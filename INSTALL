@@ -1,0 +1,133 @@
+Elgg version 0.1 alpha installation instructions
+
+Ben Werdmuller <ben@elgg.net>
+28th March, 2005
+
+
+1. BEFORE YOU BEGIN
+
+1.1 Requirements
+
+Elgg currently requires the Apache web server with mod_rewrite
+installed and the ability to send emails, plus PHP 4.3+ and MySQL 
+3.23+.  It has currently been tested on Apache installations running 
+Red Hat Linux and Microsoft Windows XP.
+
+Elgg must be installed on the root of a domain - for example,
+at http://elgg.net/, as opposed to http://elgg.net/subdirectory/.
+
+You must have a database on the MySQL server ready for use by Elgg.
+
+IF YOU ARE UPGRADING, for this release you must drop any existing
+database tables and insert the new database schema.
+
+1.2 Recommendations
+
+For this release, it is recommended that MySQL has cacheing enabled.
+Please see the MySQL documentation for instructions, or ask your
+system administrator.
+
+1.3 Time estimate
+
+Assuming you have satisfied the requirements in 1.1, the installation
+should not take longer than 20 minutes. This may vary depending on
+the connection speed to your web server.
+
+
+2. INSTALLING FILES
+
+2.1 Deploy Elgg framework
+
+Move all files aside from README, LICENSE, INSTALL and the
+"distribution" directory from the distribution package to your web 
+server directory.  Files in the root of the distribution must be in 
+the root of your web server account.
+
+2.1 Set permissions on special directories
+
+Some directories need to be written to during Elgg's normal operation
+- specifically the directory for uploaded files, and the directory
+for uploaded icons.
+
+From your root directory, navigate to /_icons.  On Linux / Unix, you 
+must change the access privileges for /_icons/data to 777 or 
+equivalent.  To do this you may be able to right click on the folder 
+and set the "CHMOD" value, or you may have to use your command line
+terminal, navigate to the _icons folder, and type:
+
+	chmod 777 data
+
+Repeat this process for /_files/data.
+
+
+3. SETTING UP THE DATABASE
+
+3.1 Open database schema
+
+There is a database schema supplied in the /distribution/database
+folder.  You must install this into the database you have set aside
+for elgg.
+
+If you are running phpMyAdmin, a third-party tool for easily
+maintaining MySQL databases, go to 3.2; otherwise go to 3.3.
+
+3.2 Setting up the database with phpMyAdmin
+
+In phpMyAdmin, click on the database you wish to use for Elgg on the 
+left hand side of the screen.  Click on the "SQL" tab at the top of
+the screen, and on the page that turns up, click "Browse" to pick a
+textfile to import.  Navigate to /distribution/database in the
+distribution package and select elgg.sql.  Click "Go".
+
+3.3 Setting up the database with command line MySQL
+
+Using your command line terminal, navigate to /distribution/database
+in the distribution package. Type the following:
+
+	mysql -u [username] -p [password] [databasename] < elgg.sql
+	
+Where [username] and [password] are your MySQL access details and
+[databasename] is the name of the database you have set aside for
+Elgg.
+
+Once you have done this, you should delete the /distribution 
+directory.
+
+
+4. SETTING UP ELGG
+
+4.1 Edit includes.php
+
+Load "includes.php".  There are eight variables that must be
+set at the top of the file - all of them are important, and they are
+clearly described within the file.  Each of them is of the form:
+
+	define("name","value");
+	
+You must enter your values within the second set of quotation marks.
+To include a quotation mark within a value (e.g. if you wanted 
+My University's "Elgg" Trial to be your site title), prefix it with
+a backslash ("\").
+
+4.2 Customise your default homepage
+
+We have included a basic default homepage, but you can alter index.php
+as you wish.  If you would like to alter the text but maintain the
+position within Elgg's flexible templating system, you will need to
+alter the file /content/mainindex/content_main_index.php.
+
+4.3 Log in
+
+We have included a default user, "news". This user owns all the
+public custom templates. Its login name is "news" and its default
+password is "password"; you should log in and change this as soon
+as possible. All new users will automatically list the news account
+as a friend, so you should not delete it.
+
+
+5. FURTHER CUSTOMISATION AND DEVELOPMENTS
+
+Please keep an eye on http://apcala.com/development/index.php for
+forthcoming developments within Elgg, including documentation on how
+to alter your default templates and writing new functionality into
+the system.

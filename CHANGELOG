@@ -1,0 +1,12 @@
+Elgg changelog
+
+0.1.1a (30th March 2005)
+------------------------
+Added missing default icon (/_icons/data/default.png)
+Added default user (news)
+Added three alternative templates
+Passwords are now MD5 encrypted
+
+0.1a (28th March 2005)
+----------------------
+Initial release

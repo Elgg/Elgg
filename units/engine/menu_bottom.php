@@ -1,0 +1,1 @@
+<a href="/content/about.php">About <?php echo sitename; ?></a> | <a href="/content/faq.php">FAQ</a> | <a href="/content/privacy.php">Privacy Policy</a>

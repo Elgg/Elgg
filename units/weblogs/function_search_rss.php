@@ -1,0 +1,30 @@
+<?php
+
+	global $search_exclusions;
+
+	if (isset($parameter) && $parameter[0] == "weblog" || $parameter[0] == "weblogall") {
+		
+		$search_exclusions[] = "weblogall";
+		$owner = (int) $_REQUEST['owner'];
+		$searchline = "tagtype = 'weblog' and tag = '".addslashes($parameter[1])."'";
+		$searchline = "(" . run("users:access_level_sql_where",$_SESSION['userid']) . ") and " . $searchline;
+		$searchline = str_replace("access", "weblog_posts.access", $searchline);
+		$searchline = str_replace("owner", "weblog_posts.owner", $searchline);
+		$refs = db_query("select weblog_posts.ident, weblog_posts.title, users.username, users.name, tags.ref from tags left join weblog_posts on weblog_posts.ident = ref left join users on users.ident = tags.owner where $searchline order by weblog_posts.posted desc limit 50");
+		
+		if (sizeof($refs) > 0) {
+			foreach($refs as $post) {
+				$run_result .= "\t<item>\n";
+				$run_result .= "\t\t<title>Weblog post :: " . htmlentities(stripslashes($post->name));
+				if ($post->title != "") {
+					$run_result .= " :: " . htmlentities(stripslashes($post->title));
+				}
+				$run_result .= "</title>\n";
+				$run_result .= "\t\t<link>" . url . htmlentities(stripslashes($post->username)) . "/weblog/" . $post->ident . ".html</link>\n";
+				$run_result .= "\t</item>\n";
+			}
+		}
+		
+	}
+
+?>
