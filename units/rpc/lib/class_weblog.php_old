@@ -1,0 +1,180 @@
+<?php
+
+    // Class handles a username or userid
+
+    Class Weblog extends ElggObject
+    {
+        var $owner;
+        var $title;
+        var $posts;
+        var $name;
+        var $username;
+        var $blog_id;
+        
+        function Weblog($id, $var) // id is owner, var is requested weblog/user id
+        {
+            // username/id conversions
+            if (is_numeric($id))
+            {
+                $this->owner = $id;
+            }
+            elseif (is_string($id))
+            {
+                $query = db_query("select ident, user_type from users where username = $id");
+                $this->owner = $query->ident;
+            }
+
+            if (is_numeric($var))
+            {
+                $this->blog_id = $var;
+            }
+            elseif (is_string($var))
+            {
+                $query = db_query("select ident, user_type from users where username = $var");
+                $this->blog_id = $query->ident;
+            }
+
+            // Is a community or a regular weblog being requested?
+
+            // Query restrictions
+            $restrictions = array();
+
+            if (run("users:type:get", $var) == "community")
+            {
+                // Is the request being made by the community owner?
+                $owner = db_query("select users.ident from users 
+                                   where users.owner = $this->owner 
+                                   and users.user_type = 'community'");
+
+                if ($owner->ident != $this->owner)
+                {
+                    // No owner, only posts where owner is author
+                    $restrictions[] = "weblog_posts.owner = $this->owner;";
+                }
+
+                // Only posts with requested 
+                $restrictions[] = "weblog_posts.weblog = $this->blog_id";
+            }
+            else
+            {
+                $restrictions[] = "weblog_posts.owner = weblog_posts.weblog";
+            }
+
+                $result = db_query("select users.name, 
+                                    users.username,
+                                    users.user_type, 
+                                    weblog_posts.ident, 
+                                    weblog_posts.weblog, 
+                                    weblog_posts.access, 
+                                    weblog_posts.posted, 
+                                    weblog_posts.title 
+                                    from users, weblog_posts " . $restrictions);
+                                    
+                                    where users.ident = '$var' and weblog_posts.owner = '$var' 
+                                    and weblog_posts.owner = weblog_posts.weblog 
+                                    order by weblog_posts.posted desc");
+
+            // First step, retrieve the regular user's weblog data
+
+            // Both username or userid may be passed
+            if (is_numeric($var))
+            {
+                // Numeric, we probably received a userid
+                $result = db_query("select users.name, 
+                                    users.username,
+                                    users.user_type, 
+                                    weblog_posts.ident, 
+                                    weblog_posts.weblog, 
+                                    weblog_posts.access, 
+                                    weblog_posts.posted, 
+                                    weblog_posts.title 
+                                    from users, weblog_posts 
+                                    where users.ident = '$var' and weblog_posts.owner = '$var' 
+                                    and weblog_posts.owner = weblog_posts.weblog 
+                                    order by weblog_posts.posted desc");
+
+                $this->owner    = $var;
+                $this->name     = $result[0]->name;
+                $this->username = $result[0]->username;
+            }
+            elseif(is_string($var))
+            {
+                // String, we probably recieved a username
+                $result = db_query("select users.ident as user_id,
+                                    users.name, 
+                                    users.user_type,
+                                    weblog_posts.ident, 
+                                    weblog_posts.weblog, 
+                                    weblog_posts.access, 
+                                    weblog_posts.posted, 
+                                    weblog_posts.title 
+                                    from users, weblog_posts 
+                                    where users.username = '$var' and weblog_posts.owner = users.ident 
+                                    and weblog_posts.owner = weblog_posts.weblog
+                                    order by weblog_posts.posted desc");
+
+                $this->owner    = $result[0]->user_id;
+                $this->name     = $result[0]->name;
+                $this->username = $var;
+            }
+            else
+            {
+                // No posts
+            }
+
+            if (sizeof($result) > 0)
+            {
+                foreach ($result as $post)
+                {
+                    $this->posts[] = $post->ident;
+                }
+            }
+            else
+            {
+            }
+
+            // Second step, retrieve community data
+        }
+
+        function getPosts()
+        {
+            return $this->posts;
+        }
+        
+        function getPost($post_id)
+        {
+            return run('posts:instance', array("id" => $post_id));
+        }
+
+        function getOwner()
+        {
+            return $this->owner;
+        }
+
+        function getTitle()
+        {
+            return $this->name . " :: Weblog";
+        }
+
+        function getName()
+        {
+            return $this->name;
+        }
+
+        function getUrl()
+        {
+            return url . $this->username . "/weblog/";
+        }
+
+        function getId()
+        {
+            // username is id
+            return $this->username;
+        }
+
+        function isCommunity()
+        {
+            return $this->community;
+        }
+    }
+?>

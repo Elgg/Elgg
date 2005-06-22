@@ -52,6 +52,29 @@
 						$run_result = nl2br(stripslashes($parameter[0]));
 						break;
 				case "keywords":
+						/* $keywords = stripslashes($parameter[0]);
+						preg_match_all("/\[\[([A-Za-z0-9 ]+)\]\]/i",$keywords,$keyword_list);
+						$keyword_list = $keyword_list[1];
+						$keywords = "";
+						if (sizeof($keyword_list) > 0) {
+							sort($keyword_list);
+							$where = run("users:access_level_sql_where",$_SESSION['userid']);
+							foreach($keyword_list as $key => $list_item) {
+								$numberofkeywords = db_query("select count(ident) as number from profile_data where ($where) and name = '".$parameter[2]."' and value like \"%[[".$list_item."]]%\"");
+								$number = $numberofkeywords[0]->number;
+								if ($number > 1) {
+									$keywords .= "<a href=\"/profile/search.php?".$parameter[2]."=".$list_item."\" title=\"$number users\">";
+								}
+								$keywords .= $list_item;
+								if ($number > 1) {
+									$keywords .= "</a>";
+								}
+								if ($key < sizeof($keyword_list) - 1) {
+									$keywords .= ", ";
+								}
+							}
+						}
+						$run_result = $keywords; */
 						$where = run("users:access_level_sql_where",$_SESSION['userid']);
 						$tags = db_query("select * from tags where ($where) and tagtype = '".addslashes($parameter[2])."' and ref = ".$parameter[4]." order by tag asc");
 						$keywords = "";
@@ -63,7 +86,7 @@
 								$numberoftags = db_query("select count(ident) as number from tags where tag = '".$tag->tag."'");
 								$numberoftags = $numberoftags[0]->number;
 								if ($numberoftags > 1) {
-									$keywords .= "<a href=\"/search/index.php?".$parameter[2]."=".urlencode(stripslashes($tag->tag))."&ref=".$parameter[4]."&owner=".$parameter[5]."\" >";
+									$keywords .= "<a href=\"".url."search/index.php?".$parameter[2]."=".urlencode(stripslashes($tag->tag))."&ref=".$parameter[4]."&owner=".$parameter[5]."\" >";
 								}
 								$keywords .= stripslashes($tag->tag);
 								if ($numberoftags > 1) {

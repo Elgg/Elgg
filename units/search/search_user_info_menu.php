@@ -5,8 +5,10 @@
 	
 		$title = "Search";
 
+		$url=url;
+		
 		$body = <<< END
-		<form style="margin: 0px; padding: 0px" name="searchform" action="/search/all.php">
+		<form style="margin: 0px; padding: 0px" name="searchform" action="{$url}search/all.php">
 		 	<script language="JavaScript" type="text/javascript">
 				<!--
 				function submitthis()
@@ -17,7 +19,7 @@
 			</script>
 			<p align="center">
 				<input name="tag" type="text" value="" style="width: 110px">&nbsp;<a href="javascript:submitthis()" style="text-decoration: none">&gt;&gt;</a><br />
-				<a href="/search/tags.php">Random tags</a>
+				<a href="{$url}search/tags.php">Random tags</a>
 			</p>
 		</form>
 

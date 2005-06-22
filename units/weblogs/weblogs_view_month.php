@@ -25,7 +25,7 @@
 		$where = run("users:access_level_sql_where",$_SESSION['userid']);
 		$posts = db_query("select * from weblog_posts 
 							where ($where) 
-							and owner = $profile_id 
+							and weblog = $profile_id 
 							and posted >= ".gmmktime(0,0,0,$month,1,$year)."
 							and posted < ".gmmktime(0,0,0,($month + 1), 1, $year)."
 							order by posted asc");

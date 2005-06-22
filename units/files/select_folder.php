@@ -8,6 +8,7 @@
 			}
 			$fileprefix = $prefix . "&gt;";
 			
+			$folders = db_query("select * from file_folders where files_owner = $userid and parent = $folderid");
 			if ($folderid == -1) {
 				$body = "<option value=\"-1\" ";
 				if ($selected == -1) {
@@ -15,7 +16,7 @@
 				}
 				$body .= ">Root</option>";
 			} else {
-				$current_folder = db_query("select ident, name from file_folders where owner = $userid and ident = $folderid");
+				$current_folder = db_query("select ident, name from file_folders where files_owner = $userid and ident = $folderid");
 				$name = (stripslashes($current_folder[0]->name));
 				$ident = $current_folder[0]->ident;
 				if ($ident == $selected) {
@@ -27,7 +28,6 @@
 					<option value="{$ident}" {$selectstring} >{$prefix} {$name} </option>
 END;
 			}			
-			$folders = db_query("select * from file_folders where owner = $userid and parent = $folderid");
 			if (sizeof($folders) > 0) {
 				foreach($folders as $folder) {
 					$body .= viewfolder($folder->ident, $userid, $level + 1,$selected);

@@ -14,4 +14,7 @@
 	// Menu button
 		$function["menu:main"][] = path . "units/icons/menu_main.php";
 		
+	// Permissions check
+		$function["permissions:check"][] = path . "units/icons/permissions_check.php";
+		
 ?>

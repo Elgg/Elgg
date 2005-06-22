@@ -13,7 +13,7 @@
 	
 		if ($folder != -1) {
 			
-			$access = db_query("select access from file_folders where owner = $owner and ident = $folder");
+			$access = db_query("select access from file_folders where files_owner = $owner and ident = $folder");
 			if (sizeof($access) > 0) {
 				$access = $access[0]->access;
 				$accessible = run("users:access_level_check",$access);
@@ -31,7 +31,7 @@
 		
 	// If this is the user's own file repository, allow him or her to edit it
 	
-		if ($owner == $_SESSION['userid']) {
+		if (run("permissions:check", "files")) {
 			
 			$run_result .= run("files:folder:edit",$folder);
 			

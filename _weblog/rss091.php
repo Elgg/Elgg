@@ -38,7 +38,7 @@ END;
     <language>en-gb</language>
     <link>$mainurl</link>
 END;
-				$entries = db_query("select * from weblog_posts where owner = $page_owner and access = 'PUBLIC' order by posted desc limit 10");
+				$entries = db_query("select * from weblog_posts where weblog = $page_owner and access = 'PUBLIC' order by posted desc limit 10");
 				if (sizeof($entries) > 0) {
 					foreach($entries as $entry) {
 						$title = htmlentities(stripslashes($entry->title));

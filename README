@@ -1,5 +1,8 @@
-Elgg (The Learning Landscape) version 0.1 alpha
+Elgg (The Learning Landscape) version 0.2
 Copyright (C) 2004-2005 David Tosh and Ben Werdmuller
+
+This program includes the phpThumb program written by James Heinrich;
+please see units/phpthumb/phpthumb.readme.txt for its information.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -22,7 +25,7 @@ Release packaged by Ben Werdmuller <ben@elgg.net>
 Elgg concept by David Tosh <d.tosh@ed.ac.uk> and Ben Werdmuller
 Copyright (C) 2004-2005 David Tosh and Ben Werdmuller
 
-Elgg 0.1 alpha is released under the GNU Public License (GPL), which
+Elgg 0.2 is released under the GNU Public License (GPL), which
 is supplied in this distribution as LICENSE.
 
 For installation instructions, please see the INSTALL file.

@@ -18,8 +18,10 @@
 		
 	// Group view / edit screen
 		// $function['groups:editpage'][] = path . "units/groups/groups_display_membership.php";
-		$function['groups:editpage'][] = path . "units/groups/groups_edit_existing.php";
+		$function['groups:editpage'][] = path . "units/groups/groups_explanation.php";
 		$function['groups:editpage'][] = path . "units/groups/groups_create.php";
+		$function['groups:editpage'][] = path . "units/groups/groups_edit_existing.php";
+		
 		
 	// Individual group editing function
 		$function['groups:edit:display'][] = path . "units/groups/groups_edit_display.php";

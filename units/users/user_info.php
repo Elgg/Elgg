@@ -1,5 +1,9 @@
 <?php
 
+	global $profile_id;
+
+	$url = url;
+	
 	// Given a title and series of user IDs as a parameter, will display a box containing the icons and names of each specified user
 	// $parameter[0] is the title of the box; $parameter[1..n] is the user ID
 
@@ -57,12 +61,14 @@ END;
 
 				$username = htmlentities(stripslashes($info->name));
 				$usermenu = run("users:infobox:menu",array($info->ident));
-				
+				if ($info->ident == $profile_id || (logged_on && (!isset($profile_id) && $info->ident == $_SESSION['userid']))) {
+					$rsslink = "<br />(<a href=\"{$url}{$info->username}/rss/\">RSS</a>)";
+				}
 				$body .= <<< END
 		<td align="center" valign="top">
-			<a href="/{$info->username}/">
-			<img src="/_icons/data/{$icon}" width="{$width}" height="{$height}" alt="{$username}" border="0" /></a><br />
-			<span class="userdetails">{$username}{$usermenu}</span>
+			<a href="{$url}{$info->username}/">
+			<img src="{$url}_icons/data/{$icon}" width="{$width}" height="{$height}" alt="{$username}" border="0" /></a><br />
+			<span class="userdetails">{$username}{$usermenu}{$rsslink}</span>
 		</td>
 END;
 		

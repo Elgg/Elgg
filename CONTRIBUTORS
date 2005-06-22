@@ -1,0 +1,36 @@
+Elgg would not be possible without the people contributing to its
+code.  The following people have made additions and changes to the
+core release, and are listed in alphabetical order. Contributors may
+email system@elgg.net in order to have contact details added or
+amended for the next release.
+
+Sven Edge
+---------
+Improved file download script
+
+David Eshelman
+--------------
+Icon upload fixes
+
+Misja Hoebe
+http://www.chn.nl/
+------------------
+XML-RPC unit
+
+Leonard Lin
+http://www.usc.edu/~lhl/
+------------------------
+Cookied logins
+Authentication refactoring
+
+David Tosh
+http://elgg.net/dtosh/
+----------------------
+Templates & assorted interface enhancements
+Documentation & welcome screens
+Misc code changes
+
+Ben Werdmuller
+http://elgg.net/bwerdmuller/
+----------------------------
+Main system programmer

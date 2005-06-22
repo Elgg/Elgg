@@ -25,6 +25,7 @@
 		$function['profile:edit'][] = path . "units/profile/function_edit.php";
 		
 	// Function to view all profile fields
+		$function['profile:view'][] = path . "units/profile/edit_link.php";
 		$function['profile:view'][] = path . "units/profile/function_view.php";
 		
 	// Function to display user's name
@@ -35,10 +36,8 @@
 	
 	// Descriptive text
 		$function['content:profile:edit'][] = path . "units/profile/content_edit.php";
-/*	
-	// Log on bar down the right hand side
-		$function['profile:log_on_pane'][] = path . "units/profile/profile_user_info.php";
-		$function['display:sidebar'][] = path . "units/profile/profile_user_info.php";
-*/		
-		
+
+	// Establish permissions
+		$function['permissions:check'][] = path . "units/profile/permissions_check.php";
+				
 ?>

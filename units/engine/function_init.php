@@ -13,5 +13,9 @@
 	// Message arrays
 		global $messages;
 		$messages = array();
+		
+	// Add the site root to the metatags
+		global $metatags;
+		// $metatags .= " 	<base href=\"".url."\" />";
 
 ?>

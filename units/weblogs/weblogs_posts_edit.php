@@ -1,9 +1,16 @@
 <?php
 
-	$username = $_SESSION['username'];
+	// $username = $_SESSION['username'];
 	
 	$post = db_query("select * from weblog_posts where ident = " . $parameter);
 	$post = $post[0];
+	
+	$url = url;
+	
+	global $page_owner;
+	$page_owner = $post->weblog;
+	
+	$username = run("users:id_to_name", $post->weblog);
 	
 	if ($post->owner != $_SESSION['userid']) {
 		exit();
@@ -11,7 +18,7 @@
 	
 	$body = <<< END
 
-<form method="post" name="elggform" action="/{$username}/weblog/{$post->ident}.html" onsubmit="return submitForm();">
+<form method="post" name="elggform" action="{$url}{$username}/weblog/{$post->ident}.html" onsubmit="return submitForm();">
 
 	<h2>Edit a post</h2>
 	<p>
@@ -31,7 +38,8 @@ END;
 	$body .= <<< END
 	</p>
 	<p>
-		Keywords:<br />
+		Keywords (<b>Separated by commas</b>):<br />
+              Keywords commonly referred to as 'Tags' are words that represent the weblog post you have just made. This will make it easier for others to search and find your posting.
 END;
 	$body .= run("display:input_field",array("edit_weblog_keywords","","keywords","weblog",$post->ident));
 	$body .= <<< END

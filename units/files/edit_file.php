@@ -1,18 +1,24 @@
 <?php
 
 	global $folder;
+	global $page_owner;
 		
+	$url = url;
+	
 	if (isset($_REQUEST['edit_file_id'])) {
 		$file_id = (int) $_REQUEST['edit_file_id'];
 	
-		$file_details = db_query("select files.*, users.username from files left join users on users.ident = files.owner where files.ident = $file_id and owner = " . $_SESSION['userid']);
+		$file_details = db_query("select files.*, users.username from files left join users on users.ident = files.owner where files.ident = $file_id and files.owner = " . $_SESSION['userid']);
 		if (sizeof($file_details) > 0) {
 			$file = $file_details[0];
+			
+			$page_owner = $file->files_owner;
+			
 			$description = stripslashes($file->description);
 			$title = htmlentities(stripslashes($file->title));
 	
 			$body = <<< END
-			<form action="/_files/action_redirection.php" method="post">
+			<form action="{$url}_files/action_redirection.php" method="post">
 			<table>
 				<tr>
 					<td>
@@ -58,14 +64,14 @@ END;
 					</td>
 					<td>
 END;
-						$body .= run("folder:select", array("edit_file_folder",$_SESSION['userid'],$file->folder));
+						$body .= run("folder:select", array("edit_file_folder",$file->files_owner,$file->folder));
 						$body .= <<< END
 					</td>
 				</tr>
 				<tr>
 					<td>
 						<label for="edit_file_keywords">
-							Keywords
+							Keywords (comma separated):
 						</label>
 					</td>
 					<td>

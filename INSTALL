@@ -1,31 +1,46 @@
-Elgg version 0.1 alpha installation instructions
+Elgg version 0.2 installation instructions
 
 Ben Werdmuller <ben@elgg.net>
-28th March, 2005
+21st June, 2005
 
 
 1. BEFORE YOU BEGIN
 
 1.1 Requirements
 
+Please read LICENSE.
+
 Elgg currently requires the Apache web server with mod_rewrite
 installed and the ability to send emails, plus PHP 4.3+ and MySQL 
 3.23+.  It has currently been tested on Apache installations running 
 Red Hat Linux and Microsoft Windows XP.
 
-Elgg must be installed on the root of a domain - for example,
+In your Apache configuration, you must have AllowOverride set to
+All for the virtual server where Elgg is installed.
+
+Elgg prefers to be installed on the root of a domain - for example,
 at http://elgg.net/, as opposed to http://elgg.net/subdirectory/.
+However, it has now been tested to work in subdirectories, although
+this remains experimental until the next release.
 
 You must have a database on the MySQL server ready for use by Elgg.
 
-IF YOU ARE UPGRADING, for this release you must drop any existing
-database tables and insert the new database schema.
+You must have the GD library installed.
+
+If you have any problems installing, please consider joining
+http://elgg.net/ and joining the Elgg Installation Support
+community at http://elgg.net/support/ .
+
+This version of Elgg only supports upgrading from version 0.1.1a
+and above. Upgrading from all older versions will require a re-install.
+
 
 1.2 Recommendations
 
 For this release, it is recommended that MySQL has cacheing enabled.
 Please see the MySQL documentation for instructions, or ask your
 system administrator.
+
 
 1.3 Time estimate
 
@@ -34,7 +49,9 @@ should not take longer than 20 minutes. This may vary depending on
 the connection speed to your web server.
 
 
+
 2. INSTALLING FILES
+
 
 2.1 Deploy Elgg framework
 
@@ -42,6 +59,13 @@ Move all files aside from README, LICENSE, INSTALL and the
 "distribution" directory from the distribution package to your web 
 server directory.  Files in the root of the distribution must be in 
 the root of your web server account.
+
+Remember to include the .htaccess files; these may be invisible by
+default if you are using MacOS X.
+
+IF YOU ARE UPGRADING, you may wish to retain your existing
+includes.php file.
+
 
 2.1 Set permissions on special directories
 
@@ -57,10 +81,16 @@ terminal, navigate to the _icons folder, and type:
 
 	chmod 777 data
 
-Repeat this process for /_files/data.
+Repeat this process for /_files/data and /_files/cache.
+
+IF YOU ARE UPGRADING, please note that /_files/cache is new in this
+release. Please remember to chmod it to 777.
+
 
 
 3. SETTING UP THE DATABASE
+
+If you are upgrading, please skip to 3.4.
 
 3.1 Open database schema
 
@@ -71,6 +101,7 @@ for elgg.
 If you are running phpMyAdmin, a third-party tool for easily
 maintaining MySQL databases, go to 3.2; otherwise go to 3.3.
 
+
 3.2 Setting up the database with phpMyAdmin
 
 In phpMyAdmin, click on the database you wish to use for Elgg on the 
@@ -78,6 +109,7 @@ left hand side of the screen.  Click on the "SQL" tab at the top of
 the screen, and on the page that turns up, click "Browse" to pick a
 textfile to import.  Navigate to /distribution/database in the
 distribution package and select elgg.sql.  Click "Go".
+
 
 3.3 Setting up the database with command line MySQL
 
@@ -93,8 +125,15 @@ Elgg.
 Once you have done this, you should delete the /distribution 
 directory.
 
+3.4 Upgrading
+
+Perform either 3.2 or 3.3 but with the upgrade.sql file found in
+/distribution/database instead of elgg.sql.
+
+
 
 4. SETTING UP ELGG
+
 
 4.1 Edit includes.php
 
@@ -109,6 +148,7 @@ To include a quotation mark within a value (e.g. if you wanted
 My University's "Elgg" Trial to be your site title), prefix it with
 a backslash ("\").
 
+
 4.2 Customise your default homepage
 
 We have included a basic default homepage, but you can alter index.php
@@ -116,7 +156,19 @@ as you wish.  If you would like to alter the text but maintain the
 position within Elgg's flexible templating system, you will need to
 alter the file /content/mainindex/content_main_index.php.
 
-4.3 Log in
+
+4.3 XML-RPC
+
+Misja Hoebe has written an XML-RPC unit that requires the PEAR library.
+This allows users to use third-party blogging tools to post to your
+Elgg systme.
+
+Please see units/rpc/README for more details. If you are sure you have
+all the prerequisites for this unit, uncomment the 'include XMLRPC' line
+in the plugins section of includes.php.
+
+
+4.4 Log in
 
 We have included a default user, "news". This user owns all the
 public custom templates. Its login name is "news" and its default
@@ -125,9 +177,10 @@ as possible. All new users will automatically list the news account
 as a friend, so you should not delete it.
 
 
+
 5. FURTHER CUSTOMISATION AND DEVELOPMENTS
 
-Please keep an eye on http://apcala.com/development/index.php for
+Please keep an eye on http://elgg.net/development/index.php for
 forthcoming developments within Elgg, including documentation on how
 to alter your default templates and writing new functionality into
 the system.

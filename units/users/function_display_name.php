@@ -1,8 +1,8 @@
 <?php
 
-	$ident = (int) $parameter[0];
+	$ident = (int) $parameter;
 	
-	$result = db_query("select name from users where ident = '$ident'");
-	echo stripslashes($result[0]->name);
+	$result = db_query("select name from users where ident = $ident");
+	$run_result .= stripslashes($result[0]->name);
 
 ?>

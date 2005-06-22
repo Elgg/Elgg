@@ -1,9 +1,13 @@
 <?php
 
+	global $page_owner;
+	
+	$redirect = url . run("users:id_to_name", $page_owner) . "/weblog/";
+
 	$username = $_SESSION['username'];
 	$body = <<< END
 
-<form method="post" name="elggform" action="/_weblog/action_redirection.php" onsubmit="return submitForm();">
+<form method="post" name="elggform" action="$redirect" onsubmit="return submitForm();">
 
 	<h2>Add a new post</h2>
 	<p>
@@ -23,7 +27,8 @@ END;
 	$body .= <<< END
 	</p>
 	<p>
-		Keywords:<br />
+		Keywords (<b>separate with commas</b>):<br />
+              Keywords commonly referred to as 'Tags' are words that represent the weblog post you have just made. This will make it easier for others to search and find your posting.
 END;
 	$body .= run("display:input_field",array("new_weblog_keywords","","keywords","weblog"));
 	$body .= <<< END

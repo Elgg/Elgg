@@ -5,6 +5,7 @@
 		$panel = <<< END
 		
 		<h2>Create template</h2>
+		<p>Here you can create your own templates based on one of the existing public templates. Just select which public template you would like to alter and then create your own. You will now have edit privilages.
 		<form action="index.php" method="post">
 		
 END;

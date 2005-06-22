@@ -2,13 +2,15 @@
 
 	// Given a user ID as a parameter, will display a list of friends
 
+	$url = url;
+	
 	if (isset($parameter[0])) {
 
 		$user_id = (int) $parameter[0];
 		
 		$result = db_query("select users.*, friends.ident as friendident from friends
 									left join users on users.ident = friends.friend
-									where owner = $user_id");
+									where friends.owner = $user_id and users.user_type = 'person'");
 
 		$body = <<< END
 	<table class="userlist">
@@ -38,8 +40,8 @@ END;
 		$friends_menu = run("users:infobox:menu",array($info->ident));
 		$body .= <<< END
 		<td align="center">
-			<a href="/{$friends_username}/">
-			<img src="/_icons/data/{$icon}" width="{$width}" height="{$height}" alt="{$friends_name}" border="0" /></a><br />
+			<a href="{$url}{$friends_username}/">
+			<img src="{$url}_icons/data/{$icon}" width="{$width}" height="{$height}" alt="{$friends_name}" border="0" /></a><br />
 			<span class="userdetails">
 				{$friends_name}
 				{$friends_menu}

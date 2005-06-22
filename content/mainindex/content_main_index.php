@@ -14,19 +14,19 @@
 		</p>
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><img src="/images/front_page/1.jpg" width="80" height="80" alt="1." /></td>
+    <td><img src="images/front_page/1.jpg" width="80" height="80" alt="1." /></td>
     <td width="50">&nbsp;</td>
     <td>Sign up for an account - it's completely free, and all you need is a valid email address.</td>
   </tr>
   <tr>
-    <td><img src="/images/front_page/2.jpg" width="80" height="80" alt="2." /></td>
+    <td><img src="images/front_page/2.jpg" width="80" height="80" alt="2." /></td>
     <td width="50">&nbsp;</td>
     <td>Create your own weblog, journal, store of files like photos and Word documents - as much or as little as you want!</td>
   </tr>
   <tr>
-    <td><img src="/images/front_page/3.jpg" width="80" height="80" alt="3." /></td>
+    <td><img src="images/front_page/3.jpg" width="80" height="80" alt="3." /></td>
     <td width="50">&nbsp;</td>
-    <td>Share them with your friends, academic staff and other Elgg users. <b>YOU</b> decide who can see them! </td>
+    <td>Share them with your friends, academic staff and other $sitename users. <b>YOU</b> decide who can see them! </td>
   </tr>
 </table>
 

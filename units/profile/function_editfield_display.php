@@ -1,8 +1,10 @@
 <?php
 
+	global $page_owner;
+
 	if (sizeof($parameter) >= 2) {
 	
-		$value = db_query("select * from profile_data where name = '".$parameter[1]."' and owner = '".$_SESSION['userid']."'");
+		$value = db_query("select * from profile_data where name = '".$parameter[1]."' and owner = '". $page_owner ."'");
 		$value = $value[0];
 		
 		$name = <<< END
@@ -19,7 +21,7 @@ END;
 		if (sizeof($parameter) < 3) {
 			$parameter[2] = "text";
 		}
-		$column1 = run("display:input_field",array("profiledetails[" . $parameter[1] . "]",$value->value,$parameter[2],$parameter[1],$value->ident));
+		$column1 = run("display:input_field",array("profiledetails[" . $parameter[1] . "]",$value->value,$parameter[2],$parameter[1],$value->ident,$page_owner));
 
 		$column2 = "<label>Access level:<br />";
 		$column2 .= run("display:access_level_select",array("profileaccess[".$parameter[1] . "]",$value->access)) . "</label>";

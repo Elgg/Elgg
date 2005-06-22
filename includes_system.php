@@ -17,6 +17,8 @@
 		require(path . "units/users/main.php");
 	// Templates
 		require(path . "units/templates/main.php");
+	// Edit permissions
+		require(path . "units/permissions/main.php");
 		
 	// User icons
 		include(path . "units/icons/main.php");
@@ -34,7 +36,13 @@
 	// Friend groups
 		include(path . "units/groups/main.php");
 	
+	// Communities
+		require(path . "units/communities/main.php");
+		
 	// Search
 		require(path . "units/search/main.php");
-				
+		
+	// Invite-a-friend
+		require(path . "units/invite/main.php");
+		
 ?>

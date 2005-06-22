@@ -22,6 +22,12 @@
 			</td>
 		</tr>
 		<tr>
+			<td>&nbsp;</td>
+			<td>
+				<label><input type="checkbox" name="remember" checked="checked" /> Remember Login</label>
+			</td>
+		</tr>
+		<tr>
 			<td colspan="2" align="right">
 				<label>Log on: <input type="submit" name="submit" value="Go" /></label>
 			</td>

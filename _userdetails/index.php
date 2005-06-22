@@ -5,12 +5,12 @@
 	// Run includes
 		require("../includes.php");
 
-		run("userdetails:init");
 		run("profile:init");
+		run("userdetails:init");
 
 		protect(1);
 				
-		$title = run("profile:display:name") . " :: Edit user details";
+		$title = run("profile:display:name") . " :: Edit details";
 		
 		$body = run("templates:draw", array(
 				'context' => 'infobox',

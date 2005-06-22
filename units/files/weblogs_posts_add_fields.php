@@ -1,6 +1,7 @@
 <?php
 
-	// Function to recursively view folders
+$sitename = sitename;	
+// Function to recursively view folders
 	
 		function viewfolder($folderid, $userid, $level) {
 
@@ -64,7 +65,7 @@ END;
 			
 			
 			<p>
-				Embed a file:<br />
+				Embed a file from your $sitename file storage:<br />
 				<select name="weblog_add_file" id="weblog_add_file">
 		
 END;

@@ -25,6 +25,7 @@
 		$function['weblogs:posts:edit'][] = path . "units/weblogs/weblogs_posts_edit.php";
 		
 	// View weblog posts
+		$function['weblogs:view'][] = path . "units/weblogs/weblogs_post_field.php";
 		$function['weblogs:view'][] = path . "units/weblogs/weblogs_view.php";
 		$function['weblogs:posts:view'][] = path . "units/weblogs/weblogs_posts_view.php";
 		$function['weblogs:friends:view'][] = path . "units/weblogs/weblogs_friends_view.php";
@@ -45,5 +46,8 @@
 		
 	// Weblog preview
 		$function['templates:preview'][] = path . "units/weblogs/templates_preview.php";
+		
+	// Establish permissions
+		$function['permissions:check'][] = path . "units/weblogs/permissions_check.php";
 		
 ?>

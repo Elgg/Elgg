@@ -1,7 +1,9 @@
 <?php
 
 	global $search_exclusions;
-	
+
+	$url = url;
+		
 	if (isset($parameter) && $parameter[0] == "weblog" || $parameter[0] == "weblogall") {
 		
 		if ($parameter[0] == "weblog") {
@@ -9,6 +11,7 @@
 			$owner = (int) $_REQUEST['owner'];
 			$searchline = "tagtype = 'weblog' and owner = $owner and tag = '".addslashes($parameter[1])."'";
 			$searchline = "(" . run("users:access_level_sql_where",$_SESSION['userid']) . ") and " . $searchline;
+			$searchline = str_replace("owner","tags.owner",$searchline);
 			$refs = db_query("select ref from tags where $searchline");
 			$searchline = "";
 			if (sizeof($refs) > 0) {
@@ -19,18 +22,24 @@
 					}
 					$searchline .= "weblog_posts.ident = " . $ref->ref;
 				}
-				$posts = db_query("select users.name, users.username, weblog_posts.title, weblog_posts.ident, weblog_posts.posted from weblog_posts left join users on users.ident = weblog_posts.owner where ($searchline) order by posted desc");
+				$posts = db_query("select users.name, users.username, weblog_posts.title, weblog_posts.ident, weblog_posts.weblog, weblog_posts.owner, weblog_posts.posted from weblog_posts left join users on users.ident = weblog_posts.owner where ($searchline) order by posted desc");
 				$run_result .= "<h2>Weblog posts by " . stripslashes($posts[0]->name) . " in category '".$parameter[1]."'</h2>\n<ul>";
 				foreach($posts as $post) {
 					$run_result .= "<li>";
-					$run_result .= "<a href=\"/" . $post->username . "/weblog/" . $post->ident . ".html\">" . gmdate("F d, Y",$post->posted) . " - " . stripslashes($post->title) . "</a>\n";
+					$weblogusername = run("users:id_to_name",$post->weblog);
+					$run_result .= "<a href=\"" . url . $weblogusername . "/weblog/" . $post->ident . ".html\">" . gmdate("F d, Y",$post->posted) . " - " . stripslashes($post->title) . "</a>\n";
+					if ($post->owner != $post->weblog) {
+						$run_result .= " @ " . "<a href=\"" . url . $weblogusername . "/weblog/\">" . $weblogusername . "</a>\n";
+					}
 					$run_result .= "</li>";
 				}
 				$run_result .= "</ul>";
+				$run_result .= "<p><small>[ <a href=\"". url . $post->username . "/weblog/rss/" . $parameter[1] . "\">RSS feed for weblog posts by " . stripslashes($posts[0]->name) . " in category '".$parameter[1]."'</a> ]</small></p>\n";
 			}
 		}
 		$searchline = "tagtype = 'weblog' and tag = '".addslashes($parameter[1])."'";
 		$searchline = "(" . run("users:access_level_sql_where",$_SESSION['userid']) . ") and " . $searchline;
+		$searchline = str_replace("owner","tags.owner",$searchline);
 		$sql = "select distinct users.* from tags left join users on users.ident = tags.owner where ($searchline)";
 		if ($parameter[0] == "weblog") {
 			$sql .= " and users.ident != " . $owner;
@@ -69,8 +78,8 @@
 		$link_keyword = urlencode($parameter[1]);
 		$body .= <<< END
 		<td align="center">
-			<a href="/search/index.php?weblog={$link_keyword}&owner={$friends_userid}">
-			<img src="/_icons/data/{$icon}" width="{$width}" height="{$height}" alt="{$friends_name}" border="0" /></a><br />
+			<a href="{$url}search/index.php?weblog={$link_keyword}&owner={$friends_userid}">
+			<img src="{$url}_icons/data/{$icon}" width="{$width}" height="{$height}" alt="{$friends_name}" border="0" /></a><br />
 			<span class="userdetails">
 				{$friends_name}
 				{$friends_menu}

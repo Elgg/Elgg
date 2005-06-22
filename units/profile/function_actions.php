@@ -2,12 +2,13 @@
 
 	// Action parser for profiles
 
-		if (isset($_POST['action']) && $_POST['action'] == "profile:edit" && logged_on) {
+		global $page_owner;
+	
+		if (isset($_POST['action']) && $_POST['action'] == "profile:edit" && logged_on && run("permissions:check", "profile")) {
 		
-
 			if (isset($_POST))			
 			if (isset($_POST['profiledetails'])) {
-				db_query("delete from profile_data where owner = '".$_SESSION['userid']."'");
+				db_query("delete from profile_data where owner = '".$page_owner."'");
 				foreach($_POST['profiledetails'] as $field => $value) {
 
 					if ($value != "") {
@@ -15,7 +16,7 @@
 						$value = addslashes($value);
 						$field = addslashes($field);
 						$access = addslashes($_POST['profileaccess'][$field]);
-						$owner = (int) $_SESSION['userid'];
+						$owner = (int) $page_owner;
 						
 						db_query("insert into profile_data set name = '$field', value = '$value', access = '$access', owner = '$owner'");
 						$insert_id = (int) db_id();
@@ -45,7 +46,7 @@
 					}
 			
 				}
-				$messages[] = "Your profile was updated.";
+				$messages[] = "Profile updated.";
 			}
 		
 		}

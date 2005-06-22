@@ -3,7 +3,7 @@
 	$run_result .= run("templates:draw", array(
 						'context' => 'menuitem',
 						'name' => 'Groups',
-						'location' => '/_groups/'
+						'location' => url . '_groups/'
 					)
 					);
 

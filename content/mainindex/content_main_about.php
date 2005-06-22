@@ -4,9 +4,9 @@
 	$run_result .= <<< END
 <h1>About $sitename</h1>
 
-<h3>More about $sitename?</h3>
+<h3>More about $sitename</h3>
 
-<p>$sitename is the creation of <a href="/ben">Ben Werdmuller</a> and <a href="/davet">David Tosh</a>. The concept behind the system is to develop a fully customizable learning landscape. To achieve this $sitename is a hybrid of weblogging, e-portfolios and social networking. It is hoped this combination of features with help promote student engagement in learning through reflection in an academic and social setting.</p>
+<p>$sitename is the creation of <a href="http://apcala.com/ben">Ben Werdmuller</a> and <a href="http://elgg.net/dtosh">David Tosh</a>. The concept behind the system is to develop a fully customizable learning landscape. To achieve this $sitename is a hybrid of weblogging, e-portfolios and social networking. It is hoped this combination of features with help promote student engagement in learning through reflection in an academic and social setting.</p>
 
 <p>Learning is not a solitary pursuit and we feel real strength can be achieved from the creation of learning communities. Students interacting with: peers, tutors, lecturers, resources etc. The sharing of knowledge, ideas and problems can help foster a sense of belonging and development. </p>
 

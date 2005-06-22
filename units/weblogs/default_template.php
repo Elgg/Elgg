@@ -3,6 +3,8 @@
 	global $template;
 	global $template_definition;
 	
+	$url = url;
+	
 	$template_definition[] = array(
 									'id' => 'weblogpost',
 									'name' => "Weblog Post",
@@ -27,9 +29,9 @@
 		<td valign="top" width="100" align="center">
 			<div style="float:right">
 				<p><br />
-				<a href="/{{username}}/weblog/">
-					<img src="/_icons/data/{{usericon}}" border="0" /><br />
-					<a href="/{{username}}/weblog/">{{fullname}}</a></p>
+				<a href="{$url}{{username}}/weblog/">
+					<img src="{$url}_icons/data/{{usericon}}" border="0" /><br />
+					<a href="{$url}{{username}}/weblog/">{{fullname}}</a></p>
 		</td>
 		<td width="20">&nbsp;</td>
 		<td valign="top">		

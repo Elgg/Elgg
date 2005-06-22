@@ -102,7 +102,8 @@ END;
 																		$messages[] = "The username '$username' is already taken by another user. You will need to pick a different one.";
 																	} else {
 																		$name = addslashes($_REQUEST['join_name']);
-																		$password = addslashes(md5($_REQUEST['join_password']));
+																		$displaypassword = $_REQUEST['join_password1'];
+																		$password = addslashes(md5($_REQUEST['join_password1']));
 																		$details = $details[0];
 																		$email = $details->email;
 																		db_query("insert into users set name = '$name',
@@ -126,7 +127,7 @@ Thanks for joining $sitename!
 For your records, your $sitename username and password are:
 
 	Username: $username
-	Password: $password
+	Password: $displaypassword
 	
 You can log in at any time by visiting " . url . " and entering these details into the login form.
 
@@ -142,6 +143,33 @@ The $sitename Team"), "From: $sitename <".email.">");
 														}
 													} else {
 														$messages[] = "You must indicate that you are at least 13 years old to join.";
+													}
+												break;
+				// Request a new password
+					case "invite_password_request":		if (isset($_REQUEST['password_request_name'])) {
+														$users = db_query("select ident, email from users where username = '".addslashes($_REQUEST['password_request_name'])."' and user_type = 'person'");
+														if (sizeof($users) > 0) {
+															$code = substr(md5(time() . $_REQUEST['password_request_name']),0,7);
+															$ident = $users[0]->ident;
+															db_query("insert into password_requests set code = '$code', owner = $ident");
+															$url = url . "_invite/new_password.php?passwordcode=" . $code;
+															mail(stripslashes($users[0]->email), "Verify your $sitename account password request", wordwrap("
+A request has been received to generate your account at
+$sitename a new password.
+
+To confirm this request and receive a new password by email, please
+click the following link:
+
+	$url
+
+Please let us know if you have any further problems.
+
+Regards,
+The $sitename Team"), "From: $sitename <".email.">");
+															$messages[] = "Your verification email was sent. Please check your inbox.";
+														} else {
+															$messages[] = "No user with that username was found.";
+														}
 													}
 												break;
 				

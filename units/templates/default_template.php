@@ -27,36 +27,31 @@
 </head>
 
 <body>
-<table width="100%"  border="0" cellspacing="0" cellpadding="0" class="header">
+<table width="100%"  border="0" cellspacing="0" cellpadding="0">
   <tr>
-	<td width="4%"><img src="/_templates/default/graphics/leaf.jpg" border="0"></td><td><a href="{{url}}" >{{title}}</a></td><td width="4%">&nbsp;</td>
-  </tr>
-</table>
-<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="menubar">
-  <tr>
-    <td width="4%">&nbsp;</td><td  align="left" valign="top">{{messageshell}}</td><td width="4%">&nbsp;</td>
+    <td id="pagetop"><a href="{{url}}"><img src="{{url}}_templates/default/graphics/purplecrayon.gif" alt="Elgg" width="227" height="70" border="0" /></a></td>
   </tr>
 </table>
 <table width="100%"  border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td colspan="5" align="left" valign="top" id="mainbody">{{menu}}{{messageshell}}</td>
+  </tr>
   <tr>
     <td colspan="5">
     	&nbsp;
     </td>
   </tr>
   <tr>
-    <td width="4%" align="left" valign="top" >&nbsp;</td>
-    <td align="70%" align="right" valign="top" class="mainbody">{{mainbody}}</td>
-<td width="2%" align="right" valign="top" >&nbsp;</td>
-<td width="20%" align="center" valign="top" class="sidebar">{{sidebar}}<br />{{menu}}</td>
-    <td width="4%" align="right" valign="top" >&nbsp;</td>
+    <td width="4%" align="left" valign="top" id="mainbody">&nbsp;</td>
+    <td width="65%" align="left" valign="top" id="mainbody">{{mainbody}}</td>
+    <td width="2%" align="right" valign="top" id="mainbody">&nbsp;</td>
+    <td width="25%" align="right" valign="top" id="mainbody">{{sidebar}}</td>
+    <td width="4%" align="right" valign="top" id="mainbody">&nbsp;</td>
   </tr>
-</table><br />
-<table width="100%" border="0" cellpadding="4" cellspacing="0" class="footer">
   <tr>
-    <td colspan="5" align="center" valign="middle">
-      Copyright &copy; 2004&nbsp;&nbsp;
-      <a href="/content/faq.php">FAQ</a>&nbsp;&nbsp;<a href="/content/privacy.php">Privacy Policy</a>&nbsp;&nbsp;<p>Powered by <a href="http://apcala.com">Apcala</a></p>
-</td>
+    <td height="100" colspan="5" align="center" valign="middle">
+      Copyright &copy; 2004-2005 ELGG      <br />
+      <a href="{{url}}content/about.php">About ELGG</a> | <a href="{{url}}content/faq.php">FAQ</a> | <a href="{{url}}content/privacy.php">Privacy Policy</a> | <a href="{{url}}content/run_your_own.php">Run your own ELGG</a></td>
   </tr>
 </table>
 </body>
@@ -75,7 +70,7 @@ END;
 	
 /*
 
-	Swish template CSS
+	Elgg main site CSS file
 
 */
 
@@ -83,7 +78,7 @@ body			{
 					margin: 0px;
 					background-color: #ffffff;
 					font-family: arial, helvetica;
-					font-size: 9pt;
+					font-size: 10pt;
 					line-height: 1.2ems;
 					margin: 0px;
 					padding: 0px;
@@ -102,24 +97,36 @@ form			{
 					margin: 0px;
 					padding: 0px;
 				}
-
+				
 /* Page top */
-
-.header {
-	font-size:16px;
-	padding:8px;
-	background-color: #ffffff;
-        
-}
-
-.header a {
-	text-decoration:none;
-	color:#7E7D7D;
-	font-family: arial, georgia, "times new roman", palatino;
-	font-size: 26pt;
-	text-transform: lowercase;
-}
-
+#pagetop		{
+					background-color: #5F1741;
+				}
+#pagetop ul		{
+					position: absolute;
+					right: 0;
+					top: 0;
+					list-style-type: none;
+					margin: 0px;
+					padding: 0px;
+				}
+#pagetop li		{
+					font-family: verdana, arial, helvetica, helv;
+					color:#ffffff;
+					margin: 0;
+					padding: 0;
+				}
+#pagetop li a	{
+					display: block;
+					text-decoration: none;
+					color: #ffa800;
+					text-align: center;
+					background-color: #444444;
+				}
+#pagetop li a:hover	{
+					color: #000000;
+					background-color: #ffa800;
+				}
 .messages		{
 					background-color: #000000;
 					color: #ffffff;
@@ -129,34 +136,34 @@ form			{
 .messages ul	{
 					padding: 0px;
 					margin: 0px;
-					list-style-type: none;
 				}
 .menubar		{
-					background-color: #ebebeb;
-					text-align: justify;
+					background-color: #aaaaaa;
+					padding: 3px;
+					border: 0px;
+					border-bottom: 1px;
+					border-color: #000000;
+					border-style: solid;
 				}
 .menubar a		{
+					color: #ffffff;
 					padding: 3px;
 					text-decoration: none;
-					margin: 1px;
-					background-color: #F3C886;
-					color: #ffffff;
-					display: block;
 				}
 .menubar a:hover	{
-					background-color: #C95922;
+					text-decoration: underline;
 				}
 .actionbox		{
-					background-color: #FFFFFF;
+					background-color: #eeeeee;
 					border: 1px;
 					border-color: #000000;
 					border-style: solid;
 					padding: 7px;
-
+					
 				}
 .actionbox caption	{
-					background-color: #ebebeb;
-					color: #000000;
+					background-color: #aaaaaa;
+					color: #ffffff;
 					vertical-align: middle;
 					text-align: center;
 					padding: 4px;
@@ -166,98 +173,37 @@ form			{
 					border-style: solid;
 					border-bottom: 0px;
 					font-size: 1.1em;
-
+					
 				}
 .infobox		{
-                                        border:1px;
-                                         border-color:#5F5E5E;
-                                        border-style:solid;
-				}
-
-.infobox caption
-				{
-					font-weight: bold;
-					padding: 10px;
-                                        color:#000000;
-				}
-.mainbody .infobox	{
-					background-color: #ffffff;
-					padding: 12px;
-				}
-.mainbody .infobox caption	{
-				
-					/*background-color: #ebebeb;
-					color: #000000;*/
-                                        display: none;
-					
-				}				
-.sidebar .infobox	{
-					background-color: #FFFFFF;
+					background-color: #eeeeee;
+					border: 1px;
+					border-color: #000000;
+					border-style: solid;
 					padding: 7px;
-                                        border:1px;
-                                         border-color:#5F5E5E;
-                                        border-style:solid;
 				}
-.sidebar .infobox caption	{
-					background-color: #ebebeb;
-					color: #000000;
-                                        border:0px;
-                                        border-top:1px;
-                                        border-right:1px;
-                                        border-left:1px;
-                                         border-color:#5F5E5E;
-                                        border-style:solid;
-                                        
+.infobox caption	{
+					background-color: #aaaaaa;
+					color: #ffffff;
+					vertical-align: middle;
+					text-align: center;
+					padding: 4px;
+					font-weight: bold;
+					border: 1px;
+					border-color: #000000;
+					border-style: solid;
+					border-bottom: 0px;
+					font-size: 1.1em;
 				}
 .profiletable 	{
-					padding: 5px;
+					border: 1px;
+					border-style: solid;
+					border-color: #888888;
 			  	}
 .profiletable .fieldname	{
-					background-color: #ebebeb;
-					color: #000000;
-					padding: 5px;
+					background-color: #C6DEFD;
 				}
-.profiletable input, .profiletable select, .profiletable textarea
-				{
-					font-family: verdana;
-					font-size: 8pt;
-					background-color: #E0E8F4;
-					border: 2px;
-					border-style: solid;
-
-					border-color: #E5B54C;
-				}
-.profiletable input:hover, 
-.profiletable select:hover, 
-.profiletable textarea:hover
-				{
-					border-color: #000000;
-				}
-.footer {
-     background-color:#ffffff;
-	 color:#000000;
-	 font-size: 12px;
-}
-
-.footer a {
-	color:#000000;
-	text-decoration:underline;
-	font-size: 12px;
-	font: Georgia, Verdana, Arial;
-
-}
-
 	
-		.weblogdateheader		{
-			
-										font-size: 0.6ems;
-									}
-	
-.weblog {
-      border:1px;
-      border-color:#7E7D7D;
-      border-style:dashed;
-}	
 END;
 
 	$template_definition[] = array(
@@ -277,7 +223,7 @@ END;
 		{{name}}
 	</caption>
 	<tr>
-		<td align="left">
+		<td>
 {{contents}}
 		</td>
 	</tr>
@@ -337,13 +283,13 @@ END;
 
 	$template['menu'] = <<< END
 	
-    <table width="100%" class="menubar">
-       <tr>
-           <td>
-               {{menuitems}}
-           </td>
-       </tr>
-   </table>
+	<table width="100%" class="menubar">
+		<tr>
+			<td>
+				{{menuitems}}
+			</td>
+		</tr>
+	</table>
 	
 END;
 
@@ -359,7 +305,7 @@ END;
 
 	$template['menuitem'] = <<< END
 	
-	<a href="{{location}}" class="menuitem">{{name}}</a>
+	<a href="{{location}}">{{name}}</a> |
 	
 END;
 
@@ -377,18 +323,17 @@ END;
 	$template['databox'] = <<< END
 
 <table width="95%" class="profiletable" align="center" style="margin-bottom: 3px">
-   <tr>
-       <td width="20%" class="fieldname">
-           {{name}}
-
-       </td>
-       <td width="50%">
-           {{column1}}
-       </td>
-       <td width="30%">
-           {{column2}}
-       </td>
-   </tr>
+	<tr>
+		<td width="20%" class="fieldname">
+			{{name}}
+		</td>
+		<td width="50%">
+			{{column1}}
+		</td>
+		<td width="30%">
+			{{column2}}
+		</td>
+	</tr>
 </table>
 	
 END;
@@ -406,14 +351,14 @@ END;
 	$template['databox1'] = <<< END
 
 <table width="95%" class="profiletable" align="center" style="margin-bottom: 3px">
-   <tr>
-       <td width="15%" class="fieldname">
-           {{name}}
-       </td>
-       <td width="85%" style="padding-left: 15px">
-           {{column1}}
-       </td>
-   </tr>
+	<tr>
+		<td width="20%" class="fieldname">
+			{{name}}
+		</td>
+		<td width="80%">
+			{{column1}}
+		</td>
+	</tr>
 </table>
 	
 END;
@@ -431,16 +376,16 @@ END;
 	$template['databoxvertical'] = <<< END
 	
 <table width="95%" class="profiletable" align="center" style="margin-bottom: 3px">
-   <tr>
-       <td align="center" class="fieldname">
-           {{name}}
-       </td>
-   </tr>
-   <tr>
-       <td >
-           {{contents}}
-       </td>
-   </tr>
+	<tr>
+		<td align="center" class="fieldname">
+			{{name}}
+		</td>
+	</tr>
+	<tr>
+		<td >
+			{{contents}}
+		</td>
+	</tr>
 </table>
 	
 END;

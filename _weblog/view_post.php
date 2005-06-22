@@ -24,8 +24,8 @@
 			
 			global $page_owner;
 			global $profile_id;
-			$profile_id = $post->owner;
-			$page_owner = $post->owner;
+			$profile_id = $post->weblog;
+			$page_owner = $post->weblog;
 			
 			$title = run("profile:display:name") . " :: Weblog :: " . stripslashes($post->title);
 			

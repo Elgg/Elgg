@@ -13,8 +13,8 @@
 														&& isset($_REQUEST['new_weblog_post'])
 														&& isset($_REQUEST['new_weblog_access'])
 														&& isset($_REQUEST['new_weblog_keywords'])
+														&& run("permissions:check", "weblog")
 													) {
-														
 														$title = addslashes($_REQUEST['new_weblog_title']);
 														$body = addslashes($_REQUEST['new_weblog_post']);
 														$access = addslashes($_REQUEST['new_weblog_access']);
@@ -23,6 +23,7 @@
 																		body = '$body',
 																		access = '$access',
 																		posted = ".time().",
+																		weblog = $page_owner,
 																		owner = ".$_SESSION['userid']);
 														$insert_id = db_id();
 														if ($_REQUEST['new_weblog_keywords'] != "") {
@@ -38,8 +39,11 @@
 																}
 															}
 														}
-														$messages[] = "Your post has been added to your weblog.";
-														define('redirect_url',url . $_SESSION['username'] . "/weblog/");
+														if (run("users:type:get",$page_owner) == "person") {
+															$messages[] = "Your post has been added to your weblog.";
+														}
+														// define('redirect_url',url . $_SESSION['username'] . "/weblog/");
+														define('redirect_url',url . run("users:id_to_name", $page_owner) . "/weblog/");
 													}
 													break;
 				// Edit a weblog post
@@ -101,7 +105,7 @@
 															$messages[] = "You do not appear to own this weblog post. It was not deleted.";
 														}
 														global $redirect_url;
-														$redirect_url = url . $_SESSION['username'] . "/weblog/";
+														$redirect_url = url . run("users:id_to_name",$post_info[0]->weblog) . "/weblog/";
 														define('redirect_url',$redirect_url);
 													}
 													break;

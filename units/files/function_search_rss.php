@@ -28,9 +28,14 @@
 		}
 		if (sizeof($file_refs) > 0) {
 			foreach($file_refs as $file) {
+					$mimetype = run("files:mimetype:determine",$file->location);
+					if ($mimetype == false) {
+						$mimetype = "application/octet-stream";
+					}
 					$run_result .= "\t<item>\n";
 					$run_result .= "\t\t<title>File :: " . htmlentities(stripslashes($file->fullname)) . " :: " . htmlentities(stripslashes($file->title)) . "</title>\n";
 					$run_result .= "\t\t<link>" . url  . htmlentities(stripslashes($file->username)) . "/files/" . $file->folder . "/" . $file->ident . "/" . htmlentities(stripslashes($file->originalname)) . "</link>\n";
+					$run_result .= "\t\t<enclosure url=\"" . url  . htmlentities(stripslashes($file->username)) . "/files/" . $file->folder . "/" . $file->ident . "/" . htmlentities(stripslashes($file->originalname)) . "\" length=\"". $file->size ."\" mimetype=\"$mimetype\" />\n";
 					$run_result .= "\t</item>\n";
 			}
 		}

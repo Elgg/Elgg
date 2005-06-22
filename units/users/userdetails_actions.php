@@ -2,35 +2,46 @@
 
 	// Userdetails actions
 	
-		if (logged_on && isset($_REQUEST['action'])) {
+		global $page_owner;
+	
+		if (logged_on && isset($_REQUEST['action']) && run("permissions:check", "userdetails:change")) {
 			
 			switch($_REQUEST['action']) {
 				
 				// Update user details
 					case "userdetails:update":
-													if (isset($_REQUEST['name']) && isset($_REQUEST['email'])) {
+													if (isset($_REQUEST['name'])) {
 														$userdetails_ok = "yes";
 														$name = addslashes($_REQUEST['name']);
 														if (strlen($name) > 64) {
 															$messages[] = "Your suggested name was too long. Please try something shorter.";
 															$userdetails_ok = "no";
 														}
-														$email = $_REQUEST['email'];
-														if (!@preg_match("/^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$/i",$email)) {
-															$messages[] = "Your suggested email address $email doesn't appear to be valid.";
-															$userdetails_ok = "no";
-														} else {
-															$email = addslashes($email);
+														
+														if (run("users:type:get", $page_owner) == 'person' && isset($_REQUEST['email'])) {
+															$email = $_REQUEST['email'];
+															if (!@preg_match("/^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$/i",$email)) {
+																$messages[] = "Your suggested email address $email doesn't appear to be valid.";
+																$userdetails_ok = "no";
+															} else {
+																$email = addslashes($email);
+																db_query("update users set email = '$email' where ident = $id");
+																if ($_SESSION['userid'] == $page_owner) {
+																	$_SESSION['email'] = stripslashes($email);
+																}
+																$messages[] = "Email address updated.";
+															}
 														}
 														
 														if ($userdetails_ok == "yes") {
-															$messages[] = "Your name and email address were updated.";
-															$id = (int) $_SESSION['userid'];
-															db_query("update users set name = '$name', email = '$email' where ident = $id");
-															$_SESSION['name'] = stripslashes($name);
-															$_SESSION['email'] = stripslashes($email);
+															$messages[] = "Name updated.";
+															$id = (int) $page_owner;
+															db_query("update users set name = '$name' where ident = $id");
+															if ($_SESSION['userid'] == $page_owner) {
+																$_SESSION['name'] = stripslashes($name);
+															}
 														} else {
-															$messages[] = "Your user details were not changed.";
+															$messages[] = "Details were not changed.";
 														}
 														
 													}
@@ -45,7 +56,7 @@
 																$messages[] = "Password not changed: Your password can only consist of letters or numbers.";
 															} else {
 																$messages[] = "Your password was updated.";
-																db_query("update users set password = '$password1' where ident = " . $_SESSION['userid']);
+																db_query("update users set password = '".md5($password1)."' where ident = " . $page_owner);
 															}
 														} else {
 															$messages[] = "Password not changed: The password and its verification string did not match.";

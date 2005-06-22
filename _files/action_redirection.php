@@ -9,6 +9,11 @@
 
 		global $redirect_url;
 		global $messages;
+		global $page_owner;
+		
+		if (isset($_REQUEST['files_owner'])) {
+			$page_owner = (int) $_REQUEST['files_owner'];
+		}
 		
 		if (isset($messages) && sizeof($messages) > 0) {
 			$_SESSION['messages'] = $messages;

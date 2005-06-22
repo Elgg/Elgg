@@ -18,8 +18,8 @@
 	// Get all posts in the system that we can see
 	
 		$where = run("users:access_level_sql_where",$_SESSION['userid']);
-		$posts = db_query("select * from weblog_posts where ($where) and owner = $profile_id order by posted desc limit $weblog_offset,25");
-		$numberofposts = db_query("select count(ident) as numberofposts from weblog_posts where ($where) and owner = $profile_id");
+		$posts = db_query("select * from weblog_posts where ($where) and weblog = $profile_id order by posted desc limit $weblog_offset,25");
+		$numberofposts = db_query("select count(ident) as numberofposts from weblog_posts where ($where) and weblog = $profile_id");
 		$numberofposts = $numberofposts[0]->numberofposts;
 				
 		if (sizeof($posts > 0) || sizeof($friendsposts > 0)) {

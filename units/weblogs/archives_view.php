@@ -9,7 +9,7 @@
 		$archives = db_query("SELECT distinct 
 									EXTRACT(YEAR_MONTH FROM FROM_UNIXTIME(posted)) as archivestamp
 									FROM `weblog_posts` 
-									WHERE owner = $profile_id
+									WHERE weblog = $profile_id
 									order by posted desc");
 
 	// If there are any archives ...
@@ -45,7 +45,7 @@
 	// Print a link
 	
 				$run_result .= "<li>";
-				$run_result .= "<a href=\"/$weblog_name/weblog/archive/$year/$month/\">";
+				$run_result .= "<a href=\"".url."$weblog_name/weblog/archive/$year/$month/\">";
 				$run_result .= date("F",gmmktime(0,0,0,$month,1,$year)) . " " . $year;
 				$run_result .= "</a>";
 				$run_result .= "</li>";

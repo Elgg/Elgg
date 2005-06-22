@@ -10,7 +10,7 @@
 			$profile_id = (int) run("users:name_to_id", $_GET['profile_name']);
 		} else if (isset($_GET['profile_id'])) {
 			$profile_id = (int) $_GET['profile_id'];
-		} else if (isset($_POST['profile_id'])) {
+		} else if (isset($_POST['profileid'])) {
 			$profile_id = (int) $_POST['profileid'];
 		} else if (isset($_SESSION['userid'])) {
 			$profile_id = (int) $_SESSION['userid'];

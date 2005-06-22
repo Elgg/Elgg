@@ -11,6 +11,7 @@
 						2 => type of input field
 						3 => reference name (for tag fields and so on)
 						4 => ID number (if any)
+						5 => Owner
 		
 					)
 	
@@ -20,6 +21,10 @@
 			
 			if (!isset($parameter[4])) {
 				$parameter[4] = -1;
+			}
+			
+			if (!isset($parameter[5])) {
+				$parameter[5] = $_SESSION['userid'];
 			}
 			
 			switch($parameter[2]) {
@@ -50,7 +55,7 @@
 						}
 						$parameter[1] = $keywords;
 						*/
-						$tags = db_query("select * from tags where tagtype = '".$parameter[3]."' and ref = '".$parameter[4]."' and owner = " . $_SESSION['userid'] . " order by tag asc");
+						$tags = db_query("select * from tags where tagtype = '".$parameter[3]."' and ref = '".$parameter[4]."' and owner = " . $parameter[5] . " order by tag asc");
 						$keywords = "";
 						if (sizeof($tags) > 0) {
 							foreach($tags as $key => $tag) {

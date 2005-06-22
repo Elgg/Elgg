@@ -5,6 +5,8 @@
 	*	(Access rights are presumed)
 	*/
 
+		$url = url;
+	
 	// If a folder has been specified, convert it to integer;
 	// otherwise assume we're in the root
 	
@@ -26,7 +28,7 @@
 	
 		if ($folder != -1) {
 			
-			$this_folder = db_query("select * from file_folders where ident = $folder and owner = $page_owner");
+			$this_folder = db_query("select * from file_folders where ident = $folder and files_owner = $page_owner");
 			$this_folder = $this_folder[0];
 		
 			$folder_name = stripslashes($this_folder->name);
@@ -44,7 +46,7 @@
 			$parent = (int) $this_folder->parent;
 			
 			if ($parent != -1) {
-				$parent_details = db_query("select * from file_folders where ident = $parent and owner = $page_owner");
+				$parent_details = db_query("select * from file_folders where ident = $parent and files_owner = $page_owner");
 				$parent_details = $parent_details[0];
 				$display_parent = $parent;
 			} else {
@@ -54,14 +56,14 @@
 			}
 			
 			
-			$body .= "<p><a href=\"/$owner_username/files/$display_parent\">";
+			$body .= "<p><a href=\"".url."$owner_username/files/$display_parent\">";
 			$body .= "Return to " . stripslashes($parent_details->name);
 			$body .= "</a></p>";
 		}
 		
 	// Firstly, get a list of folders
 	
-		$folders = db_query("select * from file_folders where parent = $folder and (" . run("users:access_level_sql_where") . ") and owner = $page_owner");
+		$folders = db_query("select * from file_folders where parent = $folder and (" . run("users:access_level_sql_where") . ") and files_owner = $page_owner");
 	
 	// Display folders we actually have access to
 	
@@ -81,9 +83,9 @@ END;
 					$username = $owner_username;
 					$ident = (int) $folder_details->ident;
 					$name = stripslashes($folder_details->name);
-					if ($folder_details->owner == $_SESSION['userid']) {
+					if ($folder_details->owner == $_SESSION['userid'] || $folder_details->files_owner == $_SESSION['userid']) {
 						$foldermenu = <<< END
-	[<a href="/_files/action_redirection.php?action=delete_folder&delete_folder_id={$folder_details->ident}" onClick="return confirm('Are you sure you want to permanently delete this folder?')">Delete</a>]
+	[<a href="{$url}_files/action_redirection.php?action=delete_folder&delete_folder_id={$folder_details->ident}" onClick="return confirm('Are you sure you want to permanently delete this folder?')">Delete</a>]
 END;
 					} else {
 						$foldermenu = "";
@@ -95,11 +97,11 @@ END;
 					$body .= run("templates:draw", array(
 									'context' => 'folder',
 									'username' => $username,
-									'url' => "/$username/files/$ident",
+									'url' => $url . "$username/files/$ident",
 									'ident' => $ident,
 									'name' => $name,
 									'menu' => $foldermenu,
-									'icon' => "/_files/folder.png",
+									'icon' => $url . "_files/folder.png",
 									'keywords' => $keywords
 								)
 								);
@@ -110,7 +112,7 @@ END;
 	
 	// Then get a list of files
 	
-		$files = db_query("select * from files where folder = $folder and owner = $page_owner");	
+		$files = db_query("select * from files where folder = $folder and files_owner = $page_owner");	
 
 	// View files we actually have access to
 
@@ -126,10 +128,18 @@ END;
 					$description = nl2br(stripslashes($file->description));
 					$originalname = stripslashes($file->originalname);
 					$filemenu = round(($file->size / 1000000),4) . "Mb ";
-					if ($file->owner == $_SESSION['userid']) {
+					$icon = $url . "_files/icon.php?id=" . $file->ident;
+					/*
+					$mimetype = run("files:mimetype:determine",$file->originalname);
+					if ($mimetype == "image/jpeg" || $mimetype == "image/png") {
+						$icon = $url . "units/phpthumb/phpThumb.php?src=" . $file->location;
+					} else {
+						$icon = $url . "_files/file.png";
+					} */
+					if ($file->owner == $_SESSION['userid'] || $file->files_owner == $_SESSION['userid']) {
 						$filemenu .= <<< END
-	[<a href="/_files/edit_file.php?edit_file_id={$file->ident}">Edit</a>]
-	[<a href="/_files/action_redirection.php?action=delete_file&delete_file_id={$file->ident}" onClick="return confirm('Are you sure you want to permanently delete this file?')">Delete</a>]
+	[<a href="{$url}_files/edit_file.php?edit_file_id={$file->ident}">Edit</a>]
+	[<a href="{$url}_files/action_redirection.php?action=delete_file&delete_file_id={$file->ident}" onClick="return confirm('Are you sure you want to permanently delete this file?')">Delete</a>]
 END;
 					} else {
 						$filemenu = "";
@@ -146,9 +156,9 @@ END;
 									'folder' => $folder,
 									'description' => $description,
 									'originalname' => $originalname,
-									'url' => "/$username/files/$folder/$ident/$originalname",
+									'url' => $url . "$username/files/$folder/$ident/$originalname",
 									'menu' => $filemenu,
-									'icon' => "/_files/file.png",
+									'icon' => $icon,
 									'keywords' => $keywords
 								)
 								);

@@ -13,7 +13,6 @@
 	// Actions to perform on initialisation
 		$function['init'][] = path . "units/users/function_session_start.php";
 		$function['init'][] = path . "units/users/function_session_actions.php";
-		$function['init'][] = path . "units/users/function_session_current_status.php";
 		$function['init'][] = path . "units/users/function_default_access_levels.php";
 		$function['init'][] = path . "units/users/function_define_ownership.php";
 
@@ -62,5 +61,11 @@
 				
 	// Information for the home screen
 		$function['content:mainindex'][] = path . "units/users/content_main_index.php";
+		
+	// Get user type
+		$function['users:type:get'][] = path . "units/users/get_type.php";
+		
+	// Permissions checker
+		$function['permissions:check'][] = path . "units/users/permissions_check.php";
 		
 ?>

@@ -13,11 +13,12 @@
 			
 			$searchline = "tagtype = '".addslashes($parameter[0])."' and tag = '".addslashes($parameter[1])."'";
 			$searchline = "(" . run("users:access_level_sql_where",$_SESSION['userid']) . ") and " . $searchline;
+			$searchline = str_replace("owner", "tags.owner", $searchline);
 			$result = db_query("select distinct users.* from tags left join users on users.ident = tags.owner where $searchline");
 
 			$parameter[1] = stripslashes($parameter[1]);
 			
-			if (sizeof($result) > 0) {
+			if ($result && sizeof($result) > 0) {
 				foreach($result as $key => $info) {
 					$run_result .= "\t<item>\n";
 					$run_result .= "\t\t<title>'" . htmlentities($parameter[0]) . "' includes " . htmlentities($parameter[1]) . " :: " . htmlentities(stripslashes($info->name)) . "</title>\n";

@@ -2,6 +2,7 @@
 
 	// Search criteria are passed in $parameter from run("search:display")
 	
+		$url = url;
 		$handle = 0;
 		foreach($data['profile:details'] as $profiletype) {
 			if ($profiletype[1] == $parameter[0] && $profiletype[2] == "keywords") {
@@ -13,6 +14,7 @@
 			
 			$searchline = "tagtype = '".addslashes($parameter[0])."' and tag = '".addslashes($parameter[1])."'";
 			$searchline = "(" . run("users:access_level_sql_where",$_SESSION['userid']) . ") and " . $searchline;
+			$searchline = str_replace("owner","tags.owner",$searchline);
 			$result = db_query("select distinct users.* from tags left join users on users.ident = tags.owner where $searchline");
 
 			$parameter[1] = stripslashes($parameter[1]);
@@ -55,8 +57,8 @@ END;
 					$friends_menu = run("users:infobox:menu",array($info->ident));
 					$body .= <<< END
 		<td align="center">
-			<a href="/{$friends_username}/">
-			<img src="/_icons/data/{$icon}" width="{$width}" height="{$height}" alt="{$friends_name}" border="0" /></a><br />
+			<a href="{$url}{$friends_username}/">
+			<img src="{$url}_icons/data/{$icon}" width="{$width}" height="{$height}" alt="{$friends_name}" border="0" /></a><br />
 			<span class="userdetails">
 				{$friends_name}
 				{$friends_menu}

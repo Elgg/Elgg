@@ -2,8 +2,8 @@
 
 	$run_result .= run("templates:draw", array(
 						'context' => 'menuitem',
-						'name' => 'User icons',
-						'location' => '/_icons/'
+						'name' => 'Your site picture',
+						'location' => url . '_icons/'
 					)
 					);
 

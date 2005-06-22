@@ -17,7 +17,9 @@
 													db_query("insert into friends 
 																set owner = 	" . $_SESSION['userid'] . ",
 																    friend = 	$friend_id");
-													$messages[] = $friend[0]->name . " was added to your friends list.";
+													if (run("users:type:get", $friend_id) == "person") {
+														$messages[] = $friend[0]->name . " was added to your friends list.";
+													}
 												}
 											}
 										}
@@ -30,7 +32,9 @@
 												db_query("delete from friends 
 															where owner = 	" . $_SESSION['userid'] . "
 															and friend = 	$friend_id");
-												$messages[] = $friend[0]->name . " was removed from your friends.";
+												if (run("users:type:get", $friend_id) == "person") {
+													$messages[] = $friend[0]->name . " was removed from your friends.";
+												}
 											}
 										}
 										break;

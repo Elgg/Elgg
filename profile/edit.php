@@ -9,7 +9,9 @@
 				
 		protect(1);
 
-		$title = $_SESSION['name'] . " :: Edit profile";
+		global $page_owner;
+		
+		$title = run("users:display:name", $page_owner) . " :: Edit profile";
 		
 		$body = run("content:profile:edit");
 		$body .= run("profile:edit");

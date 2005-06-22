@@ -1,5 +1,26 @@
 Elgg changelog
 
+0.2 (20th June 2005)
+--------------------
+Incorporated cookied login patch by Leonard Lin
+Incorporated phpThumb() by James Heinrich - see units/phpthumb/phpthumb.readme.txt
+Added communities
+
+0.1.2a (24th April 2005)
+------------------------
+Incorporated file download patch by Sven Edge
+Incorporated icon upload patch by David Eshelman
+Incorporated password patch by Ben Werdmuller
+Added RSS feed for files
+Added RSS feed for a single user's activity
+Added ability to filter RSS feed by tag
+Changed all file items in RSS feeds to use enclosures, ensuring compatibility with podcasting
+Altered instructions in includes.php
+
+0.1.1b (2nd April 2005)
+-----------------------
+Fixed some template and password issues
+
 0.1.1a (30th March 2005)
 ------------------------
 Added missing default icon (/_icons/data/default.png)

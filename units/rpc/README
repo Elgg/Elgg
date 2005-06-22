@@ -1,0 +1,25 @@
+Elgg XML-RPC package
+
+This plugin implements XML-RPC interfaces for the following API definitions:
+
+* Blogger API
+* metaWeblog API
+* MoveableType API
+
+The package depends on the PEAR XML-RPC package, see <http://pear.php.net/manual/en/package.webservices.xml-rpc.php>. Be sure you are using a recent version (>= 1.3), since older versions could cause trouble with some clients.
+
+The code should be considered beta quality right now. Not a lot of testing has been done with available clients, so if you encounter any problems, please report them to <misja@efobia.nl>. 
+
+Clients include w.Bloggar <http://www.w.blogar.com> for Windows and DashBlog <http://dashblog.theonelab.com/> for Mac OS X.
+
+The client should be configured to send requests to the following URL: http://your_elg_server/_rpc/RPC2.php
+
+The MetaWeblog API is fully usable, although not complete: categories aren't supported by Elgg at the moment, so they are of no use right now and are not being handled.
+
+A debugging proxy server is included in the debug directory, it would be useful if you can provide some output from this utility. The proxy requires python to be installed on your system. Point it at the Elgg system you are using, e.g.:
+
+./xmlrpc-debug-proxy.py elgg.net 80
+
+Next, configure your client to send requests to localhost:8080/_rpc/RPC2.php and you will see the requests being made flashing by.
+
+One final notice: the API's require to have your password being sent unencrypted accross the net. Please be aware of this security risk.

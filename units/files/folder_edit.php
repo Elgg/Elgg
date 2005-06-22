@@ -1,11 +1,17 @@
 <?php
 
 	global $folder;
+	global $page_owner;
+	
+	$url = url;
 	
 	if ($folder != -1) {
 		global $this_folder;
 		global $folder_name;
 		$folder_name = htmlentities($folder_name);
+		$folder_details = db_query("select * from file_folders where ident = " . $this_folder);
+		$folder_details = $folder_details[0];
+		if ($folder_details->owner == $_SESSION['userid'] || $folder_details->files_owner == $_SESSION['userid']) {
 		$run_result .= <<< END
 	<h2>
 		Edit this folder
@@ -51,7 +57,7 @@ END;
 			<tr>
 				<td>
 					<label for="edit_folder_access">
-						Keywords
+						Keywords (comma separated):
 					</label>
 				</td>
 				<td>
@@ -70,13 +76,14 @@ END;
 		</table>
 	</form>
 END;
-	$title = "Edit this folder";
-	$run_result .= run("templates:draw", array(
-							'context' => 'databoxvertical',
-							'name' => $title,
-							'contents' => $body
-						)
-						);
+		$title = "Edit this folder";
+		$run_result .= run("templates:draw", array(
+								'context' => 'databoxvertical',
+								'name' => $title,
+								'contents' => $body
+							)
+							);
+		}
 	}
 	$run_result .= <<< END
 	<h2>
@@ -114,7 +121,7 @@ END;
 			<tr>
 				<td>
 					<label for="new_folder_keywords">
-						Keywords
+						Keywords: (comma separated)
 					</label>
 				</td>
 				<td>
@@ -126,6 +133,7 @@ END;
 			<tr>
 				<td colspan="2" align="center">
 					<input type="hidden" name="folder" value="{$folder}" />
+					<input type="hidden" name="files_owner" value="{$page_owner}" />
 					<input type="hidden" name="action" value="files:createfolder" />
 					<input type="submit" value="Create" />
 				</td>
@@ -141,33 +149,31 @@ END;
 					);
 	$run_result .= <<< END
 	</form><br />
-	<form action="/_files/action_redirection.php" method="post" enctype="multipart/form-data">
+	<form action="{$url}_files/action_redirection.php" method="post" enctype="multipart/form-data">
 END;
 
 	$title = "Upload a file";
 
-	if (isset($_SESSION['file_data'])) {
-		$file_data = $_SESSION['file_data'];
-		unset($_SESSION['file_data']);
-		$filetitle = $file_data->new_file_title;
-		$filedescr = $file_data->new_file_description;
-		$fileaccess = $file_data->new_file_access;
-		$filefolder = $file_data->folder;
-	}
-	
 	$body = <<< END
 	
 		<table>
 			<tr>
 				<td colspan="2">
-					You have used 
 END;
-					$quota = db_query("select sum(size) as totalsize from files where owner = ".$_SESSION['userid']);
+					if ($pageowner == $_SESSION['userid']) {
+						$body .= "You have used ";
+					} else {
+						$body .= "Used space: ";
+					}
+					
+					// $quota = db_query("select sum(size) as totalsize from files where owner = ".$_SESSION['userid']);
+					$quota = db_query("select sum(size) as totalsize from files where files.files_owner = ". $page_owner);
 					$quota = $quota[0]->totalsize;
 					$body .= round(($quota / 1000000),4);
 					$body .= "Mb of a total ";
 
-					$quota = db_query("select file_quota from users where ident = " . $_SESSION['userid']);
+					// $quota = db_query("select file_quota from users where ident = " . $_SESSION['userid']);
+					$quota = db_query("select file_quota from users where ident = " . $page_owner);
 					$quota = $quota[0]->file_quota;
 					$body .= round(($quota / 1000000),4) . "Mb.";
 	$body .= <<< END
@@ -219,7 +225,7 @@ END;
 			<tr>
 				<td>
 					<label for="new_file_keywords">
-						Keywords
+						Keywords: (comma separated)
 					</label>
 				</td>
 				<td>
@@ -245,6 +251,7 @@ END;
 			<tr>
 				<td colspan="2" align="center"><br />
 					<input type="hidden" name="folder" value="{$folder}" />
+					<input type="hidden" name="files_owner" value="{$page_owner}" />
 					<input type="hidden" name="action" value="files:uploadfile" />
 					<input type="submit" value="Upload" />
 				</td>

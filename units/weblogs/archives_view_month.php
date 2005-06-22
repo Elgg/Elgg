@@ -9,7 +9,7 @@
 		$archives = db_query("SELECT distinct 
 									EXTRACT(YEAR_MONTH FROM FROM_UNIXTIME(posted)) as archivestamp
 									FROM `weblog_posts` 
-									WHERE owner = $profile_id")
+									WHERE weblog = $profile_id")
 							or die(db_error());
 
 	// If there are any archives ...

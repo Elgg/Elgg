@@ -14,7 +14,7 @@ END;
 									'url' => "",
 									'ident' => 0,
 									'name' => "Subfolder",
-									'icon' => "/_files/folder.png"
+									'icon' => "/_files/data/folder.png"
 								)
 								);
 
@@ -27,7 +27,7 @@ END;
 									'description' => "This is a file",
 									'originalname' => "filename",
 									'url' => "#",
-									'icon' => "/_files/file.png"
+									'icon' => "/_files/data/file.png"
 								)
 								);
 								

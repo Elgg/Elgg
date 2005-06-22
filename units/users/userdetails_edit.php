@@ -1,8 +1,19 @@
 <?php
 
-	$name = htmlentities($_SESSION['name']);
-	$email = htmlentities($_SESSION['email']);
-
+	global $page_owner;
+	
+	if (run("users:type:get",$page_owner) == 'person' && run("permissions:check","userdetails:change")) {
+	
+	if ($page_owner == $_SESSION['userid']) {
+		$name = htmlentities($_SESSION['name']);
+		$email = htmlentities($_SESSION['email']);
+	} else {
+		$info = db_query("select * from users where ident = $page_owner");
+		$info = $info[0];
+		$name = htmlentities(stripslashes($info->name));
+		$email = htmlentities(stripslashes($info->email));
+	}
+	
 	$body = <<< END
 
 <form action="index.php" method="post">
@@ -81,5 +92,6 @@ END;
 END;
 
 	$run_result .= $body;
+	}
 
 ?>

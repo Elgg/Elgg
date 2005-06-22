@@ -18,7 +18,7 @@
 	
 		$friends = run("friends:get",array($page_owner));
 		
-		$where2 = "owner = \"$page_owner\"";
+		$where2 = "weblog = \"$page_owner\"";
 		
 		if (sizeof($friends) > 0) {
 			
@@ -27,7 +27,7 @@
 				if ($where2 != "") {
 					$where2 .= "or ";
 				}
-				$where2 .= "owner=\"".$friend->user_id."\" ";
+				$where2 .= "(weblog=\"".$friend->user_id."\")";
 				
 			}
 			

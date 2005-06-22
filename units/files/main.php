@@ -22,6 +22,7 @@
 		
 	// Determines whether or not a file should be displayed in the browser
 		$function['files:mimetype:inline'][] = path . "units/files/files_mimetype_inline.php";
+		$function['files:mimetype:determine'][] = path . "units/files/files_mimetype_determine.php";
 		
 	// View files
 		$function['files:view'][] = path . "units/files/files_view.php";
@@ -57,5 +58,9 @@
 		
 	// Template preview
 		$function['templates:preview'][] = path . "units/files/templates_preview.php";
-		
+
+	// Establish permissions
+		$function['permissions:check'][] = path . "units/files/permissions_check.php";
+
+				
 ?>

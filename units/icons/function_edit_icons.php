@@ -2,12 +2,22 @@
 
 	// Display icons and allow user to edit their names or delete some
 	
+	global $page_owner;
+
+	$url = url;
+		
 	// Get all icons associated with a user
-		$icons = db_query("select * from icons where owner = " . $_SESSION['userid']);
+		$icons = db_query("select * from icons where owner = $page_owner");
+		if ($page_owner != $_SESSION['userid']) {
+			$currenticon = db_query("select icons.filename, users.icon from users left join icons on icons.ident = users.icon where users.ident = $page_owner");
+			$currenticon = $currenticon[0]->filename;
+		} else {
+			$currenticon = $_SESSION['icon'];
+		}
 
 		$body = <<< END
 		<h2>
-			Your Icons
+			Site pictures
 		</h2>
 END;
 		
@@ -17,7 +27,7 @@ END;
 			$body .= <<< END
 		<form action="" method="post" />		
 			<p>
-				Your current icons are listed below.
+				Site pictures are small pictures that act as a representative icon throughout the system.
 			</p>
 END;
 			foreach($icons as $icon) {
@@ -29,9 +39,9 @@ END;
 						</label>
 END;
 				$column1 = <<< END
-						<p align="center"><img src="/_icons/data/{$icon->filename}" {$attr} /></p>
+						<p align="center"><img src="{$url}_icons/data/{$icon->filename}" {$attr} /></p>
 END;
-				if ($icon->filename == $_SESSION['icon']) {
+				if ($icon->filename == $currenticon) {
 					$checked = "checked=\"checked\"";
 				} else {
 					$checked = "";
@@ -81,7 +91,7 @@ END;
 
 	$body .= <<< END
 		<p>
-			You don't have any icons loaded yet.
+			You don't have any site pictures loaded yet.
 		</p>
 END;
 
