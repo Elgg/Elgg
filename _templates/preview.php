@@ -10,8 +10,8 @@
 		run("profile:init");
 		run("templates:init");
 		
-		$title = "Template Preview";
-		
+		$title = gettext("Template Preview");
+		define("context", "account");
 		$body = run("templates:preview");
 		
 		global $messages;

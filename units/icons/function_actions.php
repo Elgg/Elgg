@@ -46,7 +46,6 @@
 			if (isset($_POST['icons_delete'])) {
 				if (sizeof($_POST['icons_delete']) > 0) {
 					foreach($_POST['icons_delete'] as $delete_icon) {
-						echo "!";
 						$delete_icon = (int) $delete_icon;
 						$result = db_query("select filename from icons where ident = $delete_icon and owner = " . $page_owner);
 						if (sizeof($result) == 1) {
@@ -60,7 +59,7 @@
 							}
 						}
 					}
-					$messages[] = "Your selected icons were deleted.";
+					$messages[] = gettext("Your selected icons were deleted.");
 				}
 			}
 			
@@ -72,7 +71,7 @@
 			if (isset($_POST['icondescription']) && isset($_POST['icondefault'])
 				&& isset($_FILES['iconfile']['name'])) {
 				
-				$messages[] = "Attempting to upload icon file ...";
+				$messages[] = gettext("Attempting to upload icon file ...");
 				
 				$ok = true;
 				$templocation = $_FILES['iconfile']['tmp_name'];
@@ -82,20 +81,20 @@
 					$numicons = (int) $numicons[0]->numicons;
 					if ($numicons >= $_SESSION['icon_quota']) {
 						$ok = false;
-						$messages[] = "You have already met your icon quota. You must delete some icons before you can upload any new ones.";
+						$messages[] = gettext("You have already met your icon quota. You must delete some icons before you can upload any new ones.");
 					}
 				}
 				if ($ok == true) {
 					$imageattr = @getimagesize($templocation);
 					if ($imageattr == false) {
 						$ok = false;
-						$messages[] = "The uploaded icon file was invalid. Please ensure you are using JPEG, GIF or PNG files.";
+						$messages[] = gettext("The uploaded icon file was invalid. Please ensure you are using JPEG, GIF or PNG files.");
 					}
 				}
 				if ($ok == true) {
 					if ($imageattr[0] > 100 || $imageattr[1] > 100) {
 						// $ok = false;
-						// $messages[] = "The uploaded icon file was too large. Files must have maximum dimensions of 100x100.";
+						// $messages[] = gettext("The uploaded icon file was too large. Files must have maximum dimensions of 100x100.");
 						require_once(path . 'units/phpthumb/phpthumb.class.php');
   						$phpThumb = new phpThumb();
   						$phpThumb->setSourceFilename($templocation);
@@ -108,12 +107,12 @@
     						$imageattr[2] = "2";
   						} else {
 	  						$ok = false;
-	  						$messages[] .= 'Failed: '.implode("\n", $phpThumb->debugmessages);
+	  						$messages[] .= '#Failed: '.implode("\n", $phpThumb->debugmessages);
   						}
 					}
 				}
 				if ($ok == true && ($imageattr[2] > 3 || $imageattr[2] < 1)) {
-					$message[] = "The uploaded icon file was in an image format other than JPEG, GIF or PNG. These are unsupported at present.";
+					$message[] = gettext("The uploaded icon file was in an image format other than JPEG, GIF or PNG. These are unsupported at present.");
 				} else if ($ok == true) {
 					switch($imageattr[2]) {
 						case "1":	$file_extension = ".gif";
@@ -127,6 +126,7 @@
 					$save_location = path . "_icons/data/" . $save_file;
 					if (move_uploaded_file($_FILES['iconfile']['tmp_name'], $save_location)) {
 						
+						@chmod($save_location,0644);
 						$filedescription = addslashes($_POST['icondescription']);
 						db_query("insert into icons set filename = '$save_file', owner = " . $page_owner . ", description = '$filedescription'");
 						if ($_POST['icondefault'] == "yes") {
@@ -134,10 +134,10 @@
 							db_query("update users set icon = $ident where ident = " . $page_owner);
 							$_SESSION['icon'] = $save_file;
 						}
-						$messages[] = "Your icon was uploaded successfully.";
+						$messages[] = gettext("Your icon was uploaded successfully.");
 												
 					} else {
-						$messages[] = "An unknown error occurred when saving your icon. If this problem persists, please let us know and we'll do all we can to fix it quickly.";
+						$messages[] = gettext("An unknown error occurred when saving your icon. If this problem persists, please let us know and we'll do all we can to fix it quickly.");
 					}
 
 				}

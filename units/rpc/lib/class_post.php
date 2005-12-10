@@ -1,7 +1,6 @@
 <?php
     Class Post extends ElggObject
     {
-        var $owner;
         var $weblog;
         var $blog_id;
         var $access = 'PUBLIC';
@@ -10,18 +9,19 @@
         var $body;
         var $tags;
         var $comments;
+        var $type = 'post';
 
         var $exists;
 
         /**
          *
          */
-        function Post($post_id = "default")
+        function Post($post_id = null)
         {
             $this->exists = false;
 
             // Parameter passed, assume an existing post
-            if ($post_id != "")
+            if ($post_id != null)
             {
                 $post = db_query("select * from weblog_posts where ident = '$post_id'");
 
@@ -58,14 +58,6 @@
                     $this->comments[] = $comment->ident;
                 }
             }
-        }
-
-        /**
-         *
-         */
-        function getOwner()
-        {
-            return $this->owner;
         }
 
         /**

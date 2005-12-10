@@ -5,7 +5,7 @@
 	
 		$ident = (int) $parameter[0];
 		
-		// if (!isset($_SESSION['groups_cache']) || (time() - $_SESSION['groups_cache']->created > 60)) {
+		//if (!isset($_SESSION['groups_cache']) || (time() - $_SESSION['groups_cache']->created > 60)) {
 		
 			$groups = db_query("select * from groups where owner = $ident");
 			$tempdata = "";
@@ -13,6 +13,8 @@
 			$groupslist = array();
 			if (sizeof($groups) > 0) {
 				foreach($groups as $group) {
+
+					$tempdata = "";
 					
 					// @unset($data);
 					$tempdata->name = stripslashes($group->name);
@@ -32,7 +34,7 @@
 			$_SESSION['groups_cache']->created = time();
 			$_SESSION['groups_cache']->data = $groupslist;
 			
-		// }
+		//}
 		
 		$run_result = $_SESSION['groups_cache']->data;
 

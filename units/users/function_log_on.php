@@ -10,12 +10,12 @@
     $ok = authenticate_account($l, $p);
     if($ok) {
 
-     $messages[] = AUTH_MSG_OK;
+     $messages[] = gettext("You have been logged on.");
      define('redirect_url',url . "home.php");
     } else {
-      $messages[] = AUTH_MSG_BADLOGIN;
+      $messages[] = gettext("Unrecognised username or password. The system could not log you on, or you may not have activated your account.");
     }
   } else {
-    $messages[] = AUTH_MSG_MISSING;
+    $messages[] = gettext("Either the username or password were not specified. The system could not log you on.");
   }
 ?>

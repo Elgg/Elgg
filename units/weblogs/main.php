@@ -24,10 +24,14 @@
 		$function['weblogs:posts:add'][] = path . "units/weblogs/weblogs_posts_add.php";
 		$function['weblogs:posts:edit'][] = path . "units/weblogs/weblogs_posts_edit.php";
 		
+	// Weblog post field
+		$function['display:input_field'][] = path . "units/weblogs/function_input_field_display.php";
+		
 	// View weblog posts
-		$function['weblogs:view'][] = path . "units/weblogs/weblogs_post_field.php";
+		$function['weblogs:view'][] = path . "units/weblogs/weblogs_post_field_wrapper.php";
 		$function['weblogs:view'][] = path . "units/weblogs/weblogs_view.php";
 		$function['weblogs:posts:view'][] = path . "units/weblogs/weblogs_posts_view.php";
+		$function['weblogs:posts:view:individual'][] = path . "units/weblogs/weblogs_posts_view.php";
 		$function['weblogs:friends:view'][] = path . "units/weblogs/weblogs_friends_view.php";
 		$function['weblogs:everyone:view'][] = path . "units/weblogs/weblogs_all_users_view.php";
 		$function['weblogs:text:process'][] = path . "units/weblogs/weblogs_text_process.php";
@@ -37,8 +41,9 @@
 	// Edit / create weblog comments
 		$function['weblogs:comments:add'][] = path . "units/weblogs/weblogs_comments_add.php";
 		
-	// Menu button
+	// Menu buttons
 		$function['menu:main'][] = path . "units/weblogs/menu_main.php";	
+		$function['menu:sub'][] = path . "units/weblogs/menu_sub.php";	
 		
 	// Log on bar down the right hand side
 		// $function['profile:log_on_pane'][] = path . "units/weblogs/weblogs_user_info_menu.php";
@@ -49,5 +54,8 @@
 		
 	// Establish permissions
 		$function['permissions:check'][] = path . "units/weblogs/permissions_check.php";
+		
+	// Actions to perform when an access group is deleted
+		$function['groups:delete'][] = path . "units/weblogs/groups_delete.php";
 		
 ?>

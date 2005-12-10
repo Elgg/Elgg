@@ -18,7 +18,7 @@
 											}
 											if ($exists) {
 												db_query("update users set template_id = $id where ident = " . $_SESSION['userid']);
-												$messages[] = "Your current template has been changed.";
+												$messages[] = gettext("Your current template has been changed.");
 											}
 										}
 										break;
@@ -43,7 +43,7 @@
 															db_query("insert into template_elements set name='$slashname', content = '$slashcontent', template_id = $id");
 														}
 													}
-													$messages[] = "Your template has been updated.";
+													$messages[] = gettext("Your template has been updated.");
 												}
 											}
 										break;
@@ -58,7 +58,7 @@
 													db_query("update users set template_id = -1 where template_id = $id");
 													db_query("delete from template_elements where template_id = $id");
 													db_query("delete from templates where ident = $id");
-													$messages[] = "Your template was deleted.";
+													$messages[] = gettext("Your template was deleted.");
 												}
 											}
 										break;

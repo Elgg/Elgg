@@ -41,9 +41,9 @@
 																}
 															}
 														}
-														$messages[] = "Your folder was created.";
+														$messages[] = gettext("Your folder was created.");
 													} else {
-														$messages[] = "Could not create folder. Perhaps the folder name was blank?";
+														$messages[] = gettext("Could not create folder. Perhaps the folder name was blank?");
 													}
 												break;
 				
@@ -66,7 +66,7 @@
 														if 	(
 																$_FILES['new_file']['error'] != 0
 															) {
-																$messages[] = "There was an error uploading the file. Possibly the file was too large, or the upload was interrupted.";
+																$messages[] = gettext("There was an error uploading the file. Possibly the file was too large, or the upload was interrupted.");
 															} else {
 																
 																$total_quota = db_query("select sum(size) as sum from files where owner = " . $page_owner);
@@ -76,7 +76,7 @@
 																$max_quota = $max_quota[0]->file_quota;
 																
 																if ($total_quota + $_FILES['new_file']['size'] > $max_quota) {
-																	$messages[] = "You have exceeded the file quota for this account. Some files must be deleted before you can upload this one.";
+																	$messages[] = gettext("You have exceeded the file quota for this account. Some files must be deleted before you can upload this one.");
 																} else {
 																
 																	$access = addslashes($_REQUEST['new_file_access']);
@@ -144,7 +144,7 @@
 																			}
 																		}
 																		
-																		$messages[] = "The file was successfully uploaded.";
+																		$messages[] = gettext("The file was successfully uploaded.");
 																		$redirect_url = url . $ul_username . "/files/";
 																		if ($folderid > -1) {
 																			$redirect_url .= $folderid;
@@ -162,7 +162,7 @@
 															$redirect_url .= $folderid;
 														}
 														define('redirect_url', $redirect_url);
-														$messages[] = "Upload unsuccessful. You must check the copyright box for a file to be uploaded.";
+														$messages[] = gettext("Upload unsuccessful. You must check the copyright box for a file to be uploaded.");
 													}
 												break;
 				// Edit a file
@@ -184,7 +184,7 @@
 														$file_info = db_query("select owner, files_owner from files where ident = $file_id");
 														$file_info = $file_info[0];
 														$files_username = run("users:id_to_name", $file_info->files_owner);
-														if ($file_info->owner == $_SESSION['userid'] || $file_info->files_owner == $_SESSION['userid']) {
+														if (run("permissions:check", array("files:edit",$file_info->files_owner))) {
 															db_query("update files set 
 																						folder = $file_folder,
 																						title = '$file_title',
@@ -210,7 +210,7 @@
 																$redirect_url .= $file_folder;
 															}
 															define('redirect_url',$redirect_url);
-															$messages[] = "The file was updated.";
+															$messages[] = gettext("The file was updated.");
 														}
 													}
 												break;
@@ -225,28 +225,32 @@
 													) {
 														$edit_folder_id = (int) $_REQUEST['edit_folder_id'];
 														$edit_owner = db_query("select owner from file_folders where ident = $edit_folder_id");
-														if ($edit_owner[0]->owner == $_SESSION['userid']) {
-															$edit_parent_id = (int) $_REQUEST['edit_folder_parent'];
-															db_query("update file_folders
-																			set name = '".addslashes($_REQUEST['edit_folder_name'])."',
-																				access = '".addslashes($_REQUEST['edit_folder_access'])."',
-																				parent = ".$edit_parent_id."
-																				where ident = $edit_folder_id");
-															db_query("delete from tags where tagtype = 'folder' and ref = $edit_folder_id");
-															if ($_REQUEST['edit_folder_keywords'] != "") {
-																$edit_value = $_REQUEST['edit_folder_keywords'];
-																$edit_value = str_replace("\n","",$edit_value);
-																$edit_value = str_replace("\r","",$edit_value);
-																$edit_keyword_list = explode(",",$edit_value);
-																sort($edit_keyword_list);
-																if (sizeof($edit_keyword_list) > 0) {
-																	foreach($edit_keyword_list as $key => $list_item) {
-																		$list_item = addslashes(trim($list_item));
-																		db_query("insert into tags set tagtype = 'folder', access = '".addslashes($_REQUEST['edit_folder_access'])."', tag = '$list_item', ref = $edit_folder_id, owner = " . $_SESSION['userid']);
+														if (run("permissions:check", array("files:edit",$edit_owner[0]->owner))) {
+															if ($_REQUEST['edit_folder_id'] == $_REQUEST['edit_folder_parents']) {
+																$edit_parent_id = (int) $_REQUEST['edit_folder_parent'];
+																db_query("update file_folders
+																				set name = '".addslashes($_REQUEST['edit_folder_name'])."',
+																					access = '".addslashes($_REQUEST['edit_folder_access'])."',
+																					parent = ".$edit_parent_id."
+																					where ident = $edit_folder_id");
+																db_query("delete from tags where tagtype = 'folder' and ref = $edit_folder_id");
+																if ($_REQUEST['edit_folder_keywords'] != "") {
+																	$edit_value = $_REQUEST['edit_folder_keywords'];
+																	$edit_value = str_replace("\n","",$edit_value);
+																	$edit_value = str_replace("\r","",$edit_value);
+																	$edit_keyword_list = explode(",",$edit_value);
+																	sort($edit_keyword_list);
+																	if (sizeof($edit_keyword_list) > 0) {
+																		foreach($edit_keyword_list as $key => $list_item) {
+																			$list_item = addslashes(trim($list_item));
+																			db_query("insert into tags set tagtype = 'folder', access = '".addslashes($_REQUEST['edit_folder_access'])."', tag = '$list_item', ref = $edit_folder_id, owner = " . $_SESSION['userid']);
+																		}
 																	}
 																}
+																$messages[] = gettext("The folder was edited.");
+															} else {
+																$messages[] = gettext("Error: a folder cannot be its own parent.");
 															}
-															$messages[] = "The folder was edited.";
 														}
 													}
 												break;
@@ -257,8 +261,8 @@
 													) {
 														$id = (int) $_REQUEST['delete_folder_id'];
 														if ($id > -1) {
-															$folder = db_query("select * from file_folders where ident = $id and (owner = " . $_SESSION['userid'] . " or files_owner = " . $_SESSION['userid'] . ")");
-															if (sizeof($folder) > 0) {
+															$folder = db_query("select * from file_folders where ident = $id");
+															if (sizeof($folder) > 0 && (run("permissions:check", array("files:edit",$folder[0]->files_owner)) || run("permissions:check", array("files:edit",$folder[0]->owner)))) {
 																$folder = $folder[0];
 																$files_username = run("users:id_to_name", $folder->files_owner);
 																db_query("update file_folders set parent = " . $folder->parent . " where parent = $id");
@@ -271,7 +275,7 @@
 																	$redirect_url .= $folder->parent;
 																}
 																define('redirect_url', $redirect_url);
-																$messages[] = "The folder was deleted.";
+																$messages[] = gettext("The folder was deleted.");
 															}
 														}
 													}
@@ -283,8 +287,8 @@
 													) {
 														$id = (int) $_REQUEST['delete_file_id'];
 														if ($id > -1) {
-															$file = db_query("select * from files where ident = $id and (owner = " . $_SESSION['userid'] . " or files_owner = " . $_SESSION['userid'] . ")");
-															if (sizeof($file) > 0) {
+															$file = db_query("select * from files where ident = $id");
+															if (sizeof($file) > 0 && (run("permissions:check", array("files:edit",$file[0]->files_owner)) || run("permissions:check", array("files:edit",$file[0]->owner)))) {
 																$file = $file[0];
 																$files_username = run("users:id_to_name", $file->files_owner);
 																@unlink(stripslashes($file->location));
@@ -295,7 +299,7 @@
 																	$redirect_url .= $file->folder;
 																}
 																define('redirect_url', $redirect_url);
-																$messages[] = "The file was deleted.";
+																$messages[] = gettext("The file was deleted.");
 															}
 														}
 													}

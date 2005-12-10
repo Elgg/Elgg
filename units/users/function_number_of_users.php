@@ -1,23 +1,22 @@
 <?php
 
 	global $page_owner;
-
 	if ((!logged_on) && $page_owner == -1) {
 
-		$body = "There are ";
-
 		$result = db_query("select count(ident) as numusers from users where active = 'yes'");
-		$result = $result[0]->numusers;
-		$body .= $result . " active users.<br /> (";
+		$result = "<p>" . sprintf(gettext("There are %d active users."),$result[0]->numusers);
+		$body = $result;
+		$body .= "<br />";
 		
-		$result = db_query("select count(ident) as numusers from users where active = 'yes' and code != ''");
-		$body .= $result[0]->numusers . " logged on.)";
+		$result = db_query("select count(ident) as numusers from users where active = 'yes' and code != '' and last_action > " . (time() - 600));
+		$body .= sprintf(gettext("(%d logged on.)"), $result[0]->numusers) . "</p>";
 		
 		$run_result .= run("templates:draw",array(
 							'template' => -1,
-							'context' => 'infobox',
-							'name' => "User Statistics",
-							'contents' => $body
+							'context' => 'contentholder',
+							'title' => gettext("User Statistics"),
+							'body' => $body,
+							'submenu' => ''
 						)
 						);
 

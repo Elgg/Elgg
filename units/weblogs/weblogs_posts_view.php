@@ -65,22 +65,29 @@
 		}
 
 		$body = run("weblogs:text:process",stripslashes($post->body));
-		$body = str_replace("{{more}}","<a href=\"".url.$username."/weblog/{$post->ident}.html\">More ...</a>",$body);
+              $More = gettext("More");//NOT SURE ABOUT THIS ONE'S POSITION!!!!
+              $Keywords = gettext("Keywords:");//NOT SURE ABOUT THIS ONE'S POSITION!!!!
+              $anyComments = gettext("comment(s)");//THIS OCCURS BELOW BUT IN AN IF STATEMENT?
+		$body = str_replace("{{more}}","<a href=\"" . url . "/".$username."/weblog/{$post->ident}.html\">$More ...</a>",$body);
 		$keywords = run("display:output_field", array("","keywords","weblog","weblog",$post->ident,$post->owner));
 		if ($keywords) {
 			$body .= <<< END
 			<p class="weblog_keywords">
-				<small>Keywords: {$keywords}</small>
+				<small>$Keywords {$keywords}</small>
 			</p>
 END;
 		}
-		if ($post->owner == $_SESSION['userid'] && logged_on) {
-			$body .= <<< END
+		// if ($post->owner == $_SESSION['userid'] && logged_on) {
+			if (run("permissions:check",array("weblog:edit",$post->owner))) {
+					$Edit = gettext("Edit");
+                    $returnConfirm = gettext("Are you sure you want to permanently delete this weblog post?");
+                    $Delete = gettext("Delete");
+                    $body .= <<< END
 			
 			<p>
 				<small>
-					[<a href="{$url}_weblog/edit.php?action=edit&weblog_post_id={$post->ident}">Edit</a>]
-					[<a href="{$url}_weblog/action_redirection.php?action=delete_weblog_post&delete_post_id={$post->ident}" onClick="return confirm('Are you sure you want to permanently delete this weblog post?')">Delete</a>]
+					[<a href="{$url}_weblog/edit.php?action=edit&weblog_post_id={$post->ident}&owner={$post->owner}">$Edit</a>]
+					[<a href="{$url}_weblog/action_redirection.php?action=delete_weblog_post&delete_post_id={$post->ident}" onClick="return confirm('$returnConfirm')">$Delete</a>]
 				</small>
 			</p>
 			
@@ -94,7 +101,7 @@ END;
 		}
 		$numcomments = $_SESSION['comment_cache'][$post->ident]->data;
 
-		$comments = "<a href=\"".url.$username."/weblog/{$post->ident}.html\">$numcomments comment(s)</a>";		
+		$comments = "<a href=\"".url.$username."/weblog/{$post->ident}.html\">$numcomments $anyComments</a>";		
 
 		if (isset($individual) && ($individual == 1)) {
 			
@@ -106,10 +113,13 @@ END;
 				foreach($comments as $comment) {
 					$commentmenu = "";
 					if (logged_on && ($comment->owner == $_SESSION['userid'] || $post->owner == $_SESSION['userid'])) {
+						$Edit = gettext("Edit");
+                    	$returnConfirm = gettext("Are you sure you want to permanently delete this weblog comment?");
+                    	$Delete = gettext("Delete");
 						$commentmenu = <<< END
 			<p>
 				<small>
-					[<a href="{$url}_weblog/action_redirection.php?action=weblog_comment_delete&weblog_comment_delete={$comment->ident}" onClick="return confirm('Are you sure you want to permanently delete this weblog comment?')">Delete</a>]
+					[<a href="{$url}_weblog/action_redirection.php?action=weblog_comment_delete&weblog_comment_delete={$comment->ident}" onClick="return confirm('$returnConfirm')">$Delete</a>]
 				</small>
 			</p>
 END;

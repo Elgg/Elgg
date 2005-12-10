@@ -8,18 +8,20 @@
 		run("profile:init");
 		run("invite:init");
 		
+		define("context", "network");
+		
 	// You must be logged on to view this!
 		if (logged_on) {
 		
-		$title = "Invite a Friend";
+		$title = gettext("Invite a Friend");
 		
 		$body = run("content:invite:invite");
 		$body .= run("invite:invite");
 		
 		$body = run("templates:draw", array(
-						'context' => 'infobox',
-						'name' => $title,
-						'contents' => $body
+						'context' => 'contentholder',
+						'title' => $title,
+						'body' => $body
 					)
 					);
 		

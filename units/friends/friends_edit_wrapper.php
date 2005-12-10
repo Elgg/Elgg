@@ -2,15 +2,15 @@
 
 		global $page_owner;
 		
-		$title = run("profile:display:name") . " :: Friends";
+		$title = run("profile:display:name") . " :: ". gettext("Friends I have linked to") ."";
 
 		$body = run("content:friends:manage");
 		$body .= run("friends:edit",array($page_owner));
 		
 		$body = run("templates:draw", array(
-						'context' => 'infobox',
-						'name' => $title,
-						'contents' => $body
+						'context' => 'contentholder',
+						'title' => $title,
+						'body' => $body
 					)
 					);
 

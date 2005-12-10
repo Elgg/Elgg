@@ -1,17 +1,22 @@
 <?php
 
-	$run_result .= run("templates:draw", array(
-						'context' => 'menuitem',
-						'name' => 'View your weblog',
-						'location' => url . $_SESSION['username'] . '/weblog/'
-					)
-					);
+	global $page_owner;
 
-	$run_result .= run("templates:draw", array(
-						'context' => 'menuitem',
-						'name' => 'Update your weblog',
-						'location' => url . '/_weblog/edit.php'
-					)
-					);
+	if (context == "weblog" && $page_owner == $_SESSION['userid']) {
+
+		$run_result .= run("templates:draw", array(
+							'context' => 'selectedmenuitem',
+							'name' => gettext("Your Blog"),
+							'location' => url . $_SESSION['username'] . '/weblog/'
+						)
+						);
+	} else {
+		$run_result .= run("templates:draw", array(
+							'context' => 'menuitem',
+							'name' => gettext("Your Blog"),
+							'location' => url . $_SESSION['username'] . '/weblog/'
+						)
+						);
+	}
 					
 ?>

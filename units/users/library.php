@@ -32,6 +32,7 @@
   // Authentication Function
   // Returns true or false
   function authenticate_account($l='', $p='') {
+
     // If login and password passed, check DB (standard login)
     if($l && $p) {
       /*** TODO: Create Proper Abstraction Interface - don't use file binding -- ugh ***/
@@ -39,7 +40,11 @@
     }
 
     // Already logged in, we're done
-    if($_SESSION['userid'] > 0) return 1;
+    if($_SESSION['userid'] > 0) {
+	    if (!run("users:flags:get", array("banned", $_SESSION['userid']))) {
+	    	return 1;
+    	}
+    }
 
     // Check to see if there's a persistent cookie
     if($ticket = md5($_COOKIE[AUTH_COOKIE])) {
@@ -48,8 +53,13 @@
       if($row = $result[0]) {
         if($ticket == $row->code) {
           /*** TODO: Create Proper Abstraction Interface - don't use file binding -- ugh ***/
-          init_session_database($row->ident);
-          return 1;
+          if (!run("users:flags:get", array("banned",$row->ident))) {
+          	init_session_database($row->ident);
+          	return 1;
+      	  } else {
+	      	  global $messages;
+	      	  $messages[] = gettext("You have been banned from the system!");
+      	  }
         }
       }
     }
@@ -69,6 +79,12 @@
     $result = db_query($sql);
     if($row = $result[0]) {
       $ok = init_session_database($row->ident);
+      if (run("users:flags:get", array("banned", $row->ident))) {
+	      $ok = false;
+	      $row = false;
+	      global $messages;
+	      $messages[] = gettext("You have been banned from the system!");
+      }
     }
 
     // Set Persistent Cookie

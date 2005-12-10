@@ -10,13 +10,15 @@
 		run("profile:init");
 		run("friends:init");
 
+		define("context", "network");
+		
 	// Whose friends are we looking at?
 		global $page_owner;
 		
 	// You must be logged on to view this!
 	//	protect(1);
 		
-		$title = run("profile:display:name") . " :: Friends";
+		$title = run("profile:display:name") . " :: ". gettext("Friends I have linked to");
 								
 		echo run("templates:draw:page", array(
 					$title, run("friends:editpage")

@@ -1,9 +1,17 @@
 <?php
 
 	global $search_exclusions;
+	
+       $weblogPosted = gettext("Weblog posts by"); // gettext variable
+       $inCategory = gettext("in category"); // gettext variable
+       $rssForBlog = gettext("RSS feed for weblog posts by"); // gettext variable
+       $otherUsers = gettext("Other users with weblog posts in category"); // gettext variable
+       $otherUsers2 = gettext("Users with weblog posts in category"); // gettext variable
 
-	$url = url;
-		
+   
+
+
+
 	if (isset($parameter) && $parameter[0] == "weblog" || $parameter[0] == "weblogall") {
 		
 		if ($parameter[0] == "weblog") {
@@ -23,18 +31,18 @@
 					$searchline .= "weblog_posts.ident = " . $ref->ref;
 				}
 				$posts = db_query("select users.name, users.username, weblog_posts.title, weblog_posts.ident, weblog_posts.weblog, weblog_posts.owner, weblog_posts.posted from weblog_posts left join users on users.ident = weblog_posts.owner where ($searchline) order by posted desc");
-				$run_result .= "<h2>Weblog posts by " . stripslashes($posts[0]->name) . " in category '".$parameter[1]."'</h2>\n<ul>";
+				$run_result .= "<h2>$weblogPosted " . stripslashes($posts[0]->name) . " $inCategory '".$parameter[1]."'</h2>\n<ul>";
 				foreach($posts as $post) {
 					$run_result .= "<li>";
 					$weblogusername = run("users:id_to_name",$post->weblog);
-					$run_result .= "<a href=\"" . url . $weblogusername . "/weblog/" . $post->ident . ".html\">" . gmdate("F d, Y",$post->posted) . " - " . stripslashes($post->title) . "</a>\n";
+					$run_result .= "<a href=\"".url . $weblogusername . "/weblog/" . $post->ident . ".html\">" . gmdate("F d, Y",$post->posted) . " - " . stripslashes($post->title) . "</a>\n";
 					if ($post->owner != $post->weblog) {
 						$run_result .= " @ " . "<a href=\"" . url . $weblogusername . "/weblog/\">" . $weblogusername . "</a>\n";
 					}
 					$run_result .= "</li>";
 				}
 				$run_result .= "</ul>";
-				$run_result .= "<p><small>[ <a href=\"". url . $post->username . "/weblog/rss/" . $parameter[1] . "\">RSS feed for weblog posts by " . stripslashes($posts[0]->name) . " in category '".$parameter[1]."'</a> ]</small></p>\n";
+				$run_result .= "<p><small>[ <a href=\"".url.$post->username . "/weblog/rss/" . $parameter[1] . "\">$rssForBlog " . stripslashes($posts[0]->name) . " $inCategory '".$parameter[1]."'</a> ]</small></p>\n";
 			}
 		}
 		$searchline = "tagtype = 'weblog' and tag = '".addslashes($parameter[1])."'";
@@ -48,9 +56,9 @@
 		
 		if (sizeof($users) > 0) {
 			if ($parameter[0] == "weblog") {
-				$run_result .= "<h2>Other users with weblog posts in category '".$parameter[1]."'</h2>\n";
+				$run_result .= "<h2>$otherUsers '".$parameter[1]."'</h2>\n";
 			} else {
-				$run_result .= "<h2>Users with weblog posts in category '".$parameter[1]."'</h2>\n";
+				$run_result .= "<h2>$otherUsers2 '".$parameter[1]."'</h2>\n";
 			}
 			$body = "<table><tr>";
 			$i = 1;
@@ -76,14 +84,19 @@
 		$friends_name = htmlentities(stripslashes($info->name));
 		$friends_menu = run("users:infobox:menu",array($info->ident));
 		$link_keyword = urlencode($parameter[1]);
+              $width = round($width / 2);
+		$height = round($height / 2);
+		$url = url;
 		$body .= <<< END
 		<td align="center">
+                    <p>
 			<a href="{$url}search/index.php?weblog={$link_keyword}&owner={$friends_userid}">
 			<img src="{$url}_icons/data/{$icon}" width="{$width}" height="{$height}" alt="{$friends_name}" border="0" /></a><br />
 			<span class="userdetails">
 				{$friends_name}
 				{$friends_menu}
 			</span>
+                    </p>
 		</td>
 END;
 					if ($i % 5 == 0) {

@@ -14,9 +14,9 @@
 	
 		global $page_owner;
 		
-		if ($parameter == "userdetails:change") {
+		if ($parameter[0] == "userdetails:change") {
 			
-			if ($page_owner == $_SESSION['userid']) {
+			if ($parameter[1] == $_SESSION['userid']) {
 				$run_result = true;
 			}
 			

@@ -7,15 +7,21 @@
 
 		run("profile:init");
 		run("userdetails:init");
+		
+		if (isset($_REQUEST['context'])) {
+			define("context", $_REQUEST['context']);
+		} else {
+			define("context", "account");
+		}
 
 		protect(1);
 				
-		$title = run("profile:display:name") . " :: Edit details";
+		$title = run("profile:display:name") . " :: ". gettext("Edit user details");
 		
 		$body = run("templates:draw", array(
-				'context' => 'infobox',
-				'name' => $title,
-				'contents' => run("userdetails:edit")
+				'context' => 'contentholder',
+				'title' => $title,
+				'body' => run("userdetails:edit")
 			)
 			);
 		

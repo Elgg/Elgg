@@ -9,10 +9,11 @@
 		
 			global $page_owner;
 			
+                     $uploadandEdit = gettext("Upload / edit site pictures for this community.");
 			$run_result .= <<< END
 			
 			<p>
-				<a href="{$url}_icons/?profile_id={$page_owner}">Upload / edit site pictures for this community.</a>
+				<a href="{$url}_icons/?profile_id={$page_owner}">$uploadandEdit </a>
 			</p>
 			
 END;
@@ -22,10 +23,11 @@ END;
 		
 			global $page_owner;
 			
+                     $changeName = gettext("Change this community's name.");
 			$run_result .= <<< END
 			
 			<p>
-				<a href="{$url}_userdetails/?profile_id={$page_owner}">Change this community's name.</a>
+				<a href="{$url}_userdetails/?profile_id={$page_owner}">$changeName</a>
 			</p>
 			
 END;

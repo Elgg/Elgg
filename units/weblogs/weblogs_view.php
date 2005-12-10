@@ -14,6 +14,8 @@
 		}
 		$weblog_offset = (int) $weblog_offset;
 
+		$url = url;
+		
 		
 	// Get all posts in the system that we can see
 	
@@ -42,9 +44,10 @@
 			
 			if ($numberofposts - ($weblog_offset + 25) > 0) {
 				$display_weblog_offset = $weblog_offset + 25;
+				$back = gettext("Back");
 				$run_result .= <<< END
 				
-				<a href="/{$weblog_name}/weblog/skip={$display_weblog_offset}">&lt;&lt; Previous 25</a>
+				<a href="{$url}{$weblog_name}/weblog/skip={$display_weblog_offset}">&lt;&lt; $back</a>
 				
 END;
 			}
@@ -53,9 +56,10 @@ END;
 				if ($display_weblog_offset < 0) {
 					$display_weblog_offset = 0;
 				}
+				$next = gettext("Next");
 				$run_result .= <<< END
 				
-				<a href="/{$weblog_name}/weblog/skip={$display_weblog_offset}">Next 25 &gt;&gt;</a>
+				<a href="{$url}{$weblog_name}/weblog/skip={$display_weblog_offset}">$next &gt;&gt;</a>
 				
 END;
 			}

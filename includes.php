@@ -1,7 +1,6 @@
 <?php
 
-	ini_set("display_errors", "1");
-	error_reporting(E_ERROR | E_WARNING | E_PARSE);
+	// error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 	// ELGG system includes
 	
@@ -10,26 +9,32 @@
 	// i.e., define("system constant name", "your value");
 	
 		// Name of the site (eg Elgg, Apcala, University of Bogton's Learning Landscape, etc)
-			define("sitename", "Ben's test server");
+			define("sitename", "");
 		// External URL to the site (eg http://elgg.bogton.edu/)
 		// NB: **MUST** have a final slash at the end
-			define("url", "http://localhost/");
+			define("url", "");
 		// Physical path to the files (eg /home/elggserver/httpdocs/)
 		// NB: **MUST** have a final slash at the end
-			define("path", "c:\Documents and Settings\Ben\My Documents\code\public_html\\");
+			define("path", "");
 		// Email address of the master admin (eg elgg-admin@bogton.edu)
-			define("email", "ben@elgg.net");
-
+			define("email", "");
+		// Country code to set language to if you have gettext installed
+		// To include new languages, save their compiled .mo gettext
+		// file into languages/country code/LC_MESSAGES/
+		// (the file within this folder must be called elgg.mo)
+		// An Elgg gettext template is included as /elgg.pot
+			define("locale", "en_EN");
+			
 	// Database config:
 	
 		// Database server (eg localhost)
-			define("db_server", "localhost");
+			define("db_server", "");
 		// Database username
-			define("db_user", "root");
+			define("db_user", "");
 		// Database password
 			define("db_pass", "");
 		// Database name
-			define("db_name", "elgg");
+			define("db_name", "");
 					
 	// Load required system files: do not edit this line.
 		require("includes_system.php");
@@ -41,6 +46,9 @@
 		
 	// XMLRPC
 	//	@include(path . "units/rpc/main.php");
+	
+	// Atom
+	//	@include(path . "units/atom/main.php");
 	
 	/***************************************************************************
 	*	CONTENT MODULES
@@ -55,6 +63,13 @@
 	// User-related
 		@include(path . "content/users/main.php");
 	
+	/***************************************************************************
+	*	HELP MODULES
+	****************************************************************************/
+		
+	// Include main
+		@include(path . "help/mainindex/main.php");
+		
 	/***************************************************************************
 	*	START-OF-PAGE RUNNING
 	****************************************************************************/

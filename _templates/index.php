@@ -10,7 +10,9 @@
 		run("profile:init");
 		run("templates:init");
 		
-		$title = run("profile:display:name") . " :: Select / Create Template";
+		define("context", "account");
+		
+		$title = run("profile:display:name") . " :: ". gettext("Select / Create Themes");
 		
 		$body = run("content:templates:view");
 		$body .= run("templates:view");
@@ -18,9 +20,9 @@
 		$body .= run("templates:add");
 		
 		$body = run("templates:draw", array(
-						'context' => 'infobox',
-						'name' => $title,
-						'contents' => $body
+						'context' => 'contentholder',
+						'title' => $title,
+						'body' => $body
 					)
 					);
 		

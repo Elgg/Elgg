@@ -35,7 +35,7 @@
 			switch($parameter[1]) {
 				
 				case "icq":
-						$run_result = "<img src=\"http://web.icq.com/whitepages/online?icq=".htmlentities(stripslashes($parameter[0]))."&img=5\" height=\"18\" width=\"18\" />  <b>".htmlentities(stripslashes($parameter[0]))."</b> (<a href=\"http://wwp.icq.com/scripts/search.dll?to=".htmlentities(stripslashes($parameter[0]))."\">Add User</a>, <a href=\"http://wwp.icq.com/scripts/contact.dll?msgto=".htmlentities(stripslashes($parameter[0]))."\">Send Message</a>)";
+						$run_result = "<img src=\"http://web.icq.com/whitepages/online?icq=".htmlentities(stripslashes($parameter[0]))."&img=5\" height=\"18\" width=\"18\" />  <b>".htmlentities(stripslashes($parameter[0]))."</b> (<a href=\"http://wwp.icq.com/scripts/search.dll?to=".htmlentities(stripslashes($parameter[0]))."\">" . gettext("Add User") . "</a>, <a href=\"http://wwp.icq.com/scripts/contact.dll?msgto=".htmlentities(stripslashes($parameter[0]))."\">". gettext("Send Message") ."</a>)";
 						break;
 				case "skype":
 						$run_result = "<a href=\"callto://".htmlentities(stripslashes($parameter[0]))."\">".htmlentities(stripslashes($parameter[0]))."</a> <img src=\"http://goodies.skype.com/graphics/skypeme_btn_small_white.gif\" border=\"0\">";
@@ -44,7 +44,7 @@
 						$run_result = "MSN <b>".htmlentities(stripslashes($parameter[0]))."</b>";
 						break;
 				case "aim":
-						$run_result = "<img src=\"http://big.oscar.aol.com/".htmlentities(stripslashes($parameter[0]))."?on_url=http://www.aol.com/aim/gr/online.gif&off_url=http://www.aol.com/aim/gr/offline.gif\" width=\"14\" height=\"17\" /> <b>".htmlentities(stripslashes($parameter[0]))."</b> (<a href=\"aim:addbuddy?screenname=".htmlentities(stripslashes($parameter[0]))."\">Add Buddy</a>, <a href=\"aim:goim?screenname=".htmlentities(stripslashes($parameter[0]))."&message=Hello\">Send Message</a>)";
+						$run_result = "<img src=\"http://big.oscar.aol.com/".htmlentities(stripslashes($parameter[0]))."?on_url=http://www.aol.com/aim/gr/online.gif&off_url=http://www.aol.com/aim/gr/offline.gif\" width=\"14\" height=\"17\" /> <b>".htmlentities(stripslashes($parameter[0]))."</b> (<a href=\"aim:addbuddy?screenname=".htmlentities(stripslashes($parameter[0]))."\">". gettext("Add Buddy") ."</a>, <a href=\"aim:goim?screenname=".htmlentities(stripslashes($parameter[0]))."&message=Hello\">". gettext("Send Message") ."</a>)";
 						break;
 				case "text":
 				case "mediumtext":
@@ -97,7 +97,7 @@
 						$run_result = $keywords;
 						break;
 				case "email":
-						$run_result = preg_replace("/([\w\.]*\w+@[\w\.]*\w)/i","<a href=\"mailto:$1\">$1</a>",$parameter[0]);
+						$run_result = preg_replace("/[\\d\\w\\.\\-_]+@[\\d\\w\\-_\\.]+?\\.[\\w]{2,3}(\\.[\\w]{2,3})?/i","<a href=\"mailto:$0\">$0</a>",$parameter[0]);
 						break;
 				case "web":
 						$run_result = $parameter[0];

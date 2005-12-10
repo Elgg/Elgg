@@ -9,20 +9,20 @@
 END;
 		$run_result .= run("templates:draw", array(
 														'context' => 'databox1',
-														'name' => 'Their name',
+														'name' => gettext("Their name"),
 														'column1' => run("display:input_field",array("invite_name","","text"))
 							)
 							);
 		$run_result .= run("templates:draw", array(
 														'context' => 'databox1',
-														'name' => 'Their email address',
+														'name' => gettext("Their email address"),
 														'column1' => run("display:input_field",array("invite_email","","text"))
 							)
 							);
 							
 		$run_result .= run("templates:draw", array(
 														'context' => 'databox1',
-														'name' => 'An optional message',
+														'name' => gettext("An optional message"),
 														'column1' => run("display:input_field",array("invite_text","","longtext"))
 							)
 							);
@@ -30,7 +30,7 @@ END;
 		$run_result .= run("templates:draw", array(
 														'context' => 'databox1',
 														'name' => '&nbsp;',
-														'column1' => '<input type="submit" value="Invite" />'
+														'column1' => '<input type="submit" value="'.gettext("Invite").'" />'
 							)
 							);
 							

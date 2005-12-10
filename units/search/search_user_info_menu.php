@@ -3,9 +3,10 @@
 		global $page_owner;
 		$profile_id = $page_owner;
 	
-		$title = "Search";
+		$title = gettext("Search");
 
 		$url=url;
+              $randomTags = gettext("Random tags"); // gettext variable
 		
 		$body = <<< END
 		<form style="margin: 0px; padding: 0px" name="searchform" action="{$url}search/all.php">
@@ -19,19 +20,18 @@
 			</script>
 			<p align="center">
 				<input name="tag" type="text" value="" style="width: 110px">&nbsp;<a href="javascript:submitthis()" style="text-decoration: none">&gt;&gt;</a><br />
-				<a href="{$url}search/tags.php">Random tags</a>
+				<a href="{$url}search/tags.php">$randomTags</a>
 			</p>
 		</form>
 
 END;
 
-		$run_result .= "<div class=\"box_search\">";
 		$run_result .= run("templates:draw", array(
-								'context' => 'infobox',
-								'name' => $title,
-								'contents' => $body
+								'context' => 'contentholder',
+								'title' => $title,
+								'body' => $body,
+								'submenu' => ''
 							)
 							);
-		$run_result .= "</div>";
 
 ?>

@@ -22,7 +22,7 @@
 	// Grab title, see if we can edit the template
 		$editable = 0;
 		if ($template_id == -1) {
-			$templatetitle = "Default Template";
+			$templatetitle = gettext("Default Template");
 		} else {
 			$templatestuff = db_query("select * from templates where ident = $template_id");
 			$templatetitle = stripslashes($templatestuff[0]->name);
@@ -56,7 +56,7 @@ END;
 	
 	$run_result .= run("templates:draw", array(
 												'context' => 'databoxvertical',
-												'name' => '<b>Template Name</b>',
+												'name' => gettext("Template Name"),
 												'contents' => run("display:input_field",array("templatetitle",$templatetitle,"text"))
 											)
 											);
@@ -64,9 +64,10 @@ END;
 	foreach($template_definition as $element) {
 		
 		$name = "<b>" . $element['name'] . "</b><br /><i>" . $element['description'] . "</i>";
-		
+		$glossary = gettext("Glossary"); // gettext variable
+
 		if (sizeof($element['glossary']) > 0) {
-			$column1 = "<b>Glossary</b><br />";
+			$column1 = "<b>$glossary</b><br />";
 			foreach($element['glossary'] as $gloss_id => $gloss_descr) {
 				$column1 .= $gloss_id . " -- " . $gloss_descr . "<br />";
 			}
@@ -99,21 +100,22 @@ END;
 	}
 	
 	if ($editable) {
-		$run_result .= <<< END
+		$save = gettext("Save"); // gettext variable
+             $run_result .= <<< END
 	
 		<p align="center">
 			<input type="hidden" name="action" value="templates:save" />
 			<input type="hidden" name="save_template_id" value="$template_id" />
-			<input type="submit" value="Save" />
+			<input type="submit" value="$save" />
 		</p>	
 	
 END;
 	} else {
-		$run_result .= <<< END
+		$noEdit = gettext("You may not edit this template. To create a new, editable template based on the default, go to <a href=\"index.php\">the main templates page</a>."); // gettext variable
+              $run_result .= <<< END
 		
 		<p>
-			You may not edit this template. To create a new, editable template
-			<i>based</i> on the default, go to <a href="index.php">the main templates page</a>.
+			$noEdit
 		</p>
 		
 END;

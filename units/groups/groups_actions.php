@@ -30,7 +30,7 @@
 																		where owner = $ident
 																		and ident = $groupid");
 												unset($_SESSION['groups_cache']);
-												$messages[] = "Your group was updated.";
+												$messages[] = gettext("Your group was updated.");
 												foreach($data['access'] as $key => $accessarray) {
 													if ($accessarray[1] == "group" . $groupid) {
 														$data['access'][$key] = array(stripslashes($_REQUEST['groupname']),"group" . $groupid);
@@ -43,6 +43,7 @@
 										if (isset($_POST['groupid']) && logged_on) {
 											$groupid = (int) $_POST['groupid'];
 											$ident = (int) $_SESSION['userid'];
+											run("groups:delete",$groupid);
 											db_query("delete from groups where ident = $groupid and owner = $ident");
 											if (db_affected_rows() > 0) {
 												db_query("delete from group_membership where group_id = $groupid");
@@ -69,16 +70,10 @@
 															db_query("insert into group_membership
 																				set user_id = $newmember,
 																					group_id = $groupid");
-														} else {
-															echo "membership exists: " . var_export($exists,true);
-														}
+														} 
 													}
-												} else {
-													echo "post: " . var_export($_POST,true);
-												}
-											} else {
-												echo "group exists: " . var_export($exists,true);
-											}
+												} 
+											} 
 											unset($_SESSION['groups_cache']);
 										}
 										break;

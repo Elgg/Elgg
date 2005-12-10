@@ -13,10 +13,10 @@
 									order by posted desc");
 
 	// If there are any archives ...
-	
+	$archive = gettext("Weblog Archive"); // gettext variable
 		if (sizeof($archives) > 0) {
 		
-			$run_result .= "<h1 class=\"weblogdateheader\">Weblog Archive</h1>";
+			$run_result .= "<h1 class=\"weblogdateheader\">$archive</h1>";
 			
 	// Get the name of the weblog user
 			
@@ -45,7 +45,7 @@
 	// Print a link
 	
 				$run_result .= "<li>";
-				$run_result .= "<a href=\"".url."$weblog_name/weblog/archive/$year/$month/\">";
+				$run_result .= "<a href=\"/$weblog_name/weblog/archive/$year/$month/\">";
 				$run_result .= date("F",gmmktime(0,0,0,$month,1,$year)) . " " . $year;
 				$run_result .= "</a>";
 				$run_result .= "</li>";
@@ -57,7 +57,7 @@
 	// If there are no posts to archive, say so!
 			
 		} else {
-			
+			$noBlogs = gettext("There are no weblog posts to archive as yet."); // gettext variable - NOT SURE ABOUT THIS POSITION
 			$run_result .= "<p>There are no weblog posts to archive as yet.</p>";
 			
 		}

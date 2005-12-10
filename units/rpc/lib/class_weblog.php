@@ -6,7 +6,7 @@
      * A class for representing an Elgg weblog.
      *
      * @author    Misja Hoebe <misja@efobia.nl>
-     * @version   0.3
+     * @version   0.4
      * @copyright 2005, Misja Hoebe/Elgg project, GPL
      * @package   RPC
      */
@@ -17,12 +17,13 @@
 
         var $blog_name;
         var $blog_username;
-        var $blog_owner;
+        var $owner;
 
         var $user_id;
         var $user_name;
         var $user_username;
 
+        var $type = 'weblog';
         var $community;
 
         /**
@@ -63,25 +64,22 @@
             // Are we dealing with a person or a community?
             if (run("users:type:get", $this->ident) == "person")
             {
-                $result = db_query("select users.name, 
-                                    users.username, 
-                                    weblog_posts.ident, 
-                                    weblog_posts.weblog, 
-                                    weblog_posts.access, 
-                                    weblog_posts.posted, 
-                                    weblog_posts.title 
-                                    from users, weblog_posts 
-                                    where users.ident = '$this->user_id' 
-                                    and weblog_posts.owner = '$this->user_id' 
-                                    and weblog_posts.weblog = '$this->user_id'
-                                    order by weblog_posts.posted desc");
+                $result = db_query("select name, username 
+                                    from users
+                                    where ident = $this->user_id");
+
+                $posts  = db_query("select ident 
+                                    from weblog_posts 
+                                    where owner = $this->user_id 
+                                    and weblog = $this->user_id 
+                                    order by posted desc");
 
                 $this->user_name     = $result[0]->name;
                 $this->user_username = $result[0]->username;
 
                 $this->blog_name     = $this->user_name;
                 $this->blog_username = $this->user_username;
-                $this->blog_owner    = $this->user_id;
+                $this->owner         = $this->user_id;
             }
             else
             {
@@ -90,25 +88,25 @@
 
                 // Get the owner
                 $sql_owner = db_query("select owner from users where ident = $this->ident");
-                $this->blog_owner = $sql_owner[0]->owner;
+                $this->owner = $sql_owner[0]->owner;
 
                 // Inject an SQL restriction if the user is not owner
                 $sql_insert = "";
                 
-                if ($this->blog_owner != $this->user_id)
+                if ($this->owner != $this->user_id)
                 {
-                    $sql_insert = " and weblog_posts.owner = $this->user_id ";
+                    $sql_insert = " and owner = $this->user_id ";
                 }
 
-                $result = db_query("select users.name, 
-                                    users.username,
-                                    users.owner, 
-                                    weblog_posts.ident 
-                                    from users, weblog_posts 
-                                    where users.ident = $this->ident 
-                                    and weblog_posts.weblog = $this->ident
+                $result = db_query("select name, username
+                                    from users
+                                    where ident = $this->ident");
+
+                $posts  = db_query("select ident 
+                                    from weblog_posts 
+                                    where weblog = $this->ident 
                                     $sql_insert
-                                    order by weblog_posts.posted desc");
+                                    order by posted desc");
 
                 $this->blog_name     = $result[0]->name;
                 $this->blog_username = $result[0]->username;
@@ -120,9 +118,9 @@
             }
 
 
-            if (sizeof($result) > 0)
+            if (sizeof($posts) > 0)
             {
-                foreach ($result as $post)
+                foreach ($posts as $post)
                 {
                     $this->posts[] = $post->ident;
                 }
@@ -162,7 +160,7 @@
          */
         function getOwner()
         {
-            return $this->blog_owner;
+            return $this->owner;
         }
 
         /**
@@ -172,7 +170,7 @@
          */
         function isOwner()
         {
-            if ($this->blog_owner == $this->user_id)
+            if ($this->owner == $this->user_id)
             {
                 return true;
             }
@@ -219,6 +217,26 @@
         function getUrl()
         {
             return url . $this->blog_username . "/weblog/";
+        }
+
+        /**
+         * Get the Atom feed URL
+         *
+         * @return string The servce.feed URL.
+         */
+        function getAtomFeedUrl()
+        {
+            return url . "atom/" . $this->ident;
+        }
+
+        /**
+         * Get the Atom post URL
+         *
+         * @return string The service.post URL.
+         */
+        function getAtomPostUrl()
+        {
+            return url . "atom/" . $this->ident;
         }
     }
 ?>

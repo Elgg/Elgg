@@ -9,6 +9,8 @@
 
 	// Plug-in engine (must be loaded first)
 		require(path . "units/engine/main.php");
+	// Language / internationalisation
+		require(path . "units/gettext/main.php");
 	// Database
 		require(path . "units/db/main.php");
 	// Display
@@ -31,18 +33,27 @@
 	// File repository
 		include(path . "units/files/main.php");
 				
+	// Communities
+		require(path . "units/communities/main.php");
+		
 	// Friends
 		include(path . "units/friends/main.php");
 	// Friend groups
 		include(path . "units/groups/main.php");
-	
-	// Communities
-		require(path . "units/communities/main.php");
+		
+	// 'Your network'
+		require(path . "units/network/main.php");
 		
 	// Search
 		require(path . "units/search/main.php");
 		
 	// Invite-a-friend
 		require(path . "units/invite/main.php");
+		
+	// Admin system
+		require(path . "units/admin/main.php");
+		
+	// XML parsing
+		require(path . "units/xml/main.php");
 		
 ?>

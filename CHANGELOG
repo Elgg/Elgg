@@ -1,5 +1,21 @@
 Elgg changelog
 
+0.31 (9th December 2005)
+------------------------
+Bugfix release
+
+0.3 (26th September 2005)
+-------------------------
+Added internationalisation support using gettext
+Added 'recent activity' page for weblogs
+Added administration functions
+Added inappropriate content flagging
+Added user tracking by time
+Added automatic URL-to-hyperlink for weblogs
+Added help files
+Changed internal permissions system
+Changed user interface, substantially revamping it for usability
+
 0.2 (20th June 2005)
 --------------------
 Incorporated cookied login patch by Leonard Lin

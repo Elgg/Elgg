@@ -40,12 +40,14 @@ END;
 		$friends_menu = run("users:infobox:menu",array($info->ident));
 		$body .= <<< END
 		<td align="center">
+                    <p>
 			<a href="{$url}{$friends_username}/">
 			<img src="{$url}_icons/data/{$icon}" width="{$width}" height="{$height}" alt="{$friends_name}" border="0" /></a><br />
 			<span class="userdetails">
 				{$friends_name}
 				{$friends_menu}
 			</span>
+                    </p>
 		</td>
 END;
 					if ($i % 5 == 0) {
@@ -55,9 +57,9 @@ END;
 			}
 		} else {
 			if ($user_id == $_SESSION['userid']) {
-				$body .= "<td>You don't have any communities listed! To join a community, click the 'join' button underneath a community's icon. You can find communities you're interested in by using the search function.</td>";
+				$body .= "<td><p>". gettext("You don't have any communities listed! To join a community, click the 'join' button underneath a community's icon. You can find communities you're interested in by using the search function.") ."</p></td>";
 			} else {
-				$body .= "<td>This user is not currently a member of any communities.</td>";
+				$body .= "<td><p>". gettext("This user is not currently a member of any communities.") ."</p></td>";
 			}
 		}
 		$body .= <<< END

@@ -1,0 +1,30 @@
+
+Theme transfer instructions
+---------------------------
+
+Elgg 0.3x has a radically different navigation and theme structure
+than the previous version. As a result, themes from previous versions
+will not work, and by default old themes are deleted on upgrade.
+However, if you would like to use old themes, you can perform the
+following actions using the theme editor:
+
+
+A. 'CONTENT HOLDER':
+
+1. Copy the contents of infobox into contentholder
+2. Change {{name}} to {{title}}, {{content}} to {{body}}
+3. Add {{submenu}} just above {{body}}
+
+B. 'PAGE SHELL':
+
+1. In pageshell, add {{topmenu}} directly after {{menu}}
+
+C. 'SELECTED INDIVIDUAL MAIN MENU ITEM':
+
+1. Copy 'individual main menu item' to 'SELECTED individual menu item'
+
+D. 'STATUS MENUBAR SHELL':
+
+1. Copy 'main menu shell' to 'status menubar shell'
+2. Replace {{menuitems}} in the status menubar shell with {{topmenuitems}}
+3. Copy 'individual main menu item' to 'individual status menu item' 

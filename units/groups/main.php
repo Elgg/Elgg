@@ -22,7 +22,6 @@
 		$function['groups:editpage'][] = path . "units/groups/groups_create.php";
 		$function['groups:editpage'][] = path . "units/groups/groups_edit_existing.php";
 		
-		
 	// Individual group editing function
 		$function['groups:edit:display'][] = path . "units/groups/groups_edit_display.php";
 
@@ -33,6 +32,6 @@
 		$function['users:access_level_sql_where'][] = path . "units/groups/function_access_level_sql_where.php";
 		
 	// Menu button
-		$function['menu:main'][] = path . "units/groups/menu_main.php";
+		$function['menu:sub'][] = path . "units/groups/menu_sub.php";
 		
 ?>

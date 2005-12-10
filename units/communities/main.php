@@ -31,11 +31,12 @@
 		$function['friends:init'][] = path . "units/communities/communities_actions.php";
 	
 	// Communities bar down the right hand side
-		$function['display:sidebar'][] = path . "units/communities/communities_owned.php";
+              $function['display:sidebar'][] = path . "units/communities/communities_owned.php";
 		$function['display:sidebar'][] = path . "units/communities/community_memberships.php";
 
 	// 'Communities' aspect to the little menus beneath peoples' icons
 		$function['users:infobox:menu'][] = path . "units/communities/user_info_menu.php";
+		$function['users:infobox:menu:text'][] = path . "units/communities/user_info_menu_text.php";
 		
 	// Permissions for communities
 		$function['permissions:check'][] = path . "units/communities/permissions_check.php";
@@ -43,7 +44,6 @@
 	// View community memberships
 		$function['communities:editpage'][] = path . "units/communities/communities_edit_wrapper.php";
 		$function['communities:edit'][] = path . "units/communities/communities_edit.php";
-		$function['communities:edit'][] = path . "units/communities/communities_create.php";
 		$function['communities:members'][] = path . "units/communities/communities_members.php";
 		$function['communities:owned'][] = path . "units/communities/communities_moderator_of.php";
 		$function['communities:owned'][] = path . "units/communities/communities_create.php";
@@ -59,5 +59,8 @@
 		
 	// Edit profile details
 		$function['userdetails:edit'][] = path . "units/communities/userdetails_edit.php";
+		
+	// Menu items
+		$function['menu:sub'][] = path . "units/communities/menu_sub.php";
 		
 ?>

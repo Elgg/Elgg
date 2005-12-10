@@ -6,6 +6,8 @@
 	
 		global $page_owner;
 		
+		$url = url;
+		
 	// If the weblog offset hasn't been set, it's 0
 		if (!isset($_REQUEST['weblog_offset'])) {
 			$weblog_offset = 0;
@@ -27,7 +29,7 @@
 				if ($where2 != "") {
 					$where2 .= "or ";
 				}
-				$where2 .= "(weblog=\"".$friend->user_id."\")";
+				$where2 .= "weblog=\"".$friend->user_id."\" ";
 				
 			}
 			
@@ -63,9 +65,10 @@
 			
 			if ($numberofposts - ($weblog_offset + 25) > 0) {
 				$display_weblog_offset = $weblog_offset + 25;
-				$run_result .= <<< END
+				$back = gettext("Back"); // gettext variable
+                            $run_result .= <<< END
 				
-				<a href="/{$weblog_name}/weblog/friends/skip={$display_weblog_offset}">&lt;&lt; Previous 25</a>
+				<a href="{$url}{$weblog_name}/weblog/friends/skip={$display_weblog_offset}">&lt;&lt; $back</a>
 				<!-- <form action="" method="post" style="display:inline">
 					<input type="submit" value="&lt;&lt; Previous 25" />
 					<input type="hidden" name="weblog_offset" value="{$display_weblog_offset}" />
@@ -78,13 +81,10 @@ END;
 				if ($display_weblog_offset < 0) {
 					$display_weblog_offset = 0;
 				}
-				$run_result .= <<< END
+				$next = gettext("Next"); // gettext variable
+                           $run_result .= <<< END
 				
-				<a href="/{$weblog_name}/weblog/friends/skip={$display_weblog_offset}">Next 25 &gt;&gt;</a>
-				<!-- <form action="" method="post" style="display:inline">
-					<input type="submit" value="Next 25 &gt;&gt;" />
-					<input type="hidden" name="weblog_offset" value="{$display_weblog_offset}" />
-				</form> -->
+				<a href="{$url}{$weblog_name}/weblog/friends/skip={$display_weblog_offset}">$next &gt;&gt;</a>
 				
 END;
 			}

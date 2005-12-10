@@ -29,10 +29,10 @@
 						}
 					}
 				} else {
-					$run_result .= "<b>[You do not have permission to access this file]</b>";
+					$run_result .= "<b>[" . gettext("You do not have permission to access this file") . "]</b>";
 				}
 			} else {
-				$run_result .= "<b>[File does not exist]</b>";
+				$run_result .= "<b>[" . gettext("File does not exist") . "]</b>";
 			}
 			
 		}

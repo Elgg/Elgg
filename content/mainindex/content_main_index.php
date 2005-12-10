@@ -1,35 +1,45 @@
 <?php
 
 	$sitename = sitename;
-	$run_result = <<< END
-
-		<h1>Welcome to $sitename</h1>
-		<p>
-			$sitename is a fully featured electronic portfolio, weblog and social networking system,
-			connecting learners and creating communities of learning.
-		</p>
-		<p>
-			For more information on e-portfolios, see <a href="http://www.eradc.org/blog/">the ERADC
-			weblog</a> - or just sign up and experiment!
-		</p>
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><img src="images/front_page/1.jpg" width="80" height="80" alt="1." /></td>
-    <td width="50">&nbsp;</td>
-    <td>Sign up for an account - it's completely free, and all you need is a valid email address.</td>
-  </tr>
-  <tr>
-    <td><img src="images/front_page/2.jpg" width="80" height="80" alt="2." /></td>
-    <td width="50">&nbsp;</td>
-    <td>Create your own weblog, journal, store of files like photos and Word documents - as much or as little as you want!</td>
-  </tr>
-  <tr>
-    <td><img src="images/front_page/3.jpg" width="80" height="80" alt="3." /></td>
-    <td width="50">&nbsp;</td>
-    <td>Share them with your friends, academic staff and other $sitename users. <b>YOU</b> decide who can see them! </td>
-  </tr>
-</table>
-
-END;
+	
+	$run_result = "<h5>" . gettext("Welcome") . "</h5>";
+	$run_result .= "<p><b>" . sprintf(gettext("Why not <a href=\"%s\">create your profile</a>?"), url . "profile/edit.php") . "</b><br />";
+	$run_result .= "<p>". gettext("Tell people about yourself and connect to others with similar interests and goals.") . "<br />";
+	
+	$users = db_query("SELECT distinct users.*, icons.filename as iconfile FROM tags LEFT JOIN users ON users.ident = tags.owner left join icons on icons.ident = users.icon WHERE (tags.tagtype = 'biography' OR tags.tagtype = 'minibio' OR tags.tagtype = 'interests')AND users.icon != -1 AND tags.access = 'PUBLIC' and users.user_type = 'person' ORDER BY rand( ) LIMIT 3 ");
+	
+	if (sizeof($users) > 0) {
+		if (sizeof($users) > 1) {
+			$run_result .= gettext("Here are some examples of complete profiles:");
+		} else {
+			$run_result .= gettext("Here is an example of a complete profile:");
+		}
+		foreach($users as $key => $user) {
+			if ($key > 0) {
+				$run_result .= ", ";
+			} else {
+				$run_result .= " ";
+			}
+			$run_result .= "<a href=\"" . url . $user->username . "/\">" . stripslashes($user->name) . "</a>";
+		}
+	}
+	
+	$run_result .= "</p>";
+	
+	$run_result .= "<p><b>" . sprintf(gettext("Or you could <a href=\"%s\">start your blog</a>?"),url . "_weblog/edit.php") . "</b><br /><br />";
+    $run_result .= sprintf(gettext("Comment on what you're learning, collect interesting links and decide who gets to see what you're writing. Here's what <a href=\"%s\">everyone else is talking about</a> right now."),url . "_weblog/everyone.php") . "</p>";
+    $run_result .= "<p>&nbsp;</p>";
+    
+    $news = db_query("select weblog_posts.* from weblog_posts left join users on users.ident = weblog_posts.weblog where users.username = 'news' order by posted desc limit 1");
+    if (sizeof($news) > 0) {
+    	
+	    $news = $news[0];
+	    
+		$run_result .= "<div class=\"siteNews\">";
+		$run_result .= "<h2>" . gettext("Latest news") . "</h2>";
+		$run_result .= "<p>" . nl2br(stripslashes($news->body)) . "</p>";
+		$run_result .= "</div>";
+		
+	}
 
 ?>

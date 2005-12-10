@@ -2,39 +2,44 @@
 
 	// Template preview
 	
+              $header = gettext("Folder name"); // gettext variable
+              $subHeader = gettext("Subfolders"); // gettext variable
 		$body = <<< END
 		
-		<h2>Folder name</h2>
-		<h3>Subfolders</h3>
+		<h2>$header</h2>
+		<h3>$subHeader</h3>
 		
 END;
 		$body .= run("templates:draw", array(
 									'context' => 'folder',
-									'username' => "test",
+									'username' => gettext("test"),
 									'url' => "",
 									'ident' => 0,
-									'name' => "Subfolder",
-									'icon' => "/_files/data/folder.png"
+									'name' => gettext("Subfolder"),
+									'icon' => url. "_files/folder.png",
+									'menu' => "[<a href=\"#\">" . gettext("Delete") . "</a>]"
 								)
 								);
 
 		$body .= run("templates:draw", array(
 									'context' => 'file',
-									'username' => "test",
-									'title' => "A sample file",
+									'username' => gettext("test"),
+									'title' => gettext("A sample file"),
 									'ident' => 0,
 									'folder' => 0,
-									'description' => "This is a file",
-									'originalname' => "filename",
+									'description' => gettext("This is a file"),
+									'originalname' => gettext("filename"),
 									'url' => "#",
-									'icon' => "/_files/data/file.png"
+									'icon' => url . "_files/file.png",
+									'menu' => "[<a href=\"#\">" . gettext("Edit") . "</a>] [<a href=\"#\">" . gettext("Delete") . "</a>]"
 								)
 								);
 								
 		$run_result .= run("templates:draw", array(
-													'context' => 'infobox',
-													'name' => 'Files and folders',
-													'contents' => $body
+													'context' => 'contentholder',
+													'title' => gettext("Files and folders"),
+													'body' => $body,
+													'submenu' => ''
 													)
 													);
 								

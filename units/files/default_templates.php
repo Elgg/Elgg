@@ -5,15 +5,15 @@
 	
 	$template_definition[] = array(
 									'id' => 'folder',
-									'name' => "Folder",
-									'description' => "Each individual folder",
+									'name' => gettext("Folder"),
+									'description' => gettext("Each individual folder"),
 									'glossary' => array(
-															'{{username}}' => 'The owner of the folder',
-															'{{name}}' => 'The name of the folder',
-															'{{url}}' => 'The folder\'s URL',
-															'{{menu}}' => 'Menu items for folder owner (edit, delete, etc)',
-															'{{icon}}' => 'The URL of the file\'s icon',
-															'{{keywords}}' => 'Keywords associated with the folder'
+															'{{username}}' => gettext("The owner of the folder"),
+															'{{name}}' => gettext("The name of the folder"),
+															'{{url}}' => gettext("The folder's URL"),
+															'{{menu}}' => gettext("Menu items for folder owner (edit, delete, etc)"),
+															'{{icon}}' => gettext("The URL of the file's icon"),
+															'{{keywords}}' => gettext("Keywords associated with the folder")
 														)
 									);
 	
@@ -35,16 +35,16 @@ END;
 
 	$template_definition[] = array(
 									'id' => 'file',
-									'name' => "File",
-									'description' => "Each individual file within a folder",
+									'name' => gettext("File"),
+									'description' => gettext("Each individual file within a folder"),
 									'glossary' => array(
-															'{{url}}' => 'The file\'s URL',
-															'{{originalname}}' => 'Its filename',
-															'{{description}}' => 'A description of the file',
-															'{{title}}' => 'Its title',
-															'{{menu}}' => 'Menu items for file owner (edit, delete, etc)',
-															'{{icon}}' => 'The URL of its icon',
-															'{{keywords}}' => 'Keywords associated with the folder'
+															'{{url}}' => gettext("The file's URL"),
+															'{{originalname}}' => gettext("Its filename"),
+															'{{description}}' => gettext("A description of the file"),
+															'{{title}}' => gettext("Its title"),
+															'{{menu}}' => gettext("Menu items for file owner (edit, delete, etc)"),
+															'{{icon}}' => gettext("The URL of its icon"),
+															'{{keywords}}' => gettext("Keywords associated with the folder")
 														)
 									);
 
@@ -60,7 +60,7 @@ END;
 							<td valign="middle">
 								<a href="{{url}}"><b>{{title}}</b></a>
 								<small>{{menu}}</small><br />
-									{{description}}<br />
+									<p>{{description}}</p>
 								<small>{{originalname}}</small><br />
 								<small>{{keywords}}</small>
 							</td>

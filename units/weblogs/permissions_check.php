@@ -16,8 +16,23 @@
 		
 		if ($parameter == "weblog") {
 			
-			if ($page_owner == $_SESSION['userid']) {
+			if ($page_owner == $_SESSION['userid'] && logged_on) {
 				$run_result = true;
+			}
+			
+		}
+		
+		if (logged_on) {
+			
+			// $parameter[0] = context
+			// $parameter1[1] = $post->owner
+			
+			if ($parameter[0] == "weblog:edit") {
+				
+				if ($parameter[1] == $_SESSION['userid'] && logged_on) {
+					$run_result = true;
+				}
+				
 			}
 			
 		}

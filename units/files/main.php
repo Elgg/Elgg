@@ -43,8 +43,9 @@
 	// Turn file ID into a link
 		$function['files:links:make'][] = path . "units/files/files_links_make.php";
 		
-	// Menu button
+	// Menu buttons
 		$function['menu:main'][] = path . "units/files/menu_main.php";	
+		$function['menu:sub'][] = path . "units/files/menu_sub.php";	
 
 	// Load default template
 		$function['init'][] = path . "units/files/default_templates.php";
@@ -62,5 +63,7 @@
 	// Establish permissions
 		$function['permissions:check'][] = path . "units/files/permissions_check.php";
 
-				
+	// Actions to perform when an access group is deleted
+		$function['groups:delete'][] = path . "units/files/groups_delete.php";
+
 ?>

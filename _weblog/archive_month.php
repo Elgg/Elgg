@@ -6,17 +6,19 @@
 		require("../includes.php");
 		
 		run("profile:init");
-		run("friends:init");
 		run("weblogs:init");
+		run("friends:init");
 		
-		$title = run("profile:display:name") . " :: Weblog Archives";
+		define("context", "weblog");
+		
+		$title = run("profile:display:name") . " :: " . gettext("Blog Archives");
 		
 		$body .= run("weblogs:archives:month:view");
 		
 		$body = run("templates:draw", array(
-						'context' => 'infobox',
-						'name' => $title,
-						'contents' => $body
+						'context' => 'contentholder',
+						'title' => $title,
+						'body' => $body
 					)
 					);
 		

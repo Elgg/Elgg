@@ -15,13 +15,13 @@
 		if (sizeof($refs) > 0) {
 			foreach($refs as $post) {
 				$run_result .= "\t<item>\n";
-				$run_result .= "\t\t<title>Weblog post :: " . htmlentities(stripslashes($post->name));
+				$run_result .= "\t\t<title><![CDATA[" . gettext("Weblog post") . " :: " . (stripslashes($post->name));
 				if ($post->title != "") {
-					$run_result .= " :: " . htmlentities(stripslashes($post->title));
+					$run_result .= " :: " . (stripslashes($post->title));
 				}
 				$weblogusername = run("users:id_to_name",$post->weblog);
-				$run_result .= "</title>\n";
-				$run_result .= "\t\t<link>" . url . htmlentities(stripslashes($weblogusername)) . "/weblog/" . $post->ident . ".html</link>\n";
+				$run_result .= "]]></title>\n";
+				$run_result .= "\t\t<link>" . url . (stripslashes($weblogusername)) . "/weblog/" . $post->ident . ".html</link>\n";
 				$run_result .= "\t</item>\n";
 			}
 		}

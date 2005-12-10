@@ -6,6 +6,7 @@
 		require("../includes.php");
 		
 		run("profile:init");
+		define("context", "profile");
 		
 		$title = run("profile:display:name");
 
@@ -13,9 +14,9 @@
 		$body .= run("profile:view");
 		
 		$body = run("templates:draw", array(
-						'context' => 'infobox',
-						'name' => $title,
-						'contents' => $body
+						'context' => 'contentholder',
+						'title' => $title,
+						'body' => $body
 					)
 					);
 					

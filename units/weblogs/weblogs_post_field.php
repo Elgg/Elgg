@@ -3,7 +3,8 @@
 	// Allow users to post to a weblog if they have permission
 	
 		if (run("permissions:check", "weblog")) {
-			
+/*			
+                     $clickToAdd = gettext("Click here to post to this weblog."); // gettext variable
 			$title = <<< END
 				<script language="javascript" type="text/javascript">
 					function show(whichLayer) {
@@ -48,7 +49,7 @@
 					}
 				</script> 
 				<p>
-					<a href="javascript:show('add_weblog_post');">Click here to post to this weblog.</a>
+					<a href="javascript:show('add_weblog_post');">$clickToAdd</a>
 				</p>
 			
 END;
@@ -58,26 +59,43 @@ END;
 			
 END;
 			$body .= run("weblogs:posts:add");
+                     $hide = gettext("Click here to hide this form."); // gettext variable
 			$body .= <<< END
 			
 				<p>
-					<a href="javascript:hide('add_weblog_post');">Click here to hide this form.</a>
+					<a href="javascript:hide('add_weblog_post');">$hide</a>
 				</p>
 			
 END;
-			
+
 			$body .= <<< END
 			
 			</div>
 			
 END;
+			*/
+			
+			$body = <<< END
+			
+END;
 
-			$run_result .= run("templates:draw", array(
-									'context' => 'databoxvertical',
-									'name' => $title,
-									'contents' => $body
-								)
-								);
+			global $page_owner;
+			$clickToAdd = gettext("Click here to post to this weblog.");
+			$postUrl = url . "_weblog/edit.php?owner=" . $page_owner;
+			$body .= <<< END
+			
+				<p>
+					<a href="$postUrl">$clickToAdd</a>
+				</p>
+			
+END;
+
+			$body .= <<< END
+			
+			
+END;
+			
+			$run_result .= $body;
 
 
 		}

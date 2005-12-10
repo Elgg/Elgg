@@ -2,7 +2,7 @@
 
 	global $page_owner;
 	
-	if (run("users:type:get",$page_owner) == 'person' && run("permissions:check","userdetails:change")) {
+	if (run("users:type:get",$page_owner) == 'person' && run("permissions:check",array("userdetails:change", $page_owner))) {
 	
 	if ($page_owner == $_SESSION['userid']) {
 		$name = htmlentities($_SESSION['name']);
@@ -14,65 +14,71 @@
 		$email = htmlentities(stripslashes($info->email));
 	}
 	
+       $changeName = gettext("Change your full name:"); // gettext variable
+       $displayed = gettext("This name will be displayed throughout the system."); // gettext variable
 	$body = <<< END
 
 <form action="index.php" method="post">
 
-	<h3>
-		Change your full name
-	</h3>
+	<h5>
+		$changeName
+	</h5>
 	<p>
-		This name will be displayed throughout the system.
+		$displayed
 	</p>
 
 END;
 
 	$body .= run("templates:draw", array(
 			'context' => 'databox',
-			'name' => 'Your full name',
+			'name' => gettext("Your full name "),
 			'column1' => "<input type=\"text\" name=\"name\" value=\"$name\" />"
 		)
 		);
 	
-	$body .= <<< END
+	$emailAddress = gettext("Your email address:"); // gettext variable
+       $emailRules = gettext("This will not be displayed to other users; you can choose to make an email address available via the profile screen."); // gettext variable
+       $body .= <<< END
 			
-	<h3>
-		Your email address
-	</h3>
+	<h5>
+		$emailAddress
+	</h5>
 	<p>
-		This will not be displayed to other users; you can choose to make an email address available via the profile screen.
+		$emailRules
 	</p>
 	
 END;
 
 	$body .= run("templates:draw", array(
 			'context' => 'databox',
-			'name' => 'Your email address',
+			'name' => gettext("Your email address "),
 			'column1' => "<input type=\"text\" name=\"email\" value=\"$email\" />"
 		)
 		);
 
-	$body .= <<< END
+	$password = gettext("Change your password:"); // gettext variable
+       $passwordRules = gettext("Leave this blank if you're happy to leave your password as it is."); // gettext variable
+       $body .= <<< END
 		
-	<h3>
-		Change your password
-	</h3>
+	<h5>
+		$password
+	</h5>
 	<p>
-		Leave this blank if you're happy to leave your password as it is.
+		$passwordRules
 	</p>
 	
 END;
 	
 	$body .= run("templates:draw", array(
 			'context' => 'databox',
-			'name' => 'Your password',
+			'name' => gettext("Your password: "),
 			'column1' => "<input type=\"password\" name=\"password1\" value=\"\" />"
 		)
 		);
 		
 	$body .= run("templates:draw", array(
 			'context' => 'databox',
-			'name' => 'Again for verification purposes',
+			'name' => gettext("Again for verification purposes: "),
 			'column1' => "<input type=\"password\" name=\"password2\" value=\"\" />"
 		)
 		);
@@ -80,11 +86,17 @@ END;
 	// Allow plug-ins to add stuff ...
 		$body .= run("userdetails:edit:details");
 
+		$id = $page_owner;
+
+		$save = gettext("Save");
+		
 		$body .= <<< END
 		
 	<p align="center">
 		<input type="hidden" name="action" value="userdetails:update" />
-		<input type="submit" value="Save" />
+		<input type="hidden" name="id" value="$page_owner" />
+		<input type="hidden" name="profile_id" value="$page_owner" />
+		<input type="submit" value="$save" />
 	</p>
 	
 </form>

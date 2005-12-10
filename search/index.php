@@ -8,15 +8,15 @@
 		run("search:init");
 		run("search:all:tagtypes");
 		
-		$title = "Search";
+		$title = gettext("Search");
 
 		$body = run("content:profile:search");
 		$body .= run("search:display");
 		
 		$body = run("templates:draw", array(
-						'context' => 'infobox',
-						'name' => $title,
-						'contents' => $body
+						'context' => 'contentholder',
+						'title' => $title,
+						'body' => $body
 					)
 					);
 					

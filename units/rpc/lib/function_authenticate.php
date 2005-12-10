@@ -30,12 +30,52 @@
 
     // For now parameters take precendence
     
-    if (isset($parameter) && $parameter != "") // parameters passed by run()
+    if (isset($parameter) && $parameter['username'] != "") // parameters passed by run()
     {
         $username = addslashes($parameter['username']);
         $password = addslashes(md5($parameter['password']));
         
         $auth['method'] = "parameters";
+    }
+    elseif (isset($_SERVER['HTTP_X_WSSE']) && $_SERVER['HTTP_X_WSSE'] != "")
+    {
+        // Some basic Web Services Security UsernameToken Profile (WSSE) support
+        $wsse = str_replace("UsernameToken","", $_SERVER['HTTP_X_WSSE']);
+        $wsse = explode(",", $wsse);
+
+        foreach ($wsse as $element)
+        {
+            $element = explode("=", $element);
+            $key = trim($element[0]);
+            $val = trim($element[1],"\x22\x27");
+
+            if ( $key == "Username")
+            {
+                $username = addslashes($val);
+            }
+            elseif ($key == "PasswordDigest")
+            {
+                $password = $val;
+            }
+            elseif ($key == "Created")
+            {
+                $created = $val;
+            }
+            elseif ($key == "Nonce")
+            {
+                $nonce = $val;
+            }
+        }
+
+        $result = db_query("select password from users where username = '$username'");
+        $good_pw = md5($result->password);
+
+        // Recreate the digest
+        $digest = pack("H*", sha1($nonce
+								. $created
+								. $good_pw));
+
+        $auth['method'] = $good_pw;
     }
     elseif (isset($_SERVER['PHP_AUTH_USER']) && 
             isset($_SERVER['PHP_AUTH_PW'])   && 

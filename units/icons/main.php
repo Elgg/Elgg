@@ -12,7 +12,7 @@
 		$function["icons:add"][] = path . "units/icons/function_add_icons.php";
 	
 	// Menu button
-		$function["menu:main"][] = path . "units/icons/menu_main.php";
+		$function["menu:sub"][] = path . "units/icons/menu_sub.php";
 		
 	// Permissions check
 		$function["permissions:check"][] = path . "units/icons/permissions_check.php";

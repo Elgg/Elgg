@@ -40,7 +40,7 @@
 															}
 														}
 														if (run("users:type:get",$page_owner) == "person") {
-															$messages[] = "Your post has been added to your weblog.";
+															$messages[] = gettext("Your post has been added to your weblog.");
 														}
 														// define('redirect_url',url . $_SESSION['username'] . "/weblog/");
 														define('redirect_url',url . run("users:id_to_name", $page_owner) . "/weblog/");
@@ -59,11 +59,18 @@
 														$title = addslashes($_REQUEST['edit_weblog_title']);
 														$body = addslashes($_REQUEST['new_weblog_post']);
 														$access = addslashes($_REQUEST['edit_weblog_access']);
-														$exists = db_query("select count(ident) as post_exists
+														$exists = db_query("select count(ident) as post_exists, owner 
 																					from weblog_posts
-																					where ident = $id and
-																					owner = ".$_SESSION['userid']);
+																					where ident = $id
+																					group by ident")
+																					or die(mysql_error());
+														$owner = $exists[0]->owner;
 														$exists = $exists[0]->post_exists;
+														
+														if (!run("permissions:check", array("weblog:edit", $owner))) {
+															$exists = false;
+														}
+														
 														if ($exists) {
 															db_query("update weblog_posts
 																		set title = '$title',
@@ -80,11 +87,12 @@
 																if (sizeof($keyword_list) > 0) {
 																	foreach($keyword_list as $key => $list_item) {
 																		$list_item = addslashes(trim($list_item));
-																		db_query("insert into tags set tagtype = 'weblog', access = '$access', tag = '$list_item', ref = $id, owner = " . $_SESSION['userid']);
+																		db_query("insert into tags set tagtype = 'weblog', access = '$access', tag = '$list_item', ref = $id, owner = $owner");
 																	}
 																}
 															}
-															$messages[] = "Your post has been modified.";
+                                                                                               
+															$messages[] = gettext("The weblog post has been modified."); // gettext variable
 														}
 														
 													}
@@ -95,17 +103,19 @@
 														&& isset($_REQUEST['delete_post_id'])
 													) {
 														$id = (int) $_REQUEST['delete_post_id'];
-														$post_info= db_query("select * from weblog_posts where ident = $id");
-														if ($post_info[0]->owner == $_SESSION['userid']) {
+														$post_info = db_query("select * from weblog_posts where ident = $id");
+														$post_info = $post_info[0];
+														if (run("permissions:check", array("weblog:edit", $post_info->owner))) {
 															db_query("delete from weblog_posts where ident = $id");
 															db_query("delete from weblog_comments where post_id = $id");
 															db_query("delete from tags where tagtype = 'weblog' and ref = $id");
-															$messages[] = "Your weblog post was deleted.";
+                                                            $modified2 = gettext("The selected weblog post was deleted."); // gettext variable - NOT SURE ABOUT THIS POSITION!!!
+															$messages[] = "$modified2";
 														} else {
-															$messages[] = "You do not appear to own this weblog post. It was not deleted.";
+                                                            $messages[] = gettext("You do not appear to have permissions to delete this weblog post. It was not deleted."); // gettext variable
 														}
 														global $redirect_url;
-														$redirect_url = url . run("users:id_to_name",$post_info[0]->weblog) . "/weblog/";
+														$redirect_url = url . run("users:id_to_name",$post_info->weblog) . "/weblog/";
 														define('redirect_url',$redirect_url);
 													}
 													break;
@@ -132,7 +142,7 @@
 																			postedname = '$postedname',
 																			owner = $owner,
 																			post_id = $post_id");
-															$messages[] = "Your comment has been added.";
+                                                                                                       $messages[] = gettext("Your comment has been added."); // gettext variable
 															
 														}
 													}
@@ -152,7 +162,7 @@
 															if ($_SESSION['userinfo'] == $commentinfo->owner
 																|| $_SESSION['userinfo'] == $comentinfo->postowner) {
 																	db_query("delete from weblog_comments where ident = $comment_id");
-																	$messages[] = "Your comment was deleted.";
+																	$messages[] = gettext("Your comment was deleted.");
 																	$redirect_url = url . run("users:id_to_name",$commentinfo->postowner) . "/weblog/" . $commentinfo->postid . ".html";
 																	define('redirect_url',$redirect_url);
 															}

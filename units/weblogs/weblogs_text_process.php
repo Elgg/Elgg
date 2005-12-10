@@ -6,6 +6,13 @@
 			$run_result .= nl2br($parameter);
 		}
 		
+		
+		// URLs to links
+		
+		$run_result = html_activate_urls($run_result);
+		
+		// Text cutting
+		
 		global $individual;
 		
 		if (!isset($individual) || $individual != 1) {

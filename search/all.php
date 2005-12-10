@@ -8,15 +8,15 @@
 		run("search:init");
 		run("search:all:tagtypes");
 		
-		$title = "Searching Everything";
+		$title = gettext("Searching Everything");
 
 		$body = run("content:search:all");
 		$body .= run("search:all:display", $_REQUEST['tag']);
 		
 		$body = run("templates:draw", array(
-						'context' => 'infobox',
-						'name' => $title,
-						'contents' => $body
+						'context' => 'contentholder',
+						'title' => $title,
+						'body' => $body
 					)
 					);
 					

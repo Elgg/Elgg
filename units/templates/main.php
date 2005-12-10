@@ -30,6 +30,6 @@
 		$function['templates:add'][] = path . "units/templates/templates_add.php";
 		
 	// Template-related menu functions
-		$function['menu:user'] = array_merge(array(path . "units/templates/menu_main.php"), $function['menu:user']);
+		$function['menu:sub'][] = path . "units/templates/menu_sub.php";
 		
 ?>

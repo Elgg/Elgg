@@ -22,11 +22,17 @@
 		}
 		
 		$run_result .= <<< END
+<?xml version='1.0'?>
 <rdf:RDF
-      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-      xmlns:foaf="http://xmlns.com/foaf/0.1/"
-      xmlns:admin="http://webns.net/mvcb/">
+		xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+		xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+		xmlns:dc="http://purl.org/dc/elements/1.1/"
+		xmlns:bio="http://purl.org/vocab/bio/0.1/"
+		xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#"
+		xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+		xmlns:admin="http://webns.net/mvcb/"
+		xmlns:rel="http://purl.org/vocab/relationship/"
+		xmlns:foaf="http://xmlns.com/foaf/0.1/">
 	<foaf:PersonalProfileDocument rdf:about="">
 	  <foaf:maker rdf:nodeID="elgg{$user->ident}"/>
 	  <foaf:primaryTopic rdf:nodeID="elgg{$user->ident}"/>
@@ -37,10 +43,14 @@
 		<foaf:nick>{$username}</foaf:nick>
 		<foaf:name>{$name}</foaf:name>
 		<foaf:mbox_sha1sum>{$shamail}</foaf:mbox_sha1sum>
-		<foaf:homepage rdf:resource="{$personalurl}"/>
 		{$iconstring}
 END;
+		$run_result .= run("foaf:generate:fields",$parameter);
 
+		$run_result .= "\t\t<vCard:ADR rdf:parseType=\"Resource\">\n";
+		$run_result .= run("vcard:generate:fields:adr",$parameter);
+		$run_result .= "\t\t</vCard:ADR>\n";
+		
 		$friends = db_query("select users.* from friends left join users on users.ident = friends.friend where friends.owner = " . $user->ident);
 		if (sizeof($friends) > 0) {
 			foreach($friends as $friend) {

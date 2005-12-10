@@ -44,9 +44,10 @@
 			
 			if ($numberofposts - ($weblog_offset + 25) > 0) {
 				$display_weblog_offset = $weblog_offset + 25;
+                           $back = gettext("Back"); // gettext variable
 				$run_result .= <<< END
 				
-				<a href="/_weblog/everyone.php?weblog_offset={$display_weblog_offset}">&lt;&lt; Previous 25</a>
+				<a href="/_weblog/everyone.php?weblog_offset={$display_weblog_offset}">&lt;&lt;  $back</a>
 				<!-- <form action="" method="post" style="display:inline">
 					<input type="submit" value="&lt;&lt; Previous 25" />
 					<input type="hidden" name="weblog_offset" value="{$display_weblog_offset}" />
@@ -59,9 +60,10 @@ END;
 				if ($display_weblog_offset < 0) {
 					$display_weblog_offset = 0;
 				}
+                            $next = gettext("Next"); // gettext variable
 				$run_result .= <<< END
 				
-				<a href="/_weblog/everyone.php?weblog_offset={$display_weblog_offset}">Next 25 &gt;&gt;</a>
+				<a href="/_weblog/everyone.php?weblog_offset={$display_weblog_offset}">$next &gt;&gt;</a>
 				<!-- <form action="" method="post" style="display:inline">
 					<input type="submit" value="Next 25 &gt;&gt;" />
 					<input type="hidden" name="weblog_offset" value="{$display_weblog_offset}" />

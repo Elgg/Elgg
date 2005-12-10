@@ -55,17 +55,21 @@
 						}
 						$parameter[1] = $keywords;
 						*/
-						$tags = db_query("select * from tags where tagtype = '".$parameter[3]."' and ref = '".$parameter[4]."' and owner = " . $parameter[5] . " order by tag asc");
-						$keywords = "";
-						if (sizeof($tags) > 0) {
-							foreach($tags as $key => $tag) {
-								if ($key > 0) {
-									$keywords .= ", ";
+						if (!isset($data['profile:preload'][$parameter[3]])) {
+							$tags = db_query("select * from tags where tagtype = '".$parameter[3]."' and ref = '".$parameter[4]."' and owner = " . $parameter[5] . " order by tag asc");
+							$keywords = "";
+							if (sizeof($tags) > 0) {
+								foreach($tags as $key => $tag) {
+									if ($key > 0) {
+										$keywords .= ", ";
+									}
+									$keywords .= stripslashes($tag->tag);
 								}
-								$keywords .= stripslashes($tag->tag);
 							}
+							$parameter[1] = $keywords;
+						} else {
+							// $parameter[1] = $data['profile:preload'][$parameter[3]];
 						}
-						$parameter[1] = $keywords;
 						// $parameter[1] = var_export($parameter,true);
 						$run_result .= "<textarea name=\"".$parameter[0]."\" id=\"".$parameter[0]."\" style=\"width: 95%; height: 100px\">".htmlentities(stripslashes($parameter[1]))."</textarea>";
 						break;

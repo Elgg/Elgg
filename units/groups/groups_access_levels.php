@@ -7,7 +7,7 @@
 		if (sizeof($groups) > 0) {
 			foreach($groups as $group) {
 				
-				$data['access'][] = array("Group: " . $group->name, "group" . $group->ident);
+				$data['access'][] = array(gettext("Group") . ": " . $group->name, "group" . $group->ident);
 				
 			}
 		}

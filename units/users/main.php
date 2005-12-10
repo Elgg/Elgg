@@ -30,10 +30,8 @@
 		$function['users:id_to_name'][] = path . "units/users/function_id_to_name.php";
 		
 	// User-related menu functions
-		$function['menu:user'][] = path . "units/users/menu_main.php";
-	
-	// Log-off button
-		$function['menu:user'][] = path . "units/users/menu_user.php";
+		$function['menu:top'][] = path . "units/users/menu_top.php";
+		$function['menu:sub'][] = path . "units/users/menu_sub.php";
 		
 	// Userinfo box
 		$function['users:infobox'][] = path . "units/users/user_info.php";
@@ -67,5 +65,13 @@
 		
 	// Permissions checker
 		$function['permissions:check'][] = path . "units/users/permissions_check.php";
+		
+	// Flag functions:
+	// Check the value of a flag
+		$function['users:flags:get'][] = path . "units/users/flag_get.php";
+	// Set the value of a flag
+		$function['users:flags:set'][] = path . "units/users/flag_set.php";
+	// Remove a flag
+		$function['users:flags:unset'][] = path . "units/users/flag_unset.php";
 		
 ?>

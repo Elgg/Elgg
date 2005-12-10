@@ -46,8 +46,8 @@
 	// If there are no posts to archive, say so!
 			
 		} else {
-			
-			$run_result .= "<p>There are no weblog posts to archive as yet.</p>";
+			$noBlogs = gettext("There are no weblog posts to archive as yet."); // gettext variable - NOT SURE ABOUT THIS POSITION
+			$run_result .= "<p>$noBlogs</p>";
 			
 		}
 	

@@ -21,5 +21,19 @@
 			}
 			
 		}
+		if (logged_on) {
+			
+			// $parameter[0] = context
+			// $parameter[1] = file owner
+			
+			if ($parameter[0] == "files:edit") {
+				
+				if ($parameter[1] == $_SESSION['userid']) {
+					return true;
+				}
+				
+			}
+			
+		}
 
 ?>

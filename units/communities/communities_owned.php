@@ -4,24 +4,25 @@
 	
 	if ($page_owner != -1) {
 		if (run("users:type:get", $page_owner) == "person") {
-			$result = db_query("select users.ident from users
+			$result = db_query("select users.ident, users.username, users.name from users
 										where users.owner = $page_owner
-										and users.user_type = 'community'
-										limit 8");
-			$friends = array();
+										and users.user_type = 'community'");
 			if (sizeof($result) > 0) {
+				$body = "<p>";
 				foreach($result as $row) {
-					$friends[] = (int) $row->ident;
+					$body .= "<a href=\"" . url . stripslashes($row->username) . "/\">" . stripslashes($row->name) . "</a><br />";
 				}
-				$run_result .= "<div class=\"box_moderator_of\">";
-				$run_result .= run("users:infobox",
-											array(
-													"Moderator Of",
-													$friends,
-													"<a href=\"".url."_communities/owned.php?owner=$profile_id\">Owned Communities</a>"
-													)
-							);			
-				$run_result .= "</div>";
+				$body .= "</p>";
+				// $run_result .= $body;
+				$run_result .= run("templates:draw", array(
+						'context' => 'contentholder',
+						'title' => gettext("Owned communities"),
+						'body' => $body,
+						'submenu' => ''
+					)
+					);
+			} else {
+				$run_result .= "";
 			}
 		}
 	}

@@ -18,7 +18,7 @@
 																set owner = 	" . $_SESSION['userid'] . ",
 																    friend = 	$friend_id");
 													if (run("users:type:get", $friend_id) == "person") {
-														$messages[] = $friend[0]->name . " was added to your friends list.";
+														$messages[] = $friend[0]->name . gettext(" was added to your friends list.");
 													}
 												}
 											}
@@ -33,7 +33,7 @@
 															where owner = 	" . $_SESSION['userid'] . "
 															and friend = 	$friend_id");
 												if (run("users:type:get", $friend_id) == "person") {
-													$messages[] = $friend[0]->name . " was removed from your friends.";
+													$messages[] = $friend[0]->name . gettext(" was removed from your friends.");
 												}
 											}
 										}

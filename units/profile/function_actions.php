@@ -11,6 +11,13 @@
 				db_query("delete from profile_data where owner = '".$page_owner."'");
 				foreach($_POST['profiledetails'] as $field => $value) {
 
+					$field = addslashes($field);
+					foreach($data['profile:details'] as $datatype) {
+						if ($datatype[1] == $field && $datatype[2] == "keywords") {
+							db_query("delete from tags where tagtype = '$field' and owner = '$owner'");
+						}
+					}
+					
 					if ($value != "") {
 				
 						$value = addslashes($value);
@@ -23,7 +30,6 @@
 						
 						foreach($data['profile:details'] as $datatype) {
 							if ($datatype[1] == $field && $datatype[2] == "keywords") {
-								db_query("delete from tags where tagtype = '$field' and owner = '$owner'");
 								$keywords = "";
 								$value = str_replace("\n","",$value);
 								$value = str_replace("\r","",$value);
@@ -46,7 +52,7 @@
 					}
 			
 				}
-				$messages[] = "Profile updated.";
+				$messages[] = gettext("Profile updated.");
 			}
 		
 		}

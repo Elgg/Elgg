@@ -7,15 +7,15 @@
 		
 		run("invite:init");
 		
-		$title = "Join " . sitename;
+		$title = sprintf(gettext("Join %s"), sitename);
 		
 		$body = run("content:invite:join");
 		$body .= run("join:no_invite");
 		
 		$body = run("templates:draw", array(
-						'context' => 'infobox',
-						'name' => $title,
-						'contents' => $body
+						'context' => 'contentholder',
+						'title' => $title,
+						'body' => $body
 					)
 					);
 		

@@ -20,7 +20,7 @@
 		$i = 1;
 		if (sizeof($parameter[1]) == 0) {
 			
-			$body = "None.";
+			$body = "<p>" . gettext("None.") . "</p>";
 			
 		} else {
 			$body .= <<< END
@@ -54,7 +54,7 @@ END;
 					$icon = "default.png";
 				}
 				list($width, $height, $type, $attr) = getimagesize(path . "_icons/data/" . $icon);
-				if (sizeof($parameter[1]) > 4) {
+				if (sizeof($parameter[1]) > 1) {
 					$width = round($width / 2);
 					$height = round($height / 2);
 				}
@@ -62,13 +62,15 @@ END;
 				$username = htmlentities(stripslashes($info->name));
 				$usermenu = run("users:infobox:menu",array($info->ident));
 				if ($info->ident == $profile_id || (logged_on && (!isset($profile_id) && $info->ident == $_SESSION['userid']))) {
-					$rsslink = "<br />(<a href=\"{$url}{$info->username}/rss/\">RSS</a>)";
+					$rsslink = "<br /><a href=\"{$url}{$info->username}/rss/\">RSS</a> | <a href=\"{$url}{$info->username}/tags/\">" . gettext("Tags") . "</a> | <a href=\"{$url}{$info->username}/feeds/\">" . gettext("Resources") . "</a>";
 				}
 				$body .= <<< END
 		<td align="center" valign="top">
+			<p>
 			<a href="{$url}{$info->username}/">
-			<img src="{$url}_icons/data/{$icon}" width="{$width}" height="{$height}" alt="{$username}" border="0" /></a><br />
-			<span class="userdetails">{$username}{$usermenu}{$rsslink}</span>
+			<img src="{$url}_icons/data/{$icon}" width="{$width}" height="{$height}" alt="{$username}" border="0"/></a><br />
+			<span class="userdetails">{$username}&nbsp;&nbsp;{$usermenu}{$rsslink}</span>
+                    </p>
 		</td>
 END;
 		
@@ -84,9 +86,10 @@ END;
 		}
 		
 			$run_result .= run("templates:draw", array(
-						'context' => 'infobox',
-						'name' => $name,
-						'contents' => $body
+						'context' => 'contentholder',
+						'title' => $name,
+						'body' => $body,
+						'submenu' => ''
 					)
 					);
 		

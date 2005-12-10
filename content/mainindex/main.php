@@ -8,6 +8,7 @@
 		$function['content:faq'][] = path . "/content/mainindex/content_main_faq.php";
 		$function['content:privacy'][] = path . "/content/mainindex/content_main_privacy.php";
 		$function['content:terms'][] = path . "/content/mainindex/content_main_terms.php";
+        $function['content:mainindex:loggedout'][] = path . "/content/mainindex/content_loggedout.php";
 
 
 ?>

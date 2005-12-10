@@ -1,19 +1,30 @@
-ALTER TABLE `file_folders` ADD `files_owner` INT NOT NULL AFTER `owner` ;
-ALTER TABLE `file_folders` ADD INDEX ( `files_owner` ) ;
-UPDATE file_folders SET files_owner = owner;
 
-ALTER TABLE `files` ADD `files_owner` INT NOT NULL AFTER `owner` ;
-ALTER TABLE `files` ADD INDEX ( `files_owner` ) ;
-UPDATE files SET files_owner = owner;
+DELETE FROM templates ;
+DELETE FROM template_elements ;
 
-ALTER TABLE `users` DROP `community` ,
-DROP `community_owner` ;
-ALTER TABLE `users` ADD `owner` INT DEFAULT '-1' NOT NULL AFTER `template_id` ,
-ADD `user_type` VARCHAR( 128 ) DEFAULT 'person' NOT NULL AFTER `owner` ;
-ALTER TABLE `users` ADD INDEX ( `owner` );
-ALTER TABLE `users` ADD INDEX ( `user_type` ) ;
+ALTER TABLE users ADD last_action INT NOT NULL after user_type ;
 
-ALTER TABLE `weblog_posts` DROP `community`;
-ALTER TABLE `weblog_posts` ADD `weblog` INT DEFAULT '-1' NOT NULL AFTER `owner` ;
-ALTER TABLE `weblog_posts` ADD INDEX ( `weblog` ) ;
-UPDATE weblog_posts SET weblog = owner;
+CREATE TABLE `content_flags` (
+  `ident` int(11) NOT NULL auto_increment,
+  `url` varchar(128) NOT NULL default '',
+  PRIMARY KEY  (`ident`),
+  KEY `url` (`url`)
+) ;
+CREATE TABLE `password_requests` (
+  `ident` int(11) NOT NULL auto_increment,
+  `owner` int(11) NOT NULL default '0',
+  `code` varchar(128) NOT NULL default '',
+  PRIMARY KEY  (`ident`),
+  KEY `owner` (`owner`,`code`)
+) ;
+
+CREATE TABLE `user_flags` (
+  `ident` int(11) NOT NULL auto_increment,
+  `user_id` int(11) NOT NULL default '0',
+  `flag` varchar(64) NOT NULL default '',
+  `value` varchar(64) NOT NULL default '',
+  PRIMARY KEY  (`ident`),
+  KEY `user_id` (`user_id`,`flag`,`value`)
+) ;
+
+INSERT INTO `user_flags` VALUES (0,1,'admin','1');

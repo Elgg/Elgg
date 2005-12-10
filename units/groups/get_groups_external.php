@@ -5,7 +5,7 @@
 	
 		$ident = (int) $parameter[0];
 		
-		// if (!isset($_SESSION['groups_cache']) || (time() - $_SESSION['groups_cache']->created > 60)) {
+		//if (!isset($_SESSION['groups_cache']) || (time() - $_SESSION['groups_cache']->created > 60)) {
 		
 			$where1 = run("users:access_level_sql_where",$ident);
 			$groups = db_query("select groups.name, groups.ident, groups.access, groups.owner, 
@@ -14,12 +14,11 @@
 										left join groups on groups.ident = group_membership.group_id
 										left join users on users.ident = groups.owner
 										where ($where1) and group_membership.user_id = $ident");
-			$tempdata = "";
 			
 			$groupslist = array();
 			if (sizeof($groups) > 0) {
 				foreach($groups as $group) {
-					
+					$tempdata = "";
 					// @unset($data);
 					$tempdata->name = stripslashes($group->name);
 					$tempdata->ident = $group->ident;
@@ -32,8 +31,11 @@
 				}
 			}
 			
-		// }
+			$_SESSION['groups_cache']->created = time();
+			$_SESSION['groups_cache']->data = $groupslist;
+			
+		//}
 		
-		$run_result = $groupslist;
+		$run_result = $_SESSION['groups_cache']->data;
 
 ?>

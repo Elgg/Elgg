@@ -7,6 +7,7 @@
         var $postedname;
         var $body;
         var $posted;
+        var $type = 'comment';
 
         var $exists;
 

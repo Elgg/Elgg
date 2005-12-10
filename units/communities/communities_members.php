@@ -40,12 +40,14 @@ END;
 		$friends_menu = run("users:infobox:menu",array($info->ident));
 		$body .= <<< END
 		<td align="center">
+			<p>
 			<a href="{$url}{$friends_username}/">
 			<img src="{$url}_icons/data/{$icon}" width="{$width}" height="{$height}" alt="{$friends_name}" border="0" /></a><br />
 			<span class="userdetails">
 				{$friends_name}
 				{$friends_menu}
 			</span>
+			</p>
 		</td>
 END;
 					if ($i % 5 == 0) {
@@ -54,7 +56,7 @@ END;
 					$i++;
 			}
 		} else {
-				$body .= "<td>This community doesn't currently have any members.</td>";
+				$body .= "<td><p>". gettext("This community doesn't currently have any members.") . "</p></td>";
 		}
 		$body .= <<< END
 	</tr>

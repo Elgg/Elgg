@@ -45,12 +45,14 @@ END;
 		$friends_menu = run("users:infobox:menu",array($info->ident));
 		$body .= <<< END
 		<td align="center">
+			<p>
 			<a href="{$url}{$friends_username}/">
 			<img src="{$url}_icons/data/{$icon}" width="{$width}" height="{$height}" alt="{$friends_name}" border="0" /></a><br />
 			<span class="userdetails">
 				{$friends_name}
 				{$friends_menu}
 			</span>
+			</p>
 		</td>
 END;
 					if ($i % 5 == 0) {
@@ -60,9 +62,9 @@ END;
 			}
 		} else {
 			if ($user_id == $_SESSION['userid']) {
-				$body .=  "<td>Nobody's listed you as a friend! Maybe you need to start chatting to some other users?</td>";
+				$body .=  "<td><p>" . gettext("Nobody's listed you as a friend! Maybe you need to start chatting to some other users?") . "</p></td>";
 			} else {
-				$body .= "<td>This user isn't currently listed as anyone's friend. Maybe you could be the first?</td>";
+				$body .= "<td><p>" . gettext("This user isn't currently listed as anyone's friend. Maybe you could be the first?") . "</p></td>";
 			}
 		}
 		$body .= <<< END

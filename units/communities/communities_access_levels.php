@@ -2,12 +2,12 @@
 
 	// Get communities
 	
-		$communities = db_query("select * from users where owner = " . $_SESSION['userid']);
+		$communities = db_query("select * from users where owner = " . $_SESSION['userid'] . " and user_type = 'community'");
 	
-		if (sizeof($communities) > 0) {
+		if (sizeof($communities) > 0 && $communities != null) {
 			foreach($communities as $community) {
 				
-				$data['access'][] = array("Community: " . $community->name, "community" . $community->ident);
+				$data['access'][] = array(gettext("Community") .": " . $community->name, "community" . $community->ident);
 				
 			}
 		}
@@ -18,10 +18,10 @@
 										and users.owner <> " . $_SESSION['userid'] . "
 										and friends.owner = " . $_SESSION['userid']);
 		
-		if (sizeof($communities) > 0) {
+		if (sizeof($communities) > 0 && $communities != null) {
 			foreach($communities as $community) {
 				
-				$data['access'][] = array("Community: " . $community->name, "community" . $community->ident);
+				$data['access'][] = array(gettext("Community") . ": " . $community->name, "community" . $community->ident);
 				
 			}
 		}

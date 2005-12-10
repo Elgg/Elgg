@@ -4,11 +4,12 @@
 	
 		$post = $parameter;
 		
+              $addComment = gettext("Add a comment"); // gettext variable
 		$run_result .= <<< END
 		
 	<form action="" method="post">
 	
-		<h2>Add a comment</h2>
+		<h2>$addComment</h2>
 	
 END;
 
@@ -29,7 +30,7 @@ END;
 		$run_result .= run("templates:draw", array(
 		
 								'context' => 'databox1',
-								'name' => "Your comment text",
+								'name' => gettext("Your comment text"),
 								'column1' => $field
 		
 							)
@@ -38,13 +39,13 @@ END;
 		if (logged_on) {
 			$comment_name = $_SESSION['name'];
 		} else {
-			$comment_name = "Guest";
+			$comment_name = gettext("Guest");
 		}
 
 		$run_result .= run("templates:draw", array(
 		
 								'context' => 'databox1',
-								'name' => 'Your name',
+								'name' => gettext("Your name"),
 								'column1' => "<input type=\"text\" name=\"postedname\" value=\"".htmlentities($comment_name)."\" />"
 		
 							)
@@ -54,7 +55,7 @@ END;
 		
 								'context' => 'databox1',
 								'name' => '&nbsp;',
-								'column1' => "<input type=\"submit\" value=\"Add comment\" />"
+								'column1' => "<input type=\"submit\" value=\"".gettext("Add comment")."\" />"
 		
 							)
 							);

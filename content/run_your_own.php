@@ -5,10 +5,10 @@
 
 	// Draw page
 		echo run("templates:draw:page", array(
-					"Running Your Own " . sitename,
+					sprintf(gettext("Running Your Own %s"),sitename),
 					run("templates:draw", array(
 													'contents' => run("content:run_your_own"),
-													'name' => "Running Your Own " . sitename,
+													'name' => sprintf(gettext("Running Your Own %s"), sitename),
 													'context' => 'infobox'
 												)
 												)

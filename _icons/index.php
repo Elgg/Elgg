@@ -9,20 +9,27 @@
 		run("userdetails:init");
 		run("profile:init");
 		run("icons:init");
+		
+		if (isset($_REQUEST['context'])) {
+			define("context", $_REQUEST['context']);
+		} else {
+			define("context", "account");
+		}
+
 
 	// You must be logged on to view this!
 		protect(1);
 		
-		$title = run("profile:display:name") . " :: Manage user icons";
+		$title = run("profile:display:name") . " :: ". gettext("Manage user icons");
 		
 		$body = run("content:icons:manage");
 		$body .= run("icons:edit");
 		$body .= run("icons:add");
 		
 		$mainbody = run("templates:draw", array(
-							'context' => 'infobox',
-							'name' => $title,
-							'contents' => $body
+							'context' => 'contentholder',
+							'title' => $title,
+							'body' => $body
 						)
 						);
 						

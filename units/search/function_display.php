@@ -4,12 +4,12 @@
 	
 		global $search_exclusions;
 		$search_exclusions = array();
-		if (isset($_REQUEST) || (isset($parameter) && sizeof($parameter) == 2)) {
+		if (isset($_GET) || (isset($parameter) && sizeof($parameter) == 2)) {
 			
 			if ((isset($parameter) && sizeof($parameter) == 2)) {
 				$query[$parameter[0]] = $parameter[1];
 			} else {
-				$query = $_REQUEST;
+				$query = $_GET;
 			}
 			
 	// A flag to see if we've actually had any results displayed

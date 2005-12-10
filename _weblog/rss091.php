@@ -43,7 +43,7 @@ END;
 					foreach($entries as $entry) {
 						$title = htmlentities(stripslashes($entry->title));
 						$link = url . $username . "/weblog/" . $entry->ident . ".html";
-						$body = htmlentities(run("weblogs:text:process",stripslashes($entry->body)));
+						$body = (run("weblogs:text:process",stripslashes($entry->body)));
 						echo <<< END
     <item>
         <title>$title</title>

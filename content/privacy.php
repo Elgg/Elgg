@@ -5,10 +5,10 @@
 
 	// Draw page
 		echo run("templates:draw:page", array(
-					sitename . " Privacy Policy",
+					sprintf(gettext("%s Privacy Policy"),sitename),
 					run("templates:draw", array(
 													'contents' => run("content:privacy"),
-													'name' => sitename . " Privacy Policy",
+													'name' => sprintf(gettext("%s Privacy Policy"), sitename),
 													'context' => 'infobox'
 												)
 												)

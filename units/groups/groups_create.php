@@ -1,17 +1,22 @@
 <?php
 
+       $header = gettext("Create a new group"); // gettext variable
+       $labelValue = gettext("Group name:"); // gettext variable
+       $buttonValue = gettext("Create"); // gettext variable
 	$run_result .= <<< END
 
-<h2>
-	Create a new group
-</h2>
+<h5>
+	$header
+</h5>
 <form action="" method="post">
-	<label>
-		Group name:
-		<input type="text" name="name" value="" />
-	</label>
-	<input type="submit" value="Create" />
-	<input type="hidden" name="action" value="group:create" />
+	<p>
+		<label>
+			$labelValue
+			<input type="text" name="name" value="" />
+		</label>
+		<input type="submit" value=$buttonValue />
+		<input type="hidden" name="action" value="group:create" />
+	</p>
 </form>
 
 END;

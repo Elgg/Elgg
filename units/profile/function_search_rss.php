@@ -21,7 +21,7 @@
 			if ($result && sizeof($result) > 0) {
 				foreach($result as $key => $info) {
 					$run_result .= "\t<item>\n";
-					$run_result .= "\t\t<title>'" . htmlentities($parameter[0]) . "' includes " . htmlentities($parameter[1]) . " :: " . htmlentities(stripslashes($info->name)) . "</title>\n";
+					$run_result .= "\t\t<title><![CDATA['" . htmlentities($parameter[0]) . "' = " . htmlentities($parameter[1]) . " :: " . htmlentities(stripslashes($info->name)) . "]]></title>\n";
 					$run_result .= "\t\t<link>" . url . htmlentities(stripslashes($info->username)) . "</link>\n";
 					$run_result .= "\t</item>\n";
 				}

@@ -6,7 +6,7 @@
 
 	<br />
 	<table width="250" class="actionbox">
-		<caption align="top">Files</caption>
+		<caption align="top"><?php echo gettext("Files"); ?></caption>
 		<tr>
 		</tr>
 	</table>

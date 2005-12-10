@@ -7,15 +7,15 @@
 		
 		run("search:init");
 		
-		$title = "Some Tags";
+		$title = gettext("Some Tags");
 
 		$body = run("content:tags");
 		$body .= run("search:tags:display");
 		
 		$body = run("templates:draw", array(
-						'context' => 'infobox',
-						'name' => $title,
-						'contents' => $body
+						'context' => 'contentholder',
+						'title' => $title,
+						'body' => $body
 					)
 					);
 					

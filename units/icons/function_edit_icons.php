@@ -15,26 +15,29 @@
 			$currenticon = $_SESSION['icon'];
 		}
 
+              $header = gettext("Site pictures"); // gettext variable
 		$body = <<< END
 		<h2>
-			Site pictures
+			$header
 		</h2>
 END;
 		
 	// If we have some icons, display them; otherwise explain that there isn't anything to edit
 		if (sizeof($icons) > 0) {
 			
-			$body .= <<< END
+			$desc = gettext("Site pictures are small pictures that act as a representative icon throughout the system."); // gettext variable
+                    $body .= <<< END
 		<form action="" method="post" />		
 			<p>
-				Site pictures are small pictures that act as a representative icon throughout the system.
+				$desc
 			</p>
 END;
 			foreach($icons as $icon) {
 				list($width, $height, $type, $attr) = getimagesize(path . "_icons/data/" . $icon->filename);
 
+				$delete = gettext("Delete");
 				$name = <<< END
-						<label>Delete:
+						<label>$delete:
 							<input type="checkbox" name="icons_delete[]" value="{$icon->ident}" />
 						</label>
 END;
@@ -47,12 +50,14 @@ END;
 					$checked = "";
 				}
 				$defaulticon = htmlentities(stripslashes($icon->description));
+                           $nameLabel = gettext("Name:");//gettext variable
+                           $default = gettext("Default:");//gettext variable
 				$column2 = <<< END
-						<label>Name:
+						<label>$nameLabel
 							<input	type="text" name="description[{$icon->ident}]" 
 									value="{$defaulticon}" />
 						</label><br />
-						<label>Default: <input type="radio" name="defaulticon" value="{$icon->ident}" {$checked} /></label>
+						<label>$default <input type="radio" name="defaulticon" value="{$icon->ident}" {$checked} /></label>
 END;
 
 				$body .= run("templates:draw", array(
@@ -70,8 +75,9 @@ END;
 			} else {
 				$checked = "";
 			}
-			$column1 = <<< END
-						<label>No default:
+			$noDefault = gettext("No default:");
+                     $column1 = <<< END
+						<label>$noDefault
 						<input type="radio" name="defaulticon" value="-1" {$checked} /></label>
 END;
 			$body .= run("templates:draw", array(
@@ -79,19 +85,21 @@ END;
 							'column1' => $column1
 						)
 						);
-			$body .= <<< END
+			$save = gettext("Save"); // gettext variable
+                     $body .= <<< END
 				<p align="center">
 					<input type="hidden" name="action" value="icons:edit" />
-					<input type="submit" value="Save" />		
+					<input type="submit" value=$save />		
 				</p>
 			</form>
 END;
 			
 		} else {
-
+       
+       $noneLoaded = gettext("You don't have any site pictures loaded yet."); // gettext variable
 	$body .= <<< END
 		<p>
-			You don't have any site pictures loaded yet.
+			$noneLoaded
 		</p>
 END;
 

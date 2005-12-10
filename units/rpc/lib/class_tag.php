@@ -6,7 +6,7 @@
         var $tagtype;
         var $ref;
         var $access;
-        var $owner;
+        var $type = 'tag';
 
         var $exists;
 
@@ -67,14 +67,6 @@
         function getAccess()
         {
             return $this->access;
-        }
-
-        /**
-         *
-         */
-        function getOwner()
-        {
-            return $this->owner;
         }
 
         /**

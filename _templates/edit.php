@@ -10,7 +10,9 @@
 		run("profile:init");
 		run("templates:init");
 		
-		$title = run("profile:display:name") . " :: Template Edit";
+		define("context", "account");
+		
+		$title = run("profile:display:name") . " :: " . gettext("Template Edit");
 		
 		$body = run("content:templates:edit");
 		
@@ -22,9 +24,9 @@
 		}
 		
 		$body = run("templates:draw", array(
-						'context' => 'infobox',
-						'name' => $title,
-						'contents' => $body
+						'context' => 'contentholder',
+						'title' => $title,
+						'body' => $body
 					)
 					);
 		

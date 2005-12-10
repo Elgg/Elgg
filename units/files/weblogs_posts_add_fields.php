@@ -49,7 +49,8 @@ END;
 		if (isset($parameter)) {
 
 			$userid = (int) $parameter;
-				
+			
+                     $embedFile = sprintf(gettext("Embed a file from your %s file storage:"), $sitename);	
 			$run_result .= <<< END
 <script language="javascript">
 <!--
@@ -65,18 +66,20 @@ END;
 			
 			
 			<p>
-				Embed a file from your $sitename file storage:<br />
+				$embedFile<br />
 				<select name="weblog_add_file" id="weblog_add_file">
 		
 END;
 
 			$run_result .= viewfolder(-1, $userid, 0);
 
+                    $addCode = gettext("This will add a code to your weblog post that will be converted into an embedded file."); // gettext variable
+                    $buttonValue = gettext("Add"); // gettext value
 			$run_result .= <<< END
 		
 				</select>
-				<input type="button" value="Add" onclick="addFile(this.form)" /><br />
-				(This will add a code to your weblog post that will be converted into an embedded file.)
+				<input type="button" value="$buttonValue" onclick="addFile(this.form)" /><br />
+				($addCode)
 			</p>
 		
 END;

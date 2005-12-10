@@ -3,6 +3,9 @@
    * Function to log off 
    */
 
+  // Remove code from database
+  db_query("update users set code = '' where ident = " . $_SESSION['userid']);
+   
   // Kill entire session (well done)
   session_unset();
   session_destroy();

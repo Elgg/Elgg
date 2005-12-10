@@ -30,7 +30,7 @@
 	
 	// ... and the current user is allowed to access it ...
 				
-					if (run("users:access_level_check",$file->access) == true) {
+					if (run("users:access_level_check",$file->access) == true || $file->owner == $_SESSION['userid']) {
 
 	// Send 304s where possible, rather than spitting out the file each time
 						$if_modified_since = preg_replace('/;.*$/', '', $_SERVER['HTTP_IF_MODIFIED_SINCE']);

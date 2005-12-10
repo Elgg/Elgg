@@ -9,6 +9,7 @@
         var $name;
         var $tags;
         var $access;
+        var $type = 'collection';
 
         var $username;
         var $exists;

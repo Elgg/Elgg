@@ -35,11 +35,11 @@
 				
 		} else {
 			
-			$folder_name = "Root Folder";
+			$folder_name = gettext("Root Folder");
 			
 		}
 		
-		$body = "<h2>" . $folder_name . "</h2>";
+		$body = "<h5>" . $folder_name . "</h5>";
 		
 		if ($folder != -1) {
 			
@@ -57,7 +57,7 @@
 			
 			
 			$body .= "<p><a href=\"".url."$owner_username/files/$display_parent\">";
-			$body .= "Return to " . stripslashes($parent_details->name);
+			$body .= "". gettext("Return to") ." " . stripslashes($parent_details->name);
 			$body .= "</a></p>";
 		}
 		
@@ -69,11 +69,12 @@
 	
 		if (sizeof($folders) > 0) {
 			
-			$body .= <<< END
+			$subFolders = gettext("Subfolders"); // gettext variable
+                     $body .= <<< END
 
-					<h3>
-						Subfolders
-					</h3>
+					<h5>
+						$subFolders
+					</h5>
 
 END;
 			
@@ -83,16 +84,18 @@ END;
 					$username = $owner_username;
 					$ident = (int) $folder_details->ident;
 					$name = stripslashes($folder_details->name);
-					if ($folder_details->owner == $_SESSION['userid'] || $folder_details->files_owner == $_SESSION['userid']) {
-						$foldermenu = <<< END
-	[<a href="{$url}_files/action_redirection.php?action=delete_folder&delete_folder_id={$folder_details->ident}" onClick="return confirm('Are you sure you want to permanently delete this folder?')">Delete</a>]
+					if (run("permissions:check", array("files:edit", $folder_details->owner))  || run("permissions:check", array("files:edit", $folder_details->files_owner))) {
+					    $areyouSure = gettext("Are you sure you want to permanently delete this folder?"); // gettext variable
+                                      $delete = gettext("Delete"); // gettext variable
+                                      $foldermenu = <<< END
+	[<a href="{$url}_files/action_redirection.php?action=delete_folder&delete_folder_id={$folder_details->ident}" onClick="return confirm('$areyouSure')">$delete</a>]
 END;
 					} else {
 						$foldermenu = "";
 					}
 					$keywords = run("display:output_field", array("","keywords","folder","folder",$ident,$folder_details->owner));
 					if ($keywords) {
-						$keywords = "Keywords: " . $keywords;
+						$keywords = gettext("Keywords: ") . $keywords;
 					}
 					$body .= run("templates:draw", array(
 									'context' => 'folder',
@@ -120,7 +123,7 @@ END;
 			
 			foreach($files as $file) {
 				
-				if (run("users:access_level_check",$file->access) == true) {
+				if (run("users:access_level_check",$file->access) == true || $file->owner == $_SESSION['userid']) {
 					$username = $owner_username;
 					$ident = (int) $file->ident;
 					$folder = $file->folder;
@@ -136,17 +139,20 @@ END;
 					} else {
 						$icon = $url . "_files/file.png";
 					} */
-					if ($file->owner == $_SESSION['userid'] || $file->files_owner == $_SESSION['userid']) {
+					if (run("permissions:check", array("files:edit", $file->owner))  || run("permissions:check", array("files:edit", $file->files_owner))) {
+                                         $areyouSure = gettext("Are you sure you want to permanently delete this file?"); // gettext variable
+                                         $delete = gettext("Delete"); // gettext variable
+                                         $edit = gettext("Edit"); // gettext variable
 						$filemenu .= <<< END
-	[<a href="{$url}_files/edit_file.php?edit_file_id={$file->ident}">Edit</a>]
-	[<a href="{$url}_files/action_redirection.php?action=delete_file&delete_file_id={$file->ident}" onClick="return confirm('Are you sure you want to permanently delete this file?')">Delete</a>]
+	[<a href="{$url}_files/edit_file.php?edit_file_id={$file->ident}&owner=$page_owner">$edit</a>]
+	[<a href="{$url}_files/action_redirection.php?action=delete_file&delete_file_id={$file->ident}" onClick="return confirm('$areyouSure')">$delete</a>]
 END;
 					} else {
 						$filemenu = "";
 					}
 					$keywords = run("display:output_field", array("","keywords","file","file",$ident,$file->owner));
 					if ($keywords) {
-						$keywords = "Keywords: " . $keywords;
+						$keywords = gettext("Keywords: ") . $keywords;
 					}
 					$body .= run("templates:draw", array(
 									'context' => 'file',
@@ -172,7 +178,7 @@ END;
 	
 		if (sizeof($files) ==0 && sizeof($folders) == 0) {
 			
-			$body .= "<p>This folder is currently empty.</p>";
+			$body .= "<p>" . gettext("This folder is currently empty.") . "</p>";
 			
 		}
 		

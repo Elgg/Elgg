@@ -3,82 +3,66 @@
 	global $template;
 	global $template_definition;
 	
-	$url = url;
-	
 	$template_definition[] = array(
 									'id' => 'weblogpost',
-									'name' => "Weblog Post",
-									'description' => "A template for each weblog post.",
+									'name' => gettext("Weblog Post"),
+									'description' => gettext("A template for each weblog post."),
 									'glossary' => array(
-															'{{title}}' => 'Post title',
-															'{{body}}' => 'The text of the post',
-															'{{username}}' => 'The username of the person making the post',
-															'{{usericon}}' => 'Their user icon',
-															'{{fullname}}' => 'Their full name',
-															'{{date}}' => 'The time and date of the post',
-															'{{commentslink}}' => 'A link to any comments',
-															'{{trackbackslink}}' => 'A link to any trackbacks',
-															'{{comments}}' => 'A list of comments, if any'
+															'{{title}}' => gettext('Post title'),
+															'{{body}}' => gettext('The text of the post'),
+															'{{username}}' => gettext('The username of the person making the post'),
+															'{{usericon}}' => gettext('Their user icon'),
+															'{{fullname}}' => gettext('Their full name'),
+															'{{date}}' => gettext('The time and date of the post'),
+															'{{commentslink}}' => gettext('A link to any comments'),
+															'{{trackbackslink}}' => gettext('A link to any trackbacks'),
+															'{{comments}}' => gettext('A list of comments, if any')
 														)
 									);
 	
+	$postedby = gettext("Posted by");
 	$template['weblogpost'] = <<< END
 
-<table width="100%" style="border: 0px; border-bottom: 1px; border-style: solid; border-color: #000000">
-	<tr>
-		<td valign="top" width="100" align="center">
-			<div style="float:right">
-				<p><br />
-				<a href="{$url}{{username}}/weblog/">
-					<img src="{$url}_icons/data/{{usericon}}" border="0" /><br />
-					<a href="{$url}{{username}}/weblog/">{{fullname}}</a></p>
-		</td>
-		<td width="20">&nbsp;</td>
-		<td valign="top">		
-			<p>
-				<br />
-				<b>{{title}}</b>
-			</p>
-			<div style="margin-left: 20px">
-				{{body}}
-			</div>
-			<p>
-				<small>Posted by {{username}} at {{date}} | {{commentslink}} {{trackbackslink}}</small>
-			</p>
-			{{comments}}
-		</td>
-	</tr>
-</table>
 
+<div class="user"><p style="margin-top: 0px; padding-top: 0px"><a href="{{url}}{{username}}/weblog/"><img src="{{url}}_icons/data/{{usericon}}"/></a><br /><a href="{{url}}{{username}}/weblog/">{{fullname}}</a></p></div><div class="Post"><h5>{{title}}</h5>
+  <p>{{body}}</p>
+  <h3>
+	  $postedby {{username}}
+      | {{commentslink}}
+  </h3>
+  {{comments}}
+</div>
+<div class="clearing"></div>	
 END;
 
 	$template_definition[] = array(
 									'id' => 'weblogcomments',
-									'name' => "Weblog Comments",
-									'description' => "A placeholder for weblog comments.",
+									'name' => gettext("Weblog Comments"),
+									'description' => gettext("A placeholder for weblog comments."),
 									'glossary' => array(
-															'{{comments}}' => 'The list of comments themselves'
+															'{{comments}}' => gettext('The list of comments themselves')
 														)
 									);
+									
+	$comments = gettext("Comments");
 
 	$template['weblogcomments'] = <<< END
 
 <hr noshade="noshade" />
-<h3>Comments</h3>
+<h5>$comments</h5>
 <ol>
 {{comments}}
-</ol>
-	
+</ol>	
 END;
 
 	$template_definition[] = array(
 									'id' => 'weblogcomment',
-									'name' => "Individual weblog comment",
-									'description' => "A template for each individual weblog comment. (Displayed one after the other, embedded in the comment placeholder.)",
+									'name' => gettext("Individual weblog comment"),
+									'description' => gettext("A template for each individual weblog comment. (Displayed one after the other, embedded in the comment placeholder.)"),
 									'glossary' => array(
-															'{{body}}' => 'Post body',
-															'{{postedname}}' => 'The name of the person making the comment',
-															'{{weblogcomment}}' => 'When the comment was posted'
+															'{{body}}' => gettext('Post body'),
+															'{{postedname}}' => gettext('The name of the person making the comment'),
+															'{{weblogcomment}}' => gettext('When the comment was posted')
 														)
 									);
 
@@ -87,7 +71,7 @@ END;
 <li>
 	{{body}}
 	<p style="border: 0px; border-bottom: 1px; border-style: solid; border-color: #000000">
-		<small>Posted by {{postedname}} on {{posted}}</small>
+		<small>$postedby {{postedname}} on {{posted}}</small>
 	</p>
 </li>
 	

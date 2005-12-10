@@ -34,4 +34,6 @@
     // File class
         $function['files:instance'][] = path . "units/rpc/lib/function_load_file.php";
 
+    // Tag URI handler
+        $function['tags:uri:object'][] = path . "units/rpc/lib/function_taguri_object.php";
 ?>

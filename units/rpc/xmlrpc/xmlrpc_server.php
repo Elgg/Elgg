@@ -48,6 +48,7 @@
     include path . "units/rpc/xmlrpc/library_blogger_xmlrpc.php";
     include path . "units/rpc/xmlrpc/library_mt_xmlrpc.php";
     include path . "units/rpc/xmlrpc/library_livejournal_xmlrpc.php";
+    include path . "units/rpc/xmlrpc/library_elgg_user.php";
 
     // Fire up the server
     $server = new XML_RPC_Server($handlers, 0);

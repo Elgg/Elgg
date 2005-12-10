@@ -13,6 +13,7 @@
         var $access;
         var $size;
         var $time_uploaded;
+        var $type = 'file';
 
         var $exists;
 

@@ -23,7 +23,9 @@
 		$run_result .= run("templates:draw",array(
 							'context' => 'pageshell',
 							'title' => $parameter[0],
-							'menu' => run("display:menus"),
+							'menu' => run("display:menus:main"),
+							'submenu' => run("display:menus:sub"),
+							'top' => run("display:menus:top"),
 							'sidebar' => run("display:sidebar"),
 							'mainbody' => $parameter[1],
 							'messageshell' => $messageshell

@@ -2,15 +2,15 @@
 
 		global $page_owner;
 		
-		$title = run("profile:display:name") . " :: Communities";
+		$title = run("profile:display:name") . " :: ". gettext("Communities") ."";
 
 		$body = run("content:communities:manage");
 		$body .= run("communities:edit",array($page_owner));
 		
 		$body = run("templates:draw", array(
-						'context' => 'infobox',
-						'name' => $title,
-						'contents' => $body
+						'context' => 'contentholder',
+						'title' => $title,
+						'body' => $body
 					)
 					);
 

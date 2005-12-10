@@ -18,4 +18,7 @@
 		global $metatags;
 		// $metatags .= " 	<base href=\"".url."\" />";
 
+	// Set default charset to UTF-8
+		// @ini_set("default_charset","UTF-8");
+		
 ?>

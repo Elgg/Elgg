@@ -9,6 +9,8 @@
 		run("friends:init");
 		run("weblogs:init");
 		
+		define("context", "weblog");
+		
 		global $profile_id;
 		global $individual;
 		
@@ -27,17 +29,17 @@
 			$profile_id = $post->weblog;
 			$page_owner = $post->weblog;
 			
-			$title = run("profile:display:name") . " :: Weblog :: " . stripslashes($post->title);
+			$title = run("profile:display:name") . " :: " . gettext("Weblog") . " :: " . stripslashes($post->title);
 			
 			$time = gmdate("F d, Y",$post->posted);
 			$body = "<h2 class=\"weblogdateheader\">$time</h2>\n";
 			
-			$body .= run("weblogs:posts:view",$post);
+			$body .= run("weblogs:posts:view:individual",$post);
 			
 			$body = run("templates:draw", array(
-							'context' => 'infobox',
-							'name' => $title,
-							'contents' => $body
+							'context' => 'contentholder',
+							'title' => $title,
+							'body' => $body
 						)
 						);
 			

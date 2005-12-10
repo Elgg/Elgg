@@ -1,16 +1,24 @@
 <?php
 
-	$run_result .= run("templates:draw", array(
-						'context' => 'menuitem',
-						'name' => 'View your profile',
-						'location' => url . $_SESSION['username'] . '/'
-					)
-					);
-	$run_result .= run("templates:draw", array(
-						'context' => 'menuitem',
-						'name' => 'Edit your profile',
-						'location' => url . 'profile/edit.php'
-					)
-					);
+	global $page_owner;
+	
+	if (context == "profile" && $page_owner == $_SESSION['userid']) {	
+
+		$run_result .= run("templates:draw", array(
+							'context' => 'selectedmenuitem',
+							'name' => gettext("Your Profile"),
+							'location' => url . $_SESSION['username'] . '/'
+						)
+						);
+	} else {
+		
+		$run_result .= run("templates:draw", array(
+							'context' => 'menuitem',
+							'name' => gettext("Your Profile"),
+							'location' => url . $_SESSION['username'] . '/'
+						)
+						);
+		
+	}
 
 ?>

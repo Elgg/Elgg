@@ -454,9 +454,6 @@
             {$username = 5;
                 $weblog = run('weblogs:instance', array('user_id' => $user_id,
                                                         'blog_id' => $blogid));
-//$final = new XML_RPC_Value($weblog->user_id, 'string');
-//$response = new XML_RPC_Response($final);
-//return $response;
 
                 // Get the posts
                 $posts  = array_slice($weblog->getPosts(), 0, $numberOfPosts);

@@ -7,15 +7,15 @@
 		
 		run("profile:init");
 		
-		$title = "Search Profiles";
+		$title = gettext("Search Profiles");
 
 		$body = run("content:profile:search");
 		$body .= run("profile:search");
 		
 		$body = run("templates:draw", array(
-						'context' => 'infobox',
-						'name' => $title,
-						'contents' => $body
+						'context' => 'contentholder',
+						'title' => $title,
+						'body' => $body
 					)
 					);
 					

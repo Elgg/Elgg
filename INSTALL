@@ -1,7 +1,7 @@
-Elgg version 0.2 installation instructions
+Elgg version 0.31 installation instructions
 
 Ben Werdmuller <ben@elgg.net>
-21st June, 2005
+9th December, 2005
 
 
 1. BEFORE YOU BEGIN
@@ -16,7 +16,7 @@ installed and the ability to send emails, plus PHP 4.3+ and MySQL
 Red Hat Linux and Microsoft Windows XP.
 
 In your Apache configuration, you must have AllowOverride set to
-All for the virtual server where Elgg is installed.
+All for the directory where Elgg is installed.
 
 Elgg prefers to be installed on the root of a domain - for example,
 at http://elgg.net/, as opposed to http://elgg.net/subdirectory/.
@@ -27,12 +27,13 @@ You must have a database on the MySQL server ready for use by Elgg.
 
 You must have the GD library installed.
 
+For internationalisation, you must have gettext support installed
+on your server and compiled into PHP.  If this is not found, Elgg
+will revert to English.
+
 If you have any problems installing, please consider joining
 http://elgg.net/ and joining the Elgg Installation Support
 community at http://elgg.net/support/ .
-
-This version of Elgg only supports upgrading from version 0.1.1a
-and above. Upgrading from all older versions will require a re-install.
 
 
 1.2 Recommendations
@@ -60,8 +61,8 @@ Move all files aside from README, LICENSE, INSTALL and the
 server directory.  Files in the root of the distribution must be in 
 the root of your web server account.
 
-Remember to include the .htaccess files; these may be invisible by
-default if you are using MacOS X.
+ENSURE YOU HAVE INCLUDED .htaccess files - on Linux and Unix systems
+(including Mac OS X) you 
 
 IF YOU ARE UPGRADING, you may wish to retain your existing
 includes.php file.
@@ -83,10 +84,6 @@ terminal, navigate to the _icons folder, and type:
 
 Repeat this process for /_files/data and /_files/cache.
 
-IF YOU ARE UPGRADING, please note that /_files/cache is new in this
-release. Please remember to chmod it to 777.
-
-
 
 3. SETTING UP THE DATABASE
 
@@ -96,7 +93,7 @@ If you are upgrading, please skip to 3.4.
 
 There is a database schema supplied in the /distribution/database
 folder.  You must install this into the database you have set aside
-for elgg.
+for Elgg.
 
 If you are running phpMyAdmin, a third-party tool for easily
 maintaining MySQL databases, go to 3.2; otherwise go to 3.3.
@@ -127,8 +124,18 @@ directory.
 
 3.4 Upgrading
 
-Perform either 3.2 or 3.3 but with the upgrade.sql file found in
-/distribution/database instead of elgg.sql.
+If you are upgrading from 0.301, you don't need to perform any
+SQL upgrade steps.
+
+Otherwise, perform the above steps but with the upgrade.sql file 
+found in /distribution/database.
+
+NB: The navigation system has changed severely since the previous
+version of Elgg. As a result, existing templates WILL NOT WORK.
+If you would like to keep your existing templates, you should back
+up the 'templates' and 'template_elements' tables in your database.
+You can then change templates over using the instructions in
+/THEMECHANGE.
 
 
 
@@ -160,11 +167,8 @@ alter the file /content/mainindex/content_main_index.php.
 4.3 XML-RPC
 
 Misja Hoebe has written an XML-RPC unit that requires the PEAR library.
-This allows users to use third-party blogging tools to post to your
-Elgg systme.
-
 Please see units/rpc/README for more details. If you are sure you have
-all the prerequisites for this unit, uncomment the 'include XMLRPC' line
+all the prerequisites for this unit, uncomment the include XMLRPC line
 in the plugins section of includes.php.
 
 
@@ -176,6 +180,11 @@ password is "password"; you should log in and change this as soon
 as possible. All new users will automatically list the news account
 as a friend, so you should not delete it.
 
+The news account comes with full administrator access, whether you've
+upgraded or installed fresh. To change this (we recommend that you do 
+as a matter of urgency for security reasons), create a second account, 
+and give that account administrator privileges using the administrator
+panel.
 
 
 5. FURTHER CUSTOMISATION AND DEVELOPMENTS

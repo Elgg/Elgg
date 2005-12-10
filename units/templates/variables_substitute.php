@@ -5,6 +5,7 @@
 	// "variablename" and returns the proper variable
 
 		global $menubar;
+		global $submenubar;
 		global $metatags;
 		
 		$variables = $parameter[0];
@@ -15,7 +16,38 @@
 		} else {
 			switch($template_variable) {
 				
-				case "menubar":			$run_result = $menubar;
+				case "username":		if (logged_on) {
+											$run_result = $_SESSION['username'];
+										} else {
+											$run_result = gettext("Guest");
+										}
+										break;
+				case "userfullname":	if (logged_on) {
+											$run_result = $_SESSION['name'];
+										} else {
+											$run_result = gettext("Guest");
+											$run_result .= " [<a href=\"".url."\">" . gettext("Log in") . "</a>]";
+										}
+										break;
+										break;
+				case "menu":			if (logged_on) {
+															$run_result = run("templates:draw", array(
+																					'menuitems' => run("menu:main"),
+																					'context' => 'menu'
+																				));
+														}
+										break;
+				case "submenu":			$run_result = run("templates:draw", array(
+																					'submenuitems' => run("menu:sub"),
+																					'context' => 'submenu'
+																				));
+										break;
+				case "topmenu":			if (logged_on) {
+															$run_result = run("templates:draw", array(
+																					'topmenuitems' => run("menu:top"),
+																					'context' => 'topmenu'
+																				));
+														}
 										break;
 				case "url":				$run_result = url;
 										break;

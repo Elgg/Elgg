@@ -14,7 +14,7 @@
 				$friends[] = $row->ident;
 			}
 		}
-		run("users:infobox",array("Your Friends",array($friends),"<a href=\"friends/\">Friends Screen</a>"));
+		run("users:infobox",array(".". gettext("Your Friends") ."",array($friends),"<a href=\"friends/\">". gettext("Friends Screen") ."</a>"));
 			
 	}
 

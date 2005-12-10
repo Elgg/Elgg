@@ -18,8 +18,8 @@
 	// Allow the user to request a new password
 		$function['invite:password:request'][] = path . "units/invite/password_request.php";
 		$function['invite:password:new'][] = path . "units/invite/new_password.php";
-		
-	// Menu bar
-		$function['menu:main'][] = path . "units/invite/menu_main.php";
-		
+
+	// Submenu
+		$function['menu:sub'][] = path . "units/invite/menu_sub.php";
+				
 ?>

@@ -9,15 +9,17 @@
 		run("profile:init");
 		run("friends:init");
 		
-		$title = run("profile:display:name") . " :: Weblog";
+		define("context", "weblog");
+		
+		$title = run("profile:display:name") . " :: " . gettext("Blog");
 		
 		$body = run("content:weblogs:edit");
 		$body .= run("weblogs:edit");
 
 		$body = run("templates:draw", array(
-						'context' => 'infobox',
-						'name' => $title,
-						'contents' => $body
+						'context' => 'contentholder',
+						'title' => $title,
+						'body' => $body
 					)
 					);
 		

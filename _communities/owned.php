@@ -9,6 +9,8 @@
 		run("userdetails:init");
 		run("profile:init");
 		run("friends:init");
+		
+		define("context", "network");
 
 	// Whose friends are we looking at?
 		global $page_owner;
@@ -16,13 +18,13 @@
 	// You must be logged on to view this!
 	//	protect(1);
 		
-		$title = run("profile:display:name") . " :: Owned Communities";
+		$title = run("profile:display:name") . " :: " . gettext("Owned Communities");
 								
 		echo run("templates:draw:page", array(
 					$title, run("templates:draw", array(
-						'context' => 'infobox',
-						'name' => $title,
-						'contents' => run("communities:owned",array($page_owner))
+						'context' => 'contentholder',
+						'title' => $title,
+						'body' => run("communities:owned",array($page_owner))
 					)
 					)
 				)

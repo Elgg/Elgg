@@ -11,12 +11,14 @@
 			$sitename = sitename;
 			$url = url . "tag/" . $displaytag;
 			
+			$searchdesc = sprintf(gettext("Items tagged with \"%s\" from %s"),$displaytag,$sitename);
+			
 			$run_result .= <<< END
 <rss version="0.91">
   <channel>
   	<title>$sitename :: $displaytag</title>
     <link>$url</link>
-    <description>Items tagged with "$displaytag" from $sitename</description>
+    <description>$searchdesc</description>
 
 END;
 			foreach($data['search:tagtypes'] as $tagtype) {

@@ -7,15 +7,15 @@
 		if (isset($_REQUEST['passwordcode'])) {
 			
 			$code = addslashes($_REQUEST['passwordcode']);
-			$details = db_query("select password_requests.ident as passcodeid, users.* from password_requests left join users on users.ident = password_requests.owner where password_requests.code = '$code'");
+			$details = db_query("select password_requests.ident as passcodeid, users.* from password_requests left join users on users.ident = password_requests.owner where password_requests.code = '$code' and users.user_type = 'person'");
 			if (sizeof($details) > 0) {
 				$details = $details[0];
 				
+                $passwordDesc = sprintf(gettext("A new password has been emailed to you at %s. You should be able to use it immediately; your old one has been deactivated."),$details->email);
 				$run_result .= <<< END
 				
 	<p>
-		A new password has been emailed to you. You should be able to
-		use it immediately; your old one has been deactivated.
+		$passwordDesc
 	</p>
 END;
 				$validcharset = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz234567898765432";
@@ -27,20 +27,7 @@ END;
 				
 				$sitename = sitename;
 				
-				mail($details->email, "Your $sitename password", wordwrap("
-Your $sitename password has been reset.
-
-For your records, your new password is:
-
-	Password: $newpassword
-	
-Please consider changing your password as soon as you have logged in
-for security reasons.
-
-We hope you continue to enjoy using the system.
-
-Regards,
-The $sitename Team"), "From: $sitename <".email.">");
+				mail($details->email, sprintf(gettext("Your %s password"), $sitename), wordwrap(sprintf(gettext("Your %s password has been reset.\n\nFor your records, your new password is:\n\n\tPassword: %s\n\nPlease consider changing your password as soon as you have logged in for security reasons.\n\nWe hope you continue to enjoy using the system.\n\nRegards,\n\nThe %s Team"), $sitename, $newpassword, $sitename)), "From: $sitename <".email.">");
 				
 				$newpassword = md5(($newpassword));
 				db_query("update users set password = '$newpassword' where ident = " . $details->ident);
@@ -48,10 +35,11 @@ The $sitename Team"), "From: $sitename <".email.">");
 
 			} else {
 				
+                $passwordDesc2 = gettext("Your password request code appears to be invalid. Try generating a new one?");
 				$run_result .= <<< END
 				
 	<p>
-		Your password request code appears to be invalid. Try generating a new one?
+		$passwordDesc
 	</p>
 				
 END;
@@ -59,11 +47,11 @@ END;
 			}
 			
 		} else {
-			
+			       $passwordDesc3 = gettext("Sorry, your code was invalid.");
 				$run_result .= <<< END
 				
 	<p>
-		Sorry, your code was invalid.
+		$passwordDesc3
 	</p>
 				
 END;

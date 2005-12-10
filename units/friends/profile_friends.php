@@ -20,20 +20,18 @@
 		if ($page_owner != $_SESSION['userid']) {
 			$run_result .= run("users:infobox",
 												array(
-														"Friends",
+														gettext("Friends"),
 														$friends,
-														"<a href=\"".url."_friends/?owner=$profile_id\">Friends Screen</a>
-														 (<a href=\"".url."_friends/foaf.php?owner=$profile_id\">FOAF</a>)"
+														"<a href=\"".url."_friends/?owner=$profile_id\">" . gettext("Friends Screen") . "</a> (<a href=\"".url."_friends/foaf.php?owner=$profile_id\">FOAF</a>)"
 														)
 								);
 			
 		} else {
 			$run_result .= run("users:infobox",
 												array(
-														"Your Friends",
+														gettext("Your Friends"),
 														$friends,
-														"<a href=\"".url.$_SESSION['username']."/friends/\">Friends Screen</a>
-														 (<a href=\"".url.$_SESSION['username']."/foaf/\">FOAF</a>)"
+														"<a href=\"".url.$_SESSION['username']."/friends/\">" . gettext("Friends Screen") . "</a> (<a href=\"".url.$_SESSION['username']."/foaf/\">FOAF</a>)"
 													)
 								);
 		}

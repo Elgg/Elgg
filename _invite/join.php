@@ -7,15 +7,15 @@
 		
 		run("invite:init");
 		
-		$title = "Join Elgg";
+		$title = sprintf(gettext("Join %s"),sitename);
 		
 		$body = run("content:invite:join");
 		$body .= run("invite:join");
 		
 		$body = run("templates:draw", array(
-						'context' => 'infobox',
-						'name' => $title,
-						'contents' => $body
+						'context' => 'contentholder',
+						'title' => $title,
+						'body' => $body
 					)
 					);
 		

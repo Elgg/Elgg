@@ -11,7 +11,7 @@
 		
 		if (sizeof($results) > 0) {
 			
-			$run_result .= "<h2>Matching users:</h2><p>";
+			$run_result .= "<h2>" . gettext("Matching users:") . "</h2><p>";
 			foreach($results as $returned_name) {
 				$run_result .= "<a href=\"".url.stripslashes($returned_name->username)."/\">" . stripslashes($returned_name->name) . "</a> <br />";
 			}

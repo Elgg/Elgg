@@ -19,24 +19,25 @@
 		
 		header("Content-type: text/xml");
 		
+		$rssfiles = gettext("Files");
+		
 		if (isset($profile_id)) {
 			
 			echo <<< END
-<?xml version='1.0' encoding='UTF-8'?>
 <rss version='2.0'   xmlns:dc='http://purl.org/dc/elements/1.1/'>
 
 END;
 			$info = db_query("select * from users where ident = $page_owner");
 			if (sizeof($info) > 0) {
 				$info = $info[0];
-				$name = htmlentities(stripslashes($info->name));
-				$username = htmlentities(stripslashes($info->username));
-				$mainurl = htmlentities(url . $username . "/files/");
+				$name = (stripslashes($info->name));
+				$username = (stripslashes($info->username));
+				$mainurl = (url . $username . "/files/");
+				$rssdescription = sprintf(gettext("Files for %s, hosted on %s."),$name,$sitename);
 				echo <<< END
   <channel xml:base='$mainurl'>
-    <title>$name : Files</title>
-    <description>Files for $name, hosted on $sitename.</description>
-    <language>en-gb</language>
+    <title><![CDATA[$name : $rssfiles]]></title>
+    <description><![CDATA[$rssdescription]]></description>
     <link>$mainurl</link>
 END;
 				if (!isset($_REQUEST['tag'])) {
@@ -48,8 +49,8 @@ END;
 				if (sizeof($files) > 0) {
 					foreach($files as $file) {
 						$title = htmlentities(stripslashes($file->title));
-						$link = url . $username . "/files/" . $file->folder . "/" . $file->ident . "/" . htmlentities(urlencode(stripslashes($file->originalname)));
-						$description = htmlentities(stripslashes($file->description));
+						$link = url . $username . "/files/" . $file->folder . "/" . $file->ident . "/" . (urlencode(stripslashes($file->originalname)));
+						$description = (stripslashes($file->description));
 						$pubdate = gmdate("D, d M Y H:i:s T", $file->time_uploaded);
 						$length = (int) $file->size;
 						$mimetype = run("files:mimetype:determine",$file->location);
@@ -60,17 +61,17 @@ END;
 						$keywordtags = "";
 						if (sizeof($keywords) > 0) {
 							foreach($keywords as $keyword) {
-								$keywordtags .= "\n        <dc:subject>".htmlentities(stripslashes($keyword->tag)) . "</dc:subject>";
+								$keywordtags .= "\n        <dc:subject><![CDATA[". (stripslashes($keyword->tag)) . "]]></dc:subject>";
 							}
 						}
 						echo <<< END
 
     <item>
-        <title>$title</title>
+        <title><![CDATA[$title]]></title>
         <link>$link</link>
         <enclosure url="$link" length="$length" type="$mimetype" />
         <pubDate>$pubdate</pubDate>$keywordtags
-        <description>$description</description>
+        <description><![CDATA[$description]]></description>
     </item>
 END;
 					}

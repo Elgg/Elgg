@@ -9,15 +9,16 @@
         var $name;
         var $alias;
         var $code;
+        var $icon;
         var $icon_quota;
         var $file_quota;
         var $template_id;
         var $firstname;
         var $lastname;
         var $user_type;
-        var $owner;
         var $blogs;
         var $folders;
+        var $type = 'user';
 
         var $exists;
         
@@ -54,8 +55,10 @@
                 $this->file_quota      = $info[0]->file_quota;
                 $this->user_type       = $info[0]->user_type;
                 $this->owner           = $info[0]->owner;
-                $this->firstname       = preg_replace('/\s.*$/', '', $name);
-                $this->lastname        = preg_replace('/^.*\s/', '', $name);
+
+                ereg('^([a-zA-Z]*) (.*)', $this->name, $groups);
+                $this->firstname       = trim($groups[1]);
+                $this->lastname        = trim($groups[2]);
                 
                 // Load the weblog id's, starting with communities
                 $communities = db_query("select users.ident from friends 
@@ -73,6 +76,19 @@
                 foreach($communities as $community)
                 {
                     $this->blogs[] = $community->ident;
+                }
+
+                // Add the user icon - in separate class?
+                $image = db_query("select filename, description from icons 
+                                   where owner = $this->ident");
+
+                if (sizeof($image) > 0)
+                {
+                    $this->icon = url . "_icons/data/" . $image[0]->filename;
+                }
+                else
+                {
+                    $this->icon = url . "_icons/data/default.png";
                 }
             }
         }
@@ -128,6 +144,14 @@
         /**
          *
          */
+        function getUserIcon()
+        {
+            return $this->icon;
+        }
+
+        /**
+         *
+         */
         function getIconQuota()
         {
             return $this->icon_quota;
@@ -155,14 +179,6 @@
         function getUserType()
         {
             return $this->user_type;
-        }
-
-        /**
-         *
-         */
-        function getOwner()
-        {
-            return $this->owner;
         }
 
         /**

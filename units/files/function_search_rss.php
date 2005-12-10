@@ -21,7 +21,7 @@
 		if (sizeof($folder_refs) > 0) {
 			foreach($folder_refs as $folder) {
 				$run_result .= "\t<item>\n";
-				$run_result .= "\t\t<title>File folder :: " . htmlentities(stripslashes($folder->fullname)) . " :: " . htmlentities(stripslashes($folder->name)) . "</title>\n";
+				$run_result .= "\t\t<title><![CDATA[". gettext("File folder") ." :: " . (stripslashes($folder->fullname)) . " :: " . (stripslashes($folder->name)) . "]]></title>\n";
 				$run_result .= "\t\t<link>" . url  . htmlentities(stripslashes($folder->username)) . "/files/" . $folder->ident . "</link>\n";
 				$run_result .= "\t</item>\n";
 			}
@@ -33,8 +33,8 @@
 						$mimetype = "application/octet-stream";
 					}
 					$run_result .= "\t<item>\n";
-					$run_result .= "\t\t<title>File :: " . htmlentities(stripslashes($file->fullname)) . " :: " . htmlentities(stripslashes($file->title)) . "</title>\n";
-					$run_result .= "\t\t<link>" . url  . htmlentities(stripslashes($file->username)) . "/files/" . $file->folder . "/" . $file->ident . "/" . htmlentities(stripslashes($file->originalname)) . "</link>\n";
+					$run_result .= "\t\t<title><![CDATA[". gettext("File") ." :: " . (stripslashes($file->fullname)) . " :: " . (stripslashes($file->title)) . "]]></title>\n";
+					$run_result .= "\t\t<link>" . url  . (stripslashes($file->username)) . "/files/" . $file->folder . "/" . $file->ident . "/" . (stripslashes($file->originalname)) . "</link>\n";
 					$run_result .= "\t\t<enclosure url=\"" . url  . htmlentities(stripslashes($file->username)) . "/files/" . $file->folder . "/" . $file->ident . "/" . htmlentities(stripslashes($file->originalname)) . "\" length=\"". $file->size ."\" mimetype=\"$mimetype\" />\n";
 					$run_result .= "\t</item>\n";
 			}

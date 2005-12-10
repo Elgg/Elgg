@@ -2,7 +2,7 @@
 
 	$run_result .= run("templates:draw", array(
 						'context' => 'menuitem',
-						'name' => 'Home',
+						'name' => gettext("Home"),
 						'location' => url . 'home.php'
 					)
 					);
