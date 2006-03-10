@@ -4,7 +4,7 @@
 	
 		$post = $parameter;
 		
-              $addComment = gettext("Add a comment"); // gettext variable
+		$addComment = gettext("Add a comment"); // gettext variable
 		$run_result .= <<< END
 		
 	<form action="" method="post">

@@ -54,6 +54,10 @@
     $server = new XML_RPC_Server($handlers, 0);
     
     // Possibility for handling other stuff here
+
+
+    // Set the content type
+    header("Content-type: text/xml");
     
     // Serve the request
     $server->service();

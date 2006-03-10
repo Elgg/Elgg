@@ -4,7 +4,7 @@
 	
 		if (run("permissions:check", "weblog")) {
 /*			
-                     $clickToAdd = gettext("Click here to post to this weblog."); // gettext variable
+			$clickToAdd = gettext("Click here to post to this weblog."); // gettext variable
 			$title = <<< END
 				<script language="javascript" type="text/javascript">
 					function show(whichLayer) {
@@ -59,7 +59,7 @@ END;
 			
 END;
 			$body .= run("weblogs:posts:add");
-                     $hide = gettext("Click here to hide this form."); // gettext variable
+			$hide = gettext("Click here to hide this form."); // gettext variable
 			$body .= <<< END
 			
 				<p>

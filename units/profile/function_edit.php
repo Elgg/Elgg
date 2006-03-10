@@ -36,9 +36,9 @@ END;
 		}
 	
 		$submitMsg = gettext("Submit details:");
-              $saveProfile = gettext("Save your profile");
+		$saveProfile = gettext("Save your profile");
 		$body .= <<< END
-      
+	
 	<p align="center">
 		<label>
 			$submitMsg

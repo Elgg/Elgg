@@ -117,7 +117,7 @@
                 $this->user_username = $user->getUserName();
             }
 
-
+            $this->posts = array();
             if (sizeof($posts) > 0)
             {
                 foreach ($posts as $post)

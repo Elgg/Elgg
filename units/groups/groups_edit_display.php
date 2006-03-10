@@ -10,11 +10,11 @@
 
 		<a name="{$parameter[0]->ident}"></a>
 END;
-       $yourFriends = gettext("Your friends:"); // gettext variable
+	$yourFriends = gettext("Your friends:"); // gettext variable
 	$column1 = <<< END
-			<table width="100%" border="0"
+			<table border="0">
 				<tr>
-					<td width="50%" valign="top">
+					<td width="30%" valign="top" align="left">
 						<form action="index.php#{$parameter[0]->ident}" method="post"><p>
 							$yourFriends<br />
 							<select name="friends[]" size="5" multiple="multiple">
@@ -44,8 +44,8 @@ END;
 									}
 								}
 		
-       					}
-       $addToGroup = gettext("Add selected to group"); // gettext variable
+							}
+	$addToGroup = gettext("Add selected to group"); // gettext variable
 	$column1 .= <<< END
 							</select><br />
 							<input type="submit" value="$addToGroup" />
@@ -55,9 +55,9 @@ END;
 					</td>
 END;
 	$removeFromGroup = gettext("Remove selected from group"); // gettext variable
-       $groupMembers = gettext("Members of this group:"); // gettext variable
-         $column2 = <<< END
-					<td width="50%" valign="top">
+	$groupMembers = gettext("Members of this group:"); // gettext variable
+	$column2 = <<< END
+					<td width="70%" valign="top" align="left">
 						<form action="index.php#{$parameter[0]->ident}" method="post"><p>
 							$groupMembers<br />
 							<select name="members[]" size="5" multiple="multiple">
@@ -73,8 +73,8 @@ END;
 END;
 	$namevalue = htmlentities($parameter[0]->name);
 	// $accessvalue = run("display:access_level_select",array("groupaccess",$parameter[0]->access));
-       $saveGroup = gettext("Save this group"); // gettext variable
-       $deleteGroup = gettext("Delete this group"); // gettext variable
+	$saveGroup = gettext("Save this group"); // gettext variable
+	$deleteGroup = gettext("Delete this group"); // gettext variable
 	$name = <<< END
 						<form action="index.php" method="post" style="display:inline">
 							<input type="text"   name="groupname" value="{$namevalue}" />

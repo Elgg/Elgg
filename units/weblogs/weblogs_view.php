@@ -21,7 +21,7 @@
 	
 		$where = run("users:access_level_sql_where",$_SESSION['userid']);
 		$posts = db_query("select * from weblog_posts where ($where) and weblog = $profile_id order by posted desc limit $weblog_offset,25");
-		$numberofposts = db_query("select count(ident) as numberofposts from weblog_posts where ($where) and weblog = $profile_id");
+		$numberofposts = db_query("select count(*) as numberofposts from weblog_posts where ($where) and weblog = $profile_id");
 		$numberofposts = $numberofposts[0]->numberofposts;
 				
 		if (sizeof($posts > 0) || sizeof($friendsposts > 0)) {
@@ -30,9 +30,9 @@
 			
 			foreach($posts as $post) {
 				
-				$time = gmdate("F d, Y",$post->posted);
+				$time = strftime("%B %d, %Y",$post->posted);
 				if ($time != $lasttime) {
-					$run_result .= "<h2 class=\"weblogdateheader\">$time</h2>\n";
+					$run_result .= "<h2 class=\"weblog_dateheader\">$time</h2>\n";
 					$lasttime = $time;
 				}
 				

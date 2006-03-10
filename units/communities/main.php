@@ -31,11 +31,10 @@
 		$function['friends:init'][] = path . "units/communities/communities_actions.php";
 	
 	// Communities bar down the right hand side
-              $function['display:sidebar'][] = path . "units/communities/communities_owned.php";
+		$function['display:sidebar'][] = path . "units/communities/communities_owned.php";
 		$function['display:sidebar'][] = path . "units/communities/community_memberships.php";
 
 	// 'Communities' aspect to the little menus beneath peoples' icons
-		$function['users:infobox:menu'][] = path . "units/communities/user_info_menu.php";
 		$function['users:infobox:menu:text'][] = path . "units/communities/user_info_menu_text.php";
 		
 	// Permissions for communities
@@ -48,6 +47,9 @@
 		$function['communities:owned'][] = path . "units/communities/communities_moderator_of.php";
 		$function['communities:owned'][] = path . "units/communities/communities_create.php";
 
+	// Membership requests
+		$function['communities:requests:view'][] = path . "units/communities/communities_membership_requests.php";
+		
 	// Check access levels
 		$function['users:access_level_check'][] = path . "units/communities/communities_access_level_check.php";
 		

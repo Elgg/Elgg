@@ -1,6 +1,7 @@
 <?php
 
 	//	ELGG files RSS 2.0 page
+	// this is now only used for tag-search feeds
 
 	// Run includes
 		require("../includes.php");
@@ -17,69 +18,59 @@
 		
 		$sitename = htmlentities(sitename);
 		
-		header("Content-type: text/xml");
+		$output = "";
 		
-		$rssfiles = gettext("Files");
+		$tag = trim($_REQUEST['tag']);
 		
 		if (isset($profile_id)) {
 			
-			echo <<< END
-<rss version='2.0'   xmlns:dc='http://purl.org/dc/elements/1.1/'>
+			$rssfiles = sprintf(gettext("Files tagged with %s"),$tag);
 
-END;
 			$info = db_query("select * from users where ident = $page_owner");
 			if (sizeof($info) > 0) {
 				$info = $info[0];
+				$url = url;
 				$name = (stripslashes($info->name));
 				$username = (stripslashes($info->username));
 				$mainurl = (url . $username . "/files/");
+				$rssurl = $mainurl . "rss/" . urlencode(trim($_REQUEST['tag']));
 				$rssdescription = sprintf(gettext("Files for %s, hosted on %s."),$name,$sitename);
-				echo <<< END
-  <channel xml:base='$mainurl'>
-    <title><![CDATA[$name : $rssfiles]]></title>
-    <description><![CDATA[$rssdescription]]></description>
-    <link>$mainurl</link>
+				$output .= <<< END
+<?xml-stylesheet type="text/xsl" href="{$rssurl}/rssstyles.xsl"?>
+<rss version='2.0'   xmlns:dc='http://purl.org/dc/elements/1.1/'>
+	<channel xml:base='$mainurl'>
+		<title><![CDATA[$name : $rssfiles]]></title>
+		<description><![CDATA[$rssdescription]]></description>
+		<link>$mainurl</link>
 END;
-				if (!isset($_REQUEST['tag'])) {
-					$files = db_query("select * from files where files_owner = $page_owner and access = 'PUBLIC' order by time_uploaded desc limit 10");
-				} else {
-					$tag = addslashes($_REQUEST['tag']);
-					$files = db_query("select files.* from tags left join files on files.ident = tags.ref where files.files_store = $page_owner and files.access = 'PUBLIC' and tags.tagtype = 'file' and tags.tag = '$tag' order by files.time_uploaded desc limit 10");
-				}
-				if (sizeof($files) > 0) {
-					foreach($files as $file) {
-						$title = htmlentities(stripslashes($file->title));
-						$link = url . $username . "/files/" . $file->folder . "/" . $file->ident . "/" . (urlencode(stripslashes($file->originalname)));
-						$description = (stripslashes($file->description));
-						$pubdate = gmdate("D, d M Y H:i:s T", $file->time_uploaded);
-						$length = (int) $file->size;
-						$mimetype = run("files:mimetype:determine",$file->location);
-						if ($mimetype == false) {
-							$mimetype = "application/octet-stream";
-						}
-						$keywords = db_query("select * from tags where tagtype = 'file' and ref = '".$file->ident."'");
-						$keywordtags = "";
-						if (sizeof($keywords) > 0) {
-							foreach($keywords as $keyword) {
-								$keywordtags .= "\n        <dc:subject><![CDATA[". (stripslashes($keyword->tag)) . "]]></dc:subject>";
-							}
-						}
-						echo <<< END
 
-    <item>
-        <title><![CDATA[$title]]></title>
-        <link>$link</link>
-        <enclosure url="$link" length="$length" type="$mimetype" />
-        <pubDate>$pubdate</pubDate>$keywordtags
-        <description><![CDATA[$description]]></description>
-    </item>
-END;
-					}
-				}
-				echo <<< END
+				$output .= run("files:rss:getitems", array($page_owner, 10, $tag));
+				
+				$output .= <<< END
 
-  </channel>
+	</channel>
 </rss>
 END;
+			}
+			
+			if ($output) {
+				header("Pragma: public");
+				header("Cache-Control: public"); 
+				header('Expires: ' . gmdate("D, d M Y H:i:s", (time()+3600)) . " GMT");
+				
+				$if_none_match = preg_replace('/[^0-9a-f]/', '', $_SERVER['HTTP_IF_NONE_MATCH']);
+				
+				$etag = md5($output);
+				header('ETag: "' . $etag . '"');
+				
+				if ($if_none_match == $etag) {
+					header("{$_SERVER['SERVER_PROTOCOL']} 304 Not Modified");
+					exit;
+				}
+				
+				header("Content-Length: " . strlen($output));
+				
+				header("Content-type: text/xml");
+				echo $output;
+			}
 		}
-	}

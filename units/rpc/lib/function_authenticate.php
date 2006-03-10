@@ -92,8 +92,8 @@
             $_POST['username'] != "" && 
             $_POST['password'] != "") // parameters passed via login form (form post)
     {        
-        $username = addslashes($_POST['username']);
-        $password = addslashes(md5($_POST['password']));
+        $username = trim($_POST['username']);
+        $password = trim(md5($_POST['password']));
         
         $auth['method'] = "post";
     }

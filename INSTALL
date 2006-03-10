@@ -1,7 +1,7 @@
-Elgg version 0.31 installation instructions
+Elgg version 0.4 installation instructions
 
 Ben Werdmuller <ben@elgg.net>
-9th December, 2005
+21 January 2006
 
 
 1. BEFORE YOU BEGIN
@@ -12,7 +12,7 @@ Please read LICENSE.
 
 Elgg currently requires the Apache web server with mod_rewrite
 installed and the ability to send emails, plus PHP 4.3+ and MySQL 
-3.23+.  It has currently been tested on Apache installations running 
+4.0.1+.  It has currently been tested on Apache installations running 
 Red Hat Linux and Microsoft Windows XP.
 
 In your Apache configuration, you must have AllowOverride set to
@@ -82,7 +82,8 @@ terminal, navigate to the _icons folder, and type:
 
 	chmod 777 data
 
-Repeat this process for /_files/data and /_files/cache.
+Repeat this process for /_rss/data, /_rss/cache, /_files/data and 
+/_files/cache.
 
 
 3. SETTING UP THE DATABASE
@@ -124,18 +125,19 @@ directory.
 
 3.4 Upgrading
 
-If you are upgrading from 0.301, you don't need to perform any
-SQL upgrade steps.
-
-Otherwise, perform the above steps but with the upgrade.sql file 
+Perform the above steps but with the upgrade.sql file 
 found in /distribution/database.
+
+Run http://your-elgg-location/upgrade.php once to publish RSS feeds
+for all users. Then delete it from the server.
 
 NB: The navigation system has changed severely since the previous
 version of Elgg. As a result, existing templates WILL NOT WORK.
 If you would like to keep your existing templates, you should back
 up the 'templates' and 'template_elements' tables in your database.
-You can then change templates over using the instructions in
-/THEMECHANGE.
+Note that these will need significant alteration for this version of
+Elgg, for which only alteration of the CSS and page shell portions of
+the template is recommended.
 
 
 
@@ -164,12 +166,29 @@ position within Elgg's flexible templating system, you will need to
 alter the file /content/mainindex/content_main_index.php.
 
 
-4.3 XML-RPC
+4.3 Optional plugins
 
 Misja Hoebe has written an XML-RPC unit that requires the PEAR library.
 Please see units/rpc/README for more details. If you are sure you have
 all the prerequisites for this unit, uncomment the include XMLRPC line
 in the plugins section of includes.php.
+
+We have also included an implementation of the TinyMCE editor. This
+is enabled by default. To disable it, comment out the TinyMCE line in
+the plugins section of includes.php.
+
+Another plugin is the experimental shared calendar, which allows
+users of your Elgg system to share events with each other, which can
+be found in the usual ways (restricted by groups and searchable by
+tag). To enable this, uncomment the calendar line in the plugins
+section of includes.php.
+
+If you are using the calendar, you will need to add the related
+database tables.  Using your command line terminal, navigate to 
+/distribution/database in the distribution package. Type the
+following:
+
+	mysql -u [username] -p [password] [databasename] < elgg_calendar.sql
 
 
 4.4 Log in
@@ -187,9 +206,17 @@ and give that account administrator privileges using the administrator
 panel.
 
 
+4.5 Tell us about it!
+
+Because Elgg is free and open source, we often don't hear about new
+installations. You don't have to, but we'd love it if you'd tell us
+what you're doing with it. You can reach us at system@elgg.net or add
+a link to your site directly to our information resource at
+http://elgg.org/info/.
+
+
 5. FURTHER CUSTOMISATION AND DEVELOPMENTS
 
-Please keep an eye on http://elgg.net/development/index.php for
-forthcoming developments within Elgg, including documentation on how
-to alter your default templates and writing new functionality into
-the system.
+Please keep an eye on http://elgg.org/ for forthcoming developments 
+within Elgg, including documentation on how to alter your default 
+templates and writing new functionality into the system.

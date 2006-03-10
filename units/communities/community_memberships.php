@@ -5,31 +5,31 @@
 	if ($page_owner != -1) {
 		if (run("users:type:get", $page_owner) == "person") {
 			$result = db_query("select users.ident, users.username, users.name from friends
-										left join users on users.ident = friends.friend
+										join users on users.ident = friends.friend
 										where friends.owner = $page_owner
 										and users.user_type = 'community'
-										and users.owner != $page_owner
-										group by friends.friend");
+										and users.owner != " . $page_owner);
 				
 			if (sizeof($result) > 0) {
-				$body = "<p>";
+				$body = "<ul>";
 				foreach($result as $row) {
-					$body .= "<a href=\"" . url . stripslashes($row->username) . "/\">" . stripslashes($row->name) . "</a><br />";
+					$body .= "<li><a href=\"" . url . stripslashes($row->username) . "/\">" . stripslashes($row->name) . "</a></li>";
 				}
-				$body .= "</p>";
+				$body .= "</ul>";
+				$run_result .= "<li id=\"community_membership\">";
 				$run_result .= run("templates:draw", array(
-						'context' => 'contentholder',
+						'context' => 'sidebarholder',
 						'title' => gettext("Community memberships"),
-						'body' => $body,
-						'submenu' => ''
+						'body' => $body
 					)
 					);
+				$run_result .= "</li>";
 			} else {
 				$run_result .= "";
 			}
 		} else if (run("users:type:get", $page_owner) == "community") {
 			$result = db_query("select users.ident from friends
-										left join users on users.ident = friends.owner
+										join users on users.ident = friends.owner
 										where friends.friend = $page_owner
 										group by friends.owner
 										limit 8");

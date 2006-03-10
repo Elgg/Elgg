@@ -1,5 +1,15 @@
 Elgg changelog
 
+0.4 (22 January 2006)
+-----------------------
+Added XSPF Web Music Player - http://musicplayer.sourceforge.net/
+Added Your Resources
+Added TinyMCE WYSIWYG editor - http://tinymce.moxiecode.com/
+Changed theme engine
+Added join restrictions for users and communities
+Added watched weblog posts to 'recent activity'
+Added calendar plugin
+
 0.31 (9th December 2005)
 ------------------------
 Bugfix release

@@ -1,0 +1,254 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Customization - Creating a plugin</title>
+<link href="css/screen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<div class="header">
+	<h1>Customization - Creating a plugin</h1>
+</div>
+
+<div class="content">
+	
+<h2>Creating your own plugins</h2>
+<p>
+Creating you own plugins for the TinyMCE application is fairly easy if you know the basics of HTML, CSS and Javascript. The most easy way is to copy the &quot;_template&quot; directory or one of the other core plugins and work from there. The &quot;_template&quot; directory is a tutorial plugin that shows how to create a plugin. After you copy the template you need to change the red sections marked below to the name of your plugin this is needed so that plugins don't overlap in other words it gives the plugin a unique name. Then just alter the source code as you see fit remember that your custom plugins needs to be located in tiny_mce's &quot;plugins&quot; directory. If you want you may add plugin specific options/settings but remember to namespace them in the following format &quot;&lt;your plugin&gt;_&lt;option&gt;&quot; for example &quot;yourplugin_someoption&quot;.
+</p>
+<p>
+The example below has three functions, these are explained in greater detail below.
+</p>
+<p>
+<div class="example">
+<pre>
+function TinyMCE_<span class="marked">yourplugin</span>_getInfo() {
+	// Should return info about the plugin to be presented in about dialog
+	return {
+		longname : 'Some plugin name',
+		author : 'Your name',
+		authorurl : 'http://www.yoursite.com',
+		infourl : 'http://www.yoursite.com/docs/..',
+		version : '1.0'
+	};
+};
+
+function TinyMCE_<span class="marked">yourplugin</span>_initInstance(inst) {
+	// Gets executed when a editor instance is initialized
+}
+
+function TinyMCE_<span class="marked">yourplugin</span>_getControlHTML(control_name) {
+	// Gets executed when a button is to be generated
+}
+
+function TinyMCE_<span class="marked">yourplugin</span>_handleNodeChange(editor_id, node, undo_index, undo_levels, visual_aid, any_selection) {
+   // Gets executed when the selection changes
+}
+
+function TinyMCE_<span class="marked">yourplugin</span>_execCommand(editor_id, element, command, user_interface, value) {
+   // Add your own custom commands here
+
+   return false;
+}
+
+function TinyMCE_<span class="marked">yourplugin</span>_cleanup(type, content) {
+	// Add your own custom cleanup here
+
+	return content;
+}
+</pre>
+</div>
+</p>
+
+<div class="separator"></div>
+
+<h3>Creating popup HTML files</h3>
+<p>
+When creating a popup you need to include the &quot;tiny_mce_popup.js&quot; this enables you to retrive the tinyMCE global instance in all popup windows. All variables and language definitions gets replaced in the page when it loads. So language variables such as {$lang_something} can be places in the HTML code, if you need to get a language string in JavaScript simply use the tinyMCE.getLang function.
+</p>
+<h3>Example of simple popup file:</h3>
+<div class="example">
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;{$lang_plugin_sample_title}&lt;/title&gt;
+&lt;script language=&quot;javascript&quot; src=&quot;../../tiny_mce_popup.js&quot;&gt;&lt;/script&gt;
+&lt;script language=&quot;javascript&quot;&gt;
+     // getWindowArg returns any arguments passed to the window
+     alert(tinyMCE.getWindowArg('some_arg'));
+&lt;/script&gt;
+&lt;body&gt;
+     &lt;strong&gt;{$lang_plugin_sample_desc}&lt;/strong&gt;
+&lt;/body&gt;
+</pre>
+</div>
+
+<div class="separator"></div>
+
+<h3>The TinyMCE_&lt;plugin&gt;_initInstance function (Optional)</h3>
+<p>
+	This function is called when a editor instance gets initialized.
+</p>
+<p>
+	<table border="1" cellspacing="0" cellpadding="4">
+	<thead>
+		<tr>
+			<td colspan="2">Parameters</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><strong>inst</strong></td>
+			<td>Reference to editor instance that was initialized.</td>
+		</tr>
+	</tbody>
+	</table>
+</p>
+
+
+<div class="separator"></div>
+
+<h3>The TinyMCE_&lt;plugin&gt;_handleNodeChange function (Optional)</h3>
+<p>
+This function is called when the cursor/selection of a editor instance changes. Then the currenly selected/focused node is passed to this function. This can be useful when you want to change the UI depending on what the user has selected.
+</p>
+<p>
+<table border="1" cellspacing="0" cellpadding="4">
+<thead>
+<tr>
+	<td colspan="2">Parameters</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td><strong>editor_id</strong></td>
+	<td>Unique editor id, this is the same as the $editor_id variable in getEditorTemplate.</td>
+</tr>
+<tr>
+	<td><strong>node</strong></td>
+	<td>Reference to the Node element where the cursor is currenly located.</td>
+</tr>
+<tr>
+	<td><strong>undo_index</strong></td>
+	<td>Current undo index, this value is -1 if the custom undo/redo support is disabled.</td>
+</tr>
+<tr>
+	<td><strong>undo_levels</strong></td>
+	<td>Current number of undo levels, this value is -1 if the custom undo/redo support is disabled.</td>
+</tr>
+<tr>
+	<td><strong>visual_aid</strong></td>
+	<td>True/false state of visual aid/guidelines mode.</td>
+</tr>
+<tr>
+	<td><strong>any_selection</strong></td>
+	<td>Is any text or image selected.</td>
+</tr>
+</tbody>
+</table>
+</p>
+
+<div class="separator"></div>
+
+<h3>The TinyMCE_&lt;plugin&gt;_execCommand function (Optional)</h3>
+<p>
+This function is called when a command is executed for example &quot;bold&quot; or &quot;createlink&quot; this callback/plugin function may then intercept plugin specific commands and do custom logic. If this command returns true the command handling is terminated and the default tinyMCE command handeling never gets executed.
+</p>
+<p>
+<table border="1" cellspacing="0" cellpadding="4">
+<thead>
+<tr>
+	<td colspan="2">Parameters</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td><strong>editor_id</strong></td>
+	<td>Unique editor id, this is the same as the $editor_id variable in getEditorTemplate.</td>
+</tr>
+<tr>
+	<td><strong>element</strong></td>
+	<td>Reference to the document DOM root element of the editor instance.</td>
+</tr>
+<tr>
+	<td><strong>command</strong></td>
+	<td>Command that is to be executed for example &quot;myCommand&quot;.</td>
+</tr>
+<tr>
+	<td><strong>user_interface</strong></td>
+	<td>true/false option if a user insterace is to be used or not.</td>
+</tr>
+<tr>
+	<td><strong>value</strong></td>
+	<td>Custom data value passed with command, may be any data type.</td>
+</tr>
+</tbody>
+</table> 	
+</p>
+<p>
+Returns: <br />
+true - Command intercepted and handled do not continue with command handling.<br />
+false - Continue with execCommand handling, bubble.<br />
+</p>
+
+<div class="separator"></div>
+
+<h3>The TinyMCE_&lt;plugin&gt;_getControlHTML(control_name) function (Optional)</h3>
+<p>
+This function is called when a editor needs to render a specific control/button. This function should return the HTML template of that control or a empty string if the control_name wasn't recognized. Notice the variable {$pluginurl} gets replaced with the URL prefix for the current plugin directory.
+</p>
+<p>
+<table border="1" cellspacing="0" cellpadding="4">
+<thead>
+<tr>
+	<td colspan="2">Parameters</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td><strong>control_name</strong></td>
+	<td>Control name to match against.</td>
+</tr>
+</tbody>
+</table>
+</p>
+<p>
+Returns: return the HTML template of that control or a empty string if the control_name wasn't recognized. 
+</p>
+<h3>The TinyMCE_&lt;plugin&gt;_cleanup(type, content) function (Optional)</h3>
+<p>
+This function is called when a editor does cleanup of contents. This function has the same format as the one defined in the <a href="option_cleanup_callback.html">cleanup_callback</a> option.
+</p>
+<p>
+<table border="1" cellspacing="0" cellpadding="4">
+<thead>
+<tr>
+	<td colspan="2">Parameters</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td><strong>type</strong></td>
+	<td>Type of cleanup, insert_to_editor or get_from_editor. Insert to editor is passed when new content is placed within the editor and get_from_editor is when content is passed out from the editor. When dealing with the DOM representation of the same content insert_to_editor_dom or get_from_editor_dom gets passed as a type.</td>
+</tr>
+<tr>
+	<td><strong>content</strong></td>
+	<td>HTML contents to be cleaned up, this string contains the HTML code or with the _dom types the body DOM object gets passed instead.</td>
+</tr>
+</tbody>
+</table>
+</p>
+<p>
+Returns: return the cleaned up HTML code.
+</p>
+
+</div>
+
+<div class="footer">
+	<div class="helpindexlink"><a href="index.html">Index</a></div>
+	<div class="copyright">Copyright &copy; 2005 Moxiecode Systems AB</div>
+	<br style="clear: both" />
+</div>
+
+</body>
+</html>

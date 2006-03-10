@@ -1,6 +1,7 @@
 <?php
 
 	//	ELGG aggregated RSS 2.0 page
+	// this is now only used for tag-search feeds
 
 	// Run includes
 		require("../includes.php");
@@ -15,102 +16,64 @@
 		
 		$sitename = (sitename);
 		
-		header("Content-type: text/xml");
+		$output = "";
 		
-		$rssactivity = gettext("Activity");
+		$tag = trim($_REQUEST['tag']);
 		
 		if (isset($page_owner)) {
-			echo <<< END
-<rss version='2.0'   xmlns:dc='http://purl.org/dc/elements/1.1/'>
-END;
+			
+			$rssactivity = sprintf(gettext("Activity tagged with %s"),$tag);
+			
 			$info = db_query("select * from users where ident = $page_owner");
 			if (sizeof($info) > 0) {
 				$info = $info[0];
 				$name = (stripslashes($info->name));
 				$username = (stripslashes($info->username));
-				$rssdescription = sprintf(gettext("Activity for %s, hosted on %s."),$name,$sitename);
 				$mainurl = (url . $username . "/");
-				echo <<< END
-  <channel xml:base='$mainurl'>
-    <title><![CDATA[$name : $rssactivity]]></title>
-    <description><![CDATA[$rssdescription]]></description>
-    <link>$mainurl</link>
+				$rssurl = $mainurl . "rss/" . urlencode(trim($_REQUEST['tag']));
+				$url = url;
+				$rssdescription = sprintf(gettext("Activity for %s, hosted on %s."),$name,$sitename);
+				$output .= <<< END
+<?xml-stylesheet type="text/xsl" href="{$rssurl}/rssstyles.xsl"?>
+<rss version='2.0'   xmlns:dc='http://purl.org/dc/elements/1.1/'>
+	<channel xml:base='$mainurl'>
+		<title><![CDATA[$name : $rssactivity]]></title>
+		<description><![CDATA[$rssdescription]]></description>
+		<link>$mainurl</link>
 END;
 
-			// WEBLOGS
-
-				if (!isset($_REQUEST['tag'])) {
-					$entries = db_query("select * from weblog_posts where weblog = $page_owner and access = 'PUBLIC' order by posted desc limit 10");
-				} else {
-					$tag = addslashes($_REQUEST['tag']);
-					$entries = db_query("select weblog_posts.* from tags left join weblog_posts on weblog_posts.ident = tags.ref where weblog_posts.weblog = $page_owner and weblog_posts.access = 'PUBLIC' and tags.tag = '$tag' and tags.tagtype = 'weblog' order by weblog_posts.posted desc limit 10");
-				}
-				if (sizeof($entries) > 0) {
-					foreach($entries as $entry) {
-						$title = (stripslashes($entry->title));
-						$link = url . $username . "/weblog/" . $entry->ident . ".html";
-						$body = (run("weblogs:text:process",stripslashes($entry->body)));
-						$pubdate = gmdate("D, d M Y H:i:s T", $entry->posted);
-						$keywords = db_query("select * from tags where tagtype = 'weblog' and ref = '".$entry->ident."'");
-						$keywordtags = "";
-						if (sizeof($keywords) > 0) {
-							foreach($keywords as $keyword) {
-								$keywordtags .= "\n        <dc:subject><![CDATA[".(stripslashes($keyword->tag)) . "]]></dc:subject>";
-							}
-						}
-						echo <<< END
-    <item>
-        <title><![CDATA[$title]]></title>
-        <link>$link</link>
-        <pubDate>$pubdate</pubDate>$keywordtags
-        <description><![CDATA[$body]]></description>
-    </item>
-END;
-					}
-				}
 				
-			// FILES
-			
-				if (!isset($_REQUEST['tag'])) {
-					$files = db_query("select * from files where files_owner = $page_owner and access = 'PUBLIC' order by time_uploaded desc limit 10");
-				} else {
-					$tag = addslashes($_REQUEST['tag']);
-					$files = db_query("select files.* from tags left join files on files.ident = tags.ref where files.files_owner = $page_owner and files.access = 'PUBLIC' and tags.tagtype = 'file' and tags.tag = '$tag' order by files.time_uploaded desc limit 10");
-				}
-				if (sizeof($files) > 0) {
-					foreach($files as $file) {
-						$title = (stripslashes($file->title));
-						$link = url . $username . "/files/" . $file->folder . "/" . $file->ident . "/" . (urlencode(stripslashes($file->originalname)));
-						$description = (stripslashes($file->description));
-						$pubdate = gmdate("D, d M Y H:i:s T", $file->time_uploaded);
-						$length = (int) $file->size;
-						$mimetype = run("files:mimetype:determine",$file->location);
-						if ($mimetype == false) {
-							$mimetype = "application/octet-stream";
-						}
-						$keywords = db_query("select * from tags where tagtype = 'file' and ref = '".$file->ident."'");
-						$keywordtags = "";
-						if (sizeof($keywords) > 0) {
-							foreach($keywords as $keyword) {
-								$keywordtags .= "\n        <dc:subject><![CDATA[".(stripslashes($keyword->tag)) . "]]></dc:subject>";
-							}
-						}
-						echo <<< END
-
-    <item>
-        <title><![CDATA[$title]]></title>
-        <link>$link</link>
-        <enclosure url="$link" length="$length" type="$mimetype" />
-        <pubDate>$pubdate</pubDate>$keywordtags
-        <description><![CDATA[$description]]></description>
-    </item>
-END;
-					}
-				}
+				// WEBLOGS
+				$output .= run("weblogs:rss:getitems", array($page_owner, 10, $tag));
 				
-				echo <<< END
-  </channel>
+				// FILES
+				$output .= run("files:rss:getitems", array($page_owner, 10, $tag));
+				
+				$output .= <<< END
+
+	</channel>
 </rss>
 END;
+			}
+			
+			if ($output) {
+				header("Pragma: public");
+				header("Cache-Control: public"); 
+				header('Expires: ' . gmdate("D, d M Y H:i:s", (time()+3600)) . " GMT");
+				
+				$if_none_match = preg_replace('/[^0-9a-f]/', '', $_SERVER['HTTP_IF_NONE_MATCH']);
+				
+				$etag = md5($output);
+				header('ETag: "' . $etag . '"');
+				
+				if ($if_none_match == $etag) {
+					header("{$_SERVER['SERVER_PROTOCOL']} 304 Not Modified");
+					exit;
+				}
+				
+				header("Content-Length: " . strlen($output));
+				
+				header("Content-type: text/xml");
+				echo $output;
+			}
 		}
-	}

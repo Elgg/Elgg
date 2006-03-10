@@ -42,7 +42,7 @@
 		// }
 		// $posts = $_SESSION['friends_posts_cache']->data;
 		$posts = db_query("select * from weblog_posts where ($where1) and ($where2) order by posted desc limit $weblog_offset,25");
-		$numberofposts = db_query("select count(ident) as numberofposts from weblog_posts where ($where1) and ($where2)");
+		$numberofposts = db_query("select count(*) as numberofposts from weblog_posts where ($where1) and ($where2)");
 		$numberofposts = $numberofposts[0]->numberofposts;
 		
 		if (sizeof($posts > 0)) {
@@ -66,7 +66,7 @@
 			if ($numberofposts - ($weblog_offset + 25) > 0) {
 				$display_weblog_offset = $weblog_offset + 25;
 				$back = gettext("Back"); // gettext variable
-                            $run_result .= <<< END
+				$run_result .= <<< END
 				
 				<a href="{$url}{$weblog_name}/weblog/friends/skip={$display_weblog_offset}">&lt;&lt; $back</a>
 				<!-- <form action="" method="post" style="display:inline">
@@ -82,7 +82,7 @@ END;
 					$display_weblog_offset = 0;
 				}
 				$next = gettext("Next"); // gettext variable
-                           $run_result .= <<< END
+				$run_result .= <<< END
 				
 				<a href="{$url}{$weblog_name}/weblog/friends/skip={$display_weblog_offset}">$next &gt;&gt;</a>
 				

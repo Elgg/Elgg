@@ -35,7 +35,7 @@
 			switch($parameter[2]) {
 				
 				case "weblogtext":
-						$run_result .= "<textarea name=\"".$parameter[0]."\" id=\"".$parameter[0]."\" style=\"width: 95%; height: 200px\">".htmlentities(stripslashes($parameter[1]))."</textarea>";
+						$run_result .= "<textarea name=\"".$parameter[0]."\" id=\"".$parameter[0]."\" class=\"textarea\">".htmlentities(stripslashes($parameter[1]))."</textarea>";
 					break;
 			}
 			

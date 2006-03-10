@@ -1,8 +1,0 @@
-Modified:
-
-* Added include of atomEggConfig.php in atom.php for overrides
-* Modified template path in atomHtml.php:213
-* Modified atomServices.php 'blog' service to use the Elgg storage 
-instead of original Files storage
-* Modified atomRequest.php:222 to define ELGG_USER and adjust the 
-service path

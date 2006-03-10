@@ -10,7 +10,7 @@
 			$extension = substr($parameter, strrpos($parameter, "."));
 
 	// If it's known, set the mimetype
-		switch($extension) {
+		switch(strtolower($extension)) {
 			case ".mp3":	$run_result = "audio/mpeg"; break;
 			case ".ai":		$run_result = "application/postscript"; break;
 			

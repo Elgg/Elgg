@@ -22,7 +22,7 @@
 					$tempdata->access = $group->access;
 					$members = db_query("select group_membership.user_id,
 												users.name from group_membership 
-												left join users on users.ident = group_membership.user_id
+												join users on users.ident = group_membership.user_id
 												where group_membership.group_id = " . $tempdata->ident);
 					$tempdata->members = $members;
 					

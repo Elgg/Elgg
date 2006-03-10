@@ -38,6 +38,10 @@
 	// Display a user control panel when given a database row from elgg.users
 		$function['admin:users:panel'][] = path . "units/admin/admin_users_panel.php";
 		
+	// Anti-spam
+		$function['admin:spam'][] = path . "units/admin/admin_spam.php";
+		$function['spam:check'][] = path . "units/admin/spam_check.php";
+		
 	// Admin-related actions
 		$function['init'][] = path . "units/admin/admin_actions.php";
 	

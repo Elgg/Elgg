@@ -27,16 +27,24 @@
 				$parameter[5] = $_SESSION['userid'];
 			}
 			
+			$cleanid = $parameter[0];
+			if (!ereg("^[A-Za-z][A-Za-z0-9_:\\.-]*$", $cleanid)) {
+				if (!ereg("^[A-Za-z]", $cleanid)) {
+					$cleanid = "id_" . $cleanid;
+				}
+				$cleanid = ereg_replace("[^A-Za-z0-9_:\\.-]", "__", $cleanid);
+			}
+			
 			switch($parameter[2]) {
 				
 				case "text":
-						$run_result .= "<input type=\"text\" name=\"".$parameter[0]."\" value=\"".htmlentities(stripslashes($parameter[1]))."\" style=\"width: 95%\" id=\"".$parameter[0]."\" />";
+						$run_result .= "<input type=\"text\" name=\"".$parameter[0]."\" value=\"".htmlentities(stripslashes($parameter[1]))."\" class=\"small_textarea\" id=\"".$cleanid."\" />";
 						break;
 				case "password":
-						$run_result .= "<input type=\"password\" name=\"".$parameter[0]."\" value=\"".htmlentities(stripslashes($parameter[1]))."\" style=\"width: 95%\" id=\"".$parameter[0]."\" />";
+						$run_result .= "<input type=\"password\" name=\"".$parameter[0]."\" value=\"".htmlentities(stripslashes($parameter[1]))."\" class=\"password_textarea\" id=\"".$cleanid."\" />";
 						break;
 				case "mediumtext":
-						$run_result .= "<textarea name=\"".$parameter[0]."\" id=\"".$parameter[0]."\" style=\"width: 95%; height: 100px\">".htmlentities(stripslashes($parameter[1]))."</textarea>";
+						$run_result .= "<textarea name=\"".$parameter[0]."\" id=\"".$cleanid."\" class=\"medium_textarea\">".htmlentities(stripslashes($parameter[1]))."</textarea>";
 						break;
 				case "keywords":
 						/*
@@ -71,10 +79,10 @@
 							// $parameter[1] = $data['profile:preload'][$parameter[3]];
 						}
 						// $parameter[1] = var_export($parameter,true);
-						$run_result .= "<textarea name=\"".$parameter[0]."\" id=\"".$parameter[0]."\" style=\"width: 95%; height: 100px\">".htmlentities(stripslashes($parameter[1]))."</textarea>";
+						$run_result .= "<textarea name=\"".$parameter[0]."\" id=\"".$cleanid."\" class=\"keywords_textarea\">".htmlentities(stripslashes($parameter[1]))."</textarea>";
 						break;
 				case "longtext":
-						$run_result .= "<textarea name=\"".$parameter[0]."\" id=\"".$parameter[0]."\" style=\"width: 95%; height: 200px\">".htmlentities(stripslashes($parameter[1]))."</textarea>";
+						$run_result .= "<textarea name=\"".$parameter[0]."\" id=\"".$cleanid."\" class=\"textarea\">".htmlentities(stripslashes($parameter[1]))."</textarea>";
 						break;
 				case "richtext":
 						// Rich text editor:
@@ -85,9 +93,9 @@
 								//make sure hidden and iframe values are in sync before submitting form
 								//to sync only 1 rte, use updateRTE(rte)
 								//to sync all rtes, use updateRTEs
-								updateRTE('<?=$parameter[0]?>');
+								updateRTE('<?php echo $parameter[0]; ?>');
 								//updateRTEs();
-								//alert("rte1 = " + document.elggform.<?=$parameter[0]?>.value);
+								//alert("rte1 = " + document.elggform.<?php echo $parameter[0]; ?>.value);
 								
 								//change the following line to true to submit form
 								return true;
@@ -101,13 +109,13 @@ END;
 								<noscript><p><b>Javascript must be enabled to use this form.</b></p></noscript>
 								<script language="JavaScript" type="text/javascript">
 								<!--
-								writeRichText('<?=$parameter[0]?>', '<?=$content?>', 220, 200, true, false);
-							//-->
+								writeRichText('<?php echo $parameter[0];?>', '<?php echo $content; ?>', 220, 200, true, false);
+							// -->
 							</script>
 END;
 						break;
 				case "blank":
-						$run_result .= "<input type=\"hidden\" name=\"".$parameter[0]."\" value=\"blank\" id=\"".$parameter[0]."\" />";
+						$run_result .= "<input type=\"hidden\" name=\"".$parameter[0]."\" value=\"blank\" id=\"".$cleanid."\" />";
 						break;
 				case "web":
 				case "email":
@@ -115,7 +123,7 @@ END;
 				case "msn":
 				case "skype":
 				case "icq":
-						$run_result .= "<input type=\"text\" name=\"".$parameter[0]."\" value=\"".htmlentities(stripslashes($parameter[1]))."\" style=\"width: 95%\" id=\"".$parameter[0]."\" />";
+						$run_result .= "<input type=\"text\" name=\"".$parameter[0]."\" value=\"".htmlentities(stripslashes($parameter[1]))."\" style=\"width: 95%\" id=\"".$cleanid."\" />";
 						break;
 						
 			}

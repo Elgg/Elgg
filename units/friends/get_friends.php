@@ -16,7 +16,7 @@
 		
 		$run_result = db_query("select friends.friend as user_id,
 										users.name from friends
-										left join users on users.ident = friends.friend
+										join users on users.ident = friends.friend
 										where friends.owner = $ident");
 				
 ?>

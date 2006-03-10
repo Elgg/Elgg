@@ -37,7 +37,7 @@
 		}
 		
 	// Grab the template content
-		if ($template_id == -1) {
+		if ($template_id == -1 || ($parameter['context'] != "css" && $parameter['context'] != "pageshell")) {
 			$template_element = $template[$parameter['context']];	
 		} else {
 			$template_context = addslashes($parameter['context']);

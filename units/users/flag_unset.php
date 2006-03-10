@@ -10,7 +10,7 @@
 	
 	*/
 	
-		$flagname = $parameter[0];
+		$flagname = addslashes($parameter[0]);
 		$userid = (int) $parameter[1];
 		
 	// Then add data

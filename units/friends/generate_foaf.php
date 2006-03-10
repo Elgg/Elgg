@@ -8,6 +8,7 @@
 
 		$user = $user[0];
 		$url = url;
+		$adminmail = email;
 		$personalurl = url . $user->username . "/";
 		$username = htmlentities(stripslashes($user->username));
 		$name = htmlentities(stripslashes($user->name));
@@ -34,10 +35,10 @@
 		xmlns:rel="http://purl.org/vocab/relationship/"
 		xmlns:foaf="http://xmlns.com/foaf/0.1/">
 	<foaf:PersonalProfileDocument rdf:about="">
-	  <foaf:maker rdf:nodeID="elgg{$user->ident}"/>
-	  <foaf:primaryTopic rdf:nodeID="elgg{$user->ident}"/>
-	  <admin:generatorAgent rdf:resource="{$url}"/>
-	  <admin:errorReportsTo rdf:resource="ben@elgg.net"/>
+		<foaf:maker rdf:nodeID="elgg{$user->ident}"/>
+		<foaf:primaryTopic rdf:nodeID="elgg{$user->ident}"/>
+		<admin:generatorAgent rdf:resource="{$url}"/>
+		<admin:errorReportsTo rdf:resource="{$adminmail}"/>
 	</foaf:PersonalProfileDocument>
 	<foaf:Person rdf:nodeID="elgg{$user->ident}">
 		<foaf:nick>{$username}</foaf:nick>
@@ -51,7 +52,7 @@ END;
 		$run_result .= run("vcard:generate:fields:adr",$parameter);
 		$run_result .= "\t\t</vCard:ADR>\n";
 		
-		$friends = db_query("select users.* from friends left join users on users.ident = friends.friend where friends.owner = " . $user->ident);
+		$friends = db_query("select users.* from friends join users on users.ident = friends.friend where friends.owner = " . $user->ident);
 		if (sizeof($friends) > 0) {
 			foreach($friends as $friend) {
 				$name = htmlentities(stripslashes($friend->name));

@@ -10,7 +10,7 @@
 			
 			$context = strtolower($parameter[0]);
 			
-			if (isset($screen[strtolower($parameter[0]]))) {
+			if (isset($screen[strtolower($parameter[0])])) {
 				$screen[$context] .= $parameter[1];
 			} else {
 				$screen[$context] = $parameter[1];

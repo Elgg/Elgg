@@ -39,7 +39,7 @@
 			
 		}
 		
-		$body = "<h5>" . $folder_name . "</h5>";
+		$body = "<h2>" . $folder_name . "</h2>";
 		
 		if ($folder != -1) {
 			
@@ -70,11 +70,11 @@
 		if (sizeof($folders) > 0) {
 			
 			$subFolders = gettext("Subfolders"); // gettext variable
-                     $body .= <<< END
+			$body .= <<< END
 
-					<h5>
+					<h3>
 						$subFolders
-					</h5>
+					</h3>
 
 END;
 			
@@ -85,10 +85,10 @@ END;
 					$ident = (int) $folder_details->ident;
 					$name = stripslashes($folder_details->name);
 					if (run("permissions:check", array("files:edit", $folder_details->owner))  || run("permissions:check", array("files:edit", $folder_details->files_owner))) {
-					    $areyouSure = gettext("Are you sure you want to permanently delete this folder?"); // gettext variable
-                                      $delete = gettext("Delete"); // gettext variable
-                                      $foldermenu = <<< END
-	[<a href="{$url}_files/action_redirection.php?action=delete_folder&delete_folder_id={$folder_details->ident}" onClick="return confirm('$areyouSure')">$delete</a>]
+						$areyouSure = gettext("Are you sure you want to permanently delete this folder?"); // gettext variable
+						$delete = gettext("Delete"); // gettext variable
+						$foldermenu = <<< END
+	[<a href="{$url}_files/action_redirection.php?action=delete_folder&amp;delete_folder_id={$folder_details->ident}" onClick="return confirm('$areyouSure')">$delete</a>]
 END;
 					} else {
 						$foldermenu = "";
@@ -129,23 +129,34 @@ END;
 					$folder = $file->folder;
 					$title = stripslashes($file->title);
 					$description = nl2br(stripslashes($file->description));
+					$filetitle = urlencode($title);
 					$originalname = stripslashes($file->originalname);
 					$filemenu = round(($file->size / 1000000),4) . "Mb ";
 					$icon = $url . "_files/icon.php?id=" . $file->ident;
-					/*
+					$filepath = $url . "$username/files/$folder/$ident/$originalname";
 					$mimetype = run("files:mimetype:determine",$file->originalname);
-					if ($mimetype == "image/jpeg" || $mimetype == "image/png") {
-						$icon = $url . "units/phpthumb/phpThumb.php?src=" . $file->location;
-					} else {
-						$icon = $url . "_files/file.png";
-					} */
+					
+					if ($mimetype == "audio/mpeg") {
+						$filemenu .= "<object classid=\"clsid:d27cdb6e-ae6d-11cf-96b8-444553540000\"
+codebase=\"http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0\"
+width=\"400\" height=\"15\" >
+	<param name=\"allowScriptAccess\" value=\"sameDomain\" />
+	<param name=\"movie\" value=\"" . url . "_files/mp3player/musicplayer.swf?song_url=$filepath&amp;song_title=$filetitle\" />
+	<param name=\"quality\" value=\"high\" />
+	<embed src=\"" . url . "_files/mp3player/musicplayer.swf?song_url=$filepath&amp;song_title=$filetitle\"
+	quality=\"high\" bgcolor=\"#E6E6E6\" name=\"xspf_player\" allowscriptaccess=\"sameDomain\"
+	type=\"application/x-shockwave-flash\"
+	pluginspage=\"http://www.macromedia.com/go/getflashplayer\"
+	align=\"center\" height=\"17\" width=\"17\"> </embed>
+</object>";
+					}
 					if (run("permissions:check", array("files:edit", $file->owner))  || run("permissions:check", array("files:edit", $file->files_owner))) {
-                                         $areyouSure = gettext("Are you sure you want to permanently delete this file?"); // gettext variable
-                                         $delete = gettext("Delete"); // gettext variable
-                                         $edit = gettext("Edit"); // gettext variable
+						$areyouSure = gettext("Are you sure you want to permanently delete this file?"); // gettext variable
+						$delete = gettext("Delete"); // gettext variable
+						$edit = gettext("Edit"); // gettext variable
 						$filemenu .= <<< END
-	[<a href="{$url}_files/edit_file.php?edit_file_id={$file->ident}&owner=$page_owner">$edit</a>]
-	[<a href="{$url}_files/action_redirection.php?action=delete_file&delete_file_id={$file->ident}" onClick="return confirm('$areyouSure')">$delete</a>]
+	[<a href="{$url}_files/edit_file.php?edit_file_id={$file->ident}&amp;owner=$page_owner">$edit</a>]
+	[<a href="{$url}_files/action_redirection.php?action=delete_file&amp;delete_file_id={$file->ident}" onClick="return confirm('$areyouSure')">$delete</a>]
 END;
 					} else {
 						$filemenu = "";
@@ -162,7 +173,7 @@ END;
 									'folder' => $folder,
 									'description' => $description,
 									'originalname' => $originalname,
-									'url' => $url . "$username/files/$folder/$ident/$originalname",
+									'url' => $filepath,
 									'menu' => $filemenu,
 									'icon' => $icon,
 									'keywords' => $keywords

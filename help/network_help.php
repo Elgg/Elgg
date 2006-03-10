@@ -2,8 +2,9 @@
 	
 	// Run includes
 		require("../includes.php");
- 	
-define("context", "network");
+	
+		define("context", "network");
+	
 	// Draw page
 		echo run("templates:draw:page", array(
 					"Network help ",

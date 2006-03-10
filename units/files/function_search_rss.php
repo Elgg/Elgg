@@ -15,8 +15,8 @@
 		$searchline_files = str_replace("owner", "files.owner", $searchline_files);
 		$searchline_folders = str_replace("access", "file_folders.access", $searchline_folders);
 		$searchline_folders = str_replace("owner", "file_folders.owner", $searchline_folders);
-		$file_refs = db_query("select files.*, users.username, users.name as fullname, ref from tags left join files on files.ident = tags.ref left join users on users.ident = tags.owner where $searchline_files limit 50");
-		$folder_refs = db_query("select file_folders.*, users.username, users.name as fullname, ref from tags left join file_folders on file_folders.ident = tags.ref left join users on users.ident = tags.owner where $searchline_folders limit 50");
+		$file_refs = db_query("select files.*, users.username, users.name as fullname, ref from tags join files on files.ident = tags.ref join users on users.ident = tags.owner where $searchline_files limit 50");
+		$folder_refs = db_query("select file_folders.*, users.username, users.name as fullname, ref from tags join file_folders on file_folders.ident = tags.ref join users on users.ident = tags.owner where $searchline_folders limit 50");
 		$searchline = "";
 		if (sizeof($folder_refs) > 0) {
 			foreach($folder_refs as $folder) {
@@ -34,8 +34,8 @@
 					}
 					$run_result .= "\t<item>\n";
 					$run_result .= "\t\t<title><![CDATA[". gettext("File") ." :: " . (stripslashes($file->fullname)) . " :: " . (stripslashes($file->title)) . "]]></title>\n";
-					$run_result .= "\t\t<link>" . url  . (stripslashes($file->username)) . "/files/" . $file->folder . "/" . $file->ident . "/" . (stripslashes($file->originalname)) . "</link>\n";
-					$run_result .= "\t\t<enclosure url=\"" . url  . htmlentities(stripslashes($file->username)) . "/files/" . $file->folder . "/" . $file->ident . "/" . htmlentities(stripslashes($file->originalname)) . "\" length=\"". $file->size ."\" mimetype=\"$mimetype\" />\n";
+					$run_result .= "\t\t<link>" . url  . (stripslashes($file->username)) . "/files/" . $file->folder . "/" . $file->ident . "/" . urlencode(stripslashes($file->originalname)) . "</link>\n";
+					$run_result .= "\t\t<enclosure url=\"" . url  . htmlentities(stripslashes($file->username)) . "/files/" . $file->folder . "/" . $file->ident . "/" . urlencode(htmlentities(stripslashes($file->originalname))) . "\" length=\"". $file->size ."\" type=\"$mimetype\" />\n";
 					$run_result .= "\t</item>\n";
 			}
 		}

@@ -56,19 +56,19 @@
 	
 	
 	function timer($finish = false){
-    static $start_frac_sec, $start_sec, $end_frac_sec, $end_sec;
-    if($finish){
-        list($end_frac_sec,$end_sec) = explode(" ", microtime());
-        echo '<p style="font-size: smaller">This page took about ' .
-            round(
-                (
-                    ($end_sec - $start_sec)
-                    + ($end_frac_sec - $start_frac_sec)
-                ),
-            4) . " seconds to generate.</p>\n";
-    }else{
-        list($start_frac_sec,$start_sec) = explode(" ", microtime());
-    }
+	static $start_frac_sec, $start_sec, $end_frac_sec, $end_sec;
+	if($finish){
+		list($end_frac_sec,$end_sec) = explode(" ", microtime());
+		echo '<p style="font-size: smaller">This page took about ' .
+			round(
+				(
+					($end_sec - $start_sec)
+					+ ($end_frac_sec - $start_frac_sec)
+				),
+			4) . " seconds to generate.</p>\n";
+	}else{
+		list($start_frac_sec,$start_sec) = explode(" ", microtime());
+	}
 }
 	
 	timer();

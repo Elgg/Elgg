@@ -17,7 +17,7 @@
 			
 			if ($user_details->username != "news") {
 			
-				$run_result .= "<h5>" . gettext("Change username:") . "</h5>";
+				$run_result .= "<h3>" . gettext("Change username:") . "</h3>";
 				$run_result .= run("templates:draw", array(
 					'context' => 'databox',
 					'name' => gettext("New username: "),
@@ -27,14 +27,14 @@
 			
 			}
 			
-			$run_result .= "<h5>" . gettext("Change file quota (in bytes):") . "</h5>";
+			$run_result .= "<h3>" . gettext("Change file quota (in bytes):") . "</h3>";
 			$run_result .= run("templates:draw", array(
 				'context' => 'databox',
 				'name' => gettext("New file quota: "),
 				'column1' => "<input type=\"text\" name=\"change_filequota\" value=\"".$user_details->file_quota."\" />"
 			)
 			);
-			$run_result .= "<h5>" . gettext("Change icon quota:") . "</h5>";
+			$run_result .= "<h3>" . gettext("Change icon quota:") . "</h3>";
 			$run_result .= run("templates:draw", array(
 				'context' => 'databox',
 				'name' => gettext("New icon quota: "),
@@ -43,7 +43,7 @@
 			);
 			
 			if ($user_details->user_type == "person") {
-				$run_result .= "<h5>" . gettext("User flags:") . "</h5>";
+				$run_result .= "<h3>" . gettext("User flags:") . "</h3>";
 				// Is the user an administrator?
 				if (run("users:flags:get", array("admin", $page_owner))) {
 					$checkedyes = "checked = \"true\"";

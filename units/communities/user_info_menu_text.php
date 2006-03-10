@@ -8,15 +8,24 @@
 			$user_id = (int) $parameter[0];
 			
 			if (run("users:type:get", $user_id) == "community") {
-				$result = db_query("select count(users.ident) as friend from friends 
-									left join users on users.ident = friends.friend
+				$result = db_query("select count(*) as friend from friends 
+									join users on users.ident = friends.friend
 									where friends.owner = " . $_SESSION['userid'] . "
-									  and friends.friend = $user_id");
+									 and friends.friend = $user_id");
 				$result = $result[0]->friend;
 				if ($result == 0) {
-					$run_result = "<a href=\"".url."_communities/index.php?friends_name=".$_SESSION['username']."&action=friend&friend_id=$user_id\" onClick=\"return confirm('". gettext("Are you sure you want to join this community?") ."')\">" . gettext("Click here to join this community."). "</a>";
+					$moderation = db_query("select moderation from users where ident = $user_id");
+					$moderation = $moderation[0]->moderation;
+					switch($moderation) {
+						case "no":		$run_result = "<a href=\"".url."_communities/index.php?friends_name=".$_SESSION['username']."&amp;action=friend&amp;friend_id=$user_id\" onClick=\"return confirm('". gettext("Are you sure you want to join this community?") ."')\">" . gettext("Click here to join this community."). "</a>";
+										break;
+						case "yes":		$run_result = "<a href=\"".url."_communities/index.php?friends_name=".$_SESSION['username']."&amp;action=friend&amp;friend_id=$user_id\" onClick=\"return confirm('". gettext("Are you sure you want to apply to join this community?") ."')\">" . gettext("Click here to apply to join this community."). "</a>";
+										break;
+						case "priv":	$run_result = "";
+										break;
+					}
 				} else {
-					$run_result = "<a href=\"".url."_communities/index.php?friends_name=".$_SESSION['username']."&action=unfriend&friend_id=$user_id\" onClick=\"return confirm('". gettext("Are you sure you want to leave this community?") ."')\">" . gettext("Click here to leave this community."). "</a>";
+					$run_result = "<a href=\"".url."_communities/index.php?friends_name=".$_SESSION['username']."&amp;action=unfriend&amp;friend_id=$user_id\" onClick=\"return confirm('". gettext("Are you sure you want to leave this community?") ."')\">" . gettext("Click here to leave this community."). "</a>";
 				}
 			}
 		}

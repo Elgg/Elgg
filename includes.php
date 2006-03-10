@@ -16,25 +16,32 @@
 		// Physical path to the files (eg /home/elggserver/httpdocs/)
 		// NB: **MUST** have a final slash at the end
 			define("path", "");
-		// Email address of the master admin (eg elgg-admin@bogton.edu)
+		// Email address of the system (eg elgg-admin@bogton.edu)
 			define("email", "");
 		// Country code to set language to if you have gettext installed
 		// To include new languages, save their compiled .mo gettext
 		// file into languages/country code/LC_MESSAGES/
 		// (the file within this folder must be called elgg.mo)
 		// An Elgg gettext template is included as /elgg.pot
-			define("locale", "en_EN");
+			define("locale", "en_GB");
+		// The following should be set to false if you don't want the
+		// general public to be able to register accounts with your
+		// Elgg site.
+			define("public_reg", true);
+		// Whether to display verbose error information. This is intended mainly 
+		// for Elgg developers, and should normally be set to false.
+			define("ELGG_DEBUG", true);
 			
 	// Database config:
 	
 		// Database server (eg localhost)
-			define("db_server", "");
+			define("db_server", "localhost");
 		// Database username
-			define("db_user", "");
+			define("db_user", "root");
 		// Database password
 			define("db_pass", "");
 		// Database name
-			define("db_name", "");
+			define("db_name", "elgg");
 					
 	// Load required system files: do not edit this line.
 		require("includes_system.php");
@@ -47,8 +54,11 @@
 	// XMLRPC
 	//	@include(path . "units/rpc/main.php");
 	
-	// Atom
-	//	@include(path . "units/atom/main.php");
+	// Visual editor (tinyMCE)
+		@include(path . "units/tinymce/main.php");
+	
+	// Calendaring system
+	//	require(path . "units/calendar/main.php");
 	
 	/***************************************************************************
 	*	CONTENT MODULES

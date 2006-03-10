@@ -9,13 +9,13 @@
 	// Get all icons associated with a user
 		$icons = db_query("select * from icons where owner = $page_owner");
 		if ($page_owner != $_SESSION['userid']) {
-			$currenticon = db_query("select icons.filename, users.icon from users left join icons on icons.ident = users.icon where users.ident = $page_owner");
+			$currenticon = db_query("select icons.filename, users.icon from users join icons on icons.ident = users.icon where users.ident = $page_owner");
 			$currenticon = $currenticon[0]->filename;
 		} else {
 			$currenticon = $_SESSION['icon'];
 		}
 
-              $header = gettext("Site pictures"); // gettext variable
+		$header = gettext("Site pictures"); // gettext variable
 		$body = <<< END
 		<h2>
 			$header
@@ -26,32 +26,32 @@ END;
 		if (sizeof($icons) > 0) {
 			
 			$desc = gettext("Site pictures are small pictures that act as a representative icon throughout the system."); // gettext variable
-                    $body .= <<< END
-		<form action="" method="post" />		
+			$body .= <<< END
+		<form action="" method="post" />
 			<p>
 				$desc
 			</p>
 END;
 			foreach($icons as $icon) {
-				list($width, $height, $type, $attr) = getimagesize(path . "_icons/data/" . $icon->filename);
+				list($width, $height, $type, $attr) = @getimagesize(path . "_icons/data/" . $icon->filename);
 
 				$delete = gettext("Delete");
 				$name = <<< END
-						<label>$delete:
-							<input type="checkbox" name="icons_delete[]" value="{$icon->ident}" />
+						<label for="icons_deletecheckbox">$delete:
+							<input type="checkbox" id="icons_deletecheckbox" name="icons_delete[]" value="{$icon->ident}" />
 						</label>
 END;
+				$defaulticon = htmlentities(stripslashes($icon->description));
 				$column1 = <<< END
-						<p align="center"><img src="{$url}_icons/data/{$icon->filename}" {$attr} /></p>
+						<img alt="{$defaulticon}" src="{$url}_icons/data/{$icon->filename}" {$attr} />
 END;
 				if ($icon->filename == $currenticon) {
 					$checked = "checked=\"checked\"";
 				} else {
 					$checked = "";
 				}
-				$defaulticon = htmlentities(stripslashes($icon->description));
-                           $nameLabel = gettext("Name:");//gettext variable
-                           $default = gettext("Default:");//gettext variable
+				$nameLabel = gettext("Name:");//gettext variable
+				$default = gettext("Default:");//gettext variable
 				$column2 = <<< END
 						<label>$nameLabel
 							<input	type="text" name="description[{$icon->ident}]" 
@@ -76,7 +76,7 @@ END;
 				$checked = "";
 			}
 			$noDefault = gettext("No default:");
-                     $column1 = <<< END
+			$column1 = <<< END
 						<label>$noDefault
 						<input type="radio" name="defaulticon" value="-1" {$checked} /></label>
 END;
@@ -86,24 +86,24 @@ END;
 						)
 						);
 			$save = gettext("Save"); // gettext variable
-                     $body .= <<< END
+			$body .= <<< END
 				<p align="center">
 					<input type="hidden" name="action" value="icons:edit" />
-					<input type="submit" value=$save />		
+					<input type="submit" value=$save />
 				</p>
 			</form>
 END;
 			
 		} else {
-       
-       $noneLoaded = gettext("You don't have any site pictures loaded yet."); // gettext variable
-	$body .= <<< END
+			
+			$noneLoaded = gettext("You don't have any site pictures loaded yet."); // gettext variable
+			$body .= <<< END
 		<p>
 			$noneLoaded
 		</p>
 END;
-
+			
 		}
-
+		
 		$run_result .= $body;
 ?>

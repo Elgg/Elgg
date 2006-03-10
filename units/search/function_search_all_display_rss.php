@@ -10,15 +10,18 @@
 			$displaytag = htmlentities($parameter);
 			$sitename = sitename;
 			$url = url . "tag/" . $displaytag;
+			$rssurl = url . "rsstag/" . $displaytag;
+			$siteurl = url;
 			
 			$searchdesc = sprintf(gettext("Items tagged with \"%s\" from %s"),$displaytag,$sitename);
 			
 			$run_result .= <<< END
+<?xml-stylesheet type="text/xsl" href="{$rssurl}/rssstyles.xsl"?>
 <rss version="0.91">
-  <channel>
-  	<title>$sitename :: $displaytag</title>
-    <link>$url</link>
-    <description>$searchdesc</description>
+	<channel>
+		<title>$sitename :: $displaytag</title>
+		<link>$url</link>
+		<description>$searchdesc</description>
 
 END;
 			foreach($data['search:tagtypes'] as $tagtype) {
@@ -30,7 +33,7 @@ END;
 			}
 			
 			$run_result .= <<< END
-  </channel>
+	</channel>
 </rss>
 END;
 			

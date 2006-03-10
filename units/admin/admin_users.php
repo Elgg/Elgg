@@ -17,25 +17,25 @@
 		
 		$run_result .= "<form action=\"". url . "_userdetails/\" method=\"get\">";
 		$run_result .= run("templates:draw", array(
-					'context' => 'databox',
-					'name' => gettext("Enter username"),
+					'context' => 'adminTable',
+					'name' => "<h4>" . gettext("Enter username") ."</h4>",
 					'column1' => "<input type=\"text\" name=\"profile_name\" value=\"\" /><input type=\"hidden\" name=\"context\" value=\"admin\" />",
 					'column2' => "<input type=\"submit\" value=\"".gettext("Edit user") . "\" />"
 				)
 				);
 		$run_result .= "</form>";
 		
-		$maxusers = db_query("select count(ident) as maxusers from users where users.user_type = 'person'");
+		$maxusers = db_query("select count(*) as maxusers from users where users.user_type = 'person'");
 		$maxusers = $maxusers[0]->maxusers;
 		
-		$users = db_query("select users.* from users where users.user_type = 'person' group by ident order by username asc limit $offset, 50");
+		$users = db_query("select users.* from users where users.user_type = 'person' order by username asc limit $offset, 50");
 		
 		if (sizeof($users) > 0) {
 			$run_result .= run("templates:draw", array(
-					'context' => 'databox',
-					'name' => "<b>" . gettext("Username") . "</b>",
-					'column1' => "<b>" . gettext("Full name") . "</b>",
-					'column2' => "<b>" . gettext("Email address") . "</b>"
+					'context' => 'adminTable',
+					'name' => "<h5>" . gettext("Username") . "</h5>",
+					'column1' => "<h5>" . gettext("Full name") . "</h5>",
+					'column2' => "<h5>" . gettext("Email address") . "</h5>"
 				)
 				);
 			foreach($users as $user) {
@@ -57,7 +57,7 @@
 			}
 			
 			$run_result .= run("templates:draw", array(
-						'context' => 'databox',
+						'context' => 'adminTable',
 						'name' => "&nbsp;",
 						'column1' => $prev . "&nbsp" . $next,
 						'column2' => "&nbsp;"

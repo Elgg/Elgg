@@ -1,8 +1,8 @@
 <?php
 
-       $header = gettext("Create a new group"); // gettext variable
-       $labelValue = gettext("Group name:"); // gettext variable
-       $buttonValue = gettext("Create"); // gettext variable
+	$header = gettext("Create a new group"); // gettext variable
+	$labelValue = gettext("Group name:"); // gettext variable
+	$buttonValue = gettext("Create"); // gettext variable
 	$run_result .= <<< END
 
 <h5>

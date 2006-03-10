@@ -13,7 +13,7 @@
 		}
 		
 		$communities = db_query("select users.* from friends 
-										left join users on users.ident = friends.friend 
+										join users on users.ident = friends.friend 
 										where users.user_type = 'community' 
 										and users.owner <> " . $_SESSION['userid'] . "
 										and friends.owner = " . $_SESSION['userid']);

@@ -14,13 +14,13 @@
 			if (run("users:type:get", $page_owner) == "person") {
 				$run_result .= run("templates:draw", array(
 									'context' => 'submenuitem',
-									'name' => gettext("Change your site picture"),
-									'location' => url . '_icons/?context=profile&profile_id=' . $page_owner
+									'name' => gettext("Change site picture"),
+									'location' => url . '_icons/?context=profile&amp;profile_id=' . $page_owner
 								)
 								);
 			}
 
-             $run_result .= run("templates:draw", array(
+			$run_result .= run("templates:draw", array(
 							'context' => 'submenuitem',
 							'name' => gettext("Page help"),
 							'location' => url . 'help/profile_help.php'

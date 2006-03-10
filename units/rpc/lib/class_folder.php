@@ -252,7 +252,8 @@
                 db_query("update file_folders 
                           set parent = $this->parent,
                           name = '$this->name',
-                          access = '$this->access'");
+                          access = '$this->access'
+                          where ident = '$this->ident'");
 
                 if (db_affected_rows() > 0)
                 {

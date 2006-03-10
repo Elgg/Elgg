@@ -45,6 +45,12 @@
 									'location' => url . '_userdetails/?context=profile&profile_id=' . $page_owner
 								)
 								);
+			$run_result .= run("templates:draw", array(
+									'context' => 'submenuitem',
+									'name' => gettext("View membership requests"),
+									'location' => url . '_communities/requests.php?profile_id=' . $page_owner
+								)
+								);
 		}
 		
 	}

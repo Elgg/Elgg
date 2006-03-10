@@ -22,7 +22,7 @@
 	// Grab title, see if we can edit the template
 		$editable = 0;
 		if ($template_id == -1) {
-			$templatetitle = gettext("Default Template");
+			$templatetitle = gettext("Default Theme");
 		} else {
 			$templatestuff = db_query("select * from templates where ident = $template_id");
 			$templatetitle = stripslashes($templatestuff[0]->name);
@@ -56,52 +56,54 @@ END;
 	
 	$run_result .= run("templates:draw", array(
 												'context' => 'databoxvertical',
-												'name' => gettext("Template Name"),
+												'name' => gettext("Theme Name"),
 												'contents' => run("display:input_field",array("templatetitle",$templatetitle,"text"))
 											)
 											);
 
 	foreach($template_definition as $element) {
 		
-		$name = "<b>" . $element['name'] . "</b><br /><i>" . $element['description'] . "</i>";
-		$glossary = gettext("Glossary"); // gettext variable
-
-		if (sizeof($element['glossary']) > 0) {
-			$column1 = "<b>$glossary</b><br />";
-			foreach($element['glossary'] as $gloss_id => $gloss_descr) {
-				$column1 .= $gloss_id . " -- " . $gloss_descr . "<br />";
+		if (isset($element['display']) && $element['display'] == 1) {
+		
+			$name = "<b>" . $element['name'] . "</b><br /><i>" . $element['description'] . "</i>";
+			$glossary = gettext("Glossary"); // gettext variable
+	
+			if (sizeof($element['glossary']) > 0) {
+				$column1 = "<b>$glossary</b><br />";
+				foreach($element['glossary'] as $gloss_id => $gloss_descr) {
+					$column1 .= $gloss_id . " -- " . $gloss_descr . "<br />";
+				}
+			} else {
+				$column1 = "";
 			}
-		} else {
-			$column1 = "";
-		}
-		
-		if ($current_template[$element['id']] == "" || !isset($current_template[$element['id']])) {
-			$current_template[$element['id']] = $template[$element['id']];
-		}
-		
-		$column2 = run("display:input_field",array("template[" . $element['id'] . "]",$current_template[$element['id']],"longtext"));
-/*		
-		$run_result .= run("templates:draw", array(
-								'context' => 'databox',
-								'name' => $name,
-								'column2' => $column1,
-								'column1' => $column2
-							)
-							);
-*/
-		$run_result .= run("templates:draw", array(
-								'context' => 'databoxvertical',
-								'name' => $name,
-								'contents' => $column1 . "<br />" . $column2
-							)
-							);
+			
+			if ($current_template[$element['id']] == "" || !isset($current_template[$element['id']])) {
+				$current_template[$element['id']] = $template[$element['id']];
+			}
+			
+			$column2 = run("display:input_field",array("template[" . $element['id'] . "]",$current_template[$element['id']],"longtext"));
+	/*		
+			$run_result .= run("templates:draw", array(
+									'context' => 'databox',
+									'name' => $name,
+									'column2' => $column1,
+									'column1' => $column2
+								)
+								);
+	*/
+			$run_result .= run("templates:draw", array(
+									'context' => 'databoxvertical',
+									'name' => $name,
+									'contents' => $column1 . "<br />" . $column2
+								)
+								);
 
-									
+		}									
 	}
 	
 	if ($editable) {
 		$save = gettext("Save"); // gettext variable
-             $run_result .= <<< END
+		$run_result .= <<< END
 	
 		<p align="center">
 			<input type="hidden" name="action" value="templates:save" />
@@ -111,8 +113,8 @@ END;
 	
 END;
 	} else {
-		$noEdit = gettext("You may not edit this template. To create a new, editable template based on the default, go to <a href=\"index.php\">the main templates page</a>."); // gettext variable
-              $run_result .= <<< END
+		$noEdit = gettext("You may not edit this theme. To create a new, editable theme based on the default, go to <a href=\"index.php\">the main themes page</a>."); // gettext variable
+		$run_result .= <<< END
 		
 		<p>
 			$noEdit

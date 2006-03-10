@@ -7,13 +7,20 @@
 		if (!isset($data['profile:preload'][$parameter[1]])) {
 		
 			$value = db_query("select * from profile_data where name = '".$parameter[1]."' and owner = '". $page_owner ."'");
-			$value = $value[0];
+			if (count($value)) {
+				$value = $value[0];
+			} else {
+				unset($value);
+				$value->value = null;
+				$value->ident = null;
+				$value->access = null;
+			}
 		
 		} else {
 			
-			$value = "";
+			unset($value);
 			$value->value = $data['profile:preload'][$parameter[1]];
-			$value->access = "PUBLIC";
+			$value->access = "user" . $_SESSION['userid'];
 			
 		}
 		

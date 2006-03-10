@@ -29,6 +29,13 @@
 					'location' =>  url . "_admin/flags.php"
 				)
 				);
+				
+		$run_result .= run("templates:draw", array(
+					'context' => 'submenuitem',
+					'name' => gettext("Spam control"),
+					'location' =>  url . "_admin/antispam.php"
+				)
+				);
 			
 	}
 

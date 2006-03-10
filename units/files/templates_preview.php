@@ -2,8 +2,8 @@
 
 	// Template preview
 	
-              $header = gettext("Folder name"); // gettext variable
-              $subHeader = gettext("Subfolders"); // gettext variable
+		$header = gettext("Folder name"); // gettext variable
+		$subHeader = gettext("Subfolders"); // gettext variable
 		$body = <<< END
 		
 		<h2>$header</h2>

@@ -8,7 +8,7 @@
 				// Create a new group
 				case "group:create":
 										if (isset($_POST['name']) && logged_on) {
-											$name = addslashes($_POST['name']);
+											$name = trim($_POST['name']);
 											$ident = (int) $_SESSION['userid'];
 											db_query("insert into groups set
 														name = '$name',
@@ -25,7 +25,7 @@
 											) {
 												$groupid = (int) $_REQUEST['groupid'];
 												$ident = (int) $_SESSION['userid'];
-												$name = addslashes($_REQUEST['groupname']);
+												$name = trim($_REQUEST['groupname']);
 												db_query("update groups set name = '$name'
 																		where owner = $ident
 																		and ident = $groupid");

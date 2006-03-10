@@ -5,11 +5,11 @@
 	// Basic page elements
 	
 		$name = "Basic page elements";
-              $heading1 = gettext("Heading one"); // gettext variable
-              $heading2 = gettext("Heading two"); // gettext variable
-              $bulletList = gettext("A bullet list"); // gettext variable
-              $heading3 = gettext("Heading three"); // gettext variable
-              $numberedList = gettext("A numbered list"); // gettext variable
+		$heading1 = gettext("Heading one"); // gettext variable
+		$heading2 = gettext("Heading two"); // gettext variable
+		$bulletList = gettext("A bullet list"); // gettext variable
+		$heading3 = gettext("Heading three"); // gettext variable
+		$numberedList = gettext("A numbered list"); // gettext variable
 		$body = <<< END
 		
 	<img src="/_templates/leaves.jpg" width="300" height="225" alt="A test image" align="right" />

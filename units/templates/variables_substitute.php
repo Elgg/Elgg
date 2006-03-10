@@ -60,7 +60,7 @@
 										break;
 				case "metatags":
 										// $run_result = "<link href=\"/".$parameter[2].".css\" rel=\"stylesheet\" type=\"text/css\" />";
-										$run_result = "<style><!--\n";
+										$run_result = "<style type=\"text/css\"><!--\n";
 										$run_result .= run("templates:draw",array(
 																				'template' => $template_id,
 																				'context' => 'css'

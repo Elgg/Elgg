@@ -31,7 +31,7 @@
 			if (isset($_POST['description']) && sizeof($_POST['description'] > 0)) {
 				foreach($_POST['description'] as $iconid => $newdescription) {
 					$iconid = (int) $iconid;
-					$newdescription = addslashes($newdescription);
+					$newdescription = trim($newdescription);
 					$result = db_query("select description from icons where ident = $iconid and owner = " . $page_owner);
 					if (sizeof($result) > 0) {
 						if ($result[0]->description != $newdescription) {
@@ -52,7 +52,7 @@
 							db_query("delete from icons where ident = $delete_icon");
 							@unlink(path . "_icons/data/" . $result[0]->filename);
 						}
-						if ($result[0]->filename = $_SESSION['icon']) {
+						if ($result[0]->filename == $_SESSION['icon']) {
 							db_query("update users set icon = -1 where ident = " . $page_owner);
 							if ($page_owner == $_SESSION['userid']) {
 								$_SESSION['icon'] = "default.png";
@@ -77,7 +77,7 @@
 				$templocation = $_FILES['iconfile']['tmp_name'];
 				
 				if ($ok == true) {
-					$numicons = db_query("select count(ident) as numicons from icons where owner = " . $page_owner);
+					$numicons = db_query("select count(*) as numicons from icons where owner = " . $page_owner);
 					$numicons = (int) $numicons[0]->numicons;
 					if ($numicons >= $_SESSION['icon_quota']) {
 						$ok = false;
@@ -96,19 +96,19 @@
 						// $ok = false;
 						// $messages[] = gettext("The uploaded icon file was too large. Files must have maximum dimensions of 100x100.");
 						require_once(path . 'units/phpthumb/phpthumb.class.php');
-  						$phpThumb = new phpThumb();
-  						$phpThumb->setSourceFilename($templocation);
-  						$phpThumb->w = 100;
-  						$phpThumb->h = 100;
-  						$phpThumb->config_output_format = 'jpeg';
-  						$phpThumb->config_error_die_on_error = false;
-  						if ($phpThumb->GenerateThumbnail()) {
-    						$phpThumb->RenderToFile($templocation);
-    						$imageattr[2] = "2";
-  						} else {
-	  						$ok = false;
-	  						$messages[] .= '#Failed: '.implode("\n", $phpThumb->debugmessages);
-  						}
+						$phpThumb = new phpThumb();
+						$phpThumb->setSourceFilename($templocation);
+						$phpThumb->w = 100;
+						$phpThumb->h = 100;
+						$phpThumb->config_output_format = 'jpeg';
+						$phpThumb->config_error_die_on_error = false;
+						if ($phpThumb->GenerateThumbnail()) {
+							$phpThumb->RenderToFile($templocation);
+							$imageattr[2] = "2";
+						} else {
+							$ok = false;
+							$messages[] .= '#Failed: '.implode("\n", $phpThumb->debugmessages);
+						}
 					}
 				}
 				if ($ok == true && ($imageattr[2] > 3 || $imageattr[2] < 1)) {
@@ -127,7 +127,7 @@
 					if (move_uploaded_file($_FILES['iconfile']['tmp_name'], $save_location)) {
 						
 						@chmod($save_location,0644);
-						$filedescription = addslashes($_POST['icondescription']);
+						$filedescription = trim($_POST['icondescription']);
 						db_query("insert into icons set filename = '$save_file', owner = " . $page_owner . ", description = '$filedescription'");
 						if ($_POST['icondefault'] == "yes") {
 							$ident = (int) db_id();

@@ -28,7 +28,7 @@
 		
 		if (isset($_REQUEST['folder'])) {
 			$folder = (int) $_REQUEST['folder'];
-			$result = db_query("select count(ident) as x from file_folders where ident = $folder and files_owner = $owner");
+			$result = db_query("select count(*) as x from file_folders where ident = $folder and files_owner = $owner");
 			if ($result[0]->x < 1) {
 				$folder = -1;
 			}

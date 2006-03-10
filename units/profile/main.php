@@ -50,4 +50,6 @@
 	// Actions to perform when an access group is deleted
 		$function['groups:delete'][] = path . "units/profile/groups_delete.php";
 		
+	// Publish static RSS file of posts and files
+		$function['profile:rss:publish'][] = path . "units/profile/function_rss_publish.php";
 ?>

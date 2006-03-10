@@ -16,14 +16,14 @@
 		exit();
 	}
 	
-       $editPost = gettext("Edit a post");
-       $postTitle = gettext("Post title:");
-       $postBody = gettext("Post body:");
-       $Keywords = gettext("Keywords (Separated by commas):"); // gettext variable
-       $keywordDesc = gettext("Keywords commonly referred to as 'Tags' are words that represent the weblog post you have just made. This will make it easier for others to search and find your posting."); // gettext variable
-       $accessRes = gettext("Access restrictions:"); // gettext variable
-       $postButton = gettext("Save Post"); // gettext
-       
+	$editPost = gettext("Edit a post");
+	$postTitle = gettext("Post title:");
+	$postBody = gettext("Post body:");
+	$Keywords = gettext("Keywords (Separated by commas):"); // gettext variable
+	$keywordDesc = gettext("Keywords commonly referred to as 'Tags' are words that represent the weblog post you have just made. This will make it easier for others to search and find your posting."); // gettext variable
+	$accessRes = gettext("Access restrictions:"); // gettext variable
+	$postButton = gettext("Save Post"); // gettext
+	
 	$body = <<< END
 
 <form method="post" name="elggform" action="{$url}{$username}/weblog/{$post->ident}.html" onsubmit="return submitForm();">

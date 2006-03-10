@@ -4,7 +4,7 @@
 	
 	if ($page_owner != -1 && run("users:type:get", $page_owner) == "person") {
 		$result = db_query("select users.ident from friends
-									left join users on users.ident = friends.friend
+									join users on users.ident = friends.friend
 									where friends.owner = $page_owner
 									and users.user_type = 'person'
 									group by friends.friend
@@ -16,7 +16,7 @@
 				$friends[] = (int) $row->ident;
 			}
 		}
-		$run_result .= "<div class=\"box_friends\">";
+		$run_result .= "<li id=\"sidebar_friends\">";
 		if ($page_owner != $_SESSION['userid']) {
 			$run_result .= run("users:infobox",
 												array(
@@ -35,7 +35,7 @@
 													)
 								);
 		}
-		$run_result .= "</div>";
+		$run_result .= "</li>";
 			
 	}
 

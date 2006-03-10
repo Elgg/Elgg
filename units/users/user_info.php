@@ -22,14 +22,20 @@
 			
 			$body = "<p>" . gettext("None.") . "</p>";
 			
+			if (isset($parameter[2]) && $parameter[2] != "") {
+				$body .= "<p>" . $parameter[2] . "</p>";
+			}
+			
 		} else {
 			$body .= <<< END
 			
-	<table align="center" border="0" class="userlist">
-		<tr>
+	<ul>
 			
 END;
+			$icon = "default.png";
+			$defaulticonparams = @getimagesize(path . "_icons/data/default.png");
 			foreach($parameter[1] as $key => $ident) {
+				list($width, $height, $type, $attr) = $defaulticonparams;
 				$ident = (int) $ident;
 				// if (!isset($_SESSION['user_info_cache'][$ident])) {
 					$info = db_query("select * from users where ident = $ident");
@@ -44,52 +50,50 @@ END;
 						if (sizeof($icon) == 1) {
 							//$_SESSION['icon_cache'][$info->icon]->data = $icon[0]->filename;
 							$icon = $icon[0]->filename;
-						} else {
-							//$_SESSION['icon_cache'][$info->icon]->data = "default.png";
-							$icon = "default.png";
+							if (!(list($width, $height, $type, $attr) = @getimagesize(path . "_icons/data/" . $icon))) {
+								$icon = "default.png";
+								list($width, $height, $type, $attr) = $defaulticonparams;
+							}
 						}
 					// }
 					// $icon = $_SESSION['icon_cache'][$info->icon]->data;
-				} else {
-					$icon = "default.png";
 				}
-				list($width, $height, $type, $attr) = getimagesize(path . "_icons/data/" . $icon);
+				
 				if (sizeof($parameter[1]) > 1) {
 					$width = round($width / 2);
 					$height = round($height / 2);
 				}
 
 				$username = htmlentities(stripslashes($info->name));
-				$usermenu = run("users:infobox:menu",array($info->ident));
+				$usermenu = "";
 				if ($info->ident == $profile_id || (logged_on && (!isset($profile_id) && $info->ident == $_SESSION['userid']))) {
 					$rsslink = "<br /><a href=\"{$url}{$info->username}/rss/\">RSS</a> | <a href=\"{$url}{$info->username}/tags/\">" . gettext("Tags") . "</a> | <a href=\"{$url}{$info->username}/feeds/\">" . gettext("Resources") . "</a>";
+					$usermenu = run("users:infobox:menu:text",array($info->ident));
 				}
 				$body .= <<< END
-		<td align="center" valign="top">
-			<p>
-			<a href="{$url}{$info->username}/">
-			<img src="{$url}_icons/data/{$icon}" width="{$width}" height="{$height}" alt="{$username}" border="0"/></a><br />
-			<span class="userdetails">{$username}&nbsp;&nbsp;{$usermenu}{$rsslink}</span>
-                    </p>
-		</td>
+		<li>
+			<a href="{$url}{$info->username}/">{$username}</a>
+		</li>
 END;
 		
 				if ($span == 1 || ($span == 2 && ($i % 2 == 0))) {
-					$body .= "</tr><tr>";
+					$body .= "";
 				}
 				$i++;
 			}
-			 $body .= "</tr></table>";
-		}
-		if (isset($parameter[2]) && $parameter[2] != "") {
-			$body .= "<p align='center'>" . $parameter[2] . "</p>";
+			$body .= "";
+			
+			if (isset($parameter[2]) && $parameter[2] != "") {
+				$body .= "<li><p>" . $parameter[2] . "</p></li>";
+			}
+			
+			$body .= "</ul>";
 		}
 		
 			$run_result .= run("templates:draw", array(
-						'context' => 'contentholder',
+						'context' => 'sidebarholder',
 						'title' => $name,
 						'body' => $body,
-						'submenu' => ''
 					)
 					);
 		

@@ -7,7 +7,7 @@
 		
 		if (!isset($_SESSION['groups_membership_cache'][$ident]) || (time() - $_SESSION['groups_membership_cache'][$ident]->created > 60)) {
 		
-			$groups = db_query("select groups.* from group_membership left join groups on groups.ident = group_membership.group_id where user_id = $ident");
+			$groups = db_query("select groups.* from group_membership join groups on groups.ident = group_membership.group_id where user_id = $ident");
 			
 			$membership = array();
 			if (sizeof($groups) > 0) {

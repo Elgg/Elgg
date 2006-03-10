@@ -3,7 +3,7 @@
 	global $page_owner;
 
 	// Allow the user to add more icons
-		$numicons = db_query("select count(ident) as iconnum from icons where owner = " . $page_owner);
+		$numicons = db_query("select count(*) as iconnum from icons where owner = " . $page_owner);
 		$numicons = $numicons[0]->iconnum;
 		if ($page_owner != $_SESSION['userid']) {
 			$iconquota = db_query("select icon_quota from users where ident = " . $page_owner);
@@ -13,14 +13,12 @@
 		}
 		
 		if ($numicons < $iconquota) {
-                    
-                    $header = gettext("Upload a new picture"); // gettext variable
-                    $desc = gettext("Upload a picture for this profile below. Pictures need to be 100x100 pixels or smaller, but don't worry - if you've selected a larger picture, we'll shrink it down for you. You may upload up to"); // gettext variable
-                    $desc_two = gettext("pictures in total."); // gettext variable
+			
+			$header = gettext("Upload a new picture"); // gettext variable
+			$desc = gettext("Upload a picture for this profile below. Pictures need to be 100x100 pixels or smaller, but don't worry - if you've selected a larger picture, we'll shrink it down for you. You may upload up to"); // gettext variable
+			$desc_two = gettext("pictures in total."); // gettext variable
 			$body = <<< END
-			<p>
-				<h2>$header</h2>
-			</p>
+			<h2>$header</h2>
 			<p>
 				$desc
 				{$iconquota} $desc_two
@@ -60,15 +58,15 @@ END;
 						)
 						);
 			$upload = gettext("Upload new icon"); // gettext variable
-                    $body .= <<< END
-						<p align="center"><input type="hidden" name="action" value="icons:add" />
-							<input type="submit" value=$upload /></p>
+			$body .= <<< END
+						<p><input type="hidden" name="action" value="icons:add" />
+							<input type="submit" value="$upload" /></p>
 			</form>
 
 END;
 		} else {
 			$iconQuota = sprintf(gettext("The icon quota is 1st: $s and you have 2nd: $s icons uploaded. You may not upload any more icons until you've deleted some."),$iconquota,$numicons); // gettext variable NOT SURE!!!
-                     $body = <<< END
+			$body = <<< END
 			<p>
 				$iconQuota
 			</p>

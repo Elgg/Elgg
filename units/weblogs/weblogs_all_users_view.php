@@ -21,18 +21,19 @@
 		// }
 		// $posts = $_SESSION['friends_posts_cache']->data;
 		$posts = db_query("select * from weblog_posts where ($where1) order by posted desc limit $weblog_offset,25");
-		$numberofposts = db_query("select count(ident) as numberofposts from weblog_posts where ($where1)");
+		$numberofposts = db_query("select count(*) as numberofposts from weblog_posts where ($where1)");
 		$numberofposts = $numberofposts[0]->numberofposts;
 		
 		if (sizeof($posts > 0)) {
 			
 			$lasttime = "";
+			$url = url;
 			
 			foreach($posts as $post) {
 				
 				$time = gmdate("F d, Y",$post->posted);
 				if ($time != $lasttime) {
-					$run_result .= "<h2 class=\"weblogdateheader\">$time</h2>\n";
+					$run_result .= "<h2 class=\"weblog_dateheader\">$time</h2>\n";
 					$lasttime = $time;
 				}
 				
@@ -44,10 +45,10 @@
 			
 			if ($numberofposts - ($weblog_offset + 25) > 0) {
 				$display_weblog_offset = $weblog_offset + 25;
-                           $back = gettext("Back"); // gettext variable
+				$back = gettext("Back"); // gettext variable
 				$run_result .= <<< END
 				
-				<a href="/_weblog/everyone.php?weblog_offset={$display_weblog_offset}">&lt;&lt;  $back</a>
+				<a href="{$url}_weblog/everyone.php?weblog_offset={$display_weblog_offset}">&lt;&lt;  $back</a>
 				<!-- <form action="" method="post" style="display:inline">
 					<input type="submit" value="&lt;&lt; Previous 25" />
 					<input type="hidden" name="weblog_offset" value="{$display_weblog_offset}" />
@@ -60,10 +61,10 @@ END;
 				if ($display_weblog_offset < 0) {
 					$display_weblog_offset = 0;
 				}
-                            $next = gettext("Next"); // gettext variable
+				$next = gettext("Next"); // gettext variable
 				$run_result .= <<< END
 				
-				<a href="/_weblog/everyone.php?weblog_offset={$display_weblog_offset}">$next &gt;&gt;</a>
+				<a href="{$url}_weblog/everyone.php?weblog_offset={$display_weblog_offset}">$next &gt;&gt;</a>
 				<!-- <form action="" method="post" style="display:inline">
 					<input type="submit" value="Next 25 &gt;&gt;" />
 					<input type="hidden" name="weblog_offset" value="{$display_weblog_offset}" />

@@ -45,8 +45,8 @@
 	// Print a link
 	
 				$run_result .= "<li>";
-				$run_result .= "<a href=\"/$weblog_name/weblog/archive/$year/$month/\">";
-				$run_result .= date("F",gmmktime(0,0,0,$month,1,$year)) . " " . $year;
+				$run_result .= "<a href=\"" . url . $weblog_name . "/weblog/archive/$year/$month/\">";
+				$run_result .= strftime("%B %Y", gmmktime(0,0,0,$month,1,$year));
 				$run_result .= "</a>";
 				$run_result .= "</li>";
 				

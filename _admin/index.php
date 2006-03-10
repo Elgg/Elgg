@@ -13,7 +13,7 @@
 	// You must be logged on to view this!
 								
 		echo run("templates:draw:page", array(
-					'Administration',
+					gettext("Administration"),
 					run("templates:draw", array(
 						'context' => 'contentholder',
 						'title' => gettext("Administration"), 

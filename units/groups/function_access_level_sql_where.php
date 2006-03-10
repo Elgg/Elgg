@@ -4,14 +4,16 @@
 	
 		if (logged_on) {
 			
+			$groupslist = array();
+			
 			$groups = run("groups:getmembership",array($_SESSION['userid']));
 			if (sizeof($groups) > 0) {
 				foreach($groups as $group) {
-					$run_result .= "or access = \"group" . $group->ident . "\" ";
+					$groupslist[] = $group->ident;
 				}
-				
+				$run_result .= "or access IN ('group" . implode("', 'group", $groupslist) . "')";
 			}
-						
+			
 		}
 
 ?>

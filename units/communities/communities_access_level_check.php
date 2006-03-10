@@ -3,7 +3,7 @@
 	if (substr_count($parameter, "community") > 0 && logged_on) {
 		$commnum = (int) substr($parameter, 9, 15);
 		$result = db_query("select friends.owner from friends
-												 left join users on users.ident = friends.friend
+												 join users on users.ident = friends.friend
 												 where users.user_type = 'community'
 												 and users.ident = $commnum
 												 and friends.owner = " . $_SESSION['userid']);

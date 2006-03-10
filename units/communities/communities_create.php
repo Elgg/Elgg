@@ -12,19 +12,19 @@
 	if (logged_on && $page_owner == $_SESSION['userid']) {
 	
 	$header = gettext("Create a new community"); // gettext variable
-       $communityName = gettext("Community name:"); // gettext variable
-       $communityUsername = gettext("Username for community:"); // gettext variable
-       $buttonValue = gettext("Create"); // gettext variable
+	$communityName = gettext("Community name:"); // gettext variable
+	$communityUsername = gettext("Username for community:"); // gettext variable
+	$buttonValue = gettext("Create"); // gettext variable
 
-       $run_result .= <<< END
+	$run_result .= <<< END
 
 <div class="community_create">
 	<p>
 		&nbsp;
 	</p>
-	<h5>
+	<h3>
 		$header
-	</h5>
+	</h3>
 	<form action="" method="post">
 END;
 

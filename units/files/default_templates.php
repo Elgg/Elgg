@@ -18,19 +18,21 @@
 									);
 	
 	$template['folder'] = <<< END
+					<div class="foldertable">
 					<table>
 						<tr>
-							<td valign="middle">
+							<td>
 								<a href="{{url}}">
-									<img src="{{icon}}" width="93" height="90" border="0" alt="" />
+									<img src="{{icon}}" width="70" height="59" border="0" alt="" />
 								</a>
 							</td>
-							<td valign="middle">
-								<a href="{{url}}">{{name}}</a> <small>{{menu}}</small><br />
-								<small>{{keywords}}</small
+							<td>
+								<p><a href="{{url}}">{{name}}</a> {{menu}}</p>
+								<p>{{keywords}}</p>
 							</td>
 						</tr>
 					</table>
+					</div>
 END;
 
 	$template_definition[] = array(
@@ -50,22 +52,24 @@ END;
 
 	$template['file'] = <<< END
 	
+					<div class="filetable">
 					<table>
 						<tr>
 							<td>
 								<a href="{{url}}">
-									<img src="{{icon}}" width="90" height="90" border="0" alt="" />
+									<img src="{{icon}}" width="56" height="70" border="0" alt="" />
 								</a>
 							</td>
-							<td valign="middle">
+							<td>
 								<a href="{{url}}"><b>{{title}}</b></a>
-								<small>{{menu}}</small><br />
-									<p>{{description}}</p>
-								<small>{{originalname}}</small><br />
-								<small>{{keywords}}</small>
+								<p>{{menu}}</p>
+								<p>{{description}}</p>
+								<p>{{originalname}}</p>
+								<p>{{keywords}}</p>
 							</td>
 						</tr>
 					</table>
+					</div>
 	
 END;
 

@@ -2,13 +2,13 @@
 
 	global $search_exclusions;
 	
-       $weblogPosted = gettext("Weblog posts by"); // gettext variable
-       $inCategory = gettext("in category"); // gettext variable
-       $rssForBlog = gettext("RSS feed for weblog posts by"); // gettext variable
-       $otherUsers = gettext("Other users with weblog posts in category"); // gettext variable
-       $otherUsers2 = gettext("Users with weblog posts in category"); // gettext variable
+	$weblogPosted = gettext("Weblog posts by"); // gettext variable
+	$inCategory = gettext("in category"); // gettext variable
+	$rssForBlog = gettext("RSS feed for weblog posts by"); // gettext variable
+	$otherUsers = gettext("Other users with weblog posts in category"); // gettext variable
+	$otherUsers2 = gettext("Users with weblog posts in category"); // gettext variable
 
-   
+
 
 
 
@@ -23,14 +23,15 @@
 			$refs = db_query("select ref from tags where $searchline");
 			$searchline = "";
 			if (sizeof($refs) > 0) {
-	
 				foreach($refs as $ref) {
 					if ($searchline != "") {
-						$searchline .= " or ";
+						$searchline .= ",";
 					}
-					$searchline .= "weblog_posts.ident = " . $ref->ref;
+					$searchline .= $ref->ref;
 				}
-				$posts = db_query("select users.name, users.username, weblog_posts.title, weblog_posts.ident, weblog_posts.weblog, weblog_posts.owner, weblog_posts.posted from weblog_posts left join users on users.ident = weblog_posts.owner where ($searchline) order by posted desc");
+				$searchline = " weblog_posts.ident in (" . $searchline . ")";
+				
+				$posts = db_query("select users.name, users.username, weblog_posts.title, weblog_posts.ident, weblog_posts.weblog, weblog_posts.owner, weblog_posts.posted from weblog_posts join users on users.ident = weblog_posts.owner where ($searchline) order by posted desc");
 				$run_result .= "<h2>$weblogPosted " . stripslashes($posts[0]->name) . " $inCategory '".$parameter[1]."'</h2>\n<ul>";
 				foreach($posts as $post) {
 					$run_result .= "<li>";
@@ -48,7 +49,7 @@
 		$searchline = "tagtype = 'weblog' and tag = '".addslashes($parameter[1])."'";
 		$searchline = "(" . run("users:access_level_sql_where",$_SESSION['userid']) . ") and " . $searchline;
 		$searchline = str_replace("owner","tags.owner",$searchline);
-		$sql = "select distinct users.* from tags left join users on users.ident = tags.owner where ($searchline)";
+		$sql = "select distinct users.* from tags join users on users.ident = tags.owner where ($searchline)";
 		if ($parameter[0] == "weblog") {
 			$sql .= " and users.ident != " . $owner;
 		}
@@ -62,47 +63,54 @@
 			}
 			$body = "<table><tr>";
 			$i = 1;
+			$icon = "default.png";
+			$defaulticonparams = @getimagesize(path . "_icons/data/default.png");
+				
 			foreach($users as $key => $info) {
-	
-					// $info = $info[0];
-					if ($info->icon != -1) {
-						$icon = db_query("select filename from icons where ident = " . $info->icon . " and owner = " . $info->ident);
-						if (sizeof($icon) == 1) {
-							$icon = $icon[0]->filename;
-						} else {
+				
+				list($width, $height, $type, $attr) = $defaulticonparams;
+				// $info = $info[0];
+				// if ($info->icon != -1) {
+					$icon = db_query("select filename from icons where ident = " . $info->icon);
+					if (sizeof($icon) == 1) {
+						$icon = $icon[0]->filename;
+						if (!(list($width, $height, $type, $attr) = @getimagesize(path . "_icons/data/" . $icon))) {
 							$icon = "default.png";
+							list($width, $height, $type, $attr) = $defaulticonparams;
 						}
 					} else {
 						$icon = "default.png";
 					}
-					list($width, $height, $type, $attr) = getimagesize(path . "_icons/data/" . $icon);
-					if (sizeof($users) > 4) {
-						$width = round($width / 2);
-						$height = round($height / 2);
-					}
-		$friends_userid = $info->ident;
-		$friends_name = htmlentities(stripslashes($info->name));
-		$friends_menu = run("users:infobox:menu",array($info->ident));
-		$link_keyword = urlencode($parameter[1]);
-              $width = round($width / 2);
-		$height = round($height / 2);
-		$url = url;
-		$body .= <<< END
+				// }
+				
+				if (sizeof($users) > 4) {
+					$width = round($width / 2);
+					$height = round($height / 2);
+				}
+				
+				$friends_userid = $info->ident;
+				$friends_name = htmlentities(stripslashes($info->name));
+				$friends_menu = run("users:infobox:menu",array($info->ident));
+				$link_keyword = urlencode($parameter[1]);
+				$width = round($width / 2);
+				$height = round($height / 2);
+				$url = url;
+				$body .= <<< END
 		<td align="center">
-                    <p>
-			<a href="{$url}search/index.php?weblog={$link_keyword}&owner={$friends_userid}">
+			<p>
+			<a href="{$url}search/index.php?weblog={$link_keyword}&amp;owner={$friends_userid}">
 			<img src="{$url}_icons/data/{$icon}" width="{$width}" height="{$height}" alt="{$friends_name}" border="0" /></a><br />
 			<span class="userdetails">
 				{$friends_name}
 				{$friends_menu}
 			</span>
-                    </p>
+			</p>
 		</td>
 END;
-					if ($i % 5 == 0) {
-						$body .= "\n</tr><tr>\n";
-					}
-					$i++;
+				if ($i % 5 == 0) {
+					$body .= "\n</tr><tr>\n";
+				}
+				$i++;
 			}
 			$body .= "</tr></table>";
 			$run_result .= $body;

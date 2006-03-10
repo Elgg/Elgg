@@ -15,7 +15,7 @@
 			$run_result .= "<h2>" . gettext("Automatic tag suggestion:") . "</h2><p>";
 			foreach($results as $returned_tag) {
 				if ($returned_tag->tag != $tag) {
-					$run_result .= "<a href=\"/tag/".stripslashes($returned_tag->tag)."\">" . stripslashes($returned_tag->tag) . "</a> <br />";
+					$run_result .= "<a href=\"".url."tag/".urlencode(stripslashes($returned_tag->tag))."\">" . stripslashes($returned_tag->tag) . "</a> <br />";
 				}
 			}
 			$run_result .= "</p>";

@@ -5,7 +5,7 @@
 	if (sizeof($data['access']) > 0) {
 		foreach($data['access'] as $access) {
 			if ($parameter[1] == $access[1] && $parameter[1] != "") {
-				$selected = "selected = \"selected\"";
+				$selected = ' selected="selected" ';
 			} else {
 				$selected = "";
 			}

@@ -4,7 +4,7 @@
 
 		$groupdata = run("groups:get:external", array($_SESSION['userid']));
 		if (sizeof($groupdata) > 0) {
-                     $header = gettext("Group membership"); // gettext variable
+			$header = gettext("Group membership"); // gettext variable
 			$body = <<< END
 		<h2>$header</h2>
 END;

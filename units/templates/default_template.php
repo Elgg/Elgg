@@ -4,11 +4,930 @@
 	global $template_definition;
 	$sitename = sitename;
 	$url = url;
+
+	$template_definition[] = array(
+									'id' => 'css',
+									'name' => gettext("Stylesheet"),
+									'description' => gettext("The Cascading Style Sheet for the template."),
+									'glossary' => array(),
+									'display' => 1
+									);
+
+	$template['css'] = <<< END
+/*
+	CSS for Elgg default
+*/
+
+body{
+	padding: 0;
+	font-family: arial, verdana, helvetica, sans-serif;
+	color: #333;
+	background: #eee;
+	width:97%;
+	margin:auto;
+	font-size:80%;
+	}
+
+a {
+		text-decoration: none;
+		color: #7289AF;
+		background: #fff;
+		font-family:verdana, arial, helvetica, sans-serif;
+		font-size:100%;
+
+	}
+
+p {
+	font-size: 100%;
+}
+
+h1 {
+	margin:0px 0px 15px 0px;
+	padding:0px;
+	font-size:120%;
+	font-weight:900;
+}
+
+
+h2 {
+	margin:0px 0px 5px 0px;
+	padding:0px;
+	font-size:100%
+}
+
+
+h3 {
+	margin:0px 0px 5px 0px;
+	padding:0px;
+	font-size:100%
+}
+
+h4 {
+	margin:0px 0px 5px 0px;
+	padding:0px;
+	font-size:100%
+}
+
+h5 {
+	margin:0px 0px 5px 0px;
+	padding:0px;
+	color:#1181AA;
+	background:#fff;
+	font-size:100%
+}
+
+blockquote {
+	padding: 0 1pc 1pc 1pc;
+	border: 1px solid #ddd;
+	background-color: #F0F0F0;
+	color:#000;
+	background-image: url("/_templates/double-quotes.png");
+	background-repeat: no-repeat;
+	background-position: -10px -7px;
+}
+
+/*---------------------------------------
+Wraps the entire page 
+-----------------------------------------*/
+
+#container {
+	margin: 0 auto;
+	text-align: center;
+	width: 100%;
+	min-width: 750px;
+	}
+
+
+/*-----------------------------------------
+TOP STATUS BAR 
+-------------------------------------------*/
+
+#statusbar {
+	padding: 3px 0px 2px 0;
+	margin: 0px;
+	height:19px;
+	background:#eee;
+	color: #333;
+	font-size:85%;
+}
+
+#statusbar a {
+	color: #666;
+	background:#eee;
+}
+
+#welcome {
+	float: left;
+}
+
+#welcome p{
+	font-weight:bold;
+	font-size:110%;
+	padding:0 0 0 4px;
+	margin:0px;
+}
+
+#global_menuoptions {
+	text-align: right;
+	padding:0px;
+	margin:0px;
+	float:right;
+}
+
+#global_menuoptions ul {
+	margin: 0; 
+	padding: 0;
+}
+
+#global_menuoptions li {
+	margin: 0; 
+	padding: 0;
+	display: inline;
+	list-style-type: none;
+	border: none;
+}
+
+#global_menuoptions a {
+	text-decoration: none;
+}
+
+#global_menuoptions a:hover{
+	text-decoration:underline;
+}
+
+
+/*---------------------------------------------
+HEADER 
+------------------------------------------------*/
+
+#header {
+	width: 100%;
+	background: #1181AA;
+	color:#fff;
+	border: 1px solid #ccc;
+	border-bottom: none;
+	padding: 0px;
+	margin: 0px;
+	text-align: left;
+	}
+
+#header h1 {
+	padding: 0 0 4px 0;
+	margin: 7px 0 0 20px;
+	color: #FAC83D;
+	background: #1181AA;
+	text-align: left;
+	font-size:140%;
+	font-weight:normal;
+	}
+
+#header h2 {
+	padding: 0 0 7px 0;
+	margin: 0 0 0 20px;
+	font-weight: normal;
+	color: #fff;
+	background: #1181AA;
+	border: none;
+	font-family: "Lucida Grande", arial, sans-serif;
+	font-size:120%;
+	}
+
+/*--------------------------------------------
+NAVIGATION 
+----------------------------------------------*/
+
+#navigation {
+	height: 19px;
+	margin: 0;
+	padding-left: 20px;
+	text-align:left;
+}
+
+#navigation li {
+	margin: 0; 
+	padding: 0;
+	display: inline;
+	list-style-type: none;
+	border: none;
+}
 	
+#navigation a:link, #navigation a:visited {
+
+	background: #eaeac7;
+	font-weight: normal;
+	padding: 4px 6px;
+	margin: 0 2px 0 0;
+	border: 0px solid #036;
+	text-decoration: none;
+	color: #333;
+	font-size:85%;
+}
+
+#navigation a:link.current, #navigation a:visited.current {
+	border-bottom: 1px solid #fff;
+	background: #fff;
+	color: #393;
+	font-weight: bold;
+}
+
+#navigation a:hover {
+	color: #000;
+	background: #ffc;
+}
+
+#navigation li a:hover{
+	background:#FCD63F;
+	color: #000;
+	}
+
+
+/*-----------------------------------------------
+SITE CONTENT WRAPPER 
+-------------------------------------------------*/
+
+#content_holder {
+	margin: 0;
+	padding: 20px 0;
+	width: 100%;
+	text-align: left;
+	float: left;
+	border: 1px solid #ccc;
+	border-top: none;
+	background-color: #fff;
+	color:#000;
+}
+
+/*-------------------------------------------------
+HOLDS THE MAIN CONTENT E.G. BLOG, PROFILE ETC 
+----------------------------------------------------*/
+
+#maincontent_container {
+	margin: 0;
+	padding: 5px;
+	text-align: left;
+	width: 65%;
+	float: left;
+	}
+
+#maincontent_container h2 {
+	padding-bottom: 5px;
+	padding-top: 5px;
+	margin: 0;
+	/*color: #666;
+	background-color:#fff;*/
+}
+
+#maincontent_container h1 {
+	padding-bottom: 5px;
+	padding-top: 5px;
+	margin: 0;
+	color: #666;
+	background-color:#fff;
+}
+
+#maincontent_container h3 {
+	padding-bottom: 5px;
+	padding-top: 5px;
+	margin: 0;
+	/*color: #666;
+	background-color:#fff;*/
+}
+
+
+/*-------------------------------------------------------------
+THIS DISPLAYS THE ACTUAL CONTENT WITHIN maincontent_container
+--------------------------------------------------------------*/
+
+#maincontent_display {
+	margin: 0;
+	padding: 0 0 20px 20px;
+	width: 100%;
+	text-align: left;
+	float: left;
+	background-color: #fff;
+	color:#000;
+}
+
+#maincontent_display h1 {
+	padding-bottom: 2px;
+	border-bottom: 1px solid #666;
+	margin: 0;
+	font-size:130%;
+	color: #666;
+	background-color: #fff;
+}
+
+/*---- Sub Menu attributes ----*/
+
+#maincontent_display #sub_menu {
+	font-family: verdana;
+	padding: 0px;
+	margin: 5px 0 20px 0;
+	color: #000;
+	background-color:#fff;
+}
+
+#maincontent_display #sub_menu a {
+	font-weight:bold;
+	margin:0px;
+	padding:0px;
+}
+
+#maincontent_display #sub_menu a:hover {
+	text-decoration: underline;
+}
+
+#maincontent_display #sub_menu p {
+	margin:0px;
+	padding:0px;
+}
+
+/*-----------------------------------------------------------------------
+DIV's to help control look and feel - infoholder holds all the profile data
+and is always located in within 'maincontentdisplay'
+
+-------------------------------------------------------------------------*/
+
+/*------ holds profile data -------*/
+.infoholder {
+	border:1px;
+	border-color:#eee;
+	border-style:solid;
+	margin:0 0 5px 0;
+}
+
+.infoholder p {
+	padding:0 0 0 5px;
+}
+
+.infoholder .fieldname h2 {
+	border:0;
+	border-bottom:1px;
+	border-color:#eee;
+	border-style:solid;
+	padding:5px;
+	color:#666;
+	background:#fff;
+}
+
+.infoholder_twocolumn {
+	padding:4px;
+	border:1px;
+	border-color:#eee;
+	border-style:solid;
+	margin:0 0 10px 0;
+}
+
+.infoholder_twocolumn .fieldname h3{
+	color:#666;
+	background:#fff;
+	border:0px;
+	border-bottom:1px;
+	border-color:#eee;
+	border-style:solid;
+}
+
+/*----------- holds administration data---------*/
+
+.admin_datatable {
+	border:1px;
+	border-color:#eee;
+	border-style:solid;
+	margin:0 0 5px 0;
+}
+
+.admin_datatable p {
+	padding:0px;
+	margin:0px;
+}
+
+.admin_datatable a {
+	
+}
+
+
+.admin_datatable td {
+	text-align:left;
+}
+
+.admin_datatable h3{
+	color:#666;
+	background:#fff;
+}
+
+.admin_datatable h4 {
+}
+
+/*---- header plus one row of content ------*/
+
+.databox_vertical {
+	background-color: #F9F9F9;
+	color:#000;
+	border:1px;
+	border-style:solid;
+	border-color:#DDD;
+	margin:0 0 5px 0;
+	padding:5px;
+ }
+
+.databox_vertical p{
+	padding:0px;
+	margin:0px;
+	color:#1181AA;
+	background:#fff;
+ }
+
+.databox_vertical .fieldname h3 {
+	padding:0px;
+	margin:0px;
+	color:#1181AA;
+	background:#fff;
+}
+
+/*------- holds file content ----*/
+
+.filetable {
+	background-color: #F9F9F9;
+	color:#000;
+	border:1px;
+	border-style:solid;
+	border-color:#DDD;
+	margin:0 0 5px 0;
+	width:100%;
+}
+
+.filetable p{
+	padding:0px;
+	margin:0px;
+	color:#000; /*#1181AA;*/
+	background:#fff;
+}
+
+.filetable a{
+	
+}
+
+
+.filetable table {
+	text-align:left;
+}
+
+#edit_files h4 {
+	
+}
+
+
+/*------- holds folder content ------*/
+
+.foldertable {
+	background-color: #F9F9F9;
+	color:#000;
+	border:1px;
+	border-style:solid;
+	border-color:#DDD;
+	margin:0 0 5px 0;
+	width:100%;
+}
+
+.foldertable a{
+	
+}
+
+.foldertable p{
+	padding:0px;
+	margin:0px;
+	color:#1181AA;
+	background:#fff;
+ }
+
+.foldertable table {
+	text-align:left;
+}
+
+/*------- holds network data ------*/
+
+.networktable {
+	
+}
+
+
+/*-------------------------------------------
+SIDEBAR CONTAINER 
+---------------------------------------------*/
+
+#sidebar_container {
+	margin: 0px;
+	text-align: left;
+	float: right;
+	width: 26%;
+	min-width: 100px;
+	border-left: 1px dotted #dcdcdc;
+	padding: 0 10px;
+	/*width:220px;*/
+	/*overflow: hidden;*/
+	}
+
+/*-----------------------------------------
+ACTUAL SIDEBAR CONTENT
+-------------------------------------------*/
+
+#sidebar {
+min-width: 100px;
+	padding: 0 10px;
+	}
+
+#sidebar ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+#sidebar ul li ul {
+	
+}
+
+#sidebar ul li {
+	margin: 10px 0;
+	padding-left: 5px;
+}
+
+
+#sidebar h2 {
+	font-family: "Lucida Grande", arial, sans-serif;
+	font-weight: bold;
+	color: #333;
+	background:#fff;
+	margin: 20px 0 3px 0;
+	padding: 0;
+	border: none;
+}
+
+#sidebar h2 {
+	border-bottom: 1px solid #666;
+}
+
+/*-------------------------------------------
+SIDEBAR DISPLAY COMPONENTS 
+----------------------------------------------*/
+
+#sidebar_user {
+}
+
+#recent_activity {
+}
+
+#community_owned {
+}
+
+#community_membership {
+}
+
+#sidebar_friends {
+}
+
+#search {
+}
+
+#me {
+	padding: 0 3px 3px 3px;
+	background-color:#FAC83D;
+	min-height: 71px;
+}
+
+#me a {
+	background-color:#FAC83D;
+	color: #7289AF;
+}
+
+#me #icon {
+	margin:3px 0 0 0;
+	float: left; 
+	width: 70px;
+}
+
+#me #contents {
+	margin: 0 0 0 75px;
+	text-align: left;
+}
+
+
+/*--- extra div's when looking at someone else's page ---*/
+
+#sidebar_weblog {
+}
+
+#sidebar_files {
+}
+
+
+
+/*------------------------------------------
+  FOOTER 
+  ------------------------------------------*/
+
+#footer {
+	margin: 10px 0 20px 20px;
+	text-align: center;
+	padding:5px;
+}
+
+#footer a:link, #footer a:visited {
+	text-align:right;
+}
+
+
+/*-------------------------------------------
+  INDIVIDUAL BLOG POSTS 
+  -------------------------------------------*/
+
+
+/*------ wraps all blog components ------*/
+
+.weblog_posts {
+}
+
+.weblog_posts .entry h3 {
+	color:#1181AA;
+	background:#fff;
+	padding: 0 0 10px 110px;
+}
+
+.user {
+	float: left;
+	margin: 0px;
+	padding:0 0 5px 0;
+	width: 105px;
+	text-align: left;
+}
+
+.user a {
+	
+}
+
+.post {
+	margin: 0 0 10px 0;
+	padding: 0 0 20px 110px;
+	font-family: arial;
+}
+
+.post p {
+	padding: 0;
+	margin: 3px 0 10px 0;
+	line-height: 16px;
+}
+
+.post ol, .post ul {
+	margin: 3px 0 10px 0;
+	padding: 0;
+}
+
+.post li {
+	margin: 0 0 0 30px;
+	line-height: 16px;
+}
+
+.post ul li {
+	list-style-type: square;
+}
+
+.post .blog_edit_functions p {
+	
+}
+
+.post .blog_edit_functions a {
+	
+}
+
+.post .weblog_keywords p {
+	
+}
+
+.post .weblog_keywords a {
+	
+}
+
+.info p {
+	padding: 0px;
+	margin: 0 0 5px 0;
+	color: #666;
+	background:#fff;
+	font-family: verdana;
+	font-weight: normal;
+	line-height: 14px;
+	text-align: left;
+}
+
+.info p a {
+	color: #666;
+	background:#fff;
+	text-decoration: none;
+	border-bottom: 1px dotted #666;
+	padding-bottom: 0;
+}
+
+#comments ol, #comments ul {
+	margin: 3px 0 10px 0;
+	padding: 0;
+}
+
+#comments li {
+	margin: 0 0 0 30px;
+	line-height: 16px;
+}
+
+#comments ul li {
+	list-style-type: square;
+}
+
+#comments h4 {
+	color:#1181AA;
+}
+
+.weblog_dateheader {
+	padding: 0px;
+	margin: 0 0 5px 0;
+	color: #333;
+	background:#fff;
+	font-weight: normal;
+	font-style: italic;
+	line-height: 12px;
+	border:0px;
+	border-bottom: 1px solid #ccc;
+}
+
+.clearing{clear:both;}
+
+/*---------------------------------------------
+  Your Resources
+-----------------------------------------------*/
+
+.feeds {
+	border-bottom: 1px dotted #aaaaaa;
+	background: transparent url("/_templates/sunflower.jpg") bottom right no-repeat;
+}
+
+.feed_content a {
+	color:black;
+	border:0px;
+	border-bottom:1px;
+	border-style:dotted;
+	border-color:#eee;
+}
+
+.feed_content a:hover{
+	background:#fff;
+	}
+
+.feed_content img {
+	border: 1px solid #666666;
+	padding:5px;
+}
+
+.feed_content h3 {
+	padding:0 0 4px 0;
+	margin:0px;
+}
+
+.feed_content h3 a{
+	color:black;
+	border:0px;
+	border-bottom:1px;
+	border-style:dotted;
+	border-color:#eee;
+}
+
+.feed_content h3 a:hover{
+	background:#FCD63F;
+	color:#000;
+	}
+
+.feed_date h2 {
+	font-size:13px;
+	line-height: 21px;
+	font-weight: bold;
+	padding: 5px 10px 5px 5px;
+	background: #D0DEDF;
+	color:#000;
+	text-decoration:none;
+}
+
+.via a {
+	font-size:80%;
+	color:#1181AA;
+	background:#fff;
+	border:0px;
+	border-bottom:1px;
+	border-style:dashed;
+	border-color:#ebebeb;
+}
+
+.via a:hover {
+	background:#ffc;
+	color:#1181AA;
+}
+
+
+/*---------------------------------------
+  SYSTEM MESSAGES 
+  ---------------------------------------*/
+
+#system_message{ 
+	border:1px solid #D3322A;
+	background:#F7DAD8;
+	color:#000;
+	padding:3px 50px;
+	margin:0 0 0 20px;
+}
+
+#system_message p{
+	padding:0px;
+	margin:2px;
+}
+
+
+/* -------------  help files -------------*/
+
+.helpfiles ul {
+	font-family: arial, helvetica, Tahoma;
+	color: #000000;
+	background:#fff;
+}
+
+.helpfiles h4 {
+	
+}
+
+/*------ site news for home.php ---------*/
+
+.sitenews {
+	background:#ebebeb;
+	color:#000;
+}
+
+.sitenews h2 {
+	background:#1181AA;
+	color:#FAC83D;
+	padding:0 0 5px 0;
+}
+
+/*-------------------------------------
+  Input forms
+--------------------------------------*/
+
+.textarea {
+	border: 1px solid #7F9DB9;
+	color:#71717B;
+	width: 95%;
+	height:200px;
+	padding:3px;
+}
+
+.medium_textarea {
+	width:95%;
+	height:100px;
+}
+
+.small_textarea {
+	width:95%;
+}
+
+.keywords_textarea {
+	width:95%;
+	height:100px;
+}
+
+
+/*--------------------------------------
+  MISC
+--------------------------------------*/
+
+.clearall {
+	padding: 0px;
+	clear: both;
+	font-size: 0px;
+	}
+
+.flagcontent {
+	background:#eee;
+	color:#000;
+	border:1px;
+	border-color:#000;
+	border-style:solid;
+	padding:3px;
+}
+
+.flagcontent h5 {
+	background:#eee;
+	color:#1181AA;
+}
+
+END;
+
 	$template_definition[] = array(
 									'id' => 'pageshell',
 									'name' => gettext("Page Shell"),
 									'description' => gettext("The main page shell, including headers and footers."),
+									'display' => 1,
 									'glossary' => array(
 															'{{metatags}}' => gettext("Page metatags (mandatory) - must be in the 'head' portion of the page"),
 															'{{title}}' => gettext("Page title"),
@@ -19,9 +938,9 @@
 														)
 									);
 	
-       $welcome = gettext("Welcome"); // gettext variable
-       
-       $template['pageshell'] = <<< END
+	$welcome = gettext("Welcome"); // gettext variable
+	
+	$template['pageshell'] = <<< END
 	
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -29,781 +948,43 @@
 <title>{{title}}</title>
 {{metatags}}
 </head>
-<body bgColor="#ffffff" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
- <!-- elgg banner and logo -->
- <div class="container">
-<div id="Statusbar">
-	<div id="StatusLeft">
-		<p>$welcome {{userfullname}}</p>
-	</div>
-	<div id="StatusRight">
+<body>
+<!-- elgg banner and logo -->
+<div id="container"><!-- start container -->
+	<div id="statusbar"><!-- start statusbar -->
+		<div id="welcome"><!-- start welcome -->
+			<p>$welcome {{userfullname}}</p>
+		</div><!-- end welcome -->
 		{{topmenu}}
-	</div>
-
-</div>
-<div id="Header">
-			 <h1>$sitename</h1>
-       		<h2>Learning Landscape</h2>
-	    <ul id="Tabs">  
-          {{menu}}
-		 </ul>
-</div>
-<div id="ContentFrame">
-<div class="Left">
-  <div class="col">
-  	{{messageshell}}
-  	{{mainbody}}
-  </div>
-</div>
-<div class="Right">
-
-  <div class="col">
-    <div class="Sidebar">
-    	{{sidebar}}
-	</div>
-  </div>
-</div>
-</div>
-<div class="ClearAll" />
- <div id="Footer">
-		<a href="http://elgg.net"><img src="{$url}_templates/elgg_powered.png" alt="Powered by Elgg" title="Powered by Elgg" border="0"></a>	
- </div>
- </body>
- </html>
+	</div><!-- end statusbar -->
+	<div id="header"><!-- start header -->
+		<h1>$sitename</h1>
+			<h2>Community learning space</h2>
+			<ul id="navigation">
+				{{menu}}
+			</ul>
+	</div><!-- end header -->
+	<div id="content_holder"><!-- start contentholder -->
+		<div id="maincontent_container"><!-- start main content -->
+			{{messageshell}}
+			{{mainbody}}
+		</div><!-- end main content -->
+		<div id="sidebar_container">
+			<div id="sidebar"><!-- start sidebar -->
+				<ul><!-- open sidebar lists -->
+				{{sidebar}}
+				</ul>
+			</div><!-- end sidebar -->
+		</div><!-- end sidebar_container -->
+	</div><!-- end contentholder -->
+	<div class="clearall" />
+	<div id="footer"><!-- start footer -->
+		<a href="http://elgg.net"><img src="{$url}_templates/elgg_powered.png" alt="Powered by Elgg" title="Powered by Elgg" border="0" /></a>
+	</div><!-- end footer -->
+</div><!-- end container -->
+</body>
+</html>
 			
-END;
-
-	$template_definition[] = array(
-									'id' => 'css',
-									'name' => gettext("Stylesheet"),
-									'description' => gettext("The Cascading Style Sheet for the template."),
-									'glossary' => array()
-									);
-
-	$template['css'] = <<< END
-/*
-
-	CSS for Elgg default - a huge thanks to Enej for providing most of the CSS!
-
-*/
-
-body{
-	margin: 0;
-	padding: 0;
-	font-family: "Lucida Grande", verdana, arial, helvetica, sans-serif;
-	color: #333;
-    background: #eee;
-	width:97%;
-	margin:auto;
-	}
-
-a {
-		text-decoration: none;
-		font-family: verdana, arial, helvetica;
-		color: #7289AF;
-		font-size:13px;
-	}
-
-p {
-	font-family: arial, helvetica, Tahoma;
-	color: #000000; 
-	font-size: 75%;		
-}
-
-
-h2 {
-	font-family: arial, helvetica, Tahoma;
-}
-
-
-h3 {
-	font-family: arial, helvetica, Tahoma;
-}
-
-h4 {
-	font-family: arial, helvetica, Tahoma;
-}
-
-h5 {
-	color:#1181AA;
-}
-
-/*-------------------------------------------------
-STATUS BAR
--------------------------------------------------*/
-
-#Statusbar {
-	color: #1181AA;
-	padding: 3px 10px 2px 0;
-	margin: 0px;
-	text-align: bottom;
-	font-size: 9px;
-    height:19px;
-    background:#eee;
-}
-
-
-#Statusbar a {
-	font-size: 11px;
-       color: #666;
-}
-
-#StatusRight {
-	text-align: right;
-	padding:0px;
-	padding-top:0px;
-	padding-bottom:0px;
-}
-
-#StatusRight a:hover{
-    text-decoration:underline;
-}
-
-#StatusLeft {
-	float: left;
-	color: #333;
-}
-
-#StatusLeft p{
-	font-weight: normal;
-	font-size:12px;
-	font-weight:bold;
-	padding:0px;
-	padding-left:3px;
-	margin:0px;
-	color:#ggg;
-}
-
-/*-------------------------------------------------
-HEADER
--------------------------------------------------*/
-
-#Header {
-	width: 100%;
-	background: #1181AA; 
-	border: 1px solid #ccc;
-	border-bottom: none;
-	padding: 0px;
-	margin: 0px;
-	text-align: left;
-	}
-
-#Header h1 {
-	padding: 0;
-	padding-bottom: 4px;
-	margin: 7px 0 0 20px;
-	font-size: 24px;
-	font-weight: normal;
-	color: #FAC83D; 
-	text-align: left;
-	}	
-
-#Header h2 {
-	padding: 0 0 7px 0;
-	margin: 0 0 0 20px;
-	font-size: 16px;
-	font-weight: normal;
-	color: #fff;
-	border: none;
-	font-family: "Lucida Grande", arial, sans-serif;
-	}	
-
-#Header h3 {
-	padding: 0 20px 0 0;
-	margin: 7px 0px 0 0;
-	width: 200px;
-	text-align: right;
-	float: right;
-	font-size: 10px;
-	font-weight: normal;
-	font-family: verdana;
-}
-
-#Header h3 a {
-	font-weight: bold;
-	text-decoration: none;
-}
-/*-------------------------------------------------
-contents
--------------------------------------------------*/
-
-.Container {
-	margin: 0 auto;
-	text-align: center;
-	width: 100%;
-	min-width: 750px;
-	}
-
-.ClearAll {
-	padding: 0px;
-	clear: both;
-	font-size: 0px;
-	}
-
-.userlist {
-    clear: both;
-    margin:0px;
-    margin-bottom:5px;
-}
-
-#ContentFrame, .ContentFrame {
-	margin: 0;
-	padding: 20px 0;
-	width: 100%;
-	text-align: left;
-	float: left;
-	border: 1px solid #ccc;
-	border-top: none;
-	background-color: #fff;
-}
-
-.Left {
-	margin: 0;
-	padding: 0;
-	text-align: left;
-	width: 68%;
-	float: left;
-	}
-
-.Left h2 {
-	padding-bottom: 5px;
-       padding-top: 5px;
-	border: 0px;
-	margin: 0;
-	font-size: 14px;
-	color: #666;
-}
-
-.Left h1 {
-	padding-bottom: 5px;
-       padding-top: 5px;
-	border: 0px;
-	margin: 0;
-	font-size: 15px;
-	color: #666;
-}
-
-
-
-.Right {
-	margin: 0px;
-	padding: 0;
-	text-align: left;
-	float: right;
-	width: 30%;
-      overflow: hidden;
-	}
-
-#Footer {
-	font-size: 10px;
-	color: #fff;
-	margin: 10px 0 20px 20px;
-	text-align: center;
-	padding:5px;
-}
-
-#Footer a:link, #Footer a:visited {
-	color: #666;
-	text-align:right;
-}
-
-#Footer a:hover {
-	color: #fff;
-	background: #666;
-}
-
-/*-------------------------------------------------
-TABS
--------------------------------------------------*/
-
-#Tabs {
-	height: 21px;
-	margin: 0;
-	padding-left: 20px;
-	text-align:left;
-}
-
-#Tabs li {
-	margin: 0; 
-	padding: 0;
-	display: inline;
-	list-style-type: none;
-	border: none;
-}
-	
-#Tabs a:link, #Tabs a:visited {
-
-	background: #eaeac7;
-	font-size: 11px;
-	font-weight: normal;
-	padding: 4px 6px;
-	margin: 0 2px 0 0;
-	border: 0px solid #036;
-	border-bottom: #eaeac7;
-	text-decoration: none;
-	color: #333;
-}
-
-#Tabs a:link.current, #Tabs a:visited.current {
-	border-bottom: 1px solid #fff;
-	background: #fff;
-	color: #393;
-	font-weight: bold;
-}
-
-#Tabs a:hover {
-	color: #000;
-	background: #ffc;
-}
-#Tabs li a:hover{
-	background:#FCD63F;
-	}
-
-/*-------------------------------------------------
-Profile table
--------------------------------------------------*/
-
-.profiletable 	{
-					border: 1px;
-					border-style: solid;
-					border-color: #ddd;
-					text-align:top;
-			  	}
-
-.profiletable 	p{
-       padding:0px;
-	   margin:0px;
-	  }
-				
-.profiletable img {
-	border: 0;
-}
-
-.profiletable .fieldname	{
-					background-color: #F9F9F9;
-					border-right: 2px solid #eaeac7; /*#8B8C8C;*/
-					color: #1181AA;
-					padding-left: 10px;
-					text-align:bottom;
-				}
-
-.profiletable .fieldname p {
-      color: #666;
-}
-
-.fileTable {
-   background-color: #F9F9F9;
-   border:1px;
-   border-style:solid;
-   border-color:#DDD;
- }
-
- .fileTable p{
-   padding:0px;
-   margin:0px;
-   color:#1181AA;
- }
-
-/*-------------------------------------------------
-SELECTED HEADER
--------------------------------------------------*/
-
-.SectionContent {
-	margin: 0 0 20px 0;
-}
-
-.SectionContent h1 {
-	padding-bottom: 2px;
-	border-bottom: 1px solid #666;
-	margin: 0;
-	font-size: 16px;
-	color: #666;
-}
-
-.SectionContent h3 {
-	font-family: verdana;
-	padding: 2px 0 0 0;
-	margin: 0;
-	font-size: 10px;
-	font-weight: normal;
-	color: #000;
-	}
-
-.SectionContent h3 a {
-	font-weight:bold;
-}
-
-.SectionContent h3 a:hover {
-	text-decoration: underline;
-}
-
-/*-------------------------------------------------
-INDIVIDUAL POSTS
--------------------------------------------------*/
-
-.Post {
-	margin: 0 0 10px 0;
-	padding: 0 0 20px 110px;
-       font-size:75%;
-       font-family: arial;
-}
-
-.Post p {
-	padding: 0;
-	margin: 3px 0 10px 0;
-	font-size: 12px;
-	line-height: 16px;
-}
-
-.Post h1 {
-	/* padding-top: 5px;*/
-	color: #000;
-}
-
-.Post h1 a {
-	color: #000;
-	text-decoration: none;
-}
-
-.Post h1 a:hover {
-	background: #fff;
-	color: #000;
-	text-decoration: underline;
-}	
-
-h2.date, h2.weblogdateheader {
-	padding: 0 0 0 0;
-	margin: 0 0 2px 0;
-	color: #333;
-	font-size: 10px;
-	font-weight: normal;
-	font-style: italic;
-	line-height: 12px;
-	border-bottom: 1px solid #ccc;
-}
-
-.Post h2.subhead {
-	padding: 0;
-	margin: 15px 0 0 0;
-	color: #000;
-	font-size: 12px;
-	font-weight: bold;
-	font-style: normal;
-	line-height: 12px;
-}
-
-.Post h5 {
-		margin-top: 0px;
-		padding-top: 0px;
-             font-size:100%
-	}
-
-.Post h3 {
-	padding: 0 0 0 0;
-	margin: 0 0 5px 0;
-	color: #666; 
-	font-family: verdana;
-	font-size: 10px;
-	font-weight: normal;
-	line-height: 14px;
-	text-align: left;
-}
-
-.Post h3 a {
-	color: #666;
-	text-decoration: none;
-	border-bottom: 1px dotted #666;
-	padding-bottom: 0;
-}
-
-.Post h3 a:hover {
-	color: #fff;
-	background-color: #666;
-}
-
-.Post h3 a.commentlink:link {
-	font-weight: bold;
-	color: #000;
-}
-
-.Post h3 a.commentlink:hover {
-	color: #fff;
-	background: #333;
-}
-
-.Post ol, .Post ul {
-	margin: 3px 0 10px 0;
-	padding: 0;
-}
-
-.Post li {
-	margin-left: 30px;
-	font-size: 12px;
-	line-height: 16px;
-}
-
-.Post ul li {
-	list-style-type: square;
-}
-
-.Post table {
-	background: #dcdcdc;
-}
-
-.Post td {
-	background: #fff;
-	padding: 5px;
-	font-size: 12px;
-}
-
-
-/*-------------------------------------------------
-SIDEBAR
--------------------------------------------------*/
-
-.Sidebar h1 {
-	padding: 4px 0 2px 0;
-	border-bottom: 1px solid #666;
-	margin: 0 0 5px 0;
-	font-size: 12px;
-	color: #000;
-}
-
-.Sidebar p.incategory {
-	margin-top: 0;
-	background: #ececec;
-	padding: 4px;
-}
-
-.Sidebar h2, .Sidebar h2.border {
-	font-family: "Lucida Grande", arial, sans-serif;
-	font-size: 12px;
-	font-weight: bold;
-	color: #333;
-	margin: 20px 0 3px 0;
-	padding: 0;
-	border: none;
-}
-
-.Sidebar h2.border {
-	border-bottom: 1px solid #d5d5d5;
-}
-
-
-.box_user {
-  /*background-color:#FAC83D;*/ /*#FAC83D;*/
-  margin:0px;
-  margin-bottom:5px;
-}
-
-.box_user .me {
-		padding: 3px;
-		background-color:#FAC83D;
-		padding-top: 3px;
-		min-height: 71px;
-	}
-
-.box_user p {
-   color:#000; /*#1181AA;*/
-   padding: 0px;
-   margin-top: 0px;
-  }
-
-.box_user .usermenu a {
-   color:#000; /*#1181AA;*/
-   padding: 0px;
-   margin-top: 0px;
-   font-size: 75%;
-   text-decoration: underline;
-  }
-  
-.profile_item {
-    border:1px;
-	border-style:none;
-	border-color:#ebebeb;
-	background-color:#ebebeb;
-	margin:0px;
-	margin-bottom:3px;
-}
-
-.profile_item2 {
-    border:1px;
-	border-style:none;
-	border-color:#fff;
-	background-color:#fff;
-	margin:0px;
-	margin-bottom:3px;
-}
-
-#js{ 
-	border:1px solid #D3322A;
-	background:#F7DAD8;
-	padding:3px 50px;
-	margin:0;	
-}
-
-#js p{
-   padding:0px;
-   margin:2px;
- }
-
-
-/*-------------------------------------------------
-COMMENTS
--------------------------------------------------*/
-
-.Comments h4 {
-	margin: 0 0 10px 0;
-	font-size: 10px;
-	color: #666;
-	padding: 3px 0;
-	font-weight: normal;
-	border-bottom: 1px solid #d5d5d5;
-}
-
-.Comments h2 {
-	padding: 2px 4px;
-	color: #fff;
-	background: #666;
-	font-size: 11px;
-	border-bottom: 1px solid #333;
-	margin: 0;
-
-}
-
-.Comments div.Post {
-	background: #f9f9f9;
-	border-bottom: 1px solid #efefef;
-	margin: 0 0 5px 0;
-	clear: left;
-	color: #333;
-	padding: 5px;
-}
-
-.Comments div.Post:after {
-  content: ".";
-  display: block;
-  height: 0;
-  clear: both;
-  visibility: hidden;
-}
-
-/* Hides form IE-mac \*/
-* html .Comments div.Post {height: 1%;}
-/* End hide from IE-mac */
-
-.Comments #OriginalPost {
-	padding: 0 0 30px 0;
-	background: #fff;
-	border-bottom: none;
-}
-
-.Post#Preview {
-	border: 2px solid #ef9c00;
-	padding: 0;
-}
-
-.Post#Preview h2 {
-	margin: 0;
-	padding: 5px 10px;
-	background: #ff6;
-	border: none;
-	color: #000;
-}
-
-.Post#Preview #PreviewBody {
-	padding: 10px;
-}
-
-.Post#Preview #PreviewButtons {
-	text-align: left;
-	background: #ffc;
-	padding: 5px 10px;
-}
-
-div.Comments img.avatar {
-  margin: 0 10px 10px 0;
-  width: 48px;
-  float: left;
-  padding-left: 5px;
-}
-
-div.Comments div.Post ul,
-div.Comments div.Post ol {
-  clear: left;
-}
-
-div.Comments div.Post ol li,
-div.Comments div.Post ul li {
-}
-
-/*-------------------------------------------------
-alignment
--------------------------------------------------*/
-
-.col {
-	padding: 0 5px;
-	text-align: left;
-}
-
-.Left .col {
-	padding: 0 30px 0 20px;
-       min-width: 100px;
-}
-
-.Right .col {
-	min-width: 100px;
-	border-left: 1px dotted #dcdcdc;
-	padding: 0 10px;
-}
-
-.infobox {
-   padding:0px;
-   margin:0px;
-   margin-bottom:0px;
-  }
-
-/* -------------  help files -------------*/
-
-.helpFiles ul {
-	font-family: arial, helvetica, Tahoma;
-	color: #000000; 
-	font-size: 75%;		
-}
-
-
-/*-------------- extra blog classes -----*/
-.user {
-	float: left;
-	margin: 0px;
-       padding:0px;
-       padding-bottom:5px;
-	/* padding: 0.3em 2em 2em 0; */
-	width: 105px;
-	text-align: left;
-}
-
-.weblog_post .post_content {
-	padding-left: 2em;
-}
-
-.clearing{clear:both;}
-
-/* site news for home.php */
-
-.siteNews {
-     background:#ebebeb;
-}
-
-.siteNews h2 {
-     background:#1181AA;
-     font-size:90%;
-     color:#FAC83D;
-     padding:0px;
-     padding-left:5px;
-}
-
-
 END;
 
 	$template_definition[] = array(
@@ -819,13 +1000,31 @@ END;
 
 	$template['contentholder'] = <<< END
 	
-    <div class="SectionContent">
-	
+	<div id="maincontent_display">
+
 	<h1>{{title}}</h1>
 	{{submenu}}
-	</div>
 	{{body}}
+	</div>
 	
+END;
+
+	$template_definition[] = array(
+									'id' => 'sidebarholder',
+									'name' => gettext("Sidebar section holder"),
+									'description' => gettext("Contains the sidebar section titles"),
+									'glossary' => array(
+										'{{title}}' => gettext("The header"),
+										'{{body}}' => gettext("The body of the page")
+															
+										)
+									);
+
+	$template['sidebarholder'] = <<< END
+
+	<h2>{{title}}</h2>
+	{{body}}
+
 END;
 
 	$template_definition[] = array(
@@ -845,40 +1044,17 @@ END;
 	$resources = gettext("Resources");
 	$template['ownerbox'] = <<< END
 	
-	<div class="me">
-		<div style="float: left; width: 70px"><a href="{{profileurl}}">{{usericon}}</a></div>
-		<div style="margin-left: 75px; margin-top: 0px; padding-top: 0px; text-align: left" ><p>
-			<span class="userdetails">{{name}}<br /><a href="{{profileurl}}rss/">RSS</a> | <a href="{{profileurl}}tags/">$tags</a></p>
+	<div id="me">
+		<div id="icon"><a href="{{profileurl}}">{{usericon}}</a></div>
+		<div id="contents" ><p>
+			<span class="userdetails">{{name}}<br /><a href="{{profileurl}}rss/">RSS</a> | <a href="{{profileurl}}tags/">$tags</a> | <a href="{{profileurl}}feeds/">$resources</a></span></p>
 			<p>{{tagline}}</p>
-			<p style="margin-bottom: 3px" class="usermenu">{{usermenu}}</p>
+			<p class="usermenu">{{usermenu}}</p>
 		</div>
-	</div>	
+	</div>
 
 END;
-									
-	$template_definition[] = array(
-									'id' => 'infobox',
-									'name' => gettext("Information Box"),
-									'description' => gettext("A box containing a caption and some text, used extensively throughout the site. For example, the 'friends' box and most page bodies are info boxes. Of course, you can alter this template however you wish - it doesn't need to be an actual box."),
-									'glossary' => array(
-															'{{name}}' => gettext("The title"),
-															'{{contents}}' => gettext("The contents of the box")
-														)
-									);
-	$template['infobox'] = <<< END
-
-<table class="infobox" width="100%">
-	<caption align="top">
-		{{name}}
-	</caption>
-	<tr>
-		<td>
-{{contents}}
-		</td>
-	</tr>
-</table><br />	
-END;
-
+	
 	$template_definition[] = array(
 									'id' => 'messageshell',
 									'name' => gettext("System message shell"),
@@ -890,7 +1066,7 @@ END;
 
 	$template['messageshell'] = <<< END
 	
-	<div id="js">{{messages}}</div><br />
+	<div id="system_message">{{messages}}</div><br />
 	
 END;
 
@@ -923,7 +1099,7 @@ END;
 
 	$template['menu'] = <<< END
 	
-      {{menuitems}}
+		{{menuitems}}
 END;
 
 	$template_definition[] = array(
@@ -969,9 +1145,11 @@ END;
 
 	$template['submenu'] = <<< END
 	
-		<h3>
+	<div id="sub_menu">
+		<p>
 			{{submenuitems}}
-		</h3>
+		</p>
+	</div>
 END;
 
 	$template_definition[] = array(
@@ -1001,9 +1179,9 @@ END;
 
 	$template['topmenu'] = <<< END
 	
-		<div id="StatusRight">
+		<ul id="global_menuoptions">
 			{{topmenuitems}}
-		</div>
+		</ul>
 
 END;
 
@@ -1019,7 +1197,7 @@ $template_definition[] = array(
 
 	$template['topmenuitem'] = <<< END
 	
-	[<a href="{{location}}">{{name}}</a>]&nbsp;
+	<li><a href="{{location}}">[{{name}}]</a></li>
 	
 END;
 
@@ -1036,22 +1214,13 @@ END;
 
 	$template['databox'] = <<< END
 
-<div class="infobox">
-	<table width="95%" class="profiletable" align="center" style="margin-bottom: 3px">
-	<tr>
-
-		<td width="20%" class="fieldname" valign="top">
-			<p><b>{{name}}</b></p>
-		</td>
-		<td width="50%" valign="top">
-			<p>{{column1}}</p>
-		</td>
-		<td width="30%" valign="top">
-			<p>{{column2}}</p>
-		</td>
-	</tr>
-	</table>
-</div>
+	<div class="infoholder_twocolumn">
+		<div class="fieldname">
+			<h3>{{name}}</h3>
+		</div>
+		<p>{{column1}}</p>
+		<p>{{column2}}</p>
+	</div>
 		
 END;
 
@@ -1067,20 +1236,65 @@ END;
 
 	$template['databox1'] = <<< END
 
-<div class="infobox">
-	<table width="95%" class="profiletable" align="center" style="margin-bottom: 3px">
-	<tr>
+	<div class="infoholder">
+		<div class="fieldname">
+			<h2>{{name}}</h2>
+		</div>
+		<p>{{column1}}</p>
+	</div>
+		
+END;
 
-		<td width="20%" class="fieldname" valign="top">
-			<p><b>{{name}}</b></p>
+$template_definition[] = array(
+									'id' => 'adminTable',
+									'name' => gettext("adminTable"),
+									'description' => gettext("This table is used to house stats and administration details until a good CSS solution can be applied."),
+									'glossary' => array(
+															'{{name}}' => gettext("Column One"),
+															'{{column1}}' => gettext("Column Two"),
+															'{{column2}}' => gettext("Column Three")
+														)
+									);
+
+	$template['adminTable'] = <<< END
+
+<div class="admin_datatable">
+	<table width="80%">
+	<tr>
+		<td width="25%" valign="top">
+			{{name}}
 		</td>
-		<td width="80%" valign="top">
-			<p>{{column1}}</p>
+		<td width="45%" valign="top">
+			{{column1}}
+		</td>
+		<td width="30%" valign="top">
+			{{column2}}
 		</td>
 	</tr>
 	</table>
 </div>
-		
+
+END;
+
+$template_definition[] = array(
+									'id' => 'flagContent',
+									'name' => gettext("flagContent"),
+									'description' => gettext("This hold the flag content function throughout Elgg"),
+									'glossary' => array(
+															'{{name}}' => gettext("Column One"),
+															'{{column1}}' => gettext("Column Two"),
+															'{{column2}}' => gettext("Column Three")
+														)
+									);
+
+	$template['flagContent'] = <<< END
+
+<div class="flagcontent">
+	{{name}}
+	{{column1}}
+	{{column2}}
+</div>
+
 END;
 
 	$template_definition[] = array(
@@ -1094,20 +1308,12 @@ END;
 									);
 
 	$template['databoxvertical'] = <<< END
-<div class="infobox">
-	<table width="95%" class="fileTable" align="center" style="margin-bottom: 3px">
-		<tr>
-			<td class="fieldname">
-				<p><b>{{name}}</b></p>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<p>{{contents}}</p>
-			</td>
-		</tr>
-	</table>
-</div>
+	<div class="databox_vertical">
+		<div class="fieldname">
+			<h3>{{name}}</h3>
+		</div>
+		<p>{{contents}}</p>
+	</div>
 		
 END;
 

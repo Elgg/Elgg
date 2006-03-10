@@ -18,6 +18,8 @@
 	// Unset the flag first
 		run("users:flags:unset",array($flagname, $userid));
 		
+		$flagname = addslashes($flagname);
+		
 	// Then add data
 		db_query("insert into user_flags set flag = '$flagname', user_id = $userid, value = '$value'");
 		

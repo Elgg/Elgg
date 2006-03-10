@@ -3,10 +3,11 @@
 	// Join
 		
 		$sitename = sitename;
+		$url = url;
 			
 		if (isset($_REQUEST['invitecode'])) {
 			
-			$code = addslashes($_REQUEST['invitecode']);
+			$code = trim($_REQUEST['invitecode']);
 			$details = db_query("select * from invitations where code = '$code'");
 			if (sizeof($details) > 0) {
 				
@@ -36,16 +37,16 @@
 				$invite_id = (int) ($details->ident);
 				$thankYou = sprintf(gettext("Thank you for registering for an account with %s! Registration is completely free, but before you confirm your details, please take a moment to read the following documents:"), $sitename);
 				$terms = gettext("terms and conditions"); // gettext variable
-                           $privacy = gettext("Privacy policy"); // gettext variable
-                           $age = gettext("Submitting the form below indicates acceptance of these terms. Please note that currently you must be at least 13 years of age to join the site."); // gettext variable
+				$privacy = gettext("Privacy policy"); // gettext variable
+				$age = gettext("Submitting the form below indicates acceptance of these terms. Please note that currently you must be at least 13 years of age to join the site."); // gettext variable
 				$run_result .= <<< END
 				
 	<p>
 		$thankYou
 	</p>
 	<ul>
-		<li><a href="/content/terms.php" target="_blank">$sitename $terms</a></li>
-		<li><a href="/content/privacy.php" target="_blank">$privacy</a></li>
+		<li><a href="{$url}content/terms.php" target="_blank">$sitename $terms</a></li>
+		<li><a href="{$url}content/privacy.php" target="_blank">$privacy</a></li>
 	</ul>
 	<p>
 		$age
@@ -80,10 +81,10 @@ END;
 					)
 					);
 			$correctAge = gettext("I am at least thirteen years of age."); // gettext variable
-                     $buttonValue = gettext("Join"); // gettext variable
-                     $run_result .= <<< END
+			$buttonValue = gettext("Join"); // gettext variable
+			$run_result .= <<< END
 			<p align="center">
-				<input type="checkbox" name="over13" value="yes" /> <b>$correctAge</b>
+				<label for="over13checkbox"><input type="checkbox" id="over13checkbox" name="over13" value="yes" /> <strong>$correctAge</strong></label>
 			</p>
 			<p align="center">
 				<input type="hidden" name="action" value="invite_join" />
@@ -95,7 +96,7 @@ END;
 
 			} else {
 				
-                           $invalid = sprintf(gettext("Your invitation code appears to be invalid. Codes only last for seven days; it's possible that yours is older. If you still want to join %s, it may be worth getting in touch with the person who invited you."),$sitename);
+				$invalid = sprintf(gettext("Your invitation code appears to be invalid. Codes only last for seven days; it's possible that yours is older. If you still want to join %s, it may be worth getting in touch with the person who invited you."),$sitename);
 				$run_result .= <<< END
 				
 	<p>
@@ -107,7 +108,7 @@ END;
 			}
 			
 		} else {
-			       $invite = sprintf(gettext("For the moment, joining %s requires a specially tailored invite code. If you know someone who's a member, it may be worth asking them for one."),$sitename);
+				$invite = sprintf(gettext("For the moment, joining %s requires a specially tailored invite code. If you know someone who's a member, it may be worth asking them for one."),$sitename);
 				$run_result .= <<< END
 				
 	<p>

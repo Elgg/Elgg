@@ -38,6 +38,9 @@
 		$function['weblogs:archives:view'][] = path . "units/weblogs/archives_view.php";
 		$function['weblogs:archives:month:view'][] = path . "units/weblogs/weblogs_view_month.php";
 		
+	// Mark posts as interesting (or not)
+		$function['weblogs:interesting:form'][] = path . "units/weblogs/display_interesting_post_form.php";
+		
 	// Edit / create weblog comments
 		$function['weblogs:comments:add'][] = path . "units/weblogs/weblogs_comments_add.php";
 		
@@ -58,4 +61,10 @@
 	// Actions to perform when an access group is deleted
 		$function['groups:delete'][] = path . "units/weblogs/groups_delete.php";
 		
+	// Publish static RSS file of posts
+		$function['weblogs:rss:getitems'][] = path . "units/weblogs/function_rss_getitems.php";
+		$function['weblogs:rss:publish'][] = path . "units/weblogs/function_rss_publish.php";
+		
+	// Removing function from weblogs_init.php
+		$function['weblogs:html_activate_urls'][] = path . "units/weblogs/function_html_activate_urls.php";
 ?>

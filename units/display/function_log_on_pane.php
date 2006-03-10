@@ -11,12 +11,19 @@
 	if ((!defined("logged_on") || logged_on == 0) && $page_owner == -1) {
 
 		$body = <<< END
-		
+		<li>
 		<form action="{$url}_users/action_redirection.php" method="post">
 END;
+
+		if (public_reg == true) {
+			$reg_link = '<a href="' . $url . '_invite/register.php">'. gettext("Register") .'</a> |';
+		} else {
+			$reg_link = "";
+		}
+
 		$body .= run("templates:draw",array(
 						'template' => -1,
-						'context' => 'contentholder',
+						'context' => 'sidebarholder',
 						'title' => gettext("Log On"),
 						'submenu' => '',
 						'body' => '
@@ -35,7 +42,7 @@ END;
 						<label><input type="checkbox" name="remember" checked="checked" />
 								' . gettext("Remember Login") . '</label><br />
 						<small>
-							<a href="' . $url . '_invite/register.php">'. gettext("Register") .'</a> |
+							' . $reg_link . '
 							<a href="' . $url . '_invite/forgotten_password.php">'. gettext("Forgotten password") .'</a>
 						</small></p>
 					</td>
@@ -46,7 +53,7 @@ END;
 '
 					)
 					);
-		$body .= "</form>";
+		$body .= "</form></li>";
 
 		$run_result .= $body;
 			

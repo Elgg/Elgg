@@ -1,0 +1,423 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Customization - Creating a theme</title>
+<link href="css/screen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<div class="header">
+	<h1>Customization - Creating a theme</h1>
+</div>
+
+<div class="content">
+	
+<h2>Creating your own Themes</h2>
+<p>
+Creating you own themes for the TinyMCE application is fairly easy if you know the basics of HTML, CSS and Javascript. The most easy way is to copy the &quot;default&quot; or the &quot;advanced&quot; template and rename it as your own name to for example &quot;mytheme&quot;. After you copy the template you need to change the red sections marked below to &quot;mytheme&quot; this is needed so that themes don't overlap in other words it gives the theme a unique name. Then just alter the HTML code as you see fit but notice some elements needs to be there so check the docs below on each function also remember that your custom themes needs to be located in tiny_mce's &quot;themes&quot; directory. If you want you may add theme specific options/settings but remember to namespace them in the following format &quot;theme_&lt;your theme&gt;_&lt;option&gt;&quot;.
+</p>
+<p>
+The example below has three functions, these are explained in greater detail below.
+</p>
+<p>
+<div class="example">
+<pre>
+function TinyMCE_<span class="marked">default</span>_getEditorTemplate(settings) {
+   var template = new Array();
+
+   template['html'] = '&lt;Some HTML&gt;';
+   template['delta_width'] = 0;
+   template['delta_height'] = -40;
+
+   return template;
+}
+
+function TinyMCE_<span class="marked">default</span>_getInsertLinkTemplate(settings) {
+   var template = new Array();
+
+   template['file'] = 'link.htm';
+   template['width'] = 320;
+   template['height'] = 130;
+
+   return template;
+}
+
+function TinyMCE_<span class="marked">default</span>_getInsertImageTemplate(settings) {
+   var template = new Array();
+
+   template['file'] = 'image.htm';
+   template['width'] = 320;
+   template['height'] = 130;
+
+   return template;
+}
+
+function TinyMCE_<span class="marked">default</span>_handleNodeChange(editor_id, node) {
+   // Check what happend
+}
+
+function TinyMCE_<span class="marked">default</span>_execCommand(editor_id, element, command, user_interface, value) {
+   // Your custom command logic
+   return false;
+}
+</pre>
+</div>
+</p>
+<div class="separator"></div>
+
+<h3>Creating popup HTML files</h3>
+<p>
+When creating a popup you need to include the &quot;tiny_mce_popup.js&quot; this enables you to retrive the tinyMCE global instance in all popup windows. All variables and language definitions gets replaced in the page when it loads. So language variables such as {$lang_something} can be places in the HTML code, if you need to get a language string in JavaScript simply use the tinyMCE.getLang function.
+</p>
+<h3>Example of simple popup file:</h3>
+<div class="example">
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;{$lang_plugin_sample_title}&lt;/title&gt;
+&lt;script language=&quot;javascript&quot; src=&quot;../../tiny_mce_popup.js&quot;&gt;&lt;/script&gt;
+&lt;script language=&quot;javascript&quot;&gt;
+     // getWindowArg returns any arguments passed to the window
+     alert(tinyMCE.getWindowArg('some_arg'));
+&lt;/script&gt;
+&lt;body&gt;
+     &lt;strong&gt;{$lang_plugin_sample_desc}&lt;/strong&gt;
+&lt;/body&gt;
+</pre>
+</div>
+
+<div class="separator"></div>
+<h3>The TinyMCE_&lt;theme&gt;_getEditorTemplate(settings) function</h3>
+<p>
+This function is responsible for the layout of the editor instance within the page it should return a name/value based array with some specific names. These are explained below, notice names included in [] characters are optional. The settings parameter to this function is a name/value array containing tinyMCE:s settings/options.
+</p>
+<p>
+<table border="1" cellspacing="0" cellpadding="4">
+<thead>
+<tr>
+	<td colspan="2">Template data</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td><strong>html</strong></td>
+	<td>HTML template data, this value should contain all the HTML code needed to render the editor. Notice: {$&lt;variable&gt;} are replaces with values when used. More about these specific values later on.</td>
+</tr>
+<tr>
+	<td><strong>[delta_width]</strong></td>
+	<td>Delta width, this value should contain the relative width needed by the UI. For example if a toolbar takes 20 pixels this value should be -20. This is so the editor gets the same size as the element that are replaced.</td>
+</tr>
+<tr>
+	<td><strong>[delta_height]</strong></td>
+	<td>Delta height, this value should contain the relative width needed by the UI. For example if a toolbar takes 40 pixels this value should be -40. This is so the editor gets the same size as the element that are replaced.</td>
+</tr>
+</tbody>
+</table>
+</p>
+<p>
+Variables within the &quot;html&quot; value above are replaced with internal TinyMCE values. There are two types of variables one is the ones starting with the &quot;lang_&quot; prefix, these are replaced with the matching names in the language packs. So for example &lt;b&gt;{$lang_test}&lt;/b&gt; gets replaces with the &quot;tinyMCELang['lang_test']&quot; variable and the output is then &lt;b&gt;Test&lt;/b&gt;. The other variables are passed expicilty for the template used and these are listed below. Notice: Variables within [] characters are optional.
+</p>
+<p>
+<table border="1" cellspacing="0" cellpadding="4">
+<thead>
+<tr>
+	<td colspan="2">Variables</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td><strong>editor_id</strong></td>
+	<td>This is the editor instance id and it should be placed in ID attribute of the IFRAME element that must be included in the template.</td>
+</tr>
+<tr>
+	<td><strong>[default_document]</strong></td>
+	<td>This will be replaced with a blank html page, this is added for MSIE security issues and should be placed in the SRC attribute of the IFRAME within the template.</td>
+</tr>
+<tr>
+	<td><strong>[area_width]</strong></td>
+	<td>Width of IFRAME area in pixels.</td>
+</tr>
+<tr>
+	<td><strong>[area_height]</strong></td>
+	<td>Height of IFRAME area in pixels.</td>
+</tr>
+<tr>
+	<td><strong>[width]</strong></td>
+	<td>Width of the whole editor area in pixels.</td>
+</tr>
+<tr>
+	<td><strong>[height]</strong></td>
+	<td>Height of the whole editor area in pixels.</td>
+</tr>
+<tr>
+	<td><strong>[themeurl]</strong></td>
+	<td>URL to theme location.</td>
+</tr>
+</tbody>
+</table>
+</p>
+<p>
+Notice: There are two javascript function that can be called from this template these are tinyMCE.execCommand that executes commans on the currenly selected editor area and the tinyMCE.switchClass that switches the CSS class of the element specified. For more details of commands available by execCommand check the Mozilla midas specification and the TinyMCE specific commands.
+</p>
+<div class="separator"></div>
+<h3>The TinyMCE_&lt;theme&gt;_getInsertLinkTemplate(settings) function</h3>
+<p>
+This function is responsible for the layout of the insert link popup window and it should return a name/value based array with some specific names. These are explained below, notice names included in [] characters are optional. The settings parameter to this function is a name/value array containing tinyMCE:s settings/options.
+</p>
+<p>
+<table border="1" cellspacing="0" cellpadding="4">
+<thead>
+<tr>
+	<td colspan="2">Template data</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td><strong>html</strong></td>
+	<td>HTML template data, this value should contain all the HTML code needed to render the link dialog. Notice: {$&lt;variable&gt;} are replaces with values when used. More about these specific values later on. This parameter is not needed if the &quot;file&quot; param is assigned.</td>
+</tr>
+<tr>
+	<td><strong>file</strong></td>
+	<td>Name of external template file to use, this may even be logic pages like .php,.asp,.jsp etc.</td>
+</tr>
+<tr>
+	<td><strong>[width]</strong></td>
+	<td>Width of popup window in pixels. Default is 320.</td>
+</tr>
+<tr>
+	<td><strong>[height]</strong></td>
+	<td>Height of popup window in pixels. Default is 200.</td>
+</tr>
+</tbody>
+</table>
+</p>
+<p>
+Variables within the &quot;html&quot; value above are replaced with internal TinyMCE values. There are two types of variables one is the ones starting with the &quot;lang_&quot; prefix, these are replaced with the matching names in the language packs. So for example &lt;b&gt;{$lang_test}&lt;/b&gt; gets replaces with the &quot;tinyMCELang['lang_test']&quot; variable and the output is then &lt;b&gt;Test&lt;/b&gt;. The other variables are passed expicilty for the template used and these are listed below. Notice: Variables within [] characters are optional.
+</p>
+<p>
+<table border="1" cellspacing="0" cellpadding="4">
+<thead>
+<tr>
+	<td colspan="2">Variables/Window arguments:</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td><strong>[href]</strong></td>
+	<td>This variable gets replaced with the &quot;href&quot; attribute value of the selected link if one is selected.</td>
+</tr>
+<tr>
+	<td><strong>[target]</strong></td>
+	<td>This variable gets replaced with the &quot;target&quot; attribute value of the selected link if one is selected.</td>
+</tr>
+<tr>
+	<td><strong>[css]</strong></td>
+	<td>Theme popup css location.</td>
+</tr>
+</tbody>
+</table> 	
+</p>
+<p>
+Notice: There are a javascript function that can be called from this template &quot;window.opener.tinyMCE.insertLink(href, target)&quot; this inserts the link into the currently selected editor and should be called when for example a insert button is pressed.
+</p>
+<div class="separator"></div>
+<h3>The TinyMCE_&lt;theme&gt;_getInsertImageTemplate(settings) function</h3>
+<p>
+This function is responsible for the layout of the insert image dialog, it should return a name/value based array with some specific names. These are explained below, notice names included in [] characters are optional. The settings parameter to this function is a name/value array containing tinyMCE:s settings/options.
+</p>
+<p>
+<table border="1" cellspacing="0" cellpadding="4">
+<thead>
+<tr>
+	<td colspan="2">Template data</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td><strong>html</strong></td>
+	<td>HTML template data, this value should contain all the HTML code needed to render the image dialog. Notice: {$&lt;variable&gt;} are replaces with values when used. More about these specific values later on. This parameter is not needed if the &quot;file&quot; param is assigned.</td>
+</tr>
+<tr>
+	<td><strong>[width]</strong></td>
+	<td>Width of popup window in pixels. Default is 320.</td>
+</tr>
+<tr>
+	<td><strong>[height]</strong></td>
+	<td>Height of popup window in pixels. Default is 200.</td>
+</tr>
+</tbody>
+</table>
+</p>
+<p>
+Variables within the &quot;html&quot; value above are replaced with internal TinyMCE values. There are two types of variables one is the ones starting with the &quot;lang_&quot; prefix, these are replaced with the matchin names in the language packs. So for example &lt;b&gt;{$lang_test}&lt;/b&gt; gets replaces with the &quot;tinyMCELang['lang_test']&quot; variable and the output is then &lt;b&gt;Test&lt;/b&gt;. The other variables are passed expicilty for the template used and these are listed below. Notice: Variables within [] characters are optional.
+</p>
+<p>
+<table border="1" cellspacing="0" cellpadding="4">
+<thead>
+<tr>
+	<td colspan="2">Variables/Window arguments</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td><strong>[src]</strong></td>
+	<td>This variable gets replaced with the &quot;src&quot; attribute value of the selected link if one is selected.</td>
+</tr>
+<tr>
+	<td><strong>[alt]</strong></td>
+	<td>This variable gets replaced with the &quot;alt&quot; attribute value of the selected link if one is selected.</td>
+</tr>
+<tr>
+	<td><strong>[border]</strong></td>
+	<td>This variable gets replaced with the &quot;border&quot; attribute value of the selected link if one is selected.</td>
+</tr>
+<tr>
+	<td><strong>[hspace]</strong></td>
+	<td>This variable gets replaced with the &quot;hspace&quot; attribute value of the selected link if one is selected.</td>
+</tr>
+<tr>
+	<td><strong>[vspace]</strong></td>
+	<td>This variable gets replaced with the &quot;vspace&quot; attribute value of the selected link if one is selected.</td>
+</tr>
+<tr>
+	<td><strong>[width]</strong></td>
+	<td>This variable gets replaced with the &quot;width&quot; attribute value of the selected link if one is selected.</td>
+</tr>
+<tr>
+	<td><strong>[height]</strong></td>
+	<td>This variable gets replaced with the &quot;height&quot; attribute value of the selected link if one is selected.</td>
+</tr>
+<tr>
+	<td><strong>[align]</strong></td>
+	<td>This variable gets replaced with the &quot;align&quot; attribute value of the selected link if one is selected.</td>
+</tr>
+<tr>
+	<td><strong>[css]</strong></td>
+	<td>Theme popup css location.</td>
+</tr>
+</tbody>
+</table>
+</p>
+<p>
+Notice: There are a javascript function that can be called from this template &quot;window.opener.tinyMCE.insertImage(src, alt, border, hspace, vspace, width, height, align)&quot; this inserts the image into the currently selected editor and should be called when for example a insert button is pressed.
+</p>
+
+<div class="separator"></div>
+
+<h3>The TinyMCE_&lt;theme&gt;_handleNodeChange function (Optional)</h3>
+<p>
+This function is called when the cursor/selection of a editor instance changes. Then the currenly selected/focused node is passed to this function. This can be useful when you want to change the UI depending on what the user has selected.
+</p>
+<p>
+<table border="1" cellspacing="0" cellpadding="4">
+<thead>
+<tr>
+	<td colspan="2">Parameters</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td><strong>editor_id</strong></td>
+	<td>Unique editor id, this is the same as the $editor_id variable in getEditorTemplate.</td>
+</tr>
+<tr>
+	<td><strong>node</strong></td>
+	<td>Reference to the Node element where the cursor is currenly located.</td>
+</tr>
+<tr>
+	<td><strong>undo_index</strong></td>
+	<td>Current undo index, this value is -1 if the custom undo/redo support is disabled.</td>
+</tr>
+<tr>
+	<td><strong>undo_levels</strong></td>
+	<td>Current number of undo levels, this value is -1 if the custom undo/redo support is disabled.</td>
+</tr>
+<tr>
+	<td><strong>visual_aid</strong></td>
+	<td>True/false state of visual aid/guidelines mode.</td>
+</tr>
+<tr>
+	<td><strong>any_selection</strong></td>
+	<td>Is any text or image selected.</td>
+</tr>
+</tbody>
+</table>
+</p>
+
+<div class="separator"></div>
+
+<h3>The TinyMCE_&lt;theme&gt;_execCommand function (Optional)</h3>
+<p>
+This function is called when a command is executed for example &quot;bold&quot; or &quot;createlink&quot; this callback/theme function may then intercept theme specific commands and do custom logic. If this command returns true the command handling is terminated and the default tinyMCE command handeling never gets executed.
+</p>
+<p>
+<table border="1" cellspacing="0" cellpadding="4">
+<thead>
+<tr>
+	<td colspan="2">Parameters</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td><strong>editor_id</strong></td>
+	<td>Unique editor id, this is the same as the $editor_id variable in getEditorTemplate.</td>
+</tr>
+<tr>
+	<td><strong>element</strong></td>
+	<td>Reference to the document DOM root element of the editor instance.</td>
+</tr>
+<tr>
+	<td><strong>command</strong></td>
+	<td>Command that is to be executed for example &quot;myCommand&quot;.</td>
+</tr>
+<tr>
+	<td><strong>user_interface</strong></td>
+	<td>true/false option if a user insterace is to be used or not.</td>
+</tr>
+<tr>
+	<td><strong>value</strong></td>
+	<td>Custom data value passed with command, may be any data type.</td>
+</tr>
+</tbody>
+</table> 	
+</p>
+<p>
+Returns: <br />
+true - Command intercepted and handled do not continue with command handling.<br />
+false - Continue with execCommand handling, bubble.<br />
+</p>
+
+<div class="separator"></div>
+
+<h3>The TinyMCE_&lt;theme&gt;_getControlHTML(control_name) function (Optional)</h3>
+<p>
+This function is called when a editor needs to render a specific control/button. This function should return the HTML template of that control or a empty string if the control_name wasn't recognized. Notice the variable {$pluginurl} gets replaced with the URL prefix for the current plugin directory.
+</p>
+<p>
+<table border="1" cellspacing="0" cellpadding="4">
+<thead>
+<tr>
+	<td colspan="2">Parameters</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td><strong>control_name</strong></td>
+	<td>Control name to match against.</td>
+</tr>
+</tbody>
+</table>
+</p>
+<p>
+Returns: return the HTML template of that control or a empty string if the control_name wasn't recognized. 
+</p>
+</div>
+
+<div class="footer">
+	<div class="helpindexlink"><a href="index.html">Index</a></div>
+	<div class="copyright">Copyright &copy; 2005 Moxiecode Systems AB</div>
+	<br style="clear: both" />
+</div>
+
+</body>
+</html>

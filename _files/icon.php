@@ -1,7 +1,6 @@
 <?php
 
-	// Download script
-	// Usage: http://URL/{username}/files/{folder_id}/{file_id}/{filename}
+	// Icon script
 	
 	// Run includes
 		require("../includes.php");
@@ -28,7 +27,7 @@
 	// Send 304s where possible, rather than spitting out the file each time
 						$if_modified_since = preg_replace('/;.*$/', '', $_SERVER['HTTP_IF_MODIFIED_SINCE']);
 						
-						$tstamp = filemtime($file->location);
+						$tstamp = filemtime(path . $file->location);
 						$lm = gmdate("D, d M Y H:i:s", $tstamp) . " GMT";
 						
 						if ($if_modified_since == $lm) {
@@ -48,7 +47,7 @@
 							$mimetype = "application/octet-stream";
 						}
 						if ($mimetype == "image/jpeg" || $mimetype == "image/png") {
-							$icon = url . "units/phpthumb/phpThumb.php?w=90&src=" . urlencode($file->location);
+							$icon = url . "units/phpthumb/phpThumb.php?w=90&src=" . urlencode(path . $file->location);
 							$mimetype = "image/jpeg";
 						} else {
 							$mimetype = "image/png";

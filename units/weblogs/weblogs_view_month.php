@@ -34,11 +34,11 @@
 			
 			$lasttime = "";
 			
-			$run_result .= "<h1 class=\"weblogdateheader\">" . gmdate("F Y",gmmktime(0,0,0,$month,1,$year)) . "</h1>\n";
+			$run_result .= "<h1 class=\"weblogdateheader\">" . strftime("%B %Y", gmmktime(0,0,0,$month,1,$year)) . "</h1>\n";
 			
 			foreach($posts as $post) {
 				
-				$time = gmdate("F d, Y",$post->posted);
+				$time = strftime("%B %d, %Y", $post->posted);
 				if ($time != $lasttime) {
 					$run_result .= "<h2 class=\"weblogdateheader\">$time</h2>\n";
 					$lasttime = $time;

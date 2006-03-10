@@ -13,7 +13,7 @@
 	// You must be logged on to view this!
 								
 		echo run("templates:draw:page", array(
-					'Content flags',
+					gettext("Content flags"),
 					run("templates:draw", array(
 						'context' => 'contentholder',
 						'title' => gettext("Content flags"), 

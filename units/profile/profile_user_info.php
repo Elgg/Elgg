@@ -3,18 +3,18 @@
 	global $page_owner;
 	
 	// If this is someone else's portfolio, display the user's icon
-		$run_result .= "<div class=\"box_user\">";
+		$run_result .= "<li id=\"sidebar_user\">";
 		
 		$info = db_query("select * from users where ident = $page_owner");
 		$info = $info[0];
 		
 		if ($info->icon != -1 && $info->icon != NULL) {
-				$icon = db_query("select filename from icons where ident = " . $info->icon . " and owner = $page_owner");
-				if (sizeof($icon) == 1) {
-					$icon = $icon[0]->filename;
-				} else {
-					$icon = "default.png";
-				}
+			$icon = db_query("select filename from icons where ident = " . $info->icon . " and owner = $page_owner");
+			if (sizeof($icon) == 1) {
+				$icon = $icon[0]->filename;
+			} else {
+				$icon = "default.png";
+			}
 		} else {
 			$icon = "default.png";
 		}
@@ -27,12 +27,15 @@
 			$tagline = "&nbsp;";
 		}
 		
-		list($width, $height, $type, $attr) = getimagesize(path . "_icons/data/" . $icon);
+		if (!(list($width, $height, $type, $attr) = @getimagesize(path . "_icons/data/" . $icon))) {
+			$icon = "default.png";
+			list($width, $height, $type, $attr) = getimagesize(path . "_icons/data/" . $icon);
+		}
 		
 		$width = round($width * (2/3));
 		$height = round($height * (2/3));
 		
-		$icon = "<img src=\"".url."_icons/data/$icon\" width=\"$width\" height=\"$height\" />";
+		$icon = "<img src=\"".url."_icons/data/$icon\" alt=\"\" width=\"$width\" height=\"$height\" />";
 		$name = stripslashes($info->name);
 		$url = url . stripslashes($info->username) . "/";
 		
@@ -55,13 +58,11 @@
 		}
 		
 		$run_result .= run("templates:draw", array(
-							'context' => 'contentholder',
+							'context' => 'sidebarholder',
 							'title' => $title,
-							'body' => $body,
-							'submenu' => ""
+							'body' => $body
 							)
 							);
-		
-		$run_result .= "</div>";
+		$run_result .= "</li>";
 
 ?>

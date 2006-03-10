@@ -21,6 +21,13 @@
 								'location' => url . '_friends/friendsof.php?owner=' . $page_owner
 							)
 							);
+							
+			$run_result .= run("templates:draw", array(
+								'context' => 'submenuitem',
+								'name' => gettext("Friendship requests"),
+								'location' => url . '_friends/requests.php?owner=' . $page_owner
+							)
+							);
 
 			$run_result .= run("templates:draw", array(
 								'context' => 'submenuitem',

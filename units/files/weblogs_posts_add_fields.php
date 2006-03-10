@@ -50,7 +50,9 @@ END;
 
 			$userid = (int) $parameter;
 			
-                     $embedFile = sprintf(gettext("Embed a file from your %s file storage:"), $sitename);	
+			$extrafunctions = run("files:embed:js");
+			
+			$embedFile = sprintf(gettext("Embed a file from your %s file storage:"), $sitename);	
 			$run_result .= <<< END
 <script language="javascript">
 <!--
@@ -58,6 +60,7 @@ END;
 	function addFile(form) {
 		if (form.weblog_add_file.selectedIndex != "") {
 			form.new_weblog_post.value = form.new_weblog_post.value + "{{file:" + form.weblog_add_file.options[form.weblog_add_file.selectedIndex].value + "}}";
+			$extrafunctions
 		}
 	}
 
@@ -73,8 +76,8 @@ END;
 
 			$run_result .= viewfolder(-1, $userid, 0);
 
-                    $addCode = gettext("This will add a code to your weblog post that will be converted into an embedded file."); // gettext variable
-                    $buttonValue = gettext("Add"); // gettext value
+			$addCode = gettext("This will add a code to your weblog post that will be converted into an embedded file."); // gettext variable
+			$buttonValue = gettext("Add"); // gettext value
 			$run_result .= <<< END
 		
 				</select>

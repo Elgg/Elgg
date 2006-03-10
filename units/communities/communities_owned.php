@@ -8,19 +8,20 @@
 										where users.owner = $page_owner
 										and users.user_type = 'community'");
 			if (sizeof($result) > 0) {
-				$body = "<p>";
+				$body = "<ul>";
 				foreach($result as $row) {
-					$body .= "<a href=\"" . url . stripslashes($row->username) . "/\">" . stripslashes($row->name) . "</a><br />";
+					$body .= "<li><a href=\"" . url . stripslashes($row->username) . "/\">" . stripslashes($row->name) . "</a></li>";
 				}
-				$body .= "</p>";
+				$body .= "</ul>";
 				// $run_result .= $body;
+				$run_result .= "<li id=\"community_owned\">";
 				$run_result .= run("templates:draw", array(
-						'context' => 'contentholder',
+						'context' => 'sidebarholder',
 						'title' => gettext("Owned communities"),
-						'body' => $body,
-						'submenu' => ''
+						'body' => $body
 					)
 					);
+				$run_result .= "</li>";
 			} else {
 				$run_result .= "";
 			}

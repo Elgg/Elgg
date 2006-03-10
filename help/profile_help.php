@@ -3,8 +3,7 @@
 	// Run includes
 		require("../includes.php");
 
-define("context", "profile");
-
+		define("context", "profile");
 
 // Draw page
 		echo run("templates:draw:page", array(

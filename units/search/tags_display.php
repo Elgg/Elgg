@@ -5,7 +5,7 @@
 		$run_result .= "<p>" . gettext("The following is a selection of keywords used within this site. Click one to see related users, weblog posts or objects.") . "</p>";
 	
 		$searchline = "(" . run("users:access_level_sql_where",$_SESSION['userid']) . ")";
-		$tags = db_query("select distinct tag, count(ident) as number from tags where tags.access = 'PUBLIC' group by tag order by rand() limit 200");
+		$tags = db_query("select tag, count(*) as number from tags where tags.access = 'PUBLIC' group by tag order by rand() limit 200");
 		if (sizeof($tags) > 0) {
 			
 			$max = 0;

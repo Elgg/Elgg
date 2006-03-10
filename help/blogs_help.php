@@ -3,7 +3,7 @@
 	// Run includes
 		require("../includes.php");
 
-       define("context", "weblog");
+		define("context", "weblog");
 
 	// Draw page
 		echo run("templates:draw:page", array(

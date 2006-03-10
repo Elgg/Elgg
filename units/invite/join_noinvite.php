@@ -2,11 +2,14 @@
 
 	// Join
 		
-		$sitename = sitename;
-              $partOne = sprintf(gettext("Thank you for registering for an account with %s! Registration is completely free, but before you fill in your details, please take a moment to read the following documents:"),$sitename); // gettext variable
-             $terms = gettext("terms and conditions"); // gettext variable
-              $privacy = gettext("Privacy policy"); // gettext variable
-             $partFour = gettext("When you fill in the details below, we will send an \"invitation code\" to your email address in order to validate it. You must then click on this within seven days to create your account."); // gettext variable
+		if (public_reg == true) {
+			
+			$sitename = sitename;
+			$url = url;
+			$partOne = sprintf(gettext("Thank you for registering for an account with %s! Registration is completely free, but before you fill in your details, please take a moment to read the following documents:"),$sitename); // gettext variable
+			$terms = gettext("terms and conditions"); // gettext variable
+			$privacy = gettext("Privacy policy"); // gettext variable
+			$partFour = gettext("When you fill in the details below, we will send an \"invitation code\" to your email address in order to validate it. You must then click on this within seven days to create your account."); // gettext variable
 							
 				$run_result .= <<< END
 				
@@ -14,8 +17,8 @@
 		$partOne
 	</p>
 	<ul>
-		<li><a href="/content/terms.php" target="_blank">$sitename $terms</a></li>
-		<li><a href="/content/privacy.php" target="_blank">$privacy</a></li>
+		<li><a href="{$url}content/terms.php" target="_blank">$sitename $terms</a></li>
+		<li><a href="{$url}content/privacy.php" target="_blank">$privacy</a></li>
 	</ul>
 	<p>
 		$partFour
@@ -37,7 +40,7 @@ END;
 					)
 					);
 			$buttonValue = gettext("Register");
-                     $run_result .= <<< END
+			$run_result .= <<< END
 			<p align="center">
 				<input type="hidden" name="invite_text" value="" />
 				<input type="hidden" name="action" value="invite_invite" />
@@ -46,5 +49,6 @@ END;
 		</form>
 				
 END;
+		}
 
 ?>

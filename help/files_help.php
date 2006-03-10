@@ -2,7 +2,7 @@
 	
 	// Run includes
 		require("../includes.php");
-       
+	
 	define("context", "files");
 
 	// Draw page

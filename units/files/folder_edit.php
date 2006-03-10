@@ -9,19 +9,19 @@
 		global $this_folder;
 		global $folder_name;
 		$folder_name = htmlentities($folder_name);
-		$folder_details = db_query("select * from file_folders where ident = " . $this_folder);
+		$folder_details = db_query("select * from file_folders where ident = " . $this_folder->ident);
 		$folder_details = $folder_details[0];
 		if (run("permissions:check", array("files", $folder_details->owner))  || run("permissions:check", array("files", $folder_details->files_owner))) {
 		$edit = gettext("Edit this folder"); // gettext variable
-              $run_result .= <<< END
-	<h5>
+		$run_result .= <<< END
+	<h3>
 		$edit
-	</h5>
+	</h3>
 	<form action="" method="post">
 END;
 		$labelValue = gettext("Folder name:"); // gettext variable
-             $parentFolder = gettext("Parent folder"); // gettext variable
-             $body = <<< END
+		$parentFolder = gettext("Parent folder"); // gettext variable
+		$body = <<< END
 		<table width="100%">
 			<tr>
 				<td width="30%">
@@ -35,7 +35,7 @@ END;
 			</tr>
 			<tr>
 				<td>
-					<p><label for="edit_folder_access">
+					<p><label for="edit_folder_parent">
 						$parentFolder
 					</label></p>
 				</td>
@@ -43,7 +43,7 @@ END;
 END;
 					$body .= run("folder:select", array("edit_folder_parent",$_SESSION['userid'],$this_folder->parent));
 					$accessLabel = gettext("Access restrictions"); // gettext variable
-                                  $body .= <<< END
+					$body .= <<< END
 				</p></td>
 			</tr>
 			<tr>
@@ -56,7 +56,7 @@ END;
 END;
 					$body .= run("display:access_level_select",array("edit_folder_access",$this_folder->access));
 					$keywords = gettext("Keywords (comma separated):"); // gettext variable
-                                  $body .= <<< END
+					$body .= <<< END
 				</p></td>
 			</tr>
 			<tr>
@@ -69,7 +69,7 @@ END;
 END;
 					$body .= run("display:input_field",array("edit_folder_keywords","","keywords","folder",$folder));
 					$save = gettext("Save"); // gettext variable 
-                                  $body .= <<< END
+					$body .= <<< END
 				</p></td>
 			</tr>
 			<tr>
@@ -92,16 +92,16 @@ END;
 		}
 	}
 	$header = gettext("Upload files and folders");//gettext variable
-       $run_result .= <<< END
-	<h5>
+	$run_result .= <<< END
+	<h4>
 		<a name="addFile"></a>$header
-	</h5>
+	</h4>
 	<form action="" method="post">
 END;
 
 	$title = gettext("Create a new folder");
 	$createLabel = gettext("To create a new folder, enter its name:"); //gettext variable
-       $accessLabel = gettext("Access restrictions"); //gettext variable
+	$accessLabel = gettext("Access restrictions"); //gettext variable
 
 	$body = <<< END
 		<table>
@@ -125,9 +125,9 @@ END;
 				</td>
 				<td><p>
 END;
-					$body .= run("display:access_level_select",array("new_folder_access","PUBLIC"));
+					$body .= run("display:access_level_select",array("new_folder_access","user" . $_SESSION['userid']));
 					$keywords = gettext("Keywords (comma separated):"); // gettext variable
-                                  $body .= <<< END
+					$body .= <<< END
 				</p></td>
 			</tr>
 			<tr>
@@ -140,7 +140,7 @@ END;
 END;
 					$body .= run("display:input_field",array("new_folder_keywords","","keywords","folder"));
 					$create = gettext("Create"); // gettext variable 
-                                  $body .= <<< END
+					$body .= <<< END
 				</p></td>
 			</tr>
 			<tr>
@@ -186,18 +186,18 @@ END;
 					} else {
 						$body .= sprintf(gettext("Used space: %s Mb."),round(($usedquota / 1000000),4));
 					}
-	      $fileLabel = gettext("File to upload:"); //gettext variable
-             $fileTitle = gettext("File title:"); //gettext variable
-             $fileDesc = gettext("File Description:"); //gettext variable
-             $fileAccess = gettext("Access restrictions:"); //gettext variable
+	$fileLabel = gettext("File to upload:"); //gettext variable
+	$fileTitle = gettext("File title:"); //gettext variable
+	$fileDesc = gettext("File Description:"); //gettext variable
+	$fileAccess = gettext("Access restrictions:"); //gettext variable
 
 
-             $body .= <<< END
+	$body .= <<< END
 				</p></td>
 			<tr>
 				<td width="30%"><p>
 					<label for="new_file">
-					       $fileLabel
+						$fileLabel
 					</label>
 				</p></td>
 				<td><p>
@@ -238,9 +238,9 @@ END;
 				</td>
 				<td><p>
 END;
-					$body .= run("display:access_level_select",array("new_file_access","PUBLIC"));
+					$body .= run("display:access_level_select",array("new_file_access","user" . $_SESSION['userid']));
 					$keywords = gettext("Keywords (comma separated):"); // gettext variable
-                                   $body .= <<< END
+					$body .= <<< END
 				</p></td>
 			</tr>
 			<tr>
@@ -260,16 +260,16 @@ END;
 END;
 
 			$body .= run("metadata:edit");
-                     
-                     $copyright = gettext("By checking this box, you are asserting that you have the legal right to share this file, and that you understand you are sharing it with other users of the system."); //gettext variable
-                     $upload = gettext("Upload"); //gettext variable
+			
+			$copyright = gettext("By checking this box, you are asserting that you have the legal right to share this file, and that you understand you are sharing it with other users of the system."); //gettext variable
+			$upload = gettext("Upload"); //gettext variable
 			$body .= <<< END
 			
 			<tr>
-				<td colspan="2"><p>
-					<input type="checkbox" name="copyright" value="ok" />
+				<td colspan="2"><p><label for="copyrightokcheckbox">
+					<input type="checkbox" id="copyrightokcheckbox" name="copyright" value="ok" />
 					$copyright
-					</p>
+					</label></p>
 				</td>
 			</tr>
 			<tr>

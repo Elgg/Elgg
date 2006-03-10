@@ -17,7 +17,7 @@
 
 		}
 		if ($page_owner != -1) {
-	        $run_result .= run("templates:draw", array(
+			$run_result .= run("templates:draw", array(
 								'context' => 'submenuitem',
 								'name' => gettext("RSS feed for files"),
 								'location' =>  url . $files_username . "/files/rss/"

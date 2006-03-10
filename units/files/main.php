@@ -66,4 +66,8 @@
 	// Actions to perform when an access group is deleted
 		$function['groups:delete'][] = path . "units/files/groups_delete.php";
 
+	// Publish static RSS file of files
+		$function['files:rss:getitems'][] = path . "units/files/function_rss_getitems.php";
+		$function['files:rss:publish'][] = path . "units/files/function_rss_publish.php";
+		
 ?>

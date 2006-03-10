@@ -11,8 +11,7 @@
 	// Get list of friends
 		$function['friends:get'][] = path . "units/friends/get_friends.php";
 		
-	// 'Friends' aspect to the little menus beneath peoples' icons
-		$function['users:infobox:menu'][] = path . "units/friends/user_info_menu.php";
+	// 'Friends' aspect to user profiles
 		$function['users:infobox:menu:text'][] = path . "units/friends/user_info_menu_text.php";
 	
 	// 'Friends' list in the portfolio view
@@ -23,6 +22,9 @@
 		$function['friends:editpage'][] = path . "units/friends/friends_edit_wrapper.php";
 		$function['friends:edit'][] = path . "units/friends/friends_edit.php";
 
+	// Friendship requests
+		$function['friends:requests:view'][] = path . "units/friends/user_friendship_requests.php";
+		
 	// 'Friends of' full view / edit section
 		$function['friends:of:editpage'][] = path . "units/friends/friends_of_edit_wrapper.php";
 		$function['friends:of:edit'][] = path . "units/friends/friends_of_edit.php";

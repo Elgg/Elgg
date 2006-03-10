@@ -6,12 +6,12 @@
 			
 		if (isset($_REQUEST['passwordcode'])) {
 			
-			$code = addslashes($_REQUEST['passwordcode']);
-			$details = db_query("select password_requests.ident as passcodeid, users.* from password_requests left join users on users.ident = password_requests.owner where password_requests.code = '$code' and users.user_type = 'person'");
+			$code = trim($_REQUEST['passwordcode']);
+			$details = db_query("select password_requests.ident as passcodeid, users.* from password_requests join users on users.ident = password_requests.owner where password_requests.code = '$code' and users.user_type = 'person'");
 			if (sizeof($details) > 0) {
 				$details = $details[0];
 				
-                $passwordDesc = sprintf(gettext("A new password has been emailed to you at %s. You should be able to use it immediately; your old one has been deactivated."),$details->email);
+				$passwordDesc = sprintf(gettext("A new password has been emailed to you at %s. You should be able to use it immediately; your old one has been deactivated."),$details->email);
 				$run_result .= <<< END
 				
 	<p>
@@ -35,7 +35,7 @@ END;
 
 			} else {
 				
-                $passwordDesc2 = gettext("Your password request code appears to be invalid. Try generating a new one?");
+				$passwordDesc2 = gettext("Your password request code appears to be invalid. Try generating a new one?");
 				$run_result .= <<< END
 				
 	<p>
@@ -47,7 +47,7 @@ END;
 			}
 			
 		} else {
-			       $passwordDesc3 = gettext("Sorry, your code was invalid.");
+				$passwordDesc3 = gettext("Sorry, your code was invalid.");
 				$run_result .= <<< END
 				
 	<p>

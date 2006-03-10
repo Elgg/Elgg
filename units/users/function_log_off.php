@@ -1,22 +1,22 @@
 <?php
-  /** 
-   * Function to log off 
-   */
+	/** 
+	 * Function to log off 
+	 */
 
-  // Remove code from database
-  db_query("update users set code = '' where ident = " . $_SESSION['userid']);
-   
-  // Kill entire session (well done)
-  session_unset();
-  session_destroy();
-  if (isset($_COOKIE[session_name()])) {
-    setcookie(session_name(), '', time()-84600, '/');
-  }
-
-  // Remove the any AUTH_COOKIE persistent logins
-  setcookie(AUTH_COOKIE, '', time()-84600, '/');
+	// Remove code from database
+	db_query("update users set code = '' where ident = " . $_SESSION['userid']);
 	
-  // Set headers to forward to main URL
-  header("Location: " . url . "\n");
+	// Kill entire session (well done)
+	session_unset();
+	session_destroy();
+	if (isset($_COOKIE[session_name()])) {
+		setcookie(session_name(), '', time()-84600, '/');
+	}
+
+	// Remove the any AUTH_COOKIE persistent logins
+	setcookie(AUTH_COOKIE, '', time()-84600, '/');
+	
+	// Set headers to forward to main URL
+	header("Location: " . url . "\n");
 
 ?>
