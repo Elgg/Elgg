@@ -1,28 +1,28 @@
 <?php
 
-	global $template;
-	global $template_definition;
-	
-	$template_definition[] = array(
-									'id' => 'rsspost',
-									'name' => gettext("Feed Post"),
-									'description' => gettext("A template for each post in a feed."),
-									'glossary' => array(
-															'{{title}}' => gettext('Post title'),
-															'{{body}}' => gettext('The text of the post'),
-															'{{usericon}}' => gettext('An icon for the user'),
-															'{{fullname}}' => gettext('The feed name'),
-															'{{tagline}}' => gettext('A short description of the feed'),
-															'{{link}}' => gettext('A link to the post'),
-															'{{sitelink}}' => gettext('A link to the host site'),
-															'{{feedlink}}' => gettext('A link to the host feed'),
-															'{{controls}}' => gettext('Buttons to subscribe or unsubscribe')
-															
-														)
-									);
-	
-	$postedby = gettext("Added");
-	$template['rsspost'] = <<< END
+    global $template;
+    global $template_definition;
+    
+    $template_definition[] = array(
+                                    'id' => 'rsspost',
+                                    'name' => __gettext("Feed Post"),
+                                    'description' => __gettext("A template for each post in a feed."),
+                                    'glossary' => array(
+                                                            '{{title}}' => __gettext('Post title'),
+                                                            '{{body}}' => __gettext('The text of the post'),
+                                                            '{{usericon}}' => __gettext('An icon for the user'),
+                                                            '{{fullname}}' => __gettext('The feed name'),
+                                                            '{{tagline}}' => __gettext('A short description of the feed'),
+                                                            '{{link}}' => __gettext('A link to the post'),
+                                                            '{{sitelink}}' => __gettext('A link to the host site'),
+                                                            '{{feedlink}}' => __gettext('A link to the host feed'),
+                                                            '{{controls}}' => __gettext('Buttons to subscribe or unsubscribe')
+                                                            
+                                                        )
+                                    );
+    
+    $postedby = __gettext("Added");
+    $template['rsspost'] = <<< END
 
 
 <div class="feeds">
@@ -32,7 +32,7 @@
    <div class="via"><p>via <a href="{{sitelink}}">{{fullname}}</a></p></div>
 </div>
 </div>
-<div class="clearing"></div><br />	
+<div class="clearing"></div><br />    
 END;
-		
+        
 ?>

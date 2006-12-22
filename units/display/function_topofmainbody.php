@@ -1,2 +1,0 @@
-	<tr>
-		<td id="mainbody">

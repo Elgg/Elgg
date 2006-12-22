@@ -1,0 +1,549 @@
+//////////////////////////////////////////////////////////////
+///  phpThumb() by James Heinrich <info@silisoftware.com>   //
+//        available at http://phpthumb.sourceforge.net     ///
+//////////////////////////////////////////////////////////////
+///                                                         //
+//       This code is released under the GNU GPL:           //
+//         http://www.gnu.org/copyleft/gpl.html             //
+//                                                          //
+//    +-----------------------------------------------+     //
+//    | phpThumb() is free to use according to the    |     //
+//    | terms of the GPL. Donations also gratefully   |     //
+//    | GPL FAQ: http://gnu.org/licenses/gpl-faq.html |     //
+//    |                                               |     //
+//    | Donations are gratefully accepted from happy  |     //
+//    | users :)  See http://phpthumb.sourceforge.net |     //
+//    |                                               |     //
+//    | If you like phpThumb(), please consider       |     //
+//    | writing a review at HotScripts.com:           |     //
+//    | http://www.hotscripts.com/Detailed/25654.html |     //
+//    |                                               |     //
+//    | If you do use this code somewhere, send me    |     //
+//    | an email and tell me how/where you used it.   |     //
+//    +-----------------------------------------------+     //
+//                                                         ///
+//////////////////////////////////////////////////////////////
+
+============
+Description:
+============
+
+phpThumb() uses the GD library to create thumbnails from
+images (GIF, PNG or JPEG) on the fly. The output size is
+configurable (can be larger or smaller than the source),
+and the source may be the entire image or only a portion
+of the original image. True color and resampling is used
+if GD v2.0+ is available, otherwise low-color and simple
+resizing is used. Source image can be a physical file on
+the server or can be retrieved from a database. GIFs are
+supported on all versions of GD even if GD does not have
+native GIF support thanks to the GIFutil class by Fabien
+Ezber. AntiHotlinking feature prevents other people from
+using your server to resize their thumbnails, or link to
+your  images  from  another  server.  The  cache feature
+reduces server load.
+
+
+========
+Support:
+========
+
+First, read this file.
+Then read phpthumb.faq.txt
+Then run /demo/phpThumb.demo.check.php
+If you still think it's a bug, email info@silisoftware.com
+
+
+======
+Usage:
+======
+
+Call phpThumb() just like you would a normal image.
+Examples:
+ <IMG SRC="phpThumb.php?src=/image.jpg&w=100">
+ <IMG SRC="phpThumb.php?src=http://example.com/foo.jpg">
+See the "demo" link on http://phpthumb.sourceforge.net
+for more usage examples). Parameters that can be passed
+are listed below under "URL Parameters".
+
+NOTE: It's recommended you use the local image filename
+wherever possible (rather than http://) because performance
+is much better, less (or no) use of temp files, and the
+last-modified check for cached files doesn't work for
+remote files.
+
+To access files over a LAN with Windows share names you
+must use the network name (or IP) and not a mapped drive
+name, for example:
+  //othercomputer/file.jpg - good
+  //192.168.2.1/file.jpg - good
+  z:/file.jpg - won't work
+This is a PHP limitation (see www.php.net/file-exists)
+Note: you may want to use "/" slashes instead of "\" if
+you have magic_quotes_gpc enabled to avoid stripslashes
+problems, although either slash should work if
+magic_quotes_gpc is disabled
+
+
+================================
+Alternate PATH_INFO-style Usage:
+================================
+
+phpThumb.php can also be called by passing parameters not
+after the usual "?" but like this:
+  phpThumb.php/<params>=<values>;<w>x<h>;<image>
+For example:
+  phpThumb.php/100;pic.jpg
+  phpThumb.php/100;images/pic.jpg
+  phpThumb.php/100;/images/pic.jpg
+  phpThumb.php/100x200;pic.jpg
+  phpThumb.php/x200;pic.jpg
+  phpThumb.php/f=jpeg;q=50;100x200;pic.jpg
+  phpThumb.php/fltr[]=usm;100;pic.jpg
+
+<image> must be the last item. Dimensions must be the second-
+last item. As many key/value pairs for parameters can be
+passed before those last two items, with each pair joined by
+equals ("=") and seperated by semicolon (";")
+
+
+==============================================
+Calling as an object (not using phpThumb.php):
+==============================================
+
+NOTE: most people don't need to and should not do this.
+If you just want to display resized images, please just
+use phpThumb.php, not the object mode. To render output
+to one (or more) files instead of the browser, you should
+skip phpThumb.php and instantiate your own object. Please
+take a look at /demo/phpThumb.demo.object.php for details.
+
+Note: phpThumb.php is where the caching code is located, if
+  you instantiate your own phpThumb() object that code is
+  bypassed and it's up to you to handle the reading and
+  writing of cached files.
+
+
+==============
+Configuration:
+==============
+
+There are some configuration options you may (but are
+not required to) change. Most configuration options can
+be set when you call phpThumb() - see list below), but
+default configuration options (such as cache directory)
+are in phpThumb.config.php - this is the only file you
+should ever modify.
+
+The configuration file is distributed as
+phpThumb.config.php.default to prevent accidental
+overwriting of old configuration settings. Please
+migrate your old settings to the new file (if upgrading),
+or delete your old config and rename the default to
+phpThumb.config.php
+
+
+The amount of memory required for phpThumb depends on
+several factors: the dimensions of the source image,
+the dimensions of the output image, whether unsharp
+masking is applied, whether watermarks are applied, etc.
+The auto-detection of memory limits works as a general
+"safe" value. You may be able to exceed the auto value
+by a small or large amount, depending on whether you
+apply watermarks and/or sharpening, and the output size
+of your thumbnails. I do not currently have a reliable
+formula for calculating such things, but I will attempt
+to craft one for future versions of phpThumb(). Until
+then, set "max_source_pixels" in phpThumb.config.php to a
+value that works well for you (or leave it alone if the
+defaults give you no problems).
+
+The configuration options you should maybe modify are:
+* cache_directory - thumbnailing is slow and processor-
+    intensive. Enabling caching will dramatically speed
+    up future thumbnail serving
+* max_source_pixels - This should be auto-detected, but
+    if auto-detection fails and you get an invalid image
+    from large source images, set this to about 20% of
+    your available PHP memory limit.
+* imagemagick_path - If the source image is larger than
+    max_source_pixels allows, but ImageMagick is available
+    phpThumb() will use it to generate the thumbnail.
+
+
+///////////////////////////////////////////////////////////
+Note: High-Security mode is recommended enabled if possible.
+  Set $PHPTHUMB_CONFIG['high_security_enabled'] in
+  phpThumb.config.php to enable it. Each call to phpThumb
+  needs to be made through the function supplied at the
+  bottom of phpThumb.config.php which create the hash:
+    require_once('phpThumb.config.php');
+    echo '<img src="'.phpThumbURL('src=pic.jpg&w=50').'">';
+///////////////////////////////////////////////////////////
+
+
+===============
+URL Parameters:
+===============
+
+ src = filename of source image
+ new = create new image, not thumbnail of existing image.
+       Requires "w" and "h" parameters set.
+       [ex: &new=FF0000|75] - red background, 75% opacity
+       Set to hex color string of background. Opacity is
+       optional (defaults to 100% opaque).
+   w = max width of output thumbnail in pixels
+   h = max height of output thumbnail in pixels
+  wp = max width for portrait images
+  hp = max height for portrait images
+  wl = max width for landscape images
+  hl = max height for landscape images
+  ws = max width for square images
+  hs = max height for square images
+   f = output image format ("jpeg", "png", or "gif")
+   q = JPEG compression (1=worst, 95=best, 75=default)
+  sx = left side of source rectangle (default = 0)
+       (values 0 < sx < 1 represent percentage)
+  sy = top side of source rectangle (default = 0)
+       (values 0 < sy < 1 represent percentage)
+  sw = width of source rectangle (default = fullwidth)
+       (values 0 < sw < 1 represent percentage)
+  sh = height of source rectangle (default = fullheight)
+       (values 0 < sh < 1 represent percentage)
+  zc = zoom-crop. Will auto-crop off the larger dimension
+       so that the image will fill the smaller dimension
+       (requires both "w" and "h"). Set "zc=1" to enable.
+       (overrides both "iar" and "far")
+  bg = background hex color (default = FFFFFF)
+  bc = border hex color (default = 000000)
+fltr = filter system. Call as an array as follows:
+       - "brit" (Brightness) [ex: &fltr[]=brit|<value>]
+         where <value> is the amount +/- to adjust brightness
+         (range -255 to 255)
+         Availble in PHP5 with bundled GD only.
+       - "cont" (Constrast) [ex: &fltr[]=cont|<value>]
+         where <value> is the amount +/- to adjust contrast
+         (range -255 to 255)
+         Availble in PHP5 with bundled GD only.
+       - "gam" (Gamma Correction) [ex: &fltr[]=gam|<value>]
+         where <value> can be a number >0 to 10+ (default 1.0)
+         Must be >0 (zero gives no effect). There is no max,
+         although beyond 10 is pretty useless. Negative
+         numbers actually do something, maybe not quite the
+         desired effect, but interesting nonetheless.
+       - "sat" (SATuration) [ex: &fltr[]=sat|<value>]
+         where <value> is a number between zero (no change)
+         and -100 (complete desaturation = grayscale), or it
+         can be any positive number for increased saturation.
+       - "ds" (DeSaturate) [ex: &fltr[]=ds|<value>]
+         is an alias for "sat" except values are inverted
+         (positive values remove color, negative values boost
+         saturation)
+       - "gray" (Grayscale) [ex: &fltr[]=gray]
+         remove all color from image, make it grayscale
+       - "th" (Threshold) [ex: &fltr[]=th|<value>]
+         makes image greyscale, then sets all pixels brighter
+         than <value> (range 0-255) to white, and all pixels
+         darker than <value> to black
+       - "rcd" (Reduce Color Depth) [ex: &fltr[]=rcd|<c>|<d>]
+         where <c> is the number of colors (2-256) you want
+         in the output image, and <d> is "1" for dithering
+         (deault) or "0" for no dithering
+       - "clr" (Colorize) [ex: &fltr[]=clr|<value>|<color>]
+         where <value> is a number between 0 and 100 for the
+         amount of colorization, and <color> is the hex color
+         to colorize to.
+       - "sep" (Sepia) [ex: &fltr[]=sep|<value>|<color>]
+         where <value> is a number between 0 and 100 for the
+         amount of colorization (default=50), and <color> is
+         the hex color to colorize to (default=A28065).
+         Note: this behaves differently when applied by
+         ImageMagick, in which case 80 is default, and lower
+         values give brighter/yellower images and higher
+         values give darker/bluer images
+       - "usm" (UnSharpMask) [ex: &fltr[]=usm|<a>|<r>|<t>]
+         where <a> is the amount (default = 80), <r> is the
+         radius (default = 0.5), <t> is the threshold
+         (default = 3).
+       - "blur" (Blur) [ex: &fltr[]=blur|<radius>]
+         where (0 < <radius> < 25) (default = 1)
+       - "gblr" (Gaussian Blur) [ex: &fltr[]=gblr]
+         Availble in PHP5 with bundled GD only.
+       - "sblr" (Selective Blur) [ex: &fltr[]=gblr]
+         Availble in PHP5 with bundled GD only.
+       - "smth" (Smooth) [ex: &fltr[]=smth|<value>]
+         where <value> is the weighting value for the matrix
+         (range -10 to 10, default 6)
+         Availble in PHP5 with bundled GD only.
+       - "lvl" (Levels) [ex: &fltr[]=lvl|<channel>|<min>|<max>
+         where <channel> can be one of 'r', 'g', 'b', 'a' (for
+         Red, Green, Blue, Alpha respectively), or '*' for all
+         channels based on average grayscale value (default).
+         <min> and <max> are the clip points for the levels
+         and are set to clip 0.1% of each end by default.
+         (range = 0-255) and are set to clip 0.1% of each end
+         by default. Use -1 for min and/or max to invoke auto-
+         detect mode. Using default parameters (&fltr[]=lvl)
+         is similar to Auto Contrast in Adobe Photoshop.
+       - "wb" (White Balance) [ex: &fltr[]=wb|<c>]
+         where <c> is the target hex color to white balance
+         on, this color is what "should be" white, or light
+         gray. The filter attempts to maintain brightness so
+         any gray color can theoretically be used. If <c> is
+         omitted the filter guesses based on brightest pixels
+         in each of RGB
+       - "hist" (Histogram)
+         [ex: &fltr[]=hist|<b>|<c>|<w>|<h>|<a>|<o>|<m>]
+         Where <b> is the color band(s) to display, from back
+         to front (one or more of "rgba*" for Red Green Blue
+         Alpha and Grayscale respectively);
+         <c> is a semicolon-seperated list of hex colors to
+         use for each graph band (defaults to FF0000, 00FF00,
+         0000FF, 999999, FFFFFF respectively);
+         <w> and <h> are the width and height of the overlaid
+         histogram in pixels, or if <= 1 then percentage of
+         source image width/height;
+         <a> is the alignment (same as for "wmi" and "wmt");
+         <o> is opacity from 0 (transparent) to 100 (opaque)
+             (requires PHP v4.3.2, otherwise 100% opaque);
+         <m> is the edge (and inter-tile) margin in percent
+       - "over" (OVERlay/underlay image) overlays an image on
+         the thumbnail, or overlays the thumbnail on another
+         image (to create a picture frame for example)
+         [ex: &fltr[]=over|<i>|<u>|<m>|<o>]
+         where <i> is the image filename; <u> is "0" (default)
+         for overlay the image on top of the thumbnail or "1"
+         for overlay the thumbnail on top of the image; <m> is
+         the margin - can be absolute pixels, or if < 1 is a
+         percentage of the thumbnail size [must be < 0.5]
+         (default is 0 for overlay and 10% for underlay);
+         <o> is opacity (0 = transparent, 100 = opaque)
+             (requires PHP v4.3.2, otherwise 100% opaque);
+         (thanks raynerapeÿgmail*com, shabazz3ÿmsu*edu)
+       - "wmi" (WaterMarkImage)
+         [ex: &fltr[]=wmi|<f>|<a>|<o>|<m>] where
+         <f> is the filename of the image to overlay;
+         <a> is the alignment (one of BR, BL, TR, TL, C,
+             R, L, T, B, *) where B=bottom, T=top, L=left,
+             R=right, C=centre, *=tile);
+         <o> is opacity from 0 (transparent) to 100 (opaque)
+             (requires PHP v4.3.2, otherwise 100% opaque);
+         <m> is the edge (and inter-tile) margin in percent
+       - "wmt" (WaterMarkText)
+         [ex: &fltr[]=wmt|<t>|<s>|<a>|<c>|<f>|<o>|<m>|<n>|<b>|<O>|<x>]
+         where:
+         <t> is the text to use as a watermark;
+             URLencoded Unicode HTMLentities must be used for
+               characters beyond chr(127). For example, the
+               "eighth note" character (U+266A) is represented
+               as "&#9834;" and then urlencoded to "%26%239834%3B"
+             Any instance of metacharacters will be replaced
+             with their calculated value. Currently supported:
+               ^Fb = source image filesize in bytes
+               ^Fk = source image filesize in kilobytes
+               ^Fm = source image filesize in megabytes
+               ^X  = source image width in pixels
+               ^Y  = source image height in pixels
+               ^x  = thumbnail width in pixels
+               ^y  = thumbnail height in pixels
+               ^^  = the character ^
+         <s> is the font size (1-5 for built-in font, or point
+           size for TrueType fonts);
+         <a> is the alignment (one of BR, BL, TR, TL, C, R, L,
+           T, B, * where B=bottom, T=top, L=left, R=right,
+           C=centre, *=tile);
+         <c> is the hex color of the text;
+         <f> is the filename of the TTF file (optional, if
+           omitted a built-in font will be used);
+         <o> is opacity from 0 (transparent) to 100 (opaque)
+             (requires PHP v4.3.2, otherwise 100% opaque);
+         <m> is the edge (and inter-tile) margin in percent;
+         <n> is the angle
+         <b> is the hex color of the background;
+         <O> is background opacity from 0 (transparent) to
+             100 (opaque)
+             (requires PHP v4.3.2, otherwise 100% opaque);
+         <x> is the direction(s) in which the background is
+             extended (either 'x' or 'y' (or both, but both
+             will obscure entire image))
+             Note: works with TTF fonts only, not built-in
+       - "flip" [ex: &fltr[]=flip|x   or   &fltr[]=flip|y]
+         flip image on X or Y axis
+       - "ric" [ex: &fltr[]=ric|<x>|<y>]
+         rounds off the corners of the image (to transparent
+         for PNG output), where <x> is the horizontal radius
+         of the curve and <y> is the vertical radius
+       - "elip" [ex: &fltr[]=elip]
+         similar to rounded corners but more extreme
+       - "mask" [ex: &fltr[]=mask|filename.png]
+         greyscale values of mask are applied as the alpha
+         channel to the main image. White is opaque, black
+         is transparent.
+       - "bvl" (BeVeL) [ex: &fltr[]=bvl|<w>|<c1>|<c2>]
+         where <w> is the bevel width, <c1> is the hex color
+         for the top and left shading, <c2> is the hex color
+         for the bottom and right shading
+       - "bord" (BORDer) [ex: &fltr[]=bord|<w>|<rx>|<ry>|<c>
+         where <w> is the width in pixels, <rx> and <ry> are
+         horizontal and vertical radii for rounded corners,
+         and <c> is the hex color of the border
+       - "fram" (FRAMe) draws a frame, similar to "bord" but
+         more configurable
+         [ex: &fltr[]=fram|<w1>|<w2>|<c1>|<c2>|<c3>]
+         where <w1> is the width of the main border, <w2> is
+         the width of each side of the bevel part, <c1> is the
+         hex color of the main border, <c2> is the highlight
+         bevel color, <c3> is the shadow bevel color
+       - "drop" (DROP shadow)
+         [ex: &fltr[]=drop|<d>|<w>|<clr>|<a>]
+         where <d> is distance from image to shadow, <w> is
+         width of shadow fade (not yet implemented), <clr> is
+         the hex color of the shadow, and <a> is the angle of
+         the shadow (default=225)
+       - "crop" (CROP image)
+         [ex: &fltr[]=crop|<l>|<r>|<t>|<b>]
+         where <l> is the number of pixels to crop from the left
+         side of the resized image; <r>, <t>, <b> are for right,
+         top and bottom respectively. Where (0 < x < 1) the
+         value will be used as a percentage of width/height.
+         Left and top crops take precedence over right and
+         bottom values. Cropping will be limited such that at
+         least 1 pixel of width and height always remains.
+file = if set then thumbnail will be rendered to this
+       filename, not output and not cached.
+       (Deprecated. Disabled by default since v1.6.0.
+       You should instantiate your own object instead)
+goto = URL to redirect to after rendering image to file
+       * Must begin with "http://"
+       * Requires file parameter set
+       (Deprecated. Disabled by default since v1.6.0.
+       You should instantiate your own object instead)
+ err = custom error image filename instead of showing
+       error messages (for use on production sites)
+md5s = MD5 hash of the source image -- if this parameter is
+       passed with the hash of the source image then the
+       source image is not checked for existance or
+       modification and the cached file is used (if
+       available). If 'md5s' is passed an empty string then
+       phpThumb.php dies and outputs the correct MD5 hash
+       value.  This parameter is the single-file equivalent
+       of 'cache_source_filemtime_ignore_*' configuration
+       paramters
+ xto = EXIF Thumbnail Only - set to only extract EXIF
+       thumbnail and not do any additional processing
+  ra = Rotate by Angle: angle of rotation in degrees
+       positive = counterclockwise, negative = clockwise
+  ar = Auto Rotate: set to "x" to use EXIF orientation
+       stored by camera. Can also be set to "l" or "L"
+       for landscape, or "p" or "P" for portrait. "l"
+       and "P" rotate the image clockwise, "L" and "p"
+       rotate the image counter-clockwise.
+ aoe = Output Allow Enlarging - override the setting for
+       $CONFIG['output_allow_enlarging'] (1=on, 0=off)
+       ("far" and "iar" both override this and allow output
+       larger than input)
+ iar = Ignore Aspect Ratio - disable proportional resizing
+       and stretch image to fit "h" & "w" (which must both
+       be set).  (1=on, 0=off)  (overrides "far")
+ far = Force Aspect Ratio - image will be created at size
+       specified by "w" and "h" (which must both be set).
+       Alignment: L=left,R=right,T=top,B=bottom,C=center
+       BL,BR,TL,TR use the appropriate direction if the
+       image is landscape or portrait.
+maxb = MAXimum Byte size - output quality is auto-set to
+       fit thumbnail into "maxb" bytes  (compression
+       quality is adjusted for JPEG, bit depth is adjusted
+       for PNG and GIF)
+down = filename to save image to. If this is set the
+       browser will prompt to save to this filename rather
+       than display the image
+
+
+
+==============
+General Notes:
+==============
+
+* Always use the local image filename wherever possible
+  rather than a full http:// URL because performance is
+  much better, less (or no) use of temp files, and the
+  last-modified check for cached files doesn't work for
+  remote files. For example:
+   good: phpThumb.php?src=/images/nicepic.jpg
+    bad: phpThumb.php?src=/home/httpd/example/images/nicepic.jpg
+  worse: phpThumb.php?src=http://example.com/images/nicepic.jpg
+
+* Thumbnails will be scaled proportionately to fit in a
+  box of at most (width * height) pixels
+  (unless "iar" is set)
+
+* Thumbnail caching for URL or database sources requires
+  an absolute directory name for $config_cache_directory
+  Physical file cached thumbnails will be recreated if
+  the source file changes, but remote/database files
+  cannot (modification time isn't readily available)
+
+* If you need a GUI interface to phpThumb(), or for a user
+  to specify crop settings, or something like that please
+  see the list of known programs in /demo/readme.demos.txt
+
+* Cropping images can be specified with either exact pixel
+  values for sx/sy/sw/sh parameters, or if those are set
+  to a value >0 and <1 then these are interpreted as a
+  percentage of the source image width/height. For example,
+  to crop 25% off all sides, you would specify parameters:
+  phpThumb.php?src=pic.jpg&sx=.25&sy=.25&sw=.5&sh=.5
+
+* phpThumb() may have tempfile access issues on servers
+  where Safe Mode is enabled, specificly when accessing
+  a file over HTTP, or when a non-bundled version of GD
+  is in use. Specifying "config_temp_directory" may help
+
+* Properly resolving /~user/ style filenames requires
+  apache_lookup_uri(), which is missing or broken in
+  Apache2, or if PHP is not installed as an Apache module.
+  phpThumb() does try and work around this if it is
+  unavailble, but you may have to specify a full filename
+  for "src" if you encounter problems.
+
+* phpThumb() should work with PHP v4.0.6+, but seems to
+   have a few quirks before v4.1.0
+  EXIF thumbnail extraction requires PHP v4.2.0+
+  Image rotation requires PHP v4.3.0+. There have been
+    reports of problems with PHP older than v4.3.3
+  Some image filters require PHP v5.0.0+
+  Run /demo/phpThumb.demo.check.php to examine your server
+
+* phpThumb() works better and faster when ImageMagick is
+  available. Most functions will work with only GD2, but
+  speed is much faster with ImageMagick, and much larger
+  images can be processed with ImageMagick than GD.
+
+* phpThumb() works with GD v1.x, but works better with
+   GD v2.0+ because of the true-color image support
+   and ImageCopyResampled(). Also, there appears to be a
+   bug in ImageCopyResized() which is used with GD v1.x
+   where the bottom and/or right line of pixels is set
+   to the background color (due to a rounding error?)
+  NOTE: Please use the bundled version of GD if at all
+   possible (with PHP v4.3.0+) because the non-bundled
+   version has bugs which may cause PHP to crash:
+   * http://bugs.php.net/bug.php?id=21518
+   * http://bugs.php.net/bug.php?id=24174
+   phpThumb() has a workaround for the above bug but
+   there may be other bugs, and the workaround is slow.
+  Alpha transparent output requires GD >= 2.0.1 and
+   PHP >= 4.3.2
+  Most (if not all) filters require GD v2.x to function
+   at all. But many filters can be handled by ImageMagick
+   instead of GD.
+
+* Filters handled by ImageMagick or GD:
+  - brit;cont;ds;sat;gray;clr;sep;gam;neg;th;rcd;flip;edge;
+    emb;lvl;blur;gblr;usm;
+* Filters handled only by ImageMagick:
+  - none yet
+* Filters handled only by GD + PHP5:
+  - sblr;mean;smth;
+* Filters handled only by GD2:
+  - bvl;wmi;wmt;over;wb;hist;fram;drop;mask;elip;ric;bord;

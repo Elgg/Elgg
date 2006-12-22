@@ -36,4 +36,5 @@
 
     // Tag URI handler
         $function['tags:uri:object'][] = path . "units/rpc/lib/function_taguri_object.php";
+
 ?>

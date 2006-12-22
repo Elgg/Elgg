@@ -1,23 +1,23 @@
 <?php
 
-	//	ELGG weblog perform-action-then-redirect page
+    //    ELGG weblog perform-action-then-redirect page
 
-	// Run includes
-		require("../includes.php");
-		
-		run("users:init");
+    // Run includes
+        require_once(dirname(dirname(__FILE__))."/includes.php");
+        
+        run("users:init");
 
-		global $redirect_url;
-		global $messages;
-		
-		if (isset($messages) && sizeof($messages) > 0) {
-			$_SESSION['messages'] = $messages;
-		}
-		
-		if (defined('redirect_url')) {
-			header("Location: " . redirect_url);
-		} else {
-			header("Location: " . url);
-		}
-		
+        global $redirect_url;
+        global $messages;
+        
+        if (isset($messages) && sizeof($messages) > 0) {
+            $_SESSION['messages'] = $messages;
+        }
+        
+        if (defined('redirect_url')) {
+            header("Location: " . redirect_url);
+        } else {
+            header("Location: " . url);
+        }
+        
 ?>

@@ -5,6 +5,9 @@ necessarily a canonical list; contributors may email system@elgg.net
 in order to have contact details added or amended for the next
 release. We apologise for any omissions which may have arisen.
 
+It is important also to recognise the input of the Elgg development
+community; details of this can be found at http://elgg.org/developers.php.
+
 Sven Edge
 http://elgg.net/sven/
 ---------
@@ -13,12 +16,7 @@ Misc programming and SQL optimisation
 David Eshelman
 http://www.ksucentral.com/esh/
 ------------------------------
-Icon upload
-
-James Heinrich
-http://phpthumb.sourceforge.net/
---------------------------------
-phpThumb
+Icon upload alterations
 
 Misja Hoebe
 http://www.chn.nl/
@@ -34,25 +32,14 @@ http://www.usc.edu/~lhl/
 Cookied logins
 Authentication refactoring
 
-Mancomm Performance Inc
-http://www.mancomm.ca/
-----------------------
-Calendar plugin
+Karsten Lundqvist
+-----------------
+Community theming
 
-MoxieCode Systems AB
-http://tinymce.moxiecode.com/
------------------------------
-TinyMCE
-
-Music Player Project
-http://musicplayer.sourceforge.net/
------------------------------------
-Music Player
-
-WordPress
-http://www.wordpress.org
------------------------------------
-Connections, Northern, Gentle Calm themes
+New Zealand Open Source VLE Project
+http://eduforge.org/projects/nzvle
+----------------------------------
+Architectural changes, key source code contributions
 
 David Tosh
 http://elgg.net/dtosh/
@@ -63,3 +50,4 @@ Ben Werdmuller
 http://elgg.net/bwerdmuller/
 ----------------------
 Technical Director
+Main coding

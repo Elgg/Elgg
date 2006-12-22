@@ -1,19 +1,19 @@
 <?php
 
-		global $page_owner;
-		
-		$title = run("profile:display:name") . " :: ". gettext("Communities") ."";
+global $page_owner;
 
-		$body = run("content:communities:manage");
-		$body .= run("communities:edit",array($page_owner));
-		
-		$body = run("templates:draw", array(
-						'context' => 'contentholder',
-						'title' => $title,
-						'body' => $body
-					)
-					);
+$title = run("profile:display:name") . " :: ". __gettext("Communities") ."";
 
-		$run_result = $body;
-					
+$body = run("content:communities:manage");
+$body .= run("communities:edit",array($page_owner));
+
+$body = templates_draw(array(
+                             'context' => 'contentholder',
+                             'title' => $title,
+                             'body' => $body
+                             )
+                       );
+                       
+$run_result = $body;
+                    
 ?>

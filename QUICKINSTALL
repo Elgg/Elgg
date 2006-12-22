@@ -1,0 +1,71 @@
+Quick Elgg 0.67 install file
+originally by Bill Fitzgerald
+-----------------------------
+
+It's best to follow the full instructions in INSTALL, but if you're short on
+time:
+
+1. Create a database.
+
+2. Create a user on the database with all privileges (are all privileges
+necessary?):
+
+   GRANT ALL PRIVILEGES ON dbname.* TO dbuser@localhost IDENTIFIED BY
+'dbpass';
+
+3. Write down the database name (created in step 1) and the database
+user (created in step 2) and the password for the database user (dbpass,
+created in step 2).
+
+4. Create a directory outside the "public_html" directory -- this
+directory can be named whatever you want.
+
+5. Rename htaccess-dist to .htaccess.
+
+6. Open config-dist.php (found in the root directory of the Elgg
+directory structure). Rename this file config.php.
+
+7. In config.php, edit the following values to get started. The
+config.php file also contains good instructions:
+
+   $CFG->sitename = ''; // The sitename can be anything
+
+   $CFG->wwwroot = 'http://elgg.foo.org/'; // the address you put in
+   the browser to access the Elgg site
+
+   $CFG->dirroot = '/home/user/public_html/elgg/'; // a critical value
+   -- make sure to use the correct path, make sure to end with a
+   trailing slash
+
+   $CFG->sysadminemail = 'bar@foo.org'; // If you're setting the site
+   up, this is probably your email address
+
+   $CFG->defaultlocale = 'en_GB'; // If the site will run in English,
+   leave unchanged
+
+   $CFG->publicreg = true; // see instructions in config.php
+
+   $CFG->default_access = "LOGGED_IN"; // see instructions in config.php
+
+   $CFG->dataroot = '/home/user/elggdata/'; // this is the directory
+   created in step 4, above -- a critical value -- make sure to use the
+   correct path, make sure to end with a trailing slash --
+
+
+   $CFG->dbtype = 'mysql'; // for now
+   $CFG->dbhost = 'localhost';
+   $CFG->dbuser = ''; // set in step 2, above
+   $CFG->dbpass = ''; // set in step 2, above
+   $CFG->dbname = ''; // name of database created in step 1
+   $CFG->dbpersist = false;
+   $CFG->prefix = 'elgg';
+
+
+8. Navigate to the url of the site. The database tables will be created,
+and you should see a long line of messages indicating success. At the
+bottom of the page, you will see a "Continue" button -- click it.
+
+9. This will bring you the Elgg home screen. The main site admin is
+already created: Username "News"; password "password". Log in as this
+user and change the password to something more secure. Welcome to your
+Elgg site.

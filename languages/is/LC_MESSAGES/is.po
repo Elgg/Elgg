@@ -1,0 +1,4876 @@
+# Copyright (C) Elgg Project
+# This file is distributed under the same license as the Elgg package.
+# Misja Hoebe <misja@efobia.nl>, 2005.
+# Hans de Zwart <hansATdezwartDOTinfo>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Elgg 0.3\n"
+"POT-Creation-Date: 2006-09-22 14:05+0100\n"
+"PO-Revision-Date: 2006-11-10 20:25+0000\n"
+"Last-Translator: sfjalar <sfjalar@gmail.com>\n"
+"Language-Team: Dutch <i18n@elgg.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language-Code: nl\n"
+"Language-Name: Nederlands\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: elgg\n"
+"X-Generator: Emacs PO mode, version 2.01\n"
+"X-Is-Fallback-For: nl-be\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Language: Dutch\n"
+"X-Poedit-Country: NETHERLANDS\n"
+
+#: _activity/index.php:24
+msgid "Recent activity"
+msgstr "Virkni nýlega"
+
+#: _activity/index.php:29
+msgid "Currently viewing recent activity since "
+msgstr "Recente activiteit sinds "
+
+#: _activity/index.php:31
+msgid "You may view recent activity during the following time-frames:"
+msgstr "Je kan recente activiteit voor de volgende periodes bekijken:"
+
+#: _activity/index.php:33
+msgid "The last 24 hours"
+msgstr "Síðustu 24 stundirnar"
+
+#: _activity/index.php:34
+msgid "The last 48 hours"
+msgstr "Síðustu 48 stundirnar"
+
+#: _activity/index.php:35
+msgid "The last week"
+msgstr "Síðustu viku"
+
+#: _activity/index.php:36
+msgid "The last month"
+msgstr "Síðasta mánuð"
+
+#: _activity/index.php:38
+msgid "Your recent messages"
+msgstr "Nýlegar færslur"
+
+#: _activity/index.php:49
+msgid "Activity on weblog posts you have marked as interesting"
+msgstr "Virkni á bloggfærslum sem þú hefur merkt áhugaverðar"
+
+#: _activity/index.php:60
+msgid "Read more"
+msgstr "Lesa áfram"
+
+#: _activity/index.php:64
+msgid "your blog"
+msgstr "Bloggið þitt"
+
+#: _activity/index.php:67
+#, php-format
+msgid "<b>You</b> commented on weblog post '%s' in %s:"
+msgstr "<b>Þú</b> skrifaðir athugasemd á bloggfærsluna '%s' þann %s:"
+
+#: _activity/index.php:69
+#, php-format
+msgid "<b>%s</b> commented on weblog post '%s' in %s:"
+msgstr "<b>%s</b> skrifaði athugasemdir við bloggfærslur '%s' í %s:"
+
+#: _activity/index.php:79
+msgid "No activity during this time period."
+msgstr "Engin virkni á þessu tímabili"
+
+#: _admin/antispam.php:17 _admin/users.php:17 _admin/users.php:20
+#: lib/templates.php:466
+msgid "Manage users"
+msgstr "Notendastjórnun"
+
+#: _admin/antispam.php:20
+msgid "Spam blocking"
+msgstr "Ruslsíun"
+
+#: _admin/flags.php:17 _admin/flags.php:20
+msgid "Content flags"
+msgstr "Gemarkeerde inhoud"
+
+#: _admin/index.php:17 _admin/index.php:20 lib/templates.php:426
+msgid "Administration"
+msgstr "Kerfisstjórnun"
+
+#: _admin/users_add.php:17 _admin/users_add.php:20
+msgid "Add multiple users"
+msgstr "Fjölskrá notendur"
+
+#: _communities/index.php:22 mod/community/lib.php:51 mod/community/lib.php:61
+#: units/communities/communities_edit_wrapper.php:5
+msgid "Communities"
+msgstr "Samfélög"
+
+#: _communities/members.php:22 units/communities/community_memberships.php:40
+#: units/communities/community_memberships.php:42
+msgid "Members"
+msgstr "Meðlimir:"
+
+#: _communities/owned.php:22 mod/community/lib.php:55
+msgid "Owned Communities"
+msgstr "Eigin samfélög"
+
+#: _communities/requests.php:23
+#: units/communities/communities_membership_requests.php:10
+msgid "Membership requests"
+msgstr "Umsóknir um aðild"
+
+#: _files/edit_file.php:19
+msgid "Edit File"
+msgstr "Breyta skrá"
+
+#: _files/edit_folder.php:19
+msgid "Edit Folder"
+msgstr "Breyta möppu"
+
+#: _files/index.php:19 units/files/files_user_info_menu.php:13
+#: units/files/function_rss_publish.php:35 units/files/profile_files.php:9
+msgid "Files"
+msgstr "Skrár"
+
+#: _files/rss2.php:25
+#, php-format
+msgid "Files tagged with %s"
+msgstr "Skrár auðkenndar með   %s"
+
+#: _files/rss2.php:31 units/files/function_rss_publish.php:42
+#, php-format
+msgid "Files for %s, hosted on %s."
+msgstr "Skrár fyrir %s, vistaðar á %s."
+
+#: _friends/friendsof.php:21 units/friends/friends_of_edit_wrapper.php:5
+msgid "Friends who have linked to you"
+msgstr "Vinir sem hafa tengt í þig"
+
+#: _friends/index.php:21 units/friends/friends_edit_wrapper.php:5
+msgid "Friends I have linked to"
+msgstr "Vinir sem ég hef tengt í"
+
+#: _friends/requests.php:22 mod/friend/lib.php:38
+#: units/friends/user_friendship_requests.php:11
+msgid "Friendship requests"
+msgstr "Óskir um vinatengsl"
+
+#: _groups/index.php:23
+msgid "Access Controls"
+msgstr "Aðgangsstýringar"
+
+#: _icons/index.php:20
+msgid "Manage user icons"
+msgstr "Stýra táknmyndum notenda"
+
+#: _invite/forgotten_password.php:14
+msgid "Generate a New Password"
+msgstr "Búa til nýtt lykilorð"
+
+#: _invite/index.php:18
+msgid "Invite a Friend"
+msgstr "Bjóða vini"
+
+#: _invite/join.php:12 _invite/register.php:11
+#, php-format
+msgid "Join %s"
+msgstr "Gerast meðlimur í %s"
+
+#: _invite/new_password.php:11
+#, php-format
+msgid "Get new %s password"
+msgstr "Fá nýtt %s aðgangsorð"
+
+#: _rss/blog.php:15
+msgid "Publish feeds to blog"
+msgstr "Gefa út strauma á blogg"
+
+#: _rss/index.php:12 _rss/subscriptions.php:15 mod/newsclient/lib.php:29
+#: units/magpie/menu_sub.php:14
+msgid "Feeds"
+msgstr "Straumar"
+
+#: _rss/individual.php:13
+msgid "Feed detail"
+msgstr "Nánar um straum"
+
+#: _rss/popular.php:12 units/magpie/menu_sub.php:31
+msgid "Popular feeds"
+msgstr "Vinsælir straumar"
+
+#: _rss/styles.php:10
+msgid "RSS Management"
+msgstr "RSS stjórnun"
+
+#: _rss/styles.php:11
+msgid "To add this feed to your resources page, click here."
+msgstr "Smelltu hér til að bæta þessum straum við  námusíðuna þína."
+
+#: _rss/styles.php:12
+msgid ""
+"To add this feed to an external RSS aggregator, click the link that "
+"corresponds to your aggregator:"
+msgstr ""
+"Til að bæta þessum straum við ytri RSS fréttaveitu, smelltu þá á tengilinn "
+"sem svarar til fréttaveitu þinnar."
+
+#: _rss/styles.php:13
+msgid "Summary"
+msgstr "Samantekt"
+
+#: _rss/styles.php:14
+msgid "This is an RSS feed for "
+msgstr "Þetta er RSS straumur fyrir "
+
+#: _rss/styles.php:15
+msgid "Didn't mean to come here? Click to exit!"
+msgstr "Ætlaðir ekki hingað? Smelltu til að fara!"
+
+#: _templates/edit.php:15
+msgid "Template Edit"
+msgstr "Breyta sniðmáti"
+
+#: _templates/index.php:15
+msgid "Select / Create Themes"
+msgstr "Velja / Búa til sniðmát"
+
+#: _templates/preview.php:13
+msgid "Template Preview"
+msgstr "Forskoða sniðmát"
+
+#: _userdetails/index.php:18 lib/templates.php:445
+msgid "Edit user details"
+msgstr "Breyta upplýsingum um notanda"
+
+#: _weblog/archive.php:15 _weblog/archive_month.php:15
+msgid "Blog Archives"
+msgstr "Eldri færslur"
+
+#: _weblog/edit.php:24 _weblog/index.php:15
+#: units/communities/communities_membership_requests.php:33
+#: units/friends/user_friendship_requests.php:34
+#: units/weblogs/weblogs_user_info_menu.php:29
+msgid "Blog"
+msgstr "Blogg"
+
+#: _weblog/everyone.php:15
+msgid "All blogs"
+msgstr "Öll blogg"
+
+#: _weblog/everyone.php:19
+msgid "You can filter this page to certain types of posts:"
+msgstr "Þú getur síað þessa síðu miðað við sérstakar gerðir af færslum:"
+
+#: _weblog/everyone.php:21
+msgid "Personal blog posts"
+msgstr "Persónulegar bloggfærslur"
+
+#: _weblog/everyone.php:22
+msgid "Community blog posts"
+msgstr "Hópbloggfærslur"
+
+#: _weblog/everyone.php:23
+msgid "Posts with comments"
+msgstr "Færslur með athugasemdum"
+
+#: _weblog/everyone.php:24
+msgid "Posts with no comments"
+msgstr "Færslur með engum athugasemdum"
+
+#: _weblog/friends.php:15
+msgid "Friends blog"
+msgstr "Blogg vina"
+
+#: _weblog/rss2.php:51
+#, php-format
+msgid "Weblog items tagged with %s"
+msgstr "Bloggfærslur auðkenndar með %s"
+
+#: _weblog/rss2.php:54
+#, fuzzy
+msgid "Weblog items"
+msgstr "Blogg hlutir"
+
+#: _weblog/rss2.php:61
+msgid "All users"
+msgstr "Allir notendur"
+
+#: _weblog/rss2.php:74
+#, php-format
+msgid "The most recent weblog posts on %s."
+msgstr "Síðustu bloggfærslur á  %s."
+
+#: _weblog/rss2.php:78 units/weblogs/function_rss_publish.php:42
+#, php-format
+msgid "The weblog for %s, hosted on %s."
+msgstr "Blogg fyrir  %s, hýst á %s."
+
+#: _weblog/view_post.php:28
+msgid "Access denied or post not found"
+msgstr "Aðgangur óheimill eða færsla finnst ekki"
+
+#: _weblog/view_post.php:31
+msgid ""
+"Either this blog post doesn't exist or you don't currently have access "
+"privileges to view it."
+msgstr ""
+"Annað hvort er þessi bloggfærsla ekki til eða þú hefur núna ekki aðgang til "
+"að skoða hana."
+
+#: _weblog/view_post.php:39 units/weblogs/function_rss_publish.php:35
+msgid "Weblog"
+msgstr "Blogg"
+
+#: content/about.php:10 content/about.php:13
+#, php-format
+msgid "About %s"
+msgstr "Um %s"
+
+#: content/faq.php:10 content/faq.php:13
+#, fuzzy
+msgid "%s FAQ"
+msgstr "%s S.O.S"
+
+#: content/invite/invite.php:3
+msgid ""
+"If you have a friend or colleague you would like to join the system, perhaps "
+"because you would like to share protected resources or reflections with "
+"them, you can enter their details below. They will then receive a special "
+"invitation email containing a code that allows them to create a new account; "
+"once they do so, a mutual friend connection will be created between their "
+"account and yours."
+msgstr ""
+"Vul de gegevens van een vriend of collega in die je zou willen uitnodigen, "
+"misschien om in een beschermde omgeving gegevens of gedachten uit te "
+"wisselen. Zij ontvangen dan een speciaal bericht met daarin een "
+"uitnodigingscode waarmee zij een persoonlijk account kunnen aanmaken. Zodra "
+"zij dit hebben gedaan zal deze persoon aan jouw vriendelijst en omgekeerd "
+"worden toegevoegd."
+
+#: content/mainindex/content_loggedout.php:7
+#: content/mainindex/content_main_index.php:7 lib/templates.php:46
+msgid "Welcome"
+msgstr "Velkomin(n)"
+
+#: content/mainindex/content_loggedout.php:8
+#, php-format
+msgid ""
+"This is %s, a learning landscape. Why not check out <a href=\"%s\">what "
+"people are saying</a> right now."
+msgstr ""
+"Þetta er námssamfélag %s. Hvernig væri að kynna sér <a href=\"%s\">hvað fólk "
+"er að segja</a> á þessari stundu."
+
+#: content/mainindex/content_loggedout.php:9
+#, php-format
+msgid "<a href=\"%s\">Find others</a> with similar interests and goals."
+msgstr "<a href=\"%s\">Finna aðra</a> með svipuð áhugamál og markmið."
+
+#: content/mainindex/content_loggedout.php:17
+msgid "Here are some example users:"
+msgstr "Hér eru nokkrir dæmigerðir notendur:"
+
+#: content/mainindex/content_loggedout.php:19
+msgid "Here is an example user:"
+msgstr "Hér er dæmigerður notandi:"
+
+#: content/mainindex/content_loggedout.php:33
+#, php-format
+msgid ""
+"If you like what you see, why not <a href=\"%s\">register for an account</a>?"
+msgstr ""
+"Als je bevalt wat je ziet, waarom <a href=\"%s\">meld je je niet gelijk aan "
+"voor een account?"
+
+#: content/mainindex/content_loggedout.php:40
+#: content/mainindex/content_main_index.php:41
+#: units/users/content_main_index.php:27
+msgid "Latest news"
+msgstr "Nýjar fréttir"
+
+#: content/mainindex/content_main_index.php:8
+#, php-format
+msgid "Why not <a href=\"%s\">create your profile</a>?"
+msgstr "Waarom niet een eigen profiel <a href=\"%s\">aanmaken</a>?"
+
+#: content/mainindex/content_main_index.php:9
+msgid ""
+"Tell people about yourself and connect to others with similar interests and "
+"goals."
+msgstr ""
+"Segðu fólki frá þér sjálfri/sjálfum og myndaðu sambönd við aðra með sömu "
+"áhugamál og markmið."
+
+#: content/mainindex/content_main_index.php:17
+msgid "Here are some examples of complete profiles:"
+msgstr "Hér eru nokkur sýnishorn af tilbúnum lýsingum:"
+
+#: content/mainindex/content_main_index.php:19
+msgid "Here is an example of a complete profile:"
+msgstr "Hér er sýnishorn af tilbúinni lýsingu:"
+
+#: content/mainindex/content_main_index.php:33
+#, php-format
+msgid "Or you could <a href=\"%s\">start your blog</a>?"
+msgstr "Of je zou een <a href=\"%s\">eigen weblog</a> kunnen beginnen?"
+
+#: content/mainindex/content_main_index.php:34
+#, php-format
+msgid ""
+"Comment on what you're learning, collect interesting links and decide who "
+"gets to see what you're writing. Here's what <a href=\"%s\">everyone else is "
+"talking about</a> right now."
+msgstr ""
+"Reageer op waar je van leert, verzamel interessante links en bepaal wie te "
+"zien krijgt waar je over schrijft. <a href=\"%s\">Hier</a> vind je waar "
+"anderen op dit moment over spreken."
+
+#: content/privacy.php:10 content/privacy.php:13
+#, php-format
+msgid "%s Privacy Policy"
+msgstr "%s Persónuverndarstefna"
+
+#: content/run_your_own.php:10 content/run_your_own.php:13
+#, php-format
+msgid "Running Your Own %s"
+msgstr ""
+
+#: content/terms.php:10 content/terms.php:13
+#, php-format
+msgid "%s Terms &amp; Conditions"
+msgstr ""
+
+#: help/blogs_help.php:14
+msgid "'Your blog' help"
+msgstr "Hulp bij 'Jouw weblog'"
+
+#: help/calendar_help.php:10
+msgid "Calendar help"
+msgstr ""
+
+#: help/calendar_help.php:13
+msgid "'Your calendar' help"
+msgstr ""
+
+#: help/files_help.php:10
+#, php-format
+msgid "Help for %s"
+msgstr "Hjálp fyrir %s"
+
+#: help/files_help.php:13
+msgid "'Your Files' help"
+msgstr "Hulp bij 'Jouw bestanden'"
+
+#: help/network_help.php:13
+msgid "'Your Network' help"
+msgstr "Hulp bij 'Jouw netwerk'"
+
+#: help/profile_help.php:13
+msgid "'Your Profile' help"
+msgstr "Hulp bij 'Jouw profiel'"
+
+#: home.php:15 index.php:15 index2.php:15
+msgid "Main Index"
+msgstr ""
+
+#: lib/datalib.php:44
+msgid "Success"
+msgstr "Aðgerð tókst"
+
+#: lib/datalib.php:49 lib/elgglib.php:3036
+msgid "Error"
+msgstr "Villa"
+
+#: lib/db/mysql.php:216
+msgid "Publishing RSS"
+msgstr "Birti RSS"
+
+#: lib/db/mysql.php:221 lib/db/postgres7.php:184
+#, php-format
+msgid "Publishing RSS for user %d"
+msgstr "Birti RSS fyrir notanda %d"
+
+#: lib/db/mysql.php:233 lib/db/postgres7.php:196
+msgid "Adjusting file repository information"
+msgstr ""
+
+#: lib/db/mysql.php:242 lib/db/mysql.php:252 lib/db/postgres7.php:205
+#: lib/db/postgres7.php:215
+#, php-format
+msgid "Updating file %d: %s"
+msgstr "Uppfæri skrá %d:%s"
+
+#: lib/dbsetup.php:75
+msgid "Need to upgrade database"
+msgstr "Þörf á að uppfæra gagnagrunn"
+
+#: lib/displaylib.php:188 units/display/function_log_on_pane.php:16
+msgid "Register"
+msgstr "Nýskráning"
+
+#: lib/displaylib.php:196 login/index.php:56
+#: units/display/function_log_on_pane.php:28
+msgid "Log On"
+msgstr "Innskrá"
+
+#: lib/displaylib.php:202 units/admin/admin_main.php:81
+#: units/admin/admin_users.php:28 units/admin/admin_users_add.php:21
+#: units/display/function_log_on_pane.php:34
+msgid "Username"
+msgstr "Notandanafn"
+
+#: lib/displaylib.php:203 units/display/function_log_on_pane.php:35
+msgid "Password"
+msgstr "Lykilorð"
+
+#: lib/displaylib.php:210 units/display/function_log_on_pane.php:44
+msgid "Log on"
+msgstr "Innskrá"
+
+#: lib/displaylib.php:210 units/display/function_log_on_pane.php:44
+#, fuzzy
+msgid "Go"
+msgstr "Fara"
+
+#: lib/displaylib.php:212 units/display/function_log_on_pane.php:46
+msgid "Remember Login"
+msgstr "Muna innskráningu"
+
+#: lib/displaylib.php:215 units/display/function_log_on_pane.php:49
+msgid "Forgotten password"
+msgstr "Glatað lykilorð"
+
+#: lib/displaylib.php:273 units/display/function_output_field_display.php:39
+msgid "Add User"
+msgstr "Bæta við notanda"
+
+#: lib/displaylib.php:273 lib/displaylib.php:282
+#: units/display/function_output_field_display.php:39
+#: units/display/function_output_field_display.php:48
+msgid "Send Message"
+msgstr "Senda skilaboð"
+
+#: lib/displaylib.php:282 units/display/function_output_field_display.php:48
+msgid "Add Buddy"
+msgstr "Nýr vinur"
+
+#: lib/elgglib.php:327
+msgid ""
+"A server error that affects your login session was detected. Please login "
+"again or restart your browser."
+msgstr ""
+"Villa fannst í kerfinu sem hefur áhrif á innskráningu.  Vinsamlegast skráðu "
+"þig aftur inn eða endurræstu vefskoðarann"
+
+#: lib/elgglib.php:459 lib/elgglib.php:509 lib/uploadlib.php:661
+msgid "Administrator"
+msgstr "Kerfisstjóri"
+
+#: lib/elgglib.php:467
+msgid "Do not reply"
+msgstr "Ekki svara"
+
+#: lib/elgglib.php:714
+msgid "GB"
+msgstr "GB"
+
+#: lib/elgglib.php:715
+msgid "MB"
+msgstr "MB"
+
+#: lib/elgglib.php:716
+msgid "KB"
+msgstr "KB"
+
+#: lib/elgglib.php:717
+msgid "bytes"
+msgstr "bæti"
+
+#: lib/elgglib.php:1716
+msgid "Close this window"
+msgstr "Loka þessum glugga"
+
+#: lib/elgglib.php:1753 lib/elgglib.php:1803
+msgid "Choose"
+msgstr "Velja"
+
+#: lib/elgglib.php:2033
+msgid "Elgg auto-format"
+msgstr "Sjálfgefið Elgg snið"
+
+#: lib/elgglib.php:2034
+msgid "HTML format"
+msgstr "HTML snið"
+
+#: lib/elgglib.php:2035
+msgid "Plain text format"
+msgstr "Textasnið"
+
+#: lib/elgglib.php:2036
+msgid "Markdown format"
+msgstr "Markdown ritháttur"
+
+#: lib/elgglib.php:2605 lib/elgglib.php:3161
+msgid "Continue"
+msgstr "Halda áfram"
+
+#: lib/elgglib.php:3122 units/admin/admin_userdetails.php:58
+#: units/admin/admin_userdetails.php:74
+#: units/tinymce/tinymce_userdetails_edit.php:21
+#: units/tinymce/tinymce_userdetails_edit.php:28
+#: units/users/userdetails_edit.php:108 units/users/userdetails_edit.php:115
+msgid "Yes"
+msgstr "Já"
+
+#: lib/elgglib.php:3124 units/admin/admin_userdetails.php:58
+#: units/admin/admin_userdetails.php:74
+#: units/tinymce/tinymce_userdetails_edit.php:21
+#: units/tinymce/tinymce_userdetails_edit.php:28
+#: units/users/userdetails_edit.php:108 units/users/userdetails_edit.php:115
+msgid "No"
+msgstr "Nei"
+
+#: lib/elgglib.php:3415 lib/elgglib.php:3443
+msgid "You have been banned from the system!"
+msgstr "Þú hefur verið útilokaður frá kerfinu!"
+
+#: lib/elgglib.php:3473
+msgid ""
+"Sorry, but your IP number seems to have changed from when you first logged "
+"in.  This security feature prevents crackers stealing your identity while "
+"logged in to this site.  Normal users should not be seeing this message - "
+"please ask the site administrator for help."
+msgstr ""
+
+#: lib/elgglib.php:3502
+msgid "The system will remember you and automatically log you in next time."
+msgstr "Kerfið man eftir þér og skráir þig sjálfkrafa inn næst."
+
+#: lib/elgglib.php:4199 units/users/function_default_access_levels.php:7
+msgid "Logged in users"
+msgstr "Innskráðir notendur"
+
+#: lib/elgglib.php:4201 units/users/function_default_access_levels.php:5
+msgid "Private"
+msgstr "Einkamál"
+
+#: lib/elgglib.php:4203
+msgid "Restricted"
+msgstr "Takmörkuð heimild"
+
+#: lib/elgglib.php:4257 units/weblogs/function_html_activate_urls.php:46
+msgid "Click to view link"
+msgstr "Smelltu til að skoða krækju"
+
+#: lib/php-getttext/examples/pigs_dropin.php:75
+msgid ""
+"This is how the story goes.\n"
+"\n"
+msgstr ""
+
+#: lib/templates.php:24 units/templates/default_template.php:9
+msgid "Stylesheet"
+msgstr "Stílsnið"
+
+#: lib/templates.php:25 units/templates/default_template.php:10
+msgid "The Cascading Style Sheet for the template."
+msgstr "Stílsniðið fyrir sniðmátið"
+
+#: lib/templates.php:34 units/templates/default_template.php:19
+msgid "Page Shell"
+msgstr "Pagina sjabloon"
+
+#: lib/templates.php:35 units/templates/default_template.php:20
+msgid "The main page shell, including headers and footers."
+msgstr "Het sjabloon van de hoofdpagina, inclusief de kop- en voetteksten."
+
+#: lib/templates.php:37 units/templates/default_template.php:23
+msgid "Page metatags (mandatory) - must be in the 'head' portion of the page"
+msgstr ""
+"De metatags van de pagina (verplicht) - moeten in de 'head' van de pagina te "
+"worden opgenomen"
+
+#: lib/templates.php:38 units/templates/default_template.php:24
+msgid "Page title"
+msgstr "Titill síðu"
+
+#: lib/templates.php:39 units/templates/default_template.php:25
+msgid "Menu"
+msgstr "Valseðill"
+
+#: lib/templates.php:40 units/templates/default_template.php:26
+msgid "Status menu"
+msgstr "Status menu"
+
+#: lib/templates.php:41 units/templates/default_template.php:27
+msgid "Main body"
+msgstr "Meginmál"
+
+#: lib/templates.php:42 units/templates/default_template.php:28
+msgid "Sidebar"
+msgstr "Hliðardálkur"
+
+#: lib/templates.php:55 units/templates/default_template.php:36
+msgid "Content holder"
+msgstr "Efnisvísir"
+
+#: lib/templates.php:56 units/templates/default_template.php:37
+msgid ""
+"Contains the main content for a page (as opposed to the sidebar or the "
+"title)."
+msgstr "Inniheldur meginmál síðu (þ.e. ekki titill eða efni í hliðarramma)."
+
+#: lib/templates.php:58 lib/templates.php:110
+#: units/templates/default_template.php:39
+msgid "The title"
+msgstr "Titillinn"
+
+#: lib/templates.php:59 units/templates/default_template.php:40
+msgid "The page submenu"
+msgstr "Het pagina submenu"
+
+#: lib/templates.php:60 units/templates/default_template.php:41
+#: units/templates/default_template.php:62
+msgid "The body of the page"
+msgstr "Meginmál síðunnar"
+
+#: lib/templates.php:77 units/templates/default_template.php:76
+msgid "Owner box"
+msgstr "Ruimte van de eigenaar"
+
+#: lib/templates.php:78 units/templates/default_template.php:77
+#, fuzzy
+msgid "A box containing a description of the owner of the current profile."
+msgstr "Rammi sem inniheldur notandalýsingu"
+
+#: lib/templates.php:80 units/templates/default_template.php:79
+msgid "The user's name"
+msgstr "Notandanafn"
+
+#: lib/templates.php:81 units/templates/default_template.php:80
+msgid "The URL of the user's profile page, including terminating slash"
+msgstr ""
+"De URL van de profiel pagina van de gebruiker, inclusief afsluitende slash"
+
+#: lib/templates.php:82 units/templates/default_template.php:81
+msgid "The user's icon, if it exists"
+msgstr "Táknmynd notanda, ef hún er til staðar"
+
+#: lib/templates.php:83 units/templates/default_template.php:82
+msgid "A short blurb about the user"
+msgstr "Stuttur texti um notandann"
+
+#: lib/templates.php:84 units/templates/default_template.php:83
+msgid "Links to friend / unfriend a user"
+msgstr "Link naar een vriend / verwijder link naar een gebruiker"
+
+#: lib/templates.php:85 units/templates/default_template.php:84
+msgid "Links to any lms hosts the user is attached to"
+msgstr "Slóð að námsstjórnunarkerfum sem notandinn er tengdur"
+
+#: lib/templates.php:89 search/personaltags.php:16
+#: units/templates/default_template.php:89
+msgid "Tags"
+msgstr "Tög"
+
+#: lib/templates.php:90 search/index.php:96
+#: units/templates/default_template.php:90
+msgid "Resources"
+msgstr "Aðföng"
+
+#: lib/templates.php:107
+msgid "Information Box"
+msgstr "Upplýsingarammi"
+
+#: lib/templates.php:108
+msgid ""
+"A box containing a caption and some text, used extensively throughout the "
+"site. For example, the 'friends' box and most page bodies are info boxes. Of "
+"course, you can alter this template however you wish - it doesn't need to be "
+"an actual box."
+msgstr ""
+"Een informatieruimte met een kop en tekst die door de gehele website vaak "
+"wordt gebruikt. De ruimte 'Vrienden' is hier een voorbeeld van. "
+"Vanzelfsprekend kan deze gewijzigd worden."
+
+#: lib/templates.php:111
+msgid "The contents of the box"
+msgstr "Innihald reitsins"
+
+#: lib/templates.php:130 units/templates/default_template.php:110
+msgid "System message shell"
+msgstr "Ruimte voor systeemberichten"
+
+#: lib/templates.php:131 units/templates/default_template.php:111
+msgid "A list of system messages will be placed within the message shell."
+msgstr ""
+"Een lijst van systeemberichten die in de berichtenruimte wordt geplaatst."
+
+#: lib/templates.php:133 units/templates/default_template.php:113
+msgid "The messages"
+msgstr "Skilaboðin"
+
+#: lib/templates.php:145 units/templates/default_template.php:125
+msgid "Individual system messages"
+msgstr "Einstaka kerfisboð"
+
+#: lib/templates.php:146 units/templates/default_template.php:126
+msgid "Each individual system message."
+msgstr "Hvert einstaka kerfisboð."
+
+#: lib/templates.php:148 units/templates/default_template.php:128
+msgid "The system message"
+msgstr "Het systeembericht"
+
+#: lib/templates.php:163 units/templates/default_template.php:143
+msgid "Main menu shell"
+msgstr "Centrale menuruimte"
+
+#: lib/templates.php:164 units/templates/default_template.php:144
+msgid "A list of main menu items will be placed within the menubar shell."
+msgstr "Een lijst van hoofdmenu opties die wordt geplaatst in de menuruimte."
+
+#: lib/templates.php:166 lib/templates.php:212 lib/templates.php:244
+#: units/templates/default_template.php:146
+#: units/templates/default_template.php:192
+#: units/templates/default_template.php:226
+msgid "The menu items"
+msgstr "De menu opties"
+
+#: lib/templates.php:177 units/templates/default_template.php:157
+msgid "Individual main menu item"
+msgstr "Individuele hoofdmenu optie"
+
+#: lib/templates.php:178 units/templates/default_template.php:158
+msgid ""
+"This is the template for each individual main menu item. A series of these "
+"is placed within the menubar shell template."
+msgstr ""
+"Dit is het sjabloon elk individuel hoofdmenu item. Een aantal hiervan wordt "
+"in het menubalk sjabloon geplaatst."
+
+#: lib/templates.php:180 lib/templates.php:196 lib/templates.php:228
+#: lib/templates.php:261 units/templates/default_template.php:160
+#: units/templates/default_template.php:176
+#: units/templates/default_template.php:210
+#: units/templates/default_template.php:243
+msgid "The URL of the menu item"
+msgstr "De URL van de menu optie"
+
+#: lib/templates.php:181 lib/templates.php:197 lib/templates.php:229
+#: lib/templates.php:262 units/templates/default_template.php:161
+#: units/templates/default_template.php:177
+#: units/templates/default_template.php:211
+#: units/templates/default_template.php:244
+msgid "The menu item's name"
+msgstr "De naam van de menu optie"
+
+#: lib/templates.php:193 units/templates/default_template.php:173
+msgid "Selected individual main menu item"
+msgstr "Selecteer een Individuele hoofdmenu optie"
+
+#: lib/templates.php:194 units/templates/default_template.php:174
+msgid ""
+"This is the template for an individual main menu item if it is selected."
+msgstr ""
+"Dit is het sjabloon een individuel hoofdmenu item indien het is geselecteerd."
+
+#: lib/templates.php:209 units/templates/default_template.php:189
+msgid "Sub-menubar shell"
+msgstr "Submenu ruimte"
+
+#: lib/templates.php:210 units/templates/default_template.php:190
+msgid "A list of sub-menu items will be placed within the menubar shell."
+msgstr "Een lijst van submenu opties die wordt geplaatst in de menuruimte."
+
+#: lib/templates.php:225 units/templates/default_template.php:207
+msgid "Individual sub-menu item"
+msgstr "Einstaka atriði á undirvalseðli"
+
+#: lib/templates.php:226 units/templates/default_template.php:208
+msgid ""
+"This is the template for each individual sub-menu item. A series of these is "
+"placed within the sub-menubar shell template."
+msgstr ""
+"Dit is het sjabloon voor elke individuele submenu optie. Een aantal hiervan "
+"wordt in het het submenubalk sjabloon geplaatst."
+
+#: lib/templates.php:241 units/templates/default_template.php:223
+msgid "Status menubar shell"
+msgstr "Statusmenu ruimte"
+
+#: lib/templates.php:242 units/templates/default_template.php:224
+msgid ""
+"A list of statusbar menu items will be placed within the status menubar "
+"shell."
+msgstr ""
+"Een lijst van statusbalk opties die wordt geplaatst in de status menuruimte."
+
+#: lib/templates.php:258 units/templates/default_template.php:240
+msgid "Individual statusbar menu item"
+msgstr "Individuele statusbalkmenu optie"
+
+#: lib/templates.php:259 units/templates/default_template.php:241
+msgid ""
+"This is the template for each individual statusbar menu item. A series of "
+"these is placed within the status menubar shell template."
+msgstr ""
+"Dit is het sjabloon is voor elk individuel menubalk item. Een aantal hiervan "
+"wordt in de status menubalk geplaatst."
+
+#: lib/templates.php:274 units/templates/default_template.php:256
+msgid "Data input box (two columns)"
+msgstr "Invoerveld (twee kolommen)"
+
+#: lib/templates.php:275 units/templates/default_template.php:257
+msgid ""
+"This is mostly used whenever some input is taken from the user. For example, "
+"each of the fields in the profile edit screen is a data input box."
+msgstr ""
+"Dit wordt voornamelijk gebruikt wanneer invoer van de gebruiker nodig is. "
+"Bijvoorbeeld elk veld op de pagina voor het bewerken van het persoonlijk "
+"profiel is een invoerveld."
+
+#: lib/templates.php:277 units/templates/default_template.php:259
+msgid "The name for the data we're inputting"
+msgstr "De naam van de ingevoerde gegevens"
+
+#: lib/templates.php:278 units/templates/default_template.php:260
+msgid "The first item of data"
+msgstr "Het eerste element van de invoer"
+
+#: lib/templates.php:279 units/templates/default_template.php:261
+msgid "The second item of data"
+msgstr "Het tweede element van de invoer"
+
+#: lib/templates.php:306 units/templates/default_template.php:279
+msgid "Data input box (one column)"
+msgstr "Invoerveld (een kolom)"
+
+#: lib/templates.php:307 units/templates/default_template.php:280
+msgid "A single-column version of the data box."
+msgstr "Een voorbeeld van een invoerveld in een enkele kolom."
+
+#: lib/templates.php:309 units/templates/default_template.php:282
+msgid "The name of the data we're inputting"
+msgstr "De naam van de gegevens die we aan het invoeren zijn"
+
+#: lib/templates.php:310 lib/templates.php:338
+#: units/templates/default_template.php:283
+#: units/templates/default_template.php:356
+msgid "The data itself"
+msgstr "De gegevens zelf"
+
+#: lib/templates.php:334 units/templates/default_template.php:352
+msgid "Data input box (vertical)"
+msgstr "Invoerveld (verticaal)"
+
+#: lib/templates.php:335 units/templates/default_template.php:353
+msgid ""
+"A slightly different version of the data box, used on this edit page amongst "
+"other places."
+msgstr ""
+"Een iets andere versie van de gegevensruimte; wordt op deze en een aantal "
+"andere pagina's gebruikt."
+
+#: lib/templates.php:337 units/templates/default_template.php:355
+msgid "Name of the data we\\'re inputting"
+msgstr ""
+
+#: lib/templates.php:400 mod/template/lib.php:15
+msgid "Change theme"
+msgstr "Breyta um þema"
+
+#: lib/templates.php:433
+msgid "Account settings"
+msgstr "Account instellingen"
+
+#: lib/templates.php:439
+msgid "Log off"
+msgstr "Útskrá"
+
+#: lib/templates.php:449
+msgid "Your site picture"
+msgstr "Jouw site afbeelding"
+
+#: lib/templates.php:456
+msgid "Main"
+msgstr "Aðal"
+
+#: lib/templates.php:461 units/admin/admin_users_add.php:36
+msgid "Add users"
+msgstr "Skrá notendur"
+
+#: lib/templates.php:471
+msgid "Manage flagged content"
+msgstr "Sýsla með flaggað efni"
+
+#: lib/templates.php:476
+#, fuzzy
+msgid "Spam control"
+msgstr "Eftirlit með ruslpósti"
+
+#: lib/templates.php:581
+msgid "Your current template has been changed."
+msgstr "Núverandi sniðmáti hefur verið breytt"
+
+#: lib/templates.php:611 units/templates/template_actions.php:59
+msgid "Your template has been updated."
+msgstr "Sniðmátið hefur verið uppfært."
+
+#: lib/templates.php:623 units/templates/template_actions.php:75
+msgid "Your template was deleted."
+msgstr "Sniðmátinu hefur verið eytt."
+
+#: lib/templates.php:733 units/templates/templates_add.php:8
+#, fuzzy
+msgid "Create theme"
+msgstr "Búa til þema"
+
+#: lib/templates.php:734 units/templates/templates_add.php:9
+msgid ""
+"Here you can create your own themes based on one of the existing public "
+"themes. Just select which public theme you would like to alter and then "
+"create your own. You will now have edit privilages."
+msgstr ""
+
+#: lib/templates.php:750 units/templates/templates_add.php:25
+#, fuzzy
+msgid "Theme name"
+msgstr "Nafn þema"
+
+#: lib/templates.php:755 lib/templates.php:818 lib/templates.php:1017
+#: units/templates/templates_add.php:30 units/templates/templates_edit.php:22
+#: units/templates/templates_view.php:22
+msgid "Default Theme"
+msgstr "Sjálfgefið þema"
+
+#: lib/templates.php:859 units/templates/templates_edit.php:65
+msgid "Glossary"
+msgstr "Orðasafn"
+
+#: lib/templates.php:895 units/admin/admin_spam.php:22
+#: units/communities/userdetails_edit.php:91
+#: units/templates/templates_edit.php:101 units/users/userdetails_edit.php:181
+msgid "Save"
+msgstr "Vista"
+
+#: lib/templates.php:933 units/templates/templates_preview.php:8
+msgid "Heading one"
+msgstr "Fyrirsögn eitt"
+
+#: lib/templates.php:934 units/templates/templates_preview.php:9
+msgid "Heading two"
+msgstr "Fyrirsögn tveir"
+
+#: lib/templates.php:935 units/templates/templates_preview.php:10
+msgid "A bullet list"
+msgstr "Atriðalisti"
+
+#: lib/templates.php:936 units/templates/templates_preview.php:11
+msgid "Heading three"
+msgstr "Fyrirsögn þrjú"
+
+#: lib/templates.php:937 units/templates/templates_preview.php:12
+msgid "A numbered list"
+msgstr "Númeraður listi"
+
+#: lib/templates.php:967 units/templates/templates_preview.php:42
+msgid "Some text input"
+msgstr "Sýnishorn af texta"
+
+#: lib/templates.php:974 units/templates/templates_preview.php:49
+msgid "Some longer text input"
+msgstr "Sýnishorn af lengri texta"
+
+#: lib/templates.php:980 units/templates/templates_preview.php:55
+msgid "Further text input"
+msgstr "Nog meer tekstinvoer"
+
+#: lib/templates.php:1000 units/templates/templates_view.php:5
+msgid "Select / Create / Edit Themes"
+msgstr "Velja / Mynda / Breyta þemum"
+
+#: lib/templates.php:1001 units/templates/templates_view.php:6
+msgid "Public Themes"
+msgstr "Opinber þemu"
+
+#: lib/templates.php:1002 units/templates/templates_view.php:7
+#, php-format
+msgid ""
+"The following are public themes that you can use to change the way your %s "
+"looks - these do not change the content only the appearance. Check the "
+"preview and then select the one you want. If you wish you can adapt one of "
+"these using the 'create theme' option below."
+msgstr ""
+
+#: lib/templates.php:1035 lib/templates.php:1067
+#: units/templates/templates_view.php:40 units/templates/templates_view.php:72
+msgid "preview"
+msgstr "forskoða"
+
+#: lib/templates.php:1046 units/templates/templates_view.php:50
+msgid "Personal themes"
+msgstr "Eigin þemu"
+
+#: lib/templates.php:1047 units/templates/templates_view.php:51
+msgid ""
+"These are themes that you have created. You can edit and delete these. These "
+"theme(s) only control actual look and feel - you cannot change any content "
+"here. To change any of your content you need to use the other menu options "
+"such as: edit profile, update weblog etc."
+msgstr ""
+"Dit zijn de thema's die jij hebt aangemaakt. Je kunt ze wijzigen en "
+"verwijderen. Deze thema's bepalen alleen maar hoe de pagina wordt getoond - "
+"je kunt hier geen inhoud veranderen. Om de inhoud te veranderen zul je één "
+"van de andere opties moeten kiezen zoals: wijzig je profiel, weblog "
+"bewerken, etc."
+
+#: lib/templates.php:1069 units/files/templates_preview.php:34
+#: units/templates/templates_view.php:74
+#: units/weblogs/weblogs_posts_view.php:139
+msgid "Edit"
+msgstr "Sýsl"
+
+#: lib/templates.php:1070 units/templates/templates_view.php:75
+msgid "Are you sure you want to permanently remove this template?"
+msgstr "Viltu örugglega eyða þessu sniðmáti?"
+
+#: lib/templates.php:1070 units/files/folder_view.php:75
+#: units/files/templates_preview.php:34 units/templates/templates_view.php:75
+#: units/weblogs/weblogs_posts_view.php:141
+msgid "Delete"
+msgstr "Eyða"
+
+#: lib/templates.php:1081
+msgid "Select new theme"
+msgstr "Velja nýtt þema"
+
+#: lib/templates.php:1127 lib/templates.php:1135
+#: units/weblogs/weblogs_comments_add.php:42
+msgid "Guest"
+msgstr "Gestur"
+
+#: lib/templates.php:1136
+msgid "Log in"
+msgstr "Innskrá"
+
+#: lib/uploadlib.php:109
+#, php-format
+msgid ""
+"Your file upload has failed because there was a problem with one of the "
+"files, %s.<br /> Here is a log of the problems:<br />%s<br />Not recovering."
+msgstr ""
+
+#: lib/uploadlib.php:135
+#, php-format
+msgid "File was renamed from %s to %s because of invalid characters."
+msgstr "Skráarheiti var breytt úr %s yfir í %s vegna ótækra tákna."
+
+#: lib/uploadlib.php:164
+#, php-format
+msgid "Sorry, but that file is too big (limit is %s)"
+msgstr "Því miður, þessi skrá er of stór (hámarkið er %s)"
+
+#: lib/uploadlib.php:217
+msgid "File uploaded successfully"
+msgstr "Það tókst að hlaða skránni inn."
+
+#: lib/uploadlib.php:232 lib/uploadlib.php:342 lib/uploadlib.php:359
+#, fuzzy
+msgid "No file was found - are you sure you selected one to upload?"
+msgstr "Engin skrá fannst - ertu viss um að þú valdir skrá til að hlaða inn?"
+
+#: lib/uploadlib.php:268
+msgid "The old file(s) in your upload area have been deleted"
+msgstr "Eldri skjölum í gagnasafni hefur verið eytt"
+
+#: lib/uploadlib.php:299
+#, php-format
+msgid "File was renamed from %s to %s because there was a filename conflict."
+msgstr ""
+"Skráarheiti var breytt úr %s yfir í %s vegna þess að til staðar var önnur "
+"skrá með sama nafni."
+
+#: lib/uploadlib.php:340 lib/uploadlib.php:363
+#, php-format
+msgid ""
+"An unknown problem occurred while uploading the file '%s' (perhaps it was "
+"too large?)"
+msgstr ""
+"Óþekkt villa kom upp við innlestur á skránni '%s' - ef til vill var hún of "
+"stór"
+
+#: lib/uploadlib.php:347
+#, fuzzy
+msgid "Uploaded file exceeded the maximum size limit set by the server"
+msgstr "Stærð skrár er umfram það sem vefþjónn heimilar."
+
+#: lib/uploadlib.php:351
+msgid "Uploaded file exceeded the maximum size limit set by the form"
+msgstr ""
+
+#: lib/uploadlib.php:355
+msgid "File was only partially uploaded"
+msgstr "Einungis tókst að hlaða inn hluta af skránni"
+
+#: lib/uploadlib.php:377
+#, php-format
+msgid "Upload log for file %u"
+msgstr ""
+
+#: lib/uploadlib.php:470
+msgid "Title:"
+msgstr "Titill:"
+
+#: lib/uploadlib.php:509
+msgid "The file has been moved to a quarantine directory."
+msgstr "Skráin var færð til einangrunar í þar til gert skráarsafn."
+
+#: lib/uploadlib.php:512
+#, php-format
+msgid ""
+"The file has been moved to your specified quarantine directory, the new "
+"location is %s"
+msgstr ""
+
+#: lib/uploadlib.php:517 lib/uploadlib.php:526 lib/uploadlib.php:535
+#: lib/uploadlib.php:540
+msgid "The file has been deleted"
+msgstr "Skránni hefur verið eytt"
+
+#: lib/uploadlib.php:520 lib/uploadlib.php:529
+#, php-format
+msgid ""
+"Could not move the file into your specified quarantine directory, %s. You "
+"need to fix this as files are being deleted if they're found to be infected."
+msgstr ""
+
+#: lib/uploadlib.php:543
+msgid "The file could not be deleted"
+msgstr "Ekki var hægt að eyða skránni"
+
+#: lib/uploadlib.php:559
+msgid ""
+"This file that has been uploaded was found to contain a virus and has been "
+"moved or delted and the user notified."
+msgstr ""
+
+#: lib/uploadlib.php:595
+#, fuzzy
+msgid ""
+"Elgg is configured to run clam on file upload, but the path supplied to Clam "
+"AV, %s,  is invalid."
+msgstr ""
+"Elgg hefur verið þannig stillt að það á að keyra clam vírusvörnina í hvert "
+"sinn sem skrá er hlaðið í kerfið, en slóðin að Clam AV, %s er ótæk."
+
+#: lib/uploadlib.php:597
+msgid ""
+"In addition, Elgg is configured so that if clam fails to run, files are "
+"treated like viruses.  This essentially means that no student can upload a "
+"file successfully until you fix this."
+msgstr ""
+
+#: lib/uploadlib.php:603 lib/uploadlib.php:642
+msgid ""
+"Your administrator has enabled virus checking for file uploads but has "
+"misconfigured something.<br />Your file upload was NOT successful. Your "
+"administrator has been emailed to notify them so they can fix it.<br />Maybe "
+"try uploading this file later."
+msgstr ""
+
+#: lib/uploadlib.php:621
+#, php-format
+msgid ""
+"Attention administrator! Clam AV has found a virus in a file uploaded by %s. "
+"Here is the output of clamscan:"
+msgstr ""
+
+#: lib/uploadlib.php:627
+#, php-format
+msgid ""
+"The file you have uploaded, %s, has been scanned by a virus checker and "
+"found to be infected! Your file upload was NOT successful."
+msgstr ""
+
+#: lib/uploadlib.php:633
+#, php-format
+msgid ""
+"Clam AV has failed to run.  The return error message was %s. Here is the "
+"output from Clam:"
+msgstr ""
+
+#: lib/uploadlib.php:658
+#, php-format
+msgid "%s :: Clam AV notification"
+msgstr "%s :: Tilkynning frá Clam vírusvörninni"
+
+#: lib/uploadlib.php:702
+msgid "There was an unknown error with clam."
+msgstr ""
+
+#: lib/userlib.php:24 login/index.php:34
+msgid "You have been logged on."
+msgstr "Þú ert innskráður."
+
+#: lib/userlib.php:25 login/index.php:43
+#, fuzzy
+msgid ""
+"Unrecognised username or password. The system could not log you on, or you "
+"may not have activated your account."
+msgstr ""
+"Óþekkt notendanafn eða aðgangsorð. Innskráning mistókst eða hugsanlega hefur "
+"þú ekki virkjað aðganginn þinn."
+
+#: lib/userlib.php:26 login/index.php:46
+msgid ""
+"Either the username or password were not specified. The system could not log "
+"you on."
+msgstr "Notendanafn eða lykilorð vantar. Innskráning mistókst."
+
+#: lib/userlib.php:160
+msgid "You cannot reply to this message by email."
+msgstr "Ekki er hægt að svara þessum skilaboðum með tölvupósti."
+
+#: lib/userlib.php:161
+msgid "Failed to send email. An unknown error occurred."
+msgstr "Gat ekki sent tölvupóst. Óþekkt villa."
+
+#: lib/userlib.php:175
+msgid "Failed to send message. An unknown error occurred."
+msgstr "Gat ekki sent skilaboð. Óþekkt villa."
+
+#: lib/userlib.php:207
+msgid "System"
+msgstr "Kerfi"
+
+#: lms/join.php:48 units/invite/invite_actions.php:97
+msgid ""
+"Error! Your username must contain letters and numbers only, cannot be blank, "
+"and must be between 3 and 12 characters in length."
+msgstr ""
+"Villa! Notendanafnið þitt getur einungis innihaldið bókstafi og tölur og "
+"verður að vera minnst 3 stafir og mest 12 stafir að lengd."
+
+#: lms/join.php:56 units/invite/invite_actions.php:93
+msgid ""
+"Error! Invalid password. Your passwords must match and be between 6 and 16 "
+"characters in length."
+msgstr ""
+"Villa! Ógilt lykilorð. Lykilorðin verða að vera þau sömu og samanstanda af 6 "
+"til 16 bókstöfum."
+
+#: lms/join.php:60
+msgid "Error! You must enter your fullname"
+msgstr "Villa! Þú verður að skrá fullt nafn."
+
+#: lms/join.php:71
+#, fuzzy
+msgid "Error! Your username and password does not match our record."
+msgstr "Villa! Notandanafn og lykilorð ekki í samræmi við okkar upplýsingar."
+
+#: lms/join.php:76
+msgid "Fatal Error! Unknown action requested."
+msgstr ""
+
+#: lms/join.php:105
+msgid "Your account creation was successful!"
+msgstr ""
+
+#: lms/join.php:117
+msgid "Join up"
+msgstr "Vertu með"
+
+#: lms/join.php:129
+msgid "Login"
+msgstr "Innskrá"
+
+#: lms/rss.php:28 profile/rss2.php:32
+#: units/profile/function_rss_publish.php:43
+#, php-format
+msgid "Activity for %s, hosted on %s."
+msgstr ""
+
+#: lms/rss.php:33 units/profile/function_rss_publish.php:35
+msgid "Activity"
+msgstr "Viðfang"
+
+#: lms/rss.php:43
+#, php-format
+msgid "%s posted on weblog post:"
+msgstr ""
+
+#: lms/rss.php:65
+#, php-format
+msgid "%s posted on weblog post '%s'"
+msgstr ""
+
+#: lms/rss.php:83
+msgid "No activity"
+msgstr "Engin virkni"
+
+#: login/index.php:21
+msgid "You are already logged on."
+msgstr "Þú ert þegar innskráð/ur"
+
+#: login/index.php:36
+#, fuzzy
+msgid ""
+"The password for this account is extremely insecure and represents a major "
+"security risk. You should change it immediately."
+msgstr ""
+"Lykilorð þessa skráningarreiknings er afar ótryggt og setur öryggi vefsins í "
+"hættu. Þú ættir að breyta því sem fyrst."
+
+#: login/index.php:49
+msgid "Please log in"
+msgstr "Vinsamlegast skráðu þig inn"
+
+#: mod/adash/add.php:25
+msgid "Add dashboard items"
+msgstr ""
+
+#: mod/adash/add.php:45
+msgid "Widget added."
+msgstr ""
+
+#: mod/adash/add.php:59
+msgid "Select a widget type from the list below:"
+msgstr ""
+
+#: mod/adash/add.php:69
+msgid "Add"
+msgstr "Nýtt"
+
+#: mod/adash/add.php:78
+msgid "You do not have permission to add widgets to this dashboard."
+msgstr ""
+
+#: mod/adash/delete.php:44
+msgid "Widget deleted."
+msgstr ""
+
+#: mod/adash/edit.php:34 mod/adash/lib.php:152
+msgid "Edit widget"
+msgstr ""
+
+#: mod/adash/edit.php:64
+msgid "Widget edited."
+msgstr ""
+
+#: mod/adash/edit.php:81
+msgid "You do not have permission to edit this widget."
+msgstr ""
+
+#: mod/adash/index.php:38
+msgid "Dashboard"
+msgstr "Mælaborð"
+
+#: mod/adash/index.php:57
+msgid ""
+"This dashboard is currently empty. Why not add some widgets by clicking 'add "
+"new item' above?"
+msgstr ""
+
+#: mod/adash/index.php:59
+msgid "This dashboard is currently empty."
+msgstr ""
+
+#: mod/adash/lib.php:19 mod/adash/lib.php:22
+msgid "Your Dashboard"
+msgstr "Mælaborðið þitt"
+
+#: mod/adash/lib.php:27
+msgid "Add new item"
+msgstr ""
+
+#: mod/adash/lib.php:46 mod/adash/lib.php:264
+msgid "Text box"
+msgstr "Textareitur"
+
+#: mod/adash/lib.php:47
+#, fuzzy
+msgid "Displays the text of your choice."
+msgstr "Birtir texta að eigin vali."
+
+#: mod/adash/lib.php:153
+msgid "Delete widget"
+msgstr ""
+
+#: mod/adash/lib.php:154
+msgid "Move up"
+msgstr "Færa upp"
+
+#: mod/adash/lib.php:155
+msgid "Move down"
+msgstr "Færa niður"
+
+#: mod/adash/lib.php:226
+#, fuzzy
+msgid "Access for this widget:"
+msgstr "Aðgengi að þessu apparati:"
+
+#: mod/adash/lib.php:230
+#, fuzzy
+msgid "Save widget"
+msgstr "Vista apparat"
+
+#: mod/adash/lib.php:248
+msgid ""
+"This text box is undefined. If you are the widget owner, click 'edit widget' "
+"to add your own content."
+msgstr ""
+
+#: mod/adash/lib.php:265
+msgid ""
+"This widget displays the text content of your choice. All you need to do is "
+"enter the title and body below:"
+msgstr ""
+
+#: mod/adash/move.php:50
+#, fuzzy
+msgid "Widget moved."
+msgstr "Apparat fært."
+
+#: mod/blog/lib.php:17 mod/blog/lib.php:21
+msgid "Your Blog"
+msgstr "Bloggið þitt"
+
+#: mod/blog/lib.php:39
+msgid "Post a new entry"
+msgstr "Ný bloggfærsla"
+
+#: mod/blog/lib.php:44
+msgid "View blog"
+msgstr "Skoða blogg"
+
+#: mod/blog/lib.php:48
+msgid "Archive"
+msgstr "Skjalasafn"
+
+#: mod/blog/lib.php:52
+msgid "Friends' blogs"
+msgstr "Blogg vina"
+
+#: mod/blog/lib.php:58
+msgid "View all posts"
+msgstr "Skoða allar færslur"
+
+#: mod/blog/lib.php:62 mod/file/lib.php:39 mod/friend/lib.php:57
+#: mod/profile/lib.php:35
+msgid "Page help"
+msgstr "Hjálparsíða"
+
+#: mod/blog/lib.php:75
+msgid "Blog widget"
+msgstr "Blogg apparat"
+
+#: mod/blog/lib.php:76
+msgid "Displays the latest blog posts from a blog of your choice."
+msgstr "Birta síðustu bloggfærslur úr völdu bloggi."
+
+#: mod/blog/lib.php:138
+msgid "Blog dashboard widget"
+msgstr ""
+
+#: mod/blog/lib.php:139
+msgid ""
+"This widget displays the last couple of blog posts from an individual user. "
+"To begin, select the user from your connections below:"
+msgstr ""
+
+#: mod/blog/lib.php:154
+msgid "Then enter the number of blog posts you'd like to display:"
+msgstr "Veldu svo fjölda bloggfærslna sem þú vilt birta:"
+
+#: mod/community/lib.php:19 mod/profile/lib.php:27
+msgid "Edit this profile"
+msgstr "Breyta þessari lýsingu"
+
+#: mod/community/lib.php:25
+msgid "Community site picture"
+msgstr "Táknmynd fyrir samfélagsvef"
+
+#: mod/community/lib.php:29
+msgid "Edit community details"
+msgstr ""
+
+#: mod/community/lib.php:37
+msgid "View membership requests"
+msgstr ""
+
+#: mod/file/lib.php:14 mod/file/lib.php:17
+#: units/files/files_user_info_menu.php:11
+msgid "Your Files"
+msgstr "Skrárnar þínar"
+
+#: mod/file/lib.php:28
+msgid "Add a file or a folder"
+msgstr "Ný skrá eða skráarsafn"
+
+#: mod/file/lib.php:34
+msgid "RSS feed for files"
+msgstr "RSS straumur fyrir skrár"
+
+#: mod/friend/lib.php:15 mod/friend/lib.php:18
+msgid "Your Network"
+msgstr "Netið þitt"
+
+#: mod/friend/lib.php:30 units/friends/profile_friends.php:18
+msgid "Friends"
+msgstr "Vinir"
+
+#: mod/friend/lib.php:34
+msgid "Friend of"
+msgstr "Vinir"
+
+#: mod/friend/lib.php:42
+msgid "FOAF"
+msgstr "FOAF"
+
+#: mod/friend/lib.php:47
+msgid "Access controls"
+msgstr "Aðgangsstýringar"
+
+#: mod/friend/lib.php:52
+msgid "Invite a friend"
+msgstr "Bjóða vin"
+
+#: mod/newsclient/lib.php:14 mod/newsclient/lib.php:17
+msgid "Your Resources"
+msgstr "Aðföngin þín"
+
+#: mod/newsclient/lib.php:32
+#, fuzzy
+msgid "Publish to blog"
+msgstr "Birta í bloggi"
+
+#: mod/newsclient/lib.php:36 units/magpie/menu_sub.php:22
+msgid "View aggregator"
+msgstr ""
+
+#: mod/newsclient/lib.php:40
+msgid "Popular Feeds"
+msgstr "Vinsælir straumar"
+
+#: mod/newsclient/lib.php:85
+msgid "Feed widget"
+msgstr ""
+
+#: mod/newsclient/lib.php:86
+msgid "Displays the latest entries from an external feed of your choice."
+msgstr ""
+
+#: mod/newsclient/lib.php:113
+msgid "This feed is currently empty."
+msgstr ""
+
+#: mod/newsclient/lib.php:120
+msgid "This feed widget is undefined."
+msgstr ""
+
+#: mod/newsclient/lib.php:138
+msgid "Feeds dashboard widget"
+msgstr ""
+
+#: mod/newsclient/lib.php:139
+msgid ""
+"This widget displays the last couple of entries from an external feed you "
+"have subscribed to. To begin, select the feed from your subscriptions below:"
+msgstr ""
+
+#: mod/newsclient/lib.php:158
+msgid "Then enter the number of feed entries you'd like to display:"
+msgstr ""
+
+#: mod/newsclient/lib.php:164
+#, php-format
+msgid ""
+"You can't select a feed for this widget because you don't have any feed "
+"subscriptions. Click on <a href=\"%s\">Your</a> Resources to subscribe to a "
+"feed."
+msgstr ""
+
+#: mod/profile/lib.php:16 mod/profile/lib.php:19
+msgid "Your Profile"
+msgstr "Lýsingin þín"
+
+#: mod/profile/lib.php:31
+msgid "Change site picture"
+msgstr ""
+
+#: mod/profile/lib.php:39
+msgid "People"
+msgstr "Fólk"
+
+#: mod/profile/lib.php:51 mod/profile/lib.php:80 mod/profile/lib.php:120
+msgid "Profile widget"
+msgstr ""
+
+#: mod/profile/lib.php:52
+msgid "Displays the contents of a profile field."
+msgstr ""
+
+#: mod/profile/lib.php:81
+msgid "This profile box is undefined."
+msgstr ""
+
+#: mod/profile/lib.php:121
+msgid ""
+"Select a profile field below; the widget will then display the profile "
+"content from this field."
+msgstr ""
+
+#: profile/edit.php:35
+msgid "Edit profile"
+msgstr "Breyta lýsingu"
+
+#: profile/edit.php:88 units/profile/function_actions.php:37
+msgid "Profile updated."
+msgstr "Lýsing uppfærð."
+
+#: profile/profile.class.php:48 units/profile/edit_link.php:8
+msgid "Click here to edit this profile."
+msgstr "Smelltu hér til að breyta þessari lýsingu"
+
+#: profile/profile.class.php:86 units/profile/content_edit.php:2
+msgid ""
+"    This screen allows you to edit your profile. Blank fields will not show "
+"up on your profile screen in any view; you can change the access level for "
+"each piece of information in order to prevent it from falling into the wrong "
+"hands. For example, we strongly recommend you keep your address to yourself "
+"or a few trusted parties."
+msgstr ""
+
+#: profile/profile.class.php:95
+msgid "You can import some profile data by uploading a FOAF file here:"
+msgstr ""
+
+#: profile/profile.class.php:98
+msgid "Upload a FOAF file:"
+msgstr ""
+
+#: profile/profile.class.php:100 units/files/folder_edit.php:259
+msgid "Upload"
+msgstr "Senda inn"
+
+#: profile/profile.class.php:185
+#: units/profile/function_editfield_defaults.php:37
+msgid "Who am I?"
+msgstr "Hver er ég?"
+
+#: profile/profile.class.php:185
+#: units/profile/function_editfield_defaults.php:37
+msgid "A short introduction for you."
+msgstr "Een korte introductie van jezelf."
+
+#: profile/profile.class.php:186
+msgid "Introduction"
+msgstr "Kynning"
+
+#: profile/profile.class.php:186
+msgid "A short introduction to this community."
+msgstr "Stutt kynning á þessu samfélagi"
+
+#: profile/profile.class.php:189
+#: units/profile/function_editfield_defaults.php:40
+msgid "Brief description"
+msgstr "Stutt lýsing"
+
+#: profile/profile.class.php:189
+#: units/profile/function_editfield_defaults.php:40
+msgid "For use in your sidebar profile."
+msgstr "Om in het jouw profiel in de zijbalk op te nemen"
+
+#: profile/profile.class.php:192
+#: units/profile/function_editfield_defaults.php:43
+msgid "Street address"
+msgstr "Heimilisfang"
+
+#: profile/profile.class.php:195
+#: units/profile/function_editfield_defaults.php:46
+msgid "Town"
+msgstr "Bær"
+
+#: profile/profile.class.php:198
+#: units/profile/function_editfield_defaults.php:49
+msgid "State / Region"
+msgstr ""
+
+#: profile/profile.class.php:201
+#: units/profile/function_editfield_defaults.php:52
+msgid "Postal code"
+msgstr "Póstnúmer"
+
+#: profile/profile.class.php:204
+#: units/profile/function_editfield_defaults.php:55
+msgid "Country"
+msgstr "Land"
+
+#: profile/profile.class.php:207 units/admin/admin_main.php:83
+#: units/admin/admin_users.php:30 units/admin/admin_users_add.php:23
+#: units/profile/function_editfield_defaults.php:58
+msgid "Email address"
+msgstr "Netfang"
+
+#: profile/profile.class.php:209
+#: units/profile/function_editfield_defaults.php:60
+msgid "Work telephone"
+msgstr "Vinnusími"
+
+#: profile/profile.class.php:212
+#: units/profile/function_editfield_defaults.php:63
+msgid "Home telephone"
+msgstr "Heimasími"
+
+#: profile/profile.class.php:215
+#: units/profile/function_editfield_defaults.php:66
+msgid "Mobile telephone"
+msgstr "GSM sími"
+
+#: profile/profile.class.php:218
+#: units/profile/function_editfield_defaults.php:69
+msgid "Official website address"
+msgstr "Vefur"
+
+#: profile/profile.class.php:218
+#: units/profile/function_editfield_defaults.php:69
+#, fuzzy
+msgid "The URL to your official website, if you have one."
+msgstr "Slóðin að opinberum vef þínum, ef þú heldur úti vef."
+
+#: profile/profile.class.php:221
+#: units/profile/function_editfield_defaults.php:72
+msgid "Personal website address"
+msgstr "Slóð að persónulegum vef."
+
+#: profile/profile.class.php:221
+#: units/profile/function_editfield_defaults.php:72
+msgid "The URL to your personal website, if you have one."
+msgstr "De URL van je persoonlijke website, als je er één hebt."
+
+#: profile/profile.class.php:224
+#: units/profile/function_editfield_defaults.php:75
+msgid "ICQ number"
+msgstr "ICQ tala"
+
+#: profile/profile.class.php:227
+#: units/profile/function_editfield_defaults.php:78
+msgid "MSN chat"
+msgstr "MSN"
+
+#: profile/profile.class.php:230
+#: units/profile/function_editfield_defaults.php:81
+msgid "AIM screenname"
+msgstr "AIM notandanafn"
+
+#: profile/profile.class.php:233
+#: units/profile/function_editfield_defaults.php:84
+msgid "Skype username"
+msgstr "Skype notandanafn"
+
+#: profile/profile.class.php:235
+#: units/profile/function_editfield_defaults.php:86
+msgid "Jabber username"
+msgstr "Jabber notandanafn"
+
+#: profile/profile.class.php:238
+#: units/profile/function_editfield_defaults.php:89
+msgid "Interests"
+msgstr "Áhugamál"
+
+#: profile/profile.class.php:238 profile/profile.class.php:242
+#: profile/profile.class.php:243 profile/profile.class.php:252
+#: profile/profile.class.php:258
+#: units/profile/function_editfield_defaults.php:89
+#: units/profile/function_editfield_defaults.php:93
+#: units/profile/function_editfield_defaults.php:94
+#: units/profile/function_editfield_defaults.php:103
+#: units/profile/function_editfield_defaults.php:109
+msgid "Separated with commas."
+msgstr "Aðskilið með kommum."
+
+#: profile/profile.class.php:242
+#: units/profile/function_editfield_defaults.php:93
+msgid "Likes"
+msgstr "Hefur áhuga á"
+
+#: profile/profile.class.php:243
+#: units/profile/function_editfield_defaults.php:94
+msgid "Dislikes"
+msgstr "Líkar ekki"
+
+#: profile/profile.class.php:244
+#: units/profile/function_editfield_defaults.php:95
+msgid "Occupation"
+msgstr "Starfsvettvangur"
+
+#: profile/profile.class.php:245
+#: units/profile/function_editfield_defaults.php:96
+msgid "Industry"
+msgstr "Sector"
+
+#: profile/profile.class.php:247
+#: units/profile/function_editfield_defaults.php:98
+msgid "Company / Institution"
+msgstr "Fyrirtæki / stofnun"
+
+#: profile/profile.class.php:250
+#: units/profile/function_editfield_defaults.php:101
+msgid "Job Title"
+msgstr "Starfstitill"
+
+#: profile/profile.class.php:251
+#: units/profile/function_editfield_defaults.php:102
+msgid "Job Description"
+msgstr "Starfslýsing"
+
+#: profile/profile.class.php:252
+#: units/profile/function_editfield_defaults.php:103
+msgid "I would like to ..."
+msgstr "Ég myndi vilja ..."
+
+#: profile/profile.class.php:253
+#: units/profile/function_editfield_defaults.php:104
+msgid "Career Goals"
+msgstr "Markmiðssetningar"
+
+#: profile/profile.class.php:253
+#: units/profile/function_editfield_defaults.php:104
+msgid ""
+"Freeform: let colleagues and potential employers know what you'd like to get "
+"out of your career."
+msgstr ""
+"Vrij formaat: laat collega's en potentiële werkgevers weten wat jouw "
+"carrière plannen zijn."
+
+#: profile/profile.class.php:254
+#: units/profile/function_editfield_defaults.php:105
+msgid "Level of Education"
+msgstr "Menntun"
+
+#: profile/profile.class.php:255
+#: units/profile/function_editfield_defaults.php:106
+msgid "High School"
+msgstr "Framhaldsskóli"
+
+#: profile/profile.class.php:256
+#: units/profile/function_editfield_defaults.php:107
+msgid "University / College"
+msgstr "Háskóli"
+
+#: profile/profile.class.php:257
+#: units/profile/function_editfield_defaults.php:108
+msgid "Degree"
+msgstr "Gráða"
+
+#: profile/profile.class.php:258
+#: units/profile/function_editfield_defaults.php:109
+msgid "Main Skills"
+msgstr "Styrkleikar"
+
+#: profile/profile.class.php:317
+#: units/profile/function_editfield_display.php:40
+msgid "Access Restriction:"
+msgstr "Aðgangstakmarkanir"
+
+#: profile/profile.class.php:390 units/profile/function_search.php:35
+msgid "Profiles where"
+msgstr "Profielen waarvan"
+
+#: profile/profile.class.php:551 units/profile/function_upload_foaf.php:8
+msgid ""
+"There was an error uploading the file. Possibly the file was too large, or "
+"the upload was interrupted."
+msgstr ""
+"Villa kom fram þegar skráin var sótt. Hugsanlega er skráin of stór eða "
+"truflun varð á vinnslunni."
+
+#: profile/profile.class.php:631 units/profile/function_upload_foaf.php:88
+msgid ""
+"Data from your FOAF file has been preloaded. You must click Save at the "
+"bottom of the page for the changes to take effect."
+msgstr ""
+
+#: profile/profile.class.php:635 units/profile/function_upload_foaf.php:92
+msgid "Error: supplied file did not appear to be a FOAF file."
+msgstr "Villa: skrá virðist ekki vera FOAF skrá"
+
+#: profile/profile.class.php:947 units/profile/profile_user_info.php:58
+#: units/weblogs/weblogs_user_info.php:7
+msgid "Profile Owner"
+msgstr "Eigandi lýsingar"
+
+#: profile/profile.class.php:949 units/profile/profile_user_info.php:60
+#: units/weblogs/weblogs_user_info.php:9
+msgid "You"
+msgstr "Þú"
+
+#: profile/rss2.php:25
+#, php-format
+msgid "Activity tagged with %s"
+msgstr ""
+
+#: profile/search.php:10
+msgid "Search Profiles"
+msgstr ""
+
+#: search/all.php:13
+msgid "Searching Everything"
+msgstr "Leita í öllu"
+
+#: search/index.php:15 units/search/search_user_info_menu.php:7
+msgid "Search"
+msgstr "Leita"
+
+#: search/index.php:38
+msgid "Search for results from:"
+msgstr ""
+
+#: search/index.php:43
+msgid "All"
+msgstr "Allt"
+
+#: search/index.php:78
+msgid "Filter by content type:"
+msgstr ""
+
+#: search/index.php:82
+msgid "Everything"
+msgstr "Allt"
+
+#: search/index.php:89
+msgid "Users and communities"
+msgstr "Notendur og samfélög"
+
+#: search/tags.php:12
+msgid "Some Tags"
+msgstr ""
+
+#: units/activity/recent.php:3
+msgid ""
+"This screen displays recent activity on your account by other users over a "
+"given time range."
+msgstr ""
+"Dit scherm geeft activiteit op jouw account door andere gebruikers weer voor "
+"een bepaalde periode."
+
+#: units/admin/admin_actions.php:44
+msgid ""
+"Error! The new username must contain letters and numbers only, cannot be "
+"blank, and must be between 3 and 12 characters in length."
+msgstr ""
+"Villa! Nýja notendanafnið getur einungis innihaldið bókstafi og tölur og "
+"verður að vera minnst 3 stafir og mest 12 stafir að lengd."
+
+#: units/admin/admin_actions.php:50
+#, php-format
+msgid "Username was changed to %s."
+msgstr "Notendanafninu var breytt í %s"
+
+#: units/admin/admin_actions.php:58
+#, php-format
+msgid "File quota was changed to %d."
+msgstr "Skráarkvóta hefur verið breytt í %d"
+
+#: units/admin/admin_actions.php:65
+#, php-format
+msgid "Icon quota was changed to %d."
+msgstr "Schijfruimte voor pictogrammen is gewijzigd naar %d."
+
+#: units/admin/admin_actions.php:80
+#, php-format
+msgid "User flag '%s' set to '%s'"
+msgstr "Gebruikersbezwaar '%s' gewijzigd in '%s'"
+
+#: units/admin/admin_actions.php:94
+msgid "Spam list updated."
+msgstr ""
+
+#: units/admin/admin_actions.php:123
+#, php-format
+msgid ""
+"User addition %d failed: at least one field was blank. Username: %s, name: "
+"%s, email: %s"
+msgstr ""
+"Nýskráning notandans %d mistókst: Einn af eftirfarandi reitum var "
+"óútfylltur.Notendanafn: %s, nafn: %s, tölvupóstfang: %s"
+
+#: units/admin/admin_actions.php:128
+#, php-format
+msgid ""
+"New username %d (%s) was invalid; usernames must contain letters and numbers "
+"only, cannot be blank, and must be between 3 and 12 characters in length."
+msgstr ""
+"De nieuwe gebruikersnaam %d (%s) is ongeldig: gebruikersnamen mogen alleen "
+"maar letters en cijfers bevatten, mogen niet leeg zijn en moeten tussen de 3 "
+"en 12 karakters lang zijn."
+
+#: units/admin/admin_actions.php:134
+#, php-format
+msgid "User addition %d failed: username %s is already in use."
+msgstr ""
+"Nýskráning notandans %d mistókst: notendanafnið %s er þegar til staðar."
+
+#: units/admin/admin_actions.php:138
+#, php-format
+msgid "User addition %d failed: email address %s appears to be invalid."
+msgstr "Nýskráning notandans %d mistókst:tölvupóstfangið %s virðist ógilt."
+
+#: units/admin/admin_actions.php:181
+#, php-format
+msgid "Your new %s account"
+msgstr "Jouw nieuwe %s account"
+
+#: units/admin/admin_actions.php:182
+#, php-format
+msgid ""
+"You have been added to %s!\n"
+"\n"
+"For your records, your %s username and password are:\n"
+"\n"
+"\tUsername: %s\n"
+"\t"
+msgstr ""
+
+#: units/admin/admin_actions.php:183
+#, php-format
+msgid ""
+"Password: %s\n"
+"\n"
+"You can log in at any time by visiting %s and entering these details into "
+"the login form.\n"
+"\n"
+msgstr ""
+
+#: units/admin/admin_actions.php:184 units/invite/invite_actions.php:143
+#, php-format
+msgid ""
+"We hope you enjoy using the system.\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s Team"
+msgstr ""
+
+#: units/admin/admin_actions.php:185
+#, php-format
+msgid "User %s was created."
+msgstr "Notandinn %s hefur verið stofnaður."
+
+#: units/admin/admin_contentflags.php:7
+msgid ""
+"The following pages have been flagged as having obscene or inappropriate "
+"content. They are ordered by number of complaints."
+msgstr ""
+"Notendur hafa gefið til kynna að eftirfarandi vefsíður innihaldi óviðeigandi "
+"efni. Vefsíðunum er raðað eftir fjölda ábendinga."
+
+#: units/admin/admin_contentflags.php:8
+msgid ""
+"To view the pages in question, click the following links. To remove the "
+"flags, for example if the flag is a false positive or if you've deleted the "
+"offending content, check the appropriate box and click the 'delete' button "
+"below."
+msgstr ""
+"Klik op de volgende links om de betreffende pagina's op te roepen. Selecteer "
+"het bericht  en klik op 'Verwijderen' om markeringen te verwijderen, "
+"bijvoorbeeld in het geval van een valse melding,"
+
+#: units/admin/admin_contentflags.php:18
+msgid "Page URL"
+msgstr "Vefslóð"
+
+#: units/admin/admin_contentflags.php:19
+msgid "Number of objections"
+msgstr "Aantal bezwaren"
+
+#: units/admin/admin_contentflags.php:38
+msgid "Remove flag(s)"
+msgstr "fjarlægja flagg/flögg"
+
+#: units/admin/admin_contentflags.php:44
+msgid "No content flags were found at present."
+msgstr "Geen markeringen van inhoud gevonden."
+
+#: units/admin/admin_main.php:9
+msgid "Site statistics"
+msgstr "Tölfræði vefsins"
+
+#: units/admin/admin_main.php:17
+#, php-format
+msgid "Accounts of type '%s'"
+msgstr "Accounts van type '%s'"
+
+#: units/admin/admin_main.php:33
+msgid "Weblog statistics"
+msgstr "Tölfræði bloggs"
+
+#: units/admin/admin_main.php:34 units/admin/admin_main.php:48
+msgid "All-time:"
+msgstr "Onbepaalde periode"
+
+#: units/admin/admin_main.php:35 units/admin/admin_main.php:37
+#, php-format
+msgid "%d weblog posts, %d comments"
+msgstr "%d bloggfærslur, %d athugsemd(ir)"
+
+#: units/admin/admin_main.php:36 units/admin/admin_main.php:49
+msgid "Last 7 days:"
+msgstr "Síðustu 7 dagar:"
+
+#: units/admin/admin_main.php:47
+msgid "File statistics"
+msgstr "Tölfræði skráar"
+
+#: units/admin/admin_main.php:48 units/admin/admin_main.php:49
+#, php-format
+msgid "%d files (%d bytes)"
+msgstr "%d skrár (%d bæti)"
+
+#: units/admin/admin_main.php:67
+msgid "Database statistics"
+msgstr "Tölfræði yfir gagnagrunn"
+
+#: units/admin/admin_main.php:68
+msgid "Total database size:"
+msgstr "Heildarstærð gagnagrunns:"
+
+#: units/admin/admin_main.php:68
+#, php-format
+msgid "%d bytes"
+msgstr "%d bæti"
+
+#: units/admin/admin_main.php:75
+msgid "Users online now"
+msgstr "Tengdir notendur"
+
+#: units/admin/admin_main.php:76
+msgid ""
+"The following users have an active session and have performed an action "
+"within the past 10 minutes."
+msgstr ""
+"Eftirfarandi notendur eru virkir í kerfinu og hafa framkvæmt einhverja "
+"aðgerð síðustu 10 mínútur."
+
+#: units/admin/admin_main.php:82 units/admin/admin_users.php:29
+#: units/admin/admin_users_add.php:22
+msgid "Full name"
+msgstr "Fullt nafn"
+
+#: units/admin/admin_main.php:93
+#, php-format
+msgid "%d users in total."
+msgstr "%d notendur alls."
+
+#: units/admin/admin_spam.php:7
+msgid ""
+"Add regular expressions below, one per line, to block spam. For example, "
+"'foo' will block all comments containing the word foo, (foo|bar) will block "
+"comments containing the word foo or bar."
+msgstr ""
+
+#: units/admin/admin_spam.php:8
+#, fuzzy
+msgid "Blank lines and lines starting with # will be ignored."
+msgstr "Auðar línur og línur sem hefjast á # verða hunsaðar."
+
+#: units/admin/admin_spam.php:20
+msgid "Regular expressions"
+msgstr "Reglubundnar segðir"
+
+#: units/admin/admin_userdetails.php:19
+msgid "Change username:"
+msgstr "Breyta notendanafni:"
+
+#: units/admin/admin_userdetails.php:22
+msgid "New username: "
+msgstr "Nýtt notendanafn "
+
+#: units/admin/admin_userdetails.php:29
+msgid "Change file quota (in bytes):"
+msgstr "Breyta skráarkvóta (í bætum):"
+
+#: units/admin/admin_userdetails.php:32
+msgid "New file quota: "
+msgstr "Nýr skráarkvóti: "
+
+#: units/admin/admin_userdetails.php:36
+msgid "Change icon quota:"
+msgstr "Breyta teiknikvóta:"
+
+#: units/admin/admin_userdetails.php:39
+msgid "New icon quota: "
+msgstr "Nieuwe schijfruimte voor pictogrammen: "
+
+#: units/admin/admin_userdetails.php:45
+msgid "User flags:"
+msgstr "Flögg notanda:"
+
+#: units/admin/admin_userdetails.php:56
+msgid "Site administrator: "
+msgstr "Kerfisstjóri: "
+
+#: units/admin/admin_userdetails.php:72
+msgid "Banned: "
+msgstr "Bannað: "
+
+#: units/admin/admin_users.php:10
+msgid ""
+"The following is a list of all the users in the system, 50 users at a time. "
+"You can click each one to edit their user details as if you were logged in "
+"as them, as well as set user flags (including 'ban user' and 'set user as "
+"administrator')."
+msgstr ""
+"Eftirfarandi er listi yfir alla notendur í kerfinu, 50 í einu. Hægt er að "
+"smella á hvern einstaka notanda og breyta upplýsingum um viðkomandi á sama "
+"hátt og ef þú værir innskráður sem hann."
+
+#: units/admin/admin_users.php:11
+msgid ""
+"If you know the username of the user you would like to edit, you can also "
+"enter it below."
+msgstr ""
+"Indien je de gebruikersnaam kent van de gebruiker die je wilt, vul deze dan "
+"hieronder in."
+
+#: units/admin/admin_users.php:16
+msgid "Enter username"
+msgstr "Skráðu notendanafn"
+
+#: units/admin/admin_users.php:18
+msgid "Edit user"
+msgstr "Breyta notanda"
+
+#: units/admin/admin_users.php:37
+msgid "Next"
+msgstr "Næsta"
+
+#: units/admin/admin_users.php:46
+msgid "Previous"
+msgstr "Fyrra"
+
+#: units/admin/admin_users_add.php:18
+msgid ""
+"You can create up to 12 users below; passwords will be autogenerated and "
+"emailed to the account owners. You must include all fields, but you may "
+"leave rows blank."
+msgstr ""
+"Þú getur stofnað allt að 12 notendur hér að neðan: Lykilorð verða sjálfkrafa "
+"búin til og send notendum í tölvupósti. Allir reitir verða að vera "
+"útfylltir, en einstaka línum má sleppa."
+
+#: units/admin/admin_users_panel.php:12
+#: units/communities/communities_membership_requests.php:32
+#: units/friends/user_friendship_requests.php:33
+msgid "Profile"
+msgstr "Lýsing"
+
+#: units/admin/display_content_flag_form.php:23
+msgid "Flag content"
+msgstr "Flagga innihaldi"
+
+#: units/admin/display_content_flag_form.php:24
+msgid ""
+"To mark this content as obscene or inappropriate, click the 'Flag' button "
+"and an administrator will view it in due course."
+msgstr ""
+"Klik op 'Markeren', indien de inhoud obsceen of ongepast is. De beheerder "
+"zal de pagina vervolgens controleren."
+
+#: units/admin/display_content_flag_form.php:25
+msgid "Flag"
+msgstr "Flagg"
+
+#: units/communities/communities_access_levels.php:10
+#: units/communities/communities_access_levels.php:19
+msgid "Community"
+msgstr "Samfélag"
+
+#: units/communities/communities_actions.php:20
+msgid ""
+"Error! The community username must contain letters and numbers only, cannot "
+"be blank, and must be between 3 and 12 characters in length."
+msgstr ""
+"Villa! Nauðsynlegt er að gefa samfélagi nafn. Nafn samfélags getur einungis "
+"innihaldið bókstafi og tölur og verður að vera minnst 3 stafir og mest 12 "
+"stafir að lengd."
+
+#: units/communities/communities_actions.php:22
+msgid "Error! The community name cannot be blank."
+msgstr "Villa! Samfélag verður að hafa nafn."
+
+#: units/communities/communities_actions.php:26
+#, php-format
+msgid ""
+"The username %s is already taken by another user. You will need to pick a "
+"different one."
+msgstr ""
+
+#: units/communities/communities_actions.php:44
+msgid "Your community was created and you were added as its first member."
+msgstr "Samfélagið hefur verið stofnað með þig sem fyrsta meðlim."
+
+#: units/communities/communities_actions.php:58
+#, fuzzy
+msgid "You joined %s."
+msgstr "Þú hefur skráð þig í %s."
+
+#: units/communities/communities_actions.php:60
+#, php-format
+msgid ""
+"%s has joined %s!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+
+#: units/communities/communities_actions.php:61
+#, php-format
+msgid ""
+"%s\n"
+"\n"
+"To view all community members, click here:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s team."
+msgstr ""
+
+#: units/communities/communities_actions.php:63
+#, php-format
+msgid "New %s member"
+msgstr "Nýr meðlimur %s"
+
+#: units/communities/communities_actions.php:67
+#, php-format
+msgid ""
+"Membership of %s needs to be approved. Your request has been added to the "
+"list."
+msgstr ""
+
+#: units/communities/communities_actions.php:69
+#, php-format
+msgid ""
+"%s has applied to join %s!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+
+#: units/communities/communities_actions.php:70
+#, php-format
+msgid ""
+"%s\n"
+"\n"
+"To view all membership requests and approve or deny this user, click here:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s team."
+msgstr ""
+
+#: units/communities/communities_actions.php:72
+#, php-format
+msgid "New %s member request"
+msgstr ""
+
+#: units/communities/communities_actions.php:76
+#, php-format
+msgid "%s is a private community. Your membership request has been declined."
+msgstr ""
+
+#: units/communities/communities_actions.php:88
+#, php-format
+msgid "You left %s."
+msgstr "Þú hefur yfirgefið %s."
+
+#: units/communities/communities_actions.php:95
+msgid "Your post has been added to the community weblog."
+msgstr "Jouw bericht is aan de weblog van de gemeenschap toegevoegd."
+
+#: units/communities/communities_actions.php:111
+#, php-format
+msgid ""
+"You approved the membership request. %s is now a member of this community."
+msgstr ""
+"Þú hefur samþykkt beiðni um þátttöku. %s er núna meðlimur í þessu samfélagi."
+
+#: units/communities/communities_actions.php:113
+msgid "An error occurred: the membership request could not be approved."
+msgstr "Villa kom upp: ekki var hægt að samþykkja beiðni um þátttöku."
+
+#: units/communities/communities_actions.php:116
+#: units/communities/communities_actions.php:135
+msgid "Error: you do not have authority to modify this membership request."
+msgstr ""
+"Villa: þú hefur ekki heimild til þess að breyta beiðni þessa notanda um "
+"þátttöku."
+
+#: units/communities/communities_actions.php:119
+#: units/communities/communities_actions.php:138
+msgid "An error occurred: the membership request could not be found."
+msgstr "Villa: beiðni um þátttöku fannst ekki."
+
+#: units/communities/communities_actions.php:133
+#, php-format
+msgid ""
+"You declined the membership request. %s is not a member of this community."
+msgstr ""
+"Þú hefur hafnað þátttökubeiðninni. %s er ekki meðlimur í þessu samfélagi."
+
+#: units/communities/communities_create.php:16
+msgid "Create a new community"
+msgstr "Stofna nýtt samfélag"
+
+#: units/communities/communities_create.php:17
+msgid "Community name:"
+msgstr "Nafn samfélags:"
+
+#: units/communities/communities_create.php:18
+msgid "Username for community:"
+msgstr "Notendanafn samfélags:"
+
+#: units/communities/communities_create.php:19
+#: units/groups/groups_create.php:5
+msgid "Create"
+msgstr "Mynda"
+
+#: units/communities/communities_membership_requests.php:15
+msgid ""
+"The following users would like to join this community. They need your "
+"approval to do this (to change this setting, visit the 'community settings' "
+"page)."
+msgstr ""
+
+#: units/communities/communities_membership_requests.php:48
+msgid "You have no pending membership requests."
+msgstr ""
+
+#: units/communities/communities_owned.php:18
+msgid "Owned communities"
+msgstr "Eigin samfélög"
+
+#: units/communities/community_memberships.php:20
+msgid "Community memberships"
+msgstr "Samfélagsþátttaka"
+
+#: units/communities/community_wiki.php:15
+msgid "Community Wiki"
+msgstr "Samfélagswiki"
+
+#: units/communities/profile_edit_link.php:12
+msgid "Upload / edit site pictures for this community."
+msgstr "Upload / bewerk het pictogram voor deze gemeenschap."
+
+#: units/communities/user_info_menu_text.php:18
+msgid "Are you sure you want to join this community?"
+msgstr "Viltu örugglega vera meðlimur í þessu samfélagi?"
+
+#: units/communities/user_info_menu_text.php:18
+msgid "Click here to join this community."
+msgstr "Smelltu hér til þess að gerast meðlimur í þessu samfélagi."
+
+#: units/communities/user_info_menu_text.php:20
+msgid "Are you sure you want to apply to join this community?"
+msgstr "Viltu örugglega sækja um aðgang að þessu samfélagi?"
+
+#: units/communities/user_info_menu_text.php:20
+msgid "Click here to apply to join this community."
+msgstr "Smelltu hér til þess að sækja um aðgang að þessu samfélagi."
+
+#: units/communities/user_info_menu_text.php:26
+msgid "Are you sure you want to leave this community?"
+msgstr "Viltu örugglega yfirgefa þetta samfélag?"
+
+#: units/communities/user_info_menu_text.php:26
+msgid "Click here to leave this community."
+msgstr "Smelltu hér til að yfirgefa þetta samfélag."
+
+#: units/communities/userdetails_actions.php:23
+#, php-format
+msgid "Community ownership transferred to %s."
+msgstr ""
+
+#: units/communities/userdetails_actions.php:26
+msgid "Could not retrieve community details."
+msgstr "Gat ekki sótt upplýsingar um samfélag."
+
+#: units/communities/userdetails_edit.php:11
+msgid "Change your community name"
+msgstr "Breyta nafninu á samfélaginu þínu"
+
+#: units/communities/userdetails_edit.php:12
+#: units/users/userdetails_edit.php:12
+msgid "This name will be displayed throughout the system."
+msgstr "Deze naam zal overal in de website getoond worden."
+
+#: units/communities/userdetails_edit.php:27
+msgid "Community name"
+msgstr "Nafn samfélags"
+
+#: units/communities/userdetails_edit.php:32
+#, fuzzy
+msgid "Membership restriction:"
+msgstr "Takmarkanir á þátttöku:"
+
+#: units/communities/userdetails_edit.php:33
+msgid "This allows you to choose who can join this community."
+msgstr ""
+"Þetta gerir þér kleift að velja hverjir geta gerst meðlimir í þessu "
+"samfélagi."
+
+#: units/communities/userdetails_edit.php:50
+msgid "No moderation: anyone can join this community."
+msgstr "Engar takmarkanir: allir geta fengið aðgang að þessu samfélagi."
+
+#: units/communities/userdetails_edit.php:55
+#, fuzzy
+msgid "Moderation: memberships must be approved by you."
+msgstr "Stýring: óskir um aðgang verða að hljóta þitt samþykki."
+
+#: units/communities/userdetails_edit.php:60
+msgid "Private: nobody can join this community."
+msgstr "Prívat: enginn fær aðgang að þessu samfélagi."
+
+#: units/communities/userdetails_edit.php:65
+msgid "Membership restriction"
+msgstr "Takmarkanir á aðgangi"
+
+#: units/communities/userdetails_edit.php:70
+msgid "Community ownership"
+msgstr ""
+
+#: units/communities/userdetails_edit.php:71
+msgid ""
+"Type the username of the user who you want to own this community below. You "
+"cannot leave this blank, or specify a community or a user that doesn't exist."
+msgstr ""
+
+#: units/communities/userdetails_edit.php:83
+msgid "Community owner"
+msgstr "Eigandi samfélags"
+
+#: units/files/default_templates.php:8
+msgid "Folder"
+msgstr "Mappa"
+
+#: units/files/default_templates.php:9
+msgid "Each individual folder"
+msgstr "Hver einstaka mappa"
+
+#: units/files/default_templates.php:11
+msgid "The owner of the folder"
+msgstr "Eigandi möppunnar"
+
+#: units/files/default_templates.php:12
+msgid "The name of the folder"
+msgstr "Nafn möppunnar"
+
+#: units/files/default_templates.php:13
+msgid "The folder's URL"
+msgstr "Vefslóðin að skráarsafninu"
+
+#: units/files/default_templates.php:14
+msgid "Menu items for folder owner (edit, delete, etc)"
+msgstr ""
+"Menu opties voor de eigenaar van de map (bewerken, verwijderen, etc.)"
+
+#: units/files/default_templates.php:15
+msgid "The URL of the file's icon"
+msgstr "De URL van het pictogram van het bestand."
+
+#: units/files/default_templates.php:16 units/files/default_templates.php:49
+msgid "Keywords associated with the folder"
+msgstr "Lykilorð sem tengjast þessari möppu"
+
+#: units/files/default_templates.php:40 units/files/function_search_rss.php:44
+msgid "File"
+msgstr "Skrá"
+
+#: units/files/default_templates.php:41
+msgid "Each individual file within a folder"
+msgstr "Hver einstaka skrá í möppu"
+
+#: units/files/default_templates.php:43
+msgid "The file's URL"
+msgstr "Vefslóðin að skránni"
+
+#: units/files/default_templates.php:44
+msgid "Its filename"
+msgstr "Skráarheiti"
+
+#: units/files/default_templates.php:45
+msgid "A description of the file"
+msgstr "Lýsing á skránni"
+
+#: units/files/default_templates.php:46
+msgid "Its title"
+msgstr "Titill"
+
+#: units/files/default_templates.php:47
+msgid "Menu items for file owner (edit, delete, etc)"
+msgstr ""
+"Menu opties voor de eigenaar van het bestand (bewerken, verwijderen, etc.)"
+
+#: units/files/default_templates.php:48
+msgid "The URL of its icon"
+msgstr "Slóðin að teikninu"
+
+#: units/files/edit_file.php:17 units/files/folder_edit.php:184
+msgid "File title:"
+msgstr "Skráarnafn:"
+
+#: units/files/files_actions.php:26
+msgid "Your folder was created."
+msgstr "Mappan var mynduð."
+
+#: units/files/files_actions.php:28
+msgid "Could not create folder. Perhaps the folder name was blank?"
+msgstr "Ekki hægt að mynda möppu. Hugsanlega gleymdist að skrá heiti?"
+
+#: units/files/files_actions.php:47
+msgid ""
+"Upload unsuccessful. You must check the copyright box for a file to be "
+"uploaded."
+msgstr ""
+"Ekki tókst að sækja skránna. Þú verður að haka við \"höfundarréttur\" áður "
+"en hægt er að sækja skrá."
+
+#: units/files/files_actions.php:86
+msgid "The file was successfully uploaded."
+msgstr "Skránni hefur verið hlaðið inn."
+
+#: units/files/files_actions.php:122
+msgid "The file was updated."
+msgstr "Skráin var uppfærð."
+
+#: units/files/files_actions.php:142
+msgid "The folder was edited."
+msgstr "Skráarsafninu var eytt."
+
+#: units/files/files_actions.php:144
+msgid "Error: a folder cannot be its own parent."
+msgstr "Villa! Mappa getur ekki innihaldið sjálfa sig."
+
+#: units/files/files_actions.php:167
+msgid "The folder was deleted."
+msgstr "Skráarsafninu var eytt."
+
+#: units/files/files_actions.php:189
+msgid "The file was deleted."
+msgstr "Skránni var eytt."
+
+#: units/files/files_links_make.php:51
+msgid "You do not have permission to access this file"
+msgstr "Þú hefur ekki aðgang að þessari skrá"
+
+#: units/files/files_links_make.php:54
+msgid "File does not exist"
+msgstr "Skráin er ekki til"
+
+#: units/files/files_user_info_menu.php:23
+msgid "File Storage"
+msgstr "Skráarhýsing"
+
+#: units/files/folder_edit.php:12
+msgid "Edit this folder"
+msgstr "Breyta þessari möppu"
+
+#: units/files/folder_edit.php:99
+msgid "Create a new folder"
+msgstr "Mynda nýja möppu"
+
+#: units/files/folder_edit.php:100
+msgid "To create a new folder, enter its name:"
+msgstr "Sláðu inn nafn til þess að búa til nýja möppu."
+
+#: units/files/folder_edit.php:101
+msgid "Access restrictions"
+msgstr "Aðgangsstakmarkanir"
+
+#: units/files/folder_edit.php:165
+msgid "Upload a file"
+msgstr "Sækja skrá"
+
+#: units/files/folder_edit.php:179
+#, php-format
+msgid "You have used %s Mb of a total %s Mb."
+msgstr "Þó hefur nýtt %s Mb af alls %s Mb."
+
+#: units/files/folder_edit.php:181
+#, php-format
+msgid "Used space: %s Mb."
+msgstr "Geymslurými í notkun: %s Mb"
+
+#: units/files/folder_edit.php:183
+msgid "File to upload:"
+msgstr "Skrá til að hlaða"
+
+#: units/files/folder_edit.php:185
+msgid "File Description:"
+msgstr "Skráarlýsing"
+
+#: units/files/folder_edit.php:186 units/weblogs/weblogs_posts_add.php:27
+#: units/weblogs/weblogs_posts_edit.php:21
+msgid "Access restrictions:"
+msgstr "Aðgangstakmarkanir:"
+
+#: units/files/folder_edit.php:236
+msgid "Keywords (comma separated):"
+msgstr "Lykilorð (aðskild með kommum):"
+
+#: units/files/folder_edit.php:258
+#, fuzzy
+msgid ""
+"By checking this box, you are asserting that you have the legal right to "
+"share this file, and that you understand you are sharing it with other users "
+"of the system."
+msgstr ""
+"Með því að haka í þennan reit ertu þú að staðfesta leyfi þitt til þess að "
+"deila viðkomandi skrá og að þú ert að deila henni með öðrum notendum "
+"kerfisins."
+
+#: units/files/folder_view.php:27
+msgid "Root Folder"
+msgstr "Rótarmappa"
+
+#: units/files/folder_view.php:50
+msgid "Return to"
+msgstr "Aftur í"
+
+#: units/files/folder_view.php:57 units/files/templates_preview.php:6
+msgid "Subfolders"
+msgstr "Undirmöppur"
+
+#: units/files/folder_view.php:74
+msgid "Are you sure you want to permanently delete this folder?"
+msgstr "Viltu örugglega eyða þessu skráarsafnið endanlega?"
+
+#: units/files/folder_view.php:174
+msgid "This folder is currently empty."
+msgstr "Skráarsafnið er tómt."
+
+#: units/files/function_search.php:50
+#, php-format
+msgid "Folders owned by '%s' in category '%s'"
+msgstr "Möppur í eigu '%s' í flokknum '%s'"
+
+#: units/files/function_search.php:88
+#, php-format
+msgid "Files owned by %s in category '%s'"
+msgstr "Skrár í eigu %s í flokknum '%s'"
+
+#: units/files/function_search.php:106
+#, php-format
+msgid "RSS feed for files owned by %s"
+msgstr "RSS straumar fyrir skrár í eigu %s"
+
+#: units/files/function_search.php:117
+msgid "Users with files or folders in category"
+msgstr "Notendur með skrár eða möppur í flokkinum"
+
+#: units/files/function_search_rss.php:34
+msgid "File folder"
+msgstr "Skráarsafn"
+
+#: units/files/templates_preview.php:5
+msgid "Folder name"
+msgstr "Nafn skráarsafns"
+
+#: units/files/templates_preview.php:26
+msgid "test"
+msgstr "prufa"
+
+#: units/files/templates_preview.php:27
+msgid "A sample file"
+msgstr "Sýnisskrá"
+
+#: units/files/templates_preview.php:30
+msgid "This is a file"
+msgstr "Þetta er skrá"
+
+#: units/files/templates_preview.php:31
+msgid "filename"
+msgstr "skráarheiti"
+
+#: units/files/templates_preview.php:40
+msgid "Files and folders"
+msgstr "Skrár og skráarsöfn"
+
+#: units/files/weblogs_posts_add_fields.php:55
+#, php-format
+msgid "Embed a file from your %s file storage:"
+msgstr "Samþættu skrá úr %s skráarsafninu:"
+
+#: units/friends/friends_actions.php:24
+#, php-format
+msgid "%s was added to your friends list."
+msgstr "%s var bætt við vinalistann þinn."
+
+#: units/friends/friends_actions.php:26
+#, php-format
+msgid ""
+"%s has added you as a friend!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+
+#: units/friends/friends_actions.php:27 units/friends/friends_actions.php:88
+#, php-format
+msgid ""
+"%s\n"
+"\n"
+"To view all your friends, click here:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s team."
+msgstr ""
+
+#: units/friends/friends_actions.php:29
+#, php-format
+msgid "New %s friend"
+msgstr "Nýr %s vinur"
+
+#: units/friends/friends_actions.php:34
+#, php-format
+msgid "%s couldn't be added to your friends list."
+msgstr "Ekki var hægt að bæta %s við vinalistann þinn."
+
+#: units/friends/friends_actions.php:40
+#, php-format
+msgid ""
+"%s has elected to moderate friendship requests. Your request has been added "
+"to their moderation queue."
+msgstr ""
+
+#: units/friends/friends_actions.php:42
+#, php-format
+msgid ""
+"%s has requested to add you as a friend!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+
+#: units/friends/friends_actions.php:43
+#, php-format
+msgid ""
+"%s\n"
+"\n"
+"To view all your friends requests and approve or deny this user, click "
+"here:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s team."
+msgstr ""
+
+#: units/friends/friends_actions.php:45
+#, php-format
+msgid "New %s friend request"
+msgstr ""
+
+#: units/friends/friends_actions.php:50
+#, php-format
+msgid ""
+"%s has elected to moderate friendship requests, but your friend request "
+"couldn't be added to their moderation queue."
+msgstr ""
+
+#: units/friends/friends_actions.php:54
+#, php-format
+msgid ""
+"%s has decided not to allow any new friendship requests at this time. Your "
+"friendship request has been declined."
+msgstr ""
+
+#: units/friends/friends_actions.php:64
+msgid " was removed from your friends."
+msgstr " hefur verið fjarlæg/ur af vinalistanum þínum."
+
+#: units/friends/friends_actions.php:68
+msgid " couldn't be removed from your friends."
+msgstr ""
+
+#: units/friends/friends_actions.php:86
+#, php-format
+msgid "You approved the friendship request. %s now lists you as a friend."
+msgstr ""
+
+#: units/friends/friends_actions.php:87
+#, php-format
+msgid ""
+"%s has approved your friendship request!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+
+#: units/friends/friends_actions.php:90
+#, php-format
+msgid "%s friend request approved!"
+msgstr ""
+
+#: units/friends/friends_actions.php:93
+msgid "An error occurred: couldn't add you as a friend"
+msgstr ""
+
+#: units/friends/friends_actions.php:96 units/friends/friends_actions.php:120
+msgid "Error: you do not have authority to modify this friendship request."
+msgstr ""
+
+#: units/friends/friends_actions.php:99 units/friends/friends_actions.php:123
+msgid "An error occurred: the friendship request could not be found."
+msgstr ""
+
+#: units/friends/friends_actions.php:113
+#, php-format
+msgid ""
+"You declined the friendship request. %s does not list you as a friend."
+msgstr "Þú hafnaðir beiðni um vinskap. %s skráir þig ekki sem vin."
+
+#: units/friends/friends_actions.php:114
+#, php-format
+msgid ""
+"%s has denied your friendship request.\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+
+#: units/friends/friends_actions.php:115
+#, php-format
+msgid ""
+"%s\n"
+"\n"
+"To view all your existing friends, click here:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s team."
+msgstr ""
+
+#: units/friends/friends_actions.php:117
+#, php-format
+msgid "%s friend request denied"
+msgstr ""
+
+#: units/friends/profile_friends.php:20 units/friends/profile_friends.php:29
+msgid "View all Friends"
+msgstr "Birta alla vini"
+
+#: units/friends/profile_friends.php:27 units/friends/user_friends.php:14
+msgid "Your Friends"
+msgstr "Vinir þínir"
+
+#: units/friends/user_friends.php:14
+msgid "Friends Screen"
+msgstr "Vinaskjár"
+
+#: units/friends/user_friendship_requests.php:16
+msgid ""
+"The following users would like to add you as a friend. They need your "
+"approval to do this (to change this setting, visit the 'account settings' "
+"page)."
+msgstr ""
+
+#: units/friends/user_friendship_requests.php:51
+msgid "You have no pending friendship requests."
+msgstr ""
+
+#: units/friends/user_info_menu_text.php:19
+msgid "Are you sure you want to add this user as a friend?"
+msgstr "Viltu örugglega bæta þessum notanda við sem vini?"
+
+#: units/friends/user_info_menu_text.php:19
+msgid "Click here to add this user as a friend."
+msgstr "Smelltu hér til þess að bæta þessum notanda á vinalistann þinn."
+
+#: units/friends/user_info_menu_text.php:26
+msgid "Are you sure you want to remove this user from your friends list?"
+msgstr "Viltu örugglega fjarlægja þennan notanda af vinalistanum þínum?"
+
+#: units/friends/user_info_menu_text.php:26
+msgid "Click here to remove this user from your friends list."
+msgstr "Smelltu hér til að fjarlægja þennan notanda af vinalistanum þínum."
+
+#: units/groups/groups_access_levels.php:8
+msgid "Group"
+msgstr "Hópur"
+
+#: units/groups/groups_actions.php:27
+msgid "Your group was updated."
+msgstr "Jouw groep is bijgewerkt."
+
+#: units/groups/groups_create.php:3
+msgid "Create a new group"
+msgstr "Stofna nýjan hóp"
+
+#: units/groups/groups_create.php:4
+msgid "Group name:"
+msgstr "Nafn hóps:"
+
+#: units/groups/groups_display_membership.php:6
+msgid "Group membership"
+msgstr "Hópaþátttaka"
+
+#: units/groups/groups_edit_existing.php:6
+msgid "Groups you own"
+msgstr "Hópar í þinni umsjá"
+
+#: units/groups/groups_editpage.php:4
+msgid "Existing groups"
+msgstr "Núverandi hópar"
+
+#: units/groups/groups_explanation.php:3
+msgid ""
+"Access is controlled through the use of Access groups and this is one of the "
+"most powerful features of Elgg. Access groups allow you to have complete "
+"control over who sees what within your environment. You can create as many "
+"access groups as you wish. Each access group can have as many of your "
+"friends as you like and each access group created becomes another option in "
+"the 'access restriction' dropdown menu beside each profile item, weblog post "
+"and file uploaded."
+msgstr ""
+"Groepen is één van de meest krachtige eigenschappen van Elgg. Groepen geven "
+"je de mogelijkheid te controleren wie wat binnen jouw Elgg ziet. Je kun "
+"zoveel groepen aanmaken als je wilt. Elke groep kan zoveel vrienden bevatten "
+"als je maar wilt en elke groep kan geselecteerd worden bij de menu optie "
+"'toegangsrechten' naast elk onderdeel van jouw profiel, weblog bericht of "
+"bestand."
+
+#: units/groups/groups_explanation.php:4 units/groups/groups_help.php:4
+msgid ""
+"When you create an access group, add people to it then select it as your "
+"access restriction on a weblog post only the people in that group will be "
+"able to see that weblog post and so on for all elements in your learning "
+"landscape."
+msgstr ""
+"Groepen bepalen de beperkingen. Als je een groep aanmaakt en daar vrienden "
+"aan toevoegt en deze groep vervolgens selecteert als restrictie voor jouw "
+"weblog bericht, dan kunnen alleen deze vrienden het bericht zien. Het "
+"principe geldt voor alle onderdelen in de omgeving."
+
+#: units/groups/groups_help.php:3
+msgid "This is a help file for the Groups functions."
+msgstr "Þetta er hjálparskrá fyrir hópavinnu."
+
+#: units/icons/function_actions.php:56
+msgid "Your selected icons were deleted."
+msgstr "De geselecteerde pictogrammen zijn verwijderd."
+
+#: units/icons/function_actions.php:70
+msgid ""
+"You have already met your icon quota. You must delete some icons before you "
+"can upload any new ones."
+msgstr ""
+"De schijfruimte voor pictogrammen is op. Je zult een aantal pictogrammen "
+"moeten verwijderen voordat je nieuwe kunt uploaden."
+
+#: units/icons/function_actions.php:78
+msgid "Attempting to upload icon file ..."
+msgstr "Reyni að hlaða teikni..."
+
+#: units/icons/function_actions.php:85
+msgid ""
+"The uploaded icon file was invalid. Please ensure you are using JPEG, GIF or "
+"PNG files."
+msgstr ""
+"Het geuploade pictogram kan niet worden gebruikt. Wees er zeker van dat het "
+"een JPEG, GIF of PNG bestand ist."
+
+#: units/icons/function_actions.php:117
+msgid ""
+"The uploaded icon file was in an image format other than JPEG, GIF or PNG. "
+"These are unsupported at present."
+msgstr ""
+"Het geuploade bestand heeft een ander formaat dan JPEG, GIF of PNG. Andere "
+"formaten worden op dit moment niet ondersteund."
+
+#: units/icons/function_actions.php:137
+msgid "Your icon was uploaded successfully."
+msgstr "Jouw pictogram is met succes geupload"
+
+#: units/icons/function_actions.php:140
+msgid ""
+"An unknown error occurred when saving your icon. If this problem persists, "
+"please let us know and we'll do all we can to fix it quickly."
+msgstr ""
+"Óþekkt villa kom upp við vistun teiknisins. Hafðu vinsamlegast samband við "
+"kerfisstjórn ef þú heldur áfram að fá þessa villu."
+
+#: units/icons/function_add_icons.php:15
+msgid "Upload a new picture"
+msgstr "Sækja nýja mynd"
+
+#: units/icons/function_add_icons.php:16
+msgid ""
+"Upload a picture for this profile below. Pictures need to be 100x100 pixels "
+"or smaller, but don't worry - if you've selected a larger picture, we'll "
+"shrink it down for you. You may upload up to"
+msgstr ""
+"Upload een afbeelding voor dit profiel. Afbeeldingen moeten 100 bij 100 "
+"pixels of kleiner zijn, maar maak je geen zorgen: wij verkleinen het voor je "
+"als de afbeelding groter is. Je mag uploaden tot"
+
+#: units/icons/function_add_icons.php:17
+msgid "pictures in total."
+msgstr "myndir alls."
+
+#: units/icons/function_edit_icons.php:21
+msgid "Site pictures"
+msgstr "Myndir á vef"
+
+#: units/icons/function_edit_icons.php:79
+msgid "No default:"
+msgstr "Ekkert sjálfgefið"
+
+#: units/invite/invite_actions.php:34
+msgid "They included the following message:"
+msgstr ""
+
+#: units/invite/invite_actions.php:38
+#, php-format
+msgid "Thank you for registering with %s."
+msgstr ""
+
+#: units/invite/invite_actions.php:39
+#, php-format
+msgid "%s account verification"
+msgstr ""
+
+#: units/invite/invite_actions.php:42 units/invite/invite_actions.php:43
+msgid "has invited you to join"
+msgstr "Hefur boðið þér þátttöku í"
+
+#: units/invite/invite_actions.php:42
+msgid "a learning landscape system."
+msgstr "een leerlandschap omgeving"
+
+#: units/invite/invite_actions.php:46
+#, php-format
+msgid ""
+"Dear %s,\n"
+"\n"
+"%s %s\n"
+"\n"
+"To join, visit the following URL:\n"
+"\n"
+"\t%s\n"
+"\n"
+msgstr ""
+
+#: units/invite/invite_actions.php:47
+#, php-format
+msgid "Your email address has not been passed onto any third parties,"
+msgstr ""
+
+#: units/invite/invite_actions.php:48
+#, php-format
+msgid ""
+" and will be removed from our system within seven days.\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s team."
+msgstr ""
+
+#: units/invite/invite_actions.php:51
+#, php-format
+msgid ""
+"Your invitation was sent to %s at %s. It will be valid for seven days."
+msgstr ""
+
+#: units/invite/invite_actions.php:54
+#, php-format
+msgid "User %s already has that email address. Invitation not sent."
+msgstr ""
+
+#: units/invite/invite_actions.php:57
+msgid ""
+"Someone with that email address has already been invited to the system. "
+msgstr ""
+"Einhverjum með þennan tölvupóst hefur þegar verið boðinn aðgangur að "
+"kerfinu. "
+
+#: units/invite/invite_actions.php:60
+msgid "Invitation failed: The email address was not valid."
+msgstr "Boðskort misfórst. Tölvupóstur reyndist ótækur."
+
+#: units/invite/invite_actions.php:63
+msgid "Error: This community has reached its maximum number of users."
+msgstr "Villa: Hámarksfjölda meðlima í samfélaginu er náð."
+
+#: units/invite/invite_actions.php:66
+msgid "Invitation failed: you are not logged in."
+msgstr "Boðskort misfórst: þú ert ekki innskráð/ur."
+
+#: units/invite/invite_actions.php:69
+msgid "Invitation failed: you must specify both a name and an email address."
+msgstr ""
+"De uitnodiging is niet geslaagd: je moet zowel een naam als e-mail adres "
+"opgeven."
+
+#: units/invite/invite_actions.php:82
+msgid ""
+"Unfortunately this community has reached its account limit and you are "
+"unable to join at this time."
+msgstr ""
+
+#: units/invite/invite_actions.php:85
+msgid "You must indicate that you are at least 13 years old to join."
+msgstr ""
+
+#: units/invite/invite_actions.php:89
+msgid "Error! Invalid invite code."
+msgstr ""
+
+#: units/invite/invite_actions.php:138
+msgid ""
+"Your account was created! You can now log in using the username and password "
+"you supplied. You have been sent an email containing these details for "
+"reference purposes."
+msgstr ""
+"Je account is aangemaakt! Je kunt nu inloggen met de naam en het wachtwoord "
+"die je hebt opgegeven. Er is een e-mail naar je gestuurd met deze gegevens."
+
+#: units/invite/invite_actions.php:140
+#, php-format
+msgid "Your %s account"
+msgstr ""
+
+#: units/invite/invite_actions.php:141
+#, php-format
+msgid ""
+"Thanks for joining %s!\n"
+"\n"
+"For your records, your %s username and password are:\n"
+"\n"
+"\t"
+msgstr ""
+
+#: units/invite/invite_actions.php:142
+#, php-format
+msgid ""
+"Username: %s\n"
+"\tPassword: %s\n"
+"\n"
+"You can log in at any time by visiting %s and entering these details into "
+"the login form.\n"
+"\n"
+msgstr ""
+
+#: units/invite/invite_actions.php:160
+#, php-format
+msgid "Verify your %s account password request"
+msgstr ""
+
+#: units/invite/invite_actions.php:161
+#, php-format
+msgid ""
+"A request has been received to generate your account at %s a new password.\n"
+"\n"
+msgstr ""
+
+#: units/invite/invite_actions.php:162
+#, php-format
+msgid ""
+"To confirm this request and receive a new password by email, please click "
+"the following link:\n"
+"\n"
+"\t%s\n"
+"\n"
+msgstr ""
+
+#: units/invite/invite_actions.php:163
+#, php-format
+msgid ""
+"Please let us know if you have any further problems.\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s Team"
+msgstr ""
+
+#: units/invite/invite_actions.php:165
+msgid "Your verification email was sent. Please check your inbox."
+msgstr "Staðfestingarpóstur hefur verið sendur. Athugaðu tölvupóstinn þinn."
+
+#: units/invite/invite_actions.php:167
+msgid "No user with that username was found."
+msgstr "Enginn notandi fannst með þetta notendanafn."
+
+#: units/invite/invite_join.php:29
+#, php-format
+msgid ""
+"Thank you for registering for an account with %s! Registration is completely "
+"free, but before you confirm your details, please take a moment to read the "
+"following documents:"
+msgstr ""
+"Bedankt voor het aanmaken van een account bij %s! Hier zijn geen kosten aan "
+"verbonden maar lees eerst het volgende voor je jouw gegevens bevestigt:"
+
+#: units/invite/invite_join.php:30 units/invite/join_noinvite.php:10
+msgid "terms and conditions"
+msgstr "notendaskilmálar"
+
+#: units/invite/invite_join.php:31 units/invite/join_noinvite.php:11
+msgid "Privacy policy"
+msgstr "Persónuvernd"
+
+#: units/invite/invite_join.php:32
+msgid ""
+"Submitting the form below indicates acceptance of these terms. Please note "
+"that currently you must be at least 13 years of age to join the site."
+msgstr ""
+"Met het versturen van deze gegevens bevestig je dat je deze voorwaarden "
+"accepteert. Wees je er van bewust dat je dertien jaar of ouder moet zijn om "
+"lid te kunnen worden van deze site."
+
+#: units/invite/invite_join.php:52 units/weblogs/weblogs_comments_add.php:48
+msgid "Your name"
+msgstr "Jouw naam"
+
+#: units/invite/invite_join.php:58
+msgid "Your username - (Must be letters only)"
+msgstr "Notendanafnið þitt - (Einungis bókstafir)"
+
+#: units/invite/invite_join.php:64
+msgid "Enter a password"
+msgstr "Skráðu lykilorð"
+
+#: units/invite/invite_join.php:70
+msgid "Your password again for verification purposes"
+msgstr "Voer het wachtwoord ter bevestiging nogmaals in"
+
+#: units/invite/invite_join.php:74
+msgid "I am at least thirteen years of age."
+msgstr "Ég er þrettán ára eða eldri."
+
+#: units/invite/invite_join.php:75
+msgid "Join"
+msgstr "Taka þátt"
+
+#: units/invite/invite_join.php:90
+#, php-format
+msgid ""
+"Your invitation code appears to be invalid. Codes only last for seven days; "
+"it's possible that yours is older. If you still want to join %s, it may be "
+"worth getting in touch with the person who invited you."
+msgstr ""
+"Je registratiecode is niet geldig. De code vervalt na zeven dagen, het kan "
+"zijn dat die van jou is verlopen. Als je nog steeds lid wilt worden van %s "
+"dan kan het de moeite waard zijn om contact op te nemen met de persoon die "
+"jou heeft uitgenodigd."
+
+#: units/invite/join_noinvite.php:9
+#, php-format
+msgid ""
+"Thank you for registering for an account with %s! Registration is completely "
+"free, but before you fill in your details, please take a moment to read the "
+"following documents:"
+msgstr ""
+"Bedankt voor het aanmaken van een account bij %s! Hier zijn geen kosten aan "
+"verbonden maar lees eerst het volgende voor je jouw gegevens bevestigt:"
+
+#: units/invite/join_noinvite.php:12
+msgid ""
+"When you fill in the details below, we will send an \"invitation code\" to "
+"your email address in order to validate it. You must then click on this "
+"within seven days to create your account."
+msgstr ""
+"Na het invullen van onderstaande gegevens zal een \"activatie code\" naar je "
+"e-mail adres worden gestuurd. Om de aanmelding definitief te maken moet je "
+"binnen zeven dagen op deze code in het bericht klikken."
+
+#: units/invite/new_password.php:12
+#, php-format
+msgid ""
+"A new password has been emailed to you at %s. You should be able to use it "
+"immediately; your old one has been deactivated."
+msgstr ""
+"Een nieuw wachtwoord is je toegestuurd naar %s. Deze kun je direct "
+"gebruiken, je oude wachtwoord is nu verwijderd."
+
+#: units/invite/password_request.php:5
+#, php-format
+msgid ""
+"To generate a new password at %s!, enter your username below. We will send "
+"the address of a unique verification page to you via email click on the link "
+"in the body of the message and a new password will be sent to you."
+msgstr ""
+"Om een nieuw wachtwoord voor %s aan te vragen moet je hier je gebruikersnaam "
+"invoeren. Wij sturen jou dan e-mail met het adres naar een unieke pagina. "
+"Klik op de link in dit bericht en een nieuwe wachtwoord zal worden "
+"opgestuurd."
+
+#: units/invite/password_request.php:6
+msgid "This method reduces the chance of a mistakenly reset password."
+msgstr ""
+
+#: units/magpie/default_template.php:8
+msgid "Feed Post"
+msgstr ""
+
+#: units/magpie/default_template.php:9
+msgid "A template for each post in a feed."
+msgstr ""
+
+#: units/magpie/default_template.php:11 units/weblogs/default_template.php:11
+msgid "Post title"
+msgstr "Titill færslu"
+
+#: units/magpie/default_template.php:12 units/weblogs/default_template.php:12
+msgid "The text of the post"
+msgstr ""
+
+#: units/magpie/default_template.php:13
+msgid "An icon for the user"
+msgstr "Teikn fyrir notandann"
+
+#: units/magpie/default_template.php:14
+msgid "The feed name"
+msgstr "Nafn á RSS straumi"
+
+#: units/magpie/default_template.php:15
+msgid "A short description of the feed"
+msgstr "Stutt lýsing á RSS straumi"
+
+#: units/magpie/default_template.php:16
+msgid "A link to the post"
+msgstr ""
+
+#: units/magpie/default_template.php:17
+msgid "A link to the host site"
+msgstr ""
+
+#: units/magpie/default_template.php:18
+msgid "A link to the host feed"
+msgstr ""
+
+#: units/magpie/default_template.php:19
+msgid "Buttons to subscribe or unsubscribe"
+msgstr "Hnappar til að óska eftir eða afturkalla áskrift"
+
+#: units/magpie/default_template.php:24
+msgid "Added"
+msgstr "Bætt við"
+
+#: units/magpie/function_actions.php:23 units/magpie/function_actions.php:87
+#: units/magpie/function_actions.php:101
+msgid "Your feed subscription was successful."
+msgstr ""
+
+#: units/magpie/function_actions.php:25
+msgid "Feed subscription failed: you are already subscribed to this feed."
+msgstr ""
+
+#: units/magpie/function_actions.php:34
+msgid "Your have successfully removed this feed from your subscriptions."
+msgstr ""
+
+#: units/magpie/function_actions.php:36
+msgid "Feed unsubscription failed: you are not subscribed to this feed."
+msgstr ""
+
+#: units/magpie/function_actions.php:62
+msgid ""
+"Feed not imported to blog: You cannot import a feed from this account."
+msgstr ""
+
+#: units/magpie/function_actions.php:89
+msgid "Feed subscription failed: this feed subscription already exists."
+msgstr ""
+
+#: units/magpie/function_actions.php:103
+msgid ""
+"Feed subscription failed: feed appears to be invalid. Please check your link "
+"or try later."
+msgstr ""
+
+#: units/magpie/function_actions.php:107
+msgid ""
+"Feed subscription failed: could not get feed. Please check your link or try "
+"later."
+msgstr ""
+
+#: units/magpie/function_subscriptions.php:11
+#: units/magpie/function_subscriptions_popular.php:6
+msgid ""
+"Feeds are information streams from other sites. You will often see a link to "
+"an 'RSS' feed while browsing; enter the link address into the 'add feed' box "
+"at the bottom of the page to read that information from within your learning "
+"landscape."
+msgstr ""
+
+#: units/magpie/function_subscriptions.php:23
+#: units/magpie/function_subscriptions_popular.php:14
+#: units/magpie/function_subscriptions_publish_to_blog.php:22
+msgid "Last updated"
+msgstr "S"
+
+#: units/magpie/function_subscriptions.php:24
+#: units/magpie/function_subscriptions_publish_to_blog.php:23
+msgid "Resource name"
+msgstr "Nafn viðfangs"
+
+#: units/magpie/function_subscriptions.php:31
+#: units/magpie/function_subscriptions_publish_to_blog.php:43
+msgid "View content"
+msgstr "Birta innihald"
+
+#: units/magpie/function_subscriptions.php:34
+#: units/magpie/function_subscriptions_popular.php:27
+#: units/magpie/function_view_post.php:44
+msgid "Are you sure you want to unsubscribe from this feed?"
+msgstr ""
+
+#: units/magpie/function_subscriptions.php:34
+#: units/magpie/function_subscriptions_popular.php:27
+#: units/magpie/function_view_post.php:44
+msgid "Unsubscribe"
+msgstr "Afturkalla áskrift"
+
+#: units/magpie/function_subscriptions.php:52
+#: units/magpie/function_subscriptions_publish_to_blog.php:60
+msgid "Update"
+msgstr "Uppfæra"
+
+#: units/magpie/function_subscriptions.php:62
+#: units/magpie/function_subscriptions_publish_to_blog.php:70
+msgid "You are not subscribed to any feeds."
+msgstr ""
+
+#: units/magpie/function_subscriptions.php:64
+#: units/magpie/function_subscriptions_publish_to_blog.php:72
+msgid "No feeds were found."
+msgstr ""
+
+#: units/magpie/function_subscriptions.php:69
+#: units/magpie/function_subscriptions_popular.php:47
+msgid "To subscribe to a new feed, enter its address below:"
+msgstr ""
+"Skráðu slóðina að RSS strauminum hér fyrir neðan til að gerast áskrifandi:"
+
+#: units/magpie/function_subscriptions.php:75
+#: units/magpie/function_subscriptions_popular.php:29
+#: units/magpie/function_subscriptions_popular.php:53
+#: units/magpie/function_view_post.php:46
+msgid "Subscribe"
+msgstr ""
+
+#: units/magpie/function_subscriptions_popular.php:7
+msgid "This is a list of the feeds with the most subscribers."
+msgstr ""
+
+#: units/magpie/function_subscriptions_popular.php:15
+msgid "Link to site"
+msgstr ""
+
+#: units/magpie/function_subscriptions_popular.php:21
+msgid "Unnamed Feed"
+msgstr ""
+
+#: units/magpie/function_subscriptions_popular.php:23
+msgid "View posts"
+msgstr ""
+
+#: units/magpie/function_subscriptions_popular.php:29
+#: units/magpie/function_view_post.php:46
+msgid "Are you sure you want to subscribe to this feed?"
+msgstr ""
+
+#: units/magpie/function_subscriptions_popular.php:32
+msgid "Subscribers"
+msgstr "Áskrifendur"
+
+#: units/magpie/function_subscriptions_popular.php:45
+msgid "No-one has subscribed to any feeds."
+msgstr "Enginn hefur gerst áskrifandi að RSS straum"
+
+#: units/magpie/function_subscriptions_publish_to_blog.php:11
+msgid ""
+"Click a box below to automatically import content from a feed into your "
+"blog. You can also add default keywords for content from that feed. (You "
+"should only do this if you have the legal right to use this resource - in "
+"other words, you must have permission from the content owner.)"
+msgstr ""
+
+#: units/magpie/function_subscriptions_publish_to_blog.php:31
+msgid ""
+"Are you sure you want to import this content into your personal blog?\\nYou "
+"should make sure you own it or have permission from the copyright holder."
+msgstr ""
+
+#: units/magpie/function_subscriptions_publish_to_blog.php:41
+msgid "Keywords: "
+msgstr "Lykilorð: "
+
+#: units/magpie/function_view.php:29
+#: units/magpie/function_view_individual.php:26
+#: units/weblogs/weblogs_all_users_view.php:107
+#: units/weblogs/weblogs_friends_view.php:58 units/weblogs/weblogs_view.php:53
+msgid "Back"
+msgstr "Til baka"
+
+#: units/magpie/function_view_post.php:28
+msgid "unknown"
+msgstr "óþekkt"
+
+#: units/magpie/function_view_post.php:40
+msgid "View site"
+msgstr "Skoða vef"
+
+#: units/profile/profile_user_info.php:42
+msgid "Your LMS hosts"
+msgstr "Vefumsjónarkerfi"
+
+#: units/search/function_search_all_display_rss.php:16
+#, php-format
+msgid "Items tagged with \"%s\" from %s"
+msgstr ""
+
+#: units/search/search_suggest_rss.php:6
+msgid "Syndication"
+msgstr "Syndicatie"
+
+#: units/search/search_suggest_rss.php:7
+msgid "RSS feed for this tag"
+msgstr "RSS straumur fyrir þetta tag"
+
+#: units/search/search_suggest_tags.php:22
+msgid "Automatic tag suggestion:"
+msgstr "Automatische tag suggestie:"
+
+#: units/search/search_suggest_users.php:23
+msgid "Matching accounts:"
+msgstr ""
+
+#: units/search/search_user_info_menu.php:9
+msgid "Random tags"
+msgstr "Tög að handahófi"
+
+#: units/search/tags_display.php:7
+msgid ""
+"The following is a selection of keywords used within this site. Click one to "
+"see related users, weblog posts or objects."
+msgstr ""
+"Eftirfarandi eru valin lykilorð sem eru í notkun á vefnum. Smelltu á "
+"lykilorð til að sjá hvaða notendur, blogg eða skrár tengjast því."
+
+#: units/search/tags_display_personal.php:39
+msgid "No tags found for this user."
+msgstr "Engin tög fundustu sem tengjast þessum notanda."
+
+#: units/templates/default_template.php:58
+msgid "Sidebar section holder"
+msgstr ""
+
+#: units/templates/default_template.php:59
+msgid "Contains the sidebar section titles"
+msgstr ""
+
+#: units/templates/default_template.php:61
+msgid "The header"
+msgstr ""
+
+#: units/templates/default_template.php:300
+msgid "adminTable"
+msgstr ""
+
+#: units/templates/default_template.php:301
+msgid ""
+"This table is used to house stats and administration details until a good "
+"CSS solution can be applied."
+msgstr ""
+
+#: units/templates/default_template.php:303
+#: units/templates/default_template.php:334
+msgid "Column One"
+msgstr "Dálkur eitt"
+
+#: units/templates/default_template.php:304
+#: units/templates/default_template.php:335
+msgid "Column Two"
+msgstr "Dálkur tvö"
+
+#: units/templates/default_template.php:305
+#: units/templates/default_template.php:336
+msgid "Column Three"
+msgstr "Dálkur þrjú"
+
+#: units/templates/default_template.php:331
+#, fuzzy
+msgid "flagContent"
+msgstr "Flagga innihald"
+
+#: units/templates/default_template.php:332
+msgid "This holds the flag content function throughout Elgg"
+msgstr ""
+
+#: units/templates/template_actions.php:26
+msgid "The templates have been changed according to your choices."
+msgstr "Sniðmátunum hefur verið breytt að þinni ósk."
+
+#: units/templates/template_actions.php:29
+msgid "No changes made as no area of change where selected!"
+msgstr ""
+
+#: units/templates/templates_add.php:50
+msgid "Based on"
+msgstr "Byggt á"
+
+#: units/templates/templates_add.php:55
+msgid "Create Theme"
+msgstr "Nýtt þema"
+
+#: units/templates/templates_view.php:88
+msgid "Change templates"
+msgstr "Skipta um sniðmát"
+
+#: units/templates/templates_view.php:89
+msgid "The selected changes will affect:"
+msgstr "Valdar breytingar munu hafa áhrif á:"
+
+#: units/tinymce/tinymce_userdetails_actions.php:15
+msgid "Your editor preferences have been saved"
+msgstr ""
+
+#: units/tinymce/tinymce_userdetails_actions.php:18
+msgid "Your editor preferences have been changed"
+msgstr ""
+
+#: units/tinymce/tinymce_userdetails_actions.php:20
+msgid "Your editor preferences could not be changed"
+msgstr ""
+
+#: units/tinymce/tinymce_userdetails_edit.php:3
+msgid "Visual text editing"
+msgstr ""
+
+#: units/tinymce/tinymce_userdetails_edit.php:4
+msgid ""
+"Set this to 'yes' if you would like to use a visual (WYSIWYG) text editor "
+"for your posts and comments."
+msgstr ""
+
+#: units/tinymce/tinymce_userdetails_edit.php:20
+#: units/tinymce/tinymce_userdetails_edit.php:27
+msgid "Enable visual editor: "
+msgstr ""
+
+#: units/users/content_main_index.php:6
+msgid "View your profile!"
+msgstr "Skoða eigin lýsingu!"
+
+#: units/users/content_main_index.php:7
+msgid "Your portfolio is the main way people find out about you. You can"
+msgstr "Je portfolio is de snelste manier waarop mensen"
+
+#: units/users/content_main_index.php:8
+msgid "edit your details"
+msgstr "Wijzig je details"
+
+#: units/users/content_main_index.php:9
+msgid "and choose exactly what you want to share with whom."
+msgstr "en kies precies met wie je wat wilt delen"
+
+#: units/users/function_default_access_levels.php:6
+msgid "Public"
+msgstr "Opinbert"
+
+#: units/users/function_number_of_users.php:7
+#, php-format
+msgid "There are %d active users."
+msgstr "Það eru %d virkir notendur."
+
+#: units/users/function_number_of_users.php:12
+#, php-format
+msgid "(%d logged on.)"
+msgstr "(%d innskráðir.)"
+
+#: units/users/function_number_of_users.php:17
+msgid "User Statistics"
+msgstr "Tölfræði notanda"
+
+#: units/users/user_info.php:22
+msgid "None."
+msgstr "Engin(n)"
+
+#: units/users/userdetails_actions.php:20
+msgid "Your suggested name was too long. Please try something shorter."
+msgstr "De naam die je hebt ingevuld was te lang. Probeer iets korters."
+
+#: units/users/userdetails_actions.php:40
+msgid "Email address updated."
+msgstr "Tölvupóstfang hefur verið uppfært."
+
+#: units/users/userdetails_actions.php:47
+msgid "Your moderation preferences have been changed."
+msgstr ""
+
+#: units/users/userdetails_actions.php:54
+msgid "Public comments and discussion set to 'on'."
+msgstr ""
+
+#: units/users/userdetails_actions.php:57
+msgid "Public comments and discussion set to 'off'."
+msgstr ""
+
+#: units/users/userdetails_actions.php:65
+msgid "Email comments and discussion set to 'on'."
+msgstr ""
+
+#: units/users/userdetails_actions.php:68
+msgid "Email comments and discussion set to 'off'."
+msgstr ""
+
+#: units/users/userdetails_actions.php:76
+msgid "Email notifications set to 'on'."
+msgstr "Tilkynningar í tölvupósti eru virkjaðar"
+
+#: units/users/userdetails_actions.php:79
+msgid "Email notifications set to 'off'."
+msgstr "Tilkynningar í tölvupósti eru óvirkar"
+
+#: units/users/userdetails_actions.php:94
+msgid "Details were not changed."
+msgstr "Smáatriðum var ekki breytt."
+
+#: units/users/userdetails_actions.php:105
+msgid ""
+"Password not changed: Your password is either too short or too long. It must "
+"be between 4 and 32 characters in length."
+msgstr ""
+"Het wachtwoord is niet gewijzigd: De lengte van het wachtwoord is te kort of "
+"te lang. Het moeten tussen de 4 en de 12 tekens lang zijn."
+
+#: units/users/userdetails_actions.php:107
+msgid ""
+"Password not changed: Your password can only consist of letters or numbers."
+msgstr ""
+"Het wachtwoord is niet gewijzigd: het wachtwoord mag alleen maar cijfer en "
+"letters bevatten."
+
+#: units/users/userdetails_actions.php:109
+msgid "Your password was updated."
+msgstr "Lykilorðið þitt hefur verið uppfært."
+
+#: units/users/userdetails_actions.php:116
+msgid ""
+"Password not changed: The password and its verification string did not match."
+msgstr ""
+"Het wachtwoord is niet gewijzigd: het wachtwoord en het wachtwoord ter "
+"controle kwamen niet overeen."
+
+#: units/users/userdetails_edit.php:11
+msgid "Change your full name:"
+msgstr "Breyta eigin nafni:"
+
+#: units/users/userdetails_edit.php:28
+msgid "Your full name "
+msgstr "Jouw volledige naam "
+
+#: units/users/userdetails_edit.php:33
+msgid "Your email address:"
+msgstr "Tölvupósturinn þinn:"
+
+#: units/users/userdetails_edit.php:34
+#, fuzzy
+msgid ""
+"This will not be displayed to other users; you can choose to make an email "
+"address available via the profile screen."
+msgstr ""
+"Póstfangið er ekki sýnilegt öðrum notendum. Þú getur valið að gera "
+"póstfangið opinbert via the profile screen."
+
+#: units/users/userdetails_edit.php:48
+msgid "Your email address "
+msgstr "Tölvupósturinn þinn "
+
+#: units/users/userdetails_edit.php:53
+msgid "Friendship moderation:"
+msgstr ""
+
+#: units/users/userdetails_edit.php:54
+msgid "This allows you to choose who can list you as a friend."
+msgstr ""
+
+#: units/users/userdetails_edit.php:71
+msgid "No moderation: anyone can list you as a friend. (Recommended)"
+msgstr ""
+
+#: units/users/userdetails_edit.php:76
+msgid "Moderation: friendships must be approved by you."
+msgstr ""
+
+#: units/users/userdetails_edit.php:81
+msgid "Private: nobody can list you as a friend."
+msgstr ""
+
+#: units/users/userdetails_edit.php:86
+msgid "Friendship moderation"
+msgstr ""
+
+#: units/users/userdetails_edit.php:91
+msgid "Make comments public"
+msgstr ""
+
+#: units/users/userdetails_edit.php:92
+msgid ""
+"Set this to 'yes' if you would like anyone to be able to comment on your "
+"resources (by default only logged-in users can). Note that this may make you "
+"vulnerable to spam."
+msgstr ""
+
+#: units/users/userdetails_edit.php:107 units/users/userdetails_edit.php:114
+msgid "Public comments: "
+msgstr ""
+
+#: units/users/userdetails_edit.php:120
+msgid "Receive email notifications"
+msgstr "Fá tilkynningar í tölvupósti"
+
+#: units/users/userdetails_edit.php:121
+msgid ""
+"Set this to 'yes' if you would like to receive email copies of any messages "
+"you receive. This includes blog comments, notifications when people add you "
+"as a friend and more. You can always view these online as part of your "
+"recent activity page."
+msgstr ""
+
+#: units/weblogs/archives_view.php:19
+msgid "Weblog Archive"
+msgstr "Eldri færslur"
+
+#: units/weblogs/archives_view.php:62 units/weblogs/archives_view_month.php:44
+msgid "There are no weblog posts to archive as yet."
+msgstr "Er zijn nog geen weblog berichten om te archiveren"
+
+#: units/weblogs/default_template.php:8
+msgid "Weblog Post"
+msgstr ""
+
+#: units/weblogs/default_template.php:9
+#, fuzzy
+msgid "A template for each weblog post."
+msgstr "Sniðmát fyrir hverja einstaka bloggfærslu"
+
+#: units/weblogs/default_template.php:13
+#, fuzzy
+msgid "The username of the person making the post"
+msgstr "Notandanafn þess sem skráir færsluna"
+
+#: units/weblogs/default_template.php:14
+msgid "Their user icon"
+msgstr ""
+
+#: units/weblogs/default_template.php:15
+#, fuzzy
+msgid "Their full name"
+msgstr "Fullt nafn þeirra"
+
+#: units/weblogs/default_template.php:16
+msgid "The time and date of the post"
+msgstr ""
+
+#: units/weblogs/default_template.php:17
+msgid "A link to any comments"
+msgstr ""
+
+#: units/weblogs/default_template.php:18
+msgid "A link to any trackbacks"
+msgstr ""
+
+#: units/weblogs/default_template.php:19
+msgid "A list of comments, if any"
+msgstr ""
+
+#: units/weblogs/default_template.php:23
+msgid "Posted by"
+msgstr "Skráð af"
+
+#: units/weblogs/default_template.php:50
+msgid "Weblog Comments"
+msgstr ""
+
+#: units/weblogs/default_template.php:51
+msgid "A placeholder for weblog comments."
+msgstr ""
+
+#: units/weblogs/default_template.php:53
+msgid "The list of comments themselves"
+msgstr ""
+
+#: units/weblogs/default_template.php:57
+#, fuzzy
+msgid "Comments"
+msgstr "Athugasemdir"
+
+#: units/weblogs/default_template.php:72
+msgid "Individual weblog comment"
+msgstr ""
+
+#: units/weblogs/default_template.php:73
+msgid ""
+"A template for each individual weblog comment. (Displayed one after the "
+"other, embedded in the comment placeholder.)"
+msgstr ""
+
+#: units/weblogs/default_template.php:75
+msgid "Post body"
+msgstr "Meginmál"
+
+#: units/weblogs/default_template.php:76
+msgid "The name of the person making the comment"
+msgstr ""
+
+#: units/weblogs/default_template.php:77
+msgid "When the comment was posted"
+msgstr ""
+
+#: units/weblogs/default_template.php:78
+msgid "The usericon of the person making the comment, if available"
+msgstr ""
+
+#: units/weblogs/display_interesting_post_form.php:21
+msgid "Stop keeping track of this post"
+msgstr ""
+
+#: units/weblogs/display_interesting_post_form.php:22
+msgid ""
+"You have marked this post as interesting; all comments will appear on your "
+"'recent activity' page. If you would like to remove this flag, click here."
+msgstr ""
+
+#: units/weblogs/display_interesting_post_form.php:23
+msgid "Remove interesting flag"
+msgstr ""
+
+#: units/weblogs/display_interesting_post_form.php:25
+msgid "Keep track of this post"
+msgstr "Fylgjast með þessari færslu"
+
+#: units/weblogs/display_interesting_post_form.php:26
+msgid ""
+"Click the 'Mark interesting' button to monitor new comments on your 'recent "
+"activity' page."
+msgstr ""
+
+#: units/weblogs/display_interesting_post_form.php:27
+msgid "Mark interesting"
+msgstr "Merkja sem áhugavert"
+
+#: units/weblogs/function_search.php:5
+msgid "Weblog posts by"
+msgstr "Bloggfærslur færðar af"
+
+#: units/weblogs/function_search.php:6
+msgid "in category"
+msgstr "in de categorie"
+
+#: units/weblogs/function_search.php:7
+msgid "RSS feed for weblog posts by"
+msgstr "RSS straumur fyrir bloggfærslur:"
+
+#: units/weblogs/function_search.php:8
+msgid "Other users with weblog posts in category"
+msgstr "Andere gebruikers met weblog berichten in deze categorie"
+
+#: units/weblogs/function_search.php:9
+msgid "Users with weblog posts in category"
+msgstr "Notendur með bloggfærslur í flokkinum"
+
+#: units/weblogs/function_search_rss.php:20
+#: units/weblogs/templates_preview.php:53
+msgid "Weblog post"
+msgstr "Weblog bericht"
+
+#: units/weblogs/templates_preview.php:7
+msgid "Unkind Guest"
+msgstr "Ókurteis gestur"
+
+#: units/weblogs/templates_preview.php:8
+msgid " I mock you, Babbage! Your difference engine will never catch on."
+msgstr ""
+" Ik lach je uit, Babbage! Jouw difference engine zal nooit wat worden."
+
+#: units/weblogs/templates_preview.php:9
+#: units/weblogs/templates_preview.php:11
+msgid "Charles Babbage"
+msgstr "Charles Babbage"
+
+#: units/weblogs/templates_preview.php:10
+msgid "Says you!"
+msgstr "Segir þú!"
+
+#: units/weblogs/templates_preview.php:12
+#, fuzzy
+msgid "The Analytical Engine - introduction from Chapter VIII"
+msgstr "The Analytical Engine - introduction from Chapter VIII"
+
+#: units/weblogs/templates_preview.php:13
+#, fuzzy
+msgid ""
+"The circular arrangement of the axes of the Difference Engine round the "
+"large central wheels led to the most extended prospects. The whole of "
+"arithmetic now appeared within the grasp of mechanism. A vague glimpse even "
+"of an Analytical Engine at length opened out, and I pursued with enthusiasm "
+"the shadowy vision. The drawings and the experiments were of the most costly "
+"kind. Draftsmen of the highest order were necessary to economize the labour "
+"of my own head; whilst skilled workmen were required to execute the "
+"experimental machinery to which I was obliged constantly to have recourse. "
+"In order to carry out my pursuits successfully, I had purchased a house with "
+"above a quarter of an acre of ground in a very quiet locality. My coach-"
+"house was now converted into a forge and a foundry, whilst my stables were "
+"transformed into a workshop. I built other extensive workshops myself, and "
+"had a fireproof building for my drawings and draftsmen. Having myself worked "
+"with a variety of tools, and having studied the art of constructing each of "
+"them, I at length laid it down as a principle - that, except in rare cases, "
+"I would never do anything myself if I could afford to hire another person "
+"who could do it for me."
+msgstr ""
+"The circular arrangement of the axes of the Difference Engine round the "
+"large central wheels led to the most extended prospects. The whole of "
+"arithmetic now appeared within the grasp of mechanism. A vague glimpse even "
+"of an Analytical Engine at length opened out, and I pursued with enthusiasm "
+"the shadowy vision. The drawings and the experiments were of the most costly "
+"kind. Draftsmen of the highest order were necessary to economize the labour "
+"of my own head; whilst skilled workmen were required to execute the "
+"experimental machinery to which I was obliged constantly to have recourse. "
+"In order to carry out my pursuits successfully, I had purchased a house with "
+"above a quarter of an acre of ground in a very quiet locality. My coach-"
+"house was now converted into a forge and a foundry, whilst my stables were "
+"transformed into a workshop. I built other extensive workshops myself, and "
+"had a fireproof building for my drawings and draftsmen. Having myself worked "
+"with a variety of tools, and having studied the art of constructing each of "
+"them, I at length laid it down as a principle - that, except in rare cases, "
+"I would never do anything myself if I could afford to hire another person "
+"who could do it for me."
+
+#: units/weblogs/weblogs_actions.php:25
+msgid "Your post has been added to your weblog."
+msgstr "Het bericht is toegevoegd aan jouw weblog"
+
+#: units/weblogs/weblogs_actions.php:54
+msgid "The weblog post has been modified."
+msgstr "Het bericht is gewijzigd"
+
+#: units/weblogs/weblogs_actions.php:68
+msgid "This weblog post has now been added to your 'interesting' list."
+msgstr ""
+
+#: units/weblogs/weblogs_actions.php:79
+msgid "You are no longer monitoring this weblog post."
+msgstr "Þú ert ekki lengur að fylgjast með þessari færslu."
+
+#: units/weblogs/weblogs_actions.php:97
+msgid "The selected weblog post was deleted."
+msgstr "Het geselecteerde weblog bericht is verwijderd."
+
+#: units/weblogs/weblogs_actions.php:99
+msgid ""
+"You do not appear to have permission to delete this weblog post. It was not "
+"deleted."
+msgstr ""
+"Þú virðist ekki hafa heimild til þess að eyða þessari bloggfærslu. Færslunni "
+"var ekki eytt."
+
+#: units/weblogs/weblogs_actions.php:140
+msgid "Your comment has been added."
+msgstr "Je reactie is toegevoegd"
+
+#: units/weblogs/weblogs_actions.php:144
+#, fuzzy
+msgid "Your comment could not be posted. The system thought it was spam."
+msgstr ""
+"Athugasemdinni var ekki komið á framfæri. Kerfið lítur á hana sem ruslpóst."
+
+#: units/weblogs/weblogs_actions.php:162
+msgid "Your comment was deleted."
+msgstr "Samfélaginu hefur verið eytt."
+
+#: units/weblogs/weblogs_all_users_view.php:24
+msgid "Remove filter"
+msgstr "Fjarlægja síu"
+
+#: units/weblogs/weblogs_all_users_view.php:29
+#, fuzzy
+msgid "Filtered: Showing personal blog posts"
+msgstr "Síað: Birti einungis eigin bloggfærslur"
+
+#: units/weblogs/weblogs_all_users_view.php:33
+msgid "Filtered: Showing community blog posts"
+msgstr "Síað: Birti einungis bloggfærslur samfélags"
+
+#: units/weblogs/weblogs_all_users_view.php:38
+msgid "Filtered: Showing posts with comments"
+msgstr "Síað: Birti bloggfærslur með athugasemdum"
+
+#: units/weblogs/weblogs_all_users_view.php:42
+msgid "Filtered: Showing posts with no comments"
+msgstr "Síað: Birti færslur án athugasemda"
+
+#: units/weblogs/weblogs_all_users_view.php:57
+msgid "Filtered: Showing posts from "
+msgstr "Síað: Birti færslur frá "
+
+#: units/weblogs/weblogs_all_users_view.php:67
+msgid "Filtered: Showing posts tagged with "
+msgstr "Síað: Birti færslur merktar með "
+
+#: units/weblogs/weblogs_comments_add.php:7
+msgid "Add a comment"
+msgstr "Ný athugasemd"
+
+#: units/weblogs/weblogs_comments_add.php:33
+msgid "Your comment text"
+msgstr "Texti athugasemdar"
+
+#: units/weblogs/weblogs_comments_add.php:58
+msgid "Add comment"
+msgstr "Ný athugasemd"
+
+#: units/weblogs/weblogs_post_field.php:83
+msgid "Click here to post to this weblog."
+msgstr "Smelltu hér til að skrá færslu í þetta blogg."
+
+#: units/weblogs/weblogs_posts_add.php:22
+msgid "Add a new post"
+msgstr "Ný færsla"
+
+#: units/weblogs/weblogs_posts_add.php:23
+#: units/weblogs/weblogs_posts_edit.php:17
+msgid "Post title:"
+msgstr "Titill færslu:"
+
+#: units/weblogs/weblogs_posts_add.php:24
+#: units/weblogs/weblogs_posts_edit.php:18
+msgid "Post body:"
+msgstr "Meginmál:"
+
+#: units/weblogs/weblogs_posts_add.php:25
+#: units/weblogs/weblogs_posts_edit.php:19
+msgid "Keywords (Separated by commas):"
+msgstr "Lykilorð (aðskyld með kommum):"
+
+#: units/weblogs/weblogs_posts_add.php:26
+#: units/weblogs/weblogs_posts_edit.php:20
+msgid ""
+"Keywords commonly referred to as 'Tags' are words that represent the weblog "
+"post you have just made. This will make it easier for others to search and "
+"find your posting."
+msgstr ""
+"Lykilorð, kölluð tög, eru orð sem einkenna bloggfærsluna sem þú ert að færa. "
+"Skráning lykilorða einfalda öðrum notendum að leita eftir færslum frá þér."
+
+#: units/weblogs/weblogs_posts_add.php:28
+msgid "Post"
+msgstr "Publiceer"
+
+#: units/weblogs/weblogs_posts_add.php:78
+#, fuzzy
+msgid ""
+"You must be logged in to post a new weblog entry. You may do so using the "
+"login pane to the right of the screen."
+msgstr ""
+"Þú verður að vera innskráð/ur til þess að skrá nýja bloggfærslu. Þú getur "
+"skráð þig inn hér hægra megin á skjánum.."
+
+#: units/weblogs/weblogs_posts_edit.php:16
+msgid "Edit a post"
+msgstr "Breyta færslur"
+
+#: units/weblogs/weblogs_posts_edit.php:22
+msgid "Save Post"
+msgstr "Vista færslu"
+
+#: units/weblogs/weblogs_posts_view.php:86
+msgid "More"
+msgstr "Meira"
+
+#: units/weblogs/weblogs_posts_view.php:87
+msgid "Keywords:"
+msgstr "Lykilorð:"
+
+#: units/weblogs/weblogs_posts_view.php:88
+msgid "comment(s)"
+msgstr "athugasemd(ir)"
+
+#: units/weblogs/weblogs_posts_view.php:140
+msgid "Are you sure you want to permanently delete this weblog comment?"
+msgstr "Viltu örugglega eyða þessari athugasemd?"
+
+#: units/weblogs/weblogs_user_info_menu.php:10
+msgid "Recent Activity"
+msgstr "Nýleg virkni"
+
+#: units/weblogs/weblogs_user_info_menu.php:12
+msgid "View your activity"
+msgstr "Skoða eigin virkni"
+
+#: units/xml/main.php:78
+msgid "XML error: "
+msgstr "XML villa: "
+
+#~ msgid ""
+#~ "\tThis screen allows you to edit your profile. Blank fields will not show up "
+#~ "on your profile screen in any view; you can change the access level for each "
+#~ "piece of information in order to prevent it from falling into the wrong "
+#~ "hands. For example, we strongly recommend you keep your address to yourself "
+#~ "or a few trusted parties."
+#~ msgstr ""
+#~ "\tOp deze pagina kun je jouw profiel bewerken. Lege velden zullen hoe dan "
+#~ "ook niet zichtbaar zijn. Je kunt voor elk element de toegangsrechten bepalen "
+#~ "zodat het niet in de verkeerde handen kan vallen. Bijvoorbeeld, wij raden "
+#~ "aan dat je jouw adres voor jezelf bewaart of alleen voor mensen die je kent "
+#~ "en vertrouwt."
+
+#~ msgid " FAQ"
+#~ msgstr " SOS"
+
+#~ msgid " Terms &amp; Conditions"
+#~ msgstr " Notendaskilmálar"
+
+#~ msgid " was added to your friends list."
+#~ msgstr " hefur verið bætt við vinalistann þinn."
+
+#~ msgid "<b>$s</b> posted on weblog post:"
+#~ msgstr "<b>$s</b> heeft op op het weblog bericht geplaatst:"
+
+#~ msgid "About"
+#~ msgstr "Um"
+
+#~ msgid "About "
+#~ msgstr "Um "
+
+#~ msgid "Add selected to group"
+#~ msgstr "Bættu völdum notanda við hóp"
+
+#~ msgid "Again for verification purposes: "
+#~ msgstr "Aftur til samanburðar "
+
+#~ msgid "An optional message"
+#~ msgstr "Valkvæm skilaboð"
+
+#~ msgid "Are you sure you want to add this user to your friends list?"
+#~ msgstr "Viltu örugglega bæta þessum notanda við vinalistann þinn?"
+
+#~ msgid "Are you sure you want to permanently delete this file?"
+#~ msgstr "Viltu örugglega eyða þessari skrá endanlega?"
+
+#~ msgid "Are you sure you want to permanently delete this weblog post?"
+#~ msgstr "Viltu örugglega eða þessari bloggfærslu?"
+
+#~ msgid "Change this community's name."
+#~ msgstr "Breyta nafni á samfélagi."
+
+#~ msgid "Change your password:"
+#~ msgstr "Breyta lykilorði:"
+
+#~ msgid "Community Members"
+#~ msgstr "Meðlimir samfélags"
+
+#~ msgid "Community blog"
+#~ msgstr "Samfélagsblogg"
+
+#~ msgid "Create Template"
+#~ msgstr "Mynda nýtt sniðmát"
+
+#~ msgid "Create template"
+#~ msgstr "Mynda sniðmát"
+
+#~ msgid "Default Template"
+#~ msgstr "Sjálfgefið sniðmát"
+
+#~ msgid "Default:"
+#~ msgstr "Sjálfgefið:"
+
+#~ msgid "Delete this group"
+#~ msgstr "Eyða hóp"
+
+#~ msgid "Edit "
+#~ msgstr "Breyta "
+
+#~ msgid "FAQ"
+#~ msgstr "SOS"
+
+#~ msgid "File description:"
+#~ msgstr "Skráarlýsing:"
+
+#~ msgid "File folder:"
+#~ msgstr "Skráarsafn:"
+
+#~ msgid "Files owned by "
+#~ msgstr "Skrár í eigu "
+
+#~ msgid "Folder name:"
+#~ msgstr "Nafn skráarsafns:"
+
+#~ msgid "Folders owned by"
+#~ msgstr "Skráarsöfn í eigu"
+
+#~ msgid ""
+#~ "For the moment, joining %s requires a specially tailored invite code. If you "
+#~ "know someone who's a member, it may be worth asking them for one."
+#~ msgstr ""
+#~ "Op dit moment is voor het lid worden van %s een speciale code nodig. "
+#~ "Misschien is het de moeite waard een code te vragen aan iemand die al lid "
+#~ "is.Í augnablikinu er krafist sérstaks boðskorts viðÍ augnablikinu"
+
+#~ msgid "Friends blogs"
+#~ msgstr "Blogg vina"
+
+#~ msgid "Has anyone commented on your blog?"
+#~ msgstr "Hefur einhver skráð athugasemd við bloggið þitt?"
+
+#~ msgid ""
+#~ "Here you can create your own templates based on one of the existing public "
+#~ "templates. Just select which public template you would like to alter and "
+#~ "then create your own. You will now have edit privilages."
+#~ msgstr ""
+#~ "Hier kun je op basis van bestaande thema's een eigen thema aanmaken. "
+#~ "Selecteer een van de bestaande thema's die je wilt wijzigen en maak dan je "
+#~ "eigen thema. Je hebt nu alle rechten om het te wijzigen."
+
+#~ msgid "Home"
+#~ msgstr "Heim"
+
+#~ msgid "Icon description:"
+#~ msgstr "Lýsing á teikni"
+
+#~ msgid "Invite"
+#~ msgstr "Bjóða"
+
+#~ msgid "Leave this blank if you're happy to leave your password as it is."
+#~ msgstr "Skyldu þennan reit óútfylltan ef þú vilt ekki breyta lykilorðinu."
+
+#~ msgid "Make this the default icon:"
+#~ msgstr "Maak dit het standaard pictogram:"
+
+#~ msgid "Matching users:"
+#~ msgstr "Overeenkomende gebruikers:"
+
+#~ msgid "Members of this group:"
+#~ msgstr "Meðlimir í þessum hóp:"
+
+#~ msgid "Name of the data we're inputting"
+#~ msgstr "De naam van de ingevoerde gegevens"
+
+#~ msgid "Name:"
+#~ msgstr "Nafn:"
+
+#~ msgid ""
+#~ "Nobody's listed you as a friend! Maybe you need to start chatting to some "
+#~ "other users?"
+#~ msgstr ""
+#~ "Enginn hefur skráð þig sem vin! Ef til vill þarft þú að hafa meiri samskipti "
+#~ "við aðra notendur?"
+
+#~ msgid "Owned by %s"
+#~ msgstr "Is van %s"
+
+#~ msgid "Parent folder"
+#~ msgstr "Bovenliggende map"
+
+#~ msgid "Personal blog"
+#~ msgstr "Persoonlijk weblog"
+
+#~ msgid "Picture to upload:"
+#~ msgstr "Te uploaden afbeelding"
+
+#~ msgid "Postal address"
+#~ msgstr "Postadres"
+
+#~ msgid "Privacy Policy"
+#~ msgstr "Persónuvernd"
+
+#~ msgid "RSS feed"
+#~ msgstr "RSS straumur"
+
+#~ msgid "Remove selected from group"
+#~ msgstr "Fjarlægja valda úr hóp"
+
+#~ msgid "Request new password"
+#~ msgstr "Krefjast nýs lykilorðs"
+
+#~ msgid "Running Your Own "
+#~ msgstr "Installeer je eigen ELGG "
+
+#~ msgid "Save changes"
+#~ msgstr "Vista breytingar"
+
+#~ msgid "Save this group"
+#~ msgstr "Vista þennan hóp"
+
+#~ msgid "Save your profile"
+#~ msgstr "Vista lýsingu"
+
+#~ msgid ""
+#~ "Site pictures are small pictures that act as a representative icon "
+#~ "throughout the system."
+#~ msgstr ""
+#~ "Site afbeeldingen zijn kleine afbeeldingen die als herkenbaar pictogram in "
+#~ "de website worden gebruikt."
+
+#~ msgid ""
+#~ "Someone with that email address has already been invited to the system. "
+#~ "Invitation not sent."
+#~ msgstr ""
+#~ "Einhverjum með þetta tölvupóstfang hefur þegar verið boðinn aðgangur að "
+#~ "kerfinu. Boð var ekki sent."
+
+#~ msgid "Sorry, your code was invalid."
+#~ msgstr "Sorry, jouw code is ongeldig."
+
+#~ msgid "Subfolder"
+#~ msgstr "Undirmappa"
+
+#~ msgid "Submit details:"
+#~ msgstr "Verstuur gegevens:"
+
+#~ msgid "Template Name"
+#~ msgstr "Nafn á sniðmáti"
+
+#~ msgid "Template name"
+#~ msgstr "Nafn á sniðmáti"
+
+#~ msgid ""
+#~ "The following are public themes that you can use to change the way your %s! "
+#~ "looks - these do not change the content only the appearance. Check the "
+#~ "preview and then select the one you want. If you wish you can adapt one of "
+#~ "these using the 'create theme' option below."
+#~ msgstr ""
+#~ "Deze thema's zijn openbaar en kun je gebruiken om het uiterlijk van jouw %s! "
+#~ "te wijzigen. Ze veranderen niet de inhoud, alleen maar hoe het zich toont. "
+#~ "Bekijk de voorbeeldweergave en selecteer het thema dat je wilt gebruiken. "
+#~ "Als je wilt, kun je één van deze thema's als basis gebruiken voor een nieuw  "
+#~ "thema door hieronder voor de 'Maak thema'  optie te kiezen."
+
+#~ msgid ""
+#~ "The icon quota is 1st: $s and you have 2nd: $s icons uploaded. You may not "
+#~ "upload any more icons until you've deleted some."
+#~ msgstr ""
+#~ "De schijfruimte voor pictogrammen is  %s en je hebt %s pictogrammen "
+#~ "geupload. Je mag niet meer pictogrammen uploaden totdat je een aantal hebt "
+#~ "verwijderd."
+
+#~ msgid ""
+#~ "The username $s is already taken by another user. You will need to pick a "
+#~ "different one."
+#~ msgstr ""
+#~ "De gebruikersnaam $s is al van iemand anders. Je zult een andere moeten "
+#~ "kiezen."
+
+#~ msgid ""
+#~ "The username '$username' is already taken by another user. You will need to "
+#~ "pick a different one."
+#~ msgstr ""
+#~ "De gebruikersnaam '$username' is al van iemand anders. Je zult een andere "
+#~ "moeten kiezen."
+
+#~ msgid "Their email address"
+#~ msgstr "Tölvupóstföng þeirra"
+
+#~ msgid "Their name"
+#~ msgstr "Nöfn þeirra"
+
+#~ msgid "This community doesn't currently have any members."
+#~ msgstr "Þetta samfélag er án meðlima."
+
+#~ msgid ""
+#~ "This user doesn't currently have any friends listed. Maybe if you list them "
+#~ "as a friend, it'll start the ball rolling ..?"
+#~ msgstr ""
+#~ "Deze gebruiker heeft op dit moment nog geen vrienden. Misschien kun je hier "
+#~ "verandering in brengen door deze gebruiker als vriend in jouw lijst op te "
+#~ "nemen?"
+
+#~ msgid "This user is not currently a member of any communities."
+#~ msgstr "Þessi notandi er ekki meðlimur í neinu samfélagi."
+
+#~ msgid "This user is not currently moderating any communities."
+#~ msgstr "Þessi notandi er ekki stjórnandi í neinu samfélagi."
+
+#~ msgid ""
+#~ "This user isn't currently listed as anyone's friend. Maybe you could be the "
+#~ "first?"
+#~ msgstr ""
+#~ "Niemand heeft deze gebruiker in een vriendenlijst opgenomen. Misschien ben "
+#~ "jij de eerste?"
+
+#~ msgid ""
+#~ "This will add a code to your weblog post that will be converted into an "
+#~ "embedded file."
+#~ msgstr ""
+#~ "Een code zal aan jouw bericht worden toegevoegd die automatisch wordt "
+#~ "omgezet naar het toe te voegen bestand."
+
+#~ msgid "Upload files and folders"
+#~ msgstr "Sækja skrár og möppur"
+
+#~ msgid "Upload new icon"
+#~ msgstr "Sækja ný teikn"
+
+#~ msgid ""
+#~ "You do not appear to have permissions to delete this weblog post. It was not "
+#~ "deleted."
+#~ msgstr ""
+#~ "Þú virðist ekki hafa heimild til þess að eyða þessari bloggfærslu. Færslunni "
+#~ "var ekki eytt."
+
+#~ msgid ""
+#~ "You don't have any communities listed! To join a community, click the 'join' "
+#~ "button underneath a community's icon. You can find communities you're "
+#~ "interested in by using the search function."
+#~ msgstr ""
+#~ "Þú ert ekki meðlimur í samfélagi. Til þess að gerast meðlimur í samfélagi "
+#~ "verður þú að smella á \"gerast meðlimur\" hnappinn neðan við táknmynd "
+#~ "viðkomandi samfélags. Þú getur leitað eftir áhugaverðum samfélögum með því "
+#~ "að nýta leitarskipanir kerfisins."
+
+#~ msgid ""
+#~ "You don't have any friends listed! To add a user as a friend, click the "
+#~ "'friend' button underneath a user's icon."
+#~ msgstr ""
+#~ "Þú hefur enga vini skráða. Til þess að bæta notanda á vinalista verður þú að "
+#~ "smella á \"vinur\" hnappinn neðan við táknmynd viðkomandi notanda."
+
+#~ msgid "You don't have any site pictures loaded yet."
+#~ msgstr "Je hebt nog geen site afbeeldingen geplaatst."
+
+#~ msgid "You don't own any communities. Why not create one?"
+#~ msgstr ""
+#~ "Þú hefur ekki stofnað samfélag. Hvers vegna ekki að stofna eitt núna?"
+
+#~ msgid ""
+#~ "You have exceeded the file quota for this account. Some files must be "
+#~ "deleted before you can upload this one."
+#~ msgstr ""
+#~ "Skráarkvótinn þinn er uppurinn. Þú verður að eyða einverri skrá eða skrám "
+#~ "áður en þú getur sótt þessa."
+
+#~ msgid "You left "
+#~ msgstr "Þú fórst "
+
+#~ msgid ""
+#~ "You may not edit this template. To create a new, editable template based on "
+#~ "the default, go to <a href=\"index.php\">the main templates page</a>."
+#~ msgstr ""
+#~ "Þessu sniðmáti er ekki hægt að breyta. Til þess að búa til nýtt breytanlegt "
+#~ "sniðmát sem byggir á sjálfgefna sniðmátinu verður þú að opna síðuna sem "
+#~ "geymir<a href=\"index.php\">sniðmátin</a>."
+
+#~ msgid "Your %s password"
+#~ msgstr "Jouw wachtwoord voor %s"
+
+#~ msgid ""
+#~ "Your %s password has been reset.\n"
+#~ "\n"
+#~ "For your records, your new password is:\n"
+#~ "\tPassword: %s\n"
+#~ "Please consider changing your password as soon as you have logged infor "
+#~ "security reasons.\n"
+#~ "\n"
+#~ "We hope you continue to enjoy using the system.\n"
+#~ "\n"
+#~ "Regards,\n"
+#~ "The %s Team"
+#~ msgstr ""
+#~ "Je wachtwoord voor %s is vernieuwd.\n"
+#~ "\n"
+#~ "Ter herinnering, je nieuwe wachtwoord is:\n"
+#~ "\tWachtwoord : %s\n"
+#~ "Het is veiliger om zodra je bent ingelogd dit nieuwe wachtwoord meteen te "
+#~ "veranderen.\n"
+#~ "\n"
+#~ "We hopen dat je met plezier deze site blijft gebruiken.\n"
+#~ "\n"
+#~ "Vr. groet,\n"
+#~ "Het %s team"
+
+#~ msgid "Your email address"
+#~ msgstr "Tölvupósturinn þinn"
+
+#~ msgid "Your friends:"
+#~ msgstr "Vinir þínir:"
+
+#~ msgid ""
+#~ "Your password request code appears to be invalid. Try generating a new one?"
+#~ msgstr ""
+#~ "Jouw code voor de aanvraag van het wachtwoord blijkt ongeldig. Probeer een "
+#~ "nieuwe aan te vragen?"
+
+#~ msgid "Your password: "
+#~ msgstr "Lykilorðið þitt: "
+
+#~ msgid "Your suggested email address $email doesn't appear to be valid."
+#~ msgstr "Het e-mail adres dat je hebt ingevuld ($email) is niet geldig."
+
+#~ msgid "Your username"
+#~ msgstr "Notendanafnið þitt"
+
+#~ msgid "About ELGG"
+#~ msgstr "Over ELGG"
+
+#~ msgid "Contact"
+#~ msgstr "Contact"
+
+#~ msgid "Help"
+#~ msgstr "Help"
+
+#~ msgid ""
+#~ " is already taken by another user. You will need to pick a different one."
+#~ msgstr " is al in gebruik door een andere gebruiker. Kies een andere naam."
+
+#~ msgid "Moderator Of"
+#~ msgstr "Moderator van"
+
+#~ msgid "Member Of"
+#~ msgstr "Lid van"
+
+#~ msgid "You have used "
+#~ msgstr "Je hebt in gebruik "
+
+#~ msgid "Access level:"
+#~ msgstr "Toegangsniveau:"
+
+#~ msgid "Select / Create / Edit templates"
+#~ msgstr "Selecteer / Maak / Wijzig sjablonen"
+
+#~ msgid "There are"
+#~ msgstr "Er zijn"
+
+#~ msgid "Update your weblog"
+#~ msgstr "Werk je weblog bij"
+
+#~ msgid "Edit details"
+#~ msgstr "Wijzig details"
+
+#~ msgid "Join Elgg"
+#~ msgstr "Wordt lid van Elgg"
+
+#~ msgid "password "
+#~ msgstr "wachtwoord "

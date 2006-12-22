@@ -1,4 +1,4 @@
-<?
+<?php
 
     // Really Simple Discovery (RSD)
     // see: <http://archipelago.phrasewise.com/rsd>
@@ -9,9 +9,9 @@
 
     header("Content-type: text/xml");
 
-    if ($_GET["user_id"]) {
-        $blog_id  = $_GET["user_id"];
-        $username = run("users:id_to_name", $blog_id);
+    $blog_id =  optional_param('user_id',0,PARAM_INT);
+    if (!empty($blog_id)) {
+        $username = user_info('username', $blog_id);
         $service_url = url . "_rpc/RPC2.php";
         $user_homepage = url . $username . "/weblog/";
 

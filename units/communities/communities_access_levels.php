@@ -1,31 +1,24 @@
 <?php
 
-	// Get communities
-	
-		$communities = db_query("select * from users where owner = " . $_SESSION['userid'] . " and user_type = 'community'");
-	
-		if (sizeof($communities) > 0 && $communities != null) {
-			foreach($communities as $community) {
-				
-				$data['access'][] = array(gettext("Community") .": " . $community->name, "community" . $community->ident);
-				
-			}
-		}
-		
-		$communities = db_query("select users.* from friends 
-										join users on users.ident = friends.friend 
-										where users.user_type = 'community' 
-										and users.owner <> " . $_SESSION['userid'] . "
-										and friends.owner = " . $_SESSION['userid']);
-		
-		if (sizeof($communities) > 0 && $communities != null) {
-			foreach($communities as $community) {
-				
-				$data['access'][] = array(gettext("Community") . ": " . $community->name, "community" . $community->ident);
-				
-			}
-		}
-		
-		$communities = db_query("select * from users where owner = " . $_SESSION['userid']);
+// Get communities
+
+global $USER;
+global $CFG;
+
+if ($communities = get_records_select('users','owner = ? AND user_type = ?',array($USER->ident,'community'))) {
+    foreach($communities as $community) {
+        $data['access'][] = array(__gettext("Community") .": " . $community->name, "community" . $community->ident);
+    }
+}
+
+if ($communities = get_records_sql("SELECT u.* FROM ".$CFG->prefix."friends f
+                                    JOIN ".$CFG->prefix.'users u ON u.ident = f.friend 
+                                    WHERE u.user_type = ? AND u.owner <> ? AND f.owner = ?',
+                                   array('community',$USER->ident,$USER->ident))) {
+    foreach($communities as $community) {
+        $data['access'][] = array(__gettext("Community") . ": " . $community->name, "community" . $community->ident);
+        
+    }
+}
 
 ?>

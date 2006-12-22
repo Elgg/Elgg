@@ -1,3 +1,184 @@
+Version 2.0.6.1 (2005-05-04)
+	Fixed issue where the layer and style plugins couldn't be added in incorrect order.
+	Fixed issue with Firefox nl not beeing defined in triggerSave correctly.
+Version 2.0.6 (2005-05-03)
+	Added new theme_advanced_source_editor_wrap option, this gives the possibility to force word wrapping.
+	Added new support for using div,blockquote,dt,dd,code,samp as a items in the theme_advanced_blockformats option.
+	Added new strict_loading_mode option, this switches the loading method from document.write to DOM.
+	Added new hidden_tab_class, display_tab_class options for resolving the MSIE image dimension bug.
+	Added new absolute layer support, this was added to a new plugin called layer.
+	Added new CSS style properties support, this was as a plugin called style.
+	Fixed bug where TinyMCE was reporting a warning when inserting a image while running on HTTPS.
+	Fixed bug where pressing the browser back button after submit removed empty paragraphs in MSIE.
+	Fixed bug where links the the same page as the editor page was converted into a /.
+	Fixed bug where the getSelectedHTML method was returning undefined when selecting controls in MSIE.
+	Fixed bug with unterminated string literal errors where reported in some browsers.
+	Fixed bug where src and href where converted into xsrc and xhref in text.
+	Fixed bug where two characters where removed by backspace sometimes in Gecko.
+	Fixed bug where class drop list wasn't visible in some of the table dialogs.
+	Fixed bug where br elements where incorrectly removed within paragraphs on backspace.
+	Fixed bug where drag/drop operations failed in MSIE when editor height was set to a % value.
+	Fixed bug where width/height was lost on images if they where placed in hidden tabs in MSIE.
+	Fixed bugs with CSS auto import parsing, contributed by Scott Eade.
+	Fixed compatiblity issues with MSIE 5.0. Some RegExps needed to be rewritten.
+	Fixed issue that made it impossible to remove the entity code/name for &#39;.
+	Fixed issue with odd <br></br> elements not beeing handled properly.
+	Fixed issue where TinyMCE couldn't be loaded in a XML document.
+	Fixed issue with contextmenu beeing placed outside of visible area on Gecko browsers.
+	Fixed issue whith area tag not being closed.
+Version 2.0.5.1 (2005-03-22)
+	Fixed bug where emtpy paragraphs sometimes got removed in MSIE.
+	Fixed bug where autosave plugin was running even in fullscreen mode.
+	Fixed bug where browse and color image button urls in form_utils.js where hardcoded.
+Version 2.0.5 (2005-03-21)
+	Added API docs for the TinyMCE_Popup class that is used by all dialogs in TinyMCE.
+	Added new TinyMCE_Layer class to the core of TinyMCE plugins will be using this later on.
+	Added new loadPlugin function, use this to load external plugins.
+	Added instructions on how to contribute language packs.
+	Added new support for multiple content_css files, based on contribution by Man-Chicken.
+	Added new table_cell_limit, table_row_limit, table_col_limit options, based on contribution by Man-Chicken.
+	Added new fix_list_elements option, if this is set to true UL/OL lists will be forced XHTML valid on cleanup.
+	Added new fix_table_elements, if this is set to true tables will be moved outside paragraphs.
+	Fixed so input and button as closed elements in the cleanup logic.
+	Fixed so the mceButtonSelected is more visible with darker background in the editor_ui.css.
+	Fixed issue where charmap.js was calling switchClass that's reserved for buttons.
+	Fixed issue where the directionality option wasn't used in the preview plugin.
+	Fixed issues with nestled bullet lists pasted from Word 2003.
+	Fixed bug where button wasn't selected correctly in MSIE due to a CSS issue.
+	Fixed bug where ask mode wasn't working on DIV elements in Firefox and Opera.
+	Fixed bug where the mceAddFrameControl command wasn't working correctly.
+	Fixed bug where language packs wasn't imported correctly in plugins loaded externaly.
+	Fixed bug where focusing external input elements was visible in element path under MSIE.
+	Fixed bug where fullscreen plugin wasn't opening the window fullscreen in Firefox.
+	Fixed bug where style select dropdown wasn't working in Firefox when used in fullscreen mode.
+	Fixed bug where the fix_content_duplication wasn't working anymore.
+	Fixed bug where MSIE sometimes generated empty paragraphs.
+	Fixed bug where MSIE sometimes generated tags like <//tag>.
+	Fixed bug where the directionality option produced a error for the color picker dialog.
+	Fixed bug where configured callback options wasn't executed correctly in fullscreen mode.
+	Fixed bug where tags got generated as <*> some times in Gecko.
+	Fixed bug where the cursor was placed within a the anchor when inserting a new one in Gecko.
+	Fixed bug where convert_fonts_to_span option wasn't working correctly with new cleanup engine.
+	Fixed various language pack issues such as invalid characters.
+	Fixed naming conflict with zoom plugin and the format select box.
+	Fixed so that the initialization of the editor is slightly faster.
+	Removed all language packs except the english one from the core package. [BREAKS COMPATIBLITY]
+Version 2.0.4 (2006-02-24)
+	Fixed bug where fullscreen plugin was using the tinymce_dev.js script.
+	Fixed bug where events where having a return true; statement infront of them.
+	Fixed bug where theme_advanced_toolbar_location option wasn't working.
+	Fixed bug where select lists wasn't working if you touched them with the tab key.
+	Fixed bug where auto reset design mode wasn't working correctly.
+	Fixed bug where null was inserted in paste button action in MSIE.
+	Fixed bug where _template plugin had a , instead of . character on e.type.
+	Fixed bug where src, href where replaced to xsrc and xhref in comments.
+	Fixed bug where paste_cleanup_on_paste option wasn't working correctly with the paste plugin.
+	Fixed bug where MSIE was reporting an error when TinyMCE was placed in a frame and not focused.
+	Fixed bug where clipboard_msg wasn't entity decoded corectly before displaying it in confirm box.
+	Fixed bug where mceRemoveControl wasn't working correctly on DIV elements.
+	Fixed bug where mceInsertContent/mceReplaceContent produced error when a empty string was inserted.
+	Fixed so the default valid_elements option is more XHTML valid.
+	Fixed issue where style formatting wasn't handled when pasting content from Word.
+	Fixed issue where ' characters wasn't entity encoded, they are now encoded into &#39; and not &apos;.
+	Fixed issue with empty paragraphs, these are now filled with &nsbp; if they are empty.
+	Added documentation on how the # prefix can be used in the valid_elements option.
+	Added new options paste_remove_styles and paste_remove_spans to paste plugin.
+	Added possibility to have empty default attributes values.
+Version 2.0.3 (2006-02-13)
+	Added missing buttons to button reference page in documentation.
+	Added dt,dl,dd elements to default_valid elements config value.
+	Added new support for self registrering plugins.
+	Added new callback for themes and plugins handleEvent and the handle_event_callback option.
+	Added new execcommand_callback option, this enables you to add custom execcommand logic on page level.
+	Added new custom_shortcuts option, this enables you to disable plugin/theme specific keyboard shortcuts.
+	Added new addShortcut to TinyMCE_Control, this enables plugin to register custom keyboard shortcuts.
+	Added new getButtonHTML function to TinyMCE core, this function makes it easier for plugins/themes to make buttons.
+	Added more documentation on how to write plugins and updated the _template plugin.
+	Added more documentation on how to write custom themes.
+	Fixed so the default window size of the source editor is larger in the advanced theme.
+	Fixed so all internal plugins use the new auto registration and separation logic.
+	Fixed so all internal themes use the new auto registration and separation logic.
+	Fixed so the Safari warning is switched off by default.
+	Fixed so cursor position isn't moved when performing a cleanup.
+	Fixed so cursor position is correct when performing undo/redo actions.
+	Fixed so all themes/plugins now use a:hover to produce the mouse over button effect.
+	Fixed so it uses the DOMContentLoaded and onreadystatechange instead of onload.
+	Fixed so the simple theme also supports the button_tile_map option.
+	Fixed so the selection/cursor is moved to the beginning of area on search/replace.
+	Fixed callback handling to reduce logic, improve performance and flexibility.
+	Fixed documentarion error for the paste plugin, contributed by Jochen Metzger.
+	Fixed bug that made the cleanup process to hang MSIE on specific content.
+	Fixed bug with absolute to relative URL convertion logic if the absolute URL didn't have a path.
+	Fixed bug where about.htm in advanced theme refered to a non existing css file.
+	Fixed bug with defParam and the event_elements option.
+	Fixed bug where fullscreen plugin wasn't correctly setup with editor contents.
+	Fixed bug where paste/drop converted relative URLs incorrectly in MSIE.
+	Fixed bug with inlinepopups not restoring selection on close window in MSIE.
+	Fixed bug where selection was lost when a new column/row was inserted in a table running in Gecko.
+	Fixed bug where save plugin wasn't working in fullscreen mode.
+	Fixed bug where fullscreen plugin wasn't working in Opera.
+	Fixed bug where editor resizing in advanced theme wasn't working in Opera.
+	Fixed bug where cursor position was placed at the end of instance on word paste.
+	Fixed bug where a tinyMCE is undefined error was reported in Firefox.
+	Fixed compatiblity issues with new cleanup plugin and the prototype.js library.
+	Renamed the mceItemEditable/mceItemNonEditable to mceEditable/mceNonEditable.
+	Renamed the TinyMCEControl class to TinyMCE_Control, TinyMCE_ is the valid class prefix.
+	Removed the getInsertLinkTemplate and getInsertImageTemplate functions from themes and from API.
+	Removed insertImage and insertLink from TinyMCE core, they are moved to the advanced theme.
+	Removed opacity workaround made for Opera Preview 1, download Opera Preview 2 instead.
+	Removed search backward function from replace dialog since it could result in a infinite loop.
+	Marked insertlink_callback, insertimage_callback options as deprecated these can be replaced with execcommand_callback.
+	Moved selection specific methods to a new class. For example inst.selectNode is now inst.selection.selectNode.
+	Updated German language pack, contributed by Ace Man.
+Version 2.0.2 (2006-01-24)
+	Added updated Danish language pack contributed by Jan Moelgaard, John Dalsgaard and Bo Frederiksen.
+	Added updated Czech language pack contributed by michi aka mishal.
+	Added new Slovenian language pack contributed by Domen Kosir.
+	Added new Turkish language pack contributed by Engin Dumlu.
+	Added new save_onsavecallback option to the save plugin, this function is called on save.
+	Added new save_enablewhendirty option to the save plugin, this will disable the button until changes are made.
+	Added new onpageload callback event, this event is called when the page is loaded but before instances are made.
+	Added new accessibility_focus option, this enables you to control if buttons should be tab focusable or not.
+	Added new greek alpha character to charmap dialog.
+	Added new Scaron,scaron,Alpha entities to the default value of the entities option thanks to Kevin Rodgers.
+	Added new contextmenu items link.unlink,advhr contributed by Speednet.
+	Added new paste_insert_word_content_callback option for the paste plugin.
+	Added new cleanup plugin, this will replace the one inside the core ones it's considered stable.
+	Added cancel button to color picker contributed by Speednet.
+	Fixed various documentation errors and typos, modified the FAQ.
+	Fixed issue where the first handleNodeChange call was done to early in initialization.
+	Fixed issue with Dutch language pack for advlink plugin.
+	Fixed issue where dialogs was to short when dialog_type option was set to modal in MSIE.
+	Fixed bug where insert image under Gecko resulted in a broken image if it was inserted a the beginning of a element.
+	Fixed bug where mceVisualAid class wasn't removed from TH elements on save.
+	Fixed bug where the href attribute area elements gets converted to xhref.
+	Fixed bug with document relative anchors being forced absolute even when the convert_urls was set to false.
+	Fixed bug where some plugins produced &gr; intead of &gt; entities on string encoding.
+	Fixed bug where some characters in charmap dialog was double encoded in Firefox/Gecko.
+	Fixed bug with XML core entities wasn't encoded when using raw or numeric value in entity_encoding option.
+	Fixed bug where classes was removed from table,td,th elements when the verify_css_classes option was enabled.
+	Fixed bug where elements was getting a visual aid class if a default or force class attribute value rule was used.
+	Fixed bug where strong/em rules didn't handle the -/+ prefixes correctly under Firefox/Mozilla.
+	Fixed bug where non textarea elements didn't work when submiting content.
+	Fixed bug where a access denied error was produced when using contextmenu together with modal dialogs under MSIE.
+	Fixed bug where fullscreen plugin didn't call custom cleanup functions when passing content back and forth.
+	Fixed issue where default rule for font tags didn't have a + prefix in valid_elements.
+	Fixed issue with CSS where "arrow" was used instead of "default" for cursor replacement.
+	Fixed issue where the replace button replaced the current selection first time it was used.
+	Fixed issue with missing title for the advhr dialog.
+	Fixed issue with div not beeing usable in the theme_advanced_blockformats option.
+	Fixed issue in with translation in the German language pack.
+	Fixed so the word wrap toggle for source view functions in Firefox/Mozilla.
+	Fixed so title attribute of emotion images gets inserted aswell as alt.
+	Fixed so the insert return on popups is checked by default in advlink.
+	Fixed so url gets filled when empty if a user selects a popup url.
+	Fixed so some init settings gets trimmed from whitespace.
+	Fixed so charmap closes when a char is selected since most of the time users only need one char.
+	Fixed so the link and image dialogs of advanced theme are styled with the new 2.x layout.
+	Fixed accessibility issuew with the link, image and advhr dialogs.
+	Fixed so the advhr dialog uses the new 2.x layout.
+	Fixed XHTML compliance for Preview plugin contributed by Bo Frederiksen.
+	Fixed entity decoding problem with insert button of the advhr plugin contributed by Bo Frederiksen.
 Version 2.0.1 (2005-12-02)
 	Fixed critical bug in some MSIE versions when submiting content.
 Version 2.0 (2005-12-01)

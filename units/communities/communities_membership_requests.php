@@ -1,64 +1,62 @@
 <?php
+global $CFG;
+$body = '';
+    // Lists membership requests for a community
 
-	// Lists membership requests for a community
+    if (logged_on) {
+        
+        global $page_owner;
+        if (user_type($page_owner) == "community" && run("permissions:check",array("userdetails:change", $page_owner))) {
+            $title = run("profile:display:name") . " :: ". __gettext("Membership requests") ."";
 
-	if (logged_on) {
-		
-		global $page_owner;
-		
-		if (run("users:type:get", $page_owner) == "community" && run("permissions:check",array("userdetails:change", $page_owner))) {
+            if ($pending_requests = get_records_sql('SELECT fr.ident AS request_id, u.*  FROM '.$CFG->prefix.'friends_requests fr
+                                                     LEFT JOIN '.$CFG->prefix.'users u ON u.ident = fr.owner
+                                                     WHERE fr.friend = ? ORDER BY u.name ASC',array($page_owner))) {
+                $body .= "<p>" . __gettext("The following users would like to join this community. They need your approval to do this (to change this setting, visit the 'community settings' page).") . "</p>";
+                    
+                foreach($pending_requests as $pending_user) {
+                    
+                    $where = run("users:access_level_sql_where",$_SESSION['userid']);
+                    if ($description = get_record_select('profile_data',"($where) AND name = 'minibio' and owner = " . $pending_user->ident)) {
+                        $description = "<p>" . stripslashes($description->value) . "</p>";
+                    } else {
+                        $description = "<p>&nbsp;</p>";
+                    }
 
-			$title = run("profile:display:name") . " :: ". gettext("Membership requests") ."";
-			
-			$pending_requests = db_query("select friends_requests.ident as request_id, users.*, icons.filename from friends_requests left join users on users.ident = friends_requests.owner left join icons on icons.ident = users.icon where friends_requests.friend = $page_owner order by users.name asc");
-			if (sizeof($pending_requests) > 0) {
-			
-				$body .= "<p>" . gettext("The following users would like to join this community. They need your approval to do this (to change this setting, visit the 'community settings' page).") . "</p>";
-					
-				foreach($pending_requests as $pending_user) {
-					
-					$where = run("users:access_level_sql_where",$_SESSION['userid']);
-					$description = db_query("select * from profile_data where ($where) and name = 'minibio' and owner = " . $pending_user->ident);
-					if (sizeof($description) > 0) {
-						$description = "<p>" . stripslashes($description[0]->value) . "</p>";
-					} else {
-						$description = "<p>&nbsp;</p>";
-					}
+                    $request_id = $pending_user->request_id;
+                    
+                    $pending_user->name = run("profile:display:name",$pending_user->ident);
+                    
+                    $col1 = "<p><b>" . $pending_user->name . "</b></p>" . $description;
+                    $col1 .= "<p>";
+                    $col1 .= '<a href="' . url . $pending_user->username . '/">' . __gettext("Profile") . "</a> | ";
+                    $col1 .= '<a href="' . url . $pending_user->username . '/weblog/">' . __gettext("Blog") . "</a></p>";
+                    $col2 = '<p><a href="' .url. "_communities/requests.php?action=community:approve:request&amp;request_id=$request_id&amp;owner=$page_owner\">Approve</a> | <a href=\"" .url. "_communities/requests.php?action=community:decline:request&amp;request_id=$request_id&amp;owner=$page_owner\">Decline</a></p>";
+                    $ident = $pending_user->ident;
 
-					$icon = $pending_user->filename;
-					
-					$request_id = $pending_user->request_id;
-					
-					$col1 = "<p><b>" . stripslashes($pending_user->name) . "</b></p>" . $description;
-					$col1 .= "<p>";
-					$col1 .= "<a href=\"" . url . $pending_user->username . "/\">" . gettext("Profile") . "</a> | ";
-					$col1 .= "<a href=\"" . url . $pending_user->username . "/weblog/\">" . gettext("Blog") . "</a></p>";
-					$col2 = "<p><a href=\"" .url. "_communities/requests.php?action=community:approve:request&request_id=$request_id&owner=$page_owner\">Approve</a> | <a href=\"" .url. "_communities/requests.php?action=community:decline:request&request_id=$request_id&owner=$page_owner\">Decline</a></p>";
-					$ident = $pending_user->ident;
-
-					$body .= run("templates:draw", array(
-														'context' => 'adminTable',
-														'name' => "<img src=\"" . url . "_icons/data/" . $icon . "\" />",
-														'column1' => $col1,
-														'column2' => $col2
-													)
-													);
-					
-				}
-				
-			} else {
-				$body .= "<p>" . gettext("You have no pending membership requests.") . "</p>";
-			}
-			
-			$run_result = run("templates:draw", array(
-						'context' => 'contentholder',
-						'title' => $title,
-						'body' => $body
-					)
-					);
-		
-		}
-		
-	}
+                    $body .= templates_draw(array(
+                                                    'context' => 'adminTable',
+                                                    'name' => '<img src="' . url . '_icon/user/' . $pending_user->icon . '" />',
+                                                    'column1' => $col1,
+                                                    'column2' => $col2
+                                                 )
+                                                 );
+                    
+                }
+                
+            } else {
+                $body .= "<p>" . __gettext("You have no pending membership requests.") . "</p>";
+            }
+            
+            $run_result = templates_draw( array(
+                        'context' => 'contentholder',
+                        'title' => $title,
+                        'body' => $body
+                    )
+                    );
+        
+        }
+        
+    }
 
 ?>

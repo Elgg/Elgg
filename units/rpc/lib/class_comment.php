@@ -17,19 +17,17 @@
 
             if ($var != "")
             {
-                $comment = db_query("select * from weblog_comments where ident = '$var'"); 
 
-                $this->ident      = $comment[0]->ident;
-                $this->post_id    = $comment[0]->post_id;
-                $this->owner      = $comment[0]->owner;
-                $this->postedname = $comment[0]->postedname;
-                $this->body       = $comment[0]->body;
-                $this->posted     = $comment[0]->posted;
-
-                // Does the requested id exist
-                if (sizeof($comment) > 0)
-                {
+                if ($comment = get_record('weblog_comments','ident',$var)) {
+                    $this->ident      = $comment->ident;
+                    $this->post_id    = $comment->post_id;
+                    $this->owner      = $comment->owner;
+                    $this->postedname = $comment->postedname;
+                    $this->body       = $comment->body;
+                    $this->posted     = $comment->posted;
                     $this->exists = true;
+                } else {
+                    $this->exists = false;
                 }
             }
             else
@@ -65,16 +63,7 @@
 
         function delete()
         {
-            db_query("delete from weblog_comments where ident = '$this->ident'");
-
-            if (db_affected_rows() > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return delete_records('weblog_comments','ident',$this->ident);
         }
     }
 

@@ -3,8 +3,8 @@ body, td, .content { font-family: Verdana, Arial, helvetica, sans-serif; font-si
 .title { font-family: Verdana, Arial, helvetica, sans-serif; font-size: 16px; font-weight: bold; }
 .subtitle { font-size: 12px; font-weight: bold; }
 
-.toc_ul, .toc_li { margin-left: 8 px; line-height: 16px; }
-.step_ol, .step_li { margin-left: 11 px; line-height: 16px; }
+.toc_ul, .toc_li { margin-left: 8px; line-height: 16px; }
+.step_ol, .step_li { margin-left: 11px; line-height: 16px; }
 img { border: 0; }
 
 a:visited { color: #666666; text-decoration: underline; }

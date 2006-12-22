@@ -6,8 +6,11 @@
 
     // TODO include a check for a valid request
  
+    // This can be run from walled gardens
+        define("context","external");
+        
     // Run includes
-        require("../includes.php");
+        require_once(dirname(dirname(__FILE__))."/includes.php");
 
     // Fire up the XML-RPC server
         run('rpc:xmlrpc:server');

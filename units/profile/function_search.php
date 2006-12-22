@@ -1,92 +1,83 @@
 <?php
 
-	// Search criteria are passed in $parameter from run("search:display")
-	
-		$url = url;
-		$handle = 0;
-		foreach($data['profile:details'] as $profiletype) {
-			if ($profiletype[1] == $parameter[0] && $profiletype[2] == "keywords") {
-				$handle = 1;
-			}
-		}
-	
-		if ($handle) {
-			
-			$searchline = "tagtype = '".addslashes($parameter[0])."' and tag = '".addslashes($parameter[1])."'";
-			$searchline = "(" . run("users:access_level_sql_where",$_SESSION['userid']) . ") and " . $searchline;
-			$searchline = str_replace("owner","tags.owner",$searchline);
-			$result = db_query("select distinct users.* from tags join users on users.ident = tags.owner where $searchline");
+global $CFG, $db, $PAGE;
 
-			$parameter[1] = stripslashes($parameter[1]);
-			
-			if (sizeof ($result) > 0) {
-				$profilesMsg = gettext("Profiles where");
-				$body = <<< END
-			
-	<h2>
-		$profilesMsg
+    // Search criteria are passed in $parameter from run("search:display")
+    
+        $handle = 0;
+        foreach($data['profile:details'] as $profiletype) {
+            if ($profiletype[1] == $parameter[0] && $profiletype[2] == "keywords") {
+                $handle = 1;
+            } else {
+                $icon = "default.png";
+            }
+        }
+        
+        if (!empty($PAGE->returned_items) && $PAGE->returned_items == "resources") {
+            $handle = 0;
+        }
+        
+        if ($handle) {
+            
+            $searchline = "tagtype = " . $db->qstr($parameter[0]) . " AND tag = " . $db->qstr($parameter[1]) . "";
+            $searchline = "(" . run("users:access_level_sql_where",$_SESSION['userid']) . ") and " . $searchline;
+            if (!empty($PAGE->search_type_unformatted)) {
+                $searchline .= " AND u.user_type = " . $PAGE->search_type;
+            }
+            
+            $searchline = str_replace("owner","t.owner",$searchline);
+            
+            $parameter[1] = stripslashes($parameter[1]);
+
+            if ($result = get_records_sql('SELECT DISTINCT u.* FROM '.$CFG->prefix.'tags t
+                                          JOIN '.$CFG->prefix.'users u ON u.ident = t.owner
+                                          WHERE '.$searchline)) {
+            $profilesMsg = __gettext("Profiles where");
+$body = <<< END
+            
+    <h2>
+        $profilesMsg
 END;
-				$body .= " '".gettext($parameter[0])."' = '".$parameter[1]."':";
-				$body .= <<< END
-	</h2>
+                $body .= " '".__gettext($parameter[0])."' = '".$parameter[1]."':";
+                $body .= <<< END
+    </h2>
 END;
-				$body .= <<< END
-	<table class="userlist">
-		<tr>
+                $body .= <<< END
+    <table class="userlist">
+        <tr>
 END;
-				$i = 1;
-				$icon = "default.png";
-				$defaulticonparams = @getimagesize(path . "_icons/data/default.png");
-				
-				foreach($result as $key => $info) {
-					
-					list($width, $height, $type, $attr) = $defaulticonparams;
-					// $info = $info[0];
-					// if ($info->icon != -1) {
-						$icon = db_query("select filename from icons where ident = " . $info->icon);
-						if (sizeof($icon) == 1) {
-							$icon = $icon[0]->filename;
-							if (!(list($width, $height, $type, $attr) = @getimagesize(path . "_icons/data/" . $icon))) {
-								$icon = "default.png";
-								list($width, $height, $type, $attr) = $defaulticonparams;
-							}
-						} else {
-							$icon = "default.png";
-						}
-					// }
-					
-					if (sizeof($parameter[1]) > 4) {
-						$width = round($width / 2);
-						$height = round($height / 2);
-					}
-					$friends_username = stripslashes($info->username);
-					$friends_name = htmlentities(stripslashes($info->name));
-					$friends_menu = run("users:infobox:menu",array($info->ident));
-					$width = round($width / 2);
-					$height = round($height / 2);
-					$body .= <<< END
-		<td align="center">
-			<p>
-			<a href="{$url}{$friends_username}/">
-			<img src="{$url}_icons/data/{$icon}" width="{$width}" height="{$height}" alt="{$friends_name}" border="0" /></a><br />
-			<span class="userdetails">
-				{$friends_name}
-				{$friends_menu}
-			</span>
-			</p>
-		</td>
+                $i = 1;
+                $w = 100;
+                if (sizeof($result) > 4) {
+                    $w = 50;
+                }
+                foreach($result as $key => $info) {
+                    $friends_username = $info->username;
+                    // $friends_name = htmlspecialchars(stripslashes($info->name), ENT_COMPAT, 'utf-8');
+                    $friends_name = run("profile:display:name",$info->ident);
+                    $info->icon = run("icons:get",$info->ident);
+                    $body .= <<< END
+        <td align="center">
+            <p>
+            <a href="{$CFG->wwwroot}{$friends_username}/">
+            <img src="{$CFG->wwwroot}_icon/user/{$info->icon}/w/{$w}" alt="{$friends_name}" border="0" /></a><br />
+            <span class="userdetails">
+                <a href="{$CFG->wwwroot}{$friends_username}/">{$friends_name}</a>
+            </span>
+            </p>
+        </td>
 END;
-					if ($i % 5 == 0) {
-						$body .= "</tr><tr>";
-					}
-					$i++;
-				}
-				$body .= <<< END
-	</tr>
-	</table>
+                    if ($i % 5 == 0) {
+                        $body .= "</tr><tr>";
+                    }
+                    $i++;
+                }
+                $body .= <<< END
+    </tr>
+    </table>
 END;
-				$run_result .= $body;
-			}
-		}
+                $run_result .= $body;
+            }
+        }
 
 ?>

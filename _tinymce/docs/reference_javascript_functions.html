@@ -223,8 +223,9 @@ Example:
 </div>
 </p>
 <div class="separator"></div>
-<h3>tinyMCE.insertLink(href, target);</h3>
-
+<h3><span class="marked">(Deprecated)</span> tinyMCE.insertLink(href, target);</h3>
+<p>This method is deprecated and removed as of 2.0.3. Use tinyMCE.execCommand('mceInsertContent',false,'custom html'); instead and tinyMCE.getInstanceById('&lt;inst&gt;').selection.getFocusElement() to retrive/update the selected element.</p>
+<p>But if you realy need the old function it's marked internal but is available in the advanced theme and you can call it by using tinyMCE.themes['advanced']._insertLink(href, target);. But the recommended way is to modify your code to use the logic above.</p>
 <p>This method inserts a link a the cursor position of the selected editor instance or updates the selected link with new data. This method should be called upon "ok" in the insertLink popup when you create custom themes.
 </p>
 <table border="1" cellspacing="0" cellpadding="4">
@@ -248,7 +249,8 @@ Example:
 Returns: Nothing
 </p>
 <div class="separator"></div>
-<h3>tinyMCE.insertImage(src, alt, border, hspace, vspace, width, height, align, title, onmouseover, onmouseout);</h4>
+<h3><span class="marked">(Deprecated)</span> tinyMCE.insertImage(src, alt, border, hspace, vspace, width, height, align, title, onmouseover, onmouseout);</h4>
+<p>This method is deprecated and removed as of 2.0.3. Use tinyMCE.execCommand('mceInsertContent',false,'custom html'); instead or if you realy need the old function it's marked internal but is available in the advanced theme and you can call it by using tinyMCE.themes['advanced']._insertImage(src, alt, border, hspace, vspace, width, height, align, title, onmouseover, onmouseout);. But the recommended way is to modify your code to use the logic above.</p>
 <p>
 This method inserts a image a the cursor position of the selected editor instance or updates the selected image with new data. This method should be called upon "ok" in the insertImage popup when you create custom themes.
 </p>
@@ -379,7 +381,7 @@ This method returns a editor instance by editor id.
 </table>
 </p>
 <p>
-Returns: TinyMCE Editor instance (TinyMCEControl). 
+Returns: TinyMCE Editor instance (TinyMCE_Control). 
 </p>
 <div class="separator"></div>
 <h3>tinyMCE.importThemeLanguagePack([theme]);</h3>
@@ -587,7 +589,7 @@ Returns: TinyMCE configuration parameter.
 
 <div class="footer">
 	<div class="helpindexlink"><a href="index.html">Index</a></div>
-	<div class="copyright">Copyright &copy; 2005 Moxiecode Systems AB</div>
+	<div class="copyright">Copyright &copy; 2003-2006 <a href="http://www.moxiecode.com">Moxiecode Systems AB</a></div>
 	<br style="clear: both" />
 </div>
 

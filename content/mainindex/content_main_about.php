@@ -1,7 +1,7 @@
 <?php
 
-	$sitename = sitename;
-	$run_result .= <<< END
+    $sitename = sitename;
+    $run_result .= <<< END
 <h1>About $sitename</h1>
 
 <h3>More about $sitename</h3>

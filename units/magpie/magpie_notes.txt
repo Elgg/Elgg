@@ -1,0 +1,11 @@
+Modifications to standard magpie release
+========================================
+
+rss_fetch.inc
+=============
+
+Elgg already has Snoopy.class.inc in /lib/snoopy/, so the require_once line can be 
+changed to point to that one.
+
+The function error() has to be renamed in order to avoid a clash with elgglib.php.
+Currently, it is renamed to _magpie_error().

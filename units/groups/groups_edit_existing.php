@@ -1,22 +1,21 @@
 <?php
 
-	// Display existing groups
+// Display existing groups
 
-		$groupdata = run("groups:get", array($_SESSION['userid']));
-		if (sizeof($groupdata) > 0) {
-			$header = gettext("Groups you own"); // gettext variable
-			$body = <<< END
-		<h5>$header</h5>
+if ($groupdata = run("groups:get", array($_SESSION['userid']))) {
+    $header = __gettext("Groups you own"); // gettext variable
+    $body = <<< END
+        <h5>$header</h5>
 END;
-						
-			foreach($groupdata as $group) {
-				
-				$body .= run("groups:edit:display",array($group));
-				
-			}
-			
-			$run_result .= $body;
-			
-		}
+                        
+    foreach($groupdata as $group) {
+        
+        $body .= run("groups:edit:display",array($group));
+        
+    }
+    
+    $run_result .= $body;
+    
+}
 
 ?>

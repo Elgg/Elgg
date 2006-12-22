@@ -1,16 +1,16 @@
 <?php
 
-	/*
-	*	MySQL database plug-in
-	*/
+    /*
+    *    MySQL database plug-in
+    */
 
-	// Configuration
-		require("conf.php");
-		
-	// Library functions
-		require("library.php");
-		
-	// On initialisation, run the connect script
-		$function['init'][] = path . "units/db/function_connect.php";
-	
+    // Configuration
+        require_once(dirname(__FILE__)."/conf.php");
+        
+    // Library functions
+        require_once(dirname(__FILE__)."/library.php");
+        
+    // On initialisation, run the connect script
+        $function['init'][] = path . "units/db/function_connect.php";
+    
 ?>

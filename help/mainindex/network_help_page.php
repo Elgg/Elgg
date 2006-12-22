@@ -1,9 +1,9 @@
 <?php
 
-	$sitename = sitename;
-	$url = url;
-	$email = email;
-	$run_result .= <<< END
+    global $CFG;
+    $sitename = sitename;
+    $email = email;
+    $run_result .= <<< END
 
 <div class="helpfiles">
 <h3>What is 'Your Network'?</h3>
@@ -19,7 +19,7 @@
 <p>It is here that you can create new communities</p>
 <h4>>> Here's how:</h4>
 <p><b>Step 1:</b> You need to give the community a name as well as a username.</p>
-<img src="{$url}help/images/community_one.jpg" alt="Create a community" title="Create a community" width="336" height="120" border="0" />
+<img src="{$CFG->wwwroot}help/images/community_one.jpg" alt="Create a community" title="Create a community" width="336" height="120" border="0" />
 <p><b>Step 2:</b> Click '<b>create</b>' and that is it! You have now created a new comunity.</p>
 <h3>Friends:</h3>
 <p><b>Friends I have linked to</b> this page displays all the friends you have linked to. To remove a friend you just click on the small icon beside their name.</p>

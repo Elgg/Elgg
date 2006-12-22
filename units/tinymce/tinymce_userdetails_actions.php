@@ -1,24 +1,26 @@
 <?php
 
-	// Save the user's editor choice
+    // Save the user's editor choice
+    $action = optional_param('action');
+    $id = optional_param('id',0,PARAM_INT);
+    $value = optional_param('visualeditor');
 
-	if (logged_on && isset($_REQUEST['action']) && run("permissions:check",
-		array("userdetails:change",((int) $_REQUEST['id'])))) {
+    if (logged_on && !empty($action) 
+        && run("permissions:check", array("userdetails:change",$id))) {
+        if (!empty($value) && in_array($value,array('yes','no'))) {
 
-		if (isset($_REQUEST['visualeditor']) && ($_REQUEST['visualeditor'] == "yes" || $_REQUEST['visualeditor'] == "no")) {
-
-			// Get the current value, will also create an initial entry if not yet set
-			$current = run('userdetails:editor', (int) $_REQUEST['id']);
-			$value   = $_REQUEST['visualeditor'];
-			$id	  = (int) $_REQUEST['id'];
-
-			if ($current == $value) {
-				$messages[] .= gettext("Your editor preferences have been saved");
-			} else {
-				db_query("update user_flags set value = '$value' where flag = 'visualeditor' and user_id = $id");
-				$messages[] .= gettext("Your editor preferences have been changed");
-			}
-		}
-	}
+            // Get the current value, will also create an initial entry if not yet set
+            $current = run('userdetails:editor', $id);
+            if ($current == $value) {
+                $messages[] .= __gettext("Your editor preferences have been saved");
+            } else {
+                if (user_flag_set('visualeditor', $value, $id)) {
+                    $messages[] .= __gettext("Your editor preferences have been changed");
+                } else {
+                    $messages[] .= __gettext("Your editor preferences could not be changed");
+                }
+            }
+        }
+    }
 
 ?>

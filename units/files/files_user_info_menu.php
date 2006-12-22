@@ -1,44 +1,41 @@
 <?php
+global $USER;
+global $CFG;
+global $page_owner;
+$profile_id = $page_owner;
 
-		global $page_owner;
-		$profile_id = $page_owner;
-		$url = url;
-		
-		if ($page_owner != -1 && $page_owner != $_SESSION['userid']) {
-		
-			$posts = db_query("select count(*) as x from files where (".run("users:access_level_sql_where",$profile_id).") and files_owner = $profile_id");
-			$posts = $posts[0]->x;
-		
-			if ($_SESSION['userid'] == $profile_id) {
-				$title = gettext("Your Files");
-			} else {
-				$title = gettext("Files");
-			}
-	
-			if ($posts == 1) {
-				$filesstring = $posts . " file";
-			} else {
-				$filesstring = $posts . " files";
-			}
-			
-			$weblog_username = run("users:id_to_name",$profile_id);
-			$fileStorage = gettext("File Storage"); // gettext variable
-			$body = <<< END
-		<ul>
-			<li><a href="{$url}{$weblog_username}/files/">$fileStorage</a> ($filesstring)</li>
-			<li>(<a href="{$url}{$weblog_username}/files/rss/">RSS</a>)</li>
-		</ul>
+if ($page_owner != -1 && $page_owner != $USER->ident) {
+    $posts = count_records_select('files',"files_owner = $profile_id AND (".run("users:access_level_sql_where",$profile_id).")");
+    
+    if ($USER->ident == $profile_id) {
+        $title = __gettext("Your Files");
+    } else {
+        $title = __gettext("Files");
+    }
+    
+    if ($posts == 1) {
+        $filesstring = $posts . " file";
+    } else {
+        $filesstring = $posts . " files";
+    }
+    
+    $weblog_username = user_info('username', $profile_id);
+    $fileStorage = __gettext("File Storage"); // gettext variable
+    $body = <<< END
+        <ul>
+            <li><a href="{$CFG->wwwroot}{$weblog_username}/files/">$fileStorage</a> ($filesstring)</li>
+            <li>(<a href="{$CFG->wwwroot}{$weblog_username}/files/rss/">RSS</a>)</li>
+        </ul>
 END;
 
-			$run_result .= "<li id=\"sidebar_files\">";
-			$run_result .= run("templates:draw", array(
-									'context' => 'sidebarholder',
-									'title' => $title,
-									'body' => $body
-								)
-								);
-			$run_result .= "</li>";
-
-		}
-		
+    $run_result .= "<li id=\"sidebar_files\">";
+    $run_result .= templates_draw(array(
+                                        'context' => 'sidebarholder',
+                                        'title' => $title,
+                                        'body' => $body
+                                        )
+                                  );
+    $run_result .= "</li>";
+}
+        
 ?>

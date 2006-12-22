@@ -1,14 +1,16 @@
 /**
- * Czech lang variables 
+ * Czech lang variables
  * encoding: utf-8
- *  
- * $Id: cs.js,v 1.6 2005/10/18 13:59:42 spocke Exp $ 
- */  
+ *
+ * $Id: cs.js,v 1.8 2006/02/23 09:05:57 spocke Exp $
+ */
 
-tinyMCE.addToLang('',{
-insert_flash : 'Vlo�it/editovat Flash Movie',
-insert_flash_file : 'Flash soubor (.swf)',
-insert_flash_size : 'Velikost',
-insert_flash_list : 'Seznam',
-flash_props : 'Vlastnosti Flash'
+tinyMCE.addToLang('flash',{
+title : 'Vložit / editovat Flash',
+desc : 'Vložit / editovat Flash',
+file : 'Flash soubor (.swf)',
+size : 'Velikost',
+list : 'Flash soubory',
+props : 'Flash nastavení',
+general : 'Obecné'
 });

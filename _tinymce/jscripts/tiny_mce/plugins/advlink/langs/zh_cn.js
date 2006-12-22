@@ -1,4 +1,5 @@
-// Simplified Chinese lang variables contributed by tom_cat (thomaswangyang@gmail.com)
+// Simplified Chinese lang variables contributed by TinyMCE_China_Team ( tinymce_china {AT} yahoogroups {DOT} com ).
+// visit our homepage at: http://www.cube316.net/tinymce/ for more information.
 
 tinyMCE.addToLang('advlink',{
 general_tab : '一般',
@@ -40,7 +41,7 @@ mime : '目标 MIME 种类',
 rel : '页与目标的关系',
 rev : '目标与页的关系',
 tabindex : 'Tabindex',
-accesskey : 'Accesskey',
+accesskey : '快捷键',
 ltr : '从左到右',
 rtl : '从右到左'
 });

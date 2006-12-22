@@ -1,3 +1,3 @@
 <h1>
-	Edit your user details
+    Edit your user details
 </h1>

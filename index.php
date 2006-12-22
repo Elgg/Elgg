@@ -1,22 +1,25 @@
 <?php
 
-	require("includes.php");
-	
-	if (logged_on) {
-		$body = run("content:mainindex");
-	} else {
-		$body = run("content:mainindex:loggedout");
-	}
-	
-	echo run("templates:draw:page", array(
-					sitename,
-					run("templates:draw", array(
-													'body' => $body,
-													'title' => gettext("Main Index"),
-													'context' => 'contentholder'
-												)
-												)
-			)
-			);
-			
+    global $CFG;
+
+    require_once(dirname(__FILE__)."/includes.php");
+    templates_page_setup();
+    if (logged_on) {
+        $body = templates_draw(array(
+                                        'context' => 'frontpage_loggedin'
+                                )   
+                                );
+    } else {
+        $body = templates_draw(array(
+                                        'context' => 'frontpage_loggedout'
+                                )   
+                                );
+    }
+    
+    echo templates_page_draw( array(
+                    $CFG->sitename,
+                    $body
+            )
+            );
+            
 ?>

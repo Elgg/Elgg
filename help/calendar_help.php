@@ -1,20 +1,20 @@
 <?php
 
-	// Run includes
-		require("../includes.php");
+    // Run includes
+        require_once(dirname(dirname(__FILE__))."/includes.php");
 
        define("context", "calendar");
 
-	// Draw page
-		echo run("templates:draw:page", array(
-					gettext("Calendar help"),
-					run("templates:draw", array(
-													'body' => run("help:calendar"),
-													'title' => gettext("'Your calendar' help"),
-													'context' => 'contentholder'
-												)
-												)
-			)
-			);
-		
+    // Draw page
+        echo templates_page_draw( array(
+                    __gettext("Calendar help"),
+                    templates_draw( array(
+                                                    'body' => run("help:calendar"),
+                                                    'title' => __gettext("'Your calendar' help"),
+                                                    'context' => 'contentholder'
+                                                )
+                                                )
+            )
+            );
+        
 ?>

@@ -1,27 +1,29 @@
 <?php
 
-	//	ELGG invite-a-friend page
+    //    ELGG invite-a-friend page
 
-	// Run includes
-		require("../includes.php");
-		
-		run("invite:init");
-		
-		$title = sprintf(gettext("Join %s"),sitename);
-		
-		$body = run("content:invite:join");
-		$body .= run("invite:join");
-		
-		$body = run("templates:draw", array(
-						'context' => 'contentholder',
-						'title' => $title,
-						'body' => $body
-					)
-					);
-		
-		echo run("templates:draw:page", array(
-						$title, $body
-					)
-					);
+    // Run includes
+        define("context","external");
+        require_once(dirname(dirname(__FILE__))."/includes.php");
+        
+        run("invite:init");
+        templates_page_setup();        
+        
+        $title = sprintf(__gettext("Join %s"),sitename);
+        
+        $body = run("content:invite:join");
+        $body .= run("invite:join");
+        
+        $body = templates_draw(array(
+                        'context' => 'contentholder',
+                        'title' => $title,
+                        'body' => $body
+                    )
+                    );
+        
+        echo templates_page_draw( array(
+                        $title, $body
+                    )
+                    );
 
 ?>

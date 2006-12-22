@@ -1,33 +1,32 @@
 <?php
 
-	//	ELGG change user details page
+//    ELGG change user details page
 
-	// Run includes
-		require("../includes.php");
+// Run includes
+require_once(dirname(dirname(__FILE__))."/includes.php");
 
-		run("profile:init");
-		run("userdetails:init");
-		
-		if (isset($_REQUEST['context'])) {
-			define("context", $_REQUEST['context']);
-		} else {
-			define("context", "account");
-		}
+run("profile:init");
+run("userdetails:init");
 
-		protect(1);
-				
-		$title = run("profile:display:name") . " :: ". gettext("Edit user details");
-		
-		$body = run("templates:draw", array(
-				'context' => 'contentholder',
-				'title' => $title,
-				'body' => run("userdetails:edit")
-			)
-			);
-		
-		echo run("templates:draw:page", array(
-				$title, $body
-			)
-			);
+$context = optional_param('context','account');
+define('context',$context);
+
+protect(1);
+
+templates_page_setup();
+
+$title = run("profile:display:name") . " :: ". __gettext("Edit user details");
+
+$body = templates_draw(array(
+                             'context' => 'contentholder',
+                             'title' => $title,
+                             'body' => run("userdetails:edit")
+                             )
+                       );
+        
+echo templates_page_draw( array(
+                                      $title, $body
+                                      )
+         );
 
 ?>

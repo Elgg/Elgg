@@ -1,12 +1,12 @@
 <?php
 
-	// Function to authenticate
-	
-	// Original elgg logon code is not modular enough, most of the data, bussinesslogic and
-	// presentation folded in one, plus:
-	// - it expects the username and password in the _POST variable, we are dealing with _SERVER.
-	// - it sets a display message, we need a run_result
-	// - what if we need LDAP, or other ...
+    // Function to authenticate
+    
+    // Original elgg logon code is not modular enough, most of the data, bussinesslogic and
+    // presentation folded in one, plus:
+    // - it expects the username and password in the _POST variable, we are dealing with _SERVER.
+    // - it sets a display message, we need a run_result
+    // - what if we need LDAP, or other ...
 
     // Note: the HTTP Authentication hooks in PHP are only available when it is running as an Apache 
     // module and is hence not available in the CGI version.
@@ -32,8 +32,8 @@
     
     if (isset($parameter) && $parameter['username'] != "") // parameters passed by run()
     {
-        $username = addslashes($parameter['username']);
-        $password = addslashes(md5($parameter['password']));
+        $username = $parameter['username'];
+        $password = md5($parameter['password']);
         
         $auth['method'] = "parameters";
     }
@@ -51,7 +51,7 @@
 
             if ( $key == "Username")
             {
-                $username = addslashes($val);
+                $username = $val;
             }
             elseif ($key == "PasswordDigest")
             {
@@ -66,14 +66,14 @@
                 $nonce = $val;
             }
         }
-
-        $result = db_query("select password from users where username = '$username'");
+        
+        $result = get_record('users','username',$username);
         $good_pw = md5($result->password);
 
         // Recreate the digest
         $digest = pack("H*", sha1($nonce
-								. $created
-								. $good_pw));
+                                . $created
+                                . $good_pw));
 
         $auth['method'] = $good_pw;
     }
@@ -82,8 +82,8 @@
             $_SERVER['PHP_AUTH_USER'] != ""  && 
             $_SERVER['PHP_AUTH_PW'] != "") // Basic HTTP AUTH
     {
-        $username = addslashes($_SERVER['PHP_AUTH_USER']);
-        $password = addslashes(md5($_SERVER['PHP_AUTH_PW']));
+        $username = $_SERVER['PHP_AUTH_USER'];
+        $password = md5($_SERVER['PHP_AUTH_PW']);
         
         $auth['method'] = "http-basic-auth";
     }
@@ -106,12 +106,12 @@
     
     if (isset($username))
     {
-        $result = db_query("select password from users where username = '$username'");
-        
-        if (sizeof($result) > 0)
-        {
+        // TODO NZVLE - convert this to use the new authentication handler
+        // but it doesn't differentiate between incorrect password & no such user currently
+        // so leaving for now.
+        if ($result = get_record('users','username',$username)) {
 
-            if ($result[0]->password == $password)
+            if ($result->password == $password)
             {
                 $auth['status']  = true;
                 $auth['message'] = "Authenticated";

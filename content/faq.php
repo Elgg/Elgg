@@ -1,18 +1,20 @@
 <?php
-	
-	// Run includes
-		require("../includes.php");
+    
+    // Run includes
+        define("context","external");
+        require_once(dirname(dirname(__FILE__))."/includes.php");
+        templates_page_setup();
 
 // Draw page
-		echo run("templates:draw:page", array(
-					sprintf(gettext("%s FAQ"),sitename),
-					run("templates:draw", array(
-													'contents' => run("content:faq"),
-													'name' => sprintf(gettext("%s FAQ"),sitename),
-													'context' => 'infobox'
-												)
-												)
-			)
-			);
-		
+        echo templates_page_draw( array(
+                    sprintf(__gettext("%s FAQ"),sitename),
+                    templates_draw(array(
+                                                    'body' => run("content:faq"),
+                                                    'name' => sprintf(__gettext("%s FAQ"),sitename),
+                                                    'context' => 'contentholder'
+                                                )
+                                                )
+            )
+            );
+        
 ?>

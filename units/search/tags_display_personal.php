@@ -1,39 +1,43 @@
 <?php
+global $CFG;
+// Display a user's tags
 
-	// Display a user's tags
+global $page_owner; // logged in user
+$parameter = (int) $parameter; // user whose tags we're looking at
 
-		global $page_owner;
-		
-		$searchline = "(" . run("users:access_level_sql_where",$page_owner) . ")";
-		$searchline = str_replace("access","tags.access", $searchline);
-		$tags = db_query("select tag, count(*) as number from tags where $searchline and tags.owner = $page_owner group by tags.tag asc");
-		if (sizeof($tags) > 0) {
-			
-			$max = 0;
-			foreach($tags as $tag) {
-				if ($tag->number > $max) {
-					$max = $tag->number;
-				}
-			}
-			foreach($tags as $tag) {
-				if ($tag->number > ($max * 0.5)) {
-					$size = "200%";
-				} else if ($tag->number > ($max * 0.35)) {
-					$size = "170%";
-				} else if ($tag->number > 4) {
-					$size = "140%";
-				} else if ($tag->number > 1) {
-					$size = "100%";
-				} else {
-					$size = "80%";
-				}
-				$tag->tag = stripslashes($tag->tag);
-				$run_result .= "<a href=\"".url."search/index.php?all=".urlencode(htmlentities(strtolower(($tag->tag))))."&amp;owner=$page_owner\" style=\"font-size: $size\" title=\"".htmlentities($tag->tag)." (" .$tag->number. ")\">";
-				$run_result .= $tag->tag . "</a> ";
-			}
-			
-		} else {
-			$run_result = "<p>" . gettext("No tags found for this user.") . "</p>";
-		}
+$searchline = "(" . run("users:access_level_sql_where",$page_owner) . ")";
+$searchline = str_replace("access","t.access", $searchline);
+if ($tags = get_records_sql('SELECT tag, count(ident) AS number 
+                             FROM '.$CFG->prefix.'tags t
+                             WHERE '.$searchline.' AND owner = '.$parameter.'
+                             GROUP BY tag ASC')) {
+    $max = 0;
+    foreach($tags as $tag) {
+        if ($tag->number > $max) {
+            $max = $tag->number;
+        }
+    }
+    
+    $tag_count = 0;
+    foreach($tags as $tag) {
+        
+        if ($max > 1) {
+            $size = round((log($tag->number) / log($max)) * 300) + 100;
+        } else {
+            $size = 100;
+        }
+        
+        $tag->tag = stripslashes($tag->tag);
+        $run_result .= "<a href=\"".url."search/index.php?all=".urlencode(htmlspecialchars((($tag->tag)), ENT_COMPAT, 'utf-8'))."&amp;owner=$parameter\" style=\"font-size: $size%\" title=\"".htmlspecialchars($tag->tag, ENT_COMPAT, 'utf-8')." (" .$tag->number. ")\">";
+        $run_result .= $tag->tag . "</a>";
+        if ($tag_count < sizeof($tags) - 1) {
+            $run_result .= ", ";
+        }
+        $tag_count++;
+    }
+    
+} else {
+    $run_result = "<p>" . __gettext("No tags found for this user.") . "</p>";
+}
 
 ?>

@@ -23,39 +23,34 @@
             // Parameter passed, assume an existing post
             if ($post_id != null)
             {
-                $post = db_query("select * from weblog_posts where ident = '$post_id'");
-
-                $this->ident     = $post[0]->ident;
-                $this->owner     = $post[0]->owner;
-                $this->blog_id   = $post[0]->weblog;
-                $this->access    = $post[0]->access;
-                $this->posted    = $post[0]->posted;
-                $this->title     = $post[0]->title;
-                $this->body      = $post[0]->body;
-
-                // Get the weblog context
-                $this->weblog = run('weblogs:instance', array('user_id' => $this->owner,
-                                                              'blog_id' => $this->blog_id));
-
-                // Does the requested id exist
-                if (sizeof($post) > 0)
-                {
+                if ($post = get_record('weblog_posts','ident',$post_id)) {
+                    $this->ident     = $post->ident;
+                    $this->owner     = $post->owner;
+                    $this->blog_id   = $post->weblog;
+                    $this->access    = $post->access;
+                    $this->posted    = $post->posted;
+                    $this->title     = $post->title;
+                    $this->body      = $post->body;
+                    
+                    // Get the weblog context
+                    $this->weblog = run('weblogs:instance', array('user_id' => $this->owner,
+                                                                  'blog_id' => $this->blog_id));
+                    
+                    // Does the requested id exist
                     $this->exists = true;
                 }
-
-                $post_tags = db_query("select ident from tags where ref = '$post_id'");
-
-                // An aray of Tag objects
-                foreach ($post_tags as $tag)
-                {
-                    $this->tags[] = $tag->ident;
+                
+                if ($post_tags = get_records('tags','tagtype','weblog','ref',$post_id)) {
+                    // An aray of Tag objects
+                    foreach ($post_tags as $tag) {
+                        $this->tags[] = $tag->ident;
+                    }
                 }
-
-                $post_comments = db_query("select ident from weblog_comments where post_id = '$post_id'");
-
-                foreach ($post_comments as $comment)
-                {
-                    $this->comments[] = $comment->ident;
+                
+                if ($post_comments = get_records('weblog_comments','post_id',$post_id)) {
+                    foreach ($post_comments as $comment) {
+                        $this->comments[] = $comment->ident;
+                    }
                 }
             }
         }
@@ -225,7 +220,7 @@
          */
         function setTitle($val)
         {
-            $this->title = addslashes($val);
+            $this->title = $val;
         }
 
         /**
@@ -233,7 +228,7 @@
          */
         function setBody($val)
         {
-            $this->body = addslashes($val);
+            $this->body = $val;
         }
 
         /**
@@ -244,11 +239,68 @@
             $this->blog_id = $val;
         }
 
+        function validate($action = null)
+        {
+            // $action parameter currently not used
+        
+            // Get the weblog object
+            if (!isset($this->weblog))
+            {
+                // Get the weblog context
+                $this->weblog = run('weblogs:instance', array('user_id' => $this->owner,
+                                                              'blog_id' => $this->blog_id));
+            }
+
+            // Always post to your own blog :)
+            if ($this->weblog->community == false && $this->owner == $this->blog_id)
+            {
+                return true;
+            }
+
+            // A community can't post to itself
+            if ($this->weblog->community == true && $this->owner == $this->blog_id)
+            {
+                return false;
+            }
+
+            // Only a member or community owner can post to a community
+            if ($this->weblog->community == true)
+            {
+                if ($this->weblog->owner != $this->owner)
+                {
+                    // Not community owner, is it a member? 
+                    if ($result = get_records_sql('SELECT DISTINCT u.ident, 1 
+                                                   FROM ' . $CFG->prefix . 'friends f JOIN ' . $CFG->prefix . 'users u 
+                                                   ON u.ident = f.owner 
+                                                   WHERE f.friend = ? AND u.ident = ? ', 
+                                                   array($this->blog_id,$this->owner)))
+                    {
+                        // Memberships found
+                        return true;
+                    }
+                    else
+                    {
+                        // Not a friend, nor owner, deny this save
+                        return false;
+                    }
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+
         /**
          *
          */
         function delete()
         {
+            if (!$this->validate('delete'))
+            {
+                return false;
+            }
+
             if ($this->exists)
             {
                 // Check ownership
@@ -268,17 +320,9 @@
 
                 // Remove comments
                 $this->deleteComments();
-
-                db_query("delete from weblog_posts where ident = '$this->ident'");
-
-                if (db_affected_rows() > 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                $rssresult = run("weblogs:rss:publish", array($this->owner, false));
+                $rssresult = run("profile:rss:publish", array($this->owner, false));
+                return delete_records('weblog_posts','ident',$this->ident);
             }
         }
 
@@ -287,50 +331,38 @@
          */
         function save()
         {
+            if (!$this->validate('save'))
+            {
+                return false;
+            }
+            
+            $wp = new StdClass;
+            $wp->title = $this->title;
+            $wp->body = $this->body;
+            $wp->access = $this->access;
+            $wp->ident = $this->ident;
+
             if ($this->exists == true)
             {
-                // Check ownership
-                if ($this->weblog->isOwner() != true)
-                {
-                    // Not weblog owner, check at post level
-                    if ($this->owner != $this->weblog->getOwner())
-                    {
-                        return false;
-                    }
-                }
-
-                // Owner is still unmutable
-                db_query("update weblog_posts set 
-                          title = '$this->title', 
-                          body = '$this->body', 
-                          access = '$this->access', 
-                          where ident = $this->ident");
-
-                if (db_affected_rows() > 0)
-                {
+                if (update_record('weblog_posts',$wp)) {
+                    $rssresult = run("weblogs:rss:publish", array($this->owner, false));
+                    $rssresult = run("profile:rss:publish", array($this->owner, false));
                     return $this->ident;
-                }
-                else
-                {
-                    return false;
-                }    
+                } 
+                return false;
             }
             else
             {
-                db_query("insert into weblog_posts set 
-                          title = '$this->title',
-                          body = '$this->body',
-                          weblog = $this->blog_id, 
-                          access = '$this->access', 
-                          posted = ".time().", 
-                          owner = $this->owner");
+                // Post doesn't exist
 
-                if (db_affected_rows() > 0)
-                {
-                    // Set the new post id
-                    $this->ident = db_id();
+                $wp->weblog = $this->blog_id;
+                $wp->posted = time();
+                $wp->owner = $this->owner;
+
+                if ($this->ident = insert_record('weblog_posts',$wp)) {
                     $this->exists = true;
-
+                    $rssresult = run("weblogs:rss:publish", array($this->owner, false));
+                    $rssresult = run("profile:rss:publish", array($this->owner, false));
                     return $this->ident;
                 }
                 else

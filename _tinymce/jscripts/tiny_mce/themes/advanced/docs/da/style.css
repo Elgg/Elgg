@@ -3,8 +3,8 @@ body, td, .content { font-family: Verdana, Arial, helvetica, sans-serif; font-si
 .title { font-family: Verdana, Arial, helvetica, sans-serif; font-size: 16px; font-weight: bold; }
 .subtitle { font-size: 12px; font-weight: bold; }
 
-.toc_ul, .toc_li { margin-left: 8 px; line-height: 16px; }
-.step_ol, .step_li { margin-left: 11 px; line-height: 16px; }
+.toc_ul, .toc_li { margin-left: 8px; line-height: 16px; }
+.step_ol, .step_li { margin-left: 11px; line-height: 16px; }
 img { border: #000000 solid 1px; }
 
 a:visited { color: #666666; text-decoration: underline; }
@@ -24,5 +24,5 @@ a { color: #666666; text-decoration: underline; }
 .codecontent a:hover { color: #666666; text-decoration: none; font-weight: bold  }
 .codecontent a { color: #666666; text-decoration: none; font-weight: bold  }
 
-hr { height: 1px; }
+hr { height: 1px; border:none;}
 

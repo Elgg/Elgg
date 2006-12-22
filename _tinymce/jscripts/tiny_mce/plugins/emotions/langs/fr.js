@@ -1,17 +1,18 @@
-// Traduit par Normand Lamoureux le 2005-11-12
+// FR lang variables
+// Modified by Motte, last updated 2006-03-23
 
 tinyMCE.addToLang('emotions',{
-title : 'Choisir une émoticône',
-desc : 'Insérer une émoticône',
+title : 'Choisir une &eacute;motic&ocirc;ne',
+desc : 'Ins&eacute;rer une &eacute;motic&ocirc;ne',
 cool : 'Cool',
 cry : 'Triste',
-embarassed : 'Embarrassé',
+embarassed : 'Embarrass&eacute;',
 foot_in_mouth : 'Oups !',
-frown : 'Mécontent',
+frown : 'M&eacute;content',
 innocent : 'Innocent',
 kiss : 'Bisou',
 laughing : 'Mort de rire',
-money_mouth : 'Sencuré',
+money_mouth : 'Sencur&eacute;',
 sealed : 'Motus',
 smile : 'Sourire',
 surprised : 'Surprise',

@@ -1,34 +1,35 @@
 <?php
 
-	//	ELGG manage files page
+    //    ELGG manage files page
 
-	// Run includes
-		require("../includes.php");
-		
-	// Initialise functions for user details, icon management and profile management
-		run("userdetails:init");
-		run("profile:init");
-		run("files:init");
-		
-		define("context", "files");
+    // Run includes
+        require_once(dirname(dirname(__FILE__))."/includes.php");
+        
+    // Initialise functions for user details, icon management and profile management
+        run("userdetails:init");
+        run("profile:init");
+        run("files:init");
+        
+        define("context", "files");
+        templates_page_setup();
 
-	// Whose files are we looking at?
+    // Whose files are we looking at?
 
-		global $page_owner;
-		$title = run("profile:display:name") . " :: " . gettext("Edit File");
+        global $page_owner;
+        $title = run("profile:display:name") . " :: " . __gettext("Edit File");
 
-		$body = run("content:files:edit");
-		$body .= run("files:edit");
-		
-		echo run("templates:draw:page", array(
-					$title,
-					run("templates:draw", array(
-							'context' => 'contentholder',
-							'title' => $title,
-							'body' => $body
-						)
-						)
-				)
-				);
-				
+        $body = run("content:files:edit");
+        $body .= run("files:edit");
+        
+        echo templates_page_draw( array(
+                    $title,
+                    templates_draw(array(
+                            'context' => 'contentholder',
+                            'title' => $title,
+                            'body' => $body
+                        )
+                        )
+                )
+                );
+                
 ?>

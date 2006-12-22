@@ -1,256 +1,204 @@
 <?php
+global $USER;
+global $CFG;
 
-	// Actions to perform
-	
-	if (isset($_REQUEST['action'])) {
-		
-		switch($_REQUEST['action']) {
-			
-			// Create a new weblog post
-			case "weblogs:post:add":
-				if (
-					logged_on
-					&& isset($_REQUEST['new_weblog_title'])
-					&& isset($_REQUEST['new_weblog_post'])
-					&& isset($_REQUEST['new_weblog_access'])
-					&& isset($_REQUEST['new_weblog_keywords'])
-					&& run("permissions:check", "weblog")
-				) {
-					$title = trim($_REQUEST['new_weblog_title']);
-					$body = trim($_REQUEST['new_weblog_post']);
-					$access = trim($_REQUEST['new_weblog_access']);
-					db_query("insert into weblog_posts
-								set title = '$title',
-									body = '$body',
-									access = '$access',
-									posted = ".time().",
-									weblog = $page_owner,
-									owner = ".$_SESSION['userid']);
-					$insert_id = db_id();
-					$value = trim(stripslashes($_REQUEST['new_weblog_keywords']));
-					if ($value != "") {
-						$value = str_replace("\n","",$value);
-						$value = str_replace("\r","",$value);
-						$keyword_list = explode(",",$value);
-						sort($keyword_list);
-						if (sizeof($keyword_list) > 0) {
-							foreach($keyword_list as $key => $list_item) {
-								$list_item = addslashes(trim($list_item));
-								db_query("insert into tags set tagtype = 'weblog', access = '$access', tag = '$list_item', ref = $insert_id, owner = " . $_SESSION['userid']);
-							}
-						}
-					}
-					$rssresult = run("weblogs:rss:publish", array($page_owner, false));
-					$rssresult = run("profile:rss:publish", array($page_owner, false));
-					if (run("users:type:get",$page_owner) == "person") {
-						$messages[] = gettext("Your post has been added to your weblog.");
-					}
-					// define('redirect_url',url . $_SESSION['username'] . "/weblog/");
-					define('redirect_url',url . run("users:id_to_name", $page_owner) . "/weblog/");
-				}
-				break;
-				
-				
-			// Edit a weblog post
-			case "weblogs:post:edit":
-				if (
-					logged_on
-					&& isset($_REQUEST['edit_weblog_title'])
-					&& isset($_REQUEST['new_weblog_post'])
-					&& isset($_REQUEST['edit_weblog_access'])
-					&& isset($_REQUEST['edit_weblog_post_id'])
-					&& isset($_REQUEST['edit_weblog_keywords'])
-				) {
-					$id = (int) $_REQUEST['edit_weblog_post_id'];
-					$title = trim($_REQUEST['edit_weblog_title']);
-					$body = trim($_REQUEST['new_weblog_post']);
-					$access = trim($_REQUEST['edit_weblog_access']);
-					$exists = db_query("select owner 
-												from weblog_posts
-												where ident = " . $id)
-												or die(mysql_error());
-					if (is_array($exists) && count($exists)) {
-						$owner = $exists[0]->owner;
-						$exists = true;
-					} else {
-						$owner = 0;
-						$exists = false;
-					}
-					
-					if (!run("permissions:check", array("weblog:edit", $owner))) {
-						$exists = false;
-					}
-					
-					if ($exists) {
-						db_query("update weblog_posts
-									set title = '$title',
-										body = '$body',
-										access = '$access'
-									where ident = $id");
-						db_query("delete from tags where tagtype = 'weblog' and ref = $id");
-						$value = trim(stripslashes($_REQUEST['edit_weblog_keywords']));
-						if ($value != "") {
-							$value = str_replace("\n","",$value);
-							$value = str_replace("\r","",$value);
-							$keyword_list = explode(",",$value);
-							sort($keyword_list);
-							if (sizeof($keyword_list) > 0) {
-								foreach($keyword_list as $key => $list_item) {
-									$list_item = addslashes(trim($list_item));
-									db_query("insert into tags set tagtype = 'weblog', access = '$access', tag = '$list_item', ref = $id, owner = $owner");
-								}
-							}
-						}
-						
-						$rssresult = run("weblogs:rss:publish", array($owner, false));
-						$rssresult = run("profile:rss:publish", array($owner, false));
-						$messages[] = gettext("The weblog post has been modified."); // gettext variable
-					}
-					
-				}
-				break;
-				
-				
-			// Delete a weblog post
-			case "delete_weblog_post":
-				if (
-					logged_on
-					&& isset($_REQUEST['delete_post_id'])
-				) {
-					$id = (int) $_REQUEST['delete_post_id'];
-					$post_info = db_query("select * from weblog_posts where ident = $id");
-					$post_info = $post_info[0];
-					if (run("permissions:check", array("weblog:edit", $post_info->owner))) {
-						db_query("delete from weblog_posts where ident = $id");
-						db_query("delete from weblog_comments where post_id = $id");
-						db_query("delete from tags where tagtype = 'weblog' and ref = $id");
-						$rssresult = run("weblogs:rss:publish", array($post_info->owner, false));
-						$rssresult = run("profile:rss:publish", array($post_info->owner, false));
-						$modified2 = gettext("The selected weblog post was deleted."); // gettext variable - NOT SURE ABOUT THIS POSITION!!!
-						$messages[] = "$modified2";
-					} else {
-						$messages[] = gettext("You do not appear to have permissions to delete this weblog post. It was not deleted."); // gettext variable
-					}
-					global $redirect_url;
-					$redirect_url = url . run("users:id_to_name",$post_info->weblog) . "/weblog/";
-					define('redirect_url',$redirect_url);
-				}
-				break;
-				
-				
-			// Create a weblog comment
-			case "weblogs:comment:add":
-				if (
-					isset($_REQUEST['post_id'])
-					&& isset($_REQUEST['new_weblog_comment'])
-					&& isset($_REQUEST['postedname'])
-					&& isset($_REQUEST['owner'])
-				) {
-					$post_id = (int) $_REQUEST['post_id'];
-					$where = run("users:access_level_sql_where",$_SESSION['userid']);
-					$post = db_query("select ident, owner, title from weblog_posts where ($where) and ident = $post_id");
-					if (sizeof($post) > 0) {
-						if (run("spam:check",$_REQUEST['new_weblog_comment']) != true) {
-							$post = $post[0];
-							$post_id = (int) $_REQUEST['post_id'];
-							$body = trim($_REQUEST['new_weblog_comment']);
-							$postedname = trim($_REQUEST['postedname']);
-							$owner = (int) $_SESSION['userid'];
-							$posted = time();
-							
-							// If we're logged on or comments are public, add one
-							if (logged_on || run("users:flags:get",array("publiccomments",$post->owner))) {
-								db_query("insert into weblog_comments
-											set body = '$body',
-												posted = $posted,
-												postedname = '$postedname',
-												owner = $owner,
-												post_id = $post_id");
-												
-								// If we're logged on and not the owner of this comment, add this to our watchlist
-								if (logged_on && $owner != $post->owner) {
-									db_query("delete from weblog_watchlist where weblog_post = $post_id and owner = $owner");
-									db_query("insert into weblog_watchlist
-												set owner = $owner,
-												weblog_post = $post_id");
-								}
-								
-								// Email comment if applicable
-								if (run("users:flags:get",array("emailreplies",$post->owner))) {
-									$email = db_query("select email,username from users where ident = " . ((int) $post->owner));
-									if (sizeof($email) > 0) {
-										$username = $email[0]->username;
-										$email = $email[0]->email;
-										$message = gettext(sprintf("You have received a comment from %s on your blog post '%s'. It reads as follows:", $postedname, stripslashes($post->title)));
-										$message .= "\n\n\n" . stripslashes($body) . "\n\n\n";
-										$message .= gettext(sprintf("To reply and see other comments on this blog post, click here: %s", url . $username . "/weblog/" . $post->ident . ".html"));
-										$message = wordwrap($message);
-										mail(stripslashes($email), stripslashes($post->title), $message, "From: " . sitename . "<" . email . ">");
-									}
-								}
-								$messages[] = gettext("Your comment has been added."); // gettext variable
-							}
-						} else {
-							$messages[] = gettext("Your comment could not be posted. The system thought it was spam.");
-						}
-					}
-				}
-				break;
-				
-				
-			// Delete a weblog comment
-			case "weblog_comment_delete":
-				if (
-					logged_on
-					&& isset($_REQUEST['weblog_comment_delete'])
-				) {
-					$comment_id = (int) $_REQUEST['weblog_comment_delete'];
-					$commentinfo = db_query("select weblog_comments.*, weblog_posts.owner as postowner,
-											 weblog_posts.ident as postid
-											 from weblog_comments
-											 left join weblog_posts on weblog_posts.ident = weblog_comments.post_id
-											 where weblog_comments.ident = $comment_id");
-					$commentinfo = $commentinfo[0];
-					if ($_SESSION['userinfo'] == $commentinfo->owner
-						|| $_SESSION['userinfo'] == $comentinfo->postowner) {
-							db_query("delete from weblog_comments where ident = $comment_id");
-							$messages[] = gettext("Your comment was deleted.");
-							$redirect_url = url . run("users:id_to_name",$commentinfo->postowner) . "/weblog/" . $commentinfo->postid . ".html";
-							define('redirect_url',$redirect_url);
-					}
-				}
-				break;
-				
-			//Mark a weblog post as interesting
-			case "weblog:interesting:on":
-				if (
-					logged_on
-					&& isset($_REQUEST['weblog_post'])
-				) {
-					
-					$weblog_post = (int) $_REQUEST['weblog_post'];
-					db_query("insert into weblog_watchlist set weblog_post = $weblog_post, owner = " . $_SESSION['userid']);
-					$messages[] = gettext("This weblog post has now been added to your 'interesting' list.");
-					
-					}
-				break;
-				
-			//Remove an 'interesting' flag
-			case "weblog:interesting:off":
-				if (
-					logged_on
-					&& isset($_REQUEST['weblog_post'])
-				) {
-					
-					$weblog_post = (int) $_REQUEST['weblog_post'];
-					db_query("delete from weblog_watchlist where weblog_post = $weblog_post and owner = " . $_SESSION['userid']);
-					$messages[] = gettext("You are no longer monitoring this weblog post.");
-					
-					}
-				break;
-				
-		}
-		
-	}
+// Actions to perform
+$action = optional_param('action');
+switch ($action) {
+    // Create a new weblog post
+    case "weblogs:post:add":
+        $post = new StdClass;
+        $post->title = trim(optional_param('new_weblog_title'));
+        $post->body = trim(optional_param('new_weblog_post'));
+        $post->access = trim(optional_param('new_weblog_access'));
+        $post->icon = optional_param('new_weblog_icon',user_info("icon",$_SESSION['userid']),PARAM_INT);
+        if (logged_on && !empty($post->body) && !empty($post->access) && run("permissions:check", "weblog")) {
+            $post->posted = time();
+            $post->owner = $USER->ident;
+            $post->weblog = $page_owner;
+            
+            $post = plugin_hook("weblog_post","create",$post);
+
+            if (!empty($post)) {            
+                $insert_id = insert_record('weblog_posts',$post);
+                $post->ident = $insert_id;
+                $value = trim(optional_param('new_weblog_keywords'));
+                insert_tags_from_string ($value, 'weblog', $insert_id, $post->access, $post->owner);
+                $post = plugin_hook("weblog_post","publish",$post);
+                $rssresult = run("weblogs:rss:publish", array($page_owner, false));
+                $rssresult = run("profile:rss:publish", array($page_owner, false));
+                if (user_type($page_owner) == "person") {
+                    $messages[] = __gettext("Your post has been added to your weblog.");
+                }
+            }
+            // define('redirect_url',url . $_SESSION['username'] . "/weblog/");
+            define('redirect_url',url . user_info("username",$page_owner) . "/weblog/");
+        }
+        break;
+        
+    // Edit a weblog post
+    case "weblogs:post:edit":
+        $post = new StdClass;
+        $post->title = trim(optional_param('edit_weblog_title'));
+        $post->body = trim(optional_param('new_weblog_post'));
+        $post->access = trim(optional_param('edit_weblog_access'));
+        $post->icon = optional_param('edit_weblog_icon',user_info("icon",$_SESSION['userid']),PARAM_INT);
+        $post->ident = optional_param('edit_weblog_post_id',0,PARAM_INT);
+        if (logged_on && !empty($post->body) && !empty($post->access) && !empty($post->ident)) {
+            $exists = false;
+            if ($oldpost = get_record('weblog_posts','ident',$post->ident)) {
+                if (run("permissions:check", array("weblog:edit", $oldpost->owner))) {
+                    $exists = true;
+                }
+            }
+            
+            if (!empty($exists)) {
+                $post = plugin_hook("weblog_post","update",$post);
+                if (!empty($post)) {
+                    update_record('weblog_posts',$post);
+                    delete_records('tags','tagtype','weblog','ref',$post->ident);
+                    $value = trim(optional_param('edit_weblog_keywords'));
+                    insert_tags_from_string ($value, 'weblog', $post->ident, $post->access, $oldpost->owner);
+                    $post = get_record('weblog_posts','ident',$post->ident);
+                    $post = plugin_hook("weblog_post","republish",$post);
+                    $rssresult = run("weblogs:rss:publish", array($oldpost->weblog, false));
+                    $rssresult = run("profile:rss:publish", array($oldpost->weblog, false));
+                    $messages[] = __gettext("The weblog post has been modified."); // gettext variable
+                }
+            }
+            define('redirect_url',url . user_info("username",$page_owner) . "/weblog/" . $post->ident . ".html");
+        }
+        break;
+        
+    //Mark a weblog post as interesting
+    case "weblog:interesting:on":
+        $weblog_post = optional_param('weblog_post',0,PARAM_INT);
+        if (logged_on && !empty($weblog_post)) {
+            $wl = new StdClass;
+            $wl->weblog_post = $weblog_post;
+            $wl->owner = $USER->ident;
+            if (insert_record('weblog_watchlist',$wl)) {
+                $messages[] = __gettext("This weblog post has now been added to your 'interesting' list.");
+            }
+            define('redirect_url',url . user_info("username",$page_owner) . "/weblog/" . $weblog_post . ".html");
+        }
+        break;
+        
+    //Remove an 'interesting' flag
+    case "weblog:interesting:off":
+        $weblog_post = optional_param('weblog_post',0,PARAM_INT);
+        if (logged_on && !empty($weblog_post)) {
+            if (delete_records('weblog_watchlist','weblog_post',$weblog_post,'owner',$USER->ident)) {
+                $messages[] = __gettext("You are no longer monitoring this weblog post.");
+            }
+            define('redirect_url',url . user_info("username",$page_owner) . "/weblog/" . $weblog_post . ".html");
+        }
+        break;
+        
+    // Delete a weblog post
+    case "delete_weblog_post":
+        $id = optional_param('delete_post_id',0,PARAM_INT);
+        if (logged_on && !empty($id)) {
+            if ($post_info = get_record('weblog_posts','ident',$id)) {
+                if (run("permissions:check", array("weblog:edit", $post_info->owner))) {
+                    $post_info = plugin_hook("weblog_post","delete",$post_info);
+                    if (!empty($post_info)) {
+                        delete_records('weblog_posts','ident',$id);
+                        delete_records('weblog_comments','post_id',$id);
+                        delete_records('weblog_watchlist','weblog_post',$id);
+                        delete_records('tags','tagtype','weblog','ref',$id);
+                        $rssresult = run("weblogs:rss:publish", array($post_info->weblog, false));
+                        $rssresult = run("profile:rss:publish", array($post_info->weblog, false));
+                        $messages[] = __gettext("The selected weblog post was deleted."); // gettext variable - NOT SURE ABOUT THIS POSITION!!!
+                    }
+                } else {
+                    $messages[] = __gettext("You do not appear to have permission to delete this weblog post. It was not deleted."); // gettext variable
+                }
+            }
+            global $redirect_url;
+            $redirect_url = url . user_info('username', $post_info->weblog) . "/weblog/";
+            define('redirect_url',$redirect_url);
+        }
+        break; 
+        
+    // Create a weblog comment
+    case "weblogs:comment:add":
+        $comment = new StdClass;
+        $comment->post_id = optional_param('post_id',0,PARAM_INT);
+        $comment->body = trim(optional_param('new_weblog_comment'));
+        $comment->postedname = trim(optional_param('postedname'));
+        $commentbackup = $comment;
+        if (!empty($comment->post_id) && !empty($comment->body) && !empty($comment->postedname)) {
+            $where = run("users:access_level_sql_where",$USER->ident);
+            if ($post = get_record_select('weblog_posts','('.$where.') AND ident = '.$comment->post_id)) {
+                if (run("spam:check",$comment->body) != true) {
+                    // If we're logged on or comments are public, add one
+                    if (logged_on || (!$CFG->disable_publiccomments && user_flag_get("publiccomments",$post->owner)) ) {
+                        $comment->owner = $USER->ident;
+                        $comment->posted = time();
+                        $comment = plugin_hook("weblog_comment","create",$comment);
+                        if (!empty($comment)) {
+                                $insert_id = insert_record('weblog_comments',$comment);
+                                $comment->ident = $insert_id;
+                                $comment = plugin_hook("weblog_comment","publish",$comment);
+        
+                                // If we're logged on and not the owner of this post, add post to our watchlist
+                                if (logged_on && $comment->owner != $post->owner) {
+                                    delete_records('weblog_watchlist','weblog_post',$comment->post_id,'owner',$comment->owner);
+                                    $wl = new StdClass;
+                                    $wl->owner = $comment->owner;
+                                    $wl->weblog_post = $comment->post_id;
+                                    insert_record('weblog_watchlist',$wl);
+                                }
+        
+                                // Email comment if applicable
+                                if ($comment->owner != $post->owner) {
+                                    $message = __gettext(sprintf("You have received a comment from %s on your blog post '%s'. It reads as follows:", $comment->postedname, stripslashes($post->title)));
+                                    $message .= "\n\n" . stripslashes($comment->body) . "\n\n";
+                                    $message .= __gettext(sprintf("To reply and see other comments on this blog post, click here: %s", $CFG->wwwroot . user_info("username",$post->weblog) . "/weblog/" . $post->ident . ".html"));
+                                    $message = wordwrap($message);
+                                    message_user($post->owner,$comment->owner,stripslashes($post->title),$message);
+                                    $messages[] = __gettext("Your comment has been added."); // gettext variable
+                                }
+
+                        }
+                    }
+                } else {
+                    $messages[] = __gettext("Your comment could not be posted. The system thought it was spam.");
+                }
+                define('redirect_url',url . user_info("username",$page_owner) . "/weblog/" . $commentbackup->post_id . ".html");
+            }
+        }
+        break;
+        
+        
+    // Delete a weblog comment
+    case "weblog_comment_delete":
+        $comment_id = optional_param('weblog_comment_delete');
+        if (logged_on && !empty($comment_id)) {
+            $commentinfo = get_record_sql('SELECT wc.*,wp.owner AS postowner,wp.ident AS postid
+                                           FROM '.$CFG->prefix.'weblog_comments wc 
+                                           LEFT JOIN '.$CFG->prefix.'weblog_posts wp ON wp.ident = wc.post_id
+                                            WHERE wc.ident = ' . $comment_id);
+            $commentinfo = plugin_hook("weblog_comment","delete",$commentinfo);
+            if (!empty($commentinfo)) {
+                if ($commentinfo->owner == $USER->ident || run("permissions:check", "weblog")) {
+                    delete_records('weblog_comments','ident',$comment_id);
+                    $messages[] = __gettext("Your comment was deleted.");
+                }
+            }
+            $redirect_url = url . user_info('username', $commentinfo->postowner) . "/weblog/" . $commentinfo->postid . ".html";
+            define('redirect_url',$redirect_url);
+        }
+        break;
+}
+
+if (defined('redirect_url')) {
+    
+    $_SESSION['messages'] = $messages;
+    header("Location: " . redirect_url);
+    exit;
+    
+}
 
 ?>

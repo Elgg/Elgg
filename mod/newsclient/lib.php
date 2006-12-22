@@ -1,0 +1,171 @@
+<?php
+
+function newsclient_pagesetup() {
+    // register links -- 
+    global $profile_id;
+    global $PAGE;
+    global $CFG;
+
+    $page_owner = $profile_id;
+    $rss_username = user_info('username', $page_owner);
+
+    if (isloggedin() && user_info("user_type",$_SESSION['userid']) != "external") {
+        if (defined("context") && context == "resources" && $page_owner == $_SESSION['userid']) {
+            $PAGE->menu[] = array( 'name' => 'feeds',
+                                   'html' => "<li><a href=\"{$CFG->wwwroot}{$_SESSION['username']}/feeds/\" class=\"selected\" >" .__gettext("Your Resources").'</a></li>');
+        } else {
+            $PAGE->menu[] = array( 'name' => 'feeds',
+                                   'html' => "<li><a href=\"{$CFG->wwwroot}{$_SESSION['username']}/feeds/\" >" .__gettext("Your Resources").'</a></li>');
+        }
+    }
+
+    if (defined("context") && context == "resources") {
+    
+        if ($page_owner != -1) {
+            $PAGE->menu_sub[] = array( 'name' => 'newsfeed:subscription',
+                                       'html' => a_href( $CFG->wwwroot.$rss_username."/feeds/", 
+                                                          __gettext("Feeds")));
+            if (run("permissions:check", "profile") && logged_on) {
+                $PAGE->menu_sub[] = array( 'name' => 'newsfeed:subscription:publish:blog',
+                                           'html' => a_href( $CFG->wwwroot."_rss/blog.php?profile_name=" . user_info("username",$page_owner), 
+                                                              __gettext("Publish to blog")));
+            }
+            $PAGE->menu_sub[] = array( 'name' => 'newsclient',
+                                       'html' => a_href( $CFG->wwwroot.$rss_username."/feeds/all/", 
+                                                          __gettext("View aggregator")));
+        }
+        $PAGE->menu_sub[] = array( 'name' => 'feed',
+                                   'html' => a_href( $CFG->wwwroot."_rss/popular.php",
+                                                      __gettext("Popular Feeds")));
+
+        /*
+        $PAGE->menu_sub[] = array( 'name' => 'feed',
+                                   'html' => a_href( $CFG->wwwroot."help/feeds_help.php", 
+                                                      "Page help"));
+        */
+
+    }
+}
+
+function newsclient_cron() {
+    global $CFG;
+
+    // if we've run in the last 5 mins, skip it
+    if (!empty($CFG->newsclient_lastcron) && (time() - 300) < $CFG->newsclient_lastcron) {
+        return true;
+    }
+    
+    run("weblogs:init");
+    run("profile:init");
+    run("rss:init");
+    
+    define('context','resources');
+    
+    run('rss:prune');
+    
+    run("rss:update:all:cron");
+
+    set_config('newsclient_lastcron',time());
+    
+    
+}
+
+function newsclient_init() {
+    
+    global $CFG;
+    
+    $CFG->widgets->display['feed'] = "newsclient_widget_display";
+    $CFG->widgets->edit['feed'] = "newsclient_widget_edit";
+    $CFG->widgets->list[] = array(
+                                        'name' => __gettext("Feed widget"),
+                                        'description' => __gettext("Displays the latest entries from an external feed of your choice."),
+                                        'id' => "feed"
+                                );
+    
+}
+
+function newsclient_widget_display($widget) {
+    
+    global $CFG;
+
+    $body = "";
+        
+    $feed_id = adash_get_data("feed_id",$widget->ident);
+    $feed_posts = adash_get_data("feed_posts",$widget->ident);
+    if (empty($feed_posts)) {
+        $feed_posts = 1;
+    }
+    
+    if (!empty($feed_id)) {
+        
+        if ($posts = get_records_sql("SELECT fp.*,f.name,f.siteurl,f.tagline FROM ".$CFG->prefix."feed_posts fp
+                      JOIN ".$CFG->prefix."feeds f ON f.ident = fp.feed
+                      WHERE f.ident = $feed_id ORDER BY fp.added DESC, fp.ident ASC limit $feed_posts")) {
+                          
+            foreach($posts as $post) {
+                $body .= "<h2><a href=\"" .$post->url . "\">". $post->title . "</a></h2>" . $post->body;
+            }
+        } else {
+            
+            $body .= "<p>" . __gettext("This feed is currently empty.") . "</p>";
+            
+        }
+        
+      
+    } else {
+        
+        $body .= "<p>" . __gettext("This feed widget is undefined.") . "</p>";
+        
+    }
+    
+    return $body;
+    
+}
+
+function newsclient_widget_edit($widget) {
+    
+    global $CFG, $page_owner;
+    
+    $feed_id = adash_get_data("feed_id",$widget->ident);
+    $feed_posts = adash_get_data("feed_posts",$widget->ident);
+    if (empty($feed_posts)) {
+        $feed_posts = 1;
+    }
+
+    $body = "<h2>" . __gettext("Feeds dashboard widget") . "</h2>";
+    $body .= "<p>" . __gettext("This widget displays the last couple of entries from an external feed you have subscribed to. To begin, select the feed from your subscriptions below:") . "</p>";
+                
+    $feed_subscriptions = get_records_sql('SELECT fs.ident AS subid, fs.autopost, fs.autopost_tag, f.* FROM '.$CFG->prefix.'feed_subscriptions fs
+                                      JOIN '.$CFG->prefix.'feeds f ON f.ident = fs.feed_id
+                                      WHERE fs.user_id = ? ORDER BY f.name ASC',array($page_owner));
+    
+    if (is_array($feed_subscriptions) && !empty($feed_subscriptions)) {
+        
+        $body .= "<p><select name=\"dashboard_data[feed_id]\">\n";
+        foreach ($feed_subscriptions as $subscription) {
+            if ($subscription->ident == $feed_id) {
+                $selected = "selected=\"selected\"";
+            } else {
+                $selected = "";
+            }
+            $body .= "<option value=\"" . $subscription->ident . "\" $selected>" . $subscription->name . "</option>\n";
+        }
+        $body .= "</select></p>\n";
+        
+        $body .= "<p>" . __gettext("Then enter the number of feed entries you'd like to display:") . "</p>";
+    
+        $body .= "<p><input type=\"text\" name=\"dashboard_data[feed_posts]\" value=\"" . $feed_posts . "\" /></p>";
+        
+    } else {
+        
+        $body .= "<p>" . sprintf(__gettext("You can't select a feed for this widget because you don't have any feed subscriptions. Click on <a href=\"%s\">Your</a> Resources to subscribe to a feed."),$CFG->wwwroot . $_SESSION['username'] . "/feeds/") . "</p>";
+        
+    }
+    
+    return $body;
+    
+}
+
+
+
+?>

@@ -9,8 +9,6 @@
 		theme : "advanced",
 		mode : "exact",
 		elements : "elm1,elm2",
-		//insertlink_callback : "customInsertLink",
-		//insertimage_callback : "customInsertImage",
 		save_callback : "customSave",
 		content_css : "example_advanced.css",
 		extended_valid_elements : "a[href|target|name]",
@@ -18,46 +16,39 @@
 		theme_advanced_buttons3_add_before : "tablecontrols,separator",
 		//invalid_elements : "a",
 		theme_advanced_styles : "Header 1=header1;Header 2=header2;Header 3=header3;Table Row=tableRow1", // Theme specific setting CSS classes
+		//execcommand_callback : "myCustomExecCommandHandler",
 		debug : false
 	});
 
-	// Custom insert link callback, extends the link function
-	function customInsertLink(href, target) {
-		var result = new Array();
+	// Custom event handler
+	function myCustomExecCommandHandler(editor_id, elm, command, user_interface, value) {
+		var linkElm, imageElm, inst;
 
-		alert("customInsertLink called href: " + href + " target: " + target);
+		switch (command) {
+			case "mceLink":
+				inst = tinyMCE.getInstanceById(editor_id);
+				linkElm = tinyMCE.getParentElement(inst.selection.getFocusElement(), "a");
 
-		result['href'] = "http://www.sourceforge.net";
-		result['target'] = '_blank';
+				if (linkElm)
+					alert("Link dialog has been overriden. Found link href: " + tinyMCE.getAttrib(linkElm, "href"));
+				else
+					alert("Link dialog has been overriden.");
 
-		return result;
-	}
+				return true;
 
-	// Custom insert image callback, extends the image function
-	function customInsertImage(src, alt, border, hspace, vspace, width, height, align) {
-		var result = new Array();
+			case "mceImage":
+				inst = tinyMCE.getInstanceById(editor_id);
+				imageElm = tinyMCE.getParentElement(inst.selection.getFocusElement(), "img");
 
-		var debug = "CustomInsertImage called:\n"
-		debug += "src: " + src + "\n";
-		debug += "alt: " + alt + "\n";
-		debug += "border: " + border + "\n";
-		debug += "hspace: " + hspace + "\n";
-		debug += "vspace: " + vspace + "\n";
-		debug += "width: " + width + "\n";
-		debug += "height: " + height + "\n";
-		debug += "align: " + align + "\n";
-		alert(debug);
+				if (imageElm)
+					alert("Image dialog has been overriden. Found image src: " + tinyMCE.getAttrib(imageElm, "src"));
+				else
+					alert("Image dialog has been overriden.");
 
-		result['src'] = "logo.jpg";
-		result['alt'] = "test description";
-		result['border'] = "2";
-		result['hspace'] = "5";
-		result['vspace'] = "5";
-		result['width'] = width;
-		result['height'] = height;
-		result['align'] = "right";
+				return true;
+		}
 
-		return result;
+		return false; // Pass to next handler in chain
 	}
 
 	// Custom save callback, gets called when the contents is to be submitted
@@ -100,7 +91,7 @@ Some custom actions:
 <a href="javascript:tinyMCE.execCommand('Bold');">[Bold]</a> | 
 <a href="javascript:tinyMCE.execCommand('Italic');">[Italic]</a>
 <a href="javascript:void(0);" onclick="tinyMCE.execCommand('mceInsertContent',false,'<b>Hello world!!</b>');">[Insert some HTML]</a>
-<a href="javascript:void(0);" onclick="tinyMCE.execCommand('mceReplaceContent',false,'<!-- xxx --><b>{$selection}</b>');">[Replace selection]</a>
+<a href="javascript:void(0);" onclick="tinyMCE.execCommand('mceReplaceContent',false,'<!-- comment --><b>{$selection}</b>');">[Replace selection]</a>
 
 <br />
 

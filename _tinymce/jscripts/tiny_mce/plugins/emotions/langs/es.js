@@ -4,8 +4,9 @@
  * Authors : Alvaro Velasco,
  *           Adolfo Sanz De Diego (asanzdiego) <asanzdiego@yahoo.es>,
  *           Carlos C Soto (eclipxe) <csoto@sia-solutions.com>
- * Last Updated : October 17, 2005
- * TinyMCE Version : 2.0RC3
+ *           Eneko Castresana Vara
+ * Last Updated : July 14, 2006
+ * TinyMCE Version : 2.0.6.1
  */
 
 tinyMCE.addToLang('emotions',{
@@ -25,6 +26,6 @@ smile : 'Sonriente',
 surprised : 'Sorprendido',
 tongue_out : 'Burla',
 undecided : 'Indeciso',
-wink : 'Guiño',
+wink : 'Gui&ntilde;o',
 yell : 'Enfadado'
 });

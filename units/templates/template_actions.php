@@ -1,103 +1,111 @@
 <?php
+global $USER, $CFG;
+    // Actions
 
-	// Actions
-
-		global $template;
-		
-		if (isset($_REQUEST['action']) && logged_on) {
-			
-			switch($_REQUEST['action']) {
-				
-				case "templates:select":
-					if (isset($_REQUEST['selected_template'])) {
-						$id = (int) $_REQUEST['selected_template'];
-						if ($id == -1) {
-							$exists = 1;
-						} else {
-							$exists = db_query("select count(*) as template_exists from templates where ident = $id and (owner = ".$_SESSION['userid']." or public='yes')");
-							$exists = $exists[0]->template_exists;
-						}
-						if ($exists) {
-							db_query("update users set template_id = $id where ident = " . $_SESSION['userid']);
-							$messages[] = gettext("Your current template has been changed.");
-						}
-					}
-					break;
-					
-					
-				case "templates:save":
-					if (
-							isset($_REQUEST['template'])
-							&& isset($_REQUEST['save_template_id'])
-							&& isset($_REQUEST['templatetitle'])
-						) {
-							$id = (int) $_REQUEST['save_template_id'];
-							unset($_SESSION['template_element_cache'][$id]);
-							$exists = db_query("select count(*) as template_exists from templates where ident = $id and owner = ".$_SESSION['userid']);
-							$exists = $exists[0]->template_exists;
-							if ($exists) {
-								$templatetitle = trim($_REQUEST['templatetitle']);
-								db_query("update templates set name = '$templatetitle' where ident = $id");
-								db_query("delete from template_elements where template_id = $id");
-								foreach($_REQUEST['template'] as $name => $content) {
-									$name = trim($name);
-									$content = trim($content);
-									$noslashname = stripslashes($name);
-									$noslashcontent = stripslashes($content);
-									if ($noslashcontent != "" && $noslashcontent != $template[$noslashname]) {
-										db_query("insert into template_elements set name='$name', content = '$content', template_id = $id");
-									}
-								}
-								$messages[] = gettext("Your template has been updated.");
-							}
-						}
-					break;
-					
-					
-				case "deletetemplate":
-					if (
-							isset($_REQUEST['delete_template_id'])
-						) {
-							$id = (int) $_REQUEST['delete_template_id'];
-							unset($_SESSION['template_element_cache'][$id]);
-							$exists = db_query("select count(*) as template_exists from templates where ident = $id and owner = ".$_SESSION['userid']);
-							$exists = $exists[0]->template_exists;
-							if ($exists) {
-								db_query("update users set template_id = -1 where template_id = $id");
-								db_query("delete from template_elements where template_id = $id");
-								db_query("delete from templates where ident = $id");
-								$messages[] = gettext("Your template was deleted.");
-							}
-						}
-					break;
-					
-					
-				case "templates:create":
-					if (
-							isset($_REQUEST['new_template_name'])
-							&& isset($_REQUEST['template_based_on'])
-						) {
-							$based_on = (int) $_REQUEST['template_based_on'];
-							$name = trim($_REQUEST['new_template_name']);
-							db_query("insert into templates set name = '$name', public = 'no', owner = " . $_SESSION['userid']);
-							$new_template_id = db_id();
-							if ($based_on != -1) {
-								$exists = db_query("select count(*) as template_exists from templates where ident = $based_on and (owner = ".$_SESSION['userid']." or public = 'yes')");
-								$exists = $exists[0]->template_exists;
-								if ($exists) {
-									$elements = db_query("select * from template_elements where template_id = $based_on");
-									if (sizeof($elements) > 0) {
-										foreach($elements as $element) {
-											db_query("insert into template_elements set name = '".addslashes($element->name)."', content = '".addslashes($element->content)."', template_id = '".$new_template_id."'");
-										}
-									}
-								}
-							}
-						}
-					break;
-				
-			}
-			
-		}
+        global $template;
+        
+        if (isset($_REQUEST['action']) && logged_on && !$CFG->disable_templatechanging) {
+            
+            switch($_REQUEST['action']) {
+                
+                case "templates:select":
+                    if (isset($_REQUEST['selected_template'])) {
+                        $id = (int) $_REQUEST['selected_template'];
+                        if ($id == -1) {
+                            $exists = 1;
+                        } else {
+                            $exists = record_exists_sql('SELECT ident FROM '.$CFG->prefix.'templates t
+                                                         WHERE ident = '.$id.' AND (owner = '.$USER->ident." OR public = 'yes')");
+                        }
+                        if ($exists) {
+                            if(sizeof($_REQUEST['affected_areas'])) {
+                                foreach($_REQUEST['affected_areas'] as $index => $value) {
+                                    //TODO - check security
+                                    set_field('users','template_id',$id,'ident',$value);
+                                }
+                                $messages[] = __gettext("The templates have been changed according to your choices.");
+                            }
+                            else {
+                                $messages[] = __gettext("No changes made as no area of change where selected!");
+                            }                            
+                        }
+                    }
+                    break;
+                    
+                    
+                case "templates:save":
+                    if (
+                            isset($_REQUEST['template'])
+                            && isset($_REQUEST['save_template_id'])
+                            && isset($_REQUEST['templatetitle'])
+                        ) {
+                            $id = (int) $_REQUEST['save_template_id'];
+                            unset($_SESSION['template_element_cache'][$id]);
+                            if (record_exists('templates','ident',$id,'owner',$USER->ident)) {
+                                $templatetitle = trim($_REQUEST['templatetitle']);
+                                set_field('templates','name',$templatetitle,'ident',$id);
+                                delete_records('template_elements','template_id',$id);
+                                foreach($_REQUEST['template'] as $name => $content) {
+                                    $te = new StdClass;
+                                    $te->name = trim($name);
+                                    $te->content = trim($content);
+                                    $te->template_id = $id;
+                                    $noslashname = stripslashes($te->name);
+                                    $noslashcontent = stripslashes($te->content);
+                                    if ($noslashcontent != "" && $noslashcontent != $template[$noslashname]) {
+                                        insert_record('template_elements',$te);
+                                    }
+                                }
+                                $messages[] = __gettext("Your template has been updated.");
+                            }
+                        }
+                    break;
+                    
+                    
+                case "deletetemplate":
+                    if (
+                            isset($_REQUEST['delete_template_id'])
+                        ) {
+                            $id = (int) $_REQUEST['delete_template_id'];
+                            unset($_SESSION['template_element_cache'][$id]);
+                            if (record_exists('templates','ident',$id,'owner',$USER->ident)) {
+                                set_field('users','template_id',-1,'template_id',$id);
+                                delete_records('template_elements','template_id',$id);
+                                delete_records('templates','ident',$id);
+                                $messages[] = __gettext("Your template was deleted.");
+                            }
+                        }
+                    break;
+                    
+                    
+                case "templates:create":
+                    $name = optional_param('new_template_name');
+                    $based_on = optional_param('template_based_on',0,PARAM_INT);
+                    if (empty($CFG->disable_usertemplates) && !empty($name)) {
+                            $t = new StdClass;
+                            $t->name = trim($name);
+                            $t->owner = $USER->ident;
+                            $t->public = 'no';
+                            $new_template_id = insert_record('templates',$t);
+                            if (!empty($based_on) && $based_on != -1) {
+                                if (record_exists_sql('SELECT ident FROM '.$CFG->prefix.'templates t 
+                                                       WHERE ident = '.$based_on.' AND (owner = '.$USER->ident." OR public = 'yes')")) {
+                                    if ($elements = get_records('template_elements','template_id',$based_on)) {
+                                        foreach($elements as $element) {
+                                            $te = new StdClass;
+                                            $te->name = addslashes($element->name);
+                                            $te->content = addslashes($element->content);
+                                            $te->template_id = $new_template_id;
+                                            insert_record('template_elements',$te);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    break;
+                
+            }
+            
+        }
 
 ?>

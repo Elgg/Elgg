@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Plugin: spellchecker</title>
+<link href="css/screen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<div class="header">
+	<h1>Plugin: spellchecker</h1>
+</div>
+
+<div class="content">
+	<p>This plugin adds spellchecker functionality to TinyMCE by providing a new button that performs a AJAX call to a backend PHP page that uses pspell.</p>
+	<h3>Installation Instructions</h3>
+	<p>
+	<ol>
+		<li>Download the spellchecker plugin from the <a href="http://tinymce.moxiecode.com/download.php">TinyMCE website</a>.</li>
+		<li>Copy the spellchecker directory to the plugins directory of TinyMCE (/jscripts/tiny_mce/plugins).</li>
+		<li>Add plugin to TinyMCE plugin option list example: plugins : &quot;spellchecker&quot;.</li>
+		<li>Add the button name to button list, example: theme_advanced_buttons3_add : &quot;spellchecker&quot;.</li>
+	</ol>
+	</p>
+	<h3>Spellchecker plugins/modes</h3>
+	<p>
+		TinyMCE Spellchecker currently supports 3 modes. These are available as configurable PHP classes.
+		<ul>
+			<li>TinyPspell - Run pspell within PHP. (PHP needs to be compiled with pspell support)</li>
+			<li>TinyPspellShell - Run pspell as a command line shell application.</li>
+			<li>TinyGoogleSpell - Use HTTP proxy bridge to connect to a Google XML Web Service.</li>
+		</ul>
+		Use this as the value for the the languages option when you are using the GoogleSpell class: +English=en,Danish=da,Dutch=nl,Finnish=fi,French=fr,German=de,Italian=it,Polish=pl,Portuguese=pt,Spanish=es,Swedish=sv
+	<br /><br /></p>
+	<h3>Initialization Example</h3>
+	<p>
+	<div class="example">
+	<pre>
+tinyMCE.init({
+	theme : &quot;advanced&quot;,
+	mode : &quot;textareas&quot;,
+	plugins : &quot;spellchecker&quot;,
+	theme_advanced_buttons3_add : &quot;spellchecker&quot;,
+	spellchecker_languages : &quot;+English=en,Swedish=sv&quot;,
+	spellchecker_word_separator_chars : &quot;\\s!\"#$%&amp;()*+,-./:;&lt;=&gt;?@[\]&circ;_{|}§&copy;&laquo;&reg;±¶·¸&raquo;¼½¾¿×÷¤\u201d\u201c&quot;
+});
+</pre>
+	</div>
+	</p>
+	<p>
+	<h3>Options</h3>
+	</p>
+	<p>
+	<table border="1" cellspacing="0" cellpadding="4">
+	<tr>
+		<td>[spellchecker_languages]</td>
+		<td>Enables you to specify what languages your pspell installation can handle. The value of this option should be a comma separated name value list in the following format name1=value1,name2=value,name3=value where name is the string to present in the menu and the value is a ISO language code like sv or en. If you add a + character infront of the name it will be the default value for the spellchecker. The default value for this option is: +English=en.</td>
+	</tr>
+  	<tr>
+ 		<td>[spellchecker_word_separator_chars]</td>
+ 		<td>This option enables you to specify the word separator characters. The default value for this option is: \\s!"#$%&()*+,-./:;<=>?@[\]^_{|}§©«®±¶·¸»¼½¾¿×÷¤\u201d\u201c.</td>
+ 	</tr>
+	</table>
+	</p>
+</div>
+
+<div class="footer">
+	<div class="helpindexlink"><a href="index.html">Index</a></div>
+	<div class="copyright">Copyright &copy; 2003-2006 <a href="http://www.moxiecode.com">Moxiecode Systems AB</a></div>
+	<br style="clear: both" />
+</div>
+</body>
+</html>

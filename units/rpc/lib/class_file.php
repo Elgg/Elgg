@@ -26,20 +26,20 @@
 
             if ($var != "")
             {
-                $file = db_query("select * from files where ident = $var");
-
-                $this->ident         = $var;
-                $this->owner         = $file[0]->owner;
-                $this->files_owner   = $file[0]->files_owner;
-                $this->folder        = $file[0]->folder;
-                $this->community     = $file[0]->community;
-                $this->title         = $file[0]->title;
-                $this->originalname  = $file[0]->originalname;
-                $this->description   = $file[0]->description;
-                $this->location      = $file[0]->location;
-                $this->access        = $file[0]->access;
-                $this->size          = $file[0]->size;
-                $this->time_uploaded = $file[0]->time_uploaded;
+                if ($file = get_record('files','ident',$var)) {
+                    $this->ident         = $var;
+                    $this->owner         = $file->owner;
+                    $this->files_owner   = $file->files_owner;
+                    $this->folder        = $file->folder;
+                    $this->community     = $file->community;
+                    $this->title         = $file->title;
+                    $this->originalname  = $file->originalname;
+                    $this->description   = $file->description;
+                    $this->location      = $file->location;
+                    $this->access        = $file->access;
+                    $this->size          = $file->size;
+                    $this->time_uploaded = $file->time_uploaded;
+                }
             }
         }
 
@@ -186,7 +186,7 @@
          */
         function setTitle($val)
         {
-            $this->title = addslashes($val);
+            $this->title = $val;
         }
 
         /**
@@ -194,7 +194,7 @@
          */
         function setOriginalName($val)
         {
-            $this->originalname = addslashes($val);
+            $this->originalname = $val;
         }
 
         /**
@@ -202,7 +202,7 @@
          */
         function setDescription($val)
         {
-            $this->description = addslashes($val);
+            $this->description = $val;
         }
 
         /**
@@ -246,8 +246,7 @@
             $user = run('users:instance', array('user_id' => $this->owner));
             
             $quotum = $user->getFileQuota();
-            $quotum_used = db_query("select sum(size) as sum from files where owner = $this->owner");
-            $quotum_used = $quotum_used[0]->sum;
+            $quotum_used = get_field('files','sum(size)','owner',$this->owner);
 
             if ($quotum_used + $size > $quotum)
             {
@@ -265,13 +264,15 @@
          */
         function saveBase64Data($data)
         {
+            global $CFG;
+
             $folder = run('folders:instance', array('id' => $this->folder));
 
             // Decode the file and store it
             $filename = time() . "_" . preg_replace("/[^\w.-]/i","_",$this->originalname);
             $storage  = $folder->getPersonalStorage();
         
-            $if = fopen($storage. $filename, "wb");
+            $if = fopen($CFG->dataroot . $storage . $filename, "wb");
 
             $file = base64_decode($data);
 
@@ -279,14 +280,14 @@
         
             fclose($if);
 
-            $size = filesize($storage.$filename);
+            $size = filesize($CFG->dataroot . $storage . $filename);
 
             $allowed = $this->checkQuota($size);
 
             if ($allowed == false)
             {
                 // Quotum exceeded, remove the upload
-                @unlink($storage.$filename);
+                @unlink($CFG->dataroot . $storage . $filename);
 
                 $result['value'] = false;
                 $result['message'] = "Quotum exceeded";
@@ -297,7 +298,7 @@
             {
                 $this->date = time();
                 $this->size = $size;
-                $this->location = $storage.$filename;
+                $this->location = $storage . $filename;
 
                 return $this->save();
             }
@@ -310,21 +311,20 @@
         {
             if ($this->exists == false)
             {
-                db_query("insert into files set owner = $this->owner,
-                          files_owner = $this->files_owner,
-                          folder = $this->folder,
-                          originalname = '$this->originalname',
-                          title = '$this->title',
-                          description = 'Automated upload',
-                          location = '$this->location',
-                          access = '$this->access',
-                          size = '$this->size',
-                          time_uploaded = ".time());
-
-                if (db_affected_rows() > 0)
-                {
+                $f = new StdClass;
+                $f->owner = $this->owner;
+                $f->files_owner = $this->files_owner;
+                $f->folder = $this->folder;
+                $f->originalname = $this->originalname;
+                $f->title = $this->title;
+                $f->description = 'Automated upload';
+                $f->location = $this->location;
+                $f->access = $this->access;
+                $f->size = $this->size;
+                $f->time_uploaded =  time();
+                $this->ident = insert_record('files',$f);
+                if (!empty($this->ident)) {
                     $this->exists = true;
-                    $this->ident = db_id();
 
                     $result['value'] = $this->ident;
                     $result['message'] = "File stored";
@@ -341,15 +341,14 @@
             }
             else
             {
-                db_query("update files set 
-                          folder = $this->folder,
-                          title = '$this->title',
-                          description = 'Automated upload',
-                          access = '$this->access',
-                          where ident = $this->ident");
+                $f = new StdClass;
+                $f->folder = $this->folder;
+                $f->title = $this->title;
+                $f->description = 'Automated upload';
+                $f->access = $this->access;
+                $f->ident = $this->ident;
+                if (update_record('files',$f)) {
 
-                if (db_affected_rows() > 0)
-                {
                     $result['value'] = $this->ident;
                     $result['message'] = "File updated";
 

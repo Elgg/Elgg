@@ -25,46 +25,41 @@
             {
                 if (is_numeric($var))
                 {
-                    $folder= db_query("select * from file_folders where ident = '$var'");
+                    $folder = get_record('file_folders','ident',$var);
                 }
                 else
                 {
-                    $folder= db_query("select * from file_folders where name = '$var'");
+                    $folder = get_record('file_folders','name',$var);
                 }
 
-                $this->ident       = $folder[0]->ident;
-                $this->owner       = $folder[0]->owner;
-                $this->files_owner = $folder[0]->files_owner;
-                $this->parent      = $folder[0]->parent;
-                $this->name        = $folder[0]->name;
-                $this->access      = $folder[0]->access;
-
-                // Does the requested id exist
-                if (sizeof($folder[0]) > 0)
-                {
+                if (!empty($folder)) {
+                    $this->ident       = $folder->ident;
+                    $this->owner       = $folder->owner;
+                    $this->files_owner = $folder->files_owner;
+                    $this->parent      = $folder->parent;
+                    $this->name        = $folder->name;
+                    $this->access      = $folder->access;
+                    
                     $this->exists = true;
                 }
 
-                $folder_childs = db_query("select * from file_folders where parent = '$var'");
-
-                foreach ($folder_childs as $child)
-                {
-                    $this->child_folders[] = $child->ident;
+                if ($folder_childs = get_records('file_folders','parent',$var)) {
+                    foreach ($folder_childs as $child) {
+                        $this->child_folders[] = $child->ident;
+                    }
+                }
+                
+                if ($file_childs = get_records('files','parent',$var)) {
+                    foreach ($file_childs as $child) {
+                        $this->child_files[] = $child->ident;
+                    }
                 }
 
-                $file_childs = db_query("select * from files where parent = '$var'");
-
-                foreach ($file_childs as $child)
-                {
-                    $this->child_files[] = $child->ident;
-                }
-
-                $folder_tags = db_query("select ident from tags where ref = '$var'");
-
-                // An aray of Tag objects
-                foreach ($post_tags as $tag)
-                {
-                    $this->tags[] = $tag->ident;
+                if ($folder_tags = get_records('tags','tagtype','folder','ref',$var)) {
+                    // An aray of Tag objects
+                    foreach ($folder_tags as $tag) {
+                        $this->tags[] = $tag->ident;
+                    }
                 }
             }
         }
@@ -79,17 +74,18 @@
         }
 
         /**
-         *
+         * Returns path without leading $CFG->dataroot
          */
         function getPersonalStorage()
         {
+            $textlib  = textlib_get_instance();
             // User's personal filesystem storage location
             $user = run('users:instance', array('user_id' => $this->files_owner));
             $this->username = $user->getUserName();
 
-            $upload_folder = substr($this->username,0,1);
+            $personal_folder = 'files/' . $textlib->substr($this->username,0,1) . "/" . $this->username . "/";
 
-            return path . "_files/data/" . $upload_folder . "/" . $this->username . "/";
+            return $personal_folder;
         }
 
         /**
@@ -97,20 +93,24 @@
          */
         function setupPersonalStorage()
         {
+            global $CFG;
+
+            $textlib = textlib_get_instance();
             // Finally, create the default user filesystem folder, if not available
             $user = run('users:instance', array('user_id' => $this->owner));
             $this->username = $user->getUserName();
                 
-            $upload_folder = substr($this->username,0,1);
+            $base_folder = $CFG->dataroot . 'files/' . $textlib->substr($this->username,0,1);
+            $personal_folder = $base_folder . "/" .$this->username;
             
-            if (!file_exists(path . "_files/data/" . $upload_folder))
+            if (!file_exists($base_folder))
             {
-               mkdir(path . "_files/data/" . $upload_folder);
+               mkdir($base_folder);
             }
 
-            if (!file_exists(path . "_files/data/" . $upload_folder . "/" . $this->username))
+            if (!file_exists($personal_folder))
             {
-                mkdir(path . "_files/data/" . $upload_folder . "/" . $this->username);
+                mkdir($personal_folder);
             }
         }
 
@@ -245,18 +245,15 @@
         function save()
         {
             $this->setupPersonalStorage();
-
+            $ff = new StdClass;
+            $ff->parent = $this->parent;
+            $ff->name = $this->name;
+            $ff->access = $this->access;
             if ($this->exists == true)
             {
                 // Owner is still unmutable
-                db_query("update file_folders 
-                          set parent = $this->parent,
-                          name = '$this->name',
-                          access = '$this->access'
-                          where ident = '$this->ident'");
-
-                if (db_affected_rows() > 0)
-                {
+                $ff->ident = $this->ident;
+                if (update_record('file_folders',$ff)) {
                     return $this->ident;
                 }
                 else
@@ -266,17 +263,9 @@
             }
             else
             {
-                db_query("insert into file_folders 
-                          set parent = $this->parent,
-                          name = '$this->name',
-                          access = '$this->access',
-                          owner = $this->owner,
-                          files_owner = $this->files_owner");
-
-                if (db_affected_rows() > 0)
-                {
-                    // Set the new folder id
-                    $this->ident = db_id();
+                $ff->owner = $this->owner;
+                $ff->files_owner = $this->files_owner;
+                if ($this->ident = insert_record('file_folders',$ff)) {
 
                     $this->exists = true;
 
@@ -297,7 +286,7 @@
             // TODO refactor to handle more sophisticated operations like cut, paste, move
 
             // Also delete all subfolders and files
-            db_query("delete from file_folders where ident = $this->ident");
+            $deleted = delete_records('file_folders','ident',$this->ident);
 
             // Delete tags
             $this->deleteTags();
@@ -318,15 +307,7 @@
                 $folder->save();
             }
 
-
-            if (db_affected_rows > 0 )
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return $deleted;
         }
     }
 ?>

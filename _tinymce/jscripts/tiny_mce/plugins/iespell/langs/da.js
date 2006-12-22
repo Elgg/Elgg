@@ -1,7 +1,7 @@
-// DK lang variables contributed by Jan Moelgaard
+// DK lang variables contributed by Jan Moelgaard, John Dalsgaard and Bo Frederiksen.
 
 tinyMCE.addToLang('',{
 iespell_desc : 'Lav stavekontrol',
-iespell_download : "ieSpell kan ikke findes. Klik p&#229; OK for at forts&#230;tte til downloadsiden."
+iespell_download : "Kan ikke finde ieSpell. Klik p&aring; OK for at forts&aelig;tte til siden med overførsler."
 });
 

@@ -1,39 +1,34 @@
 <?php
 
-		global $owner;
+global $owner;
 
-		if (isset($_GET['files_name'])) {
-			$owner = (int) run("users:name_to_id", $_GET['files_name']);
-		} else if (isset($_REQUEST['owner'])) {
-			$owner = (int) $_REQUEST['owner'];
-		} else if (isset($_SESSION['userid'])) {
-			$owner = (int) $_SESSION['userid'];
-		}
+$files_name = optional_param('files_name');
+if (!empty($files_name)) {
+    $owner = user_info_username('ident', $files_name);
+} else {
+    $owner = optional_param('owner',optional_param('userid',0,PARAM_INT),PARAM_INT);
+}
 
-		global $owner_username;		
-		$owner_username = run("users:id_to_name",$owner);
-		
-		global $page_owner;
-		
-		if (isset($_REQUEST['files_owner'])) {
-			$page_owner = (int) $_REQUEST['files_owner'];
-		} else {
-			$page_owner = $owner;
-		}
-		
-		global $profile_id;
-		$profile_id = $owner;
-		
-		global $folder;
-		
-		if (isset($_REQUEST['folder'])) {
-			$folder = (int) $_REQUEST['folder'];
-			$result = db_query("select count(*) as x from file_folders where ident = $folder and files_owner = $owner");
-			if ($result[0]->x < 1) {
-				$folder = -1;
-			}
-		} else {
-			$folder = -1;
-		}
-		
+global $owner_username;        
+$owner_username = user_info('username', $owner);
+
+global $page_owner;
+
+$fowner = optional_param('files_owner',$owner);
+if (!empty($fowner)) {
+    $page_owner = $fowner;
+}
+
+global $profile_id;
+$profile_id = $owner;
+
+global $folder;
+
+$folder = optional_param('folder',0,PARAM_INT);
+$count = count_records('file_folders','ident',$folder,'files_owner',$owner);
+
+if (empty($count) || empty($folder)) {
+    $folder = -1;
+}
+
 ?>

@@ -72,5 +72,6 @@ loaded_plugins : 'Geladene Plugins',
 help : 'Hilfe',
 not_set : '-- Nicht festgelegt --',
 close : 'Schlie&szlig;en',
-toolbar_focus : 'Jump to tool buttons - Alt+Q, Jump to editor - Alt-Z, Jump to element path - Alt-X'
+toolbar_focus : 'Jump to tool buttons - Alt+Q, Jump to editor - Alt-Z, Jump to element path - Alt-X',
+insert_link_delta_width : 40
 });

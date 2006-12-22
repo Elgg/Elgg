@@ -1,0 +1,34 @@
+<form action="join.php" method="post">
+<input type="hidden" name="mode" value="join" />
+    <table class="lmssignup">
+        <tr valign="top">
+            <td><?php echo gettext('Username'); ?></td>
+            <td><input type="text" name="username" value="<?php echo $u->username; ?>" /></td>
+            <td rowspan="6" valign="top"><?php
+            echo '<b>'.gettext('Create an account with elgg.').'</b><br />';
+            echo gettext('The URL of your profile page will be ').$CFG->wwwroot.'username<br />';
+            echo gettext('This account will not expire when you stop being affiliated with your institution');
+?></td>
+        </tr>
+        <tr>
+            <td><?php echo gettext('Fullname'); ?></td>
+            <td><input type="text" name="name" value="<?php echo $u->name; ?>" /></td>
+        </tr>
+        <tr>
+            <td><?php echo gettext('Password'); ?></td>
+            <td><input type="password" name="password1" /></td>
+        </tr>
+        <tr>
+            <td><?php echo gettext('Password (again)'); ?></td>
+            <td><input type="password" name="password2" /></td>
+        </tr>
+        <tr>
+            <td><?php echo gettext('Email address'); ?></td>
+            <td><input type="text" name="email" value="<?php echo $u->email; ?>" /></td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td><input type="submit" value="<?php echo gettext('Create account!'); ?>" /></td>
+        </tr>
+    </table>
+</form>

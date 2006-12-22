@@ -1,5 +1,5 @@
 <?php
 
-	$data['search:tagtypes'][] = "file";
+    $data['search:tagtypes'][] = "file";
 
 ?>

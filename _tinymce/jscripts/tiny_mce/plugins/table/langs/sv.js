@@ -72,5 +72,8 @@ row : 'Rad',
 col : 'Kolumn',
 rowgroup : 'Rad grupp',
 colgroup : 'Kolumn grupp',
+col_limit : 'Du har angivit mer kolumner &auml;n vad som &auml;r till&aring;tet. Max &auml;r: {$cols}.',
+row_limit : 'Du har angivit mer rader &auml;n vad som &auml;r till&aring;tet. Max &auml;r:  {$rows}.',
+cell_limit : 'Du har angivit mer celler &auml;n vad som &auml;r till&aring;tet. Max &auml;r:  {$cells}.',
 missing_scope: '&Auml;r du s&auml;ker p&aring; att du vill forts&auml;tta utan att specifisera ett scope, utan denna kan det bli sv&aring;rt f&ouml;r handikappade att f&ouml;rst&aring; tabellen.'
 });

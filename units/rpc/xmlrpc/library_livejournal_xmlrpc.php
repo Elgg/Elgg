@@ -22,41 +22,30 @@
         sessiongenerate - Generate a session cookie.
         syncitems - Returns a list of all the items that have been created or updated for a user.    
     */
-
-    // Prepare a list of handlers to be loaded into the XML-RPC server
-
-    $handlers_lj = array('LJ.XMLRPC.getFriends'  => array('function' => 'lj_getFriends'));
-
-    $handlers = $handlers + $handlers_lj;
     
-    function lj_getFriends($params)
+    function lj_getFriends($params, $method)
     {
         // Number of parameters
         $nr_params = 1;
-        
+ //return count($params);
         // Do we have the required number of parameters?
-        if ($params->getNumParams() != $nr_params)
+        if (count($params) == 0)
         {
             // Raise an XML-RPC error
-            $response = new XML_RPC_Response (0, -32602, "Invalid method parameters");
-            
-            return $response;
+            return new IXR_Error(-32602, "Invalid method parameters");
         }
 
         // Parse parameters
-        $request    = $params->getParam(0);
+        $content = $params;
 
-        $content = $request->scalarval();
-
-        $username = $content['username']->scalarval();
+        $username = $params['username'];
 
         $user = run('users:instance', array('user_id' => $username));
 
         if (!$user->exists())
         {
-            $response = new XML_RPC_Response (0, 806, "No such user");
+            return new IXR_Error(806, "No such user");
 
-            return $response;
         }
 /*
         if (array_key_exists('auth_method', $request) && $request['auth_method'] != "")
@@ -82,12 +71,12 @@
         $result['friends'] = array();
         $limit = "";
 
-        if ($content['friendlimit'])
+        if ($params['friendlimit'])
         {
-            $limit = $content['friendlimit']->scalarval();
+            $limit = $params['friendlimit'];
         }
 
-        if ($content['includefriendof'] && $content['includefriendof']->scalarval() == 1)
+        if ($params['includefriendof'] && $params['includefriendof'] == 1)
         {
             $result['friendsof'] = array();
 
@@ -104,20 +93,20 @@
 
                     $friend = run('users:instance', array('user_id' => $friend_id));
 
-                    $tmp['username']  = new XML_RPC_Value($friend->getUserName());
-                    $tmp['fullname']  = new XML_RPC_Value($friend->getName());
-                    $tmp['fgcolor']   = new XML_RPC_Value("#FFFFFF");
-                    $tmp['bgcolor']   = new XML_RPC_Value("#000000");
-                    $tmp['groupmask'] = new XML_RPC_Value(0, 'int'); // TODO find out what the bits are about 
+                    $tmp['username']  = $friend->getUserName();
+                    $tmp['fullname']  = $friend->getName();
+                    $tmp['fgcolor']   = "#FFFFFF";
+                    $tmp['bgcolor']   = "#000000";
+                    $tmp['groupmask'] = (int) 0; // TODO find out what the bits are about 
 
-                    $friends[] = new XML_RPC_Value($tmp, 'struct');
+                    $friends[] = $tmp;
                 }
             }
 
-            $result['friendsof'] = new XML_RPC_Value($friends, 'array');
+            $result['friendsof'] = $friends;
         }
 
-        if ($content['includegroups'] && $content['includegroups']->scalarval() == 1)
+        if ($content['includegroups'] && $content['includegroups'] == 1)
         {
             $result['friendsgroup'] = array();
         }
@@ -135,22 +124,18 @@
 
                 $friend = run('users:instance', array('user_id' => $friend_id));
 
-                $tmp['username']  = new XML_RPC_Value($friend->getUserName());
-                $tmp['fullname']  = new XML_RPC_Value($friend->getName());
-                $tmp['fgcolor']   = new XML_RPC_Value("#FFFFFF");
-                $tmp['bgcolor']   = new XML_RPC_Value("#000000");
-                $tmp['groupmask'] = new XML_RPC_Value(0, 'int'); // TODO find out what the bits are about 
+                $tmp['username']  = $friend->getUserName();
+                $tmp['fullname']  = $friend->getName();
+                $tmp['fgcolor']   = "#FFFFFF";
+                $tmp['bgcolor']   = "#000000";
+                $tmp['groupmask'] = (int) 0; // TODO find out what the bits are about 
 
-                $friends[] = new XML_RPC_Value($tmp, 'struct');
+                $friends[] = $tmp;
             }
         }
         
-        $result['friends'] = new XML_RPC_Value($friends, 'array');
+        $result['friends'] = $friends;
 
-        $value = new XML_RPC_Value($result, 'struct');
-
-        $response = new XML_RPC_Response($value);
-
-        return $response;
+        return $result;
     }
 ?>

@@ -1,0 +1,280 @@
+//////////////////////////////////////////////////////////////
+///  phpThumb() by James Heinrich <info@silisoftware.com>   //
+//        available at http://phpthumb.sourceforge.net     ///
+//////////////////////////////////////////////////////////////
+///                                                         //
+//    Frequently Asked Questions (FAQ) about phpThumb()     //
+//                                                         ///
+//////////////////////////////////////////////////////////////
+
+
+Q: My question isn't answered here and I can't find any
+   forums, how do I get support?
+A: Please email me directly at info@silisoftware.com with
+   any questions, suggestions, donations, etc.
+
+
+Q: I think I found a bug, what's the first thing I should do?
+A: Please make sure you're using the latest version. There's
+   a good chance I may have already fixed the bug, so please
+   make sure you can reproduce it with the latest version
+   before reporting the bug.
+
+
+Q: phpThumb doesn't work as expected, and it may be a server
+   configuration issue -- how do I check?
+A: Please run /demo/demo.check.php to find out how your server
+   matches up with the recommended configuration and for
+   suggestions on what to change for improved performance.
+
+
+Q: What is the GPL? Can I use this for commercial sites?
+A: See the GPL FAQ: http://www.gnu.org/licenses/gpl-faq.html
+   In general, if you just want to call phpThumb.php in the
+   standard <img src="phpThumb.php?src=pic.jpg&w=100"> manner
+   then there is no problem, you're free to do this no matter
+   if you site is commercial or not, or what license your code
+   is released under.
+   If you're calling phpThumb() as an object then you will
+   probably run into license issues, so consult the above FAQ
+   and the GPL itself.
+   No matter if you use phpThumb() commercially or not, no
+   payment is required. However, donations are always welcome
+   and can be made at http://phpthumb.sourceforge.net
+
+
+Q: Some images generate thumbnails, but some fail (the original
+   non-resized image is output instead).
+A: Your PHP installation does not have a high enough memory_limit
+   and ImageMagick is not installed on the server. The PHP memory
+   required is 5 times the number of pixels in the image.
+   For example:
+     640x480x5   = 1.5MB
+     1600x1200x5 = 9.2MB
+   You can adjust the PHP memory limit in php.ini (if you have
+   permission on your server to do so), or (better yet) install
+   ImageMagick on the server and that will bypass the memory limit
+   issue. If you can't do either of the above, you can resize the
+   images manually (with your favourite image editor) to a size
+   that your memory_limit setting can handle, and/or you can
+   re-save the images with an image editor that can embed an EXIF
+   thumbnail (Photoshop for example) which phpThumb can use as an
+   image source (lower image quality, but perhaps better than
+   nothing).
+
+
+Q: I'm getting is this error message:
+   Failed: RenderToFile(<filename>) failed because
+   !is_resource($this->gdimg_output)
+A: You missed the call to GenerateThumbnail() before
+   RenderToFile() or OutputThumbnail.
+   See /demo/phpThumb.demo.object.php for an example.
+
+
+Q: I'm trying to save a phpThumb-generated image in Internet
+   Explorer and it saves in BMP format, why?
+A: This is not phpThumb's fault, it is an IE issue:
+   http://support.microsoft.com/default.aspx?scid=kb;en-us;810978
+   http://support.microsoft.com/default.aspx?scid=kb;en-us;260650
+
+
+Q: PNG images with transparent areas show up with gray background
+   in the areas that are supposed to be transparent.
+A: Internet Explorer has had a broken PNG alpha-channel display
+   implementation for a decade, so it may never get fixed. Other
+   major browsers generally handle alpha-transparent PNGs fine.
+   See http://www.silisoftware.com/png_transparency/
+   For an alpha-channel PNG display in IE hack, see this page:
+   http://www.koivi.com/ie-png-transparency/
+
+
+Q: I'm getting "<filename> does not exist" when I know the
+   file does exist
+A: Check that these two values are present and properly
+   configured in phpThumb.config.php (introduced in v1.6.0):
+    $PHPTHUMB_CONFIG['allow_src_above_docroot']  (default=false)
+    $PHPTHUMB_CONFIG['allow_src_above_phpthumb'] (default=true)
+   If your images are outside DOCUMENT_ROOT then you will have
+    to configure 'allow_src_above_docroot' to true.
+   Make sure whatever user the webserver is running as has read
+    permission to the file/directory you're reading from
+
+
+Q: Should I use phpThumb.php, or use phpThumb() as an object?
+A: phpThumb.php is easier to use (less coding) for basic uses.
+   phpThumb.php handles all caching; your own object will need
+   to have its own caching code. If you just want to display a
+   thumbnailed version of an existing image, use phpThumb.php
+   If you want to render one (or more) thumbnails to static
+   files (during upload, for example), that's an appropriate
+   use for the object mode. Also, phpThumb.config.php is only
+   used by phpThumb.php, so if you instantiate your own object
+   you need to manually set all configuration options because
+   phpThumb.config.php has NO effect. So, to repeat:
+   **always use phpThumb.php unless you NEED to have an object**
+
+
+Q: The first time I go to a page which contains thumbnails I
+   don't actually see the thumbnail, I just get a browser image
+   placeholder (or no image). As soon as I hit refresh, all the
+   thumbnail images pop into place really fast.
+A: You can try and see if it works better with
+     $PHPTHUMB_CONFIG['cache_force_passthru'] = false;
+   but typically the default setting works better.
+   This is something of an unresolved issue on some servers,
+   where for whatever reason I haven't (yet?) been able to
+   figure out a setting that always works the first time. If the
+   above config setting doesn't help, you might be stuck with
+   having to manually or automagically pre-cache thumbnails as
+   they're created.  Please email info@silisoftware.com if you
+   have a better solution...
+
+
+Q: Are there any front-end GUI interfaces to phpThumb()?
+A: See /demo/readme.demo.txt
+
+
+Q: Are there / have there been any security issues in phpThumb?
+A: http://secunia.com/product/5199/
+
+
+Q: Why can't Flash work with images output from phpThumb()?
+A: Flash doesn't like progressive JPEG. Set:
+   $PHPTHUMB_CONFIG['output_interlace'] = false;
+
+
+Q: Image quality is not very good - why?
+A: If you're using GD v1.x, no way around it. Upgrade to GD v2.x
+
+
+Q: Image quality is very bad, very pixelated -- why?
+A: You may be trying to resize images larger than the available
+   PHP memory, so phpThumb is simply extracting and using the
+   EXIF thumbnail as the image source, which is usually about
+   160x120 (so if you resize it to 640x480 it will look very bad).
+   To calculate the required size for memory_limit in php.ini,
+   calculate the number of pixels in the image and multiply by 5:
+   For example, 1600x1200 = 1600 * 1200 * 5 = 9600000 = 10M
+   Easy solution: install ImageMagick
+
+
+Q: Can I save the generated thumbnail to a file?
+A: Yes, there are several ways to do so; the best way is to call
+   phpThumb as an object and call RenderToFile() to save the
+   thumbnail to whatever filename you want.
+   See /demo/phpThumb.demo.object.php for an example.
+   The other way is to use the 'file' parameter (see
+   /docs/phpthumb.readme.txt) but this parameter is deprecated
+   and may not exist in future versions of phpThumb().
+
+
+Q: "Off-server thumbnailing is not allowed" -- how do I enable it?
+A: By default, phpThumb() only makes thumbnails for the same
+   domain that it is running on. To allow it to make thumbnails
+   for a limited number of other domains, add them
+   (in phpThumb.config.php) like this:
+     $PHPTHUMB_CONFIG['nohotlink_valid_domains'] = array(
+        @$_SERVER['HTTP_HOST'], 'example.com', 'www.example.com',
+        'subdomain.example.net', 'example.org');
+   To disable off-server thumbnail blocking, just set:
+     $PHPTHUMB_CONFIG['nohotlink_enabled'] = false;
+
+
+Q: Is it possible to set the parameters (like w/h/fltr[]) in
+   the config, so that they can't be changed over the URL?
+A: Take a look at $PHPTHUMB_DEFAULTS at the bottom of
+   phpThumb.config.php  You'll want to set
+     $PHPTHUMB_DEFAULTS_GETSTRINGOVERRIDE = false
+   possibly also
+     $PHPTHUMB_DEFAULTS_DISABLEGETPARAMS = true
+   You may also want to investigate
+     $PHPTHUMB_CONFIG['high_security_enabled'] = true
+   (see the example at the bottom of phpThumb.config.php
+   for how to call images in HighSecurity mode)
+
+
+Q: Is there a way to use phpThumb() object to create thumbnails
+   without the parameters in the URL showing the location of
+   the image etc?
+A: There is a demo in /demo/phpThumb.demo.object.php. You could
+   modify this into your own file, but there still remains the
+   problem of passing parameters to the file, whether it's
+   phpThumb.php or your own instantiation of a phpThumb() object.
+   I would suggest is putting as many of the common parameters
+   into phpThumb.config.php as possible under $PHPTHUMB_DEFAULTS,
+   so you then don't have to pass them for each image. If you
+   don't want people modifying the parameters, turn on
+   $PHPTHUMB_CONFIG['high_security_enabled'] and set a password
+   (you'll need to generate the <img> tags with phpThumbURL()
+   provided at the bottom of phpThumb.config.php). If you don't
+   want people accessing your source images at all, you can
+   place them outside DOCUMENT_ROOT on your server (as long as
+   phpThumb/PHP has read access to the directory). The other
+   option is to put your source images in a MySQL database
+   and set $PHPTHUMB_CONFIG['mysql_query'] and related
+   parameters in phpThumb.config.php to pull your source images
+   from the database. That way it's impossible to retrieve the
+   images except through phpThumb.php, and if high_security is
+   enabled, then nobody can modify the parameters to view
+   anything except what you want to show. So, yes, it's possible
+   to use your own object, but it's probably better to use
+   phpThumb.php if possible -- one notable issue is that
+   phpThumb.php handles all the caching, so you're on your own
+   to deal with that if you create your own object.
+
+
+Q: How do I write the output thumbnail back to a database instead
+   of outputting to the browser or a file?
+A: See /demo/phpThumb.demo.object.php  Basically you need to call
+   $this->GenerateThumbnail() then $this->RenderOutput() and then
+   the output raw image data is found in $this->outputImageData
+
+
+Q: phpThumb runs slowly, as if the images aren't cached, when I use HTTP source
+   images (not on my server). How can I make it go faster?
+A: $PHPTHUMB_CONFIG['cache_source_filemtime_ignore_remote'] = true;
+   // if true, remote source images will not be checked for modification date and
+   // cached image will be used if available, even if source image is changed or removed
+
+
+Q: What does the "cache_default_only_suffix" configuration option do?
+A: Cache files are normally created with big ugly names like
+   "phpThumb_cache_www.example.com_src1a482c2c760463795ff18faf073b389f_par3e099041c2f4a73041a7f5d7e7fc481a_dat1119952152.jpeg"
+   but if cache_default_only_suffix is enabled, cache filenames are simplified to
+   "pic_thumb.jpg" (for example). The problem is that only one version of that
+   thumbnail is possible, and you can never call it again with a different size,
+   or different filters, etc.  Generally you don't want that enabled, but it's
+   there because some people asked for it.
+
+
+Q: Why is the visual size of rotated images smaller than the unrotated images?
+A: phpThumb fits the rotated image into the 'w' and 'h' dimensions.
+   Try not specifying a 'w' parameter: phpThumb.php?src=file.png&ra=15
+   That should leave the image the apparent same size as the unrotated image
+   (in actual fact the canvas size is enlarged to fit the rotated image in it).
+
+
+Q: How can I purge cached files when I delete the source image?
+A: You can either let phpThumb's built-in cache purging features (see phpThumb.config.php)
+   take effect, or you can manually walk through your source images to delete and find
+   the matching cache files and delete them:
+     if ($dh = opendir($sourcedir)) {
+       while ($file = readddir($dh)) {
+         if ($file == $WhatIwantToDelete) {
+           $md5 = md5_file($sourcedir.'/'.$file);
+           unlink($phpthumb_cache_dir.'/phpThumb_cache_www.example.com_src'.$md5.'*.*');
+         }
+       }
+       closedir($dh);
+     }
+
+
+Q: What is the proper name for this script/program/library?
+A: The official name is "phpThumb()" but it may be written
+   as simply "phpThumb" in short form (or where parentheses
+   are not permitted), or "phpthumb" in case-insensitive
+   environments. The following is a non-exhaustive sample of
+   unacceptable forms: PHPthumb; phpThumbs; phpthump;
+   phpthumbnailer; phpThumbnail; PHP Thumb; Phpthumb; etc.
+
+

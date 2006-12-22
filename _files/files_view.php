@@ -1,14 +1,14 @@
 <?php
 
-	/*
-	*	View files
-	*/
+    /*
+    *    View files
+    */
 
-	// Get current folder	
-	
-		global $folder;
-		if (!isset($folder)) {
-			echo "!!!";
-		}
-	
+    // Get current folder    
+    
+        global $folder;
+        if (!isset($folder)) {
+            echo "!!!";
+        }
+    
 ?>

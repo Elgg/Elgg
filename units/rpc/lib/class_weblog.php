@@ -47,8 +47,7 @@
             }
             elseif (is_string($user_id))
             {
-                $query = db_query("select ident from users where username = $user_id");
-                $this->user_id = $query->ident;
+                $this->user_id = user_info_username('ident',$user_id);
             }
 
             if (is_numeric($blog_id))
@@ -57,25 +56,18 @@
             }
             elseif (is_string($blog_id))
             {
-                $query = db_query("select ident from users where username = $blog_id");
-                $this->ident = $query->ident;
+                $this->ident = user_info_username('ident',$blog_id);
             }
 
             // Are we dealing with a person or a community?
-            if (run("users:type:get", $this->ident) == "person")
+            if (user_type($this->ident) == "person")
             {
-                $result = db_query("select name, username 
-                                    from users
-                                    where ident = $this->user_id");
+                if ($result = get_record('users','ident',$this->user_id)) {
+                    $this->user_name     = $result->name;
+                    $this->user_username = $result->username;
+                }
 
-                $posts  = db_query("select ident 
-                                    from weblog_posts 
-                                    where owner = $this->user_id 
-                                    and weblog = $this->user_id 
-                                    order by posted desc");
-
-                $this->user_name     = $result[0]->name;
-                $this->user_username = $result[0]->username;
+                $posts = get_records_select('weblog_posts',"owner = ? AND weblog = ?",array($this->user_id,$this->user_id),'posted DESC');
 
                 $this->blog_name     = $this->user_name;
                 $this->blog_username = $this->user_username;
@@ -87,8 +79,7 @@
                 $this->community = true;
 
                 // Get the owner
-                $sql_owner = db_query("select owner from users where ident = $this->ident");
-                $this->owner = $sql_owner[0]->owner;
+                $this->owner = user_info('owner',$this->ident);
 
                 // Inject an SQL restriction if the user is not owner
                 $sql_insert = "";
@@ -98,19 +89,13 @@
                     $sql_insert = " and owner = $this->user_id ";
                 }
 
-                $result = db_query("select name, username
-                                    from users
-                                    where ident = $this->ident");
-
-                $posts  = db_query("select ident 
-                                    from weblog_posts 
-                                    where weblog = $this->ident 
-                                    $sql_insert
-                                    order by posted desc");
-
-                $this->blog_name     = $result[0]->name;
-                $this->blog_username = $result[0]->username;
+                if ($result = get_record('users','ident',$this->ident)) {
+                    $this->blog_name     = $result->name;
+                    $this->blog_username = $result->username;
+                }
                 
+                $posts = get_records_select('weblog_posts',"weblog = $this->ident $sql_insert",null,'posted DESC');
+
                 $user = run('users:instance', array('user_id' => $this->user_id));
                 
                 $this->user_name     = $user->getName();
@@ -118,7 +103,7 @@
             }
 
             $this->posts = array();
-            if (sizeof($posts) > 0)
+            if (is_array($posts) && sizeof($posts) > 0)
             {
                 foreach ($posts as $post)
                 {

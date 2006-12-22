@@ -30,6 +30,7 @@
 				 <tr><td><strong>?</strong></td><td>Separates attribute verification values, see above.</td></tr>
 				 <tr><td><strong>+</strong></td><td>Makes the element open if no child nodes exists. Example: +a.</td></tr>
 				 <tr><td><strong>-</strong></td><td>Enables removal of empty elements such as &gt;strong /&lt;. Example: -strong.</td></tr>
+				 <tr><td><strong>#</strong></td><td>Enables padding of empty elements, this will padd with &amp;nbsp; if they are empty. Example: #p.</td></tr>
 			</tbody>
 		</table>
 		Wildcards such as *,+,? may be used in element or attribute name matching. 
@@ -64,7 +65,7 @@ tinyMCE.init({
 	</p>
 	<div class="example">
 <pre>
-+a[id|style|rel|rev|charset|hreflang|dir|lang|tabindex|accesskey|type|name|href|target|title|class|onfocus|onblur|onclick|ondblclick|onmousedown|onmouseup|onmouseover|onmousemove|onmouseout|onkeypress|onkeydown|onkeyup],-strong/b[class|style],-em/i[class|style],-strike[class|style],-u[class|style],+p[style|dir|class|align],-ol[class|style],-ul[class|style],-li[class|style],br,img[id|dir|lang|longdesc|usemap|style|class|src|onmouseover|onmouseout|border=0|alt|title|hspace|vspace|width|height|align],-sub[style|class],-sup[style|class],-blockquote[dir|style],-table[border=0|cellspacing|cellpadding|width|height|class|align|summary|style|dir|id|lang|bgcolor|background|bordercolor],-tr[id|lang|dir|class|rowspan|width|height|align|valign|style|bgcolor|background|bordercolor],tbody[id|class],thead[id|class],tfoot[id|class],-td[id|lang|dir|class|colspan|rowspan|width|height|align|valign|style|bgcolor|background|bordercolor|scope],-th[id|lang|dir|class|colspan|rowspan|width|height|align|valign|style|scope],caption[id|lang|dir|class|style],-div[id|dir|class|align|style],-span[style|class|align],-pre[class|align|style],address[class|align|style],-h1[style|dir|class|align],-h2[style|dir|class|align],-h3[style|dir|class|align],-h4[style|dir|class|align],-h5[style|dir|class|align],-h6[style|dir|class|align],hr[class|style],font[face|size|style|id|class|dir|color]
++a[id|style|rel|rev|charset|hreflang|dir|lang|tabindex|accesskey|type|name|href|target|title|class|onfocus|onblur|onclick|ondblclick|onmousedown|onmouseup|onmouseover|onmousemove|onmouseout|onkeypress|onkeydown|onkeyup],-strong/-b[class|style],-em/-i[class|style],-strike[class|style],-u[class|style],#p[id|style|dir|class|align],-ol[class|style],-ul[class|style],-li[class|style],br,img[id|dir|lang|longdesc|usemap|style|class|src|onmouseover|onmouseout|border|alt=|title|hspace|vspace|width|height|align],-sub[style|class],-sup[style|class],-blockquote[dir|style],-table[border=0|cellspacing|cellpadding|width|height|class|align|summary|style|dir|id|lang|bgcolor|background|bordercolor],-tr[id|lang|dir|class|rowspan|width|height|align|valign|style|bgcolor|background|bordercolor],tbody[id|class],thead[id|class],tfoot[id|class],-td[id|lang|dir|class|colspan|rowspan|width|height|align|valign|style|bgcolor|background|bordercolor|scope],-th[id|lang|dir|class|colspan|rowspan|width|height|align|valign|style|scope],caption[id|lang|dir|class|style],-div[id|dir|class|align|style],-span[style|class|align],-pre[class|align|style],address[class|align|style],-h1[id|style|dir|class|align],-h2[id|style|dir|class|align],-h3[id|style|dir|class|align],-h4[id|style|dir|class|align],-h5[id|style|dir|class|align],-h6[id|style|dir|class|align],hr[class|style],-font[face|size|style|id|class|dir|color],dd[id|class|title|style|dir|lang],dl[id|class|title|style|dir|lang],dt[id|class|title|style|dir|lang]
 </pre>
 	</div>
 
@@ -72,7 +73,7 @@ tinyMCE.init({
 
 	<h3>Full XHTML rule set:</h3>
 	<p>
-		This is the default string used by TinyMCE to cleanup the HTML contents.
+		The following will validate that the page complies fully with the XHTML specification. 
 	</p>
 	<div class="example">
 <pre>
@@ -272,7 +273,7 @@ valid_elements : &quot;&quot;
 +&quot;small[class|dir&lt;ltr?rtl|id|lang|onclick|ondblclick|onkeydown|onkeypress&quot;
   +&quot;|onkeyup|onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|style&quot;
   +&quot;|title],&quot;
-+&quot;span[align<lt;center?justify?left?right|class|dir&lt;ltr?rtl|id|lang|onclick|ondblclick|onkeydown&quot;
++&quot;span[align&lt;center?justify?left?right|class|dir&lt;ltr?rtl|id|lang|onclick|ondblclick|onkeydown&quot;
   +&quot;|onkeypress|onkeyup|onmousedown|onmousemove|onmouseout|onmouseover&quot;
   +&quot;|onmouseup|style|title],&quot;
 +&quot;strike[class|class|dir&lt;ltr?rtl|id|lang|onclick|ondblclick|onkeydown&quot;
@@ -339,7 +340,7 @@ valid_elements : &quot;&quot;
 
 <div class="footer">
 	<div class="helpindexlink"><a href="index.html">Index</a></div>
-	<div class="copyright">Copyright &copy; 2005 Moxiecode Systems AB</div>
+	<div class="copyright">Copyright &copy; 2003-2006 <a href="http://www.moxiecode.com">Moxiecode Systems AB</a></div>
 	<br style="clear: both" />
 </div>
 

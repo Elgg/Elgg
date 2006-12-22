@@ -1,0 +1,21 @@
+<form action="join.php" method="post">
+<input type="hidden" name="mode" value="login" />
+    <table class="lmssignup">
+        <tr valign="top">
+            <td><?php echo gettext('Username'); ?></td>
+            <td><input type="text" name="username" value="<?php echo $u->username; ?>" /></td>
+            <td rowspan="6" valign="top"><?php
+            echo '<b>'.gettext('Login with your existing account.').'</b><br />';
+            echo gettext('You can login and join this community using your account if you already have one');
+?></td>
+        </tr>
+        <tr>
+            <td><?php echo gettext('Password'); ?></td>
+            <td><input type="password" name="password1" /></td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td><input type="submit" value="<?php echo gettext('Login'); ?>" /></td>
+        </tr>
+    </table>
+</form>

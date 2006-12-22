@@ -1,11 +1,12 @@
-// Traduit par Normand Lamoureux le 2005-11-12
+// FR lang variables
+// Modified by Motte, last updated 2006-03-23
 
 tinyMCE.addToLang('flash',{
 title : 'Gestionnaire d\'animation Flash',
-desc : 'Insérer une animation Flash',
+desc : 'Ins&eacute;rer une animation Flash',
 file : 'Fichier Flash (.swf)',
 size : 'Taille',
 list : 'Fichiers Flash',
-props : 'Propriétés Flash',
-general : 'Général'
+props : 'Propri&eacute;t&eacute;s Flash',
+general : 'G&eacute;n&eacute;ral'
 });

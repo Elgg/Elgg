@@ -4,30 +4,10 @@
      * Blogger and metaWeblog API implementation
      */
 
-    // Prepare a list of handlers to be loaded into the XML-RPC server
-    
-    $handlers_blogger = array('blogger.newPost'           => array('function' => 'genric_newPost'),
-                              'blogger.editPost'          => array('function' => 'generc_editPost'),
-                              'blogger.deletePost'        => array('function' => 'blogger_deletePost'),
-                              'blogger.getRecentPosts'    => array('function' => 'generic_getRecentPosts'),
-                              'blogger.getUsersBlogs'     => array('function' => 'blogger_getUsersBlogs'),
-                              'blogger.getUserInfo'       => array('function' => 'blogger_getUserInfo'),
-                              'metaWeblog.newPost'        => array('function' => 'generic_newPost'),
-                              'metaWeblog.getRecentPosts' => array('function' => 'generic_getRecentPosts'),
-                              'metaWeblog.editPost'       => array('function' => 'generic_editPost'),
-                              'metaWeblog.getPost'        => array('function' => 'metaweblog_getPost'),
-                              'metaWeblog.newMediaObject' => array('function' => 'metaweblog_newMediaObject'));
-
-    // Add the handlers to the global handlers array
-    $handlers = $handlers + $handlers_blogger;
-
-    function generic_newPost($params)
+    function generic_newPost($params, $method)
     {
-        // How are we being called?
-        $method    = $params->method();
-        
         // Number of parameters
-        $nr_params = null;
+        $nr_params = null;            // Raise an XML-RPC error
         
         if ($method == "blogger.newPost")
         {
@@ -41,54 +21,40 @@
         }
         
         // Do we have the required number of parameters?
-        if ($params->getNumParams() != $nr_params)
+        if (count($params) != $nr_params)
         {
             // Raise an XML-RPC error
-            $response = new XML_RPC_Response (0, -32602, "Invalid method parameters");
-            
-            return $response;
+            return new IXR_Error(-32602, "Invalid method parameters");
         }
         
         // Parse parameters
         if ($api == "blogger")
         {
-            $param    = $params->getParam(1);
-            $blogid   = $param->scalarval();
-
-            $param    = $params->getParam(2);
-            $username = $param->scalarval();
-        
-            $param    = $params->getParam(3);
-            $password = $param->scalarval();
-        
-            $param    = $params->getParam(4);
-            $content  = $param->scalarval();
-        
-            $param    = $params->getParam(5);
-            $publish  = (boolean) $param->scalarval();
+            $blogid   = $params[1];
+            $username = $params[2];
+            $password = $params[3];
+            $content  = $params[4];
+            $publish  = (boolean) $params[5];
         }
         else
         {
-            $param    = $params->getParam(0);
-            $blogid = $param->scalarval();
-
-            $param    = $params->getParam(1);
-            $username = $param->scalarval();
-        
-            $param    = $params->getParam(2);
-            $password = $param->scalarval();
-        
-            $param    = $params->getParam(3);
-            $content  = $param->scalarval();
-        
-            $param    = $params->getParam(4);
-            $publish  = (boolean) $param->scalarval();
+            $blogid   = $params[0];
+            $username = $params[1];
+            $password = $params[2];
+            $content  = $params[3];
+            $publish  = (boolean) $params[4];
         }
-        
+       
+        // Exit if no blogid provided
+        if ($blogid == "")
+        {
+            // Raise an XML-RPC error
+            return new IXR_Error(-32602, "No blog ID provided");
+        }
+
         // Check credentials
         $auth = run('rpc:auth', array("username" => $username,
                                       "password" => $password));
-       
         if ($auth['status'] == true)
         {
             $user = run('users:instance', array('user_id' => $username));
@@ -121,18 +87,18 @@
                 // TODO possibly handle interesting mt extensions
                 //   (String) mt_text_more (the value for the additional entry text, combine with {{cut}}?)
                 //   (String) mt_excerpt (the value for the excerpt field)
-                
-                $post->setTitle($content['title']->scalarval());
-                $post->setBody($content['description']->scalarval());               
+                //   (Boolean) mt_allow_comments (Elgg only handles this as a global and not per post option)
+                $post->setTitle($content['title']);
+                $post->setBody($content['description']);
             }
 
             // Save first because we need a postid to be able to add the tags later
             $post->save();
             
-            // We support mt_keywords
-            if (array_key_exists('mt_keywords', $content) && $post->getIdent() != "")
+            // We support mt_keywords if request is metaWeblog
+            if ($api != "blogger" && array_key_exists('mt_keywords', $content) && $post->getIdent() != "")
             {
-                $keywords =  $content['mt_keywords']->scalarval();
+                $keywords =  $content['mt_keywords'];
                 $tags = explode(',', $keywords);
                 sort($tags);
 
@@ -150,34 +116,24 @@
             // Do we have a new post id?
             if ($post->getIdent() != "")
             {
-                $value = new XML_RPC_Value($post->getIdent());
-                $response = new XML_RPC_Response($value);
-
-                return $response;
+                return $post->getIdent();
             }
             else
             {
                 // No new post id available, item hasn't been saved so raise an XML-RPC error
-                $response = new XML_RPC_Response (0, -32500, "Unable to save item");
-
-                return $response;
+                return new IXR_Error(-32500, "Unable to save item");
             }
         }
         else
         {
             // Invalid credentials, raise an XML-RPC error
-            $response = new XML_RPC_Response (0, $auth['code'], $auth['message']);
-            
-            return $response;
+            return new IXR_Error($auth['code'], $auth['message']);
         }
     }
     
-    function generic_editPost($params)
+    function generic_editPost($params, $method)
     {
         // TODO editPost is almost similar to newPost, try to merge them
-
-        // How are we being called?
-        $method    = $params->method();
         
         // Number of parameters
         $nr_params = null;
@@ -194,48 +150,28 @@
         }
         
         // Do we have the required number of parameters?
-        if ($params->getNumParams() != $nr_params)
+        if (count($params) != $nr_params)
         {
             // Raise an XML-RPC error
-            $response = new XML_RPC_Response (0, -32602, "Invalid method parameters");
-            
-            return $response;
+            return new IXR_Error(-32602, "Invalid method parameters");
         }
         
         // Parse parameters
         if ($api == "blogger")
         {
-            $param    = $params->getParam(1);
-            $postid   = $param->scalarval();
-
-            $param    = $params->getParam(2);
-            $username = $param->scalarval();
-
-            $param    = $params->getParam(3);
-            $password = $param->scalarval();
-
-            $param    = $params->getParam(4);
-            $content  = $param->scalarval();
-
-            $param    = $params->getParam(5);
-            $publish  = $param->scalarval();
+            $postid   = $params[1];
+            $username = $params[2];
+            $password = $params[3];
+            $content  = $params[4];
+            $publish  = $params[5];
         }
         else
         {
-            $param    = $params->getParam(0);
-            $postid   = $param->scalarval();
-
-            $param    = $params->getParam(1);
-            $username = $param->scalarval();
-
-            $param    = $params->getParam(2);
-            $password = $param->scalarval();
-
-            $param    = $params->getParam(3);
-            $content  = $param->scalarval();
-
-            $param    = $params->getParam(4);
-            $publish  = $param->scalarval();
+            $postid   = $params[0];
+            $username = $params[1];
+            $password = $params[2];
+            $content  = $params[3];
+            $publish  = $params[4];
         }
 
         // Check credentials
@@ -270,8 +206,8 @@
                 //   (String) mt_text_more (the value for the additional entry text, combine with {{cut}}?)
                 //   (String) mt_excerpt (the value for the excerpt field)
                 
-                $post->setTitle($content['title']->scalarval());
-                $post->setBody($content['description']->scalarval());
+                $post->setTitle($content['title']);
+                $post->setBody($content['description']);
 
                 // We support mt_keywords
                 if (array_key_exists('mt_keywords', $content) && $result != false)
@@ -280,7 +216,7 @@
                     $post->deleteTags();
 
                     // Crunch and set the keywords as tags
-                    $keywords =  $content['mt_keywords']->scalarval();
+                    $keywords =  $content['mt_keywords'];
                     $tags = explode(',', $keywords);
 
                     foreach ($tags as $tag)
@@ -298,44 +234,30 @@
             // Do we have a succesfull save?
             if ($post->save() == true)
             {
-                $value = new XML_RPC_Value($result, 'boolean');
-                $response = new XML_RPC_Response($value);
-
-                return $response;
+                return true;
             }
             else
             {
                 // Modification are not saved, raise an XML-RPC error
-                $response = new XML_RPC_Response (0, -32500, "Unable to update item");
-
-                return $response;
+                return new IXR_Error(-32500, "Unable to update item");
             }
         }
         else
         {
             // Invalid credentials, raise an XML-RPC error
-            $response = new XML_RPC_Response (0, $auth['code'], $auth['message']);
-            
-            return $response;
+            return new IXR_Error($auth['code'], $auth['message']);
         }
     }
     
     /*
      */
-    function blogger_deletePost($params)
+    function blogger_deletePost($params, $method)
     {
         // Parse parameters
-        $param    = $params->getParam(1);
-        $postid   = $param->scalarval();
-
-        $param    = $params->getParam(2);
-        $username = $param->scalarval();
-        
-        $param    = $params->getParam(3);
-        $password = $param->scalarval();
-        
-        $param    = $params->getParam(4);
-        $publish  = (boolean) $param->scalarval(); // not used
+        $postid   = $params[1];
+        $username = $params[2];
+        $password = $params[3];
+        $publish  = (boolean) $params[4]; // not used
 
         // Check credentials
         $auth = run('rpc:auth', array("username" => $username,
@@ -347,26 +269,18 @@
             
             if ($post->delete() == true)
             {
-                $value = new XML_RPC_Value(true, 'boolean');
-
-                $response = new XML_RPC_Response($value);
-
-                return $response;
+                return true;
             }
             else
             {
                 // Message not deleted, raise an XML-RPC error
-                $response = new XML_RPC_Response (0, -32500, "Unable to delete post");
-            
-                return $response;
+                return new IXR_Error(-32500, "Unable to delete post");
             }
         }
         else
         {
             // Invalid credentials, raise an XML-RPC error
-            $response = new XML_RPC_Response (0, $auth['code'], $auth['message']);
-            
-            return $response;
+            return new IXR_Error($auth['code'], $auth['message']);
         }
     }
     
@@ -378,14 +292,11 @@
      * Return value: on success, array of structs containing ISO.8601 dateCreated, String userid, 
      * String postid, String content; on failure, fault
      *
-     * Notes: dateCreated is in the timezone of the weblog; blogid and blogid parameters are 
-     * not being used
+     * Notes: dateCreated is in the timezone of the weblog; blogid and 
+     * blogid parameters are not being used
      */
-    function generic_getRecentPosts($params)
+    function generic_getRecentPosts($params, $method)
     {
-        // How are we being called?
-        $method    = $params->method();
-        
         // Number of parameters
         $nr_params = null;
         
@@ -401,42 +312,26 @@
         }
         
         // Do we have the required number of parameters?
-        if ($params->getNumParams() != $nr_params)
+        if (count($params) != $nr_params)
         {
             // Raise an XML-RPC error
-            $response = new XML_RPC_Response (0, -32602, "Invalid method parameters");
-            
-            return $response;
+            return new IXR_Error(-32602, "Invalid method parameters");
         }
 
         // Parse parameters
         if ($api == "blogger")
         {
-            $param    = $params->getParam(1);
-            $blogid   = $param->scalarval();
-            
-            $param    = $params->getParam(2);
-            $username = $param->scalarval();
-
-            $param    = $params->getParam(3);
-            $password = $param->scalarval();
-
-            $param          = $params->getParam(4);
-            $numberOfPosts  = (int) $param->scalarval();
+            $blogid   = $params[1];
+            $username = $params[2];
+            $password = $params[3];
+            $numberOfPosts  = (int) $params[4];
         }
         elseif($api == "metaWeblog")
         {
-            $param    = $params->getParam(0);
-            $blogid   = $param->scalarval();
-
-            $param    = $params->getParam(1);
-            $username = $param->scalarval();
-
-            $param    = $params->getParam(2);
-            $password = $param->scalarval();
-
-            $param          = $params->getParam(3);
-            $numberOfPosts  = (int) $param->scalarval();
+            $blogid   = $params[0];
+            $username = $params[1];
+            $password = $params[2];
+            $numberOfPosts  = (int) $params[3];
         }
 
         // Check credentials
@@ -451,18 +346,18 @@
         {
             // Minimum of one, no maximum (for now)
             if ($numberOfPosts >= 1)
-            {$username = 5;
+            {
                 $weblog = run('weblogs:instance', array('user_id' => $user_id,
                                                         'blog_id' => $blogid));
 
                 // Get the posts
                 $posts  = array_slice($weblog->getPosts(), 0, $numberOfPosts);
-                
+
                 // Global results array
                 $result = array();
 
-                if (sizeof($posts) > 0)
-                {
+                if (!empty($posts)) {
+
                     foreach($posts as $post_id)
                     {
                         $post = $weblog->getPost($post_id);
@@ -471,47 +366,28 @@
                         $entry = array();
                         
                         // Fill the post array, same for blogger and metaWeblog
-                        $entry['dateCreated'] = new XML_RPC_Value(date('Ymd\TH:i:s', $post->getPosted()), 'dateTime.iso8601');
-                        $entry['userid']      = new XML_RPC_Value($weblog->getIdent()); // is username
-                        $entry['postid']      = new XML_RPC_Value($post->getIdent());
+                        $entry['dateCreated'] = new IXR_Date($post->getPosted());
+                        $entry['userid']      = $weblog->getIdent(); // is username
+                        $entry['postid']      = $post->getIdent();
                         
                         // Here the API's differ
                         if ($api == "blogger")
                         {
-                            $entry['content']     = new XML_RPC_Value($post->getBody());
+                            $entry['content']     = $post->getBody();
                         }
                         else
                         {
-                            $entry['title']       = new XML_RPC_Value($post->getTitle());
-                            $entry['description'] = new XML_RPC_Value($post->getBody());
-                            $entry['url']         = new XML_RPC_Value($post->getUrl());
-                            $entry['permalink']   = new XML_RPC_Value($post->getPermaLink());
-                        }
-                                          $tags = $post->getTags();
-
-                        if (sizeof($tags) > 0)
-                        {
-                            $keywords = array();
-
-                            foreach($tags as $tag_id)
-                            {
-                                $tag = $post->getTag($tag_id);
-
-                                $keywords[] = $tag->getTagName();
-                            }
-                            
-                            $str_keywords = implode(',', $keywords);
-
-
-                            // Add the keywords
-                            $entry['mt_keywords'] = new XML_RPC_Value($str_keywords);
+                            $entry['title']       = $post->getTitle();
+                            $entry['description'] = $post->getBody();
+                            $entry['url']         = $post->getUrl();
+                            $entry['permalink']   = $post->getPermaLink();
                         }
  
                         // We support tags as mt_keywords
                         $tags = $post->getTags();
 
-                        if (sizeof($tags) > 0)
-                        {
+                        if (!empty($tags)) {
+
                             $keywords = array();
 
                             foreach($tags as $tag_id)
@@ -525,47 +401,31 @@
 
 
                             // Add the keywords
-                            $entry['mt_keywords'] = new XML_RPC_Value($str_keywords);
+                            $entry['mt_keywords'] = $str_keywords;
                         }
-                        
-                        
-                        // Construct the encoded post struct
-                        $value = new XML_RPC_Value($entry, 'struct');
-                        
+
                         // Add it to the results array
-                        $result[] = $value;  
+                        $result[] = $entry;  
                     }
 
-                    // Construct the final encoded array
-                    $final = new XML_RPC_Value($result, 'array');
-                    
-                    // Prepare the response
-                    $response = new XML_RPC_Response($final);
-            
-                    return $response;
+                    return $result;
                 }
                 else
                 {
                     // Numbers of requested posts can't be provided, raise an XML-RPC error
-                    $response = new XML_RPC_Response(0, 806, "No Such Item");
-            
-                    return $response;
+                    return new IXR_Error(806, "No Such Item");
                 }
             }
             else
             {
                 // Wrong amount of requested posts, raise an XML-RPC error
-                $response = new XML_RPC_Response(0, 805, "Amount parameter must be 1 or more");
-            
-                return $response;
+                return new IXR_Error(805, "Amount parameter must be 1 or more");
             }
         }
         else
         {
             // Invalid credentials, raise an XML-RPC error
-            $response = new XML_RPC_Response (0, $auth['code'], $auth['message']);
-            
-            return $response;
+            return new IXR_Error($auth['code'], $auth['message']);
         }
     }
 
@@ -579,23 +439,18 @@
      *
      * Notes: Currently elgg only provides one weblog per user; appkey is not being used
      */
-    function blogger_getUsersBlogs($params)
+    function blogger_getUsersBlogs($params, $method)
     {
         // Do we have the required number of parameters?
-        if ($params->getNumParams() != 3)
+        if (count($params) != 3)
         {
             // Raise an XML-RPC error
-            $response = new XML_RPC_Response (0, -32602, "Invalid method parameters");
-            
-            return $response;
+            return new IXR_Error(-32602, "Invalid method parameters");
         }
 
         // Parse parameters
-        $param    = $params->getParam(1);
-        $username = $param->scalarval();
-        
-        $param    = $params->getParam(2);
-        $password = $param->scalarval();
+        $username = $params[1];
+        $password = $params[2];
 
         // Check credentials
         $auth = run('rpc:auth', array("username" => $username,
@@ -622,31 +477,20 @@
                 // Array to hold the weblog data
                 $value = array();
             
-                $value['url']      = new XML_RPC_Value($weblog->getUrl());
-                $value['blogid']   = new XML_RPC_Value($weblog->getIdent());
-                $value['blogName'] = new XML_RPC_Value($weblog->getTitle());
+                $value['url']      = $weblog->getUrl();
+                $value['blogid']   = $weblog->getIdent();
+                $value['blogName'] = $weblog->getTitle();
 
-                // Construct the encoded weblog struct
-                $blog = new XML_RPC_Value($value, 'struct');
-            
                 // Add it to the result array
-                $result[] = $blog;
+                $result[] = $value;
             }
             
-            // Construct the final encoded array
-            $final = new XML_RPC_Value($result, 'array');
-
-            // Prepare the response
-            $response = new XML_RPC_Response($final);
-            
-            return $response;
+            return $result;
         }
         else
         {
             // Invalid credentials, raise an XML-RPC error
-            $response = new XML_RPC_Response (0, $auth['code'], $auth['message']);
-            
-            return $response;
+            return new IXR_Error($auth['code'], $auth['message']);
         }
     }
     
@@ -662,23 +506,18 @@
      * is the username after the first space character. nickname is elgg username. 
      * appkey is not being used.
      */
-    function blogger_getUserInfo($params)
+    function blogger_getUserInfo($params, $method)
     {
         // Do we have the required number of parameters?
-        if ($params->getNumParams() != 3)
+        if (count($params) != 3)
         {
             // Raise an XML-RPC error
-            $response = new XML_RPC_Response (0, -32602, "Invalid method parameters");
-            
-            return $response;
+            return new IXR_Error(-32602, "Invalid method parameters");
         }
         
         // Parse parameters
-        $param    = $params->getParam(1);
-        $username = $param->scalarval();
-        
-        $param    = $params->getParam(2);
-        $password = $param->scalarval();
+        $username = $params[1];
+        $password = $params[2];
         
         // Check credentials
         $auth = run('rpc:auth', array("username" => $username,
@@ -693,50 +532,36 @@
             $result = array();
             
             // Fill the results array
-            $result['userid']    = new XML_RPC_Value($user->getUserName());
-            $result['firstname'] = new XML_RPC_Value($user->getFirstName());
-            $result['lastname']  = new XML_RPC_Value($user->getLastName());
-            $result['nickname']  = new XML_RPC_Value($user->getUserName());
-            $result['email']     = new XML_RPC_Value($user->getEmail());
-            $result['url']       = new XML_RPC_Value($user->getPersonalUrl());
+            $result['userid']    = $user->getUserName();
+            $result['firstname'] = $user->getFirstName();
+            $result['lastname']  = $user->getLastName();
+            $result['nickname']  = $user->getUserName();
+            $result['email']     = $user->getEmail();
+            $result['url']       = $user->getPersonalUrl();
 
-            // Construct the encoded info struct
-            $value = new XML_RPC_Value($result, 'struct');
-            
-            // Prepare the response
-            $response = new XML_RPC_Response($value);
-            
-            return $response;
+            return $result;
         }
         else
         {
             // Invalid credentials, raise an XML-RPC error
-            $response = new XML_RPC_Response (0, $auth['code'], $auth['message']);
-            
-            return $response;
+            return new IXR_Error($auth['code'], $auth['message']);
         }
     }
     
-    function metaweblog_getPost($params)
+    function metaweblog_getPost($params, $method)
     {
         // Do we have the required number of parameters?
-        if ($params->getNumParams() != 3)
+        if (count($params) != 3)
         {
             // Raise an XML-RPC error
-            $response = new XML_RPC_Response (0, -32602, "Invalid method parameters");
-            
-            return $response;
+            return new IXR_Error(-32602, "Invalid method parameters");
         }
         
         // Parse parameters
         $param    = $params->getParam(0);
-        $postid   = $param->scalarval();
-        
-        $param    = $params->getParam(1);
-        $username = $param->scalarval();
-        
-        $param    = $params->getParam(2);
-        $password = $param->scalarval();
+        $postid   = $params[0];
+        $username = $params[1];
+        $password = $params[2];
         
         // Check credentials
         $auth = run('rpc:auth', array("username" => $username,
@@ -752,19 +577,19 @@
             $entry = array();
                 
             // Fill the post array
-            $entry['dateCreated'] = new XML_RPC_Value(date('Ymd\TH:i:s', $post->getPosted()), 'dateTime.iso8601');
-            $entry['userid']      = new XML_RPC_Value($username);
-            $entry['postid']      = new XML_RPC_Value($postid);
-            $entry['title']       = new XML_RPC_Value($post->getTitle());
-            $entry['description'] = new XML_RPC_Value($post->getBody());
-            $entry['url']         = new XML_RPC_Value($post->getUrl());
-            $entry['permalink']   = new XML_RPC_Value($post->getPermaLink());
+            $entry['dateCreated'] = new IXR_Date($post->getPosted());
+            $entry['userid']      = $username;
+            $entry['postid']      = $postid;
+            $entry['title']       = $post->getTitle();
+            $entry['description'] = $post->getBody();
+            $entry['url']         = $post->getUrl();
+            $entry['permalink']   = $post->getPermaLink();
 
             // Support mt_keywords
             $tags = $post->getTags();
 
-            if (sizeof($tags) > 0)
-            {
+            if (!empty($tags)) {
+
                 $keywords = array();
 
                 foreach($tags as $tag_id)
@@ -777,23 +602,15 @@
                 $str_keywords = implode(',', $keywords);
 
                 // Add the keywords
-                $entry['mt_keywords'] = new XML_RPC_Value($str_keywords);
+                $entry['mt_keywords'] = $str_keywords;
             }
 
-            // Construct the encoded info struct
-            $value = new XML_RPC_Value($entry, 'struct');
-            
-            // Prepare the response
-            $response = new XML_RPC_Response($value);
-
-            return $response;
+            return $entry;
         }
         else
         {
             // Invalid credentials, raise an XML-RPC error
-            $response = new XML_RPC_Response (0, $auth['code'], $auth['message']);
-            
-            return $response;
+            return new IXR_Error($auth['code'], $auth['message']);
         }
     }
 
@@ -808,30 +625,21 @@
      * the file) and String name (the name of the file). The type key (media type of the file) is 
      * currently ignored.
      */
-    function metaweblog_newMediaObject($params)
+    function metaweblog_newMediaObject($params, $method)
     {
         // Do we have the required number of parameters?
-        if ($params->getNumParams() != 4)
+        if (count($params) != 4)
         {
             // Raise an XML-RPC error
-            $response = new XML_RPC_Response (0, -32602, "Invalid method parameters");
-            
-            return $response;
+            return new IXR_Error(0, -32602, "Invalid method parameters");
         }
         
         // Parse parameters
 
-        $param    = $params->getParam(0);
-        $blogid   = $param->scalarval();
-        
-        $param    = $params->getParam(1);
-        $username = $param->scalarval();
-
-        $param    = $params->getParam(2);
-        $password = $param->scalarval();
-
-        $param    = $params->getParam(3);
-        $file     = $param->scalarval();
+        $blogid   = $params[0];
+        $username = $params[1];
+        $password = $params[2];
+        $file     = $params[3];
         
         // Check credentials
         $auth = run('rpc:auth', array("username" => $username,
@@ -840,9 +648,9 @@
         if ($auth['status'] == true)
         {
             // Get the file type and contents
-            $type = $file['type']->scalarval();
-            $bits = $file['bits']->scalarval();
-            $name = $file['name']->scalarval();
+            $type = $file['type'];
+            $bits = $file['bits'];
+            $name = $file['name'];
             
             // New user object
             $user = run('users:instance', array('user_id' => $username));
@@ -887,26 +695,20 @@
                 // Find out which one (most) clients use. For now use the struct
 
                 // Return the URL as a struct
-                $uri['url'] = new XML_RPC_Value($file->getUrl());
-                
-                $value = new XML_RPC_Value($uri, 'struct');
-                
-                $response = new XML_RPC_Response($value);
-                
-                return $response;
+                $uri['url'] = $file->getUrl();
+                                
+                return $uri;
             }
             else
             {
                 // No url, raise an XML-RPC error
-                return new XML_RPC_Response(0, -2, $stored['message']);
+                return new IXR_Error(-2, $stored['message']);
             }
         }
         else
         {
             // Invalid credentials, raise an XML-RPC error
-            $response = new XML_RPC_Response (0, $auth['code'], $auth['message']);
-            
-            return $response;
+            return new IXR_Error($auth['code'], $auth['message']);
         }
     }
 ?>

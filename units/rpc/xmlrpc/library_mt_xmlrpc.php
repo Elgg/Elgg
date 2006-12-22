@@ -5,46 +5,24 @@
      * Full implementation except for the mt.getTrackbackPings call
      */
 
-    // Prepare a list of handlers to be loaded into the XML-RPC server
-
-    $handlers_mt = array('mt.getRecentPostTitles'  => array('function' => 'mt_getRecenPostTitles'),
-                         'mt.getCategoryList'      => array('function' => 'mt_getCategoryList'),
-                         'mt.getPostCategories'    => array('function' => 'mt_getPostCategories'),
-                         'mt.setPostCategories'    => array('function' => 'mt_setPostCategories'),
-                         'mt.supportedMethods'     => array('function' => 'mt_supportedMethods'),
-                         'mt.supportedTextFilters' => array('function' => 'mt_supportedTextFilters'),
-                         'mt.publishPost'          => array('function' => 'mt_publishPost'));
-
-    // Add the handlers to the global handlers array
-    $handlers = $handlers + $handlers_mt;
-
-    function mt_getRecenPostTitles($params)
+    function mt_getRecenPostTitles($params, $method)
     {
         // Number of parameters
-        $nr_params = 4;
+        $nr_params = (int) 4;
         
         // Do we have the required number of parameters?
-        if ($params->getNumParams() != $nr_params)
+        if (count($params) != $nr_params)
         {
             // Raise an XML-RPC error
-            $response = new XML_RPC_Response (0, -32602, "Invalid method parameters");
-            
-            return $response;
+            return new IXR_Error(-32602, "Invalid method parameters");
         }
 
         // Parse parameters
         
-        $param    = $params->getParam(0);
-        $blogid   = $param->scalarval();
-
-        $param    = $params->getParam(1);
-        $username = $param->scalarval();
-
-        $param    = $params->getParam(2);
-        $password = $param->scalarval();
-
-        $param          = $params->getParam(3);
-        $numberOfPosts  = (int) $param->scalarval();
+        $blogid        = $params[0];
+        $username      = $params[1];
+        $password      = $params[2];
+        $numberOfPosts = $params[3];
 
         // Check credentials
         $auth = run('rpc:auth', array("username" => $username,
@@ -76,77 +54,55 @@
                         $entry = array();
                         
                         // Fill the post array, same for blogger and metaWeblog
-                        $entry['dateCreated'] = new XML_RPC_Value(date('Ymd\TH:i:s', $post->getPosted()), 'dateTime.iso8601');
-                        $entry['userid']      = new XML_RPC_Value($weblog->getId()); // is username for now
-                        $entry['postid']      = new XML_RPC_Value($post->getIdent());
-                        $entry['title']       = new XML_RPC_Value($post->getTitle());
-                        
-                        // Construct the encoded post struct
-                        $value = new XML_RPC_Value($entry, 'struct');
-                        
-                        // Add it to the results array
-                        $result[] = $value;  
+                        $entry['dateCreated'] = new IXR_Date($post->getPosted());
+                        $entry['userid']      = (int) $weblog->getIdent(); // is username for now
+                        $entry['postid']      = (int) $post->getIdent();
+                        $entry['title']       = $post->getTitle();
                     }
-
-                    // Construct the final encoded array
-                    $final = new XML_RPC_Value($result, 'array');
-                    
-                    // Prepare the response
-                    $response = new XML_RPC_Response($final);
-            
-                    return $response;
+                    return $entry;
                 }
                 else
                 {
                     // Numbers of requested posts can't be provided, raise an XML-RPC error
-                    $response = new XML_RPC_Response(0, 806, "No Such Item");
-            
-                    return $response;
+                    return new IXR_Error(806, "No Such Item");
                 }
             }
             else
             {
                 // Wrong amount of requested posts, raise an XML-RPC error
-                $response = new XML_RPC_Response(0, 805, "Amount parameter must be 1 or more");
-            
-                return $response;
+                return new IXR_Error(805, "Amount parameter must be 1 or more");
             }
         }
         else
         {
             // Invalid credentials, raise an XML-RPC error
-            $response = new XML_RPC_Response (0, $auth['code'], $auth['message']);
-            
-            return $response;
+            return new IXR_Error($auth['code'], $auth['message']);
         }
     }
 
     // returns an array of structs containing String categoryId and String categoryName; on failure, fault.
-    function mt_getCategoryList($params)
+    function mt_getCategoryList($params, $method)
     {
         // Number of parameters
         $nr_params = 3;
         
         // Do we have the required number of parameters?
-        if ($params->getNumParams() != $nr_params)
+        if (count($params) != $nr_params)
         {
             // Raise an XML-RPC error
-            $response = new XML_RPC_Response (0, -32602, "Invalid method parameters");
-            
-            return $response;
+            return new IXR_Error(-32602, "Invalid method parameters");
         }
 
         // Parse parameters
-        $param    = $params->getParam(1);
-        $username = $param->scalarval();
-
-        $param    = $params->getParam(2);
-        $password = $param->scalarval();
+        $username = $params[1];
+        $password = $params[2];
 
         // Check credentials
         $auth = run('rpc:auth', array("username" => $username,
                                       "password" => $password));
-        
+
+        $cats = array();
+                
         if ($auth['status'] == true)
         {
             // Global results array
@@ -156,58 +112,40 @@
              * Some clients _need_ the categories so just provide them with a default one.
              */
 
-            $tag['categoryId'] = new XML_RPC_Value('999');
-            $tag['categoryName'] = new XML_RPC_Value('Default category');
+            $results['categoryId'] = '999';
+            $results['categoryName'] = 'Default category';
 
-            // Construct the encoded post struct
-            $value = new XML_RPC_Value($tag, 'struct');
+            // Append
+            $cats[] = $results;
 
-            // Add it to the results array
-            $result[] = $value;
-
-            // Construct the final encoded array
-            $final = new XML_RPC_Value($result, 'array');
-
-            // Prepare the response
-            $response = new XML_RPC_Response($final);
-
-            return $response;      
+            return $cats;
         }
         else
         {
             // Invalid credentials, raise an XML-RPC error
-            $response = new XML_RPC_Response (0, $auth['code'], $auth['message']);
-            
-            return $response;
+            return new IXR_Error($auth['code'], $auth['message']);
         }
     }
 
     /* TODO Right now this function only returns a list of tags, which is not quite what the spec demands. 
      * Unfortunately elgg doesn't do categories, so think of something else    
      */
-    function mt_getPostCategories($params)
+    function mt_getPostCategories($params, $method)
     {
         // Number of parameters
         $nr_params = 3;
         
         // Do we have the required number of parameters?
-        if ($params->getNumParams() != $nr_params)
+        if (count($params) != $nr_params)
         {
             // Raise an XML-RPC error
-            $response = new XML_RPC_Response (0, -32602, "Invalid method parameters");
-            
-            return $response;
+            return new IXR_Error(-32602, "Invalid method parameters");            
         }
 
         // Parse parameters
-        $param    = $params->getParam(0);
-        $postId   = (int) $param->scalarval();
-
-        $param    = $params->getParam(1);
-        $username = $param->scalarval();
-
-        $param    = $params->getParam(2);
-        $password = $param->scalarval();
+        $postId   = (int) $params[0];
+        $username = $params[1];
+        $password = $params[2];
 
 
         // Check credentials
@@ -223,61 +161,38 @@
              * Som clients _need_ the categories so just provide them with a default one.
              */
 
-            $tag['categoryId'] = new XML_RPC_Value('999');
-            $tag['categoryName'] = new XML_RPC_Value('Default category');
+            $results['categoryId'] = '999';
+            $results['categoryName'] = 'Default category';
 
-            // Construct the encoded post struct
-            $value = new XML_RPC_Value($tag, 'struct');
-
-            // Add it to the results array
-            $result[] = $value;
-
-            // Construct the final encoded array
-            $final = new XML_RPC_Value($result, 'array');
-
-            // Prepare the response
-            $response = new XML_RPC_Response($final);
-
-            return $response;
+            return $results;
         }
         else
         {
             // Invalid credentials, raise an XML-RPC error
-            $response = new XML_RPC_Response (0, $auth['code'], $auth['message']);
-            
-            return $response;
+            return new IXR_Error($auth['code'], $auth['message']);
         }
     }
 
     /* TODO This function will always return true. Categories aren't available in elgg so 
      * think of something else
      */
-    function mt_setPostCategories($params)
+    function mt_setPostCategories($params, $method)
     {
         // Number of parameters
         $nr_params = 4;
         
         // Do we have the required number of parameters?
-        if ($params->getNumParams() != $nr_params)
+        if (count($params) != $nr_params)
         {
             // Raise an XML-RPC error
-            $response = new XML_RPC_Response (0, -32602, "Invalid method parameters");
-            
-            return $response;
+            return new IXR_Error(-32602, "Invalid method parameters");
         }
 
         // Parse parameters
-        $param      = $params->getParam(0);
-        $postId     = $param->scalarval();
-
-        $param      = $params->getParam(1);
-        $username   = $param->scalarval();
-
-        $param      = $params->getParam(2);
-        $password   = $param->scalarval();
-
-        $param      = $params->getParam(3);
-        $categories = $param->scalarval();
+        $postId     = $params[0];
+        $username   = $params[1];
+        $password   = $params[2];
+        $categories = $params[3];
 
         // Check credentials
         $auth = run('rpc:auth', array("username" => $username,
@@ -291,24 +206,18 @@
             // Unpack the encoded categories/tags
             foreach($categories as $value)
             {
-                $category = $value->scalarval();
-                $tagIds[] = $category['categoryId']->scalarval();
+                // Process the following:
+                // (string) $value['categoryId']
+                // (boolean)$value['isPrimary']
             }
 
             /* TODO categories don't map to tags, think of something else */
-
-            $value = new XML_RPC_Value(true, 'boolean');
-
-            $response = new XML_RPC_Response($value);
-
-            return $response;
+            return true;
         }
         else
         {
             // Invalid credentials, raise an XML-RPC error
-            $response = new XML_RPC_Response (0, $auth['code'], $auth['message']);
-            
-            return $response;
+            return new IXR_Error($auth['code'], $auth['message']);
         }
     }
 
@@ -316,37 +225,30 @@
     {
         // TODO We will return the handler array. Not very safe since its content depends 
         // on the library loading order. It will do for now.
+        // Refactor to use the introsppection API
         
         $result = array();
         
         // $handlers is declared global so we can fetch it via $GLOBALS
         foreach($GLOBALS['handlers'] as $key => $value)
         {
-            $result[] = new XML_RPC_Value($key);
+            $result[] = $key;
         }
-        
-        $value = new XML_RPC_Value($result, 'array');
 
-        $response = new XML_RPC_Response($value);
-        
-        return $response;
+        return $result;
     }
 
-    function mt_supportedTextFilters($params)
+    function mt_supportedTextFilters($params, $method)
     {
         // Not supported, return an empty array
         
         $result = array();
         
-        $value = new XML_RPC_Value($result, 'array');
-        
-        $response = new XML_RPC_Response($value);
-
-        return $response;
+        return $result;
     }
 
     /* This function just sets the access level to public*/
-    function mt_publishPost($params)
+    function mt_publishPost($params, $method)
     {
         // Number of parameters
         $nr_params = 3;
@@ -355,20 +257,13 @@
         if ($params->getNumParams() != $nr_params)
         {
             // Raise an XML-RPC error
-            $response = new XML_RPC_Response (0, -32602, "Invalid method parameters");
-            
-            return $response;
+            return new IXR_Error(-32602, "Invalid method parameters");
         }
 
         // Parse parameters
-        $param    = $params->getParam(0);
-        $postId   = $param->scalarval();
-
-        $param    = $params->getParam(1);
-        $username = $param->scalarval();
-
-        $param    = $params->getParam(2);
-        $password = $param->scalarval();
+        $postId   = $params[0];
+        $username = $params[1];
+        $password = $params[2];
 
 
         // Check credentials
@@ -386,25 +281,19 @@
             
             if ($post->save() == true)
             {
-                $value = new XML_RPC_Value(true, 'boolean');
-
-                $response = new XML_RPC_Response($value);
-
-                return $response;
+                return true;
             }
             else
             {
                 // The status hasn't been saved, raise an XML-RPC error
-                $response = new XML_RPC_Response (0, -32500, "Unable to publish post");            
+                return new IXR_Error(-32500, "Unable to publish post");            
             }
             
         }
         else
         {
             // Invalid credentials, raise an XML-RPC error
-            $response = new XML_RPC_Response (0, $auth['code'], $auth['message']);
-            
-            return $response;
+            return new IXR_Error($auth['code'], $auth['message']);
         }
     }
 ?>

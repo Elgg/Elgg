@@ -1,6 +1,6 @@
 <?php
+global $CFG;
 $sitename = sitename;
-$url = url;
 $run_result .= <<< END
 
 <div class="helpfiles">
@@ -15,16 +15,16 @@ $run_result .= <<< END
 
 <h5>How to do it?</h5>
 <h4>>> Select 'Post a new entry'</h4>
-<img src="{$url}help/images/blog_start.jpg" alt="Post a blog entry" title="Post a blog entry" width="369" height="99" border="0" />
+<img src="{$CFG->wwwroot}help/images/blog_start.jpg" alt="Post a blog entry" title="Post a blog entry" width="369" height="99" border="0" />
 <p><b>Step one:</b> Now you will see the 'Add a new post' page. First you give your blog post a title then fill in some content.</p>
-<img src="{$url}help/images/blog_two.jpg" alt="Title and content" title="Title and content" width="437" height="147" border="0" />
+<img src="{$CFG->wwwroot}help/images/blog_two.jpg" alt="Title and content" title="Title and content" width="437" height="147" border="0" />
 <p><b>Step two:</b> <i>(optional)</i> Once you finished writing the content - you might want to add some keywords (tags). These keywords can be individual words or phrase - <b>separated by a comma</b>.</p>
-<img src="{$url}help/images/blog_three.jpg" alt="Title and content" title="Title and content" width="424" height="126" border="0" />
+<img src="{$CFG->wwwroot}help/images/blog_three.jpg" alt="Title and content" title="Title and content" width="424" height="126" border="0" />
 <p><b>Step three:</b> <i>(optional - default is public)</i> Like all things in <b>your</b> landscape you can control who gets to read your blog post. Use the 'Access Restrictions' to do this.</p>
-<img src="{$url}help/images/blog_four.jpg" alt="Access" title="Access" width="163" height="102" border="0" />
+<img src="{$CFG->wwwroot}help/images/blog_four.jpg" alt="Access" title="Access" width="163" height="102" border="0" />
 <p><i>Note: You can create your own access restrictions at 'Your Network' - 'Access controls'</i></p>
 <p><b>Step four:</b> <i>(optional)</i> If you would like to embed a file into you blog post use the 'Embed a file..' option. Images less than 400pixel by 400 pixel will display in the blog post, all other files will be linked to.</p>
-<img src="{$url}help/images/blog_five.jpg" alt="Embed an image" title="Embed an image" width="485" height="67" border="0" />
+<img src="{$CFG->wwwroot}help/images/blog_five.jpg" alt="Embed an image" title="Embed an image" width="485" height="67" border="0" />
 <p><b>Step five:</b> Now just press 'Post' and you have created your first blog post!</p>
 <h3>Other functions</h3>
 <p><b>RSS feed:</b> this is so people can follow your blog posts using an RSS aggregator. (<i>Note: only the posts you mark as public</i>)</p>

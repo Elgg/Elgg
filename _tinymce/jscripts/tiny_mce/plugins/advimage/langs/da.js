@@ -1,4 +1,4 @@
-// DK lang variables contributed by Jan Moelgaard
+// DK lang variables contributed by Jan Moelgaard, John Dalsgaard and Bo Frederiksen.
 
 tinyMCE.addToLang('advimage',{
 tab_general : 'Generelt',
@@ -10,17 +10,18 @@ preview : 'Se',
 constrain_proportions : 'Fasthold proportioner',
 langdir : 'Tekstretning',
 langcode : 'Sprogkode',
-long_desc : 'Langt beskrivelseslink',
-style : 'Style',
+long_desc : 'Henvisning til lang beskrivelse',
+style : 'Stil',
 classes : 'Klasser',
-ltr : 'Venstre til h&#248;jre',
-rtl : 'H&#248;jre til venstre',
+ltr : 'Venstre til h&oslash;jre',
+rtl : 'H&oslash;jre til venstre',
 id : 'Id',
-image_map : 'Billedkort',
-swap_image : 'Alternativt billede',
-alt_image : 'Alternative image',
+image_map : 'Kortbillede',
+swap_image : 'Udskift billede',
+alt_image : 'Alternativt billede',
 mouseover : 'ved mouse over',
 mouseout : 'ved mouse out',
 misc : 'Diverse',
-example_img : 'Appearance&nbsp;preview&nbsp;image'
+example_img : 'Appearance&nbsp;preview&nbsp;image',
+missing_alt : 'Er du sikker p&aring; at du vil forts&aelig;tte uden at inds&aelig;tte en billedbeskrivelse? Uden den, kan billedet v&aelig;re utilg&aelig;ngeligt for brugere med handicap, eller for brugere med en tekst-browser, eller som har sl&aring;et billedvisning fra.'
 });

@@ -1,83 +1,85 @@
 <?php
+global $CFG;
+global $search_exclusions;
 
-	global $search_exclusions;
-
-	if (isset($parameter) && $parameter[0] == "file") {
-		
-		$search_exclusions[] = "folder";
-		$search_exclusions[] = "file";
-		
-		$file_refs = db_query("select distinct tags.owner from tags left join files on files.ident = tags.ref where (tags.tagtype = 'file' or tags.tagtype = 'folder') and tag='".addslashes($parameter[1]) . "' and tags.access = 'PUBLIC' order by files.time_uploaded desc limit 50");
-		
-		$sitename = sitename;
-		$url = url;
-		
-		if (sizeof($file_refs) > 0) {
-			foreach($file_refs as $post) {
-				
-				$page_owner = $post->owner;
-				
-				$run_result .= <<< END
+if (isset($parameter) && $parameter[0] == "file") {
+    
+    $search_exclusions[] = "folder";
+    $search_exclusions[] = "file";
+    
+    $sitename = sitename;
+    
+    $parameter[1] = trim($parameter[1]);
+    
+    if ($file_refs = get_records_sql('SELECT DISTINCT t.owner,1 FROM '.$CFG->prefix.'tags t 
+                                     LEFT JOIN '.$CFG->prefix."files f ON f.ident = t.refs
+                                     WHERE (t.tagtype = ? OR t.tagtype = ?)
+                                     AND t.tag = ? AND t.access = ?
+                                     ORDER BY f.time_uploaded DESC LIMIT 50",
+                                     array('file','folder',$parameter[1],'PUBLIC'))) {
+        foreach($file_refs as $post) {
+            $page_owner = $post->owner;
+                
+            $run_result .= <<< END
 <rss version='2.0'   xmlns:dc='http://purl.org/dc/elements/1.1/'>
 END;
-			$info = db_query("select * from users where ident = $page_owner");
-				if (sizeof($info) > 0) {
-					$info = $info[0];
-					$name = htmlentities(stripslashes($info->name));
-					$username = htmlentities(stripslashes($info->username));
-					$mainurl = htmlentities(url . $username . "/files/");
-					$run_result .= <<< END
-	<channel xml:base='$mainurl'>
-		<title>$name : Files</title>
-		<description>Files for $name, hosted on $sitename.</description>
-		<language>en-gb</language>
-		<link>$mainurl</link>
+            if ($info = get_record('users','ident',$page_owner)) {
+                $name = htmlspecialchars(stripslashes($info->name), ENT_COMPAT, 'utf-8');
+                $username = htmlspecialchars($info->username, ENT_COMPAT, 'utf-8');
+                $mainurl = url . $username . "/files/";
+                $run_result .= <<< END
+    <channel xml:base='$mainurl'>
+        <title>$name : Files</title>
+        <description>Files for $name, hosted on $sitename.</description>
+        <language>en-gb</language>
+        <link>$mainurl</link>
 END;
-					if (!isset($_REQUEST['tag'])) {
-						$files = db_query("select * from files where files_owner = $page_owner and access = 'PUBLIC' order by time_uploaded desc limit 10");
-					} else {
-						$tag = trim($_REQUEST['tag']);
-						$files = db_query("select files.* from tags left join files on files.ident = tags.ref where tags.owner = $page_owner and files.access = 'PUBLIC' and tags.tagtype = 'file' and tags.tag = '$tag' order by files.time_uploaded desc limit 10");
-					}
-					if (sizeof($files) > 0) {
-						foreach($files as $file) {
-							$title = htmlentities(stripslashes($file->title));
-							$link = url . $username . "/files/" . $file->folder . "/" . $file->ident . "/" . htmlentities(urlencode(stripslashes($file->originalname)));
-							$description = htmlentities(stripslashes($file->description));
-							$pubdate = gmdate("D, d M Y H:i:s T", $file->time_uploaded);
-							$length = (int) $file->size;
-							$mimetype = run("files:mimetype:determine",$file->location);
-							if ($mimetype == false) {
-								$mimetype = "application/octet-stream";
-							}
-							$keywords = db_query("select * from tags where tagtype = 'file' and ref = '".$file->ident."'");
-							$keywordtags = "";
-							if (sizeof($keywords) > 0) {
-								foreach($keywords as $keyword) {
-									$keywordtags .= "\n\t\t<dc:subject>".htmlentities(stripslashes($keyword->tag)) . "</dc:subject>";
-								}
-							}
-							$run_result .= <<< END
-
-		<item>
-			<title>$title</title>
-			<link>$link</link>
-			<enclosure url="$link" length="$length" type="$mimetype" />
-			<pubDate>$pubdate</pubDate>$keywordtags
-			<description>$description</description>
-		</item>
+                $tag = trim(optional_param('tag'));
+                if (empty($tag)) {
+                    $files = get_records_select('files',"files_owner = $page_owner AND access = 'PUBLIC' ORDER BY time_uploaded DESC LIMIT 10");
+                } else {
+                    $files = get_records_sql('SELECT f.* from '.$CFG->prefix.'tags t
+                                              LEFT JOIN '.$CFG->prefix.'files f ON f.ident = t.ref
+                                              WHERE t.owner = ? AND f.access = ?
+                                              AND t.tagtype = ? AND t.tag = ?
+                                              ORDER BY f.time_uploaded DESC LIMIT 10',
+                                             array($page_owner,'PUBLIC','file',$tag));
+                }
+                if (!empty($files)) {
+                    foreach($files as $file) {
+                        $title = htmlspecialchars(stripslashes($file->title), ENT_COMPAT, 'utf-8');
+                        $link = url . $username . "/files/" . $file->folder . "/" . $file->ident . "/" . htmlspecialchars(urlencode(stripslashes($file->originalname)), ENT_COMPAT, 'utf-8');
+                        $description = htmlspecialchars(stripslashes($file->description), ENT_COMPAT, 'utf-8');
+                        $pubdate = gmdate("D, d M Y H:i:s T", $file->time_uploaded);
+                        $length = (int) $file->size;
+                        require_once($CFG->dirroot.'lib/filelib.php');
+                        $mimetype = mimeinfo('type',$file->location);
+                        $keywordtags = "";
+                        if ($keywords = get_records_select('tags',"tagtype = ? AND ref = ?",array('file',$file->ident))) {
+                            foreach($keywords as $keyword) {
+                                $keywordtags .= "\n\t\t<dc:subject>".htmlspecialchars(stripslashes($keyword->tag), ENT_COMPAT, 'utf-8') . "</dc:subject>";
+                            }
+                        }
+                        $run_result .= <<< END
+                            
+        <item>
+            <title>$title</title>
+            <link>$link</link>
+            <enclosure url="$link" length="$length" type="$mimetype" />
+            <pubDate>$pubdate</pubDate>$keywordtags
+            <description>$description</description>
+        </item>
 END;
-						}
-					}
-					$run_result .= <<< END
-
-	</channel>
+                    }
+                }
+                $run_result .= <<< END
+                        
+    </channel>
 </rss>
 END;
-				}
-			}
-		}
-		
-	}
+            }
+        }
+    }
+}
 
 ?>

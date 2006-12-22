@@ -27,45 +27,49 @@
          */
         function User($var)
         {
+            global $CFG;
             $this->exists = false;
 
             // Both username or userid may be passed
             if (is_numeric($var))
             {
                 // Numeric, we probably received a userid
-                $info = db_query("select * from users where ident = '$var'");
+                $info = get_record('users','ident',$var);
             }
             elseif(is_string($var))
             {
                 // String, we probably recieved a username
-                $info = db_query("select * from users where username = '$var'");
+                $info = get_record('users','username',$var);
             }
 
-            if (sizeof($info) > 0)
-            {
+            if (!empty($info)) {
                 $this->exists = true;
 
-                $this->ident           = $info[0]->ident;
-                $this->username        = $info[0]->username;
-                $this->email           = $info[0]->email;
-                $this->name            = $info[0]->name;
-                $this->alias           = $info[0]->alias;
-                $this->code            = $info[0]->code;
-                $this->icon_quota      = $info[0]->icon_quota;
-                $this->file_quota      = $info[0]->file_quota;
-                $this->user_type       = $info[0]->user_type;
-                $this->owner           = $info[0]->owner;
+                $this->ident           = $info->ident;
+                $this->username        = $info->username;
+                $this->email           = $info->email;
+                $this->name            = $info->name;
+                $this->alias           = $info->alias;
+                $this->code            = $info->code;
+                $this->icon_quota      = $info->icon_quota;
+                $this->file_quota      = $info->file_quota;
+                $this->user_type       = $info->user_type;
+                $this->owner           = $info->owner;
 
                 ereg('^([a-zA-Z]*) (.*)', $this->name, $groups);
                 $this->firstname       = trim($groups[1]);
                 $this->lastname        = trim($groups[2]);
                 
                 // Load the weblog id's, starting with communities
-                $communities = db_query("select users.ident from friends 
-                                         left join users on users.ident = friends.friend 
-                                         where friends.owner = $this->ident 
-                                         and users.user_type = 'community' 
-                                         group by friends.friend");
+
+                // Need to select two fields to collect instead of just u.ident else
+                // this very handy datalib function will return false...
+                $communities = get_records_sql('SELECT DISTINCT u.ident,u.name 
+                                               FROM '.$CFG->prefix.'friends f
+                                               JOIN '.$CFG->prefix.'users u 
+                                               ON u.ident = f.friend
+                                               WHERE f.owner = ? 
+                                               AND u.user_type = ?',array($this->ident,'community'));
 
                 $this->blogs = array();
 
@@ -73,23 +77,13 @@
                 $this->blogs[] = $this->ident;
 
                 // Add the communities
-                foreach($communities as $community)
-                {
-                    $this->blogs[] = $community->ident;
+                if ($communities) {
+                    foreach($communities as $community) {
+                        $this->blogs[] = $community->ident;
+                    }
                 }
 
-                // Add the user icon - in separate class?
-                $image = db_query("select filename, description from icons 
-                                   where owner = $this->ident");
-
-                if (sizeof($image) > 0)
-                {
-                    $this->icon = url . "_icons/data/" . $image[0]->filename;
-                }
-                else
-                {
-                    $this->icon = url . "_icons/data/default.png";
-                }
+                $this->icon = url . '_icon/user/' . $info->icon;
             }
         }
 
@@ -223,15 +217,15 @@
             {
                 // A bit awkward, but create a list of folder id's. Needed for the xml-rpc
                 // code to determine a default upload folder
-                $folders = db_query("select ident from file_folders 
-                                     where files_owner = $this->ident");
+                $folders = get_records('file_folders','files_owner',$this->ident);
 
                 $this->folders = array();
 
                 // Add the folders
-                foreach($folders as $folder)
-                {
-                    $this->folders[] = $folder->ident;
+                if (is_array($folders)) {
+                    foreach($folders as $folder) {
+                        $this->folders[] = $folder->ident;
+                    }
                 }
             }
 
@@ -246,18 +240,10 @@
          */
         function getFolderId($name)
         {
+            global $CFG;
             $id = "";
-
-            $folder = db_query("select from file_folders 
-                                where name = '$name' 
-                                and files_owner = $this->ident");
-
-            // Return the first match, if available
-            if (sizeof($folder) > 0)
-            {
-                $id = $folder[0]->ident;
-
-                return $id;
+            if ($folder = get_record_select('file_folders','name = ? AND files_owner = ?',array($name,$this->ident))) {
+                return $folder->ident;
             }
             else
             {
@@ -270,6 +256,7 @@
          */
         function getFriends($limit = null)
         {
+            global $CFG;
             // Unlimited if not passed or 0/empty
             if ($limit == null || $limit == 0 || $limit == "")
             {
@@ -279,19 +266,20 @@
             {
                 $inject_limit = " limit $limit";
             }
-
-            $result = db_query("select friends.friend as user_id from friends 
-                                left join users on users.ident = friends.friend 
-                                where friends.owner = $this->ident and
-                                users.user_type = 'person'
-                                $inject_limit");
             $friends = array();
 
-            foreach ($result as $friend)
-            {
-                $friends[] = $friend->user_id;
+            if ($result = get_records_sql('SELECT f.friend AS user_id,u.name 
+                                          FROM '.$CFG->prefix.'friends f 
+                                          JOIN '.$CFG->prefix.'users u 
+                                          ON u.ident = f.friend 
+                                          WHERE f.owner = ? 
+                                          AND u.user_type = ? '.$inject_limit, 
+                                          array($this->ident,'person'))) {
+                foreach ($result as $friend) {
+                    $friends[] = $friend->user_id;
+                }
             }
-
+            
             return $friends;
         }
 
@@ -300,6 +288,7 @@
          */
         function getFriendOf($limit = null)
         {
+            global $CFG;
             // Unlimited if not passed or 0/empty
             if ($limit == null || $limit == 0 || $limit == "")
             {
@@ -310,17 +299,19 @@
                 $inject_limit = " limit $limit";
             }
 
-            $result = db_query("select users.ident as user_id from friends 
-                                 left join users on users.ident = friends.owner
-                                 where friend = $this->ident and
-                                 users.user_type = 'person'
-                                 $inject_limit");
 
             $friend_of = array();
 
-            foreach ($result as $named_by)
-            {
-                $friend_of[] = $named_by->ident;
+            if ($result = get_records_sql('SELECT u.ident AS user_id, u.name 
+                                          FROM '.$CFG->prefix.'friends f 
+                                          LEFT JOIN '.$CFG->prefix.'users u 
+                                          ON u.ident = f.owner 
+                                          WHERE f.friend = ? 
+                                          AND u.user_type = ? '.$inject_limit,
+                                          array($this->ident,'person'))) {
+                foreach ($result as $named_by) {
+                    $friend_of[] = $named_by->user_id;
+                }
             }
 
             return $friend_of;
@@ -331,7 +322,7 @@
          */
         function setUserName($val)
         {
-            $this->username = addslashes($val);
+            $this->username = $val;
         }
 
         /**
@@ -339,7 +330,7 @@
          */
         function setEmail($val)
         {
-            $this->email = addslashes($val);
+            $this->email = $val;
         }
 
         /**
@@ -347,7 +338,7 @@
          */
         function setName($val)
         {
-            $this->name = addslashes($val);
+            $this->name = $val;
         }
 
         /**
@@ -355,7 +346,7 @@
          */
         function setAlias($val)
         {
-            $this->alias = addslashes($val);
+            $this->alias = $val;
         }
 
         /**

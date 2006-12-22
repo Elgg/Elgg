@@ -1,0 +1,4444 @@
+# Korean translation for elgg
+# Copyright (c) 2006 Rosetta Contributors and Canonical Ltd 2006
+# This file is distributed under the same license as the elgg package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2006.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: elgg\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2006-09-22 14:05+0100\n"
+"PO-Revision-Date: 2006-11-09 23:42+0000\n"
+"Last-Translator: Jong-Dae Park <jdpark7@gmail.com>\n"
+"Language-Team: Korean <ko@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: _activity/index.php:24
+msgid "Recent activity"
+msgstr "최근 활동"
+
+#: _activity/index.php:29
+msgid "Currently viewing recent activity since "
+msgstr "이후로 최근 활동 보기 "
+
+#: _activity/index.php:31
+msgid "You may view recent activity during the following time-frames:"
+msgstr "다음 시간 프레임 동안 최근 활동들을 볼 수 있습니다."
+
+#: _activity/index.php:33
+msgid "The last 24 hours"
+msgstr "지난 24 시간"
+
+#: _activity/index.php:34
+msgid "The last 48 hours"
+msgstr "지난 48 시간"
+
+#: _activity/index.php:35
+msgid "The last week"
+msgstr "지난 주"
+
+#: _activity/index.php:36
+msgid "The last month"
+msgstr "지난 달"
+
+#: _activity/index.php:38
+msgid "Your recent messages"
+msgstr "당신의 최근 메세지"
+
+#: _activity/index.php:49
+msgid "Activity on weblog posts you have marked as interesting"
+msgstr "당신이 관심있는 것으로 표시한 블로그 게시물에 대한 활동"
+
+#: _activity/index.php:60
+msgid "Read more"
+msgstr "더 읽기"
+
+#: _activity/index.php:64
+msgid "your blog"
+msgstr "당신의 블로그"
+
+#: _activity/index.php:67
+#, php-format
+msgid "<b>You</b> commented on weblog post '%s' in %s:"
+msgstr "<b>당신이</b> 블로그 게시물%s 안에 댓글 '%s'을 남겼습니다 :"
+
+#: _activity/index.php:69
+#, php-format
+msgid "<b>%s</b> commented on weblog post '%s' in %s:"
+msgstr "<b>%s</b>가 블로그 게시물%s 안에 댓글 '%s'을 남겼습니다 :"
+
+#: _activity/index.php:79
+msgid "No activity during this time period."
+msgstr "이 시간동안 아무 활동이 없습니다."
+
+#: _admin/antispam.php:17 _admin/users.php:17 _admin/users.php:20
+#: lib/templates.php:466
+msgid "Manage users"
+msgstr "사용자 관리"
+
+#: _admin/antispam.php:20
+msgid "Spam blocking"
+msgstr "스팸 차단"
+
+#: _admin/flags.php:17 _admin/flags.php:20
+msgid "Content flags"
+msgstr "컨텐츠 플래그"
+
+#: _admin/index.php:17 _admin/index.php:20 lib/templates.php:426
+msgid "Administration"
+msgstr "관리"
+
+#: _admin/users_add.php:17 _admin/users_add.php:20
+msgid "Add multiple users"
+msgstr "다수 사용자 추가"
+
+#: _communities/index.php:22 mod/community/lib.php:51 mod/community/lib.php:61
+#: units/communities/communities_edit_wrapper.php:5
+msgid "Communities"
+msgstr "커뮤니티"
+
+#: _communities/members.php:22 units/communities/community_memberships.php:40
+#: units/communities/community_memberships.php:42
+msgid "Members"
+msgstr "구성원"
+
+#: _communities/owned.php:22 mod/community/lib.php:55
+msgid "Owned Communities"
+msgstr "자신의 커뮤니티"
+
+#: _communities/requests.php:23
+#: units/communities/communities_membership_requests.php:10
+msgid "Membership requests"
+msgstr "멤버십 요청"
+
+#: _files/edit_file.php:19
+msgid "Edit File"
+msgstr "파일 편집"
+
+#: _files/edit_folder.php:19
+msgid "Edit Folder"
+msgstr "폴더 편집"
+
+#: _files/index.php:19 units/files/files_user_info_menu.php:13
+#: units/files/function_rss_publish.php:35 units/files/profile_files.php:9
+msgid "Files"
+msgstr "파일"
+
+#: _files/rss2.php:25
+#, php-format
+msgid "Files tagged with %s"
+msgstr "%s로 태그된 파일"
+
+#: _files/rss2.php:31 units/files/function_rss_publish.php:42
+#, php-format
+msgid "Files for %s, hosted on %s."
+msgstr "%s에 호스트되고 있는 %s 에 대한 파일"
+
+#: _friends/friendsof.php:21 units/friends/friends_of_edit_wrapper.php:5
+msgid "Friends who have linked to you"
+msgstr "당신에게 링크한 친구들"
+
+#: _friends/index.php:21 units/friends/friends_edit_wrapper.php:5
+msgid "Friends I have linked to"
+msgstr "내가 링크한 친구들"
+
+#: _friends/requests.php:22 mod/friend/lib.php:38
+#: units/friends/user_friendship_requests.php:11
+msgid "Friendship requests"
+msgstr "친구 관계 요청"
+
+#: _groups/index.php:23
+msgid "Access Controls"
+msgstr "접근 제어"
+
+#: _icons/index.php:20
+msgid "Manage user icons"
+msgstr "사용자 아이콘 관리"
+
+#: _invite/forgotten_password.php:14
+msgid "Generate a New Password"
+msgstr "새 암호 생성"
+
+#: _invite/index.php:18
+msgid "Invite a Friend"
+msgstr "친구 초대"
+
+#: _invite/join.php:12 _invite/register.php:11
+#, php-format
+msgid "Join %s"
+msgstr "%s에 가담"
+
+#: _invite/new_password.php:11
+#, php-format
+msgid "Get new %s password"
+msgstr "새 %s 암호 얻기"
+
+#: _rss/blog.php:15
+msgid "Publish feeds to blog"
+msgstr "블로그에 피드 보내기"
+
+#: _rss/index.php:12 _rss/subscriptions.php:15 mod/newsclient/lib.php:29
+#: units/magpie/menu_sub.php:14
+msgid "Feeds"
+msgstr "피드"
+
+#: _rss/individual.php:13
+msgid "Feed detail"
+msgstr "피드 세부사항"
+
+#: _rss/popular.php:12 units/magpie/menu_sub.php:31
+msgid "Popular feeds"
+msgstr "인기있는 피드"
+
+#: _rss/styles.php:10
+msgid "RSS Management"
+msgstr "RSS 관리"
+
+#: _rss/styles.php:11
+msgid "To add this feed to your resources page, click here."
+msgstr "당신의 자원 페이지에 이 피드를 추가하기 위해서는 여기를 클릭하세요."
+
+#: _rss/styles.php:12
+msgid ""
+"To add this feed to an external RSS aggregator, click the link that "
+"corresponds to your aggregator:"
+msgstr "외부 RSS 수집기에 이 피드를 보내기 위해서는 당신의 수집기에 해당하는 링크를 클릭하세요."
+
+#: _rss/styles.php:13
+msgid "Summary"
+msgstr "요약"
+
+#: _rss/styles.php:14
+msgid "This is an RSS feed for "
+msgstr "이것은 를 위한 RSS 피드 입니다. "
+
+#: _rss/styles.php:15
+msgid "Didn't mean to come here? Click to exit!"
+msgstr "여기 오려고 한 것이 아닙니까? 나가기 위해 클릭하십시요."
+
+#: _templates/edit.php:15
+msgid "Template Edit"
+msgstr "템플릿 편집"
+
+#: _templates/index.php:15
+msgid "Select / Create Themes"
+msgstr "주제 선택/생성"
+
+#: _templates/preview.php:13
+msgid "Template Preview"
+msgstr "템플릿 미리보기"
+
+#: _userdetails/index.php:18 lib/templates.php:445
+msgid "Edit user details"
+msgstr "사용자 세부사항 편집"
+
+#: _weblog/archive.php:15 _weblog/archive_month.php:15
+msgid "Blog Archives"
+msgstr "블로그 저장소"
+
+#: _weblog/edit.php:24 _weblog/index.php:15
+#: units/communities/communities_membership_requests.php:33
+#: units/friends/user_friendship_requests.php:34
+#: units/weblogs/weblogs_user_info_menu.php:29
+msgid "Blog"
+msgstr "블로그"
+
+#: _weblog/everyone.php:15
+msgid "All blogs"
+msgstr "모든 블로그"
+
+#: _weblog/everyone.php:19
+msgid "You can filter this page to certain types of posts:"
+msgstr "당신은 어떤 형태의 게시물에 대해 이 페이지를 필터할 수 있습니다."
+
+#: _weblog/everyone.php:21
+msgid "Personal blog posts"
+msgstr "개인 블로그 게시물"
+
+#: _weblog/everyone.php:22
+msgid "Community blog posts"
+msgstr "커뮤니티 블로그 게시물"
+
+#: _weblog/everyone.php:23
+msgid "Posts with comments"
+msgstr "코멘트가 있는 게시물"
+
+#: _weblog/everyone.php:24
+msgid "Posts with no comments"
+msgstr "코멘트가 없는 게시물"
+
+#: _weblog/friends.php:15
+msgid "Friends blog"
+msgstr "친구 블로그"
+
+#: _weblog/rss2.php:51
+#, php-format
+msgid "Weblog items tagged with %s"
+msgstr "%s 로 태그된 블로그 아이템"
+
+#: _weblog/rss2.php:54
+msgid "Weblog items"
+msgstr "블로그 아이템"
+
+#: _weblog/rss2.php:61
+msgid "All users"
+msgstr "모든 사용자"
+
+#: _weblog/rss2.php:74
+#, php-format
+msgid "The most recent weblog posts on %s."
+msgstr "%s 의 가장 최근 블로그 게시물"
+
+#: _weblog/rss2.php:78 units/weblogs/function_rss_publish.php:42
+#, php-format
+msgid "The weblog for %s, hosted on %s."
+msgstr "%s 에 호스트되는 %s 애 대한 블로그"
+
+#: _weblog/view_post.php:28
+msgid "Access denied or post not found"
+msgstr "접근이 거부되었거나 게시물이 없습니다."
+
+#: _weblog/view_post.php:31
+msgid ""
+"Either this blog post doesn't exist or you don't currently have access "
+"privileges to view it."
+msgstr "이 블로그 게시물은 없거나 현재 그것을 볼 수 있는 권한이 없습니다."
+
+#: _weblog/view_post.php:39 units/weblogs/function_rss_publish.php:35
+msgid "Weblog"
+msgstr "블로그"
+
+#: content/about.php:10 content/about.php:13
+#, php-format
+msgid "About %s"
+msgstr "%s 에 대해서"
+
+#: content/faq.php:10 content/faq.php:13
+#, php-format
+msgid "%s FAQ"
+msgstr "%s 자주 묻는 질문"
+
+#: content/invite/invite.php:3
+msgid ""
+"If you have a friend or colleague you would like to join the system, perhaps "
+"because you would like to share protected resources or reflections with "
+"them, you can enter their details below. They will then receive a special "
+"invitation email containing a code that allows them to create a new account; "
+"once they do so, a mutual friend connection will be created between their "
+"account and yours."
+msgstr ""
+"만일 당신이 보호된 자료나 생각들을 공유하기 위해 이 시스템에 접속하기를 원하는 친구나 동료가 있다면 아래에 그들의 세부사항을 입력할 수 "
+"있습니다. 그들은 새로운 계정을 만들 수 있도록 하는 코드가 포함된 특별 초청 이메일을 받게 될 것입니다. 만일 그들이 새로운 계정을 "
+"만든다면 상호 친구 관계가 그들 계정과 당신 계정사이에 만들어 질 것입니다."
+
+#: content/mainindex/content_loggedout.php:7
+#: content/mainindex/content_main_index.php:7 lib/templates.php:46
+msgid "Welcome"
+msgstr "환영합니다."
+
+#: content/mainindex/content_loggedout.php:8
+#, php-format
+msgid ""
+"This is %s, a learning landscape. Why not check out <a href=\"%s\">what "
+"people are saying</a> right now."
+msgstr ""
+"이것은 %s, 배움의 들판입니다.  사람들이  <a href=\"%s\">무어라고 말하는지</a> 지금 확인하시지 않으렵니까?"
+
+#: content/mainindex/content_loggedout.php:9
+#, php-format
+msgid "<a href=\"%s\">Find others</a> with similar interests and goals."
+msgstr "비슷한 관심과 목표를 가지고 있는 <a href=\"%s\">다른 사람들을 찾기</a>."
+
+#: content/mainindex/content_loggedout.php:17
+msgid "Here are some example users:"
+msgstr "예제 사용자들입니다."
+
+#: content/mainindex/content_loggedout.php:19
+msgid "Here is an example user:"
+msgstr "예제 사용자입니다."
+
+#: content/mainindex/content_loggedout.php:33
+#, php-format
+msgid ""
+"If you like what you see, why not <a href=\"%s\">register for an account</a>?"
+msgstr "당신이 보고 있는것이 마음에 드시면, <a href=\"%s\">계정에 등록</a> 하시지 않으렵니까?"
+
+#: content/mainindex/content_loggedout.php:40
+#: content/mainindex/content_main_index.php:41
+#: units/users/content_main_index.php:27
+msgid "Latest news"
+msgstr "최근 뉴스"
+
+#: content/mainindex/content_main_index.php:8
+#, php-format
+msgid "Why not <a href=\"%s\">create your profile</a>?"
+msgstr "당신의 <a href=\"%s\">신상명세를 만들지 않으시렵니까</a>?"
+
+#: content/mainindex/content_main_index.php:9
+msgid ""
+"Tell people about yourself and connect to others with similar interests and "
+"goals."
+msgstr "다른 사람들에게 당신에 대해 말하고 비슷한 관심과 목표를 가진 사람과 연결하십시요."
+
+#: content/mainindex/content_main_index.php:17
+msgid "Here are some examples of complete profiles:"
+msgstr "완성된 신상명세의 예 입니다."
+
+#: content/mainindex/content_main_index.php:19
+msgid "Here is an example of a complete profile:"
+msgstr "완성된 신상명세의 예입니다."
+
+#: content/mainindex/content_main_index.php:33
+#, php-format
+msgid "Or you could <a href=\"%s\">start your blog</a>?"
+msgstr "혹은 당신은 <a href=\"%s\">당신의 블로그를 시작</a>할 수 있었습니까?"
+
+#: content/mainindex/content_main_index.php:34
+#, php-format
+msgid ""
+"Comment on what you're learning, collect interesting links and decide who "
+"gets to see what you're writing. Here's what <a href=\"%s\">everyone else is "
+"talking about</a> right now."
+msgstr ""
+"당신이 배우는 것에 대해 코멘트 하고, 관심 있는 링크들을 모으며 당신이 쓴 것을 보게 될 사람들을 결정하세요. 지금 <a "
+"href=\"%s\">다른 사람들이 말하는 것들</a>이 여기 입습니다."
+
+#: content/privacy.php:10 content/privacy.php:13
+#, php-format
+msgid "%s Privacy Policy"
+msgstr "%s 개인정보 보호 정책"
+
+#: content/run_your_own.php:10 content/run_your_own.php:13
+#, php-format
+msgid "Running Your Own %s"
+msgstr "자신의 %s를 운영"
+
+#: content/terms.php:10 content/terms.php:13
+#, php-format
+msgid "%s Terms &amp; Conditions"
+msgstr "%s 조건 &amp; 조건들"
+
+#: help/blogs_help.php:14
+msgid "'Your blog' help"
+msgstr "'블로그' 도움말"
+
+#: help/calendar_help.php:10
+msgid "Calendar help"
+msgstr "일정 도움말"
+
+#: help/calendar_help.php:13
+msgid "'Your calendar' help"
+msgstr "'일정' 도움말"
+
+#: help/files_help.php:10
+#, php-format
+msgid "Help for %s"
+msgstr "%s 에 대한 도움말"
+
+#: help/files_help.php:13
+msgid "'Your Files' help"
+msgstr "'당신 파일' 도움말"
+
+#: help/network_help.php:13
+msgid "'Your Network' help"
+msgstr "'당신 네트워크' 도움말"
+
+#: help/profile_help.php:13
+msgid "'Your Profile' help"
+msgstr "'당신 신상명세' 도움말"
+
+#: home.php:15 index.php:15 index2.php:15
+msgid "Main Index"
+msgstr "메인 인덱스"
+
+#: lib/datalib.php:44
+msgid "Success"
+msgstr "성공"
+
+#: lib/datalib.php:49 lib/elgglib.php:3036
+msgid "Error"
+msgstr "오류"
+
+#: lib/db/mysql.php:216
+msgid "Publishing RSS"
+msgstr "RSS 출판"
+
+#: lib/db/mysql.php:221 lib/db/postgres7.php:184
+#, php-format
+msgid "Publishing RSS for user %d"
+msgstr "사용자 %d를 위한 RSS 출판"
+
+#: lib/db/mysql.php:233 lib/db/postgres7.php:196
+msgid "Adjusting file repository information"
+msgstr "파일 저장소 정보 조정"
+
+#: lib/db/mysql.php:242 lib/db/mysql.php:252 lib/db/postgres7.php:205
+#: lib/db/postgres7.php:215
+#, php-format
+msgid "Updating file %d: %s"
+msgstr "파일 %d:%s 새로고침"
+
+#: lib/dbsetup.php:75
+msgid "Need to upgrade database"
+msgstr "데이터베이스를 업그레이드 할 필요가 있습니다."
+
+#: lib/displaylib.php:188 units/display/function_log_on_pane.php:16
+msgid "Register"
+msgstr "등록"
+
+#: lib/displaylib.php:196 login/index.php:56
+#: units/display/function_log_on_pane.php:28
+msgid "Log On"
+msgstr "로그온"
+
+#: lib/displaylib.php:202 units/admin/admin_main.php:81
+#: units/admin/admin_users.php:28 units/admin/admin_users_add.php:21
+#: units/display/function_log_on_pane.php:34
+msgid "Username"
+msgstr "사용자 이름"
+
+#: lib/displaylib.php:203 units/display/function_log_on_pane.php:35
+msgid "Password"
+msgstr "암호"
+
+#: lib/displaylib.php:210 units/display/function_log_on_pane.php:44
+msgid "Log on"
+msgstr "로그온"
+
+#: lib/displaylib.php:210 units/display/function_log_on_pane.php:44
+msgid "Go"
+msgstr "진행"
+
+#: lib/displaylib.php:212 units/display/function_log_on_pane.php:46
+msgid "Remember Login"
+msgstr "로그인 기억"
+
+#: lib/displaylib.php:215 units/display/function_log_on_pane.php:49
+msgid "Forgotten password"
+msgstr "잊어버린 암호"
+
+#: lib/displaylib.php:273 units/display/function_output_field_display.php:39
+msgid "Add User"
+msgstr "사용자 추가"
+
+#: lib/displaylib.php:273 lib/displaylib.php:282
+#: units/display/function_output_field_display.php:39
+#: units/display/function_output_field_display.php:48
+msgid "Send Message"
+msgstr "메세지 보내기"
+
+#: lib/displaylib.php:282 units/display/function_output_field_display.php:48
+msgid "Add Buddy"
+msgstr "친구 추가"
+
+#: lib/elgglib.php:327
+msgid ""
+"A server error that affects your login session was detected. Please login "
+"again or restart your browser."
+msgstr "당신의 로그린 세션에 영향을 주는 서버 오류가 발견되었습니다. 로그인을 다시하거나 브라우저를 다시 시작하십시요."
+
+#: lib/elgglib.php:459 lib/elgglib.php:509 lib/uploadlib.php:661
+msgid "Administrator"
+msgstr "관리자"
+
+#: lib/elgglib.php:467
+msgid "Do not reply"
+msgstr "답장 보내지 마십시요."
+
+#: lib/elgglib.php:714
+msgid "GB"
+msgstr "GB"
+
+#: lib/elgglib.php:715
+msgid "MB"
+msgstr "MB"
+
+#: lib/elgglib.php:716
+msgid "KB"
+msgstr "KB"
+
+#: lib/elgglib.php:717
+msgid "bytes"
+msgstr "바이트"
+
+#: lib/elgglib.php:1716
+msgid "Close this window"
+msgstr "이 창을 닫으십시요."
+
+#: lib/elgglib.php:1753 lib/elgglib.php:1803
+msgid "Choose"
+msgstr "선택"
+
+#: lib/elgglib.php:2033
+msgid "Elgg auto-format"
+msgstr "Elgg 자동 포멧"
+
+#: lib/elgglib.php:2034
+msgid "HTML format"
+msgstr "HTML 포멧"
+
+#: lib/elgglib.php:2035
+msgid "Plain text format"
+msgstr "평문 텍스트 포멧"
+
+#: lib/elgglib.php:2036
+msgid "Markdown format"
+msgstr "마크다운 포멧"
+
+#: lib/elgglib.php:2605 lib/elgglib.php:3161
+msgid "Continue"
+msgstr "계속"
+
+#: lib/elgglib.php:3122 units/admin/admin_userdetails.php:58
+#: units/admin/admin_userdetails.php:74
+#: units/tinymce/tinymce_userdetails_edit.php:21
+#: units/tinymce/tinymce_userdetails_edit.php:28
+#: units/users/userdetails_edit.php:108 units/users/userdetails_edit.php:115
+msgid "Yes"
+msgstr "예"
+
+#: lib/elgglib.php:3124 units/admin/admin_userdetails.php:58
+#: units/admin/admin_userdetails.php:74
+#: units/tinymce/tinymce_userdetails_edit.php:21
+#: units/tinymce/tinymce_userdetails_edit.php:28
+#: units/users/userdetails_edit.php:108 units/users/userdetails_edit.php:115
+msgid "No"
+msgstr "아니오"
+
+#: lib/elgglib.php:3415 lib/elgglib.php:3443
+msgid "You have been banned from the system!"
+msgstr "당신은 시스템으로 부터 추방되었습니다."
+
+#: lib/elgglib.php:3473
+msgid ""
+"Sorry, but your IP number seems to have changed from when you first logged "
+"in.  This security feature prevents crackers stealing your identity while "
+"logged in to this site.  Normal users should not be seeing this message - "
+"please ask the site administrator for help."
+msgstr ""
+"죄송합니다. 당신의 IP번호가 처음 로그인 핬을때와 달라진 것 같습니다. 이 보안 기능은 이 사이트에 로그인 된 동안 당신의 정보를 "
+"크래커가 도둑질해가지 못하도록 합니다. 정상적인 사용자는 이 메세지를 보지 않을 것입니다. 도움을 위해 사이트 관리자에게 문의하십시요."
+
+#: lib/elgglib.php:3502
+msgid "The system will remember you and automatically log you in next time."
+msgstr "시스템이 당신을 기억해서 다음번에 당신을 자동으로 로그인 시킬 것입니다."
+
+#: lib/elgglib.php:4199 units/users/function_default_access_levels.php:7
+msgid "Logged in users"
+msgstr "로그인 한 사용자들"
+
+#: lib/elgglib.php:4201 units/users/function_default_access_levels.php:5
+msgid "Private"
+msgstr "개인적인"
+
+#: lib/elgglib.php:4203
+msgid "Restricted"
+msgstr "제한된"
+
+#: lib/elgglib.php:4257 units/weblogs/function_html_activate_urls.php:46
+msgid "Click to view link"
+msgstr "링크를 보기 위해 클릭"
+
+#: lib/php-getttext/examples/pigs_dropin.php:75
+msgid ""
+"This is how the story goes.\n"
+"\n"
+msgstr ""
+"이야기 내용은 다음과 같습니다.\n"
+"\n"
+
+#: lib/templates.php:24 units/templates/default_template.php:9
+msgid "Stylesheet"
+msgstr "스타일시트"
+
+#: lib/templates.php:25 units/templates/default_template.php:10
+msgid "The Cascading Style Sheet for the template."
+msgstr "템플릿을 위한 캐스케이딩 스타일 시트"
+
+#: lib/templates.php:34 units/templates/default_template.php:19
+msgid "Page Shell"
+msgstr "페이지 쉘"
+
+#: lib/templates.php:35 units/templates/default_template.php:20
+msgid "The main page shell, including headers and footers."
+msgstr "머릿말과 꼬리말을 포함하는 메인 페이지 쉘"
+
+#: lib/templates.php:37 units/templates/default_template.php:23
+msgid "Page metatags (mandatory) - must be in the 'head' portion of the page"
+msgstr "페이지의 메타태그(필수)-페이지의 'head' 부분에 있어야 합니다."
+
+#: lib/templates.php:38 units/templates/default_template.php:24
+msgid "Page title"
+msgstr "페이지 제목"
+
+#: lib/templates.php:39 units/templates/default_template.php:25
+msgid "Menu"
+msgstr "메뉴"
+
+#: lib/templates.php:40 units/templates/default_template.php:26
+msgid "Status menu"
+msgstr "상태 메뉴"
+
+#: lib/templates.php:41 units/templates/default_template.php:27
+msgid "Main body"
+msgstr "메인 내용"
+
+#: lib/templates.php:42 units/templates/default_template.php:28
+msgid "Sidebar"
+msgstr "사이드 바"
+
+#: lib/templates.php:55 units/templates/default_template.php:36
+msgid "Content holder"
+msgstr "컨텐츠 폴더"
+
+#: lib/templates.php:56 units/templates/default_template.php:37
+msgid ""
+"Contains the main content for a page (as opposed to the sidebar or the "
+"title)."
+msgstr "페이지(사이드바나 타이틀이 아닌)에 대한 메인 컨텐츠를 포함합니다."
+
+#: lib/templates.php:58 lib/templates.php:110
+#: units/templates/default_template.php:39
+msgid "The title"
+msgstr "제목"
+
+#: lib/templates.php:59 units/templates/default_template.php:40
+msgid "The page submenu"
+msgstr "페이지 서브 메뉴"
+
+#: lib/templates.php:60 units/templates/default_template.php:41
+#: units/templates/default_template.php:62
+msgid "The body of the page"
+msgstr "페이지 본체"
+
+#: lib/templates.php:77 units/templates/default_template.php:76
+msgid "Owner box"
+msgstr "소유자 박스"
+
+#: lib/templates.php:78 units/templates/default_template.php:77
+msgid "A box containing a description of the owner of the current profile."
+msgstr "현재 신상명세의 소유자에 대한 설명이 들어 있는 박스"
+
+#: lib/templates.php:80 units/templates/default_template.php:79
+msgid "The user's name"
+msgstr "사용자 이름"
+
+#: lib/templates.php:81 units/templates/default_template.php:80
+msgid "The URL of the user's profile page, including terminating slash"
+msgstr "사용자 신상명세 페이지의 슬래시를 포함하는 URL"
+
+#: lib/templates.php:82 units/templates/default_template.php:81
+msgid "The user's icon, if it exists"
+msgstr "만일 있는 경우 사용자의 아이콘"
+
+#: lib/templates.php:83 units/templates/default_template.php:82
+msgid "A short blurb about the user"
+msgstr "사용자에 대한 간단한 추천 광고"
+
+#: lib/templates.php:84 units/templates/default_template.php:83
+msgid "Links to friend / unfriend a user"
+msgstr "사용자를 친구로 하기/안하기 링크"
+
+#: lib/templates.php:85 units/templates/default_template.php:84
+msgid "Links to any lms hosts the user is attached to"
+msgstr "사용자가 소속되어 있는 LMS 호스트로 링크"
+
+#: lib/templates.php:89 search/personaltags.php:16
+#: units/templates/default_template.php:89
+msgid "Tags"
+msgstr "태그"
+
+#: lib/templates.php:90 search/index.php:96
+#: units/templates/default_template.php:90
+msgid "Resources"
+msgstr "자원"
+
+#: lib/templates.php:107
+msgid "Information Box"
+msgstr "정보 박스"
+
+#: lib/templates.php:108
+msgid ""
+"A box containing a caption and some text, used extensively throughout the "
+"site. For example, the 'friends' box and most page bodies are info boxes. Of "
+"course, you can alter this template however you wish - it doesn't need to be "
+"an actual box."
+msgstr ""
+"캡션과 몇 문장을 포함하는 박스가 사이트 전역에 걸쳐 많이 사용됩니다. 예를 들면 '친구' 박스나 대부분 페이지 본문은 정보 박스 "
+"입니다. 물론 당신이 원하면 이 템플릿을 변경할 수 있습니다.- 그것은 실제 박스일 필요는 없습니다."
+
+#: lib/templates.php:111
+msgid "The contents of the box"
+msgstr "박스의 컨텐츠"
+
+#: lib/templates.php:130 units/templates/default_template.php:110
+msgid "System message shell"
+msgstr "시스템 메세지 틀"
+
+#: lib/templates.php:131 units/templates/default_template.php:111
+msgid "A list of system messages will be placed within the message shell."
+msgstr "시스템 메세지 목록이 메세지 틀안에 놓여질 것 입니다."
+
+#: lib/templates.php:133 units/templates/default_template.php:113
+msgid "The messages"
+msgstr "메세지들"
+
+#: lib/templates.php:145 units/templates/default_template.php:125
+msgid "Individual system messages"
+msgstr "개별 시스템 메세지들"
+
+#: lib/templates.php:146 units/templates/default_template.php:126
+msgid "Each individual system message."
+msgstr "각 개별 시스템 메세지"
+
+#: lib/templates.php:148 units/templates/default_template.php:128
+msgid "The system message"
+msgstr "시스템 메세지"
+
+#: lib/templates.php:163 units/templates/default_template.php:143
+msgid "Main menu shell"
+msgstr "메인 메뉴 틀"
+
+#: lib/templates.php:164 units/templates/default_template.php:144
+msgid "A list of main menu items will be placed within the menubar shell."
+msgstr "메인메뉴 항목의 목록이 메뉴바 틀 안에 놓여질 것 입니다."
+
+#: lib/templates.php:166 lib/templates.php:212 lib/templates.php:244
+#: units/templates/default_template.php:146
+#: units/templates/default_template.php:192
+#: units/templates/default_template.php:226
+msgid "The menu items"
+msgstr "메뉴 항목"
+
+#: lib/templates.php:177 units/templates/default_template.php:157
+msgid "Individual main menu item"
+msgstr "개별 메인 메뉴 항목"
+
+#: lib/templates.php:178 units/templates/default_template.php:158
+msgid ""
+"This is the template for each individual main menu item. A series of these "
+"is placed within the menubar shell template."
+msgstr "이것은 각 개별 메인 메뉴 항목의 템플릿 입니다. 이것들의 연속이 메뉴바 틀 템플릿안에 놓여질 것입니다."
+
+#: lib/templates.php:180 lib/templates.php:196 lib/templates.php:228
+#: lib/templates.php:261 units/templates/default_template.php:160
+#: units/templates/default_template.php:176
+#: units/templates/default_template.php:210
+#: units/templates/default_template.php:243
+msgid "The URL of the menu item"
+msgstr "메뉴 항목의 URL"
+
+#: lib/templates.php:181 lib/templates.php:197 lib/templates.php:229
+#: lib/templates.php:262 units/templates/default_template.php:161
+#: units/templates/default_template.php:177
+#: units/templates/default_template.php:211
+#: units/templates/default_template.php:244
+msgid "The menu item's name"
+msgstr "메뉴 항목의 이름"
+
+#: lib/templates.php:193 units/templates/default_template.php:173
+msgid "Selected individual main menu item"
+msgstr "선택된 개별 메인 메뉴 항목"
+
+#: lib/templates.php:194 units/templates/default_template.php:174
+msgid ""
+"This is the template for an individual main menu item if it is selected."
+msgstr "만일 선택된다면 이것은 개인 메인 메뉴 항목을 위한 템프릿입니다."
+
+#: lib/templates.php:209 units/templates/default_template.php:189
+msgid "Sub-menubar shell"
+msgstr "부 메뉴바 틀"
+
+#: lib/templates.php:210 units/templates/default_template.php:190
+msgid "A list of sub-menu items will be placed within the menubar shell."
+msgstr "서브 메뉴 항목 리스트가 메뉴바 틀안에 놓여질 것입니다."
+
+#: lib/templates.php:225 units/templates/default_template.php:207
+msgid "Individual sub-menu item"
+msgstr "개별 서브메뉴 항목"
+
+#: lib/templates.php:226 units/templates/default_template.php:208
+msgid ""
+"This is the template for each individual sub-menu item. A series of these is "
+"placed within the sub-menubar shell template."
+msgstr "이것은 각 개별 서브-메뉴 항목에 대한 템플릿 입니다. 이것들의 시리즈가 서브-메뉴바 틀 템플릿안에 놓여질 것입니다."
+
+#: lib/templates.php:241 units/templates/default_template.php:223
+msgid "Status menubar shell"
+msgstr "상태 메뉴바 틀"
+
+#: lib/templates.php:242 units/templates/default_template.php:224
+msgid ""
+"A list of statusbar menu items will be placed within the status menubar "
+"shell."
+msgstr "상태바 메뉴 항목의 리스트가 상태 메뉴바 틀 안에 놓여질 것입니다."
+
+#: lib/templates.php:258 units/templates/default_template.php:240
+msgid "Individual statusbar menu item"
+msgstr "개별 상태바 메뉴 항목"
+
+#: lib/templates.php:259 units/templates/default_template.php:241
+msgid ""
+"This is the template for each individual statusbar menu item. A series of "
+"these is placed within the status menubar shell template."
+msgstr "이것은 각 개별 상태바 메뉴 항목에 대한 템플릿 입니다. 일련의 템플릿이 상태 메뉴바 틀 템플릿안에 놓여질 것입니다."
+
+#: lib/templates.php:274 units/templates/default_template.php:256
+msgid "Data input box (two columns)"
+msgstr "데이터 입력 상자 (2 열)"
+
+#: lib/templates.php:275 units/templates/default_template.php:257
+msgid ""
+"This is mostly used whenever some input is taken from the user. For example, "
+"each of the fields in the profile edit screen is a data input box."
+msgstr ""
+"이것은 사용자로 부터 입력이 이루어 질때 많이 사용됩니다. 예를 들어 신상명세 편집 화면의 각 항목은 데이터 입력 상자입니다."
+
+#: lib/templates.php:277 units/templates/default_template.php:259
+msgid "The name for the data we're inputting"
+msgstr "입력하는 데이터에 대한 이름"
+
+#: lib/templates.php:278 units/templates/default_template.php:260
+msgid "The first item of data"
+msgstr "데이터의 처음 항목"
+
+#: lib/templates.php:279 units/templates/default_template.php:261
+msgid "The second item of data"
+msgstr "데이터의 두번째 항목"
+
+#: lib/templates.php:306 units/templates/default_template.php:279
+msgid "Data input box (one column)"
+msgstr "데이터 입력 상자 (1 열)"
+
+#: lib/templates.php:307 units/templates/default_template.php:280
+msgid "A single-column version of the data box."
+msgstr "데이터 상자의 1열 버전"
+
+#: lib/templates.php:309 units/templates/default_template.php:282
+msgid "The name of the data we're inputting"
+msgstr "입력하는 데이터의 이름"
+
+#: lib/templates.php:310 lib/templates.php:338
+#: units/templates/default_template.php:283
+#: units/templates/default_template.php:356
+msgid "The data itself"
+msgstr "데이터 자체"
+
+#: lib/templates.php:334 units/templates/default_template.php:352
+msgid "Data input box (vertical)"
+msgstr "데이터 입력 박스 (수직)"
+
+#: lib/templates.php:335 units/templates/default_template.php:353
+msgid ""
+"A slightly different version of the data box, used on this edit page amongst "
+"other places."
+msgstr "데이터 박스의 약간 다른 버전, 다른 곳 중 이페이지를 편집할때 사용"
+
+#: lib/templates.php:337 units/templates/default_template.php:355
+msgid "Name of the data we\\'re inputting"
+msgstr "입력하고 있는 데이터의 이름"
+
+#: lib/templates.php:400 mod/template/lib.php:15
+msgid "Change theme"
+msgstr "테마 변경"
+
+#: lib/templates.php:433
+msgid "Account settings"
+msgstr "계정 설정"
+
+#: lib/templates.php:439
+msgid "Log off"
+msgstr "로그 오프"
+
+#: lib/templates.php:449
+msgid "Your site picture"
+msgstr "당신의 사이트 그림"
+
+#: lib/templates.php:456
+msgid "Main"
+msgstr "메인"
+
+#: lib/templates.php:461 units/admin/admin_users_add.php:36
+msgid "Add users"
+msgstr "사용자 추가"
+
+#: lib/templates.php:471
+msgid "Manage flagged content"
+msgstr "표식이 되어 있는 컨텐츠 관리"
+
+#: lib/templates.php:476
+msgid "Spam control"
+msgstr "스팸 통제"
+
+#: lib/templates.php:581
+msgid "Your current template has been changed."
+msgstr "당신의 현재 템플릿이 변경되었습니다."
+
+#: lib/templates.php:611 units/templates/template_actions.php:59
+msgid "Your template has been updated."
+msgstr "당신의 템플릿이 갱신되었습니다."
+
+#: lib/templates.php:623 units/templates/template_actions.php:75
+msgid "Your template was deleted."
+msgstr "당신의 템플릿이 삭제 되었습니다."
+
+#: lib/templates.php:733 units/templates/templates_add.php:8
+msgid "Create theme"
+msgstr "테마 만들기"
+
+#: lib/templates.php:734 units/templates/templates_add.php:9
+msgid ""
+"Here you can create your own themes based on one of the existing public "
+"themes. Just select which public theme you would like to alter and then "
+"create your own. You will now have edit privilages."
+msgstr ""
+"여기서 존재하는 공개 테마를 기초로 당신 자신만의 테마를 만들 수 있습니다. 어떤 공개 테마를 변경해서 당신 것을 만들려고 하는지 "
+"선택하십시요. 당신은 편집 권한을 갖게 될 것입니다."
+
+#: lib/templates.php:750 units/templates/templates_add.php:25
+msgid "Theme name"
+msgstr "테마이름"
+
+#: lib/templates.php:755 lib/templates.php:818 lib/templates.php:1017
+#: units/templates/templates_add.php:30 units/templates/templates_edit.php:22
+#: units/templates/templates_view.php:22
+msgid "Default Theme"
+msgstr "디폴트 테마"
+
+#: lib/templates.php:859 units/templates/templates_edit.php:65
+msgid "Glossary"
+msgstr "용어 설명"
+
+#: lib/templates.php:895 units/admin/admin_spam.php:22
+#: units/communities/userdetails_edit.php:91
+#: units/templates/templates_edit.php:101 units/users/userdetails_edit.php:181
+msgid "Save"
+msgstr "저장"
+
+#: lib/templates.php:933 units/templates/templates_preview.php:8
+msgid "Heading one"
+msgstr "제목 1"
+
+#: lib/templates.php:934 units/templates/templates_preview.php:9
+msgid "Heading two"
+msgstr "제목 2"
+
+#: lib/templates.php:935 units/templates/templates_preview.php:10
+msgid "A bullet list"
+msgstr "표식있는 목록"
+
+#: lib/templates.php:936 units/templates/templates_preview.php:11
+msgid "Heading three"
+msgstr "제목 3"
+
+#: lib/templates.php:937 units/templates/templates_preview.php:12
+msgid "A numbered list"
+msgstr "번호가 매겨진 목록"
+
+#: lib/templates.php:967 units/templates/templates_preview.php:42
+msgid "Some text input"
+msgstr "문장 입력"
+
+#: lib/templates.php:974 units/templates/templates_preview.php:49
+msgid "Some longer text input"
+msgstr "긴 문장 입력"
+
+#: lib/templates.php:980 units/templates/templates_preview.php:55
+msgid "Further text input"
+msgstr "더 문장 입력"
+
+#: lib/templates.php:1000 units/templates/templates_view.php:5
+msgid "Select / Create / Edit Themes"
+msgstr "테마 선택/만들기/편집"
+
+#: lib/templates.php:1001 units/templates/templates_view.php:6
+msgid "Public Themes"
+msgstr "공개 테마"
+
+#: lib/templates.php:1002 units/templates/templates_view.php:7
+#, php-format
+msgid ""
+"The following are public themes that you can use to change the way your %s "
+"looks - these do not change the content only the appearance. Check the "
+"preview and then select the one you want. If you wish you can adapt one of "
+"these using the 'create theme' option below."
+msgstr ""
+"다음은 당신의 %s가 어떻게 보일지를 변경하는데 사용할 수 있는 공개 테마들입니다. 이것들은 컨텐츠를 변경하지 않고 겉모습만 변경하게 "
+"됩니다. 미리보기로 확인한 다음 원하는 것을 선택하세요. 원한다면 아래의 '테마 생성' 옵션을 사용하여 이것들 중에 하나를 적용시킬 갈 "
+"수 있습니다."
+
+#: lib/templates.php:1035 lib/templates.php:1067
+#: units/templates/templates_view.php:40 units/templates/templates_view.php:72
+msgid "preview"
+msgstr "미리보기"
+
+#: lib/templates.php:1046 units/templates/templates_view.php:50
+msgid "Personal themes"
+msgstr "개인적인 테마"
+
+#: lib/templates.php:1047 units/templates/templates_view.php:51
+msgid ""
+"These are themes that you have created. You can edit and delete these. These "
+"theme(s) only control actual look and feel - you cannot change any content "
+"here. To change any of your content you need to use the other menu options "
+"such as: edit profile, update weblog etc."
+msgstr ""
+"이것들은 당신이 만든 테마들입니다. 이것들을 편집하거나 삭제할 수 있습니다. 이러한 테마들은 실제 보이는 모습과 느낌을 제어합니다- "
+"내용는 변경되지 않습니다. 컨텐츠를 변경하고자 하면 프로파일 편집이나 블로그 갱신 등 다른 메뉴 옵션을 사용해야 합니다."
+
+#: lib/templates.php:1069 units/files/templates_preview.php:34
+#: units/templates/templates_view.php:74
+#: units/weblogs/weblogs_posts_view.php:139
+msgid "Edit"
+msgstr "편집"
+
+#: lib/templates.php:1070 units/templates/templates_view.php:75
+msgid "Are you sure you want to permanently remove this template?"
+msgstr "이 템플릿을 영구히 제거하기를 원하십니까?"
+
+#: lib/templates.php:1070 units/files/folder_view.php:75
+#: units/files/templates_preview.php:34 units/templates/templates_view.php:75
+#: units/weblogs/weblogs_posts_view.php:141
+msgid "Delete"
+msgstr "삭제"
+
+#: lib/templates.php:1081
+msgid "Select new theme"
+msgstr "새 테마 선택"
+
+#: lib/templates.php:1127 lib/templates.php:1135
+#: units/weblogs/weblogs_comments_add.php:42
+msgid "Guest"
+msgstr "손님"
+
+#: lib/templates.php:1136
+msgid "Log in"
+msgstr "로그인"
+
+#: lib/uploadlib.php:109
+#, php-format
+msgid ""
+"Your file upload has failed because there was a problem with one of the "
+"files, %s.<br /> Here is a log of the problems:<br />%s<br />Not recovering."
+msgstr ""
+"%s 파일에 문제가 있어서 파일 업로드를 실패하였습니다<br /> 문제에 대한 로그는 다음과 같습니다:<br />%s<br />복원 안됨."
+
+#: lib/uploadlib.php:135
+#, php-format
+msgid "File was renamed from %s to %s because of invalid characters."
+msgstr "잘못된 문자 때문에 파일이름이 %s 에서 %s로 바뀌었습니다."
+
+#: lib/uploadlib.php:164
+#, php-format
+msgid "Sorry, but that file is too big (limit is %s)"
+msgstr "죄송합니다. 파일이 너무 큽니다. (최대 한계는 %s 입니다)"
+
+#: lib/uploadlib.php:217
+msgid "File uploaded successfully"
+msgstr "파일을 성공적으로 업로드 하였습니다."
+
+#: lib/uploadlib.php:232 lib/uploadlib.php:342 lib/uploadlib.php:359
+msgid "No file was found - are you sure you selected one to upload?"
+msgstr "파일이 발견되지 않았습니다. 업로드하기 위해 파일을 선택한 것이 맞습니까?"
+
+#: lib/uploadlib.php:268
+msgid "The old file(s) in your upload area have been deleted"
+msgstr "당신의 업로드 영역에 있는 오래된 파일이 삭제 되었습니다."
+
+#: lib/uploadlib.php:299
+#, php-format
+msgid "File was renamed from %s to %s because there was a filename conflict."
+msgstr "파일 이름에 충돌이 있기 때문에 파일이름이 %s 에서 %s 로 변경되었습니다."
+
+#: lib/uploadlib.php:340 lib/uploadlib.php:363
+#, php-format
+msgid ""
+"An unknown problem occurred while uploading the file '%s' (perhaps it was "
+"too large?)"
+msgstr "파일 %s 을 올리기하는 동안 알려지지 않은 문제가 발생하였습니다. (파일이 너무 큰것은 아닌지?)"
+
+#: lib/uploadlib.php:347
+msgid "Uploaded file exceeded the maximum size limit set by the server"
+msgstr "업로드 파일이 서버에 의해 설정된 파일의 최대 크기를 초과하였습니다."
+
+#: lib/uploadlib.php:351
+msgid "Uploaded file exceeded the maximum size limit set by the form"
+msgstr "업로드 파일이 양식에 의해 설정된 최대 파일 크기를 초과하였습니다."
+
+#: lib/uploadlib.php:355
+msgid "File was only partially uploaded"
+msgstr "파일이 부분적으로만 업로드 되었습니다."
+
+#: lib/uploadlib.php:377
+#, php-format
+msgid "Upload log for file %u"
+msgstr "파일 %u에 대한 업도드 로그"
+
+#: lib/uploadlib.php:470
+msgid "Title:"
+msgstr "제목"
+
+#: lib/uploadlib.php:509
+msgid "The file has been moved to a quarantine directory."
+msgstr "파일이 검역소 디렉토리로 이동되었습니다."
+
+#: lib/uploadlib.php:512
+#, php-format
+msgid ""
+"The file has been moved to your specified quarantine directory, the new "
+"location is %s"
+msgstr "파일이 당신이 명시한 검역 디렉토리로 이동되었습니다. 새로운 위치는 %s 입니다."
+
+#: lib/uploadlib.php:517 lib/uploadlib.php:526 lib/uploadlib.php:535
+#: lib/uploadlib.php:540
+msgid "The file has been deleted"
+msgstr "파일이 삭제되었습니다."
+
+#: lib/uploadlib.php:520 lib/uploadlib.php:529
+#, php-format
+msgid ""
+"Could not move the file into your specified quarantine directory, %s. You "
+"need to fix this as files are being deleted if they're found to be infected."
+msgstr ""
+"당신이 명시한 검역 디렉토리 %s로 파일을 옮길 수 없습니다. 만일 파일이 바이러스에 감염된 것으로 발견되면 파일이 삭제될 것이므로 "
+"이것을 고쳐야 합니다."
+
+#: lib/uploadlib.php:543
+msgid "The file could not be deleted"
+msgstr "파일이 삭제될 수 없습니다."
+
+#: lib/uploadlib.php:559
+msgid ""
+"This file that has been uploaded was found to contain a virus and has been "
+"moved or delted and the user notified."
+msgstr "업로드한 파일이 바이러스를 가지고 있는 것으로 발견되었으며 다른 곳으로 이동되었거나 삭제되었으며 사용자에게 통지하였습니다."
+
+#: lib/uploadlib.php:595
+#, php-format
+msgid ""
+"Elgg is configured to run clam on file upload, but the path supplied to Clam "
+"AV, %s,  is invalid."
+msgstr "엘그는 올리기한 파일에 대해 클램을 실행하도록 설정되었지만, 클램 AV %s로의 경로가 틀립니다."
+
+#: lib/uploadlib.php:597
+msgid ""
+"In addition, Elgg is configured so that if clam fails to run, files are "
+"treated like viruses.  This essentially means that no student can upload a "
+"file successfully until you fix this."
+msgstr ""
+"추가적으로 클램이 동작하는데 실패하면 파일들이 바이러스로 취급되도록 엘그가 설정되었습니다. 이것은 당신이 문제를 고칠때까지 어느 학습자도 "
+"파일을 올릴 수 없다는 것을 의미합니다."
+
+#: lib/uploadlib.php:603 lib/uploadlib.php:642
+msgid ""
+"Your administrator has enabled virus checking for file uploads but has "
+"misconfigured something.<br />Your file upload was NOT successful. Your "
+"administrator has been emailed to notify them so they can fix it.<br />Maybe "
+"try uploading this file later."
+msgstr ""
+"파일 업로드를 위하여 관리자가  바이러스 검사를 하도록 설정해 놓았지만 무언가 잘 못 설정하였습니다. <br/> 당신의 파일 올리기가 "
+"성공하지 못하였습니다. 관리자에게 그것들이 고쳐질 수 있다는 것을 알려주기위해 이메일이 보내어 졌습니다. 이 파일 올리기를 다음에 해 "
+"보십시요,"
+
+#: lib/uploadlib.php:621
+#, php-format
+msgid ""
+"Attention administrator! Clam AV has found a virus in a file uploaded by %s. "
+"Here is the output of clamscan:"
+msgstr "관리자 주의! 클램 AV가 %s에 의해 올려진 파일에서 바이러스를 발견하였습니다. 클램스캔 결과는 다음과 같습니다:"
+
+#: lib/uploadlib.php:627
+#, php-format
+msgid ""
+"The file you have uploaded, %s, has been scanned by a virus checker and "
+"found to be infected! Your file upload was NOT successful."
+msgstr ""
+"당신이 올린 파일 %s 는 바이러스 검사프로그램에 의해 스캔된 결과 감염된 것으로 발견되었습니다. 당신의 파일 올리기는 성공하지 "
+"못하였습니다."
+
+#: lib/uploadlib.php:633
+#, php-format
+msgid ""
+"Clam AV has failed to run.  The return error message was %s. Here is the "
+"output from Clam:"
+msgstr "클램 AV는 동작하는데 실패하였습니다. 돌아온 오류 메세지는 %s 였습니다. 클램으로 부터 출력은 다음과 같습니다:"
+
+#: lib/uploadlib.php:658
+#, php-format
+msgid "%s :: Clam AV notification"
+msgstr "%s:: 클램 AV 통지"
+
+#: lib/uploadlib.php:702
+msgid "There was an unknown error with clam."
+msgstr "클램에서 알려지지 않은 오류가 있습니다."
+
+#: lib/userlib.php:24 login/index.php:34
+msgid "You have been logged on."
+msgstr "당신이 로그된 상태에 있습니다."
+
+#: lib/userlib.php:25 login/index.php:43
+msgid ""
+"Unrecognised username or password. The system could not log you on, or you "
+"may not have activated your account."
+msgstr "알수 없는 사용자 이름 혹은 암호. 시스템이 당신을 로그온 시킬 수 없거나 당신 계정을 활성화 하지 않았는지 모릅니다."
+
+#: lib/userlib.php:26 login/index.php:46
+msgid ""
+"Either the username or password were not specified. The system could not log "
+"you on."
+msgstr "사용자 이름 혹은 암호가 명시되지 않았습니다. 시스템은 당신을 로그온 시킬 수 없습니다."
+
+#: lib/userlib.php:160
+msgid "You cannot reply to this message by email."
+msgstr "이 메세지에 답장을 이메일로 보낼 수 없습니다."
+
+#: lib/userlib.php:161
+msgid "Failed to send email. An unknown error occurred."
+msgstr "이메일을 보내는데 실패하였습니다. 알 수 없는 오류가 발생하였습니다."
+
+#: lib/userlib.php:175
+msgid "Failed to send message. An unknown error occurred."
+msgstr "메세지를 보내는데 실패하였습니다. 알 수 없는 오류가 발생하였습니다."
+
+#: lib/userlib.php:207
+msgid "System"
+msgstr "시스템"
+
+#: lms/join.php:48 units/invite/invite_actions.php:97
+msgid ""
+"Error! Your username must contain letters and numbers only, cannot be blank, "
+"and must be between 3 and 12 characters in length."
+msgstr "오류! 사용자 이름은 문자와 숫자만으로 구성되어야 하며 공백어어서는 안되고 3에서 12자의 문자로 구성되어야 합니다."
+
+#: lms/join.php:56 units/invite/invite_actions.php:93
+msgid ""
+"Error! Invalid password. Your passwords must match and be between 6 and 16 "
+"characters in length."
+msgstr "오류! 틀린 암호. 암호가 일치해야 하며 6에서 16글자로 되어 있어야 합니다."
+
+#: lms/join.php:60
+msgid "Error! You must enter your fullname"
+msgstr "오류! 당신의 전체 이름을 입력해야 합니다."
+
+#: lms/join.php:71
+msgid "Error! Your username and password does not match our record."
+msgstr "오류! 당신의 사용자 이름과 암호가 기록과 일치되지 않습니다."
+
+#: lms/join.php:76
+msgid "Fatal Error! Unknown action requested."
+msgstr "치명적 오류! 알수없는 동작이 요청되었습니다."
+
+#: lms/join.php:105
+msgid "Your account creation was successful!"
+msgstr "계정이 성공적으로 생성되었습니다."
+
+#: lms/join.php:117
+msgid "Join up"
+msgstr "가입하기"
+
+#: lms/join.php:129
+msgid "Login"
+msgstr "로그인"
+
+#: lms/rss.php:28 profile/rss2.php:32
+#: units/profile/function_rss_publish.php:43
+#, php-format
+msgid "Activity for %s, hosted on %s."
+msgstr "%s에서 제공되는 %s 에 대한 활동"
+
+#: lms/rss.php:33 units/profile/function_rss_publish.php:35
+msgid "Activity"
+msgstr "활동"
+
+#: lms/rss.php:43
+#, php-format
+msgid "%s posted on weblog post:"
+msgstr "블로그 게시에 게시된 %s"
+
+#: lms/rss.php:65
+#, php-format
+msgid "%s posted on weblog post '%s'"
+msgstr "블로그 게시 %s 에 게시된 %s"
+
+#: lms/rss.php:83
+msgid "No activity"
+msgstr "활동 없음"
+
+#: login/index.php:21
+msgid "You are already logged on."
+msgstr "당신은 이미 로그온 하였습니다."
+
+#: login/index.php:36
+msgid ""
+"The password for this account is extremely insecure and represents a major "
+"security risk. You should change it immediately."
+msgstr "이 계정에 대한 암호는 매우 안전하지 않으며 중대한 보안 위협이 됩니다. 당신은 즉시 암호를 변경해야 합니다."
+
+#: login/index.php:49
+msgid "Please log in"
+msgstr "로그인 하십시요"
+
+#: mod/adash/add.php:25
+msgid "Add dashboard items"
+msgstr "대시보드 항목 추가"
+
+#: mod/adash/add.php:45
+msgid "Widget added."
+msgstr "위젯이 추가되었습니다."
+
+#: mod/adash/add.php:59
+msgid "Select a widget type from the list below:"
+msgstr "아래 목록에서 위젯 형식을 선택하십시요"
+
+#: mod/adash/add.php:69
+msgid "Add"
+msgstr "추가"
+
+#: mod/adash/add.php:78
+msgid "You do not have permission to add widgets to this dashboard."
+msgstr "이 대시보드에 위젯을 추가할 권한을 가지고 있지 않습니다."
+
+#: mod/adash/delete.php:44
+msgid "Widget deleted."
+msgstr "위젯이 삭제되었습니다."
+
+#: mod/adash/edit.php:34 mod/adash/lib.php:152
+msgid "Edit widget"
+msgstr "위젯 편집"
+
+#: mod/adash/edit.php:64
+msgid "Widget edited."
+msgstr "위젯이 편집되었습니다."
+
+#: mod/adash/edit.php:81
+msgid "You do not have permission to edit this widget."
+msgstr "이 위젯을 편집할 권한을 가지고 있지 않습니다."
+
+#: mod/adash/index.php:38
+msgid "Dashboard"
+msgstr "대시보드"
+
+#: mod/adash/index.php:57
+msgid ""
+"This dashboard is currently empty. Why not add some widgets by clicking 'add "
+"new item' above?"
+msgstr "이 대시보드는 현재 비어 있습니다. 위의 '새 항목 추가'를 클릭하여 몇개 구성요소를 추가하지 않으렵니까?"
+
+#: mod/adash/index.php:59
+msgid "This dashboard is currently empty."
+msgstr "이 대시보드는 현재 비어 있습니다."
+
+#: mod/adash/lib.php:19 mod/adash/lib.php:22
+msgid "Your Dashboard"
+msgstr "당신의 대시보드"
+
+#: mod/adash/lib.php:27
+msgid "Add new item"
+msgstr "새 항목 추가"
+
+#: mod/adash/lib.php:46 mod/adash/lib.php:264
+msgid "Text box"
+msgstr "텍스트 상자"
+
+#: mod/adash/lib.php:47
+msgid "Displays the text of your choice."
+msgstr "선택한 문장 표시"
+
+#: mod/adash/lib.php:153
+msgid "Delete widget"
+msgstr "구성요소 삭제"
+
+#: mod/adash/lib.php:154
+msgid "Move up"
+msgstr "위로 이동"
+
+#: mod/adash/lib.php:155
+msgid "Move down"
+msgstr "아래로 이동"
+
+#: mod/adash/lib.php:226
+msgid "Access for this widget:"
+msgstr "이 구성요소에 대한 접근"
+
+#: mod/adash/lib.php:230
+msgid "Save widget"
+msgstr "위젯 저장"
+
+#: mod/adash/lib.php:248
+msgid ""
+"This text box is undefined. If you are the widget owner, click 'edit widget' "
+"to add your own content."
+msgstr "이 텍스트 상자는 정의되지 않았습니다. 만일 위젯 소유자라면 당신의 컨텐츠를 추가하기 위해 '위젯 편집'을 클릭하십시요."
+
+#: mod/adash/lib.php:265
+msgid ""
+"This widget displays the text content of your choice. All you need to do is "
+"enter the title and body below:"
+msgstr "이 위젯은 선택한 것의 텍스트 내용을 표시합니다. 해야할 일은 제목과 본문을 아래와 같이 입력하는 일입니다."
+
+#: mod/adash/move.php:50
+msgid "Widget moved."
+msgstr "위젯이 이동함"
+
+#: mod/blog/lib.php:17 mod/blog/lib.php:21
+msgid "Your Blog"
+msgstr "당신의 블로그"
+
+#: mod/blog/lib.php:39
+msgid "Post a new entry"
+msgstr "새  항목 게시"
+
+#: mod/blog/lib.php:44
+msgid "View blog"
+msgstr "블로그"
+
+#: mod/blog/lib.php:48
+msgid "Archive"
+msgstr "저장소"
+
+#: mod/blog/lib.php:52
+msgid "Friends' blogs"
+msgstr "친구의 블로그"
+
+#: mod/blog/lib.php:58
+msgid "View all posts"
+msgstr "모든 게시물 보기"
+
+#: mod/blog/lib.php:62 mod/file/lib.php:39 mod/friend/lib.php:57
+#: mod/profile/lib.php:35
+msgid "Page help"
+msgstr "페이지 도움말"
+
+#: mod/blog/lib.php:75
+msgid "Blog widget"
+msgstr "블로그 구성요소"
+
+#: mod/blog/lib.php:76
+msgid "Displays the latest blog posts from a blog of your choice."
+msgstr "당신이 선택한 블로그로부터 최근 블로그 게시물 표시"
+
+#: mod/blog/lib.php:138
+msgid "Blog dashboard widget"
+msgstr "블로그 대시보드 구성요소"
+
+#: mod/blog/lib.php:139
+msgid ""
+"This widget displays the last couple of blog posts from an individual user. "
+"To begin, select the user from your connections below:"
+msgstr ""
+"이 구성요소는 개인 사용자들로 부터 마지막 한두개의 블로그 게시물을 표시합니다. 시작하려면 아래에서 당신과 연결된 사람들로부터 사용자를 "
+"선택하십시요."
+
+#: mod/blog/lib.php:154
+msgid "Then enter the number of blog posts you'd like to display:"
+msgstr "그 다음에 표시하고자 하는 블로그 게시물의 수를 입력하세요."
+
+#: mod/community/lib.php:19 mod/profile/lib.php:27
+msgid "Edit this profile"
+msgstr "이 신상명세 편집"
+
+#: mod/community/lib.php:25
+msgid "Community site picture"
+msgstr "커뮤니티 사이트 그림"
+
+#: mod/community/lib.php:29
+msgid "Edit community details"
+msgstr "커뮤니티 세부사항 편집"
+
+#: mod/community/lib.php:37
+msgid "View membership requests"
+msgstr "멤버쉽 요청 보기"
+
+#: mod/file/lib.php:14 mod/file/lib.php:17
+#: units/files/files_user_info_menu.php:11
+msgid "Your Files"
+msgstr "당신의 파일들"
+
+#: mod/file/lib.php:28
+msgid "Add a file or a folder"
+msgstr "파일이나 폴더 추가"
+
+#: mod/file/lib.php:34
+msgid "RSS feed for files"
+msgstr "파일들에 대한 RSS 알리미"
+
+#: mod/friend/lib.php:15 mod/friend/lib.php:18
+msgid "Your Network"
+msgstr "당신의 네트워크"
+
+#: mod/friend/lib.php:30 units/friends/profile_friends.php:18
+msgid "Friends"
+msgstr "친구들"
+
+#: mod/friend/lib.php:34
+msgid "Friend of"
+msgstr "친구-"
+
+#: mod/friend/lib.php:42
+msgid "FOAF"
+msgstr "친구의 친구"
+
+#: mod/friend/lib.php:47
+msgid "Access controls"
+msgstr "접근 통제"
+
+#: mod/friend/lib.php:52
+msgid "Invite a friend"
+msgstr "친구 초대"
+
+#: mod/newsclient/lib.php:14 mod/newsclient/lib.php:17
+msgid "Your Resources"
+msgstr "당신의 자원"
+
+#: mod/newsclient/lib.php:32
+msgid "Publish to blog"
+msgstr "블로그에 출력"
+
+#: mod/newsclient/lib.php:36 units/magpie/menu_sub.php:22
+msgid "View aggregator"
+msgstr "블로그 모음 보기"
+
+#: mod/newsclient/lib.php:40
+msgid "Popular Feeds"
+msgstr "인기있는 알리미"
+
+#: mod/newsclient/lib.php:85
+msgid "Feed widget"
+msgstr "알리미 구성요소"
+
+#: mod/newsclient/lib.php:86
+msgid "Displays the latest entries from an external feed of your choice."
+msgstr "당신이 선택한 외부 알리미로 부터 최근 항목 표시"
+
+#: mod/newsclient/lib.php:113
+msgid "This feed is currently empty."
+msgstr "이 알리미는 현재 비어 있습니다."
+
+#: mod/newsclient/lib.php:120
+msgid "This feed widget is undefined."
+msgstr "이 알리미 구성요소는 정의되지 않았습니다."
+
+#: mod/newsclient/lib.php:138
+msgid "Feeds dashboard widget"
+msgstr "대시보드 구성요소에게 알림"
+
+#: mod/newsclient/lib.php:139
+msgid ""
+"This widget displays the last couple of entries from an external feed you "
+"have subscribed to. To begin, select the feed from your subscriptions below:"
+msgstr "이 구성요소는 당신이 구독한 외부 알리미로부터 몇개의 항목을 표시합니다. 시작하려면 아래 구독중에 알리미를 선택하십시요."
+
+#: mod/newsclient/lib.php:158
+msgid "Then enter the number of feed entries you'd like to display:"
+msgstr "표시하고자 하는 알리미 항목의 수를 입력하세요."
+
+#: mod/newsclient/lib.php:164
+#, php-format
+msgid ""
+"You can't select a feed for this widget because you don't have any feed "
+"subscriptions. Click on <a href=\"%s\">Your</a> Resources to subscribe to a "
+"feed."
+msgstr ""
+"아무 알리미 구독을 하지 않았기 때문에 이 위젯에 대한 알리미를 선택할 수 없습니다. 알리미를 구독하기 위해서 <a "
+"href=\"%s\">자원</a>을 클릭하세요."
+
+#: mod/profile/lib.php:16 mod/profile/lib.php:19
+msgid "Your Profile"
+msgstr "프로파일"
+
+#: mod/profile/lib.php:31
+msgid "Change site picture"
+msgstr "사이트 그림 변경"
+
+#: mod/profile/lib.php:39
+msgid "People"
+msgstr "사람들"
+
+#: mod/profile/lib.php:51 mod/profile/lib.php:80 mod/profile/lib.php:120
+msgid "Profile widget"
+msgstr "프로파일 위젯"
+
+#: mod/profile/lib.php:52
+msgid "Displays the contents of a profile field."
+msgstr "프로파일 필드의 컨텐츠 표시"
+
+#: mod/profile/lib.php:81
+msgid "This profile box is undefined."
+msgstr "이 프로파일 상자는 정의되지 않았습니다."
+
+#: mod/profile/lib.php:121
+msgid ""
+"Select a profile field below; the widget will then display the profile "
+"content from this field."
+msgstr "아래의 프로파일을 선택하십시요; 위젯이 이 필드로부터 프로파일 컨텐츠를 표시할 것입니다."
+
+#: profile/edit.php:35
+msgid "Edit profile"
+msgstr "프로파일 편집"
+
+#: profile/edit.php:88 units/profile/function_actions.php:37
+msgid "Profile updated."
+msgstr "프로파일 갱신됨"
+
+#: profile/profile.class.php:48 units/profile/edit_link.php:8
+msgid "Click here to edit this profile."
+msgstr "이 신상명세를 편집하기 위해 여기를 클릭하세요."
+
+#: profile/profile.class.php:86 units/profile/content_edit.php:2
+msgid ""
+"    This screen allows you to edit your profile. Blank fields will not show "
+"up on your profile screen in any view; you can change the access level for "
+"each piece of information in order to prevent it from falling into the wrong "
+"hands. For example, we strongly recommend you keep your address to yourself "
+"or a few trusted parties."
+msgstr ""
+"    이 스크린에서 당신의 신상명세를 편집할 수 있습니다. 비어 있는 필드는 어떤 보기에서도 당신의 신상명세 스크린에 나타나지 않을 "
+"것입니다. 정보가 잘못된 곳으로 흘러들어가는 것을 막기 위해 각 정보에 대해 접근 수준을 변경할 수 있습니다. 예를 들면 당신의 주소를 "
+"당신이나 믿을만한 사람들에게만 알수 있도록 하는 것을 권장합니다."
+
+#: profile/profile.class.php:95
+msgid "You can import some profile data by uploading a FOAF file here:"
+msgstr "여기서 친구의 친구 파일을 올려서 신상명세 자료를 가져올 수 있습니다."
+
+#: profile/profile.class.php:98
+msgid "Upload a FOAF file:"
+msgstr "친구의 친구 파일 올리기"
+
+#: profile/profile.class.php:100 units/files/folder_edit.php:259
+msgid "Upload"
+msgstr "올리기"
+
+#: profile/profile.class.php:185
+#: units/profile/function_editfield_defaults.php:37
+msgid "Who am I?"
+msgstr "나는 누구 일까요?"
+
+#: profile/profile.class.php:185
+#: units/profile/function_editfield_defaults.php:37
+msgid "A short introduction for you."
+msgstr "당신을 위한 간단한 소개"
+
+#: profile/profile.class.php:186
+msgid "Introduction"
+msgstr "소개"
+
+#: profile/profile.class.php:186
+msgid "A short introduction to this community."
+msgstr "이 커뮤니티에 대한 간단한 소개"
+
+#: profile/profile.class.php:189
+#: units/profile/function_editfield_defaults.php:40
+msgid "Brief description"
+msgstr "간단한 설명"
+
+#: profile/profile.class.php:189
+#: units/profile/function_editfield_defaults.php:40
+msgid "For use in your sidebar profile."
+msgstr "사이드바 프로파일에 사용하기 위해"
+
+#: profile/profile.class.php:192
+#: units/profile/function_editfield_defaults.php:43
+msgid "Street address"
+msgstr "세부 주소"
+
+#: profile/profile.class.php:195
+#: units/profile/function_editfield_defaults.php:46
+msgid "Town"
+msgstr "시/군"
+
+#: profile/profile.class.php:198
+#: units/profile/function_editfield_defaults.php:49
+msgid "State / Region"
+msgstr "도"
+
+#: profile/profile.class.php:201
+#: units/profile/function_editfield_defaults.php:52
+msgid "Postal code"
+msgstr "우편번호"
+
+#: profile/profile.class.php:204
+#: units/profile/function_editfield_defaults.php:55
+msgid "Country"
+msgstr "국가"
+
+#: profile/profile.class.php:207 units/admin/admin_main.php:83
+#: units/admin/admin_users.php:30 units/admin/admin_users_add.php:23
+#: units/profile/function_editfield_defaults.php:58
+msgid "Email address"
+msgstr "이메일 주소"
+
+#: profile/profile.class.php:209
+#: units/profile/function_editfield_defaults.php:60
+msgid "Work telephone"
+msgstr "직장 전화번호"
+
+#: profile/profile.class.php:212
+#: units/profile/function_editfield_defaults.php:63
+msgid "Home telephone"
+msgstr "집 전화번호"
+
+#: profile/profile.class.php:215
+#: units/profile/function_editfield_defaults.php:66
+msgid "Mobile telephone"
+msgstr "이동 전화 번호"
+
+#: profile/profile.class.php:218
+#: units/profile/function_editfield_defaults.php:69
+msgid "Official website address"
+msgstr "공식적인 웹사이트 주소"
+
+#: profile/profile.class.php:218
+#: units/profile/function_editfield_defaults.php:69
+msgid "The URL to your official website, if you have one."
+msgstr "만일 있는 경우, 당신의 공식적인 웹사이트로의 URL"
+
+#: profile/profile.class.php:221
+#: units/profile/function_editfield_defaults.php:72
+msgid "Personal website address"
+msgstr "개인 웹사이트 주소"
+
+#: profile/profile.class.php:221
+#: units/profile/function_editfield_defaults.php:72
+msgid "The URL to your personal website, if you have one."
+msgstr "만일 있는 경우, 당신의 개인적인 웹사이트로의 URL"
+
+#: profile/profile.class.php:224
+#: units/profile/function_editfield_defaults.php:75
+msgid "ICQ number"
+msgstr "ICQ 지수"
+
+#: profile/profile.class.php:227
+#: units/profile/function_editfield_defaults.php:78
+msgid "MSN chat"
+msgstr "MSN 채팅"
+
+#: profile/profile.class.php:230
+#: units/profile/function_editfield_defaults.php:81
+msgid "AIM screenname"
+msgstr "AIM 스크린 이름"
+
+#: profile/profile.class.php:233
+#: units/profile/function_editfield_defaults.php:84
+msgid "Skype username"
+msgstr "스카이프 사용자 이름"
+
+#: profile/profile.class.php:235
+#: units/profile/function_editfield_defaults.php:86
+msgid "Jabber username"
+msgstr "재버 사용자이름"
+
+#: profile/profile.class.php:238
+#: units/profile/function_editfield_defaults.php:89
+msgid "Interests"
+msgstr "관심사"
+
+#: profile/profile.class.php:238 profile/profile.class.php:242
+#: profile/profile.class.php:243 profile/profile.class.php:252
+#: profile/profile.class.php:258
+#: units/profile/function_editfield_defaults.php:89
+#: units/profile/function_editfield_defaults.php:93
+#: units/profile/function_editfield_defaults.php:94
+#: units/profile/function_editfield_defaults.php:103
+#: units/profile/function_editfield_defaults.php:109
+msgid "Separated with commas."
+msgstr "콤마로 분리된"
+
+#: profile/profile.class.php:242
+#: units/profile/function_editfield_defaults.php:93
+msgid "Likes"
+msgstr "좋아하는 것"
+
+#: profile/profile.class.php:243
+#: units/profile/function_editfield_defaults.php:94
+msgid "Dislikes"
+msgstr "싫어하는 것"
+
+#: profile/profile.class.php:244
+#: units/profile/function_editfield_defaults.php:95
+msgid "Occupation"
+msgstr "직업"
+
+#: profile/profile.class.php:245
+#: units/profile/function_editfield_defaults.php:96
+msgid "Industry"
+msgstr "산업체"
+
+#: profile/profile.class.php:247
+#: units/profile/function_editfield_defaults.php:98
+msgid "Company / Institution"
+msgstr "회사/기관"
+
+#: profile/profile.class.php:250
+#: units/profile/function_editfield_defaults.php:101
+msgid "Job Title"
+msgstr "직업 명칭"
+
+#: profile/profile.class.php:251
+#: units/profile/function_editfield_defaults.php:102
+msgid "Job Description"
+msgstr "직업 설명"
+
+#: profile/profile.class.php:252
+#: units/profile/function_editfield_defaults.php:103
+msgid "I would like to ..."
+msgstr "하고 싶은 것은"
+
+#: profile/profile.class.php:253
+#: units/profile/function_editfield_defaults.php:104
+msgid "Career Goals"
+msgstr "경력 목표"
+
+#: profile/profile.class.php:253
+#: units/profile/function_editfield_defaults.php:104
+msgid ""
+"Freeform: let colleagues and potential employers know what you'd like to get "
+"out of your career."
+msgstr "자유형식:동료나 잠재적인 고용주가 당신의 경력에서 알리고 싶은 것을 알게 하십시요."
+
+#: profile/profile.class.php:254
+#: units/profile/function_editfield_defaults.php:105
+msgid "Level of Education"
+msgstr "교육 수준"
+
+#: profile/profile.class.php:255
+#: units/profile/function_editfield_defaults.php:106
+msgid "High School"
+msgstr "고등학교"
+
+#: profile/profile.class.php:256
+#: units/profile/function_editfield_defaults.php:107
+msgid "University / College"
+msgstr "대학/전문대학"
+
+#: profile/profile.class.php:257
+#: units/profile/function_editfield_defaults.php:108
+msgid "Degree"
+msgstr "학위"
+
+#: profile/profile.class.php:258
+#: units/profile/function_editfield_defaults.php:109
+msgid "Main Skills"
+msgstr "주요 기술"
+
+#: profile/profile.class.php:317
+#: units/profile/function_editfield_display.php:40
+msgid "Access Restriction:"
+msgstr "접근 제한"
+
+#: profile/profile.class.php:390 units/profile/function_search.php:35
+msgid "Profiles where"
+msgstr "신상명세 where"
+
+#: profile/profile.class.php:551 units/profile/function_upload_foaf.php:8
+msgid ""
+"There was an error uploading the file. Possibly the file was too large, or "
+"the upload was interrupted."
+msgstr "파일을 업로드 하는데 오류가 있었습니다. 아마도 파일이 매우 크거나 업로드가 방해받았을 것입니다."
+
+#: profile/profile.class.php:631 units/profile/function_upload_foaf.php:88
+msgid ""
+"Data from your FOAF file has been preloaded. You must click Save at the "
+"bottom of the page for the changes to take effect."
+msgstr "당신의 친구의친구 파일이 미리업로드 되었습니다. 효과가 일어나려면 페이지 아래에 있는 저장을 클릭해야 합니다."
+
+#: profile/profile.class.php:635 units/profile/function_upload_foaf.php:92
+msgid "Error: supplied file did not appear to be a FOAF file."
+msgstr "오류: 제공된 파일이 친구의 친구 파일이 아닌 것 처럼 보입니다."
+
+#: profile/profile.class.php:947 units/profile/profile_user_info.php:58
+#: units/weblogs/weblogs_user_info.php:7
+msgid "Profile Owner"
+msgstr "프로파일 소유자"
+
+#: profile/profile.class.php:949 units/profile/profile_user_info.php:60
+#: units/weblogs/weblogs_user_info.php:9
+msgid "You"
+msgstr "당신"
+
+#: profile/rss2.php:25
+#, php-format
+msgid "Activity tagged with %s"
+msgstr "%s로 태그된 활동"
+
+#: profile/search.php:10
+msgid "Search Profiles"
+msgstr "프로파일 검색"
+
+#: search/all.php:13
+msgid "Searching Everything"
+msgstr "모든 것 검색"
+
+#: search/index.php:15 units/search/search_user_info_menu.php:7
+msgid "Search"
+msgstr "검색"
+
+#: search/index.php:38
+msgid "Search for results from:"
+msgstr "다음으로 부터 결과 검색:"
+
+#: search/index.php:43
+msgid "All"
+msgstr "모두"
+
+#: search/index.php:78
+msgid "Filter by content type:"
+msgstr "컨텐츠 형식으로 필터"
+
+#: search/index.php:82
+msgid "Everything"
+msgstr "모든 것"
+
+#: search/index.php:89
+msgid "Users and communities"
+msgstr "사용자들 및 커뮤니티들"
+
+#: search/tags.php:12
+msgid "Some Tags"
+msgstr "어떤 태그들"
+
+#: units/activity/recent.php:3
+msgid ""
+"This screen displays recent activity on your account by other users over a "
+"given time range."
+msgstr "이 스크린은 주어진 시간 범위동안 다른 사용자에 의해 이루어진 당신 계정에 대한 최근의 활동을 표시합니다."
+
+#: units/admin/admin_actions.php:44
+msgid ""
+"Error! The new username must contain letters and numbers only, cannot be "
+"blank, and must be between 3 and 12 characters in length."
+msgstr "오류! 새 사용자 이름은 문자와 수만을 포함해야 하며 공백이어서는 안되고 3-12문자로 구성되어야 합니다."
+
+#: units/admin/admin_actions.php:50
+#, php-format
+msgid "Username was changed to %s."
+msgstr "사용자 이름이 %s로 변경되었습니다."
+
+#: units/admin/admin_actions.php:58
+#, php-format
+msgid "File quota was changed to %d."
+msgstr "파일 할당량이 %d 로 변경되었습니다."
+
+#: units/admin/admin_actions.php:65
+#, php-format
+msgid "Icon quota was changed to %d."
+msgstr "아이콘 할당량이 %d로 변경되었습니다."
+
+#: units/admin/admin_actions.php:80
+#, php-format
+msgid "User flag '%s' set to '%s'"
+msgstr "사용자 플래그 '%s'  가 '%s'로 설정되었습니다."
+
+#: units/admin/admin_actions.php:94
+msgid "Spam list updated."
+msgstr "스팸 목록이 갱신되었습니다."
+
+#: units/admin/admin_actions.php:123
+#, php-format
+msgid ""
+"User addition %d failed: at least one field was blank. Username: %s, name: "
+"%s, email: %s"
+msgstr "사용자 추가 %d 가 실패하였습니다. 적어도 한 항목이 비어있습니다. 사용자이름:%s, 이름: %s,  이메일:%s"
+
+#: units/admin/admin_actions.php:128
+#, php-format
+msgid ""
+"New username %d (%s) was invalid; usernames must contain letters and numbers "
+"only, cannot be blank, and must be between 3 and 12 characters in length."
+msgstr ""
+"새 사용자이름 %d(%s) 가 올바르지 않습니다. 사용자 이름은 문자나 숫자만으로 구성되어야 하며 공백일수 없고 3에서 12개로 "
+"구성되어야 합니다."
+
+#: units/admin/admin_actions.php:134
+#, php-format
+msgid "User addition %d failed: username %s is already in use."
+msgstr "사용자 추가 %d 가 실패하였습니다: 사용자이름 %s 이 이미 사용 중입니다."
+
+#: units/admin/admin_actions.php:138
+#, php-format
+msgid "User addition %d failed: email address %s appears to be invalid."
+msgstr "사용자 추가 %d 가 실패하였습니다: 이메일 주소 %s 가 올바르지 않은 것으로 보입니다."
+
+#: units/admin/admin_actions.php:181
+#, php-format
+msgid "Your new %s account"
+msgstr "당신의 새 %s 계정"
+
+#: units/admin/admin_actions.php:182
+#, php-format
+msgid ""
+"You have been added to %s!\n"
+"\n"
+"For your records, your %s username and password are:\n"
+"\n"
+"\tUsername: %s\n"
+"\t"
+msgstr ""
+"당신은 %s 에 추가되었습니다.\n"
+"\n"
+"당신의 기록을 위하여, 당신 %s의 사용자이름과 암호는 다음과 같습니다:\n"
+"\n"
+"\t 사용자 이름: %s\n"
+"\t"
+
+#: units/admin/admin_actions.php:183
+#, php-format
+msgid ""
+"Password: %s\n"
+"\n"
+"You can log in at any time by visiting %s and entering these details into "
+"the login form.\n"
+"\n"
+msgstr ""
+"암호: %s\n"
+"\n"
+"%s 를 방문해서 언제든지 로그인 할 수 있으며 로그인 양식에 세부사항들을 입력할 수 있습니다.\n"
+"\n"
+
+#: units/admin/admin_actions.php:184 units/invite/invite_actions.php:143
+#, php-format
+msgid ""
+"We hope you enjoy using the system.\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s Team"
+msgstr ""
+"이 시스템을 즐기기를 희망합니다.\n"
+"\n"
+"좋은 하루 되십시요.\n"
+"\n"
+"%s 팀"
+
+#: units/admin/admin_actions.php:185
+#, php-format
+msgid "User %s was created."
+msgstr "사용자 %s가 생성되었습니다."
+
+#: units/admin/admin_contentflags.php:7
+msgid ""
+"The following pages have been flagged as having obscene or inappropriate "
+"content. They are ordered by number of complaints."
+msgstr "다음 페이지는 않좋거나 부적절한 컨텐츠를 가진것으로 표식되었습니다. 몇 불만을 말씀하신 분들에 의해 요청되었습니다."
+
+#: units/admin/admin_contentflags.php:8
+msgid ""
+"To view the pages in question, click the following links. To remove the "
+"flags, for example if the flag is a false positive or if you've deleted the "
+"offending content, check the appropriate box and click the 'delete' button "
+"below."
+msgstr ""
+"의문이 드는 페이지를 보기위해서는 다음 링크를 클릭하세요. 예를 들어 표식이 거짓 긍정이거나 도발적인 컨텐츠를 삭제한 경우 표식을 "
+"제거하기 위해서는 해당하는 상자를 체크하고 아래의 '삭제'버튼을 클릭하세요."
+
+#: units/admin/admin_contentflags.php:18
+msgid "Page URL"
+msgstr "페이지 URL"
+
+#: units/admin/admin_contentflags.php:19
+msgid "Number of objections"
+msgstr "반대한 수"
+
+#: units/admin/admin_contentflags.php:38
+msgid "Remove flag(s)"
+msgstr "표식 제거"
+
+#: units/admin/admin_contentflags.php:44
+msgid "No content flags were found at present."
+msgstr "현재 아무런 컨텐츠 플래스가 발견되지 않았습니다."
+
+#: units/admin/admin_main.php:9
+msgid "Site statistics"
+msgstr "사이트 통계"
+
+#: units/admin/admin_main.php:17
+#, php-format
+msgid "Accounts of type '%s'"
+msgstr "'%s'  형식의 계정"
+
+#: units/admin/admin_main.php:33
+msgid "Weblog statistics"
+msgstr "블로그 통계"
+
+#: units/admin/admin_main.php:34 units/admin/admin_main.php:48
+msgid "All-time:"
+msgstr "모든 시간"
+
+#: units/admin/admin_main.php:35 units/admin/admin_main.php:37
+#, php-format
+msgid "%d weblog posts, %d comments"
+msgstr "%d 블로그 게시물, %d 코멘트"
+
+#: units/admin/admin_main.php:36 units/admin/admin_main.php:49
+msgid "Last 7 days:"
+msgstr "지난 7일"
+
+#: units/admin/admin_main.php:47
+msgid "File statistics"
+msgstr "파일 통계"
+
+#: units/admin/admin_main.php:48 units/admin/admin_main.php:49
+#, php-format
+msgid "%d files (%d bytes)"
+msgstr "%d 파일들 (%d 바이트)"
+
+#: units/admin/admin_main.php:67
+msgid "Database statistics"
+msgstr "데이터베이스 통계"
+
+#: units/admin/admin_main.php:68
+msgid "Total database size:"
+msgstr "전체 데이터베이스 크기"
+
+#: units/admin/admin_main.php:68
+#, php-format
+msgid "%d bytes"
+msgstr "%d 바이트"
+
+#: units/admin/admin_main.php:75
+msgid "Users online now"
+msgstr "사용자 지금 온라인"
+
+#: units/admin/admin_main.php:76
+msgid ""
+"The following users have an active session and have performed an action "
+"within the past 10 minutes."
+msgstr "다음 사용자는 활동적인 세션을 가지고 있으며 지난 10분 동안 활동을 하였습니다."
+
+#: units/admin/admin_main.php:82 units/admin/admin_users.php:29
+#: units/admin/admin_users_add.php:22
+msgid "Full name"
+msgstr "전체 이름"
+
+#: units/admin/admin_main.php:93
+#, php-format
+msgid "%d users in total."
+msgstr "총 %d 사용자"
+
+#: units/admin/admin_spam.php:7
+msgid ""
+"Add regular expressions below, one per line, to block spam. For example, "
+"'foo' will block all comments containing the word foo, (foo|bar) will block "
+"comments containing the word foo or bar."
+msgstr ""
+"스팸을 막기 위해서 한줄에 하나씩 정규 표현을 아래에 추가하세요. 예를 들면 'foo'는 단어 'foo'를 포함하는 모든 코멘트를 차단할 "
+"것이며 (foo|bar) 는 단어 foo 나 bar를 포함하는 코멘트들을 차단할 것입니다."
+
+#: units/admin/admin_spam.php:8
+msgid "Blank lines and lines starting with # will be ignored."
+msgstr "빈 줄들과 #으로 시작하는 줄들은 무시될 것입니다."
+
+#: units/admin/admin_spam.php:20
+msgid "Regular expressions"
+msgstr "정규 표현"
+
+#: units/admin/admin_userdetails.php:19
+msgid "Change username:"
+msgstr "사용자 이름 변경"
+
+#: units/admin/admin_userdetails.php:22
+msgid "New username: "
+msgstr "새 사용자 이름: "
+
+#: units/admin/admin_userdetails.php:29
+msgid "Change file quota (in bytes):"
+msgstr "파일 할당량 변경 (바이트)"
+
+#: units/admin/admin_userdetails.php:32
+msgid "New file quota: "
+msgstr "새 파일 할당량: "
+
+#: units/admin/admin_userdetails.php:36
+msgid "Change icon quota:"
+msgstr "아이콘 할당량 변경:"
+
+#: units/admin/admin_userdetails.php:39
+msgid "New icon quota: "
+msgstr "새 아이콘 할당량: "
+
+#: units/admin/admin_userdetails.php:45
+msgid "User flags:"
+msgstr "사용자 표식"
+
+#: units/admin/admin_userdetails.php:56
+msgid "Site administrator: "
+msgstr "사이트 관리자 "
+
+#: units/admin/admin_userdetails.php:72
+msgid "Banned: "
+msgstr "탈퇴됨: "
+
+#: units/admin/admin_users.php:10
+msgid ""
+"The following is a list of all the users in the system, 50 users at a time. "
+"You can click each one to edit their user details as if you were logged in "
+"as them, as well as set user flags (including 'ban user' and 'set user as "
+"administrator')."
+msgstr ""
+"다음은 시스템안의 모든 사용자 목록을 한번에 50명씩 보여줍니다. 당신은 각 사용자를 클릭해서 당신이 사용자처럼 로그인한 것 같이 "
+"사용자의 세부사항을 편집할 수 있고 사용자 표식('탈퇴시킨 사용자' 와 ' 사용자를관 리자로 설정' 을 포함하는)을 설정할 수 있습니다."
+
+#: units/admin/admin_users.php:11
+msgid ""
+"If you know the username of the user you would like to edit, you can also "
+"enter it below."
+msgstr "편집하고자 하는 사용자의 사용자 이름을 알고 있으면 아래에 입력할 수 있습니다."
+
+#: units/admin/admin_users.php:16
+msgid "Enter username"
+msgstr "사용자이름을 입력하세요"
+
+#: units/admin/admin_users.php:18
+msgid "Edit user"
+msgstr "사용자 편집"
+
+#: units/admin/admin_users.php:37
+msgid "Next"
+msgstr "다음"
+
+#: units/admin/admin_users.php:46
+msgid "Previous"
+msgstr "이전"
+
+#: units/admin/admin_users_add.php:18
+msgid ""
+"You can create up to 12 users below; passwords will be autogenerated and "
+"emailed to the account owners. You must include all fields, but you may "
+"leave rows blank."
+msgstr ""
+"아래에 12 사용자까지 생성할 수 있습니다; 암호는 자동으로 만들어지며 계정 소유자에게 이메일로 보내어 질 것입니다. 모든 필드를 "
+"포함해야합니다만 행은 공백으로 남겨놓을 수 있습니다."
+
+#: units/admin/admin_users_panel.php:12
+#: units/communities/communities_membership_requests.php:32
+#: units/friends/user_friendship_requests.php:33
+msgid "Profile"
+msgstr "프로파일"
+
+#: units/admin/display_content_flag_form.php:23
+msgid "Flag content"
+msgstr "표식 컨텐츠"
+
+#: units/admin/display_content_flag_form.php:24
+msgid ""
+"To mark this content as obscene or inappropriate, click the 'Flag' button "
+"and an administrator will view it in due course."
+msgstr ""
+"이 컨텐츠를 외설적이거나 부적절한 것으로 표시하기 위해서는 '표식' 버튼을 클릭하세요. 관리자가 적당한 순서에 그것을 보게 될 것입니다."
+
+#: units/admin/display_content_flag_form.php:25
+msgid "Flag"
+msgstr "표식"
+
+#: units/communities/communities_access_levels.php:10
+#: units/communities/communities_access_levels.php:19
+msgid "Community"
+msgstr "커뮤니티"
+
+#: units/communities/communities_actions.php:20
+msgid ""
+"Error! The community username must contain letters and numbers only, cannot "
+"be blank, and must be between 3 and 12 characters in length."
+msgstr "오류!  커뮤니티 사용자 이름은 문자와 숫자만 포함할 수 있으며 공백일 수 없고 3에서 12개의 문자로 구성되어야 합니다."
+
+#: units/communities/communities_actions.php:22
+msgid "Error! The community name cannot be blank."
+msgstr "오류! 커뮤니티 이름은 공백일 수 없습니다."
+
+#: units/communities/communities_actions.php:26
+#, php-format
+msgid ""
+"The username %s is already taken by another user. You will need to pick a "
+"different one."
+msgstr "사용자 이름 %s는 이미 다른 사람이 사용 중입니다. 다른 것을 선택하십시요."
+
+#: units/communities/communities_actions.php:44
+msgid "Your community was created and you were added as its first member."
+msgstr "당신의 커뮤니티가 만들어졌으며 당신이 처음 구성원으로 추가되었습니다."
+
+#: units/communities/communities_actions.php:58
+#, php-format
+msgid "You joined %s."
+msgstr "당신이 %s에 가입하였습니다."
+
+#: units/communities/communities_actions.php:60
+#, php-format
+msgid ""
+"%s has joined %s!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+"%s 가 %s 에 가입하였습니다.\n"
+"\n"
+"이 사용자의 프로필을 방문하기 위해서는 다음 링크를 클릭하세요.\n"
+"\n"
+"\t"
+
+#: units/communities/communities_actions.php:61
+#, php-format
+msgid ""
+"%s\n"
+"\n"
+"To view all community members, click here:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s team."
+msgstr ""
+"%s\n"
+"\n"
+"모든 커뮤니티 구성원을 보기 위해서는 여기를 클릭하세요:\n"
+"\n"
+"\t%s\n"
+"\n"
+"안녕히 계십시요.\n"
+"\n"
+"%s 팀."
+
+#: units/communities/communities_actions.php:63
+#, php-format
+msgid "New %s member"
+msgstr "새 %s 구성원"
+
+#: units/communities/communities_actions.php:67
+#, php-format
+msgid ""
+"Membership of %s needs to be approved. Your request has been added to the "
+"list."
+msgstr "%s 의 멤버쉽이 승인받아야 합니다. 당신의 요청이 목록에 추가되었습니다."
+
+#: units/communities/communities_actions.php:69
+#, php-format
+msgid ""
+"%s has applied to join %s!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+"%s 가 %s 에 가입신청하였습니다.\n"
+"\n"
+"이 사용자의 프로파일을 방문하기 위해서는 다음 링크를 클릭하세요:\n"
+"\n"
+"\t"
+
+#: units/communities/communities_actions.php:70
+#, php-format
+msgid ""
+"%s\n"
+"\n"
+"To view all membership requests and approve or deny this user, click here:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s team."
+msgstr ""
+"%s\n"
+"\n"
+"모든 멤버쉽 요청을 보고 이 사용자를 승인하거나 거절하려면 여기를 클릭하세요:\n"
+"\n"
+"\t%s\n"
+"\n"
+"안녕히 계십시요.\n"
+"\n"
+"%s 팀"
+
+#: units/communities/communities_actions.php:72
+#, php-format
+msgid "New %s member request"
+msgstr "새 %s 멤버 요청"
+
+#: units/communities/communities_actions.php:76
+#, php-format
+msgid "%s is a private community. Your membership request has been declined."
+msgstr "%s 는 사적인 커뮤니티입니다. 당신의 구성원 요청이 거절되었습니다."
+
+#: units/communities/communities_actions.php:88
+#, php-format
+msgid "You left %s."
+msgstr "당신은 %s를 떠났습니다."
+
+#: units/communities/communities_actions.php:95
+msgid "Your post has been added to the community weblog."
+msgstr "당신의 게시물이 커뮤니티 블로그에 추가되었습니다."
+
+#: units/communities/communities_actions.php:111
+#, php-format
+msgid ""
+"You approved the membership request. %s is now a member of this community."
+msgstr "멤버쉽 요청을 승인하였습니다. %s는 이제 이 커뮤니티의 구성원입니다."
+
+#: units/communities/communities_actions.php:113
+msgid "An error occurred: the membership request could not be approved."
+msgstr "오류가 발생하였습니다: 멤버쉽 요청을 승인해줄 수 없습니다."
+
+#: units/communities/communities_actions.php:116
+#: units/communities/communities_actions.php:135
+msgid "Error: you do not have authority to modify this membership request."
+msgstr "오류: 당신은 이 멤버쉽 요청을 변경할 수 있는 권한이 없습니다."
+
+#: units/communities/communities_actions.php:119
+#: units/communities/communities_actions.php:138
+msgid "An error occurred: the membership request could not be found."
+msgstr "오류가 발생하였습니다. 멤버쉽 요청을 발견하지 못하였습니다."
+
+#: units/communities/communities_actions.php:133
+#, php-format
+msgid ""
+"You declined the membership request. %s is not a member of this community."
+msgstr "당신은 멤버쉽 요청을 거절하였습니다. %s는 이 커뮤니티의 구성원이 아닙니다."
+
+#: units/communities/communities_create.php:16
+msgid "Create a new community"
+msgstr "새 커뮤니티 만들기"
+
+#: units/communities/communities_create.php:17
+msgid "Community name:"
+msgstr "커뮤니티 이름:"
+
+#: units/communities/communities_create.php:18
+msgid "Username for community:"
+msgstr "커뮤니티에 대한 사용자 이름:"
+
+#: units/communities/communities_create.php:19
+#: units/groups/groups_create.php:5
+msgid "Create"
+msgstr "만들기"
+
+#: units/communities/communities_membership_requests.php:15
+msgid ""
+"The following users would like to join this community. They need your "
+"approval to do this (to change this setting, visit the 'community settings' "
+"page)."
+msgstr ""
+"다음 사용자들이 이 커뮤니티에 가입하고자 합니다. 이를 위해서는 당신의 승인이 필요합니다.( 이설정을 바꾸기 위해서는 '커뮤니티 설정'  "
+"페이지를 방문하세요)."
+
+#: units/communities/communities_membership_requests.php:48
+msgid "You have no pending membership requests."
+msgstr "미처리된 멤버쉽 요청이 없습니다."
+
+#: units/communities/communities_owned.php:18
+msgid "Owned communities"
+msgstr "소유한 커뮤니티"
+
+#: units/communities/community_memberships.php:20
+msgid "Community memberships"
+msgstr "커뮤니티 멤버쉽"
+
+#: units/communities/community_wiki.php:15
+msgid "Community Wiki"
+msgstr "커뮤니티 위키"
+
+#: units/communities/profile_edit_link.php:12
+msgid "Upload / edit site pictures for this community."
+msgstr "이 커뮤니티를 위한 사이트 사진을 올리고 편집하기"
+
+#: units/communities/user_info_menu_text.php:18
+msgid "Are you sure you want to join this community?"
+msgstr "이 커뮤니티에 가입하기를 희망하십니까?"
+
+#: units/communities/user_info_menu_text.php:18
+msgid "Click here to join this community."
+msgstr "이 커뮤니티에 가입하기 위해 여기를 클릭하십시요."
+
+#: units/communities/user_info_menu_text.php:20
+msgid "Are you sure you want to apply to join this community?"
+msgstr "이 커뮤니티에 가입 신청하기를 원합십니까?"
+
+#: units/communities/user_info_menu_text.php:20
+msgid "Click here to apply to join this community."
+msgstr "이 커뮤니티에 가입신청하기 위해 여기를 클릭하십시요."
+
+#: units/communities/user_info_menu_text.php:26
+msgid "Are you sure you want to leave this community?"
+msgstr "이 커뮤니티에서 탈퇴하기를 원하십니까?"
+
+#: units/communities/user_info_menu_text.php:26
+msgid "Click here to leave this community."
+msgstr "이 커뮤니티에서 탈퇴하기 위해서는 여기를 클릭하십시요."
+
+#: units/communities/userdetails_actions.php:23
+#, php-format
+msgid "Community ownership transferred to %s."
+msgstr "커뮤니티 소유권이 %s 에게로 이전되었습니다."
+
+#: units/communities/userdetails_actions.php:26
+msgid "Could not retrieve community details."
+msgstr "커뮤니티 세부사항를 가져올 수 없습니다."
+
+#: units/communities/userdetails_edit.php:11
+msgid "Change your community name"
+msgstr "커뮤니티 이름 변경"
+
+#: units/communities/userdetails_edit.php:12
+#: units/users/userdetails_edit.php:12
+msgid "This name will be displayed throughout the system."
+msgstr "이 이름이 시스템 전체를 통하여 표시될 것입니다."
+
+#: units/communities/userdetails_edit.php:27
+msgid "Community name"
+msgstr "커뮤니티 이름"
+
+#: units/communities/userdetails_edit.php:32
+msgid "Membership restriction:"
+msgstr "멤버쉽 제한"
+
+#: units/communities/userdetails_edit.php:33
+msgid "This allows you to choose who can join this community."
+msgstr "이것은 누가 이 커뮤니티에 가입할 수 있는가를 선택할 수 있게 해 줍니다."
+
+#: units/communities/userdetails_edit.php:50
+msgid "No moderation: anyone can join this community."
+msgstr "조정 없음: 누구든지 이 커뮤니티에 가입할 수 있습니다."
+
+#: units/communities/userdetails_edit.php:55
+msgid "Moderation: memberships must be approved by you."
+msgstr "조정: 멤버쉽이 당신에 의해 승인되어야 합니다."
+
+#: units/communities/userdetails_edit.php:60
+msgid "Private: nobody can join this community."
+msgstr "개인적: 아무도 이 커뮤니티에 가입할 수 없습니다."
+
+#: units/communities/userdetails_edit.php:65
+msgid "Membership restriction"
+msgstr "멤버쉽 제한"
+
+#: units/communities/userdetails_edit.php:70
+msgid "Community ownership"
+msgstr "커뮤니티 소유권"
+
+#: units/communities/userdetails_edit.php:71
+msgid ""
+"Type the username of the user who you want to own this community below. You "
+"cannot leave this blank, or specify a community or a user that doesn't exist."
+msgstr ""
+"이 커뮤니티를 소유하기를 원하는 사용자 이름을 입력하세요. 이 칸을 공백으로 둘 수 없습니다. 혹은 존재하지 않는 커뮤니티나 사용자를 "
+"명시하십시요."
+
+#: units/communities/userdetails_edit.php:83
+msgid "Community owner"
+msgstr "커뮤니티 소유자"
+
+#: units/files/default_templates.php:8
+msgid "Folder"
+msgstr "폴더"
+
+#: units/files/default_templates.php:9
+msgid "Each individual folder"
+msgstr "각 개별 폴더"
+
+#: units/files/default_templates.php:11
+msgid "The owner of the folder"
+msgstr "폴더의 소유자"
+
+#: units/files/default_templates.php:12
+msgid "The name of the folder"
+msgstr "폴더의 이름"
+
+#: units/files/default_templates.php:13
+msgid "The folder's URL"
+msgstr "폴더의 URL"
+
+#: units/files/default_templates.php:14
+msgid "Menu items for folder owner (edit, delete, etc)"
+msgstr "폴더 소유자에 대한 메뉴 항목(편집, 삭제 등)"
+
+#: units/files/default_templates.php:15
+msgid "The URL of the file's icon"
+msgstr "파일의 아이콘에 대한 URL"
+
+#: units/files/default_templates.php:16 units/files/default_templates.php:49
+msgid "Keywords associated with the folder"
+msgstr "폴더에 연관된 키워드"
+
+#: units/files/default_templates.php:40 units/files/function_search_rss.php:44
+msgid "File"
+msgstr "파일"
+
+#: units/files/default_templates.php:41
+msgid "Each individual file within a folder"
+msgstr "폴더냉에 각자 개별 파일"
+
+#: units/files/default_templates.php:43
+msgid "The file's URL"
+msgstr "파일의 URL"
+
+#: units/files/default_templates.php:44
+msgid "Its filename"
+msgstr "파일 이름"
+
+#: units/files/default_templates.php:45
+msgid "A description of the file"
+msgstr "파일에 대한 설명"
+
+#: units/files/default_templates.php:46
+msgid "Its title"
+msgstr "제목"
+
+#: units/files/default_templates.php:47
+msgid "Menu items for file owner (edit, delete, etc)"
+msgstr "파일 소유자에 대한 메뉴 항목(편집, 삭제 등)"
+
+#: units/files/default_templates.php:48
+msgid "The URL of its icon"
+msgstr "아이콘의 URL"
+
+#: units/files/edit_file.php:17 units/files/folder_edit.php:184
+msgid "File title:"
+msgstr "파일 제목"
+
+#: units/files/files_actions.php:26
+msgid "Your folder was created."
+msgstr "폴더가 만들어졌습니다."
+
+#: units/files/files_actions.php:28
+msgid "Could not create folder. Perhaps the folder name was blank?"
+msgstr "폴더를 만들 수 없습니다. 폴더이름이 공백이지는 않습니까?"
+
+#: units/files/files_actions.php:47
+msgid ""
+"Upload unsuccessful. You must check the copyright box for a file to be "
+"uploaded."
+msgstr "업로드 실패. 파일을 업로드 하기 위해서는 저작권 상자를 체크해야 합니다."
+
+#: units/files/files_actions.php:86
+msgid "The file was successfully uploaded."
+msgstr "파일이 성공적으로 업로드 되었습니다."
+
+#: units/files/files_actions.php:122
+msgid "The file was updated."
+msgstr "파일이 갱신되었습니다."
+
+#: units/files/files_actions.php:142
+msgid "The folder was edited."
+msgstr "폴더가 편집되었습니다."
+
+#: units/files/files_actions.php:144
+msgid "Error: a folder cannot be its own parent."
+msgstr "폴더는 자신의 상위 폴더가 될 수 없습니다."
+
+#: units/files/files_actions.php:167
+msgid "The folder was deleted."
+msgstr "폴더가 삭제되었습니다."
+
+#: units/files/files_actions.php:189
+msgid "The file was deleted."
+msgstr "파일이 삭제되었습니다."
+
+#: units/files/files_links_make.php:51
+msgid "You do not have permission to access this file"
+msgstr "이 파일을 접근할 허가를 가지고 있지 않습니다."
+
+#: units/files/files_links_make.php:54
+msgid "File does not exist"
+msgstr "파일이 존재하지 않습니다."
+
+#: units/files/files_user_info_menu.php:23
+msgid "File Storage"
+msgstr "파일 스토리지"
+
+#: units/files/folder_edit.php:12
+msgid "Edit this folder"
+msgstr "이 폴더 편집"
+
+#: units/files/folder_edit.php:99
+msgid "Create a new folder"
+msgstr "새 폴더 생성"
+
+#: units/files/folder_edit.php:100
+msgid "To create a new folder, enter its name:"
+msgstr "새 폴더를 생성하기 위해 폴더 이름을 입력하세요."
+
+#: units/files/folder_edit.php:101
+msgid "Access restrictions"
+msgstr "접근 제한"
+
+#: units/files/folder_edit.php:165
+msgid "Upload a file"
+msgstr "파일 올리기"
+
+#: units/files/folder_edit.php:179
+#, php-format
+msgid "You have used %s Mb of a total %s Mb."
+msgstr "총 %s MB중 %s MB를 사용하였습니다."
+
+#: units/files/folder_edit.php:181
+#, php-format
+msgid "Used space: %s Mb."
+msgstr "사용된 공간: %s Mb."
+
+#: units/files/folder_edit.php:183
+msgid "File to upload:"
+msgstr "올리기할 파일"
+
+#: units/files/folder_edit.php:185
+msgid "File Description:"
+msgstr "파일 설명"
+
+#: units/files/folder_edit.php:186 units/weblogs/weblogs_posts_add.php:27
+#: units/weblogs/weblogs_posts_edit.php:21
+msgid "Access restrictions:"
+msgstr "접근 제한"
+
+#: units/files/folder_edit.php:236
+msgid "Keywords (comma separated):"
+msgstr "키워드(콤마로 분리된):"
+
+#: units/files/folder_edit.php:258
+msgid ""
+"By checking this box, you are asserting that you have the legal right to "
+"share this file, and that you understand you are sharing it with other users "
+"of the system."
+msgstr ""
+"이 상자를 체크하면 이 파일을 공유할 법적 권리를 가지고 있음으며 다른 사람들과 공유한다는 것을 이해하고 있다는 것을 확인하는 것입니다."
+
+#: units/files/folder_view.php:27
+msgid "Root Folder"
+msgstr "루트 폴더"
+
+#: units/files/folder_view.php:50
+msgid "Return to"
+msgstr "돌아가기"
+
+#: units/files/folder_view.php:57 units/files/templates_preview.php:6
+msgid "Subfolders"
+msgstr "하위 폴더"
+
+#: units/files/folder_view.php:74
+msgid "Are you sure you want to permanently delete this folder?"
+msgstr "이 폴더를 영구히 삭제하기를 원하십니까?"
+
+#: units/files/folder_view.php:174
+msgid "This folder is currently empty."
+msgstr "이 폴더는 현재 비어 있습니다."
+
+#: units/files/function_search.php:50
+#, php-format
+msgid "Folders owned by '%s' in category '%s'"
+msgstr "범주 '%s'에 있는 '%s'가 소유한 폴더들"
+
+#: units/files/function_search.php:88
+#, php-format
+msgid "Files owned by %s in category '%s'"
+msgstr "범주 '%s'에 있는 '%s'가 소유한 파일들"
+
+#: units/files/function_search.php:106
+#, php-format
+msgid "RSS feed for files owned by %s"
+msgstr "%s 가 소유한 파일들에 대한 RSS 알리미"
+
+#: units/files/function_search.php:117
+msgid "Users with files or folders in category"
+msgstr "범주에 파일이나 폴더를 가지고 있는 사용자"
+
+#: units/files/function_search_rss.php:34
+msgid "File folder"
+msgstr "파일 폴더"
+
+#: units/files/templates_preview.php:5
+msgid "Folder name"
+msgstr "폴더 이름"
+
+#: units/files/templates_preview.php:26
+msgid "test"
+msgstr "테스트"
+
+#: units/files/templates_preview.php:27
+msgid "A sample file"
+msgstr "샘플 파일"
+
+#: units/files/templates_preview.php:30
+msgid "This is a file"
+msgstr "파일입니다"
+
+#: units/files/templates_preview.php:31
+msgid "filename"
+msgstr "파일이름"
+
+#: units/files/templates_preview.php:40
+msgid "Files and folders"
+msgstr "파일과 폴더들"
+
+#: units/files/weblogs_posts_add_fields.php:55
+#, php-format
+msgid "Embed a file from your %s file storage:"
+msgstr "%s 파일 스토리지로 부터 파일 임베드 하기"
+
+#: units/friends/friends_actions.php:24
+#, php-format
+msgid "%s was added to your friends list."
+msgstr "%s가 친구목록에 추가되었습니다."
+
+#: units/friends/friends_actions.php:26
+#, php-format
+msgid ""
+"%s has added you as a friend!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+"%s 가 당신을 친구로 추가하였습니다!\n"
+"\n"
+"이 사용자의 프로필을 방문하려면 다음 링크를 클릭하십시요.\n"
+"\n"
+"\t"
+
+#: units/friends/friends_actions.php:27 units/friends/friends_actions.php:88
+#, php-format
+msgid ""
+"%s\n"
+"\n"
+"To view all your friends, click here:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s team."
+msgstr ""
+"%s\n"
+"\n"
+"당신의 모든 친구들을 보려면 여기를 클릭하세요:\n"
+"\n"
+"\t%s\n"
+"\n"
+"안녕히 계십시요.\n"
+"\n"
+"%s 팀"
+
+#: units/friends/friends_actions.php:29
+#, php-format
+msgid "New %s friend"
+msgstr "새 %s 친구"
+
+#: units/friends/friends_actions.php:34
+#, php-format
+msgid "%s couldn't be added to your friends list."
+msgstr "%s 가 친구 목록에 추가될 수 없었습니다."
+
+#: units/friends/friends_actions.php:40
+#, php-format
+msgid ""
+"%s has elected to moderate friendship requests. Your request has been added "
+"to their moderation queue."
+msgstr "%s 가 친구 관계 요청을 중재하기 위해 선출되었습니다. 당신의 요청은 그들의 중재 대기열에 추가되었습니다."
+
+#: units/friends/friends_actions.php:42
+#, php-format
+msgid ""
+"%s has requested to add you as a friend!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+"%s 가 당신을 친구로 추가하기를 요청하였습니다.\n"
+"\n"
+"이 사용자의 프로필을 방문하기 위해서는 다음 링크를 클릭하세요:\n"
+"\n"
+"\t"
+
+#: units/friends/friends_actions.php:43
+#, php-format
+msgid ""
+"%s\n"
+"\n"
+"To view all your friends requests and approve or deny this user, click "
+"here:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s team."
+msgstr ""
+"%s\n"
+"\n"
+"모든 친구 요청을 보고 이 사용자를 승인하거나 거절하기위해서는 여기를 클릭하세요:\n"
+"\n"
+"\t%s\n"
+"\n"
+"안녕히 계십시요.\n"
+"\n"
+"%s 팀"
+
+#: units/friends/friends_actions.php:45
+#, php-format
+msgid "New %s friend request"
+msgstr "새 %s 친구 요청"
+
+#: units/friends/friends_actions.php:50
+#, php-format
+msgid ""
+"%s has elected to moderate friendship requests, but your friend request "
+"couldn't be added to their moderation queue."
+msgstr "%s 가 친구 요청을 중재하기 위해 선출되었습니다만 당신의 친구 요청이 그들의 중재 대기열에 추가 될 수 없었습니다."
+
+#: units/friends/friends_actions.php:54
+#, php-format
+msgid ""
+"%s has decided not to allow any new friendship requests at this time. Your "
+"friendship request has been declined."
+msgstr "%s 는 이 시점에서 새로운 친구 요청을 허용하지 않기로 하였습니다. 당신의 친구 요청이 거절되었습니다."
+
+#: units/friends/friends_actions.php:64
+msgid " was removed from your friends."
+msgstr " 가 당신의 친구로부터 해지되었습니다."
+
+#: units/friends/friends_actions.php:68
+msgid " couldn't be removed from your friends."
+msgstr " 는 친구로 부터 해지될 수 없습니다."
+
+#: units/friends/friends_actions.php:86
+#, php-format
+msgid "You approved the friendship request. %s now lists you as a friend."
+msgstr "당신은 친구 요청을 승인하였습니다. %s 는 당신을 친구로 나열할 것입니다."
+
+#: units/friends/friends_actions.php:87
+#, php-format
+msgid ""
+"%s has approved your friendship request!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+"%s 가 당신의 친구 요청을 승인하였습니다.\n"
+"\n"
+"이 사용자의 프로필을 방문하기 위해서는 다음 링크를 클릭하십시요:\n"
+"\n"
+"\t"
+
+#: units/friends/friends_actions.php:90
+#, php-format
+msgid "%s friend request approved!"
+msgstr "%s 찬구 요청이 승인되었습니다!"
+
+#: units/friends/friends_actions.php:93
+msgid "An error occurred: couldn't add you as a friend"
+msgstr "오류가 발생하였습니다: 친구로 당신을 추가할 수 없음"
+
+#: units/friends/friends_actions.php:96 units/friends/friends_actions.php:120
+msgid "Error: you do not have authority to modify this friendship request."
+msgstr "당신은 친구 요청을 변경할 권한이 없습니다."
+
+#: units/friends/friends_actions.php:99 units/friends/friends_actions.php:123
+msgid "An error occurred: the friendship request could not be found."
+msgstr "오류가 발생하였습니다: 친구 요청을 찾을 수 없습니다."
+
+#: units/friends/friends_actions.php:113
+#, php-format
+msgid ""
+"You declined the friendship request. %s does not list you as a friend."
+msgstr "당신은 친구 요청을 거절하였습니다. %s 는 당신을 친구로 나열하지 않을 것입니다."
+
+#: units/friends/friends_actions.php:114
+#, php-format
+msgid ""
+"%s has denied your friendship request.\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+"%s 는 당신의 친구 요청을 거절하였습니다.\n"
+"\n"
+"이 사용자의 프로파일을 방문하려면 다음 링크를 클릭하십시요:\n"
+"\n"
+"\t"
+
+#: units/friends/friends_actions.php:115
+#, php-format
+msgid ""
+"%s\n"
+"\n"
+"To view all your existing friends, click here:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s team."
+msgstr ""
+"%s\n"
+"\n"
+"모든 친구들을 볼려면 여기를 클릭하십시요:\n"
+"\n"
+"\t%s\n"
+"\n"
+"좋은 하루 되시길 빕니다.\n"
+"\n"
+"%s 팀 드림"
+
+#: units/friends/friends_actions.php:117
+#, php-format
+msgid "%s friend request denied"
+msgstr "%s 친구 요청이 거절됨"
+
+#: units/friends/profile_friends.php:20 units/friends/profile_friends.php:29
+msgid "View all Friends"
+msgstr "모든 친구 보기"
+
+#: units/friends/profile_friends.php:27 units/friends/user_friends.php:14
+msgid "Your Friends"
+msgstr "친구들"
+
+#: units/friends/user_friends.php:14
+msgid "Friends Screen"
+msgstr "친구들 화면"
+
+#: units/friends/user_friendship_requests.php:16
+msgid ""
+"The following users would like to add you as a friend. They need your "
+"approval to do this (to change this setting, visit the 'account settings' "
+"page)."
+msgstr ""
+"다음 사용자들이 당신을 친구로 추가하기를 희망합니다. 이를 위해 당신의 승인이 필요합니다.(이 설정을 바꾸기 위해서는 '계정 설정' "
+"페이지를 방문하십시요)."
+
+#: units/friends/user_friendship_requests.php:51
+msgid "You have no pending friendship requests."
+msgstr "당신은 미처리된 친구 요청이 없습니다."
+
+#: units/friends/user_info_menu_text.php:19
+msgid "Are you sure you want to add this user as a friend?"
+msgstr "당신은 이 사용자를 친구로 추가하기를 원하십니까?"
+
+#: units/friends/user_info_menu_text.php:19
+msgid "Click here to add this user as a friend."
+msgstr "이 사용자를 친구로 추가하기 위해서는 여기를 클릭하세요."
+
+#: units/friends/user_info_menu_text.php:26
+msgid "Are you sure you want to remove this user from your friends list?"
+msgstr "당신의 친구 목록에서 이 사용자를 포함시키지 않기를 원하십니까?"
+
+#: units/friends/user_info_menu_text.php:26
+msgid "Click here to remove this user from your friends list."
+msgstr "당신의 친구 목록에서 이 사용자를 포함시키지 않으려면 여기를 클릭하세요."
+
+#: units/groups/groups_access_levels.php:8
+msgid "Group"
+msgstr "그룹"
+
+#: units/groups/groups_actions.php:27
+msgid "Your group was updated."
+msgstr "당신의 그룹이 갱신되었습니다."
+
+#: units/groups/groups_create.php:3
+msgid "Create a new group"
+msgstr "새 그룹 만들기"
+
+#: units/groups/groups_create.php:4
+msgid "Group name:"
+msgstr "그룹 이름:"
+
+#: units/groups/groups_display_membership.php:6
+msgid "Group membership"
+msgstr "그룹 멤버쉽"
+
+#: units/groups/groups_edit_existing.php:6
+msgid "Groups you own"
+msgstr "당신이 소유하고 있는 그룹"
+
+#: units/groups/groups_editpage.php:4
+msgid "Existing groups"
+msgstr "기존 그룹들"
+
+#: units/groups/groups_explanation.php:3
+msgid ""
+"Access is controlled through the use of Access groups and this is one of the "
+"most powerful features of Elgg. Access groups allow you to have complete "
+"control over who sees what within your environment. You can create as many "
+"access groups as you wish. Each access group can have as many of your "
+"friends as you like and each access group created becomes another option in "
+"the 'access restriction' dropdown menu beside each profile item, weblog post "
+"and file uploaded."
+msgstr ""
+"접근은 접근 그룹을 통해 통제되며 이것이 Elgg의 가장 강력한 기능입니다. 접근 그룹은 누가 당신의 환경안에서 무엇을 볼지를 완전히 "
+"통제하도록 해 줍니다. 당신이 원하는 만큼 많은 접근 그룹들을 만들 수 있습니다. 각 접근 그룹은 원하는 만큼의 많은 친구를 포함할 수 "
+"있습니다. 만들어진 접근 그룹은 각 프로파일 항목, 블로그 게시물, 올려진 파일 들 옆에있는 '접근 제한' 드롭다운 메뉴에 또 하나의 "
+"옵션이 될 것입니다."
+
+#: units/groups/groups_explanation.php:4 units/groups/groups_help.php:4
+msgid ""
+"When you create an access group, add people to it then select it as your "
+"access restriction on a weblog post only the people in that group will be "
+"able to see that weblog post and so on for all elements in your learning "
+"landscape."
+msgstr ""
+"접근 그룹을 만들때 그룹에 사람들을 추가하고 블로그 게시물에 접근 제한으로 선택하면 그 그룹에 있는 사람들만이 그 블로그 게시물을 볼 수 "
+"있을 것입니다. 당신의 배움 공간안의 모든 요소에 대해서도 같은 방법을 적용하면 됩니다."
+
+#: units/groups/groups_help.php:3
+msgid "This is a help file for the Groups functions."
+msgstr "그룹 기능들을 위한 도움말 파일입니다."
+
+#: units/icons/function_actions.php:56
+msgid "Your selected icons were deleted."
+msgstr "선택한 아이콘들이 삭제되었습니다."
+
+#: units/icons/function_actions.php:70
+msgid ""
+"You have already met your icon quota. You must delete some icons before you "
+"can upload any new ones."
+msgstr "아이콘 할당량을 다 사용하였습니다. 새로운 아이콘을 올리기 전에 몇개의 아이콘들을 삭제해야 합니다."
+
+#: units/icons/function_actions.php:78
+msgid "Attempting to upload icon file ..."
+msgstr "아이콘 파일을 올리려고 시도 중..."
+
+#: units/icons/function_actions.php:85
+msgid ""
+"The uploaded icon file was invalid. Please ensure you are using JPEG, GIF or "
+"PNG files."
+msgstr "올려진 아이콘 파일은 맞지 않습니다. JPEG, GIF나 PNG  파일인지 확인하십시요."
+
+#: units/icons/function_actions.php:117
+msgid ""
+"The uploaded icon file was in an image format other than JPEG, GIF or PNG. "
+"These are unsupported at present."
+msgstr ""
+"올려진 아이콘 파일은 JPEG, GIF나 PNG  이외의 이미지 파일 형식으로 되어 있습니다. 현재 이들은 지원되지 않습니다."
+
+#: units/icons/function_actions.php:137
+msgid "Your icon was uploaded successfully."
+msgstr "당신의 아이콘이 성공적으로 업로드되었습니다."
+
+#: units/icons/function_actions.php:140
+msgid ""
+"An unknown error occurred when saving your icon. If this problem persists, "
+"please let us know and we'll do all we can to fix it quickly."
+msgstr ""
+"아이콘을 저장할때 알려지지 않은 오류가 발생하였습니다. 만일 이 문제가 지속되면 우리에게 알려주십시요. 문제를 빨리 해결하기 위해 최선을 "
+"다할 것입니다."
+
+#: units/icons/function_add_icons.php:15
+msgid "Upload a new picture"
+msgstr "새로운 사진 올리기"
+
+#: units/icons/function_add_icons.php:16
+msgid ""
+"Upload a picture for this profile below. Pictures need to be 100x100 pixels "
+"or smaller, but don't worry - if you've selected a larger picture, we'll "
+"shrink it down for you. You may upload up to"
+msgstr ""
+"아래의 프로파일에 대한 사진을 업로드 하십시요. 사진은 100x100 픽셀 보다 작아야 합니다. 그러나 염려하지 마십시요. 만일 큰 "
+"그림을 선택하였다면 우리가 작게 만들것입니다. 최대로 다음 크기 까지 업로드 할 수 있습니다."
+
+#: units/icons/function_add_icons.php:17
+msgid "pictures in total."
+msgstr "총 사진들"
+
+#: units/icons/function_edit_icons.php:21
+msgid "Site pictures"
+msgstr "사이트 사진들"
+
+#: units/icons/function_edit_icons.php:79
+msgid "No default:"
+msgstr "디폴트 없음"
+
+#: units/invite/invite_actions.php:34
+msgid "They included the following message:"
+msgstr "그것들은 다음 메세지를 포함하고 있습니다."
+
+#: units/invite/invite_actions.php:38
+#, php-format
+msgid "Thank you for registering with %s."
+msgstr "%s 로 등록해주셔서 감사합니다."
+
+#: units/invite/invite_actions.php:39
+#, php-format
+msgid "%s account verification"
+msgstr "%s 계정 확인"
+
+#: units/invite/invite_actions.php:42 units/invite/invite_actions.php:43
+msgid "has invited you to join"
+msgstr "당신을 가입 초대하였습니다."
+
+#: units/invite/invite_actions.php:42
+msgid "a learning landscape system."
+msgstr "배움 공간 시스템"
+
+#: units/invite/invite_actions.php:46
+#, php-format
+msgid ""
+"Dear %s,\n"
+"\n"
+"%s %s\n"
+"\n"
+"To join, visit the following URL:\n"
+"\n"
+"\t%s\n"
+"\n"
+msgstr ""
+"%s 님께\n"
+"\n"
+"%s %s\n"
+"\n"
+"가입하기 위해서는 다음 URL을 방문하십시요:\n"
+"\n"
+"\t%s\n"
+"\n"
+
+#: units/invite/invite_actions.php:47
+#, php-format
+msgid "Your email address has not been passed onto any third parties,"
+msgstr "당신의 이메일 주소는 다른 제2자에게 전달되지 않습니다."
+
+#: units/invite/invite_actions.php:48
+#, php-format
+msgid ""
+" and will be removed from our system within seven days.\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s team."
+msgstr ""
+" 이고 7일내에 우리 시스템에서 제거될 것입니다.\n"
+"\n"
+"좋은 하루 되십시요.\n"
+"\n"
+"%s 팀 드림."
+
+#: units/invite/invite_actions.php:51
+#, php-format
+msgid ""
+"Your invitation was sent to %s at %s. It will be valid for seven days."
+msgstr "당신의 초대가 %s 에 있는 %s 에게로 보내어 졌습니다. 그것은 7일 동안 유효합니다."
+
+#: units/invite/invite_actions.php:54
+#, php-format
+msgid "User %s already has that email address. Invitation not sent."
+msgstr "사용자 %s 가 이미 그 이메일 주소를 가지고 있습니다. 초대가 보내지지 않았습니다."
+
+#: units/invite/invite_actions.php:57
+msgid ""
+"Someone with that email address has already been invited to the system. "
+msgstr "그 이메일 주소를 가지고 있는 누군가 이미 시스템으로 초대를 받았습니다. "
+
+#: units/invite/invite_actions.php:60
+msgid "Invitation failed: The email address was not valid."
+msgstr "초청 실패: 이메일 주소가 맞지 않습니다."
+
+#: units/invite/invite_actions.php:63
+msgid "Error: This community has reached its maximum number of users."
+msgstr "오류: 이 커뮤니티는 최대 사용자 수에 도달하였습니다."
+
+#: units/invite/invite_actions.php:66
+msgid "Invitation failed: you are not logged in."
+msgstr "초청실패: 당신은 로그인되지 않았습니다."
+
+#: units/invite/invite_actions.php:69
+msgid "Invitation failed: you must specify both a name and an email address."
+msgstr "초청 실패: 이름과 이메일 주소를 명시해야 합니다."
+
+#: units/invite/invite_actions.php:82
+msgid ""
+"Unfortunately this community has reached its account limit and you are "
+"unable to join at this time."
+msgstr "불행하게도 이 커뮤니티는 계정 한계에 도달하여 지금 가입할 수 없습니다."
+
+#: units/invite/invite_actions.php:85
+msgid "You must indicate that you are at least 13 years old to join."
+msgstr "가입하기 위해서는 당신이 13세 이상이라는 것을 표시해야 합니다."
+
+#: units/invite/invite_actions.php:89
+msgid "Error! Invalid invite code."
+msgstr "오류! 잘못된 초청 코드"
+
+#: units/invite/invite_actions.php:138
+msgid ""
+"Your account was created! You can now log in using the username and password "
+"you supplied. You have been sent an email containing these details for "
+"reference purposes."
+msgstr ""
+"당신의 계정이 만들어졌습니다. 로그인 이름과 암호로 로그인 할 수 있습니다. 당신에게 참조목적으로 세부사항이 들어 있는 이메일이 "
+"보내어졌습니다."
+
+#: units/invite/invite_actions.php:140
+#, php-format
+msgid "Your %s account"
+msgstr "당신의 %s 계정"
+
+#: units/invite/invite_actions.php:141
+#, php-format
+msgid ""
+"Thanks for joining %s!\n"
+"\n"
+"For your records, your %s username and password are:\n"
+"\n"
+"\t"
+msgstr ""
+"%s 에 가입해 주셔서 감사합니다.\n"
+"\n"
+"참고로 당신 %s 의 사용자 이름과 암호는 다음과 같습니다.:\n"
+"\n"
+"\t"
+
+#: units/invite/invite_actions.php:142
+#, php-format
+msgid ""
+"Username: %s\n"
+"\tPassword: %s\n"
+"\n"
+"You can log in at any time by visiting %s and entering these details into "
+"the login form.\n"
+"\n"
+msgstr ""
+"사용자 이름: %s\n"
+"\t암호:%s\n"
+"\n"
+"당신은 %s를 방문해서 로그인 양식에 이 세부사항들을 입력하여 언제든지 로그인 할 수 있습니다.\n"
+"\n"
+
+#: units/invite/invite_actions.php:160
+#, php-format
+msgid "Verify your %s account password request"
+msgstr "당신 %s 의 계정 암호 요청을 확인하십시요"
+
+#: units/invite/invite_actions.php:161
+#, php-format
+msgid ""
+"A request has been received to generate your account at %s a new password.\n"
+"\n"
+msgstr ""
+"%s 에 있는 당신의 계정에 새로운 암호를 생성하도록 요청받았습니다.\n"
+"\n"
+
+#: units/invite/invite_actions.php:162
+#, php-format
+msgid ""
+"To confirm this request and receive a new password by email, please click "
+"the following link:\n"
+"\n"
+"\t%s\n"
+"\n"
+msgstr ""
+"이 요청을 확인하고 이메일로 새 암호를 받기 위해서 다음 링크를 클릭하십시요:\n"
+"\n"
+"\t%s\n"
+"\n"
+
+#: units/invite/invite_actions.php:163
+#, php-format
+msgid ""
+"Please let us know if you have any further problems.\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s Team"
+msgstr ""
+"추가적인 문제가 있으면 알려 주십시요.\n"
+"\n"
+"좋은 하루되시길 빕니다.\n"
+"\n"
+"%s 팀 드림"
+
+#: units/invite/invite_actions.php:165
+msgid "Your verification email was sent. Please check your inbox."
+msgstr "확인 이메일이 보내어졌습니다. 당신의 받은 편지함을 확인하십시요."
+
+#: units/invite/invite_actions.php:167
+msgid "No user with that username was found."
+msgstr "그 사용자 이름의 사용자를 찾을 수 없습니다."
+
+#: units/invite/invite_join.php:29
+#, php-format
+msgid ""
+"Thank you for registering for an account with %s! Registration is completely "
+"free, but before you confirm your details, please take a moment to read the "
+"following documents:"
+msgstr ""
+"%s 로 계정 발급을 위해 등록해 주셔서 감사합니다. 등록은 무료이지만, 세부사항을 확인하기전에 시간을 내셔서 다음 문서를 읽기 바랍니다."
+
+#: units/invite/invite_join.php:30 units/invite/join_noinvite.php:10
+msgid "terms and conditions"
+msgstr "조항과 조건"
+
+#: units/invite/invite_join.php:31 units/invite/join_noinvite.php:11
+msgid "Privacy policy"
+msgstr "개인정보 보호 정책"
+
+#: units/invite/invite_join.php:32
+msgid ""
+"Submitting the form below indicates acceptance of these terms. Please note "
+"that currently you must be at least 13 years of age to join the site."
+msgstr ""
+"아래 양식을 제출하는 것은 이들 조항에 대해 동의하는 것을 의미합니다. 이 사이트에 가입하기 위해서는 현재 최소 13세 이상이 되어야 "
+"합니다."
+
+#: units/invite/invite_join.php:52 units/weblogs/weblogs_comments_add.php:48
+msgid "Your name"
+msgstr "이름"
+
+#: units/invite/invite_join.php:58
+msgid "Your username - (Must be letters only)"
+msgstr "사용자 이름(문자로만)"
+
+#: units/invite/invite_join.php:64
+msgid "Enter a password"
+msgstr "암호를 입력하세요"
+
+#: units/invite/invite_join.php:70
+msgid "Your password again for verification purposes"
+msgstr "확인을 위한 암호 재입력"
+
+#: units/invite/invite_join.php:74
+msgid "I am at least thirteen years of age."
+msgstr "나는 13세 이상입니다."
+
+#: units/invite/invite_join.php:75
+msgid "Join"
+msgstr "가입"
+
+#: units/invite/invite_join.php:90
+#, php-format
+msgid ""
+"Your invitation code appears to be invalid. Codes only last for seven days; "
+"it's possible that yours is older. If you still want to join %s, it may be "
+"worth getting in touch with the person who invited you."
+msgstr ""
+"당신의 초청 코드는 틀린것처럼 보입니다. 코드는 7일동안만 유효합니다. 당신의 코드가 오래되었을 수 있습니다. 아직 %s 에 가입하기를 "
+"원하면 당신을 초청한 사람과 연락하는 것이 유용할 수 있습니다."
+
+#: units/invite/join_noinvite.php:9
+#, php-format
+msgid ""
+"Thank you for registering for an account with %s! Registration is completely "
+"free, but before you fill in your details, please take a moment to read the "
+"following documents:"
+msgstr ""
+"%s 로 계정에 등록해 주셔서 감사합니다. 등록은 무료입니다. 당신의 세부사항을 입력하기전에 시간을 내어 다음 문서를 읽기 바랍니다."
+
+#: units/invite/join_noinvite.php:12
+msgid ""
+"When you fill in the details below, we will send an \"invitation code\" to "
+"your email address in order to validate it. You must then click on this "
+"within seven days to create your account."
+msgstr ""
+"아래 세부사항을 입력하게되면 그것을 확인하기 위해 \"초청 코드\"를  당신의 이메일 주소로 보낼 것입니다. 계정을 만들기 위해서는 7일 "
+"이내에 초청코드를 클릭해야 합니다."
+
+#: units/invite/new_password.php:12
+#, php-format
+msgid ""
+"A new password has been emailed to you at %s. You should be able to use it "
+"immediately; your old one has been deactivated."
+msgstr ""
+"새로운 암호가 %s 의 당신에게 이메일 보내어졌습니다. 이제 바로 그것을 사용할 수 있습니다: 이전 암호는 사용할 수 없습니다."
+
+#: units/invite/password_request.php:5
+#, php-format
+msgid ""
+"To generate a new password at %s!, enter your username below. We will send "
+"the address of a unique verification page to you via email click on the link "
+"in the body of the message and a new password will be sent to you."
+msgstr ""
+"%s 에 새로운 암호를 만들기 위해서는 아래에 사용자 이름을 입력하세요. 이메일로 확인 페이지의 주소를 보낼터인데, 메세지의 링크를 "
+"클릭하면 새로운 암호가 당신에게 보내어질 것입니다."
+
+#: units/invite/password_request.php:6
+msgid "This method reduces the chance of a mistakenly reset password."
+msgstr "이 방법은 암호를 잘 못 초기화하는 기회를 줄여줍니다."
+
+#: units/magpie/default_template.php:8
+msgid "Feed Post"
+msgstr "게시 알림"
+
+#: units/magpie/default_template.php:9
+msgid "A template for each post in a feed."
+msgstr "알리미의 각 게시물에 대한 템플릿"
+
+#: units/magpie/default_template.php:11 units/weblogs/default_template.php:11
+msgid "Post title"
+msgstr "게시물 제목"
+
+#: units/magpie/default_template.php:12 units/weblogs/default_template.php:12
+msgid "The text of the post"
+msgstr "게시물 문장"
+
+#: units/magpie/default_template.php:13
+msgid "An icon for the user"
+msgstr "사용자에 대한 아이콘"
+
+#: units/magpie/default_template.php:14
+msgid "The feed name"
+msgstr "알리미 이름"
+
+#: units/magpie/default_template.php:15
+msgid "A short description of the feed"
+msgstr "알리미에 대한 간단한 설명"
+
+#: units/magpie/default_template.php:16
+msgid "A link to the post"
+msgstr "게시물에 대한 링크"
+
+#: units/magpie/default_template.php:17
+msgid "A link to the host site"
+msgstr "호스트 사이트에 대한 링크"
+
+#: units/magpie/default_template.php:18
+msgid "A link to the host feed"
+msgstr "호스트 알리미에 대한 링크"
+
+#: units/magpie/default_template.php:19
+msgid "Buttons to subscribe or unsubscribe"
+msgstr "구독하거나 구독해지를 위한 버튼"
+
+#: units/magpie/default_template.php:24
+msgid "Added"
+msgstr "추가됨"
+
+#: units/magpie/function_actions.php:23 units/magpie/function_actions.php:87
+#: units/magpie/function_actions.php:101
+msgid "Your feed subscription was successful."
+msgstr "알리미 구독을 성공적으로 하였습니다."
+
+#: units/magpie/function_actions.php:25
+msgid "Feed subscription failed: you are already subscribed to this feed."
+msgstr "알리미 구독 실패: 당신은 이미 이 알리미를 구독하고 있습니다."
+
+#: units/magpie/function_actions.php:34
+msgid "Your have successfully removed this feed from your subscriptions."
+msgstr "구독한 것들 중에 이 알리미를 성공적으로 제거하였습니다."
+
+#: units/magpie/function_actions.php:36
+msgid "Feed unsubscription failed: you are not subscribed to this feed."
+msgstr "알리미 구독해지 실패: 이 알리미를 구독하고 있지 않습니다."
+
+#: units/magpie/function_actions.php:62
+msgid ""
+"Feed not imported to blog: You cannot import a feed from this account."
+msgstr "블로그에 알리미를 가져오지 못함: 이 계정으로부터 알리미를 가져올 수 없습니다."
+
+#: units/magpie/function_actions.php:89
+msgid "Feed subscription failed: this feed subscription already exists."
+msgstr "알리미 구독 실패: 이 알리미 구독은 이미 존재합니다."
+
+#: units/magpie/function_actions.php:103
+msgid ""
+"Feed subscription failed: feed appears to be invalid. Please check your link "
+"or try later."
+msgstr "알리미 구독 실패: 알리미가 잘못된 것 같습니다. 링크를 확인해보던가 다음에 시도하십시요."
+
+#: units/magpie/function_actions.php:107
+msgid ""
+"Feed subscription failed: could not get feed. Please check your link or try "
+"later."
+msgstr "알리미 구독 실패: 알리미를 가져올 수 없습니다. 링크를 확인해보던가 다음에 시도하십시요"
+
+#: units/magpie/function_subscriptions.php:11
+#: units/magpie/function_subscriptions_popular.php:6
+msgid ""
+"Feeds are information streams from other sites. You will often see a link to "
+"an 'RSS' feed while browsing; enter the link address into the 'add feed' box "
+"at the bottom of the page to read that information from within your learning "
+"landscape."
+msgstr ""
+"알리미는 다른 사이트로부터의 정보의 흐름입니다. 브라우즈 화면에서 가끔 'RSS' 알리미 링크들을 볼 것입니다. 당신의 배움 공간안에서 "
+"그들 정보에 대한 것을 읽기 위해 페이지의 아래에 있는 '알리미추가' 상자에 링크 주소를 입력하십시요."
+
+#: units/magpie/function_subscriptions.php:23
+#: units/magpie/function_subscriptions_popular.php:14
+#: units/magpie/function_subscriptions_publish_to_blog.php:22
+msgid "Last updated"
+msgstr "마지막 갱신됨"
+
+#: units/magpie/function_subscriptions.php:24
+#: units/magpie/function_subscriptions_publish_to_blog.php:23
+msgid "Resource name"
+msgstr "자원 이름"
+
+#: units/magpie/function_subscriptions.php:31
+#: units/magpie/function_subscriptions_publish_to_blog.php:43
+msgid "View content"
+msgstr "컨텐츠 보기"
+
+#: units/magpie/function_subscriptions.php:34
+#: units/magpie/function_subscriptions_popular.php:27
+#: units/magpie/function_view_post.php:44
+msgid "Are you sure you want to unsubscribe from this feed?"
+msgstr "이 알리미를 구독해지하기를 원하십니까?"
+
+#: units/magpie/function_subscriptions.php:34
+#: units/magpie/function_subscriptions_popular.php:27
+#: units/magpie/function_view_post.php:44
+msgid "Unsubscribe"
+msgstr "구독 해지"
+
+#: units/magpie/function_subscriptions.php:52
+#: units/magpie/function_subscriptions_publish_to_blog.php:60
+msgid "Update"
+msgstr "새로고침"
+
+#: units/magpie/function_subscriptions.php:62
+#: units/magpie/function_subscriptions_publish_to_blog.php:70
+msgid "You are not subscribed to any feeds."
+msgstr "아무 알리미도 구독하지 않았습니다."
+
+#: units/magpie/function_subscriptions.php:64
+#: units/magpie/function_subscriptions_publish_to_blog.php:72
+msgid "No feeds were found."
+msgstr "아무런 알리미가 없습니다."
+
+#: units/magpie/function_subscriptions.php:69
+#: units/magpie/function_subscriptions_popular.php:47
+msgid "To subscribe to a new feed, enter its address below:"
+msgstr "새로운 알리미를 구독하기 위해서는 아래에 주소를 입력하세요:"
+
+#: units/magpie/function_subscriptions.php:75
+#: units/magpie/function_subscriptions_popular.php:29
+#: units/magpie/function_subscriptions_popular.php:53
+#: units/magpie/function_view_post.php:46
+msgid "Subscribe"
+msgstr "구독"
+
+#: units/magpie/function_subscriptions_popular.php:7
+msgid "This is a list of the feeds with the most subscribers."
+msgstr "이것은 많은 구독자를 가지고 있는 알리미 목록입니다."
+
+#: units/magpie/function_subscriptions_popular.php:15
+msgid "Link to site"
+msgstr "사이트로의 링크"
+
+#: units/magpie/function_subscriptions_popular.php:21
+msgid "Unnamed Feed"
+msgstr "이름이 없는 알리미"
+
+#: units/magpie/function_subscriptions_popular.php:23
+msgid "View posts"
+msgstr "게시물 보기"
+
+#: units/magpie/function_subscriptions_popular.php:29
+#: units/magpie/function_view_post.php:46
+msgid "Are you sure you want to subscribe to this feed?"
+msgstr "이 알리미를 구독하기를 원하십니까?"
+
+#: units/magpie/function_subscriptions_popular.php:32
+msgid "Subscribers"
+msgstr "구독자"
+
+#: units/magpie/function_subscriptions_popular.php:45
+msgid "No-one has subscribed to any feeds."
+msgstr "아무도 어떤 게시물을 구독하지 않았습니다."
+
+#: units/magpie/function_subscriptions_publish_to_blog.php:11
+msgid ""
+"Click a box below to automatically import content from a feed into your "
+"blog. You can also add default keywords for content from that feed. (You "
+"should only do this if you have the legal right to use this resource - in "
+"other words, you must have permission from the content owner.)"
+msgstr ""
+"알리미로무터 당신의 블로그로 컨텐츠를 자동으로 가져오기 위해서 아래 상자를 클릭하십시요. 그 알리미로부터 컨텐츠에 대한 기본 키워드를 "
+"추가할 수 있습니다.(당신이 이 자원을 사용할 법적 권한이 있는 경우에만 이것을 할 수 있습니다. 다시말해서 컨텐츠 소유자로부터 허가를 "
+"받아야만 합니다)"
+
+#: units/magpie/function_subscriptions_publish_to_blog.php:31
+msgid ""
+"Are you sure you want to import this content into your personal blog?\\nYou "
+"should make sure you own it or have permission from the copyright holder."
+msgstr ""
+"당신의 블로그로 이 컨텐츠들을 가져오기 하시기를 원하십니까?\\n 당신이 그것을 소유하거나 저작권자로 부터 허가를 받은 것인지 확실히 "
+"하십시요."
+
+#: units/magpie/function_subscriptions_publish_to_blog.php:41
+msgid "Keywords: "
+msgstr "키워드: "
+
+#: units/magpie/function_view.php:29
+#: units/magpie/function_view_individual.php:26
+#: units/weblogs/weblogs_all_users_view.php:107
+#: units/weblogs/weblogs_friends_view.php:58 units/weblogs/weblogs_view.php:53
+msgid "Back"
+msgstr "뒤로"
+
+#: units/magpie/function_view_post.php:28
+msgid "unknown"
+msgstr "알려지지 않음"
+
+#: units/magpie/function_view_post.php:40
+msgid "View site"
+msgstr "사이트 보기"
+
+#: units/profile/profile_user_info.php:42
+msgid "Your LMS hosts"
+msgstr "LMS 호스트"
+
+#: units/search/function_search_all_display_rss.php:16
+#, php-format
+msgid "Items tagged with \"%s\" from %s"
+msgstr "%s 로부터 %s 로 태그된 항목"
+
+#: units/search/search_suggest_rss.php:6
+msgid "Syndication"
+msgstr "신디케이션"
+
+#: units/search/search_suggest_rss.php:7
+msgid "RSS feed for this tag"
+msgstr "이 태그에 대한 RSS 알리미"
+
+#: units/search/search_suggest_tags.php:22
+msgid "Automatic tag suggestion:"
+msgstr "자동 태그 제안:"
+
+#: units/search/search_suggest_users.php:23
+msgid "Matching accounts:"
+msgstr "부합되는 계정:"
+
+#: units/search/search_user_info_menu.php:9
+msgid "Random tags"
+msgstr "임의 태그들"
+
+#: units/search/tags_display.php:7
+msgid ""
+"The following is a selection of keywords used within this site. Click one to "
+"see related users, weblog posts or objects."
+msgstr ""
+"다음은 이 사이트에 사용된 선택된 키워드들입니다. 관련된 사용자, 블로그 게시물, 혹은 객체를 보기 위해서 하나를 클릭하십시요."
+
+#: units/search/tags_display_personal.php:39
+msgid "No tags found for this user."
+msgstr "이 사용자에 대해서는 아무 태그도 찾을 수 없습니다."
+
+#: units/templates/default_template.php:58
+msgid "Sidebar section holder"
+msgstr "사이드바 섹션 홀더"
+
+#: units/templates/default_template.php:59
+msgid "Contains the sidebar section titles"
+msgstr "사이드바 섹션 제목을 포함합니다."
+
+#: units/templates/default_template.php:61
+msgid "The header"
+msgstr "헤더"
+
+#: units/templates/default_template.php:300
+msgid "adminTable"
+msgstr "관리테이블"
+
+#: units/templates/default_template.php:301
+msgid ""
+"This table is used to house stats and administration details until a good "
+"CSS solution can be applied."
+msgstr "이 테이블은 좋은 CSS 솔루션이 적용되지 전까지는 통계와 관리 세부사항을 모아두는데 사용됩니다."
+
+#: units/templates/default_template.php:303
+#: units/templates/default_template.php:334
+msgid "Column One"
+msgstr "1열"
+
+#: units/templates/default_template.php:304
+#: units/templates/default_template.php:335
+msgid "Column Two"
+msgstr "2열"
+
+#: units/templates/default_template.php:305
+#: units/templates/default_template.php:336
+msgid "Column Three"
+msgstr "3열"
+
+#: units/templates/default_template.php:331
+msgid "flagContent"
+msgstr "표식 컨텐츠"
+
+#: units/templates/default_template.php:332
+msgid "This holds the flag content function throughout Elgg"
+msgstr "이것은 Elgg 전체 표식 컨텐츠 기능을 가지고 있습니다."
+
+#: units/templates/template_actions.php:26
+msgid "The templates have been changed according to your choices."
+msgstr "당신의 선택에 따라 템플릿이 변경되었습니다."
+
+#: units/templates/template_actions.php:29
+msgid "No changes made as no area of change where selected!"
+msgstr "변경 영역이 선택되지 않았으므로 아무 변경이 되지 않았습니다."
+
+#: units/templates/templates_add.php:50
+msgid "Based on"
+msgstr "근거한"
+
+#: units/templates/templates_add.php:55
+msgid "Create Theme"
+msgstr "테마 만들기"
+
+#: units/templates/templates_view.php:88
+msgid "Change templates"
+msgstr "템플릿 변경"
+
+#: units/templates/templates_view.php:89
+msgid "The selected changes will affect:"
+msgstr "선택된 변경은 다음에 영향을 줄 것입니다:"
+
+#: units/tinymce/tinymce_userdetails_actions.php:15
+msgid "Your editor preferences have been saved"
+msgstr "에디터 선호설정이 저장되었습니다."
+
+#: units/tinymce/tinymce_userdetails_actions.php:18
+msgid "Your editor preferences have been changed"
+msgstr "에디터 선호설정이 변경되었습니다."
+
+#: units/tinymce/tinymce_userdetails_actions.php:20
+msgid "Your editor preferences could not be changed"
+msgstr "에디터의 선호설정을 변경할 수 없습니다."
+
+#: units/tinymce/tinymce_userdetails_edit.php:3
+msgid "Visual text editing"
+msgstr "시각적인 텍스트 편집"
+
+#: units/tinymce/tinymce_userdetails_edit.php:4
+msgid ""
+"Set this to 'yes' if you would like to use a visual (WYSIWYG) text editor "
+"for your posts and comments."
+msgstr "게시물과 코멘트에 대해서 시각적 편집기 (WYSIWYG)를 사용하고자 하면 이것을 '예'로 설정하십시요."
+
+#: units/tinymce/tinymce_userdetails_edit.php:20
+#: units/tinymce/tinymce_userdetails_edit.php:27
+msgid "Enable visual editor: "
+msgstr "비주얼 편집기 활성화: "
+
+#: units/users/content_main_index.php:6
+msgid "View your profile!"
+msgstr "신상명세 보기!"
+
+#: units/users/content_main_index.php:7
+msgid "Your portfolio is the main way people find out about you. You can"
+msgstr "포트폴리오는 사람들이 당신에 대해 알 수 있는 주요 수단입니다."
+
+#: units/users/content_main_index.php:8
+msgid "edit your details"
+msgstr "당신은 세부사항을 편집할 수 있습니다."
+
+#: units/users/content_main_index.php:9
+msgid "and choose exactly what you want to share with whom."
+msgstr "그리고 누구와 무엇을 공유하기를 원하는지 선택할 수 있습니다."
+
+#: units/users/function_default_access_levels.php:6
+msgid "Public"
+msgstr "공개"
+
+#: units/users/function_number_of_users.php:7
+#, php-format
+msgid "There are %d active users."
+msgstr "%d 활동적인 사용자들이 있습니다."
+
+#: units/users/function_number_of_users.php:12
+#, php-format
+msgid "(%d logged on.)"
+msgstr "(%d 로그온함)"
+
+#: units/users/function_number_of_users.php:17
+msgid "User Statistics"
+msgstr "사용자 통계"
+
+#: units/users/user_info.php:22
+msgid "None."
+msgstr "없음"
+
+#: units/users/userdetails_actions.php:20
+msgid "Your suggested name was too long. Please try something shorter."
+msgstr "제안한 이름이 너무 깁니다. 짧은 다른 것을 시도해 보십시요."
+
+#: units/users/userdetails_actions.php:40
+msgid "Email address updated."
+msgstr "이메일 주소가 갱신되었습니다."
+
+#: units/users/userdetails_actions.php:47
+msgid "Your moderation preferences have been changed."
+msgstr "중재 선호설정이 변경되었습니다."
+
+#: units/users/userdetails_actions.php:54
+msgid "Public comments and discussion set to 'on'."
+msgstr "공개적인 코멘트와 토론 '켜짐'으로 설정"
+
+#: units/users/userdetails_actions.php:57
+msgid "Public comments and discussion set to 'off'."
+msgstr "공개적인 코멘트와 토론 '꺼짐'으로 설정"
+
+#: units/users/userdetails_actions.php:65
+msgid "Email comments and discussion set to 'on'."
+msgstr "이메일 코멘트와 토론 '켜짐'으로 설정"
+
+#: units/users/userdetails_actions.php:68
+msgid "Email comments and discussion set to 'off'."
+msgstr "이메일 코멘트와 토론 '꺼짐'으로 설정"
+
+#: units/users/userdetails_actions.php:76
+msgid "Email notifications set to 'on'."
+msgstr "이메일 알림 '켜짐'으로 설정"
+
+#: units/users/userdetails_actions.php:79
+msgid "Email notifications set to 'off'."
+msgstr "이메일 알림 '꺼짐'으로 설정"
+
+#: units/users/userdetails_actions.php:94
+msgid "Details were not changed."
+msgstr "세부사항은 변경되지 않았습니다."
+
+#: units/users/userdetails_actions.php:105
+msgid ""
+"Password not changed: Your password is either too short or too long. It must "
+"be between 4 and 32 characters in length."
+msgstr "암호가 변경되지 않았습니다: 암호가 너무 짧거나 너무 깁니다. 암호는 4에서 32 문자로 구성되어야 합니다."
+
+#: units/users/userdetails_actions.php:107
+msgid ""
+"Password not changed: Your password can only consist of letters or numbers."
+msgstr "암호가 변경되지 않았습니다: 암호는 문자와 숫자로만 구성될 수 있습니다."
+
+#: units/users/userdetails_actions.php:109
+msgid "Your password was updated."
+msgstr "암호가 갱신되었습니다."
+
+#: units/users/userdetails_actions.php:116
+msgid ""
+"Password not changed: The password and its verification string did not match."
+msgstr "암호가 변경되지 않았습니다: 암호와 확인 문자열이 서로 맞지 않습니다."
+
+#: units/users/userdetails_edit.php:11
+msgid "Change your full name:"
+msgstr "전체 이름 변경:"
+
+#: units/users/userdetails_edit.php:28
+msgid "Your full name "
+msgstr "전체 이름 "
+
+#: units/users/userdetails_edit.php:33
+msgid "Your email address:"
+msgstr "이메일 주소:"
+
+#: units/users/userdetails_edit.php:34
+msgid ""
+"This will not be displayed to other users; you can choose to make an email "
+"address available via the profile screen."
+msgstr ""
+"이것은 다른 사용자에게 표시되지 않을 것입니다. 신상명세 화면을 통해 이메일 주소를 다른사람들이 볼 수 있도록 할 수 있습니다."
+
+#: units/users/userdetails_edit.php:48
+msgid "Your email address "
+msgstr "이메일 주소 "
+
+#: units/users/userdetails_edit.php:53
+msgid "Friendship moderation:"
+msgstr "친구 관계 중재"
+
+#: units/users/userdetails_edit.php:54
+msgid "This allows you to choose who can list you as a friend."
+msgstr "이것은 누가 당신을 친구로 표시할지를 선택하게 해 줍니다."
+
+#: units/users/userdetails_edit.php:71
+msgid "No moderation: anyone can list you as a friend. (Recommended)"
+msgstr "중재 없음: 누구라도 당신을 친구로 표시할 수 있습니다.(권장)"
+
+#: units/users/userdetails_edit.php:76
+msgid "Moderation: friendships must be approved by you."
+msgstr "중재: 친구관계가 당신에 의해 승인 받아야 합니다."
+
+#: units/users/userdetails_edit.php:81
+msgid "Private: nobody can list you as a friend."
+msgstr "개인적: 아무도 당신을 친구로 표시할 수 없습니다."
+
+#: units/users/userdetails_edit.php:86
+msgid "Friendship moderation"
+msgstr "친구 관계 중재"
+
+#: units/users/userdetails_edit.php:91
+msgid "Make comments public"
+msgstr "코멘트 공개"
+
+#: units/users/userdetails_edit.php:92
+msgid ""
+"Set this to 'yes' if you would like anyone to be able to comment on your "
+"resources (by default only logged-in users can). Note that this may make you "
+"vulnerable to spam."
+msgstr ""
+"누구라도 당신의 자원에 대해 코멘트 할 수 있도록 하려면 이것을 '예'로 설정하세요(디폴트로 로그인한 사용자만 할 수 있음). 이것은 "
+"당신이 스팸에 노출되게 할 수도 있습니다."
+
+#: units/users/userdetails_edit.php:107 units/users/userdetails_edit.php:114
+msgid "Public comments: "
+msgstr "공개 코멘트: "
+
+#: units/users/userdetails_edit.php:120
+msgid "Receive email notifications"
+msgstr "이메일 알림 받음"
+
+#: units/users/userdetails_edit.php:121
+msgid ""
+"Set this to 'yes' if you would like to receive email copies of any messages "
+"you receive. This includes blog comments, notifications when people add you "
+"as a friend and more. You can always view these online as part of your "
+"recent activity page."
+msgstr ""
+"수신한 어떤 메세지라도 이메일로 사본을 받기를 원한다면 이것을 '예'로 설정하세요. 이것은 블로그 코멘트, 사람들이 당신을 친구나 다른 "
+"것으로 당신을 추가할때 알림등을 포함합니다. 당신의 최근 활동 페이지 부분에서 이것들을 온라인으로 볼 수 있습니다."
+
+#: units/weblogs/archives_view.php:19
+msgid "Weblog Archive"
+msgstr "블로그 저장소"
+
+#: units/weblogs/archives_view.php:62 units/weblogs/archives_view_month.php:44
+msgid "There are no weblog posts to archive as yet."
+msgstr "아직 저장할 블로그 게시물이 없습니다."
+
+#: units/weblogs/default_template.php:8
+msgid "Weblog Post"
+msgstr "블로그 게시물"
+
+#: units/weblogs/default_template.php:9
+msgid "A template for each weblog post."
+msgstr "각 블로그 게시물에 대한 템플릿"
+
+#: units/weblogs/default_template.php:13
+msgid "The username of the person making the post"
+msgstr "게시를 하는 사람의 사용자 이름"
+
+#: units/weblogs/default_template.php:14
+msgid "Their user icon"
+msgstr "그들의 사용자 아이콘"
+
+#: units/weblogs/default_template.php:15
+msgid "Their full name"
+msgstr "그들의 전체 이름"
+
+#: units/weblogs/default_template.php:16
+msgid "The time and date of the post"
+msgstr "게시물의 시간과 일자"
+
+#: units/weblogs/default_template.php:17
+msgid "A link to any comments"
+msgstr "어떤 코멘트들로의 링크"
+
+#: units/weblogs/default_template.php:18
+msgid "A link to any trackbacks"
+msgstr "글타레 추적 링크"
+
+#: units/weblogs/default_template.php:19
+msgid "A list of comments, if any"
+msgstr "코멘트 목록"
+
+#: units/weblogs/default_template.php:23
+msgid "Posted by"
+msgstr "게시자:"
+
+#: units/weblogs/default_template.php:50
+msgid "Weblog Comments"
+msgstr "블로그 코멘트"
+
+#: units/weblogs/default_template.php:51
+msgid "A placeholder for weblog comments."
+msgstr "블로그 코멘트를 위한 장소"
+
+#: units/weblogs/default_template.php:53
+msgid "The list of comments themselves"
+msgstr "코멘트 자체 목록"
+
+#: units/weblogs/default_template.php:57
+msgid "Comments"
+msgstr "코멘트"
+
+#: units/weblogs/default_template.php:72
+msgid "Individual weblog comment"
+msgstr "개별 블로그 코멘트"
+
+#: units/weblogs/default_template.php:73
+msgid ""
+"A template for each individual weblog comment. (Displayed one after the "
+"other, embedded in the comment placeholder.)"
+msgstr "각 개별 블로그 코멘트 템플릿 (코멘트 틀상자에서 하나씩 보여짐)"
+
+#: units/weblogs/default_template.php:75
+msgid "Post body"
+msgstr "게시물 본문"
+
+#: units/weblogs/default_template.php:76
+msgid "The name of the person making the comment"
+msgstr "코멘트를 하는 사람 이름"
+
+#: units/weblogs/default_template.php:77
+msgid "When the comment was posted"
+msgstr "댓글이 게시된 시간"
+
+#: units/weblogs/default_template.php:78
+msgid "The usericon of the person making the comment, if available"
+msgstr "댓글을 한 사람의 사용자 아이콘(있는 경우)"
+
+#: units/weblogs/display_interesting_post_form.php:21
+msgid "Stop keeping track of this post"
+msgstr "이 게시물 추적을 중지"
+
+#: units/weblogs/display_interesting_post_form.php:22
+msgid ""
+"You have marked this post as interesting; all comments will appear on your "
+"'recent activity' page. If you would like to remove this flag, click here."
+msgstr ""
+"당신은 이 게시물에 관심이 있다고 표시하였습니다. 모든 댓글들이 당신의 '최근 활동' 페이지에 나타날 것입니다. 이 표식을 제거하려면 "
+"여기를 클릭하십시요."
+
+#: units/weblogs/display_interesting_post_form.php:23
+msgid "Remove interesting flag"
+msgstr "관심있는 표식 제거"
+
+#: units/weblogs/display_interesting_post_form.php:25
+msgid "Keep track of this post"
+msgstr "이 게시물 추적"
+
+#: units/weblogs/display_interesting_post_form.php:26
+msgid ""
+"Click the 'Mark interesting' button to monitor new comments on your 'recent "
+"activity' page."
+msgstr "당신의 '최근 활동' 페이지에 새 댓글을 모니터링 하기위해서 '관심 표시' 버튼을 클릭하십시요."
+
+#: units/weblogs/display_interesting_post_form.php:27
+msgid "Mark interesting"
+msgstr "관심 표시"
+
+#: units/weblogs/function_search.php:5
+msgid "Weblog posts by"
+msgstr "블로그 게시물"
+
+#: units/weblogs/function_search.php:6
+msgid "in category"
+msgstr "범주에서"
+
+#: units/weblogs/function_search.php:7
+msgid "RSS feed for weblog posts by"
+msgstr "블로그 게시물에 대한 RSS 알리미"
+
+#: units/weblogs/function_search.php:8
+msgid "Other users with weblog posts in category"
+msgstr "범주에 블로그 게시물이 있는 다른 사용자"
+
+#: units/weblogs/function_search.php:9
+msgid "Users with weblog posts in category"
+msgstr "범주에 블로그 게시물이 있는 사용자"
+
+#: units/weblogs/function_search_rss.php:20
+#: units/weblogs/templates_preview.php:53
+msgid "Weblog post"
+msgstr "블로그 게시물"
+
+#: units/weblogs/templates_preview.php:7
+msgid "Unkind Guest"
+msgstr "불친절한 손님"
+
+#: units/weblogs/templates_preview.php:8
+msgid " I mock you, Babbage! Your difference engine will never catch on."
+msgstr " 당신의 빼기 엔진은 절대 따라잡지 못할 것입니다."
+
+#: units/weblogs/templates_preview.php:9
+#: units/weblogs/templates_preview.php:11
+msgid "Charles Babbage"
+msgstr "찰스 배비지"
+
+#: units/weblogs/templates_preview.php:10
+msgid "Says you!"
+msgstr "세즈유 프로그램"
+
+#: units/weblogs/templates_preview.php:12
+msgid "The Analytical Engine - introduction from Chapter VIII"
+msgstr "해석적 엔진-8장에서 소개"
+
+#: units/weblogs/templates_preview.php:13
+msgid ""
+"The circular arrangement of the axes of the Difference Engine round the "
+"large central wheels led to the most extended prospects. The whole of "
+"arithmetic now appeared within the grasp of mechanism. A vague glimpse even "
+"of an Analytical Engine at length opened out, and I pursued with enthusiasm "
+"the shadowy vision. The drawings and the experiments were of the most costly "
+"kind. Draftsmen of the highest order were necessary to economize the labour "
+"of my own head; whilst skilled workmen were required to execute the "
+"experimental machinery to which I was obliged constantly to have recourse. "
+"In order to carry out my pursuits successfully, I had purchased a house with "
+"above a quarter of an acre of ground in a very quiet locality. My coach-"
+"house was now converted into a forge and a foundry, whilst my stables were "
+"transformed into a workshop. I built other extensive workshops myself, and "
+"had a fireproof building for my drawings and draftsmen. Having myself worked "
+"with a variety of tools, and having studied the art of constructing each of "
+"them, I at length laid it down as a principle - that, except in rare cases, "
+"I would never do anything myself if I could afford to hire another person "
+"who could do it for me."
+msgstr ""
+"The circular arrangement of the axes of the Difference Engine round the "
+"large central wheels led to the most extended prospects. The whole of "
+"arithmetic now appeared within the grasp of mechanism. A vague glimpse even "
+"of an Analytical Engine at length opened out, and I pursued with enthusiasm "
+"the shadowy vision. The drawings and the experiments were of the most costly "
+"kind. Draftsmen of the highest order were necessary to economize the labour "
+"of my own head; whilst skilled workmen were required to execute the "
+"experimental machinery to which I was obliged constantly to have recourse. "
+"In order to carry out my pursuits successfully, I had purchased a house with "
+"above a quarter of an acre of ground in a very quiet locality. My coach-"
+"house was now converted into a forge and a foundry, whilst my stables were "
+"transformed into a workshop. I built other extensive workshops myself, and "
+"had a fireproof building for my drawings and draftsmen. Having myself worked "
+"with a variety of tools, and having studied the art of constructing each of "
+"them, I at length laid it down as a principle - that, except in rare cases, "
+"I would never do anything myself if I could afford to hire another person "
+"who could do it for me."
+
+#: units/weblogs/weblogs_actions.php:25
+msgid "Your post has been added to your weblog."
+msgstr "당신의 게시물이 블로그에 추가되었습니다."
+
+#: units/weblogs/weblogs_actions.php:54
+msgid "The weblog post has been modified."
+msgstr "블로그 게시물이 변경되었습니다."
+
+#: units/weblogs/weblogs_actions.php:68
+msgid "This weblog post has now been added to your 'interesting' list."
+msgstr "이 블로그 게시물이 당신의 '관심' 목록에 추가되었습니다."
+
+#: units/weblogs/weblogs_actions.php:79
+msgid "You are no longer monitoring this weblog post."
+msgstr "당신은 더 이상 이 블로그 게시물을 모니터링하지 않습니다."
+
+#: units/weblogs/weblogs_actions.php:97
+msgid "The selected weblog post was deleted."
+msgstr "선택된 블로그 게시물이 삭제되었습니다."
+
+#: units/weblogs/weblogs_actions.php:99
+msgid ""
+"You do not appear to have permission to delete this weblog post. It was not "
+"deleted."
+msgstr "당신은 이 블로그 게시물을 삭제할 허가를 가지고 있지 않은 것처럼 보입니다. 삭제되지 않았습니다."
+
+#: units/weblogs/weblogs_actions.php:140
+msgid "Your comment has been added."
+msgstr "당신의 댓글리 추가 되었습니다."
+
+#: units/weblogs/weblogs_actions.php:144
+msgid "Your comment could not be posted. The system thought it was spam."
+msgstr "당신의 댓글이 게시되지 않았습니다. 시스템이 그것을 스팸으로 생각하였습니다."
+
+#: units/weblogs/weblogs_actions.php:162
+msgid "Your comment was deleted."
+msgstr "당신의 댓글이 삭제되었습니다."
+
+#: units/weblogs/weblogs_all_users_view.php:24
+msgid "Remove filter"
+msgstr "필터 제거"
+
+#: units/weblogs/weblogs_all_users_view.php:29
+msgid "Filtered: Showing personal blog posts"
+msgstr "필터됨: 개인 블로그 게시물 보여주기"
+
+#: units/weblogs/weblogs_all_users_view.php:33
+msgid "Filtered: Showing community blog posts"
+msgstr "필터됨: 커뮤니티 블로그 게시물 보여주기"
+
+#: units/weblogs/weblogs_all_users_view.php:38
+msgid "Filtered: Showing posts with comments"
+msgstr "필터됨: 댓글이 있는 게시물 보여주기"
+
+#: units/weblogs/weblogs_all_users_view.php:42
+msgid "Filtered: Showing posts with no comments"
+msgstr "필터됨: 댓글이 없는 게시물 보여주기"
+
+#: units/weblogs/weblogs_all_users_view.php:57
+msgid "Filtered: Showing posts from "
+msgstr "필터됨: 로 부터 게시물 보여주기 "
+
+#: units/weblogs/weblogs_all_users_view.php:67
+msgid "Filtered: Showing posts tagged with "
+msgstr "필터됨: 로 태그된 게시물 보여주기 "
+
+#: units/weblogs/weblogs_comments_add.php:7
+msgid "Add a comment"
+msgstr "댓글 추가"
+
+#: units/weblogs/weblogs_comments_add.php:33
+msgid "Your comment text"
+msgstr "댓글 문장"
+
+#: units/weblogs/weblogs_comments_add.php:58
+msgid "Add comment"
+msgstr "댓글 추가"
+
+#: units/weblogs/weblogs_post_field.php:83
+msgid "Click here to post to this weblog."
+msgstr "이 블로그에 게시하기 위해서는 여기를 클릭하십시요"
+
+#: units/weblogs/weblogs_posts_add.php:22
+msgid "Add a new post"
+msgstr "새 게시물 추가"
+
+#: units/weblogs/weblogs_posts_add.php:23
+#: units/weblogs/weblogs_posts_edit.php:17
+msgid "Post title:"
+msgstr "게시물 제목:"
+
+#: units/weblogs/weblogs_posts_add.php:24
+#: units/weblogs/weblogs_posts_edit.php:18
+msgid "Post body:"
+msgstr "게시물 내용:"
+
+#: units/weblogs/weblogs_posts_add.php:25
+#: units/weblogs/weblogs_posts_edit.php:19
+msgid "Keywords (Separated by commas):"
+msgstr "키워드들(콤마로 분리):"
+
+#: units/weblogs/weblogs_posts_add.php:26
+#: units/weblogs/weblogs_posts_edit.php:20
+msgid ""
+"Keywords commonly referred to as 'Tags' are words that represent the weblog "
+"post you have just made. This will make it easier for others to search and "
+"find your posting."
+msgstr ""
+"'태그'로 보통 불려지는 키워드는 블로그를 대표하는 단어들 입니다. 이것은 다른 사람들이 당신의 게시물을 검색하거나 찾는 것을 쉽게 해 "
+"줍니다."
+
+#: units/weblogs/weblogs_posts_add.php:28
+msgid "Post"
+msgstr "게시물"
+
+#: units/weblogs/weblogs_posts_add.php:78
+msgid ""
+"You must be logged in to post a new weblog entry. You may do so using the "
+"login pane to the right of the screen."
+msgstr "새 게시물을 게시하기 위해서는 로그인 해야 합니다. 화면의 오른쪽에 있는 로그인 창에서 로그인 할 수 있습니다."
+
+#: units/weblogs/weblogs_posts_edit.php:16
+msgid "Edit a post"
+msgstr "게시물 편집"
+
+#: units/weblogs/weblogs_posts_edit.php:22
+msgid "Save Post"
+msgstr "게시물 저장"
+
+#: units/weblogs/weblogs_posts_view.php:86
+msgid "More"
+msgstr "더"
+
+#: units/weblogs/weblogs_posts_view.php:87
+msgid "Keywords:"
+msgstr "키워드:"
+
+#: units/weblogs/weblogs_posts_view.php:88
+msgid "comment(s)"
+msgstr "댓글(들)"
+
+#: units/weblogs/weblogs_posts_view.php:140
+msgid "Are you sure you want to permanently delete this weblog comment?"
+msgstr "이 블로그 댓글을 영구히 삭제하기를 원하십니까?"
+
+#: units/weblogs/weblogs_user_info_menu.php:10
+msgid "Recent Activity"
+msgstr "최근 활동"
+
+#: units/weblogs/weblogs_user_info_menu.php:12
+msgid "View your activity"
+msgstr "활동 보기"
+
+#: units/xml/main.php:78
+msgid "XML error: "
+msgstr "XML 오류: "

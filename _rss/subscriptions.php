@@ -1,29 +1,40 @@
 <?php
 
-	require("../includes.php");
-	
-	global $page_owner;
-	
-	run("weblogs:init");
-	run("profile:init");	
-	run("rss:init");
-	
-	define('context','resources');
-	
-	$title = run("profile:display:name") ." :: " . gettext("Feeds");
-	
-	$body = run("rss:subscriptions",$feed);
-	
-	$body = run("templates:draw", array(
-					'context' => 'contentholder',
-					'title' => $title,
-					'body' => $body
-				)
-				);
-	
-	echo run("templates:draw:page", array(
-					$title, $body
-				)
-				);
+    require_once(dirname(dirname(__FILE__))."/includes.php");
+    
+//    global $page_owner;
+    
+    run("weblogs:init");
+    run("profile:init");
+    
+    $username = trim(optional_param('profile_name',''));
+    $user_id = user_info_username("ident", $username);
+    if (!$user_id) {
+        $user_id = $page_owner;
+    } else {
+        $page_owner = $user_id;
+        $profile_id = $user_id;
+    }
+    
+    run("rss:init"); // down here cos it sends $page_owner to rss function_actions.php
+    
+    define('context','resources');
+    templates_page_setup();
+    
+    $title = run("profile:display:name", $user_id) ." :: " . __gettext("Feeds");
+    
+    $body = run("rss:subscriptions", $user_id);
+    
+    $body = templates_draw(array(
+                    'context' => 'contentholder',
+                    'title' => $title,
+                    'body' => $body
+                )
+                );
+    
+    echo templates_page_draw( array(
+                    $title, $body
+                )
+                );
 
 ?>

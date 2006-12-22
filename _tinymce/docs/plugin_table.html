@@ -59,6 +59,9 @@
 				<tr><td><strong>table_styles</strong></td><td>This option should contain a semicolon separated list of class titles and class names separated by =. The titles are the ones that get presented to the user in the styles drop down list and and the class names is the classes that gets inserted.</td></tr>
 				<tr><td><strong>table_cell_styles</strong></td><td>This option should contain a semicolon separated list of class titles and class names separated by =. The titles are the ones that get presented to the user in the styles drop down list and and the class names is the classes that gets inserted.</td></tr>
 				<tr><td><strong>table_row_styles</strong></td><td>This option should contain a semicolon separated list of class titles and class names separated by =. The titles are the ones that get presented to the user in the styles drop down list and and the class names is the classes that gets inserted.</td></tr>
+				<tr><td><strong>table_cell_limit</strong></td><td>Enables you to specify the max number of cells for a table.</td></tr>
+				<tr><td><strong>table_row_limit</strong></td><td>Enables you to specify the max number of rows for a table.</td></tr>
+				<tr><td><strong>table_col_limit</strong></td><td>Enables you to specify the max number of columns for a table.</td></tr>
 			</tbody>
 		</table>
 		<br />
@@ -82,7 +85,10 @@ tinyMCE.init({
 	theme_advanced_buttons3_add : &quot;<strong>tablecontrols</strong>&quot;,
 	table_styles : "Header 1=header1;Header 2=header2;Header 3=header3",
 	table_cell_styles : "Header 1=header1;Header 2=header2;Header 3=header3;Table Cell=tableCel1",
-	table_row_styles : "Header 1=header1;Header 2=header2;Header 3=header3;Table Row=tableRow1"
+	table_row_styles : "Header 1=header1;Header 2=header2;Header 3=header3;Table Row=tableRow1",
+	table_cell_limit : 100,
+	table_row_limit : 5,
+	table_col_limit : 5
 });</pre>
 	</div>
 	</p>
@@ -90,7 +96,7 @@ tinyMCE.init({
 
 <div class="footer">
 	<div class="helpindexlink"><a href="index.html">Index</a></div>
-	<div class="copyright">Copyright &copy; 2005 Moxiecode Systems AB</div>
+	<div class="copyright">Copyright &copy; 2003-2006 <a href="http://www.moxiecode.com">Moxiecode Systems AB</a></div>
 	<br style="clear: both" />
 </div>
 

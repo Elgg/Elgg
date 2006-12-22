@@ -1,61 +1,44 @@
 <?php
-
 // Action parser for profiles
 
 global $page_owner;
+$page_owner = (int) $page_owner;
 
 if (isset($_POST['action']) && $_POST['action'] == "profile:edit" && logged_on && run("permissions:check", "profile")) {
-
-	if (isset($_POST))			
-	if (isset($_POST['profiledetails'])) {
-		db_query("delete from profile_data where owner = '".$page_owner."'");
-		foreach($_POST['profiledetails'] as $field => $value) {
-			
-			// TODO: These addslashes probably need to go too
-			
-			$field = addslashes($field);
-			foreach($data['profile:details'] as $datatype) {
-				if ($datatype[1] == $field && $datatype[2] == "keywords") {
-					db_query("delete from tags where tagtype = '$field' and owner = '$owner'");
-				}
-			}
-			
-			if ($value != "") {
-				
-				$value = addslashes($value);
-				$field = addslashes($field);
-				$access = trim($_POST['profileaccess'][$field]);
-				$owner = (int) $page_owner;
-				
-				db_query("insert into profile_data set name = '$field', value = '$value', access = '$access', owner = '$owner'");
-				$insert_id = (int) db_id();
-				
-				foreach($data['profile:details'] as $datatype) {
-					if ($datatype[1] == $field && $datatype[2] == "keywords") {
-						$keywords = "";
-						$value = str_replace("\n","",$value);
-						$value = str_replace("\r","",$value);
-						$keyword_list = explode(",",$value);
-						sort($keyword_list);
-						if (sizeof($keyword_list) > 0) {
-							foreach($keyword_list as $key => $list_item) {
-								if ($key > 0) {
-									$keywords .= ", ";
-								}
-								$keywords .= ($list_item);
-								$list_item = (trim($list_item));
-								db_query("insert into tags set tagtype = '$field', access = '$access', tag = '$list_item', ref = $insert_id, owner = $owner");
-							}
-						}
-						$value = $keywords;
-					}
-				}
-				
-			}
-			
-		}
-		$messages[] = gettext("Profile updated.");
-	}
+    
+    if (isset($_POST['profiledetails'])) {
+        delete_records('profile_data','owner',$page_owner);
+        foreach($_POST['profiledetails'] as $field => $value) {
+            
+            $value = trim($value);
+            
+            if ($value != "") {
+                //TODO get rid of variable duplication here. (Penny)
+                $access = trim($_POST['profileaccess'][$field]);
+                $owner = (int) $page_owner;
+                
+                $pd = new StdClass;
+                $pd->name = $field;
+                $pd->value = $value;
+                $pd->access = $access;
+                $pd->owner = $page_owner;
+                // $pd = plugin_hook("profile_item","update",$pd);
+                $insert_id = insert_record('profile_data',$pd);
+                $pd->ident = $insert_id;
+                $pd = plugin_hook("profile_item","publish",$pd);
+                
+                foreach($data['profile:details'] as $datatype) {
+                    if ($datatype[1] == $field && $datatype[2] == "keywords") {
+                        delete_records('tags', 'tagtype', $field, 'owner', $page_owner);
+                        $value = insert_tags_from_string ($value, $field, $insert_id, $access, $page_owner);
+                    }
+                }
+                
+            }
+            
+        }
+        $messages[] = __gettext("Profile updated.");
+    }
 
 }
 

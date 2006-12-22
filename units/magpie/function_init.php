@@ -1,9 +1,19 @@
 <?php
+global $CFG;
+// Initialise magpie
 
-	// Initialise magpie
-	
-		define('rss','true');
-		define('MAGPIE_DIR', path . "units/magpie/");
-		include_once(path . 'units/magpie/rss_fetch.inc');
-		
+if (isset($CFG->rsspostsmaxage) && $CFG->rsspostsmaxage > 0) {
+    $CFG->rsspostsmaxage = (int) $CFG->rsspostsmaxage;
+} elseif (!isset($CFG->rsspostsmaxage)) {
+    $CFG->rsspostsmaxage = 60;
+} else {
+    $CFG->rsspostsmaxage = 0;
+}
+
+define('rss','true');
+define('MAGPIE_DIR', $CFG->dirroot . "units/magpie/");
+define('MAGPIE_OUTPUT_ENCODING', 'UTF-8');
+define('MAGPIE_USER_AGENT', "Elgg's furrepticiouf feed fetcher");
+require_once(MAGPIE_DIR . 'rss_fetch.inc');
+
 ?>

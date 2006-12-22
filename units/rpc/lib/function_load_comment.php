@@ -3,7 +3,7 @@
     // Support run()
     if (isset($parameter) && $parameter != "")
     {
-        $id = addslashes($parameter['id']);
+        $id = $parameter['id'];
 
         $comment = new Comment($id);
     }

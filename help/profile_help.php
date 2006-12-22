@@ -1,20 +1,20 @@
 <?php
-	
-	// Run includes
-		require("../includes.php");
+    
+    // Run includes
+        require_once(dirname(dirname(__FILE__))."/includes.php");
 
-		define("context", "profile");
-
+        define("context", "profile");
+        templates_page_setup();
 // Draw page
-		echo run("templates:draw:page", array(
-					"Profile help",
-					run("templates:draw", array(
-													'body' => run("help:profile"),
-													'title' => gettext("'Your Profile' help"),
-													'context' => 'contentholder'
-												)
-												)
-			)
-			);
-		
+        echo templates_page_draw( array(
+                    "Profile help",
+                    templates_draw(array(
+                                                    'body' => run("help:profile"),
+                                                    'title' => __gettext("'Your Profile' help"),
+                                                    'context' => 'contentholder'
+                                                )
+                                                )
+            )
+            );
+        
 ?>

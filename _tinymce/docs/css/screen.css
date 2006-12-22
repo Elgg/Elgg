@@ -16,15 +16,15 @@ body {
 h1 {
 	font-size: 18px;
 	font-weight: bold;
-	padding: 0px;
+	padding: 0;
 	margin: 4px;
 }
 
 h2 {
 	font-size: 14px;
 	font-weight: bold;
-	padding: 0px;
-	margin: 0px;
+	padding: 0;
+	margin: 0;
 	margin-top: 4px;
 	margin-bottom: 4px;
 }
@@ -32,8 +32,8 @@ h2 {
 h3 {
 	font-size: 11px;
 	font-weight: bold;
-	padding: 0px;
-	margin: 0px;
+	padding: 0;
+	margin: 0;
 	margin-bottom: 3px;
 }
 
@@ -57,19 +57,19 @@ p {
 
 .helpindex {
 	margin-left: 20px;
-	padding-left: 0px;
+	padding-left: 0;
 }
 
 
 .optionlist {
-	margin: 0px;
-	padding: 0px;
+	margin: 0;
+	padding: 0;
 	margin-bottom: 10px;
 }
 
 .optionlist li {
-	padding: 0px;
-	margin: 0px;
+	padding: 0;
+	margin: 0;
 	margin-top: 3px;
 	margin-bottom: 3px;
 	margin-left: 10px;
@@ -90,8 +90,8 @@ p {
 }
 
 code, pre {
-	margin: 0px;
-	padding: 0px;
+	margin: 0;
+	padding: 0;
 	background-color: #E6EBF1;
 }
 
@@ -142,4 +142,27 @@ a {
 
 thead {
 	background-color: #E6EBF1;	
+}
+
+.btable {
+}
+
+.btable th {
+	border: 1px solid gray;
+	vertical-align: top;
+}
+
+.btable td {
+	border: 1px solid gray;
+	vertical-align: top;
+}
+
+.plist {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.plist li {
+	padding-bottom: 3px;
 }

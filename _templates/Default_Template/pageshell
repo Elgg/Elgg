@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>{{title}}</title>
+{{metatags}}
+</head>
+<body>
+<!-- elgg banner and logo -->
+<table bgcolor="#ffffff" cellpadding="0" cellspacing="0" id="container">
+<tr>
+<td>
+<div id="header"><!-- open div header -->
+	<div id="logo"><!-- open div logo -->
+		<h1><a href="{{url}}">{{sitename}}</a></h1>
+		<h2>{{tagline}}</h2>
+	</div><!-- close div logo -->
+	<div id="global_menuoptions"><!-- open div global_menuoptions -->
+		{{topmenu}}
+		<p>Welcome {{userfullname}} </p>
+	</div><!-- close div global_menuoptions -->
+</div><!-- close div header -->
+<div class="clearme"/>
+</td>
+</tr>
+<tr>
+<td>
+<table cellpadding="3" cellspacing="0" border="0" id="content_holder">
+	<tr>
+	<td valign="top" id="maincontent_container" align="left">
+		<ul id="navigation">
+			{{menu}}
+			<li></li><!-- used to validate -->
+		</ul>
+		{{messageshell}}
+		{{mainbody}}
+	</td>
+	<td valign="top" id="sidebar" align="left">
+		<ul><!-- open sidebar lists -->
+		{{sidebar}}
+		</ul><!-- close sidebar lists -->
+		<div id="search_widget"><!-- open div search_widget -->
+		<img src="{{url}}_templates/default_images/own_ad_top.gif" alt="" border="0" />
+		<form name="searchform" action="{{url}}search/index.php">
+			<script language="JavaScript" type="text/javascript">
+				<!--
+				function submitthis() {
+					document.searchform.submit();
+				}
+				// -->
+			</script>
+			<p><label>Search</label><br /><input type="text" size="20" name="tag" value="" />
+			<select name="user_type">
+				<option value="">--- all ---</option>
+				<option value="person">People</option>
+				<option value="community">Communities</option>
+			</select> <br /><input type="submit" value="search" /></p>
+		</form>
+		<img src="{{url}}_templates/default_images/own_ad_bottom.gif" alt="" border="0" />
+		</div><!-- close div search_widget -->
+	</td>
+	</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td align="center">
+	<div id="footer"><!-- start footer -->
+	<span style="color:#FF934B">{{sitename}}</span> <a href="{{url}}content/terms.php">Terms and conditions</a>&nbsp;|&nbsp;<a href="{{url}}content/privacy.php">Privacy Policy</a>
+	</div><!-- end footer --><br />
+	<a href="http://elgg.org"><img src="{{url}}_templates/elgg_powered.png" title="Elgg powered" border="0" alt="Elgg powered" /></a>
+	<br />
+</td>
+</tr>
+</table>
+</body>
+</html>

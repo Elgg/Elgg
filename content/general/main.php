@@ -1,7 +1,7 @@
 <?php
 
-	// General content tags
+    // General content tags
 
-		$function['content:copyright'][] = path . "/content/general/content_copyright.php";
+        $function['content:copyright'][] = path . "content/general/content_copyright.php";
 
 ?>

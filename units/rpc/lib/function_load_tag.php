@@ -2,7 +2,7 @@
     // Support run()
     if (isset($parameter) && $parameter != "")
     {
-        $id = addslashes($parameter['id']);
+        $id = $parameter['id'];
 
         $tag = new Tag($id);
     }

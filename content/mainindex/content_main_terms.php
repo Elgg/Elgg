@@ -1,7 +1,7 @@
 <?php
 
-	$sitename = sitename;
-	$run_result .= <<< END
+    $sitename = sitename;
+    $run_result .= <<< END
 <p><b>If you use the $sitename web site you agree to be bound by the following terms and conditions ('Terms of Use').</b></p>
 
 <p><b>Basic Terms</B></p>

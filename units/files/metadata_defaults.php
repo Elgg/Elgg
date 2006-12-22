@@ -1,8 +1,8 @@
 <?php
 
-	// Initial metadata
+    // Initial metadata
 
-	// Of form 
-	// $data['files:details'][] = array( "Field label" , "Field name" );
+    // Of form 
+    // $data['files:details'][] = array( "Field label" , "Field name" );
 
 ?>

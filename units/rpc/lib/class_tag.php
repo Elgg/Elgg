@@ -20,18 +20,15 @@
             // Parameter passed, assume an existing tag
             if ($var != "")
             {
-                $result = db_query("select * from tags where ident = '$var'");
-            
-                $this->ident   = $result[0]->ident;
-                $this->tag     = $result[0]->tag;
-                $this->tagtype = $result[0]->tagtype;
-                $this->ref     = $result[0]->ref;
-                $this->access  = $result[0]->access;
-                $this->owner   = $result[0]->owner;
-
-                // Does the requested id exist
-                if (sizeof($result) > 0)
-                {
+                if ($result = get_record('tags','ident',$var)) {
+                    $this->ident   = $result->ident;
+                    $this->tag     = $result->tag;
+                    $this->tagtype = $result->tagtype;
+                    $this->ref     = $result->ref;
+                    $this->access  = $result->access;
+                    $this->owner   = $result->owner;
+                    
+                    // Does the requested id exist
                     $this->exists = true;
                 }
             }
@@ -74,7 +71,7 @@
          */
         function setTagName($val)
         {
-            $this->tag = addslashes(trim($val));
+            $this->tag = trim($val);
         }
 
         /**
@@ -116,16 +113,7 @@
         {
             if ($this->exists == true)
             {
-                db_query("delete from tags where ident = '$this->ident'");
-
-                if (db_affected_rows() > 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return delete_records('tags','ident',$this->ident);
             }
             else
             {
@@ -138,47 +126,28 @@
          */
         function save()
         {
+            $t = new StdClass;
+            $t->tagtype = 'weblog';
+            $t->access = $this->access;
+            $t->tag = $this->tag;
+            $t->ref = $this->ref;
+            $t->owner = $this->owner;
             // Always delete existing tags
             if ($this->exists == false)
             {
-                db_query("insert into tags set 
-                          tagtype = 'weblog', 
-                          access = '$this->access', 
-                          tag = '$this->tag', 
-                          ref = $this->ref, 
-                          owner = '$this->owner'");
-
-                if (db_affected_rows() > 0)
-                {
+                if ($this->ident = insert_record('tags',$t)) {
+                    $this->exists = true;
                     return $this->ident;
                 }
-                else
-                {
-                    return false;
-                }
+                return false;
             }
             else
             {
-                db_query("update tags set 
-                          tagtype = 'weblog', 
-                          access = '$this->access', 
-                          tag = '$this->tag', 
-                          ref = $this->ref 
-                          where ident = $this->ident");
-
-                if (db_affected_rows() > 0)
-                {
-                    $this->ident  = db_id();
-
-                    $this->exists = true;
-
+                $t->ident = $this->ident;
+                if (update_record('tags',$t)) {
                     return $this->ident;
                 }
-                else
-                {
-                    return false;
-                }
-
+                return false;
             }
         }
     }

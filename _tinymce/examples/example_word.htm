@@ -20,7 +20,6 @@
 		content_css : "example_word.css",
 	    plugi2n_insertdate_dateFormat : "%Y-%m-%d",
 	    plugi2n_insertdate_timeFormat : "%H:%M:%S",
-		extended_valid_elements : "hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]",
 		external_link_list_url : "example_link_list.js",
 		external_image_list_url : "example_image_list.js",
 		flash_external_list_url : "example_flash_list.js",
@@ -31,7 +30,9 @@
 		theme_advanced_link_targets : "_something=My somthing;_something2=My somthing2;_something3=My somthing3;",
 		paste_auto_cleanup_on_paste : true,
 		paste_convert_headers_to_strong : false,
-		paste_strip_class_attributes : "all"
+		paste_strip_class_attributes : "all",
+		paste_remove_spans : false,
+		paste_remove_styles : false		
 	});
 
 	function fileBrowserCallBack(field_name, url, type, win) {

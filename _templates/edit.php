@@ -1,38 +1,38 @@
 <?php
 
-	//	ELGG template edit page
+//    ELGG template edit page
 
-	// Run includes
-		require("../includes.php");
-		
-		protect(1);
-		
-		run("profile:init");
-		run("templates:init");
-		
-		define("context", "account");
-		
-		$title = run("profile:display:name") . " :: " . gettext("Template Edit");
-		
-		$body = run("content:templates:edit");
-		
-		if (isset($_REQUEST['id'])) {
-			$id = (int) $_REQUEST['id'];
-			$body .= run("templates:edit",$id);
-		} else {
-			$body = run("templates:edit");
-		}
-		
-		$body = run("templates:draw", array(
-						'context' => 'contentholder',
-						'title' => $title,
-						'body' => $body
-					)
-					);
-		
-		echo run("templates:draw:page", array(
-						$title, $body
-					)
-					);
+// Run includes
+require_once(dirname(dirname(__FILE__))."/includes.php");
+
+protect(1);
+
+run("profile:init");
+run("templates:init");
+
+define("context", "account");
+templates_page_setup();
+$title = run("profile:display:name") . " :: " . __gettext("Template Edit");
+
+$body = run("content:templates:edit");
+
+$id = optional_param('id',0,PARAM_INT);
+if (!empty($id)) {
+    $body .= run("templates:edit",$id);
+} else {
+    $body = run("templates:edit");
+}
+
+$body = templates_draw(array(
+                             'context' => 'contentholder',
+                             'title' => $title,
+                             'body' => $body
+                             )
+                       );
+                       
+echo templates_page_draw( array(
+                                      $title, $body
+                                      )
+         );
 
 ?>

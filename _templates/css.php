@@ -1,15 +1,15 @@
 <?php
 
-	require("../includes.php");
-	
-	header("Content-type: text/css");
+require_once(dirname(dirname(__FILE__))."/includes.php");
 
-	$template_id = (int) $_REQUEST['template'];
-		
-	echo run("templates:draw",array(
-			'template' => $template_id,
-			'context' => 'css'
-		)
-		);
+header("Content-type: text/css; charset=utf-8");
 
+$template_id = optional_param('template',0,PARAM_INT);
+
+echo templates_draw(array(
+                          'template' => $template_id,
+                          'context' => 'css'
+                          )
+                    );
+                    
 ?>

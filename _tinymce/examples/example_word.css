@@ -39,23 +39,23 @@ pre {
 
 /* Fix for MS Office style paragraphs (MsoNormal) */
 p {
-	margin: 0px;
-	padding: 0px;
+	margin: 0;
+	padding: 0;
 }
 
 /* Fix for MS Office unindeted lists */
 .unIndentedList {
-	margin: 0px;
-	padding: 0px;
+	margin: 0;
+	padding: 0;
 	list-style-position: inside;
 }
 
 .unIndentedList li {
-	padding: 0px;
+	padding: 0;
 }
 
 /* Fix for MS Office UL lists */
 ul {
-	margin-top: 0px;
-	margin-bottom: 0px;
+	margin-top: 0;
+	margin-bottom: 0;
 }

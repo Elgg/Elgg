@@ -3,7 +3,7 @@
     // Support run()
     if (isset($parameter) && $parameter != "")
     {
-        $user_id = addslashes($parameter['user_id']);
+        $user_id = $parameter['user_id'];
 
         $user = new User($user_id);
     }

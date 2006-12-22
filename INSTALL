@@ -1,7 +1,7 @@
-Elgg version 0.4 installation instructions
+Elgg version 0.67 installation instructions
 
-Ben Werdmuller <ben@elgg.net>
-21 January 2006
+Ben Werdmuller <ben@curverider.co.uk>
+12 December 2006
 
 
 1. BEFORE YOU BEGIN
@@ -12,18 +12,13 @@ Please read LICENSE.
 
 Elgg currently requires the Apache web server with mod_rewrite
 installed and the ability to send emails, plus PHP 4.3+ and MySQL 
-4.0.1+.  It has currently been tested on Apache installations running 
-Red Hat Linux and Microsoft Windows XP.
+4.1+ (Postgres can also be used).  It has currently been tested on 
+Apache installations running Red Hat Linux and Microsoft Windows XP.
 
 In your Apache configuration, you must have AllowOverride set to
 All for the directory where Elgg is installed.
 
-Elgg prefers to be installed on the root of a domain - for example,
-at http://elgg.net/, as opposed to http://elgg.net/subdirectory/.
-However, it has now been tested to work in subdirectories, although
-this remains experimental until the next release.
-
-You must have a database on the MySQL server ready for use by Elgg.
+You must have a database on the database server ready for use by Elgg.
 
 You must have the GD library installed.
 
@@ -56,117 +51,70 @@ the connection speed to your web server.
 
 2.1 Deploy Elgg framework
 
-Move all files aside from README, LICENSE, INSTALL and the
-"distribution" directory from the distribution package to your web 
-server directory.  Files in the root of the distribution must be in 
-the root of your web server account.
+Move all files from the distribution package to your web server root directory.
+This is normally called 'public_html', 'httpdocs' or 'www'. If you like, you 
+can place Elgg in a subdirectory of this; commonly, people will place it in
+one called 'elgg'.
 
-ENSURE YOU HAVE INCLUDED .htaccess files - on Linux and Unix systems
-(including Mac OS X) you 
-
-IF YOU ARE UPGRADING, you may wish to retain your existing
-includes.php file.
+Rename htaccess-dist to .htaccess, and config-dist.php to config.php.
 
 
-2.1 Set permissions on special directories
+2.2 Create data directory
 
-Some directories need to be written to during Elgg's normal operation
-- specifically the directory for uploaded files, and the directory
-for uploaded icons.
+The data directory needs to be written to during Elgg's normal 
+operation to store uploaded files and so on.  This does not come with
+Elgg out of the box, and needs to be manually created. You can 
+create it anywhere reachable by the Elgg installation scripts, 
+although we recommend you place it outside of your web server root.
 
-From your root directory, navigate to /_icons.  On Linux / Unix, you 
-must change the access privileges for /_icons/data to 777 or 
-equivalent.  To do this you may be able to right click on the folder 
-and set the "CHMOD" value, or you may have to use your command line
-terminal, navigate to the _icons folder, and type:
+You must assign the correct privileges.  To do this you may be able to
+right click on the folder and set the "CHMOD" value, or you may have 
+to use your command line terminal, navigate to the data folder, and
+type:
 
-	chmod 777 data
-
-Repeat this process for /_rss/data, /_rss/cache, /_files/data and 
-/_files/cache.
-
-
-3. SETTING UP THE DATABASE
-
-If you are upgrading, please skip to 3.4.
-
-3.1 Open database schema
-
-There is a database schema supplied in the /distribution/database
-folder.  You must install this into the database you have set aside
-for Elgg.
-
-If you are running phpMyAdmin, a third-party tool for easily
-maintaining MySQL databases, go to 3.2; otherwise go to 3.3.
+    chmod 777 data
+    
+Where 'data' is the name of your data directory.
 
 
-3.2 Setting up the database with phpMyAdmin
+2.3 Allow admin access to the templates
 
-In phpMyAdmin, click on the database you wish to use for Elgg on the 
-left hand side of the screen.  Click on the "SQL" tab at the top of
-the screen, and on the page that turns up, click "Browse" to pick a
-textfile to import.  Navigate to /distribution/database in the
-distribution package and select elgg.sql.  Click "Go".
+If you want to use the Elgg administration panel to change templates etc,
+you will also need to run the following command from the root of your Elgg
+installation:
 
-
-3.3 Setting up the database with command line MySQL
-
-Using your command line terminal, navigate to /distribution/database
-in the distribution package. Type the following:
-
-	mysql -u [username] -p [password] [databasename] < elgg.sql
-	
-Where [username] and [password] are your MySQL access details and
-[databasename] is the name of the database you have set aside for
-Elgg.
-
-Once you have done this, you should delete the /distribution 
-directory.
-
-3.4 Upgrading
-
-Perform the above steps but with the upgrade.sql file 
-found in /distribution/database.
-
-Run http://your-elgg-location/upgrade.php once to publish RSS feeds
-for all users. Then delete it from the server.
-
-NB: The navigation system has changed severely since the previous
-version of Elgg. As a result, existing templates WILL NOT WORK.
-If you would like to keep your existing templates, you should back
-up the 'templates' and 'template_elements' tables in your database.
-Note that these will need significant alteration for this version of
-Elgg, for which only alteration of the CSS and page shell portions of
-the template is recommended.
+    chmod 777 _templates/Default_Template
 
 
+3. SETTING UP ELGG
 
-4. SETTING UP ELGG
 
+3.1 Edit config.php
 
-4.1 Edit includes.php
+config.php does not exist out of the box.  You will need to copy
+config-dist.php to config.php and edit the configuration values there.
 
-Load "includes.php".  There are eight variables that must be
-set at the top of the file - all of them are important, and they are
-clearly described within the file.  Each of them is of the form:
+There are several variables that must be set at the top of the file -
+all of them are important, and they are clearly described within the
+file.  Each of them is of the form:
 
-	define("name","value");
-	
+    $CFG->data = 'value';
+    
 You must enter your values within the second set of quotation marks.
 To include a quotation mark within a value (e.g. if you wanted 
 My University's "Elgg" Trial to be your site title), prefix it with
 a backslash ("\").
 
 
-4.2 Customise your default homepage
+3.2 Customise your default homepage and other settings
 
-We have included a basic default homepage, but you can alter index.php
-as you wish.  If you would like to alter the text but maintain the
-position within Elgg's flexible templating system, you will need to
-alter the file /content/mainindex/content_main_index.php.
+Once you've filled in config.php, you can visit http://yoursite/_elggadmin/,
+and log in using the main email address and news initial password. This will
+allow you to change various aspects of your site, including the default
+template and the site homepage.
 
 
-4.3 Optional plugins
+3.3 Optional plugins
 
 Misja Hoebe has written an XML-RPC unit that requires the PEAR library.
 Please see units/rpc/README for more details. If you are sure you have
@@ -177,21 +125,8 @@ We have also included an implementation of the TinyMCE editor. This
 is enabled by default. To disable it, comment out the TinyMCE line in
 the plugins section of includes.php.
 
-Another plugin is the experimental shared calendar, which allows
-users of your Elgg system to share events with each other, which can
-be found in the usual ways (restricted by groups and searchable by
-tag). To enable this, uncomment the calendar line in the plugins
-section of includes.php.
 
-If you are using the calendar, you will need to add the related
-database tables.  Using your command line terminal, navigate to 
-/distribution/database in the distribution package. Type the
-following:
-
-	mysql -u [username] -p [password] [databasename] < elgg_calendar.sql
-
-
-4.4 Log in
+3.4 Log in
 
 We have included a default user, "news". This user owns all the
 public custom templates. Its login name is "news" and its default
@@ -206,16 +141,37 @@ and give that account administrator privileges using the administrator
 panel.
 
 
-4.5 Tell us about it!
+3.5 Elgg in a subdirectory and 404 errors
+
+If you are running Elgg in a subdirectory of your web site, and when browsing 
+around it pages seem to be missing, you may also need to edit the .htaccess file. 
+Below the "RewriteEngine on" line, add a line:
+
+RewriteBase /subdirectory/
+
+changing subdirectory to the location of Elgg relative to your overall web root.
+
+For example, if your site is http://example.com/
+              and Elgg is in http://example.com/sites/elgg/
+try adding the line:
+
+RewriteBase /sites/elgg/
+
+If you're not running Elgg in a subdirectory on your site, but still getting lots
+of 404 errors beyond the front page, you could instead try:
+
+RewriteBase /
+
+
+3.6 Tell us about it!
 
 Because Elgg is free and open source, we often don't hear about new
 installations. You don't have to, but we'd love it if you'd tell us
-what you're doing with it. You can reach us at system@elgg.net or add
-a link to your site directly to our information resource at
-http://elgg.org/info/.
+what you're doing with it. You can reach us at info@curverider.co.uk,
+or give us a phone using the details in README.
 
 
-5. FURTHER CUSTOMISATION AND DEVELOPMENTS
+4. FURTHER CUSTOMISATION AND DEVELOPMENTS
 
 Please keep an eye on http://elgg.org/ for forthcoming developments 
 within Elgg, including documentation on how to alter your default 

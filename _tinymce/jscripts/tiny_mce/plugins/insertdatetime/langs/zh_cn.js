@@ -1,4 +1,5 @@
-// Simplified Chinese lang variables contributed by tom_cat (thomaswangyang@gmail.com)
+// Simplified Chinese lang variables contributed by TinyMCE_China_Team ( tinymce_china {AT} yahoogroups {DOT} com ).
+// visit our homepage at: http://www.cube316.net/tinymce/ for more information.
 
 tinyMCE.addToLang('',{
 insertdate_def_fmt : '%Y-%m-%d',
