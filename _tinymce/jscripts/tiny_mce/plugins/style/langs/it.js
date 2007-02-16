@@ -1,8 +1,15 @@
-// IT lang variables
+/**
+ * IT lang variables
+ * 
+ * Author : Luciano Vernaschi <luciano@virgilio.it>
+ * Last Updated : Oct. 17th, 2006
+ * TinyMCE Version : 2.0.7
+ */
 
 tinyMCE.addToLang('style',{
 title : 'Modifica stile CSS',
 styleinfo_desc : 'Modifica stile CSS',
+apply : 'Applica',
 text_tab : 'Testo',
 background_tab : 'Sfondo',
 block_tab : 'Blocco',
@@ -20,6 +27,11 @@ text_lineheight : 'Altezza linea',
 text_case : 'Caso',
 text_color : 'Colore',
 text_decoration : 'Decorazione',
+text_overline : 'Linea sopra',
+text_underline : 'Sottolinea',
+text_striketrough : 'Linea sovrapposta',
+text_blink : 'Lampeggia',
+text_none : 'Nessuno',
 background_color : 'Colore di sfondo',
 background_image : 'Immagine di sfondo',
 background_repeat : 'Ripeti',

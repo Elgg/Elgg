@@ -111,16 +111,12 @@ END;
         $Edit = __gettext("Edit");
         $returnConfirm = __gettext("Are you sure you want to permanently delete this weblog post?");
         $Delete = __gettext("Delete");
-        $body .= <<< END
-            
-            <div class="blog_edit_functions">
-                <p>
-                    [<a href="{$CFG->wwwroot}_weblog/edit.php?action=edit&amp;weblog_post_id={$post->ident}&amp;owner={$post->owner}">$Edit</a>]
-                    [<a href="{$CFG->wwwroot}_weblog/action_redirection.php?action=delete_weblog_post&amp;delete_post_id={$post->ident}" onclick="return confirm('$returnConfirm')">$Delete</a>]
-                </p>
-            </div>
-            
+        $links = <<< END
+                    | <a href="{$CFG->wwwroot}_weblog/edit.php?action=edit&amp;weblog_post_id={$post->ident}&amp;owner={$post->owner}">$Edit</a> |
+                    <a href="{$CFG->wwwroot}_weblog/action_redirection.php?action=delete_weblog_post&amp;delete_post_id={$post->ident}" onclick="return confirm('$returnConfirm')">$Delete</a>
 END;
+    } else {
+        $links = "";
     }
     
     if (!isset($_SESSION['comment_cache'][$post->ident]) || (time() - $_SESSION['comment_cache'][$post->ident]->created > 120)) {
@@ -130,7 +126,7 @@ END;
     }
     $numcomments = $_SESSION['comment_cache'][$post->ident]->data;
     
-    $comments = "<a href=\"".url.$username."/weblog/{$post->ident}.html\">$numcomments $anyComments</a>";        
+    $comments = "| <a href=\"".url.$username."/weblog/{$post->ident}.html\">$numcomments $anyComments</a>";        
     
     if (isset($individual) && ($individual == 1)) {
         // looking at an individual post and its comments
@@ -168,15 +164,11 @@ END;
                 
                 foreach($comments as $comment) {
                     $commentmenu = "";
-                    if (logged_on && ($comment->owner == $_SESSION['userid'] || run("permissions:check", "weblog"))) {
-                        $Edit = __gettext("Edit");
+                    if (logged_on && ($comment->owner == $_SESSION['userid'] || run("permissions:check",array("weblog:edit",$post->owner)))) {
                         $returnConfirm = __gettext("Are you sure you want to permanently delete this weblog comment?");
                         $Delete = __gettext("Delete");
                         $commentmenu = <<< END
-
-                    <p>
-                        [<a href="{$CFG->wwwroot}_weblog/action_redirection.php?action=weblog_comment_delete&amp;weblog_comment_delete={$comment->ident}" onclick="return confirm('$returnConfirm')">$Delete</a>]
-                    </p>
+                        <a href="{$CFG->wwwroot}_weblog/action_redirection.php?action=weblog_comment_delete&amp;weblog_comment_delete={$comment->ident}" onclick="return confirm('$returnConfirm')">$Delete</a>
 END;
                     }
                     $comment->postedname = htmlspecialchars($comment->postedname, ENT_COMPAT, 'utf-8');
@@ -196,10 +188,11 @@ END;
                     $commentsbody .= templates_draw(array(
                                                           'context' => 'weblogcomment',
                                                           'postedname' => $comment->postedname,
-                                                          'body' => '<a name="cmt' . $comment->ident . '" id="cmt' . $comment->ident . '"></a>' . $comment->body . $commentmenu,
+                                                          'body' => '<a name="cmt' . $comment->ident . '" id="cmt' . $comment->ident . '"></a>' . $comment->body,
                                                           'posted' => strftime("%A, %e %B %Y, %R %Z",$comment->posted),
                                                           'usericon' => $comment->icon,
-                                                          'permalink' => $thispageurl . "#cmt" . $comment->ident
+                                                          'permalink' => $thispageurl . "#cmt" . $comment->ident,
+                                                          'links' =>  $commentmenu
                                                           )
                                                     );
                     
@@ -221,7 +214,8 @@ END;
                                                 'body' => $body,
                                                 'fullname' => $fullname,
                                                 'title' => "<a href=\"".url.$username."/weblog/{$post->ident}.html\">$title</a>",
-                                                'comments' => $commentsbody
+                                                'comments' => $commentsbody,
+                                                'links' => $links
                                                 )
                                           );
             
@@ -244,7 +238,8 @@ END;
                                                 'body' => $body,
                                                 'fullname' => "",
                                                 'title' => "<a href=\"".url.$username."/weblog/{$post->ident}.html\">$title</a>",
-                                                'comments' => ""
+                                                'comments' => "",
+                                                'links' => $links
                                                 )
                                           );
         }
@@ -258,7 +253,8 @@ END;
                                             'body' => $body,
                                             'fullname' => $fullname,
                                             'title' => "<a href=\"".url.$username."/weblog/{$post->ident}.html\">$title</a>",
-                                            'commentslink' => $comments
+                                            'commentslink' => $comments,
+                                            'links' => $links
                                             )
                                       );        
     }

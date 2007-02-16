@@ -357,9 +357,6 @@ function plugin_hook($object_type,$event,$object = null) {
 
 function report_session_error() {
     global $CFG, $FULLME;
-    if (empty($CFG->lang)) {
-        $CFG->lang = "en";
-    }
 
     //clear session cookies
     setcookie('ElggSession'.$CFG->sessioncookie, '', time() - 3600, $CFG->cookiepath);
@@ -374,6 +371,7 @@ function report_session_error() {
     redirect($FULLME, 'A server error that affects your login session was detected. Please login again or restart your browser.', 5);
 }
 
+// never called
 /**
  * For security purposes, this function will check that the currently
  * given sesskey (passed as a parameter to the script or this function)
@@ -382,23 +380,23 @@ function report_session_error() {
  * @param string $sesskey optionally provided sesskey
  * @return bool
  */
-function confirm_sesskey($sesskey=NULL) {
-    global $USER;
+// function confirm_sesskey($sesskey=NULL) {
+//     global $USER;
 
-    if (!empty($USER->ignoresesskey) || !empty($CFG->ignoresesskey)) {
-        return true;
-    }
+//     if (!empty($USER->ignoresesskey) || !empty($CFG->ignoresesskey)) {
+//         return true;
+//     }
 
-    if (empty($sesskey)) {
-        $sesskey = required_param('sesskey');  // Check script parameters
-    }
+//     if (empty($sesskey)) {
+//         $sesskey = required_param('sesskey');  // Check script parameters
+//     }
 
-    if (!isset($USER->sesskey)) {
-        return false;
-    }
+//     if (!isset($USER->sesskey)) {
+//         return false;
+//     }
 
-    return ($USER->sesskey === $sesskey);
-}
+//     return ($USER->sesskey === $sesskey);
+// }
 
 
 /**
@@ -724,6 +722,10 @@ function get_real_size($size=0) {
     if (!$size) {
         return 0;
     }
+    $scan['GB'] = 1073741824;
+    $scan['Gb'] = 1073741824;
+    $scan['G'] = 1073741824;
+    $scan['g'] = 1073741824;
     $scan['MB'] = 1048576;
     $scan['Mb'] = 1048576;
     $scan['M'] = 1048576;
@@ -1241,12 +1243,13 @@ function get_performance_info() {
 
     if (function_exists('posix_times')) {
         $ptimes = posix_times();
-        foreach ($ptimes as $key => $val) {
-            $info[$key] = $ptimes[$key] -  $PERF->startposixtimes[$key];            
+        if ($ptimes) {
+            foreach ($ptimes as $key => $val) {
+                $info[$key] = $ptimes[$key] -  $PERF->startposixtimes[$key];            
+            }
+            $info['html'] .= "<span class=\"posixtimes\">ticks: $info[ticks] user: $info[utime] sys: $info[stime] cuser: $info[cutime] csys: $info[cstime]</span> ";
+            $info['txt'] .= "ticks: $info[ticks] user: $info[utime] sys: $info[stime] cuser: $info[cutime] csys: $info[cstime] ";
         }
-        $info['html'] .= "<span class=\"posixtimes\">ticks: $info[ticks] user: $info[utime] sys: $info[stime] cuser: $info[cutime] csys: $info[cstime]</span> ";
-        $info['txt'] .= "ticks: $info[ticks] user: $info[utime] sys: $info[stime] cuser: $info[cutime] csys: $info[cstime] ";
-
     }
 
     // Grab the load average for the last minute
@@ -2881,106 +2884,6 @@ function print_table($table) {
 }
 
 /**
- * Prints a basic textarea field.
- *
- * @uses $CFG
- * @param boolean $usehtmleditor ?
- * @param int $rows ?
- * @param int $cols ?
- * @param null $width <b>Legacy field no longer used!</b>  Set to zero to get control over mincols
- * @param null $height <b>Legacy field no longer used!</b>  Set to zero to get control over minrows
- * @param string $name ?
- * @param string $value ?
- * @param int $courseid ?
- * @todo Finish documenting this function
- */
-function print_textarea($usehtmleditor, $rows, $cols, $width, $height, $name, $value='', $courseid=0) {
-/// $width and height are legacy fields and no longer used as pixels like they used to be.
-/// However, you can set them to zero to override the mincols and minrows values below.
-
-    global $CFG, $course;
-    static $scriptcount; // For loading the htmlarea script only once.
-
-    $mincols = 65;
-    $minrows = 10;
-
-    if (empty($courseid)) {
-        if (!empty($course->id)) {  // search for it in global context
-            $courseid = $course->id;
-        }
-    }
-
-    if (empty($scriptcount)) {
-        $scriptcount = 0;
-    }
-
-    if ($usehtmleditor) {
-
-        if (!empty($courseid) and isteacher($courseid)) {
-            echo ($scriptcount < 1) ? '<script type="text/javascript" src="'. $CFG->wwwroot .'lib/editor/htmlarea.php?id='. $courseid .'"></script>'."\n" : '';
-        } else {
-            echo ($scriptcount < 1) ? '<script type="text/javascript" src="'. $CFG->wwwroot .'lib/editor/htmlarea.php"></script>'."\n" : '';
-        }
-        echo ($scriptcount < 1) ? '<script type="text/javascript" src="'. $CFG->wwwroot .'lib/editor/lang/en.php"></script>'."\n" : '';
-        $scriptcount++;
-
-        if ($height) {    // Usually with legacy calls
-            if ($rows < $minrows) {
-                $rows = $minrows;
-            }
-        }
-        if ($width) {    // Usually with legacy calls
-            if ($cols < $mincols) {
-                $cols = $mincols;
-            }
-        }
-    }
-
-    echo '<textarea id="edit-'. $name .'" name="'. $name .'" rows="'. $rows .'" cols="'. $cols .'">';
-    if ($usehtmleditor) {
-        echo htmlspecialchars(stripslashes_safe($value), ENT_COMPAT, 'utf-8'); // needed for editing of cleaned text!
-    } else {
-        p ($value);
-    }
-    echo '</textarea>'."\n";
-}
-
-/**
- * Legacy function, provided for backward compatability.
- * This method now simply calls {@link use_html_editor()}
- *
- * @deprecated Use {@link use_html_editor()} instead.
- * @param string $name Form element to replace with HTMl editor by name
- * @todo Finish documenting this function
- */
-function print_richedit_javascript($form, $name, $source='no') {
-    use_html_editor($name);
-}
-
-
-/**
- * Sets up the HTML editor on textareas in the current page.
- * If a field name is provided, then it will only be
- * applied to that field - otherwise it will be used
- * on every textarea in the page.
- *
- * In most cases no arguments need to be supplied
- *
- * @param string $name Form element to replace with HTMl editor by name
- */
-function use_html_editor($name='', $editorhidebuttons='') {
-    echo '<script language="javascript" type="text/javascript" defer="defer">'."\n";
-    print_editor_config($editorhidebuttons);
-    if (empty($name)) {
-        echo "\n".'HTMLArea.replaceAll(config);'."\n";
-    } else {
-        echo "\nHTMLArea.replace('edit-$name', config);\n";
-    }
-    echo '</script>'."\n";
-}
-
-
-/**
  * Prints form items with the names $day, $month and $year
  *
  * @param int $day ?
@@ -3265,105 +3168,6 @@ function rebuildnolinktag($text) {
 
 
 /**
- * Prints out the HTML editor config.
- *
- * @uses $CFG
- */
- function print_editor_config($editorhidebuttons='') {
-
-    global $CFG;
-
-    // print new config
-    echo 'var config = new HTMLArea.Config();'."\n";
-    echo "config.pageStyle = \"body {";
-    if(!(empty($CFG->editorbackgroundcolor))) {
-        echo " background-color: $CFG->editorbackgroundcolor;";
-    }
-
-    if(!(empty($CFG->editorfontfamily))) {
-        echo " font-family: $CFG->editorfontfamily;";
-    }
-
-    if(!(empty($CFG->editorfontsize))) {
-        echo " font-size: $CFG->editorfontsize;";
-    }
-
-    echo " }\";\n";
-    echo "config.killWordOnPaste = ";
-    echo(empty($CFG->editorkillword)) ? "false":"true";
-    echo ';'."\n";
-    echo 'config.fontname = {'."\n";
-
-    $fontlist = isset($CFG->editorfontlist) ? explode(';', $CFG->editorfontlist) : array();
-    $i = 1;                     // Counter is used to get rid of the last comma.
-
-    foreach($fontlist as $fontline) {
-        if(!empty($fontline)) {
-            if ($i > 1) {
-                echo ','."\n";
-            }
-            list($fontkey, $fontvalue) = split(':', $fontline);
-            echo '"'. $fontkey ."\":\t'". $fontvalue ."'";
-
-            $i++;
-        }
-    }
-    echo '};';
-
-    if (!empty($editorhidebuttons)) {
-        echo "\nconfig.hideSomeButtons(\" ". $editorhidebuttons ." \");\n";
-    } else if (!empty($CFG->editorhidebuttons)) {
-        echo "\nconfig.hideSomeButtons(\" ". $CFG->editorhidebuttons ." \");\n";
-    }
-
-    if(!empty($CFG->editorspelling) && !empty($CFG->aspellpath)) {
-        print_speller_code($usehtmleditor=true);
-    }
-}
-
-/**
- * Prints out code needed for spellchecking.
- * Original idea by Ludo (Marc Alier).
- *
- * @uses $CFG
- * @param boolean $usehtmleditor ?
- * @todo Finish documenting this function
- */
-function print_speller_code ($usehtmleditor=false) {
-    global $CFG;
-
-    if(!$usehtmleditor) {
-        echo "\n".'<script language="javascript" type="text/javascript">'."\n";
-        echo 'function openSpellChecker() {'."\n";
-        echo "\tvar speller = new spellChecker();\n";
-        echo "\tspeller.popUpUrl = \"" . $CFG->wwwroot ."lib/speller/spellchecker.html\";\n";
-        echo "\tspeller.spellCheckScript = \"". $CFG->wwwroot ."lib/speller/server-scripts/spellchecker.php\";\n";
-        echo "\tspeller.spellCheckAll();\n";
-        echo '}'."\n";
-        echo '</script>'."\n";
-    } else {
-        echo "\nfunction spellClickHandler(editor, buttonId) {\n";
-        echo "\teditor._textArea.value = editor.getHTML();\n";
-        echo "\tvar speller = new spellChecker( editor._textArea );\n";
-        echo "\tspeller.popUpUrl = \"" . $CFG->wwwroot ."lib/speller/spellchecker.html\";\n";
-        echo "\tspeller.spellCheckScript = \"". $CFG->wwwroot ."lib/speller/server-scripts/spellchecker.php\";\n";
-        echo "\tspeller._moogle_edit=1;\n";
-        echo "\tspeller._editor=editor;\n";
-        echo "\tspeller.openChecker();\n";
-        echo '}'."\n";
-    }
-}
-
-/**
- * Print button for spellchecking when editor is disabled
- */
-function print_speller_button () {
-    echo '<input type="button" value="Check spelling" onclick="openSpellChecker();" />'."\n";
-}
-
-
-
-/**
  * Adjust the list of allowed tags based on $CFG->allowobjectembed and user roles (admin)
  */
 function adjust_allowed_tags() {
@@ -3371,7 +3175,7 @@ function adjust_allowed_tags() {
     global $CFG, $ALLOWED_TAGS;
 
     if (!empty($CFG->allowobjectembed)) {
-        $ALLOWED_TAGS .= '<embed><object>';
+        $ALLOWED_TAGS .= '<embed><object><param>';
     }
 }
 
@@ -3713,8 +3517,11 @@ function fill_legacy_user_session($user = NULL) {
     if ($iconid == -1) {
         $_SESSION['icon'] = "default.png";
     } else {
-        $icon = get_record('icons','ident',$iconid);
-        $_SESSION['icon'] = $icon->filename;
+        if ($icon = get_record('icons','ident',$iconid)) {
+            $_SESSION['icon'] = $icon->filename;
+        } else {
+            $_SESSION['icon'] = "default.png";
+        }
     }
     $_SESSION['icon_quota'] = (int) $user->icon_quota;
 }
@@ -3784,9 +3591,14 @@ if (!function_exists('htmlspecialchars_decode')) {
  * @todo Finish documenting this function
  */
 function get_max_upload_file_size($maxbytes=0) {
+    global $CFG;
 
     if (! $filesize = ini_get('upload_max_filesize')) {
-        $filesize = '5M';
+        if (!empty($CFG->absmaxuploadsize)) {
+            $filesize = $CFG->absmaxuploadsize;
+        } else {
+            $filesize = '5M';
+        }
     }
     $minimumsize = get_real_size($filesize);
 
@@ -4315,5 +4127,31 @@ function activate_urls ($str) {
     
 }
 
+/***
+ *** Returns the ID of the page owner, as reported by all plugins. Default is -1.
+ ***/
+ function page_owner() {
+     
+     static $owner, $called;
+     if (!$called) {
+         
+         $owner = optional_param('owner',-1,PARAM_INT);
+         if ($allmods = get_list_of_plugins('mod') ) {
+            foreach ($allmods as $mod) {
+                $mod_page_owner = $mod . '_page_owner';
+                if (function_exists($mod_page_owner)) {
+                    if ($value = $mod_page_owner()) {
+                        
+                        $owner = $value;
+                        
+                    }
+                }
+           }
+        }
+        $called = true;
+     }
+     
+     return $owner;
+ }
 
 ?>

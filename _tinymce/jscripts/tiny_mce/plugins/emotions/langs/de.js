@@ -1,22 +1,22 @@
 // DE lang variables
 
 tinyMCE.addToLang('emotions',{
-title : 'Insert emotion',
+title : 'Emotion einf&uuml;gen',
 desc : 'Emotions',
 cool : 'Cool',
-cry : 'Cry',
-embarassed : 'Embarassed',
-foot_in_mouth : 'Foot in mouth',
-frown : 'Frown',
-innocent : 'Innocent',
-kiss : 'Kiss',
-laughing : 'Laughing',
-money_mouth : 'Money mouth',
-sealed : 'Sealed',
-smile : 'Smile',
-surprised : 'Surprised',
-tongue_out : 'Tongue out',
-undecided : 'Undecided',
-wink : 'Wink',
-yell : 'Yell'
+cry : 'Weinen',
+embarassed : 'Besch&auml;mt',
+foot_in_mouth : 'Fettn&auml;pfchen',
+frown : 'Missbilligen',
+innocent : 'Unschuldig',
+kiss : 'Kuss',
+laughing : 'Lachanfall',
+money_mouth : 'Geld im Kopf',
+sealed : 'Besiegelt',
+smile : 'L&auml;cheln',
+surprised : '&Uuml;berrascht',
+tongue_out : 'Zunge ausstrecken',
+undecided : 'Unentschieden',
+wink : 'Winken',
+yell : 'Schreien'
 });

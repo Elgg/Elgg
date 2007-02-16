@@ -3,7 +3,6 @@
     $config = <<< END
 <?php
     
-// ELGG system configuration parameters.
 
 // System constants: set values as necessary
 // Supply your values within the second set of speech marks in the pair
@@ -41,7 +40,8 @@
 // To include new languages, save their compiled .mo gettext
 // file into languages/country code/LC_MESSAGES/
 // (the file within this folder must be called elgg.mo)
-// An Elgg gettext template is included as /elgg.pot
+// See https://launchpad.net/elgg/trunk/+pots/elgg for more
+// translations.
 
     \$CFG->defaultlocale = '$PARSEDCFG->defaultlocale';
 
@@ -84,6 +84,10 @@
 
     \$CFG->default_access = "$PARSEDCFG->default_access";
 
+// Set the following to true to force users to log in before they can post comments, overriding per-user option
+// Handy sledgehammer-to-crack-a-nut to protect against comment spam.
+    \$CFG->disable_publiccomments = $PARSEDCFG->disable_publiccomments;
+    
 // dataroot. this is where uploaded files will go (and sessions for now)
 // This should be OUTSIDE your wwwroot.
 // NB: **MUST** have a final slash at the end
@@ -121,11 +125,17 @@
 
     \$CFG->rsspostsmaxage = $PARSEDCFG->rsspostsmaxage;
 
-// Admin panel username and password
+// Set this to 'admin' to only allow administrators to create new communities.
+// You can set this to other user flags if you're told to by a plugin.
 
-    \$CFG->adminuser = '$PARSEDCFG->adminuser';
-    \$CFG->adminpassword = '$PARSEDCFG->adminpassword';
+    \$CFG->community_create_flag = "$PARSEDCFG->community_create_flag";
 
+// Username and password for the admin panel at /_elggadmin/
+// To use the admin panel, these can't be left blank!
+
+    \$CFG->adminuser = "$PARSEDCFG->adminuser";
+    \$CFG->adminpassword = "$PARSEDCFG->adminpassword";
+    
 //
 //   Capture performance profiling data
 //   define('ELGG_PERF'  , true);
@@ -154,8 +164,8 @@
 // TEMPLATES HANDLING
 \$CFG->disable_usertemplates = $PARSEDCFG->disable_usertemplates;  // users can only choose from available templates
 \$CFG->disable_templatechanging = $PARSEDCFG->disable_templatechanging; // users can't change their template at all
-//Templates root defaults to /_templates; if you change this, you will need
-//to move or copy /_templates/Default_Template/ to the new location
+//Templates root defaults to /mod/template/templates; if you change this, you will need
+//to move or copy /mod/template/templates/Default_Template/ to the new location
 \$CFG->templatesroot = '$PARSEDCFG->templatesroot'; // use on-disk templates instead of DB templates 
 
 //Template file handing is not currently recommended.
@@ -185,33 +195,27 @@
 // This user needs write access to {\$CFG->dataroot}lms/incoming/ as that is where the incoming files will end up.
 
 
-// Some other \$CFG variables found in codebase
+// For SSL feed *reading* support, Snoopy needs to know where the curl executable is.
+// To disable, or if curl is not available (e.g. on Windows), set to false
+//\$CFG->curlpath = "/usr/bin/curl";
+\$CFG->curlpath = '$PARSEDCFG->curlpath';
+
+// Some other \$CFG variables found in codebase.
+// They may or may not be config options. Some are just used for holding global data.
 
 // \$CFG->admin
-// \$CFG->allowobjectembed
-// \$CFG->aspellpath
+// \$CFG->allowobjectembed // boolean - whether to allow <object> and <embed> tags through input-cleaning
 // \$CFG->auth
 // \$CFG->cachetext
 // \$CFG->currenttextiscacheable
 // \$CFG->dbsessions
 // \$CFG->detect_unchecked_vars
-// \$CFG->editorbackgroundcolor
-// \$CFG->editorfontfamily
-// \$CFG->editorfontlist
-// \$CFG->editorfontsize
-// \$CFG->editorhidebuttons
-// \$CFG->editorkillword
-// \$CFG->editorspelling
 // \$CFG->filterall
 // \$CFG->framename
-// \$CFG->handlebounces
-// \$CFG->ignoresesskey
-// \$CFG->lang
-// \$CFG->lastcron
-// \$CFG->libdir
+// \$CFG->handlebounces // in commented-out code
+// \$CFG->ignoresesskey // in commented-out code
 // \$CFG->logsql
 // \$CFG->maxbytes
-// \$CFG->newsclient_lastcron
 // \$CFG->openid_comments_allowed
 // \$CFG->opentogoogle
 // \$CFG->pathtodu

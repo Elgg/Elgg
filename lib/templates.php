@@ -2,7 +2,7 @@
 
 /*** NZVLE TODO
  *** 
- *** + Break the html/css bits of the default template into separate files
+ *** + Break the html/css bits of the Default_Template into separate files
  ***   they mess up the code layout and indentation, and generally don't 
  ***   belong here.
  *** + Clean up and document the calling conventions -- get rid of $parameter
@@ -10,6 +10,26 @@
  ***
  ***/
 
+/***
+ *** Takes in the short name of a template and returns the comparable version
+ *** from the file system
+ *** @param string $shortname short name of template to convert to file version
+ ***/
+function templates_shortname_to_file($shortname) {
+    $shortname = str_replace(" ","_",$shortname);
+    return $shortname;
+}
+
+/***
+ *** Takes in the directory name of a template and returns the comparable version
+ *** for use as a shortname to display
+ *** @param string $foldername folder name of template to convert to internal version
+ ***/
+ function templates_file_to_shortname($foldername) {
+     $foldername = str_replace("_"," ",$foldername);
+     return $foldername;
+ }
+ 
 function default_template () {
 
     global $CFG;
@@ -51,7 +71,7 @@ function default_template () {
     $template['frontpage_loggedin'] = file_get_contents($CFG->templatesroot . "Default_Template/frontpage_loggedin");
     
     // REMOVED stylesheet (was old version and should not have been here)
-    // TODO: extract all default template stuff from lib/templates.php
+    // TODO: extract all Default_Template stuff from lib/templates.php
 
 $template_definition[] = array(
                                     'id' => 'contentholder',
@@ -423,23 +443,25 @@ function templates_page_setup (){
     //
 
     if (isadmin()) {
-    $PAGE->menu_top [] = array( 'name' => 'admin',
-                                //'html' => a_href("{$CFG->wwwroot}_admin/",
-                                //                "Administration"));
-                                'html' => "<li><a href=\"" . $CFG->wwwroot . "_admin/\">" . __gettext("Administration") . "</a></li>");
+        $PAGE->menu_top [] = array( 'name' => 'admin',
+                                    //'html' => a_href("{$CFG->wwwroot}_admin/",
+                                    //                "Administration"));
+                                    'html' => "<li><a href=\"" . $CFG->wwwroot . "_admin/\">" . __gettext("Administration") . "</a></li>");
     }
     
-    $PAGE->menu_top[] = array(
-                              'name' => 'userdetails',
-                              //'html' => a_href("{$CFG->wwwroot}_userdetails/",
-                              //                  "Account settings"));
-                              'html' => "<li><a href=\"" . $CFG->wwwroot . "_userdetails/\">" . __gettext("Account settings") . "</a></li>");
-
-    $PAGE->menu_top[] = array(
-                              'name' => 'logoff',
-                              //'html' => a_href("{$CFG->wwwroot}login/logout.php",
-                              //                 "Log off"));
-                              'html' => "<li><a href=\"" . $CFG->wwwroot . "login/logout.php\">" . __gettext("Log off") . "</a></li>");
+    if (logged_on) {
+        $PAGE->menu_top[] = array(
+                                  'name' => 'userdetails',
+                                  //'html' => a_href("{$CFG->wwwroot}_userdetails/",
+                                  //                  "Account settings"));
+                                  'html' => "<li><a href=\"" . $CFG->wwwroot . "_userdetails/\">" . __gettext("Account settings") . "</a></li>");
+    
+        $PAGE->menu_top[] = array(
+                                  'name' => 'logoff',
+                                  //'html' => a_href("{$CFG->wwwroot}login/logout.php",
+                                  //                 "Log off"));
+                                  'html' => "<li><a href=\"" . $CFG->wwwroot . "login/logout.php\">" . __gettext("Log off") . "</a></li>");
+    };
 
     if (defined("context") && context == "account") {
         $PAGE->menu_sub[] = array(
@@ -551,14 +573,13 @@ function templates_page_draw ($param) {
     return $run_result;
 }
 
-function templates_actions () {
+function templates_actions() {
 
     global $CFG,$USER,$db;
 
     // Actions
 
-    global $template;
-    global $messages;
+    global $template, $messages, $CFG;
     
     $action = optional_param('action');
     if (!logged_on) {
@@ -569,44 +590,46 @@ function templates_actions () {
     
     switch ($action) {
         case "templates:select":
-            $id = optional_param('selected_template',0,PARAM_INT);
-            if ($id == -1) {
-                $exists = 1;
+            $id = optional_param('selected_template');
+            if (substr($id, 0, 2) == "db") {
+                $template_id = (int) substr($id,2);
+                $exists = record_exists_sql('SELECT ident, shortname FROM '.$CFG->prefix.'templates WHERE ident = '.$template_id.' AND (owner = '.$USER->ident ." OR public='yes')");
             } else {
-                $exists = record_exists_sql('SELECT ident FROM '.$CFG->prefix.'templates WHERE ident = '.$id.' AND (owner = '.$USER->ident ." OR public='yes')");
+                $exists = file_exists($CFG->templatesroot . templates_shortname_to_file($id));
             }
             if ($exists) {
-                $t = new StdClass;
-                $t->template_id = $id;
-                $t->ident = $USER->ident;
-                update_record('users',$t);
-                
-                $messages[] = __gettext("Your current template has been changed.");
+                $affected_areas = optional_param('affected_areas',0,PARAM_INT);
+                if(is_array($affected_areas)) {
+                    foreach($affected_areas as $index => $value) {
+                        //TODO - check security
+                        set_field('users','template_name',$id,'ident',$value);
+                    }
+                    $messages[] = __gettext("The templates have been changed according to your choices.");
+                } else {
+                    $messages[] = __gettext("No changes made as no area of change was selected!");
+                }
             }
             break;
             
+
         case "templates:save":
-            $template = optional_param('template');
+            $templatearray = optional_param('template','','');
             $id = optional_param('save_template_id',0,PARAM_INT);
-            $templatetitle = optional_param('templatetitle');
-            if (!empty($template) && !empty($id) && !empty($templatetitle)) {
+            $templatetitle = trim(optional_param('templatetitle'));
+            if (!empty($templatearray) && !empty($id) && !empty($templatetitle)) {
                 unset($_SESSION['template_element_cache'][$id]);
                 $exists = record_exists('templates','ident',$id,'owner',$USER->ident);
                 if ($exists) {
-                    $t = new StdClass;
-                    $t->name = $templatetitle;
-                    $t->ident = $id;
-                    update_record('templates',$t);
+                    set_field('templates','name',$templatetitle,'ident',$id);
                     delete_records('template_elements','template_id',$id);
-                    $contents = optional_param('template');
-                    foreach ($contents as $name => $content) {
+                    foreach($templatearray as $name => $content) {
                         //TODO Fix this with PARAM_CLEANHTML or similar
-                        $slashname = addslashes($name);
-                        $slashcontent = addslashes($content);
+                        $cleanname = trim($name);
+                        $cleancontent = trim($content);
                         if ($content != "" && $content != $template[$name]) {
                             $te = new StdClass;
-                            $te->name = $slashname;
-                            $te->content = $slashcontent;
+                            $te->name = $cleanname;
+                            $te->content = $cleancontent;
                             $te->template_id = $id;
                             insert_record('template_elements',$te);
                         }
@@ -615,6 +638,8 @@ function templates_actions () {
                 }
             }
             break;
+            
+            
         case "deletetemplate":
             $id = optional_param('delete_template_id',0,PARAM_INT);
             unset($_SESSION['template_element_cache'][$id]);
@@ -623,28 +648,31 @@ function templates_actions () {
                 //$db->execute('UPDATE '.$CFG->prefix.'users SET template_id = -1 WHERE template_id = '.$id);
                 set_field('users', 'template_id', -1, 'template_id', $id);
                 delete_records('template_elements','template_id',$id);
-                delete_records('template','ident',$id);
+                delete_records('templates','ident',$id);
                 $messages[] = __gettext("Your template was deleted.");
             }
             break;
+            
+            
         case "templates:create":
-            $based_on = optional_param('template_based_on',0,PARAM_INT);
-            $name = optional_param('new_template_name');
-            if (!empty($name)) { // $based_on can be empty, surely?  -Penny
+            $based_on = optional_param('template_based_on');
+            $name = trim(optional_param('new_template_name'));
+            if (empty($CFG->disable_usertemplates) && !empty($name)) {
                 $t = new StdClass;
                 $t->name = $name;
                 $t->public = 'no';
                 $t->owner = $USER->ident;
                 $new_template_id = insert_record('templates',$t);
-                if ($based_on != -1) {
-                    $exists = record_exists_sql('SELECT ident FROM '.$CFG->prefix.'templates WHERE ident = ? AND (owner = ? OR public = ?)',array($based_on,$USER->ident,'yes'));
-                    if ($exists) {
-                        if ($elements = get_records('template_elements','template_id',$based_on)) {
-                            foreach($elements as $element) {
-                                $element->template_id = $new_template_id;
-                                insert_record('template_elements',$element);
-                            }
-                        }
+                $t->shortname = 'db'.$new_template_id;
+                $t->ident = $new_template_id;
+                update_record('templates',$t);
+                foreach(array('pageshell','css') as $template_element) {
+                    if ($result = get_template_element($based_on, $template_element)) {
+                        $element = new stdClass;
+                        $element->template_id = $new_template_id;
+                        $element->content = $result->content;
+                        $element->name = $template_element;
+                        insert_record('template_elements',$element);
                     }
                 }
             }
@@ -660,11 +688,11 @@ function templates_draw ($parameter) {
     // $parameter['template'] = the template ID, $parameter['element'] = the template element,
     // all other $parameter[n] = template elements
 
-    // Initialise global template variable, which contains the default template
+    // Initialise global template variable, which contains the Default_Template
         global $template;
         
     // Initialise global template ID variable, which contains the template ID we're using
-        global $template_id;
+        global $template_name;
         global $page_owner;
         global $CFG;
         
@@ -676,49 +704,48 @@ function templates_draw ($parameter) {
             // error_log("templates_draw pcontext " . print_r($parameter,1));
         }
     // Get template details
-        if (!isset($template_id)) {
+        if (!isset($template_name)) {
             if (!isset($page_owner) || $page_owner == -1) {
-                $template_id = -1;
+                $template_name = "Default_Template";
             } else {
-                // if (!isset($_SESSION['template_id_cache'][$page_owner])) {
-                if (!$template_id = user_info('template_id',$page_owner)) {
-                    $template_id = -1;
+                if (!$template_name = user_info('template_name',$page_owner)) {
+                    $template_name = "Default_Template";
                 }
-                // }
-                // $template_id = $_SESSION['template_id_cache'][$page_owner];
             }
         }
         
     // Template ID override
-        $t = optional_param('template_preview',0,PARAM_INT);
+        $t = optional_param('template_preview');
         if (!empty($t)) {
-            $template_id = $t;
+            $template_name = $t;
         }
 
     // Grab the template content
-        if ($template_id == -1 || ($parameter['context'] != "css" && $parameter['context'] != "pageshell")) {
-            $template_element = $template[$parameter['context']];            
+        if ($template_name == "Default_Template" || ($parameter['context'] != "css" && $parameter['context'] != "pageshell")) {
+            $template_element = $template[$parameter['context']];
         } else {
-            $template_context = addslashes($parameter['context']);
-                if (!isset($page_template_cache[$parameter['context']])) {
-                    $result = get_template_element($template_id, $template_context);
+            if (!isset($page_template_cache[$parameter['context']])) {
+                if ($result = get_template_element($template_name, $parameter['context'])) {
                     $page_template_cache[$parameter['context']] = $result;
                 } else {
-                    $result = $page_template_cache[$parameter['context']];
+                    $page_template_cache[$parameter['context']] = $template[$parameter['context']];
                 }
-                if (!empty($result)) {
-                    $template_element = stripslashes($result->content);
-                } else {
-                    $template_element = $template[$parameter['context']];
-                }
+            } else {
+                $result = $page_template_cache[$parameter['context']];
+            }
+            if (!empty($result)) {
+                $template_element = $result->content;
+            } else {
+                $template_element = $template[$parameter['context']];
+            }
         }
         
-        if (!empty($CFG->templates->variables_substitute) && (is_callable($CFG->templates->variables_substitute[$parameter['context']]) || is_array($CFG->templates->variables_substitute[$parameter['context']]))) {
+        if (!empty($CFG->templates->variables_substitute) && !empty($CFG->templates->variables_substitute[$parameter['context']])) {
             if (is_array($CFG->templates->variables_substitute[$parameter['context']])) {
                 foreach ($CFG->templates->variables_substitute[$parameter['context']] as $sub_function) {
                     $template_element .= $sub_function($vars);
                 }
-            } else {
+            } elseif (is_callable($CFG->templates->variables_substitute[$parameter['context']])) {
                 $template_element .= $CFG->templates->variables_substitute[$parameter['context']]($vars);
             }
         }
@@ -730,7 +757,7 @@ function templates_draw ($parameter) {
     // Substitute elements
 
         $functionbody = "
-            \$passed = array(".var_export($parameter,true).",\$matches[1], " . $template_id . ");
+            \$passed = array(".var_export($parameter,true).",\$matches[1], '" . $template_name . "');
             return templates_variables_substitute(\$passed);
         ";
         
@@ -741,8 +768,12 @@ function templates_draw ($parameter) {
         return $run_result;
 }
 
+/***
+ *** Draws a form to create a new template based on one of the existing choices.
+ ***/
 function templates_add () {
     global $USER;
+
 
     // Create a new template
         $header = __gettext("Create theme"); // gettext variable
@@ -767,17 +798,16 @@ END;
                                             )
                                             );
         
-        $default = __gettext("Default Theme"); // gettext variable
-        $column1 = <<< END
-        
-            <select name="template_based_on">
-                <option value="-1">$default</option>
-END;
-        
-        if ($templates = get_records_select('templates','owner = '.$USER->ident." OR public = 'yes'",'public')) {
-            foreach($templates as $template) {
-                $column1 .= "<option value=\"".$template->ident."\">".stripslashes($template->name) . "</option>";
+        $default = __gettext("Default Template"); // gettext variable
+        $templates_list = templates_list();
+        $column1 = "<select name=\"template_based_on\">";
+        foreach($templates_list as $template) {
+            $name = __gettext($template['name']);
+            $column1 .= "<option value=\"".$template['name']."\"";
+            if ($template['name'] == "Default Template") {
+                $column1 .= " selected=\"selected\"";
             }
+            $column1 .= ">" . $name . "</option>";
         }
         
         $column1 .= <<< END
@@ -803,8 +833,7 @@ END;
         
 END;
 
-        $run_result .= $panel;
-        return $run_result;
+        return $panel;
 }
 
 function templates_edit () {
@@ -816,42 +845,55 @@ function templates_edit () {
 
     if (!isset($parameter)) {
     // Get template details
-        if (!$template_id = user_info('template_id',$USER->ident)) {
-            $template_id = -1;
+        if (!$template_name = user_info('template_name',$USER->ident)) {
+            $template_name = "Default_Template";
         }
     } else {
         if (!is_array($parameter)) {
-            $template_id = (int) $parameter;
+            $template_name = trim($parameter);
         } else {
-            $template_id = -1;
+            $template_name = "Default_Template";
         }
     }
 
     // Grab title, see if we can edit the template
         $editable = 0;
-        if ($template_id == -1) {
+        if ($template_name == "Default_Template") {
             $templatetitle = __gettext("Default Theme");
         } else {
-            $templatestuff = get_record('templates','ident',$template_id);
-            $templatetitle = stripslashes($templatestuff->name);
-            if ($templatestuff->owner == $USER->ident) {
-                $editable = 1;
-            }
-            if (($templatestuff->owner != $USER->ident) && ($templatestuff->public != 'yes')) {
-                $template_id = -1;
+            if ($templatestuff = get_record('templates','shortname',$template_name)) {
+                $templatetitle = $templatestuff->name;
+                if ($templatestuff->owner == $USER->ident) {
+                    $editable = 1;
+                }
+                if (($templatestuff->owner != $USER->ident) && ($templatestuff->public != 'yes')) {
+                    $template_name = 'Default_Template';
+                }
             }
         }
     
     // Grab the template content
-        if ($template_id == -1) {
+        if ($template_name == "Default_Template") {
             $current_template = $template;
         } else {
-            if ($elements = get_records('template_elements','template_id',$template_id)) {
-                foreach($result as $element) {
-                    $current_template[stripslashes($element->name)] = stripslashes($element->content);
+            
+            if (substr($template_name, 0, 2) == "db") {
+                $template_id = (int) substr($template_name,2);
+                $result = get_record('template_elements','template_id',$template_id,'name',$element_name);
+                if ($elements = get_records('template_elements','template_id',$template_id)) {
+                    foreach($result as $element) {
+                        $current_template[$element->name] = $element->content;
+                    }
+                } else {
+                    $current_template = $template;
                 }
             } else {
-                $current_template = $template;
+               foreach(array('pageshell','css') as $element_name) {
+                   $template_file = $CFG->templatesroot . templates_shortname_to_file($template_name) . '/' . $element_name;
+                   if ($element_content = file_get_contents($template_file)) {
+                        $current_template[$element_name] = $element_content;
+                   }
+                }
             }
         }
     
@@ -952,7 +994,7 @@ function templates_preview () {
         $numberedList = __gettext("A numbered list"); // gettext variable
         $body = <<< END
         
-    <img src="{$CFG->wwwroot}_templates/leaves.jpg" width="300" height="225" alt="A test image" align="right" />
+    <img src="{$CFG->wwwroot}mod/template/images/leaves.jpg" width="300" height="225" alt="A test image" align="right" />
     <h1>$heading1</h1>
     <p>Paragraph text</p>
     <h2>$heading2</h2>
@@ -1007,10 +1049,38 @@ END;
         return $run_result;
 }
 
-function templates_view () {
-    global $USER;
+/***
+ *** Returns a list of templates as an array.
+ ***/
+function templates_list() {
+    
+        $template_list = array();
+        if ($templates = get_list_of_plugins('mod/template/templates','theme_master')) {
+            foreach($templates as $template) {
+                $template_list[] = array(
+                                            'name' => templates_file_to_shortname($template),
+                                            'id' => NULL,
+                                            'shortname' => $template
+                                         );
+            }
+        }
+        if ($templates = get_records('templates','public','yes')) {
+            foreach($templates as $template) {
+                $template_list[] = array(
+                                         'name' => $template->name,
+                                         'id' => $template->ident,
+                                         'shortname' => $template->shortname
+                                         );
+            }
+        }
+        return $template_list;
+}
 
-    $user_template = user_info('template_id',$USER->ident);
+function templates_view () {
+    global $USER, $CFG;
+    $run_result = "";
+
+    $user_template = user_info('template_name',$USER->ident);
         $sitename = sitename;
         $title = __gettext("Select / Create / Edit Themes"); // gettext variable
         $header = __gettext("Public Themes"); // gettext variable
@@ -1027,29 +1097,27 @@ function templates_view () {
     </p>
     
 END;
-
+/*
         $template_list[] = array(
                                     'name' => __gettext("Default Theme"),
+                                    'shortname' => "Default_Template",
                                     'id' => -1
                                 );
-        if ($templates = get_records('templates','public','yes')) {
-            foreach($templates as $template) {
-                $template_list[] = array(
-                                         'name' => stripslashes($template->name),
-                                         'id' => stripslashes($template->ident)
-                                         );
-            }
-        }
+*/
+        $template_list = templates_list();
         foreach($template_list as $template) {
-            $name = "<input type='radio' name='selected_template' value='".$template['id']."' ";
-            if ($template['id'] == $user_template) {
+            if ($template['name'] == "Default Template") {
+                $template['name'] = __gettext("Default Template");
+            }
+            $name = "<input type='radio' name='selected_template' value='".$template['shortname']."' ";
+            if ($template['shortname'] == $user_template) {
                 $name .= "checked=\"checked\"";
             }
             $name .=" /> ";
             $column1 = "<b>" . $template['name'] . "</b>";
-            $column2 = "<a href=\"".url."_templates/preview.php?template_preview=".$template['id']."\" target=\"preview\">" . __gettext("preview") . "</a>";
+            $column2 = "<a href=\"".url."_templates/preview.php?template_preview=".$template['shortname']."\" target=\"preview\">" . __gettext("Preview") . "</a>";
             $panel .=templates_draw(array(
-                                                        'context' => 'databox',
+                                                        'context' => 'adminTable',
                                                         'name' => $name,
                                                         'column1' => $column1,
                                                         'column2' => $column2
@@ -1073,18 +1141,18 @@ END;
 END;
 
             foreach($templates as $template) {
-                    $name = "<input type='radio' name='selected_template' value='".$template->ident."'";
-                    if ($template->ident == $user_template) {
-                        $name .= "checked=\"checked\"";
+                    $name = "<input type='radio' name='selected_template' value='db".$template->ident."'";
+                    if ($template->shortname == $user_template) {
+                        $name .= " checked=\"checked\"";
                     }
                     $name .=" /> ";
-                    $column1 = "<b>" . stripslashes($template->name) . "</b>";
-                    $column2 = "<a href=\"".url."_templates/preview.php?template_preview=".$template->ident."\" target=\"preview\">" . __gettext("preview") . "</a>";
+                    $column1 = "<b>" . $template->name . "</b>";
+                    $column2 = "<a href=\"".url."_templates/preview.php?template_preview=".$template->shortname."\" target=\"preview\">" . __gettext("Preview") . "</a>";
 
                     $column2 .= " | <a href=\"".url."_templates/edit.php?id=".$template->ident."\" >". __gettext("Edit") ."</a>";
                     $column2 .= " | <a href=\"".url."_templates/?action=deletetemplate&amp;delete_template_id=".$template->ident."\"  onclick=\"return confirm('" . __gettext("Are you sure you want to permanently remove this template?") . "')\">" . __gettext("Delete") . "</a>";
                     $panel .=templates_draw(array(
-                                                        'context' => 'databox',
+                                                        'context' => 'adminTable',
                                                         'name' => $name,
                                                         'column1' => $column1,
                                                         'column2' => $column2
@@ -1092,6 +1160,47 @@ END;
                                                     );
             }
         }
+        
+                $ownerCommunities = get_records('users','owner',$USER->ident);
+        $header3 = __gettext("Change templates");
+        $decs3 = __gettext("The selected changes will affect:");
+        
+        $panel .= <<< END
+<br />
+    <h2>
+        $header3
+    </h2>
+    <p>
+        $decs3
+    </p>
+END;
+    
+        $name = "<input type='checkbox' name='affected_areas[]' value='".$USER->ident."' checked=\"checked\" />";
+        $column1 = "<h4>User page</h4>";
+        $column2 = "<h4>". __gettext("Your personal space") ."</h4>";
+        $panel .= templates_draw(array(
+                            'context' => 'adminTable',
+                        'name' => $name,
+                        'column1' => $column1,
+                        'column2' => $column2
+                        )
+                        );
+    
+        if(!empty($ownerCommunities)) {
+            foreach($ownerCommunities as $ownerCommunity) {
+                $name = "<input type='checkbox' name='affected_areas[]' value='".$ownerCommunity->ident."' />";
+                $column1 = "<h4>".stripslashes($ownerCommunity->name)."</h4>";
+                $column2 = "<h4>".__gettext("Community: ") . stripslashes($ownerCommunity->name)."</h4>";
+                $panel .= templates_draw(array(
+                                    'context' => 'adminTable',
+                                'name' => $name,
+                                'column1' => $column1,
+                                'column2' => $column2
+                                )
+                                );
+            }
+        }
+
         
     $submitValue = __gettext("Select new theme"); // gettext variable
     $panel .= <<< END
@@ -1127,6 +1236,7 @@ function templates_variables_substitute ($param) {
     global $metatags;
     global $PAGE;
     global $template_id;
+    global $template_name;
     global $db;
     
     //error_log("tvs " . print_r($template_variable,1));
@@ -1165,9 +1275,9 @@ function templates_variables_substitute ($param) {
             break;
         case "userfullname":
             if (logged_on) {
-                $result =  htmlspecialchars($_SESSION['name'], ENT_COMPAT, 'utf-8');
+                $result = __gettext("Welcome") . " " . htmlspecialchars($_SESSION['name'], ENT_COMPAT, 'utf-8');
             } else {
-                $result =  __gettext("Guest") . " [<a href=\"".url."login/index.php\">" . __gettext("Log in") . "</a>]";
+                $result = __gettext("Welcome") . " " . __gettext("Guest") . " [<a href=\"".url."login/index.php\">" . __gettext("Log in") . "</a>]";
             }
             break;
         case "menu":
@@ -1187,12 +1297,10 @@ function templates_variables_substitute ($param) {
             break;
 
         case "topmenu":
-            if (logged_on) {
                 $result =  templates_draw(array(
                                             'topmenuitems' => menu_join('', $PAGE->menu_top),
                                             'context' => 'topmenu'
                                             ));
-            }
             break;
 
         case "url":
@@ -1209,13 +1317,13 @@ function templates_variables_substitute ($param) {
 
         case "metatags":
             // $run_result = "<link href=\"/".$template_variable.".css\" rel=\"stylesheet\" type=\"text/css\" />";
-            $result =   "<style type=\"text/css\"><!--\n"
+            $result =   "<style type=\"text/css\">\n"
                 . templates_draw(array(
-                                       'template' => $template_id,
+                                       'template' => $template_name,
                                        'context' => 'css'
                                        )
                                  )
-                . "// -->\n</style>\n"
+                . "\n</style>\n"
                 . $metatags;
             break;
             
@@ -1240,9 +1348,9 @@ function templates_variables_substitute ($param) {
             }
             
             if ($users = get_records_sql("SELECT DISTINCT u.*,i.filename AS iconfile, ".$db->random." as rand 
-                                    FROM ".$CFG->prefix."tags t JOIN ".$CFG->prefix."users u ON u.ident = t.owner
+                                    FROM ".$CFG->prefix."profile_data t JOIN ".$CFG->prefix."users u ON u.ident = t.owner
                                     LEFT JOIN ".$CFG->prefix."icons i ON i.ident = u.icon 
-                                    WHERE t.tagtype IN (?,?,?) AND u.icon != ? AND t.access = ? AND u.user_type = ? 
+                                    WHERE t.name IN (?,?,?) AND u.icon != ? AND t.access = ? AND u.user_type = ? 
                                     ORDER BY rand LIMIT " . $vars[1],array('biography','minibio','interests',-1,'PUBLIC','person'))) {
                 $usercount = 0;
                 foreach($users as $user) {
@@ -1251,9 +1359,11 @@ function templates_variables_substitute ($param) {
                     } else {
                         $result .= " ";
                     }
-                    $result .= "<a href=\"" . $CFG->wwwroot . $user->username . "/\">" . stripslashes($user->name) . "</a>";
+                    $result .= "<a href=\"" . $CFG->wwwroot . $user->username . "/\">" . $user->name . "</a>";
                     $usercount++;
                 }
+            } else {
+                $result .= __gettext("Sorry, no users have filled in their profiles yet.");
             }
             
             break;
@@ -1286,8 +1396,6 @@ function templates_variables_substitute ($param) {
 END;
                 
                 foreach($users as $user) {
-
-                    $user->name = stripslashes($user->name);
                     $result .= <<< END
                     
                       <td align="center">
@@ -1317,10 +1425,7 @@ END;
             $tags = get_records_sql("SELECT tag, count(ident) as numtags FROM `".$CFG->prefix."tags` WHERE access = 'public' and tagtype=".$vars[1]." group by tag order by numtags desc limit 20");
             $tag_count = 0;
             foreach($tags as $tag) {
-                
-                
-                $tag->tag = stripslashes($tag->tag);
-                $result .= "<a href=\"".url."tag/".urlencode(htmlspecialchars(strtolower(($tag->tag)), ENT_COMPAT, 'utf-8'))."\" title=\"".htmlspecialchars($tag->tag, ENT_COMPAT, 'utf-8')." (" .$tag->numtags. ")\">";
+                $result .= "<a href=\"".url."tag/".urlencode(htmlspecialchars(strtolower($tag->tag), ENT_COMPAT, 'utf-8'))."\" title=\"".htmlspecialchars($tag->tag, ENT_COMPAT, 'utf-8')." (" .$tag->numtags. ")\">";
                 $result .= $tag->tag . "</a>";
                 if ($tag_count < sizeof($tags) - 1) {
                     $result .= ", ";
@@ -1329,6 +1434,7 @@ END;
             }
             
             break;
+            
         case "populartags":
             $result = "";
             $tags = get_records_sql("SELECT tag, count(ident) as numtags FROM `".$CFG->prefix."tags` WHERE access = 'public' and tag!='' group by tag having numtags > 1 order by ident desc limit 20");
@@ -1348,8 +1454,7 @@ END;
                     $size = 100;
                 }
                 
-                $tag->tag = stripslashes($tag->tag);
-                $result .= "<a href=\"".url."tag/".urlencode(htmlspecialchars(strtolower(($tag->tag)), ENT_COMPAT, 'utf-8'))."\" style=\"font-size: $size%\" title=\"".htmlspecialchars($tag->tag, ENT_COMPAT, 'utf-8')." (" .$tag->numtags. ")\">";
+                $result .= "<a href=\"".url."tag/".urlencode(htmlspecialchars(strtolower($tag->tag), ENT_COMPAT, 'utf-8'))."\" style=\"font-size: $size%\" title=\"".htmlspecialchars($tag->tag, ENT_COMPAT, 'utf-8')." (" .$tag->numtags. ")\">";
                 $result .= $tag->tag . "</a>";
                 if ($tag_count < sizeof($tags) - 1) {
                     $result .= ", ";
@@ -1363,12 +1468,12 @@ END;
             
         }
     }
-    if (!empty($CFG->templates->variables_substitute) && (is_callable($CFG->templates->variables_substitute[$template_variable]) || is_array($CFG->templates->variables_substitute[$template_variable]))) {
+    if (!empty($CFG->templates->variables_substitute) && !empty($CFG->templates->variables_substitute[$template_variable])) {
         if (is_array($CFG->templates->variables_substitute[$template_variable])) {
             foreach ($CFG->templates->variables_substitute[$template_variable] as $sub_function) {
                 $result .= $sub_function($vars);
             }
-        } else {
+        } elseif (is_callable($CFG->templates->variables_substitute[$template_variable])) {
             $result .= $CFG->templates->variables_substitute[$template_variable]($vars);
         }
     }
@@ -1377,25 +1482,41 @@ END;
 }
 
 /***
- *** Fetches the template elements from disk or db. 
+ *** Fetches the template elements from disk or db.
+ *** If $template_name starts with 'db', it will assume the rest of the name
+ *** is a database ident. Otherwise, it will 
  ***/
-function get_template_element ($template_id, $element_name) {
+function get_template_element ($template_name, $element_name) {
     global $CFG;
+    static $template_cache;
 
+    // $template_name = strtolower(clean_param($template_name, PARAM_ALPHANUM));
+    $result = false;
     if ($CFG->templatestore === 'db') {
-        $result = get_record('template_elements','template_id',$template_id,'name',$element_name);
-    } else {
-        $template_name = get_field('templates', 'name', 'ident', $template_id);
-        $template_name = strtolower(clean_param($template_name, PARAM_ALPHANUM));
-        $template_file = $CFG->templatesroot . $template_name . '/' . $element_name;
-        
-        if (! $element_content = file_get_contents($template_file)) {
-            trigger_error("Problems retrieving template element from $template_file");
+        if (substr($template_name, 0, 2) == "db") {
+            $template_id = (int) substr($template_name,2);
+            $result = get_record('template_elements','template_id',$template_id,'name',$element_name);
         } else {
+           $template_file = $CFG->templatesroot . templates_shortname_to_file($template_name) . '/' . $element_name;
+           if ($element_content = @file_get_contents($template_file)) {
+                $result = new StdClass;
+                $result->content = $element_content;
+                $result->ident   = NULL;
+                $result->name    = $element_name;
+                $result->shortname = $template_name;
+            }
+        }
+    } else {
+        // $template_name = get_field('templates', 'name', 'ident', $template_id);
+        // $template_name = strtolower(clean_param($template_name, PARAM_ALPHANUM));
+        $template_file = $CFG->templatesroot . templates_shortname_to_file($template_name) . '/' . $element_name;
+        
+        if ($element_content = @file_get_contents($template_file)) {
             $result = new StdClass;
             $result->content = $element_content;
             $result->ident   = $template_id;
             $result->name    = $element_name;
+            $result->shortname = $template_name;
         }
     }
     return $result;

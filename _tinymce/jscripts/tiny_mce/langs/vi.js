@@ -1,4 +1,4 @@
-// Vietnamese lang variables - Đỗ Xuân Tiến - tiendx2002@yahoo.com Việt hóa
+﻿// Vietnamese lang variables - Đỗ Xuân Tiến - tiendx2002@yahoo.com Việt hóa
 
 tinyMCE.addToLang('',{
 bold_desc : 'Đậm (Ctrl+B)',
@@ -23,7 +23,7 @@ focus_alert : 'Cần nhấn chuột vào bên trong ô nhập trước khi sử 
 edit_confirm : 'Bạn có muốn dùng chế độ WYSIWYG (thấy gì có nấy) cho ô nhập này?',
 insert_link_title : 'Thêm/sửa liên kết',
 insert : 'Thêm',
-update : 'Cập nhật',
+update : 'Cập_nhật',
 cancel : 'Hủy bỏ',
 insert_link_url : 'Địa chỉ liên kết',
 insert_link_target : 'Mục tiêu',

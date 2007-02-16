@@ -1,11 +1,11 @@
 // RU lang variables KOI8-R
 
 tinyMCE.addToLang('flash',{
-title : 'Вставить / Редактировать Flash ролик',
-desc : 'Вставить / Редактировать Flash ролик',
-file : 'Flash-Файл (.swf)',
+title : 'Вставить / Редактировать флеш-ролик',
+desc : 'Вставить / Редактировать флеш-ролик',
+file : 'Флеш-Файл (.swf)',
 size : 'Размер',
-list : 'Flash файлы',
-props : 'Свойства Flash',
+list : 'Флеш-файлы',
+props : 'Свойства флеш',
 general : 'Основное'
 });

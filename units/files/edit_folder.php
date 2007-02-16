@@ -16,15 +16,14 @@ if ($this_folder != 0) {
 
     $folder_details = get_record('file_folders','ident',$this_folder);
     if (!empty($folder)  && (run("permissions:check", array("files:edit",$folder_details->owner)) || run("permissions:check", array("files:edit",$folder_details->files_owner)))) {
-        $edit = __gettext("Edit this folder"); // gettext variable
+        // $edit = __gettext("Edit this folder"); // gettext variable
         $run_result .= <<< END
-    <h3>
-        $edit
-    </h3>
     <form action="" method="post">
 END;
         $labelValue = __gettext("Folder name:"); // gettext variable
-        $parentFolder = __gettext("Parent folder"); // gettext variable
+        $parentFolder = __gettext("Parent folder:"); // gettext variable
+        $folderType = __gettext("Folder type:"); // gettext variable
+        $folderTypePicker = file_folder_type_switcher($folder_details, "edit_folder_type");
         $body = <<< END
         <table width="100%">
             <tr>
@@ -39,14 +38,23 @@ END;
             </tr>
             <tr>
                 <td>
+                    <p><label for="new_folder_type">$folderType</label></p>
+                </td>
+                <td>
+                    <p>$folderTypePicker</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
                     <p><label for="edit_folder_parent">
                         $parentFolder
                     </label></p>
                 </td>
                 <td><p>
 END;
-        $body .= run("folder:select", array("edit_folder_parent",$_SESSION['userid'],$folder_details->parent));
-        $accessLabel = __gettext("Access restrictions"); // gettext variable
+        // $body .= run("folder:select", array("edit_folder_parent",$_SESSION['userid'],$folder_details->parent));
+        $body .= run("folder:select", array("edit_folder_parent",$folder_details->files_owner,$folder_details->parent));
+        $accessLabel = __gettext("Access restrictions:"); // gettext variable
         $body .= <<< END
                 </p></td>
             </tr>
@@ -58,6 +66,9 @@ END;
                 </td>
                 <td><p>
 END;
+
+        
+
         $body .= run("display:access_level_select",array("edit_folder_access",$folder_details->access));
         $keywords = __gettext("Keywords (comma separated):"); // gettext variable
         $body .= <<< END
@@ -106,7 +117,9 @@ END;
 
 $title = __gettext("Create a new folder");
 $createLabel = __gettext("To create a new folder, enter its name:"); //gettext variable
-$accessLabel = __gettext("Access restrictions"); //gettext variable
+$accessLabel = __gettext("Access restrictions:"); //gettext variable
+$folderType = __gettext("Folder type:"); // gettext variable
+$folderTypePicker = file_folder_type_switcher(null, "edit_folder_type");
 
 $body = <<< END
         <table>
@@ -119,6 +132,14 @@ $body = <<< END
                 <td><p>
                     <input type="text" name="new_folder_name" id="new_folder_name" value="" />
                     </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p><label for="new_folder_type">$folderType</label></p>
+                </td>
+                <td>
+                    <p>$folderTypePicker</p>
                 </td>
             </tr>
             <tr>
@@ -192,8 +213,6 @@ $fileLabel = __gettext("File to upload:"); //gettext variable
 $fileTitle = __gettext("File title:"); //gettext variable
 $fileDesc = __gettext("File Description:"); //gettext variable
 $fileAccess = __gettext("Access restrictions:"); //gettext variable
-
-
 $body .= <<< END
                 </p></td>
             <tr>

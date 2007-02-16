@@ -15,7 +15,8 @@ switch($action) {
     case "community:create":
         $comm_name = optional_param('comm_name');
         $comm_username = optional_param('comm_username');
-        if (logged_on && !empty($comm_name) && !empty($comm_username)) {
+        if (logged_on && !empty($comm_name) && !empty($comm_username) &&
+            ($CFG->community_create_flag == "" || user_flag_get($CFG->community_create_flag, $USER->ident))) {
             if (!preg_match("/^[A-Za-z0-9]{3,12}$/",$comm_username)) {
                 $messages[] = __gettext("Error! The community username must contain letters and numbers only, cannot be blank, and must be between 3 and 12 characters in length.");
             } else if (trim($comm_name) == "") {

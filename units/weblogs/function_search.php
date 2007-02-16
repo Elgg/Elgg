@@ -65,8 +65,8 @@ if ((isset($parameter) && $parameter[0] == "weblog" || $parameter[0] == "webloga
             $run_result .= "</ul>";
             $run_result .= "<p><small>[ <a href=\"".url.$username . "/weblog/rss/" . $parameter[1] . "\">$rssForBlog " . $name . " $inCategory '".$parameter[1]."'</a> ]</small></p>\n";
         }
-                    } else {
-                        $icon = "default.png";
+    } else {
+        $icon = "default.png";
     }
     $searchline = "tagtype = 'weblog' and tag = " . $db->qstr($parameter[1]) . "";
     $searchline = "(" . run("users:access_level_sql_where",$_SESSION['userid']) . ") AND " . $searchline;

@@ -10,8 +10,8 @@ run("search:all:tagtypes");
 
 define("context","search");
 
-$title = __gettext("Searching Everything");
 $tag = optional_param('tag');
+$title = __gettext("Searching") . " : " . $tag;
 
 templates_page_setup();
 $body = run("content:search:all");

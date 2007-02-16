@@ -2,16 +2,16 @@
 // fixed by lemiel 14.11.2005
 
 tinyMCE.addToLang('advimage',{
-tab_general : 'G³ówne ustawienia',
+tab_general : 'GÅ‚Ã³wne ustawienia',
 tab_appearance : 'Widok',
 tab_advanced : 'Zaawansowane',
-general : 'G³ówne',
-title : 'Tytu³',
-preview : 'Podgl±d',
+general : 'GÅ‚Ã³wne',
+title : 'TytuÅ‚',
+preview : 'PodglÄ…d',
 constrain_proportions : 'Zachowaj proporcje',
 langdir : 'Kierunek tekstu',
-langcode : 'Kod jêzyka',
-long_desc : 'D³ugi opis linku',
+langcode : 'Kod jÄ™zyka',
+long_desc : 'DÅ‚ugi opis linku',
 style : 'Styl',
 classes : 'Klasy',
 ltr : 'Lewy do prawego',
@@ -22,7 +22,7 @@ swap_image : 'Podmiana obrazka',
 alt_image : 'Alternatywny obrazek',
 mouseover : 'gdy myszka nad obrazkiem',
 mouseout : 'gdy myszka poza obrazkiem',
-misc : 'Ró¿ne',
-example_img : 'Przyk³adowy&nbsp;podgl±d&nbsp;obrazka',
-missing_alt : 'Czy jeste¶ pewien, ¿e chcesz kontynuowaæ bez zawarcia opisu obrazka? Niektórzy u¿ytkownicy moga u¿ywaæ przegl±darek tekstowych, lub mieæ ograniczenia na wy¶wietlanie grafik, a wtedy Twój obrazek pozostanie dla nich niewidoczny.'
+misc : 'RÃ³Å¼ne',
+example_img : 'PrzykÅ‚adowy&nbsp;podglÄ…d&nbsp;obrazka',
+missing_alt : 'Czy jesteÅ› pewien, Å¼e chcesz kontynuowaÄ‡ bez zawarcia opisu obrazka? NiektÃ³rzy uÅ¼ytkownicy moga uÅ¼ywaÄ‡ przeglÄ…darek tekstowych, lub mieÄ‡ ograniczenia na wyÅ›wietlanie grafik, a wtedy TwÃ³j obrazek pozostanie dla nich niewidoczny.'
 });

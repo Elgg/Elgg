@@ -59,12 +59,12 @@ END;
         }
         return $run_result;
     }
-
+    
     function display_name () {
-
+        
         global $name_cache;
         global $data;
-    
+        
         if (!isset($name_cache[$this->id]) || (time() - $name_cache[$this->id]->created > 60)) {
         
             $name_cache[$this->id]->created = time();
@@ -74,24 +74,93 @@ END;
         $run_result = $name_cache[$this->id]->data;
         return $run_result;
     }
-
+    
     function display_form () {
-
+        
         global $page_owner;
         global $data;
         global $CFG;
-
-        $run_result = '';
-
-        $body = "<p>\n" . __gettext("    This screen allows you to edit your profile. Blank fields will not show up on your profile screen in any view; you can change the access level for each piece of information in order to prevent it from falling into the wrong hands. For example, we strongly recommend you keep your address to yourself or a few trusted parties.") . "</p>\n";
-
-        if (run("permissions:check", "profile")) {
-    
-            $profile_username = user_info('username', $page_owner);
         
-
-
+        $run_result = '';
+        
+        $body = "<p>\n" . __gettext("    This screen allows you to edit your profile. Blank fields will not show up on your profile screen in any view; you can change the access level for each piece of information in order to prevent it from falling into the wrong hands. For example, we strongly recommend you keep your address to yourself or a few trusted parties.") . "</p>\n";
+        
+        if (run("permissions:check", "profile")) {
+            
+            $profile_username = user_info('username', $page_owner);
+            
             $body .= "<form action=\"".url . "profile/edit.php?profile_id=".$page_owner."\" method=\"post\" enctype=\"multipart/form-data\">";
+            $body .= "<div class=\"tabber\">";
+            
+            // Cycle through all defined profile detail fields and display them
+            
+            $profilecat = array( );
+            
+            if (!empty($data['profile:details']) && sizeof($data['profile:details']) > 0) {
+                
+                foreach($data['profile:details'] as $field) {
+                    
+                    if (is_array($field)) {
+                        $flabel = !empty($field[0]) ? $field[0] : '';
+                        $fname  = !empty($field[1]) ? $field[1] : '';
+                        $ftype  = !empty($field[2]) ? $field[2] : '';
+                        $fblurb = !empty($field[3]) ? $field[3] : '';
+                        $fusertype = !empty($field[4]) ? $field[4] : '';
+                        $finvisible = false;
+                        $frequired = false;
+                        $fcat = __gettext("Main");
+                    // Otherwise map things the new way!
+                    } else {
+                        $flabel = $field->name;
+                        $fname = $field->internal_name;
+                        $ftype = $field->field_type;
+                        $fblurb = $field->description;
+                        $fusertype = $field->user_type;
+                        $finvisible = $field->invisible;
+                        $frequired = $field->required;
+                        if (!empty($field->category)) {
+                            $fcat = $field->category;
+                        } else {
+                            $fcat = __gettext("Main");
+                        }
+                    }
+                    
+                    if (!isset($profilecat[$fcat])) {
+                        $profilecat[$fcat] = '';
+                    }
+                    $profilecat[$fcat] .= $this->editfield_display($field);
+                }
+                if (sizeof($profilecat) > 0) {
+                    foreach($profilecat as $cat => $html) {
+                        
+                        $body .= "<div class=\"tabbertab\" title=\"$cat\">";
+                        $body .= $html;
+                        $body .= "</div>";
+                        
+                    }
+                }
+                
+            }
+            
+            $submitMsg = __gettext("Submit details:");
+            $saveProfile = __gettext("Save your profile");
+            $body .= <<< END
+                
+                </div>
+                
+                <p align="center">
+                <label>
+                $submitMsg
+                <input type="submit" name="submit" value="$saveProfile" />
+                </label>
+                <input type="hidden" name="action" value="profile:edit" />
+                <input type="hidden" name="profile_id" value="$page_owner" />
+                </p>
+
+                </form>
+END;
+
+            $body .= "<p>&nbsp;</p><form action=\"".url . "profile/edit.php?profile_id=".$page_owner."\" method=\"post\" enctype=\"multipart/form-data\">";
             $body .= "<p>" . __gettext("You can import some profile data by uploading a FOAF file here:") . "</p>";
             $body .=templates_draw(array(
                                                  'context' => 'databox',
@@ -106,34 +175,6 @@ END;
                 <input type="hidden" name="profile_id" value="$page_owner" />
                 </form>
         
-END;
-            $body .= "<p>" .__gettext("Or you can fill in your profile directly below:") . "</p>";
-            $body .= "<form action=\"".url . "profile/edit.php?profile_id=".$page_owner."\" method=\"post\">";
-    
-            // Cycle through all defined profile detail fields and display them
-    
-            if (!empty($data['profile:details']) && sizeof($data['profile:details']) > 0) {
-        
-                foreach($data['profile:details'] as $field) {
-                    $body .= $this->editfield_display($field);
-                }
-    
-            }
-    
-            $submitMsg = __gettext("Submit details:");
-            $saveProfile = __gettext("Save your profile");
-            $body .= <<< END
-    
-                <p align="center">
-                <label>
-                $submitMsg
-                <input type="submit" name="submit" value="$saveProfile" />
-                </label>
-                <input type="hidden" name="action" value="profile:edit" />
-                <input type="hidden" name="profile_id" value="$page_owner" />
-                </p>
-
-                </form>
 END;
 
             $run_result .= $body;
@@ -160,11 +201,26 @@ END;
         }
         
         // copy array element with default to ''
-        $flabel = !empty($field[0]) ? $field[0] : '';
-        $fname  = !empty($field[1]) ? $field[1] : '';
-        $ftype  = !empty($field[2]) ? $field[2] : '';
-        $fblurb = !empty($field[3]) ? $field[3] : '';
-        $fusertype = !empty($field[4]) ? $field[4] : '';
+        
+        // If we're dealing with the old-style profile fields
+        if (is_array($field)) {
+            $flabel = !empty($field[0]) ? $field[0] : '';
+            $fname  = !empty($field[1]) ? $field[1] : '';
+            $ftype  = !empty($field[2]) ? $field[2] : '';
+            $fblurb = !empty($field[3]) ? $field[3] : '';
+            $fusertype = !empty($field[4]) ? $field[4] : '';
+            $finvisible = false;
+            $frequired = false;
+        // Otherwise map things the new way!
+        } else {
+            $flabel = $field->name;
+            $fname = $field->internal_name;
+            $ftype = $field->field_type;
+            $fblurb = $field->description;
+            $fusertype = $field->user_type;
+            $finvisible = $field->invisible;
+            $frequired = $field->required;
+        }
         
         if (!empty($fusertype) && $fusertype != $usertype) {
             return '';
@@ -180,7 +236,7 @@ END;
             return '';
         }
             
-        if (!isset($data['profile:preload'][$flabel])) {
+        if (!isset($data['profile:preload'][$fname])) {
             if (!$value = get_record('profile_data','name',$fname,'owner',$page_owner)) {
                 $value = "";
                 $value->value = "";
@@ -189,8 +245,15 @@ END;
         } else {
             $value = "";
             $value->value = $data['profile:preload'][$fname];
-            $value->access = $CFG->default_access;
+            if (!isset($data['profile:preload:access'][$fname])) {
+                $value->access = $CFG->default_access;
+            } else {
+                $value->access = $data['profile:preload:access'][$fname];
+            }
             
+        }
+        if ($finvisible) {
+            $value->access = "PRIVATE";
         }
         
         $name = "<label for=\"$fname\"><b>{$flabel}</b>";
@@ -224,13 +287,31 @@ END;
         global $data;
 
         $run_result = '';
+        
+        // If we're dealing with the old-style profile fields
+        if (is_array($field)) {
+            $flabel = !empty($field[0]) ? $field[0] : '';
+            $fname  = !empty($field[1]) ? $field[1] : '';
+            $ftype  = !empty($field[2]) ? $field[2] : '';
+            $fblurb = !empty($field[3]) ? $field[3] : '';
+            $fusertype = !empty($field[4]) ? $field[4] : '';
+        // Otherwise map things the new way!
+        } else {
+            $flabel = $field->name;
+            $fname = $field->internal_name;
+            $ftype = $field->field_type;
+            $fblurb = $field->description;
+            $fusertype = $field->user_type;
+            $finvisible = $field->invisible;
+            $frequired = $field->required;
+        }
 
-        if (sizeof($field) >= 2) {
+        //if (sizeof($field) >= 2) {
     
             // $value = get_record('profile_data','name',$field[1],'owner',$this->id);
         
             foreach($allvalues as $curvalue) {
-                if ($curvalue->name == stripslashes($field[1])) {
+                if ($curvalue->name == stripslashes($fname)) {
                     $value = $curvalue;
                     break; // found it, done!
                 }
@@ -240,10 +321,10 @@ END;
                 return '';
             }
 
-            if ((($value->value != "" && $value->value != "blank")) 
+            if ((($value->value != "" && $value->value != "blank" && !$finvisible)) 
                 && run("users:access_level_check", $value->access)) {
-                $name = $field[0];
-                $column1 = display_output_field(array($value->value,$field[2],$field[1],$field[0],$value->ident));
+                $name = $flabel;
+                $column1 = display_output_field(array($value->value,$ftype,$fname,$flabel,$value->ident));
                 $run_result .=templates_draw(array(
                                                            'context' => 'databox1',
                                                            'name' => $name,
@@ -251,7 +332,7 @@ END;
                                                            )
                                    );
             }
-        }
+        // }
         return $run_result;
     }
 
@@ -544,7 +625,25 @@ END;
     
             if ($allvalues = get_records('profile_data','owner',$this->id)) {
                 foreach($data['profile:details'] as $field) {
-                    if (empty($field[4]) || $usertype == $field[4]) {
+                    if (is_array($field)) {
+                        $flabel = !empty($field[0]) ? $field[0] : '';
+                        $fname  = !empty($field[1]) ? $field[1] : '';
+                        $ftype  = !empty($field[2]) ? $field[2] : '';
+                        $fblurb = !empty($field[3]) ? $field[3] : '';
+                        $fusertype = !empty($field[4]) ? $field[4] : '';
+                        $finvisible = false;
+                        $frequired = false;
+                    // Otherwise map things the new way!
+                    } else {
+                        $flabel = $field->name;
+                        $fname = $field->internal_name;
+                        $ftype = $field->field_type;
+                        $fblurb = $field->description;
+                        $fusertype = $field->user_type;
+                        $finvisible = $field->invisible;
+                        $frequired = $field->required;
+                    }
+                    if (empty($fusertype) || $usertype == $fusertype) {
                     // $field is an array, with the name
                     // of the field in $field[0]
                         $run_result .= $this->field_display($field,$allvalues);

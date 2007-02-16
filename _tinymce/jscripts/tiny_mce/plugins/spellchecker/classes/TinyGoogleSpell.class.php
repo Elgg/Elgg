@@ -78,13 +78,28 @@ class TinyGoogleSpell {
         $header .= $xml;
 		//$this->_debugData($xml);
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL,$url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $header);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-        $xml = curl_exec($ch);
-        curl_close($ch);
+		// Use raw sockets
+		$fp = fsockopen("ssl://" . $server, $port, $errno, $errstr, 30);
+		if ($fp) {
+			// Send request
+			fwrite($fp, $header);
+
+			// Read response
+			$xml = "";
+			while (!feof($fp))
+				$xml .= fgets($fp, 128);
+
+			fclose($fp);
+		} else {
+			// Use curl
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL,$url);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $header);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+			$xml = curl_exec($ch);
+			curl_close($ch);
+		}
 
 		//$this->_debugData($xml);
 

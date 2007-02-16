@@ -92,10 +92,16 @@ if (logged_on && run("permissions:check", "profile")) {
                     
                     require_once($CFG->dirroot . 'lib/snoopy/Snoopy.class.inc');
                     $client = new Snoopy();
+                    $client->agent = MAGPIE_USER_AGENT; // some sites (wikipedia for one) appear to block snoopy's default user agent.
                     if (empty($CFG->curlpath) && substr($url,0,8) == "https://") {
                         $messages[] = __gettext("Feed subscription failed: SSL feed reading is not enabled.");
                     } else if (@$client->fetch($url) && $client->error == '') {
-                        if (substr_count($client->results,"<channel") > 0 || substr_count($client->results,"<feed") > 0) {
+                        //apparently 403 can happen without $client->error being filled
+                        if ($client->status == 403) {
+                            $messages[] = __gettext("Feed subscription failed: The feed's server returned a 403 Forbidden error.");
+                            // Embeds the error page in an iframe. data: URIs don't work in IE however.
+                            //$messages[] = '<iframe style="width: 100%" src="data:text/html;base64,' . base64_encode($client->results) . '"></iframe>';
+                        } elseif (substr_count($client->results,"<channel") > 0 || substr_count($client->results,"<feed") > 0) {
                             $feed = new StdClass;
                             $feed->url = $url;
                             $feed->name = '';
@@ -106,8 +112,8 @@ if (logged_on && run("permissions:check", "profile")) {
                             insert_record('feed_subscriptions',$fs);
                             $messages[] = __gettext("Your feed subscription was successful.");
                         } else {
-                            //var_dump($client->results);
                             $messages[] = __gettext("Feed subscription failed: feed appears to be invalid. Please check your link or try later.");
+                            //$messages[] = '<iframe style="width: 100%" src="data:text/html;base64,' . base64_encode($client->results) . '"></iframe>';
                         }
                         
                     } else {

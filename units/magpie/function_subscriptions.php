@@ -2,20 +2,16 @@
 global $USER,$CFG,$page_owner;
 $body = '';
 
-if (logged_on) {
+//if (logged_on) {
+//a user's aggregator (rss:view) is public, so the feed list might as well be too
     
     $displayuser = (int) $parameter;
-    
-    //global $rss_subscriptions;
-    //run("rss:subscriptions:get");
     
     run("rss:update:all",$displayuser);
     if ($USER->ident == $displayuser) {
         $body .= "<p>". __gettext("Feeds are information streams from other sites. You will often see a link to an 'RSS' feed while browsing; enter the link address into the 'add feed' box at the bottom of the page to read that information from within your learning landscape.") . "</p>";
     }
-    if ($feed_subscriptions = get_records_sql('SELECT fs.ident AS subid, fs.autopost, fs.autopost_tag, f.* FROM '.$CFG->prefix.'feed_subscriptions fs
-                                              JOIN '.$CFG->prefix.'feeds f ON f.ident = fs.feed_id
-                                              WHERE fs.user_id = ? ORDER BY f.name ASC',array($displayuser))) {
+    if ($feed_subscriptions = newsclient_get_subscriptions_user($displayuser, true)) {
         if (run("permissions:check", "profile")) {
             $body .= "<form action=\"\" method=\"post\" >";
         }
@@ -29,7 +25,10 @@ if (logged_on) {
                                 );
                                 
         foreach($feed_subscriptions as $feed) {
-            $name = "<a href=\"".$feed->siteurl."\">" . stripslashes($feed->name) . "</a>";
+            $name = "
+            <a href=\"".$feed->siteurl."\">" . $feed->name . "</a>
+            <a href=\"".$feed->url."\"><img src=\"{$CFG->wwwroot}mod/template/icons/rss.png\" border=\"0\" alt=\"rss\" /></a>
+            ";
             $column2 = "<a href=\"".url."_rss/individual.php?feed=".$feed->ident."\">". __gettext("View content") . "</a>";
             // this allows unsubscribing the *displayed* user from the feed (if you're admin), as opposed
             // to the popular feeds page, which allows you to unsubscribe yourself from a feed.
@@ -51,13 +50,16 @@ if (logged_on) {
             
         }
         
+        $username = user_info("username", $displayuser);
+        $opml = '<a href="' . $CFG->wwwroot . '_rss/opml.php?profile_name=' . $username . '">' . __gettext("Subscription list as OPML") . '</a>';
+        
         if (run("permissions:check", "profile")) {
             
             $body .= templates_draw( array(
                                                 'context' => 'adminTable',
                                                 'name' => "<input type=\"hidden\" name=\"action\" value=\"rss:subscriptions:update\" />",
                                                 'column1' => "<input type=\"submit\" value=\"" . __gettext("Update") . "\" />",
-                                                'column2' => ""
+                                                'column2' => $opml
                                             )
                                             );
             
@@ -86,6 +88,6 @@ if (logged_on) {
     }
     $run_result .= $body;
     
-}
+//}
 
 ?>

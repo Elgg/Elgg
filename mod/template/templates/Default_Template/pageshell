@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>{{title}}</title>
+{{metatags}}
+</head>
+<body>
+{{toolbar}}
+<div id="container"><!-- open container which wraps the header, maincontent and sidebar -->
+<div id="header"><!-- open div header -->
+	<div id="header-inner">
+		<div id="logo"><!-- open div logo -->
+			<h1><a href="{{url}}">{{sitename}}</a></h1>
+			<h2>{{tagline}}</h2>
+		</div><!-- close div logo -->
+		{{searchbox}}
+	</div>
+</div><!-- close div header -->
+<div id="content-holder"><!-- open content-holder div -->
+	<div id="content-holder-inner">
+		<div id="splitpane-sidebar"><!-- open splitpane-sidebar div -->
+			<ul><!-- open sidebar lists -->
+			{{sidebar}}
+			</ul><!-- close sidebar lists -->
+		</div><!-- close splitpane-sidebar div -->
+		<div id="splitpane-content"><!-- open splitpane-content div -->
+			{{messageshell}}
+			{{mainbody}}
+		</div><!-- close open splitpane-content div -->
+	</div>
+</div><!-- close content-holder div --> 
+<div id="footer"><!-- start footer -->
+	<div id="footer-inner">
+		<span style="color:#FF934B">{{sitename}}</span> <a href="{{url}}content/terms.php">Terms and conditions</a>&nbsp;|&nbsp;<a href="{{url}}content/privacy.php">Privacy Policy</a><br />
+		<a href="http://elgg.org/"><img src="{{url}}mod/template/icons/elgg_powered.png" title="Elgg powered" border="0" alt="Elgg powered" /></a>
+		<br />
+		{{perf}}
+	</div>
+</div><!-- end footer -->
+</div><!-- close container div -->
+</body>
+</html>

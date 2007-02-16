@@ -14,7 +14,7 @@
         define("context", "network");
         
         // Quick config: this changes the number of search results on the page
-        $CFG->search_results = 20;
+        $CFG->browser_search_results = 20;
         
         $search_sql = "";
         
@@ -47,6 +47,26 @@
             setcookie("displayicons",$displayicons,time() + (86400 * 365));
         }
         
+        $userunderline = "";
+        $communitiesunderline = "";
+        $allunderline = "";
+        
+        switch($display) {
+            case "communities":
+                $usertypefilter = ' u.user_type = "community" ';
+                $communitiesunderline = ' style="text-decoration: underline;" ';
+                break;
+            case "users":
+                $usertypefilter = ' u.user_type = "person" ';
+                $userunderline = ' style="text-decoration: underline;" ';
+                break;
+            default:
+                $display = '';
+                $usertypefilter = ' 1 ';
+                $allunderline = ' style="text-decoration: underline;" ';
+                break;
+        }
+            
         $functionbody = "
         
             global \$search_sql;
@@ -66,18 +86,7 @@
         if (!empty($searchtype)) {
             $displayfilter = $searchtype . "::" . $displayfilter;
         }
-        
-        $userunderline = "";
-        $communitiesunderline = "";
-        $allunderline = "";
-        
-        if ($display == "users") {
-            $userunderline = " class=\"underline\" ";
-        } else if ($display == "communities") {
-            $communitiesunderline = " class=\"underline\" ";
-        } else {
-            $allunderline = " class=\"underline\" ";
-        } 
+        $displayfilter = htmlspecialchars($displayfilter);
         
         $all = __gettext("All");
         $communities = __gettext("Communities");
@@ -92,56 +101,31 @@
                 <a href="index.php?display=all&amp;searchtype=$searchtype&amp;filter=$filter" $allunderline>$all</a> | 
                 <a href="index.php?display=users&amp;searchtype=$searchtype&amp;filter=$filter" $userunderline>$users</a> | 
                 <a href="index.php?display=communities&amp;searchtype=$searchtype&amp;filter=$filter" $communitiesunderline>$communities</a> | 
+            </p>
             
             <form action="index.php" method="get">
-                <p>$filter_text : <input type="textbox" size="60" name="filter" value="$displayfilter" /><input type="hidden" name="display" value="{$display}" />&nbsp;<input type="submit" value="$filter_text &gt;&gt;" /></p>
+                <p>$filter_text : <input type="textbox" size="60" name="filter" value="$displayfilter" />
+                <input type="hidden" name="display" value="{$display}" />&nbsp;<input type="submit" value="$filter_text &gt;&gt;" /></p>
             </form>
         
 END;
         
         if (empty($search_sql)) {
             $formatted_filter = $db->qstr($filter);
-            switch($display) {
-                
-                case "communities":
-                    if (empty($filter)) {
-                        $search_sql = "SELECT u.*, COUNT(DISTINCT m.ident) AS members FROM `".$CFG->prefix."users` u JOIN ".$CFG->prefix."friends m ON m.friend = u.ident WHERE u.user_type = \"community\" GROUP BY u.ident ORDER BY members DESC, name DESC";
-                        $count_sql = "SELECT COUNT(DISTINCT u.ident) AS numberofusers, COUNT(DISTINCT m.ident) AS members FROM `".$CFG->prefix."users` u JOIN ".$CFG->prefix."friends m ON m.friend = u.ident WHERE u.user_type = \"community\"";
-                    } else {
-                        if (empty($searchtype)) {
-                            $search_sql = "SELECT DISTINCT u.*, COUNT(DISTINCT m.ident) AS members FROM ".$CFG->prefix."tags t JOIN ".$CFG->prefix."users u ON u.ident = t.owner JOIN ".$CFG->prefix."friends m ON m.friend = u.ident WHERE ($access_string) AND t.tag = $formatted_filter AND u.user_type = 'community' GROUP BY u.ident ORDER BY members DESC, name DESC";
-                            $count_sql = "SELECT COUNT(DISTINCT u.ident) AS numberofusers, COUNT(DISTINCT m.ident) AS members FROM ".$CFG->prefix."tags t JOIN ".$CFG->prefix."users u ON u.ident = t.owner JOIN ".$CFG->prefix."friends m ON m.friend = u.ident WHERE ($access_string) AND t.tag = $formatted_filter AND u.user_type = 'community'";
-                        }
-                    }
-                    break;
-                case "users":
-                    if (empty($filter)) {
-                        $search_sql = "SELECT u.*, COUNT(DISTINCT m.ident) AS members FROM `".$CFG->prefix."users` u JOIN ".$CFG->prefix."friends m ON m.friend = u.ident WHERE u.user_type = \"person\" GROUP BY u.ident ORDER BY members DESC, name DESC";
-                        $count_sql = "SELECT COUNT(DISTINCT u.ident) AS numberofusers, COUNT(DISTINCT m.ident) AS members FROM `".$CFG->prefix."users` u JOIN ".$CFG->prefix."friends m ON m.friend = u.ident WHERE u.user_type = \"person\"";
-                    } else {
-                        if (empty($searchtype)) {
-                            $search_sql = "SELECT DISTINCT u.*, COUNT(DISTINCT m.ident) AS members FROM ".$CFG->prefix."tags t JOIN ".$CFG->prefix."users u ON u.ident = t.owner JOIN ".$CFG->prefix."friends m ON m.friend = u.ident WHERE ($access_string) AND t.tag = $formatted_filter AND u.user_type = 'person' GROUP BY u.ident ORDER BY members DESC, name DESC";
-                            $count_sql = "SELECT COUNT(DISTINCT u.ident) AS numberofusers, COUNT(DISTINCT m.ident) AS members FROM ".$CFG->prefix."tags t JOIN ".$CFG->prefix."users u ON u.ident = t.owner JOIN ".$CFG->prefix."friends m ON m.friend = u.ident WHERE ($access_string) AND t.tag = $formatted_filter AND u.user_type = 'person'";
-                        }
-                    }
-                    break;
-                default:
-                    if (empty($filter)) {
-                        $search_sql = "SELECT u.*, COUNT(DISTINCT m.ident) AS members FROM `".$CFG->prefix."users` u JOIN ".$CFG->prefix."friends m ON m.friend = u.ident GROUP BY u.ident ORDER BY members DESC, name DESC";
-                        $count_sql = "SELECT COUNT(DISTINCT u.ident) AS numberofusers, COUNT(DISTINCT m.ident) AS members FROM `".$CFG->prefix."users` u JOIN ".$CFG->prefix."friends m ON m.friend = u.ident ";
-                    } else {
-                        if (empty($searchtype)) {
-                            $search_sql = "SELECT DISTINCT u.*, COUNT(DISTINCT m.ident) AS members FROM ".$CFG->prefix."tags t JOIN ".$CFG->prefix."users u ON u.ident = t.owner JOIN ".$CFG->prefix."friends m ON m.friend = u.ident WHERE ($access_string) AND t.tag = $formatted_filter GROUP BY u.ident ORDER BY members DESC, name DESC";
-                            $count_sql = "SELECT COUNT(DISTINCT u.ident) AS numberofusers, COUNT(DISTINCT m.ident) AS members FROM ".$CFG->prefix."tags t JOIN ".$CFG->prefix."users u ON u.ident = t.owner JOIN ".$CFG->prefix."friends m ON m.friend = u.ident WHERE ($access_string) AND t.tag = $formatted_filter";
-                        }
-                    }
-                    break;
-                
+            
+            if (empty($filter)) {
+                $search_sql = "SELECT u.ident, u.username, u.name, u.icon, u.user_type, COUNT(m.ident) AS members FROM `".$CFG->prefix."users` u JOIN ".$CFG->prefix."friends m ON m.friend = u.ident WHERE " . $usertypefilter . " GROUP BY u.ident ORDER BY members DESC, name DESC";
+                $count_sql = "SELECT COUNT(DISTINCT u.ident) AS numberofusers, COUNT(m.ident) AS members FROM `".$CFG->prefix."users` u JOIN ".$CFG->prefix."friends m ON m.friend = u.ident WHERE " . $usertypefilter . "";
+            } else {
+                if (empty($searchtype)) {
+                    $search_sql = "SELECT u.ident, u.username, u.name, u.icon, u.user_type, COUNT(m.ident) AS members FROM ".$CFG->prefix."tags t JOIN ".$CFG->prefix."users u ON u.ident = t.owner JOIN ".$CFG->prefix."friends m ON m.friend = u.ident WHERE ($access_string) AND t.tag = $formatted_filter AND " . $usertypefilter . " GROUP BY u.ident ORDER BY members DESC, name DESC";
+                    $count_sql = "SELECT COUNT(DISTINCT u.ident) AS numberofusers, COUNT(m.ident) AS members FROM ".$CFG->prefix."tags t JOIN ".$CFG->prefix."users u ON u.ident = t.owner JOIN ".$CFG->prefix."friends m ON m.friend = u.ident WHERE ($access_string) AND t.tag = $formatted_filter AND " . $usertypefilter . "";
+                }
             }
-        
+            
         }
         
-        $search_sql .= sql_paging_limit($offset, $CFG->search_results);
+        $search_sql .= sql_paging_limit($offset, $CFG->browser_search_results);
         
         if ($results = get_records_sql($search_sql)) {
             
@@ -164,24 +148,23 @@ END;
                     <td width="10%" colspan="2">$icontoggle</td>
                     <td width="25%" valign="top"><b>$name</b></td>
                     <td width="25%" valign="top"><b>$description</b></td>
-                    <td width="12.5%" valign="top"><b>$connections</b></td>
-                    <td width="12.5%" valign="top"><b>$posts</b></td>
-                    <td width="15%" valign="top"><b>$type</b></td>
+                    <td width="12%" valign="top"><b>$connections</b></td>
+                    <td width="12%" valign="top"><b>$posts</b></td>
+                    <td width="16%" valign="top"><b>$type</b></td>
                 </tr>
             
 END;
             
             foreach($results as $result) {
                 
-                $blogposts = get_record_sql("SELECT COUNT(".$CFG->prefix."weblog_posts.ident) AS weblogposts FROM ".$CFG->prefix."weblog_posts WHERE weblog = {$result->ident}");
-                $description = get_record_sql("SELECT ".$CFG->prefix."profile_data.value FROM ".$CFG->prefix."profile_data WHERE owner = {$result->ident} AND name = 'minibio'");
+                $blogposts = count_records("weblog_posts", "weblog", $result->ident);
+                $description = get_field("profile_data", "value", "owner", $result->ident, "name", 'minibio');
                 
-                $icon = "{$CFG->wwwroot}_icon/user/{$result->icon}/h/67/";
+                $icon = "{$CFG->wwwroot}_icon/user/{$result->icon}";
                 
-                $description = @stripslashes($description->value);
-                $name = stripslashes($result->name);
+                $name = htmlspecialchars($result->name);
                 
-                $iconcode = "<a href=\"{$CFG->wwwroot}{$result->username}\"><img src=\"{$icon}\" border=\"0\" /></a>";
+                $iconcode = "<a href=\"{$CFG->wwwroot}{$result->username}\"><img src=\"{$icon}\" border=\"0\" alt=\"{$result->username}\" /></a>";
                 if (!$displayicons) {
                     // Uncomment this if we move to Javascript unhide
                     // $iconcode = "<span style=\"display:none\" class=\"iconhide\">".$iconcode."</span>";
@@ -208,7 +191,7 @@ END;
                     <td><a href="{$CFG->wwwroot}{$result->username}">{$name}</a></td>
                     <td>{$description}</td>
                     <td>{$result->members}</td>
-                    <td>{$blogposts->weblogposts}</td>
+                    <td>{$blogposts}</td>
                     <td>{$result->user_type}</td>
                 </tr>
 END;
@@ -221,18 +204,18 @@ END;
             
 END;
 
-            if ($search_total = get_record_sql($count_sql)) {
+            if (!empty($count_sql) && $search_total = get_record_sql($count_sql)) {
                 $search_total = $search_total->numberofusers;
             } else {
                 $search_total = 0;
             }
             
-            if ($search_total > $CFG->search_results) {
+            if ($search_total > $CFG->browser_search_results) {
                 
                 $i = 1;
-                while (($i * $CFG->search_results) - $CFG->search_results < $search_total) {
+                while (($i * $CFG->browser_search_results) - $CFG->browser_search_results < $search_total) {
                     
-                    $body .= "<a href=\"index.php?display=all&searchtype=$searchtype&filter=$filter&offset=".(($i * $CFG->search_results) - ($CFG->search_results))."\">";
+                    $body .= "<a href=\"index.php?display=$display&amp;searchtype=$searchtype&amp;filter=$filter&amp;offset=".(($i * $CFG->browser_search_results) - ($CFG->browser_search_results))."\">";
                     $body .= $i;
                     $body .= "</a> ";
                     $i++;

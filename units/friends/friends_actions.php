@@ -23,9 +23,7 @@ switch ($action) {
                         if (user_info("user_type",$friend_id) == "person") {
                             $messages[] = sprintf(__gettext("%s was added to your friends list."),$friend->name);
                                 $u = get_record('users','ident',$friend_id);
-                            $message_body = sprintf(__gettext("%s has added you as a friend!\n\nTo visit this user's profile, click on the following link:\n\n\t".
-                                                             "%s\n\nTo view all your friends, click here:\n\n\t%s\n\nRegards,\n\nThe %s team."),
-                                                             $_SESSION['name'], $CFG->wwwroot . user_info("username",$USER->ident) . "/", $CFG->wwwroot . user_info("username",$friend_id) . "/friends/",$CFG->sitename);
+                            $message_body = sprintf(__gettext("%s has added you as a friend!\n\nTo visit this user's profile, click on the following link:\n\n\t%s\n\nTo view all your friends, click here:\n\n\t%s\n\nRegards,\n\nThe %s team."),$_SESSION['name'], $CFG->wwwroot . user_info("username",$USER->ident) . "/", $CFG->wwwroot . user_info("username",$friend_id) . "/friends/",$CFG->sitename);
                             $title = sprintf(__gettext("New %s friend"), $CFG->sitename);
                             notify_user($u,$title,$message_body);
                         }
@@ -39,9 +37,7 @@ switch ($action) {
                         if (user_info("user_type",$friend_id) == "person") {
                             $messages[] = sprintf(__gettext("%s has elected to moderate friendship requests. Your request has been added to their moderation queue."),$friend->name);
                             $u = get_record('users','ident',$friend_id);
-                            $message_body = sprintf(__gettext("%s has requested to add you as a friend!\n\nTo visit this user's profile, click on the following link:\n\n\t".
-                                                             "%s\n\nTo view all your friends requests and approve or deny this user, click here:\n\n\t%s\n\nRegards,\n\nThe %s team."),
-                                                             $_SESSION['name'], $CFG->wwwroot . user_info("username",$USER->ident) . "/", $CFG->wwwroot . "_friends/requests.php?owner=" . $friend_id,$CFG->sitename);
+                            $message_body = sprintf(__gettext("%s has requested to add you as a friend!\n\nTo visit this user's profile, click on the following link:\n\n\t%s\n\nTo view all your friends requests and approve or deny this user, click here:\n\n\t%s\n\nRegards,\n\nThe %s team."),$_SESSION['name'], $CFG->wwwroot . user_info("username",$USER->ident) . "/", $CFG->wwwroot . "_friends/requests.php?owner=" . $friend_id,$CFG->sitename);
                             $title = sprintf(__gettext("New %s friend request"), $CFG->sitename);
                             notify_user($u,$title,$message_body);
                         }
@@ -84,9 +80,7 @@ switch ($action) {
                      if (insert_record('friends',$f)) {
                          delete_records('friends_requests','ident',$request_id);
                          $messages[] = sprintf(__gettext("You approved the friendship request. %s now lists you as a friend."),stripslashes($request->name));
-                         $message_body = sprintf(__gettext("%s has approved your friendship request!\n\nTo visit this user's profile, click on the following link:\n\n\t".
-                                                          "%s\n\nTo view all your friends, click here:\n\n\t%s\n\nRegards,\n\nThe %s team."),
-                                                          user_info("name",$request->friend), $CFG->wwwroot . user_info("username",$request->friend) . "/", $CFG->wwwroot . user_info("username",$request->owner) . "/friends/",$CFG->sitename);
+                         $message_body = sprintf(__gettext("%s has approved your friendship request!\n\nTo visit this user's profile, click on the following link:\n\n\t%s\n\nTo view all your friends, click here:\n\n\t%s\n\nRegards,\n\nThe %s team."),user_info("name",$request->friend), $CFG->wwwroot . user_info("username",$request->friend) . "/", $CFG->wwwroot . user_info("username",$request->owner) . "/friends/",$CFG->sitename);
                          $title = sprintf(__gettext("%s friend request approved!"), $CFG->sitename);
                          notify_user($request->owner,$title,$message_body);
                      } else {
@@ -111,9 +105,7 @@ switch ($action) {
                  if (run("permissions:check",array("userdetails:change", $page_owner))) {
                      delete_records('friends_requests','ident',$request_id);
                      $messages[] = sprintf(__gettext("You declined the friendship request. %s does not list you as a friend."),stripslashes($request->name));
-                     $message_body = sprintf(__gettext("%s has denied your friendship request.\n\nTo visit this user's profile, click on the following link:\n\n\t".
-                                                          "%s\n\nTo view all your existing friends, click here:\n\n\t%s\n\nRegards,\n\nThe %s team."),
-                                                          user_info("name",$request->friend), $CFG->wwwroot . user_info("username",$request->friend) . "/", $CFG->wwwroot . user_info("username",$request->owner) . "/friends/",$CFG->sitename);
+                     $message_body = sprintf(__gettext("%s has denied your friendship request.\n\nTo visit this user's profile, click on the following link:\n\n\t%s\n\nTo view all your existing friends, click here:\n\n\t%s\n\nRegards,\n\nThe %s team."),user_info("name",$request->friend), $CFG->wwwroot . user_info("username",$request->friend) . "/", $CFG->wwwroot . user_info("username",$request->owner) . "/friends/",$CFG->sitename);
                      $title = sprintf(__gettext("%s friend request denied"), $CFG->sitename);
                      notify_user($request->owner,$title,$message_body);
                  } else {

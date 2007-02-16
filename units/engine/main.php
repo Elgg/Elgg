@@ -7,7 +7,9 @@
     // Library functions
         require_once(dirname(__FILE__)."/library.php");
     
+        global $CFG;
+        
     // Initialise variables etc on startup
-        $function['init'][] = path . "units/engine/function_init.php";
+        $function['init'][] = $CFG->dirroot . "units/engine/function_init.php";
         
 ?>

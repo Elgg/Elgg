@@ -12,7 +12,8 @@
 
         define("context","search");
                 
-        $title = __gettext("Search");
+        $tag = optional_param('tag');
+        $title = __gettext("Searching") . " : " . $tag;
         templates_page_setup();
         
         $PAGE->search_type_unformatted = optional_param('user_type','');

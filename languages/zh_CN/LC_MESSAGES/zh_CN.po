@@ -1,0 +1,4701 @@
+# Copyright (C) Elgg Project
+# This file is distributed under the same license as the Elgg package.
+# Misja Hoebe <misja@efobia.nl>, 2005.
+# Hans de Zwart <hansATdezwartDOTinfo>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Elgg 0.61\n"
+"POT-Creation-Date: 2007-01-06 02:52+0000\n"
+"PO-Revision-Date: 2006-12-21 05:08+0000\n"
+"Last-Translator: Morler <morlers@gmail.com>\n"
+"Language-Team: Chinese <i18n@elgg.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language-Code: nl\n"
+"Language-Name: Nederlands\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: elgg\n"
+"X-Generator: Emacs PO mode, version 2.01\n"
+"X-Is-Fallback-For: nl-be\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Language: Chinese\n"
+"X-Poedit-Country: CHINA\n"
+"X-Rosetta-Export-Date: 2007-01-08 17:18+0000\n"
+
+#: _activity/index.php:24
+msgid "Recent activity"
+msgstr "最近活动情况"
+
+#: _activity/index.php:29
+msgid "Currently viewing recent activity since "
+msgstr "现在查看的近期活动，自 "
+
+#: _activity/index.php:31
+msgid "You may view recent activity during the following time-frames:"
+msgstr "察看下列时间内的活动情况"
+
+#: _activity/index.php:33
+msgid "The last 24 hours"
+msgstr "过去的24小时"
+
+#: _activity/index.php:34
+msgid "The last 48 hours"
+msgstr "过去48小时"
+
+#: _activity/index.php:35
+msgid "The last week"
+msgstr "上周"
+
+#: _activity/index.php:36
+msgid "The last month"
+msgstr "过去一个月"
+
+#: _activity/index.php:38
+msgid "Your recent messages"
+msgstr "最近收到的信息"
+
+#: _activity/index.php:49
+msgid "Activity on weblog posts you have marked as interesting"
+msgstr ""
+
+#: _activity/index.php:60
+msgid "Read more"
+msgstr "继续阅读"
+
+#: _activity/index.php:64
+msgid "your blog"
+msgstr "你的blog"
+
+#: _activity/index.php:67
+#, fuzzy
+msgid "<b>You</b> commented on weblog post '%s' in %s:"
+msgstr "<b>你</b>在%s有如下评论'%s'"
+
+#: _activity/index.php:69
+#, fuzzy
+msgid "<b>%s</b> commented on weblog post '%s' in %s:"
+msgstr "<b>%s</b>在%s有如下评论'%s'"
+
+#: _activity/index.php:79
+msgid "No activity during this time period."
+msgstr "本时段没有任何活动。"
+
+#: _admin/antispam.php:17 _admin/users.php:17 _admin/users.php:20
+#: lib/templates.php:471
+msgid "Manage users"
+msgstr "管理用户"
+
+#: _admin/antispam.php:20
+msgid "Spam blocking"
+msgstr "屏蔽垃圾信息"
+
+#: _admin/flags.php:17 _admin/flags.php:20
+msgid "Content flags"
+msgstr "举报内容"
+
+#: _admin/index.php:17 _admin/index.php:20 lib/templates.php:429
+msgid "Administration"
+msgstr "管理"
+
+#: _admin/users_add.php:17 _admin/users_add.php:20
+msgid "Add multiple users"
+msgstr "添加多个用户"
+
+#: auth/ldap/lib.php:113 lms/join.php:48 units/invite/invite_actions.php:97
+msgid ""
+"Error! Your username must contain letters and numbers only, cannot be blank, "
+"and must be between 3 and 12 characters in length."
+msgstr "错误！新用户名只能由英文字母和数字组成，不能是空白，长度为3到12个字母之间。"
+
+#: auth/ldap/lib.php:118 units/communities/communities_actions.php:26
+#, php-format
+msgid ""
+"The username %s is already taken by another user. You will need to pick a "
+"different one."
+msgstr ""
+
+#: auth/ldap/lib.php:139
+#, php-format
+msgid ""
+"User addition %d failed: Unknown reason, please contact you system "
+"administrator."
+msgstr ""
+
+#: _communities/index.php:22 mod/browser/index.php:83 mod/community/lib.php:53
+#: mod/community/lib.php:63 units/communities/communities_edit_wrapper.php:5
+msgid "Communities"
+msgstr "社区"
+
+#: _communities/members.php:22 units/communities/community_memberships.php:40
+#: units/communities/community_memberships.php:42
+msgid "Members"
+msgstr "成员"
+
+#: _communities/owned.php:22 mod/community/lib.php:57
+msgid "Owned Communities"
+msgstr "社区"
+
+#: _communities/requests.php:23
+#: units/communities/communities_membership_requests.php:10
+msgid "Membership requests"
+msgstr ""
+
+#: content/about.php:10 content/about.php:13
+#, php-format
+msgid "About %s"
+msgstr "关于%s"
+
+#: content/faq.php:10 content/faq.php:13
+#, php-format
+msgid "%s FAQ"
+msgstr "%s疑难解答"
+
+#: content/invite/invite.php:3
+msgid ""
+"If you have a friend or colleague you would like to join the system, perhaps "
+"because you would like to share protected resources or reflections with "
+"them, you can enter their details below. They will then receive a special "
+"invitation email containing a code that allows them to create a new account; "
+"once they do so, a mutual friend connection will be created between their "
+"account and yours."
+msgstr ""
+""
+"如果你想邀请朋友或同事加入系统，想让他们分享你的个人资源，请在下面填写他们的详细信息。他们会收到一封带有编码的邀请信，允许他们创建新帐户。新创建的帐户和你的"
+"帐户之间会默认密切的联系。"
+
+#: content/mainindex/content_loggedout.php:7
+#: content/mainindex/content_main_index.php:7 lib/templates.php:46
+#: lib/templates.php:1170 lib/templates.php:1172
+msgid "Welcome"
+msgstr "欢迎"
+
+#: content/mainindex/content_loggedout.php:8
+#, php-format
+msgid ""
+"This is %s, a learning landscape. Why not check out <a href=\"%s\">what "
+"people are saying</a> right now."
+msgstr ""
+
+#: content/mainindex/content_loggedout.php:9
+#, php-format
+msgid "<a href=\"%s\">Find others</a> with similar interests and goals."
+msgstr "找 <a href=\"%s\">其他</a> 有相同兴趣的人。"
+
+#: content/mainindex/content_loggedout.php:17
+msgid "Here are some example users:"
+msgstr "这里是一些作为用户的例子："
+
+#: content/mainindex/content_loggedout.php:19
+msgid "Here is an example user:"
+msgstr "这是一个用户的例子"
+
+#: content/mainindex/content_loggedout.php:33
+#, php-format
+msgid ""
+"If you like what you see, why not <a href=\"%s\">register for an account</a>?"
+msgstr "如果你喜欢这里，为什么不<a href=\"%s\">注册帐户呢？"
+
+#: content/mainindex/content_loggedout.php:40
+#: content/mainindex/content_main_index.php:41
+msgid "Latest news"
+msgstr "最新消息"
+
+#: content/mainindex/content_main_index.php:8
+#, php-format
+msgid "Why not <a href=\"%s\">create your profile</a>?"
+msgstr "为何不<a href=\"%s\">创建你的档案</a>？"
+
+#: content/mainindex/content_main_index.php:9
+msgid ""
+"Tell people about yourself and connect to others with similar interests and "
+"goals."
+msgstr "向别人简单介绍自己，以联系和你志趣相投的人。"
+
+#: content/mainindex/content_main_index.php:17
+msgid "Here are some examples of complete profiles:"
+msgstr "这里有一些完整用户信息的例子"
+
+#: content/mainindex/content_main_index.php:19
+msgid "Here is an example of a complete profile:"
+msgstr "这是一个完整用户信息的例子"
+
+#: content/mainindex/content_main_index.php:33
+#, php-format
+msgid "Or you could <a href=\"%s\">start your blog</a>?"
+msgstr "或者你可以现在就开始<a href=\"%s\">写blog啦</a>?"
+
+#: content/mainindex/content_main_index.php:34
+#, php-format
+msgid ""
+"Comment on what you're learning, collect interesting links and decide who "
+"gets to see what you're writing. Here's what <a href=\"%s\">everyone else is "
+"talking about</a> right now."
+msgstr "对你正在了解的进行评论，收集有趣的链接， 决定谁会看到你写的东西。这里<a href=\"%s\">别人正在讨论什么。"
+
+#: content/privacy.php:10 content/privacy.php:13
+#, php-format
+msgid "%s Privacy Policy"
+msgstr "%s隐私政策"
+
+#: content/run_your_own.php:10 content/run_your_own.php:13
+#, php-format
+msgid "Running Your Own %s"
+msgstr "运行你自己的%s"
+
+#: content/terms.php:10 content/terms.php:13
+#, php-format
+msgid "%s Terms &amp; Conditions"
+msgstr ""
+
+#: _files/edit_file.php:19
+msgid "Edit File"
+msgstr "编辑文件"
+
+#: _files/edit_folder.php:19
+msgid "Edit Folder"
+msgstr "编辑文件夹"
+
+#: _files/index.php:19 units/files/files_user_info_menu.php:13
+#: units/files/function_rss_publish.php:35 units/files/profile_files.php:9
+msgid "Files"
+msgstr "文件"
+
+#: _files/rss2.php:25
+#, php-format
+msgid "Files tagged with %s"
+msgstr "文件的标签为：%s"
+
+#: _files/rss2.php:31 units/files/function_rss_publish.php:42
+#, php-format
+msgid "Files for %s, hosted on %s."
+msgstr "%s的文件，保存于%s。"
+
+#: _friends/friendsof.php:21 units/friends/friends_of_edit_wrapper.php:5
+msgid "Friends who have linked to you"
+msgstr "好友中链接过你的"
+
+#: _friends/index.php:21 units/friends/friends_edit_wrapper.php:5
+msgid "Friends I have linked to"
+msgstr "我链接过的还有"
+
+#: _friends/requests.php:22 mod/friend/lib.php:38
+#: units/friends/user_friendship_requests.php:11
+msgid "Friendship requests"
+msgstr ""
+
+#: _groups/index.php:23
+msgid "Access Controls"
+msgstr "权限控制"
+
+#: help/blogs_help.php:14
+msgid "'Your blog' help"
+msgstr "'你的日记'帮助"
+
+#: help/calendar_help.php:10
+msgid "Calendar help"
+msgstr "日历帮助"
+
+#: help/calendar_help.php:13
+msgid "'Your calendar' help"
+msgstr "‘你的日历’帮助"
+
+#: help/files_help.php:10
+#, php-format
+msgid "Help for %s"
+msgstr "帮助%s"
+
+#: help/files_help.php:13
+msgid "'Your Files' help"
+msgstr "'你的文件'帮助"
+
+#: help/network_help.php:13
+msgid "'Your Network' help"
+msgstr "'你的网络'帮助"
+
+#: help/profile_help.php:13
+msgid "'Your Profile' help"
+msgstr "'你的个人信息'帮助"
+
+#: home.php:15 index2.php:15
+msgid "Main Index"
+msgstr "首页"
+
+#: _icons/index.php:20
+msgid "Manage user icons"
+msgstr "管理用户头像"
+
+#: _invite/forgotten_password.php:14
+msgid "Generate a New Password"
+msgstr "生成新密码"
+
+#: _invite/index.php:18
+msgid "Invite a Friend"
+msgstr "邀请朋友"
+
+#: _invite/join.php:12 _invite/register.php:11
+#, php-format
+msgid "Join %s"
+msgstr "加入 %s"
+
+#: _invite/new_password.php:11
+#, php-format
+msgid "Get new %s password"
+msgstr "获取 %s 密码"
+
+#: lib/datalib.php:45
+msgid "Success"
+msgstr "成功"
+
+#: lib/datalib.php:50 lib/elgglib.php:3083
+msgid "Error"
+msgstr "错误"
+
+#: lib/db/mysql.php:215
+msgid "Publishing RSS"
+msgstr ""
+
+#: lib/db/mysql.php:220 lib/db/postgres7.php:183
+#, php-format
+msgid "Publishing RSS for user %d"
+msgstr ""
+
+#: lib/db/mysql.php:232 lib/db/postgres7.php:195
+msgid "Adjusting file repository information"
+msgstr ""
+
+#: lib/db/mysql.php:241 lib/db/mysql.php:251 lib/db/postgres7.php:204
+#: lib/db/postgres7.php:214
+#, php-format
+msgid "Updating file %d: %s"
+msgstr "更新文件 %d: %s"
+
+#: lib/dbsetup.php:77
+msgid "Need to upgrade database"
+msgstr "需要升级数据库"
+
+#: lib/displaylib.php:188 units/display/function_log_on_pane.php:16
+#: units/invite/join_noinvite.php:42
+msgid "Register"
+msgstr "注册"
+
+#: lib/displaylib.php:196 login/index.php:56
+#: units/display/function_log_on_pane.php:28
+msgid "Log On"
+msgstr "登陆"
+
+#: lib/displaylib.php:202 units/admin/admin_main.php:81
+#: units/admin/admin_users_add.php:20 units/admin/admin_users.php:28
+#: units/display/function_log_on_pane.php:34
+msgid "Username"
+msgstr "用户名"
+
+#: lib/displaylib.php:203 units/display/function_log_on_pane.php:35
+msgid "Password"
+msgstr "密码"
+
+#: lib/displaylib.php:210 units/display/function_log_on_pane.php:44
+msgid "Log on"
+msgstr "登录"
+
+#: lib/displaylib.php:210 units/display/function_log_on_pane.php:44
+#, fuzzy
+msgid "Go"
+msgstr "Door"
+
+#: lib/displaylib.php:212 units/display/function_log_on_pane.php:46
+msgid "Remember Login"
+msgstr "记住登陆信息"
+
+#: lib/displaylib.php:215 units/display/function_log_on_pane.php:49
+msgid "Forgotten password"
+msgstr "忘了密码？"
+
+#: lib/displaylib.php:273
+msgid "Add User"
+msgstr "加用户"
+
+#: lib/displaylib.php:273 lib/displaylib.php:282
+msgid "Send Message"
+msgstr "发送信息"
+
+#: lib/displaylib.php:282
+msgid "Add Buddy"
+msgstr "加好友"
+
+#: lib/elgglib.php:506 lib/elgglib.php:556 lib/uploadlib.php:661
+msgid "Administrator"
+msgstr "管理员"
+
+#: lib/elgglib.php:514
+msgid "Do not reply"
+msgstr "不回复"
+
+#: lib/elgglib.php:761
+msgid "GB"
+msgstr "GB"
+
+#: lib/elgglib.php:762
+msgid "MB"
+msgstr "MB"
+
+#: lib/elgglib.php:763
+msgid "KB"
+msgstr "KB"
+
+#: lib/elgglib.php:764
+msgid "bytes"
+msgstr "字节"
+
+#: lib/elgglib.php:1763
+msgid "Close this window"
+msgstr "关闭此窗口"
+
+#: lib/elgglib.php:1800 lib/elgglib.php:1850
+msgid "Choose"
+msgstr "选择"
+
+#: lib/elgglib.php:2080
+msgid "Elgg auto-format"
+msgstr ""
+
+#: lib/elgglib.php:2081
+msgid "HTML format"
+msgstr ""
+
+#: lib/elgglib.php:2082
+msgid "Plain text format"
+msgstr ""
+
+#: lib/elgglib.php:2083
+msgid "Markdown format"
+msgstr ""
+
+#: lib/elgglib.php:2652 lib/elgglib.php:3210
+msgid "Continue"
+msgstr "继续"
+
+#: lib/elgglib.php:3169 units/admin/admin_userdetails.php:58
+#: units/admin/admin_userdetails.php:74 units/icons/function_add_icons.php:48
+#: units/tinymce/tinymce_userdetails_edit.php:21
+#: units/tinymce/tinymce_userdetails_edit.php:28
+#: units/users/userdetails_edit.php:109 units/users/userdetails_edit.php:116
+#: units/users/userdetails_edit.php:139 units/users/userdetails_edit.php:146
+msgid "Yes"
+msgstr "Ja"
+
+#: lib/elgglib.php:3171 units/admin/admin_userdetails.php:58
+#: units/admin/admin_userdetails.php:74 units/icons/function_add_icons.php:49
+#: units/tinymce/tinymce_userdetails_edit.php:21
+#: units/tinymce/tinymce_userdetails_edit.php:28
+#: units/users/userdetails_edit.php:109 units/users/userdetails_edit.php:116
+#: units/users/userdetails_edit.php:139 units/users/userdetails_edit.php:146
+msgid "No"
+msgstr "否"
+
+#: lib/elgglib.php:3468 lib/elgglib.php:3496
+msgid "You have been banned from the system!"
+msgstr "你被系统拒绝"
+
+#: lib/elgglib.php:3526
+msgid ""
+"Sorry, but your IP number seems to have changed from when you first logged "
+"in.  This security feature prevents crackers stealing your identity while "
+"logged in to this site.  Normal users should not be seeing this message - "
+"please ask the site administrator for help."
+msgstr ""
+
+#: lib/elgglib.php:3556
+msgid "The system will remember you and automatically log you in next time."
+msgstr "系统将会记住你的密码，并在下次自动为你登录。"
+
+#: lib/elgglib.php:4253 units/users/function_default_access_levels.php:7
+msgid "Logged in users"
+msgstr "注册用户"
+
+#: lib/elgglib.php:4255 units/users/function_default_access_levels.php:5
+msgid "Private"
+msgstr "私人"
+
+#: lib/elgglib.php:4257
+msgid "Restricted"
+msgstr ""
+
+#: lib/elgglib.php:4311
+msgid "Click to view link"
+msgstr "点击查看链接"
+
+#: lib/php-getttext/examples/pigs_dropin.php:75
+msgid ""
+"This is how the story goes.\n"
+"\n"
+msgstr ""
+
+#: lib/templates.php:24 units/templates/default_template.php:9
+msgid "Stylesheet"
+msgstr "样式表"
+
+#: lib/templates.php:25 units/templates/default_template.php:10
+msgid "The Cascading Style Sheet for the template."
+msgstr "模版的css"
+
+#: lib/templates.php:34 units/templates/default_template.php:19
+msgid "Page Shell"
+msgstr "页面位置"
+
+#: lib/templates.php:35 units/templates/default_template.php:20
+msgid "The main page shell, including headers and footers."
+msgstr "主页面设置，包括标题和页脚"
+
+#: lib/templates.php:37 units/templates/default_template.php:23
+msgid "Page metatags (mandatory) - must be in the 'head' portion of the page"
+msgstr "页面tags必须在页面顶端"
+
+#: lib/templates.php:38 units/templates/default_template.php:24
+msgid "Page title"
+msgstr "页面标题"
+
+#: lib/templates.php:39 units/templates/default_template.php:25
+msgid "Menu"
+msgstr "Menu"
+
+#: lib/templates.php:40 units/templates/default_template.php:26
+msgid "Status menu"
+msgstr "身份菜单"
+
+#: lib/templates.php:41 units/templates/default_template.php:27
+msgid "Main body"
+msgstr "Hoofdtekst"
+
+#: lib/templates.php:42 units/templates/default_template.php:28
+msgid "Sidebar"
+msgstr "边栏"
+
+#: lib/templates.php:58 units/templates/default_template.php:39
+msgid "Content holder"
+msgstr "内容发布者"
+
+#: lib/templates.php:59 units/templates/default_template.php:40
+msgid ""
+"Contains the main content for a page (as opposed to the sidebar or the "
+"title)."
+msgstr "包含页面的主要内容（预侧面工具条和抬头相对）"
+
+#: lib/templates.php:61 lib/templates.php:113
+#: units/templates/default_template.php:42
+msgid "The title"
+msgstr "标题"
+
+#: lib/templates.php:62 units/templates/default_template.php:43
+msgid "The page submenu"
+msgstr "页面下级菜单"
+
+#: lib/templates.php:63 units/templates/default_template.php:44
+#: units/templates/default_template.php:65
+msgid "The body of the page"
+msgstr "页面正文"
+
+#: lib/templates.php:80 units/templates/default_template.php:79
+msgid "Owner box"
+msgstr "Ruimte van de eigenaar"
+
+#: lib/templates.php:81 units/templates/default_template.php:80
+msgid "A box containing a description of the owner of the current profile."
+msgstr "包含文件所属用户信息的文件包。"
+
+#: lib/templates.php:83 units/templates/default_template.php:82
+msgid "The user's name"
+msgstr "用户名"
+
+#: lib/templates.php:84 units/templates/default_template.php:83
+msgid "The URL of the user's profile page, including terminating slash"
+msgstr "用户文件页面的url，包括结束语？"
+
+#: lib/templates.php:85 units/templates/default_template.php:84
+msgid "The user's icon, if it exists"
+msgstr "用户头像（如果存在）"
+
+#: lib/templates.php:86 units/templates/default_template.php:85
+msgid "A short blurb about the user"
+msgstr "简短的关于拥护的描述信息"
+
+#: lib/templates.php:87 units/templates/default_template.php:86
+msgid "Links to friend / unfriend a user"
+msgstr "连接到好友/阻止一名用户成为好友"
+
+#: lib/templates.php:88 units/templates/default_template.php:87
+msgid "Links to any lms hosts the user is attached to"
+msgstr ""
+
+#: lib/templates.php:92 search/personaltags.php:26
+#: units/templates/default_template.php:92
+msgid "Tags"
+msgstr "tags"
+
+#: lib/templates.php:93 search/index.php:96
+#: units/templates/default_template.php:93
+msgid "Resources"
+msgstr ""
+
+#: lib/templates.php:110
+msgid "Information Box"
+msgstr "信息"
+
+#: lib/templates.php:111
+msgid ""
+"A box containing a caption and some text, used extensively throughout the "
+"site. For example, the 'friends' box and most page bodies are info boxes. Of "
+"course, you can alter this template however you wish - it doesn't need to be "
+"an actual box."
+msgstr "站点内广泛使用的包括标题和部分文件的包。例如，“好友”包和大部分的页面包属于信息包。当然，你可以任意更换这个模版-不需要文件包。"
+
+#: lib/templates.php:114
+msgid "The contents of the box"
+msgstr "box内容"
+
+#: lib/templates.php:133 units/templates/default_template.php:113
+msgid "System message shell"
+msgstr "系统信息行"
+
+#: lib/templates.php:134 units/templates/default_template.php:114
+msgid "A list of system messages will be placed within the message shell."
+msgstr "系统信息列表会在系统信息位置显示。"
+
+#: lib/templates.php:136 units/templates/default_template.php:116
+msgid "The messages"
+msgstr "信息"
+
+#: lib/templates.php:148 units/templates/default_template.php:128
+msgid "Individual system messages"
+msgstr "个人系统信息"
+
+#: lib/templates.php:149 units/templates/default_template.php:129
+msgid "Each individual system message."
+msgstr "每条系统信息。"
+
+#: lib/templates.php:151 units/templates/default_template.php:131
+msgid "The system message"
+msgstr "系统信息"
+
+#: lib/templates.php:166 units/templates/default_template.php:146
+msgid "Main menu shell"
+msgstr "Centrale menuruimte"
+
+#: lib/templates.php:167 units/templates/default_template.php:147
+msgid "A list of main menu items will be placed within the menubar shell."
+msgstr "主菜单项目列表会在菜单栏位置显示。"
+
+#: lib/templates.php:169 lib/templates.php:215 lib/templates.php:247
+#: units/templates/default_template.php:149
+#: units/templates/default_template.php:195
+#: units/templates/default_template.php:229
+msgid "The menu items"
+msgstr "菜单栏项目"
+
+#: lib/templates.php:180 units/templates/default_template.php:160
+msgid "Individual main menu item"
+msgstr "个人主菜单"
+
+#: lib/templates.php:181 units/templates/default_template.php:161
+msgid ""
+"This is the template for each individual main menu item. A series of these "
+"is placed within the menubar shell template."
+msgstr "这是一个个人主菜单显示样式。更多风格参见样式菜单栏"
+
+#: lib/templates.php:183 lib/templates.php:199 lib/templates.php:231
+#: lib/templates.php:264 units/templates/default_template.php:163
+#: units/templates/default_template.php:179
+#: units/templates/default_template.php:213
+#: units/templates/default_template.php:246
+msgid "The URL of the menu item"
+msgstr "菜单项的url"
+
+#: lib/templates.php:184 lib/templates.php:200 lib/templates.php:232
+#: lib/templates.php:265 units/templates/default_template.php:164
+#: units/templates/default_template.php:180
+#: units/templates/default_template.php:214
+#: units/templates/default_template.php:247
+msgid "The menu item's name"
+msgstr "菜单栏项目名称"
+
+#: lib/templates.php:196 units/templates/default_template.php:176
+msgid "Selected individual main menu item"
+msgstr "选择个人主菜单风格"
+
+#: lib/templates.php:197 units/templates/default_template.php:177
+msgid ""
+"This is the template for an individual main menu item if it is selected."
+msgstr "这是一个个人主菜单显示样式"
+
+#: lib/templates.php:212 units/templates/default_template.php:192
+msgid "Sub-menubar shell"
+msgstr "下级菜单栏"
+
+#: lib/templates.php:213 units/templates/default_template.php:193
+msgid "A list of sub-menu items will be placed within the menubar shell."
+msgstr "二级菜单项目列表会在菜单栏位置显示。"
+
+#: lib/templates.php:228 units/templates/default_template.php:210
+msgid "Individual sub-menu item"
+msgstr "个人二级菜单"
+
+#: lib/templates.php:229 units/templates/default_template.php:211
+msgid ""
+"This is the template for each individual sub-menu item. A series of these is "
+"placed within the sub-menubar shell template."
+msgstr "这是一个个人下级菜单项样式。更多风格参见下级菜单样式。"
+
+#: lib/templates.php:244 units/templates/default_template.php:226
+msgid "Status menubar shell"
+msgstr "身份菜单栏"
+
+#: lib/templates.php:245 units/templates/default_template.php:227
+msgid ""
+"A list of statusbar menu items will be placed within the status menubar "
+"shell."
+msgstr "状态栏项目列列表会在状态栏位置显示。"
+
+#: lib/templates.php:261 units/templates/default_template.php:243
+msgid "Individual statusbar menu item"
+msgstr "个人状态栏菜单"
+
+#: lib/templates.php:262 units/templates/default_template.php:244
+msgid ""
+"This is the template for each individual statusbar menu item. A series of "
+"these is placed within the status menubar shell template."
+msgstr "这是一个个人状态菜单显示样式。更多风格参见个人状态栏样式菜单。"
+
+#: lib/templates.php:277 units/templates/default_template.php:259
+msgid "Data input box (two columns)"
+msgstr "输入数据框（双行）"
+
+#: lib/templates.php:278 units/templates/default_template.php:260
+msgid ""
+"This is mostly used whenever some input is taken from the user. For example, "
+"each of the fields in the profile edit screen is a data input box."
+msgstr "这里主要用作用户导入信息。例如，修改文件的每个地方都是一个数据包"
+
+#: lib/templates.php:280 units/templates/default_template.php:262
+msgid "The name for the data we're inputting"
+msgstr "导入的数据名称"
+
+#: lib/templates.php:281 units/templates/default_template.php:263
+msgid "The first item of data"
+msgstr "数据第一项"
+
+#: lib/templates.php:282 units/templates/default_template.php:264
+msgid "The second item of data"
+msgstr "数据第二项"
+
+#: lib/templates.php:309 units/templates/default_template.php:282
+msgid "Data input box (one column)"
+msgstr "输入数据框（单行）"
+
+#: lib/templates.php:310 units/templates/default_template.php:283
+msgid "A single-column version of the data box."
+msgstr "单行数据框"
+
+#: lib/templates.php:312 units/templates/default_template.php:285
+msgid "The name of the data we're inputting"
+msgstr "导入的数据名称"
+
+#: lib/templates.php:313 lib/templates.php:341
+#: units/templates/default_template.php:286
+#: units/templates/default_template.php:359
+msgid "The data itself"
+msgstr "数据本身"
+
+#: lib/templates.php:337 units/templates/default_template.php:355
+msgid "Data input box (vertical)"
+msgstr "输入数据框（竖排）"
+
+#: lib/templates.php:338 units/templates/default_template.php:356
+msgid ""
+"A slightly different version of the data box, used on this edit page amongst "
+"other places."
+msgstr "用在本也和其他地方的稍有不同的数据框。"
+
+#: lib/templates.php:340 units/templates/default_template.php:358
+msgid "Name of the data we\\'re inputting"
+msgstr ""
+
+#: lib/templates.php:403 mod/template/lib.php:15
+msgid "Change theme"
+msgstr "改变显示主题"
+
+#: lib/templates.php:437
+msgid "Account settings"
+msgstr "账号设置"
+
+#: lib/templates.php:443
+msgid "Log off"
+msgstr "注销"
+
+#: lib/templates.php:450 _userdetails/index.php:18
+msgid "Edit user details"
+msgstr "编辑详细用户信息"
+
+#: lib/templates.php:454
+msgid "Your site picture"
+msgstr "你的站点图像"
+
+#: lib/templates.php:461
+msgid "Main"
+msgstr "Hoofdtekst"
+
+#: lib/templates.php:466 units/admin/admin_users_add.php:35
+msgid "Add users"
+msgstr "加用户"
+
+#: lib/templates.php:476
+msgid "Manage flagged content"
+msgstr "管理举报内容"
+
+#: lib/templates.php:481
+msgid "Spam control"
+msgstr ""
+
+#: lib/templates.php:586
+msgid "Your current template has been changed."
+msgstr "你的目前风格被改变"
+
+#: lib/templates.php:616 units/templates/template_actions.php:59
+msgid "Your template has been updated."
+msgstr "你的风格被更新"
+
+#: lib/templates.php:629 units/templates/template_actions.php:75
+msgid "Your template was deleted."
+msgstr "你的风格被删除"
+
+#: lib/templates.php:750 units/templates/templates_add.php:8
+msgid "Create theme"
+msgstr ""
+
+#: lib/templates.php:751 units/templates/templates_add.php:9
+msgid ""
+"Here you can create your own themes based on one of the existing public "
+"themes. Just select which public theme you would like to alter and then "
+"create your own. You will now have edit privilages."
+msgstr ""
+
+#: lib/templates.php:767 units/templates/templates_add.php:25
+msgid "Theme name"
+msgstr ""
+
+#: lib/templates.php:772 lib/templates.php:835 lib/templates.php:1034
+#: units/templates/templates_add.php:30 units/templates/templates_edit.php:22
+#: units/templates/templates_view.php:22
+msgid "Default Theme"
+msgstr "默认风格主题"
+
+#: lib/templates.php:791 units/templates/templates_add.php:50
+msgid "Based on"
+msgstr "基于"
+
+#: lib/templates.php:796 units/templates/templates_add.php:55
+msgid "Create Theme"
+msgstr ""
+
+#: lib/templates.php:868 units/templates/templates_edit.php:55
+msgid "Theme Name"
+msgstr ""
+
+#: lib/templates.php:876 units/templates/templates_edit.php:65
+msgid "Glossary"
+msgstr "词汇表"
+
+#: lib/templates.php:912 units/admin/admin_spam.php:22
+#: units/communities/userdetails_edit.php:91 units/files/edit_folder.php:75
+#: units/icons/function_edit_icons.php:89
+#: units/templates/templates_edit.php:101 units/users/userdetails_edit.php:183
+msgid "Save"
+msgstr "保存"
+
+#: lib/templates.php:923 units/templates/templates_edit.php:112
+msgid ""
+"You may not edit this theme. To create a new, editable theme based on the "
+"default, go to <a href=\"index.php\">the main themes page</a>."
+msgstr ""
+
+#: lib/templates.php:950 units/templates/templates_preview.php:8
+msgid "Heading one"
+msgstr "一号标题"
+
+#: lib/templates.php:951 units/templates/templates_preview.php:9
+msgid "Heading two"
+msgstr "二号标题"
+
+#: lib/templates.php:952 units/templates/templates_preview.php:10
+msgid "A bullet list"
+msgstr "无序号列表"
+
+#: lib/templates.php:953 units/templates/templates_preview.php:11
+msgid "Heading three"
+msgstr "三号标题"
+
+#: lib/templates.php:954 units/templates/templates_preview.php:12
+msgid "A numbered list"
+msgstr "有数字序列的列表。"
+
+#: lib/templates.php:984 units/templates/templates_preview.php:42
+msgid "Some text input"
+msgstr "导入文本"
+
+#: lib/templates.php:991 units/templates/templates_preview.php:49
+msgid "Some longer text input"
+msgstr "导入较长文本"
+
+#: lib/templates.php:997 units/templates/templates_preview.php:55
+msgid "Further text input"
+msgstr "输入更多文字"
+
+#: lib/templates.php:1017 units/templates/templates_view.php:5
+msgid "Select / Create / Edit Themes"
+msgstr "选择/创建/编辑 风格"
+
+#: lib/templates.php:1018 units/templates/templates_view.php:6
+msgid "Public Themes"
+msgstr "公共风格"
+
+#: lib/templates.php:1019 units/templates/templates_view.php:7
+#, php-format
+msgid ""
+"The following are public themes that you can use to change the way your %s "
+"looks - these do not change the content only the appearance. Check the "
+"preview and then select the one you want. If you wish you can adapt one of "
+"these using the 'create theme' option below."
+msgstr ""
+
+#: lib/templates.php:1052 lib/templates.php:1084
+#: units/templates/templates_view.php:40 units/templates/templates_view.php:72
+msgid "preview"
+msgstr "预览"
+
+#: lib/templates.php:1063 units/templates/templates_view.php:50
+msgid "Personal themes"
+msgstr "个人主题"
+
+#: lib/templates.php:1064 units/templates/templates_view.php:51
+msgid ""
+"These are themes that you have created. You can edit and delete these. These "
+"theme(s) only control actual look and feel - you cannot change any content "
+"here. To change any of your content you need to use the other menu options "
+"such as: edit profile, update weblog etc."
+msgstr ""
+"这些是你建立的主题。你可以编辑或者删除。这些主题只会改变形式，不会对内容有印象。要改变你的内容，你需要使用其他菜单：编辑信息，上传网志等。"
+
+#: lib/templates.php:1086 units/files/folder_view.php:76
+#: units/files/folder_view.php:141 units/files/templates_preview.php:34
+#: units/templates/templates_view.php:74
+#: units/weblogs/weblogs_posts_view.php:111
+msgid "Edit"
+msgstr "编辑"
+
+#: lib/templates.php:1087 units/templates/templates_view.php:75
+msgid "Are you sure you want to permanently remove this template?"
+msgstr "你是想用就删除这个模版么？"
+
+#: lib/templates.php:1087 units/files/folder_view.php:75
+#: units/files/folder_view.php:140 units/files/templates_preview.php:20
+#: units/files/templates_preview.php:34 units/icons/function_edit_icons.php:40
+#: units/templates/templates_view.php:75
+#: units/weblogs/weblogs_posts_view.php:113
+#: units/weblogs/weblogs_posts_view.php:173
+msgid "Delete"
+msgstr "删除"
+
+#: lib/templates.php:1098 units/templates/templates_view.php:127
+msgid "Select new theme"
+msgstr "选择新风格"
+
+#: lib/templates.php:1151 lib/templates.php:1165 lib/templates.php:1172
+#: units/weblogs/weblogs_comments_add.php:42
+msgid "Guest"
+msgstr "游客"
+
+#: lib/templates.php:1172
+msgid "Log in"
+msgstr ""
+
+#: lib/uploadlib.php:109
+#, php-format
+msgid ""
+"Your file upload has failed because there was a problem with one of the "
+"files, %s.<br /> Here is a log of the problems:<br />%s<br />Not recovering."
+msgstr ""
+
+#: lib/uploadlib.php:135
+#, php-format
+msgid "File was renamed from %s to %s because of invalid characters."
+msgstr ""
+
+#: lib/uploadlib.php:164
+#, php-format
+msgid "Sorry, but that file is too big (limit is %s)"
+msgstr ""
+
+#: lib/uploadlib.php:217
+msgid "File uploaded successfully"
+msgstr ""
+
+#: lib/uploadlib.php:232 lib/uploadlib.php:342 lib/uploadlib.php:359
+msgid "No file was found - are you sure you selected one to upload?"
+msgstr ""
+
+#: lib/uploadlib.php:268
+msgid "The old file(s) in your upload area have been deleted"
+msgstr ""
+
+#: lib/uploadlib.php:299
+#, php-format
+msgid "File was renamed from %s to %s because there was a filename conflict."
+msgstr ""
+
+#: lib/uploadlib.php:340 lib/uploadlib.php:363
+#, php-format
+msgid ""
+"An unknown problem occurred while uploading the file '%s' (perhaps it was "
+"too large?)"
+msgstr ""
+
+#: lib/uploadlib.php:347
+msgid "Uploaded file exceeded the maximum size limit set by the server"
+msgstr ""
+
+#: lib/uploadlib.php:351
+msgid "Uploaded file exceeded the maximum size limit set by the form"
+msgstr ""
+
+#: lib/uploadlib.php:355
+msgid "File was only partially uploaded"
+msgstr ""
+
+#: lib/uploadlib.php:377
+#, php-format
+msgid "Upload log for file %u"
+msgstr ""
+
+#: lib/uploadlib.php:470
+msgid "Title:"
+msgstr ""
+
+#: lib/uploadlib.php:509
+msgid "The file has been moved to a quarantine directory."
+msgstr ""
+
+#: lib/uploadlib.php:512
+#, php-format
+msgid ""
+"The file has been moved to your specified quarantine directory, the new "
+"location is %s"
+msgstr ""
+
+#: lib/uploadlib.php:517 lib/uploadlib.php:526 lib/uploadlib.php:535
+#: lib/uploadlib.php:540
+msgid "The file has been deleted"
+msgstr ""
+
+#: lib/uploadlib.php:520 lib/uploadlib.php:529
+#, php-format
+msgid ""
+"Could not move the file into your specified quarantine directory, %s. You "
+"need to fix this as files are being deleted if they're found to be infected."
+msgstr ""
+
+#: lib/uploadlib.php:543
+msgid "The file could not be deleted"
+msgstr ""
+
+#: lib/uploadlib.php:559
+msgid ""
+"This file that has been uploaded was found to contain a virus and has been "
+"moved or delted and the user notified."
+msgstr ""
+
+#: lib/uploadlib.php:595
+#, php-format
+msgid ""
+"Elgg is configured to run clam on file upload, but the path supplied to Clam "
+"AV, %s,  is invalid."
+msgstr ""
+
+#: lib/uploadlib.php:597
+msgid ""
+"In addition, Elgg is configured so that if clam fails to run, files are "
+"treated like viruses.  This essentially means that no student can upload a "
+"file successfully until you fix this."
+msgstr ""
+
+#: lib/uploadlib.php:603 lib/uploadlib.php:642
+msgid ""
+"Your administrator has enabled virus checking for file uploads but has "
+"misconfigured something.<br />Your file upload was NOT successful. Your "
+"administrator has been emailed to notify them so they can fix it.<br />Maybe "
+"try uploading this file later."
+msgstr ""
+
+#: lib/uploadlib.php:621
+#, php-format
+msgid ""
+"Attention administrator! Clam AV has found a virus in a file uploaded by %s. "
+"Here is the output of clamscan:"
+msgstr ""
+
+#: lib/uploadlib.php:627
+#, php-format
+msgid ""
+"The file you have uploaded, %s, has been scanned by a virus checker and "
+"found to be infected! Your file upload was NOT successful."
+msgstr ""
+
+#: lib/uploadlib.php:633
+#, php-format
+msgid ""
+"Clam AV has failed to run.  The return error message was %s. Here is the "
+"output from Clam:"
+msgstr ""
+
+#: lib/uploadlib.php:658
+#, php-format
+msgid "%s :: Clam AV notification"
+msgstr ""
+
+#: lib/uploadlib.php:702
+msgid "There was an unknown error with clam."
+msgstr ""
+
+#: lib/userlib.php:24 login/index.php:34
+msgid "You have been logged on."
+msgstr "登陆成功"
+
+#: lib/userlib.php:25 login/index.php:43
+msgid ""
+"Unrecognised username or password. The system could not log you on, or you "
+"may not have activated your account."
+msgstr "该用户名或密码不存在。无法登陆，或者你没有激活你的账户"
+
+#: lib/userlib.php:26 login/index.php:46
+msgid ""
+"Either the username or password were not specified. The system could not log "
+"you on."
+msgstr "用户名或者密码不对。请尝试再次登陆。"
+
+#: lib/userlib.php:169
+msgid "You cannot reply to this message by email."
+msgstr ""
+
+#: lib/userlib.php:170
+msgid "Failed to send email. An unknown error occurred."
+msgstr ""
+
+#: lib/userlib.php:184
+msgid "Failed to send message. An unknown error occurred."
+msgstr ""
+
+#: lib/userlib.php:216
+msgid "System"
+msgstr ""
+
+#: lms/join.php:56 units/invite/invite_actions.php:93
+msgid ""
+"Error! Invalid password. Your passwords must match and be between 6 and 16 "
+"characters in length."
+msgstr "错误！密码不符合要求。密码必须是6-16个字符的长度。"
+
+#: lms/join.php:60
+msgid "Error! You must enter your fullname"
+msgstr ""
+
+#: lms/join.php:71
+msgid "Error! Your username and password does not match our record."
+msgstr ""
+
+#: lms/join.php:76
+msgid "Fatal Error! Unknown action requested."
+msgstr ""
+
+#: lms/join.php:105
+msgid "Your account creation was successful!"
+msgstr ""
+
+#: lms/join.php:117
+msgid "Join up"
+msgstr ""
+
+#: lms/join.php:129
+msgid "Login"
+msgstr ""
+
+#: lms/rss.php:28 profile/rss2.php:32
+#: units/profile/function_rss_publish.php:43
+#, php-format
+msgid "Activity for %s, hosted on %s."
+msgstr ""
+
+#: lms/rss.php:33 units/profile/function_rss_publish.php:35
+msgid "Activity"
+msgstr ""
+
+#: lms/rss.php:43
+#, php-format
+msgid "%s posted on weblog post:"
+msgstr ""
+
+#: lms/rss.php:65
+#, php-format
+msgid "%s posted on weblog post '%s'"
+msgstr ""
+
+#: lms/rss.php:83
+msgid "No activity"
+msgstr ""
+
+#: login/index.php:21
+msgid "You are already logged on."
+msgstr ""
+
+#: login/index.php:36
+msgid ""
+"The password for this account is extremely insecure and represents a major "
+"security risk. You should change it immediately."
+msgstr ""
+
+#: login/index.php:49
+msgid "Please log in"
+msgstr ""
+
+#: mod/adash/add.php:25
+msgid "Add dashboard items"
+msgstr ""
+
+#: mod/adash/add.php:45
+msgid "Widget added."
+msgstr ""
+
+#: mod/adash/add.php:59
+msgid "Select a widget type from the list below:"
+msgstr ""
+
+#: mod/adash/add.php:69 units/files/weblogs_posts_add_fields.php:80
+msgid "Add"
+msgstr "增加"
+
+#: mod/adash/add.php:78
+msgid "You do not have permission to add widgets to this dashboard."
+msgstr ""
+
+#: mod/adash/delete.php:44
+msgid "Widget deleted."
+msgstr ""
+
+#: mod/adash/edit.php:34 mod/adash/lib.php:151
+msgid "Edit widget"
+msgstr ""
+
+#: mod/adash/edit.php:64
+msgid "Widget edited."
+msgstr ""
+
+#: mod/adash/edit.php:81
+msgid "You do not have permission to edit this widget."
+msgstr ""
+
+#: mod/adash/index.php:38
+msgid "Dashboard"
+msgstr ""
+
+#: mod/adash/index.php:57
+msgid ""
+"This dashboard is currently empty. Why not add some widgets by clicking 'add "
+"new item' above?"
+msgstr ""
+
+#: mod/adash/index.php:59
+msgid "This dashboard is currently empty."
+msgstr ""
+
+#: mod/adash/lib.php:19 mod/adash/lib.php:22
+msgid "Your Dashboard"
+msgstr ""
+
+#: mod/adash/lib.php:27
+msgid "Add new item"
+msgstr ""
+
+#: mod/adash/lib.php:46 mod/adash/lib.php:263
+msgid "Text box"
+msgstr ""
+
+#: mod/adash/lib.php:47
+msgid "Displays the text of your choice."
+msgstr ""
+
+#: mod/adash/lib.php:152
+msgid "Delete widget"
+msgstr ""
+
+#: mod/adash/lib.php:153
+msgid "Move up"
+msgstr ""
+
+#: mod/adash/lib.php:154
+msgid "Move down"
+msgstr ""
+
+#: mod/adash/lib.php:225
+msgid "Access for this widget:"
+msgstr ""
+
+#: mod/adash/lib.php:229
+msgid "Save widget"
+msgstr ""
+
+#: mod/adash/lib.php:247
+msgid ""
+"This text box is undefined. If you are the widget owner, click 'edit widget' "
+"to add your own content."
+msgstr ""
+
+#: mod/adash/lib.php:264
+msgid ""
+"This widget displays the text content of your choice. All you need to do is "
+"enter the title and body below:"
+msgstr ""
+
+#: mod/adash/move.php:50
+msgid "Widget moved."
+msgstr ""
+
+#: mod/blog/lib.php:17 mod/blog/lib.php:21
+msgid "Your Blog"
+msgstr "你的日记"
+
+#: mod/blog/lib.php:39
+msgid "Post a new entry"
+msgstr "发表新文章"
+
+#: mod/blog/lib.php:44
+msgid "View blog"
+msgstr "察看blog"
+
+#: mod/blog/lib.php:48
+msgid "Archive"
+msgstr "存档"
+
+#: mod/blog/lib.php:52
+msgid "Friends' blogs"
+msgstr ""
+
+#: mod/blog/lib.php:57 _weblog/interesting.php:15
+msgid "Interesting posts"
+msgstr ""
+
+#: mod/blog/lib.php:63
+msgid "View all posts"
+msgstr "察看所有发布"
+
+#: mod/blog/lib.php:67 mod/file/lib.php:48 mod/friend/lib.php:57
+#: mod/profile/lib.php:35
+msgid "Page help"
+msgstr "页面帮助"
+
+#: mod/blog/lib.php:80
+msgid "Blog widget"
+msgstr ""
+
+#: mod/blog/lib.php:81
+msgid "Displays the latest blog posts from a blog of your choice."
+msgstr ""
+
+#: mod/blog/lib.php:143
+msgid "Blog dashboard widget"
+msgstr ""
+
+#: mod/blog/lib.php:144
+msgid ""
+"This widget displays the last couple of blog posts from an individual user. "
+"To begin, select the user from your connections below:"
+msgstr ""
+
+#: mod/blog/lib.php:159
+msgid "Then enter the number of blog posts you'd like to display:"
+msgstr ""
+
+#: mod/browser/index.php:21
+msgid "Browser"
+msgstr ""
+
+#: mod/browser/index.php:82 search/index.php:43
+msgid "All"
+msgstr ""
+
+#: mod/browser/index.php:84
+msgid "Users"
+msgstr ""
+
+#: mod/browser/index.php:85
+msgid "Browse"
+msgstr ""
+
+#: mod/browser/index.php:86
+msgid "Filter"
+msgstr ""
+
+#: mod/browser/index.php:154
+msgid "Name"
+msgstr ""
+
+#: mod/browser/index.php:155
+msgid "Description"
+msgstr ""
+
+#: mod/browser/index.php:156
+msgid "Connections"
+msgstr ""
+
+#: mod/browser/index.php:157
+msgid "Posts"
+msgstr ""
+
+#: mod/browser/index.php:158
+msgid "Type"
+msgstr ""
+
+#: mod/community/lib.php:21 mod/profile/lib.php:27
+msgid "Edit this profile"
+msgstr "编辑这个用户信息"
+
+#: mod/community/lib.php:25
+msgid "Community site picture"
+msgstr ""
+
+#: mod/community/lib.php:29
+msgid "Edit community details"
+msgstr ""
+
+#: mod/community/lib.php:38
+msgid "View membership requests"
+msgstr ""
+
+#: mod/file/lib.php:23 mod/file/lib.php:26
+#: units/files/files_user_info_menu.php:11
+msgid "Your Files"
+msgstr "你的文件"
+
+#: mod/file/lib.php:37
+msgid "Add a file or a folder"
+msgstr "在文件夹中添加文件"
+
+#: mod/file/lib.php:43
+msgid "RSS feed for files"
+msgstr "文件的RSS订阅"
+
+#: mod/friend/lib.php:15 mod/friend/lib.php:18
+msgid "Your Network"
+msgstr "你的网络"
+
+#: mod/friend/lib.php:30 units/friends/profile_friends.php:18
+msgid "Friends"
+msgstr "还有"
+
+#: mod/friend/lib.php:34
+msgid "Friend of"
+msgstr "我是谁的好友"
+
+#: mod/friend/lib.php:42
+msgid "FOAF"
+msgstr "我朋友的朋友"
+
+#: mod/friend/lib.php:47
+msgid "Access controls"
+msgstr "权限控制"
+
+#: mod/friend/lib.php:52
+msgid "Invite a friend"
+msgstr "要请朋友"
+
+#: mod/gettext/lib.php:17
+msgid "Language"
+msgstr ""
+
+#: mod/gettext/lib.php:19 units/gettext/library.php:428
+msgid "default"
+msgstr ""
+
+#: mod/newsclient/lib.php:15 mod/newsclient/lib.php:18
+msgid "Your Resources"
+msgstr ""
+
+#: mod/newsclient/lib.php:27 _rss/index.php:24 _rss/subscriptions.php:24
+#: units/magpie/menu_sub.php:14
+msgid "Feeds"
+msgstr ""
+
+#: mod/newsclient/lib.php:31
+msgid "Publish to blog"
+msgstr ""
+
+#: mod/newsclient/lib.php:35 units/magpie/menu_sub.php:22
+msgid "View aggregator"
+msgstr ""
+
+#: mod/newsclient/lib.php:39
+msgid "Popular Feeds"
+msgstr ""
+
+#: mod/newsclient/lib.php:80
+msgid "Feed widget"
+msgstr ""
+
+#: mod/newsclient/lib.php:81
+msgid "Displays the latest entries from an external feed of your choice."
+msgstr ""
+
+#: mod/newsclient/lib.php:110
+msgid "This feed is currently empty."
+msgstr ""
+
+#: mod/newsclient/lib.php:117
+msgid "This feed widget is undefined."
+msgstr ""
+
+#: mod/newsclient/lib.php:135
+msgid "Feeds dashboard widget"
+msgstr ""
+
+#: mod/newsclient/lib.php:136
+msgid ""
+"This widget displays the last couple of entries from an external feed you "
+"have subscribed to. To begin, select the feed from your subscriptions below:"
+msgstr ""
+
+#: mod/newsclient/lib.php:155
+msgid "Then enter the number of feed entries you'd like to display:"
+msgstr ""
+
+#: mod/newsclient/lib.php:161
+#, php-format
+msgid ""
+"You can't select a feed for this widget because you don't have any feed "
+"subscriptions. Click on <a href=\"%s\">Your</a> Resources to subscribe to a "
+"feed."
+msgstr ""
+
+#: mod/profile/lib.php:16 mod/profile/lib.php:19
+msgid "Your Profile"
+msgstr "你的信息"
+
+#: mod/profile/lib.php:31
+msgid "Change site picture"
+msgstr ""
+
+#: mod/profile/lib.php:39
+msgid "People"
+msgstr ""
+
+#: mod/profile/lib.php:67 mod/profile/lib.php:96 mod/profile/lib.php:136
+msgid "Profile widget"
+msgstr ""
+
+#: mod/profile/lib.php:68
+msgid "Displays the contents of a profile field."
+msgstr ""
+
+#: mod/profile/lib.php:97
+msgid "This profile box is undefined."
+msgstr ""
+
+#: mod/profile/lib.php:137
+msgid ""
+"Select a profile field below; the widget will then display the profile "
+"content from this field."
+msgstr ""
+
+#: mod/profile/profile.config.php:41
+#: units/profile/function_editfield_defaults.php:37
+msgid "Who am I?"
+msgstr "Wie ben ik?"
+
+#: mod/profile/profile.config.php:41
+#: units/profile/function_editfield_defaults.php:37
+msgid "A short introduction for you."
+msgstr "简短的自我介绍。"
+
+#: mod/profile/profile.config.php:42
+msgid "Introduction"
+msgstr ""
+
+#: mod/profile/profile.config.php:42
+msgid "A short introduction to this community."
+msgstr ""
+
+#: mod/profile/profile.config.php:45
+#: units/profile/function_editfield_defaults.php:40
+msgid "Brief description"
+msgstr "简短介绍"
+
+#: mod/profile/profile.config.php:45
+#: units/profile/function_editfield_defaults.php:40
+msgid "For use in your sidebar profile."
+msgstr "工具条"
+
+#: mod/profile/profile.config.php:48
+#: units/profile/function_editfield_defaults.php:43
+msgid "Street address"
+msgstr ""
+
+#: mod/profile/profile.config.php:51
+#: units/profile/function_editfield_defaults.php:46
+msgid "Town"
+msgstr ""
+
+#: mod/profile/profile.config.php:54
+#: units/profile/function_editfield_defaults.php:49
+msgid "State / Region"
+msgstr ""
+
+#: mod/profile/profile.config.php:57
+#: units/profile/function_editfield_defaults.php:52
+msgid "Postal code"
+msgstr ""
+
+#: mod/profile/profile.config.php:60
+#: units/profile/function_editfield_defaults.php:55
+msgid "Country"
+msgstr ""
+
+#: mod/profile/profile.config.php:63 units/admin/admin_main.php:83
+#: units/admin/admin_users_add.php:22 units/admin/admin_users.php:30
+#: units/profile/function_editfield_defaults.php:58
+msgid "Email address"
+msgstr "电子邮件"
+
+#: mod/profile/profile.config.php:65
+#: units/profile/function_editfield_defaults.php:60
+msgid "Work telephone"
+msgstr "Telefoon werk"
+
+#: mod/profile/profile.config.php:68
+#: units/profile/function_editfield_defaults.php:63
+msgid "Home telephone"
+msgstr "住宅电话"
+
+#: mod/profile/profile.config.php:71
+#: units/profile/function_editfield_defaults.php:66
+msgid "Mobile telephone"
+msgstr "手机"
+
+#: mod/profile/profile.config.php:74
+#: units/profile/function_editfield_defaults.php:69
+msgid "Official website address"
+msgstr "官方站点地址"
+
+#: mod/profile/profile.config.php:74
+#: units/profile/function_editfield_defaults.php:69
+msgid "The URL to your official website, if you have one."
+msgstr "你的官方站点的url，如果你拥有自己的官方站点。"
+
+#: mod/profile/profile.config.php:77
+#: units/profile/function_editfield_defaults.php:72
+msgid "Personal website address"
+msgstr "个人网站地址"
+
+#: mod/profile/profile.config.php:77
+#: units/profile/function_editfield_defaults.php:72
+msgid "The URL to your personal website, if you have one."
+msgstr "你的个人网站的url，如果你拥有自己的个人站点。"
+
+#: mod/profile/profile.config.php:80
+#: units/profile/function_editfield_defaults.php:75
+msgid "ICQ number"
+msgstr "ICQ"
+
+#: mod/profile/profile.config.php:83
+#: units/profile/function_editfield_defaults.php:78
+msgid "MSN chat"
+msgstr "MSN 聊天"
+
+#: mod/profile/profile.config.php:86
+#: units/profile/function_editfield_defaults.php:81
+msgid "AIM screenname"
+msgstr "AIM 用户名"
+
+#: mod/profile/profile.config.php:89
+#: units/profile/function_editfield_defaults.php:84
+msgid "Skype username"
+msgstr "skype用户名"
+
+#: mod/profile/profile.config.php:91
+#: units/profile/function_editfield_defaults.php:86
+msgid "Jabber username"
+msgstr "Jabber gebruikersnaam"
+
+#: mod/profile/profile.config.php:94
+#: units/profile/function_editfield_defaults.php:89
+msgid "Interests"
+msgstr "兴趣"
+
+#: mod/profile/profile.config.php:94 mod/profile/profile.config.php:98
+#: mod/profile/profile.config.php:99 mod/profile/profile.config.php:108
+#: mod/profile/profile.config.php:114
+#: units/profile/function_editfield_defaults.php:89
+#: units/profile/function_editfield_defaults.php:93
+#: units/profile/function_editfield_defaults.php:94
+#: units/profile/function_editfield_defaults.php:103
+#: units/profile/function_editfield_defaults.php:109
+msgid "Separated with commas."
+msgstr "用逗号隔开"
+
+#: mod/profile/profile.config.php:98
+#: units/profile/function_editfield_defaults.php:93
+msgid "Likes"
+msgstr "喜好"
+
+#: mod/profile/profile.config.php:99
+#: units/profile/function_editfield_defaults.php:94
+msgid "Dislikes"
+msgstr "不喜欢的东西"
+
+#: mod/profile/profile.config.php:100
+#: units/profile/function_editfield_defaults.php:95
+msgid "Occupation"
+msgstr "占有"
+
+#: mod/profile/profile.config.php:101
+#: units/profile/function_editfield_defaults.php:96
+msgid "Industry"
+msgstr "工业？"
+
+#: mod/profile/profile.config.php:103
+#: units/profile/function_editfield_defaults.php:98
+msgid "Company / Institution"
+msgstr "公司/组织"
+
+#: mod/profile/profile.config.php:106
+#: units/profile/function_editfield_defaults.php:101
+msgid "Job Title"
+msgstr "工作题目"
+
+#: mod/profile/profile.config.php:107
+#: units/profile/function_editfield_defaults.php:102
+msgid "Job Description"
+msgstr "工作描述"
+
+#: mod/profile/profile.config.php:108
+#: units/profile/function_editfield_defaults.php:103
+msgid "I would like to ..."
+msgstr "Ik zou graag het volgende willen..."
+
+#: mod/profile/profile.config.php:109
+#: units/profile/function_editfield_defaults.php:104
+msgid "Career Goals"
+msgstr "事业目标"
+
+#: mod/profile/profile.config.php:109
+#: units/profile/function_editfield_defaults.php:104
+msgid ""
+"Freeform: let colleagues and potential employers know what you'd like to get "
+"out of your career."
+msgstr "自由状态？允许同事和其他未来员工知道你想从你的事业中得到什么"
+
+#: mod/profile/profile.config.php:110
+#: units/profile/function_editfield_defaults.php:105
+msgid "Level of Education"
+msgstr "教育程度"
+
+#: mod/profile/profile.config.php:111
+#: units/profile/function_editfield_defaults.php:106
+msgid "High School"
+msgstr "中学"
+
+#: mod/profile/profile.config.php:112
+#: units/profile/function_editfield_defaults.php:107
+msgid "University / College"
+msgstr "大学"
+
+#: mod/profile/profile.config.php:113
+#: units/profile/function_editfield_defaults.php:108
+msgid "Degree"
+msgstr "级别"
+
+#: mod/profile/profile.config.php:114
+#: units/profile/function_editfield_defaults.php:109
+msgid "Main Skills"
+msgstr "Belangrijkste vaardigheden"
+
+#: profile/edit.php:35
+msgid "Edit profile"
+msgstr "编辑个人信息"
+
+#: profile/edit.php:88 units/profile/function_actions.php:40
+msgid "Profile updated."
+msgstr "信息更新"
+
+#: profile/profile.class.php:48 units/profile/edit_link.php:8
+msgid "Click here to edit this profile."
+msgstr "点击此处编辑用户信息"
+
+#: profile/profile.class.php:86 units/profile/content_edit.php:2
+msgid ""
+"    This screen allows you to edit your profile. Blank fields will not show "
+"up on your profile screen in any view; you can change the access level for "
+"each piece of information in order to prevent it from falling into the wrong "
+"hands. For example, we strongly recommend you keep your address to yourself "
+"or a few trusted parties."
+msgstr ""
+
+#: profile/profile.class.php:95
+msgid "You can import some profile data by uploading a FOAF file here:"
+msgstr ""
+
+#: profile/profile.class.php:98
+msgid "Upload a FOAF file:"
+msgstr ""
+
+#: profile/profile.class.php:100 units/files/edit_folder.php:267
+msgid "Upload"
+msgstr "上传"
+
+#: profile/profile.class.php:110
+msgid "Or you can fill in your profile directly below:"
+msgstr ""
+
+#: profile/profile.class.php:123
+msgid "Submit details:"
+msgstr "提交详细信息"
+
+#: profile/profile.class.php:124
+msgid "Save your profile"
+msgstr "保存用户信息"
+
+#: profile/profile.class.php:207
+#: units/profile/function_editfield_display.php:40
+msgid "Access Restriction:"
+msgstr "权限范围："
+
+#: profile/profile.class.php:280 units/profile/function_search.php:35
+msgid "Profiles where"
+msgstr "信息位置"
+
+#: profile/profile.class.php:441 units/profile/function_upload_foaf.php:8
+msgid ""
+"There was an error uploading the file. Possibly the file was too large, or "
+"the upload was interrupted."
+msgstr "上传文件错误。可能文件过大，或上传被中断"
+
+#: profile/profile.class.php:521 units/profile/function_upload_foaf.php:88
+msgid ""
+"Data from your FOAF file has been preloaded. You must click Save at the "
+"bottom of the page for the changes to take effect."
+msgstr ""
+
+#: profile/profile.class.php:525 units/profile/function_upload_foaf.php:92
+msgid "Error: supplied file did not appear to be a FOAF file."
+msgstr ""
+
+#: profile/profile.class.php:837 units/profile/profile_user_info.php:58
+#: units/weblogs/weblogs_user_info.php:7
+msgid "Profile Owner"
+msgstr "信息用户"
+
+#: profile/profile.class.php:839 units/profile/profile_user_info.php:60
+#: units/weblogs/weblogs_user_info.php:9
+msgid "You"
+msgstr "Jij"
+
+#: profile/rss2.php:25
+#, php-format
+msgid "Activity tagged with %s"
+msgstr ""
+
+#: profile/search.php:10
+msgid "Search Profiles"
+msgstr ""
+
+#: _rss/blog.php:25
+msgid "Publish feeds to blog"
+msgstr "添加blog feed"
+
+#: _rss/individual.php:13
+msgid "Feed detail"
+msgstr ""
+
+#: _rss/popular.php:12 units/magpie/menu_sub.php:31
+msgid "Popular feeds"
+msgstr ""
+
+#: _rss/styles.php:10
+msgid "RSS Management"
+msgstr "RSS管理"
+
+#: _rss/styles.php:11
+msgid "To add this feed to your resources page, click here."
+msgstr ""
+
+#: _rss/styles.php:12
+msgid ""
+"To add this feed to an external RSS aggregator, click the link that "
+"corresponds to your aggregator:"
+msgstr ""
+
+#: _rss/styles.php:13
+msgid "Summary"
+msgstr "摘要"
+
+#: _rss/styles.php:14
+msgid "This is an RSS feed for "
+msgstr ""
+
+#: _rss/styles.php:15
+msgid "Didn't mean to come here? Click to exit!"
+msgstr "并不想到这来？点击此处退出！"
+
+#: search/all.php:13
+msgid "Searching Everything"
+msgstr ""
+
+#: search/index.php:15 units/search/search_user_info_menu.php:7
+msgid "Search"
+msgstr "查找"
+
+#: search/index.php:38
+msgid "Search for results from:"
+msgstr ""
+
+#: search/index.php:78
+msgid "Filter by content type:"
+msgstr ""
+
+#: search/index.php:82
+msgid "Everything"
+msgstr ""
+
+#: search/index.php:89
+msgid "Users and communities"
+msgstr ""
+
+#: search/tags.php:12
+msgid "Some Tags"
+msgstr ""
+
+#: _templates/edit.php:15
+msgid "Template Edit"
+msgstr "模版编辑"
+
+#: _templates/index.php:15
+msgid "Select / Create Themes"
+msgstr "选择/创建 风格"
+
+#: _templates/preview.php:13
+msgid "Template Preview"
+msgstr "预览模版"
+
+#: units/activity/recent.php:3
+msgid ""
+"This screen displays recent activity on your account by other users over a "
+"given time range."
+msgstr "本页面显示其他用户在一定时间内再你的账户上的操作"
+
+#: units/admin/admin_actions.php:44
+msgid ""
+"Error! The new username must contain letters and numbers only, cannot be "
+"blank, and must be between 3 and 12 characters in length."
+msgstr "错误！新用户名只能由英文字母和数字组成，不能是空白，长度为3到12个字母之间。"
+
+#: units/admin/admin_actions.php:50
+#, php-format
+msgid "Username was changed to %s."
+msgstr ""
+
+#: units/admin/admin_actions.php:58
+#, php-format
+msgid "File quota was changed to %d."
+msgstr "文件配额更改为： %d 。"
+
+#: units/admin/admin_actions.php:65
+#, php-format
+msgid "Icon quota was changed to %d."
+msgstr ""
+
+#: units/admin/admin_actions.php:80
+#, php-format
+msgid "User flag '%s' set to '%s'"
+msgstr ""
+
+#: units/admin/admin_actions.php:94
+msgid "Spam list updated."
+msgstr ""
+
+#: units/admin/admin_actions.php:123
+#, php-format
+msgid ""
+"User addition %d failed: at least one field was blank. Username: %s, name: "
+"%s, email: %s"
+msgstr ""
+
+#: units/admin/admin_actions.php:128
+#, php-format
+msgid ""
+"New username %d (%s) was invalid; usernames must contain letters and numbers "
+"only, cannot be blank, and must be between 3 and 12 characters in length."
+msgstr ""
+
+#: units/admin/admin_actions.php:134
+#, php-format
+msgid "User addition %d failed: username %s is already in use."
+msgstr ""
+
+#: units/admin/admin_actions.php:138
+#, php-format
+msgid "User addition %d failed: email address %s appears to be invalid."
+msgstr ""
+
+#: units/admin/admin_actions.php:181
+#, php-format
+msgid "Your new %s account"
+msgstr ""
+
+#: units/admin/admin_actions.php:182
+#, php-format
+msgid ""
+"You have been added to %s!\n"
+"\n"
+"For your records, your %s username and password are:\n"
+"\n"
+"\tUsername: %s\n"
+"\t"
+msgstr ""
+
+#: units/admin/admin_actions.php:185
+#, php-format
+msgid "User %s was created."
+msgstr ""
+
+#: units/admin/admin_contentflags.php:7
+msgid ""
+"The following pages have been flagged as having obscene or inappropriate "
+"content. They are ordered by number of complaints."
+msgstr "下列页面因不健康内容被标记。按被投诉的次数排列"
+
+#: units/admin/admin_contentflags.php:8
+msgid ""
+"To view the pages in question, click the following links. To remove the "
+"flags, for example if the flag is a false positive or if you've deleted the "
+"offending content, check the appropriate box and click the 'delete' button "
+"below."
+msgstr "察看有问题的页面，点击下列链接。取消标记，请点击”取消“"
+
+#: units/admin/admin_contentflags.php:18
+msgid "Page URL"
+msgstr "url页"
+
+#: units/admin/admin_contentflags.php:19
+msgid "Number of objections"
+msgstr "反对数目"
+
+#: units/admin/admin_contentflags.php:38
+msgid "Remove flag(s)"
+msgstr "取消举报"
+
+#: units/admin/admin_contentflags.php:44
+msgid "No content flags were found at present."
+msgstr "目前没有赞同标记"
+
+#: units/admin/admin_main.php:9
+msgid "Site statistics"
+msgstr "站点数据"
+
+#: units/admin/admin_main.php:17
+#, php-format
+msgid "Accounts of type '%s'"
+msgstr "账号类型 '%s'"
+
+#: units/admin/admin_main.php:33
+msgid "Weblog statistics"
+msgstr "blog数据"
+
+#: units/admin/admin_main.php:34 units/admin/admin_main.php:48
+msgid "All-time:"
+msgstr "没有时间限制："
+
+#: units/admin/admin_main.php:35 units/admin/admin_main.php:37
+#, php-format
+msgid "%u weblog posts, %u comments"
+msgstr ""
+
+#: units/admin/admin_main.php:36 units/admin/admin_main.php:49
+msgid "Last 7 days:"
+msgstr "过去7天："
+
+#: units/admin/admin_main.php:47
+msgid "File statistics"
+msgstr "文件信息"
+
+#: units/admin/admin_main.php:48 units/admin/admin_main.php:49
+#, php-format
+msgid "%u files (%s bytes)"
+msgstr ""
+
+#: units/admin/admin_main.php:67
+msgid "Database statistics"
+msgstr ""
+
+#: units/admin/admin_main.php:68
+msgid "Total database size:"
+msgstr ""
+
+#: units/admin/admin_main.php:68
+#, php-format
+msgid "%u bytes"
+msgstr ""
+
+#: units/admin/admin_main.php:75
+msgid "Users online now"
+msgstr "用户在线"
+
+#: units/admin/admin_main.php:76
+msgid ""
+"The following users have an active session and have performed an action "
+"within the past 10 minutes."
+msgstr "下列用户是活动的，在过去10分钟内有操作。"
+
+#: units/admin/admin_main.php:82 units/admin/admin_users_add.php:21
+#: units/admin/admin_users.php:29
+msgid "Full name"
+msgstr "全名"
+
+#: units/admin/admin_main.php:93
+#, php-format
+msgid "%u users in total."
+msgstr ""
+
+#: units/admin/admin_spam.php:7
+msgid ""
+"Add regular expressions below, one per line, to block spam. For example, "
+"'foo' will block all comments containing the word foo, (foo|bar) will block "
+"comments containing the word foo or bar."
+msgstr ""
+
+#: units/admin/admin_spam.php:8
+msgid "Blank lines and lines starting with # will be ignored."
+msgstr ""
+
+#: units/admin/admin_spam.php:20
+msgid "Regular expressions"
+msgstr ""
+
+#: units/admin/admin_userdetails.php:19
+msgid "Change username:"
+msgstr "更改用户名："
+
+#: units/admin/admin_userdetails.php:22
+msgid "New username: "
+msgstr "新用户名： "
+
+#: units/admin/admin_userdetails.php:29
+msgid "Change file quota (in bytes):"
+msgstr "改变文件配额（单位是bytes）"
+
+#: units/admin/admin_userdetails.php:32
+msgid "New file quota: "
+msgstr "新文件 "
+
+#: units/admin/admin_userdetails.php:36
+msgid "Change icon quota:"
+msgstr "改变图表配额："
+
+#: units/admin/admin_userdetails.php:39
+msgid "New icon quota: "
+msgstr "新头像 "
+
+#: units/admin/admin_userdetails.php:45
+msgid "User flags:"
+msgstr "用户标记"
+
+#: units/admin/admin_userdetails.php:56
+msgid "Site administrator: "
+msgstr "站点管理员 "
+
+#: units/admin/admin_userdetails.php:72
+msgid "Banned: "
+msgstr "被封了的： "
+
+#: units/admin/admin_users_add.php:17
+msgid ""
+"You can create up to 12 users below; passwords will be autogenerated and "
+"emailed to the account owners. You must include all fields, but you may "
+"leave rows blank."
+msgstr ""
+"Hier kan je tot twaalf gebruikers aanmaken. Wachtwoorden worden automatisch "
+"gegenereerd en verstuurd naar de eigenaren van de accounts. Alle velden "
+"dienen te worden ingevuld, regels mogen blank zijn."
+
+#: units/admin/admin_users_panel.php:12
+#: units/communities/communities_membership_requests.php:32
+#: units/friends/user_friendship_requests.php:33
+msgid "Profile"
+msgstr "用户信息"
+
+#: units/admin/admin_users.php:10
+msgid ""
+"The following is a list of all the users in the system, 50 users at a time. "
+"You can click each one to edit their user details as if you were logged in "
+"as them, as well as set user flags (including 'ban user' and 'set user as "
+"administrator')."
+msgstr "下表是本系统所有用户列表，50人同时在线。你可以选择修改用户个人信息，也可以用投诉（包括“阻止用户”或者“把某用户设置为管理员”）"
+
+#: units/admin/admin_users.php:11
+msgid ""
+"If you know the username of the user you would like to edit, you can also "
+"enter it below."
+msgstr "如果你知道你想编辑的用户的用户名，请输入。"
+
+#: units/admin/admin_users.php:16
+msgid "Enter username"
+msgstr "输入用户名"
+
+#: units/admin/admin_users.php:18
+msgid "Edit user"
+msgstr "编辑用户"
+
+#: units/admin/admin_users.php:37 units/magpie/function_view_individual.php:38
+#: units/magpie/function_view.php:41
+#: units/weblogs/weblogs_all_users_view.php:123
+#: units/weblogs/weblogs_friends_view.php:73
+#: units/weblogs/weblogs_interesting_view.php:64
+#: units/weblogs/weblogs_view.php:65
+msgid "Next"
+msgstr "下一个"
+
+#: units/admin/admin_users.php:46
+msgid "Previous"
+msgstr "上一个"
+
+#: units/admin/display_content_flag_form.php:23
+msgid "Flag content"
+msgstr "举报这个"
+
+#: units/admin/display_content_flag_form.php:24
+msgid ""
+"To mark this content as obscene or inappropriate, click the 'Flag' button "
+"and an administrator will view it in due course."
+msgstr "标记该内容不健康，点击“标记”，管理员会尽快处理"
+
+#: units/admin/display_content_flag_form.php:25
+msgid "Flag"
+msgstr "举报"
+
+#: units/communities/communities_access_levels.php:10
+#: units/communities/communities_access_levels.php:19
+msgid "Community"
+msgstr "社区"
+
+#: units/communities/communities_actions.php:20
+msgid ""
+"Error! The community username must contain letters and numbers only, cannot "
+"be blank, and must be between 3 and 12 characters in length."
+msgstr "错误~社区用户名只能用字母和数字，不能不天，而且长度为3-12之间。"
+
+#: units/communities/communities_actions.php:22
+msgid "Error! The community name cannot be blank."
+msgstr "错误！必须填写社区名称。"
+
+#: units/communities/communities_actions.php:44
+msgid "Your community was created and you were added as its first member."
+msgstr "你的社区已被建立，你是该社区的第一位成员。"
+
+#: units/communities/communities_actions.php:58
+#, php-format
+msgid "You joined %s."
+msgstr ""
+
+#: units/communities/communities_actions.php:60
+#, php-format
+msgid ""
+"%s has joined %s!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+
+#: units/communities/communities_actions.php:63
+#, php-format
+msgid "New %s member"
+msgstr ""
+
+#: units/communities/communities_actions.php:67
+#, php-format
+msgid ""
+"Membership of %s needs to be approved. Your request has been added to the "
+"list."
+msgstr ""
+
+#: units/communities/communities_actions.php:69
+#, php-format
+msgid ""
+"%s has applied to join %s!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+
+#: units/communities/communities_actions.php:72
+#, php-format
+msgid "New %s member request"
+msgstr ""
+
+#: units/communities/communities_actions.php:76
+#, php-format
+msgid "%s is a private community. Your membership request has been declined."
+msgstr ""
+
+#: units/communities/communities_actions.php:88
+#, php-format
+msgid "You left %s."
+msgstr ""
+
+#: units/communities/communities_actions.php:95
+msgid "Your post has been added to the community weblog."
+msgstr "你发布的文章已经被加入社区blog"
+
+#: units/communities/communities_actions.php:111
+#, php-format
+msgid ""
+"You approved the membership request. %s is now a member of this community."
+msgstr ""
+
+#: units/communities/communities_actions.php:113
+msgid "An error occurred: the membership request could not be approved."
+msgstr ""
+
+#: units/communities/communities_actions.php:116
+#: units/communities/communities_actions.php:135
+msgid "Error: you do not have authority to modify this membership request."
+msgstr ""
+
+#: units/communities/communities_actions.php:119
+#: units/communities/communities_actions.php:138
+msgid "An error occurred: the membership request could not be found."
+msgstr ""
+
+#: units/communities/communities_actions.php:133
+#, php-format
+msgid ""
+"You declined the membership request. %s is not a member of this community."
+msgstr ""
+
+#: units/communities/communities_create.php:16
+msgid "Create a new community"
+msgstr "建立新社区"
+
+#: units/communities/communities_create.php:17
+msgid "Community name:"
+msgstr "社区名称："
+
+#: units/communities/communities_create.php:18
+msgid "Username for community:"
+msgstr "用户社区名"
+
+#: units/communities/communities_create.php:19 units/files/edit_folder.php:147
+#: units/groups/groups_create.php:5
+msgid "Create"
+msgstr "创建"
+
+#: units/communities/communities_edit.php:47
+msgid ""
+"You don't have any communities listed! To join a community, click the 'join' "
+"button underneath a community's icon. You can find communities you're "
+"interested in by using the search function."
+msgstr "你没有社区列表。要加入社区，请点击该社区图标下方的“加入”。你可以通过搜索来查找你感兴趣的社区"
+
+#: units/communities/communities_edit.php:49
+msgid "This user is not currently a member of any communities."
+msgstr "该用户不是任何社区成员"
+
+#: units/communities/communities_membership_requests.php:15
+msgid ""
+"The following users would like to join this community. They need your "
+"approval to do this (to change this setting, visit the 'community settings' "
+"page)."
+msgstr ""
+
+#: units/communities/communities_membership_requests.php:33
+#: units/friends/user_friendship_requests.php:34
+#: units/weblogs/weblogs_user_info_menu.php:29 _weblog/edit.php:24
+#: _weblog/index.php:15
+msgid "Blog"
+msgstr "日记"
+
+#: units/communities/communities_membership_requests.php:48
+msgid "You have no pending membership requests."
+msgstr ""
+
+#: units/communities/communities_members.php:45
+msgid "This community doesn't currently have any members."
+msgstr "该社区目前没有成员"
+
+#: units/communities/communities_moderator_of.php:47
+msgid "You don't own any communities. Why not create one?"
+msgstr "你没有任何社区，不创建一个么？"
+
+#: units/communities/communities_moderator_of.php:49
+msgid "This user is not currently moderating any communities."
+msgstr "该用户不属于任何社区"
+
+#: units/communities/communities_owned.php:18
+msgid "Owned communities"
+msgstr "社区"
+
+#: units/communities/community_memberships.php:20
+msgid "Community memberships"
+msgstr "社区成员审核"
+
+#: units/communities/community_wiki.php:15
+msgid "Community Wiki"
+msgstr ""
+
+#: units/communities/profile_edit_link.php:12
+msgid "Upload / edit site pictures for this community."
+msgstr "上传/编辑该社区图像"
+
+#: units/communities/profile_edit_link.php:26
+msgid "Change this community's name."
+msgstr "改变这个社区的名字"
+
+#: units/communities/userdetails_actions.php:23
+#, php-format
+msgid "Community ownership transferred to %s."
+msgstr ""
+
+#: units/communities/userdetails_actions.php:26
+msgid "Could not retrieve community details."
+msgstr ""
+
+#: units/communities/userdetails_edit.php:11
+msgid "Change your community name"
+msgstr "更改社区名称"
+
+#: units/communities/userdetails_edit.php:12
+#: units/users/userdetails_edit.php:12
+msgid "This name will be displayed throughout the system."
+msgstr "该用户名在系统通用"
+
+#: units/communities/userdetails_edit.php:27
+msgid "Community name"
+msgstr "社区名称"
+
+#: units/communities/userdetails_edit.php:32
+msgid "Membership restriction:"
+msgstr ""
+
+#: units/communities/userdetails_edit.php:33
+msgid "This allows you to choose who can join this community."
+msgstr ""
+
+#: units/communities/userdetails_edit.php:50
+msgid "No moderation: anyone can join this community."
+msgstr ""
+
+#: units/communities/userdetails_edit.php:55
+msgid "Moderation: memberships must be approved by you."
+msgstr ""
+
+#: units/communities/userdetails_edit.php:60
+msgid "Private: nobody can join this community."
+msgstr ""
+
+#: units/communities/userdetails_edit.php:65
+msgid "Membership restriction"
+msgstr ""
+
+#: units/communities/userdetails_edit.php:70
+msgid "Community ownership"
+msgstr ""
+
+#: units/communities/userdetails_edit.php:71
+msgid ""
+"Type the username of the user who you want to own this community below. You "
+"cannot leave this blank, or specify a community or a user that doesn't exist."
+msgstr ""
+
+#: units/communities/userdetails_edit.php:83
+msgid "Community owner"
+msgstr ""
+
+#: units/communities/user_info_menu_text.php:18
+msgid "Are you sure you want to join this community?"
+msgstr "你是想挤入这个社区么？"
+
+#: units/communities/user_info_menu_text.php:18
+msgid "Click here to join this community."
+msgstr "点击此处加入这社区"
+
+#: units/communities/user_info_menu_text.php:20
+msgid "Are you sure you want to apply to join this community?"
+msgstr ""
+
+#: units/communities/user_info_menu_text.php:20
+msgid "Click here to apply to join this community."
+msgstr ""
+
+#: units/communities/user_info_menu_text.php:26
+msgid "Are you sure you want to leave this community?"
+msgstr "你是想退出这个社区么？"
+
+#: units/communities/user_info_menu_text.php:26
+msgid "Click here to leave this community."
+msgstr "点击此处推出这个社区"
+
+#: units/files/default_templates.php:8
+msgid "Folder"
+msgstr ""
+
+#: units/files/default_templates.php:9
+msgid "Each individual folder"
+msgstr "每个文件夹"
+
+#: units/files/default_templates.php:11
+msgid "The owner of the folder"
+msgstr "文件夹拥有者"
+
+#: units/files/default_templates.php:12
+msgid "The name of the folder"
+msgstr "文件夹名称"
+
+#: units/files/default_templates.php:13
+msgid "The folder's URL"
+msgstr "文件夹的url"
+
+#: units/files/default_templates.php:14
+msgid "Menu items for folder owner (edit, delete, etc)"
+msgstr "菜单选项（编辑、删除等）"
+
+#: units/files/default_templates.php:15
+msgid "The URL of the file's icon"
+msgstr "文件图表的的URL"
+
+#: units/files/default_templates.php:16 units/files/default_templates.php:49
+msgid "Keywords associated with the folder"
+msgstr "文件夹的关键词"
+
+#: units/files/default_templates.php:40 units/files/function_search_rss.php:44
+msgid "File"
+msgstr "文件"
+
+#: units/files/default_templates.php:41
+msgid "Each individual file within a folder"
+msgstr "文件加重的每个文件。"
+
+#: units/files/default_templates.php:43
+msgid "The file's URL"
+msgstr "文件的url"
+
+#: units/files/default_templates.php:44
+msgid "Its filename"
+msgstr "文件名"
+
+#: units/files/default_templates.php:45
+msgid "A description of the file"
+msgstr "文件描述"
+
+#: units/files/default_templates.php:46
+msgid "Its title"
+msgstr "题目"
+
+#: units/files/default_templates.php:47
+msgid "Menu items for file owner (edit, delete, etc)"
+msgstr "菜单选项（编辑、删除等）"
+
+#: units/files/default_templates.php:48
+msgid "The URL of its icon"
+msgstr "图标的URL"
+
+#: units/files/edit_file.php:17 units/files/edit_folder.php:192
+msgid "File title:"
+msgstr "文件题目："
+
+#: units/files/edit_file.php:29
+msgid "File description:"
+msgstr "文件描述"
+
+#: units/files/edit_file.php:40 units/files/edit_folder.php:194
+#: units/weblogs/weblogs_posts_add.php:27
+#: units/weblogs/weblogs_posts_edit.php:21
+msgid "Access restrictions:"
+msgstr "访问受控制："
+
+#: units/files/edit_file.php:51
+msgid "File folder:"
+msgstr "文件夹："
+
+#: units/files/edit_file.php:62 units/files/edit_folder.php:62
+#: units/files/edit_folder.php:134 units/files/edit_folder.php:244
+msgid "Keywords (comma separated):"
+msgstr "关键词（ 用英文逗号隔开）："
+
+#: units/files/edit_file.php:80
+msgid "Save changes"
+msgstr "保存修改"
+
+#: units/files/edit_file.php:98
+msgid "Edit "
+msgstr "编辑 "
+
+#: units/files/edit_folder.php:19 units/files/edit_folder.php:89
+msgid "Edit this folder"
+msgstr "编辑这个文件夹"
+
+#: units/files/edit_folder.php:26
+msgid "Folder name:"
+msgstr "文件夹名称："
+
+#: units/files/edit_folder.php:27
+msgid "Parent folder"
+msgstr "上级文件夹"
+
+#: units/files/edit_folder.php:49 units/files/edit_folder.php:109
+msgid "Access restrictions"
+msgstr "访问受控制。"
+
+#: units/files/edit_folder.php:99
+msgid "Upload files and folders"
+msgstr "上传文件和文件夹"
+
+#: units/files/edit_folder.php:107
+msgid "Create a new folder"
+msgstr "创建新文件夹"
+
+#: units/files/edit_folder.php:108
+msgid "To create a new folder, enter its name:"
+msgstr "创建新文件夹，名称："
+
+#: units/files/edit_folder.php:173
+msgid "Upload a file"
+msgstr "上传一个文件"
+
+#: units/files/edit_folder.php:187
+#, php-format
+msgid "You have used %s Mb of a total %s Mb."
+msgstr ""
+
+#: units/files/edit_folder.php:189
+#, php-format
+msgid "Used space: %s Mb."
+msgstr ""
+
+#: units/files/edit_folder.php:191
+msgid "File to upload:"
+msgstr "上传文件："
+
+#: units/files/edit_folder.php:193
+msgid "File Description:"
+msgstr "文件描述"
+
+#: units/files/edit_folder.php:266
+msgid ""
+"By checking this box, you are asserting that you have the legal right to "
+"share this file, and that you understand you are sharing it with other users "
+"of the system."
+msgstr "勾璇这里代表你有权共享你上传的文件。就是说别上传那些可能会“违反别人版权”的东西。"
+
+#: units/files/files_actions.php:30
+msgid "Your folder was created."
+msgstr "文件夹建立了。"
+
+#: units/files/files_actions.php:33
+msgid "Could not create folder. Perhaps the folder name was blank?"
+msgstr "无法创建文件夹。你是不是没给文件夹起名字？"
+
+#: units/files/files_actions.php:53
+msgid ""
+"Upload unsuccessful. You must check the copyright box for a file to be "
+"uploaded."
+msgstr ""
+"Upload niet geslaagd. Vink de optie auteursrechten aan om een bestand te "
+"kunnen uploaden."
+
+#: units/files/files_actions.php:95
+msgid "The file was successfully uploaded."
+msgstr "文件被成功上传"
+
+#: units/files/files_actions.php:136
+msgid "The file was updated."
+msgstr "文件被更新"
+
+#: units/files/files_actions.php:160
+msgid "The folder was edited."
+msgstr "文件夹被编辑"
+
+#: units/files/files_actions.php:163
+msgid "Error: a folder cannot be its own parent."
+msgstr "错误：这个文件夹不能是自己的上一层文件夹。"
+
+#: units/files/files_actions.php:189
+msgid "The folder was deleted."
+msgstr "文件夹被删除"
+
+#: units/files/files_actions.php:214
+msgid "The file was deleted."
+msgstr "文件被删除"
+
+#: units/files/files_links_make.php:54
+msgid "You do not have permission to access this file"
+msgstr "你无权察看该文件"
+
+#: units/files/files_links_make.php:57
+msgid "File does not exist"
+msgstr "文件不存在"
+
+#: units/files/files_user_info_menu.php:23
+msgid "File Storage"
+msgstr "文件存储"
+
+#: units/files/folder_view.php:27
+msgid "Root Folder"
+msgstr "最上层目录"
+
+#: units/files/folder_view.php:50
+msgid "Return to"
+msgstr "返回到"
+
+#: units/files/folder_view.php:57 units/files/templates_preview.php:6
+msgid "Subfolders"
+msgstr "下级文件夹"
+
+#: units/files/folder_view.php:74
+msgid "Are you sure you want to permanently delete this folder?"
+msgstr "你是想用就删除这个文件夹么？"
+
+#: units/files/folder_view.php:87 units/files/folder_view.php:149
+#: units/magpie/function_subscriptions_publish_to_blog.php:41
+msgid "Keywords: "
+msgstr "关键词： "
+
+#: units/files/folder_view.php:139
+msgid "Are you sure you want to permanently delete this file?"
+msgstr "你是想用就删除这个文件么？"
+
+#: units/files/folder_view.php:175
+msgid "This folder is currently empty."
+msgstr "空文件夹"
+
+#: units/files/function_search.php:49
+#, php-format
+msgid "Folders owned by '%s' in category '%s'"
+msgstr ""
+
+#: units/files/function_search.php:88
+#, php-format
+msgid "Files owned by %s in category '%s'"
+msgstr ""
+
+#: units/files/function_search.php:90
+msgid "View folder"
+msgstr ""
+
+#: units/files/function_search.php:107
+#, php-format
+msgid "RSS feed for files owned by %s"
+msgstr ""
+
+#: units/files/function_search.php:118
+msgid "Users with files or folders in category"
+msgstr "拥有文件或文件夹的用户列表"
+
+#: units/files/function_search_rss.php:34
+msgid "File folder"
+msgstr "文件夹"
+
+#: units/files/templates_preview.php:5
+msgid "Folder name"
+msgstr "文件夹名称"
+
+#: units/files/templates_preview.php:15 units/files/templates_preview.php:26
+msgid "test"
+msgstr ""
+
+#: units/files/templates_preview.php:18
+msgid "Subfolder"
+msgstr "下级文件夹"
+
+#: units/files/templates_preview.php:27
+msgid "A sample file"
+msgstr ""
+
+#: units/files/templates_preview.php:30
+msgid "This is a file"
+msgstr "文件"
+
+#: units/files/templates_preview.php:31
+msgid "filename"
+msgstr "文件名"
+
+#: units/files/templates_preview.php:40
+msgid "Files and folders"
+msgstr "文件和文件家"
+
+#: units/files/weblogs_posts_add_fields.php:55
+#, php-format
+msgid "Embed a file from your %s file storage:"
+msgstr "从您的 %s 资源中选一个添加到日记中。"
+
+#: units/files/weblogs_posts_add_fields.php:79
+msgid ""
+"This will add a code to your weblog post that will be converted into an "
+"embedded file."
+msgstr "给你的blog添加代码，使其成为内部文件"
+
+#: units/friends/friends_actions.php:24
+#, php-format
+msgid "%s was added to your friends list."
+msgstr ""
+
+#: units/friends/friends_actions.php:26
+#, php-format
+msgid ""
+"%s has added you as a friend!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+
+#: units/friends/friends_actions.php:29
+#, php-format
+msgid "New %s friend"
+msgstr ""
+
+#: units/friends/friends_actions.php:34
+#, php-format
+msgid "%s couldn't be added to your friends list."
+msgstr ""
+
+#: units/friends/friends_actions.php:40
+#, php-format
+msgid ""
+"%s has elected to moderate friendship requests. Your request has been added "
+"to their moderation queue."
+msgstr ""
+
+#: units/friends/friends_actions.php:42
+#, php-format
+msgid ""
+"%s has requested to add you as a friend!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+
+#: units/friends/friends_actions.php:45
+#, php-format
+msgid "New %s friend request"
+msgstr ""
+
+#: units/friends/friends_actions.php:50
+#, php-format
+msgid ""
+"%s has elected to moderate friendship requests, but your friend request "
+"couldn't be added to their moderation queue."
+msgstr ""
+
+#: units/friends/friends_actions.php:54
+#, php-format
+msgid ""
+"%s has decided not to allow any new friendship requests at this time. Your "
+"friendship request has been declined."
+msgstr ""
+
+#: units/friends/friends_actions.php:64
+msgid " was removed from your friends."
+msgstr " 已被从你的好友列表中删除。"
+
+#: units/friends/friends_actions.php:68
+msgid " couldn't be removed from your friends."
+msgstr ""
+
+#: units/friends/friends_actions.php:86
+#, php-format
+msgid "You approved the friendship request. %s now lists you as a friend."
+msgstr ""
+
+#: units/friends/friends_actions.php:87
+#, php-format
+msgid ""
+"%s has approved your friendship request!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+
+#: units/friends/friends_actions.php:90
+#, php-format
+msgid "%s friend request approved!"
+msgstr ""
+
+#: units/friends/friends_actions.php:93
+msgid "An error occurred: couldn't add you as a friend"
+msgstr ""
+
+#: units/friends/friends_actions.php:96 units/friends/friends_actions.php:120
+msgid "Error: you do not have authority to modify this friendship request."
+msgstr ""
+
+#: units/friends/friends_actions.php:99 units/friends/friends_actions.php:123
+msgid "An error occurred: the friendship request could not be found."
+msgstr ""
+
+#: units/friends/friends_actions.php:113
+#, php-format
+msgid ""
+"You declined the friendship request. %s does not list you as a friend."
+msgstr ""
+
+#: units/friends/friends_actions.php:114
+#, php-format
+msgid ""
+"%s has denied your friendship request.\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+
+#: units/friends/friends_actions.php:117
+#, php-format
+msgid "%s friend request denied"
+msgstr ""
+
+#: units/friends/friends_edit.php:47
+msgid ""
+"You don't have any friends listed! To add a user as a friend, click the "
+"'friend' button underneath a user's icon."
+msgstr "你没有好友列表。要加某人为好友，选择用户头像下的“加入”"
+
+#: units/friends/friends_edit.php:49
+msgid ""
+"This user doesn't currently have any friends listed. Maybe if you list them "
+"as a friend, it'll start the ball rolling ..?"
+msgstr "该用户没有好友列表。你列他为好友，会循环下去？"
+
+#: units/friends/friends_of_edit.php:18
+#, php-format
+msgid "Displaying 1000 most recently active people, of %d found."
+msgstr ""
+
+#: units/friends/friends_of_edit.php:58
+msgid ""
+"Nobody's listed you as a friend! Maybe you need to start chatting to some "
+"other users?"
+msgstr "你不在任何用户的好友列表中。是否需要同其他用户聊天？"
+
+#: units/friends/friends_of_edit.php:60
+msgid ""
+"This user isn't currently listed as anyone's friend. Maybe you could be the "
+"first?"
+msgstr "该用户不是任何人的好友，或许你是第一个？"
+
+#: units/friends/profile_friends.php:20 units/friends/profile_friends.php:29
+msgid "View all Friends"
+msgstr ""
+
+#: units/friends/profile_friends.php:27 units/friends/user_friends.php:14
+msgid "Your Friends"
+msgstr "你的好友"
+
+#: units/friends/user_friendship_requests.php:16
+msgid ""
+"The following users would like to add you as a friend. They need your "
+"approval to do this (to change this setting, visit the 'account settings' "
+"page)."
+msgstr ""
+
+#: units/friends/user_friendship_requests.php:51
+msgid "You have no pending friendship requests."
+msgstr ""
+
+#: units/friends/user_friends.php:14
+msgid "Friends Screen"
+msgstr "好友的屏幕"
+
+#: units/friends/user_info_menu_text.php:19
+msgid "Are you sure you want to add this user as a friend?"
+msgstr "确定要价这个用户位好友么？"
+
+#: units/friends/user_info_menu_text.php:19
+msgid "Click here to add this user as a friend."
+msgstr "点击此处加这个用户位好友"
+
+#: units/friends/user_info_menu_text.php:26
+msgid "Are you sure you want to remove this user from your friends list?"
+msgstr "你是想用将这个用户从好友列表中删除么？"
+
+#: units/friends/user_info_menu_text.php:26
+msgid "Click here to remove this user from your friends list."
+msgstr "点击此处从好友列表中删除这个用户"
+
+#: units/gettext/library.php:410
+msgid "Language selection"
+msgstr ""
+
+#: units/gettext/library.php:411
+msgid ""
+"Choose your preferred language for this site. The following languages are "
+"available on this system:"
+msgstr ""
+
+#: units/gettext/library.php:422
+msgid "No languages installed"
+msgstr ""
+
+#: units/gettext/library.php:480 units/gettext/library.php:485
+msgid "Preferred language"
+msgstr ""
+
+#: units/gettext/library.php:480
+msgid "saved"
+msgstr ""
+
+#: units/gettext/library.php:485
+msgid "not changed"
+msgstr ""
+
+#: units/groups/groups_access_levels.php:8
+msgid "Group"
+msgstr "组"
+
+#: units/groups/groups_actions.php:27
+msgid "Your group was updated."
+msgstr "你的组已经被更新"
+
+#: units/groups/groups_create.php:3
+msgid "Create a new group"
+msgstr "创建新的组"
+
+#: units/groups/groups_create.php:4
+msgid "Group name:"
+msgstr "组名："
+
+#: units/groups/groups_display_membership.php:6
+msgid "Group membership"
+msgstr "组员"
+
+#: units/groups/groups_display_membership.php:15
+#, php-format
+msgid "Owned by %s"
+msgstr "Is van %s"
+
+#: units/groups/groups_edit_display.php:13
+msgid "Your friends:"
+msgstr "你的朋友们"
+
+#: units/groups/groups_edit_display.php:44
+msgid "Add selected to group"
+msgstr "将所选加入到组"
+
+#: units/groups/groups_edit_display.php:53
+msgid "Remove selected from group"
+msgstr "从组中取消选定内容"
+
+#: units/groups/groups_edit_display.php:54
+msgid "Members of this group:"
+msgstr "本族成员："
+
+#: units/groups/groups_edit_display.php:72
+msgid "Save this group"
+msgstr "保存着各族"
+
+#: units/groups/groups_edit_display.php:73
+msgid "Delete this group"
+msgstr "删除这个组"
+
+#: units/groups/groups_edit_existing.php:6
+msgid "Groups you own"
+msgstr "你创建的组"
+
+#: units/groups/groups_editpage.php:4
+msgid "Existing groups"
+msgstr "现有社区"
+
+#: units/groups/groups_explanation.php:3
+msgid ""
+"Access is controlled through the use of Access groups and this is one of the "
+"most powerful features of Elgg. Access groups allow you to have complete "
+"control over who sees what within your environment. You can create as many "
+"access groups as you wish. Each access group can have as many of your "
+"friends as you like and each access group created becomes another option in "
+"the 'access restriction' dropdown menu beside each profile item, weblog post "
+"and file uploaded."
+msgstr ""
+""
+"组权限控制是elgg中最强大的功能。权限控制让你完全控制谁可以看你发表的东西。你可以创建无限夺得权限控制组。每一个组都可以加无限多你的好友。创建权限租后，你"
+"的权限控制下拉菜单会增加新的选项。你就可以把这个权限控制分配给你的用户信息，日记和上传文件。"
+
+#: units/groups/groups_explanation.php:4 units/groups/groups_help.php:4
+msgid ""
+"When you create an access group, add people to it then select it as your "
+"access restriction on a weblog post only the people in that group will be "
+"able to see that weblog post and so on for all elements in your learning "
+"landscape."
+msgstr "当你创建一个组，邀请别人加入，选择被批准加入它的限制。你在该组的发布只有改组的成员能看到"
+
+#: units/groups/groups_help.php:3
+msgid "This is a help file for the Groups functions."
+msgstr "这是对组功能的帮助文件"
+
+#: units/icons/function_actions.php:57
+msgid "Your selected icons were deleted."
+msgstr "你选择的头像被删除"
+
+#: units/icons/function_actions.php:71
+msgid ""
+"You have already met your icon quota. You must delete some icons before you "
+"can upload any new ones."
+msgstr "图片配额已经使用。请删除某些图片后再上传新的"
+
+#: units/icons/function_actions.php:79
+msgid "Attempting to upload icon file ..."
+msgstr "尝试上传文件..."
+
+#: units/icons/function_actions.php:86
+msgid ""
+"The uploaded icon file was invalid. Please ensure you are using JPEG, GIF or "
+"PNG files."
+msgstr "上传头像图片无效。请确认图片格式（JPEG, GIF or PNG）"
+
+#: units/icons/function_actions.php:118
+msgid ""
+"The uploaded icon file was in an image format other than JPEG, GIF or PNG. "
+"These are unsupported at present."
+msgstr "目前本站点至只支持JPEG, GIF or PNG格式图片"
+
+#: units/icons/function_actions.php:138
+msgid "Your icon was uploaded successfully."
+msgstr "你的头像成功上传"
+
+#: units/icons/function_actions.php:141
+msgid ""
+"An unknown error occurred when saving your icon. If this problem persists, "
+"please let us know and we'll do all we can to fix it quickly."
+msgstr "在保存你的用户头像过程中出现错误。如果这个错误总是发生。请和我们联系我们尽快解决。"
+
+#: units/icons/function_add_icons.php:15
+msgid "Upload a new picture"
+msgstr "上传一个新的图片"
+
+#: units/icons/function_add_icons.php:16
+msgid ""
+"Upload a picture for this profile below. Pictures need to be 100x100 pixels "
+"or smaller, but don't worry - if you've selected a larger picture, we'll "
+"shrink it down for you. You may upload up to"
+msgstr "增加上传图片。图片尺寸应在100x100内，如果你上传了大的图片，系统会自动帮你修改"
+
+#: units/icons/function_add_icons.php:17
+msgid "pictures in total."
+msgstr "张照片（总数）"
+
+#: units/icons/function_add_icons.php:26
+msgid "Picture to upload:"
+msgstr "图片上传"
+
+#: units/icons/function_add_icons.php:37
+msgid "Icon description:"
+msgstr "头像描述"
+
+#: units/icons/function_add_icons.php:45
+msgid "Make this the default icon:"
+msgstr "设置为默认图标："
+
+#: units/icons/function_add_icons.php:58
+msgid "Upload new icon"
+msgstr "上传新头像"
+
+#: units/icons/function_edit_icons.php:21
+msgid "Site pictures"
+msgstr "站点图像"
+
+#: units/icons/function_edit_icons.php:31
+msgid ""
+"Site pictures are small pictures that act as a representative icon "
+"throughout the system."
+msgstr "站点图像会作为你的头像在整个系统中应用。"
+
+#: units/icons/function_edit_icons.php:55
+msgid "Name:"
+msgstr "名字："
+
+#: units/icons/function_edit_icons.php:56
+msgid "Default:"
+msgstr "默认："
+
+#: units/icons/function_edit_icons.php:79
+msgid "No default:"
+msgstr "没有默认值"
+
+#: units/icons/function_edit_icons.php:100
+msgid "You don't have any site pictures loaded yet."
+msgstr "你目前没有站点图片"
+
+#: units/invite/invite_actions.php:34
+msgid "They included the following message:"
+msgstr ""
+
+#: units/invite/invite_actions.php:38
+#, php-format
+msgid "Thank you for registering with %s."
+msgstr ""
+
+#: units/invite/invite_actions.php:39
+#, php-format
+msgid "%s account verification"
+msgstr ""
+
+#: units/invite/invite_actions.php:42 units/invite/invite_actions.php:43
+msgid "has invited you to join"
+msgstr "邀请你加入"
+
+#: units/invite/invite_actions.php:42
+msgid "a learning landscape system."
+msgstr "学习平台。"
+
+#: units/invite/invite_actions.php:46
+#, php-format
+msgid ""
+"Dear %s,\n"
+"\n"
+"%s %s\n"
+"\n"
+"To join, visit the following URL:\n"
+"\n"
+"\t%s\n"
+"\n"
+msgstr ""
+
+#: units/invite/invite_actions.php:51
+#, php-format
+msgid ""
+"Your invitation was sent to %s at %s. It will be valid for seven days."
+msgstr ""
+
+#: units/invite/invite_actions.php:54
+#, php-format
+msgid "User %s already has that email address. Invitation not sent."
+msgstr ""
+
+#: units/invite/invite_actions.php:57
+msgid ""
+"Someone with that email address has already been invited to the system. "
+msgstr ""
+
+#: units/invite/invite_actions.php:60
+msgid "Invitation failed: The email address was not valid."
+msgstr ""
+
+#: units/invite/invite_actions.php:63
+msgid "Error: This community has reached its maximum number of users."
+msgstr ""
+
+#: units/invite/invite_actions.php:66
+msgid "Invitation failed: you are not logged in."
+msgstr ""
+
+#: units/invite/invite_actions.php:69
+msgid "Invitation failed: you must specify both a name and an email address."
+msgstr "邀请失败：必须输入用户名和email地址"
+
+#: units/invite/invite_actions.php:82
+msgid ""
+"Unfortunately this community has reached its account limit and you are "
+"unable to join at this time."
+msgstr ""
+
+#: units/invite/invite_actions.php:85
+msgid "You must indicate that you are at least 13 years old to join."
+msgstr ""
+
+#: units/invite/invite_actions.php:89
+msgid "Error! Invalid invite code."
+msgstr ""
+
+#: units/invite/invite_actions.php:138
+msgid ""
+"Your account was created! You can now log in using the username and password "
+"you supplied. You have been sent an email containing these details for "
+"reference purposes."
+msgstr "用户创建。现在可以使用用户名和密码登陆。一封详细说明邮件已发送给你"
+
+#: units/invite/invite_actions.php:140
+#, php-format
+msgid "Your %s account"
+msgstr ""
+
+#: units/invite/invite_actions.php:141
+#, php-format
+msgid ""
+"Thanks for joining %s!\n"
+"\n"
+"For your records, your %s username and password are:\n"
+"\n"
+"\t"
+msgstr ""
+
+#: units/invite/invite_actions.php:160
+#, php-format
+msgid "Verify your %s account password request"
+msgstr ""
+
+#: units/invite/invite_actions.php:161
+#, php-format
+msgid ""
+"A request has been received to generate your account at %s a new password.\n"
+"\n"
+msgstr ""
+
+#: units/invite/invite_actions.php:165
+msgid "Your verification email was sent. Please check your inbox."
+msgstr "已经发送了确认电子邮件。请你查看邮箱。"
+
+#: units/invite/invite_actions.php:167
+msgid "No user with that username was found."
+msgstr "此注册用户不存在"
+
+#: units/invite/invite_join.php:29
+#, php-format
+msgid ""
+"Thank you for registering for an account with %s! Registration is completely "
+"free, but before you confirm your details, please take a moment to read the "
+"following documents:"
+msgstr ""
+
+#: units/invite/invite_join.php:30 units/invite/join_noinvite.php:10
+msgid "terms and conditions"
+msgstr "服务条款"
+
+#: units/invite/invite_join.php:31 units/invite/join_noinvite.php:11
+msgid "Privacy policy"
+msgstr "隐私政策"
+
+#: units/invite/invite_join.php:32
+msgid ""
+"Submitting the form below indicates acceptance of these terms. Please note "
+"that currently you must be at least 13 years of age to join the site."
+msgstr "提交下表格表示你认可所有条款。加入本站点需明示你的年龄超过13岁。"
+
+#: units/invite/invite_join.php:52 units/invite/join_noinvite.php:32
+#: units/weblogs/weblogs_comments_add.php:48
+msgid "Your name"
+msgstr "你的名字"
+
+#: units/invite/invite_join.php:58
+msgid "Your username - (Must be letters only)"
+msgstr "你的用户名 - （只能使字母）"
+
+#: units/invite/invite_join.php:64
+msgid "Enter a password"
+msgstr "输入密码"
+
+#: units/invite/invite_join.php:70
+msgid "Your password again for verification purposes"
+msgstr "请再次输入密码以验证"
+
+#: units/invite/invite_join.php:74
+msgid "I am at least thirteen years of age."
+msgstr "Ik ben dertien jaar of ouder."
+
+#: units/invite/invite_join.php:75
+msgid "Join"
+msgstr "加入"
+
+#: units/invite/invite_join.php:90
+#, php-format
+msgid ""
+"Your invitation code appears to be invalid. Codes only last for seven days; "
+"it's possible that yours is older. If you still want to join %s, it may be "
+"worth getting in touch with the person who invited you."
+msgstr "你的邀请码无效。该邀请码只在7天内有效，可能你的已经过期。如果你还是想加入%s，请联系邀请你来的人"
+
+#: units/invite/invite_join.php:102
+#, php-format
+msgid ""
+"For the moment, joining %s requires a specially tailored invite code. If you "
+"know someone who's a member, it may be worth asking them for one."
+msgstr "%s 需要邀请确认码才能加入。如果你认识其中的组员，向他们要。"
+
+#: units/invite/invite.php:12
+msgid "Their name"
+msgstr "他们的名字"
+
+#: units/invite/invite.php:18
+msgid "Their email address"
+msgstr "他们的email地址"
+
+#: units/invite/invite.php:25
+msgid "An optional message"
+msgstr "可填可不填的信息"
+
+#: units/invite/invite.php:33
+msgid "Invite"
+msgstr "邀请"
+
+#: units/invite/join_noinvite.php:9
+#, php-format
+msgid ""
+"Thank you for registering for an account with %s! Registration is completely "
+"free, but before you fill in your details, please take a moment to read the "
+"following documents:"
+msgstr ""
+
+#: units/invite/join_noinvite.php:12
+msgid ""
+"When you fill in the details below, we will send an \"invitation code\" to "
+"your email address in order to validate it. You must then click on this "
+"within seven days to create your account."
+msgstr "填入下列详细信息，我们会给你的电子邮箱发送确认信。必须在7天之内创建新账户。"
+
+#: units/invite/join_noinvite.php:38
+msgid "Your email address"
+msgstr "你的电子邮件地址"
+
+#: units/invite/new_password.php:12
+#, php-format
+msgid ""
+"A new password has been emailed to you at %s. You should be able to use it "
+"immediately; your old one has been deactivated."
+msgstr "我们把你的新密码发送到了 %s。新密码立刻就可以使用了。你的旧密码已经被暂停。"
+
+#: units/invite/new_password.php:28
+#, fuzzy, php-format
+msgid "Your %s password"
+msgstr "密码"
+
+#: units/invite/new_password.php:28
+#, php-format
+msgid ""
+"Your %s password has been reset.\n"
+"\n"
+"For your records, your new password is:\n"
+"\n"
+"\t"
+msgstr ""
+
+#: units/invite/new_password.php:37
+msgid ""
+"Your password request code appears to be invalid. Try generating a new one?"
+msgstr "你的密码申请无效，请更换新密码"
+
+#: units/invite/new_password.php:49
+msgid "Sorry, your code was invalid."
+msgstr "对不起，你的密码无效"
+
+#: units/invite/password_request.php:5
+#, php-format
+msgid ""
+"To generate a new password at %s!, enter your username below. We will send "
+"the address of a unique verification page to you via email click on the link "
+"in the body of the message and a new password will be sent to you."
+msgstr ""
+
+#: units/invite/password_request.php:6
+msgid "This method reduces the chance of a mistakenly reset password."
+msgstr ""
+
+#: units/invite/password_request.php:22
+msgid "Your username"
+msgstr "你的用户名"
+
+#: units/invite/password_request.php:26
+msgid "Request new password"
+msgstr "发给我新密码"
+
+#: units/magpie/default_template.php:8
+msgid "Feed Post"
+msgstr ""
+
+#: units/magpie/default_template.php:9
+msgid "A template for each post in a feed."
+msgstr ""
+
+#: units/magpie/default_template.php:11 units/weblogs/default_template.php:11
+msgid "Post title"
+msgstr ""
+
+#: units/magpie/default_template.php:12 units/weblogs/default_template.php:12
+msgid "The text of the post"
+msgstr ""
+
+#: units/magpie/default_template.php:13
+msgid "An icon for the user"
+msgstr ""
+
+#: units/magpie/default_template.php:14
+msgid "The feed name"
+msgstr ""
+
+#: units/magpie/default_template.php:15
+msgid "A short description of the feed"
+msgstr ""
+
+#: units/magpie/default_template.php:16
+msgid "A link to the post"
+msgstr ""
+
+#: units/magpie/default_template.php:17
+msgid "A link to the host site"
+msgstr ""
+
+#: units/magpie/default_template.php:18
+msgid "A link to the host feed"
+msgstr ""
+
+#: units/magpie/default_template.php:19
+msgid "Buttons to subscribe or unsubscribe"
+msgstr ""
+
+#: units/magpie/default_template.php:24
+msgid "Added"
+msgstr ""
+
+#: units/magpie/function_actions.php:23 units/magpie/function_actions.php:87
+#: units/magpie/function_actions.php:107
+msgid "Your feed subscription was successful."
+msgstr ""
+
+#: units/magpie/function_actions.php:25
+msgid "Feed subscription failed: you are already subscribed to this feed."
+msgstr ""
+
+#: units/magpie/function_actions.php:34
+msgid "Your have successfully removed this feed from your subscriptions."
+msgstr ""
+
+#: units/magpie/function_actions.php:36
+msgid "Feed unsubscription failed: you are not subscribed to this feed."
+msgstr ""
+
+#: units/magpie/function_actions.php:62
+msgid ""
+"Feed not imported to blog: You cannot import a feed from this account."
+msgstr ""
+
+#: units/magpie/function_actions.php:89
+msgid "Feed subscription failed: this feed subscription already exists."
+msgstr ""
+
+#: units/magpie/function_actions.php:96
+msgid "Feed subscription failed: SSL feed reading is not enabled."
+msgstr ""
+
+#: units/magpie/function_actions.php:110
+msgid ""
+"Feed subscription failed: feed appears to be invalid. Please check your link "
+"or try later."
+msgstr ""
+
+#: units/magpie/function_actions.php:114
+msgid ""
+"Feed subscription failed: could not get feed. Please check your link or try "
+"later."
+msgstr ""
+
+#: units/magpie/function_actions.php:116
+msgid "Error message was: "
+msgstr ""
+
+#: units/magpie/function_subscriptions.php:14
+#: units/magpie/function_subscriptions_popular.php:6
+msgid ""
+"Feeds are information streams from other sites. You will often see a link to "
+"an 'RSS' feed while browsing; enter the link address into the 'add feed' box "
+"at the bottom of the page to read that information from within your learning "
+"landscape."
+msgstr ""
+
+#: units/magpie/function_subscriptions.php:25
+#: units/magpie/function_subscriptions_popular.php:14
+#: units/magpie/function_subscriptions_publish_to_blog.php:22
+msgid "Last updated"
+msgstr ""
+
+#: units/magpie/function_subscriptions.php:26
+#: units/magpie/function_subscriptions_publish_to_blog.php:23
+msgid "Resource name"
+msgstr ""
+
+#: units/magpie/function_subscriptions.php:33
+#: units/magpie/function_subscriptions_publish_to_blog.php:43
+msgid "View content"
+msgstr ""
+
+#: units/magpie/function_subscriptions.php:41
+#: units/magpie/function_subscriptions_popular.php:27
+#: units/magpie/function_view_post.php:44
+msgid "Are you sure you want to unsubscribe from this feed?"
+msgstr ""
+
+#: units/magpie/function_subscriptions.php:41
+#: units/magpie/function_subscriptions_popular.php:27
+#: units/magpie/function_view_post.php:44
+msgid "Unsubscribe"
+msgstr ""
+
+#: units/magpie/function_subscriptions.php:59
+#: units/magpie/function_subscriptions_publish_to_blog.php:60
+msgid "Update"
+msgstr ""
+
+#: units/magpie/function_subscriptions.php:69
+#: units/magpie/function_subscriptions_publish_to_blog.php:70
+msgid "You are not subscribed to any feeds."
+msgstr ""
+
+#: units/magpie/function_subscriptions.php:71
+#: units/magpie/function_subscriptions_publish_to_blog.php:72
+msgid "No feeds were found."
+msgstr ""
+
+#: units/magpie/function_subscriptions.php:76
+#: units/magpie/function_subscriptions_popular.php:47
+msgid "To subscribe to a new feed, enter its address below:"
+msgstr ""
+
+#: units/magpie/function_subscriptions.php:82
+#: units/magpie/function_subscriptions_popular.php:29
+#: units/magpie/function_subscriptions_popular.php:53
+#: units/magpie/function_view_post.php:46
+msgid "Subscribe"
+msgstr ""
+
+#: units/magpie/function_subscriptions_popular.php:7
+msgid "This is a list of the feeds with the most subscribers."
+msgstr ""
+
+#: units/magpie/function_subscriptions_popular.php:15
+msgid "Link to site"
+msgstr ""
+
+#: units/magpie/function_subscriptions_popular.php:21
+msgid "Unnamed Feed"
+msgstr ""
+
+#: units/magpie/function_subscriptions_popular.php:23
+msgid "View posts"
+msgstr ""
+
+#: units/magpie/function_subscriptions_popular.php:29
+#: units/magpie/function_view_post.php:46
+msgid "Are you sure you want to subscribe to this feed?"
+msgstr ""
+
+#: units/magpie/function_subscriptions_popular.php:32
+msgid "Subscribers"
+msgstr ""
+
+#: units/magpie/function_subscriptions_popular.php:45
+msgid "No-one has subscribed to any feeds."
+msgstr ""
+
+#: units/magpie/function_subscriptions_publish_to_blog.php:11
+msgid ""
+"Click a box below to automatically import content from a feed into your "
+"blog. You can also add default keywords for content from that feed. (You "
+"should only do this if you have the legal right to use this resource - in "
+"other words, you must have permission from the content owner.)"
+msgstr ""
+
+#: units/magpie/function_subscriptions_publish_to_blog.php:31
+msgid ""
+"Are you sure you want to import this content into your personal blog?\\nYou "
+"should make sure you own it or have permission from the copyright holder."
+msgstr ""
+
+#: units/magpie/function_view_individual.php:26
+#: units/magpie/function_view.php:29
+#: units/weblogs/weblogs_all_users_view.php:107
+#: units/weblogs/weblogs_friends_view.php:57
+#: units/weblogs/weblogs_interesting_view.php:52
+#: units/weblogs/weblogs_view.php:53
+msgid "Back"
+msgstr "返回"
+
+#: units/magpie/function_view_post.php:28
+msgid "unknown"
+msgstr ""
+
+#: units/magpie/function_view_post.php:40
+msgid "View site"
+msgstr ""
+
+#: units/profile/profile_user_info.php:42
+msgid "Your LMS hosts"
+msgstr ""
+
+#: units/search/function_search_all_display_rss.php:16
+#, php-format
+msgid "Items tagged with \"%s\" from %s"
+msgstr ""
+
+#: units/search/search_suggest_rss.php:6
+msgid "Syndication"
+msgstr "企业联合组织"
+
+#: units/search/search_suggest_rss.php:7
+msgid "RSS feed for this tag"
+msgstr "这个标签的RSS订阅"
+
+#: units/search/search_suggest_tags.php:22
+msgid "Automatic tag suggestion:"
+msgstr "自动提示给用户的标签"
+
+#: units/search/search_suggest_users.php:23
+msgid "Matching accounts:"
+msgstr ""
+
+#: units/search/search_user_info_menu.php:9
+msgid "Random tags"
+msgstr "随机标签"
+
+#: units/search/tags_display_personal.php:40
+msgid "No tags found for this user."
+msgstr "此名用户没有tags"
+
+#: units/search/tags_display.php:7
+msgid ""
+"The following is a selection of keywords used within this site. Click one to "
+"see related users, weblog posts or objects."
+msgstr "下面是随机挑选出来的在本站点使用的关键词列表。通过选择其中的某个可以联系到某用户、其发表的blog文章等。"
+
+#: units/templates/default_template.php:61
+msgid "Sidebar section holder"
+msgstr ""
+
+#: units/templates/default_template.php:62
+msgid "Contains the sidebar section titles"
+msgstr ""
+
+#: units/templates/default_template.php:64
+msgid "The header"
+msgstr ""
+
+#: units/templates/default_template.php:303
+msgid "adminTable"
+msgstr ""
+
+#: units/templates/default_template.php:304
+msgid ""
+"This table is used to house stats and administration details until a good "
+"CSS solution can be applied."
+msgstr ""
+
+#: units/templates/default_template.php:306
+#: units/templates/default_template.php:337
+msgid "Column One"
+msgstr ""
+
+#: units/templates/default_template.php:307
+#: units/templates/default_template.php:338
+msgid "Column Two"
+msgstr ""
+
+#: units/templates/default_template.php:308
+#: units/templates/default_template.php:339
+msgid "Column Three"
+msgstr ""
+
+#: units/templates/default_template.php:334
+msgid "flagContent"
+msgstr ""
+
+#: units/templates/default_template.php:335
+msgid "This holds the flag content function throughout Elgg"
+msgstr ""
+
+#: units/templates/template_actions.php:26
+msgid "The templates have been changed according to your choices."
+msgstr ""
+
+#: units/templates/template_actions.php:29
+msgid "No changes made as no area of change where selected!"
+msgstr ""
+
+#: units/templates/templates_view.php:88
+msgid "Change templates"
+msgstr ""
+
+#: units/templates/templates_view.php:89
+msgid "The selected changes will affect:"
+msgstr ""
+
+#: units/templates/templates_view.php:103
+msgid "Your personal space"
+msgstr ""
+
+#: units/templates/templates_view.php:116
+msgid "Community: "
+msgstr ""
+
+#: units/tinymce/tinymce_userdetails_actions.php:15
+msgid "Your editor preferences have been saved"
+msgstr ""
+
+#: units/tinymce/tinymce_userdetails_actions.php:18
+msgid "Your editor preferences have been changed"
+msgstr ""
+
+#: units/tinymce/tinymce_userdetails_actions.php:20
+msgid "Your editor preferences could not be changed"
+msgstr ""
+
+#: units/tinymce/tinymce_userdetails_edit.php:3
+msgid "Visual text editing"
+msgstr ""
+
+#: units/tinymce/tinymce_userdetails_edit.php:4
+msgid ""
+"Set this to 'yes' if you would like to use a visual (WYSIWYG) text editor "
+"for your posts and comments."
+msgstr ""
+
+#: units/tinymce/tinymce_userdetails_edit.php:20
+#: units/tinymce/tinymce_userdetails_edit.php:27
+msgid "Enable visual editor: "
+msgstr ""
+
+#: units/users/function_default_access_levels.php:6
+msgid "Public"
+msgstr "公开"
+
+#: units/users/function_number_of_users.php:7
+#, php-format
+msgid "There are %d active users."
+msgstr ""
+
+#: units/users/function_number_of_users.php:12
+#, php-format
+msgid "(%d logged on.)"
+msgstr "(%d 登陆用户。)"
+
+#: units/users/function_number_of_users.php:17
+msgid "User Statistics"
+msgstr "用户数据"
+
+#: units/users/userdetails_actions.php:20
+msgid "Your suggested name was too long. Please try something shorter."
+msgstr "你的名字太长，请尝试短一点的。"
+
+#: units/users/userdetails_actions.php:40
+msgid "Email address updated."
+msgstr "电子邮件地址更新了"
+
+#: units/users/userdetails_actions.php:47
+msgid "Your moderation preferences have been changed."
+msgstr ""
+
+#: units/users/userdetails_actions.php:55
+msgid "Public comments and discussion set to 'on'."
+msgstr ""
+
+#: units/users/userdetails_actions.php:58
+msgid "Public comments and discussion set to 'off'."
+msgstr ""
+
+#: units/users/userdetails_actions.php:67
+msgid "Email comments and discussion set to 'on'."
+msgstr ""
+
+#: units/users/userdetails_actions.php:70
+msgid "Email comments and discussion set to 'off'."
+msgstr ""
+
+#: units/users/userdetails_actions.php:78
+msgid "Email notifications set to 'on'."
+msgstr ""
+
+#: units/users/userdetails_actions.php:81
+msgid "Email notifications set to 'off'."
+msgstr ""
+
+#: units/users/userdetails_actions.php:96
+msgid "Details were not changed."
+msgstr "细节没有更新。"
+
+#: units/users/userdetails_actions.php:107
+msgid ""
+"Password not changed: Your password is either too short or too long. It must "
+"be between 4 and 32 characters in length."
+msgstr "密码修改失败：密码太短或太长。长度应在4-32个字符。"
+
+#: units/users/userdetails_actions.php:109
+msgid ""
+"Password not changed: Your password can only consist of letters or numbers."
+msgstr "密码修改失败：密码只能由字母或数字组成"
+
+#: units/users/userdetails_actions.php:111
+msgid "Your password was updated."
+msgstr "密码已经被更新"
+
+#: units/users/userdetails_actions.php:118
+msgid ""
+"Password not changed: The password and its verification string did not match."
+msgstr "密码修改失败：两次输入的密码不同"
+
+#: units/users/userdetails_edit.php:11
+msgid "Change your full name:"
+msgstr "更改你的名字："
+
+#: units/users/userdetails_edit.php:28
+msgid "Your full name "
+msgstr "全名 "
+
+#: units/users/userdetails_edit.php:33
+msgid "Your email address:"
+msgstr "你的电子邮件地址："
+
+#: units/users/userdetails_edit.php:34
+msgid ""
+"This will not be displayed to other users; you can choose to make an email "
+"address available via the profile screen."
+msgstr "其他用户不会看到。你可以选择设置一个有效的email地址"
+
+#: units/users/userdetails_edit.php:48
+msgid "Your email address "
+msgstr "你的电子邮件地址 "
+
+#: units/users/userdetails_edit.php:53
+msgid "Friendship moderation:"
+msgstr ""
+
+#: units/users/userdetails_edit.php:54
+msgid "This allows you to choose who can list you as a friend."
+msgstr ""
+
+#: units/users/userdetails_edit.php:71
+msgid "No moderation: anyone can list you as a friend. (Recommended)"
+msgstr ""
+
+#: units/users/userdetails_edit.php:76
+msgid "Moderation: friendships must be approved by you."
+msgstr ""
+
+#: units/users/userdetails_edit.php:81
+msgid "Private: nobody can list you as a friend."
+msgstr ""
+
+#: units/users/userdetails_edit.php:86
+msgid "Friendship moderation"
+msgstr ""
+
+#: units/users/userdetails_edit.php:91
+msgid "Make comments public"
+msgstr ""
+
+#: units/users/userdetails_edit.php:92
+msgid ""
+"Set this to 'yes' if you would like anyone to be able to comment on your "
+"resources (by default only logged-in users can). Note that this may make you "
+"vulnerable to spam."
+msgstr ""
+
+#: units/users/userdetails_edit.php:108 units/users/userdetails_edit.php:115
+msgid "Public comments: "
+msgstr ""
+
+#: units/users/userdetails_edit.php:122
+msgid "Receive email notifications"
+msgstr ""
+
+#: units/users/userdetails_edit.php:123
+msgid ""
+"Set this to 'yes' if you would like to receive email copies of any messages "
+"you receive. This includes blog comments, notifications when people add you "
+"as a friend and more. You can always view these online as part of your "
+"recent activity page."
+msgstr ""
+
+#: units/users/userdetails_edit.php:138 units/users/userdetails_edit.php:145
+msgid "Receive notifications: "
+msgstr ""
+
+#: units/users/userdetails_edit.php:151
+msgid "Change your password:"
+msgstr "更改你的密码："
+
+#: units/users/userdetails_edit.php:152
+msgid "Leave this blank if you're happy to leave your password as it is."
+msgstr "如果不更改密码，这里留为空白"
+
+#: units/users/userdetails_edit.php:166
+msgid "Your password: "
+msgstr "密码 "
+
+#: units/users/userdetails_edit.php:173
+msgid "Again for verification purposes: "
+msgstr "再次输入确认： "
+
+#: units/users/user_info.php:22
+msgid "None."
+msgstr "没有"
+
+#: units/weblogs/archives_view_month.php:44 units/weblogs/archives_view.php:62
+msgid "There are no weblog posts to archive as yet."
+msgstr "目前没有可存档的网志发布"
+
+#: units/weblogs/archives_view.php:19
+#: units/weblogs/weblogs_user_info_menu.php:46
+msgid "Weblog Archive"
+msgstr "blog文档"
+
+#: units/weblogs/default_template.php:8
+msgid "Weblog Post"
+msgstr ""
+
+#: units/weblogs/default_template.php:9
+msgid "A template for each weblog post."
+msgstr ""
+
+#: units/weblogs/default_template.php:13
+msgid "The username of the person making the post"
+msgstr ""
+
+#: units/weblogs/default_template.php:14
+msgid "Their user icon"
+msgstr ""
+
+#: units/weblogs/default_template.php:15
+msgid "Their full name"
+msgstr ""
+
+#: units/weblogs/default_template.php:16
+msgid "The time and date of the post"
+msgstr ""
+
+#: units/weblogs/default_template.php:17
+msgid "A link to any comments"
+msgstr ""
+
+#: units/weblogs/default_template.php:18
+msgid "A link to any trackbacks"
+msgstr ""
+
+#: units/weblogs/default_template.php:19
+msgid "A list of comments, if any"
+msgstr ""
+
+#: units/weblogs/default_template.php:23
+msgid "Posted by"
+msgstr "发布人："
+
+#: units/weblogs/default_template.php:50
+msgid "Weblog Comments"
+msgstr ""
+
+#: units/weblogs/default_template.php:51
+msgid "A placeholder for weblog comments."
+msgstr ""
+
+#: units/weblogs/default_template.php:53
+msgid "The list of comments themselves"
+msgstr ""
+
+#: units/weblogs/default_template.php:54
+msgid "The list of page links when there are lots of comments"
+msgstr ""
+
+#: units/weblogs/default_template.php:58
+msgid "Comments"
+msgstr ""
+
+#: units/weblogs/default_template.php:75
+msgid "Individual weblog comment"
+msgstr ""
+
+#: units/weblogs/default_template.php:76
+msgid ""
+"A template for each individual weblog comment. (Displayed one after the "
+"other, embedded in the comment placeholder.)"
+msgstr ""
+
+#: units/weblogs/default_template.php:78
+msgid "Post body"
+msgstr ""
+
+#: units/weblogs/default_template.php:79
+msgid "The name of the person making the comment"
+msgstr ""
+
+#: units/weblogs/default_template.php:80
+msgid "When the comment was posted"
+msgstr ""
+
+#: units/weblogs/default_template.php:81
+msgid "The usericon of the person making the comment, if available"
+msgstr ""
+
+#: units/weblogs/default_template.php:82
+msgid "A permalink to the comment"
+msgstr ""
+
+#: units/weblogs/display_interesting_post_form.php:21
+msgid "Stop keeping track of this post"
+msgstr ""
+
+#: units/weblogs/display_interesting_post_form.php:22
+msgid ""
+"You have marked this post as interesting; all comments will appear on your "
+"'recent activity' page. If you would like to remove this flag, click here."
+msgstr ""
+
+#: units/weblogs/display_interesting_post_form.php:23
+msgid "Remove interesting flag"
+msgstr ""
+
+#: units/weblogs/display_interesting_post_form.php:25
+msgid "Keep track of this post"
+msgstr ""
+
+#: units/weblogs/display_interesting_post_form.php:26
+msgid ""
+"Click the 'Mark interesting' button to monitor new comments on your 'recent "
+"activity' page."
+msgstr ""
+
+#: units/weblogs/display_interesting_post_form.php:27
+msgid "Mark interesting"
+msgstr ""
+
+#: units/weblogs/function_rss_publish.php:35 _weblog/view_post.php:39
+msgid "Weblog"
+msgstr "blog"
+
+#: units/weblogs/function_rss_publish.php:42 _weblog/rss2.php:78
+#, php-format
+msgid "The weblog for %s, hosted on %s."
+msgstr ""
+
+#: units/weblogs/function_search.php:5
+msgid "Weblog posts by"
+msgstr "blog由 发布"
+
+#: units/weblogs/function_search.php:6
+msgid "in category"
+msgstr "分类"
+
+#: units/weblogs/function_search.php:7
+msgid "RSS feed for weblog posts by"
+msgstr "某人日记的的RSS订阅"
+
+#: units/weblogs/function_search.php:8
+msgid "Other users with weblog posts in category"
+msgstr "其他网志用户在此分类中发表文章"
+
+#: units/weblogs/function_search.php:9
+msgid "Users with weblog posts in category"
+msgstr "拥有blog的用户列表"
+
+#: units/weblogs/function_search_rss.php:20
+#: units/weblogs/templates_preview.php:53
+msgid "Weblog post"
+msgstr "blog发布"
+
+#: units/weblogs/templates_preview.php:7
+msgid "Unkind Guest"
+msgstr "不友好过客"
+
+#: units/weblogs/templates_preview.php:8
+msgid " I mock you, Babbage! Your difference engine will never catch on."
+msgstr ""
+" Ik lach je uit, Babbage! Jouw difference engine zal nooit wat worden."
+
+#: units/weblogs/templates_preview.php:9
+#: units/weblogs/templates_preview.php:11
+msgid "Charles Babbage"
+msgstr "Charles Babbage"
+
+#: units/weblogs/templates_preview.php:10
+msgid "Says you!"
+msgstr "Dat zeg jij!"
+
+#: units/weblogs/templates_preview.php:12
+msgid "The Analytical Engine - introduction from Chapter VIII"
+msgstr "分析引擎 - 第三章导入"
+
+#: units/weblogs/templates_preview.php:13
+msgid ""
+"The circular arrangement of the axes of the Difference Engine round the "
+"large central wheels led to the most extended prospects. The whole of "
+"arithmetic now appeared within the grasp of mechanism. A vague glimpse even "
+"of an Analytical Engine at length opened out, and I pursued with enthusiasm "
+"the shadowy vision. The drawings and the experiments were of the most costly "
+"kind. Draftsmen of the highest order were necessary to economize the labour "
+"of my own head; whilst skilled workmen were required to execute the "
+"experimental machinery to which I was obliged constantly to have recourse. "
+"In order to carry out my pursuits successfully, I had purchased a house with "
+"above a quarter of an acre of ground in a very quiet locality. My coach-"
+"house was now converted into a forge and a foundry, whilst my stables were "
+"transformed into a workshop. I built other extensive workshops myself, and "
+"had a fireproof building for my drawings and draftsmen. Having myself worked "
+"with a variety of tools, and having studied the art of constructing each of "
+"them, I at length laid it down as a principle - that, except in rare cases, "
+"I would never do anything myself if I could afford to hire another person "
+"who could do it for me."
+msgstr ""
+
+#: units/weblogs/weblogs_actions.php:31
+msgid "Your post has been added to your weblog."
+msgstr "你发布的文章已经加入你的blog"
+
+#: units/weblogs/weblogs_actions.php:66
+msgid "The weblog post has been modified."
+msgstr "网志发布被更新"
+
+#: units/weblogs/weblogs_actions.php:81
+msgid "This weblog post has now been added to your 'interesting' list."
+msgstr ""
+
+#: units/weblogs/weblogs_actions.php:92
+msgid "You are no longer monitoring this weblog post."
+msgstr ""
+
+#: units/weblogs/weblogs_actions.php:112
+msgid "The selected weblog post was deleted."
+msgstr "选中的网志被删除"
+
+#: units/weblogs/weblogs_actions.php:115
+msgid ""
+"You do not appear to have permission to delete this weblog post. It was not "
+"deleted."
+msgstr ""
+
+#: units/weblogs/weblogs_actions.php:161
+msgid "Your comment has been added."
+msgstr "评论发布"
+
+#: units/weblogs/weblogs_actions.php:166
+msgid "Your comment could not be posted. The system thought it was spam."
+msgstr ""
+
+#: units/weblogs/weblogs_actions.php:186
+msgid "Your comment was deleted."
+msgstr "已经删除你的评论"
+
+#: units/weblogs/weblogs_all_users_view.php:24
+msgid "Remove filter"
+msgstr ""
+
+#: units/weblogs/weblogs_all_users_view.php:29
+msgid "Filtered: Showing personal blog posts"
+msgstr ""
+
+#: units/weblogs/weblogs_all_users_view.php:33
+msgid "Filtered: Showing community blog posts"
+msgstr ""
+
+#: units/weblogs/weblogs_all_users_view.php:38
+msgid "Filtered: Showing posts with comments"
+msgstr ""
+
+#: units/weblogs/weblogs_all_users_view.php:42
+msgid "Filtered: Showing posts with no comments"
+msgstr ""
+
+#: units/weblogs/weblogs_all_users_view.php:57
+msgid "Filtered: Showing posts from "
+msgstr ""
+
+#: units/weblogs/weblogs_all_users_view.php:67
+msgid "Filtered: Showing posts tagged with "
+msgstr ""
+
+#: units/weblogs/weblogs_comments_add.php:7
+msgid "Add a comment"
+msgstr "我说两句"
+
+#: units/weblogs/weblogs_comments_add.php:33
+msgid "Your comment text"
+msgstr "你的评论文字"
+
+#: units/weblogs/weblogs_comments_add.php:58
+msgid "Add comment"
+msgstr "添加评论"
+
+#: units/weblogs/weblogs_post_field.php:83
+msgid "Click here to post to this weblog."
+msgstr "点几次处发布到日记"
+
+#: units/weblogs/weblogs_posts_add.php:22
+msgid "Add a new post"
+msgstr "添加文章"
+
+#: units/weblogs/weblogs_posts_add.php:23
+#: units/weblogs/weblogs_posts_edit.php:17
+msgid "Post title:"
+msgstr "题目"
+
+#: units/weblogs/weblogs_posts_add.php:24
+#: units/weblogs/weblogs_posts_edit.php:18
+msgid "Post body:"
+msgstr "正文"
+
+#: units/weblogs/weblogs_posts_add.php:25
+#: units/weblogs/weblogs_posts_edit.php:19
+msgid "Keywords (Separated by commas):"
+msgstr "关键词（ 用英文逗号隔开）："
+
+#: units/weblogs/weblogs_posts_add.php:26
+#: units/weblogs/weblogs_posts_edit.php:20
+msgid ""
+"Keywords commonly referred to as 'Tags' are words that represent the weblog "
+"post you have just made. This will make it easier for others to search and "
+"find your posting."
+msgstr "关键词，一般称为标签，是可以代表你刚写的这篇日记内容的词。写点关键词方便别人找到你的文章。"
+
+#: units/weblogs/weblogs_posts_add.php:28
+msgid "Post"
+msgstr "文章"
+
+#: units/weblogs/weblogs_posts_add.php:84
+msgid ""
+"You must be logged in to post a new weblog entry. You may do so using the "
+"login pane to the right of the screen."
+msgstr ""
+
+#: units/weblogs/weblogs_posts_edit.php:13
+msgid "Access Denied"
+msgstr ""
+
+#: units/weblogs/weblogs_posts_edit.php:16
+msgid "Edit a post"
+msgstr "编辑日记"
+
+#: units/weblogs/weblogs_posts_edit.php:22
+msgid "Save Post"
+msgstr "保存文章"
+
+#: units/weblogs/weblogs_posts_view.php:94
+msgid "More"
+msgstr "更多"
+
+#: units/weblogs/weblogs_posts_view.php:95
+msgid "Keywords:"
+msgstr "关键词："
+
+#: units/weblogs/weblogs_posts_view.php:96
+msgid "comment(s)"
+msgstr "评论"
+
+#: units/weblogs/weblogs_posts_view.php:112
+msgid "Are you sure you want to permanently delete this weblog post?"
+msgstr "你是想用就删除这篇日记文章么？"
+
+#: units/weblogs/weblogs_posts_view.php:155
+msgid "Page: "
+msgstr ""
+
+#: units/weblogs/weblogs_posts_view.php:172
+msgid "Are you sure you want to permanently delete this weblog comment?"
+msgstr "你确实想永久删除这条评论么？"
+
+#: units/weblogs/weblogs_posts_view.php:230
+msgid "You must be logged in to post a comment."
+msgstr ""
+
+#: units/weblogs/weblogs_user_info_menu.php:10
+msgid "Recent Activity"
+msgstr "最近活动"
+
+#: units/weblogs/weblogs_user_info_menu.php:12
+msgid "View your activity"
+msgstr "察看你的活动"
+
+#: units/weblogs/weblogs_user_info_menu.php:36
+msgid "Personal blog"
+msgstr "个人博客"
+
+#: units/weblogs/weblogs_user_info_menu.php:41
+msgid "Community blog"
+msgstr "社区日记"
+
+#: units/weblogs/weblogs_user_info_menu.php:47 _weblog/friends.php:15
+msgid "Friends blog"
+msgstr "好友的日记"
+
+#: units/xml/main.php:78
+msgid "XML error: "
+msgstr ""
+
+#: _weblog/archive_month.php:15 _weblog/archive.php:15
+msgid "Blog Archives"
+msgstr "日记存档"
+
+#: _weblog/everyone.php:15
+msgid "All blogs"
+msgstr "所有日记"
+
+#: _weblog/everyone.php:19
+msgid "You can filter this page to certain types of posts:"
+msgstr ""
+
+#: _weblog/everyone.php:21
+msgid "Personal blog posts"
+msgstr "个人blog文章"
+
+#: _weblog/everyone.php:22
+msgid "Community blog posts"
+msgstr "社区blog文章"
+
+#: _weblog/everyone.php:23
+msgid "Posts with comments"
+msgstr "允许评论"
+
+#: _weblog/everyone.php:24
+msgid "Posts with no comments"
+msgstr "不允许评论"
+
+#: _weblog/rss2.php:51
+#, php-format
+msgid "Weblog items tagged with %s"
+msgstr ""
+
+#: _weblog/rss2.php:54
+msgid "Weblog items"
+msgstr ""
+
+#: _weblog/rss2.php:61
+msgid "All users"
+msgstr "所有用户"
+
+#: _weblog/rss2.php:74
+#, php-format
+msgid "The most recent weblog posts on %s."
+msgstr ""
+
+#: _weblog/view_post.php:28
+msgid "Access denied or post not found"
+msgstr "无权访问或未找到文章"
+
+#: _weblog/view_post.php:31
+msgid ""
+"Either this blog post doesn't exist or you don't currently have access "
+"privileges to view it."
+msgstr "这篇文章当前并不存在或你无权访问"
+
+#~ msgid ""
+#~ "\tThis screen allows you to edit your profile. Blank fields will not show up "
+#~ "on your profile screen in any view; you can change the access level for each "
+#~ "piece of information in order to prevent it from falling into the wrong "
+#~ "hands. For example, we strongly recommend you keep your address to yourself "
+#~ "or a few trusted parties."
+#~ msgstr ""
+#~ ""
+#~ "\t这个页面允许你编辑你的信息。空白处不会在你的文件页面显示；你可以更改每条信息的访问权限以防止信息泄露。例如，我们强烈建议你把地址限定在个人或者少量可以信"
+#~ "任的人的范围内。"
+
+#~ msgid " FAQ"
+#~ msgstr " 常问问题"
+
+#~ msgid " Terms &amp; Conditions"
+#~ msgstr " 服务条款"
+
+#~ msgid " was added to your friends list."
+#~ msgstr " 已被加入到你的好友列表。"
+
+#, php-format
+#~ msgid "%d files (%d bytes)"
+#~ msgstr "%d 文件 (%d bytes)"
+
+#, php-format
+#~ msgid "%d users in total."
+#~ msgstr "总共有 %d l 用户。"
+
+#, php-format
+#~ msgid "%d weblog posts, %d comments"
+#~ msgstr "%d 篇文章， %d 条评论"
+
+#~ msgid "<b>$s</b> posted on weblog post:"
+#~ msgstr "<b>$s</b> 发不到了日志上："
+
+#~ msgid "About"
+#~ msgstr "关于"
+
+#~ msgid "About "
+#~ msgstr "关于 "
+
+#~ msgid "Are you sure you want to add this user to your friends list?"
+#~ msgstr "确定加这个用户到你好友列表么？"
+
+#~ msgid "Community Members"
+#~ msgstr "社区成员"
+
+#~ msgid "Create Template"
+#~ msgstr "创建模版"
+
+#~ msgid "Create template"
+#~ msgstr "创建风格主题"
+
+#~ msgid "Default Template"
+#~ msgstr "默认模版"
+
+#~ msgid "FAQ"
+#~ msgstr "常问问题"
+
+#~ msgid "Files owned by "
+#~ msgstr "文件属于 "
+
+#~ msgid "Folders owned by"
+#~ msgstr "文件夹属于"
+
+#~ msgid "Friends blogs"
+#~ msgstr "好友的日记"
+
+#~ msgid "Has anyone commented on your blog?"
+#~ msgstr "是否有人评论了你的日记？"
+
+#~ msgid ""
+#~ "Here you can create your own templates based on one of the existing public "
+#~ "templates. Just select which public template you would like to alter and "
+#~ "then create your own. You will now have edit privilages."
+#~ msgstr "这里你可以在现有公开模版上创建自己的模版。选择你喜欢的模版，然后创建自己的，你会有修改权限。"
+
+#~ msgid "Home"
+#~ msgstr "家庭"
+
+#~ msgid "Matching users:"
+#~ msgstr "Overeenkomende gebruikers:"
+
+#~ msgid "Name of the data we're inputting"
+#~ msgstr "De naam van de ingevoerde gegevens"
+
+#~ msgid "Postal address"
+#~ msgstr "邮政地址"
+
+#~ msgid "Privacy Policy"
+#~ msgstr "隐私政策"
+
+#~ msgid "RSS feed"
+#~ msgstr "RSS订阅"
+
+#~ msgid "Running Your Own "
+#~ msgstr "运行你自己的 "
+
+#~ msgid ""
+#~ "Someone with that email address has already been invited to the system. "
+#~ "Invitation not sent."
+#~ msgstr "该email地址已被邀请过，你的邀请未被发送。"
+
+#~ msgid "Template Name"
+#~ msgstr "模版名称"
+
+#~ msgid "Template name"
+#~ msgstr "模版名称"
+
+#~ msgid ""
+#~ "The following are public themes that you can use to change the way your %s! "
+#~ "looks - these do not change the content only the appearance. Check the "
+#~ "preview and then select the one you want. If you wish you can adapt one of "
+#~ "these using the 'create theme' option below."
+#~ msgstr "下列是你可以选择的风格——这些主题不改变内容只改变样式。你可以在预览后选择你喜欢的风格。选择创建主题可以改编现有主题。"
+
+#~ msgid ""
+#~ "The icon quota is 1st: $s and you have 2nd: $s icons uploaded. You may not "
+#~ "upload any more icons until you've deleted some."
+#~ msgstr "头像配额是第一个$s ，你有第二个。头像更新。在删除部分现有头像前你不可以上传更多。"
+
+#~ msgid ""
+#~ "The username $s is already taken by another user. You will need to pick a "
+#~ "different one."
+#~ msgstr "用户名已存在，请选择其他"
+
+#~ msgid ""
+#~ "The username '$username' is already taken by another user. You will need to "
+#~ "pick a different one."
+#~ msgstr "用户名已存在，请选择其他"
+
+#~ msgid "View your profile!"
+#~ msgstr "察看你的信息"
+
+#~ msgid ""
+#~ "You do not appear to have permissions to delete this weblog post. It was not "
+#~ "deleted."
+#~ msgstr "你无权删除此发布，删除失败"
+
+#~ msgid ""
+#~ "You have exceeded the file quota for this account. Some files must be "
+#~ "deleted before you can upload this one."
+#~ msgstr "用户上传文件超出限额。请删除某些文件再上传新文件。"
+
+#~ msgid "You left "
+#~ msgstr "离开 "
+
+#~ msgid ""
+#~ "You may not edit this template. To create a new, editable template based on "
+#~ "the default, go to <a href=\"index.php\">the main templates page</a>."
+#~ msgstr "你无法编辑此主题。要在现有默认模版基础上创建可编辑的新样式，去模版主页"
+
+#~ msgid ""
+#~ "Your %s password has been reset.\n"
+#~ "\n"
+#~ "For your records, your new password is:\n"
+#~ "\tPassword: %s\n"
+#~ "Please consider changing your password as soon as you have logged infor "
+#~ "security reasons.\n"
+#~ "\n"
+#~ "We hope you continue to enjoy using the system.\n"
+#~ "\n"
+#~ "Regards,\n"
+#~ "The %s Team"
+#~ msgstr "你的密码被储存。新密码请登陆后修改密码希望你喜欢使用这个系统"
+
+#~ msgid "Your suggested email address $email doesn't appear to be valid."
+#~ msgstr "你的申请email地址似乎无效。"
+
+#~ msgid "and choose exactly what you want to share with whom."
+#~ msgstr "核选择你要和谁共享什么。"
+
+#~ msgid "edit your details"
+#~ msgstr "编辑你的详细内容"
+
+#~ msgid "About ELGG"
+#~ msgstr "Over ELGG"
+
+#~ msgid "Contact"
+#~ msgstr "Contact"
+
+#~ msgid "Help"
+#~ msgstr "Help"
+
+#~ msgid ""
+#~ " is already taken by another user. You will need to pick a different one."
+#~ msgstr " is al in gebruik door een andere gebruiker. Kies een andere naam."
+
+#~ msgid "Moderator Of"
+#~ msgstr "Moderator van"
+
+#~ msgid "Member Of"
+#~ msgstr "Lid van"
+
+#~ msgid "You have used "
+#~ msgstr "Je hebt in gebruik "
+
+#~ msgid "Access level:"
+#~ msgstr "Toegangsniveau:"
+
+#~ msgid "Select / Create / Edit templates"
+#~ msgstr "Selecteer / Maak / Wijzig sjablonen"
+
+#~ msgid "There are"
+#~ msgstr "Er zijn"
+
+#~ msgid "Update your weblog"
+#~ msgstr "Werk je weblog bij"
+
+#~ msgid "Edit details"
+#~ msgstr "Wijzig details"
+
+#~ msgid "Join Elgg"
+#~ msgstr "Wordt lid van Elgg"
+
+#~ msgid "password "
+#~ msgstr "wachtwoord "

@@ -1,10 +1,10 @@
-// RU cp1251 lang variables
+// RU lang variables UTF-8
 
 tinyMCE.addToLang('',{
-paste_text_desc : 'Вставить как простой текст',
-paste_text_title : 'Используйте CTRL+V для вставки текста в окошко.',
-paste_text_linebreaks : 'Сохранить переносы строк',
-paste_word_desc : 'Вставить из Word',
-paste_word_title : 'Используйте CTRL+V для вставки текста в окошко.',
-selectall_desc : 'Выделить всё'
+paste_text_desc : 'Р’СЃС‚Р°РІРёС‚СЊ РєР°Рє РїСЂРѕСЃС‚РѕР№ С‚РµРєСЃС‚',
+paste_text_title : 'РСЃРїРѕР»СЊР·СѓР№С‚Рµ CTRL+V РґР»СЏ РІСЃС‚Р°РІРєРё С‚РµРєСЃС‚Р° РІ РѕРєРѕС€РєРѕ.',
+paste_text_linebreaks : 'РЎРѕС…СЂР°РЅРёС‚СЊ РїРµСЂРµРЅРѕСЃС‹ СЃС‚СЂРѕРє',
+paste_word_desc : 'Р’СЃС‚Р°РІРёС‚СЊ РёР· Word',
+paste_word_title : 'РСЃРїРѕР»СЊР·СѓР№С‚Рµ CTRL+V РґР»СЏ РІСЃС‚Р°РІРєРё С‚РµРєСЃС‚Р° РІ РѕРєРѕС€РєРѕ.',
+selectall_desc : 'Р’С‹РґРµР»РёС‚СЊ РІСЃС‘'
 });

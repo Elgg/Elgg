@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	
+	<title>Lightbox JS v2.0 | Test Page</title>
+
+	<link rel="stylesheet" href="css/lightbox.css" type="text/css" media="screen" />
+	
+	<script src="js/prototype.js" type="text/javascript"></script>
+	<script src="js/scriptaculous.js?load=effects" type="text/javascript"></script>
+	<script src="js/lightbox.js" type="text/javascript"></script>
+
+	<style type="text/css">
+		body{ color: #333; font: 13px 'Lucida Grande', Verdana, sans-serif;	}
+	</style>
+
+</head>
+<body>
+
+
+<h1><a href="http://www.huddletogether.com/projects/lightbox2/">Lightbox JS <em>v2.0</em></a></h1>
+<p><a href="http://www.huddletogether.com">by Lokesh Dhakar</a></p>
+
+<h2>Example</h2>
+
+<a href="images/image-1.jpg" rel="lightbox"><img src="images/thumb-1.jpg" width="100" height="40" alt="" /></a>
+
+
+
+
+<h2>How to Use:</h2>
+<h3>Part 1 - Setup</h3>
+<ol>
+<li>Lightbox v2.0 uses the Prototype Framework and Scriptaculous Effects Library. You will need to include these three Javascript files in your header.
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;js/prototype.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;js/scriptaculous.js?load=effects&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;js/lightbox.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+</li>
+<li>Include the Lightbox CSS file (or append your active stylesheet with the Lightbox styles).
+<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;css/lightbox.css&quot; type=&quot;text/css&quot; media=&quot;screen&quot; /&gt;
+</code></pre>
+</li>
+<li>Check the CSS and make sure the referenced <code>prevlabel.gif</code> and <code>nextlabel.gif</code> files are in the right location. Also, make sure the <code>loading.gif</code> and <code>closelabel.gif</code> files as referenced near the top of the <code>lightbox.js</code> file are in the right location.</li>
+</ol>
+<h3>Part 2 - Activate</h3>
+<ol>
+<li>Add a <code>rel="lightbox"</code> attribute to any link tag to activate the lightbox. For example:
+<pre><code>&lt;a href=&quot;images/image-1.jpg&quot; rel=&quot;lightbox&quot; title=&quot;my caption&quot;&gt;image #1&lt;/a&gt;
+</code></pre>
+<em>Optional: </em>Use the <code>title</code> attribute if you want to show a caption.		</li>
+<li>If you have a set of related images that you would like to group, follow step one but additionally include a group name between square brackets in the rel attribute. For example: 
+<pre><code>&lt;a href=&quot;images/image-1.jpg&quot; rel=&quot;lightbox[roadtrip]&quot;&gt;image #1&lt;/a&gt;
+&lt;a href=&quot;images/image-2.jpg&quot; rel=&quot;lightbox[roadtrip]&quot;&gt;image #2&lt;/a&gt;
+&lt;a href=&quot;images/image-3.jpg&quot; rel=&quot;lightbox[roadtrip]&quot;&gt;image #3&lt;/a&gt;
+</code></pre>
+No limits to the number of image sets per page or how many images are allowed in each set. Go nuts!</li>
+</ol>	
+
+
+</body>
+</html>

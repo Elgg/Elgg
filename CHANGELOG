@@ -1,5 +1,19 @@
 Elgg changelog
 
+0.7 (February 2007)
+-------------------
+Multiple authentication types
+Improved templating engine
+Visual installer and improved admin panel
+APIs including custom folder types
+Photo gallery
+Improved navigation
+OPML output of feed subscriptions
+Linked browser
+More TinyMCE improvements, including preview
+Much friendlier error messages
+Assorted bugfixes and improvements
+
 0.67 (1 December 2006)
 ----------------------
 Improved internationalisation (and more bundled languages)

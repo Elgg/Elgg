@@ -35,7 +35,7 @@ $run_result .= "<h1 class=\"weblogdateheader\">$archive</h1>";
         $month = substr($archive->archivestamp, 4, 2);
         
         if ($year != $lastyear) {
-            if ($lastyear .= 0) {
+            if ($lastyear != 0) {
                 $run_result .= "</ul>";
             }
             $lastyear = $year;

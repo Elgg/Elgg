@@ -12,7 +12,7 @@
         
         $body = run("invite:password:new");
         
-        $body .= templates_draw(array(
+        $body = templates_draw(array(
                         'context' => 'contentholder',
                         'title' => $title,
                         'body' => $body

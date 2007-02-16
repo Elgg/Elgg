@@ -1,4 +1,4 @@
-// RU KOI8-R lang variables
+// RU lang variables KOI8-R
 
 tinyMCE.addToLang('',{
 paste_text_desc : 'Вставить как простой текст',

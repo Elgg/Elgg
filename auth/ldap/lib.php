@@ -26,10 +26,12 @@
      * $CFG->ldap_protocol_version = 3;
      * // Filter for username, common are cn or uid
      * $CFG->ldap_filter_attr = 'uid';
-     * // Search attibutes
+     * // Search attibutes (can be bassed as array or comma seperated string)
      * $CFG->ldap_search_attr = array('dn', 'ou', 'mail');
      * // Create user, relies on the givenname, sn, and email attributes for now
      * $CFG->ldap_user_create = true;
+     * // Fallback option, try internal authentication if everything fails
+     * $CFG->ldap_internal_fallback = true
      */
 
     function ldap_authenticate_user_login($username, $password) {
@@ -60,6 +62,14 @@
         // Which search attributes to return
         if (!$CFG->ldap_search_attr) {
             $CFG->ldap_search_attr = array('dn');
+        }
+        else
+        {
+            if (!is_array($CFG->ldap_search_attr))
+            {
+                // Comma separated string
+                $CFG->ldap_search_attr = explode(',', $CFG->ldap_search_attr);
+            }
         }
 
         // Setup the connection
@@ -162,9 +172,15 @@
                             ldap_close($ds);
 
                         // No such user in LDAP, fallback to internal authentication
-                        // TODO make this a configurable option
-                        require_once($CFG->dirroot . 'auth/internal/lib.php');
-                        return internal_authenticate_user_login($username, $password);
+                        if ($CFG->ldap_internal_fallback && $CFG->ldap_internal_fallback == true) {
+                            require_once($CFG->dirroot . 'auth/internal/lib.php');
+
+                            return internal_authenticate_user_login($username, $password);
+                        }
+                        else
+                        {
+                            return false;
+                        }
                     }
                 }
             } else {

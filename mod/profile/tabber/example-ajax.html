@@ -1,0 +1,86 @@
+<!-- $Id: example-ajax.html,v 1.2 2006/04/27 21:00:38 pat Exp $ -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Ajax Tabber Example</title>
+
+<link rel="stylesheet" href="example.css" TYPE="text/css" MEDIA="screen">
+<link rel="stylesheet" href="example-print.css" TYPE="text/css" MEDIA="print">
+
+
+<!--
+Load prototype.js
+You can get it at http://prototype.conio.net/
+-->
+<script src="http://www.barelyfitz.com/projects/tabber/effects/prototype.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+/* Optional: Temporarily hide the "tabber" class so it does not "flash"
+   on the page as plain HTML. After tabber runs, the class is changed
+   to "tabberlive" and it will appear. */
+
+document.write('<style type="text/css">.tabber{display:none;}<\/style>');
+
+var tabberOptions = {
+
+  'onClick': function(argsObj) {
+
+    var t = argsObj.tabber; /* Tabber object */
+    var i = argsObj.index; /* Which tab was clicked (0..n) */
+    var div = this.tabs[i].div; /* The tab content div */
+
+    /* Display a loading message */
+    div.innerHTML = "<p>Loading...<\/p>";
+
+    /* Fetch some html depending on which tab was clicked */
+    var url = 'example-ajax-' + i + '.html';
+    var pars = 'foo=bar&foo2=bar2'; /* just for example */
+    var myAjax = new Ajax.Updater(div, url, {method:'get',parameters:pars});
+  },
+
+  'onLoad': function(argsObj) {
+    /* Load the first tab */
+    argsObj.index = 0;
+    this.onClick(argsObj);
+  },
+
+
+}
+</script>
+
+<script type="text/javascript" src="tabber.js"></script>
+
+<style type="text/css">
+.tabberlive .tabbertab {
+  height:200px;
+}
+</style>
+</head>
+<body>
+
+<h1>Ajax Tabber Example</h1>
+
+<p>&larr; <a href="http://www.barelyfitz.com/projects/tabber/">Tabber Home</a></p>
+
+<div class="tabber">
+
+     <div class="tabbertab">
+	  <h2>Tab 1</h2>
+     </div>
+
+
+     <div class="tabbertab">
+	  <h2>Tab 2</h2>
+     </div>
+
+
+     <div class="tabbertab">
+	  <h2>Tab 3</h2>
+     </div>
+
+</div>
+
+</body>
+</html>

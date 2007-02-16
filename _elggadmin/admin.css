@@ -1,8 +1,10 @@
 /*
-    CSS for Elgg default
+    CSS for default Elgg Admin
 */
 
-body{
+/* globals */
+
+body {
     padding: 0;
     margin:0;
     text-align:center;
@@ -10,9 +12,9 @@ body{
     color: #918f8d; /*333;*/
     background: #eee url(bg2.gif);
     width:100%;
-	font-size:90%;
-	line-height:1.6em;
-	margin: auto;
+ font-size:90%;
+ line-height:1.6em;
+ margin: auto;
     }
 
 a {
@@ -83,99 +85,57 @@ blockquote {
 }
 
 .checkbox {
-	background: #fff;
-	border: none;
-	margin: 0;
-	padding: 0;
+ background: #fff;
+ border: none;
+ margin: 0;
+ padding: 0;
 }
 
 label {
-	margin: 0;
-	padding: 0;
+ margin: 0;
+ padding: 0;
 }
 
-/*---------------------------------------
+input {
+   width:500px;
+   font-size: 1.4em;
+   font-weight:normal;
+}
+
+textarea {
+   background-color: #FFF;
+   color: #000;
+   border: 1px solid #CCC;
+   font-size: 1em;
+   padding: 3px;
+                    margin: 0 0 5px;
+                    width:95%;
+                    height:200px;
+  }
+
+.button {
+  padding:2px;
+  font-size:16px;
+  width:50px;
+} /*--- search 'go' button ---*/
+
+/*
 Wraps the entire page 
------------------------------------------*/
+*/
 
 #container {
     width: 97%;
     min-width: 750px;
-	padding:0px;
-	margin:0px;
-	border:1px solid #ccc;
-	background:#fff;
-	margin: 10 auto;
+ padding:0px;
+ margin:0px;
+ border:1px solid #ccc;
+ background:#fff;
+ margin: 10 auto;
     }
 
-
-/*-----------------------------------------
-TOP STATUS BAR 
--------------------------------------------*/
-
-#statusbar {
-    padding: 3px 0px 2px 0;
-    margin: 0px;
-    height:19px;
-    background:#aaaaaa;
-    color: #fff;
-   font-size:80%;
-   width: 100%;
-}
-
-#statusbar a {
-    color: #fff;
-    background:#aaaaaa;
-}
-
-#statusbar p {
-   color;#fff;
-}
-
-#welcome {
-    float: left;
-}
-
-#welcome p{
-    font-weight:bold;
-       font-size:110%;
-    padding:0 0 0 4px;
-    margin:0px;
-    color:#fff;
-}
-
-#global_menuoptions {
-    text-align: right;
-    padding:0 10px 0 0;
-    margin:0px;
-    float:right;
-}
-
-#global_menuoptions ul {
-    margin: 0; 
-    padding: 0;
-}
-
-#global_menuoptions li {
-    margin: 0; 
-    padding: 0;
-    display: inline;
-    list-style-type: none;
-    border: none;
-}
-
-#global_menuoptions a {
-    text-decoration: none;
-}
-
-#global_menuoptions a:hover{
-    text-decoration:underline;
-}
-
-
-/*---------------------------------------------
+/*
 HEADER 
-------------------------------------------------*/
+*/
 
 #header {
     width: 100%;
@@ -184,67 +144,22 @@ HEADER
     padding: 0px;
     margin: 0px;
     text-align: left;
-	height:60px;
+ height:60px;
     }
 
 #header h1 {
-    padding: 0 0 4px 0;
-    margin: 7px 0 0 0px;
-    color:#017FBC;
-	font-size:1.4em;
-    background: #fff;
-    text-align: left;
-    font-weight:normal;
-    }    
-
-#header h2 {
-    padding: 0 0 7px 0;
-    margin: 0 0 0 0px;
-    font-weight: normal;
-    color: #000;
-    background: #fff;
-    border: none;
-    font-family: "Lucida Grande", arial, sans-serif;
-       font-size:120%;
-    } 
-
-#header p {
     padding: 10px 0 4px 15px;
     margin: 0;
     color:#017FBC;
-	font-size:1.4em;
+ font-size:1.4em;
     background: #fff;
     text-align: left;
     font-weight:bold;
-    }
+    }    
 
-#header p a {
-   color: #888;
-    background: #fff;
-	font-size:70%;
-	padding:0px;
-	margin:-20 10px 0 0px;
-}
-
-#go_home p a{
-  background:#F7DAD8;
-    text-align: center;
-    padding:2px;
-	border:1px solid #D3322A;
-	border-bottom:1px solid #D3322A;
-	font-size:0.7em;
-	float:right;
-}
-
-#go_home p a:hover {
-   border-top:1px solid #017FBC;
-   border-bottom:1px solid #017FBC;
-   background:#eee;
-  }
-
-/*--------------------------------------------
+/*
 NAVIGATION 
-----------------------------------------------*/
+*/
 
 #navigation {
 height: 25px;
@@ -298,9 +213,9 @@ text-decoration:none;
 background:#D1E751;
 }
 
-/*-----------------------------------------------
+/*
 SITE CONTENT WRAPPER 
--------------------------------------------------*/
+*/
 
 #content {
     margin: 0;
@@ -310,8 +225,8 @@ SITE CONTENT WRAPPER
     border-top: none;
     background-color: #fff;
     color:#000;
-	font-size:90%;
-	min-height:300px;
+ font-size:90%;
+ min-height:300px;
 }
 
 #content h1 {
@@ -320,51 +235,19 @@ SITE CONTENT WRAPPER
   margin:0px;
  }
 
- #sub_menu {
-    font-family: verdana;
-    padding: 0px;
-    margin: 5px 0 20px 0;
-    color: #000;
-    background-color:#fff;
-}
-
-#content #sub_menu a {
-    font-weight:bold;
-    margin:0px;
-    padding:0px;
-}
-
-#content #sub_menu a:hover {
-    text-decoration: underline;
-}
-
-#content #sub_menu a.active {
-   text-decoration:underline;
- }
-
-#content #sub_menu p {
-      margin:0px;
-      padding:0px;
-}
-
-#content table p {
-    padding:0;
-    margin:0;
-}
-
-/*------------------------------------------
+/*
   FOOTER 
-  ------------------------------------------*/
+*/
 
 #footer {
     background:#fff;
     text-align: center;
     padding:0px;
-	border-top:1px solid #ccc;
-	border-bottom:1px solid #ccc;
-	font-size:0.8em;
-	width: 45em;
-	margin: 10 auto;
+ border-top:1px solid #ccc;
+ border-bottom:1px solid #ccc;
+ font-size:0.8em;
+ width: 45em;
+ margin: 10 auto;
 }
 
 #footer a:hover {
@@ -375,929 +258,46 @@ SITE CONTENT WRAPPER
     text-align:right;
 }
 
-/*---------------------------------------
-  SYSTEM MESSAGES 
-  ---------------------------------------*/
+/*
+  Important warning messages
+*/
 
-#system_message{ 
-    border:1px solid #D3322A;
+.important{ 
     background:#F7DAD8;
     color:#000;
-    padding:3px 50px;
-    margin:0 0 0 20px;
 }
 
-#system_message p{
-   padding:0px;
-   margin:2px;
+.important p{
  }
 
-/* -------------  help files -------------*/
 
-.helpfiles ul {
-    font-family: arial, helvetica, Tahoma;
-    color: #000000;
-    background:#fff;
+/*
+ System messages
+*/
+
+#messages {
+ text-align:left;
+ background:#E7EDF3;
+ border:1px solid #87B2E1;
+ padding:10px;
+ margin:10px;
 }
 
-.helpfiles h4 {
- 
+#messages ul {
+  margin:0;
+  padding:0;
 }
 
-/*------ site news for home.php ---------*/
-
-.sitenews {
-     background:#ebebeb;
-     color:#000;
+#messages li {
+  list-style:none;
 }
 
-.sitenews h2 {
-     background:#1181AA;
-     color:#FAC83D;
-     padding:0 0 5px 0;
-}
-
-/*-------------------------------------
-  Input forms
---------------------------------------*/
-
-.textarea {
-    border: 1px solid #7F9DB9;
-    color:#71717B;
-    width: 95%;
-       height:200px;
-    padding:3px;
-}
-
-.medium_textarea {
-   width:95%;
-   height:100px;
-}
-
-.small_textarea {
-    width:95%;
-}
-
-.keywords_textarea {
-    width:95%;
-    height:100px;
-}
-
-
-/*--------------------------------------
+/*
    MISC 
---------------------------------------*/
+*/
 
 .clearall {
     padding: 0px;
     clear: both;
     font-size: 0px;
     }
-
-/*--- New Classes ---*/
-
-/*--------------------------------------------
-Input displays / text areas / buttons etc
----------------------------------------------*/
-
-#login_pane {
-	background: #fff url(/images/bg.gif);
-	border: 1px solid #ccc;
-	margin: 4em auto;
-	padding: 1.5em;
-	width: 35em;
-}
-
-#login_pane h1 {
-	background: #fff;
-	margin-top: 0;
-	color:#017FBC;
-	font-size:1.4em;
-}
-
-#login_pane #site_name h1 {
-	background: #fff;
-	margin-top: 0;
-	border-bottom:1px solid #ccc;
-	color:#017FBC;
-	font-size:1.4em;
-	text-align:right;
-}
-
-#login_pane input {
-	padding: 3px;
-}
-
-#login_pane #username, #login_pane #password {
-	font-size: 1.7em;
-	width: 80%;
-}
-
-#login_pane #submit {
-	font-size: 1.7em;
-}
-
-#login_pane a:hover {
-    text-decoration:underline;
-}
-
-form, label input {
-	margin: 0;
-	padding: 0;
-}
-
-input {
-			background-color: #FFF;
-			color: #000;
-			border: 1px solid #CCC;
-			font-size: 1.4em;
-			padding: 3px;
-                    margin: 0 0 5px;
-                    font-family:Verdana, Arial, Helvetica, sans-serif;
-		}
-
-input.big_input{font-size:1.6em; font-family:Verdana, Arial, Helvetica, sans-serif; margin: 0 0 5px; color:#000; width:70%;} /*--- Edit user details page ---*/
-
-input.large{font-size:1.4em; font-family:Verdana, Arial, Helvetica, sans-serif; margin: 0 0 5px; color:#000; width:95%;} /*--- Profile items / blog title area ---*/ 
-
-input.small{font-size:0.9em;}
-
-input:hover, input select:hover, input textbox:hover {
-	background-color: #F0F8FF;
-}
-
-input:focus {
-   background-color: #F0F8FF;
-   border-color:#777;
-}
-
-textarea {
-			background-color: #FFF;
-			color: #000;
-			border: 1px solid #CCC;
-			font-size: 1em;
-			padding: 3px;
-                    margin: 0 0 5px;
-                    width:95%;
-                    height:200px;
-		}
-
-textarea.editor{
-         height:200px;
-} /*-- used to size the HTML editor ------*/
-
-textarea.keywords {
-         height:30px;
-} /*--- Used to size any keyword fields; keywords, likes, interests, skills, who like to... ---*/
-
-textarea:hover {
-	background-color: #F0F8FF;
-}
-
-textarea:focus {
-   background-color: #F0F8FF;
-   border-color:#777;
-}
-
-label {
-  font-size:100%;
-}
-
-.submit_button {
-    font-size:15px;
-    padding:5px 15px 5px 15px;
-    margin:0px;
-    border:1px solid #777;
-    border-bottom:2px solid #777;
-    border-right:2px solid #777;
-    font-weight:bold;
-}
-
-.submit_button:hover {
-       background:#FCD63F;
-       color:#000;
-}
-
-.button {
-  padding:2px;
-  font-size:16px;
-} /*--- search 'go' button ---*/
-
-.submit input, .submit input:focus, .button {
-	background: url( /images/fade-back.png );
-	border: 3px double #999;
-	border-left-color: #ccc;
-	border-top-color: #ccc;
-	color: #333;
-	padding: 0.25em;
-}
-
-.submit input:active, .button:active {
-	background: #f4f4f4;
-	border: 3px double #ccc;
-	border-left-color: #999;
-	border-top-color: #999;
-}
-
-/*--- New widget classes for front page/dashboard placement ---*/
-
-#profile {
-   border:1px solid #EEE;
-  background:#F7F7F7; /*#fff;*/
- font-size:85%;
- }
-
-#profile p {
-    padding:2px;
-   margin:0px;
-}
-
-#profile img {
-    margin:4px;
-}
-
-#profile h2 {
-   background:#EEE;
-  color:#666;
-  padding:2px 2px 2px 4px;
-  font-size:100%;
-}
-
-#news_feed {
-   border:1px solid #E1E7EC;
-  background:#EFF5FF;
- font-size:85%;
- }
-
-#news_feed a{
-  background:#EFF5FF;
-}
-
-#news_feed p {
-    padding:2px;
-   margin:0px;
-}
-
-#news_feed img {
-    margin:2px;
-}
-
-#news_feed h2 {
-   background:#E1E7EC;
-  color:#666;
-  padding:2px 2px 2px 4px;
-  font-size:100%;
-  margin:0px;
-}
-
-#news_feed h3 {
-   background:#E1E7EC;
-  color:#666;
-  padding:2px 2px 2px 4px;
-  margin:5px 0 5px 0;
-}
-
-#welcome_message {
-   background:#EFF5FF;
-   border:1px solid #000;
- }
-
-#welcome_message h1 { 
-      padding:0 0 0 10px;
-}
-
-#welcome_message p {
-    padding:10px 0 10px 10px;
-}
-
-#welcome_message a {
-    background:#eff5ff;
-	text-decoration:underline;
-}
-
-#widget_stats {
-  background:#eee;
-  border:1px solid #eee;
-  padding:4px;
-  margin:5px;
- }
-
-#widget_login{
-  background:#fff;
-  border:1px solid #eee;
-  padding:4px;
-  margin:5px;
- }
-
-#widget_search {
-  background:#eee;
-  border:1px solid #eee;
-  padding:4px;
-  margin:5px;
- }
-
-/*-----------------------------------------------
-Edit Dashboard widgets
-------------------------------------------------*/
-
-.dash_widgets {
-   background:#EFF5FF;
-   border:1px solid #ccc;
-   font-size:80%;
- }
-
-.dash_widgets h2 {
-   font-size:1.1em;
-   text-align:center;
-   background:#EFF5FF;
-  }
-
-.dash_widgets ul li {
-   background:#EFF5FF;
- }
- 
-.dash_widgets a {
-   background:#eff5ff;
-   padding:0 0 0 5px;
-}
-
-.widget_button {
-   text-align:center;
-   margin:0 0 0 30px;
-   width:60%;
-   font-size:1.2em;
- }
-
-.widget_button:hover {
-   background:#F7DAD8;
- }
-
-/*------------------------------------------------------
-Preview area
---------------------------------------------------------*/
-
-#preview{
-   border:1px solid #ccc;
-   overflow-y: scroll;
-   height:400px;
-   padding:0 0 0 10px;
-}
-
-/*------------------------------------------------------
-Edit personal details
-------------------------------------------------------*/
-
-.user_date {
-    font: "Lucida Grande", "Lucida Sans Unicode", Tahoma, Verdana;
-} /*--- used to apply style to the new edit details class, title followed by the entry box ---*/
-
-.edit_personal {
-   border:1px solid #ccc;
-   width:60%;
-   padding:0 10px 0 10px;
-} /*--- Used to apply style to the various areas on the edit user details page ---*/
-
-.edit_personal h2 {
-    font-size:130%;
-    border-bottom:1px solid #ccc;
-    margin:0 0 7px 0;
-}
-
-.edit_personal p {
-    margin:10px 0 20px 0;
-}
-
-/*----------------------------------------------------
-Warnings
------------------------------------------------------*/
-
-#edit_mode {
-  background:#F7DAD8;
-    text-align: center;
-    padding:2px;
-	margin:4px 4px 10px 4px;
-	border-top:1px solid #D3322A;
-	border-bottom:1px solid #D3322A;
-	font-size:0.9em;
-	width:25em;
-	margin: 0 auto;
-}
-
-#edit_mode h1{
-    padding:0px;
-	margin:0px;
-}
-
-/*----------------------------------------------------
-Edit/Post blogs
------------------------------------------------------*/
-
-/*-------------------------------------------
-SIDEBAR CONTAINER 
----------------------------------------------*/
-
-#sidebar_container {
-    margin: 0px;
-    text-align: left;
-    float: right;
-    width: 26%;
-       min-width: 100px;
-    border-left: 1px dotted #dcdcdc;
-    padding: 0 10px;
-  /*width:220px;*/
-      /*overflow: hidden;*/
-    }
-
-/*-----------------------------------------
-ACTUAL SIDEBAR CONTENT
--------------------------------------------*/
-
-#sidebar {
-min-width: 100px;
-    padding: 0 10px;
-    }
-
-#sidebar ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-#sidebar ul li ul {
-    
-}
-
-#sidebar ul li {
-    margin: 10px 0;
-    padding-left: 5px;
-}
-
-
-#sidebar h2 {
-    font-family: "Lucida Grande", arial, sans-serif;
-    font-weight: bold;
-    color: #333;
-       background:#fff;
-    margin: 20px 0 3px 0;
-    padding: 0;
-    border: none;
-}
-
-#sidebar h2 {
-    border-bottom: 1px solid #666; 
-}
-
-/*---- header plus one row of content ------*/
-
-.databox_vertical {
-   background-color: #F9F9F9;
-   color:#000;
-   border:1px;
-   border-style:solid;
-   border-color:#DDD;
-   margin:0 0 5px 0;
-   padding:5px;
- }
-
- .databox_vertical p{
-   padding:0px;
-   margin:0px;
-   color:#1181AA;
-   background:#fff;
- }
-
-.databox_vertical .fieldname h3 {
-  padding:0px;
-  margin:0px;
-  color:#1181AA;
-  background:#fff;
-}
-
-.blog_options a {
-    background:#ebebeb;
-    color:#000;
-    font-weight:bold;
-    padding:3px;
-    border:1px solid #000;
-    width:90%;
-    margin:0px 0 3px 0;
-    display:block;
-    text-align:center;
-	font-size:0.8em;
-}
-
-.blog_options a:hover {
-      background:#fff;
-}
-
-.blog_access {
-    border:1px solid #777;
-    padding:0px;
-    margin:0px;
-	font-size:0.8em;
-}
-
-.blog_access h4 {
-    padding:3px;
-    background:#eee;
-	font-size:1.2em;
-}
-
-.blog_admin {
-    border:1px solid #777;
-    padding:0px;
-    margin:0px;
-	font-size:0.8em;
-}
-
-.blog_admin h4 {
-    padding:3px;
-    background:#eee;
-	font-size:1.2em;
-}
-
-.tags {
-   margin:10px 0 0 0;
-   border:1px solid #777;
-   background:#eee;
-}
-
-.tags p {
-   padding;0px;
-   margin:0px;
-   background:#eee;
-   font-size:0.8em;
-}
-
-.tags a {
-   background:#eee;
-   font-size:0.8em;
-}
-
-.tags .popular a{
-    float:right;
-    color:#990000;
-    text-decoration:underline;
-}
-
-.tag_area {
-    border:3px solid #777;
-    background:#fff;
-    height:16px;
-    margin:5px 0 0 0;
-	font-size:0.8em;
-}
-
-.tag_area a {
-   background:#fff;
-   font-size:0.8em;
-}
-
-.tag_area a:hover {
-  text-decoration:underline;
-}
-
-.files_display {
-   background:#eee;
-   margin:0 0 0 0;
-   border:1px solid #777;
-   border-top:0px;
-   font-size:0.8em;
-}
-
-
-.file_type_select select {
-       width:100%;
-       border:0px;
-       background:#fff;
-       padding:0px;
-       margin:0px;
-	   font-size:0.8em;
-}
-
-/*---- Added from the initial wireframes ------*/
-
-.sidebar_filter {
-    background:#eaeac7;
-   border:1px solid #1181AA;
-   padding:5px;
-}
-
-.sidebar_filter p {
-     font-size:0.7em;
-}
-
-#file_edit {
-  padding:5px;
-  font-size:0.7em;
-}
-
-#file_edit p {
-   font-size:0.7em;
- }
-   
-
-/*------- holds folder content ------*/
-
-.foldertable {
-	background-color: #F9F9F9;
-	color:#000;
-	border:1px;
-	border-style:solid;
-	border-color:#DDD;
-	margin:0 0 5px 0;
-	width:100%;
-	font-size:80%;
-}
-
-.foldertable a{
-	color:#990000;
-	text-decoration:none;
-}
-
-.foldertable p{
-	padding:0px;
-	margin:0px;
-	color:#1181AA;
-	background:#fff;
-	font-size:80%;
- }
-
-.foldertable table {
-	text-align:left;
-}
-
-.foldertable_header {
-     background:#CAD7EE;
-     padding:0 0 0 0;
-     margin:0px;
-     color:#000;
-     border:1px solid #bdbdbd;
-     border-bottom:0px;
-	 font-size:80%;
-}
-
-.foldertable_header p {
-     padding:0 0 0 10px;
-     margin:0px;
-	 font-size:80%;
-}
-
-/*------- holds file content ----*/
-
-.filetable {
-	background-color: #F9F9F9;
-	color:#000;
-	border:1px;
-	border-style:solid;
-	border-color:#DDD;
-	margin:0 0 5px 0;
-	width:100%;
-}
-
-.filetable p{
-	padding:0px;
-	margin:0px;
-	color:#000; /*#1181AA;*/
-	background:#fff;
-	font-size:80%;
-}
-
-.filetable a{
-	
-}
-
-.databox_vertical {
-	background-color: #F9F9F9;
-	color:#000;
-	border:1px;
-	border-style:solid;
-	border-color:#DDD;
-	margin:0 0 5px 0;
-	padding:5px;
- }
-
-.databox_vertical p{
-	padding:0px;
-	margin:0px;
-	color:#1181AA;
-	background:#fff;
-	font-size:80%;
- }
-
-.databox_vertical .fieldname h3 {
-	padding:0px;
-	margin:0 0 10px 0;
-	color:#1181AA;
-	background:#fff;
-}
-
-.theme_holder p{
-  font-size:80%;
- }
-
-.overDiv {
-   text-align:left;
- }
-
-
-/* $Id: example.css,v 1.5 2006/03/27 02:44:36 pat Exp $ */
-
-/*--------------------------------------------------
-  REQUIRED to hide the non-active tab content.
-  But do not hide them in the print stylesheet!
-  --------------------------------------------------*/
-.tabberlive .tabbertabhide {
- display:none;
-}
-
-/*--------------------------------------------------
-  .tabber = before the tabber interface is set up
-  .tabberlive = after the tabber interface is set up
-  --------------------------------------------------*/
-.tabber {
-}
-.tabberlive {
- margin-top:1em;
-}
-
-/*--------------------------------------------------
-  ul.tabbernav = the tab navigation list
-  li.tabberactive = the active tab
-  --------------------------------------------------*/
-ul.tabbernav
-{
- margin:0;
- padding: 3px 0;
- border-bottom: 1px solid #778;
- font: bold 12px Verdana, sans-serif;
-}
-
-ul.tabbernav li
-{
- list-style: none;
- margin: 0;
- display: inline;
-}
-
-ul.tabbernav li a
-{
- padding: 3px 0.5em;
- margin-left: 3px;
- border: 1px solid #778;
- border-bottom: none;
- background: #DDE;
- text-decoration: none;
-}
-
-ul.tabbernav li a:link { color: #448; }
-ul.tabbernav li a:visited { color: #667; }
-
-ul.tabbernav li a:hover
-{
- color: #000;
- background: #AAE;
- border-color: #227;
-}
-
-ul.tabbernav li.tabberactive a
-{
- background-color: #fff;
- border-bottom: 1px solid #fff;
-}
-
-ul.tabbernav li.tabberactive a:hover
-{
- color: #000;
- background: white;
- border-bottom: 1px solid white;
-}
-
-/*--------------------------------------------------
-  .tabbertab = the tab content
-  Add style only after the tabber interface is set up (.tabberlive)
-  --------------------------------------------------*/
-.tabberlive .tabbertab {
- padding:5px;
- border:1px solid #aaa;
- border-top:0;
-
- /* If you don't want the tab size changing whenever a tab is changed
-    you can set a fixed height */
-
- /* height:200px; */
-
- /* If you set a fix height set overflow to auto and you will get a
-    scrollbar when necessary */
-
- /* overflow:auto; */
-}
-
-/* If desired, hide the heading since a heading is provided by the tab */
-.tabberlive .tabbertab h2 {
- display:none;
-}
-.tabberlive .tabbertab h3 {
- display:none;
-}
-
-/* Example of using an ID to set different styles for the tabs on the page */
-.tabberlive#tab1 {
-}
-.tabberlive#tab2 {
-}
-.tabberlive#tab2 .tabbertab {
- height:200px;
- overflow:auto;
-}
-
-/*--------- Admin datatable ----------------------*/
-
-.admin_datatable table {
-    font-size:0.9em;
-    border:1px solid #eee;
-    margin:1px 0 0 0;
-}
-
-/*------------------------------------------------------
-New toolbar
-------------------------------------------------------*/
-
-#toolbar {
-  background:#33415D;
-  height:35px;
-  padding:0 10px 0 10px;
-  margin:0;
-  width:100%;
-}
-
-#toolbar td {
-   border-right:0px solid #eee;
-}
-
-#toolbar p {
-  color:#fff;
-  padding:0;
-  margin:0;
-}
-
-#toolbar a {
-   color:#fff;
-   background:#33415D;
-   font-size:80%;
-}
-
-
-/*-------------------------------------------
-Simple interface classes
---------------------------------------------*/
-
-#search {
-   margin:5px 40px 10px 0;
-   float:right;
-}
-
-#search input {
-			background-color: #FFF;
-			color: #999999;
-			border: 1px solid #CCC;
-			font-size: 11px;
-			padding: 3px;
-		}
-		
-#search .button {
-			padding: 1px;
-		}
-
-
-/*--------------------------------------------------------
-Admin profile classes and id's
----------------------------------------------------------*/
-
-#edit_field_names input{
-   font-size:1.2em;
-   padding:2px;
-   font-family:Verdana, Arial, Helvetica, sans-serif; 
-   margin: 0 0 5px; 
-   color:#000;
-   border:none;
-   width:100%;}
-
-#edit_field_names input:hover {
-   background:transparent;
-}
-
-#edit_field_names input:focus {
-   background-color: #F0F8FF;
-}
-
-#edit_field_names p {
-   padding:0;
-   margin:0;
-   font-size:0.9em;
-}
-
-#number_one {
-  border:1px solid #eee;
-  margin:0 0 10px 0;
-}

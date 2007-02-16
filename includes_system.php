@@ -11,8 +11,6 @@
         require($CFG->dirroot . "units/engine/main.php");
     // Language / internationalisation
         require($CFG->dirroot . "units/gettext/main.php");
-    // Database
-        require($CFG->dirroot . "units/db/main.php");
     // Display
         require($CFG->dirroot . "units/display/main.php");
     // Users

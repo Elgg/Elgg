@@ -61,7 +61,9 @@ if (($constraint2 == 'h' || $constraint2 == 'w') && $size2 != 100) {
 }
 
 // images most likely don't want compressing, and this will kill the Vary header
-@apache_setenv('no-gzip', '1');
+if (function_exists('apache_setenv')) { // apparently @ isn't enough to make php ignore this failing
+    @apache_setenv('no-gzip', '1');
+}
 
 // user icons are public
 header("Pragma: public");

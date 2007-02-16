@@ -1,0 +1,52 @@
+<style type="text/css">
+    .photogallery-photo-container,
+    .photogallery-file-container {
+       margin:20px 0 10px 0;
+    }
+    
+    .photogallery-photo-image img,
+    .photogallery-file-image img {
+        border: 0px;
+    }
+
+    .photogallery-photo-infobar,
+    .photogallery-file-infobar {
+        font-size: 80%;
+    }
+    
+    .photogallery-photo-keywords,
+    .photogallery-file-keywords {
+        font-style: italic;
+    }
+    
+    .photogallery-photo-container {
+        height: 240px;
+    }
+        
+    .photogallery-photo-image {
+      float:left;
+      margin:5px 10px 10px 0;
+      width:200px;
+      height:200px;
+      text-align: center;
+    }
+    
+    .photogallery-photo-info {
+       margin:10px 0 10px 220px;
+    }
+     
+    .photogallery-file-container {
+        height: 105px;
+    }
+       
+    .photogallery-file-image {
+      float:left;
+      margin:5px 10px 10px 0;
+      width:100px;
+    }
+    
+    .photogallery-file-info {
+       margin:10px 0 10px 120px;
+    }
+    
+</style>

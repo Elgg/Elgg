@@ -12,7 +12,7 @@
         $body = '<li>';
         $body .= '<form action="'.url.'login/index.php" method="post">';
 
-        if (public_reg == true && ($CFG->maxusers == 0 || (count_users('person') < $CFG->maxusers))) {
+        if ($CFG->publicreg == true && ($CFG->maxusers == 0 || (count_users('person') < $CFG->maxusers))) {
             $reg_link = '<a href="' . url . '_invite/register.php">'. __gettext("Register") .'</a> |';
         } else {
             $reg_link = "";

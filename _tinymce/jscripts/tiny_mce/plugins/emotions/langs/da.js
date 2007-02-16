@@ -1,12 +1,12 @@
-// DK lang variables contributed by Jan Moelgaard, John Dalsgaard and Bo Frederiksen.
+// Danish lang variables contributed by Jan Moelgaard, John Dalsgaard and Bo Frederiksen.
 
 tinyMCE.addToLang('emotions',{
-title : 'Inds&aelig;t hum&oslash;rikon',
-desc : 'Hum&oslash;rikon',
+title : 'Inds&aelig;t smiley',
+desc : 'Smileys',
 cool : 'Sej',
 cry : 'Gr&aring;d',
 embarassed : 'Forlegen',
-foot_in_mouth : 'Fod i munden',
+foot_in_mouth : 'Foden i munden',
 frown : 'Rynket pande',
 innocent : 'Uskyldig',
 kiss : 'Kys',

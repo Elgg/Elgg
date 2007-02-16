@@ -11,34 +11,28 @@ $subscribers = count_records('feed_subscriptions','feed_id',$parameter);
 
 if (!empty($feed) && !empty($subscribers)) {
 
-    $update_time = 1;
-
-    /* if ($subscribers > 10) {
-        $update_time = 3600;
+    if ($subscribers > 10) {
+        $update_time = $CFG->mintimebetweenrssupdate;
     } else if ($subscribers > 5) {
-        $update_time = 4800;
+        $update_time = $CFG->mintimebetweenrssupdate * 2;
     } else if ($subscribers > 1) {
-        $update_time = 7200;
+        $update_time = $CFG->mintimebetweenrssupdate * 4;
     } else {
-        $update_time = 14400;
-    } */
+        $update_time = $CFG->mintimebetweenrssupdate * 8;
+    }
     
-    // TODO: adjust system so the presence of tons of feeds with few subscribers
-    // doesn't clog up the cron
-    $update_time = 3600;
-
     $timenow = time();
     
     if ($feed->last_updated < ($timenow - $update_time)) {
         set_field('feeds','last_updated',$timenow,'ident',$parameter);
         if ($rss = run("rss:get", $feed->url)) {
             
-            $feedtitle = trim(stripslashes($rss->channel['title']));
-            $feedtagline = trim(stripslashes($rss->channel['tagline']));
+            $feedtitle = (isset($rss->channel['title'])) ? trim(stripslashes($rss->channel['title'])) : '';
+            $feedtagline = (isset($rss->channel['tagline'])) ? trim(stripslashes($rss->channel['tagline'])) : '';
             if (strlen($feedtagline) > 120) {
                 $feedtagline = "";
             }
-            $feedurl = trim(stripslashes($rss->channel['link']));
+            $feedurl = (isset($rss->channel['link'])) ? trim(stripslashes($rss->channel['link'])) : '';
             $f = new StdClass;
             $f->siteurl = $feedurl;
             $f->name = $feedtitle;
@@ -46,7 +40,7 @@ if (!empty($feed) && !empty($subscribers)) {
             $f->ident = $parameter;
             update_record('feeds',$f);
             $feeditems = array();
-            if ($feeditemstemp = get_records('feed_posts','feed',$parameter)) {
+            if ($feeditemstemp = get_records('feed_posts','feed',$parameter, '', 'ident,url')) {
                 foreach($feeditemstemp as $feeditem) {
                     $feeditems[$feeditem->ident] = stripslashes($feeditem->url);
                 }
@@ -134,7 +128,8 @@ if (!empty($feed) && !empty($subscribers)) {
                             $fp->added = $added;
                             insert_record('feed_posts',$fp);
                             if ($weblogs = get_records_select('feed_subscriptions','feed_id = ? AND autopost = ?',array($parameter,'yes'))) {
-                                $body = "<p><span class=\"blog_post_source\">$url</span> " . $description;
+                                $description = clean_text($description);
+                                $body = "<p><span class=\"blog_post_source\">$url</span></p> " . $description;
                                 foreach($weblogs as $weblog) {
                                     $wp = new StdClass;
                                     $wp->title = $title;

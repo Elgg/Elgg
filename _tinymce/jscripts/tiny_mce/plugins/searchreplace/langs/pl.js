@@ -3,21 +3,21 @@
 // http://www.mfusion.prv.pl
 
 tinyMCE.addToLang('',{
-searchreplace_search_desc : 'Znajd¼',
-searchreplace_searchnext_desc : 'Znajd¼ ponownie',
-searchreplace_replace_desc : 'Znajd¼/Zast±p',
-searchreplace_notfound : 'Ukoñczono wyszukiwanie. Poszukiwana fraza nie zosta³a odnaleziona.',
-searchreplace_search_title : 'Znajd¼',
-searchreplace_replace_title : 'Znajd¼/Zast±p',
-searchreplace_allreplaced : 'Wszystkie wyst±pienia poszukiwanej frazy zosta³y zast±pione. ',
-searchreplace_findwhat : 'Znajd¼',
-searchreplace_replacewith : 'Zast±p',
+searchreplace_search_desc : 'ZnajdÄ½',
+searchreplace_searchnext_desc : 'ZnajdÄ½ ponownie',
+searchreplace_replace_desc : 'ZnajdÄ½/ZastÄ…p',
+searchreplace_notfound : 'UkoÅ„czono wyszukiwanie. Poszukiwana fraza nie zostaÅ‚a odnaleziona.',
+searchreplace_search_title : 'ZnajdÄ½',
+searchreplace_replace_title : 'ZnajdÄ½/ZastÄ…p',
+searchreplace_allreplaced : 'Wszystkie wystÄ…pienia poszukiwanej frazy zostaÅ‚y zastÄ…pione. ',
+searchreplace_findwhat : 'ZnajdÄ½',
+searchreplace_replacewith : 'ZastÄ…p',
 searchreplace_direction : 'Kierunek',
-searchreplace_up : 'Do góry',
-searchreplace_down : 'Do do³u',
-searchreplace_case : 'Wielko¶æ liter',
-searchreplace_findnext : 'Znajd¼&nbsp;nastêpny',
-searchreplace_replace : 'Zast±p',
-searchreplace_replaceall : 'Zast±p&nbsp;wszystkie',
-searchreplace_cancel : 'Wyjd¼'
+searchreplace_up : 'Do gÃ³ry',
+searchreplace_down : 'Do doÅ‚u',
+searchreplace_case : 'WielkoÅ›Ä‡ liter',
+searchreplace_findnext : 'ZnajdÄ½&nbsp;nastÄ™pny',
+searchreplace_replace : 'ZastÄ…p',
+searchreplace_replaceall : 'ZastÄ…p&nbsp;wszystkie',
+searchreplace_cancel : 'WyjdÄ½'
 });

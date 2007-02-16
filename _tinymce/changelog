@@ -1,7 +1,138 @@
-Version 2.0.6.1 (2005-05-04)
+Version 2.0.9 (2007-01-09)
+	Added support for fullscreen new window mode since the other method was problematic for some.
+	Added new hide_selects_on_submit option. Enables the possibility to enable/disable disabling of TinyMCE select elements.
+	Added new removeInstance callback for plugins and also a new remove_instance_callback option.
+	Added warning if flash and media plugin is used at the same time. Flash plugin should be replaced with media plugin.
+	Fixed so that fullscreen can be used even if placed in absolute positioned divs with borders etc.
+	Fixed so that contextmenu on named anchors doesn't display the link/unlink items.
+	Fixed so that wrap in source editor dialog works in Opera.
+	Fixed so that single quotes/&#39; is only applied to text nodes not attributes.
+	Fixed so that the emotions dialog is a little wider to avoid the FF bug with statusbar content alignment.
+	Fixed issue where TinyMCE wasn't restoring scroll position after fullscreen mode switch.
+	Fixed some HTML issues in style plugin dialog. Contributed by Michael Keck.
+	Fixed bug where color selection menu was visible for instances that got removed.
+	Fixed bug where it wasn't possible to remove block formatting with format select box.
+	Fixed bug with xhtmlxtras plugin not working when convert_fonts_to_spans option enabled.
+	Fixed bug where element path elements wasn't entity encoded properly.
+	Fixed bug where IE 7 produced a invalid attribute exception for some URLs.
+	Fixed bug where the fix_table_elements option moved tables out of divs and not just P and H1-6 elements.
+	Fixed bug where drop menu for spellchecker didn't work in IE.
+	Fixed bug with noneditable plugin. The classes where removed sometimes.
+	Fixed bug where media plugin failed if single quotes wasn't entity encoded.
+	Fixed bug where fullscreen mode switched the way bold/italic/underline works in FF.
+	Fixed bug where style plugin could modify body element of editor instance.
+	Fixed bugs and issues with searchreplace plugin.
+	Fixed bug where windows using inlinepopups where invisible when using fullscreen mode. Contributed by Joshua T. Corbin.
+	Fixed bug where inlinepopups where settings style values without px suffix. Contributed by Joshua T. Corbin.
+	Fixed bug where externaltoolbar where causing problems in fullscreen mode. Contributed by Joshua T. Corbin.
+	Fixed alignment problems of buttons inside the search/replace dialog. Contributed by Dongsu Jang.
+	Optimized event/callback execution by a factor of 10.
+	Optimized cleanup engine by factor of 2 on some documents.
+	Optimized shortcut and key event handling logic.
+Version 2.0.8 (2006-10-23)
+	Added class select lists for all xhtmlxtras dialogs, custom values can still be added.
+	Added missing documentation for devkit, xhtmlxtras, visualchars and nonbreaking plugins.
+	Added new gecko_spellcheck option, this enables you to disable/enable the FF 2.0 spellchecker.
+	Fixed so that the media can be modified using the context menu.
+	Fixed bug where media plugin wasn't working if convert_fonts_to_span option was enabled.
+	Fixed bug where media plugin produced errors on older IE versions.
+	Fixed bug where media plugin was breaking when prototype was used on the same page.
+	Fixed bug where cite and datetime attributes wasn't added to the default valid_elements list for del and ins.
+	Fixed bug where insert date in xhtmlxtras plugin wasn't placed in language pack.
+	Fixed bug where new fullscreen mode didn't function in IE with XHTML transitional doctype.
+	Fixed bug where new text and hilite text previews generated ghost layers in IE.
+	Fixed bug where fullscreen mode produced an error is the resizing was disabled.
+	Fixed bug where BR elements wasn't removed from PRE elements when apply_source_formatting was enabled.
+	Fixed bug where JS errors where thrown in IE if TinyMCE was placed in a frameset.
+	Fixed bug where devkit reported errors if TinyMCE was places in a frameset.
+	Fixed bug where auto_focus option didn't work in IE.
+	Fixed bug where FF leaked memory on some event handlers.
+	Fixed bug where Fullscreen plugin didn't fill containing elements if they where absolute.
+	Fixed bug where IE 7 hover out CSS events wasn't triggered correctly due to a IE bug.
+	Fixed bug where contextmenu plugin showed a incorrect flash menu item if the media plugin was enabled.
+	Fixed bug where 100% width of TinyMCE instances didn't work correctly.
+	Fixed issue where the image icon was selected when a user selected a media object.
+	Fixed issue where select elements where disabled if AJAX or custom submit triggers where used.
+	Fixed issue where formatblock command could insert invalid elements.
+	Fixed issue with duplicate default rules for abbr in valid_elements.
+	Fixed issue where the devkit wasn't the frontmost layer all the time.
+Version 2.0.7 (2006-10-17)
+	Added new visualchars plugin. Enables users to see custom chars like &nbsp;.
+	Added new nonbreaking plugin. Enables users to insert &nbsp; characters.
+	Added new devkit plugin. Gives TinyMCE developers more information.
+	Added new xhtmlxtras plugin. Based on work contributed by Andrew Tetlaw.
+	Added new text and hilite color picker layers to the advanced theme.
+	Added new media plugin, this handles flash, quicktime, windows media player, real player.
+	Added new valid_child_elements option. Enables you to remove non valid child nodes from parents.
+	Added new required attribute flag to the valid_elements option.
+	Added new popup_css add option. Enables you to add an additional css to all popups.
+	Added new table_default_border, table_default_cellpadding, table_default_cellspacing options to table plugin.
+	Added new RegExp support for editor_selector/editor_deselector options.
+	Added new validation class. Implemented in various dialogs.
+	Added new createTag and createTagHTML methods to the API.
+	Added new shortcut keys for h1-h6,p,div,address elements by keys Ctrl+1-9.
+	Added lightbox, nofollow and tag as possible rel attribute values in the advlink dialog.
+	Added new table delete control for the table plugin.
+	Added new updated search/replace dialogs. Contributed by Felix Riesterer.
+	Added image browser support for style plugin.
+	Fixed bugs and issues with the lastest Safari Nightly build.
+	Fixed bugs where data was set outside the current function scopes.
+	Fixed bug where all plugin and theme callback methods had the "this" reference incorrectly set to window.
+	Fixed bug where a call to moveToBookmark method resulted in a error is called on a hidden TinyMCE instance.
+	Fixed bug where script element contents and event attributes where HTML encoded.
+	Fixed bug where TinyMCE didn't load if a base element and relative URL to TinyMCE where used in MSIE.
+	Fixed bug where TinyMCE didn't function in MSIE 5.0.1 because call method wasn't available.
+	Fixed bug where context menu location wasn't correct if the user scrolled down on page.
+	Fixed bug where nodes wasn't selected correctly in Opera 9.
+	Fixed bug with setOuterHTML function. This had some impacts on the spellchecker plugin.
+	Fixed bug where spaces in the body node of the document couldn't be deleted.
+	Fixed bug where images lost focus in IE if they where placed in a resizable div.
+	Fixed bug where isDirty state was set after calling user specific onsubmit function.
+	Fixed bug where editor_selector/editor_deselector matched incorrectly on some names.
+	Fixed bug where contextmenu was placed in the wrong location in FF.
+	Fixed bug where images had a href attribute displayed in it's element path title.
+	Fixed bug where forms_utils.js function where using a relative URL to the current theme.
+	Fixed bug where cursor was placed at a incorrect location after mceInsertContent call in Gecko.
+	Fixed bug where selection/caret is moved to top of document on a cleanup in Gecko.
+	Fixed bug where button elements was forced closed.
+	Fixed bug where comma separated content_css option wasn't working with the preview plugin.
+	Fixed bug where DIV element named doc caused errors in IE.
+	Fixed bug where the selectedInstance wasn't updated correctly if the user clicked outside of the body of a editor area.
+	Fixed bug where strong and em wasn't handled correctly in Gecko browsers if the user added them by using the source editor.
+	Fixed bug where script tag was removed if it was the first element in IE and convert_fonts_to_span option was enabled.
+	Fixed bug when converting empty divs to editor instances didn't work in IE.
+	Fixed bug where Gecko produces a BR tag at the end of a single line of content.
+	Fixed bug where the entity_encoding numeric wasn't converting &nbsp; to &#160;.
+	Fixed bug where fullpage plugin produced an error if the first thing was to edit the header data.
+	Fixed bug where background attribute of body element in fullpage plugin produced error in IE.
+	Fixed bug where Opera was reporting errors if the width/height of a editor area was set to a percent value.
+	Fixed bug where JS error was produced in IE if you tried to insert a row/column.
+	Fixed bug where IE was causing flicker if the browser cache was disabled and the button_tile_map option is enabled.
+	Fixed bug where onchange callback wasn't executed on a mceInsertContent command.
+	Fixed bug where custom classes on anchor elements was removed.
+	Fixed bug where force_br_newlines options produced errors in Opera.
+	Fixed bugs with table selection not beeing restored correctly when actions where performed.
+	Fixed issue where a link wasn't removed on unlink in gecko if only the caret was placed within the link.
+	Fixed so that the valid attribute values for the valid_elements rules are case insensitive.
+	Fixed so that the fullscreen plugin uses the current document area instead of a new window/popup.
+	Fixed so that the cleanup callback is executed on themes.
+	Fixed so that document local anchors isn't forced absolute.
+	Fixed so that the initialization is even faster both editor instanced and dialogs.
+	Fixed so that the force_p_newlines option works on Opera & Safari. This is enabled by default.
+	Fixed so that empty td cells are padded with &nbsp; by default. This can be changed with the extended_valid_elements option.
+	Fixed so that the theme_advanced_disable option works with RowLayout.
+	Fixed so that string serialization is alot faster in all browsers. Makes the cleanup logic a lot faster.
+	Fixed issue with language variable in replace dialog in the searchreplace plugin.
+	Fixed various CSS compatiblity issues with MSIE 7 beta 3.
+	Renamed some image names in style and layer plugins for compatiblity with Drupal.
+	Fixed some HTML and CSS issues with the style properties plugin.
+	Fixed so the addMCEControl method returns the new editor instance id.
+	Fixed translation issues with the style properties dialog, patch contributed by TOMASIAN.
+	Removed the need for adding language codes to plugins. Since the online service now merges old ones with en.
+Version 2.0.6.1 (2006-05-04)
 	Fixed issue where the layer and style plugins couldn't be added in incorrect order.
 	Fixed issue with Firefox nl not beeing defined in triggerSave correctly.
-Version 2.0.6 (2005-05-03)
+Version 2.0.6 (2006-05-03)
 	Added new theme_advanced_source_editor_wrap option, this gives the possibility to force word wrapping.
 	Added new support for using div,blockquote,dt,dd,code,samp as a items in the theme_advanced_blockformats option.
 	Added new strict_loading_mode option, this switches the loading method from document.write to DOM.
@@ -26,11 +157,11 @@ Version 2.0.6 (2005-05-03)
 	Fixed issue where TinyMCE couldn't be loaded in a XML document.
 	Fixed issue with contextmenu beeing placed outside of visible area on Gecko browsers.
 	Fixed issue whith area tag not being closed.
-Version 2.0.5.1 (2005-03-22)
+Version 2.0.5.1 (2006-03-22)
 	Fixed bug where emtpy paragraphs sometimes got removed in MSIE.
 	Fixed bug where autosave plugin was running even in fullscreen mode.
 	Fixed bug where browse and color image button urls in form_utils.js where hardcoded.
-Version 2.0.5 (2005-03-21)
+Version 2.0.5 (2006-03-21)
 	Added API docs for the TinyMCE_Popup class that is used by all dialogs in TinyMCE.
 	Added new TinyMCE_Layer class to the core of TinyMCE plugins will be using this later on.
 	Added new loadPlugin function, use this to load external plugins.

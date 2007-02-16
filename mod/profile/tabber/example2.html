@@ -1,0 +1,153 @@
+<!-- $Id: example2.html,v 1.8 2006/04/10 05:05:28 pat Exp $ -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Advanced Tabber Example</title>
+
+<link rel="stylesheet" href="example.css" TYPE="text/css" MEDIA="screen">
+<link rel="stylesheet" href="example-print.css" TYPE="text/css" MEDIA="print">
+
+<script type="text/javascript">
+
+/* Optional: Temporarily hide the "tabber" class so it does not "flash"
+   on the page as plain HTML. After tabber runs, the class is changed
+   to "tabberlive" and it will appear.
+*/
+document.write('<style type="text/css">.tabber{display:none;}<\/style>');
+
+var tabberOptions = {
+
+  /* Optional: instead of letting tabber run during the onload event,
+     we'll start it up manually. This can be useful because the onload
+     even runs after all the images have finished loading, and we can
+     run tabber at the bottom of our page to start it up faster. See the
+     bottom of this page for more info. Note: this variable must be set
+     BEFORE you include tabber.js.
+  */
+  'manualStartup':true,
+
+  /* Optional: code to run after each tabber object has initialized */
+
+  'onLoad': function(argsObj) {
+    /* Display an alert only after tab2 */
+    if (argsObj.tabber.id == 'tab2') {
+      alert('Finished loading tab2!');
+    }
+  },
+
+  /* Optional: code to run when the user clicks a tab. If this
+     function returns boolean false then the tab will not be changed
+     (the click is canceled). If you do not return a value or return
+     something that is not boolean false, */
+
+  'onClick': function(argsObj) {
+
+    var t = argsObj.tabber; /* Tabber object */
+    var id = t.id; /* ID of the main tabber DIV */
+    var i = argsObj.index; /* Which tab was clicked (0 is the first tab) */
+    var e = argsObj.event; /* Event object */
+
+    if (id == 'tab2') {
+      return confirm('Swtich to '+t.tabs[i].headingText+'?\nEvent type: '+e.type);
+    }
+  },
+
+  /* Optional: set an ID for each tab navigation link */
+  'addLinkId': true
+
+};
+
+</script>
+
+<!-- Load the tabber code -->
+<script type="text/javascript" src="tabber.js"></script>
+
+</head>
+<body>
+
+<h1>Advanced Tabber Example</h1>
+
+<p>&larr; <a href="http://www.barelyfitz.com/projects/tabber/">Tabber Home</a></p>
+
+<p>In the following example, the height is not constrained, so the page jumps around when a new tab is selected. "Tab 2" contains a nested tabber.</p>
+
+<div class="tabber" id="tab1">
+
+  <div class="tabbertab">
+    <h2><a name="tab1">Tab <em>1</em></a></h2>
+    <p>Tab 1 content.</p>
+  </div>
+
+  <div class="tabbertab">
+    <h2>Tab 2</h2>
+    <p>Tab 2 content. A nested tabber:</p>
+
+    <div class="tabber" id="tab1-1">
+
+      <div class="tabbertab">
+        <h3>Tab 2-1</h3>
+        <p>Tab 2-1 content.</p>
+      </div>
+
+      <div class="tabbertab">
+        <h3>Tab 2-2</h3>
+        <p>Tab 2-2 content.</p>
+      </div>
+
+      <div class="tabbertab">
+        <h3>Tab 2-3</h3>
+        <p>Tab 2-3 content.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabbertab">
+    <h2>Tab 3</h2>
+    <p>Tab 3 content.</p>
+  </div>
+</div>
+
+<p>In the following example, "Tab 2" should be selected automatically. In addition, there is an onclick function attached to the tabs so you can confirm each click.</p>
+
+
+<div class="tabber" id="tab2">
+
+  <div class="tabbertab">
+    <h2>Tab 1</h2>
+    <p>Tab 1 content.</p>
+  </div>
+
+  <div class="tabbertab tabbertabdefault">
+    <h2>Tab 2</h2>
+    <p>Long content to show the scrollbar to the right.</p>
+    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras nonummy lorem quis neque. Etiam molestie auctor ante. Fusce in enim. Suspendisse at ipsum. Praesent eget odio vitae lorem consectetuer euismod. Mauris vel risus eget arcu congue sodales. Mauris adipiscing viverra ante. Cras pharetra augue sit amet enim. Pellentesque ac sem. Nullam pulvinar convallis orci. In tristique accumsan enim. Nam venenatis suscipit lorem. Nam ut dui sit amet libero egestas facilisis. Aliquam elementum lectus sed ipsum tincidunt aliquet. Pellentesque nec nunc at metus malesuada hendrerit. Suspendisse magna. Aliquam odio augue, eleifend non, euismod nec, molestie quis, pede. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;</p>
+
+    <p>In hac habitasse platea dictumst. Aenean suscipit nisl. In mollis consequat purus. Integer scelerisque. Nullam imperdiet sapien nec lectus. Praesent in orci. Donec magna magna, posuere at, auctor in, sagittis nec, mi. Morbi volutpat, magna pharetra scelerisque lacinia, est erat ultricies neque, nec convallis lorem lorem ut dolor. Proin ac nunc eget nibh pulvinar gravida. Sed pretium, sem ac suscipit imperdiet, mauris ligula dictum nulla, pulvinar interdum pede urna vel magna. In lectus. In sed odio. Quisque eros ligula, placerat nec, tincidunt in, ullamcorper sed, lectus. Nam aliquet orci eget ante. Aliquam aliquet mattis pede. Mauris eleifend nibh vel nunc.</p>
+
+    <p>Sed mi lacus, sodales ac, lacinia nec, rutrum sodales, dolor. Morbi convallis molestie enim. Aenean tristique justo. Nullam erat ante, tempor a, suscipit ut, luctus vitae, erat. Proin fermentum. Etiam id erat ut est scelerisque volutpat. Praesent gravida libero vitae sapien. Donec vel elit. In non enim nec quam rutrum sollicitudin. Suspendisse tincidunt adipiscing ligula. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Etiam vel nulla non augue varius pretium. Integer vestibulum enim vel tortor.</p>
+
+    <p>Nulla at massa. Vivamus turpis urna, ultrices eget, auctor ullamcorper, ultricies quis, urna. Proin lobortis tincidunt orci. Duis quam neque, mattis vel, rutrum vitae, porttitor id, libero. Vestibulum sagittis lorem eget pede. Curabitur dignissim, nisi sit amet porttitor dignissim, quam felis condimentum arcu, eget facilisis metus lacus in quam. Nulla semper. In hac habitasse platea dictumst. Aenean luctus diam. Aenean consequat massa quis nisi.</p>
+
+    <p>Curabitur quam odio, ornare vel, hendrerit ac, sagittis mattis, ipsum. Fusce accumsan, dolor ac suscipit gravida, tortor nibh cursus ligula, at posuere orci arcu euismod ipsum. Nunc iaculis, turpis quis mattis imperdiet, nibh sapien venenatis nulla, id ornare tortor nunc in risus. Morbi lacinia mollis nulla. Donec tempus vestibulum diam. Praesent aliquet metus non orci. Nulla dictum pulvinar sem. Proin mi. Maecenas pharetra enim eget elit. Ut interdum libero ac est. Phasellus accumsan. Praesent vulputate vehicula elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla pretium diam non felis. Aenean at nisl. Proin rutrum tempus mauris. In metus ante, congue eu, vestibulum in, tincidunt sit amet, tortor. Suspendisse non enim eget elit imperdiet fringilla. Pellentesque odio erat, consequat vitae, euismod nec, congue sed, lectus. Praesent tempor urna.</p>
+    </div>
+
+    <div class="tabbertab" title="Tab 3 Title Override">
+      <h2>Tab 3</h2>
+      <p>The name of this tab is taken from the TITLE attribute instead of from the H2 element, then the TITLE attribute is erased so it does not cause a mouseover tooltip over the content area.</p>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+/* Since we specified manualStartup=true, tabber will not run after
+   the onload event. Instead let's run it now, to prevent any delay
+   while images load.
+*/
+
+tabberAutomatic(tabberOptions);
+
+</script>
+
+</body>
+</html>

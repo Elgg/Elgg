@@ -15,11 +15,21 @@
 
     // Whose files are we looking at?
 
-        global $page_owner;
+        global $CFG, $page_owner, $owner, $folder;
         $title = run("profile:display:name") . " :: ". __gettext("Files") ."";
 
+        $folder_object = get_record('file_folders','files_owner',$owner,'ident',$folder);
+
         $body = run("content:files:view");
-        $body .= run("files:view");
+                
+        if (!is_object($folder_object) || $folder_object->handler == "elgg"
+            || !isset($folder_object->handler)
+            || !isset($CFG->folders->handler[$folder_object->handler]->function_name)
+            || !is_callable($CFG->folders->handler[$folder_object->handler]->function_name)) {
+            $body .= run("files:view",$folder_object);
+        } else {
+            $body .= $CFG->folders->handler[$folder_object->handler]->function_name($folder_object);
+        }
         
         echo templates_page_draw( array(
                     $title,

@@ -140,8 +140,9 @@
     
     // Protect users to a certain access level
     function protect($level, $owner = -1) {
+        global $CFG;
         if (accesslevel($owner) < $level) {
-            run("access_denied");
+            echo '<a href="' . $CFG->wwwroot . '">' . __gettext("Access Denied") . '</a>';
             exit();
         }
     }

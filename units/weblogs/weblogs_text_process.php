@@ -31,12 +31,12 @@
             $functionbody = <<< END
                 
                 \$matches[1] = str_replace("&amp;","&",\$matches[1]);
-                return "<embed style=\"width:400px; height:326px;\" id=\"VideoPlayback\" type=\"application/x-shockwave-flash\" src=\"\$matches[1]\" />";
+                return "<embed class=\"VideoPlayback\" type=\"application/x-shockwave-flash\" src=\"\$matches[1]\" />";
                 
 END;
     
             // $run_result = preg_replace_callback("/\{\{video:([A-Za-z0-9\.\:\_\-\/\\?\=\&\+]+)\}\}/i",create_function('$matches',$functionbody),$run_result);
-            $run_result = preg_replace_callback("/\{\{video:(.+)\}\}/i",create_function('$matches',$functionbody),$run_result);
+            $run_result = preg_replace_callback("/\{\{video:([^}]+)\}\}/i",create_function('$matches',$functionbody),$run_result);
             
             
             // URLs to links

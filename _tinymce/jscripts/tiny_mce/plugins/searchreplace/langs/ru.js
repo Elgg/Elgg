@@ -1,22 +1,21 @@
-// RU cp1251 lang variables
+// RU lang variables UTF-8
 
 tinyMCE.addToLang('',{
-searchreplace_search_desc : 'Найти',
-searchreplace_searchnext_desc : 'Найти опять',
-searchreplace_replace_desc : 'Найти/Заменить',
-searchreplace_notfound : 'Поиск завершён. Искомое выражение не найдено.',
-searchreplace_search_title : 'Найти',
-searchreplace_replace_title : 'Найти/Заменить',
-searchreplace_allreplaced : 'Замена была выполнена во всех случаях совпадения искомого выражения.',
-searchreplace_findwhat : 'Найти что',
-searchreplace_replacewith : 'Заменить чем',
-searchreplace_direction : 'Направление',
-searchreplace_up : 'Вверх',
-searchreplace_down : 'Вниз',
-searchreplace_case : 'С учётом регистра',
-searchreplace_findnext : 'Найти&nbsp;следующее',
-searchreplace_replace : 'Заменить',
-searchreplace_replaceall : 'Заменить&nbsp;везде',
-searchreplace_cancel : 'Отменить',
-searchreplace_replace_delta_width : 150
+searchreplace_search_desc : 'РќР°Р№С‚Рё',
+searchreplace_searchnext_desc : 'РќР°Р№С‚Рё РѕРїСЏС‚СЊ',
+searchreplace_replace_desc : 'РќР°Р№С‚Рё / Р—Р°РјРµРЅРёС‚СЊ',
+searchreplace_notfound : 'РџРѕРёСЃРє Р·Р°РІРµСЂС€С‘РЅ. РСЃРєРѕРјРѕРµ РІС‹СЂР°Р¶РµРЅРёРµ РЅРµ РЅР°Р№РґРµРЅРѕ.',
+searchreplace_search_title : 'РќР°Р№С‚Рё',
+searchreplace_replace_title : 'РќР°Р№С‚Рё / Р—Р°РјРµРЅРёС‚СЊ',
+searchreplace_allreplaced : 'Р—Р°РјРµРЅР° Р±С‹Р»Р° РІС‹РїРѕР»РЅРµРЅР° РІРѕ РІСЃРµС… СЃР»СѓС‡Р°СЏС… СЃРѕРІРїР°РґРµРЅРёСЏ РёСЃРєРѕРјРѕРіРѕ РІС‹СЂР°Р¶РµРЅРёСЏ.',
+searchreplace_findwhat : 'РќР°Р№С‚Рё С‡С‚Рѕ',
+searchreplace_replacewith : 'Р—Р°РјРµРЅРёС‚СЊ С‡РµРј',
+searchreplace_direction : 'РќР°РїСЂР°РІР»РµРЅРёРµ',
+searchreplace_up : 'Р’РІРµСЂС…',
+searchreplace_down : 'Р’РЅРёР·',
+searchreplace_case : 'РЎ СѓС‡С‘С‚РѕРј СЂРµРіРёСЃС‚СЂР°',
+searchreplace_findnext : 'РќР°Р№С‚Рё&nbsp;СЃР»РµРґСѓСЋС‰РµРµ',
+searchreplace_replace : 'Р—Р°РјРµРЅРёС‚СЊ',
+searchreplace_replaceall : 'Р—Р°РјРµРЅРёС‚СЊ&nbsp;РІРµР·РґРµ',
+searchreplace_cancel : 'РћС‚РјРµРЅРёС‚СЊ'
 });

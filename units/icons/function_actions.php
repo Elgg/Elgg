@@ -11,13 +11,13 @@ if ($action == "icons:edit" && logged_on && run("permissions:check", "uploadicon
     $icondefault = optional_param('defaulticon',0,PARAM_INT);
     if ($icondefault == -1) {
         set_field('users','icon',-1,'ident',$page_owner);
-        $USER->icon = 'default.png';
-        $_SESSION['icon'] = "default.png";
+        $USER->icon = -1; //id
+        $_SESSION['icon'] = "default.png"; //filename
     } else {
         if ($iconfilename = get_field('icons','filename','ident',$icondefault,'owner',$page_owner)) {
             if ($page_owner == $USER->ident) {
-                $_SESSION['icon'] = $iconfilename;
-                $USER->icon = $iconfilename;
+                $_SESSION['icon'] = $iconfilename; //filename
+                $USER->icon = $icondefault; //id
             }
             set_field('users','icon',$icondefault,'ident',$page_owner);
         }
@@ -44,13 +44,13 @@ if ($action == "icons:edit" && logged_on && run("permissions:check", "uploadicon
                 set_field('weblog_posts', 'icon', -1, 'icon', $delete_icon, 'owner', $page_owner);
                 $ul_username = user_info('username', $page_owner);
                 $upload_folder = $textlib->substr($ul_username,0,1);
-                $filepath = $CFG->dataroot . "icons/" . $upload_folder . "/" . $ul_username . "/".$file->filename; 
+                $filepath = $CFG->dataroot . "icons/" . $upload_folder . "/" . $ul_username . "/".$result->filename; 
                 @unlink($filepath);
                 if ($result->filename == $USER->icon) {
                     set_field('users','icon',-1,'ident',$page_owner);
                     if ($page_owner == $USER->ident) {
-                        $USER->icon = "default.png";
-                        $_SESSION['icon'] = "default.png";
+                        $USER->icon = -1; //id
+                        $_SESSION['icon'] = "default.png"; //filename
                     }
                 }
             }
@@ -132,8 +132,11 @@ if ($action == "icons:add" && logged_on && run("permissions:check", "uploadicons
             $ident = insert_record('icons',$i);
             if ($icondefault == "yes") {
                 set_field('users','icon',$ident,'ident',$page_owner);
-                $_SESSION['icon'] = $save_file;
-                $USER->icon = $save_file;
+                if ($page_owner == $USER->ident) {
+                    $_SESSION['icon'] = $i->filename; //filename
+                    $USER->icon = $ident; //id
+                    unset($_SESSION['user_info_cache'][$USER->ident]);
+                }
             }
             $messages[] = __gettext("Your icon was uploaded successfully.");
             

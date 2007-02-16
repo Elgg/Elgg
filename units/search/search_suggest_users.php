@@ -20,7 +20,7 @@ if (isset($parameter)) {
     }
     
     if ($results = get_records_sql($searchline)) {
-        $run_result .= "<h2>" . __gettext("Matching accounts:") . "</h2><p>";
+        $run_result .= "<h2>" . __gettext("Matching users and communities:") . "</h2><p>";
         foreach($results as $returned_name) {
             $run_result .= "<a href=\"" . url . $returned_name->username . '/">' . htmlspecialchars($returned_name->name) . "</a> <br />";
         }

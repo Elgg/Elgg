@@ -15,7 +15,7 @@
             '{{fullname}}' => __gettext('Their full name'),
             '{{date}}' => __gettext('The time and date of the post'),
             '{{commentslink}}' => __gettext('A link to any comments'),
-            '{{trackbackslink}}' => __gettext('A link to any trackbacks'),
+            '{{links}}' => __gettext('Any more links'),
             '{{comments}}' => __gettext('A list of comments, if any'),
         )
     );
@@ -24,24 +24,23 @@
     $template['weblogpost'] = <<< END
 
 
-<div class="weblog_posts"><!-- Holds all aspects of a blog post -->
-    <div class="entry"><!-- Open class entry -->
+<div class="weblog-post"><!-- Holds all aspects of a blog post -->
         <div class="user"><!-- Open class user -->
             <a href="{{url}}{{username}}/weblog/"><img alt="" src="{{url}}_icon/user/{{usericon}}"/></a><br /><a href="{{url}}{{username}}/weblog/">{{fullname}}</a>
         </div><!-- Close class user -->
-        <div class="weblog_title"><h3>{{title}}</h3></div>
+        <div class="weblog-title"><h3>{{title}}</h3></div>
         <div class="post"><!-- Open class post -->
             {{body}}
-            <div class="info"><!-- Open class info -->
+        </div><!-- Close class post -->
+		<div class="info"><!-- Open class info -->
             <p>
                 $postedby {{fullname}}
-                 | {{commentslink}}
+                 {{links}}
+                 {{commentslink}}
             </p>
-            </div><!-- Close class info -->
-        </div><!-- Close class post -->
+        </div><!-- Close class info -->
         {{comments}}
-    </div><!-- Close class entry -->
-</div><!-- Close weblog_posts -->
+</div><!-- Close weblog_post -->
 <div class="clearing"></div>    
 END;
 
@@ -79,7 +78,8 @@ END;
             '{{postedname}}' => __gettext('The name of the person making the comment'),
             '{{weblogcomment}}' => __gettext('When the comment was posted'),
             '{{usericon}}' => __gettext('The usericon of the person making the comment, if available'),
-            '{{permalink}}' => __gettext('A permalink to the comment')
+            '{{permalink}}' => __gettext('A permalink to the comment'),
+            '{{links}}' => __gettext('Any more links'),
         )
     );
 
@@ -87,21 +87,13 @@ END;
 
 <li>
     {{body}}
-    <div class="comment_owner">
+    <div class="comment-owner">
     <p>
-        {{usericon}}{{postedname}} on {{posted}} <a href="{{permalink}}">#</a>
+        {{usericon}}{{postedname}} on {{posted}} <a href="{{permalink}}">#</a> | {{links}}
     </p>
     </div>
 </li>
 
-END;
-
-    $template['css'] .= <<< END
-    
-        .weblogdateheader {
-            font-size: 0.6em;
-        }
-    
 END;
 
 ?>

@@ -17,12 +17,11 @@ if (isset($parameter[0])) {
 END;
     $i = 1;
     if (!empty($result)) {
+        $w = 100;
+        if (count($result) > 4) {
+            $w = 50;
+        }
         foreach($result as $key => $info) {
-            $w = 100;
-            if (count($result) > 4) {
-                $w = 50;
-            }
-            // $friends_name = htmlspecialchars(stripslashes($info->name), ENT_COMPAT, 'utf-8');
             $friends_name = run("profile:display:name", $info->ident);
             $info->icon = run("icons:get",$info->ident);
             $friends_menu = run("users:infobox:menu",array($info->ident));

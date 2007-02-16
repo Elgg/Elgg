@@ -8,16 +8,14 @@
         protect(1);
         
         run("profile:init");
-        run("templates:init");
+        templates_actions();
         
         define("context", "account");
         templates_page_setup();        
         $title = run("profile:display:name") . " :: ". __gettext("Select / Create Themes");
         
-        $body = run("content:templates:view");
-        $body .= run("templates:view");
-        $body .= run("content:templates:add");
-        $body .= run("templates:add");
+        $body = templates_view();
+        $body .= templates_add();
         
         $body = templates_draw(array(
                         'context' => 'contentholder',

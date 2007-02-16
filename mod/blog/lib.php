@@ -30,7 +30,7 @@ function blog_pagesetup() {
         if ($page_owner != -1) {
 
             $PAGE->menu_sub[] = array ( 'name' => 'blog:rssfeed',
-                                        'html' => "<a href=\"{$CFG->wwwroot}{$weblog_username}/weblog/rss/\"><img src=\"{$CFG->wwwroot}_templates/icons/rss.png\" border=\"0\" alt=\"rss\" /></a>"); 
+                                        'html' => "<a href=\"{$CFG->wwwroot}{$weblog_username}/weblog/rss/\"><img src=\"{$CFG->wwwroot}mod/template/icons/rss.png\" border=\"0\" alt=\"rss\" /></a>"); 
 
             
             if (run("permissions:check", "weblog") && logged_on) {
@@ -61,10 +61,6 @@ function blog_pagesetup() {
         $PAGE->menu_sub[] = array ( 'name' => 'blog:everyone',
                                     'html' => "<a href=\"{$CFG->wwwroot}_weblog/everyone.php\">"
                                     . __gettext("View all posts") . '</a>'); 
-        
-        $PAGE->menu_sub[] = array ( 'name' => 'blog:help',
-                                    'html' => "<a href=\"{$CFG->wwwroot}help/blogs_help.php\">"
-                                    . __gettext("Page help") . '</a>'); 
 
     }
 
@@ -81,6 +77,8 @@ function blog_pagesetup() {
                                                 'description' => __gettext("Displays the latest blog posts from a blog of your choice."),
                                                 'id' => "blog"
                                         );
+            $CFG->templates->variables_substitute['blog'][] = "blog_keyword";
+            $CFG->templates->variables_substitute['blogsummary'][] = "blog_summary_keyword";
             
         }
         
@@ -163,5 +161,86 @@ function blog_pagesetup() {
             return $body;
             
         }
+        
+        function blog_keyword($vars) {
+            global $CFG, $db;
+            
+            $body = "";
+            
+            if (!isset($vars[1])) {
+                $blog_posts = 2;
+            } else {
+                $blog_posts = $vars[1];
+            }
+
+            $where = run("users:access_level_sql_where",$_SESSION['userid']);
+                        
+            if (!isset($vars[2]) || $vars[2] == "all") {
+                $posts = get_records_sql("select * from ".$CFG->prefix."weblog_posts where ($where) order by posted desc limit $blog_posts");
+            } else {
+                $blog_id = (int) user_info_username('ident',$vars[2]);
+                $posts = get_records_sql("select * from ".$CFG->prefix."weblog_posts where ($where) and weblog = $blog_id order by posted desc limit $blog_posts");
+            }
+            
+            if (is_array($posts) && !empty($posts)) {
+                foreach($posts as $post) {
+                    if ($vars[3] != "slim") {
+                        $body .= run("weblogs:posts:view",$post);
+                    } else {
+                        $body .= "<div class=\"frontpage-blog-contents\">";
+                        $body .= "<h4>" . $post->title . "</h4>";
+                        $body .= "<p class=\"frontpage-blog-date\">" . strftime("%B %d, %Y",$post->posted) . "</p>";
+                        $body .= "<p class=\"frontpage-blog-body\">" . run("weblogs:text:process", $post->body) . "</p>";
+                        $body .= "<p class=\"frontpage-blog-from\">" . __gettext("From:") . " <a href=\"{$CFG->wwwroot}" . user_info("username",$post->weblog) . "\">" . user_info("name",$post->weblog) . "</a> - ";
+                        $body .= "<a href=\"{$CFG->wwwroot}" . user_info("username",$post->weblog) . "/weblog/" . $post->ident . ".html\">" . __gettext("Read more") . "</a></p>";
+                        $body .= "</div>";
+                    }
+                }
+            }
+            
+            return $body;
+        }
+        
+        function blog_summary_keyword($vars) {
+            global $CFG;
+            $body = "";
+            
+            if (!isset($vars[1])) {
+                $blog_posts = 2;
+            } else {
+                $blog_posts = $vars[1];
+            }
+
+            $where = run("users:access_level_sql_where",$_SESSION['userid']);
+                        
+            if (!isset($vars[2]) || $vars[2] == "all") {
+                $posts = get_records_sql("select * from ".$CFG->prefix."weblog_posts where ($where) order by posted desc limit $blog_posts");
+            } else {
+                $blog_id = (int) user_info_username('ident',$vars[2]);
+                $posts = get_records_sql("select * from ".$CFG->prefix."weblog_posts where ($where) and weblog = $blog_id order by posted desc limit $blog_posts");
+            }
+            
+            if (is_array($posts) && !empty($posts)) {
+                foreach($posts as $post) {
+                    $body .= "<div class=\"frontpage-blog-summary\">";
+                    $body .= "<h4>" . $post->title . "</h4>";
+                    $body .= "<p class=\"frontpage-blog-date\">" . strftime("%B %d, %Y",$post->posted) . "</p>";
+                    $body .= "<p class=\"frontpage-blog-from\">" . __gettext("From:") . " <a href=\"{$CFG->wwwroot}" . user_info("username",$post->weblog) . "\">" . user_info("name",$post->weblog) . "</a> - ";
+                    $body .= "<a href=\"{$CFG->wwwroot}" . user_info("username",$post->weblog) . "/weblog/" . $post->ident . ".html\">" . __gettext("Read more") . "</a></p>";
+                    $body .= "</div>";
+                }
+            }
+            
+            return $body;
+        }
+        
+    function blog_page_owner() {
+        
+        $weblog_name = optional_param('weblog_name');
+        if (!empty($weblog_name)) {
+            return (int) user_info_username('ident', $weblog_name);
+        }
+        
+    }
     
 ?>

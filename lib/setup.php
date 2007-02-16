@@ -69,6 +69,10 @@ if (empty($CFG->disable_publiccomments)) {
     $CFG->disable_publiccomments = false;
 }
 
+if (empty($CFG->community_create_flag)) {
+    $CFG->community_create_flag = "";
+}
+
 if (empty($CFG->curlpath)) {
     $CFG->curlpath = false;
 }
@@ -83,6 +87,12 @@ if (empty($CFG->cookiepath)) {
     unset($pathcomponents);
 }
 
+if (empty($CFG->absmaxuploadsize)) {
+    // absolute maximum allowed file upload size.
+    // in most cases, apache or php will have lower limits configured, that cannot be overridden in code.
+    $CFG->absmaxuploadsize = '20M';
+}
+
 $CFG->libdir = $CFG->dirroot . 'lib';
 
 // set up our database connection
@@ -92,6 +102,7 @@ if ($CFG->debug & E_USER_ERROR) {
 require_once($CFG->dirroot . 'lib/adodb/adodb.inc.php'); // Database access functions
 
 $db = &ADONewConnection($CFG->dbtype);
+$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
 error_reporting(0);  // Hide errors
 
@@ -371,7 +382,7 @@ require_once($CFG->dirroot . "lib/displaylib.php");
 ////// Init templating basics
 //////
 if (!isset($CFG->templatestore)) { $CFG->templatestore = 'db' ;}
-if (!isset($CFG->templatesroot)) { $CFG->templatesroot = $CFG->dirroot . "_templates/";}
+if (!isset($CFG->templatesroot)) { $CFG->templatesroot = $CFG->dirroot . "mod/template/templates/";}
 if (!isset($PAGE->menu       )) { $PAGE->menu        = array();}
 if (!isset($PAGE->menu_sub   )) { $PAGE->menu_sub    = array();}
 if (!isset($PAGE->menu_top   )) { $PAGE->menu_top    = array();}
@@ -430,7 +441,7 @@ define("url",$CFG->wwwroot);
 define("path",$CFG->dirroot);
 define("email",$CFG->sysadminemail);
 define("locale", $CFG->defaultlocale);
-define("public_reg", $CFG->publicreg);
+//define("public_reg", $CFG->publicreg);
 if (empty($CFG->default_access)) {
     $CFG->default_access = "LOGGED_IN";
 }

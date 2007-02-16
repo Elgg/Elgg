@@ -1,0 +1,4866 @@
+# Basque translation for elgg
+# Copyright (c) 2006 Rosetta Contributors and Canonical Ltd 2006
+# This file is distributed under the same license as the elgg package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2006.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: elgg\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2007-01-06 02:52+0000\n"
+"PO-Revision-Date: 2007-01-12 10:27+0000\n"
+"Last-Translator: Margari León <margari.leon@ehu.es>\n"
+"Language-Team: Basque <eu@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Rosetta-Export-Date: 2007-01-12 11:18+0000\n"
+
+#: _activity/index.php:24
+msgid "Recent activity"
+msgstr "Azkenengo aktibitatea"
+
+#: _activity/index.php:29
+msgid "Currently viewing recent activity since "
+msgstr "Geroztik egindako arestiko aktibitatea ikusgai "
+
+#: _activity/index.php:31
+msgid "You may view recent activity during the following time-frames:"
+msgstr "Arestiko jarduera ikus dezakezu ondoko denbora tarteetan:"
+
+#: _activity/index.php:33
+msgid "The last 24 hours"
+msgstr "Azken 24 orduetan"
+
+#: _activity/index.php:34
+msgid "The last 48 hours"
+msgstr "Azken 48 orduetan"
+
+#: _activity/index.php:35
+msgid "The last week"
+msgstr "Azken astean"
+
+#: _activity/index.php:36
+msgid "The last month"
+msgstr "Azken hilean"
+
+#: _activity/index.php:38
+msgid "Your recent messages"
+msgstr "Zure azken mezuak"
+
+#: _activity/index.php:49
+msgid "Activity on weblog posts you have marked as interesting"
+msgstr "Aukeratu dituzun blog mezuetako aktibitatea"
+
+#: _activity/index.php:60
+msgid "Read more"
+msgstr "Gehiago irakurri"
+
+#: _activity/index.php:64
+msgid "your blog"
+msgstr "zure bloga"
+
+#: _activity/index.php:67
+#, php-format
+msgid "<b>You</b> commented on weblog post '%s' in %s:"
+msgstr "'%s' weblogeko %s mezuari egin dizkiozun komentarioak:"
+
+#: _activity/index.php:69
+#, php-format
+msgid "<b>%s</b> commented on weblog post '%s' in %s:"
+msgstr "%s' weblogeko %s mezuari %s k egin dizkion komentarioak:"
+
+#: _activity/index.php:79
+msgid "No activity during this time period."
+msgstr "Denbora tarte honetan ez da jarduerarik egon."
+
+#: _admin/antispam.php:17 _admin/users.php:17 _admin/users.php:20
+#: lib/templates.php:471
+msgid "Manage users"
+msgstr "Erabiltzaileak kudeatu"
+
+#: _admin/antispam.php:20
+msgid "Spam blocking"
+msgstr "Blokeatu spam-a"
+
+#: _admin/flags.php:17 _admin/flags.php:20
+msgid "Content flags"
+msgstr "Eduki markak"
+
+#: _admin/index.php:17 _admin/index.php:20 lib/templates.php:429
+msgid "Administration"
+msgstr "Kudeaketa"
+
+#: _admin/users_add.php:17 _admin/users_add.php:20
+msgid "Add multiple users"
+msgstr "Erabiltzaile anitzak gehitu"
+
+#: auth/ldap/lib.php:113 lms/join.php:48 units/invite/invite_actions.php:97
+msgid ""
+"Error! Your username must contain letters and numbers only, cannot be blank, "
+"and must be between 3 and 12 characters in length."
+msgstr ""
+"Errorea! Zure erabiltzaile izenak hizkiak eta zenbakiak baino ez ditu izan "
+"behar, ezin da zuriz utzi, eta 3 eta 12 karaktere bitarteko luzera izan "
+"behar du."
+
+#: auth/ldap/lib.php:118 units/communities/communities_actions.php:26
+#, php-format
+msgid ""
+"The username %s is already taken by another user. You will need to pick a "
+"different one."
+msgstr ""
+"%s erabiltzaile izena beste erabiltzaile batek dauka dagoeneko. Beste bat "
+"jarri behar duzu."
+
+#: auth/ldap/lib.php:139
+#, php-format
+msgid ""
+"User addition %d failed: Unknown reason, please contact you system "
+"administrator."
+msgstr ""
+"Erabiltzaile gehiketak %d huts egin du: Arrazoi ezezaguna, mesedez kontakta "
+"ezazu zure sistemaren administratzailearekin."
+
+#: _communities/index.php:22 mod/browser/index.php:83 mod/community/lib.php:53
+#: mod/community/lib.php:63 units/communities/communities_edit_wrapper.php:5
+msgid "Communities"
+msgstr "Komunitateak"
+
+#: _communities/members.php:22 units/communities/community_memberships.php:40
+#: units/communities/community_memberships.php:42
+msgid "Members"
+msgstr "Partaideak"
+
+#: _communities/owned.php:22 mod/community/lib.php:57
+msgid "Owned Communities"
+msgstr "Norberaren komunitateak"
+
+#: _communities/requests.php:23
+#: units/communities/communities_membership_requests.php:10
+msgid "Membership requests"
+msgstr "Partaidetza gauzatzeko eskaerak"
+
+#: content/about.php:10 content/about.php:13
+#, php-format
+msgid "About %s"
+msgstr "%s(r)i buruz"
+
+#: content/faq.php:10 content/faq.php:13
+#, php-format
+msgid "%s FAQ"
+msgstr "%s Ohizko Galderak"
+
+#: content/invite/invite.php:3
+msgid ""
+"If you have a friend or colleague you would like to join the system, perhaps "
+"because you would like to share protected resources or reflections with "
+"them, you can enter their details below. They will then receive a special "
+"invitation email containing a code that allows them to create a new account; "
+"once they do so, a mutual friend connection will be created between their "
+"account and yours."
+msgstr ""
+"Sisteman izen eman nahi duen lagun edo kide bat baduzu, agian baliabide edo "
+"hausnarketa berarekin era pribatuan banatu nahi dituzulako, hemen sartu "
+"ditzakezu bere datuak. Kontu bat irekitzeko aukera ematen duen posta "
+"elektroniko gonbidapen bat jasoko dute kode berezi batekin; hau egin ostean, "
+"lagunen arteko konexio bat sortuko da bere kontu eta zeurearen artean."
+
+#: content/mainindex/content_loggedout.php:7
+#: content/mainindex/content_main_index.php:7 lib/templates.php:46
+#: lib/templates.php:1170 lib/templates.php:1172
+msgid "Welcome"
+msgstr "Ongi etorri"
+
+#: content/mainindex/content_loggedout.php:8
+#, php-format
+msgid ""
+"This is %s, a learning landscape. Why not check out <a href=\"%s\">what "
+"people are saying</a> right now."
+msgstr ""
+"Hau da %s -ren ikasketa eremua. Zergatik ez begiratu <a href=\"%s\">besteak "
+"zer esaten ari diren</a> orain."
+
+#: content/mainindex/content_loggedout.php:9
+#, php-format
+msgid "<a href=\"%s\">Find others</a> with similar interests and goals."
+msgstr "<a href=\"%s\">Aurkitu</a> interes eta helburu berdinekin."
+
+#: content/mainindex/content_loggedout.php:17
+msgid "Here are some example users:"
+msgstr "Hemen dituzu zenbait erabiltzaile adibide:"
+
+#: content/mainindex/content_loggedout.php:19
+msgid "Here is an example user:"
+msgstr "Hemen duzu erabiltzaile adibide bat:"
+
+#: content/mainindex/content_loggedout.php:33
+#, php-format
+msgid ""
+"If you like what you see, why not <a href=\"%s\">register for an account</a>?"
+msgstr ""
+"Ikusten duzuna atsegin baldin baduzu, zergatik ez duzu <a href=\"%s\">kontu "
+"baten erregistroa</a> egiten?"
+
+#: content/mainindex/content_loggedout.php:40
+#: content/mainindex/content_main_index.php:41
+msgid "Latest news"
+msgstr "Azken berriak"
+
+#: content/mainindex/content_main_index.php:8
+#, php-format
+msgid "Why not <a href=\"%s\">create your profile</a>?"
+msgstr "Zergatik ez duzu <a href=\"%s\">zure profila sortuko</a>?"
+
+#: content/mainindex/content_main_index.php:9
+msgid ""
+"Tell people about yourself and connect to others with similar interests and "
+"goals."
+msgstr ""
+"Kontatu jendeari zure buruari buruz eta konektatu zure interes eta helburu "
+"berdinak dituzten beste batzurekin."
+
+#: content/mainindex/content_main_index.php:17
+msgid "Here are some examples of complete profiles:"
+msgstr "Hemen dituzu osaturiko zenbait profilen adibideak:"
+
+#: content/mainindex/content_main_index.php:19
+msgid "Here is an example of a complete profile:"
+msgstr "Hemen duzu profil osatu baten adibidea:"
+
+#: content/mainindex/content_main_index.php:33
+#, php-format
+msgid "Or you could <a href=\"%s\">start your blog</a>?"
+msgstr "Edo zure <a href=\"%s\">bloga has dezakezu</a>?"
+
+#: content/mainindex/content_main_index.php:34
+#, php-format
+msgid ""
+"Comment on what you're learning, collect interesting links and decide who "
+"gets to see what you're writing. Here's what <a href=\"%s\">everyone else is "
+"talking about</a> right now."
+msgstr ""
+"Ikasten ari zarenaren inguruko komentarioa, esteka interesgarriak bildu eta "
+"erabaki zeinek ikus dezaken idazten ari zarena. Hemen dago <a "
+"href=\"%s\">gainontzeko guztiak zertaz ari diren hizketan</a> momentu "
+"honetan."
+
+#: content/privacy.php:10 content/privacy.php:13
+#, php-format
+msgid "%s Privacy Policy"
+msgstr "%s Pribatutasun oharra"
+
+#: content/run_your_own.php:10 content/run_your_own.php:13
+#, php-format
+msgid "Running Your Own %s"
+msgstr "Zure %s Propioa Funtzionarazten"
+
+#: content/terms.php:10 content/terms.php:13
+#, php-format
+msgid "%s Terms &amp; Conditions"
+msgstr "%s Erabilpen baldintzak"
+
+#: _files/edit_file.php:19
+msgid "Edit File"
+msgstr "Editatu fitxategia"
+
+#: _files/edit_folder.php:19
+msgid "Edit Folder"
+msgstr "Editatu karpeta"
+
+#: _files/index.php:19 units/files/files_user_info_menu.php:13
+#: units/files/function_rss_publish.php:35 units/files/profile_files.php:9
+msgid "Files"
+msgstr "Fitxategiak"
+
+#: _files/rss2.php:25
+#, php-format
+msgid "Files tagged with %s"
+msgstr "%s arekin etiketaturiko fitxategiak"
+
+#: _files/rss2.php:31 units/files/function_rss_publish.php:42
+#, php-format
+msgid "Files for %s, hosted on %s."
+msgstr "%s rentzako fitxategiak, %s n bilduak"
+
+#: _friends/friendsof.php:21 units/friends/friends_of_edit_wrapper.php:5
+msgid "Friends who have linked to you"
+msgstr "Estekatu zaituzten lagunak"
+
+#: _friends/index.php:21 units/friends/friends_edit_wrapper.php:5
+msgid "Friends I have linked to"
+msgstr "Estekatu ditudan lagunak"
+
+#: _friends/requests.php:22 mod/friend/lib.php:38
+#: units/friends/user_friendship_requests.php:11
+msgid "Friendship requests"
+msgstr "Adiskidetasuna gauzatzeko eskaerak"
+
+#: _groups/index.php:23
+msgid "Access Controls"
+msgstr "Sarbide kontrolak"
+
+#: help/blogs_help.php:14
+msgid "'Your blog' help"
+msgstr "'Zure bloga'-ren laguntza"
+
+#: help/calendar_help.php:10
+msgid "Calendar help"
+msgstr "Egutegiaren laguntza"
+
+#: help/calendar_help.php:13
+msgid "'Your calendar' help"
+msgstr "'Zure egutegia'-ren laguntza"
+
+#: help/files_help.php:10
+#, php-format
+msgid "Help for %s"
+msgstr "%s rentzako laguntza"
+
+#: help/files_help.php:13
+msgid "'Your Files' help"
+msgstr "'Zure Fitxategiak'-en laguntza"
+
+#: help/network_help.php:13
+msgid "'Your Network' help"
+msgstr "'Zure Sarea'-ren laguntza"
+
+#: help/profile_help.php:13
+msgid "'Your Profile' help"
+msgstr "'Zure Profila'-ren laguntza"
+
+#: home.php:15 index2.php:15
+msgid "Main Index"
+msgstr "Aurkibide nagusia"
+
+#: _icons/index.php:20
+msgid "Manage user icons"
+msgstr "Erabiltzaile ikurrak kudeatu"
+
+#: _invite/forgotten_password.php:14
+msgid "Generate a New Password"
+msgstr "Pasahitza sortu"
+
+#: _invite/index.php:18
+msgid "Invite a Friend"
+msgstr "Gonbidatu laguna"
+
+#: _invite/join.php:12 _invite/register.php:11
+#, php-format
+msgid "Join %s"
+msgstr "%s gehitu"
+
+#: _invite/new_password.php:11
+#, php-format
+msgid "Get new %s password"
+msgstr "Eskuratu %s pasahitz berria"
+
+#: lib/datalib.php:45
+msgid "Success"
+msgstr "Ongi burutu da"
+
+#: lib/datalib.php:50 lib/elgglib.php:3083
+msgid "Error"
+msgstr "Errorea"
+
+#: lib/db/mysql.php:215
+msgid "Publishing RSS"
+msgstr "RSSak argitaratzen"
+
+#: lib/db/mysql.php:220 lib/db/postgres7.php:183
+#, php-format
+msgid "Publishing RSS for user %d"
+msgstr "%d erabiltzailearentzako RSSak argitaratzen"
+
+#: lib/db/mysql.php:232 lib/db/postgres7.php:195
+msgid "Adjusting file repository information"
+msgstr "Fitxategi biltegiaren informazioa aldatzen"
+
+#: lib/db/mysql.php:241 lib/db/mysql.php:251 lib/db/postgres7.php:204
+#: lib/db/postgres7.php:214
+#, php-format
+msgid "Updating file %d: %s"
+msgstr "%d fitxategia eguneratzen: %s"
+
+#: lib/dbsetup.php:77
+msgid "Need to upgrade database"
+msgstr "Datubaseak eguneratzeko beharra du"
+
+#: lib/displaylib.php:188 units/display/function_log_on_pane.php:16
+#: units/invite/join_noinvite.php:42
+msgid "Register"
+msgstr "Erregistratu"
+
+#: lib/displaylib.php:196 login/index.php:56
+#: units/display/function_log_on_pane.php:28
+msgid "Log On"
+msgstr "Saioa Hasi"
+
+#: lib/displaylib.php:202 units/admin/admin_main.php:81
+#: units/admin/admin_users_add.php:20 units/admin/admin_users.php:28
+#: units/display/function_log_on_pane.php:34
+msgid "Username"
+msgstr "Erabiltzaile izena"
+
+#: lib/displaylib.php:203 units/display/function_log_on_pane.php:35
+msgid "Password"
+msgstr "Pasahitza"
+
+#: lib/displaylib.php:210 units/display/function_log_on_pane.php:44
+msgid "Log on"
+msgstr "Sartu"
+
+#: lib/displaylib.php:210 units/display/function_log_on_pane.php:44
+msgid "Go"
+msgstr "Aurrera"
+
+#: lib/displaylib.php:212 units/display/function_log_on_pane.php:46
+msgid "Remember Login"
+msgstr "Gakoa Gogoratu"
+
+#: lib/displaylib.php:215 units/display/function_log_on_pane.php:49
+msgid "Forgotten password"
+msgstr "Ahaztutako pasahitza"
+
+#: lib/displaylib.php:273
+msgid "Add User"
+msgstr "Erabiltzailea gehitu"
+
+#: lib/displaylib.php:273 lib/displaylib.php:282
+msgid "Send Message"
+msgstr "Bidali mezua"
+
+#: lib/displaylib.php:282
+msgid "Add Buddy"
+msgstr "Kidea Gehitu"
+
+#: lib/elgglib.php:506 lib/elgglib.php:556 lib/uploadlib.php:661
+msgid "Administrator"
+msgstr "Administratzailea"
+
+#: lib/elgglib.php:514
+msgid "Do not reply"
+msgstr "Ez erantzun"
+
+#: lib/elgglib.php:761
+msgid "GB"
+msgstr "GB"
+
+#: lib/elgglib.php:762
+msgid "MB"
+msgstr "MB"
+
+#: lib/elgglib.php:763
+msgid "KB"
+msgstr "KB"
+
+#: lib/elgglib.php:764
+msgid "bytes"
+msgstr "byteak"
+
+#: lib/elgglib.php:1763
+msgid "Close this window"
+msgstr "Itxi leiho hau"
+
+#: lib/elgglib.php:1800 lib/elgglib.php:1850
+msgid "Choose"
+msgstr "Aukeratu"
+
+#: lib/elgglib.php:2080
+msgid "Elgg auto-format"
+msgstr "Elgg auto-formatua"
+
+#: lib/elgglib.php:2081
+msgid "HTML format"
+msgstr "HTML formatua"
+
+#: lib/elgglib.php:2082
+msgid "Plain text format"
+msgstr "Testu soileko formatua"
+
+#: lib/elgglib.php:2083
+msgid "Markdown format"
+msgstr "Markdown formatua"
+
+#: lib/elgglib.php:2652 lib/elgglib.php:3210
+msgid "Continue"
+msgstr "Jarraitu"
+
+#: lib/elgglib.php:3169 units/admin/admin_userdetails.php:58
+#: units/admin/admin_userdetails.php:74 units/icons/function_add_icons.php:48
+#: units/tinymce/tinymce_userdetails_edit.php:21
+#: units/tinymce/tinymce_userdetails_edit.php:28
+#: units/users/userdetails_edit.php:109 units/users/userdetails_edit.php:116
+#: units/users/userdetails_edit.php:139 units/users/userdetails_edit.php:146
+msgid "Yes"
+msgstr "Bai"
+
+#: lib/elgglib.php:3171 units/admin/admin_userdetails.php:58
+#: units/admin/admin_userdetails.php:74 units/icons/function_add_icons.php:49
+#: units/tinymce/tinymce_userdetails_edit.php:21
+#: units/tinymce/tinymce_userdetails_edit.php:28
+#: units/users/userdetails_edit.php:109 units/users/userdetails_edit.php:116
+#: units/users/userdetails_edit.php:139 units/users/userdetails_edit.php:146
+msgid "No"
+msgstr "Ez"
+
+#: lib/elgglib.php:3468 lib/elgglib.php:3496
+msgid "You have been banned from the system!"
+msgstr "Sistemara sarrera debekatu egin zaizu!"
+
+#: lib/elgglib.php:3526
+msgid ""
+"Sorry, but your IP number seems to have changed from when you first logged "
+"in.  This security feature prevents crackers stealing your identity while "
+"logged in to this site.  Normal users should not be seeing this message - "
+"please ask the site administrator for help."
+msgstr ""
+"Barkatu, baina zure IP helbidea identifikatu zinenetik aldatu dela dirudi. "
+"Segurtasun neurri honek crackerren zure identitatearen lapurketa ekiditen "
+"dute identifikatua zauden bitartean. Erabiltzaile arruntek ez dute mezu hau "
+"ikusiko - jarri gunearen kudeatzailearekin harremanetan mesedez."
+
+#: lib/elgglib.php:3556
+msgid "The system will remember you and automatically log you in next time."
+msgstr "Sistemak gogoratuko zaitu eta hurrengoan automatikoki sartuko zaitu."
+
+#: lib/elgglib.php:4253 units/users/function_default_access_levels.php:7
+msgid "Logged in users"
+msgstr "Konektatuta dauden erabiltzaileak"
+
+#: lib/elgglib.php:4255 units/users/function_default_access_levels.php:5
+msgid "Private"
+msgstr "Pribatua"
+
+#: lib/elgglib.php:4257
+msgid "Restricted"
+msgstr "Mugatua"
+
+#: lib/elgglib.php:4311
+msgid "Click to view link"
+msgstr "Esteka ikusteko klikatu"
+
+#: lib/php-getttext/examples/pigs_dropin.php:75
+msgid ""
+"This is how the story goes.\n"
+"\n"
+msgstr ""
+"Istorioak honela jarraitzen du.\n"
+"\n"
+
+#: lib/templates.php:24 units/templates/default_template.php:9
+msgid "Stylesheet"
+msgstr "Estilo orria"
+
+#: lib/templates.php:25 units/templates/default_template.php:10
+msgid "The Cascading Style Sheet for the template."
+msgstr "Txantiloiarentzako CSS Estilo Orria."
+
+#: lib/templates.php:34 units/templates/default_template.php:19
+msgid "Page Shell"
+msgstr "Orrialdearen erabiltzaile-interfaza"
+
+#: lib/templates.php:35 units/templates/default_template.php:20
+msgid "The main page shell, including headers and footers."
+msgstr "Orrialde nagusiaren erabiltzaile-interfaza, goiburu eta oinak barne."
+
+#: lib/templates.php:37 units/templates/default_template.php:23
+msgid "Page metatags (mandatory) - must be in the 'head' portion of the page"
+msgstr ""
+"Orriaren meta etiketak - orriaren burukoan ('head') atalean egon behar dute"
+
+#: lib/templates.php:38 units/templates/default_template.php:24
+msgid "Page title"
+msgstr "Orrialdearen izenburua"
+
+#: lib/templates.php:39 units/templates/default_template.php:25
+msgid "Menu"
+msgstr "Menua"
+
+#: lib/templates.php:40 units/templates/default_template.php:26
+msgid "Status menu"
+msgstr "Egoera-menua"
+
+#: lib/templates.php:41 units/templates/default_template.php:27
+msgid "Main body"
+msgstr "Gorputz nagusia"
+
+#: lib/templates.php:42 units/templates/default_template.php:28
+msgid "Sidebar"
+msgstr "Alboko-barra"
+
+#: lib/templates.php:58 units/templates/default_template.php:39
+msgid "Content holder"
+msgstr "Eduki-euslea"
+
+#: lib/templates.php:59 units/templates/default_template.php:40
+msgid ""
+"Contains the main content for a page (as opposed to the sidebar or the "
+"title)."
+msgstr ""
+"Orrialde batentzako edukin nagusia biltzen du (alboko-barra edo izenburuak "
+"ez bezala)."
+
+#: lib/templates.php:61 lib/templates.php:113
+#: units/templates/default_template.php:42
+msgid "The title"
+msgstr "Izenburua"
+
+#: lib/templates.php:62 units/templates/default_template.php:43
+msgid "The page submenu"
+msgstr "Orrialdearen azpimenua"
+
+#: lib/templates.php:63 units/templates/default_template.php:44
+#: units/templates/default_template.php:65
+msgid "The body of the page"
+msgstr "Orrialdearen gorputza"
+
+#: lib/templates.php:80 units/templates/default_template.php:79
+msgid "Owner box"
+msgstr "Norberaren kaxa"
+
+#: lib/templates.php:81 units/templates/default_template.php:80
+msgid "A box containing a description of the owner of the current profile."
+msgstr "Oraingo profilaren jabearen deskribapena duen kaxa bat."
+
+#: lib/templates.php:83 units/templates/default_template.php:82
+msgid "The user's name"
+msgstr "Erabiltzailearen izena"
+
+#: lib/templates.php:84 units/templates/default_template.php:83
+msgid "The URL of the user's profile page, including terminating slash"
+msgstr "Erabiltzailearen profilaren URL helbidea, bukaera barra barne"
+
+#: lib/templates.php:85 units/templates/default_template.php:84
+msgid "The user's icon, if it exists"
+msgstr "Erabiltzailearen ikonoa, existitzen baldin bada"
+
+#: lib/templates.php:86 units/templates/default_template.php:85
+msgid "A short blurb about the user"
+msgstr "Erabiltzaileari buruzko laburpen txiki bat"
+
+#: lib/templates.php:87 units/templates/default_template.php:86
+msgid "Links to friend / unfriend a user"
+msgstr "Estekatu erabiltzaile bat lagun / lagun-ohi gisa."
+
+#: lib/templates.php:88 units/templates/default_template.php:87
+msgid "Links to any lms hosts the user is attached to"
+msgstr "Erabiltzailea erantsita dagoen edozein lms ostalarirentzat estekak"
+
+#: lib/templates.php:92 search/personaltags.php:26
+#: units/templates/default_template.php:92
+msgid "Tags"
+msgstr "Etiketak"
+
+#: lib/templates.php:93 search/index.php:96
+#: units/templates/default_template.php:93
+msgid "Resources"
+msgstr "Baliabideak"
+
+#: lib/templates.php:110
+msgid "Information Box"
+msgstr "Informazioa Kaxa"
+
+#: lib/templates.php:111
+msgid ""
+"A box containing a caption and some text, used extensively throughout the "
+"site. For example, the 'friends' box and most page bodies are info boxes. Of "
+"course, you can alter this template however you wish - it doesn't need to be "
+"an actual box."
+msgstr ""
+"Gunean zehar erabilia izan den ohar edo testu bat duen kaxa bat. Adibidez, "
+"'lagunak' kaxa eta orrialdearen gorputz gehienak informazio kaxak dira. "
+"Noski, txantiloi hau nahi duzunean eraldatu dezakezu -  ez du zertan "
+"benetako kaxa bat izan behar."
+
+#: lib/templates.php:114
+msgid "The contents of the box"
+msgstr "Kaxaren edukiak"
+
+#: lib/templates.php:133 units/templates/default_template.php:113
+msgid "System message shell"
+msgstr "Sistemaren mezu atala"
+
+#: lib/templates.php:134 units/templates/default_template.php:114
+msgid "A list of system messages will be placed within the message shell."
+msgstr "Sistemako mezuen zerrenda bat mezu atalaren tartean kokatuko dira."
+
+#: lib/templates.php:136 units/templates/default_template.php:116
+msgid "The messages"
+msgstr "Mezuak"
+
+#: lib/templates.php:148 units/templates/default_template.php:128
+msgid "Individual system messages"
+msgstr "Sistemaren mezu indibidualak"
+
+#: lib/templates.php:149 units/templates/default_template.php:129
+msgid "Each individual system message."
+msgstr "Sistemaren mezu indibidual bakoitza."
+
+#: lib/templates.php:151 units/templates/default_template.php:131
+msgid "The system message"
+msgstr "Sistemaren mezua"
+
+#: lib/templates.php:166 units/templates/default_template.php:146
+msgid "Main menu shell"
+msgstr "Menu nagusiaren atala"
+
+#: lib/templates.php:167 units/templates/default_template.php:147
+msgid "A list of main menu items will be placed within the menubar shell."
+msgstr ""
+"Menu nagusiaren elementuen zerrenda bat menu barraren tartean kokatuko da."
+
+#: lib/templates.php:169 lib/templates.php:215 lib/templates.php:247
+#: units/templates/default_template.php:149
+#: units/templates/default_template.php:195
+#: units/templates/default_template.php:229
+msgid "The menu items"
+msgstr "Menuaren azken itema"
+
+#: lib/templates.php:180 units/templates/default_template.php:160
+msgid "Individual main menu item"
+msgstr "Menu nagusi indibidualeko itema"
+
+#: lib/templates.php:181 units/templates/default_template.php:161
+msgid ""
+"This is the template for each individual main menu item. A series of these "
+"is placed within the menubar shell template."
+msgstr ""
+"Hau menu nagusi indibidualaren item bakoitzarentzako txantiloi bat da. "
+"Honelako batzu erabiltzaile-interfazeko txantiloian daude."
+
+#: lib/templates.php:183 lib/templates.php:199 lib/templates.php:231
+#: lib/templates.php:264 units/templates/default_template.php:163
+#: units/templates/default_template.php:179
+#: units/templates/default_template.php:213
+#: units/templates/default_template.php:246
+msgid "The URL of the menu item"
+msgstr "Menua-itemaren URLa"
+
+#: lib/templates.php:184 lib/templates.php:200 lib/templates.php:232
+#: lib/templates.php:265 units/templates/default_template.php:164
+#: units/templates/default_template.php:180
+#: units/templates/default_template.php:214
+#: units/templates/default_template.php:247
+msgid "The menu item's name"
+msgstr "Menu-itemaren izena"
+
+#: lib/templates.php:196 units/templates/default_template.php:176
+msgid "Selected individual main menu item"
+msgstr "Aukeratu menu nagusi indibidualeko itema"
+
+#: lib/templates.php:197 units/templates/default_template.php:177
+msgid ""
+"This is the template for an individual main menu item if it is selected."
+msgstr ""
+"Hau menu nagusi indibidualeko itemaren txantiloia da aukeratzen baldin bada."
+
+#: lib/templates.php:212 units/templates/default_template.php:192
+msgid "Sub-menubar shell"
+msgstr "Azpi-menu barra atala"
+
+#: lib/templates.php:213 units/templates/default_template.php:193
+msgid "A list of sub-menu items will be placed within the menubar shell."
+msgstr ""
+"Azpimenu itemen zerrenda bat dago erabiltzailearen-interfazearen menu barran."
+
+#: lib/templates.php:228 units/templates/default_template.php:210
+msgid "Individual sub-menu item"
+msgstr "Azpi-menu indibidualeko itema"
+
+#: lib/templates.php:229 units/templates/default_template.php:211
+msgid ""
+"This is the template for each individual sub-menu item. A series of these is "
+"placed within the sub-menubar shell template."
+msgstr ""
+"Azpimenu indibidual bakoitzarentzako txantiloi bat da hau. Horrelako batzu "
+"erabiltzailearen-interfazaren azpimenuaren txantiloian daude."
+
+#: lib/templates.php:244 units/templates/default_template.php:226
+msgid "Status menubar shell"
+msgstr "Erabiltzaile-interfazaren menubarraren egoera."
+
+#: lib/templates.php:245 units/templates/default_template.php:227
+msgid ""
+"A list of statusbar menu items will be placed within the status menubar "
+"shell."
+msgstr ""
+"Egoera barraren menu elementuen zerrenda bat egoera menu barraren tartean "
+"kokatuko da."
+
+#: lib/templates.php:261 units/templates/default_template.php:243
+msgid "Individual statusbar menu item"
+msgstr "Egoera barra indibilualaren menu elemntua"
+
+#: lib/templates.php:262 units/templates/default_template.php:244
+msgid ""
+"This is the template for each individual statusbar menu item. A series of "
+"these is placed within the status menubar shell template."
+msgstr ""
+"Egoera-barra indibidualeko item bakoitzarentzako txantiloia da hau. "
+"Horrelakoen bilduma bat dago menu-barrako erabiltzaile interfazaren "
+"txantiloian."
+
+#: lib/templates.php:277 units/templates/default_template.php:259
+msgid "Data input box (two columns)"
+msgstr "Datu sarrerarako kaxa (bi zutabe)"
+
+#: lib/templates.php:278 units/templates/default_template.php:260
+msgid ""
+"This is mostly used whenever some input is taken from the user. For example, "
+"each of the fields in the profile edit screen is a data input box."
+msgstr ""
+"Hau batez ere erabiltzaileak sarturiko informazioren bat hartzerakoan "
+"erabili ohi da. Adibidez, profila editatzeko pantailan azaltzen den eremu "
+"bakoitza datuak sartzeko kaxa bat da."
+
+#: lib/templates.php:280 units/templates/default_template.php:262
+msgid "The name for the data we're inputting"
+msgstr "Sartzen ari garen datuentzako izena"
+
+#: lib/templates.php:281 units/templates/default_template.php:263
+msgid "The first item of data"
+msgstr "Datuen lehen itema"
+
+#: lib/templates.php:282 units/templates/default_template.php:264
+msgid "The second item of data"
+msgstr "Datuen bigarren itema"
+
+#: lib/templates.php:309 units/templates/default_template.php:282
+msgid "Data input box (one column)"
+msgstr "Datu sarrerarako kaxa (zutabe bat)"
+
+#: lib/templates.php:310 units/templates/default_template.php:283
+msgid "A single-column version of the data box."
+msgstr "Datu kaxaren zutabe bakarreko bertsioa."
+
+#: lib/templates.php:312 units/templates/default_template.php:285
+msgid "The name of the data we're inputting"
+msgstr "Sartzen ari garen datuen izena"
+
+#: lib/templates.php:313 lib/templates.php:341
+#: units/templates/default_template.php:286
+#: units/templates/default_template.php:359
+msgid "The data itself"
+msgstr "Norberaren datuak"
+
+#: lib/templates.php:337 units/templates/default_template.php:355
+msgid "Data input box (vertical)"
+msgstr "Datu sarrerarako kaxa (bertikala)"
+
+#: lib/templates.php:338 units/templates/default_template.php:356
+msgid ""
+"A slightly different version of the data box, used on this edit page amongst "
+"other places."
+msgstr ""
+"Pittin bat desberdina den datu basearen bertsioa, besteak-beste edizio orri "
+"honetan erabiltzen da."
+
+#: lib/templates.php:340 units/templates/default_template.php:358
+msgid "Name of the data we\\'re inputting"
+msgstr "Sartu ditugun datuen izena"
+
+#: lib/templates.php:403 mod/template/lib.php:15
+msgid "Change theme"
+msgstr "Txantiloia aldatu"
+
+#: lib/templates.php:437
+msgid "Account settings"
+msgstr "Kontuaren ezarpenak"
+
+#: lib/templates.php:443
+msgid "Log off"
+msgstr "Irten"
+
+#: lib/templates.php:450 _userdetails/index.php:18
+msgid "Edit user details"
+msgstr "Erabiltzaile kontua editatu"
+
+#: lib/templates.php:454
+msgid "Your site picture"
+msgstr "Zure argazkia gunean"
+
+#: lib/templates.php:461
+msgid "Main"
+msgstr "Nagusia"
+
+#: lib/templates.php:466 units/admin/admin_users_add.php:35
+msgid "Add users"
+msgstr "Erabiltzaileak gehitu"
+
+#: lib/templates.php:476
+msgid "Manage flagged content"
+msgstr "Markaturiko edukiak kudeatu"
+
+#: lib/templates.php:481
+msgid "Spam control"
+msgstr "Spam kontrola"
+
+#: lib/templates.php:586
+msgid "Your current template has been changed."
+msgstr "Zure oraingo txantiloia aldatua izan da."
+
+#: lib/templates.php:616 units/templates/template_actions.php:59
+msgid "Your template has been updated."
+msgstr "Zure txantiloia eguneratua izan da."
+
+#: lib/templates.php:629 units/templates/template_actions.php:75
+msgid "Your template was deleted."
+msgstr "Zure txantiloia ezabatua izan da."
+
+#: lib/templates.php:750 units/templates/templates_add.php:8
+msgid "Create theme"
+msgstr "Azala sortu"
+
+#: lib/templates.php:751 units/templates/templates_add.php:9
+msgid ""
+"Here you can create your own themes based on one of the existing public "
+"themes. Just select which public theme you would like to alter and then "
+"create your own. You will now have edit privilages."
+msgstr ""
+"Hemen zure azal propioak sortu ditzazkezu dagoeneko existitzen diren azal "
+"publikoetatik abiatuta. Soilik aukeratu zein azal eraldatu nahiko zenukeen "
+"eta ondoren sortu zurea. Ez da beharrezkoa edizio pribilegioak izatea."
+
+#: lib/templates.php:767 units/templates/templates_add.php:25
+msgid "Theme name"
+msgstr "Txantiloiaren izena"
+
+#: lib/templates.php:772 lib/templates.php:835 lib/templates.php:1034
+#: units/templates/templates_add.php:30 units/templates/templates_edit.php:22
+#: units/templates/templates_view.php:22
+msgid "Default Theme"
+msgstr "Lehenetsitako Azala"
+
+#: lib/templates.php:791 units/templates/templates_add.php:50
+msgid "Based on"
+msgstr "Oinarritzen da"
+
+#: lib/templates.php:796 units/templates/templates_add.php:55
+msgid "Create Theme"
+msgstr "Azala Sortu"
+
+#: lib/templates.php:868 units/templates/templates_edit.php:55
+msgid "Theme Name"
+msgstr "Azalaren Izena"
+
+#: lib/templates.php:876 units/templates/templates_edit.php:65
+msgid "Glossary"
+msgstr "Glosategia"
+
+#: lib/templates.php:912 units/admin/admin_spam.php:22
+#: units/communities/userdetails_edit.php:91 units/files/edit_folder.php:75
+#: units/icons/function_edit_icons.php:89
+#: units/templates/templates_edit.php:101 units/users/userdetails_edit.php:183
+msgid "Save"
+msgstr "Gorde"
+
+#: lib/templates.php:923 units/templates/templates_edit.php:112
+msgid ""
+"You may not edit this theme. To create a new, editable theme based on the "
+"default, go to <a href=\"index.php\">the main themes page</a>."
+msgstr ""
+"Agian ez duzu azal hau editatzeko aukerarik izango. Hobetsitako azalean "
+"oinarritutako azal editagarri berri bat sortzeko <a "
+"href=\"index.php\">azalen orrialde nagusira</a> joan."
+
+#: lib/templates.php:950 units/templates/templates_preview.php:8
+msgid "Heading one"
+msgstr "Lehen goiburua"
+
+#: lib/templates.php:951 units/templates/templates_preview.php:9
+msgid "Heading two"
+msgstr "Bigarren goiburua"
+
+#: lib/templates.php:952 units/templates/templates_preview.php:10
+msgid "A bullet list"
+msgstr "Bineta zerrenda bat"
+
+#: lib/templates.php:953 units/templates/templates_preview.php:11
+msgid "Heading three"
+msgstr "Hirugarren goiburua"
+
+#: lib/templates.php:954 units/templates/templates_preview.php:12
+msgid "A numbered list"
+msgstr "Zenbakitutako zerrenda"
+
+#: lib/templates.php:984 units/templates/templates_preview.php:42
+msgid "Some text input"
+msgstr "Zenbait testu sarrera"
+
+#: lib/templates.php:991 units/templates/templates_preview.php:49
+msgid "Some longer text input"
+msgstr "Testu luzeagodun sarrera batzu"
+
+#: lib/templates.php:997 units/templates/templates_preview.php:55
+msgid "Further text input"
+msgstr "Testuaren sarrera gehigarria"
+
+#: lib/templates.php:1017 units/templates/templates_view.php:5
+msgid "Select / Create / Edit Themes"
+msgstr "Aukeratu / Sortu / Editatu Azalak"
+
+#: lib/templates.php:1018 units/templates/templates_view.php:6
+msgid "Public Themes"
+msgstr "Azal Publikoak"
+
+#: lib/templates.php:1019 units/templates/templates_view.php:7
+#, php-format
+msgid ""
+"The following are public themes that you can use to change the way your %s "
+"looks - these do not change the content only the appearance. Check the "
+"preview and then select the one you want. If you wish you can adapt one of "
+"these using the 'create theme' option below."
+msgstr ""
+"Ondokoak zure %s ren itxura aldatzeko erabili ditzazkezun azal publikoak "
+"dira - honek ez du edukia aldatzen, soilik itxura. Aurreikuspena probatu eta "
+"ondoren nahi duzuna aukeratu. Nahi baldin baduzu hauetako bat moldatu "
+"dezakezu, ondoko 'azala sortu' aukera erabilita."
+
+#: lib/templates.php:1052 lib/templates.php:1084
+#: units/templates/templates_view.php:40 units/templates/templates_view.php:72
+msgid "preview"
+msgstr "Aurreikuspena"
+
+#: lib/templates.php:1063 units/templates/templates_view.php:50
+msgid "Personal themes"
+msgstr "Txantiloi pertsonalak"
+
+#: lib/templates.php:1064 units/templates/templates_view.php:51
+msgid ""
+"These are themes that you have created. You can edit and delete these. These "
+"theme(s) only control actual look and feel - you cannot change any content "
+"here. To change any of your content you need to use the other menu options "
+"such as: edit profile, update weblog etc."
+msgstr ""
+"Zuk sortutako azalak dira hauek. Editatu eta ezabatu ditzazkezu. Azal "
+"hau(ek) oraingo itxura baino ez du(te) kontrolatzen - ezin duzu inolako "
+"edukinik aldatu hemen. Zure edukietakoren bat aldatzeko beste menu aukera "
+"batzu erabili behar dituzu, esaterako: profila editatu, weblog jeitxiera, "
+"e.a."
+
+#: lib/templates.php:1086 units/files/folder_view.php:76
+#: units/files/folder_view.php:141 units/files/templates_preview.php:34
+#: units/templates/templates_view.php:74
+#: units/weblogs/weblogs_posts_view.php:111
+msgid "Edit"
+msgstr "Editatu"
+
+#: lib/templates.php:1087 units/templates/templates_view.php:75
+msgid "Are you sure you want to permanently remove this template?"
+msgstr "Ziur al zaude txantiloi hau behin-betiko ezabatu nahi duzulua?"
+
+#: lib/templates.php:1087 units/files/folder_view.php:75
+#: units/files/folder_view.php:140 units/files/templates_preview.php:20
+#: units/files/templates_preview.php:34 units/icons/function_edit_icons.php:40
+#: units/templates/templates_view.php:75
+#: units/weblogs/weblogs_posts_view.php:113
+#: units/weblogs/weblogs_posts_view.php:173
+msgid "Delete"
+msgstr "Ezabatu"
+
+#: lib/templates.php:1098 units/templates/templates_view.php:127
+msgid "Select new theme"
+msgstr "Txantiloi berria aukeratu"
+
+#: lib/templates.php:1151 lib/templates.php:1165 lib/templates.php:1172
+#: units/weblogs/weblogs_comments_add.php:42
+msgid "Guest"
+msgstr "Gonbidatua"
+
+#: lib/templates.php:1172
+msgid "Log in"
+msgstr "Sartu"
+
+#: lib/uploadlib.php:109
+#, php-format
+msgid ""
+"Your file upload has failed because there was a problem with one of the "
+"files, %s.<br /> Here is a log of the problems:<br />%s<br />Not recovering."
+msgstr ""
+"Zure fitxategi igoerak huts egin du fitxategietako batekin arazo bat egon "
+"delako, %s.<br /> Arazoen sarrera hemen duzu:<br />%s<br />Ez da "
+"berresturatzen ari."
+
+#: lib/uploadlib.php:135
+#, php-format
+msgid "File was renamed from %s to %s because of invalid characters."
+msgstr ""
+"Fitxategia %s tik %s ra berrizendatua izan da karaktere okerrengatik."
+
+#: lib/uploadlib.php:164
+#, php-format
+msgid "Sorry, but that file is too big (limit is %s)"
+msgstr "Sentitzen dugu baina fitxategia handiegia da (%s da muga)"
+
+#: lib/uploadlib.php:217
+msgid "File uploaded successfully"
+msgstr "Fitxategia ondo igo da"
+
+#: lib/uploadlib.php:232 lib/uploadlib.php:342 lib/uploadlib.php:359
+msgid "No file was found - are you sure you selected one to upload?"
+msgstr ""
+"Ez da fitxategirik topatu - ziur al zaude bat aukeratu duzula igotzeko?"
+
+#: lib/uploadlib.php:268
+msgid "The old file(s) in your upload area have been deleted"
+msgstr ""
+"Zure fitxategien eremuko zaharkitutako fitxategiak ezabatuak izan dira"
+
+#: lib/uploadlib.php:299
+#, php-format
+msgid "File was renamed from %s to %s because there was a filename conflict."
+msgstr ""
+"Fitxategia %s tik %s ra berrizendatu da fitxategien izenekin arazo bat "
+"zegoelako."
+
+#: lib/uploadlib.php:340 lib/uploadlib.php:363
+#, php-format
+msgid ""
+"An unknown problem occurred while uploading the file '%s' (perhaps it was "
+"too large?)"
+msgstr ""
+"Arazo ezezagun bat suertatu da '%s' fitxategia igotzen ari zen bitartean "
+"(handiegia zen agian?)"
+
+#: lib/uploadlib.php:347
+msgid "Uploaded file exceeded the maximum size limit set by the server"
+msgstr ""
+"Fitxategiak zerbitzarian ezarritako gehienezko tamaina baina handiagoa da"
+
+#: lib/uploadlib.php:351
+msgid "Uploaded file exceeded the maximum size limit set by the form"
+msgstr "Igotako fitxategiak formularioaren gehienezko tamaina gainditzen du."
+
+#: lib/uploadlib.php:355
+msgid "File was only partially uploaded"
+msgstr "Fitxategia ez da guztiz igo"
+
+#: lib/uploadlib.php:377
+#, php-format
+msgid "Upload log for file %u"
+msgstr "%u fitxategiarentzako erregistroa igo"
+
+#: lib/uploadlib.php:470
+msgid "Title:"
+msgstr "Izenburua:"
+
+#: lib/uploadlib.php:509
+msgid "The file has been moved to a quarantine directory."
+msgstr "Fitxategia koarentena direktoriora mugitua izan da."
+
+#: lib/uploadlib.php:512
+#, php-format
+msgid ""
+"The file has been moved to your specified quarantine directory, the new "
+"location is %s"
+msgstr ""
+"Fitxategia zehaztu duzun koarentena direktoriora mugitua izan da, %s da "
+"kokagune berria"
+
+#: lib/uploadlib.php:517 lib/uploadlib.php:526 lib/uploadlib.php:535
+#: lib/uploadlib.php:540
+msgid "The file has been deleted"
+msgstr "Fitxategia ezabatua izan da"
+
+#: lib/uploadlib.php:520 lib/uploadlib.php:529
+#, php-format
+msgid ""
+"Could not move the file into your specified quarantine directory, %s. You "
+"need to fix this as files are being deleted if they're found to be infected."
+msgstr ""
+"Ezin izan da fitxategia zuk zehaztutako %s, koarentena direktoriora mugitu. "
+"Hau zuzendu behar duzu infektaturiko fitxategiak ezabatuak izaten ari "
+"baitira."
+
+#: lib/uploadlib.php:543
+msgid "The file could not be deleted"
+msgstr "Fitxategia ezin da ezabatu"
+
+#: lib/uploadlib.php:559
+msgid ""
+"This file that has been uploaded was found to contain a virus and has been "
+"moved or delted and the user notified."
+msgstr ""
+"Igotako fitxategi honek birus bat du eta mugitu edo ezabatu egin da, eta "
+"erabiltzaileari jakinarazi zaio."
+
+#: lib/uploadlib.php:595
+#, php-format
+msgid ""
+"Elgg is configured to run clam on file upload, but the path supplied to Clam "
+"AV, %s,  is invalid."
+msgstr ""
+"Fitxategi baten igoeran clam-a abiarazteko konfiguratuta dago Elgg, baina "
+"Clam AV antibirusari eman zaion ibilbidea, %s, okerra da."
+
+#: lib/uploadlib.php:597
+msgid ""
+"In addition, Elgg is configured so that if clam fails to run, files are "
+"treated like viruses.  This essentially means that no student can upload a "
+"file successfully until you fix this."
+msgstr ""
+"Horretaz gain, Elgg konfiguratuta dago clam-aren abiarazteak huts egingo "
+"balu fitxategiak birus gisa tratatuak izateko. Hau da, ikasleek ezingo "
+"dituzte fitxategiak igo hau konpontzen ez duzun bitartean."
+
+#: lib/uploadlib.php:603 lib/uploadlib.php:642
+msgid ""
+"Your administrator has enabled virus checking for file uploads but has "
+"misconfigured something.<br />Your file upload was NOT successful. Your "
+"administrator has been emailed to notify them so they can fix it.<br />Maybe "
+"try uploading this file later."
+msgstr ""
+"Zure administratzaileak igotako fitxategientzat birus bilaketa aktibatu du "
+"baina zerbait deskonfiguratu da.<br />Zure fitxategia EZ da ondo igo. Zure "
+"administratzaileari posta bat bidali zaio honen berri emanez eta beraz "
+"konpondu dezake.<br />Saiatu agian fitxategi hau beranduago igotzen."
+
+#: lib/uploadlib.php:621
+#, php-format
+msgid ""
+"Attention administrator! Clam AV has found a virus in a file uploaded by %s. "
+"Here is the output of clamscan:"
+msgstr ""
+"Adi administratzaile! Clam AV-k birus bat topatu du %s k igotako fitxategi "
+"batean. Antibirusaren emaitza ondokoa da:"
+
+#: lib/uploadlib.php:627
+#, php-format
+msgid ""
+"The file you have uploaded, %s, has been scanned by a virus checker and "
+"found to be infected! Your file upload was NOT successful."
+msgstr ""
+"%s, zuk igotako fitxategia, antibirus batek arakatu du eta infektatuta "
+"dagoela ikusi du! Zure fitxategi igoera EZ da burutu."
+
+#: lib/uploadlib.php:633
+#, php-format
+msgid ""
+"Clam AV has failed to run.  The return error message was %s. Here is the "
+"output from Clam:"
+msgstr ""
+"Clam AV antibirusa ezin izan da exekutatu. %s da bueltako errore mezua. Clam-"
+"aren irteera ondokoa da:"
+
+#: lib/uploadlib.php:658
+#, php-format
+msgid "%s :: Clam AV notification"
+msgstr "%s :: Clam AVaren notifikazioa"
+
+#: lib/uploadlib.php:702
+msgid "There was an unknown error with clam."
+msgstr "Errore ezezagun bat gertatu da clam-arekin."
+
+#: lib/userlib.php:24 login/index.php:34
+msgid "You have been logged on."
+msgstr "Saioa hasi duzu."
+
+#: lib/userlib.php:25 login/index.php:43
+msgid ""
+"Unrecognised username or password. The system could not log you on, or you "
+"may not have activated your account."
+msgstr ""
+"Erabiltzaile izen edo pasahitz ezezaguna. Sistemak ezin zaitu sartu, edo "
+"zure kontua aktibaturik ez egotea gerta daiteke."
+
+#: lib/userlib.php:26 login/index.php:46
+msgid ""
+"Either the username or password were not specified. The system could not log "
+"you on."
+msgstr ""
+"Ez dira, ez erabiltzaile izena ezta gakoa zehaztu. Sistemak ezin dizu "
+"sartzen utzi."
+
+#: lib/userlib.php:169
+msgid "You cannot reply to this message by email."
+msgstr "Ezin diozu mezu honi emailez erantzun."
+
+#: lib/userlib.php:170
+msgid "Failed to send email. An unknown error occurred."
+msgstr ""
+"Emaila bidaltzerakoan arazo bat egon da. Errore ezezagun bat eman da."
+
+#: lib/userlib.php:184
+msgid "Failed to send message. An unknown error occurred."
+msgstr "Mezua bidaltzerakoan arazo bat egon da. Errore ezezagun bat eman da."
+
+#: lib/userlib.php:216
+msgid "System"
+msgstr "Sistema"
+
+#: lms/join.php:56 units/invite/invite_actions.php:93
+msgid ""
+"Error! Invalid password. Your passwords must match and be between 6 and 16 "
+"characters in length."
+msgstr ""
+"Errorea! Pasahitz okerra. Zure pasahitzak 6 eta 16 bitarteko luzera izan "
+"behar du."
+
+#: lms/join.php:60
+msgid "Error! You must enter your fullname"
+msgstr "Errorea! Zure izen osoa sartu behar duzu"
+
+#: lms/join.php:71
+msgid "Error! Your username and password does not match our record."
+msgstr ""
+"Errorea! Zure erabiltzaile izena eta pasahitza ez datoz bat zuk "
+"gordetakoarekin."
+
+#: lms/join.php:76
+msgid "Fatal Error! Unknown action requested."
+msgstr "Errore larria! Eskatutako ekintza ezezaguna da."
+
+#: lms/join.php:105
+msgid "Your account creation was successful!"
+msgstr "Zure kontua ondo sortu da!"
+
+#: lms/join.php:117
+msgid "Join up"
+msgstr "Izena eman"
+
+#: lms/join.php:129
+msgid "Login"
+msgstr "Sartu"
+
+#: lms/rss.php:28 profile/rss2.php:32
+#: units/profile/function_rss_publish.php:43
+#, php-format
+msgid "Activity for %s, hosted on %s."
+msgstr "%s rentzako aktibitatea, %s n gordea."
+
+#: lms/rss.php:33 units/profile/function_rss_publish.php:35
+msgid "Activity"
+msgstr "Jarduera"
+
+#: lms/rss.php:43
+#, php-format
+msgid "%s posted on weblog post:"
+msgstr "%s bidalia(k) weblog postara:"
+
+#: lms/rss.php:65
+#, php-format
+msgid "%s posted on weblog post '%s'"
+msgstr "%s bidalia(k) '%s' weblog postara"
+
+#: lms/rss.php:83
+msgid "No activity"
+msgstr "Ez dago jarduerarik"
+
+#: login/index.php:21
+msgid "You are already logged on."
+msgstr "Saioa hasia duzu dagoeneko."
+
+#: login/index.php:36
+msgid ""
+"The password for this account is extremely insecure and represents a major "
+"security risk. You should change it immediately."
+msgstr "Kontu honentzako pasahitza zeharo"
+
+#: login/index.php:49
+msgid "Please log in"
+msgstr "Mesedez, sar zaitez"
+
+#: mod/adash/add.php:25
+msgid "Add dashboard items"
+msgstr "Dashboard-aren itemak gehitu"
+
+#: mod/adash/add.php:45
+msgid "Widget added."
+msgstr "Widget-a gehitu da."
+
+#: mod/adash/add.php:59
+msgid "Select a widget type from the list below:"
+msgstr "Aukeratu widget mota bat ondoko zerrendatik:"
+
+#: mod/adash/add.php:69 units/files/weblogs_posts_add_fields.php:80
+msgid "Add"
+msgstr "Gehitu"
+
+#: mod/adash/add.php:78
+msgid "You do not have permission to add widgets to this dashboard."
+msgstr "Ez duzu dashboard honi widgets-ak gehitzeko baimenik."
+
+#: mod/adash/delete.php:44
+msgid "Widget deleted."
+msgstr "Widget-a ezabatua izan da."
+
+#: mod/adash/edit.php:34 mod/adash/lib.php:151
+msgid "Edit widget"
+msgstr "Widget-a editatu"
+
+#: mod/adash/edit.php:64
+msgid "Widget edited."
+msgstr "Widget-a editatua izan da."
+
+#: mod/adash/edit.php:81
+msgid "You do not have permission to edit this widget."
+msgstr "Ez duzu widget hau editatzeko baimenik."
+
+#: mod/adash/index.php:38
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: mod/adash/index.php:57
+msgid ""
+"This dashboard is currently empty. Why not add some widgets by clicking 'add "
+"new item' above?"
+msgstr ""
+"Dashboard hau hutsik dago orain. Zergatik ez dituzu widget batzu gehitzen "
+"'item berria gehitu'-ren gainean klikatuta?"
+
+#: mod/adash/index.php:59
+msgid "This dashboard is currently empty."
+msgstr "Dashboard hau hutsik dago orain."
+
+#: mod/adash/lib.php:19 mod/adash/lib.php:22
+msgid "Your Dashboard"
+msgstr "Zure Dashboarda"
+
+#: mod/adash/lib.php:27
+msgid "Add new item"
+msgstr "Elementu berria gehitu"
+
+#: mod/adash/lib.php:46 mod/adash/lib.php:263
+msgid "Text box"
+msgstr "Testu kaxa"
+
+#: mod/adash/lib.php:47
+msgid "Displays the text of your choice."
+msgstr "Aukeratu duzun testua erakusten du."
+
+#: mod/adash/lib.php:152
+msgid "Delete widget"
+msgstr "Widget-a ezabatu"
+
+#: mod/adash/lib.php:153
+msgid "Move up"
+msgstr "Gora mugitu"
+
+#: mod/adash/lib.php:154
+msgid "Move down"
+msgstr "Behera mugitu"
+
+#: mod/adash/lib.php:225
+msgid "Access for this widget:"
+msgstr "Widget honetara sarrera:"
+
+#: mod/adash/lib.php:229
+msgid "Save widget"
+msgstr "Widget-a gorde"
+
+#: mod/adash/lib.php:247
+msgid ""
+"This text box is undefined. If you are the widget owner, click 'edit widget' "
+"to add your own content."
+msgstr ""
+"Testu kaxa hau ez dago zehaztuta. Widget honen jabea baldin bazara klikatu "
+"\"widget-a editatu\" n zure edukin propioa gehitzeko."
+
+#: mod/adash/lib.php:264
+msgid ""
+"This widget displays the text content of your choice. All you need to do is "
+"enter the title and body below:"
+msgstr ""
+"Widget honek aukeratu duzun testua bistaraziko du. Egin behar duzun bakarra "
+"izenburua eta testua sartzea da:"
+
+#: mod/adash/move.php:50
+msgid "Widget moved."
+msgstr "Widget-a mugitua izan da."
+
+#: mod/blog/lib.php:17 mod/blog/lib.php:21
+msgid "Your Blog"
+msgstr "Zure Bloga"
+
+#: mod/blog/lib.php:39
+msgid "Post a new entry"
+msgstr "Sarrera berri bat bidali"
+
+#: mod/blog/lib.php:44
+msgid "View blog"
+msgstr "Blog ikuskera"
+
+#: mod/blog/lib.php:48
+msgid "Archive"
+msgstr "Fitxategia"
+
+#: mod/blog/lib.php:52
+msgid "Friends' blogs"
+msgstr "Lagunen blogak"
+
+#: mod/blog/lib.php:57 _weblog/interesting.php:15
+msgid "Interesting posts"
+msgstr "Posta interesgarriak"
+
+#: mod/blog/lib.php:63
+msgid "View all posts"
+msgstr "Posta guztiak ikusi"
+
+#: mod/blog/lib.php:67 mod/file/lib.php:48 mod/friend/lib.php:57
+#: mod/profile/lib.php:35
+msgid "Page help"
+msgstr "Laguntza orrialdea"
+
+#: mod/blog/lib.php:80
+msgid "Blog widget"
+msgstr "Widget bloga"
+
+#: mod/blog/lib.php:81
+msgid "Displays the latest blog posts from a blog of your choice."
+msgstr "Aukeratzen duzun blogaren azken postak erakusten ditu."
+
+#: mod/blog/lib.php:143
+msgid "Blog dashboard widget"
+msgstr "Blog arbel gehigarria"
+
+#: mod/blog/lib.php:144
+msgid ""
+"This widget displays the last couple of blog posts from an individual user. "
+"To begin, select the user from your connections below:"
+msgstr ""
+"Gehigarri honek erabiltzaile baten azken mezuak erakusten ditu. Hasteko, "
+"aukeratu harreman zerrenda honetatik:"
+
+#: mod/blog/lib.php:159
+msgid "Then enter the number of blog posts you'd like to display:"
+msgstr "Erakutsi nahi duzun blog posta kopurua jarri:"
+
+#: mod/browser/index.php:21
+msgid "Browser"
+msgstr "Nabigatzailea"
+
+#: mod/browser/index.php:82 search/index.php:43
+msgid "All"
+msgstr "Guztia"
+
+#: mod/browser/index.php:84
+msgid "Users"
+msgstr "Erabiltzaileak"
+
+#: mod/browser/index.php:85
+msgid "Browse"
+msgstr "Nabigatu"
+
+#: mod/browser/index.php:86
+msgid "Filter"
+msgstr "Filtroa"
+
+#: mod/browser/index.php:154
+msgid "Name"
+msgstr "Izena"
+
+#: mod/browser/index.php:155
+msgid "Description"
+msgstr "Deskribapena"
+
+#: mod/browser/index.php:156
+msgid "Connections"
+msgstr "Harremanak"
+
+#: mod/browser/index.php:157
+msgid "Posts"
+msgstr "Mezuak"
+
+#: mod/browser/index.php:158
+msgid "Type"
+msgstr "Mota:"
+
+#: mod/community/lib.php:21 mod/profile/lib.php:27
+msgid "Edit this profile"
+msgstr "Profil hau editatu"
+
+#: mod/community/lib.php:25
+msgid "Community site picture"
+msgstr "Komunitatearen argazkia gunean"
+
+#: mod/community/lib.php:29
+msgid "Edit community details"
+msgstr "Komunitatearen xehetasunak editatu"
+
+#: mod/community/lib.php:38
+msgid "View membership requests"
+msgstr "Partaide izateko eskaerak ikusi"
+
+#: mod/file/lib.php:23 mod/file/lib.php:26
+#: units/files/files_user_info_menu.php:11
+msgid "Your Files"
+msgstr "Zure Fitxategiak"
+
+#: mod/file/lib.php:37
+msgid "Add a file or a folder"
+msgstr "Fitxategi edo karpeta bat gehitu"
+
+#: mod/file/lib.php:43
+msgid "RSS feed for files"
+msgstr "Fitxategien RSS elikadura iturria"
+
+#: mod/friend/lib.php:15 mod/friend/lib.php:18
+msgid "Your Network"
+msgstr "Zure Sarea"
+
+#: mod/friend/lib.php:30 units/friends/profile_friends.php:18
+msgid "Friends"
+msgstr "Lagunak"
+
+#: mod/friend/lib.php:34
+msgid "Friend of"
+msgstr "Ondokoaren laguna:"
+
+#: mod/friend/lib.php:42
+msgid "FOAF"
+msgstr "FOAF"
+
+#: mod/friend/lib.php:47
+msgid "Access controls"
+msgstr "Sarrera kontrolak"
+
+#: mod/friend/lib.php:52
+msgid "Invite a friend"
+msgstr "Lagun bat gonbidatu"
+
+#: mod/gettext/lib.php:17
+msgid "Language"
+msgstr "Hizkuntza"
+
+#: mod/gettext/lib.php:19 units/gettext/library.php:428
+msgid "default"
+msgstr "lehenetsia"
+
+#: mod/newsclient/lib.php:15 mod/newsclient/lib.php:18
+msgid "Your Resources"
+msgstr "Zure Baliabideak"
+
+#: mod/newsclient/lib.php:27 _rss/index.php:24 _rss/subscriptions.php:24
+#: units/magpie/menu_sub.php:14
+msgid "Feeds"
+msgstr "Jarioak"
+
+#: mod/newsclient/lib.php:31
+msgid "Publish to blog"
+msgstr "Blogean argitaratu"
+
+#: mod/newsclient/lib.php:35 units/magpie/menu_sub.php:22
+msgid "View aggregator"
+msgstr "Agregatzailea ikusi"
+
+#: mod/newsclient/lib.php:39
+msgid "Popular Feeds"
+msgstr "Elikadura iturri hedatuak"
+
+#: mod/newsclient/lib.php:80
+msgid "Feed widget"
+msgstr "Jario gehigarria"
+
+#: mod/newsclient/lib.php:81
+msgid "Displays the latest entries from an external feed of your choice."
+msgstr "Erakutsi kanpoko jario bateko azken sarrerak."
+
+#: mod/newsclient/lib.php:110
+msgid "This feed is currently empty."
+msgstr "Feed hau hutsik dago orain."
+
+#: mod/newsclient/lib.php:117
+msgid "This feed widget is undefined."
+msgstr "Widget-aren feed-a ez dago definituta."
+
+#: mod/newsclient/lib.php:135
+msgid "Feeds dashboard widget"
+msgstr "Jarioak arbel gehigarria"
+
+#: mod/newsclient/lib.php:136
+msgid ""
+"This widget displays the last couple of entries from an external feed you "
+"have subscribed to. To begin, select the feed from your subscriptions below:"
+msgstr ""
+"Widget honek harpidetuta zauden kanpoko feed baten sarrera pare bat "
+"erakusten ditu. Hasteko, zure harpidetzetatik aukereatu feed bat:"
+
+#: mod/newsclient/lib.php:155
+msgid "Then enter the number of feed entries you'd like to display:"
+msgstr "Erakutsi nahi dituzun jarioaren sarrera kopurua zehaztu:"
+
+#: mod/newsclient/lib.php:161
+#, php-format
+msgid ""
+"You can't select a feed for this widget because you don't have any feed "
+"subscriptions. Click on <a href=\"%s\">Your</a> Resources to subscribe to a "
+"feed."
+msgstr ""
+"Ezin duzu feed bat aukeratu widget honentzako ez bait duzu feed-"
+"harpidetzarik. Klikatu <a href=\"%s\">Zure</a> Baliabidetan feed batetara "
+"harpidetzeko."
+
+#: mod/profile/lib.php:16 mod/profile/lib.php:19
+msgid "Your Profile"
+msgstr "Zure Profila"
+
+#: mod/profile/lib.php:31
+msgid "Change site picture"
+msgstr "Guneko argazkia aldatu"
+
+#: mod/profile/lib.php:39
+msgid "People"
+msgstr "Jendea"
+
+#: mod/profile/lib.php:67 mod/profile/lib.php:96 mod/profile/lib.php:136
+msgid "Profile widget"
+msgstr "Widget profila"
+
+#: mod/profile/lib.php:68
+msgid "Displays the contents of a profile field."
+msgstr "Profil eremu baten edukia erakusten du."
+
+#: mod/profile/lib.php:97
+msgid "This profile box is undefined."
+msgstr "Profil kaxa hau definitu gabe dago."
+
+#: mod/profile/lib.php:137
+msgid ""
+"Select a profile field below; the widget will then display the profile "
+"content from this field."
+msgstr ""
+"Aukeratu ondoko profil-eremu bat; widget-ak eremu horretako profil-edukia "
+"erakutsiko du."
+
+#: mod/profile/profile.config.php:41
+#: units/profile/function_editfield_defaults.php:37
+msgid "Who am I?"
+msgstr "Nor naiz ni?"
+
+#: mod/profile/profile.config.php:41
+#: units/profile/function_editfield_defaults.php:37
+msgid "A short introduction for you."
+msgstr "Zeure buruaren aurkezpen labur bat."
+
+#: mod/profile/profile.config.php:42
+msgid "Introduction"
+msgstr "Sarrera"
+
+#: mod/profile/profile.config.php:42
+msgid "A short introduction to this community."
+msgstr "Komunitate honen aurkezpen labur bat."
+
+#: mod/profile/profile.config.php:45
+#: units/profile/function_editfield_defaults.php:40
+msgid "Brief description"
+msgstr "Deskribapen motz bat"
+
+#: mod/profile/profile.config.php:45
+#: units/profile/function_editfield_defaults.php:40
+msgid "For use in your sidebar profile."
+msgstr "Zure profilaren alboko-barran erabiltzeko."
+
+#: mod/profile/profile.config.php:48
+#: units/profile/function_editfield_defaults.php:43
+msgid "Street address"
+msgstr "Helbidea"
+
+#: mod/profile/profile.config.php:51
+#: units/profile/function_editfield_defaults.php:46
+msgid "Town"
+msgstr "Hiria"
+
+#: mod/profile/profile.config.php:54
+#: units/profile/function_editfield_defaults.php:49
+msgid "State / Region"
+msgstr "Herrialdea / Eskualdea"
+
+#: mod/profile/profile.config.php:57
+#: units/profile/function_editfield_defaults.php:52
+msgid "Postal code"
+msgstr "Posta kodea"
+
+#: mod/profile/profile.config.php:60
+#: units/profile/function_editfield_defaults.php:55
+msgid "Country"
+msgstr "Herrialdea"
+
+#: mod/profile/profile.config.php:63 units/admin/admin_main.php:83
+#: units/admin/admin_users_add.php:22 units/admin/admin_users.php:30
+#: units/profile/function_editfield_defaults.php:58
+msgid "Email address"
+msgstr "Posta elektronikoaren helbidea"
+
+#: mod/profile/profile.config.php:65
+#: units/profile/function_editfield_defaults.php:60
+msgid "Work telephone"
+msgstr "Lantegiko telefonoa"
+
+#: mod/profile/profile.config.php:68
+#: units/profile/function_editfield_defaults.php:63
+msgid "Home telephone"
+msgstr "Etxeko telefonoa"
+
+#: mod/profile/profile.config.php:71
+#: units/profile/function_editfield_defaults.php:66
+msgid "Mobile telephone"
+msgstr "Sakeleko telefonoa"
+
+#: mod/profile/profile.config.php:74
+#: units/profile/function_editfield_defaults.php:69
+msgid "Official website address"
+msgstr "Webgune ofizialaren helbidea"
+
+#: mod/profile/profile.config.php:74
+#: units/profile/function_editfield_defaults.php:69
+msgid "The URL to your official website, if you have one."
+msgstr "Zure webgune ofizialarentzako URLa, bat baldin baduzu."
+
+#: mod/profile/profile.config.php:77
+#: units/profile/function_editfield_defaults.php:72
+msgid "Personal website address"
+msgstr "Zure webgune pertsonalaren helbidea"
+
+#: mod/profile/profile.config.php:77
+#: units/profile/function_editfield_defaults.php:72
+msgid "The URL to your personal website, if you have one."
+msgstr "Zure webgune pertsonalarentzako URLa, bat baldin baduzu."
+
+#: mod/profile/profile.config.php:80
+#: units/profile/function_editfield_defaults.php:75
+msgid "ICQ number"
+msgstr "ICQ zenbakia"
+
+#: mod/profile/profile.config.php:83
+#: units/profile/function_editfield_defaults.php:78
+msgid "MSN chat"
+msgstr "MSN chata"
+
+#: mod/profile/profile.config.php:86
+#: units/profile/function_editfield_defaults.php:81
+msgid "AIM screenname"
+msgstr "AIM pantailaren izena"
+
+#: mod/profile/profile.config.php:89
+#: units/profile/function_editfield_defaults.php:84
+msgid "Skype username"
+msgstr "Skype erabiltzaile izena"
+
+#: mod/profile/profile.config.php:91
+#: units/profile/function_editfield_defaults.php:86
+msgid "Jabber username"
+msgstr "Jabber erabiltzaile izena"
+
+#: mod/profile/profile.config.php:94
+#: units/profile/function_editfield_defaults.php:89
+msgid "Interests"
+msgstr "Zaletasunak"
+
+#: mod/profile/profile.config.php:94 mod/profile/profile.config.php:98
+#: mod/profile/profile.config.php:99 mod/profile/profile.config.php:108
+#: mod/profile/profile.config.php:114
+#: units/profile/function_editfield_defaults.php:89
+#: units/profile/function_editfield_defaults.php:93
+#: units/profile/function_editfield_defaults.php:94
+#: units/profile/function_editfield_defaults.php:103
+#: units/profile/function_editfield_defaults.php:109
+msgid "Separated with commas."
+msgstr "Kakotxa bitartez banandua."
+
+#: mod/profile/profile.config.php:98
+#: units/profile/function_editfield_defaults.php:93
+msgid "Likes"
+msgstr "Gustoko duzuna"
+
+#: mod/profile/profile.config.php:99
+#: units/profile/function_editfield_defaults.php:94
+msgid "Dislikes"
+msgstr "Atsegin ez duzuna"
+
+#: mod/profile/profile.config.php:100
+#: units/profile/function_editfield_defaults.php:95
+msgid "Occupation"
+msgstr "Egitekoa"
+
+#: mod/profile/profile.config.php:101
+#: units/profile/function_editfield_defaults.php:96
+msgid "Industry"
+msgstr "Industria"
+
+#: mod/profile/profile.config.php:103
+#: units/profile/function_editfield_defaults.php:98
+msgid "Company / Institution"
+msgstr "Enpresa / Erakundea"
+
+#: mod/profile/profile.config.php:106
+#: units/profile/function_editfield_defaults.php:101
+msgid "Job Title"
+msgstr "Lanpostua"
+
+#: mod/profile/profile.config.php:107
+#: units/profile/function_editfield_defaults.php:102
+msgid "Job Description"
+msgstr "Lanpostuaren Deskribapena"
+
+#: mod/profile/profile.config.php:108
+#: units/profile/function_editfield_defaults.php:103
+msgid "I would like to ..."
+msgstr "Atsegingo nuke..."
+
+#: mod/profile/profile.config.php:109
+#: units/profile/function_editfield_defaults.php:104
+msgid "Career Goals"
+msgstr "Helburu Profesionalak"
+
+#: mod/profile/profile.config.php:109
+#: units/profile/function_editfield_defaults.php:104
+msgid ""
+"Freeform: let colleagues and potential employers know what you'd like to get "
+"out of your career."
+msgstr ""
+"Formulario librea: jakinarazi iezaiezu zure lankide eta enplegatzaileei zure "
+"lan-ibilbidetik zer lortu nahiko zenukeen."
+
+#: mod/profile/profile.config.php:110
+#: units/profile/function_editfield_defaults.php:105
+msgid "Level of Education"
+msgstr "Ikasketa Maila"
+
+#: mod/profile/profile.config.php:111
+#: units/profile/function_editfield_defaults.php:106
+msgid "High School"
+msgstr "Bigarren Hezkuntza"
+
+#: mod/profile/profile.config.php:112
+#: units/profile/function_editfield_defaults.php:107
+msgid "University / College"
+msgstr "Unibertsitatea / Fakultatea"
+
+#: mod/profile/profile.config.php:113
+#: units/profile/function_editfield_defaults.php:108
+msgid "Degree"
+msgstr "Maila"
+
+#: mod/profile/profile.config.php:114
+#: units/profile/function_editfield_defaults.php:109
+msgid "Main Skills"
+msgstr "Gaitasun Nagusiak"
+
+#: profile/edit.php:35
+msgid "Edit profile"
+msgstr "Profila editatu"
+
+#: profile/edit.php:88 units/profile/function_actions.php:40
+msgid "Profile updated."
+msgstr "Profila gaurkotu egin da."
+
+#: profile/profile.class.php:48 units/profile/edit_link.php:8
+msgid "Click here to edit this profile."
+msgstr "Hemen klikatu profil hau editatzeko."
+
+#: profile/profile.class.php:86 units/profile/content_edit.php:2
+msgid ""
+"    This screen allows you to edit your profile. Blank fields will not show "
+"up on your profile screen in any view; you can change the access level for "
+"each piece of information in order to prevent it from falling into the wrong "
+"hands. For example, we strongly recommend you keep your address to yourself "
+"or a few trusted parties."
+msgstr ""
+"    Leiho honek zure profila aldatzen uzten dizu. Eremu hutsak ez dira zure "
+"profilean inoiz zure profilean erakutsiko; eremu bakoitzaren atzipen maila "
+"zehaztu dezakezu zure informazioa esku okerretan erori ez dadin. Adibidez, "
+"zure helbidea zuretzako edo pertsona konkretu batzuentzako bakarrik "
+"gordetzea gomendatzen dizugu."
+
+#: profile/profile.class.php:95
+msgid "You can import some profile data by uploading a FOAF file here:"
+msgstr ""
+"Profilaren informazio batzuk inportatu ditzakezu FOAF fitxategi bat igoz:"
+
+#: profile/profile.class.php:98
+msgid "Upload a FOAF file:"
+msgstr "FOAF fitxategi bat igo:"
+
+#: profile/profile.class.php:100 units/files/edit_folder.php:267
+msgid "Upload"
+msgstr "Igo"
+
+#: profile/profile.class.php:110
+msgid "Or you can fill in your profile directly below:"
+msgstr "Edo zure profilean bete dezakezu zuzenean:"
+
+#: profile/profile.class.php:123
+msgid "Submit details:"
+msgstr "Xehetasunak bidali:"
+
+#: profile/profile.class.php:124
+msgid "Save your profile"
+msgstr "Zure profila gorde"
+
+#: profile/profile.class.php:207
+#: units/profile/function_editfield_display.php:40
+msgid "Access Restriction:"
+msgstr "Atzipen Murriztapenak:"
+
+#: profile/profile.class.php:280 units/profile/function_search.php:35
+msgid "Profiles where"
+msgstr "Profilak non"
+
+#: profile/profile.class.php:441 units/profile/function_upload_foaf.php:8
+msgid ""
+"There was an error uploading the file. Possibly the file was too large, or "
+"the upload was interrupted."
+msgstr ""
+"Fitxategia igotzerakoan arazo bat egon da. Ziur aski fitxategia handiegia "
+"izango zen, edo igoera eten egingo zen."
+
+#: profile/profile.class.php:521 units/profile/function_upload_foaf.php:88
+msgid ""
+"Data from your FOAF file has been preloaded. You must click Save at the "
+"bottom of the page for the changes to take effect."
+msgstr ""
+"FOAF fitxategiaren zenbait informazio aurre kargatuta izan da. Orriaren "
+"azpialdean agertzen den Gorde botoia sakatu, aldaketak gauzatu daitezen."
+
+#: profile/profile.class.php:525 units/profile/function_upload_foaf.php:92
+msgid "Error: supplied file did not appear to be a FOAF file."
+msgstr "Errorea: fitxategiak ez dirudi FOAF fitxategi bat."
+
+#: profile/profile.class.php:837 units/profile/profile_user_info.php:58
+#: units/weblogs/weblogs_user_info.php:7
+msgid "Profile Owner"
+msgstr "Profilaren Jabea"
+
+#: profile/profile.class.php:839 units/profile/profile_user_info.php:60
+#: units/weblogs/weblogs_user_info.php:9
+msgid "You"
+msgstr "Zu"
+
+#: profile/rss2.php:25
+#, php-format
+msgid "Activity tagged with %s"
+msgstr "%s rekin etiketatutako jarduera"
+
+#: profile/search.php:10
+msgid "Search Profiles"
+msgstr "Profilak Bilatu"
+
+#: _rss/blog.php:25
+msgid "Publish feeds to blog"
+msgstr "Blogarentzako elikadura iturriak argitaratu"
+
+#: _rss/individual.php:13
+msgid "Feed detail"
+msgstr "Jarioaren zehaztasuna"
+
+#: _rss/popular.php:12 units/magpie/menu_sub.php:31
+msgid "Popular feeds"
+msgstr "Elikadura-iturri hedatuak"
+
+#: _rss/styles.php:10
+msgid "RSS Management"
+msgstr "RSS kudeaketa"
+
+#: _rss/styles.php:11
+msgid "To add this feed to your resources page, click here."
+msgstr ""
+"Zure baliabide orrialdean elikadura iturri hau gehitzeko hemen klikatu."
+
+#: _rss/styles.php:12
+msgid ""
+"To add this feed to an external RSS aggregator, click the link that "
+"corresponds to your aggregator:"
+msgstr ""
+"Jario hau kanpoko RSS jario irakurgailu batera gehitzeko, zure jario "
+"irakurgailuari dagokion botoia sakatu."
+
+#: _rss/styles.php:13
+msgid "Summary"
+msgstr "Laburpena"
+
+#: _rss/styles.php:14
+msgid "This is an RSS feed for "
+msgstr "Hau %s rentzako RSS elikadura iturri bat da "
+
+#: _rss/styles.php:15
+msgid "Didn't mean to come here? Click to exit!"
+msgstr "Ez al zenuen hona etorri nahi? Klikatu irteteko!"
+
+#: search/all.php:13
+msgid "Searching Everything"
+msgstr "Guztia Bilatzen"
+
+#: search/index.php:15 units/search/search_user_info_menu.php:7
+msgid "Search"
+msgstr "Bilatu"
+
+#: search/index.php:38
+msgid "Search for results from:"
+msgstr "Ondoko emaitzetan bilatu:"
+
+#: search/index.php:78
+msgid "Filter by content type:"
+msgstr "Edukin motaren baitan iragatzi:"
+
+#: search/index.php:82
+msgid "Everything"
+msgstr "Guztia"
+
+#: search/index.php:89
+msgid "Users and communities"
+msgstr "Erabiltzaileak eta komunitateak"
+
+#: search/tags.php:12
+msgid "Some Tags"
+msgstr "Hainbat Etiketa"
+
+#: _templates/edit.php:15
+msgid "Template Edit"
+msgstr "Txantiloia Editatu"
+
+#: _templates/index.php:15
+msgid "Select / Create Themes"
+msgstr "Aukeratu/ Sortu plantilak"
+
+#: _templates/preview.php:13
+msgid "Template Preview"
+msgstr "Txantiloia Aurreikusi"
+
+#: units/activity/recent.php:3
+msgid ""
+"This screen displays recent activity on your account by other users over a "
+"given time range."
+msgstr ""
+"Leiho honek beste erabiltzaileek zure kontuan egindako azken mugimenduak "
+"erakusten ditu emandako denbora tartean."
+
+#: units/admin/admin_actions.php:44
+msgid ""
+"Error! The new username must contain letters and numbers only, cannot be "
+"blank, and must be between 3 and 12 characters in length."
+msgstr ""
+"Errorea! Erabiltzaile berriak letrak eta zenbakiak bakarrik onartzen ditu, "
+"ezin da txuri utzi, 3 eta 12 karaktere luzera izan behar duelarik."
+
+#: units/admin/admin_actions.php:50
+#, php-format
+msgid "Username was changed to %s."
+msgstr "Erabiltzaile izena %s ra izan da aldatua."
+
+#: units/admin/admin_actions.php:58
+#, php-format
+msgid "File quota was changed to %d."
+msgstr "Fitxategi tamaina %d -ra aldatu da"
+
+#: units/admin/admin_actions.php:65
+#, php-format
+msgid "Icon quota was changed to %d."
+msgstr "Ikono kopurua %d ra aldatu da."
+
+#: units/admin/admin_actions.php:80
+#, php-format
+msgid "User flag '%s' set to '%s'"
+msgstr "'%s' erabiltzaile bandera '%s'n jarri"
+
+#: units/admin/admin_actions.php:94
+msgid "Spam list updated."
+msgstr "Eguneratutako spam zerrenda."
+
+#: units/admin/admin_actions.php:123
+#, php-format
+msgid ""
+"User addition %d failed: at least one field was blank. Username: %s, name: "
+"%s, email: %s"
+msgstr ""
+"%d erabiltzaile gehitze errorea: eremu bat gutxienez zuriz zegoen. "
+"Erabiltzaile izena: %s, izena: %s, emaila: %s"
+
+#: units/admin/admin_actions.php:128
+#, php-format
+msgid ""
+"New username %d (%s) was invalid; usernames must contain letters and numbers "
+"only, cannot be blank, and must be between 3 and 12 characters in length."
+msgstr ""
+"%d (%s) erabiltzaile izen berria okerra da; erabiltzaile izenek hizki eta "
+"zenbakiak baino ezin dituzte eduki, ezin da zuriz utzi, eta 3-12 karaktereko "
+"luzera izan behar du."
+
+#: units/admin/admin_actions.php:134
+#, php-format
+msgid "User addition %d failed: username %s is already in use."
+msgstr ""
+"%d erabiltzailearen izen ematea oker joan da: %s erabiltzailea hartua dago."
+
+#: units/admin/admin_actions.php:138
+#, php-format
+msgid "User addition %d failed: email address %s appears to be invalid."
+msgstr ""
+"%d erabiltzailearen izen ematea oker joan da: %s erabiltzailearen posta "
+"elektronikoa okerra dirudi."
+
+#: units/admin/admin_actions.php:181
+#, php-format
+msgid "Your new %s account"
+msgstr "Zure %s kontu berria"
+
+#: units/admin/admin_actions.php:182
+#, php-format
+msgid ""
+"You have been added to %s!\n"
+"\n"
+"For your records, your %s username and password are:\n"
+"\n"
+"\tUsername: %s\n"
+"\t"
+msgstr ""
+"%s n gehitua izan zara!\n"
+"\n"
+"Zure informazioa gordetzeko, zure %s erabiltzaile izena eta pasahitza "
+"ondokoak dira:\n"
+"\n"
+"\t Erabiltzaile izena: %s\n"
+"\t"
+
+#: units/admin/admin_actions.php:185
+#, php-format
+msgid "User %s was created."
+msgstr "%s erabiltzailea sortu da."
+
+#: units/admin/admin_contentflags.php:7
+msgid ""
+"The following pages have been flagged as having obscene or inappropriate "
+"content. They are ordered by number of complaints."
+msgstr ""
+"Orri hauek eduki lizun edo desegokia izateagatik markatuak izan dira. Kexa "
+"kopuruaren arabera ordenatuak izan dira."
+
+#: units/admin/admin_contentflags.php:8
+msgid ""
+"To view the pages in question, click the following links. To remove the "
+"flags, for example if the flag is a false positive or if you've deleted the "
+"offending content, check the appropriate box and click the 'delete' button "
+"below."
+msgstr ""
+"Orri hauek ikusteko, lotura hauetan klikatu. Markak ezabatzeko, marka "
+"positibo bat bada adibidez edo eduki desegokia ezabatu  bada, aukeratu kutxa "
+"egokia eta ondoren 'ezabatu' botoia sakatu."
+
+#: units/admin/admin_contentflags.php:18
+msgid "Page URL"
+msgstr "Orrialdearen URLa"
+
+#: units/admin/admin_contentflags.php:19
+msgid "Number of objections"
+msgstr "Eragozpen kopurua"
+
+#: units/admin/admin_contentflags.php:38
+msgid "Remove flag(s)"
+msgstr "Markak ezabatu"
+
+#: units/admin/admin_contentflags.php:44
+msgid "No content flags were found at present."
+msgstr "Ez da eduki markarik aurkitu."
+
+#: units/admin/admin_main.php:9
+msgid "Site statistics"
+msgstr "Gunearen estatistikak"
+
+#: units/admin/admin_main.php:17
+#, php-format
+msgid "Accounts of type '%s'"
+msgstr "'%s' motako kontuak"
+
+#: units/admin/admin_main.php:33
+msgid "Weblog statistics"
+msgstr "Weblogaren estatistikak"
+
+#: units/admin/admin_main.php:34 units/admin/admin_main.php:48
+msgid "All-time:"
+msgstr "Beti:"
+
+#: units/admin/admin_main.php:35 units/admin/admin_main.php:37
+#, php-format
+msgid "%u weblog posts, %u comments"
+msgstr "%u weblog mezu, %u iruzkin"
+
+#: units/admin/admin_main.php:36 units/admin/admin_main.php:49
+msgid "Last 7 days:"
+msgstr "Azken 7 egunak:"
+
+#: units/admin/admin_main.php:47
+msgid "File statistics"
+msgstr "Fitxategi estatistikak"
+
+#: units/admin/admin_main.php:48 units/admin/admin_main.php:49
+#, php-format
+msgid "%u files (%s bytes)"
+msgstr "%u fitxategi (%s byte)"
+
+#: units/admin/admin_main.php:67
+msgid "Database statistics"
+msgstr "Datu basearen estatistikak"
+
+#: units/admin/admin_main.php:68
+msgid "Total database size:"
+msgstr "Datu basearen tamaina osoa:"
+
+#: units/admin/admin_main.php:68
+#, php-format
+msgid "%u bytes"
+msgstr "%u byte"
+
+#: units/admin/admin_main.php:75
+msgid "Users online now"
+msgstr "Orain konektatuta dauden erabiltzaileak"
+
+#: units/admin/admin_main.php:76
+msgid ""
+"The following users have an active session and have performed an action "
+"within the past 10 minutes."
+msgstr ""
+"Erabiltzaile honek sesio aktibo bat dauka eta azken 10 minututan ekintzaren "
+"bat egin du."
+
+#: units/admin/admin_main.php:82 units/admin/admin_users_add.php:21
+#: units/admin/admin_users.php:29
+msgid "Full name"
+msgstr "Izen osoa"
+
+#: units/admin/admin_main.php:93
+#, php-format
+msgid "%u users in total."
+msgstr "%u erabiltzaile guztira."
+
+#: units/admin/admin_spam.php:7
+msgid ""
+"Add regular expressions below, one per line, to block spam. For example, "
+"'foo' will block all comments containing the word foo, (foo|bar) will block "
+"comments containing the word foo or bar."
+msgstr ""
+"Espresio erregularrak gehitu, bat lerro bakoitzeko, spam-a blokeatzeko, "
+"Adibidez, 'foo' erabiliz foo hitza duen erantzunak blokeatuko ditu, "
+"(foo|bar) foo edo bar hitza dituen iruzkinak blokeatuko ditu."
+
+#: units/admin/admin_spam.php:8
+msgid "Blank lines and lines starting with # will be ignored."
+msgstr "Lerro zuriak eta # rekin hasten direnak ez dira aintzat hartuko."
+
+#: units/admin/admin_spam.php:20
+msgid "Regular expressions"
+msgstr "Expresio erregularrak"
+
+#: units/admin/admin_userdetails.php:19
+msgid "Change username:"
+msgstr "Erabiltzaile izena aldatu:"
+
+#: units/admin/admin_userdetails.php:22
+msgid "New username: "
+msgstr "Erabiltzaile izen berria: "
+
+#: units/admin/admin_userdetails.php:29
+msgid "Change file quota (in bytes):"
+msgstr "Aldatu fitxategi tamaina (bytetan):"
+
+#: units/admin/admin_userdetails.php:32
+msgid "New file quota: "
+msgstr "Fitxategi kuota berria: "
+
+#: units/admin/admin_userdetails.php:36
+msgid "Change icon quota:"
+msgstr "Ikonoen muga aldatu"
+
+#: units/admin/admin_userdetails.php:39
+msgid "New icon quota: "
+msgstr "Ikonoen muga berria: "
+
+#: units/admin/admin_userdetails.php:45
+msgid "User flags:"
+msgstr "Erabiltzaile banderak:"
+
+#: units/admin/admin_userdetails.php:56
+msgid "Site administrator: "
+msgstr "Gunearen administratzailea: "
+
+#: units/admin/admin_userdetails.php:72
+msgid "Banned: "
+msgstr "Debekatuta: "
+
+#: units/admin/admin_users_add.php:17
+msgid ""
+"You can create up to 12 users below; passwords will be autogenerated and "
+"emailed to the account owners. You must include all fields, but you may "
+"leave rows blank."
+msgstr ""
+"Gehienez 12 erabiltzaile sortu ditzazkezu; pasahitzak automatikoki sortuko "
+"dira eta kontuen jabeei emailez bidaliko zaizkie. Eremu guztiak gehitu behar "
+"dituzu, baina ilerak zuriz utz ditzazkezu."
+
+#: units/admin/admin_users_panel.php:12
+#: units/communities/communities_membership_requests.php:32
+#: units/friends/user_friendship_requests.php:33
+msgid "Profile"
+msgstr "Profila"
+
+#: units/admin/admin_users.php:10
+msgid ""
+"The following is a list of all the users in the system, 50 users at a time. "
+"You can click each one to edit their user details as if you were logged in "
+"as them, as well as set user flags (including 'ban user' and 'set user as "
+"administrator')."
+msgstr ""
+"Ondokoa, sistemaren erabiltzaile guztien zerrenda bat da, 50 erabiltzaile "
+"ikus daitezke aldiro. Horietako bakoitzean klika dezakezu beren erabiltzaile "
+"datuak editatzeko beraiek bezala sartu bazara sisteman, era berean, "
+"erabiltzaile banderak ere erabili ditzazkezu ('ezgaitutako erabiltzailea' "
+"eta 'erabiltzailea administratzailetzat jarri' barne)"
+
+#: units/admin/admin_users.php:11
+msgid ""
+"If you know the username of the user you would like to edit, you can also "
+"enter it below."
+msgstr ""
+"Editatu nahi duzun erabiltzailearen erabiltzaile izena ezagutzen baduzu, "
+"hemen sartu dezakezu."
+
+#: units/admin/admin_users.php:16
+msgid "Enter username"
+msgstr "Erabiltzaile izena jarri"
+
+#: units/admin/admin_users.php:18
+msgid "Edit user"
+msgstr "Erabiltzailea editatu"
+
+#: units/admin/admin_users.php:37 units/magpie/function_view_individual.php:38
+#: units/magpie/function_view.php:41
+#: units/weblogs/weblogs_all_users_view.php:123
+#: units/weblogs/weblogs_friends_view.php:73
+#: units/weblogs/weblogs_interesting_view.php:64
+#: units/weblogs/weblogs_view.php:65
+msgid "Next"
+msgstr "Hurrengoa"
+
+#: units/admin/admin_users.php:46
+msgid "Previous"
+msgstr "Aurrekoa"
+
+#: units/admin/display_content_flag_form.php:23
+msgid "Flag content"
+msgstr "Edukin bandera"
+
+#: units/admin/display_content_flag_form.php:24
+msgid ""
+"To mark this content as obscene or inappropriate, click the 'Flag' button "
+"and an administrator will view it in due course."
+msgstr ""
+"Eduki hau desegokia bada, 'Flag' botoia sakatu eta kudeatzaileak berrikusiko "
+"du ahal bezain laster."
+
+#: units/admin/display_content_flag_form.php:25
+msgid "Flag"
+msgstr "Bandera"
+
+#: units/communities/communities_access_levels.php:10
+#: units/communities/communities_access_levels.php:19
+msgid "Community"
+msgstr "Komunitatea"
+
+#: units/communities/communities_actions.php:20
+msgid ""
+"Error! The community username must contain letters and numbers only, cannot "
+"be blank, and must be between 3 and 12 characters in length."
+msgstr ""
+"Errorea! Komunitateko erabiltzaile izenak hizki eta zenbakiak baina ezin "
+"ditu eduki, ezin da zuriz utzi eta 3-12 karaktere bitarteko luzera izan "
+"behar du."
+
+#: units/communities/communities_actions.php:22
+msgid "Error! The community name cannot be blank."
+msgstr "Errorea! Komunitatearen izena ezin da zuriz utzi."
+
+#: units/communities/communities_actions.php:44
+msgid "Your community was created and you were added as its first member."
+msgstr ""
+"Zure komunitatea sortua izan da eta zu bere lehenengo kide gisa gehitua izan "
+"zara."
+
+#: units/communities/communities_actions.php:58
+#, php-format
+msgid "You joined %s."
+msgstr "%sn sartu zara."
+
+#: units/communities/communities_actions.php:60
+#, php-format
+msgid ""
+"%s has joined %s!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+"%s gehitu da %s!\n"
+"\n"
+"Erabiltzaile profil hau bisitatzeko klikatu ondoko estekan:\n"
+"\n"
+"\t"
+
+#: units/communities/communities_actions.php:63
+#, php-format
+msgid "New %s member"
+msgstr "%s erabiltzaile berria"
+
+#: units/communities/communities_actions.php:67
+#, php-format
+msgid ""
+"Membership of %s needs to be approved. Your request has been added to the "
+"list."
+msgstr ""
+"%s -ren izen ematea baieztatua izan behar da. Zure eskaera zerrendara "
+"gehitua izan da."
+
+#: units/communities/communities_actions.php:69
+#, php-format
+msgid ""
+"%s has applied to join %s!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+"%s sartzeko eskaera egin du %s!\n"
+"\n"
+"Erabiltzaile honen profila ikusteko, lotura honetan klikatu:\n"
+"\n"
+"\t"
+
+#: units/communities/communities_actions.php:72
+#, php-format
+msgid "New %s member request"
+msgstr "%s izen emate eskaera berria"
+
+#: units/communities/communities_actions.php:76
+#, php-format
+msgid "%s is a private community. Your membership request has been declined."
+msgstr ""
+"%s komunitate pribatu bat da. Zure izen emate eskaera gaitzetsia izan da."
+
+#: units/communities/communities_actions.php:88
+#, php-format
+msgid "You left %s."
+msgstr "%s utzi duzu."
+
+#: units/communities/communities_actions.php:95
+msgid "Your post has been added to the community weblog."
+msgstr "Zure posta komunitatearen weblog-ean gehitu da."
+
+#: units/communities/communities_actions.php:111
+#, php-format
+msgid ""
+"You approved the membership request. %s is now a member of this community."
+msgstr ""
+"Izen emate eskaera onartu duzu. %s komunitatearen erabiltzailea da orain."
+
+#: units/communities/communities_actions.php:113
+msgid "An error occurred: the membership request could not be approved."
+msgstr "Errore bat gertatu da: partaidetza eskaera ezin izan da onartu."
+
+#: units/communities/communities_actions.php:116
+#: units/communities/communities_actions.php:135
+msgid "Error: you do not have authority to modify this membership request."
+msgstr "Errorea: ez duzu partaidetza eskaera hau eraldatzeko baimenik."
+
+#: units/communities/communities_actions.php:119
+#: units/communities/communities_actions.php:138
+msgid "An error occurred: the membership request could not be found."
+msgstr "Errore bat gertatu da: partaidetza eskaera ezin izan da topatu."
+
+#: units/communities/communities_actions.php:133
+#, php-format
+msgid ""
+"You declined the membership request. %s is not a member of this community."
+msgstr ""
+"Izen emate eskaera gaitzetsi duzu. %s ez da komunitateko erabiltzailea."
+
+#: units/communities/communities_create.php:16
+msgid "Create a new community"
+msgstr "Komunitate berri bat sortu"
+
+#: units/communities/communities_create.php:17
+msgid "Community name:"
+msgstr "Komunitatearen izena:"
+
+#: units/communities/communities_create.php:18
+msgid "Username for community:"
+msgstr "Komunitatearentzako erabiltzaile izena:"
+
+#: units/communities/communities_create.php:19 units/files/edit_folder.php:147
+#: units/groups/groups_create.php:5
+msgid "Create"
+msgstr "Sortu"
+
+#: units/communities/communities_edit.php:47
+msgid ""
+"You don't have any communities listed! To join a community, click the 'join' "
+"button underneath a community's icon. You can find communities you're "
+"interested in by using the search function."
+msgstr ""
+"Ez duzu komunitaterik zerrendatuta! Komunitate batetan sartzeko, "
+"komunitatearen ikonoaren azpian dagoen 'sartu' botoia sakatu. Bilaketa "
+"funtzioa erabilita interesgarriak suerta dakizkizun komunitateak aurkitu "
+"ditzazkezu."
+
+#: units/communities/communities_edit.php:49
+msgid "This user is not currently a member of any communities."
+msgstr "Erabiltzaile hau orain ez da inolako komunitateren partaidea."
+
+#: units/communities/communities_membership_requests.php:15
+msgid ""
+"The following users would like to join this community. They need your "
+"approval to do this (to change this setting, visit the 'community settings' "
+"page)."
+msgstr ""
+"Erabiltzaile hauek komunitatean sartu nahi dute. Zure onespena behar dute "
+"(ezaugarri hauek aldatzeko, 'komunitate ezaugarri' orrialdea bisitatu."
+
+#: units/communities/communities_membership_requests.php:33
+#: units/friends/user_friendship_requests.php:34
+#: units/weblogs/weblogs_user_info_menu.php:29 _weblog/edit.php:24
+#: _weblog/index.php:15
+msgid "Blog"
+msgstr "Bloga"
+
+#: units/communities/communities_membership_requests.php:48
+msgid "You have no pending membership requests."
+msgstr "Ez duzu izen emate eskaerarik."
+
+#: units/communities/communities_members.php:45
+msgid "This community doesn't currently have any members."
+msgstr "Komunitate honek orain ez du partaiderik bat ere."
+
+#: units/communities/communities_moderator_of.php:47
+msgid "You don't own any communities. Why not create one?"
+msgstr "Ez duzu zeure komunitate propiorik. Zergatik ez duzu bat sortzen?"
+
+#: units/communities/communities_moderator_of.php:49
+msgid "This user is not currently moderating any communities."
+msgstr "Erabiltzaile hau ez du komunitaterik moderatzen."
+
+#: units/communities/communities_owned.php:18
+msgid "Owned communities"
+msgstr "Zure komunitateak"
+
+#: units/communities/community_memberships.php:20
+msgid "Community memberships"
+msgstr "Komunitatearen partaideak"
+
+#: units/communities/community_wiki.php:15
+msgid "Community Wiki"
+msgstr "Wiki Komunitatea"
+
+#: units/communities/profile_edit_link.php:12
+msgid "Upload / edit site pictures for this community."
+msgstr "Igo / editatu gunerako argazkia komunitate honentzat."
+
+#: units/communities/profile_edit_link.php:26
+msgid "Change this community's name."
+msgstr "Aldatu komunitate honen izena"
+
+#: units/communities/userdetails_actions.php:23
+#, php-format
+msgid "Community ownership transferred to %s."
+msgstr "Komunitatearen jabetza %s erabiltzaileak du orain."
+
+#: units/communities/userdetails_actions.php:26
+msgid "Could not retrieve community details."
+msgstr "Komunitatearen ezaugarriak ezin izan dira jaso."
+
+#: units/communities/userdetails_edit.php:11
+msgid "Change your community name"
+msgstr "Zure komunitatearen izena aldatu"
+
+#: units/communities/userdetails_edit.php:12
+#: units/users/userdetails_edit.php:12
+msgid "This name will be displayed throughout the system."
+msgstr "Izen hau sisteman zehar erakutsiko da."
+
+#: units/communities/userdetails_edit.php:27
+msgid "Community name"
+msgstr "Komunitatearen izena"
+
+#: units/communities/userdetails_edit.php:32
+msgid "Membership restriction:"
+msgstr "Izen emate murriztapenak:"
+
+#: units/communities/userdetails_edit.php:33
+msgid "This allows you to choose who can join this community."
+msgstr "Komunitatera zein sartu daitekeen aukeratu dezakezu hemen."
+
+#: units/communities/userdetails_edit.php:50
+msgid "No moderation: anyone can join this community."
+msgstr "Moderaziorik ez: edozein sar daiteke komunitate honetara."
+
+#: units/communities/userdetails_edit.php:55
+msgid "Moderation: memberships must be approved by you."
+msgstr "Moderazioa: izen emateak zuk baimendu behar dituzu."
+
+#: units/communities/userdetails_edit.php:60
+msgid "Private: nobody can join this community."
+msgstr "Pribatua: komunitate honetan ezin da inor sartu."
+
+#: units/communities/userdetails_edit.php:65
+msgid "Membership restriction"
+msgstr "Izen emate murriztapenak"
+
+#: units/communities/userdetails_edit.php:70
+msgid "Community ownership"
+msgstr "Komunitatearen jabetza"
+
+#: units/communities/userdetails_edit.php:71
+msgid ""
+"Type the username of the user who you want to own this community below. You "
+"cannot leave this blank, or specify a community or a user that doesn't exist."
+msgstr ""
+"Ondoko komunitatearen jabea izatea nahi duzun erabiltzailearen izena idatzi. "
+"Ezin duzu ez zuriz utzi, ezta komunitate bat edo existitzen ez den "
+"erabiltzaile bat jarri."
+
+#: units/communities/userdetails_edit.php:83
+msgid "Community owner"
+msgstr "Komunitatearen jabea"
+
+#: units/communities/user_info_menu_text.php:18
+msgid "Are you sure you want to join this community?"
+msgstr "Ziur al zaude komunitate honetan sartu nahi duzula?"
+
+#: units/communities/user_info_menu_text.php:18
+msgid "Click here to join this community."
+msgstr "Hemen klikatu komunitate honetan sartzeko."
+
+#: units/communities/user_info_menu_text.php:20
+msgid "Are you sure you want to apply to join this community?"
+msgstr "Ziur zaude komunitate honetara sartzeko eskaera egin nahi duzula?"
+
+#: units/communities/user_info_menu_text.php:20
+msgid "Click here to apply to join this community."
+msgstr "Hemen klikatu komunitate honetara sartzeko eskaera egiteko."
+
+#: units/communities/user_info_menu_text.php:26
+msgid "Are you sure you want to leave this community?"
+msgstr "Ziur al zaude komunitate hau utzi nahi duzula?"
+
+#: units/communities/user_info_menu_text.php:26
+msgid "Click here to leave this community."
+msgstr "Hemen klikatu komunitate hau uzteko."
+
+#: units/files/default_templates.php:8
+msgid "Folder"
+msgstr "Karpeta"
+
+#: units/files/default_templates.php:9
+msgid "Each individual folder"
+msgstr "Banakako karpeta bakoitza"
+
+#: units/files/default_templates.php:11
+msgid "The owner of the folder"
+msgstr "Karpetaren jabea"
+
+#: units/files/default_templates.php:12
+msgid "The name of the folder"
+msgstr "Karpetaren izena"
+
+#: units/files/default_templates.php:13
+msgid "The folder's URL"
+msgstr "Karpetaren URLa"
+
+#: units/files/default_templates.php:14
+msgid "Menu items for folder owner (edit, delete, etc)"
+msgstr "Karpetaren jabearen menu-itemak (editatu, ezabatu, e.a.)"
+
+#: units/files/default_templates.php:15
+msgid "The URL of the file's icon"
+msgstr "Fitxategiaren ikonoaren URLa"
+
+#: units/files/default_templates.php:16 units/files/default_templates.php:49
+msgid "Keywords associated with the folder"
+msgstr "Karpetarekin erlazionaturiko hitz-gakoak"
+
+#: units/files/default_templates.php:40 units/files/function_search_rss.php:44
+msgid "File"
+msgstr "Fitxategi"
+
+#: units/files/default_templates.php:41
+msgid "Each individual file within a folder"
+msgstr "Katalogo baten barneko fitxategi indibidual bakoitza"
+
+#: units/files/default_templates.php:43
+msgid "The file's URL"
+msgstr "Fitxategiaren URLa"
+
+#: units/files/default_templates.php:44
+msgid "Its filename"
+msgstr "Fitxategiaren izena"
+
+#: units/files/default_templates.php:45
+msgid "A description of the file"
+msgstr "Fitxategiaren deskribapen bat"
+
+#: units/files/default_templates.php:46
+msgid "Its title"
+msgstr "Bere izenburua"
+
+#: units/files/default_templates.php:47
+msgid "Menu items for file owner (edit, delete, etc)"
+msgstr "Menu elementuak fitxategiaren jabearentzat (editatu, ezabatu, etab)"
+
+#: units/files/default_templates.php:48
+msgid "The URL of its icon"
+msgstr "Ikono honen URLa"
+
+#: units/files/edit_file.php:17 units/files/edit_folder.php:192
+msgid "File title:"
+msgstr "Fitxategiaren izenburua:"
+
+#: units/files/edit_file.php:29
+msgid "File description:"
+msgstr "Deskribapen-fitxategia:"
+
+#: units/files/edit_file.php:40 units/files/edit_folder.php:194
+#: units/weblogs/weblogs_posts_add.php:27
+#: units/weblogs/weblogs_posts_edit.php:21
+msgid "Access restrictions:"
+msgstr "Atzipen murriztapenak:"
+
+#: units/files/edit_file.php:51
+msgid "File folder:"
+msgstr "Fitxategi-karpeta:"
+
+#: units/files/edit_file.php:62 units/files/edit_folder.php:62
+#: units/files/edit_folder.php:134 units/files/edit_folder.php:244
+msgid "Keywords (comma separated):"
+msgstr "Hitz-gakoak (kakotxa bidez bananduak):"
+
+#: units/files/edit_file.php:80
+msgid "Save changes"
+msgstr "Aldaketak gorde"
+
+#: units/files/edit_file.php:98
+msgid "Edit "
+msgstr "Editatu "
+
+#: units/files/edit_folder.php:19 units/files/edit_folder.php:89
+msgid "Edit this folder"
+msgstr "Karpeta hau editatu"
+
+#: units/files/edit_folder.php:26
+msgid "Folder name:"
+msgstr "Karpetaren izena:"
+
+#: units/files/edit_folder.php:27
+msgid "Parent folder"
+msgstr "Karpeta-aita"
+
+#: units/files/edit_folder.php:49 units/files/edit_folder.php:109
+msgid "Access restrictions"
+msgstr "Sarrera murrizketa"
+
+#: units/files/edit_folder.php:99
+msgid "Upload files and folders"
+msgstr "Fitxategiak eta karpetak igo"
+
+#: units/files/edit_folder.php:107
+msgid "Create a new folder"
+msgstr "Karpeta berri bat sortu"
+
+#: units/files/edit_folder.php:108
+msgid "To create a new folder, enter its name:"
+msgstr "Karpeta berri bat sortzeko bere izena sartu:"
+
+#: units/files/edit_folder.php:173
+msgid "Upload a file"
+msgstr "Fitxategi bat igo"
+
+#: units/files/edit_folder.php:187
+#, php-format
+msgid "You have used %s Mb of a total %s Mb."
+msgstr "%s Mb-etik %s Mb erabili dituzu."
+
+#: units/files/edit_folder.php:189
+#, php-format
+msgid "Used space: %s Mb."
+msgstr "Erabilitako muga: %s Mb."
+
+#: units/files/edit_folder.php:191
+msgid "File to upload:"
+msgstr "Igotzeko fitxategia:"
+
+#: units/files/edit_folder.php:193
+msgid "File Description:"
+msgstr "Fitxategiaren Deskribapena:"
+
+#: units/files/edit_folder.php:266
+msgid ""
+"By checking this box, you are asserting that you have the legal right to "
+"share this file, and that you understand you are sharing it with other users "
+"of the system."
+msgstr ""
+"Kutxa hau markatuz gero, fitxategi hau elkar trukatzeko eskubide legala "
+"duzula onartzen ari zara, eta ulertzen duzu sistemaren beste "
+"erabiltzaileekin banatzen ari zarela."
+
+#: units/files/files_actions.php:30
+msgid "Your folder was created."
+msgstr "Zure karpeta sortua izan da."
+
+#: units/files/files_actions.php:33
+msgid "Could not create folder. Perhaps the folder name was blank?"
+msgstr "Ezin izan da karpeta sortu. Karpetaren izena zuriz utziko zen agian?"
+
+#: units/files/files_actions.php:53
+msgid ""
+"Upload unsuccessful. You must check the copyright box for a file to be "
+"uploaded."
+msgstr ""
+"Igoera gaizki joan da. Copyright kutxa markatu behar duzu fitxategia "
+"igotzeko."
+
+#: units/files/files_actions.php:95
+msgid "The file was successfully uploaded."
+msgstr "Fitxategia ondo igo da."
+
+#: units/files/files_actions.php:136
+msgid "The file was updated."
+msgstr "Fitxategia eguneratua izan da."
+
+#: units/files/files_actions.php:160
+msgid "The folder was edited."
+msgstr "Karpeta editatua izan da."
+
+#: units/files/files_actions.php:163
+msgid "Error: a folder cannot be its own parent."
+msgstr "Errorea: karpeta batek ezin du bere aita izan."
+
+#: units/files/files_actions.php:189
+msgid "The folder was deleted."
+msgstr "Karpeta ezabatua izan da."
+
+#: units/files/files_actions.php:214
+msgid "The file was deleted."
+msgstr "Fitxategia ezabatua izan da."
+
+#: units/files/files_links_make.php:54
+msgid "You do not have permission to access this file"
+msgstr "Ez duzu fitxategi honetara sartzeko baimenik"
+
+#: units/files/files_links_make.php:57
+msgid "File does not exist"
+msgstr "Fitxategia ez da existitzen"
+
+#: units/files/files_user_info_menu.php:23
+msgid "File Storage"
+msgstr "Fitxategi Bilketa"
+
+#: units/files/folder_view.php:27
+msgid "Root Folder"
+msgstr "Erro-Karpeta"
+
+#: units/files/folder_view.php:50
+msgid "Return to"
+msgstr "Bueltatu"
+
+#: units/files/folder_view.php:57 units/files/templates_preview.php:6
+msgid "Subfolders"
+msgstr "Azpikarpetak"
+
+#: units/files/folder_view.php:74
+msgid "Are you sure you want to permanently delete this folder?"
+msgstr "Ziur al zaude karpeta hau behin-betiko ezabatu nahi duzula?"
+
+#: units/files/folder_view.php:87 units/files/folder_view.php:149
+#: units/magpie/function_subscriptions_publish_to_blog.php:41
+msgid "Keywords: "
+msgstr "Hitz-gakoak: "
+
+#: units/files/folder_view.php:139
+msgid "Are you sure you want to permanently delete this file?"
+msgstr "Ziur al zaude fitxategi hau behin-betiko ezabatu nahi duzula?"
+
+#: units/files/folder_view.php:175
+msgid "This folder is currently empty."
+msgstr "Karpeta hau hutsik dago orain."
+
+#: units/files/function_search.php:49
+#, php-format
+msgid "Folders owned by '%s' in category '%s'"
+msgstr "'%s' jabe den katalogoak '%s' kategorian"
+
+#: units/files/function_search.php:88
+#, php-format
+msgid "Files owned by %s in category '%s'"
+msgstr "'%s' jabe den fitxategiak '%s' kategorian"
+
+#: units/files/function_search.php:90
+msgid "View folder"
+msgstr "Karpeta ikusi"
+
+#: units/files/function_search.php:107
+#, php-format
+msgid "RSS feed for files owned by %s"
+msgstr "%s jabe den fitxategien RSS jarioa"
+
+#: units/files/function_search.php:118
+msgid "Users with files or folders in category"
+msgstr "Kategorian fitxategi edo karpetak dituzten erabiltzaileak"
+
+#: units/files/function_search_rss.php:34
+msgid "File folder"
+msgstr "Fitxategi-karpeta"
+
+#: units/files/templates_preview.php:5
+msgid "Folder name"
+msgstr "Karpetaren izena"
+
+#: units/files/templates_preview.php:15 units/files/templates_preview.php:26
+msgid "test"
+msgstr "proba"
+
+#: units/files/templates_preview.php:18
+msgid "Subfolder"
+msgstr "Azpikarpeta"
+
+#: units/files/templates_preview.php:27
+msgid "A sample file"
+msgstr "Adibide fitxategi bat"
+
+#: units/files/templates_preview.php:30
+msgid "This is a file"
+msgstr "Hau fitxategi bat da"
+
+#: units/files/templates_preview.php:31
+msgid "filename"
+msgstr "fitxategiaren izena"
+
+#: units/files/templates_preview.php:40
+msgid "Files and folders"
+msgstr "Fitxategiak eta karpetak"
+
+#: units/files/weblogs_posts_add_fields.php:55
+#, php-format
+msgid "Embed a file from your %s file storage:"
+msgstr "Zure %s fitxategi-direktoriotik fitxategi bat txertatu:"
+
+#: units/files/weblogs_posts_add_fields.php:79
+msgid ""
+"This will add a code to your weblog post that will be converted into an "
+"embedded file."
+msgstr ""
+"Honek zure weblogari kode bat gehituko dio, ondoren atxikitutako fitxategi "
+"batean bihurtuko dena."
+
+#: units/friends/friends_actions.php:24
+#, php-format
+msgid "%s was added to your friends list."
+msgstr "%s zure lagunen zerrendan gehitua izan da."
+
+#: units/friends/friends_actions.php:26
+#, php-format
+msgid ""
+"%s has added you as a friend!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+"%s lagun gisa gehitu zaitu!\n"
+"\n"
+"Erabiltzaile honen profila bisitatzeko klikatu ondoko estekan:\n"
+"\n"
+"\t"
+
+#: units/friends/friends_actions.php:29
+#, php-format
+msgid "New %s friend"
+msgstr "%s lagun berria"
+
+#: units/friends/friends_actions.php:34
+#, php-format
+msgid "%s couldn't be added to your friends list."
+msgstr "%s ezin izan da zure lagun zerrendara sartu."
+
+#: units/friends/friends_actions.php:40
+#, php-format
+msgid ""
+"%s has elected to moderate friendship requests. Your request has been added "
+"to their moderation queue."
+msgstr ""
+"%s k adiskidetasun eskaerak mugatzea erabaki du. Zure eskaera bere moderazio-"
+"ilarara gehitu da."
+
+#: units/friends/friends_actions.php:42
+#, php-format
+msgid ""
+"%s has requested to add you as a friend!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+"%s k zure laguna izatea eskatu du!\n"
+"\n"
+"Erabiltzaile honen profila bisitatzeko klikatu ondoko estekan:\n"
+"\n"
+"\t"
+
+#: units/friends/friends_actions.php:45
+#, php-format
+msgid "New %s friend request"
+msgstr "%sren lagun izate eskaera berria"
+
+#: units/friends/friends_actions.php:50
+#, php-format
+msgid ""
+"%s has elected to moderate friendship requests, but your friend request "
+"couldn't be added to their moderation queue."
+msgstr ""
+"%s k adiskidetasun eskaerak mugatzea erabaki du, baina zure eskaera ezin "
+"izan da bere moderazio-ilarara gehitu."
+
+#: units/friends/friends_actions.php:54
+#, php-format
+msgid ""
+"%s has decided not to allow any new friendship requests at this time. Your "
+"friendship request has been declined."
+msgstr ""
+"%s -k momentuz lagun izateko eskaerarik ez baimentzea erabaki du. Zure lagun "
+"izateko eskaera gaitzetsia izan da."
+
+#: units/friends/friends_actions.php:64
+msgid " was removed from your friends."
+msgstr " zure lagun izateari utzi dio."
+
+#: units/friends/friends_actions.php:68
+msgid " couldn't be removed from your friends."
+msgstr " ezin izan zuen zure lagun izateari utzi."
+
+#: units/friends/friends_actions.php:86
+#, php-format
+msgid "You approved the friendship request. %s now lists you as a friend."
+msgstr ""
+"Laguntasun eskaera onartu zenuen. %s k lagun zerrendan azalduko da orain."
+
+#: units/friends/friends_actions.php:87
+#, php-format
+msgid ""
+"%s has approved your friendship request!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+"%s -ek zure lagun izateko eskaera onartu du\n"
+"\n"
+"Erabiltzailearen profila ikusteko, lotura hauetan klikatu:\n"
+"\n"
+"\t"
+
+#: units/friends/friends_actions.php:90
+#, php-format
+msgid "%s friend request approved!"
+msgstr "%s ren laguntasun eskaera onartua!"
+
+#: units/friends/friends_actions.php:93
+msgid "An error occurred: couldn't add you as a friend"
+msgstr "Errore bat gertatu da: ezin izan zara lagun gisa gehitua izan"
+
+#: units/friends/friends_actions.php:96 units/friends/friends_actions.php:120
+msgid "Error: you do not have authority to modify this friendship request."
+msgstr "Errorea: ez duzu laguntasun eskaera hau moldatzeko baimenik."
+
+#: units/friends/friends_actions.php:99 units/friends/friends_actions.php:123
+msgid "An error occurred: the friendship request could not be found."
+msgstr "Errore bat gertatu da: lagun izateko eskaera ezin izan da aurkitu."
+
+#: units/friends/friends_actions.php:113
+#, php-format
+msgid ""
+"You declined the friendship request. %s does not list you as a friend."
+msgstr ""
+"Lagun izateko eskaera gaitzetsi duzu. %s -k ez zaitu izen bezala zerrendatu."
+
+#: units/friends/friends_actions.php:114
+#, php-format
+msgid ""
+"%s has denied your friendship request.\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+"%s -ek zure lagun izateko eskaera gaitzetsi du\n"
+"\n"
+"Erabiltzailearen profila ikusteko, lotura hauetan klikatu:\n"
+"\n"
+"\t"
+
+#: units/friends/friends_actions.php:117
+#, php-format
+msgid "%s friend request denied"
+msgstr "%s lagun eskaera gaitzetsia"
+
+#: units/friends/friends_edit.php:47
+msgid ""
+"You don't have any friends listed! To add a user as a friend, click the "
+"'friend' button underneath a user's icon."
+msgstr ""
+"Ez duzu lagunik zerrendaturik! Lagunak gehitzeko, klikatu 'lagun' botoia "
+"erabiltzaile ikonoaren azpian."
+
+#: units/friends/friends_edit.php:49
+msgid ""
+"This user doesn't currently have any friends listed. Maybe if you list them "
+"as a friend, it'll start the ball rolling ..?"
+msgstr ""
+"Erabiltzaileak ez du lagunik zerrendaturik. Beharbada zure listan "
+"zerrendatzen baduzu jendea animatzen hasiko da...?"
+
+#: units/friends/friends_of_edit.php:18
+#, php-format
+msgid "Displaying 1000 most recently active people, of %d found."
+msgstr "1000 erabiltzaile aktiboenak erakusten. %d aurkitu dira."
+
+#: units/friends/friends_of_edit.php:58
+msgid ""
+"Nobody's listed you as a friend! Maybe you need to start chatting to some "
+"other users?"
+msgstr ""
+"Ez dago inor zerrendatuta lagun gisa! Beste erabiltzaileren batekin "
+"chateatzen hasi beharko zenuke akaso?"
+
+#: units/friends/friends_of_edit.php:60
+msgid ""
+"This user isn't currently listed as anyone's friend. Maybe you could be the "
+"first?"
+msgstr ""
+"Erabiltzaile hau orain ez dago zerrendatuta inoren lagun gisa. Zu izan "
+"zaitezke lehena agian?"
+
+#: units/friends/profile_friends.php:20 units/friends/profile_friends.php:29
+msgid "View all Friends"
+msgstr "Lagun guztiak ikusi"
+
+#: units/friends/profile_friends.php:27 units/friends/user_friends.php:14
+msgid "Your Friends"
+msgstr "Zure Lagunak"
+
+#: units/friends/user_friendship_requests.php:16
+msgid ""
+"The following users would like to add you as a friend. They need your "
+"approval to do this (to change this setting, visit the 'account settings' "
+"page)."
+msgstr ""
+"Ondoko erabiltzaileek lagun gisa gehitu nahi zaituzte. Zure onarpena behar "
+"dute hori egin ahal izateko (ezarpen hau aldatzeko, bisita ezazu  'kontuaren "
+"ezarpenak' orrialdea)."
+
+#: units/friends/user_friendship_requests.php:51
+msgid "You have no pending friendship requests."
+msgstr "Ez duzu laguntasun eskaerarik erantzun gabe."
+
+#: units/friends/user_friends.php:14
+msgid "Friends Screen"
+msgstr "Lagunen pantaila"
+
+#: units/friends/user_info_menu_text.php:19
+msgid "Are you sure you want to add this user as a friend?"
+msgstr "Ziur al zaude erabiltzaile hau lagun gisa gehitu nahi duzula?"
+
+#: units/friends/user_info_menu_text.php:19
+msgid "Click here to add this user as a friend."
+msgstr "Hemen klikatu erabiltzaile hau lagun gisa gehitzeko."
+
+#: units/friends/user_info_menu_text.php:26
+msgid "Are you sure you want to remove this user from your friends list?"
+msgstr ""
+"Ziur al zaude erabiltzaile hau zure lagun zerrendatik ezabatu nahi duzula?"
+
+#: units/friends/user_info_menu_text.php:26
+msgid "Click here to remove this user from your friends list."
+msgstr "Hemen klikatu erabiltzaile hau zure lagun zerrendatik ezabatzeko."
+
+#: units/gettext/library.php:410
+msgid "Language selection"
+msgstr "Hizkuntzaren aukeraketa"
+
+#: units/gettext/library.php:411
+msgid ""
+"Choose your preferred language for this site. The following languages are "
+"available on this system:"
+msgstr ""
+"Gune honetarako zure hizkuntza lehenetsia aukeratu. Sistema honetan ondoko "
+"hizkuntzen artean aukera dezakezu:"
+
+#: units/gettext/library.php:422
+msgid "No languages installed"
+msgstr "Ez dago hizkuntzarik istalatuta"
+
+#: units/gettext/library.php:480 units/gettext/library.php:485
+msgid "Preferred language"
+msgstr "Hobetsitako hizkuntza"
+
+#: units/gettext/library.php:480
+msgid "saved"
+msgstr "gordea"
+
+#: units/gettext/library.php:485
+msgid "not changed"
+msgstr "ez da aldatu"
+
+#: units/groups/groups_access_levels.php:8
+msgid "Group"
+msgstr "Taldea"
+
+#: units/groups/groups_actions.php:27
+msgid "Your group was updated."
+msgstr "Zure taldea eguneratua izan da."
+
+#: units/groups/groups_create.php:3
+msgid "Create a new group"
+msgstr "Talde berri bat sortu"
+
+#: units/groups/groups_create.php:4
+msgid "Group name:"
+msgstr "Taldearen izena:"
+
+#: units/groups/groups_display_membership.php:6
+msgid "Group membership"
+msgstr "Taldearen partaideak"
+
+#: units/groups/groups_display_membership.php:15
+#, php-format
+msgid "Owned by %s"
+msgstr "%sn jabetzakoa"
+
+#: units/groups/groups_edit_display.php:13
+msgid "Your friends:"
+msgstr "Zure lagunak:"
+
+#: units/groups/groups_edit_display.php:44
+msgid "Add selected to group"
+msgstr "Aukeratutakoa taldera gehitu"
+
+#: units/groups/groups_edit_display.php:53
+msgid "Remove selected from group"
+msgstr "Aukeratutakoa taldetik ezabatu"
+
+#: units/groups/groups_edit_display.php:54
+msgid "Members of this group:"
+msgstr "Talde honetako partaideak:"
+
+#: units/groups/groups_edit_display.php:72
+msgid "Save this group"
+msgstr "Talde hau gorde"
+
+#: units/groups/groups_edit_display.php:73
+msgid "Delete this group"
+msgstr "Talde hau ezabatu"
+
+#: units/groups/groups_edit_existing.php:6
+msgid "Groups you own"
+msgstr "Dauzkazun taldeak"
+
+#: units/groups/groups_editpage.php:4
+msgid "Existing groups"
+msgstr "Dauden taldeak"
+
+#: units/groups/groups_explanation.php:3
+msgid ""
+"Access is controlled through the use of Access groups and this is one of the "
+"most powerful features of Elgg. Access groups allow you to have complete "
+"control over who sees what within your environment. You can create as many "
+"access groups as you wish. Each access group can have as many of your "
+"friends as you like and each access group created becomes another option in "
+"the 'access restriction' dropdown menu beside each profile item, weblog post "
+"and file uploaded."
+msgstr ""
+"Sarrera, Taldeen sarreraren bitartez kontrolatzen da eta hau da Elgg-en "
+"ezaugarri potenteenetako bat. Taldeen sarrerak zure ingurunean zeinek zer "
+"ikusten duen guztia kontrolatzeko aukera eskainzen dizu. Nahi dituzun talde "
+"sarrera guztiak sortu ditzazkezu. Sarrera talde bakoitzak nahi dituzun lagun "
+"guztiak izan ditzazke eta talde sarrera bakoitzak profil bakoitzaren "
+"itemaren, weblog posta eta igotako fitxategien ondoan beste 'sarrera "
+"mugatuen' azpimenuak sortzeko aukera ere eskaintzen dizu."
+
+#: units/groups/groups_explanation.php:4 units/groups/groups_help.php:4
+msgid ""
+"When you create an access group, add people to it then select it as your "
+"access restriction on a weblog post only the people in that group will be "
+"able to see that weblog post and so on for all elements in your learning "
+"landscape."
+msgstr ""
+
+#: units/groups/groups_help.php:3
+msgid "This is a help file for the Groups functions."
+msgstr "Hau Taldeen funtzioentzako laguntza fitxategi bat da."
+
+#: units/icons/function_actions.php:57
+msgid "Your selected icons were deleted."
+msgstr "Aukeratu dituzun ikonoak ezabatuak izan dira."
+
+#: units/icons/function_actions.php:71
+msgid ""
+"You have already met your icon quota. You must delete some icons before you "
+"can upload any new ones."
+msgstr ""
+"Zure ikono kuota gainditu duzu. Zenbait ikono ezabatu behar dituzu berriak "
+"igo ahal izateko."
+
+#: units/icons/function_actions.php:79
+msgid "Attempting to upload icon file ..."
+msgstr "Ikono fitxategi bat igotzen..."
+
+#: units/icons/function_actions.php:86
+msgid ""
+"The uploaded icon file was invalid. Please ensure you are using JPEG, GIF or "
+"PNG files."
+msgstr ""
+"Igotako ikono fitxategia ez da baliagarria. Ziurtatu JPEG, GIF edo PNG "
+"fitxategi bat igotzen ari zarela."
+
+#: units/icons/function_actions.php:118
+msgid ""
+"The uploaded icon file was in an image format other than JPEG, GIF or PNG. "
+"These are unsupported at present."
+msgstr ""
+"Igotako ikonoak JPEG, GIF edo PNG ez den beste formatu batetan dagoen irudi "
+"bat da. Ezin da onartu orain."
+
+#: units/icons/function_actions.php:138
+msgid "Your icon was uploaded successfully."
+msgstr "Zure ikonoa ondo igo da."
+
+#: units/icons/function_actions.php:141
+msgid ""
+"An unknown error occurred when saving your icon. If this problem persists, "
+"please let us know and we'll do all we can to fix it quickly."
+msgstr ""
+"Errore ezezagun bat suertatu da zure ikonoa gordetzerakoan. Arazo honek bere "
+"hortan jarraitzen badu, mesedez jakin arazi iezaguzu eta ahal duguna egingo "
+"dugu lehen bait lehen konpontzeko."
+
+#: units/icons/function_add_icons.php:15
+msgid "Upload a new picture"
+msgstr "Argazki berri bat igo"
+
+#: units/icons/function_add_icons.php:16
+msgid ""
+"Upload a picture for this profile below. Pictures need to be 100x100 pixels "
+"or smaller, but don't worry - if you've selected a larger picture, we'll "
+"shrink it down for you. You may upload up to"
+msgstr ""
+"Irudi bat igo ondoko profilarentzat. Irudiak 100x100 pixeletakoa, edo "
+"txikiagoa izan behar du, baina ez larritu - handiagoa den irudi bat "
+"aukeratzen baldin baduzu, txikituko dizugu. Igo dezakezu"
+
+#: units/icons/function_add_icons.php:17
+msgid "pictures in total."
+msgstr "argazkiak guztira."
+
+#: units/icons/function_add_icons.php:26
+msgid "Picture to upload:"
+msgstr "Igotzeko irudia:"
+
+#: units/icons/function_add_icons.php:37
+msgid "Icon description:"
+msgstr "Ikono deskribapena:"
+
+#: units/icons/function_add_icons.php:45
+msgid "Make this the default icon:"
+msgstr "Ikono hau hobetsitako ikono bilakatu:"
+
+#: units/icons/function_add_icons.php:58
+msgid "Upload new icon"
+msgstr "Ikono berria igo"
+
+#: units/icons/function_edit_icons.php:21
+msgid "Site pictures"
+msgstr "Gunearen argazkiak"
+
+#: units/icons/function_edit_icons.php:31
+msgid ""
+"Site pictures are small pictures that act as a representative icon "
+"throughout the system."
+msgstr ""
+"Guneko argazkiak sisteman zehar ordezkatze lanak egiten dituzten argazki "
+"txikiak dira."
+
+#: units/icons/function_edit_icons.php:55
+msgid "Name:"
+msgstr "Izena:"
+
+#: units/icons/function_edit_icons.php:56
+msgid "Default:"
+msgstr "Hobetsitakoa:"
+
+#: units/icons/function_edit_icons.php:79
+msgid "No default:"
+msgstr "Ez hobetsitakoa:"
+
+#: units/icons/function_edit_icons.php:100
+msgid "You don't have any site pictures loaded yet."
+msgstr "Ez duzu guneko irudirik kargatuta oraindik."
+
+#: units/invite/invite_actions.php:34
+msgid "They included the following message:"
+msgstr "Mezu hauek ditu:"
+
+#: units/invite/invite_actions.php:38
+#, php-format
+msgid "Thank you for registering with %s."
+msgstr "Eskerrik asko %s-rekin izen emateagatik."
+
+#: units/invite/invite_actions.php:39
+#, php-format
+msgid "%s account verification"
+msgstr "%s kontu egiaztapena"
+
+#: units/invite/invite_actions.php:42 units/invite/invite_actions.php:43
+msgid "has invited you to join"
+msgstr "parte-hartzera gonbidatu zaituzte"
+
+#: units/invite/invite_actions.php:42
+msgid "a learning landscape system."
+msgstr "ikasketa ingurune sistema bat."
+
+#: units/invite/invite_actions.php:46
+#, php-format
+msgid ""
+"Dear %s,\n"
+"\n"
+"%s %s\n"
+"\n"
+"To join, visit the following URL:\n"
+"\n"
+"\t%s\n"
+"\n"
+msgstr ""
+"%s maitea,\n"
+"\n"
+"%s %s\n"
+"\n"
+"Sartzeko, bisita ezazu ondoko URLa:\n"
+"\n"
+"tab]%s\n"
+"\n"
+
+#: units/invite/invite_actions.php:51
+#, php-format
+msgid ""
+"Your invitation was sent to %s at %s. It will be valid for seven days."
+msgstr ""
+"Zure gonbidapena %s bidali zaio %s tan. Zazpi egunetan balio izango du."
+
+#: units/invite/invite_actions.php:54
+#, php-format
+msgid "User %s already has that email address. Invitation not sent."
+msgstr ""
+"%s erabiltzaileak dagoeneko badauka posta elektroniko helbide hau. "
+"Gonbidapena ez da bidali."
+
+#: units/invite/invite_actions.php:57
+msgid ""
+"Someone with that email address has already been invited to the system. "
+msgstr ""
+"Posta elektroniko helbide hau duen norbait sistemara gonbidatua izan da "
+"dagoeneko. "
+
+#: units/invite/invite_actions.php:60
+msgid "Invitation failed: The email address was not valid."
+msgstr "Gonbidapenak huts egin du: Posta elektroniko helbidea okerra da."
+
+#: units/invite/invite_actions.php:63
+msgid "Error: This community has reached its maximum number of users."
+msgstr "Errorea: Komunitate hau gehienezko erabiltzaile kopurura iritsi da."
+
+#: units/invite/invite_actions.php:66
+msgid "Invitation failed: you are not logged in."
+msgstr "Gonbidapenak huts egin du: ez zaude identifikaturik."
+
+#: units/invite/invite_actions.php:69
+msgid "Invitation failed: you must specify both a name and an email address."
+msgstr ""
+"Gonbidapena gaizki joan da: izen eta posta elektroniko helbidea zehaztu "
+"behar dituzu."
+
+#: units/invite/invite_actions.php:82
+msgid ""
+"Unfortunately this community has reached its account limit and you are "
+"unable to join at this time."
+msgstr ""
+"Zoritxarrez komunitate honek bere kontu mugara iritsi da ezin duzu orain "
+"izen eman."
+
+#: units/invite/invite_actions.php:85
+msgid "You must indicate that you are at least 13 years old to join."
+msgstr "Gutxienez 13 urte dituzula zehaztu behar duzu sartzeko."
+
+#: units/invite/invite_actions.php:89
+msgid "Error! Invalid invite code."
+msgstr "Errorea! Gonbidapen kode"
+
+#: units/invite/invite_actions.php:138
+msgid ""
+"Your account was created! You can now log in using the username and password "
+"you supplied. You have been sent an email containing these details for "
+"reference purposes."
+msgstr ""
+"Zure kontua sortu da! Emandako izen eta pasahitzak erabiliz sar zaitezke. "
+"Informazio horrekin posta elektroniko bat bidali dizugu, erreferentzia "
+"helburuarekin bakarrik."
+
+#: units/invite/invite_actions.php:140
+#, php-format
+msgid "Your %s account"
+msgstr "Zure %s kontua"
+
+#: units/invite/invite_actions.php:141
+#, php-format
+msgid ""
+"Thanks for joining %s!\n"
+"\n"
+"For your records, your %s username and password are:\n"
+"\n"
+"\t"
+msgstr ""
+"Eskerrik asko izen emateagatik, %s!\n"
+"\n"
+"Gogoratu, zure %s erabiltzailea eta pasahitz hauek dira:\n"
+"\n"
+"\t"
+
+#: units/invite/invite_actions.php:160
+#, php-format
+msgid "Verify your %s account password request"
+msgstr "Begiratu zure %s kontuaren pasahitz eskaera"
+
+#: units/invite/invite_actions.php:161
+#, php-format
+msgid ""
+"A request has been received to generate your account at %s a new password.\n"
+"\n"
+msgstr ""
+"Eskaera bat jaso da zure %s kontuarentzako pasahitz berri bat sortzeko.\n"
+"\n"
+
+#: units/invite/invite_actions.php:165
+msgid "Your verification email was sent. Please check your inbox."
+msgstr ""
+"Egiaztapen posta elektronikoa bidalia izan da. Zure posta elektroniko kontua "
+"egiaztatu."
+
+#: units/invite/invite_actions.php:167
+msgid "No user with that username was found."
+msgstr "Ez da izen horrekin erabiltzailerik aurkitu."
+
+#: units/invite/invite_join.php:29
+#, php-format
+msgid ""
+"Thank you for registering for an account with %s! Registration is completely "
+"free, but before you confirm your details, please take a moment to read the "
+"following documents:"
+msgstr ""
+"Eskerrik asko %s kontu batetetan erregistratzeagatik! Erregistroa guztiz "
+"doanekoa da baina zure datuak sartu aurretik irakurri ondoko dokumentuak "
+"mesedez:"
+
+#: units/invite/invite_join.php:30 units/invite/join_noinvite.php:10
+msgid "terms and conditions"
+msgstr "erabilpen baldintzak"
+
+#: units/invite/invite_join.php:31 units/invite/join_noinvite.php:11
+msgid "Privacy policy"
+msgstr "Pribatutasun oharra"
+
+#: units/invite/invite_join.php:32
+msgid ""
+"Submitting the form below indicates acceptance of these terms. Please note "
+"that currently you must be at least 13 years of age to join the site."
+msgstr ""
+"Formulario hau bidaltzeak baldintzen onarpena adierazten du. Gunera sartzeko "
+"13 urteko adina behintzat eduki behar duzula kontutan hartu."
+
+#: units/invite/invite_join.php:52 units/invite/join_noinvite.php:32
+#: units/weblogs/weblogs_comments_add.php:48
+msgid "Your name"
+msgstr "Zure izena"
+
+#: units/invite/invite_join.php:58
+msgid "Your username - (Must be letters only)"
+msgstr "Zure erabiltzaile izena - (Hizkiak izan behar dute soilik)"
+
+#: units/invite/invite_join.php:64
+msgid "Enter a password"
+msgstr "Pasahitza sartu"
+
+#: units/invite/invite_join.php:70
+msgid "Your password again for verification purposes"
+msgstr "Zure pasahitza berriro egiaztapen helburuarekin"
+
+#: units/invite/invite_join.php:74
+msgid "I am at least thirteen years of age."
+msgstr "Hamahiru urte dauzkat gutxienez."
+
+#: units/invite/invite_join.php:75
+msgid "Join"
+msgstr "Sartu"
+
+#: units/invite/invite_join.php:90
+#, php-format
+msgid ""
+"Your invitation code appears to be invalid. Codes only last for seven days; "
+"it's possible that yours is older. If you still want to join %s, it may be "
+"worth getting in touch with the person who invited you."
+msgstr ""
+"Zure gonbidapen kodea okerra dela dirudi. Kodeek zazpi egunetako "
+"baliogarritasuna dute; zurea zaharragoa izan daiteke. Oraindik %s n sartzeko "
+"asmoa baldin baduzu, gonbidatu zintuen pertsonarekin kontaktuan jartzea izan "
+"daiteke onena."
+
+#: units/invite/invite_join.php:102
+#, php-format
+msgid ""
+"For the moment, joining %s requires a specially tailored invite code. If you "
+"know someone who's a member, it may be worth asking them for one."
+msgstr ""
+"Momentuz, %s a sartzeak bereziki zehaztutako gonbidapen kode bat eskatzen "
+"du. Bertako kide den norbait ezagutzen baldin baduzu berari eskatzea izan "
+"daiteke onena."
+
+#: units/invite/invite.php:12
+msgid "Their name"
+msgstr "Beren izena"
+
+#: units/invite/invite.php:18
+msgid "Their email address"
+msgstr "Beren posta elektronikoaren helbidea"
+
+#: units/invite/invite.php:25
+msgid "An optional message"
+msgstr "Aukerako mezu bat"
+
+#: units/invite/invite.php:33
+msgid "Invite"
+msgstr "Gonbidatu"
+
+#: units/invite/join_noinvite.php:9
+#, php-format
+msgid ""
+"Thank you for registering for an account with %s! Registration is completely "
+"free, but before you fill in your details, please take a moment to read the "
+"following documents:"
+msgstr ""
+"Eskerrik asko %s n kontu bat erregistratzeagatik! Erregistroa doanekoa da "
+"guztiz, baina zure datuak sartu aurretik irakur itzazu ondoko dokumentuak "
+"mesedez:"
+
+#: units/invite/join_noinvite.php:12
+msgid ""
+"When you fill in the details below, we will send an \"invitation code\" to "
+"your email address in order to validate it. You must then click on this "
+"within seven days to create your account."
+msgstr ""
+"Ondoko eremuak zure datuekin betetzen dituzunean \"gonbidapen kode\" bat "
+"bidaliko dizugu zure posta elektronikora balioztaketa egiteko. Bertan "
+"klikatu behar duzu zazpi egunen barruan zure kontua sortzeko."
+
+#: units/invite/join_noinvite.php:38
+msgid "Your email address"
+msgstr "Zure posta elekronikoaren helbidea"
+
+#: units/invite/new_password.php:12
+#, php-format
+msgid ""
+"A new password has been emailed to you at %s. You should be able to use it "
+"immediately; your old one has been deactivated."
+msgstr ""
+"Pasahitz berri bat bidali zaizu %s posta elektronikora. Berehala erabili "
+"ahal izago duzu; zure pasahitz zaharra desgaitua izan da."
+
+#: units/invite/new_password.php:28
+#, php-format
+msgid "Your %s password"
+msgstr "Zure pasahitza %s"
+
+#: units/invite/new_password.php:28
+#, php-format
+msgid ""
+"Your %s password has been reset.\n"
+"\n"
+"For your records, your new password is:\n"
+"\n"
+"\t"
+msgstr ""
+"Zure %s parahitza aldatua izan da.\n"
+"\n"
+"Zure informazioa gordetzeko zure pasahitz berria ondokoa da:\n"
+"\n"
+"\t"
+
+#: units/invite/new_password.php:37
+msgid ""
+"Your password request code appears to be invalid. Try generating a new one?"
+msgstr "Zure pasahitz kodea ez da baliagarria. Saiatu berri bat sortzen?"
+
+#: units/invite/new_password.php:49
+msgid "Sorry, your code was invalid."
+msgstr "Barkatu, zure kodea ez da baliagarria."
+
+#: units/invite/password_request.php:5
+#, php-format
+msgid ""
+"To generate a new password at %s!, enter your username below. We will send "
+"the address of a unique verification page to you via email click on the link "
+"in the body of the message and a new password will be sent to you."
+msgstr ""
+"%s n pasahitz berri bat sortzeko!, sartu zure erabiltzaile izena jarraian. "
+"Egiaztapen orri bakar baten helbidea bidaliko dizugu emailez. Klikatu mezuan "
+"dagoen estekan eta pasahitz berri bat bidaliko dizugu."
+
+#: units/invite/password_request.php:6
+msgid "This method reduces the chance of a mistakenly reset password."
+msgstr ""
+"Metodo honek pasahitza nahigabe berrasierazteko aukerak murrizten ditu."
+
+#: units/invite/password_request.php:22
+msgid "Your username"
+msgstr "Zure erabiltzaile izena"
+
+#: units/invite/password_request.php:26
+msgid "Request new password"
+msgstr "Pasahitz berria eskatu"
+
+#: units/magpie/default_template.php:8
+msgid "Feed Post"
+msgstr "Jarioko Mezua"
+
+#: units/magpie/default_template.php:9
+msgid "A template for each post in a feed."
+msgstr "Txantiloi bat feed baten posta bakoitzarentzako."
+
+#: units/magpie/default_template.php:11 units/weblogs/default_template.php:11
+msgid "Post title"
+msgstr "Postaren izenburua"
+
+#: units/magpie/default_template.php:12 units/weblogs/default_template.php:12
+msgid "The text of the post"
+msgstr "Postaren testua"
+
+#: units/magpie/default_template.php:13
+msgid "An icon for the user"
+msgstr "Erabiltzailearentzako ikonoa"
+
+#: units/magpie/default_template.php:14
+msgid "The feed name"
+msgstr "Feed-aren izena"
+
+#: units/magpie/default_template.php:15
+msgid "A short description of the feed"
+msgstr "Feed-aren deskribapen labur bat"
+
+#: units/magpie/default_template.php:16
+msgid "A link to the post"
+msgstr "Postarentzat esteka"
+
+#: units/magpie/default_template.php:17
+msgid "A link to the host site"
+msgstr "Esteka bat host-gunera"
+
+#: units/magpie/default_template.php:18
+msgid "A link to the host feed"
+msgstr "Esteka bat host feed-era"
+
+#: units/magpie/default_template.php:19
+msgid "Buttons to subscribe or unsubscribe"
+msgstr "Harpidetu eta harpidetza uzteko botoiak"
+
+#: units/magpie/default_template.php:24
+msgid "Added"
+msgstr "Gehitua"
+
+#: units/magpie/function_actions.php:23 units/magpie/function_actions.php:87
+#: units/magpie/function_actions.php:107
+msgid "Your feed subscription was successful."
+msgstr "Zure feed-harpidetza ondo egin da."
+
+#: units/magpie/function_actions.php:25
+msgid "Feed subscription failed: you are already subscribed to this feed."
+msgstr ""
+"Jariora harpidetzak huts egin du: jario honetara harpidetua zaude jada."
+
+#: units/magpie/function_actions.php:34
+msgid "Your have successfully removed this feed from your subscriptions."
+msgstr "Zure harpidetzetatik jario hau ezabatua izan da."
+
+#: units/magpie/function_actions.php:36
+msgid "Feed unsubscription failed: you are not subscribed to this feed."
+msgstr ""
+"Jariora harpidetza ezabatzeak huts egin du: ez zaude jario honetara "
+"harpideturik."
+
+#: units/magpie/function_actions.php:62
+msgid ""
+"Feed not imported to blog: You cannot import a feed from this account."
+msgstr ""
+"Jarioa ez da blogera inportatu: Ezin duzu jarioa inportatu kontu honetatik."
+
+#: units/magpie/function_actions.php:89
+msgid "Feed subscription failed: this feed subscription already exists."
+msgstr ""
+"Jariora harpidetzak huts egin du: jario honetara harpidetua zaude jada."
+
+#: units/magpie/function_actions.php:96
+msgid "Feed subscription failed: SSL feed reading is not enabled."
+msgstr ""
+"Jariora harpidetzak huts egin du: SSL jario irakurketa ez dago gaitua."
+
+#: units/magpie/function_actions.php:110
+msgid ""
+"Feed subscription failed: feed appears to be invalid. Please check your link "
+"or try later."
+msgstr ""
+"Jariora harpidetzak huts egin du: jarioa ez da baliagarria. Aztertu "
+"jarioaren esteka eta saiatu beranduago mesedez."
+
+#: units/magpie/function_actions.php:114
+msgid ""
+"Feed subscription failed: could not get feed. Please check your link or try "
+"later."
+msgstr ""
+"Jariora harpidetzak huts egin du: ezin da jarioa eskuratu. Aztertu jarioaren "
+"esteka eta saiatu beranduago mesedez."
+
+#: units/magpie/function_actions.php:116
+msgid "Error message was: "
+msgstr "Errore mezua: "
+
+#: units/magpie/function_subscriptions.php:14
+#: units/magpie/function_subscriptions_popular.php:6
+msgid ""
+"Feeds are information streams from other sites. You will often see a link to "
+"an 'RSS' feed while browsing; enter the link address into the 'add feed' box "
+"at the bottom of the page to read that information from within your learning "
+"landscape."
+msgstr ""
+"Feed-ak beste guneetako informazio jarioak dira. RSS feed batetara doan "
+"esteka bat ikusiko duzu maiz bilaketa bat egiten duzun bitartean; "
+"orrialdearen azpikaldean dagoen  'feed-a gehitu' kaxan estekaren helbidea "
+"sartu zure ikasketa ingurunetik mugitu gabe informazioa irakurri ahal "
+"izateko."
+
+#: units/magpie/function_subscriptions.php:25
+#: units/magpie/function_subscriptions_popular.php:14
+#: units/magpie/function_subscriptions_publish_to_blog.php:22
+msgid "Last updated"
+msgstr "Azken eguneratzea"
+
+#: units/magpie/function_subscriptions.php:26
+#: units/magpie/function_subscriptions_publish_to_blog.php:23
+msgid "Resource name"
+msgstr "Baliabidearen izena"
+
+#: units/magpie/function_subscriptions.php:33
+#: units/magpie/function_subscriptions_publish_to_blog.php:43
+msgid "View content"
+msgstr "Edukia ikusi"
+
+#: units/magpie/function_subscriptions.php:41
+#: units/magpie/function_subscriptions_popular.php:27
+#: units/magpie/function_view_post.php:44
+msgid "Are you sure you want to unsubscribe from this feed?"
+msgstr "Ziur al zaude feed honetatik harpidetza eten nahi duzula?"
+
+#: units/magpie/function_subscriptions.php:41
+#: units/magpie/function_subscriptions_popular.php:27
+#: units/magpie/function_view_post.php:44
+msgid "Unsubscribe"
+msgstr "Harpidetza eten"
+
+#: units/magpie/function_subscriptions.php:59
+#: units/magpie/function_subscriptions_publish_to_blog.php:60
+msgid "Update"
+msgstr "Eguneratu"
+
+#: units/magpie/function_subscriptions.php:69
+#: units/magpie/function_subscriptions_publish_to_blog.php:70
+msgid "You are not subscribed to any feeds."
+msgstr "Ez zaude inolako feed-era harpidetuta."
+
+#: units/magpie/function_subscriptions.php:71
+#: units/magpie/function_subscriptions_publish_to_blog.php:72
+msgid "No feeds were found."
+msgstr "Ez da feed-ik aurkitu."
+
+#: units/magpie/function_subscriptions.php:76
+#: units/magpie/function_subscriptions_popular.php:47
+msgid "To subscribe to a new feed, enter its address below:"
+msgstr ""
+"Feed berri batetara harpidetzeko sartu zure posta elektronikoaren helbidea "
+"ondoren:"
+
+#: units/magpie/function_subscriptions.php:82
+#: units/magpie/function_subscriptions_popular.php:29
+#: units/magpie/function_subscriptions_popular.php:53
+#: units/magpie/function_view_post.php:46
+msgid "Subscribe"
+msgstr "Harpidetu"
+
+#: units/magpie/function_subscriptions_popular.php:7
+msgid "This is a list of the feeds with the most subscribers."
+msgstr "Harpidedun gehien dituzten feed-en zerrenda bat da hau."
+
+#: units/magpie/function_subscriptions_popular.php:15
+msgid "Link to site"
+msgstr "Guneko estekak"
+
+#: units/magpie/function_subscriptions_popular.php:21
+msgid "Unnamed Feed"
+msgstr "Izenik Gabeko Feeda"
+
+#: units/magpie/function_subscriptions_popular.php:23
+msgid "View posts"
+msgstr "Postak ikusi"
+
+#: units/magpie/function_subscriptions_popular.php:29
+#: units/magpie/function_view_post.php:46
+msgid "Are you sure you want to subscribe to this feed?"
+msgstr "Ziur al zaude feed honetan harpidetu nahi duzula?"
+
+#: units/magpie/function_subscriptions_popular.php:32
+msgid "Subscribers"
+msgstr "Harpiedunak"
+
+#: units/magpie/function_subscriptions_popular.php:45
+msgid "No-one has subscribed to any feeds."
+msgstr "Inor ez da inongo jarioetara harpidetu."
+
+#: units/magpie/function_subscriptions_publish_to_blog.php:11
+msgid ""
+"Click a box below to automatically import content from a feed into your "
+"blog. You can also add default keywords for content from that feed. (You "
+"should only do this if you have the legal right to use this resource - in "
+"other words, you must have permission from the content owner.)"
+msgstr ""
+"Ondoko kaxa klikatu feed batetatik automatikoki edukiak inportatzeko zure "
+"blogera. Feed horretatik jasotako edukientzako hobetsitako hitz-gakoak "
+"gehitu ditzazkezu. (Hau, baliabide honen eskubide legakak baldin badituzu  "
+"egin beharko zenuke soilik - beste hitzetan, edukiaren jabearen baimenak "
+"izan behar dituzu)."
+
+#: units/magpie/function_subscriptions_publish_to_blog.php:31
+msgid ""
+"Are you sure you want to import this content into your personal blog?\\nYou "
+"should make sure you own it or have permission from the copyright holder."
+msgstr ""
+"Ziur al zaude edukin hau zure blog pertsonalera inportatu nahi "
+"duzula?\\nZurea dela edo jabearen copyright baimenak dauzkazula egiaztatu "
+"beharko zenuke."
+
+#: units/magpie/function_view_individual.php:26
+#: units/magpie/function_view.php:29
+#: units/weblogs/weblogs_all_users_view.php:107
+#: units/weblogs/weblogs_friends_view.php:57
+#: units/weblogs/weblogs_interesting_view.php:52
+#: units/weblogs/weblogs_view.php:53
+msgid "Back"
+msgstr "Atzera"
+
+#: units/magpie/function_view_post.php:28
+msgid "unknown"
+msgstr "ezezaguna"
+
+#: units/magpie/function_view_post.php:40
+msgid "View site"
+msgstr "Gunea ikusi"
+
+#: units/profile/profile_user_info.php:42
+msgid "Your LMS hosts"
+msgstr "Zure LMS hostatzea"
+
+#: units/search/function_search_all_display_rss.php:16
+#, php-format
+msgid "Items tagged with \"%s\" from %s"
+msgstr "\"%s\"-rekin etiketatutako elementua %s-tik"
+
+#: units/search/search_suggest_rss.php:6
+msgid "Syndication"
+msgstr "Sindikazioa"
+
+#: units/search/search_suggest_rss.php:7
+msgid "RSS feed for this tag"
+msgstr "Etiketa honentzako RSS jarioa"
+
+#: units/search/search_suggest_tags.php:22
+msgid "Automatic tag suggestion:"
+msgstr "Automatikoki gomendatutako etiketak:"
+
+#: units/search/search_suggest_users.php:23
+msgid "Matching accounts:"
+msgstr "Bat datozen kontuak:"
+
+#: units/search/search_user_info_menu.php:9
+msgid "Random tags"
+msgstr "Ausazko etiketak"
+
+#: units/search/tags_display_personal.php:40
+msgid "No tags found for this user."
+msgstr "Ez da erabiltzaile honen etiketarik aurkitu."
+
+#: units/search/tags_display.php:7
+msgid ""
+"The following is a selection of keywords used within this site. Click one to "
+"see related users, weblog posts or objects."
+msgstr ""
+"Gune honetan erabiltzen diren etiketen hautaketa bat da hau. Klikatu, "
+"erlazionaturiko erabiltzaile, weblog mezu edo objektuetan."
+
+#: units/templates/default_template.php:61
+msgid "Sidebar section holder"
+msgstr ""
+
+#: units/templates/default_template.php:62
+msgid "Contains the sidebar section titles"
+msgstr "Alboko barraren izenburuak ditu"
+
+#: units/templates/default_template.php:64
+msgid "The header"
+msgstr "Burukoa"
+
+#: units/templates/default_template.php:303
+msgid "adminTable"
+msgstr "kudeaketaTaula"
+
+#: units/templates/default_template.php:304
+msgid ""
+"This table is used to house stats and administration details until a good "
+"CSS solution can be applied."
+msgstr ""
+"Taula honek estatistikak eta kudeaketa ezaugarriak erakusteko balio du CSS "
+"soluzio egoki bat jarri artean."
+
+#: units/templates/default_template.php:306
+#: units/templates/default_template.php:337
+msgid "Column One"
+msgstr "Bat Zutabea"
+
+#: units/templates/default_template.php:307
+#: units/templates/default_template.php:338
+msgid "Column Two"
+msgstr "Bi Zutabea"
+
+#: units/templates/default_template.php:308
+#: units/templates/default_template.php:339
+msgid "Column Three"
+msgstr "Hiru Zutabea"
+
+#: units/templates/default_template.php:334
+msgid "flagContent"
+msgstr "markatutakoEdukia"
+
+#: units/templates/default_template.php:335
+msgid "This holds the flag content function throughout Elgg"
+msgstr "Honek markatutako edukiaren funtzioa du Elgg guztian zehar"
+
+#: units/templates/template_actions.php:26
+msgid "The templates have been changed according to your choices."
+msgstr "Txantiloiak aldatuak izan dira zure aukeren arabera."
+
+#: units/templates/template_actions.php:29
+msgid "No changes made as no area of change where selected!"
+msgstr "Ez da aldaketarik egin, aldaketa eremurik aukeratu ez delako!"
+
+#: units/templates/templates_view.php:88
+msgid "Change templates"
+msgstr "Txantilioiak aldatu"
+
+#: units/templates/templates_view.php:89
+msgid "The selected changes will affect:"
+msgstr "Aukeratutako aldaketek eraginak izango dituzte:"
+
+#: units/templates/templates_view.php:103
+msgid "Your personal space"
+msgstr "Zure gune pertsonala"
+
+#: units/templates/templates_view.php:116
+msgid "Community: "
+msgstr "Komunitatea: "
+
+#: units/tinymce/tinymce_userdetails_actions.php:15
+msgid "Your editor preferences have been saved"
+msgstr "Zure editore hobespenak gorde dira."
+
+#: units/tinymce/tinymce_userdetails_actions.php:18
+msgid "Your editor preferences have been changed"
+msgstr "Zure editore hobespenak gorde dira."
+
+#: units/tinymce/tinymce_userdetails_actions.php:20
+msgid "Your editor preferences could not be changed"
+msgstr "Zure editore hobespenak ezin izan dira aldatu."
+
+#: units/tinymce/tinymce_userdetails_edit.php:3
+msgid "Visual text editing"
+msgstr "Testu edizioa ikusi"
+
+#: units/tinymce/tinymce_userdetails_edit.php:4
+msgid ""
+"Set this to 'yes' if you would like to use a visual (WYSIWYG) text editor "
+"for your posts and comments."
+msgstr ""
+"'bai' bezala markatu (WYSIWYG) testu editore bat erabili nahi baduzu zure "
+"mezu era iruzkinentzat."
+
+#: units/tinymce/tinymce_userdetails_edit.php:20
+#: units/tinymce/tinymce_userdetails_edit.php:27
+msgid "Enable visual editor: "
+msgstr "Editore bisuala onartu: "
+
+#: units/users/function_default_access_levels.php:6
+msgid "Public"
+msgstr "Publikoa"
+
+#: units/users/function_number_of_users.php:7
+#, php-format
+msgid "There are %d active users."
+msgstr "%d erabiltzaile aktibo daude."
+
+#: units/users/function_number_of_users.php:12
+#, php-format
+msgid "(%d logged on.)"
+msgstr "(%d barruan da/dira)"
+
+#: units/users/function_number_of_users.php:17
+msgid "User Statistics"
+msgstr "Erabiltzaile Estatistikak"
+
+#: units/users/userdetails_actions.php:20
+msgid "Your suggested name was too long. Please try something shorter."
+msgstr "Proposatu duzun izena luzeegia da. Mesedez saiatu laburrago batekin."
+
+#: units/users/userdetails_actions.php:40
+msgid "Email address updated."
+msgstr "Posta elektronikoaren helbidea eguneratua izan da."
+
+#: units/users/userdetails_actions.php:47
+msgid "Your moderation preferences have been changed."
+msgstr "Zure moderatze ezaugarriak aldatuak izan dira."
+
+#: units/users/userdetails_actions.php:55
+msgid "Public comments and discussion set to 'on'."
+msgstr "Iruzkin publikoak eta eztabaida 'on' egoeran jarri da."
+
+#: units/users/userdetails_actions.php:58
+msgid "Public comments and discussion set to 'off'."
+msgstr "Komentario publikoak eta eztabaidak 'desaktibatu'."
+
+#: units/users/userdetails_actions.php:67
+msgid "Email comments and discussion set to 'on'."
+msgstr "Komentario publikoak eta eztabaidak 'aktibatu'."
+
+#: units/users/userdetails_actions.php:70
+msgid "Email comments and discussion set to 'off'."
+msgstr "Posta elektronikoko komentarioak eta eztabaidak 'desaktibatu'."
+
+#: units/users/userdetails_actions.php:78
+msgid "Email notifications set to 'on'."
+msgstr "Posta elektronikoko oharrak 'aktibatu'."
+
+#: units/users/userdetails_actions.php:81
+msgid "Email notifications set to 'off'."
+msgstr "Posta elektronikoko oharrak 'desaktibatu'."
+
+#: units/users/userdetails_actions.php:96
+msgid "Details were not changed."
+msgstr "Xehetasunak ez dira aldatu."
+
+#: units/users/userdetails_actions.php:107
+msgid ""
+"Password not changed: Your password is either too short or too long. It must "
+"be between 4 and 32 characters in length."
+msgstr ""
+"Pasahitza ez da aldatu: Zure pasahitza motza edo luzea da. 4 eta 32 "
+"karaktere arteko luzerakoa izan behar du."
+
+#: units/users/userdetails_actions.php:109
+msgid ""
+"Password not changed: Your password can only consist of letters or numbers."
+msgstr ""
+"Pasahitza ez da aldatu: Zure pasahitzak hizki eta zenbakiak izan ditzazke "
+"soilik."
+
+#: units/users/userdetails_actions.php:111
+msgid "Your password was updated."
+msgstr "Zure pasahitza eguneratua izan da."
+
+#: units/users/userdetails_actions.php:118
+msgid ""
+"Password not changed: The password and its verification string did not match."
+msgstr ""
+"Pasahitza ez da aldatu: Pasahitzak eta bere egiaztapen kateak ez dute bat "
+"egiten."
+
+#: units/users/userdetails_edit.php:11
+msgid "Change your full name:"
+msgstr "Zure izen osoa aldatu:"
+
+#: units/users/userdetails_edit.php:28
+msgid "Your full name "
+msgstr "Zure izen osoa "
+
+#: units/users/userdetails_edit.php:33
+msgid "Your email address:"
+msgstr "Zure posta elektroniko helbidea:"
+
+#: units/users/userdetails_edit.php:34
+msgid ""
+"This will not be displayed to other users; you can choose to make an email "
+"address available via the profile screen."
+msgstr ""
+"Hau ez zaio beste erabiltzaileei erakutsiko; posta elektroniko helbidea "
+"erakusteko aukera eman dezakezu profilaren leihotik."
+
+#: units/users/userdetails_edit.php:48
+msgid "Your email address "
+msgstr "Zure posta elektroniko helbidea "
+
+#: units/users/userdetails_edit.php:53
+msgid "Friendship moderation:"
+msgstr "Adiskideen moderazioa:"
+
+#: units/users/userdetails_edit.php:54
+msgid "This allows you to choose who can list you as a friend."
+msgstr ""
+"Zure lagun bezala zerrendatzeko baimena zenek duen aukera dezakezu hemen."
+
+#: units/users/userdetails_edit.php:71
+msgid "No moderation: anyone can list you as a friend. (Recommended)"
+msgstr ""
+"Moderaziorik ez: edonork zerrenda zaitzake lagun bezala. (Gomendagarria)"
+
+#: units/users/userdetails_edit.php:76
+msgid "Moderation: friendships must be approved by you."
+msgstr "Moderazioa: lagun izate eskaerak zuk baimendu behar dituzu."
+
+#: units/users/userdetails_edit.php:81
+msgid "Private: nobody can list you as a friend."
+msgstr "Pribatua: inork ezin zaitzake lagun bezala zerrendatu."
+
+#: units/users/userdetails_edit.php:86
+msgid "Friendship moderation"
+msgstr "Laguntasun moderazioa"
+
+#: units/users/userdetails_edit.php:91
+msgid "Make comments public"
+msgstr "Iruzkinak publiko egin"
+
+#: units/users/userdetails_edit.php:92
+msgid ""
+"Set this to 'yes' if you would like anyone to be able to comment on your "
+"resources (by default only logged-in users can). Note that this may make you "
+"vulnerable to spam."
+msgstr ""
+"'Bai' jarri hemen zure baliabideetan komentarioak egiteko aukera eman nahi "
+"baldin badiozu norbaiti (erregistraturiko erabiltzaileei baino ez uzteko "
+"dago hobetsita). Kontuan izan spam-a jasotzeko aukera gehiago izango "
+"dituzula honekin."
+
+#: units/users/userdetails_edit.php:108 units/users/userdetails_edit.php:115
+msgid "Public comments: "
+msgstr "Komentario publikoak: "
+
+#: units/users/userdetails_edit.php:122
+msgid "Receive email notifications"
+msgstr "Posta elektroniko notifikazioak jaso"
+
+#: units/users/userdetails_edit.php:123
+msgid ""
+"Set this to 'yes' if you would like to receive email copies of any messages "
+"you receive. This includes blog comments, notifications when people add you "
+"as a friend and more. You can always view these online as part of your "
+"recent activity page."
+msgstr ""
+"'Bai' jarri hemen jasotzen dituzun email guztien kopia bat jaso nahi baldin "
+"baduzu. Honek blog komentarioak, norbaitek lagun gisa gehitzen zaituenean "
+"jakinaraztea, e.a. hartzen du barne. Guzti hau zure arestiko jardueraren "
+"orrialdean ere ikus dezakezu online."
+
+#: units/users/userdetails_edit.php:138 units/users/userdetails_edit.php:145
+msgid "Receive notifications: "
+msgstr "Notifikazioak jaso: "
+
+#: units/users/userdetails_edit.php:151
+msgid "Change your password:"
+msgstr "Zure pasahitza aldatu:"
+
+#: units/users/userdetails_edit.php:152
+msgid "Leave this blank if you're happy to leave your password as it is."
+msgstr ""
+"Eremu hau zuriz utzi zure pasahitza bere hortan utzi nahi baldin baduzu."
+
+#: units/users/userdetails_edit.php:166
+msgid "Your password: "
+msgstr "Zure pasahitza: "
+
+#: units/users/userdetails_edit.php:173
+msgid "Again for verification purposes: "
+msgstr "Berriro egiaztatu asmoz: "
+
+#: units/users/user_info.php:22
+msgid "None."
+msgstr "Bat ere ez."
+
+#: units/weblogs/archives_view_month.php:44 units/weblogs/archives_view.php:62
+msgid "There are no weblog posts to archive as yet."
+msgstr "Oraindik ez dago weblog postarik artxibatzeke."
+
+#: units/weblogs/archives_view.php:19
+#: units/weblogs/weblogs_user_info_menu.php:46
+msgid "Weblog Archive"
+msgstr "Weblog Artxiboa"
+
+#: units/weblogs/default_template.php:8
+msgid "Weblog Post"
+msgstr "Weblog posta"
+
+#: units/weblogs/default_template.php:9
+msgid "A template for each weblog post."
+msgstr "Weblog posta bakoitzarentzako txantiloi bat."
+
+#: units/weblogs/default_template.php:13
+msgid "The username of the person making the post"
+msgstr "Mezua egin duen erabiltzailearen izena"
+
+#: units/weblogs/default_template.php:14
+msgid "Their user icon"
+msgstr "Beren erabiltzaile ikonoa"
+
+#: units/weblogs/default_template.php:15
+msgid "Their full name"
+msgstr "Beren izen abizenak"
+
+#: units/weblogs/default_template.php:16
+msgid "The time and date of the post"
+msgstr "Postaren ordu eta data"
+
+#: units/weblogs/default_template.php:17
+msgid "A link to any comments"
+msgstr "Iruzkinetara lotura"
+
+#: units/weblogs/default_template.php:18
+msgid "A link to any trackbacks"
+msgstr "Trackback-etara lotrua"
+
+#: units/weblogs/default_template.php:19
+msgid "A list of comments, if any"
+msgstr "Komentario zerrenda, baldin badaude"
+
+#: units/weblogs/default_template.php:23
+msgid "Posted by"
+msgstr "Ondokoak bidalia:"
+
+#: units/weblogs/default_template.php:50
+msgid "Weblog Comments"
+msgstr "Weblogaren Komentarioak"
+
+#: units/weblogs/default_template.php:51
+msgid "A placeholder for weblog comments."
+msgstr "Weblog iruzkinen biltegia"
+
+#: units/weblogs/default_template.php:53
+msgid "The list of comments themselves"
+msgstr "Iruzkinen zerrenda bera"
+
+#: units/weblogs/default_template.php:54
+msgid "The list of page links when there are lots of comments"
+msgstr "Orrialde esteken zerrenda komentario asko daudenean"
+
+#: units/weblogs/default_template.php:58
+msgid "Comments"
+msgstr "Komentarioak"
+
+#: units/weblogs/default_template.php:75
+msgid "Individual weblog comment"
+msgstr "Weblog indibidualeko iruzkina"
+
+#: units/weblogs/default_template.php:76
+msgid ""
+"A template for each individual weblog comment. (Displayed one after the "
+"other, embedded in the comment placeholder.)"
+msgstr ""
+"Weblog indibidualeko iruzkin bakoitzeko txantiloia. (Bata bestearen atzetik "
+"erakutsia, iruzkin biltegian barneratua.)"
+
+#: units/weblogs/default_template.php:78
+msgid "Post body"
+msgstr "Postaren gorputza"
+
+#: units/weblogs/default_template.php:79
+msgid "The name of the person making the comment"
+msgstr "Iruzkina egiten ari den pertsonaren izena"
+
+#: units/weblogs/default_template.php:80
+msgid "When the comment was posted"
+msgstr "Iruzkina argitarataratua denean"
+
+#: units/weblogs/default_template.php:81
+msgid "The usericon of the person making the comment, if available"
+msgstr ""
+"Iruzkina egiten ari den pertsonaren erabiltzaile izena, eskuragarri badago"
+
+#: units/weblogs/default_template.php:82
+msgid "A permalink to the comment"
+msgstr "Iruzkinaren permalink-a"
+
+#: units/weblogs/display_interesting_post_form.php:21
+msgid "Stop keeping track of this post"
+msgstr "Mezu honen jarraipena gelditu"
+
+#: units/weblogs/display_interesting_post_form.php:22
+msgid ""
+"You have marked this post as interesting; all comments will appear on your "
+"'recent activity' page. If you would like to remove this flag, click here."
+msgstr ""
+"Mezu hau interesgarri bezala markatu duzu; iruzkin guztiak 'azken "
+"aktibitatea' orrialdean erakutsiko dira. Marka hau ezabatu nahi baduzu, "
+"hemen klikatu."
+
+#: units/weblogs/display_interesting_post_form.php:23
+msgid "Remove interesting flag"
+msgstr "Interesgarria marka kendu"
+
+#: units/weblogs/display_interesting_post_form.php:25
+msgid "Keep track of this post"
+msgstr "Mezu honen jarraipena egin"
+
+#: units/weblogs/display_interesting_post_form.php:26
+msgid ""
+"Click the 'Mark interesting' button to monitor new comments on your 'recent "
+"activity' page."
+msgstr ""
+"'Markatu interesgarri bezala' botoia sakatu iruzkin berriak ikusteko zure "
+"'azken aktibitate' orrian."
+
+#: units/weblogs/display_interesting_post_form.php:27
+msgid "Mark interesting"
+msgstr "Interesgarri bezala markatu"
+
+#: units/weblogs/function_rss_publish.php:35 _weblog/view_post.php:39
+msgid "Weblog"
+msgstr "Webloga"
+
+#: units/weblogs/function_rss_publish.php:42 _weblog/rss2.php:78
+#, php-format
+msgid "The weblog for %s, hosted on %s."
+msgstr "%s webloga, %s -n hostatua."
+
+#: units/weblogs/function_search.php:5
+msgid "Weblog posts by"
+msgstr "Weblogeko mezuaren egilea"
+
+#: units/weblogs/function_search.php:6
+msgid "in category"
+msgstr "kategorian"
+
+#: units/weblogs/function_search.php:7
+msgid "RSS feed for weblog posts by"
+msgstr "Weblog mezuen RSS jarioaren egilea"
+
+#: units/weblogs/function_search.php:8
+msgid "Other users with weblog posts in category"
+msgstr "Kategorian weblog postak dituzten beste erabiltzaileak"
+
+#: units/weblogs/function_search.php:9
+msgid "Users with weblog posts in category"
+msgstr "Kategorian weblog postak dituzten erabiltzaileak"
+
+#: units/weblogs/function_search_rss.php:20
+#: units/weblogs/templates_preview.php:53
+msgid "Weblog post"
+msgstr "Weblog posta"
+
+#: units/weblogs/templates_preview.php:7
+msgid "Unkind Guest"
+msgstr "Gonbidatu Desatxegina"
+
+#: units/weblogs/templates_preview.php:8
+msgid " I mock you, Babbage! Your difference engine will never catch on."
+msgstr ""
+
+#: units/weblogs/templates_preview.php:9
+#: units/weblogs/templates_preview.php:11
+msgid "Charles Babbage"
+msgstr ""
+
+#: units/weblogs/templates_preview.php:10
+msgid "Says you!"
+msgstr "Diostazu!"
+
+#: units/weblogs/templates_preview.php:12
+msgid "The Analytical Engine - introduction from Chapter VIII"
+msgstr ""
+
+#: units/weblogs/templates_preview.php:13
+msgid ""
+"The circular arrangement of the axes of the Difference Engine round the "
+"large central wheels led to the most extended prospects. The whole of "
+"arithmetic now appeared within the grasp of mechanism. A vague glimpse even "
+"of an Analytical Engine at length opened out, and I pursued with enthusiasm "
+"the shadowy vision. The drawings and the experiments were of the most costly "
+"kind. Draftsmen of the highest order were necessary to economize the labour "
+"of my own head; whilst skilled workmen were required to execute the "
+"experimental machinery to which I was obliged constantly to have recourse. "
+"In order to carry out my pursuits successfully, I had purchased a house with "
+"above a quarter of an acre of ground in a very quiet locality. My coach-"
+"house was now converted into a forge and a foundry, whilst my stables were "
+"transformed into a workshop. I built other extensive workshops myself, and "
+"had a fireproof building for my drawings and draftsmen. Having myself worked "
+"with a variety of tools, and having studied the art of constructing each of "
+"them, I at length laid it down as a principle - that, except in rare cases, "
+"I would never do anything myself if I could afford to hire another person "
+"who could do it for me."
+msgstr ""
+
+#: units/weblogs/weblogs_actions.php:31
+msgid "Your post has been added to your weblog."
+msgstr "Zure posta zure weblog-ean gehitu da."
+
+#: units/weblogs/weblogs_actions.php:66
+msgid "The weblog post has been modified."
+msgstr "Weblogeko mezua aldatua izan da."
+
+#: units/weblogs/weblogs_actions.php:81
+msgid "This weblog post has now been added to your 'interesting' list."
+msgstr "Weblog-eko mezu hau 'interesgarrien' zerrendara gehitua izan da."
+
+#: units/weblogs/weblogs_actions.php:92
+msgid "You are no longer monitoring this weblog post."
+msgstr "Ez duzu weblog mezu honen jarraipena egingo."
+
+#: units/weblogs/weblogs_actions.php:112
+msgid "The selected weblog post was deleted."
+msgstr "Aukeratutako weblog posta ezabatu da."
+
+#: units/weblogs/weblogs_actions.php:115
+msgid ""
+"You do not appear to have permission to delete this weblog post. It was not "
+"deleted."
+msgstr ""
+"Ez dirudi weblog mezu hau ezabatzeko baimenak dituzunik. Ez da ezabatua izan."
+
+#: units/weblogs/weblogs_actions.php:161
+msgid "Your comment has been added."
+msgstr "Zure komentarioa gehitu da."
+
+#: units/weblogs/weblogs_actions.php:166
+msgid "Your comment could not be posted. The system thought it was spam."
+msgstr "Zure komentarioa ez da bidali. Sistemak spam-tzat hartu du."
+
+#: units/weblogs/weblogs_actions.php:186
+msgid "Your comment was deleted."
+msgstr "Zure komentarioa ezabatua izan zen."
+
+#: units/weblogs/weblogs_all_users_view.php:24
+msgid "Remove filter"
+msgstr "Kendu iragazkia"
+
+#: units/weblogs/weblogs_all_users_view.php:29
+msgid "Filtered: Showing personal blog posts"
+msgstr "Iragazia: Blog mezu pertsonalak erakusten"
+
+#: units/weblogs/weblogs_all_users_view.php:33
+msgid "Filtered: Showing community blog posts"
+msgstr "Iragazia: Komunitateko blog mezuak erakusten"
+
+#: units/weblogs/weblogs_all_users_view.php:38
+msgid "Filtered: Showing posts with comments"
+msgstr "Iragazia: Iruzkinak dituzten mezuak"
+
+#: units/weblogs/weblogs_all_users_view.php:42
+msgid "Filtered: Showing posts with no comments"
+msgstr "Iragazia: Iruzkinik gabeko mezuak"
+
+#: units/weblogs/weblogs_all_users_view.php:57
+msgid "Filtered: Showing posts from "
+msgstr "Iragazia: Erabiltzaile honen mezuak erakusten: "
+
+#: units/weblogs/weblogs_all_users_view.php:67
+msgid "Filtered: Showing posts tagged with "
+msgstr "Iragazia: Etiketa hau duten mezuak "
+
+#: units/weblogs/weblogs_comments_add.php:7
+msgid "Add a comment"
+msgstr "Komentario bat gehitu"
+
+#: units/weblogs/weblogs_comments_add.php:33
+msgid "Your comment text"
+msgstr "Zure komentarioaren testua"
+
+#: units/weblogs/weblogs_comments_add.php:58
+msgid "Add comment"
+msgstr "Komentario bat"
+
+#: units/weblogs/weblogs_post_field.php:83
+msgid "Click here to post to this weblog."
+msgstr "Hemen klikatu weblog honetara bidalketa egiteko."
+
+#: units/weblogs/weblogs_posts_add.php:22
+msgid "Add a new post"
+msgstr "Posta berri bat gehitu"
+
+#: units/weblogs/weblogs_posts_add.php:23
+#: units/weblogs/weblogs_posts_edit.php:17
+msgid "Post title:"
+msgstr "Mezuaren izenburua:"
+
+#: units/weblogs/weblogs_posts_add.php:24
+#: units/weblogs/weblogs_posts_edit.php:18
+msgid "Post body:"
+msgstr "Mezuaren gorputza:"
+
+#: units/weblogs/weblogs_posts_add.php:25
+#: units/weblogs/weblogs_posts_edit.php:19
+msgid "Keywords (Separated by commas):"
+msgstr "Hitz-gakoak (Kakotx bidez bananduak):"
+
+#: units/weblogs/weblogs_posts_add.php:26
+#: units/weblogs/weblogs_posts_edit.php:20
+msgid ""
+"Keywords commonly referred to as 'Tags' are words that represent the weblog "
+"post you have just made. This will make it easier for others to search and "
+"find your posting."
+msgstr ""
+"'Etiketa' bezala izendatzen ditugun gako hitzak egin berri duzun weblog "
+"mezua adierazteko dira. Honek arrazagoa egingo du besteentzat zure mezuak "
+"bilatu eta aurkitzea."
+
+#: units/weblogs/weblogs_posts_add.php:28
+msgid "Post"
+msgstr "Mezua"
+
+#: units/weblogs/weblogs_posts_add.php:84
+msgid ""
+"You must be logged in to post a new weblog entry. You may do so using the "
+"login pane to the right of the screen."
+msgstr ""
+"Izen emanda egon behar zara weblogean sarrera bat egiteko. Leihoaren "
+"eskuinean agertzen den panela erabiliz egin dezakezu hori."
+
+#: units/weblogs/weblogs_posts_edit.php:13
+msgid "Access Denied"
+msgstr "Sarbidea Ukatua"
+
+#: units/weblogs/weblogs_posts_edit.php:16
+msgid "Edit a post"
+msgstr "Mezu bat editatu"
+
+#: units/weblogs/weblogs_posts_edit.php:22
+msgid "Save Post"
+msgstr "Mezua Gorde"
+
+#: units/weblogs/weblogs_posts_view.php:94
+msgid "More"
+msgstr "Gehiago"
+
+#: units/weblogs/weblogs_posts_view.php:95
+msgid "Keywords:"
+msgstr "Hitz-gakoak:"
+
+#: units/weblogs/weblogs_posts_view.php:96
+msgid "comment(s)"
+msgstr "iruzkinak"
+
+#: units/weblogs/weblogs_posts_view.php:112
+msgid "Are you sure you want to permanently delete this weblog post?"
+msgstr "Ziur zaude weblog mezu hau betirako ezabatu nahi duzula?"
+
+#: units/weblogs/weblogs_posts_view.php:155
+msgid "Page: "
+msgstr "Orria: "
+
+#: units/weblogs/weblogs_posts_view.php:172
+msgid "Are you sure you want to permanently delete this weblog comment?"
+msgstr ""
+"Ziur al zaude behin-betiko ezabatu nahi duzula weblogaren komentario hau?"
+
+#: units/weblogs/weblogs_posts_view.php:230
+msgid "You must be logged in to post a comment."
+msgstr "Identifikaturik egon behar zara mezu bat idazteko."
+
+#: units/weblogs/weblogs_user_info_menu.php:10
+msgid "Recent Activity"
+msgstr "Arestiko Jarduera"
+
+#: units/weblogs/weblogs_user_info_menu.php:12
+msgid "View your activity"
+msgstr "Zure jarduera ikusi"
+
+#: units/weblogs/weblogs_user_info_menu.php:36
+msgid "Personal blog"
+msgstr "Blog pertsonala"
+
+#: units/weblogs/weblogs_user_info_menu.php:41
+msgid "Community blog"
+msgstr "Komunitate bloga"
+
+#: units/weblogs/weblogs_user_info_menu.php:47 _weblog/friends.php:15
+msgid "Friends blog"
+msgstr "Lagunen bloga"
+
+#: units/xml/main.php:78
+msgid "XML error: "
+msgstr "XML errorea: "
+
+#: _weblog/archive_month.php:15 _weblog/archive.php:15
+msgid "Blog Archives"
+msgstr "Blogaren Fitxategiak"
+
+#: _weblog/everyone.php:15
+msgid "All blogs"
+msgstr "Blog guztiak"
+
+#: _weblog/everyone.php:19
+msgid "You can filter this page to certain types of posts:"
+msgstr "Orrialde hau zenbait posta motetatik filtratu dezakezu:"
+
+#: _weblog/everyone.php:21
+msgid "Personal blog posts"
+msgstr "Norberaren blog mezuak"
+
+#: _weblog/everyone.php:22
+msgid "Community blog posts"
+msgstr "Komunitatearen blog mezuak"
+
+#: _weblog/everyone.php:23
+msgid "Posts with comments"
+msgstr "Erantzuna duten mezuak"
+
+#: _weblog/everyone.php:24
+msgid "Posts with no comments"
+msgstr "Erantzun gabeko mezuak"
+
+#: _weblog/rss2.php:51
+#, php-format
+msgid "Weblog items tagged with %s"
+msgstr "%s rekin etiketaturiko weblog itemak"
+
+#: _weblog/rss2.php:54
+msgid "Weblog items"
+msgstr "Weblog-aren itemak"
+
+#: _weblog/rss2.php:61
+msgid "All users"
+msgstr "Erabiltzaile guztiak"
+
+#: _weblog/rss2.php:74
+#, php-format
+msgid "The most recent weblog posts on %s."
+msgstr "Weblog-aren posta berrienak %s n."
+
+#: _weblog/view_post.php:28
+msgid "Access denied or post not found"
+msgstr "Sarrera ukatu dago edo posta ez da topatu"
+
+#: _weblog/view_post.php:31
+msgid ""
+"Either this blog post doesn't exist or you don't currently have access "
+"privileges to view it."
+msgstr ""
+"Blog mezu hau ez da existitzen edo zuk orain ez duzu berau ikusteko sarrera "
+"pribilegiorik."

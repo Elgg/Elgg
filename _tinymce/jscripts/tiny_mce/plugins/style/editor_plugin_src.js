@@ -1,20 +1,18 @@
 /**
- * $RCSfile: editor_plugin_src.js,v $
- * $Revision: 1.1 $
- * $Date: 2006/05/03 10:46:42 $
+ * $Id: editor_plugin_src.js 167 2007-01-05 15:35:53Z spocke $
  *
  * @author Moxiecode
- * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright © 2004-2007, Moxiecode Systems AB, All rights reserved.
  */
 
 /* Import plugin specific language pack */
-tinyMCE.importPluginLanguagePack('style', 'en');
+tinyMCE.importPluginLanguagePack('style');
 
 var TinyMCE_StylePlugin = {
 	getInfo : function() {
 		return {
 			longname : 'Style',
-			author : 'Moxiecode Systems',
+			author : 'Moxiecode Systems AB',
 			authorurl : 'http://tinymce.moxiecode.com',
 			infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_style.html',
 			version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
@@ -24,7 +22,7 @@ var TinyMCE_StylePlugin = {
 	getControlHTML : function(cn) {
 		switch (cn) {
 			case "styleprops":
-				return tinyMCE.getButtonHTML(cn, 'lang_style_styleinfo_desc', '{$pluginurl}/images/style_info.gif', 'mceStyleProps', true);
+				return tinyMCE.getButtonHTML(cn, 'lang_style_styleinfo_desc', '{$pluginurl}/images/styleprops.gif', 'mceStyleProps', true);
 		}
 
 		return "";
@@ -56,6 +54,10 @@ var TinyMCE_StylePlugin = {
 	},
 
 	handleNodeChange : function(editor_id, node, undo_index, undo_levels, visual_aid, any_selection) {
+		if (node.nodeName == 'BODY')
+			tinyMCE.switchClass(editor_id + '_styleprops', 'mceButtonDisabled');
+		else
+			tinyMCE.switchClass(editor_id + '_styleprops', 'mceButtonNormal');
 	},
 
 	// Private plugin specific methods
@@ -63,7 +65,7 @@ var TinyMCE_StylePlugin = {
 	_styleProps : function() {
 		var e = tinyMCE.selectedInstance.selection.getFocusElement();
 
-		if (!e)
+		if (!e || e.nodeName == 'BODY')
 			return;
 
 		tinyMCE.openWindow({

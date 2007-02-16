@@ -1,8 +1,8 @@
 <?php
 
     foreach($data['profile:details'] as $profiletype) {
-        if ($profiletype[2] == "keywords") {
-            $data['search:tagtypes:rss'][] = $profiletype[1];
+        if ($profiletype->field_type == "keywords") {
+            $data['search:tagtypes:rss'][] = $profiletype->internal_name;
         }
     }
 

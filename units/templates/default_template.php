@@ -46,13 +46,9 @@
                                     );    
 
     $template['contentholder'] = <<< END
-    
-    <div id="maincontent_display">
-
     <h1>{{title}}</h1>
-    {{submenu}}
+	{{submenu}}
     {{body}}
-      </div>
     
 END;
 
@@ -68,7 +64,6 @@ $template_definition[] = array(
                                     );
 
     $template['sidebarholder'] = <<< END
- 
     <h2>{{title}}</h2>
        {{body}}
 
@@ -94,7 +89,6 @@ END;
     $template['ownerbox'] = <<< END
     
      <div id="me">
-        <div id="me_top"><!-- to let IE size properly --></div>
         <div id="icon"><a href="{{profileurl}}">{{usericon}}</a></div>
         <div id="contents" >
           <p>
@@ -103,7 +97,6 @@ END;
             <p>{{lmshosts}}</p>
             <p class="usermenu">{{usermenu}}</p>
         </div>
-        <div id="me_bottom"><!-- this comment is for IE sizing issues --></div>
        </div>
 
 END;
@@ -119,7 +112,7 @@ END;
 
     $template['messageshell'] = <<< END
     
-    <div id="system_message">{{messages}}</div><br />
+    <div id="system-message">{{messages}}</div><br />
     
 END;
 
@@ -198,7 +191,7 @@ END;
 
     $template['submenu'] = <<< END
     
-        <div id="sub_menu">
+        <div id="sub-menu">
         <p>
             {{submenuitems}}
         </p>
@@ -232,7 +225,7 @@ END;
 
     $template['topmenu'] = <<< END
     
-        <ul id="global_menuitems">
+        <ul>
             {{topmenuitems}}
         </ul>
 
@@ -267,7 +260,7 @@ END;
 
     $template['databox'] = <<< END
 
-<div class="infoholder_twocolumn">
+<div class="infoholder">
         <div class="fieldname">
             <h3>{{name}}</h3>
         </div>
@@ -291,7 +284,7 @@ END;
 
 <div class="infoholder">
         <div class="fieldname">
-            <h2>{{name}}</h2>
+            <h3>{{name}}</h3>
         </div>
         <p>{{column1}}</p>
     </div>
@@ -311,8 +304,8 @@ $template_definition[] = array(
 
     $template['adminTable'] = <<< END
 
-<div class="admin_datatable">
-    <table width="80%">
+<div>
+    <table width="100%">
     <tr>
         <td width="25%" valign="top">
             {{name}}
@@ -361,7 +354,7 @@ END;
                                     );
 
     $template['databoxvertical'] = <<< END
-<div class="databox_vertical">
+<div class="infoholder">
         <div class="fieldname">
             <h3>{{name}}</h3>
         </div>

@@ -13,7 +13,7 @@ if (isset($parameter) && $page_owner != -1) {
             }
             break;
         case    "files":
-        case    "weblog":        
+        case    "weblog":
             if (record_exists('users','ident',$page_owner,'owner',$USER->ident,'user_type','community')) {
                 $run_result = true;
             }
@@ -35,6 +35,7 @@ if (isset($parameter) && $page_owner != -1) {
             if (record_exists('users','ident',$page_owner,'owner',$USER->ident,'user_type','community')) {
                 $run_result = true;
             }
+            break;
         }
     } else {
         switch($parameter[0]) {
@@ -52,11 +53,12 @@ if (isset($parameter) && $page_owner != -1) {
                     $run_result = true;
                 }
             }
-            case    "userdetails:change":
-                if (record_exists('users','ident',$parameter[1],'owner',$USER->ident,'user_type','community')) {
-                    $run_result = true;
-                }
-                break;
+            break;
+        case    "userdetails:change":
+            if (record_exists('users','ident',$parameter[1],'owner',$USER->ident,'user_type','community')) {
+                $run_result = true;
+            }
+            break;
         }
     }
 }

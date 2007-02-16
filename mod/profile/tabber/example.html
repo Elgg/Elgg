@@ -1,0 +1,50 @@
+<!-- $Id: example.html,v 1.4 2006/03/27 02:44:36 pat Exp $ -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Simple Tabber Example</title>
+
+<script type="text/javascript" src="tabber.js"></script>
+<link rel="stylesheet" href="example.css" TYPE="text/css" MEDIA="screen">
+<link rel="stylesheet" href="example-print.css" TYPE="text/css" MEDIA="print">
+
+<script type="text/javascript">
+
+/* Optional: Temporarily hide the "tabber" class so it does not "flash"
+   on the page as plain HTML. After tabber runs, the class is changed
+   to "tabberlive" and it will appear. */
+
+document.write('<style type="text/css">.tabber{display:none;}<\/style>');
+</script>
+
+</head>
+<body>
+
+<h1>Tabber Example</h1>
+
+<p>&larr; <a href="http://www.barelyfitz.com/projects/tabber/">Tabber Home</a></p>
+
+<div class="tabber">
+
+     <div class="tabbertab">
+	  <h2>Tab 1</h2>
+	  <p>Tab 1 content.</p>
+     </div>
+
+
+     <div class="tabbertab">
+	  <h2>Tab 2</h2>
+	  <p>Tab 2 content.</p>
+     </div>
+
+
+     <div class="tabbertab">
+	  <h2>Tab 3</h2>
+	  <p>Tab 3 content.</p>
+     </div>
+
+</div>
+
+</body>
+</html>

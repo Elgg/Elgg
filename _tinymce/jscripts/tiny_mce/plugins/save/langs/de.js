@@ -1,4 +1,4 @@
-// DE lang variables 
+// DE lang variables
 
 tinyMCE.addToLang('',{
 save_desc : 'Speichern'

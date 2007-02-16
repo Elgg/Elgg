@@ -163,26 +163,33 @@ if (!empty($action) && logged_on) {
                     $u->password = $md5password;
                     $u->active = 'yes';
                     $u->user_type = 'person';
-                    $newid = insert_record('users',$u);
-
-                    // Calendar code shouldn't go here! But its here anyways so just checking
-                    // the global function array to check to see if calendar module is loaded.
-                    global $function;
-                    if(isset($function["calendar:init"])) {
-                        $c = new StdClass;
-                        $c->owner = $newid;
-                        insert_record('calendar',$c);
+                    
+                    $u = plugin_hook("user","create",$u);
+                    
+                    if (!empty($u)) {
+                        $newid = insert_record('users',$u);
+                        $u->ident = $newid;
+    
+                        // Calendar code shouldn't go here! But its here anyways so just checking
+                        // the global function array to check to see if calendar module is loaded.
+                        global $function;
+                        if(isset($function["calendar:init"])) {
+                            $c = new StdClass;
+                            $c->owner = $newid;
+                            insert_record('calendar',$c);
+                        }
+                        
+                        $u = plugin_hook("user","publish",$u);
+                        
+                        $rssresult = run("weblogs:rss:publish", array($newid, false));
+                        $rssresult = run("files:rss:publish", array($newid, false));
+                        $rssresult = run("profile:rss:publish", array($newid, false));
+                        $sitename = sitename;
+                        $username = $new_username[$i];
+                        email_to_user($u,null,sprintf(__gettext("Your new %s account"),sitename), 
+                                      sprintf(__gettext("You have been added to %s!\n\nFor your records, your %s username and password are:\n\n\tUsername: %s\n\tPassword: %s\n\nYou can log in at any time by visiting %s and entering these details into the login form.\n\nWe hope you enjoy using the system.\n\nRegards,\n\nThe %s Team"),$sitename,$sitename,$username,$password,url,$sitename));
+                        $messages[] = sprintf(__gettext("User %s was created."),$username);
                     }
-                    $rssresult = run("weblogs:rss:publish", array($newid, false));
-                    $rssresult = run("files:rss:publish", array($newid, false));
-                    $rssresult = run("profile:rss:publish", array($newid, false));
-                    $sitename = sitename;
-                    $username = $new_username[$i];
-                    email_to_user($u,null,sprintf(__gettext("Your new %s account"),sitename), 
-                                  sprintf(__gettext("You have been added to %s!\n\nFor your records, your %s username and password are:\n\n\tUsername: %s\n\t"
-                                                  ."Password: %s\n\nYou can log in at any time by visiting %s and entering these details into the login form.\n\n"
-                                                  ."We hope you enjoy using the system.\n\nRegards,\n\nThe %s Team"),$sitename,$sitename,$username,$password,url,$sitename));
-                    $messages[] = sprintf(__gettext("User %s was created."),$username);
                 }
             }
             break;

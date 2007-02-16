@@ -1,5 +1,5 @@
-// RU lang variables cp1251
+// RU lang variables UTF-8
 
 tinyMCE.addToLang('',{
-autosave_unload_msg : 'Изменения не будут потеряны если Вы уйдёте с этой страницы.'
+autosave_unload_msg : 'РР·РјРµРЅРµРЅРёСЏ РЅРµ Р±СѓРґСѓС‚ РїРѕС‚РµСЂСЏРЅС‹ РµСЃР»Рё Р’С‹ СѓР№РґС‘С‚Рµ СЃ СЌС‚РѕР№ СЃС‚СЂР°РЅРёС†С‹.'
 });

@@ -32,8 +32,8 @@
                 }
                 
                 // Set the templates root if it doesn't exist
-                if (!isset($CFG->templatesroot)) {
-                    $CFG->templatesroot = $CFG->dirroot . "_templates/";
+                if (empty($CFG->templatesroot)) {
+                    $CFG->templatesroot = $CFG->dirroot . "mod/template/templates/";
                 }
                 
                 // Check logins etc
@@ -54,7 +54,48 @@
             } else {
                 
                 // Activities to perform if Elgg's config file doesn't exist
-                elggadmin_createconfig();
+                // Load Elgg configuration
+                global $CFG, $messages;
+                require_once($ADMINCFG->admin->elggdir . "config-dist.php");
+                
+                // Begin Elgg admin session
+                session_name("elggadmin");
+                session_start();
+                
+                if (isset($_SESSION['messages'])) {
+                    $messages = $_SESSION['messages'];
+                    $_SESSION['messages'] = "";
+                }
+                
+                // Set the dirroot
+                if (empty($CFG->dirroot)) {
+                    $CFG->dirroot = str_replace("//","/",str_replace("_elggadmin","",str_replace("\\","/",dirname(__FILE__))));
+                }
+                if (empty($CFG->wwwroot) || $CFG->wwwroot == "http://") {
+                    $CFG->wwwroot = "http://" . str_replace("index.php","",str_replace("_elggadmin/","",$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']));
+                }
+                
+                // Set the templates root if it doesn't exist
+                if (!isset($CFG->templatesroot)) {
+                    $CFG->templatesroot = $CFG->dirroot . "mod/template/templates/";
+                }
+                
+                // Check logins etc
+                elggadmin_actions();
+                
+                $messages[] = <<< END
+                
+                <h2>Welcome to the Elgg installer!</h2>
+                <p>Fill in the details below, click 'Save' at the bottom, and your Elgg installation will be ready to go.
+                Don't worry if you don't know all the details: the really important settings (the ones Elgg won't work without)
+                are highlighted in red for you, and you can come back at any time by visiting {$CFG->wwwroot}_elggadmin.</p>
+                <p>It's possible this installer hasn't been given permission to save files to your Elgg installation directory
+                by the server. If that's the case, we'll give you a copy of the config.php file, and you'll need to upload it
+                to your installation directory by hand.</p>
+                <p>Of course, if you like to get your hands dirty, you can also set these values by copying config-dist.php to config.php
+                in your Elgg installation folder and editing it by hand in your text editor of choice.</p>
+                
+END;
                 
             }
         }
@@ -137,7 +178,7 @@
     // Initialisation for config editing
         function elggadmin_config_init() {
             
-            global $CFG, $PARSEDCFG, $ADMINCFG, $messages;
+            global $CFG, $PARSEDCFG, $ADMINCFG, $DEFCFG, $messages;
             
             if (!isset($PARSEDCFG)) {
             
@@ -158,12 +199,20 @@
     // Display the form to set configuration options
         function elggadmin_config_main() {
             
-            global $CFG, $PARSEDCFG, $ADMINCFG, $messages;
+            global $CFG, $PARSEDCFG, $ADMINCFG, $messages, $DEFCFG;
+            
+            require_once("configdef.php");
             
             echo "<form action=\"\" method=\"post\">";
-            foreach(get_object_vars($CFG) as $name => $value) {
-                
+            foreach(($DEFCFG->config) as $name => $value) {
                 if (!in_array($name,$ADMINCFG->admin->noedit)) {
+                    
+                    //require_once("configdef.php");
+                    
+                    if (isset($DEFCFG->config[$name]->important) && $DEFCFG->config[$name]->important == true) {
+                        echo "<div class=\"important\">";
+                    }
+                    
                     echo "<p>";
                     if (isset($ADMINCFG->config[$name]->name)) {
                         echo "<b>" . $ADMINCFG->config[$name]->name . "</b>";
@@ -178,7 +227,7 @@
                         switch($ADMINCFG->config[$name]->type) {
                             
                             case "requiredstring":
-                            case "integer":     echo "<input type=\"text\" name=\"$name\" value=\"" . htmlspecialchars($value) . "\" />";
+                            case "integer":     echo "<input type=\"text\" name=\"$name\" value=\"" . (string) htmlspecialchars($CFG->$name) . "\" />";
                                                 break;
                             case "access":
                                                 $selected = array();
@@ -190,9 +239,9 @@
                                                 echo "</select>";
                                                 break;
                             case "boolean":
-                                                $value = (int) $value;
+                                                $value = (int) $CFG->$name;
                                                 $selected = array();
-                                                if ($value) {
+                                                if ($value == "1") {
                                                     $selected['yes'] = "selected=\"selected\"";
                                                 } else {
                                                     $selected['no'] = "selected=\"selected\"";
@@ -205,10 +254,14 @@
                             
                         }
                     } else {
-                        echo "<input type=\"text\" name=\"$name\" value=\"" . htmlspecialchars($value) . "\" />";
+                        echo "<input type=\"text\" name=\"$name\" value=\"" . htmlspecialchars($CFG->$name) . "\" />";
                     }
                     
                     echo "</p>\n";
+                    
+                    if (isset($DEFCFG->config[$name]->important) && $DEFCFG->config[$name]->important == true) {
+                        echo "</div>";
+                    }
                 }
                 
             }
@@ -224,8 +277,9 @@
             global $CFG, $ADMINCFG, $PARSEDCFG, $DEFCFG, $messages;
             
             $oktosave = 1;
+            require_once("configdef.php");
             
-            foreach(get_object_vars($CFG) as $name => $value) {
+            foreach($DEFCFG->config as $name => $value) {
                 
                 if (!in_array($name,$ADMINCFG->admin->noedit)) {
                     if (isset($_REQUEST[$name])) {
@@ -248,18 +302,19 @@
                                             $CFG->$name = (int) $CFG->$name;
                                             break;
                                 case "boolean":
-                                            if (empty($CFG->$name)) {
+                                            if (!isset($CFG->$name)) {
                                                 $CFG->$name = "0";
                                             }
                                             $CFG->$name = (int) $CFG->$name;
                                             if ($CFG->$name > 1) {
                                                 $CFG->$name = "1";
                                             }
+                                            
                                             break;
                                 case "requiredstring":
                                             if (empty($CFG->$name)) {
                                                 $oktosave = 0;
-                                                $messages[] = sprintf(("You cannot leave '%s' blank!"),$ADMINCFG->config[$name]->name);
+                                                $messages[] = sprintf(("You cannot leave '%s' blank!"),$DEFCFG->config[$name]->name);
                                             }
                                             break;
                                 case "access":
@@ -279,7 +334,7 @@
                 
                 $newconfigfile = elggadmin_configstring();
                 if (!@file_put_contents($ADMINCFG->admin->elggdir . $ADMINCFG->admin->configfile, $newconfigfile)) {
-                    $messages[] = sprintf(("We couldn't write your new configuration to your configuration file at %s. Therefore, please copy everything from the textbox below and paste it into a new file called %s in %s."),$ADMINCFG->admin->elggdir . $ADMINCFG->admin->configfile,$ADMINCFG->admin->configfile,$ADMINCFG->admin->elggdir . $ADMINCFG->admin->configfile) . "<br />" . "<textarea cols=\"40\" rows=\"6\">" . $newconfigfile . "</textarea>";
+                    $messages[] = sprintf(("We couldn't write your new configuration to your configuration file at %s. Therefore, please copy everything from the textbox below and paste it into a new file called %s in the root of your Elgg installation."),$ADMINCFG->admin->elggdir . $ADMINCFG->admin->configfile,$ADMINCFG->admin->configfile) . "<br />" . "<textarea cols=\"40\" rows=\"6\">" . $newconfigfile . "</textarea>";
                 } else {
                     $messages[] = ("Your new configuration was saved.");
                 }
@@ -539,7 +594,11 @@
     // Displays navigation
         function elggadmin_navigation($current_page) {
      
+            global $ADMINCFG;
+            
             $current[$current_page] = "class=\"active\"";
+            
+            if (file_exists($ADMINCFG->admin->elggdir . $ADMINCFG->admin->configfile)) {
             
             echo <<< END
             <div id="navigation"><!-- start navigation -->
@@ -552,6 +611,8 @@
                 </ul>
             </div>
 END;
+
+            }
             
         }
         
@@ -596,11 +657,9 @@ END;
             global $messages;
             echo file_get_contents("HEADER");
             if (!empty($messages) && is_array($messages)) {
-                echo "<div class=\"messages\"><ul>\n";
+                echo "<div id=\"messages\"><ul>\n";
                 foreach($messages as $message) {
-                    
                     echo "<li>" . $message . "</li>\n";
-                    
                 }
                 echo "</ul></div>\n";
             }

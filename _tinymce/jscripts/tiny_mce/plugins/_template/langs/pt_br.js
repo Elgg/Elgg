@@ -2,12 +2,13 @@
  * pt_br lang variables
  * Brazilian Portuguese
  *
- * Authors :
+ * Author
+ * Revision and modifications:
  *           Marcio Barbosa (mpg) <mpg@mpg.com.br>
- * Last Updated : November 26, 2005
- * TinyMCE Version : 2.0RC4
+ * First Release : November 26, 2005 - TinyMCE Version : 2.0RC4
+ * Last Updated : November 20, 2006 - TinyMCE Version : 2.0.8
  */
 tinyMCE.addToLang('',{
-template_title : 'Este é só um modêlo de popup',
-template_desc : 'Este é só um modêlo de botão'
+template_title : 'Este &eacute; s&oacute; um mod&ecirc;lo de popup',
+template_desc : 'Este &eacute; s&oacute; um mod&ecirc;lo de bot&atilde;o'
 });

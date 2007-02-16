@@ -9,9 +9,10 @@
         $comm_username = $_SESSION['comm_username'];
     }
 
-    global $page_owner;
+    global $page_owner, $CFG, $USER;
     
-    if (logged_on && $page_owner == $_SESSION['userid']) {
+    if (logged_on && $page_owner == $_SESSION['userid'] &&
+        ($CFG->community_create_flag == "" || user_flag_get($CFG->community_create_flag, $USER->ident))) {
     
     $header = __gettext("Create a new community"); // gettext variable
     $communityName = __gettext("Community name:"); // gettext variable

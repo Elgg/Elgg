@@ -1,0 +1,427 @@
+/*
+Elgg general CSS
+CSS last updated 16/01/07
+This is a very simple page shell and CSS with little style attatched - to be used to see who the Elgg
+theme is structured.
+*/
+
+/*
+   GLOBALS: used to set all the general elements
+*/
+
+body { 
+	background:#fff;
+color:#697C83;
+font-family:Arial, 'Trebuchet MS','Lucida Grande', Arial, sans-serif;
+text-align:left;
+margin:0 auto;
+padding:0;
+font-size: 80%;
+}
+
+p {
+  color:#555;
+  margin:0 0 10px 0;
+}
+
+a {
+  text-decoration:none;
+  color:#555;
+}
+
+ol, ul {
+  color:#697C83;
+}
+
+h1 {
+  font-size:130%;
+}
+
+h2, h3, h4, h5 {
+   font-size:100%;
+}
+
+blockquote{
+	background: #EEE url({{url}}mod/template/templates/Default_Template/images/blockquote.png) no-repeat bottom left;
+	padding: 10px;
+	padding-bottom: 40px;
+	margin: 1em;
+}
+
+/*
+   TABLES IN ELGG
+*/
+
+td {
+  border:1px solid #eee;
+  padding:0;
+  margin:0;
+}
+
+td h4, h3, h5 {
+  padding:0;
+  margin:0;
+}
+
+/* 
+   CONTAINER: WRAPS THE HEADER AND MAIN CONTENT AREA BELOW THE USER TOOLBAR
+*/
+
+div#container {
+	width:940px;
+	margin:0 auto;
+	padding:0;
+	background:#fff;
+	border-top:1px solid #fff;
+}
+
+/* 
+   HEADER: THE HEADER INCLUDES THE LOGO AND SEARCH BAR
+*/
+
+div#header {
+   margin:0;
+   padding:0;
+   text-align:left;
+   background:#fff;
+   border-bottom:1px solid #ccc;
+   position:relative;
+   width:940px;
+   height:120px;
+ }
+
+/* 
+   LOGO: LOCATED WITHIN HEADER
+*/
+
+div#header #logo{
+	margin: 0px;
+        padding:10px;
+	float:left;
+}
+
+div#header #logo h1 {
+   font-size:30px;
+   padding:0;
+   margin:10px 0 6px 0;
+}
+
+div#header #logo h1 a{
+   font-family:Helvetica, "Myriad Web", Arial, sans-serif;
+}
+
+div#header #logo h2{
+   color:#F17D00;
+   padding:0;
+   margin:0;
+   font-size:1.2em;
+}
+
+/* 
+   SEARCH BAR: LOCATED WITHIN HEADER
+*/
+
+div#header #search-header {
+   float:right;
+   background:url({{url}}mod/template/templates/Default_Template/images/search_icon.gif) no-repeat left top;
+   width:330px;
+   margin:0;
+   padding:0;
+   position:absolute;
+   top:10px;
+   right:0;
+}
+
+div#header #search-header img {
+   margin:0 0 0 10px;
+}
+
+div#header #search-header p {
+   padding:0 0 0 15px;
+   margin:0;
+}
+
+div#header #search-header span a {
+
+}
+
+/* 
+   CONTENT-HOLDER: WRAPS THE MAIN PAGE CONTENT. THIS CAN INCLUDE
+   THE SINGLE PAGE LAYOUT AND THE SPLIT PANE (CONTENT AND SIDEBAR)
+*/
+
+#content-holder {
+   padding:0px;
+   margin:0px;
+   width:940px;
+   min-height:500px;
+   overflow:hidden;
+   position:relative;
+ }
+
+div#content-holder a:hover {
+    text-decoration:underline;
+}
+
+div#content-holder h1 {
+    font-size:150%;
+}
+
+div#content-holder h2 {
+          border:0;
+          border-bottom:1px solid #eee;
+          padding:0;
+          margin:0 0 10px 0;
+          color:#666;
+          background:#fff;
+         font-size:1.1em;
+}
+
+/* 
+   VARIOUS LAYOUTS WITHIN CONTENT-HOLDER
+*/
+
+/* 
+   THE MAIN CONTENT AREA WHEN IT IS A SINGLE PAGE, NO SIDEBAR
+*/
+
+div#single-page {
+    margin: 0;
+    padding: 0 15px 0 0;
+    width:900px;
+    text-align: left;
+    background-color: #fff;
+    color:#000;
+    border:1px solid #eee;
+}
+
+/* 
+   THE MAIN CONTENT AREA WHEN THE SIDEBAR IS IN PLACE
+*/
+
+div#splitpane-content {
+    margin: 0;
+    padding: 0 0 0 10px;
+    width:690px;
+    text-align: left;
+    float: left;
+    background-color: #fff;
+    color:#000;
+    overflow-x:hidden;
+}
+
+/* 
+   SIDEBAR: THIS IS ONLY PRESENT WHEN SPLITPANE-CONTENT IS IN USE
+*/
+
+div#splitpane-sidebar {
+   width: 220px;
+   margin:0;
+   padding:0;
+   background:#fff;
+   border-left:1px solid #ccc;
+   margin:0;
+   float: right;
+}
+
+/* 
+   THE SIDEBAR CONTENTS
+*/
+
+div#splitpane-sidebar td {
+   width: 200px;
+   background:#fff;
+   margin:0 0 0 20px;
+  }
+
+div#splitpane-sidebar ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+div#splitpane-sidebar ul li {
+    margin:2px 0;
+    padding-left: 5px;
+    border-bottom:1px dashed #eee;
+}
+
+div#splitpane-sidebar ul li ul li a {
+     padding:0 0 0 5px;
+}
+
+div#splitpane-sidebar h2 {
+    text-align:left;
+    border-bottom:1px solid #ccc;
+    color:#777;
+    font-size:0.9em;
+    width:200px;
+}
+
+/* 
+   FOOTER 
+*/
+
+div#footer {
+    background:#fff;
+	border-top:1px solid #ccc;
+    text-align: center;
+    padding:10px 0 0 0;
+    font-size:1em;
+    height:80px;
+    margin:0;
+    width:100%;
+}
+
+div#footer a {
+}
+div#footer img {
+   margin:20px 0 0 0;
+}
+
+div#footer a:hover {
+   text-decoration:underline;
+ }
+
+div#footer a:link, div#footer a:visited {
+    text-align:right;
+}
+
+/*
+   SYSTEM MESSAGES 
+*/
+
+div#system-message{ 
+    border:1px solid #D3322A;
+    background:#F7DAD8;
+    color:#000;
+    padding:3px 50px;
+    margin:20px 20px 0 20px;
+}
+
+div#system-message p{
+   padding:0px;
+   margin:2px;
+ }
+
+/*
+  CLEAR BOTH
+*/
+
+.clearing {
+    clear:both;
+}
+
+/* 
+   THIS IS THE END OF THE MAIN PAGE COMPONENTS - EVERYTHING BELOW THIS IS ASSOCIATED WITH VARIOUS ELEMENTS
+   WITHIN ELGG, THIS INCLUDES THE BLOG CLASSESS, PROFILE, FILES, SIDEBAR WIDGETS, PROFILE WIDGETS ETC.
+*/
+
+/* 
+   BLOGGING ENGINE
+*/
+
+.weblog-post {
+   margin:20px 0 10px 0;
+}
+
+.user {
+  float:left;
+  margin:5px 10px 10px 0;
+  height:120px;
+}
+
+.user img {
+   border:1px solid #eee;
+   padding:2px;
+}
+
+.weblog-keywords p a {
+   margin:20px 0 0 0;
+   padding:0;
+   clear:both;
+}
+
+.weblog-title {
+   margin:10px 0 10px 105px;
+}
+
+.post {
+   margin:10px 0 10px 105px;
+}
+
+.info {
+  border:1px solid #ccc;
+  margin:10px 0 10px 105px;
+  clear:both;
+}
+
+.info p { 
+   padding:0 0 0 10px;
+   margin:0;
+   color:#990000;
+}
+
+.info p a { 
+   font-size:0.9em;
+   color:#555;
+}
+
+/* this is the thin line between the actual post and comments */
+
+#comments-divide {
+   height:1px;
+   background:#ccc;
+}
+
+.comment-owner {
+    border:1px solid #eee;
+    background:#f2f7fb;
+    padding:5px;
+    margin:20px 0 5px 0;
+    height:50px;
+    width:400px;
+}
+
+.comment-owner img {
+   margin:0px 5px 0px 0px;
+   text-align:left;
+}
+
+.comment-owner a {
+   background:#f2f7fb;
+}
+
+.comment-owner p {
+  padding:0;
+  margin:0;
+}
+
+/* END OF BLOGGING ENGINE */
+
+/* 
+   SUB MENU OPTIONS: THESE WILL BE MOVED TO THE NEW SIDEBAR SHORTLY
+*/
+
+div#sub-menu p {
+  margin:10px 0 10px 0;
+  padding:3px;
+  background:#efefef;
+  border:1px solid #ccc;
+}
+
+/* END OF SUB-MENU DIV */
+
+/*
+  INFOHOLDER: this holds profile data, account settings and administration content
+*/
+
+.infoholder {
+   margin:10px 0 20px 0;
+}
+
+.infoholder p {
+   padding:5px 0 5px 10px;
+}
+
+/* the end of INFOHOLDER */

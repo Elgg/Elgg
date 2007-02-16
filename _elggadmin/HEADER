@@ -7,5 +7,5 @@
 <body>
 <div id="container"><!-- start container -->
 <div id="header"><!-- start header -->
-<p>Elgg - administration panel</p>
+<h1>Elgg - administration panel</h1>
 </div><!-- end header -->

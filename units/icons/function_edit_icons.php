@@ -10,7 +10,7 @@ $page_username = user_info('username', $page_owner);
 $icons = get_records('icons','owner',$page_owner);
 
 if ($page_owner != $USER->ident) {
-    $currenticon = get_field_sql('SELECT i.filename 
+    $currenticon = get_field_sql('SELECT i.ident 
                                   FROM '.$CFG->prefix.'users u 
                                   JOIN '.$CFG->prefix.'icons i ON i.ident = u.icon
                                   WHERE u.ident = ?',array($page_owner));
@@ -47,7 +47,7 @@ END;
         $column1 = <<< END
                         <img alt="{$defaulticon}" src="{$CFG->wwwroot}_icon/user/{$icon->ident}" />
 END;
-        if ($icon->filename == $currenticon) {
+        if ($icon->ident == $currenticon) {
             $checked = 'checked="checked"';
         } else {
             $checked = "";
@@ -72,7 +72,7 @@ END;
     }
     
     if ($_SESSION['icon'] == "default.png") {
-        $checked = "checked = \"checked\"";
+        $checked = 'checked="checked"';
     } else {
         $checked = "";
     }

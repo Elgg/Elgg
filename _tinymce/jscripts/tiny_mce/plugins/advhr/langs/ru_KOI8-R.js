@@ -1,4 +1,4 @@
-// RU KOI8-R lang variables
+// RU lang variables KOI8-R
 
 tinyMCE.addToLang('',{
 insert_advhr_desc : 'Вставить / редактировать горизонтальный разделитель',

@@ -45,7 +45,9 @@ if (!empty($id)) {
                 // partly because it's pointless, but mainly because some browsers
                 // are thick.
                 if (preg_match('#^(application.*zip|image/(png|jpeg|gif))$#', $mimetype)) {
-                    @apache_setenv('no-gzip', '1');
+                    if (function_exists('apache_setenv')) { // apparently @ isn't enough to make php ignore this failing
+                        @apache_setenv('no-gzip', '1');
+                    }
                 }
                 spitfile_with_mtime_check($CFG->dataroot . $file->location, $mimetype, $file->handler);
             }

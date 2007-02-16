@@ -425,7 +425,9 @@ END;
         {
 
             $tmp .= '<select name="lang">';
-            $tmp .= '<option value="default">'.__gettext('default').'</option>';
+            $tmp .= '<option value="default">'.__gettext('default')."</option>\n";
+            
+            ksort($CFG->languages_installed);
             
             foreach ($CFG->languages_installed as $key => $description)
             {
@@ -434,7 +436,7 @@ END;
                 {
                     $selected = 'selected="selected"';
                 }
-                $tmp .= '<option value="'.$key.'" '.$selected.'>'.$description.'</option>';
+                $tmp .= '<option value="'.$key.'" '.$selected.'>'.$description."</option>\n";
             }
             
             $tmp .= '</select>';

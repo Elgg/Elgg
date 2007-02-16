@@ -10,6 +10,10 @@ if (isset($CFG->rsspostsmaxage) && $CFG->rsspostsmaxage > 0) {
     $CFG->rsspostsmaxage = 0;
 }
 
+if (empty($CFG->mintimebetweenrssupdate)) {
+    $CFG->mintimebetweenrssupdate = 1800;
+}
+
 define('rss','true');
 define('MAGPIE_DIR', $CFG->dirroot . "units/magpie/");
 define('MAGPIE_OUTPUT_ENCODING', 'UTF-8');

@@ -2,7 +2,7 @@
 
 global $CFG;
 // Join
-        
+
 $sitename = sitename;
 $textlib = textlib_get_instance();
 
@@ -10,7 +10,6 @@ $code = optional_param('invitecode');
 if (!empty($code)) {
     if ($details = get_record('invitations','code',$code)) {
         $name = optional_param('join_name',$details->name);
-
         $username = optional_param('join_username');
         if (empty($username)) {
             $username = "";
@@ -31,7 +30,7 @@ if (!empty($code)) {
         $privacy = __gettext("Privacy policy"); // gettext variable
         $age = __gettext("Submitting the form below indicates acceptance of these terms. Please note that currently you must be at least 13 years of age to join the site."); // gettext variable
         $run_result .= <<< END
-            
+        
     <p>
         $thankYou
     </p>
@@ -42,11 +41,10 @@ if (!empty($code)) {
     <p>
         $age
     </p>
-
     <form action="" method="post">
-                
+        
 END;
-                
+        
         $run_result .= templates_draw(array(
                                             'context' => 'databoxvertical',
                                             'name' => __gettext("Your name"),
@@ -82,32 +80,43 @@ END;
                 <input type="submit" value="$buttonValue" />
             </p>
         </form>
-                
 END;
-
+        
     } else {
         
-        $invalid = sprintf(__gettext("Your invitation code appears to be invalid. Codes only last for seven days; it's possible that yours is older. If you still want to join %s, it may be worth getting in touch with the person who invited you."),$sitename);
+        $invalid = __gettext("Your invitation code appears to be invalid. Codes only last for seven days; it's possible that yours is older.");
+        
+        if ($CFG->publicreg) {
+            $invalid .= sprintf(__gettext("If you still want to join %s, click the Register link."),$sitename);
+        } else {
+            $invalid .= sprintf(__gettext("If you still want to join %s, it may be worth getting in touch with the person who invited you."),$sitename);
+        }
+        
+        
         $run_result .= <<< END
-            
+        
     <p>
         $invalid
     </p>
-                
+        
 END;
-                
+        
     }
     
 } else {
-    $invite = sprintf(__gettext("For the moment, joining %s requires a specially tailored invite code. If you know someone who's a member, it may be worth asking them for one."),$sitename);
+    if ($CFG->publicreg) {
+        $invite = sprintf(__gettext("To join %s, click the Register link."),$sitename);
+    } else {
+        $invite = sprintf(__gettext("For the moment, joining %s requires a specially tailored invite code. If you know someone who's a member, it may be worth asking them for one."),$sitename);
+    }
     $run_result .= <<< END
-                
+    
     <p>
         $invite
     </p>
-                
+    
 END;
-            
+    
 }
 
 ?>

@@ -52,17 +52,20 @@ function friend_pagesetup() {
                                                                   __gettext("Invite a friend"))); 
                 }
                 
-                $PAGE->menu_sub[] = array( 'name' => 'friend:help',
-                                           'html' => a_href( "{$CFG->wwwroot}help/network_help.php",
-                                                              __gettext("Page help")));
-                
-                
-
             }
             
         }
     }
 
 }
+
+    function friend_page_owner() {
+        
+        $friends_name = optional_param('friends_name');
+        if (!empty($friends_name)) {
+            return user_info_username('ident', $friends_name);
+        }
+        
+    }
 
 ?>

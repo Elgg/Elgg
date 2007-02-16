@@ -1,8 +1,8 @@
-// RU KOI8-R lang variables
+// RU lang variables KOI8-R
 
 /* Remember to namespace the language parameters lang_<your plugin>_<some name> */
 
 tinyMCE.addToLang('',{
-template_title : 'Это шаблон для popup',
+template_title : 'Это шаблон для всплывающего окна',
 template_desc : 'Это шаблон для кнопки'
 });

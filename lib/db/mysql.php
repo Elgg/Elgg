@@ -314,7 +314,7 @@ function main_upgrade($oldversion=0) {
     
     if ($oldversion < 2006081000) {
         
-        // Add old Elgg default template as Classic Elgg
+        // Add old Elgg Default_Template as Classic Elgg
         
         $template = new StdClass;
         $template->name = "Classic Elgg";
@@ -379,8 +379,33 @@ function main_upgrade($oldversion=0) {
         execute_sql("ALTER TABLE `{$CFG->prefix}files` ADD `handler` VARCHAR( 32 ) NOT NULL DEFAULT 'elgg'");
     }
     
+    if ($oldversion < 2006122401) {
+        execute_sql("UPDATE `{$CFG->prefix}template_elements` SET `content`=REPLACE(`content`, '<p>Welcome {{userfullname}}', '<p>{{userfullname}}') WHERE `name`='pageshell' AND `content` LIKE '%<p>Welcome {{userfullname}}%' ");
+    }
     
-    return $result; 
+    if ($oldversion < 2007010401) {
+        execute_sql("ALTER TABLE `{$CFG->prefix}file_folders` ADD `handler` VARCHAR( 32 ) NOT NULL DEFAULT 'elgg'");
+    }
+    
+    if ($oldversion < 2007011801) {
+        execute_sql("update `{$CFG->prefix}users` SET template_id = -1");
+        execute_sql("update `{$CFG->prefix}templates` SET public = 'no'");
+    }
+    
+    if ($oldversion < 2007013001) {
+        execute_sql("ALTER TABLE `{$CFG->prefix}files` CHANGE `handler` `handler` VARCHAR( 32 ) NOT NULL DEFAULT 'elgg'");
+        set_field('files', 'handler', 'elgg', 'handler', 'local');
+    }
+    
+    if ($oldversion < 2007020101) {
+        execute_sql("ALTER TABLE `{$CFG->prefix}templates` ADD `shortname` VARCHAR( 128 ) NOT NULL");
+        execute_sql("UPDATE `{$CFG->prefix}templates` SET `shortname` = concat('db',ident)");
+        execute_sql("ALTER TABLE `{$CFG->prefix}users` ADD `template_name` VARCHAR( 128 ) NOT NULL DEFAULT 'Default_Template'");
+        execute_sql("UPDATE `{$CFG->prefix}users` SET `template_name` = concat('db',template_id) where template_id <> -1");
+        execute_sql("UPDATE `{$CFG->prefix}users` SET `template_name` = 'Default_Template' where template_id = -1");
+    }
+    
+    return $result;
 }
 
 ?>

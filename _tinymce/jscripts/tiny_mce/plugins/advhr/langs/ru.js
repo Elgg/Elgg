@@ -1,8 +1,8 @@
-// RU cp1251 lang variables
+// RU lang variables UTF-8
 
 tinyMCE.addToLang('',{
-insert_advhr_desc : 'Вставить / редактировать горизонтальный разделитель',
-insert_advhr_width : 'Ширина',
-insert_advhr_size : 'Высота',
-insert_advhr_noshade : 'Без тени'
+insert_advhr_desc : 'Р’СЃС‚Р°РІРёС‚СЊ / СЂРµРґР°РєС‚РёСЂРѕРІР°С‚СЊ РіРѕСЂРёР·РѕРЅС‚Р°Р»СЊРЅС‹Р№ СЂР°Р·РґРµР»РёС‚РµР»СЊ',
+insert_advhr_width : 'РЁРёСЂРёРЅР°',
+insert_advhr_size : 'Р’С‹СЃРѕС‚Р°',
+insert_advhr_noshade : 'Р‘РµР· С‚РµРЅРё'
 });

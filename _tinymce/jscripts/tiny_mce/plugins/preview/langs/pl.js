@@ -3,5 +3,5 @@
 // http://www.musion.prv.pl
 
 tinyMCE.addToLang('',{
-preview_desc : 'Podgl±d'
+preview_desc : 'PodglÄ…d'
 });

@@ -58,9 +58,11 @@
     
     
     if (count($diemessages)) {
-        $diebody  = '<html><body><h1>Error - Elgg cannot run</h1><ul>';
+        $diebody  = '<html><body><h1>Elgg isn\'t ready to run. :(</h1><ul>';
         $diebody .= '<li>' . implode("</li><li>", $diemessages) . '</li>';
-        $diebody .= '</ul><p>Please read the INSTALL and config-dist.php files for more information.</p></body></html>';
+        $diebody .= '</ul><p>Please read the INSTALL and config-dist.php files for more information,';
+        $diebody .= '<a href="_elggadmin/">or click here to use the friendly installer</a>.</p>';
+        $diebody .= '</body></html>';
         die($diebody);
     } else {
         unset($diemessages);

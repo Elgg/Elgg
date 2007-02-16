@@ -1,5 +1,7 @@
 <?php
 
+$run_result .= templates_add();
+/*
 global $USER;
 global $CFG;
 
@@ -67,5 +69,5 @@ END;
 }
 
 $run_result .= $panel;
-
+*/
 ?>

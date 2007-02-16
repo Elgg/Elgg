@@ -20,6 +20,7 @@ if (logged_on) {
             $f->parent = $folder;
             $f->files_owner = $page_owner;
             $f->owner = $USER->ident;
+            $f->handler = trim(optional_param('edit_folder_type'));
             $f = plugin_hook("folder","create",$f);
             if (!empty($f)) {
                 $insert_id = insert_record('file_folders',$f);
@@ -43,8 +44,9 @@ if (logged_on) {
         $copyright = optional_param('copyright');
         
         if (logged_on && !empty($access) && !empty($folderid) && run("permissions:check", "files")) {
+            $ul_username = user_info('username', $page_owner);
             if (empty($copyright)) {
-                $redirect_url = url . $USER->username . "/files/";
+                $redirect_url = $CFG->wwwroot . $ul_username . "/files/";
                 if ($folderid > -1) {
                     $redirect_url .= $folderid;
                 }
@@ -52,7 +54,6 @@ if (logged_on) {
                 $messages[] = __gettext("Upload unsuccessful. You must check the copyright box for a file to be uploaded.");
                 break;
             }
-            $ul_username = user_info('username', $page_owner);
             $upload_folder = $textlib->substr($ul_username,0,1);
             require_once($CFG->dirroot.'lib/uploadlib.php');
             $total_quota = get_field_sql('SELECT sum(size) FROM '.$CFG->prefix.'files WHERE owner = ?',array($page_owner));
@@ -98,7 +99,7 @@ if (logged_on) {
                 $messages[] = $um->get_errors();
             }
             
-            $redirect_url = url . $ul_username . "/files/";
+            $redirect_url = $CFG->wwwroot . $ul_username . "/files/";
             if ($folderid > -1) {
                 $redirect_url .= $folderid;
             }
@@ -126,9 +127,9 @@ if (logged_on) {
                     $file_keywords = trim(optional_param('edit_file_keywords'));
                     insert_tags_from_string ($file_keywords, 'file', $f->ident, $f->access, $USER->ident);
                     plugin_hook("file","republish",$file_info);
-                    $redirect_url = url . $files_username . "/files/";
-                    if ($file_folder != -1) {
-                        $redirect_url .= $file_folder;
+                    $redirect_url = $CFG->wwwroot . $files_username . "/files/";
+                    if ($f->folder != -1) {
+                        $redirect_url .= $f->folder;
                     }
                     define('redirect_url',$redirect_url);
                     $rssresult = run("files:rss:publish", array($file_info->files_owner, false));
@@ -142,12 +143,14 @@ if (logged_on) {
         // Edit a folder
     case "edit_folder":
         $f = new StdClass;
+        $return_type = trim(optional_param('return_type','same'));
         $f->ident = optional_param('edit_folder_id',0,PARAM_INT);
         $f->name = trim(optional_param('edit_folder_name'));
         $f->access = trim(optional_param('edit_folder_access'));
+        $f->handler = trim(optional_param('edit_folder_type'));
         $f->parent = optional_param('edit_folder_parent',0,PARAM_INT);
         if (!empty($f->ident) && !empty($f->name) && !empty($f->access) && !empty($f->parent)) {
-            $edit_owner = get_field('file_folders','owner','ident',$f->ident);
+            $edit_owner = get_field('file_folders','files_owner','ident',$f->ident);
             if (run("permissions:check", array("files:edit",$edit_owner))) {
                 if ($f->ident != $f->parent) {
                     $f = plugin_hook("folder","update",$f);
@@ -158,6 +161,17 @@ if (logged_on) {
                         insert_tags_from_string ($edit_value, 'folder', $f->ident, $f->access, $USER->ident);
                         plugin_hook("folder","updated",$f);
                         $messages[] = __gettext("The folder was edited.");
+                        if ($return_type == "same") {
+                            $return_url = $CFG->wwwroot . user_info("username",$edit_owner) . "/files/" . $f->ident;
+                        } else {
+                            $return_url = $CFG->wwwroot . user_info("username",$edit_owner) . "/files/";
+                            if ($f->parent > -1) {
+                                $return_url .= $f->parent;
+                            }
+                        }
+                        $_SESSION['messages'] = $messages;
+                        header("Location: $return_url");
+                        exit;
                     }
                 } else {
                     $messages[] = __gettext("Error: a folder cannot be its own parent.");
@@ -181,7 +195,7 @@ if (logged_on) {
                     delete_records('tags','tagtype','folder','ref',$id);
                 }
                 global $redirect_url;
-                $redirect_url = url . $files_username . "/files/";
+                $redirect_url = $CFG->wwwroot . $files_username . "/files/";
                 if ($folder->parent > -1) {
                     $redirect_url .= $folder->parent;
                 }
@@ -204,7 +218,7 @@ if (logged_on) {
                     delete_records('files','ident',$id);
                     delete_records('tags','tagtype','file','ref',$id);
                 }
-                $redirect_url = url . $files_username . "/files/";
+                $redirect_url = $CFG->wwwroot . $files_username . "/files/";
                 if ($file->folder > -1) {
                     $redirect_url .= $file->folder;
                 }

@@ -6,7 +6,7 @@ global $CFG, $db, $PAGE;
     
         $handle = 0;
         foreach($data['profile:details'] as $profiletype) {
-            if ($profiletype[1] == $parameter[0] && $profiletype[2] == "keywords") {
+            if ($profiletype->internal_name == $parameter[0] && $profiletype->field_type == "keywords") {
                 $handle = 1;
             } else {
                 $icon = "default.png";

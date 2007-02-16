@@ -53,6 +53,9 @@ switch ($action) {
             }
             
             if (!empty($exists)) {
+                $post->posted = $oldpost->posted;
+                $post->owner = $oldpost->owner;
+                $post->weblog = $oldpost->weblog;
                 $post = plugin_hook("weblog_post","update",$post);
                 if (!empty($post)) {
                     update_record('weblog_posts',$post);
@@ -138,35 +141,34 @@ switch ($action) {
                         $comment->posted = time();
                         $comment = plugin_hook("weblog_comment","create",$comment);
                         if (!empty($comment)) {
-                                $insert_id = insert_record('weblog_comments',$comment);
-                                $comment->ident = $insert_id;
-                                $comment = plugin_hook("weblog_comment","publish",$comment);
-        
-                                // If we're logged on and not the owner of this post, add post to our watchlist
-                                if (logged_on && $comment->owner != $post->owner) {
-                                    delete_records('weblog_watchlist','weblog_post',$comment->post_id,'owner',$comment->owner);
-                                    $wl = new StdClass;
-                                    $wl->owner = $comment->owner;
-                                    $wl->weblog_post = $comment->post_id;
-                                    insert_record('weblog_watchlist',$wl);
-                                }
-        
-                                // Email comment if applicable
-                                if ($comment->owner != $post->owner) {
-                                    $message = __gettext(sprintf("You have received a comment from %s on your blog post '%s'. It reads as follows:", $comment->postedname, stripslashes($post->title)));
-                                    $message .= "\n\n" . stripslashes($comment->body) . "\n\n";
-                                    $message .= __gettext(sprintf("To reply and see other comments on this blog post, click here: %s", $CFG->wwwroot . user_info("username",$post->weblog) . "/weblog/" . $post->ident . ".html"));
-                                    $message = wordwrap($message);
-                                    message_user($post->owner,$comment->owner,stripslashes($post->title),$message);
-                                    $messages[] = __gettext("Your comment has been added."); // gettext variable
-                                }
-
+                            $insert_id = insert_record('weblog_comments',$comment);
+                            $comment->ident = $insert_id;
+                            $comment = plugin_hook("weblog_comment","publish",$comment);
+                            
+                            // If we're logged on and not the owner of this post, add post to our watchlist
+                            if (logged_on && $comment->owner != $post->owner) {
+                                delete_records('weblog_watchlist','weblog_post',$comment->post_id,'owner',$comment->owner);
+                                $wl = new StdClass;
+                                $wl->owner = $comment->owner;
+                                $wl->weblog_post = $comment->post_id;
+                                insert_record('weblog_watchlist',$wl);
+                            }
+                            
+                            // Email comment if applicable
+                            if ($comment->owner != $post->owner) {
+                                $message = __gettext(sprintf("You have received a comment from %s on your blog post '%s'. It reads as follows:", $comment->postedname, stripslashes($post->title)));
+                                $message .= "\n\n" . stripslashes($comment->body) . "\n\n";
+                                $message .= __gettext(sprintf("To reply and see other comments on this blog post, click here: %s", $CFG->wwwroot . user_info("username",$post->weblog) . "/weblog/" . $post->ident . ".html"));
+                                $message = wordwrap($message);
+                                message_user($post->owner,$comment->owner,stripslashes($post->title),$message);
+                                $messages[] = __gettext("Your comment has been added."); // gettext variable
+                            }
                         }
                     }
                 } else {
                     $messages[] = __gettext("Your comment could not be posted. The system thought it was spam.");
                 }
-                define('redirect_url',url . user_info("username",$page_owner) . "/weblog/" . $commentbackup->post_id . ".html");
+                define('redirect_url',url . user_info("username",$post->owner) . "/weblog/" . $commentbackup->post_id . ".html");
             }
         }
         break;

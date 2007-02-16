@@ -1,0 +1,33 @@
+// UK lang variables
+
+tinyMCE.addToLang('xhtmlxtras',{
+cite_desc : 'Lainaus',
+abbr_desc : 'Lyhenne (Abbreviation)',
+acronym_desc : 'Lyhenne (Acronym)',
+del_desc : 'Poisto',
+ins_desc : 'Lis‰ys',
+attribute_label_title : 'Title',
+attribute_label_id : 'ID',
+attribute_label_class : 'Luokka',
+attribute_label_style : 'Tyyli',
+attribute_label_cite : 'Lainaus',
+attribute_label_datetime : 'P‰iv‰m‰‰r‰/Aika',
+attribute_label_langdir : 'Tekstin suunta',
+attribute_option_ltr : 'Vasemmalta oikealle',
+attribute_option_rtl : 'Oikealta vasemmalle',
+attribute_label_langcode : 'Kieli',
+general_tab : 'Yleiset',
+attrib_tab : 'Ominaisuudet',
+events_tab : 'Tapahtumat',
+fieldset_general_tab : 'Yleiset asetukset',
+fieldset_attrib_tab : 'Elementin ominaisuudet',
+fieldset_events_tab : 'Elementin tapahtumat',
+title_ins_element : 'Lis‰ys elementti',
+title_del_element : 'Poisto elementti',
+title_acronym_element : 'Lyhenne elementti (Acronym)',
+title_abbr_element : 'Lyhenne elementti (Abbreviation)',
+title_cite_element : 'Lainaus elementti',
+remove : 'Poista',
+not_set : '--Ei asetettu--',
+insert_date : 'Lis‰‰ p‰iv‰m‰‰r‰/aika'
+});

@@ -1,22 +1,22 @@
-// RU lang variables cp1251
+// RU lang variables UTF-8
 
 tinyMCE.addToLang('emotions',{
-title : 'Вставить смайлик',
-desc : 'Смайлики',
-cool : 'Cool',
-cry : 'Плач',
-embarassed : 'Embarassed',
-foot_in_mouth : 'Foot in mouth',
-frown : 'Нахмуренность',
-innocent : 'Святой',
-kiss : 'Поцелуй',
-laughing : 'Смех',
-money_mouth : 'Money mouth',
-sealed : 'Заклеенный',
-smile : 'Улыбка',
-surprised : 'Сюрприз',
-tongue_out : 'Высунутый язык',
-undecided : 'Undecided',
-wink : 'Wink',
-yell : 'Yell'
+title : 'Р’СЃС‚Р°РІРёС‚СЊ СЃРјР°Р№Р»РёРє',
+desc : 'РЎРјР°Р№Р»РёРєРё',
+cool : 'РљСЂСѓС‚Рѕ',
+cry : 'РџР»Р°С‡',
+embarassed : 'РЎРјСѓС‰РµРЅРЅС‹Р№',
+foot_in_mouth : 'РљРѕСЃРЅРѕСЏР·С‹С‡РЅС‹Р№',
+frown : 'РќР°С…РјСѓСЂРµРЅС‹Р№',
+innocent : 'РЎРІСЏС‚РѕР№',
+kiss : 'РџРѕС†РµР»СѓР№',
+laughing : 'РЎРјРµС…',
+money_mouth : 'Р”РµР»СЊРЅС‹Р№',
+sealed : 'Р—Р°РєР»РµРµРЅРЅС‹Р№',
+smile : 'РЈР»С‹Р±РєР°',
+surprised : 'РЎСЋСЂРїСЂРёР·',
+tongue_out : 'Р’С‹СЃСѓРЅСѓС‚С‹Р№ СЏР·С‹Рє',
+undecided : 'РќРµСЂРµС€РёС‚РµР»СЊРЅС‹Р№',
+wink : 'РџРѕРґРјРёРіРЅСѓС‚СЊ',
+yell : 'Р’РѕРїР»СЊ'
 });

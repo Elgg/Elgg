@@ -4,7 +4,9 @@ require_once(dirname(dirname(__FILE__))."/includes.php");
 
 $user->code = '';
 $user->ident = $USER->ident;
-update_record('users',$user);
+if ($USER->ident) { //for some reason this can run with user id 0...?
+    update_record('users',$user);
+}
 
 unset($USER);
 unset($SESSION);
@@ -27,7 +29,7 @@ setcookie(AUTH_COOKIE, '', time()-84600, $CFG->cookiepath);
 session_destroy();
 
 // Set headers to forward to main URL
-header("Location: " . url . "\n");
+header("Location: " . $CFG->wwwroot . "\n");
 
     
 ?>

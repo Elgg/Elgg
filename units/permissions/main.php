@@ -6,6 +6,6 @@
     // FUNCTIONS
     
     // Check permissions
-        $function['permissions:check'][] = path . "units/permissions/function_check.php";
+        $function['permissions:check'][] = $CFG->dirroot . "units/permissions/function_check.php";
 
 ?>

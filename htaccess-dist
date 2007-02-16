@@ -13,7 +13,10 @@
 Options +FollowSymLinks
 
 # PHP defaults to allowing file uploads of max 2MB, below is example option for 5MB.
-# NB: Adjusting value may not work, depending on other configured php and apache limits
+# NB: Adjusting value may not work, depending on other configured php and apache limits.
+# for more info see http://php.net/manual/en/features.file-upload.php and http://httpd.apache.org/docs/2.0/mod/core.html#limitrequestbody
+# post_max_size should be slightly larger than upload_max_filesize, but the default is usually 8MB anyway.
+#php_value post_max_size 8388608
 #php_value upload_max_filesize 5242880
 
 # Elgg can be more of a RAM lover than PHP's default of 8 meg. E.g. 16 meg:

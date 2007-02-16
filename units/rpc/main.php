@@ -5,36 +5,36 @@
      */
 
     // Functions to perform upon init;
-        $function['init'][] = path . "units/rpc/rpc_init.php";
+        $function['init'][] = $CFG->dirroot . "units/rpc/rpc_init.php";
 
     // Function to log on
-        $function['rpc:auth'][] = path . "units/rpc/lib/function_authenticate.php";
+        $function['rpc:auth'][] = $CFG->dirroot . "units/rpc/lib/function_authenticate.php";
 
     // XML-RPC server
-        $function['rpc:xmlrpc:server'][] = path . "units/rpc/xmlrpc/xmlrpc_server.php";
+        $function['rpc:xmlrpc:server'][] = $CFG->dirroot . "units/rpc/xmlrpc/xmlrpc_server.php";
 
     // Users class
-        $function['users:instance'][] = path . "units/rpc/lib/function_load_user.php";
+        $function['users:instance'][] = $CFG->dirroot . "units/rpc/lib/function_load_user.php";
 
     // Weblog class
-        $function['weblogs:instance'][] = path . "units/rpc/lib/function_load_weblog.php";
+        $function['weblogs:instance'][] = $CFG->dirroot . "units/rpc/lib/function_load_weblog.php";
 
     // Post class
-        $function['posts:instance'][] = path . "units/rpc/lib/function_load_post.php";
+        $function['posts:instance'][] = $CFG->dirroot . "units/rpc/lib/function_load_post.php";
 
     // Tag class
-        $function['tags:instance'][] = path . "units/rpc/lib/function_load_tag.php";
+        $function['tags:instance'][] = $CFG->dirroot . "units/rpc/lib/function_load_tag.php";
 
     // Comment class
-        $function['comments:instance'][] = path . "units/rpc/lib/function_load_comment.php";
+        $function['comments:instance'][] = $CFG->dirroot . "units/rpc/lib/function_load_comment.php";
 
     // Folder class
-        $function['folders:instance'][] = path . "units/rpc/lib/function_load_folder.php";
+        $function['folders:instance'][] = $CFG->dirroot . "units/rpc/lib/function_load_folder.php";
 
     // File class
-        $function['files:instance'][] = path . "units/rpc/lib/function_load_file.php";
+        $function['files:instance'][] = $CFG->dirroot . "units/rpc/lib/function_load_file.php";
 
     // Tag URI handler
-        $function['tags:uri:object'][] = path . "units/rpc/lib/function_taguri_object.php";
+        $function['tags:uri:object'][] = $CFG->dirroot . "units/rpc/lib/function_taguri_object.php";
 
 ?>

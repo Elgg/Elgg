@@ -61,7 +61,14 @@ function newsclient_cron() {
     
     define('context','resources');
     
-    run('rss:prune');
+    // this doesn't need running every 5 mins
+    if (empty($CFG->newsclient_lastcronprune)) {
+        set_config('newsclient_lastcronprune',time());
+    }
+    if ((time() - 86400) >= $CFG->newsclient_lastcronprune) {
+        run('rss:prune');
+        set_config('newsclient_lastcronprune',time());
+    }
     
     run("rss:update:all:cron");
 
@@ -131,13 +138,11 @@ function newsclient_widget_edit($widget) {
     if (empty($feed_posts)) {
         $feed_posts = 1;
     }
-
+    
     $body = "<h2>" . __gettext("Feeds dashboard widget") . "</h2>";
     $body .= "<p>" . __gettext("This widget displays the last couple of entries from an external feed you have subscribed to. To begin, select the feed from your subscriptions below:") . "</p>";
                 
-    $feed_subscriptions = get_records_sql('SELECT fs.ident AS subid, fs.autopost, fs.autopost_tag, f.* FROM '.$CFG->prefix.'feed_subscriptions fs
-                                      JOIN '.$CFG->prefix.'feeds f ON f.ident = fs.feed_id
-                                      WHERE fs.user_id = ? ORDER BY f.name ASC',array($page_owner));
+    $feed_subscriptions = newsclient_get_subscriptions_user($page_owner, true);
     
     if (is_array($feed_subscriptions) && !empty($feed_subscriptions)) {
         
@@ -153,7 +158,7 @@ function newsclient_widget_edit($widget) {
         $body .= "</select></p>\n";
         
         $body .= "<p>" . __gettext("Then enter the number of feed entries you'd like to display:") . "</p>";
-    
+        
         $body .= "<p><input type=\"text\" name=\"dashboard_data[feed_posts]\" value=\"" . $feed_posts . "\" /></p>";
         
     } else {
@@ -167,5 +172,26 @@ function newsclient_widget_edit($widget) {
 }
 
 
+// return an array of feed subscriptions for a given userid
+// if joined is true, return feed detail etc, otherwise just return feed_subscriptions rows
+function newsclient_get_subscriptions_user($userid, $joined = false) {
+    
+	global $CFG;
+	
+    $userid = (int) $userid;
+    if (empty($joined)) {
+        
+        $feed_subscriptions = get_records('feed_subscriptions', 'user_id', $userid);
+        
+    } else {
+        
+        $feed_subscriptions = get_records_sql('SELECT fs.ident AS subid, fs.autopost, fs.autopost_tag, f.* FROM '.$CFG->prefix.'feed_subscriptions fs
+            JOIN '.$CFG->prefix.'feeds f ON f.ident = fs.feed_id
+            WHERE fs.user_id = ? ORDER BY f.name ASC',array($userid));
+        
+    }
+    
+    return $feed_subscriptions;
+}
 
 ?>

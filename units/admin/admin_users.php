@@ -25,9 +25,9 @@ if (logged_on && user_flag_get("admin", $_SESSION['userid'])) {
     if ($users = get_records('users','user_type','person','username ASC','*',$offset,50)) {
         $run_result .= templates_draw(array(
                                             'context' => 'adminTable',
-                                            'name' => "<h5>" . __gettext("Username") . "</h5>",
-                                            'column1' => "<h5>" . __gettext("Full name") . "</h5>",
-                                            'column2' => "<h5>" . __gettext("Email address") . "</h5>"
+                                            'name' => "<h3>" . __gettext("Username") . "</h3>",
+                                            'column1' => "<h3>" . __gettext("Full name") . "</h3>",
+                                            'column2' => "<h3>" . __gettext("Email address") . "</h3>"
                                             )
                                       );
         foreach($users as $user) {

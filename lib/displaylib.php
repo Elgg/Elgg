@@ -39,6 +39,7 @@ function display_input_field ($parameter) {
     
     */
 
+    global $CFG;
     $run_result = '';
 
     if (isset($parameter) && sizeof($parameter) > 2) {
@@ -153,6 +154,14 @@ END;
         case "weblogtext":
             $run_result .= "<textarea name=\"".$parameter[0]."\" id=\"".$parameter[0]."\" style=\"width: 95%; height: 200px\">".htmlspecialchars(stripslashes($parameter[1]), ENT_COMPAT, 'utf-8')."</textarea>";
             break;
+        default:
+            if (isset($CFG->display_field_module[$parameter[2]])) {
+                $callback = $CFG->display_field_module[$parameter[2]] . "_display_input_field";
+                if (is_callable($callback)) {
+                    $run_result .= $callback($parameter);
+                }
+            }
+            break;
         }
             
     }
@@ -184,7 +193,7 @@ function log_on_pane () {
 
         $body = '<form action="'.url.'login/index.php" method="post">';
 
-        if (public_reg == true && ($CFG->maxusers == 0 || (count_users('person') < $CFG->maxusers))) {
+        if ($CFG->publicreg == true && ($CFG->maxusers == 0 || (count_users('person') < $CFG->maxusers))) {
             $reg_link = '<a href="' . url . '_invite/register.php">'. __gettext("Register") .'</a> |';
         } else {
             $reg_link = "";
@@ -251,11 +260,12 @@ function display_output_field ($parameter) {
     
     global $db;
     global $page_owner;
+    global $CFG;
 
     $run_result = '';
     
     if (isset($parameter) && sizeof($parameter) > 1) {
-            
+        
         if (!isset($parameter[4])) {
             $parameter[4] = -1;
         }
@@ -266,7 +276,7 @@ function display_output_field ($parameter) {
                 $parameter[5] = -1;
             }
         }
-            
+        
         switch($parameter[1]) {
                 
         case "icq":
@@ -342,8 +352,15 @@ function display_output_field ($parameter) {
             }
             $run_result = "<a href=\"" . $run_result . "\" target=\"_blank\">" . $run_result . "</a>";
             break;
+        default:
+            if (isset($CFG->display_field_module[$parameter[1]])) {
+                $callback = $CFG->display_field_module[$parameter[1]] . "_display_output_field";
+                if (is_callable($callback)) {
+                    $run_result = $callback($parameter);
+                }
+            }
+            break;
         }
-            
     }
     return $run_result;
 }

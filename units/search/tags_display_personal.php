@@ -19,10 +19,11 @@ if ($tags = get_records_sql('SELECT tag, count(ident) AS number
     }
     
     $tag_count = 0;
+    $run_result .= "<div id=\"tagcloud\"><p>";
     foreach($tags as $tag) {
         
         if ($max > 1) {
-            $size = round((log($tag->number) / log($max)) * 300) + 100;
+            $size = round((log($tag->number) / log($max)) * 200) + 100;
         } else {
             $size = 100;
         }
@@ -35,6 +36,7 @@ if ($tags = get_records_sql('SELECT tag, count(ident) AS number
         }
         $tag_count++;
     }
+    $run_result .= "</p></div>";
     
 } else {
     $run_result = "<p>" . __gettext("No tags found for this user.") . "</p>";

@@ -1,5 +1,5 @@
 /**
- * $Id: editor_plugin_src.js 28 2006-08-01 16:02:56Z spocke $
+ * $Id: editor_plugin_src.js 177 2007-01-10 13:23:14Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -16,11 +16,11 @@ var TinyMCE_SpellCheckerPlugin = {
 
 	getInfo : function() {
 		return {
-			longname : 'Spellchecker',
+			longname : 'Spellchecker PHP',
 			author : 'Moxiecode Systems AB',
 			authorurl : 'http://tinymce.moxiecode.com',
 			infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_spellchecker.html',
-			version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
+			version : "1.0.3"
 		};
 	},
 
@@ -137,7 +137,7 @@ var TinyMCE_SpellCheckerPlugin = {
 	},
 
 	setupContent : function(editor_id, body, doc) {
-		TinyMCE_SpellCheckerPlugin._removeWords(doc);
+		TinyMCE_SpellCheckerPlugin._removeWords(doc, null, true);
 	},
 
 	getControlHTML : function(cn) {
@@ -200,6 +200,15 @@ var TinyMCE_SpellCheckerPlugin = {
 	},
 
 	_menuButtonEvent : function(e, o) {
+		var t = this;
+
+		// Give IE some time since it's buggy!! :(
+		window.setTimeout(function() {
+			t._menuButtonEvent2(e, o);
+		}, 1);
+	},
+
+	_menuButtonEvent2 : function(e, o) {
 		if (o.className == 'mceMenuButtonFocus')
 			return;
 
@@ -240,7 +249,7 @@ var TinyMCE_SpellCheckerPlugin = {
 	},
 
 	execCommand : function(editor_id, element, command, user_interface, value) {
-		var inst = tinyMCE.getInstanceById(editor_id), self = TinyMCE_SpellCheckerPlugin, args = '', co, bb, mb, nl, i, e;
+		var inst = tinyMCE.getInstanceById(editor_id), self = TinyMCE_SpellCheckerPlugin, args = '', co, bb, mb, nl, i, e, mbs;
 
 		// Handle commands
 		switch (command) {
@@ -248,9 +257,13 @@ var TinyMCE_SpellCheckerPlugin = {
 				if (!inst.spellcheckerOn) {
 					inst.spellCheckerBookmark = inst.selection.getBookmark();
 
+					// Fix for IE bug: #1610184
+					if (tinyMCE.isRealIE)
+						tinyMCE.setInnerHTML(inst.getBody(), inst.getBody().innerHTML);
+
 					// Setup arguments
 					args += 'id=' + inst.editorId + "|" + (++self._counter);
-					args += '&cmd=spell&check=' + encodeURIComponent(self._getWordList(inst.getBody())).replace( /\'/g, '%27' );
+					args += '&cmd=spell&check=' + encodeURIComponent(self._getWordList(inst.getBody())).replace(/\'/g, '%27');
 					args += '&lang=' + escape(inst.spellCheckerLang);
 
 					co = document.getElementById(inst.editorId + '_parent').firstChild;
@@ -262,7 +275,14 @@ var TinyMCE_SpellCheckerPlugin = {
 					// Setup message box
 					mb = self._getMsgBoxLayer(inst);
 					e = mb.getElement();
-					e.innerHTML = '<span>' + tinyMCE.getLang('lang_spellchecker_swait', '', true) + '</span>';
+
+					if (e.childNodes[0])
+						e.removeChild(e.childNodes[0]);
+
+					mbs = document.createElement("span");
+					mbs.innerHTML = '<span>' + tinyMCE.getLang('lang_spellchecker_swait', '', true) + '</span>';
+					e.appendChild(mbs);
+
 					mb.show();
 					mb.moveRelativeTo(co, 'cc');
 
@@ -328,7 +348,7 @@ var TinyMCE_SpellCheckerPlugin = {
 	cleanup : function(type, content, inst) {
 		switch (type) {
 			case "get_from_editor_dom":
-				TinyMCE_SpellCheckerPlugin._removeWords(content);
+				TinyMCE_SpellCheckerPlugin._removeWords(content, null, true);
 				inst.spellcheckerOn = false;
 				break;
 		}
@@ -391,12 +411,15 @@ var TinyMCE_SpellCheckerPlugin = {
 					self._markWords(inst.getDoc(), inst.getBody(), decodeURIComponent(el.firstChild.nodeValue).split('+'));
 					inst.selection.moveToBookmark(inst.spellCheckerBookmark);
 
-					if(tinyMCE.getParam('spellchecker_report_mispellings', false))
+					if(tinyMCE.getParam('spellchecker_report_misspellings', false))
 						alert(tinyMCE.getLang('lang_spellchecker_mpell_found', '', true, {words : self._countWords(inst)}));
 				} else
 					alert(tinyMCE.getLang('lang_spellchecker_no_mpell', '', true));
 
 				self._checkDone(inst);
+
+				// Odd stuff FF removed useCSS, disable state for it
+				inst.useCSS = false;
 
 				break;
 
@@ -445,7 +468,7 @@ var TinyMCE_SpellCheckerPlugin = {
 		return wl.join(' ');
 	},
 
-	_removeWords : function(doc, word) {
+	_removeWords : function(doc, word, cleanup) {
 		var i, c, nl = doc.getElementsByTagName("span");
 		var self = TinyMCE_SpellCheckerPlugin;
 		var inst = tinyMCE.selectedInstance, b = inst ? inst.selection.getBookmark() : null;
@@ -459,7 +482,7 @@ var TinyMCE_SpellCheckerPlugin = {
 				self._removeWord(nl[i]);
 		}
 
-		if (b)
+		if (b && !cleanup)
 			inst.selection.moveToBookmark(b);
 	},
 

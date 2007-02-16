@@ -1,0 +1,141 @@
+<style type="text/css">
+/* 
+	USER TOOLBAR: IN DEFAULT ELGG, THIS SITS
+	AT THE VERY TOP OF THE PAGE.
+*/
+
+div#elggtoolbar {
+	height:30px;
+	font-family:Arial, 'Trebuchet MS','Lucida Grande', sans-serif;
+	top:0;
+	left: 0;
+	width:100%;
+	background:url({{url}}mod/toolbar/images/toolbar_nav_grey.gif) repeat-x bottom;
+	color:#000;
+	margin:0;
+	padding:0 0 4px 0;
+}
+
+div#elggtoolbar p {
+	margin:0;
+	padding:6px 0 0 5px;
+	color:#91B6C0;
+}
+
+div#elggtoolbar span a {
+	color:#ccc;
+	border:1px solid #777;
+	padding:2px 4px 2px 4px;
+}
+
+div#elggtoolbar span a:hover {
+	text-decoration:none;
+}
+
+div#elggtoolbar img {
+	padding:0;
+	margin:0 5px 0 0;
+	border:0;
+}
+
+/* 
+	GLOBAL USER OPTIONS: LOGOUT AND ACCOUNT SETTINGS, TOP RIGHT
+*/
+
+div#elggtoolbar #global-menuoptions{
+	float:right;
+	text-align:right;
+	width:300px;
+	margin:4px 10px 0 0;
+	font-size:0.9em;
+}
+
+div#elggtoolbar #global-menuoptions ul {
+	margin:0;
+	padding:0;
+}
+
+div#elggtoolbar #global-menuoptions li {
+	margin: 0; 
+	padding: 0;
+	display: inline;
+	list-style-type: none;
+	border: none;
+}
+
+div#elggtoolbar #global-menuoptions li a{
+	text-decoration:underline;
+	padding:0 10px 0 0;
+	margin:20px 0 0 0;
+	color:#000;
+	background:transparent;
+}
+
+div#elggtoolbar #global-menuoptions p {
+	padding:0 10px 0 0;
+}
+
+div#elggtoolbar #global-menuoptions img {
+	padding:0;
+	margin:0 10px 0 0;
+}
+
+/* 
+	USER NAVIGATION: THIS STYLES THE USERS MAIN NAV IN THE TOOLBAR,
+	IN DEFAULT ELGG IT SITS OVER ON THE LEFT HAND SIDE
+*/
+
+div#elggtoolbar #navigation {
+	height: 19px;
+	margin: 3px 0 0 4px;
+	padding:0;
+	text-align:left;
+	float:left;
+}
+
+div#elggtoolbar #navigation li {
+	margin: 0; 
+	padding: 3px;
+	display: inline;
+	list-style-type: none;
+	float: left;
+}
+
+div#elggtoolbar #navigation a {
+	margin: 0 2px 0 0;
+	text-decoration: none;
+	font-size:90%;
+	color:#000;
+	background:#efefef;
+	border:1px solid #ccc;
+	padding:2px 4px 2px 4px;
+}
+
+div#elggtoolbar #navigation a:hover {
+	background:#E0EEFC;
+}
+
+div#elggtoolbar #navigation a.selected {
+	background:#E0EEFC;
+	border:1px solid #ccc;
+}
+
+div#elggtoolbar form {
+	margin: 4px 0 0 4px;
+	width: 700px;
+	float: left;
+}
+
+div#elggtoolbar #powered-by-elgg {
+	margin: 7px 4px 0 0;
+	float: right;
+}
+
+div#container {
+	margin-top: 1px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom:0;
+}
+
+</style>

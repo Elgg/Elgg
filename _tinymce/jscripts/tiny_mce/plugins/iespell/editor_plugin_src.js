@@ -1,20 +1,18 @@
 /**
- * $RCSfile: editor_plugin_src.js,v $
- * $Revision: 1.20 $
- * $Date: 2006/02/10 16:29:39 $
+ * $Id: editor_plugin_src.js 162 2007-01-03 16:16:52Z spocke $
  *
  * @author Moxiecode
- * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright © 2004-2007, Moxiecode Systems AB, All rights reserved.
  */
 
 /* Import plugin specific language pack */
-tinyMCE.importPluginLanguagePack('iespell', 'en,tr,cs,el,fr_ca,it,ko,sv,zh_cn,fr,de,pl,pt_br,nl,da,he,nb,ru,ru_KOI8-R,ru_UTF-8,nn,fi,cy,es,is,zh_tw,zh_tw_utf8,sk');
+tinyMCE.importPluginLanguagePack('iespell');
 
 var TinyMCE_IESpellPlugin = {
 	getInfo : function() {
 		return {
 			longname : 'IESpell (MSIE Only)',
-			author : 'Moxiecode Systems',
+			author : 'Moxiecode Systems AB',
 			authorurl : 'http://tinymce.moxiecode.com',
 			infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_iespell.html',
 			version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion

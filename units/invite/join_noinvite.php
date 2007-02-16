@@ -3,7 +3,7 @@
     global $CFG;
     // Join
         
-        if (public_reg == true) {
+        if ($CFG->publicreg == true) {
             
             $sitename = sitename;
             $partOne = sprintf(__gettext("Thank you for registering for an account with %s! Registration is completely free, but before you fill in your details, please take a moment to read the following documents:"),$sitename); // gettext variable
@@ -42,12 +42,18 @@ END;
             $buttonValue = __gettext("Register");
             $run_result .= <<< END
             <p align="center">
-                <input type="hidden" name="invite_text" value="" />
                 <input type="hidden" name="action" value="invite_invite" />
                 <input type="submit" value=$buttonValue />
             </p>
         </form>
                 
+END;
+        } else {
+            $nope = __gettext("Self-registration is currently disabled."); // gettext variable
+            $run_result .= <<< END
+    <p>
+        $nope
+    </p>
 END;
         }
 

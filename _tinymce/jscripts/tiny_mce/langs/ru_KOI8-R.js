@@ -1,6 +1,5 @@
-// Russian KOI8-R translation by Vladimir Vitkovsky
-// admin@transport.su
-// www.webgui.uanet.biz
+// Russian KOI8-R translation by Vladimir Vitkovsky - admin@transport.su
+// Updated to 2.0.6.1 with some old errors fixed by yarodin@gmail.com for e107.org
 
 tinyMCE.addToLang('',{
 bold_desc : 'Полужирный',
@@ -14,7 +13,7 @@ justifyfull_desc : 'Равномерное заполнение',
 bullist_desc : 'Маркированный список',
 numlist_desc : 'Нумерованный список',
 outdent_desc : 'Уменьшить отступ',
-indent_desc : 'Увеличить отспут',
+indent_desc : 'Увеличить отступ',
 undo_desc : 'Отменить',
 redo_desc : 'Вернуть',
 link_desc : 'Вставить/изменить ссылку',

@@ -1,4 +1,4 @@
-// Vietnamese lang variables - Đỗ Xuân Tiến - tiendx2002@yahoo.com Việt hóa
+﻿// Vietnamese lang variables - Đỗ Xuân Tiến - tiendx2002@yahoo.com Việt hóa
 
 tinyMCE.addToLang('table',{
 general_tab : 'Chung',
@@ -71,5 +71,8 @@ row : 'Hàng',
 col : 'Cột',
 rowgroup : 'Nhóm hàng',
 colgroup : 'Nhóm cột',
+col_limit : 'Bạn đã chạm đến số tối đa cột của {$cols}.',
+row_limit : 'Bạn đã chạm đến số tối đa hàng của {$rows}.',
+cell_limit : 'Bạn đã chạm đến số tối đa ô của {$cells}.',
 missing_scope: 'Bạn có chắc bạn muốn tiếp tục mà không cần xác định phạm vi cho ô tiêu đề bảng này? Nếu thiếu nó, có thể những người sử dụng khuyết thiếu sẽ khó có thể hiểu nội dung của dữ liệu trong bảng.'
 });

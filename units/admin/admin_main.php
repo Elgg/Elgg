@@ -9,18 +9,21 @@ if (logged_on && user_flag_get("admin", $USER->ident)) {
         $run_result .= "<h2>" . __gettext("Site statistics") . "</h2>";
     
     // Number of users of each type
-    if ($users = count_users() && !empty($users) && is_array($users)) {
+    $users = count_users();
+    if (!empty($users) && is_array($users)) {
+        $data = '';
         foreach($users as $user) {
-            
-            $run_result .= templates_draw(array(
-                                                'context' => 'adminTable',
-                                                'name' => "<h3>" . sprintf(__gettext("Accounts of type '%s'"), $user->user_type) . "</h3> ",
-                                                'column1' => "<p>" . $user->numusers . "</p> ",
-                                                'column2' => "&nbsp;"
-                                                )
-                                          );
-            
+            $data .= '<h4>' . $user->user_type . ":</h4><p>" . $user->numusers . "</p> ";
         }
+        
+        $run_result .= templates_draw(array(
+                                            'context' => 'adminTable',
+                                            'name' => "<h3>" . __gettext("Accounts by type") . "</h3> ",
+                                            'column1' => '' . $data . '',
+                                            'column2' => "&nbsp;"
+                                            )
+                                      );
+        
     }
     
     // Number of weblog posts

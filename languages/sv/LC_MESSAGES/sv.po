@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 0.6\n"
-"Report-Msgid-Bugs-To:\n"
-"POT-Creation-Date: 2006-09-22 14:05+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-01-06 02:52+0000\n"
 "PO-Revision-Date: 2006-11-15 15:12+0000\n"
 "Last-Translator: Joakim Nordlander <jonord@cfl.se>\n"
 "Language-Team: Swedish <i18n@elgg.net>\n"
@@ -21,6 +21,7 @@ msgstr ""
 "X-Poedit-Language: Swedish\n"
 "X-Poedit-Country: SWEDEN\n"
 "X-Poedit-SourceCharset: utf-8\n"
+"X-Rosetta-Export-Date: 2007-01-08 17:18+0000\n"
 
 #: _activity/index.php:24
 msgid "Recent activity"
@@ -81,7 +82,7 @@ msgid "No activity during this time period."
 msgstr "Ingen aktivitet under denna tidsperiod."
 
 #: _admin/antispam.php:17 _admin/users.php:17 _admin/users.php:20
-#: lib/templates.php:466
+#: lib/templates.php:471
 msgid "Manage users"
 msgstr "Hantera användare"
 
@@ -93,7 +94,7 @@ msgstr "Spam-blockering"
 msgid "Content flags"
 msgstr "Innehållsflaggor"
 
-#: _admin/index.php:17 _admin/index.php:20 lib/templates.php:426
+#: _admin/index.php:17 _admin/index.php:20 lib/templates.php:429
 msgid "Administration"
 msgstr "Administration"
 
@@ -101,8 +102,32 @@ msgstr "Administration"
 msgid "Add multiple users"
 msgstr "Lägg till flera användare"
 
-#: _communities/index.php:22 mod/community/lib.php:51 mod/community/lib.php:61
-#: units/communities/communities_edit_wrapper.php:5
+#: auth/ldap/lib.php:113 lms/join.php:48 units/invite/invite_actions.php:97
+msgid ""
+"Error! Your username must contain letters and numbers only, cannot be blank, "
+"and must be between 3 and 12 characters in length."
+msgstr ""
+"Fel! Ditt användarnamn får endast innehålla bokstäver och siffror, kan inte "
+"vara blankt och måste vara mellan 3 till 12 tecken långt."
+
+#: auth/ldap/lib.php:118 units/communities/communities_actions.php:26
+#, php-format
+msgid ""
+"The username %s is already taken by another user. You will need to pick a "
+"different one."
+msgstr ""
+"Användarnamnet %s är redan taget av en annan användare. Du måste välja ett "
+"annat."
+
+#: auth/ldap/lib.php:139
+#, php-format
+msgid ""
+"User addition %d failed: Unknown reason, please contact you system "
+"administrator."
+msgstr ""
+
+#: _communities/index.php:22 mod/browser/index.php:83 mod/community/lib.php:53
+#: mod/community/lib.php:63 units/communities/communities_edit_wrapper.php:5
 msgid "Communities"
 msgstr "Communities"
 
@@ -111,7 +136,7 @@ msgstr "Communities"
 msgid "Members"
 msgstr "Medlemmar"
 
-#: _communities/owned.php:22 mod/community/lib.php:55
+#: _communities/owned.php:22 mod/community/lib.php:57
 msgid "Owned Communities"
 msgstr "Ägda Communities"
 
@@ -119,207 +144,6 @@ msgstr "Ägda Communities"
 #: units/communities/communities_membership_requests.php:10
 msgid "Membership requests"
 msgstr "Medlemskapsförfrågningar"
-
-#: _files/edit_file.php:19
-msgid "Edit File"
-msgstr "Redigera Fil"
-
-#: _files/edit_folder.php:19
-msgid "Edit Folder"
-msgstr "Redigera Folder"
-
-#: _files/index.php:19 units/files/files_user_info_menu.php:13
-#: units/files/function_rss_publish.php:35 units/files/profile_files.php:9
-msgid "Files"
-msgstr "Filer"
-
-#: _files/rss2.php:25
-#, php-format
-msgid "Files tagged with %s"
-msgstr "Filer markerade med %s"
-
-#: _files/rss2.php:31 units/files/function_rss_publish.php:42
-#, php-format
-msgid "Files for %s, hosted on %s."
-msgstr "Filer för %s, hostade på %s."
-
-#: _friends/friendsof.php:21 units/friends/friends_of_edit_wrapper.php:5
-msgid "Friends who have linked to you"
-msgstr "Vänner som har länkat till dig"
-
-#: _friends/index.php:21 units/friends/friends_edit_wrapper.php:5
-msgid "Friends I have linked to"
-msgstr "Vänner som jag har länkat till"
-
-#: _friends/requests.php:22 mod/friend/lib.php:38
-#: units/friends/user_friendship_requests.php:11
-msgid "Friendship requests"
-msgstr "Vänskapsförfrågningar"
-
-#: _groups/index.php:23
-msgid "Access Controls"
-msgstr "AccessKontroller"
-
-#: _icons/index.php:20
-msgid "Manage user icons"
-msgstr "Hantera användarikoner"
-
-#: _invite/forgotten_password.php:14
-msgid "Generate a New Password"
-msgstr "Skapa ett Nytt Lösenord"
-
-#: _invite/index.php:18
-msgid "Invite a Friend"
-msgstr "Bjud in en vän"
-
-#: _invite/join.php:12 _invite/register.php:11
-#, php-format
-msgid "Join %s"
-msgstr "Anslut till %s"
-
-#: _invite/new_password.php:11
-#, php-format
-msgid "Get new %s password"
-msgstr "Få nytt %s lösenord"
-
-#: _rss/blog.php:15
-msgid "Publish feeds to blog"
-msgstr "Publicera feeder till blogg"
-
-#: _rss/index.php:12 _rss/subscriptions.php:15 mod/newsclient/lib.php:29
-#: units/magpie/menu_sub.php:14
-msgid "Feeds"
-msgstr "Feeder"
-
-#: _rss/individual.php:13
-msgid "Feed detail"
-msgstr "Feed-detaljer"
-
-#: _rss/popular.php:12 units/magpie/menu_sub.php:31
-msgid "Popular feeds"
-msgstr "Populära feeder"
-
-#: _rss/styles.php:10
-msgid "RSS Management"
-msgstr "RSS Hantering"
-
-#: _rss/styles.php:11
-msgid "To add this feed to your resources page, click here."
-msgstr "Klicka här för att lägga till denna feed till din resurssida"
-
-#: _rss/styles.php:12
-msgid ""
-"To add this feed to an external RSS aggregator, click the link that "
-"corresponds to your aggregator:"
-msgstr ""
-"Klicka på länken som motsvarar din aggregator för att lägga till denna feed "
-"till en extern RSS aggregator."
-
-#: _rss/styles.php:13
-msgid "Summary"
-msgstr "Summering"
-
-#: _rss/styles.php:14
-msgid "This is an RSS feed for "
-msgstr "Detta är en RSS-feed för "
-
-#: _rss/styles.php:15
-msgid "Didn't mean to come here? Click to exit!"
-msgstr "Kom hit av misstag? Klicka här!"
-
-#: _templates/edit.php:15
-msgid "Template Edit"
-msgstr "Redigera Mall"
-
-#: _templates/index.php:15
-msgid "Select / Create Themes"
-msgstr "Välj / Skapa Teman"
-
-#: _templates/preview.php:13
-msgid "Template Preview"
-msgstr "Förhandsgranska Mall"
-
-#: _userdetails/index.php:18 lib/templates.php:445
-msgid "Edit user details"
-msgstr "Redigera användare"
-
-#: _weblog/archive.php:15 _weblog/archive_month.php:15
-msgid "Blog Archives"
-msgstr "BloggArkiv"
-
-#: _weblog/edit.php:24 _weblog/index.php:15
-#: units/communities/communities_membership_requests.php:33
-#: units/friends/user_friendship_requests.php:34
-#: units/weblogs/weblogs_user_info_menu.php:29
-msgid "Blog"
-msgstr "Blogg"
-
-#: _weblog/everyone.php:15
-msgid "All blogs"
-msgstr "Alla bloggar"
-
-#: _weblog/everyone.php:19
-msgid "You can filter this page to certain types of posts:"
-msgstr "Du kan filtrera denna sida till vissa typer av postningar:"
-
-#: _weblog/everyone.php:21
-msgid "Personal blog posts"
-msgstr "Personliga bloggpostningar"
-
-#: _weblog/everyone.php:22
-msgid "Community blog posts"
-msgstr "Gemenskapsbloggpostningar"
-
-#: _weblog/everyone.php:23
-msgid "Posts with comments"
-msgstr "Posta med kommentarer"
-
-#: _weblog/everyone.php:24
-msgid "Posts with no comments"
-msgstr "Posta utan kommentarer"
-
-#: _weblog/friends.php:15
-msgid "Friends blog"
-msgstr "Vänners bloggar"
-
-#: _weblog/rss2.php:51
-#, php-format
-msgid "Weblog items tagged with %s"
-msgstr "Webbloggsföremål markerade med %s"
-
-#: _weblog/rss2.php:54
-msgid "Weblog items"
-msgstr "Webbloggsföremål"
-
-#: _weblog/rss2.php:61
-msgid "All users"
-msgstr "Alla användare"
-
-#: _weblog/rss2.php:74
-#, php-format
-msgid "The most recent weblog posts on %s."
-msgstr "De nyaste webbloggarna på %s."
-
-#: _weblog/rss2.php:78 units/weblogs/function_rss_publish.php:42
-#, php-format
-msgid "The weblog for %s, hosted on %s."
-msgstr "Webbloggen för %s, hostad på %s."
-
-#: _weblog/view_post.php:28
-msgid "Access denied or post not found"
-msgstr "Åtkomst nekad eller postning ej funnen"
-
-#: _weblog/view_post.php:31
-msgid ""
-"Either this blog post doesn't exist or you don't currently have access "
-"privileges to view it."
-msgstr ""
-"Antingen finns inte denna blogg eller så har du för närvarnde inte rättighet "
-"att se den."
-
-#: _weblog/view_post.php:39 units/weblogs/function_rss_publish.php:35
-msgid "Weblog"
-msgstr "Webblogg"
 
 #: content/about.php:10 content/about.php:13
 #, php-format
@@ -348,6 +172,7 @@ msgstr ""
 
 #: content/mainindex/content_loggedout.php:7
 #: content/mainindex/content_main_index.php:7 lib/templates.php:46
+#: lib/templates.php:1170 lib/templates.php:1172
 msgid "Welcome"
 msgstr "Välkommen"
 
@@ -382,7 +207,6 @@ msgstr ""
 
 #: content/mainindex/content_loggedout.php:40
 #: content/mainindex/content_main_index.php:41
-#: units/users/content_main_index.php:27
 msgid "Latest news"
 msgstr "Senaste nytt"
 
@@ -436,6 +260,46 @@ msgstr "Köra Din Egna %s"
 msgid "%s Terms &amp; Conditions"
 msgstr "%s Villkor och Begränsingar"
 
+#: _files/edit_file.php:19
+msgid "Edit File"
+msgstr "Redigera Fil"
+
+#: _files/edit_folder.php:19
+msgid "Edit Folder"
+msgstr "Redigera Folder"
+
+#: _files/index.php:19 units/files/files_user_info_menu.php:13
+#: units/files/function_rss_publish.php:35 units/files/profile_files.php:9
+msgid "Files"
+msgstr "Filer"
+
+#: _files/rss2.php:25
+#, php-format
+msgid "Files tagged with %s"
+msgstr "Filer markerade med %s"
+
+#: _files/rss2.php:31 units/files/function_rss_publish.php:42
+#, php-format
+msgid "Files for %s, hosted on %s."
+msgstr "Filer för %s, hostade på %s."
+
+#: _friends/friendsof.php:21 units/friends/friends_of_edit_wrapper.php:5
+msgid "Friends who have linked to you"
+msgstr "Vänner som har länkat till dig"
+
+#: _friends/index.php:21 units/friends/friends_edit_wrapper.php:5
+msgid "Friends I have linked to"
+msgstr "Vänner som jag har länkat till"
+
+#: _friends/requests.php:22 mod/friend/lib.php:38
+#: units/friends/user_friendship_requests.php:11
+msgid "Friendship requests"
+msgstr "Vänskapsförfrågningar"
+
+#: _groups/index.php:23
+msgid "Access Controls"
+msgstr "AccessKontroller"
+
 #: help/blogs_help.php:14
 msgid "'Your blog' help"
 msgstr "'Din blogg' hjälp"
@@ -465,42 +329,65 @@ msgstr "'Ditt nätverk' hjälp"
 msgid "'Your Profile' help"
 msgstr "'Din Profil' hjälp"
 
-#: home.php:15 index.php:15 index2.php:15
+#: home.php:15 index2.php:15
 msgid "Main Index"
 msgstr "Huvudindex"
 
-#: lib/datalib.php:44
+#: _icons/index.php:20
+msgid "Manage user icons"
+msgstr "Hantera användarikoner"
+
+#: _invite/forgotten_password.php:14
+msgid "Generate a New Password"
+msgstr "Skapa ett Nytt Lösenord"
+
+#: _invite/index.php:18
+msgid "Invite a Friend"
+msgstr "Bjud in en vän"
+
+#: _invite/join.php:12 _invite/register.php:11
+#, php-format
+msgid "Join %s"
+msgstr "Anslut till %s"
+
+#: _invite/new_password.php:11
+#, php-format
+msgid "Get new %s password"
+msgstr "Få nytt %s lösenord"
+
+#: lib/datalib.php:45
 msgid "Success"
 msgstr "Lyckades"
 
-#: lib/datalib.php:49 lib/elgglib.php:3036
+#: lib/datalib.php:50 lib/elgglib.php:3083
 msgid "Error"
 msgstr "Fel"
 
-#: lib/db/mysql.php:216
+#: lib/db/mysql.php:215
 msgid "Publishing RSS"
 msgstr "Publicera RSS"
 
-#: lib/db/mysql.php:221 lib/db/postgres7.php:184
+#: lib/db/mysql.php:220 lib/db/postgres7.php:183
 #, php-format
 msgid "Publishing RSS for user %d"
 msgstr "Publicerar RSS för användare %d"
 
-#: lib/db/mysql.php:233 lib/db/postgres7.php:196
+#: lib/db/mysql.php:232 lib/db/postgres7.php:195
 msgid "Adjusting file repository information"
 msgstr "Justera fillagerinformation"
 
-#: lib/db/mysql.php:242 lib/db/mysql.php:252 lib/db/postgres7.php:205
-#: lib/db/postgres7.php:215
+#: lib/db/mysql.php:241 lib/db/mysql.php:251 lib/db/postgres7.php:204
+#: lib/db/postgres7.php:214
 #, php-format
 msgid "Updating file %d: %s"
 msgstr "Uppdaterar fil %d: %s"
 
-#: lib/dbsetup.php:75
+#: lib/dbsetup.php:77
 msgid "Need to upgrade database"
 msgstr "Behöver uppgradera databas"
 
 #: lib/displaylib.php:188 units/display/function_log_on_pane.php:16
+#: units/invite/join_noinvite.php:42
 msgid "Register"
 msgstr "Registrera"
 
@@ -510,7 +397,7 @@ msgid "Log On"
 msgstr "Logga På"
 
 #: lib/displaylib.php:202 units/admin/admin_main.php:81
-#: units/admin/admin_users.php:28 units/admin/admin_users_add.php:21
+#: units/admin/admin_users_add.php:20 units/admin/admin_users.php:28
 #: units/display/function_log_on_pane.php:34
 msgid "Username"
 msgstr "Användarnamn"
@@ -535,101 +422,93 @@ msgstr "Kom ihåg Login"
 msgid "Forgotten password"
 msgstr "Glömt lösenord"
 
-#: lib/displaylib.php:273 units/display/function_output_field_display.php:39
+#: lib/displaylib.php:273
 msgid "Add User"
 msgstr "Lägg till Användare"
 
 #: lib/displaylib.php:273 lib/displaylib.php:282
-#: units/display/function_output_field_display.php:39
-#: units/display/function_output_field_display.php:48
 msgid "Send Message"
 msgstr "Skicka Meddelande"
 
-#: lib/displaylib.php:282 units/display/function_output_field_display.php:48
+#: lib/displaylib.php:282
 msgid "Add Buddy"
 msgstr "Lägg till Kompis"
 
-#: lib/elgglib.php:327
-msgid ""
-"A server error that affects your login session was detected. Please login "
-"again or restart your browser."
-msgstr ""
-"Ett serverfel som berör din loginsession inträffade. Vänligen logga in igen "
-"eller starta om din webbläsare."
-
-#: lib/elgglib.php:459 lib/elgglib.php:509 lib/uploadlib.php:661
+#: lib/elgglib.php:506 lib/elgglib.php:556 lib/uploadlib.php:661
 msgid "Administrator"
 msgstr "Administratör"
 
-#: lib/elgglib.php:467
+#: lib/elgglib.php:514
 msgid "Do not reply"
 msgstr "Svara ej"
 
-#: lib/elgglib.php:714
+#: lib/elgglib.php:761
 msgid "GB"
 msgstr "GB"
 
-#: lib/elgglib.php:715
+#: lib/elgglib.php:762
 msgid "MB"
 msgstr "MB"
 
-#: lib/elgglib.php:716
+#: lib/elgglib.php:763
 msgid "KB"
 msgstr "KB"
 
-#: lib/elgglib.php:717
+#: lib/elgglib.php:764
 msgid "bytes"
 msgstr "bytes"
 
-#: lib/elgglib.php:1716
+#: lib/elgglib.php:1763
 msgid "Close this window"
 msgstr "Stäng fönster"
 
-#: lib/elgglib.php:1753 lib/elgglib.php:1803
+#: lib/elgglib.php:1800 lib/elgglib.php:1850
 msgid "Choose"
 msgstr "Välj"
 
-#: lib/elgglib.php:2033
+#: lib/elgglib.php:2080
 msgid "Elgg auto-format"
 msgstr "Elgg autoformatering"
 
-#: lib/elgglib.php:2034
+#: lib/elgglib.php:2081
 msgid "HTML format"
 msgstr "HTML format"
 
-#: lib/elgglib.php:2035
+#: lib/elgglib.php:2082
 msgid "Plain text format"
 msgstr "Enkelt textformat"
 
-#: lib/elgglib.php:2036
+#: lib/elgglib.php:2083
 msgid "Markdown format"
 msgstr "Markdown format"
 
-#: lib/elgglib.php:2605 lib/elgglib.php:3161
+#: lib/elgglib.php:2652 lib/elgglib.php:3210
 msgid "Continue"
 msgstr "Fortsätt"
 
-#: lib/elgglib.php:3122 units/admin/admin_userdetails.php:58
-#: units/admin/admin_userdetails.php:74
+#: lib/elgglib.php:3169 units/admin/admin_userdetails.php:58
+#: units/admin/admin_userdetails.php:74 units/icons/function_add_icons.php:48
 #: units/tinymce/tinymce_userdetails_edit.php:21
 #: units/tinymce/tinymce_userdetails_edit.php:28
-#: units/users/userdetails_edit.php:108 units/users/userdetails_edit.php:115
+#: units/users/userdetails_edit.php:109 units/users/userdetails_edit.php:116
+#: units/users/userdetails_edit.php:139 units/users/userdetails_edit.php:146
 msgid "Yes"
 msgstr "Ja"
 
-#: lib/elgglib.php:3124 units/admin/admin_userdetails.php:58
-#: units/admin/admin_userdetails.php:74
+#: lib/elgglib.php:3171 units/admin/admin_userdetails.php:58
+#: units/admin/admin_userdetails.php:74 units/icons/function_add_icons.php:49
 #: units/tinymce/tinymce_userdetails_edit.php:21
 #: units/tinymce/tinymce_userdetails_edit.php:28
-#: units/users/userdetails_edit.php:108 units/users/userdetails_edit.php:115
+#: units/users/userdetails_edit.php:109 units/users/userdetails_edit.php:116
+#: units/users/userdetails_edit.php:139 units/users/userdetails_edit.php:146
 msgid "No"
 msgstr "Nej"
 
-#: lib/elgglib.php:3415 lib/elgglib.php:3443
+#: lib/elgglib.php:3468 lib/elgglib.php:3496
 msgid "You have been banned from the system!"
 msgstr "Du har blivit bannad från systemet!"
 
-#: lib/elgglib.php:3473
+#: lib/elgglib.php:3526
 msgid ""
 "Sorry, but your IP number seems to have changed from when you first logged "
 "in.  This security feature prevents crackers stealing your identity while "
@@ -641,24 +520,24 @@ msgstr ""
 "är inloggad mot denna sajt. Normala användare ska inte se detta meddelande - "
 "vänligen kontakta sajtadminstratören för hjälp."
 
-#: lib/elgglib.php:3502
+#: lib/elgglib.php:3556
 msgid "The system will remember you and automatically log you in next time."
 msgstr ""
 "Systemet kommer att komma ihåg dig och logga in dig automatiskt nästa gång."
 
-#: lib/elgglib.php:4199 units/users/function_default_access_levels.php:7
+#: lib/elgglib.php:4253 units/users/function_default_access_levels.php:7
 msgid "Logged in users"
 msgstr "Inloggade användare"
 
-#: lib/elgglib.php:4201 units/users/function_default_access_levels.php:5
+#: lib/elgglib.php:4255 units/users/function_default_access_levels.php:5
 msgid "Private"
 msgstr "Privat"
 
-#: lib/elgglib.php:4203
+#: lib/elgglib.php:4257
 msgid "Restricted"
 msgstr "Begränsad"
 
-#: lib/elgglib.php:4257 units/weblogs/function_html_activate_urls.php:46
+#: lib/elgglib.php:4311
 msgid "Click to view link"
 msgstr "Klicka för att se på länk"
 
@@ -711,11 +590,11 @@ msgstr "Huvudkropp"
 msgid "Sidebar"
 msgstr "Sidebar"
 
-#: lib/templates.php:55 units/templates/default_template.php:36
+#: lib/templates.php:58 units/templates/default_template.php:39
 msgid "Content holder"
 msgstr "Innehållshållare"
 
-#: lib/templates.php:56 units/templates/default_template.php:37
+#: lib/templates.php:59 units/templates/default_template.php:40
 msgid ""
 "Contains the main content for a page (as opposed to the sidebar or the "
 "title)."
@@ -723,68 +602,68 @@ msgstr ""
 "Innehåller huvudinnehållet för en sida (till skillnad från sidobaren eller "
 "titeln)."
 
-#: lib/templates.php:58 lib/templates.php:110
-#: units/templates/default_template.php:39
+#: lib/templates.php:61 lib/templates.php:113
+#: units/templates/default_template.php:42
 msgid "The title"
 msgstr "Titeln"
 
-#: lib/templates.php:59 units/templates/default_template.php:40
+#: lib/templates.php:62 units/templates/default_template.php:43
 msgid "The page submenu"
 msgstr "Sidoundermenyn"
 
-#: lib/templates.php:60 units/templates/default_template.php:41
-#: units/templates/default_template.php:62
+#: lib/templates.php:63 units/templates/default_template.php:44
+#: units/templates/default_template.php:65
 msgid "The body of the page"
 msgstr "Sidans kropp"
 
-#: lib/templates.php:77 units/templates/default_template.php:76
+#: lib/templates.php:80 units/templates/default_template.php:79
 msgid "Owner box"
 msgstr "Ägarruta"
 
-#: lib/templates.php:78 units/templates/default_template.php:77
+#: lib/templates.php:81 units/templates/default_template.php:80
 msgid "A box containing a description of the owner of the current profile."
 msgstr ""
 "En ruta som innehåller en beskrivning av ägaren till den nuvarande profilen."
 
-#: lib/templates.php:80 units/templates/default_template.php:79
+#: lib/templates.php:83 units/templates/default_template.php:82
 msgid "The user's name"
 msgstr "Användarens namn"
 
-#: lib/templates.php:81 units/templates/default_template.php:80
+#: lib/templates.php:84 units/templates/default_template.php:83
 msgid "The URL of the user's profile page, including terminating slash"
 msgstr "URLen till användarens profilsida, inklusive avslutande snedsträck"
 
-#: lib/templates.php:82 units/templates/default_template.php:81
+#: lib/templates.php:85 units/templates/default_template.php:84
 msgid "The user's icon, if it exists"
 msgstr "Användarens ikon, om den finns"
 
-#: lib/templates.php:83 units/templates/default_template.php:82
+#: lib/templates.php:86 units/templates/default_template.php:85
 msgid "A short blurb about the user"
 msgstr "En kort beskrivning om användaren"
 
-#: lib/templates.php:84 units/templates/default_template.php:83
+#: lib/templates.php:87 units/templates/default_template.php:86
 msgid "Links to friend / unfriend a user"
 msgstr "Länkar till vän / ta bort användare som vän"
 
-#: lib/templates.php:85 units/templates/default_template.php:84
+#: lib/templates.php:88 units/templates/default_template.php:87
 msgid "Links to any lms hosts the user is attached to"
 msgstr "Länkar till LMS-värdar som användaren är ansluten till"
 
-#: lib/templates.php:89 search/personaltags.php:16
-#: units/templates/default_template.php:89
+#: lib/templates.php:92 search/personaltags.php:26
+#: units/templates/default_template.php:92
 msgid "Tags"
 msgstr "Märkningar"
 
-#: lib/templates.php:90 search/index.php:96
-#: units/templates/default_template.php:90
+#: lib/templates.php:93 search/index.php:96
+#: units/templates/default_template.php:93
 msgid "Resources"
 msgstr "Resurser"
 
-#: lib/templates.php:107
+#: lib/templates.php:110
 msgid "Information Box"
 msgstr "Informationsruta"
 
-#: lib/templates.php:108
+#: lib/templates.php:111
 msgid ""
 "A box containing a caption and some text, used extensively throughout the "
 "site. For example, the 'friends' box and most page bodies are info boxes. Of "
@@ -796,55 +675,55 @@ msgstr ""
 "informationsrutor. Du kan givetvis ändra denna mall hur du vill - det måste "
 "inte vara en faktisk ruta."
 
-#: lib/templates.php:111
+#: lib/templates.php:114
 msgid "The contents of the box"
 msgstr "Innehållet i rutan"
 
-#: lib/templates.php:130 units/templates/default_template.php:110
+#: lib/templates.php:133 units/templates/default_template.php:113
 msgid "System message shell"
 msgstr "Systemmeddelandeskal"
 
-#: lib/templates.php:131 units/templates/default_template.php:111
+#: lib/templates.php:134 units/templates/default_template.php:114
 msgid "A list of system messages will be placed within the message shell."
 msgstr ""
 "En lista med systemmeddelanden kommer placeras inom meddelandeskalet."
 
-#: lib/templates.php:133 units/templates/default_template.php:113
+#: lib/templates.php:136 units/templates/default_template.php:116
 msgid "The messages"
 msgstr "Meddelandena"
 
-#: lib/templates.php:145 units/templates/default_template.php:125
+#: lib/templates.php:148 units/templates/default_template.php:128
 msgid "Individual system messages"
 msgstr "Enskilda systemmeddelanden"
 
-#: lib/templates.php:146 units/templates/default_template.php:126
+#: lib/templates.php:149 units/templates/default_template.php:129
 msgid "Each individual system message."
 msgstr "Varje enskilt systemmeddelande."
 
-#: lib/templates.php:148 units/templates/default_template.php:128
+#: lib/templates.php:151 units/templates/default_template.php:131
 msgid "The system message"
 msgstr "Systemmeddelandet"
 
-#: lib/templates.php:163 units/templates/default_template.php:143
+#: lib/templates.php:166 units/templates/default_template.php:146
 msgid "Main menu shell"
 msgstr "Huvudmenyskal"
 
-#: lib/templates.php:164 units/templates/default_template.php:144
+#: lib/templates.php:167 units/templates/default_template.php:147
 msgid "A list of main menu items will be placed within the menubar shell."
 msgstr "En lista med huvudmenyföremål kommer placeras inom menyradsskalet."
 
-#: lib/templates.php:166 lib/templates.php:212 lib/templates.php:244
-#: units/templates/default_template.php:146
-#: units/templates/default_template.php:192
-#: units/templates/default_template.php:226
+#: lib/templates.php:169 lib/templates.php:215 lib/templates.php:247
+#: units/templates/default_template.php:149
+#: units/templates/default_template.php:195
+#: units/templates/default_template.php:229
 msgid "The menu items"
 msgstr "Menyföremål"
 
-#: lib/templates.php:177 units/templates/default_template.php:157
+#: lib/templates.php:180 units/templates/default_template.php:160
 msgid "Individual main menu item"
 msgstr "Enskilda huvudmenysföremål"
 
-#: lib/templates.php:178 units/templates/default_template.php:158
+#: lib/templates.php:181 units/templates/default_template.php:161
 msgid ""
 "This is the template for each individual main menu item. A series of these "
 "is placed within the menubar shell template."
@@ -852,44 +731,44 @@ msgstr ""
 "Detta är mallen för varje enskilt undermenyföremål. En följd av dessa är "
 "placerade inom undermenyradsskalsmallen."
 
-#: lib/templates.php:180 lib/templates.php:196 lib/templates.php:228
-#: lib/templates.php:261 units/templates/default_template.php:160
-#: units/templates/default_template.php:176
-#: units/templates/default_template.php:210
-#: units/templates/default_template.php:243
+#: lib/templates.php:183 lib/templates.php:199 lib/templates.php:231
+#: lib/templates.php:264 units/templates/default_template.php:163
+#: units/templates/default_template.php:179
+#: units/templates/default_template.php:213
+#: units/templates/default_template.php:246
 msgid "The URL of the menu item"
 msgstr "URLen till menyföremålet"
 
-#: lib/templates.php:181 lib/templates.php:197 lib/templates.php:229
-#: lib/templates.php:262 units/templates/default_template.php:161
-#: units/templates/default_template.php:177
-#: units/templates/default_template.php:211
-#: units/templates/default_template.php:244
+#: lib/templates.php:184 lib/templates.php:200 lib/templates.php:232
+#: lib/templates.php:265 units/templates/default_template.php:164
+#: units/templates/default_template.php:180
+#: units/templates/default_template.php:214
+#: units/templates/default_template.php:247
 msgid "The menu item's name"
 msgstr "Menyföremålets namn"
 
-#: lib/templates.php:193 units/templates/default_template.php:173
+#: lib/templates.php:196 units/templates/default_template.php:176
 msgid "Selected individual main menu item"
 msgstr "Valt enskilt huvudmenyföremål"
 
-#: lib/templates.php:194 units/templates/default_template.php:174
+#: lib/templates.php:197 units/templates/default_template.php:177
 msgid ""
 "This is the template for an individual main menu item if it is selected."
 msgstr "Detta är mallen för ett enskilt huvudmenyföremål om det är valt."
 
-#: lib/templates.php:209 units/templates/default_template.php:189
+#: lib/templates.php:212 units/templates/default_template.php:192
 msgid "Sub-menubar shell"
 msgstr "Undermenyradsskal"
 
-#: lib/templates.php:210 units/templates/default_template.php:190
+#: lib/templates.php:213 units/templates/default_template.php:193
 msgid "A list of sub-menu items will be placed within the menubar shell."
 msgstr "En lista med undermenyföremål kommer placeras inom menyradsskalet."
 
-#: lib/templates.php:225 units/templates/default_template.php:207
+#: lib/templates.php:228 units/templates/default_template.php:210
 msgid "Individual sub-menu item"
 msgstr "Enskilda undermneyföremål"
 
-#: lib/templates.php:226 units/templates/default_template.php:208
+#: lib/templates.php:229 units/templates/default_template.php:211
 msgid ""
 "This is the template for each individual sub-menu item. A series of these is "
 "placed within the sub-menubar shell template."
@@ -897,11 +776,11 @@ msgstr ""
 "Detta är mallen för varje enskilt undermenyföremål. En samling av dessa är "
 "placerade inom undermenyradsskalsmallen."
 
-#: lib/templates.php:241 units/templates/default_template.php:223
+#: lib/templates.php:244 units/templates/default_template.php:226
 msgid "Status menubar shell"
 msgstr "Statusmenyradsskal"
 
-#: lib/templates.php:242 units/templates/default_template.php:224
+#: lib/templates.php:245 units/templates/default_template.php:227
 msgid ""
 "A list of statusbar menu items will be placed within the status menubar "
 "shell."
@@ -909,11 +788,11 @@ msgstr ""
 "En lista med statusmenyradsföremål  kommer placeras inom "
 "statusmenyradsskalet."
 
-#: lib/templates.php:258 units/templates/default_template.php:240
+#: lib/templates.php:261 units/templates/default_template.php:243
 msgid "Individual statusbar menu item"
 msgstr "Enskilda statusradsmenyföremål"
 
-#: lib/templates.php:259 units/templates/default_template.php:241
+#: lib/templates.php:262 units/templates/default_template.php:244
 msgid ""
 "This is the template for each individual statusbar menu item. A series of "
 "these is placed within the status menubar shell template."
@@ -921,11 +800,11 @@ msgstr ""
 "Detta är mallen för varje enskilt statusradsmenyföremål. En samling av dessa "
 "är placerade inom statusmenyradsskalsmallen."
 
-#: lib/templates.php:274 units/templates/default_template.php:256
+#: lib/templates.php:277 units/templates/default_template.php:259
 msgid "Data input box (two columns)"
 msgstr "Inmatningsruta (två kolumner)"
 
-#: lib/templates.php:275 units/templates/default_template.php:257
+#: lib/templates.php:278 units/templates/default_template.php:260
 msgid ""
 "This is mostly used whenever some input is taken from the user. For example, "
 "each of the fields in the profile edit screen is a data input box."
@@ -933,41 +812,41 @@ msgstr ""
 "Detta används mest när indata tas från användaren. Exempelvis är varje fält "
 "på profilredigeringssidan en inmatningsruta."
 
-#: lib/templates.php:277 units/templates/default_template.php:259
+#: lib/templates.php:280 units/templates/default_template.php:262
 msgid "The name for the data we're inputting"
 msgstr "Namnet för datat vi matar in"
 
-#: lib/templates.php:278 units/templates/default_template.php:260
+#: lib/templates.php:281 units/templates/default_template.php:263
 msgid "The first item of data"
 msgstr "Första datat"
 
-#: lib/templates.php:279 units/templates/default_template.php:261
+#: lib/templates.php:282 units/templates/default_template.php:264
 msgid "The second item of data"
 msgstr "Andra datat"
 
-#: lib/templates.php:306 units/templates/default_template.php:279
+#: lib/templates.php:309 units/templates/default_template.php:282
 msgid "Data input box (one column)"
 msgstr "Inmatningsruta (en kolumn)"
 
-#: lib/templates.php:307 units/templates/default_template.php:280
+#: lib/templates.php:310 units/templates/default_template.php:283
 msgid "A single-column version of the data box."
 msgstr "En enkolumnsversion av datarutan."
 
-#: lib/templates.php:309 units/templates/default_template.php:282
+#: lib/templates.php:312 units/templates/default_template.php:285
 msgid "The name of the data we're inputting"
 msgstr "Namnet på datat vi matar in"
 
-#: lib/templates.php:310 lib/templates.php:338
-#: units/templates/default_template.php:283
-#: units/templates/default_template.php:356
+#: lib/templates.php:313 lib/templates.php:341
+#: units/templates/default_template.php:286
+#: units/templates/default_template.php:359
 msgid "The data itself"
 msgstr "Själva datat"
 
-#: lib/templates.php:334 units/templates/default_template.php:352
+#: lib/templates.php:337 units/templates/default_template.php:355
 msgid "Data input box (vertical)"
 msgstr "Inmatningsruta (vertikal)"
 
-#: lib/templates.php:335 units/templates/default_template.php:353
+#: lib/templates.php:338 units/templates/default_template.php:356
 msgid ""
 "A slightly different version of the data box, used on this edit page amongst "
 "other places."
@@ -975,59 +854,63 @@ msgstr ""
 "En något annorlunda version av datarutan, används bland annat på denna "
 "redigeringssida."
 
-#: lib/templates.php:337 units/templates/default_template.php:355
+#: lib/templates.php:340 units/templates/default_template.php:358
 msgid "Name of the data we\\'re inputting"
 msgstr "Namn på datat vi matar in ."
 
-#: lib/templates.php:400 mod/template/lib.php:15
+#: lib/templates.php:403 mod/template/lib.php:15
 msgid "Change theme"
 msgstr "Ändra tema"
 
-#: lib/templates.php:433
+#: lib/templates.php:437
 msgid "Account settings"
 msgstr "Kontoinställningar"
 
-#: lib/templates.php:439
+#: lib/templates.php:443
 msgid "Log off"
 msgstr "Logga ut"
 
-#: lib/templates.php:449
+#: lib/templates.php:450 _userdetails/index.php:18
+msgid "Edit user details"
+msgstr "Redigera användare"
+
+#: lib/templates.php:454
 msgid "Your site picture"
 msgstr "Din sajtbild"
 
-#: lib/templates.php:456
+#: lib/templates.php:461
 msgid "Main"
 msgstr "Huvudindex"
 
-#: lib/templates.php:461 units/admin/admin_users_add.php:36
+#: lib/templates.php:466 units/admin/admin_users_add.php:35
 msgid "Add users"
 msgstr "Lägg till användare"
 
-#: lib/templates.php:471
+#: lib/templates.php:476
 msgid "Manage flagged content"
 msgstr "Hantera flaggat innehål"
 
-#: lib/templates.php:476
+#: lib/templates.php:481
 msgid "Spam control"
 msgstr "Spamkontroll"
 
-#: lib/templates.php:581
+#: lib/templates.php:586
 msgid "Your current template has been changed."
 msgstr "Din nuvarande mall har ändrats."
 
-#: lib/templates.php:611 units/templates/template_actions.php:59
+#: lib/templates.php:616 units/templates/template_actions.php:59
 msgid "Your template has been updated."
 msgstr "Din mall har uppdaterats."
 
-#: lib/templates.php:623 units/templates/template_actions.php:75
+#: lib/templates.php:629 units/templates/template_actions.php:75
 msgid "Your template was deleted."
 msgstr "Din mall raderades."
 
-#: lib/templates.php:733 units/templates/templates_add.php:8
+#: lib/templates.php:750 units/templates/templates_add.php:8
 msgid "Create theme"
 msgstr "Skapa tema"
 
-#: lib/templates.php:734 units/templates/templates_add.php:9
+#: lib/templates.php:751 units/templates/templates_add.php:9
 msgid ""
 "Here you can create your own themes based on one of the existing public "
 "themes. Just select which public theme you would like to alter and then "
@@ -1037,67 +920,86 @@ msgstr ""
 "vilket publikt tema du vill ändra och skapa sedan din egna. Du kommer då ha "
 "redigeringsprivilegier."
 
-#: lib/templates.php:750 units/templates/templates_add.php:25
+#: lib/templates.php:767 units/templates/templates_add.php:25
 msgid "Theme name"
 msgstr "Temanamn"
 
-#: lib/templates.php:755 lib/templates.php:818 lib/templates.php:1017
+#: lib/templates.php:772 lib/templates.php:835 lib/templates.php:1034
 #: units/templates/templates_add.php:30 units/templates/templates_edit.php:22
 #: units/templates/templates_view.php:22
 msgid "Default Theme"
 msgstr "Standardtema"
 
-#: lib/templates.php:859 units/templates/templates_edit.php:65
+#: lib/templates.php:791 units/templates/templates_add.php:50
+msgid "Based on"
+msgstr "Baserad på"
+
+#: lib/templates.php:796 units/templates/templates_add.php:55
+msgid "Create Theme"
+msgstr "Skapa Tema"
+
+#: lib/templates.php:868 units/templates/templates_edit.php:55
+msgid "Theme Name"
+msgstr ""
+
+#: lib/templates.php:876 units/templates/templates_edit.php:65
 msgid "Glossary"
 msgstr "Ordlista"
 
-#: lib/templates.php:895 units/admin/admin_spam.php:22
-#: units/communities/userdetails_edit.php:91
-#: units/templates/templates_edit.php:101 units/users/userdetails_edit.php:181
+#: lib/templates.php:912 units/admin/admin_spam.php:22
+#: units/communities/userdetails_edit.php:91 units/files/edit_folder.php:75
+#: units/icons/function_edit_icons.php:89
+#: units/templates/templates_edit.php:101 units/users/userdetails_edit.php:183
 msgid "Save"
 msgstr "Spara"
 
-#: lib/templates.php:933 units/templates/templates_preview.php:8
+#: lib/templates.php:923 units/templates/templates_edit.php:112
+msgid ""
+"You may not edit this theme. To create a new, editable theme based on the "
+"default, go to <a href=\"index.php\">the main themes page</a>."
+msgstr ""
+
+#: lib/templates.php:950 units/templates/templates_preview.php:8
 msgid "Heading one"
 msgstr "Rubrik ett"
 
-#: lib/templates.php:934 units/templates/templates_preview.php:9
+#: lib/templates.php:951 units/templates/templates_preview.php:9
 msgid "Heading two"
 msgstr "Rubrik två"
 
-#: lib/templates.php:935 units/templates/templates_preview.php:10
+#: lib/templates.php:952 units/templates/templates_preview.php:10
 msgid "A bullet list"
 msgstr "En punktlista"
 
-#: lib/templates.php:936 units/templates/templates_preview.php:11
+#: lib/templates.php:953 units/templates/templates_preview.php:11
 msgid "Heading three"
 msgstr "Rubrik tre"
 
-#: lib/templates.php:937 units/templates/templates_preview.php:12
+#: lib/templates.php:954 units/templates/templates_preview.php:12
 msgid "A numbered list"
 msgstr "En numrerad lista"
 
-#: lib/templates.php:967 units/templates/templates_preview.php:42
+#: lib/templates.php:984 units/templates/templates_preview.php:42
 msgid "Some text input"
 msgstr "Lite textindata"
 
-#: lib/templates.php:974 units/templates/templates_preview.php:49
+#: lib/templates.php:991 units/templates/templates_preview.php:49
 msgid "Some longer text input"
 msgstr "Lite längre textindata"
 
-#: lib/templates.php:980 units/templates/templates_preview.php:55
+#: lib/templates.php:997 units/templates/templates_preview.php:55
 msgid "Further text input"
 msgstr "Ytterligare extindata"
 
-#: lib/templates.php:1000 units/templates/templates_view.php:5
+#: lib/templates.php:1017 units/templates/templates_view.php:5
 msgid "Select / Create / Edit Themes"
 msgstr "Välj / Skapa / Redigera teman"
 
-#: lib/templates.php:1001 units/templates/templates_view.php:6
+#: lib/templates.php:1018 units/templates/templates_view.php:6
 msgid "Public Themes"
 msgstr "Publika Teman"
 
-#: lib/templates.php:1002 units/templates/templates_view.php:7
+#: lib/templates.php:1019 units/templates/templates_view.php:7
 #, php-format
 msgid ""
 "The following are public themes that you can use to change the way your %s "
@@ -1110,16 +1012,16 @@ msgstr ""
 "förhandsgranskningen och välj sedan den du vill ha. Om du vill kan du "
 "anpassa någon av dessa genom att välja 'Skapa tema' nedan."
 
-#: lib/templates.php:1035 lib/templates.php:1067
+#: lib/templates.php:1052 lib/templates.php:1084
 #: units/templates/templates_view.php:40 units/templates/templates_view.php:72
 msgid "preview"
 msgstr "förhandsgranska"
 
-#: lib/templates.php:1046 units/templates/templates_view.php:50
+#: lib/templates.php:1063 units/templates/templates_view.php:50
 msgid "Personal themes"
 msgstr "Personliga teman"
 
-#: lib/templates.php:1047 units/templates/templates_view.php:51
+#: lib/templates.php:1064 units/templates/templates_view.php:51
 msgid ""
 "These are themes that you have created. You can edit and delete these. These "
 "theme(s) only control actual look and feel - you cannot change any content "
@@ -1131,32 +1033,36 @@ msgstr ""
 "innehållet använder du de andra menyvalen som redigera profil, uppdatera "
 "webblogg osv."
 
-#: lib/templates.php:1069 units/files/templates_preview.php:34
+#: lib/templates.php:1086 units/files/folder_view.php:76
+#: units/files/folder_view.php:141 units/files/templates_preview.php:34
 #: units/templates/templates_view.php:74
-#: units/weblogs/weblogs_posts_view.php:139
+#: units/weblogs/weblogs_posts_view.php:111
 msgid "Edit"
 msgstr "Redigera"
 
-#: lib/templates.php:1070 units/templates/templates_view.php:75
+#: lib/templates.php:1087 units/templates/templates_view.php:75
 msgid "Are you sure you want to permanently remove this template?"
 msgstr "Är du säker på att du permanent vill ta bort denna mall?"
 
-#: lib/templates.php:1070 units/files/folder_view.php:75
-#: units/files/templates_preview.php:34 units/templates/templates_view.php:75
-#: units/weblogs/weblogs_posts_view.php:141
+#: lib/templates.php:1087 units/files/folder_view.php:75
+#: units/files/folder_view.php:140 units/files/templates_preview.php:20
+#: units/files/templates_preview.php:34 units/icons/function_edit_icons.php:40
+#: units/templates/templates_view.php:75
+#: units/weblogs/weblogs_posts_view.php:113
+#: units/weblogs/weblogs_posts_view.php:173
 msgid "Delete"
 msgstr "Radera"
 
-#: lib/templates.php:1081
+#: lib/templates.php:1098 units/templates/templates_view.php:127
 msgid "Select new theme"
 msgstr "Välj nytt tema"
 
-#: lib/templates.php:1127 lib/templates.php:1135
+#: lib/templates.php:1151 lib/templates.php:1165 lib/templates.php:1172
 #: units/weblogs/weblogs_comments_add.php:42
 msgid "Guest"
 msgstr "Gäst"
 
-#: lib/templates.php:1136
+#: lib/templates.php:1172
 msgid "Log in"
 msgstr "Logga in"
 
@@ -1351,29 +1257,21 @@ msgid ""
 "you on."
 msgstr "Användarnamnet eller lösenordet saknades. Du loggades inte in."
 
-#: lib/userlib.php:160
+#: lib/userlib.php:169
 msgid "You cannot reply to this message by email."
 msgstr "Du kan inte svara på detta meddelande via epost."
 
-#: lib/userlib.php:161
+#: lib/userlib.php:170
 msgid "Failed to send email. An unknown error occurred."
 msgstr "Kunde inte skicka epost. Ett okänt fel inträffade."
 
-#: lib/userlib.php:175
+#: lib/userlib.php:184
 msgid "Failed to send message. An unknown error occurred."
 msgstr "Kunde inte skicka meddelande. Ett okänt fel inträffade."
 
-#: lib/userlib.php:207
+#: lib/userlib.php:216
 msgid "System"
 msgstr "System"
-
-#: lms/join.php:48 units/invite/invite_actions.php:97
-msgid ""
-"Error! Your username must contain letters and numbers only, cannot be blank, "
-"and must be between 3 and 12 characters in length."
-msgstr ""
-"Fel! Ditt användarnamn får endast innehålla bokstäver och siffror, kan inte "
-"vara blankt och måste vara mellan 3 till 12 tecken långt."
 
 #: lms/join.php:56 units/invite/invite_actions.php:93
 msgid ""
@@ -1459,7 +1357,7 @@ msgstr "La till Widget."
 msgid "Select a widget type from the list below:"
 msgstr "Välj widgettyo från listan nedan:"
 
-#: mod/adash/add.php:69
+#: mod/adash/add.php:69 units/files/weblogs_posts_add_fields.php:80
 msgid "Add"
 msgstr "Lägg till"
 
@@ -1471,7 +1369,7 @@ msgstr "Du har inte rätt att lägga till widgets till denna dashboard."
 msgid "Widget deleted."
 msgstr "Widget raderad."
 
-#: mod/adash/edit.php:34 mod/adash/lib.php:152
+#: mod/adash/edit.php:34 mod/adash/lib.php:151
 msgid "Edit widget"
 msgstr "Redigera widget"
 
@@ -1507,7 +1405,7 @@ msgstr "Din Dashboard"
 msgid "Add new item"
 msgstr "Lägg till ny sak"
 
-#: mod/adash/lib.php:46 mod/adash/lib.php:264
+#: mod/adash/lib.php:46 mod/adash/lib.php:263
 msgid "Text box"
 msgstr "Textbox"
 
@@ -1515,27 +1413,27 @@ msgstr "Textbox"
 msgid "Displays the text of your choice."
 msgstr "Visar texten du valt."
 
-#: mod/adash/lib.php:153
+#: mod/adash/lib.php:152
 msgid "Delete widget"
 msgstr "Ta bord widget"
 
-#: mod/adash/lib.php:154
+#: mod/adash/lib.php:153
 msgid "Move up"
 msgstr "Flytta upp"
 
-#: mod/adash/lib.php:155
+#: mod/adash/lib.php:154
 msgid "Move down"
 msgstr "Flytta ner"
 
-#: mod/adash/lib.php:226
+#: mod/adash/lib.php:225
 msgid "Access for this widget:"
 msgstr "Åtkomst för denna widget:"
 
-#: mod/adash/lib.php:230
+#: mod/adash/lib.php:229
 msgid "Save widget"
 msgstr "Spara widget"
 
-#: mod/adash/lib.php:248
+#: mod/adash/lib.php:247
 msgid ""
 "This text box is undefined. If you are the widget owner, click 'edit widget' "
 "to add your own content."
@@ -1543,7 +1441,7 @@ msgstr ""
 "Denna textbox är inte definierad. Om du är ägaren till widgeten, klicka på "
 "\"Redigera widget\" för att lägga till ditt egna innehåll."
 
-#: mod/adash/lib.php:265
+#: mod/adash/lib.php:264
 msgid ""
 "This widget displays the text content of your choice. All you need to do is "
 "enter the title and body below:"
@@ -1575,28 +1473,32 @@ msgstr "Arkiv"
 msgid "Friends' blogs"
 msgstr "Vänners bloggar"
 
-#: mod/blog/lib.php:58
+#: mod/blog/lib.php:57 _weblog/interesting.php:15
+msgid "Interesting posts"
+msgstr ""
+
+#: mod/blog/lib.php:63
 msgid "View all posts"
 msgstr "Visa alla postningar"
 
-#: mod/blog/lib.php:62 mod/file/lib.php:39 mod/friend/lib.php:57
+#: mod/blog/lib.php:67 mod/file/lib.php:48 mod/friend/lib.php:57
 #: mod/profile/lib.php:35
 msgid "Page help"
 msgstr "Sidohjälp"
 
-#: mod/blog/lib.php:75
+#: mod/blog/lib.php:80
 msgid "Blog widget"
 msgstr "Blogga widget"
 
-#: mod/blog/lib.php:76
+#: mod/blog/lib.php:81
 msgid "Displays the latest blog posts from a blog of your choice."
 msgstr "Visar de senaste bloggpostningarna från en blogg du valt."
 
-#: mod/blog/lib.php:138
+#: mod/blog/lib.php:143
 msgid "Blog dashboard widget"
 msgstr "Bloggdahsboardwidget"
 
-#: mod/blog/lib.php:139
+#: mod/blog/lib.php:144
 msgid ""
 "This widget displays the last couple of blog posts from an individual user. "
 "To begin, select the user from your connections below:"
@@ -1604,11 +1506,51 @@ msgstr ""
 "Denna widget visar de senaste bloggpostningarna från en viss användare. Föra "
 "tt börja, välj användaren från dina kontakter nedan:"
 
-#: mod/blog/lib.php:154
+#: mod/blog/lib.php:159
 msgid "Then enter the number of blog posts you'd like to display:"
 msgstr "Ange sedan antalet bloggpostningar du vill visa:"
 
-#: mod/community/lib.php:19 mod/profile/lib.php:27
+#: mod/browser/index.php:21
+msgid "Browser"
+msgstr ""
+
+#: mod/browser/index.php:82 search/index.php:43
+msgid "All"
+msgstr "Alla"
+
+#: mod/browser/index.php:84
+msgid "Users"
+msgstr ""
+
+#: mod/browser/index.php:85
+msgid "Browse"
+msgstr ""
+
+#: mod/browser/index.php:86
+msgid "Filter"
+msgstr ""
+
+#: mod/browser/index.php:154
+msgid "Name"
+msgstr ""
+
+#: mod/browser/index.php:155
+msgid "Description"
+msgstr ""
+
+#: mod/browser/index.php:156
+msgid "Connections"
+msgstr ""
+
+#: mod/browser/index.php:157
+msgid "Posts"
+msgstr ""
+
+#: mod/browser/index.php:158
+msgid "Type"
+msgstr ""
+
+#: mod/community/lib.php:21 mod/profile/lib.php:27
 msgid "Edit this profile"
 msgstr "Redigera denna profil"
 
@@ -1620,20 +1562,20 @@ msgstr "Gemenskapssajtbild"
 msgid "Edit community details"
 msgstr "Redigera gemenskapsdetaljer"
 
-#: mod/community/lib.php:37
+#: mod/community/lib.php:38
 msgid "View membership requests"
 msgstr "Visa medlemsskapsförfrågningar"
 
-#: mod/file/lib.php:14 mod/file/lib.php:17
+#: mod/file/lib.php:23 mod/file/lib.php:26
 #: units/files/files_user_info_menu.php:11
 msgid "Your Files"
 msgstr "Dina Filer"
 
-#: mod/file/lib.php:28
+#: mod/file/lib.php:37
 msgid "Add a file or a folder"
 msgstr "Lägg till en fil eller en katalog"
 
-#: mod/file/lib.php:34
+#: mod/file/lib.php:43
 msgid "RSS feed for files"
 msgstr "RSS feed för filer"
 
@@ -1661,44 +1603,57 @@ msgstr "AccessKontroller"
 msgid "Invite a friend"
 msgstr "Bjud in en vän"
 
-#: mod/newsclient/lib.php:14 mod/newsclient/lib.php:17
+#: mod/gettext/lib.php:17
+msgid "Language"
+msgstr ""
+
+#: mod/gettext/lib.php:19 units/gettext/library.php:428
+msgid "default"
+msgstr ""
+
+#: mod/newsclient/lib.php:15 mod/newsclient/lib.php:18
 msgid "Your Resources"
 msgstr "Dina resurser"
 
-#: mod/newsclient/lib.php:32
+#: mod/newsclient/lib.php:27 _rss/index.php:24 _rss/subscriptions.php:24
+#: units/magpie/menu_sub.php:14
+msgid "Feeds"
+msgstr "Feeder"
+
+#: mod/newsclient/lib.php:31
 msgid "Publish to blog"
 msgstr "Publicera till blogg"
 
-#: mod/newsclient/lib.php:36 units/magpie/menu_sub.php:22
+#: mod/newsclient/lib.php:35 units/magpie/menu_sub.php:22
 msgid "View aggregator"
 msgstr "Visa aggregator"
 
-#: mod/newsclient/lib.php:40
+#: mod/newsclient/lib.php:39
 msgid "Popular Feeds"
 msgstr "Populära feeder"
 
-#: mod/newsclient/lib.php:85
+#: mod/newsclient/lib.php:80
 msgid "Feed widget"
 msgstr "Feedwidget"
 
-#: mod/newsclient/lib.php:86
+#: mod/newsclient/lib.php:81
 #, fuzzy
 msgid "Displays the latest entries from an external feed of your choice."
 msgstr "Visar de senaste sakerna från en extern feed."
 
-#: mod/newsclient/lib.php:113
+#: mod/newsclient/lib.php:110
 msgid "This feed is currently empty."
 msgstr "Denna feed är tom för närvarande."
 
-#: mod/newsclient/lib.php:120
+#: mod/newsclient/lib.php:117
 msgid "This feed widget is undefined."
 msgstr "Denna feedwidget är inte definierad."
 
-#: mod/newsclient/lib.php:138
+#: mod/newsclient/lib.php:135
 msgid "Feeds dashboard widget"
 msgstr "Feedsdashboardwidget"
 
-#: mod/newsclient/lib.php:139
+#: mod/newsclient/lib.php:136
 msgid ""
 "This widget displays the last couple of entries from an external feed you "
 "have subscribed to. To begin, select the feed from your subscriptions below:"
@@ -1706,12 +1661,12 @@ msgstr ""
 "Denna widget visar de senaste sakerna från en extern feed som du har "
 "prenumererat på. Börja med att välja feeden från dina prenumerationer nedan:"
 
-#: mod/newsclient/lib.php:158
+#: mod/newsclient/lib.php:155
 #, fuzzy
 msgid "Then enter the number of feed entries you'd like to display:"
 msgstr "Ange sedan antaled feed-entries som du vill visa:"
 
-#: mod/newsclient/lib.php:164
+#: mod/newsclient/lib.php:161
 #, php-format
 msgid ""
 "You can't select a feed for this widget because you don't have any feed "
@@ -1734,19 +1689,19 @@ msgstr "Ändra sajtbild"
 msgid "People"
 msgstr "Folk"
 
-#: mod/profile/lib.php:51 mod/profile/lib.php:80 mod/profile/lib.php:120
+#: mod/profile/lib.php:67 mod/profile/lib.php:96 mod/profile/lib.php:136
 msgid "Profile widget"
 msgstr "Profilwidget"
 
-#: mod/profile/lib.php:52
+#: mod/profile/lib.php:68
 msgid "Displays the contents of a profile field."
 msgstr "Visar innehållet från ett profilfält."
 
-#: mod/profile/lib.php:81
+#: mod/profile/lib.php:97
 msgid "This profile box is undefined."
 msgstr "Denna profilbox är odefinierad."
 
-#: mod/profile/lib.php:121
+#: mod/profile/lib.php:137
 msgid ""
 "Select a profile field below; the widget will then display the profile "
 "content from this field."
@@ -1754,11 +1709,225 @@ msgstr ""
 "Välj ett profilfält nedan; widgeten kommer sedan visa innehållet från detta "
 "fält"
 
+#: mod/profile/profile.config.php:41
+#: units/profile/function_editfield_defaults.php:37
+msgid "Who am I?"
+msgstr "Vem är jag?"
+
+#: mod/profile/profile.config.php:41
+#: units/profile/function_editfield_defaults.php:37
+msgid "A short introduction for you."
+msgstr "En kort introduktion för dig."
+
+#: mod/profile/profile.config.php:42
+msgid "Introduction"
+msgstr "Introduktion"
+
+#: mod/profile/profile.config.php:42
+msgid "A short introduction to this community."
+msgstr "En kort introduktion till denna community."
+
+#: mod/profile/profile.config.php:45
+#: units/profile/function_editfield_defaults.php:40
+msgid "Brief description"
+msgstr "Kort beskrivning"
+
+#: mod/profile/profile.config.php:45
+#: units/profile/function_editfield_defaults.php:40
+msgid "For use in your sidebar profile."
+msgstr "Att användas i din sidobarsprofil."
+
+#: mod/profile/profile.config.php:48
+#: units/profile/function_editfield_defaults.php:43
+msgid "Street address"
+msgstr "Gatuadress"
+
+#: mod/profile/profile.config.php:51
+#: units/profile/function_editfield_defaults.php:46
+msgid "Town"
+msgstr "Stad"
+
+#: mod/profile/profile.config.php:54
+#: units/profile/function_editfield_defaults.php:49
+msgid "State / Region"
+msgstr "Stat / Region"
+
+#: mod/profile/profile.config.php:57
+#: units/profile/function_editfield_defaults.php:52
+msgid "Postal code"
+msgstr "Postnummer"
+
+#: mod/profile/profile.config.php:60
+#: units/profile/function_editfield_defaults.php:55
+msgid "Country"
+msgstr "Land"
+
+#: mod/profile/profile.config.php:63 units/admin/admin_main.php:83
+#: units/admin/admin_users_add.php:22 units/admin/admin_users.php:30
+#: units/profile/function_editfield_defaults.php:58
+msgid "Email address"
+msgstr "Epostadress"
+
+#: mod/profile/profile.config.php:65
+#: units/profile/function_editfield_defaults.php:60
+msgid "Work telephone"
+msgstr "Arbetstelefon"
+
+#: mod/profile/profile.config.php:68
+#: units/profile/function_editfield_defaults.php:63
+msgid "Home telephone"
+msgstr "Hemtelefon"
+
+#: mod/profile/profile.config.php:71
+#: units/profile/function_editfield_defaults.php:66
+msgid "Mobile telephone"
+msgstr "Mobiltelefon"
+
+#: mod/profile/profile.config.php:74
+#: units/profile/function_editfield_defaults.php:69
+msgid "Official website address"
+msgstr "Officiell webbsideadress"
+
+#: mod/profile/profile.config.php:74
+#: units/profile/function_editfield_defaults.php:69
+msgid "The URL to your official website, if you have one."
+msgstr "URLen till din officiella webbsajt, om du har en."
+
+#: mod/profile/profile.config.php:77
+#: units/profile/function_editfield_defaults.php:72
+msgid "Personal website address"
+msgstr "Personlig webbsideadress"
+
+#: mod/profile/profile.config.php:77
+#: units/profile/function_editfield_defaults.php:72
+msgid "The URL to your personal website, if you have one."
+msgstr "URLen till din personliga webbsajt, om du har en."
+
+#: mod/profile/profile.config.php:80
+#: units/profile/function_editfield_defaults.php:75
+msgid "ICQ number"
+msgstr "ICQ-nummer"
+
+#: mod/profile/profile.config.php:83
+#: units/profile/function_editfield_defaults.php:78
+msgid "MSN chat"
+msgstr "MSN-chat"
+
+#: mod/profile/profile.config.php:86
+#: units/profile/function_editfield_defaults.php:81
+msgid "AIM screenname"
+msgstr "AIM screenname"
+
+#: mod/profile/profile.config.php:89
+#: units/profile/function_editfield_defaults.php:84
+msgid "Skype username"
+msgstr "Skype användarnamn"
+
+#: mod/profile/profile.config.php:91
+#: units/profile/function_editfield_defaults.php:86
+msgid "Jabber username"
+msgstr "Jabber användarnamn"
+
+#: mod/profile/profile.config.php:94
+#: units/profile/function_editfield_defaults.php:89
+msgid "Interests"
+msgstr "Intressen"
+
+#: mod/profile/profile.config.php:94 mod/profile/profile.config.php:98
+#: mod/profile/profile.config.php:99 mod/profile/profile.config.php:108
+#: mod/profile/profile.config.php:114
+#: units/profile/function_editfield_defaults.php:89
+#: units/profile/function_editfield_defaults.php:93
+#: units/profile/function_editfield_defaults.php:94
+#: units/profile/function_editfield_defaults.php:103
+#: units/profile/function_editfield_defaults.php:109
+msgid "Separated with commas."
+msgstr "Åtskilda med komman."
+
+#: mod/profile/profile.config.php:98
+#: units/profile/function_editfield_defaults.php:93
+msgid "Likes"
+msgstr "Gillar"
+
+#: mod/profile/profile.config.php:99
+#: units/profile/function_editfield_defaults.php:94
+msgid "Dislikes"
+msgstr "Ogillar"
+
+#: mod/profile/profile.config.php:100
+#: units/profile/function_editfield_defaults.php:95
+msgid "Occupation"
+msgstr "Yrke"
+
+#: mod/profile/profile.config.php:101
+#: units/profile/function_editfield_defaults.php:96
+msgid "Industry"
+msgstr "Näringsgren"
+
+#: mod/profile/profile.config.php:103
+#: units/profile/function_editfield_defaults.php:98
+msgid "Company / Institution"
+msgstr "Företag / Institution"
+
+#: mod/profile/profile.config.php:106
+#: units/profile/function_editfield_defaults.php:101
+msgid "Job Title"
+msgstr "Arbetstitel"
+
+#: mod/profile/profile.config.php:107
+#: units/profile/function_editfield_defaults.php:102
+msgid "Job Description"
+msgstr "Arbetsbeskrivning"
+
+#: mod/profile/profile.config.php:108
+#: units/profile/function_editfield_defaults.php:103
+msgid "I would like to ..."
+msgstr "Jag skulle vilja ..."
+
+#: mod/profile/profile.config.php:109
+#: units/profile/function_editfield_defaults.php:104
+msgid "Career Goals"
+msgstr "Karriärmål"
+
+#: mod/profile/profile.config.php:109
+#: units/profile/function_editfield_defaults.php:104
+msgid ""
+"Freeform: let colleagues and potential employers know what you'd like to get "
+"out of your career."
+msgstr ""
+"Freeform: låt kollegor och potentiella arbetsgivare veta vad du vill få ut "
+"av din karriär."
+
+#: mod/profile/profile.config.php:110
+#: units/profile/function_editfield_defaults.php:105
+msgid "Level of Education"
+msgstr "Utbildningsnivå"
+
+#: mod/profile/profile.config.php:111
+#: units/profile/function_editfield_defaults.php:106
+msgid "High School"
+msgstr "Grund / Gymnasieskola"
+
+#: mod/profile/profile.config.php:112
+#: units/profile/function_editfield_defaults.php:107
+msgid "University / College"
+msgstr "Universitet / Högskola"
+
+#: mod/profile/profile.config.php:113
+#: units/profile/function_editfield_defaults.php:108
+msgid "Degree"
+msgstr "Examen"
+
+#: mod/profile/profile.config.php:114
+#: units/profile/function_editfield_defaults.php:109
+msgid "Main Skills"
+msgstr "Huvudfärdigheter"
+
 #: profile/edit.php:35
 msgid "Edit profile"
 msgstr "Redigera profil"
 
-#: profile/edit.php:88 units/profile/function_actions.php:37
+#: profile/edit.php:88 units/profile/function_actions.php:40
 msgid "Profile updated."
 msgstr "Profil uppdaterad."
 
@@ -1788,234 +1957,32 @@ msgstr ""
 msgid "Upload a FOAF file:"
 msgstr "Ladda upp en FOAF-fil:"
 
-#: profile/profile.class.php:100 units/files/folder_edit.php:259
+#: profile/profile.class.php:100 units/files/edit_folder.php:267
 msgid "Upload"
 msgstr "Ladda upp"
 
-#: profile/profile.class.php:185
-#: units/profile/function_editfield_defaults.php:37
-msgid "Who am I?"
-msgstr "Vem är jag?"
-
-#: profile/profile.class.php:185
-#: units/profile/function_editfield_defaults.php:37
-msgid "A short introduction for you."
-msgstr "En kort introduktion för dig."
-
-#: profile/profile.class.php:186
-msgid "Introduction"
-msgstr "Introduktion"
-
-#: profile/profile.class.php:186
-msgid "A short introduction to this community."
-msgstr "En kort introduktion till denna community."
-
-#: profile/profile.class.php:189
-#: units/profile/function_editfield_defaults.php:40
-msgid "Brief description"
-msgstr "Kort beskrivning"
-
-#: profile/profile.class.php:189
-#: units/profile/function_editfield_defaults.php:40
-msgid "For use in your sidebar profile."
-msgstr "Att användas i din sidobarsprofil."
-
-#: profile/profile.class.php:192
-#: units/profile/function_editfield_defaults.php:43
-msgid "Street address"
-msgstr "Gatuadress"
-
-#: profile/profile.class.php:195
-#: units/profile/function_editfield_defaults.php:46
-msgid "Town"
-msgstr "Stad"
-
-#: profile/profile.class.php:198
-#: units/profile/function_editfield_defaults.php:49
-msgid "State / Region"
-msgstr "Stat / Region"
-
-#: profile/profile.class.php:201
-#: units/profile/function_editfield_defaults.php:52
-msgid "Postal code"
-msgstr "Postnummer"
-
-#: profile/profile.class.php:204
-#: units/profile/function_editfield_defaults.php:55
-msgid "Country"
-msgstr "Land"
-
-#: profile/profile.class.php:207 units/admin/admin_main.php:83
-#: units/admin/admin_users.php:30 units/admin/admin_users_add.php:23
-#: units/profile/function_editfield_defaults.php:58
-msgid "Email address"
-msgstr "Epostadress"
-
-#: profile/profile.class.php:209
-#: units/profile/function_editfield_defaults.php:60
-msgid "Work telephone"
-msgstr "Arbetstelefon"
-
-#: profile/profile.class.php:212
-#: units/profile/function_editfield_defaults.php:63
-msgid "Home telephone"
-msgstr "Hemtelefon"
-
-#: profile/profile.class.php:215
-#: units/profile/function_editfield_defaults.php:66
-msgid "Mobile telephone"
-msgstr "Mobiltelefon"
-
-#: profile/profile.class.php:218
-#: units/profile/function_editfield_defaults.php:69
-msgid "Official website address"
-msgstr "Officiell webbsideadress"
-
-#: profile/profile.class.php:218
-#: units/profile/function_editfield_defaults.php:69
-msgid "The URL to your official website, if you have one."
-msgstr "URLen till din officiella webbsajt, om du har en."
-
-#: profile/profile.class.php:221
-#: units/profile/function_editfield_defaults.php:72
-msgid "Personal website address"
-msgstr "Personlig webbsideadress"
-
-#: profile/profile.class.php:221
-#: units/profile/function_editfield_defaults.php:72
-msgid "The URL to your personal website, if you have one."
-msgstr "URLen till din personliga webbsajt, om du har en."
-
-#: profile/profile.class.php:224
-#: units/profile/function_editfield_defaults.php:75
-msgid "ICQ number"
-msgstr "ICQ-nummer"
-
-#: profile/profile.class.php:227
-#: units/profile/function_editfield_defaults.php:78
-msgid "MSN chat"
-msgstr "MSN-chat"
-
-#: profile/profile.class.php:230
-#: units/profile/function_editfield_defaults.php:81
-msgid "AIM screenname"
-msgstr "AIM screenname"
-
-#: profile/profile.class.php:233
-#: units/profile/function_editfield_defaults.php:84
-msgid "Skype username"
-msgstr "Skype användarnamn"
-
-#: profile/profile.class.php:235
-#: units/profile/function_editfield_defaults.php:86
-msgid "Jabber username"
-msgstr "Jabber användarnamn"
-
-#: profile/profile.class.php:238
-#: units/profile/function_editfield_defaults.php:89
-msgid "Interests"
-msgstr "Intressen"
-
-#: profile/profile.class.php:238 profile/profile.class.php:242
-#: profile/profile.class.php:243 profile/profile.class.php:252
-#: profile/profile.class.php:258
-#: units/profile/function_editfield_defaults.php:89
-#: units/profile/function_editfield_defaults.php:93
-#: units/profile/function_editfield_defaults.php:94
-#: units/profile/function_editfield_defaults.php:103
-#: units/profile/function_editfield_defaults.php:109
-msgid "Separated with commas."
-msgstr "Åtskilda med komman."
-
-#: profile/profile.class.php:242
-#: units/profile/function_editfield_defaults.php:93
-msgid "Likes"
-msgstr "Gillar"
-
-#: profile/profile.class.php:243
-#: units/profile/function_editfield_defaults.php:94
-msgid "Dislikes"
-msgstr "Ogillar"
-
-#: profile/profile.class.php:244
-#: units/profile/function_editfield_defaults.php:95
-msgid "Occupation"
-msgstr "Yrke"
-
-#: profile/profile.class.php:245
-#: units/profile/function_editfield_defaults.php:96
-msgid "Industry"
-msgstr "Näringsgren"
-
-#: profile/profile.class.php:247
-#: units/profile/function_editfield_defaults.php:98
-msgid "Company / Institution"
-msgstr "Företag / Institution"
-
-#: profile/profile.class.php:250
-#: units/profile/function_editfield_defaults.php:101
-msgid "Job Title"
-msgstr "Arbetstitel"
-
-#: profile/profile.class.php:251
-#: units/profile/function_editfield_defaults.php:102
-msgid "Job Description"
-msgstr "Arbetsbeskrivning"
-
-#: profile/profile.class.php:252
-#: units/profile/function_editfield_defaults.php:103
-msgid "I would like to ..."
-msgstr "Jag skulle vilja ..."
-
-#: profile/profile.class.php:253
-#: units/profile/function_editfield_defaults.php:104
-msgid "Career Goals"
-msgstr "Karriärmål"
-
-#: profile/profile.class.php:253
-#: units/profile/function_editfield_defaults.php:104
-msgid ""
-"Freeform: let colleagues and potential employers know what you'd like to get "
-"out of your career."
+#: profile/profile.class.php:110
+msgid "Or you can fill in your profile directly below:"
 msgstr ""
-"Freeform: låt kollegor och potentiella arbetsgivare veta vad du vill få ut "
-"av din karriär."
 
-#: profile/profile.class.php:254
-#: units/profile/function_editfield_defaults.php:105
-msgid "Level of Education"
-msgstr "Utbildningsnivå"
+#: profile/profile.class.php:123
+msgid "Submit details:"
+msgstr ""
 
-#: profile/profile.class.php:255
-#: units/profile/function_editfield_defaults.php:106
-msgid "High School"
-msgstr "Grund / Gymnasieskola"
+#: profile/profile.class.php:124
+msgid "Save your profile"
+msgstr ""
 
-#: profile/profile.class.php:256
-#: units/profile/function_editfield_defaults.php:107
-msgid "University / College"
-msgstr "Universitet / Högskola"
-
-#: profile/profile.class.php:257
-#: units/profile/function_editfield_defaults.php:108
-msgid "Degree"
-msgstr "Examen"
-
-#: profile/profile.class.php:258
-#: units/profile/function_editfield_defaults.php:109
-msgid "Main Skills"
-msgstr "Huvudfärdigheter"
-
-#: profile/profile.class.php:317
+#: profile/profile.class.php:207
 #: units/profile/function_editfield_display.php:40
 msgid "Access Restriction:"
 msgstr "AccessBegränsningar:"
 
-#: profile/profile.class.php:390 units/profile/function_search.php:35
+#: profile/profile.class.php:280 units/profile/function_search.php:35
 msgid "Profiles where"
 msgstr "Profiler där"
 
-#: profile/profile.class.php:551 units/profile/function_upload_foaf.php:8
+#: profile/profile.class.php:441 units/profile/function_upload_foaf.php:8
 msgid ""
 "There was an error uploading the file. Possibly the file was too large, or "
 "the upload was interrupted."
@@ -2023,7 +1990,7 @@ msgstr ""
 "Det uppstod ett fel när filen laddades upp. Möjligen var filen för stor "
 "eller så avbröts uppladdningen."
 
-#: profile/profile.class.php:631 units/profile/function_upload_foaf.php:88
+#: profile/profile.class.php:521 units/profile/function_upload_foaf.php:88
 msgid ""
 "Data from your FOAF file has been preloaded. You must click Save at the "
 "bottom of the page for the changes to take effect."
@@ -2031,16 +1998,16 @@ msgstr ""
 "Data från din FOAF-fil har förladdat. Du måste klicka på Spara nederst på "
 "sidan för att ändringarna ska slå igenom."
 
-#: profile/profile.class.php:635 units/profile/function_upload_foaf.php:92
+#: profile/profile.class.php:525 units/profile/function_upload_foaf.php:92
 msgid "Error: supplied file did not appear to be a FOAF file."
 msgstr "Fel: filen verkar inte vara en FOAF-fil."
 
-#: profile/profile.class.php:947 units/profile/profile_user_info.php:58
+#: profile/profile.class.php:837 units/profile/profile_user_info.php:58
 #: units/weblogs/weblogs_user_info.php:7
 msgid "Profile Owner"
 msgstr "Profilägare"
 
-#: profile/profile.class.php:949 units/profile/profile_user_info.php:60
+#: profile/profile.class.php:839 units/profile/profile_user_info.php:60
 #: units/weblogs/weblogs_user_info.php:9
 msgid "You"
 msgstr "Du"
@@ -2054,6 +2021,46 @@ msgstr "Aktivitet markerad med %s"
 msgid "Search Profiles"
 msgstr "Sök Profiler"
 
+#: _rss/blog.php:25
+msgid "Publish feeds to blog"
+msgstr "Publicera feeder till blogg"
+
+#: _rss/individual.php:13
+msgid "Feed detail"
+msgstr "Feed-detaljer"
+
+#: _rss/popular.php:12 units/magpie/menu_sub.php:31
+msgid "Popular feeds"
+msgstr "Populära feeder"
+
+#: _rss/styles.php:10
+msgid "RSS Management"
+msgstr "RSS Hantering"
+
+#: _rss/styles.php:11
+msgid "To add this feed to your resources page, click here."
+msgstr "Klicka här för att lägga till denna feed till din resurssida"
+
+#: _rss/styles.php:12
+msgid ""
+"To add this feed to an external RSS aggregator, click the link that "
+"corresponds to your aggregator:"
+msgstr ""
+"Klicka på länken som motsvarar din aggregator för att lägga till denna feed "
+"till en extern RSS aggregator."
+
+#: _rss/styles.php:13
+msgid "Summary"
+msgstr "Summering"
+
+#: _rss/styles.php:14
+msgid "This is an RSS feed for "
+msgstr "Detta är en RSS-feed för "
+
+#: _rss/styles.php:15
+msgid "Didn't mean to come here? Click to exit!"
+msgstr "Kom hit av misstag? Klicka här!"
+
 #: search/all.php:13
 msgid "Searching Everything"
 msgstr "Söker Allt"
@@ -2065,10 +2072,6 @@ msgstr "Sök"
 #: search/index.php:38
 msgid "Search for results from:"
 msgstr "Sök efter resultat från:"
-
-#: search/index.php:43
-msgid "All"
-msgstr "Alla"
 
 #: search/index.php:78
 msgid "Filter by content type:"
@@ -2085,6 +2088,18 @@ msgstr "Användare och communities"
 #: search/tags.php:12
 msgid "Some Tags"
 msgstr "Vissa märkningar"
+
+#: _templates/edit.php:15
+msgid "Template Edit"
+msgstr "Redigera Mall"
+
+#: _templates/index.php:15
+msgid "Select / Create Themes"
+msgstr "Välj / Skapa Teman"
+
+#: _templates/preview.php:13
+msgid "Template Preview"
+msgstr "Förhandsgranska Mall"
 
 #: units/activity/recent.php:3
 msgid ""
@@ -2179,36 +2194,6 @@ msgstr ""
 "\tAnvändarnamn: %s\n"
 "\t"
 
-#: units/admin/admin_actions.php:183
-#, php-format
-msgid ""
-"Password: %s\n"
-"\n"
-"You can log in at any time by visiting %s and entering these details into "
-"the login form.\n"
-"\n"
-msgstr ""
-"Lösenord: %s\n"
-"\n"
-"Du kan logga in när som helst genom att besöka %s och skriva in detta i "
-"loginformuläret.\n"
-"\n"
-
-#: units/admin/admin_actions.php:184 units/invite/invite_actions.php:143
-#, php-format
-msgid ""
-"We hope you enjoy using the system.\n"
-"\n"
-"Regards,\n"
-"\n"
-"The %s Team"
-msgstr ""
-"Vi hoppas att du kommer att trivas med systemet.\n"
-"\n"
-"Hälsningar,\n"
-"\n"
-"%s Teamet"
-
 #: units/admin/admin_actions.php:185
 #, php-format
 msgid "User %s was created."
@@ -2269,8 +2254,8 @@ msgstr "All-time:"
 
 #: units/admin/admin_main.php:35 units/admin/admin_main.php:37
 #, php-format
-msgid "%d weblog posts, %d comments"
-msgstr "%d webbloggpostningar, %d kommentarer"
+msgid "%u weblog posts, %u comments"
+msgstr ""
 
 #: units/admin/admin_main.php:36 units/admin/admin_main.php:49
 msgid "Last 7 days:"
@@ -2282,8 +2267,8 @@ msgstr "Filstatistik"
 
 #: units/admin/admin_main.php:48 units/admin/admin_main.php:49
 #, php-format
-msgid "%d files (%d bytes)"
-msgstr "%d filer (%d bytes)"
+msgid "%u files (%s bytes)"
+msgstr ""
 
 #: units/admin/admin_main.php:67
 msgid "Database statistics"
@@ -2295,8 +2280,8 @@ msgstr "Total databasstorlek:"
 
 #: units/admin/admin_main.php:68
 #, php-format
-msgid "%d bytes"
-msgstr "%d bytes"
+msgid "%u bytes"
+msgstr ""
 
 #: units/admin/admin_main.php:75
 msgid "Users online now"
@@ -2310,15 +2295,15 @@ msgstr ""
 "Följande användare har en aktiv session och har gjort en aktivitet de "
 "senaste tio minuterna."
 
-#: units/admin/admin_main.php:82 units/admin/admin_users.php:29
-#: units/admin/admin_users_add.php:22
+#: units/admin/admin_main.php:82 units/admin/admin_users_add.php:21
+#: units/admin/admin_users.php:29
 msgid "Full name"
 msgstr "Fullständigt namn"
 
 #: units/admin/admin_main.php:93
 #, php-format
-msgid "%d users in total."
-msgstr "Totalt %d användare."
+msgid "%u users in total."
+msgstr ""
 
 #: units/admin/admin_spam.php:7
 msgid ""
@@ -2374,6 +2359,22 @@ msgstr "Sajtadministratör "
 msgid "Banned: "
 msgstr "Bannade: "
 
+#: units/admin/admin_users_add.php:17
+msgid ""
+"You can create up to 12 users below; passwords will be autogenerated and "
+"emailed to the account owners. You must include all fields, but you may "
+"leave rows blank."
+msgstr ""
+"Du kan skapa upp till 12 användare nedan; lösenorden kommer autogenereras "
+"och epostas till kontoägarna. Du måste fylla i alla fält, men du kan lämna "
+"tomma rader."
+
+#: units/admin/admin_users_panel.php:12
+#: units/communities/communities_membership_requests.php:32
+#: units/friends/user_friendship_requests.php:33
+msgid "Profile"
+msgstr "Profil"
+
 #: units/admin/admin_users.php:10
 msgid ""
 "The following is a list of all the users in the system, 50 users at a time. "
@@ -2402,29 +2403,18 @@ msgstr "Ange användarnamn"
 msgid "Edit user"
 msgstr "Redigera användare"
 
-#: units/admin/admin_users.php:37
+#: units/admin/admin_users.php:37 units/magpie/function_view_individual.php:38
+#: units/magpie/function_view.php:41
+#: units/weblogs/weblogs_all_users_view.php:123
+#: units/weblogs/weblogs_friends_view.php:73
+#: units/weblogs/weblogs_interesting_view.php:64
+#: units/weblogs/weblogs_view.php:65
 msgid "Next"
 msgstr "Nästa"
 
 #: units/admin/admin_users.php:46
 msgid "Previous"
 msgstr "Föregående"
-
-#: units/admin/admin_users_add.php:18
-msgid ""
-"You can create up to 12 users below; passwords will be autogenerated and "
-"emailed to the account owners. You must include all fields, but you may "
-"leave rows blank."
-msgstr ""
-"Du kan skapa upp till 12 användare nedan; lösenorden kommer autogenereras "
-"och epostas till kontoägarna. Du måste fylla i alla fält, men du kan lämna "
-"tomma rader."
-
-#: units/admin/admin_users_panel.php:12
-#: units/communities/communities_membership_requests.php:32
-#: units/friends/user_friendship_requests.php:33
-msgid "Profile"
-msgstr "Profil"
 
 #: units/admin/display_content_flag_form.php:23
 msgid "Flag content"
@@ -2459,15 +2449,6 @@ msgstr ""
 msgid "Error! The community name cannot be blank."
 msgstr "Fel! Gemenskapsnamnet kan inte vara tomt."
 
-#: units/communities/communities_actions.php:26
-#, php-format
-msgid ""
-"The username %s is already taken by another user. You will need to pick a "
-"different one."
-msgstr ""
-"Användarnamnet %s är redan taget av en annan användare. Du måste välja ett "
-"annat."
-
 #: units/communities/communities_actions.php:44
 msgid "Your community was created and you were added as its first member."
 msgstr "Din gemenskap skapades och du lades till som dess första medlem."
@@ -2491,29 +2472,6 @@ msgstr ""
 "Klicka på följande länk för att se denna användares profil:\n"
 "\n"
 "\t"
-
-#: units/communities/communities_actions.php:61
-#, php-format
-msgid ""
-"%s\n"
-"\n"
-"To view all community members, click here:\n"
-"\n"
-"\t%s\n"
-"\n"
-"Regards,\n"
-"\n"
-"The %s team."
-msgstr ""
-"%s\n"
-"\n"
-"Klicka här för att se alla gemenskapsmedlemmar:\n"
-"\n"
-"\t%s\n"
-"\n"
-"Hälsningar,\n"
-"\n"
-"%s teamet."
 
 #: units/communities/communities_actions.php:63
 #, php-format
@@ -2542,30 +2500,6 @@ msgstr ""
 "Klicka på följande länk för att se denna användares profil:\n"
 "\n"
 "\t"
-
-#: units/communities/communities_actions.php:70
-#, php-format
-msgid ""
-"%s\n"
-"\n"
-"To view all membership requests and approve or deny this user, click here:\n"
-"\n"
-"\t%s\n"
-"\n"
-"Regards,\n"
-"\n"
-"The %s team."
-msgstr ""
-"%s\n"
-"\n"
-"Klicka här för att se alla medlemsskapsansökningar och för att godkänna "
-"eller neka denna användare:\n"
-"\n"
-"\t%s\n"
-"\n"
-"Hälsningar,\n"
-"\n"
-"%s teamet."
 
 #: units/communities/communities_actions.php:72
 #, php-format
@@ -2624,10 +2558,21 @@ msgstr "Gemenskapsnamn:"
 msgid "Username for community:"
 msgstr "Användarnamn för gemenskap:"
 
-#: units/communities/communities_create.php:19
+#: units/communities/communities_create.php:19 units/files/edit_folder.php:147
 #: units/groups/groups_create.php:5
 msgid "Create"
 msgstr "Skapa"
+
+#: units/communities/communities_edit.php:47
+msgid ""
+"You don't have any communities listed! To join a community, click the 'join' "
+"button underneath a community's icon. You can find communities you're "
+"interested in by using the search function."
+msgstr ""
+
+#: units/communities/communities_edit.php:49
+msgid "This user is not currently a member of any communities."
+msgstr ""
 
 #: units/communities/communities_membership_requests.php:15
 msgid ""
@@ -2639,9 +2584,28 @@ msgstr ""
 "godkännande för att göra detta (gå till 'gemenskaps-inställningar' för att "
 "ändra denna inställning)."
 
+#: units/communities/communities_membership_requests.php:33
+#: units/friends/user_friendship_requests.php:34
+#: units/weblogs/weblogs_user_info_menu.php:29 _weblog/edit.php:24
+#: _weblog/index.php:15
+msgid "Blog"
+msgstr "Blogg"
+
 #: units/communities/communities_membership_requests.php:48
 msgid "You have no pending membership requests."
 msgstr "Du har inga medlemsansökningar som väntar."
+
+#: units/communities/communities_members.php:45
+msgid "This community doesn't currently have any members."
+msgstr ""
+
+#: units/communities/communities_moderator_of.php:47
+msgid "You don't own any communities. Why not create one?"
+msgstr ""
+
+#: units/communities/communities_moderator_of.php:49
+msgid "This user is not currently moderating any communities."
+msgstr ""
 
 #: units/communities/communities_owned.php:18
 msgid "Owned communities"
@@ -2659,29 +2623,9 @@ msgstr "Gemenskaps-Wiki"
 msgid "Upload / edit site pictures for this community."
 msgstr "Ladda upp / redigera sajtbilder för denna gemenskap."
 
-#: units/communities/user_info_menu_text.php:18
-msgid "Are you sure you want to join this community?"
-msgstr "Är du säker på att du vill bli medlem i denna gemenskap?"
-
-#: units/communities/user_info_menu_text.php:18
-msgid "Click here to join this community."
-msgstr "Klicka här för att bli medlem i denna gemenskap."
-
-#: units/communities/user_info_menu_text.php:20
-msgid "Are you sure you want to apply to join this community?"
-msgstr "Är du säker att du vill ansöka om att bli medlem av denna gemenskap?"
-
-#: units/communities/user_info_menu_text.php:20
-msgid "Click here to apply to join this community."
-msgstr "Klicka här för att ansöka om medlemskap i denna gemenskap."
-
-#: units/communities/user_info_menu_text.php:26
-msgid "Are you sure you want to leave this community?"
-msgstr "Är du säker på att du vill lämna denna gemenskap?"
-
-#: units/communities/user_info_menu_text.php:26
-msgid "Click here to leave this community."
-msgstr "Klicka här för att lämna denna gemenskap."
+#: units/communities/profile_edit_link.php:26
+msgid "Change this community's name."
+msgstr ""
 
 #: units/communities/userdetails_actions.php:23
 #, php-format
@@ -2745,6 +2689,30 @@ msgstr ""
 #: units/communities/userdetails_edit.php:83
 msgid "Community owner"
 msgstr "Ägare av communityn"
+
+#: units/communities/user_info_menu_text.php:18
+msgid "Are you sure you want to join this community?"
+msgstr "Är du säker på att du vill bli medlem i denna gemenskap?"
+
+#: units/communities/user_info_menu_text.php:18
+msgid "Click here to join this community."
+msgstr "Klicka här för att bli medlem i denna gemenskap."
+
+#: units/communities/user_info_menu_text.php:20
+msgid "Are you sure you want to apply to join this community?"
+msgstr "Är du säker att du vill ansöka om att bli medlem av denna gemenskap?"
+
+#: units/communities/user_info_menu_text.php:20
+msgid "Click here to apply to join this community."
+msgstr "Klicka här för att ansöka om medlemskap i denna gemenskap."
+
+#: units/communities/user_info_menu_text.php:26
+msgid "Are you sure you want to leave this community?"
+msgstr "Är du säker på att du vill lämna denna gemenskap?"
+
+#: units/communities/user_info_menu_text.php:26
+msgid "Click here to leave this community."
+msgstr "Klicka här för att lämna denna gemenskap."
 
 #: units/files/default_templates.php:8
 msgid "Folder"
@@ -2810,110 +2778,88 @@ msgstr "Menyval för filägare (redigera, radera, etc)"
 msgid "The URL of its icon"
 msgstr "URLen till dess ikon"
 
-#: units/files/edit_file.php:17 units/files/folder_edit.php:184
+#: units/files/edit_file.php:17 units/files/edit_folder.php:192
 msgid "File title:"
 msgstr "Filtitel"
 
-#: units/files/files_actions.php:26
-msgid "Your folder was created."
-msgstr "Din mapp skapades."
-
-#: units/files/files_actions.php:28
-msgid "Could not create folder. Perhaps the folder name was blank?"
-msgstr "Kunde inte skapa mapp. Vad mappnamnet möjligen tomt?"
-
-#: units/files/files_actions.php:47
-msgid ""
-"Upload unsuccessful. You must check the copyright box for a file to be "
-"uploaded."
+#: units/files/edit_file.php:29
+msgid "File description:"
 msgstr ""
-"Uppladdningen misslyckades. Du måste kryssa i copyright-rutan för en "
-"uppladdad fil."
 
-#: units/files/files_actions.php:86
-msgid "The file was successfully uploaded."
-msgstr "Filen laddades upp utan problem."
-
-#: units/files/files_actions.php:122
-msgid "The file was updated."
-msgstr "Filen uppdaterades."
-
-#: units/files/files_actions.php:142
-msgid "The folder was edited."
-msgstr "Mappen redigerades."
-
-#: units/files/files_actions.php:144
-msgid "Error: a folder cannot be its own parent."
-msgstr "Fel: En mapp kan inte vara sin egna förälder."
-
-#: units/files/files_actions.php:167
-msgid "The folder was deleted."
-msgstr "Mappen raderades."
-
-#: units/files/files_actions.php:189
-msgid "The file was deleted."
-msgstr "Filen raderades."
-
-#: units/files/files_links_make.php:51
-msgid "You do not have permission to access this file"
-msgstr "Du har inte rättighet att nå denna fil"
-
-#: units/files/files_links_make.php:54
-msgid "File does not exist"
-msgstr "Filen existerar inte"
-
-#: units/files/files_user_info_menu.php:23
-msgid "File Storage"
-msgstr "Fillager"
-
-#: units/files/folder_edit.php:12
-msgid "Edit this folder"
-msgstr "Redigera denna mapp"
-
-#: units/files/folder_edit.php:99
-msgid "Create a new folder"
-msgstr "Skapa en ny mapp"
-
-#: units/files/folder_edit.php:100
-msgid "To create a new folder, enter its name:"
-msgstr "För att skapa en mapp, ange dess namn:"
-
-#: units/files/folder_edit.php:101
-msgid "Access restrictions"
-msgstr "Accessbegränsningar"
-
-#: units/files/folder_edit.php:165
-msgid "Upload a file"
-msgstr "Ladda upp en fil"
-
-#: units/files/folder_edit.php:179
-#, php-format
-msgid "You have used %s Mb of a total %s Mb."
-msgstr "Du har använd %s Mb av totalt %s Mb."
-
-#: units/files/folder_edit.php:181
-#, php-format
-msgid "Used space: %s Mb."
-msgstr "Använt utrymme: %s Mb."
-
-#: units/files/folder_edit.php:183
-msgid "File to upload:"
-msgstr "Fil att ladda upp:"
-
-#: units/files/folder_edit.php:185
-msgid "File Description:"
-msgstr "Filbeskrivning"
-
-#: units/files/folder_edit.php:186 units/weblogs/weblogs_posts_add.php:27
+#: units/files/edit_file.php:40 units/files/edit_folder.php:194
+#: units/weblogs/weblogs_posts_add.php:27
 #: units/weblogs/weblogs_posts_edit.php:21
 msgid "Access restrictions:"
 msgstr "Accessbegränsningar:"
 
-#: units/files/folder_edit.php:236
+#: units/files/edit_file.php:51
+msgid "File folder:"
+msgstr ""
+
+#: units/files/edit_file.php:62 units/files/edit_folder.php:62
+#: units/files/edit_folder.php:134 units/files/edit_folder.php:244
 msgid "Keywords (comma separated):"
 msgstr "Nyckelord (åtskiljda med komma):"
 
-#: units/files/folder_edit.php:258
+#: units/files/edit_file.php:80
+msgid "Save changes"
+msgstr ""
+
+#: units/files/edit_file.php:98
+msgid "Edit "
+msgstr ""
+
+#: units/files/edit_folder.php:19 units/files/edit_folder.php:89
+msgid "Edit this folder"
+msgstr "Redigera denna mapp"
+
+#: units/files/edit_folder.php:26
+msgid "Folder name:"
+msgstr ""
+
+#: units/files/edit_folder.php:27
+msgid "Parent folder"
+msgstr ""
+
+#: units/files/edit_folder.php:49 units/files/edit_folder.php:109
+msgid "Access restrictions"
+msgstr "Accessbegränsningar"
+
+#: units/files/edit_folder.php:99
+msgid "Upload files and folders"
+msgstr ""
+
+#: units/files/edit_folder.php:107
+msgid "Create a new folder"
+msgstr "Skapa en ny mapp"
+
+#: units/files/edit_folder.php:108
+msgid "To create a new folder, enter its name:"
+msgstr "För att skapa en mapp, ange dess namn:"
+
+#: units/files/edit_folder.php:173
+msgid "Upload a file"
+msgstr "Ladda upp en fil"
+
+#: units/files/edit_folder.php:187
+#, php-format
+msgid "You have used %s Mb of a total %s Mb."
+msgstr "Du har använd %s Mb av totalt %s Mb."
+
+#: units/files/edit_folder.php:189
+#, php-format
+msgid "Used space: %s Mb."
+msgstr "Använt utrymme: %s Mb."
+
+#: units/files/edit_folder.php:191
+msgid "File to upload:"
+msgstr "Fil att ladda upp:"
+
+#: units/files/edit_folder.php:193
+msgid "File Description:"
+msgstr "Filbeskrivning"
+
+#: units/files/edit_folder.php:266
 msgid ""
 "By checking this box, you are asserting that you have the legal right to "
 "share this file, and that you understand you are sharing it with other users "
@@ -2921,6 +2867,58 @@ msgid ""
 msgstr ""
 "Genom att kryssa för denna ruta försäkrar du att du ha rätt att dela denna "
 "fil och att du delar den med andra användare av systemet."
+
+#: units/files/files_actions.php:30
+msgid "Your folder was created."
+msgstr "Din mapp skapades."
+
+#: units/files/files_actions.php:33
+msgid "Could not create folder. Perhaps the folder name was blank?"
+msgstr "Kunde inte skapa mapp. Vad mappnamnet möjligen tomt?"
+
+#: units/files/files_actions.php:53
+msgid ""
+"Upload unsuccessful. You must check the copyright box for a file to be "
+"uploaded."
+msgstr ""
+"Uppladdningen misslyckades. Du måste kryssa i copyright-rutan för en "
+"uppladdad fil."
+
+#: units/files/files_actions.php:95
+msgid "The file was successfully uploaded."
+msgstr "Filen laddades upp utan problem."
+
+#: units/files/files_actions.php:136
+msgid "The file was updated."
+msgstr "Filen uppdaterades."
+
+#: units/files/files_actions.php:160
+msgid "The folder was edited."
+msgstr "Mappen redigerades."
+
+#: units/files/files_actions.php:163
+msgid "Error: a folder cannot be its own parent."
+msgstr "Fel: En mapp kan inte vara sin egna förälder."
+
+#: units/files/files_actions.php:189
+msgid "The folder was deleted."
+msgstr "Mappen raderades."
+
+#: units/files/files_actions.php:214
+msgid "The file was deleted."
+msgstr "Filen raderades."
+
+#: units/files/files_links_make.php:54
+msgid "You do not have permission to access this file"
+msgstr "Du har inte rättighet att nå denna fil"
+
+#: units/files/files_links_make.php:57
+msgid "File does not exist"
+msgstr "Filen existerar inte"
+
+#: units/files/files_user_info_menu.php:23
+msgid "File Storage"
+msgstr "Fillager"
 
 #: units/files/folder_view.php:27
 msgid "Root Folder"
@@ -2938,11 +2936,20 @@ msgstr "Undermappar"
 msgid "Are you sure you want to permanently delete this folder?"
 msgstr "Är du säker på att du permanent vill ta bort denna mapp?"
 
-#: units/files/folder_view.php:174
+#: units/files/folder_view.php:87 units/files/folder_view.php:149
+#: units/magpie/function_subscriptions_publish_to_blog.php:41
+msgid "Keywords: "
+msgstr "Nyckelord: "
+
+#: units/files/folder_view.php:139
+msgid "Are you sure you want to permanently delete this file?"
+msgstr ""
+
+#: units/files/folder_view.php:175
 msgid "This folder is currently empty."
 msgstr "Denna mapp är för närvarande tom."
 
-#: units/files/function_search.php:50
+#: units/files/function_search.php:49
 #, php-format
 msgid "Folders owned by '%s' in category '%s'"
 msgstr "Mappar ägda av '%s' i kategorin '%s'"
@@ -2952,12 +2959,16 @@ msgstr "Mappar ägda av '%s' i kategorin '%s'"
 msgid "Files owned by %s in category '%s'"
 msgstr "Filer som ägs av %s i kategorin '%s'"
 
-#: units/files/function_search.php:106
+#: units/files/function_search.php:90
+msgid "View folder"
+msgstr ""
+
+#: units/files/function_search.php:107
 #, php-format
 msgid "RSS feed for files owned by %s"
 msgstr "RSS feeder för filer ägda av %s"
 
-#: units/files/function_search.php:117
+#: units/files/function_search.php:118
 msgid "Users with files or folders in category"
 msgstr "Användare med filer eller mappar i kategorin"
 
@@ -2969,9 +2980,13 @@ msgstr "Filmapp"
 msgid "Folder name"
 msgstr "Mappnamn"
 
-#: units/files/templates_preview.php:26
+#: units/files/templates_preview.php:15 units/files/templates_preview.php:26
 msgid "test"
 msgstr "test"
+
+#: units/files/templates_preview.php:18
+msgid "Subfolder"
+msgstr ""
 
 #: units/files/templates_preview.php:27
 msgid "A sample file"
@@ -2994,6 +3009,12 @@ msgstr "Filer och mappar"
 msgid "Embed a file from your %s file storage:"
 msgstr "Bädda in en fil från din %s fillager:"
 
+#: units/files/weblogs_posts_add_fields.php:79
+msgid ""
+"This will add a code to your weblog post that will be converted into an "
+"embedded file."
+msgstr ""
+
 #: units/friends/friends_actions.php:24
 #, php-format
 msgid "%s was added to your friends list."
@@ -3013,29 +3034,6 @@ msgstr ""
 "Klicka på följande länk för att se dennes profil:\n"
 "\n"
 "\t"
-
-#: units/friends/friends_actions.php:27 units/friends/friends_actions.php:88
-#, php-format
-msgid ""
-"%s\n"
-"\n"
-"To view all your friends, click here:\n"
-"\n"
-"\t%s\n"
-"\n"
-"Regards,\n"
-"\n"
-"The %s team."
-msgstr ""
-"%s\n"
-"\n"
-"Klicka här för att se alla dina vännar:\n"
-"\n"
-"\t%s\n"
-"\n"
-"Hälsningar,\n"
-"\n"
-"%s teamet."
 
 #: units/friends/friends_actions.php:29
 #, php-format
@@ -3070,31 +3068,6 @@ msgstr ""
 "Klicka på följande länk för att se dennes profil:\n"
 "\n"
 "\t"
-
-#: units/friends/friends_actions.php:43
-#, php-format
-msgid ""
-"%s\n"
-"\n"
-"To view all your friends requests and approve or deny this user, click "
-"here:\n"
-"\n"
-"\t%s\n"
-"\n"
-"Regards,\n"
-"\n"
-"The %s team."
-msgstr ""
-"%s\n"
-"\n"
-"Klicka här för att se alla dina vänners förfrågningar och för att godkänna "
-"eller neka denna användare:\n"
-"\n"
-"\t%s\n"
-"\n"
-"Hälsningar,\n"
-"\n"
-"%s teamet."
 
 #: units/friends/friends_actions.php:45
 #, php-format
@@ -3185,33 +3158,39 @@ msgstr ""
 "\n"
 "\t"
 
-#: units/friends/friends_actions.php:115
-#, php-format
-msgid ""
-"%s\n"
-"\n"
-"To view all your existing friends, click here:\n"
-"\n"
-"\t%s\n"
-"\n"
-"Regards,\n"
-"\n"
-"The %s team."
-msgstr ""
-"%s\n"
-"\n"
-"Klicka här för att se alla dina befintliga vänner:\n"
-"\n"
-"\t%s\n"
-"\n"
-"Hälsningar,\n"
-"\n"
-"%s teamet."
-
 #: units/friends/friends_actions.php:117
 #, php-format
 msgid "%s friend request denied"
 msgstr "%s vänskapsförfrågan nekad"
+
+#: units/friends/friends_edit.php:47
+msgid ""
+"You don't have any friends listed! To add a user as a friend, click the "
+"'friend' button underneath a user's icon."
+msgstr ""
+
+#: units/friends/friends_edit.php:49
+msgid ""
+"This user doesn't currently have any friends listed. Maybe if you list them "
+"as a friend, it'll start the ball rolling ..?"
+msgstr ""
+
+#: units/friends/friends_of_edit.php:18
+#, php-format
+msgid "Displaying 1000 most recently active people, of %d found."
+msgstr ""
+
+#: units/friends/friends_of_edit.php:58
+msgid ""
+"Nobody's listed you as a friend! Maybe you need to start chatting to some "
+"other users?"
+msgstr ""
+
+#: units/friends/friends_of_edit.php:60
+msgid ""
+"This user isn't currently listed as anyone's friend. Maybe you could be the "
+"first?"
+msgstr ""
 
 #: units/friends/profile_friends.php:20 units/friends/profile_friends.php:29
 msgid "View all Friends"
@@ -3220,10 +3199,6 @@ msgstr "Visa alla Vänner"
 #: units/friends/profile_friends.php:27 units/friends/user_friends.php:14
 msgid "Your Friends"
 msgstr "Dina vänner"
-
-#: units/friends/user_friends.php:14
-msgid "Friends Screen"
-msgstr "Vänners Sida"
 
 #: units/friends/user_friendship_requests.php:16
 msgid ""
@@ -3237,6 +3212,10 @@ msgstr ""
 #: units/friends/user_friendship_requests.php:51
 msgid "You have no pending friendship requests."
 msgstr "Du har inga vänskapsförfrågningar som väntar."
+
+#: units/friends/user_friends.php:14
+msgid "Friends Screen"
+msgstr "Vänners Sida"
 
 #: units/friends/user_info_menu_text.php:19
 msgid "Are you sure you want to add this user as a friend?"
@@ -3254,6 +3233,32 @@ msgstr ""
 #: units/friends/user_info_menu_text.php:26
 msgid "Click here to remove this user from your friends list."
 msgstr "Klicka här för att ta bort denna användare från din vännerlista."
+
+#: units/gettext/library.php:410
+msgid "Language selection"
+msgstr ""
+
+#: units/gettext/library.php:411
+msgid ""
+"Choose your preferred language for this site. The following languages are "
+"available on this system:"
+msgstr ""
+
+#: units/gettext/library.php:422
+msgid "No languages installed"
+msgstr ""
+
+#: units/gettext/library.php:480 units/gettext/library.php:485
+msgid "Preferred language"
+msgstr ""
+
+#: units/gettext/library.php:480
+msgid "saved"
+msgstr ""
+
+#: units/gettext/library.php:485
+msgid "not changed"
+msgstr ""
 
 #: units/groups/groups_access_levels.php:8
 msgid "Group"
@@ -3274,6 +3279,35 @@ msgstr "Gruppnamn:"
 #: units/groups/groups_display_membership.php:6
 msgid "Group membership"
 msgstr "Gruppmedlemskap"
+
+#: units/groups/groups_display_membership.php:15
+#, php-format
+msgid "Owned by %s"
+msgstr ""
+
+#: units/groups/groups_edit_display.php:13
+msgid "Your friends:"
+msgstr ""
+
+#: units/groups/groups_edit_display.php:44
+msgid "Add selected to group"
+msgstr ""
+
+#: units/groups/groups_edit_display.php:53
+msgid "Remove selected from group"
+msgstr ""
+
+#: units/groups/groups_edit_display.php:54
+msgid "Members of this group:"
+msgstr ""
+
+#: units/groups/groups_edit_display.php:72
+msgid "Save this group"
+msgstr ""
+
+#: units/groups/groups_edit_display.php:73
+msgid "Delete this group"
+msgstr ""
 
 #: units/groups/groups_edit_existing.php:6
 msgid "Groups you own"
@@ -3317,11 +3351,11 @@ msgstr ""
 msgid "This is a help file for the Groups functions."
 msgstr "Detta är en hjälpfil för Gruppfunktionerna."
 
-#: units/icons/function_actions.php:56
+#: units/icons/function_actions.php:57
 msgid "Your selected icons were deleted."
 msgstr "Dina valda ikoner raderades."
 
-#: units/icons/function_actions.php:70
+#: units/icons/function_actions.php:71
 msgid ""
 "You have already met your icon quota. You must delete some icons before you "
 "can upload any new ones."
@@ -3329,11 +3363,11 @@ msgstr ""
 "Du har redan nått din ikonkvot. Du måste radera några ikoner först innan du "
 "kan ladda upp nya."
 
-#: units/icons/function_actions.php:78
+#: units/icons/function_actions.php:79
 msgid "Attempting to upload icon file ..."
 msgstr "Försöker ladda upp ikonfil..."
 
-#: units/icons/function_actions.php:85
+#: units/icons/function_actions.php:86
 msgid ""
 "The uploaded icon file was invalid. Please ensure you are using JPEG, GIF or "
 "PNG files."
@@ -3341,7 +3375,7 @@ msgstr ""
 "Den uppladdade ikonfilen var felaktig. Försäkra dig om att du använder dig "
 "av JPEG, GIF eller PNG-filer."
 
-#: units/icons/function_actions.php:117
+#: units/icons/function_actions.php:118
 msgid ""
 "The uploaded icon file was in an image format other than JPEG, GIF or PNG. "
 "These are unsupported at present."
@@ -3349,11 +3383,11 @@ msgstr ""
 "Den uppladdade ikonfilen hade ett annat format än JPEG, GIF eller PNG. Dessa "
 "stöds inte för närvarande."
 
-#: units/icons/function_actions.php:137
+#: units/icons/function_actions.php:138
 msgid "Your icon was uploaded successfully."
 msgstr "Uppladdningen av din ikon lyckades."
 
-#: units/icons/function_actions.php:140
+#: units/icons/function_actions.php:141
 msgid ""
 "An unknown error occurred when saving your icon. If this problem persists, "
 "please let us know and we'll do all we can to fix it quickly."
@@ -3379,13 +3413,47 @@ msgstr ""
 msgid "pictures in total."
 msgstr "bilder totalt."
 
+#: units/icons/function_add_icons.php:26
+msgid "Picture to upload:"
+msgstr ""
+
+#: units/icons/function_add_icons.php:37
+msgid "Icon description:"
+msgstr ""
+
+#: units/icons/function_add_icons.php:45
+msgid "Make this the default icon:"
+msgstr ""
+
+#: units/icons/function_add_icons.php:58
+msgid "Upload new icon"
+msgstr ""
+
 #: units/icons/function_edit_icons.php:21
 msgid "Site pictures"
 msgstr "Sajtbilder"
 
+#: units/icons/function_edit_icons.php:31
+msgid ""
+"Site pictures are small pictures that act as a representative icon "
+"throughout the system."
+msgstr ""
+
+#: units/icons/function_edit_icons.php:55
+msgid "Name:"
+msgstr ""
+
+#: units/icons/function_edit_icons.php:56
+msgid "Default:"
+msgstr ""
+
 #: units/icons/function_edit_icons.php:79
 msgid "No default:"
 msgstr "Ingen standard:"
+
+#: units/icons/function_edit_icons.php:100
+msgid "You don't have any site pictures loaded yet."
+msgstr ""
 
 #: units/invite/invite_actions.php:34
 msgid "They included the following message:"
@@ -3429,26 +3497,6 @@ msgstr ""
 "\n"
 "\t%s\n"
 "\n"
-
-#: units/invite/invite_actions.php:47
-#, php-format
-msgid "Your email address has not been passed onto any third parties,"
-msgstr "Din epostadress har inte skickats vidare till någon tredjepart,"
-
-#: units/invite/invite_actions.php:48
-#, php-format
-msgid ""
-" and will be removed from our system within seven days.\n"
-"\n"
-"Regards,\n"
-"\n"
-"The %s team."
-msgstr ""
-" och kommer att tas bort från vårt system inom sju dagar.\n"
-"\n"
-"Hälsningar,\n"
-"\n"
-"%s teamet."
 
 #: units/invite/invite_actions.php:51
 #, php-format
@@ -3529,23 +3577,6 @@ msgstr ""
 "\n"
 "\t"
 
-#: units/invite/invite_actions.php:142
-#, php-format
-msgid ""
-"Username: %s\n"
-"\tPassword: %s\n"
-"\n"
-"You can log in at any time by visiting %s and entering these details into "
-"the login form.\n"
-"\n"
-msgstr ""
-"Användarnamn: %s\n"
-"\tLösenord: %s\n"
-"\n"
-"Du kan logga in när du vill genom att besöka %s och skriva in detta i "
-"loginformuläret.\n"
-"\n"
-
 #: units/invite/invite_actions.php:160
 #, php-format
 msgid "Verify your %s account password request"
@@ -3560,36 +3591,6 @@ msgstr ""
 "En förfrågan har mottagits för att skapa ett nytt lösenord till ditt konto "
 "hos %s.\n"
 "\n"
-
-#: units/invite/invite_actions.php:162
-#, php-format
-msgid ""
-"To confirm this request and receive a new password by email, please click "
-"the following link:\n"
-"\n"
-"\t%s\n"
-"\n"
-msgstr ""
-"Klicka på denna länk för att bekräfta denna förfrågan och få ett nytt "
-"lösenord via epost:\n"
-"\n"
-"\t%s\n"
-"\n"
-
-#: units/invite/invite_actions.php:163
-#, php-format
-msgid ""
-"Please let us know if you have any further problems.\n"
-"\n"
-"Regards,\n"
-"\n"
-"The %s Team"
-msgstr ""
-"Låt oss få höra om du har fler problem.\n"
-"\n"
-"Hälsningar,\n"
-"\n"
-"%s Teamet"
 
 #: units/invite/invite_actions.php:165
 msgid "Your verification email was sent. Please check your inbox."
@@ -3625,7 +3626,8 @@ msgstr ""
 "Genom att du skickar in formuläret nedan accepterar du dessa villkor. Notera "
 "att du måste vara minst 13 år för att gå med i sajten."
 
-#: units/invite/invite_join.php:52 units/weblogs/weblogs_comments_add.php:48
+#: units/invite/invite_join.php:52 units/invite/join_noinvite.php:32
+#: units/weblogs/weblogs_comments_add.php:48
 msgid "Your name"
 msgstr "Ditt namn"
 
@@ -3660,6 +3662,29 @@ msgstr ""
 "det är möjligt att din är äldre. Om du fortfarande vill gå med i %s kan det "
 "vara värt att ta kontakt med personen som bjöd in dig."
 
+#: units/invite/invite_join.php:102
+#, php-format
+msgid ""
+"For the moment, joining %s requires a specially tailored invite code. If you "
+"know someone who's a member, it may be worth asking them for one."
+msgstr ""
+
+#: units/invite/invite.php:12
+msgid "Their name"
+msgstr ""
+
+#: units/invite/invite.php:18
+msgid "Their email address"
+msgstr ""
+
+#: units/invite/invite.php:25
+msgid "An optional message"
+msgstr ""
+
+#: units/invite/invite.php:33
+msgid "Invite"
+msgstr ""
+
 #: units/invite/join_noinvite.php:9
 #, php-format
 msgid ""
@@ -3680,6 +3705,10 @@ msgstr ""
 "till din epostadress för att validera den. Du måste sedan klicka på den inom "
 "sju dagar för att skapa ditt konto."
 
+#: units/invite/join_noinvite.php:38
+msgid "Your email address"
+msgstr ""
+
 #: units/invite/new_password.php:12
 #, php-format
 msgid ""
@@ -3688,6 +3717,30 @@ msgid ""
 msgstr ""
 "Ett nytt lösenord har skickats till dig vid %s. Du kan använda det på en "
 "gång, ditt gamla har avaktiverats."
+
+#: units/invite/new_password.php:28
+#, php-format
+msgid "Your %s password"
+msgstr ""
+
+#: units/invite/new_password.php:28
+#, php-format
+msgid ""
+"Your %s password has been reset.\n"
+"\n"
+"For your records, your new password is:\n"
+"\n"
+"\t"
+msgstr ""
+
+#: units/invite/new_password.php:37
+msgid ""
+"Your password request code appears to be invalid. Try generating a new one?"
+msgstr ""
+
+#: units/invite/new_password.php:49
+msgid "Sorry, your code was invalid."
+msgstr ""
 
 #: units/invite/password_request.php:5
 #, php-format
@@ -3704,6 +3757,14 @@ msgstr ""
 #: units/invite/password_request.php:6
 msgid "This method reduces the chance of a mistakenly reset password."
 msgstr "Denna metod minskar risken för att lösenordet återställs av misstag."
+
+#: units/invite/password_request.php:22
+msgid "Your username"
+msgstr ""
+
+#: units/invite/password_request.php:26
+msgid "Request new password"
+msgstr ""
 
 #: units/magpie/default_template.php:8
 msgid "Feed Post"
@@ -3754,7 +3815,7 @@ msgid "Added"
 msgstr "Lades till"
 
 #: units/magpie/function_actions.php:23 units/magpie/function_actions.php:87
-#: units/magpie/function_actions.php:101
+#: units/magpie/function_actions.php:107
 msgid "Your feed subscription was successful."
 msgstr "Din prenumeration på feeden lyckades."
 
@@ -3782,7 +3843,11 @@ msgid "Feed subscription failed: this feed subscription already exists."
 msgstr ""
 "Prenumerationen på feeden misslyckades: denna feedprenumeration finns redan."
 
-#: units/magpie/function_actions.php:103
+#: units/magpie/function_actions.php:96
+msgid "Feed subscription failed: SSL feed reading is not enabled."
+msgstr ""
+
+#: units/magpie/function_actions.php:110
 msgid ""
 "Feed subscription failed: feed appears to be invalid. Please check your link "
 "or try later."
@@ -3790,7 +3855,7 @@ msgstr ""
 "Prenumerationen på feeden misslyckades:  feeden verkar vara ogiltig. "
 "Kontrollera länken eller försök senare."
 
-#: units/magpie/function_actions.php:107
+#: units/magpie/function_actions.php:114
 msgid ""
 "Feed subscription failed: could not get feed. Please check your link or try "
 "later."
@@ -3798,7 +3863,11 @@ msgstr ""
 "Prenumerationen på feeden misslyckades: kunde inte hämta feeden. Kontrollera "
 "länken eller försök senare."
 
-#: units/magpie/function_subscriptions.php:11
+#: units/magpie/function_actions.php:116
+msgid "Error message was: "
+msgstr ""
+
+#: units/magpie/function_subscriptions.php:14
 #: units/magpie/function_subscriptions_popular.php:6
 msgid ""
 "Feeds are information streams from other sites. You will often see a link to "
@@ -3811,55 +3880,55 @@ msgstr ""
 "till feed'-rutan längst ner på sidan för att läsa den informationen inom "
 "ditt lärlandskap."
 
-#: units/magpie/function_subscriptions.php:23
+#: units/magpie/function_subscriptions.php:25
 #: units/magpie/function_subscriptions_popular.php:14
 #: units/magpie/function_subscriptions_publish_to_blog.php:22
 msgid "Last updated"
 msgstr "Senast uppdaterad"
 
-#: units/magpie/function_subscriptions.php:24
+#: units/magpie/function_subscriptions.php:26
 #: units/magpie/function_subscriptions_publish_to_blog.php:23
 msgid "Resource name"
 msgstr "Resursnamn"
 
-#: units/magpie/function_subscriptions.php:31
+#: units/magpie/function_subscriptions.php:33
 #: units/magpie/function_subscriptions_publish_to_blog.php:43
 msgid "View content"
 msgstr "Visa innehåll"
 
-#: units/magpie/function_subscriptions.php:34
+#: units/magpie/function_subscriptions.php:41
 #: units/magpie/function_subscriptions_popular.php:27
 #: units/magpie/function_view_post.php:44
 msgid "Are you sure you want to unsubscribe from this feed?"
 msgstr "Är du säker på att du vill sluta prenumerera på denna feed?"
 
-#: units/magpie/function_subscriptions.php:34
+#: units/magpie/function_subscriptions.php:41
 #: units/magpie/function_subscriptions_popular.php:27
 #: units/magpie/function_view_post.php:44
 msgid "Unsubscribe"
 msgstr "Sluta prenumerera"
 
-#: units/magpie/function_subscriptions.php:52
+#: units/magpie/function_subscriptions.php:59
 #: units/magpie/function_subscriptions_publish_to_blog.php:60
 msgid "Update"
 msgstr "Uppdatera"
 
-#: units/magpie/function_subscriptions.php:62
+#: units/magpie/function_subscriptions.php:69
 #: units/magpie/function_subscriptions_publish_to_blog.php:70
 msgid "You are not subscribed to any feeds."
 msgstr "Du prenumererar inte på några feeder."
 
-#: units/magpie/function_subscriptions.php:64
+#: units/magpie/function_subscriptions.php:71
 #: units/magpie/function_subscriptions_publish_to_blog.php:72
 msgid "No feeds were found."
 msgstr "Inga feeder hittades."
 
-#: units/magpie/function_subscriptions.php:69
+#: units/magpie/function_subscriptions.php:76
 #: units/magpie/function_subscriptions_popular.php:47
 msgid "To subscribe to a new feed, enter its address below:"
 msgstr "För att prenumerera på en ny feed, ange adressen nedan:"
 
-#: units/magpie/function_subscriptions.php:75
+#: units/magpie/function_subscriptions.php:82
 #: units/magpie/function_subscriptions_popular.php:29
 #: units/magpie/function_subscriptions_popular.php:53
 #: units/magpie/function_view_post.php:46
@@ -3916,14 +3985,12 @@ msgstr ""
 "blogg?\\nDu bör försäkra dig om att du äger det eller att du har tillstånd "
 "från copyrightsinnehavaren."
 
-#: units/magpie/function_subscriptions_publish_to_blog.php:41
-msgid "Keywords: "
-msgstr "Nyckelord: "
-
-#: units/magpie/function_view.php:29
 #: units/magpie/function_view_individual.php:26
+#: units/magpie/function_view.php:29
 #: units/weblogs/weblogs_all_users_view.php:107
-#: units/weblogs/weblogs_friends_view.php:58 units/weblogs/weblogs_view.php:53
+#: units/weblogs/weblogs_friends_view.php:57
+#: units/weblogs/weblogs_interesting_view.php:52
+#: units/weblogs/weblogs_view.php:53
 msgid "Back"
 msgstr "Bakåt"
 
@@ -3964,6 +4031,10 @@ msgstr "Matchande konton:"
 msgid "Random tags"
 msgstr "Slumpmässiga märkningar"
 
+#: units/search/tags_display_personal.php:40
+msgid "No tags found for this user."
+msgstr "Inga märkningar funna för denna användare."
+
 #: units/search/tags_display.php:7
 msgid ""
 "The following is a selection of keywords used within this site. Click one to "
@@ -3972,27 +4043,23 @@ msgstr ""
 "Följande är ett urval av nyckelord som används på denna sajt. Klicka på en "
 "för att se relaterade användare, webbloggpostningar eller objekt."
 
-#: units/search/tags_display_personal.php:39
-msgid "No tags found for this user."
-msgstr "Inga märkningar funna för denna användare."
-
-#: units/templates/default_template.php:58
+#: units/templates/default_template.php:61
 msgid "Sidebar section holder"
 msgstr "Sidebar sektionshållare"
 
-#: units/templates/default_template.php:59
+#: units/templates/default_template.php:62
 msgid "Contains the sidebar section titles"
 msgstr "Innehåller sidebarssektionstitlarna"
 
-#: units/templates/default_template.php:61
+#: units/templates/default_template.php:64
 msgid "The header"
 msgstr "Sidhuvudet"
 
-#: units/templates/default_template.php:300
+#: units/templates/default_template.php:303
 msgid "adminTable"
 msgstr "adminTabell"
 
-#: units/templates/default_template.php:301
+#: units/templates/default_template.php:304
 msgid ""
 "This table is used to house stats and administration details until a good "
 "CSS solution can be applied."
@@ -4000,26 +4067,26 @@ msgstr ""
 "Denna tabell används för statistik och administrationsdetaljer tills en bra "
 "CSS-lösning kan användas."
 
-#: units/templates/default_template.php:303
-#: units/templates/default_template.php:334
+#: units/templates/default_template.php:306
+#: units/templates/default_template.php:337
 msgid "Column One"
 msgstr "Kolumn Ett"
 
-#: units/templates/default_template.php:304
-#: units/templates/default_template.php:335
+#: units/templates/default_template.php:307
+#: units/templates/default_template.php:338
 msgid "Column Two"
 msgstr "Kolumn Två"
 
-#: units/templates/default_template.php:305
-#: units/templates/default_template.php:336
+#: units/templates/default_template.php:308
+#: units/templates/default_template.php:339
 msgid "Column Three"
 msgstr "Kolumn Tre"
 
-#: units/templates/default_template.php:331
+#: units/templates/default_template.php:334
 msgid "flagContent"
 msgstr "flaggInnehåll"
 
-#: units/templates/default_template.php:332
+#: units/templates/default_template.php:335
 msgid "This holds the flag content function throughout Elgg"
 msgstr "Detta håller flagg-innehållsfunktionen genom Elgg"
 
@@ -4031,14 +4098,6 @@ msgstr "Mallarna har ändrats enligt dina val."
 msgid "No changes made as no area of change where selected!"
 msgstr "Inga ändringar gjorda eftersom inga områden valdes!"
 
-#: units/templates/templates_add.php:50
-msgid "Based on"
-msgstr "Baserad på"
-
-#: units/templates/templates_add.php:55
-msgid "Create Theme"
-msgstr "Skapa Tema"
-
 #: units/templates/templates_view.php:88
 #, fuzzy
 msgid "Change templates"
@@ -4047,6 +4106,14 @@ msgstr "Ändra tema"
 #: units/templates/templates_view.php:89
 msgid "The selected changes will affect:"
 msgstr "De valda ändringarna kommer påverka:"
+
+#: units/templates/templates_view.php:103
+msgid "Your personal space"
+msgstr ""
+
+#: units/templates/templates_view.php:116
+msgid "Community: "
+msgstr ""
 
 #: units/tinymce/tinymce_userdetails_actions.php:15
 msgid "Your editor preferences have been saved"
@@ -4077,23 +4144,6 @@ msgstr ""
 msgid "Enable visual editor: "
 msgstr "Aktivera visuell redigerare: "
 
-#: units/users/content_main_index.php:6
-msgid "View your profile!"
-msgstr "Tittapå din profil!"
-
-#: units/users/content_main_index.php:7
-msgid "Your portfolio is the main way people find out about you. You can"
-msgstr ""
-"Din portfolio är den huvudsakliga vägen som andra hittar till dig. Du kan"
-
-#: units/users/content_main_index.php:8
-msgid "edit your details"
-msgstr "redigera dina detaljer"
-
-#: units/users/content_main_index.php:9
-msgid "and choose exactly what you want to share with whom."
-msgstr "och välja exakt vad du vill dela med wem."
-
 #: units/users/function_default_access_levels.php:6
 msgid "Public"
 msgstr "Publik"
@@ -4112,10 +4162,6 @@ msgstr "(%d loggade på.)"
 msgid "User Statistics"
 msgstr "Användarstatistik"
 
-#: units/users/user_info.php:22
-msgid "None."
-msgstr "Ingen."
-
 #: units/users/userdetails_actions.php:20
 msgid "Your suggested name was too long. Please try something shorter."
 msgstr "Ditt föreslagna namn var för långt. Försökt med något kortare."
@@ -4128,35 +4174,35 @@ msgstr "Epostadress uppdaterad."
 msgid "Your moderation preferences have been changed."
 msgstr "Dina begränsningsinställningar har ändrats."
 
-#: units/users/userdetails_actions.php:54
+#: units/users/userdetails_actions.php:55
 msgid "Public comments and discussion set to 'on'."
 msgstr "Publika kommentarer och diskussioner satta till 'på'."
 
-#: units/users/userdetails_actions.php:57
+#: units/users/userdetails_actions.php:58
 msgid "Public comments and discussion set to 'off'."
 msgstr "Publika kommentarer och diskussioner satta till 'av'."
 
-#: units/users/userdetails_actions.php:65
+#: units/users/userdetails_actions.php:67
 msgid "Email comments and discussion set to 'on'."
 msgstr "Epostkommentarer och diskussioner satta till 'på'."
 
-#: units/users/userdetails_actions.php:68
+#: units/users/userdetails_actions.php:70
 msgid "Email comments and discussion set to 'off'."
 msgstr "Epostkommentarer och diskussioner satta till 'av'."
 
-#: units/users/userdetails_actions.php:76
+#: units/users/userdetails_actions.php:78
 msgid "Email notifications set to 'on'."
 msgstr "Epostavisering satt till 'på'."
 
-#: units/users/userdetails_actions.php:79
+#: units/users/userdetails_actions.php:81
 msgid "Email notifications set to 'off'."
 msgstr "Epostavisering satt till 'av'."
 
-#: units/users/userdetails_actions.php:94
+#: units/users/userdetails_actions.php:96
 msgid "Details were not changed."
 msgstr "Detaljer ändrades inte."
 
-#: units/users/userdetails_actions.php:105
+#: units/users/userdetails_actions.php:107
 msgid ""
 "Password not changed: Your password is either too short or too long. It must "
 "be between 4 and 32 characters in length."
@@ -4164,17 +4210,17 @@ msgstr ""
 "Lösenordet ändrades inte: Lösenordet är antingen för kort eller för långt. "
 "Det måste vara mellan 4 och 32 tecken långt."
 
-#: units/users/userdetails_actions.php:107
+#: units/users/userdetails_actions.php:109
 msgid ""
 "Password not changed: Your password can only consist of letters or numbers."
 msgstr ""
 "Lösenordet ändrades inte: Det kan endast bestå av bokstäver eller nummer."
 
-#: units/users/userdetails_actions.php:109
+#: units/users/userdetails_actions.php:111
 msgid "Your password was updated."
 msgstr "Ditt lösenord uppdaterades."
 
-#: units/users/userdetails_actions.php:116
+#: units/users/userdetails_actions.php:118
 msgid ""
 "Password not changed: The password and its verification string did not match."
 msgstr ""
@@ -4243,15 +4289,15 @@ msgstr ""
 "resurser (som standard kan bara inloggade användare göra detta). Notera att "
 "detta kan göra dig sårbar för spam."
 
-#: units/users/userdetails_edit.php:107 units/users/userdetails_edit.php:114
+#: units/users/userdetails_edit.php:108 units/users/userdetails_edit.php:115
 msgid "Public comments: "
 msgstr "Publika kommentarer: "
 
-#: units/users/userdetails_edit.php:120
+#: units/users/userdetails_edit.php:122
 msgid "Receive email notifications"
 msgstr "Ta emout epostaviseringar"
 
-#: units/users/userdetails_edit.php:121
+#: units/users/userdetails_edit.php:123
 msgid ""
 "Set this to 'yes' if you would like to receive email copies of any messages "
 "you receive. This includes blog comments, notifications when people add you "
@@ -4262,13 +4308,38 @@ msgstr ""
 "inkluderar bloggkommentarer, information när folk lägger till dig som kompis "
 "med mera. Du kan alltid se dessa online på din senaste aktivitetssida."
 
-#: units/weblogs/archives_view.php:19
-msgid "Weblog Archive"
-msgstr "Webbloggsarkiv"
+#: units/users/userdetails_edit.php:138 units/users/userdetails_edit.php:145
+msgid "Receive notifications: "
+msgstr ""
 
-#: units/weblogs/archives_view.php:62 units/weblogs/archives_view_month.php:44
+#: units/users/userdetails_edit.php:151
+msgid "Change your password:"
+msgstr ""
+
+#: units/users/userdetails_edit.php:152
+msgid "Leave this blank if you're happy to leave your password as it is."
+msgstr ""
+
+#: units/users/userdetails_edit.php:166
+msgid "Your password: "
+msgstr ""
+
+#: units/users/userdetails_edit.php:173
+msgid "Again for verification purposes: "
+msgstr ""
+
+#: units/users/user_info.php:22
+msgid "None."
+msgstr "Ingen."
+
+#: units/weblogs/archives_view_month.php:44 units/weblogs/archives_view.php:62
 msgid "There are no weblog posts to archive as yet."
 msgstr "Det finns inga webbloggpostningar att arkivera än?"
+
+#: units/weblogs/archives_view.php:19
+#: units/weblogs/weblogs_user_info_menu.php:46
+msgid "Weblog Archive"
+msgstr "Webbloggsarkiv"
 
 #: units/weblogs/default_template.php:8
 msgid "Weblog Post"
@@ -4322,15 +4393,19 @@ msgstr "En platshållare för webbloggskommentarer."
 msgid "The list of comments themselves"
 msgstr "Kommentarslista"
 
-#: units/weblogs/default_template.php:57
+#: units/weblogs/default_template.php:54
+msgid "The list of page links when there are lots of comments"
+msgstr ""
+
+#: units/weblogs/default_template.php:58
 msgid "Comments"
 msgstr "Kommentarer"
 
-#: units/weblogs/default_template.php:72
+#: units/weblogs/default_template.php:75
 msgid "Individual weblog comment"
 msgstr "Enskilda webbloggskommentarer"
 
-#: units/weblogs/default_template.php:73
+#: units/weblogs/default_template.php:76
 msgid ""
 "A template for each individual weblog comment. (Displayed one after the "
 "other, embedded in the comment placeholder.)"
@@ -4338,21 +4413,25 @@ msgstr ""
 "En mall för varje enskild webbloggskommentar. (Visas en efter en, inbäddad i "
 "kommentarsplatshållaren.)"
 
-#: units/weblogs/default_template.php:75
+#: units/weblogs/default_template.php:78
 msgid "Post body"
 msgstr "Postkropp"
 
-#: units/weblogs/default_template.php:76
+#: units/weblogs/default_template.php:79
 msgid "The name of the person making the comment"
 msgstr "Namnet på personen som kommenterar"
 
-#: units/weblogs/default_template.php:77
+#: units/weblogs/default_template.php:80
 msgid "When the comment was posted"
 msgstr "När postades kommentaren"
 
-#: units/weblogs/default_template.php:78
+#: units/weblogs/default_template.php:81
 msgid "The usericon of the person making the comment, if available"
 msgstr "Ikonen för personen som kommenterar, om tillgänglig"
+
+#: units/weblogs/default_template.php:82
+msgid "A permalink to the comment"
+msgstr ""
 
 #: units/weblogs/display_interesting_post_form.php:21
 msgid "Stop keeping track of this post"
@@ -4385,6 +4464,15 @@ msgstr ""
 #: units/weblogs/display_interesting_post_form.php:27
 msgid "Mark interesting"
 msgstr "Markera som intressant"
+
+#: units/weblogs/function_rss_publish.php:35 _weblog/view_post.php:39
+msgid "Weblog"
+msgstr "Webblogg"
+
+#: units/weblogs/function_rss_publish.php:42 _weblog/rss2.php:78
+#, php-format
+msgid "The weblog for %s, hosted on %s."
+msgstr "Webbloggen för %s, hostad på %s."
 
 #: units/weblogs/function_search.php:5
 msgid "Weblog posts by"
@@ -4470,28 +4558,28 @@ msgstr ""
 "I would never do anything myself if I could afford to hire another person "
 "who could do it for me."
 
-#: units/weblogs/weblogs_actions.php:25
+#: units/weblogs/weblogs_actions.php:31
 msgid "Your post has been added to your weblog."
 msgstr "Din postning har laggts till till din webblogg."
 
-#: units/weblogs/weblogs_actions.php:54
+#: units/weblogs/weblogs_actions.php:66
 msgid "The weblog post has been modified."
 msgstr "Webbloggpostningen har modifierats."
 
-#: units/weblogs/weblogs_actions.php:68
+#: units/weblogs/weblogs_actions.php:81
 msgid "This weblog post has now been added to your 'interesting' list."
 msgstr ""
 "Denna webbloggpostning har nu laggts till till din 'intressant'-lista."
 
-#: units/weblogs/weblogs_actions.php:79
+#: units/weblogs/weblogs_actions.php:92
 msgid "You are no longer monitoring this weblog post."
 msgstr "Du följer inte denna webbloggpostning längre."
 
-#: units/weblogs/weblogs_actions.php:97
+#: units/weblogs/weblogs_actions.php:112
 msgid "The selected weblog post was deleted."
 msgstr "Den valda webbloggpostningen raderades."
 
-#: units/weblogs/weblogs_actions.php:99
+#: units/weblogs/weblogs_actions.php:115
 msgid ""
 "You do not appear to have permission to delete this weblog post. It was not "
 "deleted."
@@ -4499,15 +4587,15 @@ msgstr ""
 "Du verkar inte ha rätt att ta bort denna webbloggpostning. Den togs inte "
 "bort."
 
-#: units/weblogs/weblogs_actions.php:140
+#: units/weblogs/weblogs_actions.php:161
 msgid "Your comment has been added."
 msgstr "Din kommentar lades till."
 
-#: units/weblogs/weblogs_actions.php:144
+#: units/weblogs/weblogs_actions.php:166
 msgid "Your comment could not be posted. The system thought it was spam."
 msgstr "Din kommentar kunde inte postas. Systemet ansåg att det var spam."
 
-#: units/weblogs/weblogs_actions.php:162
+#: units/weblogs/weblogs_actions.php:186
 msgid "Your comment was deleted."
 msgstr "Ta bort filter"
 
@@ -4589,13 +4677,17 @@ msgstr ""
 msgid "Post"
 msgstr "Posta"
 
-#: units/weblogs/weblogs_posts_add.php:78
+#: units/weblogs/weblogs_posts_add.php:84
 msgid ""
 "You must be logged in to post a new weblog entry. You may do so using the "
 "login pane to the right of the screen."
 msgstr ""
 "Du måste vara inloggad för att posta en ny webblogg. Du kan göra det genom "
 "att använda loginrutan till höger på skärmen."
+
+#: units/weblogs/weblogs_posts_edit.php:13
+msgid "Access Denied"
+msgstr ""
 
 #: units/weblogs/weblogs_posts_edit.php:16
 msgid "Edit a post"
@@ -4605,22 +4697,34 @@ msgstr "Redigera en postning"
 msgid "Save Post"
 msgstr "Spara Postning"
 
-#: units/weblogs/weblogs_posts_view.php:86
+#: units/weblogs/weblogs_posts_view.php:94
 msgid "More"
 msgstr "Mer"
 
-#: units/weblogs/weblogs_posts_view.php:87
+#: units/weblogs/weblogs_posts_view.php:95
 msgid "Keywords:"
 msgstr "Nyckelord:"
 
-#: units/weblogs/weblogs_posts_view.php:88
+#: units/weblogs/weblogs_posts_view.php:96
 msgid "comment(s)"
 msgstr "kommentar(er)"
 
-#: units/weblogs/weblogs_posts_view.php:140
+#: units/weblogs/weblogs_posts_view.php:112
+msgid "Are you sure you want to permanently delete this weblog post?"
+msgstr ""
+
+#: units/weblogs/weblogs_posts_view.php:155
+msgid "Page: "
+msgstr ""
+
+#: units/weblogs/weblogs_posts_view.php:172
 msgid "Are you sure you want to permanently delete this weblog comment?"
 msgstr ""
 "Är du säker på att du vill ta bort denna webbloggskommentar permanent?"
+
+#: units/weblogs/weblogs_posts_view.php:230
+msgid "You must be logged in to post a comment."
+msgstr ""
 
 #: units/weblogs/weblogs_user_info_menu.php:10
 msgid "Recent Activity"
@@ -4630,15 +4734,301 @@ msgstr "Ny aktivitet"
 msgid "View your activity"
 msgstr "Titta på din aktivitet"
 
+#: units/weblogs/weblogs_user_info_menu.php:36
+msgid "Personal blog"
+msgstr ""
+
+#: units/weblogs/weblogs_user_info_menu.php:41
+msgid "Community blog"
+msgstr ""
+
+#: units/weblogs/weblogs_user_info_menu.php:47 _weblog/friends.php:15
+msgid "Friends blog"
+msgstr "Vänners bloggar"
+
 #: units/xml/main.php:78
 msgid "XML error: "
 msgstr "XML fel: "
 
+#: _weblog/archive_month.php:15 _weblog/archive.php:15
+msgid "Blog Archives"
+msgstr "BloggArkiv"
+
+#: _weblog/everyone.php:15
+msgid "All blogs"
+msgstr "Alla bloggar"
+
+#: _weblog/everyone.php:19
+msgid "You can filter this page to certain types of posts:"
+msgstr "Du kan filtrera denna sida till vissa typer av postningar:"
+
+#: _weblog/everyone.php:21
+msgid "Personal blog posts"
+msgstr "Personliga bloggpostningar"
+
+#: _weblog/everyone.php:22
+msgid "Community blog posts"
+msgstr "Gemenskapsbloggpostningar"
+
+#: _weblog/everyone.php:23
+msgid "Posts with comments"
+msgstr "Posta med kommentarer"
+
+#: _weblog/everyone.php:24
+msgid "Posts with no comments"
+msgstr "Posta utan kommentarer"
+
+#: _weblog/rss2.php:51
+#, php-format
+msgid "Weblog items tagged with %s"
+msgstr "Webbloggsföremål markerade med %s"
+
+#: _weblog/rss2.php:54
+msgid "Weblog items"
+msgstr "Webbloggsföremål"
+
+#: _weblog/rss2.php:61
+msgid "All users"
+msgstr "Alla användare"
+
+#: _weblog/rss2.php:74
+#, php-format
+msgid "The most recent weblog posts on %s."
+msgstr "De nyaste webbloggarna på %s."
+
+#: _weblog/view_post.php:28
+msgid "Access denied or post not found"
+msgstr "Åtkomst nekad eller postning ej funnen"
+
+#: _weblog/view_post.php:31
+msgid ""
+"Either this blog post doesn't exist or you don't currently have access "
+"privileges to view it."
+msgstr ""
+"Antingen finns inte denna blogg eller så har du för närvarnde inte rättighet "
+"att se den."
+
 #~ msgid "Activity on your weblog posts"
 #~ msgstr "Aktivitet på dina webbloggpostningar"
 
+#~ msgid ""
+#~ "A server error that affects your login session was detected. Please login "
+#~ "again or restart your browser."
+#~ msgstr ""
+#~ "Ett serverfel som berör din loginsession inträffade. Vänligen logga in igen "
+#~ "eller starta om din webbläsare."
+
+#, php-format
+#~ msgid ""
+#~ "Password: %s\n"
+#~ "\n"
+#~ "You can log in at any time by visiting %s and entering these details into "
+#~ "the login form.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Lösenord: %s\n"
+#~ "\n"
+#~ "Du kan logga in när som helst genom att besöka %s och skriva in detta i "
+#~ "loginformuläret.\n"
+#~ "\n"
+
+#, php-format
+#~ msgid ""
+#~ "We hope you enjoy using the system.\n"
+#~ "\n"
+#~ "Regards,\n"
+#~ "\n"
+#~ "The %s Team"
+#~ msgstr ""
+#~ "Vi hoppas att du kommer att trivas med systemet.\n"
+#~ "\n"
+#~ "Hälsningar,\n"
+#~ "\n"
+#~ "%s Teamet"
+
+#, php-format
+#~ msgid "%d weblog posts, %d comments"
+#~ msgstr "%d webbloggpostningar, %d kommentarer"
+
+#, php-format
+#~ msgid "%d files (%d bytes)"
+#~ msgstr "%d filer (%d bytes)"
+
+#, php-format
+#~ msgid "%d bytes"
+#~ msgstr "%d bytes"
+
+#, php-format
+#~ msgid "%d users in total."
+#~ msgstr "Totalt %d användare."
+
+#, php-format
+#~ msgid ""
+#~ "%s\n"
+#~ "\n"
+#~ "To view all community members, click here:\n"
+#~ "\n"
+#~ "\t%s\n"
+#~ "\n"
+#~ "Regards,\n"
+#~ "\n"
+#~ "The %s team."
+#~ msgstr ""
+#~ "%s\n"
+#~ "\n"
+#~ "Klicka här för att se alla gemenskapsmedlemmar:\n"
+#~ "\n"
+#~ "\t%s\n"
+#~ "\n"
+#~ "Hälsningar,\n"
+#~ "\n"
+#~ "%s teamet."
+
+#, php-format
+#~ msgid ""
+#~ "%s\n"
+#~ "\n"
+#~ "To view all membership requests and approve or deny this user, click here:\n"
+#~ "\n"
+#~ "\t%s\n"
+#~ "\n"
+#~ "Regards,\n"
+#~ "\n"
+#~ "The %s team."
+#~ msgstr ""
+#~ "%s\n"
+#~ "\n"
+#~ "Klicka här för att se alla medlemsskapsansökningar och för att godkänna "
+#~ "eller neka denna användare:\n"
+#~ "\n"
+#~ "\t%s\n"
+#~ "\n"
+#~ "Hälsningar,\n"
+#~ "\n"
+#~ "%s teamet."
+
+#, php-format
+#~ msgid ""
+#~ "%s\n"
+#~ "\n"
+#~ "To view all your friends, click here:\n"
+#~ "\n"
+#~ "\t%s\n"
+#~ "\n"
+#~ "Regards,\n"
+#~ "\n"
+#~ "The %s team."
+#~ msgstr ""
+#~ "%s\n"
+#~ "\n"
+#~ "Klicka här för att se alla dina vännar:\n"
+#~ "\n"
+#~ "\t%s\n"
+#~ "\n"
+#~ "Hälsningar,\n"
+#~ "\n"
+#~ "%s teamet."
+
+#, php-format
+#~ msgid ""
+#~ "%s\n"
+#~ "\n"
+#~ "To view all your friends requests and approve or deny this user, click "
+#~ "here:\n"
+#~ "\n"
+#~ "\t%s\n"
+#~ "\n"
+#~ "Regards,\n"
+#~ "\n"
+#~ "The %s team."
+#~ msgstr ""
+#~ "%s\n"
+#~ "\n"
+#~ "Klicka här för att se alla dina vänners förfrågningar och för att godkänna "
+#~ "eller neka denna användare:\n"
+#~ "\n"
+#~ "\t%s\n"
+#~ "\n"
+#~ "Hälsningar,\n"
+#~ "\n"
+#~ "%s teamet."
+
+#~ msgid "Your email address has not been passed onto any third parties,"
+#~ msgstr "Din epostadress har inte skickats vidare till någon tredjepart,"
+
+#, php-format
+#~ msgid ""
+#~ " and will be removed from our system within seven days.\n"
+#~ "\n"
+#~ "Regards,\n"
+#~ "\n"
+#~ "The %s team."
+#~ msgstr ""
+#~ " och kommer att tas bort från vårt system inom sju dagar.\n"
+#~ "\n"
+#~ "Hälsningar,\n"
+#~ "\n"
+#~ "%s teamet."
+
+#, php-format
+#~ msgid ""
+#~ "Username: %s\n"
+#~ "\tPassword: %s\n"
+#~ "\n"
+#~ "You can log in at any time by visiting %s and entering these details into "
+#~ "the login form.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Användarnamn: %s\n"
+#~ "\tLösenord: %s\n"
+#~ "\n"
+#~ "Du kan logga in när du vill genom att besöka %s och skriva in detta i "
+#~ "loginformuläret.\n"
+#~ "\n"
+
+#, php-format
+#~ msgid ""
+#~ "To confirm this request and receive a new password by email, please click "
+#~ "the following link:\n"
+#~ "\n"
+#~ "\t%s\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Klicka på denna länk för att bekräfta denna förfrågan och få ett nytt "
+#~ "lösenord via epost:\n"
+#~ "\n"
+#~ "\t%s\n"
+#~ "\n"
+
+#, php-format
+#~ msgid ""
+#~ "Please let us know if you have any further problems.\n"
+#~ "\n"
+#~ "Regards,\n"
+#~ "\n"
+#~ "The %s Team"
+#~ msgstr ""
+#~ "Låt oss få höra om du har fler problem.\n"
+#~ "\n"
+#~ "Hälsningar,\n"
+#~ "\n"
+#~ "%s Teamet"
+
 #~ msgid "Matching users:"
 #~ msgstr "Matchande användare:"
+
+#~ msgid "View your profile!"
+#~ msgstr "Tittapå din profil!"
+
+#~ msgid "Your portfolio is the main way people find out about you. You can"
+#~ msgstr ""
+#~ "Din portfolio är den huvudsakliga vägen som andra hittar till dig. Du kan"
+
+#~ msgid "edit your details"
+#~ msgstr "redigera dina detaljer"
+
+#~ msgid "and choose exactly what you want to share with whom."
+#~ msgstr "och välja exakt vad du vill dela med wem."
 
 #~ msgid "Receive email messages"
 #~ msgstr "Ta emot epostmeddelanden"

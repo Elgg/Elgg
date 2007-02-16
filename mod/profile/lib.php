@@ -30,9 +30,6 @@ function profile_pagesetup() {
                                            'html' => '<a href="'.$CFG->wwwroot.'_icons/?context=profile&amp;profile_id='.$pgowner.'">'
                                            . __gettext("Change site picture") . '</a>');
             }
-            $PAGE->menu_sub[] = array( 'name' => 'profile:help',
-                                       'html' => '<a href="'.$CFG->wwwroot.'help/profile_help.php">'
-                                       . __gettext("Page help") . '</a>');
         }
     }
     
@@ -105,14 +102,14 @@ function profile_widget_display($widget) {
     $user_type = user_info("user_type",$widget->owner);
     
     foreach($data['profile:details'] as $field_row) {
-        if ($field_row[1] == $profile_field && (!isset($field_row[4]) || $field_row[4] == $user_type)) {
+        if ($field_row->internal_name == $profile_field && (!isset($field_row->user_type) || $field_row->user_type == $user_type)) {
             $field = $field_row;
         }
     }
     
-    $title = $field[0];
-    $value = get_record_sql("select * from ".$CFG->prefix."profile_data where owner = ".$widget->owner." and name = " . $db->qstr($field[1]));
-    $body = display_output_field(array($value->value,$field[2],$field[1],$field[0],$value->ident));
+    $title = $field->name;
+    $value = get_record_sql("select * from ".$CFG->prefix."profile_data where owner = ".$widget->owner." and name = " . $db->qstr($field->internal_name));
+    $body = display_output_field(array($value->value,$field->field_type,$field->internal_name,$field->name,$value->ident));
     
     return "<h2>$title</h2>$body";
     
@@ -142,14 +139,14 @@ function profile_widget_edit($widget) {
         
     foreach($data['profile:details'] as $field_row) {
         
-        if (!isset($field_row[4]) || $field_row[4] == $user_type) {
-            if ($field_row[1] == $profile_field ) {
+        if (!isset($field_row->user_type) || $field_row->user_type == $user_type) {
+            if ($field_row->internal_name == $profile_field ) {
                 $selected = "selected=\"selected\"";
             } else {
                 $selected = "";
             }
             
-            $body .= "<option value=\"" . $field_row[1] . "\">" . $field_row[0] . "</option>\n";
+            $body .= "<option value=\"" . $field_row->internal_name . "\">" . $field_row->name . "</option>\n";
         }    
     }
     
@@ -158,6 +155,16 @@ function profile_widget_edit($widget) {
     return $body;
     
 }
-
+    function profile_page_owner() {
+        if ($profile_name = optional_param('profile_name')) {
+            if ($profile_id = user_info_username('ident', $profile_name)) {
+                return $profile_id;
+            }
+        }
+        if ($profile_id = optional_param("profile_id",0,PARAM_INT)) {
+            return $profile_id;
+        }
+        
+    }
 
 ?>

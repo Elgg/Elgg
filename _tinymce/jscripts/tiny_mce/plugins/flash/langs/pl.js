@@ -9,6 +9,6 @@ desc : 'Wstaw/edytuj film flash',
 file : 'Plik flash (.swf)',
 size : 'Rozmiar',
 list : 'Pliki flash',
-props : 'W≥a∂ciwo∂ci flash',
-general : 'G≥Ûwne'
+props : 'W≈Ça≈õciwo≈õci flash',
+general : 'G≈Ç√≥wne'
 });

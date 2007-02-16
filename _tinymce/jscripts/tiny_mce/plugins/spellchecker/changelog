@@ -1,3 +1,13 @@
+Version 1.0.3.1 (2007-01-10)
+	Added fix for Gecko browsers starting to produce spans instead of strong/em etc after a spellcheck.
+Version 1.0.3 (2007-01-09)
+	Fixed bug where spellchecker was stealing focus in explorer.
+	Fixed bug where IE produced two words on a spellcheck after chars inside the word was removed.
+	Fixed so that curl isn't required for the Google speller class if you use PHP 4.3.0+.
+	Fixed issue with version not being displayed in about dialog.
+	Fixed bug where focus on windows where lost if they executed a cleanup.
+	Fixed typo on the spellchecker_report_misspellings option, added missing s.
+	Fixed issue with progress dialog not being presented correctly. Contributed by Mike Engelhart.
 Version 1.0.2 (2006-08-02)
 	Added new spellchecker_report_mispellings option, contributed by Jeremy B.
 	Fixed various regexp bugs and issues. Some where contributed by Jeremy B.

@@ -1,6 +1,6 @@
-// RU lang variables cp1251
+// RU lang variables UTF-8
 
 tinyMCE.addToLang('',{
-fullscreen_title : 'Полноэкранный режим',
-fullscreen_desc : 'Включить полноэкранный режим'
+fullscreen_title : 'РџРѕР»РЅРѕСЌРєСЂР°РЅРЅС‹Р№ СЂРµР¶РёРј',
+fullscreen_desc : 'Р’РєР»СЋС‡РёС‚СЊ РїРѕР»РЅРѕСЌРєСЂР°РЅРЅС‹Р№ СЂРµР¶РёРј'
 });

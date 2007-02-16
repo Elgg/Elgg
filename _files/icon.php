@@ -14,6 +14,9 @@ global $CFG;
 
 // If an ID number for the file has been specified ...
 $id = optional_param('id',0,PARAM_INT);
+$w = optional_param('w',90,PARAM_INT);
+$h = optional_param('h',90,PARAM_INT);
+
 if (!empty($id)) {
     // ... and the file exists ...
     if ($file = get_record('files','ident',$id)) {
@@ -23,7 +26,9 @@ if (!empty($id)) {
             require_once($CFG->dirroot . 'lib/iconslib.php');
             
             // images most likely don't want compressing, and this will kill the Vary header
-            @apache_setenv('no-gzip', '1');
+            if (function_exists('apache_setenv')) { // apparently @ isn't enough to make php ignore this failing
+                @apache_setenv('no-gzip', '1');
+            }
             
             if ($file->access == 'PUBLIC') {
                 header("Pragma: public");
@@ -38,7 +43,9 @@ if (!empty($id)) {
             if ($mimetype == "image/jpeg" || $mimetype == "image/png" || $mimetype == "image/gif") {
                 // file is an image
                 
-                $phpthumbconfig['w'] = 90;
+                $phpthumbconfig = array();
+                $phpthumbconfig['w'] = $w;
+                $phpthumbconfig['h'] = $h;
                 
                 $filelocation = file_cache($file);
                 spit_phpthumb_image($filelocation, $phpthumbconfig);

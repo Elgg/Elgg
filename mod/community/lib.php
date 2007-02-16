@@ -5,6 +5,7 @@ function community_pagesetup() {
     global $profile_id;
     global $PAGE;
     global $CFG;
+    global $USER;
 
     $page_owner = $profile_id;
     
@@ -15,7 +16,7 @@ function community_pagesetup() {
         if (defined("context") && context == "profile") {
 
             if (run("permissions:check", "profile")) {
-            
+                
                 $PAGE->menu_sub[] = array( 'name' => 'profile:edit', 
                                        'html' => '<a href="'.$CFG->wwwroot.'profile/edit.php?profile_id='.$page_owner.'">'
                                        . __gettext("Edit this profile") . '</a>');
@@ -23,7 +24,7 @@ function community_pagesetup() {
                 $PAGE->menu_sub[] = array( 'name' => 'community:pic',
                                            'html' => a_href("{$CFG->wwwroot}_icons/?context=profile&amp;profile_id=$page_owner" ,
                                                               __gettext("Community site picture")));
-    
+                
                 $PAGE->menu_sub[] = array( 'name' => 'community:edit',
                                            'html' => a_href("{$CFG->wwwroot}_userdetails/?context=profile&amp;profile_id=$page_owner" ,
                                                              __gettext("Edit community details")));
@@ -32,9 +33,11 @@ function community_pagesetup() {
             
         }
         if (defined("context") && (context == "profile" || context == "network")) {
-            $PAGE->menu_sub[] = array( 'name' => 'community:requests',
+            if (run("permissions:check", "profile")) {
+                $PAGE->menu_sub[] = array( 'name' => 'community:requests',
                                            'html' => a_href("{$CFG->wwwroot}_communities/requests.php?profile_id=$page_owner",
                                                              __gettext("View membership requests")));
+            }
         }
         
         /*$PAGE->menu_sub[] = array( 'name' => 'community:members',
@@ -49,11 +52,11 @@ function community_pagesetup() {
             $PAGE->menu_sub[] = array( 'name' => 'community',
                                        'html' => a_href("{$CFG->wwwroot}_communities/?owner=$page_owner" ,
                                                           __gettext("Communities"))); 
-                            
+            if ($CFG->community_create_flag == "" || user_flag_get($CFG->community_create_flag, $USER->ident)) {
             $PAGE->menu_sub[] = array( 'name' => 'community:owned',
                                        'html' => a_href("{$CFG->wwwroot}_communities/owned.php?owner=$page_owner" ,
                                                           __gettext("Owned Communities")));
-
+            }
         }
         
     }

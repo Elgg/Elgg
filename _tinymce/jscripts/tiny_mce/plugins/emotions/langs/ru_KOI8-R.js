@@ -3,20 +3,20 @@
 tinyMCE.addToLang('emotions',{
 title : 'Вставить смайлик',
 desc : 'Смайлики',
-cool : 'Cool',
+cool : 'Круто',
 cry : 'Плач',
-embarassed : 'Embarassed',
-foot_in_mouth : 'Foot in mouth',
-frown : 'Нахмуренность',
+embarassed : 'Смущенный',
+foot_in_mouth : 'Косноязычный',
+frown : 'Нахмуреный',
 innocent : 'Святой',
 kiss : 'Поцелуй',
 laughing : 'Смех',
-money_mouth : 'Money mouth',
+money_mouth : 'Дельный',
 sealed : 'Заклеенный',
 smile : 'Улыбка',
 surprised : 'Сюрприз',
 tongue_out : 'Высунутый язык',
-undecided : 'Undecided',
-wink : 'Wink',
-yell : 'Yell'
+undecided : 'Нерешительный',
+wink : 'Подмигнуть',
+yell : 'Вопль'
 });

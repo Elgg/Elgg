@@ -226,11 +226,13 @@ function setAttrib(elm, attrib, value) {
 		if (attrib == "width") {
 			attrib = "style.width";
 			value = value + "px";
+			value = value.replace(/%px/g, 'px');
 		}
 
 		if (attrib == "height") {
 			attrib = "style.height";
 			value = value + "px";
+			value = value.replace(/%px/g, 'px');
 		}
 
 		if (attrib == "class")
@@ -271,6 +273,11 @@ function insertAction() {
 	var src = formObj.src.value;
 	var onmouseoversrc = formObj.onmouseoversrc.value;
 	var onmouseoutsrc = formObj.onmouseoutsrc.value;
+
+	if (!AutoValidator.validate(formObj)) {
+		alert(tinyMCE.getLang('lang_invalid_data'));
+		return false;
+	}
 
 	if (tinyMCE.getParam("accessibility_warnings")) {
 		if (formObj.alt.value == "") {
@@ -476,22 +483,12 @@ function showPreviewImage(src, start) {
 	if (src == "")
 		elm.innerHTML = "";
 	else
-		elm.innerHTML = '<img src="' + src + '" border="0" />'
-
-	getImageData(src);
-}
-
-function getImageData(src) {
-	preloadImg = new Image();
-
-	tinyMCE.addEvent(preloadImg, "load", updateImageData);
-	tinyMCE.addEvent(preloadImg, "error", resetImageData);
-
-	preloadImg.src = src;
+		elm.innerHTML = '<img id="previewImg" src="' + src + '" border="0" onload="updateImageData();" onerror="resetImageData();" />'
 }
 
 function updateImageData() {
 	var formObj = document.forms[0];
+	var preloadImg = document.getElementById('previewImg');
 
 	if (formObj.width.value == "")
 		formObj.width.value = preloadImg.width;

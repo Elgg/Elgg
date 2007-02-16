@@ -575,7 +575,7 @@ function count_records_sql($sql, $values=null) {
         return 0;
     }
 
-    return $rs->fields[0];
+    return reset($rs->fields);
 }
 
 
@@ -685,7 +685,7 @@ function get_record_sql($sql, $values=null, $expectmultiple=false, $nolimit=fals
     } else {                          // Error: found more than one record
         notify('Error:  Turn off debugging to hide this error.');
         notify($sql . $limit);
-        if ($records = $rs->GetAssoc(true)) {
+        if ($records = elgg_GetAssoc($rs)) {
             notify('Found more than one record in get_record_sql !');
             print_object($records);
         } else {
@@ -892,7 +892,7 @@ function get_recordset_sql($sql,$values=null) {
  */
 function recordset_to_array($rs) {
     if ($rs && $rs->RecordCount() > 0) {
-        if ($records = $rs->GetAssoc(true)) {
+        if ($records = elgg_GetAssoc($rs)) {
             foreach ($records as $key => $record) {
                 $objects[$key] = (object) $record;
             }
@@ -999,7 +999,7 @@ function get_records_sql($sql,$values=null) {
 function recordset_to_menu($rs) {
     if ($rs && $rs->RecordCount() > 0) {
         while (!$rs->EOF) {
-            $menu[$rs->fields[0]] = $rs->fields[1];
+            $menu[reset($rs->fields)] = $rs->fields[1];
             $rs->MoveNext();
         }
         return $menu;
@@ -1156,7 +1156,7 @@ function get_field_sql($sql, $values=null) {
     }
 
     if ( $rs->RecordCount() == 1 ) {
-        return $rs->fields[0];
+        return reset($rs->fields);
     } else {
         return false;
     }
@@ -1386,7 +1386,7 @@ function insert_record($table, $dataobject, $returnid=true, $primarykey='ident')
         if ( ($rs = $db->Execute('SELECT '. $primarykey .' FROM '. $CFG->prefix . $table .' WHERE oid = '. $id))
              && ($rs->RecordCount() == 1) ) {
             trigger_error("Retrieved $primarykey from oid on table $table because we could not find the sequence.");
-            return (integer)$rs->fields[0];
+            return (integer) reset($rs->fields);
         } 
         trigger_error('Failed to retrieve primary key after insert: SELECT '. $primarykey .
                       ' FROM '. $CFG->prefix . $table .' WHERE oid = '. $id);
@@ -1676,11 +1676,39 @@ function check_db_compat() {
         return false;
     }
 
-    if (intval($rs->fields[0]) <= 3) {
+    if (intval(reset($rs->fields)) <= 3) {
         return false;
     }
 
     return true;
 }
+
+function &elgg_GetAssoc(&$recordset) {
+	// adaptation of adodb's GetAssoc(), which in order to have the key as a named field in the data, 
+	// you have to get data back in an array with both named and numeric keys, because GetAssoc for some 
+	// unknown reason always strips out the first data element to use as the key. 0 comes before the first 
+	// named field in the array, and the name is preserved.
+	// with this function, we can just get all data back as pure associative arrays, and halve the memory used by db calls.
+	// 
+	// ps. left out all the stuff in GetAssoc we (afaik) don't use :)
+	
+	$results = array();
+	while (!$recordset->EOF) {
+		$keys = array_keys($recordset->fields);
+		$sliced_array = array();
+
+		foreach($keys as $key) {
+			$sliced_array[$key] = $recordset->fields[$key];
+		}
+		
+		$results[trim(reset($recordset->fields))] = $sliced_array;
+		$recordset->MoveNext();
+	}
+	
+	$ref =& $results; # workaround accelerator incompat with PHP 4.4 :(
+	return $ref; 
+}
+
+
 
 ?>

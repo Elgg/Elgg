@@ -1,0 +1,11 @@
+
+--This line, and those below, will be ignored--
+
+M    spellchecker/editor_plugin.js
+M    spellchecker/langs/en.js
+M    spellchecker/editor_plugin_src.js
+M    spellchecker/changelog
+M    spellchecker/tinyspell.php
+M    spellchecker/config.php
+M    spellchecker/classes/TinyPspellShell.class.php
+M    spellchecker/classes/TinyGoogleSpell.class.php

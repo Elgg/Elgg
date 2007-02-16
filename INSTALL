@@ -1,4 +1,4 @@
-Elgg version 0.67 installation instructions
+Elgg version 0.7 installation instructions
 
 Ben Werdmuller <ben@curverider.co.uk>
 12 December 2006
@@ -8,7 +8,8 @@ Ben Werdmuller <ben@curverider.co.uk>
 
 1.1 Requirements
 
-Please read LICENSE.
+Please read LICENSE and README. If you're upgrading rather than making
+a fresh install, also read the UPGRADE file.
 
 Elgg currently requires the Apache web server with mod_rewrite
 installed and the ability to send emails, plus PHP 4.3+ and MySQL 
@@ -27,8 +28,14 @@ on your server and compiled into PHP.  If this is not found, Elgg
 will revert to English.
 
 If you have any problems installing, please consider joining
-http://elgg.net/ and joining the Elgg Installation Support
-community at http://elgg.net/support/ .
+http://elgg.org/ and viewing the installation support community there.
+
+Note that if URLs like /username/weblog/ are not working for you, this
+is an issue with mod_rewrite, and is an error in your Apache installation
+rather than Elgg. A mod_rewrite primer (written by a third party) is
+available here:
+
+http://www.kuro5hin.org/story/2003/7/31/2335/08552#setup
 
 
 1.2 Recommendations
@@ -83,11 +90,15 @@ If you want to use the Elgg administration panel to change templates etc,
 you will also need to run the following command from the root of your Elgg
 installation:
 
-    chmod 777 _templates/Default_Template
+    chmod 777 mod/template/templates/Default_Template
 
 
 3. SETTING UP ELGG
 
+NB: you can ignore everything from here on in if you want to use the
+visual installer. To do this, just call up the web directory you used
+to install Elgg, and follow the instructions on-screen. The direct
+URL for the installer is http://[your elgg install location]/_elggadmin.
 
 3.1 Edit config.php
 

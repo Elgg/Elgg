@@ -1,0 +1,13 @@
+<h1>Welcome {{name}}</h1>
+<p>
+    This is {{sitename}}, a learning landscape. Why not check out <a href="{{url}}_weblog/everyone.php">what people are saying</a> right now?
+</p>
+<p>
+    <a href="{{url}}search/tags.php">Find others</a> with similar interests and goals.
+</p>
+<p>
+    Here are some example users: {{randomusers}}
+</p>
+<p>
+    If you like what you see, why not <a href="{{url}}_invite/register.php">register for an account</a>?
+</p>

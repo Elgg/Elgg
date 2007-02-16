@@ -15,6 +15,13 @@ function template_pagesetup() {
                                                           __gettext("Change theme")));  
         }
     }
+    
+    $CFG->templates->variables_substitute['templatesroot'][] = "templates_root";
+}
+
+function templates_root($vars) {
+    global $CFG;
+    return $CFG->templatesroot;
 }
 
 ?>

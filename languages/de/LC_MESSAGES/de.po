@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 0.6\n"
-"POT-Creation-Date: 2006-09-22 14:05+0100\n"
-"PO-Revision-Date: 2006-11-06 18:55+0000\n"
-"Last-Translator: ariepl <andreas.riepl@exabis.at>\n"
+"POT-Creation-Date: 2007-01-06 02:52+0000\n"
+"PO-Revision-Date: 2007-01-03 09:55+0000\n"
+"Last-Translator: Michi <michaela.bell@jku.at>\n"
 "Language-Team: German <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -22,6 +22,7 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Language: Deutsch\n"
 "X-Poedit-Country: DEUTSCHLAND\n"
+"X-Rosetta-Export-Date: 2007-01-08 17:18+0000\n"
 
 #: _activity/index.php:24
 msgid "Recent activity"
@@ -83,7 +84,7 @@ msgid "No activity during this time period."
 msgstr "Keine Aktivitäten während dieser Periode."
 
 #: _admin/antispam.php:17 _admin/users.php:17 _admin/users.php:20
-#: lib/templates.php:466
+#: lib/templates.php:471
 msgid "Manage users"
 msgstr "Benutzer verwalten"
 
@@ -95,7 +96,7 @@ msgstr "Spam blockieren"
 msgid "Content flags"
 msgstr "bedenkliche Inhalte"
 
-#: _admin/index.php:17 _admin/index.php:20 lib/templates.php:426
+#: _admin/index.php:17 _admin/index.php:20 lib/templates.php:429
 msgid "Administration"
 msgstr "Administration"
 
@@ -103,8 +104,31 @@ msgstr "Administration"
 msgid "Add multiple users"
 msgstr "mehrere User hinzufügen"
 
-#: _communities/index.php:22 mod/community/lib.php:51 mod/community/lib.php:61
-#: units/communities/communities_edit_wrapper.php:5
+#: auth/ldap/lib.php:113 lms/join.php:48 units/invite/invite_actions.php:97
+msgid ""
+"Error! Your username must contain letters and numbers only, cannot be blank, "
+"and must be between 3 and 12 characters in length."
+msgstr ""
+"Fehler! Ihr Username darf nur Buchstaben und Nummern enthalten, darf nicht "
+"leer sein und muss zwischen 3 und 12 Zeichen lang sein."
+
+#: auth/ldap/lib.php:118 units/communities/communities_actions.php:26
+#, php-format
+msgid ""
+"The username %s is already taken by another user. You will need to pick a "
+"different one."
+msgstr ""
+"Der Anmeldename %s ist bereits vergeben. Bitte geben Sie einen anderen an."
+
+#: auth/ldap/lib.php:139
+#, php-format
+msgid ""
+"User addition %d failed: Unknown reason, please contact you system "
+"administrator."
+msgstr ""
+
+#: _communities/index.php:22 mod/browser/index.php:83 mod/community/lib.php:53
+#: mod/community/lib.php:63 units/communities/communities_edit_wrapper.php:5
 msgid "Communities"
 msgstr "Communities"
 
@@ -113,7 +137,7 @@ msgstr "Communities"
 msgid "Members"
 msgstr "Mitglieder"
 
-#: _communities/owned.php:22 mod/community/lib.php:55
+#: _communities/owned.php:22 mod/community/lib.php:57
 msgid "Owned Communities"
 msgstr "abonnierte Communities"
 
@@ -121,207 +145,6 @@ msgstr "abonnierte Communities"
 #: units/communities/communities_membership_requests.php:10
 msgid "Membership requests"
 msgstr "Mitgliedschaftsanfragen"
-
-#: _files/edit_file.php:19
-msgid "Edit File"
-msgstr "Datei bearbeiten"
-
-#: _files/edit_folder.php:19
-msgid "Edit Folder"
-msgstr "Ordner bearbeiten"
-
-#: _files/index.php:19 units/files/files_user_info_menu.php:13
-#: units/files/function_rss_publish.php:35 units/files/profile_files.php:9
-msgid "Files"
-msgstr "Dateien"
-
-#: _files/rss2.php:25
-#, php-format
-msgid "Files tagged with %s"
-msgstr "Dateien, die mit %s gekennzeichnet sind"
-
-#: _files/rss2.php:31 units/files/function_rss_publish.php:42
-#, php-format
-msgid "Files for %s, hosted on %s."
-msgstr "Dateien von %s, gehostet auf %s."
-
-#: _friends/friendsof.php:21 units/friends/friends_of_edit_wrapper.php:5
-msgid "Friends who have linked to you"
-msgstr "Freund/inn/en, die zu Ihnen linken"
-
-#: _friends/index.php:21 units/friends/friends_edit_wrapper.php:5
-msgid "Friends I have linked to"
-msgstr "Freund/inn/en, zu denen ich linke"
-
-#: _friends/requests.php:22 mod/friend/lib.php:38
-#: units/friends/user_friendship_requests.php:11
-msgid "Friendship requests"
-msgstr "Freundschaftsanfragen"
-
-#: _groups/index.php:23
-msgid "Access Controls"
-msgstr "Zugriffskontrolle"
-
-#: _icons/index.php:20
-msgid "Manage user icons"
-msgstr "User Icons verwalten"
-
-#: _invite/forgotten_password.php:14
-msgid "Generate a New Password"
-msgstr "neues Passwort erzeugen"
-
-#: _invite/index.php:18
-msgid "Invite a Friend"
-msgstr "Freund einladen"
-
-#: _invite/join.php:12 _invite/register.php:11
-#, php-format
-msgid "Join %s"
-msgstr "an %s teilnehmen"
-
-#: _invite/new_password.php:11
-#, php-format
-msgid "Get new %s password"
-msgstr "Neues %s Passwort zusenden"
-
-#: _rss/blog.php:15
-msgid "Publish feeds to blog"
-msgstr "Feeds auf Blog veröffentlichen"
-
-#: _rss/index.php:12 _rss/subscriptions.php:15 mod/newsclient/lib.php:29
-#: units/magpie/menu_sub.php:14
-msgid "Feeds"
-msgstr "Feeds"
-
-#: _rss/individual.php:13
-msgid "Feed detail"
-msgstr "Feed Detail"
-
-#: _rss/popular.php:12 units/magpie/menu_sub.php:31
-msgid "Popular feeds"
-msgstr "Beliebte Feeds"
-
-#: _rss/styles.php:10
-msgid "RSS Management"
-msgstr "RSS Verwaltung"
-
-#: _rss/styles.php:11
-msgid "To add this feed to your resources page, click here."
-msgstr "Um diesen Feed Ihren Ressourcen hinzuzufügen, klicken Sie hier."
-
-#: _rss/styles.php:12
-msgid ""
-"To add this feed to an external RSS aggregator, click the link that "
-"corresponds to your aggregator:"
-msgstr ""
-"Um diesen Feed einem externen RSS Aggregator hinzuzufügen, klicken Sie auf "
-"den Link Ihres Aggregators."
-
-#: _rss/styles.php:13
-msgid "Summary"
-msgstr "Zusammenfassung"
-
-#: _rss/styles.php:14
-msgid "This is an RSS feed for "
-msgstr "Dies ist ein RSS Feed für "
-
-#: _rss/styles.php:15
-msgid "Didn't mean to come here? Click to exit!"
-msgstr "Sie wollten nicht hierhin? Klicken Sie, um die Seite zu verlassen!"
-
-#: _templates/edit.php:15
-msgid "Template Edit"
-msgstr "Design editieren"
-
-#: _templates/index.php:15
-msgid "Select / Create Themes"
-msgstr "Design auswählen / erstellen"
-
-#: _templates/preview.php:13
-msgid "Template Preview"
-msgstr "Designvorschau"
-
-#: _userdetails/index.php:18 lib/templates.php:445
-msgid "Edit user details"
-msgstr "Userdetails bearbeiten"
-
-#: _weblog/archive.php:15 _weblog/archive_month.php:15
-msgid "Blog Archives"
-msgstr "Blog Archive"
-
-#: _weblog/edit.php:24 _weblog/index.php:15
-#: units/communities/communities_membership_requests.php:33
-#: units/friends/user_friendship_requests.php:34
-#: units/weblogs/weblogs_user_info_menu.php:29
-msgid "Blog"
-msgstr "Blog"
-
-#: _weblog/everyone.php:15
-msgid "All blogs"
-msgstr "Alle Blogs"
-
-#: _weblog/everyone.php:19
-msgid "You can filter this page to certain types of posts:"
-msgstr "Sie können diese Seite nach verschiedenen Beitragstypen filtern:"
-
-#: _weblog/everyone.php:21
-msgid "Personal blog posts"
-msgstr "Private Blogbeiträge"
-
-#: _weblog/everyone.php:22
-msgid "Community blog posts"
-msgstr "Community-Blogbeiträge"
-
-#: _weblog/everyone.php:23
-msgid "Posts with comments"
-msgstr "Beiträge mit Kommentaren"
-
-#: _weblog/everyone.php:24
-msgid "Posts with no comments"
-msgstr "Beiträge ohne Kommentare"
-
-#: _weblog/friends.php:15
-msgid "Friends blog"
-msgstr "Freund/innen Blog"
-
-#: _weblog/rss2.php:51
-#, php-format
-msgid "Weblog items tagged with %s"
-msgstr "Bloginhalte, die mit %s gekennzeichnet sind"
-
-#: _weblog/rss2.php:54
-msgid "Weblog items"
-msgstr "Bloginhalte"
-
-#: _weblog/rss2.php:61
-msgid "All users"
-msgstr "Alle User"
-
-#: _weblog/rss2.php:74
-#, php-format
-msgid "The most recent weblog posts on %s."
-msgstr "Die aktuellsten Blogbeiträge auf %s."
-
-#: _weblog/rss2.php:78 units/weblogs/function_rss_publish.php:42
-#, php-format
-msgid "The weblog for %s, hosted on %s."
-msgstr "Das Blog von %s, gehostet auf %s."
-
-#: _weblog/view_post.php:28
-msgid "Access denied or post not found"
-msgstr "Zugang verweigert oder Beitrag nicht gefunden"
-
-#: _weblog/view_post.php:31
-msgid ""
-"Either this blog post doesn't exist or you don't currently have access "
-"privileges to view it."
-msgstr ""
-"Entweder existiert dieser Blogbeitrag nicht oder Sie haben nicht die nötigen "
-"Berechtigungen, um ihn zu betrachten."
-
-#: _weblog/view_post.php:39 units/weblogs/function_rss_publish.php:35
-msgid "Weblog"
-msgstr "Weblog"
 
 #: content/about.php:10 content/about.php:13
 #, php-format
@@ -351,6 +174,7 @@ msgstr ""
 
 #: content/mainindex/content_loggedout.php:7
 #: content/mainindex/content_main_index.php:7 lib/templates.php:46
+#: lib/templates.php:1170 lib/templates.php:1172
 msgid "Welcome"
 msgstr "Herzlich Willkommen"
 
@@ -387,7 +211,6 @@ msgstr ""
 
 #: content/mainindex/content_loggedout.php:40
 #: content/mainindex/content_main_index.php:41
-#: units/users/content_main_index.php:27
 msgid "Latest news"
 msgstr "Neuigkeiten"
 
@@ -443,6 +266,46 @@ msgstr "Legen Sie Ihr eigenes %s an"
 msgid "%s Terms &amp; Conditions"
 msgstr "%s Nutzungsbedingungen"
 
+#: _files/edit_file.php:19
+msgid "Edit File"
+msgstr "Datei bearbeiten"
+
+#: _files/edit_folder.php:19
+msgid "Edit Folder"
+msgstr "Ordner bearbeiten"
+
+#: _files/index.php:19 units/files/files_user_info_menu.php:13
+#: units/files/function_rss_publish.php:35 units/files/profile_files.php:9
+msgid "Files"
+msgstr "Dateien"
+
+#: _files/rss2.php:25
+#, php-format
+msgid "Files tagged with %s"
+msgstr "Dateien, die mit %s gekennzeichnet sind"
+
+#: _files/rss2.php:31 units/files/function_rss_publish.php:42
+#, php-format
+msgid "Files for %s, hosted on %s."
+msgstr "Dateien von %s, gehostet auf %s."
+
+#: _friends/friendsof.php:21 units/friends/friends_of_edit_wrapper.php:5
+msgid "Friends who have linked to you"
+msgstr "Freund/inn/en, die zu Ihnen linken"
+
+#: _friends/index.php:21 units/friends/friends_edit_wrapper.php:5
+msgid "Friends I have linked to"
+msgstr "Freund/inn/en, zu denen ich linke"
+
+#: _friends/requests.php:22 mod/friend/lib.php:38
+#: units/friends/user_friendship_requests.php:11
+msgid "Friendship requests"
+msgstr "Freundschaftsanfragen"
+
+#: _groups/index.php:23
+msgid "Access Controls"
+msgstr "Zugriffskontrolle"
+
 #: help/blogs_help.php:14
 msgid "'Your blog' help"
 msgstr "Ihr Blog"
@@ -472,42 +335,65 @@ msgstr "Ihr Netzwerk"
 msgid "'Your Profile' help"
 msgstr "Ihr Profil"
 
-#: home.php:15 index.php:15 index2.php:15
+#: home.php:15 index2.php:15
 msgid "Main Index"
 msgstr "Hauptseite"
 
-#: lib/datalib.php:44
+#: _icons/index.php:20
+msgid "Manage user icons"
+msgstr "User Icons verwalten"
+
+#: _invite/forgotten_password.php:14
+msgid "Generate a New Password"
+msgstr "neues Passwort erzeugen"
+
+#: _invite/index.php:18
+msgid "Invite a Friend"
+msgstr "Freund einladen"
+
+#: _invite/join.php:12 _invite/register.php:11
+#, php-format
+msgid "Join %s"
+msgstr "an %s teilnehmen"
+
+#: _invite/new_password.php:11
+#, php-format
+msgid "Get new %s password"
+msgstr "Neues %s Passwort zusenden"
+
+#: lib/datalib.php:45
 msgid "Success"
 msgstr "Erfolg"
 
-#: lib/datalib.php:49 lib/elgglib.php:3036
+#: lib/datalib.php:50 lib/elgglib.php:3083
 msgid "Error"
 msgstr "Fehler"
 
-#: lib/db/mysql.php:216
+#: lib/db/mysql.php:215
 msgid "Publishing RSS"
 msgstr "RSS veröffentlichen"
 
-#: lib/db/mysql.php:221 lib/db/postgres7.php:184
+#: lib/db/mysql.php:220 lib/db/postgres7.php:183
 #, php-format
 msgid "Publishing RSS for user %d"
 msgstr "Veröffentliche RSS für Benutzer %d"
 
-#: lib/db/mysql.php:233 lib/db/postgres7.php:196
+#: lib/db/mysql.php:232 lib/db/postgres7.php:195
 msgid "Adjusting file repository information"
 msgstr "Anpassen der Dateiverwaltungsinformation"
 
-#: lib/db/mysql.php:242 lib/db/mysql.php:252 lib/db/postgres7.php:205
-#: lib/db/postgres7.php:215
+#: lib/db/mysql.php:241 lib/db/mysql.php:251 lib/db/postgres7.php:204
+#: lib/db/postgres7.php:214
 #, php-format
 msgid "Updating file %d: %s"
 msgstr "Aktualisiere Datei %d: %s"
 
-#: lib/dbsetup.php:75
+#: lib/dbsetup.php:77
 msgid "Need to upgrade database"
 msgstr "Datenbank-Upgrade erforderlich"
 
 #: lib/displaylib.php:188 units/display/function_log_on_pane.php:16
+#: units/invite/join_noinvite.php:42
 msgid "Register"
 msgstr "Registrieren"
 
@@ -517,7 +403,7 @@ msgid "Log On"
 msgstr "Einloggen"
 
 #: lib/displaylib.php:202 units/admin/admin_main.php:81
-#: units/admin/admin_users.php:28 units/admin/admin_users_add.php:21
+#: units/admin/admin_users_add.php:20 units/admin/admin_users.php:28
 #: units/display/function_log_on_pane.php:34
 msgid "Username"
 msgstr "Username"
@@ -542,101 +428,93 @@ msgstr "Login merken"
 msgid "Forgotten password"
 msgstr "Kennwort vergessen"
 
-#: lib/displaylib.php:273 units/display/function_output_field_display.php:39
+#: lib/displaylib.php:273
 msgid "Add User"
 msgstr "User hinzufügen"
 
 #: lib/displaylib.php:273 lib/displaylib.php:282
-#: units/display/function_output_field_display.php:39
-#: units/display/function_output_field_display.php:48
 msgid "Send Message"
 msgstr "Nachricht senden"
 
-#: lib/displaylib.php:282 units/display/function_output_field_display.php:48
+#: lib/displaylib.php:282
 msgid "Add Buddy"
 msgstr "Freund hinzufügen"
 
-#: lib/elgglib.php:327
-msgid ""
-"A server error that affects your login session was detected. Please login "
-"again or restart your browser."
-msgstr ""
-"Es trat ein Serverfehler auf, der Ihre aktuelle Sitzung betrifft. Bitte "
-"loggen Sie sich neu ein oder starten Sie Ihren Browser neu."
-
-#: lib/elgglib.php:459 lib/elgglib.php:509 lib/uploadlib.php:661
+#: lib/elgglib.php:506 lib/elgglib.php:556 lib/uploadlib.php:661
 msgid "Administrator"
 msgstr "Administrator"
 
-#: lib/elgglib.php:467
+#: lib/elgglib.php:514
 msgid "Do not reply"
 msgstr "Nicht beantworten"
 
-#: lib/elgglib.php:714
+#: lib/elgglib.php:761
 msgid "GB"
 msgstr "GB"
 
-#: lib/elgglib.php:715
+#: lib/elgglib.php:762
 msgid "MB"
 msgstr "MB"
 
-#: lib/elgglib.php:716
+#: lib/elgglib.php:763
 msgid "KB"
 msgstr "KB"
 
-#: lib/elgglib.php:717
+#: lib/elgglib.php:764
 msgid "bytes"
 msgstr "Bytes"
 
-#: lib/elgglib.php:1716
+#: lib/elgglib.php:1763
 msgid "Close this window"
 msgstr "Fenster schliessen"
 
-#: lib/elgglib.php:1753 lib/elgglib.php:1803
+#: lib/elgglib.php:1800 lib/elgglib.php:1850
 msgid "Choose"
 msgstr "Auswählen"
 
-#: lib/elgglib.php:2033
+#: lib/elgglib.php:2080
 msgid "Elgg auto-format"
 msgstr "Elgg Auto-Format"
 
-#: lib/elgglib.php:2034
+#: lib/elgglib.php:2081
 msgid "HTML format"
 msgstr "HTML Format"
 
-#: lib/elgglib.php:2035
+#: lib/elgglib.php:2082
 msgid "Plain text format"
 msgstr "Reines Text Format"
 
-#: lib/elgglib.php:2036
+#: lib/elgglib.php:2083
 msgid "Markdown format"
 msgstr ""
 
-#: lib/elgglib.php:2605 lib/elgglib.php:3161
+#: lib/elgglib.php:2652 lib/elgglib.php:3210
 msgid "Continue"
 msgstr "Weiter"
 
-#: lib/elgglib.php:3122 units/admin/admin_userdetails.php:58
-#: units/admin/admin_userdetails.php:74
+#: lib/elgglib.php:3169 units/admin/admin_userdetails.php:58
+#: units/admin/admin_userdetails.php:74 units/icons/function_add_icons.php:48
 #: units/tinymce/tinymce_userdetails_edit.php:21
 #: units/tinymce/tinymce_userdetails_edit.php:28
-#: units/users/userdetails_edit.php:108 units/users/userdetails_edit.php:115
+#: units/users/userdetails_edit.php:109 units/users/userdetails_edit.php:116
+#: units/users/userdetails_edit.php:139 units/users/userdetails_edit.php:146
 msgid "Yes"
 msgstr "Ja"
 
-#: lib/elgglib.php:3124 units/admin/admin_userdetails.php:58
-#: units/admin/admin_userdetails.php:74
+#: lib/elgglib.php:3171 units/admin/admin_userdetails.php:58
+#: units/admin/admin_userdetails.php:74 units/icons/function_add_icons.php:49
 #: units/tinymce/tinymce_userdetails_edit.php:21
 #: units/tinymce/tinymce_userdetails_edit.php:28
-#: units/users/userdetails_edit.php:108 units/users/userdetails_edit.php:115
+#: units/users/userdetails_edit.php:109 units/users/userdetails_edit.php:116
+#: units/users/userdetails_edit.php:139 units/users/userdetails_edit.php:146
 msgid "No"
 msgstr "Nein"
 
-#: lib/elgglib.php:3415 lib/elgglib.php:3443
+#: lib/elgglib.php:3468 lib/elgglib.php:3496
 msgid "You have been banned from the system!"
 msgstr "Sie wurden vom System gebannt!"
 
-#: lib/elgglib.php:3473
+#: lib/elgglib.php:3526
 msgid ""
 "Sorry, but your IP number seems to have changed from when you first logged "
 "in.  This security feature prevents crackers stealing your identity while "
@@ -648,25 +526,25 @@ msgstr ""
 "Identität stehlen, während Sie eingeloggt sind. Normale User sollten diese "
 "Meldung nicht angezeigt bekommen - bitte kontaktieren Sie den Administrator."
 
-#: lib/elgglib.php:3502
+#: lib/elgglib.php:3556
 msgid "The system will remember you and automatically log you in next time."
 msgstr ""
 "Das System speichert Ihre Daten und meldet Sie beim nächsten Login "
 "automatisch an."
 
-#: lib/elgglib.php:4199 units/users/function_default_access_levels.php:7
+#: lib/elgglib.php:4253 units/users/function_default_access_levels.php:7
 msgid "Logged in users"
 msgstr "eingeloggte User"
 
-#: lib/elgglib.php:4201 units/users/function_default_access_levels.php:5
+#: lib/elgglib.php:4255 units/users/function_default_access_levels.php:5
 msgid "Private"
 msgstr "Privat"
 
-#: lib/elgglib.php:4203
+#: lib/elgglib.php:4257
 msgid "Restricted"
 msgstr "Eingeschränkt"
 
-#: lib/elgglib.php:4257 units/weblogs/function_html_activate_urls.php:46
+#: lib/elgglib.php:4311
 msgid "Click to view link"
 msgstr "Klicken, um Link anzuzeigen"
 
@@ -720,11 +598,11 @@ msgstr "Main body"
 msgid "Sidebar"
 msgstr "Seitenleiste"
 
-#: lib/templates.php:55 units/templates/default_template.php:36
+#: lib/templates.php:58 units/templates/default_template.php:39
 msgid "Content holder"
 msgstr "Content holder"
 
-#: lib/templates.php:56 units/templates/default_template.php:37
+#: lib/templates.php:59 units/templates/default_template.php:40
 msgid ""
 "Contains the main content for a page (as opposed to the sidebar or the "
 "title)."
@@ -732,67 +610,67 @@ msgstr ""
 "Contains the main content for a page (as opposed to the sidebar or the "
 "title)."
 
-#: lib/templates.php:58 lib/templates.php:110
-#: units/templates/default_template.php:39
+#: lib/templates.php:61 lib/templates.php:113
+#: units/templates/default_template.php:42
 msgid "The title"
 msgstr "Titel"
 
-#: lib/templates.php:59 units/templates/default_template.php:40
+#: lib/templates.php:62 units/templates/default_template.php:43
 msgid "The page submenu"
 msgstr "Untermenü der Seite"
 
-#: lib/templates.php:60 units/templates/default_template.php:41
-#: units/templates/default_template.php:62
+#: lib/templates.php:63 units/templates/default_template.php:44
+#: units/templates/default_template.php:65
 msgid "The body of the page"
 msgstr "The body of the page"
 
-#: lib/templates.php:77 units/templates/default_template.php:76
+#: lib/templates.php:80 units/templates/default_template.php:79
 msgid "Owner box"
 msgstr "Besitzerbox"
 
-#: lib/templates.php:78 units/templates/default_template.php:77
+#: lib/templates.php:81 units/templates/default_template.php:80
 msgid "A box containing a description of the owner of the current profile."
 msgstr "Diese Box enthält eine Beschreibung des Profilbesitzers."
 
-#: lib/templates.php:80 units/templates/default_template.php:79
+#: lib/templates.php:83 units/templates/default_template.php:82
 msgid "The user's name"
 msgstr "User Name"
 
-#: lib/templates.php:81 units/templates/default_template.php:80
+#: lib/templates.php:84 units/templates/default_template.php:83
 msgid "The URL of the user's profile page, including terminating slash"
 msgstr "The URL of the user's profile page, including terminating slash"
 
-#: lib/templates.php:82 units/templates/default_template.php:81
+#: lib/templates.php:85 units/templates/default_template.php:84
 msgid "The user's icon, if it exists"
 msgstr "User Icon, wenn vorhanden"
 
-#: lib/templates.php:83 units/templates/default_template.php:82
+#: lib/templates.php:86 units/templates/default_template.php:85
 msgid "A short blurb about the user"
 msgstr "Eine Kurzbeschreibung des Users"
 
-#: lib/templates.php:84 units/templates/default_template.php:83
+#: lib/templates.php:87 units/templates/default_template.php:86
 msgid "Links to friend / unfriend a user"
 msgstr "Links to friend / unfriend a user"
 
-#: lib/templates.php:85 units/templates/default_template.php:84
+#: lib/templates.php:88 units/templates/default_template.php:87
 msgid "Links to any lms hosts the user is attached to"
 msgstr "Verlinkt alle LMS Hosts denen der Benutzer hinzugefügt ist"
 
-#: lib/templates.php:89 search/personaltags.php:16
-#: units/templates/default_template.php:89
+#: lib/templates.php:92 search/personaltags.php:26
+#: units/templates/default_template.php:92
 msgid "Tags"
 msgstr "Stichwörter"
 
-#: lib/templates.php:90 search/index.php:96
-#: units/templates/default_template.php:90
+#: lib/templates.php:93 search/index.php:96
+#: units/templates/default_template.php:93
 msgid "Resources"
 msgstr "Ressourcen"
 
-#: lib/templates.php:107
+#: lib/templates.php:110
 msgid "Information Box"
 msgstr "Informationsbox"
 
-#: lib/templates.php:108
+#: lib/templates.php:111
 msgid ""
 "A box containing a caption and some text, used extensively throughout the "
 "site. For example, the 'friends' box and most page bodies are info boxes. Of "
@@ -804,54 +682,54 @@ msgstr ""
 "course, you can alter this template however you wish - it doesn't need to be "
 "an actual box."
 
-#: lib/templates.php:111
+#: lib/templates.php:114
 msgid "The contents of the box"
 msgstr "Inhalt der Box"
 
-#: lib/templates.php:130 units/templates/default_template.php:110
+#: lib/templates.php:133 units/templates/default_template.php:113
 msgid "System message shell"
 msgstr "System message shell"
 
-#: lib/templates.php:131 units/templates/default_template.php:111
+#: lib/templates.php:134 units/templates/default_template.php:114
 msgid "A list of system messages will be placed within the message shell."
 msgstr "A list of system messages will be placed within the message shell."
 
-#: lib/templates.php:133 units/templates/default_template.php:113
+#: lib/templates.php:136 units/templates/default_template.php:116
 msgid "The messages"
 msgstr "Nachrichten"
 
-#: lib/templates.php:145 units/templates/default_template.php:125
+#: lib/templates.php:148 units/templates/default_template.php:128
 msgid "Individual system messages"
 msgstr "Individuelle Systemnachricht"
 
-#: lib/templates.php:146 units/templates/default_template.php:126
+#: lib/templates.php:149 units/templates/default_template.php:129
 msgid "Each individual system message."
 msgstr "jede persönliche Systemnachricht."
 
-#: lib/templates.php:148 units/templates/default_template.php:128
+#: lib/templates.php:151 units/templates/default_template.php:131
 msgid "The system message"
 msgstr "Sytemnachricht"
 
-#: lib/templates.php:163 units/templates/default_template.php:143
+#: lib/templates.php:166 units/templates/default_template.php:146
 msgid "Main menu shell"
 msgstr "Main menu shell"
 
-#: lib/templates.php:164 units/templates/default_template.php:144
+#: lib/templates.php:167 units/templates/default_template.php:147
 msgid "A list of main menu items will be placed within the menubar shell."
 msgstr "Eine Liste der Menüpunkte wird in der Menüleiste angezeigt."
 
-#: lib/templates.php:166 lib/templates.php:212 lib/templates.php:244
-#: units/templates/default_template.php:146
-#: units/templates/default_template.php:192
-#: units/templates/default_template.php:226
+#: lib/templates.php:169 lib/templates.php:215 lib/templates.php:247
+#: units/templates/default_template.php:149
+#: units/templates/default_template.php:195
+#: units/templates/default_template.php:229
 msgid "The menu items"
 msgstr "Menüpunkte"
 
-#: lib/templates.php:177 units/templates/default_template.php:157
+#: lib/templates.php:180 units/templates/default_template.php:160
 msgid "Individual main menu item"
 msgstr "Individueller Hauptmenüpunkt"
 
-#: lib/templates.php:178 units/templates/default_template.php:158
+#: lib/templates.php:181 units/templates/default_template.php:161
 msgid ""
 "This is the template for each individual main menu item. A series of these "
 "is placed within the menubar shell template."
@@ -859,45 +737,45 @@ msgstr ""
 "This is the template for each individual main menu item. A series of these "
 "is placed within the menubar shell template."
 
-#: lib/templates.php:180 lib/templates.php:196 lib/templates.php:228
-#: lib/templates.php:261 units/templates/default_template.php:160
-#: units/templates/default_template.php:176
-#: units/templates/default_template.php:210
-#: units/templates/default_template.php:243
+#: lib/templates.php:183 lib/templates.php:199 lib/templates.php:231
+#: lib/templates.php:264 units/templates/default_template.php:163
+#: units/templates/default_template.php:179
+#: units/templates/default_template.php:213
+#: units/templates/default_template.php:246
 msgid "The URL of the menu item"
 msgstr "URL des Menüpunktes"
 
-#: lib/templates.php:181 lib/templates.php:197 lib/templates.php:229
-#: lib/templates.php:262 units/templates/default_template.php:161
-#: units/templates/default_template.php:177
-#: units/templates/default_template.php:211
-#: units/templates/default_template.php:244
+#: lib/templates.php:184 lib/templates.php:200 lib/templates.php:232
+#: lib/templates.php:265 units/templates/default_template.php:164
+#: units/templates/default_template.php:180
+#: units/templates/default_template.php:214
+#: units/templates/default_template.php:247
 msgid "The menu item's name"
 msgstr "Name des Menüpunkts"
 
-#: lib/templates.php:193 units/templates/default_template.php:173
+#: lib/templates.php:196 units/templates/default_template.php:176
 msgid "Selected individual main menu item"
 msgstr "Ausgewählter individueller Hauptmenüpunkt"
 
-#: lib/templates.php:194 units/templates/default_template.php:174
+#: lib/templates.php:197 units/templates/default_template.php:177
 msgid ""
 "This is the template for an individual main menu item if it is selected."
 msgstr ""
 "This is the template for an individual main menu item if it is selected."
 
-#: lib/templates.php:209 units/templates/default_template.php:189
+#: lib/templates.php:212 units/templates/default_template.php:192
 msgid "Sub-menubar shell"
 msgstr "Sub-menubar shell"
 
-#: lib/templates.php:210 units/templates/default_template.php:190
+#: lib/templates.php:213 units/templates/default_template.php:193
 msgid "A list of sub-menu items will be placed within the menubar shell."
 msgstr "A list of sub-menu items will be placed within the menubar shell."
 
-#: lib/templates.php:225 units/templates/default_template.php:207
+#: lib/templates.php:228 units/templates/default_template.php:210
 msgid "Individual sub-menu item"
 msgstr "Individueller Untermenüpunkt"
 
-#: lib/templates.php:226 units/templates/default_template.php:208
+#: lib/templates.php:229 units/templates/default_template.php:211
 msgid ""
 "This is the template for each individual sub-menu item. A series of these is "
 "placed within the sub-menubar shell template."
@@ -905,11 +783,11 @@ msgstr ""
 "This is the template for each individual sub-menu item. A series of these is "
 "placed within the sub-menubar shell template."
 
-#: lib/templates.php:241 units/templates/default_template.php:223
+#: lib/templates.php:244 units/templates/default_template.php:226
 msgid "Status menubar shell"
 msgstr "Status menubar shell"
 
-#: lib/templates.php:242 units/templates/default_template.php:224
+#: lib/templates.php:245 units/templates/default_template.php:227
 msgid ""
 "A list of statusbar menu items will be placed within the status menubar "
 "shell."
@@ -917,11 +795,11 @@ msgstr ""
 "A list of statusbar menu items will be placed within the status menubar "
 "shell."
 
-#: lib/templates.php:258 units/templates/default_template.php:240
+#: lib/templates.php:261 units/templates/default_template.php:243
 msgid "Individual statusbar menu item"
 msgstr "Individueller Menüpunkt der Statusleiste"
 
-#: lib/templates.php:259 units/templates/default_template.php:241
+#: lib/templates.php:262 units/templates/default_template.php:244
 msgid ""
 "This is the template for each individual statusbar menu item. A series of "
 "these is placed within the status menubar shell template."
@@ -929,11 +807,11 @@ msgstr ""
 "This is the template for each individual statusbar menu item. A series of "
 "these is placed within the status menubar shell template."
 
-#: lib/templates.php:274 units/templates/default_template.php:256
+#: lib/templates.php:277 units/templates/default_template.php:259
 msgid "Data input box (two columns)"
 msgstr "Data input box (two columns)"
 
-#: lib/templates.php:275 units/templates/default_template.php:257
+#: lib/templates.php:278 units/templates/default_template.php:260
 msgid ""
 "This is mostly used whenever some input is taken from the user. For example, "
 "each of the fields in the profile edit screen is a data input box."
@@ -941,41 +819,41 @@ msgstr ""
 "This is mostly used whenever some input is taken from the user. For example, "
 "each of the fields in the profile edit screen is a data input box."
 
-#: lib/templates.php:277 units/templates/default_template.php:259
+#: lib/templates.php:280 units/templates/default_template.php:262
 msgid "The name for the data we're inputting"
 msgstr "The name for the data we're inputting"
 
-#: lib/templates.php:278 units/templates/default_template.php:260
+#: lib/templates.php:281 units/templates/default_template.php:263
 msgid "The first item of data"
 msgstr "The first item of data"
 
-#: lib/templates.php:279 units/templates/default_template.php:261
+#: lib/templates.php:282 units/templates/default_template.php:264
 msgid "The second item of data"
 msgstr "The second item of data"
 
-#: lib/templates.php:306 units/templates/default_template.php:279
+#: lib/templates.php:309 units/templates/default_template.php:282
 msgid "Data input box (one column)"
 msgstr "Data input box (one column)"
 
-#: lib/templates.php:307 units/templates/default_template.php:280
+#: lib/templates.php:310 units/templates/default_template.php:283
 msgid "A single-column version of the data box."
 msgstr "Eine einspaltige Version der Datenbox."
 
-#: lib/templates.php:309 units/templates/default_template.php:282
+#: lib/templates.php:312 units/templates/default_template.php:285
 msgid "The name of the data we're inputting"
 msgstr "The name of the data we're inputting"
 
-#: lib/templates.php:310 lib/templates.php:338
-#: units/templates/default_template.php:283
-#: units/templates/default_template.php:356
+#: lib/templates.php:313 lib/templates.php:341
+#: units/templates/default_template.php:286
+#: units/templates/default_template.php:359
 msgid "The data itself"
 msgstr "The data itself"
 
-#: lib/templates.php:334 units/templates/default_template.php:352
+#: lib/templates.php:337 units/templates/default_template.php:355
 msgid "Data input box (vertical)"
 msgstr "Data input box (vertical)"
 
-#: lib/templates.php:335 units/templates/default_template.php:353
+#: lib/templates.php:338 units/templates/default_template.php:356
 msgid ""
 "A slightly different version of the data box, used on this edit page amongst "
 "other places."
@@ -983,59 +861,63 @@ msgstr ""
 "A slightly different version of the data box, used on this edit page amongst "
 "other places."
 
-#: lib/templates.php:337 units/templates/default_template.php:355
+#: lib/templates.php:340 units/templates/default_template.php:358
 msgid "Name of the data we\\'re inputting"
 msgstr "Name der Daten die wir einfügen"
 
-#: lib/templates.php:400 mod/template/lib.php:15
+#: lib/templates.php:403 mod/template/lib.php:15
 msgid "Change theme"
 msgstr "Darstellung ändern"
 
-#: lib/templates.php:433
+#: lib/templates.php:437
 msgid "Account settings"
 msgstr "Account Einstellungen"
 
-#: lib/templates.php:439
+#: lib/templates.php:443
 msgid "Log off"
 msgstr "Ausloggen"
 
-#: lib/templates.php:449
+#: lib/templates.php:450 _userdetails/index.php:18
+msgid "Edit user details"
+msgstr "Userdetails bearbeiten"
+
+#: lib/templates.php:454
 msgid "Your site picture"
 msgstr "Ihr Profil Bild"
 
-#: lib/templates.php:456
+#: lib/templates.php:461
 msgid "Main"
 msgstr "Main"
 
-#: lib/templates.php:461 units/admin/admin_users_add.php:36
+#: lib/templates.php:466 units/admin/admin_users_add.php:35
 msgid "Add users"
 msgstr "User hinzufügen"
 
-#: lib/templates.php:471
+#: lib/templates.php:476
 msgid "Manage flagged content"
 msgstr "bedenkliche Inhalte verwalten"
 
-#: lib/templates.php:476
+#: lib/templates.php:481
 msgid "Spam control"
 msgstr "Spamabwehr"
 
-#: lib/templates.php:581
+#: lib/templates.php:586
 msgid "Your current template has been changed."
 msgstr "Ihr aktuelles Design wurde geändert."
 
-#: lib/templates.php:611 units/templates/template_actions.php:59
+#: lib/templates.php:616 units/templates/template_actions.php:59
 msgid "Your template has been updated."
 msgstr "Ihre Designvorlage wurde aktualisiert."
 
-#: lib/templates.php:623 units/templates/template_actions.php:75
+#: lib/templates.php:629 units/templates/template_actions.php:75
 msgid "Your template was deleted."
 msgstr "Ihre Designvorlage wurde gelöscht."
 
-#: lib/templates.php:733 units/templates/templates_add.php:8
+#: lib/templates.php:750 units/templates/templates_add.php:8
 msgid "Create theme"
 msgstr "Design erstellen"
 
-#: lib/templates.php:734 units/templates/templates_add.php:9
+#: lib/templates.php:751 units/templates/templates_add.php:9
 msgid ""
 "Here you can create your own themes based on one of the existing public "
 "themes. Just select which public theme you would like to alter and then "
@@ -1046,67 +928,86 @@ msgstr ""
 "welches sie verändern wollen um ihr eigenes zu erstellen. Sie haben dann "
 "Schreibrechte."
 
-#: lib/templates.php:750 units/templates/templates_add.php:25
+#: lib/templates.php:767 units/templates/templates_add.php:25
 msgid "Theme name"
 msgstr "Name des Designs"
 
-#: lib/templates.php:755 lib/templates.php:818 lib/templates.php:1017
+#: lib/templates.php:772 lib/templates.php:835 lib/templates.php:1034
 #: units/templates/templates_add.php:30 units/templates/templates_edit.php:22
 #: units/templates/templates_view.php:22
 msgid "Default Theme"
 msgstr "Standard Template"
 
-#: lib/templates.php:859 units/templates/templates_edit.php:65
+#: lib/templates.php:791 units/templates/templates_add.php:50
+msgid "Based on"
+msgstr "Basierend auf"
+
+#: lib/templates.php:796 units/templates/templates_add.php:55
+msgid "Create Theme"
+msgstr "Design erstellen"
+
+#: lib/templates.php:868 units/templates/templates_edit.php:55
+msgid "Theme Name"
+msgstr ""
+
+#: lib/templates.php:876 units/templates/templates_edit.php:65
 msgid "Glossary"
 msgstr "Glossar"
 
-#: lib/templates.php:895 units/admin/admin_spam.php:22
-#: units/communities/userdetails_edit.php:91
-#: units/templates/templates_edit.php:101 units/users/userdetails_edit.php:181
+#: lib/templates.php:912 units/admin/admin_spam.php:22
+#: units/communities/userdetails_edit.php:91 units/files/edit_folder.php:75
+#: units/icons/function_edit_icons.php:89
+#: units/templates/templates_edit.php:101 units/users/userdetails_edit.php:183
 msgid "Save"
 msgstr "Speichern"
 
-#: lib/templates.php:933 units/templates/templates_preview.php:8
+#: lib/templates.php:923 units/templates/templates_edit.php:112
+msgid ""
+"You may not edit this theme. To create a new, editable theme based on the "
+"default, go to <a href=\"index.php\">the main themes page</a>."
+msgstr ""
+
+#: lib/templates.php:950 units/templates/templates_preview.php:8
 msgid "Heading one"
 msgstr "Überschrift der Ebene 1"
 
-#: lib/templates.php:934 units/templates/templates_preview.php:9
+#: lib/templates.php:951 units/templates/templates_preview.php:9
 msgid "Heading two"
 msgstr "Überschrift der Ebene 2"
 
-#: lib/templates.php:935 units/templates/templates_preview.php:10
+#: lib/templates.php:952 units/templates/templates_preview.php:10
 msgid "A bullet list"
 msgstr "eine Aufzählung"
 
-#: lib/templates.php:936 units/templates/templates_preview.php:11
+#: lib/templates.php:953 units/templates/templates_preview.php:11
 msgid "Heading three"
 msgstr "Überschrift der Ebene 3"
 
-#: lib/templates.php:937 units/templates/templates_preview.php:12
+#: lib/templates.php:954 units/templates/templates_preview.php:12
 msgid "A numbered list"
 msgstr "Eine nummerierte Liste"
 
-#: lib/templates.php:967 units/templates/templates_preview.php:42
+#: lib/templates.php:984 units/templates/templates_preview.php:42
 msgid "Some text input"
 msgstr "Texteingabe"
 
-#: lib/templates.php:974 units/templates/templates_preview.php:49
+#: lib/templates.php:991 units/templates/templates_preview.php:49
 msgid "Some longer text input"
 msgstr "Längere Texteingabe"
 
-#: lib/templates.php:980 units/templates/templates_preview.php:55
+#: lib/templates.php:997 units/templates/templates_preview.php:55
 msgid "Further text input"
 msgstr "weiterer Text"
 
-#: lib/templates.php:1000 units/templates/templates_view.php:5
+#: lib/templates.php:1017 units/templates/templates_view.php:5
 msgid "Select / Create / Edit Themes"
 msgstr "Design auswählen / erstellen / bearbeiten"
 
-#: lib/templates.php:1001 units/templates/templates_view.php:6
+#: lib/templates.php:1018 units/templates/templates_view.php:6
 msgid "Public Themes"
 msgstr "Öffentliche Designs"
 
-#: lib/templates.php:1002 units/templates/templates_view.php:7
+#: lib/templates.php:1019 units/templates/templates_view.php:7
 #, fuzzy
 msgid ""
 "The following are public themes that you can use to change the way your %s "
@@ -1120,16 +1021,16 @@ msgstr ""
 "Sie können auch bestehende Themen verändern indem Sie die \"Thema "
 "verändern\"-Option auswählen."
 
-#: lib/templates.php:1035 lib/templates.php:1067
+#: lib/templates.php:1052 lib/templates.php:1084
 #: units/templates/templates_view.php:40 units/templates/templates_view.php:72
 msgid "preview"
 msgstr "Vorschau"
 
-#: lib/templates.php:1046 units/templates/templates_view.php:50
+#: lib/templates.php:1063 units/templates/templates_view.php:50
 msgid "Personal themes"
 msgstr "Persönliche Designs"
 
-#: lib/templates.php:1047 units/templates/templates_view.php:51
+#: lib/templates.php:1064 units/templates/templates_view.php:51
 msgid ""
 "These are themes that you have created. You can edit and delete these. These "
 "theme(s) only control actual look and feel - you cannot change any content "
@@ -1141,32 +1042,36 @@ msgstr ""
 "Inhalte können Sie über Menüoptionen wie Profil editieren, Blog updaten, "
 "etc. verändern."
 
-#: lib/templates.php:1069 units/files/templates_preview.php:34
+#: lib/templates.php:1086 units/files/folder_view.php:76
+#: units/files/folder_view.php:141 units/files/templates_preview.php:34
 #: units/templates/templates_view.php:74
-#: units/weblogs/weblogs_posts_view.php:139
+#: units/weblogs/weblogs_posts_view.php:111
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: lib/templates.php:1070 units/templates/templates_view.php:75
+#: lib/templates.php:1087 units/templates/templates_view.php:75
 msgid "Are you sure you want to permanently remove this template?"
 msgstr "Sind Sie sicher, dass Sie dieses Template permanent löschen möchten?"
 
-#: lib/templates.php:1070 units/files/folder_view.php:75
-#: units/files/templates_preview.php:34 units/templates/templates_view.php:75
-#: units/weblogs/weblogs_posts_view.php:141
+#: lib/templates.php:1087 units/files/folder_view.php:75
+#: units/files/folder_view.php:140 units/files/templates_preview.php:20
+#: units/files/templates_preview.php:34 units/icons/function_edit_icons.php:40
+#: units/templates/templates_view.php:75
+#: units/weblogs/weblogs_posts_view.php:113
+#: units/weblogs/weblogs_posts_view.php:173
 msgid "Delete"
 msgstr "Löschen"
 
-#: lib/templates.php:1081
+#: lib/templates.php:1098 units/templates/templates_view.php:127
 msgid "Select new theme"
 msgstr "OK"
 
-#: lib/templates.php:1127 lib/templates.php:1135
+#: lib/templates.php:1151 lib/templates.php:1165 lib/templates.php:1172
 #: units/weblogs/weblogs_comments_add.php:42
 msgid "Guest"
 msgstr "Gast"
 
-#: lib/templates.php:1136
+#: lib/templates.php:1172
 msgid "Log in"
 msgstr "Anmelden"
 
@@ -1369,29 +1274,21 @@ msgid ""
 msgstr ""
 "Falscher Username oder Passwort. Sie konnten nicht eingeloggt werden."
 
-#: lib/userlib.php:160
+#: lib/userlib.php:169
 msgid "You cannot reply to this message by email."
 msgstr "Sie können auf diese Nachricht per E-Mail antworten."
 
-#: lib/userlib.php:161
+#: lib/userlib.php:170
 msgid "Failed to send email. An unknown error occurred."
 msgstr "Fehler beim Senden der E-Mail. Ein unbekannter Fehler trat auf."
 
-#: lib/userlib.php:175
+#: lib/userlib.php:184
 msgid "Failed to send message. An unknown error occurred."
 msgstr "Fehler beim Senden der Nachricht. Ein unbekannter Fehler trat auf."
 
-#: lib/userlib.php:207
+#: lib/userlib.php:216
 msgid "System"
 msgstr "System"
-
-#: lms/join.php:48 units/invite/invite_actions.php:97
-msgid ""
-"Error! Your username must contain letters and numbers only, cannot be blank, "
-"and must be between 3 and 12 characters in length."
-msgstr ""
-"Fehler! Ihr Username darf nur Buchstaben und Nummern enthalten, darf nicht "
-"leer sein und muss zwischen 3 und 12 Zeichen lang sein."
 
 #: lms/join.php:56 units/invite/invite_actions.php:93
 msgid ""
@@ -1479,7 +1376,7 @@ msgstr "Widget hinzugefügt."
 msgid "Select a widget type from the list below:"
 msgstr "Wähle einen Widget Typ aus der Liste aus:"
 
-#: mod/adash/add.php:69
+#: mod/adash/add.php:69 units/files/weblogs_posts_add_fields.php:80
 msgid "Add"
 msgstr "Hinzufügen"
 
@@ -1491,7 +1388,7 @@ msgstr "Sie haben keine Erlaubnis Widgets zu diesem Dashboard hinzuzufügen."
 msgid "Widget deleted."
 msgstr "Widget gelöscht"
 
-#: mod/adash/edit.php:34 mod/adash/lib.php:152
+#: mod/adash/edit.php:34 mod/adash/lib.php:151
 msgid "Edit widget"
 msgstr "Widget bearbeiten"
 
@@ -1527,7 +1424,7 @@ msgstr "Ihr Dashboard"
 msgid "Add new item"
 msgstr "Neues Objekt hinzufügen"
 
-#: mod/adash/lib.php:46 mod/adash/lib.php:264
+#: mod/adash/lib.php:46 mod/adash/lib.php:263
 msgid "Text box"
 msgstr "Textfeld"
 
@@ -1535,27 +1432,27 @@ msgstr "Textfeld"
 msgid "Displays the text of your choice."
 msgstr "Zeigt einen Text Ihrer Wahl an."
 
-#: mod/adash/lib.php:153
+#: mod/adash/lib.php:152
 msgid "Delete widget"
 msgstr "Widget löschen"
 
-#: mod/adash/lib.php:154
+#: mod/adash/lib.php:153
 msgid "Move up"
 msgstr "Nach oben"
 
-#: mod/adash/lib.php:155
+#: mod/adash/lib.php:154
 msgid "Move down"
 msgstr "Nach unten"
 
-#: mod/adash/lib.php:226
+#: mod/adash/lib.php:225
 msgid "Access for this widget:"
 msgstr "Zugang zu diesem Widget:"
 
-#: mod/adash/lib.php:230
+#: mod/adash/lib.php:229
 msgid "Save widget"
 msgstr "Widget speichern"
 
-#: mod/adash/lib.php:248
+#: mod/adash/lib.php:247
 msgid ""
 "This text box is undefined. If you are the widget owner, click 'edit widget' "
 "to add your own content."
@@ -1563,7 +1460,7 @@ msgstr ""
 "Diese Textbox ist undefiniert. Wenn sie der Besitzer des Widgets sind, "
 "klicken sie auf 'Widget bearbeiten' um ihren eigenen Inhalte hinzuzufügen."
 
-#: mod/adash/lib.php:265
+#: mod/adash/lib.php:264
 msgid ""
 "This widget displays the text content of your choice. All you need to do is "
 "enter the title and body below:"
@@ -1595,28 +1492,32 @@ msgstr "Archiv"
 msgid "Friends' blogs"
 msgstr "Blogs von Freund/inn/en"
 
-#: mod/blog/lib.php:58
+#: mod/blog/lib.php:57 _weblog/interesting.php:15
+msgid "Interesting posts"
+msgstr ""
+
+#: mod/blog/lib.php:63
 msgid "View all posts"
 msgstr "Alle Beiträge sehen"
 
-#: mod/blog/lib.php:62 mod/file/lib.php:39 mod/friend/lib.php:57
+#: mod/blog/lib.php:67 mod/file/lib.php:48 mod/friend/lib.php:57
 #: mod/profile/lib.php:35
 msgid "Page help"
 msgstr "Hilfe"
 
-#: mod/blog/lib.php:75
+#: mod/blog/lib.php:80
 msgid "Blog widget"
 msgstr "Blog widget"
 
-#: mod/blog/lib.php:76
+#: mod/blog/lib.php:81
 msgid "Displays the latest blog posts from a blog of your choice."
 msgstr "Zeigt die neusten Blogeinträge eines Blogs deiner Wahl."
 
-#: mod/blog/lib.php:138
+#: mod/blog/lib.php:143
 msgid "Blog dashboard widget"
 msgstr "Blog Dashboard Widget"
 
-#: mod/blog/lib.php:139
+#: mod/blog/lib.php:144
 msgid ""
 "This widget displays the last couple of blog posts from an individual user. "
 "To begin, select the user from your connections below:"
@@ -1624,11 +1525,51 @@ msgstr ""
 "Dieses Widget zeigt die neusten Blogeinträge eines individuellen Benutzers. "
 "Um zu beginnen, wählen sie einen Benutzer von ihren Verbindungen aus:"
 
-#: mod/blog/lib.php:154
+#: mod/blog/lib.php:159
 msgid "Then enter the number of blog posts you'd like to display:"
 msgstr "Geben Sie an, wieviele Blogbeiträge angezeigt werden sollen:"
 
-#: mod/community/lib.php:19 mod/profile/lib.php:27
+#: mod/browser/index.php:21
+msgid "Browser"
+msgstr "Browser"
+
+#: mod/browser/index.php:82 search/index.php:43
+msgid "All"
+msgstr "Alles"
+
+#: mod/browser/index.php:84
+msgid "Users"
+msgstr "NutzerInnen"
+
+#: mod/browser/index.php:85
+msgid "Browse"
+msgstr "Durchsuchen"
+
+#: mod/browser/index.php:86
+msgid "Filter"
+msgstr "Filter"
+
+#: mod/browser/index.php:154
+msgid "Name"
+msgstr "Name"
+
+#: mod/browser/index.php:155
+msgid "Description"
+msgstr "Beschreibung"
+
+#: mod/browser/index.php:156
+msgid "Connections"
+msgstr "Verbindungen"
+
+#: mod/browser/index.php:157
+msgid "Posts"
+msgstr "Beiträge"
+
+#: mod/browser/index.php:158
+msgid "Type"
+msgstr "Typ"
+
+#: mod/community/lib.php:21 mod/profile/lib.php:27
 msgid "Edit this profile"
 msgstr "dieses Profil bearbeiten"
 
@@ -1640,20 +1581,20 @@ msgstr "Community Bild"
 msgid "Edit community details"
 msgstr "Community-Details bearbeiten"
 
-#: mod/community/lib.php:37
+#: mod/community/lib.php:38
 msgid "View membership requests"
 msgstr "Mitgliedschaftsanträge ansehen"
 
-#: mod/file/lib.php:14 mod/file/lib.php:17
+#: mod/file/lib.php:23 mod/file/lib.php:26
 #: units/files/files_user_info_menu.php:11
 msgid "Your Files"
 msgstr "Ihre Dateien"
 
-#: mod/file/lib.php:28
+#: mod/file/lib.php:37
 msgid "Add a file or a folder"
 msgstr "Datei oder Ordner hinzufügen"
 
-#: mod/file/lib.php:34
+#: mod/file/lib.php:43
 msgid "RSS feed for files"
 msgstr "RSS Feed für Dateien"
 
@@ -1681,53 +1622,66 @@ msgstr "Zugriffskontrolle"
 msgid "Invite a friend"
 msgstr "Freund einladen"
 
-#: mod/newsclient/lib.php:14 mod/newsclient/lib.php:17
+#: mod/gettext/lib.php:17
+msgid "Language"
+msgstr "Sprache"
+
+#: mod/gettext/lib.php:19 units/gettext/library.php:428
+msgid "default"
+msgstr "Standard"
+
+#: mod/newsclient/lib.php:15 mod/newsclient/lib.php:18
 msgid "Your Resources"
 msgstr "Ihre Ressourcen"
 
-#: mod/newsclient/lib.php:32
+#: mod/newsclient/lib.php:27 _rss/index.php:24 _rss/subscriptions.php:24
+#: units/magpie/menu_sub.php:14
+msgid "Feeds"
+msgstr "Feeds"
+
+#: mod/newsclient/lib.php:31
 msgid "Publish to blog"
 msgstr "Am Blog veröffentlichen"
 
-#: mod/newsclient/lib.php:36 units/magpie/menu_sub.php:22
+#: mod/newsclient/lib.php:35 units/magpie/menu_sub.php:22
 msgid "View aggregator"
 msgstr "Aggregator zeigen"
 
-#: mod/newsclient/lib.php:40
+#: mod/newsclient/lib.php:39
 msgid "Popular Feeds"
 msgstr "Beliebte Reeds"
 
-#: mod/newsclient/lib.php:85
+#: mod/newsclient/lib.php:80
 msgid "Feed widget"
-msgstr ""
+msgstr "Feed Widget"
 
-#: mod/newsclient/lib.php:86
+#: mod/newsclient/lib.php:81
 msgid "Displays the latest entries from an external feed of your choice."
 msgstr "Zeigt die letzten Einträge eines externen Feed ihrer Wahl"
 
-#: mod/newsclient/lib.php:113
+#: mod/newsclient/lib.php:110
 msgid "This feed is currently empty."
 msgstr "Dieser Feed hat momentan keinen Inhalt."
 
-#: mod/newsclient/lib.php:120
+#: mod/newsclient/lib.php:117
 msgid "This feed widget is undefined."
-msgstr ""
+msgstr "Dieses Feed Widget ist nicht definiert."
 
-#: mod/newsclient/lib.php:138
+#: mod/newsclient/lib.php:135
 msgid "Feeds dashboard widget"
 msgstr ""
 
-#: mod/newsclient/lib.php:139
+#: mod/newsclient/lib.php:136
 msgid ""
 "This widget displays the last couple of entries from an external feed you "
 "have subscribed to. To begin, select the feed from your subscriptions below:"
 msgstr ""
 
-#: mod/newsclient/lib.php:158
+#: mod/newsclient/lib.php:155
 msgid "Then enter the number of feed entries you'd like to display:"
 msgstr "Geben Sie an, wieviele Feedeinträge angezeigt werden sollen:"
 
-#: mod/newsclient/lib.php:164
+#: mod/newsclient/lib.php:161
 #, php-format
 msgid ""
 "You can't select a feed for this widget because you don't have any feed "
@@ -1747,29 +1701,244 @@ msgstr "Userbild ändern"
 msgid "People"
 msgstr "Personen"
 
-#: mod/profile/lib.php:51 mod/profile/lib.php:80 mod/profile/lib.php:120
+#: mod/profile/lib.php:67 mod/profile/lib.php:96 mod/profile/lib.php:136
 msgid "Profile widget"
-msgstr ""
+msgstr "Profil widget"
 
-#: mod/profile/lib.php:52
+#: mod/profile/lib.php:68
 msgid "Displays the contents of a profile field."
 msgstr "Zeigt die Inhalte eines Profil Feldes"
 
-#: mod/profile/lib.php:81
+#: mod/profile/lib.php:97
 msgid "This profile box is undefined."
 msgstr "Diese Profilbox ist undefiniert."
 
-#: mod/profile/lib.php:121
+#: mod/profile/lib.php:137
 msgid ""
 "Select a profile field below; the widget will then display the profile "
 "content from this field."
 msgstr ""
 
+#: mod/profile/profile.config.php:41
+#: units/profile/function_editfield_defaults.php:37
+msgid "Who am I?"
+msgstr "Ich über mich"
+
+#: mod/profile/profile.config.php:41
+#: units/profile/function_editfield_defaults.php:37
+msgid "A short introduction for you."
+msgstr "Eine kurze Vorstellung Ihres Profils."
+
+#: mod/profile/profile.config.php:42
+msgid "Introduction"
+msgstr "Vorstellung"
+
+#: mod/profile/profile.config.php:42
+msgid "A short introduction to this community."
+msgstr "Eine kurze Vorstellung dieser Community."
+
+#: mod/profile/profile.config.php:45
+#: units/profile/function_editfield_defaults.php:40
+msgid "Brief description"
+msgstr "kurze Beschreibung"
+
+#: mod/profile/profile.config.php:45
+#: units/profile/function_editfield_defaults.php:40
+msgid "For use in your sidebar profile."
+msgstr "Für die Verwendung in Ihrem Seitenprofil."
+
+#: mod/profile/profile.config.php:48
+#: units/profile/function_editfield_defaults.php:43
+msgid "Street address"
+msgstr "Strasse"
+
+#: mod/profile/profile.config.php:51
+#: units/profile/function_editfield_defaults.php:46
+msgid "Town"
+msgstr "Wohnort"
+
+#: mod/profile/profile.config.php:54
+#: units/profile/function_editfield_defaults.php:49
+msgid "State / Region"
+msgstr "Bundesland / Kanton"
+
+#: mod/profile/profile.config.php:57
+#: units/profile/function_editfield_defaults.php:52
+msgid "Postal code"
+msgstr "Postleitzahl"
+
+#: mod/profile/profile.config.php:60
+#: units/profile/function_editfield_defaults.php:55
+msgid "Country"
+msgstr "Land"
+
+#: mod/profile/profile.config.php:63 units/admin/admin_main.php:83
+#: units/admin/admin_users_add.php:22 units/admin/admin_users.php:30
+#: units/profile/function_editfield_defaults.php:58
+msgid "Email address"
+msgstr "Email-Adresse"
+
+#: mod/profile/profile.config.php:65
+#: units/profile/function_editfield_defaults.php:60
+msgid "Work telephone"
+msgstr "Telefon geschäftlich"
+
+#: mod/profile/profile.config.php:68
+#: units/profile/function_editfield_defaults.php:63
+msgid "Home telephone"
+msgstr "Telefon privat"
+
+#: mod/profile/profile.config.php:71
+#: units/profile/function_editfield_defaults.php:66
+msgid "Mobile telephone"
+msgstr "Mobiltelefon"
+
+#: mod/profile/profile.config.php:74
+#: units/profile/function_editfield_defaults.php:69
+msgid "Official website address"
+msgstr "URL Ihrer offiziellen Homepage"
+
+#: mod/profile/profile.config.php:74
+#: units/profile/function_editfield_defaults.php:69
+msgid "The URL to your official website, if you have one."
+msgstr "Die URL Ihrer offiziellen Website, falls Sie über eine verfügen."
+
+#: mod/profile/profile.config.php:77
+#: units/profile/function_editfield_defaults.php:72
+msgid "Personal website address"
+msgstr "URL Ihrer privaten Website"
+
+#: mod/profile/profile.config.php:77
+#: units/profile/function_editfield_defaults.php:72
+msgid "The URL to your personal website, if you have one."
+msgstr "Die URL Ihrer persönlichen Website, falls Sie über eine verfügen."
+
+#: mod/profile/profile.config.php:80
+#: units/profile/function_editfield_defaults.php:75
+msgid "ICQ number"
+msgstr "ICQ Nummer"
+
+#: mod/profile/profile.config.php:83
+#: units/profile/function_editfield_defaults.php:78
+msgid "MSN chat"
+msgstr "MSN"
+
+#: mod/profile/profile.config.php:86
+#: units/profile/function_editfield_defaults.php:81
+msgid "AIM screenname"
+msgstr "AIM alias"
+
+#: mod/profile/profile.config.php:89
+#: units/profile/function_editfield_defaults.php:84
+msgid "Skype username"
+msgstr "SKYPE Anmeldename"
+
+#: mod/profile/profile.config.php:91
+#: units/profile/function_editfield_defaults.php:86
+msgid "Jabber username"
+msgstr "JABBER Anmeldename"
+
+#: mod/profile/profile.config.php:94
+#: units/profile/function_editfield_defaults.php:89
+msgid "Interests"
+msgstr "Interessen"
+
+#: mod/profile/profile.config.php:94 mod/profile/profile.config.php:98
+#: mod/profile/profile.config.php:99 mod/profile/profile.config.php:108
+#: mod/profile/profile.config.php:114
+#: units/profile/function_editfield_defaults.php:89
+#: units/profile/function_editfield_defaults.php:93
+#: units/profile/function_editfield_defaults.php:94
+#: units/profile/function_editfield_defaults.php:103
+#: units/profile/function_editfield_defaults.php:109
+msgid "Separated with commas."
+msgstr "Komma-getrennt"
+
+#: mod/profile/profile.config.php:98
+#: units/profile/function_editfield_defaults.php:93
+msgid "Likes"
+msgstr "Ich mag"
+
+#: mod/profile/profile.config.php:99
+#: units/profile/function_editfield_defaults.php:94
+msgid "Dislikes"
+msgstr "Ich mag nicht"
+
+#: mod/profile/profile.config.php:100
+#: units/profile/function_editfield_defaults.php:95
+msgid "Occupation"
+msgstr "Beruf"
+
+#: mod/profile/profile.config.php:101
+#: units/profile/function_editfield_defaults.php:96
+msgid "Industry"
+msgstr "Branche"
+
+#: mod/profile/profile.config.php:103
+#: units/profile/function_editfield_defaults.php:98
+msgid "Company / Institution"
+msgstr "Firma / Einrichtung"
+
+#: mod/profile/profile.config.php:106
+#: units/profile/function_editfield_defaults.php:101
+msgid "Job Title"
+msgstr "Berufsbezeichnung"
+
+#: mod/profile/profile.config.php:107
+#: units/profile/function_editfield_defaults.php:102
+msgid "Job Description"
+msgstr "Berufsbeschreibung"
+
+#: mod/profile/profile.config.php:108
+#: units/profile/function_editfield_defaults.php:103
+msgid "I would like to ..."
+msgstr "Ich möchte...."
+
+#: mod/profile/profile.config.php:109
+#: units/profile/function_editfield_defaults.php:104
+msgid "Career Goals"
+msgstr "Karriere Ziele"
+
+#: mod/profile/profile.config.php:109
+#: units/profile/function_editfield_defaults.php:104
+msgid ""
+"Freeform: let colleagues and potential employers know what you'd like to get "
+"out of your career."
+msgstr ""
+"Freitext: lassen Sie KollegInnen und potentielle ArbeitgeberInnen wissen, "
+"welche Karriere Sie anstreben."
+
+#: mod/profile/profile.config.php:110
+#: units/profile/function_editfield_defaults.php:105
+msgid "Level of Education"
+msgstr "höchste abgeschlossene Ausbildung"
+
+#: mod/profile/profile.config.php:111
+#: units/profile/function_editfield_defaults.php:106
+#, fuzzy
+msgid "High School"
+msgstr "Oberstufe"
+
+#: mod/profile/profile.config.php:112
+#: units/profile/function_editfield_defaults.php:107
+msgid "University / College"
+msgstr "Universität"
+
+#: mod/profile/profile.config.php:113
+#: units/profile/function_editfield_defaults.php:108
+msgid "Degree"
+msgstr "Akademischer Grad"
+
+#: mod/profile/profile.config.php:114
+#: units/profile/function_editfield_defaults.php:109
+msgid "Main Skills"
+msgstr "besondere Fähigkeiten"
+
 #: profile/edit.php:35
 msgid "Edit profile"
 msgstr "Profil bearbeiten"
 
-#: profile/edit.php:88 units/profile/function_actions.php:37
+#: profile/edit.php:88 units/profile/function_actions.php:40
 msgid "Profile updated."
 msgstr "Profil aktualisiert."
 
@@ -1800,235 +1969,32 @@ msgstr ""
 msgid "Upload a FOAF file:"
 msgstr "FOAF Datei hochladen:"
 
-#: profile/profile.class.php:100 units/files/folder_edit.php:259
+#: profile/profile.class.php:100 units/files/edit_folder.php:267
 msgid "Upload"
 msgstr "Upload"
 
-#: profile/profile.class.php:185
-#: units/profile/function_editfield_defaults.php:37
-msgid "Who am I?"
-msgstr "Ich über mich"
-
-#: profile/profile.class.php:185
-#: units/profile/function_editfield_defaults.php:37
-msgid "A short introduction for you."
-msgstr "Eine kurze Vorstellung Ihres Profils."
-
-#: profile/profile.class.php:186
-msgid "Introduction"
-msgstr "Vorstellung"
-
-#: profile/profile.class.php:186
-msgid "A short introduction to this community."
-msgstr "Eine kurze Vorstellung dieser Community."
-
-#: profile/profile.class.php:189
-#: units/profile/function_editfield_defaults.php:40
-msgid "Brief description"
-msgstr "kurze Beschreibung"
-
-#: profile/profile.class.php:189
-#: units/profile/function_editfield_defaults.php:40
-msgid "For use in your sidebar profile."
-msgstr "Für die Verwendung in Ihrem Seitenprofil."
-
-#: profile/profile.class.php:192
-#: units/profile/function_editfield_defaults.php:43
-msgid "Street address"
-msgstr "Strasse"
-
-#: profile/profile.class.php:195
-#: units/profile/function_editfield_defaults.php:46
-msgid "Town"
-msgstr "Wohnort"
-
-#: profile/profile.class.php:198
-#: units/profile/function_editfield_defaults.php:49
-msgid "State / Region"
-msgstr "Bundesland / Kanton"
-
-#: profile/profile.class.php:201
-#: units/profile/function_editfield_defaults.php:52
-msgid "Postal code"
-msgstr "Postleitzahl"
-
-#: profile/profile.class.php:204
-#: units/profile/function_editfield_defaults.php:55
-msgid "Country"
-msgstr "Land"
-
-#: profile/profile.class.php:207 units/admin/admin_main.php:83
-#: units/admin/admin_users.php:30 units/admin/admin_users_add.php:23
-#: units/profile/function_editfield_defaults.php:58
-msgid "Email address"
-msgstr "Email-Adresse"
-
-#: profile/profile.class.php:209
-#: units/profile/function_editfield_defaults.php:60
-msgid "Work telephone"
-msgstr "Telefon geschäftlich"
-
-#: profile/profile.class.php:212
-#: units/profile/function_editfield_defaults.php:63
-msgid "Home telephone"
-msgstr "Telefon privat"
-
-#: profile/profile.class.php:215
-#: units/profile/function_editfield_defaults.php:66
-msgid "Mobile telephone"
-msgstr "Mobiltelefon"
-
-#: profile/profile.class.php:218
-#: units/profile/function_editfield_defaults.php:69
-msgid "Official website address"
-msgstr "URL Ihrer offiziellen Homepage"
-
-#: profile/profile.class.php:218
-#: units/profile/function_editfield_defaults.php:69
-msgid "The URL to your official website, if you have one."
-msgstr "Die URL Ihrer offiziellen Website, falls Sie über eine verfügen."
-
-#: profile/profile.class.php:221
-#: units/profile/function_editfield_defaults.php:72
-msgid "Personal website address"
-msgstr "URL Ihrer privaten Website"
-
-#: profile/profile.class.php:221
-#: units/profile/function_editfield_defaults.php:72
-msgid "The URL to your personal website, if you have one."
-msgstr "Die URL Ihrer persönlichen Website, falls Sie über eine verfügen."
-
-#: profile/profile.class.php:224
-#: units/profile/function_editfield_defaults.php:75
-msgid "ICQ number"
-msgstr "ICQ Nummer"
-
-#: profile/profile.class.php:227
-#: units/profile/function_editfield_defaults.php:78
-msgid "MSN chat"
-msgstr "MSN"
-
-#: profile/profile.class.php:230
-#: units/profile/function_editfield_defaults.php:81
-msgid "AIM screenname"
-msgstr "AIM alias"
-
-#: profile/profile.class.php:233
-#: units/profile/function_editfield_defaults.php:84
-msgid "Skype username"
-msgstr "SKYPE Anmeldename"
-
-#: profile/profile.class.php:235
-#: units/profile/function_editfield_defaults.php:86
-msgid "Jabber username"
-msgstr "JABBER Anmeldename"
-
-#: profile/profile.class.php:238
-#: units/profile/function_editfield_defaults.php:89
-msgid "Interests"
-msgstr "Interessen"
-
-#: profile/profile.class.php:238 profile/profile.class.php:242
-#: profile/profile.class.php:243 profile/profile.class.php:252
-#: profile/profile.class.php:258
-#: units/profile/function_editfield_defaults.php:89
-#: units/profile/function_editfield_defaults.php:93
-#: units/profile/function_editfield_defaults.php:94
-#: units/profile/function_editfield_defaults.php:103
-#: units/profile/function_editfield_defaults.php:109
-msgid "Separated with commas."
-msgstr "Komma-getrennt"
-
-#: profile/profile.class.php:242
-#: units/profile/function_editfield_defaults.php:93
-msgid "Likes"
-msgstr "Ich mag"
-
-#: profile/profile.class.php:243
-#: units/profile/function_editfield_defaults.php:94
-msgid "Dislikes"
-msgstr "Ich mag nicht"
-
-#: profile/profile.class.php:244
-#: units/profile/function_editfield_defaults.php:95
-msgid "Occupation"
-msgstr "Beruf"
-
-#: profile/profile.class.php:245
-#: units/profile/function_editfield_defaults.php:96
-msgid "Industry"
-msgstr "Branche"
-
-#: profile/profile.class.php:247
-#: units/profile/function_editfield_defaults.php:98
-msgid "Company / Institution"
-msgstr "Firma / Einrichtung"
-
-#: profile/profile.class.php:250
-#: units/profile/function_editfield_defaults.php:101
-msgid "Job Title"
-msgstr "Berufsbezeichnung"
-
-#: profile/profile.class.php:251
-#: units/profile/function_editfield_defaults.php:102
-msgid "Job Description"
-msgstr "Berufsbeschreibung"
-
-#: profile/profile.class.php:252
-#: units/profile/function_editfield_defaults.php:103
-msgid "I would like to ..."
-msgstr "Ich möchte...."
-
-#: profile/profile.class.php:253
-#: units/profile/function_editfield_defaults.php:104
-msgid "Career Goals"
-msgstr "Karriere Ziele"
-
-#: profile/profile.class.php:253
-#: units/profile/function_editfield_defaults.php:104
-msgid ""
-"Freeform: let colleagues and potential employers know what you'd like to get "
-"out of your career."
+#: profile/profile.class.php:110
+msgid "Or you can fill in your profile directly below:"
 msgstr ""
-"Freitext: lassen Sie KollegInnen und potentielle ArbeitgeberInnen wissen, "
-"welche Karriere Sie anstreben."
 
-#: profile/profile.class.php:254
-#: units/profile/function_editfield_defaults.php:105
-msgid "Level of Education"
-msgstr "höchste abgeschlossene Ausbildung"
+#: profile/profile.class.php:123
+msgid "Submit details:"
+msgstr "Details absenden:"
 
-#: profile/profile.class.php:255
-#: units/profile/function_editfield_defaults.php:106
-#, fuzzy
-msgid "High School"
-msgstr "Oberstufe"
+#: profile/profile.class.php:124
+msgid "Save your profile"
+msgstr "Profil speichern"
 
-#: profile/profile.class.php:256
-#: units/profile/function_editfield_defaults.php:107
-msgid "University / College"
-msgstr "Universität"
-
-#: profile/profile.class.php:257
-#: units/profile/function_editfield_defaults.php:108
-msgid "Degree"
-msgstr "Akademischer Grad"
-
-#: profile/profile.class.php:258
-#: units/profile/function_editfield_defaults.php:109
-msgid "Main Skills"
-msgstr "besondere Fähigkeiten"
-
-#: profile/profile.class.php:317
+#: profile/profile.class.php:207
 #: units/profile/function_editfield_display.php:40
 msgid "Access Restriction:"
 msgstr "Zugriffsbeschränkung:"
 
-#: profile/profile.class.php:390 units/profile/function_search.php:35
+#: profile/profile.class.php:280 units/profile/function_search.php:35
 msgid "Profiles where"
 msgstr "Profile mit Inhalt"
 
-#: profile/profile.class.php:551 units/profile/function_upload_foaf.php:8
+#: profile/profile.class.php:441 units/profile/function_upload_foaf.php:8
 msgid ""
 "There was an error uploading the file. Possibly the file was too large, or "
 "the upload was interrupted."
@@ -2036,7 +2002,7 @@ msgstr ""
 "Fehler beim Upload der Datei. Eventuell war die Datei zu groß oder der "
 "Uploadvorgang wurde unterbrochen."
 
-#: profile/profile.class.php:631 units/profile/function_upload_foaf.php:88
+#: profile/profile.class.php:521 units/profile/function_upload_foaf.php:88
 msgid ""
 "Data from your FOAF file has been preloaded. You must click Save at the "
 "bottom of the page for the changes to take effect."
@@ -2044,16 +2010,16 @@ msgstr ""
 "Die Daten einer FOAF Dateo wurden geladen. Sie müssen auf Speichern am Ende "
 "der Seite klicken damit die Änderungen gespeichert werden."
 
-#: profile/profile.class.php:635 units/profile/function_upload_foaf.php:92
+#: profile/profile.class.php:525 units/profile/function_upload_foaf.php:92
 msgid "Error: supplied file did not appear to be a FOAF file."
 msgstr "Fehler: die Datei scheint keine FOAF Datei zu sein."
 
-#: profile/profile.class.php:947 units/profile/profile_user_info.php:58
+#: profile/profile.class.php:837 units/profile/profile_user_info.php:58
 #: units/weblogs/weblogs_user_info.php:7
 msgid "Profile Owner"
 msgstr "Profil Besitzer"
 
-#: profile/profile.class.php:949 units/profile/profile_user_info.php:60
+#: profile/profile.class.php:839 units/profile/profile_user_info.php:60
 #: units/weblogs/weblogs_user_info.php:9
 msgid "You"
 msgstr "Ihr Profil"
@@ -2067,6 +2033,46 @@ msgstr "Aktivitäten mit dem Stichwort %s"
 msgid "Search Profiles"
 msgstr "Profile durchsuchen"
 
+#: _rss/blog.php:25
+msgid "Publish feeds to blog"
+msgstr "Feeds auf Blog veröffentlichen"
+
+#: _rss/individual.php:13
+msgid "Feed detail"
+msgstr "Feed Detail"
+
+#: _rss/popular.php:12 units/magpie/menu_sub.php:31
+msgid "Popular feeds"
+msgstr "Beliebte Feeds"
+
+#: _rss/styles.php:10
+msgid "RSS Management"
+msgstr "RSS Verwaltung"
+
+#: _rss/styles.php:11
+msgid "To add this feed to your resources page, click here."
+msgstr "Um diesen Feed Ihren Ressourcen hinzuzufügen, klicken Sie hier."
+
+#: _rss/styles.php:12
+msgid ""
+"To add this feed to an external RSS aggregator, click the link that "
+"corresponds to your aggregator:"
+msgstr ""
+"Um diesen Feed einem externen RSS Aggregator hinzuzufügen, klicken Sie auf "
+"den Link Ihres Aggregators."
+
+#: _rss/styles.php:13
+msgid "Summary"
+msgstr "Zusammenfassung"
+
+#: _rss/styles.php:14
+msgid "This is an RSS feed for "
+msgstr "Dies ist ein RSS Feed für "
+
+#: _rss/styles.php:15
+msgid "Didn't mean to come here? Click to exit!"
+msgstr "Sie wollten nicht hierhin? Klicken Sie, um die Seite zu verlassen!"
+
 #: search/all.php:13
 msgid "Searching Everything"
 msgstr "Alles durchsuchen"
@@ -2078,10 +2084,6 @@ msgstr "suchen"
 #: search/index.php:38
 msgid "Search for results from:"
 msgstr "Suchergebnisse von:"
-
-#: search/index.php:43
-msgid "All"
-msgstr "Alles"
 
 #: search/index.php:78
 msgid "Filter by content type:"
@@ -2098,6 +2100,18 @@ msgstr "NutzerInnen und Communities"
 #: search/tags.php:12
 msgid "Some Tags"
 msgstr "Einige Stichworte"
+
+#: _templates/edit.php:15
+msgid "Template Edit"
+msgstr "Design editieren"
+
+#: _templates/index.php:15
+msgid "Select / Create Themes"
+msgstr "Design auswählen / erstellen"
+
+#: _templates/preview.php:13
+msgid "Template Preview"
+msgstr "Designvorschau"
 
 #: units/activity/recent.php:3
 msgid ""
@@ -2190,36 +2204,6 @@ msgstr ""
 "\tAnmeldename: %s\n"
 "\t"
 
-#: units/admin/admin_actions.php:183
-#, php-format
-msgid ""
-"Password: %s\n"
-"\n"
-"You can log in at any time by visiting %s and entering these details into "
-"the login form.\n"
-"\n"
-msgstr ""
-"Passwort: %s\n"
-"\n"
-"Sie können sich jederzeit einloggen, wenn Sie %s besuchen und diese Daten im "
-"Login-Formular eintragen\n"
-"\n"
-
-#: units/admin/admin_actions.php:184 units/invite/invite_actions.php:143
-#, php-format
-msgid ""
-"We hope you enjoy using the system.\n"
-"\n"
-"Regards,\n"
-"\n"
-"The %s Team"
-msgstr ""
-"Wir wünschen Ihnen viel Freude im Umgang mit dem System.\n"
-"\n"
-"Freundliche Grüße\n"
-"\n"
-"das %s Team"
-
 #: units/admin/admin_actions.php:185
 #, php-format
 msgid "User %s was created."
@@ -2280,8 +2264,8 @@ msgstr "Jederzeit:"
 
 #: units/admin/admin_main.php:35 units/admin/admin_main.php:37
 #, php-format
-msgid "%d weblog posts, %d comments"
-msgstr "%d Blog Einträge, %d Kommentare"
+msgid "%u weblog posts, %u comments"
+msgstr ""
 
 #: units/admin/admin_main.php:36 units/admin/admin_main.php:49
 msgid "Last 7 days:"
@@ -2293,8 +2277,8 @@ msgstr "Datei Statistiken"
 
 #: units/admin/admin_main.php:48 units/admin/admin_main.php:49
 #, php-format
-msgid "%d files (%d bytes)"
-msgstr "%d Dateien (%d Bytes)"
+msgid "%u files (%s bytes)"
+msgstr ""
 
 #: units/admin/admin_main.php:67
 msgid "Database statistics"
@@ -2306,8 +2290,8 @@ msgstr "Gesamtgröße der Datenbank:"
 
 #: units/admin/admin_main.php:68
 #, php-format
-msgid "%d bytes"
-msgstr "%d Bytes"
+msgid "%u bytes"
+msgstr ""
 
 #: units/admin/admin_main.php:75
 msgid "Users online now"
@@ -2321,15 +2305,15 @@ msgstr ""
 "Folgende User sind im Moment aktiv und haben während der letzten 10 Minuten "
 "am System agiert."
 
-#: units/admin/admin_main.php:82 units/admin/admin_users.php:29
-#: units/admin/admin_users_add.php:22
+#: units/admin/admin_main.php:82 units/admin/admin_users_add.php:21
+#: units/admin/admin_users.php:29
 msgid "Full name"
 msgstr "Vollständiger Name"
 
 #: units/admin/admin_main.php:93
 #, php-format
-msgid "%d users in total."
-msgstr "%d User insgesamt."
+msgid "%u users in total."
+msgstr "%u NutzerInnen insgesamt"
 
 #: units/admin/admin_spam.php:7
 msgid ""
@@ -2386,6 +2370,23 @@ msgstr "Site Admin: "
 msgid "Banned: "
 msgstr "Gebannt: "
 
+#: units/admin/admin_users_add.php:17
+msgid ""
+"You can create up to 12 users below; passwords will be autogenerated and "
+"emailed to the account owners. You must include all fields, but you may "
+"leave rows blank."
+msgstr ""
+"Sie können bis zu 12 User eingeben. Passwörter werden automatisch generiert "
+"und an die Accountnutzer verschickt. Sie müssen alle Felder ausfüllen, "
+"können aber selbst- verständlich Reihen leer lassen, wenn Sie weniger User "
+"erstellen möchten.."
+
+#: units/admin/admin_users_panel.php:12
+#: units/communities/communities_membership_requests.php:32
+#: units/friends/user_friendship_requests.php:33
+msgid "Profile"
+msgstr "Profil"
+
 #: units/admin/admin_users.php:10
 msgid ""
 "The following is a list of all the users in the system, 50 users at a time. "
@@ -2414,30 +2415,18 @@ msgstr "Username eingeben"
 msgid "Edit user"
 msgstr "User bearbeiten"
 
-#: units/admin/admin_users.php:37
+#: units/admin/admin_users.php:37 units/magpie/function_view_individual.php:38
+#: units/magpie/function_view.php:41
+#: units/weblogs/weblogs_all_users_view.php:123
+#: units/weblogs/weblogs_friends_view.php:73
+#: units/weblogs/weblogs_interesting_view.php:64
+#: units/weblogs/weblogs_view.php:65
 msgid "Next"
 msgstr "Weiter"
 
 #: units/admin/admin_users.php:46
 msgid "Previous"
 msgstr "vorherige"
-
-#: units/admin/admin_users_add.php:18
-msgid ""
-"You can create up to 12 users below; passwords will be autogenerated and "
-"emailed to the account owners. You must include all fields, but you may "
-"leave rows blank."
-msgstr ""
-"Sie können bis zu 12 User eingeben. Passwörter werden automatisch generiert "
-"und an die Accountnutzer verschickt. Sie müssen alle Felder ausfüllen, "
-"können aber selbst- verständlich Reihen leer lassen, wenn Sie weniger User "
-"erstellen möchten.."
-
-#: units/admin/admin_users_panel.php:12
-#: units/communities/communities_membership_requests.php:32
-#: units/friends/user_friendship_requests.php:33
-msgid "Profile"
-msgstr "Profil"
 
 #: units/admin/display_content_flag_form.php:23
 msgid "Flag content"
@@ -2473,14 +2462,6 @@ msgstr ""
 msgid "Error! The community name cannot be blank."
 msgstr "Fehler! Die Community kann nicht leer sein."
 
-#: units/communities/communities_actions.php:26
-#, php-format
-msgid ""
-"The username %s is already taken by another user. You will need to pick a "
-"different one."
-msgstr ""
-"Der Anmeldename %s ist bereits vergeben. Bitte geben Sie einen anderen an."
-
 #: units/communities/communities_actions.php:44
 msgid "Your community was created and you were added as its first member."
 msgstr ""
@@ -2506,29 +2487,6 @@ msgstr ""
 "folgenden Link:\n"
 "\n"
 "\t"
-
-#: units/communities/communities_actions.php:61
-#, php-format
-msgid ""
-"%s\n"
-"\n"
-"To view all community members, click here:\n"
-"\n"
-"\t%s\n"
-"\n"
-"Regards,\n"
-"\n"
-"The %s team."
-msgstr ""
-"%s\n"
-"\n"
-"Um alle Mitglieder der Community anzuzeigen, hier klicken\n"
-"\n"
-"\t%s\n"
-"\n"
-"Mit freundlichem Gruß,\n"
-"\n"
-"Ihr %s team."
 
 #: units/communities/communities_actions.php:63
 #, php-format
@@ -2558,29 +2516,6 @@ msgstr ""
 "Um das Profil des Users zu sehen, klicken Sie auf folgenden Link:\n"
 "\n"
 "\t"
-
-#: units/communities/communities_actions.php:70
-#, php-format
-msgid ""
-"%s\n"
-"\n"
-"To view all membership requests and approve or deny this user, click here:\n"
-"\n"
-"\t%s\n"
-"\n"
-"Regards,\n"
-"\n"
-"The %s team."
-msgstr ""
-"%s\n"
-"Um alle Anfragen der Mitglieder anzusehen und den User anzunehmen oder "
-"abzulehnen, bitte hier klicken:\n"
-"\n"
-"\t%s\n"
-"\n"
-"Besten Dank,\n"
-"\n"
-"Das %s Team."
 
 #: units/communities/communities_actions.php:72
 #, php-format
@@ -2648,10 +2583,24 @@ msgstr "Name der Community:"
 msgid "Username for community:"
 msgstr "Username für Community:"
 
-#: units/communities/communities_create.php:19
+#: units/communities/communities_create.php:19 units/files/edit_folder.php:147
 #: units/groups/groups_create.php:5
 msgid "Create"
 msgstr "Erstellen"
+
+#: units/communities/communities_edit.php:47
+msgid ""
+"You don't have any communities listed! To join a community, click the 'join' "
+"button underneath a community's icon. You can find communities you're "
+"interested in by using the search function."
+msgstr ""
+"Sie haben keine Community gelistet! Um einer Community beizutreten, klicken "
+"Sie auf den 'teilnehmen' Button unter dem Community Icon. Sie können "
+"Communities finden, indem Sie die Suchfunktion nutzen."
+
+#: units/communities/communities_edit.php:49
+msgid "This user is not currently a member of any communities."
+msgstr "Dieser User ist momentan keiner Community zugeordnet."
 
 #: units/communities/communities_membership_requests.php:15
 msgid ""
@@ -2663,9 +2612,28 @@ msgstr ""
 "benötigen Sie Ihre Zustimmung. (Um diese Einstellung zu ändern, gehen Sie "
 "zur 'Community Einstellungen'-Seite."
 
+#: units/communities/communities_membership_requests.php:33
+#: units/friends/user_friendship_requests.php:34
+#: units/weblogs/weblogs_user_info_menu.php:29 _weblog/edit.php:24
+#: _weblog/index.php:15
+msgid "Blog"
+msgstr "Blog"
+
 #: units/communities/communities_membership_requests.php:48
 msgid "You have no pending membership requests."
 msgstr "Es liegen keine unbearbeiteten Mitgliedschaftsanfragen vor."
+
+#: units/communities/communities_members.php:45
+msgid "This community doesn't currently have any members."
+msgstr "Diese Community hat im Moment keine Mitglieder."
+
+#: units/communities/communities_moderator_of.php:47
+msgid "You don't own any communities. Why not create one?"
+msgstr "Sie gehören zu keiner Community. Erstellen Sie Ihre eigene!"
+
+#: units/communities/communities_moderator_of.php:49
+msgid "This user is not currently moderating any communities."
+msgstr "Dieser User nimmt momentan an keiner Community aktiv teil."
 
 #: units/communities/communities_owned.php:18
 msgid "Owned communities"
@@ -2683,34 +2651,9 @@ msgstr "Gemeinschaftswiki"
 msgid "Upload / edit site pictures for this community."
 msgstr "Site Bild der Community hochladen / bearbeiten"
 
-#: units/communities/user_info_menu_text.php:18
-msgid "Are you sure you want to join this community?"
-msgstr ""
-"Sind Sie sicher, dass Sie sich in diese Community einschreiben möchten?"
-
-#: units/communities/user_info_menu_text.php:18
-msgid "Click here to join this community."
-msgstr "Klicken Sie hier, um dieser Community beizutreten."
-
-#: units/communities/user_info_menu_text.php:20
-msgid "Are you sure you want to apply to join this community?"
-msgstr ""
-"Sind Sie sicher, dass Sie beantragen wollen, sich in diese Community "
-"einzuschreiben?"
-
-#: units/communities/user_info_menu_text.php:20
-msgid "Click here to apply to join this community."
-msgstr ""
-"Klicken Sie hier, um einen Antrag auf Beitritt zu dieser Community zu senden."
-
-#: units/communities/user_info_menu_text.php:26
-msgid "Are you sure you want to leave this community?"
-msgstr ""
-"Sind Sie sicher, dass Sie sich von dieser Community abmelden möchten?"
-
-#: units/communities/user_info_menu_text.php:26
-msgid "Click here to leave this community."
-msgstr "Klicken Sie hier, um sich von dieser Community abzumelden."
+#: units/communities/profile_edit_link.php:26
+msgid "Change this community's name."
+msgstr "Name der Community ändern"
 
 #: units/communities/userdetails_actions.php:23
 #, php-format
@@ -2774,6 +2717,35 @@ msgstr ""
 #: units/communities/userdetails_edit.php:83
 msgid "Community owner"
 msgstr "Eigentümer der Community"
+
+#: units/communities/user_info_menu_text.php:18
+msgid "Are you sure you want to join this community?"
+msgstr ""
+"Sind Sie sicher, dass Sie sich in diese Community einschreiben möchten?"
+
+#: units/communities/user_info_menu_text.php:18
+msgid "Click here to join this community."
+msgstr "Klicken Sie hier, um dieser Community beizutreten."
+
+#: units/communities/user_info_menu_text.php:20
+msgid "Are you sure you want to apply to join this community?"
+msgstr ""
+"Sind Sie sicher, dass Sie beantragen wollen, sich in diese Community "
+"einzuschreiben?"
+
+#: units/communities/user_info_menu_text.php:20
+msgid "Click here to apply to join this community."
+msgstr ""
+"Klicken Sie hier, um einen Antrag auf Beitritt zu dieser Community zu senden."
+
+#: units/communities/user_info_menu_text.php:26
+msgid "Are you sure you want to leave this community?"
+msgstr ""
+"Sind Sie sicher, dass Sie sich von dieser Community abmelden möchten?"
+
+#: units/communities/user_info_menu_text.php:26
+msgid "Click here to leave this community."
+msgstr "Klicken Sie hier, um sich von dieser Community abzumelden."
 
 #: units/files/default_templates.php:8
 msgid "Folder"
@@ -2839,110 +2811,88 @@ msgstr "Menüpunkte für Dateieigner (bearbeiten, löschen, etc)"
 msgid "The URL of its icon"
 msgstr "URL des Icons"
 
-#: units/files/edit_file.php:17 units/files/folder_edit.php:184
+#: units/files/edit_file.php:17 units/files/edit_folder.php:192
 msgid "File title:"
 msgstr "Datei Titel:"
 
-#: units/files/files_actions.php:26
-msgid "Your folder was created."
-msgstr "Ihr Ordner wurde erstellt."
-
-#: units/files/files_actions.php:28
-msgid "Could not create folder. Perhaps the folder name was blank?"
-msgstr ""
-"Konnte den Ordner nicht erstellen. Stellen Sie sicher, dass Sie einen "
-"Ordnernamen vergeben haben."
-
-#: units/files/files_actions.php:47
-msgid ""
-"Upload unsuccessful. You must check the copyright box for a file to be "
-"uploaded."
-msgstr "Upload fehlgeschlagen. Bitte haken Sie die Copyright-Box an."
-
-#: units/files/files_actions.php:86
-msgid "The file was successfully uploaded."
-msgstr "die Datei wurde erfolgreich upgeloadet."
-
-#: units/files/files_actions.php:122
-msgid "The file was updated."
-msgstr "die Datei wurde aktualisiert"
-
-#: units/files/files_actions.php:142
-msgid "The folder was edited."
-msgstr "Ordner wurde bearbeitet."
-
-#: units/files/files_actions.php:144
-msgid "Error: a folder cannot be its own parent."
-msgstr "Fehler: Ein Ordner kann nicht in sich selbst erstellt werden."
-
-#: units/files/files_actions.php:167
-msgid "The folder was deleted."
-msgstr "Ordner wurde gelöscht."
-
-#: units/files/files_actions.php:189
-msgid "The file was deleted."
-msgstr "die Datei wurde gelöscht"
-
-#: units/files/files_links_make.php:51
-msgid "You do not have permission to access this file"
-msgstr "Sie haben nicht die Berechtigung, diese Datei anzusehen."
-
-#: units/files/files_links_make.php:54
-msgid "File does not exist"
-msgstr "Datei existiert nicht"
-
-#: units/files/files_user_info_menu.php:23
-msgid "File Storage"
-msgstr "Datei Sicherung"
-
-#: units/files/folder_edit.php:12
-msgid "Edit this folder"
-msgstr "diesen Ordner bearbeiten"
-
-#: units/files/folder_edit.php:99
-msgid "Create a new folder"
-msgstr "neuen Ordner erstellen"
-
-#: units/files/folder_edit.php:100
-msgid "To create a new folder, enter its name:"
-msgstr "Um einen neuen Ordner zu erstellen, geben Sie einen Namen an:"
-
-#: units/files/folder_edit.php:101
-msgid "Access restrictions"
-msgstr "Zugriffsbeschränkungen"
-
-#: units/files/folder_edit.php:165
-msgid "Upload a file"
-msgstr "Datei hochladen"
-
-#: units/files/folder_edit.php:179
-#, php-format
-msgid "You have used %s Mb of a total %s Mb."
-msgstr "Sie nutzen %s MB von insgesamt %s MB."
-
-#: units/files/folder_edit.php:181
-#, php-format
-msgid "Used space: %s Mb."
-msgstr "verwendeter Speicherplatz: %s MB."
-
-#: units/files/folder_edit.php:183
-msgid "File to upload:"
-msgstr "Datei hochladen:"
-
-#: units/files/folder_edit.php:185
-msgid "File Description:"
+#: units/files/edit_file.php:29
+msgid "File description:"
 msgstr "Datei Beschreibung:"
 
-#: units/files/folder_edit.php:186 units/weblogs/weblogs_posts_add.php:27
+#: units/files/edit_file.php:40 units/files/edit_folder.php:194
+#: units/weblogs/weblogs_posts_add.php:27
 #: units/weblogs/weblogs_posts_edit.php:21
 msgid "Access restrictions:"
 msgstr "Zugriffsbeschränkungen:"
 
-#: units/files/folder_edit.php:236
+#: units/files/edit_file.php:51
+msgid "File folder:"
+msgstr "Datei Ordner:"
+
+#: units/files/edit_file.php:62 units/files/edit_folder.php:62
+#: units/files/edit_folder.php:134 units/files/edit_folder.php:244
 msgid "Keywords (comma separated):"
 msgstr "Stichwörter (Komma-getrennt):"
 
-#: units/files/folder_edit.php:258
+#: units/files/edit_file.php:80
+msgid "Save changes"
+msgstr "Änderungen speichern"
+
+#: units/files/edit_file.php:98
+msgid "Edit "
+msgstr "Bearbeiten "
+
+#: units/files/edit_folder.php:19 units/files/edit_folder.php:89
+msgid "Edit this folder"
+msgstr "diesen Ordner bearbeiten"
+
+#: units/files/edit_folder.php:26
+msgid "Folder name:"
+msgstr "Ordner Name:"
+
+#: units/files/edit_folder.php:27
+msgid "Parent folder"
+msgstr "übergeordneter Ordner"
+
+#: units/files/edit_folder.php:49 units/files/edit_folder.php:109
+msgid "Access restrictions"
+msgstr "Zugriffsbeschränkungen"
+
+#: units/files/edit_folder.php:99
+msgid "Upload files and folders"
+msgstr "Dateien und Ordner hochladen"
+
+#: units/files/edit_folder.php:107
+msgid "Create a new folder"
+msgstr "neuen Ordner erstellen"
+
+#: units/files/edit_folder.php:108
+msgid "To create a new folder, enter its name:"
+msgstr "Um einen neuen Ordner zu erstellen, geben Sie einen Namen an:"
+
+#: units/files/edit_folder.php:173
+msgid "Upload a file"
+msgstr "Datei hochladen"
+
+#: units/files/edit_folder.php:187
+#, php-format
+msgid "You have used %s Mb of a total %s Mb."
+msgstr "Sie nutzen %s MB von insgesamt %s MB."
+
+#: units/files/edit_folder.php:189
+#, php-format
+msgid "Used space: %s Mb."
+msgstr "verwendeter Speicherplatz: %s MB."
+
+#: units/files/edit_folder.php:191
+msgid "File to upload:"
+msgstr "Datei hochladen:"
+
+#: units/files/edit_folder.php:193
+msgid "File Description:"
+msgstr "Datei Beschreibung:"
+
+#: units/files/edit_folder.php:266
 msgid ""
 "By checking this box, you are asserting that you have the legal right to "
 "share this file, and that you understand you are sharing it with other users "
@@ -2951,6 +2901,58 @@ msgstr ""
 "Hiermit bestätigen Sie, dass Sie das Recht haben, diese Datei zu "
 "veröffentlichen und klären sich damit einverstanden, diese Datei anderen "
 "Elgg-Usern zur Verfügung zu stellen."
+
+#: units/files/files_actions.php:30
+msgid "Your folder was created."
+msgstr "Ihr Ordner wurde erstellt."
+
+#: units/files/files_actions.php:33
+msgid "Could not create folder. Perhaps the folder name was blank?"
+msgstr ""
+"Konnte den Ordner nicht erstellen. Stellen Sie sicher, dass Sie einen "
+"Ordnernamen vergeben haben."
+
+#: units/files/files_actions.php:53
+msgid ""
+"Upload unsuccessful. You must check the copyright box for a file to be "
+"uploaded."
+msgstr "Upload fehlgeschlagen. Bitte haken Sie die Copyright-Box an."
+
+#: units/files/files_actions.php:95
+msgid "The file was successfully uploaded."
+msgstr "die Datei wurde erfolgreich upgeloadet."
+
+#: units/files/files_actions.php:136
+msgid "The file was updated."
+msgstr "die Datei wurde aktualisiert"
+
+#: units/files/files_actions.php:160
+msgid "The folder was edited."
+msgstr "Ordner wurde bearbeitet."
+
+#: units/files/files_actions.php:163
+msgid "Error: a folder cannot be its own parent."
+msgstr "Fehler: Ein Ordner kann nicht in sich selbst erstellt werden."
+
+#: units/files/files_actions.php:189
+msgid "The folder was deleted."
+msgstr "Ordner wurde gelöscht."
+
+#: units/files/files_actions.php:214
+msgid "The file was deleted."
+msgstr "die Datei wurde gelöscht"
+
+#: units/files/files_links_make.php:54
+msgid "You do not have permission to access this file"
+msgstr "Sie haben nicht die Berechtigung, diese Datei anzusehen."
+
+#: units/files/files_links_make.php:57
+msgid "File does not exist"
+msgstr "Datei existiert nicht"
+
+#: units/files/files_user_info_menu.php:23
+msgid "File Storage"
+msgstr "Datei Sicherung"
 
 #: units/files/folder_view.php:27
 msgid "Root Folder"
@@ -2968,11 +2970,20 @@ msgstr "Unterordner"
 msgid "Are you sure you want to permanently delete this folder?"
 msgstr "Sind Sie sicher, dass Sie diesen Ordner permanent löschen möchten?"
 
-#: units/files/folder_view.php:174
+#: units/files/folder_view.php:87 units/files/folder_view.php:149
+#: units/magpie/function_subscriptions_publish_to_blog.php:41
+msgid "Keywords: "
+msgstr "Stichwörter: "
+
+#: units/files/folder_view.php:139
+msgid "Are you sure you want to permanently delete this file?"
+msgstr "Sind Sie sicher, dass Sie diese Datei permanent löschen möchten?"
+
+#: units/files/folder_view.php:175
 msgid "This folder is currently empty."
 msgstr "Ordner ist im Moment leer."
 
-#: units/files/function_search.php:50
+#: units/files/function_search.php:49
 #, php-format
 msgid "Folders owned by '%s' in category '%s'"
 msgstr "Ordner von '%s' in Kategorie '%s'"
@@ -2982,12 +2993,16 @@ msgstr "Ordner von '%s' in Kategorie '%s'"
 msgid "Files owned by %s in category '%s'"
 msgstr "Dateien von %s in Kategorie '%s'"
 
-#: units/files/function_search.php:106
+#: units/files/function_search.php:90
+msgid "View folder"
+msgstr ""
+
+#: units/files/function_search.php:107
 #, php-format
 msgid "RSS feed for files owned by %s"
 msgstr "RSS Feed für Dateien von %s"
 
-#: units/files/function_search.php:117
+#: units/files/function_search.php:118
 msgid "Users with files or folders in category"
 msgstr "User mit Dateien oder Ordnern in Kategorie"
 
@@ -2999,9 +3014,13 @@ msgstr "Datei Ordner"
 msgid "Folder name"
 msgstr "Ordner Name"
 
-#: units/files/templates_preview.php:26
+#: units/files/templates_preview.php:15 units/files/templates_preview.php:26
 msgid "test"
 msgstr "Test"
+
+#: units/files/templates_preview.php:18
+msgid "Subfolder"
+msgstr "Unterordner"
 
 #: units/files/templates_preview.php:27
 msgid "A sample file"
@@ -3024,6 +3043,13 @@ msgstr "Dateien und Ordner"
 msgid "Embed a file from your %s file storage:"
 msgstr "Eine Datei aus Ihrem %s Speicher einbetten:"
 
+#: units/files/weblogs_posts_add_fields.php:79
+msgid ""
+"This will add a code to your weblog post that will be converted into an "
+"embedded file."
+msgstr ""
+"Hiermit fügen Sie Ihrem Beitrag einen Code hinzu, der eine Datei einbettet."
+
 #: units/friends/friends_actions.php:24
 #, php-format
 msgid "%s was added to your friends list."
@@ -3043,29 +3069,6 @@ msgstr ""
 "Um das Profil dieses Users zu sehen, klicken Sie auf folgenden Link:\n"
 "\n"
 "\t"
-
-#: units/friends/friends_actions.php:27 units/friends/friends_actions.php:88
-#, php-format
-msgid ""
-"%s\n"
-"\n"
-"To view all your friends, click here:\n"
-"\n"
-"\t%s\n"
-"\n"
-"Regards,\n"
-"\n"
-"The %s team."
-msgstr ""
-"%s\n"
-"\n"
-"Um alle Freunde zu sehen, bitte hier klicken:\n"
-"\n"
-"\t%s\n"
-"\n"
-"Besten Dank,\n"
-"\n"
-"Das %s-Team."
 
 #: units/friends/friends_actions.php:29
 #, php-format
@@ -3100,31 +3103,6 @@ msgstr ""
 "Um das User-Profil anzusehen, klicken Sie bitte auf folgenden Link:\n"
 "\n"
 "\t"
-
-#: units/friends/friends_actions.php:43
-#, php-format
-msgid ""
-"%s\n"
-"\n"
-"To view all your friends requests and approve or deny this user, click "
-"here:\n"
-"\n"
-"\t%s\n"
-"\n"
-"Regards,\n"
-"\n"
-"The %s team."
-msgstr ""
-"%s\n"
-"\n"
-"Um alle \"Freund-Anfragen\" anzusehen und Sie zu erlauben, bzw. anzulehnen, "
-"kilcken Sie bitte hier:\n"
-"\n"
-"\t%s\n"
-"\n"
-"Besten Dank,\n"
-"\n"
-"Ihr %s-Team."
 
 #: units/friends/friends_actions.php:45
 #, php-format
@@ -3221,33 +3199,46 @@ msgstr ""
 "\n"
 "\t"
 
-#: units/friends/friends_actions.php:115
-#, php-format
-msgid ""
-"%s\n"
-"\n"
-"To view all your existing friends, click here:\n"
-"\n"
-"\t%s\n"
-"\n"
-"Regards,\n"
-"\n"
-"The %s team."
-msgstr ""
-"%s\n"
-"\n"
-"Um alle ihre Freunde anzuzeigen, klicken sie hier:\n"
-"\n"
-"\t%s\n"
-"\n"
-"Mit freundlichem Gruss,\n"
-"\n"
-"Das %s team."
-
 #: units/friends/friends_actions.php:117
 #, php-format
 msgid "%s friend request denied"
 msgstr "%s Freundschaftsanfrage abgelehnt"
+
+#: units/friends/friends_edit.php:47
+msgid ""
+"You don't have any friends listed! To add a user as a friend, click the "
+"'friend' button underneath a user's icon."
+msgstr ""
+"Sie haben keine Freunde gelistet! Um einen User als Freund hinzuzufügen, "
+"klicken Sie den 'Freund/in' Button unter dem Usericon."
+
+#: units/friends/friends_edit.php:49
+msgid ""
+"This user doesn't currently have any friends listed. Maybe if you list them "
+"as a friend, it'll start the ball rolling ..?"
+msgstr ""
+"Dieser User hat keine Freunde in seiner Liste. Machen Sie den Anfang und "
+"fügen Sie ihn hinzu."
+
+#: units/friends/friends_of_edit.php:18
+#, php-format
+msgid "Displaying 1000 most recently active people, of %d found."
+msgstr ""
+
+#: units/friends/friends_of_edit.php:58
+msgid ""
+"Nobody's listed you as a friend! Maybe you need to start chatting to some "
+"other users?"
+msgstr ""
+"Niemand hat Sie als Freund gelistet :-( Möchten Sie vielleicht die "
+"Kommunikation mit anderen Usern starten?"
+
+#: units/friends/friends_of_edit.php:60
+msgid ""
+"This user isn't currently listed as anyone's friend. Maybe you could be the "
+"first?"
+msgstr ""
+"Dieser User wurde von niemandem als Freund gelistet. Seien Sie der/die Erste!"
 
 #: units/friends/profile_friends.php:20 units/friends/profile_friends.php:29
 msgid "View all Friends"
@@ -3256,10 +3247,6 @@ msgstr "Alle Freunde/Freundinnen ansehen"
 #: units/friends/profile_friends.php:27 units/friends/user_friends.php:14
 msgid "Your Friends"
 msgstr "Ihre Freunde"
-
-#: units/friends/user_friends.php:14
-msgid "Friends Screen"
-msgstr "Freund/innen Monitor"
 
 #: units/friends/user_friendship_requests.php:16
 msgid ""
@@ -3274,6 +3261,10 @@ msgstr ""
 #: units/friends/user_friendship_requests.php:51
 msgid "You have no pending friendship requests."
 msgstr "Es liegen keine unbearbeiteten Freundschaftsanträge vor."
+
+#: units/friends/user_friends.php:14
+msgid "Friends Screen"
+msgstr "Freund/innen Monitor"
 
 #: units/friends/user_info_menu_text.php:19
 msgid "Are you sure you want to add this user as a friend?"
@@ -3291,6 +3282,34 @@ msgstr ""
 #: units/friends/user_info_menu_text.php:26
 msgid "Click here to remove this user from your friends list."
 msgstr "Klicken Sie hier, um diesen User von Ihrer Friendlist zu entfernen."
+
+#: units/gettext/library.php:410
+msgid "Language selection"
+msgstr "Sprachwahl"
+
+#: units/gettext/library.php:411
+msgid ""
+"Choose your preferred language for this site. The following languages are "
+"available on this system:"
+msgstr ""
+"Wählen Sie Ihre bevorzugte Sprache für diese Site aus. Die folgenden "
+"Sprachen sind am System vorhanden:"
+
+#: units/gettext/library.php:422
+msgid "No languages installed"
+msgstr "Keine Sprachpakete installiert"
+
+#: units/gettext/library.php:480 units/gettext/library.php:485
+msgid "Preferred language"
+msgstr "Bevorzugte Sprache"
+
+#: units/gettext/library.php:480
+msgid "saved"
+msgstr "gespeichert"
+
+#: units/gettext/library.php:485
+msgid "not changed"
+msgstr "nicht verändert"
 
 #: units/groups/groups_access_levels.php:8
 msgid "Group"
@@ -3311,6 +3330,35 @@ msgstr "Gruppen-Name"
 #: units/groups/groups_display_membership.php:6
 msgid "Group membership"
 msgstr "Gruppen-Mitgliedschaft"
+
+#: units/groups/groups_display_membership.php:15
+#, php-format
+msgid "Owned by %s"
+msgstr "Besitzer: %s"
+
+#: units/groups/groups_edit_display.php:13
+msgid "Your friends:"
+msgstr "Ihre Freunde:"
+
+#: units/groups/groups_edit_display.php:44
+msgid "Add selected to group"
+msgstr "Auswahl zu Gruppe hinzufügen"
+
+#: units/groups/groups_edit_display.php:53
+msgid "Remove selected from group"
+msgstr "Auswahl von Gruppe entfernen"
+
+#: units/groups/groups_edit_display.php:54
+msgid "Members of this group:"
+msgstr "Mitglieder dieser Gruppe:"
+
+#: units/groups/groups_edit_display.php:72
+msgid "Save this group"
+msgstr "Gruppe speichern"
+
+#: units/groups/groups_edit_display.php:73
+msgid "Delete this group"
+msgstr "diese Gruppe löschen"
 
 #: units/groups/groups_edit_existing.php:6
 msgid "Groups you own"
@@ -3353,11 +3401,11 @@ msgstr ""
 msgid "This is a help file for the Groups functions."
 msgstr "Das ist eine Hilfedatei für die Gruppenfunktionen."
 
-#: units/icons/function_actions.php:56
+#: units/icons/function_actions.php:57
 msgid "Your selected icons were deleted."
 msgstr "ausgewählte Icons wurden gelöscht."
 
-#: units/icons/function_actions.php:70
+#: units/icons/function_actions.php:71
 msgid ""
 "You have already met your icon quota. You must delete some icons before you "
 "can upload any new ones."
@@ -3365,11 +3413,11 @@ msgstr ""
 "Maximale Speicherkapazität erreicht. Löschen Sie Dateien, um neue hinzufügen "
 "zu können."
 
-#: units/icons/function_actions.php:78
+#: units/icons/function_actions.php:79
 msgid "Attempting to upload icon file ..."
 msgstr "Versuche, Datei hochzuladen ..."
 
-#: units/icons/function_actions.php:85
+#: units/icons/function_actions.php:86
 msgid ""
 "The uploaded icon file was invalid. Please ensure you are using JPEG, GIF or "
 "PNG files."
@@ -3377,7 +3425,7 @@ msgstr ""
 "Das hochgeladene Icon ist fehlerhaft. Bitte stellen Sie sicher, dass es im "
 "Format JPEG, GIF oder PNG vorliegt."
 
-#: units/icons/function_actions.php:117
+#: units/icons/function_actions.php:118
 msgid ""
 "The uploaded icon file was in an image format other than JPEG, GIF or PNG. "
 "These are unsupported at present."
@@ -3385,11 +3433,11 @@ msgstr ""
 "Das hochgeladene Icon war nicht im Format JPEG, GIF oder PNG. Andere "
 "Dateitypen werden im Moment nicht unterstützt."
 
-#: units/icons/function_actions.php:137
+#: units/icons/function_actions.php:138
 msgid "Your icon was uploaded successfully."
 msgstr "Ihr Icon wurde erfolgreich upgeloadet."
 
-#: units/icons/function_actions.php:140
+#: units/icons/function_actions.php:141
 msgid ""
 "An unknown error occurred when saving your icon. If this problem persists, "
 "please let us know and we'll do all we can to fix it quickly."
@@ -3416,13 +3464,48 @@ msgstr ""
 msgid "pictures in total."
 msgstr "Bilder insgesamt"
 
+#: units/icons/function_add_icons.php:26
+msgid "Picture to upload:"
+msgstr "Bild uploaden:"
+
+#: units/icons/function_add_icons.php:37
+msgid "Icon description:"
+msgstr "Icon Beschreibung:"
+
+#: units/icons/function_add_icons.php:45
+msgid "Make this the default icon:"
+msgstr "zum Standard Icon machen:"
+
+#: units/icons/function_add_icons.php:58
+msgid "Upload new icon"
+msgstr "neues Icon hochladen"
+
 #: units/icons/function_edit_icons.php:21
 msgid "Site pictures"
 msgstr "Site Bilder"
 
+#: units/icons/function_edit_icons.php:31
+msgid ""
+"Site pictures are small pictures that act as a representative icon "
+"throughout the system."
+msgstr ""
+"Site Bilder sind kleine Bilder die als repräsentatives Icon am System dienen."
+
+#: units/icons/function_edit_icons.php:55
+msgid "Name:"
+msgstr "Name:"
+
+#: units/icons/function_edit_icons.php:56
+msgid "Default:"
+msgstr "Standard:"
+
 #: units/icons/function_edit_icons.php:79
 msgid "No default:"
 msgstr "kein Standard:"
+
+#: units/icons/function_edit_icons.php:100
+msgid "You don't have any site pictures loaded yet."
+msgstr "Sie haben keine Site Bilder."
 
 #: units/invite/invite_actions.php:34
 msgid "They included the following message:"
@@ -3466,26 +3549,6 @@ msgstr ""
 "\n"
 "\t%s\n"
 "\n"
-
-#: units/invite/invite_actions.php:47
-#, php-format
-msgid "Your email address has not been passed onto any third parties,"
-msgstr "Ihre E-Mail Adresse wurde nicht an Dritte weitergegeben,"
-
-#: units/invite/invite_actions.php:48
-#, php-format
-msgid ""
-" and will be removed from our system within seven days.\n"
-"\n"
-"Regards,\n"
-"\n"
-"The %s team."
-msgstr ""
-" und wird aus dem System innerhalb der nächsten sieben Tage entfernt\n"
-"\n"
-"Mit freundlichem Gruss,\n"
-"\n"
-"Das %s team."
 
 #: units/invite/invite_actions.php:51
 #, php-format
@@ -3570,17 +3633,6 @@ msgid ""
 "\t"
 msgstr ""
 
-#: units/invite/invite_actions.php:142
-#, php-format
-msgid ""
-"Username: %s\n"
-"\tPassword: %s\n"
-"\n"
-"You can log in at any time by visiting %s and entering these details into "
-"the login form.\n"
-"\n"
-msgstr ""
-
 #: units/invite/invite_actions.php:160
 #, php-format
 msgid "Verify your %s account password request"
@@ -3592,36 +3644,6 @@ msgid ""
 "A request has been received to generate your account at %s a new password.\n"
 "\n"
 msgstr ""
-
-#: units/invite/invite_actions.php:162
-#, php-format
-msgid ""
-"To confirm this request and receive a new password by email, please click "
-"the following link:\n"
-"\n"
-"\t%s\n"
-"\n"
-msgstr ""
-"Um diese Anfrage zu bestätigen und ein neues Passwort per E-Mail zu "
-"erhalten, klicken Sie bitte auf den folgenden Link:\n"
-"\n"
-"\t%s\n"
-"\n"
-
-#: units/invite/invite_actions.php:163
-#, php-format
-msgid ""
-"Please let us know if you have any further problems.\n"
-"\n"
-"Regards,\n"
-"\n"
-"The %s Team"
-msgstr ""
-"Bei weiteren Problemen wenden Sie sich bitte an uns.\n"
-"\n"
-"Freundliche Grüße\n"
-"\n"
-"Das %s Team"
 
 #: units/invite/invite_actions.php:165
 msgid "Your verification email was sent. Please check your inbox."
@@ -3660,7 +3682,8 @@ msgstr ""
 "Nutzerbedingungen. Nutzer müssen StudentInnen der JKU sein, um für Elgg "
 "freigeschalten zu werden."
 
-#: units/invite/invite_join.php:52 units/weblogs/weblogs_comments_add.php:48
+#: units/invite/invite_join.php:52 units/invite/join_noinvite.php:32
+#: units/weblogs/weblogs_comments_add.php:48
 msgid "Your name"
 msgstr "Ihr Name"
 
@@ -3696,6 +3719,31 @@ msgstr ""
 "teilnehmen möchten, kontaktieren Sie die Person, die Sie eingeladen hat, um "
 "einen neuen Code zu erhalten."
 
+#: units/invite/invite_join.php:102
+#, php-format
+msgid ""
+"For the moment, joining %s requires a specially tailored invite code. If you "
+"know someone who's a member, it may be worth asking them for one."
+msgstr ""
+"Im Moment benötigen Sie einen speziellen Code, um %s zu nutzen. Jeder "
+"registrierte User kann Sie einladen und Ihnen so den Code schicken."
+
+#: units/invite/invite.php:12
+msgid "Their name"
+msgstr "Name"
+
+#: units/invite/invite.php:18
+msgid "Their email address"
+msgstr "E-Mail-Adresse"
+
+#: units/invite/invite.php:25
+msgid "An optional message"
+msgstr "Eine optionale Nachricht"
+
+#: units/invite/invite.php:33
+msgid "Invite"
+msgstr "Einladen"
+
 #: units/invite/join_noinvite.php:9
 #, php-format
 msgid ""
@@ -3716,6 +3764,10 @@ msgstr ""
 "Email-Adresse. Sie müssen diesen Code innerhalb von 7 Tagen bestätigen, um "
 "einen Account zu erstellen.."
 
+#: units/invite/join_noinvite.php:38
+msgid "Your email address"
+msgstr "Ihre Email-Adresse"
+
 #: units/invite/new_password.php:12
 #, php-format
 msgid ""
@@ -3724,6 +3776,31 @@ msgid ""
 msgstr ""
 "Ein neues Passwort wurde an Ihre E-Mailadresse %s geschickt. Sie können "
 "dieses Passwort ab sofort verwenden; das alte Passwort wurde deaktiviert."
+
+#: units/invite/new_password.php:28
+#, php-format
+msgid "Your %s password"
+msgstr "Ihr %s Passwort"
+
+#: units/invite/new_password.php:28
+#, php-format
+msgid ""
+"Your %s password has been reset.\n"
+"\n"
+"For your records, your new password is:\n"
+"\n"
+"\t"
+msgstr ""
+
+#: units/invite/new_password.php:37
+msgid ""
+"Your password request code appears to be invalid. Try generating a new one?"
+msgstr ""
+"Ihr Passwort scheint ungültig zu sein. Möchten Sie ein neues beantragen?"
+
+#: units/invite/new_password.php:49
+msgid "Sorry, your code was invalid."
+msgstr "Entschuldigung, Ihr Code ist ungültig."
 
 #: units/invite/password_request.php:5
 #, php-format
@@ -3744,13 +3821,21 @@ msgstr ""
 "Diese Methode reduziert die Möglichkeit ein Passwort versehentlich "
 "zurückzusetzen"
 
+#: units/invite/password_request.php:22
+msgid "Your username"
+msgstr "Ihr Username"
+
+#: units/invite/password_request.php:26
+msgid "Request new password"
+msgstr "neues Passwort beantragen"
+
 #: units/magpie/default_template.php:8
 msgid "Feed Post"
 msgstr "Feed Beitrag"
 
 #: units/magpie/default_template.php:9
 msgid "A template for each post in a feed."
-msgstr ""
+msgstr "Eine Vorlage für jeden einzelnen Post in einem Feed."
 
 #: units/magpie/default_template.php:11 units/weblogs/default_template.php:11
 msgid "Post title"
@@ -3778,7 +3863,7 @@ msgstr "Link zum Beitrag"
 
 #: units/magpie/default_template.php:17
 msgid "A link to the host site"
-msgstr ""
+msgstr "Link zur Host-Site"
 
 #: units/magpie/default_template.php:18
 msgid "A link to the host feed"
@@ -3793,7 +3878,7 @@ msgid "Added"
 msgstr "Hinzugefügt"
 
 #: units/magpie/function_actions.php:23 units/magpie/function_actions.php:87
-#: units/magpie/function_actions.php:101
+#: units/magpie/function_actions.php:107
 msgid "Your feed subscription was successful."
 msgstr "Ihre RSS-Newsfeed-Bestellung was erfolgreich."
 
@@ -3826,7 +3911,11 @@ msgstr ""
 "Fehler bei der RSS-Newsfeed-Bestellung: Es liegt bereits eine RSS-Newsfeed-"
 "Bestellung vor."
 
-#: units/magpie/function_actions.php:103
+#: units/magpie/function_actions.php:96
+msgid "Feed subscription failed: SSL feed reading is not enabled."
+msgstr ""
+
+#: units/magpie/function_actions.php:110
 msgid ""
 "Feed subscription failed: feed appears to be invalid. Please check your link "
 "or try later."
@@ -3834,7 +3923,7 @@ msgstr ""
 "Fehler bei der RSS-Newsfeed-Bestellung: Das RSS-Newsfeedscheint fehlerhaft "
 "zu sein. Bitte überprüfen Sie den Link oder versuchen Sie es später erneut."
 
-#: units/magpie/function_actions.php:107
+#: units/magpie/function_actions.php:114
 msgid ""
 "Feed subscription failed: could not get feed. Please check your link or try "
 "later."
@@ -3842,7 +3931,11 @@ msgstr ""
 "Fehler bei der RSS-Newsfeed-Bestellung: Kann RSS-Newsfeed nicht auffinden. "
 "Bitte überprüfen Sie den Link oder versuchen Sie es später erneut."
 
-#: units/magpie/function_subscriptions.php:11
+#: units/magpie/function_actions.php:116
+msgid "Error message was: "
+msgstr ""
+
+#: units/magpie/function_subscriptions.php:14
 #: units/magpie/function_subscriptions_popular.php:6
 msgid ""
 "Feeds are information streams from other sites. You will often see a link to "
@@ -3855,56 +3948,56 @@ msgstr ""
 "Adresse in das \"Feed hinzufügen\" Feld am unteren Seitenrand ein, um die "
 "RSS-Newsfeed-Informationen innerhalb Ihrer Lernumgebenung lesen zu können."
 
-#: units/magpie/function_subscriptions.php:23
+#: units/magpie/function_subscriptions.php:25
 #: units/magpie/function_subscriptions_popular.php:14
 #: units/magpie/function_subscriptions_publish_to_blog.php:22
 msgid "Last updated"
 msgstr "Zuletzt aktualisiert"
 
-#: units/magpie/function_subscriptions.php:24
+#: units/magpie/function_subscriptions.php:26
 #: units/magpie/function_subscriptions_publish_to_blog.php:23
 msgid "Resource name"
 msgstr "Name der Ressource"
 
-#: units/magpie/function_subscriptions.php:31
+#: units/magpie/function_subscriptions.php:33
 #: units/magpie/function_subscriptions_publish_to_blog.php:43
 msgid "View content"
 msgstr "Inhalt ansehen"
 
-#: units/magpie/function_subscriptions.php:34
+#: units/magpie/function_subscriptions.php:41
 #: units/magpie/function_subscriptions_popular.php:27
 #: units/magpie/function_view_post.php:44
 msgid "Are you sure you want to unsubscribe from this feed?"
 msgstr "Sind sie sicher das sie sich von diesem Feed abmelden wollen?"
 
-#: units/magpie/function_subscriptions.php:34
+#: units/magpie/function_subscriptions.php:41
 #: units/magpie/function_subscriptions_popular.php:27
 #: units/magpie/function_view_post.php:44
 msgid "Unsubscribe"
 msgstr "Sich abmelden"
 
-#: units/magpie/function_subscriptions.php:52
+#: units/magpie/function_subscriptions.php:59
 #: units/magpie/function_subscriptions_publish_to_blog.php:60
 msgid "Update"
 msgstr "Aktualisieren"
 
-#: units/magpie/function_subscriptions.php:62
+#: units/magpie/function_subscriptions.php:69
 #: units/magpie/function_subscriptions_publish_to_blog.php:70
 msgid "You are not subscribed to any feeds."
 msgstr "Sie haben keinen RSS-Newsfeed bestellt."
 
-#: units/magpie/function_subscriptions.php:64
+#: units/magpie/function_subscriptions.php:71
 #: units/magpie/function_subscriptions_publish_to_blog.php:72
 msgid "No feeds were found."
 msgstr "Es wurden keine Feeds gefunden."
 
-#: units/magpie/function_subscriptions.php:69
+#: units/magpie/function_subscriptions.php:76
 #: units/magpie/function_subscriptions_popular.php:47
 msgid "To subscribe to a new feed, enter its address below:"
 msgstr ""
 "Um einen neuen Feed zu abonnieren, geben Sie unten seine Adresse ein:"
 
-#: units/magpie/function_subscriptions.php:75
+#: units/magpie/function_subscriptions.php:82
 #: units/magpie/function_subscriptions_popular.php:29
 #: units/magpie/function_subscriptions_popular.php:53
 #: units/magpie/function_view_post.php:46
@@ -3962,14 +4055,12 @@ msgstr ""
 "wollen ?\\nSie sollten sicherstellen, dass sie die Rechte des "
 "Copyrightbesitzers besitzen."
 
-#: units/magpie/function_subscriptions_publish_to_blog.php:41
-msgid "Keywords: "
-msgstr "Stichwörter: "
-
-#: units/magpie/function_view.php:29
 #: units/magpie/function_view_individual.php:26
+#: units/magpie/function_view.php:29
 #: units/weblogs/weblogs_all_users_view.php:107
-#: units/weblogs/weblogs_friends_view.php:58 units/weblogs/weblogs_view.php:53
+#: units/weblogs/weblogs_friends_view.php:57
+#: units/weblogs/weblogs_interesting_view.php:52
+#: units/weblogs/weblogs_view.php:53
 msgid "Back"
 msgstr "Zurück"
 
@@ -4010,6 +4101,10 @@ msgstr "Passende Accounts:"
 msgid "Random tags"
 msgstr "zufällige Stichwörter"
 
+#: units/search/tags_display_personal.php:40
+msgid "No tags found for this user."
+msgstr "Für diesen User wurden keine Tags gefunden."
+
 #: units/search/tags_display.php:7
 msgid ""
 "The following is a selection of keywords used within this site. Click one to "
@@ -4019,53 +4114,49 @@ msgstr ""
 "benutzt wurden. Durch Klicken sehen Sie verwandte User, Blogbeiträge oder "
 "Objekte."
 
-#: units/search/tags_display_personal.php:39
-msgid "No tags found for this user."
-msgstr "Für diesen User wurden keine Tags gefunden."
-
-#: units/templates/default_template.php:58
+#: units/templates/default_template.php:61
 msgid "Sidebar section holder"
 msgstr "Sidebarbereich Platzhalter"
 
-#: units/templates/default_template.php:59
+#: units/templates/default_template.php:62
 msgid "Contains the sidebar section titles"
 msgstr ""
 
-#: units/templates/default_template.php:61
+#: units/templates/default_template.php:64
 #, fuzzy
 msgid "The header"
 msgstr "Kopf"
 
-#: units/templates/default_template.php:300
+#: units/templates/default_template.php:303
 msgid "adminTable"
 msgstr ""
 
-#: units/templates/default_template.php:301
+#: units/templates/default_template.php:304
 msgid ""
 "This table is used to house stats and administration details until a good "
 "CSS solution can be applied."
 msgstr ""
 
-#: units/templates/default_template.php:303
-#: units/templates/default_template.php:334
+#: units/templates/default_template.php:306
+#: units/templates/default_template.php:337
 msgid "Column One"
 msgstr "Spalte Eins"
 
-#: units/templates/default_template.php:304
-#: units/templates/default_template.php:335
+#: units/templates/default_template.php:307
+#: units/templates/default_template.php:338
 msgid "Column Two"
 msgstr "Spalte Zwei"
 
-#: units/templates/default_template.php:305
-#: units/templates/default_template.php:336
+#: units/templates/default_template.php:308
+#: units/templates/default_template.php:339
 msgid "Column Three"
 msgstr "Spalte Drei"
 
-#: units/templates/default_template.php:331
+#: units/templates/default_template.php:334
 msgid "flagContent"
 msgstr ""
 
-#: units/templates/default_template.php:332
+#: units/templates/default_template.php:335
 msgid "This holds the flag content function throughout Elgg"
 msgstr ""
 
@@ -4080,14 +4171,6 @@ msgstr ""
 "Da keine Änderungswünsche selektiert wurden, wurden keine Änderungen "
 "ausgeführt."
 
-#: units/templates/templates_add.php:50
-msgid "Based on"
-msgstr "Basierend auf"
-
-#: units/templates/templates_add.php:55
-msgid "Create Theme"
-msgstr "Design erstellen"
-
 #: units/templates/templates_view.php:88
 msgid "Change templates"
 msgstr "Templates ändern"
@@ -4095,6 +4178,14 @@ msgstr "Templates ändern"
 #: units/templates/templates_view.php:89
 msgid "The selected changes will affect:"
 msgstr "Die ausgewählten Änderungen betreffen:"
+
+#: units/templates/templates_view.php:103
+msgid "Your personal space"
+msgstr ""
+
+#: units/templates/templates_view.php:116
+msgid "Community: "
+msgstr ""
 
 #: units/tinymce/tinymce_userdetails_actions.php:15
 msgid "Your editor preferences have been saved"
@@ -4123,24 +4214,7 @@ msgstr ""
 #: units/tinymce/tinymce_userdetails_edit.php:20
 #: units/tinymce/tinymce_userdetails_edit.php:27
 msgid "Enable visual editor: "
-msgstr ""
-
-#: units/users/content_main_index.php:6
-msgid "View your profile!"
-msgstr "eigenes Profil ansehen"
-
-#: units/users/content_main_index.php:7
-msgid "Your portfolio is the main way people find out about you. You can"
-msgstr ""
-"Durch Ihr Portfolio können Sie sich nach außen hin präsentieren. Sie können"
-
-#: units/users/content_main_index.php:8
-msgid "edit your details"
-msgstr "Ihre Details bearbeiten"
-
-#: units/users/content_main_index.php:9
-msgid "and choose exactly what you want to share with whom."
-msgstr "und wählen Sie aus, was Sie mit wem teilen möchten."
+msgstr "Visuellen Editor aktivieren: "
 
 #: units/users/function_default_access_levels.php:6
 msgid "Public"
@@ -4160,10 +4234,6 @@ msgstr "(%d eingelogged.)"
 msgid "User Statistics"
 msgstr "User Statistik"
 
-#: units/users/user_info.php:22
-msgid "None."
-msgstr "Keine/r."
-
 #: units/users/userdetails_actions.php:20
 msgid "Your suggested name was too long. Please try something shorter."
 msgstr ""
@@ -4177,35 +4247,35 @@ msgstr "Email-Adresse aktualisiert."
 msgid "Your moderation preferences have been changed."
 msgstr "Ihre Moderationseinstellungen wurden gespeichert."
 
-#: units/users/userdetails_actions.php:54
+#: units/users/userdetails_actions.php:55
 msgid "Public comments and discussion set to 'on'."
 msgstr "Öffentliche Kommentare und Diskussionen sind aktiviert."
 
-#: units/users/userdetails_actions.php:57
+#: units/users/userdetails_actions.php:58
 msgid "Public comments and discussion set to 'off'."
 msgstr "Öffentliche Kommentare und Diskussionen deaktiviert"
 
-#: units/users/userdetails_actions.php:65
+#: units/users/userdetails_actions.php:67
 msgid "Email comments and discussion set to 'on'."
 msgstr ""
 
-#: units/users/userdetails_actions.php:68
+#: units/users/userdetails_actions.php:70
 msgid "Email comments and discussion set to 'off'."
 msgstr "Email Kommentar und Diskussion ist AUS."
 
-#: units/users/userdetails_actions.php:76
+#: units/users/userdetails_actions.php:78
 msgid "Email notifications set to 'on'."
 msgstr "Email-Benachrichtigung ist AN"
 
-#: units/users/userdetails_actions.php:79
+#: units/users/userdetails_actions.php:81
 msgid "Email notifications set to 'off'."
 msgstr "Email-Benachrichtigung ist AUS"
 
-#: units/users/userdetails_actions.php:94
+#: units/users/userdetails_actions.php:96
 msgid "Details were not changed."
 msgstr "Details wurden nicht verändert."
 
-#: units/users/userdetails_actions.php:105
+#: units/users/userdetails_actions.php:107
 msgid ""
 "Password not changed: Your password is either too short or too long. It must "
 "be between 4 and 32 characters in length."
@@ -4213,18 +4283,18 @@ msgstr ""
 "Passwort konnte nicht geändert werden: Ihr Passwort ist entweder zu lang "
 "oder zu kurz. Es muss zwischen 4 und 32 Zeichen lang sein."
 
-#: units/users/userdetails_actions.php:107
+#: units/users/userdetails_actions.php:109
 msgid ""
 "Password not changed: Your password can only consist of letters or numbers."
 msgstr ""
 "Passwort konnte nicht geändert werden: Ihr Passwort darf nur aus Buchstaben "
 "und Ziffern bestehen."
 
-#: units/users/userdetails_actions.php:109
+#: units/users/userdetails_actions.php:111
 msgid "Your password was updated."
 msgstr "Ihr Passwort wurde aktualisiert."
 
-#: units/users/userdetails_actions.php:116
+#: units/users/userdetails_actions.php:118
 msgid ""
 "Password not changed: The password and its verification string did not match."
 msgstr ""
@@ -4261,15 +4331,15 @@ msgstr ""
 
 #: units/users/userdetails_edit.php:54
 msgid "This allows you to choose who can list you as a friend."
-msgstr ""
+msgstr "Hier können Sie einstellen, wer Sie als Freund/in listen darf."
 
 #: units/users/userdetails_edit.php:71
 msgid "No moderation: anyone can list you as a friend. (Recommended)"
-msgstr ""
+msgstr "Keine Moderation: Jede/r kann Sie als Freund/in listen. (empfohlen)"
 
 #: units/users/userdetails_edit.php:76
 msgid "Moderation: friendships must be approved by you."
-msgstr ""
+msgstr "Moderation: Freundschaftsanträge müssen von Ihnen bewilligt werden."
 
 #: units/users/userdetails_edit.php:81
 msgid "Private: nobody can list you as a friend."
@@ -4290,15 +4360,15 @@ msgid ""
 "vulnerable to spam."
 msgstr ""
 
-#: units/users/userdetails_edit.php:107 units/users/userdetails_edit.php:114
+#: units/users/userdetails_edit.php:108 units/users/userdetails_edit.php:115
 msgid "Public comments: "
 msgstr "Öffentliche Kommentare: "
 
-#: units/users/userdetails_edit.php:120
+#: units/users/userdetails_edit.php:122
 msgid "Receive email notifications"
 msgstr "E-Mail Benachrichtigungen empfangen"
 
-#: units/users/userdetails_edit.php:121
+#: units/users/userdetails_edit.php:123
 msgid ""
 "Set this to 'yes' if you would like to receive email copies of any messages "
 "you receive. This includes blog comments, notifications when people add you "
@@ -4306,13 +4376,39 @@ msgid ""
 "recent activity page."
 msgstr ""
 
-#: units/weblogs/archives_view.php:19
-msgid "Weblog Archive"
-msgstr "Weblog Archiv"
+#: units/users/userdetails_edit.php:138 units/users/userdetails_edit.php:145
+msgid "Receive notifications: "
+msgstr ""
 
-#: units/weblogs/archives_view.php:62 units/weblogs/archives_view_month.php:44
+#: units/users/userdetails_edit.php:151
+msgid "Change your password:"
+msgstr "Passwort ändern:"
+
+#: units/users/userdetails_edit.php:152
+msgid "Leave this blank if you're happy to leave your password as it is."
+msgstr ""
+"Lassen Sie dieses Feld frei, wenn Sie Ihr Passwort nicht ändern möchten."
+
+#: units/users/userdetails_edit.php:166
+msgid "Your password: "
+msgstr "Ihr Passwort: "
+
+#: units/users/userdetails_edit.php:173
+msgid "Again for verification purposes: "
+msgstr "Wiederholung zur Bestätigung: "
+
+#: units/users/user_info.php:22
+msgid "None."
+msgstr "Keine/r."
+
+#: units/weblogs/archives_view_month.php:44 units/weblogs/archives_view.php:62
 msgid "There are no weblog posts to archive as yet."
 msgstr "Keine archivierten Blogbeiträge vorhanden."
+
+#: units/weblogs/archives_view.php:19
+#: units/weblogs/weblogs_user_info_menu.php:46
+msgid "Weblog Archive"
+msgstr "Weblog Archiv"
 
 #: units/weblogs/default_template.php:8
 msgid "Weblog Post"
@@ -4366,15 +4462,19 @@ msgstr "Ein Platzhalter für Weblog Kommentare"
 msgid "The list of comments themselves"
 msgstr "Die Liste der Kommentare"
 
-#: units/weblogs/default_template.php:57
+#: units/weblogs/default_template.php:54
+msgid "The list of page links when there are lots of comments"
+msgstr ""
+
+#: units/weblogs/default_template.php:58
 msgid "Comments"
 msgstr "Kommentare"
 
-#: units/weblogs/default_template.php:72
+#: units/weblogs/default_template.php:75
 msgid "Individual weblog comment"
 msgstr "Individueller Weblog Kommentar"
 
-#: units/weblogs/default_template.php:73
+#: units/weblogs/default_template.php:76
 msgid ""
 "A template for each individual weblog comment. (Displayed one after the "
 "other, embedded in the comment placeholder.)"
@@ -4382,23 +4482,27 @@ msgstr ""
 "Ein Template für jeden individuellen Weblog Kommentar. (Einer nach dem "
 "anderen angezeigt, eingebette in den Kommentar Platzhalter.)"
 
-#: units/weblogs/default_template.php:75
+#: units/weblogs/default_template.php:78
 #, fuzzy
 msgid "Post body"
 msgstr "Post-Hauptbereich"
 
-#: units/weblogs/default_template.php:76
+#: units/weblogs/default_template.php:79
 msgid "The name of the person making the comment"
 msgstr "Der Name der Person, welche den Kommentar verfasst hat"
 
-#: units/weblogs/default_template.php:77
+#: units/weblogs/default_template.php:80
 msgid "When the comment was posted"
 msgstr "Wenn der Kommentar angesandt wurde"
 
-#: units/weblogs/default_template.php:78
+#: units/weblogs/default_template.php:81
 msgid "The usericon of the person making the comment, if available"
 msgstr ""
 "Das User-Icon der Person, welche den Kommentar verfasst hat, ist verfügbar"
+
+#: units/weblogs/default_template.php:82
+msgid "A permalink to the comment"
+msgstr "Ein Permalink zum Kommentar"
 
 #: units/weblogs/display_interesting_post_form.php:21
 #, fuzzy
@@ -4428,6 +4532,15 @@ msgstr ""
 #: units/weblogs/display_interesting_post_form.php:27
 msgid "Mark interesting"
 msgstr ""
+
+#: units/weblogs/function_rss_publish.php:35 _weblog/view_post.php:39
+msgid "Weblog"
+msgstr "Weblog"
+
+#: units/weblogs/function_rss_publish.php:42 _weblog/rss2.php:78
+#, php-format
+msgid "The weblog for %s, hosted on %s."
+msgstr "Das Blog von %s, gehostet auf %s."
 
 #: units/weblogs/function_search.php:5
 msgid "Weblog posts by"
@@ -4472,12 +4585,10 @@ msgid "Says you!"
 msgstr "Sagst du!"
 
 #: units/weblogs/templates_preview.php:12
-#, fuzzy
 msgid "The Analytical Engine - introduction from Chapter VIII"
 msgstr "Die Analytische Maschine - Einführung aus Kapitel VIII"
 
 #: units/weblogs/templates_preview.php:13
-#, fuzzy
 msgid ""
 "The circular arrangement of the axes of the Difference Engine round the "
 "large central wheels led to the most extended prospects. The whole of "
@@ -4518,27 +4629,27 @@ msgstr ""
 "Beispieltext Beispieltext Beispieltext Beispieltext Beispieltext "
 "Beispieltext Beispieltext Beispieltext"
 
-#: units/weblogs/weblogs_actions.php:25
+#: units/weblogs/weblogs_actions.php:31
 msgid "Your post has been added to your weblog."
 msgstr "Beitrag wurde zu Ihrem Weblog hinzugefügt."
 
-#: units/weblogs/weblogs_actions.php:54
+#: units/weblogs/weblogs_actions.php:66
 msgid "The weblog post has been modified."
 msgstr "Blogbeitrag wurde geändert."
 
-#: units/weblogs/weblogs_actions.php:68
+#: units/weblogs/weblogs_actions.php:81
 msgid "This weblog post has now been added to your 'interesting' list."
 msgstr ""
 
-#: units/weblogs/weblogs_actions.php:79
+#: units/weblogs/weblogs_actions.php:92
 msgid "You are no longer monitoring this weblog post."
-msgstr ""
+msgstr "Sie beobachten diesen Weblog Beitrag nicht länger."
 
-#: units/weblogs/weblogs_actions.php:97
+#: units/weblogs/weblogs_actions.php:112
 msgid "The selected weblog post was deleted."
 msgstr "Ausgewählter Blogbeitrag wurde gelöscht."
 
-#: units/weblogs/weblogs_actions.php:99
+#: units/weblogs/weblogs_actions.php:115
 msgid ""
 "You do not appear to have permission to delete this weblog post. It was not "
 "deleted."
@@ -4546,18 +4657,17 @@ msgstr ""
 "Sie haben offensichtlich keine Erlaubnis diesen Weblog Eintrag zu löschen. "
 "Er wurde nicht gelöscht."
 
-#: units/weblogs/weblogs_actions.php:140
+#: units/weblogs/weblogs_actions.php:161
 msgid "Your comment has been added."
 msgstr "Ihr Kommentar wurde hinzugefügt."
 
-#: units/weblogs/weblogs_actions.php:144
-#, fuzzy
+#: units/weblogs/weblogs_actions.php:166
 msgid "Your comment could not be posted. The system thought it was spam."
 msgstr ""
 "Ihr Kommentar wurde nicht gepostet. Das System hat ihn als SPAM-artig "
 "identifiziert."
 
-#: units/weblogs/weblogs_actions.php:162
+#: units/weblogs/weblogs_actions.php:186
 msgid "Your comment was deleted."
 msgstr "Ihr Kommentar wurde gelöscht."
 
@@ -4639,14 +4749,17 @@ msgstr ""
 msgid "Post"
 msgstr "Beitrag absenden"
 
-#: units/weblogs/weblogs_posts_add.php:78
-#, fuzzy
+#: units/weblogs/weblogs_posts_add.php:84
 msgid ""
 "You must be logged in to post a new weblog entry. You may do so using the "
 "login pane to the right of the screen."
 msgstr ""
 "Sie müssen eingeloggt sein um einen neuen Weblog-Eintrag zu erfassen. Sie "
 "können sich im rechten oberen Eck der Site einloggen."
+
+#: units/weblogs/weblogs_posts_edit.php:13
+msgid "Access Denied"
+msgstr "Zugriff verweigert"
 
 #: units/weblogs/weblogs_posts_edit.php:16
 msgid "Edit a post"
@@ -4656,22 +4769,34 @@ msgstr "Beitrag bearbeiten"
 msgid "Save Post"
 msgstr "Beitrag speichern"
 
-#: units/weblogs/weblogs_posts_view.php:86
+#: units/weblogs/weblogs_posts_view.php:94
 msgid "More"
 msgstr "Mehr"
 
-#: units/weblogs/weblogs_posts_view.php:87
+#: units/weblogs/weblogs_posts_view.php:95
 msgid "Keywords:"
 msgstr "Stichwörter:"
 
-#: units/weblogs/weblogs_posts_view.php:88
+#: units/weblogs/weblogs_posts_view.php:96
 msgid "comment(s)"
 msgstr "Kommentar(e)"
 
-#: units/weblogs/weblogs_posts_view.php:140
+#: units/weblogs/weblogs_posts_view.php:112
+msgid "Are you sure you want to permanently delete this weblog post?"
+msgstr "Sind Sie sicher, dass Sie diesen Beitrag permanent löschen möchten?"
+
+#: units/weblogs/weblogs_posts_view.php:155
+msgid "Page: "
+msgstr ""
+
+#: units/weblogs/weblogs_posts_view.php:172
 msgid "Are you sure you want to permanently delete this weblog comment?"
 msgstr ""
 "Sind Sie sicher, dass Sie diesen Kommentar permanent löschen möchten?"
+
+#: units/weblogs/weblogs_posts_view.php:230
+msgid "You must be logged in to post a comment."
+msgstr ""
 
 #: units/weblogs/weblogs_user_info_menu.php:10
 msgid "Recent Activity"
@@ -4681,9 +4806,79 @@ msgstr "kürzliche Aktivitäten"
 msgid "View your activity"
 msgstr "eigene Aktivitäten ansehen"
 
+#: units/weblogs/weblogs_user_info_menu.php:36
+msgid "Personal blog"
+msgstr "Persönliches Blog"
+
+#: units/weblogs/weblogs_user_info_menu.php:41
+msgid "Community blog"
+msgstr "Community Blog"
+
+#: units/weblogs/weblogs_user_info_menu.php:47 _weblog/friends.php:15
+msgid "Friends blog"
+msgstr "Freund/innen Blog"
+
 #: units/xml/main.php:78
 msgid "XML error: "
 msgstr "XML Fehler "
+
+#: _weblog/archive_month.php:15 _weblog/archive.php:15
+msgid "Blog Archives"
+msgstr "Blog Archive"
+
+#: _weblog/everyone.php:15
+msgid "All blogs"
+msgstr "Alle Blogs"
+
+#: _weblog/everyone.php:19
+msgid "You can filter this page to certain types of posts:"
+msgstr "Sie können diese Seite nach verschiedenen Beitragstypen filtern:"
+
+#: _weblog/everyone.php:21
+msgid "Personal blog posts"
+msgstr "Private Blogbeiträge"
+
+#: _weblog/everyone.php:22
+msgid "Community blog posts"
+msgstr "Community-Blogbeiträge"
+
+#: _weblog/everyone.php:23
+msgid "Posts with comments"
+msgstr "Beiträge mit Kommentaren"
+
+#: _weblog/everyone.php:24
+msgid "Posts with no comments"
+msgstr "Beiträge ohne Kommentare"
+
+#: _weblog/rss2.php:51
+#, php-format
+msgid "Weblog items tagged with %s"
+msgstr "Bloginhalte, die mit %s gekennzeichnet sind"
+
+#: _weblog/rss2.php:54
+msgid "Weblog items"
+msgstr "Bloginhalte"
+
+#: _weblog/rss2.php:61
+msgid "All users"
+msgstr "Alle User"
+
+#: _weblog/rss2.php:74
+#, php-format
+msgid "The most recent weblog posts on %s."
+msgstr "Die aktuellsten Blogbeiträge auf %s."
+
+#: _weblog/view_post.php:28
+msgid "Access denied or post not found"
+msgstr "Zugang verweigert oder Beitrag nicht gefunden"
+
+#: _weblog/view_post.php:31
+msgid ""
+"Either this blog post doesn't exist or you don't currently have access "
+"privileges to view it."
+msgstr ""
+"Entweder existiert dieser Blogbeitrag nicht oder Sie haben nicht die nötigen "
+"Berechtigungen, um ihn zu betrachten."
 
 #~ msgid ""
 #~ "\tThis screen allows you to edit your profile. Blank fields will not show up "
@@ -4707,6 +4902,18 @@ msgstr "XML Fehler "
 #~ msgid " was added to your friends list."
 #~ msgstr " wurde zu Ihrer Friendlist hinzugefügt."
 
+#, php-format
+#~ msgid "%d files (%d bytes)"
+#~ msgstr "%d Dateien (%d Bytes)"
+
+#, php-format
+#~ msgid "%d users in total."
+#~ msgstr "%d User insgesamt."
+
+#, php-format
+#~ msgid "%d weblog posts, %d comments"
+#~ msgstr "%d Blog Einträge, %d Kommentare"
+
 #~ msgid "<b>$s</b> posted on weblog post:"
 #~ msgstr "<b>$s</b> veröffentlicht in Blog-Beitrag:"
 
@@ -4716,36 +4923,12 @@ msgstr "XML Fehler "
 #~ msgid "About "
 #~ msgstr "Über... "
 
-#~ msgid "Add selected to group"
-#~ msgstr "Auswahl zu Gruppe hinzufügen"
-
-#~ msgid "Again for verification purposes: "
-#~ msgstr "Wiederholung zur Bestätigung: "
-
-#~ msgid "An optional message"
-#~ msgstr "Eine optionale Nachricht"
-
 #~ msgid "Are you sure you want to add this user to your friends list?"
 #~ msgstr ""
 #~ "Sind Sie sicher, dass Sie diesen User Ihrer Friendlist hinzufügen möchten?"
 
-#~ msgid "Are you sure you want to permanently delete this file?"
-#~ msgstr "Sind Sie sicher, dass Sie diese Datei permanent löschen möchten?"
-
-#~ msgid "Are you sure you want to permanently delete this weblog post?"
-#~ msgstr "Sind Sie sicher, dass Sie diesen Beitrag permanent löschen möchten?"
-
-#~ msgid "Change this community's name."
-#~ msgstr "Name der Community ändern"
-
-#~ msgid "Change your password:"
-#~ msgstr "Passwort ändern:"
-
 #~ msgid "Community Members"
 #~ msgstr "Community Mitglieder"
-
-#~ msgid "Community blog"
-#~ msgstr "Community Blog"
 
 #~ msgid "Create Template"
 #~ msgstr "Template erstellen"
@@ -4756,40 +4939,15 @@ msgstr "XML Fehler "
 #~ msgid "Default Template"
 #~ msgstr "Standard Template"
 
-#~ msgid "Default:"
-#~ msgstr "Standard:"
-
-#~ msgid "Delete this group"
-#~ msgstr "diese Gruppe löschen"
-
-#~ msgid "Edit "
-#~ msgstr "Bearbeiten "
-
 #~ msgid "FAQ"
 #~ msgstr "FAQ"
-
-#~ msgid "File description:"
-#~ msgstr "Datei Beschreibung:"
-
-#~ msgid "File folder:"
-#~ msgstr "Datei Ordner:"
 
 #~ msgid "Files owned by "
 #~ msgstr "Dateien von "
 
-#~ msgid "Folder name:"
-#~ msgstr "Ordner Name:"
-
 #, fuzzy
 #~ msgid "Folders owned by"
 #~ msgstr "Ordner von"
-
-#~ msgid ""
-#~ "For the moment, joining %s requires a specially tailored invite code. If you "
-#~ "know someone who's a member, it may be worth asking them for one."
-#~ msgstr ""
-#~ "Im Moment benötigen Sie einen speziellen Code, um %s zu nutzen. Jeder "
-#~ "registrierte User kann Sie einladen und Ihnen so den Code schicken."
 
 #~ msgid "Friends blogs"
 #~ msgstr "Blogs von Freund/innen"
@@ -4809,49 +4967,11 @@ msgstr "XML Fehler "
 #~ msgid "Home"
 #~ msgstr "Home"
 
-#~ msgid "Icon description:"
-#~ msgstr "Icon Beschreibung:"
-
-#~ msgid "Invite"
-#~ msgstr "Einladen"
-
-#~ msgid "Leave this blank if you're happy to leave your password as it is."
-#~ msgstr ""
-#~ "Lassen Sie dieses Feld frei, wenn Sie Ihr Passwort nicht ändern möchten."
-
-#~ msgid "Make this the default icon:"
-#~ msgstr "zum Standard Icon machen:"
-
 #~ msgid "Matching users:"
 #~ msgstr "passende User:"
 
-#~ msgid "Members of this group:"
-#~ msgstr "Mitglieder dieser Gruppe:"
-
 #~ msgid "Name of the data we're inputting"
 #~ msgstr "Name of the data we're inputting"
-
-#~ msgid "Name:"
-#~ msgstr "Name:"
-
-#~ msgid ""
-#~ "Nobody's listed you as a friend! Maybe you need to start chatting to some "
-#~ "other users?"
-#~ msgstr ""
-#~ "Niemand hat Sie als Freund gelistet :-( Möchten Sie vielleicht die "
-#~ "Kommunikation mit anderen Usern starten?"
-
-#~ msgid "Owned by %s"
-#~ msgstr "Besitzer: %s"
-
-#~ msgid "Parent folder"
-#~ msgstr "übergeordneter Ordner"
-
-#~ msgid "Personal blog"
-#~ msgstr "Persönliches Blog"
-
-#~ msgid "Picture to upload:"
-#~ msgstr "Bild uploaden:"
 
 #, fuzzy
 #~ msgid "Postal address"
@@ -4863,29 +4983,8 @@ msgstr "XML Fehler "
 #~ msgid "RSS feed"
 #~ msgstr "RSS Feed"
 
-#~ msgid "Remove selected from group"
-#~ msgstr "Auswahl von Gruppe entfernen"
-
-#~ msgid "Request new password"
-#~ msgstr "neues Passwort beantragen"
-
 #~ msgid "Running Your Own "
 #~ msgstr "Betreiben Sie Ihr eigenes "
-
-#~ msgid "Save changes"
-#~ msgstr "Änderungen speichern"
-
-#~ msgid "Save this group"
-#~ msgstr "Gruppe speichern"
-
-#~ msgid "Save your profile"
-#~ msgstr "Profil speichern"
-
-#~ msgid ""
-#~ "Site pictures are small pictures that act as a representative icon "
-#~ "throughout the system."
-#~ msgstr ""
-#~ "Site Bilder sind kleine Bilder die als repräsentatives Icon am System dienen."
 
 #~ msgid ""
 #~ "Someone with that email address has already been invited to the system. "
@@ -4893,15 +4992,6 @@ msgstr "XML Fehler "
 #~ msgstr ""
 #~ "Jemand mit dieser Email-Adresse wurde bereits eingeladen. Neuerliche "
 #~ "Einladung nicht versandt."
-
-#~ msgid "Sorry, your code was invalid."
-#~ msgstr "Entschuldigung, Ihr Code ist ungültig."
-
-#~ msgid "Subfolder"
-#~ msgstr "Unterordner"
-
-#~ msgid "Submit details:"
-#~ msgstr "Details absenden:"
 
 #~ msgid "Template Name"
 #~ msgstr "Name des Designs"
@@ -4941,72 +5031,13 @@ msgstr "XML Fehler "
 #~ "Der Username '$username' ist bereits vergeben. Bitte wählen Sie einen "
 #~ "anderen."
 
-#~ msgid "Their email address"
-#~ msgstr "E-Mail-Adresse"
-
-#~ msgid "Their name"
-#~ msgstr "Name"
-
-#~ msgid "This community doesn't currently have any members."
-#~ msgstr "Diese Community hat im Moment keine Mitglieder."
-
-#~ msgid ""
-#~ "This user doesn't currently have any friends listed. Maybe if you list them "
-#~ "as a friend, it'll start the ball rolling ..?"
-#~ msgstr ""
-#~ "Dieser User hat keine Freunde in seiner Liste. Machen Sie den Anfang und "
-#~ "fügen Sie ihn hinzu."
-
-#~ msgid "This user is not currently a member of any communities."
-#~ msgstr "Dieser User ist momentan keiner Community zugeordnet."
-
-#~ msgid "This user is not currently moderating any communities."
-#~ msgstr "Dieser User nimmt momentan an keiner Community aktiv teil."
-
-#~ msgid ""
-#~ "This user isn't currently listed as anyone's friend. Maybe you could be the "
-#~ "first?"
-#~ msgstr ""
-#~ "Dieser User wurde von niemandem als Freund gelistet. Seien Sie der/die Erste!"
-
-#~ msgid ""
-#~ "This will add a code to your weblog post that will be converted into an "
-#~ "embedded file."
-#~ msgstr ""
-#~ "Hiermit fügen Sie Ihrem Beitrag einen Code hinzu, der eine Datei einbettet."
-
-#~ msgid "Upload files and folders"
-#~ msgstr "Dateien und Ordner hochladen"
-
-#~ msgid "Upload new icon"
-#~ msgstr "neues Icon hochladen"
+#~ msgid "View your profile!"
+#~ msgstr "eigenes Profil ansehen"
 
 #~ msgid ""
 #~ "You do not appear to have permissions to delete this weblog post. It was not "
 #~ "deleted."
 #~ msgstr "Sie haben nicht die Berechtigung, diesen Beitrag zu löschen."
-
-#~ msgid ""
-#~ "You don't have any communities listed! To join a community, click the 'join' "
-#~ "button underneath a community's icon. You can find communities you're "
-#~ "interested in by using the search function."
-#~ msgstr ""
-#~ "Sie haben keine Community gelistet! Um einer Community beizutreten, klicken "
-#~ "Sie auf den 'teilnehmen' Button unter dem Community Icon. Sie können "
-#~ "Communities finden, indem Sie die Suchfunktion nutzen."
-
-#~ msgid ""
-#~ "You don't have any friends listed! To add a user as a friend, click the "
-#~ "'friend' button underneath a user's icon."
-#~ msgstr ""
-#~ "Sie haben keine Freunde gelistet! Um einen User als Freund hinzuzufügen, "
-#~ "klicken Sie den 'Freund/in' Button unter dem Usericon."
-
-#~ msgid "You don't have any site pictures loaded yet."
-#~ msgstr "Sie haben keine Site Bilder."
-
-#~ msgid "You don't own any communities. Why not create one?"
-#~ msgstr "Sie gehören zu keiner Community. Erstellen Sie Ihre eigene!"
 
 #~ msgid ""
 #~ "You have exceeded the file quota for this account. Some files must be "
@@ -5024,9 +5055,6 @@ msgstr "XML Fehler "
 #~ msgstr ""
 #~ "You may not edit this template. To create a new, editable template based on "
 #~ "the default, go to <a href=\"index.php\">the main templates page</a>."
-
-#~ msgid "Your %s password"
-#~ msgstr "Ihr %s Passwort"
 
 #, fuzzy
 #~ msgid ""
@@ -5057,25 +5085,18 @@ msgstr "XML Fehler "
 #~ "\n"
 #~ "Ihr %s Team"
 
-#~ msgid "Your email address"
-#~ msgstr "Ihre Email-Adresse"
-
-#~ msgid "Your friends:"
-#~ msgstr "Ihre Freunde:"
-
-#~ msgid ""
-#~ "Your password request code appears to be invalid. Try generating a new one?"
+#~ msgid "Your portfolio is the main way people find out about you. You can"
 #~ msgstr ""
-#~ "Ihr Passwort scheint ungültig zu sein. Möchten Sie ein neues beantragen?"
-
-#~ msgid "Your password: "
-#~ msgstr "Ihr Passwort: "
+#~ "Durch Ihr Portfolio können Sie sich nach außen hin präsentieren. Sie können"
 
 #~ msgid "Your suggested email address $email doesn't appear to be valid."
 #~ msgstr "Ihre angegebene Email-Adresse $email scheint ungültig zu sein."
 
-#~ msgid "Your username"
-#~ msgstr "Ihr Username"
+#~ msgid "and choose exactly what you want to share with whom."
+#~ msgstr "und wählen Sie aus, was Sie mit wem teilen möchten."
+
+#~ msgid "edit your details"
+#~ msgstr "Ihre Details bearbeiten"
 
 #~ msgid "About ELGG"
 #~ msgstr "Über ELGG"

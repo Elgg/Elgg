@@ -1,7 +1,7 @@
-// DE lang variables 
+// DE lang variables
 
 tinyMCE.addToLang('',{
-insertdate_def_fmt : '%Y-%m-%d',
+insertdate_def_fmt : '%d.%m.%Y',
 inserttime_def_fmt : '%H:%M:%S',
 insertdate_desc : 'Datum einf&uuml;gen',
 inserttime_desc : 'Zeit einf&uuml;gen',

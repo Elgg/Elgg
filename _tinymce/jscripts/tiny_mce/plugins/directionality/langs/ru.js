@@ -1,6 +1,6 @@
-// RU lang variables cp1251
+// RU lang variables UTF-8
 
 tinyMCE.addToLang('',{
-directionality_ltr_desc : 'Направление слева направо',
-directionality_rtl_desc : 'Направление справа налево'
+directionality_ltr_desc : 'РќР°РїСЂР°РІР»РµРЅРёРµ СЃР»РµРІР° РЅР°РїСЂР°РІРѕ',
+directionality_rtl_desc : 'РќР°РїСЂР°РІР»РµРЅРёРµ СЃРїСЂР°РІР° РЅР°Р»РµРІРѕ'
 });

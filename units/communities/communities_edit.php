@@ -8,8 +8,7 @@ if (isset($parameter[0])) {
     
     $result = get_records_sql('SELECT u.*, f.ident AS friendident FROM '.$CFG->prefix.'friends f
                                JOIN '.$CFG->prefix.'users u ON u.ident = f.friend
-                               WHERE f.owner = ? AND u.user_type = ?',
-                              array($user_id,'community'));
+                               WHERE f.owner = ? AND u.user_type = ?', array($user_id,'community'));
     
     $body = <<< END
     <div class="networktable">
@@ -18,12 +17,11 @@ if (isset($parameter[0])) {
 END;
     $i = 1;
     if (!empty($result)) {
+        $w = 100;
+        if (sizeof($result) > 4) {
+            $w = 50;
+        }
         foreach($result as $key => $info) {
-            $w = 100;
-            if (sizeof($result) > 4) {
-                $w = 50;
-            }
-            // $friends_name = htmlspecialchars(stripslashes($info->name), ENT_COMPAT, 'utf-8');
             $friends_name = run("profile:display:name",$info->ident);
             $info->icon = run("icons:get",$info->ident);
             $friends_menu = run("users:infobox:menu",array($info->ident));

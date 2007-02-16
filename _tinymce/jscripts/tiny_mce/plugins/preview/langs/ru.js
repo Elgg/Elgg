@@ -1,5 +1,5 @@
-// RU lang variables cp1251
+// RU lang variables UTF-8
 
 tinyMCE.addToLang('',{
-preview_desc : 'Предварительный просмотр'
+preview_desc : 'РџСЂРµРґРІР°СЂРёС‚РµР»СЊРЅС‹Р№ РїСЂРѕСЃРјРѕС‚СЂ'
 });

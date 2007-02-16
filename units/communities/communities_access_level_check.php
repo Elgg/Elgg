@@ -10,7 +10,8 @@ if (substr_count($parameter, "community") > 0 && logged_on) {
                                  array('community',$commnum,$USER->ident))) {  
         $run_result = true;
     } else {
-        $run_result = record_exists('users','user_type','community','owner',$USER->ident);
+        // $run_result = record_exists('users','user_type','community','owner',$USER->ident);
+        $run_result = record_exists('users','user_type','community','ident',$commnum,'owner',$USER->ident);
     }
 }
 

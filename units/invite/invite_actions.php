@@ -1,67 +1,64 @@
 <?php
 global $USER;
 global $CFG;
-// Kill all old invitations
 
+// Kill all old invitations
 delete_records_select('invitations',"added < ?",array(time() - (86400 * 7)));
 
 // Get site name
-
-$sitename = sitename;
+$sitename = $CFG->sitename;
 
 $action = optional_param('action');
 switch ($action) {
-        
+    
     // Add a new invite code
-     case "invite_invite":        
+     case "invite_invite":
          $invite = new StdClass;
          $invite->name = trim(optional_param('invite_name'));
          $invite->email = trim(optional_param('invite_email'));
          if (!empty($invite->name) && !empty($invite->email)) {
              if (logged_on || ($CFG->publicinvite == true)) {
                  if (($CFG->maxusers == 0 || (count_users('person') < $CFG->maxusers))) {
-                 if (validate_email(stripslashes($invite->email))) {
-                     $strippedname = stripslashes($invite->name); // for the message text.
-                     $invitations = count_records('invitations','email',$invite->email);
-                     if ($invitations == 0) {
-                         if (!$account = get_record('users','email',$invite->email)) {
-                             $invite->code = 'i' . substr(base_convert(md5(time() . $USER->username), 16, 36), 0, 7);
-                             $invite->added = time();
-                             $invite->owner = $USER->ident;
-                             insert_record('invitations',$invite);
-                             $invitetext = trim(optional_param('invite_text'));
-                             if (!empty($invitetext)) {
-                                 $invitetext = __gettext("They included the following message:") . "\n\n----------\n" . stripslashes($invitetext) . "\n----------";
-                             }
-                             $url = url . "_invite/join.php?invitecode=" . $invite->code;
-                             if (!logged_on) {
-                                 $greetingstext = sprintf(__gettext("Thank you for registering with %s."),$sitename);
-                                 $subjectline = sprintf(__gettext("%s account verification"),$sitename);
-                                 $from_email = email;
+                     if (validate_email(stripslashes($invite->email))) {
+                         $strippedname = stripslashes($invite->name); // for the message text.
+                         $invitations = count_records('invitations','email',$invite->email);
+                         if ($invitations == 0) {
+                             if (!$account = get_record('users','email',$invite->email)) {
+                                 $invite->code = 'i' . substr(base_convert(md5(time() . $USER->username), 16, 36), 0, 7);
+                                 $invite->added = time();
+                                 $invite->owner = $USER->ident;
+                                 insert_record('invitations',$invite);
+                                 $url = url . "_invite/join.php?invitecode=" . $invite->code;
+                                 if (!logged_on) {
+                                     $invitetext = '';
+                                     $greetingstext = sprintf(__gettext("Thank you for registering with %s."),$sitename);
+                                     $subjectline = sprintf(__gettext("%s account verification"),$sitename);
+                                     $from_email = email;
+                                 } else {
+                                     $invitetext = trim(optional_param('invite_text'));
+                                     if (!empty($invitetext)) {
+                                         $invitetext = __gettext("They included the following message:") . "\n\n----------\n" . $invitetext . "\n----------";
+                                     }
+                                     $greetingstext = $USER->name . " " . __gettext("has invited you to join") ." $sitename, ". __gettext("a learning landscape system.") ."";
+                                     $subjectline = $USER->name . " " . __gettext("has invited you to join") ." $sitename";
+                                     $from_email = $USER->email;
+                                 }
+                                 $emailmessage = sprintf(__gettext("Dear %s,\n\n%s %s\n\nTo join, visit the following URL:\n\n\t%s\n\nYour email address has not been passed onto any third parties, and will be removed from our system within seven days.\n\nRegards,\n\nThe %s team."),$strippedname,$greetingstext,$invitetext,$url, $sitename);
+                                 $emailmessage = wordwrap($emailmessage);
+                                 $messages[] = sprintf(__gettext("Your invitation was sent to %s at %s. It will be valid for seven days."),$strippedname,$invite->email);
+                                 email_to_user($invite,null,$subjectline,$emailmessage);
                              } else {
-                                 $greetingstext = $USER->name . " " . __gettext("has invited you to join") ." $sitename, ". __gettext("a learning landscape system.") ."";
-                                 $subjectline = $USER->name . " " . __gettext("has invited you to join") ." $sitename";
-                                 $from_email = $USER->email;
+                                 $messages[] = sprintf(__gettext("User %s already has that email address. Invitation not sent."),$account->username);
                              }
-                             $emailmessage = sprintf(__gettext("Dear %s,\n\n%s %s\n\nTo join, visit the following URL:\n\n\t%s\n\n"
-                                                             ."Your email address has not been passed onto any third parties,"
-                                                             ." and will be removed from our system within seven days.\n\nRegards,\n\nThe %s team.")
-                                                     ,$strippedname,$greetingstext,$invitetext,$url, $sitename);
-                             $emailmessage = wordwrap($emailmessage);
-                             $messages[] = sprintf(__gettext("Your invitation was sent to %s at %s. It will be valid for seven days."),$strippedname,$invite->email);
-                             email_to_user($invite,null,$subjectline,$emailmessage);
                          } else {
-                             $messages[] = sprintf(__gettext("User %s already has that email address. Invitation not sent."),$account->username);
+                             $messages[] = __gettext("Someone with that email address has already been invited to the system. ");
                          }
                      } else {
-                         $messages[] = __gettext("Someone with that email address has already been invited to the system. ");
+                         $messages[] = __gettext("Invitation failed: The email address was not valid.");
                      }
                  } else {
-                     $messages[] = __gettext("Invitation failed: The email address was not valid.");
+                     $messages[] = __gettext("Error: This community has reached its maximum number of users.");
                  }
-             } else {
-                 $messages[] = __gettext("Error: This community has reached its maximum number of users.");
-             }
              } else {
                  $messages[] = __gettext("Invitation failed: you are not logged in.");
              }
@@ -80,6 +77,7 @@ switch ($action) {
          if (isset($name) && isset($code)) {
              if (!($CFG->maxusers == 0 || (count_users('person') < $CFG->maxusers))) {
                  $messages[] = __gettext("Unfortunately this community has reached its account limit and you are unable to join at this time.");
+                 break;
              }
              if (empty($over13)) {
                  $messages[] = __gettext("You must indicate that you are at least 13 years old to join.");
@@ -108,47 +106,55 @@ switch ($action) {
              $u->password = md5($password1);
              $u->email = $details->email;
              $u->username = $username;
-             $ident = insert_record('users',$u);
-             //    Calendar code is in the wrong place!
-             global $function;
-             if(isset($function["calendar:init"])) {
-                 $c = new StdClass;
-                 $c->owner = $ident;
-                 insert_record('calendar',$c);
-             }
-             $owner = (int)$details->owner;
-             if ($owner != -1) {
-                 $f = new StdClass;
-                 $f->owner = $owner;
-                 $f->friend = $ident;
-                 insert_record('friends',$f);
-                 $f->owner = $ident;
-                 $f->friend = $owner;
-                 insert_record('friends',$f);
-             }
-             if ($owner != 1) {
+             $u = plugin_hook("user","create",$u);
+             
+             if (!empty($u)) {
+                 $ident = insert_record('users',$u);
+                 $u->ident = $ident;
+                 //    Calendar code is in the wrong place!
+                 global $function;
+                 if(isset($function["calendar:init"])) {
+                     $c = new StdClass;
+                     $c->owner = $ident;
+                     insert_record('calendar',$c);
+                 }
+                 $owner = (int)$details->owner;
+                 if ($owner != -1) { // invited by someone - set up mutual friendship
+                     $f = new StdClass;
+                     $f->owner = $owner;
+                     $f->friend = $ident;
+                     insert_record('friends',$f);
+                     $f->owner = $ident;
+                     $f->friend = $owner;
+                     insert_record('friends',$f);
+                 }
+                 // make them friend the news user
                  $f = new StdClass;
                  $f->owner = $ident;
                  $f->friend = 1;
                  insert_record('friends',$f);
-             }
-             $rssresult = run("weblogs:rss:publish", array($ident, false));
-             $rssresult = run("files:rss:publish", array($ident, false));
-             $rssresult = run("profile:rss:publish", array($ident, false));
-             $_SESSION['messages'][] = __gettext("Your account was created! You can now log in using the username and password you supplied. You have been sent an email containing these details for reference purposes.");
-             delete_records('invitations','code',$code);
-             email_to_user($u,null,sprintf(__gettext("Your %s account"),$sitename), 
-                  sprintf(__gettext("Thanks for joining %s!\n\nFor your records, your %s username and password are:\n\n\t"
-                                  ."Username: %s\n\tPassword: %s\n\nYou can log in at any time by visiting %s and entering these details into the login form.\n\n"
-                                  ."We hope you enjoy using the system.\n\nRegards,\n\nThe %s Team")
-                          ,$sitename,$sitename,$username,$displaypassword,url,$sitename));
-             header("Location: " . url);
-             exit();
+                 
+                 $u = plugin_hook("user","publish",$u);
+                 
+                 $rssresult = run("weblogs:rss:publish", array($ident, false));
+                 $rssresult = run("files:rss:publish", array($ident, false));
+                 $rssresult = run("profile:rss:publish", array($ident, false));
+                 $_SESSION['messages'][] = __gettext("Your account was created! You can now log in using the username and password you supplied. You have been sent an email containing these details for reference purposes.");
+                 delete_records('invitations','code',$code);
+                 email_to_user($u,null,sprintf(__gettext("Your %s account"),$sitename), 
+                      sprintf(__gettext("Thanks for joining %s!\n\nFor your records, your %s username and password are:\n\n\t")
+                                      .__gettext("Username: %s\n\tPassword: %s\n\nYou can log in at any time by visiting %s and entering these details into the login form.\n\n")
+                                      .__gettext("We hope you enjoy using the system.\n\nRegards,\n\nThe %s Team")
+                              ,$sitename,$sitename,$username,$displaypassword,url,$sitename));
+                 header("Location: " . $CFG->wwwroot);
+                 exit();
+             
+            }
          }
          break;
 
      // Request a new password
-     case "invite_password_request":        
+     case "invite_password_request":
          $username = optional_param('password_request_name');
          if (!empty($username)) {
              if ($user = get_record('users','username',trim($username),'user_type','person')) {
@@ -158,9 +164,9 @@ switch ($action) {
                  insert_record('password_requests',$pwreq);
                  $url = url . "_invite/new_password.php?passwordcode=" . $pwreq->code;
                  email_to_user($user,null,sprintf(__gettext("Verify your %s account password request"),$sitename), 
-                               sprintf(__gettext("A request has been received to generate your account at %s a new password.\n\n"
-                                               ."To confirm this request and receive a new password by email, please click the following link:\n\n\t%s\n\n"
-                                               ."Please let us know if you have any further problems.\n\nRegards,\n\nThe %s Team")
+                               sprintf(__gettext("A request has been received to generate your account at %s a new password.\n\n")
+                                               .__gettext("To confirm this request and receive a new password by email, please click the following link:\n\n\t%s\n\n")
+                                               .__gettext("Please let us know if you have any further problems.\n\nRegards,\n\nThe %s Team")
                                        ,$sitename,$url,$sitename));
                  $messages[] = __gettext("Your verification email was sent. Please check your inbox.");
              } else {
@@ -169,6 +175,5 @@ switch ($action) {
          }
          break;
 }
-            
 
 ?>

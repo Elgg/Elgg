@@ -1,17 +1,15 @@
 /**
- * $RCSfile: editor_plugin_src.js,v $
- * $Revision: 1.10 $
- * $Date: 2006/04/07 15:52:50 $
+ * $Id: editor_plugin_src.js 162 2007-01-03 16:16:52Z spocke $
  *
  * @author Moxiecode
- * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright © 2004-2007, Moxiecode Systems AB, All rights reserved.
  */
 
 var TinyMCE_ZoomPlugin = {
 	getInfo : function() {
 		return {
 			longname : 'Zoom',
-			author : 'Moxiecode Systems',
+			author : 'Moxiecode Systems AB',
 			authorurl : 'http://tinymce.moxiecode.com',
 			infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_zoom.html',
 			version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion

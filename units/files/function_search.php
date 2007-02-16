@@ -34,7 +34,7 @@ if (isset($parameter) && $parameter[0] == "file" && $handle) {
         }
         $folders = get_records_sql('SELECT ff.name,u.name AS userfullname,u.ident as userid,u.username,ff.ident 
                                     FROM '.$CFG->prefix.'file_folders ff
-                                    LEFT JOIN '.$CFG->prefix.'users u ON u.ident = ff.owner
+                                    LEFT JOIN '.$CFG->prefix.'users u ON u.ident = ff.files_owner
                                     WHERE ('.$searchline.') ORDER BY name ASC');
         
         $name = '';
@@ -84,10 +84,14 @@ if (isset($parameter) && $parameter[0] == "file" && $handle) {
                 $name = run("profile:display:name",$f->userid);
                 $username = $f->username;
             }
+            $folder_names = array();
             
             $run_result .= "<h2>" . sprintf(__gettext("Files owned by %s in category '%s'"), $name, $parameter[1])."</h2>\n";
             foreach($files as $file) {
-                $menu = '[<a href="' . $CFG->wwwroot . $file->username . "/files/" . (($file->folder > 0) ? $file->folder . '/' : '') . '">' . __gettext("View folder") . '</a>]';
+                if (!isset($folder_names[$file->folder])) {
+                    $folder_name[$file->folder] = get_field("file_folders","name","ident",$file->folder);
+                }
+                $menu = '[<a href="' . $CFG->wwwroot . $file->username . "/files/" . (($file->folder > 0) ? $file->folder . '/' : '') . '">' . sprintf(__gettext("In folder '%s'"), $folder_name[$file->folder]) . '</a>]';
                 $run_result .= templates_draw(array(
                                                     'context' => 'file',
                                                     'username' => $file->username,
@@ -115,7 +119,7 @@ if (isset($parameter) && $parameter[0] == "file" && $handle) {
         $sql .= " AND u.ident != " . $owner;
     }
     if ($users = get_records_sql($sql)) {
-        $run_result .= "<h2>". __gettext("Users with files or folders in category") . " '". $parameter[1]."'</h2>\n";
+        $run_result .= "<h2>". __gettext("Users and communities with files or folders in category") . " '". $parameter[1]."'</h2>\n";
         $body = "<table><tr>";
         $i = 1;
         $w = 100;
