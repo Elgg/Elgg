@@ -1,0 +1,13 @@
+div#container {
+	width: 100%;
+}
+
+#content-holder {
+	width: 99%;
+	margin: 2px;
+	min-height: 100%;
+}
+#wizard_form td{
+	padding:5px;
+}
+

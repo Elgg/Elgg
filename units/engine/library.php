@@ -30,7 +30,7 @@
             
             global $run_context;
             
-            $run_result = NULL;
+            $run_result = false;
             
             if (isset($function[$context])) {
                 

@@ -32,7 +32,7 @@ but I have updated it to use datalib functions anyway. Tested ok.
 <rss version="0.91">
 END;
             if ($info = get_record('users','ident',$page_owner)) {
-                $name = htmlspecialchars(stripslashes($info->name), ENT_COMPAT, 'utf-8');
+                $name = htmlspecialchars(stripslashes(user_name($info->ident)), ENT_COMPAT, 'utf-8');
                 $username = htmlspecialchars($info->username, ENT_COMPAT, 'utf-8');
                 $sitename = sitename;
                 $mainurl = htmlspecialchars(url . $username . "/weblog/", ENT_COMPAT, 'utf-8');

@@ -74,7 +74,7 @@ if (isset($page_owner)) {
                                     $rssdescription = sprintf(__gettext("The most recent weblog posts on %s."),$sitename);
                                     $rssweblog = $rssdescription;
                                     break;
-                    default:        $name = (stripslashes($info->name));
+                    default:        $name = (stripslashes(user_name($info->ident)));
                                     $rssdescription = sprintf(__gettext("The weblog for %s, hosted on %s."),$name,$sitename);
                                     break;
                     

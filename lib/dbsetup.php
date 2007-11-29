@@ -24,23 +24,40 @@ $newinstall = false;
 if (!$maintables) {
     if (file_exists($CFG->dirroot . "lib/db/$CFG->dbtype.sql")) {
         $db->debug = true;
-        if (modify_database($CFG->dirroot . "lib/db/$CFG->dbtype.sql")) {
-            include_once($CFG->dirroot . "version.php");
-            set_config('version', $version);
-            $db->debug = false;
-            notify($strdatabasesuccess, "green");
-            if (!isset($CFG->newsinitialpassword) || empty($CFG->newsinitialpassword)) {
-                notify("WARNING: the initial password for the news account is 'password'. This account has administrator privileges, and you should log in and change the password as soon as installation is complete.");
-            } else {
-                //$newspassword = $db->qstr(md5($CFG->newsinitialpassword));
-                //execute_sql("update ".$CFG->prefix."users set password = $newspassword where username = 'news'");
-                set_field('users', 'password', md5($CFG->newsinitialpassword), 'username', 'news');
+        
+        //version check
+        $continue = true;
+        $infoarr = $db->ServerInfo();
+        if (!empty($infoarr['version'])) {
+            switch($CFG->dbtype) {
+                case "mysql":
+                    if (!preg_match('/^(4\.1|[5-9]\.|[0-9][0-9]+)/', $infoarr['version'])) {
+                        error('Error: Your MySQL version is too old: ' . $infoarr['version'] . '. Elgg requires MySQL 4.1 or newer. 5.0 or newer is recommended.');
+                        $continue = false;
+                    }
+                break;
             }
-            //execute_sql("update ".$CFG->prefix."users set email = ". $db->qstr($CFG->sysadminemail) ." where username = 'news'");
-            set_field('users', 'email', $CFG->sysadminemail, 'username', 'news');
-        } else {
-            $db->debug = false;
-            error("Error: Main databases NOT set up successfully");
+        }
+        
+        if ($continue) {
+            if (modify_database($CFG->dirroot . "lib/db/$CFG->dbtype.sql")) {
+                include_once($CFG->dirroot . "version.php");
+                set_config('version', $version);
+                $db->debug = false;
+                notify($strdatabasesuccess, "green");
+                if (!isset($CFG->newsinitialpassword) || empty($CFG->newsinitialpassword)) {
+                    notify("WARNING: the initial password for the news account is 'password'. This account has administrator privileges, and you should log in and change the password as soon as installation is complete.");
+                } else {
+                    //$newspassword = $db->qstr(md5($CFG->newsinitialpassword));
+                    //execute_sql("update ".$CFG->prefix."users set password = $newspassword where username = 'news'");
+                    set_field('users', 'password', md5($CFG->newsinitialpassword), 'username', 'news');
+                }
+                //execute_sql("update ".$CFG->prefix."users set email = ". $db->qstr($CFG->sysadminemail) ." where username = 'news'");
+                set_field('users', 'email', $CFG->sysadminemail, 'username', 'news');
+            } else {
+                $db->debug = false;
+                error("Error: Main databases NOT set up successfully");
+            }
         }
     } else {
         error("Error: Your database ($CFG->dbtype) is not yet fully supported by Elgg.  See the lib/db directory.");

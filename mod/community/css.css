@@ -1,0 +1,24 @@
+/*
+  COMMUNITY: this holds community data
+*/
+
+#networktable{
+}
+
+#networktable .member_icon{
+  float:left;
+  padding-right:10px;
+}
+
+#networktable div.member_info{
+}
+
+#networktable ul{
+  list-style: none;
+  margin: 0px;
+}
+
+#networktable td{
+  border: 0px;
+}
+/* the end of COMMUNITY */

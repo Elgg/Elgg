@@ -10,7 +10,7 @@ div#elggtoolbar {
 	top:0;
 	left: 0;
 	width:100%;
-	background:url({{url}}mod/toolbar/images/toolbar_nav_grey.gif) repeat-x bottom;
+	background:url({{url}}mod/toolbar/images/toolbar-bg.gif) repeat-x bottom;
 	color:#000;
 	margin:0;
 	padding:0 0 4px 0;

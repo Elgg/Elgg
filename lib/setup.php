@@ -69,6 +69,10 @@ if (empty($CFG->disable_publiccomments)) {
     $CFG->disable_publiccomments = false;
 }
 
+if (empty($CFG->disable_passwordchanging)) {
+    $CFG->disable_passwordchanging = false;
+}
+
 if (empty($CFG->community_create_flag)) {
     $CFG->community_create_flag = "";
 }
@@ -106,11 +110,23 @@ $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
 error_reporting(0);  // Hide errors
 
-if (!empty($CFG->dbpersist)) {    // Use persistent connection (default)
-    $dbconnected = $db->PConnect($CFG->dbhost,$CFG->dbuser,$CFG->dbpass,$CFG->dbname);
-} else {                                                     // Use single connection
-    $dbconnected = $db->Connect($CFG->dbhost,$CFG->dbuser,$CFG->dbpass,$CFG->dbname);
+if (!empty($CFG->dbpersist)) {
+    $dbcmd = 'PConnect'; // Use persistent connection (default)
+} else {
+    $dbcmd = 'Connect'; // Use single connection
 }
+
+if (is_array($CFG->dbhost)) {
+    foreach ($CFG->dbhost as $ahost) {
+        if ($dbconnected = $db->$dbcmd($ahost,$CFG->dbuser,$CFG->dbpass,$CFG->dbname)) {
+            $CFG->dbhost = $ahost;
+            break;
+        }
+    }
+} else {
+    $dbconnected = $db->$dbcmd($CFG->dbhost,$CFG->dbuser,$CFG->dbpass,$CFG->dbname);
+}
+
 if (! $dbconnected) {
     // In the name of protocol correctness, monitoring and performance
     // profiling, set the appropriate error headers for machine consumption

@@ -287,10 +287,18 @@ class IXR_Server {
     function serve($data = false) {
         if (!$data) {
             global $HTTP_RAW_POST_DATA;
-            if (!$HTTP_RAW_POST_DATA) {
-               die('XML-RPC server accepts POST requests only.');
+            // CHANGE FROM UPSTREAM START - http://bugs.php.net/bug.php?id=41293
+            if (isset($HTTP_RAW_POST_DATA)) {
+                $input = $HTTP_RAW_POST_DATA;
+            } else {
+                $input = implode("\r\n", file('php://input'));
             }
-            $data = $HTTP_RAW_POST_DATA;
+            if (empty($input)) {
+                error_log('XML-RPC server accepts POST requests only.');
+                die('XML-RPC server accepts POST requests only.');
+            }
+            $data = $input;
+            // CHANGE FROM UPSTREAM END
         }
         $this->message = new IXR_Message($data);
         if (!$this->message->parse()) {

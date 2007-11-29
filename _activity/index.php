@@ -75,8 +75,48 @@ if ($activities = get_records_sql('SELECT wc.*, u.username, u.name as weblogname
                                       )
                                 );
     }
+
 } else {
     $body .= "<p>" . __gettext("No activity during this time period.") . "</p>";
+}
+
+// Display the river, if river plugin is installed!
+if (function_exists('river_save_event'))
+{
+	$river = river_get_river($page_owner, 0, $starttime);
+
+	$body .= "<h2>" . __gettext("Your river") . "</h2>";
+	
+	if ($river)
+	{
+		$d1 = "";
+		$d2 = "";
+		
+		foreach ($river as $r)
+		{
+			$d2 = date("j-n-y", $r->ts); // Set second marker
+
+			$txt = $r->string;
+			$date = date("l jS F Y", $r->ts);
+			$time = date("g:ia", $r->ts);
+
+			if (strcmp($d1,$d2)!=0) $body .= "<div class=\"_activity_river_entry_time\">$date</div>";
+			
+			$body .= <<< END
+				<div class="_activity_river_entry">
+					<div class="_activity_river_entry_txt">$txt
+					<span class="_activity_river_entry_time">$time</span></div>
+				</div>
+END;
+		
+			$d1 = date("j-n-y", $r->ts); // Now set first marker to date
+		}
+		
+	}
+	else
+	{
+		$body .= __gettext("This user hasn't done anything yet.");
+	}
 }
 
 $body = templates_draw(array(

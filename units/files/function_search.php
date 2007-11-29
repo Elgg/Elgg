@@ -128,16 +128,16 @@ if (isset($parameter) && $parameter[0] == "file" && $handle) {
         }
         foreach($users as $key => $info) {
             $friends_userid = $info->ident;
-            // $friends_name = htmlspecialchars(stripslashes($info->name), ENT_COMPAT, 'utf-8');
-            $friends_name = run("profile:display:name",$info->ident);
+            $friends_name = user_name($info->ident);
             $info->icon = run("icons:get",$info->ident);
             $friends_menu = run("users:infobox:menu",array($info->ident));
             $link_keyword = urlencode($parameter[1]);
+            $friends_icon = user_icon_html($info->ident,$w);
             $body .= <<< END
         <td align="center">
             <p>
             <a href="{$CFG->wwwroot}search/index.php?file={$link_keyword}&amp;owner={$friends_userid}">
-            <img src="{$CFG->wwwroot}_icon/user/{$info->icon}/w/{$w}" alt="{$friends_name}" border="0" /></a><br />
+            {$friends_icon}</a><br />
             <span class="userdetails">
                 {$friends_name}
                 {$friends_menu}

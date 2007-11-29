@@ -168,6 +168,9 @@
 //to move or copy /mod/template/templates/Default_Template/ to the new location
 \$CFG->templatesroot = '$PARSEDCFG->templatesroot'; // use on-disk templates instead of DB templates 
 
+// PROFILE LOCATION
+\$CFG->profilelocation = '$PARSEDCFG->profilelocation';
+
 //Template file handing is not currently recommended.
 //\$CFG->templatestore = 'db';          // 'db' (default) or 'files' (requires \$CFG->templatesroot to be set)
 

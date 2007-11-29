@@ -1,0 +1,22 @@
+Elgg version 0.8 IIS installation instructions
+
+Ben Werdmuller <ben@curverider.co.uk>
+5 July 2007
+
+Some users have had success installing on Microsoft IIS web servers. While
+this appears to work as normal, it is worth noting that it remains untested
+by the core Elgg team and should be approached with caution.
+
+IIS Mod-Rewrite is required. This can be obtained from:
+
+    http://www.micronovae.com/ModRewrite/ModRewrite.html
+
+Once this is installed, follow the instructions in INSTALL as normal. However,
+when you copy htaccess-dist to .htaccess, open this file in a text editor and
+remove all lines that don't start with RewriteEngine or RewriteRule.
+
+You may find the following thread on Elgg.org useful:
+
+    http://elgg.org/developers/weblog/900.html
+
+Thanks to the Elgg.org community for testing this functionality.

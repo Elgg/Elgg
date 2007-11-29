@@ -1,0 +1,4932 @@
+# Vietnamese translation for elgg
+# Copyright (c) 2007 Rosetta Contributors and Canonical Ltd 2007
+# This file is distributed under the same license as the elgg package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2007.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: elgg\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2007-02-07 13:51+0000\n"
+"PO-Revision-Date: 2007-04-12 00:17+0000\n"
+"Last-Translator: mic <michiganannd@yahoo.com>\n"
+"Language-Team: Vietnamese <vi@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Rosetta-Export-Date: 2007-04-21 17:39:27+0000\n"
+
+#: _activity/index.php:24
+msgid "Recent activity"
+msgstr "Những hoạt động gần nhất"
+
+#: _activity/index.php:29
+msgid "Currently viewing recent activity since "
+msgstr "Hiện đang xem những hoạt động gần nhất từ khi "
+
+#: _activity/index.php:31
+msgid "You may view recent activity during the following time-frames:"
+msgstr "Bạn có thể xem những hoạt động thông qua bảng thời gian sau"
+
+#: _activity/index.php:33
+msgid "The last 24 hours"
+msgstr "24 giờ vừa qua"
+
+#: _activity/index.php:34
+msgid "The last 48 hours"
+msgstr "48 giờ vừa qua"
+
+#: _activity/index.php:35
+msgid "The last week"
+msgstr "Tuần trước"
+
+#: _activity/index.php:36
+msgid "The last month"
+msgstr "Tháng trước"
+
+#: _activity/index.php:38
+msgid "Your recent messages"
+msgstr "Những thông điệp của bạn"
+
+#: _activity/index.php:49
+msgid "Activity on weblog posts you have marked as interesting"
+msgstr "Những hoạt động trên các blog mà bạn đã đánh đấu yêu thích"
+
+#: _activity/index.php:60
+msgid "Read more"
+msgstr "Đọc thêm"
+
+#: _activity/index.php:64
+msgid "your blog"
+msgstr "Blog của bạn"
+
+#: _activity/index.php:67
+#, php-format
+msgid "<b>You</b> commented on weblog post '%s' in %s:"
+msgstr "<b>Bạn</b> đã cho ý kiến trên blog đăng '%s' trong %s:"
+
+#: _activity/index.php:69
+#, php-format
+msgid "<b>%s</b> commented on weblog post '%s' in %s:"
+msgstr "<b>%s</b> đã cho ý kiến trên blog đang  '%s' trong %s:"
+
+#: _activity/index.php:79
+msgid "No activity during this time period."
+msgstr "Không có hoạt động nào trong khoảng thời gian này."
+
+#: _admin/antispam.php:17 _admin/users.php:17 _admin/users.php:20
+#: lib/templates.php:491
+msgid "Manage users"
+msgstr "Quản lý thành viên"
+
+#: _admin/antispam.php:20
+msgid "Spam blocking"
+msgstr ""
+
+#: _admin/flags.php:17 _admin/flags.php:20
+msgid "Content flags"
+msgstr "Đánh dấu nội dung"
+
+#: _admin/index.php:17 _admin/index.php:20 lib/templates.php:449
+msgid "Administration"
+msgstr "Quản trị"
+
+#: _admin/users_add.php:17 _admin/users_add.php:20
+msgid "Add multiple users"
+msgstr "Thêm nhiều thành viên"
+
+#: _communities/index.php:22 mod/browser/index.php:83 mod/community/lib.php:54
+#: mod/community/lib.php:64 mod/toolbar/lib.php:43
+#: units/communities/communities_edit_wrapper.php:5
+msgid "Communities"
+msgstr "Diễn đàn"
+
+#: _communities/members.php:22 units/communities/community_memberships.php:40
+#: units/communities/community_memberships.php:42
+msgid "Members"
+msgstr "Thành viên"
+
+#: _communities/owned.php:22 mod/community/lib.php:58
+msgid "Owned Communities"
+msgstr "Diễn đàn của bạn"
+
+#: _communities/requests.php:23
+#: units/communities/communities_membership_requests.php:10
+msgid "Membership requests"
+msgstr "Yêu cầu làm thành viên"
+
+#: _files/edit_file.php:19
+msgid "Edit File"
+msgstr "Sửa tập tin"
+
+#: _files/edit_folder.php:19
+msgid "Edit Folder"
+msgstr "Sửa thư mục"
+
+#: _files/index.php:19 units/files/files_user_info_menu.php:13
+#: units/files/function_rss_publish.php:35 units/files/profile_files.php:9
+msgid "Files"
+msgstr "Tập tin"
+
+#: _files/rss2.php:25
+#, php-format
+msgid "Files tagged with %s"
+msgstr "File được đánh dấu với %s"
+
+#: _files/rss2.php:31 units/files/function_rss_publish.php:42
+#, php-format
+msgid "Files for %s, hosted on %s."
+msgstr "Tập tin cho %s, đăng trên %s"
+
+#: _friends/friendsof.php:21 units/friends/friends_of_edit_wrapper.php:5
+msgid "Friends who have linked to you"
+msgstr "Những bạn bè mà kết nối đến bạn"
+
+#: _friends/index.php:21 units/friends/friends_edit_wrapper.php:5
+msgid "Friends I have linked to"
+msgstr "Những bạn bè mà bạn kết nối đến"
+
+#: _friends/requests.php:22 mod/friend/lib.php:38
+#: units/friends/user_friendship_requests.php:11
+msgid "Friendship requests"
+msgstr "Yêu cầu làm quen"
+
+#: _groups/index.php:23
+msgid "Access Controls"
+msgstr "Kiểm soát đăng nhập"
+
+#: _icons/index.php:20
+msgid "Manage user icons"
+msgstr "Quản lý biểu tượng thành viên"
+
+#: _invite/forgotten_password.php:14
+msgid "Generate a New Password"
+msgstr "Tạo mật khẩu mới"
+
+#: _invite/index.php:18
+msgid "Invite a Friend"
+msgstr "Mời bạn bè"
+
+#: _invite/join.php:12 _invite/register.php:11
+#, php-format
+msgid "Join %s"
+msgstr "Tham gia %s"
+
+#: _invite/new_password.php:11
+#, php-format
+msgid "Get new %s password"
+msgstr "Tạo mới %s mật khẩu"
+
+#: _rss/blog.php:25
+msgid "Publish feeds to blog"
+msgstr "Hiển thị feed đến blog"
+
+#: _rss/index.php:24 _rss/subscriptions.php:24 mod/newsclient/lib.php:27
+#: units/magpie/menu_sub.php:14
+msgid "Feeds"
+msgstr ""
+
+#: _rss/individual.php:13
+msgid "Feed detail"
+msgstr "Chi tiết Feed"
+
+#: _rss/opml.php:16
+#, php-format
+msgid "Feed subscriptions for %s"
+msgstr "Đăng ký feed cho %s"
+
+#: _rss/opml.php:35
+msgid "No subscriptions found"
+msgstr "Không tìm thấy đăng ký"
+
+#: _rss/opml.php:46
+#, php-format
+msgid "Username not found: %s"
+msgstr ""
+
+#: _rss/popular.php:12 units/magpie/menu_sub.php:31
+msgid "Popular feeds"
+msgstr "Các feed nổi tiếng"
+
+#: _rss/styles.php:10
+msgid "RSS Management"
+msgstr "Quản lý RSS"
+
+#: _rss/styles.php:11
+msgid "To add this feed to your resources page, click here."
+msgstr "Để thêm feed này vào tài nguyên của bạn, nhấn ở đây"
+
+#: _rss/styles.php:12
+msgid ""
+"To add this feed to an external RSS aggregator, click the link that "
+"corresponds to your aggregator:"
+msgstr ""
+"Để thêm feed này vào RSS aggregator ngoài thì nhấn vào đường link đến "
+"aggregator của bạn:"
+
+#: _rss/styles.php:13
+msgid "Summary"
+msgstr "Tóm tắt"
+
+#: _rss/styles.php:14
+msgid "This is an RSS feed for "
+msgstr "Đây là RSS feed cho "
+
+#: _rss/styles.php:15
+msgid "Didn't mean to come here? Click to exit!"
+msgstr "Bạn không có ý đến đây? Nhấn để thoát!"
+
+#: _templates/edit.php:15
+msgid "Template Edit"
+msgstr "Chỉnh sửa giao diện"
+
+#: _templates/index.php:15
+msgid "Select / Create Themes"
+msgstr "Chọn / Tạo giao diện"
+
+#: _templates/preview.php:13
+msgid "Template Preview"
+msgstr "Xem trước giao diện"
+
+#: _userdetails/index.php:18 lib/templates.php:470
+msgid "Edit user details"
+msgstr "Chỉnh sửa thông tin"
+
+#: _weblog/archive.php:15 _weblog/archive_month.php:15
+msgid "Blog Archives"
+msgstr "Các lưu trữ trong Blog"
+
+#: _weblog/edit.php:24 _weblog/index.php:15
+#: units/communities/communities_membership_requests.php:33
+#: units/friends/user_friendship_requests.php:34
+#: units/weblogs/weblogs_user_info_menu.php:29
+msgid "Blog"
+msgstr ""
+
+#: _weblog/everyone.php:15
+msgid "All blogs"
+msgstr "Tất cả Blog"
+
+#: _weblog/everyone.php:19
+msgid "You can filter this page to certain types of posts:"
+msgstr "Bạn có thể chọn lọc trang này bằng nhiều kiểu bài khác nhau:"
+
+#: _weblog/everyone.php:21
+msgid "Personal blog posts"
+msgstr "Những bài viết blog cá nhân"
+
+#: _weblog/everyone.php:22
+msgid "Community blog posts"
+msgstr "Những bài viết trong diễn đàn"
+
+#: _weblog/everyone.php:23
+msgid "Posts with comments"
+msgstr "Bài với ý kiến"
+
+#: _weblog/everyone.php:24
+msgid "Posts with no comments"
+msgstr "Bài với không ý kiến"
+
+#: _weblog/friends.php:15 units/weblogs/weblogs_user_info_menu.php:47
+msgid "Friends blog"
+msgstr "Blog của bạn bè"
+
+#: _weblog/interesting.php:15 mod/blog/lib.php:57
+msgid "Interesting posts"
+msgstr "Những bài viết chú ý"
+
+#: _weblog/rss2.php:51
+#, php-format
+msgid "Weblog items tagged with %s"
+msgstr "Các bài viết được đánh dấu với %s"
+
+#: _weblog/rss2.php:54
+msgid "Weblog items"
+msgstr "Những bài viết trong blog"
+
+#: _weblog/rss2.php:61
+msgid "All users"
+msgstr "Tất cả thành viên"
+
+#: _weblog/rss2.php:74
+#, php-format
+msgid "The most recent weblog posts on %s."
+msgstr "Những bài viết mới nhất trên %s"
+
+#: _weblog/rss2.php:78 units/weblogs/function_rss_publish.php:42
+#, php-format
+msgid "The weblog for %s, hosted on %s."
+msgstr "Blog dành cho %s, đăng trên %s"
+
+#: _weblog/view_post.php:28
+msgid "Access denied or post not found"
+msgstr "Không được truy cập hay không tìm thấy bài viết"
+
+#: _weblog/view_post.php:31
+msgid ""
+"Either this blog post doesn't exist or you don't currently have access "
+"privileges to view it."
+msgstr "Có thể bài viết này không tồn tại hay bạn không có quyền để xem nó."
+
+#: _weblog/view_post.php:39 units/weblogs/function_rss_publish.php:35
+msgid "Weblog"
+msgstr "Blog"
+
+#: auth/ldap/lib.php:113 lms/join.php:48 units/invite/invite_actions.php:95
+msgid ""
+"Error! Your username must contain letters and numbers only, cannot be blank, "
+"and must be between 3 and 12 characters in length."
+msgstr ""
+"Xảy ra lỗi! Tên truy cập của bạn chỉ được phép bao gồm ký tự và chữ số, "
+"không thể bỏ trống, và ít nhất là 3 cho đến 12 ký tự."
+
+#: auth/ldap/lib.php:118 units/communities/communities_actions.php:27
+#, php-format
+msgid ""
+"The username %s is already taken by another user. You will need to pick a "
+"different one."
+msgstr "Tên truy cập %s đã có người đăng ký. Bạn cần phải chọn 1 tên khác."
+
+#: auth/ldap/lib.php:139
+#, php-format
+msgid ""
+"User addition %d failed: Unknown reason, please contact you system "
+"administrator."
+msgstr ""
+"Thêm thành viên % bị hủy: Không rõ lý do, xin vui lòng liên hệ nhà quản trị."
+
+#: content/about.php:10 content/about.php:13
+#, php-format
+msgid "About %s"
+msgstr "Thông tin về %s"
+
+#: content/faq.php:10 content/faq.php:13
+#, php-format
+msgid "%s FAQ"
+msgstr "%s Câu hỏi và Trả lời"
+
+#: content/invite/invite.php:3
+msgid ""
+"If you have a friend or colleague you would like to join the system, perhaps "
+"because you would like to share protected resources or reflections with "
+"them, you can enter their details below. They will then receive a special "
+"invitation email containing a code that allows them to create a new account; "
+"once they do so, a mutual friend connection will be created between their "
+"account and yours."
+msgstr ""
+"Nếu bạn có người bạn hay là đồng nghiệp và bạn muốn họ cùng tham gia hệ "
+"thông, có thế bởi vì bạn muốn cùng chia sẻ những tài nguyên với họ, bạn có "
+"thể điền thông tin của họ dưới đây. Rồi sau đó họ sẽ nhận dược 1 bức thư mời "
+"đặc biệt mà cho phép họ đăng ký 1 tài khoản mới; một khi họ đã đăng ký; kết "
+"nối bạn bè sẽ được tự động thiết lập giữa 2 người trong hệ thống."
+
+#: content/mainindex/content_loggedout.php:7
+#: content/mainindex/content_main_index.php:7 lib/templates.php:66
+#: lib/templates.php:1278 lib/templates.php:1280
+msgid "Welcome"
+msgstr "Chào mừng bạn"
+
+#: content/mainindex/content_loggedout.php:8
+#, php-format
+msgid ""
+"This is %s, a learning landscape. Why not check out <a href=\"%s\">what "
+"people are saying</a> right now."
+msgstr ""
+
+#: content/mainindex/content_loggedout.php:9
+#, php-format
+msgid "<a href=\"%s\">Find others</a> with similar interests and goals."
+msgstr ""
+
+#: content/mainindex/content_loggedout.php:17
+msgid "Here are some example users:"
+msgstr ""
+
+#: content/mainindex/content_loggedout.php:19
+msgid "Here is an example user:"
+msgstr ""
+
+#: content/mainindex/content_loggedout.php:33
+#, php-format
+msgid ""
+"If you like what you see, why not <a href=\"%s\">register for an account</a>?"
+msgstr ""
+
+#: content/mainindex/content_loggedout.php:40
+#: content/mainindex/content_main_index.php:41
+msgid "Latest news"
+msgstr "Những tin tức mới nhất"
+
+#: content/mainindex/content_main_index.php:8
+#, php-format
+msgid "Why not <a href=\"%s\">create your profile</a>?"
+msgstr ""
+
+#: content/mainindex/content_main_index.php:9
+msgid ""
+"Tell people about yourself and connect to others with similar interests and "
+"goals."
+msgstr "Giới thiệu về bản thân và kết nối với mọi người cùng sở thích."
+
+#: content/mainindex/content_main_index.php:17
+msgid "Here are some examples of complete profiles:"
+msgstr ""
+
+#: content/mainindex/content_main_index.php:19
+msgid "Here is an example of a complete profile:"
+msgstr ""
+
+#: content/mainindex/content_main_index.php:33
+#, php-format
+msgid "Or you could <a href=\"%s\">start your blog</a>?"
+msgstr ""
+
+#: content/mainindex/content_main_index.php:34
+#, php-format
+msgid ""
+"Comment on what you're learning, collect interesting links and decide who "
+"gets to see what you're writing. Here's what <a href=\"%s\">everyone else is "
+"talking about</a> right now."
+msgstr ""
+
+#: content/privacy.php:10 content/privacy.php:13
+#, php-format
+msgid "%s Privacy Policy"
+msgstr "%s Chính Sách Riêng Tư"
+
+#: content/run_your_own.php:10 content/run_your_own.php:13
+#, php-format
+msgid "Running Your Own %s"
+msgstr ""
+
+#: content/terms.php:10 content/terms.php:13
+#, php-format
+msgid "%s Terms &amp; Conditions"
+msgstr "%s Điều kiện sử dụng &amp; Điều khoản"
+
+#: home.php:15 index2.php:15
+msgid "Main Index"
+msgstr "Trang Chủ"
+
+#: lib/datalib.php:45
+msgid "Success"
+msgstr "Thành công"
+
+#: lib/datalib.php:50 lib/elgglib.php:2986
+msgid "Error"
+msgstr "Lỗi sai"
+
+#: lib/db/mysql.php:215
+msgid "Publishing RSS"
+msgstr "Hiển thị RSS"
+
+#: lib/db/mysql.php:220 lib/db/postgres7.php:183
+#, php-format
+msgid "Publishing RSS for user %d"
+msgstr "Hiển thị RSS cho thành viên %d"
+
+#: lib/db/mysql.php:232 lib/db/postgres7.php:195
+msgid "Adjusting file repository information"
+msgstr "Điều chỉnh thông tin chứa file"
+
+#: lib/db/mysql.php:241 lib/db/mysql.php:251 lib/db/postgres7.php:204
+#: lib/db/postgres7.php:214
+#, php-format
+msgid "Updating file %d: %s"
+msgstr "Nâng cấp tập tin %d: %s"
+
+#: lib/dbsetup.php:77
+msgid "Need to upgrade database"
+msgstr "Cần phải nâng cấp database"
+
+#: lib/displaylib.php:197 units/display/function_log_on_pane.php:16
+#: units/invite/join_noinvite.php:42
+msgid "Register"
+msgstr "Đăng ký"
+
+#: lib/displaylib.php:205 login/index.php:56
+#: units/display/function_log_on_pane.php:28
+msgid "Log On"
+msgstr "Đăng nhập"
+
+#: lib/displaylib.php:211 mod/toolbar/lib.php:30 units/admin/admin_main.php:84
+#: units/admin/admin_users.php:28 units/admin/admin_users_add.php:20
+#: units/display/function_log_on_pane.php:34
+msgid "Username"
+msgstr "Tên truy nhập"
+
+#: lib/displaylib.php:212 mod/toolbar/lib.php:31
+#: units/display/function_log_on_pane.php:35
+msgid "Password"
+msgstr "Mật khẩu"
+
+#: lib/displaylib.php:219 units/display/function_log_on_pane.php:44
+msgid "Log on"
+msgstr "Đăng nhập"
+
+#: lib/displaylib.php:219 units/display/function_log_on_pane.php:44
+msgid "Go"
+msgstr "Chuyển"
+
+#: lib/displaylib.php:221 units/display/function_log_on_pane.php:46
+msgid "Remember Login"
+msgstr "Nhớ giữa các lần đăng nhập"
+
+#: lib/displaylib.php:224 units/display/function_log_on_pane.php:49
+msgid "Forgotten password"
+msgstr "Quên mật khẩu"
+
+#: lib/displaylib.php:283
+msgid "Add User"
+msgstr "Thêm người dùng"
+
+#: lib/displaylib.php:283 lib/displaylib.php:292
+msgid "Send Message"
+msgstr "Gửi thông điệp"
+
+#: lib/displaylib.php:292
+msgid "Add Buddy"
+msgstr "Thêm người bạn"
+
+#: lib/elgglib.php:504 lib/elgglib.php:554 lib/uploadlib.php:661
+msgid "Administrator"
+msgstr "Quản trị"
+
+#: lib/elgglib.php:512
+msgid "Do not reply"
+msgstr "Không trả lời lại"
+
+#: lib/elgglib.php:763
+msgid "GB"
+msgstr ""
+
+#: lib/elgglib.php:764
+msgid "MB"
+msgstr ""
+
+#: lib/elgglib.php:765
+msgid "KB"
+msgstr ""
+
+#: lib/elgglib.php:766
+msgid "bytes"
+msgstr ""
+
+#: lib/elgglib.php:1766
+msgid "Close this window"
+msgstr "Đóng cửa sổ này"
+
+#: lib/elgglib.php:1803 lib/elgglib.php:1853
+msgid "Choose"
+msgstr "Chọn"
+
+#: lib/elgglib.php:2083
+msgid "Elgg auto-format"
+msgstr "Tự động định dạng"
+
+#: lib/elgglib.php:2084
+msgid "HTML format"
+msgstr "Định dạng HTML"
+
+#: lib/elgglib.php:2085
+msgid "Plain text format"
+msgstr "Định dạng chữ"
+
+#: lib/elgglib.php:2086
+msgid "Markdown format"
+msgstr "Định dạng Markdown"
+
+#: lib/elgglib.php:2655 lib/elgglib.php:3113
+msgid "Continue"
+msgstr "Tiếp tục"
+
+#: lib/elgglib.php:3072 units/admin/admin_userdetails.php:58
+#: units/admin/admin_userdetails.php:74 units/icons/function_add_icons.php:48
+#: units/tinymce/tinymce_userdetails_edit.php:21
+#: units/tinymce/tinymce_userdetails_edit.php:28
+#: units/users/userdetails_edit.php:109 units/users/userdetails_edit.php:116
+#: units/users/userdetails_edit.php:139 units/users/userdetails_edit.php:146
+msgid "Yes"
+msgstr "Đồng Ý"
+
+#: lib/elgglib.php:3074 units/admin/admin_userdetails.php:58
+#: units/admin/admin_userdetails.php:74 units/icons/function_add_icons.php:49
+#: units/tinymce/tinymce_userdetails_edit.php:21
+#: units/tinymce/tinymce_userdetails_edit.php:28
+#: units/users/userdetails_edit.php:109 units/users/userdetails_edit.php:116
+#: units/users/userdetails_edit.php:139 units/users/userdetails_edit.php:146
+msgid "No"
+msgstr "Không"
+
+#: lib/elgglib.php:3272 lib/elgglib.php:3300
+msgid "You have been banned from the system!"
+msgstr "Bạn đã bị cấm từ hệ thống này!"
+
+#: lib/elgglib.php:3330
+msgid ""
+"Sorry, but your IP number seems to have changed from when you first logged "
+"in.  This security feature prevents crackers stealing your identity while "
+"logged in to this site.  Normal users should not be seeing this message - "
+"please ask the site administrator for help."
+msgstr ""
+"Xin lỗi, nhưng địa chỉ IP của bạn dường như đã thay đổi lần đăng nhập đầu "
+"tiên. Hệ thống bảo mật này nhằm chống lại việc ăn cắp thông tin cá nhân của "
+"bạn. Những thành viên bình thường sẽ không thấy được thông điệp này. Xin vui "
+"lòng liên hệ nhà quản trị để được giúp đỡ"
+
+#: lib/elgglib.php:3360
+msgid "The system will remember you and automatically log you in next time."
+msgstr "Hệ thông sẽ nhớ bạn và tự động đăng nhập lần tiếp theo"
+
+#: lib/elgglib.php:4062 units/users/function_default_access_levels.php:7
+msgid "Logged in users"
+msgstr "Những thành viên đã đăng nhập"
+
+#: lib/elgglib.php:4064 units/users/function_default_access_levels.php:5
+msgid "Private"
+msgstr "Cá nhân"
+
+#: lib/elgglib.php:4066
+msgid "Restricted"
+msgstr "Bị hạn chế"
+
+#: lib/elgglib.php:4120
+msgid "Click to view link"
+msgstr "Nhấn để xem link"
+
+#: lib/php-getttext/examples/pigs_dropin.php:75
+msgid ""
+"This is how the story goes.\n"
+"\n"
+msgstr ""
+
+#: lib/templates.php:44 units/templates/default_template.php:9
+msgid "Stylesheet"
+msgstr ""
+
+#: lib/templates.php:45 units/templates/default_template.php:10
+msgid "The Cascading Style Sheet for the template."
+msgstr "CSS dành cho giao diện"
+
+#: lib/templates.php:54 units/templates/default_template.php:19
+msgid "Page Shell"
+msgstr "Giao diện trang chính"
+
+#: lib/templates.php:55 units/templates/default_template.php:20
+msgid "The main page shell, including headers and footers."
+msgstr ""
+"Giao diện trang chính bao gồm phần đầu và phần chân (header và footer)"
+
+#: lib/templates.php:57 units/templates/default_template.php:23
+msgid "Page metatags (mandatory) - must be in the 'head' portion of the page"
+msgstr "Page metatags - cần phải trong phần 'head' của trang web"
+
+#: lib/templates.php:58 units/templates/default_template.php:24
+msgid "Page title"
+msgstr "Tựa trang"
+
+#: lib/templates.php:59 units/templates/default_template.php:25
+msgid "Menu"
+msgstr "Trình đơn"
+
+#: lib/templates.php:60 units/templates/default_template.php:26
+msgid "Status menu"
+msgstr "Thanh tình trạng"
+
+#: lib/templates.php:61 units/templates/default_template.php:27
+msgid "Main body"
+msgstr "Phần thân bài"
+
+#: lib/templates.php:62 units/templates/default_template.php:28
+msgid "Sidebar"
+msgstr "Thanh bên"
+
+#: lib/templates.php:78 units/templates/default_template.php:39
+msgid "Content holder"
+msgstr "Nội dung"
+
+#: lib/templates.php:79 units/templates/default_template.php:40
+msgid ""
+"Contains the main content for a page (as opposed to the sidebar or the "
+"title)."
+msgstr "Bao gồm phần nội dung chính của trang web"
+
+#: lib/templates.php:81 lib/templates.php:133
+#: units/templates/default_template.php:42
+msgid "The title"
+msgstr "Tiêu đề"
+
+#: lib/templates.php:82 units/templates/default_template.php:43
+msgid "The page submenu"
+msgstr "Trình đơn phụ"
+
+#: lib/templates.php:83 units/templates/default_template.php:44
+#: units/templates/default_template.php:61
+msgid "The body of the page"
+msgstr "Phần thân của trang"
+
+#: lib/templates.php:100 units/templates/default_template.php:74
+msgid "Owner box"
+msgstr "Chủ nhân của hộp thoại"
+
+#: lib/templates.php:101 units/templates/default_template.php:75
+msgid "A box containing a description of the owner of the current profile."
+msgstr "Một hộp thoại bao gồm chú thích về người chủ của hồ sơ này."
+
+#: lib/templates.php:103 units/templates/default_template.php:77
+msgid "The user's name"
+msgstr "Tên của thành viên"
+
+#: lib/templates.php:104 units/templates/default_template.php:78
+msgid "The URL of the user's profile page, including terminating slash"
+msgstr "Link đến trang hồ sơ của thành viên"
+
+#: lib/templates.php:105 units/templates/default_template.php:79
+msgid "The user's icon, if it exists"
+msgstr "Biểu tượng của thành viên, nếu có"
+
+#: lib/templates.php:106 units/templates/default_template.php:80
+msgid "A short blurb about the user"
+msgstr "Lời quảng cáo ngắn gọn về thành viên"
+
+#: lib/templates.php:107 units/templates/default_template.php:81
+msgid "Links to friend / unfriend a user"
+msgstr "Link đến bạn / không phải là bạn thành viến"
+
+#: lib/templates.php:108 units/templates/default_template.php:82
+msgid "Links to any lms hosts the user is attached to"
+msgstr "Link đến bất kỳ lms hosts mà thành viên đã đính kèm đến"
+
+#: lib/templates.php:112 search/personaltags.php:26
+#: units/templates/default_template.php:87
+msgid "Tags"
+msgstr "Từ Khóa"
+
+#: lib/templates.php:113 search/index.php:97
+#: units/templates/default_template.php:88
+msgid "Resources"
+msgstr "Tài nguyên"
+
+#: lib/templates.php:130
+msgid "Information Box"
+msgstr "Hộp thoại thông tin"
+
+#: lib/templates.php:131
+msgid ""
+"A box containing a caption and some text, used extensively throughout the "
+"site. For example, the 'friends' box and most page bodies are info boxes. Of "
+"course, you can alter this template however you wish - it doesn't need to be "
+"an actual box."
+msgstr "1 hộp thoại bao gồm tiêu đề và chữ."
+
+#: lib/templates.php:134
+msgid "The contents of the box"
+msgstr "Nội dung của hộp thoại"
+
+#: lib/templates.php:153 units/templates/default_template.php:106
+msgid "System message shell"
+msgstr "Hệ thống thông điệp"
+
+#: lib/templates.php:154 units/templates/default_template.php:107
+msgid "A list of system messages will be placed within the message shell."
+msgstr "Danh sách các thông điệp sẽ được đặt trong hệ thống thông điệp"
+
+#: lib/templates.php:156 units/templates/default_template.php:109
+msgid "The messages"
+msgstr "Các thông điệp"
+
+#: lib/templates.php:168 units/templates/default_template.php:121
+msgid "Individual system messages"
+msgstr "Thông điệp cá nhân"
+
+#: lib/templates.php:169 units/templates/default_template.php:122
+msgid "Each individual system message."
+msgstr "Từng thông điệp cá nhân"
+
+#: lib/templates.php:171 units/templates/default_template.php:124
+msgid "The system message"
+msgstr "Hệ thống thông điệp"
+
+#: lib/templates.php:186 units/templates/default_template.php:139
+msgid "Main menu shell"
+msgstr ""
+
+#: lib/templates.php:187 units/templates/default_template.php:140
+msgid "A list of main menu items will be placed within the menubar shell."
+msgstr "Danh sách các thành phần sẽ được thay đổi trong menubar shell."
+
+#: lib/templates.php:189 lib/templates.php:235 lib/templates.php:267
+#: units/templates/default_template.php:142
+#: units/templates/default_template.php:188
+#: units/templates/default_template.php:222
+msgid "The menu items"
+msgstr "Các thành phần"
+
+#: lib/templates.php:200 units/templates/default_template.php:153
+msgid "Individual main menu item"
+msgstr "Thành phần menu cá nhân"
+
+#: lib/templates.php:201 units/templates/default_template.php:154
+msgid ""
+"This is the template for each individual main menu item. A series of these "
+"is placed within the menubar shell template."
+msgstr "Đây là giao diện cho từng thành phần cá nhân menu"
+
+#: lib/templates.php:203 lib/templates.php:219 lib/templates.php:251
+#: lib/templates.php:284 units/templates/default_template.php:156
+#: units/templates/default_template.php:172
+#: units/templates/default_template.php:206
+#: units/templates/default_template.php:239
+msgid "The URL of the menu item"
+msgstr "Link của thành phần menu"
+
+#: lib/templates.php:204 lib/templates.php:220 lib/templates.php:252
+#: lib/templates.php:285 units/templates/default_template.php:157
+#: units/templates/default_template.php:173
+#: units/templates/default_template.php:207
+#: units/templates/default_template.php:240
+msgid "The menu item's name"
+msgstr "Tên của thành phần"
+
+#: lib/templates.php:216 units/templates/default_template.php:169
+msgid "Selected individual main menu item"
+msgstr "Lựa chọn"
+
+#: lib/templates.php:217 units/templates/default_template.php:170
+msgid ""
+"This is the template for an individual main menu item if it is selected."
+msgstr ""
+
+#: lib/templates.php:232 units/templates/default_template.php:185
+msgid "Sub-menubar shell"
+msgstr ""
+
+#: lib/templates.php:233 units/templates/default_template.php:186
+msgid "A list of sub-menu items will be placed within the menubar shell."
+msgstr ""
+
+#: lib/templates.php:248 units/templates/default_template.php:203
+msgid "Individual sub-menu item"
+msgstr ""
+
+#: lib/templates.php:249 units/templates/default_template.php:204
+msgid ""
+"This is the template for each individual sub-menu item. A series of these is "
+"placed within the sub-menubar shell template."
+msgstr ""
+
+#: lib/templates.php:264 units/templates/default_template.php:219
+msgid "Status menubar shell"
+msgstr ""
+
+#: lib/templates.php:265 units/templates/default_template.php:220
+msgid ""
+"A list of statusbar menu items will be placed within the status menubar "
+"shell."
+msgstr ""
+
+#: lib/templates.php:281 units/templates/default_template.php:236
+msgid "Individual statusbar menu item"
+msgstr ""
+
+#: lib/templates.php:282 units/templates/default_template.php:237
+msgid ""
+"This is the template for each individual statusbar menu item. A series of "
+"these is placed within the status menubar shell template."
+msgstr ""
+
+#: lib/templates.php:297 units/templates/default_template.php:252
+msgid "Data input box (two columns)"
+msgstr "Hộp thoại nhập dữ liệu (2 cột)"
+
+#: lib/templates.php:298 units/templates/default_template.php:253
+msgid ""
+"This is mostly used whenever some input is taken from the user. For example, "
+"each of the fields in the profile edit screen is a data input box."
+msgstr ""
+
+#: lib/templates.php:300 units/templates/default_template.php:255
+msgid "The name for the data we're inputting"
+msgstr "Tên của dữ liệu chúng ta đang nhập"
+
+#: lib/templates.php:301 units/templates/default_template.php:256
+msgid "The first item of data"
+msgstr ""
+
+#: lib/templates.php:302 units/templates/default_template.php:257
+msgid "The second item of data"
+msgstr ""
+
+#: lib/templates.php:329 units/templates/default_template.php:275
+msgid "Data input box (one column)"
+msgstr ""
+
+#: lib/templates.php:330 units/templates/default_template.php:276
+msgid "A single-column version of the data box."
+msgstr ""
+
+#: lib/templates.php:332 units/templates/default_template.php:278
+msgid "The name of the data we're inputting"
+msgstr "Tên của dữ liệu"
+
+#: lib/templates.php:333 lib/templates.php:361
+#: units/templates/default_template.php:279
+#: units/templates/default_template.php:352
+msgid "The data itself"
+msgstr ""
+
+#: lib/templates.php:357 units/templates/default_template.php:348
+msgid "Data input box (vertical)"
+msgstr ""
+
+#: lib/templates.php:358 units/templates/default_template.php:349
+msgid ""
+"A slightly different version of the data box, used on this edit page amongst "
+"other places."
+msgstr ""
+
+#: lib/templates.php:360 units/templates/default_template.php:351
+msgid "Name of the data we\\'re inputting"
+msgstr ""
+
+#: lib/templates.php:423 mod/template/lib.php:15
+msgid "Change theme"
+msgstr "Thay đổi giao diện"
+
+#: lib/templates.php:457
+msgid "Account settings"
+msgstr "Thông tin tài khoản"
+
+#: lib/templates.php:463
+msgid "Log off"
+msgstr "Thoát"
+
+#: lib/templates.php:474
+msgid "Your site picture"
+msgstr "Hình ảnh đại diện của bạn"
+
+#: lib/templates.php:481 profile/edit.php:105 profile/edit.php:112
+#: profile/profile.class.php:111 profile/profile.class.php:124
+msgid "Main"
+msgstr "Trang chủ"
+
+#: lib/templates.php:486 units/admin/admin_users_add.php:35
+msgid "Add users"
+msgstr "Thêm thành viên"
+
+#: lib/templates.php:496
+msgid "Manage flagged content"
+msgstr ""
+
+#: lib/templates.php:501
+msgid "Spam control"
+msgstr ""
+
+#: lib/templates.php:607
+msgid "The templates have been changed according to your choices."
+msgstr "Đã thay đổi giao diện theo như sự lựa chọn của bạn"
+
+#: lib/templates.php:609
+msgid "No changes made as no area of change was selected!"
+msgstr "Không có sự thay đổi nào"
+
+#: lib/templates.php:637
+msgid "Your template has been updated."
+msgstr "Đã cập nhập giao diện của bạn"
+
+#: lib/templates.php:652
+msgid "Your template was deleted."
+msgstr "Đã xóa giao diện của bạn"
+
+#: lib/templates.php:779
+msgid "Create theme"
+msgstr "Tạo giao diện"
+
+#: lib/templates.php:780
+msgid ""
+"Here you can create your own themes based on one of the existing public "
+"themes. Just select which public theme you would like to alter and then "
+"create your own. You will now have edit privilages."
+msgstr ""
+"Ở đây bạn có thể tạo giao diện cho riêng mình dựa trên những giao diện có "
+"sẵn của chúng tôi. Chỉ cần lựa chọn giao diện mà bạn muốn dựa theo và tạo "
+"giao diện riêng của mình. Bạn sau đó sẽ có quyền sửa chữa. Lưu ý có 1 số "
+"code bạn không có quyền thay đổi trong giao diện (đều được đánh dấu trong "
+"giao diện) ; nếu bạn cố tình sửa chữa hay xóa bỏ những đoạn code đó hệ thống "
+"của chúng tôi sẽ xóa tài khoản và ban bạn ngay lập tức!"
+
+#: lib/templates.php:796
+msgid "Theme name"
+msgstr "Tên giao diện"
+
+#: lib/templates.php:801 lib/templates.php:1110
+msgid "Default Template"
+msgstr "Giao diện mặc định"
+
+#: lib/templates.php:805
+msgid "name"
+msgstr "tên"
+
+#: lib/templates.php:819
+msgid "Based on"
+msgstr "Dựa trên"
+
+#: lib/templates.php:824
+msgid "Create Theme"
+msgstr "Tạo giao diện"
+
+#: lib/templates.php:862 units/templates/templates_edit.php:22
+msgid "Default Theme"
+msgstr "Giao diện mặc định"
+
+#: lib/templates.php:908 units/templates/templates_edit.php:55
+msgid "Theme Name"
+msgstr "Tên giao diện"
+
+#: lib/templates.php:916 units/templates/templates_edit.php:65
+msgid "Glossary"
+msgstr "Bản chú giải"
+
+#: lib/templates.php:952 units/admin/admin_spam.php:22
+#: units/communities/userdetails_edit.php:91 units/files/edit_folder.php:85
+#: units/icons/function_edit_icons.php:89
+#: units/templates/templates_edit.php:101 units/users/userdetails_edit.php:183
+msgid "Save"
+msgstr "Lưu"
+
+#: lib/templates.php:963 units/templates/templates_edit.php:112
+msgid ""
+"You may not edit this theme. To create a new, editable theme based on the "
+"default, go to <a href=\"index.php\">the main themes page</a>."
+msgstr ""
+"Bạn có thể không chỉnh sửa được giao diện này. Để tạo một cái mới mà chỉnh "
+"sửa được dựa trên mặc định, vào <a href=\"index.php\">trang giao diện "
+"chính</a>."
+
+#: lib/templates.php:990 units/templates/templates_preview.php:8
+msgid "Heading one"
+msgstr "Đầu đề một"
+
+#: lib/templates.php:991 units/templates/templates_preview.php:9
+msgid "Heading two"
+msgstr "Đầu đề hai"
+
+#: lib/templates.php:992 units/templates/templates_preview.php:10
+msgid "A bullet list"
+msgstr "Thụt đầu dòng"
+
+#: lib/templates.php:993 units/templates/templates_preview.php:11
+msgid "Heading three"
+msgstr "Đầu đề ba"
+
+#: lib/templates.php:994 units/templates/templates_preview.php:12
+msgid "A numbered list"
+msgstr "Đếm số đầu dòng"
+
+#: lib/templates.php:1024 units/templates/templates_preview.php:42
+msgid "Some text input"
+msgstr "Nhập thông itn"
+
+#: lib/templates.php:1031 units/templates/templates_preview.php:49
+msgid "Some longer text input"
+msgstr "Thêm 1 số thông tin dài hơn"
+
+#: lib/templates.php:1037 units/templates/templates_preview.php:55
+msgid "Further text input"
+msgstr "Những thông tin thêm"
+
+#: lib/templates.php:1085
+msgid "Select / Create / Edit Themes"
+msgstr "Chọn / Tạo / Chỉnh sửa giao diện"
+
+#: lib/templates.php:1086
+msgid "Public Themes"
+msgstr "Giao diện chung"
+
+#: lib/templates.php:1087
+#, php-format
+msgid ""
+"The following are public themes that you can use to change the way your %s "
+"looks - these do not change the content only the appearance. Check the "
+"preview and then select the one you want. If you wish you can adapt one of "
+"these using the 'create theme' option below."
+msgstr ""
+
+#: lib/templates.php:1118 lib/templates.php:1150
+msgid "Preview"
+msgstr "Xem truớc"
+
+#: lib/templates.php:1129
+msgid "Personal themes"
+msgstr "Giao diện cá nhân"
+
+#: lib/templates.php:1130
+msgid ""
+"These are themes that you have created. You can edit and delete these. These "
+"theme(s) only control actual look and feel - you cannot change any content "
+"here. To change any of your content you need to use the other menu options "
+"such as: edit profile, update weblog etc."
+msgstr ""
+"Đây là những giao diện bạn đã tạo. Bạn có thể chỉnh sửa hay xóa chúng. Những "
+"giao diện này chỉ là cái nhìn bề ngoài, bạn không thể thay đổi nội dung của "
+"hệ thống ở đây. Để thay đổi nội dung, bạn có thể vào xem thông tin tài "
+"khoản, blog v.v..Tuy nhiên lưu ý trong các giao diện chúng tôi đã có đánh "
+"dấu những đoạn code bạn không có quyền thay đổi, nếu bạn thay đổi hoặc xóa "
+"các đoạn code trên, hệ thống sẽ tự động xóa và khóa tài khoản của bạn!"
+
+#: lib/templates.php:1152 mod/file/lib.php:197 mod/file/lib.php:215
+#: units/files/templates_preview.php:34
+#: units/weblogs/weblogs_posts_view.php:111
+msgid "Edit"
+msgstr "Chỉnh sửa"
+
+#: lib/templates.php:1153
+msgid "Are you sure you want to permanently remove this template?"
+msgstr "Bạn có chắc muốn xóa giao diện này?"
+
+#: lib/templates.php:1153 mod/file/lib.php:196 mod/file/lib.php:214
+#: units/files/templates_preview.php:20 units/files/templates_preview.php:34
+#: units/icons/function_edit_icons.php:40
+#: units/weblogs/weblogs_posts_view.php:113
+#: units/weblogs/weblogs_posts_view.php:167
+msgid "Delete"
+msgstr "Xóa bỏ"
+
+#: lib/templates.php:1165
+msgid "Change templates"
+msgstr "Thay đổi giao diện"
+
+#: lib/templates.php:1166
+msgid "The selected changes will affect:"
+msgstr "Những sự lựa chọn sẽ có hiệu lực:"
+
+#: lib/templates.php:1180
+msgid "Your personal space"
+msgstr "Khoảng trống cá nhân bạn"
+
+#: lib/templates.php:1193
+msgid "Community: "
+msgstr "Diễn đàn: "
+
+#: lib/templates.php:1205
+msgid "Select new theme"
+msgstr "Chọn giao diện mới"
+
+#: lib/templates.php:1259 lib/templates.php:1273 lib/templates.php:1280
+#: units/weblogs/weblogs_comments_add.php:42
+msgid "Guest"
+msgstr "Khách"
+
+#: lib/templates.php:1280
+msgid "Log in"
+msgstr "Đăng nhập"
+
+#: lib/templates.php:1366
+msgid "Sorry, no users have filled in their profiles yet."
+msgstr ""
+
+#: lib/uploadlib.php:109
+#, php-format
+msgid ""
+"Your file upload has failed because there was a problem with one of the "
+"files, %s.<br /> Here is a log of the problems:<br />%s<br />Not recovering."
+msgstr ""
+"Tập tin đăng tải của bạn đã bị thất bại bởi vì đã có vấn đề với chúng, %s. "
+"<br /> Đây là bản ghi lỗi của các vấn đề: <br />%s<br />Chưa phục hồi."
+
+#: lib/uploadlib.php:135
+#, php-format
+msgid "File was renamed from %s to %s because of invalid characters."
+msgstr "Tập tin đã được đổi tên từ %s đến %s bởi vì các ký tự sai."
+
+#: lib/uploadlib.php:164
+#, php-format
+msgid "Sorry, but that file is too big (limit is %s)"
+msgstr "Xin lỗi nhưng tập tin này quá lớn (giới hạn là %s)"
+
+#: lib/uploadlib.php:217
+msgid "File uploaded successfully"
+msgstr "Đã đăng tải tập tin thành công"
+
+#: lib/uploadlib.php:232 lib/uploadlib.php:342 lib/uploadlib.php:359
+msgid "No file was found - are you sure you selected one to upload?"
+msgstr ""
+"Không tìm thấy tập tin nào - Bạn có chắc bạn đã lựa chọn tập tin để đăng tải?"
+
+#: lib/uploadlib.php:268
+msgid "The old file(s) in your upload area have been deleted"
+msgstr "Tập tin cũ trong vùng đăng tải của bạn đã bị xóa"
+
+#: lib/uploadlib.php:299
+#, php-format
+msgid "File was renamed from %s to %s because there was a filename conflict."
+msgstr ""
+"Tập tin đã được thay đổi tên từ %s thành %s bởi vì đã có sự xung đột tên."
+
+#: lib/uploadlib.php:340 lib/uploadlib.php:363
+#, php-format
+msgid ""
+"An unknown problem occurred while uploading the file '%s' (perhaps it was "
+"too large?)"
+msgstr ""
+"Có sự cố không biết xảy ra trong quá trình đăng tải file '%s' (có thể vì nó "
+"quá lớn?)"
+
+#: lib/uploadlib.php:347
+msgid "Uploaded file exceeded the maximum size limit set by the server"
+msgstr "Tập tin đăng tải quá lớn"
+
+#: lib/uploadlib.php:351
+msgid "Uploaded file exceeded the maximum size limit set by the form"
+msgstr "Tập tin đăng tải quá lớn"
+
+#: lib/uploadlib.php:355
+msgid "File was only partially uploaded"
+msgstr "Tập tin chỉ được đăng tải 1 phần"
+
+#: lib/uploadlib.php:377
+#, php-format
+msgid "Upload log for file %u"
+msgstr "Bản ghi đăng tải cho tập tin %u"
+
+#: lib/uploadlib.php:470
+msgid "Title:"
+msgstr "Tiêu đề :"
+
+#: lib/uploadlib.php:509
+msgid "The file has been moved to a quarantine directory."
+msgstr "Tập tin đã được chuyển đến thư mục bảo đảm"
+
+#: lib/uploadlib.php:512
+#, php-format
+msgid ""
+"The file has been moved to your specified quarantine directory, the new "
+"location is %s"
+msgstr "Tập tin đã được chuyển đến thư mục bảo đảm của bạn, vị trí mới là %s"
+
+#: lib/uploadlib.php:517 lib/uploadlib.php:526 lib/uploadlib.php:535
+#: lib/uploadlib.php:540
+msgid "The file has been deleted"
+msgstr "Tập tin đã được xóa"
+
+#: lib/uploadlib.php:520 lib/uploadlib.php:529
+#, php-format
+msgid ""
+"Could not move the file into your specified quarantine directory, %s. You "
+"need to fix this as files are being deleted if they're found to be infected."
+msgstr ""
+"Không thể chuyển dời tập tin đến thư mục bảo đảm của bạn, %s. Bạn cần phải "
+"khắc phục điều này bởi vì tập tin sẽ bị xóa nếu như nó bị nhiễm."
+
+#: lib/uploadlib.php:543
+msgid "The file could not be deleted"
+msgstr "Tập tin không thể bị xóa"
+
+#: lib/uploadlib.php:559
+msgid ""
+"This file that has been uploaded was found to contain a virus and has been "
+"moved or delted and the user notified."
+msgstr ""
+"Tập tin này đã được đăng tải nhưng tìm thấy virus trong nó và đã được xóa "
+"hay chuyển."
+
+#: lib/uploadlib.php:595
+#, php-format
+msgid ""
+"Elgg is configured to run clam on file upload, but the path supplied to Clam "
+"AV, %s,  is invalid."
+msgstr ""
+"Chúng tôi chạy clam trên các file đăng tải, nhưng đường link đến Clam AV, "
+"%s, là không hợp lệ"
+
+#: lib/uploadlib.php:597
+msgid ""
+"In addition, Elgg is configured so that if clam fails to run, files are "
+"treated like viruses.  This essentially means that no student can upload a "
+"file successfully until you fix this."
+msgstr ""
+
+#: lib/uploadlib.php:603 lib/uploadlib.php:642
+msgid ""
+"Your administrator has enabled virus checking for file uploads but has "
+"misconfigured something.<br />Your file upload was NOT successful. Your "
+"administrator has been emailed to notify them so they can fix it.<br />Maybe "
+"try uploading this file later."
+msgstr ""
+
+#: lib/uploadlib.php:621
+#, php-format
+msgid ""
+"Attention administrator! Clam AV has found a virus in a file uploaded by %s. "
+"Here is the output of clamscan:"
+msgstr ""
+
+#: lib/uploadlib.php:627
+#, php-format
+msgid ""
+"The file you have uploaded, %s, has been scanned by a virus checker and "
+"found to be infected! Your file upload was NOT successful."
+msgstr ""
+
+#: lib/uploadlib.php:633
+#, php-format
+msgid ""
+"Clam AV has failed to run.  The return error message was %s. Here is the "
+"output from Clam:"
+msgstr ""
+
+#: lib/uploadlib.php:658
+#, php-format
+msgid "%s :: Clam AV notification"
+msgstr ""
+
+#: lib/uploadlib.php:702
+msgid "There was an unknown error with clam."
+msgstr ""
+
+#: lib/userlib.php:24 login/index.php:34
+msgid "You have been logged on."
+msgstr "bạn đã đăng nhập"
+
+#: lib/userlib.php:25 login/index.php:43
+msgid ""
+"Unrecognised username or password. The system could not log you on, or you "
+"may not have activated your account."
+msgstr ""
+"Không tìm thấy tên đăng nhập hay mật khẩu. Hệ thống không thể cho phép bạn "
+"đăng nhập hay bạn vẫn chưa khởi động tài khoản của mình."
+
+#: lib/userlib.php:26 login/index.php:46
+msgid ""
+"Either the username or password were not specified. The system could not log "
+"you on."
+msgstr ""
+"Có thể là tên đăng nhập hay mật khẩu không đúng. Hệ thống không cho phép bạn "
+"đăng nhập"
+
+#: lib/userlib.php:145 units/weblogs/weblogs_posts_edit.php:13
+msgid "Access Denied"
+msgstr "Truy cập bị từ chối"
+
+#: lib/userlib.php:170
+msgid "You cannot reply to this message by email."
+msgstr "Bạn không thể trả lời thông điệp này bằng email."
+
+#: lib/userlib.php:171
+msgid "Failed to send email. An unknown error occurred."
+msgstr "Không thể gửi mail. Một lỗi không biết đã xảy ra."
+
+#: lib/userlib.php:185
+msgid "Failed to send message. An unknown error occurred."
+msgstr "Không thể gửi thông điệp. Một lỗi không biết đã xảy ra."
+
+#: lib/userlib.php:217
+msgid "System"
+msgstr "Hệ Thống"
+
+#: lms/join.php:56 units/invite/invite_actions.php:91
+msgid ""
+"Error! Invalid password. Your passwords must match and be between 6 and 16 "
+"characters in length."
+msgstr ""
+"Xảy ra lỗi!Sai mật khẩu. Mật khẩu của bạn phải đúng và cần giữa 6 cho đến 16 "
+"ký tự."
+
+#: lms/join.php:60
+msgid "Error! You must enter your fullname"
+msgstr "Bạn cần phải điền đầy đủ tên"
+
+#: lms/join.php:71
+msgid "Error! Your username and password does not match our record."
+msgstr "Xảy ra lỗi! Tên đăng nhập và mật khẩu của bạn không đúng."
+
+#: lms/join.php:76
+msgid "Fatal Error! Unknown action requested."
+msgstr "Lỗi nghiêm trọng!Không hiểu yêu cầu."
+
+#: lms/join.php:105
+msgid "Your account creation was successful!"
+msgstr "Tài khoản của bạn đã được tạo thành công!"
+
+#: lms/join.php:117
+msgid "Join up"
+msgstr "Tham gia"
+
+#: lms/join.php:129
+msgid "Login"
+msgstr "Đăng nhập"
+
+#: lms/rss.php:28 profile/rss2.php:32
+#: units/profile/function_rss_publish.php:43
+#, php-format
+msgid "Activity for %s, hosted on %s."
+msgstr "Hoạt động cho %s , trên %s."
+
+#: lms/rss.php:33 units/profile/function_rss_publish.php:35
+msgid "Activity"
+msgstr "Hoạt động"
+
+#: lms/rss.php:43
+#, php-format
+msgid "%s posted on weblog post:"
+msgstr "%s đã đăng bài trên blog:"
+
+#: lms/rss.php:65
+#, php-format
+msgid "%s posted on weblog post '%s'"
+msgstr "%s đã đăng bài trên blog '%s'"
+
+#: lms/rss.php:83
+msgid "No activity"
+msgstr "Không có hoạt động nào"
+
+#: login/index.php:21
+msgid "You are already logged on."
+msgstr "Bạn đã đăng nhập"
+
+#: login/index.php:36
+msgid ""
+"The password for this account is extremely insecure and represents a major "
+"security risk. You should change it immediately."
+msgstr ""
+"Mật khẩu cho tài khoản này cực kỳ không an toàn. Bạn nên thay đổi nó ngay "
+"lập tức."
+
+#: login/index.php:49
+msgid "Please log in"
+msgstr "Vui lòng đăng nhập"
+
+#: mod/adash/add.php:25
+msgid "Add dashboard items"
+msgstr "Thêm công cụ vào bảng tin"
+
+#: mod/adash/add.php:45
+msgid "Widget added."
+msgstr "Đã thêm widget"
+
+#: mod/adash/add.php:59
+msgid "Select a widget type from the list below:"
+msgstr "Lựa chọn 1 loại widget từ danh sách dưới đây:"
+
+#: mod/adash/add.php:69 units/files/weblogs_posts_add_fields.php:80
+msgid "Add"
+msgstr "Thêm"
+
+#: mod/adash/add.php:78
+msgid "You do not have permission to add widgets to this dashboard."
+msgstr "Bạn không có quyền thêm widget vào bảng tin này."
+
+#: mod/adash/delete.php:44
+msgid "Widget deleted."
+msgstr "Xóa Widget"
+
+#: mod/adash/edit.php:34 mod/adash/lib.php:151
+msgid "Edit widget"
+msgstr "Chỉnh sửa widget"
+
+#: mod/adash/edit.php:64
+msgid "Widget edited."
+msgstr "Đã chỉnh sửa widget."
+
+#: mod/adash/edit.php:81
+msgid "You do not have permission to edit this widget."
+msgstr "Bạn không có quyền chỉnh sửa widget này."
+
+#: mod/adash/index.php:38
+msgid "Dashboard"
+msgstr "Bảng tin"
+
+#: mod/adash/index.php:57
+msgid ""
+"This dashboard is currently empty. Why not add some widgets by clicking 'add "
+"new item' above?"
+msgstr ""
+"Bảng tin này hiện thời đang trống. Tại sao lại không thêm các widget mới?"
+
+#: mod/adash/index.php:59
+msgid "This dashboard is currently empty."
+msgstr "Bảng tin này hiện thời đang trống"
+
+#: mod/adash/lib.php:19 mod/adash/lib.php:22
+msgid "Your Dashboard"
+msgstr "Bảng tin của bạn"
+
+#: mod/adash/lib.php:27
+msgid "Add new item"
+msgstr "Thêm mục mới"
+
+#: mod/adash/lib.php:46 mod/adash/lib.php:263
+msgid "Text box"
+msgstr "Hộp văn bản"
+
+#: mod/adash/lib.php:47
+msgid "Displays the text of your choice."
+msgstr "Hiển thị nội dung bạn chọn"
+
+#: mod/adash/lib.php:152
+msgid "Delete widget"
+msgstr "Xóa widget"
+
+#: mod/adash/lib.php:153
+msgid "Move up"
+msgstr "Dời lên"
+
+#: mod/adash/lib.php:154
+msgid "Move down"
+msgstr "Dời xuống"
+
+#: mod/adash/lib.php:225
+msgid "Access for this widget:"
+msgstr "Truy cập widget này"
+
+#: mod/adash/lib.php:229
+msgid "Save widget"
+msgstr "Lưu widget"
+
+#: mod/adash/lib.php:247
+msgid ""
+"This text box is undefined. If you are the widget owner, click 'edit widget' "
+"to add your own content."
+msgstr ""
+"Hộp văn bản này không được xác định. Nếu bạn là chủ nhân của widget này, hãy "
+"nhấn vào chỉnh sửa widget để thêm nội dung vào."
+
+#: mod/adash/lib.php:264
+msgid ""
+"This widget displays the text content of your choice. All you need to do is "
+"enter the title and body below:"
+msgstr ""
+"Widget này hiển thị nội dung hộp thoại bạn chọn. Bạn chỉ cần điền tiêu đề và "
+"thân bài sau đây:"
+
+#: mod/adash/move.php:50
+msgid "Widget moved."
+msgstr "Chuyển widget"
+
+#: mod/blog/lib.php:17 mod/blog/lib.php:21
+msgid "Your Blog"
+msgstr "Blog Của Bạn"
+
+#: mod/blog/lib.php:39
+msgid "Post a new entry"
+msgstr "Đăng bài mới"
+
+#: mod/blog/lib.php:44
+msgid "View blog"
+msgstr "Xem blog"
+
+#: mod/blog/lib.php:48
+msgid "Archive"
+msgstr "Lưu trữ"
+
+#: mod/blog/lib.php:52
+msgid "Friends' blogs"
+msgstr "Blog của bạn bè"
+
+#: mod/blog/lib.php:63
+msgid "View all posts"
+msgstr "Xem tất cả các bài viết"
+
+#: mod/blog/lib.php:76
+msgid "Blog widget"
+msgstr ""
+
+#: mod/blog/lib.php:77
+msgid "Displays the latest blog posts from a blog of your choice."
+msgstr "Hiển thị những bài viết mới từ 1 blog mà bạn chọn"
+
+#: mod/blog/lib.php:139
+msgid "Blog dashboard widget"
+msgstr "Bảng thông tin widget"
+
+#: mod/blog/lib.php:140
+msgid ""
+"This widget displays the last couple of blog posts from an individual user. "
+"To begin, select the user from your connections below:"
+msgstr ""
+"Widget này hiển thị những bài viết trong blog từ 1 thành viên. Để bắt đầu, "
+"lựa chọn thành viên từ kết nối của bạn dưới đây:"
+
+#: mod/blog/lib.php:155
+msgid "Then enter the number of blog posts you'd like to display:"
+msgstr "Sau đó điền số bài bạn muốn hiển thị"
+
+#: mod/browser/index.php:21
+msgid "Browser"
+msgstr "Bộ duyệt"
+
+#: mod/browser/index.php:82 search/index.php:44
+msgid "All"
+msgstr "Tất cả"
+
+#: mod/browser/index.php:84
+msgid "Users"
+msgstr "Thành viên"
+
+#: mod/browser/index.php:85 mod/toolbar/lib.php:45
+msgid "Browse"
+msgstr "Lựa chọn"
+
+#: mod/browser/index.php:86
+msgid "Filter"
+msgstr "Bộ Lọc"
+
+#: mod/browser/index.php:154
+msgid "Name"
+msgstr "Tên:"
+
+#: mod/browser/index.php:155
+msgid "Description"
+msgstr "Chú giải"
+
+#: mod/browser/index.php:156
+msgid "Connections"
+msgstr "Kết nối"
+
+#: mod/browser/index.php:157
+msgid "Posts"
+msgstr "Bài viết"
+
+#: mod/browser/index.php:158
+msgid "Type"
+msgstr "Kiểu"
+
+#: mod/community/lib.php:22 mod/profile/lib.php:27
+msgid "Edit this profile"
+msgstr "Chỉnh sửa hồ sơ này"
+
+#: mod/community/lib.php:26
+msgid "Community site picture"
+msgstr "Hình ảnh đại diện của diễn đàn"
+
+#: mod/community/lib.php:30
+msgid "Edit community details"
+msgstr "Chỉnh sửa thông tin của diễn đàn"
+
+#: mod/community/lib.php:39
+msgid "View membership requests"
+msgstr "Xem yêu cầu làm thành viên"
+
+#: mod/file/lib.php:13
+msgid "Default file folder"
+msgstr "Thư mục tập tin mặc định"
+
+#: mod/file/lib.php:29 mod/file/lib.php:32
+#: units/files/files_user_info_menu.php:11
+msgid "Your Files"
+msgstr "Tập tin của bạn"
+
+#: mod/file/lib.php:43
+msgid "Add a file or a folder"
+msgstr "Thêm tập tin hay thư mục"
+
+#: mod/file/lib.php:49
+msgid "RSS feed for files"
+msgstr "RSS feed cho tập tin"
+
+#: mod/file/lib.php:82 mod/photogallery/lib.php:133
+#: units/files/templates_preview.php:6
+msgid "Subfolders"
+msgstr "Thư mục con"
+
+#: mod/file/lib.php:101 mod/file/lib.php:155
+#: units/magpie/function_subscriptions_publish_to_blog.php:39
+msgid "Keywords: "
+msgstr "Từ khóa: "
+
+#: mod/file/lib.php:181 mod/photogallery/lib.php:138
+msgid "This folder is currently empty."
+msgstr "Thư mục này hiện đang trống"
+
+#: mod/file/lib.php:195
+msgid "Are you sure you want to permanently delete this file?"
+msgstr "Bạn có chắc muốn xóa tập tin này?"
+
+#: mod/file/lib.php:213
+msgid "Are you sure you want to permanently delete this folder?"
+msgstr "Bạn có chắc muốn xóa thư mục này?"
+
+#: mod/friend/lib.php:15 mod/friend/lib.php:18
+msgid "Your Network"
+msgstr "Mạng Kết Nối"
+
+#: mod/friend/lib.php:30 units/friends/profile_friends.php:18
+msgid "Friends"
+msgstr "Bạn bè"
+
+#: mod/friend/lib.php:34
+msgid "Friend of"
+msgstr "Bạn bè của"
+
+#: mod/friend/lib.php:42
+msgid "FOAF"
+msgstr ""
+
+#: mod/friend/lib.php:47
+msgid "Access controls"
+msgstr "Kiểm soát quyền truy cập"
+
+#: mod/friend/lib.php:52
+msgid "Invite a friend"
+msgstr "Mời bạn bè"
+
+#: mod/newsclient/lib.php:15 mod/newsclient/lib.php:18
+msgid "Your Resources"
+msgstr "Tài nguyên của bạn"
+
+#: mod/newsclient/lib.php:31
+msgid "Publish to blog"
+msgstr "Đăng tải lên blog"
+
+#: mod/newsclient/lib.php:35 units/magpie/menu_sub.php:22
+msgid "View aggregator"
+msgstr "Xem aggregator"
+
+#: mod/newsclient/lib.php:39
+msgid "Popular Feeds"
+msgstr "Feed nổi tiếng"
+
+#: mod/newsclient/lib.php:84
+msgid "Feed widget"
+msgstr ""
+
+#: mod/newsclient/lib.php:85
+msgid "Displays the latest entries from an external feed of your choice."
+msgstr "Hiển thị những bài cuối cùng từ feed bên ngoài"
+
+#: mod/newsclient/lib.php:114
+msgid "This feed is currently empty."
+msgstr "Feed này hiện thời đang trống"
+
+#: mod/newsclient/lib.php:121
+msgid "This feed widget is undefined."
+msgstr "Feed widget này không xác định"
+
+#: mod/newsclient/lib.php:139
+msgid "Feeds dashboard widget"
+msgstr "Feed bảng thông tin widget"
+
+#: mod/newsclient/lib.php:140
+msgid ""
+"This widget displays the last couple of entries from an external feed you "
+"have subscribed to. To begin, select the feed from your subscriptions below:"
+msgstr ""
+"Widget này hiển thị những thông tin từ feed bên ngoài của bạn. Để bắt đầu, "
+"lụa chọn feed mà bạn đã đăng ký dưới đây:"
+
+#: mod/newsclient/lib.php:157
+msgid "Then enter the number of feed entries you'd like to display:"
+msgstr "Sau đó điền số feed mà bạn muốn hiển thị:"
+
+#: mod/newsclient/lib.php:163
+#, php-format
+msgid ""
+"You can't select a feed for this widget because you don't have any feed "
+"subscriptions. Click on <a href=\"%s\">Your</a> Resources to subscribe to a "
+"feed."
+msgstr ""
+"Bạn không thể lựa chọn feed cho widget này bởi vì bạn không có đăng ký bất "
+"kỳ feed nào cả. Nhấn vào <a href=\"%s\">Tài nguyên của bạn</a> để đăng ký "
+"feed."
+
+#: mod/photogallery/lib.php:9
+msgid "Photo gallery"
+msgstr "Thư viện hình ảnh"
+
+#: mod/photogallery/lib.php:45
+#, php-format
+msgid "Uploaded on %s"
+msgstr "Đã đăng tải trên %s"
+
+#: mod/photogallery/lib.php:50
+msgid "No title"
+msgstr "Không có tiêu đề"
+
+#: mod/photogallery/lib.php:129
+msgid "Non-photo files"
+msgstr "Không phải tập tin hình ảnh"
+
+#: mod/profile/lib.php:16 mod/profile/lib.php:19
+msgid "Your Profile"
+msgstr "Hồ sơ của bạn"
+
+#: mod/profile/lib.php:31
+msgid "Change site picture"
+msgstr "Thay đổi hình ảnh của trang"
+
+#: mod/profile/lib.php:36 mod/toolbar/lib.php:42
+msgid "People"
+msgstr "Người"
+
+#: mod/profile/lib.php:64 mod/profile/lib.php:93 mod/profile/lib.php:133
+msgid "Profile widget"
+msgstr "Hồ sơ widget"
+
+#: mod/profile/lib.php:65
+msgid "Displays the contents of a profile field."
+msgstr "Hiển thị nội dung của hồ sơ"
+
+#: mod/profile/lib.php:94
+msgid "This profile box is undefined."
+msgstr "Hộp thoại hồ sơ này không được xác định"
+
+#: mod/profile/lib.php:134
+msgid ""
+"Select a profile field below; the widget will then display the profile "
+"content from this field."
+msgstr ""
+"Lựa chọn 1 mục hồ sơ dưới đây; widget sau đó sẽ hiển thị nội dung từ mục này."
+
+#: mod/profile/profile.config.php:56
+#: units/profile/function_editfield_defaults.php:37
+msgid "Who am I?"
+msgstr "Tôi là ai?"
+
+#: mod/profile/profile.config.php:59
+#: units/profile/function_editfield_defaults.php:37
+msgid "A short introduction for you."
+msgstr "Giới thiệu vắn tắt về bạn"
+
+#: mod/profile/profile.config.php:61 mod/profile/profile.config.php:71
+#: mod/profile/profile.config.php:83 mod/profile/profile.config.php:285
+#: mod/profile/profile.config.php:298 mod/profile/profile.config.php:308
+#: mod/profile/profile.config.php:371 mod/profile/profile.config.php:431
+msgid "Basic details"
+msgstr "Thông tin cơ bản"
+
+#: mod/profile/profile.config.php:66
+msgid "Introduction"
+msgstr "Giới thiệu"
+
+#: mod/profile/profile.config.php:69
+msgid "A short introduction to this community."
+msgstr "Giới thiệu vắn tắt về diễn đàn này"
+
+#: mod/profile/profile.config.php:79
+#: units/profile/function_editfield_defaults.php:40
+msgid "Brief description"
+msgstr "Chú thích vắn tắt"
+
+#: mod/profile/profile.config.php:82
+#: units/profile/function_editfield_defaults.php:40
+msgid "For use in your sidebar profile."
+msgstr "Để sử dụng cho thanh trượt bên hồ sơ"
+
+#: mod/profile/profile.config.php:91
+#: units/profile/function_editfield_defaults.php:43
+msgid "Street address"
+msgstr "Địa chỉ đường"
+
+#: mod/profile/profile.config.php:95 mod/profile/profile.config.php:107
+#: mod/profile/profile.config.php:119 mod/profile/profile.config.php:131
+#: mod/profile/profile.config.php:143
+msgid "Location"
+msgstr "Vị trí"
+
+#: mod/profile/profile.config.php:103
+#: units/profile/function_editfield_defaults.php:46
+msgid "Town"
+msgstr "Thị trấn"
+
+#: mod/profile/profile.config.php:115
+#: units/profile/function_editfield_defaults.php:49
+msgid "State / Region"
+msgstr "Tỉnh Thành"
+
+#: mod/profile/profile.config.php:127
+#: units/profile/function_editfield_defaults.php:52
+msgid "Postal code"
+msgstr "Mã bưu điện"
+
+#: mod/profile/profile.config.php:139
+#: units/profile/function_editfield_defaults.php:55
+msgid "Country"
+msgstr "Nước"
+
+#: mod/profile/profile.config.php:151 units/admin/admin_main.php:86
+#: units/admin/admin_users.php:30 units/admin/admin_users_add.php:22
+#: units/profile/function_editfield_defaults.php:58
+msgid "Email address"
+msgstr "Địa chỉ email"
+
+#: mod/profile/profile.config.php:155 mod/profile/profile.config.php:166
+#: mod/profile/profile.config.php:178 mod/profile/profile.config.php:190
+#: mod/profile/profile.config.php:202 mod/profile/profile.config.php:214
+#: mod/profile/profile.config.php:226 mod/profile/profile.config.php:238
+#: mod/profile/profile.config.php:250 mod/profile/profile.config.php:262
+#: mod/profile/profile.config.php:273
+msgid "Contact"
+msgstr "Liên hệ"
+
+#: mod/profile/profile.config.php:162
+#: units/profile/function_editfield_defaults.php:60
+msgid "Work telephone"
+msgstr "Điện thoại làm việc"
+
+#: mod/profile/profile.config.php:174
+#: units/profile/function_editfield_defaults.php:63
+msgid "Home telephone"
+msgstr "Điện thoại nhà"
+
+#: mod/profile/profile.config.php:186
+#: units/profile/function_editfield_defaults.php:66
+msgid "Mobile telephone"
+msgstr "Điện thoại di động"
+
+#: mod/profile/profile.config.php:198
+#: units/profile/function_editfield_defaults.php:69
+msgid "Official website address"
+msgstr "Trang chủ"
+
+#: mod/profile/profile.config.php:201
+#: units/profile/function_editfield_defaults.php:69
+msgid "The URL to your official website, if you have one."
+msgstr "Link đến trang chủ của bạn, nếu bạn có."
+
+#: mod/profile/profile.config.php:210
+#: units/profile/function_editfield_defaults.php:72
+msgid "Personal website address"
+msgstr "Trang web cá nhân"
+
+#: mod/profile/profile.config.php:213
+#: units/profile/function_editfield_defaults.php:72
+msgid "The URL to your personal website, if you have one."
+msgstr "Link đến trang web cá nhân, nếu bạn có."
+
+#: mod/profile/profile.config.php:222
+#: units/profile/function_editfield_defaults.php:75
+msgid "ICQ number"
+msgstr "Số ICQ"
+
+#: mod/profile/profile.config.php:234
+#: units/profile/function_editfield_defaults.php:78
+msgid "MSN chat"
+msgstr ""
+
+#: mod/profile/profile.config.php:246
+#: units/profile/function_editfield_defaults.php:81
+msgid "AIM screenname"
+msgstr "Tên đăng ký trên AIM"
+
+#: mod/profile/profile.config.php:258
+#: units/profile/function_editfield_defaults.php:84
+msgid "Skype username"
+msgstr "Tên đăng ký trên Skype"
+
+#: mod/profile/profile.config.php:269
+#: units/profile/function_editfield_defaults.php:86
+msgid "Jabber username"
+msgstr ""
+
+#: mod/profile/profile.config.php:281
+#: units/profile/function_editfield_defaults.php:89
+msgid "Interests"
+msgstr "Sở thích"
+
+#: mod/profile/profile.config.php:284 mod/profile/profile.config.php:297
+#: mod/profile/profile.config.php:307 mod/profile/profile.config.php:430
+#: units/profile/function_editfield_defaults.php:89
+#: units/profile/function_editfield_defaults.php:93
+#: units/profile/function_editfield_defaults.php:94
+#: units/profile/function_editfield_defaults.php:103
+#: units/profile/function_editfield_defaults.php:109
+msgid "Separated with commas."
+msgstr "Cách nhau bằng dấu phẩy"
+
+#: mod/profile/profile.config.php:294
+#: units/profile/function_editfield_defaults.php:93
+msgid "Likes"
+msgstr "Yêu thích"
+
+#: mod/profile/profile.config.php:304
+#: units/profile/function_editfield_defaults.php:94
+msgid "Dislikes"
+msgstr "Không thích"
+
+#: mod/profile/profile.config.php:314
+#: units/profile/function_editfield_defaults.php:95
+msgid "Occupation"
+msgstr "Nghề nghiệp"
+
+#: mod/profile/profile.config.php:318 mod/profile/profile.config.php:328
+#: mod/profile/profile.config.php:339 mod/profile/profile.config.php:351
+#: mod/profile/profile.config.php:361 mod/profile/profile.config.php:381
+msgid "Employment"
+msgstr "Việc làm"
+
+#: mod/profile/profile.config.php:324
+#: units/profile/function_editfield_defaults.php:96
+msgid "Industry"
+msgstr "Ngành kinh doanh"
+
+#: mod/profile/profile.config.php:335
+#: units/profile/function_editfield_defaults.php:98
+msgid "Company / Institution"
+msgstr "Công ty / Tổ chức"
+
+#: mod/profile/profile.config.php:347
+#: units/profile/function_editfield_defaults.php:101
+msgid "Job Title"
+msgstr "Chức danh"
+
+#: mod/profile/profile.config.php:357
+#: units/profile/function_editfield_defaults.php:102
+msgid "Job Description"
+msgstr "Giải thích nghề nghiệp"
+
+#: mod/profile/profile.config.php:367
+#: units/profile/function_editfield_defaults.php:103
+msgid "I would like to ..."
+msgstr "Tôi muốn..."
+
+#: mod/profile/profile.config.php:370
+msgid "Your goals, separated with commas."
+msgstr "Mục tiêu của bạn, cách nhau bằng dấu phẩy"
+
+#: mod/profile/profile.config.php:377
+#: units/profile/function_editfield_defaults.php:104
+msgid "Career Goals"
+msgstr "Mục tiêu nghề nghiệp"
+
+#: mod/profile/profile.config.php:380
+#: units/profile/function_editfield_defaults.php:104
+msgid ""
+"Freeform: let colleagues and potential employers know what you'd like to get "
+"out of your career."
+msgstr ""
+"Freeform: hãy để đồng nghiệp và công nhân biết bạn ghét cái gì trong công "
+"việc của mình."
+
+#: mod/profile/profile.config.php:387
+#: units/profile/function_editfield_defaults.php:105
+msgid "Level of Education"
+msgstr "Trình độ học vấn"
+
+#: mod/profile/profile.config.php:391 mod/profile/profile.config.php:401
+#: mod/profile/profile.config.php:411 mod/profile/profile.config.php:421
+msgid "Education"
+msgstr "Giáo dục"
+
+#: mod/profile/profile.config.php:397
+#: units/profile/function_editfield_defaults.php:106
+msgid "High School"
+msgstr "Trường cấp 3"
+
+#: mod/profile/profile.config.php:407
+#: units/profile/function_editfield_defaults.php:107
+msgid "University / College"
+msgstr "Đại học / Cao đẳng"
+
+#: mod/profile/profile.config.php:417
+#: units/profile/function_editfield_defaults.php:108
+msgid "Degree"
+msgstr "Bằng"
+
+#: mod/profile/profile.config.php:427
+#: units/profile/function_editfield_defaults.php:109
+msgid "Main Skills"
+msgstr "Kỹ thuật chính"
+
+#: mod/toolbar/lib.php:29
+msgid "Log on:"
+msgstr "Đăng nhập"
+
+#: mod/toolbar/lib.php:32
+msgid "Powered by Elgg"
+msgstr ""
+
+#: mod/toolbar/lib.php:41
+msgid "all"
+msgstr "toàn bộ"
+
+#: mod/toolbar/lib.php:44
+msgid "Tag cloud"
+msgstr "Cụm từ khóa"
+
+#: profile/edit.php:44
+msgid "Edit profile"
+msgstr "Chỉnh sửa hồ sơ"
+
+#: profile/edit.php:118
+#, php-format
+msgid "%s (in category %s)"
+msgstr "%s (trong thư mục %s)"
+
+#: profile/edit.php:150
+msgid "Profile updated."
+msgstr "Cập nhật hồ sơ"
+
+#: profile/edit.php:167
+#, php-format
+msgid "You need to fill in the following required fields: %s"
+msgstr "Bạn cần phải điền vào các phần sau: %s"
+
+#: profile/profile.class.php:48 units/profile/edit_link.php:8
+msgid "Click here to edit this profile."
+msgstr "Nhấn vào đây để chỉnh sửa hồ sơ này"
+
+#: profile/profile.class.php:86 units/profile/content_edit.php:2
+msgid ""
+"    This screen allows you to edit your profile. Blank fields will not show "
+"up on your profile screen in any view; you can change the access level for "
+"each piece of information in order to prevent it from falling into the wrong "
+"hands. For example, we strongly recommend you keep your address to yourself "
+"or a few trusted parties."
+msgstr ""
+"    Màn hình này cho phép bạn chỉnh sử hồ sơ của mình. Những dòng trắng sẽ "
+"không hiển thị trên màn hình hồ sơ ở mọi góc độ; bạn có thể thay đổi quyền "
+"truy cập cho từng phần của thông tin để chống lại việc thông tin rơi vào "
+"nhầm người. Ví dụ: chúng tôi khuyên bạn nên giữ địa chỉ nhà cho những người "
+"thân quen mà thôi."
+
+#: profile/profile.class.php:145
+msgid "Submit details:"
+msgstr "Đăng tải thông tin"
+
+#: profile/profile.class.php:146
+msgid "Save your profile"
+msgstr "Lưu hồ sơ"
+
+#: profile/profile.class.php:164
+msgid "You can import some profile data by uploading a FOAF file here:"
+msgstr ""
+"Bạn có thể nhập 1 số dữ liệu hồ sơ bằng cách đăng tải file FOAF ở đây"
+
+#: profile/profile.class.php:167
+msgid "Upload a FOAF file:"
+msgstr "Đăng tải FOAF file:"
+
+#: profile/profile.class.php:169 units/files/edit_folder.php:285
+msgid "Upload"
+msgstr "Tải lên"
+
+#: profile/profile.class.php:270
+#: units/profile/function_editfield_display.php:40
+msgid "Access Restriction:"
+msgstr "Quyền truy cập"
+
+#: profile/profile.class.php:361 units/profile/function_search.php:35
+msgid "Profiles where"
+msgstr "Hồ sơ ở"
+
+#: profile/profile.class.php:522 units/profile/function_upload_foaf.php:8
+msgid ""
+"There was an error uploading the file. Possibly the file was too large, or "
+"the upload was interrupted."
+msgstr ""
+"Đã có lỗi xảy trong khi tải lên. Có thể là file quá lớn hay quá trình đăng "
+"tải bị ngừng."
+
+#: profile/profile.class.php:602 units/profile/function_upload_foaf.php:88
+msgid ""
+"Data from your FOAF file has been preloaded. You must click Save at the "
+"bottom of the page for the changes to take effect."
+msgstr ""
+"Dữ liệu từ FOAF của bạn đã được đăng tải trước. Bạn cần phải nhấn Lưu ở phía "
+"dưới trang web thì sự thay đổi mới có hiệu lực."
+
+#: profile/profile.class.php:606 units/profile/function_upload_foaf.php:92
+msgid "Error: supplied file did not appear to be a FOAF file."
+msgstr "Xảy ra lỗi: file mà bạn cung cấp không phải là fie FOAF"
+
+#: profile/profile.class.php:936 units/profile/profile_user_info.php:58
+#: units/weblogs/weblogs_user_info.php:7
+msgid "Profile Owner"
+msgstr "Chủ nhân hồ sơ"
+
+#: profile/profile.class.php:938 units/profile/profile_user_info.php:60
+#: units/weblogs/weblogs_user_info.php:9
+msgid "You"
+msgstr "Bạn"
+
+#: profile/rss2.php:25
+#, php-format
+msgid "Activity tagged with %s"
+msgstr "Những hoạt động được đánh dấu với %s"
+
+#: profile/search.php:10
+msgid "Search Profiles"
+msgstr "Tìm kiếm hồ sơ"
+
+#: search/all.php:14 search/index.php:16
+msgid "Searching"
+msgstr "Tìm kiếm"
+
+#: search/index.php:39
+msgid "Search for results from:"
+msgstr "Tìm kiếm kết quả từ:"
+
+#: search/index.php:79
+msgid "Filter by content type:"
+msgstr "Chọn lọc nội dung:"
+
+#: search/index.php:83
+msgid "Everything"
+msgstr "Mọi thứ"
+
+#: search/index.php:90
+msgid "Users and communities"
+msgstr "Các thành viên và diễn đàn"
+
+#: search/tags.php:12
+msgid "Some Tags"
+msgstr "Một số mục đánh dấu"
+
+#: units/activity/recent.php:3
+msgid ""
+"This screen displays recent activity on your account by other users over a "
+"given time range."
+msgstr ""
+"Màn hình này hiển thị những hoạt động gần đây trên tài khoản của bạn bở "
+"những thành viên khác trong khoảng thời gian đã cho."
+
+#: units/admin/admin_actions.php:44
+msgid ""
+"Error! The new username must contain letters and numbers only, cannot be "
+"blank, and must be between 3 and 12 characters in length."
+msgstr ""
+"Xảy ra lỗi! Tên truy nhập cần phải bao gồm chữ cái và số, không thể bỏ "
+"trống, và cần phải từ 3 đến 12 ký tự trong chiều dài"
+
+#: units/admin/admin_actions.php:50
+#, php-format
+msgid "Username was changed to %s."
+msgstr "Tên truy nhập đã được thành %s"
+
+#: units/admin/admin_actions.php:58
+#, php-format
+msgid "File quota was changed to %d."
+msgstr "Dung lượng lưu trữ đã được đổi thàn %d"
+
+#: units/admin/admin_actions.php:65
+#, php-format
+msgid "Icon quota was changed to %d."
+msgstr "Hình ảnh đại diện của dung lượng đã được đổi thành %d"
+
+#: units/admin/admin_actions.php:80
+#, php-format
+msgid "User flag '%s' set to '%s'"
+msgstr "Thành viên đánh dấu '%s' thành '%s'"
+
+#: units/admin/admin_actions.php:94
+msgid "Spam list updated."
+msgstr "Đã cập nhật danh sách spam"
+
+#: units/admin/admin_actions.php:123
+#, php-format
+msgid ""
+"User addition %d failed: at least one field was blank. Username: %s, name: "
+"%s, email: %s"
+msgstr ""
+
+#: units/admin/admin_actions.php:128
+#, php-format
+msgid ""
+"New username %d (%s) was invalid; usernames must contain letters and numbers "
+"only, cannot be blank, and must be between 3 and 12 characters in length."
+msgstr ""
+"Xảy ra lỗi! Tên truy nhập mới %d (%s) không đúng; tên truy nhập cần phải bao "
+"gồm chữ cái và số, không thể bỏ trống, và cần phải từ 3 đến 12 ký tự trong "
+"chiều dài"
+
+#: units/admin/admin_actions.php:134
+#, php-format
+msgid "User addition %d failed: username %s is already in use."
+msgstr ""
+
+#: units/admin/admin_actions.php:138
+#, php-format
+msgid "User addition %d failed: email address %s appears to be invalid."
+msgstr ""
+
+#: units/admin/admin_actions.php:181
+#, php-format
+msgid "Your new %s account"
+msgstr "%s tài khoản mới của bạn"
+
+#: units/admin/admin_actions.php:182
+#, php-format
+msgid ""
+"You have been added to %s!\n"
+"\n"
+"For your records, your %s username and password are:\n"
+"\n"
+"\tUsername: %s\n"
+"\tPassword: %s\n"
+"\n"
+"You can log in at any time by visiting %s and entering these details into "
+"the login form.\n"
+"\n"
+"We hope you enjoy using the system.\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s Team"
+msgstr ""
+"Bạn đã được tham gia vào %s!\n"
+"\n"
+"Cho việc lưu trữ, %s tên đăng nhập và mật khẩu là\n"
+"\n"
+"\tTên đăng nhập: %s\n"
+"\tMật khẩu: %s\n"
+"\n"
+"Bạn có thể đăng nhập bất cứ lúc nào bằng cách vào %s và đăng nhập.\n"
+"\n"
+"Chúng tôi hy vọng bạn sẽ có những khoảng thời gian vui vẻ với chúng tôi.\n"
+"\n"
+"Trân trọng,\n"
+"\n"
+"Đội ngũ %s."
+
+#: units/admin/admin_actions.php:183
+#, php-format
+msgid "User %s was created."
+msgstr "Thành viên %s đã được tạo."
+
+#: units/admin/admin_contentflags.php:7
+msgid ""
+"The following pages have been flagged as having obscene or inappropriate "
+"content. They are ordered by number of complaints."
+msgstr ""
+"Những trang web sau đã được đánh dấu là khiêu dâm hay có nội dung không phù "
+"hợp. Chúng được gọi theo số lượng người phàn nàn."
+
+#: units/admin/admin_contentflags.php:8
+msgid ""
+"To view the pages in question, click the following links. To remove the "
+"flags, for example if the flag is a false positive or if you've deleted the "
+"offending content, check the appropriate box and click the 'delete' button "
+"below."
+msgstr ""
+
+#: units/admin/admin_contentflags.php:18
+msgid "Page URL"
+msgstr ""
+
+#: units/admin/admin_contentflags.php:19
+msgid "Number of objections"
+msgstr "Số lượng phản đối"
+
+#: units/admin/admin_contentflags.php:38
+msgid "Remove flag(s)"
+msgstr "Bỏ các mục đánh dấu"
+
+#: units/admin/admin_contentflags.php:44
+msgid "No content flags were found at present."
+msgstr "Không tìm thấy các nội dung bị đánh dấu"
+
+#: units/admin/admin_main.php:9
+msgid "Site statistics"
+msgstr "Tình hình site"
+
+#: units/admin/admin_main.php:21
+msgid "Accounts by type"
+msgstr "Các tài khoản theo kiểu"
+
+#: units/admin/admin_main.php:36
+msgid "Weblog statistics"
+msgstr "Tình hình blog"
+
+#: units/admin/admin_main.php:37 units/admin/admin_main.php:51
+msgid "All-time:"
+msgstr "Tất cả thời gian:"
+
+#: units/admin/admin_main.php:38 units/admin/admin_main.php:40
+#, php-format
+msgid "%u weblog posts, %u comments"
+msgstr "%u bài viết trong blog, %u ý kiến"
+
+#: units/admin/admin_main.php:39 units/admin/admin_main.php:52
+msgid "Last 7 days:"
+msgstr "7 ngày vừa qua:"
+
+#: units/admin/admin_main.php:50
+msgid "File statistics"
+msgstr "Tình hình tập tin"
+
+#: units/admin/admin_main.php:51 units/admin/admin_main.php:52
+#, php-format
+msgid "%u files (%s bytes)"
+msgstr "%u tập tin (%s bytes)"
+
+#: units/admin/admin_main.php:70
+msgid "Database statistics"
+msgstr ""
+
+#: units/admin/admin_main.php:71
+msgid "Total database size:"
+msgstr ""
+
+#: units/admin/admin_main.php:71
+#, php-format
+msgid "%u bytes"
+msgstr "%u byte"
+
+#: units/admin/admin_main.php:78
+msgid "Users online now"
+msgstr "Thành viên đang trực tuyến"
+
+#: units/admin/admin_main.php:79
+msgid ""
+"The following users have an active session and have performed an action "
+"within the past 10 minutes."
+msgstr ""
+"Những thành viên sau đã có những hoạt động session trong vòng 10 phút qua."
+
+#: units/admin/admin_main.php:85 units/admin/admin_users.php:29
+#: units/admin/admin_users_add.php:21
+msgid "Full name"
+msgstr "Họ và Tên"
+
+#: units/admin/admin_main.php:96
+#, php-format
+msgid "%u users in total."
+msgstr "Tổng cộng %u thành viên"
+
+#: units/admin/admin_spam.php:7
+msgid ""
+"Add regular expressions below, one per line, to block spam. For example, "
+"'foo' will block all comments containing the word foo, (foo|bar) will block "
+"comments containing the word foo or bar."
+msgstr ""
+
+#: units/admin/admin_spam.php:8
+msgid "Blank lines and lines starting with # will be ignored."
+msgstr ""
+
+#: units/admin/admin_spam.php:20
+msgid "Regular expressions"
+msgstr ""
+
+#: units/admin/admin_userdetails.php:19
+msgid "Change username:"
+msgstr "Thay đổi tên truy nhập"
+
+#: units/admin/admin_userdetails.php:22
+msgid "New username: "
+msgstr "Tên truy nhập mới: "
+
+#: units/admin/admin_userdetails.php:29
+msgid "Change file quota (in bytes):"
+msgstr ""
+
+#: units/admin/admin_userdetails.php:32
+msgid "New file quota: "
+msgstr ""
+
+#: units/admin/admin_userdetails.php:36
+msgid "Change icon quota:"
+msgstr ""
+
+#: units/admin/admin_userdetails.php:39
+msgid "New icon quota: "
+msgstr ""
+
+#: units/admin/admin_userdetails.php:45
+msgid "User flags:"
+msgstr "Thành viên đánh dấu:"
+
+#: units/admin/admin_userdetails.php:56
+msgid "Site administrator: "
+msgstr ""
+
+#: units/admin/admin_userdetails.php:72
+msgid "Banned: "
+msgstr ""
+
+#: units/admin/admin_users.php:10
+msgid ""
+"The following is a list of all the users in the system, 50 users at a time. "
+"You can click each one to edit their user details as if you were logged in "
+"as them, as well as set user flags (including 'ban user' and 'set user as "
+"administrator')."
+msgstr ""
+
+#: units/admin/admin_users.php:11
+msgid ""
+"If you know the username of the user you would like to edit, you can also "
+"enter it below."
+msgstr ""
+
+#: units/admin/admin_users.php:16
+msgid "Enter username"
+msgstr ""
+
+#: units/admin/admin_users.php:18
+msgid "Edit user"
+msgstr ""
+
+#: units/admin/admin_users.php:37 units/magpie/function_view.php:41
+#: units/magpie/function_view_individual.php:38
+#: units/weblogs/weblogs_all_users_view.php:123
+#: units/weblogs/weblogs_friends_view.php:73
+#: units/weblogs/weblogs_interesting_view.php:64
+#: units/weblogs/weblogs_view.php:65
+msgid "Next"
+msgstr "Xem kế"
+
+#: units/admin/admin_users.php:46
+msgid "Previous"
+msgstr "Trước đó"
+
+#: units/admin/admin_users_add.php:17
+msgid ""
+"You can create up to 12 users below; passwords will be autogenerated and "
+"emailed to the account owners. You must include all fields, but you may "
+"leave rows blank."
+msgstr ""
+
+#: units/admin/admin_users_panel.php:12
+#: units/communities/communities_membership_requests.php:32
+#: units/friends/user_friendship_requests.php:33
+msgid "Profile"
+msgstr "Hồ sơ"
+
+#: units/admin/display_content_flag_form.php:23
+msgid "Flag content"
+msgstr "Đánh dấu nội dung"
+
+#: units/admin/display_content_flag_form.php:24
+msgid ""
+"To mark this content as obscene or inappropriate, click the 'Flag' button "
+"and an administrator will view it in due course."
+msgstr ""
+"Để đánh dấu nội dung này là khiêu dâm hoặc không lành mạnh, nhấn nút 'Đánh "
+"dấu' và nhà quản trị sẽ xem xét chúng."
+
+#: units/admin/display_content_flag_form.php:25
+msgid "Flag"
+msgstr "Đánh dấu không lành mạnh"
+
+#: units/communities/communities_access_levels.php:10
+#: units/communities/communities_access_levels.php:19
+msgid "Community"
+msgstr "Diễn đàn"
+
+#: units/communities/communities_actions.php:21
+msgid ""
+"Error! The community username must contain letters and numbers only, cannot "
+"be blank, and must be between 3 and 12 characters in length."
+msgstr ""
+"Xảy ra lỗi! Tên của diễn đàn chỉ được bao gồm chư và số thôi, không thể bỏ "
+"trống và cần phải từ 3 cho đến 12 ký tự."
+
+#: units/communities/communities_actions.php:23
+msgid "Error! The community name cannot be blank."
+msgstr "Xảy ra lỗi! Tên diễn đàn không thể bỏ trống."
+
+#: units/communities/communities_actions.php:45
+msgid "Your community was created and you were added as its first member."
+msgstr ""
+"Diễn đàn của bạn đã được tạo và bạn đã được thêm vào là thành viên đầu tiên "
+"của nó."
+
+#: units/communities/communities_actions.php:59
+#, php-format
+msgid "You joined %s."
+msgstr "Bạn đã tham gia %s."
+
+#: units/communities/communities_actions.php:61
+#, php-format
+msgid ""
+"%s has joined %s!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+"%s đã tham gia %s!\n"
+"\n"
+"Để xem hồ sơ thành viên, nhấn vào đường link sau:\n"
+"\n"
+"\t"
+
+#: units/communities/communities_actions.php:64
+#, php-format
+msgid "New %s member"
+msgstr "%s thành viên mới"
+
+#: units/communities/communities_actions.php:68
+#, php-format
+msgid ""
+"Membership of %s needs to be approved. Your request has been added to the "
+"list."
+msgstr ""
+"Thành viên của %s cần được phê chuẩn. Yêu cần của bạn đã được thêm vào danh "
+"sách."
+
+#: units/communities/communities_actions.php:70
+#, php-format
+msgid ""
+"%s has applied to join %s!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+"%s đã xin đăng ký vào %s!\n"
+"\n"
+"Để xem hồ sơ của thành viên, nhấn và đường link sau đây:\n"
+"\n"
+"\t"
+
+#: units/communities/communities_actions.php:73
+#, php-format
+msgid "New %s member request"
+msgstr "Những yêu cầu mới từ %s thành viên"
+
+#: units/communities/communities_actions.php:77
+#, php-format
+msgid "%s is a private community. Your membership request has been declined."
+msgstr ""
+"%s là điễn đàn riêng tư. Yêu cầu làm thành viên của bạn đã bị từ chối."
+
+#: units/communities/communities_actions.php:89
+#, php-format
+msgid "You left %s."
+msgstr "Bạn rời khỏi %s."
+
+#: units/communities/communities_actions.php:96
+msgid "Your post has been added to the community weblog."
+msgstr "Bài viết của bạn đã được thêm vào diễn đàn."
+
+#: units/communities/communities_actions.php:112
+#, php-format
+msgid ""
+"You approved the membership request. %s is now a member of this community."
+msgstr ""
+"Bạn đã phê chuẩn yêu cầu làm thành viên. %s bây giờ là thành viên của diễn "
+"đàn này."
+
+#: units/communities/communities_actions.php:114
+msgid "An error occurred: the membership request could not be approved."
+msgstr "Có lỗi xảy ra: yêu cầu làm thành viên không thể phê chuẩn."
+
+#: units/communities/communities_actions.php:117
+#: units/communities/communities_actions.php:136
+msgid "Error: you do not have authority to modify this membership request."
+msgstr "Xảy ra lỗi: bạn không có quyền để thay đổi yêu cầu thành viên này."
+
+#: units/communities/communities_actions.php:120
+#: units/communities/communities_actions.php:139
+msgid "An error occurred: the membership request could not be found."
+msgstr "Xảy ra lỗi: không tìm thấy yêu cầu làm thành viên."
+
+#: units/communities/communities_actions.php:134
+#, php-format
+msgid ""
+"You declined the membership request. %s is not a member of this community."
+msgstr ""
+"Bạn đã từ chối yêu cần làm thành viên. %s không là thành viên của diễn đàn "
+"này."
+
+#: units/communities/communities_create.php:17
+msgid "Create a new community"
+msgstr "Tạo diễn đàn mới"
+
+#: units/communities/communities_create.php:18
+msgid "Community name:"
+msgstr "Tên diễn đàn"
+
+#: units/communities/communities_create.php:19
+msgid "Username for community:"
+msgstr "Tên truy nhập cho diễn đàn"
+
+#: units/communities/communities_create.php:20 units/files/edit_folder.php:167
+#: units/groups/groups_create.php:5
+msgid "Create"
+msgstr "Tạo"
+
+#: units/communities/communities_edit.php:47
+msgid ""
+"You don't have any communities listed! To join a community, click the 'join' "
+"button underneath a community's icon. You can find communities you're "
+"interested in by using the search function."
+msgstr ""
+"Bạn không có bất kỳ diễn đàn nào trong danh sách. Để tham gia diễn đàn, nhấn "
+"vào nút 'tham gia' ở phía dưới biểu tượng của diễn đàn. Bạn có thể tìm thấy "
+"các diễn đàn mà mình yêu thích bằng cách sử dụng chức năng tìm kiếm."
+
+#: units/communities/communities_edit.php:49
+msgid "This user is not currently a member of any communities."
+msgstr "Thành viên này hiện không là thành viên của bất kỳ diễn đàn nào."
+
+#: units/communities/communities_members.php:45
+msgid "This community doesn't currently have any members."
+msgstr "Diễn đàn này không có bất kỳ thành viên nào."
+
+#: units/communities/communities_membership_requests.php:15
+msgid ""
+"The following users would like to join this community. They need your "
+"approval to do this (to change this setting, visit the 'community settings' "
+"page)."
+msgstr ""
+"Những thành viên sau muốn tham gia vào diễn đàn này. Họ cần sự phê chuẩn để "
+"thực hiện được việc này (để thay đổi điều này,vào trang 'Cấu hình diễn đàn')."
+
+#: units/communities/communities_membership_requests.php:48
+msgid "You have no pending membership requests."
+msgstr "Bạn không có yêu cần thành viên nào."
+
+#: units/communities/communities_moderator_of.php:47
+msgid "You don't own any communities. Why not create one?"
+msgstr ""
+"Bạn không làm quản trị bất kỳ diễn đàn nào. Tại sao lại không tạo một cái?"
+
+#: units/communities/communities_moderator_of.php:49
+msgid "This user is not currently moderating any communities."
+msgstr "Thành viên này không quản trị bất kỳ diễn đàn nào."
+
+#: units/communities/communities_owned.php:18
+msgid "Owned communities"
+msgstr "Diễn đàn của bạn"
+
+#: units/communities/community_memberships.php:20
+msgid "Community memberships"
+msgstr "Thành viên diễn đàn"
+
+#: units/communities/community_wiki.php:15
+msgid "Community Wiki"
+msgstr "Wiki của diễn đàn"
+
+#: units/communities/profile_edit_link.php:12
+msgid "Upload / edit site pictures for this community."
+msgstr "Đăng tải / chỉnh sửa hình đại diện cho diễn đàn."
+
+#: units/communities/profile_edit_link.php:26
+msgid "Change this community's name."
+msgstr "Thay đổi tên của diễn đàn."
+
+#: units/communities/user_info_menu_text.php:18
+msgid "Are you sure you want to join this community?"
+msgstr "Bạn có chắc muốn tham gia diễn đàn này?"
+
+#: units/communities/user_info_menu_text.php:18
+msgid "Click here to join this community."
+msgstr "Nhấn vào đây để tham gia diễn đàn"
+
+#: units/communities/user_info_menu_text.php:20
+msgid "Are you sure you want to apply to join this community?"
+msgstr "Bạn có chắc muốn đăng ký cho diễn đàn này?"
+
+#: units/communities/user_info_menu_text.php:20
+msgid "Click here to apply to join this community."
+msgstr "Nhấn vào đây để đăng ký cho diễn đàn này."
+
+#: units/communities/user_info_menu_text.php:26
+msgid "Are you sure you want to leave this community?"
+msgstr "Bạn có chắc muốn rời khỏi diễn đàn này?"
+
+#: units/communities/user_info_menu_text.php:26
+msgid "Click here to leave this community."
+msgstr "Nhấn vào đây để rời khỏi diễn đàn."
+
+#: units/communities/userdetails_actions.php:23
+#, php-format
+msgid "Community ownership transferred to %s."
+msgstr "Quản trị diễn đàn được chuyễn cho %s."
+
+#: units/communities/userdetails_actions.php:26
+msgid "Could not retrieve community details."
+msgstr "Không thể nhận thông tin chi tiết của diễn đàn."
+
+#: units/communities/userdetails_edit.php:11
+msgid "Change your community name"
+msgstr "Thay đổi tên diễn đàn"
+
+#: units/communities/userdetails_edit.php:12
+#: units/users/userdetails_edit.php:12
+msgid "This name will be displayed throughout the system."
+msgstr "Tên này sẽ hiển thị qua hệ thống."
+
+#: units/communities/userdetails_edit.php:27
+msgid "Community name"
+msgstr "Tên diễn đàn"
+
+#: units/communities/userdetails_edit.php:32
+msgid "Membership restriction:"
+msgstr "Quyền hạn của thành viên"
+
+#: units/communities/userdetails_edit.php:33
+msgid "This allows you to choose who can join this community."
+msgstr ""
+"Điều này cho phép bạn lựa chọn ai mới có quyền tham gia diễn đàn này."
+
+#: units/communities/userdetails_edit.php:50
+msgid "No moderation: anyone can join this community."
+msgstr "Không quản lý: ai cũng có thể tham gia diễn đàn này."
+
+#: units/communities/userdetails_edit.php:55
+msgid "Moderation: memberships must be approved by you."
+msgstr "Quản lý: thành viên cần phải thông qua sự kiểm chứng bởi bạn."
+
+#: units/communities/userdetails_edit.php:60
+msgid "Private: nobody can join this community."
+msgstr "Cá nhân: không ai có thể tham gia diễn đàn này."
+
+#: units/communities/userdetails_edit.php:65
+msgid "Membership restriction"
+msgstr "Quyền hạn thành viên"
+
+#: units/communities/userdetails_edit.php:70
+msgid "Community ownership"
+msgstr "Nhà quản trị của diễn đàn"
+
+#: units/communities/userdetails_edit.php:71
+msgid ""
+"Type the username of the user who you want to own this community below. You "
+"cannot leave this blank, or specify a community or a user that doesn't exist."
+msgstr ""
+"Điền tên truy nhập của thành viên mà bạn muốn quản trị diễn đàn này bên "
+"dưới. Bạn không thể bỏ trống, hay là tên của diễn đàn khác hay là thành viên "
+"đó không tồn tại."
+
+#: units/communities/userdetails_edit.php:83
+msgid "Community owner"
+msgstr "Nhà quản trị diễn đàn"
+
+#: units/files/default_templates.php:8
+msgid "Folder"
+msgstr "Thư mục"
+
+#: units/files/default_templates.php:9
+msgid "Each individual folder"
+msgstr "Từng thư mục cá nhân"
+
+#: units/files/default_templates.php:11
+msgid "The owner of the folder"
+msgstr "Chủ nhân của thư mục"
+
+#: units/files/default_templates.php:12
+msgid "The name of the folder"
+msgstr "Tên của thư mục"
+
+#: units/files/default_templates.php:13
+msgid "The folder's URL"
+msgstr "Link của thư mục"
+
+#: units/files/default_templates.php:14
+msgid "Menu items for folder owner (edit, delete, etc)"
+msgstr "Menu items cho chủ nhân thư mục (chỉnh sửa, xóa, v.v..)"
+
+#: units/files/default_templates.php:15
+msgid "The URL of the file's icon"
+msgstr "Link của hình đại diện cho tập tin"
+
+#: units/files/default_templates.php:16 units/files/default_templates.php:49
+msgid "Keywords associated with the folder"
+msgstr "Những từ khóa liên quan đến thư mục"
+
+#: units/files/default_templates.php:40 units/files/function_search_rss.php:44
+msgid "File"
+msgstr "Tập tin"
+
+#: units/files/default_templates.php:41
+msgid "Each individual file within a folder"
+msgstr "Từng tập tin cá nhân trong thư mục"
+
+#: units/files/default_templates.php:43
+msgid "The file's URL"
+msgstr "Link của tập tin"
+
+#: units/files/default_templates.php:44
+msgid "Its filename"
+msgstr "Tên tập tin"
+
+#: units/files/default_templates.php:45
+msgid "A description of the file"
+msgstr "Bảng chú thích cho tập tin"
+
+#: units/files/default_templates.php:46
+msgid "Its title"
+msgstr "Tiêu đề của nó"
+
+#: units/files/default_templates.php:47
+msgid "Menu items for file owner (edit, delete, etc)"
+msgstr "Menu items dành cho chủ nhân tập tin (chỉnh sửa, xóa, v.v..)"
+
+#: units/files/default_templates.php:48
+msgid "The URL of its icon"
+msgstr "Link của hình đại diện"
+
+#: units/files/edit_file.php:17 units/files/edit_folder.php:212
+msgid "File title:"
+msgstr "Tiêu đề của tập tin"
+
+#: units/files/edit_file.php:29
+msgid "File description:"
+msgstr "Chú giải tập tin"
+
+#: units/files/edit_file.php:40 units/files/edit_folder.php:56
+#: units/files/edit_folder.php:119 units/files/edit_folder.php:214
+#: units/weblogs/weblogs_posts_add.php:27
+#: units/weblogs/weblogs_posts_edit.php:21
+msgid "Access restrictions:"
+msgstr "Quản lý truy cập"
+
+#: units/files/edit_file.php:51
+msgid "File folder:"
+msgstr "Thư mục tập tin"
+
+#: units/files/edit_file.php:62 units/files/edit_folder.php:72
+#: units/files/edit_folder.php:154 units/files/edit_folder.php:262
+msgid "Keywords (comma separated):"
+msgstr "Từ khóa (cách nhau bằng dấu phẩy)"
+
+#: units/files/edit_file.php:80
+msgid "Save changes"
+msgstr "Lưu các thay đổi"
+
+#: units/files/edit_file.php:98
+msgid "Edit "
+msgstr "Chỉnh sửa "
+
+#: units/files/edit_folder.php:23
+msgid "Folder name:"
+msgstr "Tên thư mục"
+
+#: units/files/edit_folder.php:24
+msgid "Parent folder:"
+msgstr "Thư mục chính"
+
+#: units/files/edit_folder.php:25 units/files/edit_folder.php:120
+msgid "Folder type:"
+msgstr "Kiễu thư mục:"
+
+#: units/files/edit_folder.php:99
+msgid "Edit this folder"
+msgstr "Chỉnh sửa thư mục này"
+
+#: units/files/edit_folder.php:109
+msgid "Upload files and folders"
+msgstr "Đăng tải thư mục và tập tin"
+
+#: units/files/edit_folder.php:117
+msgid "Create a new folder"
+msgstr "Tạo thư mục mới"
+
+#: units/files/edit_folder.php:118
+msgid "To create a new folder, enter its name:"
+msgstr "Tạo thư mục mới và điền tên của chúng"
+
+#: units/files/edit_folder.php:193
+msgid "Upload a file"
+msgstr "Đăng tải tập tin"
+
+#: units/files/edit_folder.php:207
+#, php-format
+msgid "You have used %s Mb of a total %s Mb."
+msgstr "Bạn đã sử dụng %s Mb trong tổng số %s Mb."
+
+#: units/files/edit_folder.php:209
+#, php-format
+msgid "Used space: %s Mb."
+msgstr "Đã sử dụng: %s Mb"
+
+#: units/files/edit_folder.php:211
+msgid "File to upload:"
+msgstr "Tập tin để đăng tải:"
+
+#: units/files/edit_folder.php:213
+msgid "File Description:"
+msgstr "Chú giải tập tin"
+
+#: units/files/edit_folder.php:284
+msgid ""
+"By checking this box, you are asserting that you have the legal right to "
+"share this file, and that you understand you are sharing it with other users "
+"of the system."
+msgstr ""
+"Bằng việc chọn hộp thoại này, bạn đã đồng ý rằng bạn có quyền chia sẻ tập "
+"tin này, và bạn hiểu rằng nó có thể sẽ được chia sẻ với mọi thành viên trong "
+"cộng đồng này."
+
+#: units/files/files_actions.php:31
+msgid "Your folder was created."
+msgstr "Thư mục của bạn đã được tạo"
+
+#: units/files/files_actions.php:34
+msgid "Could not create folder. Perhaps the folder name was blank?"
+msgstr "Không thể tạo thư mục. Có thể vì tên thư mục đã bị bỏ trống?"
+
+#: units/files/files_actions.php:54
+msgid ""
+"Upload unsuccessful. You must check the copyright box for a file to be "
+"uploaded."
+msgstr ""
+"Đăng tải thành công. Bạn cần phải chọn nút bản quyền bên dưới để có thể đăng "
+"tải tập tin."
+
+#: units/files/files_actions.php:96
+msgid "The file was successfully uploaded."
+msgstr "Tập tin đã được đăng tải thành công."
+
+#: units/files/files_actions.php:137
+msgid "The file was updated."
+msgstr "Tập tin đã được cập nhật"
+
+#: units/files/files_actions.php:163
+msgid "The folder was edited."
+msgstr "Thư mục đã được chỉnh sửa"
+
+#: units/files/files_actions.php:177
+msgid "Error: a folder cannot be its own parent."
+msgstr "Lỗi: thư mục không thể là thư mục mẹ của chính nó."
+
+#: units/files/files_actions.php:203
+msgid "The folder was deleted."
+msgstr "Thư mục đã được xóa"
+
+#: units/files/files_actions.php:228
+msgid "The file was deleted."
+msgstr "Tập tin đã được xóa."
+
+#: units/files/files_links_make.php:54
+msgid "You do not have permission to access this file"
+msgstr "Bạn không có quyền để truy cập tập tin này"
+
+#: units/files/files_links_make.php:57
+msgid "File does not exist"
+msgstr "Tập tin không tồn tại"
+
+#: units/files/files_user_info_menu.php:23
+msgid "File Storage"
+msgstr "Kho lưu trữ tập tin"
+
+#: units/files/files_view.php:26 units/files/folder_view.php:14
+msgid "Root Folder"
+msgstr "Thư mục gốc"
+
+#: units/files/files_view.php:47
+msgid "Return to"
+msgstr "Trở lại về"
+
+#: units/files/function_search.php:49
+#, php-format
+msgid "Folders owned by '%s' in category '%s'"
+msgstr "Thư mục được tạo bởi '%s' trong mục lục '%s'"
+
+#: units/files/function_search.php:89
+#, php-format
+msgid "Files owned by %s in category '%s'"
+msgstr "Tập tin được tạo bởi '%s' trong mục lục '%s'"
+
+#: units/files/function_search.php:94
+#, php-format
+msgid "In folder '%s'"
+msgstr "Trong thư mục '%s'"
+
+#: units/files/function_search.php:111
+#, php-format
+msgid "RSS feed for files owned by %s"
+msgstr "RSS feed cho tập tin này được tạo bởi %s"
+
+#: units/files/function_search.php:122
+msgid "Users with files or folders in category"
+msgstr "Các thành viên với tập tin hay thư mục trong thư mục"
+
+#: units/files/function_search_rss.php:34
+msgid "File folder"
+msgstr "Thư mục tập tin"
+
+#: units/files/templates_preview.php:5
+msgid "Folder name"
+msgstr "Tên thư mục"
+
+#: units/files/templates_preview.php:15 units/files/templates_preview.php:26
+msgid "test"
+msgstr "Kiểm tra"
+
+#: units/files/templates_preview.php:18
+msgid "Subfolder"
+msgstr "Thư mục con"
+
+#: units/files/templates_preview.php:27
+msgid "A sample file"
+msgstr "Tập tin ví dụ"
+
+#: units/files/templates_preview.php:30
+msgid "This is a file"
+msgstr "Đây là một tập tin"
+
+#: units/files/templates_preview.php:31
+msgid "filename"
+msgstr "Tên tập tin"
+
+#: units/files/templates_preview.php:40
+msgid "Files and folders"
+msgstr "Các tập tin và thư mục"
+
+#: units/files/weblogs_posts_add_fields.php:55
+#, php-format
+msgid "Embed a file from your %s file storage:"
+msgstr "Kèm một tập tin từ trong %s kho lưu trữ tập tin của bạn"
+
+#: units/files/weblogs_posts_add_fields.php:79
+msgid ""
+"This will add a code to your weblog post that will be converted into an "
+"embedded file."
+msgstr ""
+"Việc này sẽ thêm đoạn mã vào trong bài viết ở blog và sẽ được chuyển thành "
+"tập tin kèm theo."
+
+#: units/friends/friends_actions.php:24
+#, php-format
+msgid "%s was added to your friends list."
+msgstr "%s đã được thêm vào danh sách bạn bè của bạn."
+
+#: units/friends/friends_actions.php:26
+#, php-format
+msgid ""
+"%s has added you as a friend!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t%s\n"
+"\n"
+"To view all your friends, click here:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s team."
+msgstr ""
+"%s đã thêm bạn như là bạn bè!\n"
+"\n"
+"Để thăm quan hồ sơ của thành viên này, nhấn và đường link sau đây:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Để xem tất cả bạn bè của bạn, nhấn ở đây:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Trân trọng,\n"
+"\n"
+"Đội ngũ %s"
+
+#: units/friends/friends_actions.php:27
+#, php-format
+msgid "New %s friend"
+msgstr "%s bạn mới"
+
+#: units/friends/friends_actions.php:32
+#, php-format
+msgid "%s couldn't be added to your friends list."
+msgstr "%s không thể thêm vào trong danh sách bạn bè"
+
+#: units/friends/friends_actions.php:38
+#, php-format
+msgid ""
+"%s has elected to moderate friendship requests. Your request has been added "
+"to their moderation queue."
+msgstr ""
+"%s đã lựa chọn để kiểm soát thông tin làm quen từ các thành viên khác. Yêu "
+"cầu của bạn đã được thêm vào danh sách chờ đợi."
+
+#: units/friends/friends_actions.php:40
+#, php-format
+msgid ""
+"%s has requested to add you as a friend!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t%s\n"
+"\n"
+"To view all your friends requests and approve or deny this user, click "
+"here:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s team."
+msgstr ""
+"%s đã yêu cầu thêm bạn vào danh sách bạn bè!\n"
+"\n"
+"Để thăm quan hồ sơ của thành viên này, nhấn và đường link sau đây:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Để xem tất cả yêu cầu bạn bè để chấp thuận hay từ chối thành viên này, nhấn "
+"ở đây:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Trân trọng,\n"
+"\n"
+"Đội ngũ %s ."
+
+#: units/friends/friends_actions.php:41
+#, php-format
+msgid "New %s friend request"
+msgstr "%s yêu cầu bạn bè mới"
+
+#: units/friends/friends_actions.php:46
+#, php-format
+msgid ""
+"%s has elected to moderate friendship requests, but your friend request "
+"couldn't be added to their moderation queue."
+msgstr ""
+"%s đã lựa chọn để yêu cầu làm quen, nhưng yêu cầu của bạn đã không được thêm "
+"vào danh sách chờ đợi."
+
+#: units/friends/friends_actions.php:50
+#, php-format
+msgid ""
+"%s has decided not to allow any new friendship requests at this time. Your "
+"friendship request has been declined."
+msgstr ""
+"%s đã quyết định không cho phép yêu cầu làm quen vào thời điểm này. Yêu cầu "
+"làm quen của bạn đã bị từ chối."
+
+#: units/friends/friends_actions.php:60
+msgid " was removed from your friends."
+msgstr " đã bị xóa trong danh sách bạn bè của bạn."
+
+#: units/friends/friends_actions.php:64
+msgid " couldn't be removed from your friends."
+msgstr " không thể xóa bỏ từ danh sách bạn bè của bạn."
+
+#: units/friends/friends_actions.php:82
+#, php-format
+msgid "You approved the friendship request. %s now lists you as a friend."
+msgstr ""
+"Bạn đã chấp nhận lời mời làm quen. %s bây giờ trong danh sách bạn bè của bạn."
+
+#: units/friends/friends_actions.php:83
+#, php-format
+msgid ""
+"%s has approved your friendship request!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t%s\n"
+"\n"
+"To view all your friends, click here:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s team."
+msgstr ""
+"%s đã chấp nhận yêu cầu làm quen của bạn!\n"
+"\n"
+"Để xem hồ sơ của thành viên này, nhấn vào đường link sau:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Để xem tất cả bạn bè, nhấn vào đây:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Trân trọng,\n"
+"\n"
+"Đội ngũ %s ."
+
+#: units/friends/friends_actions.php:84
+#, php-format
+msgid "%s friend request approved!"
+msgstr "%s yêu cầu làm quen đã chấp thuận!"
+
+#: units/friends/friends_actions.php:87
+msgid "An error occurred: couldn't add you as a friend"
+msgstr "Xảy ra lỗi: không thể thêm bạn là bạn bè"
+
+#: units/friends/friends_actions.php:90 units/friends/friends_actions.php:112
+msgid "Error: you do not have authority to modify this friendship request."
+msgstr "Xảy ra lỗi: bạn không có quyền để chỉnh sửa yêu cầu làm quen này."
+
+#: units/friends/friends_actions.php:93 units/friends/friends_actions.php:115
+msgid "An error occurred: the friendship request could not be found."
+msgstr "Xảy ra lỗi: yêu cầu làm quen không tìm thấy."
+
+#: units/friends/friends_actions.php:107
+#, php-format
+msgid ""
+"You declined the friendship request. %s does not list you as a friend."
+msgstr "Bạn đã từ chối kết nối bạn bè. %s không còn trong danh sách bạn bè."
+
+#: units/friends/friends_actions.php:108
+#, php-format
+msgid ""
+"%s has denied your friendship request.\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t%s\n"
+"\n"
+"To view all your existing friends, click here:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s team."
+msgstr ""
+"%s đã từ chối yêu cầu làm quen của bạn.\n"
+"\n"
+"Để xem hồ sơ của thành viên này, nhấn vào đường link sau đây:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Để xem tất cả các bạn bè, nhấn vào đây:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Trân trọng,\n"
+"\n"
+"Đội ngũ %s."
+
+#: units/friends/friends_actions.php:109
+#, php-format
+msgid "%s friend request denied"
+msgstr "%s từ chối yêu cầu làm quen"
+
+#: units/friends/friends_edit.php:47
+msgid ""
+"You don't have any friends listed! To add a user as a friend, click the "
+"'friend' button underneath a user's icon."
+msgstr ""
+"Bạn không có bất kỳ bạn bè nào trong danh sách!Để thêm bạn bè, nhấn vào nút "
+"làm quen ngay bên dưới hình ảnh đại diện của thành viên"
+
+#: units/friends/friends_edit.php:49
+msgid ""
+"This user doesn't currently have any friends listed. Maybe if you list them "
+"as a friend, it'll start the ball rolling ..?"
+msgstr ""
+"Thành viên này hiện nay không có bất kỳ bạn bè nào trong danh sách. Nếu có "
+"thể bạn mời làm quen, và 1 vòng lặp mới sẽ bắt đầu...?"
+
+#: units/friends/friends_of_edit.php:18
+#, php-format
+msgid "Displaying 1000 most recently active people, of %d found."
+msgstr ""
+"Hiển thị 1000 những hoạt động gần đây nhất của mọi người, tìm thấy trong %d"
+
+#: units/friends/friends_of_edit.php:58
+msgid ""
+"Nobody's listed you as a friend! Maybe you need to start chatting to some "
+"other users?"
+msgstr ""
+"Không có người nào đã yêu cầu làm bạn bè với bạn! Có thể bạn sẽ bắt đầu nói "
+"chuyện với mọi người để làm quen...?"
+
+#: units/friends/friends_of_edit.php:60
+msgid ""
+"This user isn't currently listed as anyone's friend. Maybe you could be the "
+"first?"
+msgstr ""
+"Thành viên này hiện nay không có nằm trong bất kỳ danh sách bạn bè nào của "
+"các thành viên khác. Nếu có thể bạn mời làm quen, và 1 vòng lặp mới sẽ bắt "
+"đầu...?"
+
+#: units/friends/profile_friends.php:20 units/friends/profile_friends.php:29
+msgid "View all Friends"
+msgstr "Xem tất cả bạn bè"
+
+#: units/friends/profile_friends.php:27 units/friends/user_friends.php:14
+msgid "Your Friends"
+msgstr "Bạn bè của bạn"
+
+#: units/friends/user_friends.php:14
+msgid "Friends Screen"
+msgstr "Màn hình bạn bè"
+
+#: units/friends/user_friendship_requests.php:16
+msgid ""
+"The following users would like to add you as a friend. They need your "
+"approval to do this (to change this setting, visit the 'account settings' "
+"page)."
+msgstr ""
+"Các thành viên sau đây muốn kết bạn với bạn. Họ cần được sự phê chuẩn của "
+"bạn để có thể thực hiện được điều này ( để thay đổi sự điều chỉnh này, bạn "
+"có thể thay đổi ở trong mục tinh chỉnh tài khoản)."
+
+#: units/friends/user_friendship_requests.php:51
+msgid "You have no pending friendship requests."
+msgstr "Bạn không có yêu cầu làm quen nào đang chờ"
+
+#: units/friends/user_info_menu_text.php:19
+msgid "Are you sure you want to add this user as a friend?"
+msgstr "Bạn có chắc muốn làm quen với thành viên này?"
+
+#: units/friends/user_info_menu_text.php:19
+msgid "Click here to add this user as a friend."
+msgstr "Nhấn vào đây để làm quen với thành viên này."
+
+#: units/friends/user_info_menu_text.php:26
+msgid "Are you sure you want to remove this user from your friends list?"
+msgstr "Bạn có chắc muốn xóa thành viên này ra khỏi danh sách bạn bè?"
+
+#: units/friends/user_info_menu_text.php:26
+msgid "Click here to remove this user from your friends list."
+msgstr "Nhấn vào đây để xóa thành viên này ra khỏi danh sách bạn bè."
+
+#: units/gettext/library.php:410
+msgid "Language selection"
+msgstr "Lựa chọn ngôn ngữ"
+
+#: units/gettext/library.php:411
+msgid ""
+"Choose your preferred language for this site. The following languages are "
+"available on this system:"
+msgstr ""
+"lựa chọn ngôn ngữ mà bạn muốn sử dụng cho site này. Những ngôn ngữ sau hiện "
+"đang có trên hệ thống này:"
+
+#: units/gettext/library.php:422
+msgid "No languages installed"
+msgstr ""
+
+#: units/gettext/library.php:428
+msgid "default"
+msgstr "Mặc định"
+
+#: units/gettext/library.php:480 units/gettext/library.php:485
+msgid "Preferred language"
+msgstr "Ngôn ngữ yêu thích"
+
+#: units/gettext/library.php:480
+msgid "saved"
+msgstr "đã lưu"
+
+#: units/gettext/library.php:485
+msgid "not changed"
+msgstr "không thay đổi"
+
+#: units/groups/groups_access_levels.php:8
+msgid "Group"
+msgstr "Nhóm"
+
+#: units/groups/groups_actions.php:27
+msgid "Your group was updated."
+msgstr "Nhóm của bạn đã được cập nhật"
+
+#: units/groups/groups_create.php:3
+msgid "Create a new group"
+msgstr "Tạo nhóm mới"
+
+#: units/groups/groups_create.php:4
+msgid "Group name:"
+msgstr "Tên nhóm:"
+
+#: units/groups/groups_display_membership.php:6
+msgid "Group membership"
+msgstr "Thành viên của nhóm"
+
+#: units/groups/groups_display_membership.php:15
+#, php-format
+msgid "Owned by %s"
+msgstr "Quản trị bời %s"
+
+#: units/groups/groups_edit_display.php:13
+msgid "Your friends:"
+msgstr "Bạn bè của bạn"
+
+#: units/groups/groups_edit_display.php:44
+msgid "Add selected to group"
+msgstr "Thêm lựa chọn vào nhóm"
+
+#: units/groups/groups_edit_display.php:53
+msgid "Remove selected from group"
+msgstr "Xóa bỏ lựa chọn từ nhóm"
+
+#: units/groups/groups_edit_display.php:54
+msgid "Members of this group:"
+msgstr "Các thành viên của nhóm này:"
+
+#: units/groups/groups_edit_display.php:72
+msgid "Save this group"
+msgstr "Lưu nhóm này"
+
+#: units/groups/groups_edit_display.php:73
+msgid "Delete this group"
+msgstr "Xóa nhóm này"
+
+#: units/groups/groups_edit_existing.php:6
+msgid "Groups you own"
+msgstr "Những nhóm mà bạn quản trị"
+
+#: units/groups/groups_editpage.php:4
+msgid "Existing groups"
+msgstr "Những nhóm có sẵn"
+
+#: units/groups/groups_explanation.php:3
+msgid ""
+"Access is controlled through the use of Access groups and this is one of the "
+"most powerful features of Elgg. Access groups allow you to have complete "
+"control over who sees what within your environment. You can create as many "
+"access groups as you wish. Each access group can have as many of your "
+"friends as you like and each access group created becomes another option in "
+"the 'access restriction' dropdown menu beside each profile item, weblog post "
+"and file uploaded."
+msgstr ""
+"Truy cập được quản lý thông qua việc sử dụng nhóm truy cập và đây là một "
+"trong những chức năng tuyệt vời nhất của cộng đồng này. Nhóm truy cập cho "
+"phép bạn có một tầm kiểm soát hoàn toàn những ai có quyền xem toàn bộ nhóm "
+"trong giới hạn của bạn. Bạn có thể tạo không hạn chế các nhóm truy cập. Từng "
+"nhóm truy cập có thể có bao nhiêu bạn bè của bạn cũng được và từng nhóm truy "
+"cập sẽ tự động tạo 1 lựa chọn khác trong vùng \"Quyền truy cập\" menu giữa "
+"các thành phần trong hồ sơ, bài viết trong weblog hay là đăng tải tập tin."
+
+#: units/groups/groups_explanation.php:4 units/groups/groups_help.php:4
+msgid ""
+"When you create an access group, add people to it then select it as your "
+"access restriction on a weblog post only the people in that group will be "
+"able to see that weblog post and so on for all elements in your learning "
+"landscape."
+msgstr ""
+"Khi bạn tạo 1 nhóm truy cập, thêm người vào nó; sau đó thì chọn quyền truy "
+"cập trong các bài viết mà chỉ có người trong nhóm đó mới có thể thấy các bài "
+"viết trong nhóm cũng như là các chức năng khác."
+
+#: units/groups/groups_help.php:3
+msgid "This is a help file for the Groups functions."
+msgstr "Đây là tập tin giúp đỡ dành cho chức năng nhóm"
+
+#: units/icons/function_actions.php:57
+msgid "Your selected icons were deleted."
+msgstr "Hình ảnh đại diện bạn vừa chọn đã bị xóa."
+
+#: units/icons/function_actions.php:71
+msgid ""
+"You have already met your icon quota. You must delete some icons before you "
+"can upload any new ones."
+msgstr ""
+"Bạn đã hết giới hạn của hình ảnh đại diện lưu trữ. Bạn cần phải xóa bỏ một "
+"số hình ảnh trước khi có thể đăng tải cái mới."
+
+#: units/icons/function_actions.php:79
+msgid "Attempting to upload icon file ..."
+msgstr "Đang chuẩn bị đăng tải tập tin ..."
+
+#: units/icons/function_actions.php:86
+msgid ""
+"The uploaded icon file was invalid. Please ensure you are using JPEG, GIF or "
+"PNG files."
+msgstr ""
+"Hình ảnh đại diện vừa đăng tải không đúng. Xin vui lòng chọn các tập tin "
+"JPEG, GIF hay PNG."
+
+#: units/icons/function_actions.php:118
+msgid ""
+"The uploaded icon file was in an image format other than JPEG, GIF or PNG. "
+"These are unsupported at present."
+msgstr "Hình ảnh đại diện không phải là các tập tin JPEG, GIF hay PNG."
+
+#: units/icons/function_actions.php:138
+msgid "Your icon was uploaded successfully."
+msgstr "Hình ảnh đại diện của bạn đã được đăng tải thành công."
+
+#: units/icons/function_actions.php:141
+msgid ""
+"An unknown error occurred when saving your icon. If this problem persists, "
+"please let us know and we'll do all we can to fix it quickly."
+msgstr ""
+"Có lỗi không biết đã xảy ra khi lưu trữ hình ảnh đại diện của bạn. Nếu vấn "
+"đề này vẫn còn tồn tại, xin vui lòng thông báo cho chúng tôi biết và chúng "
+"tôi sẽ nhanh chóng khắc phục nó."
+
+#: units/icons/function_add_icons.php:15
+msgid "Upload a new picture"
+msgstr "Đăng tải hình ảnh mới"
+
+#: units/icons/function_add_icons.php:16
+msgid ""
+"Upload a picture for this profile below. Pictures need to be 100x100 pixels "
+"or smaller, but don't worry - if you've selected a larger picture, we'll "
+"shrink it down for you. You may upload up to"
+msgstr ""
+"Đăng tải hình ảnh mới cho hồ sơ phía dưới. Hình ảnh gần phải có kích thước "
+"là 100x100 pixels hay nhỏ hơn. Nhưng đừng lo lắng, nếu hình ảnh bạn quá lớn, "
+"chúng tôi sẽ tự động thu nhỏ lại. Bạn có thể đăng tải đến"
+
+#: units/icons/function_add_icons.php:17
+msgid "pictures in total."
+msgstr "tổng số các hình ảnh"
+
+#: units/icons/function_add_icons.php:26
+msgid "Picture to upload:"
+msgstr "Hình ảnh để đăng tải"
+
+#: units/icons/function_add_icons.php:37
+msgid "Icon description:"
+msgstr "Chú thích hình ảnh"
+
+#: units/icons/function_add_icons.php:45
+msgid "Make this the default icon:"
+msgstr "Hiển thị hình này là hình ảnh đại diện mặc định"
+
+#: units/icons/function_add_icons.php:58
+msgid "Upload new icon"
+msgstr "Đăng tải hình ảnh đại diện mới"
+
+#: units/icons/function_edit_icons.php:21
+msgid "Site pictures"
+msgstr "Hình ảnh của trang web"
+
+#: units/icons/function_edit_icons.php:31
+msgid ""
+"Site pictures are small pictures that act as a representative icon "
+"throughout the system."
+msgstr ""
+"Hình ảnh của trang web là những hình ảnh nhỏ để làm biểu tượng trong cộng "
+"đồng này."
+
+#: units/icons/function_edit_icons.php:55
+msgid "Name:"
+msgstr "Tên"
+
+#: units/icons/function_edit_icons.php:56
+msgid "Default:"
+msgstr "Mặc định:"
+
+#: units/icons/function_edit_icons.php:79
+msgid "No default:"
+msgstr "Không mặc định"
+
+#: units/icons/function_edit_icons.php:100
+msgid "You don't have any site pictures loaded yet."
+msgstr "Bạn không có hình ảnh trang web nào được đăng tải."
+
+#: units/invite/invite.php:12
+msgid "Their name"
+msgstr "Tên của họ"
+
+#: units/invite/invite.php:18
+msgid "Their email address"
+msgstr "Địa chỉ email của họ"
+
+#: units/invite/invite.php:25
+msgid "An optional message"
+msgstr "Thông điệp kèm theo"
+
+#: units/invite/invite.php:33
+msgid "Invite"
+msgstr "Mời"
+
+#: units/invite/invite_actions.php:34
+msgid "They included the following message:"
+msgstr "Họ đã được bao gồm thông điệp kèm theo sau:"
+
+#: units/invite/invite_actions.php:38
+#, php-format
+msgid "Thank you for registering with %s."
+msgstr "Cám ơn đã đăng ký với %s"
+
+#: units/invite/invite_actions.php:39
+#, php-format
+msgid "%s account verification"
+msgstr "%s xác nhận tài khoản"
+
+#: units/invite/invite_actions.php:42 units/invite/invite_actions.php:43
+msgid "has invited you to join"
+msgstr "đã mời bạn để tham gia"
+
+#: units/invite/invite_actions.php:42
+msgid "a learning landscape system."
+msgstr "hệ thống cộng đồng mở"
+
+#: units/invite/invite_actions.php:46
+#, php-format
+msgid ""
+"Dear %s,\n"
+"\n"
+"%s %s\n"
+"\n"
+"To join, visit the following URL:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Your email address has not been passed onto any third parties, and will be "
+"removed from our system within seven days.\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s team."
+msgstr ""
+"Kính gửi %s,\n"
+"\n"
+"%s %s\n"
+"\n"
+"Để tham gia, xin vui lòng theo đường link sau đây:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Địa chỉ email của bạn không được thông qua một cơ sở thứ 3 nào và sẽ được "
+"xóa trong hệ thống hệ thống của chúng tôi trong vòng 7 ngày.\n"
+"\n"
+"Trân trọng,\n"
+"\n"
+"Đội ngũ %s."
+
+#: units/invite/invite_actions.php:48
+#, php-format
+msgid ""
+"Your invitation was sent to %s at %s. It will be valid for seven days."
+msgstr ""
+"Thư mời của bạn đã được gửi đến %s tại %s. Nó sẽ tồn tại trong vòng 7 ngày."
+
+#: units/invite/invite_actions.php:51
+#, php-format
+msgid "User %s already has that email address. Invitation not sent."
+msgstr "Thành viên %s đã có địa chỉ email đó. Thư mời không được gửi"
+
+#: units/invite/invite_actions.php:54
+msgid ""
+"Someone with that email address has already been invited to the system. "
+msgstr "Ai đó với địa chỉ email này đã được mời đến hệ thống. "
+
+#: units/invite/invite_actions.php:57
+msgid "Invitation failed: The email address was not valid."
+msgstr "Thư mời bị thất bại: địa chỉ email không đúng."
+
+#: units/invite/invite_actions.php:60
+msgid "Error: This community has reached its maximum number of users."
+msgstr "Xảy ra lỗi: diễn đàn đã hết giới hạn thành viên."
+
+#: units/invite/invite_actions.php:63
+msgid "Invitation failed: you are not logged in."
+msgstr "Thư mời thất bại: bạn không đăng nhập."
+
+#: units/invite/invite_actions.php:66
+msgid "Invitation failed: you must specify both a name and an email address."
+msgstr "Thư mời thất bại: bạn cần ghi rõ tên và địa chỉ email."
+
+#: units/invite/invite_actions.php:79
+msgid ""
+"Unfortunately this community has reached its account limit and you are "
+"unable to join at this time."
+msgstr ""
+
+#: units/invite/invite_actions.php:83
+msgid "You must indicate that you are at least 13 years old to join."
+msgstr "Bạn cần phải công nhận bạn lớn hơn 13 tuỗi để tham gia."
+
+#: units/invite/invite_actions.php:87
+msgid "Error! Invalid invite code."
+msgstr "Xảy ra lỗi! Sai code thư mời."
+
+#: units/invite/invite_actions.php:136
+msgid ""
+"Your account was created! You can now log in using the username and password "
+"you supplied. You have been sent an email containing these details for "
+"reference purposes."
+msgstr ""
+"Tài khoản của bạn đã được tạo! Bây giờ bạn có thể đăng nhập bằng username và "
+"mật khẩu của mình. Bạn cũng đã được gửi 1 bản email về những thông tin này "
+"để làm tài liệu."
+
+#: units/invite/invite_actions.php:138
+#, php-format
+msgid "Your %s account"
+msgstr "%s tài khoản của bạn"
+
+#: units/invite/invite_actions.php:139
+#, php-format
+msgid ""
+"Thanks for joining %s!\n"
+"\n"
+"For your records, your %s username and password are:\n"
+"\n"
+"\t"
+msgstr ""
+"Cám ơn vì đã tham gia %s!\n"
+"\n"
+"Để làm lưu trữ,  %s username và mật khẩu là:\n"
+"\n"
+"\t"
+
+#: units/invite/invite_actions.php:158
+#, php-format
+msgid "Verify your %s account password request"
+msgstr ""
+
+#: units/invite/invite_actions.php:159
+#, php-format
+msgid ""
+"A request has been received to generate your account at %s a new password.\n"
+"\n"
+msgstr ""
+"Yêu cầu đã được nhận để tạo mật khẩu mới cho tài khoản của bạn tại %s.\n"
+"\n"
+
+#: units/invite/invite_actions.php:163
+msgid "Your verification email was sent. Please check your inbox."
+msgstr ""
+"Thư xác nhận email đã được gửi. Xin vui lòng kiểm tra hộp thư của bạn."
+
+#: units/invite/invite_actions.php:165
+msgid "No user with that username was found."
+msgstr "Không có thành viên nào với username này."
+
+#: units/invite/invite_join.php:28
+#, php-format
+msgid ""
+"Thank you for registering for an account with %s! Registration is completely "
+"free, but before you confirm your details, please take a moment to read the "
+"following documents:"
+msgstr ""
+"Cám ơn đã đăng ký tài khao3n tại %s! Đăng ký hoàn toàn miễn phí, tuy nhiên "
+"trước khi bạn xác nhận thông tin của mình, xin vui lòng đọc những tài liệu "
+"sau đây:"
+
+#: units/invite/invite_join.php:29 units/invite/join_noinvite.php:10
+msgid "terms and conditions"
+msgstr "Điều kiện & điều khoản"
+
+#: units/invite/invite_join.php:30 units/invite/join_noinvite.php:11
+msgid "Privacy policy"
+msgstr "Chính sách cá nhân"
+
+#: units/invite/invite_join.php:31
+msgid ""
+"Submitting the form below indicates acceptance of these terms. Please note "
+"that currently you must be at least 13 years of age to join the site."
+msgstr ""
+"Một khi bản tiếp tục hộp đăng ký này có nghĩa là bạn đã đồng ý với chính "
+"sách & điều kiện của chúng tôi."
+
+#: units/invite/invite_join.php:50 units/invite/join_noinvite.php:32
+#: units/weblogs/weblogs_comments_add.php:48
+msgid "Your name"
+msgstr "Tên của bạn"
+
+#: units/invite/invite_join.php:56
+msgid "Your username - (Must be letters only)"
+msgstr "Username của bạn - ( chỉ được bao gồm ký tự)"
+
+#: units/invite/invite_join.php:62
+msgid "Enter a password"
+msgstr "Mật khẩu:"
+
+#: units/invite/invite_join.php:68
+msgid "Your password again for verification purposes"
+msgstr "Vui lòng điền mật khẩu lại để xác nhận"
+
+#: units/invite/invite_join.php:72
+msgid "I am at least thirteen years of age."
+msgstr "Tôi đã lớn hơn hoặc ít nhất là 13 tuổi."
+
+#: units/invite/invite_join.php:73
+msgid "Join"
+msgstr "Tham gia"
+
+#: units/invite/invite_join.php:87
+msgid ""
+"Your invitation code appears to be invalid. Codes only last for seven days; "
+"it's possible that yours is older."
+msgstr ""
+"Code thư mời của bạn dường như không đúng. Code chỉ tồn tại trong bảy ngày, "
+"có thể của bạn đã quá cũ."
+
+#: units/invite/invite_join.php:90
+#, php-format
+msgid "If you still want to join %s, click the Register link."
+msgstr "Nếu bạn vẫn muốn tham gia %s, xin vui lòng nhấn vào nút đăng ký"
+
+#: units/invite/invite_join.php:92
+#, php-format
+msgid ""
+"If you still want to join %s, it may be worth getting in touch with the "
+"person who invited you."
+msgstr ""
+"Nếu bạn vẫn muốn tham gia %s, bạn vẫn có thể liên hệ với người đã mời bạn."
+
+#: units/invite/invite_join.php:108
+#, php-format
+msgid "To join %s, click the Register link."
+msgstr "Để tham gia %s, nhấn vào đ8ang ký link."
+
+#: units/invite/invite_join.php:110
+#, php-format
+msgid ""
+"For the moment, joining %s requires a specially tailored invite code. If you "
+"know someone who's a member, it may be worth asking them for one."
+msgstr ""
+
+#: units/invite/join_noinvite.php:9
+#, php-format
+msgid ""
+"Thank you for registering for an account with %s! Registration is completely "
+"free, but before you fill in your details, please take a moment to read the "
+"following documents:"
+msgstr ""
+"Xin cảm ơn vì đã tham gia với %s! Đăng ký thì hoàn toàn miễn phí nhưng vui "
+"lòng đọc trước những tài liệu sau trước khi đăng ký:"
+
+#: units/invite/join_noinvite.php:12
+msgid ""
+"When you fill in the details below, we will send an \"invitation code\" to "
+"your email address in order to validate it. You must then click on this "
+"within seven days to create your account."
+msgstr ""
+"Khi bạn điền những thông tin dưới đây, chúng tôi sẽ gửi \"code thư mời\" đến "
+"địa chỉ email của bạn để xác nhận chúng. Sau đó bạn cần phải click vào đường "
+"link trong vòng 7 ngày để khởi tạo tài khoản."
+
+#: units/invite/join_noinvite.php:38
+msgid "Your email address"
+msgstr "Địa chỉ email"
+
+#: units/invite/join_noinvite.php:53
+msgid "Self-registration is currently disabled."
+msgstr ""
+
+#: units/invite/new_password.php:13
+#, php-format
+msgid ""
+"A new password has been emailed to you at %s. You should be able to use it "
+"immediately; your old one has been deactivated."
+msgstr ""
+"M6at5 khẩu mới đã được email đến bạn ở %s. Bạn có thể sử dụng nó ngay lập "
+"tức. Mật khẩu cũ của bạn đã bị hủy bỏ."
+
+#: units/invite/new_password.php:30
+#, php-format
+msgid "Your %s password"
+msgstr "%s mật khẩu của bạn"
+
+#: units/invite/new_password.php:30
+#, php-format
+msgid ""
+"Your %s password has been reset.\n"
+"\n"
+"For your records, your new password is:\n"
+"\n"
+"\tPassword: %s\n"
+"\n"
+"Please consider changing your password as soon as you have logged in for "
+"security reasons.\n"
+"\n"
+"We hope you continue to enjoy using the system.\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s Team"
+msgstr ""
+"%s mật khẩu của bạn đã được làm lại.\n"
+"\n"
+"Để lưu trữ, đây là mật khẩu mới của bạn:\n"
+"\n"
+"\tMật khẩu: %s\n"
+"\n"
+"Xin vui lòng thay đổi mật khẩu của bạn ngay sau khi bạn đăng nhập vì lý do "
+"bảo mật.\n"
+"\n"
+"Chúng tôi hy vọng bạn tiếp tục có những phút giây thoải mái với cộng động "
+"này\n"
+"\n"
+"Trân trọng,\n"
+"\n"
+"Đội ngũ %s"
+
+#: units/invite/new_password.php:37 units/invite/new_password.php:49
+msgid ""
+"Your password request code appears to be invalid. Try generating a new one?"
+msgstr "Mật khẩu của bạn yêu cầu dường như sai. Thử tạo một cái mới?"
+
+#: units/invite/password_request.php:5
+#, php-format
+msgid ""
+"To generate a new password at %s!, enter your username below. We will send "
+"the address of a unique verification page to you via email click on the link "
+"in the body of the message and a new password will be sent to you."
+msgstr ""
+"Để tạo mật khẩu mới tai %s! Điền username của bạn dưới đây. Chúng tôi sẽ gửi "
+"cho bạn link để xác nhận qua email của bạn và sau đó mật khẩu mới của bạn sẽ "
+"được gửi lại một lần nữa."
+
+#: units/invite/password_request.php:6
+msgid "This method reduces the chance of a mistakenly reset password."
+msgstr ""
+"Phương pháp này giảm thiểu cơ hội bị nhầm lẫn trong quá trình khởi động lại "
+"mật khẩu,"
+
+#: units/invite/password_request.php:22
+msgid "Your username"
+msgstr "Username của bạn"
+
+#: units/invite/password_request.php:26
+msgid "Request new password"
+msgstr "Yêu cầu mật khẩu mới"
+
+#: units/magpie/default_template.php:8
+msgid "Feed Post"
+msgstr "Bài Feed"
+
+#: units/magpie/default_template.php:9
+msgid "A template for each post in a feed."
+msgstr "Giao diện cho từng bài ở trong feed"
+
+#: units/magpie/default_template.php:11 units/weblogs/default_template.php:11
+msgid "Post title"
+msgstr "Tiêu đề bài viết"
+
+#: units/magpie/default_template.php:12 units/weblogs/default_template.php:12
+msgid "The text of the post"
+msgstr "Bản văn của bài viết"
+
+#: units/magpie/default_template.php:13
+msgid "An icon for the user"
+msgstr "Hình đại diện cho thành viên"
+
+#: units/magpie/default_template.php:14
+msgid "The feed name"
+msgstr "Tên của feed"
+
+#: units/magpie/default_template.php:15
+msgid "A short description of the feed"
+msgstr "1 đoạn chú thích ngắn cho feed"
+
+#: units/magpie/default_template.php:16
+msgid "A link to the post"
+msgstr "Link đến bài viết"
+
+#: units/magpie/default_template.php:17
+msgid "A link to the host site"
+msgstr "Link đến host site"
+
+#: units/magpie/default_template.php:18
+msgid "A link to the host feed"
+msgstr "Link đến host feed"
+
+#: units/magpie/default_template.php:19
+msgid "Buttons to subscribe or unsubscribe"
+msgstr "Nút để đăng ký và gỡ bỏ"
+
+#: units/magpie/default_template.php:24
+msgid "Added"
+msgstr "Đã thêm"
+
+#: units/magpie/function_actions.php:23 units/magpie/function_actions.php:87
+#: units/magpie/function_actions.php:107
+msgid "Your feed subscription was successful."
+msgstr "Đăng ký feed của bạn đã thành công"
+
+#: units/magpie/function_actions.php:25
+msgid "Feed subscription failed: you are already subscribed to this feed."
+msgstr "Đăng ký feed thất bại: bạn đã đăng feed này."
+
+#: units/magpie/function_actions.php:34
+msgid "Your have successfully removed this feed from your subscriptions."
+msgstr "Bạn đã xóa thành công feed này."
+
+#: units/magpie/function_actions.php:36
+msgid "Feed unsubscription failed: you are not subscribed to this feed."
+msgstr "Xóa feed không thành công: bạn đã không đăng ký feed này."
+
+#: units/magpie/function_actions.php:62
+msgid ""
+"Feed not imported to blog: You cannot import a feed from this account."
+msgstr ""
+"Feed không đăng vào blog: bạn không thể đăng feed vào blog từ tài khoản này."
+
+#: units/magpie/function_actions.php:89
+msgid "Feed subscription failed: this feed subscription already exists."
+msgstr "Đăng ký feed thất bại: feed này đã được đăng ký."
+
+#: units/magpie/function_actions.php:96
+msgid "Feed subscription failed: SSL feed reading is not enabled."
+msgstr "Đăng ký feed thất bại: SSl feed không được mở."
+
+#: units/magpie/function_actions.php:110
+msgid ""
+"Feed subscription failed: feed appears to be invalid. Please check your link "
+"or try later."
+msgstr ""
+"Đăng ký feed thất bại: feed dường như không đúng. Xin vui lòng kiểm tra link "
+"của bạn và thử lại."
+
+#: units/magpie/function_actions.php:114
+msgid ""
+"Feed subscription failed: could not get feed. Please check your link or try "
+"later."
+msgstr ""
+"Đăng ký feed thất bại: không thể lấy thông tin từ feed.  Xin vui lòng kiểm "
+"tra link của bạn và thử lại."
+
+#: units/magpie/function_actions.php:116
+msgid "Error message was: "
+msgstr "Thông điệp báo lỗi là: "
+
+#: units/magpie/function_subscriptions.php:12
+#: units/magpie/function_subscriptions_popular.php:5
+msgid ""
+"Feeds are information streams from other sites. You will often see a link to "
+"an 'RSS' feed while browsing; enter the link address into the 'add feed' box "
+"at the bottom of the page to read that information from within your learning "
+"landscape."
+msgstr ""
+"Vậy RSS là gì? RSS là một định dạng tập tin thuộc họ XML (ngôn ngữ đánh dấu "
+"mở rộng, một chuẩn dùng để mô tả dữ liệu) dùng trong việc chia sẻ tin tức "
+"Web (Web syndication) được dùng bởi nhiều website tin tức và nhật ký trực "
+"tuyến."
+
+#: units/magpie/function_subscriptions.php:21
+#: units/magpie/function_subscriptions_popular.php:13
+#: units/magpie/function_subscriptions_publish_to_blog.php:18
+msgid "Last updated"
+msgstr "Lần cuối cập nhật"
+
+#: units/magpie/function_subscriptions.php:22
+#: units/magpie/function_subscriptions_publish_to_blog.php:19
+msgid "Resource name"
+msgstr "Tên tài nguyên"
+
+#: units/magpie/function_subscriptions.php:32
+#: units/magpie/function_subscriptions_publish_to_blog.php:41
+msgid "View content"
+msgstr "Xem nội dung"
+
+#: units/magpie/function_subscriptions.php:40
+#: units/magpie/function_subscriptions_popular.php:30
+#: units/magpie/function_view_post.php:44
+msgid "Are you sure you want to unsubscribe from this feed?"
+msgstr "Bạn có chắc muốn hủy bỏ đăng ký feed này?"
+
+#: units/magpie/function_subscriptions.php:40
+#: units/magpie/function_subscriptions_popular.php:30
+#: units/magpie/function_view_post.php:44
+msgid "Unsubscribe"
+msgstr "Bỏ đăng ký"
+
+#: units/magpie/function_subscriptions.php:54
+msgid "Subscription list as OPML"
+msgstr "Đăng ký danh sách như là OPML"
+
+#: units/magpie/function_subscriptions.php:61
+#: units/magpie/function_subscriptions_publish_to_blog.php:57
+msgid "Update"
+msgstr "Cập nhật"
+
+#: units/magpie/function_subscriptions.php:71
+#: units/magpie/function_subscriptions_publish_to_blog.php:67
+msgid "You are not subscribed to any feeds."
+msgstr "Bạn không đăng ký bất kỳ feed nào."
+
+#: units/magpie/function_subscriptions.php:73
+#: units/magpie/function_subscriptions_publish_to_blog.php:69
+msgid "No feeds were found."
+msgstr "KHông tìm thấy feed nào."
+
+#: units/magpie/function_subscriptions.php:78
+#: units/magpie/function_subscriptions_popular.php:52
+msgid "To subscribe to a new feed, enter its address below:"
+msgstr "Để đăng ký feed mới, nhập địa chỉ dưới đây:"
+
+#: units/magpie/function_subscriptions.php:84
+#: units/magpie/function_subscriptions_popular.php:32
+#: units/magpie/function_subscriptions_popular.php:58
+#: units/magpie/function_view_post.php:46
+msgid "Subscribe"
+msgstr "Đăng ký"
+
+#: units/magpie/function_subscriptions_popular.php:6
+msgid "This is a list of the feeds with the most subscribers."
+msgstr "Đây là danh sách feed với nhiều người đăng ký nhất."
+
+#: units/magpie/function_subscriptions_popular.php:14
+msgid "Link to site"
+msgstr "Link đến site"
+
+#: units/magpie/function_subscriptions_popular.php:20
+msgid "Unnamed Feed"
+msgstr "Feed không có tên"
+
+#: units/magpie/function_subscriptions_popular.php:25
+msgid "View posts"
+msgstr "Xem các bài viết"
+
+#: units/magpie/function_subscriptions_popular.php:32
+#: units/magpie/function_view_post.php:46
+msgid "Are you sure you want to subscribe to this feed?"
+msgstr "Bạn có chắc muốn đăng ký feed này?"
+
+#: units/magpie/function_subscriptions_popular.php:36
+msgid "Subscribers"
+msgstr "Người đăng ký"
+
+#: units/magpie/function_subscriptions_popular.php:49
+msgid "No-one has subscribed to any feeds."
+msgstr "Chưa ai đăng ký feed này cả."
+
+#: units/magpie/function_subscriptions_publish_to_blog.php:9
+msgid ""
+"Click a box below to automatically import content from a feed into your "
+"blog. You can also add default keywords for content from that feed. (You "
+"should only do this if you have the legal right to use this resource - in "
+"other words, you must have permission from the content owner, as the feed's "
+"content will appear in your blog as if you had written it.)"
+msgstr ""
+"Chọn vào hộp thoại sau đây sẽ tự động nhập nội dung từ feed vào trong blog "
+"của bạn. Bạn cũng có thể thêm các từ khóa mặc định từ feed này."
+
+#: units/magpie/function_subscriptions_publish_to_blog.php:27
+msgid ""
+"Are you sure you want to import this content into your personal blog?\\nYou "
+"should make sure you own it or have permission from the copyright holder."
+msgstr ""
+"Bạn có chắc muốn nhập nội dung từ đây vào trong blog của bạn?\\n Bạn nên "
+"chắc rằng bạn có quyền để làm việc này từ nàh cung cấp feed."
+
+#: units/magpie/function_view.php:29
+#: units/magpie/function_view_individual.php:26
+#: units/weblogs/weblogs_all_users_view.php:107
+#: units/weblogs/weblogs_friends_view.php:57
+#: units/weblogs/weblogs_interesting_view.php:52
+#: units/weblogs/weblogs_view.php:53
+msgid "Back"
+msgstr "Quay lại"
+
+#: units/magpie/function_view_post.php:28
+msgid "unknown"
+msgstr "Không xác định"
+
+#: units/magpie/function_view_post.php:40
+msgid "View site"
+msgstr "Xem site"
+
+#: units/profile/profile_user_info.php:42
+msgid "Your LMS hosts"
+msgstr "LMS host của bạn"
+
+#: units/search/function_search_all_display_rss.php:16
+#, php-format
+msgid "Items tagged with \"%s\" from %s"
+msgstr "Những mục được đánh dấu với \"%s\" từ %s"
+
+#: units/search/search_suggest_rss.php:6
+msgid "Syndication"
+msgstr "Trao đổi"
+
+#: units/search/search_suggest_rss.php:7
+msgid "RSS feed for this tag"
+msgstr "RSS feed cho đánh dấu này"
+
+#: units/search/search_suggest_tags.php:22
+msgid "Automatic tag suggestion:"
+msgstr "Những từ khóa tự động:"
+
+#: units/search/search_suggest_users.php:23
+msgid "Matching accounts:"
+msgstr "Những tài khoản khớp nhau:"
+
+#: units/search/search_user_info_menu.php:7
+msgid "Search"
+msgstr "Tìm kiếm"
+
+#: units/search/search_user_info_menu.php:9
+msgid "Random tags"
+msgstr "Những từ khóa ngẫu nhiên"
+
+#: units/search/tags_display.php:7
+msgid ""
+"The following is a selection of keywords used within this site. Click one to "
+"see related users, weblog posts or objects."
+msgstr ""
+"Những từ khóa sau đã được sử dụng trong cộng đồng. Chọn một cái để xem thành "
+"viên, weblog, bài viết hay chủ đề."
+
+#: units/search/tags_display_personal.php:40
+msgid "No tags found for this user."
+msgstr "KHông tìm thấy từ khóa nào cho thành viên này."
+
+#: units/templates/default_template.php:57
+msgid "Sidebar section holder"
+msgstr "Khu vực giữ thanh trượt"
+
+#: units/templates/default_template.php:58
+msgid "Contains the sidebar section titles"
+msgstr "Nội dung tiêu đề khu vực thanh trượt"
+
+#: units/templates/default_template.php:60
+msgid "The header"
+msgstr "Phần đầu"
+
+#: units/templates/default_template.php:296
+msgid "adminTable"
+msgstr ""
+
+#: units/templates/default_template.php:297
+msgid ""
+"This table is used to house stats and administration details until a good "
+"CSS solution can be applied."
+msgstr ""
+
+#: units/templates/default_template.php:299
+#: units/templates/default_template.php:330
+msgid "Column One"
+msgstr ""
+
+#: units/templates/default_template.php:300
+#: units/templates/default_template.php:331
+msgid "Column Two"
+msgstr ""
+
+#: units/templates/default_template.php:301
+#: units/templates/default_template.php:332
+msgid "Column Three"
+msgstr ""
+
+#: units/templates/default_template.php:327
+msgid "flagContent"
+msgstr ""
+
+#: units/templates/default_template.php:328
+msgid "This holds the flag content function throughout Elgg"
+msgstr "Cái này dùng để giữ nội dung được đánh dấu."
+
+#: units/tinymce/tinymce_userdetails_actions.php:15
+msgid "Your editor preferences have been saved"
+msgstr "Trìh soạn thảo yêu thích của bạn đã được lưu"
+
+#: units/tinymce/tinymce_userdetails_actions.php:18
+msgid "Your editor preferences have been changed"
+msgstr "Trìh soạn thảo yêu thích của bạn đã được thay đổi"
+
+#: units/tinymce/tinymce_userdetails_actions.php:20
+msgid "Your editor preferences could not be changed"
+msgstr "Trìh soạn thảo yêu thích của bạn không được thay đổi"
+
+#: units/tinymce/tinymce_userdetails_edit.php:3
+msgid "Visual text editing"
+msgstr "Trình soạn thảo"
+
+#: units/tinymce/tinymce_userdetails_edit.php:4
+msgid ""
+"Set this to 'yes' if you would like to use a visual (WYSIWYG) text editor "
+"for your posts and comments."
+msgstr "Chọn Đồng ý nếu như bạn muốn sử dụng trình soạn thảo đa năng WYSIWYG"
+
+#: units/tinymce/tinymce_userdetails_edit.php:20
+#: units/tinymce/tinymce_userdetails_edit.php:27
+msgid "Enable visual editor: "
+msgstr "Bật trình soạn thảo đa năng WYSIWYG "
+
+#: units/users/function_default_access_levels.php:6
+msgid "Public"
+msgstr "Công cộng"
+
+#: units/users/function_number_of_users.php:7
+#, php-format
+msgid "There are %d active users."
+msgstr "Có %d thành viên"
+
+#: units/users/function_number_of_users.php:12
+#, php-format
+msgid "(%d logged on.)"
+msgstr "(%d đang đăng nhập)"
+
+#: units/users/function_number_of_users.php:17
+msgid "User Statistics"
+msgstr "Tình hình thành viên"
+
+#: units/users/user_info.php:22
+msgid "None."
+msgstr "Không"
+
+#: units/users/userdetails_actions.php:20
+msgid "Your suggested name was too long. Please try something shorter."
+msgstr "Tên của bạn quá dài. Xin vui lòng chọn tên khác ngắn hơn."
+
+#: units/users/userdetails_actions.php:40
+msgid "Email address updated."
+msgstr "Đã cập nhật địa chỉ email"
+
+#: units/users/userdetails_actions.php:47
+msgid "Your moderation preferences have been changed."
+msgstr "Những quản lý yêu thích của bạn đã được thay đổi"
+
+#: units/users/userdetails_actions.php:55
+msgid "Public comments and discussion set to 'on'."
+msgstr "Ý kiến công khai và thảo luận được bật"
+
+#: units/users/userdetails_actions.php:58
+msgid "Public comments and discussion set to 'off'."
+msgstr "Ý kiến công khai và thảo luận được tắt"
+
+#: units/users/userdetails_actions.php:67
+msgid "Email comments and discussion set to 'on'."
+msgstr "Ý kiến email và thảo luận được bật"
+
+#: units/users/userdetails_actions.php:70
+msgid "Email comments and discussion set to 'off'."
+msgstr "Ý kiến email và thảo luận được tắt"
+
+#: units/users/userdetails_actions.php:78
+msgid "Email notifications set to 'on'."
+msgstr "Báo cáo email được bật"
+
+#: units/users/userdetails_actions.php:81
+msgid "Email notifications set to 'off'."
+msgstr "Báo cáo email được tắt"
+
+#: units/users/userdetails_actions.php:96
+msgid "Details were not changed."
+msgstr "Thông tin chi tiết đã không thay đổi"
+
+#: units/users/userdetails_actions.php:107
+msgid ""
+"Password not changed: Your password is either too short or too long. It must "
+"be between 4 and 32 characters in length."
+msgstr ""
+"Mật khẩu không thay đổi: mật khẩu của bạn có thể quá ngắn hay quá dài. Nó "
+"cần phải giữa 4 và 32 ký tự."
+
+#: units/users/userdetails_actions.php:109
+msgid ""
+"Password not changed: Your password can only consist of letters or numbers."
+msgstr ""
+"Mật khẩu không thay đổi: mật khẩu của bạn chỉ có thể bao gồm ký tự và chữ số."
+
+#: units/users/userdetails_actions.php:111
+msgid "Your password was updated."
+msgstr "Đã cập nhật mật khẩu của bạn."
+
+#: units/users/userdetails_actions.php:118
+msgid ""
+"Password not changed: The password and its verification string did not match."
+msgstr ""
+"Mật khẩu đã không thay đổi: mật khẩu và xác nhận mật khẩu không khớp nhau."
+
+#: units/users/userdetails_edit.php:11
+msgid "Change your full name:"
+msgstr "Thay đổi tên của bạn"
+
+#: units/users/userdetails_edit.php:28
+msgid "Your full name "
+msgstr "Tên đầy đủ của bạn "
+
+#: units/users/userdetails_edit.php:33
+msgid "Your email address:"
+msgstr "Địa chỉ email của bạn:"
+
+#: units/users/userdetails_edit.php:34
+msgid ""
+"This will not be displayed to other users; you can choose to make an email "
+"address available via the profile screen."
+msgstr ""
+"Việc này sẽ không hiển thị đến các thành viên khác; bạn có thể chọn để tạo 1 "
+"địa chỉ email tồn tại qua màn hình hồ sơ."
+
+#: units/users/userdetails_edit.php:48
+msgid "Your email address "
+msgstr "Địa chỉ email của bạn "
+
+#: units/users/userdetails_edit.php:53
+msgid "Friendship moderation:"
+msgstr "Quản lý bạn bè"
+
+#: units/users/userdetails_edit.php:54
+msgid "This allows you to choose who can list you as a friend."
+msgstr "Điều này cho phép bạn chọn ai có thể làm quen với bạn"
+
+#: units/users/userdetails_edit.php:71
+msgid "No moderation: anyone can list you as a friend. (Recommended)"
+msgstr "Không quản lý: ai cũng có thể làm quen với bạn"
+
+#: units/users/userdetails_edit.php:76
+msgid "Moderation: friendships must be approved by you."
+msgstr "Quản lý: cần phải được sự chấp thuận của bạn trước khi làm quen."
+
+#: units/users/userdetails_edit.php:81
+msgid "Private: nobody can list you as a friend."
+msgstr "Cá nhân: không ai có thể làm quen với bạn."
+
+#: units/users/userdetails_edit.php:86
+msgid "Friendship moderation"
+msgstr "Quản lý bạn bè"
+
+#: units/users/userdetails_edit.php:91
+msgid "Make comments public"
+msgstr "Ý kiến công khai"
+
+#: units/users/userdetails_edit.php:92
+msgid ""
+"Set this to 'yes' if you would like anyone to be able to comment on your "
+"resources (by default only logged-in users can). Note that this may make you "
+"vulnerable to spam."
+msgstr ""
+"Nếu chọn đồng ý thì mọi người có thể đăng tải ý kiến của họ trên tài nguyên "
+"của bạn (theo mặc định chỉ có thành viên mới được)."
+
+#: units/users/userdetails_edit.php:108 units/users/userdetails_edit.php:115
+msgid "Public comments: "
+msgstr "Ý kiến công khai: "
+
+#: units/users/userdetails_edit.php:122
+msgid "Receive email notifications"
+msgstr "Nhận thư báo cáo"
+
+#: units/users/userdetails_edit.php:123
+msgid ""
+"Set this to 'yes' if you would like to receive email copies of any messages "
+"you receive. This includes blog comments, notifications when people add you "
+"as a friend and more. You can always view these online as part of your "
+"recent activity page."
+msgstr ""
+"Nếu chọn là đồng ý thì bạn sẽ nhận được thư và tin nhắn riêng khi bạn nhận "
+"được bất kỳ lời nhắn hay khi có người làm quen với bạn."
+
+#: units/users/userdetails_edit.php:138 units/users/userdetails_edit.php:145
+msgid "Receive notifications: "
+msgstr "Nhận thư báo: "
+
+#: units/users/userdetails_edit.php:151
+msgid "Change your password:"
+msgstr "Thay đổi mật khẩu của bạn:"
+
+#: units/users/userdetails_edit.php:152
+msgid "Leave this blank if you're happy to leave your password as it is."
+msgstr "Để trống nếu như bạn đã hài lòng với mật khẩu cũ của mình."
+
+#: units/users/userdetails_edit.php:166
+msgid "Your password: "
+msgstr "Mật khẩu: "
+
+#: units/users/userdetails_edit.php:173
+msgid "Again for verification purposes: "
+msgstr "Điền lại một lần nữa để xác nhận: "
+
+#: units/weblogs/archives_view.php:19
+#: units/weblogs/weblogs_user_info_menu.php:46
+msgid "Weblog Archive"
+msgstr "Lưu trữ weblog"
+
+#: units/weblogs/archives_view.php:62 units/weblogs/archives_view_month.php:44
+msgid "There are no weblog posts to archive as yet."
+msgstr "Không có bài viết nào trong lưu trữ blog."
+
+#: units/weblogs/default_template.php:8
+msgid "Weblog Post"
+msgstr "Bài viết weblog"
+
+#: units/weblogs/default_template.php:9
+msgid "A template for each weblog post."
+msgstr "Giao diện cho từng bài viết"
+
+#: units/weblogs/default_template.php:13
+msgid "The username of the person making the post"
+msgstr "Tên truy nhập của người đang viết bài"
+
+#: units/weblogs/default_template.php:14
+msgid "Their user icon"
+msgstr "Hình ảnh đại diện của họ"
+
+#: units/weblogs/default_template.php:15
+msgid "Their full name"
+msgstr "Tên đầy đủ của họ"
+
+#: units/weblogs/default_template.php:16
+msgid "The time and date of the post"
+msgstr "Thời gian của bài viết"
+
+#: units/weblogs/default_template.php:17
+msgid "A link to any comments"
+msgstr "Link đến bất kỳ ý kiến nào"
+
+#: units/weblogs/default_template.php:18 units/weblogs/default_template.php:82
+msgid "Any more links"
+msgstr "Các link khác"
+
+#: units/weblogs/default_template.php:19
+msgid "A list of comments, if any"
+msgstr "Danh sách ý kiến, nếu có"
+
+#: units/weblogs/default_template.php:23
+msgid "Posted by"
+msgstr "Đăng bởi"
+
+#: units/weblogs/default_template.php:49
+msgid "Weblog Comments"
+msgstr "Ý kiến trong weblog"
+
+#: units/weblogs/default_template.php:50
+msgid "A placeholder for weblog comments."
+msgstr "Nơi lưu trữ ý kiến"
+
+#: units/weblogs/default_template.php:52
+msgid "The list of comments themselves"
+msgstr "Danh sách ý kiến"
+
+#: units/weblogs/default_template.php:53
+msgid "The list of page links when there are lots of comments"
+msgstr "Danh sách các link khi mà có nhiều ý kiến"
+
+#: units/weblogs/default_template.php:57
+msgid "Comments"
+msgstr "Ý kiến"
+
+#: units/weblogs/default_template.php:74
+msgid "Individual weblog comment"
+msgstr "Ý kiến trên blog cá nhân"
+
+#: units/weblogs/default_template.php:75
+msgid ""
+"A template for each individual weblog comment. (Displayed one after the "
+"other, embedded in the comment placeholder.)"
+msgstr "Gioa diện cho từng ý kiến weblog."
+
+#: units/weblogs/default_template.php:77
+msgid "Post body"
+msgstr "Thân bài"
+
+#: units/weblogs/default_template.php:78
+msgid "The name of the person making the comment"
+msgstr "Tên của người đang viết ý kiến"
+
+#: units/weblogs/default_template.php:79
+msgid "When the comment was posted"
+msgstr "Khi ý kiến được đăng"
+
+#: units/weblogs/default_template.php:80
+msgid "The usericon of the person making the comment, if available"
+msgstr "Hình ảnh đại diện của người viết ý kiến, nếu có"
+
+#: units/weblogs/default_template.php:81
+msgid "A permalink to the comment"
+msgstr "Link cố định đến ý kiến"
+
+#: units/weblogs/display_interesting_post_form.php:21
+msgid "Stop keeping track of this post"
+msgstr "Ngừng việc theo dõi bài này"
+
+#: units/weblogs/display_interesting_post_form.php:22
+msgid ""
+"You have marked this post as interesting; all comments will appear on your "
+"'recent activity' page. If you would like to remove this flag, click here."
+msgstr ""
+"Bạn đã chọn bài viết này là bài viết thú vị; tất cả ý kiến sẽ hiển thị trên "
+"'những hoạt động' gần đây của bạn. Nếu bạn muốn bỏ, nhấn ở đây."
+
+#: units/weblogs/display_interesting_post_form.php:23
+msgid "Remove interesting flag"
+msgstr "Xóa bỏ đánh dấu bài viết thú vị"
+
+#: units/weblogs/display_interesting_post_form.php:25
+msgid "Keep track of this post"
+msgstr "Theo dõi chủ đề này"
+
+#: units/weblogs/display_interesting_post_form.php:26
+msgid ""
+"Click the 'Mark interesting' button to monitor new comments on your 'recent "
+"activity' page."
+msgstr ""
+"Nhấn \"Đánh dấu thú vị' để theo dõi những ý kiến mới trong trang 'Những hoạt "
+"động gần đây' của bạn."
+
+#: units/weblogs/display_interesting_post_form.php:27
+msgid "Mark interesting"
+msgstr "Đánh dấu thú vị"
+
+#: units/weblogs/function_search.php:5
+msgid "Weblog posts by"
+msgstr "Weblog đăng bởi"
+
+#: units/weblogs/function_search.php:6
+msgid "in category"
+msgstr "trong thư mục"
+
+#: units/weblogs/function_search.php:7
+msgid "RSS feed for weblog posts by"
+msgstr "RSS feed cho weblog đăng bởi"
+
+#: units/weblogs/function_search.php:8
+msgid "Other users with weblog posts in category"
+msgstr "Các thành viên khác với bài viết trong mục lục"
+
+#: units/weblogs/function_search.php:9
+msgid "Users with weblog posts in category"
+msgstr "Thành viên với các bài viết trong mục lục"
+
+#: units/weblogs/function_search_rss.php:20
+#: units/weblogs/templates_preview.php:53
+msgid "Weblog post"
+msgstr "Bài viết weblog"
+
+#: units/weblogs/templates_preview.php:7
+msgid "Unkind Guest"
+msgstr "Khách"
+
+#: units/weblogs/templates_preview.php:8
+msgid " I mock you, Babbage! Your difference engine will never catch on."
+msgstr ""
+
+#: units/weblogs/templates_preview.php:9
+#: units/weblogs/templates_preview.php:11
+msgid "Charles Babbage"
+msgstr ""
+
+#: units/weblogs/templates_preview.php:10
+msgid "Says you!"
+msgstr ""
+
+#: units/weblogs/templates_preview.php:12
+msgid "The Analytical Engine - introduction from Chapter VIII"
+msgstr ""
+
+#: units/weblogs/templates_preview.php:13
+msgid ""
+"The circular arrangement of the axes of the Difference Engine round the "
+"large central wheels led to the most extended prospects. The whole of "
+"arithmetic now appeared within the grasp of mechanism. A vague glimpse even "
+"of an Analytical Engine at length opened out, and I pursued with enthusiasm "
+"the shadowy vision. The drawings and the experiments were of the most costly "
+"kind. Draftsmen of the highest order were necessary to economize the labour "
+"of my own head; whilst skilled workmen were required to execute the "
+"experimental machinery to which I was obliged constantly to have recourse. "
+"In order to carry out my pursuits successfully, I had purchased a house with "
+"above a quarter of an acre of ground in a very quiet locality. My coach-"
+"house was now converted into a forge and a foundry, whilst my stables were "
+"transformed into a workshop. I built other extensive workshops myself, and "
+"had a fireproof building for my drawings and draftsmen. Having myself worked "
+"with a variety of tools, and having studied the art of constructing each of "
+"them, I at length laid it down as a principle - that, except in rare cases, "
+"I would never do anything myself if I could afford to hire another person "
+"who could do it for me."
+msgstr ""
+
+#: units/weblogs/weblogs_actions.php:31
+msgid "Your post has been added to your weblog."
+msgstr "Bài viết của bạn đã được đăng vào blog"
+
+#: units/weblogs/weblogs_actions.php:66
+msgid "The weblog post has been modified."
+msgstr "Bài viết trong blog đã được chỉnh sửa"
+
+#: units/weblogs/weblogs_actions.php:81
+msgid "This weblog post has now been added to your 'interesting' list."
+msgstr "Bài viết này đã được thêm vào danh sách 'bài viết thú vị' của bạn."
+
+#: units/weblogs/weblogs_actions.php:92
+msgid "You are no longer monitoring this weblog post."
+msgstr "Bạn không còn theo dõi bài viết này nữa."
+
+#: units/weblogs/weblogs_actions.php:112
+msgid "The selected weblog post was deleted."
+msgstr "Bài viết được lựa chọn đã bị xóa."
+
+#: units/weblogs/weblogs_actions.php:115
+msgid ""
+"You do not appear to have permission to delete this weblog post. It was not "
+"deleted."
+msgstr ""
+"Bạn dường như không có quyền để xóa bài viết trong blog. Nó đã không được "
+"xóa."
+
+#: units/weblogs/weblogs_actions.php:161
+msgid "Your comment has been added."
+msgstr "Ý kiến của bạn đã được đăng."
+
+#: units/weblogs/weblogs_actions.php:166
+msgid "Your comment could not be posted. The system thought it was spam."
+msgstr "Ý kiến của bạn không được đăng. Hệ thống nghĩ rằng đó là spam."
+
+#: units/weblogs/weblogs_actions.php:186
+msgid "Your comment was deleted."
+msgstr "Ý kiến của bạn đã bị xóa."
+
+#: units/weblogs/weblogs_all_users_view.php:24
+msgid "Remove filter"
+msgstr "Bỏ bộ lọc"
+
+#: units/weblogs/weblogs_all_users_view.php:29
+msgid "Filtered: Showing personal blog posts"
+msgstr "Bộ lọc: Hiển thị những bài viết cá nhân"
+
+#: units/weblogs/weblogs_all_users_view.php:33
+msgid "Filtered: Showing community blog posts"
+msgstr "Bộ lọc: Hiển thị những bài viết trong diễn đàn"
+
+#: units/weblogs/weblogs_all_users_view.php:38
+msgid "Filtered: Showing posts with comments"
+msgstr "Bộ lọc: Hiển thị những bài viết với ý kiến"
+
+#: units/weblogs/weblogs_all_users_view.php:42
+msgid "Filtered: Showing posts with no comments"
+msgstr "Bộ lBộ lọc: Hiển thị những bài viết với không ý kiến"
+
+#: units/weblogs/weblogs_all_users_view.php:57
+msgid "Filtered: Showing posts from "
+msgstr "Bộ lọc: Hiển thị những bài viết từ "
+
+#: units/weblogs/weblogs_all_users_view.php:67
+msgid "Filtered: Showing posts tagged with "
+msgstr "Bộ lọc: Hiển thị những bài viết được đánh dấu với "
+
+#: units/weblogs/weblogs_comments_add.php:7
+msgid "Add a comment"
+msgstr "Thêm ý kiến"
+
+#: units/weblogs/weblogs_comments_add.php:33
+msgid "Your comment text"
+msgstr "Ý kiến của bạn"
+
+#: units/weblogs/weblogs_comments_add.php:58
+msgid "Add comment"
+msgstr "Thêm ý kiến"
+
+#: units/weblogs/weblogs_post_field.php:83
+msgid "Click here to post to this weblog."
+msgstr "Nhấn vào đây để đăng vào blog này."
+
+#: units/weblogs/weblogs_posts_add.php:22
+msgid "Add a new post"
+msgstr "Thêm bài viết mới"
+
+#: units/weblogs/weblogs_posts_add.php:23
+#: units/weblogs/weblogs_posts_edit.php:17
+msgid "Post title:"
+msgstr "Tiêu đề:"
+
+#: units/weblogs/weblogs_posts_add.php:24
+#: units/weblogs/weblogs_posts_edit.php:18
+msgid "Post body:"
+msgstr "Thân bài:"
+
+#: units/weblogs/weblogs_posts_add.php:25
+#: units/weblogs/weblogs_posts_edit.php:19
+msgid "Keywords (Separated by commas):"
+msgstr "Từ khóa (cách nhau bằng dấu phẩy):"
+
+#: units/weblogs/weblogs_posts_add.php:26
+#: units/weblogs/weblogs_posts_edit.php:20
+msgid ""
+"Keywords commonly referred to as 'Tags' are words that represent the weblog "
+"post you have just made. This will make it easier for others to search and "
+"find your posting."
+msgstr ""
+"Từ khóa được dùng để hiển thị những từ chính trong bài viết. Điều này giúp "
+"mọi người dễ dàng tìm đọc bài viết của bạn."
+
+#: units/weblogs/weblogs_posts_add.php:28
+msgid "Post"
+msgstr "Đăng bài"
+
+#: units/weblogs/weblogs_posts_add.php:84
+msgid ""
+"You must be logged in to post a new weblog entry. You may do so using the "
+"login pane to the right of the screen."
+msgstr "Bạn cần phải đăng nhập để đăng bài viết mới."
+
+#: units/weblogs/weblogs_posts_edit.php:16
+msgid "Edit a post"
+msgstr "Chỉnh sửa bài viết"
+
+#: units/weblogs/weblogs_posts_edit.php:22
+msgid "Save Post"
+msgstr "Lưu bài viết"
+
+#: units/weblogs/weblogs_posts_view.php:94
+msgid "More"
+msgstr "Thêm nữa"
+
+#: units/weblogs/weblogs_posts_view.php:95
+msgid "Keywords:"
+msgstr "Từ khoá:"
+
+#: units/weblogs/weblogs_posts_view.php:96
+msgid "comment(s)"
+msgstr "Ý kiến"
+
+#: units/weblogs/weblogs_posts_view.php:112
+msgid "Are you sure you want to permanently delete this weblog post?"
+msgstr "Bạn có chắc muốn xóa bài viết này?"
+
+#: units/weblogs/weblogs_posts_view.php:149
+msgid "Page: "
+msgstr "Trang: "
+
+#: units/weblogs/weblogs_posts_view.php:166
+msgid "Are you sure you want to permanently delete this weblog comment?"
+msgstr "Bạn có chắc muốn xóa ý kiến của bài viết này?"
+
+#: units/weblogs/weblogs_posts_view.php:223
+msgid "You must be logged in to post a comment."
+msgstr "Bạn cần phải đăng nhập để gửi ý kiến"
+
+#: units/weblogs/weblogs_user_info_menu.php:10
+msgid "Recent Activity"
+msgstr "Hoạt động gần đây"
+
+#: units/weblogs/weblogs_user_info_menu.php:12
+msgid "View your activity"
+msgstr "Xem hoạt động của bạn"
+
+#: units/weblogs/weblogs_user_info_menu.php:36
+msgid "Personal blog"
+msgstr "Blog cá nhân"
+
+#: units/weblogs/weblogs_user_info_menu.php:41
+msgid "Community blog"
+msgstr "Diễn đàn"
+
+#: units/xml/main.php:78
+msgid "XML error: "
+msgstr "Lỗi XML "

@@ -1,7 +1,7 @@
 <?php
 global $CFG;
 // Generate a new password
-        
+
 $sitename = sitename;
 
 $code = trim(optional_param('passwordcode'));

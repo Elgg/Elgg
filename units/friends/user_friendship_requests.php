@@ -39,7 +39,7 @@ global $CFG;
                     
                     $body .= templates_draw(array(
                                                         'context' => 'adminTable',
-                                                        'name' => "<img src=\"" . url . "_icon/user/{$pending_user->icon}\" />",
+                                                        'name' => user_icon_html($pending_user->ident),
                                                         'column1' => $col1,
                                                         'column2' => $col2
                                                     )

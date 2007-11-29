@@ -558,7 +558,7 @@
         }
         
         // Parse parameters
-        $param    = $params->getParam(0);
+        //$param    = $params->getParam(0);
         $postid   = $params[0];
         $username = $params[1];
         $password = $params[2];

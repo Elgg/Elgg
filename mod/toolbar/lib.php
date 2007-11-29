@@ -31,6 +31,11 @@
         $toolbar = str_replace("{{password}}", __gettext("Password"), $toolbar);
         $toolbar = str_replace("{{poweredby}}", __gettext("Powered by Elgg"), $toolbar);
         $toolbar = str_replace("{{remember}}", __gettext("Remember me"), $toolbar);
+        if (isloggedin()) {
+            $toolbar =  str_replace("{{usericon}}", "<a href=\"{$CFG->wwwroot}{$_SESSION['username']}\">" . user_icon_html($_SESSION['userid'], 50) . "</a>", $toolbar);
+        } else {
+            $toolbar = str_replace("{{usericon}}", user_icon_html(-1, 50), $toolbar);
+        }
         
         return $toolbar;
         
@@ -44,12 +49,13 @@
         $communities = __gettext("Communities");
         $tagcloud = __gettext("Tag cloud");
         $browse = __gettext("Browse");
+        $searchdefault = __gettext("Search");
         
         $searchbox = <<< END
         
         <div id="search-header"><!-- open search-header div -->
         <form id="searchform" action="{$CFG->wwwroot}search/index.php" method="get">
-            <p><input type="text" size="20" name="tag" value="search" />
+            <p><input type="text" size="20" name="tag" value="{$searchdefault}" onclick="if (this.value=='{$searchdefault}') { this.value='' }" />
             <select name="user_type">
                 <option value="">-- {$all} --</option>
                 <option value="person">{$people}</option>

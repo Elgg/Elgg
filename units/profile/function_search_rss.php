@@ -21,7 +21,7 @@ global $db;
                                           WHERE '.$searchline)) {
                 foreach($result as $key => $info) {
                     $run_result .= "\t<item>\n";
-                    $run_result .= "\t\t<title><![CDATA['" . htmlspecialchars($parameter[0], ENT_COMPAT, 'utf-8') . "' = " . htmlspecialchars($parameter[1], ENT_COMPAT, 'utf-8') . " :: " . htmlspecialchars(stripslashes($info->name), ENT_COMPAT, 'utf-8') . "]]></title>\n";
+                    $run_result .= "\t\t<title><![CDATA['" . htmlspecialchars($parameter[0], ENT_COMPAT, 'utf-8') . "' = " . htmlspecialchars($parameter[1], ENT_COMPAT, 'utf-8') . " :: " . htmlspecialchars(stripslashes(user_name($info->ident)), ENT_COMPAT, 'utf-8') . "]]></title>\n";
                     $run_result .= "\t\t<link>" . url . htmlspecialchars($info->username, ENT_COMPAT, 'utf-8') . "</link>\n";
                     $run_result .= "\t</item>\n";
                 }

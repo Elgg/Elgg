@@ -39,7 +39,7 @@ switch ($action) {
                                      if (!empty($invitetext)) {
                                          $invitetext = __gettext("They included the following message:") . "\n\n----------\n" . $invitetext . "\n----------";
                                      }
-                                     $greetingstext = $USER->name . " " . __gettext("has invited you to join") ." $sitename, ". __gettext("a learning landscape system.") ."";
+                                     $greetingstext = $USER->name . " " . __gettext("has invited you to join") ." $sitename, ". __gettext("a social network.") ."";
                                      $subjectline = $USER->name . " " . __gettext("has invited you to join") ." $sitename";
                                      $from_email = $USER->email;
                                  }

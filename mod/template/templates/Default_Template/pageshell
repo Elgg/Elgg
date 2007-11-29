@@ -17,26 +17,28 @@
 	</div>
 </div><!-- close div header -->
 <div id="content-holder"><!-- open content-holder div -->
-	<div id="content-holder-inner">
+	<div id="content-holder-inner">   
 		<div id="splitpane-sidebar"><!-- open splitpane-sidebar div -->
+		    <div id="sidebar-contents">
 			<ul><!-- open sidebar lists -->
 			{{sidebar}}
 			</ul><!-- close sidebar lists -->
+			</div>
+			<div id="sidebar-bottom"></div><!-- used to provide the rounded bottom -->
 		</div><!-- close splitpane-sidebar div -->
 		<div id="splitpane-content"><!-- open splitpane-content div -->
 			{{messageshell}}
 			{{mainbody}}
 		</div><!-- close open splitpane-content div -->
 	</div>
-</div><!-- close content-holder div --> 
+</div><!-- close content-holder div -->
+</div><!-- close container div -->
 <div id="footer"><!-- start footer -->
 	<div id="footer-inner">
-		<span style="color:#FF934B">{{sitename}}</span> <a href="{{url}}content/terms.php">Terms and conditions</a>&nbsp;|&nbsp;<a href="{{url}}content/privacy.php">Privacy Policy</a><br />
-		<a href="http://elgg.org/"><img src="{{url}}mod/template/icons/elgg_powered.png" title="Elgg powered" border="0" alt="Elgg powered" /></a>
-		<br />
+		<p><a href="http://elgg.org/"><img src="{{url}}mod/template/icons/elgg_powered.png" title="Elgg powered" border="0" alt="Elgg powered" align="left"/></a>
+		 <a href="{{url}}content/terms.php">Terms and conditions</a>&nbsp;|&nbsp;<a href="{{url}}content/privacy.php">Privacy Policy</a>
 		{{perf}}
 	</div>
 </div><!-- end footer -->
-</div><!-- close container div -->
 </body>
 </html>

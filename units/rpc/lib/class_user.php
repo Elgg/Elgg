@@ -48,7 +48,7 @@
                 $this->ident           = $info->ident;
                 $this->username        = $info->username;
                 $this->email           = $info->email;
-                $this->name            = $info->name;
+                $this->name            = user_name($info->ident);
                 $this->alias           = $info->alias;
                 $this->code            = $info->code;
                 $this->icon_quota      = $info->icon_quota;
@@ -83,7 +83,7 @@
                     }
                 }
 
-                $this->icon = url . '_icon/user/' . $info->icon;
+                $this->icon = user_icon_html($info->ident,100,true);
             }
         }
 

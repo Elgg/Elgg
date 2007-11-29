@@ -168,7 +168,7 @@ CREATE TABLE prefix_templates (
   name varchar(128) NOT NULL default '',
   owner integer NOT NULL default '0',
   public varchar(3) CHECK (public IN ('yes','no')) NOT NULL default 'yes',
-  shortname varchar(128) NOT NULL,
+  shortname varchar(128) NOT NULL
 ) ;
 
 CREATE INDEX prefix_templates_name_idx ON prefix_templates (name,owner,public);
@@ -353,10 +353,11 @@ CREATE TABLE prefix_messages (
   ident SERIAL PRIMARY KEY,
   title text NOT NULL default '',
   body text NOT NULL default '',
-  from_id int(11) NOT NULL default -1,
-  to_id int(11) NOT NULL default -1,
-  posted int(11) NOT NULL default 0,
-  status enum('read','unread') NOT NULL default 'unread',
+  from_id integer NOT NULL default -1,
+  to_id integer NOT NULL default -1,
+  posted integer NOT NULL default 0,
+  status varchar(128) NOT NULL default 'unread',
+  CHECK (status IN ('read','unread'))
 );
 
 CREATE INDEX prefix_messages_to_id_idx ON prefix_messages (from_id,to_id);

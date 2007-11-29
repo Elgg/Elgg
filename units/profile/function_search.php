@@ -53,14 +53,14 @@ END;
                 }
                 foreach($result as $key => $info) {
                     $friends_username = $info->username;
-                    // $friends_name = htmlspecialchars(stripslashes($info->name), ENT_COMPAT, 'utf-8');
                     $friends_name = run("profile:display:name",$info->ident);
                     $info->icon = run("icons:get",$info->ident);
+                    $friends_icon = user_icon_html($info->ident,$w);
                     $body .= <<< END
         <td align="center">
             <p>
             <a href="{$CFG->wwwroot}{$friends_username}/">
-            <img src="{$CFG->wwwroot}_icon/user/{$info->icon}/w/{$w}" alt="{$friends_name}" border="0" /></a><br />
+            {$friends_icon}</a><br />
             <span class="userdetails">
                 <a href="{$CFG->wwwroot}{$friends_username}/">{$friends_name}</a>
             </span>

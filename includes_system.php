@@ -25,15 +25,6 @@
     // Profiles
         include($CFG->dirroot . "units/profile/main.php");
         
-    // Weblog
-        include($CFG->dirroot . "units/weblogs/main.php");
-    
-    // File repository
-        include($CFG->dirroot . "units/files/main.php");
-                
-    // Communities
-        require($CFG->dirroot . "units/communities/main.php");
-        
     // Friends
         include($CFG->dirroot . "units/friends/main.php");
     // Friend groups

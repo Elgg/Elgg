@@ -1,0 +1,9 @@
+img.toolbutton {
+	background:#FFFFFF url(img/buttonshadow.png) repeat-x scroll center bottom;
+	/*background:#FFFFFF repeat-x scroll center bottom;*/
+	background-color:#FFFFFF;
+	border: 1px solid #8CACBB;
+	cursor: pointer;
+	margin: 0pt 1px 0pt 0pt;
+	padding: 0px;
+}

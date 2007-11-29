@@ -1,0 +1,190 @@
+-----------------------------------------------------------
+| BLOG MODULE: Configuration options and Extension points |
+-----------------------------------------------------------
+
+Configuration Options
+=====================
+
+POSTS_PER_PAGE (default value: 10)
+	To configure the max number of posts per page in (view blog, archive, friends posts,
+	interesting posts, all posts) you can change the constant 'POSTS_PER_PAGE' in
+	'blog/lib/weblogs_init.php'.
+
+Extension points
+================
+
+You can extend the blog plug-in in many ways.
+Here the explanation for the avaible extension points.
+
+Add and Edit Forms
+------------------
+
+display:icon:select
+	File(s):
+		- blog/lib/weblogs_posts_add.php
+		- blog/lib/weblogs_posts_edit.php
+	Action:
+		Allow plugins to add an icon selection box
+	Know implementations:
+		The 'posticon' plug-in
+
+weblogs:posts:add:fields
+	File(s):
+		- blog/lib/weblogs_posts_add.php
+		- blog/lib/weblogs_posts_edit.php
+	Action:
+		Allow plugins to add extra fields to the form
+	Know implementations:
+		The 'files' plug-in (unit/files/weblogs_posts_add_fields.php)
+
+weblog:posts:extrafield
+	File(s):
+		- blog/lib/weblogs_posts_add.php
+		- blog/lib/weblogs_posts_edit.php
+	Action:
+		Add the extension field (see below) if it is avaible
+	Know implementations:
+
+Visualization
+-------------
+
+weblogs:posts:geticon
+	File(s):
+		- blog/lib/weblogs_posts_view.php
+	Action:
+		Show the post icon
+	Know implementations:
+		The 'posticon' plug-in
+
+weblogs:posts:getname
+	File(s):
+		- blog/lib/weblogs_posts_view.php
+	Action:
+		Allow plugins to set the name on the post
+	Know implementations:
+
+weblogs:text:process
+	File(s):
+		- blog/lib/weblogs_posts_view.php
+	Action:
+		Allow plugins to set add functionality to the process of the posts text
+	Know implementations:
+		The 'files' plug-in (unit/files/weblogs_text_process.php)
+
+Extension Context
+=================
+This special feature allows to you to use the blog infraestructure to build your own plug-in.
+For example:
+  You want to build a basic 'projects' plug-in that allows people to add a 'project'
+  with the following phases: Formultating proyect, Active project, Finished project.
+
+  A easy way to build that is to modify the blog plug-in to show a field that allow
+  to select the project phase and automatically add 'Project' and '<Phase> project'
+  tags but without let the user modify them, except of course throught an specified
+  selection mechanism.
+
+To build that kind of extensions the blog plug-in add a 'extension context' mechanism
+that allows to you:
+
+	- Add an extra field to show the avaible options throught the 'weblog:posts:extrafield'
+	  extension point.
+
+	- Change all the blog links without to change any code.
+		p.e int the 'projects' example the weblog plug-ins turn into:
+
+		http://yoursite/elgg/weblog/ 			http://yoursite/elgg/projects/
+		http://yoursite/elgg/weblog/archive		http://yoursite/elgg/projects/archive
+		http://yoursite/elgg/weblog/edit		http://yoursite/elgg/projects/edit
+		(...)
+
+	- Change the blog related strings without to change any code.
+		p.e. <username> :: Blog turn into <username> :: Projects
+
+	- Filter the list pages with the context tags.
+		p.e.:
+		For the 'projects' example the 'view projects' list doesn't show any
+		post that doesn't have the following tags:
+			'Project', 'Formultating project', 'Active project', 'Finished project'
+
+		On another hand the normal blog list doesn't show the posts that have the
+		previous tags.
+
+Adding a extension context
+--------------------------
+
+1.	In your '<plug-in>_init' function configure your context in the '$CFG->weblog_extensions' variable:
+	For example:
+	  $CFG->weblog_extensions['projects']= array ();
+	  $CFG->weblog_extensions['projects']['name']=  __gettext("Projects");
+	  $CFG->weblog_extensions['projects']['type']=  __gettext("Project");
+	  $CFG->weblog_extensions['projects']['field']= __gettext("Project type:");
+	  $CFG->weblog_extensions['projects']['values']= array (__gettext("Formulating Project"), __gettext("Active Project"), __gettext("Ended Project"));
+
+2.	Listen for the 'publish', 'republish' events
+	For example:
+	  listen_for_event('weblog_post', 'publish', 'projects_new');
+	  listen_for_event('weblog_post', 'republish', 'projects_new');
+
+3.	Implement the callback function.
+	For example:
+	function projects_new($object_type, $event, $object) {
+	  global $CFG;
+	  $values = $CFG->weblog_extensions['projects']['values'];
+	  if (!empty ($object->ident) && $object_type == "weblog_post" && ($event == "publish"  || $event == "republish") &&
+	      in_array($object->extra_value,$values)) {
+	    insert_tags_from_string (__gettext("Project"), 'weblog', $object->ident, $object->access, $object->owner);
+	    insert_tags_from_string ($object->extra_value, 'weblog', $object->ident, $object->access, $object->owner);
+	  }
+	  return $object;
+	}
+
+4.	Configure the field visualization (weblog:posts:extrafield option).
+	For example:
+		$function["weblog:posts:extrafield"][] = $CFG->dirroot ."mod/projects/projects_blog_extension_view.php";
+
+		------- the 'projects_blog_extension_view.php' file ----------
+		if(isset($parameter)){
+	    $extensionContext = $parameter[0];
+	    if($extensionContext=="projects"){
+	      $extraField = $parameter[1];
+	      $extraValue = $parameter[2];
+	      $extraSelected = $parameter[3];
+
+	      if(isset($extraField) && isset($extraValue)){
+	      $run_result .= templates_draw(array('context'=>'databoxvertical',
+                                    'name'=>$extraField,
+                                    'contents'=>display_input_field(array('new_weblog_extra',$extraSelected,'vertical_radio',null,null,null,
+                                    									  $extraValue))
+                                    )
+                             );
+    	  }
+	    }
+	}
+
+	NOTE:
+		When the "weblog:posts:extrafield" is called it gets four parameters:
+		parameter[0] = extensionContext ('projects' in the example)
+		parameter[1] = field name ('Project type' in the example)
+		parameter[2] = field values (array(__gettext("Formulating Project"), __gettext("Active Project"), __gettext("Ended Project") in the example)
+		parameter[3] = selected value
+
+		In the display_input_field function you can use: 'select', 'radio', 'vertical_radio' for field visualization
+
+5.	Add the rewrite configuration. You must to add the 'extension' parameter to all those URL to configure the context
+	For example:
+
+	  RewriteRule ^([A-Za-z0-9]+)\/projects\/?$ mod/blog/index.php?weblog_name=$1&extension=projects
+	  RewriteRule ^([A-Za-z0-9]+)\/projects\/new$ mod/blog/edit.php?weblog_name=$1&extension=projects
+	  RewriteRule ^([A-Za-z0-9]+)\/projects\/edit\/([0-9]+)$ mod/blog/edit.php?profile_name=$1&weblog_post_id=$2&action=edit&extension=projects
+	  RewriteRule ^[A-Za-z0-9]+\/projects\/([0-9]+)\.html$ mod/blog/view_post.php?post=$1&extension=projects
+	  RewriteRule ^[A-Za-z0-9]+\/projects\/([0-9]+)\.html.([0-9]+)$ mod/log/view_post.php?post=$1&commentpage=$2&extension=projects
+	  RewriteRule ^([A-Za-z0-9]+)\/projects\/friends\/?$ mod/blog/friends.php?weblog_name=$1&extension=projects
+	  ReWriteRule ^([A-Za-z0-9]+)\/projects\/friends\/skip=([0-9]+)$ mod/blog/friends.php?weblog_name=$1&weblog_offset=$2&extension=projects
+	  RewriteRule ^([A-Za-z0-9]+)\/projects\/interesting\/?$ mod/blog/interesting.php?weblog_name=$1&extension=projects
+	  ReWriteRule ^([A-Za-z0-9]+)\/projects\/interesting\/skip=([0-9]+)$ mod/blog/interesting.php?weblog_name=$1&weblog_offset=$2&extension=projects
+	  RewriteRule ^([A-Za-z0-9]+)\/projects\/archive\/?$ mod/blog/archive.php?weblog_name=$1&extension=projects
+	  RewriteRule ^([A-Za-z0-9]+)\/projects\/archive\/([0-9]+)\/([0-9]+)\/?$ mod/blog/archive_month.php?weblog_name=$1&year=$2&month=$3&extension=projects
+	  ReWriteRule ^projects\/everyone$ mod/blog/everyone.php?extension=projects
+	  ReWriteRule ^projects\/everyone\/(people|communities|commented|uncommented)$ mod/blog/everyone.php?extension=projects&filter=$1
+	  ReWriteRule ^projects\/everyone\/skip/([0-9]+)$ mod/blog/everyone.php?extension=projects&weblog_offset=$1
+

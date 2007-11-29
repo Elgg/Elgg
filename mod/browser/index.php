@@ -160,11 +160,11 @@ END;
                 $blogposts = count_records("weblog_posts", "weblog", $result->ident);
                 $description = get_field("profile_data", "value", "owner", $result->ident, "name", 'minibio');
                 
-                $icon = "{$CFG->wwwroot}_icon/user/{$result->icon}";
+                $icon_html = user_icon_html($result->ident);
                 
                 $name = htmlspecialchars($result->name);
                 
-                $iconcode = "<a href=\"{$CFG->wwwroot}{$result->username}\"><img src=\"{$icon}\" border=\"0\" alt=\"{$result->username}\" /></a>";
+                $iconcode = "<a href=\"{$CFG->wwwroot}{$result->username}\">{$icon_html}</a>";
                 if (!$displayicons) {
                     // Uncomment this if we move to Javascript unhide
                     // $iconcode = "<span style=\"display:none\" class=\"iconhide\">".$iconcode."</span>";

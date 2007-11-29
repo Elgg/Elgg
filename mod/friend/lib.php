@@ -59,13 +59,25 @@ function friend_pagesetup() {
 
 }
 
+    function friend_init() {
+        global $CFG;
+        // Delete users
+            listen_for_event("user","delete","friend_user_delete");        
+    }
+
     function friend_page_owner() {
-        
         $friends_name = optional_param('friends_name');
         if (!empty($friends_name)) {
             return user_info_username('ident', $friends_name);
         }
-        
+    }
+    
+    function friend_user_delete($object_type, $event, $object) {
+        if (!empty($object->ident) && $object_type == "user" && $event == "delete") {
+            delete_records('friends','owner',$object->ident);
+            delete_records('friends','friend',$object->ident);
+        }
+        return $object;
     }
 
 ?>

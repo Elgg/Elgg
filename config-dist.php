@@ -110,12 +110,16 @@
 
     $CFG->prefix = 'elgg';
 
-// performance and debugging //
+// performance and debugging
 // Uncomment this to get sql errors sent to the webserver error log.
 // $CFG->dblogerror = true;
-// put this to 2047 to get adodb error handling.
 
-    $CFG->debug = 0;
+// verbosity of PHP error message logging.
+// set this to 2047 to get adodb error handling.
+
+    //$CFG->debug = 0; // don't log *any* error messages. previously this was the (unhelpful) default.
+    $CFG->debug = 7; // only basic errors. for production systems. equivalent to php (E_ERROR | E_WARNING | E_PARSE).
+    //$CFG->debug = 2047; // errors and notices. for development systems/debugging. equivalent to php E_ALL.
 
 // Number of days to keep incoming RSS feed entries for before deleting them.
 // A value of 0 disables automatic deletion.
@@ -168,6 +172,9 @@
 //Template file handing is not currently recommended.
 //$CFG->templatestore = 'db';          // 'db' (default) or 'files' (requires $CFG->templatesroot to be set)
 
+// PROFILE LOCATION
+//\$CFG->profilelocation = '$PARSEDCFG->templatelocation';
+
 // set up some LMS hosts.
 // --------------------------------------------------
 // This array is KEYED on installid - the lms clients should identify themselves with this installid
@@ -197,13 +204,17 @@
 //$CFG->curlpath = "/usr/bin/curl";
 $CFG->curlpath = false;
 
+// Whether to prevent users from changing their passwords.
+// For use with an external authentication system that doesn't look at the elgg user's password.
+// You'll probably want to disable registration and invites too.
+$CFG->disable_passwordchanging = false;
 
 // Some other $CFG variables found in codebase.
 // They may or may not be config options. Some are just used for holding global data.
 
 // $CFG->admin
 // $CFG->allowobjectembed // boolean - whether to allow <object> and <embed> tags through input-cleaning
-// $CFG->auth
+// $CFG->auth // string - which auth plugin to use
 // $CFG->cachetext
 // $CFG->currenttextiscacheable
 // $CFG->dbsessions

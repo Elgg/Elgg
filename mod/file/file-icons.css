@@ -1,0 +1,141 @@
+/* Media file styles */
+a.mediafile {
+	background: transparent url({{url}}mod/file/fileicons/file.png)
+		no-repeat scroll 0px 1px;
+	padding-left: 20px;
+}
+
+a.ppt {
+	background-image: url({{url}}mod/file/fileicons/ppt.png);
+}
+a.bz2 {
+	background-image: url({{url}}mod/file/fileicons/bz2.png);
+}	   
+a.htm {
+	background-image: url({{url}}mod/file/fileicons/htm.png);
+}
+	
+a.odc {
+	background-image: url({{url}}mod/file/fileicons/odc.png);
+}
+	
+a.odp {
+	background-image: url({{url}}mod/file/fileicons/odp.png);
+}
+	
+a.png {
+	background-image: url({{url}}mod/file/fileicons/png.png);
+}
+
+a.rpm {
+	background-image: url({{url}}mod/file/fileicons/rpm.png);
+}
+
+a.sxd {
+	background-image: url({{url}}mod/file/fileicons/sxd.png);
+}
+
+a.tgz {
+	background-image: url({{url}}mod/file/fileicons/tgz.png);
+}
+
+a.zip {
+	background-image: url({{url}}mod/file/fileicons/zip.png);
+}
+a.conf {
+	background-image: url({{url}}mod/file/fileicons/conf.png);
+}
+
+a.gif {
+	background-image: url({{url}}mod/file/fileicons/gif.png);
+}
+ 
+a.odf {
+	background-image: url({{url}}mod/file/fileicons/odf.png);
+}
+
+a.ods {
+	background-image: url({{url}}mod/file/fileicons/ods.png);
+}
+
+a.rtf {
+	background-image: url({{url}}mod/file/fileicons/rtf.png);
+}
+
+a.sxi {
+	background-image: url({{url}}mod/file/fileicons/sxi.png);
+}
+
+a.txt {
+	background-image: url({{url}}mod/file/fileicons/txt.png);
+}
+a.deb {
+	background-image: url({{url}}mod/file/fileicons/deb.png);
+}
+ 
+a.gz {
+	background-image: url({{url}}mod/file/fileicons/gz.png);
+}
+
+a.jpeg {
+	background-image: url({{url}}mod/file/fileicons/jpeg.png);
+}
+ 
+a.odg {
+	background-image: url({{url}}mod/file/fileicons/odg.png);
+}
+
+a.odt {
+	background-image: url({{url}}mod/file/fileicons/odt.png);
+}
+
+a.ps {
+	background-image: url({{url}}mod/file/fileicons/ps.png);
+}
+ 
+a.swf {
+	background-image: url({{url}}mod/file/fileicons/swf.png);
+}
+
+a.sxw {
+	background-image: url({{url}}mod/file/fileicons/sxw.png);
+}
+
+a.xls {
+	background-image: url({{url}}mod/file/fileicons/xls.png);
+}
+a.doc {
+	background-image: url({{url}}mod/file/fileicons/doc.png);
+}
+ 
+a.html {
+	background-image: url({{url}}mod/file/fileicons/html.png);
+}
+
+a.jpg {
+	background-image: url({{url}}mod/file/fileicons/jpg.png);
+}
+
+a.odi {
+	background-image: url({{url}}mod/file/fileicons/odi.png);
+}
+
+a.pdf {
+	background-image: url({{url}}mod/file/fileicons/pdf.png);
+}
+
+a.rar {
+	background-image: url({{url}}mod/file/fileicons/rar.png);
+}
+
+a.sxc {
+	background-image: url({{url}}mod/file/fileicons/sxc.png);
+}
+
+a.tar {
+	background-image: url({{url}}mod/file/fileicons/tar.png);
+}
+
+a.xml {
+	background-image: url({{url}}mod/file/fileicons/xml.png);
+}

@@ -1,0 +1,417 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: O2o v0.1\n"
+"POT-Creation-Date: 2007-01-06 02:52+0000\n"
+"PO-Revision-Date: 2007-02-17 16:14+0000\n"
+"Last-Translator: Nicolás Martín <nicolas@somosmas.org>\n"
+"Language-Team: Spanish (O2O) <nicolas@somosmas.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Rosetta-Export-Date: 2007-01-08 16:18+0000\n"
+
+#: addgroup.php:23
+msgid "Invite a Community"
+msgstr "Invitar a un Grupo"
+
+#: default_template.php:14
+msgid "Comminity Members admin page"
+msgstr "Página de administración de Miembros del Grupo"
+
+#: default_template.php:15
+msgid "A template for the community members admin page."
+msgstr "Plantilla para la página de administración de miembros del grupo."
+
+#: default_template.php:17
+msgid "Community members list"
+msgstr "Listado de miembros del grupo"
+
+#: default_template.php:23
+msgid "Community member visualization"
+msgstr "Visualización de miembros de grupo"
+
+#: default_template.php:24
+msgid "A template for the community member display"
+msgstr "Plantilla para el despliegue de miembros del grupo"
+
+#: default_template.php:26
+msgid "Member's name"
+msgstr "Nombre del miembro"
+
+#: default_template.php:27
+msgid "Member's profile page"
+msgstr "Página de perfil del usuario"
+
+#: default_template.php:28
+msgid "Member's icon"
+msgstr "Icono del miembro"
+
+#: default_template.php:29
+msgid "Member's functions"
+msgstr "Funciones del miembro"
+
+#: default_template.php:35
+msgid "Community membership visualization"
+msgstr "Visualización de membresía del grupo"
+
+#: default_template.php:36
+msgid "A template for the community membership display"
+msgstr "Plantilla para el despliegue de membresía del grupo"
+
+#: default_template.php:47
+msgid "Community creation"
+msgstr "Creación de grupo"
+
+#: default_template.php:48
+msgid "A template for the community creation form"
+msgstr "Plantilla del formulario de creación de grupos"
+
+#: default_template.php:50
+msgid "Page title"
+msgstr "Título de la página"
+
+#: default_template.php:51
+msgid "Form fields"
+msgstr "Campos del formulario"
+
+#: index.php:25
+msgid "Communities"
+msgstr "Grupos"
+
+#: lib/userdetails_actions.php:23
+msgid "Community ownership transferred to %s."
+msgstr "Administración del grupo transferido a %s."
+
+#: lib/userdetails_actions.php:26
+msgid "Could not retrieve community details."
+msgstr "No se pudieron retornar los detalles del grupo."
+
+#: lib/userdetails_actions.php:29
+msgid "Could not find new owner %s. Community owner not changed."
+msgstr "No se pudo encontrar al administrador %s. La administración del grupo no ha sido cambiada."
+
+#: lib/userdetails_edit.php:11
+msgid "Change your community name"
+msgstr "Cambiar el nombre del grupo"
+
+#: lib/userdetails_edit.php:12
+msgid "This name will be displayed throughout the system."
+msgstr "Este nombre será desplegado a través de todo el sistema."
+
+#: lib/userdetails_edit.php:27
+msgid "Community name"
+msgstr "Nombre del grupo"
+
+#: lib/userdetails_edit.php:32
+msgid "Membership restriction:"
+msgstr "Restricciones de membresía:"
+
+#: lib/userdetails_edit.php:33
+msgid "This allows you to choose who can join this community."
+msgstr "Esto te permite escoger quien puede unirse a éste grupo."
+
+#: lib/userdetails_edit.php:50
+msgid "No moderation: anyone can join this community."
+msgstr "Sin moderación: cualquiera puede unirse a este grupo."
+
+#: lib/userdetails_edit.php:55
+msgid "Moderation: memberships must be approved by you."
+msgstr "Con moderación: debes aprobar las solicitudes de membresía."
+
+#: lib/userdetails_edit.php:60
+msgid "Private: nobody can join this community."
+msgstr "Privado: sólo el administrador puede crear usuarios."
+
+#: lib/userdetails_edit.php:65
+msgid "Membership restriction"
+msgstr "Restricción de membresía"
+
+#: lib/userdetails_edit.php:70
+msgid "Community ownership"
+msgstr "Administración del grupo"
+
+#: lib/userdetails_edit.php:71
+msgid "Type the username of the user who you want to own this community below. You cannot leave this blank, or specify a community or a user that doesn't exist."
+msgstr "Escribe el nombre de usuario del usuario que quieres que sea administrador del grupo. No puedes dejar este espacio en blanco, especificar el nombre de un grupo o de un usuario que no existe."
+
+#: lib/userdetails_edit.php:83
+msgid "Community owner"
+msgstr "Administrador del grupo"
+
+#: lib/userdetails_edit.php:91
+msgid "Save"
+msgstr "Guardar"
+
+#: lib/communities_edit.php:27
+msgid "Members"
+msgstr "Miembros"
+
+#: lib/communities_edit.php:30
+msgid "Administrate"
+msgstr "Administrar"
+
+#: lib/communities_edit.php:31
+msgid "Are you sure you want to delete this community?"
+msgstr "¿Está seguro que quiere borrar este grupo?"
+
+#: lib/communities_edit.php:32
+msgid "Delete"
+msgstr "Borrar"
+
+#: lib/communities_edit.php:36
+msgid "Are you sure you want to separate this user from the community?"
+msgstr "¿Está seguro que quiere sacar a este usuario del grupo?"
+
+#: lib/communities_edit.php:37
+msgid "Separate"
+msgstr "Sacar"
+
+#: lib/communities_edit.php:55
+msgid "Communities to which I belong"
+msgstr "Grupos a los que pertenezco"
+
+#: lib/communities_edit.php:57
+msgid "Owned Communities"
+msgstr "Grupos que administro"
+
+#: lib/communities_edit.php:74
+msgid "You don't have any communities listed! To join a community, click the 'join' button underneath a community's icon. You can find communities you're interested in by using the search function."
+msgstr "¡No tienes ningún grupo listado! Para unirte a un grupo, presiona el botón 'unirse' al lado del ícono del grupo. Puedes buscar grupos que sean de tu interés usando la función de buscar."
+
+#: lib/communities_edit.php:76
+msgid "This user is not currently a member of any communities."
+msgstr "Este usuario no es miembro de ningún grupo actualmente."
+
+#: lib/communities_moderator_of.php:45
+msgid "You don't own any communities. Why not create one?"
+msgstr "No administras ningún grupo. ¿Por qué no crear uno?"
+
+#: lib/communities_moderator_of.php:47
+msgid "This user is not currently moderating any communities."
+msgstr "Este usuario no modera ningún grupo actualmente."
+
+#: lib/communities_membership_requests.php:11
+msgid "Membership requests"
+msgstr "Solicitudes de membresía"
+
+#: lib/communities_membership_requests.php:16
+msgid "The following users would like to join this community. They need your approval to do this (to change this setting, visit the 'community settings' page)."
+msgstr "Los siguientes usuarios quieren unirse a este grupo. Ellos necesitan tu aprobación para poder hacerlo (para cambiar esta configuración, entra a la página de 'Configuración de grupo'"
+
+#: lib/communities_membership_requests.php:33
+msgid "Profile"
+msgstr "Perfil"
+
+#: lib/communities_membership_requests.php:34
+msgid "Blog"
+msgstr "Contenidos"
+
+#: lib/communities_membership_requests.php:49
+msgid "You have no pending membership requests."
+msgstr "No tienes solicitudes de membresía pendientes."
+
+#: lib/communities_members.php:29
+msgid "Owner"
+msgstr "Administrador"
+
+#: lib/communities_members.php:48
+msgid "This community doesn't currently have any members."
+msgstr "Este grupo no tiene actualmente ningún miembro."
+
+#: lib/communities_actions.php:22
+msgid "Error! The community username must contain letters and numbers only, cannot be blank, and must be between 3 and 12 characters in length."
+msgstr "¡Error! El nombre de usuario del grupo debe contener solamente letras y/o números, no puede dejarse vacío, y debe tener entre 3 y 12 caracteres."
+
+#: lib/communities_actions.php:24
+msgid "Error! The community name cannot be blank."
+msgstr "¡Error! El nombre del grupo no puede dejarse vacío."
+
+#: lib/communities_actions.php:28
+msgid "The username %s is already taken by another user. You will need to pick a different one."
+msgstr "El nombre de usuario %s ya ha sido usado por otro usuario. Debes escoger uno diferente."
+
+#: lib/communities_actions.php:48
+msgid "Your community was created and you were added as its first member."
+msgstr "Tu grupo ha sido creado y has sido adicionado como su primer miembro."
+
+#: lib/communities_actions.php:65
+msgid "You joined %s."
+msgstr "Te has unido a %s."
+
+#: lib/communities_actions.php:67
+msgid "%s has joined %s!\n\nTo visit this user's profile, click on the following link:\n\n\t"
+msgstr "¡%s se ha unido a %s!\n\nPara visitar el perfil del usuario, presiona en el siguiente vínculo:\n\n\t"
+
+#: lib/communities_actions.php:70
+msgid "New %s member"
+msgstr "Nuevo miembro en %s"
+
+#: lib/communities_actions.php:74
+msgid "Membership of %s needs to be approved. Your request has been added to the list."
+msgstr "La membresía de %s requiere ser aprobada. Tu solicitud ha sido agregada a la lista."
+
+#: lib/communities_actions.php:76
+msgid "%s has applied to join %s!\n\nTo visit this user's profile, click on the following link:\n\n\t"
+msgstr "¡%s ha aplicado para unirse a %s!\n\nPara visitar el perfil del usuario, presiona en el siguiente vínculo:\n\n\t"
+
+#: lib/communities_actions.php:79
+msgid "New %s member request"
+msgstr "Nueva solicitud de membresía en %s"
+
+#: lib/communities_actions.php:83
+msgid "%s is a private community. Your membership request has been declined."
+msgstr "%s es un grupo privado. Tu solicitud de membresía ha sido declinada."
+
+#: lib/communities_actions.php:95
+msgid "You left %s."
+msgstr "Te has retirado de %s."
+
+#: lib/communities_actions.php:103
+msgid "The community was deleted."
+msgstr "El grupo ha sido borrado."
+
+#: lib/communities_actions.php:105
+msgid "Error: the community could not be deleted."
+msgstr "Error: el grupo no pudo ser borrado."
+
+#: lib/communities_actions.php:117
+msgid "%s was removed from your community"
+msgstr "%s ha sido sacado de tu grupo"
+
+#: lib/communities_actions.php:120
+msgid "%s coundn't be removed from your community"
+msgstr "%s no pudo ser sacado de tu grupo"
+
+#: lib/communities_actions.php:128
+msgid "Your post has been added to the community weblog."
+msgstr "Tu contenido ha sido agregado al contenido del grupo."
+
+#: lib/communities_actions.php:144
+msgid "You approved the membership request. %s is now a member of this community."
+msgstr "Has aprobado la solicitud de membresía. %s es ahora miembro de este grupo."
+
+#: lib/communities_actions.php:146
+msgid "An error occurred: the membership request could not be approved."
+msgstr "Ha ocurrido un error: la solicitud de membresía no pudo ser aprobada."
+
+#: lib/communities_actions.php:149
+msgid "Error: you do not have authority to modify this membership request."
+msgstr "Error: no tienes autorización para modificar esta solicitud de membresía."
+
+#: lib/communities_actions.php:152
+msgid "An error occurred: the membership request could not be found."
+msgstr "Ha ocurrido un error: la solicitud de membresía no se encontró."
+
+#: lib/communities_actions.php:166
+msgid "You declined the membership request. %s is not a member of this community."
+msgstr "Has declinado la solicitud de membresía. %s no es un miembro de este grupo."
+
+#: lib/communities_create.php:17
+msgid "Create a new community"
+msgstr "Crear un nuevo grupo"
+
+#: lib/communities_create.php:18
+msgid "Community name:"
+msgstr "Nombre del grupo:"
+
+#: lib/communities_create.php:19
+msgid "Username for community (forms part of the community website address):"
+msgstr "Nombre de usuario del grupo (formará parte de la dirección web del grupo):"
+
+#: lib/communities_create.php:20
+msgid "Create"
+msgstr "Crear"
+
+#: lib/community_memberships.php:20
+msgid "Community memberships"
+msgstr "Membresías del grupo"
+
+#: lib/user_info_menu_text.php:18
+msgid "Are you sure you want to join this community?"
+msgstr "¿Estás seguro que quieres unirte a este grupo?"
+
+#: lib/user_info_menu_text.php:18
+msgid "Click here to join this community."
+msgstr "Presiona aquí para unirte a este grupo."
+
+#: lib/user_info_menu_text.php:20
+msgid "Are you sure you want to apply to join this community?"
+msgstr "¿Estás seguro que quieres aplicar para unirte a este grupo?"
+
+#: lib/user_info_menu_text.php:20
+msgid "Click here to apply to join this community."
+msgstr "Presiona aquí para aplicar para unirte a este grupo."
+
+#: lib/user_info_menu_text.php:26
+msgid "Are you sure you want to leave this community?"
+msgstr "¿Estás seguro que quieres abandonar este grupo?"
+
+#: lib/user_info_menu_text.php:26
+msgid "Click here to leave this community."
+msgstr "Presiona aquí para abandonar este grupo."
+
+#: lib/profile_edit_link.php:12
+msgid "Upload / edit site pictures for this community."
+msgstr "Subir / editar imágenes para este grupo."
+
+#: lib/profile_edit_link.php:26
+msgid "Change this community's name."
+msgstr "Cambiar el nombre de este grupo."
+
+#: lib/communities_access_levels.php:10
+msgid "Community"
+msgstr "Grupo"
+
+#: lib/communities_owned.php:18
+msgid "Owned communities"
+msgstr "Grupos que administro"
+
+#: lib.php:45
+msgid "Your Communities"
+msgstr "Mis Grupos"
+
+#: lib.php:61
+msgid "Edit community profile"
+msgstr "Editar perfil del grupo"
+
+#: lib.php:65
+msgid "Community site picture"
+msgstr "Imágen del grupo"
+
+#: lib.php:69
+msgid "Edit community details"
+msgstr "Editar detalles del grupo"
+
+#: lib.php:79
+msgid "Return to community profile"
+msgstr "Volver al perfil del grupo"
+
+#: lib.php:84
+msgid "Edit members"
+msgstr "Editar miembros"
+
+#: lib.php:88
+msgid "View membership requests"
+msgstr "Ver solicitudes de membresía"
+
+#: lib.php:99
+msgid "Invite a friend"
+msgstr "Invitar a un contacto"
+
+#: lib.php:125
+msgid "New Community"
+msgstr "Nuevo Grupo"
+
+#: lib.php:211
+msgid "Community %s was returned to the news user."
+msgstr "El grupo %s ha sido asignado al usuario 'news'."
+
+#: lib.php:213
+msgid "Community %s is now owned by -1 (nobody)."
+msgstr "El grupo %s es ahora administrado por -1 (nadie)."
+

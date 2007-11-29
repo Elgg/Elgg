@@ -35,6 +35,9 @@
                 if (empty($CFG->templatesroot)) {
                     $CFG->templatesroot = $CFG->dirroot . "mod/template/templates/";
                 }
+                if (!isset($CFG->profilelocation)) {
+                    $CFG->profilelocation = $CFG->dirroot . "mod/profile/";
+                }
                 
                 // Check logins etc
                 elggadmin_actions();
@@ -75,9 +78,13 @@
                     $CFG->wwwroot = "http://" . str_replace("index.php","",str_replace("_elggadmin/","",$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']));
                 }
                 
-                // Set the templates root if it doesn't exist
+                // Set the templates root and profile location if they don't exist
                 if (!isset($CFG->templatesroot)) {
                     $CFG->templatesroot = $CFG->dirroot . "mod/template/templates/";
+                }
+                
+                if (!isset($CFG->profilelocation)) {
+                    $CFG->profilelocation = $CFG->dirroot . "mod/profile/";
                 }
                 
                 // Check logins etc
@@ -157,7 +164,7 @@ END;
                 && !empty($CFG->adminuser) && !empty($CFG->adminpassword) ) {
                 
                     if ($username == $CFG->adminuser
-                        && $password = $CFG->adminpassword) {
+                        && $password == $CFG->adminpassword) {
                             
                             $_SESSION['adminid'] = 1;
                             $_SESSION['admincode'] = md5($CFG->adminuser . $CFG->adminpassword);

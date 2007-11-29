@@ -1,5 +1,81 @@
 <?php 
 
+
+/** Set the display object method for a given module.
+ * @param $module A string containing the module name - eg "file"
+ * @param $function The name of your function matching the prototype $name($object_id, $object_type, $view) where $object_type is the description of the object eg "file::file".
+ */
+function display_set_display_function($module, $function)
+{
+	global $CFG;
+
+	if (!isset($CFG->displayobjectfunctions))
+		$CFG->displayobjectfunctions = array();
+
+	$CFG->displayobjectfunctions[$module] = $function;
+}
+
+/** Call a function's display object code and returns its html
+ * @param $module The module name eg 'file'
+ * @param $object_id The id of the object
+ * @param $object_type The type of the object - eg 'file::file' - largely ignored.
+ * @param $view Do we want to display a full view or a limited view - 'full' or 'summary'?
+ */
+function display_run_displayobject($module, $object_id, $object_type, $view = 'full')
+{
+	global $CFG;
+
+	$result = "";
+	if (isset($CFG->displayobjectfunctions[$module]))
+	{
+		$function = $CFG->displayobjectfunctions[$module];
+		if (is_callable($function))
+		{
+			$result = $function($object_id, $object_type, $view);
+		}
+	}
+
+	return $result;
+}
+
+/** Add a hook for displaying annotations for an object.
+ * @param $object_type The type of object you're registering the hook for
+ * @param $function The function to register it to
+ */
+function display_set_display_annotation_function($object_type, $function)
+{
+	global $CFG;
+
+	if (!isset($CFG->displayobjectannotationfunctions))
+		$CFG->displayobjectannotationfunctions = array();
+
+	$CFG->displayobjectannotationfunctions[$object_type][] = $function;
+}
+
+/** Display the annotations for a specific object type.
+ * @param $object The id of the object
+ * @param $object_type The type of the object - eg 'file::file' - largely ignored.
+ * @param $view Do we want to display a full view or a limited view - 'full' or 'summary'?
+ */
+function display_run_displayobjectannotations($object, $object_type, $view = 'full')
+{
+	global $CFG;
+
+	$result = "";
+	if (isset($CFG->displayobjectannotationfunctions[$object_type]))
+	{
+		foreach ($CFG->displayobjectannotationfunctions[$object_type] as $function)
+		{ 
+			if (is_callable($function))
+			{
+				$result .= $function($object, $object_type, $view);
+			}
+		}
+	}
+
+	return $result;
+}
+
 // Function to sanitise RTF edit text
 /* function RTESafe($strText) {
     //returns safe code for preloading in the RTE

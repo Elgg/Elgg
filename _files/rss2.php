@@ -25,7 +25,7 @@ if (isset($profile_id)) {
     $rssfiles = sprintf(__gettext("Files tagged with %s"),$tag);
 
     if ($info = get_record('users','ident',$page_owner)) {
-        $name = stripslashes($info->name);
+        $name = stripslashes(user_name($info->ident));
         $mainurl = $CFG->wwwroot . $info->username . "/files/";
         $rssurl = $mainurl . "rss/" . urlencode($tag);
         $rssdescription = sprintf(__gettext("Files for %s, hosted on %s."),$name,$sitename);

@@ -1,0 +1,61 @@
+----------------------------------------------------------------------
+| CONTENT TOOLBAR MODULE: Configuration options and Extension points |
+----------------------------------------------------------------------
+
+This plug-in adds a basic placeholder to buttons and functions that modify
+a field within a form.
+
+It was originally designed to allow to add the 'video wizard' button to the
+weblog add and edit forms, but it could be used to add more functions there
+and another places within Elgg.
+
+Some examples:
+   -A button that allows to select and insert a file from your elgg files 
+    in a weblog post throught a wizard instead the current selector box
+    (planed feature)
+   
+   -Add buttons for use a very basic wiki sintax 
+
+Configuration Options
+======================
+
+$CFG->contenttoolbar_icons
+	To configure if you want to display icons in the toolbar
+
+$CFG->allowobjectembed = true;
+	If you want to use the video widget you need allow the 
+	use of embed objects
+
+Extension points
+================
+
+Visualization
+--------------
+
+display:content:toolbar
+	Action:
+		Adds the toolbar
+	Parameter(s):
+		The input field to be modified
+	File(s) that use it:
+		- blog/lib/weblogs_posts_add.php
+		- blog/lib/weblogs_posts_edit.php
+
+video:text:process
+	Action:
+		Process the {{vide:url?size}} tag
+	Parameter(s):
+		The text to be processed
+	File(s) that use it:
+		- blog/lib/weblogs_text_process.php
+		- contenttoolbar/lib.php (at widget process)
+
+Add a new button
+-----------------
+To add a new button to the toolbar you need to call the following function
+
+  add_content_tool_button($type,$title, $icon, $key, $options)
+
+Look at 'contenttoolbar/contenttoolbar_functions.php' for the complete documentation
+
+    

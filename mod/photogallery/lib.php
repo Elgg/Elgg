@@ -47,7 +47,7 @@ END;
                         $image = "<a href=\"{$CFG->wwwroot}_files/icon.php?id={$file->ident}&w=500&h=500\" rel=\"lightbox[folder]\"><img src=\"$image\" /></a>";
                         $fileinfo = round(($file->size / 1048576),4) . "Mb";
                         $filelinks = file_edit_links($file);
-                        $uploaded = sprintf(__gettext("Uploaded on %s"),strftime("%A, %e %B %Y",$file->time_uploaded));
+                        $uploaded = sprintf(__gettext("Uploaded on %s"),strftime("%A, %d %B %Y",$file->time_uploaded));
                         $keywords = display_output_field(array("","keywords","file","file",$file->ident,$file->owner));
                         $mimetype = mimeinfo('type',$file->originalname);
     

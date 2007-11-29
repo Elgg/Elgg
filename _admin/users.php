@@ -11,6 +11,19 @@
         define("context", "admin");
         templates_page_setup();
         
+        $flag = optional_param("flag");
+        switch($flag) {
+            case "admin":
+                            $body = run("admin:users:admin");
+                            break;
+            case "banned":
+                            $body = run("admin:users:banned");
+                            break;
+            default:
+                            $body = run("admin:users");
+                            break;
+        }
+        
     // You must be logged on to view this!
                                 
         echo templates_page_draw( array(
@@ -18,7 +31,7 @@
                     templates_draw(array(
                         'context' => 'contentholder',
                         'title' => __gettext("Manage users"), 
-                        'body' => run("admin:users")
+                        'body' => $body
                     )
                     )
                 )

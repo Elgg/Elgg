@@ -87,6 +87,65 @@
         
     }
     
+    /**
+     * Returns a user's name, with event hooks allowing for interception.
+     * Internally passes around a "user_name" "display" event, with an object
+     * containing the elements 'name' and 'owner'.
+     *
+     * @uses $CFG
+     * @param integer $user_id  The unique ID of the user we want to find the name for.
+     * @return string Returns the user's name, or a blank string if something went wrong (eg the user didn't exist).
+     */
+    function user_name($user_id) {
+        global $CFG;
+        $user_name = new stdClass;
+        $user_name->owner = $user_id;
+        if ($user_name->name = user_info("name",$user_id)) {
+            if ($user_name = plugin_hook("user_name","display",$user_name)) {
+                return $user_name->name;
+            }
+        }
+        return "";
+    }
+     
+    /**
+     * Returns the HTML to display a user's icon, with event hooks allowing for interception.
+     * Internally passes around a "user_icon" "display" event, with an object
+     * containing the elements 'html', 'icon' (being the icon ID), 'size', 'owner' and 'url'.
+     *
+     * @uses $CFG
+     * @param integer $user_id  The unique ID of the user we want to display the icon for.
+     * @param integer $size  The size of the icon we want to display (max: 100).
+     * @param boolean $urlonly  If true, returns the URL of the icon rather than the full HTML.
+     * @return string Returns the icon HTML, or the default icon if something went wrong (eg the user didn't exist).
+     */
+    function user_icon_html($user_id, $size = 100, $urlonly = false) {
+        global $CFG;
+        $extra = "";
+        $user_icon = new stdClass;
+        $user_icon->owner = $user_id;
+        $user_icon->size = $size;
+        if ($size < 100) {
+            $extra = "/h/$size/w/$size";
+        }
+        if ($user_icon->icon = user_info("icon",$user_id)) {
+            $user_icon->url = "{$CFG->wwwroot}_icon/user/{$user_icon->icon}{$extra}";
+            $user_icon->html = "<img src=\"{$user_icon->url}\" border=\"0\" alt=\"user icon\" />";
+            if ($user_icon = plugin_hook("user_icon","display",$user_icon)) {
+                if ($urlonly) {
+                    return $user_icon->url;
+                } else {
+                    return $user_icon->html;
+                }
+            }
+        }
+        if ($urlonly) {
+            return -1;
+        } else {
+            return "<img src=\"{$CFG->wwwroot}_icon/user/-1{$extra}\" border=\"0\" alt=\"default user icon\" />";
+        }
+    }
+    
 // USER FLAGS //////////////////////////////////////////////////////////////////
 
     // Gets the value of a flag
@@ -291,7 +350,7 @@
                                   FROM '.$CFG->prefix.'users
                                   WHERE '.$where.'
                                   GROUP BY user_type')) {
-            if (sizeof($users) > 1) {
+            if (empty($type) || sizeof($users) > 1) {
                 return $users;
             }
             foreach($users as $user) {
@@ -302,4 +361,49 @@
         return false;
     }
 
+// USER DEATH //////////////////////////////////////////////////////////////////
+
+    /**
+     * Delete a user.
+     *
+     * @uses $CFG
+     * @param integer $user_id  The unique ID of the user to delete.
+     * @return true|false Returns true if the user was deleted; false otherwise.
+     */
+     function user_delete($user_id) {
+
+         global $CFG;
+
+         // Verify that the user exists
+         if ($user = get_record_sql("select * from {$CFG->prefix}users where ident = {$user_id}")) {
+             
+             // Call the event hook for all plugins to do their worst with the user's data
+             $user = plugin_hook("user","delete",$user);
+             
+             // If all went well ...
+             if (!empty($user)) {
+                 
+                 // Remove any icons and icon folders
+                 if ($icons = get_records_sql("select * from {$CFG->prefix}icons where owner = {$user->ident}")) {
+                     foreach($icons as $icon) {
+                         $filepath = $CFG->dataroot . "icons/" . substr($user->username,0,1) . "/" . $user->username . "/" . $icon->filename;
+                         @unlink($filepath);
+                     }
+                     @rmdir($filepath = $CFG->dataroot . "icons/" . substr($user->username,0,1) . "/" . $user->username . "/");
+                 }
+                 
+                 // Remove the user from the database!
+                 delete_records("users","ident",$user->ident);
+                 delete_records("user_flags","user_id",$user->ident);
+                 delete_records("messages","to_id",$user->ident);
+                 delete_records("messages","from_id",$user->ident);
+                 return true;
+
+             }
+             
+             return false;
+         }
+
+     }
+    
 ?>

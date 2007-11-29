@@ -291,6 +291,9 @@ function clean_param($param, $options) {
 function get_list_of_plugins($plugin='mod', $exclude='') {
     
     global $CFG;
+    if ($plugin == 'mod') {
+        $plugin = $CFG->dirroot . $plugin;
+    }
     static $plugincache = array();
     $plugincachename = $plugin . "_" . $exclude;
     
@@ -298,16 +301,17 @@ function get_list_of_plugins($plugin='mod', $exclude='') {
         $plugins = $plugincache[$plugincachename];
     } else {
         $plugins = array();
-        $basedir = opendir($CFG->dirroot . $plugin);
-        while (false !== ($dir = readdir($basedir))) {
-            $firstchar = substr($dir, 0, 1);
-            if ($firstchar == '.' or $dir == 'CVS' or $dir == '_vti_cnf' or $dir == $exclude) {
-                continue;
+        if ($basedir = opendir($plugin)) {
+            while (false !== ($dir = readdir($basedir))) {
+                $firstchar = substr($dir, 0, 1);
+                if ($firstchar == '.' or $dir == 'CVS' or $dir == '_vti_cnf' or $dir == $exclude) {
+                    continue;
+                }
+                if ((filetype($plugin .'/'. $dir) != 'dir') && ((filetype($plugin .'/'. $dir) != 'link'))) {
+                    continue;
+                }
+                $plugins[] = $dir;
             }
-            if (filetype($CFG->dirroot . $plugin .'/'. $dir) != 'dir') {
-                continue;
-            }
-            $plugins[] = $dir;
         }
         if ($plugins) {
             asort($plugins);
@@ -368,7 +372,7 @@ function report_session_error() {
     //    set_config('session_error_counter', 1);
     //}
     //called from setup.php, so gettext module hasn't been loaded yet
-    redirect($FULLME, 'A server error that affects your login session was detected. Please login again or restart your browser.', 5);
+    redirect($FULLME, '', 1);
 }
 
 // never called
@@ -445,7 +449,7 @@ function email_to_user($user, $from, $subject, $messagetext, $messagehtml='', $a
 
     include_once($CFG->libdir .'/phpmailer/class.phpmailer.php');
 
-    if (empty($user)) {
+    if (empty($user) || empty($user->email)) {
         return false;
     }
 
@@ -3219,7 +3223,9 @@ function random_string ($length=15) {
     return $string;
 }
 
-// Fills user information
+/**
+ * Fills user information
+ */
 function init_user_var($user) {
     
     global $CFG;
@@ -3235,8 +3241,12 @@ function init_user_var($user) {
 }
 
 
-// Authentication Function
-// Returns true or false
+/**
+ * Authentication Function
+ * @param string $username
+ * @param string $password plaintext password
+ * @return boolean
+ */
 function authenticate_account($username,$password) {
     
     global $CFG,$USER;
@@ -3284,7 +3294,9 @@ function authenticate_account($username,$password) {
     return $ok;
 }
 
-// Attempts to get login from a cookie
+/**
+ * Attempts to get login from a cookie
+ */
 function cookied_login() {
     global $USER;
     if((!empty($_COOKIE[AUTH_COOKIE])) && $ticket = md5($_COOKIE[AUTH_COOKIE])) {
@@ -3362,8 +3374,11 @@ function remember_login($id) {
     return 1;
 }
 
-// Returns whether the user is logged in or not;
-// if not logged in, checks for persistent cookie
+/**
+ * Returns whether the user is logged in or not;
+ * if not logged in, checks for persistent cookie
+ * @return boolean
+ */
 function isloggedin() { 
     global $USER;
     if (empty($USER->ident) && empty($USER->loggedin)) {
@@ -3637,8 +3652,9 @@ function remove_dir($dir, $content_only=false) {
     return rmdir($dir);
 }
 
-//Function to check if a directory exists
-//and, optionally, create it
+/**
+ * Function to check if a directory exists and, optionally, create it
+ */
 function check_dir_exists($dir,$create=false) {
     
     global $CFG;
@@ -3703,9 +3719,12 @@ function copy_dir($from_file,$to_file) {
 }
 
 
+/**
+ * Zip an array of files/dirs to a destination zip file
+ * Both parameters must be FULL paths to the files/dirs
+ * @return boolean
+ */
 function zip_files ($originalfiles, $destination) {
-//Zip an array of files/dirs to a destination zip file
-//Both parameters must be FULL paths to the files/dirs
 
     global $CFG;
 
@@ -3797,11 +3816,14 @@ function zip_files ($originalfiles, $destination) {
     return true;
 }
 
+/**
+ * Unzip one zip file to a destination dir
+ * Both parameters must be FULL paths
+ * If destination isn't specified, it will be the
+ * SAME directory where the zip file resides.
+ * @return boolean
+ */
 function unzip_file ($zipfile, $destination = '', $showstatus = true) {
-//Unzip one zip file to a destination dir
-//Both parameters must be FULL paths
-//If destination isn't specified, it will be the
-//SAME directory where the zip file resides.
 
     global $CFG;
 
@@ -3883,10 +3905,12 @@ function unzip_file ($zipfile, $destination = '', $showstatus = true) {
     return true;
 }
 
+/**
+ * This function is used as callback in unzip_file() function
+ * to clean illegal characters for given platform and to prevent directory traversal.
+ * Produces the same result as info-zip unzip.
+ */
 function unzip_cleanfilename ($p_event, &$p_header) {
-//This function is used as callback in unzip_file() function
-//to clean illegal characters for given platform and to prevent directory traversal.
-//Produces the same result as info-zip unzip.
     $p_header['filename'] = ereg_replace('[[:cntrl:]]', '', $p_header['filename']); //strip control chars first!
     $p_header['filename'] = ereg_replace('\.\.+', '', $p_header['filename']); //directory traversal protection
     if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
@@ -3903,10 +3927,12 @@ function unzip_cleanfilename ($p_event, &$p_header) {
 }
 
 
+/**
+ * This function shows the results of the unzip execution
+ * depending of the value of the $CFG->zip, results will be
+ * text or an array of files.
+ */
 function unzip_show_status ($list,$removepath) {
-//This function shows the results of the unzip execution
-//depending of the value of the $CFG->zip, results will be
-//text or an array of files.
 
     global $CFG;
 
@@ -3947,6 +3973,10 @@ function unzip_show_status ($list,$removepath) {
     }
 }
 
+/**
+ * 
+ * @return boolean
+ */
 function isadmin($userid=0) {
     global $USER;
 
@@ -3998,25 +4028,36 @@ function get_admin() {
 
 }
 
-// cli_die($str) - a perlish die()
-//
-// this function call will exit with a warning and an exit code
-// that clearly indicates that something went wrong.
-//
-// We shouldn't need this, but due to PHP's web-centric heritage,
-// die()/exit() cant print a warnign _and_ set a non-success exit
-// code. Silly thing -- disregarding POSIX and friends doesn't get
-// you very far ;-D 
+/**
+ * cli_die($str) - a perlish die()
+ * 
+ * this function call will exit with a warning and an exit code
+ * that clearly indicates that something went wrong.
+ * 
+ * We shouldn't need this, but due to PHP's web-centric heritage,
+ * die()/exit() cant print a warnign _and_ set a non-success exit
+ * code. Silly thing -- disregarding POSIX and friends doesn't get
+ * you very far ;-D 
+ */
 function cli_die ($str, $code) {
     trigger_error($str);
     exit(1);
-
 }
 
 
 
-// Take a comma-separated string of keywords and create the relevant tag entries
-// in the database. Returns a cleaned comma-separated keyword string.
+/**
+ * Take a comma-separated string of keywords and create the relevant tag entries
+ * in the database. Returns a cleaned comma-separated keyword string.
+ * 
+ * @param string $string user-input tag string
+ * @param string $tagtype type of tagged object
+ * @param int $ref id of tagged object
+ * @param string $access access control value
+ * @param int $owner tag owner
+ * 
+ * @return string cleaned comma-separated keyword string
+ */
 function insert_tags_from_string ($string, $tagtype, $ref, $access, $owner) {
 
     $ref = (int) $ref;
@@ -4056,8 +4097,13 @@ function insert_tags_from_string ($string, $tagtype, $ref, $access, $owner) {
 }
 
 
-// return the "this is restricted" text for a given access value
-// functionised to reduce code duplication
+/**
+ * return the "this is restricted" text for a given access value
+ * functionised to reduce code duplication
+ * 
+ * @param string $access access control value
+ * @return string description for output
+ */
 function get_access_description ($accessvalue) {
     
     if ($accessvalue != "PUBLIC") {
@@ -4067,6 +4113,12 @@ function get_access_description ($accessvalue) {
             $title = "[" . __gettext("Private") . "] ";
         } else {
             $title = "[" . __gettext("Restricted") . "] ";
+            if (substr_count($accessvalue, "community") > 0) {
+                $name = user_name(str_replace("community", '', $accessvalue));
+                $title = '<span title="' . __gettext('Restricted to Community: ') . $name . '">' . $title . '</span>';
+            } else if (substr_count($accessvalue, "group") > 0) {
+                $title = '<span title="' . __gettext('Restricted to Group') . '">' . $title . '</span>';
+            }
         }
     } else {
         $title = "";
@@ -4075,7 +4127,11 @@ function get_access_description ($accessvalue) {
     return $title;
 }
 
-// Activate URLs - turns any URLs found into links
+/**
+ * Activate URLs - turns any URLs found into links
+ * @param string $str
+ * @return string 
+*/
 function activate_urls ($str) {
     
     // Function for URL autodiscovery
@@ -4127,31 +4183,32 @@ function activate_urls ($str) {
     
 }
 
-/***
- *** Returns the ID of the page owner, as reported by all plugins. Default is -1.
- ***/
- function page_owner() {
-     
-     static $owner, $called;
-     if (!$called) {
-         
-         $owner = optional_param('owner',-1,PARAM_INT);
-         if ($allmods = get_list_of_plugins('mod') ) {
-            foreach ($allmods as $mod) {
-                $mod_page_owner = $mod . '_page_owner';
-                if (function_exists($mod_page_owner)) {
-                    if ($value = $mod_page_owner()) {
-                        
-                        $owner = $value;
-                        
-                    }
-                }
-           }
-        }
-        $called = true;
-     }
-     
-     return $owner;
- }
+/**
+ * Returns the ID of the page owner, as reported by all plugins. Default is -1.
+ * @return integer
+ */
+function page_owner() {
+    
+    static $owner, $called;
+    if (!$called) {
+        
+        $owner = optional_param('owner',-1,PARAM_INT);
+        if ($allmods = get_list_of_plugins('mod') ) {
+           foreach ($allmods as $mod) {
+               $mod_page_owner = $mod . '_page_owner';
+               if (function_exists($mod_page_owner)) {
+                   if ($value = $mod_page_owner()) {
+                       
+                       $owner = $value;
+                       
+                   }
+               }
+          }
+       }
+       $called = true;
+    }
+    
+    return $owner;
+}
 
 ?>

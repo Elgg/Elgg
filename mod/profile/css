@@ -1,0 +1,152 @@
+<style type="text/css">
+
+/*
+ PROFILE WIDGETS STUFF
+*/
+
+img.profile-photo {
+	border:1px solid #eee;
+	padding:2px;
+}
+
+.profile_main p {
+	color:#000;
+}
+
+.profile_main p a {
+	text-decoration: underline;
+}
+
+.profile_main_bottom {
+	clear: both;
+}
+
+.profile_primary {
+	float: left;
+	width: 270px;
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
+.profile_secondary {
+	float: right;
+	width: 400px;
+	margin-top: 10px;
+	color:#000;
+}
+
+.profile_bio {
+	padding-top: 10px;
+	background:#efefef;
+}
+
+.profile_widgets {
+	clear: both;
+	width: 760px;
+	/*background: #004995;*/
+}
+
+.profile_icon img {
+	border:1px solid #eee;
+	padding:2px 2px 2px 2px;
+}
+
+.profile_widgets_left {
+	float: left;
+	width: 330px;
+}
+
+.profile_widgets_right {
+	float: right;
+	width: 330px
+}
+
+/* profile - widgets */
+
+#profile_widgets {
+	position:relative;
+}
+
+.profile_bio {
+	width:244px;
+	padding:2px;
+}
+
+.widgets_even {
+	float:left;
+	width:340px;
+	margin:0;
+	padding:0;
+}
+
+.widgets_odd {
+	float:right;
+	width:340px;
+	margin:0;
+	padding:0;
+}
+
+.widget {
+	border: 0px solid #BBDCE9; /*#95BDCD;*/
+	margin-bottom: 15px;
+	padding: 0;
+	width:330px;
+        overflow-x:hidden;
+}
+
+.widget .widget_content {
+	padding: 4px 10px 4px 10px;
+}
+
+.widget .widget_content h3 {
+	padding:0;
+	margin:0;
+}
+
+.widget .widget_bottom {
+	 display: block;
+	 background-color: #E2F0F6; /*#CBE5EF;*/
+	 margin: 0px;
+	 padding-left: 10px;
+	 border-top: 1px solid #BBDCE9;
+	 font-size:0.8em;
+}
+
+.widget .widget_menu ul {
+	margin:0 0 0 5px;
+	padding:0;
+}
+
+.widget .widget_menu ul li {
+	 list-style:none;
+}
+
+.widget .widget_menu ul li a {
+	 text-decoration:underline;
+}
+
+.widget .widget_admin_menu {
+	background-color: #E2F0F6;
+	padding:2px 0 0 5px;
+}
+
+#hidden3, #hidden2, #hidden4, #hidden5 {
+  height:20px;
+}
+
+.widget .widget_title {
+		  border:0;
+		  border-bottom:1px solid #cdcdcd; /*#BBDCE9;*/
+		  padding:0 2px 0 2px;
+		  margin:0 0 10px 0;
+		  color:#000;
+		  font-size:1.2em;
+		 font-weight:bold;
+}
+
+.widget  .widget_content h2 a {
+	background:url( {{url}}_templates/icons/arrow.gif) no-repeat left;
+	padding:0 0 0 10px;
+}
+
+</style>

@@ -1,0 +1,8 @@
+<li>
+    {{body}}
+    <div class="embedded-comment-owner">
+    <p>
+        {{usericon}}{{postedname}} on {{posted}} <a href="{{permalink}}">#</a> | {{links}}
+    </p>
+    </div>
+</li>

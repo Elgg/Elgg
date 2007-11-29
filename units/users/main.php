@@ -43,7 +43,7 @@
         $function['users:access_level_sql_where'][] = $CFG->dirroot . "units/users/function_access_level_sql_where.php";
         
     // Display a user's name, given a user ID
-        $function['users:display:name'][] = $CFG->dirroot . "units/users/function_display_name.php";// DEPRECATED - use run("profile:display:name", $ident) or user_info("name", $ident)
+        $function['users:display:name'][] = $CFG->dirroot . "units/users/function_display_name.php";// DEPRECATED - use user_name($id)
         
     // User details edit screen
         $function['userdetails:edit'][] = $CFG->dirroot . "units/users/userdetails_edit.php";

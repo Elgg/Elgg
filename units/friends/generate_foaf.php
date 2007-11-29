@@ -6,12 +6,13 @@ $user_id = (int) $parameter;
 if ($user = get_record('users','ident',$user_id)) {
     $adminmail = email;
     $personalurl = $CFG->wwwroot . $user->username . "/";
-    $username = htmlspecialchars($user->username, ENT_COMPAT, 'utf-8');
-    $name = htmlspecialchars(stripslashes($user->name), ENT_COMPAT, 'utf-8');
+    $username = htmlspecialchars(user_name($user_id), ENT_COMPAT, 'utf-8');
+    $name = htmlspecialchars(stripslashes(user_name($user_id)), ENT_COMPAT, 'utf-8');
     $shamail = sha1("mailto:" . $user->email);
     
     if ($user->icon != -1) {
-        $iconstring = "<foaf:depiction rdf:resource=\"". $CFG->wwwroot . "_icon/user/".$user->icon."\" />";
+        $iconurl = user_icon_html($user->ident,100,true);
+        $iconstring = "<foaf:depiction rdf:resource=\"{$iconurl}\" />";
     } else {
         $iconstring = "";
     }
@@ -45,18 +46,25 @@ $run_result .= run("foaf:generate:fields",$parameter);
 $run_result .= "\t\t<vCard:ADR rdf:parseType=\"Resource\">\n";
 $run_result .= run("vcard:generate:fields:adr",$parameter);
 $run_result .= "\t\t</vCard:ADR>\n";
- 
+
+if ($interests = get_records_sql("select t.* from {$CFG->prefix}tags t where t.owner = {$user->ident} and t.tagtype = 'interests' and t.access = 'PUBLIC'")) {
+    foreach ($interests as $interest) {
+        $run_result .= "\t\t<foaf:interest dc:title=\"".htmlspecialchars($interest->tag)."\" rdf:resource=\"{$CFG->wwwroot}tag/".urlencode($interest->tag)."\" />\n";
+    }
+}
+
 if ($friends = get_records_sql('SELECT u.* FROM '.$CFG->prefix.'friends f  
                                 JOIN '.$CFG->prefix.'users u ON u.ident = f.friend 
                                 WHERE f.owner = ?',array($user->ident))) {
     foreach($friends as $friend) {
-        $name = htmlspecialchars(stripslashes($friend->name), ENT_COMPAT, 'utf-8');
+        $name = htmlspecialchars(stripslashes(user_name($friend->ident)), ENT_COMPAT, 'utf-8');
         $email = htmlspecialchars(sha1("mailto:" . $friend->email), ENT_COMPAT, 'utf-8');
         $username = htmlspecialchars($friend->username, ENT_COMPAT, 'utf-8');
         $personalurl = url . $username . "/";
         $foafurl = $personalurl . "foaf/";
         if ($friend->icon != -1) {
-            $iconstring = "<foaf:depiction rdf:resource=\"". url . "_icon/user/".$friend->icon."\" />";
+            $iconurl = user_icon_html($friend->ident,100,true);
+            $iconstring = "<foaf:depiction rdf:resource=\"{$iconurl}\" />";
         } else {
             $iconstring = "";
         }

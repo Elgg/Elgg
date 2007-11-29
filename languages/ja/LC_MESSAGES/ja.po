@@ -1,0 +1,4707 @@
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-02-07 13:51+0000\n"
+"Last-Translator: Takafumi <elgg.japan@gmail.com>\n"
+"Language-Team: Elgg Japan\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language-Code: ja\n"
+"Language-Name: Japanese\n"
+"Domain: elgg\n"
+"PO-Revision-Date: 2007-05-31 08:54+0000\n"
+"X-Rosetta-Export-Date: 2007-06-02 01:08:10+0000\n"
+
+#: _activity/index.php:24
+msgid "Recent activity"
+msgstr "最近の活動"
+
+#: _activity/index.php:29
+msgid "Currently viewing recent activity since "
+msgstr "次の日時以降、最近の活動が表示されています： "
+
+#: _activity/index.php:31
+msgid "You may view recent activity during the following time-frames:"
+msgstr "次の期間中の活動を見ることができます："
+
+#: _activity/index.php:33
+msgid "The last 24 hours"
+msgstr "過去24時間"
+
+#: _activity/index.php:34
+msgid "The last 48 hours"
+msgstr "過去48時間"
+
+#: _activity/index.php:35
+msgid "The last week"
+msgstr "過去1週間"
+
+#: _activity/index.php:36
+msgid "The last month"
+msgstr "過去1ヶ月"
+
+#: _activity/index.php:38
+msgid "Your recent messages"
+msgstr "最近のメッセージ"
+
+#: _activity/index.php:49
+msgid "Activity on weblog posts you have marked as interesting"
+msgstr "興味深いとしてマークしたブログ投稿に対する活動"
+
+#: _activity/index.php:60
+msgid "Read more"
+msgstr "続きを読む"
+
+#: _activity/index.php:64
+msgid "your blog"
+msgstr "ブログ"
+
+#: _activity/index.php:67
+#, php-format
+msgid "<b>You</b> commented on weblog post '%s' in %s:"
+msgstr "<b>あなた</b>は、ブログ投稿「%s」（%s）にコメントを付けました："
+
+#: _activity/index.php:69
+#, php-format
+msgid "<b>%s</b> commented on weblog post '%s' in %s:"
+msgstr "<b>%s</b>は、ブログ投稿「%s」（%s）にコメントを付けました："
+
+#: _activity/index.php:79
+msgid "No activity during this time period."
+msgstr "この期間中の活動はありません。"
+
+#: _admin/antispam.php:17 _admin/users.php:17 _admin/users.php:20
+#: lib/templates.php:491
+msgid "Manage users"
+msgstr "ユーザ管理"
+
+#: _admin/antispam.php:20
+msgid "Spam blocking"
+msgstr "スパムの遮断"
+
+#: _admin/flags.php:17 _admin/flags.php:20
+msgid "Content flags"
+msgstr "コンテンツフラグ"
+
+#: _admin/index.php:17 _admin/index.php:20 lib/templates.php:449
+msgid "Administration"
+msgstr "管理セクション"
+
+#: _admin/users_add.php:17 _admin/users_add.php:20
+msgid "Add multiple users"
+msgstr "複数ユーザの追加"
+
+#: _communities/index.php:22 mod/browser/index.php:83 mod/community/lib.php:54
+#: mod/community/lib.php:64 mod/toolbar/lib.php:43
+#: units/communities/communities_edit_wrapper.php:5
+msgid "Communities"
+msgstr "コミュニティ"
+
+#: _communities/members.php:22 units/communities/community_memberships.php:40
+#: units/communities/community_memberships.php:42
+msgid "Members"
+msgstr "メンバー"
+
+#: _communities/owned.php:22 mod/community/lib.php:58
+msgid "Owned Communities"
+msgstr "所有コミュニティ"
+
+#: _communities/requests.php:23
+#: units/communities/communities_membership_requests.php:10
+msgid "Membership requests"
+msgstr "参加申し込み"
+
+#: _files/edit_file.php:19
+msgid "Edit File"
+msgstr "ファイルの編集"
+
+#: _files/edit_folder.php:19
+msgid "Edit Folder"
+msgstr "フォルダの編集"
+
+#: _files/index.php:19 units/files/files_user_info_menu.php:13
+#: units/files/function_rss_publish.php:35 units/files/profile_files.php:9
+msgid "Files"
+msgstr "ファイル"
+
+#: _files/rss2.php:25
+#, php-format
+msgid "Files tagged with %s"
+msgstr "%s のタグが付けられたファイル"
+
+#: _files/rss2.php:31 units/files/function_rss_publish.php:42
+#, php-format
+msgid "Files for %s, hosted on %s."
+msgstr "%s さんのファイル／ホスト： %s"
+
+#: _friends/friendsof.php:21 units/friends/friends_of_edit_wrapper.php:5
+msgid "Friends who have linked to you"
+msgstr "リンクされた友人"
+
+#: _friends/index.php:21 units/friends/friends_edit_wrapper.php:5
+msgid "Friends I have linked to"
+msgstr "リンクした友人"
+
+#: _friends/requests.php:22 mod/friend/lib.php:38
+#: units/friends/user_friendship_requests.php:11
+msgid "Friendship requests"
+msgstr "交友の申し込み"
+
+#: _groups/index.php:23
+msgid "Access Controls"
+msgstr "アクセスコントロール"
+
+#: _icons/index.php:20
+msgid "Manage user icons"
+msgstr "ユーザアイコン管理"
+
+#: _invite/forgotten_password.php:14
+msgid "Generate a New Password"
+msgstr "新しいパスワードの発行"
+
+#: _invite/index.php:18
+msgid "Invite a Friend"
+msgstr "友人を招待"
+
+#: _invite/join.php:12 _invite/register.php:11
+#, php-format
+msgid "Join %s"
+msgstr "%s に参加"
+
+#: _invite/new_password.php:11
+#, php-format
+msgid "Get new %s password"
+msgstr "%s での新しいパスワードを取得"
+
+#: _rss/blog.php:25
+msgid "Publish feeds to blog"
+msgstr "フィードをブログへ掲載"
+
+#: _rss/index.php:24 _rss/subscriptions.php:24 mod/newsclient/lib.php:27
+#: units/magpie/menu_sub.php:14
+msgid "Feeds"
+msgstr "フィード"
+
+#: _rss/individual.php:13
+msgid "Feed detail"
+msgstr "フィードの詳細"
+
+#: _rss/opml.php:16
+#, php-format
+msgid "Feed subscriptions for %s"
+msgstr "%s さんの定期購読フィード"
+
+#: _rss/opml.php:35
+msgid "No subscriptions found"
+msgstr "定期購読しているフィードはありません"
+
+#: _rss/opml.php:46
+#, php-format
+msgid "Username not found: %s"
+msgstr "ユーザ名が見つかりません： %s"
+
+#: _rss/popular.php:12 units/magpie/menu_sub.php:31
+msgid "Popular feeds"
+msgstr "人気の高いフィード"
+
+#: _rss/styles.php:10
+msgid "RSS Management"
+msgstr "RSS管理"
+
+#: _rss/styles.php:11
+msgid "To add this feed to your resources page, click here."
+msgstr "このフィードをリソースページに追加するには、ここをクリックしてください。"
+
+#: _rss/styles.php:12
+msgid ""
+"To add this feed to an external RSS aggregator, click the link that "
+"corresponds to your aggregator:"
+msgstr "このフィードを外部のRSSアグリゲータに追加するには、対応するリンクをクリックしてください。"
+
+#: _rss/styles.php:13
+msgid "Summary"
+msgstr "概要"
+
+#: _rss/styles.php:14
+msgid "This is an RSS feed for "
+msgstr "RSSフィード - "
+
+#: _rss/styles.php:15
+msgid "Didn't mean to come here? Click to exit!"
+msgstr "迷い込みましたか？ ここをクリックすると抜け出せます！"
+
+#: _templates/edit.php:15
+msgid "Template Edit"
+msgstr "テンプレートの編集"
+
+#: _templates/index.php:15
+msgid "Select / Create Themes"
+msgstr "テーマの選択／作成"
+
+#: _templates/preview.php:13
+msgid "Template Preview"
+msgstr "テンプレートのプレビュー"
+
+#: _userdetails/index.php:18 lib/templates.php:470
+msgid "Edit user details"
+msgstr "ユーザ詳細の編集"
+
+#: _weblog/archive.php:15 _weblog/archive_month.php:15
+msgid "Blog Archives"
+msgstr "ブログアーカイブ"
+
+#: _weblog/edit.php:24 _weblog/index.php:15
+#: units/communities/communities_membership_requests.php:33
+#: units/friends/user_friendship_requests.php:34
+#: units/weblogs/weblogs_user_info_menu.php:29
+msgid "Blog"
+msgstr "ブログ"
+
+#: _weblog/everyone.php:15
+msgid "All blogs"
+msgstr "すべてのブログ"
+
+#: _weblog/everyone.php:19
+msgid "You can filter this page to certain types of posts:"
+msgstr "このページを投稿を特定のタイプ別にフィルタリングできます："
+
+#: _weblog/everyone.php:21
+msgid "Personal blog posts"
+msgstr "個人ブログ投稿"
+
+#: _weblog/everyone.php:22
+msgid "Community blog posts"
+msgstr "コミュニティブログ投稿"
+
+#: _weblog/everyone.php:23
+msgid "Posts with comments"
+msgstr "コメントの付いた投稿"
+
+#: _weblog/everyone.php:24
+msgid "Posts with no comments"
+msgstr "コメントの付いていない投稿"
+
+#: _weblog/friends.php:15 units/weblogs/weblogs_user_info_menu.php:47
+msgid "Friends blog"
+msgstr "友人のブログ"
+
+#: _weblog/interesting.php:15 mod/blog/lib.php:57
+msgid "Interesting posts"
+msgstr "興味深い投稿"
+
+#: _weblog/rss2.php:51
+#, php-format
+msgid "Weblog items tagged with %s"
+msgstr "%s のタグが付けられたブログ"
+
+#: _weblog/rss2.php:54
+msgid "Weblog items"
+msgstr "ブログ項目"
+
+#: _weblog/rss2.php:61
+msgid "All users"
+msgstr "すべてのユーザ"
+
+#: _weblog/rss2.php:74
+#, php-format
+msgid "The most recent weblog posts on %s."
+msgstr "%s での最新ブログ投稿です。"
+
+#: _weblog/rss2.php:78 units/weblogs/function_rss_publish.php:42
+#, php-format
+msgid "The weblog for %s, hosted on %s."
+msgstr "%s さんのブログ／ホスト： %s"
+
+#: _weblog/view_post.php:28
+msgid "Access denied or post not found"
+msgstr "アクセスが許可されていないか、投稿が見つかりません"
+
+#: _weblog/view_post.php:31
+msgid ""
+"Either this blog post doesn't exist or you don't currently have access "
+"privileges to view it."
+msgstr "ブログ投稿が存在しないか、あなたは現在、表示するためのアクセス権を持っていません。"
+
+#: _weblog/view_post.php:39 units/weblogs/function_rss_publish.php:35
+msgid "Weblog"
+msgstr "ブログ"
+
+#: auth/ldap/lib.php:113 lms/join.php:48 units/invite/invite_actions.php:95
+msgid ""
+"Error! Your username must contain letters and numbers only, cannot be blank, "
+"and must be between 3 and 12 characters in length."
+msgstr "エラー！ ユーザ名は 3 ～ 12 文字の英数字のみで入力する必要があります。 また、空欄にはできません。"
+
+#: auth/ldap/lib.php:118 units/communities/communities_actions.php:27
+#, php-format
+msgid ""
+"The username %s is already taken by another user. You will need to pick a "
+"different one."
+msgstr "すでに別のユーザがユーザ名「%s」を使用していますので、異なるユーザ名にする必要があります。"
+
+#: auth/ldap/lib.php:139
+#, php-format
+msgid ""
+"User addition %d failed: Unknown reason, please contact you system "
+"administrator."
+msgstr "%d のユーザ追加に失敗しました： 理由は不明です。 システム管理者と連絡を取ってください。"
+
+#: content/about.php:10 content/about.php:13
+#, php-format
+msgid "About %s"
+msgstr "%s について"
+
+#: content/faq.php:10 content/faq.php:13
+#, php-format
+msgid "%s FAQ"
+msgstr "%s FAQ"
+
+#: content/invite/invite.php:3
+msgid ""
+"If you have a friend or colleague you would like to join the system, perhaps "
+"because you would like to share protected resources or reflections with "
+"them, you can enter their details below. They will then receive a special "
+"invitation email containing a code that allows them to create a new account; "
+"once they do so, a mutual friend connection will be created between their "
+"account and yours."
+msgstr ""
+""
+"あなたがシステムに参加したい友人や同僚を持ち、保護されたリソースや考えなどを共有したいのなら、以下に招待したい人の詳細を記入し、「招待」ボタンを押してくださ"
+"い。 すると、招待をされた方には、新しいアカウントを作成するためのコードを含んだ特別な招待メールが届きます。 "
+"招待された方がアカウントを作成すると、共通の友人コネクションがあなたとの間に作られます。"
+
+#: content/mainindex/content_loggedout.php:7
+#: content/mainindex/content_main_index.php:7 lib/templates.php:66
+#: lib/templates.php:1278 lib/templates.php:1280
+msgid "Welcome"
+msgstr "ようこそ"
+
+#: content/mainindex/content_loggedout.php:8
+#, php-format
+msgid ""
+"This is %s, a learning landscape. Why not check out <a href=\"%s\">what "
+"people are saying</a> right now."
+msgstr "ここは %s のソーシャルネットワークです。 今、<a href=\"%s\">人々が伝えていること</a>をチェックしてください。"
+
+#: content/mainindex/content_loggedout.php:9
+#, php-format
+msgid "<a href=\"%s\">Find others</a> with similar interests and goals."
+msgstr "<a href=\"%s\">他の人々と一緒に、同じような関心事や目標を見つけてください。</a>"
+
+#: content/mainindex/content_loggedout.php:17
+msgid "Here are some example users:"
+msgstr "ここに何人かのユーザの実例があります："
+
+#: content/mainindex/content_loggedout.php:19
+msgid "Here is an example user:"
+msgstr "ここにユーザの実例があります："
+
+#: content/mainindex/content_loggedout.php:33
+#, php-format
+msgid ""
+"If you like what you see, why not <a href=\"%s\">register for an account</a>?"
+msgstr "見たものが気に入ったのなら、<a href=\"%s\">アカウント登録</a>をしてはいかがですか？"
+
+#: content/mainindex/content_loggedout.php:40
+#: content/mainindex/content_main_index.php:41
+msgid "Latest news"
+msgstr "最新ニュース"
+
+#: content/mainindex/content_main_index.php:8
+#, php-format
+msgid "Why not <a href=\"%s\">create your profile</a>?"
+msgstr "なぜ、<a href=\"%s\">あなたのプロフィールを作成</a>しないのですか？"
+
+#: content/mainindex/content_main_index.php:9
+msgid ""
+"Tell people about yourself and connect to others with similar interests and "
+"goals."
+msgstr "あなた自身のことを人々に話し、同じような関心事や目標を持った他の方と繋がりを持ってください。"
+
+#: content/mainindex/content_main_index.php:17
+msgid "Here are some examples of complete profiles:"
+msgstr "ここにいくつかの完全なプロフィールの実例があります："
+
+#: content/mainindex/content_main_index.php:19
+msgid "Here is an example of a complete profile:"
+msgstr "ここに完全なプロフィールの実例があります："
+
+#: content/mainindex/content_main_index.php:33
+#, php-format
+msgid "Or you could <a href=\"%s\">start your blog</a>?"
+msgstr ""
+
+#: content/mainindex/content_main_index.php:34
+#, php-format
+msgid ""
+"Comment on what you're learning, collect interesting links and decide who "
+"gets to see what you're writing. Here's what <a href=\"%s\">everyone else is "
+"talking about</a> right now."
+msgstr ""
+
+#: content/privacy.php:10 content/privacy.php:13
+#, php-format
+msgid "%s Privacy Policy"
+msgstr "%s プライバシーポリシー"
+
+#: content/run_your_own.php:10 content/run_your_own.php:13
+#, php-format
+msgid "Running Your Own %s"
+msgstr ""
+
+#: content/terms.php:10 content/terms.php:13
+#, php-format
+msgid "%s Terms &amp; Conditions"
+msgstr "%s 利用条件"
+
+#: home.php:15 index2.php:15
+msgid "Main Index"
+msgstr "メインインデックス"
+
+#: lib/datalib.php:45
+msgid "Success"
+msgstr "成功"
+
+#: lib/datalib.php:50 lib/elgglib.php:2986
+msgid "Error"
+msgstr "エラー"
+
+#: lib/db/mysql.php:215
+msgid "Publishing RSS"
+msgstr ""
+
+#: lib/db/mysql.php:220 lib/db/postgres7.php:183
+#, php-format
+msgid "Publishing RSS for user %d"
+msgstr ""
+
+#: lib/db/mysql.php:232 lib/db/postgres7.php:195
+msgid "Adjusting file repository information"
+msgstr ""
+
+#: lib/db/mysql.php:241 lib/db/mysql.php:251 lib/db/postgres7.php:204
+#: lib/db/postgres7.php:214
+#, php-format
+msgid "Updating file %d: %s"
+msgstr ""
+
+#: lib/dbsetup.php:77
+msgid "Need to upgrade database"
+msgstr "データベースのアップグレードが必要です"
+
+#: lib/displaylib.php:197 units/display/function_log_on_pane.php:16
+#: units/invite/join_noinvite.php:42
+msgid "Register"
+msgstr "ユーザ登録"
+
+#: lib/displaylib.php:205 login/index.php:56
+#: units/display/function_log_on_pane.php:28
+msgid "Log On"
+msgstr "ログオン"
+
+#: lib/displaylib.php:211 mod/toolbar/lib.php:30 units/admin/admin_main.php:84
+#: units/admin/admin_users.php:28 units/admin/admin_users_add.php:20
+#: units/display/function_log_on_pane.php:34
+msgid "Username"
+msgstr "ユーザ名"
+
+#: lib/displaylib.php:212 mod/toolbar/lib.php:31
+#: units/display/function_log_on_pane.php:35
+msgid "Password"
+msgstr "パスワード"
+
+#: lib/displaylib.php:219 units/display/function_log_on_pane.php:44
+msgid "Log on"
+msgstr "ログオン"
+
+#: lib/displaylib.php:219 units/display/function_log_on_pane.php:44
+msgid "Go"
+msgstr "実行"
+
+#: lib/displaylib.php:221 units/display/function_log_on_pane.php:46
+msgid "Remember Login"
+msgstr "次回から入力を省略"
+
+#: lib/displaylib.php:224 units/display/function_log_on_pane.php:49
+msgid "Forgotten password"
+msgstr "パスワードの再発行"
+
+#: lib/displaylib.php:283
+msgid "Add User"
+msgstr "ユーザの追加"
+
+#: lib/displaylib.php:283 lib/displaylib.php:292
+msgid "Send Message"
+msgstr "メッセージ送信"
+
+#: lib/displaylib.php:292
+msgid "Add Buddy"
+msgstr "友人の追加"
+
+#: lib/elgglib.php:504 lib/elgglib.php:554 lib/uploadlib.php:661
+msgid "Administrator"
+msgstr "管理者"
+
+#: lib/elgglib.php:512
+msgid "Do not reply"
+msgstr "返信不要"
+
+#: lib/elgglib.php:763
+msgid "GB"
+msgstr "GB"
+
+#: lib/elgglib.php:764
+msgid "MB"
+msgstr "MB"
+
+#: lib/elgglib.php:765
+msgid "KB"
+msgstr "KB"
+
+#: lib/elgglib.php:766
+msgid "bytes"
+msgstr "バイト"
+
+#: lib/elgglib.php:1766
+msgid "Close this window"
+msgstr "このウィンドウを閉じる"
+
+#: lib/elgglib.php:1803 lib/elgglib.php:1853
+msgid "Choose"
+msgstr "選択"
+
+#: lib/elgglib.php:2083
+msgid "Elgg auto-format"
+msgstr "Elgg自動書式"
+
+#: lib/elgglib.php:2084
+msgid "HTML format"
+msgstr "HTML書式"
+
+#: lib/elgglib.php:2085
+msgid "Plain text format"
+msgstr "プレーンテキスト"
+
+#: lib/elgglib.php:2086
+msgid "Markdown format"
+msgstr "Markdown書式"
+
+#: lib/elgglib.php:2655 lib/elgglib.php:3113
+msgid "Continue"
+msgstr "継続"
+
+#: lib/elgglib.php:3072 units/admin/admin_userdetails.php:58
+#: units/admin/admin_userdetails.php:74 units/icons/function_add_icons.php:48
+#: units/tinymce/tinymce_userdetails_edit.php:21
+#: units/tinymce/tinymce_userdetails_edit.php:28
+#: units/users/userdetails_edit.php:109 units/users/userdetails_edit.php:116
+#: units/users/userdetails_edit.php:139 units/users/userdetails_edit.php:146
+msgid "Yes"
+msgstr "はい"
+
+#: lib/elgglib.php:3074 units/admin/admin_userdetails.php:58
+#: units/admin/admin_userdetails.php:74 units/icons/function_add_icons.php:49
+#: units/tinymce/tinymce_userdetails_edit.php:21
+#: units/tinymce/tinymce_userdetails_edit.php:28
+#: units/users/userdetails_edit.php:109 units/users/userdetails_edit.php:116
+#: units/users/userdetails_edit.php:139 units/users/userdetails_edit.php:146
+msgid "No"
+msgstr "いいえ"
+
+#: lib/elgglib.php:3272 lib/elgglib.php:3300
+msgid "You have been banned from the system!"
+msgstr "あなたはシステムからアクセス禁止にされました！"
+
+#: lib/elgglib.php:3330
+msgid ""
+"Sorry, but your IP number seems to have changed from when you first logged "
+"in.  This security feature prevents crackers stealing your identity while "
+"logged in to this site.  Normal users should not be seeing this message - "
+"please ask the site administrator for help."
+msgstr ""
+"申し訳ありませんが、あなたの IP が最初にログインしたときと違っているようです。 "
+"このセキュリティ機能は、このサイトにログインしている間、あなたの個人情報がクラッカーに盗まれることを阻止します。 "
+"通常のユーザがこのメッセージを見るべきではありません - サイト管理者にご連絡ください。"
+
+#: lib/elgglib.php:3360
+msgid "The system will remember you and automatically log you in next time."
+msgstr "システムはあなたを覚えておき、次回は自動的にログインさせます。"
+
+#: lib/elgglib.php:4062 units/users/function_default_access_levels.php:7
+msgid "Logged in users"
+msgstr "ログインユーザ"
+
+#: lib/elgglib.php:4064 units/users/function_default_access_levels.php:5
+msgid "Private"
+msgstr "プライベート"
+
+#: lib/elgglib.php:4066
+msgid "Restricted"
+msgstr "制限"
+
+#: lib/elgglib.php:4120
+msgid "Click to view link"
+msgstr "クリックしてリンクを表示"
+
+#: lib/php-getttext/examples/pigs_dropin.php:75
+msgid ""
+"This is how the story goes.\n"
+"\n"
+msgstr ""
+"This is how the story goes.\n"
+"\n"
+
+#: lib/templates.php:44 units/templates/default_template.php:9
+msgid "Stylesheet"
+msgstr "スタイルシート"
+
+#: lib/templates.php:45 units/templates/default_template.php:10
+msgid "The Cascading Style Sheet for the template."
+msgstr "このテンプレートの CSS です。"
+
+#: lib/templates.php:54 units/templates/default_template.php:19
+msgid "Page Shell"
+msgstr "ページ・シェル"
+
+#: lib/templates.php:55 units/templates/default_template.php:20
+msgid "The main page shell, including headers and footers."
+msgstr "ヘッダとフッタを含んだ、メインページのシェルです。"
+
+#: lib/templates.php:57 units/templates/default_template.php:23
+msgid "Page metatags (mandatory) - must be in the 'head' portion of the page"
+msgstr "ページのメタタグ（必須） - ページの'head'部にある必要があります"
+
+#: lib/templates.php:58 units/templates/default_template.php:24
+msgid "Page title"
+msgstr "ページタイトル"
+
+#: lib/templates.php:59 units/templates/default_template.php:25
+msgid "Menu"
+msgstr "メニュー"
+
+#: lib/templates.php:60 units/templates/default_template.php:26
+msgid "Status menu"
+msgstr "ステータスメニュー"
+
+#: lib/templates.php:61 units/templates/default_template.php:27
+msgid "Main body"
+msgstr "本文"
+
+#: lib/templates.php:62 units/templates/default_template.php:28
+msgid "Sidebar"
+msgstr "サイドバー"
+
+#: lib/templates.php:78 units/templates/default_template.php:39
+msgid "Content holder"
+msgstr "コンテンツ所有者"
+
+#: lib/templates.php:79 units/templates/default_template.php:40
+msgid ""
+"Contains the main content for a page (as opposed to the sidebar or the "
+"title)."
+msgstr ""
+
+#: lib/templates.php:81 lib/templates.php:133
+#: units/templates/default_template.php:42
+msgid "The title"
+msgstr "タイトル"
+
+#: lib/templates.php:82 units/templates/default_template.php:43
+msgid "The page submenu"
+msgstr "ページサブメニュー"
+
+#: lib/templates.php:83 units/templates/default_template.php:44
+#: units/templates/default_template.php:61
+msgid "The body of the page"
+msgstr "ページ本文"
+
+#: lib/templates.php:100 units/templates/default_template.php:74
+msgid "Owner box"
+msgstr ""
+
+#: lib/templates.php:101 units/templates/default_template.php:75
+msgid "A box containing a description of the owner of the current profile."
+msgstr ""
+
+#: lib/templates.php:103 units/templates/default_template.php:77
+msgid "The user's name"
+msgstr "ユーザの名前"
+
+#: lib/templates.php:104 units/templates/default_template.php:78
+msgid "The URL of the user's profile page, including terminating slash"
+msgstr ""
+
+#: lib/templates.php:105 units/templates/default_template.php:79
+msgid "The user's icon, if it exists"
+msgstr "ユーザのアイコン（もしあれば）"
+
+#: lib/templates.php:106 units/templates/default_template.php:80
+msgid "A short blurb about the user"
+msgstr ""
+
+#: lib/templates.php:107 units/templates/default_template.php:81
+msgid "Links to friend / unfriend a user"
+msgstr ""
+
+#: lib/templates.php:108 units/templates/default_template.php:82
+msgid "Links to any lms hosts the user is attached to"
+msgstr ""
+
+#: lib/templates.php:112 search/personaltags.php:26
+#: units/templates/default_template.php:87
+msgid "Tags"
+msgstr "タグ"
+
+#: lib/templates.php:113 search/index.php:97
+#: units/templates/default_template.php:88
+msgid "Resources"
+msgstr "リソース"
+
+#: lib/templates.php:130
+msgid "Information Box"
+msgstr "情報ボックス"
+
+#: lib/templates.php:131
+msgid ""
+"A box containing a caption and some text, used extensively throughout the "
+"site. For example, the 'friends' box and most page bodies are info boxes. Of "
+"course, you can alter this template however you wish - it doesn't need to be "
+"an actual box."
+msgstr ""
+
+#: lib/templates.php:134
+msgid "The contents of the box"
+msgstr ""
+
+#: lib/templates.php:153 units/templates/default_template.php:106
+msgid "System message shell"
+msgstr "システムメッセージ・シェル"
+
+#: lib/templates.php:154 units/templates/default_template.php:107
+msgid "A list of system messages will be placed within the message shell."
+msgstr ""
+
+#: lib/templates.php:156 units/templates/default_template.php:109
+msgid "The messages"
+msgstr "メッセージ"
+
+#: lib/templates.php:168 units/templates/default_template.php:121
+msgid "Individual system messages"
+msgstr ""
+
+#: lib/templates.php:169 units/templates/default_template.php:122
+msgid "Each individual system message."
+msgstr ""
+
+#: lib/templates.php:171 units/templates/default_template.php:124
+msgid "The system message"
+msgstr "システムメッセージ"
+
+#: lib/templates.php:186 units/templates/default_template.php:139
+msgid "Main menu shell"
+msgstr "メインメニュー・シェル"
+
+#: lib/templates.php:187 units/templates/default_template.php:140
+msgid "A list of main menu items will be placed within the menubar shell."
+msgstr ""
+
+#: lib/templates.php:189 lib/templates.php:235 lib/templates.php:267
+#: units/templates/default_template.php:142
+#: units/templates/default_template.php:188
+#: units/templates/default_template.php:222
+msgid "The menu items"
+msgstr "メニュー項目"
+
+#: lib/templates.php:200 units/templates/default_template.php:153
+msgid "Individual main menu item"
+msgstr ""
+
+#: lib/templates.php:201 units/templates/default_template.php:154
+msgid ""
+"This is the template for each individual main menu item. A series of these "
+"is placed within the menubar shell template."
+msgstr ""
+
+#: lib/templates.php:203 lib/templates.php:219 lib/templates.php:251
+#: lib/templates.php:284 units/templates/default_template.php:156
+#: units/templates/default_template.php:172
+#: units/templates/default_template.php:206
+#: units/templates/default_template.php:239
+msgid "The URL of the menu item"
+msgstr "メニュー項目のURL"
+
+#: lib/templates.php:204 lib/templates.php:220 lib/templates.php:252
+#: lib/templates.php:285 units/templates/default_template.php:157
+#: units/templates/default_template.php:173
+#: units/templates/default_template.php:207
+#: units/templates/default_template.php:240
+msgid "The menu item's name"
+msgstr "メニュー項目の名前"
+
+#: lib/templates.php:216 units/templates/default_template.php:169
+msgid "Selected individual main menu item"
+msgstr ""
+
+#: lib/templates.php:217 units/templates/default_template.php:170
+msgid ""
+"This is the template for an individual main menu item if it is selected."
+msgstr ""
+
+#: lib/templates.php:232 units/templates/default_template.php:185
+msgid "Sub-menubar shell"
+msgstr "サブメニューバー・シェル"
+
+#: lib/templates.php:233 units/templates/default_template.php:186
+msgid "A list of sub-menu items will be placed within the menubar shell."
+msgstr ""
+
+#: lib/templates.php:248 units/templates/default_template.php:203
+msgid "Individual sub-menu item"
+msgstr ""
+
+#: lib/templates.php:249 units/templates/default_template.php:204
+msgid ""
+"This is the template for each individual sub-menu item. A series of these is "
+"placed within the sub-menubar shell template."
+msgstr ""
+
+#: lib/templates.php:264 units/templates/default_template.php:219
+msgid "Status menubar shell"
+msgstr "ステータスメニューバー・シェル"
+
+#: lib/templates.php:265 units/templates/default_template.php:220
+msgid ""
+"A list of statusbar menu items will be placed within the status menubar "
+"shell."
+msgstr ""
+
+#: lib/templates.php:281 units/templates/default_template.php:236
+msgid "Individual statusbar menu item"
+msgstr ""
+
+#: lib/templates.php:282 units/templates/default_template.php:237
+msgid ""
+"This is the template for each individual statusbar menu item. A series of "
+"these is placed within the status menubar shell template."
+msgstr ""
+
+#: lib/templates.php:297 units/templates/default_template.php:252
+msgid "Data input box (two columns)"
+msgstr "データ入力ボックス（2カラム）"
+
+#: lib/templates.php:298 units/templates/default_template.php:253
+msgid ""
+"This is mostly used whenever some input is taken from the user. For example, "
+"each of the fields in the profile edit screen is a data input box."
+msgstr ""
+
+#: lib/templates.php:300 units/templates/default_template.php:255
+msgid "The name for the data we're inputting"
+msgstr ""
+
+#: lib/templates.php:301 units/templates/default_template.php:256
+msgid "The first item of data"
+msgstr "データの最初の項目"
+
+#: lib/templates.php:302 units/templates/default_template.php:257
+msgid "The second item of data"
+msgstr "データの2番目の項目"
+
+#: lib/templates.php:329 units/templates/default_template.php:275
+msgid "Data input box (one column)"
+msgstr "データ入力ボックス（1カラム）"
+
+#: lib/templates.php:330 units/templates/default_template.php:276
+msgid "A single-column version of the data box."
+msgstr ""
+
+#: lib/templates.php:332 units/templates/default_template.php:278
+msgid "The name of the data we're inputting"
+msgstr ""
+
+#: lib/templates.php:333 lib/templates.php:361
+#: units/templates/default_template.php:279
+#: units/templates/default_template.php:352
+msgid "The data itself"
+msgstr ""
+
+#: lib/templates.php:357 units/templates/default_template.php:348
+msgid "Data input box (vertical)"
+msgstr ""
+
+#: lib/templates.php:358 units/templates/default_template.php:349
+msgid ""
+"A slightly different version of the data box, used on this edit page amongst "
+"other places."
+msgstr ""
+
+#: lib/templates.php:360 units/templates/default_template.php:351
+msgid "Name of the data we\\'re inputting"
+msgstr ""
+
+#: lib/templates.php:423 mod/template/lib.php:15
+msgid "Change theme"
+msgstr "テーマの変更"
+
+#: lib/templates.php:457
+msgid "Account settings"
+msgstr "アカウント設定"
+
+#: lib/templates.php:463
+msgid "Log off"
+msgstr "ログオフ"
+
+#: lib/templates.php:474
+msgid "Your site picture"
+msgstr "サイト画像"
+
+#: lib/templates.php:481 profile/edit.php:105 profile/edit.php:112
+#: profile/profile.class.php:111 profile/profile.class.php:124
+msgid "Main"
+msgstr "メイン"
+
+#: lib/templates.php:486 units/admin/admin_users_add.php:35
+msgid "Add users"
+msgstr "ユーザ追加"
+
+#: lib/templates.php:496
+msgid "Manage flagged content"
+msgstr "問題のあるコンテンツの管理"
+
+#: lib/templates.php:501
+msgid "Spam control"
+msgstr "スパムコントロール"
+
+#: lib/templates.php:607
+msgid "The templates have been changed according to your choices."
+msgstr ""
+
+#: lib/templates.php:609
+msgid "No changes made as no area of change was selected!"
+msgstr ""
+
+#: lib/templates.php:637
+msgid "Your template has been updated."
+msgstr "テンプレートが更新されました。"
+
+#: lib/templates.php:652
+msgid "Your template was deleted."
+msgstr "テンプレートが削除されました。"
+
+#: lib/templates.php:779
+msgid "Create theme"
+msgstr "テーマ作成"
+
+#: lib/templates.php:780
+msgid ""
+"Here you can create your own themes based on one of the existing public "
+"themes. Just select which public theme you would like to alter and then "
+"create your own. You will now have edit privilages."
+msgstr ""
+"ここで、既存の共通テーマをもとにした独自のテーマを作成できます。 カスタマイズしたい好みの共通テーマを選択し、あなた自身のテーマを作成してください。 "
+"あなたは今、編集特権を持ちます。"
+
+#: lib/templates.php:796
+msgid "Theme name"
+msgstr "テーマ名"
+
+#: lib/templates.php:801 lib/templates.php:1110
+msgid "Default Template"
+msgstr "デフォルトテンプレート"
+
+#: lib/templates.php:805
+msgid "name"
+msgstr "名前"
+
+#: lib/templates.php:819
+msgid "Based on"
+msgstr "ベースにするテンプレート"
+
+#: lib/templates.php:824
+msgid "Create Theme"
+msgstr "テーマ作成"
+
+#: lib/templates.php:862 units/templates/templates_edit.php:22
+msgid "Default Theme"
+msgstr "デフォルトテーマ"
+
+#: lib/templates.php:908 units/templates/templates_edit.php:55
+msgid "Theme Name"
+msgstr "テーマ名"
+
+#: lib/templates.php:916 units/templates/templates_edit.php:65
+msgid "Glossary"
+msgstr "用語集"
+
+#: lib/templates.php:952 units/admin/admin_spam.php:22
+#: units/communities/userdetails_edit.php:91 units/files/edit_folder.php:85
+#: units/icons/function_edit_icons.php:89
+#: units/templates/templates_edit.php:101 units/users/userdetails_edit.php:183
+msgid "Save"
+msgstr "保存"
+
+#: lib/templates.php:963 units/templates/templates_edit.php:112
+msgid ""
+"You may not edit this theme. To create a new, editable theme based on the "
+"default, go to <a href=\"index.php\">the main themes page</a>."
+msgstr ""
+
+#: lib/templates.php:990 units/templates/templates_preview.php:8
+msgid "Heading one"
+msgstr "見出し 1"
+
+#: lib/templates.php:991 units/templates/templates_preview.php:9
+msgid "Heading two"
+msgstr "見出し 2"
+
+#: lib/templates.php:992 units/templates/templates_preview.php:10
+msgid "A bullet list"
+msgstr "順序無しリスト"
+
+#: lib/templates.php:993 units/templates/templates_preview.php:11
+msgid "Heading three"
+msgstr "見出し 3"
+
+#: lib/templates.php:994 units/templates/templates_preview.php:12
+msgid "A numbered list"
+msgstr "順序付きリスト"
+
+#: lib/templates.php:1024 units/templates/templates_preview.php:42
+msgid "Some text input"
+msgstr "テキスト入力"
+
+#: lib/templates.php:1031 units/templates/templates_preview.php:49
+msgid "Some longer text input"
+msgstr "長いテキスト入力"
+
+#: lib/templates.php:1037 units/templates/templates_preview.php:55
+msgid "Further text input"
+msgstr "追加テキスト入力"
+
+#: lib/templates.php:1085
+msgid "Select / Create / Edit Themes"
+msgstr "テーマの選択／作成／編集"
+
+#: lib/templates.php:1086
+msgid "Public Themes"
+msgstr "共通テーマ"
+
+#: lib/templates.php:1087
+#, php-format
+msgid ""
+"The following are public themes that you can use to change the way your %s "
+"looks - these do not change the content only the appearance. Check the "
+"preview and then select the one you want. If you wish you can adapt one of "
+"these using the 'create theme' option below."
+msgstr ""
+"以下は %s の外観を変更するために使用できる共通テーマです。 これらはコンテンツに変更は加えず、外観のみを変更します。 "
+"プレビューをチェックし、希望するものを選んでください。 "
+"以下の「テーマ作成」オプションを使用することで、これらのうちの1つをカスタマイズすることもできます。"
+
+#: lib/templates.php:1118 lib/templates.php:1150
+msgid "Preview"
+msgstr "プレビュー"
+
+#: lib/templates.php:1129
+msgid "Personal themes"
+msgstr "個人テーマ"
+
+#: lib/templates.php:1130
+msgid ""
+"These are themes that you have created. You can edit and delete these. These "
+"theme(s) only control actual look and feel - you cannot change any content "
+"here. To change any of your content you need to use the other menu options "
+"such as: edit profile, update weblog etc."
+msgstr ""
+"これらは作成済みのテーマです。 これらは編集や削除ができます。 これらのテーマは、単に実際のルック＆フィールをコントロールできるだけです。 － "
+"ここでコンテンツを変更することはできません。 "
+"コンテンツを変更したい場合は、「プロフィールの編集」や「ブログの更新」のような、他のメニューアイテムを使用する必要があります。"
+
+#: lib/templates.php:1152 mod/file/lib.php:197 mod/file/lib.php:215
+#: units/files/templates_preview.php:34
+#: units/weblogs/weblogs_posts_view.php:111
+msgid "Edit"
+msgstr "編集"
+
+#: lib/templates.php:1153
+msgid "Are you sure you want to permanently remove this template?"
+msgstr "本当に、このテンプレートを完全に削除してもよろしいですか？"
+
+#: lib/templates.php:1153 mod/file/lib.php:196 mod/file/lib.php:214
+#: units/files/templates_preview.php:20 units/files/templates_preview.php:34
+#: units/icons/function_edit_icons.php:40
+#: units/weblogs/weblogs_posts_view.php:113
+#: units/weblogs/weblogs_posts_view.php:167
+msgid "Delete"
+msgstr "削除"
+
+#: lib/templates.php:1165
+msgid "Change templates"
+msgstr "テンプレートの変更"
+
+#: lib/templates.php:1166
+msgid "The selected changes will affect:"
+msgstr "選択の変更は次のものに影響します："
+
+#: lib/templates.php:1180
+msgid "Your personal space"
+msgstr "あなたの個人スペース"
+
+#: lib/templates.php:1193
+msgid "Community: "
+msgstr "コミュニティ： "
+
+#: lib/templates.php:1205
+msgid "Select new theme"
+msgstr "新しいテーマを選択"
+
+#: lib/templates.php:1259 lib/templates.php:1273 lib/templates.php:1280
+#: units/weblogs/weblogs_comments_add.php:42
+msgid "Guest"
+msgstr "ゲスト"
+
+#: lib/templates.php:1280
+msgid "Log in"
+msgstr "ログイン"
+
+#: lib/templates.php:1366
+msgid "Sorry, no users have filled in their profiles yet."
+msgstr ""
+
+#: lib/uploadlib.php:109
+#, php-format
+msgid ""
+"Your file upload has failed because there was a problem with one of the "
+"files, %s.<br /> Here is a log of the problems:<br />%s<br />Not recovering."
+msgstr ""
+
+#: lib/uploadlib.php:135
+#, php-format
+msgid "File was renamed from %s to %s because of invalid characters."
+msgstr "無効な文字が含まれていたため、ファイル名は %s から %s に変更されました。"
+
+#: lib/uploadlib.php:164
+#, php-format
+msgid "Sorry, but that file is too big (limit is %s)"
+msgstr "申し訳ありませんがファイルが大きすぎます（制限値 %s）"
+
+#: lib/uploadlib.php:217
+msgid "File uploaded successfully"
+msgstr "ファイルは正常にアップロードされました"
+
+#: lib/uploadlib.php:232 lib/uploadlib.php:342 lib/uploadlib.php:359
+msgid "No file was found - are you sure you selected one to upload?"
+msgstr "ファイルが見つかりませんでした - 間違いなく、アップロードするために1つ選びましたか？"
+
+#: lib/uploadlib.php:268
+msgid "The old file(s) in your upload area have been deleted"
+msgstr "アップロード領域の古いファイルが削除されました。"
+
+#: lib/uploadlib.php:299
+#, php-format
+msgid "File was renamed from %s to %s because there was a filename conflict."
+msgstr "同名ファイルが存在したため、ファイル名は %s から %s に変更されました。"
+
+#: lib/uploadlib.php:340 lib/uploadlib.php:363
+#, php-format
+msgid ""
+"An unknown problem occurred while uploading the file '%s' (perhaps it was "
+"too large?)"
+msgstr ""
+
+#: lib/uploadlib.php:347
+msgid "Uploaded file exceeded the maximum size limit set by the server"
+msgstr "アップロードされたファイルが、サーバで設定されている最大サイズの制限を超過しました。"
+
+#: lib/uploadlib.php:351
+msgid "Uploaded file exceeded the maximum size limit set by the form"
+msgstr "アップロードされたファイルが、フォームで設定されている最大サイズの制限を超過しました。"
+
+#: lib/uploadlib.php:355
+msgid "File was only partially uploaded"
+msgstr "ファイルの一部分のみがアップロードされました。"
+
+#: lib/uploadlib.php:377
+#, php-format
+msgid "Upload log for file %u"
+msgstr "%u ファイルのアップロードログ"
+
+#: lib/uploadlib.php:470
+msgid "Title:"
+msgstr "タイトル："
+
+#: lib/uploadlib.php:509
+msgid "The file has been moved to a quarantine directory."
+msgstr "ファイルが隔離ディレクトリへ移動されました。"
+
+#: lib/uploadlib.php:512
+#, php-format
+msgid ""
+"The file has been moved to your specified quarantine directory, the new "
+"location is %s"
+msgstr "ファイルが指定された隔離ディレクトリへ移動されました。 新しい場所は %s です。"
+
+#: lib/uploadlib.php:517 lib/uploadlib.php:526 lib/uploadlib.php:535
+#: lib/uploadlib.php:540
+msgid "The file has been deleted"
+msgstr "ファイルが削除されました"
+
+#: lib/uploadlib.php:520 lib/uploadlib.php:529
+#, php-format
+msgid ""
+"Could not move the file into your specified quarantine directory, %s. You "
+"need to fix this as files are being deleted if they're found to be infected."
+msgstr ""
+
+#: lib/uploadlib.php:543
+msgid "The file could not be deleted"
+msgstr "ファイルは削除できませんでした"
+
+#: lib/uploadlib.php:559
+msgid ""
+"This file that has been uploaded was found to contain a virus and has been "
+"moved or delted and the user notified."
+msgstr "アップロードされたファイルでウイルスが発見されました。 それらは削除または隔離され、その旨をユーザに通知しました。"
+
+#: lib/uploadlib.php:595
+#, php-format
+msgid ""
+"Elgg is configured to run clam on file upload, but the path supplied to Clam "
+"AV, %s,  is invalid."
+msgstr ""
+
+#: lib/uploadlib.php:597
+msgid ""
+"In addition, Elgg is configured so that if clam fails to run, files are "
+"treated like viruses.  This essentially means that no student can upload a "
+"file successfully until you fix this."
+msgstr ""
+
+#: lib/uploadlib.php:603 lib/uploadlib.php:642
+msgid ""
+"Your administrator has enabled virus checking for file uploads but has "
+"misconfigured something.<br />Your file upload was NOT successful. Your "
+"administrator has been emailed to notify them so they can fix it.<br />Maybe "
+"try uploading this file later."
+msgstr ""
+
+#: lib/uploadlib.php:621
+#, php-format
+msgid ""
+"Attention administrator! Clam AV has found a virus in a file uploaded by %s. "
+"Here is the output of clamscan:"
+msgstr ""
+
+#: lib/uploadlib.php:627
+#, php-format
+msgid ""
+"The file you have uploaded, %s, has been scanned by a virus checker and "
+"found to be infected! Your file upload was NOT successful."
+msgstr ""
+
+#: lib/uploadlib.php:633
+#, php-format
+msgid ""
+"Clam AV has failed to run.  The return error message was %s. Here is the "
+"output from Clam:"
+msgstr ""
+
+#: lib/uploadlib.php:658
+#, php-format
+msgid "%s :: Clam AV notification"
+msgstr ""
+
+#: lib/uploadlib.php:702
+msgid "There was an unknown error with clam."
+msgstr ""
+
+#: lib/userlib.php:24 login/index.php:34
+msgid "You have been logged on."
+msgstr "あなたはログオンしました。"
+
+#: lib/userlib.php:25 login/index.php:43
+msgid ""
+"Unrecognised username or password. The system could not log you on, or you "
+"may not have activated your account."
+msgstr ""
+"ユーザ名またはパスワードを承認できませんでした。 システムがログオンさせられなかったか、あるいはあなた自身がアカウントを活性化していない可能性があります。"
+
+#: lib/userlib.php:26 login/index.php:46
+msgid ""
+"Either the username or password were not specified. The system could not log "
+"you on."
+msgstr "ユーザ名またはパスワードが特定できませんでしたので、システムはログオンさせることができません。"
+
+#: lib/userlib.php:145 units/weblogs/weblogs_posts_edit.php:13
+msgid "Access Denied"
+msgstr "アクセスが許否されました"
+
+#: lib/userlib.php:170
+msgid "You cannot reply to this message by email."
+msgstr "このメッセージにメールで返信できません。"
+
+#: lib/userlib.php:171
+msgid "Failed to send email. An unknown error occurred."
+msgstr "未知のエラーが発生したため、メール送信に失敗しました。"
+
+#: lib/userlib.php:185
+msgid "Failed to send message. An unknown error occurred."
+msgstr "未知のエラーが発生したため、メッセージ送信に失敗しました。"
+
+#: lib/userlib.php:217
+msgid "System"
+msgstr "システム"
+
+#: lms/join.php:56 units/invite/invite_actions.php:91
+msgid ""
+"Error! Invalid password. Your passwords must match and be between 6 and 16 "
+"characters in length."
+msgstr ""
+
+#: lms/join.php:60
+msgid "Error! You must enter your fullname"
+msgstr "エラー！ 氏名の入力は必須です。"
+
+#: lms/join.php:71
+msgid "Error! Your username and password does not match our record."
+msgstr "エラー！ ユーザ名とパスワードがシステムに記録されているものと一致しません。"
+
+#: lms/join.php:76
+msgid "Fatal Error! Unknown action requested."
+msgstr "致命的なエラー！ 未知の動作を要求されました。"
+
+#: lms/join.php:105
+msgid "Your account creation was successful!"
+msgstr "あなたのアカウントの作成に成功しました！"
+
+#: lms/join.php:117
+msgid "Join up"
+msgstr ""
+
+#: lms/join.php:129
+msgid "Login"
+msgstr "ログイン"
+
+#: lms/rss.php:28 profile/rss2.php:32
+#: units/profile/function_rss_publish.php:43
+#, php-format
+msgid "Activity for %s, hosted on %s."
+msgstr "%s さんの活動／ホスト： %s"
+
+#: lms/rss.php:33 units/profile/function_rss_publish.php:35
+msgid "Activity"
+msgstr "活動"
+
+#: lms/rss.php:43
+#, php-format
+msgid "%s posted on weblog post:"
+msgstr ""
+
+#: lms/rss.php:65
+#, php-format
+msgid "%s posted on weblog post '%s'"
+msgstr ""
+
+#: lms/rss.php:83
+msgid "No activity"
+msgstr "活動なし"
+
+#: login/index.php:21
+msgid "You are already logged on."
+msgstr "あなたはすでにログオンしています。"
+
+#: login/index.php:36
+msgid ""
+"The password for this account is extremely insecure and represents a major "
+"security risk. You should change it immediately."
+msgstr "このアカウントのパスワードは極めて安全性が低く、重大なセキュリティ上の危険がありますので、直ちにパスワードを変更してください。"
+
+#: login/index.php:49
+msgid "Please log in"
+msgstr "ログインしてください"
+
+#: mod/adash/add.php:25
+msgid "Add dashboard items"
+msgstr "ダッシュボードアイテムの追加"
+
+#: mod/adash/add.php:45
+msgid "Widget added."
+msgstr "ウィジェットが追加されました。"
+
+#: mod/adash/add.php:59
+msgid "Select a widget type from the list below:"
+msgstr "以下のリストからウィジェットタイプを選択してください："
+
+#: mod/adash/add.php:69 units/files/weblogs_posts_add_fields.php:80
+msgid "Add"
+msgstr "追加"
+
+#: mod/adash/add.php:78
+msgid "You do not have permission to add widgets to this dashboard."
+msgstr "このダッシュボードにウィジェットを追加する権限がありません。"
+
+#: mod/adash/delete.php:44
+msgid "Widget deleted."
+msgstr "ウィジェットが削除されました。"
+
+#: mod/adash/edit.php:34 mod/adash/lib.php:151
+msgid "Edit widget"
+msgstr "ウィジェットの編集"
+
+#: mod/adash/edit.php:64
+msgid "Widget edited."
+msgstr "ウィジェットが編集されました。"
+
+#: mod/adash/edit.php:81
+msgid "You do not have permission to edit this widget."
+msgstr "このウィジェットを編集する権限がありません。"
+
+#: mod/adash/index.php:38
+msgid "Dashboard"
+msgstr "ダッシュボード"
+
+#: mod/adash/index.php:57
+msgid ""
+"This dashboard is currently empty. Why not add some widgets by clicking 'add "
+"new item' above?"
+msgstr "現在、このダッシュボードは空です。 上部の「新しいアイテムの追加」をクリックして、ウィジェットを追加することができます。"
+
+#: mod/adash/index.php:59
+msgid "This dashboard is currently empty."
+msgstr "現在、このダッシュボードは空です。"
+
+#: mod/adash/lib.php:19 mod/adash/lib.php:22
+msgid "Your Dashboard"
+msgstr "ダッシュボード"
+
+#: mod/adash/lib.php:27
+msgid "Add new item"
+msgstr "新しいアイテムの追加"
+
+#: mod/adash/lib.php:46 mod/adash/lib.php:263
+msgid "Text box"
+msgstr "テキストボックス"
+
+#: mod/adash/lib.php:47
+msgid "Displays the text of your choice."
+msgstr "好みのテキストを表示します。"
+
+#: mod/adash/lib.php:152
+msgid "Delete widget"
+msgstr "ウェジェットの削除"
+
+#: mod/adash/lib.php:153
+msgid "Move up"
+msgstr "上へ移動"
+
+#: mod/adash/lib.php:154
+msgid "Move down"
+msgstr "下へ移動"
+
+#: mod/adash/lib.php:225
+msgid "Access for this widget:"
+msgstr "このウィジェットへのアクセス権"
+
+#: mod/adash/lib.php:229
+msgid "Save widget"
+msgstr "ウィジェットの保存"
+
+#: mod/adash/lib.php:247
+msgid ""
+"This text box is undefined. If you are the widget owner, click 'edit widget' "
+"to add your own content."
+msgstr ""
+
+#: mod/adash/lib.php:264
+msgid ""
+"This widget displays the text content of your choice. All you need to do is "
+"enter the title and body below:"
+msgstr ""
+
+#: mod/adash/move.php:50
+msgid "Widget moved."
+msgstr "ウィジェットは移動されました。"
+
+#: mod/blog/lib.php:17 mod/blog/lib.php:21
+msgid "Your Blog"
+msgstr "ブログ"
+
+#: mod/blog/lib.php:39
+msgid "Post a new entry"
+msgstr "新しいエントリの投稿"
+
+#: mod/blog/lib.php:44
+msgid "View blog"
+msgstr "ブログの表示"
+
+#: mod/blog/lib.php:48
+msgid "Archive"
+msgstr "アーカイブ"
+
+#: mod/blog/lib.php:52
+msgid "Friends' blogs"
+msgstr "友人のブログ"
+
+#: mod/blog/lib.php:63
+msgid "View all posts"
+msgstr "全投稿を表示"
+
+#: mod/blog/lib.php:76
+msgid "Blog widget"
+msgstr "ブログ・ウィジェット"
+
+#: mod/blog/lib.php:77
+msgid "Displays the latest blog posts from a blog of your choice."
+msgstr "好みのブログから最新のブログ投稿を表示します。"
+
+#: mod/blog/lib.php:139
+msgid "Blog dashboard widget"
+msgstr "ブログダッシュボード・ウィジェット"
+
+#: mod/blog/lib.php:140
+msgid ""
+"This widget displays the last couple of blog posts from an individual user. "
+"To begin, select the user from your connections below:"
+msgstr ""
+
+#: mod/blog/lib.php:155
+msgid "Then enter the number of blog posts you'd like to display:"
+msgstr "表示したいブログ投稿数を入力してください："
+
+#: mod/browser/index.php:21
+msgid "Browser"
+msgstr "ブラウザ"
+
+#: mod/browser/index.php:82 search/index.php:44
+msgid "All"
+msgstr "すべて"
+
+#: mod/browser/index.php:84
+msgid "Users"
+msgstr "ユーザ"
+
+#: mod/browser/index.php:85 mod/toolbar/lib.php:45
+msgid "Browse"
+msgstr "一覧"
+
+#: mod/browser/index.php:86
+msgid "Filter"
+msgstr "フィルタ"
+
+#: mod/browser/index.php:154
+msgid "Name"
+msgstr "名前"
+
+#: mod/browser/index.php:155
+msgid "Description"
+msgstr "説明"
+
+#: mod/browser/index.php:156
+msgid "Connections"
+msgstr "コネクション"
+
+#: mod/browser/index.php:157
+msgid "Posts"
+msgstr "投稿"
+
+#: mod/browser/index.php:158
+msgid "Type"
+msgstr "タイプ"
+
+#: mod/community/lib.php:22 mod/profile/lib.php:27
+msgid "Edit this profile"
+msgstr "プロフィールの編集"
+
+#: mod/community/lib.php:26
+msgid "Community site picture"
+msgstr "コミュニティのサイト画像"
+
+#: mod/community/lib.php:30
+msgid "Edit community details"
+msgstr "コミュニティの詳細を編集"
+
+#: mod/community/lib.php:39
+msgid "View membership requests"
+msgstr "参加申し込みの表示"
+
+#: mod/file/lib.php:13
+msgid "Default file folder"
+msgstr "ファイルフォルダ"
+
+#: mod/file/lib.php:29 mod/file/lib.php:32
+#: units/files/files_user_info_menu.php:11
+msgid "Your Files"
+msgstr "ファイル"
+
+#: mod/file/lib.php:43
+msgid "Add a file or a folder"
+msgstr "ファイル／フォルダの追加"
+
+#: mod/file/lib.php:49
+msgid "RSS feed for files"
+msgstr "ファイルのRSSフィード"
+
+#: mod/file/lib.php:82 mod/photogallery/lib.php:133
+#: units/files/templates_preview.php:6
+msgid "Subfolders"
+msgstr "サブフォルダ"
+
+#: mod/file/lib.php:101 mod/file/lib.php:155
+#: units/magpie/function_subscriptions_publish_to_blog.php:39
+msgid "Keywords: "
+msgstr "キーワード： "
+
+#: mod/file/lib.php:181 mod/photogallery/lib.php:138
+msgid "This folder is currently empty."
+msgstr "現在、このフォルダは空です。"
+
+#: mod/file/lib.php:195
+msgid "Are you sure you want to permanently delete this file?"
+msgstr "本当に、このファイルを完全に削除してもよろしいですか？"
+
+#: mod/file/lib.php:213
+msgid "Are you sure you want to permanently delete this folder?"
+msgstr "本当に、このフォルダを完全に削除してもよろしいですか？"
+
+#: mod/friend/lib.php:15 mod/friend/lib.php:18
+msgid "Your Network"
+msgstr "ネットワーク"
+
+#: mod/friend/lib.php:30 units/friends/profile_friends.php:18
+msgid "Friends"
+msgstr "リンクした友人"
+
+#: mod/friend/lib.php:34
+msgid "Friend of"
+msgstr "リンクされた友人"
+
+#: mod/friend/lib.php:42
+msgid "FOAF"
+msgstr "FOAF"
+
+#: mod/friend/lib.php:47
+msgid "Access controls"
+msgstr "アクセスコントロール"
+
+#: mod/friend/lib.php:52
+msgid "Invite a friend"
+msgstr "友人を招待"
+
+#: mod/newsclient/lib.php:15 mod/newsclient/lib.php:18
+msgid "Your Resources"
+msgstr "リソース"
+
+#: mod/newsclient/lib.php:31
+msgid "Publish to blog"
+msgstr "ブログへ掲載"
+
+#: mod/newsclient/lib.php:35 units/magpie/menu_sub.php:22
+msgid "View aggregator"
+msgstr "アグリゲータを表示"
+
+#: mod/newsclient/lib.php:39
+msgid "Popular Feeds"
+msgstr "人気の高いフィード"
+
+#: mod/newsclient/lib.php:84
+msgid "Feed widget"
+msgstr "フィード・ウィジェット"
+
+#: mod/newsclient/lib.php:85
+msgid "Displays the latest entries from an external feed of your choice."
+msgstr "好みの外部フィードから最新のエントリを表示します。"
+
+#: mod/newsclient/lib.php:114
+msgid "This feed is currently empty."
+msgstr "現在、このフィードは空です。"
+
+#: mod/newsclient/lib.php:121
+msgid "This feed widget is undefined."
+msgstr "フィード・ウィジェットが未定義です。"
+
+#: mod/newsclient/lib.php:139
+msgid "Feeds dashboard widget"
+msgstr "フィードダッシュボード・ウィジェット"
+
+#: mod/newsclient/lib.php:140
+msgid ""
+"This widget displays the last couple of entries from an external feed you "
+"have subscribed to. To begin, select the feed from your subscriptions below:"
+msgstr ""
+
+#: mod/newsclient/lib.php:157
+msgid "Then enter the number of feed entries you'd like to display:"
+msgstr "表示したいフィードエントリ数を入力してください："
+
+#: mod/newsclient/lib.php:163
+#, php-format
+msgid ""
+"You can't select a feed for this widget because you don't have any feed "
+"subscriptions. Click on <a href=\"%s\">Your</a> Resources to subscribe to a "
+"feed."
+msgstr ""
+
+#: mod/photogallery/lib.php:9
+msgid "Photo gallery"
+msgstr "フォトギャラリー"
+
+#: mod/photogallery/lib.php:45
+#, php-format
+msgid "Uploaded on %s"
+msgstr ""
+
+#: mod/photogallery/lib.php:50
+msgid "No title"
+msgstr "タイトルなし"
+
+#: mod/photogallery/lib.php:129
+msgid "Non-photo files"
+msgstr "フォト以外のファイル"
+
+#: mod/profile/lib.php:16 mod/profile/lib.php:19
+msgid "Your Profile"
+msgstr "プロフィール"
+
+#: mod/profile/lib.php:31
+msgid "Change site picture"
+msgstr "サイト画像の変更"
+
+#: mod/profile/lib.php:36 mod/toolbar/lib.php:42
+msgid "People"
+msgstr "ピープル"
+
+#: mod/profile/lib.php:64 mod/profile/lib.php:93 mod/profile/lib.php:133
+msgid "Profile widget"
+msgstr "プロフィール・ウィジェット"
+
+#: mod/profile/lib.php:65
+msgid "Displays the contents of a profile field."
+msgstr "プロフィールフィールドの内容を表示します。"
+
+#: mod/profile/lib.php:94
+msgid "This profile box is undefined."
+msgstr "プロフィールボックスが未定義です。"
+
+#: mod/profile/lib.php:134
+msgid ""
+"Select a profile field below; the widget will then display the profile "
+"content from this field."
+msgstr ""
+
+#: mod/profile/profile.config.php:56
+#: units/profile/function_editfield_defaults.php:37
+msgid "Who am I?"
+msgstr "私は誰？"
+
+#: mod/profile/profile.config.php:59
+#: units/profile/function_editfield_defaults.php:37
+msgid "A short introduction for you."
+msgstr "簡単な自己紹介を記入してください。"
+
+#: mod/profile/profile.config.php:61 mod/profile/profile.config.php:71
+#: mod/profile/profile.config.php:83 mod/profile/profile.config.php:285
+#: mod/profile/profile.config.php:298 mod/profile/profile.config.php:308
+#: mod/profile/profile.config.php:371 mod/profile/profile.config.php:431
+msgid "Basic details"
+msgstr "基本的な詳細"
+
+#: mod/profile/profile.config.php:66
+msgid "Introduction"
+msgstr "イントロダクション"
+
+#: mod/profile/profile.config.php:69
+msgid "A short introduction to this community."
+msgstr "このコミュニティの簡単な紹介"
+
+#: mod/profile/profile.config.php:79
+#: units/profile/function_editfield_defaults.php:40
+msgid "Brief description"
+msgstr "簡単な説明"
+
+#: mod/profile/profile.config.php:82
+#: units/profile/function_editfield_defaults.php:40
+msgid "For use in your sidebar profile."
+msgstr "サイドバーのプロフィールに使用されます。"
+
+#: mod/profile/profile.config.php:91
+#: units/profile/function_editfield_defaults.php:43
+msgid "Street address"
+msgstr "住所"
+
+#: mod/profile/profile.config.php:95 mod/profile/profile.config.php:107
+#: mod/profile/profile.config.php:119 mod/profile/profile.config.php:131
+#: mod/profile/profile.config.php:143
+msgid "Location"
+msgstr "所在地"
+
+#: mod/profile/profile.config.php:103
+#: units/profile/function_editfield_defaults.php:46
+msgid "Town"
+msgstr "市区町村名 (Town)"
+
+#: mod/profile/profile.config.php:115
+#: units/profile/function_editfield_defaults.php:49
+msgid "State / Region"
+msgstr "都道府県名 (State / Region)"
+
+#: mod/profile/profile.config.php:127
+#: units/profile/function_editfield_defaults.php:52
+msgid "Postal code"
+msgstr "郵便番号"
+
+#: mod/profile/profile.config.php:139
+#: units/profile/function_editfield_defaults.php:55
+msgid "Country"
+msgstr "国名"
+
+#: mod/profile/profile.config.php:151 units/admin/admin_main.php:86
+#: units/admin/admin_users.php:30 units/admin/admin_users_add.php:22
+#: units/profile/function_editfield_defaults.php:58
+msgid "Email address"
+msgstr "メールアドレス"
+
+#: mod/profile/profile.config.php:155 mod/profile/profile.config.php:166
+#: mod/profile/profile.config.php:178 mod/profile/profile.config.php:190
+#: mod/profile/profile.config.php:202 mod/profile/profile.config.php:214
+#: mod/profile/profile.config.php:226 mod/profile/profile.config.php:238
+#: mod/profile/profile.config.php:250 mod/profile/profile.config.php:262
+#: mod/profile/profile.config.php:273
+msgid "Contact"
+msgstr "コンタクト"
+
+#: mod/profile/profile.config.php:162
+#: units/profile/function_editfield_defaults.php:60
+msgid "Work telephone"
+msgstr "職場電話番号"
+
+#: mod/profile/profile.config.php:174
+#: units/profile/function_editfield_defaults.php:63
+msgid "Home telephone"
+msgstr "自宅電話番号"
+
+#: mod/profile/profile.config.php:186
+#: units/profile/function_editfield_defaults.php:66
+msgid "Mobile telephone"
+msgstr "携帯電話番号"
+
+#: mod/profile/profile.config.php:198
+#: units/profile/function_editfield_defaults.php:69
+msgid "Official website address"
+msgstr "公的なウェブサイトアドレス"
+
+#: mod/profile/profile.config.php:201
+#: units/profile/function_editfield_defaults.php:69
+msgid "The URL to your official website, if you have one."
+msgstr "もしあれば、公的なウェブサイトのURLを入力してください。"
+
+#: mod/profile/profile.config.php:210
+#: units/profile/function_editfield_defaults.php:72
+msgid "Personal website address"
+msgstr "個人的なウェブサイトアドレス"
+
+#: mod/profile/profile.config.php:213
+#: units/profile/function_editfield_defaults.php:72
+msgid "The URL to your personal website, if you have one."
+msgstr "もしあれば、個人的なウェブサイトのURLを入力してください。"
+
+#: mod/profile/profile.config.php:222
+#: units/profile/function_editfield_defaults.php:75
+msgid "ICQ number"
+msgstr "ICQナンバー"
+
+#: mod/profile/profile.config.php:234
+#: units/profile/function_editfield_defaults.php:78
+msgid "MSN chat"
+msgstr "MSNチャット"
+
+#: mod/profile/profile.config.php:246
+#: units/profile/function_editfield_defaults.php:81
+msgid "AIM screenname"
+msgstr "AIMスクリーンネーム"
+
+#: mod/profile/profile.config.php:258
+#: units/profile/function_editfield_defaults.php:84
+msgid "Skype username"
+msgstr "Skypeユーザ名"
+
+#: mod/profile/profile.config.php:269
+#: units/profile/function_editfield_defaults.php:86
+msgid "Jabber username"
+msgstr "Jabberユーザ名"
+
+#: mod/profile/profile.config.php:281
+#: units/profile/function_editfield_defaults.php:89
+msgid "Interests"
+msgstr "興味のあること"
+
+#: mod/profile/profile.config.php:284 mod/profile/profile.config.php:297
+#: mod/profile/profile.config.php:307 mod/profile/profile.config.php:430
+#: units/profile/function_editfield_defaults.php:89
+#: units/profile/function_editfield_defaults.php:93
+#: units/profile/function_editfield_defaults.php:94
+#: units/profile/function_editfield_defaults.php:103
+#: units/profile/function_editfield_defaults.php:109
+msgid "Separated with commas."
+msgstr "コンマで区切って入力してください。"
+
+#: mod/profile/profile.config.php:294
+#: units/profile/function_editfield_defaults.php:93
+msgid "Likes"
+msgstr "好きなもの（こと）"
+
+#: mod/profile/profile.config.php:304
+#: units/profile/function_editfield_defaults.php:94
+msgid "Dislikes"
+msgstr "嫌いなもの（こと）"
+
+#: mod/profile/profile.config.php:314
+#: units/profile/function_editfield_defaults.php:95
+msgid "Occupation"
+msgstr "職業"
+
+#: mod/profile/profile.config.php:318 mod/profile/profile.config.php:328
+#: mod/profile/profile.config.php:339 mod/profile/profile.config.php:351
+#: mod/profile/profile.config.php:361 mod/profile/profile.config.php:381
+msgid "Employment"
+msgstr "職業"
+
+#: mod/profile/profile.config.php:324
+#: units/profile/function_editfield_defaults.php:96
+msgid "Industry"
+msgstr "業種"
+
+#: mod/profile/profile.config.php:335
+#: units/profile/function_editfield_defaults.php:98
+msgid "Company / Institution"
+msgstr "会社／団体"
+
+#: mod/profile/profile.config.php:347
+#: units/profile/function_editfield_defaults.php:101
+msgid "Job Title"
+msgstr "職種／役職"
+
+#: mod/profile/profile.config.php:357
+#: units/profile/function_editfield_defaults.php:102
+msgid "Job Description"
+msgstr "職務内容"
+
+#: mod/profile/profile.config.php:367
+#: units/profile/function_editfield_defaults.php:103
+msgid "I would like to ..."
+msgstr "やりたいこと"
+
+#: mod/profile/profile.config.php:370
+msgid "Your goals, separated with commas."
+msgstr "あなたの目標をコンマで区切って入力してください。"
+
+#: mod/profile/profile.config.php:377
+#: units/profile/function_editfield_defaults.php:104
+msgid "Career Goals"
+msgstr "職業上（出世）の目標"
+
+#: mod/profile/profile.config.php:380
+#: units/profile/function_editfield_defaults.php:104
+msgid ""
+"Freeform: let colleagues and potential employers know what you'd like to get "
+"out of your career."
+msgstr "自由形式： あなたがキャリアから得たいことを、未来の雇用者や同僚に知ってもらってください。"
+
+#: mod/profile/profile.config.php:387
+#: units/profile/function_editfield_defaults.php:105
+msgid "Level of Education"
+msgstr "教育水準"
+
+#: mod/profile/profile.config.php:391 mod/profile/profile.config.php:401
+#: mod/profile/profile.config.php:411 mod/profile/profile.config.php:421
+msgid "Education"
+msgstr "教育"
+
+#: mod/profile/profile.config.php:397
+#: units/profile/function_editfield_defaults.php:106
+msgid "High School"
+msgstr "高校"
+
+#: mod/profile/profile.config.php:407
+#: units/profile/function_editfield_defaults.php:107
+msgid "University / College"
+msgstr "大学／専門学校"
+
+#: mod/profile/profile.config.php:417
+#: units/profile/function_editfield_defaults.php:108
+msgid "Degree"
+msgstr "学位"
+
+#: mod/profile/profile.config.php:427
+#: units/profile/function_editfield_defaults.php:109
+msgid "Main Skills"
+msgstr "主な技能"
+
+#: mod/toolbar/lib.php:29
+msgid "Log on:"
+msgstr "ログオン："
+
+#: mod/toolbar/lib.php:32
+msgid "Powered by Elgg"
+msgstr "Powered by Elgg"
+
+#: mod/toolbar/lib.php:41
+msgid "all"
+msgstr "すべて"
+
+#: mod/toolbar/lib.php:44
+msgid "Tag cloud"
+msgstr "タグクラウド"
+
+#: profile/edit.php:44
+msgid "Edit profile"
+msgstr "プロフィールの編集"
+
+#: profile/edit.php:118
+#, php-format
+msgid "%s (in category %s)"
+msgstr ""
+
+#: profile/edit.php:150
+msgid "Profile updated."
+msgstr "プロフィールは更新されました。"
+
+#: profile/edit.php:167
+#, php-format
+msgid "You need to fill in the following required fields: %s"
+msgstr "次のフィールドへの記入は必須です： %s"
+
+#: profile/profile.class.php:48 units/profile/edit_link.php:8
+msgid "Click here to edit this profile."
+msgstr "このプロフィールを編集するには、ここをクリックしてください。"
+
+#: profile/profile.class.php:86 units/profile/content_edit.php:2
+msgid ""
+"    This screen allows you to edit your profile. Blank fields will not show "
+"up on your profile screen in any view; you can change the access level for "
+"each piece of information in order to prevent it from falling into the wrong "
+"hands. For example, we strongly recommend you keep your address to yourself "
+"or a few trusted parties."
+msgstr ""
+"    この画面であなたのプロフィールを編集することができます。 空欄にしたフィールドは、どの領域のプロフィール画面上にも現れることはありません。 "
+"個人情報が悪用されることを阻止するために、各情報ごとにアクセスレベルを変更することができます。 "
+"例えば、住所や電話番号などの重要な情報は、自分自身や信頼の置ける仲間以外には公開しないことを強くお勧めします。"
+
+#: profile/profile.class.php:145
+msgid "Submit details:"
+msgstr "詳細の送信："
+
+#: profile/profile.class.php:146
+msgid "Save your profile"
+msgstr "プロフィールの保存"
+
+#: profile/profile.class.php:164
+msgid "You can import some profile data by uploading a FOAF file here:"
+msgstr "ここで FOAF ファイルをアップロードすると、いくつかのプロフィールデータを読み込むことができます："
+
+#: profile/profile.class.php:167
+msgid "Upload a FOAF file:"
+msgstr "FOAFファイルのアップロード："
+
+#: profile/profile.class.php:169 units/files/edit_folder.php:285
+msgid "Upload"
+msgstr "アップロード"
+
+#: profile/profile.class.php:270
+#: units/profile/function_editfield_display.php:40
+msgid "Access Restriction:"
+msgstr "アクセス制限"
+
+#: profile/profile.class.php:361 units/profile/function_search.php:35
+msgid "Profiles where"
+msgstr ""
+
+#: profile/profile.class.php:522 units/profile/function_upload_foaf.php:8
+msgid ""
+"There was an error uploading the file. Possibly the file was too large, or "
+"the upload was interrupted."
+msgstr "ファイルのアップロード中にエラーが発生しました。 ファイルが大きすぎるか、転送が中断された可能性があります。"
+
+#: profile/profile.class.php:602 units/profile/function_upload_foaf.php:88
+msgid ""
+"Data from your FOAF file has been preloaded. You must click Save at the "
+"bottom of the page for the changes to take effect."
+msgstr ""
+
+#: profile/profile.class.php:606 units/profile/function_upload_foaf.php:92
+msgid "Error: supplied file did not appear to be a FOAF file."
+msgstr ""
+
+#: profile/profile.class.php:936 units/profile/profile_user_info.php:58
+#: units/weblogs/weblogs_user_info.php:7
+msgid "Profile Owner"
+msgstr "プロフィール所有者"
+
+#: profile/profile.class.php:938 units/profile/profile_user_info.php:60
+#: units/weblogs/weblogs_user_info.php:9
+msgid "You"
+msgstr "あなた"
+
+#: profile/rss2.php:25
+#, php-format
+msgid "Activity tagged with %s"
+msgstr ""
+
+#: profile/search.php:10
+msgid "Search Profiles"
+msgstr "プロフィールの検索"
+
+#: search/all.php:14 search/index.php:16
+msgid "Searching"
+msgstr "検索中"
+
+#: search/index.php:39
+msgid "Search for results from:"
+msgstr "次の結果から検索："
+
+#: search/index.php:79
+msgid "Filter by content type:"
+msgstr "コンテンツタイプによるフィルタ："
+
+#: search/index.php:83
+msgid "Everything"
+msgstr "すべて"
+
+#: search/index.php:90
+msgid "Users and communities"
+msgstr "ユーザとコミュニティ"
+
+#: search/tags.php:12
+msgid "Some Tags"
+msgstr "いくつかのタグ"
+
+#: units/activity/recent.php:3
+msgid ""
+"This screen displays recent activity on your account by other users over a "
+"given time range."
+msgstr ""
+
+#: units/admin/admin_actions.php:44
+msgid ""
+"Error! The new username must contain letters and numbers only, cannot be "
+"blank, and must be between 3 and 12 characters in length."
+msgstr ""
+
+#: units/admin/admin_actions.php:50
+#, php-format
+msgid "Username was changed to %s."
+msgstr "ユーザ名が %s に変更されました。"
+
+#: units/admin/admin_actions.php:58
+#, php-format
+msgid "File quota was changed to %d."
+msgstr "ファイルの容量制限が %d に変更されました。"
+
+#: units/admin/admin_actions.php:65
+#, php-format
+msgid "Icon quota was changed to %d."
+msgstr "アイコンの数量制限が %d に変更されました。"
+
+#: units/admin/admin_actions.php:80
+#, php-format
+msgid "User flag '%s' set to '%s'"
+msgstr "ユーザフラグ「%s」が %s にセットされました。"
+
+#: units/admin/admin_actions.php:94
+msgid "Spam list updated."
+msgstr "スパムリストが更新されました。"
+
+#: units/admin/admin_actions.php:123
+#, php-format
+msgid ""
+"User addition %d failed: at least one field was blank. Username: %s, name: "
+"%s, email: %s"
+msgstr ""
+
+#: units/admin/admin_actions.php:128
+#, php-format
+msgid ""
+"New username %d (%s) was invalid; usernames must contain letters and numbers "
+"only, cannot be blank, and must be between 3 and 12 characters in length."
+msgstr ""
+"新しいユーザ名 %d (%s) は無効です。 ユーザ名は 3 ～ 12 文字の英数字のみで入力する必要があります。 また、空欄にはできません。"
+
+#: units/admin/admin_actions.php:134
+#, php-format
+msgid "User addition %d failed: username %s is already in use."
+msgstr ""
+
+#: units/admin/admin_actions.php:138
+#, php-format
+msgid "User addition %d failed: email address %s appears to be invalid."
+msgstr ""
+
+#: units/admin/admin_actions.php:181
+#, php-format
+msgid "Your new %s account"
+msgstr "%s の新規アカウント"
+
+#: units/admin/admin_actions.php:182
+#, php-format
+msgid ""
+"You have been added to %s!\n"
+"\n"
+"For your records, your %s username and password are:\n"
+"\n"
+"\tUsername: %s\n"
+"\tPassword: %s\n"
+"\n"
+"You can log in at any time by visiting %s and entering these details into "
+"the login form.\n"
+"\n"
+"We hope you enjoy using the system.\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s Team"
+msgstr ""
+
+#: units/admin/admin_actions.php:183
+#, php-format
+msgid "User %s was created."
+msgstr "ユーザ %s が作成されました。"
+
+#: units/admin/admin_contentflags.php:7
+msgid ""
+"The following pages have been flagged as having obscene or inappropriate "
+"content. They are ordered by number of complaints."
+msgstr "以下は、公序良俗に反するか、不適切な内容だと判断されたためにフラグが立てられたページが、苦情の多い順に並べられています。"
+
+#: units/admin/admin_contentflags.php:8
+msgid ""
+"To view the pages in question, click the following links. To remove the "
+"flags, for example if the flag is a false positive or if you've deleted the "
+"offending content, check the appropriate box and click the 'delete' button "
+"below."
+msgstr ""
+"問題のページを見るためには、以下のリンクをクリックしてください。 "
+"何かの間違いでフラグが立てられた場合や、すでに問題のコンテンツを削除した場合など、フラグを"
+"除去するには適切なチェックボックスにチェックを入れた後に「フラグの除去」ボタンを押してください。"
+
+#: units/admin/admin_contentflags.php:18
+msgid "Page URL"
+msgstr "ページURL"
+
+#: units/admin/admin_contentflags.php:19
+msgid "Number of objections"
+msgstr "不服申し立ての数"
+
+#: units/admin/admin_contentflags.php:38
+msgid "Remove flag(s)"
+msgstr "フラグの除去"
+
+#: units/admin/admin_contentflags.php:44
+msgid "No content flags were found at present."
+msgstr "現在のところ、フラグの立ったコンテンツはありません。"
+
+#: units/admin/admin_main.php:9
+msgid "Site statistics"
+msgstr "サイト統計"
+
+#: units/admin/admin_main.php:21
+msgid "Accounts by type"
+msgstr "タイプごとの計算"
+
+#: units/admin/admin_main.php:36
+msgid "Weblog statistics"
+msgstr "ブログ統計"
+
+#: units/admin/admin_main.php:37 units/admin/admin_main.php:51
+msgid "All-time:"
+msgstr "全期間"
+
+#: units/admin/admin_main.php:38 units/admin/admin_main.php:40
+#, php-format
+msgid "%u weblog posts, %u comments"
+msgstr "ブログ投稿：%u ／ コメント：%u"
+
+#: units/admin/admin_main.php:39 units/admin/admin_main.php:52
+msgid "Last 7 days:"
+msgstr "最近の7日間："
+
+#: units/admin/admin_main.php:50
+msgid "File statistics"
+msgstr "ファイル統計"
+
+#: units/admin/admin_main.php:51 units/admin/admin_main.php:52
+#, php-format
+msgid "%u files (%s bytes)"
+msgstr "%u ファイル（%s バイト）"
+
+#: units/admin/admin_main.php:70
+msgid "Database statistics"
+msgstr "データベース統計"
+
+#: units/admin/admin_main.php:71
+msgid "Total database size:"
+msgstr "データベースサイズの合計："
+
+#: units/admin/admin_main.php:71
+#, php-format
+msgid "%u bytes"
+msgstr "%u バイト"
+
+#: units/admin/admin_main.php:78
+msgid "Users online now"
+msgstr "オンライン中のユーザ"
+
+#: units/admin/admin_main.php:79
+msgid ""
+"The following users have an active session and have performed an action "
+"within the past 10 minutes."
+msgstr "以下のユーザはアクティブなセッションを持ち、過去10分以内に操作を行いました。"
+
+#: units/admin/admin_main.php:85 units/admin/admin_users.php:29
+#: units/admin/admin_users_add.php:21
+msgid "Full name"
+msgstr "氏名"
+
+#: units/admin/admin_main.php:96
+#, php-format
+msgid "%u users in total."
+msgstr "合計 %u ユーザ"
+
+#: units/admin/admin_spam.php:7
+msgid ""
+"Add regular expressions below, one per line, to block spam. For example, "
+"'foo' will block all comments containing the word foo, (foo|bar) will block "
+"comments containing the word foo or bar."
+msgstr ""
+"以下に、１行あたり１つとして、スパムをブロックするための正規表現を追加してください。 例えば、<b>'foo'</b> を追加した場合は "
+"<b>foo</b> を含むすべてのコメントがブロックされ、<b>(foo|bar)</b> を追加した場合は <b>foo か bar</b> "
+"を含むすべてのコメントがブロックされます。"
+
+#: units/admin/admin_spam.php:8
+msgid "Blank lines and lines starting with # will be ignored."
+msgstr "# で始まる行と空行は無視されます。"
+
+#: units/admin/admin_spam.php:20
+msgid "Regular expressions"
+msgstr "正規表現"
+
+#: units/admin/admin_userdetails.php:19
+msgid "Change username:"
+msgstr "ユーザ名の変更："
+
+#: units/admin/admin_userdetails.php:22
+msgid "New username: "
+msgstr "新しいユーザ名： "
+
+#: units/admin/admin_userdetails.php:29
+msgid "Change file quota (in bytes):"
+msgstr "ファイル容量制限の変更（バイト単位）："
+
+#: units/admin/admin_userdetails.php:32
+msgid "New file quota: "
+msgstr "新しいファイル容量制限： "
+
+#: units/admin/admin_userdetails.php:36
+msgid "Change icon quota:"
+msgstr "アイコンの数量制限："
+
+#: units/admin/admin_userdetails.php:39
+msgid "New icon quota: "
+msgstr "新しいアイコンの数量制限 "
+
+#: units/admin/admin_userdetails.php:45
+msgid "User flags:"
+msgstr "ユーザフラグ："
+
+#: units/admin/admin_userdetails.php:56
+msgid "Site administrator: "
+msgstr "サイト管理者にする： "
+
+#: units/admin/admin_userdetails.php:72
+msgid "Banned: "
+msgstr "アクセス禁止にする： "
+
+#: units/admin/admin_users.php:10
+msgid ""
+"The following is a list of all the users in the system, 50 users at a time. "
+"You can click each one to edit their user details as if you were logged in "
+"as them, as well as set user flags (including 'ban user' and 'set user as "
+"administrator')."
+msgstr ""
+"以下は、システムでの全ユーザ（うち、一度に50ユーザ）がリストされています。 "
+"各ユーザの氏名をクリックすることで、ユーザフラグ（アクセス禁止とサイト管理者）の設定と、ユーザの詳細を編集することができます。"
+
+#: units/admin/admin_users.php:11
+msgid ""
+"If you know the username of the user you would like to edit, you can also "
+"enter it below."
+msgstr "編集したいユーザのユーザ名がわかる場合は、以下に入力することもできます。"
+
+#: units/admin/admin_users.php:16
+msgid "Enter username"
+msgstr "ユーザ名の入力"
+
+#: units/admin/admin_users.php:18
+msgid "Edit user"
+msgstr "ユーザの編集"
+
+#: units/admin/admin_users.php:37 units/magpie/function_view.php:41
+#: units/magpie/function_view_individual.php:38
+#: units/weblogs/weblogs_all_users_view.php:123
+#: units/weblogs/weblogs_friends_view.php:73
+#: units/weblogs/weblogs_interesting_view.php:64
+#: units/weblogs/weblogs_view.php:65
+msgid "Next"
+msgstr "次へ"
+
+#: units/admin/admin_users.php:46
+msgid "Previous"
+msgstr "前へ"
+
+#: units/admin/admin_users_add.php:17
+msgid ""
+"You can create up to 12 users below; passwords will be autogenerated and "
+"emailed to the account owners. You must include all fields, but you may "
+"leave rows blank."
+msgstr ""
+"以下で、最大12ユーザを作成できます。 パスワードは自動で生成され、アカウントの所有者にメールで送信されます。 "
+"横一列のフィールドは、全て埋めるか、全て空欄にする必要があります。"
+
+#: units/admin/admin_users_panel.php:12
+#: units/communities/communities_membership_requests.php:32
+#: units/friends/user_friendship_requests.php:33
+msgid "Profile"
+msgstr "プロフィール"
+
+#: units/admin/display_content_flag_form.php:23
+msgid "Flag content"
+msgstr "問題のあるコンテンツ"
+
+#: units/admin/display_content_flag_form.php:24
+msgid ""
+"To mark this content as obscene or inappropriate, click the 'Flag' button "
+"and an administrator will view it in due course."
+msgstr ""
+"このコンテンツが公序良俗に反する、あるいは不適切だと思われる場合は、以下の「フラグ」ボタンを押してください。 後日、管理者が適切に判断と対処を行います。"
+
+#: units/admin/display_content_flag_form.php:25
+msgid "Flag"
+msgstr "フラグ"
+
+#: units/communities/communities_access_levels.php:10
+#: units/communities/communities_access_levels.php:19
+msgid "Community"
+msgstr "コミュニティ"
+
+#: units/communities/communities_actions.php:21
+msgid ""
+"Error! The community username must contain letters and numbers only, cannot "
+"be blank, and must be between 3 and 12 characters in length."
+msgstr "エラー！ コミュニティのユーザ名は 3 ～ 12 文字の英数字のみで入力する必要があります。 また、空欄にはできません。"
+
+#: units/communities/communities_actions.php:23
+msgid "Error! The community name cannot be blank."
+msgstr "エラー！ コミュニティ名の入力は必須です。"
+
+#: units/communities/communities_actions.php:45
+msgid "Your community was created and you were added as its first member."
+msgstr "コミュニティが作成され、あなたが最初のメンバーとして加えられました。"
+
+#: units/communities/communities_actions.php:59
+#, php-format
+msgid "You joined %s."
+msgstr "あなたは %s に参加しました。"
+
+#: units/communities/communities_actions.php:61
+#, php-format
+msgid ""
+"%s has joined %s!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+
+#: units/communities/communities_actions.php:64
+#, php-format
+msgid "New %s member"
+msgstr "新しい %s のメンバー"
+
+#: units/communities/communities_actions.php:68
+#, php-format
+msgid ""
+"Membership of %s needs to be approved. Your request has been added to the "
+"list."
+msgstr "%s の参加申請は承認が必要です。 あなたの申請はリストへ加えられました。"
+
+#: units/communities/communities_actions.php:70
+#, php-format
+msgid ""
+"%s has applied to join %s!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+
+#: units/communities/communities_actions.php:73
+#, php-format
+msgid "New %s member request"
+msgstr ""
+
+#: units/communities/communities_actions.php:77
+#, php-format
+msgid "%s is a private community. Your membership request has been declined."
+msgstr "%s はプライベートコミュニティのため、あなたの参加申請は拒否されました。"
+
+#: units/communities/communities_actions.php:89
+#, php-format
+msgid "You left %s."
+msgstr ""
+
+#: units/communities/communities_actions.php:96
+msgid "Your post has been added to the community weblog."
+msgstr "投稿がコミュニティブログに追加されました。"
+
+#: units/communities/communities_actions.php:112
+#, php-format
+msgid ""
+"You approved the membership request. %s is now a member of this community."
+msgstr "参加申請を承認しました。 %sさんは、今からこのコミュニティのメンバーです。"
+
+#: units/communities/communities_actions.php:114
+msgid "An error occurred: the membership request could not be approved."
+msgstr "エラー発生： 参加申請が承認できませんでした。"
+
+#: units/communities/communities_actions.php:117
+#: units/communities/communities_actions.php:136
+msgid "Error: you do not have authority to modify this membership request."
+msgstr "エラー： あなたにはこの参加申請を修正する権限がありません。"
+
+#: units/communities/communities_actions.php:120
+#: units/communities/communities_actions.php:139
+msgid "An error occurred: the membership request could not be found."
+msgstr "エラー発生： 参加申請が見つかりませんでした。"
+
+#: units/communities/communities_actions.php:134
+#, php-format
+msgid ""
+"You declined the membership request. %s is not a member of this community."
+msgstr "参加申請を許否しました。 %sさんは、このコミュニティのメンバーではありません。"
+
+#: units/communities/communities_create.php:17
+msgid "Create a new community"
+msgstr "新しいコミュニティを作成"
+
+#: units/communities/communities_create.php:18
+msgid "Community name:"
+msgstr "コミュニティ名："
+
+#: units/communities/communities_create.php:19
+msgid "Username for community:"
+msgstr "コミュニティでのユーザ名："
+
+#: units/communities/communities_create.php:20 units/files/edit_folder.php:167
+#: units/groups/groups_create.php:5
+msgid "Create"
+msgstr "作成"
+
+#: units/communities/communities_edit.php:47
+msgid ""
+"You don't have any communities listed! To join a community, click the 'join' "
+"button underneath a community's icon. You can find communities you're "
+"interested in by using the search function."
+msgstr ""
+
+#: units/communities/communities_edit.php:49
+msgid "This user is not currently a member of any communities."
+msgstr ""
+
+#: units/communities/communities_members.php:45
+msgid "This community doesn't currently have any members."
+msgstr ""
+
+#: units/communities/communities_membership_requests.php:15
+msgid ""
+"The following users would like to join this community. They need your "
+"approval to do this (to change this setting, visit the 'community settings' "
+"page)."
+msgstr ""
+
+#: units/communities/communities_membership_requests.php:48
+msgid "You have no pending membership requests."
+msgstr "承認待ちの参加申し込みはありません。"
+
+#: units/communities/communities_moderator_of.php:47
+msgid "You don't own any communities. Why not create one?"
+msgstr "あなたはコミュニティを所有していません。 なぜ1つも作らないのですか？"
+
+#: units/communities/communities_moderator_of.php:49
+msgid "This user is not currently moderating any communities."
+msgstr ""
+
+#: units/communities/communities_owned.php:18
+msgid "Owned communities"
+msgstr "所有コミュニティ"
+
+#: units/communities/community_memberships.php:20
+msgid "Community memberships"
+msgstr "コミュニティメンバーシップ"
+
+#: units/communities/community_wiki.php:15
+msgid "Community Wiki"
+msgstr "コミュニティWiki"
+
+#: units/communities/profile_edit_link.php:12
+msgid "Upload / edit site pictures for this community."
+msgstr "コミュニティのサイト画像のアップロード／編集"
+
+#: units/communities/profile_edit_link.php:26
+msgid "Change this community's name."
+msgstr "このコミュニティの名前を変更する。"
+
+#: units/communities/user_info_menu_text.php:18
+msgid "Are you sure you want to join this community?"
+msgstr "本当に、このコミュニティに参加しますか？"
+
+#: units/communities/user_info_menu_text.php:18
+msgid "Click here to join this community."
+msgstr "このコミュニティに参加するには、ここをクリックしてください。"
+
+#: units/communities/user_info_menu_text.php:20
+msgid "Are you sure you want to apply to join this community?"
+msgstr "本当に、このコミュニティに参加の申請をしますか？"
+
+#: units/communities/user_info_menu_text.php:20
+msgid "Click here to apply to join this community."
+msgstr "このコミュニティに参加の申請をするには、ここをクリックしてください。"
+
+#: units/communities/user_info_menu_text.php:26
+msgid "Are you sure you want to leave this community?"
+msgstr "本当に、このコミュニティから脱退してもよろしいですか？"
+
+#: units/communities/user_info_menu_text.php:26
+msgid "Click here to leave this community."
+msgstr "このコミュニティから脱退するには、ここをクリックしてください。"
+
+#: units/communities/userdetails_actions.php:23
+#, php-format
+msgid "Community ownership transferred to %s."
+msgstr ""
+
+#: units/communities/userdetails_actions.php:26
+msgid "Could not retrieve community details."
+msgstr ""
+
+#: units/communities/userdetails_edit.php:11
+msgid "Change your community name"
+msgstr "コミュニティ名の変更"
+
+#: units/communities/userdetails_edit.php:12
+#: units/users/userdetails_edit.php:12
+msgid "This name will be displayed throughout the system."
+msgstr "この名前はシステム全域で表示されます。"
+
+#: units/communities/userdetails_edit.php:27
+msgid "Community name"
+msgstr "コミュニティ名"
+
+#: units/communities/userdetails_edit.php:32
+msgid "Membership restriction:"
+msgstr "参加制限："
+
+#: units/communities/userdetails_edit.php:33
+msgid "This allows you to choose who can join this community."
+msgstr "このコミュニティへの参加の制限を選択してください。"
+
+#: units/communities/userdetails_edit.php:50
+msgid "No moderation: anyone can join this community."
+msgstr "モデレートしない： 誰でもこのコミュニティに参加できます。"
+
+#: units/communities/userdetails_edit.php:55
+msgid "Moderation: memberships must be approved by you."
+msgstr "モデレートする： 参加申し込みが、あなたに承認される必要があります。"
+
+#: units/communities/userdetails_edit.php:60
+msgid "Private: nobody can join this community."
+msgstr "プライベート： 誰もこのコミュニティに参加できません。"
+
+#: units/communities/userdetails_edit.php:65
+msgid "Membership restriction"
+msgstr "参加制限"
+
+#: units/communities/userdetails_edit.php:70
+msgid "Community ownership"
+msgstr "コミュニティ所有権"
+
+#: units/communities/userdetails_edit.php:71
+msgid ""
+"Type the username of the user who you want to own this community below. You "
+"cannot leave this blank, or specify a community or a user that doesn't exist."
+msgstr ""
+"このコミュニティの所有者にしたいユーザ名を、以下の欄に入力してください。 存在しないコミュニティやユーザ名の指定や、空欄にすることはできません。"
+
+#: units/communities/userdetails_edit.php:83
+msgid "Community owner"
+msgstr "コミュニティ所有者"
+
+#: units/files/default_templates.php:8
+msgid "Folder"
+msgstr "フォルダ"
+
+#: units/files/default_templates.php:9
+msgid "Each individual folder"
+msgstr ""
+
+#: units/files/default_templates.php:11
+msgid "The owner of the folder"
+msgstr ""
+
+#: units/files/default_templates.php:12
+msgid "The name of the folder"
+msgstr ""
+
+#: units/files/default_templates.php:13
+msgid "The folder's URL"
+msgstr "フォルダのURL"
+
+#: units/files/default_templates.php:14
+msgid "Menu items for folder owner (edit, delete, etc)"
+msgstr ""
+
+#: units/files/default_templates.php:15
+msgid "The URL of the file's icon"
+msgstr ""
+
+#: units/files/default_templates.php:16 units/files/default_templates.php:49
+msgid "Keywords associated with the folder"
+msgstr ""
+
+#: units/files/default_templates.php:40 units/files/function_search_rss.php:44
+msgid "File"
+msgstr "ファイル"
+
+#: units/files/default_templates.php:41
+msgid "Each individual file within a folder"
+msgstr ""
+
+#: units/files/default_templates.php:43
+msgid "The file's URL"
+msgstr "ファイルのURL"
+
+#: units/files/default_templates.php:44
+msgid "Its filename"
+msgstr "ファイル名"
+
+#: units/files/default_templates.php:45
+msgid "A description of the file"
+msgstr "ファイルの説明"
+
+#: units/files/default_templates.php:46
+msgid "Its title"
+msgstr "タイトル"
+
+#: units/files/default_templates.php:47
+msgid "Menu items for file owner (edit, delete, etc)"
+msgstr "ファイル所有者のためのメニューアイテム（編集、削除など）"
+
+#: units/files/default_templates.php:48
+msgid "The URL of its icon"
+msgstr "アイコンのURL"
+
+#: units/files/edit_file.php:17 units/files/edit_folder.php:212
+msgid "File title:"
+msgstr "ファイルのタイトル："
+
+#: units/files/edit_file.php:29
+msgid "File description:"
+msgstr "ファイルの説明"
+
+#: units/files/edit_file.php:40 units/files/edit_folder.php:56
+#: units/files/edit_folder.php:119 units/files/edit_folder.php:214
+#: units/weblogs/weblogs_posts_add.php:27
+#: units/weblogs/weblogs_posts_edit.php:21
+msgid "Access restrictions:"
+msgstr "アクセス制限"
+
+#: units/files/edit_file.php:51
+msgid "File folder:"
+msgstr "ファイルフォルダ："
+
+#: units/files/edit_file.php:62 units/files/edit_folder.php:72
+#: units/files/edit_folder.php:154 units/files/edit_folder.php:262
+msgid "Keywords (comma separated):"
+msgstr "キーワード（コンマ区切り）："
+
+#: units/files/edit_file.php:80
+msgid "Save changes"
+msgstr "変更の保存"
+
+#: units/files/edit_file.php:98
+msgid "Edit "
+msgstr "編集 "
+
+#: units/files/edit_folder.php:23
+msgid "Folder name:"
+msgstr "フォルダ名："
+
+#: units/files/edit_folder.php:24
+msgid "Parent folder:"
+msgstr "上位フォルダ："
+
+#: units/files/edit_folder.php:25 units/files/edit_folder.php:120
+msgid "Folder type:"
+msgstr "フォルダタイプ："
+
+#: units/files/edit_folder.php:99
+msgid "Edit this folder"
+msgstr "フォルダの編集"
+
+#: units/files/edit_folder.php:109
+msgid "Upload files and folders"
+msgstr "ファイル／フォルダのアップロード"
+
+#: units/files/edit_folder.php:117
+msgid "Create a new folder"
+msgstr "新しいフォルダの作成"
+
+#: units/files/edit_folder.php:118
+msgid "To create a new folder, enter its name:"
+msgstr "新しいフォルダの名前を入力してください："
+
+#: units/files/edit_folder.php:193
+msgid "Upload a file"
+msgstr "ファイルのアップロード"
+
+#: units/files/edit_folder.php:207
+#, php-format
+msgid "You have used %s Mb of a total %s Mb."
+msgstr "使用量： %s MB ／ 使用可能容量： %s MB"
+
+#: units/files/edit_folder.php:209
+#, php-format
+msgid "Used space: %s Mb."
+msgstr "使用容量： %s MB"
+
+#: units/files/edit_folder.php:211
+msgid "File to upload:"
+msgstr "アップロードするファイル："
+
+#: units/files/edit_folder.php:213
+msgid "File Description:"
+msgstr "ファイルの説明："
+
+#: units/files/edit_folder.php:284
+msgid ""
+"By checking this box, you are asserting that you have the legal right to "
+"share this file, and that you understand you are sharing it with other users "
+"of the system."
+msgstr "このファイルを共有する法的権限を持ち、システム上の他のユーザとの共有を了解していることを表明するならば、ここにチェックを入れてください。"
+
+#: units/files/files_actions.php:31
+msgid "Your folder was created."
+msgstr "フォルダが作成されました。"
+
+#: units/files/files_actions.php:34
+msgid "Could not create folder. Perhaps the folder name was blank?"
+msgstr "フォルダを作成できませんでした。 フォルダ名が空欄ではないですか？"
+
+#: units/files/files_actions.php:54
+msgid ""
+"Upload unsuccessful. You must check the copyright box for a file to be "
+"uploaded."
+msgstr "アップロードは失敗しました。 アップロードするには、コピーライトボックスにチェックを入れる必要があります。"
+
+#: units/files/files_actions.php:96
+msgid "The file was successfully uploaded."
+msgstr "ファイルが正常にアップロードされました。"
+
+#: units/files/files_actions.php:137
+msgid "The file was updated."
+msgstr "ファイルが更新されました。"
+
+#: units/files/files_actions.php:163
+msgid "The folder was edited."
+msgstr "フォルダが編集されました。"
+
+#: units/files/files_actions.php:177
+msgid "Error: a folder cannot be its own parent."
+msgstr "エラー： フォルダが自身の上位になることはあり得ません。"
+
+#: units/files/files_actions.php:203
+msgid "The folder was deleted."
+msgstr "フォルダが削除されました。"
+
+#: units/files/files_actions.php:228
+msgid "The file was deleted."
+msgstr "ファイルが削除されました。"
+
+#: units/files/files_links_make.php:54
+msgid "You do not have permission to access this file"
+msgstr "このファイルへのアクセス権限がありません"
+
+#: units/files/files_links_make.php:57
+msgid "File does not exist"
+msgstr "ファイルが存在しません"
+
+#: units/files/files_user_info_menu.php:23
+msgid "File Storage"
+msgstr "ファイル収納庫"
+
+#: units/files/files_view.php:26 units/files/folder_view.php:14
+msgid "Root Folder"
+msgstr "ルートフォルダ"
+
+#: units/files/files_view.php:47
+msgid "Return to"
+msgstr "戻る："
+
+#: units/files/function_search.php:49
+#, php-format
+msgid "Folders owned by '%s' in category '%s'"
+msgstr ""
+
+#: units/files/function_search.php:89
+#, php-format
+msgid "Files owned by %s in category '%s'"
+msgstr ""
+
+#: units/files/function_search.php:94
+#, php-format
+msgid "In folder '%s'"
+msgstr ""
+
+#: units/files/function_search.php:111
+#, php-format
+msgid "RSS feed for files owned by %s"
+msgstr ""
+
+#: units/files/function_search.php:122
+msgid "Users with files or folders in category"
+msgstr ""
+
+#: units/files/function_search_rss.php:34
+msgid "File folder"
+msgstr "ファイルフォルダ"
+
+#: units/files/templates_preview.php:5
+msgid "Folder name"
+msgstr "フォルダ名"
+
+#: units/files/templates_preview.php:15 units/files/templates_preview.php:26
+msgid "test"
+msgstr "テスト"
+
+#: units/files/templates_preview.php:18
+msgid "Subfolder"
+msgstr "サブフォルダ"
+
+#: units/files/templates_preview.php:27
+msgid "A sample file"
+msgstr "サンプルファイル"
+
+#: units/files/templates_preview.php:30
+msgid "This is a file"
+msgstr "ファイル"
+
+#: units/files/templates_preview.php:31
+msgid "filename"
+msgstr "ファイル名"
+
+#: units/files/templates_preview.php:40
+msgid "Files and folders"
+msgstr "ファイルとフォルダ"
+
+#: units/files/weblogs_posts_add_fields.php:55
+#, php-format
+msgid "Embed a file from your %s file storage:"
+msgstr "%s のファイル収納庫からファイルを埋め込む："
+
+#: units/files/weblogs_posts_add_fields.php:79
+msgid ""
+"This will add a code to your weblog post that will be converted into an "
+"embedded file."
+msgstr "埋め込みファイルに変換されるコードを、ブログ投稿に加えます。"
+
+#: units/friends/friends_actions.php:24
+#, php-format
+msgid "%s was added to your friends list."
+msgstr "%s さんが友人リストに加えられました。"
+
+#: units/friends/friends_actions.php:26
+#, php-format
+msgid ""
+"%s has added you as a friend!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t%s\n"
+"\n"
+"To view all your friends, click here:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s team."
+msgstr ""
+
+#: units/friends/friends_actions.php:27
+#, php-format
+msgid "New %s friend"
+msgstr "%s での新しい友人"
+
+#: units/friends/friends_actions.php:32
+#, php-format
+msgid "%s couldn't be added to your friends list."
+msgstr "%s さんを友人リストに加えることができませんでした。"
+
+#: units/friends/friends_actions.php:38
+#, php-format
+msgid ""
+"%s has elected to moderate friendship requests. Your request has been added "
+"to their moderation queue."
+msgstr ""
+
+#: units/friends/friends_actions.php:40
+#, php-format
+msgid ""
+"%s has requested to add you as a friend!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t%s\n"
+"\n"
+"To view all your friends requests and approve or deny this user, click "
+"here:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s team."
+msgstr ""
+
+#: units/friends/friends_actions.php:41
+#, php-format
+msgid "New %s friend request"
+msgstr "%s での新しい交友申請"
+
+#: units/friends/friends_actions.php:46
+#, php-format
+msgid ""
+"%s has elected to moderate friendship requests, but your friend request "
+"couldn't be added to their moderation queue."
+msgstr ""
+
+#: units/friends/friends_actions.php:50
+#, php-format
+msgid ""
+"%s has decided not to allow any new friendship requests at this time. Your "
+"friendship request has been declined."
+msgstr ""
+
+#: units/friends/friends_actions.php:60
+msgid " was removed from your friends."
+msgstr " さんは友人リストから削除されました。"
+
+#: units/friends/friends_actions.php:64
+msgid " couldn't be removed from your friends."
+msgstr " さんは友人リストから削除できませんでした。"
+
+#: units/friends/friends_actions.php:82
+#, php-format
+msgid "You approved the friendship request. %s now lists you as a friend."
+msgstr ""
+
+#: units/friends/friends_actions.php:83
+#, php-format
+msgid ""
+"%s has approved your friendship request!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t%s\n"
+"\n"
+"To view all your friends, click here:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s team."
+msgstr ""
+
+#: units/friends/friends_actions.php:84
+#, php-format
+msgid "%s friend request approved!"
+msgstr ""
+
+#: units/friends/friends_actions.php:87
+msgid "An error occurred: couldn't add you as a friend"
+msgstr ""
+
+#: units/friends/friends_actions.php:90 units/friends/friends_actions.php:112
+msgid "Error: you do not have authority to modify this friendship request."
+msgstr ""
+
+#: units/friends/friends_actions.php:93 units/friends/friends_actions.php:115
+msgid "An error occurred: the friendship request could not be found."
+msgstr ""
+
+#: units/friends/friends_actions.php:107
+#, php-format
+msgid ""
+"You declined the friendship request. %s does not list you as a friend."
+msgstr ""
+
+#: units/friends/friends_actions.php:108
+#, php-format
+msgid ""
+"%s has denied your friendship request.\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t%s\n"
+"\n"
+"To view all your existing friends, click here:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s team."
+msgstr ""
+
+#: units/friends/friends_actions.php:109
+#, php-format
+msgid "%s friend request denied"
+msgstr "%s での交友申請は拒否されました。"
+
+#: units/friends/friends_edit.php:47
+msgid ""
+"You don't have any friends listed! To add a user as a friend, click the "
+"'friend' button underneath a user's icon."
+msgstr ""
+"今のところ、誰も友人としてリストしていません。 友人を加えるには、ユーザのアイコンの下にある「友人」ボタン（またはリンク）をクリックしてください。"
+
+#: units/friends/friends_edit.php:49
+msgid ""
+"This user doesn't currently have any friends listed. Maybe if you list them "
+"as a friend, it'll start the ball rolling ..?"
+msgstr ""
+
+#: units/friends/friends_of_edit.php:18
+#, php-format
+msgid "Displaying 1000 most recently active people, of %d found."
+msgstr ""
+
+#: units/friends/friends_of_edit.php:58
+msgid ""
+"Nobody's listed you as a friend! Maybe you need to start chatting to some "
+"other users?"
+msgstr "今のところ、誰からも友人としてリストされていません。 まずは他のユーザとの雑談から始めては如何でしょう？"
+
+#: units/friends/friends_of_edit.php:60
+msgid ""
+"This user isn't currently listed as anyone's friend. Maybe you could be the "
+"first?"
+msgstr ""
+
+#: units/friends/profile_friends.php:20 units/friends/profile_friends.php:29
+msgid "View all Friends"
+msgstr "すべての友人を表示"
+
+#: units/friends/profile_friends.php:27 units/friends/user_friends.php:14
+msgid "Your Friends"
+msgstr "友人"
+
+#: units/friends/user_friends.php:14
+msgid "Friends Screen"
+msgstr "友人画面"
+
+#: units/friends/user_friendship_requests.php:16
+msgid ""
+"The following users would like to add you as a friend. They need your "
+"approval to do this (to change this setting, visit the 'account settings' "
+"page)."
+msgstr ""
+
+#: units/friends/user_friendship_requests.php:51
+msgid "You have no pending friendship requests."
+msgstr "承認待ちの「交友申請」はありません。"
+
+#: units/friends/user_info_menu_text.php:19
+msgid "Are you sure you want to add this user as a friend?"
+msgstr "本当に、このユーザを友人に加えてもよろしいですか？"
+
+#: units/friends/user_info_menu_text.php:19
+msgid "Click here to add this user as a friend."
+msgstr "このユーザを友人に加えるには、ここをクリックしてください。"
+
+#: units/friends/user_info_menu_text.php:26
+msgid "Are you sure you want to remove this user from your friends list?"
+msgstr "本当に、このユーザを友人リストから削除してもよろしいですか？"
+
+#: units/friends/user_info_menu_text.php:26
+msgid "Click here to remove this user from your friends list."
+msgstr "このユーザを友人リストから削除するには、ここをクリックしてください。"
+
+#: units/gettext/library.php:410
+msgid "Language selection"
+msgstr "言語選択"
+
+#: units/gettext/library.php:411
+msgid ""
+"Choose your preferred language for this site. The following languages are "
+"available on this system:"
+msgstr "このサイトで利用できる以下の言語から、常用したい言語を選択してください。"
+
+#: units/gettext/library.php:422
+msgid "No languages installed"
+msgstr "言語がインストールされていません"
+
+#: units/gettext/library.php:428
+msgid "default"
+msgstr "デフォルト"
+
+#: units/gettext/library.php:480 units/gettext/library.php:485
+msgid "Preferred language"
+msgstr "常用言語"
+
+#: units/gettext/library.php:480
+msgid "saved"
+msgstr "が保存されました"
+
+#: units/gettext/library.php:485
+msgid "not changed"
+msgstr "は変更されませんでした"
+
+#: units/groups/groups_access_levels.php:8
+msgid "Group"
+msgstr "グループ"
+
+#: units/groups/groups_actions.php:27
+msgid "Your group was updated."
+msgstr "グループが更新されました。"
+
+#: units/groups/groups_create.php:3
+msgid "Create a new group"
+msgstr "新しいグループの作成"
+
+#: units/groups/groups_create.php:4
+msgid "Group name:"
+msgstr "グループ名："
+
+#: units/groups/groups_display_membership.php:6
+msgid "Group membership"
+msgstr "グループメンバーシップ"
+
+#: units/groups/groups_display_membership.php:15
+#, php-format
+msgid "Owned by %s"
+msgstr "所有者： %s"
+
+#: units/groups/groups_edit_display.php:13
+msgid "Your friends:"
+msgstr "友人："
+
+#: units/groups/groups_edit_display.php:44
+msgid "Add selected to group"
+msgstr "選択したものをグループに追加する"
+
+#: units/groups/groups_edit_display.php:53
+msgid "Remove selected from group"
+msgstr "選択したものをグループから削除する"
+
+#: units/groups/groups_edit_display.php:54
+msgid "Members of this group:"
+msgstr "グループのメンバー："
+
+#: units/groups/groups_edit_display.php:72
+msgid "Save this group"
+msgstr "グループの保存"
+
+#: units/groups/groups_edit_display.php:73
+msgid "Delete this group"
+msgstr "グループの削除"
+
+#: units/groups/groups_edit_existing.php:6
+msgid "Groups you own"
+msgstr "あなたの所有するグループ"
+
+#: units/groups/groups_editpage.php:4
+msgid "Existing groups"
+msgstr "既存のグループ"
+
+#: units/groups/groups_explanation.php:3
+msgid ""
+"Access is controlled through the use of Access groups and this is one of the "
+"most powerful features of Elgg. Access groups allow you to have complete "
+"control over who sees what within your environment. You can create as many "
+"access groups as you wish. Each access group can have as many of your "
+"friends as you like and each access group created becomes another option in "
+"the 'access restriction' dropdown menu beside each profile item, weblog post "
+"and file uploaded."
+msgstr ""
+
+#: units/groups/groups_explanation.php:4 units/groups/groups_help.php:4
+msgid ""
+"When you create an access group, add people to it then select it as your "
+"access restriction on a weblog post only the people in that group will be "
+"able to see that weblog post and so on for all elements in your learning "
+"landscape."
+msgstr ""
+
+#: units/groups/groups_help.php:3
+msgid "This is a help file for the Groups functions."
+msgstr "これはグループ機能のヘルプファイルです。"
+
+#: units/icons/function_actions.php:57
+msgid "Your selected icons were deleted."
+msgstr "選択されたアイコンは削除されました。"
+
+#: units/icons/function_actions.php:71
+msgid ""
+"You have already met your icon quota. You must delete some icons before you "
+"can upload any new ones."
+msgstr "アイコンの容量が制限に達しました。 新しいアイコンをアップロードする前に、いくつかのアイコンを削除する必要があります。"
+
+#: units/icons/function_actions.php:79
+msgid "Attempting to upload icon file ..."
+msgstr "アイコンファイルをアップロード中です..."
+
+#: units/icons/function_actions.php:86
+msgid ""
+"The uploaded icon file was invalid. Please ensure you are using JPEG, GIF or "
+"PNG files."
+msgstr "アップロードされたアイコンファイルは無効です。 JPEG、GIF、PNG のファイルを使用してください。"
+
+#: units/icons/function_actions.php:118
+msgid ""
+"The uploaded icon file was in an image format other than JPEG, GIF or PNG. "
+"These are unsupported at present."
+msgstr "JPEG、GIF、PNG 以外の画像形式のアイコンファイルがアップロードされましたが、現在のところ、それらはサポートしていません。"
+
+#: units/icons/function_actions.php:138
+msgid "Your icon was uploaded successfully."
+msgstr "アイコンは正常にアップロードされました。"
+
+#: units/icons/function_actions.php:141
+msgid ""
+"An unknown error occurred when saving your icon. If this problem persists, "
+"please let us know and we'll do all we can to fix it quickly."
+msgstr ""
+"アイコン保存時に未知のエラーが発生しました。 この問題が継続して発生する場合、開発者までご連絡いただければ、できるだけ早期に修正するように努めます。"
+
+#: units/icons/function_add_icons.php:15
+msgid "Upload a new picture"
+msgstr "新しい画像のアップロード"
+
+#: units/icons/function_add_icons.php:16
+msgid ""
+"Upload a picture for this profile below. Pictures need to be 100x100 pixels "
+"or smaller, but don't worry - if you've selected a larger picture, we'll "
+"shrink it down for you. You may upload up to"
+msgstr ""
+"以下で、このプロフィールの画像をアップロードしてください。 画像は 100x100 "
+"ピクセル以下である必要がありますが、選んだ画像が大きい場合でも、それは自動的に縮小されますので心配はいりません。 最大で合計"
+
+#: units/icons/function_add_icons.php:17
+msgid "pictures in total."
+msgstr "画像をアップロードできます。"
+
+#: units/icons/function_add_icons.php:26
+msgid "Picture to upload:"
+msgstr "アップロードする画像："
+
+#: units/icons/function_add_icons.php:37
+msgid "Icon description:"
+msgstr "アイコンの説明："
+
+#: units/icons/function_add_icons.php:45
+msgid "Make this the default icon:"
+msgstr "これをデフォルトのアイコンにする："
+
+#: units/icons/function_add_icons.php:58
+msgid "Upload new icon"
+msgstr "新しいアイコンのアップロード"
+
+#: units/icons/function_edit_icons.php:21
+msgid "Site pictures"
+msgstr "サイト画像"
+
+#: units/icons/function_edit_icons.php:31
+msgid ""
+"Site pictures are small pictures that act as a representative icon "
+"throughout the system."
+msgstr "サイト画像は、システム全体にわたる代表的なアイコンの役割をする小さな画像です。"
+
+#: units/icons/function_edit_icons.php:55
+msgid "Name:"
+msgstr "名前："
+
+#: units/icons/function_edit_icons.php:56
+msgid "Default:"
+msgstr "デフォルト："
+
+#: units/icons/function_edit_icons.php:79
+msgid "No default:"
+msgstr "デフォルトなし："
+
+#: units/icons/function_edit_icons.php:100
+msgid "You don't have any site pictures loaded yet."
+msgstr "今のところ、サイト画像はありません。"
+
+#: units/invite/invite.php:12
+msgid "Their name"
+msgstr "招待する人の名前"
+
+#: units/invite/invite.php:18
+msgid "Their email address"
+msgstr "招待する人のメールアドレス"
+
+#: units/invite/invite.php:25
+msgid "An optional message"
+msgstr "招待する人へのメッセージ"
+
+#: units/invite/invite.php:33
+msgid "Invite"
+msgstr "招待"
+
+#: units/invite/invite_actions.php:34
+msgid "They included the following message:"
+msgstr "招待した方は以下のメッセージを付加しました："
+
+#: units/invite/invite_actions.php:38
+#, php-format
+msgid "Thank you for registering with %s."
+msgstr "%s へのご登録ありがとうございます。"
+
+#: units/invite/invite_actions.php:39
+#, php-format
+msgid "%s account verification"
+msgstr "%s さんのアカウント確認"
+
+#: units/invite/invite_actions.php:42 units/invite/invite_actions.php:43
+msgid "has invited you to join"
+msgstr "さんから次のお誘いがありました："
+
+#: units/invite/invite_actions.php:42
+msgid "a learning landscape system."
+msgstr "ソーシャルネットワークへ参加しませんか？"
+
+#: units/invite/invite_actions.php:46
+#, php-format
+msgid ""
+"Dear %s,\n"
+"\n"
+"%s %s\n"
+"\n"
+"To join, visit the following URL:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Your email address has not been passed onto any third parties, and will be "
+"removed from our system within seven days.\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s team."
+msgstr ""
+"こんにちは、%s さん。\n"
+"\n"
+"%s %s\n"
+"\n"
+"参加するには以下のURLを訪れてください：\n"
+"\n"
+"\t%s\n"
+"\n"
+"あなたのメールアドレスが第三者にわたることはなく、私たちのシステムからも7日以内に削除されます。\n"
+"\n"
+"あなたのご参加をお待ちしております。\n"
+"\n"
+"%s チーム"
+
+#: units/invite/invite_actions.php:48
+#, php-format
+msgid ""
+"Your invitation was sent to %s at %s. It will be valid for seven days."
+msgstr "あなたからの招待状は %s (%s) さん宛に送信されました。 招待状の有効期間は7日間です。"
+
+#: units/invite/invite_actions.php:51
+#, php-format
+msgid "User %s already has that email address. Invitation not sent."
+msgstr "同一メールアドレスを所有するユーザが存在するため、招待状は送信されませんでした。<!--%s-->"
+
+#: units/invite/invite_actions.php:54
+msgid ""
+"Someone with that email address has already been invited to the system. "
+msgstr "そのメールアドレスを持った方は、すでにシステムに招待済みです。 "
+
+#: units/invite/invite_actions.php:57
+msgid "Invitation failed: The email address was not valid."
+msgstr "招待の失敗： メールアドレスが有効ではありません。"
+
+#: units/invite/invite_actions.php:60
+msgid "Error: This community has reached its maximum number of users."
+msgstr "エラー： このコミュニティは最大ユーザ数に達しました。"
+
+#: units/invite/invite_actions.php:63
+msgid "Invitation failed: you are not logged in."
+msgstr "招待の失敗： あなたはログインしていません。"
+
+#: units/invite/invite_actions.php:66
+msgid "Invitation failed: you must specify both a name and an email address."
+msgstr "招待の失敗： あなたは名前とメールアドレスの両方を指定する必要があります。"
+
+#: units/invite/invite_actions.php:79
+msgid ""
+"Unfortunately this community has reached its account limit and you are "
+"unable to join at this time."
+msgstr "申し訳ありませんが、このコミュニティのアカウントが制限に達したため、今回は参加することができません。"
+
+#: units/invite/invite_actions.php:83
+msgid "You must indicate that you are at least 13 years old to join."
+msgstr "参加するためには、13歳以上であることを示す必要があります。"
+
+#: units/invite/invite_actions.php:87
+msgid "Error! Invalid invite code."
+msgstr "エラー！ 無効な招待コードです。"
+
+#: units/invite/invite_actions.php:136
+msgid ""
+"Your account was created! You can now log in using the username and password "
+"you supplied. You have been sent an email containing these details for "
+"reference purposes."
+msgstr ""
+"アカウントが作成されました！ あなたの入力したユーザ名とパスワードを使用して、すぐにログインすることができます。 "
+"また、これらの詳細を含んだメールをあなた宛に送信しました。"
+
+#: units/invite/invite_actions.php:138
+#, php-format
+msgid "Your %s account"
+msgstr "あなたの %s でのアカウント"
+
+#: units/invite/invite_actions.php:139
+#, php-format
+msgid ""
+"Thanks for joining %s!\n"
+"\n"
+"For your records, your %s username and password are:\n"
+"\n"
+"\t"
+msgstr ""
+"%s へのご参加ありがとうございます！\n"
+"\n"
+"あなたの %s でのユーザ名とパスワードは以下のとおりです：\n"
+"\n"
+"\t"
+
+#: units/invite/invite_actions.php:158
+#, php-format
+msgid "Verify your %s account password request"
+msgstr "%s でのアカウントのパスワードリクエストの確認"
+
+#: units/invite/invite_actions.php:159
+#, php-format
+msgid ""
+"A request has been received to generate your account at %s a new password.\n"
+"\n"
+msgstr ""
+
+#: units/invite/invite_actions.php:163
+msgid "Your verification email was sent. Please check your inbox."
+msgstr "あなた宛に確認メールが送信されました。 しばらくしてからメールの受信を確認してください。"
+
+#: units/invite/invite_actions.php:165
+msgid "No user with that username was found."
+msgstr "そのユーザ名のユーザは見つかりませんでした。"
+
+#: units/invite/invite_join.php:28
+#, php-format
+msgid ""
+"Thank you for registering for an account with %s! Registration is completely "
+"free, but before you confirm your details, please take a moment to read the "
+"following documents:"
+msgstr ""
+
+#: units/invite/invite_join.php:29 units/invite/join_noinvite.php:10
+msgid "terms and conditions"
+msgstr "利用条件"
+
+#: units/invite/invite_join.php:30 units/invite/join_noinvite.php:11
+msgid "Privacy policy"
+msgstr "プライバシーポリシー"
+
+#: units/invite/invite_join.php:31
+msgid ""
+"Submitting the form below indicates acceptance of these terms. Please note "
+"that currently you must be at least 13 years of age to join the site."
+msgstr ""
+
+#: units/invite/invite_join.php:50 units/invite/join_noinvite.php:32
+#: units/weblogs/weblogs_comments_add.php:48
+msgid "Your name"
+msgstr "あなたの名前"
+
+#: units/invite/invite_join.php:56
+msgid "Your username - (Must be letters only)"
+msgstr "ユーザ名 - （文字だけに限ります）"
+
+#: units/invite/invite_join.php:62
+msgid "Enter a password"
+msgstr "パスワードを入力"
+
+#: units/invite/invite_join.php:68
+msgid "Your password again for verification purposes"
+msgstr "確認のためにパスワードを再入力"
+
+#: units/invite/invite_join.php:72
+msgid "I am at least thirteen years of age."
+msgstr "私は満13才以上です。"
+
+#: units/invite/invite_join.php:73
+msgid "Join"
+msgstr "参加"
+
+#: units/invite/invite_join.php:87
+msgid ""
+"Your invitation code appears to be invalid. Codes only last for seven days; "
+"it's possible that yours is older."
+msgstr "あなたの招待コードは無効のようです。 コードの有効期限は７日間のため、それより古い可能性があります。"
+
+#: units/invite/invite_join.php:90
+#, php-format
+msgid "If you still want to join %s, click the Register link."
+msgstr ""
+
+#: units/invite/invite_join.php:92
+#, php-format
+msgid ""
+"If you still want to join %s, it may be worth getting in touch with the "
+"person who invited you."
+msgstr ""
+
+#: units/invite/invite_join.php:108
+#, php-format
+msgid "To join %s, click the Register link."
+msgstr ""
+
+#: units/invite/invite_join.php:110
+#, php-format
+msgid ""
+"For the moment, joining %s requires a specially tailored invite code. If you "
+"know someone who's a member, it may be worth asking them for one."
+msgstr ""
+
+#: units/invite/join_noinvite.php:9
+#, php-format
+msgid ""
+"Thank you for registering for an account with %s! Registration is completely "
+"free, but before you fill in your details, please take a moment to read the "
+"following documents:"
+msgstr ""
+"%s のアカウントにご登録いただきありがとうございます。 "
+"登録は完全無料ですが、あなたの詳細を記入する前に、時間を割いて以下のドキュメントをよくお読みください："
+
+#: units/invite/join_noinvite.php:12
+msgid ""
+"When you fill in the details below, we will send an \"invitation code\" to "
+"your email address in order to validate it. You must then click on this "
+"within seven days to create your account."
+msgstr ""
+"以下の詳細を記入し、「ユーザ登録」ボタンを押して送信すると、メールアドレスに確認のための「招待コード」が送信されます。 "
+"メールの到着後、それをクリックしてアカウントを作成してください。 "
+"ただし、「招待コード」の有効期間は７日間であり、その期間を過ぎると無効となりますのでご注意ください。"
+
+#: units/invite/join_noinvite.php:38
+msgid "Your email address"
+msgstr "あなたのメールアドレス"
+
+#: units/invite/join_noinvite.php:53
+msgid "Self-registration is currently disabled."
+msgstr "現在、ユーザ自身による登録は無効となっています。"
+
+#: units/invite/new_password.php:13
+#, php-format
+msgid ""
+"A new password has been emailed to you at %s. You should be able to use it "
+"immediately; your old one has been deactivated."
+msgstr ""
+
+#: units/invite/new_password.php:30
+#, php-format
+msgid "Your %s password"
+msgstr "あなたの %s でのパスワード"
+
+#: units/invite/new_password.php:30
+#, php-format
+msgid ""
+"Your %s password has been reset.\n"
+"\n"
+"For your records, your new password is:\n"
+"\n"
+"\tPassword: %s\n"
+"\n"
+"Please consider changing your password as soon as you have logged in for "
+"security reasons.\n"
+"\n"
+"We hope you continue to enjoy using the system.\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s Team"
+msgstr ""
+
+#: units/invite/new_password.php:37 units/invite/new_password.php:49
+msgid ""
+"Your password request code appears to be invalid. Try generating a new one?"
+msgstr "あなたのパスワード申請コードは無効のようです。 新しいものを生成しますか？"
+
+#: units/invite/password_request.php:5
+#, php-format
+msgid ""
+"To generate a new password at %s!, enter your username below. We will send "
+"the address of a unique verification page to you via email click on the link "
+"in the body of the message and a new password will be sent to you."
+msgstr ""
+"%s での新しいパスワードを発行するために、以下にユーザ名を入力してください。 "
+"パスワードの再発行には、まず、メールでユニークな確認ページへのアドレスを送信します。 "
+"その後、確認ページにアクセスすることで新しいパスワードがメールで送信されます。"
+
+#: units/invite/password_request.php:6
+msgid "This method reduces the chance of a mistakenly reset password."
+msgstr "この方法は、間違ってパスワードをリセットしてしまう機会を減らします。"
+
+#: units/invite/password_request.php:22
+msgid "Your username"
+msgstr "あなたのユーザ名"
+
+#: units/invite/password_request.php:26
+msgid "Request new password"
+msgstr "新しいパスワードのリクエスト"
+
+#: units/magpie/default_template.php:8
+msgid "Feed Post"
+msgstr "投稿のフィード"
+
+#: units/magpie/default_template.php:9
+msgid "A template for each post in a feed."
+msgstr "フィードの各投稿のためのテンプレートです。"
+
+#: units/magpie/default_template.php:11 units/weblogs/default_template.php:11
+msgid "Post title"
+msgstr "投稿のタイトル"
+
+#: units/magpie/default_template.php:12 units/weblogs/default_template.php:12
+msgid "The text of the post"
+msgstr "投稿のテキスト"
+
+#: units/magpie/default_template.php:13
+msgid "An icon for the user"
+msgstr "ユーザのアイコン"
+
+#: units/magpie/default_template.php:14
+msgid "The feed name"
+msgstr "フィード名"
+
+#: units/magpie/default_template.php:15
+msgid "A short description of the feed"
+msgstr "フィードの簡単な説明"
+
+#: units/magpie/default_template.php:16
+msgid "A link to the post"
+msgstr "投稿へのリンク"
+
+#: units/magpie/default_template.php:17
+msgid "A link to the host site"
+msgstr "ホストサイトへのリンク"
+
+#: units/magpie/default_template.php:18
+msgid "A link to the host feed"
+msgstr "ホストフィードへのリンク"
+
+#: units/magpie/default_template.php:19
+msgid "Buttons to subscribe or unsubscribe"
+msgstr "定期購読・購読解除ボタン"
+
+#: units/magpie/default_template.php:24
+msgid "Added"
+msgstr "追加しました"
+
+#: units/magpie/function_actions.php:23 units/magpie/function_actions.php:87
+#: units/magpie/function_actions.php:107
+msgid "Your feed subscription was successful."
+msgstr "フィードの定期購読は成功しました。"
+
+#: units/magpie/function_actions.php:25
+msgid "Feed subscription failed: you are already subscribed to this feed."
+msgstr "フィードの定期購読は失敗しました： あなたはすでに、このフィードを定期購読しています。"
+
+#: units/magpie/function_actions.php:34
+msgid "Your have successfully removed this feed from your subscriptions."
+msgstr "フィードはあなたの定期購読から正常に削除されました。"
+
+#: units/magpie/function_actions.php:36
+msgid "Feed unsubscription failed: you are not subscribed to this feed."
+msgstr "フィードの定期購読解除は失敗しました： あなたは、このフィードを定期購読していません。"
+
+#: units/magpie/function_actions.php:62
+msgid ""
+"Feed not imported to blog: You cannot import a feed from this account."
+msgstr "フィードをブログへインポートできませんでした： このアカウントからフィードをインポートすることはできません。"
+
+#: units/magpie/function_actions.php:89
+msgid "Feed subscription failed: this feed subscription already exists."
+msgstr "フィードの定期購読は失敗しました： このフィードの定期購読はすでに存在します。"
+
+#: units/magpie/function_actions.php:96
+msgid "Feed subscription failed: SSL feed reading is not enabled."
+msgstr "フィードの定期購読は失敗しました： SSL フィードの読み込みが有効ではありません。"
+
+#: units/magpie/function_actions.php:110
+msgid ""
+"Feed subscription failed: feed appears to be invalid. Please check your link "
+"or try later."
+msgstr "フィードの定期購読は失敗しました： フィードが無効だと思われます。 リンクをチェックするか、後ほど再試行してください。"
+
+#: units/magpie/function_actions.php:114
+msgid ""
+"Feed subscription failed: could not get feed. Please check your link or try "
+"later."
+msgstr "フィードの定期購読は失敗しました： フィードが取得できませんでした。 リンクをチェックするか、後ほど再試行してください。"
+
+#: units/magpie/function_actions.php:116
+msgid "Error message was: "
+msgstr "エラーメッセージ： "
+
+#: units/magpie/function_subscriptions.php:12
+#: units/magpie/function_subscriptions_popular.php:5
+msgid ""
+"Feeds are information streams from other sites. You will often see a link to "
+"an 'RSS' feed while browsing; enter the link address into the 'add feed' box "
+"at the bottom of the page to read that information from within your learning "
+"landscape."
+msgstr ""
+"フィードは他サイトからの情報の流れです。 あなたはよく、様々なサイトを閲覧中に「RSS」フィードへのリンクを見かけるでしょう。 "
+"このスペースでそれらの情報を読むために、フィードへのリンクアドレスをページ下部の「定期購読」フィールドに入力してください。"
+
+#: units/magpie/function_subscriptions.php:21
+#: units/magpie/function_subscriptions_popular.php:13
+#: units/magpie/function_subscriptions_publish_to_blog.php:18
+msgid "Last updated"
+msgstr "最終更新"
+
+#: units/magpie/function_subscriptions.php:22
+#: units/magpie/function_subscriptions_publish_to_blog.php:19
+msgid "Resource name"
+msgstr "リソース名"
+
+#: units/magpie/function_subscriptions.php:32
+#: units/magpie/function_subscriptions_publish_to_blog.php:41
+msgid "View content"
+msgstr "コンテンツ表示"
+
+#: units/magpie/function_subscriptions.php:40
+#: units/magpie/function_subscriptions_popular.php:30
+#: units/magpie/function_view_post.php:44
+msgid "Are you sure you want to unsubscribe from this feed?"
+msgstr "本当に、このフィードの定期購読を中止してもよろしいですか？"
+
+#: units/magpie/function_subscriptions.php:40
+#: units/magpie/function_subscriptions_popular.php:30
+#: units/magpie/function_view_post.php:44
+msgid "Unsubscribe"
+msgstr "購読中止"
+
+#: units/magpie/function_subscriptions.php:54
+msgid "Subscription list as OPML"
+msgstr "OPMLでの定期購読リスト"
+
+#: units/magpie/function_subscriptions.php:61
+#: units/magpie/function_subscriptions_publish_to_blog.php:57
+msgid "Update"
+msgstr "更新"
+
+#: units/magpie/function_subscriptions.php:71
+#: units/magpie/function_subscriptions_publish_to_blog.php:67
+msgid "You are not subscribed to any feeds."
+msgstr "購読しているフィードはありません。"
+
+#: units/magpie/function_subscriptions.php:73
+#: units/magpie/function_subscriptions_publish_to_blog.php:69
+msgid "No feeds were found."
+msgstr "フィードが見つかりませんでした。"
+
+#: units/magpie/function_subscriptions.php:78
+#: units/magpie/function_subscriptions_popular.php:52
+msgid "To subscribe to a new feed, enter its address below:"
+msgstr "新たに定期購読したいフィードのアドレスを、以下に入力してください："
+
+#: units/magpie/function_subscriptions.php:84
+#: units/magpie/function_subscriptions_popular.php:32
+#: units/magpie/function_subscriptions_popular.php:58
+#: units/magpie/function_view_post.php:46
+msgid "Subscribe"
+msgstr "定期購読"
+
+#: units/magpie/function_subscriptions_popular.php:6
+msgid "This is a list of the feeds with the most subscribers."
+msgstr "以下は、最も多く定期購読されているフィードのリストです。"
+
+#: units/magpie/function_subscriptions_popular.php:14
+msgid "Link to site"
+msgstr "サイトへのリンク"
+
+#: units/magpie/function_subscriptions_popular.php:20
+msgid "Unnamed Feed"
+msgstr "名前のないフィード"
+
+#: units/magpie/function_subscriptions_popular.php:25
+msgid "View posts"
+msgstr "投稿表示"
+
+#: units/magpie/function_subscriptions_popular.php:32
+#: units/magpie/function_view_post.php:46
+msgid "Are you sure you want to subscribe to this feed?"
+msgstr "本当に、このフィードを定期購読しますか？"
+
+#: units/magpie/function_subscriptions_popular.php:36
+msgid "Subscribers"
+msgstr "定期購読者"
+
+#: units/magpie/function_subscriptions_popular.php:49
+msgid "No-one has subscribed to any feeds."
+msgstr "誰も定期購読していません。"
+
+#: units/magpie/function_subscriptions_publish_to_blog.php:9
+msgid ""
+"Click a box below to automatically import content from a feed into your "
+"blog. You can also add default keywords for content from that feed. (You "
+"should only do this if you have the legal right to use this resource - in "
+"other words, you must have permission from the content owner, as the feed's "
+"content will appear in your blog as if you had written it.)"
+msgstr ""
+"あなたのブログへフィードからコンテンツを自動的にインポートしたい場合は、以下のフィードのチェックボックスへチェックを入れてください。 "
+"フィードからのコンテンツには、デフォルトのキーワード（タグ）を加えることができます。 （※ "
+"これは、あなたがフィードから得られるリソースに対して、法的権限を持つ場合にのみ利用してください。 "
+"言い換えれば、この機能を利用すると、フィードからのコンテンツがまるであなたが書いたように見えますので、コンテンツ所有者の許可がなければなりません。）"
+
+#: units/magpie/function_subscriptions_publish_to_blog.php:27
+msgid ""
+"Are you sure you want to import this content into your personal blog?\\nYou "
+"should make sure you own it or have permission from the copyright holder."
+msgstr ""
+""
+"本当に、あなたの個人ブログにコンテンツをインポートしてもよろしいですか？\\nこれは法的な問題を孕みますので、それがあなたの所有するものか、あるいは、間違い"
+"なく著作権保有者から許可を得ている必要があります。"
+
+#: units/magpie/function_view.php:29
+#: units/magpie/function_view_individual.php:26
+#: units/weblogs/weblogs_all_users_view.php:107
+#: units/weblogs/weblogs_friends_view.php:57
+#: units/weblogs/weblogs_interesting_view.php:52
+#: units/weblogs/weblogs_view.php:53
+msgid "Back"
+msgstr "戻る"
+
+#: units/magpie/function_view_post.php:28
+msgid "unknown"
+msgstr "不明"
+
+#: units/magpie/function_view_post.php:40
+msgid "View site"
+msgstr "サイトを表示"
+
+#: units/profile/profile_user_info.php:42
+msgid "Your LMS hosts"
+msgstr ""
+
+#: units/search/function_search_all_display_rss.php:16
+#, php-format
+msgid "Items tagged with \"%s\" from %s"
+msgstr ""
+
+#: units/search/search_suggest_rss.php:6
+msgid "Syndication"
+msgstr "記事配信"
+
+#: units/search/search_suggest_rss.php:7
+msgid "RSS feed for this tag"
+msgstr "このタグのRSSフィード"
+
+#: units/search/search_suggest_tags.php:22
+msgid "Automatic tag suggestion:"
+msgstr ""
+
+#: units/search/search_suggest_users.php:23
+msgid "Matching accounts:"
+msgstr "一致したアカウント："
+
+#: units/search/search_user_info_menu.php:7
+msgid "Search"
+msgstr "検索"
+
+#: units/search/search_user_info_menu.php:9
+msgid "Random tags"
+msgstr "ランダムタグ"
+
+#: units/search/tags_display.php:7
+msgid ""
+"The following is a selection of keywords used within this site. Click one to "
+"see related users, weblog posts or objects."
+msgstr ""
+"以下は、このサイトで使用されているキーワードを選抜したものです。 関連するユーザやブログ投稿、オブジェクトを見るために、どれか1つをクリックしてください。"
+
+#: units/search/tags_display_personal.php:40
+msgid "No tags found for this user."
+msgstr "このユーザのタグは見つかりませんでした。"
+
+#: units/templates/default_template.php:57
+msgid "Sidebar section holder"
+msgstr ""
+
+#: units/templates/default_template.php:58
+msgid "Contains the sidebar section titles"
+msgstr ""
+
+#: units/templates/default_template.php:60
+msgid "The header"
+msgstr "見出し"
+
+#: units/templates/default_template.php:296
+msgid "adminTable"
+msgstr ""
+
+#: units/templates/default_template.php:297
+msgid ""
+"This table is used to house stats and administration details until a good "
+"CSS solution can be applied."
+msgstr ""
+
+#: units/templates/default_template.php:299
+#: units/templates/default_template.php:330
+msgid "Column One"
+msgstr "カラム 1"
+
+#: units/templates/default_template.php:300
+#: units/templates/default_template.php:331
+msgid "Column Two"
+msgstr "カラム 2"
+
+#: units/templates/default_template.php:301
+#: units/templates/default_template.php:332
+msgid "Column Three"
+msgstr "カラム 3"
+
+#: units/templates/default_template.php:327
+msgid "flagContent"
+msgstr ""
+
+#: units/templates/default_template.php:328
+msgid "This holds the flag content function throughout Elgg"
+msgstr ""
+
+#: units/tinymce/tinymce_userdetails_actions.php:15
+msgid "Your editor preferences have been saved"
+msgstr "エディタの設定が保存されました"
+
+#: units/tinymce/tinymce_userdetails_actions.php:18
+msgid "Your editor preferences have been changed"
+msgstr "エディタの設定が変更されました。"
+
+#: units/tinymce/tinymce_userdetails_actions.php:20
+msgid "Your editor preferences could not be changed"
+msgstr "エディタの設定を変更できませんでした。"
+
+#: units/tinymce/tinymce_userdetails_edit.php:3
+msgid "Visual text editing"
+msgstr "WYSIWYGテキスト編集"
+
+#: units/tinymce/tinymce_userdetails_edit.php:4
+msgid ""
+"Set this to 'yes' if you would like to use a visual (WYSIWYG) text editor "
+"for your posts and comments."
+msgstr "投稿やコメントでWYSIWYGエディタを使用したい場合には、「はい」を指定してください。"
+
+#: units/tinymce/tinymce_userdetails_edit.php:20
+#: units/tinymce/tinymce_userdetails_edit.php:27
+msgid "Enable visual editor: "
+msgstr "WYSIWYGエディタの有効化： "
+
+#: units/users/function_default_access_levels.php:6
+msgid "Public"
+msgstr "パブリック"
+
+#: units/users/function_number_of_users.php:7
+#, php-format
+msgid "There are %d active users."
+msgstr "アクティブユーザ： %d 人"
+
+#: units/users/function_number_of_users.php:12
+#, php-format
+msgid "(%d logged on.)"
+msgstr "(%d 人がログオン中です)"
+
+#: units/users/function_number_of_users.php:17
+msgid "User Statistics"
+msgstr "ユーザ統計"
+
+#: units/users/user_info.php:22
+msgid "None."
+msgstr "なし"
+
+#: units/users/userdetails_actions.php:20
+msgid "Your suggested name was too long. Please try something shorter."
+msgstr "名前が長すぎます。 もう少し短くしてください。"
+
+#: units/users/userdetails_actions.php:40
+msgid "Email address updated."
+msgstr "メールアドレスが更新されました。"
+
+#: units/users/userdetails_actions.php:47
+msgid "Your moderation preferences have been changed."
+msgstr "モデレーション設定が変更されました。"
+
+#: units/users/userdetails_actions.php:55
+msgid "Public comments and discussion set to 'on'."
+msgstr "パブリックコメントとディスカッションが「有効」に設定されました。"
+
+#: units/users/userdetails_actions.php:58
+msgid "Public comments and discussion set to 'off'."
+msgstr "パブリックコメントとディスカッションが「無効」に設定されました。"
+
+#: units/users/userdetails_actions.php:67
+msgid "Email comments and discussion set to 'on'."
+msgstr "メールコメントとディスカッションが「有効」に設定されました。"
+
+#: units/users/userdetails_actions.php:70
+msgid "Email comments and discussion set to 'off'."
+msgstr "メールコメントとディスカッションが「無効」に設定されました。"
+
+#: units/users/userdetails_actions.php:78
+msgid "Email notifications set to 'on'."
+msgstr "メール通知が「有効」に設定されました。"
+
+#: units/users/userdetails_actions.php:81
+msgid "Email notifications set to 'off'."
+msgstr "メール通知が「無効」に設定されました。"
+
+#: units/users/userdetails_actions.php:96
+msgid "Details were not changed."
+msgstr "詳細は変更されませんでした。"
+
+#: units/users/userdetails_actions.php:107
+msgid ""
+"Password not changed: Your password is either too short or too long. It must "
+"be between 4 and 32 characters in length."
+msgstr ""
+"パスワードは変更されませんでした： パスワードの長さが適切ではありません。 パスワードの文字数は、4 ～ 32 文字である必要があります。"
+
+#: units/users/userdetails_actions.php:109
+msgid ""
+"Password not changed: Your password can only consist of letters or numbers."
+msgstr "パスワードは変更されませんでした： パスワードに使用できるのは英数字のみです。"
+
+#: units/users/userdetails_actions.php:111
+msgid "Your password was updated."
+msgstr "パスワードが更新されました。"
+
+#: units/users/userdetails_actions.php:118
+msgid ""
+"Password not changed: The password and its verification string did not match."
+msgstr "パスワードは変更されませんでした： 確認用に入力されたパスワードと一致しませんでした。"
+
+#: units/users/userdetails_edit.php:11
+msgid "Change your full name:"
+msgstr "氏名の変更："
+
+#: units/users/userdetails_edit.php:28
+msgid "Your full name "
+msgstr "氏名 "
+
+#: units/users/userdetails_edit.php:33
+msgid "Your email address:"
+msgstr "メールアドレス："
+
+#: units/users/userdetails_edit.php:34
+msgid ""
+"This will not be displayed to other users; you can choose to make an email "
+"address available via the profile screen."
+msgstr "これは他のユーザには表示されません。 他のユーザに公開するメールアドレスは、プロフィールの編集画面で設定することができます。"
+
+#: units/users/userdetails_edit.php:48
+msgid "Your email address "
+msgstr "メールアドレス "
+
+#: units/users/userdetails_edit.php:53
+msgid "Friendship moderation:"
+msgstr "交友関係モデレーション："
+
+#: units/users/userdetails_edit.php:54
+msgid "This allows you to choose who can list you as a friend."
+msgstr "他のユーザが、あなたを友人リストに加える際の制限を選択してください。"
+
+#: units/users/userdetails_edit.php:71
+msgid "No moderation: anyone can list you as a friend. (Recommended)"
+msgstr "モデレートしない： 誰でも友人リストに加えることができます。（推奨）"
+
+#: units/users/userdetails_edit.php:76
+msgid "Moderation: friendships must be approved by you."
+msgstr "モデレートする： 友人リストに加えるには、あなたの承認が必要となります。"
+
+#: units/users/userdetails_edit.php:81
+msgid "Private: nobody can list you as a friend."
+msgstr "プライベート： 誰も友人リストに加えることができません。"
+
+#: units/users/userdetails_edit.php:86
+msgid "Friendship moderation"
+msgstr "交友関係のモデレーション"
+
+#: units/users/userdetails_edit.php:91
+msgid "Make comments public"
+msgstr "コメントをパブリックにする"
+
+#: units/users/userdetails_edit.php:92
+msgid ""
+"Set this to 'yes' if you would like anyone to be able to comment on your "
+"resources (by default only logged-in users can). Note that this may make you "
+"vulnerable to spam."
+msgstr ""
+"あなたのリソースに不特定の人々がコメントできるようにしたい場合は、「はい」に設定してください（デフォルトではログインユーザのみがコメントできます）。 "
+"ただし、「はい」にするとスパム投稿に利用されやすいことに留意してください。"
+
+#: units/users/userdetails_edit.php:108 units/users/userdetails_edit.php:115
+msgid "Public comments: "
+msgstr "パブリックコメント： "
+
+#: units/users/userdetails_edit.php:122
+msgid "Receive email notifications"
+msgstr "メール通知を受け取る"
+
+#: units/users/userdetails_edit.php:123
+msgid ""
+"Set this to 'yes' if you would like to receive email copies of any messages "
+"you receive. This includes blog comments, notifications when people add you "
+"as a friend and more. You can always view these online as part of your "
+"recent activity page."
+msgstr ""
+"どのようなメッセージのコピーでもメールで受け取りたい場合は、ここを「はい」に設定してください。 "
+"これはブログのコメント、ユーザがあなたを友人に加えた際の通知、あるいはそれら以外のものを含みます。 "
+"あなたはいつでもオンラインで、「最近の活動」ページの一部としてこれらを見ることができます。"
+
+#: units/users/userdetails_edit.php:138 units/users/userdetails_edit.php:145
+msgid "Receive notifications: "
+msgstr "通知の受信： "
+
+#: units/users/userdetails_edit.php:151
+msgid "Change your password:"
+msgstr "パスワードの変更："
+
+#: units/users/userdetails_edit.php:152
+msgid "Leave this blank if you're happy to leave your password as it is."
+msgstr "パスワードを変更したくない場合は、ここを空欄のままにしてください。"
+
+#: units/users/userdetails_edit.php:166
+msgid "Your password: "
+msgstr "パスワード： "
+
+#: units/users/userdetails_edit.php:173
+msgid "Again for verification purposes: "
+msgstr "確認のため再度入力してください： "
+
+#: units/weblogs/archives_view.php:19
+#: units/weblogs/weblogs_user_info_menu.php:46
+msgid "Weblog Archive"
+msgstr "ブログアーカイブ"
+
+#: units/weblogs/archives_view.php:62 units/weblogs/archives_view_month.php:44
+msgid "There are no weblog posts to archive as yet."
+msgstr "今のところ、アーカイブすべきブログ投稿はありません。"
+
+#: units/weblogs/default_template.php:8
+msgid "Weblog Post"
+msgstr "ブログ投稿"
+
+#: units/weblogs/default_template.php:9
+msgid "A template for each weblog post."
+msgstr "各ブログ投稿のためのテンプレートです。"
+
+#: units/weblogs/default_template.php:13
+msgid "The username of the person making the post"
+msgstr "投稿者のユーザ名"
+
+#: units/weblogs/default_template.php:14
+msgid "Their user icon"
+msgstr "ユーザアイコン"
+
+#: units/weblogs/default_template.php:15
+msgid "Their full name"
+msgstr "氏名"
+
+#: units/weblogs/default_template.php:16
+msgid "The time and date of the post"
+msgstr "投稿の日付と時刻"
+
+#: units/weblogs/default_template.php:17
+msgid "A link to any comments"
+msgstr "任意のコメントへのリンク"
+
+#: units/weblogs/default_template.php:18 units/weblogs/default_template.php:82
+msgid "Any more links"
+msgstr "それ以上のリンク"
+
+#: units/weblogs/default_template.php:19
+msgid "A list of comments, if any"
+msgstr "コメントのリスト（もしあれば）"
+
+#: units/weblogs/default_template.php:23
+msgid "Posted by"
+msgstr "投稿者："
+
+#: units/weblogs/default_template.php:49
+msgid "Weblog Comments"
+msgstr "ブログコメント"
+
+#: units/weblogs/default_template.php:50
+msgid "A placeholder for weblog comments."
+msgstr "ブログコメントのプレースホルダーです。"
+
+#: units/weblogs/default_template.php:52
+msgid "The list of comments themselves"
+msgstr "コメントのリスト"
+
+#: units/weblogs/default_template.php:53
+msgid "The list of page links when there are lots of comments"
+msgstr "コメントが多い場合のページリンクのリスト"
+
+#: units/weblogs/default_template.php:57
+msgid "Comments"
+msgstr "コメント"
+
+#: units/weblogs/default_template.php:74
+msgid "Individual weblog comment"
+msgstr "個別のブログコメント"
+
+#: units/weblogs/default_template.php:75
+msgid ""
+"A template for each individual weblog comment. (Displayed one after the "
+"other, embedded in the comment placeholder.)"
+msgstr "各個別のブログコメントのためのテンプレートです。"
+
+#: units/weblogs/default_template.php:77
+msgid "Post body"
+msgstr "投稿の本文"
+
+#: units/weblogs/default_template.php:78
+msgid "The name of the person making the comment"
+msgstr "コメント投稿者の名前"
+
+#: units/weblogs/default_template.php:79
+msgid "When the comment was posted"
+msgstr "コメントの投稿日時"
+
+#: units/weblogs/default_template.php:80
+msgid "The usericon of the person making the comment, if available"
+msgstr "コメント投稿者のユーザアイコン（もしあれば）"
+
+#: units/weblogs/default_template.php:81
+msgid "A permalink to the comment"
+msgstr "コメントの固定リンク"
+
+#: units/weblogs/display_interesting_post_form.php:21
+msgid "Stop keeping track of this post"
+msgstr "この投稿の動向をおさえるのを中止する"
+
+#: units/weblogs/display_interesting_post_form.php:22
+msgid ""
+"You have marked this post as interesting; all comments will appear on your "
+"'recent activity' page. If you would like to remove this flag, click here."
+msgstr ""
+"あなたは、この投稿を興味深いとしてフラグを立てており、すべてのコメントは「最近の活動」ページに現れます。 "
+"もし、フラグを除去したい場合は、以下のボタンを押してください。"
+
+#: units/weblogs/display_interesting_post_form.php:23
+msgid "Remove interesting flag"
+msgstr "「興味深い投稿」フラグの除去"
+
+#: units/weblogs/display_interesting_post_form.php:25
+msgid "Keep track of this post"
+msgstr "この投稿の動向をおさえる"
+
+#: units/weblogs/display_interesting_post_form.php:26
+msgid ""
+"Click the 'Mark interesting' button to monitor new comments on your 'recent "
+"activity' page."
+msgstr "「最近の活動」ページで新しいコメントをモニターするには、「興味深い投稿」ボタンを押してください。"
+
+#: units/weblogs/display_interesting_post_form.php:27
+msgid "Mark interesting"
+msgstr "興味深い投稿"
+
+#: units/weblogs/function_search.php:5
+msgid "Weblog posts by"
+msgstr "ブログ投稿者："
+
+#: units/weblogs/function_search.php:6
+msgid "in category"
+msgstr "カテゴリ："
+
+#: units/weblogs/function_search.php:7
+msgid "RSS feed for weblog posts by"
+msgstr "RSSフィード - ブログ投稿者："
+
+#: units/weblogs/function_search.php:8
+msgid "Other users with weblog posts in category"
+msgstr "カテゴリ内にブログ投稿のある他のユーザ"
+
+#: units/weblogs/function_search.php:9
+msgid "Users with weblog posts in category"
+msgstr "カテゴリ内にブログ投稿のあるユーザ"
+
+#: units/weblogs/function_search_rss.php:20
+#: units/weblogs/templates_preview.php:53
+msgid "Weblog post"
+msgstr "ブログ投稿"
+
+#: units/weblogs/templates_preview.php:7
+msgid "Unkind Guest"
+msgstr "Unkind Guest"
+
+#: units/weblogs/templates_preview.php:8
+msgid " I mock you, Babbage! Your difference engine will never catch on."
+msgstr " I mock you, Babbage! Your difference engine will never catch on."
+
+#: units/weblogs/templates_preview.php:9
+#: units/weblogs/templates_preview.php:11
+msgid "Charles Babbage"
+msgstr "Charles Babbage"
+
+#: units/weblogs/templates_preview.php:10
+msgid "Says you!"
+msgstr "Says you!"
+
+#: units/weblogs/templates_preview.php:12
+msgid "The Analytical Engine - introduction from Chapter VIII"
+msgstr "The Analytical Engine - introduction from Chapter VIII"
+
+#: units/weblogs/templates_preview.php:13
+msgid ""
+"The circular arrangement of the axes of the Difference Engine round the "
+"large central wheels led to the most extended prospects. The whole of "
+"arithmetic now appeared within the grasp of mechanism. A vague glimpse even "
+"of an Analytical Engine at length opened out, and I pursued with enthusiasm "
+"the shadowy vision. The drawings and the experiments were of the most costly "
+"kind. Draftsmen of the highest order were necessary to economize the labour "
+"of my own head; whilst skilled workmen were required to execute the "
+"experimental machinery to which I was obliged constantly to have recourse. "
+"In order to carry out my pursuits successfully, I had purchased a house with "
+"above a quarter of an acre of ground in a very quiet locality. My coach-"
+"house was now converted into a forge and a foundry, whilst my stables were "
+"transformed into a workshop. I built other extensive workshops myself, and "
+"had a fireproof building for my drawings and draftsmen. Having myself worked "
+"with a variety of tools, and having studied the art of constructing each of "
+"them, I at length laid it down as a principle - that, except in rare cases, "
+"I would never do anything myself if I could afford to hire another person "
+"who could do it for me."
+msgstr ""
+"The circular arrangement of the axes of the Difference Engine round the "
+"large central wheels led to the most extended prospects. The whole of "
+"arithmetic now appeared within the grasp of mechanism. A vague glimpse even "
+"of an Analytical Engine at length opened out, and I pursued with enthusiasm "
+"the shadowy vision. The drawings and the experiments were of the most costly "
+"kind. Draftsmen of the highest order were necessary to economize the labour "
+"of my own head; whilst skilled workmen were required to execute the "
+"experimental machinery to which I was obliged constantly to have recourse. "
+"In order to carry out my pursuits successfully, I had purchased a house with "
+"above a quarter of an acre of ground in a very quiet locality. My coach-"
+"house was now converted into a forge and a foundry, whilst my stables were "
+"transformed into a workshop. I built other extensive workshops myself, and "
+"had a fireproof building for my drawings and draftsmen. Having myself worked "
+"with a variety of tools, and having studied the art of constructing each of "
+"them, I at length laid it down as a principle - that, except in rare cases, "
+"I would never do anything myself if I could afford to hire another person "
+"who could do it for me."
+
+#: units/weblogs/weblogs_actions.php:31
+msgid "Your post has been added to your weblog."
+msgstr "あなたの投稿がブログに追加されました。"
+
+#: units/weblogs/weblogs_actions.php:66
+msgid "The weblog post has been modified."
+msgstr "ブログ投稿が修正されました。"
+
+#: units/weblogs/weblogs_actions.php:81
+msgid "This weblog post has now been added to your 'interesting' list."
+msgstr "このブログ投稿は、あなたの「興味深い投稿」リストに追加されました。"
+
+#: units/weblogs/weblogs_actions.php:92
+msgid "You are no longer monitoring this weblog post."
+msgstr "もはやこのブログ投稿はモニターしていません。"
+
+#: units/weblogs/weblogs_actions.php:112
+msgid "The selected weblog post was deleted."
+msgstr "選択されたブログ投稿が削除されました。"
+
+#: units/weblogs/weblogs_actions.php:115
+msgid ""
+"You do not appear to have permission to delete this weblog post. It was not "
+"deleted."
+msgstr "あなたは、このブログ投稿を削除する権限がありません。 ブログ投稿は削除されませんでした。"
+
+#: units/weblogs/weblogs_actions.php:161
+msgid "Your comment has been added."
+msgstr "コメントが追加されました。"
+
+#: units/weblogs/weblogs_actions.php:166
+msgid "Your comment could not be posted. The system thought it was spam."
+msgstr "システムによってスパムと見なされたため、コメントは投稿できませんでした。"
+
+#: units/weblogs/weblogs_actions.php:186
+msgid "Your comment was deleted."
+msgstr "コメントが削除されました。"
+
+#: units/weblogs/weblogs_all_users_view.php:24
+msgid "Remove filter"
+msgstr "フィルタの削除"
+
+#: units/weblogs/weblogs_all_users_view.php:29
+msgid "Filtered: Showing personal blog posts"
+msgstr "フィルタ適用済み： 個人ブログが表示されています"
+
+#: units/weblogs/weblogs_all_users_view.php:33
+msgid "Filtered: Showing community blog posts"
+msgstr "フィルタ適用済み： コミュニティブログ投稿が表示されています"
+
+#: units/weblogs/weblogs_all_users_view.php:38
+msgid "Filtered: Showing posts with comments"
+msgstr "フィルタ適用済み： コメントの付いた投稿が表示されています"
+
+#: units/weblogs/weblogs_all_users_view.php:42
+msgid "Filtered: Showing posts with no comments"
+msgstr "フィルタ適用済み： コメントの付いていない投稿が表示されています"
+
+#: units/weblogs/weblogs_all_users_view.php:57
+msgid "Filtered: Showing posts from "
+msgstr "フィルタ適用済み： 次の日付以降の投稿が表示されています "
+
+#: units/weblogs/weblogs_all_users_view.php:67
+msgid "Filtered: Showing posts tagged with "
+msgstr "フィルタ適用済み： 次のタグを含む投稿が表示されています "
+
+#: units/weblogs/weblogs_comments_add.php:7
+msgid "Add a comment"
+msgstr "コメントの追加"
+
+#: units/weblogs/weblogs_comments_add.php:33
+msgid "Your comment text"
+msgstr "コメントテキスト"
+
+#: units/weblogs/weblogs_comments_add.php:58
+msgid "Add comment"
+msgstr "コメントの追加"
+
+#: units/weblogs/weblogs_post_field.php:83
+msgid "Click here to post to this weblog."
+msgstr "このブログに投稿するには、ここをクリックしてください。"
+
+#: units/weblogs/weblogs_posts_add.php:22
+msgid "Add a new post"
+msgstr "新しい投稿の追加"
+
+#: units/weblogs/weblogs_posts_add.php:23
+#: units/weblogs/weblogs_posts_edit.php:17
+msgid "Post title:"
+msgstr "投稿のタイトル："
+
+#: units/weblogs/weblogs_posts_add.php:24
+#: units/weblogs/weblogs_posts_edit.php:18
+msgid "Post body:"
+msgstr "投稿の本文："
+
+#: units/weblogs/weblogs_posts_add.php:25
+#: units/weblogs/weblogs_posts_edit.php:19
+msgid "Keywords (Separated by commas):"
+msgstr "キーワード（コンマで区切ってください）："
+
+#: units/weblogs/weblogs_posts_add.php:26
+#: units/weblogs/weblogs_posts_edit.php:20
+msgid ""
+"Keywords commonly referred to as 'Tags' are words that represent the weblog "
+"post you have just made. This will make it easier for others to search and "
+"find your posting."
+msgstr ""
+"一般に「タグ」と呼ばれる、あなたのブログ投稿を表すキーワードを入力してください。 "
+"これにより、他の人たちが検索によってあなたの投稿を見つけ出すのを容易にします。"
+
+#: units/weblogs/weblogs_posts_add.php:28
+msgid "Post"
+msgstr "投稿"
+
+#: units/weblogs/weblogs_posts_add.php:84
+msgid ""
+"You must be logged in to post a new weblog entry. You may do so using the "
+"login pane to the right of the screen."
+msgstr "新しいブログエントリを投稿するには、画面右側のログイン枠からログインしてください。"
+
+#: units/weblogs/weblogs_posts_edit.php:16
+msgid "Edit a post"
+msgstr "投稿の編集"
+
+#: units/weblogs/weblogs_posts_edit.php:22
+msgid "Save Post"
+msgstr "投稿の保存"
+
+#: units/weblogs/weblogs_posts_view.php:94
+msgid "More"
+msgstr "続き"
+
+#: units/weblogs/weblogs_posts_view.php:95
+msgid "Keywords:"
+msgstr "キーワード："
+
+#: units/weblogs/weblogs_posts_view.php:96
+msgid "comment(s)"
+msgstr "コメント"
+
+#: units/weblogs/weblogs_posts_view.php:112
+msgid "Are you sure you want to permanently delete this weblog post?"
+msgstr "本当に、このブログ投稿を完全に削除してもよろしいですか？"
+
+#: units/weblogs/weblogs_posts_view.php:149
+msgid "Page: "
+msgstr "ページ： "
+
+#: units/weblogs/weblogs_posts_view.php:166
+msgid "Are you sure you want to permanently delete this weblog comment?"
+msgstr "本当に、このブログコメントを完全に削除してもよろしいですか？"
+
+#: units/weblogs/weblogs_posts_view.php:223
+msgid "You must be logged in to post a comment."
+msgstr "コメントを投稿するにはログインする必要があります。"
+
+#: units/weblogs/weblogs_user_info_menu.php:10
+msgid "Recent Activity"
+msgstr "最近の活動"
+
+#: units/weblogs/weblogs_user_info_menu.php:12
+msgid "View your activity"
+msgstr "あなたの活動を表示"
+
+#: units/weblogs/weblogs_user_info_menu.php:36
+msgid "Personal blog"
+msgstr "個人ブログ"
+
+#: units/weblogs/weblogs_user_info_menu.php:41
+msgid "Community blog"
+msgstr "コミュニティブログ"
+
+#: units/xml/main.php:78
+msgid "XML error: "
+msgstr "XMLエラー： "
+
+#~ msgid "Show icons"
+#~ msgstr "アイコンを表示"
+
+#~ msgid "Hide icons"
+#~ msgstr "アイコンを非表示"

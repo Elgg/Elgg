@@ -1323,6 +1323,8 @@ function insert_record($table, $dataobject, $returnid=true, $primarykey='ident')
     foreach ($columns as $column) {
         if ($column->name <> 'ident' and isset($data[$column->name]) ) {
             $ddd[$column->name] = $data[$column->name];
+        } else if($column->name == 'created' && $column->type == 'int') {
+			$ddd['created'] = time();
         }
     }
 

@@ -1,0 +1,53 @@
+/* profile - widgets */
+
+#profile_widgets {
+	position:relative;
+}
+
+.widgets_even {
+	float:left;
+	width:330px;
+}
+
+.widgets_odd {
+	float:right;
+	width:330px;
+}
+
+.widget {
+	border: 1px solid #BBDCE9; /*#95BDCD;*/
+	margin-bottom: 5px;
+	padding: 0;
+}
+
+.widget .widget_content {
+	padding: 10px;
+}
+.widget .widget_content h3 {
+	padding:0;
+	margin:0;
+}
+
+.widget .widget_menu {
+	display: block;
+	background-color: #E2F0F6; /*#CBE5EF;*/
+	margin: 0px;
+	padding-left: 10px;
+	border-top: 1px solid #BBDCE9;
+	font-size:0.8em;
+}
+
+.widget h2 {
+	border:0;
+	border-bottom:1px solid #BBDCE9;
+	padding:0;
+	margin:0 0 10px 0;
+	color:#666;
+	background-color: #E2F0F6;
+	font-size:1.1em;
+}
+
+.widget  .widget_content h2 a {
+	background:url(http://elgg.net/_templates/icons/arrow.gif) no-repeat left;
+	padding:0 0 0 10px;
+}

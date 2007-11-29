@@ -1,0 +1,18 @@
+<div class="weblog-post"><!-- Holds all aspects of a blog post -->
+        <div class="user"><!-- Open class user -->
+            <a href="{{url}}{{username}}/weblog/">{{usericon}}</a><br /><a href="{{url}}{{username}}/weblog/">{{fullname}}</a>
+        </div><!-- Close class user -->
+        <div class="weblog-title"><h3>{{title}}</h3></div>
+        <div class="post"><!-- Open class post -->
+            {{body}}
+        </div><!-- Close class post -->
+    <div class="info"><!-- Open class info -->
+            <p>
+                {{postedby}} {{fullname}}
+                 {{links}}
+                 {{commentslink}}
+            </p>
+        </div><!-- Close class info -->
+        {{comments}}
+</div><!-- Close weblog_post -->
+<div class="clearing"></div>

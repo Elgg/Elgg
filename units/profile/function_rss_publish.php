@@ -35,7 +35,7 @@ require_once($CFG->dirroot.'lib/uploadlib.php');
             $rssactivity = __gettext("Activity");
             
             $info = get_record('users','ident',$userid);
-            $name = stripslashes($info->name);
+            $name = stripslashes(user_name($info->ident));
             //$username = $info->username;
             $mainurl = url . $username . "/";
             $rssurl = $mainurl . "rss/";

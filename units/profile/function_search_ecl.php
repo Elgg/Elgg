@@ -23,10 +23,10 @@ global $db;
                                           WHERE '.$searchline)) {
                 foreach($result as $key => $info) {
                     
-                    $icon = url . "_icon/user/".$info->icon;
+                    $icon = user_icon_html($info->ident,100,true);
                     
                     $sub_result .= "\t\t\t<item>\n";
-                    $sub_result .= "\t\t\t\t<name><![CDATA[" . htmlspecialchars(stripslashes($info->name), ENT_COMPAT, 'utf-8') . "]]></name>\n";
+                    $sub_result .= "\t\t\t\t<name><![CDATA[" . htmlspecialchars(stripslashes(user_name($info->ident)), ENT_COMPAT, 'utf-8') . "]]></name>\n";
                     $sub_result .= "\t\t\t\t<link>" . url . htmlspecialchars($info->username, ENT_COMPAT, 'utf-8') . "</link>\n";
                     $sub_result .= "\t\t\t\t<link>$icon</link>\n";
                     $sub_result .= "\t\t\t</item>\n";

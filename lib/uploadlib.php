@@ -222,7 +222,7 @@ class upload_manager {
                     $savedsomething=true;
                 }
             }
-            if ($savedsomething && $this->config->deleteothers) {
+            if (!empty($savedsomething) && $this->config->deleteothers) {
                 $this->delete_other_files($destination, $exceptions);
             }
         }

@@ -1,7 +1,7 @@
-Elgg version 0.7 upgrade instructions
+Elgg version 0.8 upgrade instructions
 
 Ben Werdmuller <ben@curverider.co.uk>
-18 December 2006
+23 April 2007
 
 
 Elgg is designed to be simple to upgrade if you are currently running 0.6 or
@@ -18,6 +18,12 @@ on most installations).
 bottom of the page to continue.
 
 5. That's it!
+
+
+PLEASE NOTE: Elgg 0.8 contains integration with the Explode service at
+http://ex.plode.us/. From time to time, Elgg will ping Explode to let it know
+it exists. If you don't want this to happen, you must delete the folder at
+/mod/explodeping.
 
 
 Users running Elgg 0.4 can upgrade using the same mechanism, but there are known

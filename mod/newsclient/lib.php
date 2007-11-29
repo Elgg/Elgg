@@ -9,7 +9,7 @@ function newsclient_pagesetup() {
     $page_owner = $profile_id;
     $rss_username = user_info('username', $page_owner);
 
-    if (isloggedin() && user_info("user_type",$_SESSION['userid']) != "external") {
+    if (isloggedin()) {
         if (defined("context") && context == "resources" && $page_owner == $_SESSION['userid']) {
             $PAGE->menu[] = array( 'name' => 'feeds',
                                    'html' => "<li><a href=\"{$CFG->wwwroot}{$_SESSION['username']}/feeds/\" class=\"selected\" >" .__gettext("Your Resources").'</a></li>');
@@ -81,12 +81,15 @@ function newsclient_init() {
     
     global $CFG;
     
-    $CFG->widgets->display['feed'] = "newsclient_widget_display";
-    $CFG->widgets->edit['feed'] = "newsclient_widget_edit";
+    // Delete users
+    listen_for_event("user","delete","newsclient_user_delete");
+    
+    //$CFG->widgets->display['feed'] = "newsclient_widget_display";
+    //$CFG->widgets->edit['feed'] = "newsclient_widget_edit";
     $CFG->widgets->list[] = array(
                                         'name' => __gettext("Feed widget"),
                                         'description' => __gettext("Displays the latest entries from an external feed of your choice."),
-                                        'id' => "feed"
+                                        'type' => "newsclient::feed"
                                 );
     
 }
@@ -94,11 +97,10 @@ function newsclient_init() {
 function newsclient_widget_display($widget) {
     
     global $CFG;
-
     $body = "";
         
-    $feed_id = adash_get_data("feed_id",$widget->ident);
-    $feed_posts = adash_get_data("feed_posts",$widget->ident);
+    $feed_id = widget_get_data("feed_id",$widget->ident);
+    $feed_posts = widget_get_data("feed_posts",$widget->ident);
     if (empty($feed_posts)) {
         $feed_posts = 1;
     }
@@ -112,6 +114,9 @@ function newsclient_widget_display($widget) {
             foreach($posts as $post) {
                 $body .= "<h2><a href=\"" .$post->url . "\">". $post->title . "</a></h2>" . $post->body;
             }
+
+            $title = $post->name;
+
         } else {
             
             $body .= "<p>" . __gettext("This feed is currently empty.") . "</p>";
@@ -125,7 +130,7 @@ function newsclient_widget_display($widget) {
         
     }
     
-    return $body;
+    return array('title'=>$title,'content'=>$body);
     
 }
 
@@ -133,20 +138,20 @@ function newsclient_widget_edit($widget) {
     
     global $CFG, $page_owner;
     
-    $feed_id = adash_get_data("feed_id",$widget->ident);
-    $feed_posts = adash_get_data("feed_posts",$widget->ident);
+    $feed_id = widget_get_data("feed_id",$widget->ident);
+    $feed_posts = widget_get_data("feed_posts",$widget->ident);
     if (empty($feed_posts)) {
         $feed_posts = 1;
     }
     
-    $body = "<h2>" . __gettext("Feeds dashboard widget") . "</h2>";
+    $body = "<h2>" . __gettext("Feeds widget") . "</h2>";
     $body .= "<p>" . __gettext("This widget displays the last couple of entries from an external feed you have subscribed to. To begin, select the feed from your subscriptions below:") . "</p>";
                 
     $feed_subscriptions = newsclient_get_subscriptions_user($page_owner, true);
     
     if (is_array($feed_subscriptions) && !empty($feed_subscriptions)) {
         
-        $body .= "<p><select name=\"dashboard_data[feed_id]\">\n";
+        $body .= "<p><select name=\"widget_data[feed_id]\">\n";
         foreach ($feed_subscriptions as $subscription) {
             if ($subscription->ident == $feed_id) {
                 $selected = "selected=\"selected\"";
@@ -159,7 +164,7 @@ function newsclient_widget_edit($widget) {
         
         $body .= "<p>" . __gettext("Then enter the number of feed entries you'd like to display:") . "</p>";
         
-        $body .= "<p><input type=\"text\" name=\"dashboard_data[feed_posts]\" value=\"" . $feed_posts . "\" /></p>";
+        $body .= "<p><input type=\"text\" name=\"widget_data[feed_posts]\" value=\"" . $feed_posts . "\" /></p>";
         
     } else {
         
@@ -176,8 +181,8 @@ function newsclient_widget_edit($widget) {
 // if joined is true, return feed detail etc, otherwise just return feed_subscriptions rows
 function newsclient_get_subscriptions_user($userid, $joined = false) {
     
-	global $CFG;
-	
+    global $CFG;
+    
     $userid = (int) $userid;
     if (empty($joined)) {
         
@@ -193,5 +198,14 @@ function newsclient_get_subscriptions_user($userid, $joined = false) {
     
     return $feed_subscriptions;
 }
+
+function newsclient_user_delete($object_type, $event, $object) {
+    global $CFG, $data;
+    if (!empty($object->ident) && $object_type == "user" && $event == "delete") {
+        delete_records('feed_subscriptions','user_id',$object->ident);
+    }
+    return $object;
+}
+
 
 ?>

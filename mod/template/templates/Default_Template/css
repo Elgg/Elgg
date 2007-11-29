@@ -1,13 +1,5 @@
 /*
-Elgg general CSS
-CSS last updated 16/01/07
-Theme adapted from:
-Theme Name: Light
-Theme URI: http://vaguedream.com/wordpress-themes/
-Description: A theme created by Stephen Reinhardt.
-Version: 1.0	
-Author: Stephen Reinhardt
-Author URI: http://vaguedream.com/
+
 */
 
 /*
@@ -15,8 +7,7 @@ Author URI: http://vaguedream.com/
 */
 
 body {
-	background:#e5e5e5;
-	/* url({{url}}mod/template/templates/Default_Template/images/wrap.gif) repeat-y; */
+	background:#fff url({{url}}mod/template/templates/Default_Template/images/header.gif) repeat-x; /* #d9e2f2  */
 	color:#697C83;
 	font-family:'Trebuchet MS','Lucida Grande', Arial, sans-serif;
 	text-align:left;
@@ -25,12 +16,6 @@ body {
 	font-size: 80%;
 	line-height:1.6em;
 }
-
-/*
-div {
-	border: 1px solid red;
-}
-*/
 
 p {
 	color:#555;
@@ -81,11 +66,9 @@ td h4, h3, h5 {
 */
 
 div#container {
-	width:940px;
+	width:970px;
 	margin:0 auto;
 	padding:0;
-	background:#fff;
-	border-top:1px solid #fff;
 }
 
 /*
@@ -96,11 +79,11 @@ div#header {
 	margin:0;
 	padding:0;
 	text-align:left;
-	background:url({{url}}mod/template/templates/Default_Template/images/header-bg.gif) repeat-x;
 	position:relative;
+	background:transparent;
 	width:100%;
-	height:120px;
-	}
+	height:110px;
+}
 
 /*
 	LOGO: LOCATED WITHIN HEADER
@@ -124,7 +107,7 @@ div#header #logo h1 a{
 }
 
 div#header #logo h2{
-	color:#F17D00;
+	color:#174764;
 	padding:0;
 	margin:0;
 	font-size:1.2em;
@@ -136,7 +119,6 @@ div#header #logo h2{
 
 div#header #search-header {
 	float:right;
-	background:url({{url}}mod/template/templates/Default_Template/images/search_icon.gif) no-repeat left top;
 	width:330px;
 	margin:0;
 	padding:0;
@@ -164,13 +146,13 @@ div#header #search-header span a {
 */
 
 #content-holder {
-	padding:0px;
-	margin:0px;
-	width:100%;
+	padding:5px;
+	margin:0;
+	width:974px;
 	min-height:500px;
-	overflow:hidden;
 	position:relative;
-	}
+	clear:both;
+}
 
 div#content-holder a:hover {
 	text-decoration:underline;
@@ -178,6 +160,9 @@ div#content-holder a:hover {
 
 div#content-holder h1 {
 	font-size:150%;
+	border-bottom:1px solid #ccc;
+	margin:0;
+	padding:0;
 }
 
 div#content-holder h2 {
@@ -211,8 +196,8 @@ div#single-page {
 
 div#splitpane-content {
 	margin: 0;
-	padding: 0 0 0 10px;
-	width:690px;
+	padding: 10px;
+	width:680px;
 	text-align: left;
 	color:#000;
 	overflow:hidden;
@@ -224,12 +209,22 @@ div#splitpane-content {
 */
 
 div#splitpane-sidebar {
-	width: 220px;
-	margin:0;
+	width: 250px;
+	margin:20px 10px 20px 0;
 	padding:0;
-	background:#fff url({{url}}mod/template/templates/Default_Template/images/side-back.gif) repeat-y;
-	margin:0;
 	float: right;
+	background:#efefef url({{url}}mod/template/templates/Default_Template/images/sidebar-top.gif) no-repeat top;
+}
+
+div#sidebar-contents {
+    padding:10px;
+}
+
+div#sidebar-bottom {
+   background:url({{url}}mod/template/templates/Default_Template/images/sidebar-bottom.gif) no-repeat bottom;
+   height:9px;
+   width:250px;
+   margin:0;
 }
 
 /*
@@ -239,22 +234,21 @@ div#splitpane-sidebar {
 div#splitpane-sidebar td {
 	width: 200px;
 	margin:0 0 0 20px;
-	}
+}
 
 div#splitpane-sidebar ul {
 	margin: 0;
-	padding: 0;
+	padding:0;
 	list-style: none;
 }
 
 div#splitpane-sidebar ul li {
 	margin:10px 0;
 	padding-left: 5px;
-	border-bottom:1px dashed #eee;
 }
 
 div#splitpane-sidebar ul li ul li a {
-	 padding:0 0 0 5px;
+	padding:0 0 0 5px;
 }
 
 div#splitpane-sidebar h2 {
@@ -262,7 +256,19 @@ div#splitpane-sidebar h2 {
 	border-bottom:1px solid #ccc;
 	color:#777;
 	font-size:0.9em;
-	width:200px;
+	width:220px;
+}
+
+/*
+   NEW CSS FOR THE TOOLBAR THAT LIVES IN THE MAIN CONTENT AREA
+*/
+
+#content-holder-toolbar {
+   float:left;
+   margin:0;
+   background:#fff;
+   border:1px solid #ccc;
+   width:150px;
 }
 
 /*
@@ -272,26 +278,33 @@ div#splitpane-sidebar h2 {
 div#footer {
 	clear: both;
 	position: relative;
-	background:url({{url}}mod/template/templates/Default_Template/images/footer.gif) repeat-x top;
-	text-align: center;
-	padding:10px 0 0 0;
 	font-size:1em;
-	height:80px;
-	margin:0;
-	color:#fff;
+	height:26px;
+	margin:20px 0 0 0;
+	color:#174764;
+	font-weight:bold;
 	width:100%;
+	padding:3px 0 0 0;
+	background:url({{url}}mod/template/templates/Default_Template/images/footer.gif) repeat-x;
+}
+
+div#footer img {
+   text-align:right;
+   padding:3px 0 0 0;
+}
+
+div#footer p {
+   padding:0 20px 0 20px;
 }
 
 div#footer a {
 	color:#fff;
-}
-div#footer img {
-	margin:20px 0 0 0;
+	padding:0 5px 0 5px;
 }
 
 div#footer a:hover {
 	text-decoration:underline;
-	}
+}
 
 div#footer a:link, div#footer a:visited {
 	text-align:right;
@@ -312,7 +325,7 @@ div#system-message{
 div#system-message p{
 	padding:0px;
 	margin:2px;
-	}
+}
 
 /*
 	CLEAR BOTH
@@ -358,11 +371,10 @@ div#system-message p{
 
 .post {
 	margin:10px 0 10px 115px;
-	background:url({{url}}mod/template/templates/Default_Template/images/infoholder_bg.gif) left repeat-y;
 }
 
 .info {
-	border:1px solid #ccc;
+	border-top:1px solid #ccc;
 	margin:10px 0 10px 115px;
 	clear:both;
 }
@@ -370,7 +382,6 @@ div#system-message p{
 .info p {
 	padding:0 0 0 10px;
 	margin:0;
-	color:#990000;
 }
 
 .info p a {
@@ -415,10 +426,14 @@ div#system-message p{
 */
 
 div#sub-menu p {
-	margin:10px 0 10px 0;
-	padding:3px;
-	background:#efefef;
-	border:1px solid #ccc;
+	margin:0 0 10px 0;
+	padding:0;
+	/*background:#efefef;*/
+	border:0px solid #ccc;
+}
+
+div#sub-menu a {
+   padding:3px;
 }
 
 /* END OF SUB-MENU DIV */
@@ -428,12 +443,11 @@ div#sub-menu p {
 */
 
 .infoholder {
-	margin:10px 0 20px 0;
+	margin:5px 0 10px 0;
 }
 
 .infoholder p {
 	padding:5px 0 5px 10px;
-	background:url({{url}}mod/template/templates/Default_Template/images/infoholder_bg.gif) left repeat-y;
 }
 
 /* the end of INFOHOLDER */
@@ -447,4 +461,252 @@ div#sub-menu p {
 	
 #tagcloud a {
 	text-decoration: none;
+}
+
+/*
+ PROFILE WIDGETS STUFF
+*/
+
+img.profile-photo {
+   border:1px solid #eee;
+   padding:2px;
+}
+
+.profile_main p {
+   color:#000;
+}
+
+.profile_main p a {
+	text-decoration: underline;
+}
+
+.profile_main_bottom {
+	clear: both;
+}
+
+.profile_primary {
+	float: left;
+	width: 270px;
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
+.profile_secondary {
+	float: right;
+	width: 360px;
+	margin: 10px 0 0 0;
+	color:#000;
+}
+
+.profile_bio {
+	padding-top: 10px;
+	background:#efefef;
+}
+
+.profile_widgets {
+	clear: both;
+    width: 760px;
+	/*background: #004995;*/
+}
+
+.profile_icon img {
+	border:1px solid #eee;
+	padding:2px 2px 2px 2px;
+}
+
+.profile_widgets_left {
+	float: left;
+	width: 330px;
+}
+
+.profile_widgets_right {
+	float: right;
+	width: 330px
+}
+
+/* profile - widgets */
+
+#profile_widgets {
+   position:relative;
+}
+
+.profile_bio {
+   width:244px;
+   padding:2px;
+}
+
+.widgets_even {
+   float:left;
+   width:340px;
+   margin:0;
+   padding:0;
+}
+
+.widgets_odd {
+   float:right;
+   width:340px;
+   margin:0;
+   padding:0;
+}
+
+.widget {
+    border: 1px solid #BBDCE9; /*#95BDCD;*/
+    margin-bottom: 15px;
+    padding: 0;
+}
+
+.widget .widget_content {
+    padding: 4px 10px 4px 10px;
+}
+
+.widget .widget_content h3 {
+    padding:0;
+    margin:0;
+}
+
+.widget .widget_bottom {
+     display: block;
+     background-color: #E2F0F6; /*#CBE5EF;*/
+     margin: 0px;
+     padding-left: 10px;
+     border-top: 1px solid #BBDCE9;
+     font-size:0.8em;
+}
+
+.widget .widget_menu ul {
+    margin:0 0 0 5px;
+	padding:0;
+}
+
+.widget .widget_menu ul li {
+     list-style:none;
+}
+
+.widget .widget_menu ul li a {
+     text-decoration:underline;
+}
+
+.widget .widget_admin_menu {
+    background-color: #E2F0F6;
+    padding:2px 0 0 5px;
+}
+
+#hidden3, #hidden2, #hidden4, #hidden5 {
+  height:20px;
+}
+
+.widget .widget_title {
+          border:0;
+          border-bottom:1px solid #cdcdcd; /*#BBDCE9;*/
+          padding:0 2px 0 2px;
+          margin:0 0 10px 0;
+          color:#000;
+	      font-size:1.2em;
+	     font-weight:bold;
+}
+
+.widget  .widget_content h2 a {
+    background:url({{url}}mod/template/images/icons/arrow.gif) no-repeat left;
+    padding:0 0 0 10px;
+    font-weight:normal;
+}
+
+/*
+  COMMENT WALL STUFF
+*/
+
+#commentwall {
+   background:#fff;
+   width:98%;
+   padding:5px;
+   margin:5px 0 10px 0;
+}
+
+.commentwall_img {
+   float:left;
+   margin:3px;
+   background:#fff;
+   border:1 solid #ccc;
+}
+
+#commentwall_form_-1 {
+  /* Background:#eee;*/
+   margin:0 0 5px 0;
+   padding:4px;
+}
+
+#commentwall_form_-1 textarea {
+   width:98%;
+   margin5px 0 5px 0;
+}
+
+#commentwall_title {
+   background:#efefef;
+   border-top:1px solid #ccc; /*#4E730C;*/
+  width:99%;
+   height:20px;
+   padding:2px;
+   font-size:12px;
+}
+.commentwall_date {
+    font-style:italic;
+    font-size:0.8em;
+    margin:0 0 10px 0;
+    background:#efefef;
+    border-bottom:1px solid #D8DFEA;
+}
+
+#commentwall #commentwall_title h2 {
+   margin:0;
+   padding:0;
+   font-size:11px;
+}
+
+.commentwall_name {
+   font-weight:bold;
+   /*border-top:1px solid #4E730C;*/
+}
+
+.commentwall_details {
+   border-top:1px solid #ccc;
+   margin-left:70px;
+}
+
+.commentwall_name {
+   background:#efefef;
+}
+
+
+#commentwall_more {
+    text-align:right;
+    padding:4px;
+    color:#000;
+    font-size:10px;
+}
+
+#commentwall_more a {
+   color:#000;
+   text-decoration:underline;
+}
+
+
+.commentwall_replybar {
+   border-bottom:1px solid #ccc;
+   font-size:11px;
+   margin:10px 0 10px 0;
+   padding:2px;
+   background:#fff;
+   text-align:right;
+   cursor:pointer;
+   color:#b85b5a;
+}
+
+.commentwall_replybar p {
+   padding:0;
+   margin:0 10px 0 0;
+}
+
+.commentwall_replybar a {
+   padding:0;
+   margin:0;
 }

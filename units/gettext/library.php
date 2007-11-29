@@ -1,10 +1,15 @@
 <?php
 
+	if (!defined('LC_MESSAGES'))
+	{
+		define('LC_MESSAGES', 6);
+	}
+
     // Echo a translated string.
     function __gettext($text, $domain = 'none')
     {
         global $CFG;
-        
+
         if ($domain == 'none')
         {
             $domain = $CFG->translation_domain;
@@ -15,7 +20,15 @@
 
         if ($i18n != null)
         {
-            return $i18n->translate($text);
+
+            foreach($i18n as $language)
+			{
+            	if($language->translate($text) != $text)
+				{
+                	return $language->translate($text);
+              	}
+            }
+            return $text;
         }
         else
         {
@@ -32,11 +45,17 @@
         if ($i18n != null)
         {
             return $i18n->n__gettext($single, $plural, $number);
-        } else {
+        }
+        else
+		{
             if ($number != 1)
+            {
                 return $plural;
+            }
             else
-                return $single;
+            {
+				return $single;
+            }
         }
     }
 
@@ -62,31 +81,33 @@
         {
             if (array_key_exists($USER->locale, $CFG->languages_domain_paths[$domain]))
             {
-                // Double check if file exists
-                if (file_exists($CFG->languages_domain_paths[$domain][$USER->locale]))
-                {
-                    $input = new CachedFileReader($CFG->languages_domain_paths[$domain][$USER->locale]);
-                    $l10n[$domain][$USER->locale] = new gettext_reader($input);
-
-                    return $l10n[$domain][$USER->locale];
+                rsort($CFG->languages_domain_paths[$domain][$USER->locale]);
+                foreach($CFG->languages_domain_paths[$domain][$USER->locale] as $languagedomain)
+				{
+                  	// Double check if file exists
+                	if (file_exists($languagedomain))
+					{
+                    	$input = new CachedFileReader($languagedomain);
+                      	$l10n[$domain][$USER->locale][] = new gettext_reader($input);
+                  	}
                 }
-                else
-                {
-                    return;
-                }
+                return $l10n[$domain][$USER->locale];
             }
             else
-            {   return;
+			{
+            	return;
             }
         }
     }
 
-    function parse_http_accept_language($str = null) {
+    function parse_http_accept_language($str = null)
+	{
         global $CFG;
 
         $browser_lang = "";
 
-        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
+		{
             $browser_lang = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
         }
         else
@@ -104,8 +125,9 @@
         // creating output list
         $accepted = array();
 
-        foreach ($langs as $lang) {
-            // parsing language preference instructions 
+        foreach ($langs as $lang)
+		{
+            // parsing language preference instructions
             // 2_digit_code[-longer_code][;q=coefficient]
             ereg('([a-z]{1,2})(-([a-z0-9]+))?(;q=([0-9\.]+))?', $lang, $found);
 
@@ -115,9 +137,12 @@
             // lang code complement
             $morecode = $found[3];
 
-            if (empty($morecode)) {
+            if (empty($morecode))
+			{
                 $fullcode = $code;
-            } else {
+            }
+           	else
+			{
                 $fullcode = $code . "_" . strtoupper($morecode);
             }
 
@@ -143,10 +168,10 @@
     function parse_installed_languages($root)
     {
         global $CFG, $messages;
-        
+
         // Load known language codes
         parse_languages_available();
-        
+
         // Array to hold domain files, available in $CFG->languages_installed
         // E.g. $CFG->languages_installed['elgg']['nl'] = '/path/to/nl/LC_MESSAGES/elgg.mo'
         $languages = array();
@@ -188,13 +213,19 @@
 
                 while(false !== ($file = readdir($langdir)))
                 {
+                  $firstchar = substr($file, 0, 1);
+
+                  if ($firstchar == '.' or $file == 'CVS' or $file == '_vti_cnf' or $file == '.svn')
+                  {
+                      continue;
+                  }
                     // Grab the .mo file
                     eregi("([a-zA-Z].*)\.mo", $file, $match);
-                    
                     if ($match)
                     {
-                        $CFG->languages_domain_paths[$match[1]][$dir] = $root.'languages/'.$dir.'/LC_MESSAGES/'.$match[0];
+                        $CFG->languages_domain_paths[$match[1]][$dir][] = $root.'languages/'.$dir.'/LC_MESSAGES/'.$match[0];
                     }
+                    $match = null;
                 }
             }
             else
@@ -208,7 +239,7 @@
     function parse_languages_available()
     {
         global $CFG;
-        
+
         // Only load once
         if (!isset($CFG->languages_available))
         {
@@ -232,7 +263,7 @@
 
         // Load default language path
         parse_installed_languages($CFG->dirroot);
-        
+
         // Load plugin language paths
         $plugindir = opendir($CFG->dirroot . 'mod/');
         while (false !== ($dir = readdir($plugindir)))
@@ -248,7 +279,7 @@
                 parse_installed_languages($CFG->dirroot.'mod/'.$dir.'/');
             }
         }
-        
+
         // Store the browser setting
         $USER->languages_browser = parse_http_accept_language();
 
@@ -256,15 +287,15 @@
         if (!$CFG->languages_available[$CFG->defaultlocale])
         {
             $bad = $CFG->defaultlocale;
-            
+
             // Empty it, and send a message to the screen
             $CFG->defaultlocale = '';
-            
+
             global $messages;
-            
+
             $messages[] = "Unknown language code: ".$bad.". Please ask the system administrator to properly configure \$CFG->defaultlocale in the main configuration file.";
         }
-        
+
         // Setup variables to hold the user language
         $USER->locale = $CFG->defaultlocale;
 
@@ -277,8 +308,8 @@
         // Now, grab user preference
 
 
-        // logged_on is not yet defined yet in this stage, 
-        // use USER->ident for this... 
+        // logged_on is not yet defined yet in this stage,
+        // use USER->ident for this...
         // TODO Implement better check!
         if ($USER->ident != 0)
         {
@@ -304,7 +335,7 @@
                 if (!empty($USER->languages_browser))
                 {
                     $keys = array_keys($USER->languages_browser);
-                    
+
                     if ($browser = $USER->languages_browser[$keys[0]])
                     {
                         $setting = $browser['fullcode'];
@@ -315,7 +346,7 @@
                     // No browser preference, get defaultlocale
                     $setting = $CFG->defaultlocale;
                 }
-                
+
                 // Store the value
                 $flag = new StdClass;
                 $flag->flag = 'language';
@@ -330,7 +361,7 @@
         else
         {
             // User is logged out
-            
+
             // TODO special actions? For now language will be set
             // to $CFG-defaultlocale for non logged in users or via
             // a session, see below.
@@ -373,7 +404,7 @@
             if ($USER->ident != 0)
             {
                 // Have to replicate flag setting because of including order
-                
+
                 // unset first
                 delete_records('user_flags','flag','language','user_id',$USER->ident);
                 // save the flag
@@ -395,8 +426,9 @@
         // Note, this implies system locales installed and is independent
         // from Elgg locales
         $time_locale = $USER->locale;
-        
-        if (!substr($USER->locale, 2, 1) == "_") {
+
+        if (!substr($USER->locale, 2, 1) == "_")
+		{
             $time_locale = $USER->locale . "_" . strtoupper($USER->locale);
         }
 
@@ -412,7 +444,7 @@
 
         $body = <<< END
             <h2>$title</h2>
-            <p>$blurb</p>    
+            <p>$blurb</p>
 END;
 
         $tmp = "";
@@ -426,9 +458,9 @@ END;
 
             $tmp .= '<select name="lang">';
             $tmp .= '<option value="default">'.__gettext('default')."</option>\n";
-            
+
             ksort($CFG->languages_installed);
-            
+
             foreach ($CFG->languages_installed as $key => $description)
             {
                 $selected = '';
@@ -438,7 +470,7 @@ END;
                 }
                 $tmp .= '<option value="'.$key.'" '.$selected.'>'.$description."</option>\n";
             }
-            
+
             $tmp .= '</select>';
         }
 
@@ -455,7 +487,7 @@ END;
     function gettext_userdetails_actions()
     {
         global $CFG, $USER, $messages;
-        
+
         $action = optional_param('action');
         $id = optional_param('id',0,PARAM_INT);
         $lang = optional_param('lang', $CFG->defaultlocale, PARAM_ALPHAEXT);
@@ -479,10 +511,6 @@ END;
 
                         $messages[] .= __gettext("Preferred language") . " " . __gettext("saved") .".";
                     }
-                }
-                else
-                {
-                    $messages[] .= __gettext("Preferred language") . " " . __gettext("not changed") .".";
                 }
             }
         }

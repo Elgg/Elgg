@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>{{title}}</title>
+{{metatags}}
+</head>
+<body>
+<div style="clear: both;">
+<div id="container"><!-- open container which wraps the header, maincontent and sidebar -->
+<div id="content-holder"><!-- open content-holder div -->
+<h2>{{title}}</h2>
+	<div id="content-holder-inner">
+		<div id="splitpane-sidebar" ><!-- open splitpane-sidebar div -->
+			<p><input type="checkbox" onclick="file_wizard_keep_open=!file_wizard_keep_open;" checked="checked">{{window_msg}}</p>
+			<ul>
+			{{directories}}
+			</ul>
+		</div><!-- close splitpane-sidebar div -->
+		<div id="splitpane-content"><!-- open splitpane-content div -->
+		<h2>{{folder_name}}</h2>
+			{{directory_files}}
+		</div><!-- close open splitpane-content div -->
+	</div>
+</div><!-- close content-holder div --> 
+</div><!-- close container div -->
+</div>
+</body>
+</html>

@@ -7,7 +7,7 @@
         require_once(dirname(dirname(__FILE__))."/includes.php");
         
         run("invite:init");
-        templates_page_setup();                
+        templates_page_setup();
         $title = sprintf(__gettext("Get new %s password"), sitename);
         
         $body = run("invite:password:new");

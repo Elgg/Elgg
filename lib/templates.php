@@ -116,7 +116,7 @@ END;
     <div class="me">
         <div style="float: left; width: 70px"><a href="{{profileurl}}">{{usericon}}</a></div>
         <div style="margin-left: 75px; margin-top: 0px; padding-top: 0px; text-align: left" ><p>
-            <span class="userdetails">{{name}}<br /><a href="{{profileurl}}rss/">RSS</a> | <a href="{{profileurl}}tags/">$tags</a> | <a href="{{profileurl}}newsclient/">$resources</a></span></p>
+            <span class="userdetails">{{name}}<br /><a href="{{profileurl}}rss/"><img src="{{url}}mod/template/icons/rss.png" alt="RSS" /></a> | <a href="{{profileurl}}tags/">$tags</a> | <a href="{{profileurl}}newsclient/">$resources</a></span></p>
             <p>{{tagline}}</p>
             <p>{{lmshosts}}</p>
             <p style="margin-bottom: 3px" class="usermenu">{{usermenu}}</p>
@@ -489,6 +489,16 @@ function templates_page_setup (){
                                   'name' => 'admin:users',
                                   'html' => a_href("{$CFG->wwwroot}_admin/users.php",
                                                    __gettext("Manage users")));
+
+        $PAGE->menu_sub[] = array(
+                                  'name' => 'admin:users',
+                                  'html' => a_href("{$CFG->wwwroot}_admin/users.php?flag=banned",
+                                                   __gettext("Banned users")));
+
+        $PAGE->menu_sub[] = array(
+                                  'name' => 'admin:users',
+                                  'html' => a_href("{$CFG->wwwroot}_admin/users.php?flag=admin",
+                                                   __gettext("Admin users")));
 
         $PAGE->menu_sub[] = array(
                                   'name' => 'admin:flaggedcontent',
@@ -1054,8 +1064,9 @@ END;
  ***/
 function templates_list() {
     
+        global $CFG;
         $template_list = array();
-        if ($templates = get_list_of_plugins('mod/template/templates','theme_master')) {
+        if ($templates = get_list_of_plugins($CFG->templatesroot,'theme_master')) {
             foreach($templates as $template) {
                 $template_list[] = array(
                                             'name' => templates_file_to_shortname($template),
@@ -1316,15 +1327,20 @@ function templates_variables_substitute ($param) {
             break;
 
         case "metatags":
-            // $run_result = "<link href=\"/".$template_variable.".css\" rel=\"stylesheet\" type=\"text/css\" />";
-            $result =   "<style type=\"text/css\">\n"
+            if (!empty($template_name)) {
+                // use a defined style
+                $result = '<link href="' . $CFG->wwwroot  . '_templates/css/' . $template_name. '" rel="stylesheet" type="text/css" />' . "\n";
+            } else {
+                // use whatever's in $template['css']
+                $result = "<style type=\"text/css\">\n"
                 . templates_draw(array(
                                        'template' => $template_name,
                                        'context' => 'css'
                                        )
                                  )
-                . "\n</style>\n"
-                . $metatags;
+                . "\n</style>\n";
+            }
+            $result .= $metatags;
             break;
             
         case 'perf':
@@ -1396,11 +1412,12 @@ function templates_variables_substitute ($param) {
 END;
                 
                 foreach($users as $user) {
+                    $icon_html = user_icon_html($user->ident,67);
                     $result .= <<< END
                     
                       <td align="center">
                          <div class="image_holder">
-                         <a href="{$CFG->wwwroot}{$user->username}/"><img src="{$CFG->wwwroot}_icon/user/{$user->iconid}/w/80/h/80" border="0" /></a>
+                         <a href="{$CFG->wwwroot}{$user->username}/">{$icon_html}</a>
                          </div>
                         <div class="userdetails">
                             <p><a href="{$CFG->wwwroot}{$user->username}/">{$user->name}</a></p>
@@ -1422,44 +1439,51 @@ END;
             } else {
                 $vars[1] = "'town'";
             }
-            $tags = get_records_sql("SELECT tag, count(ident) as numtags FROM `".$CFG->prefix."tags` WHERE access = 'public' and tagtype=".$vars[1]." group by tag order by numtags desc limit 20");
-            $tag_count = 0;
-            foreach($tags as $tag) {
-                $result .= "<a href=\"".url."tag/".urlencode(htmlspecialchars(strtolower($tag->tag), ENT_COMPAT, 'utf-8'))."\" title=\"".htmlspecialchars($tag->tag, ENT_COMPAT, 'utf-8')." (" .$tag->numtags. ")\">";
-                $result .= $tag->tag . "</a>";
-                if ($tag_count < sizeof($tags) - 1) {
-                    $result .= ", ";
+            if ($tags = get_records_sql("SELECT tag, count(ident) as numtags FROM `".$CFG->prefix."tags` WHERE access = 'public' and tagtype=".$vars[1]." group by tag order by numtags desc limit 20")) {
+                $tag_count = 0;
+                foreach($tags as $tag) {
+                    $result .= "<a href=\"".url."tag/".urlencode(htmlspecialchars(strtolower($tag->tag), ENT_COMPAT, 'utf-8'))."\" title=\"".htmlspecialchars($tag->tag, ENT_COMPAT, 'utf-8')." (" .$tag->numtags. ")\">";
+                    $result .= $tag->tag . "</a>";
+                    if ($tag_count < sizeof($tags) - 1) {
+                        $result .= ", ";
+                    }
+                    $tag_count++;
                 }
-                $tag_count++;
             }
             
             break;
             
         case "populartags":
             $result = "";
-            $tags = get_records_sql("SELECT tag, count(ident) as numtags FROM `".$CFG->prefix."tags` WHERE access = 'public' and tag!='' group by tag having numtags > 1 order by ident desc limit 20");
-            $max = 0;
-            foreach($tags as $tag) {
-                if ($tag->numtags > $max) {
-                    $max = $tag->numtags;
-                }
+            if (isset($vars[1])) {
+                $vars[1] = (int) $vars[1];
+            } else {
+                $vars[1] = "20";
             }
-            
-            $tag_count = 0;
-            foreach($tags as $tag) {
-                
-                if ($max > 1) {
-                    $size = round((log($tag->numtags) / log($max)) * 300);
-                } else {
-                    $size = 100;
+            if ($tags = get_records_sql("SELECT tag, count(ident) as numtags FROM `".$CFG->prefix."tags` WHERE access = 'public' and tag!='' group by tag having numtags > 1 order by ident desc limit " . $vars[1])) {
+                $max = 0;
+                foreach($tags as $tag) {
+                    if ($tag->numtags > $max) {
+                        $max = $tag->numtags;
+                    }
                 }
                 
-                $result .= "<a href=\"".url."tag/".urlencode(htmlspecialchars(strtolower($tag->tag), ENT_COMPAT, 'utf-8'))."\" style=\"font-size: $size%\" title=\"".htmlspecialchars($tag->tag, ENT_COMPAT, 'utf-8')." (" .$tag->numtags. ")\">";
-                $result .= $tag->tag . "</a>";
-                if ($tag_count < sizeof($tags) - 1) {
-                    $result .= ", ";
+                $tag_count = 0;
+                foreach($tags as $tag) {
+                    
+                    if ($max > 1) {
+                        $size = round((log($tag->numtags) / log($max)) * 300);
+                    } else {
+                        $size = 100;
+                    }
+                    
+                    $result .= "<a href=\"".url."tag/".urlencode(htmlspecialchars(strtolower($tag->tag), ENT_COMPAT, 'utf-8'))."\" style=\"font-size: $size%\" title=\"".htmlspecialchars($tag->tag, ENT_COMPAT, 'utf-8')." (" .$tag->numtags. ")\">";
+                    $result .= $tag->tag . "</a>";
+                    if ($tag_count < sizeof($tags) - 1) {
+                        $result .= ", ";
+                    }
+                    $tag_count++;
                 }
-                $tag_count++;
             }
             
             break;

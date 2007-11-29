@@ -1,0 +1,43 @@
+-----------------------------------------------------------
+| FILE MODULE: Configuration options and Extension points |
+-----------------------------------------------------------
+
+Configuration Options
+======================
+
+In 'lib/file_config.php'
+
+ALLOW_WIZARD_UPLOAD (default value: true)
+	To configure if you allows to upload files through the wizard
+
+WIZARD_SIMPLIFIED_ADD_FILE (default value: true)
+	To configure if you want a simplified upload form in the wizard
+	
+ALLOW_WIZARD_FILE_DELETE (default value: true)
+	To configure if you allows to delete files through the wizard
+
+Extension points
+================
+
+Behavior
+--------
+You can modify the behavior of folder management adding a new handler to:
+  $CFG->folders->handler
+  For example:
+     $CFG->folders->handler["elgg"]['menuitem'] = __gettext("Default file folder");
+     $CFG->folders->handler["elgg"]['view'] = "file_folder_view";
+     $CFG->folders->handler["elgg"]['preview'] = "file_folder_preview";
+
+Where:
+	'menuitem'	Specifies the display text in the Folder type select.
+	'view'		Specifies the function to be called to show a folder.
+	'preview'	Specifies the function the be called to preview a folder
+
+
+Visualization
+-------------
+weblogs:text:process
+	File(s):
+		- file/lib/weblogs_posts_view.php
+	Action:
+		Allow plugins to set add functionality to the process of the posts text

@@ -1,5 +1,24 @@
 Elgg changelog
 
+0.8.2 (November 2008)
+---------------------
+Fixes security issue allowing user deletion by non admin users
+
+0.8.1 (November 2007)
+---------------------
+Fixes security issue in installer
+
+0.8 (July 2007)
+---------------
+Generalised comments
+Bugfixes, efficiency improvements
+
+0.8rc1/2 (April 2007)
+---------------------
+Profile widgets and refactoring by Kevin Jardine
+Weblog content toolbar for video / file embedding by Diego Ramirez
+Explode integration
+
 0.7 (February 2007)
 -------------------
 Multiple authentication types

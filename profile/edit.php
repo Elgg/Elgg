@@ -2,7 +2,7 @@
 
 //    ELGG profile edit page
 
-global $profile_name, $profile_id;
+global $profile_name, $profile_id, $messages;
 
 // Run includes
 require_once(dirname(dirname(__FILE__))."/includes.php");
@@ -42,7 +42,7 @@ if (isset($_SESSION['profile:preload:access'])) {
     unset($_SESSION['profile:preload:access']);
 }
 
-$title = run("profile:display:name", $page_owner) . " :: ". __gettext("Edit profile") ."";
+$title = user_name($page_owner) . " :: ". __gettext("Edit profile") ."";
 templates_page_setup();
 
 $metatags .= "<script type=\"text/javascript\" src=\"" . $CFG->wwwroot . "mod/profile/tabber/tabber.js\"></script>";
@@ -71,7 +71,7 @@ function profile_update($profile_new) {
         
     $profiledetails = optional_param('profiledetails',array());
     if (count($profiledetails) > 0) {
-        delete_records('profile_data','owner',$page_owner);
+        // delete_records('profile_data','owner',$page_owner);
         
         $insertvalues = array();
         $requiredmissing = array();
@@ -80,7 +80,7 @@ function profile_update($profile_new) {
             $field = trim($field);
             $value = trim($value);
           
-            if ($value != "") {
+            if (!empty($value)) {
                 //TODO get rid of variable duplication here. (Penny)
                 if (!empty($data['profile:details'][$field]->invisible)) {
                     $access = 'user' . $page_owner;
@@ -115,11 +115,14 @@ function profile_update($profile_new) {
                             $fcat = $datatype->category;
                         }
                     }
-                    if ($fname == $field && $frequired == true) {
-                        $requiredmissing[] = sprintf(__gettext("%s (in category %s)"),$flabel,$fcat);
+                    if ($fname == $field) {
+                        if ($frequired == true) {
+                            $requiredmissing[] = sprintf(__gettext("%s (in category %s)"),$flabel,$fcat);
+                        } else {
+                            delete_records('profile_data','owner',$page_owner,'name',$fname);
+                        }
                     }
                 }
-                
             }
         }
         if (sizeof($requiredmissing) == 0) {
@@ -127,24 +130,29 @@ function profile_update($profile_new) {
             $updatedok = true;
             
             foreach($insertvalues as $insertvalue) {
-                $insert_id  = insert_record('profile_data',$insertvalue);
-                $insertvalue->ident = $insert_id;
-                foreach($data['profile:details'] as $datatype) {
-                    if (is_array($datatype)) {
-                        $fname = !empty($datatype[0]) ? $datatype[0] : '';
-                        $ftype = !empty($datatype[2]) ? $datatype[2] : '';
-                    // Otherwise map things the new way!
-                    } else {
-                        $fname = $datatype->internal_name;
-                        $ftype = $datatype->field_type;
-                    }
-                    if ($fname == $insertvalue->name && $ftype == "keywords") {
-                        delete_records('tags', 'tagtype', $insertvalue->name, 'owner', $page_owner);
-                        $value = insert_tags_from_string ($insertvalue->value, $insertvalue->name, $insert_id, $insertvalue->access, $page_owner);
-                    }
-                    if (isset($CFG->display_field_module[$ftype])) {
-                        $callback = $CFG->display_field_module[$ftype] . "_validate_input_field";
-                        $updatedok = $callback($insertvalue);
+                delete_records('profile_data','owner',$page_owner,'name',$insertvalue->name);
+                $insertvalue = plugin_hook("profile_data","create",$insertvalue);
+                if (!empty($insertvalue)) {
+                    $insert_id  = insert_record('profile_data',$insertvalue);
+                    $insertvalue->ident = $insert_id;
+                    plugin_hook("profile_data","publish",$insertvalue);
+                    foreach($data['profile:details'] as $datatype) {
+                        if (is_array($datatype)) {
+                            $fname = !empty($datatype[1]) ? $datatype[1] : '';
+                            $ftype = !empty($datatype[2]) ? $datatype[2] : '';
+                        // Otherwise map things the new way!
+                        } else {
+                            $fname = $datatype->internal_name;
+                            $ftype = $datatype->field_type;
+                        }
+                        if ($fname == $insertvalue->name && $ftype == "keywords") {
+                            delete_records('tags', 'tagtype', $insertvalue->name, 'owner', $page_owner);
+                            $value = insert_tags_from_string ($insertvalue->value, $insertvalue->name, $insert_id, $insertvalue->access, $page_owner);
+                        }
+                        if (isset($CFG->display_field_module[$ftype])) {
+                            $callback = $CFG->display_field_module[$ftype] . "_validate_input_field";
+                            $updatedok = $callback($insertvalue);
+                        }
                     }
                 }
             }

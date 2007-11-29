@@ -23,7 +23,7 @@
         
         templates_page_setup();
         
-        $title = run("profile:display:name", $user_id) . " :: " . __gettext("Tags");
+        $title = user_name($user_id) . " :: " . __gettext("Tags");
 
         $body = run("content:tags");
         $body .= run("search:tags:personal:display", $user_id);

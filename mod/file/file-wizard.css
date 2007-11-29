@@ -1,0 +1,40 @@
+h2 {
+	border-bottom: 
+}
+
+div#splitpane-sidebar {
+	width: 29%;
+	float: left;
+}
+
+div#splitpane-sidebar ul {
+	list-style-position: inside;
+	list-style-type: square;
+	padding-left: 7px;
+	line-height: 15px
+}
+
+div#splitpane-sidebar ul li {
+	list-style-position: inside;
+	list-style-type: square;
+}
+
+div#splitpane-content {
+	width: 65%;
+	border-left: 1px solid black;
+	float: right;
+	min-height: 260px;
+	padding-left: 10px;
+}
+
+div#splitpane-content ul {
+	list-style-position: inside;
+	list-style-type: circle;
+	padding-left: 10px;
+}
+
+div#splitpane-content ul li {
+	list-style-position: inside;
+	list-style-type: disc;
+	margin-left: 0px;
+}

@@ -88,5 +88,7 @@
             $DEFCFG->config['curlpath']->description = ("Set this to the CURL executable if CURL is installed; otherwise leave blank.");
             $DEFCFG->config['templatesroot']->name = ("Templates location");
             $DEFCFG->config['templatesroot']->description = ("The full path of your Default_Template directory");
+            $DEFCFG->config['profilelocation']->name = ("Profile location");
+            $DEFCFG->config['profilelocation']->description = ("The full path to your profile configuration file (usually it's best to leave this in mod/profile/)");
             
 ?>

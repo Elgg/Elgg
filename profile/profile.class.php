@@ -309,11 +309,12 @@ END;
         //if (sizeof($field) >= 2) {
     
             // $value = get_record('profile_data','name',$field[1],'owner',$this->id);
-        
-            foreach($allvalues as $curvalue) {
-                if ($curvalue->name == stripslashes($fname)) {
-                    $value = $curvalue;
-                    break; // found it, done!
+            if (is_array($allvalues) && !empty($allvalues)) {
+                foreach($allvalues as $curvalue) {
+                    if ($curvalue->name == stripslashes($fname)) {
+                        $value = $curvalue;
+                        break; // found it, done!
+                    }
                 }
             }
 

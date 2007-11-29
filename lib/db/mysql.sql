@@ -96,7 +96,7 @@ CREATE TABLE `prefix_friends` (
   `friend` int(11) NOT NULL default '0' COMMENT '-> users.ident, being friended',
   `status` varchar(4) NOT NULL default 'perm' COMMENT 'not used?',
   PRIMARY KEY (`ident`),
-  KEY `owner` (`owner`),
+  UNIQUE KEY `owner` (`owner`, `friend`),
   KEY `friend` (`friend`),
   KEY `status` (`status`)
 ) ;
@@ -112,7 +112,7 @@ CREATE TABLE `prefix_friends_requests` (
   `owner` INT NOT NULL COMMENT '-> users.ident, doing the friending',
   `friend` INT NOT NULL COMMENT '-> users.ident, being friended',
   PRIMARY KEY (`ident`) ,
-  INDEX (`owner`)
+  UNIQUE KEY (`owner`,`friend`)
 ) ;
 
 -- --------------------------------------------------------
@@ -126,7 +126,7 @@ CREATE TABLE `prefix_group_membership` (
   `user_id` int(11) NOT NULL default '0' COMMENT '-> users.ident',
   `group_id` int(11) NOT NULL default '0' COMMENT '-> groups.ident',
   PRIMARY KEY (`ident`),
-  KEY `user_id` (`user_id`,`group_id`)
+  UNIQUE KEY `user_id` (`user_id`,`group_id`)
 ) ;
 
 -- --------------------------------------------------------
@@ -355,7 +355,9 @@ CREATE TABLE `prefix_weblog_posts` (
   `title` text NOT NULL,
   `body` text NOT NULL,
   PRIMARY KEY (`ident`),
-  KEY `owner` (`owner`,`access`,`posted`),
+  KEY `owner` (`owner`),
+  KEY `access` (`access`),
+  KEY `posted` (`posted`),
   KEY `community` (`weblog`)
 ) ;
 

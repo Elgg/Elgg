@@ -20,7 +20,13 @@ if (isset($parameter)) {
     }
     
     if ($results = get_records_sql($searchline)) {
-        $run_result .= "<h2>" . __gettext("Matching users and communities:") . "</h2><p>";
+        if ($PAGE->search_type_unformatted == "person") {
+            $run_result .= "<h2>" . __gettext("Matching users:") . "</h2><p>";
+        } else if ($PAGE->search_type_unformatted == "community") {
+            $run_result .= "<h2>" . __gettext("Matching communities:") . "</h2><p>";
+        } else {
+            $run_result .= "<h2>" . __gettext("Matching users and communities:") . "</h2><p>";
+        }
         foreach($results as $returned_name) {
             $run_result .= "<a href=\"" . url . $returned_name->username . '/">' . htmlspecialchars($returned_name->name) . "</a> <br />";
         }

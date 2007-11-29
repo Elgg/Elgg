@@ -16,7 +16,8 @@
    8. You must not modify, adapt or hack $sitename or modify another website so as to falsely imply that it is associated with $sitename.<br />
    9. You must not create or submit unwanted email to any $sitename members ('Spam').<br />
   10. You must not transmit any worms or viruses or any code of a destructive nature.<br />
-  11. You must not, in the use of $sitename, violate any laws in your jurisdiction (including but not limited to copyright laws).<br /></p>
+  11. You must not, in the use of $sitename, violate any laws in your jurisdiction (including but not limited to copyright laws).<br />
+  12. Any loss of, or damage to, data is not the responsibility of $sitename. Use of this service is at your own risk.</p>
 
 <p>Violation of any of these agreements will result in the termination of your $sitename account. While $sitename prohibits such conduct and content on its site, you understand and agree that $sitename cannot be responsible for the Content posted on its web site and, despite our best efforts, may be exposed to such materials and that you use the $sitename service at your own risk.<p>
 

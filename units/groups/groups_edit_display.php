@@ -41,7 +41,7 @@ END;
                                 }
         
                             }
-    $addToGroup = __gettext("Add selected to group"); // gettext variable
+    $addToGroup = __gettext("Add selected"); // gettext variable
     $column1 .= <<< END
                             </select><br />
                             <input type="submit" value="$addToGroup" />
@@ -50,8 +50,8 @@ END;
                         </p></form>
                     </td>
 END;
-    $removeFromGroup = __gettext("Remove selected from group"); // gettext variable
-    $groupMembers = __gettext("Members of this group:"); // gettext variable
+    $removeFromGroup = __gettext("Remove selected"); // gettext variable
+    $groupMembers = __gettext("Members of this access control:"); // gettext variable
     $column2 = <<< END
                     <td width="70%" valign="top" align="left">
                         <form action="index.php#{$parameter[0]->ident}" method="post"><p>

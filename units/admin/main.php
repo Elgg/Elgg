@@ -29,6 +29,8 @@
         $function['userdetails:edit:details'][] = $CFG->dirroot . "units/admin/admin_userdetails.php";
     // Menu to view all users
         $function['admin:users'][] = $CFG->dirroot . "units/admin/admin_users.php";
+        $function['admin:users:admin'][] = $CFG->dirroot . "units/admin/admin_admin_users.php";
+        $function['admin:users:banned'][] = $CFG->dirroot . "units/admin/admin_banned_users.php";
         
     // Bulk user addition screen
         $function['admin:users:add'][] = $CFG->dirroot . "units/admin/admin_users_add.php";
@@ -41,7 +43,8 @@
         $function['spam:check'][] = $CFG->dirroot . "units/admin/spam_check.php";
         
     // Admin-related actions
-        $function['init'][] = $CFG->dirroot . "units/admin/admin_actions.php";
+        $function['admin:init'][] = $CFG->dirroot . "units/admin/admin_actions.php";
+        $function['userdetails:init'][] = $CFG->dirroot . "units/admin/admin_actions.php";
     
 
 ?>

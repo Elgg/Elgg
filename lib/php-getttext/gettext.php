@@ -249,7 +249,7 @@ class gettext_reader {
     
     if ($this->enable_cache) {
       // Caching enabled, get translated string from cache
-      if (array_key_exists($string, $this->cache_translations))
+      if (is_array($this->cache_translations) && array_key_exists($string, $this->cache_translations)) // CHANGED FROM UPSTREAM
         return $this->cache_translations[$string];
       else
         return $string;

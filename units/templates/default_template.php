@@ -92,7 +92,7 @@ END;
         <div id="icon"><a href="{{profileurl}}">{{usericon}}</a></div>
         <div id="contents" >
           <p>
-            <span class="userdetails">{{name}}<br /><a href="{{profileurl}}rss/">RSS</a> | <a href="{{profileurl}}tags/">$tags</a> | <a href="{{profileurl}}newsclient/">$resources</a></span></p>
+            <span class="userdetails">{{name}}<br /><a href="{{profileurl}}rss/"><img src="{{url}}mod/template/icons/rss.png" alt="RSS" border="0" /></a> | <a href="{{profileurl}}tags/">$tags</a> | <a href="{{profileurl}}newsclient/">$resources</a></span></p>
             <p>{{tagline}}</p>
             <p>{{lmshosts}}</p>
             <p class="usermenu">{{usermenu}}</p>

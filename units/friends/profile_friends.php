@@ -17,7 +17,7 @@ if ($page_owner != -1 && (user_type($page_owner) == "person" || user_type($page_
                            array(
                                  __gettext("Friends"),
                                  $friends,
-                                 "<a href=\"".url."_friends/?owner=$profile_id\">[" . __gettext("View all Friends") . "]</a>"
+                                 "<a href=\"".url."_friends/?owner=$page_owner\">[" . __gettext("View all Friends") . "]</a>"
                                  )
                            );
         

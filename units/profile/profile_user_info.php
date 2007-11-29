@@ -18,8 +18,8 @@ $ul_username = user_info('username', $page_owner);
 
 $info->icon = run("icons:get", $page_owner);
 
-$icon = '<img alt="" src="'.url. '_icon/user/'.$info->icon.'/h/67/w/67" border="0" />'; // height is the important one here.
-$name = stripslashes($info->name); 
+$icon = user_icon_html($info->ident,67);
+$name = stripslashes(user_name($info->ident)); 
 //$name = run("profile:display:name");
 $url = url . $info->username . "/";
 

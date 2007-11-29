@@ -1,0 +1,43 @@
+Google videos doesn't show
+--------------------------
+In Elgg 0.7 and repository version:
+- The contenttoolbar doesn't show.
+    If you couldn't see the contentoolbar check if the following line
+    of code exists in 'units/weblogs/weblogs_posts_add.php' and
+    'units/weblogs/weblogs_posts_edit.php':
+
+    $buttons = run("display:content:toolbar");
+    if(!empty($buttons)){
+      $body.=$buttons;
+    }
+
+- Google videos doesn't show
+  In 'units/weblogs/weblogs_text_process.php' check that:
+
+    if($run_result = run("video:text:process",$run_result)!=null){
+	$run_result = run("video:text:process",$run_result);
+    }
+
+  It there instead of:
+
+            // Videos
+            
+            $functionbody = <<< END
+                
+            \$width = 240;
+            \$height = 200;
+            \$url = str_replace("&amp;","&",\$matches[1]);
+            \$url = explode("?",\$url);
+            if(count(\$url)==2){
+              \$url[1] = explode("x",\$url[1]);
+              \$width = \$url[1][0];
+              \$height = \$url[1][1];
+            }
+            \$url = \$url[0];
+            return "<embed class=\"VideoPlayback\" type=\"application/x-shockwave-flash\" src=\"\$url\" width=\"\$width\" height=\"\$height\"/>";
+                
+END;
+            // $run_result = preg_replace_callback("/\{\{video:([A-Za-z0-9\.\:\_\-\/\\?\=\&\+]+)\}\}/i",create_function('$matches',$functionbody),$run_result);
+            // $run_result = preg_replace_callback("/\{\{video:([^}]+)\}\}/i",create_function('$matches',$functionbody),$run_result);
+            $run_result = preg_replace_callback("/\{\{video:([^}]+)(\?([0-9]+)x([0-9]+))?\}\}/i",create_function('$matches',$functionbody),$run_result);
+

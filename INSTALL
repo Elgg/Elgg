@@ -1,7 +1,7 @@
-Elgg version 0.7 installation instructions
+Elgg version 0.8 installation instructions
 
 Ben Werdmuller <ben@curverider.co.uk>
-12 December 2006
+5 July 2007
 
 
 1. BEFORE YOU BEGIN
@@ -15,6 +15,10 @@ Elgg currently requires the Apache web server with mod_rewrite
 installed and the ability to send emails, plus PHP 4.3+ and MySQL 
 4.1+ (Postgres can also be used).  It has currently been tested on 
 Apache installations running Red Hat Linux and Microsoft Windows XP.
+
+It is now possible to install Elgg on Microsoft IIS web server
+environments. See the separate IIS-INSTALL file for more details, but
+you need to follow the instructions below as normal.
 
 In your Apache configuration, you must have AllowOverride set to
 All for the directory where Elgg is installed.
@@ -64,6 +68,11 @@ can place Elgg in a subdirectory of this; commonly, people will place it in
 one called 'elgg'.
 
 Rename htaccess-dist to .htaccess, and config-dist.php to config.php.
+
+PLEASE NOTE: Elgg 0.8 contains integration with the Explode service at
+http://ex.plode.us/. From time to time, Elgg will ping Explode to let it know
+it exists. If you don't want this to happen, you must delete the folder at
+/mod/explodeping.
 
 
 2.2 Create data directory

@@ -140,7 +140,7 @@ if (!empty($feed) && !empty($subscribers)) {
                                     $wp->posted = $added;
                                     $id = insert_record('weblog_posts',$wp);
                                     $tags = trim($weblog->autopost_tag);
-                                    insert_tags_from_string ($tags, 'weblog', $id, 'PUBLIC', $weblog_user_id);
+                                    insert_tags_from_string ($tags, 'weblog', $id, 'PUBLIC', $weblog->user_id);
                                     $rssresult = run("weblogs:rss:publish", array($weblog->user_id, false));
                                     $rssresult = run("profile:rss:publish", array($weblog->user_id, false));
                                 }

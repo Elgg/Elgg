@@ -44,8 +44,7 @@ END;
                 $w = 50;
             }
             
-            // $username = htmlspecialchars(stripslashes($info->name), ENT_COMPAT, 'utf-8');
-            $username = run("profile:display:name", $info->ident);
+            $username = user_name($info->ident);
             $usermenu = '';
 
             $body .= <<< END

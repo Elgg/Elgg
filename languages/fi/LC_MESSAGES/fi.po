@@ -1,0 +1,4887 @@
+# Finnish translation for elgg
+# Copyright (c) 2006 Rosetta Contributors and Canonical Ltd 2006
+# This file is distributed under the same license as the elgg package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2006.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: elgg\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2007-02-07 13:51+0000\n"
+"PO-Revision-Date: 2007-04-24 05:04+0000\n"
+"Last-Translator: koistte <kodefi@gmail.com>\n"
+"Language-Team: Finnish <fi@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Rosetta-Export-Date: 2007-04-27 13:58:11+0000\n"
+
+#: _activity/index.php:24
+msgid "Recent activity"
+msgstr "Viimeisimmät tapahtumat"
+
+#: _activity/index.php:29
+msgid "Currently viewing recent activity since "
+msgstr "Viimeisimmät tapahtumat ajalta "
+
+#: _activity/index.php:31
+msgid "You may view recent activity during the following time-frames:"
+msgstr "Voit katsoa viimeisimpiä tapahtumia seuraavalta aikajaksolta:"
+
+#: _activity/index.php:33
+msgid "The last 24 hours"
+msgstr "Edelliset 24 tuntia"
+
+#: _activity/index.php:34
+msgid "The last 48 hours"
+msgstr "Edelliset 48 tuntia"
+
+#: _activity/index.php:35
+msgid "The last week"
+msgstr "Edellinen viikko"
+
+#: _activity/index.php:36
+msgid "The last month"
+msgstr "Edellinen kuukausi"
+
+#: _activity/index.php:38
+msgid "Your recent messages"
+msgstr "Uusimmat viestisi"
+
+#: _activity/index.php:49
+msgid "Activity on weblog posts you have marked as interesting"
+msgstr "Tapahtumat kiinnostaviksi merkitsemissäsi blogeissa"
+
+#: _activity/index.php:60
+msgid "Read more"
+msgstr "Lue lisää"
+
+#: _activity/index.php:64
+msgid "your blog"
+msgstr "Sinun blogi"
+
+#: _activity/index.php:67
+#, php-format
+msgid "<b>You</b> commented on weblog post '%s' in %s:"
+msgstr "<b>Sinä</b> kommentoit blogin artikkelia '%s' %s:ssa:"
+
+#: _activity/index.php:69
+#, php-format
+msgid "<b>%s</b> commented on weblog post '%s' in %s:"
+msgstr "<b>%s</b> kommentoi verkkoblogin artikkelia '%s' %s:ssä:"
+
+#: _activity/index.php:79
+msgid "No activity during this time period."
+msgstr "Ei tapahtumia tässä aikajaksossa"
+
+#: _admin/antispam.php:17 _admin/users.php:17 _admin/users.php:20
+#: lib/templates.php:491
+msgid "Manage users"
+msgstr "Hallitse käyttäjiä"
+
+#: _admin/antispam.php:20
+msgid "Spam blocking"
+msgstr "Roskapostin esto"
+
+#: _admin/flags.php:17 _admin/flags.php:20
+msgid "Content flags"
+msgstr "Sisällön liput"
+
+#: _admin/index.php:17 _admin/index.php:20 lib/templates.php:449
+msgid "Administration"
+msgstr "Hallinta"
+
+#: _admin/users_add.php:17 _admin/users_add.php:20
+msgid "Add multiple users"
+msgstr "Lisää useita käyttäjiä"
+
+#: _communities/index.php:22 mod/browser/index.php:83 mod/community/lib.php:54
+#: mod/community/lib.php:64 mod/toolbar/lib.php:43
+#: units/communities/communities_edit_wrapper.php:5
+msgid "Communities"
+msgstr "Yhteisöt"
+
+#: _communities/members.php:22 units/communities/community_memberships.php:40
+#: units/communities/community_memberships.php:42
+msgid "Members"
+msgstr "Jäsenet"
+
+#: _communities/owned.php:22 mod/community/lib.php:58
+msgid "Owned Communities"
+msgstr "Omat yhteisöt"
+
+#: _communities/requests.php:23
+#: units/communities/communities_membership_requests.php:10
+msgid "Membership requests"
+msgstr "Jäsenyyspyyntö"
+
+#: _files/edit_file.php:19
+msgid "Edit File"
+msgstr "Muokkaa tiedostoa"
+
+#: _files/edit_folder.php:19
+msgid "Edit Folder"
+msgstr "Muokkaa hakemistoa"
+
+#: _files/index.php:19 units/files/files_user_info_menu.php:13
+#: units/files/function_rss_publish.php:35 units/files/profile_files.php:9
+msgid "Files"
+msgstr "Tiedostot"
+
+#: _files/rss2.php:25
+#, php-format
+msgid "Files tagged with %s"
+msgstr "Tiedostot merkattuina %s"
+
+#: _files/rss2.php:31 units/files/function_rss_publish.php:42
+#, php-format
+msgid "Files for %s, hosted on %s."
+msgstr ""
+
+#: _friends/friendsof.php:21 units/friends/friends_of_edit_wrapper.php:5
+msgid "Friends who have linked to you"
+msgstr "Ystävät, jotka ovat linkittäneet sinuun"
+
+#: _friends/index.php:21 units/friends/friends_edit_wrapper.php:5
+msgid "Friends I have linked to"
+msgstr "Ystävät, joihin minä olen linkittänyt"
+
+#: _friends/requests.php:22 mod/friend/lib.php:38
+#: units/friends/user_friendship_requests.php:11
+msgid "Friendship requests"
+msgstr "Ystävyyspyyntö"
+
+#: _groups/index.php:23
+msgid "Access Controls"
+msgstr "Pääsynhallinta"
+
+#: _icons/index.php:20
+msgid "Manage user icons"
+msgstr "Hallitse käyttäjien kuvakkeita"
+
+#: _invite/forgotten_password.php:14
+msgid "Generate a New Password"
+msgstr "Luo uusi salasana"
+
+#: _invite/index.php:18
+msgid "Invite a Friend"
+msgstr "Kutsu ystävä"
+
+#: _invite/join.php:12 _invite/register.php:11
+#, php-format
+msgid "Join %s"
+msgstr "Liity %s"
+
+#: _invite/new_password.php:11
+#, php-format
+msgid "Get new %s password"
+msgstr "Valitse uusi %s salasana"
+
+#: _rss/blog.php:25
+msgid "Publish feeds to blog"
+msgstr "Julkaise syötteet blogissa"
+
+#: _rss/index.php:24 _rss/subscriptions.php:24 mod/newsclient/lib.php:27
+#: units/magpie/menu_sub.php:14
+msgid "Feeds"
+msgstr "Syötteet"
+
+#: _rss/individual.php:13
+msgid "Feed detail"
+msgstr "Syötteen yksityiskohdat"
+
+#: _rss/opml.php:16
+#, php-format
+msgid "Feed subscriptions for %s"
+msgstr "Tilatut syötteet %s:lle"
+
+#: _rss/opml.php:35
+msgid "No subscriptions found"
+msgstr "Tilauksia ei löytynyt"
+
+#: _rss/opml.php:46
+#, php-format
+msgid "Username not found: %s"
+msgstr "Käyttäjänimeä ei löytynyt: %s"
+
+#: _rss/popular.php:12 units/magpie/menu_sub.php:31
+msgid "Popular feeds"
+msgstr "Suositut syötteet"
+
+#: _rss/styles.php:10
+msgid "RSS Management"
+msgstr "RSS-hallinta"
+
+#: _rss/styles.php:11
+msgid "To add this feed to your resources page, click here."
+msgstr "Lisää tämä syöte resurssisivulle napauttamalla tähän."
+
+#: _rss/styles.php:12
+msgid ""
+"To add this feed to an external RSS aggregator, click the link that "
+"corresponds to your aggregator:"
+msgstr ""
+"Lisää tämä syöte ulkoiseen RSS lukijaan napauttamalla linkkiä joka vastaa "
+"sinun lukijaasi:"
+
+#: _rss/styles.php:13
+msgid "Summary"
+msgstr "Yhteenveto"
+
+#: _rss/styles.php:14
+msgid "This is an RSS feed for "
+msgstr "Tämä on RSS-syöte "
+
+#: _rss/styles.php:15
+msgid "Didn't mean to come here? Click to exit!"
+msgstr "Eikö tarkoituksesi ollut tulla tänne? Poistu klikkaamalla!"
+
+#: _templates/edit.php:15
+msgid "Template Edit"
+msgstr "Mallipohjan muokkaus"
+
+#: _templates/index.php:15
+msgid "Select / Create Themes"
+msgstr "Valitse / Luo Teemoja"
+
+#: _templates/preview.php:13
+msgid "Template Preview"
+msgstr "Mallipohjan esikatselu"
+
+#: _userdetails/index.php:18 lib/templates.php:470
+msgid "Edit user details"
+msgstr "Muokkaa käyttäjän yksityiskohtia"
+
+#: _weblog/archive.php:15 _weblog/archive_month.php:15
+msgid "Blog Archives"
+msgstr "Blogiarkistot"
+
+#: _weblog/edit.php:24 _weblog/index.php:15
+#: units/communities/communities_membership_requests.php:33
+#: units/friends/user_friendship_requests.php:34
+#: units/weblogs/weblogs_user_info_menu.php:29
+msgid "Blog"
+msgstr "Blogi"
+
+#: _weblog/everyone.php:15
+msgid "All blogs"
+msgstr "Kaikki blogit"
+
+#: _weblog/everyone.php:19
+msgid "You can filter this page to certain types of posts:"
+msgstr "voit suodattaa tälle sivulle tietynkaltaisia artikkeleja:"
+
+#: _weblog/everyone.php:21
+msgid "Personal blog posts"
+msgstr "Henkilökohtaisen blogin artikkelit"
+
+#: _weblog/everyone.php:22
+msgid "Community blog posts"
+msgstr "yhteisön blogin artikkelit"
+
+#: _weblog/everyone.php:23
+msgid "Posts with comments"
+msgstr "Artikkelit, joissa kommentteja"
+
+#: _weblog/everyone.php:24
+msgid "Posts with no comments"
+msgstr "Artikkelit, joissa ei kommentteja"
+
+#: _weblog/friends.php:15 units/weblogs/weblogs_user_info_menu.php:47
+msgid "Friends blog"
+msgstr "Ystävien blogit"
+
+#: _weblog/interesting.php:15 mod/blog/lib.php:57
+msgid "Interesting posts"
+msgstr "Mielenkiintoiset artikkelit"
+
+#: _weblog/rss2.php:51
+#, php-format
+msgid "Weblog items tagged with %s"
+msgstr "Blogit merkittyinä %s"
+
+#: _weblog/rss2.php:54
+msgid "Weblog items"
+msgstr ""
+
+#: _weblog/rss2.php:61
+msgid "All users"
+msgstr "Kaikki käyttäjät"
+
+#: _weblog/rss2.php:74
+#, php-format
+msgid "The most recent weblog posts on %s."
+msgstr "Viimeisin blogin artikkeli %s"
+
+#: _weblog/rss2.php:78 units/weblogs/function_rss_publish.php:42
+#, php-format
+msgid "The weblog for %s, hosted on %s."
+msgstr ""
+
+#: _weblog/view_post.php:28
+msgid "Access denied or post not found"
+msgstr "Pääsy estetty tai merkintää ei löydy"
+
+#: _weblog/view_post.php:31
+msgid ""
+"Either this blog post doesn't exist or you don't currently have access "
+"privileges to view it."
+msgstr "Tätä artikkelia ei joko ole tai sinulla ei ole oikeuksia nähdä sitä."
+
+#: _weblog/view_post.php:39 units/weblogs/function_rss_publish.php:35
+msgid "Weblog"
+msgstr "Verkkoblogi"
+
+#: auth/ldap/lib.php:113 lms/join.php:48 units/invite/invite_actions.php:95
+msgid ""
+"Error! Your username must contain letters and numbers only, cannot be blank, "
+"and must be between 3 and 12 characters in length."
+msgstr ""
+"Virhe! Käyttäjänimessä saa olla vain kirjaimia ja numeroita, se ei voi olla "
+"tyhjä ja sen tulee olla pituudeltaan 3-12 merkkiä pitkä."
+
+#: auth/ldap/lib.php:118 units/communities/communities_actions.php:27
+#, php-format
+msgid ""
+"The username %s is already taken by another user. You will need to pick a "
+"different one."
+msgstr ""
+"Käyttäjänimi %s on jo toisen käyttäjän käytössä. Valitse jokin muu nimi."
+
+#: auth/ldap/lib.php:139
+#, php-format
+msgid ""
+"User addition %d failed: Unknown reason, please contact you system "
+"administrator."
+msgstr ""
+"Käyttäjän lisäys %d epäonnistui: Tuntematon syy. Ota yhteyttä "
+"järjestelmänvalvojaan."
+
+#: content/about.php:10 content/about.php:13
+#, php-format
+msgid "About %s"
+msgstr "Tietoja %s:sta"
+
+#: content/faq.php:10 content/faq.php:13
+#, php-format
+msgid "%s FAQ"
+msgstr "%s FAQ"
+
+#: content/invite/invite.php:3
+msgid ""
+"If you have a friend or colleague you would like to join the system, perhaps "
+"because you would like to share protected resources or reflections with "
+"them, you can enter their details below. They will then receive a special "
+"invitation email containing a code that allows them to create a new account; "
+"once they do so, a mutual friend connection will be created between their "
+"account and yours."
+msgstr ""
+"Mikäli haluat kolleegasi tai ystäväsi käyttämään tätä järjestelmää tai "
+"haluaisit jakaa suojattuja resursseja heidän kanssaan, niin voit täyttää "
+"heidän tiedot allaolevaan lomakkeeseen. He saavat kutsun sähköpostiinsa, "
+"joka sisältää koodin uuden tilin luomista varten. Kun he ovat luoneet "
+"tilinsä, niin käyttäjätunnukset linkitetään keskenään ystäviksi."
+
+#: content/mainindex/content_loggedout.php:7
+#: content/mainindex/content_main_index.php:7 lib/templates.php:66
+#: lib/templates.php:1278 lib/templates.php:1280
+msgid "Welcome"
+msgstr "Tervetuloa"
+
+#: content/mainindex/content_loggedout.php:8
+#, php-format
+msgid ""
+"This is %s, a learning landscape. Why not check out <a href=\"%s\">what "
+"people are saying</a> right now."
+msgstr ""
+"Tämä on %s, oppimisympäristö. Käväise katsomassa <a hrf=\"%s\">mitä muut "
+"käyttäjät sanovat</a> juuri nyt."
+
+#: content/mainindex/content_loggedout.php:9
+#, php-format
+msgid "<a href=\"%s\">Find others</a> with similar interests and goals."
+msgstr "<a href=\"%s\">Etsi muita</a>samoista asioista kiinnostuneita."
+
+#: content/mainindex/content_loggedout.php:17
+msgid "Here are some example users:"
+msgstr "Tässä joitakin esimerkkikäyttäjiä:"
+
+#: content/mainindex/content_loggedout.php:19
+msgid "Here is an example user:"
+msgstr "Tässä esimerkkikäyttäjä:"
+
+#: content/mainindex/content_loggedout.php:33
+#, php-format
+msgid ""
+"If you like what you see, why not <a href=\"%s\">register for an account</a>?"
+msgstr "Jos pidit näkemästäsi, miksi et <a href=\"%s\">tekisi tunnusta</a>?"
+
+#: content/mainindex/content_loggedout.php:40
+#: content/mainindex/content_main_index.php:41
+msgid "Latest news"
+msgstr "Uusimmat uutiset"
+
+#: content/mainindex/content_main_index.php:8
+#, php-format
+msgid "Why not <a href=\"%s\">create your profile</a>?"
+msgstr "Miksipä et <a href=\"%s\">tekisi itsellesi profiilia</a>?"
+
+#: content/mainindex/content_main_index.php:9
+msgid ""
+"Tell people about yourself and connect to others with similar interests and "
+"goals."
+msgstr ""
+"Kerro toisille jotakin itsestäsi ja ole yhteydessä muihin samoista asioista "
+"kiinnostuneiden kanssa."
+
+#: content/mainindex/content_main_index.php:17
+msgid "Here are some examples of complete profiles:"
+msgstr "Tässä joitakin esimerkkejä valmiista profiileista:"
+
+#: content/mainindex/content_main_index.php:19
+msgid "Here is an example of a complete profile:"
+msgstr "Tässä on esimerkki valmiista profiilista:"
+
+#: content/mainindex/content_main_index.php:33
+#, php-format
+msgid "Or you could <a href=\"%s\">start your blog</a>?"
+msgstr "Voisit ehkä <a href=\"%s\">luoda blogin</a>?"
+
+#: content/mainindex/content_main_index.php:34
+#, php-format
+msgid ""
+"Comment on what you're learning, collect interesting links and decide who "
+"gets to see what you're writing. Here's what <a href=\"%s\">everyone else is "
+"talking about</a> right now."
+msgstr ""
+"Kommentoi oppimaasi, kerää kiinnostavia linkkejä ja päätä siitä kuka pääsee "
+"lukemaan kirjoituksiasi. Näistä < a href=\"%s\">asioista muut puhuvat</a> "
+"juuri nyt."
+
+#: content/privacy.php:10 content/privacy.php:13
+#, php-format
+msgid "%s Privacy Policy"
+msgstr "%s yksityisyyssäännöt"
+
+#: content/run_your_own.php:10 content/run_your_own.php:13
+#, php-format
+msgid "Running Your Own %s"
+msgstr ""
+
+#: content/terms.php:10 content/terms.php:13
+#, php-format
+msgid "%s Terms &amp; Conditions"
+msgstr "%s Määräykset &amp; Ehdot"
+
+#: home.php:15 index2.php:15
+msgid "Main Index"
+msgstr "Päähakemisto"
+
+#: lib/datalib.php:45
+msgid "Success"
+msgstr "Onnistui"
+
+#: lib/datalib.php:50 lib/elgglib.php:2986
+msgid "Error"
+msgstr "Virhe"
+
+#: lib/db/mysql.php:215
+msgid "Publishing RSS"
+msgstr "Julkaistaan RSS"
+
+#: lib/db/mysql.php:220 lib/db/postgres7.php:183
+#, php-format
+msgid "Publishing RSS for user %d"
+msgstr "Julkaistaan RSS käyttäjälle %d"
+
+#: lib/db/mysql.php:232 lib/db/postgres7.php:195
+msgid "Adjusting file repository information"
+msgstr "Säädetään tiedostoalueen tietoja"
+
+#: lib/db/mysql.php:241 lib/db/mysql.php:251 lib/db/postgres7.php:204
+#: lib/db/postgres7.php:214
+#, php-format
+msgid "Updating file %d: %s"
+msgstr "Päivitetään tiedostoa %d:%s"
+
+#: lib/dbsetup.php:77
+msgid "Need to upgrade database"
+msgstr "Tietokantaa tulee päivittää"
+
+#: lib/displaylib.php:197 units/display/function_log_on_pane.php:16
+#: units/invite/join_noinvite.php:42
+msgid "Register"
+msgstr "Rekisteröidy"
+
+#: lib/displaylib.php:205 login/index.php:56
+#: units/display/function_log_on_pane.php:28
+msgid "Log On"
+msgstr "Kirjaudu"
+
+#: lib/displaylib.php:211 mod/toolbar/lib.php:30 units/admin/admin_main.php:84
+#: units/admin/admin_users.php:28 units/admin/admin_users_add.php:20
+#: units/display/function_log_on_pane.php:34
+msgid "Username"
+msgstr "Käyttäjätunnus"
+
+#: lib/displaylib.php:212 mod/toolbar/lib.php:31
+#: units/display/function_log_on_pane.php:35
+msgid "Password"
+msgstr "Salasana"
+
+#: lib/displaylib.php:219 units/display/function_log_on_pane.php:44
+msgid "Log on"
+msgstr "Kirjaudu"
+
+#: lib/displaylib.php:219 units/display/function_log_on_pane.php:44
+msgid "Go"
+msgstr "Mene"
+
+#: lib/displaylib.php:221 units/display/function_log_on_pane.php:46
+msgid "Remember Login"
+msgstr "Jäsenen kirjautuminen"
+
+#: lib/displaylib.php:224 units/display/function_log_on_pane.php:49
+msgid "Forgotten password"
+msgstr "Unohtunut salasana"
+
+#: lib/displaylib.php:283
+msgid "Add User"
+msgstr "Lisää käyttäjä"
+
+#: lib/displaylib.php:283 lib/displaylib.php:292
+msgid "Send Message"
+msgstr "Lähetä viesti"
+
+#: lib/displaylib.php:292
+msgid "Add Buddy"
+msgstr "Lisää kamu"
+
+#: lib/elgglib.php:504 lib/elgglib.php:554 lib/uploadlib.php:661
+msgid "Administrator"
+msgstr "Ylläpitäjä"
+
+#: lib/elgglib.php:512
+msgid "Do not reply"
+msgstr "Älä vastaa"
+
+#: lib/elgglib.php:763
+msgid "GB"
+msgstr "GB"
+
+#: lib/elgglib.php:764
+msgid "MB"
+msgstr "MB"
+
+#: lib/elgglib.php:765
+msgid "KB"
+msgstr "KB"
+
+#: lib/elgglib.php:766
+msgid "bytes"
+msgstr "tavua"
+
+#: lib/elgglib.php:1766
+msgid "Close this window"
+msgstr "Sulje tämä ikkuna"
+
+#: lib/elgglib.php:1803 lib/elgglib.php:1853
+msgid "Choose"
+msgstr "Valitse"
+
+#: lib/elgglib.php:2083
+msgid "Elgg auto-format"
+msgstr "Elgg:n automaattinen muotoilu"
+
+#: lib/elgglib.php:2084
+msgid "HTML format"
+msgstr "HTML-muotoilu"
+
+#: lib/elgglib.php:2085
+msgid "Plain text format"
+msgstr "Pelkkä teksti"
+
+#: lib/elgglib.php:2086
+msgid "Markdown format"
+msgstr "Markdown muotoilu"
+
+#: lib/elgglib.php:2655 lib/elgglib.php:3113
+msgid "Continue"
+msgstr "Jatka"
+
+#: lib/elgglib.php:3072 units/admin/admin_userdetails.php:58
+#: units/admin/admin_userdetails.php:74 units/icons/function_add_icons.php:48
+#: units/tinymce/tinymce_userdetails_edit.php:21
+#: units/tinymce/tinymce_userdetails_edit.php:28
+#: units/users/userdetails_edit.php:109 units/users/userdetails_edit.php:116
+#: units/users/userdetails_edit.php:139 units/users/userdetails_edit.php:146
+msgid "Yes"
+msgstr "Kyllä"
+
+#: lib/elgglib.php:3074 units/admin/admin_userdetails.php:58
+#: units/admin/admin_userdetails.php:74 units/icons/function_add_icons.php:49
+#: units/tinymce/tinymce_userdetails_edit.php:21
+#: units/tinymce/tinymce_userdetails_edit.php:28
+#: units/users/userdetails_edit.php:109 units/users/userdetails_edit.php:116
+#: units/users/userdetails_edit.php:139 units/users/userdetails_edit.php:146
+msgid "No"
+msgstr "Ei"
+
+#: lib/elgglib.php:3272 lib/elgglib.php:3300
+msgid "You have been banned from the system!"
+msgstr "Järjestelmän kayttäminen tunnuksellasi on estetty!"
+
+#: lib/elgglib.php:3330
+msgid ""
+"Sorry, but your IP number seems to have changed from when you first logged "
+"in.  This security feature prevents crackers stealing your identity while "
+"logged in to this site.  Normal users should not be seeing this message - "
+"please ask the site administrator for help."
+msgstr ""
+"IP osoitteesi näyttäisi muuttuneen kirjautumisesi jälkeen. Tämä "
+"turvatoiminto estää murtautujaa varastamasta identiteettiäsi sinun ollessa "
+"kirjautuneena sivustolle. Tavalliset käyttäjät eivät tulisi saada tätä "
+"ilmoitusta näkyville - pyydä pääkäyttäjältäsi apua."
+
+#: lib/elgglib.php:3360
+msgid "The system will remember you and automatically log you in next time."
+msgstr ""
+"Järjestelmä muistaa sinut ja kirjaudut automaattisesti seuraavalaa kerralla."
+
+#: lib/elgglib.php:4062 units/users/function_default_access_levels.php:7
+msgid "Logged in users"
+msgstr "Kirjautuneet käyttäjät"
+
+#: lib/elgglib.php:4064 units/users/function_default_access_levels.php:5
+msgid "Private"
+msgstr "Yksityinen"
+
+#: lib/elgglib.php:4066
+msgid "Restricted"
+msgstr "Rajoitettu"
+
+#: lib/elgglib.php:4120
+msgid "Click to view link"
+msgstr "Katso linkki klikkaamalla"
+
+#: lib/php-getttext/examples/pigs_dropin.php:75
+msgid ""
+"This is how the story goes.\n"
+"\n"
+msgstr ""
+"Ja tarina menee näin.\n"
+"\n"
+
+#: lib/templates.php:44 units/templates/default_template.php:9
+msgid "Stylesheet"
+msgstr "Tyylitiedosto"
+
+#: lib/templates.php:45 units/templates/default_template.php:10
+msgid "The Cascading Style Sheet for the template."
+msgstr "CSS-tyylitiedosto mallipohjaan"
+
+#: lib/templates.php:54 units/templates/default_template.php:19
+msgid "Page Shell"
+msgstr ""
+
+#: lib/templates.php:55 units/templates/default_template.php:20
+msgid "The main page shell, including headers and footers."
+msgstr ""
+
+#: lib/templates.php:57 units/templates/default_template.php:23
+msgid "Page metatags (mandatory) - must be in the 'head' portion of the page"
+msgstr "Sivun metatagit (pakollinen) - täytyy sijaita sivun 'head' osiossa"
+
+#: lib/templates.php:58 units/templates/default_template.php:24
+msgid "Page title"
+msgstr "Sivun otsikko"
+
+#: lib/templates.php:59 units/templates/default_template.php:25
+msgid "Menu"
+msgstr "Valikko"
+
+#: lib/templates.php:60 units/templates/default_template.php:26
+msgid "Status menu"
+msgstr ""
+
+#: lib/templates.php:61 units/templates/default_template.php:27
+msgid "Main body"
+msgstr ""
+
+#: lib/templates.php:62 units/templates/default_template.php:28
+msgid "Sidebar"
+msgstr "Sivupalkki"
+
+#: lib/templates.php:78 units/templates/default_template.php:39
+msgid "Content holder"
+msgstr ""
+
+#: lib/templates.php:79 units/templates/default_template.php:40
+msgid ""
+"Contains the main content for a page (as opposed to the sidebar or the "
+"title)."
+msgstr "Sisältää sivun pääsisällön"
+
+#: lib/templates.php:81 lib/templates.php:133
+#: units/templates/default_template.php:42
+msgid "The title"
+msgstr "Otsikko"
+
+#: lib/templates.php:82 units/templates/default_template.php:43
+msgid "The page submenu"
+msgstr "Sivun alavalikko"
+
+#: lib/templates.php:83 units/templates/default_template.php:44
+#: units/templates/default_template.php:61
+msgid "The body of the page"
+msgstr "Sivun runko"
+
+#: lib/templates.php:100 units/templates/default_template.php:74
+msgid "Owner box"
+msgstr "Omistajakenttä"
+
+#: lib/templates.php:101 units/templates/default_template.php:75
+msgid "A box containing a description of the owner of the current profile."
+msgstr "Kenttä sisältää profiilin omistajan kuvauksen"
+
+#: lib/templates.php:103 units/templates/default_template.php:77
+msgid "The user's name"
+msgstr "Käyttäjän nimi"
+
+#: lib/templates.php:104 units/templates/default_template.php:78
+msgid "The URL of the user's profile page, including terminating slash"
+msgstr "Käyttäjän profiilisivun URL-osoite päättyen kauttaviivaan."
+
+#: lib/templates.php:105 units/templates/default_template.php:79
+msgid "The user's icon, if it exists"
+msgstr "Käyttäjän kuvake, jos löytyy"
+
+#: lib/templates.php:106 units/templates/default_template.php:80
+msgid "A short blurb about the user"
+msgstr "Lyhyt tarina käyttäjästä"
+
+#: lib/templates.php:107 units/templates/default_template.php:81
+msgid "Links to friend / unfriend a user"
+msgstr ""
+
+#: lib/templates.php:108 units/templates/default_template.php:82
+msgid "Links to any lms hosts the user is attached to"
+msgstr "Linkit LMS-järjestelmiin joihin käyttäjä on liitetty"
+
+#: lib/templates.php:112 search/personaltags.php:26
+#: units/templates/default_template.php:87
+msgid "Tags"
+msgstr "Tunnisteet"
+
+#: lib/templates.php:113 search/index.php:97
+#: units/templates/default_template.php:88
+msgid "Resources"
+msgstr "Resurssit"
+
+#: lib/templates.php:130
+msgid "Information Box"
+msgstr "Informaatiokenttä"
+
+#: lib/templates.php:131
+msgid ""
+"A box containing a caption and some text, used extensively throughout the "
+"site. For example, the 'friends' box and most page bodies are info boxes. Of "
+"course, you can alter this template however you wish - it doesn't need to be "
+"an actual box."
+msgstr ""
+"Kenttä sisältää otsikon ja tekstiä, joka näkyy koko sivuston laajudella."
+
+#: lib/templates.php:134
+msgid "The contents of the box"
+msgstr "Kentän sisältö"
+
+#: lib/templates.php:153 units/templates/default_template.php:106
+msgid "System message shell"
+msgstr ""
+
+#: lib/templates.php:154 units/templates/default_template.php:107
+msgid "A list of system messages will be placed within the message shell."
+msgstr ""
+
+#: lib/templates.php:156 units/templates/default_template.php:109
+msgid "The messages"
+msgstr "Viestit"
+
+#: lib/templates.php:168 units/templates/default_template.php:121
+msgid "Individual system messages"
+msgstr "Yksittäiset järjestelmäviestit"
+
+#: lib/templates.php:169 units/templates/default_template.php:122
+msgid "Each individual system message."
+msgstr "Kukin yksittäinen järjestelmäviesti"
+
+#: lib/templates.php:171 units/templates/default_template.php:124
+msgid "The system message"
+msgstr "Järjestelmäviesti"
+
+#: lib/templates.php:186 units/templates/default_template.php:139
+msgid "Main menu shell"
+msgstr ""
+
+#: lib/templates.php:187 units/templates/default_template.php:140
+msgid "A list of main menu items will be placed within the menubar shell."
+msgstr ""
+
+#: lib/templates.php:189 lib/templates.php:235 lib/templates.php:267
+#: units/templates/default_template.php:142
+#: units/templates/default_template.php:188
+#: units/templates/default_template.php:222
+msgid "The menu items"
+msgstr ""
+
+#: lib/templates.php:200 units/templates/default_template.php:153
+msgid "Individual main menu item"
+msgstr ""
+
+#: lib/templates.php:201 units/templates/default_template.php:154
+msgid ""
+"This is the template for each individual main menu item. A series of these "
+"is placed within the menubar shell template."
+msgstr ""
+
+#: lib/templates.php:203 lib/templates.php:219 lib/templates.php:251
+#: lib/templates.php:284 units/templates/default_template.php:156
+#: units/templates/default_template.php:172
+#: units/templates/default_template.php:206
+#: units/templates/default_template.php:239
+msgid "The URL of the menu item"
+msgstr ""
+
+#: lib/templates.php:204 lib/templates.php:220 lib/templates.php:252
+#: lib/templates.php:285 units/templates/default_template.php:157
+#: units/templates/default_template.php:173
+#: units/templates/default_template.php:207
+#: units/templates/default_template.php:240
+msgid "The menu item's name"
+msgstr ""
+
+#: lib/templates.php:216 units/templates/default_template.php:169
+msgid "Selected individual main menu item"
+msgstr ""
+
+#: lib/templates.php:217 units/templates/default_template.php:170
+msgid ""
+"This is the template for an individual main menu item if it is selected."
+msgstr ""
+
+#: lib/templates.php:232 units/templates/default_template.php:185
+msgid "Sub-menubar shell"
+msgstr ""
+
+#: lib/templates.php:233 units/templates/default_template.php:186
+msgid "A list of sub-menu items will be placed within the menubar shell."
+msgstr ""
+
+#: lib/templates.php:248 units/templates/default_template.php:203
+msgid "Individual sub-menu item"
+msgstr ""
+
+#: lib/templates.php:249 units/templates/default_template.php:204
+msgid ""
+"This is the template for each individual sub-menu item. A series of these is "
+"placed within the sub-menubar shell template."
+msgstr ""
+
+#: lib/templates.php:264 units/templates/default_template.php:219
+msgid "Status menubar shell"
+msgstr ""
+
+#: lib/templates.php:265 units/templates/default_template.php:220
+msgid ""
+"A list of statusbar menu items will be placed within the status menubar "
+"shell."
+msgstr ""
+
+#: lib/templates.php:281 units/templates/default_template.php:236
+msgid "Individual statusbar menu item"
+msgstr ""
+
+#: lib/templates.php:282 units/templates/default_template.php:237
+msgid ""
+"This is the template for each individual statusbar menu item. A series of "
+"these is placed within the status menubar shell template."
+msgstr ""
+
+#: lib/templates.php:297 units/templates/default_template.php:252
+msgid "Data input box (two columns)"
+msgstr "Tiedonsyöttökenttä (kaksi palstaa)"
+
+#: lib/templates.php:298 units/templates/default_template.php:253
+msgid ""
+"This is mostly used whenever some input is taken from the user. For example, "
+"each of the fields in the profile edit screen is a data input box."
+msgstr ""
+"Tätä käytetään tleisimmin käyttäjän syöttämään tietoon. Esimerkiksi jokainen "
+"kenttä profiilinmuokkausruudussa on tiedonsyöttökenttä."
+
+#: lib/templates.php:300 units/templates/default_template.php:255
+msgid "The name for the data we're inputting"
+msgstr "Syöttämämme tiedon nimi"
+
+#: lib/templates.php:301 units/templates/default_template.php:256
+msgid "The first item of data"
+msgstr ""
+
+#: lib/templates.php:302 units/templates/default_template.php:257
+msgid "The second item of data"
+msgstr ""
+
+#: lib/templates.php:329 units/templates/default_template.php:275
+msgid "Data input box (one column)"
+msgstr "Tiedonsyöttökenttä (yksi palsta)"
+
+#: lib/templates.php:330 units/templates/default_template.php:276
+msgid "A single-column version of the data box."
+msgstr ""
+
+#: lib/templates.php:332 units/templates/default_template.php:278
+msgid "The name of the data we're inputting"
+msgstr "Syöttämämme tiedon nimi"
+
+#: lib/templates.php:333 lib/templates.php:361
+#: units/templates/default_template.php:279
+#: units/templates/default_template.php:352
+msgid "The data itself"
+msgstr "Tieto"
+
+#: lib/templates.php:357 units/templates/default_template.php:348
+msgid "Data input box (vertical)"
+msgstr ""
+
+#: lib/templates.php:358 units/templates/default_template.php:349
+msgid ""
+"A slightly different version of the data box, used on this edit page amongst "
+"other places."
+msgstr ""
+
+#: lib/templates.php:360 units/templates/default_template.php:351
+msgid "Name of the data we\\'re inputting"
+msgstr "Nimi syöttämällemme tiedolle"
+
+#: lib/templates.php:423 mod/template/lib.php:15
+msgid "Change theme"
+msgstr "Vaihda teema"
+
+#: lib/templates.php:457
+msgid "Account settings"
+msgstr "Tilin asetukset"
+
+#: lib/templates.php:463
+msgid "Log off"
+msgstr "Kirjaudu ulos"
+
+#: lib/templates.php:474
+msgid "Your site picture"
+msgstr "Sivustosi kuva"
+
+#: lib/templates.php:481 profile/edit.php:105 profile/edit.php:112
+#: profile/profile.class.php:111 profile/profile.class.php:124
+msgid "Main"
+msgstr ""
+
+#: lib/templates.php:486 units/admin/admin_users_add.php:35
+msgid "Add users"
+msgstr "Lisää käyttäjiä"
+
+#: lib/templates.php:496
+msgid "Manage flagged content"
+msgstr "Hallitse liputettua sisältöä"
+
+#: lib/templates.php:501
+msgid "Spam control"
+msgstr "Spam-hallinta"
+
+#: lib/templates.php:607
+msgid "The templates have been changed according to your choices."
+msgstr "Mallipohjat ovat muutettu valintojesi mukaisiksi."
+
+#: lib/templates.php:609
+msgid "No changes made as no area of change was selected!"
+msgstr "Muutoksia ei tyhty, koska muutosten kohdetta ei ole valittu!"
+
+#: lib/templates.php:637
+msgid "Your template has been updated."
+msgstr "Mallipohjasi on päivitetty."
+
+#: lib/templates.php:652
+msgid "Your template was deleted."
+msgstr "Mallipohjasi on poistettu"
+
+#: lib/templates.php:779
+msgid "Create theme"
+msgstr "Luo teema"
+
+#: lib/templates.php:780
+msgid ""
+"Here you can create your own themes based on one of the existing public "
+"themes. Just select which public theme you would like to alter and then "
+"create your own. You will now have edit privilages."
+msgstr ""
+"Täällä voit luoda oman teemasi pohjautuen valmiisiin teemoihin. Valitse mitä "
+"valmista teemaa haluat muokata omaksi teemaksesi. Sinulla on nyt "
+"muokkausoikeudet."
+
+#: lib/templates.php:796
+msgid "Theme name"
+msgstr "Teeman nimi"
+
+#: lib/templates.php:801 lib/templates.php:1110
+msgid "Default Template"
+msgstr "Oletusmalli"
+
+#: lib/templates.php:805
+msgid "name"
+msgstr "nimi"
+
+#: lib/templates.php:819
+msgid "Based on"
+msgstr "Pohjautuu"
+
+#: lib/templates.php:824
+msgid "Create Theme"
+msgstr "Luo teema"
+
+#: lib/templates.php:862 units/templates/templates_edit.php:22
+msgid "Default Theme"
+msgstr "Oletusteema"
+
+#: lib/templates.php:908 units/templates/templates_edit.php:55
+msgid "Theme Name"
+msgstr "Teeman nimi"
+
+#: lib/templates.php:916 units/templates/templates_edit.php:65
+msgid "Glossary"
+msgstr "Sanasto"
+
+#: lib/templates.php:952 units/admin/admin_spam.php:22
+#: units/communities/userdetails_edit.php:91 units/files/edit_folder.php:85
+#: units/icons/function_edit_icons.php:89
+#: units/templates/templates_edit.php:101 units/users/userdetails_edit.php:183
+msgid "Save"
+msgstr "Tallenna"
+
+#: lib/templates.php:963 units/templates/templates_edit.php:112
+msgid ""
+"You may not edit this theme. To create a new, editable theme based on the "
+"default, go to <a href=\"index.php\">the main themes page</a>."
+msgstr ""
+"Et voi muokata tätä teemaa. Tee uusi muokattava teema oletusteeman pohjalta "
+"menemällä <a href=\"index.php\">teemojen pääsivulle</a>"
+
+#: lib/templates.php:990 units/templates/templates_preview.php:8
+msgid "Heading one"
+msgstr "Otsikko 1"
+
+#: lib/templates.php:991 units/templates/templates_preview.php:9
+msgid "Heading two"
+msgstr "Otsikko 2"
+
+#: lib/templates.php:992 units/templates/templates_preview.php:10
+msgid "A bullet list"
+msgstr "Numeroimaton lista"
+
+#: lib/templates.php:993 units/templates/templates_preview.php:11
+msgid "Heading three"
+msgstr "Otsikko 3"
+
+#: lib/templates.php:994 units/templates/templates_preview.php:12
+msgid "A numbered list"
+msgstr "Numeroitu lista"
+
+#: lib/templates.php:1024 units/templates/templates_preview.php:42
+msgid "Some text input"
+msgstr "Jokin tekstisyöte"
+
+#: lib/templates.php:1031 units/templates/templates_preview.php:49
+msgid "Some longer text input"
+msgstr "Jokin pidempi tekstisyöte"
+
+#: lib/templates.php:1037 units/templates/templates_preview.php:55
+msgid "Further text input"
+msgstr ""
+
+#: lib/templates.php:1085
+msgid "Select / Create / Edit Themes"
+msgstr "Valitse / Luo / Muokkaa teemoja"
+
+#: lib/templates.php:1086
+msgid "Public Themes"
+msgstr "Julkiset teemat"
+
+#: lib/templates.php:1087
+#, php-format
+msgid ""
+"The following are public themes that you can use to change the way your %s "
+"looks - these do not change the content only the appearance. Check the "
+"preview and then select the one you want. If you wish you can adapt one of "
+"these using the 'create theme' option below."
+msgstr ""
+"Nämä ovat julkisia teemoja joilla voit muuttaa %s:n ulkonäköä - teemat eivät "
+"muuta sisältöä vaan ainoastaan ulkonäköä. Voit esikatsella teemoja ja valita "
+"niistä mieleisesi. Voit valita teeman muokattavaksi valitsemalla 'luo teema' "
+"vaihtoehdon."
+
+#: lib/templates.php:1118 lib/templates.php:1150
+msgid "Preview"
+msgstr "Esikatselu"
+
+#: lib/templates.php:1129
+msgid "Personal themes"
+msgstr "Omat teemat"
+
+#: lib/templates.php:1130
+msgid ""
+"These are themes that you have created. You can edit and delete these. These "
+"theme(s) only control actual look and feel - you cannot change any content "
+"here. To change any of your content you need to use the other menu options "
+"such as: edit profile, update weblog etc."
+msgstr ""
+"Nämä ovat luomasi teemat, joita voit muokata ja poistaa. Teema(t) "
+"vaikuttavat vain ulkonäköön, eivät sisältöön. Sisällön muokkausta varten "
+"käytä valikosta vaihtoehtoja: muokkaa profiilia, päivitä verkkoblogi jne."
+
+#: lib/templates.php:1152 mod/file/lib.php:197 mod/file/lib.php:215
+#: units/files/templates_preview.php:34
+#: units/weblogs/weblogs_posts_view.php:111
+msgid "Edit"
+msgstr "Muokkaa"
+
+#: lib/templates.php:1153
+msgid "Are you sure you want to permanently remove this template?"
+msgstr "Haluatko varmasti poistaa lopullisesti tämän mallipohjan?"
+
+#: lib/templates.php:1153 mod/file/lib.php:196 mod/file/lib.php:214
+#: units/files/templates_preview.php:20 units/files/templates_preview.php:34
+#: units/icons/function_edit_icons.php:40
+#: units/weblogs/weblogs_posts_view.php:113
+#: units/weblogs/weblogs_posts_view.php:167
+msgid "Delete"
+msgstr "Poista"
+
+#: lib/templates.php:1165
+msgid "Change templates"
+msgstr "Vaihda mallipohjia"
+
+#: lib/templates.php:1166
+msgid "The selected changes will affect:"
+msgstr "Valitut muutokset vaikuttavat:"
+
+#: lib/templates.php:1180
+msgid "Your personal space"
+msgstr "Sinun henkilökohtainen alueesi"
+
+#: lib/templates.php:1193
+msgid "Community: "
+msgstr "Yhteisö "
+
+#: lib/templates.php:1205
+msgid "Select new theme"
+msgstr "Valitse uusi teema"
+
+#: lib/templates.php:1259 lib/templates.php:1273 lib/templates.php:1280
+#: units/weblogs/weblogs_comments_add.php:42
+msgid "Guest"
+msgstr "Vieras"
+
+#: lib/templates.php:1280
+msgid "Log in"
+msgstr "Kirjaudu"
+
+#: lib/templates.php:1366
+msgid "Sorry, no users have filled in their profiles yet."
+msgstr "Valitettvasti yksikään käyttäjä ei ole vielä tayttänyt profiiliaan."
+
+#: lib/uploadlib.php:109
+#, php-format
+msgid ""
+"Your file upload has failed because there was a problem with one of the "
+"files, %s.<br /> Here is a log of the problems:<br />%s<br />Not recovering."
+msgstr ""
+"Tiedoston siirto epäonnistui, koska ilmeni ongelma yhden tiedoston kohdalla, "
+"%s<br /> Tässä on loki ongelmista:<br />%s<br />"
+
+#: lib/uploadlib.php:135
+#, php-format
+msgid "File was renamed from %s to %s because of invalid characters."
+msgstr ""
+"Tiedosto on nimetty uudelleen nimestä %s nimelle %s, koska se sisälsi "
+"virheellisiä merkkejä."
+
+#: lib/uploadlib.php:164
+#, php-format
+msgid "Sorry, but that file is too big (limit is %s)"
+msgstr "Valitettavasti tiedosto on liian suuri (raja on %s)"
+
+#: lib/uploadlib.php:217
+msgid "File uploaded successfully"
+msgstr "Tiedoston siirto onnistui"
+
+#: lib/uploadlib.php:232 lib/uploadlib.php:342 lib/uploadlib.php:359
+msgid "No file was found - are you sure you selected one to upload?"
+msgstr "Tiedostoa ei löydy - valitsitko varmasti siirrettävän tiedoston?"
+
+#: lib/uploadlib.php:268
+msgid "The old file(s) in your upload area have been deleted"
+msgstr "Vanha tiedosto tiedostoalueella on poistettu"
+
+#: lib/uploadlib.php:299
+#, php-format
+msgid "File was renamed from %s to %s because there was a filename conflict."
+msgstr ""
+"Tiedosto on nimetty uudelleen nimestä %s nimelle %s. Syynä ristiriita "
+"tiedostojen nimissä."
+
+#: lib/uploadlib.php:340 lib/uploadlib.php:363
+#, php-format
+msgid ""
+"An unknown problem occurred while uploading the file '%s' (perhaps it was "
+"too large?)"
+msgstr ""
+"Tuntematon virha tapahtui siirrettäessä tiedostoa '%s' (tiedosto on "
+"mahdollisesti liian suuri?)"
+
+#: lib/uploadlib.php:347
+msgid "Uploaded file exceeded the maximum size limit set by the server"
+msgstr "Siirrettyn tiedoston koko ylitti palvelimelle asetetun rajoituksen"
+
+#: lib/uploadlib.php:351
+msgid "Uploaded file exceeded the maximum size limit set by the form"
+msgstr "Siirretty tiedosto ylitti lomakkeessa määritellyn kokorajoituksen"
+
+#: lib/uploadlib.php:355
+msgid "File was only partially uploaded"
+msgstr "Tiedosto siirrettiin osittain"
+
+#: lib/uploadlib.php:377
+#, php-format
+msgid "Upload log for file %u"
+msgstr "Siirrä lokitiedosto tiedostolle %u"
+
+#: lib/uploadlib.php:470
+msgid "Title:"
+msgstr "Otsikko:"
+
+#: lib/uploadlib.php:509
+msgid "The file has been moved to a quarantine directory."
+msgstr "Tiedosto on siirretty karanteenikansioon."
+
+#: lib/uploadlib.php:512
+#, php-format
+msgid ""
+"The file has been moved to your specified quarantine directory, the new "
+"location is %s"
+msgstr ""
+"Tiedosto on siirretty määrittämääsi karanteenikansioon, uusi sijainti on %s"
+
+#: lib/uploadlib.php:517 lib/uploadlib.php:526 lib/uploadlib.php:535
+#: lib/uploadlib.php:540
+msgid "The file has been deleted"
+msgstr "Tiedosto on poistettu"
+
+#: lib/uploadlib.php:520 lib/uploadlib.php:529
+#, php-format
+msgid ""
+"Could not move the file into your specified quarantine directory, %s. You "
+"need to fix this as files are being deleted if they're found to be infected."
+msgstr ""
+"Tiedostoa ei oitu siirtää määrittämääsi karanteenikansioon %s. Sinun tulee "
+"korjata tämä, koska saastuneet tiedostot poistetaan."
+
+#: lib/uploadlib.php:543
+msgid "The file could not be deleted"
+msgstr "tiedostoa ei voitu poistaa"
+
+#: lib/uploadlib.php:559
+msgid ""
+"This file that has been uploaded was found to contain a virus and has been "
+"moved or delted and the user notified."
+msgstr ""
+"Tämä siirretty tiedosto sisältää viruksen ja se on siirretty tai poistettu. "
+"Käyttäjälle on lähetetty tiedote."
+
+#: lib/uploadlib.php:595
+#, php-format
+msgid ""
+"Elgg is configured to run clam on file upload, but the path supplied to Clam "
+"AV, %s,  is invalid."
+msgstr ""
+"Elgg on säädetty suorittamaan clam tiedostoa siirrettäessä, mutta Clam AV:n "
+"määritelty sijainti (%s) on virheellinen."
+
+#: lib/uploadlib.php:597
+msgid ""
+"In addition, Elgg is configured so that if clam fails to run, files are "
+"treated like viruses.  This essentially means that no student can upload a "
+"file successfully until you fix this."
+msgstr ""
+"Mikäli Elgg ei voi suorittaa calm:ia niin tieostoja käsitellään saastuneina. "
+"Tämä tarkoittaa sitä, että kukaan oppilas ei voi siirtää tiedostoja "
+"palvelimelle ennen kuin asia on korjattu."
+
+#: lib/uploadlib.php:603 lib/uploadlib.php:642
+msgid ""
+"Your administrator has enabled virus checking for file uploads but has "
+"misconfigured something.<br />Your file upload was NOT successful. Your "
+"administrator has been emailed to notify them so they can fix it.<br />Maybe "
+"try uploading this file later."
+msgstr ""
+"Pääkäyttäjä on ottanut käyttöön virustarkastuksen siirretyille tiedostoille, "
+"mutta määrityksissä on jokin virhe. <br /> Tiedoston siirtosi EI onnistunut. "
+"Pääkäyttäjälle on lähetetty sähköpostia, jotta hän voi korjata ongelman.<br "
+"/> Kokeile myöhemmin uudestaan."
+
+#: lib/uploadlib.php:621
+#, php-format
+msgid ""
+"Attention administrator! Clam AV has found a virus in a file uploaded by %s. "
+"Here is the output of clamscan:"
+msgstr ""
+"Huomio järjestelmänvalvoja! Clam AV on löytönyt viruksen siirretystä "
+"tiedostosta %s. Tässä on clamscanin raportti:"
+
+#: lib/uploadlib.php:627
+#, php-format
+msgid ""
+"The file you have uploaded, %s, has been scanned by a virus checker and "
+"found to be infected! Your file upload was NOT successful."
+msgstr ""
+"Siirtämäsi tiedosto, %s, on tarkastettu virusten varalta ja havaittu "
+"saastuneeksi! tiedoston siirto EI onnistunut."
+
+#: lib/uploadlib.php:633
+#, php-format
+msgid ""
+"Clam AV has failed to run.  The return error message was %s. Here is the "
+"output from Clam:"
+msgstr ""
+"Clam AV suoritus epäonnistui. Palautunu virhe oli %s. Tässä Clam:in raportti:"
+
+#: lib/uploadlib.php:658
+#, php-format
+msgid "%s :: Clam AV notification"
+msgstr "%s :: Clam AV huomautus"
+
+#: lib/uploadlib.php:702
+msgid "There was an unknown error with clam."
+msgstr "Clam:ssä tapahtui tuntematon virhe."
+
+#: lib/userlib.php:24 login/index.php:34
+msgid "You have been logged on."
+msgstr "Olet kirjautunut."
+
+#: lib/userlib.php:25 login/index.php:43
+msgid ""
+"Unrecognised username or password. The system could not log you on, or you "
+"may not have activated your account."
+msgstr "Tuntematon käyttäjänimi tai salasana."
+
+#: lib/userlib.php:26 login/index.php:46
+msgid ""
+"Either the username or password were not specified. The system could not log "
+"you on."
+msgstr "Käyttäjänimeä tai salasanaa ei annettu."
+
+#: lib/userlib.php:145 units/weblogs/weblogs_posts_edit.php:13
+msgid "Access Denied"
+msgstr "Pääsy estetty"
+
+#: lib/userlib.php:170
+msgid "You cannot reply to this message by email."
+msgstr "Ei voi vastata tähän viestiin sähköpostilla."
+
+#: lib/userlib.php:171
+msgid "Failed to send email. An unknown error occurred."
+msgstr "Sähköpostin lähettäminen epäonnistui. Tuntematon virhe."
+
+#: lib/userlib.php:185
+msgid "Failed to send message. An unknown error occurred."
+msgstr "Viestin lähettäminen epäonnistui. Tuntematon virhe."
+
+#: lib/userlib.php:217
+msgid "System"
+msgstr "Järjestelmä"
+
+#: lms/join.php:56 units/invite/invite_actions.php:91
+msgid ""
+"Error! Invalid password. Your passwords must match and be between 6 and 16 "
+"characters in length."
+msgstr "Virhe! Salasana ei kelpaa. Salasanan pitää olle 6-16 merkkiä pitkä."
+
+#: lms/join.php:60
+msgid "Error! You must enter your fullname"
+msgstr "Virhe! Sinun tulee antaa koko nimesi"
+
+#: lms/join.php:71
+msgid "Error! Your username and password does not match our record."
+msgstr ""
+"Virhe! Antamasi käyttäjänimi ja salasana eivät vastaa järjestelmän tietoja."
+
+#: lms/join.php:76
+msgid "Fatal Error! Unknown action requested."
+msgstr "Korjaamaton virhe! Pyydettin tuntematonta toimintoa."
+
+#: lms/join.php:105
+msgid "Your account creation was successful!"
+msgstr "tilin luominen onnistui!"
+
+#: lms/join.php:117
+msgid "Join up"
+msgstr "Liity"
+
+#: lms/join.php:129
+msgid "Login"
+msgstr "Kirjaudu"
+
+#: lms/rss.php:28 profile/rss2.php:32
+#: units/profile/function_rss_publish.php:43
+#, php-format
+msgid "Activity for %s, hosted on %s."
+msgstr ""
+
+#: lms/rss.php:33 units/profile/function_rss_publish.php:35
+msgid "Activity"
+msgstr "Aktiviteetti"
+
+#: lms/rss.php:43
+#, php-format
+msgid "%s posted on weblog post:"
+msgstr "%s kirjoitti blogiin artikkelin:"
+
+#: lms/rss.php:65
+#, php-format
+msgid "%s posted on weblog post '%s'"
+msgstr "%s kirjoitti blogiin artikkelin '%s'"
+
+#: lms/rss.php:83
+msgid "No activity"
+msgstr "Ei tapahtumia"
+
+#: login/index.php:21
+msgid "You are already logged on."
+msgstr "Olet jo kirjautunut."
+
+#: login/index.php:36
+msgid ""
+"The password for this account is extremely insecure and represents a major "
+"security risk. You should change it immediately."
+msgstr ""
+"Tämän tilin salasana on erittäin turvaton ja aiheuttaa suuren "
+"tietoturvariskin. Se tulisi vaihtaa välittömästi."
+
+#: login/index.php:49
+msgid "Please log in"
+msgstr "kirjaudu sisään"
+
+#: mod/adash/add.php:25
+msgid "Add dashboard items"
+msgstr ""
+
+#: mod/adash/add.php:45
+msgid "Widget added."
+msgstr "Vimpain lisätty."
+
+#: mod/adash/add.php:59
+msgid "Select a widget type from the list below:"
+msgstr "Valitse vimpaimen tyyppi listasta:"
+
+#: mod/adash/add.php:69 units/files/weblogs_posts_add_fields.php:80
+msgid "Add"
+msgstr "Lisää"
+
+#: mod/adash/add.php:78
+msgid "You do not have permission to add widgets to this dashboard."
+msgstr ""
+
+#: mod/adash/delete.php:44
+msgid "Widget deleted."
+msgstr "Vimpain poistettu."
+
+#: mod/adash/edit.php:34 mod/adash/lib.php:151
+msgid "Edit widget"
+msgstr "Muokka vempainta"
+
+#: mod/adash/edit.php:64
+msgid "Widget edited."
+msgstr "Vempain muokattu"
+
+#: mod/adash/edit.php:81
+msgid "You do not have permission to edit this widget."
+msgstr "Sinulla ei ole oikeuksia muokata tätä vempainta."
+
+#: mod/adash/index.php:38
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: mod/adash/index.php:57
+msgid ""
+"This dashboard is currently empty. Why not add some widgets by clicking 'add "
+"new item' above?"
+msgstr ""
+
+#: mod/adash/index.php:59
+msgid "This dashboard is currently empty."
+msgstr ""
+
+#: mod/adash/lib.php:19 mod/adash/lib.php:22
+msgid "Your Dashboard"
+msgstr ""
+
+#: mod/adash/lib.php:27
+msgid "Add new item"
+msgstr "Lisää uusi"
+
+#: mod/adash/lib.php:46 mod/adash/lib.php:263
+msgid "Text box"
+msgstr "tekstikenttä"
+
+#: mod/adash/lib.php:47
+msgid "Displays the text of your choice."
+msgstr "Näyttää valitsemasi tekstin."
+
+#: mod/adash/lib.php:152
+msgid "Delete widget"
+msgstr "Poista vimpain"
+
+#: mod/adash/lib.php:153
+msgid "Move up"
+msgstr "Siirrä ylös"
+
+#: mod/adash/lib.php:154
+msgid "Move down"
+msgstr "Sii<a href=\"index.php\">rrä alas"
+
+#: mod/adash/lib.php:225
+msgid "Access for this widget:"
+msgstr "Pääsy tähän vempaimeen:"
+
+#: mod/adash/lib.php:229
+msgid "Save widget"
+msgstr "Tallenna vimpain"
+
+#: mod/adash/lib.php:247
+msgid ""
+"This text box is undefined. If you are the widget owner, click 'edit widget' "
+"to add your own content."
+msgstr ""
+"Tekstikenttää ei ole määritelty. Jos omistat vimapimen, klikkaa 'muokkaa "
+"vimpainta' ja lisää sisältö."
+
+#: mod/adash/lib.php:264
+msgid ""
+"This widget displays the text content of your choice. All you need to do is "
+"enter the title and body below:"
+msgstr ""
+"Tämä vimpain näyttää valitsemasi tekstin. Lisää vain otsikko ja teksti."
+
+#: mod/adash/move.php:50
+msgid "Widget moved."
+msgstr "Vimpain siirretty."
+
+#: mod/blog/lib.php:17 mod/blog/lib.php:21
+msgid "Your Blog"
+msgstr "Sinun Blogi"
+
+#: mod/blog/lib.php:39
+msgid "Post a new entry"
+msgstr "Kirjoita uusi artikkeli"
+
+#: mod/blog/lib.php:44
+msgid "View blog"
+msgstr "Katso blogia"
+
+#: mod/blog/lib.php:48
+msgid "Archive"
+msgstr "Arkisto"
+
+#: mod/blog/lib.php:52
+msgid "Friends' blogs"
+msgstr "Ystävien blogit"
+
+#: mod/blog/lib.php:63
+msgid "View all posts"
+msgstr "Kaikki artikkelit"
+
+#: mod/blog/lib.php:76
+msgid "Blog widget"
+msgstr "Blogivimpain"
+
+#: mod/blog/lib.php:77
+msgid "Displays the latest blog posts from a blog of your choice."
+msgstr "Näyttää uusimmat artikkelit valitsemistasi blogeista."
+
+#: mod/blog/lib.php:139
+msgid "Blog dashboard widget"
+msgstr ""
+
+#: mod/blog/lib.php:140
+msgid ""
+"This widget displays the last couple of blog posts from an individual user. "
+"To begin, select the user from your connections below:"
+msgstr ""
+"Tämä vemapin näyttää pari uusinta blogin artikkelia yksittäiseltä "
+"käyttäjältä. Alkajaisiksi valitse käyttäjä alla olevista kontakteista:"
+
+#: mod/blog/lib.php:155
+msgid "Then enter the number of blog posts you'd like to display:"
+msgstr "Montako artikkelia haluat näkyviin:"
+
+#: mod/browser/index.php:21
+msgid "Browser"
+msgstr "Selain"
+
+#: mod/browser/index.php:82 search/index.php:44
+msgid "All"
+msgstr "Kaikki"
+
+#: mod/browser/index.php:84
+msgid "Users"
+msgstr "Käyttäjät"
+
+#: mod/browser/index.php:85 mod/toolbar/lib.php:45
+msgid "Browse"
+msgstr "Selaa"
+
+#: mod/browser/index.php:86
+msgid "Filter"
+msgstr "Suotimet"
+
+#: mod/browser/index.php:154
+msgid "Name"
+msgstr "Nimi"
+
+#: mod/browser/index.php:155
+msgid "Description"
+msgstr "Kuvaus"
+
+#: mod/browser/index.php:156
+msgid "Connections"
+msgstr "Yhteydet"
+
+#: mod/browser/index.php:157
+msgid "Posts"
+msgstr "Artikkelit"
+
+#: mod/browser/index.php:158
+msgid "Type"
+msgstr "Laji"
+
+#: mod/community/lib.php:22 mod/profile/lib.php:27
+msgid "Edit this profile"
+msgstr "Muokka tätä profiilia"
+
+#: mod/community/lib.php:26
+msgid "Community site picture"
+msgstr "Yhteisön kuva"
+
+#: mod/community/lib.php:30
+msgid "Edit community details"
+msgstr "Muokkaa yhteisiön yksityiskohtia"
+
+#: mod/community/lib.php:39
+msgid "View membership requests"
+msgstr "Katso jäsenyyspyyntöjä"
+
+#: mod/file/lib.php:13
+msgid "Default file folder"
+msgstr "Oletuskansio tiedostoille"
+
+#: mod/file/lib.php:29 mod/file/lib.php:32
+#: units/files/files_user_info_menu.php:11
+msgid "Your Files"
+msgstr "Omat tiedostot"
+
+#: mod/file/lib.php:43
+msgid "Add a file or a folder"
+msgstr "Lisää tiedosto tai kansio"
+
+#: mod/file/lib.php:49
+msgid "RSS feed for files"
+msgstr "RSS-syötteet tiedostoille"
+
+#: mod/file/lib.php:82 mod/photogallery/lib.php:133
+#: units/files/templates_preview.php:6
+msgid "Subfolders"
+msgstr "Alikansiot"
+
+#: mod/file/lib.php:101 mod/file/lib.php:155
+#: units/magpie/function_subscriptions_publish_to_blog.php:39
+msgid "Keywords: "
+msgstr "Avainsanat: "
+
+#: mod/file/lib.php:181 mod/photogallery/lib.php:138
+msgid "This folder is currently empty."
+msgstr "tämä kansio on tyhjä."
+
+#: mod/file/lib.php:195
+msgid "Are you sure you want to permanently delete this file?"
+msgstr "Haluatko vasmasti poistaa tämän tiedoston pysyvästi?"
+
+#: mod/file/lib.php:213
+msgid "Are you sure you want to permanently delete this folder?"
+msgstr "Haluatko varmasti poistaa tämän kansion pysyvästi?"
+
+#: mod/friend/lib.php:15 mod/friend/lib.php:18
+msgid "Your Network"
+msgstr "Verkostosi"
+
+#: mod/friend/lib.php:30 units/friends/profile_friends.php:18
+msgid "Friends"
+msgstr "Ystävät"
+
+#: mod/friend/lib.php:34
+msgid "Friend of"
+msgstr "Olet ystävänä"
+
+#: mod/friend/lib.php:42
+msgid "FOAF"
+msgstr "FOAF"
+
+#: mod/friend/lib.php:47
+msgid "Access controls"
+msgstr "Pääsyrajoitukset"
+
+#: mod/friend/lib.php:52
+msgid "Invite a friend"
+msgstr "Kutsu ystävä"
+
+#: mod/newsclient/lib.php:15 mod/newsclient/lib.php:18
+msgid "Your Resources"
+msgstr "Resurssisi"
+
+#: mod/newsclient/lib.php:31
+msgid "Publish to blog"
+msgstr "Julkaise blogissa"
+
+#: mod/newsclient/lib.php:35 units/magpie/menu_sub.php:22
+msgid "View aggregator"
+msgstr "Näytä aggregaattori"
+
+#: mod/newsclient/lib.php:39
+msgid "Popular Feeds"
+msgstr "Suositut syötteet"
+
+#: mod/newsclient/lib.php:84
+msgid "Feed widget"
+msgstr "Syötevimpain"
+
+#: mod/newsclient/lib.php:85
+msgid "Displays the latest entries from an external feed of your choice."
+msgstr "Näyttää viimeisimmät lisäykset valitsemistasi ulkoisista syötteistä."
+
+#: mod/newsclient/lib.php:114
+msgid "This feed is currently empty."
+msgstr "Tämä syöte on tyhjä."
+
+#: mod/newsclient/lib.php:121
+msgid "This feed widget is undefined."
+msgstr "Tätä syötevimapinta ei ole määritelty."
+
+#: mod/newsclient/lib.php:139
+msgid "Feeds dashboard widget"
+msgstr ""
+
+#: mod/newsclient/lib.php:140
+msgid ""
+"This widget displays the last couple of entries from an external feed you "
+"have subscribed to. To begin, select the feed from your subscriptions below:"
+msgstr ""
+"Tämä vimpain näyttää pari uusinta artikkelia tilaamastasi ulkoisesta "
+"syötteestä. Aloita valitsemalla tilaamistasi työtteistä:"
+
+#: mod/newsclient/lib.php:157
+msgid "Then enter the number of feed entries you'd like to display:"
+msgstr "Montako syötettä haluat näkyviin:"
+
+#: mod/newsclient/lib.php:163
+#, php-format
+msgid ""
+"You can't select a feed for this widget because you don't have any feed "
+"subscriptions. Click on <a href=\"%s\">Your</a> Resources to subscribe to a "
+"feed."
+msgstr ""
+"Et voi valita syötettä tälle vempaimelle, koska et ole tilannut yhtään "
+"syötettä. Klikkaa <a href=\"%s\">Sinun</a> resursseihisi ja tilaa syöte."
+
+#: mod/photogallery/lib.php:9
+msgid "Photo gallery"
+msgstr "Kuvagalleria"
+
+#: mod/photogallery/lib.php:45
+#, php-format
+msgid "Uploaded on %s"
+msgstr "Siirrettynä %s"
+
+#: mod/photogallery/lib.php:50
+msgid "No title"
+msgstr "Ei otsikkoa"
+
+#: mod/photogallery/lib.php:129
+msgid "Non-photo files"
+msgstr "Muita kuin valokuvatiedostoja"
+
+#: mod/profile/lib.php:16 mod/profile/lib.php:19
+msgid "Your Profile"
+msgstr "Omat tietosi"
+
+#: mod/profile/lib.php:31
+msgid "Change site picture"
+msgstr "Vaihda sivuston kuva"
+
+#: mod/profile/lib.php:36 mod/toolbar/lib.php:42
+msgid "People"
+msgstr "Ihmiset"
+
+#: mod/profile/lib.php:64 mod/profile/lib.php:93 mod/profile/lib.php:133
+msgid "Profile widget"
+msgstr "Profiilivimpain"
+
+#: mod/profile/lib.php:65
+msgid "Displays the contents of a profile field."
+msgstr "Näyttää profiilikentän sisällön."
+
+#: mod/profile/lib.php:94
+msgid "This profile box is undefined."
+msgstr "Tätä profiilikenttää ei ole määritelty."
+
+#: mod/profile/lib.php:134
+msgid ""
+"Select a profile field below; the widget will then display the profile "
+"content from this field."
+msgstr ""
+
+#: mod/profile/profile.config.php:56
+#: units/profile/function_editfield_defaults.php:37
+msgid "Who am I?"
+msgstr "Kuka minä olen?"
+
+#: mod/profile/profile.config.php:59
+#: units/profile/function_editfield_defaults.php:37
+msgid "A short introduction for you."
+msgstr "Lyhey esittely itsestäsi."
+
+#: mod/profile/profile.config.php:61 mod/profile/profile.config.php:71
+#: mod/profile/profile.config.php:83 mod/profile/profile.config.php:285
+#: mod/profile/profile.config.php:298 mod/profile/profile.config.php:308
+#: mod/profile/profile.config.php:371 mod/profile/profile.config.php:431
+msgid "Basic details"
+msgstr "Perustiedot"
+
+#: mod/profile/profile.config.php:66
+msgid "Introduction"
+msgstr "Esittely"
+
+#: mod/profile/profile.config.php:69
+msgid "A short introduction to this community."
+msgstr "Lyhyt esittely tästä yhteisöstä."
+
+#: mod/profile/profile.config.php:79
+#: units/profile/function_editfield_defaults.php:40
+msgid "Brief description"
+msgstr "Lyhyt kuvaus"
+
+#: mod/profile/profile.config.php:82
+#: units/profile/function_editfield_defaults.php:40
+msgid "For use in your sidebar profile."
+msgstr ""
+
+#: mod/profile/profile.config.php:91
+#: units/profile/function_editfield_defaults.php:43
+msgid "Street address"
+msgstr "Katuosoite"
+
+#: mod/profile/profile.config.php:95 mod/profile/profile.config.php:107
+#: mod/profile/profile.config.php:119 mod/profile/profile.config.php:131
+#: mod/profile/profile.config.php:143
+msgid "Location"
+msgstr "Sijanti"
+
+#: mod/profile/profile.config.php:103
+#: units/profile/function_editfield_defaults.php:46
+msgid "Town"
+msgstr "Kaupunki"
+
+#: mod/profile/profile.config.php:115
+#: units/profile/function_editfield_defaults.php:49
+msgid "State / Region"
+msgstr ""
+
+#: mod/profile/profile.config.php:127
+#: units/profile/function_editfield_defaults.php:52
+msgid "Postal code"
+msgstr "Postinumero"
+
+#: mod/profile/profile.config.php:139
+#: units/profile/function_editfield_defaults.php:55
+msgid "Country"
+msgstr "Maa"
+
+#: mod/profile/profile.config.php:151 units/admin/admin_main.php:86
+#: units/admin/admin_users.php:30 units/admin/admin_users_add.php:22
+#: units/profile/function_editfield_defaults.php:58
+msgid "Email address"
+msgstr "Sähköpostiosoite"
+
+#: mod/profile/profile.config.php:155 mod/profile/profile.config.php:166
+#: mod/profile/profile.config.php:178 mod/profile/profile.config.php:190
+#: mod/profile/profile.config.php:202 mod/profile/profile.config.php:214
+#: mod/profile/profile.config.php:226 mod/profile/profile.config.php:238
+#: mod/profile/profile.config.php:250 mod/profile/profile.config.php:262
+#: mod/profile/profile.config.php:273
+msgid "Contact"
+msgstr "Yhteystieto"
+
+#: mod/profile/profile.config.php:162
+#: units/profile/function_editfield_defaults.php:60
+msgid "Work telephone"
+msgstr "Työpuhelin"
+
+#: mod/profile/profile.config.php:174
+#: units/profile/function_editfield_defaults.php:63
+msgid "Home telephone"
+msgstr "Kotipuhelin"
+
+#: mod/profile/profile.config.php:186
+#: units/profile/function_editfield_defaults.php:66
+msgid "Mobile telephone"
+msgstr "Matkapuhelin"
+
+#: mod/profile/profile.config.php:198
+#: units/profile/function_editfield_defaults.php:69
+msgid "Official website address"
+msgstr "Virallisen sivuston osoite"
+
+#: mod/profile/profile.config.php:201
+#: units/profile/function_editfield_defaults.php:69
+msgid "The URL to your official website, if you have one."
+msgstr "Virallisen sivun URL, jos sellainen on."
+
+#: mod/profile/profile.config.php:210
+#: units/profile/function_editfield_defaults.php:72
+msgid "Personal website address"
+msgstr "Hankilökohtaisen sivuston osoite"
+
+#: mod/profile/profile.config.php:213
+#: units/profile/function_editfield_defaults.php:72
+msgid "The URL to your personal website, if you have one."
+msgstr "Henkilökohtaisen sivuston URL, jos sellainen on."
+
+#: mod/profile/profile.config.php:222
+#: units/profile/function_editfield_defaults.php:75
+msgid "ICQ number"
+msgstr "ICQ numero"
+
+#: mod/profile/profile.config.php:234
+#: units/profile/function_editfield_defaults.php:78
+msgid "MSN chat"
+msgstr "MSN chat"
+
+#: mod/profile/profile.config.php:246
+#: units/profile/function_editfield_defaults.php:81
+msgid "AIM screenname"
+msgstr "AIM nimi"
+
+#: mod/profile/profile.config.php:258
+#: units/profile/function_editfield_defaults.php:84
+msgid "Skype username"
+msgstr "Skype nimi"
+
+#: mod/profile/profile.config.php:269
+#: units/profile/function_editfield_defaults.php:86
+msgid "Jabber username"
+msgstr "Jabber nimi"
+
+#: mod/profile/profile.config.php:281
+#: units/profile/function_editfield_defaults.php:89
+msgid "Interests"
+msgstr "Kiinnostuksen kohteet"
+
+#: mod/profile/profile.config.php:284 mod/profile/profile.config.php:297
+#: mod/profile/profile.config.php:307 mod/profile/profile.config.php:430
+#: units/profile/function_editfield_defaults.php:89
+#: units/profile/function_editfield_defaults.php:93
+#: units/profile/function_editfield_defaults.php:94
+#: units/profile/function_editfield_defaults.php:103
+#: units/profile/function_editfield_defaults.php:109
+msgid "Separated with commas."
+msgstr "Erotettuina pilkuilla."
+
+#: mod/profile/profile.config.php:294
+#: units/profile/function_editfield_defaults.php:93
+msgid "Likes"
+msgstr "Pitää"
+
+#: mod/profile/profile.config.php:304
+#: units/profile/function_editfield_defaults.php:94
+msgid "Dislikes"
+msgstr "Ei pidä"
+
+#: mod/profile/profile.config.php:314
+#: units/profile/function_editfield_defaults.php:95
+msgid "Occupation"
+msgstr "Ammatti"
+
+#: mod/profile/profile.config.php:318 mod/profile/profile.config.php:328
+#: mod/profile/profile.config.php:339 mod/profile/profile.config.php:351
+#: mod/profile/profile.config.php:361 mod/profile/profile.config.php:381
+msgid "Employment"
+msgstr ""
+
+#: mod/profile/profile.config.php:324
+#: units/profile/function_editfield_defaults.php:96
+msgid "Industry"
+msgstr "Ala"
+
+#: mod/profile/profile.config.php:335
+#: units/profile/function_editfield_defaults.php:98
+msgid "Company / Institution"
+msgstr "Yritys / Instituutio"
+
+#: mod/profile/profile.config.php:347
+#: units/profile/function_editfield_defaults.php:101
+msgid "Job Title"
+msgstr "Tehtävänimike"
+
+#: mod/profile/profile.config.php:357
+#: units/profile/function_editfield_defaults.php:102
+msgid "Job Description"
+msgstr "Työnkuvaus"
+
+#: mod/profile/profile.config.php:367
+#: units/profile/function_editfield_defaults.php:103
+msgid "I would like to ..."
+msgstr "Haluaisin ..."
+
+#: mod/profile/profile.config.php:370
+msgid "Your goals, separated with commas."
+msgstr "Tavoitteeni pilkuilla eroteltuna."
+
+#: mod/profile/profile.config.php:377
+#: units/profile/function_editfield_defaults.php:104
+msgid "Career Goals"
+msgstr "Tavoitteet urallani"
+
+#: mod/profile/profile.config.php:380
+#: units/profile/function_editfield_defaults.php:104
+msgid ""
+"Freeform: let colleagues and potential employers know what you'd like to get "
+"out of your career."
+msgstr ""
+
+#: mod/profile/profile.config.php:387
+#: units/profile/function_editfield_defaults.php:105
+msgid "Level of Education"
+msgstr "Koulutus"
+
+#: mod/profile/profile.config.php:391 mod/profile/profile.config.php:401
+#: mod/profile/profile.config.php:411 mod/profile/profile.config.php:421
+msgid "Education"
+msgstr "Koulutus"
+
+#: mod/profile/profile.config.php:397
+#: units/profile/function_editfield_defaults.php:106
+msgid "High School"
+msgstr "Lukio"
+
+#: mod/profile/profile.config.php:407
+#: units/profile/function_editfield_defaults.php:107
+msgid "University / College"
+msgstr "Yliopisto"
+
+#: mod/profile/profile.config.php:417
+#: units/profile/function_editfield_defaults.php:108
+msgid "Degree"
+msgstr "Tutkinto"
+
+#: mod/profile/profile.config.php:427
+#: units/profile/function_editfield_defaults.php:109
+msgid "Main Skills"
+msgstr "Tärkeimmät taidot"
+
+#: mod/toolbar/lib.php:29
+msgid "Log on:"
+msgstr "Kirjaudu:"
+
+#: mod/toolbar/lib.php:32
+msgid "Powered by Elgg"
+msgstr ""
+
+#: mod/toolbar/lib.php:41
+msgid "all"
+msgstr "kaikki"
+
+#: mod/toolbar/lib.php:44
+msgid "Tag cloud"
+msgstr "Tagipilvi"
+
+#: profile/edit.php:44
+msgid "Edit profile"
+msgstr "Muokka profiilia"
+
+#: profile/edit.php:118
+#, php-format
+msgid "%s (in category %s)"
+msgstr "%s (kategoriassa %s)"
+
+#: profile/edit.php:150
+msgid "Profile updated."
+msgstr "Profiili päivitetty."
+
+#: profile/edit.php:167
+#, php-format
+msgid "You need to fill in the following required fields: %s"
+msgstr "Täytä seuraavat vaaditut kentät: %s"
+
+#: profile/profile.class.php:48 units/profile/edit_link.php:8
+msgid "Click here to edit this profile."
+msgstr "Muokkaa profiilia napauttamalla tästä."
+
+#: profile/profile.class.php:86 units/profile/content_edit.php:2
+msgid ""
+"    This screen allows you to edit your profile. Blank fields will not show "
+"up on your profile screen in any view; you can change the access level for "
+"each piece of information in order to prevent it from falling into the wrong "
+"hands. For example, we strongly recommend you keep your address to yourself "
+"or a few trusted parties."
+msgstr ""
+"    Täällä voit muokata profiiliasi. Tyhjät kentät eivät tule näkyviin "
+"missään näkymässä; voit muuttaa rajoituksia jokaisen tiedon osalta, jotta ne "
+"eivät päätyisi vääriin käsiin. Esimerkkinä suosittelemme pitämään "
+"osoitetietosi vain itsesi ja muutaman luotettavan ystäväsi tiedossa."
+
+#: profile/profile.class.php:145
+msgid "Submit details:"
+msgstr "Syötä tiedot:"
+
+#: profile/profile.class.php:146
+msgid "Save your profile"
+msgstr "Tallenna profiili"
+
+#: profile/profile.class.php:164
+msgid "You can import some profile data by uploading a FOAF file here:"
+msgstr "Voit lisätä tietoja profiiliin siirtämällä FOAF-tiedoston:"
+
+#: profile/profile.class.php:167
+msgid "Upload a FOAF file:"
+msgstr "Siirrä FOAF-tiedosto:"
+
+#: profile/profile.class.php:169 units/files/edit_folder.php:285
+msgid "Upload"
+msgstr "Siirrä"
+
+#: profile/profile.class.php:270
+#: units/profile/function_editfield_display.php:40
+msgid "Access Restriction:"
+msgstr "Pääsyrajoitukset:"
+
+#: profile/profile.class.php:361 units/profile/function_search.php:35
+msgid "Profiles where"
+msgstr "Profiilit joissa"
+
+#: profile/profile.class.php:522 units/profile/function_upload_foaf.php:8
+msgid ""
+"There was an error uploading the file. Possibly the file was too large, or "
+"the upload was interrupted."
+msgstr ""
+"Tapahtui virhe siirrettäessä tiedostoa. Tiedosto on mahdollisesti liian "
+"suuri tai lataaminen keskeytettiin."
+
+#: profile/profile.class.php:602 units/profile/function_upload_foaf.php:88
+msgid ""
+"Data from your FOAF file has been preloaded. You must click Save at the "
+"bottom of the page for the changes to take effect."
+msgstr ""
+"FOAF-tiedostosi tiedot on ladattu. Klikkaa Tallenna-nappia sivun alalaidasta."
+
+#: profile/profile.class.php:606 units/profile/function_upload_foaf.php:92
+msgid "Error: supplied file did not appear to be a FOAF file."
+msgstr "Virhe: tiedosto ei näytä olevan FOAF-tiedosto."
+
+#: profile/profile.class.php:936 units/profile/profile_user_info.php:58
+#: units/weblogs/weblogs_user_info.php:7
+msgid "Profile Owner"
+msgstr "Profiilin omistaja"
+
+#: profile/profile.class.php:938 units/profile/profile_user_info.php:60
+#: units/weblogs/weblogs_user_info.php:9
+msgid "You"
+msgstr "Sinä"
+
+#: profile/rss2.php:25
+#, php-format
+msgid "Activity tagged with %s"
+msgstr ""
+
+#: profile/search.php:10
+msgid "Search Profiles"
+msgstr "Etsi profiileista"
+
+#: search/all.php:14 search/index.php:16
+msgid "Searching"
+msgstr "Etsitään"
+
+#: search/index.php:39
+msgid "Search for results from:"
+msgstr "Etsinnän tulokset:"
+
+#: search/index.php:79
+msgid "Filter by content type:"
+msgstr "Suodata sisällön mukaan:"
+
+#: search/index.php:83
+msgid "Everything"
+msgstr "Kaikki"
+
+#: search/index.php:90
+msgid "Users and communities"
+msgstr "Käyttäjiä ja yhteisöjä"
+
+#: search/tags.php:12
+msgid "Some Tags"
+msgstr ""
+
+#: units/activity/recent.php:3
+msgid ""
+"This screen displays recent activity on your account by other users over a "
+"given time range."
+msgstr ""
+
+#: units/admin/admin_actions.php:44
+msgid ""
+"Error! The new username must contain letters and numbers only, cannot be "
+"blank, and must be between 3 and 12 characters in length."
+msgstr ""
+"Virhe! Uusi käyttäjänimi voi sisältää vain kirjaimia ja numeroita, eikä se "
+"voi olla tyhjä. Pituuden on oltava kolmesta kahteentoista merkkiä."
+
+#: units/admin/admin_actions.php:50
+#, php-format
+msgid "Username was changed to %s."
+msgstr "Käyttäjänimi vaihdettu %s"
+
+#: units/admin/admin_actions.php:58
+#, php-format
+msgid "File quota was changed to %d."
+msgstr "Tiedostojen kokorajoitus vaihdettu %d."
+
+#: units/admin/admin_actions.php:65
+#, php-format
+msgid "Icon quota was changed to %d."
+msgstr "Kuvakkeen kokorajoitus vaihdettu %d."
+
+#: units/admin/admin_actions.php:80
+#, php-format
+msgid "User flag '%s' set to '%s'"
+msgstr ""
+
+#: units/admin/admin_actions.php:94
+msgid "Spam list updated."
+msgstr "roskapostilista päivitetty."
+
+#: units/admin/admin_actions.php:123
+#, php-format
+msgid ""
+"User addition %d failed: at least one field was blank. Username: %s, name: "
+"%s, email: %s"
+msgstr ""
+"Käyttäjän %d lisääminen epäonnistui: ainakin yksi kenttä oli tyhjä. "
+"Käyttäjänimi: %s, nimi: %s, sähköposti: %s"
+
+#: units/admin/admin_actions.php:128
+#, php-format
+msgid ""
+"New username %d (%s) was invalid; usernames must contain letters and numbers "
+"only, cannot be blank, and must be between 3 and 12 characters in length."
+msgstr ""
+"Uusi käyttäjänimi %d (%s) ei kelpaa; käyttäjänimi voi sisältää vain "
+"kirjaimia ja numeroita, eikä se voi olla tyhjä. Pituuden on oltava kolmesta "
+"kahteentoista merkkiä."
+
+#: units/admin/admin_actions.php:134
+#, php-format
+msgid "User addition %d failed: username %s is already in use."
+msgstr "Käyttäjän %d lisääminen epäonnistui: käyttäjänimi %s on jo käytössä."
+
+#: units/admin/admin_actions.php:138
+#, php-format
+msgid "User addition %d failed: email address %s appears to be invalid."
+msgstr "Käyttäjän %d lisääminen epäonnistui: sähköpostiosoite %s ei kelpaa."
+
+#: units/admin/admin_actions.php:181
+#, php-format
+msgid "Your new %s account"
+msgstr "Sinun uusi %s tili"
+
+#: units/admin/admin_actions.php:182
+#, php-format
+msgid ""
+"You have been added to %s!\n"
+"\n"
+"For your records, your %s username and password are:\n"
+"\n"
+"\tUsername: %s\n"
+"\tPassword: %s\n"
+"\n"
+"You can log in at any time by visiting %s and entering these details into "
+"the login form.\n"
+"\n"
+"We hope you enjoy using the system.\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s Team"
+msgstr ""
+"Sinut on lisätty %s!\n"
+"\n"
+"Tiedoksesi; sinun %s käyttäjänimesi ja salasanasi ovat:\n"
+"\n"
+"\tKäyttäjänimi: %s\n"
+"\tSalasana: %s\n"
+"\n"
+"Voit kirjautua sivulla %s ja lisätä tietojasi kaavakkeeseen.\n"
+"\n"
+"Toivottavasti viihdyt.\n"
+"\n"
+"Terveisin,\n"
+"\n"
+"%s:n tiimi"
+
+#: units/admin/admin_actions.php:183
+#, php-format
+msgid "User %s was created."
+msgstr "Käyttäjä %s on luotu."
+
+#: units/admin/admin_contentflags.php:7
+msgid ""
+"The following pages have been flagged as having obscene or inappropriate "
+"content. They are ordered by number of complaints."
+msgstr ""
+"Seuraavat sivut on liputettu sisältäviksi sopimatonta sisältöä. Ne ovat "
+"lajiteltu valitusmäärän mukaan."
+
+#: units/admin/admin_contentflags.php:8
+msgid ""
+"To view the pages in question, click the following links. To remove the "
+"flags, for example if the flag is a false positive or if you've deleted the "
+"offending content, check the appropriate box and click the 'delete' button "
+"below."
+msgstr ""
+"klikkaa linkkejä, niin näet kyseiset sivut. Mikäli sopimaton sisältö on "
+"poistettu tai liputettu sivu on väärä positiivinen, niin rastita valinta ja "
+"kllikkaa 'poista'-nappia."
+
+#: units/admin/admin_contentflags.php:18
+msgid "Page URL"
+msgstr "Sivun URL"
+
+#: units/admin/admin_contentflags.php:19
+msgid "Number of objections"
+msgstr ""
+
+#: units/admin/admin_contentflags.php:38
+msgid "Remove flag(s)"
+msgstr "Poista lippu(ja)"
+
+#: units/admin/admin_contentflags.php:44
+msgid "No content flags were found at present."
+msgstr "Ei liputettua sisältöä."
+
+#: units/admin/admin_main.php:9
+msgid "Site statistics"
+msgstr "Sivun statistiikka"
+
+#: units/admin/admin_main.php:21
+msgid "Accounts by type"
+msgstr "Käyttäjätilit tyypin mukaan"
+
+#: units/admin/admin_main.php:36
+msgid "Weblog statistics"
+msgstr "Weblogin statistiikka"
+
+#: units/admin/admin_main.php:37 units/admin/admin_main.php:51
+msgid "All-time:"
+msgstr "Koko aikana:"
+
+#: units/admin/admin_main.php:38 units/admin/admin_main.php:40
+#, php-format
+msgid "%u weblog posts, %u comments"
+msgstr "%u blogin artikkelit, %u kommentit"
+
+#: units/admin/admin_main.php:39 units/admin/admin_main.php:52
+msgid "Last 7 days:"
+msgstr "Viimeiset 7 päivää:"
+
+#: units/admin/admin_main.php:50
+msgid "File statistics"
+msgstr "Tiedostojen statistiikka"
+
+#: units/admin/admin_main.php:51 units/admin/admin_main.php:52
+#, php-format
+msgid "%u files (%s bytes)"
+msgstr "%u tiedostot (%s tavua)"
+
+#: units/admin/admin_main.php:70
+msgid "Database statistics"
+msgstr "Tietokannan statistiikka"
+
+#: units/admin/admin_main.php:71
+msgid "Total database size:"
+msgstr "Tietokannan koko:"
+
+#: units/admin/admin_main.php:71
+#, php-format
+msgid "%u bytes"
+msgstr "%u tavua"
+
+#: units/admin/admin_main.php:78
+msgid "Users online now"
+msgstr "Käyttäjiä tällä hetkellä"
+
+#: units/admin/admin_main.php:79
+msgid ""
+"The following users have an active session and have performed an action "
+"within the past 10 minutes."
+msgstr ""
+"Seuraavilla käyttäjillä on aktiivinen istunto ja he ovat olleet aktiivisia "
+"viimeisen 10 minuutin aikana."
+
+#: units/admin/admin_main.php:85 units/admin/admin_users.php:29
+#: units/admin/admin_users_add.php:21
+msgid "Full name"
+msgstr "Koko nimi"
+
+#: units/admin/admin_main.php:96
+#, php-format
+msgid "%u users in total."
+msgstr "%u käyttäjää yhteensä."
+
+#: units/admin/admin_spam.php:7
+msgid ""
+"Add regular expressions below, one per line, to block spam. For example, "
+"'foo' will block all comments containing the word foo, (foo|bar) will block "
+"comments containing the word foo or bar."
+msgstr ""
+"Lisää sännölliset lauseet, joiden perusteella estetään spammia. Yksi lause "
+"rivilleen. Esimerkiksi 'foo' estää kaikki kommentit, joissa esiintyy sana "
+"foo, (foo|bar) estää kaikki kommentit, joissa esiintyy sana foo tai bar."
+
+#: units/admin/admin_spam.php:8
+msgid "Blank lines and lines starting with # will be ignored."
+msgstr "Tyhjät rivit, jotka alkavat # hylätään."
+
+#: units/admin/admin_spam.php:20
+msgid "Regular expressions"
+msgstr "Säännölliset lausekkeet"
+
+#: units/admin/admin_userdetails.php:19
+msgid "Change username:"
+msgstr "Vaihda käyttäjänimi:"
+
+#: units/admin/admin_userdetails.php:22
+msgid "New username: "
+msgstr "Uusi käyttäjänimi: "
+
+#: units/admin/admin_userdetails.php:29
+msgid "Change file quota (in bytes):"
+msgstr "Muuta tiedostojen kokorajoitus (tavua)"
+
+#: units/admin/admin_userdetails.php:32
+msgid "New file quota: "
+msgstr "Uusi quota tiedostoille: "
+
+#: units/admin/admin_userdetails.php:36
+msgid "Change icon quota:"
+msgstr "Muuta kuvakkeiden quotaa:"
+
+#: units/admin/admin_userdetails.php:39
+msgid "New icon quota: "
+msgstr "Uusi quota kuvakkeille: "
+
+#: units/admin/admin_userdetails.php:45
+msgid "User flags:"
+msgstr "Käyttäjän liput:"
+
+#: units/admin/admin_userdetails.php:56
+msgid "Site administrator: "
+msgstr "Sivuston pääkäyttäjä: "
+
+#: units/admin/admin_userdetails.php:72
+msgid "Banned: "
+msgstr "Pannassa: "
+
+#: units/admin/admin_users.php:10
+msgid ""
+"The following is a list of all the users in the system, 50 users at a time. "
+"You can click each one to edit their user details as if you were logged in "
+"as them, as well as set user flags (including 'ban user' and 'set user as "
+"administrator')."
+msgstr ""
+
+#: units/admin/admin_users.php:11
+msgid ""
+"If you know the username of the user you would like to edit, you can also "
+"enter it below."
+msgstr ""
+"Jos tiedät muokattavan käyttäjän käyttäjänimen, niin voit kirjoittaa sen "
+"alapuolelle."
+
+#: units/admin/admin_users.php:16
+msgid "Enter username"
+msgstr "Anna käyttäjänimi"
+
+#: units/admin/admin_users.php:18
+msgid "Edit user"
+msgstr "Muokkaa käyttäjää"
+
+#: units/admin/admin_users.php:37 units/magpie/function_view.php:41
+#: units/magpie/function_view_individual.php:38
+#: units/weblogs/weblogs_all_users_view.php:123
+#: units/weblogs/weblogs_friends_view.php:73
+#: units/weblogs/weblogs_interesting_view.php:64
+#: units/weblogs/weblogs_view.php:65
+msgid "Next"
+msgstr "Seuraava"
+
+#: units/admin/admin_users.php:46
+msgid "Previous"
+msgstr "Edellinen"
+
+#: units/admin/admin_users_add.php:17
+msgid ""
+"You can create up to 12 users below; passwords will be autogenerated and "
+"emailed to the account owners. You must include all fields, but you may "
+"leave rows blank."
+msgstr ""
+"Voit luoda 12 käyttäjätunnusta kerralla; salasanan generoidaan "
+"automaattisesti ja lähetetään sähköpostilla asianomaisille. Kaikki kentät on "
+"otettava mukaan, mutta voit jättää rivejä tyhjiksi."
+
+#: units/admin/admin_users_panel.php:12
+#: units/communities/communities_membership_requests.php:32
+#: units/friends/user_friendship_requests.php:33
+msgid "Profile"
+msgstr "Profiili"
+
+#: units/admin/display_content_flag_form.php:23
+msgid "Flag content"
+msgstr "Liputa sisältö"
+
+#: units/admin/display_content_flag_form.php:24
+msgid ""
+"To mark this content as obscene or inappropriate, click the 'Flag' button "
+"and an administrator will view it in due course."
+msgstr ""
+"Mikäli tämä sivu sisältää epäasiallista materiaalia, niin voit ilmoitaa "
+"siitä pääkäyttäjälle klikkaamalla 'Lippu'-painiketta."
+
+#: units/admin/display_content_flag_form.php:25
+msgid "Flag"
+msgstr "Lippu"
+
+#: units/communities/communities_access_levels.php:10
+#: units/communities/communities_access_levels.php:19
+msgid "Community"
+msgstr "Yhteisö"
+
+#: units/communities/communities_actions.php:21
+msgid ""
+"Error! The community username must contain letters and numbers only, cannot "
+"be blank, and must be between 3 and 12 characters in length."
+msgstr ""
+"Virhe! Yhteisön nimin voi sisältää vain kirjaimia ja numeroita. Se ei voi "
+"olla tyhjä. Pituuden tulee olle kolmesta kahteentoista merkkiä."
+
+#: units/communities/communities_actions.php:23
+msgid "Error! The community name cannot be blank."
+msgstr "Virhe! Yhteisön nimi ei voi olla tyhjä."
+
+#: units/communities/communities_actions.php:45
+msgid "Your community was created and you were added as its first member."
+msgstr "Yhteisösi on luotu ja sinut on lisätty ensimmäiseksi jäseneksi."
+
+#: units/communities/communities_actions.php:59
+#, php-format
+msgid "You joined %s."
+msgstr "Liityit %s."
+
+#: units/communities/communities_actions.php:61
+#, php-format
+msgid ""
+"%s has joined %s!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+"%s on liittynyt %s!\n"
+"\n"
+"Katso käyttäjän profiilia klikkaamalla linkkiä:\n"
+"\n"
+"\t"
+
+#: units/communities/communities_actions.php:64
+#, php-format
+msgid "New %s member"
+msgstr "Uusi %s jäsen"
+
+#: units/communities/communities_actions.php:68
+#, php-format
+msgid ""
+"Membership of %s needs to be approved. Your request has been added to the "
+"list."
+msgstr "%s: jäsenyys vaatii hyväksynnän. Pyyntösi on lisätty listalle."
+
+#: units/communities/communities_actions.php:70
+#, php-format
+msgid ""
+"%s has applied to join %s!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t"
+msgstr ""
+"%s on anonut jäseneksi %s!\n"
+"\n"
+"Katso käyttäjän profiilia klikkaamalla linkkiä:\n"
+"\n"
+"\t"
+
+#: units/communities/communities_actions.php:73
+#, php-format
+msgid "New %s member request"
+msgstr "%s:n uusi jäsenyyspyyntö"
+
+#: units/communities/communities_actions.php:77
+#, php-format
+msgid "%s is a private community. Your membership request has been declined."
+msgstr "%s on yksityinen yhteisö. Jäsenyynpyyntösi on hylätty."
+
+#: units/communities/communities_actions.php:89
+#, php-format
+msgid "You left %s."
+msgstr "Olet lähtenyt %s."
+
+#: units/communities/communities_actions.php:96
+msgid "Your post has been added to the community weblog."
+msgstr "Artikkelisi on lisätty yhteisön blogiin."
+
+#: units/communities/communities_actions.php:112
+#, php-format
+msgid ""
+"You approved the membership request. %s is now a member of this community."
+msgstr "Hyväksyit jäsenyynpyynnön. %s on nyt tämän yhteisön jäsen."
+
+#: units/communities/communities_actions.php:114
+msgid "An error occurred: the membership request could not be approved."
+msgstr "Tapahtui virhe: jäsenyynpyyntöä ei voitu hyväksyä."
+
+#: units/communities/communities_actions.php:117
+#: units/communities/communities_actions.php:136
+msgid "Error: you do not have authority to modify this membership request."
+msgstr "Virhe: sinulla ei ole oikeutta muokata tätä jäsenyynpyntöä."
+
+#: units/communities/communities_actions.php:120
+#: units/communities/communities_actions.php:139
+msgid "An error occurred: the membership request could not be found."
+msgstr "Tapahtui virhe: jäsenyyspyyntöä ei löydy."
+
+#: units/communities/communities_actions.php:134
+#, php-format
+msgid ""
+"You declined the membership request. %s is not a member of this community."
+msgstr "Hylkäsit jäsenyynpyynnön. %s ei ole yhteisön jäsen."
+
+#: units/communities/communities_create.php:17
+msgid "Create a new community"
+msgstr "Luo uusi yhteisö"
+
+#: units/communities/communities_create.php:18
+msgid "Community name:"
+msgstr "Yhteisön nimi:"
+
+#: units/communities/communities_create.php:19
+msgid "Username for community:"
+msgstr "Käyttäjänimi yhteisölle:"
+
+#: units/communities/communities_create.php:20 units/files/edit_folder.php:167
+#: units/groups/groups_create.php:5
+msgid "Create"
+msgstr "Luo"
+
+#: units/communities/communities_edit.php:47
+msgid ""
+"You don't have any communities listed! To join a community, click the 'join' "
+"button underneath a community's icon. You can find communities you're "
+"interested in by using the search function."
+msgstr ""
+"Listallasi ei ole yhtään yhteisöä. Voit liittyä yhteisöön klikkaamalla "
+"'liity' -nappia yhteisön kuvakkeen alapuolelta. Käytä etsi-toimintoa "
+"mielenkiintoisten yhteisöjen etsimiseen."
+
+#: units/communities/communities_edit.php:49
+msgid "This user is not currently a member of any communities."
+msgstr "Tämä käyttäjä ei ole minkään yhteisön jäsen."
+
+#: units/communities/communities_members.php:45
+msgid "This community doesn't currently have any members."
+msgstr "Tässä yhteisössä eo ole tällä hetkellä yhtään jäsentä."
+
+#: units/communities/communities_membership_requests.php:15
+msgid ""
+"The following users would like to join this community. They need your "
+"approval to do this (to change this setting, visit the 'community settings' "
+"page)."
+msgstr ""
+"Seuraavat käyttäjät haluaisivat liittyä tähän yhteisöön. Siihen tarvitaan "
+"sinun hyväksyntäsi (vaihda asetuksia 'yhteisön asetukset' sivulla)."
+
+#: units/communities/communities_membership_requests.php:48
+msgid "You have no pending membership requests."
+msgstr "Ei odottavia jäsenyyspyyntöjä."
+
+#: units/communities/communities_moderator_of.php:47
+msgid "You don't own any communities. Why not create one?"
+msgstr "Et ole minkään yhteisön omistaja. Luodaanko yhteisö?"
+
+#: units/communities/communities_moderator_of.php:49
+msgid "This user is not currently moderating any communities."
+msgstr "Tämä käyttäjä ei moderoi tällä hetkellä mitään yhteisöä."
+
+#: units/communities/communities_owned.php:18
+msgid "Owned communities"
+msgstr "Omistetut yhteisöt"
+
+#: units/communities/community_memberships.php:20
+msgid "Community memberships"
+msgstr "Yhteisön jäsenyydet"
+
+#: units/communities/community_wiki.php:15
+msgid "Community Wiki"
+msgstr "Yhteisön Wiki"
+
+#: units/communities/profile_edit_link.php:12
+msgid "Upload / edit site pictures for this community."
+msgstr "Lataa / muokkaa yhteisön kuvaa."
+
+#: units/communities/profile_edit_link.php:26
+msgid "Change this community's name."
+msgstr "Vaihda yhteisön nimi."
+
+#: units/communities/user_info_menu_text.php:18
+msgid "Are you sure you want to join this community?"
+msgstr "Haluatko varmasti liittyä tähän yhteisöön?"
+
+#: units/communities/user_info_menu_text.php:18
+msgid "Click here to join this community."
+msgstr "Liity yhteisöön klikkaamalla tästä."
+
+#: units/communities/user_info_menu_text.php:20
+msgid "Are you sure you want to apply to join this community?"
+msgstr "Haluatko varmasti anoa yhteisön jäsenyyttä?"
+
+#: units/communities/user_info_menu_text.php:20
+msgid "Click here to apply to join this community."
+msgstr "Ano jäsenyyttä klikkaamalla tästä."
+
+#: units/communities/user_info_menu_text.php:26
+msgid "Are you sure you want to leave this community?"
+msgstr "Haluatko varmasti lähteä tästä yhteisöstä?"
+
+#: units/communities/user_info_menu_text.php:26
+msgid "Click here to leave this community."
+msgstr "Lähde yhteisöstä klikkaamalla tästä."
+
+#: units/communities/userdetails_actions.php:23
+#, php-format
+msgid "Community ownership transferred to %s."
+msgstr "Yhteisön omistajuus siirretty %s:lle."
+
+#: units/communities/userdetails_actions.php:26
+msgid "Could not retrieve community details."
+msgstr "Yhteisön tietoja ei saada."
+
+#: units/communities/userdetails_edit.php:11
+msgid "Change your community name"
+msgstr "Vaihda yhteisön nimi"
+
+#: units/communities/userdetails_edit.php:12
+#: units/users/userdetails_edit.php:12
+msgid "This name will be displayed throughout the system."
+msgstr "Tämä nimi on näkyvissä järjestelmänlaajuisesti."
+
+#: units/communities/userdetails_edit.php:27
+msgid "Community name"
+msgstr "Yhteisön nimi"
+
+#: units/communities/userdetails_edit.php:32
+msgid "Membership restriction:"
+msgstr "Jäsenyyden rajoitus:"
+
+#: units/communities/userdetails_edit.php:33
+msgid "This allows you to choose who can join this community."
+msgstr "Tästä voit valita sen kuka voi liittyä tähän yhteisöön."
+
+#: units/communities/userdetails_edit.php:50
+msgid "No moderation: anyone can join this community."
+msgstr "Ei moderointia: kuka tahansa voi liittyä tähän yhteisöön."
+
+#: units/communities/userdetails_edit.php:55
+msgid "Moderation: memberships must be approved by you."
+msgstr "Moderointi: sinun tulee hyväksyä jäsenyydet."
+
+#: units/communities/userdetails_edit.php:60
+msgid "Private: nobody can join this community."
+msgstr "Yksityinen: jäseneksi ei voi liittyä."
+
+#: units/communities/userdetails_edit.php:65
+msgid "Membership restriction"
+msgstr "Jäsenyyden rajoitus"
+
+#: units/communities/userdetails_edit.php:70
+msgid "Community ownership"
+msgstr "Yhteisön omistajuus"
+
+#: units/communities/userdetails_edit.php:71
+msgid ""
+"Type the username of the user who you want to own this community below. You "
+"cannot leave this blank, or specify a community or a user that doesn't exist."
+msgstr ""
+"Kirjoita käyttäjänimi, jonka haluat tulevan alla mainitun yhteisön "
+"omistajaksi. Kenttä ei voi olla tyhjä, se ei voi olla yhteisön nimi eikä "
+"järjestelmään tallentamaton käyttäjätunnus."
+
+#: units/communities/userdetails_edit.php:83
+msgid "Community owner"
+msgstr "Yhteisön omistaja"
+
+#: units/files/default_templates.php:8
+msgid "Folder"
+msgstr "Hakemisto"
+
+#: units/files/default_templates.php:9
+msgid "Each individual folder"
+msgstr "Kukin yksittäinen hakemisto"
+
+#: units/files/default_templates.php:11
+msgid "The owner of the folder"
+msgstr "Hakemiston omistaja"
+
+#: units/files/default_templates.php:12
+msgid "The name of the folder"
+msgstr "Hakemiston nimi"
+
+#: units/files/default_templates.php:13
+msgid "The folder's URL"
+msgstr "Hakemiston URL"
+
+#: units/files/default_templates.php:14
+msgid "Menu items for folder owner (edit, delete, etc)"
+msgstr ""
+
+#: units/files/default_templates.php:15
+msgid "The URL of the file's icon"
+msgstr "Tiedostojen kuvakkeen URL"
+
+#: units/files/default_templates.php:16 units/files/default_templates.php:49
+msgid "Keywords associated with the folder"
+msgstr "Hakemistoon liitetyt avainsanat"
+
+#: units/files/default_templates.php:40 units/files/function_search_rss.php:44
+msgid "File"
+msgstr "Tiedosto"
+
+#: units/files/default_templates.php:41
+msgid "Each individual file within a folder"
+msgstr "Kukin yksittäinen tiedosto hakemistossa"
+
+#: units/files/default_templates.php:43
+msgid "The file's URL"
+msgstr "Tiedoston URL"
+
+#: units/files/default_templates.php:44
+msgid "Its filename"
+msgstr "sen tiedostonimi"
+
+#: units/files/default_templates.php:45
+msgid "A description of the file"
+msgstr "Tiedoston kuvaus"
+
+#: units/files/default_templates.php:46
+msgid "Its title"
+msgstr "sen otsikko"
+
+#: units/files/default_templates.php:47
+msgid "Menu items for file owner (edit, delete, etc)"
+msgstr ""
+
+#: units/files/default_templates.php:48
+msgid "The URL of its icon"
+msgstr "kuvakkeen URL"
+
+#: units/files/edit_file.php:17 units/files/edit_folder.php:212
+msgid "File title:"
+msgstr "Tiedoston otsikko:"
+
+#: units/files/edit_file.php:29
+msgid "File description:"
+msgstr "Tiedoston kuvaus:"
+
+#: units/files/edit_file.php:40 units/files/edit_folder.php:56
+#: units/files/edit_folder.php:119 units/files/edit_folder.php:214
+#: units/weblogs/weblogs_posts_add.php:27
+#: units/weblogs/weblogs_posts_edit.php:21
+msgid "Access restrictions:"
+msgstr "Pääsyrajoitukset:"
+
+#: units/files/edit_file.php:51
+msgid "File folder:"
+msgstr "Tiedostohakemisto"
+
+#: units/files/edit_file.php:62 units/files/edit_folder.php:72
+#: units/files/edit_folder.php:154 units/files/edit_folder.php:262
+msgid "Keywords (comma separated):"
+msgstr "Avainsanat (erotettuna pilkuilla)"
+
+#: units/files/edit_file.php:80
+msgid "Save changes"
+msgstr "Tallenna muutokset"
+
+#: units/files/edit_file.php:98
+msgid "Edit "
+msgstr "Muokkaa "
+
+#: units/files/edit_folder.php:23
+msgid "Folder name:"
+msgstr "Hakemiston nimi:"
+
+#: units/files/edit_folder.php:24
+msgid "Parent folder:"
+msgstr "Yläkansio:"
+
+#: units/files/edit_folder.php:25 units/files/edit_folder.php:120
+msgid "Folder type:"
+msgstr "Hakemiston tyyppi:"
+
+#: units/files/edit_folder.php:99
+msgid "Edit this folder"
+msgstr "Muokkaa hakemistoa"
+
+#: units/files/edit_folder.php:109
+msgid "Upload files and folders"
+msgstr "Siirrä tiedostoja ja hakemistoja"
+
+#: units/files/edit_folder.php:117
+msgid "Create a new folder"
+msgstr "Luo uusi hakemisto"
+
+#: units/files/edit_folder.php:118
+msgid "To create a new folder, enter its name:"
+msgstr "Luo uusi hakemisto antamalla nimi:"
+
+#: units/files/edit_folder.php:193
+msgid "Upload a file"
+msgstr "Siirrä tiedosto"
+
+#: units/files/edit_folder.php:207
+#, php-format
+msgid "You have used %s Mb of a total %s Mb."
+msgstr "Käytät %s Mb %s Mb:stä."
+
+#: units/files/edit_folder.php:209
+#, php-format
+msgid "Used space: %s Mb."
+msgstr "Käytetty tila: %s Mb"
+
+#: units/files/edit_folder.php:211
+msgid "File to upload:"
+msgstr "Siirrettävä tiedosto:"
+
+#: units/files/edit_folder.php:213
+msgid "File Description:"
+msgstr "tiedoston kuvaus:"
+
+#: units/files/edit_folder.php:284
+msgid ""
+"By checking this box, you are asserting that you have the legal right to "
+"share this file, and that you understand you are sharing it with other users "
+"of the system."
+msgstr ""
+"Valitsemalla tämän vakuutat, että sinulla on laillinen oikeus jakaa tämä "
+"tiedosto ja ymmärrät että olet jakamassa sitä muiden järjestelmän käyttäjien "
+"kanssa."
+
+#: units/files/files_actions.php:31
+msgid "Your folder was created."
+msgstr "Hakemisto on luotu."
+
+#: units/files/files_actions.php:34
+msgid "Could not create folder. Perhaps the folder name was blank?"
+msgstr "Hakemistoa ei voitu tehdä. Jäikö hakemiston nimi tyhjäksi?"
+
+#: units/files/files_actions.php:54
+msgid ""
+"Upload unsuccessful. You must check the copyright box for a file to be "
+"uploaded."
+msgstr ""
+"Siirto epäonnistui. Copyrigth tulee olla valituuna, jotta tiedosto "
+"siirretään."
+
+#: units/files/files_actions.php:96
+msgid "The file was successfully uploaded."
+msgstr "Tiedoston siirto onnistui."
+
+#: units/files/files_actions.php:137
+msgid "The file was updated."
+msgstr "Tiedosto on siirretty."
+
+#: units/files/files_actions.php:163
+msgid "The folder was edited."
+msgstr "Hakemisto on luotu."
+
+#: units/files/files_actions.php:177
+msgid "Error: a folder cannot be its own parent."
+msgstr ""
+
+#: units/files/files_actions.php:203
+msgid "The folder was deleted."
+msgstr "Hakemisto on poistettu."
+
+#: units/files/files_actions.php:228
+msgid "The file was deleted."
+msgstr "Tiedosto poistettu."
+
+#: units/files/files_links_make.php:54
+msgid "You do not have permission to access this file"
+msgstr "Sinulla ei ole oikeutta tiedostoon."
+
+#: units/files/files_links_make.php:57
+msgid "File does not exist"
+msgstr "Tiedostoa ei ole"
+
+#: units/files/files_user_info_menu.php:23
+msgid "File Storage"
+msgstr ""
+
+#: units/files/files_view.php:26 units/files/folder_view.php:14
+msgid "Root Folder"
+msgstr "Juurikansio"
+
+#: units/files/files_view.php:47
+msgid "Return to"
+msgstr "Palaa"
+
+#: units/files/function_search.php:49
+#, php-format
+msgid "Folders owned by '%s' in category '%s'"
+msgstr "'%s' omistaa kansiot kategoriassa '%s'"
+
+#: units/files/function_search.php:89
+#, php-format
+msgid "Files owned by %s in category '%s'"
+msgstr "'%s' omistaa tiedostot kategoriassa '%s'"
+
+#: units/files/function_search.php:94
+#, php-format
+msgid "In folder '%s'"
+msgstr "Hakemistossa '%s'"
+
+#: units/files/function_search.php:111
+#, php-format
+msgid "RSS feed for files owned by %s"
+msgstr "%s: omistamat RSS-syötteet"
+
+#: units/files/function_search.php:122
+msgid "Users with files or folders in category"
+msgstr "KÄyttäjät, joilla on tiedostoja tai hakemistoja kategoriassa"
+
+#: units/files/function_search_rss.php:34
+msgid "File folder"
+msgstr "Tiedostot-hakemisto"
+
+#: units/files/templates_preview.php:5
+msgid "Folder name"
+msgstr "Hakemiston nimi"
+
+#: units/files/templates_preview.php:15 units/files/templates_preview.php:26
+msgid "test"
+msgstr "testi"
+
+#: units/files/templates_preview.php:18
+msgid "Subfolder"
+msgstr "Alihakemisto"
+
+#: units/files/templates_preview.php:27
+msgid "A sample file"
+msgstr "Esimerkkitiedosto"
+
+#: units/files/templates_preview.php:30
+msgid "This is a file"
+msgstr "Tämä on tiedosto"
+
+#: units/files/templates_preview.php:31
+msgid "filename"
+msgstr "tiedoston nimi"
+
+#: units/files/templates_preview.php:40
+msgid "Files and folders"
+msgstr "Tiedostot ja kansiot"
+
+#: units/files/weblogs_posts_add_fields.php:55
+#, php-format
+msgid "Embed a file from your %s file storage:"
+msgstr ""
+
+#: units/files/weblogs_posts_add_fields.php:79
+msgid ""
+"This will add a code to your weblog post that will be converted into an "
+"embedded file."
+msgstr ""
+"Tämä lisää koodin blogisi artikkeliin, joka muunnetaan osoittamaan upotettua "
+"tiedostoa."
+
+#: units/friends/friends_actions.php:24
+#, php-format
+msgid "%s was added to your friends list."
+msgstr "%s lisättiin listaan ystäväksesi."
+
+#: units/friends/friends_actions.php:26
+#, php-format
+msgid ""
+"%s has added you as a friend!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t%s\n"
+"\n"
+"To view all your friends, click here:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s team."
+msgstr ""
+
+#: units/friends/friends_actions.php:27
+#, php-format
+msgid "New %s friend"
+msgstr "Uusi %s ystävä"
+
+#: units/friends/friends_actions.php:32
+#, php-format
+msgid "%s couldn't be added to your friends list."
+msgstr "%s ei voitu lisätä ystäviesi listaan."
+
+#: units/friends/friends_actions.php:38
+#, php-format
+msgid ""
+"%s has elected to moderate friendship requests. Your request has been added "
+"to their moderation queue."
+msgstr ""
+"%s on päättänyt moderoida ystävyyspyyntöjä. Sinun pyyntösi on lisätty "
+"moderointijonoon."
+
+#: units/friends/friends_actions.php:40
+#, php-format
+msgid ""
+"%s has requested to add you as a friend!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t%s\n"
+"\n"
+"To view all your friends requests and approve or deny this user, click "
+"here:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s team."
+msgstr ""
+
+#: units/friends/friends_actions.php:41
+#, php-format
+msgid "New %s friend request"
+msgstr "uusi %s ystävyyspyyntö"
+
+#: units/friends/friends_actions.php:46
+#, php-format
+msgid ""
+"%s has elected to moderate friendship requests, but your friend request "
+"couldn't be added to their moderation queue."
+msgstr ""
+"%s on päättänyt moderoida ystävyyspyyntöjä, mutta sinun pyyntöä ei voitu "
+"lisätä moderointijonoon."
+
+#: units/friends/friends_actions.php:50
+#, php-format
+msgid ""
+"%s has decided not to allow any new friendship requests at this time. Your "
+"friendship request has been declined."
+msgstr ""
+"%s on päättänyt olla hyväksymättä ystävyyspyyntöjä toistaiseksi. Sinun "
+"ystävyyspyyntösi on hylätty."
+
+#: units/friends/friends_actions.php:60
+msgid " was removed from your friends."
+msgstr " poistettiin ystävistäsi."
+
+#: units/friends/friends_actions.php:64
+msgid " couldn't be removed from your friends."
+msgstr " ei voitu poistaa ystävistäsi."
+
+#: units/friends/friends_actions.php:82
+#, php-format
+msgid "You approved the friendship request. %s now lists you as a friend."
+msgstr "Hyväksyit ystävyyspyynnön. %s on nyt ystävälistallasi."
+
+#: units/friends/friends_actions.php:83
+#, php-format
+msgid ""
+"%s has approved your friendship request!\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t%s\n"
+"\n"
+"To view all your friends, click here:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s team."
+msgstr ""
+"%s on hyväksynyt ystävyyspyyntösi!\n"
+"\n"
+"Näet hänen profiilin seuraavasta linkistä:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Kaikki ystäväsi näet täältä:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Terveisin,\n"
+"\n"
+"%s tiimi."
+
+#: units/friends/friends_actions.php:84
+#, php-format
+msgid "%s friend request approved!"
+msgstr "%s ystävyyspyyntö hyväksyttiin!"
+
+#: units/friends/friends_actions.php:87
+msgid "An error occurred: couldn't add you as a friend"
+msgstr "Tapahtui virhe: sinua ei voitu lisätä ystäväksi"
+
+#: units/friends/friends_actions.php:90 units/friends/friends_actions.php:112
+msgid "Error: you do not have authority to modify this friendship request."
+msgstr "Virhe: sinulla ei ole oikeutta muokata tätä ystävyyspyyntöä."
+
+#: units/friends/friends_actions.php:93 units/friends/friends_actions.php:115
+msgid "An error occurred: the friendship request could not be found."
+msgstr "Tapahtui virhe: ystävyyspyyntöä ei löydy."
+
+#: units/friends/friends_actions.php:107
+#, php-format
+msgid ""
+"You declined the friendship request. %s does not list you as a friend."
+msgstr ""
+"Vastasit kieltävästi ystävyyspyyntöön. %s ei listaa sinua ystäväkseen."
+
+#: units/friends/friends_actions.php:108
+#, php-format
+msgid ""
+"%s has denied your friendship request.\n"
+"\n"
+"To visit this user's profile, click on the following link:\n"
+"\n"
+"\t%s\n"
+"\n"
+"To view all your existing friends, click here:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s team."
+msgstr ""
+
+#: units/friends/friends_actions.php:109
+#, php-format
+msgid "%s friend request denied"
+msgstr "%s ystävyyspyyntö hylättiin"
+
+#: units/friends/friends_edit.php:47
+msgid ""
+"You don't have any friends listed! To add a user as a friend, click the "
+"'friend' button underneath a user's icon."
+msgstr ""
+"Listallasi ie ole ystäviä! Klikkaa 'ystävä' -nappia käyttäjän kuvakkeen "
+"alapuolelta lisätäksesi käyttäjän ystäväksesi."
+
+#: units/friends/friends_edit.php:49
+msgid ""
+"This user doesn't currently have any friends listed. Maybe if you list them "
+"as a friend, it'll start the ball rolling ..?"
+msgstr "Kyseisen käyttäjän listalla ei ole ystäviä."
+
+#: units/friends/friends_of_edit.php:18
+#, php-format
+msgid "Displaying 1000 most recently active people, of %d found."
+msgstr "Näytetään 1000 viimeksi aktiivista käyttäjää %d:sta löytyneestä."
+
+#: units/friends/friends_of_edit.php:58
+msgid ""
+"Nobody's listed you as a friend! Maybe you need to start chatting to some "
+"other users?"
+msgstr ""
+"Ketään ei ole merkitty ystäväksesi! Pitäisiköhän sinun chattaillä toisten "
+"käyttäjien kanssa??"
+
+#: units/friends/friends_of_edit.php:60
+msgid ""
+"This user isn't currently listed as anyone's friend. Maybe you could be the "
+"first?"
+msgstr ""
+"Tätä käyttäjää ei ole merkitty kenenkään ystäväksi. Sinä voisit olla "
+"ensimmäinen."
+
+#: units/friends/profile_friends.php:20 units/friends/profile_friends.php:29
+msgid "View all Friends"
+msgstr "Näytä kaikki ystävät"
+
+#: units/friends/profile_friends.php:27 units/friends/user_friends.php:14
+msgid "Your Friends"
+msgstr "Ystäväsi"
+
+#: units/friends/user_friends.php:14
+msgid "Friends Screen"
+msgstr ""
+
+#: units/friends/user_friendship_requests.php:16
+msgid ""
+"The following users would like to add you as a friend. They need your "
+"approval to do this (to change this setting, visit the 'account settings' "
+"page)."
+msgstr ""
+"Seuraavat käyttäjät haluaisivat lisätä sinut ystäväkseen. Se vaatii sinulta "
+"hyväksynnän (voit muuttaa asetuksen 'tilin asetukset' sivulta)."
+
+#: units/friends/user_friendship_requests.php:51
+msgid "You have no pending friendship requests."
+msgstr "Ystävyyspyyntöjä ei ole osottamassa."
+
+#: units/friends/user_info_menu_text.php:19
+msgid "Are you sure you want to add this user as a friend?"
+msgstr "Haluatko varmasti lisätä tämän käyttäjän ystäväksesi?"
+
+#: units/friends/user_info_menu_text.php:19
+msgid "Click here to add this user as a friend."
+msgstr "Lisää käyttäjä ystäväksesi klikkaamalla tästä."
+
+#: units/friends/user_info_menu_text.php:26
+msgid "Are you sure you want to remove this user from your friends list?"
+msgstr "Haluatko varmasti poistaa käyttäjän ystäviesi listalta?"
+
+#: units/friends/user_info_menu_text.php:26
+msgid "Click here to remove this user from your friends list."
+msgstr "Poista tämä käyttäjä ystävistäsi klikkaamalla."
+
+#: units/gettext/library.php:410
+msgid "Language selection"
+msgstr "Kielen valinta"
+
+#: units/gettext/library.php:411
+msgid ""
+"Choose your preferred language for this site. The following languages are "
+"available on this system:"
+msgstr "Valitse sivuston kieli. Seuraavat kielet ovat käytettävissä:"
+
+#: units/gettext/library.php:422
+msgid "No languages installed"
+msgstr "Ei asennettuja kieliä"
+
+#: units/gettext/library.php:428
+msgid "default"
+msgstr "oletus"
+
+#: units/gettext/library.php:480 units/gettext/library.php:485
+msgid "Preferred language"
+msgstr "Suosikkikieli"
+
+#: units/gettext/library.php:480
+msgid "saved"
+msgstr "tallennettu"
+
+#: units/gettext/library.php:485
+msgid "not changed"
+msgstr "ei muuttunut"
+
+#: units/groups/groups_access_levels.php:8
+msgid "Group"
+msgstr "Ryhmä"
+
+#: units/groups/groups_actions.php:27
+msgid "Your group was updated."
+msgstr "Ryhmäsi päivitettiin."
+
+#: units/groups/groups_create.php:3
+msgid "Create a new group"
+msgstr "Luo uusi ryhmä"
+
+#: units/groups/groups_create.php:4
+msgid "Group name:"
+msgstr "Ryhmän nimi:"
+
+#: units/groups/groups_display_membership.php:6
+msgid "Group membership"
+msgstr "Ryhmän jäsenyys"
+
+#: units/groups/groups_display_membership.php:15
+#, php-format
+msgid "Owned by %s"
+msgstr "Omistaja %s"
+
+#: units/groups/groups_edit_display.php:13
+msgid "Your friends:"
+msgstr "Ystäväsi:"
+
+#: units/groups/groups_edit_display.php:44
+msgid "Add selected to group"
+msgstr "Lisää valitut ryhmään"
+
+#: units/groups/groups_edit_display.php:53
+msgid "Remove selected from group"
+msgstr "Poista valitut ryhmästä"
+
+#: units/groups/groups_edit_display.php:54
+msgid "Members of this group:"
+msgstr "Ryhmän jäsenet:"
+
+#: units/groups/groups_edit_display.php:72
+msgid "Save this group"
+msgstr "Tallenna tämä ryhmä"
+
+#: units/groups/groups_edit_display.php:73
+msgid "Delete this group"
+msgstr "Poista tämä ryhmä"
+
+#: units/groups/groups_edit_existing.php:6
+msgid "Groups you own"
+msgstr "Omistamasi ryhmät"
+
+#: units/groups/groups_editpage.php:4
+msgid "Existing groups"
+msgstr "Kaikki ryhmät"
+
+#: units/groups/groups_explanation.php:3
+msgid ""
+"Access is controlled through the use of Access groups and this is one of the "
+"most powerful features of Elgg. Access groups allow you to have complete "
+"control over who sees what within your environment. You can create as many "
+"access groups as you wish. Each access group can have as many of your "
+"friends as you like and each access group created becomes another option in "
+"the 'access restriction' dropdown menu beside each profile item, weblog post "
+"and file uploaded."
+msgstr ""
+
+#: units/groups/groups_explanation.php:4 units/groups/groups_help.php:4
+msgid ""
+"When you create an access group, add people to it then select it as your "
+"access restriction on a weblog post only the people in that group will be "
+"able to see that weblog post and so on for all elements in your learning "
+"landscape."
+msgstr ""
+
+#: units/groups/groups_help.php:3
+msgid "This is a help file for the Groups functions."
+msgstr "Tämä on ohjetiedosto ryhmien toiminnoille."
+
+#: units/icons/function_actions.php:57
+msgid "Your selected icons were deleted."
+msgstr "Valitsemasi kuvakkeet poistettiin."
+
+#: units/icons/function_actions.php:71
+msgid ""
+"You have already met your icon quota. You must delete some icons before you "
+"can upload any new ones."
+msgstr ""
+"Kuvakkeittesi quota on jo täynnä. Poista siirrettyjä kuvakkeita, jotta tilaa "
+"vapautuu uusille kuvakkeille."
+
+#: units/icons/function_actions.php:79
+msgid "Attempting to upload icon file ..."
+msgstr "Yritetään siirtää kuvaketiedostoa ..."
+
+#: units/icons/function_actions.php:86
+msgid ""
+"The uploaded icon file was invalid. Please ensure you are using JPEG, GIF or "
+"PNG files."
+msgstr ""
+"Siirretty kuvaketiedosto ei kelpaa. Varmista, että tiedostomuoto on JPEG, "
+"GIF tai PNG."
+
+#: units/icons/function_actions.php:118
+msgid ""
+"The uploaded icon file was in an image format other than JPEG, GIF or PNG. "
+"These are unsupported at present."
+msgstr ""
+"Siirretty kuvaketiedosto on jotakin muuta muotoa kuin JPEG, GIF tai PNG."
+
+#: units/icons/function_actions.php:138
+msgid "Your icon was uploaded successfully."
+msgstr "Kuvaketiedoston siirto onnistui."
+
+#: units/icons/function_actions.php:141
+msgid ""
+"An unknown error occurred when saving your icon. If this problem persists, "
+"please let us know and we'll do all we can to fix it quickly."
+msgstr ""
+"Tuntematon virhe kuvaketta tallennettaessa. Jos ongelma toistuu ilmoita "
+"asiasta meille."
+
+#: units/icons/function_add_icons.php:15
+msgid "Upload a new picture"
+msgstr "Siirrä uusi kuva"
+
+#: units/icons/function_add_icons.php:16
+msgid ""
+"Upload a picture for this profile below. Pictures need to be 100x100 pixels "
+"or smaller, but don't worry - if you've selected a larger picture, we'll "
+"shrink it down for you. You may upload up to"
+msgstr ""
+"Siirrä kuva tätä profiilia varten. Kuvien tulee olla kooltaan 100x100 "
+"pikseliä tai sitä pienempiä."
+
+#: units/icons/function_add_icons.php:17
+msgid "pictures in total."
+msgstr "kuvaa kaikkiaan."
+
+#: units/icons/function_add_icons.php:26
+msgid "Picture to upload:"
+msgstr "Siirrettävä kuva:"
+
+#: units/icons/function_add_icons.php:37
+msgid "Icon description:"
+msgstr "Kuvakkeen kuvaus:"
+
+#: units/icons/function_add_icons.php:45
+msgid "Make this the default icon:"
+msgstr "Oletuskuvake:"
+
+#: units/icons/function_add_icons.php:58
+msgid "Upload new icon"
+msgstr "Siirrä uusi kuvake"
+
+#: units/icons/function_edit_icons.php:21
+msgid "Site pictures"
+msgstr "Sivuston kuvat"
+
+#: units/icons/function_edit_icons.php:31
+msgid ""
+"Site pictures are small pictures that act as a representative icon "
+"throughout the system."
+msgstr ""
+"Sivuston kuvat ovat pieniä kuvia jotka toimivat kuvakkeina koko järjestelmän "
+"laajuudella."
+
+#: units/icons/function_edit_icons.php:55
+msgid "Name:"
+msgstr "Nimi:"
+
+#: units/icons/function_edit_icons.php:56
+msgid "Default:"
+msgstr "Oletus:"
+
+#: units/icons/function_edit_icons.php:79
+msgid "No default:"
+msgstr "Ei oletusta:"
+
+#: units/icons/function_edit_icons.php:100
+msgid "You don't have any site pictures loaded yet."
+msgstr "Sivuston kuvia ei ole ladattuina."
+
+#: units/invite/invite.php:12
+msgid "Their name"
+msgstr "Heidän nimet"
+
+#: units/invite/invite.php:18
+msgid "Their email address"
+msgstr "Heidän sähköpostiosoitteensa"
+
+#: units/invite/invite.php:25
+msgid "An optional message"
+msgstr "Valinnainen viesti"
+
+#: units/invite/invite.php:33
+msgid "Invite"
+msgstr "Kutsu"
+
+#: units/invite/invite_actions.php:34
+msgid "They included the following message:"
+msgstr "He lisäsivät seuraavan viestin:"
+
+#: units/invite/invite_actions.php:38
+#, php-format
+msgid "Thank you for registering with %s."
+msgstr "Kiitos rekisteröitymisestä kohteeseen %s."
+
+#: units/invite/invite_actions.php:39
+#, php-format
+msgid "%s account verification"
+msgstr "%s: tilin vahvistus"
+
+#: units/invite/invite_actions.php:42 units/invite/invite_actions.php:43
+msgid "has invited you to join"
+msgstr "on kutsunut sinut mukaan"
+
+#: units/invite/invite_actions.php:42
+msgid "a learning landscape system."
+msgstr ""
+
+#: units/invite/invite_actions.php:46
+#, php-format
+msgid ""
+"Dear %s,\n"
+"\n"
+"%s %s\n"
+"\n"
+"To join, visit the following URL:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Your email address has not been passed onto any third parties, and will be "
+"removed from our system within seven days.\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s team."
+msgstr ""
+"Hyvä %s\n"
+"\n"
+"%s %s\n"
+"\n"
+"Käy seuraavassa osoitteessa liittyäksesi:\n"
+"\n"
+"\t%s\n"
+"\n"
+"Sähköpostiosoitettasi ei ole välitetty kolmansille osapuolilleja se "
+"poistetaan järjestelmästä seitsemän päivän kuluttua.\n"
+"\n"
+"Terveisin,\n"
+"\n"
+"%s tiimi."
+
+#: units/invite/invite_actions.php:48
+#, php-format
+msgid ""
+"Your invitation was sent to %s at %s. It will be valid for seven days."
+msgstr "Kutsusi on lähetetty %s:lle %s:ään. Se on voimassa seitsemän päivää."
+
+#: units/invite/invite_actions.php:51
+#, php-format
+msgid "User %s already has that email address. Invitation not sent."
+msgstr "Käyttäjällä %s on jo tuo sähköpostiosoite. Kutsua ei lähetetty."
+
+#: units/invite/invite_actions.php:54
+msgid ""
+"Someone with that email address has already been invited to the system. "
+msgstr "Saman sähköpostiosoitteen omistaja on jo kutsuttu järjestelmään. "
+
+#: units/invite/invite_actions.php:57
+msgid "Invitation failed: The email address was not valid."
+msgstr "Kutsu epäonnistui: sähköpostiosoite ei kelpaa."
+
+#: units/invite/invite_actions.php:60
+msgid "Error: This community has reached its maximum number of users."
+msgstr "Virhe: Tämän yhteisön enimmäisjäsenmäärä on jo täyttynyt."
+
+#: units/invite/invite_actions.php:63
+msgid "Invitation failed: you are not logged in."
+msgstr "Kutsu epäonnitui: et ole kirjautunut."
+
+#: units/invite/invite_actions.php:66
+msgid "Invitation failed: you must specify both a name and an email address."
+msgstr "Kutsu epäonnistui: sekä nimi että sähköpostiosoite vaaditaan."
+
+#: units/invite/invite_actions.php:79
+msgid ""
+"Unfortunately this community has reached its account limit and you are "
+"unable to join at this time."
+msgstr ""
+"Valitettavasti yhteisön enimmäisjäsenmäärä on jo täynnä. Liittyminen ei "
+"onnistunut."
+
+#: units/invite/invite_actions.php:83
+msgid "You must indicate that you are at least 13 years old to join."
+msgstr "Sinun tulee olla vähintään 13 vuotta vanha liittyäksesi."
+
+#: units/invite/invite_actions.php:87
+msgid "Error! Invalid invite code."
+msgstr "Virhe! Kutsukoodi ei kelpaa."
+
+#: units/invite/invite_actions.php:136
+msgid ""
+"Your account was created! You can now log in using the username and password "
+"you supplied. You have been sent an email containing these details for "
+"reference purposes."
+msgstr ""
+"Tili on luotu! Voit kirjautua antamallasi käyttäjätunnuksella ja "
+"salasanalla. Sinulle on lähetetty sähköpostilla nämä tiedot."
+
+#: units/invite/invite_actions.php:138
+#, php-format
+msgid "Your %s account"
+msgstr "Sinun %s tili"
+
+#: units/invite/invite_actions.php:139
+#, php-format
+msgid ""
+"Thanks for joining %s!\n"
+"\n"
+"For your records, your %s username and password are:\n"
+"\n"
+"\t"
+msgstr ""
+"Kiitos kun liityit %s!\n"
+"\n"
+"Tiedoksesi, sinun %s käyttäjänimi ja salasana on:\n"
+"\n"
+"\t"
+
+#: units/invite/invite_actions.php:158
+#, php-format
+msgid "Verify your %s account password request"
+msgstr "Varmenna tilisi %s salasanapyyntö."
+
+#: units/invite/invite_actions.php:159
+#, php-format
+msgid ""
+"A request has been received to generate your account at %s a new password.\n"
+"\n"
+msgstr ""
+"Olemme saaneet pyynnön uuden salasanan luomiseksi tilillesi %s:ssä.\n"
+"\n"
+
+#: units/invite/invite_actions.php:163
+msgid "Your verification email was sent. Please check your inbox."
+msgstr "Varmistussähköposti on lähetetty. Tarkasta postisi."
+
+#: units/invite/invite_actions.php:165
+msgid "No user with that username was found."
+msgstr "Käyttäjänimellä ei löytynyt yhtään käyttäjää."
+
+#: units/invite/invite_join.php:28
+#, php-format
+msgid ""
+"Thank you for registering for an account with %s! Registration is completely "
+"free, but before you confirm your details, please take a moment to read the "
+"following documents:"
+msgstr ""
+"Kiitos, että rekisteröittilin %s! Rekisteröinti on täysin ilmainen, mutta "
+"ennen kuin täytät tietosi, niin käytä hetkinen seuraavien dokumenttien "
+"lukemiseen:"
+
+#: units/invite/invite_join.php:29 units/invite/join_noinvite.php:10
+msgid "terms and conditions"
+msgstr ""
+
+#: units/invite/invite_join.php:30 units/invite/join_noinvite.php:11
+msgid "Privacy policy"
+msgstr "Henkilötietojen suojausperiaatteet"
+
+#: units/invite/invite_join.php:31
+msgid ""
+"Submitting the form below indicates acceptance of these terms. Please note "
+"that currently you must be at least 13 years of age to join the site."
+msgstr ""
+"Hyväksyt ehdot lähettämällä alla oleva lomake. Sinun tulee olla vähintään 13 "
+"vuotias liittyessäsi sivustolle."
+
+#: units/invite/invite_join.php:50 units/invite/join_noinvite.php:32
+#: units/weblogs/weblogs_comments_add.php:48
+msgid "Your name"
+msgstr "Nimesi"
+
+#: units/invite/invite_join.php:56
+msgid "Your username - (Must be letters only)"
+msgstr "Sinun käyttäjänimi - (Vain kirjaimet kelpaavat)"
+
+#: units/invite/invite_join.php:62
+msgid "Enter a password"
+msgstr "Anna salasana"
+
+#: units/invite/invite_join.php:68
+msgid "Your password again for verification purposes"
+msgstr "Salasana uudelleen"
+
+#: units/invite/invite_join.php:72
+msgid "I am at least thirteen years of age."
+msgstr "Ikäni on vähintään 13 vuotta."
+
+#: units/invite/invite_join.php:73
+msgid "Join"
+msgstr "Liity"
+
+#: units/invite/invite_join.php:87
+msgid ""
+"Your invitation code appears to be invalid. Codes only last for seven days; "
+"it's possible that yours is older."
+msgstr ""
+"Kutsukoodisi ei kelpaa. Koodi kelpaa vain seitsemän päivän ajan; mahtaako "
+"koodisi olla sitä vanhempi."
+
+#: units/invite/invite_join.php:90
+#, php-format
+msgid "If you still want to join %s, click the Register link."
+msgstr "Jos yhä haluat liittyä %s, klikkaa rekisteriödy -linkkiä."
+
+#: units/invite/invite_join.php:92
+#, php-format
+msgid ""
+"If you still want to join %s, it may be worth getting in touch with the "
+"person who invited you."
+msgstr ""
+"Mikäli haluat yhä liittyä %s, ota yhteyttä sinut kutsuneeseen henkilöön."
+
+#: units/invite/invite_join.php:108
+#, php-format
+msgid "To join %s, click the Register link."
+msgstr ""
+
+#: units/invite/invite_join.php:110
+#, php-format
+msgid ""
+"For the moment, joining %s requires a specially tailored invite code. If you "
+"know someone who's a member, it may be worth asking them for one."
+msgstr ""
+"Tällä hetkellä %s liittyminen on mahdollista vain erityisellä kutsukoodilla. "
+"Jos tunnet jonkin jäsenen, niin kutsua kannattaa kysellä häneltä."
+
+#: units/invite/join_noinvite.php:9
+#, php-format
+msgid ""
+"Thank you for registering for an account with %s! Registration is completely "
+"free, but before you fill in your details, please take a moment to read the "
+"following documents:"
+msgstr ""
+"Kiitos, että rekisteröit itsellesi tilin kohteeseen %s! Rekisteröityminen on "
+"ilmaista, mutta ennen kuin täytät muut tietosi, niin käy lukemassa seutaavat "
+"dokumentit:"
+
+#: units/invite/join_noinvite.php:12
+msgid ""
+"When you fill in the details below, we will send an \"invitation code\" to "
+"your email address in order to validate it. You must then click on this "
+"within seven days to create your account."
+msgstr ""
+"Täytettyäsi alla olevat kentät lähetämme sinulle \"kutsukoodin\" "
+"sähköpostiisi, jolla varmennamme osoitteen toimivuuden. Sinun tulee klikata "
+"postissa olevaa linkkiä seitsemän päivän kuluessa."
+
+#: units/invite/join_noinvite.php:38
+msgid "Your email address"
+msgstr "Sähköpostiosoitteesi"
+
+#: units/invite/join_noinvite.php:53
+msgid "Self-registration is currently disabled."
+msgstr ""
+
+#: units/invite/new_password.php:13
+#, php-format
+msgid ""
+"A new password has been emailed to you at %s. You should be able to use it "
+"immediately; your old one has been deactivated."
+msgstr ""
+"Uusi salasana on lähetetty sinulle sähköpostilla %s. Se on käytössä heti, "
+"vanha salasanasi poistettu käytöstä."
+
+#: units/invite/new_password.php:30
+#, php-format
+msgid "Your %s password"
+msgstr "Sinun %s salasana"
+
+#: units/invite/new_password.php:30
+#, php-format
+msgid ""
+"Your %s password has been reset.\n"
+"\n"
+"For your records, your new password is:\n"
+"\n"
+"\tPassword: %s\n"
+"\n"
+"Please consider changing your password as soon as you have logged in for "
+"security reasons.\n"
+"\n"
+"We hope you continue to enjoy using the system.\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s Team"
+msgstr ""
+"%s salasanasi on vaihdettu.\n"
+"\n"
+"Uusi salasanasi on:\n"
+"\n"
+"\tSalasana: %s\n"
+"\n"
+"Salasana kannattaa vaihtaa ensitilassa.\n"
+"\n"
+"Toivottavasti viihdyt.\n"
+"\n"
+"Terveisin,\n"
+"\n"
+"%s tiimi."
+
+#: units/invite/new_password.php:37 units/invite/new_password.php:49
+msgid ""
+"Your password request code appears to be invalid. Try generating a new one?"
+msgstr "Salasanaa pyytävä koodisi ei kelpaa. Yritä tehdä uusi."
+
+#: units/invite/password_request.php:5
+#, php-format
+msgid ""
+"To generate a new password at %s!, enter your username below. We will send "
+"the address of a unique verification page to you via email click on the link "
+"in the body of the message and a new password will be sent to you."
+msgstr ""
+"Syötä käyttäjätunnuksesi alla olevaan kenttään uuden salasanan luomista "
+"varten %s! Lähetämme sähköpostilla osoitteen, jota klikkaamalla uusi "
+"salasana lähetetään sinulle."
+
+#: units/invite/password_request.php:6
+msgid "This method reduces the chance of a mistakenly reset password."
+msgstr "Tällä menetelmällä pyritään estämään salasanan tahaton vaihtaminen."
+
+#: units/invite/password_request.php:22
+msgid "Your username"
+msgstr "Käyttäjänimesi"
+
+#: units/invite/password_request.php:26
+msgid "Request new password"
+msgstr "Pyydä uusi salasana"
+
+#: units/magpie/default_template.php:8
+msgid "Feed Post"
+msgstr "Syötteen artikkeli"
+
+#: units/magpie/default_template.php:9
+msgid "A template for each post in a feed."
+msgstr "Kunkin artikkelin mallipohja syötteessä."
+
+#: units/magpie/default_template.php:11 units/weblogs/default_template.php:11
+msgid "Post title"
+msgstr "Artikkelin otsikko"
+
+#: units/magpie/default_template.php:12 units/weblogs/default_template.php:12
+msgid "The text of the post"
+msgstr "Artikkelin teksti"
+
+#: units/magpie/default_template.php:13
+msgid "An icon for the user"
+msgstr "Käyttäjän kuvake"
+
+#: units/magpie/default_template.php:14
+msgid "The feed name"
+msgstr "Syötteen nimi"
+
+#: units/magpie/default_template.php:15
+msgid "A short description of the feed"
+msgstr "Lyhyt kuvaus syötteelle"
+
+#: units/magpie/default_template.php:16
+msgid "A link to the post"
+msgstr "Linkki artikkeliin"
+
+#: units/magpie/default_template.php:17
+msgid "A link to the host site"
+msgstr "Osoite varsinaiselle sivustolle"
+
+#: units/magpie/default_template.php:18
+msgid "A link to the host feed"
+msgstr ""
+
+#: units/magpie/default_template.php:19
+msgid "Buttons to subscribe or unsubscribe"
+msgstr "Painikkeet tilaamiselle tai tilaamisen lopettamiselle"
+
+#: units/magpie/default_template.php:24
+msgid "Added"
+msgstr "Lisätty"
+
+#: units/magpie/function_actions.php:23 units/magpie/function_actions.php:87
+#: units/magpie/function_actions.php:107
+msgid "Your feed subscription was successful."
+msgstr "Syötteen tilaaminen onnistui."
+
+#: units/magpie/function_actions.php:25
+msgid "Feed subscription failed: you are already subscribed to this feed."
+msgstr "Syötteen tilaaminen epäonnistui: olet jo tilannut tämän syötteen."
+
+#: units/magpie/function_actions.php:34
+msgid "Your have successfully removed this feed from your subscriptions."
+msgstr "Syötteen tilaus on poistettu."
+
+#: units/magpie/function_actions.php:36
+msgid "Feed unsubscription failed: you are not subscribed to this feed."
+msgstr "Syötteen tilausta ei voitu poistaa: et ole tilannut tätä syötettä."
+
+#: units/magpie/function_actions.php:62
+msgid ""
+"Feed not imported to blog: You cannot import a feed from this account."
+msgstr "Syötettä ei tuotu blogiisi: tämä tili ei voi tuoda syötteitä."
+
+#: units/magpie/function_actions.php:89
+msgid "Feed subscription failed: this feed subscription already exists."
+msgstr "Syötteen tilaaminen epäonnistui: syöte on jo tilattu."
+
+#: units/magpie/function_actions.php:96
+msgid "Feed subscription failed: SSL feed reading is not enabled."
+msgstr ""
+"Syötteen tilaaminen epäonnistui: SSL syötteiden lukeminen ei ole käytössä."
+
+#: units/magpie/function_actions.php:110
+msgid ""
+"Feed subscription failed: feed appears to be invalid. Please check your link "
+"or try later."
+msgstr ""
+"Syötteen tilaaminen epäonnistui: syöte ei kelpaa. Tarkasta linkkisi tai "
+"kokeile myöhemmin uudestaan."
+
+#: units/magpie/function_actions.php:114
+msgid ""
+"Feed subscription failed: could not get feed. Please check your link or try "
+"later."
+msgstr ""
+"Syötteen tilaaminen epäonnistui: syöte ei ole saatavilla. Tarkasta linkkisi "
+"tai kokeile myöhemmin uudelleen."
+
+#: units/magpie/function_actions.php:116
+msgid "Error message was: "
+msgstr "Virheilmoitus oli: "
+
+#: units/magpie/function_subscriptions.php:12
+#: units/magpie/function_subscriptions_popular.php:5
+msgid ""
+"Feeds are information streams from other sites. You will often see a link to "
+"an 'RSS' feed while browsing; enter the link address into the 'add feed' box "
+"at the bottom of the page to read that information from within your learning "
+"landscape."
+msgstr ""
+"Syötteet ovat muilta sivuilta tulevia tietovirtoja. Surffatessasi saatat "
+"nähdä sivulla 'RSS'-linkkejä. Lisää linkin osoite sivun alalaidassa olevaan "
+"'lisää syöte' -kenttään."
+
+#: units/magpie/function_subscriptions.php:21
+#: units/magpie/function_subscriptions_popular.php:13
+#: units/magpie/function_subscriptions_publish_to_blog.php:18
+msgid "Last updated"
+msgstr "Viimeksi päivetetty"
+
+#: units/magpie/function_subscriptions.php:22
+#: units/magpie/function_subscriptions_publish_to_blog.php:19
+msgid "Resource name"
+msgstr "Resurssin nimi"
+
+#: units/magpie/function_subscriptions.php:32
+#: units/magpie/function_subscriptions_publish_to_blog.php:41
+msgid "View content"
+msgstr "Katso sisältö"
+
+#: units/magpie/function_subscriptions.php:40
+#: units/magpie/function_subscriptions_popular.php:30
+#: units/magpie/function_view_post.php:44
+msgid "Are you sure you want to unsubscribe from this feed?"
+msgstr "Haluatko varmasti lopettaa syötteen tilaamisen?"
+
+#: units/magpie/function_subscriptions.php:40
+#: units/magpie/function_subscriptions_popular.php:30
+#: units/magpie/function_view_post.php:44
+msgid "Unsubscribe"
+msgstr "Peruuta"
+
+#: units/magpie/function_subscriptions.php:54
+msgid "Subscription list as OPML"
+msgstr ""
+
+#: units/magpie/function_subscriptions.php:61
+#: units/magpie/function_subscriptions_publish_to_blog.php:57
+msgid "Update"
+msgstr "Päivitä"
+
+#: units/magpie/function_subscriptions.php:71
+#: units/magpie/function_subscriptions_publish_to_blog.php:67
+msgid "You are not subscribed to any feeds."
+msgstr "Et ole tilannut syötteitä."
+
+#: units/magpie/function_subscriptions.php:73
+#: units/magpie/function_subscriptions_publish_to_blog.php:69
+msgid "No feeds were found."
+msgstr "Syötteitä ei löydy."
+
+#: units/magpie/function_subscriptions.php:78
+#: units/magpie/function_subscriptions_popular.php:52
+msgid "To subscribe to a new feed, enter its address below:"
+msgstr "Tilaa uusi syöte kirjoittamalle sen osoite alapuolelle:"
+
+#: units/magpie/function_subscriptions.php:84
+#: units/magpie/function_subscriptions_popular.php:32
+#: units/magpie/function_subscriptions_popular.php:58
+#: units/magpie/function_view_post.php:46
+msgid "Subscribe"
+msgstr "Tilaa"
+
+#: units/magpie/function_subscriptions_popular.php:6
+msgid "This is a list of the feeds with the most subscribers."
+msgstr "Näillä syötteillä on eniten tilaajia."
+
+#: units/magpie/function_subscriptions_popular.php:14
+msgid "Link to site"
+msgstr "Linkki sivustolle"
+
+#: units/magpie/function_subscriptions_popular.php:20
+msgid "Unnamed Feed"
+msgstr "Nimettömät syötteet"
+
+#: units/magpie/function_subscriptions_popular.php:25
+msgid "View posts"
+msgstr "Näytä artikkelit"
+
+#: units/magpie/function_subscriptions_popular.php:32
+#: units/magpie/function_view_post.php:46
+msgid "Are you sure you want to subscribe to this feed?"
+msgstr "Haluatko varmasti tilata syötteen?"
+
+#: units/magpie/function_subscriptions_popular.php:36
+msgid "Subscribers"
+msgstr "Tilaajat"
+
+#: units/magpie/function_subscriptions_popular.php:49
+msgid "No-one has subscribed to any feeds."
+msgstr "Kukaan ei ole tilannut syötteitä."
+
+#: units/magpie/function_subscriptions_publish_to_blog.php:9
+msgid ""
+"Click a box below to automatically import content from a feed into your "
+"blog. You can also add default keywords for content from that feed. (You "
+"should only do this if you have the legal right to use this resource - in "
+"other words, you must have permission from the content owner, as the feed's "
+"content will appear in your blog as if you had written it.)"
+msgstr ""
+"Voit tuoda sisältä blogiisi automaattisesti syötteistä tekemällä valinnan. "
+"(sinulla tulee olla laillinen oikeus resurssin käyttöön - toisin sanoen lupa "
+"tulee olla sisällön omistajalta, koska syötteen sisältö näkyy blogissasi "
+"aivan kuten olisit kirjoittanut sen itse.)"
+
+#: units/magpie/function_subscriptions_publish_to_blog.php:27
+msgid ""
+"Are you sure you want to import this content into your personal blog?\\nYou "
+"should make sure you own it or have permission from the copyright holder."
+msgstr ""
+"Haluatko varmasti tuoda tämän sisällön omaan blogiisi?\\nOlethan tuottanut "
+"sen itse tai kysynyt luvan tekijänoikeuksien haltijalta?"
+
+#: units/magpie/function_view.php:29
+#: units/magpie/function_view_individual.php:26
+#: units/weblogs/weblogs_all_users_view.php:107
+#: units/weblogs/weblogs_friends_view.php:57
+#: units/weblogs/weblogs_interesting_view.php:52
+#: units/weblogs/weblogs_view.php:53
+msgid "Back"
+msgstr "Takaisin"
+
+#: units/magpie/function_view_post.php:28
+msgid "unknown"
+msgstr "Tuntematon"
+
+#: units/magpie/function_view_post.php:40
+msgid "View site"
+msgstr "Näytä sivusto"
+
+#: units/profile/profile_user_info.php:42
+msgid "Your LMS hosts"
+msgstr ""
+
+#: units/search/function_search_all_display_rss.php:16
+#, php-format
+msgid "Items tagged with \"%s\" from %s"
+msgstr ""
+
+#: units/search/search_suggest_rss.php:6
+msgid "Syndication"
+msgstr "Uutisvirta"
+
+#: units/search/search_suggest_rss.php:7
+msgid "RSS feed for this tag"
+msgstr "RSS-syöte tälle tagille"
+
+#: units/search/search_suggest_tags.php:22
+msgid "Automatic tag suggestion:"
+msgstr ""
+
+#: units/search/search_suggest_users.php:23
+msgid "Matching accounts:"
+msgstr ""
+
+#: units/search/search_user_info_menu.php:7
+msgid "Search"
+msgstr "Etsi"
+
+#: units/search/search_user_info_menu.php:9
+msgid "Random tags"
+msgstr "Satunnaiset tagit"
+
+#: units/search/tags_display.php:7
+msgid ""
+"The following is a selection of keywords used within this site. Click one to "
+"see related users, weblog posts or objects."
+msgstr ""
+"Alla on listaa tällä sivustolla käytetyistä avainsanoista. Klikkaamalla näet "
+"niihin liittyvät käyttäjät, blogin artikkelit tai objektit."
+
+#: units/search/tags_display_personal.php:40
+msgid "No tags found for this user."
+msgstr "Tälle käyttäjälle ei löytynyt tageja"
+
+#: units/templates/default_template.php:57
+msgid "Sidebar section holder"
+msgstr ""
+
+#: units/templates/default_template.php:58
+msgid "Contains the sidebar section titles"
+msgstr ""
+
+#: units/templates/default_template.php:60
+msgid "The header"
+msgstr "Otsikko"
+
+#: units/templates/default_template.php:296
+msgid "adminTable"
+msgstr ""
+
+#: units/templates/default_template.php:297
+msgid ""
+"This table is used to house stats and administration details until a good "
+"CSS solution can be applied."
+msgstr ""
+
+#: units/templates/default_template.php:299
+#: units/templates/default_template.php:330
+msgid "Column One"
+msgstr "Sarake 1"
+
+#: units/templates/default_template.php:300
+#: units/templates/default_template.php:331
+msgid "Column Two"
+msgstr "sarake 2"
+
+#: units/templates/default_template.php:301
+#: units/templates/default_template.php:332
+msgid "Column Three"
+msgstr "Sarake 3"
+
+#: units/templates/default_template.php:327
+msgid "flagContent"
+msgstr ""
+
+#: units/templates/default_template.php:328
+msgid "This holds the flag content function throughout Elgg"
+msgstr ""
+
+#: units/tinymce/tinymce_userdetails_actions.php:15
+msgid "Your editor preferences have been saved"
+msgstr "Editorin asetukset tallenettu"
+
+#: units/tinymce/tinymce_userdetails_actions.php:18
+msgid "Your editor preferences have been changed"
+msgstr "Editorin asetukset muutettu"
+
+#: units/tinymce/tinymce_userdetails_actions.php:20
+msgid "Your editor preferences could not be changed"
+msgstr "Editorin asetuksia ei voitu muuttaa"
+
+#: units/tinymce/tinymce_userdetails_edit.php:3
+msgid "Visual text editing"
+msgstr "Graafinen editori"
+
+#: units/tinymce/tinymce_userdetails_edit.php:4
+msgid ""
+"Set this to 'yes' if you would like to use a visual (WYSIWYG) text editor "
+"for your posts and comments."
+msgstr ""
+"Aseta tämä asentoon 'kyllä' mikäli haluat käyttää graafista editoria "
+"(WYSIWYG) artikkeleiden ja kommenttien kirjoittamiseen."
+
+#: units/tinymce/tinymce_userdetails_edit.php:20
+#: units/tinymce/tinymce_userdetails_edit.php:27
+msgid "Enable visual editor: "
+msgstr "Kätytä graafista editoria: "
+
+#: units/users/function_default_access_levels.php:6
+msgid "Public"
+msgstr "Julkinen"
+
+#: units/users/function_number_of_users.php:7
+#, php-format
+msgid "There are %d active users."
+msgstr "%d aktiivista käyttäjää."
+
+#: units/users/function_number_of_users.php:12
+#, php-format
+msgid "(%d logged on.)"
+msgstr "(%d kirjautunut)"
+
+#: units/users/function_number_of_users.php:17
+msgid "User Statistics"
+msgstr "Käyttäjän tilastot"
+
+#: units/users/user_info.php:22
+msgid "None."
+msgstr "Ei mitään."
+
+#: units/users/userdetails_actions.php:20
+msgid "Your suggested name was too long. Please try something shorter."
+msgstr "Ehdottamasi nimi on liian pitkä. Kokeile jotakin lyhempää nimeä."
+
+#: units/users/userdetails_actions.php:40
+msgid "Email address updated."
+msgstr "Sähköpostiosoite päivitetty."
+
+#: units/users/userdetails_actions.php:47
+msgid "Your moderation preferences have been changed."
+msgstr "Moderointiasetuksesi on muutettu."
+
+#: units/users/userdetails_actions.php:55
+msgid "Public comments and discussion set to 'on'."
+msgstr "Julkiset kommentit ja keskustelut asetettu 'käytössä'."
+
+#: units/users/userdetails_actions.php:58
+msgid "Public comments and discussion set to 'off'."
+msgstr "Julkiset kommentit ja keskustelus asetettu 'poissa käytöstä'."
+
+#: units/users/userdetails_actions.php:67
+msgid "Email comments and discussion set to 'on'."
+msgstr "Sähköpostikommentti ja keskustelut asetettu 'käytössä'."
+
+#: units/users/userdetails_actions.php:70
+msgid "Email comments and discussion set to 'off'."
+msgstr "Sähköpostikommentit ja keskustelut asetettu 'poissa käytöstä'."
+
+#: units/users/userdetails_actions.php:78
+msgid "Email notifications set to 'on'."
+msgstr "Sähköposti-ilmoitukset asetettu 'käytössä'."
+
+#: units/users/userdetails_actions.php:81
+msgid "Email notifications set to 'off'."
+msgstr "Sähköposti-ilmoitukset asetettu 'poissa käytöstä'."
+
+#: units/users/userdetails_actions.php:96
+msgid "Details were not changed."
+msgstr "Yksityiskohtia ei muutettu."
+
+#: units/users/userdetails_actions.php:107
+msgid ""
+"Password not changed: Your password is either too short or too long. It must "
+"be between 4 and 32 characters in length."
+msgstr ""
+"Salasanna ei muutettu: salasana on joko liian lyhyt tai liian pitkä. "
+"Salasanan pituus oltava 4:n ja 32:n merkin välillä."
+
+#: units/users/userdetails_actions.php:109
+msgid ""
+"Password not changed: Your password can only consist of letters or numbers."
+msgstr ""
+"Salasanaa ei muutettu: salasanassa voi olla vain kirjaimia ja numeroita."
+
+#: units/users/userdetails_actions.php:111
+msgid "Your password was updated."
+msgstr "Salasana vaihdettu."
+
+#: units/users/userdetails_actions.php:118
+msgid ""
+"Password not changed: The password and its verification string did not match."
+msgstr "Salasanaa ei muutettu: salasana ja sen varmistus eivät täsmää."
+
+#: units/users/userdetails_edit.php:11
+msgid "Change your full name:"
+msgstr "Vaihda koko nimesi:"
+
+#: units/users/userdetails_edit.php:28
+msgid "Your full name "
+msgstr "Koko nimesi "
+
+#: units/users/userdetails_edit.php:33
+msgid "Your email address:"
+msgstr "Sähköpostiosoitteesi:"
+
+#: units/users/userdetails_edit.php:34
+msgid ""
+"This will not be displayed to other users; you can choose to make an email "
+"address available via the profile screen."
+msgstr ""
+"Muut eivät näe tätä; profiili-sivulla voit asettaa osoitteen näkyväksi."
+
+#: units/users/userdetails_edit.php:48
+msgid "Your email address "
+msgstr "Sinun sähköpostiosoite "
+
+#: units/users/userdetails_edit.php:53
+msgid "Friendship moderation:"
+msgstr "Ystävyyden moderointi:"
+
+#: units/users/userdetails_edit.php:54
+msgid "This allows you to choose who can list you as a friend."
+msgstr "Voit valita kuka lisää sinut ystäväkseen."
+
+#: units/users/userdetails_edit.php:71
+msgid "No moderation: anyone can list you as a friend. (Recommended)"
+msgstr "Ei moderointia: kuka tahansa voi merkitä sinut ystäväksi. (Suositus)"
+
+#: units/users/userdetails_edit.php:76
+msgid "Moderation: friendships must be approved by you."
+msgstr "Moderointi: sinun tulee hyväksyä ystävyys."
+
+#: units/users/userdetails_edit.php:81
+msgid "Private: nobody can list you as a friend."
+msgstr "Yksityinen: kukaan ei voi merkitä sinua ystäväksi."
+
+#: units/users/userdetails_edit.php:86
+msgid "Friendship moderation"
+msgstr "Ystävyyden moderointi"
+
+#: units/users/userdetails_edit.php:91
+msgid "Make comments public"
+msgstr "Tee kommenteista julkisia"
+
+#: units/users/userdetails_edit.php:92
+msgid ""
+"Set this to 'yes' if you would like anyone to be able to comment on your "
+"resources (by default only logged-in users can). Note that this may make you "
+"vulnerable to spam."
+msgstr ""
+"Valitse 'kyllä' halutessasi kaikkien voivan kommentoida resurssejasi "
+"(oletuksellisesti vain kirjautuneet käyttäjät voivat kommentoida). Tämä "
+"saattaa tuottaa spammia."
+
+#: units/users/userdetails_edit.php:108 units/users/userdetails_edit.php:115
+msgid "Public comments: "
+msgstr "Julkiset kommentit: "
+
+#: units/users/userdetails_edit.php:122
+msgid "Receive email notifications"
+msgstr "Ilmoitus sähköpostiin"
+
+#: units/users/userdetails_edit.php:123
+msgid ""
+"Set this to 'yes' if you would like to receive email copies of any messages "
+"you receive. This includes blog comments, notifications when people add you "
+"as a friend and more. You can always view these online as part of your "
+"recent activity page."
+msgstr ""
+"Aseta tämä tilaan 'kyllä' mikäli haluat saada sähköpostiisi kopoit "
+"saamistasi viesteistä. Niihin kuuluvat blogin kommentit, tunnuksesi "
+"lisääminen ystäväksi jne."
+
+#: units/users/userdetails_edit.php:138 units/users/userdetails_edit.php:145
+msgid "Receive notifications: "
+msgstr "Ota vastaan ilmoituksia: "
+
+#: units/users/userdetails_edit.php:151
+msgid "Change your password:"
+msgstr "Muuta salasanaasi:"
+
+#: units/users/userdetails_edit.php:152
+msgid "Leave this blank if you're happy to leave your password as it is."
+msgstr "Jätä tämä tyhjäksi mikäli haluat jättää salasanasi entisekseen."
+
+#: units/users/userdetails_edit.php:166
+msgid "Your password: "
+msgstr "Salasanasi: "
+
+#: units/users/userdetails_edit.php:173
+msgid "Again for verification purposes: "
+msgstr "Salasana uudestaan: "
+
+#: units/weblogs/archives_view.php:19
+#: units/weblogs/weblogs_user_info_menu.php:46
+msgid "Weblog Archive"
+msgstr "Blogin arkisto"
+
+#: units/weblogs/archives_view.php:62 units/weblogs/archives_view_month.php:44
+msgid "There are no weblog posts to archive as yet."
+msgstr "Artikkeleita ei ole vielä arkistossa."
+
+#: units/weblogs/default_template.php:8
+msgid "Weblog Post"
+msgstr "Blogin artikkelit"
+
+#: units/weblogs/default_template.php:9
+msgid "A template for each weblog post."
+msgstr "Mallipohja kullekin blogin artikkelille."
+
+#: units/weblogs/default_template.php:13
+msgid "The username of the person making the post"
+msgstr "Artikkelin kirjoittajan käyttäjänimi"
+
+#: units/weblogs/default_template.php:14
+msgid "Their user icon"
+msgstr "Käyttäjän kuvake"
+
+#: units/weblogs/default_template.php:15
+msgid "Their full name"
+msgstr "Koko nimi"
+
+#: units/weblogs/default_template.php:16
+msgid "The time and date of the post"
+msgstr "Artikkelin päivämäärä ja aika"
+
+#: units/weblogs/default_template.php:17
+msgid "A link to any comments"
+msgstr "Linkki kommentteihin"
+
+#: units/weblogs/default_template.php:18 units/weblogs/default_template.php:82
+msgid "Any more links"
+msgstr "Muita linkkejä"
+
+#: units/weblogs/default_template.php:19
+msgid "A list of comments, if any"
+msgstr "Lista kommenteista, mikäli niitä on"
+
+#: units/weblogs/default_template.php:23
+msgid "Posted by"
+msgstr "Kirjoittanut"
+
+#: units/weblogs/default_template.php:49
+msgid "Weblog Comments"
+msgstr "Blogin Kommentit"
+
+#: units/weblogs/default_template.php:50
+msgid "A placeholder for weblog comments."
+msgstr ""
+
+#: units/weblogs/default_template.php:52
+msgid "The list of comments themselves"
+msgstr ""
+
+#: units/weblogs/default_template.php:53
+msgid "The list of page links when there are lots of comments"
+msgstr ""
+
+#: units/weblogs/default_template.php:57
+msgid "Comments"
+msgstr "Kommentit"
+
+#: units/weblogs/default_template.php:74
+msgid "Individual weblog comment"
+msgstr "Yksittäinen blogin kommentti"
+
+#: units/weblogs/default_template.php:75
+msgid ""
+"A template for each individual weblog comment. (Displayed one after the "
+"other, embedded in the comment placeholder.)"
+msgstr ""
+
+#: units/weblogs/default_template.php:77
+msgid "Post body"
+msgstr "Artikkelin sisältö"
+
+#: units/weblogs/default_template.php:78
+msgid "The name of the person making the comment"
+msgstr "Kommentoija nimi"
+
+#: units/weblogs/default_template.php:79
+msgid "When the comment was posted"
+msgstr "Milloin kommentti lisättiin"
+
+#: units/weblogs/default_template.php:80
+msgid "The usericon of the person making the comment, if available"
+msgstr "Kommentoivan käyttäjän kuvake, jos on"
+
+#: units/weblogs/default_template.php:81
+msgid "A permalink to the comment"
+msgstr "Permalink kommentteihin"
+
+#: units/weblogs/display_interesting_post_form.php:21
+msgid "Stop keeping track of this post"
+msgstr "Lopeta artikkelin seuraaminen"
+
+#: units/weblogs/display_interesting_post_form.php:22
+msgid ""
+"You have marked this post as interesting; all comments will appear on your "
+"'recent activity' page. If you would like to remove this flag, click here."
+msgstr ""
+"Olet merkinnyt artikkelin mielenkiintoiseksi; kaikki kommentit tulevat "
+"näkyviin 'viimeisimmät tapahtumat' sivullesi. Jos haluat poistaa lipun, "
+"klikkaa tästä."
+
+#: units/weblogs/display_interesting_post_form.php:23
+msgid "Remove interesting flag"
+msgstr "Poista 'mielenkiintoinen' -lippu"
+
+#: units/weblogs/display_interesting_post_form.php:25
+msgid "Keep track of this post"
+msgstr "Seuraa tätä atrikkelia"
+
+#: units/weblogs/display_interesting_post_form.php:26
+msgid ""
+"Click the 'Mark interesting' button to monitor new comments on your 'recent "
+"activity' page."
+msgstr ""
+"Klikkaa ' Merkitse mielenkiintoiseksi' painiketta, jotta voit seurata uusia "
+"kommentteja 'viimeisimmät tapahtumat' sivulla."
+
+#: units/weblogs/display_interesting_post_form.php:27
+msgid "Mark interesting"
+msgstr "Merkitse kiinnostavaksi"
+
+#: units/weblogs/function_search.php:5
+msgid "Weblog posts by"
+msgstr "Blogin artikkelit kirjoittajalta"
+
+#: units/weblogs/function_search.php:6
+msgid "in category"
+msgstr "kategoriassa"
+
+#: units/weblogs/function_search.php:7
+msgid "RSS feed for weblog posts by"
+msgstr "RSS-syötteet blogin artikkeleihin kirjoittajalta"
+
+#: units/weblogs/function_search.php:8
+msgid "Other users with weblog posts in category"
+msgstr "Muut käyttäjät, joilla on artikkeleja kategoriassa"
+
+#: units/weblogs/function_search.php:9
+msgid "Users with weblog posts in category"
+msgstr "Käyttäjät, joilla artikkeleja kategoriassa"
+
+#: units/weblogs/function_search_rss.php:20
+#: units/weblogs/templates_preview.php:53
+msgid "Weblog post"
+msgstr "Blogin artikkelit"
+
+#: units/weblogs/templates_preview.php:7
+msgid "Unkind Guest"
+msgstr "Töykeä vieras"
+
+#: units/weblogs/templates_preview.php:8
+msgid " I mock you, Babbage! Your difference engine will never catch on."
+msgstr ""
+
+#: units/weblogs/templates_preview.php:9
+#: units/weblogs/templates_preview.php:11
+msgid "Charles Babbage"
+msgstr ""
+
+#: units/weblogs/templates_preview.php:10
+msgid "Says you!"
+msgstr ""
+
+#: units/weblogs/templates_preview.php:12
+msgid "The Analytical Engine - introduction from Chapter VIII"
+msgstr ""
+
+#: units/weblogs/templates_preview.php:13
+msgid ""
+"The circular arrangement of the axes of the Difference Engine round the "
+"large central wheels led to the most extended prospects. The whole of "
+"arithmetic now appeared within the grasp of mechanism. A vague glimpse even "
+"of an Analytical Engine at length opened out, and I pursued with enthusiasm "
+"the shadowy vision. The drawings and the experiments were of the most costly "
+"kind. Draftsmen of the highest order were necessary to economize the labour "
+"of my own head; whilst skilled workmen were required to execute the "
+"experimental machinery to which I was obliged constantly to have recourse. "
+"In order to carry out my pursuits successfully, I had purchased a house with "
+"above a quarter of an acre of ground in a very quiet locality. My coach-"
+"house was now converted into a forge and a foundry, whilst my stables were "
+"transformed into a workshop. I built other extensive workshops myself, and "
+"had a fireproof building for my drawings and draftsmen. Having myself worked "
+"with a variety of tools, and having studied the art of constructing each of "
+"them, I at length laid it down as a principle - that, except in rare cases, "
+"I would never do anything myself if I could afford to hire another person "
+"who could do it for me."
+msgstr ""
+
+#: units/weblogs/weblogs_actions.php:31
+msgid "Your post has been added to your weblog."
+msgstr "Artikkeli on lisätty blogiin."
+
+#: units/weblogs/weblogs_actions.php:66
+msgid "The weblog post has been modified."
+msgstr "Blogin artikkeli on muokattu."
+
+#: units/weblogs/weblogs_actions.php:81
+msgid "This weblog post has now been added to your 'interesting' list."
+msgstr "Tämä blogin artikkeli on lisätty sinun listaasi 'mielenkiintoinen'."
+
+#: units/weblogs/weblogs_actions.php:92
+msgid "You are no longer monitoring this weblog post."
+msgstr "Et enää seuraa tätä artikkelia."
+
+#: units/weblogs/weblogs_actions.php:112
+msgid "The selected weblog post was deleted."
+msgstr "Valittu blogin artikkeli on poistettu."
+
+#: units/weblogs/weblogs_actions.php:115
+msgid ""
+"You do not appear to have permission to delete this weblog post. It was not "
+"deleted."
+msgstr "Sinulla ei ole oikeutta poistaa tätä blogin artikkelia."
+
+#: units/weblogs/weblogs_actions.php:161
+msgid "Your comment has been added."
+msgstr "Kommenttisi on lisätty."
+
+#: units/weblogs/weblogs_actions.php:166
+msgid "Your comment could not be posted. The system thought it was spam."
+msgstr "Kommenttia ei lisätty. Järjestelmä piti sitä spamminä."
+
+#: units/weblogs/weblogs_actions.php:186
+msgid "Your comment was deleted."
+msgstr "Kommenttisi poistettiin."
+
+#: units/weblogs/weblogs_all_users_view.php:24
+msgid "Remove filter"
+msgstr "Poista suodatin"
+
+#: units/weblogs/weblogs_all_users_view.php:29
+msgid "Filtered: Showing personal blog posts"
+msgstr "Suodatettu: Näytetään henkilökohtaisen blogin artikkelit"
+
+#: units/weblogs/weblogs_all_users_view.php:33
+msgid "Filtered: Showing community blog posts"
+msgstr "Suodatettu: Näytetään yhteisön blogin artikkelit"
+
+#: units/weblogs/weblogs_all_users_view.php:38
+msgid "Filtered: Showing posts with comments"
+msgstr "Suodatettu: Näytetään artikkelit joissa kommentteja"
+
+#: units/weblogs/weblogs_all_users_view.php:42
+msgid "Filtered: Showing posts with no comments"
+msgstr "Suodatettu: Näytetään artikkelit joissa ei kommentteja"
+
+#: units/weblogs/weblogs_all_users_view.php:57
+msgid "Filtered: Showing posts from "
+msgstr "Suodatettu: Näytetään artikkelit kohteesta "
+
+#: units/weblogs/weblogs_all_users_view.php:67
+msgid "Filtered: Showing posts tagged with "
+msgstr "Suodatettu: Näytetään artikkelit joissa tagi "
+
+#: units/weblogs/weblogs_comments_add.php:7
+msgid "Add a comment"
+msgstr "Lisää kommentti"
+
+#: units/weblogs/weblogs_comments_add.php:33
+msgid "Your comment text"
+msgstr "Kommenttisi teksti"
+
+#: units/weblogs/weblogs_comments_add.php:58
+msgid "Add comment"
+msgstr "Lisöö kommentti"
+
+#: units/weblogs/weblogs_post_field.php:83
+msgid "Click here to post to this weblog."
+msgstr "Lisää artikkeli blogiin klikkaamalla."
+
+#: units/weblogs/weblogs_posts_add.php:22
+msgid "Add a new post"
+msgstr "Lisää uusi artikkeli"
+
+#: units/weblogs/weblogs_posts_add.php:23
+#: units/weblogs/weblogs_posts_edit.php:17
+msgid "Post title:"
+msgstr "Artikkeli otsikko:"
+
+#: units/weblogs/weblogs_posts_add.php:24
+#: units/weblogs/weblogs_posts_edit.php:18
+msgid "Post body:"
+msgstr "Artikkelin teksti:"
+
+#: units/weblogs/weblogs_posts_add.php:25
+#: units/weblogs/weblogs_posts_edit.php:19
+msgid "Keywords (Separated by commas):"
+msgstr "Avainsanat (eritettuina pilkuilla)"
+
+#: units/weblogs/weblogs_posts_add.php:26
+#: units/weblogs/weblogs_posts_edit.php:20
+msgid ""
+"Keywords commonly referred to as 'Tags' are words that represent the weblog "
+"post you have just made. This will make it easier for others to search and "
+"find your posting."
+msgstr ""
+"Avainsanat eli tagit ovat artikkeli kuvaavia sanoja. Muiden on helpompi "
+"etsiä artikkeleja avainsanojen ansiosta."
+
+#: units/weblogs/weblogs_posts_add.php:28
+msgid "Post"
+msgstr "Lähetä"
+
+#: units/weblogs/weblogs_posts_add.php:84
+msgid ""
+"You must be logged in to post a new weblog entry. You may do so using the "
+"login pane to the right of the screen."
+msgstr "Et voi kirjoittaa uutta artikkelia, koska ei ole kirjautunut."
+
+#: units/weblogs/weblogs_posts_edit.php:16
+msgid "Edit a post"
+msgstr "Muokkaa artikkelia"
+
+#: units/weblogs/weblogs_posts_edit.php:22
+msgid "Save Post"
+msgstr "Tallenna artikeli"
+
+#: units/weblogs/weblogs_posts_view.php:94
+msgid "More"
+msgstr "Lisää"
+
+#: units/weblogs/weblogs_posts_view.php:95
+msgid "Keywords:"
+msgstr "Avainsanat:"
+
+#: units/weblogs/weblogs_posts_view.php:96
+msgid "comment(s)"
+msgstr "kommentit"
+
+#: units/weblogs/weblogs_posts_view.php:112
+msgid "Are you sure you want to permanently delete this weblog post?"
+msgstr "Haluatko varmasti poistaa tämän artikkelin?"
+
+#: units/weblogs/weblogs_posts_view.php:149
+msgid "Page: "
+msgstr "Sivu: "
+
+#: units/weblogs/weblogs_posts_view.php:166
+msgid "Are you sure you want to permanently delete this weblog comment?"
+msgstr "Haluatko varmasti poistaa tämän kommentin?"
+
+#: units/weblogs/weblogs_posts_view.php:223
+msgid "You must be logged in to post a comment."
+msgstr "Sinun täytyy kirjautua lähettääksesi kommentin."
+
+#: units/weblogs/weblogs_user_info_menu.php:10
+msgid "Recent Activity"
+msgstr "Viimeisimmät tapahtumat"
+
+#: units/weblogs/weblogs_user_info_menu.php:12
+msgid "View your activity"
+msgstr "Katso omaa aktiivisuuttasi"
+
+#: units/weblogs/weblogs_user_info_menu.php:36
+msgid "Personal blog"
+msgstr "Henkilökohtainen blogi"
+
+#: units/weblogs/weblogs_user_info_menu.php:41
+msgid "Community blog"
+msgstr "Yhteisön blogi"
+
+#: units/xml/main.php:78
+msgid "XML error: "
+msgstr "XML-virhe: "

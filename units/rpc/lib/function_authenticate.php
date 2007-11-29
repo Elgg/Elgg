@@ -33,7 +33,7 @@
     if (isset($parameter) && $parameter['username'] != "") // parameters passed by run()
     {
         $username = $parameter['username'];
-        $password = md5($parameter['password']);
+        $password = $parameter['password'];
         
         $auth['method'] = "parameters";
     }
@@ -106,28 +106,17 @@
     
     if (isset($username))
     {
-        // TODO NZVLE - convert this to use the new authentication handler
-        // but it doesn't differentiate between incorrect password & no such user currently
-        // so leaving for now.
-        if ($result = get_record('users','username',$username)) {
-
-            if ($result->password == $password)
-            {
-                $auth['status']  = true;
-                $auth['message'] = "Authenticated";
-                $auth['code']    = 200;
-            }
-            else
-            {
-                $auth['status']  = false;
-                $auth['message'] = "Incorrect password";
-                $auth['code']    = 801;
-            }
+        $logonsuccess = authenticate_account($username,$password);
+        if ($logonsuccess)
+        {
+            $auth['status']  = true;
+            $auth['message'] = "Authenticated";
+            $auth['code']    = 200;
         }
         else
         {
             $auth['status']  = false;
-            $auth['message'] = "No such user";
+            $auth['message'] = "Incorrect username or password";
             $auth['code']    = 801;
         }
     }
