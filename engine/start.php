@@ -13,9 +13,40 @@
 	 */
 
 	/**
-	 * Load the helper function
+	 * Load important prerequisites
 	 */
 
-		require_once(dirname(__FILE__) . "/start.functions.php");
+		require_once(dirname(__FILE__) . "/settings.php");		// Global settings
+		require_once(dirname(__FILE__) . "/lib/elgglib.php");	// Elgg core functions
+		require_once(dirname(__FILE__) . "/lib/database.php");	// Database connection
+		
+	/**
+	 * Load the configuration
+	 */
+		
+		global $CONFIG;
+
+	/**
+	 * Load the remaining libraries from /lib/ in alphabetical order,
+	 * except for a few exceptions
+	 */
+		
+		$file_exceptions = array(
+									'.','..',
+									'settings.php','settings.example.php','elgglib.php','database.php'
+								);
+		
+		if ($handle = opendir(dirname(__FILE__) . "/lib/")) {
+			$files = array();
+			while ($file = readdir($handle)) {
+				if (!in_array($file,$file_exceptions)) {
+					if (!is_dir(dirname(__FILE__) . "/lib/" . $file)) {
+						$files[] = dirname(__FILE__) . "/lib/" . $file;
+					} else {
+						
+					}
+				}
+			}
+		}
 
 ?>
