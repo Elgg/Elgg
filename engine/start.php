@@ -70,6 +70,9 @@
 		
 		}	// End portion for sanitised installs only
 		
+		// Trigger events
+			trigger_event('init', 'system');
+		
 		if ($count = count_messages("errors")) {
 			
 		}

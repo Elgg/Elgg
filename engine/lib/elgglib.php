@@ -241,4 +241,101 @@
 			return system_messages(null,$register,true);
 		}
 
+	/**
+	 * Event register
+	 * Adds functions to the register for a particular event, but also calls all functions registered to an event when required
+	 *
+	 * Event handler functions must be of the form:
+	 * 
+	 * 		event_handler_function($event, $object_type, $object);
+	 * 
+	 * And must return true or false depending on success.  A false will halt the event in its tracks and no more functions will be called.
+	 * 
+	 * You can then simply register them using the alias function:
+	 * 
+	 * 		register_event_handler('event', 'object_type', 'function_name');
+	 * 
+	 * @param string $event The type of event (eg 'init', 'update', 'delete')
+	 * @param string $object_type The type of object (eg 'system', 'blog', 'user')
+	 * @param string $function The name of the function that will handle the event
+	 * @param boolean $call Set to true to call the event rather than add to it (default false)
+	 * @param mixed $object Optionally, the object the event is being performed on (eg a user)
+	 * @return true|false Depending on success
+	 */
+		
+		function events($event = "", $object_type = "", $function = "", $call = false, $object = null) {
+			
+			static $events;
+			
+			if (!isset($events)) {
+				$events = array();
+			} else if (!isset($events[$event]) && !empty($event)) {
+				$events[$event] = array();
+			} else if (!isset($events[$event][$object_type]) && !empty($event) && !empty($object_type)) {
+				$events[$event][$object_type] = array();
+			}
+			
+			if (!$call) {
+			
+				if (!empty($event) && !empty($object_type) && is_callable($function)) {
+					$events[$event][$object_type][] = $function;
+					return true;
+				} else {
+					return false;
+				}
+			
+			} else {
+			
+				if (!empty($events[$event][$object_type]) && is_array($events[$event][$object_type])) {
+					foreach($events[$event][$object_type] as $eventfunction) {
+						if (!$eventfunction($event, $object_type, $object)) {
+							return false;
+						}
+					}
+					if ($event != 'all' && !empty($events['all'][$object_type]) && is_array($events['all'][$object_type]))
+					foreach($events['all'][$object_type] as $eventfunction) {
+						if (!$eventfunction('all', $object_type, $object)) {
+							return false;
+						}
+					}
+					if ($object_type != 'all' && !empty($events[$event]['all']) && is_array($events[$event]['all']))
+					foreach($events[$event]['all'] as $eventfunction) {
+						if (!$eventfunction($event, 'all', $object)) {
+							return false;
+						}
+					}
+					return true;
+				}
+			
+			}
+			
+			return false;
+			
+		}
+		
+	/**
+	 * Alias function for events, that registers a function to a particular kind of event
+	 *
+	 * @param string $event The event type
+	 * @param string $object_type The object type
+	 * @param string $function The function name
+	 * @return true|false Depending on success 
+	 */
+		
+		function register_event_handler($event, $object_type, $function) {
+			return events($event, $object_type, $function);
+		}
+		
+	/**
+	 * Alias function for events, that triggers a particular kind of event
+	 *
+	 * @param string $event The event type
+	 * @param string $object_type The object type
+	 * @param string $function The function name
+	 * @return true|false Depending on success 
+	 */
+		function trigger_event($event, $object_type, $object = null) {
+			return events($event, $object_type, "", true, $object);
+		}
+		
 ?>
