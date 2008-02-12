@@ -16,9 +16,25 @@
 	 * Load important prerequisites
 	 */
 
-		require_once(dirname(__FILE__) . "/lib/elgglib.php");	// Elgg core functions
-		require_once(dirname(__FILE__) . "/lib/database.php");	// Database connection
-		include(dirname(__FILE__) . "/settings.php");		// Global settings
+		if (!@include(dirname(__FILE__) . "/lib/elgglib.php")) {		// Main Elgg library
+			echo "Error in installation: could not load the main Elgg library.";
+			exit;
+		}
+		if (!@include_once(dirname(__FILE__) . "/lib/database.php"))	// Database connection
+			register_error("Could not load the main Elgg database library.");
+			
+	/**
+	 * Ensure the installation is correctly formed
+	 */
+
+		sanitise();
+			
+	/**
+	 * Load the system settings
+	 */
+		
+		if (!@include_once(dirname(__FILE__) . "/settings.php")) 		// Global settings
+			register_error("Could not load the settings file.");
 
 	/**
 	 * Load the remaining libraries from /lib/ in alphabetical order,
@@ -41,7 +57,12 @@
 	// Include them
 	
 		foreach($files as $file) {
-			include($file);
+			if (!@include_once($file))
+				register_error("Could not load {$file}");
+		}
+		
+		if ($errors = system_messages(null, "errors")) {
+			// Do something!
 		}
 		
 ?>
