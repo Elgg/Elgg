@@ -143,10 +143,16 @@
 	 *
 	 * @return true|false True if everything is ok (or Elgg is fit enough to run); false if not.
 	 */
-		function sanitise() {
+		function sanitised() {
 			
-			if (!file_exists(dirname(dirname(__FILE__)) . "/settings.php"))
+			$sanitised = true;
+			
+			if (!file_exists(dirname(dirname(__FILE__)) . "/settings.php")) {
 				register_error(elgg_view("messages/sanitisation/settings"));
+				$sanitised = false;
+			}
+				
+			return $sanitised;
 			
 		}
 		
@@ -164,30 +170,42 @@
 	 * @return true|false|array Either the array of messages, or a response regarding whether the message addition was successful
 	 */
 		
-		function system_messages($message = null, $register = "messages") {
+		function system_messages($message = null, $register = "messages", $count = false) {
 			
 			static $messages;
 			if (!isset($messages)) {
 				$messages = array();
 			}
-			if (!isset($messages[$register])) {
+			if (!isset($messages[$register]) && !empty($register)) {
 				$messages[$register] = array();
 			}
-			if (!empty($message) && is_array($message)) {
-				$messages[$register] = array_merge($messages[$register], $message);
-				return true;
-			} else if (!empty($message) && is_string($message)) {
-				$messages[$register][] = $message;
-				return true;
-			} else if (!is_string($message) && !is_array($message)) {
-				if (!empty($register)) {
-					$returnarray = $messages[$register];
-					$messages[$register] = array();
-				} else {
-					$returnarray = $messages;
-					$messages = array();
+			if (!$count) {
+				if (!empty($message) && is_array($message)) {
+					$messages[$register] = array_merge($messages[$register], $message);
+					return true;
+				} else if (!empty($message) && is_string($message)) {
+					$messages[$register][] = $message;
+					return true;
+				} else if (!is_string($message) && !is_array($message)) {
+					if (!empty($register)) {
+						$returnarray = $messages[$register];
+						$messages[$register] = array();
+					} else {
+						$returnarray = $messages;
+						$messages = array();
+					}
+					return $returnarray;
 				}
-				return $returnarray;
+			} else {
+				if (!empty($register)) {
+					return sizeof($messages[$register]);
+				} else {
+					$count = 0;
+					foreach($messages as $register => $submessages) {
+						$count += sizeof($submessages);
+					}
+					return $count;
+				}
 			}
 			return false;
 			
@@ -211,6 +229,16 @@
 	 */
 		function register_error($error) {
 			return system_messages($error, "errors");
+		}
+		
+	/**
+	 * Counts the number of messages, either globally or in a particular register
+	 *
+	 * @param string $register Optionally, the register
+	 * @return integer The number of messages
+	 */
+		function count_messages($register = "") {
+			return system_messages(null,$register,true);
 		}
 
 ?>
