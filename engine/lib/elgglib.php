@@ -251,19 +251,28 @@
 	 * 
 	 * And must return true or false depending on success.  A false will halt the event in its tracks and no more functions will be called.
 	 * 
-	 * You can then simply register them using the alias function:
+	 * You can then simply register them using the following function. Optionally, this can be called with a priority nominally from 0 to 1000, where functions with lower priority values are called first (note that priorities CANNOT be negative):
 	 * 
-	 * 		register_event_handler('event', 'object_type', 'function_name');
+	 * 		register_event_handler($event, $object_type, $function_name [, $priority = 500]);
+	 * 
+	 * Note that you can also use 'all' in place of both the event and object type. 
+	 * 
+	 * To trigger an event properly, you should always use:
+	 * 
+	 * 		trigger_event($event, $object_type [, $object]);
+	 * 
+	 * Where $object is optional, and represents the $object_type the event concerns. This will return true if successful, or false if it fails. 
 	 * 
 	 * @param string $event The type of event (eg 'init', 'update', 'delete')
 	 * @param string $object_type The type of object (eg 'system', 'blog', 'user')
 	 * @param string $function The name of the function that will handle the event
+	 * @param int $priority A priority to add new event handlers at. Lower numbers will be called first (default 500)
 	 * @param boolean $call Set to true to call the event rather than add to it (default false)
 	 * @param mixed $object Optionally, the object the event is being performed on (eg a user)
 	 * @return true|false Depending on success
 	 */
 		
-		function events($event = "", $object_type = "", $function = "", $call = false, $object = null) {
+		function events($event = "", $object_type = "", $function = "", $priority = 500, $call = false, $object = null) {
 			
 			static $events;
 			
@@ -278,7 +287,13 @@
 			if (!$call) {
 			
 				if (!empty($event) && !empty($object_type) && is_callable($function)) {
-					$events[$event][$object_type][] = $function;
+					$priority = (int) $priority;
+					if ($priority < 0) $priority = 0;
+					while (isset($events[$event][$object_type][$priority])) {
+						$priority++;
+					}
+					$events[$event][$object_type][$priority] = $function;
+					ksort($events[$event][$object_type]);
 					return true;
 				} else {
 					return false;
@@ -289,18 +304,6 @@
 				if (!empty($events[$event][$object_type]) && is_array($events[$event][$object_type])) {
 					foreach($events[$event][$object_type] as $eventfunction) {
 						if (!$eventfunction($event, $object_type, $object)) {
-							return false;
-						}
-					}
-					if ($event != 'all' && !empty($events['all'][$object_type]) && is_array($events['all'][$object_type]))
-					foreach($events['all'][$object_type] as $eventfunction) {
-						if (!$eventfunction('all', $object_type, $object)) {
-							return false;
-						}
-					}
-					if ($object_type != 'all' && !empty($events[$event]['all']) && is_array($events[$event]['all']))
-					foreach($events[$event]['all'] as $eventfunction) {
-						if (!$eventfunction($event, 'all', $object)) {
 							return false;
 						}
 					}
@@ -322,8 +325,8 @@
 	 * @return true|false Depending on success 
 	 */
 		
-		function register_event_handler($event, $object_type, $function) {
-			return events($event, $object_type, $function);
+		function register_event_handler($event, $object_type, $function, $priority = 500) {
+			return events($event, $object_type, $function, $priority);
 		}
 		
 	/**
@@ -335,7 +338,13 @@
 	 * @return true|false Depending on success 
 	 */
 		function trigger_event($event, $object_type, $object = null) {
-			return events($event, $object_type, "", true, $object);
+			if (events($event, $object_type, "", null, true, $object)
+				&& events('all', $object_type, "", null, true, $object)
+				&& events($event, 'all', "", null, true, $object)
+				&& events('all', 'all', "", null, true, $object)) {
+					return true;
+				}
+			return false;
 		}
 		
 ?>
