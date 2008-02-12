@@ -16,37 +16,32 @@
 	 * Load important prerequisites
 	 */
 
-		require_once(dirname(__FILE__) . "/settings.php");		// Global settings
 		require_once(dirname(__FILE__) . "/lib/elgglib.php");	// Elgg core functions
 		require_once(dirname(__FILE__) . "/lib/database.php");	// Database connection
-		
-	/**
-	 * Load the configuration
-	 */
-		
-		global $CONFIG;
+		include(dirname(__FILE__) . "/settings.php");		// Global settings
 
 	/**
 	 * Load the remaining libraries from /lib/ in alphabetical order,
 	 * except for a few exceptions
 	 */
 		
+	// We don't want to load or reload these files
+
 		$file_exceptions = array(
 									'.','..',
+									'.svn',
 									'settings.php','settings.example.php','elgglib.php','database.php'
 								);
-		
-		if ($handle = opendir(dirname(__FILE__) . "/lib/")) {
-			$files = array();
-			while ($file = readdir($handle)) {
-				if (!in_array($file,$file_exceptions)) {
-					if (!is_dir(dirname(__FILE__) . "/lib/" . $file)) {
-						$files[] = dirname(__FILE__) . "/lib/" . $file;
-					} else {
-						
-					}
-				}
-			}
-		}
 
+	// Get the list of files to include, and alphabetically sort them
+
+		$files = get_library_files(dirname(__FILE__) . "/lib",$file_exceptions);
+		asort($files);
+
+	// Include them
+	
+		foreach($files as $file) {
+			include($file);
+		}
+		
 ?>
