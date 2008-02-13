@@ -45,7 +45,7 @@
 		 */
 	
 			if (!@include_once(dirname(__FILE__) . "/lib/database.php"))	// Database connection
-				throw new DatabaseException("Could not load the main Elgg database library.");
+				throw new InstallationException("Could not load the main Elgg database library.");
 	
 				
 		/**
