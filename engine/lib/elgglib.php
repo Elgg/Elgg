@@ -347,4 +347,44 @@
 			return false;
 		}
 		
+		/**
+		 * PHP Error handler function.
+		 * This function acts as a wrapper to catch and report PHP error messages.
+		 * 
+		 * @see http://uk3.php.net/set-error-handler
+		 * @param unknown_type $errno
+		 * @param unknown_type $errmsg
+		 * @param unknown_type $filename
+		 * @param unknown_type $linenum
+		 * @param unknown_type $vars
+		 */
+		public function __php_error_handler($errno, $errmsg, $filename, $linenum, $vars)
+		{
+			$error = date("Y-m-d H:i:s (T)") . ": \"" . $errmsg . "\" in file " . $filename . " (line " . $linenum . ")";
+			
+			switch ($errno) {
+				case E_USER_ERROR:
+						error_log("ERROR: " . $error);
+						register_error("ERROR: " . $error);
+						
+						// Since this is a fatal error, we want to stop any further execution but do so gracefully.
+						throw new Exception("ERROR: " . $error); 
+					break;
+
+				case E_WARNING :
+				case E_USER_WARNING : 
+						error_log("WARNING: " . $error);
+						register_error("WARNING: " . $error);
+					break;
+
+				default:
+					error_log("DEBUG: " . $error); 
+					register_error("DEBUG: " . $error);
+			}
+		}
+		
+		
+		// Register the error handler
+		error_reporting(E_ALL); 
+		set_error_handler('__php_error_handler');
 ?>
