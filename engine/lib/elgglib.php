@@ -212,6 +212,16 @@
 		}
 		
 	/**
+	 * Counts the number of messages, either globally or in a particular register
+	 *
+	 * @param string $register Optionally, the register
+	 * @return integer The number of messages
+	 */
+		function count_messages($register = "") {
+			return system_messages(null,$register,true);
+		}
+		
+	/**
 	 * An alias for system_messages($message) to handle standard user information messages
 	 *
 	 * @param string|array $message Message or messages to add
@@ -229,16 +239,6 @@
 	 */
 		function register_error($error) {
 			return system_messages($error, "errors");
-		}
-		
-	/**
-	 * Counts the number of messages, either globally or in a particular register
-	 *
-	 * @param string $register Optionally, the register
-	 * @return integer The number of messages
-	 */
-		function count_messages($register = "") {
-			return system_messages(null,$register,true);
 		}
 
 	/**
