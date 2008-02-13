@@ -13,7 +13,9 @@
 	 * 
 	 * @uses $vars['title'] The page title
 	 * @uses $vars['body'] The main content of the page
+	 * @uses $vars['messages'] A 2d array of various message registers, passed from system_messages()
 	 */
+
 ?>
 
 <html>
@@ -21,6 +23,11 @@
 		<title><?php echo $vars['title']; ?></title>
 	</head>
 	<body>
+		<?php
+
+			echo elgg_view('messages/list', array('object' => 'messages'));
+		
+		?>
 		<h1><?php echo $vars['title']; ?></h1>
 		<?php echo $vars['body']; ?>
 	</body>

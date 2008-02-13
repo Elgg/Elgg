@@ -22,7 +22,7 @@
 		}
 
 		if (!@include_once(dirname(__FILE__) . "/lib/elgglib.php")) {		// Main Elgg library
-			throw new InstallationException("Could not load the main Elgg library.");
+			throw new InstallationException("Elgg could not load its main library.");
 		}
 		
 	/**

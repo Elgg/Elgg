@@ -107,6 +107,25 @@
 		    return $content;
 		
 		}
+		
+	/**
+	 * Returns a representation of a full 'page' (which might be an HTML page, RSS file, etc, depending on the current view)
+	 *
+	 * @param unknown_type $title
+	 * @param unknown_type $body
+	 * @return unknown
+	 */
+		
+		function page_draw($title, $body) {
+			
+			return elgg_view('pageshell', array(
+												'title' => $title,
+												'body' => $body,
+												'messages' => system_messages()
+											  )
+										);
+			
+		}
 
 	/**
 	 * Library loading and handling
@@ -399,8 +418,8 @@
 		
 		function __elgg_php_exception_handler($exception) {
 			
-			$body = elgg_view("messages/errors/exception",array('object' => $exception));
-			echo elgg_view("pageshell", array("title" => "Exception", "body" => $body));
+			$body = elgg_view("messages/exceptions/exception",array('object' => $exception));
+			echo page_draw("Exception", $body);
 			
 		}
 
