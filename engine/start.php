@@ -52,6 +52,7 @@
 			$file_exceptions = array(
 										'.','..',
 										'.svn',
+										'CVS',
 										'settings.php','settings.example.php','elgglib.php','database.php'
 									);
 	
