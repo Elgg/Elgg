@@ -358,7 +358,7 @@
 		 * @param unknown_type $linenum
 		 * @param unknown_type $vars
 		 */
-		public function __php_error_handler($errno, $errmsg, $filename, $linenum, $vars)
+		function __php_error_handler($errno, $errmsg, $filename, $linenum, $vars)
 		{
 			$error = date("Y-m-d H:i:s (T)") . ": \"" . $errmsg . "\" in file " . $filename . " (line " . $linenum . ")";
 			
