@@ -91,7 +91,7 @@
 	 * Gets the appropriate db link for the operation mode requested
 	 *
 	 * @param string $dblinktype The type of link we want - "read", "write" or "readwrite" (the default)
-	 * @return database link
+	 * @return object Database link
 	 */
 		function get_db_link($dblinktype) {
 			
@@ -108,6 +108,7 @@
 	/**
      * Use this function to get data from the database
      * @param $query The query being passed.
+     * @return array An array of database result objects
      */
     
         function get_data($query) {
@@ -133,6 +134,7 @@
     /**
      * Use this function to get a single data row from the database
      * @param $query The query to run.
+     * @result object A single database result object
      */ 
     
         function get_data_row($query) {
@@ -153,8 +155,9 @@
         
     /**
      * Use this function to insert database data; returns id or false
-     * @param $query The query to run.
-     * @return $id the database id of the inserted row.
+     * 
+     * @param string $query The query to run.
+     * @return int $id the database id of the inserted row.
      */ 
     
         function insert_data($query) {
@@ -174,8 +177,10 @@
         }
         
     /**
-     * Use this function to update database data
-     * @param $query The query to run.
+     * Update database data
+     * 
+     * @param string $query The query to run.
+     * @result int|false Either the number of affected rows, or false on failure
      */ 
     
         function update_data($query) {
@@ -193,9 +198,14 @@
             
         }
 
-	// Use this function to delete a record
+	/**
+	 * Use this function to delete data
+	 *
+	 * @param string $query The SQL query to run
+	 * @return int|false Either the number of affected rows, or false on failure
+	 */
     
-        function delete_record($query) {
+        function delete_data($query) {
             
             global $dbcalls;
             
@@ -213,9 +223,8 @@
     
        /**
         * Returns the number of rows returned by the last select statement, without the need to re-execute the query.
-        * This is MYSQL specific.
         *
-        * @return int
+        * @return int The number of rows returned by the last statement
         */
 		function count_last_select() {
         	$row = get_data_row("SELECT found_rows() as count");
