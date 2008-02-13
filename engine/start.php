@@ -44,9 +44,8 @@
 		 * Load the system settings
 		 */
 			
-			if (!@include_once(dirname(__FILE__) . "/settings.php")) { 		// Global settings
+			if (!@include_once(dirname(__FILE__) . "/settings.php"))  		// Global settings
 				throw new InstallationException("Elgg could not load the settings file.");
-			}
 			
 			
 		/**
