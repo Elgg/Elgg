@@ -70,4 +70,13 @@
 	 * @author Marcus Povey <marcus@dushka.co.uk>
 	 */
 	class ClassNotFoundException extends ClassException {}
+	
+	// Installation exceptions ////////////////////////////////////////////////////////////////
+
+	/**
+	 * @class InstallationException
+	 * Thrown when there is a major problem with the installation.
+	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 */
+	class InstallationException extends ConfigurationException {}
 ?>
