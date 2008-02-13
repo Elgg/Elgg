@@ -67,8 +67,12 @@
 					register_error("Could not load {$file}");
 			}
 		
-		}	// End portion for sanitised installs only
+		} else {	// End portion for sanitised installs only
 			
+			register_error("Once you've corrected any configuration issues, press reload to try again.");
+			
+		}
+		
 		// Trigger events
 			trigger_event('init', 'system');
 		

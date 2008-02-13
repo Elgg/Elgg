@@ -13,6 +13,8 @@
 	 */
 
 ?>
-Elgg couldn't find its settings file.  This is normally located in engine/settings.php.
+Elgg couldn't find its settings file. Most of Elgg's settings will be handled for you, but we need you to supply your database details. To do this:
 
-This probably means you haven't configured Elgg yet!  Some message about installing Elgg to go right about here.
+1. Rename engine/settings.example.php to settings.php in your Elgg installation.
+
+2. Open it with a text editor and enter your MySQL database details. If you don't know these, ask your system administrator or technical support for help.  
