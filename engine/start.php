@@ -16,6 +16,11 @@
 	 * Load important prerequisites
 	 */
 
+		if (!@include_once(dirname(__FILE__) . "/lib/exceptions.php")) {		// Exceptions 
+			echo "Error in installation: could not load the Exceptions library.";
+			exit;
+		}
+
 		if (!@include_once(dirname(__FILE__) . "/lib/elgglib.php")) {		// Main Elgg library
 			echo "Error in installation: could not load the main Elgg library.";
 			exit;
