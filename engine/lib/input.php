@@ -12,20 +12,20 @@
 	 */
 
 	/**
-	 * Get some input from passed variables.
+	 * Get some input from variables passed on the GET or POST line.
 	 * 
 	 * @param $variable string The variable we want to return.
 	 * @param $default mixed A default value for the variable if it is not found.
 	 */
 	function get_input($variable, $default = "")
 	{
-		
-		
-		// TODO: Some nice filtering here
 
-		if (isset($_REQUEST[$variable]))
+		if (isset($_REQUEST[$variable])) {
+			$value = $_REQUEST[$variable];
 			return trim($_REQUEST[$variable]);
-		
+		}
+
 		return $default;
+
 	}
 ?>

@@ -24,7 +24,15 @@
 		if (!@include_once(dirname(__FILE__) . "/lib/elgglib.php")) {		// Main Elgg library
 			throw new InstallationException("Could not load the main Elgg library.");
 		}
-	
+		
+	/**
+	 * Establish handlers
+	 */
+		
+	// Register the error handler
+		set_error_handler('__elgg_php_error_handler');
+		set_exception_handler('__elgg_php_exception_handler');
+
 	/**
 	 * Load the system settings
 	 */
@@ -58,7 +66,7 @@
 			$file_exceptions = array(
 										'.','..',
 										'.svn',
-										'CVS',
+										'CVS','cvs',
 										'settings.php','settings.example.php','elgglib.php','database.php'
 									);
 	
@@ -83,15 +91,4 @@
 		// Trigger events
 			trigger_event('init', 'system');
 
-			
-// TODO: Have the View catch and render any exceptions			
-		// If we have load errors, display them
-/*			if ($count = count_messages("errors")) {
-				echo elgg_view('pageshell', array(
-												'title' => "Elgg isn't ready to run just yet.",
-												'body' => elgg_view('messages/errors/list',array('object' => system_messages(null, "errors")))
-											));
-				exit;
-			}
-*/		
 ?>

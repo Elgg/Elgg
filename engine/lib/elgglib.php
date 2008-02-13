@@ -123,7 +123,7 @@
 	 */
 		function get_library_files($directory, $file_exceptions = array(), $file_list = array()) {
 			
-			if (is_file($directory)) {
+			if (is_file($directory) && !in_array($directory,$file_exceptions)) {
 				$file_list[] = $directory;
 			} else if ($handle = opendir($directory)) {
 				while ($file = readdir($handle)) {
@@ -347,18 +347,22 @@
 			return false;
 		}
 		
-		/**
-		 * PHP Error handler function.
-		 * This function acts as a wrapper to catch and report PHP error messages.
-		 * 
-		 * @see http://uk3.php.net/set-error-handler
-		 * @param unknown_type $errno
-		 * @param unknown_type $errmsg
-		 * @param unknown_type $filename
-		 * @param unknown_type $linenum
-		 * @param unknown_type $vars
-		 */
-		function __php_error_handler($errno, $errmsg, $filename, $linenum, $vars)
+	/**
+	 * Error handling
+	 */
+		
+	/**
+	 * PHP Error handler function.
+	 * This function acts as a wrapper to catch and report PHP error messages.
+	 * 
+	 * @see http://www.php.net/set-error-handler
+	 * @param int $errno The level of the error raised
+	 * @param string $errmsg The error message
+	 * @param string $filename The filename the error was raised in
+	 * @param int $linenum The line number the error was raised at
+	 * @param array $vars An array that points to the active symbol table at the point that the error occurred
+	 */
+		function __elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars)
 		{
 			$error = date("Y-m-d H:i:s (T)") . ": \"" . $errmsg . "\" in file " . $filename . " (line " . $linenum . ")";
 			
@@ -374,17 +378,30 @@
 				case E_WARNING :
 				case E_USER_WARNING : 
 						error_log("WARNING: " . $error);
-						register_error("WARNING: " . $error);
+						// register_error("WARNING: " . $error);
 					break;
 
 				default:
 					error_log("DEBUG: " . $error); 
-					register_error("DEBUG: " . $error);
+					// register_error("DEBUG: " . $error);
 			}
+			
+			return true;
 		}
 		
+	/**
+	 * Custom exception handler.
+	 * This function catches any thrown exceptions and handles them appropriately.
+	 *
+	 * @see http://www.php.net/set-exception-handler
+	 * @param Exception $exception The exception being handled
+	 */
 		
-		// Register the error handler
-		error_reporting(E_ALL); 
-		set_error_handler('__php_error_handler');
+		function __elgg_php_exception_handler($exception) {
+			
+			$body = elgg_view("messages/errors/exception",array('object' => $exception));
+			echo elgg_view("pageshell", array("title" => "Exception", "body" => $body));
+			
+		}
+
 ?>
