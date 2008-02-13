@@ -121,7 +121,7 @@
 			return elgg_view('pageshell', array(
 												'title' => $title,
 												'body' => $body,
-												'messages' => system_messages()
+												'messages' => system_messages(null,"")
 											  )
 										);
 			
@@ -419,7 +419,7 @@
 		function __elgg_php_exception_handler($exception) {
 			
 			$body = elgg_view("messages/exceptions/exception",array('object' => $exception));
-			echo page_draw("Exception", $body);
+			echo page_draw("We've encountered a problem.", $body);
 			
 		}
 

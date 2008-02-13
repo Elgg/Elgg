@@ -32,14 +32,6 @@
 	// Register the error handler
 		set_error_handler('__elgg_php_error_handler');
 		set_exception_handler('__elgg_php_exception_handler');
-
-	/**
-	 * Load the system settings
-	 */
-		
-		if (!@include_once(dirname(__FILE__) . "/settings.php")) { 		// Global settings
-			throw new InstallationException("Settings file is missing");
-		}
 		
 	/**
 	 * If there are basic issues with the way the installation is formed, don't bother trying
@@ -48,12 +40,21 @@
 		
 		if (sanitised()) {	// Begin portion for sanitised installs only
 	
+		 /**
+		 * Load the system settings
+		 */
+			
+			if (!@include_once(dirname(__FILE__) . "/settings.php")) { 		// Global settings
+				throw new InstallationException("Elgg could not load the settings file.");
+			}
+			
+			
 		/**
 		 * Load and initialise the database
 		 */
 	
 			if (!@include_once(dirname(__FILE__) . "/lib/database.php"))	// Database connection
-				throw new InstallationException("Could not load the main Elgg database library.");
+				throw new InstallationException("Elgg could not load the main Elgg database library.");
 	
 				
 		/**

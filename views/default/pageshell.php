@@ -23,12 +23,12 @@
 		<title><?php echo $vars['title']; ?></title>
 	</head>
 	<body>
+		<h1><?php echo $vars['title']; ?></h1>
 		<?php
 
-			echo elgg_view('messages/list', array('object' => 'messages'));
+			echo elgg_view('messages/list', array('object' => $vars['messages']));
 		
 		?>
-		<h1><?php echo $vars['title']; ?></h1>
 		<?php echo $vars['body']; ?>
 	</body>
 </html>
