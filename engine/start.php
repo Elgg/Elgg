@@ -16,7 +16,7 @@
 	 * Load important prerequisites
 	 */
 
-		if (!@include(dirname(__FILE__) . "/lib/elgglib.php")) {		// Main Elgg library
+		if (!@include_once(dirname(__FILE__) . "/lib/elgglib.php")) {		// Main Elgg library
 			echo "Error in installation: could not load the main Elgg library.";
 			exit;
 		}
@@ -25,8 +25,7 @@
 	 * Load the system settings
 	 */
 		
-		if (!@include_once(dirname(__FILE__) . "/settings.php")) 		// Global settings
-			register_error("Could not load the settings file.");
+		@include_once(dirname(__FILE__) . "/settings.php"); 		// Global settings
 		
 	/**
 	 * If there are basic issues with the way the installation is formed, don't bother trying
@@ -68,13 +67,20 @@
 					register_error("Could not load {$file}");
 			}
 		
-		}	// End portion for sanitised installs only
-		
+		} else {	// End portion for sanitised installs only
+			register_error("Elgg is not ready to run.");
+		}
+			
 		// Trigger events
 			trigger_event('init', 'system');
 		
-		if ($count = count_messages("errors")) {
-			
-		}
+		// If we have load errors, display them
+			if ($count = count_messages("errors")) {
+				echo elgg_view('pageshell', array(
+												'title' => "Error",
+												'body' => elgg_view('messages/errors/list',array('object' => system_messages(null, "errors")))
+											));
+				exit;
+			}
 		
 ?>
