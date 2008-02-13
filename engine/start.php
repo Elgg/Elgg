@@ -67,9 +67,7 @@
 					register_error("Could not load {$file}");
 			}
 		
-		} else {	// End portion for sanitised installs only
-			register_error("Elgg is not ready to run.");
-		}
+		}	// End portion for sanitised installs only
 			
 		// Trigger events
 			trigger_event('init', 'system');
@@ -77,7 +75,7 @@
 		// If we have load errors, display them
 			if ($count = count_messages("errors")) {
 				echo elgg_view('pageshell', array(
-												'title' => "Error",
+												'title' => "Elgg isn't ready to run just yet.",
 												'body' => elgg_view('messages/errors/list',array('object' => system_messages(null, "errors")))
 											));
 				exit;
