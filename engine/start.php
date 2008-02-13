@@ -25,7 +25,7 @@
 			echo "Error in installation: could not load the main Elgg library.";
 			exit;
 		}
-		
+	
 	/**
 	 * Load the system settings
 	 */
