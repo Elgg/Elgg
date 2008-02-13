@@ -22,15 +22,16 @@
 		}
 
 		if (!@include_once(dirname(__FILE__) . "/lib/elgglib.php")) {		// Main Elgg library
-			echo "Error in installation: could not load the main Elgg library.";
-			exit;
+			throw new InstallationException("Could not load the main Elgg library.");
 		}
 	
 	/**
 	 * Load the system settings
 	 */
 		
-		@include_once(dirname(__FILE__) . "/settings.php"); 		// Global settings
+		if (!@include_once(dirname(__FILE__) . "/settings.php")) { 		// Global settings
+			throw new InstallationException("Settings file is missing");
+		}
 		
 	/**
 	 * If there are basic issues with the way the installation is formed, don't bother trying
@@ -44,7 +45,7 @@
 		 */
 	
 			if (!@include_once(dirname(__FILE__) . "/lib/database.php"))	// Database connection
-				register_error("Could not load the main Elgg database library.");
+				throw new DatabaseException("Could not load the main Elgg database library.");
 	
 				
 		/**
@@ -70,25 +71,27 @@
 		
 			foreach($files as $file) {
 				if (!@include_once($file))
-					register_error("Could not load {$file}");
+					throw new InstallationException("Could not load {$file}");
 			}
 		
 		} else {	// End portion for sanitised installs only
 			
-			register_error("Once you've corrected any configuration issues, press reload to try again.");
+			throw new InstallationException("Once you've corrected any configuration issues, press reload to try again.");
 			
 		}
 		
 		// Trigger events
 			trigger_event('init', 'system');
-		
+
+			
+// TODO: Have the View catch and render any exceptions			
 		// If we have load errors, display them
-			if ($count = count_messages("errors")) {
+/*			if ($count = count_messages("errors")) {
 				echo elgg_view('pageshell', array(
 												'title' => "Elgg isn't ready to run just yet.",
 												'body' => elgg_view('messages/errors/list',array('object' => system_messages(null, "errors")))
 											));
 				exit;
 			}
-		
+*/		
 ?>
