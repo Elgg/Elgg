@@ -170,6 +170,13 @@
 				register_error(elgg_view("messages/sanitisation/settings"));
 				$sanitised = false;
 			}
+
+			if (!file_exists(dirname(dirname(dirname(__FILE__)))) . "/.htaccess") {
+				if (!copy(dirname(dirname(dirname(__FILE__))) . "/htaccess_dist", dirname(dirname(dirname(__FILE__))) . "/.htaccess")) {
+					register_error(elgg_view("messages/sanitisation/htaccess"));
+					$sanitised = false;
+				}
+			}
 				
 			return $sanitised;
 			
