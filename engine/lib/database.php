@@ -221,16 +221,87 @@
             
         }
     
-       /**
-        * Returns the number of rows returned by the last select statement, without the need to re-execute the query.
-        *
-        * @return int The number of rows returned by the last statement
-        */
+   /**
+    * Returns the number of rows returned by the last select statement, without the need to re-execute the query.
+    *
+    * @return int The number of rows returned by the last statement
+    */
 		function count_last_select() {
         	$row = get_data_row("SELECT found_rows() as count");
         	if ($row)
         		return $row->count;
         	return 0;
+        }
+ 
+	/**
+	 * Get the tables currently installed in the Elgg database
+	 *
+	 * @return array List of tables
+	 */
+        function get_db_tables() {
+        	$result = get_data("show tables");
+        	$result = (array) $result;
+        	
+        	$tables = array();
+        	
+        	if (is_array($result)) {
+        		foreach($result as $row) {
+        			foreach($row as $element) {
+        				$tables[] = $element;
+        			}
+        		}
+        	}
+        	
+        	return $tables;
+        }
+        
+	/**
+	 * Get the last database error for a particular database link
+	 *
+	 * @param database link $dblink
+	 * @return string Database error message
+	 */
+        function get_db_error($dblink) {
+        	return mysql_error($dblink);
+        }
+        
+	/**
+	 * Runs a full database script from disk
+	 *
+	 * @param string $scriptlocation The full apth to the script
+	 */
+        function run_sql_script($scriptlocation) {
+        	
+        	if ($script = file_get_contents($scriptlocation)) {
+        		
+        		$errors = array();
+        		
+        		$script = preg_replace('/\-\-.*\n/', '', $script);
+        		$sql_statements =  preg_split('/;[\n\r]+/', $script);
+        		foreach($sql_statements as $statement) {
+        			$statement = trim($statement);
+        			if (!empty($statement)) {
+        				$result = update_data($statement);
+	        			if ($result == false) {
+	        				$error = mysql_error();
+	        				$error = trim($error);
+	        				if (!empty($error)) {
+	        					$errors[] = $error;
+	        				}
+	        			}
+        			}
+        		}
+        		if (!empty($errors)) {
+        			$errortxt = "";
+        			foreach($errors as $error)
+        				$errortxt .= " {$error};";
+        			throw new DatabaseException("There were a number of issues: " . $errortxt);
+        		}
+        		
+        	} else {
+        		throw new DatabaseException("Elgg couldn't find the requested database script at {$scriptlocation}.");
+        	}
+        	
         }
         
 	// Stuff for initialisation

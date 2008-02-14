@@ -24,10 +24,14 @@
 	 * @return nothing|false
 	 */
 
-		function forward($location) {
+		function forward($location = "") {
 			
 			if (!headers_sent()) {
 				 $_SESSION['messages'] = system_messages();
+				 if (substr_count($location, 'http://') == 0) {
+				 	global $CONFIG;
+				 	$location = $CONFIG->url . $location;
+				 }
 				 header("Location: {$location}");
 				 exit;
 			}
