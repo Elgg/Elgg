@@ -20,19 +20,20 @@
 	/**
 	 * If we're installed, go back to the homepage
 	 */
-		forward();
+		if (is_installed())
+			forward();
 		
 	/**
 	 * Install the database
 	 */
-		$tables = get_db_tables();
-		if (!$tables) {
+		if (!is_db_installed()) {
 			run_sql_script(dirname(__FILE__) . "/engine/schema/mysql.sql");
+			system_message("The Elgg database was installed.");
 		}
 		
 	/**
 	 * Load the front page
 	 */
-		echo page_draw(null, elgg_view("homepage"));
+		echo page_draw("Installation", elgg_view("settings/system"));
 
 ?>

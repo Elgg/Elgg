@@ -20,6 +20,8 @@
 	// Set title
 		if (empty($vars['title'])) {
 			$title = $vars['config']->sitename;
+		} else if (empty($vars['config']->sitename)) {
+			$title = $vars['title'];
 		} else {
 			$title = $vars['config']->sitename . ": " . $vars['title'];
 		}
