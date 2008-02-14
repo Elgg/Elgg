@@ -1,0 +1,11 @@
+# Elgg htaccess directives
+# Copyright Curverider Ltd 2008
+# License http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+# Link http://elgg.org/
+
+php_flag magic_quotes_gpc off
+
+RewriteEngine on
+
+RewriteRule ^action\/([A-Za-z\_\-\/]+)$ action.php?action=$1
+RewriteRule ^css\/css\.css$ css/css.php
