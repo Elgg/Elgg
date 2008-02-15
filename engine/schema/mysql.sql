@@ -17,6 +17,7 @@
 CREATE TABLE `prefix_access_groups` (
   `id` int(11) NOT NULL,
   `name` varchar(16) NOT NULL,
+  `owner_id` int(11) NOT NULL,
   `site_id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `name` (`name`)
@@ -98,6 +99,7 @@ CREATE TABLE `prefix_objects` (
   `owner_id` int(11) NOT NULL,
   `site_id` int(11) NOT NULL default '0',
   `type_id` int(11) NOT NULL,
+  `access_id` int(11) NOT NULL default '0',
   `title` text NOT NULL,
   `description` text NOT NULL,
   `time_created` int(11) NOT NULL,
@@ -191,3 +193,6 @@ CREATE TABLE `prefix_sites` (
   `domain` text NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM ;
+
+INSERT INTO `prefix_elggnew`.`sites` (`id` ,`name` ,`domain`) VALUES 
+(1 , 'New Elgg site', '');

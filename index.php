@@ -21,4 +21,6 @@
 	 */
 		echo page_draw(null, elgg_view("homepage"));
 
+		get_objects(3,"blog","mammals","are lovely", 7, 2, 1);
+		
 ?>
