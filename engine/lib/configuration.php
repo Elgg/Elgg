@@ -39,6 +39,9 @@
 				$CONFIG->wwwroot .= str_replace($_SERVER['DOCUMENT_ROOT'],"",$CONFIG->path);
 			}
 			
+			if (empty($CONFIG->sitename))
+				$CONFIG->sitename = "New Elgg site";
+			
 		}
 
 ?>
