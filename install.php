@@ -20,8 +20,8 @@
 	/**
 	 * If we're installed, go back to the homepage
 	 */
-		if (is_installed())
-			forward();
+		if (is_installed() && is_db_installed())
+			forward("index.php");
 		
 	/**
 	 * Install the database

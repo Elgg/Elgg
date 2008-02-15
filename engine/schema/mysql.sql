@@ -17,6 +17,7 @@
 CREATE TABLE `prefix_access_groups` (
   `id` int(11) NOT NULL,
   `name` varchar(16) NOT NULL,
+  `site_id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `name` (`name`)
 ) ENGINE=MyISAM ;
@@ -25,10 +26,10 @@ CREATE TABLE `prefix_access_groups` (
 -- Dumping data for table `access_groups`
 --
 
-INSERT INTO `prefix_access_groups` (`id`, `name`) VALUES
-(0, 'PRIVATE'),
-(1, 'LOGGED_IN'),
-(2, 'PUBLIC');
+INSERT INTO `prefix_access_groups` (`id`, `name`, `site_id`) VALUES
+(0, 'PRIVATE', 0),
+(1, 'LOGGED_IN', 0),
+(2, 'PUBLIC', 0);
 
 -- --------------------------------------------------------
 
@@ -53,6 +54,7 @@ CREATE TABLE `prefix_configuration` (
   `id` int(11) NOT NULL,
   `name` varchar(32) NOT NULL,
   `value` text NOT NULL,
+  `site_id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `name` (`name`)
 ) ENGINE=MyISAM ;
@@ -94,7 +96,7 @@ CREATE TABLE `prefix_metadata_value` (
 CREATE TABLE `prefix_objects` (
   `id` int(11) NOT NULL auto_increment,
   `owner_id` int(11) NOT NULL,
-  `site_id` int(11) NOT NULL,
+  `site_id` int(11) NOT NULL default '0',
   `type_id` int(11) NOT NULL,
   `title` text NOT NULL,
   `description` text NOT NULL,
@@ -116,6 +118,7 @@ CREATE TABLE `prefix_object_metadata` (
   `metadata_type_id` int(11) NOT NULL,
   `value_id` int(11) NOT NULL,
   `access_id` int(11) NOT NULL,
+  `site_id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `object_id` (`object_id`,`metadata_type_id`,`value_id`),
   KEY `access_id` (`access_id`)
@@ -174,4 +177,17 @@ CREATE TABLE `prefix_user_metadata` (
   PRIMARY KEY  (`id`),
   KEY `user_id` (`user_id`,`metadata_type_id`,`value_id`),
   KEY `access_id` (`access_id`)
+) ENGINE=MyISAM ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sites`
+--
+
+CREATE TABLE `prefix_sites` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` text NOT NULL,
+  `domain` text NOT NULL,
+  PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM ;
