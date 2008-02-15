@@ -94,22 +94,82 @@
 		        $viewtype = $_SESSION['view'];
 		    }
 		
+		    if (isset($CONFIG->views->extensions[$view])) {
+		    	$viewlist = $CONFIG->views->extensions[$view];
+		    } else {
+		    	$viewlist = array(500 => $view);
+		    }
+		    
 		    ob_start();
-		    if (!@include($CONFIG->viewpath . "views/{$viewtype}/{$view}.php")) {
-		        $success = false;
-		        if ($viewtype != "default") {
-		            if (@include($CONFIG->viewpath . "views/default/{$view}.php")) {
-		                $success = true;
-		            }
-		        }
-		        if (!$success && $debug == true) {
-		            echo " [This view ({$view}) does not exist] ";
-		        }
+		    foreach($viewlist as $view) {
+		    
+		    	if (!isset($CONFIG->views->locations[$view])) {
+		    		$location = $CONFIG->viewpath . "views/";
+		    	} else {
+		    		$location = $CONFIG->views->locations[$view];
+		    	}
+			    if (!@include($location . "{$viewtype}/{$view}.php")) {
+			        $success = false;
+			        if ($viewtype != "default") {
+			            if (@include($location . "views/default/{$view}.php")) {
+			                $success = true;
+			            }
+			        }
+			        if (!$success && $CONFIG->debug == true) {
+			            echo " [This view ({$view}) does not exist] ";
+			        }
+			    }
+		    
 		    }
 		    $content = ob_get_clean();
 		
 		    return $content;
 		
+		}
+		
+	/**
+	 * Extends a view by adding other views to be displayed at the same time.
+	 *
+	 * @param string $view The view to add to.
+	 * @param string $view_name The name of the view to extend
+	 * @param int $priority The priority, from 0 to 1000, to add at (lowest numbers will be displayed first)
+	 */
+		function extend_view($view, $view_name, $priority = 501) {
+			
+			global $CONFIG;
+			if (!isset($CONFIG->views)) {
+				$CONFIG->views = new stdClass;
+			}
+			if (!isset($CONFIG->views->extensions)) {
+				$CONFIG->views->extensions = array();
+			}
+			if (!isset($CONFIG->views->extensions[$view])) {
+				$CONFIG->views[$view][500] = "{$view}";
+			}
+			while(isset($CONFIG->views->extensions[$view][$priority])) {
+				$priority++;
+			}
+			$CONFIG->views->extensions[$view][$priority] = "{$view_name}";
+			ksort($CONFIG->views->extensions[$view]);
+			
+		}
+		
+	/**
+	 * Set an alternative base location for a view (as opposed to the default of $CONFIG->viewpath)
+	 *
+	 * @param string $view The name of the view
+	 * @param string $location The base location path
+	 */
+		function set_view_location($view, $location) {
+			
+			global $CONFIG;
+			if (!isset($CONFIG->views)) {
+				$CONFIG->views = new stdClass;
+			}
+			if (!isset($CONFIG->views->locations)) {
+				$CONFIG->views->locations = array($view => $location);
+			}
+			
 		}
 		
 	/**
