@@ -81,6 +81,12 @@
 				if (!@include_once($file))
 					throw new InstallationException("Could not load {$file}");
 			}
+			
+		// Autodetect some default configuration settings
+			set_default_config();
+			
+		// Load plugins
+			load_plugins();
 		
 		} else {	// End portion for sanitised installs only
 			

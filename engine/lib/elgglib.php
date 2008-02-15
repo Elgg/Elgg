@@ -104,7 +104,7 @@
 		    foreach($viewlist as $view) {
 		    
 		    	if (!isset($CONFIG->views->locations[$view])) {
-		    		$location = $CONFIG->viewpath . "views/";
+		    		$location = $CONFIG->viewpath;
 		    	} else {
 		    		$location = $CONFIG->views->locations[$view];
 		    	}
