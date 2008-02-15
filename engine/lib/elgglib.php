@@ -111,7 +111,7 @@
 			    if (!@include($location . "{$viewtype}/{$view}.php")) {
 			        $success = false;
 			        if ($viewtype != "default") {
-			            if (@include($location . "views/default/{$view}.php")) {
+			            if (@include($location . "default/{$view}.php")) {
 			                $success = true;
 			            }
 			        }
