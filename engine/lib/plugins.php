@@ -25,8 +25,8 @@
 				
 				if ($handle = opendir($CONFIG->pluginspath)) {
 					while ($mod = readdir($handle)) {
-						if (!in_array($mod,array('.','..','.svn','CVS')) && is_dir($mod)) {
-							if (!@include($ONFIG->pluginspath . $mod . "/start.php"))
+						if (!in_array($mod,array('.','..','.svn','CVS')) && is_dir($CONFIG->pluginspath . "/" . $mod)) {
+							if (!@include($CONFIG->pluginspath . $mod . "/start.php"))
 								throw new PluginException("{$mod} is a misconfigured plugin.");
 						}
 					}

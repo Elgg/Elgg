@@ -101,7 +101,7 @@
 		    }
 		    
 		    ob_start();
-		    foreach($viewlist as $view) {
+		    foreach($viewlist as $priority => $view) {
 		    
 		    	if (!isset($CONFIG->views->locations[$view])) {
 		    		$location = $CONFIG->viewpath;
@@ -144,7 +144,7 @@
 				$CONFIG->views->extensions = array();
 			}
 			if (!isset($CONFIG->views->extensions[$view])) {
-				$CONFIG->views[$view][500] = "{$view}";
+				$CONFIG->views->extensions[$view][500] = "{$view}";
 			}
 			while(isset($CONFIG->views->extensions[$view][$priority])) {
 				$priority++;
@@ -168,6 +168,8 @@
 			}
 			if (!isset($CONFIG->views->locations)) {
 				$CONFIG->views->locations = array($view => $location);
+			} else {
+				$CONFIG->views->locations[$view] = $location;
 			}
 			
 		}

@@ -14,7 +14,7 @@
 -- Table structure for table `access_groups`
 --
 
-CREATE TABLE `access_groups` (
+CREATE TABLE `prefix_access_groups` (
   `id` int(11) NOT NULL,
   `name` varchar(16) NOT NULL,
   PRIMARY KEY  (`id`),
@@ -25,7 +25,7 @@ CREATE TABLE `access_groups` (
 -- Dumping data for table `access_groups`
 --
 
-INSERT INTO `access_groups` (`id`, `name`) VALUES
+INSERT INTO `prefix_access_groups` (`id`, `name`) VALUES
 (0, 'PRIVATE'),
 (1, 'LOGGED_IN'),
 (2, 'PUBLIC');
@@ -36,7 +36,7 @@ INSERT INTO `access_groups` (`id`, `name`) VALUES
 -- Table structure for table `access_group_membership`
 --
 
-CREATE TABLE `access_group_membership` (
+CREATE TABLE `prefix_access_group_membership` (
   `user_id` int(11) NOT NULL,
   `access_group_id` int(11) NOT NULL,
   PRIMARY KEY  (`user_id`,`access_group_id`)
@@ -49,7 +49,7 @@ CREATE TABLE `access_group_membership` (
 -- Table structure for table `configuration`
 --
 
-CREATE TABLE `configuration` (
+CREATE TABLE `prefix_configuration` (
   `id` int(11) NOT NULL,
   `name` varchar(32) NOT NULL,
   `value` text NOT NULL,
@@ -64,7 +64,7 @@ CREATE TABLE `configuration` (
 -- Table structure for table `metadata_type`
 --
 
-CREATE TABLE `metadata_type` (
+CREATE TABLE `prefix_metadata_type` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(32) NOT NULL,
   PRIMARY KEY  (`id`),
@@ -78,7 +78,7 @@ CREATE TABLE `metadata_type` (
 -- Table structure for table `metadata_value`
 --
 
-CREATE TABLE `metadata_value` (
+CREATE TABLE `prefix_metadata_value` (
   `id` int(11) NOT NULL auto_increment,
   `value` text NOT NULL,
   PRIMARY KEY  (`id`)
@@ -91,7 +91,7 @@ CREATE TABLE `metadata_value` (
 -- Table structure for table `objects`
 --
 
-CREATE TABLE `objects` (
+CREATE TABLE `prefix_objects` (
   `id` int(11) NOT NULL auto_increment,
   `owner_id` int(11) NOT NULL,
   `site_id` int(11) NOT NULL,
@@ -110,7 +110,7 @@ CREATE TABLE `objects` (
 -- Table structure for table `object_metadata`
 --
 
-CREATE TABLE `object_metadata` (
+CREATE TABLE `prefix_object_metadata` (
   `id` int(11) NOT NULL auto_increment,
   `object_id` int(11) NOT NULL,
   `metadata_type_id` int(11) NOT NULL,
@@ -127,7 +127,7 @@ CREATE TABLE `object_metadata` (
 -- Table structure for table `object_types`
 --
 
-CREATE TABLE `object_types` (
+CREATE TABLE `prefix_object_types` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(16) NOT NULL,
   PRIMARY KEY  (`id`),
@@ -140,7 +140,7 @@ CREATE TABLE `object_types` (
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE `prefix_users` (
   `id` int(11) NOT NULL auto_increment,
   `name` text NOT NULL,
   `username` varchar(12) NOT NULL default '',
@@ -165,7 +165,7 @@ CREATE TABLE `users` (
 -- Table structure for table `user_metadata`
 --
 
-CREATE TABLE `user_metadata` (
+CREATE TABLE `prefix_user_metadata` (
   `id` int(11) NOT NULL auto_increment,
   `user_id` int(11) NOT NULL,
   `metadata_type_id` int(11) NOT NULL,

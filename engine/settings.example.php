@@ -33,6 +33,11 @@
 		// Database server
 		// (For most configurations, you can leave this as 'localhost')
 			$CONFIG->dbhost = "localhost";
+			
+		// Database table prefix
+		// If you're sharing a database with other applications, you will want to use this
+		// to differentiate Elgg's tables.
+			$CONFIG->dbprefix = "elgg";
 
 	/*
 	 * Multiple database connections

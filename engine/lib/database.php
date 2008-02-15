@@ -85,6 +85,7 @@
 	 */
 		function init_db($event, $object_type, $object = null) {
 			setup_db_connections();
+			return true;
 		}
 		
 	/**
@@ -268,11 +269,14 @@
 	/**
 	 * Runs a full database script from disk
 	 *
-	 * @param string $scriptlocation The full apth to the script
+	 * @uses $CONFIG
+	 * @param string $scriptlocation The full path to the script
 	 */
         function run_sql_script($scriptlocation) {
         	
         	if ($script = file_get_contents($scriptlocation)) {
+
+        		global $CONFIG;
         		
         		$errors = array();
         		
@@ -280,6 +284,7 @@
         		$sql_statements =  preg_split('/;[\n\r]+/', $script);
         		foreach($sql_statements as $statement) {
         			$statement = trim($statement);
+        			$statement = str_replace("prefix_",$CONFIG->dbprefix,$statement);
         			if (!empty($statement)) {
         				$result = update_data($statement);
 	        			if ($result == false) {

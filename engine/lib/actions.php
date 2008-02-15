@@ -79,6 +79,7 @@
         
         function actions_init($event, $object_type, $object) {
         	register_action("error");
+        	return true;
         }
         
     // Register some actions ***************************************************
