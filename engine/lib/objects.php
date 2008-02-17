@@ -276,6 +276,32 @@
 		}
 
 	/**
+	 * Returns the value of a particular piece of metadata on an object
+	 *
+	 * @param string $metadata_name The name of the metadata
+	 * @param int $object_id The object ID
+	 * @param int $site_id The site ID, optionally
+	 * @return mixed The value of the metadata
+	 */
+		function get_object_metadata($metadata_name, $object_id, $site_id = 0) {
+			
+			if ($type_id = get_metadata_type_id($metadata_name)) {
+				
+				$accesslist = get_access_list();
+				$object_id = (int) $objet_id;
+				if ($site_id == 0) $site_id = $CONFIG->site_id;
+				$site_id = (int) $site_id;
+				
+				if ($result = get_data_row("select mv.value from object_metadata om left join metadata_value mv on mv.id = om.value_id where om.object_id = {$object_id} and om.site_id = {$site_id} and om.metadata_type_id = {$type_id}")) {
+					return $result->value;
+				}
+				return false;
+				
+			}
+			
+		}
+		
+	/**
 	 * Removes a piece of (or all) metadata for a particular object.
 	 *
 	 * @param int $object_id The ID of the object
@@ -334,6 +360,20 @@
 			}
 
 		/**
+		 * Saves this object as a new object in the database.
+		 * Note that if you use this on an already-saved object, it will create a new copy.
+		 *
+		 * @return true|false Depending on success.
+		 */
+			function saveNew() {
+				if ($id = create_object($this->title,$this->description,$this->type,$this->owner_id,$this->access_id,$this->site_id)) {
+					$this->id = $id;
+					return true;
+				}
+				return false;
+			}
+			
+		/**
 		 * Updates an object and provides an alias to update_object
 		 *
 		 * @uses update_object
@@ -371,6 +411,19 @@
 			function setMetadata($name, $value, $access_id = 0) {
 				if (!empty($this->id)) {
 					return set_object_metadata($name, $value, $access_id, $this->id, $this->site_id);
+				}
+				return false;
+			}
+
+		/**
+		 * Returns the value of a particular piece of metadata
+		 *
+		 * @param string $name The name of the metadata
+		 * @return mixed|false The metadata value; false on failure
+		 */
+			function getMetadata($name) {
+				if (!empty($this->id)) {
+					return get_object_metadata($name, $this->id, $this->site_id);
 				}
 				return false;
 			}
