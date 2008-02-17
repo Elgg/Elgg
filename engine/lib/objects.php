@@ -152,7 +152,7 @@
 	 * @return int|false Either 1 or 0 (the number of objects updated) or false on failure
 	 */
 		
-		function update_object($id, $title = null, $description = null, $type = null, $owner = null, $access_id = null, $site_id = null) {
+		function update_object($id, $title = null, $description = null, $type = null, $owner_id = null, $access_id = null, $site_id = null) {
 
 			global $CONFIG;
 			
@@ -301,4 +301,94 @@
 			return true;
 		}
 
+		
+	/**
+	 * This class represents an Elgg object.
+	 *
+	 */
+		class ElggObject {
+			
+			private $attributes = array();
+			
+			function __get($name) {
+				if (isset($attributes[$name])) {
+					return $attributes[$name];
+				}
+				return null;
+			}
+			
+			function __set($name, $value) {
+				$this->attributes[$name] = $value;
+				return true;
+			}
+			
+			function __construct($id = null) {
+				if (!empty($id)) {
+					if ($object = get_object($id)) {
+						$objarray = (array) $object;
+						foreach($objarray as $key => $value) {
+							$this->attributes[$key] = $value;
+						}
+					}
+				}
+			}
+
+		/**
+		 * Updates an object and provides an alias to update_object
+		 *
+		 * @uses update_object
+		 * @return int|false The number of objects altered, or false on failure
+		 */
+			function update() {
+				if (!empty($this->id)) {
+					return update_object($this->id, $this->title, $this->description, $this->type, $this->owner_id, $this->access_id, $this->site_id);				
+				}
+				return false;
+			}
+			
+		/**
+		 * Deletes this object
+		 *
+		 * @uses delete_object
+		 * @return int|false The number of objects deleted, or false on failure
+		 */
+			function delete() {
+				if (!empty($this->id)) {
+					return delete_object($this->id);
+				}
+				return false;
+			}
+			
+		/**
+		 * Adds metadata for this object
+		 *
+		 * @uses set_object_metadata
+		 * @param string $name The name of the metadata type
+		 * @param string $value The value for the metadata to set
+		 * @param int $access_id The access level for this piece of metadata (default: private)
+		 * @return true|false Depending on success
+		 */
+			function setMetadata($name, $value, $access_id = 0) {
+				if (!empty($this->id)) {
+					return set_object_metadata($name, $value, $access_id, $this->id, $this->site_id);
+				}
+				return false;
+			}
+			
+		/**
+		 * Clears metadata for this object, either for a particular type or across the board
+		 *
+		 * @uses remove_object_metadata
+		 * @param string $name Optionally, the name of the metadata to remove
+		 * @return true|false Depending on success
+		 */
+			function clearMetadata($name = "") {
+				if (!empty($this->id)) {
+					return remove_object_metadata($this->id, $name);
+				}
+				return false;
+			}
+
+		}
+		
 ?>
