@@ -261,8 +261,7 @@
         function get_db_tables() {
         	global $CONFIG;
         	$result = get_data("show tables");
-        	$result = (array) $result;
-        	
+        	        	 	
         	$tables = array();
         	
         	if (is_array($result) && !empty($result)) {
@@ -274,6 +273,8 @@
 	        			}
         		}
         	}
+        	else
+        		return false;
         	
         	return $tables;
         }
