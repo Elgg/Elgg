@@ -104,7 +104,11 @@
 		    foreach($viewlist as $priority => $view) {
 		    
 		    	if (!isset($CONFIG->views->locations[$view])) {
-		    		$location = $CONFIG->viewpath;
+		    		if (!isset($CONFIG->viewpath)) {
+						$location = dirname(dirname(dirname(__FILE__))) . "views/";		    			
+		    		} else {
+		    			$location = $CONFIG->viewpath;
+		    		}
 		    	} else {
 		    		$location = $CONFIG->views->locations[$view];
 		    	}
