@@ -264,11 +264,12 @@
         	
         	$tables = array();
         	
-        	if (is_array($result)) {
+        	if (is_array($result) && !empty($result)) {
         		foreach($result as $row) {
-        			foreach($row as $element) {
-        				$tables[] = $element;
-        			}
+        			if (is_array($row) && !empty($row))
+	        			foreach($row as $element) {
+	        				$tables[] = $element;
+	        			}
         		}
         	}
         	
@@ -306,13 +307,6 @@
         			$statement = str_replace("prefix_",$CONFIG->dbprefix,$statement);
         			if (!empty($statement)) {
         				$result = update_data($statement);
-	        			if ($result == false) {
-	        				$error = mysql_error();
-	        				$error = trim($error);
-	        				if (!empty($error)) {
-	        					$errors[] = $error;
-	        				}
-	        			}
         			}
         		}
         		if (!empty($errors)) {
@@ -340,6 +334,6 @@
         
 	// Stuff for initialisation
 
-		register_event_handler('init','system','init_db',0);
+		register_event_handler('boot','system','init_db',0);
 
 ?>

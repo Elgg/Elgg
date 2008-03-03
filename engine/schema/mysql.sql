@@ -194,5 +194,5 @@ CREATE TABLE `prefix_sites` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM ;
 
-INSERT INTO `prefix_elggnew`.`sites` (`id` ,`name` ,`domain`) VALUES 
+INSERT INTO `prefix_sites` (`id` ,`name` ,`domain`) VALUES 
 (1 , 'New Elgg site', '');

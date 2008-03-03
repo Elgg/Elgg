@@ -10,6 +10,7 @@
 	 */
 
 		global $CONFIG;
+		$CONFIG = new stdClass;
 
 	/*
 	 * Standard configuration
