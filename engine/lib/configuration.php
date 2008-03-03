@@ -33,12 +33,23 @@
 				
 			if (empty($CONFIG->wwwroot)) {
 				$CONFIG->wwwroot = "http://" . $_SERVER['SERVER_NAME'];
-				if (strripos($_SERVER['DOCUMENT_ROOT'],"/") < (sizeof($_SERVER['DOCUMENT_ROOT']) - 1)) {
+				/*if (strripos($_SERVER['DOCUMENT_ROOT'],"/") < (strlen($_SERVER['DOCUMENT_ROOT']) - 1)) {
 					$CONFIG->wwwroot .= "/";
+				}*/
+				
+				$request = $_SERVER['REQUEST_URI'];
+				
+				if (strripos($request,"/") < (strlen($request) - 1)) {
+					// addressing a file directly, not a dir
+					$request = substr($request, 0, strripos($request,"/")+1);
 				}
-				$CONFIG->wwwroot .= str_replace($_SERVER['DOCUMENT_ROOT'],"",$CONFIG->path);
+				
+				$CONFIG->wwwroot .= $request;
+				
+				//$CONFIG->wwwroot .= str_replace($_SERVER['DOCUMENT_ROOT'],"",$CONFIG->path);
+		
 			}
-			
+		
 			if (empty($CONFIG->url))
 				$CONFIG->url = $CONFIG->wwwroot;
 			
@@ -47,7 +58,7 @@
 				
 			if (empty($CONFIG->debug))
 				$CONFIG->debug = false;
-			
+				
 		}
 
 ?>
