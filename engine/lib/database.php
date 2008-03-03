@@ -242,6 +242,8 @@
    /**
     * Returns the number of rows returned by the last select statement, without the need to re-execute the query.
     *
+    * CANDIDATE FOR DELETION?
+    * 
     * @return int The number of rows returned by the last statement
     */
 		function count_last_select() {
