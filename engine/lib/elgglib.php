@@ -237,12 +237,12 @@
 				$sanitised = false;
 			}
 
-			/*if (!file_exists(dirname(dirname(dirname(__FILE__)))) . "/.htaccess") {
+			if (!file_exists(dirname(dirname(dirname(__FILE__))) . "/.htaccess")) {
 				if (!copy(dirname(dirname(dirname(__FILE__))) . "/htaccess_dist", dirname(dirname(dirname(__FILE__))) . "/.htaccess")) {
 					register_error(elgg_view("messages/sanitisation/htaccess"));
 					$sanitised = false;
 				}
-			}*/
+			}
 				
 			return $sanitised;
 			
@@ -477,7 +477,7 @@
 					error_log("DEBUG: " . $error); 
 					// register_error("DEBUG: " . $error);
 			}
-			
+			echo "$error <br />";
 			return true;
 		}
 		
