@@ -357,42 +357,27 @@
 				}
 			}
 
-		/**
-		 * Saves this object as a new object in the database.
-		 * Note that if you use this on an already-saved object, it will create a new copy.
-		 *
-		 * @return true|false Depending on success.
-		 */
-			function saveNew() {
-				if ($id = create_object($this->title,$this->description,$this->type,$this->owner_id,$this->access_id,$this->site_id)) {
-					$this->id = $id;
-					return true;
-				}
-				return false;
-			}
 			
 		/**
-		 * Updates an object and provides an alias to update_object
+		 * Obtains the parent site
 		 *
-		 * @uses update_object
-		 * @return int|false The number of objects altered, or false on failure
+		 * @return ElggSite The parent site
 		 */
-			function update() {
-				if (!empty($this->id)) {
-					return update_object($this->id, $this->title, $this->description, $this->type, $this->owner_id, $this->access_id, $this->site_id);				
-				}
-				return false;
+			function getSite() {
+				// TODO: gets the parent site
 			}
 			
+		
+			
 		/**
-		 * Deletes this object
+		 * Returns the value of a particular piece of metadata
 		 *
-		 * @uses delete_object
-		 * @return int|false The number of objects deleted, or false on failure
+		 * @param string $name The name of the metadata
+		 * @return mixed|false The metadata value; false on failure
 		 */
-			function delete() {
+			function getMetadata($name) {
 				if (!empty($this->id)) {
-					return delete_object($this->id);
+					return get_object_metadata($name, $this->id, $this->site_id);
 				}
 				return false;
 			}
@@ -412,19 +397,6 @@
 				}
 				return false;
 			}
-
-		/**
-		 * Returns the value of a particular piece of metadata
-		 *
-		 * @param string $name The name of the metadata
-		 * @return mixed|false The metadata value; false on failure
-		 */
-			function getMetadata($name) {
-				if (!empty($this->id)) {
-					return get_object_metadata($name, $this->id, $this->site_id);
-				}
-				return false;
-			}
 			
 		/**
 		 * Clears metadata for this object, either for a particular type or across the board
@@ -436,6 +408,89 @@
 			function clearMetadata($name = "") {
 				if (!empty($this->id)) {
 					return remove_object_metadata($this->id, $name);
+				}
+				return false;
+			}
+			
+		/**
+		 * Adds an annotation to an object
+		 *
+		 * @param string $name Name of the annotation type
+		 * @param string|int $value The annotation value
+		 * @param int $access_id The access level for the annotation
+		 * @param int $owner_id The annotation owner
+		 * @param string $vartype Optionally, the variable type of the annotation (eg "int")
+		 */
+			function annotate($name, $value, $access_id = 0, $owner_id = 0, $vartype = "") {
+				// TODO: add annotation
+			}
+			
+		/**
+		 * Returns the object's annotations of a particular type (eg "comment")
+		 *
+		 * @param string $name The type of annotation
+		 * @param int $limit Number of annotations to get
+		 * @param int $offset Any offset
+		 */
+			function getAnnotations($name, $limit = 50, $offset = 0) {
+				// TODO: get annotations
+			}
+			
+		/**
+		 * Gets the average of the integer annotations on this object
+		 *
+		 * @param string $name Optionally, the type of annotation
+		 */
+			function getAnnotationsAvg($name) {
+			}
+
+		/**
+		 * Gets the sum of the integer annotations on this object
+		 *
+		 * @param string $name Optionally, the type of annotation
+		 */
+			function getAnnotationsSum($name) {
+			}
+			
+		/**
+		 * Gets the minimum value of the integer annotations on this object
+		 *
+		 * @param string $name Optionally, the type of annotation
+		 */
+			function getAnnotationsMin($name) {
+			}
+			
+		/**
+		 * Gets the maximum value of the integer annotations on this object
+		 *
+		 * @param string $name Optionally, the type of annotation
+		 */
+			function getAnnotationsMax($name) {
+			}
+			
+		/**
+		 * Inserts or updates the object, depending on whether it's new or not
+		 *
+		 * @return true|false Depending on success
+		 */
+			function save() {
+				if (!empty($this->id)) {
+					return update_object($this->id, $this->title, $this->description, $this->type, $this->owner_id, $this->access_id, $this->site_id);				
+				} else if ($id = create_object($this->title,$this->description,$this->type,$this->owner_id,$this->access_id,$this->site_id)) {
+					$this->id = $id;
+					return true;
+				}
+			}
+			
+		/**
+		 * Deletes this object
+		 *
+		 * @uses delete_object
+		 * @return int|false The number of objects deleted, or false on failure
+		 */
+			function delete() {
+				if (!empty($this->id)) {
+					return delete_object($this->id);
 				}
 				return false;
 			}
