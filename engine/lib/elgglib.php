@@ -119,7 +119,7 @@
 			                $success = true;
 			            }
 			        }
-			        if (!$success && $CONFIG->debug == true) {
+			        if (!$success && isset($CONFIG->debug) && $CONFIG->debug == true) {
 			            echo " [This view ({$view}) does not exist] ";
 			        }
 			    }
@@ -481,7 +481,7 @@
 					error_log("DEBUG: " . $error); 
 					// register_error("DEBUG: " . $error);
 			}
-			echo "$error <br />";
+			
 			return true;
 		}
 		
