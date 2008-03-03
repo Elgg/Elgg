@@ -129,6 +129,10 @@
             if (empty($resultarray)) {
                 return false;
             }
+            
+            if (mysql_errno($dblink))
+				throw new DatabaseException(mysql_error($dblink));
+            
             return $resultarray;
         }
         
@@ -151,6 +155,10 @@
                     return $row;
                 }
             }
+            
+            if (mysql_errno($dblink))
+				throw new DatabaseException(mysql_error($dblink));
+            
             return false;
         }
         
@@ -169,12 +177,13 @@
             
             $dbcalls++;
             
-            if (mysql_query($query, $dblink)) {
+            if (mysql_query($query, $dblink)) 
                 return mysql_insert_id($dblink);
-            } else {
-                return false;
-            }
-            
+                
+			if (mysql_errno($dblink))
+				throw new DatabaseException(mysql_error($dblink));
+                
+			return false;
         }
         
     /**
@@ -194,6 +203,9 @@
             
             if (mysql_query($query, $dblink))
             	return mysql_affected_rows();
+            	
+           	if (mysql_errno($dblink))
+				throw new DatabaseException(mysql_error($dblink));
          
          	return false;   
             
@@ -214,12 +226,13 @@
             
             $dbcalls++;
             
-            if (mysql_query($query, $dblink)) {
+            if (mysql_query($query, $dblink)) 
                 return mysql_affected_rows();
-            } else {
-                return false;
-            }
             
+            if (mysql_errno($dblink))
+				throw new DatabaseException(mysql_error($dblink));
+                
+			return false;      
         }
     
    /**
