@@ -259,6 +259,7 @@
 	 * @return array List of tables
 	 */
         function get_db_tables() {
+        	global $CONFIG;
         	$result = get_data("show tables");
         	$result = (array) $result;
         	
@@ -266,6 +267,7 @@
         	
         	if (is_array($result) && !empty($result)) {
         		foreach($result as $row) {
+        			$row = (array) $row;
         			if (is_array($row) && !empty($row))
 	        			foreach($row as $element) {
 	        				$tables[] = $element;
