@@ -330,7 +330,7 @@
 	 * This class represents an Elgg object.
 	 *
 	 */
-		class ElggObject extends stdClass {
+		class ElggObject {
 			
 			private $attributes = array();
 			
