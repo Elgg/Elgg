@@ -112,7 +112,7 @@
 		    	} else {
 		    		$location = $CONFIG->views->locations[$view];
 		    	}
-			    if (!@include($location . "{$viewtype}/{$view}.php")) {
+			    if (file_exists($location . "{$viewtype}/{$view}.php") && !@include($location . "{$viewtype}/{$view}.php")) {
 			        $success = false;
 			        if ($viewtype != "default") {
 			            if (@include($location . "default/{$view}.php")) {
@@ -122,6 +122,8 @@
 			        if (!$success && isset($CONFIG->debug) && $CONFIG->debug == true) {
 			            echo " [This view ({$view}) does not exist] ";
 			        }
+			    } else if ($CONFIG->debug == true) {
+			    	echo " [This view ({$view}) does not exist] ";
 			    }
 		    
 		    }
