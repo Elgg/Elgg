@@ -66,7 +66,7 @@
 		    }
 		
 		    // Load session and configuration variables
-		    if (is_array($_SESSION)) {
+		    if (is_array($_SESSION) && isset($_SESSION)) {
 		        $vars = array_merge($vars, $_SESSION);
 		    }
 			if (!empty($CONFIG))
@@ -105,7 +105,7 @@
 		    
 		    	if (!isset($CONFIG->views->locations[$view])) {
 		    		if (!isset($CONFIG->viewpath)) {
-						$location = dirname(dirname(dirname(__FILE__))) . "views/";		    			
+						$location = dirname(dirname(dirname(__FILE__))) . "/views/";		    			
 		    		} else {
 		    			$location = $CONFIG->viewpath;
 		    		}
@@ -242,7 +242,7 @@
 			}
 
 			if (!file_exists(dirname(dirname(dirname(__FILE__))) . "/.htaccess")) {
-				if (!copy(dirname(dirname(dirname(__FILE__))) . "/htaccess_dist", dirname(dirname(dirname(__FILE__))) . "/.htaccess")) {
+				if (!@copy(dirname(dirname(dirname(__FILE__))) . "/htaccess_dist", dirname(dirname(dirname(__FILE__))) . "/.htaccess")) {
 					register_error(elgg_view("messages/sanitisation/htaccess"));
 					$sanitised = false;
 				}
