@@ -66,7 +66,7 @@
 		    }
 		
 		    // Load session and configuration variables
-		    if (is_array($_SESSION) && isset($_SESSION)) {
+		    if (isset($_SESSION) && is_array($_SESSION) ) {
 		        $vars = array_merge($vars, $_SESSION);
 		    }
 			if (!empty($CONFIG))
