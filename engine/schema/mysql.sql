@@ -190,9 +190,16 @@ CREATE TABLE `prefix_user_metadata` (
 CREATE TABLE `prefix_sites` (
   `id` int(11) NOT NULL auto_increment,
   `name` text NOT NULL,
-  `domain` text NOT NULL,
+  `description` text NOT NULL,
+  `url` text NOT NULL,
+  
+  `owner_id` int(11) NOT NULL,
+  `created` int(11) NOT NULL,
+  `last_updated` int(11) NOT NULL,
+  
+  `access_id` int(11) NOT NULL,
+  `write_access_id` int(11) NOT NULL,
+  
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM ;
 
-INSERT INTO `prefix_sites` (`id` ,`name` ,`domain`) VALUES 
-(1 , 'New Elgg site', '');
