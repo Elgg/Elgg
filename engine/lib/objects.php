@@ -97,7 +97,6 @@
 			
 			return false;
 		}
-
 		
 	/**
 	 * Creates an object
@@ -326,13 +325,12 @@
 			}
 			return true;
 		}
-
 		
 	/**
 	 * This class represents an Elgg object.
 	 *
 	 */
-		class ElggObject {
+		class ElggObject extends stdClass {
 			
 			private $attributes = array();
 			

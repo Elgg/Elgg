@@ -23,4 +23,7 @@
 
 		get_objects(3,"blog","mammals","are lovely", 7, 2, 1);
 		
+		$obj = new stdClass;
+		$obj->id = 3;
+		
 ?>
