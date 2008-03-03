@@ -108,11 +108,12 @@
 		
 	/**
      * Use this function to get data from the database
-     * @param $query The query being passed.
+     * @param string $query The query being passed.
+     * @param string $call Optionally, the name of a function to call back to on each row (which takes $row as a single parameter)
      * @return array An array of database result objects
      */
     
-        function get_data($query) {
+        function get_data($query, $callback = "") {
             
             global $dbcalls;
             
@@ -123,6 +124,9 @@
             
             if ($result = mysql_query($query, $dblink)) {
                 while ($row = mysql_fetch_object($result)) {
+                	if (!empty($callback) && is_callable($callback)) {
+                		$row = $callback($row);
+                	}
                     $resultarray[] = $row;
                 }
             }
