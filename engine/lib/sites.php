@@ -222,9 +222,21 @@
 	
 	
 	
-	
-	// todo: Get sites
-	
+	/**
+	 * Enter description here...
+	 *
+	 * @param int $user_id
+	 * @param string $type
+	 * @param string $metadata_type
+	 * @param string $metadata_value
+	 * @param string $order_by
+	 * @param int $limit
+	 * @param int $offset
+	 */
+	function get_sites($user_id = 0, $type = "", $metadata_type = "", $metadata_value = "", $order_by = "created desc", $limit = 10, $offset = 0)
+	{
+		
+	}
 	
 	/**
 	 * Retrieves details about a site, if the current user is allowed to see it
