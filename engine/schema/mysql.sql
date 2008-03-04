@@ -64,33 +64,6 @@ CREATE TABLE `prefix_configuration` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `metadata_type`
---
-
-CREATE TABLE `prefix_metadata_type` (
-  `id` int(11) NOT NULL auto_increment,
-  `name` varchar(32) NOT NULL,
-  PRIMARY KEY  (`id`),
-  KEY `name` (`name`)
-) ENGINE=MyISAM ;
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `metadata_value`
---
-
-CREATE TABLE `prefix_metadata_value` (
-  `id` int(11) NOT NULL auto_increment,
-  `value` text NOT NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM ;
-
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `objects`
 --
 
@@ -106,24 +79,6 @@ CREATE TABLE `prefix_objects` (
   `time_updated` int(11) NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `time_created` (`time_created`,`time_updated`)
-) ENGINE=MyISAM ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `object_metadata`
---
-
-CREATE TABLE `prefix_object_metadata` (
-  `id` int(11) NOT NULL auto_increment,
-  `object_id` int(11) NOT NULL,
-  `metadata_type_id` int(11) NOT NULL,
-  `value_id` int(11) NOT NULL,
-  `access_id` int(11) NOT NULL,
-  `site_id` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`id`),
-  KEY `object_id` (`object_id`,`metadata_type_id`,`value_id`),
-  KEY `access_id` (`access_id`)
 ) ENGINE=MyISAM ;
 
 -- --------------------------------------------------------
@@ -164,22 +119,6 @@ CREATE TABLE `prefix_users` (
   FULLTEXT KEY `name` (`name`)
 ) ENGINE=MyISAM ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `user_metadata`
---
-
-CREATE TABLE `prefix_user_metadata` (
-  `id` int(11) NOT NULL auto_increment,
-  `user_id` int(11) NOT NULL,
-  `metadata_type_id` int(11) NOT NULL,
-  `value_id` int(11) NOT NULL,
-  `access_id` int(11) NOT NULL,
-  PRIMARY KEY  (`id`),
-  KEY `user_id` (`user_id`,`metadata_type_id`,`value_id`),
-  KEY `access_id` (`access_id`)
-) ENGINE=MyISAM ;
 
 -- --------------------------------------------------------
 
@@ -203,3 +142,46 @@ CREATE TABLE `prefix_sites` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM ;
 
+
+-- 
+-- Table structure for annotations
+--
+CREATE TABLE `prefix_annotations` (
+	`id` int(11) NOT NULL auto_increment,
+	
+	`object_id` int(11) NOT NULL,
+	`object_type` enum ('object', 'user', 'collection', 'site') NOT NULL,
+	
+	`name` varchar(255) NOT NULL,
+	`value` text NOT NULL,
+	`value_type` enum ('integer','tag','text','file') NOT NULL,
+	
+	`owner_id` int(11) NOT NULL,
+	`created` int(11) NOT NULL,
+	
+	`access_id` int(11) NOT NULL,
+	
+	PRIMARY KEY (`id`)
+) ENGINE=MyISAM;
+
+--
+-- Table structure for metadata
+--
+CREATE TABLE `prefix_metadata` (
+	`id` int(11) NOT NULL auto_increment,
+	
+	`object_id` int(11) NOT NULL,
+	`object_type` enum ('object', 'user', 'collection', 'site') NOT NULL,
+	
+	`name` varchar(255) NOT NULL,
+	`value` text NOT NULL,
+	`value_type` enum ('integer','tag','text','file') NOT NULL,
+	
+	`created` int(11) NOT NULL,
+	
+	`access_id` int(11) NOT NULL,
+	
+	PRIMARY KEY (`id`),
+	UNIQUE KEY (`object_id`,`object_type`, `name`)
+	
+) ENGINE=MyISAM;
