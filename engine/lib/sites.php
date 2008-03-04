@@ -205,11 +205,13 @@
 		 */
 		function save() 
 		{ 
-			
-			
-			
-			
-			
+			if (isset($this->id))
+				return update_site($this->id, $this->title, $this->description, $this->url, $this->owner_id, $this->access_id); // ID Specified, update ID
+			else
+			{ 
+				$this->id = create_site($this->title, $this->description, $this->url, $this->owner_id, $this->access_id); // Create a site
+				return $this->id;
+			}
 		}
 		
 		/**
