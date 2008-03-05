@@ -332,7 +332,7 @@
 	 * @return string Sanitised string
 	 */
         function sanitise_string($string) {
-        	return mysql_real_escape_string($string);
+        	return mysql_real_escape_string(trim($string));
         }
         
 	// Stuff for initialisation
