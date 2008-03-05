@@ -108,9 +108,9 @@
 		global $CONFIG;
 		
 		$object_id = (int)$object_id;
-		$object_type = mysql_real_escape_string(trim($object_type));
-		$name = mysql_real_escape_string(trim($name));
-		$value = mysql_real_escape_string(trim($value));
+		$object_type = sanitise_string(trim($object_type));
+		$name = sanitise_string(trim($name));
+		$value = sanitise_string(trim($value));
 		$owner_id = (int)$owner_id;
 		$limit = (int)$limit;
 		$offset = (int)$offset;
@@ -159,10 +159,10 @@
 		global $CONFIG;
 
 		$object_id = (int)$object_id;
-		$object_type = mysql_real_escape_string(trim($object_type));
-		$name = mysql_real_escape_string(trim($name));
-		$value = mysql_real_escape_string(trim($value));
-		$value_type = mysql_real_escape_string(trim($value_type));
+		$object_type = sanitise_string(trim($object_type));
+		$name = sanitise_string(trim($name));
+		$value = sanitise_string(trim($value));
+		$value_type = sanitise_string(trim($value_type));
 		$owner_id = (int)$owner_id;
 		$access_id = (int)$access_id;
 		
@@ -184,9 +184,9 @@
 		global $CONFIG;
 
 		$annotation_id = (int)$annotation_id;
-		$name = mysql_real_escape_string(trim($name));
-		$value = mysql_real_escape_string(trim($value));
-		$value_type = mysql_real_escape_string(trim($value_type));
+		$name = sanitise_string(trim($name));
+		$value = sanitise_string(trim($value));
+		$value_type = sanitise_string(trim($value_type));
 		$owner_id = (int)$owner_id;
 		$access_id = (int)$access_id;
 		

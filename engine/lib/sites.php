@@ -265,7 +265,7 @@
 	{
 		global $CONFIG;
 		
-		$url = mysql_real_escape_string(trim($url));	
+		$url = sanitise_string(trim($url));	
 		$access = get_access_list();
 		
 		return get_data_row("select o.* from {$CONFIG->dbprefix}sites where url='$url' and (o.access_id in {$access} or (o.access_id = 0 and o.owner_id = {$_SESSION['id']}))");			
