@@ -177,6 +177,7 @@ CREATE TABLE `prefix_metadata` (
 	`value` text NOT NULL,
 	`value_type` enum ('integer','tag','text','file') NOT NULL,
 	
+	`owner_id` int(11) NOT NULL,
 	`created` int(11) NOT NULL,
 	
 	`access_id` int(11) NOT NULL,
