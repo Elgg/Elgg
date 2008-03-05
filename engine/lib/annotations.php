@@ -25,14 +25,19 @@
 		private $attributes;
 		
 		/**
-		 * Construct a new site object, optionally from a given id value.
+		 * Construct a new site object, optionally from a given id value or db row.
 		 *
-		 * @param int $id
+		 * @param mixed $id
 		 */
 		function __construct($id = null) 
 		{
 			if (!empty($id)) {
-				if ($annotation = get_annotation($id)) {
+				if ($id instanceof stdClass)
+					$annotation = $id;
+				else
+					$annotation = get_annotation($id);
+				
+				if ($annotation) {
 					$objarray = (array) $annotation;
 					foreach($objarray as $key => $value) {
 						$this->attributes[$key] = $value;
@@ -43,6 +48,21 @@
 		
 		function __get($name) {
 			if (isset($attributes[$name])) {
+				
+				// Sanitise outputs if required
+				if ($name=='value')
+				{
+					switch ($attributes['value_type'])
+					{
+						case 'integer' :  return (int)$attributes['value'];
+						case 'tag' :
+						case 'text' :
+						case 'file' : return sanitise_string($attributes['value']);
+							
+						default : throw new InstallationException("Type {$attributes['value_type']} is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.");
+					}
+				}
+				
 				return $attributes[$name];
 			}
 			return null;

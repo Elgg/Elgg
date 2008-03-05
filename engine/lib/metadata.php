@@ -24,14 +24,20 @@
 		private $attributes;
 		
 		/**
-		 * Construct a new site object, optionally from a given id value.
+		 * Construct a new site object, optionally from a given id value or row.
 		 *
-		 * @param int $id
+		 * @param mixed $id
 		 */
 		function __construct($id = null) 
 		{
 			if (!empty($id)) {
-				if ($metadata = get_metadata($id)) {
+				
+				if ($id instanceof stdClass)
+					$metadata = $id; // Create from db row
+				else
+					$metadata = get_metadata($id);	
+				
+				if ($metadata) {
 					$objarray = (array) $metadata;
 					foreach($objarray as $key => $value) {
 						$this->attributes[$key] = $value;
@@ -42,6 +48,21 @@
 		
 		function __get($name) {
 			if (isset($attributes[$name])) {
+				
+				// Sanitise value if necessary
+				if ($name=='value')
+				{
+					switch ($attributes['value_type'])
+					{
+						case 'integer' :  return (int)$attributes['value'];
+						case 'tag' :
+						case 'text' :
+						case 'file' : return sanitise_string($attributes['value']);
+							
+						default : throw new InstallationException("Type {$attributes['value_type']} is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.");
+					}
+				}
+				
 				return $attributes[$name];
 			}
 			return null;
@@ -154,6 +175,7 @@
 	 * @param string $order_by
 	 * @param int $limit
 	 * @param int $offset
+	 * @return array of ElggMetadata
 	 */
 	function get_metadatas($object_id = 0, $object_type = "", $owner_id = 0, $order_by = "created desc", $limit = 10, $offset = 0)
 	{
