@@ -497,6 +497,8 @@
 		
 		function __elgg_php_exception_handler($exception) {
 			
+			error_log("*** FATAL EXCEPTION *** : " . $exception);
+			
 			$body = elgg_view("messages/exceptions/exception",array('object' => $exception));
 			echo page_draw("We've encountered a problem.", $body);
 			
