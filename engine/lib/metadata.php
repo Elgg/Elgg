@@ -99,6 +99,8 @@
 		
 	}
 	
+	// add metadata wrapper
+	
 	/**
 	 * Create a new metadata.
 	 *
