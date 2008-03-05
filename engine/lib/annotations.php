@@ -97,29 +97,48 @@
 	 * Get a list of annotations for a given object/user/annotation type.
 	 *
 	 * @param int $object_id
-	 * @param string $annotation_type
+	 * @param string $object_type
 	 * @param int $owner_id
 	 * @param string $order_by
 	 * @param int $limit
 	 * @param int $offset
 	 */
-	function get_annotations($object_id = 0, $annotation_type = "", $owner_id = 0, $order_by = "created desc", $limit = 10, $offset = 0)
+	function get_annotations($object_id = 0, $object_type = "", $owner_id = 0, $order_by = "created desc", $limit = 10, $offset = 0)
 	{
+		global $CONFIG;
+		
 		$object_id = (int)$object_id;
-		$annotation_type = mysql_real_escape_string(trim($annotation_type));
+		$object_type = mysql_real_escape_string(trim($object_type));
 		$name = mysql_real_escape_string(trim($name));
 		$value = mysql_real_escape_string(trim($value));
 		$owner_id = (int)$owner_id;
 		$limit = (int)$limit;
 		$offset = (int)$offset;
 		
+		
+		// Construct query
+		$where = array();
+		
+		if ($object_id != 0)
+			$where[] = "object_id=$object_id";
+			
+		if ($object_type != "")
+			$where[] = "object_type='$object_type'";
+		
+		if ($owner_id != 0)
+			$where[] = "owner_id=$owner_id";
+			
+		// add access controls
 		$access = get_access_list();
-		
-		
+		$where[] = "(access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))";
+			
 		// construct query.
-		
-		
-		
+		$query = "SELECT * from {$CONFIG->dbprefix}annotations where ";
+		for ($n = 0; $n < count($where); $n++)
+		{
+			if ($n > 0) $query .= " and ";
+			$query .= $where[$n];
+		}
 		
 		return get_data($query);
 	}
