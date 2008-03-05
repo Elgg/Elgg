@@ -98,8 +98,6 @@
 		
 	}
 	
-	//add annotation wrapper
-	
 	/**
 	 * Get a specific annotation.
 	 *

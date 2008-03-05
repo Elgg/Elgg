@@ -99,10 +99,8 @@
 		
 	}
 	
-	// add metadata wrapper
-	
 	/**
-	 * Create a new metadata.
+	 * Create a new metadata object, or update an existing one.
 	 *
 	 * @param int $object_id
 	 * @param string $object_type
