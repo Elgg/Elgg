@@ -55,6 +55,13 @@
 	 */
 	class APIException extends Exception {}
 	
+	/**
+	 * @class CallException
+	 * An exception thrown when there is a problem calling something.
+	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 */
+	class CallException extends Exception {}
+	
 	// Class exceptions ///////////////////////////////////////////////////////////////////////
 
 	/**
@@ -79,4 +86,21 @@
 	 * @author Marcus Povey <marcus@dushka.co.uk>
 	 */
 	class InstallationException extends ConfigurationException {}
+	
+	// Call exceptions ////////////////////////////////////////////////////////////////////////
+
+	/**
+	 * @class NotImplementedException
+	 * Thrown when a method or function has not been implemented, primarily used in development... you should
+	 * not see these!
+	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 */
+	class NotImplementedException extends CallException {}
+	
+	/**
+	 * @class InvalidParameterException
+	 * A parameter is invalid.
+	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 */
+	class InvalidParameterException extends CallException {}
 ?>
