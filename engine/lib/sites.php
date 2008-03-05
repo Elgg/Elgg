@@ -30,7 +30,7 @@
 		/**
 		 * Construct a new site object, optionally from a given id value.
 		 *
-		 * @param int $id
+		 * @param mixed $id
 		 */
 		function __construct($id = null) 
 		{
@@ -40,8 +40,12 @@
 				
 				if (is_int($id))
 					$site = get_site($id); // This is an integer ID
-				else
+				else if (is_string($id))
 					$site = get_site_byurl($id); // Otherwise assume URL
+				else if ($id instanceof stdClass)
+					$site = $id;	// This is a db row, so serialise directly
+				else
+					throw new InvalidParameterException("Unrecognised or unsupported type passed to ElggSite constructor.");
 				
 				if ($site) {
 					$objarray = (array) $site;
@@ -49,6 +53,8 @@
 						$this->attributes[$key] = $value;
 					}
 				}
+				else
+					throw new IOException("Could not create ElggSite object");
 			}
 		}
 		
@@ -210,6 +216,8 @@
 			else
 			{ 
 				$this->id = create_site($this->title, $this->description, $this->url, $this->owner_id, $this->access_id); // Create a site
+				if (!$this->id) throw new IOException("Unable to save new ElggSite"); 
+				
 				return $this->id;
 			}
 		}
@@ -236,6 +244,7 @@
 	function get_sites($user_id = 0, $type = "", $metadata_type = "", $metadata_value = "", $order_by = "created desc", $limit = 10, $offset = 0)
 	{
 		// TODO: Writeme
+		throw new NotImplementedException("Writeme!");
 	}
 	
 	/**
@@ -251,7 +260,7 @@
 		$site_id = (int) $site_id;
 		$access = get_access_list();
 		
-		return get_data_row("select o.* from {$CONFIG->dbprefix}sites where id=$site_id and (o.access_id in {$access} or (o.access_id = 0 and o.owner_id = {$_SESSION['id']}))");			
+		return get_data_row("select * from {$CONFIG->dbprefix}sites where id=$site_id and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))");			
 		
 	}
 		
@@ -282,6 +291,7 @@
 	function get_site_users($site_id, $limit, $offset)
 	{
 		// TODO : Writeme
+		throw new NotImplementedException("Writeme!");
 	}
 	
 	/**
@@ -295,6 +305,7 @@
 	function get_site_objects($site_id, $type = "", $limit = 10, $offset = 0) 
 	{
 		// TODO : Writeme
+		throw new NotImplementedException("Writeme!");
 	}
 	
 	/**
@@ -308,6 +319,7 @@
 	function get_site_collections($site_id, $type = "", $limit = 10, $offset = 0)
 	{
 		// TODO : Writeme
+		throw new NotImplementedException("Writeme!");
 	}
 	
 	/**
@@ -319,6 +331,7 @@
 	function add_site_user($site_id, $user_id)
 	{
 		// TODO : Writeme
+		throw new NotImplementedException("Writeme!");
 	}
 	
 	/**
@@ -330,6 +343,7 @@
 	function remove_site_user($site_id, $user_id)
 	{
 		// TODO : Writeme
+		throw new NotImplementedException("Writeme!");
 	}
 	
 	/**
@@ -344,6 +358,7 @@
 	function set_site_metadata($name, $value, $access_id, $site_id, $vartype = "")
 	{
 		// TODO : Writeme
+		throw new NotImplementedException("Writeme!");
 	}
 	
 	/**
@@ -355,6 +370,7 @@
 	function get_site_metadata($name, $site_id)
 	{
 		// TODO : Writeme
+		throw new NotImplementedException("Writeme!");
 	}
 	
 	/**
@@ -366,6 +382,7 @@
 	function remove_site_metadata($site_id, $name)
 	{
 		// TODO : Writeme
+		throw new NotImplementedException("Writeme!");
 	}
 	
 	/**
@@ -382,6 +399,7 @@
 	function add_site_annotation($name, $value, $access_id, $owner_id, $site_id, $vartype)
 	{
 		// TODO : Writeme
+		throw new NotImplementedException("Writeme!");
 	}
 	
 	/**
@@ -395,6 +413,7 @@
 	function get_site_annotations($name, $site_id, $limit, $offset)
 	{
 		// TODO : Writeme
+		throw new NotImplementedException("Writeme!");
 	}
 	
 	/**
@@ -406,6 +425,7 @@
 	function count_site_annotations($name, $site_id)
 	{
 		// TODO : Writeme
+		throw new NotImplementedException("Writeme!");
 	}
 	
 	/**
@@ -417,6 +437,7 @@
 	function get_site_annotations_avg($name, $site_id)
 	{
 		// TODO : Writeme
+		throw new NotImplementedException("Writeme!");
 	}
 	
 	/**
@@ -428,6 +449,7 @@
 	function get_site_annotations_sum($name, $site_id)
 	{
 		// TODO : Writeme
+		throw new NotImplementedException("Writeme!");
 	}
 	
 	/**
@@ -439,6 +461,7 @@
 	function get_site_annotations_min($name, $site_id)
 	{
 		// TODO : Writeme
+		throw new NotImplementedException("Writeme!");
 	}
 	
 	/**
@@ -450,6 +473,7 @@
 	function get_site_annotations_max($name, $site_id)
 	{
 		// TODO : Writeme
+		throw new NotImplementedException("Writeme!");
 	}
 	
 	/**
@@ -461,6 +485,7 @@
 	function remove_site_annotations($site_id, $name)
 	{
 		// TODO : Writeme
+		throw new NotImplementedException("Writeme!");
 	}
 	
 	/**
@@ -472,9 +497,18 @@
 	 * @param int $owner_id
 	 * @param int $access_id
 	 */
-	function create_site($title, $description, $url, $owner_id, $access_id)
+	function create_site($title, $description, $url, $owner_id = 0, $access_id = 0)
 	{
 		// TODO : Writeme
+		throw new NotImplementedException("Writeme!");
+		
+		$title = sanitise_string($title);
+		$description = sanitise_string($description);
+		$url = sanitise_string($url);
+		$owner_id = (int)$owner_id;
+		$access_id = (int)$access_id;
+		
+		return insert_data("");
 	}
 	
 	/**
@@ -490,6 +524,7 @@
 	function update_site($id, $title, $description, $url, $owner_id, $access_id)
 	{
 		// TODO : Writeme
+		throw new NotImplementedException("Writeme!");
 	}
 	
 	/**
@@ -500,6 +535,7 @@
 	function delete_site($site_id)
 	{
 		// TODO : Writeme
+		throw new NotImplementedException("Writeme!");
 	}
 	
 	/**

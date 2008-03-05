@@ -26,4 +26,48 @@
 		$obj = new stdClass;
 		$obj->id = 3;
 		
+		
+		
+		
+		// Testing ///////
+	
+		// Create / load a site
+		$site = get_site(1);
+		if (!$site)
+		{
+			$site = new ElggSite();
+			
+			$site->title = "Test title";
+			$site->description = "Test description";
+			$site->url = "http://dushka/~icewing/Workingdirectory/elggnew/";
+			$site->owner_id = 1;
+			$site->access_id = 0;
+			
+			error_log("LOADED NEW SITE: Saving");
+			
+			$site->save();
+		}
+		else
+			$site = new ElggSite($site);
+			
+		
+		
+
+		// annotate site
+
+
+		// add meta data
+
+
+		// get site 
+
+		// get site metadata
+		// change site metadata
+
+		// get site metadata
+
+
+		// get site annotations
+		
+		
 ?>

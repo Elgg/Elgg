@@ -6,7 +6,7 @@
 	 * @package Elgg
 	 * @subpackage Core
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Marcus Povey <marcus@dushka.co.uk
+	 * @author Marcus Povey <marcus@dushka.co.uk>
 	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.org/
 	 */
@@ -87,6 +87,7 @@
 			else
 			{ 
 				$this->id = create_metadata($this->object_id, $this->object_type, $this->name, $this->value, $this->value_type, $this->owner_id, $this->access_id);
+				if (!$this->id) throw new IOException("Unable to save new ElggAnnotation");
 				return $this->id;
 			}
 			
