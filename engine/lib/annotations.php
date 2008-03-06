@@ -248,6 +248,56 @@
 		
 		return update_data("UPDATE {$CONFIG->dbprefix}annotations set value='$value', value_type='$value_type', access_id=$access_id, owner_id=$owner_id where id=$annotation_id and name='$name' and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))");
 	}
+	
+	/**
+	 * Count the number of annotations based on search parameters
+	 *
+	 * @param int $object_id
+	 * @param string $object_type
+	 * @param string $name
+	 * @param mixed $value
+	 * @param string $value_type
+	 * @param int $owner_id
+	 */
+	function count_annotations($object_id = 0, $object_type = "", $name = "", $value = "", $value_type = "", $owner_id = 0)
+	{
+		global $CONFIG;
+		
+		$object_id = (int)$object_id;
+		$object_type = sanitise_string($object_type);
+		$name = sanitise_string($name);
+		$value = sanitise_string($value);
+		$value_type = sanitise_string($value_type);
+		$owner_id = (int)$owner_id;
+		$access = get_access_list();
+		
+		$where = array();
+		$where_q = "";
+		
+		if ($object_id != 0)
+			$where[] = "object_id=$object_id";
+			
+		if ($object_type != "")
+			$where[] = "object_type='$object_type'";
+			
+		if ($name != "")
+			$where[] = "name='$name'";
+			
+		if ($value != "")
+			$where[] = "value='$value'";
+		
+		if ($owner_id != 0)
+			$where[] = "owner_id=$owner_id";
+			
+		for ($n = 0; $n < count($where); $n++)
+			$where_q .= $where[$n] ." and ";
+		
+		$result = get_data_row("SELECT count(*) as count from {$CONFIG->dbprefix}annotations WHERE $where_q (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))");
+		if ($result)
+			return $result->count;
+			
+		return false;
+	}
 
 	/**
 	 * Delete a given annotation.
