@@ -34,6 +34,8 @@
 		 */
 		function __construct($id = null) 
 		{
+			$this->attributes = array();
+			
 			if (!empty($id)) {
 				
 				$site = null;
@@ -51,6 +53,7 @@
 					$objarray = (array) $site;
 					foreach($objarray as $key => $value) {
 						$this->attributes[$key] = $value;
+						error_log("$key => $value");
 					}
 				}
 				else
@@ -59,8 +62,8 @@
 		}
 		
 		function __get($name) {
-			if (isset($attributes[$name])) {
-				return $attributes[$name];
+			if (isset($this->attributes[$name])) {
+				return $this->attributes[$name];
 			}
 			return null;
 		}
@@ -211,7 +214,7 @@
 		 */
 		function save() 
 		{ 
-			if (isset($this->id))
+			if ($this->id > 0)
 				return update_site($this->id, $this->title, $this->description, $this->url, $this->owner_id, $this->access_id); // ID Specified, update ID
 			else
 			{ 
@@ -259,7 +262,7 @@
 		
 		$site_id = (int) $site_id;
 		$access = get_access_list();
-		
+		error_log("select * from {$CONFIG->dbprefix}sites where id=$site_id and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))");
 		return get_data_row("select * from {$CONFIG->dbprefix}sites where id=$site_id and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))");			
 		
 	}
@@ -499,16 +502,16 @@
 	 */
 	function create_site($title, $description, $url, $owner_id = 0, $access_id = 0)
 	{
-		// TODO : Writeme
-		throw new NotImplementedException("Writeme!");
-		
+		global $CONFIG;
+				
 		$title = sanitise_string($title);
 		$description = sanitise_string($description);
 		$url = sanitise_string($url);
 		$owner_id = (int)$owner_id;
 		$access_id = (int)$access_id;
+		$time = time();
 		
-		return insert_data("");
+		return insert_data("INSERT into {$CONFIG->dbprefix}sites (name, description, url, owner_id, created, last_updated, access_id) VALUES ('$title','$description','$url',$owner_id,'$time','$time', $access_id)");
 	}
 	
 	/**
@@ -523,8 +526,20 @@
 	 */
 	function update_site($id, $title, $description, $url, $owner_id, $access_id)
 	{
-		// TODO : Writeme
-		throw new NotImplementedException("Writeme!");
+		
+		global $CONFIG;
+
+		$id = (int)$id;
+		$title = sanitise_string($title);
+		$description = sanitise_string($description);
+		$url = sanitise_string($url);
+		$owner_id = (int)$owner_id;
+		$access_id = (int)$access_id;
+		$time = time();
+		
+		$access = get_access_list();
+		
+		return update_data("UPDATE {$CONFIG->dbprefix}sites set name='$title', description='$description', url='$url', last_updated='$time', owner_id=$owner_id, access_id=$access_id WHERE id=$id and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))");
 	}
 	
 	/**
