@@ -212,13 +212,13 @@
 		$value_type = detect_annotation_valuetype($value, sanitise_string(trim($value_type)));
 		
 		$owner_id = (int)$owner_id;
-		if ($owner_id=0) $owner_id = $_SESSION['id'];
+		if ($owner_id==0) $owner_id = $_SESSION['id'];
 		
 		$access_id = (int)$access_id;
 		
+		$time = time();
 		
-		
-		return insert_data("INSERT into {$CONFIG->dbprefix}annotations (object_id, object_type, name, value, value_type, owner_id, created, access_id) VALUES ($object_id,'$object_type','$name','$value','$value_type', $owner_id, $access_id)");
+		return insert_data("INSERT into {$CONFIG->dbprefix}annotations (object_id, object_type, name, value, value_type, owner_id, created, access_id) VALUES ($object_id,'$object_type','$name','$value','$value_type', $owner_id, $time, $access_id)");
 	}
 	
 	/**
@@ -241,7 +241,7 @@
 		$value_type = detect_annotation_valuetype($value, sanitise_string(trim($value_type)));
 		
 		$owner_id = (int)$owner_id;
-		if ($owner_id=0) $owner_id = $_SESSION['id'];
+		if ($owner_id==0) $owner_id = $_SESSION['id'];
 		
 		$access_id = (int)$access_id;
 		
