@@ -557,7 +557,6 @@
 	 */
 	function update_site($id, $title, $description, $url, $owner_id, $access_id)
 	{
-		
 		global $CONFIG;
 
 		$id = (int)$id;
@@ -580,8 +579,11 @@
 	 */
 	function delete_site($site_id)
 	{
-		// TODO : Writeme
-		throw new NotImplementedException("Writeme!");
+		global $CONFIG;
+		
+		$site_id = (int)$site_id;
+		
+		return delete_data("DELETE from {$CONFIG->dbprefix}sites where id=$site_id");
 	}
 	
 	/**
