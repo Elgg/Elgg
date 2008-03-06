@@ -13,6 +13,21 @@
 	 */
 
 	/**
+	 * Converts a standard database row result to an ElggObject
+	 *
+	 * @param object $row The database row object
+	 * @return ElggObject The formatted ElggObject
+	 */
+		function row_to_elggobject($row) {
+			if (empty($row))
+				return $row;
+			$object = new ElggObject();
+			foreach(get_object_vars($row) as $property => $value)
+				$object->$property = $value;
+			return $object;
+		}
+
+	/**
 	 * Get object reverse ordered by publish time, optionally filtered by user and/or type
 	 *
 	 * @param int $user_id The ID of the publishing user; set to 0 for all users
@@ -56,7 +71,7 @@
 			$query .= " order by o.time_created desc ";
 			if ($limit > 0 || $offset > 0) $query .= " limit {$offset}, {$limit}";
 			
-			return get_data($query);
+			return get_data($query,"row_to_elggobject");
 			
 		}
 
@@ -73,7 +88,8 @@
 			$object_id = (int) $object_id;
 			$access = get_access_list();
 			
-			return get_data_row("select o.*, ot.name as typename from {$CONFIG->dbprefix}objects left join {$CONFIG->dbprefix}object_types ot on ot.id = o.type_id where (o.access_id in {$access} or (o.access_id = 0 and o.owner_id = {$_SESSION['id']}))");			
+			$row = get_data_row("select o.*, ot.name as typename from {$CONFIG->dbprefix}objects left join {$CONFIG->dbprefix}object_types ot on ot.id = o.type_id where (o.access_id in {$access} or (o.access_id = 0 and o.owner_id = {$_SESSION['id']}))");
+			return row_to_elggobject($row);			
 			
 		}
 		
@@ -150,7 +166,7 @@
 	 * @param int $site_id The site the object belongs to
 	 * @return int|false Either 1 or 0 (the number of objects updated) or false on failure
 	 */
-		
+
 		function update_object($id, $title = null, $description = null, $type = null, $owner_id = null, $access_id = null, $site_id = null) {
 
 			global $CONFIG;
