@@ -21,10 +21,8 @@
 		function row_to_elggobject($row) {
 			if (empty($row))
 				return $row;
-			$object = new ElggObject();
-			foreach(get_object_vars($row) as $property => $value)
-				$object->$property = $value;
-			return $object;
+			
+			return new ElggObject($row);
 		}
 
 	/**
@@ -368,7 +366,12 @@
 				$this->attributes = array();
 				
 				if (!empty($id)) {
-					if ($object = get_object($id)) {
+					if ($id instanceof stdClass)
+						$object = $id; // Create from db row
+					else
+						$object = get_object($id);
+						
+					if ($object) {
 						$objarray = (array) $object;
 						foreach($objarray as $key => $value) {
 							$this->attributes[$key] = $value;
