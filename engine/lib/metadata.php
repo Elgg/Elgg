@@ -103,6 +103,28 @@
 	}
 	
 	/**
+	 * Detect the value_type for a given value.
+	 * Currently this is very crude.
+	 * 
+	 * TODO: Make better!
+	 *
+	 * @param mixed $value
+	 * @param string $value_type If specified, overrides the detection.
+	 * @return string
+	 */
+	function detect_metadata_valuetype($value, $value_type = "")
+	{
+		if ($value_type!="")
+			return $value_type;
+			
+		// This is crude
+		if (is_int($value)) return 'integer';
+		
+		return 'tag';
+	}
+	
+	
+	/**
 	 * Create a new metadata object, or update an existing one.
 	 *
 	 * @param int $object_id
@@ -121,14 +143,29 @@
 		$object_type = sanitise_string(trim($object_type));
 		$name = sanitise_string(trim($name));
 		$value = sanitise_string(trim($value));
-		$value_type = sanitise_string(trim($value_type));
+		$value_type = detect_metadata_valuetype(sanitise_string(trim($value_type)));
 		
 		$owner_id = (int)$owner_id;
 		if ($owner_id==0) $owner_id = $_SESSION['id'];
 		
 		$access_id = (int)$access_id;
 		
-		return insert_data("INSERT into {$CONFIG->dbprefix}metadata (object_id, object_type, name, value, value_type, owner_id, created, access_id) VALUES ($object_id,'$object_type','$name','$value','$value_type', $owner_id, $access_id)");
+		$id = insert_data("INSERT into {$CONFIG->dbprefix}metadata (object_id, object_type, name, value, value_type, owner_id, created, access_id) VALUES ($object_id,'$object_type','$name','$value','$value_type', $owner_id, $access_id)");
+		
+		if (!$id)
+		{
+			$existing = get_data_row("SELECT * from {$CONFIG->dbprefix}metadata WHERE object_id = $object_id and object_type='$object_type' and name='$name' limit 1");
+			if ($existing) 
+			{
+				$id = $existing->id;
+				$result = update_metadata($id,$name, $value, $value_type, $owner_id, $access_id);
+				
+				if (!$result) return false;
+			}
+			
+		}
+		
+		return $id;
 	}
 	
 	/**
@@ -148,7 +185,7 @@
 		$id = (int)$id;
 		$name = sanitise_string(trim($name));
 		$value = sanitise_string(trim($value));
-		$value_type = sanitise_string(trim($value_type));
+		$value_type = detect_metadata_valuetype(sanitise_string(trim($value_type)));
 		
 		$owner_id = (int)$owner_id;
 		if ($owner_id==0) $owner_id = $_SESSION['id'];
