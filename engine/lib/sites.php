@@ -165,7 +165,7 @@
 		 * @param int $limit
 		 * @param int $offset
 		 */
-		function getAnnotations($name, $limit = 50, $offset = 0) { return get_site_annotations($name, $limit, $offset); }
+		function getAnnotations($name, $limit = 50, $offset = 0) { return get_site_annotations($name, $this->id, $limit, $offset); }
 		
 		/**
 		 * Return the annotations for the site.
@@ -360,8 +360,14 @@
 	 */
 	function set_site_metadata($name, $value, $access_id, $site_id, $vartype = "")
 	{
-		// TODO : Writeme
-		throw new NotImplementedException("Writeme!");
+		$name = sanitise_string($name);
+		$value = sanitise_string($value);
+		$access_id = (int)$access_id;
+		$site_id = (int)$site_id;
+		$vartype = sanitise_string($vartype);
+		
+		$id = create_metadata($site_id, 'site', $name, $value, $vartype, $owner_id, $access_id);
+		return $id;
 	}
 	
 	/**
@@ -372,8 +378,10 @@
 	 */
 	function get_site_metadata($name, $site_id)
 	{
-		// TODO : Writeme
-		throw new NotImplementedException("Writeme!");
+		$name = sanitise_string($name);
+		$site_id = (int)$site_id;
+		
+		return get_metadatas($site_id, 'site');
 	}
 	
 	/**
@@ -401,8 +409,16 @@
 	 */
 	function add_site_annotation($name, $value, $access_id, $owner_id, $site_id, $vartype)
 	{
-		// TODO : Writeme
-		throw new NotImplementedException("Writeme!");
+		$name = sanitise_string($name);
+		$value = sanitise_string($value);
+		$access_id = (int)$access_id;
+		$owner_id = (int)$owner_id; if ($owner_id==0) $owner_id = $_SESSION['id'];
+		$site_id = (int)$site_id;
+		$vartype = sanitise_string($vartype);
+		
+		$id = create_annotation($site_id, 'site', $name, $value, $vartype, $owner_id, $access_id);
+		
+		return $id;
 	}
 	
 	/**
@@ -415,8 +431,13 @@
 	 */
 	function get_site_annotations($name, $site_id, $limit, $offset)
 	{
-		// TODO : Writeme
-		throw new NotImplementedException("Writeme!");
+		$name = sanitise_string($name);
+		$site_id = (int)$site_id;
+		$limit = (int)$limit;
+		$offset = (int)$offset;
+		$owner_id = (int)$owner_id; if ($owner_id==0) $owner_id = $_SESSION['id']; // Consider adding the option to change in param?
+		
+		return get_annotations($site_id, 'site', $owner_id, "created desc", $limit, $offset);
 	}
 	
 	/**

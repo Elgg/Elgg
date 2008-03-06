@@ -30,9 +30,12 @@
 		
 		
 		// Testing ///////
+	if ($_SESSION['id']==-1) $_SESSION['id'] = 1;
 	
 		// Create / load a site
 		$site = get_site(1);
+error_log("GETTIGN SITE " . print_r($site, true));		
+		
 		if (!$site)
 		{
 			$site = new ElggSite();
@@ -43,31 +46,43 @@
 			$site->owner_id = 1;
 			$site->access_id = 0;
 			
-			error_log("LOADED NEW SITE: Saving");
+			error_log("LOADED NEW SITE: Saving" . print_r($site,true));
 			
 			$site->save();
 		}
 		else
+		{
 			$site = new ElggSite($site);
+
+			$site->title = "Test title " . time();
+			$site->save();
 			
+			error_log("UPDATING SITE " . print_r($site, true));	
+		}
 		
 		
 
 		// annotate site
-
-
+		$site->annotate("Test","TestValue");
+		
 		// add meta data
+		$site->setMetadata("Metaname", "Value");
 
 
-		// get site 
 
-		// get site metadata
+
 		// change site metadata
+		$site->setMetadata("Metaname", "Value2");
 
-		// get site metadata
+		
 
 
 		// get site annotations
+		error_log("SITE Annotations : " . print_r($site->getAnnotations("Test"), true));
+		
+		
+		// get site metadata
+		error_log("SITE Metadata : " . print_r($site->getMetadata("Metaname"), true));
 		
 		
 ?>

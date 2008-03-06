@@ -136,7 +136,6 @@
 		$value = sanitise_string(trim($value));
 		
 		$owner_id = (int)$owner_id;
-		if ($owner_id=0) $owner_id = $_SESSION['id'];
 		
 		$limit = (int)$limit;
 		$offset = (int)$offset;
