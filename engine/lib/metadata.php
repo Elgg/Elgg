@@ -144,25 +144,26 @@
 		$name = sanitise_string(trim($name));
 		$value = sanitise_string(trim($value));
 		$value_type = detect_metadata_valuetype(sanitise_string(trim($value_type)));
+		$time = time();
 		
 		$owner_id = (int)$owner_id;
 		if ($owner_id==0) $owner_id = $_SESSION['id'];
 		
 		$access_id = (int)$access_id;
+
+		$id = false;
 		
-		$id = insert_data("INSERT into {$CONFIG->dbprefix}metadata (object_id, object_type, name, value, value_type, owner_id, created, access_id) VALUES ($object_id,'$object_type','$name','$value','$value_type', $owner_id, $access_id)");
-		
-		if (!$id)
+		$existing = get_data_row("SELECT * from {$CONFIG->dbprefix}metadata WHERE object_id = $object_id and object_type='$object_type' and name='$name' limit 1");
+		if ($existing) 
 		{
-			$existing = get_data_row("SELECT * from {$CONFIG->dbprefix}metadata WHERE object_id = $object_id and object_type='$object_type' and name='$name' limit 1");
-			if ($existing) 
-			{
-				$id = $existing->id;
-				$result = update_metadata($id,$name, $value, $value_type, $owner_id, $access_id);
-				
-				if (!$result) return false;
-			}
+			$id = $existing->id;
+			$result = update_metadata($id,$name, $value, $value_type, $owner_id, $access_id);
 			
+			if (!$result) return false;
+		}
+		else
+		{
+			$id = insert_data("INSERT into {$CONFIG->dbprefix}metadata (object_id, object_type, name, value, value_type, owner_id, created, access_id) VALUES ($object_id,'$object_type','$name','$value','$value_type', $owner_id, $time, $access_id)");
 		}
 		
 		return $id;
