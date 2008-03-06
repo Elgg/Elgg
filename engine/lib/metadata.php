@@ -84,7 +84,7 @@
 		
 		function save()
 		{
-			if (isset($this->id))
+			if ($this->id > 0)
 				return update_metadata($this->id, $this->name, $this->value, $this->value_type, $this->owner_id, $this->access_id);
 			else
 			{ 
@@ -151,7 +151,7 @@
 		
 		$access = get_access_list();
 		
-		return update_data("UPDATE {$CONFIG->dbprefix}metadata set value='$value', value_type='$value_type', access_id=$access_id where id=$id and name='$name' and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))");
+		return update_data("UPDATE {$CONFIG->dbprefix}metadata set value='$value', value_type='$value_type', access_id=$access_id, owner_id=$owner_id where id=$id and name='$name' and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))");
 	}
 
 	/**
