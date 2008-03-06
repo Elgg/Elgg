@@ -335,8 +335,8 @@
 			private $attributes = array();
 			
 			function __get($name) {
-				if (isset($attributes[$name])) {
-					return $attributes[$name];
+				if (isset($this->attributes[$name])) {
+					return $this->attributes[$name];
 				}
 				return null;
 			}
@@ -347,6 +347,9 @@
 			}
 			
 			function __construct($id = null) {
+				
+				$this->attributes = array();
+				
 				if (!empty($id)) {
 					if ($object = get_object($id)) {
 						$objarray = (array) $object;
