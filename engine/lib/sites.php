@@ -518,8 +518,19 @@
 	 */
 	function remove_site_annotations($site_id, $name)
 	{
-		// TODO : Writeme
-		throw new NotImplementedException("Writeme!");
+		$annotations = get_annotations($site_id, 'site', $name);
+		
+		if($annotations)
+		{
+			foreach ($annotations as $a)
+			{
+				delete_annotation($a->id);
+			}
+			
+			return true;
+		}
+		
+		return false;
 	}
 	
 	/**
