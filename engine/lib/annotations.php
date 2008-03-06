@@ -134,7 +134,10 @@
 		$object_type = sanitise_string(trim($object_type));
 		$name = sanitise_string(trim($name));
 		$value = sanitise_string(trim($value));
+		
 		$owner_id = (int)$owner_id;
+		if ($owner_id=0) $owner_id = $_SESSION['id'];
+		
 		$limit = (int)$limit;
 		$offset = (int)$offset;
 		
@@ -207,7 +210,10 @@
 		$name = sanitise_string(trim($name));
 		$value = sanitise_string(trim($value));
 		$value_type = detect_annotation_valuetype($value, sanitise_string(trim($value_type)));
+		
 		$owner_id = (int)$owner_id;
+		if ($owner_id=0) $owner_id = $_SESSION['id'];
+		
 		$access_id = (int)$access_id;
 		
 		
@@ -233,7 +239,10 @@
 		$name = sanitise_string(trim($name));
 		$value = sanitise_string(trim($value));
 		$value_type = detect_annotation_valuetype($value, sanitise_string(trim($value_type)));
+		
 		$owner_id = (int)$owner_id;
+		if ($owner_id=0) $owner_id = $_SESSION['id'];
+		
 		$access_id = (int)$access_id;
 		
 		$access = get_access_list();
