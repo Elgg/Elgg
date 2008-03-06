@@ -136,8 +136,7 @@ CREATE TABLE `prefix_sites` (
   `created` int(11) NOT NULL,
   `last_updated` int(11) NOT NULL,
   
-  `access_id` int(11) NOT NULL,
-  `write_access_id` int(11) NOT NULL,
+  `access_id` int(11) NOT NULL
   
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM ;
