@@ -285,6 +285,9 @@
 			
 		if ($value != "")
 			$where[] = "value='$value'";
+			
+		if ($value_type != "")
+			$where[] = "value_type='$value_type'";
 		
 		if ($owner_id != 0)
 			$where[] = "owner_id=$owner_id";
