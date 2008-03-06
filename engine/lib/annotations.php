@@ -102,6 +102,21 @@
 	}
 	
 	/**
+	 * Convert a database row to a new ElggAnnotation
+	 *
+	 * @param stdClass $row
+	 * @return stdClass or ElggAnnotation
+	 */
+	function row_to_elggannotation($row) 
+	{
+		if (!($row instanceof stdClass))
+			return $row;
+			
+		return new ElggAnnotation($row);
+	}
+	
+	
+	/**
 	 * Get a specific annotation.
 	 *
 	 * @param int $annotation_id
@@ -113,7 +128,7 @@
 		$annotation_id = (int) $annotation_id;
 		$access = get_access_list();
 		
-		return get_data_row("select o.* from {$CONFIG->dbprefix}annotations where id=$annotation_id and (o.access_id in {$access} or (o.access_id = 0 and o.owner_id = {$_SESSION['id']}))");			
+		return row_to_elggannotation(get_data_row("select o.* from {$CONFIG->dbprefix}annotations where id=$annotation_id and (o.access_id in {$access} or (o.access_id = 0 and o.owner_id = {$_SESSION['id']}))"));			
 	}
 	
 	/**
@@ -164,8 +179,8 @@
 			if ($n > 0) $query .= " and ";
 			$query .= $where[$n];
 		}
-		error_log($query);
-		return get_data($query);
+		
+		return get_data($query, "row_to_elggannotation");
 	}
 	
 	/**

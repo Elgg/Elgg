@@ -103,6 +103,20 @@
 	}
 	
 	/**
+	 * Convert a database row to a new ElggMetadata
+	 *
+	 * @param stdClass $row
+	 * @return stdClass or ElggMetadata
+	 */
+	function row_to_elggmetadata($row) 
+	{
+		if (!($row instanceof stdClass))
+			return $row;
+			
+		return new ElggMetadata($row);
+	}
+	
+	/**
 	 * Detect the value_type for a given value.
 	 * Currently this is very crude.
 	 * 
@@ -210,7 +224,7 @@
 		$id = (int)$id;
 		$access = get_access_list();
 				
-		return get_data_row("SELECT * from {$CONFIG->dbprefix}metadata where id=$id and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))");
+		return row_to_elggmetadata(get_data_row("SELECT * from {$CONFIG->dbprefix}metadata where id=$id and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))"));
 	}
 
 	/**
@@ -262,7 +276,7 @@
 			$query .= $where[$n];
 		}
 		
-		return get_data($query);
+		return get_data($query, "row_to_elggmetadata");
 	}
 	
 	/**
