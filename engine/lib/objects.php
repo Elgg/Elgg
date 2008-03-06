@@ -335,6 +335,7 @@
 			private $attributes = array();
 			
 			function __get($name) {
+				
 				if (isset($this->attributes[$name])) {
 					return $this->attributes[$name];
 				}

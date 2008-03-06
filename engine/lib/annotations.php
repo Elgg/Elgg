@@ -31,6 +31,8 @@
 		 */
 		function __construct($id = null) 
 		{
+			$this->attributes = array();
+			
 			if (!empty($id)) {
 				if ($id instanceof stdClass)
 					$annotation = $id;
@@ -47,23 +49,23 @@
 		}
 		
 		function __get($name) {
-			if (isset($attributes[$name])) {
+			if (isset($this->attributes[$name])) {
 				
 				// Sanitise outputs if required
 				if ($name=='value')
 				{
-					switch ($attributes['value_type'])
+					switch ($this->attributes['value_type'])
 					{
-						case 'integer' :  return (int)$attributes['value'];
+						case 'integer' :  return (int)$this->attributes['value'];
 						case 'tag' :
 						case 'text' :
-						case 'file' : return sanitise_string($attributes['value']);
+						case 'file' : return sanitise_string($this->attributes['value']);
 							
-						default : throw new InstallationException("Type {$attributes['value_type']} is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.");
+						default : throw new InstallationException("Type {$this->attributes['value_type']} is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.");
 					}
 				}
 				
-				return $attributes[$name];
+				return $this->attributes[$name];
 			}
 			return null;
 		}
