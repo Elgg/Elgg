@@ -231,7 +231,19 @@
 		function delete() { return delete_site($this->id); }
 	}
 	
-	
+	/**
+	 * Convert a database row to a new ElggSite
+	 *
+	 * @param stdClass $row
+	 * @return stdClass or ElggSite
+	 */
+	function row_to_elggsite($row) 
+	{
+		if (!($row instanceof stdClass))
+			return $row;
+			
+		return new ElggSite($row);
+	}
 	
 	/**
 	 * Enter description here...
@@ -246,7 +258,7 @@
 	 */
 	function get_sites($user_id = 0, $type = "", $metadata_type = "", $metadata_value = "", $order_by = "created desc", $limit = 10, $offset = 0)
 	{
-		// TODO: Writeme
+		// TODO : Writeme
 		throw new NotImplementedException("Writeme!");
 	}
 	
@@ -262,9 +274,8 @@
 		
 		$site_id = (int) $site_id;
 		$access = get_access_list();
-		error_log("select * from {$CONFIG->dbprefix}sites where id=$site_id and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))");
-		return get_data_row("select * from {$CONFIG->dbprefix}sites where id=$site_id and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))");			
 		
+		return row_to_elggsite(get_data_row("select * from {$CONFIG->dbprefix}sites where id=$site_id and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))"));					
 	}
 		
 	/**
@@ -280,7 +291,7 @@
 		$url = sanitise_string(trim($url));	
 		$access = get_access_list();
 		
-		return get_data_row("select o.* from {$CONFIG->dbprefix}sites where url='$url' and (o.access_id in {$access} or (o.access_id = 0 and o.owner_id = {$_SESSION['id']}))");			
+		return row_to_elggsite(get_data_row("select o.* from {$CONFIG->dbprefix}sites where url='$url' and (o.access_id in {$access} or (o.access_id = 0 and o.owner_id = {$_SESSION['id']}))"));			
 		
 	}
 	
@@ -448,8 +459,7 @@
 	 */
 	function count_site_annotations($name, $site_id)
 	{
-		// TODO : Writeme
-		throw new NotImplementedException("Writeme!");
+		return count_annotations($site_id, 'site', $name);
 	}
 	
 	/**
