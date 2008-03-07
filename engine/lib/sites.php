@@ -46,6 +46,8 @@
 					$site = get_site_byurl($id); // Otherwise assume URL
 				else if ($id instanceof stdClass)
 					$site = $id;	// This is a db row, so serialise directly
+				else if ($id instanceof ElggSite)
+					$site = $id;
 				else
 					throw new InvalidParameterException("Unrecognised or unsupported type passed to ElggSite constructor.");
 				
