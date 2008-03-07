@@ -401,7 +401,7 @@
 			
 				if (!empty($events[$event][$object_type]) && is_array($events[$event][$object_type])) {
 					foreach($events[$event][$object_type] as $eventfunction) {
-						if (!$eventfunction($event, $object_type, $object)) {
+						if ($eventfunction($event, $object_type, $object) === false) {
 							return false;
 						}
 					}
