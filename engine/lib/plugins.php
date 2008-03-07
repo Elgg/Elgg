@@ -19,7 +19,7 @@
 	 * @todo Add proper plugin handler that launches plugins in an admin-defined order and activates them on admin request
 	 */
 		function load_plugins() {
-			
+
 			global $CONFIG;
 			if (!empty($CONFIG->pluginspath)) {
 				

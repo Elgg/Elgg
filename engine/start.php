@@ -46,15 +46,13 @@
 			
 			if (!@include_once(dirname(__FILE__) . "/settings.php"))  		// Global settings
 				throw new InstallationException("Elgg could not load the settings file.");
-			
-			
+				
 		/**
 		 * Load and initialise the database
 		 */
 	
 			if (!@include_once(dirname(__FILE__) . "/lib/database.php"))	// Database connection
 				throw new InstallationException("Elgg could not load the main Elgg database library.");
-	
 				
 		/**
 		 * Load the remaining libraries from /lib/ in alphabetical order,
@@ -81,6 +79,9 @@
 				if (!@include_once($file))
 					throw new InstallationException("Could not load {$file}");
 			}
+			
+		// Set default config
+			set_default_config();
 			
 		// Load plugins
 			load_plugins();
