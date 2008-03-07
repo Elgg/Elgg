@@ -238,7 +238,7 @@
 	 * @param int $offset
 	 * @return array of ElggMetadata
 	 */
-	function get_metadatas($object_id = 0, $object_type = "", $owner_id = 0, $order_by = "created desc", $limit = 10, $offset = 0)
+	function get_metadatas($object_id = 0, $object_type = "", $name = "", $value = "", $owner_id = 0, $order_by = "created desc", $limit = 10, $offset = 0)
 	{
 		global $CONFIG;
 		
@@ -263,6 +263,12 @@
 		
 		if ($owner_id != 0)
 			$where[] = "owner_id=$owner_id";
+			
+		if ($name != "")
+			$where[] = "name='$name'";
+			
+		if ($value != "")
+			$where[] = "value='$value'";
 			
 		// add access controls
 		$access = get_access_list();
