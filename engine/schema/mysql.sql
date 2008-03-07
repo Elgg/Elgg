@@ -185,3 +185,32 @@ CREATE TABLE `prefix_metadata` (
 	UNIQUE KEY (`object_id`,`object_type`, `name`)
 	
 ) ENGINE=MyISAM;
+
+--
+-- API Users - Users who have access to the api (may not be real users)
+--
+CREATE TABLE api_users (
+	id     int(11)     auto_increment,
+	
+	email_address varchar(128),
+	
+	api_key   varchar(40),
+	secret    varchar(40) NOT NULL,
+	active    int default 1,
+	
+	unique key (email_address),
+	unique key (api_key),
+	primary key (id)
+);
+
+--
+-- Configuration settings
+--
+CREATE TABLE configuration (
+	id int(11) NOT NULL auto_increment,
+	name varchar(50) not null default '',
+	`value` varchar(255) not null default '',
+	
+	primary key (id),
+	unique key (name)
+);
