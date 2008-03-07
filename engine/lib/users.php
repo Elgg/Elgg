@@ -452,6 +452,7 @@
 	                                                "code" =>$code
 	                                            ), "id, username, name, password")) {
 	                    foreach($users as $user) {
+	                    	$_SESSION['user'] = get_user($user->id);
 	                        $_SESSION['id'] = $user->id;
 	                        $_SESSION['username'] = $user->username;
 	                        $_SESSION['name'] = $user->name;
