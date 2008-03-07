@@ -287,7 +287,7 @@
                 $where = "where (" . $where . ")";
             }
 
-            return get_data("select {$fields}, 'users' as type from {$CONFIG->dbprefix}users {$where}");
+            return get_data("select {$fields}, 'users' as type from {$CONFIG->dbprefix}users {$where}","row_to_elgguser");
             
         }
 		
@@ -425,6 +425,67 @@
 			return false;
 			
 		}
+		
+	/**
+	 * Log in
+	 *
+	 * @param string $username
+	 * @param string $password
+	 * @param true|false $persistent
+	 * @return true|false
+	 */
+		function login($username, $password, $persistent = false) {
+            
+            global $CONFIG;
+            $dbpassword = md5($password);
+                        
+            if ($users = get_users(array("username" => $username,
+                                         "password" => $dbpassword))) {
+                 foreach($users as $user) {
+                     
+                     $_SESSION['id'] = $user->id;
+                     $_SESSION['username'] = $user->username;
+                     $_SESSION['name'] = $user->name;
+                     
+                     $code = (md5($user->name . $user->username . time() . rand()));
+                     update_data("update {$CONFIG->dbprefix}users set code = '".md5($code)."' where id = {$user->id}");
+                     
+                     //$code = md5($code);    // This is a deliberate re-MD5-ing
+                     
+                     $_SESSION['code'] = $code;
+                     //if (!empty($persistent)) {
+                         
+                         setcookie("elggperm", $code, (time()+(86400 * 30)),"/");
+                         
+                     //}
+                     // set_login_fields($user->id);
+                     
+                 }
+                 
+                 return true;
+             } else {
+                 return false;
+             }
+            
+        }
+        
+	/**
+	 * Log the current user out
+	 *
+	 * @return true|false
+	 */
+		function logout() {
+            global $CONFIG;
+            
+            unset($_SESSION['username']);
+            unset($_SESSION['name']);
+            unset($_SESSION['code']);
+            update_data("update {$CONFIG->dbprefix}users set code = '' where id = {$_SESSION['id']}");
+            $_SESSION['id'] = -1;
+            setcookie("elggperm", "", (time()-(86400 * 30)),"/");
+            
+            return true;
+        }
 		
 	/**
 	 * Initialises the system session and potentially logs the user in
