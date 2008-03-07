@@ -106,10 +106,9 @@ CREATE TABLE `prefix_users` (
   `username` varchar(12) NOT NULL default '',
   `password` varchar(32) NOT NULL default '',
   `email` text NOT NULL,
+  `language` varchar(6)  NOT NULL default '',
   `code` varchar(32) NOT NULL default '',
-  `last_updated` int(11) NOT NULL default '0',
-  `registered` int(11) NOT NULL default '0',
-  `enabled` enum('yes','no') NOT NULL default 'no',
+  `created` int(11) NOT NULL default '0',
   `last_action` int(11) NOT NULL default '0',
   `prev_last_action` int(11) NOT NULL default '0',
   `last_login` int(11) NOT NULL default '0',
@@ -141,6 +140,29 @@ CREATE TABLE `prefix_sites` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM ;
 
+--
+-- Link table between users and sites
+--
+
+CREATE TABLE `prefix_users_sites` (
+  `user_id` int(11) NOT NULL,
+  `site_id` int(11) NOT NULL,
+  PRIMARY KEY  (`user_id`,`site_id`)
+) ENGINE=MyISAM ;
+
+--
+-- Table structure for friends
+--
+
+CREATE TABLE `prefix_friends` (
+  `id` int(11) NOT NULL auto_increment,
+  `user_id` int(11) NOT NULL,
+  `friend_id` int(11) NOT NULL,
+  `site_id` int(11) NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `friend_id` (`friend_id`)
+) ENGINE=MyISAM;
 
 -- 
 -- Table structure for annotations

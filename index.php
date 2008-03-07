@@ -35,8 +35,8 @@
 		// Create / load a site
 		$site = get_site(1);
 error_log("GETTIGN SITE " . print_r($site, true));		
-		
-		if (!$site)
+
+		if (empty($site))
 		{
 			$site = new ElggSite();
 			
