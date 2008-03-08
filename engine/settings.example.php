@@ -92,5 +92,13 @@
 	 * Note that the array keys must be numeric and consecutive, i.e., they start
 	 * at 0, the next one must be at 1, etc.
 	 */
+	 
+	
+	/**
+	  * Url - I am not sure if this will be here ?
+	 **/
+	 
+	 // URL
+	    $CONFIG->url = "";
 			
 ?>
