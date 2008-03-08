@@ -284,6 +284,42 @@
 		
 		return get_data($query, "row_to_elggmetadata");
 	}
+
+	/**
+	 * Similar to get_metadatas, but instead returns the objects associated with a given meta search.
+	 * 
+	 * @param int $object_id
+	 * @param string $object_type
+	 * @param int $owner_id
+	 * @param string $order_by
+	 * @param int $limit
+	 * @param int $offset
+	 * @return mixed Array of objects or false.
+	 */
+	function get_objects_from_metadatas($object_id = 0, $object_type = "", $name = "", $value = "", $owner_id = 0, $order_by = "created desc", $limit = 10, $offset = 0)
+	{
+		$results = get_metadatas($object_id, $object_type, $name, $value, $owner_id, $order_by, $limit, $offset);
+		$objects = false;
+		
+		if ($results)
+		{
+			$objects = array();
+			
+			foreach ($results as $r)
+			{
+				switch ($r->object_type)
+				{
+					case 'object' : $objects[] = new ElggObject($r->object_id); break;
+					case 'user' : $objects[] = new ElggUser($r->object_id); break;
+					case 'collection' : $objects[] = new ElggCollection($r->object_id); break;
+					case 'site' : $objects[] = new ElggSite($r->object_id); break;
+					default: default : throw new InstallationException("Type {$r->object_type} is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.");
+				}
+			}
+		}
+		
+		return $objects;
+	}
 	
 	/**
 	 * Delete an item of metadata, where the current user has access.
