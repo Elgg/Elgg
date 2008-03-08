@@ -31,6 +31,7 @@
 <html>
 	<head>
 		<title><?php echo $title; ?></title>
+		<link rel="stylesheet" href="<?php echo $vars['url']; ?>css/css.php" type="text/css" />
 	</head>
 	<body>
 		<h1><?php echo $title; ?></h1>

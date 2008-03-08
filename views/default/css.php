@@ -15,3 +15,23 @@
 	 */
 
 ?>
+
+/*
+    Default Elgg CSS
+*/
+
+body {
+    background:#fff;
+    color:#000;
+    margin:20px center;
+    text-align:center;
+}
+
+#login-box {
+    text-align:left;
+    background:#555;
+    border:1px solid #ddd;
+    width:300px;
+    padding:10px;
+    margin:auto;
+}

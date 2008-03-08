@@ -17,15 +17,15 @@
 		require_once(dirname(__FILE__) . "/engine/start.php");
 
 	/**
-	 * Load the front page
-	 */
-		echo page_draw(null, elgg_view("homepage"));
-
-		get_objects(3,"blog","mammals","are lovely", 7, 2, 1);
-		
-		$obj = new stdClass;
-		$obj->id = 3;
-		
+      * Check to see if user is logged in, if not display login form
+      **/
+    if ($_SESSION['id'] != -1){
+        //Load the sample welcome page
+        echo page_draw(null, elgg_view("welcome"));         
+    } else {
+        //Load the front page
+        echo page_draw(null, elgg_view("login"));
+	}
 		
 		
 		

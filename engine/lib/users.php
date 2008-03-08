@@ -546,5 +546,10 @@
 		}
 
 	register_event_handler("init","system","session_init");
+	
+	//register actions *************************************************************
+   
+    register_action("login",true);
+    register_action("logout");
 		
 ?>
