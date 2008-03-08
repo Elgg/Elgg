@@ -33,10 +33,10 @@
 				
 			if (empty($CONFIG->wwwroot)) {
 				$CONFIG->wwwroot = "http://" . $_SERVER['SERVER_NAME'];
-				/*if (strripos($_SERVER['DOCUMENT_ROOT'],"/") < (strlen($_SERVER['DOCUMENT_ROOT']) - 1)) {
-					$CONFIG->wwwroot .= "/";
-				}*/
-				
+				if (strripos($_SERVER['DOCUMENT_ROOT'],"/") < (strlen($_SERVER['DOCUMENT_ROOT']) - 1)) {
+					//$CONFIG->wwwroot .= "/";
+				}
+				/*
 				$request = $_SERVER['REQUEST_URI'];
 				
 				if (strripos($request,"/") < (strlen($request) - 1)) {
@@ -45,8 +45,8 @@
 				}
 				
 				$CONFIG->wwwroot .= $request;
-				
-				//$CONFIG->wwwroot .= str_replace($_SERVER['DOCUMENT_ROOT'],"",$CONFIG->path);
+				*/
+				$CONFIG->wwwroot .= str_replace($_SERVER['DOCUMENT_ROOT'],"",$CONFIG->path);
 		
 			}
 		
