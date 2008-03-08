@@ -34,4 +34,5 @@ body {
     width:300px;
     padding:10px;
     margin:auto;
+    color:#fff;
 }
