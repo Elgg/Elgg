@@ -40,19 +40,30 @@
 				
 				$site = null;
 				
-				if (is_int($id))
-					$site = get_site($id); // This is an integer ID
-				else if (is_string($id))
-					$site = get_site_byurl($id); // Otherwise assume URL
-				else if ($id instanceof stdClass)
+				if ($id instanceof stdClass) {
 					$site = $id;	// This is a db row, so serialise directly
-				else if ($id instanceof ElggSite)
-					$site = $id;
-				else
-					throw new InvalidParameterException("Unrecognised or unsupported type passed to ElggSite constructor.");
+
+				} else if ($id instanceof ElggSite) {
+					//$site = $id;
+					$site = new stdClass;
+					foreach ($id->attributes as $k => $v)
+						$site->$k = $v;
+					
+					error_log("**** 2");
+				} else if (strpos($id, "http") !== false) {
+					$site = get_site_byurl($id);
+					error_log("**** 3");
+				} else { 
+					$tmp = get_site((int)$id); // This is an integer ID
+					$site = new stdClass;
+					foreach ($tmp->attributes as $k => $v)
+						$site->$k = $v;
+
+				}
 				
 				if ($site) {
 					$objarray = (array) $site;
+					
 					foreach($objarray as $key => $value) {
 						$this->attributes[$key] = $value;
 						error_log("$key => $value");
@@ -293,7 +304,7 @@
 		$url = sanitise_string(trim($url));	
 		$access = get_access_list();
 		
-		return row_to_elggsite(get_data_row("select o.* from {$CONFIG->dbprefix}sites where url='$url' and (o.access_id in {$access} or (o.access_id = 0 and o.owner_id = {$_SESSION['id']}))"));			
+		return row_to_elggsite(get_data_row("select * from {$CONFIG->dbprefix}sites where url='$url' and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))"));			
 		
 	}
 	
@@ -378,6 +389,7 @@
 		$access_id = (int)$access_id;
 		$site_id = (int)$site_id;
 		$vartype = sanitise_string($vartype);
+		$owner_id = $_SESSION['id'];
 		
 		$id = create_metadata($site_id, 'site', $name, $value, $vartype, $owner_id, $access_id);
 		return $id;
@@ -450,7 +462,7 @@
 		$offset = (int)$offset;
 		$owner_id = (int)$owner_id; if ($owner_id==0) $owner_id = $_SESSION['id']; // Consider adding the option to change in param?
 		
-		return get_annotations($site_id, 'site', $owner_id, "created desc", $limit, $offset);
+		return get_annotations($site_id, 'site', "","", $owner_id, "created desc", $limit, $offset);
 	}
 	
 	/**
