@@ -211,7 +211,7 @@ CREATE TABLE `prefix_metadata` (
 --
 -- API Users - Users who have access to the api (may not be real users)
 --
-CREATE TABLE api_users (
+CREATE TABLE `prefix_api_users` (
 	id     int(11)     auto_increment,
 	
 	email_address varchar(128),
@@ -228,7 +228,7 @@ CREATE TABLE api_users (
 --
 -- Configuration settings
 --
-CREATE TABLE configuration (
+CREATE TABLE `prefix_configuration` (
 	id int(11) NOT NULL auto_increment,
 	name varchar(50) not null default '',
 	`value` varchar(255) not null default '',
