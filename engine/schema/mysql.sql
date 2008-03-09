@@ -224,15 +224,3 @@ CREATE TABLE `prefix_api_users` (
 	unique key (api_key),
 	primary key (id)
 );
-
---
--- Configuration settings
---
-CREATE TABLE `prefix_configuration` (
-	id int(11) NOT NULL auto_increment,
-	name varchar(50) not null default '',
-	`value` varchar(255) not null default '',
-	
-	primary key (id),
-	unique key (name)
-);
