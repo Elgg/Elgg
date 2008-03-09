@@ -187,7 +187,7 @@
 			if ($n > 0) $query .= " and ";
 			$query .= $where[$n];
 		}
-		
+		error_log($query);
 		return get_data($query, "row_to_elggannotation");
 	}
 	
