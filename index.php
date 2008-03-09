@@ -29,12 +29,18 @@
 		
 		
 		
+		$obj = new stdClass;
+		$obj->id = 3;
+		
+		
+/*		
+		
 		// Testing ///////
 	if ($_SESSION['id']==-1) $_SESSION['id'] = 1;
 	
 		// Create / load a site
 		$site = get_site(1);
-error_log("GETTIGN SITE " . print_r($site, true));		
+error_log("GETTIGN SITE ".$_SESSION['id']. " " . print_r($site, true));		
 
 		if (empty($site))
 		{
@@ -70,19 +76,18 @@ error_log("GETTIGN SITE " . print_r($site, true));
 
 
 
-
 		// change site metadata
 		$site->setMetadata("Metaname", "Value2");
 
+		error_log("SITE RETRIEVE : " . print_r(get_objects_from_metadatas(0, "", "", "Value2"), true));
 		
-
 
 		// get site annotations
 		error_log("SITE Annotations : " . print_r($site->getAnnotations("Test"), true));
-		
+
 		
 		// get site metadata
 		error_log("SITE Metadata : " . print_r($site->getMetadata("Metaname"), true));
-		
+		*/
 		
 ?>
