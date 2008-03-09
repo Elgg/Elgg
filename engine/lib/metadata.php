@@ -307,12 +307,13 @@
 			
 			foreach ($results as $r)
 			{
+				
 				switch ($r->object_type)
 				{
-					case 'object' : $objects[] = new ElggObject($r->object_id); break;
-					case 'user' : $objects[] = new ElggUser($r->object_id); break;
-					case 'collection' : $objects[] = new ElggCollection($r->object_id); break;
-					case 'site' : $objects[] = new ElggSite($r->object_id); break;
+					case 'object' : $objects[] = new ElggObject((int)$r->object_id); break;
+					case 'user' : $objects[] = new ElggUser((int)$r->object_id); break;
+					case 'collection' : $objects[] = new ElggCollection((int)$r->object_id); break;
+					case 'site' : $objects[] = new ElggSite((int)$r->object_id); break;
 					default: default : throw new InstallationException("Type {$r->object_type} is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.");
 				}
 			}
