@@ -17,9 +17,9 @@
     // Set the system_message as appropriate
         
         if ($result) {
-            system_message("You have been logged out.");
+            system_message(elgg_echo('logout'));
         } else {
-            system_message("We couldn't log you out. We're not sure why, to be honest. Try again?");
+            system_message(elgg_echo('logouterror'));
         }
 
 ?>

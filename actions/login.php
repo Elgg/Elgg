@@ -25,9 +25,9 @@
     // Set the system_message as appropriate
         
         if ($result) {
-            system_message("You have been logged in.");
+            system_message(elgg_echo('login'));
         } else {
-            system_message("We couldn't log you in. Make sure your details are correct and please try again.");
+            system_message(elgg_echo('loginerror'));
         }
       
 ?>
