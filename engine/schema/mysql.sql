@@ -231,6 +231,7 @@ CREATE TABLE `prefix_metadata` (
 CREATE TABLE `prefix_metastrings` (
 	`id` int(11) NOT NULL auto_increment,
 	`value` text NOT NULL,
+	`count` int(11) default 1,
 	
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `value`
