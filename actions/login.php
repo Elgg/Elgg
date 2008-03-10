@@ -12,8 +12,6 @@
 	 */
 	 
     // Get username and password
-        //require_once('../engine/start.php');
-        //global $CONFIG;
     
         $username = get_input('username');
         $password = get_input("password");
@@ -35,8 +33,5 @@
         } else {
             system_message("We couldn't log you in. Make sure your details are correct and please try again.");
         }
-        
-	//	header("Location: {$passthru}");
-	// exit;       
       
 ?>

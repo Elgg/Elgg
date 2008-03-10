@@ -35,7 +35,7 @@
             
             if (isset($CONFIG->actions[$action])) {
                 if ($CONFIG->actions[$action]['public'] || $_SESSION['id'] != -1) {
-	                if (@include($CONFIG->actions[$action]['file'])) {
+	                if (@include($CONFIG->path . $CONFIG->actions[$action]['file'])) {
 	                } else {
 	                    register_error("The requested action was not defined in the system.");
 	                }

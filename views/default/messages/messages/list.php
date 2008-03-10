@@ -20,6 +20,7 @@
 		<div class="messages-errors">
 
 <?php
+
 		if (!empty($vars['object']) && is_array($vars['object'])) {
 			foreach($vars['object'] as $message) {
 				echo elgg_view('messages/messages/message',array('object' => $message));

@@ -10,10 +10,6 @@
 	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.org/
 	 */
-     
-	//delete this 
-	    require_once('../engine/start.php');
-	    global $CONFIG;
 	    
     // Log out
         $result = logout();
@@ -25,10 +21,5 @@
         } else {
             system_message("We couldn't log you out. We're not sure why, to be honest. Try again?");
         }
-        
-    //direct to frontpage
-        $url = $CONFIG->url;
-        header("Location: {$url}");
-        exit;  
 
 ?>

@@ -37,7 +37,7 @@
 		<h1><?php echo $title; ?></h1>
 		<?php
 
-			echo elgg_view('messages/list', array('object' => $vars['messages']));
+			echo elgg_view('messages/list', array('object' => $vars['sysmessages']));
 		
 		?>
 		<?php echo $vars['body']; ?>

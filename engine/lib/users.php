@@ -545,11 +545,11 @@
 	        }
 		}
 
-	register_event_handler("init","system","session_init");
+		register_event_handler("init","system","session_init");
 	
 	//register actions *************************************************************
    
-    register_action("login",true);
-    register_action("logout");
+   		register_action("login",true);
+    	register_action("logout");
 		
 ?>

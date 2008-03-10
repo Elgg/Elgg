@@ -189,11 +189,10 @@
 	 */
 		
 		function page_draw($title, $body) {
-			
 			return elgg_view('pageshell', array(
 												'title' => $title,
 												'body' => $body,
-												'messages' => system_messages(null,"")
+												'sysmessages' => system_messages(null,"")
 											  )
 										);
 			
@@ -268,38 +267,38 @@
 	 * @return true|false|array Either the array of messages, or a response regarding whether the message addition was successful
 	 */
 		
-		function system_messages($message = null, $register = "messages", $count = false) {
+		function system_messages($message = "", $register = "messages", $count = false) {
 			
-			static $messages;
-			if (!isset($messages)) {
-				$messages = array();
+			if (!isset($_SESSION['msg'])) {
+				$_SESSION['msg'] = array();
 			}
-			if (!isset($messages[$register]) && !empty($register)) {
-				$messages[$register] = array();
+			if (!isset($_SESSION['msg'][$register]) && !empty($register)) {
+				$_SESSION['msg'][$register] = array();
 			}
 			if (!$count) {
 				if (!empty($message) && is_array($message)) {
-					$messages[$register] = array_merge($messages[$register], $message);
+					$_SESSION['msg'][$register] = array_merge($_SESSION['msg'][$register], $message);
+					var_export($_SESSION['msg']); exit;
 					return true;
 				} else if (!empty($message) && is_string($message)) {
-					$messages[$register][] = $message;
+					$_SESSION['msg'][$register][] = $message;
 					return true;
-				} else if (!is_string($message) && !is_array($message)) {
-					if (!empty($register)) {
-						$returnarray = $messages[$register];
-						$messages[$register] = array();
+				} else if (is_null($message)) {
+					if ($register != "") {
+						$returnarray = $_SESSION['msg'][$register];
+						$_SESSION['msg'][$register] = array();
 					} else {
-						$returnarray = $messages;
-						$messages = array();
+						$returnarray = $_SESSION['msg'];
+						$_SESSION['msg'] = array();
 					}
 					return $returnarray;
 				}
 			} else {
 				if (!empty($register)) {
-					return sizeof($messages[$register]);
+					return sizeof($_SESSION['msg'][$register]);
 				} else {
 					$count = 0;
-					foreach($messages as $register => $submessages) {
+					foreach($_SESSION['msg'] as $register => $submessages) {
 						$count += sizeof($submessages);
 					}
 					return $count;
