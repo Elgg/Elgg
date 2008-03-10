@@ -335,7 +335,7 @@
 	 */
 	function get_site_objects($site_id, $type = "", $limit = 10, $offset = 0) 
 	{
-		global $CONFIG;
+		/*global $CONFIG;
 		
 		$site_id = (int)$site_id;
 		$type = sanitise_string($type);
@@ -350,6 +350,8 @@
 			return false;
 		
 		return get_data("SELECT * from {$CONFIG->dbprefix}objects where site_id=$site_id and type_id={$type->id} and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))","row_to_elggobject");
+		*/
+		return get_objects(0,$type, $limit, $offset, $site_id);
 	}
 	
 	/**
