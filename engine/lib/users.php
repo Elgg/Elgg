@@ -238,7 +238,93 @@
 				return is_friend($user_id, $this->id, $site_id);
 			}
 			
+		/**
+		 * Set the meta data.
+		 *
+		 * @param string $name
+		 * @param string $value
+		 * @param int $access_id
+		 * @param string $vartype
+		 */
+			function setMetadata($name, $value, $access_id = 0, $vartype = "") { return set_user_metadata($name, $value, $access_id, $this->id, $vartype); }
+		
+		/**
+		 * Get the metadata for a user.
+		 *
+		 * @param string $name
+		 */
+			function getMetadata($name) { return get_user_metadata($name, $this->id); }
+		
+		/**
+		 * Clear the metadata for a given user.
+		 *
+		 * @param string $name
+		 */
+			function clearMetadata($name = "") { return remove_user_metadata($this->id, $name); }
 			
+		/**
+		 * Adds an annotation to a user. By default, the type is detected automatically; however, 
+		 * it can also be set. Note that by default, annotations are private.
+		 * 
+		 * @param string $name
+		 * @param string $value
+		 * @param int $access_id
+		 * @param int $owner_id
+		 * @param string $vartype
+		 */
+			function annotate($name, $value, $access_id = 0, $owner_id = 0, $vartype = "") { return add_site_annotation($name, $value, $access_id, $owner_id, $this->id, $vartype); }
+		
+		/**
+		 * Get the annotations for a user.
+		 *
+		 * @param string $name
+		 * @param int $limit
+		 * @param int $offset
+		 */
+			function getAnnotations($name, $limit = 50, $offset = 0) { return get_site_annotations($name, $this->id, $limit, $offset); }
+		
+		/**
+		 * Return the annotations for the user.
+		 *
+		 * @param string $name The type of annotation.
+		 */
+			function countAnnotations($name) { return count_user_annotations($name, $this->id); }
+
+		/**
+		 * Get the average of an integer type annotation.
+		 *
+		 * @param string $name
+		 */
+			function getAnnotationsAvg($name) { return get_user_annotations_avg($name, $this->id); }
+		
+		/**
+		 * Get the sum of integer type annotations of a given type.
+		 *
+		 * @param string $name
+		 */
+			function getAnnotationsSum($name) { return get_user_annotations_sum($name, $this->id); }
+		
+		/**
+		 * Get the minimum of integer type annotations of given type.
+		 *
+		 * @param string $name
+		 */
+			function getAnnotationsMin($name) { return get_user_annotations_min($name, $this->id); }
+		
+		/**
+		 * Get the maximum of integer type annotations of a given type.
+		 *
+		 * @param string $name
+		 */
+			function getAnnotationsMax($name) { return get_user_annotations_max($name, $this->id); }
+		
+		/**
+		 * Remove all annotations or all annotations of a given user.
+		 *
+		 * @param string $name
+		 */
+			function removeAnnotations($name = "") { return remove_user_annotations($this->id, $name); }
+		
 			
 		}
 
@@ -407,7 +493,171 @@
 			return new ElggSite($row);
 		}
 		
-
+	
+	/**
+	 * Set the site metadata.
+	 *
+	 * @param string $name
+	 * @param string $value
+	 * @param int $access_id
+	 * @param int $user_id
+	 * @param string $vartype
+	 */
+	function set_user_metadata($name, $value, $access_id, $user_id, $vartype = "")
+	{
+		$name = sanitise_string($name);
+		$value = sanitise_string($value);
+		$access_id = (int)$access_id;
+		$user_id = (int)$user_id;
+		$vartype = sanitise_string($vartype);
+		$owner_id = $_SESSION['id'];
+		
+		$id = create_metadata($user_id, 'user', $name, $value, $vartype, $owner_id, $access_id);
+		return $id;
+	}
+	
+	/**
+	 * Get user metadata.
+	 *
+	 * @param string $name
+	 * @param int $user_id
+	 */
+	function get_user_metadata($name, $user_id)
+	{
+		$name = sanitise_string($name);
+		$user_id = (int)$user_id;
+		
+		return get_metadatas($user_id, 'user');
+	}
+	
+	/**
+	 * Remove user metadata
+	 *
+	 * @param int $user_id
+	 * @param string $name
+	 */
+	function remove_user_metadata($user_id, $name)
+	{
+		$result = get_metadatas($user_id, 'user', $name);
+		
+		if ($result)
+		{
+			foreach ($result as $r)
+				delete_metadata($r->id);
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Adds an annotation to a user. By default, the type is detected automatically; 
+	 * however, it can also be set. Note that by default, annotations are private.
+	 * 
+	 * @param string $name
+	 * @param string $value
+	 * @param int $access_id
+	 * @param int $owner_id
+	 * @param int $user_id
+	 * @param string $vartype
+	 */
+	function add_user_annotation($name, $value, $access_id, $owner_id, $user_id, $vartype)
+	{
+		$name = sanitise_string($name);
+		$value = sanitise_string($value);
+		$access_id = (int)$access_id;
+		$owner_id = (int)$owner_id; if ($owner_id==0) $owner_id = $_SESSION['id'];
+		$user_id = (int)$user_id;
+		$vartype = sanitise_string($vartype);
+		
+		$id = create_annotation($user_id, 'user', $name, $value, $vartype, $owner_id, $access_id);
+		
+		return $id;
+	}
+	
+	/**
+	 * Get the annotations for a user.
+	 *
+	 * @param string $name
+	 * @param int $user_id
+	 * @param int $limit
+	 * @param int $offset
+	 */
+	function get_user_annotations($name, $user_id, $limit, $offset)
+	{
+		$name = sanitise_string($name);
+		$user_id = (int)$user_id;
+		$limit = (int)$limit;
+		$offset = (int)$offset;
+		$owner_id = (int)$owner_id; if ($owner_id==0) $owner_id = $_SESSION['id']; // Consider adding the option to change in param?
+		
+		return get_annotations($user_id, 'site', "","", $owner_id, "created desc", $limit, $offset);
+	}
+	
+	/**
+	 * Count the annotations for a user of a given type.
+	 *
+	 * @param string $name
+	 * @param int $user_id
+	 */
+	function count_user_annotations($name, $user_id) { return count_annotations($user_id, 'user', $name); }
+	
+	/**
+	 * Get the average of an integer type annotation.
+	 *
+	 * @param string $name
+	 * @param int $user_id
+	 */
+	function get_user_annotations_avg($name, $user_id) { return get_annotations_avg($object_id, 'user', $name); }
+	
+	/**
+	 * Get the sum of integer type annotations of a given type.
+	 *
+	 * @param string $name
+	 * @param int $user_id
+	 */
+	function get_user_annotations_sum($name, $user_id) { return get_annotations_sum($object_id, 'user', $name); }
+	
+	/**
+	 * Get the min of integer type annotations of a given type.
+	 *
+	 * @param string $name
+	 * @param int $user_id
+	 */
+	function get_user_annotations_min($name, $user_id) { return get_annotations_min($object_id, 'user', $name); }
+	
+	/**
+	 * Get the max of integer type annotations of a given type.
+	 *
+	 * @param string $name
+	 * @param int $user_id
+	 */
+	function get_user_annotations_max($name, $user_id) { return get_annotations_max($object_id, 'user', $name); }
+	
+	/**
+	 * Remove all user annotations, or user annotations of a given type.
+	 *
+	 * @param int $user_id
+	 * @param string $name
+	 */
+	function remove_user_annotations($user_id, $name)
+	{
+		$annotations = get_annotations($user_id, 'site', $name);
+		
+		if($annotations)
+		{
+			foreach ($annotations as $a)
+			{
+				delete_annotation($a->id);
+			}
+			
+			return true;
+		}
+		
+		return false;
+	}
+		
+		
+		
 	/**
 	 * Session management
 	 */

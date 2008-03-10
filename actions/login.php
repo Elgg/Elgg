@@ -17,10 +17,6 @@
         $password = get_input("password");
         $persistent = get_input("persistent");
         
-        if (empty($passthru)) {
-            $passthru = $CONFIG->url;
-        }
-        
     // If all is present and correct, try to log in            
         if (!empty($username) && !empty($password)) {
             $result = login($username, $password, $persistent);
