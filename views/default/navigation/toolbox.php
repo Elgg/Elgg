@@ -3,6 +3,7 @@
 	/**
 	 * Elgg standard toolbox
 	 * The standard user toolbox that displays a users menu options
+	 * This will be populated depending on the plugins active - only plugin navigation will appear here
 	 * 
 	 * @package Elgg
 	 * @subpackage Core

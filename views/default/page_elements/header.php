@@ -40,4 +40,6 @@
 	<div id="header">
 	    <!-- display the page title -->
         <h1><?php echo $title; ?></h1>
+        <!-- display top level navigation -->
+        <?php echo elgg_view('navigation/topmenu'); ?>
     </div><!-- close the header div -->
