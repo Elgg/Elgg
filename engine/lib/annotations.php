@@ -326,6 +326,98 @@
 	}
 
 	/**
+	 * Return the sum of a given integer annotation.
+	 * 
+	 * @param $object_id int
+	 * @param $object_type string
+	 * @param $name string
+	 */
+	function get_annotations_sum($object_id, $object_type, $name)
+	{
+		global $CONFIG;
+		
+		$object_id = (int)$object_id;
+		$object_type = sanitise_string($object_type);
+		$name = santitise_string($name);
+		
+		$row = get_data_row("SELECT sum(value) as sum from {$CONFIG->dbprefix}annotations where object_id=$object_id and object_type='$object_type' and value_type='integer' and name='$name' and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))");
+		
+		if ($row)
+			return $row->sum;
+			
+		return false;
+	}
+	
+	/**
+	 * Return the max of a given integer annotation.
+	 * 
+	 * @param $object_id int
+	 * @param $object_type string
+	 * @param $name string
+	 */
+	function get_annotations_max($object_id, $object_type, $name)
+	{
+		global $CONFIG;
+		
+		$object_id = (int)$object_id;
+		$object_type = sanitise_string($object_type);
+		$name = santitise_string($name);
+		
+		$row = get_data_row("SELECT max(value) as max from {$CONFIG->dbprefix}annotations where object_id=$object_id and object_type='$object_type' and value_type='integer' and name='$name' and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))");
+		
+		if ($row)
+			return $row->max;
+			
+		return false;
+	}
+	
+	/**
+	 * Return the minumum of a given integer annotation.
+	 * 
+	 * @param $object_id int
+	 * @param $object_type string
+	 * @param $name string
+	 */
+	function get_annotations_min($object_id, $object_type, $name)
+	{
+		global $CONFIG;
+		
+		$object_id = (int)$object_id;
+		$object_type = sanitise_string($object_type);
+		$name = santitise_string($name);
+		
+		$row = get_data_row("SELECT min(value) as min from {$CONFIG->dbprefix}annotations where object_id=$object_id and object_type='$object_type' and value_type='integer' and name='$name' and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))");
+		
+		if ($row)
+			return $row->min;
+			
+		return false;
+	}
+	
+	/**
+	 * Return the average of a given integer annotation.
+	 * 
+	 * @param $object_id int
+	 * @param $object_type string
+	 * @param $name string
+	 */
+	function get_annotations_avg($object_id, $object_type, $name)
+	{
+		global $CONFIG;
+		
+		$object_id = (int)$object_id;
+		$object_type = sanitise_string($object_type);
+		$name = santitise_string($name);
+		
+		$row = get_data_row("SELECT avg(value) as avg from {$CONFIG->dbprefix}annotations where object_id=$object_id and object_type='$object_type' and value_type='integer' and name='$name' and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))");
+		
+		if ($row)
+			return $row->avg;
+			
+		return false;
+	}
+	
+	/**
 	 * Delete a given annotation.
 	 * 
 	 * @param $id int The id
