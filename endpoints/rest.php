@@ -41,13 +41,11 @@
 		$api_header = get_and_validate_api_headers();
 		$ApiEnvironment->api_header = $api_header;
 		
-		// Get site
-
-
-		
-
 		// Pull API user details
 		$ApiEnvironment->api_user = get_api_user($api_header->api_key);
+		
+		// Get site
+		$ApiEnvironment->site_id = $ApiEnvironment->api_user->side_id;	
 		
 		if ($ApiEnvironment->api_user)
 		{

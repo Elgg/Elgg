@@ -193,9 +193,18 @@
 	 */
 	function validate_user_token($site, $token)
 	{
-		$u = new User();
-	
-		return $u->getUserIDFromAuthToken($site, $token);
+		global $CONFIG;
+		
+		$site = (int)$site;
+		$token = sanitise_string($token);
+		
+		$time = time();
+		
+		$user = get_data_row("SELECT * from {$CONFIG->dbprefix}users_apisessions where token='$token' and site_id=$site and expires>$time");
+		if ($user)
+			return $user->user_id;
+		
+		return false;
 	}
 
 	/**
