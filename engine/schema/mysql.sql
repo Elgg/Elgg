@@ -119,6 +119,23 @@ CREATE TABLE `prefix_users` (
 ) ENGINE=MyISAM ;
 
 
+--
+-- User sessions
+-- 
+
+CREATE TABLE `prefix_users_apisessions` (
+	`id` int(11) NOT NULL auto_increment,
+	`user_id` int(11) NOT NULL,
+  	`site_id` int(11) NOT NULL,
+  	
+  	`token` varchar(40),
+  	
+  	`expires` int(11) NOT NULL,
+	
+	PRIMARY KEY  (`id`),
+	UNIQUE KEY (`user_id`,`site_id`)
+) ENGINE=MyISAM;
+
 -- --------------------------------------------------------
 
 --
@@ -215,7 +232,7 @@ CREATE TABLE `prefix_api_users` (
 	id     int(11)     auto_increment,
 	
 	email_address varchar(128),
-	
+	site_id	  int(11),
 	api_key   varchar(40),
 	secret    varchar(40) NOT NULL,
 	active    int default 1,

@@ -17,10 +17,10 @@
 	
 	// Register the error handler
 	error_reporting(E_ALL); 
-	set_error_handler('__php_error_handler');
+	set_error_handler('__php_api_error_handler');
 	
 	// Register a default exception handler
-	set_exception_handler('__php_exception_handler'); 
+	set_exception_handler('__php_api_exception_handler'); 
 	
 	// Get parameter variables
 	$format = get_input('format', 'php');
@@ -40,6 +40,11 @@
 		// Get api header
 		$api_header = get_and_validate_api_headers();
 		$ApiEnvironment->api_header = $api_header;
+		
+		// Get site
+
+
+		
 
 		// Pull API user details
 		$ApiEnvironment->api_user = get_api_user($api_header->api_key);
@@ -94,6 +99,8 @@
 	}
 	else
 	{
+		// TODO: set site environment
+		
 		// User is logged in, just execute 
 		if (isset($params['auth_token'])) $token = $params['auth_token'];
 		$result = execute_method($method, $params, $token);	

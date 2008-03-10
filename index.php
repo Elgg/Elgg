@@ -88,6 +88,7 @@ error_log("GETTIGN SITE ".$_SESSION['id']. " " . print_r($site, true));
 		
 		// get site metadata
 		error_log("SITE Metadata : " . print_r($site->getMetadata("Metaname"), true));
+
+
 		*/
-		
 ?>
