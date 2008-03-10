@@ -16,4 +16,4 @@
 ?>
 
 <p>Welcome <?php echo $user; ?></p>
-<p><a href="<?php echo $vars['url']; ?>action/logout">[logout]</a></p>
+<p><a href="<?php echo $vars['url']; ?>action/logout"><?php echo elgg_echo('logout'); ?></a></p>

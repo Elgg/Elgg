@@ -15,9 +15,9 @@
 
 	<div id="login-box">
 		<form action="<?php echo $vars['url']; ?>action/login" method="POST">
-			<label>Username<br /><input name="username" type="text" class="general-textarea" /></label>
+			<label><?php echo elgg_echo('username'); ?><br /><input name="username" type="text" class="general-textarea" /></label>
 			<br />
-			<label>Password<br /><input name="password" type="password" class="general-textarea" /></label><br />
-			<input type="submit" name="submit" value="login" />
+			<label><?php echo elgg_echo('password'); ?><br /><input name="password" type="password" class="general-textarea" /></label><br />
+			<input type="submit" name="submit" value="<?php echo elgg_echo('login'); ?>" />
 	    </form>
 	</div>

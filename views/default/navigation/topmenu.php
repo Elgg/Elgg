@@ -17,9 +17,9 @@
 
 <div id="topmenu">
     <ul>
-        <li><a href="">dashboard</a></li>
-        <li><a href="">profile</a></li>
-        <li><a href="">account</a></li>
-        <li><a href="">logout</a></li>
+        <li><a href=""><?php echo elgg_echo('dashboard'); ?></a></li>
+        <li><a href=""><?php echo elgg_echo('profile'); ?></a></li>
+        <li><a href=""><?php echo elgg_echo('account'); ?></a></li>
+        <li><a href=""><?php echo elgg_echo('logout'); ?></a></li>
     </ul>
 </div>

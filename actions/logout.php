@@ -17,7 +17,7 @@
     // Set the system_message as appropriate
         
         if ($result) {
-            system_message(elgg_echo('logout'));
+            system_message(elgg_echo('logoutok'));
         } else {
             system_message(elgg_echo('logouterror'));
         }

@@ -31,9 +31,9 @@
 			if (!isset($CONFIG->translations))
 				$CONFIG->translations = array();
 			
-			$country_code = strtlower($country_code);
+			$country_code = strtolower($country_code);
 			$country_code = trim($country_code);
-			if (is_array($language_array) && sizoef($language_array) > 0 && $country_code != "") {
+			if (is_array($language_array) && sizeof($language_array) > 0 && $country_code != "") {
 				
 				if (!isset($CONFIG->translations[$country_code])) {
 					$CONFIG->translations[$country_code] = $language_array;
@@ -84,9 +84,8 @@
 			if ($handle = opendir($CONFIG->path . "languages/")) {
 					while ($language = readdir($handle)) {
 						if (!in_array($language,array('.','..','.svn','CVS')) && !is_dir($CONFIG->path . "/languages/" . $language)) {
-							//@include($CONFIG->path . "languages/" . $language);
+							include($CONFIG->path . "languages/" . $language);
 						}
-						echo $language;
 					}
 				}
 			

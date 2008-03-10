@@ -16,7 +16,7 @@
 <div style="clear:both">
 </div><!-- close container div -->
 <div id="footer">
-<p>curverider Ltd 2008</p>
+<p><a href="http://elgg.com/">Elgg</a></p>
 </div><!-- close footer div -->
 </body>
 </html>

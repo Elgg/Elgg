@@ -25,7 +25,7 @@
     // Set the system_message as appropriate
         
         if ($result) {
-            system_message(elgg_echo('login'));
+            system_message(elgg_echo('loginok'));
         } else {
             system_message(elgg_echo('loginerror'));
         }
