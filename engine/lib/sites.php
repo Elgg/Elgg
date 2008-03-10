@@ -506,10 +506,7 @@
 	 * @param string $name
 	 * @param int $site_id
 	 */
-	function count_site_annotations($name, $site_id)
-	{
-		return count_annotations($site_id, 'site', $name);
-	}
+	function count_site_annotations($name, $site_id) { return count_annotations($site_id, 'site', $name); }
 	
 	/**
 	 * Get the average of an integer type annotation.
