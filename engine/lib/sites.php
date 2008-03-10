@@ -514,7 +514,7 @@
 	 * @param string $name
 	 * @param int $site_id
 	 */
-	function get_site_annotations_avg($name, $site_id) { return get_annotations_avg($object_id, $object_type, $name); }
+	function get_site_annotations_avg($name, $site_id) { return get_annotations_avg($site_id, 'site', $name); }
 	
 	/**
 	 * Get the sum of integer type annotations of a given type.
@@ -522,7 +522,7 @@
 	 * @param string $name
 	 * @param int $site_id
 	 */
-	function get_site_annotations_sum($name, $site_id) { return get_annotations_sum($object_id, $object_type, $name); }
+	function get_site_annotations_sum($name, $site_id) { return get_annotations_sum($site_id, 'site', $name); }
 	
 	/**
 	 * Get the min of integer type annotations of a given type.
@@ -530,7 +530,7 @@
 	 * @param string $name
 	 * @param int $site_id
 	 */
-	function get_site_annotations_min($name, $site_id) { return get_annotations_min($object_id, $object_type, $name); }
+	function get_site_annotations_min($name, $site_id) { return get_annotations_min($site_id, 'site', $name); }
 	
 	/**
 	 * Get the max of integer type annotations of a given type.
@@ -538,7 +538,7 @@
 	 * @param string $name
 	 * @param int $site_id
 	 */
-	function get_site_annotations_max($name, $site_id) { return get_annotations_max($object_id, $object_type, $name); }
+	function get_site_annotations_max($name, $site_id) { return get_annotations_max($site_id, 'site', $name); }
 	
 	/**
 	 * Remove all site annotations, or site annotations of a given type.
