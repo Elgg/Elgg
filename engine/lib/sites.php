@@ -419,8 +419,15 @@
 	 */
 	function remove_site_metadata($site_id, $name)
 	{
-		// TODO : Writeme
-		throw new NotImplementedException("Writeme!");
+		$result = get_metadatas($site_id, 'site', $name);
+		
+		if ($result)
+		{
+			foreach ($result as $r)
+				delete_metadata($r->id);
+		}
+		
+		return false;
 	}
 	
 	/**
