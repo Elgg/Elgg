@@ -206,13 +206,13 @@ CREATE TABLE `prefix_annotations` (
 -- Table structure for metadata
 --
 CREATE TABLE `prefix_metadata` (
-	`id` int(11) NOT NULL auto_increment,
+	`id` int(11) NOT NULL auto_increment,motion netcam
 	
 	`object_id` int(11) NOT NULL,
 	`object_type` enum ('object', 'user', 'collection', 'site') NOT NULL,
 	
 	`name` varchar(255) NOT NULL,
-	`value` text NOT NULL,
+	`value` int(11) NOT NULL,
 	`value_type` enum ('integer','tag','text','file') NOT NULL,
 	
 	`owner_id` int(11) NOT NULL,
@@ -223,6 +223,17 @@ CREATE TABLE `prefix_metadata` (
 	PRIMARY KEY (`id`),
 	UNIQUE KEY (`object_id`,`object_type`, `name`)
 	
+) ENGINE=MyISAM;
+
+--
+-- Meta strings table
+--
+CREATE TABLE `prefix_metastrings` (
+	`id` int(11) NOT NULL auto_increment,
+	`value` text NOT NULL,
+	
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `value`
 ) ENGINE=MyISAM;
 
 --
