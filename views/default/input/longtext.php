@@ -1,0 +1,1 @@
+<textarea class="input-textarea" name="<?php echo $vars['internalname']; ?>" <?php echo $vars['js']; ?>><?php echo $vars['value']; ?></textarea> 

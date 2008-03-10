@@ -27,12 +27,49 @@ body {
     text-align:center;
 }
 
+#header {
+    background:#000;
+    color:#fff;
+    margin:0 0 20px 0;
+    padding:10px;
+}
+
+#container {
+    width:990px;
+    border:1px solid #000;
+    margin:auto;
+}
+
+#sidebar_toolbox {
+    float:left;
+    width:150px;
+    background:#efefef;
+    padding:5px;
+    text-align:left;
+    text-size:10px;
+    margin:0;
+}
+
+#mainContent_nosidebar {
+    margin:0 0 0 180px;
+    width:750px;
+    background:#000;
+    padding:20px;
+    color:#fff;
+}
+
 #login-box {
     text-align:left;
     background:#555;
     border:1px solid #ddd;
     width:300px;
     padding:10px;
-    margin:auto;
     color:#fff;
+}
+
+#footer {
+    background:#555;
+    color:#fff;
+    margin:20px 0 0 0;
+    padding:10px;
 }

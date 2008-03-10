@@ -1,0 +1,1 @@
+<input type="password" <?php echo $vars['js']; ?> name="<?php echo $vars['internalname']; ?>" value="<?php echo $vars['value']; ?>" /> 
