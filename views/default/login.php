@@ -14,7 +14,7 @@
 ?>
 
 	<div id="login-box">
-		<form action="<?php echo $vars['url']; ?>actions/login.php" method="POST">
+		<form action="<?php echo $vars['url']; ?>action/login" method="POST">
 			<label>Username<br /><input name="username" type="text" class="general-textarea" /></label>
 			<br />
 			<label>Password<br /><input name="password" type="password" class="general-textarea" /></label><br />
