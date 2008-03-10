@@ -271,7 +271,9 @@
 	 */
 	function get_sites($user_id = 0, $type = "", $metadata_name = "", $metadata_value = "", $order_by = "created desc", $limit = 10, $offset = 0)
 	{
-		return get_objects_from_metadatas(0, 'site', $metadata_name, $metadata_value, $user_id, $order_by, $limit, $offset);
+		// I'm not sure what this is meant to do, or how its useful.
+		
+		//return get_objects_from_metadatas(0, 'site', $metadata_name, $metadata_value, $user_id, $order_by, $limit, $offset);
 	}
 	
 	/**
@@ -333,8 +335,21 @@
 	 */
 	function get_site_objects($site_id, $type = "", $limit = 10, $offset = 0) 
 	{
-		// TODO : Writeme
-		throw new NotImplementedException("Writeme!");
+		global $CONFIG;
+		
+		$site_id = (int)$site_id;
+		$type = sanitise_string($type);
+		$limit = (int)$limit;
+		$offset = (int)$offset;
+		$owner_id = (int)$owner_id; if ($owner_id==0) $owner_id = $_SESSION['id'];
+		
+		$access = get_access_list();
+		$type = get_data_row("SELECT * from {$CONFIG->dbprefix}object_types where name='$type'");
+		
+		if (!$type)
+			return false;
+		
+		return get_data("SELECT * from {$CONFIG->dbprefix}objects where site_id=$site_id and type_id={$type->id} and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))","row_to_elggobject");
 	}
 	
 	/**
@@ -359,8 +374,15 @@
 	 */
 	function add_site_user($site_id, $user_id)
 	{
-		// TODO : Writeme
-		throw new NotImplementedException("Writeme!");
+		global $CONFIG;
+		
+		$site = get_site($site_id);
+		$user = get_user($user_id);
+		
+		if (($site) && ($user))
+			return insert_data("INSERT into {$CONFIG->dbprefix}users_sites (site_id, user_id) VALUES ({$site->id},{$user->id})");
+		
+		return false;
 	}
 	
 	/**
@@ -371,8 +393,12 @@
 	 */
 	function remove_site_user($site_id, $user_id)
 	{
-		// TODO : Writeme
-		throw new NotImplementedException("Writeme!");
+		global $CONFIG;
+	
+		$site_id = (int)$site_id;
+		$user_id = (int)$user_id;
+		
+		return delete_data("DELETE from {$CONFIG->dbprefix}users_sites where site_id=$site_id and user_id=$user_id");
 	}
 	
 	/**
