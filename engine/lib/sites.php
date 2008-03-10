@@ -259,20 +259,19 @@
 	}
 	
 	/**
-	 * Enter description here...
+	 * Get sites based on the provided information.
 	 *
 	 * @param int $user_id
 	 * @param string $type
-	 * @param string $metadata_type
+	 * @param string $metadata_name 
 	 * @param string $metadata_value
 	 * @param string $order_by
 	 * @param int $limit
 	 * @param int $offset
 	 */
-	function get_sites($user_id = 0, $type = "", $metadata_type = "", $metadata_value = "", $order_by = "created desc", $limit = 10, $offset = 0)
+	function get_sites($user_id = 0, $type = "", $metadata_name = "", $metadata_value = "", $order_by = "created desc", $limit = 10, $offset = 0)
 	{
-		// TODO : Writeme
-		throw new NotImplementedException("Writeme!");
+		return get_objects_from_metadatas(0, 'site', $metadata_name, $metadata_value, $user_id, $order_by, $limit, $offset);
 	}
 	
 	/**
@@ -317,8 +316,11 @@
 	 */
 	function get_site_users($site_id, $limit, $offset)
 	{
-		// TODO : Writeme
-		throw new NotImplementedException("Writeme!");
+		$site_id = (int)$site_id;
+		$limit = (int)$limit;
+		$offset = (int)$offset;
+		
+		return get_data("SELECT u.* from users u, users_sites s where s.site_id=$site_id and u.id = s.user_id","row_to_elgguser");
 	}
 	
 	/**
