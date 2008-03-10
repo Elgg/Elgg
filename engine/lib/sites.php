@@ -610,7 +610,7 @@
 		
 		$access = get_access_list();
 		
-		return update_data("UPDATE {$CONFIG->dbprefix}sites set name='$title', description='$description', url='$url', last_updated='$time', owner_id=$owner_id, access_id=$access_id WHERE id=$id and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))");
+		return update_data("UPDATE {$CONFIG->dbprefix}sites set name='$title', description='$description', url='$url', last_updated='$time', owner_id=$owner_id, access_id=$access_id WHERE id=$id and owner_id = {$_SESSION['id']}");
 	}
 	
 	/**
