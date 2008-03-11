@@ -187,7 +187,6 @@
 	 * @param unknown_type $body
 	 * @return unknown
 	 */
-		
 		function page_draw($title, $body) {
 			return elgg_view('pageshells/pageshell', array(
 												'title' => $title,
@@ -198,6 +197,105 @@
 			
 		}
 
+	/**
+	 * Adds an array with a name to a given generic array register.
+	 * For example, these are used for menus.
+	 *
+	 * @param string $register_name The name of the top-level register
+	 * @param string $subregister_name The name of the subregister
+	 * @param mixed $subregister_value The value of the subregister
+	 * @param array $children_array Optionally, an array of children
+	 * @return true|false Depending on success
+	 */
+		function add_to_register($register_name, $subregister_name, $subregister_value, $children_array = array()) {
+			
+			global $CONFIG;
+			
+			if (empty($register_name) || empty($subregister_name) || empty($register_array))
+				return false;
+			
+			if (!isset($CONFIG->registers))
+				$CONFIG->registers = array();
+				
+			if (!isset($CONFIG->registers[$register_name]))
+				$CONFIG->registers[$register_name]  = array();
+			
+			if (is_array($register_array)) {
+				$subregister = new stdClass;
+				$subregister->name = $subregister_name;
+				$subregister->value = $subregister_value;
+				$subregister->children = $children_array;
+				$CONFIG->registers[$register_name][$subregister_name] = $subregister;
+				return true;
+			}
+			
+			return false;
+				
+		}
+		
+	/**
+	 * Returns a register object
+	 *
+	 * @param string $register_name The name of the register
+	 * @param mixed $register_value The value of the register
+	 * @param array $children_array Optionally, an array of children
+	 * @return false|stdClass Depending on success
+	 */
+		
+		function make_register_object($register_name, $register_value, $children_array = array()) {
+			
+			if (empty($register_name) || empty($subregister_name) || empty($register_array))
+				return false;
+			
+			$register = new stdClass;
+			$register->name = $register_name;
+			$register->value = $register_value;
+			$register->children = $children_array;
+			
+			return $register;
+			
+		}
+		
+	/**
+	 * If it exists, returns a particular register as an array
+	 *
+	 * @param string $register_name The name of the register
+	 * @return array|false Depending on success
+	 */
+		function get_register($register_name) {
+			
+			global $CONFIG;
+			
+			if (isset($CONFIG->registers[$register_name]))
+				return $CONFIG->registers[$register_name];
+			
+			return false;
+				
+		}
+		
+	/**
+	 * Adds an item to the menu register
+	 *
+	 * @param string $menu_name The name of the top-level menu
+	 * @param string $menu_url The URL of the page
+	 * @param array $menu_children Optionally, an array of submenu items
+	 * @return true|false Depending on success
+	 */
+		function add_menu($menu_name, $menu_url, $menu_children = array()) {
+			return add_to_register('menu',$menu_name,$menu_url, $menu_children);
+		}
+		
+	/**
+	 * Returns a menu item for use in the children section of add_menu()
+	 *
+	 * @param string $menu_name The name of the menu item
+	 * @param string $menu_url Its URL
+	 * @return stdClass|false Depending on success
+	 */
+		function menu_item($menu_name, $menu_url) {
+			return make_register_object($menu_name, $menu_url);
+		}
+		
 	/**
 	 * Library loading and handling
 	 */
