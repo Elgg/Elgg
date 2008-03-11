@@ -143,7 +143,7 @@
 	 * @param int $limit
 	 * @param int $offset
 	 */
-	function get_annotations($object_id = 0, $object_type = "", $name = "", $value = "", $owner_id = 0, $order_by = "created desc", $limit = 10, $offset = 0)
+	function get_annotations($object_id = 0, $object_type = "", $name = "", $value = "", $owner_id = 0, $object_subtype = "", $order_by = "created desc", $limit = 10, $offset = 0)
 	{
 		global $CONFIG;
 		
@@ -187,7 +187,9 @@
 			if ($n > 0) $query .= " and ";
 			$query .= $where[$n];
 		}
-		error_log($query);
+		
+		$query .= " order by $order_by limit $offset,$limit";
+		
 		return get_data($query, "row_to_elggannotation");
 	}
 	
