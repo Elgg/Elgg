@@ -240,6 +240,11 @@
 		
 		$time = time();
 		
+		// Add the metastring
+		$value = add_metastring($value);
+		if (!$value) return false;
+		
+		// If ok then add it
 		return insert_data("INSERT into {$CONFIG->dbprefix}annotations (object_id, object_type, name, value, value_type, owner_id, created, access_id) VALUES ($object_id,'$object_type','$name','$value','$value_type', $owner_id, $time, $access_id)");
 	}
 	
@@ -269,6 +274,11 @@
 		
 		$access = get_access_list();
 		
+		// Add the metastring
+		$value = add_metastring($value);
+		if (!$value) return false;
+		
+		// If ok then add it		
 		return update_data("UPDATE {$CONFIG->dbprefix}annotations set value='$value', value_type='$value_type', access_id=$access_id, owner_id=$owner_id where id=$annotation_id and name='$name' and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))");
 	}
 	

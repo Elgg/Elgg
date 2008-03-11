@@ -230,7 +230,7 @@ CREATE TABLE `prefix_metadata` (
 --
 CREATE TABLE `prefix_metastrings` (
 	`id` int(11) NOT NULL auto_increment,
-	`tag` text NOT NULL,
+	`tag` varchar(255) NOT NULL,
 	
 	PRIMARY KEY (`id`),
 	UNIQUE KEY (`tag`)
