@@ -18,6 +18,11 @@
 				extend_view("pageshell", "testplugin/pageshell");
 				set_view_location("testplugin/pageshell",$CONFIG->pluginspath . "test/views/");
 			
+			// Test menu item
+				add_menu("Test plugin",$CONFIG->wwwroot . "mod/test/",array(
+					menu_item("Main test plugin page",$CONFIG->wwwroot."mod/test/"),
+												));
+				
 		}
 
 	// Make sure test_init is called on initialisation
