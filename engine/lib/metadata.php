@@ -248,7 +248,7 @@
 	 * @param int $offset
 	 * @return array of ElggMetadata
 	 */
-	function get_metadatas($object_id = 0, $object_type = "", $name = "", $value = "", $owner_id = 0, $order_by = "created desc", $limit = 10, $offset = 0)
+	function get_metadatas($object_id = 0, $object_type = "", $name = "", $value = "", $value_type = "", $owner_id = 0, $order_by = "created desc", $limit = 10, $offset = 0)
 	{
 		global $CONFIG;
 		
@@ -256,6 +256,7 @@
 		$object_type = sanitise_string(trim($object_type));
 		$name = sanitise_string(trim($name));
 		$value = sanitise_string(trim($value));
+		$value_type = sanitise_string(trim($value_type));
 		
 		$owner_id = (int)$owner_id;
 		
@@ -279,6 +280,9 @@
 			
 		if ($value != "")
 			$where[] = "value='$value'";
+			
+		if ($value_type != "")
+			$where[] = "value_type='$value_type'";
 			
 		// add access controls
 		$access = get_access_list();
@@ -306,9 +310,9 @@
 	 * @param int $offset
 	 * @return mixed Array of objects or false.
 	 */
-	function get_objects_from_metadatas($object_id = 0, $object_type = "", $name = "", $value = "", $owner_id = 0, $order_by = "created desc", $limit = 10, $offset = 0)
+	function get_objects_from_metadatas($object_id = 0, $object_type = "", $name = "", $value = "", $value_type = "", $owner_id = 0, $order_by = "created desc", $limit = 10, $offset = 0)
 	{
-		$results = get_metadatas($object_id, $object_type, $name, $value, $owner_id, $order_by, $limit, $offset);
+		$results = get_metadatas($object_id, $object_type, $name, $value, $value_type, $owner_id, $order_by, $limit, $offset);
 		$objects = false;
 		
 		if ($results)
