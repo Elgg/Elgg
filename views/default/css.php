@@ -83,3 +83,11 @@ body {
     margin:20px 0 0 0;
     padding:10px;
 }
+
+.messages {
+    border:1px solid #D3322A;
+    background:#F7DAD8;
+    color:#000;
+    padding:3px 50px;
+    margin:20px 20px 10px 20px;
+}
