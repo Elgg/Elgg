@@ -134,3 +134,18 @@ form			{
 .profiletable .fieldname	{
 					background-color: #C6DEFD;
 				}
+
+#topmenu {
+    position:absolute;
+    top:2px;
+    right:10px;
+}
+
+#topmenu li {
+    display:inline;
+    list-style:none;
+}
+
+#topmenu a {
+    color:#fff;
+}

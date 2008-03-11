@@ -40,6 +40,7 @@
 <table width="100%"  border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td id="pagetop"><a href="<?php echo $vars['url']; ?>"><img src="<?php echo $vars['wwwroot']; ?>mod/test/graphics/purplecrayon.gif" alt="Elgg" width="227" height="70" border="0" /></a></td>
+    <td><?php echo elgg_view('navigation/topmenu'); ?></td>
   </tr>
 </table>
 <table width="100%"  border="0" cellpadding="0" cellspacing="0">
