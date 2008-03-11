@@ -53,9 +53,8 @@
 	 * @return string The HTML content
 	 */
 		function elgg_view($view, $vars = "", $viewtype = "", $debug = false) {
-		
+
 		    global $CONFIG, $strings;
-		    
 		    static $usercache;
 		    if (!is_array($usercache)) {
 		        $usercache = array();
@@ -99,7 +98,6 @@
 		    } else {
 		    	$viewlist = array(500 => $view);
 		    }
-		    
 		    ob_start();
 		    foreach($viewlist as $priority => $view) {
 		    

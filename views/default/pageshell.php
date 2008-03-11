@@ -18,6 +18,7 @@
 	 */
 
 	// Set title
+
 		if (empty($vars['title'])) {
 			$title = $vars['sitename'];
 		} else if (empty($vars['sitename'])) {

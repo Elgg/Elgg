@@ -29,7 +29,7 @@
 ?>
 
 <!-- include the header -->
-<?php echo elgg_view('page_elements/header'); ?>
+<?php echo elgg_view('page_elements/header', $vars); ?>
 
     <!-- main contents -->
     
@@ -38,7 +38,7 @@
     
     <!-- toolbox -->
     <div id="sidebar_toolbox">
-        <?php echo elgg_view("navigation/toolbox"); ?><!-- include the my world toolbox -->
+        <?php echo elgg_view("navigation/toolbox", $vars); ?><!-- include the my world toolbox -->
     </div>
     
     <!-- get the main body -->
@@ -47,4 +47,4 @@
     </div>
 
 <!-- include the footer -->
-<?php echo elgg_view('page_elements/footer'); ?>
+<?php echo elgg_view('page_elements/footer', $vars); ?>
