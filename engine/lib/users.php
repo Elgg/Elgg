@@ -343,6 +343,19 @@
 		}
 		
 	/**
+	 * Gets a user with a particular username, if they exist
+	 *
+	 * @param string $username The user's username
+	 * @return ElggUser or false
+	 */
+		function get_user_from_username($username) {
+			global $CONFIG;
+			$username = (int) sanitise_string($username);
+			return row_to_elgguser(get_data_row("select * from {$CONFIG->dbprefix}users where username = '{$username}'"));
+			
+		}
+		
+	/**
 	 * Enter description here...
 	 *
 	 * @param unknown_type $criteria
