@@ -48,11 +48,9 @@
 					$site = new stdClass;
 					foreach ($id->attributes as $k => $v)
 						$site->$k = $v;
-					
-					error_log("**** 2");
+	
 				} else if (strpos($id, "http") !== false) {
 					$site = get_site_byurl($id);
-					error_log("**** 3");
 				} else { 
 					$tmp = get_site((int)$id); // This is an integer ID
 					$site = new stdClass;
