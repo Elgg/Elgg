@@ -33,7 +33,7 @@
 <?php
 
 				if (sizeof($item->children) > 0 ) {
-					
+					echo "<ul>";
 					foreach($item->children as $subitem) {
 ?>
 		<li>
@@ -41,6 +41,7 @@
 		</li>
 <?php
 					}
+					echo "</ul>";
 					
 				}
 

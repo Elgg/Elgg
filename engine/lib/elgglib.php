@@ -211,7 +211,7 @@
 			
 			global $CONFIG;
 			
-			if (empty($register_name) || empty($subregister_name) || empty($register_array))
+			if (empty($register_name) || empty($subregister_name) || empty($children_array))
 				return false;
 			
 			if (!isset($CONFIG->registers))
@@ -220,16 +220,16 @@
 			if (!isset($CONFIG->registers[$register_name]))
 				$CONFIG->registers[$register_name]  = array();
 			
-			if (is_array($register_array)) {
-				$subregister = new stdClass;
-				$subregister->name = $subregister_name;
-				$subregister->value = $subregister_value;
+			$subregister = new stdClass;
+			$subregister->name = $subregister_name;
+			$subregister->value = $subregister_value;
+				
+			if (is_array($children_array)) {	
 				$subregister->children = $children_array;
-				$CONFIG->registers[$register_name][$subregister_name] = $subregister;
-				return true;
 			}
 			
-			return false;
+			$CONFIG->registers[$register_name][$subregister_name] = $subregister;
+			return true;
 				
 		}
 		
