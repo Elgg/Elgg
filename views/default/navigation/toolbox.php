@@ -14,23 +14,49 @@
 	 * 
 	 */
 	 
+		$menu = get_register('menu');
+
+		if (is_array($menu) && sizeof($menu) > 0) {
+		
 ?>
 
 <ul>
-    <li>
-        <h2>Menu one</h2>
-        <ul>
-            <li>option one</li>
-            <li>option two</li>
-            <li>option three</li>
-        </ul>
-    </li>
-    <li>
-        <h2>Menu two</h2>
-        <ul>
-            <li>option one</li>
-            <li>option two</li>
-            <li>option three</li>
-        </ul>
-    </li>
+
+<?php
+
+			foreach($menu as $item) {
+				
+?>
+
+	<li>
+		<h2><?php echo $item->name ?></h2>
+<?php
+
+				if (sizeof($item->children) > 0 ) {
+					
+					foreach($item->children as $subitem) {
+?>
+		<li>
+			<a href="<?php echo $item->value ?>"><?php echo $item->name; ?></a>
+		</li>
+<?php
+					}
+					
+				}
+
+?>
+	</li>
+
+<?php
+				
+			}
+
+?>
+
 </ul>    
+
+<?php
+
+		}
+
+?>
