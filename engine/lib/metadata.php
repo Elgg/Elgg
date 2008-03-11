@@ -248,7 +248,7 @@
 	 * @param int $offset
 	 * @return array of ElggMetadata
 	 */
-	function get_metadatas($object_id = 0, $object_type = "", $name = "", $value = "", $value_type = "", $owner_id = 0, $object_subtype = "", $order_by = "created desc", $limit = 10, $offset = 0)
+	function get_metadatas($object_id = 0, $object_type = "", $name = "", $value = "", $value_type = "", $owner_id = 0, $order_by = "created desc", $limit = 10, $offset = 0)
 	{
 		global $CONFIG;
 		
@@ -257,7 +257,6 @@
 		$name = sanitise_string(trim($name));
 		$value = sanitise_string(trim($value));
 		$value_type = sanitise_string(trim($value_type));
-		$object_subtype = get_object_type_id($object_subtype);
 		$owner_id = (int)$owner_id;
 		$order_by = sanitise_string($order_by);
 		
@@ -315,9 +314,9 @@
 	 * @param int $offset
 	 * @return mixed Array of objects or false.
 	 */
-	function get_objects_from_metadatas($object_id = 0, $object_type = "", $name = "", $value = "", $value_type = "", $owner_id = 0, $object_subtype = "", $order_by = "created desc", $limit = 10, $offset = 0)
+	function get_objects_from_metadatas($object_id = 0, $object_type = "", $name = "", $value = "", $value_type = "", $owner_id = 0, $order_by = "created desc", $limit = 10, $offset = 0)
 	{
-		$results = get_metadatas($object_id, $object_type, $name, $value, $value_type, $owner_id, $object_subtype, $order_by, $limit, $offset);
+		$results = get_metadatas($object_id, $object_type, $name, $value, $value_type, $owner_id, $order_by, $limit, $offset);
 		$objects = false;
 		
 		if ($results)
