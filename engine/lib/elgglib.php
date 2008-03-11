@@ -179,6 +179,30 @@
 		}
 		
 	/**
+	 * Auto-registers views from a particular starting location
+	 *
+	 * @param string $view_base The base of the view name
+	 * @param string $folder The folder to begin looking in
+	 * @param string $base_location_path The base views directory to use with set_view_location
+	 */		
+		function autoregister_views($view_base, $folder, $base_location_path) {
+			
+			if (!isset($i)) $i = 0;
+			if ($handle = opendir($folder)) {
+				while ($view = readdir($handle)) {
+					if (!in_array($view,array('.','..','.svn','CVS')) && !is_dir($folder . "/" . $view)) {
+						if (substr_count($view,".php") > 0) {
+							set_view_location($view_base . "/" . str_replace(".php","",$view), $base_location_path);
+						}
+					} else if (!in_array($view,array('.','..','.svn','CVS')) && is_dir($folder . "/" . $view)) {
+						autoregister_views($view_base . "/" . $view, $folder . "/" . $view, $base_location_path);
+					}
+				}
+			}
+			
+		}
+		
+	/**
 	 * Returns a representation of a full 'page' (which might be an HTML page, RSS file, etc, depending on the current view)
 	 *
 	 * @param unknown_type $title

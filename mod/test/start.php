@@ -13,10 +13,6 @@
 		function test_init($event, $object_type, $object = null) {
 			
 				global $CONFIG;
-				
-			// Let's add to the pageshell view.
-				extend_view("pageshell", "testplugin/pageshell");
-				set_view_location("testplugin/pageshell",$CONFIG->pluginspath . "test/views/");
 			
 			// Test menu item
 				add_menu("Test plugin",$CONFIG->wwwroot . "mod/test/",array(
