@@ -13,7 +13,7 @@
 
 	// Include required files
 	require_once('../engine/start.php');
-	global $ApiEnvironment;
+	global $CONFIG, $ApiEnvironment;
 	
 	// Register the error handler
 	error_reporting(E_ALL); 
@@ -97,7 +97,8 @@
 	}
 	else
 	{
-		// TODO: set site environment
+		// Set site environment
+		$ApiEnvironment->site_id = $CONFIG->site_id;
 		
 		// User is logged in, just execute 
 		if (isset($params['auth_token'])) $token = $params['auth_token'];

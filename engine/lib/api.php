@@ -198,6 +198,9 @@
 		$site = (int)$site;
 		$token = sanitise_string($token);
 		
+		if (!$site) throw new ConfigurationException("No site ID has been specified.");
+		if (!$token) throw new APIException("User token not specified.");
+		
 		$time = time();
 		
 		$user = get_data_row("SELECT * from {$CONFIG->dbprefix}users_apisessions where token='$token' and site_id=$site and expires>$time");
