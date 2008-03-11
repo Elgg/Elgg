@@ -65,8 +65,101 @@
 		 * Load data from the cache using a given key.
 		 *
 		 * @param string $key
+		 * @param int $offset 
+		 * @param int $limit
 		 * @return mixed The stored data or false.
 		 */
-		abstract public function load($key);
+		abstract public function load($key, $offset = 0, $limit = null);
+	}
+	
+	/**
+	 * @class ElggFileCache
+	 * Store cached data in a file store.
+	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 */
+	class ElggFileCache extends ElggCache
+	{
+		/**
+		 * Set the Elgg cache.
+		 *
+		 * @param string $cache_path The cache path.
+		 * @param int $max_age Maximum age in seconds, 0 if no limit.
+		 * @param int $max_size Maximum size of cache in seconds, 0 if no limit.
+		 */
+		function __construct($cache_path, $max_age = 0, $max_size = 0)
+		{
+			set_variable("cache_path", $cache_path);
+			set_variable("max_age", $max_age);
+			set_variable("max_size", $max_size);	
+
+			if ($cache_path=="") throw new ConfigurationException("Cache path set to nothing!");
+		}
+		
+		/**
+		 * Create and return a handle to a file.
+		 *
+		 * @param string $filename
+		 * @param string $rw
+		 */
+		protected function create_file($filename, $rw = "rb")
+		{
+			// Create a filename matrix
+			$matrix = "";
+			for ($n = 0; $n < strlen($filename); $n++)
+				$matrix .= $filename[$n] . "/";	
+	
+			// Create full path
+			$path = $this->set_variable("cache_path") . $matrix;
+			if (!mkdir($path, 0700, true)) throw new IOException("Could not make $path");
+			
+			// Open the file
+			return fopen($path . $filename, $rw);
+		}
+		
+		/**
+		 * Create a sanitised filename for the file.
+		 *
+		 * @param string $filename
+		 */
+		protected function sanitise_filename($filename)
+		{
+			// TODO : Writeme
+
+			return $filename;
+		}
+		
+		public function save($key, $data)
+		{
+			$f = $this->create_file($this->sanitise_filename($key), "wb");
+			if ($f)
+			{
+				$result = fwrite($f, $data);
+				fclose($f);
+				
+				return $result;
+			}
+			
+			return false;
+		}
+		
+		public function load($key, $offset = 0, $limit = null)
+		{
+			$f = $this->create_file($this->sanitise_filename($key));
+			if ($f) 
+			{
+				fseek($f, $offset);
+				$data = stream_get_contents($f, $limit, $offset);
+				fclose($f);
+				
+				return $data;
+			}
+			
+			return false;
+		}
+		
+		public function __destruct()
+		{
+			// TODO: Check size and age, clean up accordingly
+		}
 	}
 ?>
