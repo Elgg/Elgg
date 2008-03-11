@@ -600,9 +600,9 @@
 		
 		echo get_serialised_result($result, $format);
 	}
+
 	
 	// Error handler functions ////////////////////////////////////////////////////////////////
-	
 	
 	/** Define a global array of errors */
 	$ERRORS = array();
@@ -665,5 +665,18 @@
 			get_input('format','php') // Attempt to get the requested format if passed.
 		);
 	}
+
+	// System functions ///////////////////////////////////////////////////////////////////////
 	
+	/**
+	 * Simple api to return a list of all api's installed on the system.
+	 */
+	function list_all_apis()
+	{
+		global $METHODS;
+		return $METHODS;
+	}
+	
+	// Expose some system api functions
+	expose_function("system.api.list", "list_all_apis", NULL, false);
 ?>
