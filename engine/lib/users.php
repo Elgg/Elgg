@@ -356,6 +356,35 @@
 		}
 		
 	/**
+     * Get a particular piece of user info
+     * @param string $fieldname The name of the field we want to get
+     * @param int $user_id The id of the user we're checking for
+     * @return The value we seek, or false if the user doesn't exist
+     */
+	    function user_info($fieldname, $user_id) {
+	        
+	        // Name table
+	        static $id_to_name_table;
+	
+	        // Returns field from a given ID
+	
+	        $user_id = (int) $user_id;
+	        
+	        if (!empty($user_id)) {
+	            if (!isset($id_to_name_table[$user_id][$fieldname])) {
+	                $id_to_name_table[$user_id] = (array) get_data_row("select * from users where id = {$user_id}"); // get_record('users','ident',$user_id);
+	            }
+	            if (isset($id_to_name_table[$user_id][$fieldname])) {
+	                return $id_to_name_table[$user_id][$fieldname];
+	            }
+	        }
+	        
+	        // If we've got here, the user didn't exist in the database
+	        return false;
+	        
+	    }
+		
+	/**
 	 * Enter description here...
 	 *
 	 * @param unknown_type $criteria
