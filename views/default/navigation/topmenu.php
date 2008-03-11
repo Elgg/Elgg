@@ -15,11 +15,17 @@
 	 
 ?>
 
+<?php
+     if($_SESSION['id'] != -1){
+?>
 <div id="topmenu">
     <ul>
-        <li><a href=""><?php echo elgg_echo('dashboard'); ?></a></li>
+        <li><a href="<?php echo $vars['url']; ?>mod/dashboard/"><?php echo elgg_echo('dashboard'); ?></a></li>
         <li><a href=""><?php echo elgg_echo('profile'); ?></a></li>
         <li><a href=""><?php echo elgg_echo('account'); ?></a></li>
-        <li><a href=""><?php echo elgg_echo('logout'); ?></a></li>
+        <li><a href="<?php echo $vars['url']; ?>action/logout"><?php echo elgg_echo('logout'); ?></a></li>
     </ul>
 </div>
+<?php
+    }
+?>

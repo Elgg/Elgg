@@ -27,17 +27,30 @@ body {
     text-align:center;
 }
 
-#header {
-    background:#000;
-    color:#fff;
-    margin:0 0 20px 0;
-    padding:10px;
-}
-
 #container {
     width:990px;
-    border:1px solid #000;
+    border-left:2px solid #555;
+    border-right:2px solid #555;
     margin:auto;
+}
+
+#header {
+    margin:0 0 20px 0;
+    padding:10px;
+    text-align:left;
+    position:relative;
+    border-bottom:1px solid #555;
+}
+
+#topmenu {
+    position:absolute;
+    top:2px;
+    right:10px;
+}
+
+#topmenu li {
+    display:inline;
+    list-style:none;
 }
 
 #sidebar_toolbox {
@@ -53,9 +66,7 @@ body {
 #mainContent_nosidebar {
     margin:0 0 0 180px;
     width:750px;
-    background:#000;
     padding:20px;
-    color:#fff;
 }
 
 #login-box {
@@ -68,8 +79,7 @@ body {
 }
 
 #footer {
-    background:#555;
-    color:#fff;
+    border-top:1px solid #555;
     margin:20px 0 0 0;
     padding:10px;
 }
