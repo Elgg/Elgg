@@ -5,7 +5,7 @@
 	global $CONFIG;
 	
 	//var_export($CONFIG);
-	$body = elgg_view("test/testplugin/pageshell");
+	$body = elgg_view("testplugin/pageshell");
 	page_draw("Test plugin",$body);
 
 ?>

@@ -56,6 +56,7 @@
 
 		    global $CONFIG, $strings;
 		    static $usercache;
+		    
 		    if (!is_array($usercache)) {
 		        $usercache = array();
 		    }
@@ -112,6 +113,7 @@
 		    	}
 			    if (file_exists($location . "{$viewtype}/{$view}.php") && !@include($location . "{$viewtype}/{$view}.php")) {
 			        $success = false;
+			        
 			        if ($viewtype != "default") {
 			            if (@include($location . "default/{$view}.php")) {
 			                $success = true;
@@ -121,6 +123,7 @@
 			            echo " [This view ({$view}) does not exist] ";
 			        }
 			    } else if ($CONFIG->debug == true) {
+			    	echo $location . "{$viewtype}/{$view}.php";
 			    	echo " [This view ({$view}) does not exist] ";
 			    }
 		    
@@ -192,10 +195,12 @@
 				while ($view = readdir($handle)) {
 					if (!in_array($view,array('.','..','.svn','CVS')) && !is_dir($folder . "/" . $view)) {
 						if (substr_count($view,".php") > 0) {
-							set_view_location($view_base . "/" . str_replace(".php","",$view), $base_location_path);
+							if (!empty($view_base)) { $view_base_new = $view_base . "/"; } else { $view_base_new = ""; }
+							set_view_location($view_base_new . str_replace(".php","",$view), $base_location_path);
 						}
 					} else if (!in_array($view,array('.','..','.svn','CVS')) && is_dir($folder . "/" . $view)) {
-						autoregister_views($view_base . "/" . $view, $folder . "/" . $view, $base_location_path);
+						if (!empty($view_base)) { $view_base_new = $view_base . "/"; } else { $view_base_new = ""; }
+						autoregister_views($view_base_new . $view, $folder . "/" . $view, $base_location_path);
 					}
 				}
 			}
