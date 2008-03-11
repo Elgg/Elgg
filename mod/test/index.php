@@ -4,6 +4,8 @@
 	
 	global $CONFIG;
 	
-	var_export($CONFIG);
+	//var_export($CONFIG);
+	
+	echo page_draw("Test plugin","");
 
 ?>
