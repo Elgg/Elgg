@@ -186,7 +186,7 @@
 	 * @return unknown
 	 */
 		function page_draw($title, $body) {
-			return elgg_view('pageshells/pageshell', array(
+			echo elgg_view('pageshells/pageshell', array(
 												'title' => $title,
 												'body' => $body,
 												'sysmessages' => system_messages(null,"")
