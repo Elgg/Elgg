@@ -148,9 +148,9 @@
 		global $CONFIG;
 		
 		$entity_id = (int)$entity_id;
-		$entity_type = sanitise_string(trim($entity_type));
+		$entity_type = sanitise_string($entity_type);
 		$entity_subtype = sanitise_string($entity_subtype);
-		$name = sanitise_string(trim($name));
+		$name = sanitise_string($name);
 		$value = get_metastring_id($value);
 		
 		$owner_id = (int)$owner_id;
