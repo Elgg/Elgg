@@ -130,12 +130,13 @@
                     $resultarray[] = $row;
                 }
             }
-            if (empty($resultarray)) {
-                return false;
-            }
             
             if (mysql_errno($dblink))
 				throw new DatabaseException(mysql_error($dblink));
+				
+       		if (empty($resultarray)) {
+                return false;
+            }
             
             return $resultarray;
         }
