@@ -181,6 +181,20 @@ CREATE TABLE `prefix_friends` (
   KEY `friend_id` (`friend_id`)
 ) ENGINE=MyISAM;
 
+--
+-- Entity subtypes - lets you subtype one of the main objects (sites/objects/etc)
+--
+CREATE TABLE `prefix_entity_subtypes` (
+	`id` int(11) NOT NULL auto_increment,
+	`entity_id` int(11) NOT NULL,
+	`entity_type` enum ('object', 'user', 'collection', 'site') NOT NULL,
+	
+	`entity_subtype` varchar(50) NOT NULL,
+	
+	PRIMARY KEY (`id`),
+	UNIQUE KEY (`entity_id`,`entity_type`)
+) ENGINE=MyISAM;
+
 -- 
 -- Table structure for annotations
 --
