@@ -242,6 +242,9 @@
 	 *
 	 * @param int $entity_id
 	 * @param string $entity_type
+	 * @param string $entity_subtype
+	 * @param mixed $name Either a string or an array of terms.
+	 * @param mixed $value Either a string or an array of terms.
 	 * @param int $owner_id
 	 * @param string $order_by
 	 * @param int $limit
@@ -255,8 +258,15 @@
 		$entity_id = (int)$entity_id;
 		$entity_type = sanitise_string(trim($entity_type));
 		$entity_subtype = sanitise_string($entity_subtype);
-		$name = sanitise_string(trim($name));
-		$value = get_metastring_id($value);
+		
+		if (!is_array($name))
+			$name = sanitise_string($name);
+		if (!is_array($value))
+			$value = get_metastring_id($value);
+			
+		if ((is_array($name)) && (is_array($value)) && (count($name)!=count($value)))
+			throw new InvalidParameterException("Name and value arrays not equal.");
+			
 		$value_type = sanitise_string(trim($value_type));
 		$owner_id = (int)$owner_id;
 		$order_by = sanitise_string($order_by);
@@ -278,10 +288,16 @@
 		if ($owner_id != 0)
 			$where[] = "o.owner_id=$owner_id";
 			
-		if ($name != "")
+		if (is_array($name)) {
+			foreach ($name as $n)
+				$where[]= "o.name='$n'";
+		} else if ($name != "")
 			$where[] = "o.name='$name'";
-			
-		if ($value != "")
+
+		if (is_array($value)) {
+			foreach ($value as $v)
+				$where[]= "o.value='$v'";
+		} else if ($value != "")
 			$where[] = "o.value='$value'";
 			
 		if ($value_type != "")
@@ -314,6 +330,9 @@
 	 * 
 	 * @param int $entity_id
 	 * @param string $entity_type
+	 * @param string $entity_subtype
+	 * @param mixed $name Either a string or an array of terms.
+	 * @param mixed $value Either a string or an array of terms.
 	 * @param int $owner_id
 	 * @param string $order_by
 	 * @param int $limit
