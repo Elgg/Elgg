@@ -221,7 +221,7 @@ CREATE TABLE `prefix_metadata` (
 	`access_id` int(11) NOT NULL,
 	
 	PRIMARY KEY (`id`),
-	UNIQUE KEY (`object_id`,`object_type`, `name`)
+	UNIQUE KEY (`entity_id`,`object_type`, `name`)
 	
 ) ENGINE=MyISAM;
 
