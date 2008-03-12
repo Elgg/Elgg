@@ -81,12 +81,13 @@
 		 * @return true|false Depending on success
 		 */
 			function save() {
-				if (!empty($this->id)) {
+				if (isset($this->id)) {
 					return update_object($this->id, $this->title, $this->description, $this->type, $this->owner_id, $this->access_id, $this->site_id);				
 				} else if ($id = create_object($this->title,$this->description,$this->type,$this->owner_id,$this->access_id,$this->site_id)) {
 					$this->id = $id;
 					return true;
 				}
+				return false;
 			}
 			
 		/**
@@ -314,15 +315,15 @@
 			
 			// We can't let non-logged in users create data
 			// We also need the access restriction to be valid
-			if ($owner > 0 && in_array($access_id,get_access_array())) {
+			if (in_array($access_id,get_access_array())) {
 				
 				$type_id = get_object_type_id($type);
 				
 				$query = " insert into {$CONFIG->dbprefix}objects ";
 				$query .= "(`title`,`description`,`type_id`,`owner_id`,`site_id`,`access_id`) values ";
-				$query .= "('{$title}','{$description}', {$type_id}, {$owner}, {$site_id}, {$access_id}";
+				$query .= "('{$title}','{$description}', {$type_id}, {$owner}, {$site_id}, {$access_id})";
 				return insert_data($query);
-				
+
 			}
 			return false;
 			
@@ -345,7 +346,6 @@
 		function update_object($id, $title = null, $description = null, $type = null, $owner_id = null, $access_id = null, $site_id = null) {
 
 			global $CONFIG;
-			
 			$id = (int) $id;
 			if ($title != null) $title = sanitise_string($title);
 			if ($description != null) $description = sanitise_string($description);
@@ -357,7 +357,7 @@
 			
 			// We can't let non-logged in users create data
 			// We also need the access restriction to be valid
-			if ($owner > 0 && in_array($access_id,get_access_array())) {
+			if ($owner == $_SESSION['id'] && in_array($access_id,get_access_array())) {
 			
 				$type_id = get_object_type_id($type);
 				

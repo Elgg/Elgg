@@ -15,6 +15,13 @@
 			'logouterror' => "We couldn't log you out. Please try again.",
 	
 		/**
+		 * Errors
+		 */
+	
+			'actionundefined' => "The requested action (%s) was not defined in the system.",
+			'actionloggedout' => "Sorry, you cannot perform this action while logged out.",
+	
+		/**
 		 * User details
 		 */
 

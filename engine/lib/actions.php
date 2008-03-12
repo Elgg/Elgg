@@ -37,10 +37,10 @@
                 if ($CONFIG->actions[$action]['public'] || $_SESSION['id'] != -1) {
 	                if (@include($CONFIG->path . $CONFIG->actions[$action]['file'])) {
 	                } else {
-	                    register_error("The requested action was not defined in the system.");
+	                    register_error(sprintf(elgg_echo('actionundefined'),$action));
 	                }
                 } else {
-                    register_error("Sorry, you cannot perform this action while logged out.");
+                    register_error(elgg_echo('actionloggedout'));
                 }
             }
             forward($CONFIG->url . $forwarder);
