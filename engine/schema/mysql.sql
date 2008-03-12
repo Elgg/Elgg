@@ -187,8 +187,8 @@ CREATE TABLE `prefix_friends` (
 CREATE TABLE `prefix_annotations` (
 	`id` int(11) NOT NULL auto_increment,
 	
-	`object_id` int(11) NOT NULL,
-	`object_type` enum ('object', 'user', 'collection', 'site') NOT NULL,
+	`entity_id` int(11) NOT NULL,
+	`entity_type` enum ('object', 'user', 'collection', 'site') NOT NULL,
 	
 	`name` varchar(255) NOT NULL,
 	`value` text NOT NULL,
@@ -208,8 +208,8 @@ CREATE TABLE `prefix_annotations` (
 CREATE TABLE `prefix_metadata` (
 	`id` int(11) NOT NULL auto_increment,
 	
-	`object_id` int(11) NOT NULL,
-	`object_type` enum ('object', 'user', 'collection', 'site') NOT NULL,
+	`entity_id` int(11) NOT NULL,
+	`entity_type` enum ('object', 'user', 'collection', 'site') NOT NULL,
 	
 	`name` varchar(255) NOT NULL,
 	`value` int(11) NOT NULL,
