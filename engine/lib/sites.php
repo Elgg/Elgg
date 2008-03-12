@@ -497,7 +497,7 @@
 		$offset = (int)$offset;
 		$owner_id = (int)$owner_id; if ($owner_id==0) $owner_id = $_SESSION['id']; // Consider adding the option to change in param?
 		
-		return get_annotations($site_id, 'site', "","", $owner_id, "created desc", $limit, $offset);
+		return get_annotations($site_id, 'site', "", "","", $owner_id, "created desc", $limit, $offset);
 	}
 	
 	/**

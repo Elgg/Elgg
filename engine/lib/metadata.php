@@ -248,14 +248,15 @@
 	 * @param int $offset
 	 * @return array of ElggMetadata
 	 */
-	function get_metadatas($entity_id = 0, $entity_type = "", $name = "", $value = "", $value_type = "", $owner_id = 0, $order_by = "created desc", $limit = 10, $offset = 0)
+	function get_metadatas($entity_id = 0, $entity_type = "", $entity_subtype = "", $name = "", $value = "", $value_type = "", $owner_id = 0, $order_by = "created desc", $limit = 10, $offset = 0)
 	{
 		global $CONFIG;
 		
 		$entity_id = (int)$entity_id;
 		$entity_type = sanitise_string(trim($entity_type));
+		$entity_subtype = sanitise_string($entity_subtype);
 		$name = sanitise_string(trim($name));
-		$value = sanitise_string(trim($value));
+		$value = get_metastring_id($value);
 		$value_type = sanitise_string(trim($value_type));
 		$owner_id = (int)$owner_id;
 		$order_by = sanitise_string($order_by);
@@ -263,36 +264,41 @@
 		$limit = (int)$limit;
 		$offset = (int)$offset;
 		
+		$join = "";
+		
 		// Construct query
 		$where = array();
 		
 		if ($entity_id != 0)
-			$where[] = "entity_id=$entity_id";
+			$where[] = "o.entity_id=$entity_id";
 			
 		if ($entity_type != "")
-			$where[] = "entity_type='$entity_type'";
+			$where[] = "o.entity_type='$entity_type'";
 		
 		if ($owner_id != 0)
-			$where[] = "owner_id=$owner_id";
+			$where[] = "o.owner_id=$owner_id";
 			
 		if ($name != "")
-			$where[] = "name='$name'";
+			$where[] = "o.name='$name'";
 			
 		if ($value != "")
-			$where[] = "value='$value'";
+			$where[] = "o.value='$value'";
 			
 		if ($value_type != "")
-			$where[] = "value_type='$value_type'";
+			$where[] = "o.value_type='$value_type'";
+			
+		if ($entity_subtype != "")
+			$where[] = "s.id=" . get_entity_subtype($entity_id, $entity_type);
 			
 		// add access controls
 		$access = get_access_list();
-		$where[] = "(access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))";
+		$where[] = "(o.access_id in {$access} or (o.access_id = 0 and o.owner_id = {$_SESSION['id']}))";
 		
 		if ($entity_subtype!="")
 			$where[] = "";
 			
 		// construct query.
-		$query = "SELECT * from {$CONFIG->dbprefix}metadata where ";
+		$query = "SELECT o.* from {$CONFIG->dbprefix}metadata o LEFT JOIN {$CONFIG->dbprefix}entity_subtypes s on o.entity_id=s.entity_id and o.entity_type=s.entity_type where ";
 		for ($n = 0; $n < count($where); $n++)
 		{
 			if ($n > 0) $query .= " and ";
@@ -314,9 +320,9 @@
 	 * @param int $offset
 	 * @return mixed Array of objects or false.
 	 */
-	function get_objects_from_metadatas($entity_id = 0, $entity_type = "", $name = "", $value = "", $value_type = "", $owner_id = 0, $order_by = "created desc", $limit = 10, $offset = 0)
+	function get_objects_from_metadatas($entity_id = 0, $entity_type = "", $entity_subtype = "", $name = "", $value = "", $value_type = "", $owner_id = 0, $order_by = "created desc", $limit = 10, $offset = 0)
 	{
-		$results = get_metadatas($entity_id, $entity_type, $name, $value, $value_type, $owner_id, $order_by, $limit, $offset);
+		$results = get_metadatas($entity_id, $entity_type, $entity_subtype, $name, $value, $value_type, $owner_id, $order_by, $limit, $offset);
 		$objects = false;
 		
 		if ($results)

@@ -11,6 +11,24 @@
 	 * @link http://elgg.org/
 	 */
 
+	/**
+	 * Return the meta string id for a given tag, or false.
+	 * 
+	 * @param string $tag The value (whatever that is) to be stored
+	 * @return mixed Integer tag or false.
+	 */
+	function get_metastring_id($tag)
+	{
+		global $CONFIG;
+		
+		$tag = sanitise_string($tag);
+		
+		$row = get_data_row("SELECT * from {$CONFIG->dbprefix}metastrings where tag='$tag' limit 1");
+		if ($row)
+			return $row->id;
+			
+		return false;
+	}
 
 	/**
 	 * Add a metastring.
@@ -25,10 +43,10 @@
 		
 		$tag = sanitise_string($tag);
 		
-		$row = get_data_row("SELECT * from {$CONFIG->dbprefix}metastrings where tag='$tag' limit 1");
-		if ($row)
-			return $row->id;
+		$id = get_metastring_id($tag);
+		if ($id) return $id;
 		
 		return insert_data("INSERT into {$CONFIG->dbprefix}metastrings (tag) values ('$tag')");
 	}
+	
 ?>
