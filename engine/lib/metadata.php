@@ -88,7 +88,7 @@
 				return update_metadata($this->id, $this->name, $this->value, $this->value_type, $this->owner_id, $this->access_id);
 			else
 			{ 
-				$this->id = create_metadata($this->object_id, $this->object_type, $this->name, $this->value, $this->value_type, $this->owner_id, $this->access_id);
+				$this->id = create_metadata($this->entity_id, $this->entity_type, $this->name, $this->value, $this->value_type, $this->owner_id, $this->access_id);
 				if (!$this->id) throw new IOException("Unable to save new ElggAnnotation");
 				return $this->id;
 			}
@@ -140,20 +140,20 @@
 	/**
 	 * Create a new metadata object, or update an existing one.
 	 *
-	 * @param int $object_id
-	 * @param string $object_type
+	 * @param int $entity_id
+	 * @param string $entity_type
 	 * @param string $name
 	 * @param string $value
 	 * @param string $value_type
 	 * @param int $owner_id
 	 * @param int $access_id
 	 */
-	function create_metadata($object_id, $object_type, $name, $value, $value_type, $owner_id, $access_id = 0)
+	function create_metadata($entity_id, $entity_type, $name, $value, $value_type, $owner_id, $access_id = 0)
 	{
 		global $CONFIG;
 
-		$object_id = (int)$object_id;
-		$object_type = sanitise_string(trim($object_type));
+		$entity_id = (int)$entity_id;
+		$entity_type = sanitise_string(trim($entity_type));
 		$name = sanitise_string(trim($name));
 		$value = sanitise_string(trim($value));
 		$value_type = detect_metadata_valuetype(sanitise_string(trim($value_type)));
@@ -166,7 +166,7 @@
 
 		$id = false;
 		
-		$existing = get_data_row("SELECT * from {$CONFIG->dbprefix}metadata WHERE object_id = $object_id and object_type='$object_type' and name='$name' limit 1");
+		$existing = get_data_row("SELECT * from {$CONFIG->dbprefix}metadata WHERE entity_id = $entity_id and entity_type='$entity_type' and name='$name' limit 1");
 		if ($existing) 
 		{
 			$id = $existing->id;
@@ -181,7 +181,7 @@
 			if (!$value) return false;
 			
 			// If ok then add it
-			$id = insert_data("INSERT into {$CONFIG->dbprefix}metadata (object_id, object_type, name, value, value_type, owner_id, created, access_id) VALUES ($object_id,'$object_type','$name','$value','$value_type', $owner_id, $time, $access_id)");
+			$id = insert_data("INSERT into {$CONFIG->dbprefix}metadata (entity_id, entity_type, name, value, value_type, owner_id, created, access_id) VALUES ($entity_id,'$entity_type','$name','$value','$value_type', $owner_id, $time, $access_id)");
 		}
 		
 		return $id;
@@ -240,20 +240,20 @@
 	/**
 	 * Get a list of metadatas for a given object/user/metadata type.
 	 *
-	 * @param int $object_id
-	 * @param string $object_type
+	 * @param int $entity_id
+	 * @param string $entity_type
 	 * @param int $owner_id
 	 * @param string $order_by
 	 * @param int $limit
 	 * @param int $offset
 	 * @return array of ElggMetadata
 	 */
-	function get_metadatas($object_id = 0, $object_type = "", $name = "", $value = "", $value_type = "", $owner_id = 0, $order_by = "created desc", $limit = 10, $offset = 0)
+	function get_metadatas($entity_id = 0, $entity_type = "", $name = "", $value = "", $value_type = "", $owner_id = 0, $order_by = "created desc", $limit = 10, $offset = 0)
 	{
 		global $CONFIG;
 		
-		$object_id = (int)$object_id;
-		$object_type = sanitise_string(trim($object_type));
+		$entity_id = (int)$entity_id;
+		$entity_type = sanitise_string(trim($entity_type));
 		$name = sanitise_string(trim($name));
 		$value = sanitise_string(trim($value));
 		$value_type = sanitise_string(trim($value_type));
@@ -266,11 +266,11 @@
 		// Construct query
 		$where = array();
 		
-		if ($object_id != 0)
-			$where[] = "object_id=$object_id";
+		if ($entity_id != 0)
+			$where[] = "entity_id=$entity_id";
 			
-		if ($object_type != "")
-			$where[] = "object_type='$object_type'";
+		if ($entity_type != "")
+			$where[] = "entity_type='$entity_type'";
 		
 		if ($owner_id != 0)
 			$where[] = "owner_id=$owner_id";
@@ -288,7 +288,7 @@
 		$access = get_access_list();
 		$where[] = "(access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))";
 		
-		if ($object_subtype!="")
+		if ($entity_subtype!="")
 			$where[] = "";
 			
 		// construct query.
@@ -306,17 +306,17 @@
 	/**
 	 * Similar to get_metadatas, but instead returns the objects associated with a given meta search.
 	 * 
-	 * @param int $object_id
-	 * @param string $object_type
+	 * @param int $entity_id
+	 * @param string $entity_type
 	 * @param int $owner_id
 	 * @param string $order_by
 	 * @param int $limit
 	 * @param int $offset
 	 * @return mixed Array of objects or false.
 	 */
-	function get_objects_from_metadatas($object_id = 0, $object_type = "", $name = "", $value = "", $value_type = "", $owner_id = 0, $order_by = "created desc", $limit = 10, $offset = 0)
+	function get_objects_from_metadatas($entity_id = 0, $entity_type = "", $name = "", $value = "", $value_type = "", $owner_id = 0, $order_by = "created desc", $limit = 10, $offset = 0)
 	{
-		$results = get_metadatas($object_id, $object_type, $name, $value, $value_type, $owner_id, $order_by, $limit, $offset);
+		$results = get_metadatas($entity_id, $entity_type, $name, $value, $value_type, $owner_id, $order_by, $limit, $offset);
 		$objects = false;
 		
 		if ($results)
@@ -326,13 +326,13 @@
 			foreach ($results as $r)
 			{
 				
-				switch ($r->object_type)
+				switch ($r->entity_type)
 				{
-					case 'object' : $objects[] = new ElggObject((int)$r->object_id); break;
-					case 'user' : $objects[] = new ElggUser((int)$r->object_id); break;
-					case 'collection' : $objects[] = new ElggCollection((int)$r->object_id); break;
-					case 'site' : $objects[] = new ElggSite((int)$r->object_id); break;
-					default: default : throw new InstallationException("Type {$r->object_type} is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.");
+					case 'object' : $objects[] = new ElggObject((int)$r->entity_id); break;
+					case 'user' : $objects[] = new ElggUser((int)$r->entity_id); break;
+					case 'collection' : $objects[] = new ElggCollection((int)$r->entity_id); break;
+					case 'site' : $objects[] = new ElggSite((int)$r->entity_id); break;
+					default: default : throw new InstallationException("Type {$r->entity_type} is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.");
 				}
 			}
 		}
