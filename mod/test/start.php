@@ -24,5 +24,5 @@
 	// Make sure test_init is called on initialisation
 		register_event_handler('init','system','test_init');
 		global $CONFIG;
-		register_action('banana',true,$CONFIG->path . "mod/test/banana.php");
+		register_action('banana',true,"mod/test/banana.php");
 ?>

@@ -67,6 +67,7 @@
             }
 
             $CONFIG->actions[$action] = array('file' => $filename, 'public' => $public);
+            return true;
         }
 
 	/**
