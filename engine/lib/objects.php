@@ -359,8 +359,10 @@
 			// We also need the access restriction to be valid
 			if ($owner > 0 && in_array($access_id,get_access_array())) {
 			
+				$type_id = get_object_type_id($type);
+				
 				$params = array();
-				foreach(array('title','description','owner','site_id','access_id','site_id','owner') as $param) {
+				foreach(array('title','description','owner','access_id','site_id','owner','type_id') as $param) {
 					if ($$param != null) {
 						$params[] = "{$param} = '{$$param}'";
 					}

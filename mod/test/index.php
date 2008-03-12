@@ -8,4 +8,6 @@
 	$body = elgg_view("testplugin/pageshell");
 	page_draw("Test plugin",$body);
 
+	
+	
 ?>

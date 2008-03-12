@@ -88,4 +88,10 @@
 			
 		}
 
+	/**
+	 * Some useful constant definitions
+	 */
+		define('PRIVATE',0);
+		define('LOGGED_IN',1);
+		define('PUBLIC',2);
 ?>
