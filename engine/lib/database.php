@@ -106,6 +106,18 @@
 			
 		}
 		
+		/**
+		 * Explain a given query, useful for debug.
+		 */
+		function explain_query($query, $link)
+		{
+			if ($result = mysql_query("explain " . $query, $link)) {
+                return mysql_fetch_object($result);
+            }
+            
+            return false;
+		}
+		
 	/**
      * Use this function to get data from the database
      * @param string $query The query being passed.
@@ -115,12 +127,18 @@
     
         function get_data($query, $callback = "") {
             
-            global $dbcalls;
+            global $CONFIG, $dbcalls;
             
             $dblink = get_db_link('read');
             
             $resultarray = array();
             $dbcalls++;
+            
+        	if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
+            {
+            	error_log("--- DB QUERY --- $query");
+            	error_log("--- EXPLAINATION --- " . print_r(explain_query($query,$dblink), true));
+            }
             
             if ($result = mysql_query($query, $dblink)) {
                 while ($row = mysql_fetch_object($result)) {
@@ -149,11 +167,17 @@
     
         function get_data_row($query) {
             
-            global $dbcalls;
+            global $CONFIG, $dbcalls;
             
             $dblink = get_db_link('read');
             
             $dbcalls++;
+            
+        	if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
+            {
+            	error_log("--- DB QUERY --- $query");
+            	error_log("--- EXPLAINATION --- " . print_r(explain_query($query,$dblink), true));
+            }
             
             if ($result = mysql_query($query, $dblink)) {
                 while ($row = mysql_fetch_object($result)) {
