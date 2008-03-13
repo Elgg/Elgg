@@ -96,7 +96,8 @@ CREATE TABLE `prefix_sites_entity` (
   `description` text NOT NULL,
   `url` text NOT NULL, 
    
-  PRIMARY KEY  (`guid`)
+  PRIMARY KEY  (`guid`),
+  UNIQUE KEY (`url`)
 ) ENGINE=MyISAM ;
 
 -- Extra information relating to "users"
