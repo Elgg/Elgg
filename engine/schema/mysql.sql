@@ -22,7 +22,6 @@ CREATE TABLE `prefix_entities` (
 	`subtype` int(11) NULL,
 	
 	`owner_guid` bigint(20) unsigned NOT NULL,
-  	`site_guid` bigint(20) unsigned NOT NULL default '0',
 	`access_id` int(11) NOT NULL,
 	
 	`time_created` int(11) NOT NULL,

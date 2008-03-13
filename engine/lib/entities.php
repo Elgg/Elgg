@@ -203,7 +203,6 @@
 		public function getOwner() { return $this->get('owner_guid'); }
 		public function getType() { return $this->get('type'); }
 		public function getSubtype() { return get_subtype_from_id($this->get('owner_guid')); }
-		public function getSite() { return $this->get('site'); }
 		public function getTimeCreated() { return $this->get('time_created'); }
 		public function getTimeUpdated() { return $this->get('time_updated'); }
 		
@@ -220,12 +219,11 @@
 				return update_entity(
 					$this->get('guid'),
 					$this->get('owner_guid'),
-					$this->get('site_guid'),
 					$this->get('access_id')
 				);
 			else
 			{ 
-				$this->attributes['guid'] = create_site($this->title, $this->description, $this->url, $this->owner_id, $this->access_id); // Create a new entity (nb: using attribute array directly 'cos set function does something special!)
+				$this->attributes['guid'] = create_entity($this->attributes['type'], $this->attributes['subtype'], $this->attributes['owner_guid'], $this->attributes['access_id']); // Create a new entity (nb: using attribute array directly 'cos set function does something special!)
 				if (!$this->attributes['guid']) throw new IOException("Unable to save new object's base entity information!"); 
 				
 				return $this->attributes['guid'];
@@ -312,23 +310,21 @@
 	 *
 	 * @param int $guid
 	 * @param int $owner_guid
-	 * @param int $site_guid
 	 * @param int $access_id
 	 */
-	function update_entity($guid, $owner_guid, $site_guid, $access_id)
+	function update_entity($guid, $owner_guid,  $access_id)
 	{
 		global $CONFIG;
 		
 		$guid = (int)$guid;
 		$owner_guid = (int)$owner_guid;
-		$site_guid = (int)$site_guid;
 		$access_id = (int)$access_id;
 		$time = time();
 		
 		$access = get_access_list();
 		
 		
-		return update_data("UPDATE {$CONFIG->dbprefix}entities set owner_guid='$owner_guid', site_guid='$site_guid', access_id='$access_id', time_updated='$time' WHERE guid=$guid and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))");
+		return update_data("UPDATE {$CONFIG->dbprefix}entities set owner_guid='$owner_guid', access_id='$access_id', time_updated='$time' WHERE guid=$guid and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))");
 	}
 	
 	/**
@@ -337,29 +333,29 @@
 	 * @param string $type
 	 * @param string $subtype
 	 * @param int $owner_guid
-	 * @param int $site_guid
 	 * @param int $access_id
 	 * @return mixed The new entity's GUID or false.
 	 */
-	function create_entity($type, $subtype, $owner_guid, $site_guid, $access_id)
+	function create_entity($type, $subtype, $owner_guid, $access_id)
 	{
 		global $CONFIG;
 		
 		$type = sanitise_string($type);
 		$subtype = get_subtype_id($subtype);
 		$owner_guid = (int)$owner_guid;
-		$site_guid = (int)$site_guid;
 		$access_id = (int)$access_id;
 		$time = time();
 		
 		if (!$subtype)
 			throw new InvalidParameterException("Entity subtype '$subtype' is not supported");
 			
-		return insert_data("INSERT into {$CONFIG->dbprefix}entities (type,subtype,owner_guid,site_guid,access_id,time_created,time_updated) values ('$type',$subtype, $owner_guid, $site_guid, $access_id, $time, $time)");
+		return insert_data("INSERT into {$CONFIG->dbprefix}entities (type,subtype,owner_guid,access_id,time_created,time_updated) values ('$type',$subtype, $owner_guid, $access_id, $time, $time)");
 	}
 	
 	/**
 	 * Retrieve the entity details for a specific GUID, returning it as a stdClass db row.
+	 * 
+	 * You will only get an object if a) it exists, b) you have access to it.
 	 *
 	 * @param int $guid
 	 */
@@ -379,6 +375,9 @@
 	 */
 	function entity_row_to_elggstar($row)
 	{
+		if (!($row instanceof stdClass))
+			return $row;
+		
 		switch ($row->type)
 		{
 			case 'object' : return new ElggObject($row);
@@ -407,17 +406,15 @@
 	 * @param string $type
 	 * @param string $subtype
 	 * @param int $owner_guid
-	 * @param int $site_guid
 	 * @param string $order_by
 	 * @param int $limit
 	 * @param int $offset
 	 */
-	function get_entities($type = "", $subtype = "", $owner_guid = 9, $site_guid = 0, $order_by = "time_created desc", $limit = 10, $offset = 0)
+	function get_entities($type = "", $subtype = "", $owner_guid = 0, $order_by = "time_created desc", $limit = 10, $offset = 0)
 	{
 		$type = sanitise_string($type);
 		$subtype = get_subtype_id($subtype);
 		$owner_guid = (int)$owner_guid;
-		$site_guid = (int)$site_guid;
 		$order_by = sanitise_string($order_by);
 		$limit = (int)$limit;
 		$offset = (int)$offset;
@@ -432,8 +429,6 @@
 			$where .= " subtype=$subtype ";
 		if ($owner_guid != "")
 			$where .= " owner_guid='$owner_guid' ";
-		if ($site_guid != "")
-			$where .= " site_guid='$site_guid' ";
 		
 		$query = "SELECT * from {$CONFIG->dbprefix}entities where ";
 		foreach ($where as $w)
