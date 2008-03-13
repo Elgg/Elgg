@@ -46,15 +46,18 @@
 	/**
 	 * Handles templating views
 	 *
+	 * @see set_template_handler
+	 * 
 	 * @param string $view The name and location of the view to use
 	 * @param array $vars Any variables that the view requires, passed as an array
 	 * @param string $viewtype Optionally, the type of view that we're using (most commonly 'default')
+	 * @param boolean $debug If set to true, elgg_view will bypass any specified alternative template handler; by default, it will hand off to this if requested (see set_template_handler)
 	 * @param boolean $debug If set to true, the viewer will complain if it can't find a view
 	 * @return string The HTML content
 	 */
-		function elgg_view($view, $vars = "", $viewtype = "", $debug = false) {
+		function elgg_view($view, $vars = "", $viewtype = "", $bypass = true, $debug = false) {
 
-		    global $CONFIG, $strings;
+		    global $CONFIG;
 		    static $usercache;
 		    
 		    if (!is_array($usercache)) {
@@ -65,12 +68,14 @@
 		        $vars = array();
 		    }
 		
-		    // Load session and configuration variables
+		// Load session and configuration variables into $vars
 		    if (isset($_SESSION) && is_array($_SESSION) ) {
 		        $vars = array_merge($vars, $_SESSION);
 		    }
 			if (!empty($CONFIG))
 		    	$vars = array_merge($vars, get_object_vars($CONFIG));
+		    	
+		// Load page owner variables into $vars
 		    if (is_callable('page_owner')) {
 		        $vars['page_owner'] = page_owner();
 		    } else {
@@ -85,6 +90,13 @@
 		        }
 		    }
 		     
+		// If it's been requested, pass off to a template handler instead
+		    if ($bypass == false && isset($CONFIG->template_handler) && !empty($CONFIG->template_handler)) {
+		    	$template_handler = $CONFIG->template_handler;
+		    	return $template_handler($view, $vars);
+		    }
+		    
+		// If we haven't been asked for a specific view, assume default
 		    if (empty($_SESSION['view'])) {
 		        $_SESSION['view'] = "default";
 		    }
@@ -94,11 +106,14 @@
 		        $viewtype = $_SESSION['view'];
 		    }
 		
+		// Set up any extensions to the requested view
 		    if (isset($CONFIG->views->extensions[$view])) {
 		    	$viewlist = $CONFIG->views->extensions[$view];
 		    } else {
 		    	$viewlist = array(500 => $view);
 		    }
+		    
+		// Start the output buffer, find the requested view file, and execute it
 		    ob_start();
 		    foreach($viewlist as $priority => $view) {
 		    
@@ -128,10 +143,33 @@
 			    }
 		    
 		    }
+
+		// Save the output buffer into the $content variable
 		    $content = ob_get_clean();
-		
+
+		// Return $content
 		    return $content;
 		
+		}
+		
+	/**
+	 * Sets an alternative function to handle templates, which will be passed to by elgg_view.
+	 * This function must take the $view and $vars parameters from elgg_view:
+	 * 
+	 * 		function my_template_function(string $view, array $vars = array())
+	 * 
+	 * @see elgg_view
+	 *
+	 * @param string $function_name The name of the function to pass to.
+	 * @return true|false
+	 */
+		function set_template_handler($function_name) {
+			global $CONFIG;
+			if (!empty($function_name) && is_callable($function_name)) {
+				$CONFIG->template_handler = $function_name;			
+				return true;
+			}
+			return false;
 		}
 		
 	/**
