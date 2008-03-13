@@ -76,6 +76,7 @@ INSERT INTO `prefix_access_groups` (`id`, `name`, `site_guid`) VALUES
 
 --
 -- *** Entity superclass details ***
+-- NB: Asside from GUID, these should now have any field names incommon with the entities table.
 --
 
 -- Extra information relating to "objects"
