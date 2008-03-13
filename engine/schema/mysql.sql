@@ -80,7 +80,7 @@ INSERT INTO `prefix_access_groups` (`id`, `name`, `site_guid`) VALUES
 --
 
 -- Extra information relating to "objects"
-CREATE TABLE `prefix_objects` (
+CREATE TABLE `prefix_objects_entity` (
   `guid` bigint(20) unsigned  NOT NULL,
   
   `title` text NOT NULL,
@@ -101,7 +101,7 @@ CREATE TABLE `prefix_sites_entity` (
 ) ENGINE=MyISAM ;
 
 -- Extra information relating to "users"
-CREATE TABLE `prefix_users` (
+CREATE TABLE `prefix_users_entity` (
   `guid` bigint(20) unsigned  NOT NULL,
   
   `name` text NOT NULL,
