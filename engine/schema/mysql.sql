@@ -77,7 +77,7 @@ INSERT INTO `prefix_access_groups` (`id`, `name`, `site_guid`) VALUES
 CREATE TABLE `prefix_access_group_membership` (
   `user_guid` int(11) NOT NULL,
   `access_group_id` int(11) NOT NULL,
-  PRIMARY KEY  (`user_id`,`access_group_id`)
+  PRIMARY KEY  (`user_guid`,`access_group_id`)
 ) ENGINE=MyISAM ;
 
 
@@ -102,7 +102,7 @@ CREATE TABLE `prefix_sites_entity` (
   
   `name` text NOT NULL,
   `description` text NOT NULL,
-  `url` text NOT NULL, 
+  `url` varchar(255) NOT NULL, 
    
   PRIMARY KEY  (`guid`),
   UNIQUE KEY (`url`)
