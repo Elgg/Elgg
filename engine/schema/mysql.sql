@@ -73,6 +73,14 @@ INSERT INTO `prefix_access_groups` (`id`, `name`, `site_guid`) VALUES
 (1, 'LOGGED_IN', 0),
 (2, 'PUBLIC', 0);
 
+-- Access groups 
+CREATE TABLE `prefix_access_group_membership` (
+  `user_guid` int(11) NOT NULL,
+  `access_group_id` int(11) NOT NULL,
+  PRIMARY KEY  (`user_id`,`access_group_id`)
+) ENGINE=MyISAM ;
+
+
 --
 -- *** Entity superclass details ***
 -- NB: Asside from GUID, these should now have any field names incommon with the entities table.
