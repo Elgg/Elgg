@@ -71,8 +71,14 @@
 		 */
 		public function set($name, $value)
 		{
-			if (array_key_exists($name, $this->attributes)) 
+			if (array_key_exists($name, $this->attributes))
+			{
+				// Check that we're not trying to change the guid! 
+				if ((array_key_exists('guid')) && ($name=='guid'))
+					return false;
+					
 				$this->attributes[$name] = $value;
+			}
 			else
 				return setMetaData($name, $value);
 			
@@ -97,6 +103,11 @@
 		 * @return bool
 		 */
 		public function setMetaData($name, $value)
+		{
+			// TODO: WRITEME
+		}
+		
+		public function clearMetaData()
 		{
 			// TODO: WRITEME
 		}
@@ -126,6 +137,66 @@
 		function getAnnotations($name, $limit = 50, $offset = 0) 
 		{ 
 		// TODO: WRITEME
+		}
+		
+		/**
+		 * Remove all annotations or all annotations for this entity.
+		 *
+		 * @param string $name
+		 */
+		function clearAnnotations($name = "")
+		{
+			
+		}
+		
+		/**
+		 * Return the annotations for the entity.
+		 *
+		 * @param string $name The type of annotation.
+		 */
+		function countAnnotations($name) 
+		{ 
+
+		}
+
+		/**
+		 * Get the average of an integer type annotation.
+		 *
+		 * @param string $name
+		 */
+		function getAnnotationsAvg($name) 
+		{
+			
+		}
+		
+		/**
+		 * Get the sum of integer type annotations of a given name.
+		 *
+		 * @param string $name
+		 */
+		function getAnnotationsSum($name) 
+		{
+			
+		}
+		
+		/**
+		 * Get the minimum of integer type annotations of given name.
+		 *
+		 * @param string $name
+		 */
+		function getAnnotationsMin($name)
+		{
+			
+		}
+		
+		/**
+		 * Get the maximum of integer type annotations of a given name.
+		 *
+		 * @param string $name
+		 */
+		function getAnnotationsMax($name)
+		{
+			
 		}
 		
 		public function getGUID() { return $this->get('guid'); }
@@ -184,6 +255,14 @@
 			}
 			
 			return false;
+		}
+		
+		/**
+		 * Delete this entity.
+		 */
+		public function delete() 
+		{ 
+			return delete_entity($this->get('guid'));
 		}
 		
 	}
@@ -290,7 +369,9 @@
 		
 		$guid = (int)$guid;
 		
-		return get_data_row("SELECT * from {$CONFIG->dbprefix}entities where guid=$guid");
+		$access = get_access_list();
+		
+		return get_data_row("SELECT * from {$CONFIG->dbprefix}entities where guid=$guid and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))");
 	}
 	
 	/**
@@ -374,9 +455,10 @@
 		
 		$guid = (int)$guid;
 		
-		return delete_data("DELETE from {$CONFIG->dbprefix}entities where where guid=$guid"); 
+		$access = get_access_list();
 		
-		// TODO: Clean up subtables, or is this better handled by an object or by cascading?
+		return delete_data("DELETE from {$CONFIG->dbprefix}entities where where guid=$guid and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))"); 
+		
 	}
 
 
