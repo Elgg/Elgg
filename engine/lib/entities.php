@@ -25,6 +25,26 @@
 		 * Any field not appearing in this will be viewed as a 
 		 */
 		protected $attributes;
+		
+		/**
+		 * Initialise the attributes array. 
+		 * This is vital to distinguish between metadata and base parameters.
+		 * 
+		 * Place your base parameters here.
+		 */
+		protected function initialise_attributes()
+		{
+			// Create attributes array if not already created
+			if (!is_array($this->attributes)) $this->attributes = array();
+			
+			$this->attributes['guid'] = "";
+			$this->attributes['type'] = "";
+			$this->attributes['subtype'] = "";
+			$this->attributes['owner_guid'] = 0;
+			$this->attributes['access_id'] = 0;
+			$this->attributes['time_created'] = time();
+			$this->attributes['time_updated'] = time();
+		}
 				
 		/**
 		 * Return the value of a given key.
