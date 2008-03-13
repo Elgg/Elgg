@@ -395,7 +395,7 @@
 	 * @return true
 	 */
 		function sites_init($event, $object_type, $object) {
-			global $CONFIG;
+	/*		global $CONFIG;
 			
 			$CONFIG->site_id = 1;
 			
@@ -408,7 +408,7 @@
 					$CONFIG->wwwroot = $site->domain;
 			}
 			
-			return true;
+			return true;*/
 		}
 		
 	// Register event handlers
