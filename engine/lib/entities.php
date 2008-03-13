@@ -46,7 +46,7 @@
 			}
 			
 			// No, so see if its in the meta data for this entity
-			$meta = getMetaData($name);
+			$meta = $this->getMetaData($name);
 			if ($meta)
 				return $meta;
 			
