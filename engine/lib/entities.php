@@ -363,7 +363,21 @@
 		return get_data($query, "entity_row_to_elggstar");
 	}
 	
-	
+	/**
+	 * Delete a given entity.
+	 * 
+	 * @param int $guid
+	 */
+	function delete_entity($guid)
+	{
+		global $CONFIG;
+		
+		$guid = (int)$guid;
+		
+		return delete_data("DELETE from {$CONFIG->dbprefix}entities where where guid=$guid"); 
+		
+		// TODO: Clean up subtables, or is this better handled by an object or by cascading?
+	}
 
 
 	
