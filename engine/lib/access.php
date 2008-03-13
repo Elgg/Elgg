@@ -69,7 +69,7 @@
 				
 				$query = "select am.access_group_id from {$CONFIG->dbprefix}access_group_membership am ";
 				$query .= " left join {$CONFIG->dbprefix}access_groups ag on ag.id = am.access_group_id ";
-				$query .= " where am.user_id = {$user_id} and (ag.site_id = {$site_id} or ag.site_id = 0)";
+				$query .= " where am.user_guid = {$user_id} and (ag.site_guid = {$site_id} or ag.site_guid = 0)";
 				
 				$tmp_access_array = array(2);
 				if (isloggedin())
