@@ -362,7 +362,7 @@
 		
 		$type = sanitise_string($type);
 		$subtype = get_subtype_id($subtype);
-		$owner_guid = (int)$owner_guid;
+		$owner_guid = (int)$owner_guid; if (!$owner_guid) $owner_guid = $_SESSION['id'];
 		$access_id = (int)$access_id;
 		$time = time();
 					
