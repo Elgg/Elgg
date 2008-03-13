@@ -256,7 +256,7 @@
 		 * @param int $guid 
 		 */
 		protected function load($guid)
-		{
+		{		
 			$row = get_entity_as_row($guid);
 			
 			if ($row)

@@ -20,6 +20,22 @@
 	class ElggSite extends ElggEntity
 	{
 		/**
+		 * Initialise the attributes array. 
+		 * This is vital to distinguish between metadata and base parameters.
+		 * 
+		 * Place your base parameters here.
+		 */
+		protected function initialise_attributes()
+		{
+			parent::initialise_attributes();
+			
+			$this->attributes['type'] = "site";
+			$this->attributes['name'] = "";
+			$this->attributes['description'] = "";
+			$this->attributes['url'] = "";
+		}
+				
+		/**
 		 * Construct a new site object, optionally from a given id value.
 		 *
 		 * @param mixed $guid If an int, load that GUID. 
@@ -27,27 +43,22 @@
 		 * @throws Exception if there was a problem creating the site. 
 		 */
 		function __construct($guid = null) 
-		{
-			// Create attributes array if not already created
-			if (!is_array($this->attributes)) $this->attributes = array();
+		{			
+			$this->initialise_attributes();
 			
 			if (!empty($guid))
 			{
 				// Is $guid is a DB row - either a entity row, or a site table row.
 				if ($guid instanceof stdClass) {
-					
-					// Load what details we have
-					$objarray = (array)$guid;
-					foreach ($objarray as $key => $value)
-					 	$this->attributes[$key] = $value;
-					
+error_log("Creating by stdClass");					
 					// Load the rest
-					$this->load($objarray['guid']);
+					$this->load($guid->guid);
 				}
 				
 				// Is $guid is an ElggSite? Use a copy constructor
 				else if ($guid instanceof ElggSite)
 				{
+error_log("Creating by ElggSite");					
 					 foreach ($guid->attributes as $key => $value)
 					 	$this->attributes[$key] = $value;
 				}
@@ -56,15 +67,27 @@
 				else if ($guid instanceof ElggEntity)
 					throw new InvalidParameterException("Passing a non-ElggSite to an ElggSite constructor!");
 					
+				// See if this is a URL
+				else if (strpos($guid, "http")!==false)
+				{
+error_log("Creating by URL");					
+					$guid = get_site_by_url($guid);
+					foreach ($guid->attributes as $key => $value)
+					 	$this->attributes[$key] = $value;
+					 	
+				}
+					
 				// We assume if we have got this far, $guid is an int
-				else
+				else {
+error_log("Creating by $guid");					
 					if (!$this->load($guid)) throw new IOException("Could not create a new ElggSite object from GUID:$guid");
+				}
 			}
 		}
 		
 		function __get($name) { return $this->get($name); }
 		function __set($name, $value) { return $this->set($name, $value); }
-	
+		
 		/**
 		 * Override the load function.
 		 * This function will ensure that all data is loaded (were possible), so
@@ -73,23 +96,18 @@
 		 * @param int $guid 
 		 */
 		protected function load($guid)
-		{
+		{			
 			// Test to see if we have the generic stuff
-			if (!array_key_exists('type',$this->attributes))
-				if (!parent::load($guid)) 
-					return false;
+			if (!parent::load($guid)) 
+				return false;
 				
-			// Test to see if we have the site specific stuff
-			if (!array_key_exists('url', $this->attributes))
-			{
-				// Load missing data
-				$row = get_site_as_row($guid);
-				
-				// Now put these into the attributes array as core values
-				$objarray = (array) $row;
-				foreach($objarray as $key => $value) 
-					$this->attributes[$key] = $value;
-			}
+			// Load missing data
+			$row = get_site_entity_as_row($guid);
+			
+			// Now put these into the attributes array as core values
+			$objarray = (array) $row;
+			foreach($objarray as $key => $value) 
+				$this->attributes[$key] = $value;
 			
 			return true;
 		}
@@ -177,6 +195,20 @@
 
 		
 	}
+
+	/**
+	 * Return the site specific details of a site by a row.
+	 * 
+	 * @param int $guid
+	 */
+	function get_site_entity_as_row($guid)
+	{
+		global $CONFIG;
+		
+		$guid = (int)$guid;
+		
+		return get_data_row("SELECT * from {$CONFIG->dbprefix}sites_entity where guid=$guid");
+	}
 	
 	/**
 	 * Create or update the extras table for a given site.
@@ -204,9 +236,9 @@
 			
 			// Delete any existing stuff
 			delete_site_entity($guid);
-		
+
 			// Insert it
-			$result = insert_data("INSERT into {$CONFIG->dbprefix}sites_entity (name, description, url) values ('$name','$description','$url')");
+			$result = insert_data("INSERT into {$CONFIG->dbprefix}sites_entity (guid, name, description, url) values ($guid, '$name','$description','$url')");
 			if ($result!==false) 
 				return true;
 		}
@@ -378,6 +410,24 @@
 		
 		return get_entities_from_relationship("member_of_site", $site_guid, true, "collection", $subtype, 0, "time_created desc", $limit, $offset);
 	}
+	
+	/**
+	 * Return the site via a url.
+	 */
+	function get_site_by_url($url)
+	{
+		global $CONFIG;
+		
+		$url = sanitise_string($url);
+		
+		$row = get_data_row("SELECT * from {$CONFIG->dbprefix}sites_entity where url='$url'");
+	
+		if ($row)
+			return new ElggSite($row); 
+		
+		return false;
+	}
+	
 	
 	
 	
