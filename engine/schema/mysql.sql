@@ -39,7 +39,8 @@ CREATE TABLE `prefix_entity_subtypes` (
 	`subtype` varchar(50) NOT NULL,
 	
 	PRIMARY KEY (`id`),
-	UNIQUE KEY (`guid`)
+	UNIQUE KEY (`guid`),
+	UNIQUE KEY (`subtype`)
 ) ENGINE=MyISAM;
 
 -- Describe relationships between entities, can describe friendships but also site membership, depending on context
