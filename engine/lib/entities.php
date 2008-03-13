@@ -94,7 +94,7 @@
 			if (array_key_exists($name, $this->attributes))
 			{
 				// Check that we're not trying to change the guid! 
-				if ((array_key_exists('guid')) && ($name=='guid'))
+				if ((array_key_exists('guid', $this->attributes)) && ($name=='guid'))
 					return false;
 					
 				$this->attributes[$name] = $value;
