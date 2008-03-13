@@ -42,8 +42,8 @@
 			$this->attributes['subtype'] = "";
 			$this->attributes['owner_guid'] = 0;
 			$this->attributes['access_id'] = 0;
-			$this->attributes['time_created'] = time();
-			$this->attributes['time_updated'] = time();
+			$this->attributes['time_created'] = "";
+			$this->attributes['time_updated'] = "";
 		}
 				
 		/**
@@ -302,7 +302,7 @@
 		if ($result)
 			return $result->id;
 		
-		return false;
+		return 0;
 	}
 	
 	/**
@@ -365,11 +365,8 @@
 		$owner_guid = (int)$owner_guid;
 		$access_id = (int)$access_id;
 		$time = time();
-		
-		if (!$subtype)
-			throw new InvalidParameterException("Entity subtype '$subtype' is not supported");
-			
-		return insert_data("INSERT into {$CONFIG->dbprefix}entities (type,subtype,owner_guid,access_id,time_created,time_updated) values ('$type',$subtype, $owner_guid, $access_id, $time, $time)");
+					
+		return insert_data("INSERT into {$CONFIG->dbprefix}entities (type, subtype, owner_guid, access_id, time_created, time_updated) values ('$type',$subtype, $owner_guid, $access_id, $time, $time)");
 	}
 	
 	/**
