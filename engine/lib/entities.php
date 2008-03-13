@@ -80,7 +80,7 @@
 				$this->attributes[$name] = $value;
 			}
 			else
-				return setMetaData($name, $value);
+				return $this->setMetaData($name, $value);
 			
 			return true;
 		}
