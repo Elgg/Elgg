@@ -58,11 +58,11 @@
 			
 			global $CONFIG;
 			
-			if (empty($language))
+			if ((empty($language)) && (isset($CONFIG->language)))
 				$language = $CONFIG->language;
 				
-			if (isset($CONFIG->translations[$country_code][$message_key])) {
-				return $CONFIG->translations[$country][$message_key];
+			if (isset($CONFIG->translations[$language][$message_key])) {
+				return $CONFIG->translations[$language][$message_key];
 			} else if (isset($CONFIG->translations["en"][$message_key])) {
 				return $CONFIG->translations["en"][$message_key];
 			}
