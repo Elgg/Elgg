@@ -187,7 +187,7 @@
 		 */
 		function getAnnotationsAvg($name) 
 		{
-			
+			return get_annotations_avg($this->getGUID(), "","",$name);
 		}
 		
 		/**
@@ -197,7 +197,7 @@
 		 */
 		function getAnnotationsSum($name) 
 		{
-			
+			return get_annotations_sum($this->getGUID(), "","",$name);
 		}
 		
 		/**
@@ -207,7 +207,7 @@
 		 */
 		function getAnnotationsMin($name)
 		{
-			
+			return get_annotations_min($this->getGUID(), "","",$name);
 		}
 		
 		/**
@@ -217,7 +217,7 @@
 		 */
 		function getAnnotationsMax($name)
 		{
-			
+			return get_annotations_max($this->getGUID(), "","",$name);
 		}
 		
 		public function getGUID() { return $this->get('guid'); }
