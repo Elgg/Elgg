@@ -156,7 +156,7 @@
 		 * @param int $site_guid The guid of the site to add it to
 		 * @return true|false
 		 */
-		function add_to_site($site_guid) {
+		function addToSite($site_guid) {
 			return add_site_object($this->getGUID(), $site_guid); 
 		}
 
