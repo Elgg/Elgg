@@ -49,16 +49,14 @@
 			if (!empty($guid))
 			{
 				// Is $guid is a DB row - either a entity row, or a site table row.
-				if ($guid instanceof stdClass) {
-error_log("Creating by stdClass");					
+				if ($guid instanceof stdClass) {			
 					// Load the rest
 					$this->load($guid->guid);
 				}
 				
 				// Is $guid is an ElggSite? Use a copy constructor
 				else if ($guid instanceof ElggSite)
-				{
-error_log("Creating by ElggSite");					
+				{				
 					 foreach ($guid->attributes as $key => $value)
 					 	$this->attributes[$key] = $value;
 				}
@@ -69,8 +67,7 @@ error_log("Creating by ElggSite");
 					
 				// See if this is a URL
 				else if (strpos($guid, "http")!==false)
-				{
-error_log("Creating by URL");					
+				{					
 					$guid = get_site_by_url($guid);
 					foreach ($guid->attributes as $key => $value)
 					 	$this->attributes[$key] = $value;
@@ -78,8 +75,7 @@ error_log("Creating by URL");
 				}
 					
 				// We assume if we have got this far, $guid is an int
-				else {
-error_log("Creating by $guid");					
+				else {				
 					if (!$this->load($guid)) throw new IOException("Could not create a new ElggSite object from GUID:$guid");
 				}
 			}
