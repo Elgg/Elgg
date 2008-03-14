@@ -171,7 +171,7 @@
 	{
 		global $CONFIG;
 
-		$entity_guid = (int)$entity_id;
+		$entity_guid = (int)$entity_guid;
 		$name = sanitise_string(trim($name));
 		$value = sanitise_string(trim($value));
 		$value_type = detect_annotation_valuetype($value, sanitise_string(trim($value_type)));
@@ -238,7 +238,7 @@
 	 * @param int $offset
 	 * @param string $order_by
 	 */
-	function get_annotations($entity_guid = 0, $entity_type = "", $entity_subtype = "", $name = "", $value = "", $owner_guid = 0, $limit = 10, $offset = 0,$order_by = "a.created desc")
+	function get_annotations($entity_guid = 0, $entity_type = "", $entity_subtype = "", $name = "", $value = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "a.time_created desc")
 	{
 		global $CONFIG;
 		
@@ -250,13 +250,14 @@
 		$owner_guid = (int)$owner_guid;
 		$limit = (int)$limit;
 		$offset = (int)$offset;
+		$order_by = sanitise_string($order_by);
 		
 		$access = get_access_list();
 		
 		$where = array();
 		
 		if ($entity_guid != 0)
-			$where[] = "a.guid=$entity_guid";
+			$where[] = "a.entity_guid=$entity_guid";
 			
 		if ($entity_type != "")
 			$where[] = "e.type='$entity_type'";

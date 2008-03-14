@@ -157,7 +157,7 @@
 		 */
 		function getAnnotations($name, $limit = 50, $offset = 0) 
 		{ 
-			get_annotations($this->getGUID(), "", "", $name, "", "", 0, $limit, $offset);
+			return get_annotations($this->getGUID(), "", "", $name, "", 0, $limit, $offset);
 		}
 		
 		/**
