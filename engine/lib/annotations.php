@@ -188,7 +188,7 @@
 		if (!$value) return false;
 		
 		// If ok then add it
-		return insert_data("INSERT into {$CONFIG->dbprefix}annotations (entity_guid, name, value, value_type, owner_id, time_created, access_id) VALUES ($entity_guid,'$name',$value,'$value_type', $owner_guid, $time, $access_id)");
+		return insert_data("INSERT into {$CONFIG->dbprefix}annotations (entity_guid, name, value, value_type, owner_guid, time_created, access_id) VALUES ($entity_guid,'$name',$value,'$value_type', $owner_guid, $time, $access_id)");
 	}
 	
 	/**
