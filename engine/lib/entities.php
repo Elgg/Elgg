@@ -521,6 +521,8 @@
 	{
 		global $CONFIG;
 		
+		// TODO Make sure this deletes all metadata/annotations/relationships/etc!!
+		
 		$guid = (int)$guid;
 		
 		$access = get_access_list();
