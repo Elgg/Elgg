@@ -191,18 +191,16 @@
 	 * Call create_entity first.
 	 * 
 	 * @param int $guid
-	 * @param string $name
+	 * @param string $title
 	 * @param string $description
-	 * @param string $url
 	 */
-	function create_object_entity($guid, $name, $description, $url)
+	function create_object_entity($guid, $title, $description)
 	{
 		global $CONFIG;
 		
 		$guid = (int)$guid;
-		$name = sanitise_string($name);
+		$title = sanitise_string($title);
 		$description = sanitise_string($description);
-		$url = sanitise_string($url);
 		
 		$row = get_entity_as_row($guid);
 		
@@ -214,7 +212,7 @@
 			delete_object_entity($guid);
 
 			// Insert it
-			$result = insert_data("INSERT into {$CONFIG->dbprefix}objects_entity (guid, name, description, url) values ($guid, '$name','$description','$url')");
+			$result = insert_data("INSERT into {$CONFIG->dbprefix}objects_entity (guid, title, description) values ($guid, '$title','$description')");
 			if ($result!==false) 
 				return true;
 		}

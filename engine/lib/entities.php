@@ -556,6 +556,28 @@
 			
 		return insert_data("INSERT into {$CONFIG->dbprefix}entity_relationships (guid_one, relationship, guid_two) values ($guid_one, 'relationship', $guid_two)");
 	}
+	
+	/**
+	 * Determine whether or not a relationship between two entities exists
+	 *
+	 * @param int $guid_one The GUID of the entity "owning" the relationship
+	 * @param string $relationship The type of relationship
+	 * @param int $guid_two The GUID of the entity the relationship is with
+	 * @return true|false
+	 */
+	function check_entity_relationship($guid_one, $relationship, $guid_two)
+	{
+		global $CONFIG;
+		
+		$guid_one = (int)$guid_one;
+		$relationship = sanitise_string($relationship);
+		$guid_two = (int)$guid_two;
+			
+		if ($row = get_data_row("select guid_one from {$CONFIG->dbprefix}entity_relationships where guid_one=$guid_one and relationship='$relationship' and guid_two=$guid_two limit 1")) {
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * Remove an arbitrary relationship between two entities.
@@ -572,7 +594,7 @@
 		$relationship = sanitise_string($relationship);
 		$guid_two = (int)$guid_two;
 			
-		return insert_data("DELETE from {$CONFIG->dbprefix}entity_relationships where guid_one=$guid_one and relationship='$relationship' and guid_two=$guid_two");
+		return delete_data("DELETE from {$CONFIG->dbprefix}entity_relationships where guid_one=$guid_one and relationship='$relationship' and guid_two=$guid_two");
 	}
 	
 	
