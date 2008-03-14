@@ -366,6 +366,8 @@
 		$access_id = (int)$access_id;
 		$time = time();
 					
+		if ($type=="") throw new InvalidParameterException("Entity type must be set.");
+		
 		return insert_data("INSERT into {$CONFIG->dbprefix}entities (type, subtype, owner_guid, access_id, time_created, time_updated) values ('$type',$subtype, $owner_guid, $access_id, $time, $time)");
 	}
 	
