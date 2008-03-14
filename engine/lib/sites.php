@@ -100,10 +100,14 @@ error_log("Creating by $guid");
 			// Test to see if we have the generic stuff
 			if (!parent::load($guid)) 
 				return false;
+
+			// Check the type
+			if ($this->attributes['type']!='site')
+				throw new InvalidClassException("GUID:$guid is not a valid ElggSite");
 				
 			// Load missing data
 			$row = get_site_entity_as_row($guid);
-			
+						
 			// Now put these into the attributes array as core values
 			$objarray = (array) $row;
 			foreach($objarray as $key => $value) 
