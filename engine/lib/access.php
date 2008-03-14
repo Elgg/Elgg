@@ -30,7 +30,7 @@
 				$access_list = array();
 			
 			if ($user_id == 0) $user_id = $_SESSION['id'];
-			if ($site_id == 0) $site_id = $CONFIG->site_id;
+			if (($site_id == 0) && (isset($CONFIG->site_id))) $site_id = $CONFIG->site_id;
 			$user_id = (int) $user_id;
 			$site_id = (int) $site_id;
 			
