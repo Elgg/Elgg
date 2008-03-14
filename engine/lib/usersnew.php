@@ -344,12 +344,6 @@
 		return get_entities_from_relationship("member_of_site", $user_guid, false, "site", "", 0, "time_created desc", $limit, $offset);
 	}
 	
-	/*
-		user_is_friend($this->getGUID(), $_SESSION['id']);
-		user_is_friend($this->getGUID(), $user_guid);
-		user_is_friend($user_guid, $this->getGUID());
-	*/
-	
 	/**
 	 * Adds a user to another user's friends list.
 	 *
