@@ -138,14 +138,14 @@
 		 * it can also be set. Note that by default, annotations are private.
 		 * 
 		 * @param string $name
-		 * @param string $value
+		 * @param mixed $value
 		 * @param int $access_id
 		 * @param int $owner_id
 		 * @param string $vartype
 		 */
 		function annotate($name, $value, $access_id = 0, $owner_id = 0, $vartype = "") 
 		{ 
-		// TODO: WRITEME
+			return create_annotation($this->getGUID(), $name, $value, $vartype, $owner_id, $access_id);
 		}
 		
 		/**
@@ -167,7 +167,7 @@
 		 */
 		function clearAnnotations($name = "")
 		{
-			
+			return clear_annotations($this->getGUID(), $name);
 		}
 		
 		/**
@@ -177,7 +177,7 @@
 		 */
 		function countAnnotations($name) 
 		{ 
-
+			return count_annotations($this->getGUID(), "","",$name);
 		}
 
 		/**

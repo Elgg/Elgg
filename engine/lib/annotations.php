@@ -11,9 +11,9 @@
 	 * @link http://elgg.org/
 	 */
 
-	
 	/**
 	 * @class ElggAnnotation
+	 * An annotation is similar to metadata each entity can contain more than one of each annotation.
 	 * @author Marcus Povey <marcus@dushka.co.uk>
 	 */
 	class ElggAnnotation
@@ -80,15 +80,18 @@
 		 *
 		 * @return mixed
 		 */
-		function getOwner() { return get_user($this->owner_id); }		
+		function getOwner() 
+		{ 
+			return get_user($this->owner_guid); 
+		}		
 		
 		function save()
 		{
 			if ($this->id > 0)
-				return update_annotation($this->id, $this->name, $this->value, $this->value_type, $this->owner_id, $this->access_id);
+				return update_annotation($this->id, $this->name, $this->value, $this->value_type, $this->owner_guid, $this->access_id);
 			else
 			{ 
-				$this->id = create_annotation($this->entity_id, $this->entity_type, $this->name, $this->value, $this->value_type, $this->owner_id, $this->access_id);
+				$this->id = create_annotation($this->entity_guid, $this->name, $this->value, $this->value_type, $this->owner_guid, $this->access_id);
 				if (!$this->id) throw new IOException("Unable to save new ElggAnnotation");
 				return $this->id;
 			}
@@ -97,7 +100,10 @@
 		/**
 		 * Delete a given site.
 		 */
-		function delete() { return delete_annotation($this->id); }
+		function delete() 
+		{ 
+			return delete_annotation($this->id); 
+		}
 		
 	}
 	
@@ -113,88 +119,6 @@
 			return $row;
 			
 		return new ElggAnnotation($row);
-	}
-	
-	
-	/**
-	 * Get a specific annotation.
-	 *
-	 * @param int $annotation_id
-	 */
-	function get_annotation($annotation_id)
-	{
-		global $CONFIG;
-		
-		$annotation_id = (int) $annotation_id;
-		$access = get_access_list();
-		
-		return row_to_elggannotation(get_data_row("select o.* from {$CONFIG->dbprefix}annotations where id=$annotation_id and (o.access_id in {$access} or (o.access_id = 0 and o.owner_id = {$_SESSION['id']}))"));			
-	}
-	
-	/**
-	 * Get a list of annotations for a given object/user/annotation type.
-	 *
-	 * @param int $entity_id
-	 * @param string $entity_type
-	 * @param string $name
-	 * @param mixed $value
-	 * @param int $owner_id
-	 * @param string $order_by
-	 * @param int $limit
-	 * @param int $offset
-	 */
-	function get_annotations($entity_id = 0, $entity_type = "", $entity_subtype = "", $name = "", $value = "", $owner_id = 0, $order_by = "created desc", $limit = 10, $offset = 0)
-	{
-		global $CONFIG;
-		
-		$entity_id = (int)$entity_id;
-		$entity_type = sanitise_string($entity_type);
-		$entity_subtype = sanitise_string($entity_subtype);
-		$name = sanitise_string($name);
-		$value = get_metastring_id($value);
-		
-		$owner_id = (int)$owner_id;
-		
-		$limit = (int)$limit;
-		$offset = (int)$offset;
-		
-		
-		// Construct query
-		$where = array();
-		
-		if ($entity_id != 0)
-			$where[] = "o.entity_id=$entity_id";
-			
-		if ($entity_type != "")
-			$where[] = "o.entity_type='$entity_type'";
-		
-		if ($owner_id != 0)
-			$where[] = "o.owner_id=$owner_id";
-			
-		if ($name != "")
-			$where[] = "o.name='$name'";
-			
-		if ($value != "")
-			$where[] = "o.value='$value'";
-			
-		if ($entity_subtype != "")
-			$where[] = "s.id=" . get_entity_subtype($entity_id, $entity_type);
-			
-		// add access controls
-		$access = get_access_list();
-		$where[] = "(o.access_id in {$access} or (o.access_id = 0 and o.owner_id = {$_SESSION['id']}))";
-			
-		// construct query.
-		$query = "SELECT * from {$CONFIG->dbprefix}annotations o LEFT JOIN {$CONFIG->dbprefix}entity_subtypes s on o.entity_id=s.entity_id and o.entity_type=s.entity_type where ";
-		for ($n = 0; $n < count($where); $n++)
-		{
-			if ($n > 0) $query .= " and ";
-			$query .= $where[$n];
-		}
-		
-		$query .= " order by $order_by limit $offset,$limit";
-		
-		return get_data($query, "row_to_elggannotation");
 	}
 	
 	/**
@@ -219,28 +143,41 @@
 	}
 	
 	/**
+	 * Get a specific annotation.
+	 *
+	 * @param int $annotation_id
+	 */
+	function get_annotation($annotation_id)
+	{
+		global $CONFIG;
+		
+		$annotation_id = (int) $annotation_id;
+		$access = get_access_list();
+		
+		return row_to_elggannotation(get_data_row("select * from {$CONFIG->dbprefix}annotations where id=$annotation_id and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))"));			
+	}
+	
+	/**
 	 * Create a new annotation.
 	 *
-	 * @param int $entity_id
-	 * @param string $entity_type
+	 * @param int $entity_guid
 	 * @param string $name
 	 * @param string $value
 	 * @param string $value_type
-	 * @param int $owner_id
+	 * @param int $owner_guid
 	 * @param int $access_id
 	 */
-	function create_annotation($entity_id, $entity_type, $name, $value, $value_type, $owner_id, $access_id = 0)
+	function create_annotation($entity_guid, $name, $value, $value_type, $owner_guid, $access_id = 0)
 	{
 		global $CONFIG;
 
-		$entity_id = (int)$entity_id;
-		$entity_type = sanitise_string(trim($entity_type));
+		$entity_guid = (int)$entity_id;
 		$name = sanitise_string(trim($name));
 		$value = sanitise_string(trim($value));
 		$value_type = detect_annotation_valuetype($value, sanitise_string(trim($value_type)));
 		
-		$owner_id = (int)$owner_id;
-		if ($owner_id==0) $owner_id = $_SESSION['id'];
+		$owner_guid = (int)$owner_guid;
+		if ($owner_guid==0) $owner_guid = $_SESSION['id'];
 		
 		$access_id = (int)$access_id;
 		
@@ -251,7 +188,7 @@
 		if (!$value) return false;
 		
 		// If ok then add it
-		return insert_data("INSERT into {$CONFIG->dbprefix}annotations (entity_id, entity_type, name, value, value_type, owner_id, created, access_id) VALUES ($entity_id,'$entity_type','$name','$value','$value_type', $owner_id, $time, $access_id)");
+		return insert_data("INSERT into {$CONFIG->dbprefix}annotations (entity_guid, name, value, value_type, owner_id, time_created, access_id) VALUES ($entity_guid,'$name',$value,'$value_type', $owner_guid, $time, $access_id)");
 	}
 	
 	/**
@@ -261,10 +198,10 @@
 	 * @param string $name
 	 * @param string $value
 	 * @param string $value_type
-	 * @param int $owner_id
+	 * @param int $owner_guid
 	 * @param int $access_id
 	 */
-	function update_annotation($annotation_id, $name, $value, $value_type, $owner_id, $access_id)
+	function update_annotation($annotation_id, $name, $value, $value_type, $owner_guid, $access_id)
 	{
 		global $CONFIG;
 
@@ -273,8 +210,8 @@
 		$value = sanitise_string(trim($value));
 		$value_type = detect_annotation_valuetype($value, sanitise_string(trim($value_type)));
 		
-		$owner_id = (int)$owner_id;
-		if ($owner_id==0) $owner_id = $_SESSION['id'];
+		$owner_guid = (int)$owner_guid;
+		if ($owner_guid==0) $owner_guid = $_SESSION['id'];
 		
 		$access_id = (int)$access_id;
 		
@@ -285,150 +222,174 @@
 		if (!$value) return false;
 		
 		// If ok then add it		
-		return update_data("UPDATE {$CONFIG->dbprefix}annotations set value='$value', value_type='$value_type', access_id=$access_id, owner_id=$owner_id where id=$annotation_id and name='$name' and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))");
+		return update_data("UPDATE {$CONFIG->dbprefix}annotations set value='$value', value_type='$value_type', access_id=$access_id, owner_guid=$owner_guid where id=$annotation_id and name='$name' and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))");
 	}
 	
 	/**
-	 * Count the number of annotations based on search parameters
+	 * Get a list of annotations for a given object/user/annotation type.
 	 *
-	 * @param int $entity_id
+	 * @param int $entity_guid
 	 * @param string $entity_type
+	 * @param string $entity_subtype
 	 * @param string $name
 	 * @param mixed $value
-	 * @param string $value_type
 	 * @param int $owner_id
+	 * @param int $limit
+	 * @param int $offset
+	 * @param string $order_by
 	 */
-	function count_annotations($entity_id = 0, $entity_type = "", $name = "", $value = "", $value_type = "", $owner_id = 0)
+	function get_annotations($entity_guid = 0, $entity_type = "", $entity_subtype = "", $name = "", $value = "", $owner_guid = 0, $limit = 10, $offset = 0,$order_by = "a.created desc")
 	{
 		global $CONFIG;
 		
-		$entity_id = (int)$entity_id;
+		$entity_guid = (int)$entity_guid;
 		$entity_type = sanitise_string($entity_type);
+		$entity_subtype = get_subtype_id($entity_subtype);
 		$name = sanitise_string($name);
 		$value = get_metastring_id($value);
-		$value_type = sanitise_string($value_type);
-		$owner_id = (int)$owner_id;
+		$owner_guid = (int)$owner_guid;
+		$limit = (int)$limit;
+		$offset = (int)$offset;
+		
 		$access = get_access_list();
 		
 		$where = array();
-		$where_q = "";
 		
-		if ($entity_id != 0)
-			$where[] = "entity_id=$entity_id";
+		if ($entity_guid != 0)
+			$where[] = "a.guid=$entity_guid";
 			
 		if ($entity_type != "")
-			$where[] = "entity_type='$entity_type'";
+			$where[] = "e.type='$entity_type'";
+			
+		if ($entity_subtype != "")
+			$where[] = "e.subtype='$entity_subtype'";
+		
+		if ($owner_guid != 0)
+			$where[] = "a.owner_guid=$owner_guid";
 			
 		if ($name != "")
-			$where[] = "name='$name'";
+			$where[] = "a.name='$name'";
 			
 		if ($value != "")
-			$where[] = "value='$value'";
-			
-		if ($value_type != "")
-			$where[] = "value_type='$value_type'";
+			$where[] = "a.value='$value'";
 		
-		if ($owner_id != 0)
-			$where[] = "owner_id=$owner_id";
-			
-		for ($n = 0; $n < count($where); $n++)
-			$where_q .= $where[$n] ." and ";
+		$query = "SELECT * from {$CONFIG->dbprefix}annotations a JOIN {$CONFIG->dbprefix}entities e on a.entity_guid = e.guid where ";
+		foreach ($where as $w)
+			$query .= " $w and ";
+		$query .= " (a.access_id in {$access} or (a.access_id = 0 and a.owner_guid = {$_SESSION['id']}))"; // Add access controls
+		$query .= " order by $order_by limit $offset,$limit"; // Add order and limit
 		
-		$result = get_data_row("SELECT count(*) as count from {$CONFIG->dbprefix}annotations WHERE $where_q (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))");
-		if ($result)
-			return $result->count;
-			
-		return false;
+		return get_data($query, "row_to_elggannotation");
+		
 	}
 
 	/**
 	 * Return the sum of a given integer annotation.
 	 * 
-	 * @param $entity_id int
+	 * @param $entity_guid int
 	 * @param $entity_type string
+	 * @param $entity_subtype string
 	 * @param $name string
 	 */
-	function get_annotations_sum($entity_id, $entity_type, $name)
+	function get_annotations_sum($entity_guid, $entity_type = "", $entity_subtype = "", $name = "")
 	{
-		global $CONFIG;
-		
-		$entity_id = (int)$entity_id;
-		$entity_type = sanitise_string($entity_type);
-		$name = santitise_string($name);
-		
-		$row = get_data_row("SELECT sum(value) as sum from {$CONFIG->dbprefix}annotations where entity_id=$entity_id and entity_type='$entity_type' and value_type='integer' and name='$name' and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))");
-		
-		if ($row)
-			return $row->sum;
-			
-		return false;
+		return __get_annotations_calculate_x("sum", $entity_guid, $entity_type, $entity_subtype, $name);
 	}
 	
 	/**
 	 * Return the max of a given integer annotation.
 	 * 
-	 * @param $entity_id int
+	 * @param $entity_guid int
 	 * @param $entity_type string
+	 * @param $entity_subtype string
 	 * @param $name string
 	 */
-	function get_annotations_max($entity_id, $entity_type, $name)
+	function get_annotations_max($entity_guid, $entity_type = "", $entity_subtype = "", $name = "")
 	{
-		global $CONFIG;
-		
-		$entity_id = (int)$entity_id;
-		$entity_type = sanitise_string($entity_type);
-		$name = santitise_string($name);
-		
-		$row = get_data_row("SELECT max(value) as max from {$CONFIG->dbprefix}annotations where entity_id=$entity_id and entity_type='$entity_type' and value_type='integer' and name='$name' and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))");
-		
-		if ($row)
-			return $row->max;
-			
-		return false;
+		return __get_annotations_calculate_x("max", $entity_guid, $entity_type, $entity_subtype, $name);
 	}
 	
 	/**
 	 * Return the minumum of a given integer annotation.
 	 * 
-	 * @param $entity_id int
+	 * @param $entity_guid int
 	 * @param $entity_type string
+	 * @param $entity_subtype string
 	 * @param $name string
 	 */
-	function get_annotations_min($entity_id, $entity_type, $name)
+	function get_annotations_min($entity_guid, $entity_type = "", $entity_subtype = "", $name = "")
 	{
-		global $CONFIG;
-		
-		$entity_id = (int)$entity_id;
-		$entity_type = sanitise_string($entity_type);
-		$name = santitise_string($name);
-		
-		$row = get_data_row("SELECT min(value) as min from {$CONFIG->dbprefix}annotations where entity_id=$entity_id and entity_type='$entity_type' and value_type='integer' and name='$name' and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))");
-		
-		if ($row)
-			return $row->min;
-			
-		return false;
+		return __get_annotations_calculate_x("min", $entity_guid, $entity_type, $entity_subtype, $name);
 	}
 	
 	/**
 	 * Return the average of a given integer annotation.
 	 * 
-	 * @param $entity_id int
+	 * @param $entity_guid int
 	 * @param $entity_type string
+	 * @param $entity_subtype string
 	 * @param $name string
 	 */
-	function get_annotations_avg($entity_id, $entity_type, $name)
+	function get_annotations_avg($entity_guid, $entity_type = "", $entity_subtype = "", $name = "")
+	{
+		return __get_annotations_calculate_x("avg", $entity_guid, $entity_type, $entity_subtype, $name);
+	}
+	
+	/**
+	 * Count the number of annotations based on search parameters
+	 *
+	 * @param int $entity_guid
+	 * @param string $entity_type
+	 * @param string $entity_subtype
+	 * @param string $name
+	 */
+	function count_annotations($entity_guid = 0, $entity_type = "", $entity_subtype = "", $name = "", $value = "", $value_type = "", $owner_guid = 0)
+	{
+		return __get_annotations_calculate_x("count", $entity_guid, $entity_type, $entity_subtype, $name);
+	}
+	
+	/**
+	 * Perform a mathmatical calculation on integer annotations.
+	 * 
+	 * @param $sum string
+	 * @param $entity_id int
+	 * @param $entity_type string
+	 * @param $entity_subtype string
+	 * @param $name string
+	 */
+	function __get_annotations_calculate_x($sum = "avg", $entity_guid, $entity_type = "", $entity_subtype = "", $name = "")
 	{
 		global $CONFIG;
 		
-		$entity_id = (int)$entity_id;
+		$sum = sanitise_string($sum);
+		$entity_guid = (int)$entity_id;
 		$entity_type = sanitise_string($entity_type);
+		$entity_subtype = get_subtype_id($entity_subtype);
 		$name = santitise_string($name);
+		$access = get_access_list();
 		
-		$row = get_data_row("SELECT avg(value) as avg from {$CONFIG->dbprefix}annotations where entity_id=$entity_id and entity_type='$entity_type' and value_type='integer' and name='$name' and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))");
+		$where = array();
+		
+		if ($entity_guid)
+			$where[] = "e.guid=$entity_guid";
+		if ($entity_type!="")
+			$where[] = "e.type='$entity_type'";
+		if ($entity_subtype)
+			$where[] = "e.subtype=$entity_subtype";
+		if ($name!="")
+			$where[] = "a.name='$name'";
+			
+		$where[] = "a.value_type='integer'"; // Limit on integer types
+		
+		$query = "SELECT $sum(ms.string) as sum from {$CONFIG->dbprefix}annotations a JOIN {$CONFIG->dbprefix}entities e on a.entity_guid = e.guid JOIN {$CONFIG->dbprefix}metastrings ms on a.value=ms.id WHERE ";
+		foreach ($where as $w)
+			$query .= " $w and ";
+		$query .= " (a.access_id in {$access} or (a.access_id = 0 and a.owner_guid = {$_SESSION['id']}))"; // now add access
+		
+		$row = get_data_row($query);
 		
 		if ($row)
-			return $row->avg;
+			return $row->sum;
 			
 		return false;
 	}
@@ -446,6 +407,96 @@
 		
 		$access = get_access_list();
 		
-		return delete_data("DELETE from {$CONFIG->dbprefix}annotations  where id=$id and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))");
+		return delete_data("DELETE from {$CONFIG->dbprefix}annotations  where id=$id and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))");
 	}
+	
+	/**
+	 * Clear all the annotations for a given entity, assuming you have access to that metadata.
+	 * 
+	 * @param int $guid
+	 */
+	function clear_annotations($guid, $name = "")
+	{
+		global $CONFIG;
+		
+		$guid = (int)$guid;
+		$name = sanitise_string($name);
+		
+		$where = array();
+		
+		if ($name != "")
+			$where[] = " name='$name'";
+		
+		$query = "DELETE from {$CONFIG->dbprefix}annotations where "; 
+		foreach ($where as $w)
+			$query .= " $w and ";
+		$query .= "(access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))";
+		
+		return delete_data();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 ?>
