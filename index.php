@@ -91,18 +91,18 @@ error_log("GETTIGN SITE ".$_SESSION['id']. " " . print_r($site, true));
 */
 
 // get site annotations
-$site = get_site(1);
+$site = get_site_by_url("http://localhost/");
 error_log("GETTIGN SITE ".$_SESSION['id']. " " . print_r($site, true));		
 
 		if (empty($site))
 		{
 			$site = new ElggSite();
 			
-			$site->title = "Test title";
+			$site->name = "Test title";
 			$site->description = "Test description";
-			$site->url = "http://dushka/~icewing/Workingdirectory/elggnew/";
-			$site->owner_id = 1;
-			$site->access_id = 0;
+			$site->url = "http://localhost/";
+			$site->owner_guid = 1;
+			$site->access_guid = 0;
 			
 			error_log("LOADED NEW SITE: Saving" . print_r($site,true));
 			
@@ -112,12 +112,27 @@ error_log("GETTIGN SITE ".$_SESSION['id']. " " . print_r($site, true));
 		{
 			$site = new ElggSite($site);
 
-			$site->title = "Test title " . time();
+			$site->name = "Test title " . time();
 			$site->save();
 			
 			error_log("UPDATING SITE " . print_r($site, true));	
 		}
-		error_log("SITE Annotations : " . print_r($site->getAnnotations("Test"), true));
 		
+		// add meta data
+		$site->setMetadata("Metaname", "Value");
+
+
+
+		// change site metadata
+		$site->setMetadata("Metaname", "Value2");
+		
+		error_log("SITE Metadata : " . print_r(get_entities_from_metadata("Metaname","","site"), true));
+		
+		
+		// Get objects belonging to a site
+
+		// get objects of type
+
+
 
 ?>

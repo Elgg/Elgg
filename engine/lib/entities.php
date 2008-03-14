@@ -112,7 +112,7 @@
 		 */
 		public function getMetaData($name)
 		{
-			//TODO: Writeme
+			return get_metadata_byname($name);
 		}
 		
 		/**
@@ -120,16 +120,17 @@
 		 * 
 		 * @param string $name
 		 * @param string $value
+		 * @param string $value_type
 		 * @return bool
 		 */
-		public function setMetaData($name, $value)
+		public function setMetaData($name, $value, $value_type = "")
 		{
-			// TODO: WRITEME
+			return create_metadata($this->getGUID(), $name, $value, $value_type, $this->getOwner());
 		}
 		
 		public function clearMetaData()
 		{
-			// TODO: WRITEME
+			return clear_metadata($this->getGUID());
 		}
 		
 		/**

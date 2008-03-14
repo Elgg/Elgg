@@ -13,6 +13,7 @@
 
 	/**
 	 * @class ElggMetadata
+	 * This class describes metadata that can be attached to ElggEntities.
 	 * @author Marcus Povey <marcus@dushka.co.uk>
 	 */
 	class ElggMetadata
@@ -80,15 +81,18 @@
 		 *
 		 * @return mixed
 		 */
-		function getOwner() { return get_user($this->owner_id); }		
+		function getOwner() 
+		{ 
+			return get_user($this->owner_guid); 
+		}		
 		
 		function save()
 		{
 			if ($this->id > 0)
-				return update_metadata($this->id, $this->name, $this->value, $this->value_type, $this->owner_id, $this->access_id);
+				return update_metadata($this->id, $this->name, $this->value, $this->value_type, $this->owner_guid, $this->access_id);
 			else
 			{ 
-				$this->id = create_metadata($this->entity_id, $this->entity_type, $this->name, $this->value, $this->value_type, $this->owner_id, $this->access_id);
+				$this->id = create_metadata($this->entity_guid, $this->name, $this->value, $this->value_type, $this->owner_guid, $this->access_id);
 				if (!$this->id) throw new IOException("Unable to save new ElggAnnotation");
 				return $this->id;
 			}
@@ -98,9 +102,12 @@
 		/**
 		 * Delete a given site.
 		 */
-		function delete() { return delete_metadata($this->id); }
-		
+		function delete() 
+		{ 
+			return delete_metadata($this->id); 
+		}
 	}
+	
 	
 	/**
 	 * Convert a database row to a new ElggMetadata
@@ -136,92 +143,7 @@
 		
 		return 'tag';
 	}
-		
-	/**
-	 * Create a new metadata object, or update an existing one.
-	 *
-	 * @param int $entity_id
-	 * @param string $entity_type
-	 * @param string $name
-	 * @param string $value
-	 * @param string $value_type
-	 * @param int $owner_id
-	 * @param int $access_id
-	 */
-	function create_metadata($entity_id, $entity_type, $name, $value, $value_type, $owner_id, $access_id = 0)
-	{
-		global $CONFIG;
-
-		$entity_id = (int)$entity_id;
-		$entity_type = sanitise_string(trim($entity_type));
-		$name = sanitise_string(trim($name));
-		$value = sanitise_string(trim($value));
-		$value_type = detect_metadata_valuetype(sanitise_string(trim($value_type)));
-		$time = time();
-		
-		$owner_id = (int)$owner_id;
-		if ($owner_id==0) $owner_id = $_SESSION['id'];
-		
-		$access_id = (int)$access_id;
-
-		$id = false;
-		
-		$existing = get_data_row("SELECT * from {$CONFIG->dbprefix}metadata WHERE entity_id = $entity_id and entity_type='$entity_type' and name='$name' limit 1");
-		if ($existing) 
-		{
-			$id = $existing->id;
-			$result = update_metadata($id,$name, $value, $value_type, $owner_id, $access_id);
 			
-			if (!$result) return false;
-		}
-		else
-		{
-			// Add the metastring
-			$value = add_metastring($value);
-			if (!$value) return false;
-			
-			// If ok then add it
-			$id = insert_data("INSERT into {$CONFIG->dbprefix}metadata (entity_id, entity_type, name, value, value_type, owner_id, created, access_id) VALUES ($entity_id,'$entity_type','$name','$value','$value_type', $owner_id, $time, $access_id)");
-		}
-		
-		return $id;
-	}
-	
-	/**
-	 * Update an item of metadata.
-	 *
-	 * @param int $id
-	 * @param string $name
-	 * @param string $value
-	 * @param string $value_type
-	 * @param int $owner_id
-	 * @param int $access_id
-	 */
-	function update_metadata($id, $name, $value, $value_type, $owner_id, $access_id)
-	{
-		global $CONFIG;
-
-		$id = (int)$id;
-		$name = sanitise_string(trim($name));
-		$value = sanitise_string(trim($value));
-		$value_type = detect_metadata_valuetype(sanitise_string(trim($value_type)));
-		
-		$owner_id = (int)$owner_id;
-		if ($owner_id==0) $owner_id = $_SESSION['id'];
-		
-		$access_id = (int)$access_id;
-		
-		$access = get_access_list();
-		
-		
-		// Add the metastring
-		$value = add_metastring($value);
-		if (!$value) return false;
-		
-		// If ok then add it
-		return update_data("UPDATE {$CONFIG->dbprefix}metadata set value='$value', value_type='$value_type', access_id=$access_id, owner_id=$owner_id where id=$id and name='$name' and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))");
-	}
-
 	/**
 	 * Get a specific item of metadata.
 	 * 
@@ -234,136 +156,92 @@
 		$id = (int)$id;
 		$access = get_access_list();
 				
-		return row_to_elggmetadata(get_data_row("SELECT * from {$CONFIG->dbprefix}metadata where id=$id and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))"));
+		return row_to_elggmetadata(get_data_row("SELECT * from {$CONFIG->dbprefix}metadata where id=$id and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))"));
 	}
-
+	
 	/**
-	 * Get a list of metadatas for a given object/user/metadata type.
+	 * Create a new metadata object, or update an existing one.
 	 *
-	 * @param int $entity_id
-	 * @param string $entity_type
-	 * @param string $entity_subtype
-	 * @param mixed $name Either a string or an array of terms.
-	 * @param mixed $value Either a string or an array of terms.
-	 * @param int $owner_id
-	 * @param string $order_by
-	 * @param int $limit
-	 * @param int $offset
-	 * @return array of ElggMetadata
+	 * @param int $entity_guid
+	 * @param string $name
+	 * @param string $value
+	 * @param string $value_type
+	 * @param int $owner_guid
+	 * @param int $access_id
 	 */
-	function get_metadatas($entity_id = 0, $entity_type = "", $entity_subtype = "", $name = "", $value = "", $value_type = "", $owner_id = 0, $order_by = "created desc", $limit = 10, $offset = 0)
+	function create_metadata($entity_guid, $name, $value, $value_type, $owner_guid, $access_id = 0)
 	{
 		global $CONFIG;
-		
-		$entity_id = (int)$entity_id;
-		$entity_type = sanitise_string(trim($entity_type));
-		$entity_subtype = sanitise_string($entity_subtype);
-		
-		if (!is_array($name))
-			$name = sanitise_string($name);
-		if (!is_array($value))
-			$value = get_metastring_id($value);
-			
-		if ((is_array($name)) && (is_array($value)) && (count($name)!=count($value)))
-			throw new InvalidParameterException("Name and value arrays not equal.");
-			
-		$value_type = sanitise_string(trim($value_type));
-		$owner_id = (int)$owner_id;
-		$order_by = sanitise_string($order_by);
-		
-		$limit = (int)$limit;
-		$offset = (int)$offset;
-		
-		$join = "";
-		
-		// Construct query
-		$where = array();
-		
-		if ($entity_id != 0)
-			$where[] = "o.entity_id=$entity_id";
-			
-		if ($entity_type != "")
-			$where[] = "o.entity_type='$entity_type'";
-		
-		if ($owner_id != 0)
-			$where[] = "o.owner_id=$owner_id";
-			
-		if (is_array($name)) {
-			foreach ($name as $n)
-				$where[]= "o.name='$n'";
-		} else if ($name != "")
-			$where[] = "o.name='$name'";
 
-		if (is_array($value)) {
-			foreach ($value as $v)
-				$where[]= "o.value='$v'";
-		} else if ($value != "")
-			$where[] = "o.value='$value'";
-			
-		if ($value_type != "")
-			$where[] = "o.value_type='$value_type'";
-			
-		if ($entity_subtype != "")
-			$where[] = "s.id=" . get_entity_subtype($entity_id, $entity_type);
-			
-		// add access controls
-		$access = get_access_list();
-		$where[] = "(o.access_id in {$access} or (o.access_id = 0 and o.owner_id = {$_SESSION['id']}))";
+		$entity_guid = (int)$entity_guid;
+		$name = sanitise_string(trim($name));
+		$value = sanitise_string(trim($value));
+		$value_type = detect_metadata_valuetype(sanitise_string(trim($value_type)));
+		$time = time();
 		
-		if ($entity_subtype!="")
-			$where[] = "";
-			
-		// construct query.
-		$query = "SELECT o.* from {$CONFIG->dbprefix}metadata o LEFT JOIN {$CONFIG->dbprefix}entity_subtypes s on o.entity_id=s.entity_id and o.entity_type=s.entity_type where ";
-		for ($n = 0; $n < count($where); $n++)
+		$owner_guid = (int)$owner_guid;
+		if ($owner_guid==0) $owner_guid = $_SESSION['id'];
+		
+		$access_id = (int)$access_id;
+
+		$id = false;
+		
+		$existing = get_data_row("SELECT * from {$CONFIG->dbprefix}metadata WHERE entity_guid = $entity_guid and name='$name' limit 1");
+		if ($existing) 
 		{
-			if ($n > 0) $query .= " and ";
-			$query .= $where[$n];
+			$id = $existing->id;
+			$result = update_metadata($id, $name, $value, $value_type, $owner_guid, $access_id);
+			
+			if (!$result) return false;
 		}
-		$query .= " order by $order_by limit $offset,$limit";
+		else
+		{
+			// Add the metastring
+			$value = add_metastring($value);
+			if (!$value) return false;
+			
+			// If ok then add it
+			$id = insert_data("INSERT into {$CONFIG->dbprefix}metadata (entity_guid, name, value, value_type, owner_guid, time_created, access_id) VALUES ($entity_guid, '$name','$value','$value_type', $owner_guid, $time, $access_id)");
+		}
 		
-		return get_data($query, "row_to_elggmetadata");
+		return $id;
 	}
-
+	
 	/**
-	 * Similar to get_metadatas, but instead returns the objects associated with a given meta search.
-	 * 
-	 * @param int $entity_id
-	 * @param string $entity_type
-	 * @param string $entity_subtype
-	 * @param mixed $name Either a string or an array of terms.
-	 * @param mixed $value Either a string or an array of terms.
-	 * @param int $owner_id
-	 * @param string $order_by
-	 * @param int $limit
-	 * @param int $offset
-	 * @return mixed Array of objects or false.
+	 * Update an item of metadata.
+	 *
+	 * @param int $id
+	 * @param string $name
+	 * @param string $value
+	 * @param string $value_type
+	 * @param int $owner_guid
+	 * @param int $access_id
 	 */
-	function get_objects_from_metadatas($entity_id = 0, $entity_type = "", $entity_subtype = "", $name = "", $value = "", $value_type = "", $owner_id = 0, $order_by = "created desc", $limit = 10, $offset = 0)
+	function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_id)
 	{
-		$results = get_metadatas($entity_id, $entity_type, $entity_subtype, $name, $value, $value_type, $owner_id, $order_by, $limit, $offset);
-		$objects = false;
+		global $CONFIG;
+
+		$id = (int)$id;
+		$name = sanitise_string(trim($name));
+		$value = sanitise_string(trim($value));
+		$value_type = detect_metadata_valuetype(sanitise_string(trim($value_type)));
 		
-		if ($results)
-		{
-			$objects = array();
-			
-			foreach ($results as $r)
-			{
-				
-				switch ($r->entity_type)
-				{
-					case 'object' : $objects[] = new ElggObject((int)$r->entity_id); break;
-					case 'user' : $objects[] = new ElggUser((int)$r->entity_id); break;
-					case 'collection' : $objects[] = new ElggCollection((int)$r->entity_id); break;
-					case 'site' : $objects[] = new ElggSite((int)$r->entity_id); break;
-					default: default : throw new InstallationException("Type {$r->entity_type} is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.");
-				}
-			}
-		}
+		$owner_guid = (int)$owner_guid;
+		if ($owner_guid==0) $owner_guid = $_SESSION['id'];
 		
-		return $objects;
+		$access_id = (int)$access_id;
+		
+		$access = get_access_list();
+		
+		
+		// Add the metastring
+		$value = add_metastring($value);
+		if (!$value) return false;
+		
+		// If ok then add it
+		return update_data("UPDATE {$CONFIG->dbprefix}metadata set value='$value', value_type='$value_type', access_id=$access_id, owner_guid=$owner_guid where id=$id and name='$name' and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))");
 	}
+	
 	
 	/**
 	 * Delete an item of metadata, where the current user has access.
@@ -377,7 +255,83 @@
 		$id = (int)$id;
 		$access = get_access_list();
 				
-		return delete_data("DELETE from {$CONFIG->dbprefix}metadata where id=$id and (access_id in {$access} or (access_id = 0 and owner_id = {$_SESSION['id']}))");
+		return delete_data("DELETE from {$CONFIG->dbprefix}metadata where id=$id and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))");
 		
 	}
+	
+	/**
+	 * Return the metadata values that match your query.
+	 * 
+	 * @param string $meta_name
+	 */
+	function get_metadata_byname($meta_name)
+	{
+		global $CONFIG;
+		
+		$meta_name = sanitise_string($meta_name);
+		$access = get_access_list();
+		
+		return row_to_elggmetadata(get_data_row("SELECT * from {$CONFIG->dbprefix}metadata where name='$meta_name' and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))"));
+	}
+
+	/**
+	 * Return a list of entities based on the given search criteria.
+	 * 
+	 * @param mixed $meta_name 
+	 * @param mixed $meta_value
+	 * @param string $entity_type The type of entity to look for, eg 'site' or 'object'
+	 * @param string $entity_subtype The subtype of the entity.
+	 * @param int $limit 
+	 * @param int $offset
+	 * @param string $order_by Optional ordering.
+	 */
+	function get_entities_from_metadata($meta_name, $meta_value = "", $entity_type = "", $entity_subtype = "", $limit = 10, $offset = 0, $order_by = "e.time_created desc")
+	{
+		global $CONFIG;
+		
+		$meta_name = sanitise_string($meta_name);
+		$meta_value = get_metastring_id($meta_value);
+			
+		$entity_type = sanitise_string($entity_type);
+		$entity_subtype = get_subtype_id($entity_subtype);
+		$limit = (int)$limit;
+		$offset = (int)$offset;
+		$order_by = sanitise_string($order_by);
+			
+		$access = get_access_list();
+			
+		$where = array();
+		
+		if ($entity_type!="")
+			$where[] = "e.type='$entity_type'";
+		if ($entity_subtype)
+			$where[] = "e.subtype=$entity_subtype";
+		if ($meta_name!="")
+			$where[] = "m.name='$meta_name'";
+		if ($meta_value!="")
+			$where[] = "m.value='$meta_value'";
+		
+		$query = "SELECT * from {$CONFIG->dbprefix}entities e JOIN {$CONFIG->dbprefix}metadata m on e.guid = m.entity_guid where";
+		foreach ($where as $w)
+			$query .= " $w and ";
+		$query .= " (e.access_id in {$access} or (e.access_id = 0 and e.owner_guid = {$_SESSION['id']}))"; // Add access controls
+		$query .= " order by $order_by limit $offset,$limit"; // Add order and limit
+		
+		return get_data($query, "entity_row_to_elggstar");
+	}
+	
+	/**
+	 * Clear all the metadata for a given entity, assuming you have access to that metadata.
+	 * 
+	 * @param int $guid
+	 */
+	function clear_metadata($guid)
+	{
+		global $CONFIG;
+		
+		$guid = (int)$guid;
+		
+		return delete_data("DELETE from {$CONFIG->dbprefix}metadata where access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']})");
+	}
+	
 ?>
