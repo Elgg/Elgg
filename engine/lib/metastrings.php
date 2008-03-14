@@ -14,16 +14,16 @@
 	/**
 	 * Return the meta string id for a given tag, or false.
 	 * 
-	 * @param string $tag The value (whatever that is) to be stored
+	 * @param string $string The value (whatever that is) to be stored
 	 * @return mixed Integer tag or false.
 	 */
-	function get_metastring_id($tag)
+	function get_metastring_id($string)
 	{
 		global $CONFIG;
 		
-		$tag = sanitise_string($tag);
+		$string = sanitise_string($string);
 		
-		$row = get_data_row("SELECT * from {$CONFIG->dbprefix}metastrings where tag='$tag' limit 1");
+		$row = get_data_row("SELECT * from {$CONFIG->dbprefix}metastrings where string='$string' limit 1");
 		if ($row)
 			return $row->id;
 			
@@ -34,19 +34,19 @@
 	 * Add a metastring.
 	 * It returns the id of the tag, whether by creating it or updating it.
 	 * 
-	 * @param string $tag The value (whatever that is) to be stored
+	 * @param string $string The value (whatever that is) to be stored
 	 * @return mixed Integer tag or false.
 	 */
-	function add_metastring($tag)
+	function add_metastring($string)
 	{
 		global $CONFIG;
 		
-		$tag = sanitise_string($tag);
+		$string = sanitise_string($string);
 		
-		$id = get_metastring_id($tag);
+		$id = get_metastring_id($string);
 		if ($id) return $id;
 		
-		return insert_data("INSERT into {$CONFIG->dbprefix}metastrings (tag) values ('$tag')");
+		return insert_data("INSERT into {$CONFIG->dbprefix}metastrings (string) values ('$string')");
 	}
 	
 ?>
