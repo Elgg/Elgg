@@ -1,0 +1,264 @@
+<?php
+
+	/**
+	 * Elgg objects
+	 * Functions to manage multiple or single objects in an Elgg install
+	 * 
+	 * @package Elgg
+	 * @subpackage Core
+	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+	 * @author Curverider Ltd
+	 * @copyright Curverider Ltd 2008
+	 * @link http://elgg.org/
+	 */
+
+	/**
+	 * @class ElggObject
+	 * Representation of an "object" in the system.
+	 */
+	class ElggObject extends ElggEntity
+	{
+		/**
+		 * Initialise the attributes array. 
+		 * This is vital to distinguish between metadata and base parameters.
+		 * 
+		 * Place your base parameters here.
+		 */
+		protected function initialise_attributes()
+		{
+			parent::initialise_attributes();
+			
+			$this->attributes['type'] = "object";
+			$this->attributes['title'] = "";
+			$this->attributes['description'] = "";
+			
+			
+		}
+				
+		/**
+		 * Construct a new object entity, optionally from a given id value.
+		 *
+		 * @param mixed $guid If an int, load that GUID. 
+		 * 	If a db row then will attempt to load the rest of the data.
+		 * @throws Exception if there was a problem creating the object. 
+		 */
+		function __construct($guid = null) 
+		{			
+			$this->initialise_attributes();
+			
+			if (!empty($guid))
+			{
+				// Is $guid is a DB row - either a entity row, or a object table row.
+				if ($guid instanceof stdClass) {					
+					// Load the rest
+					$this->load($guid->guid);
+				}
+				
+				// Is $guid is an ElggObject? Use a copy constructor
+				else if ($guid instanceof ElggObject)
+				{					
+					 foreach ($guid->attributes as $key => $value)
+					 	$this->attributes[$key] = $value;
+				}
+				
+				// Is this is an ElggEntity but not an ElggObject = ERROR!
+				else if ($guid instanceof ElggEntity)
+					throw new InvalidParameterException("Passing a non-ElggObject to an ElggObject constructor!");
+										
+				// We assume if we have got this far, $guid is an int
+				else if (is_int($guid)) {					
+					if (!$this->load($guid)) throw new IOException("Could not create a new ElggObject object from GUID:$guid");
+				}
+			}
+		}
+		
+		function __get($name) { return $this->get($name); }
+		function __set($name, $value) { return $this->set($name, $value); }
+		
+		/**
+		 * Override the load function.
+		 * This function will ensure that all data is loaded (were possible), so
+		 * if only part of the ElggObject is loaded, it'll load the rest.
+		 * 
+		 * @param int $guid
+		 * @return true|false 
+		 */
+		protected function load($guid)
+		{			
+			// Test to see if we have the generic stuff
+			if (!parent::load($guid)) 
+				return false;
+
+			// Check the type
+			if ($this->attributes['type']!='object')
+				throw new InvalidClassException("GUID:$guid is not a valid ElggObject");
+				
+			// Load missing data
+			$row = get_object_entity_as_row($guid);
+						
+			// Now put these into the attributes array as core values
+			$objarray = (array) $row;
+			foreach($objarray as $key => $value) 
+				$this->attributes[$key] = $value;
+			
+			return true;
+		}
+		
+		/**
+		 * Override the save function.
+		 * @return true|false
+		 */
+		public function save()
+		{
+			// Save generic stuff
+			if (!parent::save())
+				return false;
+			
+			// Now save specific stuff
+			return create_object_entity($this->get('guid'), $this->get('title'), $this->get('description'));
+		}
+		
+		/**
+		 * Delete this object.
+		 * @return true|false
+		 */
+		public function delete() 
+		{ 
+			if (!parent::delete())
+				return false;
+				
+			return delete_object_entity($guid);
+		}
+		
+		/**
+		 * Get the object's owner
+		 *
+		 * @return ElggUser The owner user
+		 */
+		function getOwner() {
+			return new ElggUser($this->owner_guid);			
+		}
+		
+		/**
+		 * Get sites that this object is a member of
+		 *
+		 * @param string $subtype Optionally, the subtype of result we want to limit to
+		 * @param int $limit The number of results to return
+		 * @param int $offset Any indexing offset
+		 */
+		function getSites($subtype="", $limit = 10, $offset = 0) {
+			return get_site_objects($this->getGUID(), $subtype, $limit, $offset);
+		}
+		
+		/**
+		 * Add this object to a particular site
+		 *
+		 * @param int $site_guid The guid of the site to add it to
+		 * @return true|false
+		 */
+		function add_to_site($site_guid) {
+			return add_site_object($this->getGUID(), $site_guid); 
+		}
+
+		/**
+		 * Get the collections associated with a object.
+		 *
+		 * @param string $subtype Optionally, the subtype of result we want to limit to
+		 * @param int $limit The number of results to return
+		 * @param int $offset Any indexing offset
+		 * @return unknown
+		 */
+		public function getCollections($subtype="", $limit = 10, $offset = 0) { get_object_collections($this->getGUID(), $subtype, $limit, $offset); }
+		
+	}
+
+	/**
+	 * Return the object specific details of a object by a row.
+	 * 
+	 * @param int $guid
+	 */
+	function get_object_entity_as_row($guid)
+	{
+		global $CONFIG;
+		
+		$guid = (int)$guid;
+		
+		return get_data_row("SELECT * from {$CONFIG->dbprefix}objects_entity where guid=$guid");
+	}
+	
+	/**
+	 * Create or update the extras table for a given object.
+	 * Call create_entity first.
+	 * 
+	 * @param int $guid
+	 * @param string $name
+	 * @param string $description
+	 * @param string $url
+	 */
+	function create_object_entity($guid, $name, $description, $url)
+	{
+		global $CONFIG;
+		
+		$guid = (int)$guid;
+		$name = sanitise_string($name);
+		$description = sanitise_string($description);
+		$url = sanitise_string($url);
+		
+		$row = get_entity_as_row($guid);
+		
+		if ($row)
+		{
+			// Exists and you have access to it
+			
+			// Delete any existing stuff
+			delete_object_entity($guid);
+
+			// Insert it
+			$result = insert_data("INSERT into {$CONFIG->dbprefix}objects_entity (guid, name, description, url) values ($guid, '$name','$description','$url')");
+			if ($result!==false) 
+				return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Delete a object's extra data.
+	 * 
+	 * @param int $guid
+	 */
+	function delete_object_entity($guid)
+	{
+		global $CONFIG;
+		
+		$guid = (int)$guid;
+		
+		$row = get_entity_as_row($guid);
+		
+		// Check to see if we have access and it exists
+		if ($row) 
+		{
+			// Delete any existing stuff
+			return delete_data("DELETE from {$CONFIG->dbprefix}objects_entity where guid=$guid");
+		}
+		
+		return false;
+	}
+
+	/**
+	 * Get the sites this object is part of
+	 *
+	 * @param int $object_guid The object's GUID
+	 * @param int $limit Number of results to return
+	 * @param int $offset Any indexing offset
+	 * @return false|array On success, an array of ElggSites
+	 */
+	function get_object_sites($object_guid, $limit = 10, $offset = 0) {
+		$object_guid = (int)$object_guid;
+		$limit = (int)$limit;
+		$offset = (int)$offset;
+		
+		return get_entities_from_relationship("member_of_site", $object_guid, false, "site", "", 0, "time_created desc", $limit, $offset);
+	}
+		
+?>
