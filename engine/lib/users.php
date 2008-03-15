@@ -406,5 +406,42 @@
 	function get_user_objects($user_guid, $subtype = "", $limit = 10, $offset = 0) {
 		return get_entities('object',$subtype, $user_guid, "time_created desc", $limit, $offset);
 	}
+	
+	/**
+	 * Get user by username
+	 *
+	 * @param string $username The user's username
+	 * @return ElggUser|false Depending on success
+	 */
+	function get_user_by_username($username)
+	{
+		global $CONFIG;
 		
+		$username = sanitise_string($username);
+		$row = get_data_row("SELECT * from {$CONFIG->dbprefix}users_entity where username='$username'");
+	
+		if ($row)
+			return new ElggUser($row); 
+		
+		return false;
+	}
+	
+	/**
+	 * Get user by session code
+	 *
+	 * @param string $code The session code
+	 * @return ElggUser|false Depending on success
+	 */
+	function get_user_by_code($code)
+	{
+		global $CONFIG;
+		
+		$code = sanitise_string($code);
+		$row = get_data_row("SELECT * from {$CONFIG->dbprefix}users_entity where code='$code'");
+	
+		if ($row)
+			return new ElggUser($row); 
+		
+		return false;
+	}
 ?>
