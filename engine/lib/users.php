@@ -141,7 +141,7 @@
 				
 			return delete_user_entity($guid);
 		}
-	
+				
 		/**
 		 * Get sites that this user is a member of
 		 *
