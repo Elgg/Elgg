@@ -129,16 +129,7 @@
 				
 			return delete_object_entity($guid);
 		}
-		
-		/**
-		 * Get the object's owner
-		 *
-		 * @return ElggUser The owner user
-		 */
-		function getOwner() {
-			return new ElggUser($this->owner_guid);			
-		}
-		
+	
 		/**
 		 * Get sites that this object is a member of
 		 *

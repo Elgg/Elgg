@@ -141,16 +141,7 @@
 				
 			return delete_user_entity($guid);
 		}
-		
-		/**
-		 * Get the user's owner, if any
-		 *
-		 * @return ElggUser The owner user
-		 */
-		function getOwner() {
-			return new ElggUser($this->owner_guid);			
-		}
-		
+	
 		/**
 		 * Get sites that this user is a member of
 		 *
