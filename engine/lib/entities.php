@@ -432,6 +432,8 @@
 	 */
 	function get_entities($type = "", $subtype = "", $owner_guid = 0, $order_by = "time_created desc", $limit = 10, $offset = 0)
 	{
+		global $CONFIG;
+		
 		$type = sanitise_string($type);
 		$subtype = get_subtype_id($subtype);
 		$owner_guid = (int)$owner_guid;
@@ -474,6 +476,8 @@
 	 */
 	function get_entities_from_relationship($relationship, $relationship_guid, $inverse_relationship = false, $type = "", $subtype = "", $owner_guid = 0, $order_by = "time_created desc", $limit = 10, $offset = 0)
 	{
+		global $CONFIG;
+		
 		$relationship = sanitise_string($relationship);
 		$relationship_guid = (int)$relationship_guid;
 		$inverse_relationship = (bool)$inverse_relationship;
