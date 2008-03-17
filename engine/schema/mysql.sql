@@ -33,12 +33,10 @@ CREATE TABLE `prefix_entities` (
 -- Entity subtypes - lets you subtype one of the main objects (sites/objects/etc)
 CREATE TABLE `prefix_entity_subtypes` (
 	`id` int(11) NOT NULL auto_increment,
-	`guid` bigint(20) unsigned  NOT NULL,
 	
 	`subtype` varchar(50) NOT NULL,
 	
 	PRIMARY KEY (`id`),
-	UNIQUE KEY (`guid`),
 	UNIQUE KEY (`subtype`)
 ) ENGINE=MyISAM;
 
