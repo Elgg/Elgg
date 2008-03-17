@@ -428,7 +428,7 @@
 		if ($name != "")
 			$where[] = " name='$name'";
 		
-		$query = "DELETE from {$CONFIG->dbprefix}annotations where "; 
+		$query = "DELETE from {$CONFIG->dbprefix}annotations where entity_guid=$guid and "; 
 		foreach ($where as $w)
 			$query .= " $w and ";
 		$query .= "(access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))";
