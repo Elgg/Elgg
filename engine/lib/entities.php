@@ -327,6 +327,25 @@
 	}
 	
 	/**
+	 * This function will register a new subtype, returning its ID as required.
+	 * 
+	 * @param string $subtype
+	 */
+	function add_subtype($subtype)
+	{
+		global $CONFIG;
+		
+		$subtype = sanitise_string($subtype);
+		
+		$id = get_subtype_id($subtype);
+		
+		if (!$id)
+			return insert_data("insert into {$CONFIG->dbprefix}entity_subtypes (subtype) values ('$subtype')");
+		
+		return $id;
+	}
+	
+	/**
 	 * Update an existing entity.
 	 *
 	 * @param int $guid
@@ -360,9 +379,9 @@
 	function create_entity($type, $subtype, $owner_guid, $access_id)
 	{
 		global $CONFIG;
-		
+	
 		$type = sanitise_string($type);
-		$subtype = get_subtype_id($subtype);
+		$subtype = add_subtype($subtype);
 		$owner_guid = (int)$owner_guid; 
 		$access_id = (int)$access_id;
 		$time = time();
@@ -397,7 +416,7 @@
 	{
 		if (!($row instanceof stdClass))
 			return $row;
-		
+	
 		switch ($row->type)
 		{
 			case 'object' : return new ElggObject($row);
@@ -456,7 +475,7 @@
 		foreach ($where as $w)
 			$query .= " $w and ";
 		$query .= " (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))"; // Add access controls
-		$query .= " order by $order_by limit $offset,$limit"; // Add order and limit
+		$query .= " order by $order_by limit $limit, $offset"; // Add order and limit
 		
 		return get_data($query, "entity_row_to_elggstar");
 	}
@@ -512,7 +531,7 @@
 		foreach ($where as $w)
 			$query .= " $w and ";
 		$query .= " (e.access_id in {$access} or (e.access_id = 0 and e.owner_guid = {$_SESSION['id']}))"; // Add access controls
-		$query .= " order by $order_by limit $offset,$limit"; // Add order and limit
+		$query .= " order by $order_by limit $limit, $offset"; // Add order and limit
 		
 		return get_data($query, "entity_row_to_elggstar");
 	}
