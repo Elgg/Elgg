@@ -408,6 +408,27 @@
 	}
 	
 	/**
+	 * Get a user object from a GUID.
+	 * 
+	 * This function returns an ElggUser from a given GUID.
+	 * @param int $guid The GUID
+	 * @return ElggUser|false 
+	 * @throws InvalidParameterException if $GUID exists but is not an ElggUser.
+	 */
+	function get_user($guid)
+	{
+		$result = get_entity($guid);
+		
+		if (($result) && (!($result instanceof ElggUser)))
+			throw new InvalidParameterException("GUID:$guid is not an ElggUser");
+			
+		if ($result)
+			return $result;
+		
+		return false;	
+	}
+	
+	/**
 	 * Get user by username
 	 *
 	 * @param string $username The user's username

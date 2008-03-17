@@ -20,7 +20,7 @@
 	 */
 		function isloggedin() {
 			
-			if ($_SESSION['guid'] > 0)
+			if ((isset($_SESSION['guid'])) && ($_SESSION['guid'] > 0))
 				return true;
 			return false;
 			
