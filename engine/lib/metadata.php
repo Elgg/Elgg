@@ -310,14 +310,14 @@
 		if ($meta_name!="")
 			$where[] = "m.name='$meta_name'";
 		if ($meta_value!="")
-			$where[] = "m.value='$meta_value'";
+			$where[] = "m.value_id='$meta_value'";
 		
 		$query = "SELECT * from {$CONFIG->dbprefix}entities e JOIN {$CONFIG->dbprefix}metadata m on e.guid = m.entity_guid where";
 		foreach ($where as $w)
 			$query .= " $w and ";
 		$query .= " (e.access_id in {$access} or (e.access_id = 0 and e.owner_guid = {$_SESSION['id']}))"; // Add access controls
-		$query .= " order by $order_by limit $offset,$limit"; // Add order and limit
-		
+		$query .= " order by $order_by limit $limit, $offset"; // Add order and limit
+	echo $query;	
 		return get_data($query, "entity_row_to_elggstar");
 	}
 	
