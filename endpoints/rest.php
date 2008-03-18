@@ -11,10 +11,68 @@
 	 * @link http://elgg.org/
 	 */
 
+	
+	
+	
+	
+	/*
+
+	 Elgg API system
+A brief specification: internal only
+
+NB: this is a loose specification, and as such some holes or shortcomings may become evident in
+implementation.  Therefore, feel free to adjust as necessary, bearing in mind the goals, which 
+are unmovable ...
+
+Goals:  an extensible, two-way API that can be used to easily code secure client applications 
+on a variety of networked systems, whether web or application-based.  The results should be available, 
+at the very least, in JSON, serialised PHP, XML and CSV, but the output formats should also be 
+extensible by plugins in a documented way.  Similarly, plugins must be able to add new function calls, 
+in a similar way to how they register events or enable actions.
+
+
+
+
+
+
+On release, we will need to provide simple client libraries for PHP, .NET, C, Java and (although this 
+can hopefully be outsourced to Kevin or similar) Ruby on Rails.  Additionally, Django, vanilla Python 
+and Perl libraries would be a bonus, although not required.
+
+Brief implementation requirements:   A set of procedural functions.  If possible, the output should 
+use the existing views system, creating a new base view set for xml, json, csv and php.  That way other 
+output formats can be specified simply by changing the &view URL parameter, and added / extended by plugins.  
+(It would also allow RSS output pretty much for free for certain types of data.)  On failure, a friendly 
+message should be returned in a way that can be read by the client software.
+
+These functions should be made available in a simple api.php module within engine/lib.php, without the use of
+any external libraries.  If an external library really must be used, ensure that it has a compatible license 
+and can be used on all systems where Elgg can be installed, including Apache for Windows and Apache-compatible 
+web servers.
+
+When a plugin or core software module registers an API call, it should reference a function name, the 
+parameters it requires, and an English description of the call.  A special API call – and internal function - 
+should return a list of enabled calls, for the use of client applications and internal help pages respectively.
+
+As one application of the API is as a back-end for AJAX applications, the API endpoint should check $_SESSION 
+for logged in user information before checking for any other kind of login data.  This way the browser can 
+simply make an asynchronous callback request, allowing for many very interesting Javascript applications.
+In an ideal world, client applications should not need a special API key.  This is because an application would 
+have to install a new key for each installed Elgg site, which is not preferable, as it has a serious user 
+experience hit (before the user can use a new client software on a particular install, they have to go to 
+their account settings and obtain something that to them looks like a string of gobbledygook).  If possible, 
+all the client application should need is a valid username and password.
+
+Using a $CONFIG configuration option, site admins should be able to shut down the entire API system if 
+required, or disallow the $_SESSION authentication method.
+
+	 */
+	
+	
 	// Include required files
 	require_once('../engine/start.php');
-	global $CONFIG, $ApiEnvironment;
-	
+	global $CONFIG;
+
 	// Register the error handler
 	error_reporting(E_ALL); 
 	set_error_handler('__php_api_error_handler');
@@ -22,11 +80,17 @@
 	// Register a default exception handler
 	set_exception_handler('__php_api_exception_handler'); 
 	
+	// Check to see if the api is available
+	if ((isset($CONFIG->disable_api)) && ($CONFIG->disable_api == true))
+		throw new ConfigurationException("Sorry, API access has been disabled by the administrator.");
+	
+	
+	
+	
 	// Get parameter variables
 	$format = get_input('format', 'php');
 	$method = get_input('method');
 	$result = null;
-	
 	
 	// See if we have a session
 	/**
@@ -37,7 +101,68 @@
 	 */
 	if (!isloggedin())
 	{
-		// Get api header
+		//$CONFIG->api_header = get_and_validate_api_headers(); // Get api header
+		//$CONFIG->api_user = get_api_user($CONFIG->api_header->api_key); // Pull API user details
+	
+	
+		
+		
+		
+		
+		
+		
+		
+		
+	
+	}
+	else
+	{
+		// User is logged in, just execute 
+		
+		
+		
+		
+	}
+	
+	// Finally output
+	if (!($result instanceof GenericResult))
+		throw new APIException("API Result is of an unknown type, this should never happen.");
+
+	// Output the result
+	echo output_result($result, $format);
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// See if we have a session
+	/**
+	 * If we have a session then we can assume that this is being called by AJAX from 
+	 * within an already logged on browser.
+	 * 
+	 * NB. This may be a gaping security hole, but hey ho. 
+	 */
+//	if (!isloggedin())
+//	{
+/*		// Get api header
 		$api_header = get_and_validate_api_headers();
 		$ApiEnvironment->api_header = $api_header;
 		
@@ -94,22 +219,18 @@
 		}
 		else
 			throw new SecurityException("Invalid or missing API Key.",ErrorResult::$RESULT_FAIL_APIKEY_INVALID);
-	}
-	else
-	{
-		// Set site environment
-		$ApiEnvironment->site_id = $CONFIG->site_id;
-		
-		// User is logged in, just execute 
-		if (isset($params['auth_token'])) $token = $params['auth_token'];
-		$result = execute_method($method, $params, $token);	
-	}
+	}*/
+//	else
+//	{
+//		// Set site environment
+//		$ApiEnvironment->site_id = $CONFIG->site_id;
+//		
+//		// User is logged in, just execute 
+//		if (isset($params['auth_token'])) $token = $params['auth_token'];
+//		$result = execute_method($method, $params, $token);	
+//	}
 
 
-	// Finally output
-	if (!($result instanceof GenericResult))
-		throw new APIException("API Result is of an unknown type, this should never happen.");
-		
-	output_result($result, $format);
+	
 		
 ?>

@@ -158,325 +158,10 @@
 		}
 	}
 	
-	// API functions //////////////////////////////////////////////////////////////////////////
 	
-	/** Create the environment for API Calls */
-	$ApiEnvironment = new stdClass;
 	
-	/** 
-	 * An array holding methods.
-	 * The structure of this is 
-	 * 	$METHODS = array (
-	 * 		"api.method" => array (
-	 * 			"function" = 'my_function_callback'
-	 * 			"parameters" = array (
-	 * 				"variable" = array ( // NB, the order is the same as defined by your function callback
-	 * 					type => 'int' | 'bool' | 'float' | 'string'
-	 * 					required => true (default) | false  
-	 * 				)
-	 * 			)
-	 * 			"require_auth" => true (default) | false
-	 * 		)
-	 *  )
-	 */
-	$METHODS = array();
 	
-	/**
-	 * Validate a token against a given site. 
-	 * 
-	 * A token registered with one site can not be used from a different apikey(site), so be aware of this
-	 * during development.
-	 *
-	 * @param int $site The ID of the site
-	 * @param string $token The Token.
-	 * @return mixed The user id attached to the token or false.
-	 */
-	function validate_user_token($site, $token)
-	{
-		global $CONFIG;
-		
-		$site = (int)$site;
-		$token = sanitise_string($token);
-		
-		if (!$site) throw new ConfigurationException("No site ID has been specified.");
-		if (!$token) throw new APIException("User token not specified.");
-		
-		$time = time();
-		
-		$user = get_data_row("SELECT * from {$CONFIG->dbprefix}users_apisessions where token='$token' and site_id=$site and expires>$time");
-		if ($user)
-			return $user->user_id;
-		
-		return false;
-	}
-
-	/**
-	 * Expose an arbitrary function as an api call.
-	 * 
-	 * Limitations: Currently can not expose functions which expect objects or arrays.
-	 * 
-	 * @param string $method The api name to expose this as, eg "myapi.dosomething"
-	 * @param string $function Your function callback.
-	 * @param array $parameters Optional list of parameters in the same order as in your function, with optional parameters last.
-	 * @param bool $require_auth Whether this requires a user authentication token or not (default is true)
-	 * @return bool
-	 */
-	function expose_function($method, $function, array $parameters = NULL, $require_auth = true)
-	{
-		global $METHODS;
-		
-		if (
-			($method!="") &&
-			($function!="")
-		)
-		{
-			$METHODS[$method] = array();
-				
-			$METHODS[$method]["function"] = $function;
-			
-			if ($parameters!=NULL)
-				$METHODS[$method]["parameters"] = $parameters;
-			
-			$METHODS[$method]["require_auth"] = $require_auth;
-			
-			return true;
-		}
-		
-		return false;	
-	}
-
-	/**
-	 * Executes a method.
-	 * A method is a function which you have previously exposed using expose_function.
-	 *
-	 * @param string $method Method, e.g. "foo.bar"
-	 * @param array $parameters Array of parameters in the format "variable" => "value", thse will be sanitised before being fed to your handler.
-	 * @param string $token The authentication token to authorise this method call.
-	 * @return GenericResult The result of the execution.
-	 * @throws APIException, SecurityException
-	 */
-	function execute_method($method, array $parameters, $token = "")
-	{
-		global $METHODS, $ApiEnvironment;
-		
-		// Sanity check
-		$method = trim($method); 
-		$token = trim($token); 
-		
-		// See if we can find the method handler
-		if (is_callable($METHODS[$method]["function"]))
-		{
-			$serialised_parameters = "";
-			
-			$validated_userid = validate_user_token($ApiEnvironment->site_id, $token); 
-
-			if ((!$METHODS[$method]["require_auth"]) || ($validated_userid) || (isloggedin()))
-			{
-				// If we have parameters then we need to sanitise the parameters.
-				if ((isset($METHODS[$method]["parameters"])) && (is_array($METHODS[$method]["parameters"]))) 
-				{
-					foreach ($METHODS[$method]["parameters"] as $key => $value)
-					{
-						if (
-							(is_array($value)) 			// Check that this is an array
-							&& (isset($value['type']))		// Check we have a type defined
-						)
-						{
-							// Check that the variable is present in the request
-
-							if (
-								(!isset($parameters[$key])) &&				// No parameter
-								((!isset($value['required'])) || ($value['required']!=true)) // and not optional
-							)
-								throw new APIException("Missing parameter $key in method $method");
-							else
-							{
-								// Avoid debug error
-								if (isset($parameters[$key]))
-								{
-									// Set variables casting to type.	
-									switch (strtolower($value['type']))
-									{
-										case 'int':
-										case 'integer' : $serialised_parameters .= "," . (int)trim($parameters[$key]); break;
-										case 'bool':
-										case 'boolean': 
-													if (strcasecmp(trim($parameters[$key]), "false")==0) 
-														$parameters[$key]='';
-															
-													$serialised_parameters .= "," . (bool)trim($parameters[$key]); 
-													break;
-										case 'string': $serialised_parameters .= ",'" .  (string)mysql_real_escape_string(trim($parameters[$key])) . "'"; 
-													break;
-										case 'float': $serialised_parameters .= "," . (float)trim($parameters[$key]); 
-													break;
-			
-										default : throw new APIException("Unrecognised type in cast {$value['type']} for variable '$key' in method '$method'");
-									}
-								}
-							}
-						}
-						else
-							throw new APIException("Invalid parameter found for '$key' in method '$method'.");
-					}
-				}
-				
-				// Execute function: Construct function and calling parameters
-				$function = $METHODS[$method]["function"];
-				$serialised_parameters = trim($serialised_parameters, ", ");
-				
-				$result = eval("return $function($serialised_parameters);");
-			
-				// Sanity check result
-				if ($result instanceof GenericResult) // If this function returns an api result itself, just return it
-					return $result; 
-					
-				if ($result === FALSE)
-					throw new APIException("$function($serialised_parameters) has a parsing error.");
-					
-				if ($result ===  NULL)
-					throw new APIException("$function($serialised_parameters) returned no value."); // If no value
-				
-				return SuccessResult::getInstance($result); // Otherwise assume that the call was successful and return it as a success object.	
-			}
-			else
-				throw new SecurityException("Authentication token either missing, invalid or expired.", GenericResult::$RESULT_FAIL_AUTHTOKEN); 
-		}
-		
-		// Return an error if not found
-		throw new APIException("Method call '$method' has not been implemented."); 
-	}
 	
-	/**
-	 * This function looks at the super-global variable $_SERVER and extracts the various
-	 * header variables needed to pass to the validation functions after performing basic validation.
-	 *
-	 * @return stdClass Containing all the values.
-	 * @throws APIException Detailing the error.
-	 */
-	function get_and_validate_api_headers() 
-	{
-		$result = new stdClass;
-		
-		$result->method = trim($_SERVER['REQUEST_METHOD']);
-		if (($result->method != "GET") && ($result->method!= "POST")) // Only allow these methods
-			throw new APIException("Request method must be GET or POST");
-
-		$result->api_key = trim($_SERVER['HTTP_X_ELGG_APIKEY']);
-		if ($result->api_key == "")
-			throw new APIException("Missing X-Elgg-apikey HTTP header");
-		
-		$result->hmac = trim($_SERVER['HTTP_X_ELGG_HMAC']);
-		if ($result->hmac == "")
-			throw new APIException("Missing X-Elgg-hmac header");
-		
-		$result->hmac_algo = trim($_SERVER['HTTP_X_ELGG_HMAC_ALGO']);
-		if ($result->hmac_algo == "")
-			throw new APIException("Missing X-Elgg-hmac-algo header");
-		
-		$result->time = trim($_SERVER['HTTP_X_ELGG_TIME']);
-		if ($result->time == "") 
-			throw new APIException("Missing X-Elgg-time header"); 
-		if (($result->time<(microtime(true)-86400.00)) || ($result->time>(microtime(true)+86400.00))) // Basic timecheck, think about making this smaller if we get loads of users and the cache gets really big.
-			throw new APIException("X-Elgg-time is too far in the past or future");
-		
-		$result->get_variables = trim($_SERVER['QUERY_STRING']);
-		if ($result->get_variables == "")
-			throw new APIException("No data on the query string");
-
-		if ($result->method=="POST")
-		{
-			$result->posthash = trim($_SERVER['HTTP_X_ELGG_POSTHASH']);
-			if ($result->posthash == "") 
-				throw new APIException("Missing X-Elgg-posthash header");
-			
-			$result->posthash_algo = trim($_SERVER['HTTP_X_ELGG_POSTHASH_ALGO']);
-			if ($result->posthash_algo == "") 
-				throw new APIException("Missing X-Elgg-posthash_algo header");
-				
-			$result->content_type = trim($_SERVER['CONTENT_TYPE']);
-			if ($result->content_type == "")
-				throw new APIException("Missing content type for post data");
-		}
-		
-		return $result;
-	}
-	
-	/**
-	 * Find an API User's details based on the provided public api key.
-	 *
-	 * @param string $api_key The API Key
-	 * @return mixed stdClass representing the database row or false.
-	 */
-	function get_api_user($api_key)
-	{
-		global $CONFIG;
-		
-		$api_key = sanitise_string($api_key);
-		
-		return get_data_row("SELECT * from {$CONFIG->dbprefix}api_users where api_key='$api_key'");	
-	}
-
-	/**
-	 * Calculate the HMAC for the query.
-	 * This function signs an api request using the information provided and is then verified by
-	 * searunner.
-	 * 
-	 * @param $algo string The HMAC algorithm used as stored in X-Searunner-hmac-algo.
-	 * @param $time string String representation of unix time as stored in X-Searunner-time.
-	 * @param $api_key string Your api key.
-	 * @param $secret string Your secret key.
-	 * @param $get_variables string URLEncoded string representation of the get variable parameters, eg "format=php&method=searunner.test".
-	 * @param $post_hash string Optional sha1 hash of the post data.
-	 * @return string The HMAC string.
-	 */
-	function calculate_hmac($algo, $time, $api_key, $secret_key, $get_variables, $post_hash = "")
-	{
-		$ctx = hash_init($algo, HASH_HMAC, $secret_key);
-
-		hash_update($ctx, trim($time));
-		hash_update($ctx, trim($api_key));
-		hash_update($ctx, trim($get_variables));
-		if (trim($post_hash)!="") hash_update($ctx, trim($post_hash));
-
-		return hash_final($ctx);
-	}
-
-	/**
-	 * Calculate a hash for some post data.
-	 * 
-	 * TODO: Work out how to handle really large bits of data.
-	 *
-	 * @param $postdata string The post data.
-	 * @param $algo string The algorithm used.
-	 * @return string The hash.
-	 */
-	function calculate_posthash($postdata, $algo)
-	{
-		$ctx = hash_init($algo);
-
-		hash_update($ctx, $postdata);
-
-		return hash_final($ctx);
-	}
-	
-	/**
-	 * This function will do two things. Firstly it verifys that a $hmac hasn't been seen before, and 
-	 * secondly it will add the given hmac to the cache.
-	 * 
-	 * TODO : REWRITE TO NOT USE ZEND
-	 * 
-	 * @param $hmac The hmac string.
-	 * @return bool True if replay detected, false if not.
-	 */
-	function cache_hmac_check_replay($hmac)
-	{
-		global $CONFIG;
-
-		throw new NotImplementedException("Writeme!");
-		
-		return true;
-	}
 	
 	// XML functions //////////////////////////////////////////////////////////////////////////
 	
@@ -557,50 +242,94 @@
 	
 	// Output functions ///////////////////////////////////////////////////////////////////////
 	
+	$API_OUTPUT_FUNCTIONS = array();
+	
 	/**
-	 * Get output for a result in one of a number of formats.
-	 *
-	 * @param GenericResult $result
-	 * @param string $format Optional format, if not specified or invalid, PHP is assumed.
-	 * @return mixed The serialised output, or false.
+	 * Register an API output handler.
+	 * This function is used by the system and the plugins to register an output encoding method for 
+	 * returning API results.
+	 * 
+	 * @param string $form The format string, eg 'xml' or 'php'
+	 * @param string $function The function, which must be in the format function_name(stdClass $result) and return a string.
+	 * @return bool
 	 */
-	function get_serialised_result(GenericResult $result, $format = "php")
+	function register_api_outputhandler($form, $function)
 	{
-		$format = trim(strtolower($format));
+		global $API_OUTPUT_FUNCTIONS;
 		
-		if ($result)
+		if ( ($form!="") && ($function!=""))
 		{
-			// Echo
-			switch ($format)
-			{
-				case 'xml' : return serialise_object_to_xml($result->toStdClass(), "Elgg");
-				
-				case 'json' : return json_encode($result->toStdClass()); 
-
-				case 'php' :
-				default: return serialize($result->toStdClass());
-			}
+			$API_OUTPUT_FUNCTIONS[$form] = $function;
+			
+			return true;
 		}
 		
 		return false;
 	}
-	
-	/**
-	 * Output a result, altering headers and mime-types as necessary.
-	 *
-	 * @param GenericResult $result
-	 * @param string $format Optional format, if not specified or invalid, PHP is assumed.
-	 */
-	function output_result(GenericResult $result, $format = 'php')
-	{
-		switch ($format)
-		{
-			case 'xml' : header('Content-Type: text/xml'); 
-		}
-		
-		echo get_serialised_result($result, $format);
-	}
 
+	/**
+	 * Output the result, with the given fault.
+	 * 
+	 * @param GenericResult $result Result object.
+	 * @param string $format The format
+	 * @return string
+	 */
+	function output_result(GenericResult $result, $format)
+	{
+		global $API_OUTPUT_FUNCTIONS;
+	
+		if (
+			(array_key_exists($format, $API_OUTPUT_FUNCTIONS)) &&
+			(is_callable($API_OUTPUT_FUNCTIONS[$format]))
+		)
+			return $API_OUTPUT_FUNCTIONS[$format]($result->toStdClass());
+			
+		// We got here, so no output format was found. Output an error
+		$result = print_r($result, true);	
+			
+		return <<< END
+<html>
+<head><title>Something went wrong...</title></head>
+<body>
+	<h1>API Output Error</h1>	
+	<p>Something went badly wrong while outputting the result of your request to '$format'. The result and any errors are displayed in 
+	raw text below.</p>
+	<pre>
+$result
+</pre>
+</body>
+</html>
+END;
+	}
+	
+	
+	function xml_result_handler(stdClass $result)
+	{
+		header("Content-Type: text/xml");
+		return serialise_object_to_xml($result, "elgg");
+	}
+	
+	function php_result_handler(stdClass $result)
+	{
+		return serialize($result);
+	}
+	
+	function json_result_handler(stdClass $result)
+	{
+		return json_encode($result);
+	}
+	
+	function cvs_result_handler(stdClass $result)
+	{
+		throw new NotImplementedException("CVS View currently not implemented");
+	}
+	
+	// Register some format handlers
+	register_api_outputhandler('xml', 'xml_result_handler');
+	register_api_outputhandler('php', 'php_result_handler');
+	register_api_outputhandler('json', 'json_result_handler');
+	register_api_outputhandler('cvs', 'cvs_result_handler');
+	
 	
 	// Error handler functions ////////////////////////////////////////////////////////////////
 	
@@ -656,7 +385,7 @@
 		
 		error_log("*** FATAL EXCEPTION (API) *** : " . $exception);
 			
-		output_result(
+		echo output_result(
 			ErrorResult::getInstance(
 				$exception->getMessage(), 
 				$exception->getCode() == 0 ? ErrorResult::$RESULT_FAIL : $exception->getCode(), 
@@ -665,18 +394,5 @@
 			get_input('format','php') // Attempt to get the requested format if passed.
 		);
 	}
-
-	// System functions ///////////////////////////////////////////////////////////////////////
 	
-	/**
-	 * Simple api to return a list of all api's installed on the system.
-	 */
-	function list_all_apis()
-	{
-		global $METHODS;
-		return $METHODS;
-	}
-	
-	// Expose some system api functions
-	expose_function("system.api.list", "list_all_apis", NULL, false);
 ?>
