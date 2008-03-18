@@ -112,7 +112,12 @@
 		 */
 		public function getMetaData($name)
 		{
-			return get_metadata_byname($name);
+			$md = get_metadata_byname($this->getGUID(), $name);
+			
+			if ($md)
+				return $md->value;
+				
+			return null;
 		}
 		
 		/**
@@ -226,10 +231,6 @@
 		public function getSubtype() { return get_subtype_from_id($this->get('owner_guid')); }
 		public function getTimeCreated() { return $this->get('time_created'); }
 		public function getTimeUpdated() { return $this->get('time_updated'); }
-		
-		
-		// TODO: Friends/relationships
-		
 		
 		/**
 		 * Save generic attributes to the entities table.
