@@ -156,7 +156,7 @@
 		$id = (int)$id;
 		$access = get_access_list();
 				
-		return row_to_elggmetadata(get_data_row("SELECT * from {$CONFIG->dbprefix}metadata where id=$id and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))"));
+		return row_to_elggmetadata(get_data_row("SELECT m.*, v.string as value from {$CONFIG->dbprefix}metadata m JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id where m.id=$id and (m.access_id in {$access} or (m.access_id = 0 and m.owner_guid = {$_SESSION['id']}))"));
 	}
 	
 	/**
@@ -176,16 +176,16 @@
 		$entity_guid = (int)$entity_guid;
 		$name = sanitise_string(trim($name));
 		$value = sanitise_string(trim($value));
-		$value_type = detect_metadata_valuetype(sanitise_string(trim($value_type)));
-		$time = time();
-		
+		$value_type = detect_metadata_valuetype($value, sanitise_string(trim($value_type)));
+		$time = time();		
 		$owner_guid = (int)$owner_guid;
+		
 		if ($owner_guid==0) $owner_guid = $_SESSION['id'];
 		
 		$access_id = (int)$access_id;
 
 		$id = false;
-		
+	
 		$existing = get_data_row("SELECT * from {$CONFIG->dbprefix}metadata WHERE entity_guid = $entity_guid and name='$name' limit 1");
 		if ($existing) 
 		{
@@ -201,7 +201,7 @@
 			if (!$value) return false;
 			
 			// If ok then add it
-			$id = insert_data("INSERT into {$CONFIG->dbprefix}metadata (entity_guid, name, value, value_type, owner_guid, time_created, access_id) VALUES ($entity_guid, '$name','$value','$value_type', $owner_guid, $time, $access_id)");
+			$id = insert_data("INSERT into {$CONFIG->dbprefix}metadata (entity_guid, name, value_id, value_type, owner_guid, time_created, access_id) VALUES ($entity_guid, '$name','$value','$value_type', $owner_guid, $time, $access_id)");
 		}
 		
 		return $id;
@@ -224,7 +224,7 @@
 		$id = (int)$id;
 		$name = sanitise_string(trim($name));
 		$value = sanitise_string(trim($value));
-		$value_type = detect_metadata_valuetype(sanitise_string(trim($value_type)));
+		$value_type = detect_metadata_valuetype($value, sanitise_string(trim($value_type)));
 		
 		$owner_guid = (int)$owner_guid;
 		if ($owner_guid==0) $owner_guid = $_SESSION['id'];
@@ -239,7 +239,7 @@
 		if (!$value) return false;
 		
 		// If ok then add it
-		return update_data("UPDATE {$CONFIG->dbprefix}metadata set value='$value', value_type='$value_type', access_id=$access_id, owner_guid=$owner_guid where id=$id and name='$name' and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))");
+		return update_data("UPDATE {$CONFIG->dbprefix}metadata set value_id='$value', value_type='$value_type', access_id=$access_id, owner_guid=$owner_guid where id=$id and name='$name' and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))");
 	}
 	
 	
@@ -264,14 +264,15 @@
 	 * 
 	 * @param string $meta_name
 	 */
-	function get_metadata_byname($meta_name)
+	function get_metadata_byname($entity_guid,  $meta_name)
 	{
 		global $CONFIG;
-		
+	
 		$meta_name = sanitise_string($meta_name);
+		$entity_guid = (int)$entity_guid;
 		$access = get_access_list();
 		
-		return row_to_elggmetadata(get_data_row("SELECT * from {$CONFIG->dbprefix}metadata where name='$meta_name' and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))"));
+		return row_to_elggmetadata(get_data_row("SELECT m.*, v.string as value from {$CONFIG->dbprefix}metadata m JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id where m.entity_guid=$entity_guid and m.name='$meta_name' and (m.access_id in {$access} or (m.access_id = 0 and m.owner_guid = {$_SESSION['id']}))"));
 	}
 
 	/**
@@ -325,13 +326,13 @@
 	 * 
 	 * @param int $guid
 	 */
-	function clear_metadata($guid)
+	function clear_metadata($entity_guid)
 	{
 		global $CONFIG;
 		
-		$guid = (int)$guid;
+		$entity_guid = (int)$entity_guid;
 		
-		return delete_data("DELETE from {$CONFIG->dbprefix}metadata where access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']})");
+		return delete_data("DELETE from {$CONFIG->dbprefix}metadata where entity_guid=$entity_guid and access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']})");
 	}
 	
 ?>

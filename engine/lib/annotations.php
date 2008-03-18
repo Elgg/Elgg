@@ -154,7 +154,7 @@
 		$annotation_id = (int) $annotation_id;
 		$access = get_access_list();
 		
-		return row_to_elggannotation(get_data_row("select * from {$CONFIG->dbprefix}annotations where id=$annotation_id and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))"));			
+		return row_to_elggannotation(get_data_row("select a.*, v.string as value from {$CONFIG->dbprefix}annotations a JOIN JOIN {$CONFIG->dbprefix}metastrings v on a.value_id = v.id where a.id=$annotation_id and (a.access_id in {$access} or (a.access_id = 0 and a.owner_guid = {$_SESSION['id']}))"));			
 	}
 	
 	/**
@@ -188,7 +188,7 @@
 		if (!$value) return false;
 		
 		// If ok then add it
-		return insert_data("INSERT into {$CONFIG->dbprefix}annotations (entity_guid, name, value, value_type, owner_guid, time_created, access_id) VALUES ($entity_guid,'$name',$value,'$value_type', $owner_guid, $time, $access_id)");
+		return insert_data("INSERT into {$CONFIG->dbprefix}annotations (entity_guid, name, value_id, value_type, owner_guid, time_created, access_id) VALUES ($entity_guid,'$name',$value,'$value_type', $owner_guid, $time, $access_id)");
 	}
 	
 	/**
@@ -222,7 +222,7 @@
 		if (!$value) return false;
 		
 		// If ok then add it		
-		return update_data("UPDATE {$CONFIG->dbprefix}annotations set value='$value', value_type='$value_type', access_id=$access_id, owner_guid=$owner_guid where id=$annotation_id and name='$name' and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))");
+		return update_data("UPDATE {$CONFIG->dbprefix}annotations set value_id='$value', value_type='$value_type', access_id=$access_id, owner_guid=$owner_guid where id=$annotation_id and name='$name' and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))");
 	}
 	
 	/**
@@ -274,7 +274,7 @@
 		if ($value != "")
 			$where[] = "a.value='$value'";
 		
-		$query = "SELECT * from {$CONFIG->dbprefix}annotations a JOIN {$CONFIG->dbprefix}entities e on a.entity_guid = e.guid where ";
+		$query = "SELECT a.*,v.string as value from {$CONFIG->dbprefix}annotations a JOIN {$CONFIG->dbprefix}entities e on a.entity_guid = e.guid JOIN {$CONFIG->dbprefix}metastrings v on a.value_id=v.id where ";
 		foreach ($where as $w)
 			$query .= " $w and ";
 		$query .= " (a.access_id in {$access} or (a.access_id = 0 and a.owner_guid = {$_SESSION['id']}))"; // Add access controls
