@@ -206,11 +206,10 @@
 		$token = sanitise_string($token);
 		
 		if (!$site) throw new ConfigurationException("No site ID has been specified.");
-		if (!$token) throw new APIException("User token not specified.");
 		
 		$time = time();
 		
-		$user = get_data_row("SELECT * from {$CONFIG->dbprefix}users_apisessions where token='$token' and site_id=$site and expires>$time");
+		$user = get_data_row("SELECT * from {$CONFIG->dbprefix}users_apisessions where token='$token' and site_guid=$site and expires>$time");
 		if ($user)
 			return $user->user_id;
 		
@@ -225,11 +224,11 @@
 	 * @param string $method The api name to expose this as, eg "myapi.dosomething"
 	 * @param string $function Your function callback.
 	 * @param array $parameters Optional list of parameters in the same order as in your function, with optional parameters last.
-	 * @param string $description Optional human readable description of the function.
 	 * @param bool $require_auth Whether this requires a user authentication token or not (default is true)
+	 * @param string $description Optional human readable description of the function.
 	 * @return bool
 	 */
-	function expose_function($method, $function, array $parameters = NULL, $description = "", $require_auth = true)
+	function expose_function($method, $function, array $parameters = NULL, $require_auth = true, $description = "")
 	{
 		global $METHODS;
 		
@@ -358,6 +357,21 @@
 		throw new APIException("Method call '$method' has not been implemented."); 
 	}
 		
+	// System functions ///////////////////////////////////////////////////////////////////////
+	
+	/**
+	 * Simple api to return a list of all api's installed on the system.
+	 */
+	function list_all_apis()
+	{
+		global $METHODS;
+		return $METHODS;
+	}
+	
+	// Expose some system api functions
+	expose_function("system.api.list", "list_all_apis", NULL, false, "List all available API calls on the system.");
+
+	
 	// PAM AUTH HMAC functions ////////////////////////////////////////////////////////////////
 	
 	/**
