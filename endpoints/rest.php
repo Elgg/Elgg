@@ -45,7 +45,7 @@
 		$params = $_REQUEST;
 		if (isset($params['auth_token'])) $token = $params['auth_token'];
 
-		// TODO EXECUTE
+		$result = execute_method($method, $params, $token);
 	}
 	
 	// Finally output
