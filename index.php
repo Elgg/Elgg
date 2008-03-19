@@ -15,7 +15,14 @@
 	 * Start the Elgg engine
 	 */
 		require_once(dirname(__FILE__) . "/engine/start.php");
-
+		
+		
+		
+	// Testing ///////
+	if ($_SESSION['id']==-1) $_SESSION['id'] = 1;
+	
+	
+	
 	/**
       * Check to see if user is logged in, if not display login form
       **/
@@ -89,7 +96,7 @@ error_log("GETTIGN SITE ".$_SESSION['id']. " " . print_r($site, true));
 		// get site metadata
 		error_log("SITE Metadata : " . print_r($site->getMetadata("Metaname"), true));
 */
-
+/*
 // get site annotations
 $site = get_site_by_url("http://localhost/");
 error_log("GETTIGN SITE ".$_SESSION['id']. " " . print_r($site, true));		
@@ -128,10 +135,17 @@ error_log("GETTIGN SITE ".$_SESSION['id']. " " . print_r($site, true));
 		
 		error_log("SITE Metadata : " . print_r(get_entities_from_metadata("Metaname","","site"), true));
 		
+		$site->metatwo = "a different way";
 		
-		// Get objects belonging to a site
-
-		// get objects of type
+		// annotate site
+		$site->annotate("Test","TestValue");
+		
+		
+		// get site annotations
+		error_log("SITE Annotations : " . print_r($site->getAnnotations("Test"), true));
+		
+		*/
+	
 
 
 
