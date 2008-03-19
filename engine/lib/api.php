@@ -267,7 +267,7 @@
 	 */
 	function execute_method($method, array $parameters, $token = "")
 	{
-		global $METHODS;
+		global $METHODS, $CONFIG;
 		
 		// Sanity check
 		$method = sanitise_string($method); 
@@ -278,7 +278,7 @@
 		{
 			$serialised_parameters = "";
 			
-			$validated_userid = validate_user_token($ApiEnvironment->site_id, $token); 
+			$validated_userid = validate_user_token($CONFIG->site_id, $token); 
 		
 			if ((!$METHODS[$method]["require_auth"]) || ($validated_userid) || (isloggedin()))
 			{
@@ -378,7 +378,7 @@
 			"sha256" => "sha256"
 		);
 		
-		if (array_key_exists($algo))
+		if (array_key_exists($algo, $supported_algos))
 			return $supported_algos[$algo];
 			
 		throw new APIException("Algorithm '$algo' is not supported or has been disabled.");
@@ -440,7 +440,18 @@
 	{
 		global $CONFIG;
 
-		throw new NotImplementedException("Writeme!");
+		$cache_dir = $CONFIG->cache_path;
+		if (!$cache_dir)
+			throw new ConfigurationException("Cache directory 'cache_path' not set.");
+			
+		$cache = new ElggFileCache($cache_dir, 90000); // cache lifetime is 25 hours (see time window in get_and_validate_api_headers() )
+		
+		if (!$result = $cache->load($hmac))
+		{
+			$cache->save($hmac, $hmac);
+			
+			return false;
+		}
 		
 		return true;
 	}
@@ -612,7 +623,7 @@
 		global $CONFIG;
 		
 		$api_header = get_and_validate_api_headers(); // Get api header
-		$api_user = get_api_user($CONFIG->api_header->api_key); // Pull API user details
+		$api_user = get_api_user($CONFIG->site_id, $api_header->api_key); // Pull API user details
 	
 		if ($api_user)
 		{
