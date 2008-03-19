@@ -88,9 +88,9 @@
 		 */
 		function __construct($cache_path, $max_age = 0, $max_size = 0)
 		{
-			set_variable("cache_path", $cache_path);
-			set_variable("max_age", $max_age);
-			set_variable("max_size", $max_size);	
+			$this->set_variable("cache_path", $cache_path);
+			$this->set_variable("max_age", $max_age);
+			$this->set_variable("max_size", $max_size);	
 
 			if ($cache_path=="") throw new ConfigurationException("Cache path set to nothing!");
 		}
@@ -105,14 +105,20 @@
 		{
 			// Create a filename matrix
 			$matrix = "";
-			for ($n = 0; $n < strlen($filename); $n++)
-				$matrix .= $filename[$n] . "/";	
-	
+			$depth = strlen($filename);
+			if ($depth > 5) $depth = 5;
+			 
+		//	for ($n = 0; $n < $depth; $n++)
+		//		$matrix .= $filename[$n] . "/";	
+				
 			// Create full path
-			$path = $this->set_variable("cache_path") . $matrix;
-			if (!mkdir($path, 0700, true)) throw new IOException("Could not make $path");
+			$path = $this->get_variable("cache_path") . $matrix;
+			
+	//		if (!mkdir($path, 0700, true)) throw new IOException("Could not make $path");
 			
 			// Open the file
+			if (!file_exists($path . $filename)) return false;
+			
 			return fopen($path . $filename, $rw);
 		}
 		
