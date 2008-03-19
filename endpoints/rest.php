@@ -16,6 +16,8 @@
 	global $CONFIG;
 	
 	$CONFIG->debug = true;
+	$CONFIG->site_id = 2;
+	$CONFIG->cache_path = "/tmp/cache/";
 
 	// Register the error handler
 	error_reporting(E_ALL); 
