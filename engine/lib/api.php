@@ -274,7 +274,7 @@
 		$token = sanitise_string($token); 
 		
 		// See if we can find the method handler
-		if (is_callable($METHODS[$method]["function"]))
+		if ((isset($METHODS[$method]["function"])) && (is_callable($METHODS[$method]["function"])))
 		{
 			$serialised_parameters = "";
 			
