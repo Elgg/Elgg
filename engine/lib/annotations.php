@@ -154,7 +154,7 @@
 		$annotation_id = (int) $annotation_id;
 		$access = get_access_list();
 		
-		return row_to_elggannotation(get_data_row("select a.*, v.string as value from {$CONFIG->dbprefix}annotations a JOIN JOIN {$CONFIG->dbprefix}metastrings v on a.value_id = v.id where a.id=$annotation_id and (a.access_id in {$access} or (a.access_id = 0 and a.owner_guid = {$_SESSION['id']}))"));			
+		return row_to_elggannotation(get_data_row("select a.*, n.string as name, v.string as value from {$CONFIG->dbprefix}annotations a JOIN {$CONFIG->dbprefix}metastrings n on a.name_id = n.id JOIN {$CONFIG->dbprefix}metastrings v on a.value_id = v.id where a.id=$annotation_id and (a.access_id in {$access} or (a.access_id = 0 and a.owner_guid = {$_SESSION['id']}))"));			
 	}
 	
 	/**
@@ -187,8 +187,11 @@
 		$value = add_metastring($value);
 		if (!$value) return false;
 		
+		$name = add_metastring($name);
+		if (!$name) return false;
+		
 		// If ok then add it
-		return insert_data("INSERT into {$CONFIG->dbprefix}annotations (entity_guid, name, value_id, value_type, owner_guid, time_created, access_id) VALUES ($entity_guid,'$name',$value,'$value_type', $owner_guid, $time, $access_id)");
+		return insert_data("INSERT into {$CONFIG->dbprefix}annotations (entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id) VALUES ($entity_guid,'$name',$value,'$value_type', $owner_guid, $time, $access_id)");
 	}
 	
 	/**
@@ -221,8 +224,11 @@
 		$value = add_metastring($value);
 		if (!$value) return false;
 		
+		$name = add_metastring($name);
+		if (!$name) return false;
+		
 		// If ok then add it		
-		return update_data("UPDATE {$CONFIG->dbprefix}annotations set value_id='$value', value_type='$value_type', access_id=$access_id, owner_guid=$owner_guid where id=$annotation_id and name='$name' and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))");
+		return update_data("UPDATE {$CONFIG->dbprefix}annotations set value_id='$value', value_type='$value_type', access_id=$access_id, owner_guid=$owner_guid where id=$annotation_id and name_id='$name' and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))");
 	}
 	
 	/**
@@ -245,7 +251,7 @@
 		$entity_guid = (int)$entity_guid;
 		$entity_type = sanitise_string($entity_type);
 		$entity_subtype = get_subtype_id($entity_subtype);
-		$name = sanitise_string($name);
+		$name = get_metastring_id($name);
 		$value = get_metastring_id($value);
 		$owner_guid = (int)$owner_guid;
 		$limit = (int)$limit;
@@ -269,12 +275,12 @@
 			$where[] = "a.owner_guid=$owner_guid";
 			
 		if ($name != "")
-			$where[] = "a.name='$name'";
+			$where[] = "a.name_id='$name'";
 			
 		if ($value != "")
 			$where[] = "a.value='$value'";
 		
-		$query = "SELECT a.*,v.string as value from {$CONFIG->dbprefix}annotations a JOIN {$CONFIG->dbprefix}entities e on a.entity_guid = e.guid JOIN {$CONFIG->dbprefix}metastrings v on a.value_id=v.id where ";
+		$query = "SELECT a.*, n.string as name, v.string as value from {$CONFIG->dbprefix}annotations a JOIN {$CONFIG->dbprefix}entities e on a.entity_guid = e.guid JOIN {$CONFIG->dbprefix}metastrings v on a.value_id=v.id JOIN {$CONFIG->dbprefix}metastrings n on a.name_id = n.id where ";
 		foreach ($where as $w)
 			$query .= " $w and ";
 		$query .= " (a.access_id in {$access} or (a.access_id = 0 and a.owner_guid = {$_SESSION['id']}))"; // Add access controls
@@ -366,7 +372,7 @@
 		$entity_guid = (int)$entity_id;
 		$entity_type = sanitise_string($entity_type);
 		$entity_subtype = get_subtype_id($entity_subtype);
-		$name = santitise_string($name);
+		$name = get_metastring_id($name);
 		$access = get_access_list();
 		
 		$where = array();
@@ -378,7 +384,7 @@
 		if ($entity_subtype)
 			$where[] = "e.subtype=$entity_subtype";
 		if ($name!="")
-			$where[] = "a.name='$name'";
+			$where[] = "a.name_id='$name'";
 			
 		$where[] = "a.value_type='integer'"; // Limit on integer types
 		
@@ -421,12 +427,12 @@
 		global $CONFIG;
 		
 		$guid = (int)$guid;
-		$name = sanitise_string($name);
+		$name = get_metastring_id($name);
 		
 		$where = array();
 		
 		if ($name != "")
-			$where[] = " name='$name'";
+			$where[] = " name_id='$name'";
 		
 		$query = "DELETE from {$CONFIG->dbprefix}annotations where entity_guid=$guid and "; 
 		foreach ($where as $w)
@@ -435,69 +441,5 @@
 		
 		return delete_data();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 ?>
