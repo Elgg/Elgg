@@ -13,6 +13,7 @@
 	$status = get_input("status");
 	$action = get_input("action");
 	$guid = get_input("guid");
+	$tags = get_input("tags");
 	
 	$limit = get_input("limit",10);
 	$offset = get_input("offset",0);
@@ -29,6 +30,16 @@
 				$entity->setMetaData('task', $task, 'text');
 				$entity->setMetaData('status', 'notdone', 'text');
 				
+				if ($tags!="")
+				{
+					$tags = explode(",",$tags);
+					
+					foreach ($tags as $tag)
+					{
+						$tag = santitise_string($tag);
+						$entity->setMetaData($tag, $tag);
+					}
+				}
 				
 				$entity->save();
 			} else echo "error";
