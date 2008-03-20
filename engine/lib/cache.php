@@ -117,7 +117,7 @@
 	//		if (!mkdir($path, 0700, true)) throw new IOException("Could not make $path");
 			
 			// Open the file
-			if (!file_exists($path . $filename)) return false;
+			if ((!file_exists($path . $filename)) && ($rw=="rb")) return false;
 			
 			return fopen($path . $filename, $rw);
 		}
@@ -166,6 +166,37 @@
 		public function __destruct()
 		{
 			// TODO: Check size and age, clean up accordingly
+			$size = 0;
+			$dir = $this->get_variable("cache_path");
+			
+			// Short circuit if both size and age are unlimited
+			if (($this->get_variable("max_age")==0) && ($this->get_variable("max_size")==0))
+				return;
+			
+			$exclude = array(".","..");
+			
+			$files = scandir($dir);
+			
+			// Perform cleanup
+			foreach ($files as $f)
+			{
+				if (!in_array($f, $exclude))
+				{
+					$stat = stat($dir.$f);
+					
+					// Add size
+					$size .= $stat['size'];
+					
+					// Is this older than my maximum date?
+					if (($this->get_variable("max_age")>0) && (time() - $stat['mtime'] > $this->get_variable("max_age")))
+						unlink($dir.$f);
+					
+					
+					
+					// TODO: Size
+					
+				}
+			}
 		}
 	}
 ?>
