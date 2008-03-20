@@ -156,7 +156,7 @@
 		$id = (int)$id;
 		$access = get_access_list();
 				
-		return row_to_elggmetadata(get_data_row("SELECT m.*, v.string as value from {$CONFIG->dbprefix}metadata m JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id where m.id=$id and (m.access_id in {$access} or (m.access_id = 0 and m.owner_guid = {$_SESSION['id']}))"));
+		return row_to_elggmetadata(get_data_row("SELECT m.*, n.string as name, v.string as value from {$CONFIG->dbprefix}metadata m JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id JOIN {$CONFIG->dbprefix}metastrings n on m.name_id = n.id where m.id=$id and (m.access_id in {$access} or (m.access_id = 0 and m.owner_guid = {$_SESSION['id']}))"));
 	}
 	
 	/**
@@ -186,7 +186,7 @@
 
 		$id = false;
 	
-		$existing = get_data_row("SELECT * from {$CONFIG->dbprefix}metadata WHERE entity_guid = $entity_guid and name='$name' limit 1");
+		$existing = get_data_row("SELECT * from {$CONFIG->dbprefix}metadata WHERE entity_guid = $entity_guid and name_id=" . add_metastring($name) . " limit 1");
 		if ($existing) 
 		{
 			$id = $existing->id;
@@ -196,12 +196,15 @@
 		}
 		else
 		{
-			// Add the metastring
+			// Add the metastrings
 			$value = add_metastring($value);
 			if (!$value) return false;
 			
+			$name = add_metastring($name);
+			if (!$name) return false;
+			
 			// If ok then add it
-			$id = insert_data("INSERT into {$CONFIG->dbprefix}metadata (entity_guid, name, value_id, value_type, owner_guid, time_created, access_id) VALUES ($entity_guid, '$name','$value','$value_type', $owner_guid, $time, $access_id)");
+			$id = insert_data("INSERT into {$CONFIG->dbprefix}metadata (entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id) VALUES ($entity_guid, '$name','$value','$value_type', $owner_guid, $time, $access_id)");
 		}
 		
 		return $id;
@@ -238,8 +241,11 @@
 		$value = add_metastring($value);
 		if (!$value) return false;
 		
+		$name = add_metastring($name);
+		if (!$name) return false;
+		
 		// If ok then add it
-		return update_data("UPDATE {$CONFIG->dbprefix}metadata set value_id='$value', value_type='$value_type', access_id=$access_id, owner_guid=$owner_guid where id=$id and name='$name' and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))");
+		return update_data("UPDATE {$CONFIG->dbprefix}metadata set value_id='$value', value_type='$value_type', access_id=$access_id, owner_guid=$owner_guid where id=$id and name_id='$name' and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))");
 	}
 	
 	
@@ -268,11 +274,11 @@
 	{
 		global $CONFIG;
 	
-		$meta_name = sanitise_string($meta_name);
+		$meta_name = get_metastring_id($meta_name);
 		$entity_guid = (int)$entity_guid;
 		$access = get_access_list();
 		
-		return row_to_elggmetadata(get_data_row("SELECT m.*, v.string as value from {$CONFIG->dbprefix}metadata m JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id where m.entity_guid=$entity_guid and m.name='$meta_name' and (m.access_id in {$access} or (m.access_id = 0 and m.owner_guid = {$_SESSION['id']}))"));
+		return row_to_elggmetadata(get_data_row("SELECT m.*, n.string as name, v.string as value from {$CONFIG->dbprefix}metadata m JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id JOIN {$CONFIG->dbprefix}metastrings n on m.name_id = n.id where m.entity_guid=$entity_guid and m.name_id='$meta_name' and (m.access_id in {$access} or (m.access_id = 0 and m.owner_guid = {$_SESSION['id']}))"));
 	}
 
 	/**
@@ -290,7 +296,7 @@
 	{
 		global $CONFIG;
 		
-		$meta_name = sanitise_string($meta_name);
+		$meta_name = get_metastring_id($meta_name);
 		$meta_value = get_metastring_id($meta_value);
 			
 		$entity_type = sanitise_string($entity_type);
@@ -308,7 +314,7 @@
 		if ($entity_subtype)
 			$where[] = "e.subtype=$entity_subtype";
 		if ($meta_name!="")
-			$where[] = "m.name='$meta_name'";
+			$where[] = "m.name_id='$meta_name'";
 		if ($meta_value!="")
 			$where[] = "m.value_id='$meta_value'";
 		
