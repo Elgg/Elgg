@@ -841,16 +841,16 @@ END;
 		return json_encode($result);
 	}
 	
-	function cvs_result_handler(stdClass $result)
+	function csv_result_handler(stdClass $result)
 	{
-		throw new NotImplementedException("CVS View currently not implemented");
+		throw new NotImplementedException("CSV View currently not implemented");
 	}
 	
 	// Register some format handlers
 	register_api_outputhandler('xml', 'xml_result_handler');
 	register_api_outputhandler('php', 'php_result_handler');
 	register_api_outputhandler('json', 'json_result_handler');
-	register_api_outputhandler('cvs', 'cvs_result_handler');
+	register_api_outputhandler('csv', 'csv_result_handler');
 	
 	
 	// Error handler functions ////////////////////////////////////////////////////////////////
