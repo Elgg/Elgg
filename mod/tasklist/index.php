@@ -3,7 +3,7 @@
 	
 	global $CONFIG;
 	
-	//$_SESSION['id'] = 2;
+	$_SESSION['id'] = 2;
 	
 	// Get the user
 	$owner_id = page_owner();
@@ -36,7 +36,7 @@
 					
 					foreach ($tags as $tag)
 					{
-						$tag = santitise_string($tag);
+						$tag = sanitise_string($tag);
 						$entity->setMetaData($tag, $tag);
 					}
 				}
