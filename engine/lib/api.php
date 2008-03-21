@@ -807,14 +807,14 @@
 			return $API_OUTPUT_FUNCTIONS[$format]($result->toStdClass());
 			
 		// We got here, so no output format was found. Output an error
-		$result = print_r($result, true);	
+		$result = print_r($result->toStdClass(), true);	
 			
 		return <<< END
 <html>
 <head><title>Something went wrong...</title></head>
 <body>
 	<h1>API Output Error</h1>	
-	<p>Something went badly wrong while outputting the result of your request to '$format'. The result and any errors are displayed in 
+	<p>Something went badly wrong while outputting the result of your request in '$format' format. The result and any errors are displayed in 
 	raw text below.</p>
 	<pre>
 $result
