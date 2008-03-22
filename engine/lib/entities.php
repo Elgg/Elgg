@@ -621,10 +621,5 @@
 			
 		return delete_data("DELETE from {$CONFIG->dbprefix}entity_relationships where guid_one=$guid_one and relationship='$relationship' and guid_two=$guid_two");
 	}
-	
-	
-	
-	// In annotations/ meta 
-	
-	
+
 ?>
