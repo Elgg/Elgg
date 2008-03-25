@@ -413,24 +413,14 @@
 	/**
 	 * Simple api to return a list of all api's installed on the system.
 	 */
-	function list_all_apis(array $foo)
+	function list_all_apis()
 	{
 		global $METHODS;
-		//return $METHODS;
-return $foo;
+		return $METHODS;
 	}
 	
 	// Expose some system api functions
-	expose_function("system.api.list", "list_all_apis", array(
-		"bibble" => array(
-			'type' => 'array',
-	 		'required' => true  	
-		),
-		"monkey" => array (
-			'type' => 'int',
-			'required' => true
-		)
-	), "GET", false, "List all available API calls on the system.");
+	expose_function("system.api.list", "list_all_apis", NULL, "GET", false, "List all available API calls on the system.");
 
 	
 	// PAM AUTH HMAC functions ////////////////////////////////////////////////////////////////
