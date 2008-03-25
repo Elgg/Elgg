@@ -175,6 +175,7 @@
 	 * 	$METHODS = array (
 	 * 		"api.method" => array (
 	 * 			"function" = 'my_function_callback'
+	 * 			"call_method" = 'GET' | 'POST'
 	 * 			"parameters" = array (
 	 * 				"variable" = array ( // NB, the order is the same as defined by your function callback
 	 * 					type => 'int' | 'bool' | 'float' | 'string'
@@ -187,6 +188,14 @@
 	 *  )
 	 */
 	$METHODS = array();
+	
+	/**
+	 * Get the request method.
+	 */
+	function get_call_method()
+	{
+		return $_SERVER['REQUEST_METHOD'];
+	}
 	
 	/**
 	 * Validate a token against a given site. 
@@ -224,11 +233,12 @@
 	 * @param string $method The api name to expose this as, eg "myapi.dosomething"
 	 * @param string $function Your function callback.
 	 * @param array $parameters Optional list of parameters in the same order as in your function, with optional parameters last.
+	 * @param string $call_method Define what call method should be used for this function.
 	 * @param bool $require_auth Whether this requires a user authentication token or not (default is true)
 	 * @param string $description Optional human readable description of the function.
 	 * @return bool
 	 */
-	function expose_function($method, $function, array $parameters = NULL, $require_auth = true, $description = "")
+	function expose_function($method, $function, array $parameters = NULL, $call_method = "GET", $require_auth = true, $description = "")
 	{
 		global $METHODS;
 		
@@ -243,6 +253,15 @@
 			
 			if ($parameters!=NULL)
 				$METHODS[$method]["parameters"] = $parameters;
+				
+			$call_method = strtoupper($call_method);
+			switch ($call_method)
+			{
+				case 'POST' : $METHODS[$method]["call_method"] = 'POST'; break;
+				case 'GET' : $METHODS[$method]["call_method"] = 'GET'; break;
+				default : 
+					throw new InvalidParameterException("Unrecognised call method '$call_method'");
+			}
 				
 			$METHODS[$method]["description"] = $description;
 			
@@ -275,82 +294,87 @@
 		// See if we can find the method handler
 		if ((isset($METHODS[$method]["function"])) && (is_callable($METHODS[$method]["function"])))
 		{
-			$serialised_parameters = "";
-			
-			$validated_userid = validate_user_token($CONFIG->site_id, $token); 
-		
-			if ((!$METHODS[$method]["require_auth"]) || ($validated_userid) || (isloggedin()))
+			// See if this is being made with the right call method
+			if (strcmp(get_call_method(), $METHODS[$method]["call_method"]))
 			{
-				// If we have parameters then we need to sanitise the parameters.
-				if ((isset($METHODS[$method]["parameters"])) && (is_array($METHODS[$method]["parameters"]))) 
-				{
-					foreach ($METHODS[$method]["parameters"] as $key => $value)
-					{
-						if (
-							(is_array($value)) 			// Check that this is an array
-							&& (isset($value['type']))		// Check we have a type defined
-						)
-						{
-							// Check that the variable is present in the request
-
-							if (
-								(!isset($parameters[$key])) &&				// No parameter
-								((!isset($value['required'])) || ($value['required']!=true)) // and not optional
-							)
-								throw new APIException("Missing parameter $key in method $method");
-							else
-							{
-								// Avoid debug error
-								if (isset($parameters[$key]))
-								{
-									// Set variables casting to type.	
-									switch (strtolower($value['type']))
-									{
-										case 'int':
-										case 'integer' : $serialised_parameters .= "," . (int)trim($parameters[$key]); break;
-										case 'bool':
-										case 'boolean': 
-													if (strcasecmp(trim($parameters[$key]), "false")==0) 
-														$parameters[$key]='';
-															
-													$serialised_parameters .= "," . (bool)trim($parameters[$key]); 
-													break;
-										case 'string': $serialised_parameters .= ",'" .  (string)mysql_real_escape_string(trim($parameters[$key])) . "'"; 
-													break;
-										case 'float': $serialised_parameters .= "," . (float)trim($parameters[$key]); 
-													break;
+				$serialised_parameters = "";
+				
+				$validated_userid = validate_user_token($CONFIG->site_id, $token); 
 			
-										default : throw new APIException("Unrecognised type in cast {$value['type']} for variable '$key' in method '$method'");
+				if ((!$METHODS[$method]["require_auth"]) || ($validated_userid) || (isloggedin()))
+				{
+					// If we have parameters then we need to sanitise the parameters.
+					if ((isset($METHODS[$method]["parameters"])) && (is_array($METHODS[$method]["parameters"]))) 
+					{
+						foreach ($METHODS[$method]["parameters"] as $key => $value)
+						{
+							if (
+								(is_array($value)) 			// Check that this is an array
+								&& (isset($value['type']))		// Check we have a type defined
+							)
+							{
+								// Check that the variable is present in the request
+	
+								if (
+									(!isset($parameters[$key])) &&				// No parameter
+									((!isset($value['required'])) || ($value['required']!=true)) // and not optional
+								)
+									throw new APIException("Missing parameter $key in method $method");
+								else
+								{
+									// Avoid debug error
+									if (isset($parameters[$key]))
+									{
+										// Set variables casting to type.	
+										switch (strtolower($value['type']))
+										{
+											case 'int':
+											case 'integer' : $serialised_parameters .= "," . (int)trim($parameters[$key]); break;
+											case 'bool':
+											case 'boolean': 
+														if (strcasecmp(trim($parameters[$key]), "false")==0) 
+															$parameters[$key]='';
+																
+														$serialised_parameters .= "," . (bool)trim($parameters[$key]); 
+														break;
+											case 'string': $serialised_parameters .= ",'" .  (string)mysql_real_escape_string(trim($parameters[$key])) . "'"; 
+														break;
+											case 'float': $serialised_parameters .= "," . (float)trim($parameters[$key]); 
+														break;
+				
+											default : throw new APIException("Unrecognised type in cast {$value['type']} for variable '$key' in method '$method'");
+										}
 									}
 								}
 							}
+							else
+								throw new APIException("Invalid parameter found for '$key' in method '$method'.");
 						}
-						else
-							throw new APIException("Invalid parameter found for '$key' in method '$method'.");
 					}
+					
+					// Execute function: Construct function and calling parameters
+					$function = $METHODS[$method]["function"];
+					$serialised_parameters = trim($serialised_parameters, ", ");
+					
+					$result = eval("return $function($serialised_parameters);");
+				
+					// Sanity check result
+					if ($result instanceof GenericResult) // If this function returns an api result itself, just return it
+						return $result; 
+						
+					if ($result === FALSE)
+						throw new APIException("$function($serialised_parameters) has a parsing error.");
+						
+					if ($result ===  NULL)
+						throw new APIException("$function($serialised_parameters) returned no value."); // If no value
+					
+					return SuccessResult::getInstance($result); // Otherwise assume that the call was successful and return it as a success object.	
 				}
-				
-				// Execute function: Construct function and calling parameters
-				$function = $METHODS[$method]["function"];
-				$serialised_parameters = trim($serialised_parameters, ", ");
-				
-				$result = eval("return $function($serialised_parameters);");
-			
-				// Sanity check result
-				if ($result instanceof GenericResult) // If this function returns an api result itself, just return it
-					return $result; 
-					
-				if ($result === FALSE)
-					throw new APIException("$function($serialised_parameters) has a parsing error.");
-					
-				if ($result ===  NULL)
-					throw new APIException("$function($serialised_parameters) returned no value."); // If no value
-				
-				return SuccessResult::getInstance($result); // Otherwise assume that the call was successful and return it as a success object.	
-			}
+				else
+					throw new SecurityException("Authentication token either missing, invalid or expired.", GenericResult::$RESULT_FAIL_AUTHTOKEN); 
+			}	
 			else
-				throw new SecurityException("Authentication token either missing, invalid or expired.", GenericResult::$RESULT_FAIL_AUTHTOKEN); 
-			
+				throw new CallException("$method must be called using '{$METHODS[$method]["call_method"]}'");
 		}
 		
 		// Return an error if not found
@@ -369,7 +393,7 @@
 	}
 	
 	// Expose some system api functions
-	expose_function("system.api.list", "list_all_apis", NULL, false, "List all available API calls on the system.");
+	expose_function("system.api.list", "list_all_apis", NULL, "GET", false, "List all available API calls on the system.");
 
 	
 	// PAM AUTH HMAC functions ////////////////////////////////////////////////////////////////
