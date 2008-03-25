@@ -232,7 +232,12 @@
 	 * 
 	 * @param string $method The api name to expose this as, eg "myapi.dosomething"
 	 * @param string $function Your function callback.
-	 * @param array $parameters Optional list of parameters in the same order as in your function, with optional parameters last.
+	 * @param array $parameters Optional list of parameters in the same order as in your function, with optional parameters last. 
+	 * 	This array should be in the format 
+	 *   "variable" = array ( 
+	 * 					type => 'int' | 'bool' | 'float' | 'string' | 'array'
+	 * 					required => true (default) | false  
+	 * 	 )
 	 * @param string $call_method Define what call method should be used for this function.
 	 * @param bool $require_auth Whether this requires a user authentication token or not (default is true)
 	 * @param string $description Optional human readable description of the function.
@@ -295,7 +300,7 @@
 		if ((isset($METHODS[$method]["function"])) && (is_callable($METHODS[$method]["function"])))
 		{
 			// See if this is being made with the right call method
-			if (strcmp(get_call_method(), $METHODS[$method]["call_method"]))
+			if (strcmp(get_call_method(), $METHODS[$method]["call_method"])==0)
 			{
 				$serialised_parameters = "";
 				
@@ -340,6 +345,28 @@
 											case 'string': $serialised_parameters .= ",'" .  (string)mysql_real_escape_string(trim($parameters[$key])) . "'"; 
 														break;
 											case 'float': $serialised_parameters .= "," . (float)trim($parameters[$key]); 
+														break;
+											case 'array':
+															$array = "array(";
+															
+															if (is_array($parameters[$key]))
+															{
+																foreach ($parameters[$key] as $k => $v)
+																{
+																	$k = sanitise_string($k);
+																	$v = sanitise_string($v);
+																	
+																	$array .= "'$k'=>'$v',";
+																}
+																
+																$array = trim($array,",");
+															}
+															else
+																throw APIException("$key does not appear to be an array.");
+																
+															$array .= ")";
+															
+															$serialised_parameters .= $array;
 														break;
 				
 											default : throw new APIException("Unrecognised type in cast {$value['type']} for variable '$key' in method '$method'");
@@ -386,14 +413,24 @@
 	/**
 	 * Simple api to return a list of all api's installed on the system.
 	 */
-	function list_all_apis()
+	function list_all_apis(array $foo)
 	{
 		global $METHODS;
-		return $METHODS;
+		//return $METHODS;
+return $foo;
 	}
 	
 	// Expose some system api functions
-	expose_function("system.api.list", "list_all_apis", NULL, "GET", false, "List all available API calls on the system.");
+	expose_function("system.api.list", "list_all_apis", array(
+		"bibble" => array(
+			'type' => 'array',
+	 		'required' => true  	
+		),
+		"monkey" => array (
+			'type' => 'int',
+			'required' => true
+		)
+	), "GET", false, "List all available API calls on the system.");
 
 	
 	// PAM AUTH HMAC functions ////////////////////////////////////////////////////////////////
