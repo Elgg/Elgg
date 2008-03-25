@@ -176,6 +176,7 @@
 			$exclude = array(".","..");
 			
 			$files = scandir($dir);
+			if (!$files) throw new IOException("$dir is not a directory.");
 			
 			// Perform cleanup
 			foreach ($files as $f)
