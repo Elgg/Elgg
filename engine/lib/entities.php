@@ -25,7 +25,7 @@
 		 * Any field not appearing in this will be viewed as a 
 		 */
 		protected $attributes;
-		
+				
 		/**
 		 * Initialise the attributes array. 
 		 * This is vital to distinguish between metadata and base parameters.
@@ -133,6 +133,9 @@
 			return create_metadata($this->getGUID(), $name, $value, $value_type, $this->getOwner());
 		}
 		
+		/**
+		 * Clear metadata.
+		 */
 		public function clearMetaData()
 		{
 			return clear_metadata($this->getGUID());
@@ -292,15 +295,17 @@
 	 * 
 	 * TODO: Move to a nicer place?
 	 * 
+	 * @param string $type
 	 * @param string $subtype
 	 */
-	function get_subtype_id($subtype)
+	function get_subtype_id($type, $subtype)
 	{
 		global $CONFIG;
 		
+		$type = sanitise_string($type);
 		$subtype = sanitise_string($subtype);
 		
-		$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes where subtype='$subtype'");
+		$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes where type='$type' and subtype='$subtype'");
 		if ($result)
 			return $result->id;
 		
@@ -328,20 +333,45 @@
 	}
 	
 	/**
-	 * This function will register a new subtype, returning its ID as required.
+	 * This function tests to see if a subtype has a registered class handler.
 	 * 
-	 * @param string $subtype
+	 * @param string $type The type
+	 * @param string $subtype The subtype
+	 * @return a class name or null
 	 */
-	function add_subtype($subtype)
+	function get_subtype_class($type, $subtype)
 	{
 		global $CONFIG;
 		
+		$type = sanitise_string($type);
 		$subtype = sanitise_string($subtype);
 		
-		$id = get_subtype_id($subtype);
+		$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes where type='$type' and subtype='$subtype'");
+		if ($result)
+			return $result->class;
+		
+		return NULL;
+	}
+	
+	/**
+	 * This function will register a new subtype, returning its ID as required.
+	 * 
+	 * @param string $type The type you're subtyping
+	 * @param string $subtype The subtype label
+	 * @param string $class Optional class handler (if you don't want it handled by the generic elgg handler for the type)
+	 */
+	function add_subtype($type, $subtype, $class = "")
+	{
+		global $CONFIG;
+		
+		$type = sanitise_string($type);
+		$subtype = sanitise_string($subtype);
+		$class = sanitise_string($class);
+		
+		$id = get_subtype_id($type, $subtype);
 		
 		if (!$id)
-			return insert_data("insert into {$CONFIG->dbprefix}entity_subtypes (subtype) values ('$subtype')");
+			return insert_data("insert into {$CONFIG->dbprefix}entity_subtypes (type, subtype, class) values ('$type','$subtype','$class')");
 		
 		return $id;
 	}
@@ -418,14 +448,31 @@
 	{
 		if (!($row instanceof stdClass))
 			return $row;
-	
-		switch ($row->type)
+			
+		// See if there are any registered subtype handler classes for this type and subtype
+		$classname = get_subtype_class($row->type, $row->subtype);
+		if ($classname!="")
 		{
-			case 'object' : return new ElggObject($row);
-			case 'user' : return new ElggUser($row);
-			case 'collection' : return new ElggCollection($row); 
-			case 'site' : return new ElggSite($row); 
-			default: default : throw new InstallationException("Type {$row->type} is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.");
+			$tmp = $classname($row);
+			
+			if (!($tmp instanceof ElggEntity))
+				throw new ClassException("$classname is not an ElggEntity.");
+				
+		}
+		else
+		{
+			switch ($row->type)
+			{
+				case 'object' : 
+					return new ElggObject($row);
+				case 'user' : 
+					return new ElggUser($row);
+				case 'collection' : 
+					return new ElggCollection($row); 
+				case 'site' : 
+					return new ElggSite($row); 
+				default: default : throw new InstallationException("Type {$row->type} is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.");
+			}
 		}
 		
 		return false;
@@ -456,7 +503,7 @@
 		global $CONFIG;
 		
 		$type = sanitise_string($type);
-		$subtype = get_subtype_id($subtype);
+		$subtype = get_subtype_id($type, $subtype);
 		$owner_guid = (int)$owner_guid;
 		$order_by = sanitise_string($order_by);
 		$limit = (int)$limit;
@@ -503,7 +550,7 @@
 		$relationship_guid = (int)$relationship_guid;
 		$inverse_relationship = (bool)$inverse_relationship;
 		$type = sanitise_string($type);
-		$subtype = get_subtype_id($subtype);
+		$subtype = get_subtype_id($type, $subtype);
 		$owner_guid = (int)$owner_guid;
 		$order_by = sanitise_string($order_by);
 		$limit = (int)$limit;

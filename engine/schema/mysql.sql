@@ -34,10 +34,14 @@ CREATE TABLE `prefix_entities` (
 CREATE TABLE `prefix_entity_subtypes` (
 	`id` int(11) NOT NULL auto_increment,
 	
+	`type` enum ('object', 'user', 'collection', 'site') NOT NULL,
 	`subtype` varchar(50) NOT NULL,
 	
+	class varchar(50) NOT NULL default '',
+	
 	PRIMARY KEY (`id`),
-	UNIQUE KEY (`subtype`)
+	UNIQUE KEY (`class`),
+	UNIQUE KEY (`type`, `subtype`)
 ) ENGINE=MyISAM;
 
 -- Describe relationships between entities, can describe friendships but also site membership, depending on context
