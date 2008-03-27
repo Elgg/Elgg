@@ -168,8 +168,9 @@
 	 * @param string $value_type
 	 * @param int $owner_guid
 	 * @param int $access_id
+	 * @param bool $allow_multiple
 	 */
-	function create_metadata($entity_guid, $name, $value, $value_type, $owner_guid, $access_id = 0)
+	function create_metadata($entity_guid, $name, $value, $value_type, $owner_guid, $access_id = 0, $allow_multiple = false)
 	{
 		global $CONFIG;
 
@@ -179,6 +180,7 @@
 		$value_type = detect_metadata_valuetype($value, sanitise_string(trim($value_type)));
 		$time = time();		
 		$owner_guid = (int)$owner_guid;
+		$allow_multiple = (boolean)$allow_multiple;
 		
 		if ($owner_guid==0) $owner_guid = $_SESSION['id'];
 		
@@ -187,7 +189,7 @@
 		$id = false;
 	
 		$existing = get_data_row("SELECT * from {$CONFIG->dbprefix}metadata WHERE entity_guid = $entity_guid and name_id=" . add_metastring($name) . " limit 1");
-		if ($existing) 
+		if (($existing) && (!$allow_multiple)) 
 		{
 			$id = $existing->id;
 			$result = update_metadata($id, $name, $value, $value_type, $owner_guid, $access_id);
@@ -278,7 +280,7 @@
 		$entity_guid = (int)$entity_guid;
 		$access = get_access_list();
 		
-		return row_to_elggmetadata(get_data_row("SELECT m.*, n.string as name, v.string as value from {$CONFIG->dbprefix}metadata m JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id JOIN {$CONFIG->dbprefix}metastrings n on m.name_id = n.id where m.entity_guid=$entity_guid and m.name_id='$meta_name' and (m.access_id in {$access} or (m.access_id = 0 and m.owner_guid = {$_SESSION['id']}))"));
+		return get_data("SELECT m.*, n.string as name, v.string as value from {$CONFIG->dbprefix}metadata m JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id JOIN {$CONFIG->dbprefix}metastrings n on m.name_id = n.id where m.entity_guid=$entity_guid and m.name_id='$meta_name' and (m.access_id in {$access} or (m.access_id = 0 and m.owner_guid = {$_SESSION['id']}))", "row_to_elggmetadata");
 	}
 
 	/**
