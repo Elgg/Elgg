@@ -250,6 +250,23 @@
 		return update_data("UPDATE {$CONFIG->dbprefix}metadata set value_id='$value', value_type='$value_type', access_id=$access_id, owner_guid=$owner_guid where id=$id and name_id='$name' and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))");
 	}
 	
+	/**
+	 * This function creates metadata from an associative array of "key => value" pairs.
+	 * 
+	 * @param int $entity_guid
+	 * @param string $name_and_values
+	 * @param string $value_type
+	 * @param int $owner_guid
+	 * @param int $access_id
+	 * @param bool $allow_multiple
+	 */
+	function create_metadata_from_array($entity_guid, array $name_and_values, $value_type, $owner_guid, $access_id = 0, $allow_multiple = false)
+	{
+		foreach ($name_and_values as $k => $v)
+			if (!create_metadata($entity_guid, $k, $v, $value_type, $owner_guid, $access_id, $allow_multiple)) return false;
+		
+		return true;
+	}
 	
 	/**
 	 * Delete an item of metadata, where the current user has access.
