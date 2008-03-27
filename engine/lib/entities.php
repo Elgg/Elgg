@@ -124,13 +124,21 @@
 		 * Set a piece of metadata.
 		 * 
 		 * @param string $name
-		 * @param string $value
+		 * @param mixed $value
 		 * @param string $value_type
 		 * @return bool
 		 */
 		public function setMetaData($name, $value, $value_type = "")
 		{
-			return create_metadata($this->getGUID(), $name, $value, $value_type, $this->getOwner());
+			if (is_array($value))
+			{
+				foreach ($value as $v)
+					if (!create_metadata($this->getGUID(), $name, $v, $value_type, $this->getOwner(), true)) return false;
+					
+				return true;
+			}
+			else
+				return create_metadata($this->getGUID(), $name, $value, $value_type, $this->getOwner());
 		}
 		
 		/**
