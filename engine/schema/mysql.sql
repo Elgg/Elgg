@@ -173,8 +173,7 @@ CREATE TABLE `prefix_metadata` (
 	
 	`time_created` int(11) NOT NULL,
 	
-	PRIMARY KEY (`id`),
-	UNIQUE KEY (`entity_guid`, `name`)
+	PRIMARY KEY (`id`)
 	
 ) ENGINE=MyISAM;
 
