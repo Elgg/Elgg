@@ -21,7 +21,7 @@
 		function set_default_config() {
 			
 			global $CONFIG;
-			
+
 			if (empty($CONFIG->path))
 				$CONFIG->path = str_replace("\\","/",dirname(dirname(dirname(__FILE__)))) . "/";
 
@@ -37,16 +37,14 @@
 					$CONFIG->wwwroot .= "/";
 				}*/
 				
-				$request = $_SERVER['REQUEST_URI'];
-				
+				//$request = $_SERVER['REQUEST_URI'];
+				$request = str_replace($_SERVER['DOCUMENT_ROOT'],'',$CONFIG->path);
 				if (strripos($request,"/") < (strlen($request) - 1)) {
 					// addressing a file directly, not a dir
 					$request = substr($request, 0, strripos($request,"/")+1);
 				}
 				
 				$CONFIG->wwwroot .= $request;
-				
-				//$CONFIG->wwwroot .= str_replace($_SERVER['DOCUMENT_ROOT'],"",$CONFIG->path);
 		
 			}
 		
