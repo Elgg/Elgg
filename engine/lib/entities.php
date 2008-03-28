@@ -295,7 +295,19 @@
 		{ 
 			return delete_entity($this->get('guid'));
 		}
-		
+
+		/**
+		 * Export this class into a stdClass containing all necessary fields.
+		 * Override if you wish to return more information than can be found in $this->attributes (shouldn't happen) 
+		 * 
+		 * @return stdClass
+		 */
+		public function export() 
+		{ 
+			$tmp = new stdClass; 
+			$tmp->attributes = $this->attributes; 
+			return $tmp; 
+		}
 	}
 
 	/**
@@ -677,4 +689,30 @@
 		return delete_data("DELETE from {$CONFIG->dbprefix}entity_relationships where guid_one=$guid_one and relationship='$relationship' and guid_two=$guid_two");
 	}
 
+	/**
+	 * Handler called by trigger_plugin_hook on the "export" event.
+	 */
+	function export_entity_plugin_hook($hook, $entity_type, $returnvalue, $params)
+	{
+		// Sanity check values
+		if ((!is_array($params)) && (!isset($params['guid'])))
+			throw new InvalidParameterException("GUID has not been specified during export, this should never happen.");
+			
+		if (!is_array($returnvalue))
+			throw new InvalidParameterException("Entity serialisation function passed a non-array returnvalue parameter");
+			
+		$guid = (int)$params['guid'];
+		
+		// Get the entity
+		$entity = get_entity($guid);
+		
+		if ($entity instanceof ElggEntity)
+			$returnvalue[] = $entity; // Add object to list of things to serialise - actual serialisation done later
+
+		return $returnvalue;
+	}
+	
+	/** Register the hook, ensuring entities are serialised first */
+	register_plugin_hook("export", "all", "export_entity_plugin_hook", 0);
+	
 ?>
