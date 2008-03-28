@@ -153,6 +153,50 @@
 		}
 		
 	/**
+	 * When given an entity, views it intelligently.
+	 * 
+	 * Expects a view to exist called entity-type/subtype, or for the entity to have a parameter
+	 * 'view' which lists a different view to display.  In both cases, elgg_view will be called with
+	 * array('entity' => $entity) as its parameters, and therefore this is what the view should expect
+	 * to receive. 
+	 *
+	 * @param ElggEntity $entity The entity to display
+	 * @return string HTML (etc) to display
+	 */
+		function elgg_view_entity(ElggEntity $entity) {
+			
+			$view = $entity->view;
+			if (is_string($view)) {
+				return elgg_view($view,array('entity' => $entity));
+			}
+			
+			$classes = array(
+								'ElggUser' => 'user',
+								'ElggObject' => 'object',
+								'ElggSite' => 'site',
+								'ElggCollection' => 'collection'
+							);
+			
+			$entity_class = get_class($entity);
+			if (isset($classes[$entity_class])) {
+				$entity_type = $classes[$entity_class];
+			} else {
+				foreach($classes as $class => $type) {
+					if (is_subclass_of($entity,$class)) {
+						$entity_type = $class;
+						break;
+					}
+				}
+			}
+			if (!isset($entity_class)) return false;
+			
+			$subtype = $entity->getSubtype();
+			
+			return elgg_view("{$entity_type}/{$subtype}",array('entity' => $entity));
+			
+		}
+		
+	/**
 	 * Sets an alternative function to handle templates, which will be passed to by elgg_view.
 	 * This function must take the $view and $vars parameters from elgg_view:
 	 * 
