@@ -306,7 +306,6 @@
 	 * @param array $children_array Optionally, an array of children
 	 * @return false|stdClass Depending on success
 	 */
-		
 		function make_register_object($register_name, $register_value, $children_array = array()) {
 			
 			if (empty($register_name) || empty($subregister_name) || empty($register_array))
@@ -534,14 +533,14 @@
 		
 		function events($event = "", $object_type = "", $function = "", $priority = 500, $call = false, $object = null) {
 			
-			static $events;
+			global $CONFIG;
 			
-			if (!isset($events)) {
-				$events = array();
-			} else if (!isset($events[$event]) && !empty($event)) {
-				$events[$event] = array();
-			} else if (!isset($events[$event][$object_type]) && !empty($event) && !empty($object_type)) {
-				$events[$event][$object_type] = array();
+			if (!isset($CONFIG->events)) {
+				$CONFIG->events = array();
+			} else if (!isset($CONFIG->events[$event]) && !empty($event)) {
+				$CONFIG->events[$event] = array();
+			} else if (!isset($CONFIG->events[$event][$object_type]) && !empty($event) && !empty($object_type)) {
+				$CONFIG->events[$event][$object_type] = array();
 			}
 			
 			if (!$call) {
@@ -549,11 +548,11 @@
 				if (!empty($event) && !empty($object_type) && is_callable($function)) {
 					$priority = (int) $priority;
 					if ($priority < 0) $priority = 0;
-					while (isset($events[$event][$object_type][$priority])) {
+					while (isset($CONFIG->events[$event][$object_type][$priority])) {
 						$priority++;
 					}
-					$events[$event][$object_type][$priority] = $function;
-					ksort($events[$event][$object_type]);
+					$CONFIG->events[$event][$object_type][$priority] = $function;
+					ksort($CONFIG->events[$event][$object_type]);
 					return true;
 				} else {
 					return false;
@@ -561,8 +560,8 @@
 			
 			} else {
 			
-				if (!empty($events[$event][$object_type]) && is_array($events[$event][$object_type])) {
-					foreach($events[$event][$object_type] as $eventfunction) {
+				if (!empty($CONFIG->events[$event][$object_type]) && is_array($CONFIG->events[$event][$object_type])) {
+					foreach($CONFIG->events[$event][$object_type] as $eventfunction) {
 						if ($eventfunction($event, $object_type, $object) === false) {
 							return false;
 						}
@@ -583,8 +582,7 @@
 	 * @param string $object_type The object type
 	 * @param string $function The function name
 	 * @return true|false Depending on success 
-	 */
-		
+	 */	
 		function register_event_handler($event, $object_type, $function, $priority = 500) {
 			return events($event, $object_type, $function, $priority);
 		}
@@ -605,6 +603,74 @@
 					return true;
 				}
 			return false;
+		}
+		
+	/**
+	 * Register a function to a plugin hook for a particular entity type, with a given priority.
+	 * 
+	 * eg if you want the function "export_user" to be called when the hook "export" for "user" entities 
+	 * is run, use:
+	 * 
+	 * 		register_plugin_hook("export", "user", "export_user");
+	 * 
+	 * "all" is a valid value for both $hook and $entity_type. "none" is a valid value for $entity_type.
+	 *
+	 * @param string $hook The name of the hook
+	 * @param string $entity_type The name of the type of entity (eg "user", "object" etc)
+	 * @param string $function The name of a valid function to be run
+	 * @param string $priority The priority - 0 is first, 1000 last, default is 500
+	 * @return true|false Depending on success
+	 */
+		function register_plugin_hook($hook, $entity_type, $function, $priority = 500) {
+			global $CONFIG;
+			
+			if (!isset($CONFIG->hooks)) {
+				$CONFIG->hooks = array();
+			} else if (!isset($CONFIG->hooks[$hook]) && !empty($hook)) {
+				$CONFIG->hooks[$hook] = array();
+			}
+			
+			if (!empty($hook) && is_callable($function)) {
+				$priority = (int) $priority;
+				if ($priority < 0) $priority = 0;
+				while (isset($CONFIG->hooks[$hook][$priority])) {
+					$priority++;
+				}
+				$CONFIG->hooks[$hook][$priority] = $function;
+				ksort($CONFIG->hooks[$hook]);
+				return true;
+			} else {
+				return false;
+			}
+			
+		}
+		
+	/**
+	 * Triggers a plugin hook, with various parameters as an array. For example, if you're 
+	 *
+	 * @param string $hook The name of the hook to trigger
+	 * @param string $entity_type The name of the entity type to trigger it for (or "all", or "none")
+	 * @param array $params Any parameters. It's good practice to name the keys, i.e. by using array('name' => 'value', 'name2' => 'value2')
+	 * @return mixed|null The cumulative return value for the plugin hook functions
+	 */
+		function trigger_plugin_hook($hook, $entity_type, $params = null) {
+			global $CONFIG;
+			
+			$returnvalue = null;
+			
+			if (!empty($CONFIG->hooks[$hook][$entity_type]) && is_array($CONFIG->hooks[$hook][$entity_type])) {
+				foreach($CONFIG->hooks[$hook][$entity_type] as $hookfunction) {
+					$temp_return_value = $hookfunction($hook, $entity_type, $returnvalue, $params);
+					if (!is_null($temp_return_value)) $returnvalue = $temp_return_value;
+				}
+			}
+			if (!empty($CONFIG->hooks['all'][$entity_type]) && is_array($CONFIG->hooks['all'][$entity_type])) {
+				foreach($CONFIG->hooks['all'][$entity_type] as $hookfunction) {
+					$temp_return_value = $hookfunction('all', $entity_type, $returnvalue, $params);
+					if (!is_null($temp_return_value)) $returnvalue = $temp_return_value;
+				}
+			}
+			return $returnvalue;
 		}
 		
 	/**
