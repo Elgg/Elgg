@@ -80,7 +80,7 @@
 		 * 
 		 * @return stdClass Object containing the serialised result.
 		 */
-		public function toStdClass()
+		public function export()
 		{
 			global $ERRORS, $CONFIG, $PAM_HANDLER_MSG;
 			
@@ -781,7 +781,7 @@
 			return $API_OUTPUT_FUNCTIONS[$format]($result->toStdClass());
 			
 		// We got here, so no output format was found. Output an error
-		$result = print_r($result->toStdClass(), true);	
+		$result = print_r($result->export(), true);	
 			
 		return <<< END
 <html>
