@@ -25,6 +25,11 @@
 			throw new InstallationException("Elgg could not load its main library.");
 		}
 		
+		if (!@include_once(dirname(__FILE__) . "/lib/export.php")) {		// Export library
+			echo "Error in installation: could not load the Export library.";
+			exit;
+		}
+		
 	/**
 	 * Establish handlers
 	 */
