@@ -16,7 +16,7 @@
 	 * This class describes metadata that can be attached to ElggEntities.
 	 * @author Marcus Povey <marcus@dushka.co.uk>
 	 */
-	class ElggMetadata
+	class ElggMetadata implements Exportable
 	{
 		/**
 		 * This contains the site's main properties (id, etc)
@@ -105,6 +105,13 @@
 		function delete() 
 		{ 
 			return delete_metadata($this->id); 
+		}
+		
+		public function export()
+		{
+			$tmp = new stdClass;
+			$tmp->attributes = $this->attributes;
+			return $tmp;
 		}
 	}
 	
@@ -299,6 +306,21 @@
 		
 		return get_data("SELECT m.*, n.string as name, v.string as value from {$CONFIG->dbprefix}metadata m JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id JOIN {$CONFIG->dbprefix}metastrings n on m.name_id = n.id where m.entity_guid=$entity_guid and m.name_id='$meta_name' and (m.access_id in {$access} or (m.access_id = 0 and m.owner_guid = {$_SESSION['id']}))", "row_to_elggmetadata");
 	}
+	
+	/**
+	 * Return all the metadata for a given GUID.
+	 * 
+	 * @param int $entity_guid
+	 */
+	function get_metadata_for_entity($entity_guid)
+	{
+		global $CONFIG;
+	
+		$entity_guid = (int)$entity_guid;
+		$access = get_access_list();
+		
+		return get_data("SELECT m.*, n.string as name, v.string as value from {$CONFIG->dbprefix}metadata m JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id JOIN {$CONFIG->dbprefix}metastrings n on m.name_id = n.id where m.entity_guid=$entity_guid and (m.access_id in {$access} or (m.access_id = 0 and m.owner_guid = {$_SESSION['id']}))", "row_to_elggmetadata");
+	}
 
 	/**
 	 * Return a list of entities based on the given search criteria.
@@ -359,5 +381,34 @@
 		
 		return delete_data("DELETE from {$CONFIG->dbprefix}metadata where entity_guid=$entity_guid and access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']})");
 	}
+	
+	/**
+	 * Handler called by trigger_plugin_hook on the "export" event.
+	 */
+	function export_metadata_plugin_hook($hook, $entity_type, $returnvalue, $params)
+	{
+		// Sanity check values
+		if ((!is_array($params)) && (!isset($params['guid'])))
+			throw new InvalidParameterException("GUID has not been specified during export, this should never happen.");
+			
+		if (!is_array($returnvalue))
+			throw new InvalidParameterException("Entity serialisation function passed a non-array returnvalue parameter");
+			
+		$guid = (int)$params['guid'];
+		
+		// Get the metadata for the entity
+		$metadata = get_metadata_for_entity($guid);
+		
+		if ($metadata)
+		{
+			foreach ($metadata as $m)
+				$returnvalue[] = $m;
+		} 
+
+		return $returnvalue;
+	}
+	
+	/** Register the hook, ensuring entities are serialised first */
+	register_plugin_hook("export", "all", "export_metadata_plugin_hook", 2);
 	
 ?>

@@ -16,7 +16,7 @@
 	 * An annotation is similar to metadata each entity can contain more than one of each annotation.
 	 * @author Marcus Povey <marcus@dushka.co.uk>
 	 */
-	class ElggAnnotation
+	class ElggAnnotation implements Exportable
 	{
 		/**
 		 * This contains the site's main properties (id, etc)
@@ -105,6 +105,12 @@
 			return delete_annotation($this->id); 
 		}
 		
+		public function export()
+		{
+			$tmp = new stdClass;
+			$tmp->attributes = $this->attributes;
+			return $tmp;
+		}
 	}
 	
 	/**
@@ -442,4 +448,45 @@
 		return delete_data();
 	}
 	
+	/**
+	 * Handler called by trigger_plugin_hook on the "export" event.
+	 */
+	function export_annotations_plugin_hook($hook, $entity_type, $returnvalue, $params)
+	{
+		global $CONFIG;
+		
+		// Sanity check values
+		if ((!is_array($params)) && (!isset($params['guid'])))
+			throw new InvalidParameterException("GUID has not been specified during export, this should never happen.");
+			
+		if (!is_array($returnvalue))
+			throw new InvalidParameterException("Entity serialisation function passed a non-array returnvalue parameter");
+			
+		$guid = (int)$params['guid'];
+		$access = get_access_list();
+		
+		$where = array();
+		
+		if ($guid != 0)
+			$where[] = "a.entity_guid=$guid";
+			
+		$query = "SELECT a.*, n.string as name, v.string as value from {$CONFIG->dbprefix}annotations a JOIN {$CONFIG->dbprefix}entities e on a.entity_guid = e.guid JOIN {$CONFIG->dbprefix}metastrings v on a.value_id=v.id JOIN {$CONFIG->dbprefix}metastrings n on a.name_id = n.id where ";
+		foreach ($where as $w)
+			$query .= " $w and ";
+		$query .= " (a.access_id in {$access} or (a.access_id = 0 and a.owner_guid = {$_SESSION['id']}))"; // Add access controls
+		$query .= " order by a.time_created"; // Add order and limit
+		error_log($query);
+		$annotations = get_data($query, "row_to_elggannotation");
+		
+		if ($annotations)
+		{
+			foreach ($annotations as $a)
+				$returnvalue[] = $a;
+		} 
+
+		return $returnvalue;
+	}
+	
+	/** Register the hook, ensuring entities are serialised first */
+	register_plugin_hook("export", "all", "export_annotations_plugin_hook", 2);
 ?>

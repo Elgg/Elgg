@@ -19,7 +19,7 @@
 		
 		
 	// Testing ///////
-	if ($_SESSION['id']==-1) $_SESSION['id'] = 1;
+	if ($_SESSION['id']==-1) $_SESSION['id'] = 2;
 	
 	
 	
@@ -43,7 +43,7 @@
 		
 		
 		// Testing ///////
-	if ($_SESSION['id']==-1) $_SESSION['id'] = 1;
+	if ($_SESSION['id']==-1) $_SESSION['id'] = 2;
 	
 		// Create / load a site
 /*		$site = get_site(1);
@@ -96,7 +96,7 @@ error_log("GETTIGN SITE ".$_SESSION['id']. " " . print_r($site, true));
 		// get site metadata
 		error_log("SITE Metadata : " . print_r($site->getMetadata("Metaname"), true));
 */
-/*
+$CONFIG->debug = true;
 // get site annotations
 $site = get_site_by_url("http://localhost/");
 error_log("GETTIGN SITE ".$_SESSION['id']. " " . print_r($site, true));		
@@ -108,7 +108,7 @@ error_log("GETTIGN SITE ".$_SESSION['id']. " " . print_r($site, true));
 			$site->name = "Test title";
 			$site->description = "Test description";
 			$site->url = "http://localhost/";
-			$site->owner_guid = 1;
+			$site->owner_guid = 2;
 			$site->access_guid = 0;
 			
 			error_log("LOADED NEW SITE: Saving" . print_r($site,true));
@@ -127,8 +127,10 @@ error_log("GETTIGN SITE ".$_SESSION['id']. " " . print_r($site, true));
 		
 		// add meta data
 		$site->setMetadata("Metaname", "Value");
+		
+		print_r(get_metadata(9));
 
-
+/*
 
 		// change site metadata
 		$site->setMetadata("Metaname", "Value2");
@@ -144,8 +146,8 @@ error_log("GETTIGN SITE ".$_SESSION['id']. " " . print_r($site, true));
 		// get site annotations
 		error_log("SITE Annotations : " . print_r($site->getAnnotations("Test"), true));
 		
-		*/
-	
+		
+	*/
 
 
 

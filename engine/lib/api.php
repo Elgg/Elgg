@@ -17,7 +17,7 @@
 	 * @class GenericResult Result superclass.
 	 * @author Marcus Povey <marcus@dushka.co.uk>
 	 */
-	abstract class GenericResult 
+	abstract class GenericResult implements Exportable
 	{	
 		/** 
 		 * The status of the result.

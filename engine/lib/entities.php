@@ -16,7 +16,7 @@
 	 * This class holds methods for accessing the main entities table.
 	 * @author Marcus Povey <marcus@dushka.co.uk>
 	 */
-	abstract class ElggEntity
+	abstract class ElggEntity implements Exportable
 	{
 		/** 
 		 * The main attributes of an entity.

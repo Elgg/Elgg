@@ -11,6 +11,17 @@
 	 */
 
 	/**
+	 * Define an interface for all exportable objects.
+	 */
+	interface Exportable
+	{
+		/**
+		 * This must take the contents of the object and return it as a stdClass.
+		 */
+	    public function export();
+	}
+
+	/**
 	 * Export a GUID.
 	 * 
 	 * This function exports a GUID and all information related to it in an XML format.
