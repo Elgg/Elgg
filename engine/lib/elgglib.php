@@ -161,13 +161,16 @@
 	 * to receive. 
 	 *
 	 * @param ElggEntity $entity The entity to display
+	 * @param string $viewtype Optionally, the type of view that we're using (most commonly 'default')
+	 * @param boolean $debug If set to true, elgg_view will bypass any specified alternative template handler; by default, it will hand off to this if requested (see set_template_handler)
+	 * @param boolean $debug If set to true, the viewer will complain if it can't find a view
 	 * @return string HTML (etc) to display
 	 */
-		function elgg_view_entity(ElggEntity $entity) {
+		function elgg_view_entity(ElggEntity $entity, $viewtype = "", $bypass = true, $debug = false) {
 			
 			$view = $entity->view;
 			if (is_string($view)) {
-				return elgg_view($view,array('entity' => $entity));
+				return elgg_view($view,array('entity' => $entity), $viewtype, $bypass, $debug);
 			}
 			
 			$classes = array(
@@ -192,7 +195,7 @@
 			
 			$subtype = $entity->getSubtype();
 			
-			return elgg_view("{$entity_type}/{$subtype}",array('entity' => $entity));
+			return elgg_view("{$entity_type}/{$subtype}",array('entity' => $entity), $viewtype, $bypass, $debug);
 			
 		}
 		
