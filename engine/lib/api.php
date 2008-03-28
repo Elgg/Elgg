@@ -17,7 +17,7 @@
 	 * @class GenericResult Result superclass.
 	 * @author Marcus Povey <marcus@dushka.co.uk>
 	 */
-	abstract class GenericResult
+	abstract class GenericResult 
 	{	
 		/** 
 		 * The status of the result.
@@ -778,7 +778,7 @@
 			(array_key_exists($format, $API_OUTPUT_FUNCTIONS)) &&
 			(is_callable($API_OUTPUT_FUNCTIONS[$format]))
 		)
-			return $API_OUTPUT_FUNCTIONS[$format]($result->toStdClass());
+			return $API_OUTPUT_FUNCTIONS[$format]($result->export());
 			
 		// We got here, so no output format was found. Output an error
 		$result = print_r($result->export(), true);	
