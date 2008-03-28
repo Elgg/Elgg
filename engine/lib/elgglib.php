@@ -659,12 +659,11 @@
 	 * @param string $hook The name of the hook to trigger
 	 * @param string $entity_type The name of the entity type to trigger it for (or "all", or "none")
 	 * @param array $params Any parameters. It's good practice to name the keys, i.e. by using array('name' => 'value', 'name2' => 'value2')
+	 * @param mixed $returnvalue An initial return value
 	 * @return mixed|null The cumulative return value for the plugin hook functions
 	 */
-		function trigger_plugin_hook($hook, $entity_type, $params = null) {
+		function trigger_plugin_hook($hook, $entity_type, $params = null, $returnvalue = null) {
 			global $CONFIG;
-			
-			$returnvalue = null;
 			
 			if (!empty($CONFIG->hooks[$hook][$entity_type]) && is_array($CONFIG->hooks[$hook][$entity_type])) {
 				foreach($CONFIG->hooks[$hook][$entity_type] as $hookfunction) {
