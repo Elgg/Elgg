@@ -682,16 +682,18 @@
 				$CONFIG->hooks = array();
 			} else if (!isset($CONFIG->hooks[$hook]) && !empty($hook)) {
 				$CONFIG->hooks[$hook] = array();
+			} else if (!isset($CONFIG->hooks[$hook][$entity_type]) && !empty($entity_type)) {
+				$CONFIG->hooks[$hook][$entity_type] = array();
 			}
 			
-			if (!empty($hook) && is_callable($function)) {
+			if (!empty($hook) && !empty($entity_type) && is_callable($function)) {
 				$priority = (int) $priority;
 				if ($priority < 0) $priority = 0;
-				while (isset($CONFIG->hooks[$hook][$priority])) {
+				while (isset($CONFIG->hooks[$hook][$entity_type][$priority])) {
 					$priority++;
 				}
-				$CONFIG->hooks[$hook][$priority] = $function;
-				ksort($CONFIG->hooks[$hook]);
+				$CONFIG->hooks[$hook][$entity_type][$priority] = $function;
+				ksort($CONFIG->hooks[$hook][$entity_type]);
 				return true;
 			} else {
 				return false;
