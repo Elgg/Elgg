@@ -615,6 +615,13 @@
 	 * 
 	 * "all" is a valid value for both $hook and $entity_type. "none" is a valid value for $entity_type.
 	 *
+	 * The export_user function would then be defined as:
+	 * 
+	 * 		function export_user($hook, $entity_type, $returnvalue, $params);
+	 * 
+	 * Where $returnvalue is the return value returned by the last function returned by the hook, and
+	 * $params is an array containing a set of parameters (or nothing).
+	 * 
 	 * @param string $hook The name of the hook
 	 * @param string $entity_type The name of the type of entity (eg "user", "object" etc)
 	 * @param string $function The name of a valid function to be run
@@ -648,6 +655,7 @@
 	/**
 	 * Triggers a plugin hook, with various parameters as an array. For example, if you're 
 	 *
+	 * @see register_plugin_hook
 	 * @param string $hook The name of the hook to trigger
 	 * @param string $entity_type The name of the entity type to trigger it for (or "all", or "none")
 	 * @param array $params Any parameters. It's good practice to name the keys, i.e. by using array('name' => 'value', 'name2' => 'value2')
