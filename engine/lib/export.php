@@ -46,7 +46,7 @@
 		$to_be_serialised = trigger_plugin_hook("export", "all", array("guid" => $guid), $to_be_serialised);
 		
 		// Sanity check
-		if (!is_array($to_be_serialised)) throw new ExportException("There was a problem during the serialisation of GUID:$guid");
+		if ((!is_array($to_be_serialised)) || (count($to_be_serialised)==0)) throw new ExportException("No such entity GUID:$guid");
 		
 		// Now serialise the result to XML
 		$wrapper = new stdClass;
