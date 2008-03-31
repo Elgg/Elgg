@@ -109,6 +109,7 @@
 		{
 			$tmp = new stdClass;
 			$tmp->attributes = $this->attributes;
+			$tmp->attributes['owner_uuid'] = guid_to_uuid($this->owner_guid);
 			return $tmp;
 		}
 	}
