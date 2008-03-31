@@ -306,6 +306,7 @@
 		{ 
 			$tmp = new stdClass; 
 			$tmp->attributes = $this->attributes; 
+			$tmp->attributes['uuid'] = guid_to_uuid($this->getGUID());
 			return $tmp; 
 		}
 	}
