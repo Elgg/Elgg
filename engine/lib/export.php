@@ -12,6 +12,7 @@
 
 	/**
 	 * Define an interface for all exportable objects.
+	 * @author Marcus Povey
 	 */
 	interface Exportable
 	{
@@ -21,6 +22,22 @@
 	    public function export();
 	}
 
+	/**
+	 * Define an interface for all importable objects.
+	 * @author Marcus Povey
+	 */
+	interface Importable
+	{
+		/**
+		 * Accepts an array of data to import, this data is parsed from the XML produced by export.
+		 * The function should return the constructed object data, or NULL.
+		 *
+		 * @param array $data
+		 * @throws ImportException if there was a critical error importing data.
+		 */
+		public function import(array $data);
+	}
+	
 	/**
 	 * Export a GUID.
 	 * 
@@ -64,50 +81,65 @@
 		$wrapper->data = $to_be_serialised;
 	
 		return serialise_object_to_xml($wrapper, "elggexport");
-		
-
-		/*
-		  	XML will look something like this:
-
-
-			<elgg>
-				<elgguser uuid="skdfjslklkjsldkfsdfjs:556">
-					<guid>556</guid>
-					<name>Marcus Povey</name>
-
-					...
-				
-				</elgguser>
-				<annotation>
-					<name>Foo</name>
-					<value>baaaa</value>
-				</annotation>
-				<annotation>
-					<name>Monkey</name>
-					<value>bibble</value>
-				</annotation>
-
-				...
-
-				<metadata>
-					<name>Foo</name>
-					<value>baaaa</value>
-				</metadata>
-
-				...
-
-				<my_plugin>
-
-					...
-
-				</my_plugin>
-
-			</elgg> 
-		 
-		 */
-		
 	}
 	
+
+	/**
+	 * XML 2 Array function.
+	 * Taken from http://www.bytemycode.com/snippets/snippet/445/
+	 * @license UNKNOWN - Please contact if you are the original author of this code.
+	 * @author UNKNOWN
+	 */
+	function __xml2array($xml) 
+	{
+        $xmlary = array();
+               
+        $reels = '/<(\w+)\s*([^\/>]*)\s*(?:\/>|>(.*)<\/\s*\\1\s*>)/s';
+        $reattrs = '/(\w+)=(?:"|\')([^"\']*)(:?"|\')/';
+
+        preg_match_all($reels, $xml, $elements);
+
+        foreach ($elements[1] as $ie => $xx) {
+	        $xmlary[$ie]["name"] = $elements[1][$ie];
+	       
+	        if ($attributes = trim($elements[2][$ie])) {
+	                preg_match_all($reattrs, $attributes, $att);
+	                foreach ($att[1] as $ia => $xx)
+	                        $xmlary[$ie]["attributes"][$att[1][$ia]] = $att[2][$ia];
+	        }
+	
+	        $cdend = strpos($elements[3][$ie], "<");
+	        if ($cdend > 0) {
+	                $xmlary[$ie]["text"] = substr($elements[3][$ie], 0, $cdend - 1);
+	        }
+	
+	        if (preg_match($reels, $elements[3][$ie]))
+	                $xmlary[$ie]["elements"] = __xml2array($elements[3][$ie]);
+	        else if ($elements[3][$ie]) {
+	                $xmlary[$ie]["text"] = $elements[3][$ie];
+	        }
+        }
+
+        return $xmlary;
+	}
+	
+	/**
+	 * This function processes an element, passing elements to the plugin stack to see if someone will
+	 * process it.
+	 * If nobody processes the top level element, the sub level elements are processed.
+	 */
+	function __process_element(array $dom)
+	{
+		foreach ($dom as $element)
+		{
+			// See if anyone handles this element, return true if it is.
+			$handled = trigger_plugin_hook("import", "all", array("name" => $element['name'], "element" => $element), $to_be_serialised);
+		
+			// If not, then see if any of its sub elements are handled
+			if ((!$handled) && (isset($element['elements']))) __process_element($element['elements']);
+		}
+	}
+
 	/**
 	 * Import an XML serialisation of an object.
 	 * This will make a best attempt at importing a given xml doc.
@@ -117,12 +149,9 @@
 	 */
 	function import($xml)
 	{
-		// import via object ? 
-
-		// import via tag : so you pass a tag "<foo>" and all its contents out and something answers by handling it.
-		// THis is recursive but bredth first.
-
+		$dom = __xml2array($xml);
 		
+		__process_element($dom);
 	}
 
 	/**
@@ -216,4 +245,5 @@
 	
 	class ExportException extends Exception {}
 	class ImportException extends Exception {}
+	
 ?>
