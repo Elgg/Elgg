@@ -34,6 +34,7 @@
 		 *
 		 * @param array $data
 		 * @param int $version Support different internal serialisation formats, should be "1"
+		 * @return mixed The newly imported object.
 		 * @throws ImportException if there was a critical error importing data.
 		 */
 		public function import(array $data, $version = 1);
