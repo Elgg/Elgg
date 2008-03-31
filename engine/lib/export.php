@@ -33,9 +33,10 @@
 		 * The function should return the constructed object data, or NULL.
 		 *
 		 * @param array $data
+		 * @param int $version Support different internal serialisation formats, should be "1"
 		 * @throws ImportException if there was a critical error importing data.
 		 */
-		public function import(array $data);
+		public function import(array $data, $version = 1);
 	}
 	
 	/**
@@ -122,6 +123,9 @@
 
         return $xmlary;
 	}
+
+	$IMPORTED_DATA = array();
+	$IMPORTED_OBJECT_COUNTER = 0;
 	
 	/**
 	 * This function processes an element, passing elements to the plugin stack to see if someone will
@@ -130,28 +134,52 @@
 	 */
 	function __process_element(array $dom)
 	{
+		global $IMPORTED_DATA, $IMPORTED_OBJECT_COUNTER;
+		
 		foreach ($dom as $element)
 		{
 			// See if anyone handles this element, return true if it is.
 			$handled = trigger_plugin_hook("import", "all", array("name" => $element['name'], "element" => $element), $to_be_serialised);
 		
 			// If not, then see if any of its sub elements are handled
-			if ((!$handled) && (isset($element['elements']))) __process_element($element['elements']);
+			if (!$handled) 
+			{
+				if (isset($element['elements'])) 
+					__process_element($element['elements']);
+			}
+			else
+			{
+				$IMPORTED_OBJECT_COUNTER ++; // Increment validation counter
+				$IMPORTED_DATA[] = $handled; // Return the constructed object
+			}
 		}
 	}
 
+
+	
 	/**
 	 * Import an XML serialisation of an object.
 	 * This will make a best attempt at importing a given xml doc.
 	 *
 	 * @param string $xml
-	 * @return int The new GUID of the object.
+	 * @return array An array of imported objects (these have already been saved).
+	 * @throws Exception if there was a problem importing the data.
 	 */
 	function import($xml)
 	{
+		global $IMPORTED_DATA, $IMPORTED_OBJECT_COUNTER;
+		
+		$IMPORTED_DATA = array();
+		$IMPORTED_OBJECT_COUNTER = 0;
+		
 		$dom = __xml2array($xml);
 		
 		__process_element($dom);
+		
+		if ($IMPORTED_OBJECT_COUNTER!= count($IMPORTED_DATA))
+			throw new ImportException("Not all elements were imported.");
+		
+		return $IMPORTED_DATA;
 	}
 
 	/**
@@ -164,6 +192,24 @@
 		global $CONFIG;
 		
 		return "UUID:".md5($CONFIG->wwwroot)  . ":$guid";
+	}
+	
+	/**
+	 * Test to see if a given uuid is for this domain, returning true if so.
+	 * @param $uuid
+	 * @return bool
+	 */
+	function is_uuid_this_domain($uuid)
+	{
+		global $CONFIG;
+		
+		$domain = md5($CONFIG->wwwroot);
+		$tmp = explode(":",$uuid);
+		
+		if (strcmp($tmp[1], $domain) == 0)
+			return true;
+			
+		return false;
 	}
 	
 	/**
