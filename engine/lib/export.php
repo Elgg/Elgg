@@ -220,10 +220,11 @@
 		$uuid = sanitise_string($uuid);
 		
 		$entities = get_entities_from_metadata("import_uuid", $uuid);
-		if ((!$entities) || (count($entities)!=1))
-			throw new InvalidParameterException("Unexpected number of entities tagged with $uuid, previous import failed?");
-			
-		return $entities[0];
+		
+		if ($entities)
+			return $entities[0];
+		
+		return false;
 	}
 	
 	/**
