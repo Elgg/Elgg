@@ -22,20 +22,20 @@
 
             global $CONFIG;
 	        if ($username = get_input("username")) {
-	            $user = user_from_username($username);
-	            return $user->id;
+	            $user = get_user_by_username($username);
+	            return $user;
 	        }
 	        if ($owner = get_input("owner_id")) {
-	            return (int) $owner;
+	            return get_user($owner);
 	        }
             if (!empty($CONFIG->page_owner_handlers) && is_array($CONFIG->page_owner_handlers)) {
                 foreach($CONFIG->page_owner_handlers as $handler) {
-                    if ($id = $handler()) {
-                        return $id;
+                    if ($user = $handler()) {
+                        return $user;
                     }
                 }
             }
-            return -1;
+            return false;
             
         }
         
