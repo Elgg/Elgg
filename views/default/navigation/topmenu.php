@@ -16,7 +16,7 @@
 ?>
 
 <?php
-     if($_SESSION['id'] != -1){
+     if (isloggedin()) {
 ?>
 <div id="topmenu">
     <ul>

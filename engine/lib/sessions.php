@@ -126,9 +126,11 @@
                         $_SESSION['code'] = $_COOKIE['elggperm'];
 	                } else {
 	                    $_SESSION['id'] = -1;
+	                    $_SESSION['guid'] = -1;
 	                }
 	            } else {
 	                $_SESSION['id'] = -1;
+	                $_SESSION['guid'] = -1;
 	            }
 	        } else {
 	            if (!empty($_SESSION['code'])) {
@@ -138,6 +140,7 @@
 	                } else {
 	                }
 	            } else {
+	            	$_SESSION['guid'] = -1;
 	                $_SESSION['id'] = -1;
 	            }
 	        }

@@ -46,6 +46,13 @@
 	
 			'account' => "Account",
 	
+		/**
+		 * Welcome
+		 */
+	
+			'welcome' => "Welcome %s",
+			'welcome_message' => "Welcome to this Elgg installation.",
+	
 	);
 	
 	add_translation("en",$english);

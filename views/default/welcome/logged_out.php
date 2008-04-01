@@ -1,7 +1,7 @@
 <?php
 
-    /**
-	 * Elgg sample welcome page
+	/**
+	 * Elgg sample welcome page (logged out)
 	 * 
 	 * @package Elgg
 	 * @subpackage Core
@@ -10,13 +10,14 @@
 	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.org/
 	 */
-	 
-	$user = $vars['name'];
-	 
-	if (isloggedin()) {
-		echo elgg_view("welcome/logged_in");		
-	} else {
-	 	echo elgg_view("welcome/logged_out");
-	}
-	 
+
 ?>
+
+	<p>
+		<?php echo elgg_echo("welcome_message"); ?>
+	</p>
+	<?php
+
+		echo elgg_view("login");
+	
+	?>
