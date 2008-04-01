@@ -15,7 +15,7 @@
     /**
      * Gets the page owner for the current page.
      * @uses $CONFIG
-     * @return id The ID of the current page owner (-1 if none).
+     * @return ElggUser|false The current page owner (false if none).
      */
 
         function page_owner() {
