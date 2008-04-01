@@ -81,14 +81,23 @@
 		function load_translations($event, $object_type, $object) {
 			
 			global $CONFIG;
-			if ($handle = opendir($CONFIG->path . "languages/")) {
-					while ($language = readdir($handle)) {
-						if (!in_array($language,array('.','..','.svn','CVS')) && !is_dir($CONFIG->path . "/languages/" . $language)) {
-							include($CONFIG->path . "languages/" . $language);
-						}
+			register_translations($CONFIG->path . "languages/");
+			
+		}
+
+	/**
+	 * When given a full path, finds translation files and loads them
+	 *
+	 * @param string $path Full path
+	 */
+		function register_translations($path) {
+			if ($handle = opendir($path)) {
+				while ($language = readdir($handle)) {
+					if (!in_array($language,array('.','..','.svn','CVS')) && !is_dir($path . $language)) {
+						@include($path . $language);
 					}
 				}
-			
+			}
 		}
 		
 		register_event_handler("init","system","load_translations");
