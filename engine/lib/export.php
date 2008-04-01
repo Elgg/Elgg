@@ -75,8 +75,6 @@
 		$wrapper->header->date = date("r");
 		$wrapper->header->timestamp = time();
 		$wrapper->header->domain = $CONFIG->wwwroot;
-		$wrapper->header->guid = $guid;
-		$wrapper->header->uuid = guid_to_uuid($guid);
 		$wrapper->header->exported_by = guid_to_uuid($_SESSION['id']);
 		
 		// Construct data
@@ -155,8 +153,6 @@
 			}
 		}
 	}
-
-
 	
 	/**
 	 * Import an XML serialisation of an object.
@@ -172,6 +168,7 @@
 		
 		$IMPORTED_DATA = array();
 		$IMPORTED_OBJECT_COUNTER = 0;
+		$IMPORTED_GUID_MAP = array();
 		
 		$dom = __xml2array($xml);
 		
@@ -211,6 +208,36 @@
 			return true;
 			
 		return false;
+	}
+
+	/**
+	 * This function attempts to retrieve a previously imported entity via its UUID.
+	 * 
+	 * @param $uuid 
+	 */
+	function get_entity_from_uuid($uuid)
+	{
+		$uuid = sanitise_string($uuid);
+		
+		$entities = get_entities_from_metadata("import_uuid", $uuid);
+		if ((!$entities) || (count($entities)!=1))
+			throw new InvalidParameterException("Unexpected number of entities tagged with $uuid, previous import failed?");
+			
+		return $entities[0];
+	}
+	
+	/**
+	 * Tag a previously created guid with the uuid it was imported on.
+	 *
+	 * @param int $guid
+	 * @param string $uuid
+	 */
+	function add_uuid_to_guid($guid, $uuid)
+	{
+		$guid = (int)$guid;
+		$uuid = sanitise_string($uuid);
+		
+		return create_metadata($guid, "import_uuid", $uuid);
 	}
 	
 	/**
