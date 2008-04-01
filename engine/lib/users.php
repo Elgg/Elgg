@@ -457,7 +457,15 @@
 		return false;
 	}
 	
-
+	/**
+	 * Registers a user, returning false if the username already exists
+	 *
+	 * @param string $username The username of the new user
+	 * @param string $password The password
+	 * @param string $name The user's display name
+	 * @param string $email Their email address
+	 * @return int|false The new user's GUID; false on failure
+	 */
 	function register_user(string $username, string $password, string $name, string $email) {
 		
 		// Load the configuration
