@@ -40,7 +40,7 @@
 			$this->attributes['guid'] = "";
 			$this->attributes['type'] = "";
 			$this->attributes['subtype'] = "";
-			$this->attributes['owner_guid'] = 0;
+			$this->attributes['owner_guid'] = $_SESSION['guid'];
 			$this->attributes['access_id'] = 0;
 			$this->attributes['time_created'] = "";
 			$this->attributes['time_updated'] = "";

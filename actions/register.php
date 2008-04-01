@@ -12,11 +12,11 @@
 	 */
 
 	// Get variables
-		$username = get_input($username);
-		$password = get_input($password);
-		$password2 = get_input($password2);
-		$email = get_input($email);
-		$name = get_input($name);
+		$username = get_input('username');
+		$password = get_input('password');
+		$password2 = get_input('password2');
+		$email = get_input('email');
+		$name = get_input('name');
 		
 	// For now, just try and register the user
 		if (register_user($username, $password, $name, $email)) {

@@ -466,7 +466,7 @@
 	 * @param string $email Their email address
 	 * @return int|false The new user's GUID; false on failure
 	 */
-	function register_user(string $username, string $password, string $name, string $email) {
+	function register_user($username, $password, $name, $email) {
 		
 		// Load the configuration
 			global $CONFIG;
@@ -475,8 +475,9 @@
 			if (empty($username)
 				|| empty($password)
 				|| empty($name)
-				|| empty($email))
-				return false;			
+				|| empty($email)) {
+					return false;
+				}	
 			
 		// Check to see if $username exists already
 			if ($user = get_user_by_username($username)) {
@@ -489,7 +490,10 @@
 			$user->password = md5($password);
 			$user->email = $email;
 			$user->name = $name;
-			return $user->save();
+			$user->save();
+			
+			return $user->getGUID();
+			
 		
 	}
 	

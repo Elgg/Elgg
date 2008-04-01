@@ -102,7 +102,7 @@
 	 * 
 	 * This function looks for:
 	 * 
-	 * 1. $_SESSION['id'] - if not present, we're logged out, and this is set to -1
+	 * 1. $_SESSION['id'] - if not present, we're logged out, and this is set to 0
 	 * 2. The cookie 'elggperm' - if present, checks it for an authentication token, validates it, and potentially logs the user in 
 	 *
 	 * @uses $_SESSION
@@ -125,12 +125,12 @@
                         $_SESSION['guid'] = $_SESSION['id'];
                         $_SESSION['code'] = $_COOKIE['elggperm'];
 	                } else {
-	                    $_SESSION['id'] = -1;
-	                    $_SESSION['guid'] = -1;
+	                    $_SESSION['id'] = 0;
+	                    $_SESSION['guid'] = 0;
 	                }
 	            } else {
-	                $_SESSION['id'] = -1;
-	                $_SESSION['guid'] = -1;
+	                $_SESSION['id'] = 0;
+	                $_SESSION['guid'] = 0;
 	            }
 	        } else {
 	            if (!empty($_SESSION['code'])) {
@@ -140,8 +140,8 @@
 	                } else {
 	                }
 	            } else {
-	            	$_SESSION['guid'] = -1;
-	                $_SESSION['id'] = -1;
+	            	$_SESSION['guid'] = 0;
+	                $_SESSION['id'] = 0;
 	            }
 	        }
 	        if ($_SESSION['id'] > 0) {
