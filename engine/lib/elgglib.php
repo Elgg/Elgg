@@ -355,7 +355,7 @@
 	 */
 		function make_register_object($register_name, $register_value, $children_array = array()) {
 			
-			if (empty($register_name) || empty($subregister_name) || empty($register_array))
+			if (empty($register_name) || empty($register_value))
 				return false;
 			
 			$register = new stdClass;
