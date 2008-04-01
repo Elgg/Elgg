@@ -16,14 +16,9 @@
 	 * This class describes metadata that can be attached to ElggEntities.
 	 * @author Marcus Povey <marcus@dushka.co.uk>
 	 */
-	class ElggMetadata implements Exportable
+	class ElggMetadata extends ElggExtender
 	{
-		/**
-		 * This contains the site's main properties (id, etc)
-		 * @var array
-		 */
-		private $attributes;
-		
+			
 		/**
 		 * Construct a new site object, optionally from a given id value or row.
 		 *
@@ -50,40 +45,11 @@
 		}
 		
 		function __get($name) {
-			if (isset($this->attributes[$name])) {
-				
-				// Sanitise value if necessary
-				if ($name=='value')
-				{
-					switch ($this->attributes['value_type'])
-					{
-						case 'integer' :  return (int)$this->attributes['value'];
-						case 'tag' :
-						case 'text' :
-						case 'file' : return sanitise_string($this->attributes['value']);
-							
-						default : throw new InstallationException("Type {$this->attributes['value_type']} is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.");
-					}
-				}
-				
-				return $this->attributes[$name];
-			}
-			return null;
+			return $this->get($name);
 		}
 		
 		function __set($name, $value) {
-			$this->attributes[$name] = $value;
-			return true;
-		}	
-		
-		/**
-		 * Return the owner of this metadata.
-		 *
-		 * @return mixed
-		 */
-		function getOwner() 
-		{ 
-			return get_user($this->owner_guid); 
+			return $this->set($name, $value);
 		}		
 		
 		function save()
@@ -107,13 +73,6 @@
 			return delete_metadata($this->id); 
 		}
 		
-		public function export()
-		{
-			$tmp = new stdClass;
-			$tmp->attributes = $this->attributes;
-			$tmp->attributes['owner_uuid'] = guid_to_uuid($this->owner_guid);
-			return $tmp;
-		}
 	}
 	
 	
@@ -394,22 +353,21 @@
 			
 		if (!is_array($returnvalue))
 			throw new InvalidParameterException("Entity serialisation function passed a non-array returnvalue parameter");
-			
+		
 		$guid = (int)$params['guid'];
+		$name = $params['name'];	
 		
-		// Get the metadata for the entity
-		$metadata = get_metadata_for_entity($guid);
-		
-		if ($metadata)
+		$result = get_metadata_for_entity($guid); 
+				
+		if ($result)
 		{
-			foreach ($metadata as $m)
-				$returnvalue[] = $m;
-		} 
-
+			foreach ($result as $r)
+				$returnvalue[] = $r;
+		}
+		
 		return $returnvalue;
 	}
 	
-	/** Register the hook, ensuring entities are serialised first */
+	/** Register the hook */
 	register_plugin_hook("export", "all", "export_metadata_plugin_hook", 2);
-	
 ?>
