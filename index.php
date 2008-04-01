@@ -17,10 +17,6 @@
 		require_once(dirname(__FILE__) . "/engine/start.php");
 		
 		
-		
-	// Testing ///////
-	if ($_SESSION['id']==-1) $_SESSION['id'] = 2;
-	
 	
 	
 	/**
@@ -34,120 +30,7 @@
         echo page_draw(null, elgg_view("login"));
 	}
 		
-		
-		
-		$obj = new stdClass;
-		$obj->id = 3;
-		
-			
-		
-		
-		// Testing ///////
-	if ($_SESSION['id']==-1) $_SESSION['id'] = 2;
-	
-		// Create / load a site
-/*		$site = get_site(1);
-error_log("GETTIGN SITE ".$_SESSION['id']. " " . print_r($site, true));		
 
-		if (empty($site))
-		{
-			$site = new ElggSite();
-			
-			$site->title = "Test title";
-			$site->description = "Test description";
-			$site->url = "http://dushka/~icewing/Workingdirectory/elggnew/";
-			$site->owner_id = 1;
-			$site->access_id = 0;
-			
-			error_log("LOADED NEW SITE: Saving" . print_r($site,true));
-			
-			$site->save();
-		}
-		else
-		{
-			$site = new ElggSite($site);
-
-			$site->title = "Test title " . time();
-			$site->save();
-			
-			error_log("UPDATING SITE " . print_r($site, true));	
-		}
-		
-		
-
-		// annotate site
-		$site->annotate("Test","TestValue");
-		
-		// add meta data
-		$site->setMetadata("Metaname", "Value");
-
-
-
-		// change site metadata
-		$site->setMetadata("Metaname", "Value2");
-
-		error_log("SITE RETRIEVE : " . print_r(get_objects_from_metadatas(0, "", "", "Value2"), true));
-		
-
-		// get site annotations
-		error_log("SITE Annotations : " . print_r($site->getAnnotations("Test"), true));
-
-		
-		// get site metadata
-		error_log("SITE Metadata : " . print_r($site->getMetadata("Metaname"), true));
-*/
-$CONFIG->debug = true;
-// get site annotations
-$site = get_site_by_url("http://localhost/");
-error_log("GETTIGN SITE ".$_SESSION['id']. " " . print_r($site, true));		
-
-		if (empty($site))
-		{
-			$site = new ElggSite();
-			
-			$site->name = "Test title";
-			$site->description = "Test description";
-			$site->url = "http://localhost/";
-			$site->owner_guid = 2;
-			$site->access_guid = 0;
-			
-			error_log("LOADED NEW SITE: Saving" . print_r($site,true));
-			
-			$site->save();
-		}
-		else
-		{
-			$site = new ElggSite($site);
-
-			$site->name = "Test title " . time();
-			$site->save();
-			
-			error_log("UPDATING SITE " . print_r($site, true));	
-		}
-		
-		// add meta data
-		$site->setMetadata("Metaname", "Value");
-		
-		print_r(get_metadata(9));
-
-/*
-
-		// change site metadata
-		$site->setMetadata("Metaname", "Value2");
-		
-		error_log("SITE Metadata : " . print_r(get_entities_from_metadata("Metaname","","site"), true));
-		
-		$site->metatwo = "a different way";
-		
-		// annotate site
-		$site->annotate("Test","TestValue");
-		
-		
-		// get site annotations
-		error_log("SITE Annotations : " . print_r($site->getAnnotations("Test"), true));
-		
-		
-	*/
 
 
 
