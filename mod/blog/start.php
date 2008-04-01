@@ -1,6 +1,16 @@
 <?php
 
 	/**
+	 * Elgg blog plugin
+	 * 
+	 * @package ElggBlog
+	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+	 * @author Ben Werdmuller <ben@curverider.co.uk>
+	 * @copyright Curverider Ltd 2008
+	 * @link http://elgg.com/
+	 */
+
+	/**
 	 * Blog initialisation
 	 *
 	 * These parameters are required for the event API, but we won't use them:
@@ -18,11 +28,13 @@
 			// Load translations
 				register_translations($CONFIG->pluginspath . "blog/languages/");
 				
-			// Set up menu
-				add_menu(elgg_echo('blog'), $CONFIG->wwwroot . "mod/blog/",array(
-					menu_item(elgg_echo('blogread'),$CONFIG->wwwroot."mod/blog/"),
-					menu_item(elgg_echo('blogwrite'),$CONFIG->wwwroot."mod/blog/edit.php"),
-				));
+			// Set up menu for logged in users
+				if (isloggedin()) {
+					add_menu(elgg_echo('blog'), $CONFIG->wwwroot . "mod/blog/",array(
+						menu_item(elgg_echo('blogread'),$CONFIG->wwwroot."mod/blog/?username=" . $_SESSION['user']->username),
+						menu_item(elgg_echo('blogwrite'),$CONFIG->wwwroot."mod/blog/edit.php"),
+					));
+				}
 				
 		}
 

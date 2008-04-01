@@ -13,7 +13,7 @@
 
 ?>
 
-	<h2><?php echo sprintf(elgg_echo("welcome"),$vars['user']->username); ?></h2>
+	<h2><?php echo sprintf(elgg_echo("welcome"),$vars['user']->name); ?></h2>
 	<p>
 		<?php echo elgg_echo("welcome_message"); ?>
 	</p>
