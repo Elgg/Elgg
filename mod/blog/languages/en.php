@@ -7,10 +7,14 @@
 		 */
 	
 			'blog' => "Blog",
-			'userblog' => "%s's blog",
+			'blog:user' => "%s's blog",
 	
-			'blogread' => "Read blog",
-			'blogwrite' => "Write an entry",
+			'blog:read' => "Read blog",
+	
+			'blog:addpost' => "Write an entry",
+			'blog:editpost' => "Edit entry (%s)",
+	
+			'blog:text' => "Blog text",
 	
 	);
 					

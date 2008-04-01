@@ -31,8 +31,8 @@
 			// Set up menu for logged in users
 				if (isloggedin()) {
 					add_menu(elgg_echo('blog'), $CONFIG->wwwroot . "mod/blog/",array(
-						menu_item(elgg_echo('blogread'),$CONFIG->wwwroot."mod/blog/?username=" . $_SESSION['user']->username),
-						menu_item(elgg_echo('blogwrite'),$CONFIG->wwwroot."mod/blog/edit.php"),
+						menu_item(elgg_echo('blog:read'),$CONFIG->wwwroot."mod/blog/?username=" . $_SESSION['user']->username),
+						menu_item(elgg_echo('blog:addpost'),$CONFIG->wwwroot."mod/blog/add.php"),
 					));
 				}
 				

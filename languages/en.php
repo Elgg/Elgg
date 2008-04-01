@@ -54,6 +54,22 @@
 			'registerbad' => "Your registration was unsuccessful. The username may already exist, or your passwords might not match.",
 	
 		/**
+		 * Generic action words
+		 */
+	
+			'save' => "Save",
+			'update' => "Update",
+			'delete' => "Delete",
+			'Load' => "Load",
+	
+		/**
+		 * Generic data words
+		 */
+	
+			'title' => "Title",
+			'description' => "Description",
+	
+		/**
 		 * Welcome
 		 */
 	

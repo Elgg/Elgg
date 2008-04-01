@@ -1,7 +1,7 @@
 <?php
 
 	/**
-	 * Elgg blog index page
+	 * Elgg blog edit entry page
 	 * 
 	 * @package ElggBlog
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
@@ -13,10 +13,10 @@
 	// Load Elgg engine
 		require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 		
-	// Get the current page's owner
-		$page_owner = page_owner();
+	// Get the post, if it exists
+		if (get_object())
 		
 	// Display page
-		page_draw(sprintf(elgg_echo('blog:user'),$page_owner->name),$body);
+		page_draw(sprintf(elgg_echo('blog:editpost'),$post->title),$body);
 		
 ?>
