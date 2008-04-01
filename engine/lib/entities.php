@@ -792,7 +792,7 @@
 	}
 	
 	/** Register the import hook */
-	register_plugin_hook("import", "all", "import_user_plugin_hook", 0);
+	register_plugin_hook("import", "all", "import_entity_plugin_hook", 0);
 	
 	/** Register the hook, ensuring entities are serialised first */
 	register_plugin_hook("export", "all", "export_entity_plugin_hook", 0);
