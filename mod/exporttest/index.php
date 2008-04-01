@@ -13,6 +13,12 @@
 	{
 		echo elgg_view("exporttest/outputxml", array("xml" => export($guid)));
 	}
+	else if ($action=='import')
+	{
+		$body = import(get_input('xml'));
+		$body .= elgg_view("exporttest/main", array("owner_id" => $owner_id));
+		page_draw("Import results",$body);
+	}
 	else
 	{
 		$body = elgg_view("exporttest/main", array("owner_id" => $owner_id));
