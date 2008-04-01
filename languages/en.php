@@ -25,8 +25,11 @@
 		 * User details
 		 */
 
+			'name' => "Display name",
+			'email' => "Email address",
 			'username' => "Username",
 			'password' => "Password",
+			'passwordagain' => "Password (again for verification)",
 	
 		/**
 		 * Dashboard

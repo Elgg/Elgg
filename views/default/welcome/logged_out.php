@@ -18,6 +18,6 @@
 	</p>
 	<?php
 
-		echo elgg_view("login");
+		echo elgg_view("account/forms/login");
 	
 	?>
