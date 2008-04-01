@@ -457,25 +457,4 @@
 		return false;
 	}
 	
-	/**
-	 * Import a user.
-	 * This function checks the passed XML doc (as array) to see if it is a user, if so it constructs a new 
-	 * elgg user and returns "true" to inform the importer that it's been handled.
-	 */
-	function import_user_plugin_hook($hook, $entity_type, $returnvalue, $params)
-	{
-		$name = $params['name'];
-		$element = $params['element'];
-	
-		if ($name == 'ElggUser')
-		{
-			$tmp = new ElggUser();
-			$tmp->import($element);
-			
-			return $tmp;
-		}
-	}
-	
-	/** Register the import hook */
-	register_plugin_hook("import", "all", "import_user_plugin_hook", 0);
 ?>
