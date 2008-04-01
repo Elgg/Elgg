@@ -20,7 +20,7 @@
 			<label><?php echo elgg_echo('email'); ?><br /><input name="email" type="text" class="general-textarea" /></label><br />
 			<label><?php echo elgg_echo('username'); ?><br /><input name="username" type="text" class="general-textarea" /></label><br />
 			<label><?php echo elgg_echo('password'); ?><br /><input name="password" type="password" class="general-textarea" /></label><br />
-			<label><?php echo elgg_echo('passwordagain'); ?><br /><input name="password" type="password" class="general-textarea" /></label><br />
+			<label><?php echo elgg_echo('passwordagain'); ?><br /><input name="password2" type="password" class="general-textarea" /></label><br />
 			<input type="submit" name="submit" value="<?php echo elgg_echo('register'); ?>" /></p>
 	    </form>
 	</div>
