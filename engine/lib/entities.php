@@ -16,7 +16,7 @@
 	 * This class holds methods for accessing the main entities table.
 	 * @author Marcus Povey <marcus@dushka.co.uk>
 	 */
-	abstract class ElggEntity implements Exportable
+	abstract class ElggEntity implements Exportable, Importable
 	{
 		/** 
 		 * The main attributes of an entity.
@@ -309,6 +309,55 @@
 			$tmp->attributes['uuid'] = guid_to_uuid($this->getGUID());
 			$tmp->attributes['owner_uuid'] = guid_to_uuid($this->owner_guid);
 			return $tmp; 
+		}
+		
+		/**
+		 * Import data from an parsed xml data array.
+		 * 
+		 * @param array $data
+		 * @param int $version 
+		 */
+		public function import(array $data, $version = 1)
+		{
+			if ($version == 1)
+			{
+				$uuid = "";
+				
+				// Get attributes
+				foreach ($data['elements'][0]['elements'] as $attr)
+				{
+					$name = strtolower($attr['name']);
+					$text = $attr['text'];
+					
+					switch ($name)
+					{
+						case 'uuid' : $uuid = $text; break;
+						default : $this->attributes[$name] = $text;
+					}
+				}
+
+				// Check uuid as local domain
+				if (is_uuid_this_domain($uuid))
+					throw new ImportException("$uuid belongs to this domain!");
+
+				// See if this entity has already been imported, if so we don't need to create a new element
+				$entity = get_entity_from_uuid($uuid);
+				if ($entity)
+					$this->attributes['guid'] = $entity->guid;
+			
+				// save
+				if (!$this->save());
+					throw new ImportException("There was a problem saving $uuid");
+						
+				// Tag this GUID with the UUID if this is a new entity
+				if (!$entity)
+					add_uuid_to_guid($this->attributes['guid'], $uuid);
+
+				// return result
+				return $this;
+			}
+			else
+				throw new ImportException("Unsupported version ($version) passed to ElggEntity::import()");
 		}
 	}
 
