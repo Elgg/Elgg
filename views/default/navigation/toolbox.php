@@ -37,7 +37,7 @@
 					foreach($item->children as $subitem) {
 ?>
 		<li>
-			<a href="<?php echo $item->value ?>"><?php echo $item->name; ?></a> |
+			<a href="<?php echo $subitem->value ?>"><?php echo $subitem->name; ?></a> |
 		</li>
 <?php
 					}
