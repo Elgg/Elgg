@@ -1,7 +1,7 @@
 <?php
 
     /**
-	 * Elgg logout action page
+	 * Elgg logout action
 	 * 
 	 * @package Elgg
 	 * @subpackage Core

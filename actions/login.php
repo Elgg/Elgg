@@ -1,7 +1,7 @@
 <?php
 
     /**
-	 * Elgg login action page
+	 * Elgg login action
 	 * 
 	 * @package Elgg
 	 * @subpackage Core

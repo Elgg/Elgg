@@ -46,6 +46,10 @@
 	
 			'account' => "Account",
 	
+			'register' => "Register",
+			'registerok' => "You have successfully registered for %s.",
+			'registerbad' => "Your registration was unsuccessful. The username may already exist, or your passwords might not match.",
+	
 		/**
 		 * Welcome
 		 */

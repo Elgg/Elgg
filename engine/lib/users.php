@@ -457,4 +457,36 @@
 		return false;
 	}
 	
+
+	function register_user(string $username, string $password, string $name, string $email) {
+		
+		// Load the configuration
+			global $CONFIG;
+			
+		// A little sanity checking
+			if (empty($username)
+				|| empty($password)
+				|| empty($name)
+				|| empty($email))
+				return false;			
+			
+		// Check to see if $username exists already
+			if ($user = get_user_by_username($username)) {
+				return false;
+			}
+			
+		// Otherwise ...
+			$user = new ElggUser();
+			$user->username = $username;
+			$user->password = md5($password);
+			$user->email = $email;
+			$user->name = $name;
+			return $user->save();
+		
+	}
+	
+	//register actions *************************************************************
+   
+   		register_action("register",true);
+	
 ?>
