@@ -31,7 +31,7 @@
 		$task = $entity->getMetaData("task");
 print_r($task);
 print_r($entity);		
-echo "TSD : $task";
+echo "TSD : $task" . gettype($task);
 		// Render the item
 		return elgg_view("tasklist/item", array(
 			"owner_id" => $entity->owner_guid,
