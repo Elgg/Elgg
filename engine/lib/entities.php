@@ -113,7 +113,7 @@
 		public function getMetaData($name)
 		{
 			$md = get_metadata_byname($this->getGUID(), $name);
-			
+	print_r($md);		
 			if ($md)
 				return $md->value;
 				
