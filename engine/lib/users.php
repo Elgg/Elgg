@@ -489,7 +489,7 @@
 			$user->password = md5($password);
 			$user->email = $email;
 			$user->name = $name;
-			$register->access_id = 2;
+			$user->access_id = 2;
 			$user->save();
 			
 			return $user->getGUID();
