@@ -29,6 +29,7 @@
 		
 		// Task
 		$task = $entity->getMetaData("task");
+print_r($task);		
 echo "TSD : $task";
 		// Render the item
 		return elgg_view("tasklist/item", array(
