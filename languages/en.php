@@ -68,6 +68,7 @@
 	
 			'title' => "Title",
 			'description' => "Description",
+			'tags' => "Tags",
 	
 		/**
 		 * Welcome
