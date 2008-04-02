@@ -114,10 +114,10 @@
 		{
 			$md = get_metadata_byname($this->getGUID(), $name);
 
-			if ($md)
+		//	if ($md)
 				return $md->value;
 				
-			return null;
+		//	return null;
 		}
 		
 		/**
