@@ -29,7 +29,7 @@
 		
 		// Task
 		$task = $entity->getMetaData("task");
-
+echo "TSD : $task";
 		// Render the item
 		return elgg_view("tasklist/item", array(
 			"owner_id" => $entity->owner_guid,
