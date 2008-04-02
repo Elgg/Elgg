@@ -54,28 +54,11 @@
 		function page_owner_entity() {
 
             global $CONFIG;
-	        if ($username = get_input("username")) {
-	            if ($user = get_user_by_username($username)) {
-	            	return $user;
-	            } else {
-	            	return false;
-	            }
-	        }
-	        if ($owner = get_input("owner_id")) {
-	            if ($user = get_user($owner)) {
-	            	return $user;
-	            } else {
-	            	return false;
-	            }
-	        }
-            if (!empty($CONFIG->page_owner_entity_handlers) && is_array($CONFIG->page_owner_entity_handlers)) {
-                foreach($CONFIG->page_owner_entity_handlers as $handler) {
-                    if ($user = $handler()) {
-                        return $user;
-                    }
-                }
-            }
-            return false;
+	        $page_owner = page_owner();
+	        if ($page_owner > 0)
+	        	return get_user($page_owner);
+	        	
+			return false;
             
         }
         
@@ -95,25 +78,6 @@
             }
             if (is_callable($functionname)) {
                 $CONFIG->page_owner_handlers[] = $functionname;
-            }
-            
-        }
-        
-	/**
-     * Adds a page owner entity handler - a function that will
-     * return the page owner ElggUser if required
-     * (Such functions are required to return false if they don't know)
-     * @uses $CONFIG
-     * @param string $functionname The name of the function to call
-     */
-		function add_page_owner_entity_handler($functionname) {
-            
-            global $CONFIG;
-            if (empty($CONFIG->page_owner_entity_handlers)) {
-                $CONFIG->page_owner_entity_handlers = array();
-            }
-            if (is_callable($functionname)) {
-                $CONFIG->page_owner_entity_handlers[] = $functionname;
             }
             
         }
