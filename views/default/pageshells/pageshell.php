@@ -36,13 +36,14 @@
     <!-- display any system messages -->
     <?php echo elgg_view('messages/list', array('object' => $vars['sysmessages'])); ?>
     
-    <!-- toolbox -->
-    <div id="sidebar_toolbox">
-        <?php echo elgg_view("navigation/toolbox", $vars); ?><!-- include the my world toolbox -->
+    <!-- sidebar menu -->
+    <div id="sidebar_menu">
+        <?php echo elgg_view("navigation/sidebar_menu", $vars); ?>
+        <div id="sidebar-menu-bottom"></div><!-- this just displays rounded corners on the menu options, can be deleted safely -->
     </div>
     
     <!-- get the main body -->
-    <div id="mainContent_nosidebar">
+    <div id="mainContent">
         <?php echo $vars['body']; ?>
     </div>
 

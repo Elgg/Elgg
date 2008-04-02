@@ -13,7 +13,7 @@
 	 * 
 	 */
 ?>
-<div style="clear:both">
+<div style="clear:both"></div>
 </div><!-- close container div -->
 <div id="footer">
 <p><a href="http://elgg.com/">Elgg</a></p>
