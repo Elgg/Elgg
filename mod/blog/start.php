@@ -41,4 +41,8 @@
 	// Make sure the blog initialisation function is called on initialisation
 		register_event_handler('init','system','blog_init');
 		
+	// Register actions
+		global $CONFIG;
+		register_action("blog/add",false,$CONFIG->pluginspath . "blog/actions/add.php");
+		
 ?>
