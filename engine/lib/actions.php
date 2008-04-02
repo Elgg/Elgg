@@ -35,13 +35,16 @@
             
             if (isset($CONFIG->actions[$action])) {
                 if ($CONFIG->actions[$action]['public'] || $_SESSION['id'] != -1) {
-	                if (@include($CONFIG->path . $CONFIG->actions[$action]['file'])) {
+                	echo $CONFIG->actions[$action]['file']; var_export($CONFIG->actions); exit;
+	                if (@include($CONFIG->actions[$action]['file'])) {
 	                } else {
 	                    register_error(sprintf(elgg_echo('actionundefined'),$action));
 	                }
                 } else {
                     register_error(elgg_echo('actionloggedout'));
                 }
+            } else {
+            	register_error(sprintf(elgg_echo('actionundefined'),$action));
             }
             forward($CONFIG->url . $forwarder);
             
