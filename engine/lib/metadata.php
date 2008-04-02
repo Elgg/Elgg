@@ -270,7 +270,7 @@
 			return false;
 		
 		if (count($result) == 1)
-			return $result[0]->value;
+			return $result[0];
 			
 		return $result;
 	}
