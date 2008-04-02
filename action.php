@@ -16,7 +16,6 @@
 
     // Get actions
         $action = get_input("action");
-        system_message("Debug: " . $action);
         action($action);
     
 ?>
