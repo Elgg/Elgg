@@ -3,7 +3,7 @@
 	GUID : <input type="text" value="" name="guid" /> <input type="submit" name="export" value="export" />
 </form>
 
-<form>
+<form method="post">
 	<input type="hidden" name="owner_id" value="<?php echo $vars['owner_id']; ?>" />
 	<input type="hidden" name="action" value="import" />
 	IMPORT : 
