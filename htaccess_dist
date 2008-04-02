@@ -8,4 +8,5 @@ php_flag magic_quotes_gpc off
 RewriteEngine on
 
 RewriteRule ^action\/([A-Za-z\_\-\/]+)$ action.php?action=$1
+RewriteRule ^actions\/([A-Za-z\_\-\/]+)$ action.php?action=$1
 RewriteRule ^css\/css\.css$ css/css.php
