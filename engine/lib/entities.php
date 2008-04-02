@@ -532,7 +532,6 @@
 	{
 		if (!($row instanceof stdClass))
 			return $row;
-			
 		// See if there are any registered subtype handler classes for this type and subtype
 		$classname = get_subtype_class($row->type, $row->subtype);
 		if ($classname!="")
@@ -609,7 +608,8 @@
 			$query .= " $w and ";
 		$query .= " (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['guid']}))"; // Add access controls
 		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
-		return get_data($query, "entity_row_to_elggstar");
+		$dt = get_data($query, "entity_row_to_elggstar");
+		return $dt;
 	}
 	
 	/**

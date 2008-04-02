@@ -229,7 +229,7 @@
 		 * @param int $limit Number of results to return
 		 * @param int $offset Any indexing offset
 		 */
-		public function getObjects($subtype="", $limit = 10, $offset = 0) { get_user_objects($this->getGUID(), $subtype, $limit, $offset); }
+		public function getObjects($subtype="", $limit = 10, $offset = 0) { return get_user_objects($this->getGUID(), $subtype, $limit, $offset); }
 
 		/**
 		 * Get the collections associated with a user.
@@ -239,7 +239,7 @@
 		 * @param int $offset Any indexing offset
 		 * @return unknown
 		 */
-		public function getCollections($subtype="", $limit = 10, $offset = 0) { get_user_collections($this->getGUID(), $subtype, $limit, $offset); }
+		public function getCollections($subtype="", $limit = 10, $offset = 0) { return get_user_collections($this->getGUID(), $subtype, $limit, $offset); }
 		
 	}
 
@@ -395,7 +395,8 @@
 	 * @return false|array An array of ElggObjects or false, depending on success
 	 */
 	function get_user_objects($user_guid, $subtype = "", $limit = 10, $offset = 0) {
-		return get_entities('object',$subtype, $user_guid, "time_created desc", $limit, $offset);
+		$ntt = get_entities('object',$subtype, $user_guid, "time_created desc", $limit, $offset);
+		return $ntt;
 	}
 	
 	/**
