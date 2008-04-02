@@ -38,7 +38,7 @@
     
     <!-- sidebar menu -->
     <div id="sidebar_menu">
-        <?php echo elgg_view("navigation/sidebar_menu", $vars); ?>
+        <?php echo elgg_view("navigation/toolbox", $vars); ?>
         <div id="sidebar-menu-bottom"></div><!-- this just displays rounded corners on the menu options, can be deleted safely -->
     </div>
     
