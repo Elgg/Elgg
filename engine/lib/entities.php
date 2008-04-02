@@ -133,12 +133,12 @@
 			if (is_array($value))
 			{
 				foreach ($value as $v)
-					if (!create_metadata($this->getGUID(), $name, $v, $value_type, $this->getOwner(), true)) return false;
+					if (!create_metadata($this->getGUID(), $name, $v, $value_type, $this->getOwner(), $this->getAccessID(), true)) return false;
 					
 				return true;
 			}
 			else
-				return create_metadata($this->getGUID(), $name, $value, $value_type, $this->getOwner());
+				return create_metadata($this->getGUID(), $name, $value, $value_type, $this->getOwner(), $this->getAccessID());
 		}
 		
 		/**
@@ -236,6 +236,7 @@
 			return get_annotations_max($this->getGUID(), "","",$name);
 		}
 		
+		public function getAccessID() { return $this->get('access_id'); }
 		public function getGUID() { return $this->get('guid'); }
 		public function getOwner() { return $this->get('owner_guid'); }
 		public function getType() { return $this->get('type'); }
