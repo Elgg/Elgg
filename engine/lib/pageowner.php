@@ -22,12 +22,18 @@
 
             global $CONFIG;
 	        if ($username = get_input("username")) {
-	            $user = get_user_by_username($username);
-	            return $user->getGUID();
+	            if ($user = get_user_by_username($username)) {
+	            	return $user->getGUID();
+	            } else {
+	            	return 0;
+	            }
 	        }
 	        if ($owner = get_input("owner_id")) {
-	            $user = get_user($owner);
-	            return $user->getGUID();
+	            if ($user = get_user($owner)) {
+	            	return $user->getGUID();
+	            } else {
+	            	return 0;
+	            }
 	        }
             if (!empty($CONFIG->page_owner_handlers) && is_array($CONFIG->page_owner_handlers)) {
                 foreach($CONFIG->page_owner_handlers as $handler) {
@@ -36,7 +42,7 @@
                     }
                 }
             }
-            return false;
+            return 0;
             
         }
         
