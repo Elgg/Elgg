@@ -310,6 +310,7 @@
 			$tmp->attributes = $this->attributes; 
 			$tmp->attributes['uuid'] = guid_to_uuid($this->getGUID());
 			$tmp->attributes['owner_uuid'] = guid_to_uuid($this->owner_guid);
+			$tmp->attributes['subtype'] = get_subtype_from_id($tmp->attributes['subtype']);
 			return $tmp; 
 		}
 		
