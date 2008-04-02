@@ -15,7 +15,7 @@
     /**
      * Gets the page owner for the current page.
      * @uses $CONFIG
-     * @return ElggUser|false The current page owner (false if none).
+     * @return int|false The current page owner guid (false if none).
      */
 
         function page_owner() {
@@ -23,15 +23,16 @@
             global $CONFIG;
 	        if ($username = get_input("username")) {
 	            $user = get_user_by_username($username);
-	            return $user;
+	            return $user->getGUID();
 	        }
 	        if ($owner = get_input("owner_id")) {
-	            return get_user($owner);
+	            $user = get_user($owner);
+	            return $user->getGUID();
 	        }
             if (!empty($CONFIG->page_owner_handlers) && is_array($CONFIG->page_owner_handlers)) {
                 foreach($CONFIG->page_owner_handlers as $handler) {
-                    if ($user = $handler()) {
-                        return $user;
+                    if ($guid = $handler()) {
+                        return $guid;
                     }
                 }
             }
