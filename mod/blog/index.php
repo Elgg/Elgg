@@ -14,7 +14,7 @@
 		require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 		
 	// Get the current page's owner
-		$page_owner = page_owner();
+		$page_owner = page_owner_entity();
 		
 	// Display page
 		page_draw(sprintf(elgg_echo('blog:user'),$page_owner->name),$body);
