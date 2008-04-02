@@ -263,3 +263,18 @@ div#footer a:link, div#footer a:visited {
     padding:3px 50px;
     margin:20px 20px 10px 20px;
 }
+
+/*
+  Forms
+*/
+
+.input-text,
+.input-tags,
+.input-url,
+.input-textarea {
+	width: 600px;
+}
+
+.input-textarea {
+	height: 200px;
+}

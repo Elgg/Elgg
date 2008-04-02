@@ -14,4 +14,4 @@
     }
     
 ?>
-<input type="text" <?php echo $vars['js']; ?> name="<?php echo $vars['internalname']; ?>" value="<?php echo $tags; ?>" class="general-textarea"/> 
+<input type="text" <?php echo $vars['js']; ?> name="<?php echo $vars['internalname']; ?>" value="<?php echo $tags; ?>" class="input-tags"/> 
