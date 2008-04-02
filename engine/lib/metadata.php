@@ -331,7 +331,7 @@
 		foreach ($where as $w)
 			$query .= " $w and ";
 		$query .= " (e.access_id in {$access} or (e.access_id = 0 and e.owner_guid = {$_SESSION['id']}))"; // Add access controls
-		$query .= " order by $order_by limit $limit, $offset"; // Add order and limit
+		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
 
 		return get_data($query, "entity_row_to_elggstar");
 	}
