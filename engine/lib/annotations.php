@@ -218,7 +218,7 @@
 		
 		$entity_guid = (int)$entity_guid;
 		$entity_type = sanitise_string($entity_type);
-		$entity_subtype = get_subtype_id($entity_subtype);
+		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
 		$name = get_metastring_id($name);
 		$value = get_metastring_id($value);
 		$owner_guid = (int)$owner_guid;
@@ -339,7 +339,7 @@
 		$sum = sanitise_string($sum);
 		$entity_guid = (int)$entity_id;
 		$entity_type = sanitise_string($entity_type);
-		$entity_subtype = get_subtype_id($entity_subtype);
+		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
 		$name = get_metastring_id($name);
 		$access = get_access_list();
 		

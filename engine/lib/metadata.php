@@ -309,7 +309,7 @@
 		$meta_value = get_metastring_id($meta_value);
 			
 		$entity_type = sanitise_string($entity_type);
-		$entity_subtype = get_subtype_id($entity_subtype);
+		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
 		$limit = (int)$limit;
 		$offset = (int)$offset;
 		$order_by = sanitise_string($order_by);
