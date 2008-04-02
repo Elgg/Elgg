@@ -2,7 +2,6 @@
 	require_once("../../engine/start.php");
 	
 	global $CONFIG;
-	
 	$_SESSION['id'] = 2;
 	
 	// Get the user
