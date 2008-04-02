@@ -246,7 +246,7 @@
 			$where[] = "a.name_id='$name'";
 			
 		if ($value != "")
-			$where[] = "a.value='$value'";
+			$where[] = "a.value_id='$value'";
 		
 		$query = "SELECT a.*, n.string as name, v.string as value from {$CONFIG->dbprefix}annotations a JOIN {$CONFIG->dbprefix}entities e on a.entity_guid = e.guid JOIN {$CONFIG->dbprefix}metastrings v on a.value_id=v.id JOIN {$CONFIG->dbprefix}metastrings n on a.name_id = n.id where ";
 		foreach ($where as $w)
