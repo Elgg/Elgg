@@ -249,11 +249,13 @@
 		public function save()
 		{
 			if ($this->get('guid') > 0)
+			{
 				return update_entity(
 					$this->get('guid'),
 					$this->get('owner_guid'),
 					$this->get('access_id')
 				);
+			}
 			else
 			{ 
 				$this->attributes['guid'] = create_entity($this->attributes['type'], $this->attributes['subtype'], $this->attributes['owner_guid'], $this->attributes['access_id']); // Create a new entity (nb: using attribute array directly 'cos set function does something special!)
@@ -344,9 +346,12 @@
 				$entity = get_entity_from_uuid($uuid);
 				if ($entity)
 					$this->attributes['guid'] = $entity->guid;
-			
+				else
+					$this->attributes['guid'] = false;					
+
 				// save
-				if (!$this->save());
+				$result = $this->save(); 
+				if (!$result)
 					throw new ImportException("There was a problem saving $uuid");
 						
 				// Tag this GUID with the UUID if this is a new entity
@@ -439,6 +444,10 @@
 		$subtype = sanitise_string($subtype);
 		$class = sanitise_string($class);
 		
+		// Short circuit if no subtype is given
+		if ($subtype == "")
+			return 0;
+		
 		$id = get_subtype_id($type, $subtype);
 		
 		if (!$id)
@@ -483,7 +492,7 @@
 		global $CONFIG;
 	
 		$type = sanitise_string($type);
-		$subtype = add_subtype($subtype);
+		$subtype = add_subtype($type, $subtype);
 		$owner_guid = (int)$owner_guid; 
 		$access_id = (int)$access_id;
 		$time = time();
@@ -492,7 +501,7 @@
 
 		// Erased by Ben: sometimes we need unauthenticated users to create things! (eg users on registration)
 		// if ($owner_guid==0) throw new InvalidParameterException("owner_guid must not be 0");
-		
+	
 		return insert_data("INSERT into {$CONFIG->dbprefix}entities (type, subtype, owner_guid, access_id, time_created, time_updated) values ('$type',$subtype, $owner_guid, $access_id, $time, $time)");
 	}
 	

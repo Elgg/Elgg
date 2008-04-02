@@ -40,7 +40,6 @@ CREATE TABLE `prefix_entity_subtypes` (
 	class varchar(50) NOT NULL default '',
 	
 	PRIMARY KEY (`id`),
-	UNIQUE KEY (`class`),
 	UNIQUE KEY (`type`, `subtype`)
 ) ENGINE=MyISAM;
 
