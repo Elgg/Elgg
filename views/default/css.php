@@ -113,6 +113,13 @@ div#header h1 {
 	margin:10px 0 6px 0;
 }
 
+div#header h2 {
+	font-size:20px;
+	padding:20px 0 0 0;
+	margin:10px 0 6px 0;
+	color: #fff;
+}
+
 div#header h1 a{
 	color:#fff;
 	font-family:Helvetica, "Myriad Web", Arial, sans-serif;
