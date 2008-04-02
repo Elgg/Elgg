@@ -35,7 +35,6 @@
             
             if (isset($CONFIG->actions[$action])) {
                 if ($CONFIG->actions[$action]['public'] || $_SESSION['id'] != -1) {
-                	echo $CONFIG->actions[$action]['file']; var_export($CONFIG->actions); exit;
 	                if (@include($CONFIG->actions[$action]['file'])) {
 	                } else {
 	                    register_error(sprintf(elgg_echo('actionundefined'),$action));
