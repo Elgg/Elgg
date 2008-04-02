@@ -114,6 +114,7 @@
 		{
 			$md = get_metadata_byname($this->getGUID(), $name);
 echo $md->value;
+if ($md) echo "TRUE";
 			if ($md)
 				return $md->value;
 				
