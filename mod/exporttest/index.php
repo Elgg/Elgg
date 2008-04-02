@@ -4,6 +4,7 @@
 	global $CONFIG;
 	
 	$guid = get_input("guid");
+	$action = get_input("action");
 	$_SESSION['id'] = 2;
 	
 	// Get the user
