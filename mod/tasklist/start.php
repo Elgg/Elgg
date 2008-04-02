@@ -29,7 +29,7 @@
 		
 		// Task
 		$task = $entity->getMetaData("task");
-print_r($task);
+
 		// Render the item
 		return elgg_view("tasklist/item", array(
 			"owner_id" => $entity->owner_guid,
@@ -63,8 +63,7 @@ print_r($task);
 	function tasklist_draw_newtask_form($ownerid)
 	{
 		return elgg_view("tasklist/newtask", array(
-			"owner_id" => $ownerid,
-			"guid" => $entity->guid
+			"owner_id" => $ownerid
 		));
 	}
 	
