@@ -16,6 +16,12 @@
 	// Get the current page's owner
 		$page_owner = page_owner_entity();
 		
+	// Get any blog posts to display
+		$posts = $page_owner->getObjects('blog');
+		
+	// Display them
+		$body = elgg_view("blog/view",array('posts' => $posts));
+		
 	// Display page
 		page_draw(sprintf(elgg_echo('blog:user'),$page_owner->name),$body);
 		
