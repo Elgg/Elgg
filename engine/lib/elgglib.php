@@ -199,7 +199,7 @@
 
 			return elgg_view("{$entity_type}/{$subtype}",array(
 																'entity' => $entity,
-																'owner' => $owner,
+																'entity_owner' => $owner,
 																'full' => $full
 																), $viewtype, $bypass, $debug);
 			
