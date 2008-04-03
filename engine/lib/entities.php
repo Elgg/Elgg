@@ -16,7 +16,10 @@
 	 * This class holds methods for accessing the main entities table.
 	 * @author Marcus Povey <marcus@dushka.co.uk>
 	 */
-	abstract class ElggEntity implements Exportable, Importable
+	abstract class ElggEntity implements 
+		Exportable, // Allow export of data
+		Importable, // Allow import of data
+		Iterator	// Override foreach behaviour
 	{
 		/** 
 		 * The main attributes of an entity.
@@ -299,6 +302,8 @@
 			return delete_entity($this->get('guid'));
 		}
 
+		// EXPORTABLE INTERFACE ////////////////////////////////////////////////////////////
+		
 		/**
 		 * Export this class into a stdClass containing all necessary fields.
 		 * Override if you wish to return more information than can be found in $this->attributes (shouldn't happen) 
@@ -314,6 +319,8 @@
 			$tmp->attributes['subtype'] = get_subtype_from_id($tmp->attributes['subtype']);
 			return $tmp; 
 		}
+		
+		// IMPORTABLE INTERFACE ////////////////////////////////////////////////////////////
 		
 		/**
 		 * Import data from an parsed xml data array.
@@ -366,6 +373,40 @@
 			else
 				throw new ImportException("Unsupported version ($version) passed to ElggEntity::import()");
 		}
+
+		// ITERATOR INTERFACE //////////////////////////////////////////////////////////////
+		/*
+		 * This lets an entity's attributes be displayed using foreach as a normal array.
+		 * Example: http://www.sitepoint.com/print/php5-standard-library
+		 */
+		
+		private $valid = FALSE; 
+		
+   		function rewind() 
+   		{ 
+   			$this->valid = (FALSE !== reset($this->attributes));  
+   		}
+   
+   		function current() 
+   		{ 
+   			return current($this->attributes); 
+   		}
+		
+   		function key() 
+   		{ 
+   			return key($this->attributes); 
+   		}
+		
+   		function next() 
+   		{
+   			$this->valid = (FALSE !== next($this->attributes));  
+   		}
+   		
+   		function valid() 
+   		{ 
+   			return $this->valid;  
+   		}
+	
 	}
 
 	/**
