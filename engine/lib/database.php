@@ -150,7 +150,7 @@
             }
             
             if (mysql_errno($dblink))
-				throw new DatabaseException(mysql_error($dblink));
+				throw new DatabaseException(mysql_error($dblink) . " QUERY: " . $query);
 				
        		if (empty($resultarray)) {
                 return false;
@@ -185,7 +185,7 @@
             }
             
             if (mysql_errno($dblink))
-				throw new DatabaseException(mysql_error($dblink));
+				throw new DatabaseException(mysql_error($dblink) . " QUERY: " . $query);
             
             return false;
         }
@@ -209,7 +209,7 @@
                 return mysql_insert_id($dblink);
                 
 			if (mysql_errno($dblink))
-				throw new DatabaseException(mysql_error($dblink));
+				throw new DatabaseException(mysql_error($dblink) . " QUERY: " . $query);
                 
 			return false;
         }
@@ -233,7 +233,7 @@
             	return mysql_affected_rows();
             	
            	if (mysql_errno($dblink))
-				throw new DatabaseException(mysql_error($dblink));
+				throw new DatabaseException(mysql_error($dblink) . " QUERY: " . $query);
          
          	return false;   
             
@@ -258,7 +258,7 @@
                 return mysql_affected_rows();
             
             if (mysql_errno($dblink))
-				throw new DatabaseException(mysql_error($dblink));
+				throw new DatabaseException(mysql_error($dblink) . " QUERY: " . $query);
                 
 			return false;      
         }
