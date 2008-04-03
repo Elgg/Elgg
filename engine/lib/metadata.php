@@ -66,7 +66,7 @@
 		}
 		
 		/**
-		 * Delete a given site.
+		 * Delete a given metadata.
 		 */
 		function delete() 
 		{ 
