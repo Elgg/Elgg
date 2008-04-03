@@ -23,7 +23,8 @@
 		} else if (empty($vars['sitename'])) {
 			$title = $vars['title'];
 		} else {
-			$title = $vars['sitename'] . ": " . $vars['title'];
+			//$title = $vars['sitename'] . ": " . $vars['title'];
+			$title = $vars['title'];
 		}
 		
 ?>
