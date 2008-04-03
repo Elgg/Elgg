@@ -16,6 +16,8 @@
 	
 			'blog:text' => "Blog text",
 	
+			'blog:strapline' => "%s",
+	
 		/**
 		 * Status messages
 		 */

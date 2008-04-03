@@ -18,6 +18,23 @@
 
 	<div class="blog-post">
 		<h3><?php echo $vars['entity']->title; ?></h3>
+		<p class="strapline">
+			<span style="float:right">
+			<?php
+
+				echo sprintf(elgg_echo("blog:strapline"),
+								date("F j",$vars['entity']->time_created)
+				);
+			
+			?>
+			</span>
+			<?php
+
+				$owner = get_entity($vars['entity']->getOwner());
+				echo $owner->name;
+			
+			?>
+		</p>
 		<p>
 			<?php
 

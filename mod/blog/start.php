@@ -25,7 +25,7 @@
 			// Load system configuration
 				global $CONFIG;
 				
-			// Load translations
+			// Load the language file
 				register_translations($CONFIG->pluginspath . "blog/languages/");
 				
 			// Set up menu for logged in users
@@ -35,6 +35,9 @@
 						menu_item(elgg_echo('blog:addpost'),$CONFIG->wwwroot."mod/blog/add.php"),
 					));
 				}
+				
+			// Extend system CSS with our own styles, which are defined in the blog/css view
+				extend_view('css','blog/css');
 				
 		}
 
