@@ -22,6 +22,13 @@
 
 }
 
+.blog-post a {
+
+	text-decoration: underline;
+	color: #777;
+
+}
+
 .blog-post h3 {
 
 	font-size: 200%;
@@ -29,10 +36,23 @@
 
 }
 
+.blog-post h3 a {
+
+	text-decoration: none;
+
+}
+
 .blog-post .strapline {
 
 	font-size: 130%;
 	margin-bottom: 20px;
+	color: #aaa;
+
+}
+
+.blog-post .strapline a {
+
+	text-decoration: none;
 	color: #aaa;
 
 }

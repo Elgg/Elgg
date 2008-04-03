@@ -17,7 +17,7 @@
 ?>
 
 	<div class="blog-post">
-		<h3><?php echo $vars['entity']->title; ?></h3>
+		<h3><a href="<?php echo $vars['url']; ?>mod/blog/read.php?blogpost=<?php echo $vars['entity']->getGUID(); ?>"><?php echo $vars['entity']->title; ?></a></h3>
 		<p class="strapline">
 			<span style="float:right">
 			<?php
@@ -28,12 +28,7 @@
 			
 			?>
 			</span>
-			<?php
-
-				$owner = get_entity($vars['entity']->getOwner());
-				echo $owner->name;
-			
-			?>
+			<a href="<?php echo $vars['url']; ?>mod/blog/?username=<?php echo $vars['entity_owner']->username; ?>"><?php echo $vars['entity_owner']->name; ?></a>
 		</p>
 		<p>
 			<?php
@@ -52,7 +47,43 @@
 	</div>
 
 <?php
-			
+
+		// If we've been asked to display the full view
+			if (isset($vars['full']) && $vars['full'] == true) {
+				
+?>
+
+		<div class="blog-comments">
+		
+<?php
+
+		// Display comments if any
+			echo elgg_view('object/blog-comments',array('comments' => $vars['comments']));
+
+?>
+			<form action="<?php echo $vars['url']; ?>action/blog/comment/add" method="post">
+				<h3>
+					<?php echo elgg_echo("blog:comment:add"); ?>
+				</h3>
+				<p>
+					<label><?php echo elgg_echo("blog:comment:text"); ?>
+						<?php
+
+							echo elgg_view("input/longtext",array('internalname' => 'comment'));
+						
+						?>
+					</label>
+				</p>
+				<p>
+					<input type="submit" value="<?php echo elgg_echo("save"); ?>" />
+				</p>
+			</form>
+		
+		</div>
+
+<?php
+				
+			}
 		}
 
 ?>

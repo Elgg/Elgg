@@ -8,6 +8,7 @@
 	
 			'blog' => "Blog",
 			'blog:user' => "%s's blog",
+			'blog:posttitle' => "%s's blog: %s",
 	
 			'blog:read' => "Read blog",
 	
@@ -17,6 +18,9 @@
 			'blog:text' => "Blog text",
 	
 			'blog:strapline' => "%s",
+	
+			'blog:comment:add' => "Add a comment",
+			'blog:comment:text' => "Comment text",
 	
 		/**
 		 * Status messages
