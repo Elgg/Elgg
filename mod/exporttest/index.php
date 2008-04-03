@@ -16,7 +16,7 @@
 	}
 	else if ($action=='import')
 	{
-		$body = import(get_input('xml'));
+		$body = print_r(import(get_input('xml')), true);
 		$body .= elgg_view("exporttest/main", array("owner_id" => $owner_id));
 		page_draw("Import results",$body);
 	}
