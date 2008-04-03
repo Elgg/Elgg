@@ -240,7 +240,7 @@
 		public function getGUID() { return $this->get('guid'); }
 		public function getOwner() { return $this->get('owner_guid'); }
 		public function getType() { return $this->get('type'); }
-		public function getSubtype() { return get_subtype_from_id($this->get('owner_guid')); }
+		public function getSubtype() { return get_subtype_from_id($this->get('subtype')); }
 		public function getTimeCreated() { return $this->get('time_created'); }
 		public function getTimeUpdated() { return $this->get('time_updated'); }
 		
