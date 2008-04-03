@@ -22,17 +22,23 @@
 			'blog:comment:add' => "Add a comment",
 			'blog:comment:text' => "Comment text",
 	
+			'comments' => "Comments",
+	
 		/**
 		 * Status messages
 		 */
 	
 			'blog:posted' => "Your blog post was successfully posted.",
+			'comment:success' => "Your comment was successfully added.",
 	
 		/**
 		 * Error messages
 		 */
 	
 			'blog:blank' => "Sorry; you need to fill in both the title and body before you can make a post.",
+			'blog:notfound' => "Sorry; we could not find the specified blog post.",
+			
+			'comment:failure' => "An unexpected error occurred when adding your comment. Please try again.",
 	
 	);
 					

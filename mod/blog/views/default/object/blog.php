@@ -61,7 +61,7 @@
 			echo elgg_view('object/blog-comments',array('comments' => $vars['comments']));
 
 ?>
-			<form action="<?php echo $vars['url']; ?>action/blog/comment/add" method="post">
+			<form action="<?php echo $vars['url']; ?>action/blog/comments/add" method="post">
 				<h3>
 					<?php echo elgg_echo("blog:comment:add"); ?>
 				</h3>
@@ -75,6 +75,7 @@
 					</label>
 				</p>
 				<p>
+					<input type="hidden" name="blogpost_guid" value="<?php echo $vars['entity']->getGUID(); ?>" /> 
 					<input type="submit" value="<?php echo elgg_echo("save"); ?>" />
 				</p>
 			</form>

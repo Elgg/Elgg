@@ -47,5 +47,6 @@
 	// Register actions
 		global $CONFIG;
 		register_action("blog/add",false,$CONFIG->pluginspath . "blog/actions/add.php");
+		register_action("blog/comments/add",false,$CONFIG->pluginspath . "blog/actions/comments/add.php");
 		
 ?>
