@@ -643,11 +643,11 @@
 			$where[] = "subtype=$subtype";
 		if ($owner_guid != "")
 			$where[] = "owner_guid='$owner_guid'";
-		
+
 		$query = "SELECT * from {$CONFIG->dbprefix}entities where ";
 		foreach ($where as $w)
 			$query .= " $w and ";
-		$query .= " (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['guid']}))"; // Add access controls
+		$query .= " (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))"; // Add access controls
 		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
 
 		$dt = get_data($query, "entity_row_to_elggstar");
