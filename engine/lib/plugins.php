@@ -32,7 +32,7 @@
 								autoregister_views("",$CONFIG->pluginspath . $mod . "/views/default",$CONFIG->pluginspath . $mod . "/views/");
 							}
 							if (is_dir($CONFIG->pluginspath . $mod . "/languages")) {
-								register_translations($CONFIG->pluginspath . $mod . "/languages");
+								register_translations($CONFIG->pluginspath . $mod . "/languages/");
 							}
 						}
 					}
