@@ -115,18 +115,16 @@
 	        session_start();
 	        
 	        if (empty($_SESSION['guid'])) {
-	            if (isset($_COOKIE['elggperm'])) {
-	                                
+	            if (isset($_COOKIE['elggperm'])) {            
 	                $code = $_COOKIE['elggperm'];
 	                $code = md5($code);
+	                $_SESSION['guid'] = 0;
+	                $_SESSION['id'] = 0;
 	                if ($user = get_user_by_code($code)) {
                     	$_SESSION['user'] = $user;
                         $_SESSION['id'] = $user->getGUID();
                         $_SESSION['guid'] = $_SESSION['id'];
                         $_SESSION['code'] = $_COOKIE['elggperm'];
-	                } else {
-	                    $_SESSION['id'] = 0;
-	                    $_SESSION['guid'] = 0;
 	                }
 	            } else {
 	                $_SESSION['id'] = 0;
