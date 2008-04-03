@@ -194,7 +194,6 @@
 			if (!isset($entity_class)) return false;
 			
 			$subtype = $entity->getSubtype();
-			
 			return elgg_view("{$entity_type}/{$subtype}",array('entity' => $entity), $viewtype, $bypass, $debug);
 			
 		}
