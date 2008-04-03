@@ -125,7 +125,7 @@
      * @return array An array of database result objects
      */
     
-        function get_data($query, $callback = "", $debug = false) {
+        function get_data($query, $callback = "") {
             
             global $CONFIG, $dbcalls;
             
@@ -155,7 +155,6 @@
        		if (empty($resultarray)) {
                 return false;
             }
-            if ($debug) var_export($resultarray);
             return $resultarray;
         }
         
