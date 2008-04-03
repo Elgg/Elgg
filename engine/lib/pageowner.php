@@ -21,6 +21,12 @@
         function page_owner() {
 
             global $CONFIG;
+            
+            $setpageowner = set_page_owner();
+            if ($setpageowner !== false) {
+            	return $setpageowner;
+            }
+            
 	        if ($username = get_input("username")) {
 	            if ($user = get_user_by_username($username)) {
 	            	return $user->getGUID();
@@ -80,6 +86,26 @@
                 $CONFIG->page_owner_handlers[] = $functionname;
             }
             
+        }
+        
+	/**
+	 * Allows a page to manually set a page owner
+	 *
+	 * @param int $entitytoset The GUID of the page owner
+	 * @return int|false Either the page owner we've just set, or false if unset
+	 */
+        function set_page_owner($entitytoset = -1) {
+        	
+        	static $entity;
+        	
+        	if (!isset($entity)) $entity = false;
+        	
+        	if ($entitytoset > -1) {
+        		$entity = $entitytoset;
+        	}
+        	
+        	return $entity;
+        	
         }
         
 ?>
