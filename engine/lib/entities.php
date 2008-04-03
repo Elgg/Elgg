@@ -657,62 +657,6 @@
 	}
 	
 	/**
-	 * Return entities matching a given query joining against a relationship.
-	 * 
-	 * @param string $relationship The relationship eg "friends_of"
-	 * @param int $relationship_guid The guid of the entity to use query
-	 * @param bool $inverse_relationship Reverse the normal function of the query to instead say "give me all entities for whome $relationship_guid is a $relationship of"
-	 * @param string $type 
-	 * @param string $subtype
-	 * @param int $owner_guid
-	 * @param string $order_by
-	 * @param int $limit
-	 * @param int $offset
-	 */
-	function get_entities_from_relationship($relationship, $relationship_guid, $inverse_relationship = false, $type = "", $subtype = "", $owner_guid = 0, $order_by = "time_created desc", $limit = 10, $offset = 0)
-	{
-		global $CONFIG;
-		
-		$relationship = sanitise_string($relationship);
-		$relationship_guid = (int)$relationship_guid;
-		$inverse_relationship = (bool)$inverse_relationship;
-		$type = sanitise_string($type);
-		$subtype = get_subtype_id($type, $subtype);
-		$owner_guid = (int)$owner_guid;
-		$order_by = sanitise_string($order_by);
-		$limit = (int)$limit;
-		$offset = (int)$offset;
-		
-		$access = get_access_list();
-		
-		$where = array();
-		
-		if ($relationship!="")
-			$where[] = "r.relationship='$relationship'";
-		if ($relationship_guid)
-			$where[] = ($inverse_relationship ? "r.guid_one='$relationship'" : "r.guid_two='$relationship'");
-		if ($type != "")
-			$where[] = "e.type='$type'";
-		if ($subtype)
-			$where[] = "e.subtype=$subtype";
-		if ($owner_guid != "")
-			$where[] = "e.owner_guid='$owner_guid'";
-		
-		// Select what we're joining based on the options
-		$joinon = "r.guid_two=e.guid";
-		if (!$inverse_relationship)
-			$joinon = "r.guid_one=e.guid";	
-			
-		$query = "SELECT * from {$CONFIG->dbprefix}entities e JOIN {$CONFIG->dbprefix}entity_relationships r on $joinon where ";
-		foreach ($where as $w)
-			$query .= " $w and ";
-		$query .= " (e.access_id in {$access} or (e.access_id = 0 and e.owner_guid = {$_SESSION['id']}))"; // Add access controls
-		$query .= " order by $order_by limit $limit, $offset"; // Add order and limit
-		
-		return get_data($query, "entity_row_to_elggstar");
-	}
-	
-	/**
 	 * Delete a given entity.
 	 * 
 	 * @param int $guid
@@ -729,71 +673,6 @@
 		
 		return delete_data("DELETE from {$CONFIG->dbprefix}entities where where guid=$guid and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))"); 
 		
-	}
-
-	/**
-	 * Define an arbitrary relationship between two entities.
-	 * This relationship could be a friendship, a group membership or a site membership.
-	 * 
-	 * This function lets you make the statement "$guid_one has $relationship with $guid_two".
-	 * 
-	 * TODO: Access controls? Are they necessary - I don't think so since we are defining 
-	 * relationships between and anyone can do that. The objects should patch some access 
-	 * controls over the top tho.
-	 * 
-	 * @param int $guid_one
-	 * @param string $relationship 
-	 * @param int $guid_two
-	 */
-	function add_entity_relationship($guid_one, $relationship, $guid_two)
-	{
-		global $CONFIG;
-		
-		$guid_one = (int)$guid_one;
-		$relationship = sanitise_string($relationship);
-		$guid_two = (int)$guid_two;
-			
-		return insert_data("INSERT into {$CONFIG->dbprefix}entity_relationships (guid_one, relationship, guid_two) values ($guid_one, 'relationship', $guid_two)");
-	}
-	
-	/**
-	 * Determine whether or not a relationship between two entities exists
-	 *
-	 * @param int $guid_one The GUID of the entity "owning" the relationship
-	 * @param string $relationship The type of relationship
-	 * @param int $guid_two The GUID of the entity the relationship is with
-	 * @return true|false
-	 */
-	function check_entity_relationship($guid_one, $relationship, $guid_two)
-	{
-		global $CONFIG;
-		
-		$guid_one = (int)$guid_one;
-		$relationship = sanitise_string($relationship);
-		$guid_two = (int)$guid_two;
-			
-		if ($row = get_data_row("select guid_one from {$CONFIG->dbprefix}entity_relationships where guid_one=$guid_one and relationship='$relationship' and guid_two=$guid_two limit 1")) {
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Remove an arbitrary relationship between two entities.
-	 * 
-	 * @param int $guid_one
-	 * @param string $relationship 
-	 * @param int $guid_two
-	 */
-	function remove_entity_relationship($guid_one, $relationship, $guid_two)
-	{
-		global $CONFIG;
-		
-		$guid_one = (int)$guid_one;
-		$relationship = sanitise_string($relationship);
-		$guid_two = (int)$guid_two;
-			
-		return delete_data("DELETE from {$CONFIG->dbprefix}entity_relationships where guid_one=$guid_one and relationship='$relationship' and guid_two=$guid_two");
 	}
 
 	/**
