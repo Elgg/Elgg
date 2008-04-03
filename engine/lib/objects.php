@@ -51,7 +51,8 @@
 				// Is $guid is a DB row - either a entity row, or a object table row.
 				if ($guid instanceof stdClass) {					
 					// Load the rest
-					$this->load($guid->guid);
+					if (!$this->load($guid->guid))
+						throw new IOException("Failed to load new ElggObject from GUID:$guid->guid"); 
 				}
 				
 				// Is $guid is an ElggObject? Use a copy constructor
@@ -100,7 +101,7 @@
 			$objarray = (array) $row;
 			foreach($objarray as $key => $value) 
 				$this->attributes[$key] = $value;
-			
+		
 			return true;
 		}
 		

@@ -54,7 +54,8 @@
 				// Is $guid is a DB row - either a entity row, or a user table row.
 				if ($guid instanceof stdClass) {					
 					// Load the rest
-					$this->load($guid->guid);
+					if (!$this->load($guid->guid))
+						throw new IOException("Failed to load new ElggUser from GUID:$guid->guid"); 
 				}
 				
 				// See if this is a username

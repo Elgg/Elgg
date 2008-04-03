@@ -51,7 +51,8 @@
 				// Is $guid is a DB row - either a entity row, or a site table row.
 				if ($guid instanceof stdClass) {			
 					// Load the rest
-					$this->load($guid->guid);
+					if (!$this->load($guid->guid))
+						throw new IOException("Failed to load new ElggSite from GUID:$guid->guid"); 
 				}
 				
 				// Is $guid is an ElggSite? Use a copy constructor

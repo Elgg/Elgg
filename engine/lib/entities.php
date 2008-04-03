@@ -273,8 +273,8 @@
 		 */
 		protected function load($guid)
 		{		
-			$row = get_entity_as_row($guid);
-			
+			$row = get_entity_as_row($guid); 
+		
 			if ($row)
 			{
 				// Create the array if necessary - all subclasses should test before creating
@@ -608,7 +608,9 @@
 			$query .= " $w and ";
 		$query .= " (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['guid']}))"; // Add access controls
 		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
+
 		$dt = get_data($query, "entity_row_to_elggstar");
+		
 		return $dt;
 	}
 	
