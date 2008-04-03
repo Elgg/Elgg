@@ -342,6 +342,7 @@
 					
 					switch ($name)
 					{
+						case 'owner_guid' : $this->attributes['owner_guid'] = $_SESSION['id']; break;
 						case 'uuid' : $uuid = $text; break;
 						default : $this->attributes[$name] = $text;
 					}
@@ -353,10 +354,10 @@
 
 				// See if this entity has already been imported, if so we don't need to create a new element
 				$entity = get_entity_from_uuid($uuid);
-				if ($entity)
+				if ($entity) 
 					$this->attributes['guid'] = $entity->guid;
-				else
-					$this->attributes['guid'] = false;					
+				else 
+					$this->attributes['guid'] = false;
 
 				// save
 				$result = $this->save(); 

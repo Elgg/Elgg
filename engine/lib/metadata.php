@@ -305,8 +305,8 @@
 	{
 		global $CONFIG;
 		
-		$meta_name = get_metastring_id($meta_name);
-		$meta_value = get_metastring_id($meta_value);
+		$meta_n = get_metastring_id($meta_name);
+		$meta_v = get_metastring_id($meta_value);
 			
 		$entity_type = sanitise_string($entity_type);
 		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
@@ -323,9 +323,9 @@
 		if ($entity_subtype)
 			$where[] = "e.subtype=$entity_subtype";
 		if ($meta_name!="")
-			$where[] = "m.name_id='$meta_name'";
+			$where[] = "m.name_id='$meta_n'";
 		if ($meta_value!="")
-			$where[] = "m.value_id='$meta_value'";
+			$where[] = "m.value_id='$meta_v'";
 		
 		$query = "SELECT * from {$CONFIG->dbprefix}entities e JOIN {$CONFIG->dbprefix}metadata m on e.guid = m.entity_guid where";
 		foreach ($where as $w)

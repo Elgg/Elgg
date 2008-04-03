@@ -75,6 +75,7 @@
 			$tmp = new stdClass;
 			$tmp->attributes = $this->attributes;
 			$tmp->attributes['owner_uuid'] = guid_to_uuid($this->owner_guid);
+			$tmp->attributes['entity_uuid'] = guid_to_uuid($this->entity_guid);
 			return $tmp;
 		}
 		
@@ -92,20 +93,30 @@
 					
 					switch ($name)
 					{
+						case 'id' : break;
 						case 'entity_uuid' : $entity_uuid = $text; break;
 						default : $this->attributes[$name] = $text;
 					}
-					
-					// See if this entity has already been imported, if so then we need to link to it
-					$entity = get_entity_from_uuid($entity_uuid);
-					if (!$entity)
-						throw new ImportException("Sorry $entity_uuid was not found. Could not import annotation.");
-					
-					// Set owner ID
-					$this->attributes['owner_guid'] = $entity->getGUID();
-					
-					return $this;
+
 				}
+				// See if this entity has already been imported, if so then we need to link to it
+				$entity = get_entity_from_uuid($entity_uuid);
+				if (!$entity)
+					throw new ImportException("Sorry $entity_uuid was not found. Could not import annotation.");
+				
+				// Set the item ID
+				$this->attributes['entity_guid'] = $entity->getGUID();
+				
+				// Set owner
+				$this->attributes[$name] = $entity->getOwner(); 
+				
+				// save
+				$result = $this->save(); 
+				if (!$result)
+					throw new ImportException("There was a problem saving the ElggExtender");
+				
+				return $this;
+				
 			}
 			else
 				throw new ImportException("Unsupported version ($version) passed to ElggAnnotation::import()");
