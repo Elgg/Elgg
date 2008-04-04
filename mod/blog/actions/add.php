@@ -23,6 +23,9 @@
 		$_SESSION['blogbody'] = $body;
 		$_SESSION['blogtags'] = $tags;
 		
+	// Convert string of tags into a preformatted array
+		$tagarray = string_to_tag_array($tags);
+		
 	// Make sure the title / description aren't blank
 		if (empty($title) || empty($body)) {
 			register_error(elgg_echo("blog:blank"));
@@ -47,10 +50,9 @@
 				register_error(elgg_echo("blog:error"));
 				forward("mod/blog/add.php");
 			}
-	// Now let's add tags. We can pass an array directly to setMetaData!
-	// Not very painful.
-			if (is_array($tags) && sizeof($tags) > 0) {
-				$blog->tags = $tags;
+	// Now let's add tags. We can pass an array directly to the object property! Easy.
+			if (is_array($tagarray)) {
+				$blog->tags = $tagarray;
 			}
 	// Success message
 			system_message(elgg_echo("blog:posted"));

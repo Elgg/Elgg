@@ -40,7 +40,7 @@
 		<p>
 			<?php
 
-				echo $vars['entity']->tags;
+				echo elgg_view('output/tags', array('tags' => $vars['entity']->tags));
 			
 			?>
 		</p>
