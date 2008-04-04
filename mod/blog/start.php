@@ -35,6 +35,11 @@
 						menu_item(elgg_echo('blog:addpost'),$CONFIG->wwwroot."mod/blog/add.php"),
 						menu_item(elgg_echo('blog:everyone'),$CONFIG->wwwroot."mod/blog/everyone.php"),
 					));
+			// And for logged out users
+				} else {
+					add_menu(elgg_echo('blog'), $CONFIG->wwwroot . "mod/blog/",array(
+						menu_item(elgg_echo('blog:everyone'),$CONFIG->wwwroot."mod/blog/everyone.php"),
+					));
 				}
 				
 			// Extend system CSS with our own styles, which are defined in the blog/css view
@@ -48,6 +53,7 @@
 	// Register actions
 		global $CONFIG;
 		register_action("blog/add",false,$CONFIG->pluginspath . "blog/actions/add.php");
+		register_action("blog/edit",false,$CONFIG->pluginspath . "blog/actions/edit.php");
 		register_action("blog/comments/add",false,$CONFIG->pluginspath . "blog/actions/comments/add.php");
 		
 ?>

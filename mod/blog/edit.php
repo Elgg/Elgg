@@ -14,7 +14,16 @@
 		require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 		
 	// Get the post, if it exists
-		if (get_object())
+		$blogpost = (int) get_input('blogpost');
+		if ($post = get_entity($blogpost)) {
+			
+			if ($post->canEdit()) {
+				
+				$body = elgg_view("blog/forms/edit", array('entity' => $post));
+				
+			}
+			
+		}
 		
 	// Display page
 		page_draw(sprintf(elgg_echo('blog:editpost'),$post->title),$body);

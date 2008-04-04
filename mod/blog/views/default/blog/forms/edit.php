@@ -13,12 +13,12 @@
 	 */
 
 	// Set title, form destination
-		if (isset($vars['object'])) {
+		if (isset($vars['entity'])) {
 			$title = sprintf(elgg_echo("blog:editpost"),$object->title);
 			$action = "blog/edit";
-			$title = $vars['object']->title;
-			$body = $vars['object']->description;
-			$tags = $vars['object']->tags;
+			$title = $vars['entity']->title;
+			$body = $vars['entity']->description;
+			$tags = $vars['entity']->tags;
 		} else  {
 			$title = elgg_echo("blog:addpost");
 			$action = "blog/add";
@@ -76,6 +76,13 @@
 			?>
 		</p>
 		<p>
+			<?php
+
+				if (isset($vars['entity'])) {
+					?><input type="hidden" name="blogpost" value="<?php echo $vars['entity']->getGUID(); ?>" /><?php
+				}
+			
+			?>
 			<input type="submit" value="<?php echo elgg_echo('save'); ?>" />
 		</p>
 	

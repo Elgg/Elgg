@@ -44,6 +44,22 @@
 			
 			?>
 		</p>
+		<?php
+
+			if ($vars['entity']->canEdit()) {
+			?>
+				<a href="<?php echo $vars['url']; ?>mod/blog/edit.php?blogpost=<?php echo $vars['entity']->getGUID(); ?>"><?php echo elgg_echo("edit"); ?></a>
+				<a href="<?php echo $vars['url']; ?>mod/blog/delete.php?blogpost=<?php echo $vars['entity']->getGUID(); ?>"><?php echo elgg_echo("delete"); ?></a>
+				<?php
+
+					// Allow the menu to be extended
+					echo elgg_view("editmenu",array('entity' => $vars['entity']));
+				
+				?>
+			<?php
+			}
+		
+		?>
 	</div>
 
 <?php
