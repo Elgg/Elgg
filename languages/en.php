@@ -59,6 +59,7 @@
 	
 			'save' => "Save",
 			'update' => "Update",
+			'edit' => "Edit",
 			'delete' => "Delete",
 			'Load' => "Load",
 	
