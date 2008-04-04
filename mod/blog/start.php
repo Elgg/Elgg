@@ -33,6 +33,7 @@
 					add_menu(elgg_echo('blog'), $CONFIG->wwwroot . "mod/blog/",array(
 						menu_item(elgg_echo('blog:read'),$CONFIG->wwwroot."mod/blog/?username=" . $_SESSION['user']->username),
 						menu_item(elgg_echo('blog:addpost'),$CONFIG->wwwroot."mod/blog/add.php"),
+						menu_item(elgg_echo('blog:everyone'),$CONFIG->wwwroot."mod/blog/everyone.php"),
 					));
 				}
 				

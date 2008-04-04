@@ -9,6 +9,7 @@
 			'blog' => "Blog",
 			'blog:user' => "%s's blog",
 			'blog:posttitle' => "%s's blog: %s",
+			'blog:everyone' => "All blog posts",
 	
 			'blog:read' => "Read blog",
 	
