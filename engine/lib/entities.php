@@ -117,8 +117,11 @@
 		{
 			$md = get_metadata_byname($this->getGUID(), $name);
 
-			if ($md)
+			if ($md && !is_array($md)) {
 				return $md->value;
+			} else if ($md && is_array($md)) {
+				return metadata_array_to_values($md);
+			}
 				
 			return null;
 		}

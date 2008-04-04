@@ -376,6 +376,44 @@
 		return $returnvalue;
 	}
 	
+	/**
+	 * Takes in a comma-separated string and returns an array of tags which have been trimmed and set to lower case
+	 *
+	 * @param string $string Comma-separated tag string
+	 * @return array|false An array of strings, or false on failure
+	 */
+	function string_to_tag_array($string) {
+		
+		if (is_string($string)) {
+			$ar = explode(",",$string);
+			array_walk($ar,'trim');
+			array_walk($ar,'strtolower');
+			return $ar;
+		}
+		return false;
+		
+	}
+	
+	/**
+	 * Takes a metadata array (which has all kinds of properties) and turns it into a simple array of strings 
+	 *
+	 * @param array $array Metadata array
+	 * @return array Array of strings
+	 */
+	function metadata_array_to_values($array) {
+		
+		$valuearray = array();
+		
+		if (is_array($array)) {
+			foreach($array as $element) {
+				$valuearray[] = $element->value;
+			}
+		}
+		
+		return $valuearray;
+		
+	}
+	
 	/** Register the hook */
 	register_plugin_hook("export", "all", "export_metadata_plugin_hook", 2);
 ?>
