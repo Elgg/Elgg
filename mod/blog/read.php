@@ -14,7 +14,9 @@
 		require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
 	// Get the specified blog post
-		$post = (int) get_input('blogpost'); 
+		$post = (int) get_input('blogpost');
+
+	// If we can get out the blog post ...
 		if ($blogpost = get_entity($post)) {
 			
 	// Get any comments
@@ -31,10 +33,20 @@
 											'comments' => $comments,
 											'full' => true
 											));
+											
+	// Set the title appropriately
+			$title = sprintf(elgg_echo("blog:posttitle"),$page_owner->name,$blogpost->title);
+			
+	// If we're not allowed to see the blog post
+		} else {
+			
+	// Display the 'post not found' page instead
+			$body = elgg_view("blog/notfound");
+			$title = elgg_echo("blog:notfound");
 			
 		}
 		
 	// Display page
-		page_draw(sprintf(elgg_echo("blog:posttitle"),$page_owner->name,$blogpost->title),$body);
+		page_draw($title,$body);
 		
 ?>
