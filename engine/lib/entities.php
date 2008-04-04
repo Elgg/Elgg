@@ -242,6 +242,16 @@
 			return get_annotations_max($this->getGUID(), "","",$name);
 		}
 		
+		/**
+		 * Determines whether or not the specified user (by default the current one) can edit the entity 
+		 *
+		 * @param int $user_guid The user GUID, optionally (defaults to the currently logged in user)
+		 * @return true|false
+		 */
+		function canEdit($user_guid = 0) {
+			return can_edit_entity($this->getGUID(),$user_guid);
+		}
+		
 		public function getAccessID() { return $this->get('access_id'); }
 		public function getGUID() { return $this->get('guid'); }
 		public function getOwner() { return $this->get('owner_guid'); }
@@ -727,6 +737,34 @@
 			
 			return $tmp;
 		}
+	}
+	
+	/**
+	 * Determines whether or not the specified user can edit the specified entity.
+	 * 
+	 * This is extendible by registering a plugin hook taking in the parameters 'entity' and 'user',
+	 * which are the entity and user entities respectively
+	 * 
+	 * @see register_plugin_hook 
+	 *
+	 * @param int $entity_guid The GUID of the entity
+	 * @param int $user_guid The GUID of the user
+	 * @return true|false Whether the specified user can edit the specified entity.
+	 */
+	function can_edit_entity($entity_guid, $user_guid = 0) {
+		
+		if ($user_guid == 0) {
+			$user = $_SESSION['user'];
+		} else {
+			$user = get_entity($user_guid);
+		}
+		$entity = get_entity($entity_guid);
+		
+		if ($entity->getOwner() == $user->getGUID()) return true;
+		if ($entity->type == "user" && $entity->getGUID() == $user->getGUID()) return true;
+		
+		return trigger_plugin_hook('permissions_check',$entity->type,array('entity' => $entity, 'user' => $user),false);
+		
 	}
 	
 	/** Register the import hook */
