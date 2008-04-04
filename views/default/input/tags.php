@@ -8,7 +8,11 @@
             if (!empty($tags)) {
                 $tags .= ", ";
             }
-            $tags .= $tag->tag;
+            if (is_string($tag)) {
+            	$tags .= $tag;
+            } else {
+            	$tags .= $tag->value;
+            }
             
         }
     }
