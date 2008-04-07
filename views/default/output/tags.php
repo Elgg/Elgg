@@ -1,7 +1,10 @@
 <?php
-    if (!empty($vars['tags']) && is_array($vars['tags'])) {
+    if (!empty($vars['tags'])) {
         
         $string = "";
+        if (!is_array($vars['tags']))
+        	$vars['tags'] = array($vars['tags']);
+
         foreach($vars['tags'] as $tag) {
             if (!empty($tagstr)) {
                 $tagstr .= ", ";
