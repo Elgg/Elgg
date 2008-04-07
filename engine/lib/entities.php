@@ -681,10 +681,10 @@
 		// TODO Make sure this deletes all metadata/annotations/relationships/etc!!
 		
 		$guid = (int)$guid;
+		$entity = get_entity($guid);
 		
-		$access = get_access_list();
-		
-		return delete_data("DELETE from {$CONFIG->dbprefix}entities where where guid=$guid and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))"); 
+		if ($entity->canEdit())
+			return delete_data("DELETE from {$CONFIG->dbprefix}entities where where guid=$guid"); 
 		
 	}
 

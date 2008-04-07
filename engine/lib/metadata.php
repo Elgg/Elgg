@@ -73,8 +73,39 @@
 			return delete_metadata($this->id); 
 		}
 		
+		/**
+		 * Determines whether or not the specified user can edit this
+		 *
+		 * @param int $user_guid The GUID of the user (defaults to currently logged in user)
+		 * @return true|false
+		 */
+		function canEdit($user_guid = 0) {
+			return can_edit_metadata($this->id,$user_guid);
+		}
+		
 	}
 	
+	/**
+	 * Determines whether or not the specified user can edit the specified piece of metadata
+	 *
+	 * @param int $metadata_id The ID of the piece of metadata
+	 * @param int $user_guid The GUID of the user
+	 * @return true|false
+	 */
+	function can_edit_metadata($metadata_id, $user_guid = 0) {
+		
+		if ($user_guid == 0) {
+			$user = $_SESSION['user'];
+		} else {
+			$user = get_entity($user_guid);
+		}
+		$metadata = get_metadata($metadata_id);
+		
+		if ($metadata->owner_guid == $user->getGUID()) return true;
+		
+		return trigger_plugin_hook('permissions_check','metadata',array('entity' => $entity, 'user' => $user),false);
+		
+	}
 	
 	/**
 	 * Convert a database row to a new ElggMetadata
@@ -245,9 +276,10 @@
 		global $CONFIG;
 
 		$id = (int)$id;
-		$access = get_access_list();
-				
-		return delete_data("DELETE from {$CONFIG->dbprefix}metadata where id=$id and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))");
+		$metadata = get_metadata($id);
+		
+		if ($metadata->canEdit())
+			return delete_data("DELETE from {$CONFIG->dbprefix}metadata where id=$id");
 		
 	}
 	
@@ -346,8 +378,11 @@
 		global $CONFIG;
 		
 		$entity_guid = (int)$entity_guid;
-		
-		return delete_data("DELETE from {$CONFIG->dbprefix}metadata where entity_guid=$entity_guid and access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']})");
+		if ($entity = get_entity($entity_guid)) {
+			if ($entity->canEdit())
+				return delete_data("DELETE from {$CONFIG->dbprefix}metadata where entity_guid={$entity_guid}");
+		}
+		return false;
 	}
 	
 	/**
