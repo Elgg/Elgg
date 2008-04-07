@@ -398,7 +398,7 @@
 		$guid = (int)$guid;
 		$name = get_metastring_id($name);
 		
-		$entity_guid = (int)$entity_guid;
+		$entity_guid = (int) $guid;
 		if ($entity = get_entity($entity_guid)) {
 			if ($entity->canEdit()) {
 		
