@@ -312,7 +312,8 @@
 		 */
 		public function delete() 
 		{ 
-			return delete_entity($this->get('guid'));
+			$res = delete_entity($this->get('guid'));
+			return $res;
 		}
 
 		// EXPORTABLE INTERFACE ////////////////////////////////////////////////////////////
@@ -693,7 +694,8 @@
 				if ($entity->canEdit()) {
 					$entity->clearMetadata();
 					$entity->clearAnnotations();
-					return delete_data("DELETE from {$CONFIG->dbprefix}entities where guid={$guid}");
+					$res = delete_data("DELETE from {$CONFIG->dbprefix}entities where guid={$guid}");
+					return $res;
 				} 
 			}
 		}

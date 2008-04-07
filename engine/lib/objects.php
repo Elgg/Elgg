@@ -128,7 +128,7 @@
 			if (!parent::delete())
 				return false;
 				
-			return delete_object_entity($guid);
+			return delete_object_entity($this->get('guid'));
 		}
 	
 		/**
@@ -223,7 +223,7 @@
 		
 		$guid = (int)$guid;
 		
-		$row = get_entity_as_row($guid);
+		$row = get_object_entity_as_row($guid);
 		
 		// Check to see if we have access and it exists
 		if ($row) 
@@ -231,7 +231,7 @@
 			// Delete any existing stuff
 			return delete_data("DELETE from {$CONFIG->dbprefix}objects_entity where guid=$guid");
 		}
-		
+
 		return false;
 	}
 
