@@ -70,6 +70,16 @@
 		 */
 		abstract public function delete();
 		
+		/**
+		 * Determines whether or not the specified user can edit this
+		 *
+		 * @param int $user_guid The GUID of the user (defaults to currently logged in user)
+		 * @return true|false
+		 */
+		function canEdit($user_guid = 0) {
+			return can_edit_extender($this->id,$this->type,$user_guid);
+		}
+		
 		public function export()
 		{
 			$tmp = new stdClass;
@@ -144,6 +154,32 @@
 			$tmp->import($element);
 			return $tmp;
 		}
+	}
+	
+	/**
+	 * Determines whether or not the specified user can edit the specified piece of extender
+	 *
+	 * @param int $extender_id The ID of the piece of extender
+	 * @param string $type 'metadata' or 'annotation'
+	 * @param int $user_guid The GUID of the user
+	 * @return true|false
+	 */
+	function can_edit_extender($extender_id, $type, $user_guid = 0) {
+		
+		if ($user_guid == 0) {
+			$user = $_SESSION['user'];
+		} else {
+			$user = get_entity($user_guid);
+		}
+		$functionname = "get_{$type}";
+		if (is_callable($functionname)) {
+			$extender = $functionname($extender_id);
+		} else return false;
+		
+		if ($extender->getOwner() == $user->getGUID()) return true;
+		
+		return trigger_plugin_hook('permissions_check',$type,array('entity' => $entity, 'user' => $user),false);
+		
 	}
 	
 	/** Register the hook */

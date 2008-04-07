@@ -40,6 +40,7 @@
 					foreach($objarray as $key => $value) {
 						$this->attributes[$key] = $value;
 					}
+					$this->attributes['type'] = "metadata";
 				}
 			}
 		}
@@ -73,37 +74,7 @@
 			return delete_metadata($this->id); 
 		}
 		
-		/**
-		 * Determines whether or not the specified user can edit this
-		 *
-		 * @param int $user_guid The GUID of the user (defaults to currently logged in user)
-		 * @return true|false
-		 */
-		function canEdit($user_guid = 0) {
-			return can_edit_metadata($this->id,$user_guid);
-		}
 		
-	}
-	
-	/**
-	 * Determines whether or not the specified user can edit the specified piece of metadata
-	 *
-	 * @param int $metadata_id The ID of the piece of metadata
-	 * @param int $user_guid The GUID of the user
-	 * @return true|false
-	 */
-	function can_edit_metadata($metadata_id, $user_guid = 0) {
-		
-		if ($user_guid == 0) {
-			$user = $_SESSION['user'];
-		} else {
-			$user = get_entity($user_guid);
-		}
-		$metadata = get_metadata($metadata_id);
-		
-		if ($metadata->owner_guid == $user->getGUID()) return true;
-		
-		return trigger_plugin_hook('permissions_check','metadata',array('entity' => $entity, 'user' => $user),false);
 		
 	}
 	

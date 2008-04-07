@@ -41,6 +41,7 @@
 					foreach($objarray as $key => $value) {
 						$this->attributes[$key] = $value;
 					}
+					$this->attributes['type'] = "annotation";
 				}
 			}
 		}
