@@ -529,10 +529,13 @@
 		$access_id = (int)$access_id;
 		$time = time();
 		
-		$access = get_access_list();
+		$entity = get_entity($guid);
 		
-		
-		return update_data("UPDATE {$CONFIG->dbprefix}entities set owner_guid='$owner_guid', access_id='$access_id', time_updated='$time' WHERE guid=$guid and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))");
+		if ($entity->canEdit()) {
+			if (trigger_event('update',$entity->type,$entity)) {
+				return update_data("UPDATE {$CONFIG->dbprefix}entities set owner_guid='$owner_guid', access_id='$access_id', time_updated='$time' WHERE guid=$guid and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))");
+			}
+		}
 	}
 	
 	/**
@@ -559,7 +562,11 @@
 		// Erased by Ben: sometimes we need unauthenticated users to create things! (eg users on registration)
 		// if ($owner_guid==0) throw new InvalidParameterException("owner_guid must not be 0");
 	
-		return insert_data("INSERT into {$CONFIG->dbprefix}entities (type, subtype, owner_guid, access_id, time_created, time_updated) values ('$type',$subtype, $owner_guid, $access_id, $time, $time)");
+		if ($result = insert_data("INSERT into {$CONFIG->dbprefix}entities (type, subtype, owner_guid, access_id, time_created, time_updated) values ('$type',$subtype, $owner_guid, $access_id, $time, $time)")) {
+			$entity = get_entity($result);
+			trigger_event('create',$entity->type,$entity);
+		}
+		return $result;
 	}
 	
 	/**
@@ -681,10 +688,16 @@
 		// TODO Make sure this deletes all metadata/annotations/relationships/etc!!
 		
 		$guid = (int)$guid;
-		$entity = get_entity($guid);
-		
-		if ($entity->canEdit())
-			return delete_data("DELETE from {$CONFIG->dbprefix}entities where where guid=$guid"); 
+		if ($entity = get_entity($guid)) {
+			if (trigger_event('delete',$entity->type,$entity)) {
+				if ($entity->canEdit()) {
+					$entity->clearMetadata();
+					$entity->clearAnnotations();
+					return delete_data("DELETE from {$CONFIG->dbprefix}entities where where guid={$guid}");
+				} 
+			}
+		}
+		return false;
 		
 	}
 
