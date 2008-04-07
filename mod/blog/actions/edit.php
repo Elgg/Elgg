@@ -21,7 +21,7 @@
 		
 	// Make sure we actually have permission to edit
 		$blog = get_entity($guid);
-		if ($blog->subtype = "blog" && $blog->canEdit()) {
+		if ($blog->getSubtype() == "blog" && $blog->canEdit()) {
 	
 		// Cache to the session
 			$_SESSION['blogtitle'] = $title;
@@ -39,6 +39,8 @@
 		// Otherwise, save the blog post 
 			} else {
 				
+		// Get owning user
+				$owner = get_entity($blog->getOwner());
 		// For now, set its access to public (we'll add an access dropdown shortly)
 				$blog->access_id = 2;
 		// Set its title and description appropriately
@@ -59,7 +61,7 @@
 		// Remove the blog post cache
 				unset($_SESSION['blogtitle']); unset($_SESSION['blogbody']); unset($_SESSION['blogtags']);
 		// Forward to the main blog page
-				forward("mod/blog/?username=" . $_SESSION['user']->username);
+				forward("mod/blog/?username=" . $owner->username);
 					
 			}
 		
