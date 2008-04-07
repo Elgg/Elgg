@@ -654,13 +654,17 @@
 	 * @return true|false Depending on success 
 	 */
 		function trigger_event($event, $object_type, $object = null) {
-			if (events($event, $object_type, "", null, true, $object)
-				&& events('all', $object_type, "", null, true, $object)
-				&& events($event, 'all', "", null, true, $object)
-				&& events('all', 'all', "", null, true, $object)) {
-					return true;
-				}
-			return false;
+			
+			$return = true;
+			$return1 = events($event, $object_type, "", null, true, $object);
+			if (!is_null($return1)) $return = $return1;
+			$return2 = events('all', $object_type, "", null, true, $object);
+			if (!is_null($return2)) $return = $return2;
+			$return3 = events($event, 'all', "", null, true, $object);
+			if (!is_null($return3)) $return = $return3;
+			$return4 = events('all', 'all', "", null, true, $object);
+			if (!is_null($return4)) $return = $return4; 
+			return $return;
 		}
 		
 	/**

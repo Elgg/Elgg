@@ -693,7 +693,7 @@
 				if ($entity->canEdit()) {
 					$entity->clearMetadata();
 					$entity->clearAnnotations();
-					return delete_data("DELETE from {$CONFIG->dbprefix}entities where where guid={$guid}");
+					return delete_data("DELETE from {$CONFIG->dbprefix}entities where guid={$guid}");
 				} 
 			}
 		}

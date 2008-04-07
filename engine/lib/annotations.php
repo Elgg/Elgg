@@ -398,17 +398,23 @@
 		$guid = (int)$guid;
 		$name = get_metastring_id($name);
 		
-		$where = array();
+		$entity_guid = (int)$entity_guid;
+		if ($entity = get_entity($entity_guid)) {
+			if ($entity->canEdit()) {
 		
-		if ($name != "")
-			$where[] = " name_id='$name'";
+				$where = array();
+				
+				if ($name != "")
+					$where[] = " name_id='$name'";
+				
+				$query = "DELETE from {$CONFIG->dbprefix}annotations where entity_guid=$guid "; 
+				foreach ($where as $w)
+					$query .= " and $w";
+				
+				return delete_data($query);
 		
-		$query = "DELETE from {$CONFIG->dbprefix}annotations where entity_guid=$guid and "; 
-		foreach ($where as $w)
-			$query .= " $w and ";
-		$query .= "(access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))";
-		
-		return delete_data();
+			}
+		}
 	}
 	
 	/**
