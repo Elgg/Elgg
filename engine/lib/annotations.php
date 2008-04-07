@@ -221,7 +221,7 @@
 		$entity_type = sanitise_string($entity_type);
 		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
 		$name = get_metastring_id($name);
-		$value = get_metastring_id($value);
+		if ($value != "") $value = get_metastring_id($value);
 		$owner_guid = (int)$owner_guid;
 		$limit = (int)$limit;
 		$offset = (int)$offset;
@@ -254,7 +254,6 @@
 			$query .= " $w and ";
 		$query .= " (a.access_id in {$access} or (a.access_id = 0 and a.owner_guid = {$_SESSION['id']}))"; // Add access controls
 		$query .= " order by $order_by limit $offset,$limit"; // Add order and limit
-		
 		return get_data($query, "row_to_elggannotation");
 		
 	}
