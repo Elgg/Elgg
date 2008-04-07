@@ -140,7 +140,7 @@
 			if (!parent::delete())
 				return false;
 				
-			return delete_user_entity($guid);
+			return delete_user_entity($this->get('guid'));
 		}
 				
 		/**

@@ -134,7 +134,7 @@
 			if (!parent::delete())
 				return false;
 				
-			return delete_site_entity($guid);
+			return delete_site_entity($this->get('guid'));
 		}
 		
 		/**
