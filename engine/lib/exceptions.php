@@ -14,93 +14,129 @@
 	// Top level //////////////////////////////////////////////////////////////////////////////
 
 	/**
-	 * @class IOException 
+	 * IOException 
 	 * An IO Exception, throw when an IO Exception occurs. Subclass for specific IO Exceptions.
+	 * 
 	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @package Elgg
+	 * @subpackage Exceptions
 	 */
 	class IOException extends Exception {}
 
 	/**
-	 * @class ClassException 
+	 * ClassException 
 	 * A class Exception, throw when there is a class error.
+	 * 
 	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @package Elgg
+	 * @subpackage Exceptions
 	 */
 	class ClassException extends Exception {}
 
 	/**
-	 * @class ConfigurationException 
+	 * ConfigurationException 
 	 * There is a configuration error
+	 * 
 	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @package Elgg
+	 * @subpackage Exceptions
 	 */
 	class ConfigurationException extends Exception {}
 
 	/**
-	 * @class SecurityException 
+	 * SecurityException 
 	 * An Security Exception, throw when a Security Exception occurs. Subclass for specific Security Execeptions (access problems etc)
+	 * 
 	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @package Elgg
+	 * @subpackage Exceptions
 	 */
 	class SecurityException extends Exception {}
 
 	/**
-	 * @class ClassNotFoundException 
+	 * ClassNotFoundException 
 	 * An database exception, throw when a database exception happens, subclass if more detail is needed.
+	 * 
 	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @package Elgg
+	 * @subpackage Exceptions
 	 */
 	class DatabaseException extends Exception {}
 
 	/**
-	 * @class APIException
+	 * APIException
 	 * The API Exception class, thrown by the API layer when an API call has an issue.
+	 * 
 	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @package Elgg
+	 * @subpackage Exceptions
 	 */
 	class APIException extends Exception {}
 	
 	/**
-	 * @class CallException
+	 * CallException
 	 * An exception thrown when there is a problem calling something.
+	 * 
 	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @package Elgg
+	 * @subpackage Exceptions
 	 */
 	class CallException extends Exception {}
 	
 	// Class exceptions ///////////////////////////////////////////////////////////////////////
 
 	/**
-	 * @class InvalidClassException 
+	 * InvalidClassException 
 	 * An invalid class Exception, throw when a class is invalid.
+	 * 
 	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @package Elgg
+	 * @subpackage Exceptions
 	 */
 	class InvalidClassException extends ClassException {}
 
 	/**
-	 * @class ClassNotFoundException 
+	 * ClassNotFoundException 
 	 * An Class not found Exception, throw when an class can not be found occurs.
+	 * 
 	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @package Elgg
+	 * @subpackage Exceptions
 	 */
 	class ClassNotFoundException extends ClassException {}
 	
 	// Configuration exceptions ///////////////////////////////////////////////////////////////
 
 	/**
-	 * @class InstallationException
+	 * InstallationException
 	 * Thrown when there is a major problem with the installation.
+	 * 
 	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @package Elgg
+	 * @subpackage Exceptions
 	 */
 	class InstallationException extends ConfigurationException {}
 	
 	// Call exceptions ////////////////////////////////////////////////////////////////////////
 
 	/**
-	 * @class NotImplementedException
+	 * NotImplementedException
 	 * Thrown when a method or function has not been implemented, primarily used in development... you should
 	 * not see these!
+	 * 
 	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @package Elgg
+	 * @subpackage Exceptions
 	 */
 	class NotImplementedException extends CallException {}
 	
 	/**
-	 * @class InvalidParameterException
+	 * InvalidParameterException
 	 * A parameter is invalid.
+	 * 
 	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @package Elgg
+	 * @subpackage Exceptions
 	 */
 	class InvalidParameterException extends CallException {}
 ?>

@@ -11,7 +11,9 @@
 	 * @link http://elgg.org/
 	 */
 
-	// Include required files
+	/**
+	 *  Start the Elgg engine
+	 */
 	require_once('../engine/start.php');
 	global $CONFIG;
 	

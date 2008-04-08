@@ -55,7 +55,7 @@
 		}
 		
 		/**
-		 * Class variable getter overloading
+		 * Class member get overloading
 		 *
 		 * @param string $name
 		 * @return mixed
@@ -65,7 +65,7 @@
 		}
 		
 		/**
-		 * Class variable setter overloading
+		 * Class member set overloading
 		 *
 		 * @param string $name
 		 * @param mixed $value

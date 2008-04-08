@@ -17,6 +17,8 @@
 	 * For now, loads plugins directly
 	 *
 	 * @todo Add proper plugin handler that launches plugins in an admin-defined order and activates them on admin request
+	 * @package Elgg
+	 * @subpackage Core
 	 */
 		function load_plugins() {
 
@@ -43,8 +45,12 @@
 		}
 		
 	/**
-	 * @class PluginException 
+	 * PluginException
+	 *  
 	 * A plugin Exception, thrown when an Exception occurs relating to the plugin mechanism. Subclass for specific plugin Exceptions.
+	 * 
+	 * @package Elgg
+	 * @subpackage Exceptions
 	 */
 		
 		class PluginException extends Exception {}

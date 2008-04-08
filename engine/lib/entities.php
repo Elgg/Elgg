@@ -12,9 +12,12 @@
 	 */
 
 	/**
-	 * @class ElggEntity The elgg entity superclass
+	 * ElggEntity The elgg entity superclass
 	 * This class holds methods for accessing the main entities table.
+	 * 
 	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @package Elgg
+	 * @subpackage Core
 	 */
 	abstract class ElggEntity implements 
 		Exportable, // Allow export of data
@@ -34,6 +37,8 @@
 		 * This is vital to distinguish between metadata and base parameters.
 		 * 
 		 * Place your base parameters here.
+		 * 
+		 * @return void
 		 */
 		protected function initialise_attributes()
 		{
@@ -252,12 +257,60 @@
 			return can_edit_entity($this->getGUID(),$user_guid);
 		}
 		
+		/**
+		 * Enter description here...
+		 *
+		 * @return unknown
+		 * @todo document me
+		 */
 		public function getAccessID() { return $this->get('access_id'); }
+		
+		/**
+		 * Enter description here...
+		 *
+		 * @return unknown
+		 * @todo document me
+		 */
 		public function getGUID() { return $this->get('guid'); }
+		
+		/**
+		 * Enter description here...
+		 *
+		 * @return unknown
+		 * @todo document me
+		 */
 		public function getOwner() { return $this->get('owner_guid'); }
+		
+		/**
+		 * Enter description here...
+		 *
+		 * @return unknown
+		 * @todo document me
+		 */
 		public function getType() { return $this->get('type'); }
+		
+		/**
+		 * Enter description here...
+		 *
+		 * @return unknown
+		 * @todo document me
+		 */
 		public function getSubtype() { return get_subtype_from_id($this->get('subtype')); }
+		
+		/**
+		 * Enter description here...
+		 *
+		 * @return unknown
+		 * @todo document me
+		 */
 		public function getTimeCreated() { return $this->get('time_created'); }
+		
+		/**
+		 * Enter description here...
+		 *
+		 * @return unknown
+		 * @todo document me
+		 */
 		public function getTimeUpdated() { return $this->get('time_updated'); }
 		
 		/**

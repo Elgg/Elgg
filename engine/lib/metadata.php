@@ -12,9 +12,12 @@
 	 */
 
 	/**
-	 * @class ElggMetadata
+	 * ElggMetadata
 	 * This class describes metadata that can be attached to ElggEntities.
+	 * 
 	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @package Elgg
+	 * @subpackage Core
 	 */
 	class ElggMetadata extends ElggExtender
 	{
@@ -45,14 +48,32 @@
 			}
 		}
 		
+		/**
+		 * Class member get overloading
+		 *
+		 * @param string $name
+		 * @return mixed
+		 */
 		function __get($name) {
 			return $this->get($name);
 		}
 		
+		/**
+		 * Class member set overloading
+		 *
+		 * @param string $name
+		 * @param mixed $value
+		 * @return mixed
+		 */
 		function __set($name, $value) {
 			return $this->set($name, $value);
 		}		
 		
+		/**
+		 * Save matadata object
+		 *
+		 * @return int the metadata object id
+		 */
 		function save()
 		{
 			if ($this->id > 0)

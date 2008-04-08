@@ -90,7 +90,7 @@
 		}
 		
 		/**
-		 * Class variable getter overloading
+		 * Class member get overloading
 		 *
 		 * @param string $name
 		 * @return mixed
@@ -98,7 +98,7 @@
 		function __get($name) { return $this->get($name); }
 		
 		/**
-		 * Class variable setter overloading
+		 * Class member set overloading
 		 *
 		 * @param string $name
 		 * @param mixed $value

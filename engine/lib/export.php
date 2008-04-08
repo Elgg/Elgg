@@ -12,6 +12,9 @@
 
 	/**
 	 * Define an interface for all exportable objects.
+	 * 
+	 * @package Elgg
+	 * @subpackage Core
 	 * @author Marcus Povey
 	 */
 	interface Exportable
@@ -318,7 +321,21 @@
 		return $output;
 	}
 	
+	/**
+	 * Export exception
+	 * 
+	 * @package Elgg
+	 * @subpackage Exceptions
+	 *
+	 */
 	class ExportException extends Exception {}
+	
+	/**
+	 * Import exception
+	 *
+	 * @package Elgg
+	 * @subpackage Exceptions
+	 */
 	class ImportException extends Exception {}
 	
 ?>

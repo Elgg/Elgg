@@ -13,8 +13,11 @@
 	 */
 
 	/**
-	 * @class ElggObject
+	 * ElggObject
 	 * Representation of an "object" in the system.
+	 * 
+	 * @package Elgg
+	 * @subpackage Core
 	 */
 	class ElggObject extends ElggEntity
 	{
@@ -73,7 +76,21 @@
 			}
 		}
 		
+		/**
+		 * Class member get overloading
+		 *
+		 * @param string $name
+		 * @return mixed
+		 */
 		function __get($name) { return $this->get($name); }
+		
+		/**
+		 * Class member set overloading
+		 *
+		 * @param string $name
+		 * @param mixed $value
+		 * @return mixed
+		 */
 		function __set($name, $value) { return $this->set($name, $value); }
 		
 		/**

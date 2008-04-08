@@ -13,8 +13,10 @@
 
 	/**
 	 * Relationship class.
-	 * @class ElggRelationship
+	 * 
 	 * @author Marcus Povey
+	 * @package Elgg
+	 * @subpackage Core
 	 */
 	class ElggRelationship implements Importable, Exportable
 	{
@@ -49,6 +51,12 @@
 			}
 		}
 		
+		/**
+		 * Class member get overloading
+		 *
+		 * @param string $name
+		 * @return mixed
+		 */
 		protected function __get($name) {
 			if (isset($this->attributes[$name])) 
 				return $this->attributes[$name];
@@ -56,11 +64,23 @@
 			return null;
 		}
 		
+		/**
+		 * Class member set overloading
+		 *
+		 * @param string $name
+		 * @param mixed $value
+		 * @return mixed
+		 */
 		protected function __set($name, $value) {
 			$this->attributes[$name] = $value;
 			return true;
 		}
 
+		/**
+		 * Save the relationship
+		 *
+		 * @return int the relationship id
+		 */
 		public function save()
 		{
 			if ($this->id > 0)
@@ -84,6 +104,11 @@
 		}
 	
 	
+		/**
+		 * Export this relationship
+		 *
+		 * @return array
+		 */
 		public function export()
 		{
 			$tmp = new stdClass;
@@ -93,6 +118,14 @@
 			return $tmp;
 		}
 		
+		/**
+		 * Import a relationship
+		 *
+		 * @param array $data
+		 * @param int $version
+		 * @return ElggRelationship
+		 * @throws ImportException
+		 */
 		public function import(array $data, $version = 1)
 		{
 			if ($version == 1)

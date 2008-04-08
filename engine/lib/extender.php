@@ -12,8 +12,11 @@
 	 */
 
 	/**
-	 * @class ElggExtender 
+	 * ElggExtender 
+	 * 
 	 * @author Marcus Povey
+	 * @package Elgg
+	 * @subpackage Core
 	 */
 	abstract class ElggExtender implements Exportable, Importable
 	{
@@ -23,6 +26,12 @@
 		 */
 		protected $attributes;
 		
+		/**
+		 * Get an attribute
+		 *
+		 * @param string $name
+		 * @return mixed
+		 */
 		protected function get($name) {
 			if (isset($this->attributes[$name])) {
 				
@@ -45,6 +54,13 @@
 			return null;
 		}
 		
+		/**
+		 * Set an attribute
+		 *
+		 * @param string $name
+		 * @param mixed $value
+		 * @return boolean
+		 */
 		protected function set($name, $value) {
 			$this->attributes[$name] = $value;
 			return true;
@@ -80,6 +96,11 @@
 			return can_edit_extender($this->id,$this->type,$user_guid);
 		}
 		
+		/**
+		 * Export this object
+		 *
+		 * @return array
+		 */
 		public function export()
 		{
 			$tmp = new stdClass;
@@ -89,6 +110,14 @@
 			return $tmp;
 		}
 		
+		/**
+		 * Import an object
+		 *
+		 * @param array $data
+		 * @param int $version
+		 * @return ElggExtender
+		 * @throws ImportException
+		 */
 		public function import(array $data, $version = 1)
 		{
 			if ($version == 1)
