@@ -14,8 +14,11 @@
 	// Result classes /////////////////////////////////////////////////////////////////////////
 
 	/**
-	 * @class GenericResult Result superclass.
+	 * GenericResult Result superclass.
+	 * 
 	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @package Elgg
+	 * @subpackage Core
 	 */
 	abstract class GenericResult implements Exportable
 	{	
@@ -106,9 +109,12 @@
 	}
 	
 	/**
-	 * @class SuccessResult
+	 * SuccessResult
 	 * Generic success result class, extend if you want to do something special.
+	 * 
 	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @package Elgg
+	 * @subpackage Core
 	 */
 	class SuccessResult extends GenericResult
 	{
@@ -128,9 +134,12 @@
 	}
 	
 	/**
-	 * @class ErrorResult
+	 * ErrorResult
 	 * The error result class.
+	 * 
 	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @package Elgg
+	 * @subpackage Core
 	 */
 	class ErrorResult extends GenericResult
 	{

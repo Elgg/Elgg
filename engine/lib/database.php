@@ -161,7 +161,7 @@
     /**
      * Use this function to get a single data row from the database
      * @param $query The query to run.
-     * @result object A single database result object
+     * @return object A single database result object
      */ 
     
         function get_data_row($query) {
@@ -218,7 +218,7 @@
      * Update database data
      * 
      * @param string $query The query to run.
-     * @result int|false Either the number of affected rows, or false on failure
+     * @return int|false Either the number of affected rows, or false on failure
      */ 
     
         function update_data($query) {

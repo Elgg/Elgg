@@ -12,9 +12,12 @@
 	 */
 
 	/**
-	 * @class ElggCache The elgg cache superclass.
+	 * ElggCache The elgg cache superclass.
 	 * This defines the interface for a cache (wherever that cache is stored).
+	 * 
 	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @package Elgg
+	 * @subpackage API
 	 */
 	abstract class ElggCache
 	{
@@ -73,9 +76,12 @@
 	}
 	
 	/**
-	 * @class ElggFileCache
+	 * ElggFileCache
 	 * Store cached data in a file store.
+	 * 
 	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @package Elgg
+	 * @subpackage API
 	 */
 	class ElggFileCache extends ElggCache
 	{
@@ -134,6 +140,13 @@
 			return $filename;
 		}
 		
+		/**
+		 * Save a key
+		 *
+		 * @param string $key
+		 * @param string $data
+		 * @return boolean
+		 */
 		public function save($key, $data)
 		{
 			$f = $this->create_file($this->sanitise_filename($key), "wb");
@@ -148,6 +161,14 @@
 			return false;
 		}
 		
+		/**
+		 * Load a key
+		 *
+		 * @param string $key
+		 * @param int $offset
+		 * @param int $limit
+		 * @return string
+		 */
 		public function load($key, $offset = 0, $limit = null)
 		{
 			$f = $this->create_file($this->sanitise_filename($key));
