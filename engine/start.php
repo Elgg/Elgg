@@ -25,6 +25,14 @@
 			throw new InstallationException("Elgg could not load its main library.");
 		}
 		
+		if (!@include_once(dirname(__FILE__) . "/lib/actions.php")) {
+			throw new InstallationException("Elgg could not load the Actions library");
+		}	
+
+		if (!@include_once(dirname(__FILE__) . "/lib/sessions.php")) {
+			throw new InstallationException("Elgg could not load the Sessions library");
+		}	
+
 		if (!@include_once(dirname(__FILE__) . "/lib/export.php")) {		// Export library
 			echo "Error in installation: could not load the Export library.";
 			exit;
@@ -70,7 +78,7 @@
 										'.','..',
 										'.svn',
 										'CVS','cvs',
-										'settings.php','settings.example.php','elgglib.php','database.php'
+										'settings.php','settings.example.php','exceptions.php','elgglib.php','database.php','actions.php','sessions.php'
 									);
 	
 		// Get the list of files to include, and alphabetically sort them

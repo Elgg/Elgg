@@ -432,12 +432,12 @@
 	 * @return array Array of full filenames
 	 */
 		function get_library_files($directory, $file_exceptions = array(), $file_list = array()) {
-			
+			$extensions_allowed = array('.php'); 	
 			if (is_file($directory) && !in_array($directory,$file_exceptions)) {
 				$file_list[] = $directory;
 			} else if ($handle = opendir($directory)) {
 				while ($file = readdir($handle)) {
-					if (!in_array($file,$file_exceptions)) {
+					if (in_array(strrchr($file, '.'), $extensions_allowed) && !in_array($file,$file_exceptions)) {
 						$file_list = get_library_files($directory . "/" . $file, $file_exceptions, $file_list);
 					}
 				}
