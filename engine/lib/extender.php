@@ -41,9 +41,9 @@
 					switch ($this->attributes['value_type'])
 					{
 						case 'integer' :  return (int)$this->attributes['value'];
-						case 'tag' :
-						case 'text' :
-						case 'file' : return sanitise_string($this->attributes['value']);
+						//case 'tag' :
+						//case 'file' :
+						case 'text' : return sanitise_string($this->attributes['value']);
 							
 						default : throw new InstallationException("Type {$this->attributes['value_type']} is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.");
 					}
@@ -59,10 +59,14 @@
 		 *
 		 * @param string $name
 		 * @param mixed $value
+		 * @param string $value_type
 		 * @return boolean
 		 */
-		protected function set($name, $value) {
+		protected function set($name, $value, $value_type = "") {
+
 			$this->attributes[$name] = $value;
+			$this->attributes['value_type'] = detect_extender_valuetype($value, $value_type);
+			
 			return true;
 		}	
 		
@@ -160,6 +164,28 @@
 			else
 				throw new ImportException("Unsupported version ($version) passed to ElggAnnotation::import()");
 		}
+	}
+	
+	/**
+	 * Detect the value_type for a given value.
+	 * Currently this is very crude.
+	 * 
+	 * TODO: Make better!
+	 *
+	 * @param mixed $value
+	 * @param string $value_type If specified, overrides the detection.
+	 * @return string
+	 */
+	function detect_extender_valuetype($value, $value_type = "")
+	{
+		if ($value_type!="")
+			return $value_type;
+			
+		// This is crude
+		if (is_int($value)) return 'integer';
+		if (is_numeric($value)) return 'integer';
+		
+		return 'text';
 	}
 	
 	/**

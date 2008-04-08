@@ -112,27 +112,7 @@
 			
 		return new ElggMetadata($row);
 	}
-	
-	/**
-	 * Detect the value_type for a given value.
-	 * Currently this is very crude.
-	 * 
-	 * TODO: Make better!
-	 *
-	 * @param mixed $value
-	 * @param string $value_type If specified, overrides the detection.
-	 * @return string
-	 */
-	function detect_metadata_valuetype($value, $value_type = "")
-	{
-		if ($value_type!="")
-			return $value_type;
-			
-		// This is crude
-		if (is_int($value)) return 'integer';
-		
-		return 'tag';
-	}
+
 			
 	/**
 	 * Get a specific item of metadata.

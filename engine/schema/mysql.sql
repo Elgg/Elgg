@@ -147,7 +147,7 @@ CREATE TABLE `prefix_annotations` (
 	
 	`name_id` int(11) NOT NULL,
 	`value_id` int(11) NOT NULL,
-	`value_type` enum ('integer','tag','text','file') NOT NULL,
+	`value_type` enum ('integer','text') NOT NULL,
 	
 	`owner_guid` bigint(20) unsigned NOT NULL,
 	`access_id` int(11) NOT NULL,
@@ -165,7 +165,7 @@ CREATE TABLE `prefix_metadata` (
 	
 	`name_id` int(11) NOT NULL,
 	`value_id` int(11) NOT NULL,
-	`value_type` enum ('integer','tag','text','file') NOT NULL,
+	`value_type` enum ('integer','text') NOT NULL,
 
 	`owner_guid` bigint(20) unsigned NOT NULL,
 	`access_id` int(11) NOT NULL,
