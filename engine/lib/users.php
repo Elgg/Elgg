@@ -13,8 +13,12 @@
 	 */
 
 	/**
-	 * @class ElggUser
+	 * ElggUser
+	 * 
 	 * Representation of a "user" in the system.
+	 * 
+	 * @package Elgg
+	 * @subpackage Core
 	 */
 	class ElggUser extends ElggEntity
 	{
@@ -85,7 +89,21 @@
 			}
 		}
 		
+		/**
+		 * Class variable getter overloading
+		 *
+		 * @param string $name
+		 * @return mixed
+		 */
 		function __get($name) { return $this->get($name); }
+		
+		/**
+		 * Class variable setter overloading
+		 *
+		 * @param string $name
+		 * @param mixed $value
+		 * @return mixed
+		 */
 		function __set($name, $value) { return $this->set($name, $value); }
 		
 		/**

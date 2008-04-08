@@ -11,11 +11,19 @@
 	 * @link http://elgg.org/
 	 */
 
-	require_once('extender.php'); // include the superclass
+    /**
+     * Include the ElggExtender superclass
+     * 
+     */
+	require_once('extender.php');
 
 	/**
-	 * @class ElggAnnotation
+	 * ElggAnnotation
+	 * 
 	 * An annotation is similar to metadata each entity can contain more than one of each annotation.
+	 * 
+	 * @package Elgg
+	 * @subpackage Core
 	 * @author Marcus Povey <marcus@dushka.co.uk>
 	 */
 	class ElggAnnotation extends ElggExtender
@@ -46,14 +54,32 @@
 			}
 		}
 		
+		/**
+		 * Class variable getter overloading
+		 *
+		 * @param string $name
+		 * @return mixed
+		 */
 		function __get($name) {
 			return $this->get($name);
 		}
 		
+		/**
+		 * Class variable setter overloading
+		 *
+		 * @param string $name
+		 * @param mixed $value
+		 * @return void
+		 */
 		function __set($name, $value) {
 			return $this->set($name, $value);
 		}		
 		
+		/**
+		 * Save this instance
+		 *
+		 * @return int an object id
+		 */
 		function save()
 		{
 			if ($this->id > 0)

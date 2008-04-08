@@ -11,10 +11,11 @@
 	 * @link http://elgg.org/
 	 */
      
-    // Load searunner framework
+    /**
+     *  Load searunner framework
+     */
         require_once(dirname(__FILE__) . "/engine/start.php");
 
-    // Get actions
         $action = get_input("action");
         action($action);
     
