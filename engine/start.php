@@ -25,18 +25,11 @@
 			throw new InstallationException("Elgg could not load its main library.");
 		}
 		
-		if (!@include_once(dirname(__FILE__) . "/lib/actions.php")) {
-			throw new InstallationException("Elgg could not load the Actions library");
-		}	
-
-		if (!@include_once(dirname(__FILE__) . "/lib/sessions.php")) {
-			throw new InstallationException("Elgg could not load the Sessions library");
-		}	
-
 		if (!@include_once(dirname(__FILE__) . "/lib/export.php")) {		// Export library
 			echo "Error in installation: could not load the Export library.";
 			exit;
 		}
+
 		
 	/**
 	 * Establish handlers
@@ -72,6 +65,14 @@
 		 * except for a few exceptions
 		 */
 			
+			if (!@include_once(dirname(__FILE__) . "/lib/actions.php")) {
+				throw new InstallationException("Elgg could not load the Actions library");
+			}	
+
+			if (!@include_once(dirname(__FILE__) . "/lib/sessions.php")) {
+				throw new InstallationException("Elgg could not load the Sessions library");
+			}	
+
 		// We don't want to load or reload these files
 	
 			$file_exceptions = array(

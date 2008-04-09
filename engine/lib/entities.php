@@ -587,7 +587,7 @@
 		
 		if ($entity->canEdit()) {
 			if (trigger_event('update',$entity->type,$entity)) {
-				return update_data("UPDATE {$CONFIG->dbprefix}entities set owner_guid='$owner_guid', access_id='$access_id', time_updated='$time' WHERE guid=$guid and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))");
+				return update_data("UPDATE {$CONFIG->dbprefix}entities set owner_guid='$owner_guid', access_id='$access_id', time_updated='$time' WHERE guid=$guid");
 			}
 		}
 	}
