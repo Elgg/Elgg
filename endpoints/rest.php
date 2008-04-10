@@ -33,8 +33,8 @@
 		throw new ConfigurationException("Sorry, API access has been disabled by the administrator.");
 
 	// Register some default PAM methods, plugins can add their own
-	register_api_pam_handler('pam_auth_session');
-	register_api_pam_handler('pam_auth_hmac');
+	register_pam_handler('pam_auth_session');
+	register_pam_handler('pam_auth_hmac');
 	
 	// Get parameter variables
 	$format = get_input('format', 'php');
@@ -42,7 +42,7 @@
 	$result = null;
 	
 	// Authenticate session
-	if (api_pam_authenticate())
+	if (pam_authenticate())
 	{
 		// Authenticated somehow, now execute.
 		$token = "";
@@ -51,6 +51,8 @@
 
 		$result = execute_method($method, $params, $token);
 	}
+	else
+		throw new SecurityException("No authentication methods were found that could authenticate this API request.");
 	
 	// Finally output
 	if (!($result instanceof GenericResult))

@@ -615,76 +615,11 @@
 	}
 	
 	// PAM functions //////////////////////////////////////////////////////////////////////////
-	
-	$PAM_HANDLERS = array(); 
-	$PAM_HANDLER_MSG = array(); // Messages
-	
-	/**
-	 * Register a method of authenticating an incoming API request.
-	 * This function registers a PAM handler which is a function that matches the desciption pam_handler_name() 
-	 * and returns either 'true' if an incoming api request was authorised, false or throws an exception if not.
-	 * 
-	 * The handlers are tried in turn until one of them successfully authenticates the session.
-	 * 
-	 * This architecture lets an administrator choose what methods to accept for API authentication or 
-	 *
-	 * @param unknown_type $handler
-	 */
-	function register_api_pam_handler($handler)
-	{
-		global $PAM_HANDLERS;
-		
-		if (is_callable($handler))
-		{
-			$PAM_HANDLERS[$handler] = $handler;
-			return true;
-		}
-		
-		return false;
-	}
-	
-	/**
-	 * Magically authenticate an API session using one of the registered methods.
-	 * 
-	 * This function will return true if authentication was possible, otherwise it'll throw an exception.
-	 * 
-	 * If $CONFIG->debug is set then additional debug information will be returned.
-	 */
-	function api_pam_authenticate()
-	{
-		global $PAM_HANDLERS, $PAM_HANDLER_MSG;
-		global $CONFIG;
-		
-		$dbg_msgs = array();
 
-		foreach ($PAM_HANDLERS as $k => $v)
-		{
-			try {
-				// Execute the handler 
-				if ($v())
-				{
-					// Explicitly returned true
-					$PAM_HANDLER_MSG[$k] = "Authenticated!";
-
-					return true;
-				}
-				else
-					$PAM_HANDLER_MSG[$k] = "Not Authenticated.";
-			} 
-			catch (Exception $e)
-			{
-				$PAM_HANDLER_MSG[$k] = "$e";
-			}	
-		}
-		
-		// Got this far, so no methods could be found to authenticate the session
-		throw new SecurityException("No authentication methods were found that could authenticate this request.");
-	}
-	
 	/**
 	 * See if the user has a valid login sesson.
 	 */
-	function pam_auth_session()
+	function pam_auth_session($credentials = NULL)
 	{
 		return isloggedin();
 	}
@@ -692,7 +627,7 @@
 	/**
 	 * Secure authentication through headers and HMAC.
 	 */
-	function pam_auth_hmac()
+	function pam_auth_hmac($credentials = NULL)
 	{
 		global $CONFIG;
 		
