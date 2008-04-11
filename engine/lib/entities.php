@@ -390,7 +390,7 @@
 			$tmp[] = new ODDEntity(
 				$uuid,
 				$this->attributes['type'], 
-				get_subtype_from_id($tmp->attributes['subtype'])
+				get_subtype_from_id($this->attributes['subtype'])
 			);
 			
 			// Now add its attributes
@@ -399,24 +399,24 @@
 				switch ($k)
 				{
 					case 'guid' : break;		// Dont use guid
-					case 'subtype' : break;		// Hide subtype
+					case 'subtype' : break;		// The subtype
 					case 'type' : break;		// Don't use type
 					case 'access_id' : break;	// Don't use access - if can export then its public for you, then importer decides what access to give this object.
 
 					case 'owner_guid' :			// Convert owner guid to uuid
 						 $k = 'owner_uuid';
 						 $v = guid_to_uuid($v);
-						 $tmp[] = new ODDMetadata($uuid . "attr/$k/", $uuid, $k, $v, "attribute");
+						 $tmp[] = new ODDMetadata($uuid . "attr/$k/", $uuid, $k, $v);
 					break; 	
 					
 					case 'time_created' :		// Convert to RFC 822
 					case 'time_updated' : 		// Convert to RFC 822
 						$v = date('r', $v);		
-						$tmp[] = new ODDMetadata($uuid . "attr/$k/", $uuid, $k, $v, "attribute");
+						$tmp[] = new ODDMetadata($uuid . "attr/$k/", $uuid, $k, $v);
 					break;
 					
 					default : 
-						$tmp[] = new ODDMetadata($uuid . "attr/$k/", $uuid, $k, $v, "attribute");
+						$tmp[] = new ODDMetadata($uuid . "attr/$k/", $uuid, $k, $v);
 				}
 			}
 			
