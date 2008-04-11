@@ -21,7 +21,7 @@
 	{
 		/**
 		 * This must take the contents of the object and convert it to exportable class(es).
-		 * @return object or array of object.
+		 * @return object or array of objects.
 		 */
 	    public function export();
 	}
