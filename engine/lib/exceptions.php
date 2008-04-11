@@ -83,6 +83,16 @@
 	 */
 	class CallException extends Exception {}
 	
+	/**
+	 * Data format exception
+	 * An exception thrown when there is a problem in the format of some data.
+	 * 
+	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @package Elgg
+	 * @subpackage Exceptions
+	 */
+	class DataFormatException extends Exception {}
+	
 	// Class exceptions ///////////////////////////////////////////////////////////////////////
 
 	/**
