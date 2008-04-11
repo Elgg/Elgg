@@ -361,7 +361,7 @@
 	 */
 	function export_metadata_plugin_hook($hook, $entity_type, $returnvalue, $params)
 	{
-		// Sanity check values
+	/*	// Sanity check values
 		if ((!is_array($params)) && (!isset($params['guid'])))
 			throw new InvalidParameterException("GUID has not been specified during export, this should never happen.");
 			
@@ -378,7 +378,7 @@
 			foreach ($result as $r)
 				$returnvalue[] = $r;
 		}
-		
+		*/
 		return $returnvalue;
 	}
 	

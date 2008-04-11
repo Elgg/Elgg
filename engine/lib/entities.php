@@ -379,12 +379,49 @@
 		 */
 		public function export() 
 		{ 
-			$tmp = new stdClass; 
-			$tmp->attributes = $this->attributes; 
-			$tmp->attributes['uuid'] = guid_to_uuid($this->getGUID());
-			$tmp->attributes['owner_uuid'] = guid_to_uuid($this->owner_guid);
-			$tmp->attributes['subtype'] = get_subtype_from_id($tmp->attributes['subtype']);
-			return $tmp; 
+			global $CONFIG;
+			
+			$tmp = array();
+			
+			// Generate uuid
+			$uuid = guid_to_uuid($this->getGUID());
+			
+			// Create entity
+			$tmp[] = new ODDEntity(
+				$uuid,
+				$this->attributes['type'], 
+				get_subtype_from_id($tmp->attributes['subtype'])
+			);
+			
+			// Now add its attributes
+			foreach ($this->attributes as $k => $v)
+			{
+				switch ($k)
+				{
+					case 'guid' : break;		// Dont use guid
+					case 'subtype' : break;		// Hide subtype
+					case 'type' : break;		// Don't use type
+					case 'access_id' : break;	// Don't use access - if can export then its public for you, then importer decides what access to give this object.
+
+					case 'owner_guid' :			// Convert owner guid to uuid
+						 $k = 'owner_uuid';
+						 $v = guid_to_uuid($v);
+						 $tmp[] = new ODDMetadata($uuid . "attr/$k/", $uuid, $k, $v, "attribute");
+					break; 	
+					
+					case 'time_created' :		// Convert to RFC 822
+					case 'time_updated' : 		// Convert to RFC 822
+						$v = date('r', $v);		
+						$tmp[] = new ODDMetadata($uuid . "attr/$k/", $uuid, $k, $v, "attribute");
+					break;
+					
+					default : 
+						$tmp[] = new ODDMetadata($uuid . "attr/$k/", $uuid, $k, $v, "attribute");
+				}
+			}
+			
+			
+			return $tmp;
 		}
 		
 		// IMPORTABLE INTERFACE ////////////////////////////////////////////////////////////
@@ -395,7 +432,7 @@
 		 * @param array $data
 		 * @param int $version 
 		 */
-		public function import(array $data, $version = 1)
+		public function import(ODD $data)
 		{
 			if ($version == 1)
 			{
@@ -772,10 +809,17 @@
 		
 		// Get the entity
 		$entity = get_entity($guid);
+		if (!($entity instanceof ElggEntity))
+			throw new InvalidClassException("GUID:$guid is not an ElggEntity");
 		
-		if ($entity instanceof ElggEntity)
-			$returnvalue[] = $entity; // Add object to list of things to serialise - actual serialisation done later
-
+		$export = $entity->export();
+		
+		if (is_array($export))
+			foreach ($export as $e)
+				$returnvalue[] = $e;
+		else
+			$returnvalue[] = $export;
+		
 		return $returnvalue;
 	}
 	

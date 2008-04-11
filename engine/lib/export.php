@@ -20,7 +20,8 @@
 	interface Exportable
 	{
 		/**
-		 * This must take the contents of the object and return it as a stdClass.
+		 * This must take the contents of the object and convert it to exportable class(es).
+		 * @return object or array of object.
 		 */
 	    public function export();
 	}
@@ -35,154 +36,191 @@
 		 * Accepts an array of data to import, this data is parsed from the XML produced by export.
 		 * The function should return the constructed object data, or NULL.
 		 *
-		 * @param array $data
-		 * @param int $version Support different internal serialisation formats, should be "1"
+		 * @param ODD $data
 		 * @return mixed The newly imported object.
 		 * @throws ImportException if there was a critical error importing data.
 		 */
-		public function import(array $data, $version = 1);
-	}
-	
-	/**
-	 * Export a GUID.
-	 * 
-	 * This function exports a GUID and all information related to it in an XML format.
-	 * 
-	 * This function makes use of the "serialise" plugin hook, which is passed an array to which plugins
-	 * should add data to be serialised to.
-	 * 
-	 * @see ElggEntity for an example of its usage.
-	 * @param int $guid The GUID.
-	 * @return xml 
-	 */
-	function export($guid)
-	{
-		global $CONFIG;
-		
-		$guid = (int)$guid;  
-		
-		// Initialise the array
-		$to_be_serialised = array();
-		
-		// Trigger a hook to 
-		$to_be_serialised = trigger_plugin_hook("export", "all", array("guid" => $guid), $to_be_serialised);
-		
-		// Sanity check
-		if ((!is_array($to_be_serialised)) || (count($to_be_serialised)==0)) throw new ExportException("No such entity GUID:$guid");
-		
-		// Now serialise the result to XML
-		$wrapper = new stdClass;
-	
-		// Construct header
-		$wrapper->header = new stdClass;
-		$wrapper->header->date = date("r");
-		$wrapper->header->timestamp = time();
-		$wrapper->header->domain = $CONFIG->wwwroot;
-		$wrapper->header->exported_by = guid_to_uuid($_SESSION['id']);
-		
-		// Construct data
-		$wrapper->data = $to_be_serialised;
-	
-		return serialise_object_to_xml($wrapper, "elggexport");
-	}
-	
-
-	/**
-	 * XML 2 Array function.
-	 * Taken from http://www.bytemycode.com/snippets/snippet/445/
-	 * @license UNKNOWN - Please contact if you are the original author of this code.
-	 * @author UNKNOWN
-	 */
-	function __xml2array($xml) 
-	{
-        $xmlary = array();
-               
-        $reels = '/<(\w+)\s*([^\/>]*)\s*(?:\/>|>(.*)<\/\s*\\1\s*>)/s';
-        $reattrs = '/(\w+)=(?:"|\')([^"\']*)(:?"|\')/';
-
-        preg_match_all($reels, $xml, $elements);
-
-        foreach ($elements[1] as $ie => $xx) {
-	        $xmlary[$ie]["name"] = $elements[1][$ie];
-	       
-	        if ($attributes = trim($elements[2][$ie])) {
-	                preg_match_all($reattrs, $attributes, $att);
-	                foreach ($att[1] as $ia => $xx)
-	                        $xmlary[$ie]["attributes"][$att[1][$ia]] = $att[2][$ia];
-	        }
-	
-	        $cdend = strpos($elements[3][$ie], "<");
-	        if ($cdend > 0) {
-	                $xmlary[$ie]["text"] = substr($elements[3][$ie], 0, $cdend - 1);
-	        }
-	
-	        if (preg_match($reels, $elements[3][$ie]))
-	                $xmlary[$ie]["elements"] = __xml2array($elements[3][$ie]);
-	        else if ($elements[3][$ie]) {
-	                $xmlary[$ie]["text"] = $elements[3][$ie];
-	        }
-        }
-
-        return $xmlary;
+		public function import(ODD $data);
 	}
 
-	$IMPORTED_DATA = array();
-	$IMPORTED_OBJECT_COUNTER = 0;
+	/**
+	 * Export exception
+	 * 
+	 * @package Elgg
+	 * @subpackage Exceptions
+	 *
+	 */
+	class ExportException extends DataFormatException {}
 	
 	/**
-	 * This function processes an element, passing elements to the plugin stack to see if someone will
-	 * process it.
-	 * If nobody processes the top level element, the sub level elements are processed.
+	 * Import exception
+	 *
+	 * @package Elgg
+	 * @subpackage Exceptions
 	 */
-	function __process_element(array $dom)
+	class ImportException extends DataFormatException {}
+	
+	/**
+	 * Open Data Definition (ODD) superclass.
+	 * @package Elgg
+	 * @subpackage Core
+	 * @author Marcus Povey
+	 */
+	abstract class ODD
 	{
-		global $IMPORTED_DATA, $IMPORTED_OBJECT_COUNTER;
+		/**
+		 * ODD Version
+		 *
+		 * @var string
+		 */
+		private $ODDSupportedVersion = "1.0"; 
 		
-		foreach ($dom as $element)
+		/**
+		 * Attributes.
+		 */
+		private $attributes = array();
+		
+		/**
+		 * Optional body.
+		 */
+		private $body;
+		
+		/**
+		 * Construct an ODD document with initial values.
+		 */
+		public function __construct()
 		{
-			// See if anyone handles this element, return true if it is.
-			$handled = trigger_plugin_hook("import", "all", array("name" => $element['name'], "element" => $element), $to_be_serialised);
+			$this->body = "";
+			$this->setAttribute('generated', date("r"));
+		}
 		
-			// If not, then see if any of its sub elements are handled
-			if (!$handled) 
-			{
-				if (isset($element['elements'])) 
-					__process_element($element['elements']);
-			}
-			else
-			{
-				$IMPORTED_OBJECT_COUNTER ++; // Increment validation counter
-				$IMPORTED_DATA[] = $handled; // Return the constructed object
-			}
+		protected function setAttribute($key, $value) { $this->attributes[$key] = $value; }
+		protected function getAttribute($key) 
+		{ 
+			if (isset($this->attributes[$key]))
+				return $this->attributes[$key];
+				
+			return NULL;
+		}
+		protected function setBody($value) { $this->body = $value; }
+		protected function getBody() { return $this->body; }
+		
+		/**
+		 * Return the version of ODD being used.
+		 *
+		 * @return real
+		 */
+		public function getVersion() { return $this->ODDSupportedVersion; }
+		
+		/**
+		 * For serialisation, implement to return a string name of the tag eg "header" or "metadata".
+		 * @return string
+		 */
+		abstract protected function getTagName();
+
+		/**
+		 * Magic function to generate valid ODD XML for this item.
+		 */
+		public function __toString()
+		{
+			// Construct attributes
+			$attr = "";
+			foreach ($this->attributes as $k => $v)
+				$attr .= ($v!="") ? "$k=\"$v\" " : "";
+			
+			$body = $this->getBody();
+			$tag = $this->getTagName();
+			
+			$end = "/>";
+			if ($body!="")
+				$end = ">$body</$tag>";
+			
+			return "<$tag $attr" . $end . "\n";  
 		}
 	}
 	
 	/**
-	 * Import an XML serialisation of an object.
-	 * This will make a best attempt at importing a given xml doc.
-	 *
-	 * @param string $xml
-	 * @return array An array of imported objects (these have already been saved).
-	 * @throws Exception if there was a problem importing the data.
+	 * ODD Header class.
+	 * @package Elgg
+	 * @subpackage Core
+	 * @author Marcus Povey
 	 */
-	function import($xml)
+	class ODDHeader extends ODD
 	{
-		global $IMPORTED_DATA, $IMPORTED_OBJECT_COUNTER;
 		
-		$IMPORTED_DATA = array();
-		$IMPORTED_OBJECT_COUNTER = 0;
-		$IMPORTED_GUID_MAP = array();
+		function __construct($extension = "SN1.0")
+		{
+			parent::__construct();
+			
+			$this->setAttribute('version', $this->getVersion());
+			$this->setAttribute('extension', $extension);
+		}
 		
-		$dom = __xml2array($xml);
-		
-		__process_element($dom);
-		
-		if ($IMPORTED_OBJECT_COUNTER!= count($IMPORTED_DATA))
-			throw new ImportException("Not all elements were imported.");
-		
-		return $IMPORTED_DATA;
+		protected function getTagName() { return "header"; }
 	}
-
+	
+	/**
+	 * ODD Entity class.
+	 * @package Elgg
+	 * @subpackage Core
+	 * @author Marcus Povey
+	 */
+	class ODDEntity extends ODD
+	{
+		function __construct($uuid, $class, $subclass = "")
+		{
+			parent::__construct();
+			
+			$this->setAttribute('uuid', $uuid);
+			$this->setAttribute('class', $class);
+			$this->setAttribute('subclass', $subclass);	
+		}
+		
+		protected function getTagName() { return "entity"; }
+	}
+	
+	/**
+	 * ODD Metadata class.
+	 * @package Elgg
+	 * @subpackage Core
+	 * @author Marcus Povey
+	 */
+	class ODDMetaData extends ODD
+	{
+		function __construct($uuid, $entity_uuid, $name, $value, $type = "")
+		{
+			parent::__construct();
+			
+			$this->setAttribute('uuid', $uuid);
+			$this->setAttribute('entity_uuid', $entity_uuid);
+			$this->setAttribute('name', $name);
+			$this->setAttribute('type', $type);	
+			$this->setBody($value);
+		}
+		
+		protected function getTagName() { return "metadata"; }
+	}
+	
+	/**
+	 * ODD Relationship class.
+	 * @package Elgg
+	 * @subpackage Core
+	 * @author Marcus Povey
+	 */
+	class ODDRelationship extends ODD
+	{
+		function __construct($uuid1, $verb, $uuid2)
+		{
+			parent::__construct();
+			
+			$this->setAttribute('uuid1', $uuid);
+			$this->setAttribute('verb', $uuid);
+			$this->setAttribute('uuid2', $uuid);
+		}
+		
+		protected function getTagName() { return "relationship"; }
+	}
+	
 	/**
 	 * Generate a UUID from a given GUID.
 	 * 
@@ -192,7 +230,7 @@
 	{
 		global $CONFIG;
 		
-		return "UUID:".md5($CONFIG->wwwroot)  . ":$guid";
+		return $CONFIG->wwwroot  . "odd/$guid/";
 	}
 	
 	/**
@@ -204,15 +242,12 @@
 	{
 		global $CONFIG;
 		
-		$domain = md5($CONFIG->wwwroot);
-		$tmp = explode(":",$uuid);
-		
-		if (strcmp($tmp[1], $domain) == 0)
+		if (strpos($uuid, $CONFIG->wwwroot) === 0)
 			return true;
 			
 		return false;
 	}
-
+	
 	/**
 	 * This function attempts to retrieve a previously imported entity via its UUID.
 	 * 
@@ -245,97 +280,105 @@
 	}
 	
 	/**
-	 * This function serialises an object recursively into an XML representation.
-	 * The function attempts to call $data->export() which expects a stdClass in return, otherwise it will attempt to
-	 * get the object variables using get_object_vars (which will only return public variables!)
-	 * @param $data object The object to serialise.
-	 * @param $n int Level, only used for recursion.
-	 * @return string The serialised XML output.
+	 * Export a GUID.
+	 * 
+	 * This function exports a GUID and all information related to it in an XML format.
+	 * 
+	 * This function makes use of the "serialise" plugin hook, which is passed an array to which plugins
+	 * should add data to be serialised to.
+	 * 
+	 * @see ElggEntity for an example of its usage.
+	 * @param int $guid The GUID.
+	 * @return xml 
 	 */
-	function serialise_object_to_xml($data, $name = "", $n = 0)
+	function export($guid)
 	{
-		$classname = ($name=="" ? get_class($data) : $name);
+		$guid = (int)$guid;  
 		
-		$vars = method_exists($data, "export") ? get_object_vars($data->export()) : get_object_vars($data); 
+		// Initialise the array
+		$to_be_serialised = array();
 		
-		$output = "";
+		// Set header
+		$to_be_serialised[] = new ODDHeader();
 		
-		if (($n==0) || ( is_object($data) && !($data instanceof stdClass))) $output = "<$classname>";
-
-		foreach ($vars as $key => $value)
-		{
-			$output .= "<$key type=\"".gettype($value)."\">";
-			
-			if (is_object($value))
-				$output .= serialise_object_to_xml($value, $key, $n+1);
-			else if (is_array($value))
-				$output .= serialise_array_to_xml($value, $n+1);
-			else
-				$output .= htmlentities($value);
-			
-			$output .= "</$key>\n";
-		}
+		// Trigger a hook to 
+		$to_be_serialised = trigger_plugin_hook("export", "all", array("guid" => $guid), $to_be_serialised);
 		
-		if (($n==0) || ( is_object($data) && !($data instanceof stdClass))) $output .= "</$classname>\n";
+		// Sanity check
+		if ((!is_array($to_be_serialised)) || (count($to_be_serialised)==0)) throw new ExportException("No such entity GUID:$guid");
+		
+		$output = "<odd>\n";
+		
+		foreach ($to_be_serialised as $odd)
+			$output .= "$odd";
+		
+		$output .= "</odd>\n";
 		
 		return $output;
 	}
+	
+	
+	
 
+	
+
+	$IMPORTED_DATA = array();
+	$IMPORTED_OBJECT_COUNTER = 0;
+	
 	/**
-	 * Serialise an array.
-	 *
-	 * @param array $data
-	 * @param int $n Used for recursion
-	 * @return string
+	 * This function processes an element, passing elements to the plugin stack to see if someone will
+	 * process it.
+	 * If nobody processes the top level element, the sub level elements are processed.
 	 */
-	function serialise_array_to_xml(array $data, $n = 0)
+/*	function __process_element(array $dom)
 	{
-		$output = "";
+		global $IMPORTED_DATA, $IMPORTED_OBJECT_COUNTER;
 		
-		if ($n==0) $output = "<array>\n";
-		
-		foreach ($data as $key => $value)
+		foreach ($dom as $element)
 		{
-			$item = "array_item";
-			
-			if (is_numeric($key))
-				$output .= "<$item name=\"$key\" type=\"".gettype($value)."\">";
+			// See if anyone handles this element, return true if it is.
+			$handled = trigger_plugin_hook("import", "all", array("name" => $element['name'], "element" => $element), $to_be_serialised);
+		
+			// If not, then see if any of its sub elements are handled
+			if (!$handled) 
+			{
+				if (isset($element['elements'])) 
+					__process_element($element['elements']);
+			}
 			else
 			{
-				$item = $key;
-				$output .= "<$item type=\"".gettype($value)."\">";
+				$IMPORTED_OBJECT_COUNTER ++; // Increment validation counter
+				$IMPORTED_DATA[] = $handled; // Return the constructed object
 			}
-			
-			if (is_object($value))
-				$output .= serialise_object_to_xml($value, "", $n+1);
-			else if (is_array($value))
-				$output .= serialise_array_to_xml($value, $n+1);
-			else
-				$output .= htmlentities($value);
-			
-			$output .= "</$item>\n";
 		}
-		
-		if ($n==0) $output = "</array>\n";
-		
-		return $output;
 	}
 	
 	/**
-	 * Export exception
-	 * 
-	 * @package Elgg
-	 * @subpackage Exceptions
+	 * Import an XML serialisation of an object.
+	 * This will make a best attempt at importing a given xml doc.
 	 *
+	 * @param string $xml
+	 * @return array An array of imported objects (these have already been saved).
+	 * @throws Exception if there was a problem importing the data.
 	 */
-	class ExportException extends Exception {}
+/*	function import($xml)
+	{
+		global $IMPORTED_DATA, $IMPORTED_OBJECT_COUNTER;
+		
+		$IMPORTED_DATA = array();
+		$IMPORTED_OBJECT_COUNTER = 0;
+		$IMPORTED_GUID_MAP = array();
+		
+		$dom = __xml2array($xml);
+		
+		__process_element($dom);
+		
+		if ($IMPORTED_OBJECT_COUNTER!= count($IMPORTED_DATA))
+			throw new ImportException("Not all elements were imported.");
+		
+		return $IMPORTED_DATA;
+	}
+
 	
-	/**
-	 * Import exception
-	 *
-	 * @package Elgg
-	 * @subpackage Exceptions
-	 */
-	class ImportException extends Exception {}
-	
+	*/
 ?>

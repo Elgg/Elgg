@@ -427,7 +427,7 @@
 	function export_annotation_plugin_hook($hook, $entity_type, $returnvalue, $params)
 	{
 		// Sanity check values
-		if ((!is_array($params)) && (!isset($params['guid'])))
+/*		if ((!is_array($params)) && (!isset($params['guid'])))
 			throw new InvalidParameterException("GUID has not been specified during export, this should never happen.");
 			
 		if (!is_array($returnvalue))
@@ -442,7 +442,7 @@
 		{
 			foreach ($result as $r)
 				$returnvalue[] = $r;
-		}
+		}*/
 		
 		return $returnvalue;
 	}

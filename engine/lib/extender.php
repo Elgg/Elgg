@@ -122,7 +122,7 @@
 		 * @return ElggExtender
 		 * @throws ImportException
 		 */
-		public function import(array $data, $version = 1)
+		public function import(ODD $data)
 		{
 			if ($version == 1)
 			{

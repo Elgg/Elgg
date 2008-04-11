@@ -126,7 +126,7 @@
 		 * @return ElggRelationship
 		 * @throws ImportException
 		 */
-		public function import(array $data, $version = 1)
+		public function import(ODD $data)
 		{
 			if ($version == 1)
 			{
@@ -363,7 +363,7 @@
 	{
 		global $CONFIG;
 		
-		// Sanity check values
+/*		// Sanity check values
 		if ((!is_array($params)) && (!isset($params['guid'])))
 			throw new InvalidParameterException("GUID has not been specified during export, this should never happen.");
 			
@@ -379,7 +379,7 @@
 			foreach ($result as $r)
 				$returnvalue[] = $r;
 		}
-		
+*/		
 		return $returnvalue;
 	}
 	
