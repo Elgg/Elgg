@@ -100,8 +100,8 @@
 				if (count($ERRORS))
 					$result->runtime_errors = $ERRORS;
 					
-				if (count($PAM_HANDLER_MSG))
-					$result->pam = $PAM_HANDLER_MSG;
+				if (count($_PAM_HANDLERS_MSG))
+					$result->pam = $_PAM_HANDLERS_MSG;
 			}
 
 			return $result;
