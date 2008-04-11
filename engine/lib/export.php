@@ -187,7 +187,7 @@
 	 */
 	class ODDMetaData extends ODD
 	{
-		function __construct($uuid, $entity_uuid, $name, $value, $type = "")
+		function __construct($uuid, $entity_uuid, $name, $value, $type = "", $owner_uuid = "")
 		{
 			parent::__construct();
 			
@@ -195,6 +195,7 @@
 			$this->setAttribute('entity_uuid', $entity_uuid);
 			$this->setAttribute('name', $name);
 			$this->setAttribute('type', $type);	
+			$this->setAttribute('owner_uuid', $owner_uuid);
 			$this->setBody($value);
 		}
 		
