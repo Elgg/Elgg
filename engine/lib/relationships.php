@@ -111,11 +111,15 @@
 		 */
 		public function export()
 		{
-			$tmp = new stdClass;
-			$tmp->attributes = $this->attributes;
-			$tmp->attributes['uuid_one'] = guid_to_uuid($this->guid_one);
-			$tmp->attributes['uuid_two'] = guid_to_uuid($this->guid_two);
-			return $tmp;
+			$verb = get_verb_from_relationship($this->relationship); 
+			if (!$verb)
+				throw new ExportException("There is no verb mapping for '{$this->relationship}'.");
+			
+			return new ODDRelationship(
+				guid_to_uuid($this->guid_one),
+				$verb,
+				guid_to_uuid($this->guid_two)
+			);
 		}
 		
 		/**
@@ -239,7 +243,7 @@
 		$relationship = sanitise_string($relationship);
 		$guid_two = (int)$guid_two;
 			
-		return insert_data("INSERT into {$CONFIG->dbprefix}entity_relationships (guid_one, relationship, guid_two) values ($guid_one, 'relationship', $guid_two)");
+		return insert_data("INSERT into {$CONFIG->dbprefix}entity_relationships (guid_one, relationship, guid_two) values ($guid_one, '$relationship', $guid_two)");
 	}
 	
 	/**
@@ -282,6 +286,22 @@
 		return delete_data("DELETE from {$CONFIG->dbprefix}entity_relationships where guid_one=$guid_one and relationship='$relationship' and guid_two=$guid_two");
 	}
 
+	/**
+	 * Get all the relationships for a given guid.
+	 * 
+	 * @param int $guid
+	 */
+	function get_entity_relationships($guid)
+	{
+		global $CONFIG;
+		
+		$guid = (int)$guid;
+		
+		$query = "SELECT * from {$CONFIG->dbprefix}entity_relationships where guid_one=$guid";
+		
+		return get_data($query, "row_to_elggrelationship");
+	}
+	
 	/**
 	 * Return entities matching a given query joining against a relationship.
 	 * 
@@ -338,7 +358,6 @@
 		return get_data($query, "entity_row_to_elggstar");
 	}
 	
-	
 	/**
 	 *  Handler called by trigger_plugin_hook on the "import" event.
 	 */
@@ -363,7 +382,7 @@
 	{
 		global $CONFIG;
 		
-/*		// Sanity check values
+		// Sanity check values
 		if ((!is_array($params)) && (!isset($params['guid'])))
 			throw new InvalidParameterException("GUID has not been specified during export, this should never happen.");
 			
@@ -372,14 +391,14 @@
 			
 		$guid = (int)$params['guid'];
 		
-		$result = get_data("SELECT * from {$CONFIG->dbprefix}entity_relationships where guid_one = $guid");
+		$result = get_entity_relationships($guid);
 		
 		if ($result)
 		{
 			foreach ($result as $r)
-				$returnvalue[] = $r;
+				$returnvalue[] = $r->export();
 		}
-*/		
+		
 		return $returnvalue;
 	}
 	
