@@ -24,20 +24,26 @@
 	$key = get_input('key');
 	$value = get_input('value');
 	
-	echo "ACTION $callaction"; 
+	$relationship = get_input('relationship');
+	$guid2 = get_input('guid2');
 	
 	
 	switch ($callaction)
 	{
-		case 'metadata' : echo "META";
+		case 'metadata' :
 			if (!create_metadata($eguid, $key, $value))
-				echo "Could not create metadata with $guid:$key:$value";
+				echo "Could not create metadata with $eguid:$key:$value";
 		break;
 			
-		case 'annotations' : echo "ANNO";
+		case 'annotations' :
 			if (!create_annotation($eguid, $key, $value))
-				echo "Could not create metadata with $guid:$key:$value";
-		break;	
+				echo "Could not create metadata with $eguid:$key:$value";
+		break;
+
+		case 'relationship' :
+			if (!add_entity_relationship($eguid, $relationship, $guid2))
+				echo "Could not create relationship between $eguid:$relationship:$guid2";
+		break;
 	}
 		
 	// Get the current page's owner

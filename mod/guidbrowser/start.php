@@ -30,7 +30,8 @@
 					array(
 						'entity' => $entity,
 						'metadata' => get_metadata_for_entity($entity->guid),
-						'annotations' => get_annotations($entity->guid)
+						'annotations' => get_annotations($entity->guid),
+						'relationships' => get_entity_relationships($entity->guid)
 					)
 				)
 			) 

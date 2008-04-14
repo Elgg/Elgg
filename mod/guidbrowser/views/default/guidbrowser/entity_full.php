@@ -12,6 +12,7 @@
 	$entity = $vars['entity'];
 	$metadata = $vars['metadata'];
 	$annotations = $vars['annotations'];
+	$relationships = $vars['relationships'];
 	
 ?>
 <div>
@@ -87,6 +88,36 @@
 			<input name="callaction" type="hidden" value="annotations" />
 			Key : <input name="key" type="text" />
 			Value : <input name="value" type="text" /> 
+			<input name="submit" type="submit" value="submit" />
+		</form>
+	</div>
+</div>
+
+<div id="relationship">
+<h2>Relationships</h2>	
+	<?php
+		foreach ($relationships as $r)
+		{
+?>
+		<div>
+			<table>
+				<tr>
+				<td><b><?php echo $r->relationship; ?></b></td>
+				<td><?php echo $r->guid_two; ?></td> 
+				</tr>
+			</table>
+		</div>
+<?php
+		}
+	?>
+	
+	<div>
+		<form method="post">
+			<input name="eguid" type="hidden" value="<?php echo $entity->guid; ?>" />
+			<input name="owner_id" type="hidden" value="<?php echo page_owner(); ?>" />
+			<input name="callaction" type="hidden" value="relationship" />
+			Relationship : <input name="relationship" type="text" />
+			Guid : <input name="guid2" type="text" /> 
 			<input name="submit" type="submit" value="submit" />
 		</form>
 	</div>
