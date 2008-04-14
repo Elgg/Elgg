@@ -94,16 +94,16 @@
 			$this->setAttribute('generated', date("r"));
 		}
 		
-		protected function setAttribute($key, $value) { $this->attributes[$key] = $value; }
-		protected function getAttribute($key) 
+		public function setAttribute($key, $value) { $this->attributes[$key] = $value; }
+		public function getAttribute($key) 
 		{ 
 			if (isset($this->attributes[$key]))
 				return $this->attributes[$key];
 				
 			return NULL;
 		}
-		protected function setBody($value) { $this->body = $value; }
-		protected function getBody() { return $this->body; }
+		public function setBody($value) { $this->body = $value; }
+		public function getBody() { return $this->body; }
 		
 		/**
 		 * Return the version of ODD being used.
@@ -222,6 +222,39 @@
 		protected function getTagName() { return "relationship"; }
 	}
 	
+	/**
+	 * Attempt to construct an ODD object out of a XmlElement or sub-elements.
+	 * 
+	 * @param XmlElement $element The element(s)
+	 * @return mixed An ODD object if the element can be handled, or false.
+	 */
+	function ODD_factory(XmlElement $element)
+	{
+		$name = $element->name; 
+		$odd = false;
+		
+		switch ($name)
+		{
+			case 'header' : $odd = new ODDHeader(); break;
+			case 'entity' : $odd = new ODDEntity("","",""); break;
+			case 'metadata' : $odd = new ODDMetaData("","","",""); break;
+			case 'relationship' : $odd = new ODDRelationship("","",""); break;
+		}
+		
+		// Now populate values
+		if ($odd)
+		{
+			// Attributes
+			foreach ($element->attributes as $k => $v)
+				$odd->setAttribute($k,$v);
+				
+			// Body
+			$odd->setBody($element->content);
+		}
+		
+		return $odd;
+	}
+	
 	/** Relationship verb mapping */
 	$ODD_RELATIONSHIP_VERBS = array();
 	
@@ -338,9 +371,13 @@
 	function __process_element($element)
 	{
 		global $IMPORTED_DATA, $IMPORTED_OBJECT_COUNTER;
+				
+		// See if we can convert the element into an ODD element
+		$odd = ODD_factory($element);
 		
 		// See if anyone handles this element, return true if it is.
-		$handled = trigger_plugin_hook("import", "all", array("name" => $element->name, "element" => $element), $to_be_serialised);
+		if ($odd)
+			$handled = trigger_plugin_hook("import", "all", array("element" => $odd), $to_be_serialised);
 
 		// If not, then see if any of its sub elements are handled
 		if (!$handled) 
