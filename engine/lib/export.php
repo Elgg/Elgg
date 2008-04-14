@@ -214,9 +214,9 @@
 		{
 			parent::__construct();
 			
-			$this->setAttribute('uuid1', $uuid);
-			$this->setAttribute('verb', $uuid);
-			$this->setAttribute('uuid2', $uuid);
+			$this->setAttribute('uuid1', $uuid1);
+			$this->setAttribute('verb', $verb);
+			$this->setAttribute('uuid2', $uuid2);
 		}
 		
 		protected function getTagName() { return "relationship"; }
