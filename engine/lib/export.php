@@ -239,7 +239,6 @@
 			case 'entity' : $odd = new ODDEntity("","",""); break;
 			case 'metadata' : $odd = new ODDMetaData("","","",""); break;
 			case 'relationship' : $odd = new ODDRelationship("","",""); break;
-			default: throw new ImportException("Unrecognised ODD tag '$name' in import data, check version!");
 		}
 		
 		// Now populate values
