@@ -222,6 +222,49 @@
 		protected function getTagName() { return "relationship"; }
 	}
 	
+	/** Relationship verb mapping */
+	$ODD_RELATIONSHIP_VERBS = array();
+	
+	/**
+	 * This function provides a mapping between entity relationships and ODD relationship verbs.
+	 * @param string $relationship The relationship as stored in the database, eg "friend" or "member of"
+	 * @param string $verb The verb, eg "friends" or "joins"
+	 */
+	function register_odd_relationship_mapping($relationship, $verb)
+	{
+		global $ODD_RELATIONSHIP_VERBS;
+		
+		$ODD_RELATIONSHIP_VERBS[$relationship] = $verb;
+	}
+	
+	/**
+	 * Return a mapping for relationship to a pre-registered ODD verb, or false.
+	 * @param string $relationship The relationship
+	 */
+	function get_verb_from_relationship($relationship)
+	{
+		global $ODD_RELATIONSHIP_VERBS;
+		
+		if (isset($ODD_RELATIONSHIP_VERBS[$relationship]))
+			return $ODD_RELATIONSHIP_VERBS[$relationship];
+		
+		return false;
+	}
+	
+	/**
+	 * Return the relationship registered with a given verb, or false.
+	 * @param string $verb The verb.
+	 */
+	function get_relationship_from_verb($verb)
+	{
+		global $ODD_RELATIONSHIP_VERBS;
+		
+		foreach ($ODD_RELATIONSHIP_VERBS as $k => $v)
+			if ($v == $verb) return $k;
+			
+		return false;
+	}
+	
 	/**
 	 * Generate a UUID from a given GUID.
 	 * 
