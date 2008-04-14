@@ -12,6 +12,25 @@
 	 */
 
 	/**
+	 * @class XMLElement
+	 * A class representing an XML element for import.
+	 */
+	class XmlElement 
+	{
+		/** The name of the element */
+		public $name;
+		
+		/** The attributes */
+		public $attributes;
+		
+		/** CData */
+		public $content;
+		
+		/** Child elements */
+		public $children;
+	};
+	
+	/**
 	 * This function serialises an object recursively into an XML representation.
 	 * The function attempts to call $data->export() which expects a stdClass in return, otherwise it will attempt to
 	 * get the object variables using get_object_vars (which will only return public variables!)
@@ -89,41 +108,53 @@
 	}
 	
 	/**
-	 * XML 2 Array function.
-	 * Taken from http://www.bytemycode.com/snippets/snippet/445/
-	 * @license UNKNOWN - Please contact if you are the original author of this code.
-	 * @author UNKNOWN
+	 * Parse an XML file into an object.
+	 * Based on code from http://de.php.net/manual/en/function.xml-parse-into-struct.php by
+	 * efredricksen at gmail dot com
+	 * 
+	 * @param string $xml The XML.
 	 */
-	function xml2array($xml) 
+	function xml_2_object($xml)
 	{
-        $xmlary = array();
-               
-        $reels = '/<(\w+)\s*([^\/>]*)\s*(?:\/>|>(.*)<\/\s*\\1\s*>)/s';
-        $reattrs = '/(\w+)=(?:"|\')([^"\']*)(:?"|\')/';
-
-        preg_match_all($reels, $xml, $elements);
-
-        foreach ($elements[1] as $ie => $xx) {
-	        $xmlary[$ie]["name"] = $elements[1][$ie];
-	       
-	        if ($attributes = trim($elements[2][$ie])) {
-	                preg_match_all($reattrs, $attributes, $att);
-	                foreach ($att[1] as $ia => $xx)
-	                        $xmlary[$ie]["attributes"][$att[1][$ia]] = $att[2][$ia];
-	        }
-	
-	        $cdend = strpos($elements[3][$ie], "<");
-	        if ($cdend > 0) {
-	                $xmlary[$ie]["text"] = substr($elements[3][$ie], 0, $cdend - 1);
-	        }
-	
-	        if (preg_match($reels, $elements[3][$ie]))
-	                $xmlary[$ie]["elements"] = __xml2array($elements[3][$ie]);
-	        else if ($elements[3][$ie]) {
-	                $xmlary[$ie]["text"] = $elements[3][$ie];
-	        }
-        }
-
-        return $xmlary;
+		$parser = xml_parser_create();
+		
+		// Parse $xml into a structure
+		xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
+		xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);	
+		xml_parse_into_struct($parser, $xml, $tags);
+		
+ 		xml_parser_free($parser);
+ 		
+ 		$elements = array(); 
+  		$stack = array();
+  		
+  		foreach ($tags as $tag)
+  		{
+			$index = count($elements);
+			
+  			if ($tag['type'] == "complete" || $tag['type'] == "open") 
+  			{
+      			$elements[$index] = new XmlElement;
+      			$elements[$index]->name = $tag['tag'];
+      			$elements[$index]->attributes = $tag['attributes'];
+      			$elements[$index]->content = $tag['value'];
+      			
+      			if ($tag['type'] == "open") 
+      			{ 
+        			$elements[$index]->children = array();
+        			$stack[count($stack)] = &$elements;
+        			$elements = &$elements[$index]->children;
+      			}
+    		}
+    		
+    		if ($tag['type'] == "close") 
+    		{
+      			$elements = &$stack[count($stack) - 1];
+      			unset($stack[count($stack) - 1]);
+    		}
+  		}
+  		
+  		return $elements[0];
 	}
+	
 ?>

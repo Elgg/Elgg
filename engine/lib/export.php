@@ -323,6 +323,40 @@
 		return create_metadata($guid, "import_uuid", $uuid);
 	}
 	
+	
+	$IMPORTED_DATA = array();
+	$IMPORTED_OBJECT_COUNTER = 0;
+	
+	/**
+	 * This function processes an element, passing elements to the plugin stack to see if someone will
+	 * process it.
+	 * 
+	 * If nobody processes the top level element, the sub level elements are processed.
+	 * 
+	 * @param array $element The dom tree.
+	 */
+	function __process_element($element)
+	{
+		global $IMPORTED_DATA, $IMPORTED_OBJECT_COUNTER;
+		
+		// See if anyone handles this element, return true if it is.
+		$handled = trigger_plugin_hook("import", "all", array("name" => $element->name, "element" => $element), $to_be_serialised);
+
+		// If not, then see if any of its sub elements are handled
+		if (!$handled) 
+		{
+			if (isset($element->children)) 
+				foreach ($element->children as $c)
+					__process_element($c);
+		}
+		else
+		{
+			$IMPORTED_OBJECT_COUNTER ++; // Increment validation counter
+			$IMPORTED_DATA[] = $handled; // Return the constructed object
+		}
+
+	}
+	
 	/**
 	 * Export a GUID.
 	 * 
@@ -361,42 +395,6 @@
 		return $output;
 	}
 	
-	
-	
-
-	
-
-	$IMPORTED_DATA = array();
-	$IMPORTED_OBJECT_COUNTER = 0;
-	
-	/**
-	 * This function processes an element, passing elements to the plugin stack to see if someone will
-	 * process it.
-	 * If nobody processes the top level element, the sub level elements are processed.
-	 */
-/*	function __process_element(array $dom)
-	{
-		global $IMPORTED_DATA, $IMPORTED_OBJECT_COUNTER;
-		
-		foreach ($dom as $element)
-		{
-			// See if anyone handles this element, return true if it is.
-			$handled = trigger_plugin_hook("import", "all", array("name" => $element['name'], "element" => $element), $to_be_serialised);
-		
-			// If not, then see if any of its sub elements are handled
-			if (!$handled) 
-			{
-				if (isset($element['elements'])) 
-					__process_element($element['elements']);
-			}
-			else
-			{
-				$IMPORTED_OBJECT_COUNTER ++; // Increment validation counter
-				$IMPORTED_DATA[] = $handled; // Return the constructed object
-			}
-		}
-	}
-	
 	/**
 	 * Import an XML serialisation of an object.
 	 * This will make a best attempt at importing a given xml doc.
@@ -405,24 +403,19 @@
 	 * @return array An array of imported objects (these have already been saved).
 	 * @throws Exception if there was a problem importing the data.
 	 */
-/*	function import($xml)
+	function import($xml)
 	{
 		global $IMPORTED_DATA, $IMPORTED_OBJECT_COUNTER;
 		
 		$IMPORTED_DATA = array();
 		$IMPORTED_OBJECT_COUNTER = 0;
-		$IMPORTED_GUID_MAP = array();
 		
-		$dom = __xml2array($xml);
-		
-		__process_element($dom);
+		__process_element(xml_2_object($xml));
 		
 		if ($IMPORTED_OBJECT_COUNTER!= count($IMPORTED_DATA))
 			throw new ImportException("Not all elements were imported.");
 		
 		return $IMPORTED_DATA;
 	}
-
 	
-	*/
 ?>
