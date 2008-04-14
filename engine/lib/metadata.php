@@ -19,7 +19,7 @@
 	 * @package Elgg
 	 * @subpackage Core
 	 */
-	class ElggMetadata extends ElggExtender
+	class ElggMetadata extends ElggExtender implements Exportable
 	{
 			
 		/**
@@ -94,9 +94,19 @@
 		{ 
 			return delete_metadata($this->id); 
 		}
-		
-		
-		
+	
+		/**
+		 * Export this object
+		 *
+		 * @return array
+		 */
+		public function export()
+		{
+			$type = "metadata";
+			$uuid = guid_to_uuid($this->entity_guid). $type . "/{$this->id}/";
+			
+			return new ODDMetadata($uuid, guid_to_uuid($this->entity_guid), $this->attributes[$name], $this->attributes['value'], $type, guid_to_uuid($this->owner_guid));
+		}
 	}
 	
 	/**
@@ -361,7 +371,7 @@
 	 */
 	function export_metadata_plugin_hook($hook, $entity_type, $returnvalue, $params)
 	{
-	/*	// Sanity check values
+		// Sanity check values
 		if ((!is_array($params)) && (!isset($params['guid'])))
 			throw new InvalidParameterException("GUID has not been specified during export, this should never happen.");
 			
@@ -376,9 +386,9 @@
 		if ($result)
 		{
 			foreach ($result as $r)
-				$returnvalue[] = $r;
+				$returnvalue[] = $r->export();
 		}
-		*/
+		
 		return $returnvalue;
 	}
 	

@@ -18,7 +18,7 @@
 	 * @package Elgg
 	 * @subpackage Core
 	 */
-	abstract class ElggExtender implements Exportable, Importable
+	abstract class ElggExtender implements Importable
 	{
 		/**
 		 * This contains the site's main properties (id, etc)
@@ -96,23 +96,10 @@
 		 * @param int $user_guid The GUID of the user (defaults to currently logged in user)
 		 * @return true|false
 		 */
-		function canEdit($user_guid = 0) {
+		public function canEdit($user_guid = 0) {
 			return can_edit_extender($this->id,$this->type,$user_guid);
 		}
 		
-		/**
-		 * Export this object
-		 *
-		 * @return array
-		 */
-		public function export()
-		{
-			$tmp = new stdClass;
-			$tmp->attributes = $this->attributes;
-			$tmp->attributes['owner_uuid'] = guid_to_uuid($this->owner_guid);
-			$tmp->attributes['entity_uuid'] = guid_to_uuid($this->entity_guid);
-			return $tmp;
-		}
 		
 		/**
 		 * Import an object

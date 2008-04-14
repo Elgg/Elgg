@@ -26,7 +26,7 @@
 	 * @subpackage Core
 	 * @author Marcus Povey <marcus@dushka.co.uk>
 	 */
-	class ElggAnnotation extends ElggExtender
+	class ElggAnnotation extends ElggExtender implements Exportable
 	{
 		
 		/**
@@ -100,6 +100,18 @@
 			return delete_annotation($this->id); 
 		}
 
+		/**
+		 * Export this object
+		 *
+		 * @return array
+		 */
+		public function export()
+		{
+			$type = "annotation";
+			$uuid = guid_to_uuid($this->entity_guid). $type . "/{$this->id}/";
+			
+			return new ODDMetadata($uuid, guid_to_uuid($this->entity_guid), $this->attributes[$name], $this->attributes['value'], $type, guid_to_uuid($this->owner_guid));
+		}
 	}
 	
 	/**
@@ -427,7 +439,7 @@
 	function export_annotation_plugin_hook($hook, $entity_type, $returnvalue, $params)
 	{
 		// Sanity check values
-/*		if ((!is_array($params)) && (!isset($params['guid'])))
+		if ((!is_array($params)) && (!isset($params['guid'])))
 			throw new InvalidParameterException("GUID has not been specified during export, this should never happen.");
 			
 		if (!is_array($returnvalue))
@@ -441,8 +453,8 @@
 		if ($result)
 		{
 			foreach ($result as $r)
-				$returnvalue[] = $r;
-		}*/
+				$returnvalue[] = $r->export();
+		}
 		
 		return $returnvalue;
 	}

@@ -379,8 +379,6 @@
 		 */
 		public function export() 
 		{ 
-			global $CONFIG;
-			
 			$tmp = array();
 			
 			// Generate uuid
@@ -830,7 +828,7 @@
 	 */
 	function import_entity_plugin_hook($hook, $entity_type, $returnvalue, $params)
 	{
-		$name = $params['name'];
+/*		$name = $params['name'];
 		$element = $params['element'];
 		
 		$tmp = NULL;
@@ -849,6 +847,7 @@
 			
 			return $tmp;
 		}
+*/
 	}
 	
 	/**
