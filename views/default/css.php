@@ -25,7 +25,7 @@
 */
 
 body {
-    background:#fff url(<?php echo $vars['url']; ?>/graphics/header.gif) repeat-x; /* #d9e2f2  */
+    background:#fff url(<?php echo $vars['url']; ?>/_graphics/header.gif) repeat-x; /* #d9e2f2  */
 	color:#697C83;
 	font-family:'Trebuchet MS','Lucida Grande', Arial, sans-serif;
 	text-align:left;
@@ -58,7 +58,7 @@ h2, h3, h4, h5 {
 }
 
 blockquote{
-	background: #EEE url(<?php echo $vars['url']; ?>/graphics/blockquote.png) no-repeat bottom left;
+	background: #EEE url(<?php echo $vars['url']; ?>/_graphics/blockquote.png) no-repeat bottom left;
 	padding: 10px;
 	padding-bottom: 40px;
 	margin: 1em;
@@ -167,11 +167,11 @@ div#sidebar_menu {
 	margin:20px 10px 20px 0;
 	padding:0;
 	float: right;
-	background:#efefef url(<?php echo $vars['url']; ?>/graphics/sidebar-top.gif) no-repeat top;
+	background:#efefef url(<?php echo $vars['url']; ?>/_graphics/sidebar-top.gif) no-repeat top;
 }
 
 div#sidebar-menu-bottom {
-   background:url(<?php echo $vars['url']; ?>/graphics/sidebar-bottom.gif) no-repeat bottom;
+   background:url(<?php echo $vars['url']; ?>/_graphics/sidebar-bottom.gif) no-repeat bottom;
    height:9px;
    width:250px;
    margin:0;
@@ -234,7 +234,7 @@ div#footer {
 	font-weight:bold;
 	width:100%;
 	padding:3px 0 0 0;
-	background:url(<?php echo $vars['url']; ?>/graphics/footer.gif) repeat-x;
+	background:url(<?php echo $vars['url']; ?>/_graphics/footer.gif) repeat-x;
 }
 
 div#footer img {

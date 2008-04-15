@@ -34,7 +34,7 @@
 		<title><?php echo $title; ?></title>
 		<!-- include links to jQuery here? -->
 		<!-- include the default css file -->
-		<link rel="stylesheet" href="<?php echo $vars['url']; ?>css/css.php" type="text/css" />
+		<link rel="stylesheet" href="<?php echo $vars['url']; ?>_css/css.css" type="text/css" />
 	</head>
 	<body>
 	<div id="container">

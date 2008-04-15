@@ -9,7 +9,9 @@ RewriteEngine on
 
 RewriteRule ^action\/([A-Za-z\_\-\/]+)$ action.php?action=$1
 RewriteRule ^actions\/([A-Za-z\_\-\/]+)$ action.php?action=$1
-RewriteRule ^css\/css\.css$ css/css.php
-
 RewriteRule ^odd\/([A-Za-z\_\-\/]+)$ odd/handler.php?guid=$1
-RewriteRule ^odd\/([A-Za-z\_\-\/]+)\/([A-Za-z\_\-\/]+)\/([A-Za-z\_\-\/]+)$ odd/handler.php?guid=$1&type=$2&idname=$3
+RewriteRule ^odd\/([A-Za-z\_\-\/]+)\/([A-Za-z\_\-\/]+)\/([A-Za-z\_\-\/]+)$ odd/handler.php?guid=$1&type=$2&idname=$3>>>>>>> .r470
+
+RewriteRule ^\_css\/css\.css$ css/css.php
+
+RewriteRule ^([A-Za-z]+)\/(.*)\/$ pagehandler.php?handler=$1&page=$2

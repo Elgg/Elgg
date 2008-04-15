@@ -1,0 +1,106 @@
+<?php
+
+	/**
+	 * Elgg page handler functions
+	 * 
+	 * @package Elgg
+	 * @subpackage Core
+	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+	 * @author Curverider Ltd
+	 * @copyright Curverider Ltd 2008
+	 * @link http://elgg.org/
+	 */
+
+	/**
+	 * Turns the current page over to the page handler, allowing registered handlers to take over
+	 *
+	 * @param string $handler The name of the handler type (eg 'blog')
+	 * @param array $page The parameters to the page, as an array (exploded by '/' slashes)
+	 * @return true|false Depending on whether a registered page handler was found
+	 */
+	function page_handler($handler, $page) {
+		
+		global $CONFIG;
+		
+		$page = explode('/',$page);
+		if (!isset($CONFIG->pagehandler) || empty($handler)) {
+			$result = false;
+		} else if (isset($CONFIG->pagehandler[$handler]) && is_callable($CONFIG->pagehandler[$handler])) {
+			$function = $CONFIG->pagehandler[$handler];
+			$result = $function($page, $handler);
+			if ($result !== false) {
+				$result = true;
+			}
+		} else {
+			$result = false;
+		}
+		
+		if (!$result) {
+			$result = default_page_handler($page, $handler);
+		}
+		if ($result !== false) $result = true;
+		
+		return $result;
+		
+	}
+	
+	/**
+	 * Registers a page handler for a particular identifier
+	 * 
+	 * eg, you can register a function called 'blog_page_handler' for handler type 'blog'
+	 * 
+	 * Now for all URLs of type http://yoururl/blog/*, the blog_page_handler function will be called.
+	 * The part of the URL marked with * above will be exploded on '/' characters and passed as an
+	 * array to that function, eg:
+	 * 
+	 * For the URL http://yoururl/blog/username/friends/:
+	 * blog_page_handler('blog', array('username','friends')); 
+	 *
+	 * @param string $handler The page type to handle
+	 * @param string $function Your function name
+	 * @return true|false Depending on success
+	 */
+	function register_page_handler($handler, $function) {
+		
+		global $CONFIG;
+		if (!isset($CONFIG->pagehandler))
+			$CONFIG->pagehandler = array();
+		if (is_callable($function)) {
+			$CONFIG->pagehandler[$handler] = $function;
+			return true;
+		} 
+		return false;
+		
+	}
+	
+	/**
+	 * A default page handler that attempts to load the actual file at a given page handler location
+	 *
+	 * @param array $page The page URL elements
+	 * @param string $handler The base handler
+	 * @return true|false Depending on success
+	 */
+	function default_page_handler($page, $handler) {
+		
+		global $CONFIG;
+		$page = implode('/',$page);
+		if (($questionmark = strripos($page, '?')))
+			$page = substr($page, 0, $questionmark);
+
+		$script = str_replace("..","",$script);
+		$callpath = $CONFIG->path . $handler . "/" . $page;
+		if (!include($callpath)) {
+			if (substr_count($callpath,'.php') == 0) {
+				if (substr($callpath,strlen($callpath) - 1, 1) != "/")
+					$callpath .= "/";
+				$callpath .= "index.php";
+				if (!include($callpath))
+					return false; 
+			}
+		}
+		
+		return true;
+		
+	}
+
+?>
