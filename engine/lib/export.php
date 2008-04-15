@@ -37,7 +37,7 @@
 		 * The function should return the constructed object data, or NULL.
 		 *
 		 * @param ODD $data
-		 * @return mixed The newly imported object.
+		 * @return bool
 		 * @throws ImportException if there was a critical error importing data.
 		 */
 		public function import(ODD $data);
@@ -437,13 +437,13 @@
 	 * This will make a best attempt at importing a given xml doc.
 	 *
 	 * @param string $xml
-	 * @return array An array of imported objects (these have already been saved).
+	 * @return bool
 	 * @throws Exception if there was a problem importing the data.
 	 */
 	function import($xml)
 	{
 		global $IMPORTED_DATA, $IMPORTED_OBJECT_COUNTER;
-		
+	
 		$IMPORTED_DATA = array();
 		$IMPORTED_OBJECT_COUNTER = 0;
 		
@@ -452,7 +452,7 @@
 		if ($IMPORTED_OBJECT_COUNTER!= count($IMPORTED_DATA))
 			throw new ImportException("Not all elements were imported.");
 		
-		return $IMPORTED_DATA;
+		return true;
 	}
 	
 ?>
