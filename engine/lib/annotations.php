@@ -160,7 +160,7 @@
 		$entity_guid = (int)$entity_guid;
 		$name = sanitise_string(trim($name));
 		$value = sanitise_string(trim($value));
-		$value_type = detect_annotation_valuetype($value, sanitise_string(trim($value_type)));
+		$value_type = detect_extender_valuetype($value, sanitise_string(trim($value_type)));
 		
 		$owner_guid = (int)$owner_guid;
 		if ($owner_guid==0) $owner_guid = $_SESSION['id'];
@@ -197,7 +197,7 @@
 		$annotation_id = (int)$annotation_id;
 		$name = sanitise_string(trim($name));
 		$value = sanitise_string(trim($value));
-		$value_type = detect_annotation_valuetype($value, sanitise_string(trim($value_type)));
+		$value_type = detect_extender_valuetype($value, sanitise_string(trim($value_type)));
 		
 		$owner_guid = (int)$owner_guid;
 		if ($owner_guid==0) $owner_guid = $_SESSION['id'];

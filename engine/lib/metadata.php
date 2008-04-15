@@ -157,7 +157,7 @@
 		$entity_guid = (int)$entity_guid;
 		$name = sanitise_string(trim($name));
 		$value = sanitise_string(trim($value));
-		$value_type = detect_metadata_valuetype($value, sanitise_string(trim($value_type)));
+		$value_type = detect_extender_valuetype($value, sanitise_string(trim($value_type)));
 		$time = time();		
 		$owner_guid = (int)$owner_guid;
 		$allow_multiple = (boolean)$allow_multiple;
@@ -209,7 +209,7 @@
 		$id = (int)$id;
 		$name = sanitise_string(trim($name));
 		$value = sanitise_string(trim($value));
-		$value_type = detect_metadata_valuetype($value, sanitise_string(trim($value_type)));
+		$value_type = detect_extender_valuetype($value, sanitise_string(trim($value_type)));
 		
 		$owner_guid = (int)$owner_guid;
 		if ($owner_guid==0) $owner_guid = $_SESSION['id'];
