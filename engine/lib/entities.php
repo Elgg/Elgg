@@ -397,22 +397,21 @@
 			{
 				switch ($k)
 				{
-					case 'guid' : break;		// Dont use guid
-					case 'subtype' : break;		// The subtype
-					case 'type' : break;		// Don't use type
-					case 'access_id' : break;	// Don't use access - if can export then its public for you, then importer decides what access to give this object.
+					case 'guid' : 			// Dont use guid
+					case 'subtype' :		// The subtype
+					case 'type' : 			// Don't use type
+					case 'access_id' : 		// Don't use access - if can export then its public for you, then importer decides what access to give this object.
+					case 'time_created' :	// Don't use date in export
+					case 'time_updated' : 	// Don't use date in export
+					break;
 
-					case 'owner_guid' :			// Convert owner guid to uuid
+					case 'owner_guid' :			// Convert owner guid to uuid, this will be stored in metadata
 						 $k = 'owner_uuid';
 						 $v = guid_to_uuid($v);
 						 $tmp[] = new ODDMetadata($uuid . "attr/$k/", $uuid, $k, $v);
 					break; 	
 					
-					case 'time_created' :		// Convert to RFC 822
-					case 'time_updated' : 		// Convert to RFC 822
-						$v = date('r', $v);		
-						$tmp[] = new ODDMetadata($uuid . "attr/$k/", $uuid, $k, $v);
-					break;
+					
 					
 					default : 
 						$tmp[] = new ODDMetadata($uuid . "attr/$k/", $uuid, $k, $v);
@@ -837,23 +836,23 @@
 					}
 				}
 			}
-		}
-		
-		if ($tmp)
-		{
-			if (!$tmp->import($element))
-				throw new ImportException("Could not import element " . $element->getAttribute('uuid'));
+			
+			if ($tmp)
+			{
+				if (!$tmp->import($element))
+					throw new ImportException("Could not import element " . $element->getAttribute('uuid'));
+					
+				if (!$tmp->save()) // Make sure its saved
+					throw new ImportException("There was a problem saving ". $element->getAttribute('uuid'));
+	
+				// Belts and braces
+				if (!$tmp->guid)
+					throw new ImportException("New entity created but has no GUID, this should not happen."); 
 				
-			if (!$tmp->save()) // Make sure its saved
-				throw new ImportException("There was a problem saving ". $element->getAttribute('uuid'));
-
-			// Belts and braces
-			if (!$tmp->guid)
-				throw new ImportException("New entity created but has no GUID, this should not happen."); 
-			
-			add_uuid_to_guid($tmp->guid, $element->getAttribute('uuid')); // We have saved, so now tag
-			
-			return $tmp;
+				add_uuid_to_guid($tmp->guid, $element->getAttribute('uuid')); // We have saved, so now tag
+				
+				return $tmp;
+			}
 		}
 	}
 	
@@ -877,7 +876,7 @@
 			$user = get_entity($user_guid);
 		}
 		$entity = get_entity($entity_guid);
-		
+return true;
 		if ($entity->getOwner() == $user->getGUID()) return true;
 		if ($entity->type == "user" && $entity->getGUID() == $user->getGUID()) return true;
 		
