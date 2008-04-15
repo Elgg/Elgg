@@ -12,7 +12,7 @@
 	 */
 
 	/**
-	 * @class XMLElement
+	 * @class XmlElement
 	 * A class representing an XML element for import.
 	 */
 	class XmlElement 
