@@ -432,6 +432,9 @@
 		 */
 		public function import(ODD $data)
 		{
+			if (!($data instanceof ODDEntity))
+				throw new InvalidParameterException("ElggEntity::import() passed an unexpected ODD class"); 
+			
 			// Set type and subtype
 			$this->attributes['type'] = $data->getAttribute('class');
 			$this->attributes['subtype'] = $data->getAttribute('subclass');
