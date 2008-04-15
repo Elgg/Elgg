@@ -876,7 +876,7 @@
 			$user = get_entity($user_guid);
 		}
 		$entity = get_entity($entity_guid);
-return true;
+
 		if ($entity->getOwner() == $user->getGUID()) return true;
 		if ($entity->type == "user" && $entity->getGUID() == $user->getGUID()) return true;
 		
