@@ -251,6 +251,16 @@
 		public function getObjects($subtype="", $limit = 10, $offset = 0) { return get_user_objects($this->getGUID(), $subtype, $limit, $offset); }
 
 		/**
+		 * Counts the number of ElggObjects owned by this user
+		 *
+		 * @param string $subtype The subtypes of the objects, if any
+		 * @return int The number of ElggObjects
+		 */
+		public function countObjects($subtype = "") {
+			return count_user_objects($this->getGUID(), $subtype);
+		}
+
+		/**
 		 * Get the collections associated with a user.
 		 *
 		 * @param string $subtype Optionally, the subtype of result we want to limit to
@@ -403,7 +413,7 @@
 	function get_user_friends($user_guid, $subtype = "", $limit = 10, $offset = 0) {
 		return get_entities_from_relationship("friend",$user_guid,false,"user",$subtype,0,"time_created desc",$limit,$offset);
 	}
-	
+
 	/**
 	 * Obtains a list of objects owned by a user
 	 *
@@ -416,6 +426,56 @@
 	function get_user_objects($user_guid, $subtype = "", $limit = 10, $offset = 0) {
 		$ntt = get_entities('object',$subtype, $user_guid, "time_created desc", $limit, $offset);
 		return $ntt;
+	}
+	
+	/**
+	 * Counts the objects (optionally of a particular subtype) owned by a user
+	 *
+	 * @param int $user_guid The GUID of the owning user
+	 * @param string $subtype Optionally, the subtype of objects
+	 * @return int The number of objects the user owns (of this subtype)
+	 */
+	function count_user_objects($user_guid, $subtype = "") {
+		$total = get_entities('object', $subtype, $user_guid, "time_created desc", null, null, true);
+		return $total;
+	}
+	
+/**
+	 * Obtains a list of objects owned by a user's friends
+	 *
+	 * @param int $user_guid The GUID of the user to get the friends of
+	 * @param string $subtype Optionally, the subtype of objects
+	 * @param int $limit The number of results to return (default 10)
+	 * @param int $offset Indexing offset, if any
+	 * @return false|array An array of ElggObjects or false, depending on success
+	 */
+	function get_user_friends_objects($user_guid, $subtype = "", $limit = 10, $offset = 0) {
+		if ($friends = get_user_friends($user_guid, $subtype, 999999, 0)) {
+			$friendguids = array();
+			foreach($friends as $friend) {
+				$friendguids[] = $friend->getGUID();
+			}
+			return get_entities('object',$subtype,$friendguids, "time_created desc", $limit, $offset);
+		}
+		return false;
+	}
+	
+	/**
+	 * Counts the number of objects owned by a user's friends
+	 *
+	 * @param int $user_guid The GUID of the user to get the friends of
+	 * @param string $subtype Optionally, the subtype of objects
+	 * @return int The number of objects
+	 */
+	function count_user_friends_objects($user_guid, $subtype = "") {
+		if ($friends = get_user_friends($user_guid, $subtype, 999999, 0)) {
+			$friendguids = array();
+			foreach($friends as $friend) {
+				$friendguids[] = $friend->getGUID();
+			}
+			return get_entities('object',$subtype,$friendguids, "time_created desc", $limit, $offset, true);
+		}
+		return 0;
 	}
 	
 	/**

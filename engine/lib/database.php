@@ -359,6 +359,38 @@
         	return mysql_real_escape_string(trim($string));
         }
         
+	/**
+	 * Wrapper function for Americans
+	 *
+	 * @param string $string The string to sanitise
+	 * @return string Sanitised string
+	 * @uses sanitise_string
+	 */
+        function sanitize_string($string) {
+        	return sanitise_string($string);
+        }
+        
+	/**
+	 * Sanitises an integer for database use
+	 *
+	 * @param int $int
+	 * @return int Sanitised integer
+	 */
+        function sanitise_int($int) {
+        	return (int) $int;
+        }
+        
+	/**
+	 * Wrapper function for Americans
+	 *
+	 * @param int $int
+	 * @return int Sanitised integer
+	 * @uses sanitise_string
+	 */
+        function sanitize_int($int) {
+        	return (int) $int;
+        }
+        
 	// Stuff for initialisation
 
 		register_event_handler('boot','system','init_db',0);

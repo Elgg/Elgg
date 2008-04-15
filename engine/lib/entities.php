@@ -686,7 +686,7 @@
 	
 	/**
 	 * Return the entity for a given guid as the correct object.
-	 * @param $guid
+	 * @param int $guid The GUID of the entity
 	 * @return a child of ElggEntity appropriate for the type.
 	 */
 	function get_entity($guid)
@@ -695,22 +695,22 @@
 	}
 	
 	/**
-	 * Return entities matching a given query.
+	 * Return entities matching a given query, or the number thereof
 	 * 
-	 * @param string $type
-	 * @param string $subtype
-	 * @param int $owner_guid
-	 * @param string $order_by
-	 * @param int $limit
-	 * @param int $offset
+	 * @param string $type The type of entity (eg "user", "object" etc)
+	 * @param string $subtype The arbitrary subtype of the entity
+	 * @param int $owner_guid The GUID of the owning user
+	 * @param string $order_by The field to order by; by default, time_created desc
+	 * @param int $limit The number of entities to return; 10 by default
+	 * @param int $offset The indexing offset, 0 by default
+	 * @param boolean $count Set to true to get a count rather than the entities themselves (limits and offsets don't apply in this context). Defaults to false.
 	 */
-	function get_entities($type = "", $subtype = "", $owner_guid = 0, $order_by = "time_created desc", $limit = 10, $offset = 0)
+	function get_entities($type = "", $subtype = "", $owner_guid = 0, $order_by = "time_created desc", $limit = 10, $offset = 0, $count = false)
 	{
 		global $CONFIG;
 		
 		$type = sanitise_string($type);
 		$subtype = get_subtype_id($type, $subtype);
-		$owner_guid = (int)$owner_guid;
 		$order_by = sanitise_string($order_by);
 		$limit = (int)$limit;
 		$offset = (int)$offset;
@@ -723,18 +723,35 @@
 			$where[] = "type='$type'";
 		if ($subtype)
 			$where[] = "subtype=$subtype";
-		if ($owner_guid != "")
-			$where[] = "owner_guid='$owner_guid'";
+		if ($owner_guid != "") {
+			if (!is_array($owner_guid)) {
+				$owner_guid = (int) $owner_guid;
+				$where[] = "owner_guid = '$owner_guid'";
+			} else if (sizeof($owner_guid) > 0) {
+				// Cast every element to the owner_guid array to int
+				$owner_guid = array_map("sanitise_int", $owner_guid);
+				$owner_guid = implode(",",$owner_guid);
+				$where[] = "owner_guid in ({$owner_guid})";
+			}
+		}
 
-		$query = "SELECT * from {$CONFIG->dbprefix}entities where ";
+		if (!$count) {
+			$query = "SELECT * from {$CONFIG->dbprefix}entities where ";
+		} else {
+			$query = "select count(guid) as total from {$CONFIG->dbprefix}entities where ";
+		}
 		foreach ($where as $w)
 			$query .= " $w and ";
 		$query .= " (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))"; // Add access controls
-		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
-
-		$dt = get_data($query, "entity_row_to_elggstar");
-		
-		return $dt;
+		if (!$count) {
+			$query .= " order by $order_by";
+			$query .= " limit $offset, $limit"; // Add order and limit
+			$dt = get_data($query, "entity_row_to_elggstar");
+			return $dt;
+		} else {
+			$total = get_data_row($query);
+			return $total->total;
+		}
 	}
 	
 	/**
