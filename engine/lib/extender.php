@@ -18,7 +18,7 @@
 	 * @package Elgg
 	 * @subpackage Core
 	 */
-	abstract class ElggExtender implements Importable
+	abstract class ElggExtender
 	{
 		/**
 		 * This contains the site's main properties (id, etc)
@@ -100,57 +100,6 @@
 			return can_edit_extender($this->id,$this->type,$user_guid);
 		}
 		
-		
-		/**
-		 * Import an object
-		 *
-		 * @param array $data
-		 * @param int $version
-		 * @return ElggExtender
-		 * @throws ImportException
-		 */
-		public function import(ODD $data)
-		{
-			if ($version == 1)
-			{
-				$entity_uuid = NULL; 
-				
-				// Get attributes
-				foreach ($data['elements'][0]['elements'] as $attr)
-				{
-					$name = strtolower($attr['name']);
-					$text = $attr['text'];
-					
-					switch ($name)
-					{
-						case 'id' : break;
-						case 'entity_uuid' : $entity_uuid = $text; break;
-						default : $this->attributes[$name] = $text;
-					}
-
-				}
-				// See if this entity has already been imported, if so then we need to link to it
-				$entity = get_entity_from_uuid($entity_uuid);
-				if (!$entity)
-					throw new ImportException("Sorry $entity_uuid was not found. Could not import annotation.");
-				
-				// Set the item ID
-				$this->attributes['entity_guid'] = $entity->getGUID();
-				
-				// Set owner
-				$this->attributes[$name] = $entity->getOwner(); 
-				
-				// save
-				$result = $this->save(); 
-				if (!$result)
-					throw new ImportException("There was a problem saving the ElggExtender");
-				
-				return $this;
-				
-			}
-			else
-				throw new ImportException("Unsupported version ($version) passed to ElggAnnotation::import()");
-		}
 	}
 	
 	/**
@@ -180,21 +129,40 @@
 	 */
 	function import_extender_plugin_hook($hook, $entity_type, $returnvalue, $params)
 	{
-		$name = $params['name'];
 		$element = $params['element'];
 		
 		$tmp = NULL;
 		
-		switch ($name)
+		if ($element instanceof ODDMetaData)
 		{
-			case 'ElggAnnotation' : $tmp = new ElggAnnotation(); break;
-			case 'ElggMetadata' : $tmp = new ElggMetadata(); break;
-		}
+			// Recall entity
+			$entity_uuid = $element->getAttribute('entity_uuid');
+			$entity = get_entity_from_uuid($entity_uuid);
+			if (!$entity)
+				throw new ImportException("Entity '$entity_uuid' could not be found.");
+			
+			// Get the type of extender (metadata, type, attribute etc)
+			$type = $element->getAttribute('type');
+			$attr_name = $element->getAttribute('name');
+			$attr_val = $element->getBody();
 		
-		if ($tmp)
-		{
-			$tmp->import($element);
-			return $tmp;
+			switch ($type)
+			{
+				case 'annotation' : 
+					$entity->annotate($attr_name, $attr_val);
+				break;
+				case 'metadata' :
+					$entity->setMetaData($attr_name, $attr_val, "", true);
+				break;
+				default : // Anything else assume attribute
+					$entity->set($attr_name, $attr_val);			
+			}
+	
+			// Save
+			if (!$entity->save())
+				throw new ImportException("There was a problem updating entity '$entity_uuid'");
+			
+			return true;
 		}
 	}
 	
