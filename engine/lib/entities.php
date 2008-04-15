@@ -318,8 +318,8 @@
 		 */
 		public function save()
 		{
-			if ($this->get('guid') > 0)
-			{
+			if (($this->get('guid') != "") || ($this->get('guid') > 0))
+			{ 
 				return update_entity(
 					$this->get('guid'),
 					$this->get('owner_guid'),
@@ -432,49 +432,18 @@
 		 */
 		public function import(ODD $data)
 		{
-			if ($version == 1)
-			{
-				$uuid = "";
-				
-				// Get attributes
-				foreach ($data['elements'][0]['elements'] as $attr)
-				{
-					$name = strtolower($attr['name']);
-					$text = $attr['text'];
-					
-					switch ($name)
-					{
-						case 'owner_guid' : $this->attributes['owner_guid'] = $_SESSION['id']; break;
-						case 'uuid' : $uuid = $text; break;
-						default : $this->attributes[$name] = $text;
-					}
-				}
-
-				// Check uuid as local domain
-				if (is_uuid_this_domain($uuid))
-					throw new ImportException("$uuid belongs to this domain!");
-
-				// See if this entity has already been imported, if so we don't need to create a new element
-				$entity = get_entity_from_uuid($uuid);
-				if ($entity) 
-					$this->attributes['guid'] = $entity->guid;
-				else 
-					$this->attributes['guid'] = false;
-
-				// save
-				$result = $this->save(); 
-				if (!$result)
-					throw new ImportException("There was a problem saving $uuid");
-						
-				// Tag this GUID with the UUID if this is a new entity
-				if (!$entity)
-					add_uuid_to_guid($this->attributes['guid'], $uuid);
-
-				// return result
-				return $this;
-			}
-			else
-				throw new ImportException("Unsupported version ($version) passed to ElggEntity::import()");
+			// Set type and subtype
+			$this->attributes['type'] = $data->getAttribute('class');
+			$this->attributes['subtype'] = $data->getAttribute('subclass');
+			
+			// Set owner
+			$this->attributes['owner_guid'] = $_SESSION['id']; // Import as belonging to importer.
+			
+			// Set time
+			$this->attributes['time_created'] = strtotime($data->getAttribute('generated'));
+			$this->attributes['time_updated'] = time();
+			
+			return true;
 		}
 
 		// ITERATOR INTERFACE //////////////////////////////////////////////////////////////
@@ -687,7 +656,7 @@
 		$classname = get_subtype_class($row->type, $row->subtype);
 		if ($classname!="")
 		{
-			$tmp = $classname($row);
+			$tmp = new $classname($row);
 			
 			if (!($tmp instanceof ElggEntity))
 				throw new ClassException("$classname is not an ElggEntity.");
@@ -705,7 +674,7 @@
 					return new ElggCollection($row); 
 				case 'site' : 
 					return new ElggSite($row); 
-				default: default : throw new InstallationException("Type {$row->type} is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.");
+				default: throw new InstallationException("Type {$row->type} is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.");
 			}
 		}
 		
@@ -828,26 +797,60 @@
 	 */
 	function import_entity_plugin_hook($hook, $entity_type, $returnvalue, $params)
 	{
-/*		$name = $params['name'];
 		$element = $params['element'];
 		
 		$tmp = NULL;
 		
-		switch ($name)
+		if ($element instanceof ODDEntity)
 		{
-			case 'ElggUser' : $tmp = new ElggUser(); break;
-			case 'ElggSite' : $tmp = new ElggSite(); break;
-			case 'ElggConnection' : $tmp = new ElggConnection(); break;
-			case 'ElggObject' : $tmp = new ElggObject(); break;
+			$class = $element->getAttribute('class');
+			$subclass = $element->getAttribute('subclass');
+			
+			// See if we already have imported this uuid
+			$tmp = get_entity_from_uuid($element->getAttribute('uuid'));
+			
+			if (!$tmp)
+			{
+				// Construct new class with owner from session
+				$classname = get_subtype_class($class, $subclass);
+				if ($classname!="")
+				{
+					$tmp = new $classname();
+					
+					if (!($tmp instanceof ElggEntity))
+						throw new ClassException("$classname is not an ElggEntity.");
+						
+				}
+				else
+				{
+					switch ($class)
+					{
+						case 'object' : $tmp = new ElggObject($row); break;
+						case 'user' : $tmp = new ElggUser($row); break;
+						case 'collection' : $tmp = new ElggCollection($row); break; 
+						case 'site' : $tmp = new ElggSite($row); break; 
+						default: throw new InstallationException("Type $class is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.");
+					}
+				}
+			}
 		}
 		
 		if ($tmp)
 		{
-			$tmp->import($element);
+			if (!$tmp->import($element))
+				throw new ImportException("Could not import element " . $element->getAttribute('uuid'));
+				
+			if (!$tmp->save()) // Make sure its saved
+				throw new ImportException("There was a problem saving ". $element->getAttribute('uuid'));
+
+			// Belts and braces
+			if (!$tmp->guid)
+				throw new ImportException("New entity created but has no GUID, this should not happen."); 
+			
+			add_uuid_to_guid($tmp->guid, $element->getAttribute('uuid')); // We have saved, so now tag
 			
 			return $tmp;
 		}
-*/
 	}
 	
 	/**
