@@ -1,9 +1,19 @@
 <?php
 
-    /** 
-     * This is a generic view that will display a tag cloud for any
-     * section; photos, services, resources and a user or group
-     **/
+	/**
+	 * Elgg tagcloud
+	 * Displays a tagcloud
+	 * 
+	 * @package Elgg
+	 * @subpackage Core
+	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+	 * @author Curverider Ltd
+	 * @copyright Curverider Ltd 2008
+	 * @link http://elgg.org/
+	 * 
+	 * @uses $vars['tagcloud'] An array of stdClass objects with two elements: 'tag' (the text of the tag) and 'total' (the number of elements with this tag) 
+	 * 
+	 */
     
     if (!empty($vars['tagcloud']) && is_array($vars['tagcloud'])) {
         
@@ -19,7 +29,7 @@
             if (!empty($cloud)) $cloud .= ", ";
             $size = round((log($tag->total) / log($max)) * 100) + 30;
             if ($size < 60) $size = 60;
-            $cloud .= "<a href=\"" . $vars['url'] . "search/?tag=". urlencode($tag->tag) . "&type=".urlencode($tag->tag_type)."\" style=\"font-size: {$size}%\" title=\"".addslashes($tag->tag)." ({$tag->total})\" style=\"text-decoration:none;\">" .$tag->tag . "</a>";
+            $cloud .= "<a href=\"" . $vars['url'] . "search/?tag=". urlencode($tag->tag) . "\" style=\"font-size: {$size}%\" title=\"".addslashes($tag->tag)." ({$tag->total})\" style=\"text-decoration:none;\">" .$tag->tag . "</a>";
         }
         echo $cloud;
 
