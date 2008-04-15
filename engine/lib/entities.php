@@ -137,14 +137,15 @@
 		 * @param string $name
 		 * @param mixed $value
 		 * @param string $value_type
+		 * @param bool $multiple
 		 * @return bool
 		 */
-		public function setMetaData($name, $value, $value_type = "")
+		public function setMetaData($name, $value, $value_type = "", $multiple = false)
 		{
 			if (is_array($value))
 			{
 				foreach ($value as $v)
-					if (!create_metadata($this->getGUID(), $name, $v, $value_type, $this->getOwner(), $this->getAccessID(), true)) return false;
+					if (!create_metadata($this->getGUID(), $name, $v, $value_type, $this->getOwner(), $this->getAccessID(), $multiple)) return false;
 					
 				return true;
 			}
