@@ -12,6 +12,11 @@
 	 * @uses $vars['comments'] Array of comments
 	 */
 
+?>
+
+		<div class="blog-comments">
+		
+<?php
 		if (isset($vars['comments']) && is_array($vars['comments']) && sizeof($vars['comments']) > 0) {
 			
 			echo "<h3>". elgg_echo("comments") ."</h3><ol>";
@@ -25,3 +30,23 @@
 		}
 
 ?>
+			<form action="<?php echo $vars['url']; ?>action/blog/comments/add" method="post">
+				<h3>
+					<?php echo elgg_echo("blog:comment:add"); ?>
+				</h3>
+				<p>
+					<label><?php echo elgg_echo("blog:comment:text"); ?>
+						<?php
+
+							echo elgg_view("input/longtext",array('internalname' => 'comment'));
+						
+						?>
+					</label>
+				</p>
+				<p>
+					<input type="hidden" name="blogpost_guid" value="<?php echo $vars['entity']->getGUID(); ?>" /> 
+					<input type="submit" value="<?php echo elgg_echo("save"); ?>" />
+				</p>
+			</form>
+
+		</div>

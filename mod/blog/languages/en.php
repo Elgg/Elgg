@@ -32,6 +32,7 @@
 			'blog:posted' => "Your blog post was successfully posted.",
 			'comment:success' => "Your comment was successfully added.",
 			'blog:deleted' => "Your blog post was successfully deleted.",
+			'comment:deleted' => "The comment was successfully deleted.",
 	
 		/**
 		 * Error messages
@@ -42,6 +43,7 @@
 			'blog:notdeleted' => "Sorry; we could not delete this blog post.",
 	
 			'comment:failure' => "An unexpected error occurred when adding your comment. Please try again.",
+			'comment:notdeleted' => "The comment could not be deleted.",
 	
 	);
 					

@@ -16,9 +16,9 @@
 ?>
 
 	<li>
-		
-		<?php echo elgg_view("output/longtext",array("value" => $vars['entity']->value)); ?>
-		<p>
+		<div class="blog-comment">
+		<p class="blog-comment-text"><?php echo elgg_view("output/longtext",array("value" => $vars['entity']->value)); ?></p>
+		<p class="blog-comment-byline">
 			<?php
 			
 				if ($owner = get_entity($vars['entity']->owner_guid)) {
@@ -27,5 +27,24 @@
 			
 			?>, <?php echo date("F j, g:i a",$vars['entity']->time_created); ?>
 		</p>
-	
+		<?php
+
+			if ($vars['entity']->canEdit()) {
+?>
+		<p class="blog-comment-menu">
+		<?php
+
+			echo elgg_view("output/confirmlink",array(
+														'href' => $vars['url'] . "action.php?action=blog/comments/delete&comment_id=" . $vars['entity']->id,
+														'text' => elgg_echo('delete'),
+														'confirm' => elgg_echo('deleteconfirm'),
+													));
+		
+		?>
+		</p>
+<?php
+			}
+		
+		?>
+		</div>
 	</li>

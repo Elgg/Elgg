@@ -47,10 +47,16 @@
 		<?php
 
 			if ($vars['entity']->canEdit()) {
+				
 			?>
 				<a href="<?php echo $vars['url']; ?>mod/blog/edit.php?blogpost=<?php echo $vars['entity']->getGUID(); ?>"><?php echo elgg_echo("edit"); ?></a>
-				<a href="<?php echo $vars['url']; ?>action.php?action=blog/delete&blogpost=<?php echo $vars['entity']->getGUID(); ?>"><?php echo elgg_echo("delete"); ?></a>
 				<?php
+				
+					echo elgg_view("output/confirmlink", array(
+																'href' => $vars['url'] . "action.php?action=blog/delete&blogpost=" . $vars['entity']->getGUID(),
+																'text' => elgg_echo('delete'),
+																'confirm' => elgg_echo('deleteconfirm'),
+															));
 
 					// Allow the menu to be extended
 					echo elgg_view("editmenu",array('entity' => $vars['entity']));
@@ -66,41 +72,12 @@
 
 		// If we've been asked to display the full view
 			if (isset($vars['full']) && $vars['full'] == true) {
-				
-?>
-
-		<div class="blog-comments">
-		
-<?php
+				echo elgg_view('object/blog-comments',array('entity' => $vars['entity'], 'comments' => $vars['comments']));
+			}
 
 		// Display comments if any
-			echo elgg_view('object/blog-comments',array('comments' => $vars['comments']));
+			// echo elgg_view('object/blog-comments',array('entity' => $vars['entity'], 'comments' => $vars['comments']));
 
-?>
-			<form action="<?php echo $vars['url']; ?>action/blog/comments/add" method="post">
-				<h3>
-					<?php echo elgg_echo("blog:comment:add"); ?>
-				</h3>
-				<p>
-					<label><?php echo elgg_echo("blog:comment:text"); ?>
-						<?php
-
-							echo elgg_view("input/longtext",array('internalname' => 'comment'));
-						
-						?>
-					</label>
-				</p>
-				<p>
-					<input type="hidden" name="blogpost_guid" value="<?php echo $vars['entity']->getGUID(); ?>" /> 
-					<input type="submit" value="<?php echo elgg_echo("save"); ?>" />
-				</p>
-			</form>
-		
-		</div>
-
-<?php
-				
-			}
 		}
 
 ?>

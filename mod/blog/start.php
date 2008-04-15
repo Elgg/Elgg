@@ -56,5 +56,6 @@
 		register_action("blog/edit",false,$CONFIG->pluginspath . "blog/actions/edit.php");
 		register_action("blog/delete",false,$CONFIG->pluginspath . "blog/actions/delete.php");
 		register_action("blog/comments/add",false,$CONFIG->pluginspath . "blog/actions/comments/add.php");
+		register_action("blog/comments/delete",false,$CONFIG->pluginspath . "blog/actions/comments/delete.php");
 		
 ?>
