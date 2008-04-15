@@ -132,51 +132,36 @@
 		 */
 		public function import(ODD $data)
 		{
-			if ($version == 1)
+			if (!($element instanceof ODDRelationship))
+				throw new InvalidParameterException("ElggRelationship::import() passed an unexpected ODD class"); 
+			
+			$uuid_one = $data->getAttribute('uuid1');
+			$uuid_two = $data->getAttribute('uuid2'); 	
+				
+			// See if this entity has already been imported, if so then we need to link to it
+			$entity1 = get_entity_from_uuid($uuid_one);
+			$entity2 = get_entity_from_uuid($uuid_two);
+			if (($entity1) && ($entity2))
 			{
-				$uuid_one = NULL;
-				$uuid_two = NULL; 
+				// Set the item ID
+				$this->attributes['guid_one'] = $entity1->getGUID();
+				$this->attributes['guid_two'] = $entity2->getGUID();
 				
-				// Get attributes
-				foreach ($data['elements'][0]['elements'] as $attr)
-				{
-					$name = strtolower($attr['name']);
-					$text = $attr['text'];
+				// Map verb to relationship
+				$verb = $data->getAttribute('verb');
+				$this->attributes['relationship'] = get_relationship_from_verb($verb);
+				if (!$this->attributes['relationship'])
+					throw new ImportException("Could not import '$verb' as a relationship.");
 					
-					switch ($name)
-					{
-						case 'id' : break;
-						case 'entity_uuid' : $entity_uuid = $text; break;
-						default : $this->attributes[$name] = $text;
-					}
-
-				}
-				// See if this entity has already been imported, if so then we need to link to it
-				$entity1 = get_entity_from_uuid($uuid_one);
-				$entity2 = get_entity_from_uuid($uuid_two);
-				if (($entity1) && ($entity2))
-				{
-					
-					// Set the item ID
-					$this->attributes['guid_one'] = $entity1->getGUID();
-					$this->attributes['guid_two'] = $entity2->getGUID();
-										
-					// save
-					$result = $this->save(); 
-					if (!$result)
-						throw new ImportException("There was a problem saving the ElggExtender");
-					
-					return $this;
-				}
+				// save
+				$result = $this->save(); 
+				if (!$result)
+					throw new ImportException("There was a problem saving the ElggExtender");
 				
-				return false;
-				
+				return $this;
 			}
-			else
-				throw new ImportException("Unsupported version ($version) passed to ElggRelationship::import()");
 		}
 	}
-	
 	
 	
 	/**
@@ -363,16 +348,17 @@
 	 */
 	function import_relationship_plugin_hook($hook, $entity_type, $returnvalue, $params)
 	{
-		/*$name = $params['name'];
 		$element = $params['element'];
 		
-		if ($name=='ElggRelationship')
+		$tmp = NULL;
+		
+		if ($element instanceof ODDRelationship)
 		{
 			$tmp = new ElggRelationship();
 			$tmp->import($element);
 			
 			return $tmp;
-		}*/
+		}
 	}
 	
 	/**
