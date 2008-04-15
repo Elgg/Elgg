@@ -149,16 +149,18 @@
 				
 				// Map verb to relationship
 				$verb = $data->getAttribute('verb');
-				$this->attributes['relationship'] = get_relationship_from_verb($verb);
-				if (!$this->attributes['relationship'])
-					throw new ImportException("Could not import '$verb' as a relationship.");
-					
-				// save
-				$result = $this->save(); 
-				if (!$result)
-					throw new ImportException("There was a problem saving the ElggExtender");
+				$relationship = get_relationship_from_verb($verb);
 				
-				return $this;
+				if ($relationship)
+				{	
+					$this->attributes['relationship'] = $relationship;
+					// save
+					$result = $this->save(); 
+					if (!$result)
+						throw new ImportException("There was a problem saving the ElggExtender");
+					
+					return $this;
+				}
 			}
 		}
 	}
