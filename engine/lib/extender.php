@@ -186,8 +186,13 @@
 			$extender = $functionname($extender_id);
 		} else return false;
 		
+		// If the owner is the specified user, great! They can edit.
 		if ($extender->getOwner() == $user->getGUID()) return true;
 		
+		// If the user can edit the entity this is attached to, great! They can edit.
+		if (can_edit_entity($extender->entity_guid,$user->getGUID())) return true;
+		
+		// Trigger plugin hooks
 		return trigger_plugin_hook('permissions_check',$type,array('entity' => $entity, 'user' => $user),false);
 		
 	}
