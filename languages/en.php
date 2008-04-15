@@ -72,6 +72,13 @@
 			'tags' => "Tags",
 	
 		/**
+		 * Input / output strings
+		 */
+
+			'deleteconfirm' => "Are you sure you want to delete this item?",
+			'fileexists' => "A file has already been uploaded. To replace it, select it below:",
+	
+		/**
 		 * Welcome
 		 */
 	
