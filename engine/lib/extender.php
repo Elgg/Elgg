@@ -43,7 +43,7 @@
 						case 'integer' :  return (int)$this->attributes['value'];
 						//case 'tag' :
 						//case 'file' :
-						case 'text' : return sanitise_string($this->attributes['value']);
+						case 'text' : return ($this->attributes['value']);
 							
 						default : throw new InstallationException("Type {$this->attributes['value_type']} is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.");
 					}

@@ -41,12 +41,12 @@
 	{
 		global $CONFIG;
 		
-		$string = sanitise_string($string);
+		$sanstring = sanitise_string($string);
 		
 		$id = get_metastring_id($string);
 		if ($id) return $id;
 		
-		return insert_data("INSERT into {$CONFIG->dbprefix}metastrings (string) values ('$string')");
+		return insert_data("INSERT into {$CONFIG->dbprefix}metastrings (string) values ('$sanstring')");
 	}
 	
 ?>
