@@ -363,7 +363,7 @@
 	 */
 	function import_relationship_plugin_hook($hook, $entity_type, $returnvalue, $params)
 	{
-		$name = $params['name'];
+		/*$name = $params['name'];
 		$element = $params['element'];
 		
 		if ($name=='ElggRelationship')
@@ -372,7 +372,7 @@
 			$tmp->import($element);
 			
 			return $tmp;
-		}
+		}*/
 	}
 	
 	/**
