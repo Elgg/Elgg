@@ -21,6 +21,8 @@
 			'actionundefined' => "The requested action (%s) was not defined in the system.",
 			'actionloggedout' => "Sorry, you cannot perform this action while logged out.",
 	
+			'notfound' => "The requested resource could not be found, or you do not have access to it.",
+	
 		/**
 		 * User details
 		 */
@@ -61,7 +63,7 @@
 			'update' => "Update",
 			'edit' => "Edit",
 			'delete' => "Delete",
-			'Load' => "Load",
+			'load' => "Load",
 	
 		/**
 		 * Generic data words

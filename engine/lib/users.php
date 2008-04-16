@@ -491,10 +491,10 @@
 		if (!empty($guid)) // Fixes "Exception thrown without stack frame" when db_select fails
 			$result = get_entity($guid);
 		
-		if (($result) && (!($result instanceof ElggUser)))
+		if ((!empty($result)) && (!($result instanceof ElggUser)))
 			throw new InvalidParameterException("GUID:$guid is not an ElggUser");
 			
-		if ($result)
+		if (!empty($result))
 			return $result;
 		
 		return false;	

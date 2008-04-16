@@ -901,10 +901,34 @@
 		
 	}
 	
+	/**
+	 * Page handler for generic entities view system
+	 *
+	 * @param array $page Page elements from pain page handler
+	 */
+	function entities_page_handler($page) {
+		if (isset($page[0])) {
+			global $CONFIG;
+			set_input('guid',$page[0]);
+			@include($CONFIG->path . "entities/index.php");
+		}
+	}
+	
+	/**
+	 * Entities init function; establishes the page handler
+	 *
+	 */
+	function entities_init() {
+		register_page_handler('view','entities_page_handler');
+	}
+	
 	/** Register the import hook */
 	register_plugin_hook("import", "all", "import_entity_plugin_hook", 0);
 	
 	/** Register the hook, ensuring entities are serialised first */
 	register_plugin_hook("export", "all", "export_entity_plugin_hook", 0);
+	
+	/** Register init system event **/
+	register_event_handler('init','system','entities_init');
 	
 ?>
