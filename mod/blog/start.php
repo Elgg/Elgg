@@ -87,7 +87,7 @@
 		function blog_url($blogpost) {
 			
 			global $CONFIG;
-			return $CONFIG->url . "blog/" . $blogpost->getOwnerUser()->username . "/read/" . $blogpost->getGUID();
+			return $CONFIG->url . "blog/" . $blogpost->getOwnerEntity()->username . "/read/" . $blogpost->getGUID();
 			
 		}
 		

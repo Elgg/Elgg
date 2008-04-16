@@ -287,7 +287,7 @@
 		 *
 		 * @return ElggEntity The owning user
 		 */
-		public function getOwnerUser() { return get_entity($this->get('owner_guid')); }
+		public function getOwnerEntity() { return get_entity($this->get('owner_guid')); }
 		
 		/**
 		 * Enter description here...
