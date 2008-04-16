@@ -283,6 +283,13 @@
 		public function getOwner() { return $this->get('owner_guid'); }
 		
 		/**
+		 * Returns the actual entity of the user who owns this entity, if any
+		 *
+		 * @return ElggEntity The owning user
+		 */
+		public function getOwnerUser() { return get_entity($this->get('owner_guid')); }
+		
+		/**
 		 * Enter description here...
 		 *
 		 * @return unknown
@@ -313,6 +320,13 @@
 		 * @todo document me
 		 */
 		public function getTimeUpdated() { return $this->get('time_updated'); }
+		
+		/**
+		 * Gets the display URL for this entity
+		 *
+		 * @return string The URL
+		 */
+		public function getURL() { return get_entity_url($this->getGUID()); }
 		
 		/**
 		 * Save generic attributes to the entities table.
@@ -898,6 +912,73 @@
 		if ($entity->type == "user" && $entity->getGUID() == $user->getGUID()) return true;
 		
 		return trigger_plugin_hook('permissions_check',$entity->type,array('entity' => $entity, 'user' => $user),false);
+		
+	}
+	
+	/**
+	 * Gets the URL for an entity, given a particular GUID
+	 *
+	 * @param int $entity_guid The GUID of the entity
+	 * @return string The URL of the entity
+	 */
+	function get_entity_url($entity_guid) {
+		
+		global $CONFIG;
+		if ($entity = get_entity($entity_guid)) {
+
+			$url = "";
+			
+			if (isset($CONFIG->entity_url_handler[$entity->getType()][$entity->getSubType()])) {
+				$function =  $CONFIG->entity_url_handler[$entity->getType()][$entity->getSubType()];
+				if (is_callable($function)) {
+					$url = $function($entity);
+				}
+			}
+			if (isset($CONFIG->entity_url_handler[$entity->getType()]['all'])) {
+				$function =  $CONFIG->entity_url_handler[$entity->getType()]['all'];
+				if (is_callable($function)) {
+					$url = $function($entity);
+				}
+			}
+			if (isset($CONFIG->entity_url_handler['all']['all'])) {
+				$function =  $CONFIG->entity_url_handler['all']['all'];
+				if (is_callable($function)) {
+					$url = $function($entity);
+				}
+			}
+
+			if ($url == "") {
+				$url = $CONFIG->url . "view/" . $entity_guid;
+			}
+			return $url;
+			
+		}
+		return false;
+		
+	}
+	
+	/**
+	 * Sets the URL handler for a particular entity type and subtype
+	 *
+	 * @param string $function_name The function to register
+	 * @param string $entity_type The entity type
+	 * @param string $entity_subtype The entity subtype
+	 * @return true|false Depending on success
+	 */
+	function register_entity_url_handler($function_name, $entity_type = "all", $entity_subtype = "all") {
+		global $CONFIG;
+		
+		if (!is_callable($function_name)) return false;
+		
+		if (!isset($CONFIG->entity_url_handler)) {
+			$CONFIG->entity_url_handler = array();
+		}
+		if (!isset($CONFIG->entity_url_handler[$entity_type])) {
+			$CONFIG->entity_url_handler[$entity_type] = array();
+		}
+		$CONFIG->entity_url_handler[$entity_type][$entity_subtype] = $function_name;
+		
+		return true;
 		
 	}
 	
