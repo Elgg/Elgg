@@ -46,6 +46,13 @@
 			'profile' => "Profile",
 	
 		/**
+		 * Search
+		 */
+	
+			'search' => "Search",
+			'searchtitle' => "Search: %s",
+	
+		/**
 		 * Account
 		 */
 	
