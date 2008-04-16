@@ -30,14 +30,14 @@
 				
 			// Set up menu for logged in users
 				if (isloggedin()) {
-					add_menu(elgg_echo('blog'), $CONFIG->wwwroot . "mod/blog/",array(
-						menu_item(elgg_echo('blog:read'),$CONFIG->wwwroot."mod/blog/?username=" . $_SESSION['user']->username),
+					add_menu(elgg_echo('blog'), $CONFIG->wwwroot . "blog/",array(
+						menu_item(elgg_echo('blog:read'),$CONFIG->wwwroot."blog/" . $_SESSION['user']->username),
 						menu_item(elgg_echo('blog:addpost'),$CONFIG->wwwroot."mod/blog/add.php"),
 						menu_item(elgg_echo('blog:everyone'),$CONFIG->wwwroot."mod/blog/everyone.php"),
 					));
 			// And for logged out users
 				} else {
-					add_menu(elgg_echo('blog'), $CONFIG->wwwroot . "mod/blog/",array(
+					add_menu(elgg_echo('blog'), $CONFIG->wwwroot . "mod/blog/everyone.php",array(
 						menu_item(elgg_echo('blog:everyone'),$CONFIG->wwwroot."mod/blog/everyone.php"),
 					));
 				}
@@ -45,6 +45,41 @@
 			// Extend system CSS with our own styles, which are defined in the blog/css view
 				extend_view('css','blog/css');
 				
+			// Register a page handler, so we can have nice URLs
+				register_page_handler('blog','blog_page_handler');
+				
+		}
+		
+		/**
+		 * Blog page handler; allows the use of fancy URLs
+		 *
+		 * @param array $page From the page_handler function
+		 * @return true|false Depending on success
+		 */
+		function blog_page_handler($page) {
+			
+			// The first component of a blog URL is the username
+			if (isset($page[0])) {
+				set_input('username',$page[0]);
+			}
+			
+			// The second part dictates what we're doing
+			if (isset($page[1])) {
+				switch($page[1]) {
+					case "read":		set_input('blogpost',$page[2]);
+										@include(dirname(__FILE__) . "/read.php");
+										break;
+					case "friends":		// TODO: add friends blog page here
+										break;
+				}
+			// If the URL is just 'blog/username', or just 'blog/', load the standard blog index
+			} else {
+				@include(dirname(__FILE__) . "/index.php");
+				return true;
+			}
+			
+			return false;
+			
 		}
 
 	// Make sure the blog initialisation function is called on initialisation
