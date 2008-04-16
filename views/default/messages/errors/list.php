@@ -14,18 +14,23 @@
 	 * @uses $vars['object'] An array of error messages
 	 */
 
+		if (!empty($vars['object']) && is_array($vars['object'])) {
+
 ?>
 
 	<div class="messages">
 		<div class="messages-errors">
 
 <?php
-		if (!empty($vars['object']) && is_array($vars['object'])) {
 			foreach($vars['object'] as $error) {
 				echo elgg_view('messages/errors/error',array('object' => $error));
 			}
-		}
-
 ?>
 		</div>
 	</div>
+<?php
+		}
+
+
+
+?>

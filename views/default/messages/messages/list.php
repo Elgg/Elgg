@@ -14,6 +14,8 @@
 	 * @uses $vars['object'] An array of system messages
 	 */
 
+	if (!empty($vars['object']) && is_array($vars['object'])) {
+
 ?>
 
 	<div class="messages">
@@ -21,12 +23,17 @@
 
 <?php
 
-		if (!empty($vars['object']) && is_array($vars['object'])) {
+		
 			foreach($vars['object'] as $message) {
 				echo elgg_view('messages/messages/message',array('object' => $message));
 			}
-		}
 
 ?>
 		</div>
 	</div>
+	
+<?php
+
+	}
+
+?>
