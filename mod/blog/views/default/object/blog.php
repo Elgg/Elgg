@@ -17,7 +17,7 @@
 ?>
 
 	<div class="blog-post">
-		<h3><a href="<?php echo $vars['url']; ?>blog/<?php echo $vars['entity_owner']->username; ?>/read/<?php echo $vars['entity']->getGUID(); ?>"><?php echo $vars['entity']->title; ?></a></h3>
+		<h3><a href="<?php echo $vars['entity']->getURL(); ?>"><?php echo $vars['entity']->title; ?></a></h3>
 		<p class="strapline">
 			<span style="float:right">
 			<?php

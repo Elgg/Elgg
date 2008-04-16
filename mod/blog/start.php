@@ -48,6 +48,8 @@
 			// Register a page handler, so we can have nice URLs
 				register_page_handler('blog','blog_page_handler');
 				
+			// Register a URL handler for blog posts
+				register_entity_url_handler('blog_url','object','blog');
 		}
 		
 		/**
@@ -82,6 +84,13 @@
 			
 		}
 
+		function blog_url($blogpost) {
+			
+			global $CONFIG;
+			return $CONFIG->url . "blog/" . $blogpost->getOwnerUser()->username . "/read/" . $blogpost->getGUID();
+			
+		}
+		
 	// Make sure the blog initialisation function is called on initialisation
 		register_event_handler('init','system','blog_init');
 		
