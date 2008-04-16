@@ -28,7 +28,7 @@
 			
 			?>
 			</span>
-			<a href="<?php echo $vars['url']; ?>blog/<?php echo $vars['entity_owner']->username; ?>"><?php echo $vars['entity_owner']->name; ?></a>
+			<a href="<?php echo $vars['url']; ?>blog/<?php echo $vars['entity']->getOwnerEntity()->username; ?>"><?php echo $vars['entity']->getOwnerEntity()->name; ?></a>
 		</p>
 		<p>
 			<?php

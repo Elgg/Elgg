@@ -195,11 +195,9 @@
 			if (!isset($entity_class)) return false;
 			
 			$subtype = $entity->getSubtype();
-			$owner = get_entity($entity->getOwner());
 
 			return elgg_view("{$entity_type}/{$subtype}",array(
 																'entity' => $entity,
-																'entity_owner' => $owner,
 																'full' => $full
 																), $viewtype, $bypass, $debug);
 			
