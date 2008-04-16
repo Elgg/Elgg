@@ -22,6 +22,21 @@
 		
 		global $CONFIG;
 		
+		$query = parse_url($_SERVER['REQUEST_URI']);
+		if (isset($query['query'])) {
+			$query = $query['query'];
+			$query = rawurldecode($query);
+			$query = explode('&',$query);
+			if (sizeof($query) > 0) {
+				foreach($query as $queryelement) {
+					$vals = explode('=',$queryelement);
+					if (sizeof($vals) > 1) {
+						set_input(trim($vals[0]),trim($vals[1]));
+					}
+				}
+			}
+		}
+
 		$page = explode('/',$page);
 		if (!isset($CONFIG->pagehandler) || empty($handler)) {
 			$result = false;
@@ -38,7 +53,7 @@
 		if (!$result) {
 			$result = default_page_handler($page, $handler);
 		}
-		if ($result !== false) $result = true;
+		if ($result !== false) $result = true;		
 		
 		return $result;
 		

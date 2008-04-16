@@ -24,8 +24,30 @@
 			$value = $_REQUEST[$variable];
 			return trim($_REQUEST[$variable]);
 		}
+		
+		global $CONFIG;
+		
+		if (isset($CONFIG->input[$variable]))
+			return $CONFIG->input[$variable];
 
 		return $default;
 
 	}
+	
+	/**
+	 * Sets an input value that may later be retrieved by get_input
+	 *
+	 * @param string $variable The name of the variable
+	 * @param string $value The value of the variable
+	 */
+	function set_input($variable, $value) {
+		
+		global $CONFIG;
+		if (!isset($CONFIG->input))
+			$CONFIG->input = array();
+		$CONFIG->input[trim($variable)] = trim($value);
+			
+	}
+	
+	
 ?>
