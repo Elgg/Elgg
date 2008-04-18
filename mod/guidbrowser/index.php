@@ -11,9 +11,6 @@
 
 	require_once("../../engine/start.php");
 	
-	$_SESSION['guid'] = 2;
-	$_SESSION['id'] = 2;
-	
 	$eguid = get_input('eguid');
 	$limit = get_input('limit', 10);
 	$offset = get_input('offset');
