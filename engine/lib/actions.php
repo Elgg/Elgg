@@ -35,7 +35,6 @@
             
             if (isset($CONFIG->actions[$action])) {
                 if ($CONFIG->actions[$action]['public'] || $_SESSION['id'] != -1) {
-                	system_message("DEBUG ACTION ({$action}): " . $CONFIG->actions[$action]['file']);
 	                if (@include($CONFIG->actions[$action]['file'])) {
 	                } else {
 	                    register_error(sprintf(elgg_echo('actionundefined'),$action));
