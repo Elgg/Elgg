@@ -144,6 +144,7 @@
 		{
 			if (is_array($value))
 			{
+				$multiple = true;
 				foreach ($value as $v)
 					if (!create_metadata($this->getGUID(), $name, $v, $value_type, $this->getOwner(), $this->getAccessID(), $multiple)) return false;
 					
