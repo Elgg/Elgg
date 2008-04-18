@@ -1,7 +1,7 @@
 <?php
 	/**
 	 * Elgg cache
-	 * The API REST endpoint.
+	 * Cache file interface for caching data.
 	 * 
 	 * @package Elgg
 	 * @subpackage API
