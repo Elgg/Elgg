@@ -53,7 +53,7 @@
 				<?php
 				
 					echo elgg_view("output/confirmlink", array(
-																'href' => $vars['url'] . "action.php?action=blog/delete&blogpost=" . $vars['entity']->getGUID(),
+																'href' => $vars['url'] . "action_handler.php?action=blog/delete&blogpost=" . $vars['entity']->getGUID(),
 																'text' => elgg_echo('delete'),
 																'confirm' => elgg_echo('deleteconfirm'),
 															));
