@@ -11,7 +11,7 @@
 	 * @link http://elgg.org/
 	 */
     /**
-     *  Load searunner framework
+     *  Load Elgg framework
      */
         require_once(dirname(__FILE__) . "/engine/start.php");
         $action = get_input("action");
