@@ -14,4 +14,4 @@ RewriteRule ^odd\/([0-9]+)\/([A-Za-z]+)\/([A-Za-z]+)\/$ odd/handler.php?guid=$1&
 
 RewriteRule ^\_css\/css\.css$ _css/css.php
 
-RewriteRule ^pg\/([A-Za-z]+)\/(.*)\/$ pagehandler.php?handler=$1&page=$2
+RewriteRule ^pg\/([A-Za-z]+)\/(.*)$ pagehandler.php?handler=$1&page=$2
