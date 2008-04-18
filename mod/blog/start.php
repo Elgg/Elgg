@@ -30,8 +30,8 @@
 				
 			// Set up menu for logged in users
 				if (isloggedin()) {
-					add_menu(elgg_echo('blog'), $CONFIG->wwwroot . "blog/",array(
-						menu_item(elgg_echo('blog:read'),$CONFIG->wwwroot."blog/" . $_SESSION['user']->username),
+					add_menu(elgg_echo('blog'), $CONFIG->wwwroot . "pg/blog/",array(
+						menu_item(elgg_echo('blog:read'),$CONFIG->wwwroot."pg/blog/" . $_SESSION['user']->username),
 						menu_item(elgg_echo('blog:addpost'),$CONFIG->wwwroot."mod/blog/add.php"),
 						menu_item(elgg_echo('blog:everyone'),$CONFIG->wwwroot."mod/blog/everyone.php"),
 					));
@@ -87,7 +87,7 @@
 		function blog_url($blogpost) {
 			
 			global $CONFIG;
-			return $CONFIG->url . "blog/" . $blogpost->getOwnerEntity()->username . "/read/" . $blogpost->getGUID();
+			return $CONFIG->url . "pg/blog/" . $blogpost->getOwnerEntity()->username . "/read/" . $blogpost->getGUID();
 			
 		}
 		

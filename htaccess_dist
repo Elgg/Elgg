@@ -12,6 +12,6 @@ RewriteRule ^actions\/([A-Za-z\_\-\/]+)$ action.php?action=$1
 RewriteRule ^odd\/([A-Za-z\_\-\/]+)$ odd/handler.php?guid=$1
 RewriteRule ^odd\/([A-Za-z\_\-\/]+)\/([A-Za-z\_\-\/]+)\/([A-Za-z\_\-\/]+)$ odd/handler.php?guid=$1&type=$2&idname=$3
 
-RewriteRule ^\_css\/css\.css$ css/css.php
+RewriteRule ^\_css\/css\.css$ _css/css.php
 
-RewriteRule ^([A-Za-z]+)\/(.*)\/$ pagehandler.php?handler=$1&page=$2
+RewriteRule ^pg\/([A-Za-z]+)\/(.*)\/$ pagehandler.php?handler=$1&page=$2
