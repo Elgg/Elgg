@@ -84,6 +84,12 @@
 			
 		}
 
+		/**
+		 * Populates the ->getUrl() method for blog objects
+		 *
+		 * @param ElggEntity $blogpost Blog post entity
+		 * @return string Blog post URL
+		 */
 		function blog_url($blogpost) {
 			
 			global $CONFIG;
