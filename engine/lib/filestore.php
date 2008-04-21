@@ -240,6 +240,8 @@
 		{			
 			parent::__construct($guid);
 			
+			// Set default filestore
+			$this->filestore = $this->getFilestore();
 		}
 		
 		/**
@@ -268,7 +270,7 @@
 		 */
 		public function open($mode)
 		{
-			if (!$this->name)
+			if (!$this->title)
 				throw new IOException("You must specify a name before opening a file.");
 				
 			// See if file has already been saved
@@ -394,7 +396,7 @@
 					$parameters[$name] = $meta->value;
 				}
 			}
-			
+		
 			// If parameters loaded then create new filestore
 			if (count($parameters)!=0)
 			{
@@ -421,13 +423,15 @@
 			if (!parent::save())
 				return false;
 				
+			// Get filestore if necessary
+				
 			// Save datastore metadata
 			$params = $this->filestore->getParameters();
 			foreach ($params as $k => $v)
 				$this->setMetaData("filestore::$k", $v);
 			
 			// Now make a note of the filestore class
-			$this->setMetaData("filestore::filestore", get_class($this));
+			$this->setMetaData("filestore::filestore", get_class($this->filestore));
 			
 			return true;
 		}
