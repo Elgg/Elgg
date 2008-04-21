@@ -903,16 +903,27 @@
 	function can_edit_entity($entity_guid, $user_guid = 0) {
 		
 		if ($user_guid == 0) {
-			$user = $_SESSION['user'];
+			if (isset($_SESSION['user'])) {
+				$user = $_SESSION['user'];
+			} else {
+				$user = null;
+			}
 		} else {
 			$user = get_entity($user_guid);
 		}
-		$entity = get_entity($entity_guid);
+		if ($entity = get_entity($entity_guid) && !is_null($user)) {
 
-		if ($entity->getOwner() == $user->getGUID()) return true;
-		if ($entity->type == "user" && $entity->getGUID() == $user->getGUID()) return true;
+			$entity = get_entity($entity_guid);
+			if ($entity->getOwner() == $user->getGUID()) return true;
+			if ($entity->type == "user" && $entity->getGUID() == $user->getGUID()) return true;
+			
+			return trigger_plugin_hook('permissions_check',$entity->type,array('entity' => $entity, 'user' => $user),false);
 		
-		return trigger_plugin_hook('permissions_check',$entity->type,array('entity' => $entity, 'user' => $user),false);
+		} else {
+			
+			return false;
+			
+		}
 		
 	}
 	
