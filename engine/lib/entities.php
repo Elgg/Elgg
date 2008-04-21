@@ -513,8 +513,9 @@
 		
 		$type = sanitise_string($type);
 		$subtype = sanitise_string($subtype);
-		
+	
 		$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes where type='$type' and subtype='$subtype'");
+
 		if ($result)
 			return $result->id;
 		
@@ -582,7 +583,7 @@
 			return 0;
 		
 		$id = get_subtype_id($type, $subtype);
-		
+	
 		if (!$id)
 			return insert_data("insert into {$CONFIG->dbprefix}entity_subtypes (type, subtype, class) values ('$type','$subtype','$class')");
 		
