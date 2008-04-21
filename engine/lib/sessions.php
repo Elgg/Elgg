@@ -150,7 +150,7 @@
 	        }
 		}
 
-		register_event_handler("init","system","session_init");
+		register_event_handler("init","system","session_init",1);
 	
 	//register actions *************************************************************
    
