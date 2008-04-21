@@ -115,11 +115,11 @@
 		
 		public function open(ElggFile $file, $mode)
 		{
-			// Try and create the directory
-			try { $this->make_directory_root($this->dir_root); } catch (Exception $e){}
-			
 			$name = $file->getFilename();
 			$matrix = $this->make_file_matrix($name);
+			
+			// Try and create the directory
+			try { $this->make_directory_root($this->dir_root . $matrix); } catch (Exception $e){}
 			
 			switch ($mode)
 			{
@@ -174,7 +174,7 @@
 		 */
 		protected function make_directory_root($dirroot)
 		{
-			if (!mkdir($dir, 0700, true)) 
+			if (!@mkdir($dirroot, 0700, true)) 
 				throw new IOException("Could not make $dirroot");
 				
 			return true;
@@ -189,12 +189,12 @@
 		{
 			$matrix = "";
 			
-			$len = strlen($ident);
+			$len = strlen($filename);
 			if ($len>$this->matrix_depth)
 				$len = $this->matrix_depth;
 			
-			for ($n = 0; $n < strlen($ident); $n++)
-				$matrix .= $ident[$n] . "/";	
+			for ($n = 0; $n < $len; $n++)
+				$matrix .= $filename[$n] . "/";	
 	
 			return $matrix;
 		}
@@ -247,12 +247,12 @@
 		 * 
 		 * @param string $name The filename.
 		 */
-		public function setFilename($name) { $this->name = $name; }
+		public function setFilename($name) { $this->title = $name; }
 		
 		/**
 		 * Return the filename.
 		 */
-		public function getFilename() { return $this->name; }
+		public function getFilename() { return $this->title; }
 		
 		/**
 		 * Set the optional file description.
@@ -270,6 +270,9 @@
 		{
 			if (!$this->name)
 				throw new IOException("You must specify a name before opening a file.");
+				
+			// See if file has already been saved
+				// seek on datastore, parameters and name
 			
 			// Sanity check
 			if (
@@ -422,6 +425,9 @@
 			$params = $this->filestore->getParameters();
 			foreach ($params as $k => $v)
 				$this->setMetaData("filestore::$k", $v);
+			
+			// Now make a note of the filestore class
+			$this->setMetaData("filestore::filestore", get_class($this));
 			
 			return true;
 		}
