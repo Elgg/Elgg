@@ -144,9 +144,11 @@
 		{
 			if (is_array($value))
 			{
+				remove_metadata($this->getGUID(), $name);
 				$multiple = true;
-				foreach ($value as $v)
-					if (!create_metadata($this->getGUID(), $name, $v, $value_type, $this->getOwner(), $this->getAccessID(), $multiple)) return false;
+				foreach ($value as $v) {
+					if (!create_metadata($this->getGUID(), $name, $v, $value_type, $this->getOwner(), $this->getAccessID(), $multiple)) return false; 
+				}
 					
 				return true;
 			}

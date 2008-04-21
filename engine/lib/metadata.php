@@ -140,6 +140,27 @@
 	}
 	
 	/**
+	 * Removes metadata on an entity with a particular name
+	 *
+	 * @param int $entity_guid The entity GUID
+	 * @param string $name The name of the entity
+	 * @return true|false Depending on success
+	 */
+	function remove_metadata($entity_guid, $name) {
+		
+		global $CONFIG;
+		$entity_guid = (int) $entity_guid;
+		$name = sanitise_string(trim($name));
+		if ($existing = get_data("SELECT * from {$CONFIG->dbprefix}metadata WHERE entity_guid = $entity_guid and name_id=" . add_metastring($name))) {
+			foreach($existing as $ex)
+				delete_metadata($ex->id);
+			return true;
+		}
+		return false;
+		
+	}
+	
+	/**
 	 * Create a new metadata object, or update an existing one.
 	 *
 	 * @param int $entity_guid
@@ -169,14 +190,14 @@
 		$id = false;
 	
 		$existing = get_data_row("SELECT * from {$CONFIG->dbprefix}metadata WHERE entity_guid = $entity_guid and name_id=" . add_metastring($name) . " limit 1");
-		if (($existing) && (!$allow_multiple)) 
+		if (($existing) && (!$allow_multiple) && (!empty($value))) 
 		{
 			$id = $existing->id;
 			$result = update_metadata($id, $name, $value, $value_type, $owner_guid, $access_id);
 			
 			if (!$result) return false;
 		}
-		else
+		else if (!empty($value))
 		{
 			// Add the metastrings
 			$value = add_metastring($value);
@@ -187,6 +208,11 @@
 			
 			// If ok then add it
 			$id = insert_data("INSERT into {$CONFIG->dbprefix}metadata (entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id) VALUES ($entity_guid, '$name','$value','$value_type', $owner_guid, $time, $access_id)");
+		} else if ($existing) {
+			
+			$id = $existing->id;
+			delete_metadata($id);
+			
 		}
 		
 		return $id;

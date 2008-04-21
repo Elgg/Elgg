@@ -230,7 +230,7 @@
 		 * @return true|false
 		 */
 		function isFriendOf($user_guid) { return user_is_friend($user_guid, $this->getGUID()); }
-
+		
 		/**
 		 * Retrieves a list of this user's friends
 		 *
@@ -269,6 +269,16 @@
 		 * @return unknown
 		 */
 		public function getCollections($subtype="", $limit = 10, $offset = 0) { return get_user_collections($this->getGUID(), $subtype, $limit, $offset); }
+		
+		/**
+		 * If a user's owner is blank, return its own GUID as the owner
+		 *
+		 * @return int User GUID
+		 */
+		function getOwner() {
+			if ($this->owner_guid == 0)
+				return $this->getGUID();
+		}
 		
 	}
 
