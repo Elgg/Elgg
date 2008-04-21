@@ -65,7 +65,10 @@
             }
             
             if (empty($filename)) {
-                $filename = $CONFIG->path . "actions/" . $action . ".php";
+            	$path = ""; 
+            	if (isset($CONFIG->path)) $path = $CONFIG->path;
+            	
+                $filename = $path . "actions/" . $action . ".php";
             }
 
             $CONFIG->actions[$action] = array('file' => $filename, 'public' => $public);
