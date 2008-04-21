@@ -136,6 +136,9 @@
 	                if ($user = get_user_by_code($code)) {
 	                	$_SESSION['user'] = $user;
 	                } else {
+	                	unset($_SESSION['user']);
+	                	$_SESSION['guid'] = 0;
+	                	$_SESSION['id'] = 0;
 	                }
 	            } else {
 	            	$_SESSION['guid'] = 0;
