@@ -1,4 +1,4 @@
---
+l--
 -- Main Elgg database
 -- 
 -- @link http://elgg.org/
@@ -22,12 +22,14 @@ CREATE TABLE `prefix_entities` (
 	`subtype` int(11) NULL,
 	
 	`owner_guid` bigint(20) unsigned NOT NULL,
+    `site_guid` bigint(20) unsigned NOT NULL,
 	`access_id` int(11) NOT NULL,
 	
 	`time_created` int(11) NOT NULL,
 	`time_updated` int(11) NOT NULL,
 	
-	primary key (`guid`)
+	primary key (`guid`),
+    KEY `site_guid` (`site_guid`)
 );
 
 -- Entity subtypes - lets you subtype one of the main objects (sites/objects/etc)
