@@ -961,7 +961,7 @@
 			}
 
 			if ($url == "") {
-				$url = $CONFIG->url . "view/" . $entity_guid;
+				$url = $CONFIG->url . "pg/view/" . $entity_guid;
 			}
 			return $url;
 			
