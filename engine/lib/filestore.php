@@ -43,11 +43,11 @@
 		 * Read data from a filestore.
 		 *
 		 * @param mixed $f The file handle
-		 * @param int $length Length in bytes to read, or 0 for the entire file.
+		 * @param int $length Length in bytes to read.
 		 * @param int $offset The optional offset.
 		 * @return mixed String of data or false on error.
 		 */
-		abstract public function read($f, $length = 0, $offset = 0);
+		abstract public function read($f, $length, $offset = 0);
 		
 		/**
 		 * Seek a given position within a file handle.
@@ -137,7 +137,7 @@
 			return fwrite($f, $data);
 		}
 		
-		public function read($f, $length = 0, $offset = 0)
+		public function read($f, $length, $offset = 0)
 		{
 			if ($offset)
 				$this->seek($f, $offset);
@@ -223,6 +223,12 @@
 	 */
 	class ElggFile extends ElggObject
 	{
+		/** Filestore */
+		private $filestore;
+		
+		/** File handle used to identify this file in a filestore. Created by open. */
+		private $handle;
+		
 		protected function initialise_attributes()
 		{
 			parent::initialise_attributes();
@@ -230,38 +236,195 @@
 			$this->attributes['subtype'] = "file";
 		}
 		
-		function __construct($guid = null) 
+		public function __construct($guid = null) 
 		{			
 			parent::__construct($guid);
 			
 		}
 		
-		// TODO: Save filestore & filestore parameters - getparameters, save them as name/value with type "$datastoreclassname"
-
-		// TODO: Set name and optional description
+		/**
+		 * Set the filename of this file.
+		 * 
+		 * @param string $name The filename.
+		 */
+		public function setFilename($name) { $this->name = $name; }
 		
+		/**
+		 * Return the filename.
+		 */
+		public function getFilename() { return $this->name; }
 		
-		//get datastore (save with object as meta/ load from create)
+		/**
+		 * Set the optional file description.
+		 * 
+		 * @param string $description The description.
+		 */
+		public function setDescription($description) { $this->description = $description; }
 		
-		// constrcut
-
-		// initialise (set subtype to elggfile)
-
-		// set name
+		/**
+		 * Open the file with the given mode
+		 * 
+		 * @param string $mode Either read/write/append
+		 */
+		public function open($mode)
+		{
+			if (!$this->name)
+				throw new IOException("You must specify a name before opening a file.");
+			
+			// Sanity check
+			if (
+				($mode!="read") &&
+				($mode!="write") &&
+				($mode!="append")
+			)
+				throw new InvalidParameterException("Unrecognised file mode '$mode'");
+			
+			// Get the filestore
+			$fs = $this->getFilestore();
+			
+			// Ensure that we save the file details to object store
+			$this->save();
+			
+			// Open the file handle
+			$this->handle = $fs->open($this, $mode);
+			
+			return $this->handle;
+		}
+		
+		/**
+		 * Write some data.
+		 * 
+		 * @param string $data The data
+		 */
+		public function write($data)
+		{
+			$fs = $this->getFilestore();
+			
+			return $fs->write($this->handle, $data);
+		}
+		
+		/**
+		 * Read some data.
+		 * 
+		 * @param int $length Amount to read.
+		 * @param int $offset The offset to start from.
+		 */
+		public function read($length, $offset = 0)
+		{
+			$fs = $this->getFilestore();
+			
+			return $fs->read($this->handle, $length, $offset);
+		}
+		
+		/**
+		 * Close the file and commit changes
+		 */
+		public function close()
+		{
+			$fs = $this->getFilestore();
+			
+			if ($fs->close($this->handle))
+			{
+				$this->handle = NULL;
+				
+				return true;
+			}
+			
+			return false;
+		}
+		
+		/**
+		 * Delete this file.
+		 */
+		public function delete()
+		{
+			$fs = $this->getFilestore();
+			
+			return $fs->delete($this);
+		}
+		
+		/**
+		 * Seek a position in the file.
+		 * 
+		 * @param int $position
+		 */
+		public function seek($position)
+		{
+			$fs = $this->getFilestore();
+			
+			return $fs->seek($this->handle, $position);
+		}
 	
+		/**
+		 * Set a filestore.
+		 * 
+		 * @param ElggFilestore $filestore The file store.
+		 */
+		public function setFilestore(ElggFilestore $filestore)
+		{
+			$this->filestore = $filestore;	
+		}
 		
-		
-		// read / write / open / close / delete
-
-		// Get name
-
-
-		
-		// getFilestore
+		/**
+		 * Return a filestore suitable for saving this file.
+		 * This filestore is either a pre-registered filestore, a filestore loaded from metatags saved
+		 * along side this file, or the system default.
+		 */
+		protected function getFilestore()
+		{
+			// Short circuit if already set.
+			if ($this->filestore)
+				return $this->filestore;
+				
 			
+			// If filestore meta set then retrieve filestore TODO: Better way of doing this?
+			$metas = get_metadata_for_entity($this->guid);
+			$parameters = array();
+			foreach ($metas as $meta)
+			{
+				if (strpos($meta->name, "filestore::")!==false)
+				{
+					// Filestore parameter tag
+					$comp = explode("::", $meta->name);
+					$name = $comp[1]; 
 			
-			// if $filestore is blank, try and get from meta
-			// if meta not found or guid is null then get from default
+					$parameters[$name] = $meta->value;
+				}
+			}
+			
+			// If parameters loaded then create new filestore
+			if (count($parameters)!=0)
+			{
+				// Create new filestore object
+				if ((!isset($parameters['filestore'])) || (!class_exists($parameters['filestore'])))
+					throw new ClassNotFoundException("Filestore not found or class not saved with file!");
+					
+				$this->filestore = new $parameters['filestore']();
+
+				// Set parameters
+				$this->filestore->setParameters($parameters);
+			}
+			
+
+			// if still nothing then set filestore to default
+			if (!$this->filestore)
+				$this->filestore = get_default_filestore();
+
+			return $this->filestore;
+		}
+		
+		public function save()
+		{
+			if (!parent::save())
+				return false;
+				
+			// Save datastore metadata
+			$params = $this->filestore->getParameters();
+			foreach ($params as $k => $v)
+				$this->setMetaData("filestore::$k", $v);
+			
+			return true;
+		}
 		
 	}
 	
