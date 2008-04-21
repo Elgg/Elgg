@@ -1,4 +1,4 @@
-l--
+--
 -- Main Elgg database
 -- 
 -- @link http://elgg.org/
