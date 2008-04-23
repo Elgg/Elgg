@@ -234,6 +234,18 @@
 	/**
 	 * @class ElggFile
 	 * This class represents a physical file.
+	 * 
+	 * Usage:
+	 *		Create a new ElggFile object and specify a filename, and optionally a FileStore (if one isn't specified 
+	 *		then the default is assumed.
+	 * 
+	 * 		Open the file using the appropriate mode, and you will be able to read and write to the file.
+	 * 
+	 * 		Optionally, you can also call the file's save() method, this will turn the file into an entity in the 
+	 * 		system and permit you to do things like attach tags to the file etc. This is not done automatically since
+	 * 		there are many occasions where you may want access to file data on datastores using the ElggFile interface
+	 * 		but do not want to create an Entity reference to it in the system (temporary files for example).
+	 * 
 	 * @author Marcus Povey
 	 */
 	class ElggFile extends ElggObject
