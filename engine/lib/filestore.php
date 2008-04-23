@@ -72,6 +72,13 @@
 		abstract public function delete(ElggFile $file);
 		
 		/**
+		 * Return the size in bytes for a given file.
+		 * 
+		 * @param ElggFile $file
+		 */
+		abstract public function getFileSize(ElggFile $file);
+		
+		/**
 		 * Get the filestore's creation parameters as an associative array.
 		 * Used for serialisation and for storing the creation details along side a file object.
 		 * 
@@ -165,6 +172,14 @@
 		public function seek($f, $position)
 		{
 			return fseek($f, $position);
+		}
+		
+		public function getFileSize(ElggFile $file)
+		{
+			$name = $file->getFilename();
+			$matrix = $this->make_file_matrix($name);
+			
+			return filesize($this->dir_root . $matrix . $name);
 		}
 		
 		/**
@@ -361,6 +376,14 @@
 		}
 	
 		/**
+		 * Return the size of the file in bytes.
+		 */
+		public function size()
+		{
+			return $this->filestore->getFileSize($this);
+		}
+		
+		/**
 		 * Set a filestore.
 		 * 
 		 * @param ElggFilestore $filestore The file store.
@@ -422,8 +445,6 @@
 		{
 			if (!parent::save())
 				return false;
-				
-			// Get filestore if necessary
 				
 			// Save datastore metadata
 			$params = $this->filestore->getParameters();
