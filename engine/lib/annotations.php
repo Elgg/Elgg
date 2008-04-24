@@ -110,7 +110,10 @@
 			$type = "annotation";
 			$uuid = guid_to_uuid($this->entity_guid). $type . "/{$this->id}/";
 			
-			return new ODDMetadata($uuid, guid_to_uuid($this->entity_guid), $this->attributes[$name], $this->attributes['value'], $type, guid_to_uuid($this->owner_guid));
+			$meta = new ODDMetadata($uuid, guid_to_uuid($this->entity_guid), $this->attributes[$name], $this->attributes['value'], $type, guid_to_uuid($this->owner_guid));
+			$meta->setAttribute('published', date("r", $this->time_created));
+			
+			return $meta;
 		}
 	}
 	

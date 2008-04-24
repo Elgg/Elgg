@@ -402,36 +402,49 @@
 			// Generate uuid
 			$uuid = guid_to_uuid($this->getGUID());
 			
-			// Create entity
-			$tmp[] = new ODDEntity(
+			// Create entity 
+			$odd = new ODDEntity(
 				$uuid,
 				$this->attributes['type'], 
 				get_subtype_from_id($this->attributes['subtype'])
 			);
 			
+			$tmp[] = $odd;
+			
 			// Now add its attributes
 			foreach ($this->attributes as $k => $v)
 			{
+				$meta = NULL;
+				
 				switch ($k)
 				{
 					case 'guid' : 			// Dont use guid
 					case 'subtype' :		// The subtype
 					case 'type' : 			// Don't use type
 					case 'access_id' : 		// Don't use access - if can export then its public for you, then importer decides what access to give this object.
-					case 'time_created' :	// Don't use date in export
 					case 'time_updated' : 	// Don't use date in export
+					break;
+					
+					case 'time_created' :	// Created = published
+						$odd->setAttribute('published', date("r", $v));
 					break;
 
 					case 'owner_guid' :			// Convert owner guid to uuid, this will be stored in metadata
 						 $k = 'owner_uuid';
 						 $v = guid_to_uuid($v);
-						 $tmp[] = new ODDMetadata($uuid . "attr/$k/", $uuid, $k, $v);
+						 $meta = new ODDMetadata($uuid . "attr/$k/", $uuid, $k, $v);
 					break; 	
 					
 					
 					
 					default : 
-						$tmp[] = new ODDMetadata($uuid . "attr/$k/", $uuid, $k, $v);
+						$meta = new ODDMetadata($uuid . "attr/$k/", $uuid, $k, $v);
+				}
+				
+				if ($meta)
+				{
+					$meta->setAttribute('published', date("r",$this->time_created));
+					$tmp[] = $meta;
 				}
 			}
 			
@@ -460,7 +473,7 @@
 			$this->attributes['owner_guid'] = $_SESSION['id']; // Import as belonging to importer.
 			
 			// Set time
-			$this->attributes['time_created'] = strtotime($data->getAttribute('generated'));
+			$this->attributes['time_created'] = strtotime($data->getAttribute('published'));
 			$this->attributes['time_updated'] = time();
 			
 			return true;

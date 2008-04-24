@@ -157,6 +157,11 @@
 				default : // Anything else assume attribute
 					$entity->set($attr_name, $attr_val);			
 			}
+			
+			// Set time if appropriate
+			$attr_time = $element->getAttribute('published');
+			if ($attr_time)
+				$entity->set('time_created', $attr_time);
 	
 			// Save
 			if (!$entity->save())
