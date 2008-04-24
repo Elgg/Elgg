@@ -14,8 +14,7 @@
 	 */
 
 	   $version = 2008042301;  // YYYYMMDD   = Elgg Date
-	                           //         X  = Elgg Point release (0,1,2...)
-	                           //          Y = Interim incrementer
+	                           //         XX = Interim incrementer
 	
 	   $release = '1.0';    // Human-friendly version name
 
