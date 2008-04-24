@@ -812,11 +812,50 @@
 	 */
 		
 		function __elgg_php_exception_handler($exception) {
-			
+
 			error_log("*** FATAL EXCEPTION *** : " . $exception);
 			
 			$body = elgg_view("messages/exceptions/exception",array('object' => $exception));
 			echo page_draw("We've encountered a problem.", $body);
+			
+		}
+		
+	/**
+	 * Data lists
+	 */
+		
+	/**
+	 * Get the value of a particular piece of data in the datalist
+	 *
+	 * @param string $name The name of the datalist
+	 * @return string|false Depending on success
+	 */	
+		function datalist_get($name) {
+			
+			global $CONFIG;
+			$name = sanitise_string($name);
+			if ($row = get_data_row("select value from {$CONFIG->prefix}datalists where name = '{$name}'")) {
+				return $row->value;
+			}
+			return false;
+			
+		}
+		
+	/**
+	 * Sets the value for a system-wide piece of data (overwriting a previous value if it exists)
+	 *
+	 * @param string $name The name of the datalist
+	 * @param string $value The new value
+	 * @return true
+	 */
+		function datalist_set($name, $value) {
+			
+			global $CONFIG;
+			$name = sanitise_string($name);
+			$value = sanitise_string($value);
+			delete_data("delete from {$CONFIG->prefix}datalists where name = '{$name}'");
+			insert_data("insert into {$CONFIG->prefix}datalists set name = '{$name}', value = '{$value}'");
+			return true;
 			
 		}
 

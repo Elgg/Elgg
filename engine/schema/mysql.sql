@@ -43,7 +43,7 @@ CREATE TABLE `prefix_entity_subtypes` (
 	
 	PRIMARY KEY (`id`),
 	UNIQUE KEY (`type`, `subtype`)
-) ENGINE=MyISAM;
+) ;
 
 -- Describe relationships between entities, can describe friendships but also site membership, depending on context
 CREATE TABLE `prefix_entity_relationships` (
@@ -54,7 +54,7 @@ CREATE TABLE `prefix_entity_relationships` (
   `guid_two` bigint(20) unsigned  NOT NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY (`guid_one`,`relationship`,`guid_two`)
-) ENGINE=MyISAM ;
+)  ;
 
 --
 -- *** Access controls ***
@@ -68,7 +68,7 @@ CREATE TABLE `prefix_access_groups` (
   `site_guid` bigint(20) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `name` (`name`)
-) ENGINE=MyISAM ;
+)  ;
 
 -- Dumping data for table `access_groups`
 INSERT INTO `prefix_access_groups` (`id`, `name`, `site_guid`) VALUES
@@ -81,7 +81,7 @@ CREATE TABLE `prefix_access_group_membership` (
   `user_guid` int(11) NOT NULL,
   `access_group_id` int(11) NOT NULL,
   PRIMARY KEY  (`user_guid`,`access_group_id`)
-) ENGINE=MyISAM ;
+)  ;
 
 
 --
@@ -97,7 +97,7 @@ CREATE TABLE `prefix_objects_entity` (
   `description` text NOT NULL,
 
   PRIMARY KEY  (`guid`)
-) ENGINE=MyISAM ;
+)  ;
 
 -- Extra information relating to "sites"
 CREATE TABLE `prefix_sites_entity` (
@@ -109,7 +109,7 @@ CREATE TABLE `prefix_sites_entity` (
    
   PRIMARY KEY  (`guid`),
   UNIQUE KEY (`url`)
-) ENGINE=MyISAM ;
+)  ;
 
 -- Extra information relating to "users"
 CREATE TABLE `prefix_users_entity` (
@@ -131,7 +131,7 @@ CREATE TABLE `prefix_users_entity` (
   PRIMARY KEY  (`guid`),
   KEY `password` (`password`),
   FULLTEXT KEY `name` (`name`)
-) ENGINE=MyISAM ;
+)  ;
 
 
 -- TODO: Collection
@@ -157,7 +157,7 @@ CREATE TABLE `prefix_annotations` (
 	`time_created` int(11) NOT NULL,
 	
 	PRIMARY KEY (`id`)
-) ENGINE=MyISAM;
+) ;
 
 -- Table structure for metadata
 CREATE TABLE `prefix_metadata` (
@@ -176,7 +176,7 @@ CREATE TABLE `prefix_metadata` (
 	
 	PRIMARY KEY (`id`)
 	
-) ENGINE=MyISAM;
+) ;
 
 -- Meta strings table (avoids storing text strings more than once)
 CREATE TABLE `prefix_metastrings` (
@@ -185,7 +185,7 @@ CREATE TABLE `prefix_metastrings` (
 	
 	PRIMARY KEY (`id`),
 	UNIQUE KEY (`string`)
-) ENGINE=MyISAM;
+) ;
 
 --
 -- *** Misc ***
@@ -217,5 +217,12 @@ CREATE TABLE `prefix_users_apisessions` (
 	
 	PRIMARY KEY  (`id`),
 	UNIQUE KEY (`user_guid`,`site_guid`)
-) ENGINE=MyISAM;
+) ;
+
+-- Datalists for things like db version
+CREATE TABLE `prefix_datalists` (
+  `name` varchar(16) NOT NULL,
+  `value` text NOT NULL,
+  KEY `name` (`name`)
+);
 
