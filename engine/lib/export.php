@@ -91,7 +91,6 @@
 		public function __construct()
 		{
 			$this->body = "";
-			$this->setAttribute('generated', date("r"));
 		}
 		
 		public function setAttribute($key, $value) { $this->attributes[$key] = $value; }
@@ -235,7 +234,6 @@
 		
 		switch ($name)
 		{
-			case 'header' : $odd = new ODDHeader(); break;
 			case 'entity' : $odd = new ODDEntity("","",""); break;
 			case 'metadata' : $odd = new ODDMetaData("","","",""); break;
 			case 'relationship' : $odd = new ODDRelationship("","",""); break;
@@ -412,9 +410,6 @@
 		
 		// Initialise the array
 		$to_be_serialised = array();
-		
-		// Set header
-		$to_be_serialised[] = new ODDHeader();
 		
 		// Trigger a hook to 
 		$to_be_serialised = trigger_plugin_hook("export", "all", array("guid" => $guid), $to_be_serialised);
