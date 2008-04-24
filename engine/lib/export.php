@@ -380,6 +380,9 @@
 		// If not, then see if any of its sub elements are handled
 		if (!$handled) 
 		{
+			// Issue a warning
+			trigger_error("'<{$element->name}>' had no registered handler.", E_USER_WARNING);
+			
 			if (isset($element->children)) 
 				foreach ($element->children as $c)
 					__process_element($c);
@@ -388,8 +391,9 @@
 		{
 			$IMPORTED_OBJECT_COUNTER ++; // Increment validation counter
 			$IMPORTED_DATA[] = $handled; // Return the constructed object
-		}
 
+			return true;
+		}
 	}
 	
 	/**
