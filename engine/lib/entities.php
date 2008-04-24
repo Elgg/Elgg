@@ -435,12 +435,11 @@
 						 $meta = new ODDMetadata($uuid . "attr/$k/", $uuid, $k, $v);
 					break; 	
 					
-					
-					
 					default : 
 						$meta = new ODDMetadata($uuid . "attr/$k/", $uuid, $k, $v);
 				}
 				
+				// set the time of any metadata created
 				if ($meta)
 				{
 					$meta->setAttribute('published', date("r",$this->time_created));
