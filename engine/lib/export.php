@@ -139,26 +139,6 @@
 	}
 	
 	/**
-	 * ODD Header class.
-	 * @package Elgg
-	 * @subpackage Core
-	 * @author Marcus Povey
-	 */
-	class ODDHeader extends ODD
-	{
-		
-		function __construct($extension = "SN1.0")
-		{
-			parent::__construct();
-			
-			$this->setAttribute('version', $this->getVersion());
-			$this->setAttribute('extension', $extension);
-		}
-		
-		protected function getTagName() { return "header"; }
-	}
-	
-	/**
 	 * ODD Entity class.
 	 * @package Elgg
 	 * @subpackage Core
