@@ -362,6 +362,62 @@
 
 		return get_data($query, "entity_row_to_elggstar");
 	}
+
+	/**
+	 * Returns a list of entities based on the given search criteria.
+	 *
+	 * @param array $meta_array Array of 'name' => 'value' pairs
+	 * @param string $entity_type The type of entity to look for, eg 'site' or 'object'
+	 * @param string $entity_subtype The subtype of the entity.
+	 * @param int $limit 
+	 * @param int $offset
+	 * @param string $order_by Optional ordering.
+	 * @return array List of ElggEntities
+	 */
+	function get_entities_from_metadata_multi($meta_array, $entity_type = "", $entity_subtype = "", $limit = 10, $offset = 0, $order_by = "e.time_created desc")
+	{
+		global $CONFIG;
+		
+		if (!is_array($meta_array) || sizeof($meta_array) == 0) {
+			return false;
+		}
+		
+		$where = array();
+		
+		$mindex = 1;
+		$join = "";
+		foreach($meta_array as $meta_name => $meta_value) {
+			$meta_n = get_metastring_id($meta_name);
+			$meta_v = get_metastring_id($meta_value);
+			$join .= " JOIN {$CONFIG->dbprefix}metadata m{$mindex} on e.guid = m{$mindex}.entity_guid "; 
+			if ($meta_name!="")
+				$where[] = "m{$mindex}.name_id='$meta_n'";
+			if ($meta_value!="")
+				$where[] = "m{$mindex}.value_id='$meta_v'";
+			$mindex++;
+		}
+			
+		$entity_type = sanitise_string($entity_type);
+		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
+		$limit = (int)$limit;
+		$offset = (int)$offset;
+		$order_by = sanitise_string($order_by);
+			
+		$access = get_access_list();
+		
+		if ($entity_type!="")
+			$where[] = "e.type='$entity_type'";
+		if ($entity_subtype)
+			$where[] = "e.subtype=$entity_subtype";
+		
+		$query = "SELECT distinct e.* from {$CONFIG->dbprefix}entities e {$join} where";
+		foreach ($where as $w)
+			$query .= " $w and ";
+		$query .= " (e.access_id in {$access} or (e.access_id = 0 and e.owner_guid = {$_SESSION['id']}))"; // Add access controls
+		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
+
+		return get_data($query, "entity_row_to_elggstar");
+	}
 	
 	/**
 	 * Clear all the metadata for a given entity, assuming you have access to that metadata.
