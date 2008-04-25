@@ -777,7 +777,7 @@
 	 * @param array $vars An array that points to the active symbol table at the point that the error occurred
 	 */
 		function __elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars)
-		{
+		{			
 			$error = date("Y-m-d H:i:s (T)") . ": \"" . $errmsg . "\" in file " . $filename . " (line " . $linenum . ")";
 			
 			switch ($errno) {

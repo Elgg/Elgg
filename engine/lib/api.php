@@ -20,7 +20,7 @@
 	 * @package Elgg
 	 * @subpackage Core
 	 */
-	abstract class GenericResult implements Exportable
+	abstract class GenericResult
 	{	
 		/** 
 		 * The status of the result.
@@ -85,7 +85,7 @@
 		 */
 		public function export()
 		{
-			global $ERRORS, $CONFIG, $PAM_HANDLER_MSG;
+			global $ERRORS, $CONFIG, $_PAM_HANDLERS_MSG;
 			
 			$result = new stdClass;
 			
@@ -680,97 +680,6 @@
 		return false;
 	}
 	
-	// Output functions ///////////////////////////////////////////////////////////////////////
-	
-	$API_OUTPUT_FUNCTIONS = array();
-	
-	/**
-	 * Register an API output handler.
-	 * This function is used by the system and the plugins to register an output encoding method for 
-	 * returning API results.
-	 * 
-	 * @param string $form The format string, eg 'xml' or 'php'
-	 * @param string $function The function, which must be in the format function_name(stdClass $result) and return a string.
-	 * @return bool
-	 */
-	function register_api_outputhandler($form, $function)
-	{
-		global $API_OUTPUT_FUNCTIONS;
-		
-		if ( ($form!="") && ($function!=""))
-		{
-			$API_OUTPUT_FUNCTIONS[$form] = $function;
-			
-			return true;
-		}
-		
-		return false;
-	}
-
-	/**
-	 * Output the result, with the given fault.
-	 * 
-	 * @param GenericResult $result Result object.
-	 * @param string $format The format
-	 * @return string
-	 */
-	function output_result(GenericResult $result, $format)
-	{
-		global $API_OUTPUT_FUNCTIONS;
-	
-		if (
-			(array_key_exists($format, $API_OUTPUT_FUNCTIONS)) &&
-			(is_callable($API_OUTPUT_FUNCTIONS[$format]))
-		)
-			return $API_OUTPUT_FUNCTIONS[$format]($result->export());
-			
-		// We got here, so no output format was found. Output an error
-		$result = print_r($result->export(), true);	
-			
-		return <<< END
-<html>
-<head><title>Something went wrong...</title></head>
-<body>
-	<h1>API Output Error</h1>	
-	<p>Something went badly wrong while outputting the result of your request in '$format' format. The result and any errors are displayed in 
-	raw text below.</p>
-	<pre>
-$result
-</pre>
-</body>
-</html>
-END;
-	}
-	
-	
-	function xml_result_handler(stdClass $result)
-	{
-		header("Content-Type: text/xml");
-		return serialise_object_to_xml($result, "elgg");
-	}
-	
-	function php_result_handler(stdClass $result)
-	{
-		return serialize($result);
-	}
-	
-	function json_result_handler(stdClass $result)
-	{
-		return json_encode($result);
-	}
-	
-	function csv_result_handler(stdClass $result)
-	{
-		throw new NotImplementedException("CSV View currently not implemented");
-	}
-	
-	// Register some format handlers
-	register_api_outputhandler('xml', 'xml_result_handler');
-	register_api_outputhandler('php', 'php_result_handler');
-	register_api_outputhandler('json', 'json_result_handler');
-	register_api_outputhandler('csv', 'csv_result_handler');
-	
-	
 	// Error handler functions ////////////////////////////////////////////////////////////////
 	
 	/** Define a global array of errors */
@@ -825,13 +734,12 @@ END;
 		
 		error_log("*** FATAL EXCEPTION (API) *** : " . $exception);
 			
-		echo output_result(
-			ErrorResult::getInstance(
+		page_draw($exception->getMessage(), elgg_view("api/output",
+			array('result' => ErrorResult::getInstance(
 				$exception->getMessage(), 
 				$exception->getCode() == 0 ? ErrorResult::$RESULT_FAIL : $exception->getCode(), 
-				$exception),
-				
-			get_input('format','php') // Attempt to get the requested format if passed.
+				$exception)
+			))
 		);
 	}
 	
