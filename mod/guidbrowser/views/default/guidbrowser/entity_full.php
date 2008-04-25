@@ -102,6 +102,7 @@
 		<div>
 			<table>
 				<tr>
+				<td><?php echo $r->guid_one; ?></td> 
 				<td><b><?php echo $r->relationship; ?></b></td>
 				<td><?php echo $r->guid_two; ?></td> 
 				</tr>
