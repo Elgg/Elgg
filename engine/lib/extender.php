@@ -18,7 +18,10 @@
 	 * @package Elgg
 	 * @subpackage Core
 	 */
-	abstract class ElggExtender implements Exportable
+	abstract class ElggExtender implements 
+		Exportable,
+		Iterator,	// Override foreach behaviour
+		ArrayAccess // Override for array access
 	{
 		/**
 		 * This contains the site's main properties (id, etc)
@@ -100,6 +103,8 @@
 			return can_edit_extender($this->id,$this->type,$user_guid);
 		}
 		
+		// EXPORTABLE INTERFACE ////////////////////////////////////////////////////////////
+		
 		/**
 		 * Export this object
 		 *
@@ -115,6 +120,71 @@
 			
 			return $meta;
 		}
+		
+		// ITERATOR INTERFACE //////////////////////////////////////////////////////////////
+		/*
+		 * This lets an entity's attributes be displayed using foreach as a normal array.
+		 * Example: http://www.sitepoint.com/print/php5-standard-library
+		 */
+		
+		private $valid = FALSE; 
+		
+   		function rewind() 
+   		{ 
+   			$this->valid = (FALSE !== reset($this->attributes));  
+   		}
+   
+   		function current() 
+   		{ 
+   			return current($this->attributes); 
+   		}
+		
+   		function key() 
+   		{ 
+   			return key($this->attributes); 
+   		}
+		
+   		function next() 
+   		{
+   			$this->valid = (FALSE !== next($this->attributes));  
+   		}
+   		
+   		function valid() 
+   		{ 
+   			return $this->valid;  
+   		}
+	
+   		// ARRAY ACCESS INTERFACE //////////////////////////////////////////////////////////
+		/*
+		 * This lets an entity's attributes be accessed like an associative array.
+		 * Example: http://www.sitepoint.com/print/php5-standard-library
+		 */
+
+		function offsetSet($key, $value)
+		{
+   			if ( array_key_exists($key, $this->attributes) ) {
+     			$this->attributes[$key] = $value;
+   			}
+ 		} 
+ 		
+ 		function offsetGet($key) 
+ 		{
+   			if ( array_key_exists($key, $this->attributes) ) {
+     			return $this->attributes[$key];
+   			}
+ 		} 
+ 		
+ 		function offsetUnset($key) 
+ 		{
+   			if ( array_key_exists($key, $this->attributes) ) {
+     			$this->attributes[$key] = ""; // Full unsetting is dangerious for our objects
+   			}
+ 		} 
+ 		
+ 		function offsetExists($offset) 
+ 		{
+   			return array_key_exists($offset, $this->attributes);
+ 		} 
 	}
 	
 	/**
