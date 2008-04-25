@@ -807,7 +807,7 @@
 		$query .= " (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))"; // Add access controls
 		if (!$count) {
 			$query .= " order by $order_by";
-			$query .= " limit $offset, $limit"; // Add order and limit
+			if ($limit) $query .= " limit $offset, $limit"; // Add order and limit
 			$dt = get_data($query, "entity_row_to_elggstar");
 			return $dt;
 		} else {
@@ -840,6 +840,25 @@
 		}
 		return false;
 		
+	}
+	
+	/**
+	 * Delete multiple entities that match a given query.
+	 * This function itterates through and calls delete_entity on each one, this is somewhat inefficient but lets 
+	 * the 'delete' even be called for each entity.
+	 * 
+	 * @param string $type The type of entity (eg "user", "object" etc)
+	 * @param string $subtype The arbitrary subtype of the entity
+	 * @param int $owner_guid The GUID of the owning user
+	 */
+	function delete_entities($type = "", $subtype = "", $owner_guid = 0)
+	{
+		$entities = get_entities($type, $subtype, $owner_guid, "time_created desc", 0);
+		
+		foreach ($entities as $entity)
+			delete_entity($entity->guid);
+		
+		return true;
 	}
 
 	/**
