@@ -398,7 +398,6 @@
 		public function export() 
 		{ 
 			$tmp = array();
-			$namespace = "http://www.opendd.net/ext/social/1/";
 			
 			// Generate uuid
 			$uuid = guid_to_uuid($this->getGUID());
@@ -409,9 +408,6 @@
 				$this->attributes['type'], 
 				get_subtype_from_id($this->attributes['subtype'])
 			);
-			
-			// Set namespace - we're outputting as ODD Social Network Extension
-			$odd->setNamespace($namespace);
 			
 			$tmp[] = $odd;
 			
@@ -446,7 +442,6 @@
 				// set the time of any metadata created
 				if ($meta)
 				{
-					$meta->setNamespace($namespace);
 					$meta->setAttribute('published', date("r",$this->time_created));
 					$tmp[] = $meta;
 				}

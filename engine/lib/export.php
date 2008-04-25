@@ -110,31 +110,14 @@
 		public function __toString()
 		{
 			$xml = "";
-			$namespaces = "";
-			$elements_xml = "";
-	
-			// Get XML and catalog namespaces
-			foreach ($this->elements as $element)
-			{
-				$elements_xml .= "$element";
-				
-				// Lookup namespace and get prefix
-				$ns = $element->getNamespace();
-				if (($ns) && (strpos($namespaces, $ns)===false))
-				{
-					$prefix = register_odd_extension_namespace($ns); // cheating... will return a prefix no matter what.
-					$namespaces .= " xmlns:$prefix=\"$ns\"";
-				}
-				else
-					trigger_error("'".get_class($element)."' has no namespace attached.", E_USER_WARNING);
-			}
 			
 			// Output begin tag
 			$generated = date("r");
-			$xml .= "<odd version=\"{$this->ODDSupportedVersion}\" generated=\"$generated\" $namespaces>\n";
+			$xml .= "<odd version=\"{$this->ODDSupportedVersion}\" generated=\"$generated\">\n";
 
-			// output elements
-			$xml .= $elements_xml;
+			// Get XML for elements
+			foreach ($this->elements as $element)
+				$xml .= "$element";
 			
 			// Output end tag
 			$xml .= "</odd>\n";	
@@ -151,12 +134,7 @@
 	 * @author Marcus Povey
 	 */
 	abstract class ODD
-	{
-		/**
-		 * Namespace defining the ODD extension being used, optional but highly recommended.
-		 */
-		private $namespace;
-		
+	{		
 		/**
 		 * Attributes.
 		 */
@@ -185,8 +163,6 @@
 		}
 		public function setBody($value) { $this->body = $value; }
 		public function getBody() { return $this->body; }
-		public function setNamespace($namespace) { $this->namespace = $namespace; }
-		public function getNamespace() { return $this->namespace; }
 		
 		/**
 		 * For serialisation, implement to return a string name of the tag eg "header" or "metadata".
@@ -199,11 +175,6 @@
 		 */
 		public function __toString()
 		{
-			// Namespace mapping
-			$ns = "";
-			if ($this->getNamespace()!="")
-				$ns = register_odd_extension_namespace($this->getNamespace()) . ":"; // Short way: if it has been registered already we'll get back a prefix, if not it'll generate one and return.
-			
 			// Construct attributes
 			$attr = "";
 			foreach ($this->attributes as $k => $v)
@@ -313,59 +284,6 @@
 		}
 		
 		return $odd;
-	}
-	
-	/** ODD Namespaces & registered extension **/
-	$ODD_EXTENSION_NAMESPACES = array();
-	
-	/**
-	 * This function registers a namespace prefix with a given extension.
-	 * Use this function to register a friendly prefix against a namespace. Namespaces will
-	 * still function if you don't use this function however this gives you the opportunity to
-	 * register a more human readable name.
-	 * 
-	 * @param string $extension_url The namespace URL as given in the extension spec.
-	 * @param string $namespace_prefix The chosen prefix, if this is blank then one is generated.
-	 * @return string The extension prefix to be used, either $namespace_prefix, an already registered prefix or a generated one.
-	 */
-	function register_odd_extension_namespace($extension_url, $namespace_prefix = "")
-	{
-		global $ODD_EXTENSION_NAMESPACES;
-		
-		if (isset($ODD_EXTENSION_NAMESPACES[$extension_url]))
-			return $ODD_EXTENSION_NAMESPACES[$extension_url];
-			
-		if ($namespace_prefix == "")
-		{
-			do 
-			{
-				$namespace_prefix = substr(strtolower(base64_encode(md5(mt_rand()))), 0, 8);
-			}
-			while (
-				(array_key_exists($namespace_prefix, $ODD_EXTENSION_NAMESPACES)) || 
-				(is_numeric($namespace_prefix[0]))
-				); // TODO: Do this better, but i'm quite tired now...
-		}
-			
-		$ODD_EXTENSION_NAMESPACES[$extension_url] = $namespace_prefix;
-		
-		return $ODD_EXTENSION_NAMESPACES[$extension_url];
-	}
-	
-	/**
-	 * Get a named prefix.
-	 * 
-	 * @param string $extension_url The namespace URL as given in the extension spec.
-	 * @return mixed The prefix associated with the given extension or false;
-	 */
-	function get_odd_namespace_prefix($extension_url)
-	{
-		global $ODD_EXTENSION_NAMESPACES;
-		
-		if (isset($ODD_EXTENSION_NAMESPACES[$extension_url]))
-			return $ODD_EXTENSION_NAMESPACES[$extension_url];
-		
-		return false;
 	}
 	
 	/** Relationship verb mapping */
