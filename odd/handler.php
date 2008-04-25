@@ -22,7 +22,6 @@
 	$id_or_name = get_input("idname"); // Either a number or the key name (if attribute)
 	
 	$owner = page_owner();	// Obvious
-$_SESSION['id'] = 2;
 
 	if (
 		($guid!="") &&
