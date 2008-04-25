@@ -19,7 +19,7 @@
 	 * @package Elgg
 	 * @subpackage Core
 	 */
-	class ElggMetadata extends ElggExtender implements Exportable
+	class ElggMetadata extends ElggExtender
 	{
 			
 		/**
@@ -95,21 +95,6 @@
 			return delete_metadata($this->id); 
 		}
 	
-		/**
-		 * Export this object
-		 *
-		 * @return array
-		 */
-		public function export()
-		{
-			$type = "metadata";
-			$uuid = guid_to_uuid($this->entity_guid). $type . "/{$this->id}/";
-			
-			$meta = new ODDMetadata($uuid, guid_to_uuid($this->entity_guid), $this->attributes[$name], $this->attributes['value'], $type, guid_to_uuid($this->owner_guid));
-			$meta->setAttribute('published', date("r", $this->time_created));
-			
-			return $meta;
-		}
 	}
 	
 	/**
