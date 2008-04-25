@@ -21,75 +21,88 @@
 	$type = get_input("type"); // attr, metadata, annotation
 	$id_or_name = get_input("idname"); // Either a number or the key name (if attribute)
 	
-	$owner = page_owner();	// Obvious
-
+	
+	
+	// Only export the GUID
 	if (
 		($guid!="") &&
 		($type=="") &&
 		($id_or_name=="")
 	)
 	{
-		// Only export the GUID, easy.
-		$export = export($guid);
-		
-		header("Content-Type: text/xml");
-		echo $export;
+		page_draw("GUID:$guid", elgg_view("export/entity", array("entity" => get_entity($guid), "uuid" => guid_to_uuid($guid))));
 	}
+	
+	// Export an individual attribute
 	else if (
 		($guid!="") &&
 		($type!="") &&
 		($id_or_name!="")
 	)
 	{
-		// Outputting an individual attribute
-		
-	
-		$odd = "";
+		// Get a uuid
 		$entity = get_entity($guid);
-		$uuid = guid_to_uuid($entity->getGUID());
+		$uuid = guid_to_uuid($entity->getGUID()) . "$type/$id_or_name/";
 		
-		if (!$entity) throw new InvalidParameterException("Could not find an entity matching query.");
-				
 		switch ($type)
 		{
-			case 'attr' : // TODO: Do this better
-				$odd = new ODDMetaData($uuid . "attr/$id_or_name/", $uuid, $id_or_name, $entity->get($id_or_name));
+			case 'attr' : // TODO: Do this better? - This is a bit of a hack...
+				$v = $entity->get($id_or_name);
+				if (!$v) throw new InvalidParameterException("Sorry, '$id_or_name' does not exist for guid:$guid");
+				
+				$m = new ElggMetadata();
+				
+				$m->value = $v;
+				$m->name = $id_or_name;
+				$m->entity_guid = $guid;
+				$m->time_created = $entity->time_created;
+				$m->time_updated = $entity->time_updated;
+				$m->owner_guid = $entity->owner_guid;
+				$m->id = $id_or_name;
+				$m->type = "attr";
 			break;
-			
-			case 'metadata' :
+			case 'metadata' : 
 				$m = get_metadata($id_or_name);
-				if (!$m)
-					throw new InvalidParameterException("Could not find specified item of metadata");
-					
-				if ($m->entity_guid!=$entity->guid)
-					throw new InvalidParameterException("Does not belong to entity.");
-					
-				$odd = new ODDMetaData($uuid . "metadata/$id_or_name/", $uuid, $id_or_name, $m->value);
 			break;
-			
 			case 'annotation' : 
 				$m = get_annotation($id_or_name);
-				if (!$m)
-					throw new InvalidParameterException("Could not find specified annotation");
-					
-				if ($m->entity_guid!=$entity->guid)
-					throw new InvalidParameterException("Does not belong to entity.");
-					
-				$odd = new ODDMetaData($uuid . "annotation/$id_or_name/", $uuid, $id_or_name, $m->value);
+			break;	
+			case 'relationship' :
+				$r = get_relationship($id_or_name);
 			break;
-			
+				
 			default :
 				throw new InvalidParameterException("Sorry, I don't know how to export '$type'");
-				
 		}
 		
-		// echo it
-		header("Content-Type: text/xml");
-		echo "<odd>\n";
-		echo new ODDHeader();
-		echo "$odd";
-		echo "</odd>\n";
+		// Render metadata or relationship
+		if ((!$m) && (!$r))
+			throw new InvalidParameterException("Could not find any data.");
+			
+		// Exporting metadata?
+		if ($m)
+		{
+			if ($m->entity_guid!=$entity->guid)
+				throw new InvalidParameterException("Does not belong to entity.");
+			
+			page_draw("$type:$id_or_name", elgg_view("export/metadata", array("metadata" => $m, "uuid" => $uuid)));
+		}
+		
+		// Exporting relationship
+		if ($r)
+		{
+			if (
+				($r->guid_one!=$entity->guid) ||
+				($r->guid_two!=$entity->guid)
+			)
+				throw new InvalidParameterException("Does not belong to entity or refer to entity.");
+			
+			page_draw("$type:$id_or_name", elgg_view("export/relationship", array("relationship" => $r, "uuid" => $uuid)));
+		}
 	}
+	
+	// Something went wrong
 	else
 		throw new InvalidParameterException("Missing parmeter, you need to provide a GUID ");
+	
 ?>
