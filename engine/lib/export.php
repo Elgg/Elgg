@@ -11,7 +11,7 @@
 	 */
 
 	/**
-	 * Define an interface for all exportable objects.
+	 * Define an interface for all ODD exportable objects.
 	 * 
 	 * @package Elgg
 	 * @subpackage Core
@@ -24,10 +24,11 @@
 		 * @return object or array of objects.
 		 */
 	    public function export();
+	    
 	}
 
 	/**
-	 * Define an interface for all importable objects.
+	 * Define an interface for all ODD importable objects.
 	 * @author Marcus Povey
 	 */
 	interface Importable
