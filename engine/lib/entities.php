@@ -22,7 +22,8 @@
 	abstract class ElggEntity implements 
 		Exportable, // Allow export of data
 		Importable, // Allow import of data
-		Iterator	// Override foreach behaviour
+		Iterator,	// Override foreach behaviour
+		ArrayAccess // Override for array access
 	{
 		/** 
 		 * The main attributes of an entity.
@@ -511,6 +512,37 @@
    			return $this->valid;  
    		}
 	
+   		// ARRAY ACCESS INTERFACE //////////////////////////////////////////////////////////
+		/*
+		 * This lets an entity's attributes be accessed like an associative array.
+		 * Example: http://www.sitepoint.com/print/php5-standard-library
+		 */
+
+		function offsetSet($key, $value)
+		{
+   			if ( array_key_exists($key, $this->attributes) ) {
+     			$this->attributes[$key] = $value;
+   			}
+ 		} 
+ 		
+ 		function offsetGet($key) 
+ 		{
+   			if ( array_key_exists($key, $this->attributes) ) {
+     			return $this->attributes[$key];
+   			}
+ 		} 
+ 		
+ 		function offsetUnset($key) 
+ 		{
+   			if ( array_key_exists($key, $this->attributes) ) {
+     			$this->attributes[$key] = ""; // Full unsetting is dangerious for our objects
+   			}
+ 		} 
+ 		
+ 		function offsetExists($offset) 
+ 		{
+   			return array_key_exists($offset, $this->attributes);
+ 		} 
 	}
 
 	/**
