@@ -37,7 +37,6 @@
 	register_pam_handler('pam_auth_hmac');
 	
 	// Get parameter variables
-	$format = get_input('format', 'php');
 	$method = get_input('method');
 	$result = null;
 	
@@ -59,6 +58,6 @@
 		throw new APIException("API Result is of an unknown type, this should never happen.");
 
 	// Output the result
-	echo output_result($result, $format);
+	page_draw($method, elgg_view("api/output", array("result" => $result)));
 	
 ?>
