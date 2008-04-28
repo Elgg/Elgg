@@ -21,7 +21,7 @@
 		$vars['tags'] = $vars['value'];
     if (!empty($vars['tags'])) {
         
-        $string = "";
+        $tagstr = "";
         if (!is_array($vars['tags']))
         	$vars['tags'] = array($vars['tags']);
 
