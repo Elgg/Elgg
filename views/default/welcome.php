@@ -11,8 +11,6 @@
 	 * @link http://elgg.org/
 	 */
 	 
-	$user = $vars['name'];
-	 
 	if (isloggedin()) {
 		echo elgg_view("welcome/logged_in");		
 	} else {
