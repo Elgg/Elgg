@@ -1,0 +1,42 @@
+<?php 
+
+	/**
+	 * Elgg calendar input
+	 * Displays a calendar input field
+	 * 
+	 * @package Elgg
+	 * @subpackage Core
+	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+	 * @author Curverider Ltd
+	 * @copyright Curverider Ltd 2008
+	 * @link http://elgg.org/
+	 * 
+	 * @uses $vars['value'] The current value, if any
+	 * @uses $vars['js'] Any Javascript to enter into the input tag
+	 * @uses $vars['internalname'] The name of the input field
+	 * 
+	 */
+
+    static $calendarjs;
+    if (empty($calendarjs)) {
+        
+        echo <<< END
+        
+<script language="JavaScript" SRC="{$vars['url']}engine/vendors/calendarpopup/CalendarPopup.js"></script>
+        
+END;
+        $calendarjs = 1;
+    }
+    $strippedname = strip_string($vars['internalname']);
+    $js = "cal" . $strippedname;
+
+    if ($vars['value'] > 86400) {
+        $val = date("F j, Y",$vars['value']);
+    }
+    
+?>
+<script language="JavaScript">
+    var cal<?php echo $strippedname; ?> = new CalendarPopup();
+</script>
+<input type="text" <?php echo $vars['js']; ?> name="<?php echo $vars['internalname']; ?>" id="<?php echo $strippedname; ?>" value="<?php echo $val; ?>" />
+<a href="#" onclick="<?php echo $js; ?>.select(document.getElementById('<?php echo $strippedname; ?>'),'anchor<?php echo $strippedname; ?>','MMM dd, yyyy'); return false;" TITLE="<?php echo $js; ?>.select(document.forms[0].<?php echo $strippedname; ?>,'anchor<?php echo $strippedname; ?>','MMM dd, yyyy'); return false;" NAME="anchor<?php echo $strippedname; ?>" ID="anchor<?php echo $strippedname; ?>">select</a> 
