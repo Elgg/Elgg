@@ -28,46 +28,33 @@
 	<?php
 
 		}
-	
+		if (is_array($vars['profile']) && sizeof($vars['profile']) > 0)
+			foreach($vars['profile'] as $shortname => $valtype) {
+				if ($shortname != "description") {
+					$value = $vars['entity']->$shortname;
+					if (!empty($value)) {
+					
 	?>
+
 	<p>
 		<b><?php
-		
-			echo elgg_echo("profile:location");
+
+			echo elgg_echo("profile:{$shortname}");
 		
 		?>: </b>
 		<?php
 
-			echo elgg_view('output/tags',array('tags' => $vars['entity']->location));
+			echo elgg_view("output/{$valtype}",array('value' => $vars['entity']->$shortname));
 		
 		?>
+		
 	</p>
-	<p>
-		<b><?php
-		
-			echo elgg_echo("profile:skills");
-		
-		?>: </b>
-		<?php
 
-			echo elgg_view('output/tags',array('tags' => $vars['entity']->skills));
-		
-		?>
-	</p>
-	<p>
-		<b><?php
-		
-			echo elgg_echo("profile:interests");
-		
-		?>: </b>
-		<?php
-
-			echo elgg_view('output/tags',array('tags' => $vars['entity']->interests));
-		
-		?>
-	</p>
 	<?php
-
+					}
+				}
+			}
+	
 		if ($vars['entity']->canEdit()) {
 	
 	?>

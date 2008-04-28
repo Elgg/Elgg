@@ -34,6 +34,23 @@
 					));
 				}
 				
+			// For now, we'll hard code the profile items as follows:
+			// TODO make this user configurable
+				$CONFIG->profile = array(
+				
+					// Language short codes must be of the form "profile:key"
+					// where key is the array key below
+					'description' => 'longtext',
+					'location' => 'tags',
+					'interests' => 'tags',
+					'skills' => 'tags',
+					'contactemail' => 'email',
+					'phone' => 'text',
+					'mobile' => 'text',
+					'website' => 'url',
+									   
+				);
+				
 			// Register a page handler, so we can have nice URLs
 				register_page_handler('profile','profile_page_handler');
 				

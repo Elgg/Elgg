@@ -10,48 +10,37 @@
 	 * @link http://elgg.com/
 	 * 
 	 * @uses $vars['entity'] The user entity
+	 * @uses $vars['profile'] Profile items from $CONFIG->profile, defined in profile/start.php for now 
 	 */
 
 ?>
 
 <form action="<?php echo $vars['url']; ?>action/profile/edit" method="post">
 
+<?php
+
+	//var_export($vars['profile']);
+	if (is_array($vars['profile']) && sizeof($vars['profile']) > 0)
+		foreach($vars['profile'] as $shortname => $valtype) {
+			
+?>
+
 	<p>
 		<label>
-			<?php echo elgg_echo("profile:aboutme"); ?><br />
-			<?php echo elgg_view("input/longtext",array(
-															'internalname' => 'aboutme',
-															'value' => $vars['entity']->description,
-														)); ?>
+			<?php echo elgg_echo("profile:{$shortname}") ?><br />
+			<?php echo elgg_view("input/{$valtype}",array(
+															'internalname' => $shortname,
+															'value' => $vars['entity']->$shortname,
+															)); ?>
 		</label>
 	</p>
-	<p>
-		<label>
-			<?php echo elgg_echo("profile:location"); ?><br />
-			<?php echo elgg_view("input/tags",array(
-															'internalname' => 'location',
-															'value' => $vars['entity']->location,
-														)); ?>
-		</label>
-	</p>
-	<p>
-		<label>
-			<?php echo elgg_echo("profile:skills"); ?><br />
-			<?php echo elgg_view("input/tags",array(
-															'internalname' => 'skills',
-															'value' => $vars['entity']->skills,
-														)); ?>
-		</label>
-	</p>
-	<p>
-		<label>
-			<?php echo elgg_echo("profile:interests"); ?><br />
-			<?php echo elgg_view("input/tags",array(
-															'internalname' => 'interests',
-															'value' => $vars['entity']->interests,
-														)); ?>
-		</label>
-	</p>
+
+<?php
+			
+		}
+
+?>
+
 	<p>
 		<input type="submit" value="<?php echo elgg_echo("save"); ?>" />
 	</p>

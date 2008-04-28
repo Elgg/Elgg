@@ -10,22 +10,28 @@
 	 * @link http://elgg.com/
 	 */
 		
+	// Load configuration
+		global $CONFIG;
+
 	// Get profile fields
-		$aboutme = get_input('aboutme');
-		$location = string_to_tag_array(get_input('location'));
-		$skills = string_to_tag_array(get_input('skills'));
-		$interests = string_to_tag_array(get_input('interests'));
+		$input = array();
+		foreach($CONFIG->profile as $shortname => $valuetype) {
+			$input[$shortname] = get_input($shortname);
+			if ($valuetype == 'tags')
+				$input[$shortname] = string_to_tag_array($input[$shortname]);
+		}
 		
 	// Save stuff if we can, and forward to the user's profile
 		$user = $_SESSION['user'];
 		if ($user->canEdit()) {
 			
 			// Save stuff
-			$user->description = $aboutme;
+			if (sizeof($input) > 0)
+				foreach($input as $shortname => $value) {
+					$user->$shortname = $value;
+				}
 			$user->save();
-			$user->location = $location;
-			$user->skills = $skills;
-			$user->interests = $interests;
+
 			system_message(elgg_echo("profile:saved"));
 			
 			// Forward to the user's profile
