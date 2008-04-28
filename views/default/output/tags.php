@@ -17,6 +17,8 @@
 	 * 
 	 */
 
+	if (empty($vars['tags']) && !empty($vars['value']))
+		$vars['tags'] = $vars['value'];
     if (!empty($vars['tags'])) {
         
         $string = "";
