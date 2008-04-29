@@ -71,6 +71,7 @@
 			'edit' => "Edit",
 			'delete' => "Delete",
 			'load' => "Load",
+			'upload' => "Upload",
 	
 		/**
 		 * Generic data words

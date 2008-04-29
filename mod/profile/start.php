@@ -31,6 +31,7 @@
 					add_menu(elgg_echo('profile'), $CONFIG->wwwroot . "pg/profile/" . $_SESSION['user']->username,array(
 						menu_item(elgg_echo('profile:yours'),$CONFIG->wwwroot . "pg/profile/" . $_SESSION['user']->username),
 						menu_item(elgg_echo('profile:edit'),$CONFIG->wwwroot."mod/profile/edit.php"),
+						menu_item(elgg_echo('profile:editicon'),$CONFIG->wwwroot."mod/profile/editicon.php"),
 					));
 				}
 				
@@ -53,6 +54,7 @@
 				
 			// Register a page handler, so we can have nice URLs
 				register_page_handler('profile','profile_page_handler');
+				register_page_handler('icon','profile_icon_handler');
 				
 		}
 		
@@ -75,6 +77,27 @@
 		}
 		
 	/**
+	 * Profile icon page handler
+	 *
+	 * @param array $page Array of page elements, forwarded by the page handling mechanism
+	 */
+		function profile_icon_handler($page) {
+			
+			global $CONFIG;
+			
+			// The username should be the file we're getting
+			if (isset($page[0])) {
+				set_input('username',$page[0]);
+			}
+			if (isset($page[1])) {
+				set_input('size',$page[1]);
+			}
+			// Include the standard profile index
+			include($CONFIG->pluginspath . "profile/icon.php");
+			
+		}
+		
+	/**
 	 * Profile URL generator for $user->getUrl();
 	 *
 	 * @param ElggUser $user
@@ -91,6 +114,7 @@
 	// Register actions
 		global $CONFIG;
 		register_action("profile/edit",false,$CONFIG->pluginspath . "profile/actions/edit.php");
+		register_action("profile/iconupload",false,$CONFIG->pluginspath . "profile/actions/iconupload.php");
 
 
 ?>

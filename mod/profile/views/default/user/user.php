@@ -12,12 +12,16 @@
 	 * @uses $vars['entity'] The user entity
 	 */
 
-?>
+	echo elgg_view(
+						"profile/icon", array(
+												'entity' => $vars['entity'],
+												'align' => "right",
+												'size' => "large",
+											  )
+					);
 
+?>
 	<h2><a href="<?php echo $vars['entity']->getUrl(); ?>"><?php echo $vars['entity']->name; ?></a></h2>
-	<p>
-		*** USER ICON TO COME ***
-	</p>
 	<?php 
 
 		if ($vars['full'] == true) {

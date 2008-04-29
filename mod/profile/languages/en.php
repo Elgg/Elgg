@@ -21,6 +21,7 @@
 			'profile:user' => "%s's profile",
 	
 			'profile:edit' => "Edit profile",
+			'profile:editicon' => "Change your profile picture",
 	
 			'profile:description' => "About me", 
 			'profile:location' => "Location",
@@ -43,6 +44,7 @@
 	
 			'profile:notfound' => "Sorry; we could not find the specified profile.",
 			'profile:cantedit' => "Sorry; you do not have permission to edit this profile.",
+			'profile:icon:notfound' => "Sorry; there was a problem uploading your profile icon.",
 	
 	);
 					
