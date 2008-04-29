@@ -84,6 +84,15 @@
 		}
 		
 		/**
+		 * Returns the entity this is attached to
+		 *
+		 * @return ElggEntity The enttiy
+		 */
+		public function getEntity() {
+			return get_entity($this->entity_guid);
+		}
+		
+		/**
 		 * Save this data to the appropriate database table.
 		 */
 		abstract public function save();
