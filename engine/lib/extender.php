@@ -275,6 +275,9 @@
 	 */
 	function can_edit_extender($extender_id, $type, $user_guid = 0) {
 		
+		if (!isloggedin())
+			return false;
+		
 		if ($user_guid == 0) {
 			if (isset($_SESSION['user'])) {
 				$user = $_SESSION['user'];
@@ -289,6 +292,8 @@
 		if (is_callable($functionname)) {
 			$extender = $functionname($extender_id);
 		} else return false;
+		
+		if (!is_a($extender,"ElggExtender")) return false;
 		
 		// If the owner is the specified user, great! They can edit.
 		if ($extender->getOwner() == $user->getGUID()) return true;
