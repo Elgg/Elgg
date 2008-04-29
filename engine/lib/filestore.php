@@ -537,7 +537,8 @@
 					
 						// Resize and return the image contents!
 						imagecopyresized($newimage, $oldimage, 0,0,0,0,$newwidth,$newheight,$width,$height);
-						return imagejpeg($newimage);
+						imagejpeg($newimage, $_FILES[$input_name]['tmp_name'] . $newwidth . $newheight . ".tmp", 90);
+						return file_get_contents($_FILES[$input_name]['tmp_name'] . $newwidth . $newheight . ".tmp");
 						
 					}
 					
