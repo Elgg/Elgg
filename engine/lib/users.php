@@ -144,7 +144,7 @@
 			// Save generic stuff
 			if (!parent::save())
 				return false;
-			
+		
 			// Now save specific stuff
 			return create_user_entity($this->get('guid'), $this->get('name'), $this->get('username'), $this->get('password'), $this->get('email'), $this->get('language'), $this->get('code'));
 		}
@@ -278,6 +278,8 @@
 		function getOwner() {
 			if ($this->owner_guid == 0)
 				return $this->getGUID();
+				
+			return $this->owner_guid;
 		}
 		
 	}
