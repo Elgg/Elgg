@@ -344,7 +344,7 @@
 		global $CONFIG;
 		
 		$sum = sanitise_string($sum);
-		$entity_guid = (int)$entity_id;
+		$entity_guid = (int)$entity_guid;
 		$entity_type = sanitise_string($entity_type);
 		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
 		$name = get_metastring_id($name);
