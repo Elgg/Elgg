@@ -32,6 +32,8 @@ END;
 
     if ($vars['value'] > 86400) {
         $val = date("F j, Y",$vars['value']);
+    } else {
+        $val = $vars['value'];
     }
     
 ?>
