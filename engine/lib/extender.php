@@ -276,10 +276,15 @@
 	function can_edit_extender($extender_id, $type, $user_guid = 0) {
 		
 		if ($user_guid == 0) {
-			$user = $_SESSION['user'];
+			if (isset($_SESSION['user'])) {
+				$user = $_SESSION['user'];
+			} else {
+				$user = null;
+			}
 		} else {
 			$user = get_entity($user_guid);
 		}
+
 		$functionname = "get_{$type}";
 		if (is_callable($functionname)) {
 			$extender = $functionname($extender_id);
