@@ -226,6 +226,8 @@
 		$entity_type = sanitise_string($entity_type);
 		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
 		$name = get_metastring_id($name);
+		if ($name === false)
+			$name = 0;
 		if ($value != "") $value = get_metastring_id($value);
 		$owner_guid = (int)$owner_guid;
 		$limit = (int)$limit;
@@ -248,7 +250,7 @@
 		if ($owner_guid != 0)
 			$where[] = "a.owner_guid=$owner_guid";
 			
-		if ($name != "")
+		if ($name !== "")
 			$where[] = "a.name_id='$name'";
 			
 		if ($value != "")
