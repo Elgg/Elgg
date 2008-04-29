@@ -115,7 +115,7 @@
 			$type = $this->attributes['type'];
 			$uuid = guid_to_uuid($this->entity_guid). $type . "/{$this->id}/";
 			
-			$meta = new ODDMetadata($uuid, guid_to_uuid($this->entity_guid), $this->attributes[$name], $this->attributes['value'], $type, guid_to_uuid($this->owner_guid));
+			$meta = new ODDMetadata($uuid, guid_to_uuid($this->entity_guid), $this->attributes['name'], $this->attributes['value'], $type, guid_to_uuid($this->owner_guid));
 			$meta->setAttribute('published', date("r", $this->time_created));
 			
 			return $meta;
@@ -250,7 +250,7 @@
 	
 			// Save
 			if (!$entity->save())
-				throw new ImportException("There was a problem updating entity '$entity_uuid'");
+				throw new ImportException("There was a problem updating '$attr_name' on entity '$entity_uuid'");
 			
 			return true;
 		}
