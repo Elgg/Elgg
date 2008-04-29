@@ -655,6 +655,7 @@
 		$entity = get_entity($guid);
 		
 		if ($entity->canEdit()) {
+			
 			if (trigger_event('update',$entity->type,$entity)) {
 				return update_data("UPDATE {$CONFIG->dbprefix}entities set owner_guid='$owner_guid', access_id='$access_id', time_updated='$time' WHERE guid=$guid");
 			}
@@ -977,9 +978,9 @@
 		} else {
 			$user = get_entity($user_guid);
 		}
-		if ($entity = get_entity($entity_guid) && !is_null($user)) {
 
-			$entity = get_entity($entity_guid);
+		if (($entity = get_entity($entity_guid)) && (!is_null($user))) {
+
 			if ($entity->getOwner() == $user->getGUID()) return true;
 			if ($entity->type == "user" && $entity->getGUID() == $user->getGUID()) return true;
 			
