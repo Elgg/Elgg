@@ -471,6 +471,84 @@
 		
 	}
 	
+	/**
+	 * Get the contents of an uploaded file.
+	 * (Returns false if there was an issue.)
+	 *
+	 * @param string $input_name The name of the file input field on the submission form
+	 * @return mixed|false The contents of the file, or false on failure.
+	 */
+	function get_uploaded_file($input_name) {
+		
+		// If the file exists ...
+		if (isset($_FILES[$input_name]) && $_FILES[$input_name]['error'] == 0) {
+			return file_get_contents($_FILES[$input_name]['tmp_name']);
+		}
+		return false;
+		
+	}
+	
+	/**
+	 * Gets the jpeg contents of the resized version of an uploaded image 
+	 * (Returns false if the uploaded file was not an image)
+	 *
+	 * @param string $input_name The name of the file input field on the submission form
+	 * @param int $maxwidth The maximum width of the resized image
+	 * @param int $maxheight The maximum height of the resized image
+	 * @return false|mixed The contents of the resized image, or false on failure
+	 */
+	function get_resized_image_from_uploaded_file($input_name, $maxwidth, $maxheight) {
+		// If our file exists ...
+		if (isset($_FILES[$input_name]) && $_FILES[$input_name]['error'] == 0) {
+			
+			// Get the size information from the image
+			if ($imgsizearray = getimagesize($_FILES[$input_name]['tmp_name'])) {
+			
+				// Get the contents of the file
+				$filecontents = file_get_contents($_FILES[$input_name]['tmp_name']);
+				
+				// Get width and height
+				$width = $imgsizearray[0];
+				$height = $imgsizearray[1];
+				$newwidth = $width;
+				$newhight = $height;
+				
+				if ($width > $maxwidth) {
+					$newwidth = $maxwidth;
+					$newheight = floor($height * ($maxwidth / $width));
+				}
+				if ($newheight > $maxheight) {
+					$newheight = $maxheight;
+					$newwidth = floor($newwidth * ($maxheight / $newheight)); 
+				}
+				
+				$accepted_formats = array(
+												'image/jpeg' => 'jpeg',
+												'image/png' => 'png',
+												'image/gif' => 'png'
+										);
+				
+				// If it's a file we can manipulate ...
+				if (array_key_exists($imgsizearray['mime'],$accepted_formats)) {
+
+					$function = "imagecreatefrom" . $accepted_formats[$imgsizearray['mime']];
+					$newimage = imagecreatetruecolor($newwidth,$newheight);
+					if (is_callable($function) && $oldimage = $function($_FILES[$input_name]['tmp_name'])) {
+					
+						// Resize and return the image contents!
+						imagecopyresized($newimage, $oldimage, 0,0,0,0,$newwidth,$newheight,$width,$height);
+						return imagejpeg($newimage);
+						
+					}
+					
+				}
+				
+			}
+			
+		}
+		return false;
+	}
+	
 
 	/// Variable holding the default datastore
 	$DEFAULT_FILE_STORE = NULL;
