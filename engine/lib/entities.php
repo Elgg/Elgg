@@ -657,8 +657,15 @@
 		if ($entity->canEdit()) {
 			
 			if (trigger_event('update',$entity->type,$entity)) {
-				return update_data("UPDATE {$CONFIG->dbprefix}entities set owner_guid='$owner_guid', access_id='$access_id', time_updated='$time' WHERE guid=$guid");
+				$ret = update_data("UPDATE {$CONFIG->dbprefix}entities set owner_guid='$owner_guid', access_id='$access_id', time_updated='$time' WHERE guid=$guid");
+				
+				// Handle cases where there was no error BUT no rows were updated!
+				if ($ret===false)
+					return false;
+
+				return true;
 			}
+			
 		}
 	}
 	
