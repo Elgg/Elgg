@@ -208,8 +208,10 @@
 			if ($len>$this->matrix_depth)
 				$len = $this->matrix_depth;
 			
-			for ($n = 0; $n < $len; $n++)
-				$matrix .= $filename[$n] . "/";	
+			for ($n = 0; $n < $len; $n++) {
+				if (ctype_alnum($filename[$n]))
+					$matrix .= $filename[$n] . "/";
+			}	
 	
 			return $matrix;
 		}
