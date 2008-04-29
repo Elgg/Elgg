@@ -33,6 +33,7 @@
 	<head>
 		<title><?php echo $title; ?></title>
 		<!-- include links to jQuery here? -->
+		<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery.js"></script>
 		<!-- include the default css file -->
 		<link rel="stylesheet" href="<?php echo $vars['url']; ?>_css/css.css" type="text/css" />
 	</head>
