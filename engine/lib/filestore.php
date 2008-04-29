@@ -511,7 +511,7 @@
 				$width = $imgsizearray[0];
 				$height = $imgsizearray[1];
 				$newwidth = $width;
-				$newhight = $height;
+				$newheight = $height;
 				
 				if ($width > $maxwidth) {
 					$newwidth = $maxwidth;
@@ -547,7 +547,6 @@
 			}
 			
 		}
-		return false;
 	}
 	
 
