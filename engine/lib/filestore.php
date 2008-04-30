@@ -122,11 +122,27 @@
 		
 		public function open(ElggFile $file, $mode)
 		{
-			$name = $file->getFilename();
-			$matrix = $this->make_file_matrix($name);
+			// Full path and filename
+			$fullname = $file->getFilename();
+			
+			// Split into path and name
+			$ls = strrpos($fullname,"/");
+			if ($ls===false) $ls = 0;
+			
+			$path = substr($fullname, 0, $ls);
+			$name = substr($fullname, $ls);
+			
+			// Construct matrix out of user
+			$owner = $file->getOwnerEntity();
+			if (!$owner)
+				$owner = $_SESSION['user'];
+					
+			if ((!$owner) || (!$owner->username)) throw InvalidParameterException("All files must have an owner!");
+			
+			$matrix = $this->make_file_matrix($owner->username);
 			
 			// Try and create the directory
-			try { $this->make_directory_root($this->dir_root . $matrix); } catch (Exception $e){}
+			try { $this->make_directory_root($this->dir_root . $matrix . $path); } catch (Exception $e){}
 			
 			switch ($mode)
 			{
@@ -136,7 +152,7 @@
 				default: throw new InvalidParameterException("Unrecognised file mode '$mode'");
 			}
 			
-			return fopen($this->dir_root . $matrix . $name, $mode);
+			return fopen($this->dir_root . $matrix . $fullname, $mode);
 		}
 		
 		public function write($f, $data)
