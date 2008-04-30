@@ -19,7 +19,6 @@
 	<div class="blog-post">
 		<h3><a href="<?php echo $vars['entity']->getURL(); ?>"><?php echo $vars['entity']->title; ?></a></h3>
 		<p class="strapline">
-			<span style="float:right">
 			<?php
 
 				echo sprintf(elgg_echo("blog:strapline"),
@@ -27,13 +26,17 @@
 				);
 			
 			?>
-			</span>
+		</p>
+		<p style="float: left">
+			<?php
+				echo elgg_view("profile/icon",array('entity' => $vars['entity']->getOwnerEntity(), 'size' => 'medium'));
+			?><br />
 			<a href="<?php echo $vars['url']; ?>pg/blog/<?php echo $vars['entity']->getOwnerEntity()->username; ?>"><?php echo $vars['entity']->getOwnerEntity()->name; ?></a>
 		</p>
-		<p>
+		<p style="margin-left: 110px; min-height: 110px">
 			<?php
-
-				echo nl2br($vars['entity']->description);
+		
+						echo nl2br($vars['entity']->description);
 			
 			?>
 		</p>
