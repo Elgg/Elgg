@@ -115,14 +115,10 @@
 		 * @return array
 		 */
 		public function export()
-		{
-			$verb = get_verb_from_relationship($this->relationship); 
-			if (!$verb)
-				throw new ExportException("There is no verb mapping for '{$this->relationship}'.");
-			
+		{			
 			return new ODDRelationship(
 				guid_to_uuid($this->guid_one),
-				$verb,
+				$this->relationship,
 				guid_to_uuid($this->guid_two)
 			);
 		}
@@ -155,8 +151,9 @@
 				$this->attributes['guid_two'] = $entity2->getGUID();
 				
 				// Map verb to relationship
-				$verb = $data->getAttribute('verb');
-				$relationship = get_relationship_from_verb($verb);
+				//$verb = $data->getAttribute('verb');
+				//$relationship = get_relationship_from_verb($verb);
+				$relationship = $data->getAttribute('type');
 				
 				if ($relationship)
 				{	
@@ -477,8 +474,8 @@
 	}
 	
 	/** Register the import hook */
-	register_plugin_hook("import", "all", "import_relationship_plugin_hook", 1);
+	register_plugin_hook("import", "all", "import_relationship_plugin_hook", 3);
 	
 	/** Register the hook, ensuring entities are serialised first */
-	register_plugin_hook("export", "all", "export_relationship_plugin_hook", 1);
+	register_plugin_hook("export", "all", "export_relationship_plugin_hook", 3);
 ?>
