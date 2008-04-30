@@ -13,10 +13,11 @@
 	// If we were given a correct icon
 		if (
 				isloggedin()
-				&& $small = get_resized_image_from_uploaded_file('profileicon',50,50)
-				&& $medium = get_resized_image_from_uploaded_file('profileicon',100,100)
-				&& $large = get_resized_image_from_uploaded_file('profileicon',200,200)
 			) {
+				
+				$small = get_resized_image_from_uploaded_file('profileicon',50,50);
+				$medium = get_resized_image_from_uploaded_file('profileicon',100,100);
+				$large = get_resized_image_from_uploaded_file('profileicon',300,300);
 				
 				$filehandler = new ElggFile();
 				$filehandler->setFilename($_SESSION['user']->username . "large.jpg");
