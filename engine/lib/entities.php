@@ -803,6 +803,10 @@
 		
 		$type = sanitise_string($type);
 		$subtype = get_subtype_id($type, $subtype);
+		
+		if ($subtype === false)
+			return false;
+		
 		$order_by = sanitise_string($order_by);
 		$limit = (int)$limit;
 		$offset = (int)$offset;
