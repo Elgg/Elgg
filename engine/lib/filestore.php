@@ -538,7 +538,8 @@
 					if (is_callable($function) && $oldimage = $function($_FILES[$input_name]['tmp_name'])) {
 					
 						// Resize and return the image contents!
-						imagecopyresized($newimage, $oldimage, 0,0,0,0,$newwidth,$newheight,$width,$height);
+						imagecopyresampled($newimage, $oldimage, 0,0,0,0,$newwidth,$newheight,$width,$height);
+						// imagecopyresized($newimage, $oldimage, 0,0,0,0,$newwidth,$newheight,$width,$height);
 						ob_start();
 						imagejpeg($newimage, null, 90);
 						$jpeg = ob_get_clean();
