@@ -373,8 +373,10 @@
 	 * @param string $order_by
 	 * @param int $limit
 	 * @param int $offset
+	 * @param boolean $count Set to true if you want to count the number of entities instead (default false)
+	 * @return array|int|false An array of entities, or the number of entities, or false on failure
 	 */
-	function get_entities_from_relationship($relationship, $relationship_guid, $inverse_relationship = false, $type = "", $subtype = "", $owner_guid = 0, $order_by = "time_created desc", $limit = 10, $offset = 0)
+	function get_entities_from_relationship($relationship, $relationship_guid, $inverse_relationship = false, $type = "", $subtype = "", $owner_guid = 0, $order_by = "time_created desc", $limit = 10, $offset = 0, $count = false)
 	{
 		global $CONFIG;
 		
@@ -408,13 +410,25 @@
 		if (!$inverse_relationship)
 			$joinon = "r.guid_one=e.guid";	
 			
-		$query = "SELECT * from {$CONFIG->dbprefix}entities e JOIN {$CONFIG->dbprefix}entity_relationships r on $joinon where ";
+		if ($count) {
+			$query = "select count(distinct e.id) as total ";
+		} else {
+			$query = "select distinct e.* ";
+		}
+		$query .= " from {$CONFIG->dbprefix}entities e JOIN {$CONFIG->dbprefix}entity_relationships r on $joinon where ";
 		foreach ($where as $w)
 			$query .= " $w and ";
 		$query .= " (e.access_id in {$access} or (e.access_id = 0 and e.owner_guid = {$_SESSION['id']}))"; // Add access controls
-		$query .= " order by $order_by limit $limit, $offset"; // Add order and limit
+		if (!$count) {
+			$query .= " order by $order_by limit $limit, $offset"; // Add order and limit
+			return get_data($query, "entity_row_to_elggstar");
+		} else {
+			if ($count = get_data_row($query)) {
+				return $count->total;
+			}
+		}
+		return false;
 		
-		return get_data($query, "entity_row_to_elggstar");
 	}
 	
 	/**

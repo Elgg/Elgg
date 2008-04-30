@@ -253,6 +253,28 @@
 		}
 		
 		/**
+		 * Gets an array of entities from a specific relationship type
+		 *
+		 * @param string $relationship Relationship type (eg "friends")
+		 * @param int $limit Number of elements to return
+		 * @param int $offset Indexing offset
+		 * @return array|false An array of entities or false on failure
+		 */		
+		function getEntitiesFromRelationship($relationship, $limit = 50, $offset = 0) {
+			return get_entities_from_relationship($relationship,$this->getGUID(),false,"","",9,"time_created desc",$limit,$offset);			
+		}
+		
+		/**
+		 * Gets the number of of entities from a specific relationship type
+		 *
+		 * @param string $relationship Relationship type (eg "friends")
+		 * @return int|false The number of entities or false on failure
+		 */		
+		function countEntitiesFromRelationship($relationship) {
+			return get_entities_from_relationship($relationship,$this->getGUID(),false,"","",9,"time_created desc",$limit,$offset,true);			
+		}
+		
+		/**
 		 * Determines whether or not the specified user (by default the current one) can edit the entity 
 		 *
 		 * @param int $user_guid The user GUID, optionally (defaults to the currently logged in user)
