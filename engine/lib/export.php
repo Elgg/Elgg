@@ -185,9 +185,9 @@
 			
 			$end = "/>";
 			if ($body!="")
-				$end = ">$body</{$ns}{$tag}>";
+				$end = ">$body</{$tag}>";
 			
-			return "<{$ns}{$tag} $attr" . $end . "\n";  
+			return "<{$tag} $attr" . $end . "\n";  
 		}
 	}
 	
