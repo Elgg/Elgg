@@ -394,7 +394,7 @@
 		if ($relationship!="")
 			$where[] = "r.relationship='$relationship'";
 		if ($relationship_guid)
-			$where[] = ($inverse_relationship ? "r.guid_one='$relationship_guid'" : "r.guid_two='$relationship_guid'");
+			$where[] = ($inverse_relationship ? "r.guid_two='$relationship_guid'" : "r.guid_one='$relationship_guid'");
 		if ($type != "")
 			$where[] = "e.type='$type'";
 		if ($subtype)
@@ -403,9 +403,9 @@
 			$where[] = "e.owner_guid='$owner_guid'";
 		
 		// Select what we're joining based on the options
-		$joinon = "e.guid = r.guid_two";
+		$joinon = "e.guid = r.guid_one";
 		if (!$inverse_relationship)
-			$joinon = "e.guid = r.guid_one";	
+			$joinon = "e.guid = r.guid_two";	
 			
 		if ($count) {
 			$query = "select count(distinct e.id) as total ";
