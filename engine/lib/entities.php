@@ -261,7 +261,7 @@
 		 * @return array|false An array of entities or false on failure
 		 */		
 		function getEntitiesFromRelationship($relationship, $limit = 50, $offset = 0) {
-			return get_entities_from_relationship($relationship,$this->getGUID(),false,"","",9,"time_created desc",$limit,$offset);			
+			return get_entities_from_relationship($relationship,$this->getGUID(),false,"","","","time_created desc",$limit,$offset);			
 		}
 		
 		/**
@@ -271,7 +271,7 @@
 		 * @return int|false The number of entities or false on failure
 		 */		
 		function countEntitiesFromRelationship($relationship) {
-			return get_entities_from_relationship($relationship,$this->getGUID(),false,"","",9,"time_created desc",$limit,$offset,true);			
+			return get_entities_from_relationship($relationship,$this->getGUID(),false,"","","","time_created desc",$limit,$offset,true);			
 		}
 		
 		/**

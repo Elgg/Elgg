@@ -394,7 +394,7 @@
 		if ($relationship!="")
 			$where[] = "r.relationship='$relationship'";
 		if ($relationship_guid)
-			$where[] = ($inverse_relationship ? "r.guid_one='$relationship'" : "r.guid_two='$relationship'");
+			$where[] = ($inverse_relationship ? "r.guid_one='$relationship_guid'" : "r.guid_two='$relationship_guid'");
 		if ($type != "")
 			$where[] = "e.type='$type'";
 		if ($subtype)
@@ -417,7 +417,7 @@
 			$query .= " $w and ";
 		$query .= " (e.access_id in {$access} or (e.access_id = 0 and e.owner_guid = {$_SESSION['id']}))"; // Add access controls
 		if (!$count) {
-			$query .= " order by $order_by limit $limit, $offset"; // Add order and limit
+			$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
 			return get_data($query, "entity_row_to_elggstar");
 		} else {
 			if ($count = get_data_row($query)) {
