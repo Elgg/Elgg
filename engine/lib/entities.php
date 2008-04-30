@@ -271,7 +271,7 @@
 		 * @return int|false The number of entities or false on failure
 		 */		
 		function countEntitiesFromRelationship($relationship) {
-			return get_entities_from_relationship($relationship,$this->getGUID(),false,"","","","time_created desc",$limit,$offset,true);			
+			return get_entities_from_relationship($relationship,$this->getGUID(),false,"","","","time_created desc",null,null,true);			
 		}
 		
 		/**
