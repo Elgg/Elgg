@@ -40,13 +40,14 @@
 			
 			?>
 		</p>
-		<p>
+		<p style="margin-left: 110px">
 			<?php
 
 				echo elgg_view('output/tags', array('tags' => $vars['entity']->tags));
 			
 			?>
 		</p>
+		<p style="margin-left: 110px">
 		<?php
 
 			if ($vars['entity']->canEdit()) {
@@ -69,6 +70,7 @@
 			}
 		
 		?>
+		</p>
 	</div>
 
 <?php
