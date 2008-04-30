@@ -69,20 +69,6 @@
 	}
 	
 	/**
-	 * Trigger the event "request_notify_list" with a given array of context values.
-	 * 
-	 * Listening functions should examine the array and determine whether - for a given context - users need to be 
-	 */
-	function get_notify_list(array $context)
-	{
-		$list = array();
-		
-		// Trigger an event to retrieve a list of guids to notify for a given context.
-		return trigger_plugin_hook("request_notify_list", "all", $context, $list);
-	}
-	
-	
-	/**
 	 * Notification exception.
 	 * @author Marcus Povey
 	 */
