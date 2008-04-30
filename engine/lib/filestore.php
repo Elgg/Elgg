@@ -516,12 +516,12 @@
 				$newheight = $height;
 				
 				if ($width > $maxwidth) {
-					$newwidth = $maxwidth;
 					$newheight = floor($height * ($maxwidth / $width));
+					$newwidth = $maxwidth;
 				}
 				if ($newheight > $maxheight) {
-					$newheight = $maxheight;
-					$newwidth = floor($newwidth * ($maxheight / $newheight)); 
+					$newwidth = floor($newwidth * ($maxheight / $newheight));
+					$newheight = $maxheight; 
 				}
 				
 				$accepted_formats = array(
@@ -539,8 +539,10 @@
 					
 						// Resize and return the image contents!
 						imagecopyresized($newimage, $oldimage, 0,0,0,0,$newwidth,$newheight,$width,$height);
-						imagejpeg($newimage, $_FILES[$input_name]['tmp_name'] . $newwidth . $newheight . ".tmp", 90);
-						return file_get_contents($_FILES[$input_name]['tmp_name'] . $newwidth . $newheight . ".tmp");
+						ob_start();
+						imagejpeg($newimage, null, 90);
+						$jpeg = ob_get_clean();
+						return $jpeg;
 						
 					}
 					
