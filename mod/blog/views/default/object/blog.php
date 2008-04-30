@@ -77,7 +77,7 @@
 
 		// If we've been asked to display the full view
 			if (isset($vars['full']) && $vars['full'] == true) {
-				echo elgg_view('object/blog-comments',array('entity' => $vars['entity'], 'comments' => $vars['comments']));
+				echo elgg_view('object/blog-comments',array('entity' => $vars['entity'], 'comments' => $vars['entity']->getAnnotations('comment')));
 			}
 
 		// Display comments if any
