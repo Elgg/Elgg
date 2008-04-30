@@ -19,21 +19,29 @@
 				$medium = get_resized_image_from_uploaded_file('profileicon',100,100);
 				$large = get_resized_image_from_uploaded_file('profileicon',300,300);
 				
-				$filehandler = new ElggFile();
-				$filehandler->setFilename($_SESSION['user']->username . "large.jpg");
-				$filehandler->open("write");
-				$filehandler->write($large);
-				$filehandler->close();
-				$filehandler->setFilename($_SESSION['user']->username . "medium.jpg");
-				$filehandler->open("write");
-				$filehandler->write($medium);
-				$filehandler->close();
-				$filehandler->setFilename($_SESSION['user']->username . "small.jpg");
-				$filehandler->open("write");
-				$filehandler->write($small);
-				$filehandler->close();
+				if ($small !== false
+					&& $medium !== false
+					&& $large !== false) {
 				
-				system_message(elgg_echo("profile:icon:uploaded"));
+					$filehandler = new ElggFile();
+					$filehandler->setFilename($_SESSION['user']->username . "large.jpg");
+					$filehandler->open("write");
+					$filehandler->write($large);
+					$filehandler->close();
+					$filehandler->setFilename($_SESSION['user']->username . "medium.jpg");
+					$filehandler->open("write");
+					$filehandler->write($medium);
+					$filehandler->close();
+					$filehandler->setFilename($_SESSION['user']->username . "small.jpg");
+					$filehandler->open("write");
+					$filehandler->write($small);
+					$filehandler->close();
+					
+					system_message(elgg_echo("profile:icon:uploaded"));
+				
+				} else {
+					system_message(elgg_echo("profile:icon:notfound"));					
+				}
 				
 			} else {
 				
