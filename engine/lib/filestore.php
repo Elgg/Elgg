@@ -130,7 +130,7 @@
 			if ($ls===false) $ls = 0;
 			
 			$path = substr($fullname, 0, $ls);
-			$name = substr($fullname, $ls);
+			$name = substr($fullname, $ls); 
 			
 			// Construct matrix out of user
 			$owner = $file->getOwnerEntity();
