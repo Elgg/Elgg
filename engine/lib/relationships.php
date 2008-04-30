@@ -403,16 +403,16 @@
 			$where[] = "e.owner_guid='$owner_guid'";
 		
 		// Select what we're joining based on the options
-		$joinon = "r.guid_two=e.guid";
+		$joinon = "e.guid = r.guid_two";
 		if (!$inverse_relationship)
-			$joinon = "r.guid_one=e.guid";	
+			$joinon = "e.guid = r.guid_one";	
 			
 		if ($count) {
 			$query = "select count(distinct e.id) as total ";
 		} else {
 			$query = "select distinct e.* ";
 		}
-		$query .= " from {$CONFIG->dbprefix}entities e JOIN {$CONFIG->dbprefix}entity_relationships r on $joinon where ";
+		$query .= " from {$CONFIG->dbprefix}entity_relationships r JOIN {$CONFIG->dbprefix}entities e on $joinon where ";
 		foreach ($where as $w)
 			$query .= " $w and ";
 		$query .= " (e.access_id in {$access} or (e.access_id = 0 and e.owner_guid = {$_SESSION['id']}))"; // Add access controls
