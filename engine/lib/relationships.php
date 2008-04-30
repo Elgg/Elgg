@@ -408,7 +408,7 @@
 			$joinon = "e.guid = r.guid_two";	
 			
 		if ($count) {
-			$query = "select count(distinct e.id) as total ";
+			$query = "select count(distinct e.guid) as total ";
 		} else {
 			$query = "select distinct e.* ";
 		}
