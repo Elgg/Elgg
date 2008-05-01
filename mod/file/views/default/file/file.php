@@ -23,7 +23,7 @@
 		<tr>
 			<td valign="top">
 				<div class="file_icon">
-					<?php echo elgg_view("file/icon", array("mime" => $mime)); ?>
+					<?php echo elgg_view("file/icon", array("mimetype" => $mime)); ?>
 				</div>
 			</td>
 			<td valign="top">

@@ -93,7 +93,7 @@
 			"tags" => $tags,
 			"title" => $file->title,
 			"description" => $file->description,
-			"mime" => $file->getMimeType()
+			"mimetype" => $file->getMimeType()
 		));
 	}
 	
