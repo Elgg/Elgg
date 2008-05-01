@@ -12,6 +12,55 @@
 	 * @link http://elgg.org/
 	 */
 
+	
+	/**
+	 * Enter description here...
+	 *
+	 * @param unknown_type $name
+	 * @param unknown_type $value
+	 * @param unknown_type $site_guid
+	 * @return unknown
+	 */
+		function set_config($name, $value, $site_guid = 0) {
+			
+			global $CONFIG;
+			$name = mysql_real_escape_string($name);
+			$value = mysql_real_escape_string($value);
+			$site_guid = (int) $site_guid;
+			if ($site_guid == 0)
+				$site_guid = (int) $CONFIG->site_id;
+			$CONFIG->$name = $value;
+			$value = serialize($value);
+			return insert_data("insert into {$CONFIG->dbprefix}config set name = '{$name}', value = '{$value}', site_guid = {$site_guid}");
+			
+		}
+
+	/**
+	 * Gets a configuration value
+	 *
+	 * @param string $name The name of the config value
+	 * @param int $site_guid Optionally, the GUID of the site (current site is assumed by default)
+	 * @return mixed|false Depending on success
+	 */
+		function get_config($name, $site_guid = 0) {
+			
+			global $CONFIG;
+			if (isset($CONFIG->$name))
+				return $CONFIG->$name;
+			$name = mysql_real_escape_string($name);
+			$site_guid = (int) $site_guid;
+			if ($site_guid == 0)
+				$site_guid = (int) $CONFIG->site_id;
+			if ($result = get_data_row("select value from {$CONFIG->dbprefix}config where name = '{$name}' and site_guid = {$site_guid}")) {
+				$result = $result->value;
+				$result = unserialize($result->value);
+				$CONFIG->$name = $result;
+				return $result;
+			}
+			return false;
+			
+		}
+
 	/**
 	 * If certain configuration elements don't exist, autodetect sensible defaults 
 	 * 
