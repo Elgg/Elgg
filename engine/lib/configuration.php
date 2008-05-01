@@ -14,12 +14,12 @@
 
 	
 	/**
-	 * Enter description here...
+	 * Sets a configuration value
 	 *
-	 * @param unknown_type $name
-	 * @param unknown_type $value
-	 * @param unknown_type $site_guid
-	 * @return unknown
+	 * @param string $name The name of the configuration value
+	 * @param string $value Its value
+	 * @param int $site_guid Optionally, the GUID of the site (current site is assumed by default)
+	 * @return false|int 1 or false depending on success or failure 
 	 */
 		function set_config($name, $value, $site_guid = 0) {
 			
