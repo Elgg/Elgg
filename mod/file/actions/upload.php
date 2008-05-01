@@ -21,26 +21,24 @@
 	$result = $file->save();
 	
 	if ($result)
-		system_message(elgg_echo("file:saved"));
-	else
-		system_message(elgg_echo("file:uploadfailed"));
-	
-	$file->setFilename($_FILES['upload']['name']);
-	$file->setMimeType($_FILES['upload']['type']);
-	
-	$file->open("write");
-	$file->write(get_uploaded_file('upload'));
-	$file->close();
-	
-	$file->title = $title;
-	$file->description = $desc;
-	
-	$result = $file->save();
-	
-	// Save tags
-	$tags = explode(",", $tags);
-	$file->tag = $tags;
-	
+	{	
+		$file->setFilename($_FILES['upload']['name']);
+		$file->setMimeType($_FILES['upload']['type']);
+		
+		$file->open("write");
+		$file->write(get_uploaded_file('upload'));
+		$file->close();
+		
+		$file->title = $title;
+		$file->description = $desc;
+		
+		$result = $file->save();
+		
+		// Save tags
+		$tags = explode(",", $tags);
+		$file->tag = $tags;
+	}
+		
 	if ($result)
 		system_message(elgg_echo("file:saved"));
 	else
