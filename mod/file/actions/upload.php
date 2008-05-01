@@ -22,7 +22,7 @@
 	
 	if ($result)
 	{	
-		$file->setFilename($_FILES['upload']['name']);
+		$file->setFilename($prefix.$_FILES['upload']['name']);
 		$file->setMimeType($_FILES['upload']['type']);
 		
 		$file->open("write");
