@@ -49,7 +49,7 @@
 				<foaf:Person>
 					<foaf:name><?php echo $friend->name; ?></foaf:name>
   					<foaf:mbox rdf:resource="<?php echo $friend->email; ?>"/>
-  					<rdfs:seeAlso rdf:resource="<?php echo guid_to_uuid($friend->guid); ?>"/>
+  					<rdfs:seeAlso rdf:resource="<?php echo guid_to_uuid($friend->guid); ?>?view=foaf"/>
 				</foaf:Person>		
 <?php		
 			}	
