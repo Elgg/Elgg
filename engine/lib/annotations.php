@@ -361,7 +361,8 @@
 		if ($name!="")
 			$where[] = "a.name_id='$name'";
 			
-		$where[] = "a.value_type='integer'"; // Limit on integer types
+		if ($sum != "count")
+			$where[] = "a.value_type='integer'"; // Limit on integer types
 		
 		$query = "SELECT $sum(ms.string) as sum from {$CONFIG->dbprefix}annotations a JOIN {$CONFIG->dbprefix}entities e on a.entity_guid = e.guid JOIN {$CONFIG->dbprefix}metastrings ms on a.value_id=ms.id WHERE ";
 		foreach ($where as $w)
@@ -369,7 +370,6 @@
 		$query .= " (a.access_id in {$access} or (a.access_id = 0 and a.owner_guid = {$_SESSION['id']}))"; // now add access
 		
 		$row = get_data_row($query);
-		
 		if ($row)
 			return $row->sum;
 			
