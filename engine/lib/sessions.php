@@ -150,6 +150,14 @@
 	        }
 		}
 
+	/**
+	 * Used at the top of a page to mark it as logged in users only.
+	 *
+	 */
+		function gatekeeper() {
+			if (!isloggedin()) forward();
+		}
+		
 		register_event_handler("init","system","session_init",1);
 	
 	//register actions *************************************************************
