@@ -834,7 +834,7 @@
 			
 			global $CONFIG;
 			$name = sanitise_string($name);
-			if ($row = get_data_row("select value from {$CONFIG->prefix}datalists where name = '{$name}'")) {
+			if ($row = get_data_row("select value from {$CONFIG->dbprefix}datalists where name = '{$name}'")) {
 				return $row->value;
 			}
 			return false;
@@ -853,8 +853,8 @@
 			global $CONFIG;
 			$name = sanitise_string($name);
 			$value = sanitise_string($value);
-			delete_data("delete from {$CONFIG->prefix}datalists where name = '{$name}'");
-			insert_data("insert into {$CONFIG->prefix}datalists set name = '{$name}', value = '{$value}'");
+			delete_data("delete from {$CONFIG->dbprefix}datalists where name = '{$name}'");
+			insert_data("insert into {$CONFIG->dbprefix}datalists set name = '{$name}', value = '{$value}'");
 			return true;
 			
 		}
