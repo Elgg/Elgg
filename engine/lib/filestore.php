@@ -58,6 +58,14 @@
 		abstract public function seek($f, $position);
 		
 		/**
+		 * Return a whether the end of a file has been reached.
+		 * 
+		 * @param mixed $f The file handle.
+		 * @return boolean
+		 */
+		abstract public function eof($f);
+		
+		/**
 		 * Close a given file handle.
 		 *
 		 * @param mixed $f
@@ -188,6 +196,11 @@
 		public function seek($f, $position)
 		{
 			return fseek($f, $position);
+		}
+		
+		public function eof($f)
+		{
+			return feof($f);
 		}
 		
 		public function getFileSize(ElggFile $file)
@@ -429,6 +442,16 @@
 		public function size()
 		{
 			return $this->filestore->getFileSize($this);
+		}
+		
+		/**
+		 * Return a boolean value whether the file handle is at the end of the file
+		 */
+		public function eof()
+		{
+			$fs = $this->getFilestore();
+			
+			return $fs->eof($this->handle);
 		}
 		
 		/**
