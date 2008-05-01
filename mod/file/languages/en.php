@@ -37,6 +37,7 @@
 		 */
 	
 			'file:uploadfailed' => "Sorry; we could not save your file.",
+			'file:downloadfailed' => "Sorry; this file is not available at this time.",
 	
 	);
 					
