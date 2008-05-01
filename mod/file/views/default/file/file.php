@@ -15,12 +15,15 @@
 	$title = $vars['title'];
 	$desc = $vars['description'];
 	
+	$mime = $vars['mimetype'];
+	
 ?>
 <div class="file">
 	<table width="100%">
 		<tr>
 			<td valign="top">
 				<div class="file_icon">
+					<?php echo elgg_view("file/icon", array("mime" => $mime)); ?>
 				</div>
 			</td>
 			<td valign="top">

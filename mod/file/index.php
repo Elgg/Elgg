@@ -6,6 +6,9 @@
 	 * @author Marcus Povey
 	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.com/
+	 * 
+	 * 
+	 * TODO: File icons, download & mime types
 	 */
 
 	require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");

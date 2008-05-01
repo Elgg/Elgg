@@ -19,6 +19,7 @@
 	$prefix = "/file/";
 	$file = new ElggFile();
 	$file->setFilename($_FILES['upload']['name']);
+	$file->setMimeType($_FILES['upload']['type']);
 	
 	$file->open("write");
 	$file->write(get_uploaded_file('upload'));

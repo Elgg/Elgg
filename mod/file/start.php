@@ -87,12 +87,13 @@
 		$tags = $file->getMetaData("tag");
 		if (!is_array($tags))
 			$tags = array($tags);
-		
+	
 		// Draw file 
 		return elgg_view("file/file", array(
 			"tags" => $tags,
 			"title" => $file->title,
-			"description" => $file->description
+			"description" => $file->description,
+			"mime" => $file->getMimeType()
 		));
 	}
 	
