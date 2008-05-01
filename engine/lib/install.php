@@ -53,6 +53,7 @@
 			
 			// Create a new Elgg site
 				$site = new ElggSite();
+				$site->name = "Elgg site";
 				$site->save();
 				
 			// Set datalist alerting us to the fact that the default site is this one
