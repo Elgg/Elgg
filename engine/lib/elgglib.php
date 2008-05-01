@@ -859,4 +859,29 @@
 			
 		}
 
+	/**
+	 * Runs a function once - not per page load, but per installation.
+	 * If you like, you can also set the threshold for the function execution - i.e.,
+	 * if the function was executed before or on $timelastupdatedcheck, this
+	 * function will run it again.
+	 *
+	 * @param string $functionname The name of the function you want to run.
+	 * @param int $timelastupdatedcheck Optionally, the UNIX epoch timestamp of the execution threshold
+	 * @return true|false Depending on success.
+	 */
+		function run_function_once($functionname, $timelastupdatedcheck = 0) {
+			if ($lastupdated = datalist_get($name)) {
+				$lastupdated = (int) $lastupdated;
+			} else {
+				$lastupdated = 0;
+			}
+			if (is_callable($functionname) && $lastupdated <= $timelastupdatedcheck) {
+				$functionname();
+				datalist_set($functionname,time());
+				return true;
+			} else {
+				return false;
+			}
+		}
+		
 ?>
