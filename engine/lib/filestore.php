@@ -294,12 +294,30 @@
 		 * 
 		 * @param string $name The filename.
 		 */
-		public function setFilename($name) { $this->title = $name; }
+		public function setFilename($name) { $this->filename = $name; }
 		
 		/**
 		 * Return the filename.
 		 */
-		public function getFilename() { return $this->title; }
+		public function getFilename() { return $this->filename; }
+		
+		/**
+		 * Get the mime type of the file.
+		 */
+		public function getMimeType() 
+		{
+			if ($this->mimetype)
+				return $this->mimetype;
+				
+			// TODO : Guess mimetype if not here
+		}
+		
+		/**
+		 * Set the mime type of the file.
+		 * 
+		 * @param $mimetype The mimetype
+		 */
+		public function setMimeType($mimetype) { return $this->mimetype = $mimetype; }
 		
 		/**
 		 * Set the optional file description.
@@ -599,7 +617,19 @@
 		return true;
 	}
 	
+	/** 
+	 * Initialise the file modules. 
+	 * Listens to system boot and registers any appropriate file types and classes 
+	 */
+	function filestore_init()
+	{
+		// Register a class
+		add_subtype("object", "file", "ElggFile");
+		
+		// Now register a default filestore
+		set_default_filestore(new ElggDiskFilestore($CONFIG->dataroot));
+	}
 	
-	// Now register a default filestore
-	set_default_filestore(new ElggDiskFilestore($CONFIG->dataroot));
+	// Register a startup event
+	register_event_handler('init','system','filestore_init',0);
 ?>
