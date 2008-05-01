@@ -665,7 +665,7 @@
 		$class = sanitise_string($class);
 	
 		// Short circuit if no subtype is given
-		if ($subtype2 == "")
+		if ($subtype == "")
 			return 0;
 
 		$id = get_subtype_id($type, $subtype);
