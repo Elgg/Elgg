@@ -8,6 +8,8 @@
 	 * @link http://elgg.com/
 	 */
 
+	gatekeeper();
+
 	// Render the file upload page
 	page_draw(elgg_echo("file:upload"), elgg_view("file/upload", NULL));
 ?>

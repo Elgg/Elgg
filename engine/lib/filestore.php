@@ -333,7 +333,7 @@
 		 */
 		public function open($mode)
 		{
-			if (!$this->title)
+			if (!$this->getFilename())
 				throw new IOException("You must specify a name before opening a file.");
 				
 			// See if file has already been saved
@@ -616,6 +616,15 @@
 		
 		return true;
 	}
+
+	/**
+	 * Run once and only once.
+	 */
+	function filestore_run_once()
+	{
+		// Register a class
+		add_subtype("object", "file", "ElggFile");	
+	}
 	
 	/** 
 	 * Initialise the file modules. 
@@ -623,13 +632,13 @@
 	 */
 	function filestore_init()
 	{
-		// Register a class
-		add_subtype("object", "file", "ElggFile");
-		
 		// Now register a default filestore
 		set_default_filestore(new ElggDiskFilestore($CONFIG->dataroot));
+		
+		// Now run this stuff, but only once
+		run_function_once("filestore_run_once");
 	}
 	
 	// Register a startup event
-	register_event_handler('init','system','filestore_init',0);
+	register_event_handler('init','system','filestore_init',0);	
 ?>
