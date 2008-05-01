@@ -456,7 +456,7 @@
 		 */
 		public function tell()
 		{
-			$fs = $this->tell();
+			$fs = $this->filestore();
 			
 			return $fs->tell($this->handle);
 		}
