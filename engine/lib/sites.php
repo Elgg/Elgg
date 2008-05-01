@@ -462,24 +462,22 @@
 	 * @return true
 	 */
 		function sites_init($event, $object_type, $object) {
-	/*		global $CONFIG;
 			
-			$CONFIG->site_id = 1;
-			
-			trigger_event('init','sites');
-			
-			if ($site = get_data_row("select * from {$CONFIG->dbprefix}sites where id = 1")) {
-				if (!empty($site->name))
-					$CONFIG->sitename = $site->name;
-				if (!empty($site->domain))
-					$CONFIG->wwwroot = $site->domain;
+			global $CONFIG;
+			$site = trigger_plugin_hook("siteid","system");
+			if ($site === null || $site === false) {
+				$CONFIG->site_id = (int) datalist_get('default_site');
+			} else {
+				$CONFIG->site_id = $site;
 			}
+			$CONFIG->site_guid = $CONFIG->site_id;
 			
-			return true;*/
+			return true;
+			
 		}
 		
 	// Register event handlers
 
-		register_event_handler('init','system','sites_init',0);
+		register_event_handler('init','system','sites_init',2);
 
 ?>

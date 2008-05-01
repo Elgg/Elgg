@@ -870,7 +870,7 @@
 	 * @return true|false Depending on success.
 	 */
 		function run_function_once($functionname, $timelastupdatedcheck = 0) {
-			if ($lastupdated = datalist_get($name)) {
+			if ($lastupdated = datalist_get($functionname)) {
 				$lastupdated = (int) $lastupdated;
 			} else {
 				$lastupdated = 0;

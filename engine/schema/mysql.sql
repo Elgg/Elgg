@@ -229,7 +229,7 @@ CREATE TABLE `prefix_users_apisessions` (
 
 -- Datalists for things like db version
 CREATE TABLE `prefix_datalists` (
-  `name` varchar(16) NOT NULL,
+  `name` varchar(32) NOT NULL,
   `value` text NOT NULL,
   KEY `name` (`name`)
 );
