@@ -363,7 +363,7 @@
 				throw new IOException("You must specify a name before opening a file.");
 				
 			// See if file has already been saved
-				// seek on datastore, parameters and name
+				// seek on datastore, parameters and name?
 			
 			// Sanity check
 			if (
