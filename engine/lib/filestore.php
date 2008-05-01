@@ -66,6 +66,14 @@
 		abstract public function eof($f);
 		
 		/**
+		 * Return the current position in an open file.
+		 * 
+		 * @param mixed $f The file handle.
+		 * @return int
+		 */
+		abstract public function tell($f);
+		
+		/**
 		 * Close a given file handle.
 		 *
 		 * @param mixed $f
@@ -196,6 +204,11 @@
 		public function seek($f, $position)
 		{
 			return fseek($f, $position);
+		}
+		
+		public function tell($f)
+		{
+			return ftell($f);
 		}
 		
 		public function eof($f)
@@ -434,6 +447,18 @@
 			$fs = $this->getFilestore();
 			
 			return $fs->seek($this->handle, $position);
+		}
+		
+		/**
+		 * Return the current position of the file.
+		 * 
+		 * @return int The file position
+		 */
+		public function tell()
+		{
+			$fs = $this->tell();
+			
+			return $fs->tell($this->handle);
 		}
 	
 		/**
