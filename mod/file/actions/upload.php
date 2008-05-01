@@ -18,7 +18,13 @@
 	// Extract file from, save to default filestore (for now)
 	$prefix = "/file/";
 	$file = new ElggFile();
-	$file->save();
+	$result = $file->save();
+	
+	if ($result)
+		system_message(elgg_echo("file:saved"));
+	else
+		system_message(elgg_echo("file:uploadfailed"));
+	
 	$file->setFilename($_FILES['upload']['name']);
 	$file->setMimeType($_FILES['upload']['type']);
 	
