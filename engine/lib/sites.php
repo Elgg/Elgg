@@ -471,6 +471,7 @@
 				$CONFIG->site_id = $site;
 			}
 			$CONFIG->site_guid = $CONFIG->site_id;
+			$CONFIG->site = get_entity($CONFIG->site_guid);
 			
 			return true;
 			
