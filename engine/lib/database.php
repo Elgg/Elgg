@@ -355,7 +355,7 @@
 	 * @param string $string The string to sanitise
 	 * @return string Sanitised string
 	 */
-        function sanitise_string($string) {
+        function sanitise_string($string) {return $string;
         	return mysql_real_escape_string(trim($string));
         }
         

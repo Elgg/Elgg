@@ -595,7 +595,7 @@
 	 *  
 	 * TODO: Move to a nicer place?
 	 * 
-	 * @param string $subtype_id
+	 * @param int $subtype_id
 	 */
 	function get_subtype_from_id($subtype_id)
 	{
@@ -632,6 +632,25 @@
 	}
 	
 	/**
+	 * This function tests to see if a subtype has a registered class handler by its id.
+	 * 
+	 * @param int $subtype_id The subtype
+	 * @return a class name or null
+	 */
+	function get_subtype_class_from_id($subtype_id)
+	{
+		global $CONFIG;
+		
+		$subtype = (int)$subtype_id;
+		
+		$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes where id=$subtype_id");
+		if ($result)
+			return $result->class;
+		
+		return NULL;
+	}
+	
+	/**
 	 * This function will register a new subtype, returning its ID as required.
 	 * 
 	 * @param string $type The type you're subtyping
@@ -641,18 +660,17 @@
 	function add_subtype($type, $subtype, $class = "")
 	{
 		global $CONFIG;
-		
 		$type = sanitise_string($type);
 		$subtype = sanitise_string($subtype);
 		$class = sanitise_string($class);
-		
+	
 		// Short circuit if no subtype is given
-		if ($subtype == "")
+		if ($subtype2 == "")
 			return 0;
-		
+
 		$id = get_subtype_id($type, $subtype);
 	
-		if (!$id)
+		if ($id==0)
 			return insert_data("insert into {$CONFIG->dbprefix}entity_subtypes (type, subtype, class) values ('$type','$subtype','$class')");
 		
 		return $id;
@@ -748,14 +766,16 @@
 		if (!($row instanceof stdClass))
 			return $row;
 		// See if there are any registered subtype handler classes for this type and subtype
-		$classname = get_subtype_class($row->type, $row->subtype);
+
+		$classname = get_subtype_class_from_id($row->subtype);
 		if ($classname!="")
 		{
 			$tmp = new $classname($row);
 			
 			if (!($tmp instanceof ElggEntity))
 				throw new ClassException("$classname is not an ElggEntity.");
-				
+
+			return $tmp;
 		}
 		else
 		{
@@ -842,6 +862,7 @@
 		if (!$count) {
 			$query .= " order by $order_by";
 			if ($limit) $query .= " limit $offset, $limit"; // Add order and limit
+
 			$dt = get_data($query, "entity_row_to_elggstar");
 			return $dt;
 		} else {
