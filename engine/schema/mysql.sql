@@ -14,6 +14,14 @@
 -- *** The main tables ***
 --
 
+-- Site configuration.
+CREATE TABLE `prefix_config` (
+  `name` varchar(32) NOT NULL,
+  `value` text NOT NULL,
+  `site_guid` int(11) NOT NULL,
+  PRIMARY KEY  (`name`,`site_guid`)
+);
+
 -- Define entities. 
 CREATE TABLE `prefix_entities` (
 	`guid` bigint(20) unsigned  NOT NULL auto_increment,
