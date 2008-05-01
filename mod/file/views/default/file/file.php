@@ -11,6 +11,7 @@
 
 	global $CONFIG;
 	
+	$file_guid = $vars['file_guid'];
 	$tags = $vars['tags'];
 	$title = $vars['title'];
 	$desc = $vars['description'];
@@ -21,9 +22,9 @@
 <div class="file">
 	<table width="100%">
 		<tr>
-			<td valign="top">
+			<td valign="top" width="100">
 				<div class="file_icon">
-					<?php echo elgg_view("file/icon", array("mimetype" => $mime)); ?>
+					<a href="<?php echo $vars['url']; ?>action/file/download?file_guid=<?php echo $file_guid; ?>"><?php echo elgg_view("file/icon", array("mimetype" => $mime)); ?></a>					
 				</div>
 			</td>
 			<td valign="top">

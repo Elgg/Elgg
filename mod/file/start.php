@@ -90,6 +90,7 @@
 	
 		// Draw file 
 		return elgg_view("file/file", array(
+			"file_guid" => $file->guid,
 			"tags" => $tags,
 			"title" => $file->title,
 			"description" => $file->description,
@@ -123,6 +124,8 @@
 	// Make sure test_init is called on initialisation
 	register_event_handler('init','system','file_init');
 	
-	// Register an action
+	// Register actions
 	register_action("file/upload", false, $CONFIG->pluginspath . "file/actions/upload.php");
+	register_action("file/download", false, $CONFIG->pluginspath. "file/actions/download.php");
+	
 ?>
