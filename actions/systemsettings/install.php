@@ -30,7 +30,8 @@
 			
 			system_message(elgg_echo("installation:configuration:success"));
 			
-			forward("register.php");
+			header("Location: ../../register.php");
+			exit;
 			
 		}
 		
