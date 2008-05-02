@@ -135,6 +135,7 @@ div#header h1 a{
     position:absolute;
     top:2px;
     right:10px;
+    width: 300px;
 }
 
 #topmenu li {
