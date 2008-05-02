@@ -111,7 +111,8 @@
 			if ((!is_installed() || !is_db_installed()) && !substr_count($_SERVER["PHP_SELF"],"install.php")) {
 				// Autodetect some default configuration settings
 					set_default_config();
-					forward("install.php");
+					header("Location: install.php");
+					exit;
 			}
 
 		// Trigger events
