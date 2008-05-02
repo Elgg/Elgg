@@ -327,8 +327,9 @@
 	 * @param int $limit 
 	 * @param int $offset
 	 * @param string $order_by Optional ordering.
+	 * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
 	 */
-	function get_entities_from_metadata($meta_name, $meta_value = "", $entity_type = "", $entity_subtype = "", $limit = 10, $offset = 0, $order_by = "e.time_created desc")
+	function get_entities_from_metadata($meta_name, $meta_value = "", $entity_type = "", $entity_subtype = "", $limit = 10, $offset = 0, $order_by = "e.time_created desc", $site_guid = 0)
 	{
 		global $CONFIG;
 		
@@ -340,6 +341,9 @@
 		$limit = (int)$limit;
 		$offset = (int)$offset;
 		$order_by = sanitise_string($order_by);
+		$site_guid = (int) $site_guid;
+		if ($site_guid == 0)
+			$site_guid = $CONFIG->site_guid;
 			
 		$access = get_access_list();
 			
@@ -353,6 +357,8 @@
 			$where[] = "m.name_id='$meta_n'";
 		if ($meta_value!="")
 			$where[] = "m.value_id='$meta_v'";
+		if ($site_guid > 0)
+			$where[] = "e.site_guid = {$site_guid}";
 		
 		$query = "SELECT distinct e.* from {$CONFIG->dbprefix}entities e JOIN {$CONFIG->dbprefix}metadata m on e.guid = m.entity_guid where";
 		foreach ($where as $w)
@@ -372,9 +378,10 @@
 	 * @param int $limit 
 	 * @param int $offset
 	 * @param string $order_by Optional ordering.
+	 * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
 	 * @return array List of ElggEntities
 	 */
-	function get_entities_from_metadata_multi($meta_array, $entity_type = "", $entity_subtype = "", $limit = 10, $offset = 0, $order_by = "e.time_created desc")
+	function get_entities_from_metadata_multi($meta_array, $entity_type = "", $entity_subtype = "", $limit = 10, $offset = 0, $order_by = "e.time_created desc", $site_guid = 0)
 	{
 		global $CONFIG;
 		
@@ -402,13 +409,18 @@
 		$limit = (int)$limit;
 		$offset = (int)$offset;
 		$order_by = sanitise_string($order_by);
+		$site_guid = (int) $site_guid;
+		if ($site_guid == 0)
+			$site_guid = $CONFIG->site_guid;
 			
 		$access = get_access_list();
 		
 		if ($entity_type!="")
-			$where[] = "e.type='$entity_type'";
+			$where[] = "e.type = '{$entity_type}'";
 		if ($entity_subtype)
-			$where[] = "e.subtype=$entity_subtype";
+			$where[] = "e.subtype = {$entity_subtype}";
+		if ($site_guid > 0)
+			$where[] = "e.site_guid = {$site_guid}";
 		
 		$query = "SELECT distinct e.* from {$CONFIG->dbprefix}entities e {$join} where";
 		foreach ($where as $w)

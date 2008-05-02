@@ -19,7 +19,7 @@
 		if (is_array($menu) && sizeof($menu) > 0) {
 		
 ?>
-
+    <div id="sidebar_toolbox">
 <ul>
 
 <?php
@@ -55,6 +55,7 @@
 ?>
 
 </ul>    
+</div>
 
 <?php
 

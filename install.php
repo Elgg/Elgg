@@ -28,12 +28,12 @@
 	 */
 		if (!is_db_installed()) {
 			run_sql_script(dirname(__FILE__) . "/engine/schema/mysql.sql");
-			system_message("The Elgg database was installed.");
+			system_message(elgg_echo("installation:success"));
 		}
 		
 	/**
 	 * Load the front page
 	 */
-		echo page_draw("Installation", elgg_view("settings/system"));
+		echo page_draw(elgg_echo("installation:settings"), elgg_view("settings/install"));
 
 ?>

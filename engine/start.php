@@ -15,12 +15,11 @@
 	/**
 	 * Load important prerequisites
 	 */
-
+		
 		if (!@include_once(dirname(__FILE__) . "/lib/exceptions.php")) {		// Exceptions 
 			echo "Error in installation: could not load the Exceptions library.";
 			exit;
 		}
-
 		if (!@include_once(dirname(__FILE__) . "/lib/elgglib.php")) {		// Main Elgg library
 			throw new InstallationException("Elgg could not load its main library.");
 		}
@@ -106,20 +105,23 @@
 			
 		}
 		
-		// Autodetect some default configuration settings
-			set_default_config();
-		
 		// Trigger events
 			trigger_event('boot', 'system');
-			
 		// Forward if we haven't been installed
 			if ((!is_installed() || !is_db_installed()) && !substr_count($_SERVER["PHP_SELF"],"install.php")) {
-				forward("install.php");
+				// Autodetect some default configuration settings
+					set_default_config();
+					forward("install.php");
 			}
-			
+
 		// Trigger events
-			if (!substr_count($_SERVER["PHP_SELF"],"install.php")) {
+			if (!substr_count($_SERVER["PHP_SELF"],"install.php") &&
+				!substr_count($_SERVER["PHP_SELF"],"setup.php")) {
+				// If default settings haven't been installed, forward to the default settings page
 				trigger_event('init', 'system');
+				if (!datalist_get('default_settings')) {
+					//forward("setup.php");
+				}
 			}
 
 ?>

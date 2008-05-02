@@ -576,6 +576,10 @@
 				return false;
 			}
 			
+		// Check to see if we've registered the first admin yet.
+		// If not, this is the first admin user!
+			$admin = datalist_get('admin_registered');
+			
 		// Otherwise ...
 			$user = new ElggUser();
 			$user->username = $username;
@@ -584,6 +588,11 @@
 			$user->name = $name;
 			$user->access_id = 2;
 			$user->save();
+			
+			if (!$admin) {
+				$user->admin = true;
+				datalist_set('admin_registered',1);
+			}
 			
 			return $user->getGUID();
 			

@@ -89,6 +89,21 @@
 			'fileexists' => "A file has already been uploaded. To replace it, select it below:",
 	
 		/**
+		 * Installation and system settings
+		 */
+	
+			'installation' => "Installation",
+			'installation:success' => "Elgg's database was installed successfully.",
+			'installation:configuration:success' => "Your initial configuration settings have been saved. Now register your initial user; this will be your first system administrator.",
+	
+			'installation:settings' => "System settings",
+			'installation:settings:description' => "Now that the Elgg database has been successfully installed, you need to enter a couple of pieces of information to get your site fully up and running. We've tried to guess where we could, but you may find that you need to tweak these details.",
+			'sitename' => "The name of your site (eg \"My social networking site\"):",
+			'wwwroot' => "The site URL, followed by a trailing slash:",
+			'path' => "The full path to your site root on your disk, followed by a trailing slash:",
+			'dataroot' => "The full path to the directory where uploaded files will be stored, followed by a trailing slash:",
+	
+		/**
 		 * Welcome
 		 */
 	

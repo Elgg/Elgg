@@ -371,9 +371,10 @@
 	 * @param int $limit
 	 * @param int $offset
 	 * @param boolean $count Set to true if you want to count the number of entities instead (default false)
+	 * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
 	 * @return array|int|false An array of entities, or the number of entities, or false on failure
 	 */
-	function get_entities_from_relationship($relationship, $relationship_guid, $inverse_relationship = false, $type = "", $subtype = "", $owner_guid = 0, $order_by = "time_created desc", $limit = 10, $offset = 0, $count = false)
+	function get_entities_from_relationship($relationship, $relationship_guid, $inverse_relationship = false, $type = "", $subtype = "", $owner_guid = 0, $order_by = "time_created desc", $limit = 10, $offset = 0, $count = false, $site_guid = 0)
 	{
 		global $CONFIG;
 		
@@ -386,6 +387,9 @@
 		$order_by = sanitise_string($order_by);
 		$limit = (int)$limit;
 		$offset = (int)$offset;
+		$site_guid = (int) $site_guid;
+		if ($site_guid == 0)
+			$site_guid = $CONFIG->site_guid;
 		
 		$access = get_access_list();
 		
@@ -401,6 +405,8 @@
 			$where[] = "e.subtype=$subtype";
 		if ($owner_guid != "")
 			$where[] = "e.owner_guid='$owner_guid'";
+		if ($site_guid > 0)
+			$where[] = "e.site_guid = {$site_guid}";
 		
 		// Select what we're joining based on the options
 		$joinon = "e.guid = r.guid_one";

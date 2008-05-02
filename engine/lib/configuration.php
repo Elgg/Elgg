@@ -70,10 +70,9 @@
 		function set_default_config() {
 			
 			global $CONFIG;
-			
 			if (empty($CONFIG->path))
 				$CONFIG->path = str_replace("\\","/",dirname(dirname(dirname(__FILE__)))) . "/";
-
+				
 			if (empty($CONFIG->viewpath))
 				$CONFIG->viewpath = $CONFIG->path . "views/";	
 
@@ -81,10 +80,8 @@
 				$CONFIG->pluginspath = $CONFIG->path . "mod/";
 				
 			if (empty($CONFIG->wwwroot)) {
+				/*
 				$CONFIG->wwwroot = "http://" . $_SERVER['SERVER_NAME'];
-				/*if (strripos($_SERVER['DOCUMENT_ROOT'],"/") < (strlen($_SERVER['DOCUMENT_ROOT']) - 1)) {
-					$CONFIG->wwwroot .= "/";
-				}*/
 				
 				$request = $_SERVER['REQUEST_URI'];
 				
@@ -94,8 +91,8 @@
 				}
 				
 				$CONFIG->wwwroot .= $request;
-				
-				//$CONFIG->wwwroot .= str_replace($_SERVER['DOCUMENT_ROOT'],"",$CONFIG->path);
+				*/
+				$CONFIG->wwwroot = "http://" . $_SERVER['HTTP_HOST'] . str_replace("//","/",str_replace($_SERVER['DOCUMENT_ROOT'],"",$CONFIG->path));
 		
 			}
 		
@@ -107,7 +104,31 @@
 				
 			if (empty($CONFIG->debug))
 				$CONFIG->debug = false;
-				
-		}
 
+		}
+		
+	/**
+	 * Function that provides some config initialisation on system init
+	 *
+	 */
+		
+		function configuration_init() {
+			
+			global $CONFIG;
+			
+			$CONFIG->path = datalist_get('path');
+			$CONFIG->dataroot = datalist_get('dataroot');
+			$CONFIG->wwwroot = $CONFIG->site->url;
+			$CONFIG->sitename = $CONFIG->site->name;
+			
+			return true;
+			
+		}
+		
+	/**
+	 * Register config_init
+	 */
+
+		register_event_handler('init','system','configuration_init',10);
+		
 ?>

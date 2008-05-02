@@ -712,13 +712,14 @@
 	/**
 	 * Create a new entity of a given type.
 	 * 
-	 * @param string $type
-	 * @param string $subtype
-	 * @param int $owner_guid
-	 * @param int $access_id
-	 * @return mixed The new entity's GUID or false.
+	 * @param string $type The type of the entity (site, user, object).
+	 * @param string $subtype The subtype of the entity.
+	 * @param int $owner_guid The GUID of the object's owner.
+	 * @param int $access_id The access control group to create the entity with.
+	 * @param int $site_guid The site to add this entity to. Leave as 0 (default) for the current site.
+	 * @return mixed The new entity's GUID, or false on failure
 	 */
-	function create_entity($type, $subtype, $owner_guid, $access_id)
+	function create_entity($type, $subtype, $owner_guid, $access_id, $site_guid = 0)
 	{
 		global $CONFIG;
 	
@@ -727,13 +728,16 @@
 		$owner_guid = (int)$owner_guid; 
 		$access_id = (int)$access_id;
 		$time = time();
+		if ($site_guid == 0)
+			$site_guid = $CONFIG->site_guid;
+		$site_guid = (int) $site_guid;
 					
 		if ($type=="") throw new InvalidParameterException("Entity type must be set.");
 
 		// Erased by Ben: sometimes we need unauthenticated users to create things! (eg users on registration)
 		// if ($owner_guid==0) throw new InvalidParameterException("owner_guid must not be 0");
 	
-		if ($result = insert_data("INSERT into {$CONFIG->dbprefix}entities (type, subtype, owner_guid, access_id, time_created, time_updated) values ('$type',$subtype, $owner_guid, $access_id, $time, $time)")) {
+		if ($result = insert_data("INSERT into {$CONFIG->dbprefix}entities (type, subtype, owner_guid, site_guid, access_id, time_created, time_updated) values ('$type',$subtype, $owner_guid, $site_guid, $access_id, $time, $time)")) {
 			$entity = get_entity($result);
 			trigger_event('create',$entity->type,$entity);
 		}
@@ -745,13 +749,13 @@
 	 * 
 	 * You will only get an object if a) it exists, b) you have access to it.
 	 *
-	 * @param int $guid
+	 * @param int $guid The GUID of the object to extract
 	 */
 	function get_entity_as_row($guid)
 	{
 		global $CONFIG;
 		
-		$guid = (int)$guid;
+		$guid = (int) $guid;
 		
 		$access = get_access_list();
 		
@@ -816,8 +820,9 @@
 	 * @param int $limit The number of entities to return; 10 by default
 	 * @param int $offset The indexing offset, 0 by default
 	 * @param boolean $count Set to true to get a count rather than the entities themselves (limits and offsets don't apply in this context). Defaults to false.
+	 * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites. 
 	 */
-	function get_entities($type = "", $subtype = "", $owner_guid = 0, $order_by = "time_created desc", $limit = 10, $offset = 0, $count = false)
+	function get_entities($type = "", $subtype = "", $owner_guid = 0, $order_by = "time_created desc", $limit = 10, $offset = 0, $count = false, $site_guid = 0)
 	{
 		global $CONFIG;
 		
@@ -830,6 +835,9 @@
 		$order_by = sanitise_string($order_by);
 		$limit = (int)$limit;
 		$offset = (int)$offset;
+		$site_guid = (int) $site_guid;
+		if ($site_guid == 0)
+			$site_guid = $CONFIG->site_guid;
 		
 		$access = get_access_list();
 		
@@ -850,6 +858,8 @@
 				$where[] = "owner_guid in ({$owner_guid})";
 			}
 		}
+		if ($site_guid > 0)
+			$where[] = "site_guid = {$site_guid}";
 
 		if (!$count) {
 			$query = "SELECT * from {$CONFIG->dbprefix}entities where ";

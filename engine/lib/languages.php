@@ -100,6 +100,6 @@
 			}
 		}
 		
-		register_event_handler("init","system","load_translations");
+		register_event_handler("boot","system","load_translations");
 
 ?>

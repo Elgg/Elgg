@@ -27,9 +27,7 @@
     <?php echo elgg_view('messages/list', array('object' => $vars['sysmessages'])); ?>
     
     <!-- toolbox -->
-    <div id="sidebar_toolbox">
         <?php echo elgg_view("navigation/toolbox"); ?><!-- include the my world toolbox -->
-    </div>
     
     <!-- get the sidebar and contents -->
     <div id="sidebar_left">

@@ -41,38 +41,7 @@
 			return false;
 			
 		}
-
-	/**
-	 * Function that gets run once, when the system is first installed
-	 *
-	 */
-		function install_prerequisites() {
-			
-			// Load existing config
-				global $CONFIG;
-			
-			// Create a new Elgg site
-				$site = new ElggSite();
-				$site->name = "Elgg site";
-				$site->save();
-				
-			// Set datalist alerting us to the fact that the default site is this one
-				datalist_set('default_site',$site->getGUID());
-			
-		}
 		
-	/**
-	 * Functions to be run at install init-time.
-	 *
-	 */
-		function install_init() {
-
-			// Run the install_prerequisites function just once
-				run_function_once("install_prerequisites");
-
-		}
-		
-	// Make sure install_boot gets called on system book
-		register_event_handler('init','system','install_init',1);
+		register_action("systemsettings/install",true);
 		
 ?>
