@@ -690,5 +690,5 @@
 	}
 	
 	// Register a startup event
-	register_event_handler('init','system','filestore_init',0);	
+	register_event_handler('init','system','filestore_init',100);	
 ?>
