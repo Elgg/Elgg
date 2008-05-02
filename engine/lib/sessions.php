@@ -158,7 +158,7 @@
 			if (!isloggedin()) forward();
 		}
 		
-		register_event_handler("init","system","session_init",1);
+		register_event_handler("boot","system","session_init",1);
 	
 	//register actions *************************************************************
    

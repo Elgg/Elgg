@@ -479,6 +479,6 @@
 		
 	// Register event handlers
 
-		register_event_handler('init','system','sites_init',2);
+		register_event_handler('boot','system','sites_init',2);
 
 ?>

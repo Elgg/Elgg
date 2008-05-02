@@ -132,6 +132,6 @@
 	 * Register config_init
 	 */
 
-		register_event_handler('init','system','configuration_init',10);
+		register_event_handler('boot','system','configuration_init',10);
 		
 ?>
