@@ -119,6 +119,7 @@
 			$CONFIG->path = datalist_get('path');
 			$CONFIG->dataroot = datalist_get('dataroot');
 			$CONFIG->wwwroot = $CONFIG->site->url;
+			$CONFIG->url = $CONFIG->wwwroot;
 			$CONFIG->sitename = $CONFIG->site->name;
 			
 			return true;
