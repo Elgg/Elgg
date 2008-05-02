@@ -98,4 +98,16 @@
 				
 		return mail($to, $subject, $message, $headers);
 	}
+
+	/**
+	 * Correctly initialise notifications and register the email handler.
+	 *
+	 */
+	function notification_init()
+	{
+		register_notification_handler("email", "email_notify_handler");
+	}
+
+	// Register a startup event
+	register_event_handler('init','system','notification_init',0);	
 ?>
