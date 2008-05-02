@@ -829,7 +829,7 @@
 		$type = sanitise_string($type);
 		$subtype = get_subtype_id($type, $subtype);
 		
-		if ($subtype === false)
+		if ($subtype === false || $subtype === null || $subtype === 0)
 			return false;
 		
 		$order_by = sanitise_string($order_by);
@@ -845,7 +845,7 @@
 		
 		if ($type != "")
 			$where[] = "type='$type'";
-		if ($subtype)
+		if ($subtype !== "")
 			$where[] = "subtype=$subtype";
 		if ($owner_guid != "") {
 			if (!is_array($owner_guid)) {
@@ -874,9 +874,10 @@
 			if ($limit) $query .= " limit $offset, $limit"; // Add order and limit
 
 			$dt = get_data($query, "entity_row_to_elggstar");
+			system_message($query);
 			return $dt;
 		} else {
-			$total = get_data_row($query);
+			$total = get_data_row($query . "<br /><br />");
 			return $total->total;
 		}
 	}
