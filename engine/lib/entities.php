@@ -874,7 +874,6 @@
 			if ($limit) $query .= " limit $offset, $limit"; // Add order and limit
 
 			$dt = get_data($query, "entity_row_to_elggstar");
-			system_message($query);
 			return $dt;
 		} else {
 			$total = get_data_row($query . "<br /><br />");
