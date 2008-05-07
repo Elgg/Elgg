@@ -28,8 +28,8 @@
 		}
 		
 ?>
-
-<html>
+<!DOCTYPE html PUBLIC Ò-//W3C//DTD XHTML 1.0 Transitional//ENÓ Òhttp://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtdÓ>
+<html xmlns=Óhttp://www.w3.org/1999/xhtmlÓ>
 	<head>
 		<title><?php echo $title; ?></title>
 		<!-- include links to jQuery here? -->
