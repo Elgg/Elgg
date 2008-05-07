@@ -39,13 +39,12 @@
     <!-- sidebar menu -->
     <div id="sidebar_menu">
         <?php echo elgg_view("navigation/toolbox", $vars); ?>
-        <div id="sidebar-menu-bottom"></div><!-- this just displays rounded corners on the menu options, can be deleted safely -->
     </div>
-    
-    <!-- get the main body -->
-    <div id="mainContent">
-        <?php echo $vars['body']; ?>
-    </div>
+        
+	<!-- get the main body -->
+	<div id="mainContent">
+		<?php echo $vars['body']; ?>
+	</div>
 
 <!-- include the footer -->
 <?php echo elgg_view('page_elements/footer', $vars); ?>

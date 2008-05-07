@@ -30,7 +30,7 @@
         <?php echo elgg_view("navigation/toolbox"); ?><!-- include the my world toolbox -->
     
     <!-- get the sidebar and contents -->
-    <div id="sidebar_left">
+    <div id="sidebar_menu">
         <?php echo $vars['sidebar']; ?>
     </div>
 	

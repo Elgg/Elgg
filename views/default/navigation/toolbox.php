@@ -19,8 +19,8 @@
 		if (is_array($menu) && sizeof($menu) > 0) {
 		
 ?>
-    <div id="sidebar_toolbox">
-<ul>
+<div class="elggtoolbar">
+<ul class="drawers">
 
 <?php
 
@@ -28,8 +28,8 @@
 				
 ?>
 
-	<li>
-		<h2><?php echo $item->name ?></h2>
+	<li class="drawer">
+		<h2 class="drawer-handle"><?php echo $item->name ?></h2>
 <?php
 
 				if (sizeof($item->children) > 0 ) {
@@ -62,3 +62,19 @@
 		}
 
 ?>
+
+<script type="text/javascript">
+$(document).ready(function () {
+  $('li.drawer ul:not(:first)').hide(); // hide all ULs inside LI.drawer except the first one
+	$('h2.drawer-handle').click(function () {
+	// hide all the drawer contents
+	$('li.drawer ul:visible').slideUp().prev().removeClass('open');
+	// show the associated drawer content to 'this' (this is the current H2 element)
+	// since the drawer content is the next element after the clicked H2, we find
+	// it and show it using this:
+	$(this).addClass('open').next().slideDown();
+  });
+});
+</script>
+
+

@@ -154,62 +154,15 @@ div#header h1 a{
 */
 
 #sidebar_menu {
- /*   float:left;
-    width:150px;
-    background:#efefef;
-    padding:5px;
-    text-align:left;
-    text-size:10px;
-    margin:0; */
-}
-
-div#sidebar_menu {
-	width: 250px;
-	margin:20px 10px 20px 0;
+	width: 150px;
+	margin:0;
 	padding:0;
-	float: right;
-	background:#efefef url(<?php echo $vars['url']; ?>/_graphics/sidebar-top.gif) no-repeat top;
+	float: left;
+	background:#f5f5f5; /* url(<?php echo $vars['url']; ?>/_graphics/sidebar-top.gif) no-repeat top;*/
 }
-
-div#sidebar-menu-bottom {
-   background:url(<?php echo $vars['url']; ?>/_graphics/sidebar-bottom.gif) no-repeat bottom;
-   height:9px;
-   width:250px;
-   margin:0;
-}
-
-div#sidebar-contents {
-    padding:10px;
-}
-
-div#sidebar_menu ul {
-	margin: 0;
-	padding:0;
-	list-style: none;
-}
-
-div#sidebar_menu ul li {
-	margin:10px 0;
-	padding-left: 5px;
-}
-
-div#sidebar_menu ul li ul li a {
-	padding:0 0 0 5px;
-}
-
-div#sidebar_menu h2 {
-	text-align:left;
-	border-bottom:1px solid #ccc;
-	color:#777;
-	font-size:0.9em;
-	width:220px;
-}
-
-
-/**** end sidebar menu ****/
 
 #mainContent {
-    margin:0;
+    margin:0 0 0 180px;
     width:680px;
     padding:20px;
 }
@@ -286,3 +239,51 @@ div#footer a:link, div#footer a:visited {
 .input-textarea {
 	height: 200px;
 }
+
+/* 
+	elgg toolbar
+*/
+
+.elggtoolbar ul.drawers {
+	width: 150px;
+	margin: 0;
+	padding: 0;
+}
+
+.elggtoolbar li.drawer ul li {
+	line-height: 1.2em;
+	margin: 0;
+	padding: 3px 0 3px 0;
+}
+
+.elggtoolbar ul {
+	list-style: none;
+	margin: 0;
+	padding: 3px 3px 3px 10px;
+}
+
+.elggtoolbar li a {
+	text-decoration: none;
+	color: #666;
+	line-height:0.5em;
+}
+.elggtoolbar li a:hover {
+	text-decoration: underline;
+}
+
+.elggtoolbar h2.drawer-handle {
+	margin: 0;
+	padding: 1px 1px 1px 10px;
+	background-color: #e5e5e5;
+	cursor: pointer;
+	font-size: 100%;
+}
+
+.elggtoolbar h2.drawer-handle.open {
+	color:#ffffff;
+	background-color: #666666;
+}
+
+
+
+
