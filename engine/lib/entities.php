@@ -826,11 +826,11 @@
 	{
 		global $CONFIG;
 		
-		$type = sanitise_string($type);
-		$subtype = get_subtype_id($type, $subtype);
-		
 		if ($subtype === false || $subtype === null || $subtype === 0)
 			return false;
+		
+		$type = sanitise_string($type);
+		$subtype = get_subtype_id($type, $subtype);
 		
 		$order_by = sanitise_string($order_by);
 		$limit = (int)$limit;
