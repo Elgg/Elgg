@@ -24,8 +24,14 @@
   Globals
 */
 
+* {
+	/* border: 0; */
+	margin: 0;
+	padding: 0;
+}
+
 body {
-    background:#fff url(<?php echo $vars['url']; ?>/_graphics/header.gif) repeat-x; /* #d9e2f2  */
+    background:#ffffff; /* url(<?php echo $vars['url']; ?>/_graphics/header.gif) repeat-x; */
 	color:#697C83;
 	font-family:'Trebuchet MS','Lucida Grande', Arial, sans-serif;
 	text-align:left;
@@ -45,6 +51,10 @@ a {
 	color:#336699;
 }
 
+a:hover {
+	text-decoration:underline;
+}
+
 ol, ul {
 	color:#697C83;
 }
@@ -56,6 +66,8 @@ h1 {
 h2, h3, h4, h5 {
 	font-size:100%;
 }
+
+input { vertical-align:middle; }
 
 blockquote{
 	background: #EEE url(<?php echo $vars['url']; ?>/_graphics/blockquote.png) no-repeat bottom left;
@@ -98,31 +110,31 @@ div#container {
 */
 
 div#header {
-	margin:0;
-	padding:0;
+	margin:0 0 10px 0;
+	padding:5px;
 	text-align:left;
 	position:relative;
-	background:transparent;
+	background:#006699;
 	width:100%;
-	height:120px;
+	height:50px;
 }
 
 div#header h1 {
-	font-size:30px;
-	padding:20px 0 0 0;
-	margin:10px 0 6px 0;
+	font-size:20px;
+	padding:0;
+	margin:0;
 }
 
 div#header h2 {
-	font-size:20px;
-	padding:20px 0 0 0;
-	margin:10px 0 6px 0;
-	color: #fff;
+	font-size:16px;
+	padding:5px 0 0 0;
+	margin:0;
+	color:#ffffff;
 }
 
 div#header h1 a{
 	color:#fff;
-	font-family:Helvetica, "Myriad Web", Arial, sans-serif;
+	/* font-family:Helvetica, "Myriad Web", Arial, sans-serif;*/
 }
 
 /**** End header ****/
@@ -135,7 +147,8 @@ div#header h1 a{
     position:absolute;
     top:2px;
     right:10px;
-    width: 300px;
+    width: 500px;
+    text-align: right;
 }
 
 #topmenu li {
@@ -145,6 +158,11 @@ div#header h1 a{
 
 #topmenu li a {
     color:#fff;
+    margin:0 10px 0 10px;
+}
+
+#topmenu .usericon {
+	float:right;
 }
 
 /**** end top menu ****/
@@ -161,10 +179,21 @@ div#header h1 a{
 	background:#f5f5f5; /* url(<?php echo $vars['url']; ?>/_graphics/sidebar-top.gif) no-repeat top;*/
 }
 
+#sidebar_right {
+	width:380px;
+	min-height: 380px;
+	float:right;
+	margin: 0;
+	padding: 0;
+	border-top:1px solid white;
+}
+
 #mainContent {
-    margin:0 0 0 180px;
-    width:680px;
-    padding:20px;
+    margin:0 380px 0 170px;
+    width:380px;
+    min-height: 380px;
+    padding:0;
+    border-top:1px solid white;
 }
 
 #login-box {
@@ -233,7 +262,14 @@ div#footer a:link, div#footer a:visited {
 .input-tags,
 .input-url,
 .input-textarea {
-	width: 600px;
+	/* width: 600px;*/
+	width:95%;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	line-height: 1.4;
+	font-family: inherit;
+	padding:5px;
 }
 
 .input-textarea {
@@ -284,6 +320,130 @@ div#footer a:link, div#footer a:visited {
 	background-color: #666666;
 }
 
+/* 
+	rounded corner widget boxes
+*/	
+.ui-sortable { color:#222; margin:0; padding:0 10px 10px; }
+.ui-sortable h2 {color:#555; font-size:11px; margin:0; line-height:2; padding:0; }
+
+.ui-sortable-helper {
+	/* width:150px !important; */
+}
+
+.placeholder {
+	border:2px dashed #AAA;
+	margin-left:-12px;
+}
+
+
+.sort {
+	margin:10px 0;
+	position:relative;
+	/* margin:0px auto;*/
+	z-index:1;
+	margin-left:12px; /* default, width of left corner */
+	margin-bottom:0.5em; /* spacing under box */
+}
+
+.sort h1 { 
+	color:#5d9ed6;
+	font-size:14px;
+	margin:0 43px 0 0; /* margin so edit buttons are not obscured */
+	cursor:move;
+	height:1.8em;
+	padding:8px 0 0 0;
+	position:relative;
+}
+
+.sort .content,
+.sort .t,
+.sort .b,
+.sort .b div {
+	background:transparent url(<?php echo $vars['url']; ?>/_graphics/box.png) no-repeat top right;
+	_background-image:url(<?php echo $vars['url']; ?>/_graphics/box.gif); /* for ie 6 as can't use AlphaImageLoader due to div width/height not being known */
+    /* _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader (src='images/box.png', sizingMethod='crop'); */
+}
+
+.sort .content {
+	position:relative;
+	zoom:1;
+	_overflow-y:hidden;
+	padding:0 12px 0 0;
+}
+
+.sort .t {
+	/* top+left vertical slice */
+	position:absolute;
+	left:0px;
+	top:0px;
+	width:12px; /* top slice width */
+	margin-left:-12px;
+	height:100%;
+	_height:1600px; /* arbitrary long height, IE 6 */
+	background-position:top left;
+}
+
+.sort .b {
+	/* bottom */
+	position:relative;
+	width:100%;
+}
+
+.sort .b,
+.sort .b div {
+	height:6px; /* height of bottom round */
+	font-size:1px;
+}
+
+.sort .b {
+	background-position:bottom right;
+}
+
+.sort .b div {
+	position:relative;
+	width:12px; /* bottom corner width */
+	margin-left:-12px;
+	background-position:bottom left;
+}
+
+.sort p {
+	margin:0px;
+	padding:0.5em 0px 0.5em 0px;
+	line-height: 1.4em;
+	color:#555;
+}
+
+.editpanel {
+	background: #cccccc;
+	height: 100px;
+	display: none;
+}
+.button_editpanel {
+	z-index:1;
+	float:right;
+	/* background: url(images/ todo - add arrow graphic ) no-repeat right -50px; */
+	text-align: right;
+	padding: 10px 0 0 0;
+	cursor:pointer;
+	color: #cccccc;
+	text-decoration: none;
+	outline: none;
+	-moz-outline-style: none;
+}
+.active {
+	/* background-position: right 12px;*/
+	color: #666666;
+}
+a.togglepanel {
+	color: #cccccc;
+	cursor:pointer;
+	text-decoration:none;
+	float:right;
+	padding: 9px 0 0 8px;
+	font-weight: bold;
+	outline: none;
+	-moz-outline-style: none;
+}
 
 
 

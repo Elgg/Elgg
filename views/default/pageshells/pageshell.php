@@ -40,11 +40,57 @@
     <div id="sidebar_menu">
         <?php echo elgg_view("navigation/toolbox", $vars); ?>
     </div>
-        
-	<!-- get the main body -->
-	<div id="mainContent">
-		<?php echo $vars['body']; ?>
+    
+<div id="sidebar_right" class="ui-sortable">
+	
+	<div class="sort">
+		<div class="content">
+			<!-- top/left PNG -->
+			<div class="t"></div>
+			<!-- box content -->
+			<a href="#" class="togglepanel">[-]</a>
+			<a href="#" class="button_editpanel">Edit</a>
+			<h1>title in here</h1>
+	
+				<div class="editpanel">
+				<p>Here's the edit controls for this widget</p>
+				</div>
+				<div class="panelcontent">
+					<?php echo $vars['body']; ?>
+				</div>
+		</div>
+		<!-- bottom PNG -->
+		<div class="b"><div></div></div>
 	</div>
+	
+</div><!-- /sidebar_right -->   
+        
+<!-- get the main body -->
+<div id="mainContent" class="ui-sortable">
+	
+	<div class="sort">
+		<div class="content">
+			<!-- top/left PNG -->
+			<div class="t"></div>
+			<!-- box content -->
+			<a href="#" class="togglepanel">[-]</a>
+			<a href="#" class="button_editpanel">Edit</a>
+			<h1>title in here</h1>
+	
+				<div class="editpanel">
+				<p>Here's the edit controls for this widget</p>
+				</div>
+				<div class="panelcontent">
+					<?php echo $vars['body']; ?>
+				</div>
+		</div>
+		<!-- bottom PNG -->
+		<div class="b"><div></div></div>
+	</div>
+	
+</div><!-- /mainContent -->	
+	
+	
 
 <!-- include the footer -->
 <?php echo elgg_view('page_elements/footer', $vars); ?>

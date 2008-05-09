@@ -19,7 +19,7 @@
      if (isloggedin()) {
 ?>
 <div id="topmenu">
-	<div style="float:right">
+	<div class="usericon">
 	<?php
 
     	echo elgg_view("profile/icon",array('entity' => $vars['user'], 'size' => 'small'));
