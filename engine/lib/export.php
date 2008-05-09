@@ -60,232 +60,7 @@
 	 * @subpackage Exceptions
 	 */
 	class ImportException extends DataFormatException {}
-	
-	/**
-	 * @class ODDDocument ODD Document container.
-	 * This class is used during import and export to construct.
-	 * @author Marcus Povey
-	 */
-	class ODDDocument
-	{
-		/**
-		 * ODD Version
-		 *
-		 * @var string
-		 */
-		private $ODDSupportedVersion = "1.0"; 
 		
-		/**
-		 * Elements of the document.
-		 */
-		private $elements;
-		
-		public function __construct(array $elements = NULL)
-		{
-			if ($elements)
-				$this->elements = $elements;
-			else
-				$this->elements = array();
-		}
-		
-		/**
-		 * Return the version of ODD being used.
-		 *
-		 * @return string
-		 */
-		public function getVersion() { return $this->ODDSupportedVersion; }
-		
-		public function addElement(ODD $element) { $this->elements[] = $element; }
-		public function addElements(array $elements)
-		{
-			foreach ($elements as $element)
-				$this->addElement($element);
-		}
-		
-		public function getElements() { return $this->elements; }
-		
-		/**
-		 * Magic function to generate valid ODD XML for this item.
-		 */
-		public function __toString()
-		{
-			$xml = "";
-			
-			// Output begin tag
-			$generated = date("r");
-			$xml .= "<odd version=\"{$this->ODDSupportedVersion}\" generated=\"$generated\">\n";
-
-			// Get XML for elements
-			foreach ($this->elements as $element)
-				$xml .= "$element";
-			
-			// Output end tag
-			$xml .= "</odd>\n";	
-			
-			return $xml;
-		}
-	}
-	
-	
-	/**
-	 * Open Data Definition (ODD) superclass.
-	 * @package Elgg
-	 * @subpackage Core
-	 * @author Marcus Povey
-	 */
-	abstract class ODD
-	{		
-		/**
-		 * Attributes.
-		 */
-		private $attributes = array();
-		
-		/**
-		 * Optional body.
-		 */
-		private $body;
-		
-		/**
-		 * Construct an ODD document with initial values.
-		 */
-		public function __construct()
-		{
-			$this->body = "";
-		}
-		
-		public function setAttribute($key, $value) { $this->attributes[$key] = $value; }
-		public function getAttribute($key) 
-		{ 
-			if (isset($this->attributes[$key]))
-				return $this->attributes[$key];
-				
-			return NULL;
-		}
-		public function setBody($value) { $this->body = $value; }
-		public function getBody() { return $this->body; }
-		
-		/**
-		 * For serialisation, implement to return a string name of the tag eg "header" or "metadata".
-		 * @return string
-		 */
-		abstract protected function getTagName();
-
-		/**
-		 * Magic function to generate valid ODD XML for this item.
-		 */
-		public function __toString()
-		{
-			// Construct attributes
-			$attr = "";
-			foreach ($this->attributes as $k => $v)
-				$attr .= ($v!="") ? "$k=\"$v\" " : "";
-			
-			$body = $this->getBody();
-			$tag = $this->getTagName();
-			
-			$end = "/>";
-			if ($body!="")
-				$end = ">$body</{$tag}>";
-			
-			return "<{$tag} $attr" . $end . "\n";  
-		}
-	}
-	
-	/**
-	 * ODD Entity class.
-	 * @package Elgg
-	 * @subpackage Core
-	 * @author Marcus Povey
-	 */
-	class ODDEntity extends ODD
-	{
-		function __construct($uuid, $class, $subclass = "")
-		{
-			parent::__construct();
-			
-			$this->setAttribute('uuid', $uuid);
-			$this->setAttribute('class', $class);
-			$this->setAttribute('subclass', $subclass);	
-		}
-		
-		protected function getTagName() { return "entity"; }
-	}
-	
-	/**
-	 * ODD Metadata class.
-	 * @package Elgg
-	 * @subpackage Core
-	 * @author Marcus Povey
-	 */
-	class ODDMetaData extends ODD
-	{
-		function __construct($uuid, $entity_uuid, $name, $value, $type = "", $owner_uuid = "")
-		{
-			parent::__construct();
-			
-			$this->setAttribute('uuid', $uuid);
-			$this->setAttribute('entity_uuid', $entity_uuid);
-			$this->setAttribute('name', $name);
-			$this->setAttribute('type', $type);	
-			$this->setAttribute('owner_uuid', $owner_uuid);
-			$this->setBody($value);
-		}
-		
-		protected function getTagName() { return "metadata"; }
-	}
-	
-	/**
-	 * ODD Relationship class.
-	 * @package Elgg
-	 * @subpackage Core
-	 * @author Marcus Povey
-	 */
-	class ODDRelationship extends ODD
-	{
-		function __construct($uuid1, $type, $uuid2)
-		{
-			parent::__construct();
-			
-			$this->setAttribute('uuid1', $uuid1);
-			$this->setAttribute('type', $type);
-			$this->setAttribute('uuid2', $uuid2);
-		}
-		
-		protected function getTagName() { return "relationship"; }
-	}
-	
-	/**
-	 * Attempt to construct an ODD object out of a XmlElement or sub-elements.
-	 * 
-	 * @param XmlElement $element The element(s)
-	 * @return mixed An ODD object if the element can be handled, or false.
-	 */
-	function ODD_factory(XmlElement $element)
-	{
-		$name = $element->name; 
-		$odd = false;
-		
-		switch ($name)
-		{
-			case 'entity' : $odd = new ODDEntity("","",""); break;
-			case 'metadata' : $odd = new ODDMetaData("","","",""); break;
-			case 'relationship' : $odd = new ODDRelationship("","",""); break;
-		}
-		
-		// Now populate values
-		if ($odd)
-		{
-			// Attributes
-			foreach ($element->attributes as $k => $v)
-				$odd->setAttribute($k,$v);
-				
-			// Body
-			$odd->setBody($element->content);
-		}
-		
-		return $odd;
-	}
-	
 	/**
 	 * Generate a UUID from a given GUID.
 	 * 
@@ -354,36 +129,26 @@
 	 * 
 	 * If nobody processes the top level element, the sub level elements are processed.
 	 * 
-	 * @param array $element The dom tree.
+	 * @param ODD $odd The odd element to process
 	 */
-	function __process_element($element)
+	function __process_element(ODD $odd)
 	{
 		global $IMPORTED_DATA, $IMPORTED_OBJECT_COUNTER;
-				
-		// See if we can convert the element into an ODD element
-		$odd = ODD_factory($element);
 		
 		// See if anyone handles this element, return true if it is.
 		if ($odd)
 			$handled = trigger_plugin_hook("import", "all", array("element" => $odd), $to_be_serialised);
 
 		// If not, then see if any of its sub elements are handled
-		if (!$handled) 
-		{
-			// Issue a warning
-			trigger_error("'<{$element->name}>' had no registered handler.", E_USER_WARNING);
-			
-			if (isset($element->children)) 
-				foreach ($element->children as $c)
-					__process_element($c);
-		}
-		else
+		if ($handled) 
 		{
 			$IMPORTED_OBJECT_COUNTER ++; // Increment validation counter
 			$IMPORTED_DATA[] = $handled; // Return the constructed object
 
 			return true;
 		}
+		
+		return false;
 	}
 	
 	/**
@@ -431,7 +196,10 @@
 		$IMPORTED_DATA = array();
 		$IMPORTED_OBJECT_COUNTER = 0;
 		
-		__process_element(xml_2_object($xml));
+		$document = ODD_Import($xml);
+		
+		foreach ($document as $element)
+			__process_element($element);
 		
 		if ($IMPORTED_OBJECT_COUNTER!= count($IMPORTED_DATA))
 			throw new ImportException("Not all elements were imported.");

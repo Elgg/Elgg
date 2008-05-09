@@ -1,0 +1,306 @@
+<?php
+	/**
+	 * OpenDD PHP Library.
+	 * 
+	 * @package Elgg
+	 * @subpackage Core
+	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+	 * @author Marcus Povey
+	 * @copyright Curverider Ltd 2008
+	 * @link http://elgg.org/
+	 */
+	
+	/**
+	 * @class ODDDocument ODD Document container.
+	 * This class is used during import and export to construct.
+	 * @author Marcus Povey
+	 */
+	class ODDDocument implements Iterator
+	{
+		/**
+		 * ODD Version
+		 *
+		 * @var string
+		 */
+		private $ODDSupportedVersion = "1.0"; 
+		
+		/**
+		 * Elements of the document.
+		 */
+		private $elements;
+		
+		public function __construct(array $elements = NULL)
+		{
+			if ($elements)
+				$this->elements = $elements;
+			else
+				$this->elements = array();
+		}
+		
+		/**
+		 * Return the version of ODD being used.
+		 *
+		 * @return string
+		 */
+		public function getVersion() { return $this->ODDSupportedVersion; }
+		
+		public function addElement(ODD $element) { $this->elements[] = $element; }
+		public function addElements(array $elements)
+		{
+			foreach ($elements as $element)
+				$this->addElement($element);
+		}
+		
+		public function getElements() { return $this->elements; }
+		
+		/**
+		 * Magic function to generate valid ODD XML for this item.
+		 */
+		public function __toString()
+		{
+			$xml = "";
+			
+			// Output begin tag
+			$generated = date("r");
+			$xml .= "<odd version=\"{$this->ODDSupportedVersion}\" generated=\"$generated\">\n";
+
+			// Get XML for elements
+			foreach ($this->elements as $element)
+				$xml .= "$element";
+			
+			// Output end tag
+			$xml .= "</odd>\n";	
+			
+			return $xml;
+		}
+		
+		// ITERATOR INTERFACE //////////////////////////////////////////////////////////////
+		/*
+		 * This lets an entity's attributes be displayed using foreach as a normal array.
+		 * Example: http://www.sitepoint.com/print/php5-standard-library
+		 */
+		
+		private $valid = FALSE; 
+		
+   		function rewind() 
+   		{ 
+   			$this->valid = (FALSE !== reset($this->elements));  
+   		}
+   
+   		function current() 
+   		{ 
+   			return current($this->elements); 
+   		}
+		
+   		function key() 
+   		{ 
+   			return key($this->elements); 
+   		}
+		
+   		function next() 
+   		{
+   			$this->valid = (FALSE !== next($this->elements));  
+   		}
+   		
+   		function valid() 
+   		{ 
+   			return $this->valid;  
+   		}
+	}
+		
+	/**
+	 * Open Data Definition (ODD) superclass.
+	 * @package Elgg
+	 * @subpackage Core
+	 * @author Marcus Povey
+	 */
+	abstract class ODD
+	{		
+		/**
+		 * Attributes.
+		 */
+		private $attributes = array();
+		
+		/**
+		 * Optional body.
+		 */
+		private $body;
+		
+		/**
+		 * Construct an ODD document with initial values.
+		 */
+		public function __construct()
+		{
+			$this->body = "";
+		}
+		
+		public function setAttribute($key, $value) { $this->attributes[$key] = $value; }
+		public function getAttribute($key) 
+		{ 
+			if (isset($this->attributes[$key]))
+				return $this->attributes[$key];
+				
+			return NULL;
+		}
+		public function setBody($value) { $this->body = $value; }
+		public function getBody() { return $this->body; }
+		
+		/**
+		 * For serialisation, implement to return a string name of the tag eg "header" or "metadata".
+		 * @return string
+		 */
+		abstract protected function getTagName();
+
+		/**
+		 * Magic function to generate valid ODD XML for this item.
+		 */
+		public function __toString()
+		{
+			// Construct attributes
+			$attr = "";
+			foreach ($this->attributes as $k => $v)
+				$attr .= ($v!="") ? "$k=\"$v\" " : "";
+			
+			$body = $this->getBody();
+			$tag = $this->getTagName();
+			
+			$end = "/>";
+			if ($body!="")
+				$end = ">$body</{$tag}>";
+			
+			return "<{$tag} $attr" . $end . "\n";  
+		}
+	}
+	
+	/**
+	 * ODD Entity class.
+	 * @package Elgg
+	 * @subpackage Core
+	 * @author Marcus Povey
+	 */
+	class ODDEntity extends ODD
+	{
+		function __construct($uuid, $class, $subclass = "")
+		{
+			parent::__construct();
+			
+			$this->setAttribute('uuid', $uuid);
+			$this->setAttribute('class', $class);
+			$this->setAttribute('subclass', $subclass);	
+		}
+		
+		protected function getTagName() { return "entity"; }
+	}
+	
+	/**
+	 * ODD Metadata class.
+	 * @package Elgg
+	 * @subpackage Core
+	 * @author Marcus Povey
+	 */
+	class ODDMetaData extends ODD
+	{
+		function __construct($uuid, $entity_uuid, $name, $value, $type = "", $owner_uuid = "")
+		{
+			parent::__construct();
+			
+			$this->setAttribute('uuid', $uuid);
+			$this->setAttribute('entity_uuid', $entity_uuid);
+			$this->setAttribute('name', $name);
+			$this->setAttribute('type', $type);	
+			$this->setAttribute('owner_uuid', $owner_uuid);
+			$this->setBody($value);
+		}
+		
+		protected function getTagName() { return "metadata"; }
+	}
+	
+	/**
+	 * ODD Relationship class.
+	 * @package Elgg
+	 * @subpackage Core
+	 * @author Marcus Povey
+	 */
+	class ODDRelationship extends ODD
+	{
+		function __construct($uuid1, $type, $uuid2)
+		{
+			parent::__construct();
+			
+			$this->setAttribute('uuid1', $uuid1);
+			$this->setAttribute('type', $type);
+			$this->setAttribute('uuid2', $uuid2);
+		}
+		
+		protected function getTagName() { return "relationship"; }
+	}
+	
+	/**
+	 * Attempt to construct an ODD object out of a XmlElement or sub-elements.
+	 * 
+	 * @param XmlElement $element The element(s)
+	 * @return mixed An ODD object if the element can be handled, or false.
+	 */
+	function ODD_factory(XmlElement $element)
+	{
+		$name = $element->name; 
+		$odd = false;
+		
+		switch ($name)
+		{
+			case 'entity' : $odd = new ODDEntity("","",""); break;
+			case 'metadata' : $odd = new ODDMetaData("","","",""); break;
+			case 'relationship' : $odd = new ODDRelationship("","",""); break;
+		}
+		
+		// Now populate values
+		if ($odd)
+		{
+			// Attributes
+			foreach ($element->attributes as $k => $v)
+				$odd->setAttribute($k,$v);
+				
+			// Body
+			$odd->setBody($element->content);
+		}
+		
+		return $odd;
+	}
+	
+	/**
+	 * Import an ODD document.
+	 * 
+	 * @param string $xml The XML ODD.
+	 * @return ODDDocument
+	 */
+	function ODD_Import($xml)
+	{
+		// Parse XML to an array
+		$elements = xml_2_object($xml);
+
+		// Create ODDDocument
+		$document = new ODDDocument();
+		
+		// Itterate through array of elements and construct ODD document
+		foreach ($elements->children as $child) 
+		{
+			$odd = ODD_factory($child);
+			
+			if ($odd) 
+				$document->addElement($odd);
+		}
+		
+		return $document;
+	}
+	
+	/**
+	 * Export an ODD Document.
+	 *
+	 * @param ODDDocument $document The Document.
+	 */
+	function ODD_Export(ODDDocument $document)
+	{
+		return "$document";
+	}
+	
+?>
