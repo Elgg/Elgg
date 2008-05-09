@@ -10,6 +10,8 @@
 	 * @link http://elgg.org/
 	 */
 	
+	include_once("xml.php");
+	
 	/**
 	 * @class ODDDocument ODD Document container.
 	 * This class is used during import and export to construct.
