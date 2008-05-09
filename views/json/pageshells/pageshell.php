@@ -11,5 +11,6 @@
 	 * 
 	 */
 
+	header("Content-Type: application/json");
 	echo $vars['body'];
 ?>
