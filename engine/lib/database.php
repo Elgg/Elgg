@@ -153,6 +153,9 @@
 				throw new DatabaseException(mysql_error($dblink) . " QUERY: " . $query);
 				
        		if (empty($resultarray)) {
+       			if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
+       				error_log("WARNING: DB query \"$query\" returned no results.");
+       				
                 return false;
             }
             return $resultarray;
@@ -187,6 +190,9 @@
             if (mysql_errno($dblink))
 				throw new DatabaseException(mysql_error($dblink) . " QUERY: " . $query);
             
+			if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
+       				error_log("WARNING: DB query \"$query\" returned no results.");
+       				
             return false;
         }
         
