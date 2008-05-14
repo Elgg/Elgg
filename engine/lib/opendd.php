@@ -6,7 +6,7 @@
 	 * @subpackage Core
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
 	 * @author Marcus Povey
-	 * @version 0.1
+	 * @version 0.2
 	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.org/
 	 */
@@ -147,7 +147,16 @@
 		}
 		public function setBody($value) { $this->body = $value; }
 		public function getBody() { return $this->body; }
-		
+
+		/**
+		 * Set the published time.
+		 *
+		 * @param int $time Unix timestamp
+		 */
+		public function setPublished($time) 
+		{
+			$this->attributes['published'] = date("r", $time);
+		}
 		/**
 		 * For serialisation, implement to return a string name of the tag eg "header" or "metadata".
 		 * @return string
