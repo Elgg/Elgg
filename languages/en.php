@@ -57,10 +57,18 @@
 		 */
 	
 			'account' => "Account",
+			'settings' => "Settings",
 	
 			'register' => "Register",
 			'registerok' => "You have successfully registered for %s.",
 			'registerbad' => "Your registration was unsuccessful. The username may already exist, or your passwords might not match.",
+	
+		/**
+		 * Administration
+		 */
+	
+			'admin' => "Administration",
+			'admin:description' => "The admin panel allows you to control all aspects of the system, from user management to how plugins behave. Choose an option below to get started.",
 	
 		/**
 		 * Generic action words

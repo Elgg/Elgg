@@ -27,9 +27,22 @@
     ?>
     </div>
     <ul>
-        <li><a href="<?php echo $vars['url']; ?>mod/dashboard/"><?php echo elgg_echo('dashboard'); ?></a></li>
-        <li><a href=""><?php echo elgg_echo('profile'); ?></a></li>
-        <li><a href=""><?php echo elgg_echo('account'); ?></a></li>
+        <li><a href="<?php echo $vars['url']; ?>pg/dashboard/"><?php echo elgg_echo('dashboard'); ?></a></li>
+        <li><a href="<?php echo $vars['url']; ?>pg/settings/"><?php echo elgg_echo('settings'); ?></a></li>
+<?php
+
+		// The administration link is for admin or site admin users only
+		if ($vars['user']->admin || $vars['user']->siteadmin) { 
+
+?>
+
+		<li><a href="<?php echo $vars['url']; ?>pg/admin/"><?php echo elgg_echo("admin"); ?></a></li>
+
+<?php
+
+		}
+
+?>
         <li><a href="<?php echo $vars['url']; ?>action/logout"><?php echo elgg_echo('logout'); ?></a></li>
     </ul>
 </div>
