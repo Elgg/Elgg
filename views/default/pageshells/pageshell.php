@@ -56,7 +56,10 @@
 				<p>Here's the edit controls for this widget</p>
 				</div>
 				<div class="panelcontent">
-					<?php echo $vars['body']; ?>
+					<?php 
+						// echo $vars['body'];
+						// Removed to prevent double body! 
+					?>
 				</div>
 		</div>
 		<!-- bottom PNG -->
