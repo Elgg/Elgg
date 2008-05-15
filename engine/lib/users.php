@@ -251,6 +251,15 @@
 		public function getObjects($subtype="", $limit = 10, $offset = 0) { return get_user_objects($this->getGUID(), $subtype, $limit, $offset); }
 
 		/**
+		 * Get an array of ElggObjects owned by this user's friends.
+		 *
+		 * @param string $subtype The subtype of the objects, if any
+		 * @param int $limit Number of results to return
+		 * @param int $offset Any indexing offset
+		 */
+		public function getFriendsObjects($subtype = "", $limit = 10, $offset = 0) { return get_user_friends_objects($this->getGUID(), $subtype, $limit, $offset); }
+		
+		/**
 		 * Counts the number of ElggObjects owned by this user
 		 *
 		 * @param string $subtype The subtypes of the objects, if any
