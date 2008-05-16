@@ -18,7 +18,7 @@
 	$guid = get_input("guid"); // guid of the entity
 
 	// For attributes eg http://example.com/odd/73/attr/owner_uuid/ or http://example.com/odd/73/metadata/86/
-	$type = get_input("type"); // attr, metadata, annotation
+	$type = get_input("type"); // attr, metadata, annotation, rekationship
 	$id_or_name = get_input("idname"); // Either a number or the key name (if attribute)
 	
 	
