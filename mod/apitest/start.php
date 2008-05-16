@@ -163,7 +163,7 @@
 		$endpoint = sanitise_string($endpoint);
 		
 		if ($endpoint=="")
-			$endpoint = $CONFIG->wwwroot . "endpoints/rest.php";
+			$endpoint = $CONFIG->wwwroot . "services/api/rest.php";
 			
 		$API_CLIENT->api_key = $apikey;
 		$API_CLIENT->secret = $secret;
