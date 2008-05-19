@@ -31,6 +31,11 @@
 
 		
 	/**
+	 * Set light mode default
+	 */
+		$lightmode = false;
+		
+	/**
 	 * Establish handlers
 	 */
 		
@@ -93,11 +98,16 @@
 					throw new InstallationException("Could not load {$file}");
 			}
 			
+		// Determine light mode
+			$lm = strtolower(get_input('lightmode'));
+			if ($lm == 'true') $lightmode = true;
+			
 		// Set default config
 			set_default_config();
 			
-		// Load plugins
-			load_plugins();
+		// Load plugins, if we're not in light mode
+			if (!$lightmode)
+				load_plugins();
 		
 		} else {	// End portion for sanitised installs only
 			
@@ -117,7 +127,8 @@
 
 		// Trigger events
 			if (!substr_count($_SERVER["PHP_SELF"],"install.php") &&
-				!substr_count($_SERVER["PHP_SELF"],"setup.php")) {
+				!substr_count($_SERVER["PHP_SELF"],"setup.php") &&
+				!$lightmode) {
 				// If default settings haven't been installed, forward to the default settings page
 				trigger_event('init', 'system');
 				if (!datalist_get('default_settings')) {
