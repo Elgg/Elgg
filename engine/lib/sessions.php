@@ -111,6 +111,9 @@
 	 * @param unknown_type $object
 	 */
 		function session_init($event, $object_type, $object) {
+			
+			if (!is_db_installed()) return false;
+			
 			session_name('Elgg');
 	        session_start();
 	        
