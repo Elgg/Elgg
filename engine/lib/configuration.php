@@ -116,9 +116,13 @@
 			
 			global $CONFIG;
 			
-			$CONFIG->path = datalist_get('path');
-			$CONFIG->dataroot = datalist_get('dataroot');
-			if (isset($CONFIG->site)) {
+			$path = datalist_get('path');
+			if (!empty($path))
+				$CONFIG->path = $path;
+			$dataroot = datalist_get('dataroot');
+			if (!empty($dataroot))
+				$CONFIG->dataroot = $dataroot;
+			if (isset($CONFIG->site) && (get_class($CONFIG->site) == "ElggSite")) {
 				$CONFIG->wwwroot = $CONFIG->site->url;
 				$CONFIG->sitename = $CONFIG->site->name;
 			}

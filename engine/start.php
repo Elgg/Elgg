@@ -115,12 +115,12 @@
 			
 		}
 		
+		// Autodetect some default configuration settings
+			set_default_config();
 		// Trigger events
 			trigger_event('boot', 'system');
 		// Forward if we haven't been installed
 			if ((!is_installed() || !is_db_installed()) && !substr_count($_SERVER["PHP_SELF"],"install.php")) {
-				// Autodetect some default configuration settings
-					set_default_config();
 					header("Location: install.php");
 					exit;
 			}

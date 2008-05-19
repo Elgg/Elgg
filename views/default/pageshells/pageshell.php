@@ -78,7 +78,7 @@
 			<!-- box content -->
 			<a href="#" class="togglepanel">[-]</a>
 			<a href="#" class="button_editpanel">Edit</a>
-			<h1>title in here</h1>
+			<h1><?php echo $title; ?></h1>
 	
 				<div class="editpanel">
 				<p>Here's the edit controls for this widget</p>
