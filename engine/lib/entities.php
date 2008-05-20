@@ -845,7 +845,7 @@
 		
 		if ($type != "")
 			$where[] = "type='$type'";
-		if ($subtype !== "")
+		if ($subtype)
 			$where[] = "subtype=$subtype";
 		if ($owner_guid != "") {
 			if (!is_array($owner_guid)) {
