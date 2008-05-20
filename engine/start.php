@@ -94,6 +94,7 @@
 		// Include them
 		
 			foreach($files as $file) {
+				if ($CONFIG->debug) error_log("Loading $file..."); 
 				if (!@include_once($file))
 					throw new InstallationException("Could not load {$file}");
 			}
