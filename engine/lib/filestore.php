@@ -95,6 +95,13 @@
 		abstract public function getFileSize(ElggFile $file);
 		
 		/**
+		 * Return the filename of a given file as stored on the filestore.
+		 * 
+		 * @param ElggFile $file
+		 */
+		abstract public function getFilenameOnFilestore(ElggFile $file);
+		
+		/**
 		 * Get the filestore's creation parameters as an associative array.
 		 * Used for serialisation and for storing the creation details along side a file object.
 		 * 
@@ -138,7 +145,7 @@
 		
 		public function open(ElggFile $file, $mode)
 		{
-			$fullname = $this->get_systempath_from_file($file);
+			$fullname = $this->getFilenameOnFilestore($file);
 			
 			// Split into path and name
 			$ls = strrpos($fullname,"/");
@@ -181,7 +188,7 @@
 		
 		public function delete(ElggFile $file)
 		{
-			$unlink = unlink($this->get_systempath_from_file($file));
+			$unlink = unlink($this->getFilenameOnFilestore($file));
 			if ($unlink)
 				return $file->delete();
 	
@@ -205,7 +212,18 @@
 		
 		public function getFileSize(ElggFile $file)
 		{			
-			return filesize($this->get_systempath_from_file($file));
+			return filesize($this->getFilenameOnFilestore($file));
+		}
+	
+		public function getFilenameOnFilestore(ElggFile $file)
+		{
+			$owner = $file->getOwnerEntity();
+			if (!$owner)
+				$owner = $_SESSION['user'];
+					
+			if ((!$owner) || (!$owner->username)) throw InvalidParameterException("All files must have an owner!");
+			
+			return $this->dir_root . $this->make_file_matrix($owner->username) . $file->getFilename();
 		}
 		
 		/**
@@ -240,17 +258,6 @@
 			}	
 	
 			return $matrix.$filename."/";
-		}
-		
-		protected function get_systempath_from_file(ElggFile $file)
-		{
-			$owner = $file->getOwnerEntity();
-			if (!$owner)
-				$owner = $_SESSION['user'];
-					
-			if ((!$owner) || (!$owner->username)) throw InvalidParameterException("All files must have an owner!");
-			
-			return $this->dir_root . $this->make_file_matrix($owner->username) . $file->getFilename();
 		}
 		
 		public function getParameters()
@@ -321,6 +328,12 @@
 		 * Return the filename.
 		 */
 		public function getFilename() { return $this->filename; }
+		
+		/**
+		 * Return the filename of this file as it is/will be stored on the filestore, which may be different
+		 * to the filename.
+		 */
+		public function getFilenameOnFilestore() { return $this->filestore->getFilenameOnFilestore($this); }
 		
 		/**
 		 * Get the mime type of the file.
@@ -580,55 +593,72 @@
 		// If our file exists ...
 		if (isset($_FILES[$input_name]) && $_FILES[$input_name]['error'] == 0) {
 			
-			// Get the size information from the image
-			if ($imgsizearray = getimagesize($_FILES[$input_name]['tmp_name'])) {
+			return get_resized_image_from_existing_file($_FILES[$input_name]['tmp_name'], $maxwidth, $maxheight);
 			
-				// Get the contents of the file
-				$filecontents = file_get_contents($_FILES[$input_name]['tmp_name']);
-				
-				// Get width and height
-				$width = $imgsizearray[0];
-				$height = $imgsizearray[1];
-				$newwidth = $width;
-				$newheight = $height;
-				
-				if ($width > $maxwidth) {
-					$newheight = floor($height * ($maxwidth / $width));
-					$newwidth = $maxwidth;
-				}
-				if ($newheight > $maxheight) {
-					$newwidth = floor($newwidth * ($maxheight / $newheight));
-					$newheight = $maxheight; 
-				}
-				
-				$accepted_formats = array(
-												'image/jpeg' => 'jpeg',
-												'image/png' => 'png',
-												'image/gif' => 'png'
-										);
-				
-				// If it's a file we can manipulate ...
-				if (array_key_exists($imgsizearray['mime'],$accepted_formats)) {
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Gets the jpeg contents of the resized version of an already uploaded image 
+	 * (Returns false if the uploaded file was not an image)
+	 *
+	 * @param string $input_name The name of the file input field on the submission form
+	 * @param int $maxwidth The maximum width of the resized image
+	 * @param int $maxheight The maximum height of the resized image
+	 * @return false|mixed The contents of the resized image, or false on failure
+	 */
+	function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight) {
+		
+		// Get the size information from the image
+		if ($imgsizearray = getimagesize($input_name)) {
+		
+			// Get the contents of the file
+			$filecontents = file_get_contents($input_name);
+			
+			// Get width and height
+			$width = $imgsizearray[0];
+			$height = $imgsizearray[1];
+			$newwidth = $width;
+			$newheight = $height;
+			
+			if ($width > $maxwidth) {
+				$newheight = floor($height * ($maxwidth / $width));
+				$newwidth = $maxwidth;
+			}
+			if ($newheight > $maxheight) {
+				$newwidth = floor($newwidth * ($maxheight / $newheight));
+				$newheight = $maxheight; 
+			}
+			
+			$accepted_formats = array(
+											'image/jpeg' => 'jpeg',
+											'image/png' => 'png',
+											'image/gif' => 'png'
+									);
+			
+			// If it's a file we can manipulate ...
+			if (array_key_exists($imgsizearray['mime'],$accepted_formats)) {
 
-					$function = "imagecreatefrom" . $accepted_formats[$imgsizearray['mime']];
-					$newimage = imagecreatetruecolor($newwidth,$newheight);
-					if (is_callable($function) && $oldimage = $function($_FILES[$input_name]['tmp_name'])) {
-					
-						// Resize and return the image contents!
-						imagecopyresampled($newimage, $oldimage, 0,0,0,0,$newwidth,$newheight,$width,$height);
-						// imagecopyresized($newimage, $oldimage, 0,0,0,0,$newwidth,$newheight,$width,$height);
-						ob_start();
-						imagejpeg($newimage, null, 90);
-						$jpeg = ob_get_clean();
-						return $jpeg;
-						
-					}
+				$function = "imagecreatefrom" . $accepted_formats[$imgsizearray['mime']];
+				$newimage = imagecreatetruecolor($newwidth,$newheight);
+				if (is_callable($function) && $oldimage = $function($input_name)) {
+				
+					// Resize and return the image contents!
+					imagecopyresampled($newimage, $oldimage, 0,0,0,0,$newwidth,$newheight,$width,$height);
+					// imagecopyresized($newimage, $oldimage, 0,0,0,0,$newwidth,$newheight,$width,$height);
+					ob_start();
+					imagejpeg($newimage, null, 90);
+					$jpeg = ob_get_clean();
+					return $jpeg;
 					
 				}
 				
 			}
 			
 		}
+			
 		return false;
 	}
 	
