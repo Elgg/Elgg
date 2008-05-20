@@ -138,8 +138,7 @@
 		
 		public function open(ElggFile $file, $mode)
 		{
-			// Full path and filename
-			$fullname = $file->getFilename();
+			$fullname = $this->get_systempath_from_file($file);
 			
 			// Split into path and name
 			$ls = strrpos($fullname,"/");
@@ -148,17 +147,8 @@
 			$path = substr($fullname, 0, $ls);
 			$name = substr($fullname, $ls); 
 			
-			// Construct matrix out of user
-			$owner = $file->getOwnerEntity();
-			if (!$owner)
-				$owner = $_SESSION['user'];
-					
-			if ((!$owner) || (!$owner->username)) throw InvalidParameterException("All files must have an owner!");
-			
-			$matrix = $this->make_file_matrix($owner->username);
-			
 			// Try and create the directory
-			try { $this->make_directory_root($this->dir_root . $matrix . $path); } catch (Exception $e){}
+			try { $this->make_directory_root($path); } catch (Exception $e){}
 			
 			switch ($mode)
 			{
@@ -168,7 +158,7 @@
 				default: throw new InvalidParameterException("Unrecognised file mode '$mode'");
 			}
 			
-			return fopen($this->dir_root . $matrix . $fullname, $mode);
+			return fopen($fullname, $mode);
 		}
 		
 		public function write($f, $data)
@@ -191,10 +181,7 @@
 		
 		public function delete(ElggFile $file)
 		{
-			$name = $file->getFilename();
-			$matrix = $this->make_file_matrix($name);
-			
-			$unlink = unlink($this->dir_root . $matrix . $name);
+			$unlink = unlink($this->get_systempath_from_file($file));
 			if ($unlink)
 				return $file->delete();
 	
@@ -217,11 +204,8 @@
 		}
 		
 		public function getFileSize(ElggFile $file)
-		{
-			$name = $file->getFilename();
-			$matrix = $this->make_file_matrix($name);
-			
-			return filesize($this->dir_root . $matrix . $name);
+		{			
+			return filesize($this->get_systempath_from_file($file));
 		}
 		
 		/**
@@ -255,7 +239,18 @@
 					$matrix .= $filename[$n] . "/";
 			}	
 	
-			return $matrix;
+			return $matrix.$filename."/";
+		}
+		
+		protected function get_systempath_from_file(ElggFile $file)
+		{
+			$owner = $file->getOwnerEntity();
+			if (!$owner)
+				$owner = $_SESSION['user'];
+					
+			if ((!$owner) || (!$owner->username)) throw InvalidParameterException("All files must have an owner!");
+			
+			return $this->dir_root . $this->make_file_matrix($owner->username) . $file->getFilename();
 		}
 		
 		public function getParameters()
