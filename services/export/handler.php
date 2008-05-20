@@ -12,7 +12,7 @@
 	 * @link http://elgg.org/
 	 */
 
-	require_once("../engine/start.php");
+	require_once("../../engine/start.php");
 
 	// Get input values, these will be mapped via modrewrite
 	$guid = get_input("guid"); // guid of the entity
