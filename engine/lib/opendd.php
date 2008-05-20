@@ -6,7 +6,7 @@
 	 * @subpackage Core
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
 	 * @author Marcus Povey
-	 * @version 0.3
+	 * @version 0.2
 	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.org/
 	 */
@@ -270,46 +270,6 @@
 	}
 	
 	/**
-	 * A wrapper factory is used to construct the appropriate wrappers that permit ODD documents to be embedded
-	 * as a payload in other formats.
-	 */
-	abstract class ODDWrapperFactory
-	{
-		abstract function getElementWrapper($element);
-	}
-	
-	/**
-	 * Element wrapper superclass.
-	 */
-	abstract class ODDWrapper
-	{
-		/**
-		 * Wrap an element and return the encoded string.
-		 */
-		abstract function wrap($element);
-	}
-	
-	/**
-	 * Document wrapper superclass
-	 */
-	abstract class ODDDocumentWrapper extends ODDWrapper { }
-	
-	/**
-	 * Entity wrapper superclass
-	 */
-	abstract class ODDEntityWrapper extends ODDWrapper { }
-	
-	/**
-	 * Metadata wrapper superclass
-	 */
-	abstract class ODDMetaDataWrapper extends ODDWrapper { }
-	
-	/**
-	 * Relationship wrapper superclass.
-	 */
-	abstract class ODDRelationshipWrapper extends ODDWrapper { }
-	
-	/**
 	 * Attempt to construct an ODD object out of a XmlElement or sub-elements.
 	 * 
 	 * @param XmlElement $element The element(s)
@@ -373,11 +333,8 @@
 	 * @param ODDDocument $document The Document.
 	 * @param ODDWrapperFactory $wrapper Optional wrapper permitting the export process to embed ODD in other document formats.
 	 */
-	function ODD_Export(ODDDocument $document, ODDWrapperFactory $wrapper = null)
+	function ODD_Export(ODDDocument $document)
 	{
-		if ($wrapper)
-			$document->setWrapperFactory($wrapper);
-			
 		return "$document";
 	}
 	

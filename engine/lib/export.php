@@ -164,7 +164,7 @@
 	 * @param ODDWrapperFactory $wrapper Optional wrapper permitting the export process to embed ODD in other document formats.
 	 * @return xml 
 	 */
-	function export($guid, ODDWrapperFactory $wrapper = null)
+	function export($guid)
 	{
 		$guid = (int)$guid;  
 		
@@ -179,7 +179,7 @@
 		
 		$odd = new ODDDocument($to_be_serialised);
 		
-		return ODD_Export($odd, $wrapper);
+		return ODD_Export($odd);
 	}
 	
 	/**
