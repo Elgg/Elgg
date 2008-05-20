@@ -38,6 +38,30 @@
 			return false;
 			
 		}
+
+		/**
+		 * Return the current page URL.
+		 */
+		function current_page_url()
+		{
+			global $CONFIG;
+			
+			$url = parse_url($CONFIG->wwwroot);
+		
+			$page = $url['scheme'] . "://";
+	
+			// user/pass
+			if ($url['user']) $page .= $url['user'];
+			if ($url['pass']) $page .= ":".$url['pass'];
+			if (($url['user']) || $url['pass']) $page .="@";
+			
+			$page .= $url['host'];
+			$page = trim($page, "/"); $page.="/";
+			
+			$page .= $_SERVER['REQUEST_URI'];
+			
+			return $page;
+		}
 		
 	/**
 	 * Templating
