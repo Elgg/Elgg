@@ -70,9 +70,12 @@
 					throw new InvalidParameterException("Passing a non-ElggObject to an ElggObject constructor!");
 										
 				// We assume if we have got this far, $guid is an int
-				else if (is_int($guid)) {					
+				else if (is_numeric($guid)) {					
 					if (!$this->load($guid)) throw new IOException("Could not create a new ElggObject object from GUID:$guid");
 				}
+				
+				else
+					throw new IOException("Unrecognised value passed to constuctor.");
 			}
 		}
 		

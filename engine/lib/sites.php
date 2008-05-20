@@ -78,9 +78,12 @@
 				}
 					
 				// We assume if we have got this far, $guid is an int
-				else {				
+				else if (is_numeric($guid)) {				
 					if (!$this->load($guid)) throw new IOException("Could not create a new ElggSite object from GUID:$guid");
 				}
+				
+				else
+					throw new IOException("Unrecognised value passed to constuctor.");
 			}
 		}
 		
