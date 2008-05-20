@@ -582,6 +582,8 @@
 		$type = sanitise_string($type);
 		$subtype = sanitise_string($subtype);
 	
+		if ($subtype=="") return $subtype;
+		
 		$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes where type='$type' and subtype='$subtype'");
 
 		if ($result)
@@ -845,7 +847,7 @@
 		
 		if ($type != "")
 			$where[] = "type='$type'";
-		if ($subtype)
+		if ($subtype!=="")
 			$where[] = "subtype=$subtype";
 		if ($owner_guid != "") {
 			if (!is_array($owner_guid)) {
