@@ -6,7 +6,7 @@
 	 * @subpackage Core
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
 	 * @author Marcus Povey
-	 * @version 0.2
+	 * @version 0.3
 	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.org/
 	 */
@@ -31,6 +31,11 @@
 		 * Elements of the document.
 		 */
 		private $elements;
+		
+		/**
+		 * Optional wrapper factory.
+		 */
+		private $wrapperfactory;
 		
 		public function __construct(array $elements = NULL)
 		{
@@ -57,23 +62,38 @@
 		public function getElements() { return $this->elements; }
 		
 		/**
+		 * Set an optional wrapper factory to optionally embed the ODD document in another format.
+		 */
+		public function setWrapperFactory(ODDWrapperFactory $factory) { $this->wrapperfactory = $factory; }
+		
+		/**
 		 * Magic function to generate valid ODD XML for this item.
 		 */
 		public function __toString()
 		{
 			$xml = "";
 			
-			// Output begin tag
-			$generated = date("r");
-			$xml .= "<odd version=\"{$this->ODDSupportedVersion}\" generated=\"$generated\">\n";
-
-			// Get XML for elements
-			foreach ($this->elements as $element)
-				$xml .= "$element";
-			
-			// Output end tag
-			$xml .= "</odd>\n";	
-			
+			if ($this->wrapperfactory)
+			{
+				// A wrapper has been provided
+				$wrapper = $this->wrapperfactory->getElementWrapper($this); // Get the wrapper for this element
+				
+				$xml = $wrapper->wrap($this); // Wrap this element (and subelements)
+			}
+			else
+			{
+				// Output begin tag
+				$generated = date("r");
+				$xml .= "<odd version=\"{$this->ODDSupportedVersion}\" generated=\"$generated\">\n";
+	
+				// Get XML for elements
+				foreach ($this->elements as $element)
+					$xml .= "$element";
+				
+				// Output end tag
+				$xml .= "</odd>\n";	
+			}
+				
 			return $xml;
 		}
 		
@@ -157,6 +177,7 @@
 		{
 			$this->attributes['published'] = date("r", $time);
 		}
+		
 		/**
 		 * For serialisation, implement to return a string name of the tag eg "header" or "metadata".
 		 * @return string
@@ -182,6 +203,7 @@
 			
 			return "<{$tag} $attr" . $end . "\n";  
 		}
+		
 	}
 	
 	/**
@@ -248,6 +270,46 @@
 	}
 	
 	/**
+	 * A wrapper factory is used to construct the appropriate wrappers that permit ODD documents to be embedded
+	 * as a payload in other formats.
+	 */
+	abstract class ODDWrapperFactory
+	{
+		abstract function getElementWrapper($element);
+	}
+	
+	/**
+	 * Element wrapper superclass.
+	 */
+	abstract class ODDWrapper
+	{
+		/**
+		 * Wrap an element and return the encoded string.
+		 */
+		abstract function wrap($element);
+	}
+	
+	/**
+	 * Document wrapper superclass
+	 */
+	abstract class ODDDocumentWrapper extends ODDWrapper { }
+	
+	/**
+	 * Entity wrapper superclass
+	 */
+	abstract class ODDEntityWrapper extends ODDWrapper { }
+	
+	/**
+	 * Metadata wrapper superclass
+	 */
+	abstract class ODDMetaDataWrapper extends ODDWrapper { }
+	
+	/**
+	 * Relationship wrapper superclass.
+	 */
+	abstract class ODDRelationshipWrapper extends ODDWrapper { }
+	
+	/**
 	 * Attempt to construct an ODD object out of a XmlElement or sub-elements.
 	 * 
 	 * @param XmlElement $element The element(s)
@@ -309,10 +371,17 @@
 	 * Export an ODD Document.
 	 *
 	 * @param ODDDocument $document The Document.
+	 * @param ODDWrapperFactory $wrapper Optional wrapper permitting the export process to embed ODD in other document formats.
 	 */
-	function ODD_Export(ODDDocument $document)
+	function ODD_Export(ODDDocument $document, ODDWrapperFactory $wrapper = null)
 	{
+		if ($wrapper)
+			$document->setWrapperFactory($wrapper);
+			
 		return "$document";
 	}
 	
+	
+
+	// input - how? root element handler?
 ?>

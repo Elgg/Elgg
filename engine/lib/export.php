@@ -161,9 +161,10 @@
 	 * 
 	 * @see ElggEntity for an example of its usage.
 	 * @param int $guid The GUID.
+	 * @param ODDWrapperFactory $wrapper Optional wrapper permitting the export process to embed ODD in other document formats.
 	 * @return xml 
 	 */
-	function export($guid)
+	function export($guid, ODDWrapperFactory $wrapper = null)
 	{
 		$guid = (int)$guid;  
 		
@@ -178,7 +179,7 @@
 		
 		$odd = new ODDDocument($to_be_serialised);
 		
-		return "$odd";
+		return ODD_Export($odd, $wrapper);
 	}
 	
 	/**
