@@ -60,6 +60,8 @@
 						// echo $vars['body'];
 						// Removed to prevent double body!
 						echo $vars['sidebar']; 
+						// Apps can extend the sidebar to add widgets
+						echo elgg_view('sidebar',$vars);
 					?>
 				</div>
 		</div>
