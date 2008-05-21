@@ -16,9 +16,8 @@
 	 * The algorithm working out the size of font based on the number of tags.
 	 * This is quick and dirty.
 	 */
-	function calculate_tag_size($min, $max, $number_of_tags)
+	function calculate_tag_size($min, $max, $number_of_tags, $buckets = 6)
 	{
-		$buckets = 6;
 
 		$delta =  (($max - $min) / $buckets);
 		$thresholds = array();
@@ -45,7 +44,7 @@
 	 * @param array $tags The array of tags.
 	 * @return An associated array of tags with a weighting, this can then be mapped to a display class. 
 	 */
-	function generate_tag_cloud(array $tags)
+	function generate_tag_cloud(array $tags, $buckets = 6)
 	{
 		$cloud = array();
 		
@@ -61,7 +60,7 @@
 		}
 		
 		foreach ($cloud as $k => $v)
-			$cloud[$k] = calculate_tag_size($min, $max, $v);
+			$cloud[$k] = calculate_tag_size($min, $max, $v, $buckets);
 		
 		return $cloud;
 	}
