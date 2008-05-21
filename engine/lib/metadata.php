@@ -318,6 +318,58 @@
 	}
 
 	/**
+	 * Get the metadata where the entities they are referring to match a given criteria.
+	 * 
+	 * @param mixed $meta_name 
+	 * @param mixed $meta_value
+	 * @param string $entity_type The type of entity to look for, eg 'site' or 'object'
+	 * @param string $entity_subtype The subtype of the entity.
+	 * @param int $limit 
+	 * @param int $offset
+	 * @param string $order_by Optional ordering.
+	 * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
+	 */
+	function find_metadata($meta_name = "", $meta_value = "", $entity_type = "", $entity_subtype = "", $limit = 10, $offset = 0, $order_by = "e.time_created desc", $site_guid = 0)
+	{
+		global $CONFIG;
+		
+		$meta_n = get_metastring_id($meta_name);
+		$meta_v = get_metastring_id($meta_value);
+			
+		$entity_type = sanitise_string($entity_type);
+		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
+		$limit = (int)$limit;
+		$offset = (int)$offset;
+		$order_by = sanitise_string($order_by);
+		$site_guid = (int) $site_guid;
+		if ($site_guid == 0)
+			$site_guid = $CONFIG->site_guid;
+			
+		$access = get_access_list();
+			
+		$where = array();
+		
+		if ($entity_type!="")
+			$where[] = "e.type='$entity_type'";
+		if ($entity_subtype)
+			$where[] = "e.subtype=$entity_subtype";
+		if ($meta_name!="")
+			$where[] = "m.name_id='$meta_n'";
+		if ($meta_value!="")
+			$where[] = "m.value_id='$meta_v'";
+		if ($site_guid > 0)
+			$where[] = "e.site_guid = {$site_guid}";
+		
+		$query = "SELECT m.*, n.string as name, v.string as value from {$CONFIG->dbprefix}entities e JOIN {$CONFIG->dbprefix}metadata m on e.guid = m.entity_guid JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id JOIN {$CONFIG->dbprefix}metastrings n on m.name_id = n.id where";
+		foreach ($where as $w)
+			$query .= " $w and ";
+		$query .= " (e.access_id in {$access} or (e.access_id = 0 and e.owner_guid = {$_SESSION['id']}))"; // Add access controls
+		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
+
+		return get_data($query, "row_to_elggmetadata");
+	}
+	
+	/**
 	 * Return a list of entities based on the given search criteria.
 	 * 
 	 * @param mixed $meta_name 
