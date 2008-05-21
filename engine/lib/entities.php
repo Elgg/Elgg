@@ -77,7 +77,7 @@
 			}
 			
 			// No, so see if its in the meta data for this entity
-			if (isset($this->guid)) {
+			if ((int) ($this->guid) > 0) {
 				$meta = $this->getMetaData($name);
 				if ($meta)
 					return $meta;
