@@ -115,7 +115,7 @@
 					
 				$this->attributes[$name] = $value;
 			}
-			else if (isset($this->guid)) {
+			else if ((int) $this->guid > 0) {
 				return $this->setMetaData($name, $value);
 			} else {
 				$this->temp_metadata[$name] = $value;
