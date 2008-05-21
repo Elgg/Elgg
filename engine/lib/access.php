@@ -91,7 +91,7 @@
 	/**
 	 * Some useful constant definitions
 	 */
-		define('PRIVATE',0);
-		define('LOGGED_IN',1);
-		define('PUBLIC',2);
+		define('ACCESS_PRIVATE',0);
+		define('ACCESS_LOGGED_IN',1);
+		define('ACCESS_PUBLIC',2);
 ?>
