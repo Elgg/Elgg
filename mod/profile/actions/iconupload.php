@@ -24,15 +24,16 @@
 					&& $large !== false) {
 				
 					$filehandler = new ElggFile();
-					$filehandler->setFilename($_SESSION['user']->username . "large.jpg");
+					$filehandler->owner_guid = $_SESSION['user']->getGUID();
+					$filehandler->setFilename("profile/" . $_SESSION['user']->username . "large.jpg");
 					$filehandler->open("write");
 					$filehandler->write($large);
 					$filehandler->close();
-					$filehandler->setFilename($_SESSION['user']->username . "medium.jpg");
+					$filehandler->setFilename("profile/" . $_SESSION['user']->username . "medium.jpg");
 					$filehandler->open("write");
 					$filehandler->write($medium);
 					$filehandler->close();
-					$filehandler->setFilename($_SESSION['user']->username . "small.jpg");
+					$filehandler->setFilename("profile/" . $_SESSION['user']->username . "small.jpg");
 					$filehandler->open("write");
 					$filehandler->write($small);
 					$filehandler->close();

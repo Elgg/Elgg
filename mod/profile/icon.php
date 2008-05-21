@@ -26,9 +26,17 @@
 	// Try and get the icon
 	
 		$filehandler = new ElggFile();
-		$filehandler->setFilename($username . $size . ".jpg");
-		if ($filehandler->open("read") && $contents = $filehandler->read($filehandler->size())) {
-		} else {
+		$filehandler->owner_guid = $user->getGUID();
+		$filehandler->setFilename("profile/" . $username . $size . ".jpg");
+		
+		$success = false;
+		if ($filehandler->open("read")) {
+			if ($contents = $filehandler->read($filehandler->size())) {
+				$success = true;
+			} 
+		}
+		
+		if (!$success) {
 			
 			global $CONFIG;
 			$contents = @file_get_contents($CONFIG->pluginspath . "profile/graphics/default{$size}.jpg");
