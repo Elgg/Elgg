@@ -343,6 +343,29 @@
 	}
 
 	/**
+	 * Removes all arbitrary relationships originating from a particular entity
+	 *
+	 * @param int $guid_one The GUID of the entity 
+	 * @param string $relationship The name of the relationship
+	 * @param true|false $inverse Whether we're deleting inverse relationships (default false)
+	 * @return true|false Depending on success
+	 */
+	function remove_entity_relationships($guid_one, $relationship, $inverse = false) {
+		
+		global $CONFIG;
+		
+		$guid_one = (int) $guid_one;
+		$relationship = sanitise_string($relationship);
+		
+		if (!$inverse) {
+			return delete_data("DELETE from {$CONFIG->dbprefix}entity_relationships where guid_one=$guid_one and relationship='$relationship'");
+		} else {
+			return delete_data("DELETE from {$CONFIG->dbprefix}entity_relationships where guid_two=$guid_one and relationship='$relationship'");
+		}
+		
+	}
+
+	/**
 	 * Get all the relationships for a given guid.
 	 * 
 	 * @param int $guid
