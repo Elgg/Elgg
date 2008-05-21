@@ -176,6 +176,17 @@
 		}
 		
 		/**
+		 * Remove all entities associated with this entity
+		 *
+		 * @return true
+		 */
+		public function clearRelationships() {
+			remove_entity_relationships($this->getGUID());
+			remove_entity_relationships($this->getGUID(),"",true);
+			return true;
+		}
+		
+		/**
 		 * Adds an annotation to an entity. By default, the type is detected automatically; however, 
 		 * it can also be set. Note that by default, annotations are private.
 		 * 
@@ -918,6 +929,7 @@
 				if ($entity->canEdit()) {
 					$entity->clearMetadata();
 					$entity->clearAnnotations();
+					$entity->clearRelationships();
 					$res = delete_data("DELETE from {$CONFIG->dbprefix}entities where guid={$guid}");
 					return $res;
 				} 
