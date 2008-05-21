@@ -32,6 +32,7 @@
 		 * Any field not appearing in this will be viewed as a 
 		 */
 		protected $attributes;
+		protected $temp_metadata;
 				
 		/**
 		 * Initialise the attributes array. 
@@ -45,6 +46,7 @@
 		{
 			// Create attributes array if not already created
 			if (!is_array($this->attributes)) $this->attributes = array();
+			if (!is_array($this->temp_metadata)) $this->temp_metadata = array();
 			
 			$this->attributes['guid'] = "";
 			$this->attributes['type'] = "";
@@ -75,9 +77,14 @@
 			}
 			
 			// No, so see if its in the meta data for this entity
-			$meta = $this->getMetaData($name);
-			if ($meta)
-				return $meta;
+			if (isset($this->guid)) {
+				$meta = $this->getMetaData($name);
+				if ($meta)
+					return $meta;
+			} else {
+				if (isset($this->temp_metadata[$name]))
+					return $this->temp_metadata[$name];
+			}
 			
 			// Can't find it, so return null
 			return null;
@@ -108,8 +115,11 @@
 					
 				$this->attributes[$name] = $value;
 			}
-			else
+			else if (isset($this->guid)) {
 				return $this->setMetaData($name, $value);
+			} else {
+				$this->temp_metadata[$name] = $value;
+			}
 			
 			return true;
 		}
@@ -371,6 +381,14 @@
 			{ 
 				$this->attributes['guid'] = create_entity($this->attributes['type'], $this->attributes['subtype'], $this->attributes['owner_guid'], $this->attributes['access_id']); // Create a new entity (nb: using attribute array directly 'cos set function does something special!)
 				if (!$this->attributes['guid']) throw new IOException("Unable to save new object's base entity information!"); 
+				
+				// Save any unsaved metadata
+				if (sizeof($this->temp_metadata) > 0) {
+					foreach($this->temp_metadata as $name => $value) {
+						$this->$name = $value;
+						unset($this->temp_metadata[$name]);
+					}
+				}
 				
 				return $this->attributes['guid'];
 			}
