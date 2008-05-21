@@ -328,7 +328,7 @@
 	 * @param unknown_type $body
 	 * @return unknown
 	 */
-		function page_draw($title, $body) {
+		function page_draw($title, $body, $sidebar = "") {
 			if (isloggedin()) {
 				$view = "pageshells/pageshell";
 			} else {
@@ -337,6 +337,7 @@
 			echo elgg_view('pageshells/pageshell', array(
 												'title' => $title,
 												'body' => $body,
+												'sidebar' => $sidebar,
 												'sysmessages' => system_messages(null,"")
 											  )
 										);

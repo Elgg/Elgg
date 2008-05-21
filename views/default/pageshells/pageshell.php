@@ -58,7 +58,8 @@
 				<div class="panelcontent">
 					<?php 
 						// echo $vars['body'];
-						// Removed to prevent double body! 
+						// Removed to prevent double body!
+						echo $vars['sidebar']; 
 					?>
 				</div>
 		</div>
