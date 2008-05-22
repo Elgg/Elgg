@@ -22,6 +22,8 @@
 		
 		global $CONFIG;
 		
+		set_context($handler);
+		
 		$query = parse_url($_SERVER['REQUEST_URI']);
 		if (isset($query['query'])) {
 			$query = $query['query'];
