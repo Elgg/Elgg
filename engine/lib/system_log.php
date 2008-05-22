@@ -23,7 +23,7 @@
 		 * 
 		 * @return int 
 		 */
-		public abstract function getSystemLogID();
+		public function getSystemLogID();
 
 		// get object from ID .. ?
 	}
