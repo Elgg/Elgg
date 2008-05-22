@@ -677,7 +677,7 @@
 	 * @param string $function The function name
 	 * @return true|false Depending on success 
 	 */
-		function trigger_event($event, $object_type, ElggEntity $object = null) {
+		function trigger_event($event, $object_type, $object = null) {
 			
 			$return = true;
 			$return1 = events($event, $object_type, "", null, true, $object);
