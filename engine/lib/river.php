@@ -1,7 +1,7 @@
 <?php
 	/**
 	 * Elgg river.
-	 * Functions for listening for and generating the river.
+	 * Functions for listening for and generating the river out of the system log.
 	 * 
 	 * @package Elgg
 	 * @subpackage Core
@@ -10,4 +10,6 @@
 	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.org/
 	 */
+
+	// event listener
 ?>
