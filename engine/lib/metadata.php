@@ -164,8 +164,8 @@
 		global $CONFIG;
 
 		$entity_guid = (int)$entity_guid;
-		$name = sanitise_string(trim($name));
-		$value = sanitise_string(trim($value));
+		//$name = sanitise_string(trim($name));
+		//$value = sanitise_string(trim($value));
 		$value_type = detect_extender_valuetype($value, sanitise_string(trim($value_type)));
 		$time = time();		
 		$owner_guid = (int)$owner_guid;
