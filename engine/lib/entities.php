@@ -768,11 +768,7 @@
 		// Erased by Ben: sometimes we need unauthenticated users to create things! (eg users on registration)
 		// if ($owner_guid==0) throw new InvalidParameterException("owner_guid must not be 0");
 	
-		if ($result = insert_data("INSERT into {$CONFIG->dbprefix}entities (type, subtype, owner_guid, site_guid, access_id, time_created, time_updated) values ('$type',$subtype, $owner_guid, $site_guid, $access_id, $time, $time)")) {
-			$entity = get_entity($result);
-			trigger_event('create',$entity->type,$entity);
-		}
-		return $result;
+		return insert_data("INSERT into {$CONFIG->dbprefix}entities (type, subtype, owner_guid, site_guid, access_id, time_created, time_updated) values ('$type',$subtype, $owner_guid, $site_guid, $access_id, $time, $time)"); 
 	}
 	
 	/**

@@ -259,8 +259,14 @@
 
 			// Insert it
 			$result = insert_data("INSERT into {$CONFIG->dbprefix}sites_entity (guid, name, description, url) values ($guid, '$name','$description','$url')");
-			if ($result!==false) 
-				return true;
+			if ($result!==false) {
+				get_entity($guid);
+				if (trigger_event('create',$entity->type,$entity)) {
+					return true;
+				} else {
+					delete_entity($guid);
+				}
+			}
 		}
 		
 		return false;

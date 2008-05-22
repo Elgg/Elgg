@@ -342,8 +342,14 @@
 
 			// Insert it
 			$result = insert_data("INSERT into {$CONFIG->dbprefix}users_entity (guid, name, username, password, email, language, code) values ($guid, '$name', '$username', '$password', '$email', '$language', '$code')");
-			if ($result!==false) 
-				return true;
+			if ($result!==false) {
+				$entity = get_entity($guid);
+				if (trigger_event('create',$entity->type,$entity)) {
+					return true;
+				} else {
+					delete_entity($guid);
+				}
+			}				
 		}
 		
 		return false;

@@ -225,8 +225,14 @@
 
 			// Insert it
 			$result = insert_data("INSERT into {$CONFIG->dbprefix}objects_entity (guid, title, description) values ($guid, '$title','$description')");
-			if ($result!==false) 
-				return true;
+			if ($result!==false) {
+				$entity = get_entity($guid);
+				if (trigger_event('create',$entity->type,$entity)) {
+					return true;
+				} else {
+					delete_entity($guid);
+				}
+			}
 		}
 		
 		return false;
