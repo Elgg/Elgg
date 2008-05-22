@@ -234,3 +234,17 @@ CREATE TABLE `prefix_datalists` (
   KEY `name` (`name`)
 );
 
+-- System log
+CREATE TABLE `prefix_system_log` (
+	`id` int(11) NOT NULL auto_increment,
+	
+	`object_id` int(11) NOT NULL,
+	`object_class` varchar(128) NOT NULL,
+	
+	`event` varchar(128) NOT NULL,
+	
+	`time_created` int(11) NOT NULL,
+	
+	PRIMARY KEY  (`id`)
+);
+
