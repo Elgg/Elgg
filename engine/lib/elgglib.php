@@ -800,7 +800,7 @@
 			//if (!isset($CONFIG->hooks['all']['all']))
 			//	return $returnvalue;
 			
-			if (!empty($CONFIG->hooks['all']['all']) && is_array($CONFIG->hooks[$hook]['all'])) {
+			if (!empty($CONFIG->hooks['all']['all']) && is_array($CONFIG->hooks['all']['all'])) {
 				foreach($CONFIG->hooks['all']['all'] as $hookfunction) {
 					$temp_return_value = $hookfunction($hook, $entity_type, $returnvalue, $params);
 					if (!is_null($temp_return_value)) $returnvalue = $temp_return_value;
