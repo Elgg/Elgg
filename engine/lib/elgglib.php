@@ -782,7 +782,7 @@
 			
 			if (!empty($CONFIG->hooks['all'][$entity_type]) && is_array($CONFIG->hooks['all'][$entity_type])) {
 				foreach($CONFIG->hooks['all'][$entity_type] as $hookfunction) {
-					$temp_return_value = $hookfunction('all', $entity_type, $returnvalue, $params);
+					$temp_return_value = $hookfunction($hook, $entity_type, $returnvalue, $params);
 					if (!is_null($temp_return_value)) $returnvalue = $temp_return_value;
 				}
 			}
@@ -792,7 +792,17 @@
 			
 			if (!empty($CONFIG->hooks[$hook]['all']) && is_array($CONFIG->hooks[$hook]['all'])) {
 				foreach($CONFIG->hooks[$hook]['all'] as $hookfunction) {
-					$temp_return_value = $hookfunction($hook, 'all', $returnvalue, $params);
+					$temp_return_value = $hookfunction($hook, $entity_type, $returnvalue, $params);
+					if (!is_null($temp_return_value)) $returnvalue = $temp_return_value;
+				}
+			}
+			
+			if (!isset($CONFIG->hooks['all']['all']))
+				return $returnvalue;
+			
+			if (!empty($CONFIG->hooks['all']['all']) && is_array($CONFIG->hooks[$hook]['all'])) {
+				foreach($CONFIG->hooks['all']['all'] as $hookfunction) {
+					$temp_return_value = $hookfunction($hook, $entity_type, $returnvalue, $params);
 					if (!is_null($temp_return_value)) $returnvalue = $temp_return_value;
 				}
 			}
