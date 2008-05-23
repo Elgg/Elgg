@@ -767,8 +767,8 @@
 		function trigger_plugin_hook($hook, $entity_type, $params = null, $returnvalue = null) {
 			global $CONFIG;
 		
-			if (!isset($CONFIG->hooks) || !isset($CONFIG->hooks[$hook]) || !isset($CONFIG->hooks[$hook][$entity_type]))
-				return $returnvalue;
+			//if (!isset($CONFIG->hooks) || !isset($CONFIG->hooks[$hook]) || !isset($CONFIG->hooks[$hook][$entity_type]))
+			//	return $returnvalue;
 
 			if (!empty($CONFIG->hooks[$hook][$entity_type]) && is_array($CONFIG->hooks[$hook][$entity_type])) {
 				foreach($CONFIG->hooks[$hook][$entity_type] as $hookfunction) {
@@ -777,8 +777,8 @@
 				}
 			}
 			
-			if (!isset($CONFIG->hooks['all'][$entity_type]))
-				return $returnvalue;
+			//if (!isset($CONFIG->hooks['all'][$entity_type]))
+			//	return $returnvalue;
 			
 			if (!empty($CONFIG->hooks['all'][$entity_type]) && is_array($CONFIG->hooks['all'][$entity_type])) {
 				foreach($CONFIG->hooks['all'][$entity_type] as $hookfunction) {
@@ -787,8 +787,8 @@
 				}
 			}
 			
-			if (!isset($CONFIG->hooks[$hook]['all']))
-				return $returnvalue;
+			//if (!isset($CONFIG->hooks[$hook]['all']))
+			//	return $returnvalue;
 			
 			if (!empty($CONFIG->hooks[$hook]['all']) && is_array($CONFIG->hooks[$hook]['all'])) {
 				foreach($CONFIG->hooks[$hook]['all'] as $hookfunction) {
@@ -797,8 +797,8 @@
 				}
 			}
 			
-			if (!isset($CONFIG->hooks['all']['all']))
-				return $returnvalue;
+			//if (!isset($CONFIG->hooks['all']['all']))
+			//	return $returnvalue;
 			
 			if (!empty($CONFIG->hooks['all']['all']) && is_array($CONFIG->hooks[$hook]['all'])) {
 				foreach($CONFIG->hooks['all']['all'] as $hookfunction) {
