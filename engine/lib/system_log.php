@@ -19,13 +19,17 @@
 	interface Loggable 
 	{
 		/**
-		 * Return an identification for the object for storage in the system log. This id must be an integer.
+		 * Return an identification for the object for storage in the system log. 
+		 * This id must be an integer.
 		 * 
 		 * @return int 
 		 */
 		public function getSystemLogID();
-
-		// get object from ID .. ?
+		
+		/**
+		 * Return the class name of the object. Added as a function because get_class causes errors for some reason.
+		 */
+		public function getClassName();
 	}
 	
 	/**
@@ -42,9 +46,9 @@
 		{
 			// Has loggable interface, extract the necessary information and store
 			$object_id = (int)$object->getSystemLogID();
-			$object_class = santisise_string(get_class($object));
+			$object_class = $object->getClassName();
 			$event = sanitise_string($event);
-			$time_created = time();
+			$time = time();
 			
 			// Create log
 			return insert_data("INSERT into {$CONFIG->dbprefix}system_log (object_id, object_class, event, time_created) VALUES ('$object_id','$object_class','$event','$time')");
@@ -61,14 +65,12 @@
 	 */
 	function system_log_listener($event, $object_type, $object)
 	{
-		if ($object instanceof Loggable)
-		{
-			system_log($object, $event);
-		}
+		system_log($object, $event);
 		
 		return true;
 	}
-
+	
 	/** Register event to listen to all events **/
 	register_event_handler('all','all','system_log_listener');
+	
 ?>

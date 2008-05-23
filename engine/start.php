@@ -20,6 +20,7 @@
 			echo "Error in installation: could not load the Exceptions library.";
 			exit;
 		}
+		
 		if (!@include_once(dirname(__FILE__) . "/lib/elgglib.php")) {		// Main Elgg library
 			throw new InstallationException("Elgg could not load its main library.");
 		}
@@ -28,12 +29,11 @@
 			echo "Error in installation: could not load the System Log library.";
 			exit;
 		}
-		
+	
 		if (!@include_once(dirname(__FILE__) . "/lib/export.php")) {		// Export library
 			echo "Error in installation: could not load the Export library.";
 			exit;
 		}
-
 		
 	/**
 	 * Set light mode default

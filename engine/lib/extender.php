@@ -20,6 +20,7 @@
 	 */
 	abstract class ElggExtender implements 
 		Exportable,
+		Loggable,	// Can events related to this object class be logged
 		Iterator,	// Override foreach behaviour
 		ArrayAccess // Override for array access
 	{
@@ -129,6 +130,21 @@
 			
 			return $meta;
 		}
+		
+		// SYSTEM LOG INTERFACE ////////////////////////////////////////////////////////////
+		
+		/**
+		 * Return an identification for the object for storage in the system log. 
+		 * This id must be an integer.
+		 * 
+		 * @return int 
+		 */
+		public function getSystemLogID() { return $this->id; }
+		
+		/**
+		 * Return the class name of the object.
+		 */
+		public function getClassName() { return get_class($this); }
 		
 		// ITERATOR INTERFACE //////////////////////////////////////////////////////////////
 		/*

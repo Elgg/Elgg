@@ -22,6 +22,7 @@
 	abstract class ElggEntity implements 
 		Exportable, // Allow export of data
 		Importable, // Allow import of data
+		Loggable,	// Can events related to this object class be logged
 		Iterator,	// Override foreach behaviour
 		ArrayAccess // Override for array access
 	{
@@ -533,6 +534,21 @@
 			
 			return true;
 		}
+		
+		// SYSTEM LOG INTERFACE ////////////////////////////////////////////////////////////
+		
+		/**
+		 * Return an identification for the object for storage in the system log. 
+		 * This id must be an integer.
+		 * 
+		 * @return int 
+		 */
+		public function getSystemLogID() { return $this->getGUID();	}
+		
+		/**
+		 * Return the class name of the object.
+		 */
+		public function getClassName() { return get_class($this); }
 
 		// ITERATOR INTERFACE //////////////////////////////////////////////////////////////
 		/*
