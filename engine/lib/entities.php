@@ -282,12 +282,13 @@
 		 * Gets an array of entities from a specific relationship type
 		 *
 		 * @param string $relationship Relationship type (eg "friends")
+		 * @param true|false $inverse Is this an inverse relationship?
 		 * @param int $limit Number of elements to return
 		 * @param int $offset Indexing offset
 		 * @return array|false An array of entities or false on failure
 		 */		
-		function getEntitiesFromRelationship($relationship, $limit = 50, $offset = 0) {
-			return get_entities_from_relationship($relationship,$this->getGUID(),false,"","","","time_created desc",$limit,$offset);			
+		function getEntitiesFromRelationship($relationship, $inverse = false, $limit = 50, $offset = 0) {
+			return get_entities_from_relationship($relationship,$this->getGUID(),$inverse,"","","","time_created desc",$limit,$offset);			
 		}
 		
 		/**
