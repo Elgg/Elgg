@@ -41,60 +41,11 @@
         <?php echo elgg_view("navigation/toolbox", $vars); ?>
     </div>
     
-<div id="sidebar_right" class="ui-sortable">
-	
-	<div class="sort">
-		<div class="content">
-			<!-- top/left PNG -->
-			<div class="t"></div>
-			<!-- box content -->
-			<a href="#" class="togglepanel">[-]</a>
-			<a href="#" class="button_editpanel">Edit</a>
-			<h1>title in here</h1>
-	
-				<div class="editpanel">
-				<p>Here's the edit controls for this widget</p>
-				</div>
-				<div class="panelcontent">
-					<?php 
-						// echo $vars['body'];
-						// Removed to prevent double body!
-						echo $vars['sidebar']; 
-						// Apps can extend the sidebar to add widgets
-						echo elgg_view('sidebar',$vars);
-					?>
-				</div>
-		</div>
-		<!-- bottom PNG -->
-		<div class="b"><div></div></div>
-	</div>
-	
-</div><!-- /sidebar_right -->   
-        
 <!-- get the main body -->
-<div id="mainContent" class="ui-sortable">
-	
-	<div class="sort">
-		<div class="content">
-			<!-- top/left PNG -->
-			<div class="t"></div>
-			<!-- box content -->
-			<a href="#" class="togglepanel">[-]</a>
-			<a href="#" class="button_editpanel">Edit</a>
-			<h1><?php echo $title; ?></h1>
-	
-				<div class="editpanel">
-				<p>Here's the edit controls for this widget</p>
-				</div>
-				<div class="panelcontent">
-					<?php echo $vars['body']; ?>
-				</div>
-		</div>
-		<!-- bottom PNG -->
-		<div class="b"><div></div></div>
-	</div>
-	
-</div><!-- /mainContent -->	
+    <div id="mainContent">
+        <h1><?php echo $title; ?></h1>
+        <?php echo $vars['body']; ?>
+    </div>	
 	
 	
 

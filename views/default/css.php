@@ -189,8 +189,8 @@ div#header h1 a{
 }
 
 #mainContent {
-    margin:0 380px 0 170px;
-    width:380px;
+    margin:0 0 0 160px;
+    width:810px;
     min-height: 380px;
     padding:0;
     border-top:1px solid white;
@@ -444,6 +444,3 @@ a.togglepanel {
 	outline: none;
 	-moz-outline-style: none;
 }
-
-
-
