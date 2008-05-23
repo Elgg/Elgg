@@ -96,8 +96,11 @@
 		    if (isset($_SESSION) && is_array($_SESSION) ) {
 		        $vars = array_merge($vars, $_SESSION);
 		    }
+		    $vars['config'] = array();
 			if (!empty($CONFIG))
-		    	$vars = array_merge($vars, get_object_vars($CONFIG));
+		    	$vars['config'] = $CONFIG;
+		    	
+			$vars['url'] = $CONFIG->url;
 		    	
 		// Load page owner variables into $vars
 		    if (is_callable('page_owner')) {
