@@ -60,7 +60,7 @@
 			if (!isset($access_array))
 				$access_array = array();
 			
-			if ($user_id == 0) $user_id = $_SESSION['id'];
+			if ($user_id == 0) $user_id = $_SESSION['guid'];
 			if (($site_id == 0) && (isset($CONFIG->site_id))) $site_id = $CONFIG->site_id;
 			$user_id = (int) $user_id;
 			$site_id = (int) $site_id;
@@ -78,6 +78,45 @@
 				if ($groups = get_data($query)) {
 					foreach($groups as $group)
 						$tmp_access_array[] = $group->access_group_id;
+				}
+				
+				$access_array[$user_id] = $tmp_access_array;
+				
+			}
+			
+			return $access_array[$user_id];
+			
+		}
+		
+		/**
+		 * Returns an array of access permissions that the specified user is allowed to save objects with.
+		 * Permissions are of the form ('id' => 'Description')
+		 *
+		 * @param int $user_id The user's GUID.
+		 * @param int $site_id The current site.
+		 * @param true|false $flush If this is set to true, this will shun any cached version
+		 * @return array List of access permissions=
+		 */
+		function get_write_access_array($user_id = 0, $site_id = 0, $flush = false) {
+			
+			global $CONFIG;
+			static $access_array;
+			
+			if ($user_id == 0) $user_id = $_SESSION['guid'];
+			if (($site_id == 0) && (isset($CONFIG->site_id))) $site_id = $CONFIG->site_id;
+			$user_id = (int) $user_id;
+			$site_id = (int) $site_id;
+			
+			if (empty($access_array[$user_id]) || $flush == true) {
+				
+				$query = "select ag.* from {$CONFIG->dbprefix}access_groups ag ";
+				$query .= " where (ag.site_guid = {$site_id} or ag.site_guid = 0)";
+				$query .= " and (ag.owner_guid = {$user_id} or ag.owner_guid = 0)";
+				
+				$tmp_access_array = array();
+				if ($groups = get_data($query)) {
+					foreach($groups as $group)
+						$tmp_access_array[$group->id] = elgg_echo($group->name);
 				}
 				
 				$access_array[$user_id] = $tmp_access_array;
