@@ -41,7 +41,7 @@
 	function system_log($object, $event)
 	{
 		global $CONFIG;
-		
+		error_log("***************************** EVENT: $event : ".print_r($object,true));
 		if ($object instanceof Loggable)
 		{
 			// Has loggable interface, extract the necessary information and store
