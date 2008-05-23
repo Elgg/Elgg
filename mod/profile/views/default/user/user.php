@@ -32,8 +32,8 @@
 	<?php
 
 		}
-		if (is_array($vars['profile']) && sizeof($vars['profile']) > 0)
-			foreach($vars['profile'] as $shortname => $valtype) {
+		if (is_array($vars['config']->profile) && sizeof($vars['config']->profile) > 0)
+			foreach($vars['config']->profile as $shortname => $valtype) {
 				if ($shortname != "description") {
 					$value = $vars['entity']->$shortname;
 					if (!empty($value)) {
