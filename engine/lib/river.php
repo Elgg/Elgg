@@ -11,5 +11,74 @@
 	 * @link http://elgg.org/
 	 */
 
-	// event listener
+	/**
+	 * Extract a list of river events from the current system log.
+	 * This function retrieves the objects from the system log and will attempt to render 
+	 * the view "river/CLASSNAME" where CLASSNAME is the class of the object the system event is referring to.
+	 * 
+	 * This view will be passed the log entry (as 'log_entry') and the object (as 'object') which will be accessable 
+	 * through the $vars[] array.
+	 * 
+	 * It returns an array of the result of each of these views.
+	 * 
+	 * @param int $limit
+	 * @param int $offset
+	 * @return array
+	 */
+	function get_river_entries($limit = 10, $offset = 0)
+	{
+		// set start limit and offset
+		$cnt = $limit;
+		$off = $offset;
+		
+		$exit = false;
+		
+		// River objects
+		$river = array();
+		
+		do
+		{
+			$log_events = get_system_log("","", $cnt, $off);
+			
+			if (!$log_events)
+				$exit = true;
+			else
+			{
+				foreach ($log_events as $log)
+				{
+					// See if we have access to the object we're talking about
+					$class = $log->object_class;
+					$tmp = new $class();
+					$object = $tmp->getObjectFromID($log->object_id);
+					
+					// Exists and we have access to it
+					if (is_a($object, $class))
+					{
+						// See if anything can handle it
+						$tam = "";
+						
+						// test if view exist and if so
+						$tam = elgg_view("river/$class", array(
+							'log_entry' => $log,
+							'object' => $object
+						));
+						
+						if ($tam)
+						{
+							$river[] = $tam;
+							$off++;
+							$cnt--;
+						}
+					}
+				}
+			}
+						
+		} while (
+			($cnt > 0) &&
+			(!$exit)
+		);
+		
+		return $river;
+	}
+
 ?>

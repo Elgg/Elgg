@@ -184,6 +184,13 @@
 		 */
 		public function getClassName() { return get_class($this); }
 		
+		/**
+		 * For a given ID, return the object associated with it.
+		 * This is used by the river functionality primarily.
+		 * This is useful for checking access permissions etc on objects.
+		 */
+		public function getObjectFromID($id) { return get_relationship($id); }
+		
 		// ITERATOR INTERFACE //////////////////////////////////////////////////////////////
 		/*
 		 * This lets an entity's attributes be displayed using foreach as a normal array.

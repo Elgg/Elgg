@@ -27,9 +27,50 @@
 		public function getSystemLogID();
 		
 		/**
-		 * Return the class name of the object. Added as a function because get_class causes errors for some reason.
+		 * Return the class name of the object. 
+		 * Added as a function because get_class causes errors for some reason.
 		 */
 		public function getClassName();
+		
+		/**
+		 * For a given ID, return the object associated with it.
+		 * This is used by the river functionality primarily.
+		 * This is useful for checking access permissions etc on objects.
+		 */
+		public function getObjectFromID($id);
+	}
+	
+	/**
+	 * Retrieve the system log based on a number of parameters.
+	 * 
+	 * @param string $event The event you are searching on.
+	 * @param string $class The class of object it effects.
+	 * @param int $limit
+	 * @param int $offset
+	 */
+	function get_system_log($event = "", $class = "", $limit = 10, $offset = 0)
+	{
+		global $CONFIG;
+		
+		$event = sanitise_string($event);
+		$class = sanitise_string($class);
+		$limit = (int)$limit;
+		$offset = (int)$offset;
+		
+		$access = get_access_list();
+		
+		$where = array();
+		
+		if ($event != "")
+			$where[] = "event='$event'";
+		if ($class!=="")
+			$where[] = "object_class='$class'";
+			
+		$query = "SELECT * from {$CONFIG->dbprefix}system_log where 1 ";
+		foreach ($where as $w)
+			$query .= " and $w";
+		
+		return get_data($query);
 	}
 	
 	/**
@@ -51,7 +92,7 @@
 			$time = time();
 			
 			// Create log
-			return insert_data("INSERT into {$CONFIG->dbprefix}system_log (object_id, object_class, event, time_created) VALUES ('$object_id','$object_class','$event','$time')");
+			return insert_data("INSERT into {$CONFIG->dbprefix}system_log (object_id, object_class, event, time_created) VALUES ('$object_id','$object_class','$event', '$time')");
 		}
 	}
 	

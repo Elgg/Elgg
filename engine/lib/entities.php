@@ -549,6 +549,13 @@
 		 * Return the class name of the object.
 		 */
 		public function getClassName() { return get_class($this); }
+		
+		/**
+		 * For a given ID, return the object associated with it.
+		 * This is used by the river functionality primarily.
+		 * This is useful for checking access permissions etc on objects.
+		 */
+		public function getObjectFromID($id) { return get_entity($id); }
 
 		// ITERATOR INTERFACE //////////////////////////////////////////////////////////////
 		/*

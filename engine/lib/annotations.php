@@ -99,7 +99,15 @@
 		{ 
 			return delete_annotation($this->id); 
 		}
+	
+		// SYSTEM LOG INTERFACE ////////////////////////////////////////////////////////////
 
+		/**
+		 * For a given ID, return the object associated with it.
+		 * This is used by the river functionality primarily.
+		 * This is useful for checking access permissions etc on objects.
+		 */
+		public function getObjectFromID($id) { return get_annotation($id); }
 	}
 	
 	/**

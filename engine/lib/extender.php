@@ -146,6 +146,7 @@
 		 */
 		public function getClassName() { return get_class($this); }
 		
+		
 		// ITERATOR INTERFACE //////////////////////////////////////////////////////////////
 		/*
 		 * This lets an entity's attributes be displayed using foreach as a normal array.

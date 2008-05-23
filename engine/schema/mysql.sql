@@ -243,8 +243,6 @@ CREATE TABLE `prefix_system_log (
 	
 	`event` varchar(128) NOT NULL,
 	
-	`access_id` int(11) NOT NULL,
-	
 	`time_created` int(11) NOT NULL,
 	
 	PRIMARY KEY  (`id`)
