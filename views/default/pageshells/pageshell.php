@@ -39,6 +39,7 @@
     <!-- sidebar menu -->
     <div id="sidebar_menu">
         <?php echo elgg_view("navigation/toolbox", $vars); ?>
+        <?php echo $vars['sidebar']; ?>
     </div>
     
 <!-- get the main body -->
