@@ -34,6 +34,14 @@
 			'passwordagain' => "Password (again for verification)",
 	
 		/**
+		 * Access
+		 */
+	
+			'PRIVATE' => "Private",
+			'LOGGED_IN' => "Logged in users",
+			'PUBLIC' => "Public",
+	
+		/**
 		 * Dashboard
 		 */
 	
