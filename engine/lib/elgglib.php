@@ -75,7 +75,7 @@
 	 * @param string $view The name and location of the view to use
 	 * @param array $vars Any variables that the view requires, passed as an array
 	 * @param string $viewtype Optionally, the type of view that we're using (most commonly 'default')
-	 * @param boolean $debug If set to true, elgg_view will bypass any specified alternative template handler; by default, it will hand off to this if requested (see set_template_handler)
+	 * @param boolean $bypass If set to true, elgg_view will bypass any specified alternative template handler; by default, it will hand off to this if requested (see set_template_handler)
 	 * @param boolean $debug If set to true, the viewer will complain if it can't find a view
 	 * @return string The HTML content
 	 */
@@ -162,11 +162,11 @@
 			            }
 			        }
 			        if (!$success && isset($CONFIG->debug) && $CONFIG->debug == true) {
-			            echo " [This view ({$view}) does not exist] ";
+			            error_log(" [This view ({$view}) does not exist] ");
 			        }
 			    } else if ($CONFIG->debug == true && !file_exists($location . "{$viewtype}/{$view}.php")) {
-			    	echo $location . "{$viewtype}/{$view}.php";
-			    	echo " [This view ({$view}) does not exist] ";
+			    	error_log($location . "{$viewtype}/{$view}.php");
+			    	error_log(" [This view ({$view}) does not exist] ");
 			    }
 		    
 		    }
