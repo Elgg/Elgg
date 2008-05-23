@@ -170,9 +170,13 @@
 		/**
 		 * Clear metadata.
 		 */
-		public function clearMetaData()
+		public function clearMetaData($name = "")
 		{
-			return clear_metadata($this->getGUID());
+			if (empty($name)) {
+				return clear_metadata($this->getGUID());
+			} else {
+				return remove_metadata($this->getGUID(),$name);
+			}
 		}
 		
 		/**
