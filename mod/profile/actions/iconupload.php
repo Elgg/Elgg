@@ -15,6 +15,7 @@
 				isloggedin()
 			) {
 				
+				$tiny = get_resized_image_from_uploaded_file('profileicon',25,25);
 				$small = get_resized_image_from_uploaded_file('profileicon',50,50);
 				$medium = get_resized_image_from_uploaded_file('profileicon',100,100);
 				$large = get_resized_image_from_uploaded_file('profileicon',300,300);
@@ -34,6 +35,10 @@
 					$filehandler->write($medium);
 					$filehandler->close();
 					$filehandler->setFilename("profile/" . $_SESSION['user']->username . "small.jpg");
+					$filehandler->open("write");
+					$filehandler->write($small);
+					$filehandler->close();
+					$filehandler->setFilename("profile/" . $_SESSION['user']->username . "tiny.jpg");
 					$filehandler->open("write");
 					$filehandler->write($small);
 					$filehandler->close();

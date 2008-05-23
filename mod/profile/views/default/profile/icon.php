@@ -21,7 +21,7 @@
 		$username = $vars['entity']->username;
 			
 	// Get size
-		if (!in_array($vars['size'],array('small','medium','large')))
+		if (!in_array($vars['size'],array('small','medium','large','tiny')))
 			$vars['size'] = "medium";
 			
 	// Get any align and js

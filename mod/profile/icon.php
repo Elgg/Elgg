@@ -20,7 +20,7 @@
 		
 	// Get the size
 		$size = strtolower(get_input('size'));
-		if (!in_array($size,array('large','medium','small')))
+		if (!in_array($size,array('large','medium','small','tiny')))
 			$size = "medium";
 		
 	// Try and get the icon
