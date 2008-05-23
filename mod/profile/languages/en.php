@@ -42,6 +42,7 @@
 		 * Error messages
 		 */
 	
+			'profile:noaccess' => "You do not have permission to edit this profile.",
 			'profile:notfound' => "Sorry; we could not find the specified profile.",
 			'profile:cantedit' => "Sorry; you do not have permission to edit this profile.",
 			'profile:icon:notfound' => "Sorry; there was a problem uploading your profile icon.",
