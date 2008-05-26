@@ -34,12 +34,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<title><?php echo $title; ?></title>
 		<!-- include links to jQuery here? -->
-		<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery-1.2.4a.js"></script>
-		<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/ui.base.js"></script>
-		<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/ui.draggable.js"></script>
-		<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/ui.droppable.js"></script>
-		<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/ui.sortable.js"></script>
-		<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/init.js"></script>
+		<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery-1.2.6.pack.js"></script>
 		<!-- include the default css file -->
 		<link rel="stylesheet" href="<?php echo $vars['url']; ?>_css/css.css" type="text/css" />
 	</head>

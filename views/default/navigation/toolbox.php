@@ -37,7 +37,7 @@
 					foreach($item->children as $subitem) {
 ?>
 		<li>
-			<a href="<?php echo $subitem->value ?>"><?php echo $subitem->name; ?></a> |
+			<a href="<?php echo $subitem->value ?>"><?php echo $subitem->name; ?></a>
 		</li>
 <?php
 					}
@@ -65,15 +65,13 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
-  $('li.drawer ul:not(:first)').hide(); // hide all ULs inside LI.drawer except the first one
-	$('h2.drawer-handle').click(function () {
-	// hide all the drawer contents
-	$('li.drawer ul:visible').slideUp().prev().removeClass('open');
-	// show the associated drawer content to 'this' (this is the current H2 element)
-	// since the drawer content is the next element after the clicked H2, we find
-	// it and show it using this:
-	$(this).addClass('open').next().slideDown();
-  });
+	$('li.drawer ul:not(:first)').hide();
+	
+	$('h2.drawer-handle').click(function () {	
+		$('li.drawer ul:visible').slideUp('medium').prev().removeClass('open');
+		$(this).addClass('open').next().slideDown('fast');
+	return false;
+	});
 });
 </script>
 
