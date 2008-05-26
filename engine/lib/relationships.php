@@ -486,6 +486,69 @@
 		
 	}
 	
+	/**** HELPER FUNCTIONS FOR RELATIONSHIPS OF TYPE 'ATTACHED' ****/
+	
+	 /**
+     * Function to determine if the object trying to attach to other, has already done so
+     * @param int $guid_one This is the target object
+     * @param int $guid_two This is the object trying to attach to $guid_one
+     * @return true | false
+     **/
+     
+     function already_attached($guid_one, $guid_two){
+    
+         if($attached = check_entity_relationship($guid_one, "attached", $guid_two)){
+             return true;
+         }else{
+             return false;
+         }
+     }
+     
+     /**
+     * Function to get all objects attached to a particular object
+     * @param int $guid
+     * @param string $type - the type of object to return e.g. 'file', 'friend_of' etc
+     * @return an array of objects
+    **/
+         
+        function get_attachments($guid, $type=""){
+            
+            $attached = get_entities_from_relationship("attached", $guid, $inverse_relationship = false, $type, $subtype = "", $owner_guid = 0, $order_by = "time_created desc", $limit = 10, $offset = 0, $count = false, $site_guid = 0);
+            return $attached;
+           
+        }
+        
+     /**
+     * Function to remove a particular attachment between two objects
+     * @param int $guid_one This is the target object
+     * @param int $guid_two This is the object to remove from $guid_one
+     * @return a view 
+    **/
+         
+        function remove_attachment($guid_one, $guid_two){
+            
+            if(already_attached($guid_one, $guid_two))
+                remove_entity_relationship($guid_one, "attached", $guid_two);
+           
+        }
+        
+        
+     
+     /**
+     * Function to start the process of attaching one object to another
+     * @param int $guid_one This is the target object
+     * @param int $guid_two This is the object trying to attach to $guid_one
+     * @return a view 
+    **/
+         
+        function make_attachment($guid_one, $guid_two){
+            
+            if(!(already_attached($guid_one, $guid_two)))
+                if(add_entity_relationship($guid_one, "attached", $guid_two))
+                    return true;
+           
+        }
+	
 	/**
 	 *  Handler called by trigger_plugin_hook on the "import" event.
 	 */
