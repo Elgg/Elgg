@@ -247,7 +247,7 @@
 				$param_array['area' . $arg] = func_get_arg($arg);
 				$arg++;		
 			}
-			return elgg_view('canvas/layouts/{$layout}',$param_array);
+			return elgg_view("canvas/layouts/{$layout}",$param_array);
 				
 		}
 		
