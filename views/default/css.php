@@ -75,7 +75,7 @@ small {
 
 /* CONTAINER: WRAPS THE HEADER AND MAIN CONTENT AREA BELOW THE USER TOOLBAR */
 div#container {
-	/* width:90%; */
+	width:925px;
 	padding:0 40px 0 40px;
 	background: url(<?php echo $vars['url']; ?>/_graphics/pagebackground.jpg) no-repeat center top;
 	min-height: 600px;
@@ -178,6 +178,7 @@ div#footer {
 	position: relative;
 	font-size:1em;
 	height:40px;
+	width:925px;
 	margin:20px 40px 20px 40px;
 	font-weight:bold;
 	background: #ffffff;
