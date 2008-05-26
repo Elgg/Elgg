@@ -232,6 +232,26 @@
 		}
 		
 	/**
+	 * Displays an internal layout for the use of a plugin canvas.
+	 * Takes a variable number of parameters, which are made available 
+	 * in the views as $vars['area1'] .. $vars['areaN'].
+	 *
+	 * @param string $layout The name of the views in canvas/layouts/.
+	 * @return string The layout
+	 */
+		function elgg_view_layout($layout) {
+			
+			$arg = 1;
+			$param_array = array();
+			while ($arg < func_num_args()) {
+				$param_array['area' . $arg] = func_get_arg($arg);
+				$arg++;		
+			}
+			return elgg_view('canvas/layouts/{$layout}',$param_array);
+				
+		}
+		
+	/**
 	 * Sets an alternative function to handle templates, which will be passed to by elgg_view.
 	 * This function must take the $view and $vars parameters from elgg_view:
 	 * 
