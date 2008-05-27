@@ -70,6 +70,9 @@
 		foreach ($where as $w)
 			$query .= " and $w";
 		
+		$query .= " order by time_created desc";
+		$query .= " limit $offset, $limit"; // Add order and limit
+		
 		return get_data($query);
 	}
 	
