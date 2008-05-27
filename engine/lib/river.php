@@ -45,6 +45,7 @@
 				$exit = true;
 			else
 			{
+				
 				foreach ($log_events as $log)
 				{
 					// See if we have access to the object we're talking about
@@ -68,10 +69,12 @@
 						if ($tam)
 						{
 							$river[] = $tam;
-							$off++;
 							$cnt--;
 						}
 					}
+					
+					// Increase offset
+					$off++;
 				}
 			}
 						
