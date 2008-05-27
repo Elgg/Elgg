@@ -14,7 +14,8 @@
 	/**
 	 * Extract a list of river events from the current system log.
 	 * This function retrieves the objects from the system log and will attempt to render 
-	 * the view "river/CLASSNAME" where CLASSNAME is the class of the object the system event is referring to.
+	 * the view "river/CLASSNAME/EVENT" where CLASSNAME is the class of the object the system event is referring to,
+	 * and EVENT is the event (create, update, delete etc).
 	 * 
 	 * This view will be passed the log entry (as 'log_entry') and the object (as 'object') which will be accessable 
 	 * through the $vars[] array.
@@ -47,6 +48,7 @@
 				foreach ($log_events as $log)
 				{
 					// See if we have access to the object we're talking about
+					$event = $log->event;
 					$class = $log->object_class;
 					$tmp = new $class();
 					$object = $tmp->getObjectFromID($log->object_id);
@@ -58,7 +60,7 @@
 						$tam = "";
 						
 						// test if view exist and if so
-						$tam = elgg_view("river/$class", array(
+						$tam = elgg_view("river/$class/$event", array(
 							'log_entry' => $log,
 							'object' => $object
 						));
