@@ -49,5 +49,24 @@
 			
 	}
 	
+	    /**
+        * This is a function to make url clickable
+        * @param string text
+        * @return string text
+        **/
+        
+       function parse_urls($text) {
+           
+            if (preg_match_all('/(?<!href=["\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\'\!\(\)]+)/ie', $text, $urls))   {
+               
+                foreach (array_unique($urls[1]) AS $url){
+                    $urltext = $url;
+                    $text = str_replace($url, '<a href="'. $url .'" style="text-decoration:underline;">view link</a>', $text);
+                }
+            }
+            
+            return $text;
+        }
+	
 	
 ?>
