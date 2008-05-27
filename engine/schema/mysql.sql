@@ -235,7 +235,7 @@ CREATE TABLE `prefix_datalists` (
 );
 
 -- System log
-CREATE TABLE `prefix_system_log (
+CREATE TABLE `prefix_system_log` (
 	`id` int(11) NOT NULL auto_increment,
 	
 	`object_id` int(11) NOT NULL,
