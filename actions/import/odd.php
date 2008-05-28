@@ -13,6 +13,9 @@
 	 * @link http://elgg.org/
 	 */
 
+	// Safety
+	gatekeeper();
+	
 	// Get input
 	$data = get_input($data);
 	
