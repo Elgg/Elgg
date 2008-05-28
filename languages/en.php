@@ -105,6 +105,11 @@
 			'fileexists' => "A file has already been uploaded. To replace it, select it below:",
 	
 		/**
+		 * Import / export
+		 */
+			'importsuccess' => "Import of data was successful",
+			
+		/**
 		 * Installation and system settings
 		 */
 	
