@@ -12,6 +12,9 @@
 	 * @link http://elgg.org/
 	 */
 
+	// TODO: Sub queries?
+
+
 	/**
 	 * @class QueryComponent Query component superclass.
 	 * Component of a query.
@@ -283,6 +286,11 @@
 		}
 	}
 	
+	/**
+	 * @class WhereSetQueryComponent
+	 * A where query that may contain other where queries (in brackets).
+	 * @author Marcus Povey
+	 */
 	class WhereSetQueryComponent extends WhereQueryComponent
 	{
 		/**
