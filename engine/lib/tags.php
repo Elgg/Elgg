@@ -102,9 +102,9 @@
 		$access = get_access_list();
 		
 		$query = "SELECT {$CONFIG->dbprefix}msvalue.string as tag, count(msvalue.id) as total ";
-		$query .= "FROM entities e join metadata md on md.entity_guid = e.guid ";
-		$query .= " join entity_subtypes subtype on subtype.id = e.subtype ";
-		$query .= " join metastrings msvalue on msvalue.id = md.value_id ";
+		$query .= "FROM {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}metadata md on md.entity_guid = e.guid ";
+		$query .= " join {$CONFIG->dbprefix}entity_subtypes subtype on subtype.id = e.subtype ";
+		$query .= " join {$CONFIG->dbprefix}metastrings msvalue on msvalue.id = md.value_id ";
 		
 		$query .= " where 1 ";
 		
