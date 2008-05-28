@@ -490,7 +490,7 @@
 				// Where
 				if (!empty($this->where))
 				{
-					$sql .= "where 1 ";
+					$sql .= " where 1 ";
 					
 					foreach ($this->where as $where)
 						$sql .= "$where ";
@@ -502,7 +502,7 @@
 				
 					// Catch missing Where
 					if (empty($this->where))
-						$sql .= "where 1 ";
+						$sql .= " where 1 ";
 					
 					$sql .= "{$this->access_control} ";
 				} 
