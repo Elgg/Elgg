@@ -6,7 +6,7 @@
 	 * @subpackage Core
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
 	 * @author Marcus Povey
-	 * @version 0.2
+	 * @version 0.3
 	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.org/
 	 */
@@ -308,21 +308,33 @@
 	 * @return ODDDocument
 	 */
 	function ODD_Import($xml)
-	{
+	{		
 		// Parse XML to an array
 		$elements = xml_2_object($xml);
+		
+		// Sanity check 1, was this actually XML?
+		if ((!$elements) || (!$elements->children))
+			return false;
 
 		// Create ODDDocument
 		$document = new ODDDocument();
 		
 		// Itterate through array of elements and construct ODD document
+		$cnt = 0;
+
 		foreach ($elements->children as $child) 
 		{
 			$odd = ODD_factory($child);
 			
-			if ($odd) 
+			if ($odd) { 
 				$document->addElement($odd);
+				$cnt++;
+			}
 		}
+		
+		// Check that we actually found something
+		if ($cnt == 0)
+			return false;
 		
 		return $document;
 	}
