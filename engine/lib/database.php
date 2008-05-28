@@ -116,7 +116,7 @@
 		{
 			global $CONFIG;
 			
-			$this->table = $CONFIG->prefix . sanitise_string($table);
+			$this->table = $CONFIG->dbprefix . sanitise_string($table);
 			$this->field = sanitise_string($field);
 			$this->order = sanitise_string($order);
 		}
@@ -154,9 +154,9 @@
 		{
 			global $CONFIG;
 			
-			$this->acl_table = $CONFIG->prefix . sanitise_string($acl_table);
+			$this->acl_table = $CONFIG->dbprefix . sanitise_string($acl_table);
 			$this->acl_field = sanitise_string($acl_field);
-			$this->object_owner_table = $CONFIG->prefix . sanitise_string($object_owner_table);
+			$this->object_owner_table = $CONFIG->dbprefix . sanitise_string($object_owner_table);
 			$this->object_owner_id_field = sanitise_string($object_owner_id_field);
 		}
 		
@@ -187,9 +187,9 @@
 		{
 			global $CONFIG;
 			
-			$this->table1 = $CONFIG->prefix . sanitise_string($table1);
+			$this->table1 = $CONFIG->dbprefix . sanitise_string($table1);
 			$this->field1 = sanitise_string($field1);
-			$this->table2 = $CONFIG->prefix . sanitise_string($table2);
+			$this->table2 = $CONFIG->dbprefix . sanitise_string($table2);
 			$this->field2 = sanitise_string($field2);
 			$this->operator = sanitise_string($operator);
 		}
@@ -222,10 +222,10 @@
 			global $CONFIG;
 			
 			$this->link_operator = sanitise_string($link_operator);
-		 	$this->left_table = $CONFIG->prefix . sanitise_string($left_table);
+		 	$this->left_table = $CONFIG->dbprefix . sanitise_string($left_table);
 		 	$this->left_field = sanitise_string($left_field);
 		 	$this->operator = sanitise_string($operator);
-		 	$this->right_table = $CONFIG->prefix . sanitise_string($right_table);
+		 	$this->right_table = $CONFIG->dbprefix . sanitise_string($right_table);
 		 	$this->right_field = sanitise_string($right_field);
 		}
 		
@@ -256,7 +256,7 @@
 			global $CONFIG;
 			
 			$this->link_operator = sanitise_string($link_operator);
-		 	$this->left_table = $CONFIG->prefix . sanitise_string($left_table);
+		 	$this->left_table = $CONFIG->dbprefix . sanitise_string($left_table);
 		 	$this->left_field = sanitise_string($left_field);
 		 	$this->operator = sanitise_string($operator);
 		 	if (is_numeric($value))
@@ -472,6 +472,8 @@
 						
 					$sql = trim($sql, ", ");
 				}
+				else
+					throw new DatabaseException("No tables specified for query.");
 				
 				// Joins on select queries
 				if ($this->query_type->query_type == 'select') 
