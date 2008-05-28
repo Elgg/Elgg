@@ -64,4 +64,91 @@
 		
 		return $cloud;
 	}
+	
+	/**
+	 * Get an array of tags with weights for use with the output/tagcloud view.
+	 *
+	 * @param int $threshold Get the threshold of minimum number of each tags to bother with (ie only show tags where there are more than $threshold occurances)
+	 * @param int $limit Number of tags to return
+	 * @param string $metadata_name Optionally, the name of the field you want to grab for
+	 * @param string $entity_type Optionally, the entity type ('object' etc)
+	 * @param string $entity_subtype The entity subtype, optionally
+	 * @param int $owner_guid The GUID of the tags owner, optionally
+	 * @param int $site_guid Optionally, the site to restrict to (default is the current site)
+	 * @return array|false Array of objects with ->tag and ->total values, or false on failure
+	 */
+	
+	function get_tags($threshold = 1, $limit = 10, $metadata_name = "", $entity_type = "object", $entity_subtype = "", $owner_guid = "", $site_guid = -1) {
+		
+		global $CONFIG;
+		
+		$threshold = (int) $threshold;
+		$limit = (int) $limit;
+		
+		if (!empty($metadata_name)) {
+			$metadata_name = (int) get_metastring_id($metadata_name);
+		} else {
+			$metadata_name = 0;
+		}
+		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
+		$entity_type = sanitise_string($entity_type);
+		
+		$owner_guid = (int) $owner_guid;
+		
+		if ($site_guid < 0) {
+			$site_guid = $CONFIG->site_id;
+		}
+		
+		$access = get_access_list();
+		
+		$query = "SELECT {$CONFIG->dbprefix}msvalue.string as tag, count(msvalue.id) as total ";
+		$query .= "FROM entities e join metadata md on md.entity_guid = e.guid ";
+		$query .= " join entity_subtypes subtype on subtype.id = e.subtype ";
+		$query .= " join metastrings msvalue on msvalue.id = md.value_id ";
+		
+		$query .= " where 1 ";
+		
+		if ($metadata_name > 0) {
+			$query .= " and md.name_id = {$metadata_name} ";
+		}
+		if ($site_guid > 0) {
+			$query .= " and e.site_guid = {$site_guid} ";
+		}
+		if ($entity_subtype > 0) {
+			$query .= " and e.subtype = {$entity_subtype} ";
+		}
+		if ($entity_type != "") {
+			$query .= " and e.type = '{$entity_type}' ";
+		}
+		if ($owner_guid > 0) {
+			$query .= " and e.owner_guid = {$owner_guid} ";
+		}
+		
+		$query .= " and (e.access_id in {$access} or (e.access_id = 0 and e.owner_guid = {$_SESSION['id']}))";
+		
+		$query .= " group by msvalue.string having total > {$threshold} order by total desc limit {$limit} ";
+		
+		return get_data($query);
+		
+	}
+
+	/**
+	 * Loads and displays a tagcloud given particular criteria.
+	 *
+	 * @param int $threshold Get the threshold of minimum number of each tags to bother with (ie only show tags where there are more than $threshold occurances)
+	 * @param int $limit Number of tags to return
+	 * @param string $metadata_name Optionally, the name of the field you want to grab for
+	 * @param string $entity_type Optionally, the entity type ('object' etc)
+	 * @param string $entity_subtype The entity subtype, optionally
+	 * @param int $owner_guid The GUID of the tags owner, optionally
+	 * @param int $site_guid Optionally, the site to restrict to (default is the current site)
+	 * @return string THe HTML (or other, depending on view type) of the tagcloud.
+	 */
+	
+	function display_tagcloud($threshold = 1, $limit = 10, $metadata_name = "", $entity_type = "object", $entity_subtype = "", $owner_guid = "", $site_guid = -1) {
+		
+		return elgg_view("output/tagcloud",array('value' => get_tags($threshold, $limit, $metadata_name, $entity_type, $entity_subtype, $owner_guid, $site_guid),'object' => $entity_type, 'subtype' => $entity_subtype));
+		
+	}
+
 ?>

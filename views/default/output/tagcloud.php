@@ -25,6 +25,9 @@
 	} else {
 		$object = "";
 	}
+	
+	if (empty($vars['tagcloud']) && !empty($vars['value']))
+		$vars['tagcloud'] = $vars['value'];
 
     if (!empty($vars['tagcloud']) && is_array($vars['tagcloud'])) {
         
