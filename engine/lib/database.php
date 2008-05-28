@@ -150,6 +150,11 @@
 		}
 	}
 	
+	/**
+	 * @class AccessControlQueryComponent
+	 * Access control component.
+	 * @author Marcus Povey
+	 */
 	class AccessControlQueryComponent extends QueryComponent
 	{
 		/**
