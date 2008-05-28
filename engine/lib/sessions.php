@@ -41,7 +41,9 @@
                         
             if ($user = get_user_by_username($username)) {
                  if ($user->password == $dbpassword) {
-                     
+
+                 	 if (!trigger_event('login','user',$user)) return false;
+                 	
                  	 $_SESSION['user'] = $user;
                      $_SESSION['guid'] = $user->getGUID();
                      $_SESSION['id'] = $_SESSION['guid'];
@@ -60,6 +62,7 @@
                          
                          setcookie("elggperm", $code, (time()+(86400 * 30)),"/");
                          
+
                      //}
                      // set_login_fields($user->id);
 
@@ -80,8 +83,9 @@
 	 */
 		function logout() {
             global $CONFIG;
-            
+
             if (isset($_SESSION['user'])) {
+            	if (!trigger_event('logout','user',$_SESSION['user'])) return false;
             	$_SESSION['user']->code = "";
             	$_SESSION['user']->save();
             }
