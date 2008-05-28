@@ -27,18 +27,28 @@
 		}
 		
 	/**
-	 * Log in
+	 * Allows the user to log in.
 	 *
-	 * @param string $username
-	 * @param string $password
-	 * @param true|false $persistent
-	 * @return true|false
+	 * This function can be extended with the 'user''login' plugin hook;
+	 * any extension functions must return a user object. The extension function
+	 * will be given any parameters to login() as an array.
+	 * 
+	 * @param string $username The username, optionally (for standard logins)
+	 * @param string $password The password, optionally (for standard logins)
+	 * @param true|false $persistent Should the login be persistent?
+	 * @return true|false Whether login was successful
 	 */
-		function login($username, $password, $persistent = false) {
+		function login($username = "", $password = "", $persistent = false) {
             
             global $CONFIG;
+            
+            if ($user = trigger_plugin_hook('login','user',func_get_args(),false)) {
+            	trigger_event('login','user',$user);
+				return true;
+            }
+            
             $dbpassword = md5($password);
-                        
+            
             if ($user = get_user_by_username($username)) {
                  if ($user->password == $dbpassword) {
 
