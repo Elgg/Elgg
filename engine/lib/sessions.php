@@ -75,6 +75,9 @@
             
             $_SESSION['code'] = $code;
             
+            if (($persistent))
+				setcookie("elggperm", $code, (time()+(86400 * 30)),"/");
+            
             if (!$user->save() || !trigger_event('login','user',$user)) {
             	unset($_SESSION['username']);
 	            unset($_SESSION['name']);
@@ -82,11 +85,9 @@
 	            unset($_SESSION['guid']);
 	            unset($_SESSION['id']);
 	            unset($_SESSION['user']);
+	            setcookie("elggperm", "", (time()-(86400 * 30)),"/");
             	return false;
             }
-            	
-            if (($persistent))
-				setcookie("elggperm", $code, (time()+(86400 * 30)),"/");
 
 			return true;
 				
