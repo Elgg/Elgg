@@ -460,6 +460,8 @@
 						
 						$sql .= " $fields from ";
 					}
+					else
+						throw new DatabaseException("Fields missing on a select style query");
 				}
 				else
 					throw new DatabaseException("Unrecognised or unspecified query type.");
