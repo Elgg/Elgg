@@ -198,6 +198,8 @@
 		$IMPORTED_OBJECT_COUNTER = 0;
 		
 		$document = ODD_Import($xml);
+		if (!$document)
+			throw new ImportException("No OpenDD elements found in import data, import failed.");
 		
 		foreach ($document as $element)
 			__process_element($element);
@@ -207,5 +209,18 @@
 		
 		return true;
 	}
+
 	
+	/**
+	 * Register the OpenDD import action
+	 */
+	function export_init()
+	{
+		global $CONFIG;
+		
+		register_action("import/odd", false);
+	}
+	
+	// Register a startup event
+	register_event_handler('init','system','export_init',100);	
 ?>
