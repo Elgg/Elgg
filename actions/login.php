@@ -17,9 +17,12 @@
         $password = get_input("password");
         $persistent = get_input("persistent");
         
-    // If all is present and correct, try to log in            
+    // If all is present and correct, try to log in  
+    	$result = false;          
         if (!empty($username) && !empty($password)) {
-            $result = login($username, $password, $persistent);
+        	if ($user = authenticate($username,$password)) {
+        		$result = login($user, $persistent);
+        	}
         }
         
     // Set the system_message as appropriate

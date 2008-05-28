@@ -27,64 +27,64 @@
 		}
 		
 	/**
-	 * Allows the user to log in.
+	 * Perform standard authentication with a given username and password.
+	 * Returns an ElggUser object for use with login.
 	 *
-	 * This function can be extended with the 'user''login' plugin hook;
-	 * any extension functions must return a user object. The extension function
-	 * will be given any parameters to login() as an array.
-	 * 
+	 * @see login
 	 * @param string $username The username, optionally (for standard logins)
 	 * @param string $password The password, optionally (for standard logins)
-	 * @param true|false $persistent Should the login be persistent?
-	 * @return true|false Whether login was successful
+	 * @return ElggUser|false The authenticated user object, or false on failure.
 	 */
-		function login($username = "", $password = "", $persistent = false) {
-            
-            global $CONFIG;
-            
-            if ($user = trigger_plugin_hook('login','user',func_get_args(),false)) {
-            	trigger_event('login','user',$user);
-				return true;
-            }
+		
+		function authenticate($username, $password) {
             
             $dbpassword = md5($password);
             
             if ($user = get_user_by_username($username)) {
                  if ($user->password == $dbpassword) {
-
-                 	 if (!trigger_event('login','user',$user)) return false;
-                 	
-                 	 $_SESSION['user'] = $user;
-                     $_SESSION['guid'] = $user->getGUID();
-                     $_SESSION['id'] = $_SESSION['guid'];
-                     $_SESSION['username'] = $user->username;
-                     $_SESSION['name'] = $user->name;
-                     
-                     $code = (md5($user->name . $user->username . time() . rand()));
-                     // update_data("update {$CONFIG->dbprefix}users set code = '".md5($code)."' where id = {$user->id}");
-                     $user->code = md5($code);
-                     $user->save();
-                     
-                     //$code = md5($code);    // This is a deliberate re-MD5-ing
-                     
-                     $_SESSION['code'] = $code;
-                     //if (!empty($persistent)) {
-                         
-                         setcookie("elggperm", $code, (time()+(86400 * 30)),"/");
-                         
-
-                     //}
-                     // set_login_fields($user->id);
-
-                     
+                 	// return login($user,$persisten);
+                 	return $user;
                  }
-                 
-                 return true;
-             } else {
-                 return false;
-             }
+            }
             
-        }
+            return false;
+			
+		}
+		
+	/**
+	 * Logs in a specified ElggUser. For standard registration, use in conjunction
+	 * with authenticate.
+	 * 
+	 * @see authenticate
+	 * @param ElggUser $user A valid Elgg user object
+	 * @param boolean $persistent Should this be a persistent login?
+	 * @return true|false Whether login was successful
+	 */
+		function login(ElggUser $user, $persistent = false) {
+            
+            global $CONFIG;
+            
+            if (!trigger_event('login','user',$user)) return false;
+                 
+            $_SESSION['user'] = $user;
+            $_SESSION['guid'] = $user->getGUID();
+            $_SESSION['id'] = $_SESSION['guid'];
+            $_SESSION['username'] = $user->username;
+            $_SESSION['name'] = $user->name;
+                     
+            $code = (md5($user->name . $user->username . time() . rand()));
+
+            $user->code = md5($code);
+            if (!$user->save())
+            	return false;
+                     
+            $_SESSION['code'] = $code;
+            if (($persistent))
+				setcookie("elggperm", $code, (time()+(86400 * 30)),"/");
+
+			return true;
+				
+		}
         
 	/**
 	 * Log the current user out
