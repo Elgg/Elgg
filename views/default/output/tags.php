@@ -14,8 +14,19 @@
 	 * @link http://elgg.org/
 	 * 
 	 * @uses $vars['tags'] The tags to display
-	 * 
+	 * @uses $vars['tagtype'] The tagtype, optionally
 	 */
+
+	if (!empty($vars['subtype'])) {
+		$subtype = "&subtype=" . urlencode($vars['subtype']);
+	} else {
+		$subtype = "";
+	}
+	if (!empty($vars['object'])) {
+		$object = "&object=" . urlencode($vars['object']);
+	} else {
+		$object = "";
+	}
 
 	if (empty($vars['tags']) && !empty($vars['value']))
 		$vars['tags'] = $vars['value'];
@@ -35,7 +46,7 @@
                $type = "";
            }
            if (is_string($tag)) {
-               $tagstr .= "<a href=\"{$vars['url']}search/?tag=".urlencode($tag) . "{$type}\">{$tag}</a>";
+               $tagstr .= "<a href=\"{$vars['url']}search/?tag=".urlencode($tag) . "{$type}{$tagtype}{$object}\">{$tag}</a>";
            }
         }
         echo $tagstr;

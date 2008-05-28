@@ -18,10 +18,12 @@
 	// Get input
 		$tag = get_input('tag');
 		$offset = get_input('offset',0);
+		$subtype = get_input('subtype');
+		$objecttype = get_input('object');
 		
 		$body = "";
 		
-		if ($entities = get_entities_from_metadata("",$tag,"","",15,$offset)) {
+		if ($entities = get_entities_from_metadata("",$tag,"",$subtype,15,$offset)) {
 			
 			foreach($entities as $entity) {
 				$body .= elgg_view_entity($entity);
