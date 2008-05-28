@@ -70,7 +70,7 @@
 		{
 			global $CONFIG;
 			
-			$this->table = $CONFIG->prefix . sanitise_string($table);
+			$this->table = $CONFIG->dbprefix . sanitise_string($table);
 			$this->field = sanitise_string($field);
 		}
 		
@@ -136,7 +136,14 @@
 	{
 		function __construct($table)
 		{
-			$this->table = sanitise_string($table);
+			global $CONFIG;
+			
+			$this->table = $CONFIG->dbprefix . sanitise_string($table);
+		}
+		
+		function __toString()
+		{
+			return $this->table;
 		}
 	}
 	
