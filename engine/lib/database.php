@@ -236,9 +236,14 @@
 		 	$this->right_field = sanitise_string($right_field);
 		}
 		
+		public function toStringNoLink()
+		{
+			return "{$this->left_table }.{$this->left_field} {$this->operator} {$this->right_table}.{$this->right_field}";
+		}
+		
 		function __toString() 
 		{
-			return "{$this->link_operator} {$this->left_table }.{$this->left_field} {$this->operator} {$this->right_table}.{$this->right_field}";
+			return "{$this->link_operator} " . $this->toStringNoLink();
 		}
 	}
 	
@@ -269,12 +274,12 @@
 		 	if (is_numeric($value))
 		 		$this->value = (int)$value;
 		 	else
-		 		$this->value = sanitise_string($value);
+		 		$this->value = "'".sanitise_string($value)."'";
 		}
 		
-		function __toString() 
+		public function toStringNoLink()
 		{
-			return "{$this->link_operator} {$this->left_table }.{$this->left_field} {$this->operator} {$this->right_table}.{$this->right_field}";
+			return "{$this->left_table }.{$this->left_field} {$this->operator} {$this->value}";
 		}
 	}
 	
@@ -292,18 +297,19 @@
 			$this->wheres = $wheres;
 		}
 		
-		function __toString() 
+		public function toStringNoLink()
 		{
 			$cnt = 0;
-			$string = "{$this->link_operator} (";
+			$string = " (";
 			foreach ($this->wheres as $where) {
 				if (!($where instanceof WhereQueryComponent))
 					throw new DatabaseException("Where set contains non WhereQueryComponent");
 				
 				if (!$cnt)
-					$string .= "{$where->link_operator} ";
-					
-				$string .= " {$where->left_table }.{$where->left_field} {$where->operator} {$where->right_table}.{$where->right_field}";
+					$string.= $where->toStringNoLink();
+				else
+					$string.=" $where ";
+				
 				$cnt ++;			
 			}
 			$string .= ")";
