@@ -516,13 +516,15 @@
 				else
 					throw new DatabaseException("No access control was provided on query");
 					
+				// Order by
+				if (!empty($this->order))
+					$sql .= "{$this->order} ";
+					
 				// Limits
 				if (!empty($this->limit_and_offset))
 					$sql .= "{$this->limit_and_offset} ";
 				
-				// Order by
-				if (!empty($this->order))
-					$sql .= $this->order;
+				
 				
 			} catch (Exception $e) {
 				trigger_error($e, E_USER_WARNING);
