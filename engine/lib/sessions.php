@@ -42,7 +42,6 @@
             
             if ($user = get_user_by_username($username)) {
                  if ($user->password == $dbpassword) {
-                 	// return login($user,$persisten);
                  	return $user;
                  }
             }
@@ -63,8 +62,6 @@
 		function login(ElggUser $user, $persistent = false) {
             
             global $CONFIG;
-            
-            if (!trigger_event('login','user',$user)) return false;
                  
             $_SESSION['user'] = $user;
             $_SESSION['guid'] = $user->getGUID();
@@ -75,10 +72,19 @@
             $code = (md5($user->name . $user->username . time() . rand()));
 
             $user->code = md5($code);
-            if (!$user->save())
-            	return false;
-                     
+            
             $_SESSION['code'] = $code;
+            
+            if (!$user->save() || !trigger_event('login','user',$user)) {
+            	unset($_SESSION['username']);
+	            unset($_SESSION['name']);
+	            unset($_SESSION['code']);
+	            unset($_SESSION['guid']);
+	            unset($_SESSION['id']);
+	            unset($_SESSION['user']);
+            	return false;
+            }
+            	
             if (($persistent))
 				setcookie("elggperm", $code, (time()+(86400 * 30)),"/");
 
