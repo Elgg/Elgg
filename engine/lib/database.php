@@ -444,67 +444,80 @@
 			
 			$sql = "";
 			
-			// Query prefix & fields
-			if (!empty($this->query_type))
-			{
-				$sql .= "{$this->query_type} ";
-				
-				if (!empty($this->fields))
+			try
+			{ 
+				// Query prefix & fields
+				if (!empty($this->query_type))
 				{
-					$fields = "";
+					$sql .= "{$this->query_type} ";
 					
-					foreach ($this->fields as $field)
-						$fields .= "$field";	
-					
-					$sql .= " $fields from ";
+					if (!empty($this->fields))
+					{
+						$fields = "";
+						
+						foreach ($this->fields as $field)
+							$fields .= "$field";	
+						
+						$sql .= " $fields from ";
+					}
 				}
-			}
-			else
-				throw new DatabaseException("Unrecognised or unspecified query type.");
-					
-			// Tables
-			if (!empty($this->tables)) 
-			{
-				foreach($this->tables as $table) 
-					$sql .= "$table, ";
-					
-				$sql = trim($sql, ", ");
-			}
-			
-			// Joins on select queries
-			if ($this->query_type->query_type == 'select') 
-			{
-				if (!empty($this->joins)) 
-				{	
-					foreach($this->joins as $join) 
-						$sql .= "$join ";
+				else
+					throw new DatabaseException("Unrecognised or unspecified query type.");
+						
+				// Tables
+				if (!empty($this->tables)) 
+				{
+					foreach($this->tables as $table) 
+						$sql .= "$table, ";
+						
+					$sql = trim($sql, ", ");
 				}
+				
+				// Joins on select queries
+				if ($this->query_type->query_type == 'select') 
+				{
+					if (!empty($this->joins)) 
+					{	
+						foreach($this->joins as $join) 
+							$sql .= "$join ";
+					}
+				}
+				
+				// Where
+				if (!empty($this->where))
+				{
+					$sql .= "where 1 ";
+					
+					foreach ($this->where as $where)
+						$sql .= "$where ";
+				}
+	
+				// Access control
+				if (!empty($this->access_control)) 
+				{
+				
+					// Catch missing Where
+					if (empty($this->where))
+						$sql .= "where 1 ";
+					
+					$sql .= "{$this->access_control} ";
+				} 
+				else
+					throw new DatabaseException("No access control was provided on query");
+					
+				// Limits
+				if (!empty($this->limit_and_offset))
+					$sql .= "{$this->limit_and_offset} ";
+				
+				// Order by
+				if (!empty($this->order))
+					$sql .= $this->order;
+				
+			} catch (Exception $e) {
+				trigger_error($e, E_USER_WARNING);
 			}
 			
-			// Where
-			if (!empty($this->where))
-			{
-				$sql .= "where 1 ";
-				
-				foreach ($this->where as $where)
-					$sql .= "$where ";
-			}
-
-			// Access control
-			if (!empty($this->access_control))
-				$sql .= "{$this->access_control} ";
-			else
-				throw DatabaseException("No access control was provided on query");
-				
-			// Limits
-			if (!empty($this->limit_and_offset))
-				$sql .= "{$this->limit_and_offset} ";
-			
-			// Order by
-			if (!empty($this->order))
-				$sql .= $this->order;
-			
-			
+					
 			return $sql;
 		}
 		
