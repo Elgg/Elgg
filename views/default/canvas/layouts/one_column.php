@@ -1,4 +1,4 @@
-<div style="float:right;font-size:18px;width:240px;">
+<div style="float:right;width:240px;">
 <?php echo $vars['area2']; ?>
 </div>
 <div style="width:540px;">
