@@ -1026,7 +1026,7 @@
 			return false;
 
 			
-		// If file then check using regression that this it is being called from this function
+		// If file then check using reflection that this it is being called from this function
 		if ($file)
 		{
 			$mirror = false;
