@@ -12,7 +12,7 @@
 	 * @link http://elgg.org/
 	 */
 
-	// TODO: Sub queries?
+	// TODO: nested queries?
 
 
 	/**
