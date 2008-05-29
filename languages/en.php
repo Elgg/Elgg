@@ -54,6 +54,31 @@
 			'profile' => "Profile",
 	
 		/**
+		 * Friends
+		 */
+	
+			'friends' => "Friends",
+			'friends:yours' => "Your friends",
+			'friends:owned' => "%s's friends",
+			'friend:add' => "Add friend",
+			'friend:remove' => "Remove friend",
+	
+			'friends:add:successful' => "You have successfully added %s as a friend.",
+			'friends:add:failure' => "We couldn't add %s as a friend. Please try again.",
+	
+			'friends:remove:successful' => "You have successfully removed %s from your friends.",
+			'friends:remove:failure' => "We couldn't remove %s from your friends. Please try again.",
+	
+			'friends:none' => "This user hasn't added anyone as a friend yet.",
+			'friends:none:you' => "You haven't added anyone as a friend! Search for your interests to begin finding people to follow.",
+	
+			'friends:of:none' => "Nobody has added this user as a friend yet.",
+			'friends:of:none:you' => "Nobody has added you as a friend yet. Start adding content and fill in your profile to let people find you!",
+	
+			'friends:of' => "Friends of",
+			'friends:of:owned' => "People who have made %s a friend",
+	
+		/**
 		 * Search
 		 */
 	

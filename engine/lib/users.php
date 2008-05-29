@@ -216,7 +216,7 @@
 		 *
 		 * @return true|false
 		 */
-		function isFriend() { return user_is_friend($this->getGUID(), $_SESSION['id']); }
+		function isFriend() { return user_is_friend($_SESSION['guid'], $this->getGUID()); }
 		
 		/**
 		 * Determines whether this user is friends with another user
@@ -243,6 +243,16 @@
 		 * @return array|false Array of ElggUsers, or false, depending on success
 		 */
 		function getFriends($subtype = "", $limit = 10, $offset = 0) { return get_user_friends($this->getGUID(), $subtype, $limit, $offset); }
+		
+	/**
+		 * Retrieves a list of people who have made this user a friend
+		 *
+		 * @param string $subtype Optionally, the subtype of user to filter to (leave blank for all)
+		 * @param int $limit The number of users to retrieve
+		 * @param int $offset Indexing offset, if any
+		 * @return array|false Array of ElggUsers, or false, depending on success
+		 */
+		function getFriendsOf($subtype = "", $limit = 10, $offset = 0) { return get_user_friends_of($this->getGUID(), $subtype, $limit, $offset); }
 		
 		/**
 		 * Get an array of ElggObjects owned by this user.
@@ -404,6 +414,9 @@
 	function user_add_friend($user_guid, $friend_guid) {
 		$user_guid = (int) $user_guid; 
 		$friend_guid = (int) $friend_guid;
+		if (!$friend = get_entity($friend_guid)) return false;
+		if (!$user = get_entity($user_guid)) return false;
+		if (get_class($user) != "ElggUser" || get_class($friend) != "ElggUser") return false;
 		return add_entity_relationship($user_guid, "friend", $friend_guid);
 	}
 	
@@ -442,6 +455,19 @@
 	 */
 	function get_user_friends($user_guid, $subtype = "", $limit = 10, $offset = 0) {
 		return get_entities_from_relationship("friend",$user_guid,false,"user",$subtype,0,"time_created desc",$limit,$offset);
+	}
+	
+	/**
+	 * Obtains the people who have made a given user a friend
+	 *
+	 * @param int $user_guid The user's GUID
+	 * @param string $subtype The subtype of users, if any
+	 * @param int $limit Number of results to return (default 10)
+	 * @param int $offset Indexing offset, if any
+	 * @return false|array Either an array of ElggUsers or false, depending on success
+	 */
+	function get_user_friends_of($user_guid, $subtype = "", $limit = 10, $offset = 0) {
+		return get_entities_from_relationship("friend",$user_guid,true,"user",$subtype,0,"time_created desc",$limit,$offset);
 	}
 
 	/**
@@ -617,8 +643,48 @@
 		
 	}
 	
+	/**
+	 * Page handler for friends
+	 *
+	 */
+	function friends_page_handler($page_elements) {
+		
+		if (isset($page_elements[0]) && $user = get_user_by_username($page_elements[0])) {
+			set_page_owner($user->getGUID());
+		}
+		require_once(dirname(dirname(dirname(__FILE__))) . "/friends/index.php");
+		
+	}
+	
+	/**
+	 * Page handler for friends of
+	 *
+	 */
+	function friends_of_page_handler($page_elements) {
+		
+		if (isset($page_elements[0]) && $user = get_user_by_username($page_elements[0])) {
+			set_page_owner($user->getGUID());
+		}
+		require_once(dirname(dirname(dirname(__FILE__))) . "/friends/of.php");
+		
+	}
+	
+	/**
+	 * Users initialisation function, which establishes the page handler
+	 *
+	 */
+	function users_init() {
+		
+		register_page_handler('friends','friends_page_handler');
+		register_page_handler('friendsof','friends_of_page_handler');
+		
+	}
+	
 	//register actions *************************************************************
    
    		register_action("register",true);
+   		register_action("friends/add");
+   		register_action("friends/remove");
+   		register_event_handler('init','system','users_init',0);
 	
 ?>

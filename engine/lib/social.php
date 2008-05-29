@@ -62,6 +62,8 @@
         }
         
         // Set the shout words blacklist, these do not become tags when the string is converted
+        // Any language packs should include their own!
+        
             GLOBAL $CONFIG;
 		        $CONFIG->wordblacklist = array(
 	            'and',

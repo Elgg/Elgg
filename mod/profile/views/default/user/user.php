@@ -12,67 +12,6 @@
 	 * @uses $vars['entity'] The user entity
 	 */
 
-	if ($vars['full'] == true) {
-		$iconsize = "large";
-	} else {
-		$iconsize = "medium";
-	}
-	echo elgg_view(
-						"profile/icon", array(
-												'entity' => $vars['entity'],
-												'align' => "right",
-												'size' => $iconsize,
-											  )
-					);
-
+		echo elgg_view_layout("one_column",elgg_view("profile/userdetails",$vars),elgg_view("profile/menu",$vars));
+	
 ?>
-	<h2><a href="<?php echo $vars['entity']->getUrl(); ?>"><?php echo $vars['entity']->name; ?></a></h2>
-	<?php 
-
-		if ($vars['full'] == true) {
-	
-	?>
-	<p><b><?php echo elgg_echo("profile:aboutme"); ?></b></p>
-	<p><?php echo nl2br($vars['entity']->description); ?></p>
-	<?php
-
-		if (is_array($vars['config']->profile) && sizeof($vars['config']->profile) > 0)
-			foreach($vars['config']->profile as $shortname => $valtype) {
-				if ($shortname != "description") {
-					$value = $vars['entity']->$shortname;
-					if (!empty($value)) {
-					
-	?>
-
-	<p>
-		<b><?php
-
-			echo elgg_echo("profile:{$shortname}");
-		
-		?>: </b>
-		<?php
-
-			echo elgg_view("output/{$valtype}",array('value' => $vars['entity']->$shortname));
-		
-		?>
-		
-	</p>
-
-	<?php
-					}
-				}
-			}
-			
-		}
-	
-		if ($vars['entity']->canEdit()) {
-	
-	?>
-	<p>
-		<a href="<?php echo $vars['url']; ?>mod/profile/edit.php"><?php echo elgg_echo("edit"); ?></a>
-	</p>
-	<?php
-
-		}
-	
-	?>
