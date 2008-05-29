@@ -954,5 +954,116 @@
 				return false;
 			}
 		}
+
 		
+		
+	/**
+	 * Privilege elevation
+	 */
+
+	
+	/**
+	 * Gatekeeper function which ensures that a we are being executed from
+	 * a specified location.
+	 * 
+	 * To use, call this function with the function name (and optional file location) that it has to be called 
+	 * from, it will either return true or false.
+	 * 
+	 * e.g.
+	 * 
+	 * function my_secure_function()
+	 * {
+	 * 		if (!call_gatekeeper("my_call_function"))
+	 * 			return false;
+	 * 
+	 * 		... do secure stuff ...
+	 * }
+	 * 
+	 * function my_call_function()
+	 * {
+	 * 		// will work
+	 * 		my_secure_function();
+	 * }
+	 * 
+	 * function bad_function()
+	 * {
+	 * 		// Will not work
+	 * 		my_secure_function();
+	 * }
+	 * 
+	 * @param mixed $function The function that this function must have in its call stack, 
+	 * 		to test against a method pass an array containing a class and method name.
+	 * @param string $file Optional file that the function must reside in.
+	 */
+	function call_gatekeeper($function, $file = "")
+	{
+		// Sanity check
+		if (!$function)
+			return false;
+		
+		// Check against call stack to see if this is being called from the correct location
+		$callstack = debug_backtrace();
+		$stack_element = false;
+		
+		foreach ($callstack as $call)
+		{
+			if (is_array($function))
+			{
+				if (
+					(strcmp($call['class'], $function[0]) == 0) &&
+					(strcmp($call['function'], $function[1]) == 0)
+				)
+					$stack_element = $call;
+			}
+			else
+			{
+				if (strcmp($call['function'], $function) == 0)
+					$stack_element = $call;
+			}
+		}
+
+		if (!$stack_element)
+			return false;
+
+			
+		// If file then check using regression that this it is being called from this function
+		if ($file)
+		{
+			$mirror = false;
+			
+			if (is_array($function))
+				$mirror = new ReflectionMethod($stack_element['class'], $stack_element['function']);
+			else
+				$mirror = new ReflectionFunction($stack_element['function']); 
+			
+			// Sanity check
+			if (!$mirror) return false;
+			
+			// Check file against function
+			if (!strcmp($file, $mirror->getFileName())==0)
+				return false;
+		}
+	
+		
+		return true;
+	}
+	
+
+
+	
+	
+	// register privileged code block
+
+
+	// check for plugin function - use reflection to make sure that function is permitted to execute code as privileged
+									// Ensure that function can only be called from same dir tree -- compare where i'm called from to where function is.
+	// check for user function
+
+	// execute privileged code block
+		// trigger check event 
+		// if ok then
+			// swap user
+			// execute
+			// swap user
+	
 ?>
