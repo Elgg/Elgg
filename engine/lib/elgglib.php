@@ -958,7 +958,7 @@
 		
 		
 	/**
-	 * Privilege elevation
+	 * Privilege elevation and gatekeeper code
 	 */
 
 	
@@ -1000,9 +1000,9 @@
 		// Sanity check
 		if (!$function)
 			return false;
-		
+					
 		// Check against call stack to see if this is being called from the correct location
-		$callstack = debug_backtrace();
+		$callstack = debug_backtrace();		
 		$stack_element = false;
 		
 		foreach ($callstack as $call)
@@ -1029,8 +1029,14 @@
 		// If file then check that this it is being called from this function
 		if ($file)
 		{
-			// Check file against function
-			if (!strcmp($file, $stack_element['file'])==0)
+			$mirror = null;
+			
+			if (is_array($function))
+				$mirror = new ReflectionMethod($function[0], $function[1]);
+			else
+				$mirror = new ReflectionFunction($function);
+				
+			if ((!$mirror) || (strcmp($file,$mirror->getFileName())!=0))
 				return false;
 		}
 	
@@ -1071,7 +1077,76 @@
 		return false;
 	}
 
+	/**
+	 * A utility function which returns true if the code is currently running with 
+	 * extended privileges (as provided by execute_privileged_codeblock().)
+	 * 
+	 * This is essentially a wrapper around call_gatekeeper().
+	 * 
+	 * @return bool
+	 */
+	function is_privileged()
+	{
+		global $CONFIG;
+		
+		return call_gatekeeper('execute_privileged_codeblock', $CONFIG->path . 'engine/lib/elgglib.php');
+	}
 	
+	/**
+	 * Execute a function as a privileged user.
+	 * 
+	 * Privileged code blocks should be in the format of "function(array $params)" whether they
+	 * are in a class or a standalone object.
+	 * 
+	 * Before executing it triggers an event "execute_privileged_codeblock" which gives code the option 
+	 * to deny access based on a number factors (simply return false).
+	 * 
+	 * @param mixed $function The function (or array(object,method)) to execute.
+	 * @param array $params The parameters passed to the function as an array
+	 * @return the result of the executed codeblock
+	 * @throws SecurityException
+	 */
+	function execute_privileged_codeblock($function, array $params = null)
+	{
+		// Test to see if we can actually execute code
+		if (trigger_event("execute_privileged_codeblock", "all"))
+		{
+		
+		
+			// Elevate privilege
+
+			// Execute
+			$result = null;
+			
+			if (is_array($function))
+				$result = $function[0]->$function[1]($params);
+			else
+				$result = $function($params);	
+
+			// return privilege		
+			
+			
+			// Return value
+			return $result;
+		}
+		else
+			throw new SecurityException("Denied access to execute privileged code block");
+	}
+	
+	/**
+	 * Validate that a given path has privileges to execute a piece of privileged code.
+	 */
+	function epc_validate_path($event, $object_type, $object)
+	{
+		return false;
+	}
+	
+	/// Register path evaluator
+	//register_event_handler('execute_privileged_codeblock', 'all', 'epc_validate_path', 1);
+	
+	
+	
+	// get admin user funciton
 	
 	// register privileged code block
 
