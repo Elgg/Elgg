@@ -12,11 +12,16 @@
 	 * @uses $vars['entity'] The user entity
 	 */
 
+	if ($vars['full'] == true) {
+		$iconsize = "large";
+	} else {
+		$iconsize = "medium";
+	}
 	echo elgg_view(
 						"profile/icon", array(
 												'entity' => $vars['entity'],
 												'align' => "right",
-												'size' => "large",
+												'size' => $iconsize,
 											  )
 					);
 
@@ -31,7 +36,6 @@
 	<p><?php echo nl2br($vars['entity']->description); ?></p>
 	<?php
 
-		}
 		if (is_array($vars['config']->profile) && sizeof($vars['config']->profile) > 0)
 			foreach($vars['config']->profile as $shortname => $valtype) {
 				if ($shortname != "description") {
@@ -58,6 +62,8 @@
 					}
 				}
 			}
+			
+		}
 	
 		if ($vars['entity']->canEdit()) {
 	
