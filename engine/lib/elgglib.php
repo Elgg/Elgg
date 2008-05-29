@@ -1029,18 +1029,8 @@
 		// If file then check using reflection that this it is being called from this function
 		if ($file)
 		{
-			$mirror = false;
-			
-			if (is_array($function))
-				$mirror = new ReflectionMethod($stack_element['class'], $stack_element['function']);
-			else
-				$mirror = new ReflectionFunction($stack_element['function']); 
-			
-			// Sanity check
-			if (!$mirror) return false;
-			
 			// Check file against function
-			if (!strcmp($file, $mirror->getFileName())==0)
+			if (!strcmp($file, $stack_element['file'])==0)
 				return false;
 		}
 	
@@ -1048,8 +1038,27 @@
 		return true;
 	}
 	
-
-
+	/**
+	 * This function checks to see if it is being called at somepoint by a function defined somewhere 
+	 * on a given path (optionally including subdirectories).
+	 */
+	/*function callpath_gatekeeper($path, $include_subdirs = true)
+	{
+		$path = sanitise_string($path);
+		
+		if ($path)
+		{
+			$callstack = debug_backtrace();
+			
+			foreach ($callstack as $call)
+			{
+				if 
+			}
+		}
+		
+		return false;
+	}
+*/
 	
 	
 	// register privileged code block
