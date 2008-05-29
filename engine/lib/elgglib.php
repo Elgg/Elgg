@@ -1026,7 +1026,7 @@
 			return false;
 
 			
-		// If file then check using reflection that this it is being called from this function
+		// If file then check that this it is being called from this function
 		if ($file)
 		{
 			// Check file against function
@@ -1041,8 +1041,11 @@
 	/**
 	 * This function checks to see if it is being called at somepoint by a function defined somewhere 
 	 * on a given path (optionally including subdirectories).
+	 * 
+	 * @param string $path The full path and filename that this function must have in its call stack
+	 * @param bool $include_subdirs Are subdirectories of the path ok, or must you specify an absolute path and filename.
 	 */
-	/*function callpath_gatekeeper($path, $include_subdirs = true)
+	function callpath_gatekeeper($path, $include_subdirs = true)
 	{
 		$path = sanitise_string($path);
 		
@@ -1052,13 +1055,22 @@
 			
 			foreach ($callstack as $call)
 			{
-				if 
+				if ($include_subdirs)
+				{
+					if (strpos($call['file'], $path) === 0)
+						return true;
+				}
+				else
+				{
+					if (strcmp($path, $call['file'])==0)
+						return true;
+				}
 			}
 		}
 		
 		return false;
 	}
-*/
+
 	
 	
 	// register privileged code block
