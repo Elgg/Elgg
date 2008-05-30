@@ -672,6 +672,9 @@
             
             global $CONFIG, $dbcalls;
             
+            if (!callpath_gatekeeper($CONFIG->path . "engine/", true, true))
+            	throw new DatabaseException("Access to privileged function 'get_data()' is denied.");
+            
             $dblink = get_db_link('read');
             
             $resultarray = array();
@@ -714,6 +717,9 @@
             
             global $CONFIG, $dbcalls;
             
+            if (!callpath_gatekeeper($CONFIG->path . "engine/", true, true))
+            	throw new DatabaseException("Access to privileged function 'get_data_row()' is denied.");
+            
             $dblink = get_db_link('read');
             
             $dbcalls++;
@@ -750,6 +756,9 @@
             
             global $dbcalls;
             
+            if (!callpath_gatekeeper($CONFIG->path . "engine/", true, true))
+            	throw new DatabaseException("Access to privileged function 'insert_data()' is denied.");
+            
             $dblink = get_db_link('write');
             
             $dbcalls++;
@@ -772,7 +781,10 @@
     
         function update_data($query) {
             
-            global $dbcalls;
+            global $dbcalls, $CONFIG;
+            
+            if (!callpath_gatekeeper($CONFIG->path . "engine/", true, true))
+            	throw new DatabaseException("Access to privileged function 'update_data()' is denied.");
             
             $dblink = get_db_link('write');
             
@@ -797,7 +809,10 @@
     
         function delete_data($query) {
             
-            global $dbcalls;
+            global $dbcalls, $CONFIG;
+            
+            if (!callpath_gatekeeper($CONFIG->path . "engine/", true, true))
+            	throw new DatabaseException("Access to privileged function 'delete_data()' is denied.");
             
             $dblink = get_db_link('write');
             

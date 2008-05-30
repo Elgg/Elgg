@@ -1066,12 +1066,14 @@
 			{
 				if ($include_subdirs)
 				{
-					if (strpos($call['file'], $path) === 0)
+					if (strpos($call['file'], $path) === 0) {
 						if ($strict_mode) {
-							if ($callstack[2] === $call) return true;
+							if ($callstack[1] === $call) return true;
 						}
 						else
 							return true;
+					}
+					else echo ":{$call['file']}:$path: FAIL\n";
 				}
 				else
 				{
