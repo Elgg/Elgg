@@ -1050,9 +1050,9 @@
 	 * 
 	 * @param string $path The full path and filename that this function must have in its call stack
 	 * @param bool $include_subdirs Are subdirectories of the path ok, or must you specify an absolute path and filename.
-	 * @param bool $limited_mode If true then the calling method or function must be directly called by something on $path, if false the whole call stack is searched.
+	 * @param bool $strict_mode If true then the calling method or function must be directly called by something on $path, if false the whole call stack is searched.
 	 */
-	function callpath_gatekeeper($path, $include_subdirs = true, $limited_mode = false)
+	function callpath_gatekeeper($path, $include_subdirs = true, $strict_mode = false)
 	{
 		global $CONFIG;
 		
@@ -1067,7 +1067,7 @@
 				if ($include_subdirs)
 				{
 					if (strpos($call['file'], $path) === 0)
-						if ($limited_mode) {
+						if ($strict_mode) {
 							if ($callstack[2] === $call) return true;
 						}
 						else
@@ -1076,7 +1076,7 @@
 				else
 				{
 					if (strcmp($path, $call['file'])==0)
-						if ($limited_mode) {
+						if ($strict_mode) {
 							if ($callstack[2] === $call) return true;
 						} else
 							return true;
