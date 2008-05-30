@@ -1073,7 +1073,6 @@
 						else
 							return true;
 					}
-					else echo ":{$call['file']}:$path: FAIL\n";
 				}
 				else
 				{
