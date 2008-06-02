@@ -1123,13 +1123,9 @@
 	 */
 	function execute_privileged_codeblock($function, array $params = null)
 	{
-		// Test to see if we can actually execute code
+		// Test to see if we can actually execute code by calling any other functions
 		if (trigger_event("execute_privileged_codeblock", "all"))
 		{
-		
-		
-			// Elevate privilege
-
 			// Execute
 			$result = null;
 			
@@ -1138,43 +1134,41 @@
 			else
 				$result = $function($params);	
 
-			// return privilege		
-			
-			
 			// Return value
 			return $result;
 		}
-		else
-			throw new SecurityException("Denied access to execute privileged code block");
+		
+		throw new SecurityException("Denied access to execute privileged code block");
 	}
 	
 	/**
 	 * Validate that a given path has privileges to execute a piece of privileged code.
+	 * 
+	 * TODO: Is this safe to execute as an event?
 	 */
 	function epc_validate_path($event, $object_type, $object)
 	{
+		global $CONFIG;
+		
+		// Get a list of paths
+		$callstack = debug_backtrace();
+		$call_paths = array();
+		foreach ($callstack as $call)
+			$call_paths[] = sanitise_string($call['path']);
+		
+		// Get privileged paths
+		$paths = get_data("SELECT * from {$CONFIG->dbprefix}privileged_paths");	
+		foreach ($paths as $p)
+		{
+			if (in_array($CONFIG->path . "$p", $call_paths))
+				return true;
+		}
+		
 		return false;
 	}
 	
 	/// Register path evaluator
-	//register_event_handler('execute_privileged_codeblock', 'all', 'epc_validate_path', 1);
+	register_event_handler('execute_privileged_codeblock', 'all', 'epc_validate_path', 1);
 	
-	
-	
-	// get admin user funciton
-	
-	// register privileged code block
-
-
-	// check for plugin function - use reflection to make sure that function is permitted to execute code as privileged
-									// Ensure that function can only be called from same dir tree -- compare where i'm called from to where function is.
-	// check for user function
-
-	// execute privileged code block
-		// trigger check event 
-		// if ok then
-			// swap user
-			// execute
-			// swap user
 	
 ?>

@@ -248,3 +248,9 @@ CREATE TABLE `prefix_system_log` (
 	PRIMARY KEY  (`id`)
 );
 
+-- Privileged paths, added to by the admin panel
+CREATE TABLE `prefix_privileged_paths` (
+	`path` varchar(128) NOT NULL,
+	
+	PRIMARY KEY (`path`)
+);
