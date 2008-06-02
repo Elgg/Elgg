@@ -253,18 +253,28 @@
 		if ($row)
 		{
 			// Exists and you have access to it
-			
-			// Delete any existing stuff
-			delete_site_entity($guid);
-
-			// Insert it
-			$result = insert_data("INSERT into {$CONFIG->dbprefix}sites_entity (guid, name, description, url) values ($guid, '$name','$description','$url')");
-			if ($result!==false) {
-				get_entity($guid);
-				if (trigger_event('create',$entity->type,$entity)) {
+			$result = update_data("UPDATE {$CONFIG->dbprefix}sites_entity set name='$name', description='$description', url='$url' where guid=$guid");
+			if ($result!=false)
+			{
+				// Update succeeded, continue
+				$entity = get_entity($guid);
+				if (trigger_event('update',$entity->type,$entity)) {
 					return true;
 				} else {
 					delete_entity($guid);
+				}
+			}
+			else
+			{
+				// Update failed, attempt an insert.
+				$result = insert_data("INSERT into {$CONFIG->dbprefix}sites_entity (guid, name, description, url) values ($guid, '$name','$description','$url')");
+				if ($result!==false) {
+					$entity = get_entity($guid);
+					if (trigger_event('create',$entity->type,$entity)) {
+						return true;
+					} else {
+						delete_entity($guid);
+					}
 				}
 			}
 		}

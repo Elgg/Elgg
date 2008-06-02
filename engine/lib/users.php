@@ -346,20 +346,32 @@
 		if ($row)
 		{
 			// Exists and you have access to it
-			
-			// Delete any existing stuff
-			delete_user_entity($guid);
 
-			// Insert it
-			$result = insert_data("INSERT into {$CONFIG->dbprefix}users_entity (guid, name, username, password, email, language, code) values ($guid, '$name', '$username', '$password', '$email', '$language', '$code')");
-			if ($result!==false) {
+			$result = update_data("UPDATE {$CONFIG->dbprefix}users_entity set name='$name', username='$username', password='$password', email='$email', language='$language', code='$code' where guid=$guid");
+			if ($result!=false)
+			{
+				// Update succeeded, continue
 				$entity = get_entity($guid);
-				if (trigger_event('create',$entity->type,$entity)) {
+				if (trigger_event('update',$entity->type,$entity)) {
 					return true;
 				} else {
 					delete_entity($guid);
 				}
-			}				
+			}
+			else
+			{
+				// Update failed, attempt an insert.
+				$result = insert_data("INSERT into {$CONFIG->dbprefix}users_entity (guid, name, username, password, email, language, code) values ($guid, '$name', '$username', '$password', '$email', '$language', '$code')");
+				if ($result!==false) {
+					$entity = get_entity($guid);
+					if (trigger_event('create',$entity->type,$entity)) {
+						return true;
+					} else {
+						delete_entity($guid);
+					}
+				}
+			}
+					
 		}
 		
 		return false;

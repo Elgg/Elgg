@@ -218,21 +218,34 @@
 		
 		if ($row)
 		{
-			// Exists and you have access to it
+			// Core entities row exists and we have access to it
 			
-			// Delete any existing stuff
-			delete_object_entity($guid);
-
-			// Insert it
-			$result = insert_data("INSERT into {$CONFIG->dbprefix}objects_entity (guid, title, description) values ($guid, '$title','$description')");
-			if ($result!==false) {
+			$result = update_data("UPDATE {$CONFIG->dbprefix}objects_entity set title='$title', description='$description' where guid=$guid");
+			if ($result!=false)
+			{
+				// Update succeeded, continue
 				$entity = get_entity($guid);
-				if (trigger_event('create',$entity->type,$entity)) {
+				if (trigger_event('update',$entity->type,$entity)) {
 					return true;
 				} else {
 					delete_entity($guid);
 				}
 			}
+			else
+			{
+				
+				// Update failed, attempt an insert.
+				$result = insert_data("INSERT into {$CONFIG->dbprefix}objects_entity (guid, title, description) values ($guid, '$title','$description')");
+				if ($result!==false) {
+					$entity = get_entity($guid);
+					if (trigger_event('create',$entity->type,$entity)) {
+						return true;
+					} else {
+						delete_entity($guid);
+					}
+				}
+			}
+			
 		}
 		
 		return false;
