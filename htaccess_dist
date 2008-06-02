@@ -7,8 +7,8 @@ php_flag magic_quotes_gpc off
 
 RewriteEngine on
 
-RewriteRule ^action\/([A-Za-z\_\-\/]+)$ action_handler.php?action=$1
-RewriteRule ^actions\/([A-Za-z\_\-\/]+)$ action_handler.php?action=$1
+RewriteRule ^action\/([A-Za-z\_\-\/]+)$ engine/handlers/action_handler.php?action=$1
+RewriteRule ^actions\/([A-Za-z\_\-\/]+)$ engine/handlers/action_handler.php?action=$1
 
 RewriteRule ^odd\/([0-9]+)\/$ services/export/handler.php?view=odd&guid=$1
 RewriteRule ^odd\/([0-9]+)\/([A-Za-z]+)\/([A-Za-z]+)\/$ services/export/handler.php?view=odd&guid=$1&type=$2&idname=$3
@@ -19,4 +19,4 @@ RewriteRule ^json\/([0-9]+)\/([A-Za-z]+)\/([A-Za-z]+)\/$ services/export/handler
 
 RewriteRule ^\_css\/css\.css$ _css/css.php
 
-RewriteRule ^pg\/([A-Za-z]+)\/(.*)$ pagehandler.php?handler=$1&page=$2
+RewriteRule ^pg\/([A-Za-z]+)\/(.*)$ engine/handlers/pagehandler.php?handler=$1&page=$2
