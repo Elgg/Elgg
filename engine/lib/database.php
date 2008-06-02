@@ -754,7 +754,7 @@
     
         function insert_data($query) {
             
-            global $dbcalls;
+            global $CONFIG, $dbcalls;
             
             if (!callpath_gatekeeper($CONFIG->path . "engine/", true, true))
             	throw new DatabaseException("Access to privileged function 'insert_data()' is denied.");
