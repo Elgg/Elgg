@@ -1067,18 +1067,21 @@
 				if ($include_subdirs)
 				{
 					if (strpos($call['file'], $path) === 0) {
+						
 						if ($strict_mode) {
-							if ($callstack[1] === $call) return true;
+							if ($callstack[1] === $call) { return true; }
 						}
 						else
+						{
 							return true;
+						}
 					}
 				}
 				else
 				{
 					if (strcmp($path, $call['file'])==0)
 						if ($strict_mode) {
-							if ($callstack[2] === $call) return true;
+							if ($callstack[1] === $call) return true;
 						} else
 							return true;
 				}
@@ -1087,7 +1090,7 @@
 		}
 		
 		if ($CONFIG->debug)
-			system_message("Gatekeeper'd function called from {$callstack[2]['file']}:{$callstack[2]['line']}\n\nStack trace:\n\n" . print_r($callstack, true));
+			system_message("Gatekeeper'd function called from {$callstack[1]['file']}:{$callstack[1]['line']}\n\nStack trace:\n\n" . print_r($callstack, true));
 		
 		return false;
 	}
