@@ -12,9 +12,6 @@
 	 * @link http://elgg.org/
 	 */
 
-	// TODO: nested queries?
-
-
 	/**
 	 * @class QueryComponent Query component superclass.
 	 * Component of a query.
