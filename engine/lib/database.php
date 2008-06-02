@@ -216,6 +216,38 @@
 	}
 	
 	/**
+	 * @class SetQueryComponent Set query.
+	 * Represents an update set query.
+	 * @author Marcus Povey
+	 */
+	class SetQueryComponent extends QueryComponent
+	{
+		/**
+		 * Construct a setting query
+		 *
+		 * @param string $table The table to modify
+		 * @param string $field The field to modify
+		 * @param mixed $value The value to set it to
+		 */
+		function __construct($table, $field, $value)
+		{
+			global $CONFIG;
+			
+		 	$this->table = $CONFIG->dbprefix . sanitise_string($table);
+		 	$this->field = sanitise_string($field);
+		 	if (is_numeric($value))
+		 		$this->value = (int)$value;
+		 	else
+		 		$this->value = "'".sanitise_string($value)."'";
+		}
+		
+		function __toString() 
+		{
+			return "{$this->table}.{$this->field}={$this->value}";
+		}
+	}
+	
+	/**
 	 * @class WhereQueryComponent
 	 * A component of a where query.
 	 * @author Marcus Povey
@@ -417,6 +449,9 @@
 		/// Join tables
 		private $joins;
 		
+		/// Set values 
+		private $sets;
+		
 		/// Where query
 		private $where;
 		
@@ -438,6 +473,7 @@
 			$this->tables = array();
 			$this->joins = array();
 			$this->where = array();
+			$this->sets = array();
 			
 			$this->setQueryType(new SelectQueryTypeQueryComponent());
 		}
@@ -453,6 +489,8 @@
 		public function addSelectField(SelectFieldQueryComponent $component) { $this->fields[] = $component; }
 		
 		public function addJoin(JoinQueryComponent $component) { $this->joins[] = $component; }
+		
+		public function addSet(SetQueryComponent $component) { $this->sets[] = $component; }
 		
 		public function setQueryType(QueryTypeQueryComponent $component) { $this->query_type = $component; }
 		
@@ -511,6 +549,20 @@
 						foreach($this->joins as $join) 
 							$sql .= "$join ";
 					}
+				}
+				
+				// Setting values
+				if (
+					($this->query_type->query_type == 'update') || 
+					($this->query_type->query_type == 'insert')
+				) 
+				{
+					$sql .= "set ";
+					
+					foreach ($this->sets as $set)
+						$sql .= "$set, ";
+						
+					$sql = trim($sql, ", ") . " ";
 				}
 				
 				// Where
