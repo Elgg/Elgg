@@ -89,6 +89,32 @@
 		}
 		
 		/**
+		 * Add access restriction sql code to a given query.
+		 * 
+		 * Note that if this code is executed in privileged mode it will return blank.
+		 * 
+		 * TODO: DELETE once Query classes are fully integrated
+		 * 
+		 * @param string $table_prefix Optional xxx. prefix for the access code.
+		 */
+		function get_access_sql_suffix($table_prefix = "")
+		{
+			$sql = "";
+			
+			if (!is_privileged())
+			{
+				$access = get_access_list();
+				
+				if ($table_prefix)
+					$table_prefix = sanitise_string($table_prefix) . ".";
+					
+				$sql = " and ({$table_prefix}access_id in {$access} or ({$table_prefix}access_id = 0 and {$table_prefix}owner_guid = {$_SESSION['id']}))";
+			}
+			
+			return $sql;
+		}
+		
+		/**
 		 * Returns an array of access permissions that the specified user is allowed to save objects with.
 		 * Permissions are of the form ('id' => 'Description')
 		 *
