@@ -108,7 +108,7 @@
 				if ($table_prefix)
 					$table_prefix = sanitise_string($table_prefix) . ".";
 					
-				$sql = " and ({$table_prefix}access_id in {$access} or ({$table_prefix}access_id = 0 and {$table_prefix}owner_guid = {$_SESSION['id']}))";
+				$sql = " ({$table_prefix}access_id in {$access} or ({$table_prefix}access_id = 0 and {$table_prefix}owner_guid = {$_SESSION['id']}))";
 			}
 			
 			return $sql;
