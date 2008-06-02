@@ -1126,19 +1126,24 @@
 	 */
 	function execute_privileged_codeblock($function, array $params = null)
 	{
-		// Test to see if we can actually execute code by calling any other functions
-		if (trigger_event("execute_privileged_codeblock", "all"))
+		// Test path first
+		if (can_path_execute_privileged_codeblock())
 		{
-			// Execute
-			$result = null;
-			
-			if (is_array($function))
-				$result = $function[0]->$function[1]($params);
-			else
-				$result = $function($params);	
 
-			// Return value
-			return $result;
+			// Test to see if we can actually execute code by calling any other functions
+			if (trigger_event("execute_privileged_codeblock", "all"))
+			{
+				// Execute
+				$result = null;
+				
+				if (is_array($function))
+					$result = $function[0]->$function[1]($params);
+				else
+					$result = $function($params);	
+	
+				// Return value
+				return $result;
+			}
 		}
 		
 		throw new SecurityException("Denied access to execute privileged code block");
@@ -1147,9 +1152,8 @@
 	/**
 	 * Validate that a given path has privileges to execute a piece of privileged code.
 	 * 
-	 * TODO: Is this safe to execute as an event?
 	 */
-	function epc_validate_path($event, $object_type, $object)
+	function can_path_execute_privileged_codeblock()
 	{
 		global $CONFIG;
 		
