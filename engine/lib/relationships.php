@@ -443,7 +443,7 @@
 		if ($site_guid == 0)
 			$site_guid = $CONFIG->site_guid;
 		
-		$access = get_access_list();
+		//$access = get_access_list();
 		
 		$where = array();
 		
@@ -473,7 +473,7 @@
 		$query .= " from {$CONFIG->dbprefix}entity_relationships r JOIN {$CONFIG->dbprefix}entities e on $joinon where ";
 		foreach ($where as $w)
 			$query .= " $w and ";
-		$query .= " (e.access_id in {$access} or (e.access_id = 0 and e.owner_guid = {$_SESSION['id']}))"; // Add access controls
+		$query .= get_access_sql_suffix("e"); // Add access controls
 		if (!$count) {
 			$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
 			return get_data($query, "entity_row_to_elggstar");

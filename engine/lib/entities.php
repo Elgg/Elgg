@@ -812,9 +812,9 @@
 		
 		$guid = (int) $guid;
 		
-		$access = get_access_list();
+		$access = get_access_sql_suffix();
 		
-		return get_data_row("SELECT * from {$CONFIG->dbprefix}entities where guid=$guid and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))");
+		return get_data_row("SELECT * from {$CONFIG->dbprefix}entities where guid=$guid and $access");
 	}
 	
 	/**
@@ -893,9 +893,7 @@
 		$site_guid = (int) $site_guid;
 		if ($site_guid == 0)
 			$site_guid = $CONFIG->site_guid;
-		
-		$access = get_access_list();
-		
+				
 		$where = array();
 		
 		if ($type != "")
@@ -923,7 +921,7 @@
 		}
 		foreach ($where as $w)
 			$query .= " $w and ";
-		$query .= " (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))"; // Add access controls
+		$query .= get_access_sql_suffix(); // Add access controls
 		if (!$count) {
 			$query .= " order by $order_by";
 			if ($limit) $query .= " limit $offset, $limit"; // Add order and limit

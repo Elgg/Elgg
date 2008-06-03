@@ -134,9 +134,9 @@
 		global $CONFIG;
 		
 		$annotation_id = (int) $annotation_id;
-		$access = get_access_list();
+		$access = get_access_sql_suffix("a");
 		
-		return row_to_elggannotation(get_data_row("select a.*, n.string as name, v.string as value from {$CONFIG->dbprefix}annotations a JOIN {$CONFIG->dbprefix}metastrings n on a.name_id = n.id JOIN {$CONFIG->dbprefix}metastrings v on a.value_id = v.id where a.id=$annotation_id and (a.access_id in {$access} or (a.access_id = 0 and a.owner_guid = {$_SESSION['id']}))"));			
+		return row_to_elggannotation(get_data_row("select a.*, n.string as name, v.string as value from {$CONFIG->dbprefix}annotations a JOIN {$CONFIG->dbprefix}metastrings n on a.name_id = n.id JOIN {$CONFIG->dbprefix}metastrings v on a.value_id = v.id where a.id=$annotation_id and $access"));			
 	}
 	
 	/**
@@ -200,7 +200,7 @@
 		
 		$access_id = (int)$access_id;
 		
-		$access = get_access_list();
+		$access = get_access_sql_suffix();
 		
 		// Add the metastring
 		$value = add_metastring($value);
@@ -210,7 +210,7 @@
 		if (!$name) return false;
 		
 		// If ok then add it		
-		return update_data("UPDATE {$CONFIG->dbprefix}annotations set value_id='$value', value_type='$value_type', access_id=$access_id, owner_guid=$owner_guid where id=$annotation_id and name_id='$name' and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))");
+		return update_data("UPDATE {$CONFIG->dbprefix}annotations set value_id='$value', value_type='$value_type', access_id=$access_id, owner_guid=$owner_guid where id=$annotation_id and name_id='$name' and $access");
 	}
 	
 	/**
@@ -233,16 +233,18 @@
 		$entity_guid = (int)$entity_guid;
 		$entity_type = sanitise_string($entity_type);
 		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
-		$name = get_metastring_id($name);
-		if ($name === false)
-			$name = 0;
+		if ($name)
+		{
+			$name = get_metastring_id($name);
+		
+			if ($name === false)
+				$name = 0;
+		}
 		if ($value != "") $value = get_metastring_id($value);
 		$owner_guid = (int)$owner_guid;
 		$limit = (int)$limit;
 		$offset = (int)$offset;
 		$order_by = sanitise_string($order_by);
-		
-		$access = get_access_list();
 		
 		$where = array();
 		
@@ -267,9 +269,9 @@
 		$query = "SELECT a.*, n.string as name, v.string as value from {$CONFIG->dbprefix}annotations a JOIN {$CONFIG->dbprefix}entities e on a.entity_guid = e.guid JOIN {$CONFIG->dbprefix}metastrings v on a.value_id=v.id JOIN {$CONFIG->dbprefix}metastrings n on a.name_id = n.id where ";
 		foreach ($where as $w)
 			$query .= " $w and ";
-		$query .= " (a.access_id in {$access} or (a.access_id = 0 and a.owner_guid = {$_SESSION['id']}))"; // Add access controls
+		$query .= get_access_sql_suffix("a"); // Add access controls
 		$query .= " order by $order_by limit $offset,$limit"; // Add order and limit
-		return get_data($query, "row_to_elggannotation");
+echo "$query\n";		return get_data($query, "row_to_elggannotation");
 		
 	}
 
@@ -356,7 +358,6 @@
 		$entity_type = sanitise_string($entity_type);
 		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
 		$name = get_metastring_id($name);
-		$access = get_access_list();
 		
 		$where = array();
 		
@@ -375,7 +376,7 @@
 		$query = "SELECT $sum(ms.string) as sum from {$CONFIG->dbprefix}annotations a JOIN {$CONFIG->dbprefix}entities e on a.entity_guid = e.guid JOIN {$CONFIG->dbprefix}metastrings ms on a.value_id=ms.id WHERE ";
 		foreach ($where as $w)
 			$query .= " $w and ";
-		$query .= " (a.access_id in {$access} or (a.access_id = 0 and a.owner_guid = {$_SESSION['id']}))"; // now add access
+		$query .= get_access_sql_suffix("a"); // now add access
 		
 		$row = get_data_row($query);
 		if ($row)
@@ -395,9 +396,9 @@
 
 		$id = (int)$id;
 		
-		$access = get_access_list();
+		$access = get_access_sql_suffix();
 		
-		return delete_data("DELETE from {$CONFIG->dbprefix}annotations  where id=$id and (access_id in {$access} or (access_id = 0 and owner_guid = {$_SESSION['id']}))");
+		return delete_data("DELETE from {$CONFIG->dbprefix}annotations  where id=$id and $access");
 	}
 	
 	/**
