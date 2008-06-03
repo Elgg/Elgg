@@ -271,7 +271,7 @@
 			$query .= " $w and ";
 		$query .= get_access_sql_suffix("a"); // Add access controls
 		$query .= " order by $order_by limit $offset,$limit"; // Add order and limit
-echo "$query\n";		return get_data($query, "row_to_elggannotation");
+		return get_data($query, "row_to_elggannotation");
 		
 	}
 
