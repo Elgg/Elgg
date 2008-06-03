@@ -110,6 +110,8 @@
 					
 				$sql = " ({$table_prefix}access_id in {$access} or ({$table_prefix}access_id = 0 and {$table_prefix}owner_guid = {$_SESSION['id']}))";
 			}
+			else
+				$sql = " 1 ";
 			
 			return $sql;
 		}
