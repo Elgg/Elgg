@@ -273,6 +273,9 @@
 		 	$this->right_field = sanitise_string($right_field);
 		}
 		
+		/**
+		 * Return the SQL without the link operator.
+		 */
 		public function toStringNoLink()
 		{
 			return "{$this->left_table }.{$this->left_field} {$this->operator} {$this->right_table}.{$this->right_field}";
@@ -314,6 +317,9 @@
 		 		$this->value = "'".sanitise_string($value)."'";
 		}
 		
+		/**
+		 * Return the SQL without the link operator.
+		 */
 		public function toStringNoLink()
 		{
 			return "{$this->left_table }.{$this->left_field} {$this->operator} {$this->value}";
