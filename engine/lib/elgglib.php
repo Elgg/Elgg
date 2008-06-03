@@ -1174,8 +1174,6 @@
 		return false;
 	}
 	
-	/// Register path evaluator
-	register_event_handler('execute_privileged_codeblock', 'all', 'epc_validate_path', 1);
 	
 	
 ?>
