@@ -665,35 +665,36 @@
 			
 			} else {
 				
+				$return = true;
 				if (!empty($CONFIG->events[$event][$object_type]) && is_array($CONFIG->events[$event][$object_type])) {
 					foreach($CONFIG->events[$event][$object_type] as $eventfunction) {
 						if ($eventfunction($event, $object_type, $object) === false) {
-						//	return false;
+							$return = false;
 						}
 					}
 				}
 				if (!empty($CONFIG->events['all'][$object_type]) && is_array($CONFIG->events['all'][$object_type])) {					
 					foreach($CONFIG->events['all'][$object_type] as $eventfunction) {
 						if ($eventfunction($event, $object_type, $object) === false) {
-						//	return false;
+							$return = false;
 						}
 					}
 				}
 				if (!empty($CONFIG->events[$event]['all']) && is_array($CONFIG->events[$event]['all'])) {						
 					foreach($CONFIG->events[$event]['all'] as $eventfunction) {
 						if ($eventfunction($event, $object_type, $object) === false) {
-						//	return false;
+							$return = false;
 						}
 					}
 				}
 				if (!empty($CONFIG->events['all']['all']) && is_array($CONFIG->events['all']['all'])) {					
 					foreach($CONFIG->events['all']['all'] as $eventfunction) {
 						if ($eventfunction($event, $object_type, $object) === false) {
-						//	return false;
+							$return = false;
 						}
 					}
 				}
-				return true;
+				return $return;
 			
 			}
 			
