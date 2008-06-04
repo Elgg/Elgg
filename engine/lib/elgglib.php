@@ -1066,11 +1066,14 @@
 				
 			foreach ($callstack as $call)
 			{
+				$call['file'] = str_replace("\\","/",$call['file']);
+				
 				if ($include_subdirs)
 				{
 					if (strpos($call['file'], $path) === 0) {
 						
 						if ($strict_mode) {
+							$callstack[1]['file'] = str_replace("\\","/",$callstack[1]['file']);							
 							if ($callstack[1] === $call) { return true; }
 						}
 						else
@@ -1081,14 +1084,16 @@
 				}
 				else
 				{
-					if (strcmp($path, $call['file'])==0)
+					if (strcmp($path, $call['file'])==0) {
 						if ($strict_mode) {
 							if ($callstack[1] === $call) return true;
 						} else
 							return true;
+					}
 				}
 				
 			}
+			return false;
 		}
 		
 		if ($CONFIG->debug)
