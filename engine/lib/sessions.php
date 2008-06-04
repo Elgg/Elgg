@@ -175,6 +175,8 @@
 	        
 	        register_action("login",true);
     		register_action("logout");
+    		
+    		return true;
 	        
 		}
 

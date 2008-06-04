@@ -483,6 +483,9 @@
 		function sites_init($event, $object_type, $object) {
 			
 			global $CONFIG;
+			
+			if (!is_installed() || !is_db_installed()) return false;
+			
 			$site = trigger_plugin_hook("siteid","system");
 			if ($site === null || $site === false) {
 				$CONFIG->site_id = (int) datalist_get('default_site');

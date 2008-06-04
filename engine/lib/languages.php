@@ -78,8 +78,7 @@
 	 * @param unknown_type $object_type
 	 * @param unknown_type $object
 	 */
-		function load_translations($event, $object_type, $object) {
-			
+		function init_translations() {
 			global $CONFIG;
 			register_translations($CONFIG->path . "languages/");
 			
@@ -100,6 +99,6 @@
 			}
 		}
 		
-		register_event_handler("boot","system","load_translations");
+		register_event_handler("boot","system","init_translations",5);
 
 ?>

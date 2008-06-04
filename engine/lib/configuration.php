@@ -116,6 +116,8 @@
 			
 			global $CONFIG;
 			
+			if (!is_installed() || !is_db_installed()) return false;
+			
 			$path = datalist_get('path');
 			if (!empty($path))
 				$CONFIG->path = $path;
