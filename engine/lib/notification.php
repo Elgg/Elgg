@@ -77,7 +77,7 @@
 		foreach ($to as $guid)
 		{	
 			foreach ($method as $m)
-				if (!$NOTIFICATION_HANDLERS[$m]($guid, sanitise_string($m), $params))
+				if (!$NOTIFICATION_HANDLERS[$m]((int)$guid, sanitise_string($m), $params))
 					throw new NotificationException("There was an error while notifying $guid");
 		}
 			
