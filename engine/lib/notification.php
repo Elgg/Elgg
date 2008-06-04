@@ -47,7 +47,7 @@
 	/**
 	 * Send a notification message using a pre-registered method.
 	 *
-	 * @param string $method The method used 
+	 * @param mixed $method The method used as a string, or an array if multiple methods should be used. 
 	 * @param mixed $to Either a guid or an array of guid's to notify
 	 * @param string $message A message
 	 * @param array $params Optional method specific parameters as an associative array, for example "subject", "from"
@@ -62,8 +62,11 @@
 		if (!is_array($to))
 			$to = (int)$to;
 			
-		if ($method=="")
+		if (!$method)
 			throw new NotificationException("No notification method specified.");
+			
+		if (!is_array($method))
+			$method = array($method);
 			
 		if ((!array_key_exists($method, $NOTIFICATION_HANDLERS)) || (!is_callable($NOTIFICATION_HANDLERS[$method])))
 			throw new NotificationExceptions("No handler found for '$method' or it was not callable.");
@@ -71,9 +74,12 @@
 		if (!is_array($to))
 			$to = array($to);
 			
-		foreach ($to as $guid)	
-				if (!$NOTIFICATION_HANDLERS[$method]($guid, sanitise_string($method), $params))
+		foreach ($to as $guid)
+		{	
+			foreach ($method as $m)
+				if (!$NOTIFICATION_HANDLERS[$m]($guid, sanitise_string($m), $params))
 					throw new NotificationException("There was an error while notifying $guid");
+		}
 			
 		return true;
 	}
