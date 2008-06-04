@@ -3,6 +3,16 @@
 	 * Notifications
 	 * This file contains classes and functions which allow plugins to register and send notifications.
 	 * 
+	 * There are notification methods which are provided out of the box (see notification_init() ). Each method
+	 * is identified by a string, e.g. "email".
+	 * 
+	 * To register an event use register_notification_handler() and pass the method name and a handler function.
+	 * 
+	 * To send a notification call notify() passing it the method you wish to use combined with a number of method 
+	 * specific addressing parameters.
+	 * 
+	 * Catch NotificationException to trap errors.
+	 * 
 	 * @package Elgg
 	 * @subpackage API
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
