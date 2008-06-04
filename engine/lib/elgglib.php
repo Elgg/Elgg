@@ -1048,7 +1048,9 @@
 	 * This function checks to see if it is being called at somepoint by a function defined somewhere 
 	 * on a given path (optionally including subdirectories).
 	 * 
-	 * @param string $path The full path and filename that this function must have in its call stack
+	 * This function is similar to call_gatekeeper() but returns true if it is being called by a method or function which has been defined on a given path or by a specified file.
+	 * 
+	 * @param string $path The full path and filename that this function must have in its call stack If a partial path is given and $include_subdirs is true, then the function will return true if called by any function in or below the specified path.
 	 * @param bool $include_subdirs Are subdirectories of the path ok, or must you specify an absolute path and filename.
 	 * @param bool $strict_mode If true then the calling method or function must be directly called by something on $path, if false the whole call stack is searched.
 	 */
