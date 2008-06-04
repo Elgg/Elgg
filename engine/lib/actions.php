@@ -74,7 +74,7 @@
         
         function register_action($action, $public = false, $filename = "") {
             global $CONFIG;            
-
+            
             if (!isset($CONFIG->actions)) {
                 $CONFIG->actions = array();
             }
@@ -85,7 +85,7 @@
             	
                 $filename = $path . "actions/" . $action . ".php";
             }
-
+            
             $CONFIG->actions[$action] = array('file' => $filename, 'public' => $public);
             return true;
         }

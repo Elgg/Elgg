@@ -42,6 +42,14 @@
 			
 		}
 		
-		register_action("systemsettings/install",true);
+	/**
+	 * Initialisation for installation functions
+	 *
+	 */
+		function install_init() {
+			register_action("systemsettings/install",true);			
+		}
+		
+		register_event_handler("boot","system","install_init");
 		
 ?>

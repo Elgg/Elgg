@@ -172,6 +172,10 @@
 	        if ($_SESSION['id'] > 0) {
 	            // set_last_action($_SESSION['id']);
 	        }
+	        
+	        register_action("login",true);
+    		register_action("logout");
+	        
 		}
 
 	/**
@@ -183,11 +187,6 @@
 		}
 		
 		register_event_handler("boot","system","session_init",1);
-	
-	//register actions *************************************************************
-   
-   		register_action("login",true);
-    	register_action("logout");
 
 
 ?>

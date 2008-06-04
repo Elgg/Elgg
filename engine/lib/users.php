@@ -689,14 +689,14 @@
 		
 		register_page_handler('friends','friends_page_handler');
 		register_page_handler('friendsof','friends_of_page_handler');
+		register_action("register",true);
+   		register_action("friends/add");
+   		register_action("friends/remove");
 		
 	}
 	
 	//register actions *************************************************************
    
-   		register_action("register",true);
-   		register_action("friends/add");
-   		register_action("friends/remove");
    		register_event_handler('init','system','users_init',0);
 	
 ?>
