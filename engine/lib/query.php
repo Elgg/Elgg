@@ -448,8 +448,64 @@
 	}
 	
 	/**
-	 * @class Query
-	 * This class provides a framework to construct complex queries in a safer environment.
+	 * @class Query Provides a framework to construct complex queries in a safer environment.
+	 * 
+	 * The usage of this class depends on the type of query you are executing, but the basic idea is to
+	 * construct a query out of pluggable classes.
+	 * 
+	 * Once constructed SQL can be generated using the toString method, this should happen automatically 
+	 * if you pass the Query object to get_data or similar.
+	 * 
+	 * To construct a query, create a new Query() object and begin populating it with the various classes 
+	 * that define the various aspects of the query.
+	 * 
+	 * Notes:
+	 * 	- You do not have to specify things in any particular order, provided you specify all required 
+	 * 	  components.
+	 *  - With database tables you do not have to specify your db prefix, this will be added automatically.
+	 *  - When constructing your query keep an eye on the error log - any problems will get spit out here. 
+	 * 	  Note also that __toString won't let you throw Exceptions (!!!) so these are caught and echoed to 
+	 *    the log instead.
+	 * 
+	 * Here is an example of a select query which requests some data out of the entities table with an 
+	 * order and limit that uses a subset where and some normal where queries:
+	 * 
+	 * <blockquote>
+	 * 		// Construct the query
+	 * 		$query = new Query();
+	 * 		
+	 * 		// Say which table we're interested in
+	 * 		$query->addTable(new TableQueryComponent("entities"));
+	 * 
+	 * 		// What fields are we interested in
+	 * 		$query->addSelectField(new SelectFieldQueryComponent("entities","*"));
+	 * 
+	 * 		// Add access control (Default access control uses default fields on entities table.
+	 * 		// Note that it will error without something specified here!
+	 * 		$query->setAccessControl(new AccessControlQueryComponent());
+	 * 
+	 * 		// Set a limit and offset, may be omitted.
+	 * 		$query->setLimitAndOffset(new LimitOffsetQueryComponent(10,0));
+	 * 
+	 * 		// Specify the order, may be omitted
+	 * 		$query->setOrder(new OrderQueryComponent("entities", "subtype", "desc"));
+	 * 
+	 * 		// Construct a where query
+	 * 		// 
+	 * 		// This demonstrates a WhereSet which lets you have sub wheres, a
+	 * 		// WhereStatic which lets you compare a table field against a value and a
+	 * 		// Where which lets you compare a table/field with another table/field.
+	 * 		$query->addWhere(
+	 * 			new WhereSetQueryComponent(
+	 * 				array(
+	 * 					new WhereStaticQueryComponent("entities", "subtype","=", 1),
+	 * 					new WhereQueryComponent("entities","subtype","=", "entities", "subtype")
+	 * 				)
+	 * 			)
+	 * 		);
+	 * 
+	 * 		get_data($query);
+	 * </blockquote>
 	 * 
 	 * @author Marcus Povey
 	 */
@@ -677,9 +733,16 @@
 	}
 	
 	/**
-	 * @class SimpleQuery
-	 * A wrapper for Query which provides simple interface for common functions.
+	 * @class SimpleQuery A wrapper for Query which provides simple interface for common functions.
+	 * 
+	 * This class provides simple interface functions for constructing a (reasonably) standard database 
+	 * query.
+	 * 
+	 * The constructor for this class sets a number of defaults, for example sets default access controls
+	 * and a limit and offset - to change this then set it manually.
+	 * 
 	 * @author Marcus Povey
+	 * @see Query
 	 */
 	class SimpleQuery extends Query
 	{
