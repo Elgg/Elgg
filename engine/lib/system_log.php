@@ -14,6 +14,12 @@
 	/**
 	 * Interface that provides an interface which must be implemented by all objects wishing to be 
 	 * recorded in the system log (and by extension the river).
+	 * 
+	 * This interface defines a set of methods that permit the system log functions to hook in and retrieve
+	 * the necessary information and to identify what events can actually be logged.
+	 * 
+	 * To have events involving your object to be logged simply implement this interface.
+	 * 
 	 * @author Marcus Povey
 	 */
 	interface Loggable 
@@ -85,7 +91,7 @@
 	function system_log($object, $event)
 	{
 		global $CONFIG;
-		error_log("***************************** EVENT: $event : ".print_r($object,true));
+
 		if ($object instanceof Loggable)
 		{
 			// Has loggable interface, extract the necessary information and store
