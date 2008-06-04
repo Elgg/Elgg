@@ -481,28 +481,78 @@
 			$this->setQueryType(new SelectQueryTypeQueryComponent());
 		}
 		
+		/**
+		 * Add limits and offsets to the query.
+		 * 
+		 * @param LimitOffsetQueryComponent $component The limit and offset.
+		 */
 		public function setLimitAndOffset(LimitOffsetQueryComponent $component) { $this->limit_and_offset = $component; }
 		
+		/**
+		 * Reset and set the field to the select statement.
+		 * 
+		 * @param SelectFieldQueryComponent $component Table and field component.
+		 */
 		public function setSelectField(SelectFieldQueryComponent $component) 
 		{
 			$this->fields = array();
 			return $this->addSelectField($component);
 		}
 		
+		/**
+		 * Add a select field.
+		 * 
+		 * @param SelectFieldQueryComponent $component Add a component.
+		 */
 		public function addSelectField(SelectFieldQueryComponent $component) { $this->fields[] = $component; }
 		
+		/**
+		 * Add a join to the component.
+		 * 
+		 * @param JoinQueryComponent $component The join.
+		 */
 		public function addJoin(JoinQueryComponent $component) { $this->joins[] = $component; }
 		
+		/**
+		 * Set a field value in an update or insert statement.
+		 * 
+		 * @param SetQueryComponent $component Fields to set.
+		 */
 		public function addSet(SetQueryComponent $component) { $this->sets[] = $component; }
 		
+		/**
+		 * Set the query type, i.e. "select", "update", "insert" & "delete".
+		 * 
+		 * @param QueryTypeQueryComponent $component The query type.
+		 */
 		public function setQueryType(QueryTypeQueryComponent $component) { $this->query_type = $component; }
 		
+		/**
+		 * Attach an order component.
+		 * 
+		 * @param OrderQueryComponent $component The order component.
+		 */
 		public function setOrder(OrderQueryComponent $component) { $this->order = $component; }
 		
+		/**
+		 * Add a table to the query.
+		 * 
+		 * @param TableQueryComponent $component Table to add.
+		 */
 		public function addTable(TableQueryComponent $component) { $this->tables[] = $component; }
 		
+		/**
+		 * Add a where clause to the query.
+		 * 
+		 * @param WhereQueryComponent $component The where component
+		 */
 		public function addWhere(WhereQueryComponent $component) { $this->where[] = $component; }
 		
+		/**
+		 * Set access control.
+		 * 
+		 * @param AccessControlQueryComponent $component Access control.
+		 */
 		public function setAccessControl(AccessControlQueryComponent $component) { $this->access_control = $component; }
 		
 		public function __toString()
