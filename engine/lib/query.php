@@ -433,7 +433,7 @@
 	
 	/**
 	 * @class Query
-	 * This class provides a framework to construct complex queries in a safe environment.
+	 * This class provides a framework to construct complex queries in a safer environment.
 	 * 
 	 * @author Marcus Povey
 	 */
