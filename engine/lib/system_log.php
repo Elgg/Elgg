@@ -51,8 +51,8 @@
 	 * 
 	 * @param string $event The event you are searching on.
 	 * @param string $class The class of object it effects.
-	 * @param int $limit
-	 * @param int $offset
+	 * @param int $limit Maximum number of responses to return.
+	 * @param int $offset Offset of where to start.
 	 */
 	function get_system_log($event = "", $class = "", $limit = 10, $offset = 0)
 	{
@@ -84,6 +84,8 @@
 	
 	/**
 	 * Log a system event related to a specific object.
+	 * 
+	 * This is called by the event system and should not be called directly.
 	 * 
 	 * @param $object The object you're talking about.
 	 * @param $event String The event being logged
