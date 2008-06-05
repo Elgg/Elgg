@@ -388,7 +388,7 @@
 	 * @param string $order_by Optional ordering.
 	 * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
 	 */
-	function get_entities_from_metadata($meta_name, $meta_value = "", $entity_type = "", $entity_subtype = "", $limit = 10, $offset = 0, $order_by = "e.time_created desc", $site_guid = 0)
+	function get_entities_from_metadata($meta_name, $meta_value = "", $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "e.time_created desc", $site_guid = 0)
 	{
 		global $CONFIG;
 		
@@ -401,6 +401,7 @@
 		$offset = (int)$offset;
 		$order_by = sanitise_string($order_by);
 		$site_guid = (int) $site_guid;
+		$owner_guid = (int) $owner_guid;
 		if ($site_guid == 0)
 			$site_guid = $CONFIG->site_guid;
 			
@@ -418,6 +419,8 @@
 			$where[] = "m.value_id='$meta_v'";
 		if ($site_guid > 0)
 			$where[] = "e.site_guid = {$site_guid}";
+		if ($owner_guid > 0)
+			$where[] = "e.owner_guid = {$owner_guid}";
 		
 		$query = "SELECT distinct e.* from {$CONFIG->dbprefix}entities e JOIN {$CONFIG->dbprefix}metadata m on e.guid = m.entity_guid where";
 		foreach ($where as $w)
@@ -440,7 +443,7 @@
 	 * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
 	 * @return array List of ElggEntities
 	 */
-	function get_entities_from_metadata_multi($meta_array, $entity_type = "", $entity_subtype = "", $limit = 10, $offset = 0, $order_by = "e.time_created desc", $site_guid = 0)
+	function get_entities_from_metadata_multi($meta_array, $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "e.time_created desc", $site_guid = 0)
 	{
 		global $CONFIG;
 		
@@ -468,6 +471,8 @@
 		$limit = (int)$limit;
 		$offset = (int)$offset;
 		$order_by = sanitise_string($order_by);
+		$owner_guid = (int) $owner_guid;
+		
 		$site_guid = (int) $site_guid;
 		if ($site_guid == 0)
 			$site_guid = $CONFIG->site_guid;
@@ -480,6 +485,8 @@
 			$where[] = "e.subtype = {$entity_subtype}";
 		if ($site_guid > 0)
 			$where[] = "e.site_guid = {$site_guid}";
+		if ($owner_guid > 0)
+			$where[] = "e.owner_guid = {$owner_guid}";
 		
 		$query = "SELECT distinct e.* from {$CONFIG->dbprefix}entities e {$join} where";
 		foreach ($where as $w)

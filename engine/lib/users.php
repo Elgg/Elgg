@@ -545,6 +545,23 @@
 		}
 		return 0;
 	}
+
+	/**
+	 * Get user objects by an array of metadata
+	 *
+	 * @param int $user_guid The GUID of the owning user
+	 * @param string $subtype Optionally, the subtype of objects
+	 * @paran array $metadata An array of metadata
+	 * @param int $limit The number of results to return (default 10)
+	 * @param int $offset Indexing offset, if any
+	 * @return false|array An array of ElggObjects or false, depending on success
+	 * @return unknown
+	 */
+	function get_user_objects_by_metadata($user_guid, $subtype = "", $metadata = array(), $limit = 0, $offset = 0) {
+		
+		return get_entities_from_metadata_multi($metadata,"object",$subtype,$user_guid,$limit,$offset);
+		
+	}
 	
 	/**
 	 * Get a user object from a GUID.

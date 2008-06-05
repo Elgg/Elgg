@@ -116,5 +116,9 @@
 		register_action("profile/edit",false,$CONFIG->pluginspath . "profile/actions/edit.php");
 		register_action("profile/iconupload",false,$CONFIG->pluginspath . "profile/actions/iconupload.php");
 
+	// Define widgets for use in this context
+		if (is_callable('use_widgets')) {
+			use_widgets('profile');
+		}
 
 ?>
