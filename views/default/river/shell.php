@@ -16,6 +16,6 @@
 	<h1><?php echo elgg_echo('river'); ?></h1>
 	<?	
 	foreach ($river as $r)
-		echo $r;
+		echo "<div>$r</div>";
 	?>
 </div>
