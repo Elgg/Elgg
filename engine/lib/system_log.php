@@ -101,9 +101,10 @@
 			$object_class = $object->getClassName();
 			$event = sanitise_string($event);
 			$time = time();
+			$performed_by = (int)$_SESSION['guid'];
 			
 			// Create log
-			return insert_data("INSERT into {$CONFIG->dbprefix}system_log (object_id, object_class, event, time_created) VALUES ('$object_id','$object_class','$event', '$time')");
+			return insert_data("INSERT into {$CONFIG->dbprefix}system_log (object_id, object_class, event, performed_by_guid, time_created) VALUES ('$object_id','$object_class','$event',$performed_by, '$time')");
 		}
 	}
 	

@@ -242,6 +242,7 @@ CREATE TABLE `prefix_system_log` (
 	`object_class` varchar(128) NOT NULL,
 	
 	`event` varchar(128) NOT NULL,
+	`performed_by_guid` int(11) NOT NULL,
 	
 	`time_created` int(11) NOT NULL,
 	
