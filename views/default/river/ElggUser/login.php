@@ -8,4 +8,7 @@
 	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.com/
 	 */
+
+	$log_entry = $vars['log_entry'];
+	$object = $vars['object'];
 ?>

@@ -9,7 +9,8 @@
 	 * @link http://elgg.com/
 	 */
 
-	
+	$log_entry = $vars['log_entry'];
+	$object = $vars['object'];
 	
 ?>
-out
+Logged in out

@@ -133,7 +133,13 @@
 	
 			'friends:of' => "Friends of",
 			'friends:of:owned' => "People who have made %s a friend",
-	
+
+		/**
+		 * River
+		 */
+			'river' => "River",
+			
+			
 		/**
 		 * Search
 		 */
