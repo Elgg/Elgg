@@ -221,7 +221,7 @@
 			if (!$owner)
 				$owner = $_SESSION['user'];
 					
-			if ((!$owner) || (!$owner->username)) throw InvalidParameterException("All files must have an owner!");
+			if ((!$owner) || (!$owner->username)) throw InvalidParameterException(elgg_echo('InvalidParameterException:MissingOwner'));
 			
 			return $this->dir_root . $this->make_file_matrix($owner->username) . $file->getFilename();
 		}
@@ -234,7 +234,7 @@
 		protected function make_directory_root($dirroot)
 		{
 			if (!@mkdir($dirroot, 0700, true)) 
-				throw new IOException("Could not make $dirroot");
+				throw new IOException(sprintf(elgg_echo('IOException:CouldNotMake'), $dirroot));
 				
 			return true;
 		}
@@ -368,7 +368,7 @@
 		public function open($mode)
 		{
 			if (!$this->getFilename())
-				throw new IOException("You must specify a name before opening a file.");
+				throw new IOException(elgg_echo('IOException:MissingFileName'));
 				
 			// See if file has already been saved
 				// seek on datastore, parameters and name?
@@ -379,7 +379,7 @@
 				($mode!="write") &&
 				($mode!="append")
 			)
-				throw new InvalidParameterException("Unrecognised file mode '$mode'");
+				throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:UnrecognisedFileMode'), $mode));
 			
 			// Get the filestore
 			$fs = $this->getFilestore();
@@ -530,7 +530,7 @@
 			{
 				// Create new filestore object
 				if ((!isset($parameters['filestore'])) || (!class_exists($parameters['filestore'])))
-					throw new ClassNotFoundException("Filestore not found or class not saved with file!");
+					throw new ClassNotFoundException(elgg_echo('ClassNotFoundException:NotFoundNotSavedWithFile'));
 					
 				$this->filestore = new $parameters['filestore']();
 

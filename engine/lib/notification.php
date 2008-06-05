@@ -63,13 +63,13 @@
 			$to = (int)$to;
 			
 		if (!$method)
-			throw new NotificationException("No notification method specified.");
+			throw new NotificationException(elgg_echo('NotificationException:NoNotificationMethod'));
 			
 		if (!is_array($method))
 			$method = array($method);
 			
 		if ((!array_key_exists($method, $NOTIFICATION_HANDLERS)) || (!is_callable($NOTIFICATION_HANDLERS[$method])))
-			throw new NotificationExceptions("No handler found for '$method' or it was not callable.");
+			throw new NotificationExceptions(sprintf(elgg_echo('NotificationException:NoHandlerFound'), $method));
 			
 		if (!is_array($to))
 			$to = array($to);
@@ -78,7 +78,7 @@
 		{	
 			foreach ($method as $m)
 				if (!$NOTIFICATION_HANDLERS[$m]((int)$guid, sanitise_string($m), $params))
-					throw new NotificationException("There was an error while notifying $guid");
+					throw new NotificationException(sprintf(elgg_echo('NotificationException:ErrorNotifyingGuid'), $guid));
 		}
 			
 		return true;
@@ -103,7 +103,7 @@
 		$entity = get_entity($to_guid);
 		
 		if ((!($entity instanceof ElggUser)) || ($entity->email==""))
-			throw new NotificationException("Could not get the email address for GUID:$to_guid");
+			throw new NotificationException(sprintf(elgg_echo('NotificationException:NoEmailAddress'), $to_guid));
 		
 		
 		$to = $entity->email;

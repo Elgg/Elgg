@@ -70,6 +70,14 @@
 			'ImportException:NotAllImported' => "Not all elements were imported.",
 			
 			'InvalidParameterException:UnrecognisedFileMode' => "Unrecognised file mode '%s'",
+			'InvalidParameterException:MissingOwner' => "All files must have an owner!",
+			'IOException:CouldNotMake' => "Could not make %s",
+			'IOException:MissingFileName' => "You must specify a name before opening a file.",
+			'ClassNotFoundException:NotFoundNotSavedWithFile' => "Filestore not found or class not saved with file!",
+			'NotificationException:NoNotificationMethod' => "No notification method specified.",
+			'NotificationException:NoHandlerFound' => "No handler found for '%s' or it was not callable.",
+			'NotificationException:ErrorNotifyingGuid' => "There was an error while notifying %d",
+			'NotificationException:NoEmailAddress' => "Could not get the email address for GUID:%d",
 			
 		/**
 		 * User details
