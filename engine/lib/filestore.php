@@ -512,6 +512,7 @@
 			// If filestore meta set then retrieve filestore TODO: Better way of doing this?
 			$metas = get_metadata_for_entity($this->guid);
 			$parameters = array();
+			if (is_array($metas))
 			foreach ($metas as $meta)
 			{
 				if (strpos($meta->name, "filestore::")!==false)
