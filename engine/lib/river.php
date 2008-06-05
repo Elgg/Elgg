@@ -62,6 +62,7 @@
 						
 						// test if view exist and if so
 						$tam = elgg_view("river/$class/$event", array(
+							'performed_by' => get_entity($log->performed_by_guid),
 							'log_entry' => $log,
 							'object' => $object
 						));
