@@ -162,7 +162,7 @@
 				case "read" : $mode = "r+b"; break;
 				case "write" : $mode = "w+b"; break;
 				case "append" : $mode = "a+b"; break;
-				default: throw new InvalidParameterException("Unrecognised file mode '$mode'");
+				default: throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:UnrecognisedFileMode'), $mode));
 			}
 			
 			return fopen($fullname, $mode);

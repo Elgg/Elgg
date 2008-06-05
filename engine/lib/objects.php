@@ -55,7 +55,7 @@
 				if ($guid instanceof stdClass) {					
 					// Load the rest
 					if (!$this->load($guid->guid))
-						throw new IOException("Failed to load new ElggObject from GUID:$guid->guid"); 
+						throw new IOException(sprintf(elgg_echo('IOException:FailedToLoadGUID'), get_class(), $guid->guid)); 
 				}
 				
 				// Is $guid is an ElggObject? Use a copy constructor
@@ -67,15 +67,15 @@
 				
 				// Is this is an ElggEntity but not an ElggObject = ERROR!
 				else if ($guid instanceof ElggEntity)
-					throw new InvalidParameterException("Passing a non-ElggObject to an ElggObject constructor!");
+					throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonElggObject'));
 										
 				// We assume if we have got this far, $guid is an int
 				else if (is_numeric($guid)) {					
-					if (!$this->load($guid)) throw new IOException("Could not create a new ElggObject object from GUID:$guid");
+					if (!$this->load($guid)) IOException(sprintf(elgg_echo('IOException:FailedToLoadGUID'), get_class(), $guid));
 				}
 				
 				else
-					throw new IOException("Unrecognised value passed to constuctor.");
+					throw new InvalidParameterException(elgg_echo('InvalidParameterException:UnrecognisedValue'));
 			}
 		}
 		
@@ -112,7 +112,7 @@
 
 			// Check the type
 			if ($this->attributes['type']!='object')
-				throw new InvalidClassException("GUID:$guid is not a valid ElggObject");
+				throw new InvalidClassException(sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $guid, get_class()));
 				
 			// Load missing data
 			$row = get_object_entity_as_row($guid);

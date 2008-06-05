@@ -175,7 +175,7 @@
 		$to_be_serialised = trigger_plugin_hook("export", "all", array("guid" => $guid), $to_be_serialised);
 		
 		// Sanity check
-		if ((!is_array($to_be_serialised)) || (count($to_be_serialised)==0)) throw new ExportException("No such entity GUID:$guid");
+		if ((!is_array($to_be_serialised)) || (count($to_be_serialised)==0)) throw new ExportException(sprintf(elgg_echo('ExportException:NoSuchEntity'), $guid));
 		
 		$odd = new ODDDocument($to_be_serialised);
 		
@@ -199,13 +199,13 @@
 		
 		$document = ODD_Import($xml);
 		if (!$document)
-			throw new ImportException("No OpenDD elements found in import data, import failed.");
+			throw new ImportException(elgg_echo('ImportException:NoODDElements'));
 		
 		foreach ($document as $element)
 			__process_element($element);
 		
 		if ($IMPORTED_OBJECT_COUNTER!= count($IMPORTED_DATA))
-			throw new ImportException("Not all elements were imported.");
+			throw new ImportException(elgg_echo('ImportException:NotAllImported'));
 		
 		return true;
 	}

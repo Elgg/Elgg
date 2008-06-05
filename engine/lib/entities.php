@@ -397,7 +397,7 @@
 			else
 			{ 
 				$this->attributes['guid'] = create_entity($this->attributes['type'], $this->attributes['subtype'], $this->attributes['owner_guid'], $this->attributes['access_id']); // Create a new entity (nb: using attribute array directly 'cos set function does something special!)
-				if (!$this->attributes['guid']) throw new IOException("Unable to save new object's base entity information!"); 
+				if (!$this->attributes['guid']) throw new IOException(elgg_echo('IOException:BaseEntitySaveFailed')); 
 				
 				// Save any unsaved metadata
 				if (sizeof($this->temp_metadata) > 0) {
@@ -520,7 +520,7 @@
 		public function import(ODD $data)
 		{
 			if (!($data instanceof ODDEntity))
-				throw new InvalidParameterException("ElggEntity::import() passed an unexpected ODD class"); 
+				throw new InvalidParameterException(elgg_echo('InvalidParameterException:UnexpectedODDClass')); 
 			
 			// Set type and subtype
 			$this->attributes['type'] = $data->getAttribute('class');
@@ -791,11 +791,8 @@
 			$site_guid = $CONFIG->site_guid;
 		$site_guid = (int) $site_guid;
 					
-		if ($type=="") throw new InvalidParameterException("Entity type must be set.");
+		if ($type=="") throw new InvalidParameterException(elgg_echo('InvalidParameterException:EntityTypeNotSet'));
 
-		// Erased by Ben: sometimes we need unauthenticated users to create things! (eg users on registration)
-		// if ($owner_guid==0) throw new InvalidParameterException("owner_guid must not be 0");
-	
 		return insert_data("INSERT into {$CONFIG->dbprefix}entities (type, subtype, owner_guid, site_guid, access_id, time_created, time_updated) values ('$type',$subtype, $owner_guid, $site_guid, $access_id, $time, $time)"); 
 	}
 	
@@ -832,7 +829,7 @@
 			$tmp = new $classname($row);
 			
 			if (!($tmp instanceof ElggEntity))
-				throw new ClassException("$classname is not an ElggEntity.");
+				throw new ClassException(sprintf(elgg_echo('ClassException:ClassnameNotClass'), $classname, get_class()));
 
 			return $tmp;
 		}
@@ -848,7 +845,7 @@
 					return new ElggCollection($row); 
 				case 'site' : 
 					return new ElggSite($row); 
-				default: throw new InstallationException("Type {$row->type} is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.");
+				default: throw new InstallationException(sprintf(elgg_echo('InstallationException:TypeNotSupported'), $row->type));
 			}
 		}
 		
@@ -987,17 +984,17 @@
 	{
 		// Sanity check values
 		if ((!is_array($params)) && (!isset($params['guid'])))
-			throw new InvalidParameterException("GUID has not been specified during export, this should never happen.");
+			throw new InvalidParameterException(elgg_echo('InvalidParameterException:GUIDNotForExport'));
 			
 		if (!is_array($returnvalue))
-			throw new InvalidParameterException("Entity serialisation function passed a non-array returnvalue parameter");
+			throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonArrayReturnValue'));
 			
 		$guid = (int)$params['guid'];
 		
 		// Get the entity
 		$entity = get_entity($guid);
 		if (!($entity instanceof ElggEntity))
-			throw new InvalidClassException("GUID:$guid is not an ElggEntity");
+			throw new InvalidClassException(sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $guid, get_class()));
 		
 		$export = $entity->export();
 		
@@ -1038,7 +1035,7 @@
 					$tmp = new $classname();
 					
 					if (!($tmp instanceof ElggEntity))
-						throw new ClassException("$classname is not an ElggEntity.");
+						throw new ClassException(sprintf(elgg_echo('ClassException:ClassnameNotClass', $classname, get_class())));
 						
 				}
 				else
@@ -1049,7 +1046,7 @@
 						case 'user' : $tmp = new ElggUser($row); break;
 						case 'collection' : $tmp = new ElggCollection($row); break; 
 						case 'site' : $tmp = new ElggSite($row); break; 
-						default: throw new InstallationException("Type $class is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.");
+						default: throw new InstallationException(sprintf(elgg_echo('InstallationException:TypeNotSupported'), $class));
 					}
 				}
 			}
@@ -1057,14 +1054,14 @@
 			if ($tmp)
 			{
 				if (!$tmp->import($element))
-					throw new ImportException("Could not import element " . $element->getAttribute('uuid'));
+					throw new ImportException(sprintf(elgg_echo('ImportException:ImportFailed'), $element->getAttribute('uuid')));
 					
 				if (!$tmp->save()) // Make sure its saved
-					throw new ImportException("There was a problem saving ". $element->getAttribute('uuid'));
+					throw new ImportException(sprintf(elgg_echo('ImportException:ProblemSaving'), $element->getAttribute('uuid')));
 	
 				// Belts and braces
 				if (!$tmp->guid)
-					throw new ImportException("New entity created but has no GUID, this should not happen."); 
+					throw new ImportException(elgg_echo('ImportException:NoGUID')); 
 				
 				add_uuid_to_guid($tmp->guid, $element->getAttribute('uuid')); // We have saved, so now tag
 				

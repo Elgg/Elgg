@@ -94,7 +94,7 @@
 			}
 
 			$this->id = add_entity_relationship($this->guid_one, $this->relationship, $this->guid_two);
-			if (!$this->id) throw new IOException("Unable to save new ElggAnnotation");
+			if (!$this->id) throw new IOException(sprintf(elgg_new('IOException:UnableToSaveNew'), get_class()));
 
 			return $this->id;
 			
@@ -137,7 +137,7 @@
 		public function import(ODD $data)
 		{
 			if (!($element instanceof ODDRelationship))
-				throw new InvalidParameterException("ElggRelationship::import() passed an unexpected ODD class"); 
+				throw new InvalidParameterException(elgg_echo('InvalidParameterException:UnexpectedODDClass')); 
 			
 			$uuid_one = $data->getAttribute('uuid1');
 			$uuid_two = $data->getAttribute('uuid2'); 	
@@ -162,7 +162,7 @@
 					// save
 					$result = $this->save(); 
 					if (!$result)
-						throw new ImportException("There was a problem saving the ElggExtender");
+						throw new ImportException(sprintf(elgg_echo('ImportException:ProblemSaving'), get_class()));
 					
 					return $this;
 				}
@@ -576,10 +576,10 @@
 		
 		// Sanity check values
 		if ((!is_array($params)) && (!isset($params['guid'])))
-			throw new InvalidParameterException("GUID has not been specified during export, this should never happen.");
+			throw new InvalidParameterException(elgg_echo('InvalidParameterException:GUIDNotForExport'));
 			
 		if (!is_array($returnvalue))
-			throw new InvalidParameterException("Entity serialisation function passed a non-array returnvalue parameter");
+			throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonArrayReturnValue'));
 			
 		$guid = (int)$params['guid'];
 		

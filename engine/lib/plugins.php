@@ -29,7 +29,7 @@
 					while ($mod = readdir($handle)) {
 						if (!in_array($mod,array('.','..','.svn','CVS')) && is_dir($CONFIG->pluginspath . "/" . $mod)) {
 							if (!@include($CONFIG->pluginspath . $mod . "/start.php"))
-								throw new PluginException("{$mod} is a misconfigured plugin.");
+								throw new PluginException(sprintf(elgg_echo('PluginException:MisconfiguredPlugin'), $mod));
 							if (is_dir($CONFIG->pluginspath . $mod . "/views/default")) {
 								autoregister_views("",$CONFIG->pluginspath . $mod . "/views/default",$CONFIG->pluginspath . $mod . "/views/");
 							}

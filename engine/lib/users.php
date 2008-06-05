@@ -59,7 +59,7 @@
 				if ($guid instanceof stdClass) {					
 					// Load the rest
 					if (!$this->load($guid->guid))
-						throw new IOException("Failed to load new ElggUser from GUID:$guid->guid"); 
+						throw new IOException(sprintf(elgg_echo('IOException:FailedToLoadGUID'), get_class(), $guid->guid)); 
 				}
 				
 				// See if this is a username
@@ -80,15 +80,15 @@
 				
 				// Is this is an ElggEntity but not an ElggUser = ERROR!
 				else if ($guid instanceof ElggEntity)
-					throw new InvalidParameterException("Passing a non-ElggUser to an ElggUser constructor!");
+					throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonElggUser'));
 										
 				// We assume if we have got this far, $guid is an int
 				else if (is_numeric($guid)) {					
-					if (!$this->load($guid)) throw new IOException("Could not create a new ElggUser user from GUID:$guid");
+					if (!$this->load($guid)) IOException(sprintf(elgg_echo('IOException:FailedToLoadGUID'), get_class(), $guid));
 				}
 				
 				else
-					throw new IOException("Unrecognised value passed to constuctor.");
+					throw new InvalidParameterException(elgg_echo('InvalidParameterException:UnrecognisedValue'));
 			}
 		}
 		
@@ -125,7 +125,7 @@
 
 			// Check the type
 			if ($this->attributes['type']!='user')
-				throw new InvalidClassException("GUID:$guid is not a valid ElggUser");
+				throw new InvalidClassException(sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $guid, get_class()));
 				
 			// Load missing data
 			$row = get_user_entity_as_row($guid);
@@ -560,7 +560,7 @@
 			$result = get_entity($guid);
 		
 		if ((!empty($result)) && (!($result instanceof ElggUser)))
-			throw new InvalidParameterException("GUID:$guid is not an ElggUser");
+			throw new InvalidClassException(sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $guid, get_class()));
 			
 		if (!empty($result))
 			return $result;

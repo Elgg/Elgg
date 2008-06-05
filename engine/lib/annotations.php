@@ -87,7 +87,7 @@
 			else
 			{ 
 				$this->id = create_annotation($this->entity_guid, $this->name, $this->value, $this->value_type, $this->owner_guid, $this->access_id);
-				if (!$this->id) throw new IOException("Unable to save new ElggAnnotation");
+				if (!$this->id) throw new IOException(sprintf(elgg_new('IOException:UnableToSaveNew'), get_class()));
 				return $this->id;
 			}
 		}
@@ -439,10 +439,10 @@
 	{
 		// Sanity check values
 		if ((!is_array($params)) && (!isset($params['guid'])))
-			throw new InvalidParameterException("GUID has not been specified during export, this should never happen.");
+			throw new InvalidParameterException(elgg_echo('InvalidParameterException:GUIDNotForExport'));
 			
 		if (!is_array($returnvalue))
-			throw new InvalidParameterException("Entity serialisation function passed a non-array returnvalue parameter");
+			throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonArrayReturnValue'));
 		
 		$guid = (int)$params['guid'];
 		$name = $params['name'];	

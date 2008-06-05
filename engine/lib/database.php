@@ -48,9 +48,9 @@
 		        
 		    // Connect to database
 		        if (!$dblink[$dblinkname] = mysql_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, true))
-		        	throw new DatabaseException("Elgg couldn't connect to the database using the given credentials.");
+		        	throw new DatabaseException(elgg_echo('DatabaseException:WrongCredentials'));
 		        if (!mysql_select_db($CONFIG->dbname, $dblink[$dblinkname]))
-		        	throw new DatabaseException("Elgg couldn't select the database {$CONFIG->dbname}.");
+		        	throw new DatabaseException(sprintf(elgg_echo('DatabaseException:NoConnect'), $CONFIG->dbname));
 			
 		}
 		
@@ -130,7 +130,7 @@
             global $CONFIG, $dbcalls;
             
             if (!callpath_gatekeeper($CONFIG->path . "engine/", true, true))
-            	throw new DatabaseException("Access to privileged function 'get_data()' is denied.");
+            	throw new SecurityException(sprintf(elgg_echo('SecurityException:FunctionDenied'), 'get_data()'));
             
             $dblink = get_db_link('read');
             
@@ -175,7 +175,7 @@
             global $CONFIG, $dbcalls;
             
             if (!callpath_gatekeeper($CONFIG->path . "engine/", true, true))
-            	throw new DatabaseException("Access to privileged function 'get_data_row()' is denied.");
+            	throw new SecurityException(sprintf(elgg_echo('SecurityException:FunctionDenied'), 'get_data_row()'));
             
             $dblink = get_db_link('read');
             
@@ -214,7 +214,7 @@
             global $CONFIG, $dbcalls;
             
             if (!callpath_gatekeeper($CONFIG->path . "engine/", true, true))
-            	throw new DatabaseException("Access to privileged function 'insert_data()' is denied.");
+            	throw new SecurityException(sprintf(elgg_echo('SecurityException:FunctionDenied'), 'insert_data()'));
             
             $dblink = get_db_link('write');
             
@@ -241,7 +241,7 @@
             global $dbcalls, $CONFIG;
             
             if (!callpath_gatekeeper($CONFIG->path . "engine/", true, true))
-            	throw new DatabaseException("Access to privileged function 'update_data()' is denied.");
+            	throw new SecurityException(sprintf(elgg_echo('SecurityException:FunctionDenied'), 'update_data()'));
             
             $dblink = get_db_link('write');
             
@@ -269,7 +269,7 @@
             global $dbcalls, $CONFIG;
             
             if (!callpath_gatekeeper($CONFIG->path . "engine/", true, true))
-            	throw new DatabaseException("Access to privileged function 'delete_data()' is denied.");
+            	throw new SecurityException(sprintf(elgg_echo('SecurityException:FunctionDenied'), 'delete_data()'));
             
             $dblink = get_db_link('write');
             
@@ -361,11 +361,11 @@
         			$errortxt = "";
         			foreach($errors as $error)
         				$errortxt .= " {$error};";
-        			throw new DatabaseException("There were a number of issues: " . $errortxt);
+        			throw new DatabaseException(elgg_echo('DatabaseException:DBSetupIssues') . $errortxt);
         		}
         		
         	} else {
-        		throw new DatabaseException("Elgg couldn't find the requested database script at {$scriptlocation}.");
+        		throw new DatabaseException(sprintf(elgg_echo('DatabaseException:ScriptNotFound'), $scriptlocation));
         	}
         	
         }

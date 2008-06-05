@@ -22,7 +22,55 @@
 			'actionloggedout' => "Sorry, you cannot perform this action while logged out.",
 	
 			'notfound' => "The requested resource could not be found, or you do not have access to it.",
-	
+			
+			'SecurityException:Codeblock' => "Denied access to execute privileged code block",
+			'DatabaseException:WrongCredentials' => "Elgg couldn't connect to the database using the given credentials.",
+			'DatabaseException:NoConnect' => "Elgg couldn't select the database %s.",
+			'SecurityException:FunctionDenied' => "Access to privileged function '%s' is denied.",
+			'DatabaseException:DBSetupIssues' => "There were a number of issues: ",
+			'DatabaseException:ScriptNotFound' => "Elgg couldn't find the requested database script at %s.",
+			
+			'IOException:FailedToLoadGUID' => "Failed to load new %s from GUID:%d",
+			'InvalidParameterException:NonElggObject' => "Passing a non-ElggObject to an ElggObject constructor!",
+			'InvalidParameterException:UnrecognisedValue' => "Unrecognised value passed to constuctor.",
+			
+			'InvalidClassException:NotValidElggStar' => "GUID:%d is not a valid %s",
+			
+			'PluginException:MisconfiguredPlugin' => "%s is a misconfigured plugin.",
+			
+			'InvalidParameterException:NonElggUser' => "Passing a non-ElggUser to an ElggUser constructor!",
+			
+			'InvalidParameterException:NonElggSite' => "Passing a non-ElggSite to an ElggSite constructor!",
+			
+			'IOException:UnableToSaveNew' => "Unable to save new %s",
+			
+			'InvalidParameterException:GUIDNotForExport' => "GUID has not been specified during export, this should never happen.",
+			'InvalidParameterException:NonArrayReturnValue' => "Entity serialisation function passed a non-array returnvalue parameter",
+			
+			'ConfigurationException:NoCachePath' => "Cache path set to nothing!",
+			'IOException:NotDirectory' => "%s is not a directory.",
+			
+			'IOException:BaseEntitySaveFailed' => "Unable to save new object's base entity information!",
+			'InvalidParameterException:UnexpectedODDClass' => "import() passed an unexpected ODD class",
+			'InvalidParameterException:EntityTypeNotSet' => "Entity type must be set.",
+			
+			'ClassException:ClassnameNotClass' => "%s is not a %s.",
+			'InstallationException:TypeNotSupported' => "Type %s is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.",
+
+			'ImportException:ImportFailed' => "Could not import element %d",
+			'ImportException:ProblemSaving' => "There was a problem saving %s",
+			'ImportException:NoGUID' => "New entity created but has no GUID, this should not happen.",
+			
+			'ImportException:GUIDNotFound' => "Entity '%d' could not be found.",
+			'ImportException:ProblemUpdatingMeta' => "There was a problem updating '%s' on entity '%d'",
+			
+			'ExportException:NoSuchEntity' => "No such entity GUID:%d", 
+			
+			'ImportException:NoODDElements' => "No OpenDD elements found in import data, import failed.",
+			'ImportException:NotAllImported' => "Not all elements were imported.",
+			
+			'InvalidParameterException:UnrecognisedFileMode' => "Unrecognised file mode '%s'",
+			
 		/**
 		 * User details
 		 */

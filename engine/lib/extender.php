@@ -49,7 +49,7 @@
 						//case 'file' :
 						case 'text' : return ($this->attributes['value']);
 							
-						default : throw new InstallationException("Type {$this->attributes['value_type']} is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.");
+						default : throw new InstallationException(sprintf(elgg_echo('InstallationException:TypeNotSupported'), $this->attributes['value_type']));
 					}
 				}
 				
@@ -250,7 +250,7 @@
 			$entity_uuid = $element->getAttribute('entity_uuid');
 			$entity = get_entity_from_uuid($entity_uuid);
 			if (!$entity)
-				throw new ImportException("Entity '$entity_uuid' could not be found.");
+				throw new ImportException(sprintf(elgg_echo('ImportException:GUIDNotFound'), $entity_uuid));
 			
 			// Get the type of extender (metadata, type, attribute etc)
 			$type = $element->getAttribute('type');
@@ -276,7 +276,7 @@
 	
 			// Save
 			if (!$entity->save())
-				throw new ImportException("There was a problem updating '$attr_name' on entity '$entity_uuid'");
+				throw new ImportException(sprintf(elgg_echo('ImportException:ProblemUpdatingMeta'), $attr_name, $entity_uuid));
 			
 			return true;
 		}

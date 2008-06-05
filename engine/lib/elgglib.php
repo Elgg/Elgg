@@ -859,7 +859,7 @@
 						register_error("ERROR: " . $error);
 						
 						// Since this is a fatal error, we want to stop any further execution but do so gracefully.
-						throw new Exception("ERROR: " . $error); 
+						throw new Exception($error); 
 					break;
 
 				case E_WARNING :
@@ -1159,7 +1159,7 @@
 			}
 		}
 		
-		throw new SecurityException("Denied access to execute privileged code block");
+		throw new SecurityException(elgg_echo("SecurityException:Codeblock"));
 	}
 	
 	/**

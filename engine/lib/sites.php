@@ -54,7 +54,7 @@
 				if ($guid instanceof stdClass) {			
 					// Load the rest
 					if (!$this->load($guid->guid))
-						throw new IOException("Failed to load new ElggSite from GUID:$guid->guid"); 
+						throw new IOException(sprintf(elgg_echo('IOException:FailedToLoadGUID'), get_class(), $guid->guid)); 
 				}
 				
 				// Is $guid is an ElggSite? Use a copy constructor
@@ -66,7 +66,7 @@
 				
 				// Is this is an ElggEntity but not an ElggSite = ERROR!
 				else if ($guid instanceof ElggEntity)
-					throw new InvalidParameterException("Passing a non-ElggSite to an ElggSite constructor!");
+					throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonElggSite'));
 					
 				// See if this is a URL
 				else if (strpos($guid, "http")!==false)
@@ -79,11 +79,11 @@
 					
 				// We assume if we have got this far, $guid is an int
 				else if (is_numeric($guid)) {				
-					if (!$this->load($guid)) throw new IOException("Could not create a new ElggSite object from GUID:$guid");
+					if (!$this->load($guid)) throw new IOException(sprintf(elgg_echo('IOException:FailedToLoadGUID'), get_class(), $guid));
 				}
 				
 				else
-					throw new IOException("Unrecognised value passed to constuctor.");
+					throw new InvalidParameterException(elgg_echo('InvalidParameterException:UnrecognisedValue'));
 			}
 		}
 		
@@ -119,7 +119,7 @@
 
 			// Check the type
 			if ($this->attributes['type']!='site')
-				throw new InvalidClassException("GUID:$guid is not a valid ElggSite");
+				throw new InvalidClassException(sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $guid, get_class()));
 				
 			// Load missing data
 			$row = get_site_entity_as_row($guid);

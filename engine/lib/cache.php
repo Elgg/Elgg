@@ -98,7 +98,7 @@
 			$this->set_variable("max_age", $max_age);
 			$this->set_variable("max_size", $max_size);	
 
-			if ($cache_path=="") throw new ConfigurationException("Cache path set to nothing!");
+			if ($cache_path=="") throw new ConfigurationException(elgg_echo('ConfigurationException:NoCachePath'));
 		}
 		
 		/**
@@ -197,7 +197,7 @@
 			$exclude = array(".","..");
 			
 			$files = scandir($dir);
-			if (!$files) throw new IOException("$dir is not a directory.");
+			if (!$files) throw new IOException(sprintf(elgg_echo('IOException:NotDirectory'), $dir));
 			
 			// Perform cleanup
 			foreach ($files as $f)
