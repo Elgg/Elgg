@@ -12,3 +12,4 @@
 	$log_entry = $vars['log_entry'];
 	$object = $vars['object'];
 ?>
+<?php echo $object->name; ?> logged in

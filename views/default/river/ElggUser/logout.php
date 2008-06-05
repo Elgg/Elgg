@@ -13,4 +13,4 @@
 	$object = $vars['object'];
 	
 ?>
-Logged in out
+<?php echo $object->name; ?> logged out
