@@ -19,12 +19,11 @@
 	 
 	 // Set title
 		if (empty($vars['title'])) {
-			$title = $vars['sitename'];
-		} else if (empty($vars['sitename'])) {
+			$title = $vars['config']->sitename;
+		} else if (empty($vars['config']->sitename)) {
 			$title = $vars['title'];
 		} else {
-			//$title = $vars['sitename'] . ": " . $vars['title'];
-			$title = $vars['title'];
+			$title = $vars['config']->sitename . ": " . $vars['title'];
 		}
 		
 ?>
