@@ -33,7 +33,7 @@
 		<p>
 			<?php echo elgg_echo($field); ?><br />
 			<?php 
-				echo elgg_view("input/text",array('internalname' => $field, 'value' => $vars[$field])); 
+				echo elgg_view("input/text",array('internalname' => $field, 'value' => $vars['config']->$field)); 
 			?>
 		</p>
 	

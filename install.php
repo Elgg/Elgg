@@ -20,7 +20,7 @@
 	/**
 	 * If we're installed, go back to the homepage
 	 */
-		if (is_installed() && is_db_installed())
+		if ((is_installed() && is_db_installed() && datalist_get('installed')))
 			forward("index.php");
 		
 	/**

@@ -15,7 +15,7 @@
 
 	<h2><?php echo elgg_echo('register'); ?></h2>
 	<div id="register-box">
-		<form action="<?php echo $vars['url']; ?>action_handler.php" method="POST">
+		<form action="<?php echo $vars['url']; ?>action/register" method="POST">
 			<p><label><?php echo elgg_echo('name'); ?><br /><input name="name" type="text" class="general-textarea" /></label><br />
 			<label><?php echo elgg_echo('email'); ?><br /><input name="email" type="text" class="general-textarea" /></label><br />
 			<label><?php echo elgg_echo('username'); ?><br /><input name="username" type="text" class="general-textarea" /></label><br />

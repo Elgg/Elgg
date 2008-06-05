@@ -906,6 +906,10 @@
 		function datalist_get($name) {
 			
 			global $CONFIG;
+			
+			// We need this, because sometimes datalists are received before the database is created
+			if (!is_db_installed()) return false;
+			
 			$name = sanitise_string($name);
 			if ($row = get_data_row("select value from {$CONFIG->dbprefix}datalists where name = '{$name}'")) {
 				return $row->value;

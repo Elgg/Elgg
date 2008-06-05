@@ -23,6 +23,8 @@
 			$site->access_id = 2; // The site is public
 			$site->save();
 			
+			datalist_set('installed',time());
+			
 			datalist_set('path',get_input('path'));
 			datalist_set('dataroot',get_input('dataroot'));
 			
