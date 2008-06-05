@@ -29,6 +29,8 @@
 			
 		}
 		
+		$body.= elgg_view("river/shell", array('river' => get_river_entries()));
+		
 		page_draw($title, $body);
 		
 ?>
