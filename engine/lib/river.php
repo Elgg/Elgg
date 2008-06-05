@@ -22,6 +22,8 @@
 	 * 
 	 * It returns an array of the result of each of these views.
 	 * 
+	 * \TODO: Limit to just one user or just one user's friends
+	 * 
 	 * @param int $limit
 	 * @param int $offset
 	 * @return array
