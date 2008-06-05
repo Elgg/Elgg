@@ -13,7 +13,7 @@
 	$river = $vars['river'];
 ?>
 <div id="river">
-	<h1><?php elgg_echo('river'); ?></h1>
+	<h1><?php echo elgg_echo('river'); ?></h1>
 	<?	
 	foreach ($river as $r)
 		echo $r;
