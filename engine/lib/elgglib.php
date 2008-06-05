@@ -116,6 +116,9 @@
 		            $vars['page_owner_user'] = $usercache[$vars['page_owner']];
 		        }
 		    }
+		    if (!isset($vars['js'])) {
+		    	$vars['js'] = "";
+		    }
 		     
 		// If it's been requested, pass off to a template handler instead
 		    if ($bypass == false && isset($CONFIG->template_handler) && !empty($CONFIG->template_handler)) {

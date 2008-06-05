@@ -165,7 +165,11 @@
 				default: throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:UnrecognisedFileMode'), $mode));
 			}
 			
-			return fopen($fullname, $mode);
+			if (file_exists($fullname)) {
+				return fopen($fullname, $mode);
+			} else {
+				return false;
+			}
 		}
 		
 		public function write($f, $data)
@@ -233,6 +237,7 @@
 		 */
 		protected function make_directory_root($dirroot)
 		{
+			if (!file_exists($dirroot))
 			if (!@mkdir($dirroot, 0700, true)) 
 				throw new IOException(sprintf(elgg_echo('IOException:CouldNotMake'), $dirroot));
 				
