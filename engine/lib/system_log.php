@@ -123,6 +123,6 @@
 	}
 	
 	/** Register event to listen to all events **/
-	register_event_handler('all','all','system_log_listener');
+	register_event_handler('all','all','system_log_listener', 400);
 	
 ?>

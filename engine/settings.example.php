@@ -10,7 +10,8 @@
 	 */
 
 		global $CONFIG;
-		$CONFIG = new stdClass;
+		if (!isset($CONFIG))
+			$CONFIG = new stdClass;
 
 	/*
 	 * Standard configuration
