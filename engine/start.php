@@ -26,13 +26,11 @@
 		}
 		
 		if (!@include_once(dirname(__FILE__) . "/lib/system_log.php")) {		// Logging library
-			echo "Error in installation: could not load the System Log library.";
-			exit;
+			throw new InstallationException("Error in installation: could not load the System Log library.");
 		}
 	
 		if (!@include_once(dirname(__FILE__) . "/lib/export.php")) {		// Export library
-			echo "Error in installation: could not load the Export library.";
-			exit;
+			throw new InstallationException("Error in installation: could not load the Export library.");
 		}
 		
 	/**
