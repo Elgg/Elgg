@@ -19,7 +19,13 @@
 		$name = get_input('name');
 		
 	// For now, just try and register the user
-		if (register_user($username, $password, $name, $email)) {
+		if (
+			(
+				(trim($password)!="") &&
+				(strcmp($password, $password2)==0) 
+			) &&
+			(register_user($username, $password, $name, $email))
+		) {
 			system_message(sprintf(elgg_echo("registerok"),$CONFIG->sitename));
 		} else {
 			system_message(elgg_echo("registerbad"));
