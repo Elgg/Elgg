@@ -26,7 +26,7 @@
 	
 	// Check to see if the api is available
 	if ((isset($CONFIG->disable_api)) && ($CONFIG->disable_api == true))
-		throw new ConfigurationException("Sorry, API access has been disabled by the administrator.");
+		throw new SecurityException(elgg_echo('SecurityException:APIAccessDenied'));
 
 	// Register some default PAM methods, plugins can add their own
 	register_pam_handler('pam_auth_session');
@@ -47,11 +47,11 @@
 		$result = execute_method($method, $params, $token);
 	}
 	else
-		throw new SecurityException("No authentication methods were found that could authenticate this API request.");
+		throw new SecurityException(elgg_echo('SecurityException:NoAuthMethods'));
 	
 	// Finally output
 	if (!($result instanceof GenericResult))
-		throw new APIException("API Result is of an unknown type, this should never happen.");
+		throw new APIException(elgg_echo('APIException:ApiResultUnknown'));
 
 	// Output the result
 	page_draw($method, elgg_view("api/output", array("result" => $result)));

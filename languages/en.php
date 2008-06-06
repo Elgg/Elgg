@@ -94,6 +94,10 @@
 			'InvalidParameterException:DoesNotBelong' => "Does not belong to entity.",
 			'InvalidParameterException:DoesNotBelongOrRefer' => "Does not belong to entity or refer to entity.",
 			'InvalidParameterException:MissingParameter' => "Missing parameter, you need to provide a GUID.",
+			
+			'SecurityException:APIAccessDenied' => "Sorry, API access has been disabled by the administrator.",
+			'SecurityException:NoAuthMethods' => "No authentication methods were found that could authenticate this API request.",
+			'APIException:ApiResultUnknown' => "API Result is of an unknown type, this should never happen.", 
 		/**
 		 * User details
 		 */
