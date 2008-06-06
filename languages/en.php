@@ -79,6 +79,12 @@
 			'NotificationException:ErrorNotifyingGuid' => "There was an error while notifying %d",
 			'NotificationException:NoEmailAddress' => "Could not get the email address for GUID:%d",
 			
+			'DatabaseException:WhereSetNonQuery' => "Where set contains non WhereQueryComponent",
+			'DatabaseException:SelectFieldsMissing' => "Fields missing on a select style query",
+			'DatabaseException:UnspecifiedQueryType' => "Unrecognised or unspecified query type.",
+			'DatabaseException:NoTablesSpecified' => "No tables specified for query.",
+			'DatabaseException:NoACL' => "No access control was provided on query",
+			
 		/**
 		 * User details
 		 */

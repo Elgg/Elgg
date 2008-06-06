@@ -362,8 +362,8 @@
 			$string = " (";
 			foreach ($this->wheres as $where) {
 				if (!($where instanceof WhereQueryComponent))
-					throw new DatabaseException("Where set contains non WhereQueryComponent");
-				
+					throw new DatabaseException(elgg_echo('DatabaseException:WhereSetNonQuery'));
+			
 				if (!$cnt)
 					$string.= $where->toStringNoLink();
 				else
@@ -650,10 +650,10 @@
 						$sql .= " $fields from ";
 					}
 					else
-						throw new DatabaseException("Fields missing on a select style query");
+						throw new DatabaseException(elgg_echo('DatabaseException:SelectFieldsMissing'));
 				}
 				else
-					throw new DatabaseException("Unrecognised or unspecified query type.");
+					throw new DatabaseException(elgg_echo('DatabaseException:UnspecifiedQueryType'));
 						
 				// Tables
 				if (!empty($this->tables)) 
@@ -664,7 +664,7 @@
 					$sql = trim($sql, ", ");
 				}
 				else
-					throw new DatabaseException("No tables specified for query.");
+					throw new DatabaseException(elgg_echo('DatabaseException:NoTablesSpecified'));
 				
 				// Joins on select queries
 				if ($this->query_type->query_type == 'select') 
@@ -710,7 +710,7 @@
 					$sql .= "{$this->access_control} ";
 				} 
 				else
-					throw new DatabaseException("No access control was provided on query");
+					throw new DatabaseException(elgg_echo('DatabaseException:NoACL'));
 					
 				// Order by
 				if (!empty($this->order))
