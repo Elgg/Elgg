@@ -85,6 +85,8 @@
 			'DatabaseException:NoTablesSpecified' => "No tables specified for query.",
 			'DatabaseException:NoACL' => "No access control was provided on query",
 			
+			'InvalidParameterException:NoEntityFound' => "No entity found, it either doesn't exist or you don't have access to it.",
+			
 		/**
 		 * User details
 		 */

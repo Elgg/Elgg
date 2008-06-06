@@ -12,7 +12,7 @@
 	 */
 
 	$entity = $vars['entity'];
-	if (!$entity) throw new InvalidParameterException("No entity found, it either doesn't exist or you don't have access to it.");
+	if (!$entity) throw new InvalidParameterException(elgg_echo('InvalidParameterException:NoEntityFound'));
 	
 	$metadata = get_metadata_for_entity($entity->guid);
 	$annotations = get_annotations($entity->guid);
