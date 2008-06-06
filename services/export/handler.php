@@ -48,7 +48,7 @@
 		{
 			case 'attr' : // TODO: Do this better? - This is a bit of a hack...
 				$v = $entity->get($id_or_name);
-				if (!$v) throw new InvalidParameterException("Sorry, '$id_or_name' does not exist for guid:$guid");
+				if (!$v) throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:IdNotExistForGUID'), $id_or_name, $guid));
 				
 				$m = new ElggMetadata();
 				
@@ -72,18 +72,18 @@
 			break;
 				
 			default :
-				throw new InvalidParameterException("Sorry, I don't know how to export '$type'");
+				throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:CanNotExportType'), $type));
 		}
 		
 		// Render metadata or relationship
 		if ((!$m) && (!$r))
-			throw new InvalidParameterException("Could not find any data.");
+			throw new InvalidParameterException(elgg_echo('InvalidParameterException:NoDataFound'));
 			
 		// Exporting metadata?
 		if ($m)
 		{
 			if ($m->entity_guid!=$entity->guid)
-				throw new InvalidParameterException("Does not belong to entity.");
+				throw new InvalidParameterException(elgg_echo('InvalidParameterException:DoesNotBelong'));
 			
 			page_draw("$type:$id_or_name", elgg_view("export/metadata", array("metadata" => $m, "uuid" => $uuid)));
 		}
@@ -95,7 +95,7 @@
 				($r->guid_one!=$entity->guid) ||
 				($r->guid_two!=$entity->guid)
 			)
-				throw new InvalidParameterException("Does not belong to entity or refer to entity.");
+				throw new InvalidParameterException(elgg_echo('InvalidParameterException:DoesNotBelongOrRefer'));
 			
 			page_draw("$type:$id_or_name", elgg_view("export/relationship", array("relationship" => $r, "uuid" => $uuid)));
 		}
@@ -103,6 +103,6 @@
 	
 	// Something went wrong
 	else
-		throw new InvalidParameterException("Missing parmeter, you need to provide a GUID ");
+		throw new InvalidParameterException(elgg_echo('InvalidParameterException:MissingParameter'));
 	
 ?>
