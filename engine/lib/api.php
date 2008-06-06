@@ -223,7 +223,7 @@
 		$site = (int)$site;
 		$token = sanitise_string($token);
 		
-		if (!$site) throw new ConfigurationException("No site ID has been specified.");
+		if (!$site) throw new ConfigurationException(elgg_echo('ConfigurationException:NoSiteID'));
 		
 		$time = time();
 		
@@ -274,7 +274,7 @@
 				case 'POST' : $METHODS[$method]["call_method"] = 'POST'; break;
 				case 'GET' : $METHODS[$method]["call_method"] = 'GET'; break;
 				default : 
-					throw new InvalidParameterException("Unrecognised call method '$call_method'");
+					throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:UnrecognisedMethod'), $method));
 			}
 				
 			$METHODS[$method]["description"] = $description;
@@ -333,7 +333,7 @@
 									(!isset($parameters[$key])) &&				// No parameter
 									((!isset($value['required'])) || ($value['required']!=true)) // and not optional
 								)
-									throw new APIException("Missing parameter $key in method $method");
+									throw new APIException(sprintf(elgg_echo('APIException:MissingParameterInMethod'), $key, $method));
 								else
 								{
 									// Avoid debug error
@@ -371,20 +371,20 @@
 																$array = trim($array,",");
 															}
 															else
-																throw APIException("$key does not appear to be an array.");
+																throw APIException(sprintf(elgg_echo('APIException:ParameterNotArray'), $key));
 																
 															$array .= ")";
 															
 															$serialised_parameters .= $array;
 														break;
 				
-											default : throw new APIException("Unrecognised type in cast {$value['type']} for variable '$key' in method '$method'");
+											default : throw new APIException(sprintf(elgg_echo('APIException:UnrecognisedTypeCast'), $value['type'], $key, $method));
 										}
 									}
 								}
 							}
 							else
-								throw new APIException("Invalid parameter found for '$key' in method '$method'.");
+								throw new APIException(sprintf(elgg_echo('APIException:InvalidParameter'), $key, $method));
 						}
 					}
 					
@@ -399,22 +399,22 @@
 						return $result; 
 						
 					if ($result === FALSE)
-						throw new APIException("$function($serialised_parameters) has a parsing error.");
+						throw new APIException(sprintf(elgg_echo('APIException:FunctionParseError'), $function, $serialised_parameters));
 						
 					if ($result ===  NULL)
-						throw new APIException("$function($serialised_parameters) returned no value."); // If no value
+						throw new APIException(sprintf(elgg_echo('APIException:FunctionNoReturn'), $function, $serialised_parameters)); // If no value
 					
 					return SuccessResult::getInstance($result); // Otherwise assume that the call was successful and return it as a success object.	
 				}
 				else
-					throw new SecurityException("Authentication token either missing, invalid or expired.", GenericResult::$RESULT_FAIL_AUTHTOKEN); 
+					throw new SecurityException(elgg_echo('SecurityException:AuthTokenExpired'), GenericResult::$RESULT_FAIL_AUTHTOKEN); 
 			}	
 			else
-				throw new CallException("$method must be called using '{$METHODS[$method]["call_method"]}'");
+				throw new CallException(sprintf(elgg_echo('CallException:InvalidCallMethod'), $method, $METHODS[$method]["call_method"]));
 		}
 		
 		// Return an error if not found
-		throw new APIException("Method call '$method' has not been implemented."); 
+		throw new APIException(sprintf(elgg_echo('APIException:MethodCallNotImplemented'), $method)); 
 	}
 		
 	// System functions ///////////////////////////////////////////////////////////////////////
@@ -455,7 +455,7 @@
 		if (array_key_exists($algo, $supported_algos))
 			return $supported_algos[$algo];
 			
-		throw new APIException("Algorithm '$algo' is not supported or has been disabled.");
+		throw new APIException(sprintf(elgg_echo('APIException:AlgorithmNotSupported'), $algo));
 	}
 	
 	/**
@@ -516,7 +516,7 @@
 
 		$cache_dir = $CONFIG->cache_path;
 		if (!$cache_dir)
-			throw new ConfigurationException("Cache directory 'cache_path' not set.");
+			throw new ConfigurationException(elgg_echo('ConfigurationException:CacheDirNotSet'));
 			
 		$cache = new ElggFileCache($cache_dir, 90000); // cache lifetime is 25 hours (see time window in get_and_validate_api_headers() )
 		
@@ -560,43 +560,43 @@
 		
 		$result->method = $_SERVER['REQUEST_METHOD'];
 		if (($result->method != "GET") && ($result->method!= "POST")) // Only allow these methods
-			throw new APIException("Request method must be GET or POST");
+			throw new APIException(elgg_echo('APIException:NotGetOrPost'));
 
 		$result->api_key = $_SERVER['HTTP_X_ELGG_APIKEY'];
 		if ($result->api_key == "")
-			throw new APIException("Missing X-Elgg-apikey HTTP header");
+			throw new APIException(elgg_echo('APIException:MissingAPIKey'));
 		
 		$result->hmac = $_SERVER['HTTP_X_ELGG_HMAC'];
 		if ($result->hmac == "")
-			throw new APIException("Missing X-Elgg-hmac header");
+			throw new APIException(elgg_echo('APIException:MissingHmac'));
 		
 		$result->hmac_algo = $_SERVER['HTTP_X_ELGG_HMAC_ALGO'];
 		if ($result->hmac_algo == "")
-			throw new APIException("Missing X-Elgg-hmac-algo header");
+			throw new APIException(elgg_echo('APIException:MissingHmacAlgo'));
 		
 		$result->time = $_SERVER['HTTP_X_ELGG_TIME'];
 		if ($result->time == "") 
-			throw new APIException("Missing X-Elgg-time header"); 
+			throw new APIException(elgg_echo('APIException:MissingTime')); 
 		if (($result->time<(microtime(true)-86400.00)) || ($result->time>(microtime(true)+86400.00))) // Basic timecheck, think about making this smaller if we get loads of users and the cache gets really big.
-			throw new APIException("X-Elgg-time is too far in the past or future");
+			throw new APIException(elgg_echo('APIException:TemporalDrift'));
 		
 		$result->get_variables = $_SERVER['QUERY_STRING'];
 		if ($result->get_variables == "")
-			throw new APIException("No data on the query string");
+			throw new APIException(elgg_echo('APIException:NoQueryString'));
 
 		if ($result->method=="POST")
 		{
 			$result->posthash = $_SERVER['HTTP_X_ELGG_POSTHASH'];
 			if ($result->posthash == "") 
-				throw new APIException("Missing X-Elgg-posthash header");
+				throw new APIException(elgg_echo('APIException:MissingPOSTHash'));
 			
 			$result->posthash_algo = $_SERVER['HTTP_X_ELGG_POSTHASH_ALGO'];
 			if ($result->posthash_algo == "") 
-				throw new APIException("Missing X-Elgg-posthash_algo header");
+				throw new APIException(elgg_echo('APIException:MissingPOSTAlgo'));
 				
 			$result->content_type = $_SERVER['CONTENT_TYPE'];
 			if ($result->content_type == "")
-				throw new APIException("Missing content type for post data");
+				throw new APIException(elgg_echo('APIException:MissingContentType'));
 		}
 		
 		return $result;
@@ -662,20 +662,20 @@
 						$calculated_posthash = calculate_posthash($postdata, $api_header->posthash_algo);
 
 						if (strcmp($api_header->posthash, $calculated_posthash)!=0)
-							throw new SecurityException("POST data hash is invalid - Expected $calculated_posthash but got {$api_header->posthash}.");
+							throw new SecurityException(sprintf(elgg_echo('SecurityException:InvalidPostHash'), $calculated_posthash, $api_header->posthash));
 					}
 					
 					// If we've passed all the checks so far then we can be reasonably certain that the request is authentic, so return this fact to the PAM engine.
 					return true;
 				}
 				else
-					throw new SecurityException("Packet signature already seen.");
+					throw new SecurityException(elgg_echo('SecurityException:DupePacket'));
 			}
 			else 
 				throw new SecurityException("HMAC is invalid.  {$api_header->hmac} != [calc]$hmac = {$api_header->hmac_algo}(**SECRET KEY**, time:{$api_header->time}, apikey:{$api_header->api_key}, get_vars:{$api_header->get_variables}" . ($api_header->method=="POST"? "posthash:$api_header->posthash}" : ")"));
 		}
 		else
-			throw new SecurityException("Invalid or missing API Key.",ErrorResult::$RESULT_FAIL_APIKEY_INVALID);
+			throw new SecurityException(elgg_echo('SecurityException:InvalidAPIKey'),ErrorResult::$RESULT_FAIL_APIKEY_INVALID);
 			
 		return false;
 	}
