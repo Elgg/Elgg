@@ -23,16 +23,22 @@
 	 * It returns an array of the result of each of these views.
 	 * 
 	 * \TODO: Limit to just one user or just one user's friends
+	 * \TODO: Make this more efficient / reduce DB queries.
 	 * 
-	 * @param int $limit
-	 * @param int $offset
+	 * @param int $by_user The user who initiated the event.
+	 * @param string $relationship Limit return results to only those users who $by_user has $relationship with.
+	 * @param int $limit Maximum number of events to show
+	 * @param int $offset An offset
 	 * @return array
 	 */
-	function get_river_entries($limit = 10, $offset = 0)
+	function get_river_entries($by_user = "", $relationship = "", $limit = 10, $offset = 0)
 	{
 		// set start limit and offset
-		$cnt = $limit;
-		$off = $offset;
+		$cnt = $limit; // Didn' cast to int here deliberately
+		$off = $offset; // here too
+		$by_user = (int)$by_user;
+		if ($by_user)
+			$by_user_obj = get_entity($by_user);
 		
 		$exit = false;
 		
@@ -41,7 +47,7 @@
 		
 		do
 		{
-			$log_events = get_system_log("","", $cnt, $off);
+			$log_events = get_system_log($by_user, "","", $cnt, $off);
 			
 			if (!$log_events)
 				$exit = true;
@@ -59,20 +65,30 @@
 					// Exists and we have access to it
 					if (is_a($object, $class))
 					{
-						// See if anything can handle it
-						$tam = "";
-						
-						// test if view exist and if so
-						$tam = elgg_view("river/$class/$event", array(
-							'performed_by' => get_entity($log->performed_by_guid),
-							'log_entry' => $log,
-							'object' => $object
-						));
-						
-						if ($tam)
+						// If no relationship defined or it matches $relationship
+						if (
+							(!$relationship) || 
+							(
+								($relationship) &&
+								(check_entity_relationship($by_user, $relationship, $log->getObjectOwnerGUID()))
+							)
+						)
 						{
-							$river[] = $tam;
-							$cnt--;
+							// See if anything can handle it
+							$tam = "";
+							
+							// test if view exist and if so
+							$tam = elgg_view("river/$class/$event", array(
+								'performed_by' => ($by_user_obj instanceof ElggUser) ? $by_user_obj : get_entity($log->performed_by_guid),
+								'log_entry' => $log,
+								'object' => $object
+							));
+							
+							if ($tam)
+							{
+								$river[] = $tam;
+								$cnt--;
+							}
 						}
 					}
 					

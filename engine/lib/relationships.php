@@ -191,6 +191,11 @@
 		 */
 		public function getObjectFromID($id) { return get_relationship($id); }
 		
+		/**
+		 * Return the GUID of the owner of this object.
+		 */
+		public function getObjectOwnerGUID() { return $this->owner_guid; }
+		
 		// ITERATOR INTERFACE //////////////////////////////////////////////////////////////
 		/*
 		 * This lets an entity's attributes be displayed using foreach as a normal array.

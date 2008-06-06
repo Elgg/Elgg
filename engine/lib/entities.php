@@ -557,6 +557,11 @@
 		 * This is useful for checking access permissions etc on objects.
 		 */
 		public function getObjectFromID($id) { return get_entity($id); }
+		
+		/**
+		 * Return the GUID of the owner of this object.
+		 */
+		public function getObjectOwnerGUID() { return $this->owner_guid; }
 
 		// ITERATOR INTERFACE //////////////////////////////////////////////////////////////
 		/*

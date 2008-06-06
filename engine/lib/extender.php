@@ -146,6 +146,11 @@
 		 */
 		public function getClassName() { return get_class($this); }
 		
+		/**
+		 * Return the GUID of the owner of this object.
+		 */
+		public function getObjectOwnerGUID() { return $this->owner_guid; }
+		
 		
 		// ITERATOR INTERFACE //////////////////////////////////////////////////////////////
 		/*

@@ -44,29 +44,36 @@
 		 * This is useful for checking access permissions etc on objects.
 		 */
 		public function getObjectFromID($id);
+		
+		/**
+		 * Return the GUID of the owner of this object.
+		 */
+		public function getObjectOwnerGUID();
 	}
 	
 	/**
 	 * Retrieve the system log based on a number of parameters.
 	 * 
+	 * @param int $by_user The user who initiated the event.
 	 * @param string $event The event you are searching on.
 	 * @param string $class The class of object it effects.
 	 * @param int $limit Maximum number of responses to return.
 	 * @param int $offset Offset of where to start.
 	 */
-	function get_system_log($event = "", $class = "", $limit = 10, $offset = 0)
+	function get_system_log($by_user = "", $event = "", $class = "", $limit = 10, $offset = 0)
 	{
 		global $CONFIG;
 		
+		$by_user = (int)$by_user;
 		$event = sanitise_string($event);
 		$class = sanitise_string($class);
 		$limit = (int)$limit;
 		$offset = (int)$offset;
 		
-		$access = get_access_list();
-		
 		$where = array();
 		
+		if ($by_user != "")
+			$where[] = "performed_by_guid=$by_user";
 		if ($event != "")
 			$where[] = "event='$event'";
 		if ($class!=="")
