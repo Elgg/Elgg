@@ -386,7 +386,7 @@
 		 */
 		public function save()
 		{
-			if (($this->get('guid') != "") || ($this->get('guid') > 0))
+			if (!empty($this->guid))
 			{ 
 				return update_entity(
 					$this->get('guid'),
