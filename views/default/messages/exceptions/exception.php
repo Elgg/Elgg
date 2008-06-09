@@ -14,6 +14,7 @@
 	 * @uses $vars['object'] An exception
 	 */
 
+	global $CONFIG;
 ?>
 
 	<p class="messages-exception">
@@ -22,6 +23,12 @@
 
 			echo nl2br($vars['object']->getMessage());
 		
+			if ($CONFIG->debug)
+			{
+				echo "<br /><pre>";
+				print_r($vars['object']);
+				echo "</pre>";
+			}
 		?>
 		</span>
 	</p>
