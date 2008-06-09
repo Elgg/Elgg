@@ -79,7 +79,7 @@
 							$tam = "";
 							
 							// test if view exist and if so
-							if (isset($by_user_obj) && $by_user_job instanceof ElggUser) {
+							if (isset($by_user_obj) && $by_user_obj instanceof ElggUser) {
 							} else {
 								$by_user_obj = get_entity($log->performed_by_guid);
 							}
