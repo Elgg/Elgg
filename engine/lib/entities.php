@@ -468,7 +468,7 @@
 				
 				// Increment the portion counter
 				$this->attributes['tables_loaded'] ++;
-				echo "LOADED::: " . $this->attributes['tables_loaded'];	
+				
 				// Cache object handle
 				if ($this->attributes['guid']) cache_entity($this); 
 					
