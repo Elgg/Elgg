@@ -63,7 +63,8 @@
 					$object = $tmp->getObjectFromID($log->object_id);
 					
 					// Exists and we have access to it
-					if (is_a($object, $class))
+					// if (is_a($object, $class))
+					if ($object instanceof $class)
 					{
 						// If no relationship defined or it matches $relationship
 						if (
@@ -78,8 +79,12 @@
 							$tam = "";
 							
 							// test if view exist and if so
+							if (isset($by_user_obj) && $by_user_job instanceof ElggUser) {
+							} else {
+								$by_user_obj = get_entity($log->performed_by_guid);
+							}
 							$tam = elgg_view("river/$class/$event", array(
-								'performed_by' => ($by_user_obj instanceof ElggUser) ? $by_user_obj : get_entity($log->performed_by_guid),
+								'performed_by' => $by_user_obj,
 								'log_entry' => $log,
 								'object' => $object
 							));
