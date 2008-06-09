@@ -124,7 +124,8 @@
 				
 			// Load missing data
 			$row = get_site_entity_as_row($guid);
-						
+			if (($row) && (!$this->isFullyLoaded())) $this->attributes['tables_loaded'] ++;	// If $row isn't a cached copy then increment the counter
+			
 			// Now put these into the attributes array as core values
 			$objarray = (array) $row;
 			foreach($objarray as $key => $value) 
@@ -143,12 +144,7 @@
 				return false;
 			
 			// Now save specific stuff
-			$result = create_site_entity($this->get('guid'), $this->get('name'), $this->get('description'), $this->get('url'));
-		
-			// Increment the portion counter
-			if ($result) $this->attributes['tables_loaded'] ++;
-
-			return $result;
+			return create_site_entity($this->get('guid'), $this->get('name'), $this->get('description'), $this->get('url'));
 		}
 		
 		/**

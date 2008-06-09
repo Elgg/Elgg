@@ -115,6 +115,7 @@
 				
 			// Load missing data
 			$row = get_object_entity_as_row($guid);
+			if (($row) && (!$this->isFullyLoaded())) $this->attributes['tables_loaded'] ++;	// If $row isn't a cached copy then increment the counter
 						
 			// Now put these into the attributes array as core values
 			$objarray = (array) $row;
@@ -135,12 +136,7 @@
 				return false;
 			
 			// Now save specific stuff
-			$result = create_object_entity($this->get('guid'), $this->get('title'), $this->get('description'));
-		
-			// Increment the portion counter
-			if ($result) $this->attributes['tables_loaded'] ++;
-
-			return $result;
+			return create_object_entity($this->get('guid'), $this->get('title'), $this->get('description'));
 		}
 		
 		/**
