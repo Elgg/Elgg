@@ -34,8 +34,7 @@
 			$this->attributes['type'] = "object";
 			$this->attributes['title'] = "";
 			$this->attributes['description'] = "";
-			
-			
+			$this->attributes['tables_split'] = 2;
 		}
 				
 		/**

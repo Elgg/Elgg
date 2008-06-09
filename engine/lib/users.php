@@ -39,7 +39,7 @@
 			$this->attributes['email'] = "";
 			$this->attributes['language'] = "";
 			$this->attributes['code'] = "";
-			
+			$this->attributes['tables_split'] = 2;
 		}
 				
 		/**

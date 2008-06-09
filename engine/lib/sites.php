@@ -35,6 +35,7 @@
 			$this->attributes['name'] = "";
 			$this->attributes['description'] = "";
 			$this->attributes['url'] = "";
+			$this->attributes['tables_split'] = 2;
 		}
 				
 		/**
