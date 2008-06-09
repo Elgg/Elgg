@@ -23,12 +23,17 @@
 
 			echo nl2br($vars['object']->getMessage());
 		
-			if ($CONFIG->debug)
-			{
-				echo "<br /><pre>";
-				print_r($vars['object']);
-				echo "</pre>";
-			}
 		?>
 		</span>
 	</p>
+	
+	<?php if ($CONFIG->debug) { ?>
+	<hr />
+	<p class="messages-exception-detail">
+		<?php
+
+			echo nl2br(htmlentities(print_r($vars['object'], true)));
+		
+		?>
+	</p>
+	<?php } ?>
