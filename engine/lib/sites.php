@@ -225,7 +225,7 @@
 		
 		$guid = (int)$guid;
 		
-		$row = retrieve_cached_entity_row($guid);
+		/*$row = retrieve_cached_entity_row($guid);
 		if ($row)
 		{
 			// We have already cached this object, so retrieve its value from the cache
@@ -235,13 +235,13 @@
 			return $row;
 		}
 		else
-		{
+		{*/
 			// Object not cached, load it.
 			if ($CONFIG->debug)
 				error_log("** Sub part of GUID:$guid loaded from DB");
 		
 			return get_data_row("SELECT * from {$CONFIG->dbprefix}sites_entity where guid=$guid");
-		}
+		//}
 	}
 	
 	/**
