@@ -317,7 +317,7 @@
 		global $CONFIG;
 		
 		$row = retrieve_cached_entity_row($guid);
-		if ($row->isFullyLoaded())
+		if ($row)
 		{
 			// We have already cached this object, so retrieve its value from the cache
 			if ($CONFIG->debug)

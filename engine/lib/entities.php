@@ -724,7 +724,7 @@
 		$guid = (int)$guid;
 			
 		if (isset($ENTITY_CACHE[$guid])) 
-			return $ENTITY_CACHE[$guid];
+			if ($ENTITY_CACHE[$guid]->isFullyLoaded()) return $ENTITY_CACHE[$guid];
 				
 		return false;
 	}
