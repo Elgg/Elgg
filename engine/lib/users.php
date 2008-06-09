@@ -244,7 +244,7 @@
 		 */
 		function getFriends($subtype = "", $limit = 10, $offset = 0) { return get_user_friends($this->getGUID(), $subtype, $limit, $offset); }
 		
-	/**
+		/**
 		 * Retrieves a list of people who have made this user a friend
 		 *
 		 * @param string $subtype Optionally, the subtype of user to filter to (leave blank for all)
@@ -315,9 +315,25 @@
 	{
 		global $CONFIG;
 		
-		$guid = (int)$guid;
+		$row = retrieve_cached_entity_row($guid);
+		if ($row)
+		{
+			// We have already cached this object, so retrieve its value from the cache
+			if ($CONFIG->debug)
+				error_log("** Retrieving sub part of GUID:$guid from cache");
+				
+			return $row;
+		}
+		else
+		{
+			// Object not cached, load it.
+			if ($CONFIG->debug)
+				error_log("** Sub part of GUID:$guid loaded from DB");
+			
+			$guid = (int)$guid;
 		
-		return get_data_row("SELECT * from {$CONFIG->dbprefix}users_entity where guid=$guid");
+			return get_data_row("SELECT * from {$CONFIG->dbprefix}users_entity where guid=$guid");
+		}
 	}
 	
 	/**

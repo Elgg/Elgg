@@ -11,6 +11,9 @@
 	 * @link http://elgg.org/
 	 */
 
+	/// Cache objects in order to minimise database access.
+	$ENTITY_CACHE = array();
+	
 	/**
 	 * ElggEntity The elgg entity superclass
 	 * This class holds methods for accessing the main entities table.
@@ -33,6 +36,10 @@
 		 * Any field not appearing in this will be viewed as a 
 		 */
 		protected $attributes;
+
+		/**
+		 * Temporary cache for metadata, permitting meta data access before a guid has obtained.
+		 */
 		protected $temp_metadata;
 				
 		/**
@@ -45,6 +52,8 @@
 		 */
 		protected function initialise_attributes()
 		{
+			initialise_entity_cache();
+
 			// Create attributes array if not already created
 			if (!is_array($this->attributes)) $this->attributes = array();
 			if (!is_array($this->temp_metadata)) $this->temp_metadata = array();
@@ -389,6 +398,8 @@
 			$guid = (int) $this->guid;
 			if ($guid > 0)
 			{ 
+				cache_entity($this);
+
 				return update_entity(
 					$this->get('guid'),
 					$this->get('owner_guid'),
@@ -407,6 +418,9 @@
 						unset($this->temp_metadata[$name]);
 					}
 				}
+				
+				// Cache object handle
+				if ($this->attributes['guid']) cache_entity($this); 
 				
 				return $this->attributes['guid'];
 			}
@@ -431,6 +445,9 @@
 				foreach($objarray as $key => $value) 
 					$this->attributes[$key] = $value;
 				
+				// Cache object handle
+				if ($this->attributes['guid']) cache_entity($this); 
+					
 				return true;
 			}
 			
@@ -631,6 +648,83 @@
 	}
 
 	/**
+	 * Initialise the entity cache.
+	 */
+	function initialise_entity_cache()
+	{
+		global $ENTITY_CACHE;
+		
+		if (!is_array($ENTITY_CACHE))
+			$ENTITY_CACHE = array();
+	}
+	
+	/**
+	 * Invalidate this class' entry in the cache.
+	 * 
+	 * @param int $guid The guid
+	 */
+	function invalidate_cache_for_entity($guid)
+	{
+		global $ENTITY_CACHE;
+		
+		$guid = (int)$guid;
+			
+		unset($ENTITY_CACHE[$guid]);
+				
+	}
+	
+	/**
+	 * Cache an entity.
+	 * 
+	 * @param ElggEntity $entity Entity to cache
+	 */
+	function cache_entity(ElggEntity $entity)
+	{
+		global $ENTITY_CACHE;
+		
+		$ENTITY_CACHE[$entity->guid] = &$entity;
+	}
+	
+	/**
+	 * Retrieve a entity from the cache.
+	 * 
+	 * @param int $guid The guid
+	 */
+	function retrieve_cached_entity($guid)
+	{
+		global $ENTITY_CACHE;
+		
+		$guid = (int)$guid;
+			
+		if (isset($ENTITY_CACHE[$guid])) 
+			return $ENTITY_CACHE[$guid];
+				
+		return false;
+	}
+	
+	/**
+	 * As retrieve_cached_entity, but returns the result as a stdClass (compatible with load functions that
+	 * expect a database row.)
+	 * 
+	 * @param int $guid The guid
+	 */
+	function retrieve_cached_entity_row($guid)
+	{
+		$obj = retrieve_cached_entity($guid);
+		if ($obj)
+		{
+			$tmp = new stdClass;
+			
+			foreach ($obj as $k => $v)
+				$tmp->$k = $v;
+				
+			return $tmp;
+		}
+
+		return false;
+	}
+	
+	/**
 	 * Return the integer ID for a given subtype, or false.
 	 * 
 	 * TODO: Move to a nicer place?
@@ -815,9 +909,25 @@
 		
 		$guid = (int) $guid;
 		
-		$access = get_access_sql_suffix();
+		$row = retrieve_cached_entity_row($guid);
+		if ($row)
+		{
+			// We have already cached this object, so retrieve its value from the cache
+			if ($CONFIG->debug)
+				error_log("** Retrieving GUID:$guid from cache");
+
+			return $row;
+		}
+		else
+		{	
+			// Object not cached, load it.
+			if ($CONFIG->debug)
+				error_log("** GUID:$guid loaded from DB");
+			
+			$access = get_access_sql_suffix();
 		
-		return get_data_row("SELECT * from {$CONFIG->dbprefix}entities where guid=$guid and $access");
+			return get_data_row("SELECT * from {$CONFIG->dbprefix}entities where guid=$guid and $access");
+		}
 	}
 	
 	/**
