@@ -931,7 +931,7 @@
 			$dt = get_data($query, "entity_row_to_elggstar");
 			return $dt;
 		} else {
-			$total = get_data_row($query . "<br /><br />");
+			$total = get_data_row($query);
 			return $total->total;
 		}
 	}
