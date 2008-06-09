@@ -149,7 +149,12 @@
 				return false;
 		
 			// Now save specific stuff
-			return create_user_entity($this->get('guid'), $this->get('name'), $this->get('username'), $this->get('password'), $this->get('email'), $this->get('language'), $this->get('code'));
+			$result = create_user_entity($this->get('guid'), $this->get('name'), $this->get('username'), $this->get('password'), $this->get('email'), $this->get('language'), $this->get('code'));
+		
+			// Increment the portion counter
+			if ($result) $this->attributes['tables_loaded'] ++;
+
+			return $result;
 		}
 		
 		/**

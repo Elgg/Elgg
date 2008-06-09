@@ -142,7 +142,12 @@
 				return false;
 			
 			// Now save specific stuff
-			return create_site_entity($this->get('guid'), $this->get('name'), $this->get('description'), $this->get('url'));
+			$result = create_site_entity($this->get('guid'), $this->get('name'), $this->get('description'), $this->get('url'));
+		
+			// Increment the portion counter
+			if ($result) $this->attributes['tables_loaded'] ++;
+
+			return $result;
 		}
 		
 		/**

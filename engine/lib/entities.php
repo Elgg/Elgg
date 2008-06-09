@@ -65,6 +65,20 @@
 			$this->attributes['access_id'] = 0;
 			$this->attributes['time_created'] = "";
 			$this->attributes['time_updated'] = "";
+			
+			// There now follows a bit of a hack
+			/* Problem: To speed things up, some objects are split over several tables, this means that it requires
+			 * n number of database reads to fully populate an entity. This causes problems for caching and create events
+			 * since it is not possible to tell whether a subclassed entity is complete.
+			 * Solution: We have two counters, one 'tables_split' which tells whatever is interested how many tables 
+			 * are going to need to be searched in order to fully populate this object, and 'tables_loaded' which is how
+			 * many have been loaded thus far.
+			 * If the two are the same then this object is complete.
+			 * 
+			 * Use: isFullyLoaded() to check
+			 */
+			$this->attributes['tables_split'] = 1;
+			$this->attributes['tables_loaded'] = 0;
 		}
 				
 		/**
@@ -391,6 +405,13 @@
 		public function getURL() { return get_entity_url($this->getGUID()); }
 		
 		/**
+		 * Tests to see whether the object has been fully loaded.
+		 * 
+		 * @return bool
+		 */
+		public function isFullyLoaded() { return $this->attributes['tables_split'] == $this->attributes['tables_loaded']; }
+		
+		/**
 		 * Save generic attributes to the entities table.
 		 */
 		public function save()
@@ -445,6 +466,9 @@
 				foreach($objarray as $key => $value) 
 					$this->attributes[$key] = $value;
 				
+				// Increment the portion counter
+				$this->attributes['tables_loaded'] ++;
+					
 				// Cache object handle
 				if ($this->attributes['guid']) cache_entity($this); 
 					
@@ -499,6 +523,9 @@
 					case 'type' : 			// Don't use type
 					case 'access_id' : 		// Don't use access - if can export then its public for you, then importer decides what access to give this object.
 					case 'time_updated' : 	// Don't use date in export
+
+					case 'tables_split' :	// We don't want to export the internal counter variables.
+					case 'tables_loaded' :  // Or this one
 					break;
 					
 					case 'time_created' :	// Created = published

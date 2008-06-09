@@ -136,7 +136,12 @@
 				return false;
 			
 			// Now save specific stuff
-			return create_object_entity($this->get('guid'), $this->get('title'), $this->get('description'));
+			$result = create_object_entity($this->get('guid'), $this->get('title'), $this->get('description'));
+		
+			// Increment the portion counter
+			if ($result) $this->attributes['tables_loaded'] ++;
+
+			return $result;
 		}
 		
 		/**
