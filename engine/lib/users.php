@@ -150,9 +150,9 @@
 		
 			// Now save specific stuff
 			$result = create_user_entity($this->get('guid'), $this->get('name'), $this->get('username'), $this->get('password'), $this->get('email'), $this->get('language'), $this->get('code'));
-		
+		echo "ANOTHER LOAD: ".$this->attributes['tables_loaded']; 
 			// Increment the portion counter
-			if ($result) $this->attributes['tables_loaded'] ++;
+			$this->attributes['tables_loaded'] ++;
 
 			return $result;
 		}
