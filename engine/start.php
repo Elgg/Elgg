@@ -33,6 +33,10 @@
 			throw new InstallationException("Error in installation: could not load the Export library.");
 		}
 		
+		if (!@include_once(dirname(__FILE__) . "/lib/languages.php")) {		// Main Elgg library
+			throw new InstallationException("Elgg could not load its main library.");
+		}
+		
 	/**
 	 * Set light mode default
 	 */
@@ -86,7 +90,7 @@
 										'.','..',
 										'.svn',
 										'CVS','cvs',
-										'settings.php','settings.example.php','exceptions.php','elgglib.php','database.php','actions.php','sessions.php'
+										'settings.php','settings.example.php','languages.php','exceptions.php','elgglib.php','database.php','actions.php','sessions.php'
 									);
 	
 		// Get the list of files to include, and alphabetically sort them
