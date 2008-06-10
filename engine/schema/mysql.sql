@@ -139,7 +139,7 @@ CREATE TABLE `prefix_users_entity` (
   PRIMARY KEY  (`guid`),
   KEY `password` (`password`),
   FULLTEXT KEY `name` (`name`)
-)  ;
+) ENGINE=MyISAM;
 
 
 -- TODO: Collection
