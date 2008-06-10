@@ -34,7 +34,7 @@
 		}
 		
 		if (!@include_once(dirname(__FILE__) . "/lib/languages.php")) {		// Main Elgg library
-			throw new InstallationException("Elgg could not load its main library.");
+			throw new InstallationException("Error in installation: could not load the languages library.");
 		}
 		
 	/**
