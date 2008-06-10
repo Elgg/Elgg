@@ -138,6 +138,6 @@
 	 * Register config_init
 	 */
 
-		register_event_handler('boot','system','configuration_init',10);
+		register_elgg_event_handler('boot','system','configuration_init',10);
 		
 ?>

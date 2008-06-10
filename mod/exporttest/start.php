@@ -20,5 +20,5 @@
 
 	
 	// Make sure test_init is called on initialisation
-	register_event_handler('init','system','exporttest_init');
+	register_elgg_event_handler('init','system','exporttest_init');
 ?>

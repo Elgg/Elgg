@@ -222,5 +222,5 @@
 	}
 	
 	// Register a startup event
-	register_event_handler('init','system','export_init',100);	
+	register_elgg_event_handler('init','system','export_init',100);	
 ?>

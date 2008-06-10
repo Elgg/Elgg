@@ -122,7 +122,7 @@
 		// Autodetect some default configuration settings
 			set_default_config();
 		// Trigger events
-			trigger_event('boot', 'system');
+			trigger_elgg_event('boot', 'system');
 		// Forward if we haven't been installed
 			if ((!is_installed() || !is_db_installed()) && !substr_count($_SERVER["PHP_SELF"],"install.php")) {
 					header("Location: install.php");
@@ -134,7 +134,7 @@
 				!substr_count($_SERVER["PHP_SELF"],"setup.php") &&
 				!$lightmode) {
 				// If default settings haven't been installed, forward to the default settings page
-				trigger_event('init', 'system');
+				trigger_elgg_event('init', 'system');
 				if (!datalist_get('default_settings')) {
 					//forward("setup.php");
 				}

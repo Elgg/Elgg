@@ -620,13 +620,13 @@
 	 * 
 	 * You can then simply register them using the following function. Optionally, this can be called with a priority nominally from 0 to 1000, where functions with lower priority values are called first (note that priorities CANNOT be negative):
 	 * 
-	 * 		register_event_handler($event, $object_type, $function_name [, $priority = 500]);
+	 * 		register_elgg_event_handler($event, $object_type, $function_name [, $priority = 500]);
 	 * 
 	 * Note that you can also use 'all' in place of both the event and object type. 
 	 * 
 	 * To trigger an event properly, you should always use:
 	 * 
-	 * 		trigger_event($event, $object_type [, $object]);
+	 * 		trigger_elgg_event($event, $object_type [, $object]);
 	 * 
 	 * Where $object is optional, and represents the $object_type the event concerns. This will return true if successful, or false if it fails. 
 	 * 
@@ -713,7 +713,7 @@
 	 * @param string $function The function name
 	 * @return true|false Depending on success 
 	 */	
-		function register_event_handler($event, $object_type, $function, $priority = 500) {
+		function register_elgg_event_handler($event, $object_type, $function, $priority = 500) {
 			return events($event, $object_type, $function, $priority);
 		}
 		
@@ -725,7 +725,7 @@
 	 * @param string $function The function name
 	 * @return true|false Depending on success 
 	 */
-		function trigger_event($event, $object_type, $object = null) {
+		function trigger_elgg_event($event, $object_type, $object = null) {
 			$return = true;
 			$return1 = events($event, $object_type, "", null, true, $object);
 			if (!is_null($return1)) $return = $return1;
@@ -1147,7 +1147,7 @@
 		{
 
 			// Test to see if we can actually execute code by calling any other functions
-			if (trigger_event("execute_privileged_codeblock", "all"))
+			if (trigger_elgg_event("execute_privileged_codeblock", "all"))
 			{
 				// Execute
 				$result = null;

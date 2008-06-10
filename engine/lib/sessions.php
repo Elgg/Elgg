@@ -78,7 +78,7 @@
             if (($persistent))
 				setcookie("elggperm", $code, (time()+(86400 * 30)),"/");
             
-            if (!$user->save() || !trigger_event('login','user',$user)) {
+            if (!$user->save() || !trigger_elgg_event('login','user',$user)) {
             	unset($_SESSION['username']);
 	            unset($_SESSION['name']);
 	            unset($_SESSION['code']);
@@ -102,7 +102,7 @@
             global $CONFIG;
 
             if (isset($_SESSION['user'])) {
-            	if (!trigger_event('logout','user',$_SESSION['user'])) return false;
+            	if (!trigger_elgg_event('logout','user',$_SESSION['user'])) return false;
             	$_SESSION['user']->code = "";
             	$_SESSION['user']->save();
             }
@@ -188,7 +188,7 @@
 			if (!isloggedin()) forward();
 		}
 		
-		register_event_handler("boot","system","session_init",1);
+		register_elgg_event_handler("boot","system","session_init",1);
 
 
 ?>

@@ -369,7 +369,7 @@
 			{
 				// Update succeeded, continue
 				$entity = get_entity($guid);
-				if (trigger_event('update',$entity->type,$entity)) {
+				if (trigger_elgg_event('update',$entity->type,$entity)) {
 					return true;
 				} else {
 					delete_entity($guid);
@@ -381,7 +381,7 @@
 				$result = insert_data("INSERT into {$CONFIG->dbprefix}users_entity (guid, name, username, password, email, language, code) values ($guid, '$name', '$username', '$password', '$email', '$language', '$code')");
 				if ($result!==false) {
 					$entity = get_entity($guid);
-					if (trigger_event('create',$entity->type,$entity)) {
+					if (trigger_elgg_event('create',$entity->type,$entity)) {
 						return true;
 					} else {
 						delete_entity($guid);
@@ -731,6 +731,6 @@
 	
 	//register actions *************************************************************
    
-   		register_event_handler('init','system','users_init',0);
+   		register_elgg_event_handler('init','system','users_init',0);
 	
 ?>

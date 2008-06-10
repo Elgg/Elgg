@@ -721,5 +721,5 @@
 	}
 	
 	// Register a startup event
-	register_event_handler('init','system','filestore_init',100);	
+	register_elgg_event_handler('init','system','filestore_init',100);	
 ?>

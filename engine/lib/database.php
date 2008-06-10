@@ -414,6 +414,6 @@
         
 	// Stuff for initialisation
 
-		register_event_handler('boot','system','init_db',0);
+		register_elgg_event_handler('boot','system','init_db',0);
 
 ?>

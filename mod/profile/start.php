@@ -109,7 +109,7 @@
 		}
 		
 	// Make sure the profile initialisation function is called on initialisation
-		register_event_handler('init','system','profile_init',1);
+		register_elgg_event_handler('init','system','profile_init',1);
 		
 	// Register actions
 		global $CONFIG;

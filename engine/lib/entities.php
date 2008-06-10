@@ -881,7 +881,7 @@
 		$entity = get_entity($guid);
 		
 		if ($entity->canEdit()) {
-			if (trigger_event('update',$entity->type,$entity)) {
+			if (trigger_elgg_event('update',$entity->type,$entity)) {
 				$ret = update_data("UPDATE {$CONFIG->dbprefix}entities set owner_guid='$owner_guid', access_id='$access_id', time_updated='$time' WHERE guid=$guid");
 				
 				// Handle cases where there was no error BUT no rows were updated!
@@ -1086,7 +1086,7 @@
 		
 		$guid = (int)$guid;
 		if ($entity = get_entity($guid)) {
-			if (trigger_event('delete',$entity->type,$entity)) {
+			if (trigger_elgg_event('delete',$entity->type,$entity)) {
 				if ($entity->canEdit()) {
 					$entity->clearMetadata();
 					$entity->clearAnnotations();
@@ -1345,6 +1345,6 @@
 	register_plugin_hook("export", "all", "export_entity_plugin_hook", 0);
 	
 	/** Register init system event **/
-	register_event_handler('init','system','entities_init');
+	register_elgg_event_handler('init','system','entities_init');
 	
 ?>

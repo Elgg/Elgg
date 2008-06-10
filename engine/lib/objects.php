@@ -241,7 +241,7 @@
 			{
 				// Update succeeded, continue
 				$entity = get_entity($guid);
-				if (trigger_event('update',$entity->type,$entity)) {
+				if (trigger_elgg_event('update',$entity->type,$entity)) {
 					return true;
 				} else {
 					delete_entity($guid);
@@ -254,7 +254,7 @@
 				$result = insert_data("INSERT into {$CONFIG->dbprefix}objects_entity (guid, title, description) values ($guid, '$title','$description')");
 				if ($result!==false) {
 					$entity = get_entity($guid);
-					if (trigger_event('create',$entity->type,$entity)) {
+					if (trigger_elgg_event('create',$entity->type,$entity)) {
 						return true;
 					} else {
 						delete_entity($guid);

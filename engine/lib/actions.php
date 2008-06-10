@@ -105,6 +105,6 @@
         
     // Register some actions ***************************************************
     
-        register_event_handler("init","system","actions_init");
+        register_elgg_event_handler("init","system","actions_init");
 
 ?>

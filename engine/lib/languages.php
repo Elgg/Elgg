@@ -99,6 +99,6 @@
 			}
 		}
 		
-		register_event_handler("boot","system","init_translations",5);
+		register_elgg_event_handler("boot","system","init_translations",5);
 
 ?>
