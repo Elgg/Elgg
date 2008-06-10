@@ -67,7 +67,7 @@
 				return $CONFIG->translations["en"][$message_key];
 			}
 				
-			return "";
+			return $message_key;
 			
 		}
 		
