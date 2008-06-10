@@ -157,6 +157,9 @@
 			// Try and create the directory
 			try { $this->make_directory_root($path); } catch (Exception $e){}
 			
+			if (($mode!='write') && (!file_exists($fullname)))
+				return false;
+			
 			switch ($mode)
 			{
 				case "read" : $mode = "r+b"; break;
@@ -165,11 +168,8 @@
 				default: throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:UnrecognisedFileMode'), $mode));
 			}
 			
-			if (file_exists($fullname)) {
-				return fopen($fullname, $mode);
-			} else {
-				return false;
-			}
+			return fopen($fullname, $mode);
+			
 		}
 		
 		public function write($f, $data)
