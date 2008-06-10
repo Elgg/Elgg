@@ -1225,7 +1225,7 @@
 	 * @return true|false Whether the specified user can edit the specified entity.
 	 */
 	function can_edit_entity($entity_guid, $user_guid = 0) {
-		echo "e_guid:$entity_guid, u_guid:$user_guid";
+		
 		if ($user_guid == 0) {
 					
 			if (isset($_SESSION['user'])) {			
