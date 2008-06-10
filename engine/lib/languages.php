@@ -84,6 +84,8 @@
 					}
 				}
 			}
+			else
+				error_log("Missing translation path $path");
 		}
 		
 		register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
