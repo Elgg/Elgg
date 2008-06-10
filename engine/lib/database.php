@@ -140,7 +140,7 @@
         	if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
             {
             	error_log("--- DB QUERY --- $query");
-            	error_log("--- EXPLAINATION --- " . print_r(explain_query($query,$dblink), true));
+            	error_log("--- EXPLANATION --- " . print_r(explain_query($query,$dblink), true));
             }
             
             if ($result = mysql_query("$query", $dblink)) {
@@ -184,7 +184,7 @@
         	if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
             {
             	error_log("--- DB QUERY --- $query");
-            	error_log("--- EXPLAINATION --- " . print_r(explain_query($query,$dblink), true));
+            	error_log("--- EXPLANATION --- " . print_r(explain_query($query,$dblink), true));
             }
             
             if ($result = mysql_query("$query", $dblink)) {
