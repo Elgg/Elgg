@@ -72,20 +72,6 @@
 		}
 		
 	/**
-	 * Function to load translation files on system boot. Parameters are standard event API parameters, but unused.
-	 *
-	 * @param unknown_type $event
-	 * @param unknown_type $object_type
-	 * @param unknown_type $object
-	 */
-		function init_translations() {
-			global $CONFIG;
-			// register_translations($CONFIG->path . "languages/");
-			register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
-			
-		}
-
-	/**
 	 * When given a full path, finds translation files and loads them
 	 *
 	 * @param string $path Full path
@@ -100,6 +86,6 @@
 			}
 		}
 		
-		register_elgg_event_handler("boot","system","init_translations",5);
+		register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
 
 ?>
