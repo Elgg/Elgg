@@ -409,7 +409,7 @@
 		 * 
 		 * @return bool
 		 */
-		public function isFullyLoaded() { return $this->attributes['tables_split'] == $this->attributes['tables_loaded']; }
+		public function isFullyLoaded() { return ! ($this->attributes['tables_loaded'] < $this->attributes['tables_split']); }
 		
 		/**
 		 * Save generic attributes to the entities table.
@@ -709,7 +709,7 @@
 	{
 		global $ENTITY_CACHE;
 		
-		$ENTITY_CACHE[$entity->guid] = &$entity;
+		$ENTITY_CACHE[$entity->guid] = $entity;
 	}
 	
 	/**
@@ -871,17 +871,16 @@
 	 */
 	function update_entity($guid, $owner_guid,  $access_id)
 	{
-		global $CONFIG;
+		global $CONFIG, $ENTITY_CACHE;
 		
 		$guid = (int)$guid;
 		$owner_guid = (int)$owner_guid;
 		$access_id = (int)$access_id;
 		$time = time();
-		
+
 		$entity = get_entity($guid);
 		
 		if ($entity->canEdit()) {
-			
 			if (trigger_event('update',$entity->type,$entity)) {
 				$ret = update_data("UPDATE {$CONFIG->dbprefix}entities set owner_guid='$owner_guid', access_id='$access_id', time_updated='$time' WHERE guid=$guid");
 				
@@ -1226,26 +1225,25 @@
 	 * @return true|false Whether the specified user can edit the specified entity.
 	 */
 	function can_edit_entity($entity_guid, $user_guid = 0) {
-		
+		echo "e_guid:$entity_guid, u_guid:$user_guid";
 		if ($user_guid == 0) {
-			if (isset($_SESSION['user'])) {
+					
+			if (isset($_SESSION['user'])) {			
 				$user = $_SESSION['user'];
-			} else {
+			} else {		
 				$user = null;
 			}
-		} else {
+		} else {		
 			$user = get_entity($user_guid);
 		}
 
 		if (($entity = get_entity($entity_guid)) && (!is_null($user))) {
-
 			if ($entity->getOwner() == $user->getGUID()) return true;
 			if ($entity->type == "user" && $entity->getGUID() == $user->getGUID()) return true;
 			
 			return trigger_plugin_hook('permissions_check',$entity->type,array('entity' => $entity, 'user' => $user),false);
 		
-		} else {
-			
+		} else {		
 			return false;
 			
 		}
