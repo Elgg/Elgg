@@ -18,6 +18,8 @@
 		 * Errors
 		 */
 	
+			'InstallationException:CantCreateSite' => "Unable to create a default ElggSite with credentials Name:%s, Url: %s",
+		
 			'actionundefined' => "The requested action (%s) was not defined in the system.",
 			'actionloggedout' => "Sorry, you cannot perform this action while logged out.",
 	

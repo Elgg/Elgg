@@ -21,7 +21,10 @@
 			$site->name = get_input('sitename');
 			$site->url = get_input('wwwroot');
 			$site->access_id = 2; // The site is public
-			$site->save();
+			$guid = $site->save();
+			
+			if (!$guid)
+				throw new InstallationException(sprintf(elgg_echo('InstallationException:CantCreateSite'), get_input('sitename'), get_input('wwwroot')));
 			
 			datalist_set('installed',time());
 			
