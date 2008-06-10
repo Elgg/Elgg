@@ -23,6 +23,7 @@
 			'profile:edit' => "Edit profile",
 			'profile:editicon' => "Change your profile picture",
 	
+			'profile:aboutme' => "About me", 
 			'profile:description' => "About me", 
 			'profile:location' => "Location",
 			'profile:skills' => "Skills",  
