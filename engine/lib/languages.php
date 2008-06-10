@@ -77,6 +77,10 @@
 	 * @param string $path Full path
 	 */
 		function register_translations($path) {
+			global $CONFIG;
+			
+			if ($CONFIG->debug) error_log("Translations loaded from : $path");
+			
 			if ($handle = opendir($path)) {
 				while ($language = readdir($handle)) {
 					if (!in_array($language,array('.','..','.svn','CVS')) && !is_dir($path . $language)) {
