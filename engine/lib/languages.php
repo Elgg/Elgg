@@ -80,7 +80,8 @@
 	 */
 		function init_translations() {
 			global $CONFIG;
-			register_translations($CONFIG->path . "languages/");
+			// register_translations($CONFIG->path . "languages/");
+			register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
 			
 		}
 
