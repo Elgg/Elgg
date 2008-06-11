@@ -51,6 +51,26 @@
 		register_action('admin/site/update_basic', false, "", true); // Register basic site admin action
 	}
 
+	/**
+	 * Admin permissions system
+	 *
+	 * @return true|null True if the current user is an admin.
+	 */
+	function admin_permissions($hook, $type, $returnval, $params) {
+		
+		if (is_array($params) && !empty($params['user']) && $params['user'] instanceof ElggUser) {
+			$admin = $params['user']->admin;
+			if ($admin) {
+				return true;
+			}
+		}
+		
+	}
+	
 	/// Register init function
 	register_elgg_event_handler('init','system','admin_init');
+	
+	// Register a plugin hook for permissions
+	register_plugin_hook('permissions_check','all','admin_permissions');
+	
 ?>

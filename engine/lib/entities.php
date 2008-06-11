@@ -1243,7 +1243,7 @@
 			if ($entity->getOwner() == $user->getGUID()) return true;
 			if ($entity->type == "user" && $entity->getGUID() == $user->getGUID()) return true;
 		
-			return trigger_plugin_hook('permissions_check',$entity->type,array('entity' => $entity, 'user' => $user),true);
+			return trigger_plugin_hook('permissions_check',$entity->type,array('entity' => $entity, 'user' => $user),false);
 		
 		} else {		
 			return false;
