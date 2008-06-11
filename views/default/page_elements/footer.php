@@ -13,10 +13,17 @@
 	 * 
 	 */
 ?>
-<div style="clear:both"></div>
-</div><!-- close container div -->
-<div id="footer">
+
+<div class="clearfloat"></div>
+
+<div id="layout_footer">
 <p><a href="http://elgg.com/">Elgg</a></p>
-</div><!-- close footer div -->
+</div><!-- /#layout_footer -->
+
+<div class="clearfloat"></div>
+
+</div><!-- /#page_wrapper -->
+</div><!-- /#page_container -->
+
 </body>
 </html>

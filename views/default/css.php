@@ -7,7 +7,7 @@
 	 * @package Elgg
 	 * @subpackage Core
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author (s) David Tosh / Pete Harris
+	 * @author (s) Pete Harris / David Tosh
 	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.org/
 	 * 
@@ -16,33 +16,77 @@
 
 ?>
 
-<?php
-  include("reset.css");
-?>
+/* ***************************************
+	RESET BASE STYLES
+*************************************** */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+/* remember to define focus styles! */
+:focus {
+	outline: 0;
+}
+ol, ul {
+	list-style: none;
+}
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+	border-collapse: separate;
+	border-spacing: 0;
+}
+caption, th, td {
+	text-align: left;
+	font-weight: normal;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: "";
+}
+blockquote, q {
+	quotes: "" "";
+}
+.clearfloat { 
+	clear:both;
+    height:0;
+    font-size: 1px;
+    line-height: 0px;
+}
 
-
+/* ***************************************
+	DEFAULTS
+*************************************** */
 body {
 	text-align:left;
 	margin:0 auto;
 	padding:0;
-	background: #42afdc url(<?php echo $vars['url']; ?>/_graphics/pagebackground.gif) repeat-x;
-	font: 75%/170% Arial, Helvetica, sans-serif;
-	padding: 0px;
-	margin: 0px;
+	background: #4690d6;
+	font: 75%/1.5  "Lucida Grande", "Lucida Sans", Verdana, sans-serif;
 	color: #333333;
 }
-
-/* ***************************************
-	DEFAULT BASE STYLES
-*************************************** */
 a {
-	color: #3399cc;
+	color: #4690d6;
 	text-decoration: none;
 }
 a:visited {
 	color: #336699;
 }
 a:hover {
+	color: #003366;
 	text-decoration: underline;
 }
 p {
@@ -72,205 +116,303 @@ form {
 small {
 	font-size: 90%;
 }
-
-/* CONTAINER: WRAPS THE HEADER AND MAIN CONTENT AREA BELOW THE USER TOOLBAR */
-div#container {
-	width:998px;
-	margin:0 auto;
-	background: url(<?php echo $vars['url']; ?>/_graphics/pagebackground.jpg) no-repeat center top;
-	min-height: 600px;
+h1, h2, h3, h4, h5, h6 {
+	font-weight: bold;
+	line-height: normal;
 }
+h1 { font-size: 1.8em; }
+h2 { font-size: 1.5em; }
+h3 { font-size: 1.2em; }
+h4 { font-size: 1.0em; }
+h5 { font-size: 0.9em; }
+h6 { font-size: 0.8em; }
 
 /* ***************************************
-	HEADER
+    PAGE LAYOUT - MAIN STRUCTURE
 *************************************** */
+#page_container {
+	margin:0;
+	padding:0;
+}
+#page_wrapper {
+	width:998px;
+	margin:4px auto;
+	min-height: 300px;
+	background: white;
+	border-right: 1px solid #666666;
+	border-bottom: 1px solid #000000;
+}
 
-div#header {
-	margin:0 0 10px 0;
+#layout_header {
 	text-align:left;
 	position:relative;
 	width:100%;
-	height:60px;
-	border-bottom:1px solid white;
+	height:67px;
+	border-bottom:1px solid #4690d6;
+}
+#wrapper_header {
+	margin:0;
+	padding:10px 20px 20px 20px;
+}
+#layout_sidebar_left {
+	width: 160px;
+	float: left;
+}
+#wrapper_sidebar_left {
+	margin:0;
+	padding:20px 0 0 20px;
 }
 
-div#header h1 {
-	font: 160%/100% "Lucida Grande", Arial, sans-serif;
-	padding:10px 0 0 0;
-	color:#ffffff;
+#wrapper_sidebar_left p {
+	margin:0;
 }
 
-div#header h2 {
-	font: 150%/100% "Lucida Grande", Arial, sans-serif;
-	color:#ffffff;
+#layout_sidebar_right {
+	width:233px; /* 260-27*/
+	min-height: 260px;
+	float:right;
+	padding:20px 20px 14px 7px;
 }
 
-div#header h1 a{
-	color:#ffffff;
+#wrapper_sidebar_right {
+	margin:0;
 }
 
+#layout_maincontent {
+    margin:0 260px 0 160px;
+    min-height: 360px;
+    padding:20px 13px 20px 20px;
+}
+/* subclass for maincontent when hiding sidebar */
+.wide {
+    margin:0 0 0 160px !important;
+    padding:20px 20px 20px 20px !important;
+}
+/* IE6 fix */
+* html #layout_maincontent { 
+	height:360px;
+}
+
+#wrapper_sidebar_right .collapsable_box_content {
+	border-left: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
+	border-bottom: 1px solid #cccccc;
+}
+#wrapper_sidebar_right .collapsable_box_header {
+	border: 1px solid #cccccc;
+}
+
+#wrapper_maincontent .collapsable_box_content  {
+	margin:0;
+	padding:0;
+}
+
+#wrapper_maincontent {
+	margin:0;
+}
+
+#layout_spotlight {
+	padding:0;
+}
+#wrapper_spotlight {
+	margin:0;
+	padding:0;
+	height:auto;
+}
+#wrapper_spotlight .collapsable_box_content  {
+	margin:0;
+	padding:0 0 10px 0;
+	background: #dfdfdf;
+	height:184px;
+	border:none;
+}
+#layout_spotlight .collapsable_box_content p {
+	padding:0;
+	background: url(<?php echo $vars['url']; ?>_graphics/temp_spotlight.gif) repeat-x left top;
+}
+#layout_footer {
+	background: url(<?php echo $vars['url']; ?>_graphics/footer_back.gif) repeat-x left top;
+	height:80px;
+}
+#layout_footer p {
+   padding:20px;
+}
+#layout_footer a {
+   color:white;
+}
 
 /* ***************************************
-  Topmenu
+  TOPMENU (IN HEADER)
 *************************************** */
-
 #topmenu {
     position:absolute;
-    top:2px;
-    right:10px;
-    width: 500px;
+    top:10px;
+    right:20px;
+    width: 700px;
+    height:47px;
     text-align: right;
 }
-
 #topmenu li {
     display:inline;
     list-style:none;
 }
-
 #topmenu li a {
-    color:#fff;
+    color:#3399cc;
     margin:0 10px 0 10px;
 }
-
+#topmenu li a:hover {
+    color:#000000;
+}
 #topmenu .usericon {
 	float:right;
 }
-
-/* ***************************************
-    sidebar menu
-*************************************** */
-
-#sidebar_menu {
-	width: 150px;
-	float: left;
-	background: #ffffff;
-}
-
-#sidebar_right {
-	width:380px;
-	min-height: 380px;
-	float:right;
-	border-top:1px solid black;
-	background: #ffffff;
-}
-
-#mainContent {
-    margin:0 0 0 165px;
-    padding:10px 20px 20px 20px;
-    min-height: 480px;
-    background: #ffffff;
-}
-
-#login-box {
-    text-align:left;
-    border:1px solid #ddd;
-    width:300px;
-    padding:10px;
-    background: #ffffff;
-}
-
-/* ***************************************
-	FOOTER
-*************************************** */
-
-div#footer {
-	clear: both;
-	position: relative;
-	font-size:1em;
+/* temp fix - force user avatar to mini size */
+#topmenu .usericon img {
+	width:40px;
 	height:40px;
-	width:998px;
-	margin:0 auto;
-	font-weight:bold;
-	background: #ffffff;
 }
 
-div#footer img {
-   text-align:right;
-   padding:3px 0 0 0;
+/* ***************************************
+  COLLAPSABLE BOXES
+*************************************** */
+.collapsable_box {
+	margin: 0 0 20px 0;
+	background: white;
+	height:auto;
 }
-
-div#footer p {
-   padding:0 20px 0 20px;
+/* IE6 fix */
+* html .collapsable_box  { 
+	height:10px;
 }
-
-div#footer a {
-	color:#fff;
-	padding:0 5px 0 5px;
+.collapsable_box_header {
+	color: #4690d6;
+	background: #f5f5f5;
+	border-top:2px solid #4690d6;
+	padding: 5px 10px 5px 10px;
+	margin:0;
 }
-
-div#footer a:hover {
-	text-decoration:underline;
+.collapsable_box_content {
+	padding: 10px;
+	margin:0;
+	height:auto;
+	border-left:2px solid white;
+	border-right:2px solid white;
+	border-bottom:2px solid white;
 }
-
-div#footer a:link, div#footer a:visited {
-	text-align:right;
+.collapsable_box_editpanel {
+	display: none;
+	background: #dedede;
+	padding:5px 10px 5px 10px;
+	font-size: 9px;
+}
+.collapsable_box_header a.toggle_box_contents {
+	color: #4690d6;
+	cursor:pointer;
+	font-size:16px;
+	font-weight: bold;
+	text-decoration:none;
+	float:right;
+	margin: 0;
+	margin-top: -4px;
+}
+.collapsable_box_header a.toggle_box_edit_panel {
+	color: #4690d6;
+	cursor:pointer;
+	font-size:9px;
+	text-transform: uppercase;
+	text-decoration:none;
+	font-weight: normal;
+	float:right;
+	margin: 3px 10px 0 0;
+}
+/* used for collapsing a content box */
+.display_none {
+	display:none;
+}
+/* used on spotlight box - to cancel default box margin */
+.no_space_after {
+	margin: 0 0 0 0;
 }
 
 /* ***************************************
   System messages
 *************************************** */
-
 .messages {
     border:1px solid #D3322A;
     background:#F7DAD8;
     color:#000;
     padding:3px 10px 3px 10px;
-    margin:10px 0px 10px 0px;
+    margin:20px 20px 0px 20px;
 }
 
 
 /* ***************************************
-	elgg toolbar
+	ELGG TOOLBAR
 *************************************** */
-
-.elggtoolbar ul.drawers {
-	width: 150px;
-	margin: 0;
-	padding: 0;
+.elggtoolbar .elggtoolbar_header {
+	color: #4690d6;
+	background: #f5f5f5;
+	border-top:2px solid #333333;
+	border-bottom:1px solid #999999;
+	padding: 5px 10px 5px 10px;
+	margin:0;
 }
 
+.elggtoolbar {
+	border-left:2px solid #333333;
+	border-right:2px solid #333333;
+	border-bottom:2px solid #333333;
+	margin: 0 0 20px 0;
+}
+
+.elggtoolbar ul.drawers {
+	width: 136px;
+	margin: 0;
+	padding: 0;
+	
+}
 .elggtoolbar li.drawer ul li {
 	line-height: 1.2em;
 	margin: 0;
 	padding: 3px 0 3px 0;
 }
-
 .elggtoolbar ul {
 	list-style: none;
 	margin: 0;
 	padding: 3px 3px 3px 10px;
 }
-
 .elggtoolbar li {
-	background: #e4ecf5;
+	background: white;
 }
-
 .elggtoolbar li a {
 	text-decoration: none;
 	color: #3399cc;
 	line-height:0.5em;
+	padding-left:5px;
 }
 .elggtoolbar li a:hover {
 	text-decoration: underline;
 	color: #003366;
 }
-
 .elggtoolbar h2.drawer-handle {
 	margin: 0;
 	padding: 1px 1px 1px 10px;
-	background-color: #ffffff;
-	border-bottom: 1px solid #0099cc;
+	background-color: #f4f4f4;
+	border-top: 1px solid #999999;
 	cursor: pointer;
 	font-size: 100%;
+	font-weight: normal;
+	line-height: 2em;
 }
-
+.elggtoolbar h2.drawer-handle:hover {
+	background-color: #cccccc;
+}
 .elggtoolbar h2.drawer-handle.open {
-	color:#ffffff;
-	background-color: #003366;
-	border-bottom: 1px solid #003366;
+	color:#000000;
+	font-weight: bold;
+	background: #cccccc;
+	border-bottom: none;
 }
-
-
 
 /* ***************************************
 	GENERAL FORM ELEMENTS
@@ -297,9 +439,9 @@ textarea {
 	font: 12px/100% Arial, Helvetica, sans-serif;
 	color: #000000;
 	border: none;
-	width: 135px;
+	width: auto;
 	height: 25px;
-	padding-bottom: 6px;
+	padding: 2px 6px 2px 6px;
 	margin:10px 0 10px 0;
 	cursor: pointer;
 }
@@ -322,44 +464,63 @@ textarea:focus, input[type="text"]:focus {
 	height: 200px;
 }
 
+/* ***************************************
+	LOGIN / HOMEPAGE
+*************************************** */
+#login-box {
+    text-align:left;
+    border:1px solid #ddd;
+    width:300px;
+    padding:10px;
+    background: #ffffff;
+}
 
 /* ***************************************
 	MAIN CONTENT ELEMENTS
 *************************************** */
-#mainContent h1 {
-	color: #333333;
-	margin: 3px 0 2px;
-	padding-bottom: 4px;
-	font: normal 160%/100% "Lucida Grande", Arial, sans-serif;
-	border-bottom: dotted 1px #CCCCCC;
+.elggtoolbar .elggtoolbar_header h1,
+.collapsable_box_header h1 {
+	color: #4690d6;
+	font-size:1.25em;
+	line-height: 1.2em;
 }
-#mainContent h1 a, #mainContent h1 a:visited {
-	color: #333333;
-	text-decoration: none;
+
+.logo {
+	margin-left:21px;
+	margin-top:7px;
 }
-#mainContent h1 a:hover {
-	color: #44a1d0;
-	text-decoration: none;
+#header_search {
+	margin-right:50px;
 }
-#mainContent h2 {
-	color: #333333;
-	margin: 3px 0 2px;
-	padding-bottom: 4px;
-	font: normal 150%/100% "Lucida Grande", Arial, sans-serif;
-	border-bottom: dotted 1px #CCCCCC;
+#searchform input.search_input {
+	background-color:#FFFFFF;
+	border:1px solid #BBBBBB;
+	color:#999999;
+	font-size:13px;
+	font-weight:bold;
+	margin:0pt;
+	padding:2px;
+	width:180px;
 }
-#mainContent h2 a, #mainContent h2 a:visited {
-	color: #333333;
-	text-decoration: none;
+#searchform input.search_submit_button {
+	color:#ffffff;
+	background: #cccccc;
+	border:none;
+	font-size:12px;
+	font-weight:bold;
+	margin:0px;
+	padding:0px;
+	width:auto;
+	height:20px;
+	cursor:pointer;
 }
-#mainContent h2 a:hover {
-	color: #44a1d0;
-	text-decoration: none;
+#searchform input.search_submit_button:hover {
+	color:#000000;
 }
-#mainContent h3 {
-	color: #666666;
-	margin: 5px 0px 5px;
-	font: bold 110%/110% "Lucida Grande", Arial, sans-serif;
-}
+
+/* ***************************************
+	END
+*************************************** */
+
 
 

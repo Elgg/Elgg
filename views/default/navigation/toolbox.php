@@ -20,6 +20,7 @@
 		
 ?>
 <div class="elggtoolbar">
+<div class="elggtoolbar_header"><h1>Your tools</h1></div>
 <ul class="drawers">
 
 <?php
@@ -55,7 +56,7 @@
 ?>
 
 </ul>    
-</div>
+</div><!-- /.elggtoolbar -->
 
 <?php
 
@@ -65,7 +66,8 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
-	$('li.drawer ul:not(:first)').hide();
+	//$('li.drawer ul:not(:first)').hide();
+	$('li.drawer ul').hide();
 	
 	$('h2.drawer-handle').click(function () {	
 		$('li.drawer ul:visible').slideUp('medium').prev().removeClass('open');
