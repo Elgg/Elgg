@@ -34,26 +34,19 @@
 		return extend_view($view, $new_admin_view, $priority);
 	}
 	
-	
-	
-	
-	// register admin action
-
-
+	/**
+	 * Initialise the admin page.
+	 */
 	function admin_init()
 	{
 		global $CONFIG;
 		
-		// TODO: Register default pages
-
-
 		// Add plugin main menu option (last)
-		extend_elgg_admin_page('admin/main_opt/plugins', 'admin/main', 999);
-		extend_elgg_admin_page('admin/main_opt/site', 'admin/main');
-		extend_elgg_admin_page('admin/main_opt/user', 'admin/main');
+		extend_elgg_admin_page('admin/main_opt/site', 'admin/main'); 
+		extend_elgg_admin_page('admin/main_opt/user', 'admin/main'); 
+		extend_elgg_admin_page('admin/main_opt/plugins', 'admin/main', 999); // Always last
 	}
 
-	
 	/// Register init function
 	register_elgg_event_handler('init','system','admin_init');
 ?>
