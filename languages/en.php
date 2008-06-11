@@ -210,6 +210,9 @@
 		/**
 		 * Administration
 		 */
+
+			'admin:configuration:success' => "Your settings have been saved.",
+			'admin:configuration:fail' => "Your settings could not be saved.",
 	
 			'admin' => "Administration",
 			'admin:description' => "The admin panel allows you to control all aspects of the system, from user management to how plugins behave. Choose an option below to get started.",

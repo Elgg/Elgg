@@ -45,6 +45,10 @@
 		extend_elgg_admin_page('admin/main_opt/site', 'admin/main'); 
 		extend_elgg_admin_page('admin/main_opt/user', 'admin/main'); 
 		extend_elgg_admin_page('admin/main_opt/plugins', 'admin/main', 999); // Always last
+
+
+		// Register some actions
+		register_action('admin/site/update_basic', false, "", true); // Register basic site admin action
 	}
 
 	/// Register init function

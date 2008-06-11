@@ -142,7 +142,7 @@
 			// Save generic stuff
 			if (!parent::save())
 				return false;
-			
+		
 			// Now save specific stuff
 			return create_site_entity($this->get('guid'), $this->get('name'), $this->get('description'), $this->get('url'));
 		}

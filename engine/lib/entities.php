@@ -881,6 +881,7 @@
 		$entity = get_entity($guid);
 		
 		if ($entity->canEdit()) {
+			
 			if (trigger_elgg_event('update',$entity->type,$entity)) {
 				$ret = update_data("UPDATE {$CONFIG->dbprefix}entities set owner_guid='$owner_guid', access_id='$access_id', time_updated='$time' WHERE guid=$guid");
 				
@@ -1225,7 +1226,7 @@
 	 * @return true|false Whether the specified user can edit the specified entity.
 	 */
 	function can_edit_entity($entity_guid, $user_guid = 0) {
-		
+		global $CONFIG;
 		if ($user_guid == 0) {
 					
 			if (isset($_SESSION['user'])) {			
@@ -1238,9 +1239,10 @@
 		}
 
 		if (($entity = get_entity($entity_guid)) && (!is_null($user))) {
+			
 			if ($entity->getOwner() == $user->getGUID()) return true;
 			if ($entity->type == "user" && $entity->getGUID() == $user->getGUID()) return true;
-			
+		
 			return trigger_plugin_hook('permissions_check',$entity->type,array('entity' => $entity, 'user' => $user),false);
 		
 		} else {		
