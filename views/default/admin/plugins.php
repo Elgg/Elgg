@@ -13,6 +13,10 @@
 
 	// Description of what's going on
 		echo "<p>" . nl2br(elgg_echo("admin:plugins:description")) . "</p>";
-	
+
 		
-?>
+?>		
+		TODO: Writeme - add automatic plugin config
+		
+			Enable/disable is system level thing.
+			Config is a link to a config/PLUGINNAME/view ...? with the plugin registering a config action?
