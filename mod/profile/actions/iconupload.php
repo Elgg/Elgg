@@ -43,6 +43,8 @@
 					$filehandler->write($small);
 					$filehandler->close();
 					
+					$_SESSION['user']->icontime = time();
+					
 					system_message(elgg_echo("profile:icon:uploaded"));
 				
 				} else {

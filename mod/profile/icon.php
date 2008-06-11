@@ -44,6 +44,8 @@
 		}
 		
 		header("Content-type: image/jpeg");
+		header("Pragma: public");
+		header("Cache-Control: public");
 		echo $contents;
 
 ?>

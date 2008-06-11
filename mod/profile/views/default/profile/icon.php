@@ -19,6 +19,12 @@
 
 		$name = htmlentities($vars['entity']->name);
 		$username = $vars['entity']->username;
+		
+		if ($icontime = $vars['entity']->icontime) {
+			$icontime = "{$icontime}";
+		} else {
+			$icontime = "default";
+		}
 			
 	// Get size
 		if (!in_array($vars['size'],array('small','medium','large','tiny')))
@@ -33,4 +39,4 @@
 			
 ?>
 
-	<a href="<?php echo $vars['entity']->getURL(); ?>"><img src="<?php echo $vars['url']; ?>pg/icon/<?php echo $username; ?>/<?php echo $vars['size']; ?>/icon.jpg" border="0" <?php echo $align; ?> title="<?php echo $name; ?>" <?php echo $vars['js']; ?> /></a>
+	<a href="<?php echo $vars['entity']->getURL(); ?>"><img src="<?php echo $vars['url']; ?>pg/icon/<?php echo $username; ?>/<?php echo $vars['size']; ?>/<?php echo $icontime; ?>.jpg" border="0" <?php echo $align; ?> title="<?php echo $name; ?>" <?php echo $vars['js']; ?> /></a>
