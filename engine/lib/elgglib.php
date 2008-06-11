@@ -278,7 +278,7 @@
 	 * Extends a view by adding other views to be displayed at the same time.
 	 *
 	 * @param string $view The view to add to.
-	 * @param string $view_name The name of the view to extend with
+	 * @param string $view_name The name of the view to extend
 	 * @param int $priority The priority, from 0 to 1000, to add at (lowest numbers will be displayed first)
 	 */
 		function extend_view($view, $view_name, $priority = 501) {

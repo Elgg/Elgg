@@ -23,25 +23,21 @@
 	 *    nb. some pages already exist that you can extend), extend the main view to point to it, and add controls to your 
 	 * 	  new view.
 	 * 
+	 * At the moment this is essentially a wrapper around extend_view.
+	 * 
+	 * @param string $new_admin_view The view associated with the control you're adding  
 	 * @param string $view The view to extend, by default this is 'admin/main'.
-	 * @param string $new_admin_view The view body associated with the page. 
 	 * @param int $priority Optional priority to govern the appearance in the list.
 	 */
-	function extend_elgg_admin_page($view = 'admin/main', $new_admin_view, $priority = 500)
+	function extend_elgg_admin_page( $new_admin_view, $view = 'admin/main', $priority = 500)
 	{
-		
+		return extend_view($view, $new_admin_view, $priority);
 	}
 	
 	
-	/**
-	 * Return an array of registered elgg admin pages.
-	 *
-	 * @return array
-	 */
-	function get_elgg_admin_pages()
-	{
-		
-	}
+	
+	
+	// register admin action
 
 
 	function admin_init()
@@ -49,6 +45,12 @@
 		global $CONFIG;
 		
 		// TODO: Register default pages
+
+
+		// Add plugin main menu option (last)
+		extend_elgg_admin_page('admin/main_opt/plugins', 'admin/main', 999);
+		extend_elgg_admin_page('admin/main_opt/site', 'admin/main');
+		extend_elgg_admin_page('admin/main_opt/user', 'admin/main');
 	}
 
 	

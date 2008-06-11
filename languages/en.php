@@ -213,6 +213,22 @@
 	
 			'admin' => "Administration",
 			'admin:description' => "The admin panel allows you to control all aspects of the system, from user management to how plugins behave. Choose an option below to get started.",
+			
+			'admin:user' => "User Administration",
+			'admin:user:description' => "This admin panel allows you to control user settings for your site. Choose an option below to get started.",
+			'admin:user:opt:linktext' => "Configure users...",
+			'admin:user:opt:description' => "Configure users and account information. ",
+			
+			'admin:site' => "Site Administration",
+			'admin:site:description' => "This admin panel allows you to control global settings for your site. Choose an option below to get started.",
+			'admin:site:opt:linktext' => "Configure site...",
+			'admin:site:opt:description' => "Configure the site technical and non-technical settings. ",
+			
+			'admin:plugins' => "Tool Administration",
+			'admin:plugins:description' => "This admin panel allows you to control and configure tools installed on your site.",
+			'admin:plugins:opt:linktext' => "Configure tools...",
+			'admin:plugins:opt:description' => "Configure the tools installed on the site. ",
+			
 	
 		/**
 		 * Generic action words
