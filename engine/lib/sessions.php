@@ -188,6 +188,16 @@
 			if (!isloggedin()) forward();
 		}
 		
+		/**
+		 * Used at the top of a page to mark it as logged in admin or siteadmin only.
+		 *
+		 */
+		function admin_gatekeeper()
+		{
+			gatekeeper();
+			if (!$_SESSION['user']->admin && !$_SESSION['user']->siteadmin) forward();
+		}
+		
 		register_elgg_event_handler("boot","system","session_init",1);
 
 
