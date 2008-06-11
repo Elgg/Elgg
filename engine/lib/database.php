@@ -220,6 +220,11 @@
             
             $dbcalls++;
             
+        	if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
+            {
+            	error_log("--- DB QUERY --- $query");
+            }
+            
             if (mysql_query("$query", $dblink)) 
                 return mysql_insert_id($dblink);
                 
@@ -246,6 +251,11 @@
             $dblink = get_db_link('write');
             
             $dbcalls++;
+            
+       		if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
+            {
+            	error_log("--- DB QUERY --- $query");
+            }
             
             if (mysql_query("$query", $dblink))
             	return mysql_affected_rows();
@@ -274,6 +284,11 @@
             $dblink = get_db_link('write');
             
             $dbcalls++;
+            
+        	if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
+            {
+            	error_log("--- DB QUERY --- $query");
+            }
             
             if (mysql_query("$query", $dblink)) 
                 return mysql_affected_rows();
