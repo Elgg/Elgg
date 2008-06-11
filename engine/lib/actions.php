@@ -49,14 +49,19 @@
             }
             
             if (isset($CONFIG->actions[$action])) {
-                if ($CONFIG->actions[$action]['public'] || $_SESSION['id'] != -1) {
-	                if (@include($CONFIG->actions[$action]['file'])) {
+            	if (
+            		(isadminloggedin()) ||
+            		(!$CONFIG->actions[$action]['admin'])
+            	) {
+	                if ($CONFIG->actions[$action]['public'] || $_SESSION['id'] != -1) {
+		                if (@include($CONFIG->actions[$action]['file'])) {
+		                } else {
+		                    register_error(sprintf(elgg_echo('actionundefined'),$action));
+		                }
 	                } else {
-	                    register_error(sprintf(elgg_echo('actionundefined'),$action));
+	                    register_error(elgg_echo('actionloggedout'));
 	                }
-                } else {
-                    register_error(elgg_echo('actionloggedout'));
-                }
+            	}
             } else {
             	register_error(sprintf(elgg_echo('actionundefined'),$action));
             }
@@ -70,9 +75,10 @@
 	 * @param string $action The name of the action (eg "register", "account/settings/save")
 	 * @param boolean $public Can this action be accessed by people not logged into the system?
 	 * @param string $filename Optionally, the filename where this action is located
+	 * @param boolean $admin_only Whether this action is only available to admin users.
 	 */
         
-        function register_action($action, $public = false, $filename = "") {
+        function register_action($action, $public = false, $filename = "", $admin_only = false) {
             global $CONFIG;            
             
             if (!isset($CONFIG->actions)) {
@@ -86,7 +92,7 @@
                 $filename = $path . "actions/" . $action . ".php";
             }
             
-            $CONFIG->actions[$action] = array('file' => $filename, 'public' => $public);
+            $CONFIG->actions[$action] = array('file' => $filename, 'public' => $public, 'admin' => $admin_only);
             return true;
         }
 
