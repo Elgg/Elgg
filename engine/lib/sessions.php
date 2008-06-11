@@ -25,6 +25,21 @@
 			return false;
 			
 		}
+
+	/**
+	 * Returns whether or not the user is currently logged in and that they are an admin user.
+	 *
+	 * @uses $_SESSION
+	 * @uses isloggedin()
+	 * @return true|false
+	 */
+		function isadminloggedin()
+		{
+			if ((isloggedin()) && (($_SESSION['user']->admin || $_SESSION['user']->siteadmin)))
+				return true;
+				
+			return false;
+		}
 		
 	/**
 	 * Perform standard authentication with a given username and password.
