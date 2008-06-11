@@ -14,11 +14,20 @@
 	// Get the Elgg framework
 		require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
 
-	// Make sure only valid users can see this
-		gatekeeper();
-		if (!$_SESSION['user']->admin && !$_SESSION['user']->siteadmin) forward();
+	// Make sure only valid admin users can see this
+		admin_gatekeeper();
+		
 
-		$menuoptions = get_register("admin");
+		
+		
+		
+		
+	// Get menu list
+
+	// render
+		
+		
+		
 		
 	// Display main admin menu
 		page_draw(elgg_echo("admin"),elgg_view("admin/main"));
