@@ -41,7 +41,15 @@
 <div id="layout_sidebar_left">
 <div id="wrapper_sidebar_left">
     
-<?php echo elgg_view("navigation/toolbox", $vars); ?>
+<?php 
+	//if logged in, display the toolbar, else display a sample ad
+	if(isloggedin()){
+		echo elgg_view("navigation/toolbox", $vars); 
+	}else{
+		echo "<img src=\"{$vars['url']}_graphics/skyscraper.gif\" alt=\"sample skyscraper ad\" />";
+	}
+
+?>
 
 <?php echo $vars['sidebar']; ?>
 
