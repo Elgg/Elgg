@@ -70,9 +70,10 @@
 	foreach ($commands as $command => $details)
 		$list .= apitest_draw_command_form($command, $details);
 		
-	$body = elgg_view("apitest/main", array(
+	$body = elgg_view_layout("one_column", elgg_view("apitest/main", array(
 		"config" => apitest_draw_config_panel(),
 		"commandlist" => $list
-	));
+	)));
+	
 	page_draw("API Commands",$body);
 ?>

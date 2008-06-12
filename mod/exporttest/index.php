@@ -21,17 +21,20 @@
 	
 	if ($guid)
 	{
-		echo elgg_view("exporttest/outputxml", array("xml" => export($guid)));
+		echo elgg_view_layout("one_column", elgg_view("exporttest/outputxml", array("xml" => export($guid))));
 	}
 	else if ($action=='import')
 	{
-		$body = print_r(import(get_input('xml')), true);
-		$body .= elgg_view("exporttest/main", array("owner_id" => $owner_id));
+		$area1 = print_r(import(get_input('xml')), true);
+		$area1 .= elgg_view("exporttest/main", array("owner_id" => $owner_id));
+		
+		$body = elgg_view_layout("one_column", $area1);
+		
 		page_draw("Import results",$body);
 	}
 	else
 	{
-		$body = elgg_view("exporttest/main", array("owner_id" => $owner_id));
+		$body = elgg_view_layout("one_column", elgg_view("exporttest/main", array("owner_id" => $owner_id)));
 		page_draw("Export a GUID",$body);
 	}
 ?>

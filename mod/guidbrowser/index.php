@@ -47,7 +47,7 @@
 		$page_owner = page_owner_entity();
 		
 	// Display 
-		$body = guidbrowser_display($offset, $limit, $type, $subtype);
+		$body = elgg_view_layout("one_column", guidbrowser_display($offset, $limit, $type, $subtype));
 		
 	// Display page
 		page_draw(elgg_echo("guidbrowser"), $body);
