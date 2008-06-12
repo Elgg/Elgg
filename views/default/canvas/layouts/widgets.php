@@ -19,6 +19,15 @@
 
 
 	<?php echo $vars['area2']; ?>
+	<?php
+
+		if ($widgets = get_widgets(page_owner(),get_context(),2)) {
+			foreach($widgets as $widget) {
+				echo elgg_view_entity($widget);
+			}
+		}
+	
+	?>
 
 
 </div><!-- /#wrapper_sidebar_right -->
@@ -32,6 +41,15 @@
 
 	
 	<?php echo $vars['area1']; ?>
+	<?php
+
+		if ($widgets = get_widgets(page_owner(),get_context(),1)) {
+			foreach($widgets as $widget) {
+				echo elgg_view_entity($widget);
+			}
+		}
+	
+	?>
 	
 	
 </div><!-- /#wrapper_maincontent -->
