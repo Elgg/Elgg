@@ -16,8 +16,8 @@
 	// Make sure we're logged in
 		if (!isloggedin()) forward();
 		
-	// Get the form
-		$body = elgg_view("profile/editicon");
+	// Get the form and correct canvas area
+		$body = elgg_view_layout("one_column", elgg_view("profile/editicon"));
 		
 	// Draw the page
 		page_draw(elgg_echo("profile:editicon"),$body);

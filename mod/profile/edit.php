@@ -22,13 +22,16 @@
 	// Get form, if we're allowed to edit
 		if ($user->canEdit()) {
 			
-			$body = elgg_view("profile/edit",array('entity' => $user));
+			$area1 = elgg_view("profile/edit",array('entity' => $user));
 			 
 		} else {
 			
-			$body = elgg_echo("profile:noaccess");
+			$area1 = elgg_echo("profile:noaccess");
 			
 		}
+		
+    // get the required canvas area
+        $body = elgg_view_layout("one_column", $area1);
 		
 	// Draw the page
 		page_draw(elgg_echo("profile:edit"),$body);
