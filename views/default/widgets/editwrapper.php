@@ -1,7 +1,7 @@
 <?php
 
 	/**
-	 * Elgg one-column layout
+	 * Elgg edit widget layout
 	 * 
 	 * @package Elgg
 	 * @subpackage Core
@@ -13,12 +13,20 @@
 
 ?>
 
-<!-- main content -->
-<div id="layout_maincontent">
-<div id="wrapper_maincontent">
+<form>
 
-<?php echo $vars['area1']; ?>
+	<?php
 
-</div><!-- /#wrapper_maincontent -->
-<p></p><!-- necessary to avoid an ie7 bug? -->
-</div><!-- /#layout_maincontent -->	
+		echo $vars['body'];
+	
+	?>
+
+	<p>
+		<input type="submit" value="<?php
+
+			echo elgg_echo('save');			
+		
+		?>" />
+	</p>
+
+</form>
