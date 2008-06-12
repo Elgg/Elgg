@@ -355,11 +355,7 @@
 	 * @return unknown
 	 */
 		function page_draw($title, $body, $sidebar = "") {
-			if (isloggedin()) {
-				$view = "pageshells/pageshell";
-			} else {
-				$view = "pageshells/pageshell_loggedout";
-			}
+
 			echo elgg_view('pageshells/pageshell', array(
 												'title' => $title,
 												'body' => $body,
