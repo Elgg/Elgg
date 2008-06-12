@@ -1,6 +1,9 @@
-<div style="float:right;width:240px;">
-<?php echo $vars['area2']; ?>
-</div>
-<div style="width:540px;">
+<!-- main content -->
+<div id="layout_maincontent">
+<div id="wrapper_maincontent">
+
 <?php echo $vars['area1']; ?>
-</div>
+
+</div><!-- /#wrapper_maincontent -->
+<p></p><!-- necessary to avoid an ie7 bug? -->
+</div><!-- /#layout_maincontent -->	

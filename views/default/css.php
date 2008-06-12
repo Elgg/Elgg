@@ -167,26 +167,30 @@ h6 { font-size: 0.8em; }
 	margin:0;
 }
 
-#layout_sidebar_right {
-	width:233px; /* 260-27*/
-	min-height: 260px;
-	float:right;
-	padding:20px 20px 14px 7px;
+#layout_canvas {
+	margin:20px 20px 20px 160px;
+	min-height: 360px;
 }
 
+#layout_sidebar_right {
+	width:250px; /* 260-10*/
+	min-height: 260px;
+	float:right;
+	padding:0px 0px 20px 10px;
+}
 #wrapper_sidebar_right {
 	margin:0;
 }
 
 #layout_maincontent {
-    margin:0 260px 0 160px;
-    min-height: 360px;
-    padding:20px 13px 20px 20px;
+    padding:0px 10px 20px 20px;
 }
-/* subclass for maincontent when hiding sidebar */
-.wide {
-    margin:0 0 0 160px !important;
-    padding:20px 20px 20px 20px !important;
+#wrapper_maincontent {
+	margin:0;
+}
+/* subclass for layout_maincontent when showing rhs sidebar */
+.has_sidebar_right {
+    margin:0 260px 0 0 !important;
 }
 /* IE6 fix */
 * html #layout_maincontent { 
@@ -205,10 +209,6 @@ h6 { font-size: 0.8em; }
 #wrapper_maincontent .collapsable_box_content  {
 	margin:0;
 	padding:0;
-}
-
-#wrapper_maincontent {
-	margin:0;
 }
 
 #layout_spotlight {
