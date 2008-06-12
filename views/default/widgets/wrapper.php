@@ -18,7 +18,7 @@
 		$handler = "error";
 		$title = elgg_echo("error"); 
 	}
-
+	
 ?>
 
 	<div class="collapsable_box">
@@ -29,7 +29,16 @@
 		echo $vars['entity']->title;
 	
 	?></h1></div>
-	<div class="collapsable_box_editpanel"><?php echo elgg_view('widgets/editwrapper',array('body' => elgg_view("widgets/{$handler}/edit",$vars))); ?></div><!-- /collapsable_box_editpanel -->
+	<div class="collapsable_box_editpanel"><?php 
+		
+		echo elgg_view('widgets/editwrapper', 
+						array(
+								'body' => elgg_view("widgets/{$handler}/edit",$vars),
+								'entity' => $vars['entity']
+							  )
+					   ); 
+		
+	?></div><!-- /collapsable_box_editpanel -->
 	<div class="collapsable_box_content">
 		<?php echo elgg_view("widgets/{$handler}/view",$vars); ?>
 	</div><!-- /.collapsable_box_content -->

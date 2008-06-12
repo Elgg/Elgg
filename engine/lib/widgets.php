@@ -82,6 +82,8 @@
 					
 					return true;
 					
+				} else {
+					register_error($widget->subtype);
 				}
 				
 			}
@@ -102,13 +104,17 @@
 			
 			if ($widgets = get_user_objects_by_metadata($user_guid, "widget", array(
 												'column' => $column,
-												'location' => $context, 
+												'context' => $context, 
 																	), 10000)) {
 
 																		
 				$widgetorder = array();
 				foreach($widgets as $widget) {
-					$widgetorder[$widget->order] = $widget; 
+					$order = $widget->order;
+					while(isset($widgetorder[$order])) {
+						$order++;
+					}
+					$widgetorder[$order] = $widget; 
 				}
 				return $widgetorder;
 																		
@@ -148,11 +154,14 @@
 			if ($user = get_user($user_guid)) {
 				
 				$widget = new ElggObject;
+				$widget->subtype = "widget";
 				$widget->handler = $handler;
 				$widget->context = $context;
+				$widget->column = $column;
 				if (!$widget->save())
 					return false;
-				return save_widget_location($widget, $order, $column);
+				save_widget_location($widget, $order, $column);
+				return true;
 				
 			}
 			
@@ -244,7 +253,9 @@
 			
 			if ($widget = get_entity($widget_guid)) {
 				
-				if ($widget->subtype != "widget") return false;
+				$subtype = $widget->getSubtype();
+				
+				if ($subtype != "widget") return false;
 				$handler = $widget->handler;
 				if (empty($handler) || !widget_type_exists($handler)) return false;
 				
@@ -257,6 +268,7 @@
 							$widget->$name = $value;
 						}
 					}
+					$widget->save();
 				}
 				
 				$function = "save_{$handler}_widget";
@@ -276,9 +288,10 @@
 	 * Function to initialise widgets functionality on Elgg init
 	 *
 	 */
-		function widget_init() {
+		function widgets_init() {
 			
 			register_action('widgets/save');
+			register_action('widgets/add');
 			
 		}
 		

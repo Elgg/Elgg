@@ -11,6 +11,33 @@
 	 * @link http://elgg.org/
 	 */
 
+		$widgettypes = get_widget_types();
+
+		if (is_array($widgettypes) && sizeof($widgettypes) > 0) {
+			
+?>
+
+	<p>
+		<b>Temporarily, add a widget to this page:</b><br />
+
+<?php
+
+		foreach($widgettypes as $handler => $widgettype) {
+			$url = $vars['url'] . "action/widgets/add";
+			$url .= "?handler=" . $handler;
+			$url .= "&amp;context=" . get_context();
+			$url .= "&amp;user=" . page_owner();
+			$url .= "&amp;column=1";
+			echo "<a href=\"{$url}\">{$widgettype->name}</a><br />";	
+		}
+
+?>
+	</p>
+
+<?php
+			
+		}
+		
 ?>
 
 <!-- right sidebar -->
@@ -22,6 +49,7 @@
 	<?php
 
 		if ($widgets = get_widgets(page_owner(),get_context(),2)) {
+			if (is_array($widgets) && sizeof($widgets) > 0)
 			foreach($widgets as $widget) {
 				echo elgg_view_entity($widget);
 			}
@@ -44,6 +72,7 @@
 	<?php
 
 		if ($widgets = get_widgets(page_owner(),get_context(),1)) {
+			if (is_array($widgets) && sizeof($widgets) > 0)
 			foreach($widgets as $widget) {
 				echo elgg_view_entity($widget);
 			}

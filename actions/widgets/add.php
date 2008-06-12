@@ -1,7 +1,7 @@
 <?php
 
 	/**
-	 * Elgg widget save action
+	 * Elgg widget add action
 	 * 
 	 * @package Elgg
 	 * @subpackage Core
@@ -11,16 +11,24 @@
 	 * @link http://elgg.org/
 	 */
 
-
-		$guid = get_input('guid');
-		$params = $_REQUEST['params'];
-		$pageurl = get_input('pageurl');
+		$guid = get_input('user');
+		$handler = get_input('handler');
+		$context = get_input('context');
+		$column = get_input('column');
 		
 		$result = false;
 		
 		if (!empty($guid)) {
 			
-			$result = save_widget_info($guid,$params);
+			if ($user = get_entity($guid)) {
+				
+				if ($user->canEdit()) {
+					
+					$result = add_widget($user->getGUID(),$handler,$context,0,$column);
+					
+				}
+				
+			}
 			
 		}
 		

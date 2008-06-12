@@ -29,7 +29,7 @@
 			
 		}
 		
-		$body.= elgg_view("river/shell", array('river' => get_river_entries()));
+		$body = elgg_view_layout('widgets',$body);
 		
 		page_draw($title, $body);
 		
