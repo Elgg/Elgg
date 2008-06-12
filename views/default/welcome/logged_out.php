@@ -13,11 +13,15 @@
 
 ?>
 
-	<p>
-		<?php echo elgg_echo("welcome_message"); ?>
-	</p>
 	<?php
 
-		echo elgg_view("account/forms/login");
-	
+		//add various views to area1
+		$area1 = elgg_echo("welcome_message");
+		$area1 .= elgg_view("account/forms/login");
+
+		//send area one to the appropriate canvas layout
+		$body = elgg_view_layout("one_column", $area1);
+
+		//draw to screen
+		echo $body;	
 	?>
