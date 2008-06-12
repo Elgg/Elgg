@@ -11,6 +11,25 @@
 	 * @link http://elgg.org/
 	 */
 
+	/**
+	 * Register a particular context for use with widgets.
+	 *
+	 * @param string $context The context we wish to enable context for
+	 */
+		function use_widgets($context) {
+			
+			global $CONFIG;
+			if (!isset($CONFIG->widgets))
+				$CONFIG->widgets = new stdClass;
+			if (!isset($CONFIG->widgets->contexts)) {
+				$CONFIG->widgets->contexts = array();
+			}
+			if (!empty($context)) {
+				$CONFIG->widgets->contexts[] = $context;
+			}
+			
+		}
+
 
 	/**
 	 * Registers a particular action with a widget handler
