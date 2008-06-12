@@ -246,11 +246,25 @@
 				
 				if ($widget->subtype != "widget") return false;
 				$handler = $widget->handler;
-				if (empty($handler)) return false;
-				$function = "save_{$handler}_widget";
-				if (!is_callable($function)) return false;
+				if (empty($handler) || !widget_type_exists($handler)) return false;
 				
-				return $function($params);
+				// Save the params to the widget 
+				if (is_array($params) && sizeof($params) > 0) {
+					foreach($params as $name => $value) {
+						if (!empty($name) && !in_array($name,array(
+								'guid','owner_guid','access_id','site_guid'
+																	))) {
+							$widget->$name = $value;
+						}
+					}
+				}
+				
+				$function = "save_{$handler}_widget";
+				if (is_callable($function)) {
+					return $function($params);
+				}
+				
+				return true;
 				
 			}
 			
