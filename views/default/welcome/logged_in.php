@@ -13,10 +13,17 @@
 
 ?>
 
-	<h2><?php echo sprintf(elgg_echo("welcome"),$vars['user']->name); ?></h2>
-	<p>
-		<?php echo elgg_echo("welcome_message"); ?>
-	</p>
-	<p>
-		<a href="<?php echo $vars['url']; ?>action/logout"><?php echo elgg_echo('logout'); ?></a>
-	</p>
+	<?php
+
+		//add various views to area1
+		$area1 = "<h2>" . sprintf(elgg_echo("welcome"),$vars['user']->name) . "</h2>"; 
+		$area1 .= elgg_echo("welcome_message") . "<br />";
+		$url = $vars['url'] . "action/logout";
+		$area1 .= "<a href=" . $url . ">" . elgg_echo('logout') . "</a>";
+
+		//send area one to the appropriate canvas layout
+		$body = elgg_view_layout("one_column", $area1);
+
+		//draw to screen
+		echo $body;	
+	?>
