@@ -335,26 +335,23 @@
 		}
 		
 		/**
-		 * Enter description here...
+		 * Obtain this entity's access ID
 		 *
-		 * @return unknown
-		 * @todo document me
+		 * @return int The access ID
 		 */
 		public function getAccessID() { return $this->get('access_id'); }
 		
 		/**
-		 * Enter description here...
+		 * Obtain this entity's GUID
 		 *
-		 * @return unknown
-		 * @todo document me
+		 * @return int GUID
 		 */
 		public function getGUID() { return $this->get('guid'); }
 		
 		/**
-		 * Enter description here...
+		 * Get the owner of this entity
 		 *
-		 * @return unknown
-		 * @todo document me
+		 * @return int The owner GUID
 		 */
 		public function getOwner() { return $this->get('owner_guid'); }
 		
@@ -366,34 +363,30 @@
 		public function getOwnerEntity() { return get_entity($this->get('owner_guid')); }
 		
 		/**
-		 * Enter description here...
+		 * Gets the type of entity this is
 		 *
-		 * @return unknown
-		 * @todo document me
+		 * @return string Entity type
 		 */
 		public function getType() { return $this->get('type'); }
 		
 		/**
-		 * Enter description here...
+		 * Returns the subtype of this entity
 		 *
-		 * @return unknown
-		 * @todo document me
+		 * @return string The entity subtype
 		 */
 		public function getSubtype() { return get_subtype_from_id($this->get('subtype')); }
 		
 		/**
-		 * Enter description here...
+		 * Gets the UNIX epoch time that this entity was created
 		 *
-		 * @return unknown
-		 * @todo document me
+		 * @return int UNIX epoch time
 		 */
 		public function getTimeCreated() { return $this->get('time_created'); }
 		
 		/**
-		 * Enter description here...
+		 * Gets the UNIX epoch time that this entity was last updated
 		 *
-		 * @return unknown
-		 * @todo document me
+		 * @return int UNIX epoch time
 		 */
 		public function getTimeUpdated() { return $this->get('time_updated'); }
 		
