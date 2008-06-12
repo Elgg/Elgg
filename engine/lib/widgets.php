@@ -29,25 +29,6 @@
 			}
 			
 		}
-
-
-	/**
-	 * Registers a particular action with a widget handler
-	 *
-	 * @param string $handler_name
-	 * @param unknown_type $action
-	 */
-		function add_widget_save_action($handler_name, $action) {
-			
-			global $CONFIG;
-			if (!isset($CONFIG->widgets->saveactions))
-				$CONFIG->widgets->saveactions = array();
-				
-			if (!empty($handler_name)) {
-				$CONFIG->widgets->saveactions[$handler_name] = $action;
-			}
-			
-		}
 		
 	/**
 	 * When given a widget entity and a new requested location, saves the new location
@@ -141,18 +122,11 @@
 	 * Displays a particular widget
 	 *
 	 * @param ElggObject $widget The widget to display
-	 * @param boolean $edit Should we display edit mode?
 	 * @return string The HTML for the widget, including JavaScript wrapper
 	 */
-		function display_widget(ElggObject $widget, $edit = false) {
+		function display_widget(ElggObject $widget) {
 			
-			if ($edit) {
-				$body = elgg_view("widgets/" . $widget->handler . "/edit", array('entity' => $widget));
-			} else {
-				$body = elgg_view("widgets/" . $widget->handler . "/view", array('entity' => $widget));
-			} 
-			
-			return elgg_view("widgets/wrapper",array('body' => $body, 'widget' => $widget, 'edit' => $edit));
+			return elgg_view_entity($widget);
 			
 		}
 		
@@ -168,7 +142,7 @@
 	 */
 		function add_widget($user_guid, $handler, $context, $order = 0, $column = 1) {
 			
-			if (empty($user_guid) || empty($context) || empty($handler))
+			if (empty($user_guid) || empty($context) || empty($handler) || !widget_type_exists($handler))
 				return false;
 			
 			if ($user = get_user($user_guid)) {
@@ -185,6 +159,117 @@
 			return false;
 			
 		}
+		
+	/**
+	 * Define a new widget type
+	 *
+	 * @param string $handler The identifier for the widget handler
+	 * @param string $name The name of the widget type
+	 * @param string $description A description for the widget type
+	 * @return true|false Depending on success
+	 */
+		
+		function add_widget_type($handler, $name, $description) {
+
+			if (!empty($handler) && !empty($name)) {
+				
+				global $CONFIG;
+				
+				if (!isset($CONFIG->widgets))
+					$CONFIG->widgets = new stdClass;
+					
+				if (!isset($CONFIG->widgets->handlers))
+					$CONFIG->widgets->handlers = array();
+				
+				$handlerobj = new stdClass;
+				$handlerobj->name = $name;
+				$handlerobj->description = $description;
+					
+				$CONFIG->widgets->handlers[$handler] = $handlerobj;
+
+				return true;
+					
+			}
+			
+			return false;
+			
+		}
+		
+	/**
+	 * Determines whether or not widgets with the specified handler have been defined
+	 *
+	 * @param string $handler The widget handler identifying string
+	 * @return true|false Whether or not those widgets exist
+	 */
+		function widget_type_exists($handler) {
+			
+			global $CONFIG;
+			if (!empty($CONFIG->widgets) 
+				&& !empty($CONFIG->widgets->handlers) 
+				&& is_array($CONFIG->widgets->handlers) 
+				&& array_key_exists($handler, $CONFIG->widgets->handlers))
+					return true;
+
+			return false;
+			
+		}
+		
+	/**
+	 * Returns an array of stdClass objects representing the defined widget types
+	 *
+	 * @return array A list of types defined (if any)
+	 */
+		function get_widget_types() {
+			
+			global $CONFIG;
+			if (!empty($CONFIG->widgets) 
+				&& !empty($CONFIG->widgets->handlers) 
+				&& is_array($CONFIG->widgets->handlers)) {
+					
+					return $CONFIG->widgets->handlers;
+					
+				}
+				
+			return array();
+			
+		}
+		
+	/**
+	 * Saves a widget's settings (by passing an array of (name => value) pairs to save_{$handler}_widget)
+	 *
+	 * @param int $widget_guid The GUID of the widget we're saving to
+	 * @param array $params An array of name => value parameters 
+	 */
+		function save_widget_info($widget_guid, $params) {
+			
+			if ($widget = get_entity($widget_guid)) {
+				
+				if ($widget->subtype != "widget") return false;
+				$handler = $widget->handler;
+				if (empty($handler)) return false;
+				$function = "save_{$handler}_widget";
+				if (!is_callable($function)) return false;
+				
+				return $function($params);
+				
+			}
+			
+			return false;
+			
+		}
+		
+	/**
+	 * Function to initialise widgets functionality on Elgg init
+	 *
+	 */
+		function widget_init() {
+			
+			register_action('widgets/save');
+			
+		}
+		
+	// Register event
+		register_elgg_event_handler('init','system','widgets_init');
 
 
 ?>

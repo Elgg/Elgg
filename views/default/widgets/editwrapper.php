@@ -13,7 +13,7 @@
 
 ?>
 
-<form>
+<form action="<?php echo $vars['url']; ?>action/widgets/save" method="post">
 
 	<?php
 
@@ -22,6 +22,7 @@
 	?>
 
 	<p>
+		<input type="hidden" name="guid" value="<?php echo $vars['entity']->getGUID(); ?>" />
 		<input type="submit" value="<?php
 
 			echo elgg_echo('save');			

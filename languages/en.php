@@ -265,6 +265,15 @@
 			'importsuccess' => "Import of data was successful",
 			
 		/**
+		 * Widgets
+		 */
+	
+			'widgets' => "Widgets",
+			'widget' => "Widget",
+			'widgets:save:success' => "The widget was successfully saved.",
+			'widgets:save:failure' => "We could not save your widget. Please try again.",
+	
+		/**
 		 * Installation and system settings
 		 */
 	
