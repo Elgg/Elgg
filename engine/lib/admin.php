@@ -39,8 +39,6 @@
 	 */
 	function admin_init()
 	{
-		global $CONFIG;
-		
 		// Add plugin main menu option (last)
 		extend_elgg_admin_page('admin/main_opt/statistics', 'admin/main');
 		extend_elgg_admin_page('admin/main_opt/site', 'admin/main'); 

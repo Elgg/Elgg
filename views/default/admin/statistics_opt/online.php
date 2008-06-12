@@ -10,8 +10,10 @@
 	 * @link http://elgg.org/
 	 */
 
-	global $CONFIG;
-	
-	echo "<p>" . nl2br(elgg_echo("admin:statistics:description")) . "</p>";
-         
+	// users online
+	$users_online = get_number_online();
 ?>
+
+<div>
+    <h2><?php echo sprintf(elgg_echo('admin:statistics:label:onlineusers'), 10); ?></h2>
+</div>

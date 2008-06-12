@@ -2,7 +2,8 @@
 	/**
 	 * Elgg statistics library.
 	 * This file contains a number of functions for obtaining statistics about the running system.
-	 * These statistics are mainly used by the administration pages.
+	 * These statistics are mainly used by the administration pages, and is also where the basic views for statistics 
+	 * are added.
 	 * 
 	 * @package Elgg
 	 * @subpackage Core
@@ -50,40 +51,53 @@
 		return $entity_stats;
 	}
          
-        /**
-         * Return the number of users registered in the system.
-         *
-         * @return int
-         */
-        function get_number_users()
-        {
-            global $CONFIG;
+	/**
+	 * Return the number of users registered in the system.
+	 *
+	 * @return int
+	 */
+	function get_number_users()
+	{
+		global $CONFIG;
             
-            $result = get_data_row("SELECT count(*) as count from {$CONFIG->dbprefix}entities where type='user'");
+		$result = get_data_row("SELECT count(*) as count from {$CONFIG->dbprefix}entities where type='user'");
             
-            if ($result)
-                    return $result->count;
+		if ($result)
+			return $result->count;
             
-            return false;
-        }
+		return false;
+	}
         
-        /**
-         * Report how many users are currently online
-         *
-         * @return int
-         */
-        function get_number_online()
-        {
-            // TODO: get logged in users somehow
-        }
+	/**
+	 * Report how many users are currently online
+	 *
+	 * @return int
+	 */
+	function get_number_online()
+	{
+		// TODO: get logged in users somehow
+	}
         
-        /**
-         * Return a list of how many users are currently online.
-         * 
-         * @param int $limit Number of users to return
-         */
-        function get_online_users($limit = 10)
-        {
-            // TODO: Writeme
-        }
+	/**
+	 * Return a list of how many users are currently online.
+	 * 
+	 * @param int $limit Number of users to return
+ 	 */
+	function get_online_users($limit = 10)
+	{
+		// TODO: Writeme
+	}
+        
+    /**
+	 * Initialise the statistics admin page.
+	 */
+	function statistics_init()
+	{
+		extend_elgg_admin_page('admin/statistics_opt/basic', 'admin/statistics');
+		extend_elgg_admin_page('admin/statistics_opt/numentities', 'admin/statistics'); 
+		extend_elgg_admin_page('admin/statistics_opt/online', 'admin/statistics'); 
+	}
+	
+	/// Register init function
+	register_elgg_event_handler('init','system','statistics_init');
 ?>
