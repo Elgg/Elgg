@@ -28,7 +28,7 @@
         
 	
 ?>
-<div id="basic_site_statistics">
+<div>
     <h2><?php echo elgg_echo('admin:statistics:label:basic'); ?></h2>
     <table>
         <tr>
@@ -39,8 +39,10 @@
             <td><b><?php echo elgg_echo('admin:statistics:label:numonline'); ?> :</b></td>
             <td><?php echo $users_online; ?></td>
         </tr>
-    </table>    
-    
+    </table> 
+</div>   
+
+<div>    
     <h2><?php echo elgg_echo('admin:statistics:label:numentities'); ?></h2>
     <table>
         <?php
@@ -64,5 +66,10 @@ END;
             }
         ?>
     </table>
+</div>
+
+<div>
+    <h2><?php echo sprintf(elgg_echo('admin:statistics:label:onlineusers'), 10); ?></h2>
+    
     
 </div>
