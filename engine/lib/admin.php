@@ -42,6 +42,7 @@
 		global $CONFIG;
 		
 		// Add plugin main menu option (last)
+		extend_elgg_admin_page('admin/statistics', 'admin/main');
 		extend_elgg_admin_page('admin/main_opt/site', 'admin/main'); 
 		extend_elgg_admin_page('admin/main_opt/user', 'admin/main'); 
 		extend_elgg_admin_page('admin/main_opt/plugins', 'admin/main', 999); // Always last
