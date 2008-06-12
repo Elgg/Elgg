@@ -17,7 +17,7 @@
 	
 	// Number of objects broken down into type
 		
-	// who's online now
+	// who' s online now
 	
 	/**
 	 * Return an array reporting the number of various entities in the system.
