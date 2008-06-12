@@ -311,10 +311,6 @@
 	 * 
 	 * This function lets you make the statement "$guid_one has $relationship with $guid_two".
 	 * 
-	 * TODO: Access controls? Are they necessary - I don't think so since we are defining 
-	 * relationships between and anyone can do that. The objects should patch some access 
-	 * controls over the top tho.
-	 * 
 	 * @param int $guid_one
 	 * @param string $relationship 
 	 * @param int $guid_two
