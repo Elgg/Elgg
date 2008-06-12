@@ -231,6 +231,16 @@
 			'admin:plugins:description' => "This admin panel allows you to control and configure tools installed on your site.",
 			'admin:plugins:opt:linktext' => "Configure tools...",
 			'admin:plugins:opt:description' => "Configure the tools installed on the site. ",
+	
+			'admin:statistics' => "Statistics",
+			'admin:statistics:description' => "This admin panel will allow you to view statistics about your site.",
+			'admin:statistics:opt:description' => "View statistical information about users and objects on your site.",
+			'admin:statistics:opt:linktext' => "View statistics...",
+                        'admin:statistics:label:basic' => "Basic site statistics",
+                        'admin:statistics:label:numentities' => "Entities on site",
+                        'admin:statistics:label:numusers' => "Number of users",
+                        'admin:statistics:label:numonline' => "Number of users online",
+                        'admin:statistics:label:onlineusers' => "Most recent %d users online",
 			
 	
 		/**

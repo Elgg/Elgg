@@ -38,7 +38,8 @@
 			
 			$query = "SELECT count(*) as count from {$CONFIG->dbprefix}entities where type='{$type->type}'";
 			if ($type->subtype) $query.= " and subtype={$type->subtype_id}";
-			$subtype_cnt = get_data($query);
+                         
+			$subtype_cnt = get_data_row($query);
 			
 			if ($type->subtype)
 				$entity_stats[$type->type][$type->subtype] = $subtype_cnt->count;
@@ -48,4 +49,41 @@
 		
 		return $entity_stats;
 	}
+         
+        /**
+         * Return the number of users registered in the system.
+         *
+         * @return int
+         */
+        function get_number_users()
+        {
+            global $CONFIG;
+            
+            $result = get_data_row("SELECT count(*) as count from {$CONFIG->dbprefix}entities where type='user'");
+            
+            if ($result)
+                    return $result->count;
+            
+            return false;
+        }
+        
+        /**
+         * Report how many users are currently online
+         *
+         * @return int
+         */
+        function get_number_online()
+        {
+            // TODO: get logged in users somehow
+        }
+        
+        /**
+         * Return a list of how many users are currently online.
+         * 
+         * @param int $limit Number of users to return
+         */
+        function get_online_users($limit = 10)
+        {
+            // TODO: Writeme
+        }
 ?>

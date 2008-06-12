@@ -12,5 +12,57 @@
 
 	global $CONFIG;
 	
+	echo "<p>" . nl2br(elgg_echo("admin:statistics:description")) . "</p>";
+         
+        
+        
+        // Get entity statistics
+        $entity_stats = get_entity_statistics();
+                 
+        // Work out number of users
+        $users_stats = get_number_users();
+        
+        // users online
+        $users_online = get_number_online();
+        
+        
 	
 ?>
+<div id="basic_site_statistics">
+    <h2><?php echo elgg_echo('admin:statistics:label:basic'); ?></h2>
+    <table>
+        <tr>
+            <td><b><?php echo elgg_echo('admin:statistics:label:numusers'); ?> :</b></td>
+            <td><?php echo $users_stats; ?></td>
+        </tr>
+        <tr>
+            <td><b><?php echo elgg_echo('admin:statistics:label:numonline'); ?> :</b></td>
+            <td><?php echo $users_online; ?></td>
+        </tr>
+    </table>    
+    
+    <h2><?php echo elgg_echo('admin:statistics:label:numentities'); ?></h2>
+    <table>
+        <?php
+            foreach ($entity_stats as $k => $entry)
+            {
+                echo "<table>";
+                foreach ($entry as $a => $b)
+                {
+                    if ($a == "__base__") 
+                        $a=$k;
+                    else
+                        $a = "$k $a";
+                    echo <<< END
+                        <tr>
+                            <td><b>$a :</b></td>
+                            <td>$b</td>
+                        </tr>
+END;
+                }
+                echo "</table>";
+            }
+        ?>
+    </table>
+    
+</div>
