@@ -236,9 +236,9 @@
 		 * @param int $limit
 		 * @param int $offset
 		 */
-		function getAnnotations($name, $limit = 50, $offset = 0) 
+		function getAnnotations($name, $limit = 50, $offset = 0, $order="asc")) 
 		{ 
-			return get_annotations($this->getGUID(), "", "", $name, "", 0, $limit, $offset);
+			return get_annotations($this->getGUID(), "", "", $name, "", 0, $limit, $offset, $order);
 		}
 		
 		/**

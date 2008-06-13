@@ -226,7 +226,7 @@
 	 * @param int $offset
 	 * @param string $order_by
 	 */
-	function get_annotations($entity_guid = 0, $entity_type = "", $entity_subtype = "", $name = "", $value = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "a.time_created desc")
+	function get_annotations($entity_guid = 0, $entity_type = "", $entity_subtype = "", $name = "", $value = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "asc")
 	{
 		global $CONFIG;
 		
@@ -244,7 +244,11 @@
 		$owner_guid = (int)$owner_guid;
 		$limit = (int)$limit;
 		$offset = (int)$offset;
-		$order_by = sanitise_string($order_by);
+		if($order_by == 'asc')
+		    $order_by = "a.time_created asc";
+		    
+		if($order_by == 'desc')
+		    $order_by = "a.time_created desc";
 		
 		$where = array();
 		
