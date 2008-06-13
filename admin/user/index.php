@@ -17,6 +17,14 @@
 	// Make sure only valid admin users can see this
 		admin_gatekeeper();
 		
+		
+	// Display user browser
+
+	// if search, perform search
+		
+		
+	// extend user view with ban etc
+		
 	// Display main admin menu
 		page_draw(elgg_echo("admin:user"),elgg_view("admin/user"));
 		

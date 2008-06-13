@@ -14,5 +14,5 @@
 	// Description of what's going on
 		echo "<p>" . nl2br(elgg_echo("admin:user:description")) . "</p>";
 	
-		
+		echo elgg_view("admin/user_opt/search");
 ?>

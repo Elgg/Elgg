@@ -241,6 +241,9 @@
 			'admin:statistics:label:numusers' => "Number of users",
 			'admin:statistics:label:numonline' => "Number of users online",
 			'admin:statistics:label:onlineusers' => "%d Most recent users online",
+	
+			'admin:user:label:search' => "Find users:",
+			'admin:user:label:seachbutton' => "Search", 
 			
 	
 		/**
