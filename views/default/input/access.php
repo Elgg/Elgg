@@ -27,11 +27,11 @@
 <select name="<?php echo $vars['internalname']; ?>" <?php echo $vars['js']; ?>>
 <?php
 
-    foreach($vars['options'] as $option) {
-        if ($option != $vars['value']) {
-            echo "<option>{$option}</option>";
+    foreach($vars['options'] as $key => $option) {
+        if ($key != $vars['value']) {
+            echo "<option value=\"{$key}\">{$option}</option>";
         } else {
-            echo "<option selected=\"selected\">{$option}</option>";
+            echo "<option value=\"{$key}\" selected=\"selected\">{$option}</option>";
         }
     }
 
