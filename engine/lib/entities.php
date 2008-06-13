@@ -235,6 +235,7 @@
 		 * @param string $name
 		 * @param int $limit
 		 * @param int $offset
+		 * @param string $order
 		 */
 		function getAnnotations($name, $limit = 50, $offset = 0, $order="asc") 
 		{ 
