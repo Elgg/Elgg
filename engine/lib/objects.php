@@ -235,16 +235,17 @@
 		if ($row)
 		{
 			// Core entities row exists and we have access to it
-			
-			$result = update_data("UPDATE {$CONFIG->dbprefix}objects_entity set title='$title', description='$description' where guid=$guid");
-			if ($result!=false)
-			{
-				// Update succeeded, continue
-				$entity = get_entity($guid);
-				if (trigger_elgg_event('update',$entity->type,$entity)) {
-					return true;
-				} else {
-					delete_entity($guid);
+			if ($exists = get_data_row("select guid from {$CONFIG->dbprefix}objects_entity where guid = {$guid}")) {
+				$result = update_data("UPDATE {$CONFIG->dbprefix}objects_entity set title='$title', description='$description' where guid=$guid");
+				if ($result!=false)
+				{
+					// Update succeeded, continue
+					$entity = get_entity($guid);
+					if (trigger_elgg_event('update',$entity->type,$entity)) {
+						return true;
+					} else {
+						$entity->delete();
+					}
 				}
 			}
 			else

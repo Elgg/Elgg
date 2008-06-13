@@ -364,15 +364,17 @@
 		{
 			// Exists and you have access to it
 
-			$result = update_data("UPDATE {$CONFIG->dbprefix}users_entity set name='$name', username='$username', password='$password', email='$email', language='$language', code='$code', last_action = ". time() ." where guid = {$guid}");
-			if ($result != false)
-			{
-				// Update succeeded, continue
-				$entity = get_entity($guid);
-				if (trigger_elgg_event('update',$entity->type,$entity)) {
-					return true;
-				} else {
-					delete_entity($guid);
+			if ($exists = get_data_row("select guid from {$CONFIG->dbprefix}users_entity where guid = {$guid}")) {
+				$result = update_data("UPDATE {$CONFIG->dbprefix}users_entity set name='$name', username='$username', password='$password', email='$email', language='$language', code='$code', last_action = ". time() ." where guid = {$guid}");
+				if ($result != false)
+				{
+					// Update succeeded, continue
+					$entity = get_entity($guid);
+					if (trigger_elgg_event('update',$entity->type,$entity)) {
+						return true;
+					} else {
+						$entity->delete();
+					}
 				}
 			}
 			else

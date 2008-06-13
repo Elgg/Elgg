@@ -269,15 +269,17 @@
 		if ($row)
 		{
 			// Exists and you have access to it
-			$result = update_data("UPDATE {$CONFIG->dbprefix}sites_entity set name='$name', description='$description', url='$url' where guid=$guid");
-			if ($result!=false)
-			{
-				// Update succeeded, continue
-				$entity = get_entity($guid);
-				if (trigger_elgg_event('update',$entity->type,$entity)) {
-					return true;
-				} else {
-					delete_entity($guid);
+			if ($exists = get_data_row("select guid from {$CONFIG->dbprefix}sites_entity where guid = {$guid}")) {
+				$result = update_data("UPDATE {$CONFIG->dbprefix}sites_entity set name='$name', description='$description', url='$url' where guid=$guid");
+				if ($result!=false)
+				{
+					// Update succeeded, continue
+					$entity = get_entity($guid);
+					if (trigger_elgg_event('update',$entity->type,$entity)) {
+						return true;
+					} else {
+						delete_entity($guid);
+					}
 				}
 			}
 			else
