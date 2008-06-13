@@ -23,7 +23,7 @@
 	// if search, perform search
 		
 		
-	// extend user view with ban etc
+	// extend user view with ban etc? - Or extend across the board (for admin only)
 		
 	// Display main admin menu
 		page_draw(elgg_echo("admin:user"),elgg_view("admin/user"));
