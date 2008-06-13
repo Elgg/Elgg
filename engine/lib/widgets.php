@@ -259,11 +259,13 @@
 				$handler = $widget->handler;
 				if (empty($handler) || !widget_type_exists($handler)) return false;
 				
+				if (!$widget->canEdit()) return false;
+				
 				// Save the params to the widget 
 				if (is_array($params) && sizeof($params) > 0) {
 					foreach($params as $name => $value) {
 						if (!empty($name) && !in_array($name,array(
-								'guid','owner_guid','access_id','site_guid'
+								'guid','owner_guid','site_guid'
 																	))) {
 							$widget->$name = $value;
 						}
