@@ -52,6 +52,7 @@ table {
 caption, th, td {
 	text-align: left;
 	font-weight: normal;
+	vertical-align: top;
 }
 blockquote:before, blockquote:after,
 q:before, q:after {
@@ -240,6 +241,108 @@ h6 { font-size: 0.8em; }
 #layout_footer a {
    color:white;
 }
+/* ***************************************
+  CUSTOMISE PANEL (PROFILE & DASHBOARD)
+*************************************** */
+#customise_editpanel {
+	/* display:none;*/
+	margin: -20px 0 20px 20px;
+	padding:20px;
+	background: #dedede;
+}
+#customise_page_view {
+	width:490px;
+	padding:10px;
+	background:#666666;
+}
+#main_widgets {
+	padding-bottom:40px;
+	min-height: 200px;
+}
+#rightsidebar_widgets {
+	padding-bottom:40px;
+	min-height: 200px;
+}
+#customise_editpanel h2 {
+	color:white;
+	font-size: 1.2em;
+}
+#customise_editpanel #widget_picker_gallery h2 {
+	color:#333333;
+	font-size: 1.2em;
+}
+
+#customise_editpanel table.draggable_widget {
+	width:200px;
+	background: #cccccc;
+	margin: 10px 0 0 0;
+	vertical-align:text-top;
+}
+
+#widget_picker_gallery {
+	float:right;
+	border:1px solid black;
+	width:210px;
+	height:198px;
+	padding:10px;
+	overflow:auto;
+	overflow-x:hidden;
+}
+#widget_picker_gallery table.draggable_widget {
+	width:200px;
+	background: #cccccc;
+	margin: 10px 0 0 0;
+}
+
+/* take care of long widget names */
+#customise_editpanel table.draggable_widget h3 {
+	word-wrap:break-word;/* safari, webkit, ie */
+	width:140px;
+	line-height: 1.1em;
+	overflow: hidden;/* ff */
+	padding:4px;
+}
+#widget_picker_gallery table.draggable_widget h3 {
+	word-wrap:break-word;
+	width:140px;
+	line-height: 1.1em;
+	overflow: hidden;
+	padding:4px;
+}
+#customise_editpanel img.drag_handle {
+	cursor:move;
+	padding-top: 4px;
+}
+#customise_editpanel img.remove_me {
+	padding-top: 4px;
+}
+#customise_editpanel img.more_info {
+	padding-top: 4px;
+}
+.ui-sortable-helper {
+	background: lime;
+	padding: 4px;
+	margin: 10px 0 0 0;
+}
+/* IE6 fix */
+* html .ui-sortable-helper h3 { 
+	padding: 4px;
+}
+* html .ui-sortable-helper img.drag_handle, * html .ui-sortable-helper img.remove_me, * html .ui-sortable-helper img.more_info {
+	padding-top: 4px;
+}
+/* IE7 */
+*:first-child+html .ui-sortable-helper h3 {
+	padding: 4px;
+}
+*:first-child+html .ui-sortable-helper img.drag_handle, *:first-child+html .ui-sortable-helper img.remove_me, *:first-child+html .ui-sortable-helper img.more_info {
+	padding-top: 4px;
+}
+
+.placeholder {
+	border:2px dashed #AAA;
+	margin: 10px 0 10px 0;
+}
 
 /* ***************************************
   TOPMENU (IN HEADER)
@@ -275,6 +378,11 @@ h6 { font-size: 0.8em; }
 /* ***************************************
   COLLAPSABLE BOXES
 *************************************** */
+/* temp. customise button */
+a.toggle_customise_edit_panel {
+	float:right;
+}
+
 .collapsable_box {
 	margin: 0 0 20px 0;
 	background: white;

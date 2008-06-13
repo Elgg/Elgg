@@ -13,42 +13,15 @@
 
 		$widgettypes = get_widget_types();
 
-		if (is_array($widgettypes) && sizeof($widgettypes) > 0) {
+		$owner = page_owner_entity();
+		
+		if (is_array($widgettypes) && sizeof($widgettypes) > 0 && $owner->canEdit()) {
 			
 ?>
 
 <div id="customise_editpanel">
-<!-- temporarily include customise panel js here -->
 
-<!-- jQuery UI Base -->
-<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/ui.base.js"></script>	
-<!-- jQuery UI Plugins -->
-<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/ui.draggable.js"></script>
-<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/ui.droppable.js"></script>
-<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/ui.sortable.js"></script>
-
-<script type="text/javascript">
-$(document).ready(function () {
-
-	var els = ['#widget_picker_gallery', '#main_widgets', '#rightsidebar_widgets'];
-	var $els = $(els.toString());
-	
-	$els.sortable({
-		items: '> table',
-		handle: 'img.drag_handle',
-		cursor: 'move',
-		revert: true,
-		opacity: 0.8,
-		ghosting: true,
-		appendTo: 'body',
-		placeholder: 'placeholder',
-		connectWith: els,
-	});	
-	
-});
-</script>
-
-<div id="widget_picker_gallery" style="float:right;border:1px solid black;width:210px;height:198px;padding:10px;overflow:auto;overflow-x:hidden;">
+<div id="widget_picker_gallery">
 <h2>Widget gallery</h2>
 
 <?php
@@ -59,7 +32,7 @@ $(document).ready(function () {
 
 <table class="draggable_widget" cellspacing="0"><tr><td width="149px"><h3><?php echo $widget->name; ?></h3></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_remove.gif" class="remove_me" /></a></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_info.gif" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_info.gif" class="more_info" /></a></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_drag.gif" class="drag_handle" /></a></td>
 </tr></table>
 
@@ -82,27 +55,27 @@ $(document).ready(function () {
 
 <table class="draggable_widget" cellspacing="0"><tr><td width="149px"><h3>Widget 1 Title</h3></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_remove.gif" class="remove_me" /></a></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_info.gif" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_info.gif" class="more_info" /></a></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_drag.gif" class="drag_handle" /></a></td>
 </tr></table>
-<table class="draggable_widget" cellspacing="0"><tr><td width="149px"><h3>Widget 2 Title</h3></td>
+<table class="draggable_widget" cellspacing="0"><tr><td width="149px"><h3>Widget 2 Title megacalculatorextrodinaire</h3></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_remove.gif" class="remove_me" /></a></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_info.gif" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_info.gif" class="more_info" /></a></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_drag.gif" class="drag_handle" /></a></td>
 </tr></table>
 <table class="draggable_widget" cellspacing="0"><tr><td width="149px"><h3>Widget 3 Title</h3></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_remove.gif" class="remove_me" /></a></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_info.gif" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_info.gif" class="more_info" /></a></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_drag.gif" class="drag_handle" /></a></td>
 </tr></table>
 <table class="draggable_widget" cellspacing="0"><tr><td width="149px"><h3>Widget 4 Title</h3></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_remove.gif" class="remove_me" /></a></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_info.gif" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_info.gif" class="more_info" /></a></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_drag.gif" class="drag_handle" /></a></td>
 </tr></table>
 <table class="draggable_widget" cellspacing="0"><tr><td width="149px"><h3>Widget 5 Title</h3></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_remove.gif" class="remove_me" /></a></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_info.gif" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_info.gif" class="more_info" /></a></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_drag.gif" class="drag_handle" /></a></td>
 </tr></table>
 </div>
@@ -113,17 +86,17 @@ $(document).ready(function () {
 <h2>Right sidebar widgets</h2>
 <table class="draggable_widget" cellspacing="0"><tr><td width="149px"><h3>Widget 6 Title</h3></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_remove.gif" class="remove_me" /></a></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_info.gif" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_info.gif" class="more_info" /></a></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_drag.gif" class="drag_handle" /></a></td>
 </tr></table>
 <table class="draggable_widget" cellspacing="0"><tr><td width="149px"><h3>Widget 7 Title</h3></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_remove.gif" class="remove_me" /></a></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_info.gif" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_info.gif" class="more_info" /></a></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_drag.gif" class="drag_handle" /></a></td>
 </tr></table>
 <table class="draggable_widget" cellspacing="0"><tr><td width="149px"><h3>Widget 8 Title</h3></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_remove.gif" class="remove_me" /></a></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_info.gif" /></a></td>
+<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_info.gif" class="more_info" /></a></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_drag.gif" class="drag_handle" /></a></td>
 </tr></table>
 </div>

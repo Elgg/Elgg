@@ -64,17 +64,4 @@
 
 ?>
 
-<script type="text/javascript">
-$(document).ready(function () {
-	//$('li.drawer ul:not(:first)').hide();
-	$('li.drawer ul').hide();
-	
-	$('h2.drawer-handle').click(function () {	
-		$('li.drawer ul:visible').slideUp('medium').prev().removeClass('open');
-		$(this).addClass('open').next().slideDown('fast');
-	return false;
-	});
-});
-</script>
-
 
