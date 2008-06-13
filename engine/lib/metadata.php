@@ -67,7 +67,21 @@
 		 */
 		function __set($name, $value) {
 			return $this->set($name, $value);
-		}		
+		}
+
+		/**
+		 * Determines whether or not the user can edit this piece of metadata
+		 *
+		 * @return true|false Depending on permissions
+		 */
+		function canEdit() {
+			
+			if ($entity = get_entity($this->get('entity_guid'))) {
+				return $entity->canEdit();
+			}
+			return false;
+			
+		}
 		
 		/**
 		 * Save matadata object
@@ -130,9 +144,9 @@
 		global $CONFIG;
 
 		$id = (int)$id;
-		$access = get_access_sql_suffix("m");
+		$access = get_access_sql_suffix("e");
 				
-		return row_to_elggmetadata(get_data_row("SELECT m.*, n.string as name, v.string as value from {$CONFIG->dbprefix}metadata m JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id JOIN {$CONFIG->dbprefix}metastrings n on m.name_id = n.id where m.id=$id and $access"));
+		return row_to_elggmetadata(get_data_row("SELECT m.*, n.string as name, v.string as value from {$CONFIG->dbprefix}metadata m JOIN {$CONFIG->dbprefix}entities e on e.guid = m.entity_guid JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id JOIN {$CONFIG->dbprefix}metastrings n on m.name_id = n.id where m.id=$id and $access"));
 	}
 	
 	/**
@@ -229,6 +243,10 @@
 		global $CONFIG;
 
 		$id = (int)$id;
+		
+		if (!$md = get_metadata($id)) return false;
+		if (!$md->canEdit()) return false;
+		
 		//$name = sanitise_string(trim($name));
 		//$value = sanitise_string(trim($value));
 		$value_type = detect_extender_valuetype($value, sanitise_string(trim($value_type)));
@@ -240,7 +258,6 @@
 		
 		$access = get_access_sql_suffix();
 		
-		
 		// Add the metastring
 		$value = add_metastring($value);
 		if (!$value) return false;
@@ -249,7 +266,7 @@
 		if (!$name) return false;
 		
 		// If ok then add it
-		return update_data("UPDATE {$CONFIG->dbprefix}metadata set value_id='$value', value_type='$value_type', access_id=$access_id, owner_guid=$owner_guid where id=$id and name_id='$name' and $access");
+		return update_data("UPDATE {$CONFIG->dbprefix}metadata set value_id='$value', value_type='$value_type', access_id=$access_id, owner_guid=$owner_guid where id=$id and name_id='$name'");
 	}
 	
 	/**
@@ -299,8 +316,8 @@
 	
 		$meta_name = get_metastring_id($meta_name);
 		$entity_guid = (int)$entity_guid;
-		$access = get_access_sql_suffix("m");
-		$result = get_data("SELECT m.*, n.string as name, v.string as value from {$CONFIG->dbprefix}metadata m JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id JOIN {$CONFIG->dbprefix}metastrings n on m.name_id = n.id where m.entity_guid=$entity_guid and m.name_id='$meta_name' and $access", "row_to_elggmetadata");
+		$access = get_access_sql_suffix("e");
+		$result = get_data("SELECT m.*, n.string as name, v.string as value from {$CONFIG->dbprefix}metadata m JOIN {$CONFIG->dbprefix}entities e ON e.guid = m.entity_guid JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id JOIN {$CONFIG->dbprefix}metastrings n on m.name_id = n.id where m.entity_guid=$entity_guid and m.name_id='$meta_name' and $access", "row_to_elggmetadata");
 		if (!$result) 
 			return false;
 		
@@ -320,9 +337,9 @@
 		global $CONFIG;
 	
 		$entity_guid = (int)$entity_guid;
-		$access = get_access_sql_suffix("m");
+		$access = get_access_sql_suffix("e");
 		
-		return get_data("SELECT m.*, n.string as name, v.string as value from {$CONFIG->dbprefix}metadata m JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id JOIN {$CONFIG->dbprefix}metastrings n on m.name_id = n.id where m.entity_guid=$entity_guid and $access", "row_to_elggmetadata");
+		return get_data("SELECT m.*, n.string as name, v.string as value from {$CONFIG->dbprefix}metadata m JOIN {$CONFIG->dbprefix}entities e ON e.guid = m.entity_guid JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id JOIN {$CONFIG->dbprefix}metastrings n on m.name_id = n.id where m.entity_guid=$entity_guid and $access", "row_to_elggmetadata");
 	}
 
 	/**
