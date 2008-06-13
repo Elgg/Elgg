@@ -10,8 +10,10 @@
 	 * @link http://elgg.org/
 	 */
 
-	// Get entity statistics
-	$entity_stats = get_entity_statistics();
+	// Work out number of users
+	$users_stats = get_number_users();
+	
+	$users_online = get_number_online();
 ?>
 <div>
     <h2><?php echo elgg_echo('admin:statistics:label:basic'); ?></h2>
