@@ -9,10 +9,11 @@
 	 * @author Marcus Povey
 	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.org/
-	**/
+	 */
 
 	// Description of what's going on
 		echo "<p>" . nl2br(elgg_echo("admin:user:description")) . "</p>";
 	
 		echo elgg_view("admin/user_opt/search");
+		
 ?>

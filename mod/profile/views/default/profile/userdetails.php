@@ -73,6 +73,19 @@
 	</p>
 	<?php
 
+		
+			// TODO: Add admin console options here
+			if (isadminloggedin())
+			{
+?>				
+				<p>
+					<a href="<?php echo $vars['url']; ?>actions/admin/user/ban?guid=<?php echo $vars['entity']->guid; ?> ?>"><?php echo elgg_echo("ban"); ?></a>
+				</p>		
+				<p>
+					<a href="<?php echo $vars['url']; ?>actions/admin/user/delete?guid=<?php echo $vars['entity']->guid; ?> ?>"><?php echo elgg_echo("delete"); ?></a>
+				</p>	
+<?php 
+			}
 		}
 	
 	?>

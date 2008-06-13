@@ -245,6 +245,11 @@
 	
 			'admin:user:label:search' => "Find users:",
 			'admin:user:label:seachbutton' => "Search", 
+	
+			'admin:user:ban:no' => "Can not ban user",
+			'admin:user:ban:yes' => "User banned.",
+			'admin:user:delete:no' => "Can not delete user",
+			'admin:user:delete:yes' => "User deleted",
 			
 	
 		/**
@@ -257,6 +262,7 @@
 			'delete' => "Delete",
 			'load' => "Load",
 			'upload' => "Upload",
+			'ban' => "Ban",
 	
 		/**
 		 * Generic data words
