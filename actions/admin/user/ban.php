@@ -21,7 +21,7 @@
 	{
 		
 		// TODO: Ban user
-		
+		throw new NotImplementedException("WRITEME");
 		
 		
 		
