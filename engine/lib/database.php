@@ -148,7 +148,7 @@
                 	if (!empty($callback) && is_callable($callback)) {
                 		$row = $callback($row);
                 	}
-                    $resultarray[] = $row;
+                    if ($row) $resultarray[] = $row;
                 }
             }
             

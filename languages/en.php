@@ -57,6 +57,7 @@
 			'InvalidParameterException:EntityTypeNotSet' => "Entity type must be set.",
 			
 			'ClassException:ClassnameNotClass' => "%s is not a %s.",
+			'ClassNotFoundException:MissingClass' => "Class '%s' was not found, missing plugin?",
 			'InstallationException:TypeNotSupported' => "Type %s is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.",
 
 			'ImportException:ImportFailed' => "Could not import element %d",

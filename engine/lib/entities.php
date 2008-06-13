@@ -962,12 +962,17 @@
 		$classname = get_subtype_class_from_id($row->subtype);
 		if ($classname!="")
 		{
-			$tmp = new $classname($row);
-			
-			if (!($tmp instanceof ElggEntity))
-				throw new ClassException(sprintf(elgg_echo('ClassException:ClassnameNotClass'), $classname, get_class()));
-
-			return $tmp;
+			if (class_exists($classname))
+			{
+				$tmp = new $classname($row);
+				
+				if (!($tmp instanceof ElggEntity))
+					throw new ClassException(sprintf(elgg_echo('ClassException:ClassnameNotClass'), $classname, get_class()));
+	
+				return $tmp;
+			}
+			else
+				error_log(sprintf(elgg_echo('ClassNotFoundException:MissingClass'), $classname));
 		}
 		else
 		{

@@ -35,7 +35,7 @@
 <div id="metadata">
 <h2>Metadata</h2>	
 	<?php
-		foreach ($metadata as $m)
+		if ($metadata) foreach ($metadata as $m)
 		{
 ?>
 		<div>
@@ -66,7 +66,7 @@
 <div id="annotations">
 <h2>Annotations</h2>	
 	<?php
-		foreach ($annotations as $a)
+		if ($annotations) foreach ($annotations as $a)
 		{
 ?>
 		<div>
@@ -96,7 +96,7 @@
 <div id="relationship">
 <h2>Relationships</h2>	
 	<?php
-		foreach ($relationships as $r)
+		if ($relationships) foreach ($relationships as $r)
 		{
 ?>
 		<div>
