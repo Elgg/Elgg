@@ -31,6 +31,23 @@
 		}
 		
 	/**
+	 * Determines whether or not the current context is using widgets
+	 *
+	 * @return true|false Depending on widget status
+	 */
+		function using_widgets() {
+			
+			global $CONFIG;
+			$context = get_context();
+			if (isset($CONFIG->widgets->contexts) && is_array($CONFIG->widgets->contexts)) {
+				if (in_array($context, $CONFIG->widgets->contexts)) return true;
+			}
+			
+			return false;
+			
+		}
+		
+	/**
 	 * When given a widget entity and a new requested location, saves the new location
 	 * and also provides a sensible ordering for all widgets in that column
 	 *
