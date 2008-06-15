@@ -24,11 +24,8 @@
 	<div class="collapsable_box">
 	<div class="collapsable_box_header">
 	<a href="javascript:void(0);" class="toggle_box_contents">-</a><a href="javascript:void(0);" class="toggle_box_edit_panel"><?php echo elgg_echo('edit'); ?></a>
-	<h1><?php
-
-		echo $vars['entity']->title;
-	
-	?></h1></div>
+	<h1><?php echo $title; ?></h1>
+	</div>
 	<div class="collapsable_box_editpanel"><?php 
 		
 		echo elgg_view('widgets/editwrapper', 
