@@ -11,7 +11,7 @@
 	 * @link http://elgg.org/
 	 */
 
-	if ($vars['entity'] instanceof ElggObject && $vars['entity']->subtype = 'widget') {
+	if ($vars['entity'] instanceof ElggObject && $vars['entity']->getSubtype() == 'widget') {
 		$handler = $vars['entity']->handler;
 		$title = $vars['entity']->title;
 	} else {
@@ -23,9 +23,14 @@
 
 	<div class="collapsable_box">
 	<div class="collapsable_box_header">
-	<a href="javascript:void(0);" class="toggle_box_contents">-</a><a href="javascript:void(0);" class="toggle_box_edit_panel"><?php echo elgg_echo('edit'); ?></a>
+	<a href="javascript:void(0);" class="toggle_box_contents">-</a><?php if ($vars['entity']->canEdit()) { ?><a href="javascript:void(0);" class="toggle_box_edit_panel"><?php echo elgg_echo('edit'); ?></a><?php } ?>
 	<h1><?php echo $title; ?></h1>
 	</div>
+	<?php
+
+		if ($vars['entity']->canEdit()) {
+	
+	?>
 	<div class="collapsable_box_editpanel"><?php 
 		
 		echo elgg_view('widgets/editwrapper', 
@@ -36,6 +41,11 @@
 					   ); 
 		
 	?></div><!-- /collapsable_box_editpanel -->
+	<?php
+
+		}
+	
+	?>
 	<div class="collapsable_box_content">
 		<?php echo elgg_view("widgets/{$handler}/view",$vars); ?>
 	</div><!-- /.collapsable_box_content -->
