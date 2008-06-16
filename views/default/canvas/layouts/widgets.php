@@ -50,9 +50,9 @@
 <tr>
 
 <td width="300px">
-<h2>Main content area widgets</h2>
-<div id="main_widgets">
 
+<div id="main_widgets">
+<h2>Main content area widgets</h2>
 <table class="draggable_widget" cellspacing="0"><tr><td width="149px"><h3>Widget 1 Title</h3></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_remove.gif" class="remove_me" /></a></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_info.gif" class="more_info" /></a></td>
@@ -106,6 +106,9 @@
 </table>
 
 </div><!-- /#customise_page_view -->
+
+<textarea type="textarea" value="Main widgets" style="width:400px;height:60px;" id="debugField1" /></textarea>
+<textarea type="textarea" value="Right widgets" style="width:400px;height:40px;" id="debugField2" /></textarea>
 
 <input type="submit" value="Save changes" class="submit_button" />
 
@@ -164,7 +167,6 @@
 <div id="layout_maincontent" class="has_sidebar_right">
 <div id="wrapper_maincontent">
 
-	
 	<?php echo $vars['area1']; ?>
 	<?php
 

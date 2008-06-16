@@ -17,29 +17,7 @@
 <div id="layout_sidebar_right">
 <div id="wrapper_sidebar_right">
 
-	<!-- temp right sidebar box + dummy content -->
-	<div class="collapsable_box">
-	<div class="collapsable_box_header">
-	<a href="javascript:void(0);" class="toggle_box_contents">-</a><a href="javascript:void(0);" class="toggle_box_edit_panel">edit</a>
-	<h1>Goals</h1></div>
-	<div class="collapsable_box_editpanel"><p>Here's all the edit controls for this widget</p></div><!-- /collapsable_box_editpanel -->
-	<div class="collapsable_box_content">
-	   <?php echo $vars['area2']; ?>
-	</div><!-- /.collapsable_box_content -->
-	</div><!-- /.collapsable_box -->
-	
-	
-	<!-- temp right sidebar box + dummy content -->
-	<div class="collapsable_box">
-	<div class="collapsable_box_header">
-	<a href="javascript:void(0);" class="toggle_box_contents">-</a><a href="javascript:void(0);" class="toggle_box_edit_panel">edit</a>
-	<h1>Tag cloud</h1></div>
-	<div class="collapsable_box_editpanel"><p>Here's all the edit controls for this widget</p></div><!-- /collapsable_box_editpanel -->
-	<div class="collapsable_box_content">
-	   <?php echo $vars['area3']; ?>
-	</div><!-- /.collapsable_box_content -->
-	</div><!-- /.collapsable_box -->
-
+	<?php echo $vars['area2']; ?>
 
 </div><!-- /#wrapper_sidebar_right -->
 <p></p><!-- necessary to avoid an ie7 bug? -->
@@ -49,7 +27,7 @@
 <!-- main content -->
 <div id="layout_maincontent" class="has_sidebar_right">
 <div id="wrapper_maincontent">
-
+    <h2><?php echo $vars['title']; ?></h2>
     <?php echo $vars['area1']; ?>
 	
 </div><!-- /#wrapper_maincontent -->
