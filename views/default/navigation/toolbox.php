@@ -26,12 +26,13 @@
 
 <?php
 
+			$key = 0;
 			foreach($menu as $item) {
 				
 ?>
 
 	<li class="drawer">
-		<h2 class="drawer-handle"><?php echo $item->name ?></h2>
+		<h2 id="nav_<?php echo $contexts[$key]; ?>" class="drawer-handle"><?php echo $item->name ?></h2>
 <?php
 
 				if (sizeof($item->children) > 0 ) {
@@ -51,6 +52,7 @@
 	</li>
 
 <?php
+				$key++;
 				
 			}
 
@@ -63,6 +65,20 @@
 
 		}
 
+		if (in_array(get_context(),$contexts)) {
+			$key = array_search(get_context(),$contexts);
 ?>
 
 
+<script language="javascript">
+ $(document).ready(function(){
+   	$('h2#nav_<?php echo $contexts[$key]; ?>').click();
+ });
+</script>
+
+
+<?php
+
+		}
+
+?>

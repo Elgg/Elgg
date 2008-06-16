@@ -45,10 +45,11 @@
 		}
 		
 	/**
-	 * Get the name of the most recent plugin to be called in the call stack.
+	 * Get the name of the most recent plugin to be called in the call stack (or the plugin that owns the current page, if any).
 	 * 
 	 * i.e., if the last plugin was in /mod/foobar/, get_plugin_name would return foo_bar.
 	 *
+	 * @param boolean $mainfilename If set to true, this will instead determine the context from the main script filename called by the browser. Default = false. 
 	 * @return string|false Plugin name, or false if no plugin name was called
 	 */
 		function get_plugin_name($mainfilename = false) {
