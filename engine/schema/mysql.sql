@@ -189,10 +189,10 @@ CREATE TABLE `prefix_metadata` (
 -- Meta strings table (avoids storing text strings more than once)
 CREATE TABLE `prefix_metastrings` (
 	`id` int(11) NOT NULL auto_increment,
-	`string` varchar(255) NOT NULL,
+	`string` TEXT NOT NULL,
 	
 	PRIMARY KEY (`id`),
-	UNIQUE KEY (`string`)
+	FULLTEXT KEY `string` (`string`)
 ) ;
 
 --
