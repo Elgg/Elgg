@@ -51,15 +51,24 @@
 	 *
 	 * @return string|false Plugin name, or false if no plugin name was called
 	 */
-		function get_plugin_name() {
-			if ($backtrace = debug_backtrace()) { 
-				foreach($backtrace as $step) {
-					$file = $step['file'];
-					$file = str_replace("\\","/",$file);
-					$file = str_replace("//","/",$file);
-					if (preg_match("/mod\/([a-zA-Z0-9\-\_]*)\/start\.php$/",$file,$matches)) {
-						return $matches[1];
+		function get_plugin_name($mainfilename = false) {
+			if (!$mainfilename) {
+				if ($backtrace = debug_backtrace()) { 
+					foreach($backtrace as $step) {
+						$file = $step['file'];
+						$file = str_replace("\\","/",$file);
+						$file = str_replace("//","/",$file);
+						if (preg_match("/mod\/([a-zA-Z0-9\-\_]*)\/start\.php$/",$file,$matches)) {
+							return $matches[1];
+						}
 					}
+				}
+			} else {
+				$file = $_SERVER["SCRIPT_NAME"];
+				$file = str_replace("\\","/",$file);
+				$file = str_replace("//","/",$file);
+				if (preg_match("/mod\/([a-zA-Z0-9\-\_]*)\//",$file,$matches)) {
+					return $matches[1];
 				}
 			}
 			return false;
