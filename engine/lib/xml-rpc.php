@@ -503,7 +503,7 @@ END;
 	 */
 	function __php_xmlrpc_exception_handler($exception) {
 		
-		error_log("*** FATAL EXCEPTION (API) *** : " . $exception);
+		error_log("*** FATAL EXCEPTION (XML-RPC) *** : " . $exception);
 			
 		page_draw($exception->getMessage(), elgg_view("xml-rpc/output", array('result' => new XMLRPCErrorResponse($exception->getMessage(), $exception->getCode()==0 ? -32400 : $exception->getCode()))));
 	}
