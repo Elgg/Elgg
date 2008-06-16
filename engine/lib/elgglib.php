@@ -449,7 +449,18 @@
 	 * @param array $menu_children Optionally, an array of submenu items
 	 * @return true|false Depending on success
 	 */
-		function add_menu($menu_name, $menu_url, $menu_children = array()) {
+		function add_menu($menu_name, $menu_url, $menu_children = array(), $context = "") {
+			global $CONFIG;
+			if (!isset($CONFIG->menucontexts)) {
+				$CONFIG->menucontexts = array();
+			}
+			if (empty($menu)) {
+				get_plugin_name();
+			}
+			if (empty($context)) {
+				$context = get_plugin_name();
+			}
+			$CONFIG->menucontexts[] = $context;
 			return add_to_register('menu',$menu_name,$menu_url, $menu_children);
 		}
 		

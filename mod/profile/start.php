@@ -32,7 +32,7 @@
 						menu_item(elgg_echo('profile:yours'),$CONFIG->wwwroot . "pg/profile/" . $_SESSION['user']->username),
 						menu_item(elgg_echo('profile:edit'),$CONFIG->wwwroot."mod/profile/edit.php"),
 						menu_item(elgg_echo('profile:editicon'),$CONFIG->wwwroot."mod/profile/editicon.php"),
-					));
+					),'profile');
 				}
 				
 			// For now, we'll hard code the profile items as follows:

@@ -45,6 +45,27 @@
 		}
 		
 	/**
+	 * Get the name of the most recent plugin to be called in the call stack.
+	 * 
+	 * i.e., if the last plugin was in /mod/foobar/, get_plugin_name would return foo_bar.
+	 *
+	 * @return string|false Plugin name, or false if no plugin name was called
+	 */
+		function get_plugin_name() {
+			if ($backtrace = debug_backtrace()) { 
+				foreach($backtrace as $step) {
+					$file = $step['file'];
+					$file = str_replace("\\","/",$file);
+					$file = str_replace("//","/",$file);
+					if (preg_match("/mod\/([a-zA-Z0-9\-\_]*)\/start\.php$/",$file,$matches)) {
+						return $matches[1];
+					}
+				}
+			}
+			return false;
+		}
+		
+	/**
 	 * PluginException
 	 *  
 	 * A plugin Exception, thrown when an Exception occurs relating to the plugin mechanism. Subclass for specific plugin Exceptions.

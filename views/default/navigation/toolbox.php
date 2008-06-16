@@ -15,6 +15,7 @@
 	 */
 	 
 		$menu = get_register('menu');
+		$contexts = $vars['config']->menucontexts;
 
 		if (is_array($menu) && sizeof($menu) > 0) {
 		
