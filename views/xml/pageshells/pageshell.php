@@ -12,5 +12,6 @@
 	 */
 
 	header("Content-Type: text/xml");
+	header("Content-Length: " . strlen($vars['body']));
 	echo $vars['body'];
 ?>
