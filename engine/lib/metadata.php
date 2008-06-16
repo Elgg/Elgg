@@ -200,15 +200,23 @@
 		$id = false;
 	
 		$existing = get_data_row("SELECT * from {$CONFIG->dbprefix}metadata WHERE entity_guid = $entity_guid and name_id=" . add_metastring($name) . " limit 1");
-		if (($existing) && (!$allow_multiple) && (!empty($value))) 
+		if (($existing) && (!$allow_multiple) && (isset($value))) 
 		{
 			$id = $existing->id;
 			$result = update_metadata($id, $name, $value, $value_type, $owner_guid, $access_id);
 			
 			if (!$result) return false;
 		}
-		else if (!empty($value))
+		else if (isset($value))
 		{
+			// Support boolean types
+			if (is_bool($value)) {
+				if ($value)
+					$value = 1;
+				else
+					$value = 0;
+			}
+			
 			// Add the metastrings
 			$value = add_metastring($value);
 			if (!$value) return false;
@@ -219,7 +227,7 @@
 			// If ok then add it
 			$id = insert_data("INSERT into {$CONFIG->dbprefix}metadata (entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id) VALUES ($entity_guid, '$name','$value','$value_type', $owner_guid, $time, $access_id)");
 		} else if ($existing) {
-			
+// TODO: Check... are you sure you meant to do this Ben? :)			
 			$id = $existing->id;
 			delete_metadata($id);
 			
@@ -243,7 +251,7 @@
 		global $CONFIG;
 
 		$id = (int)$id;
-		
+	
 		if (!$md = get_metadata($id)) return false;
 		if (!$md->canEdit()) return false;
 		
@@ -257,6 +265,14 @@
 		$access_id = (int)$access_id;
 		
 		$access = get_access_sql_suffix();
+		
+		// Support boolean types (as integers)
+		if (is_bool($value)) {
+			if ($value)
+				$value = 1;
+			else
+				$value = 0;
+		}
 		
 		// Add the metastring
 		$value = add_metastring($value);
