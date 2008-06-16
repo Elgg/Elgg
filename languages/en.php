@@ -128,6 +128,10 @@
 			'SecurityException:InvalidPostHash' => "POST data hash is invalid - Expected %s but got %s.",
 			'SecurityException:DupePacket' => "Packet signature already seen.",
 			'SecurityException:InvalidAPIKey' => "Invalid or missing API Key.",
+	
+			'NotImplementedException:XMLRPCMethodNotImplemented' => "XML-RPC method call '%s' not implemented.",
+			'InvalidParameterException:UnexpectedReturnFormat' => "Call to method '%s' returned an unexpected result.",
+			'CallException:NotRPCCall' => "Call does not appear to be a valid XML-RPC call",
 			
 		/**
 		 * User details
@@ -314,6 +318,12 @@
 	
 			'welcome' => "Welcome %s",
 			'welcome_message' => "Welcome to this Elgg installation.",
+	
+	
+		/**
+		 * XML-RPC
+		 */
+			'xmlrpc:noinputdata'	=>	"Input data missing",
 	
 	);
 	

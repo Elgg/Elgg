@@ -1,0 +1,48 @@
+<?php
+	/**
+	 * Elgg XML-RPC handler.
+	 * 
+	 * @package Elgg
+	 * @subpackage Core
+	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+	 * @author Marcus Povey
+	 * @copyright Curverider Ltd 2008
+	 * @link http://elgg.org/
+	 */
+
+	// Load Elgg engine
+	require_once("../start.php");
+	global $CONFIG;
+
+	// Register the error handler
+	error_reporting(E_ALL); 
+	set_error_handler('__php_xmlrpc_error_handler');
+	
+	// Register a default exception handler
+	set_exception_handler('__php_xmlrpc_exception_handler'); 
+	
+	// Set some defaults
+	$result = null;
+	$view = 'xml'; // Set default view regardless
+
+	// Get the post data
+	$input = get_post_data();
+	
+	if ($input)
+	{
+		// 	Parse structures from xml
+		$call = new XMLRPCCall($input);
+		
+		// Process call
+		$result = trigger_xmlrpc_handler($call);
+	}
+	else
+		throw new CallException(elgg_echo('xmlrpc:noinputdata'));
+
+	if (!($result instanceof XMLRPCResponse))
+		throw new APIException(elgg_echo('APIException:ApiResultUnknown'));
+
+	// Output result
+	page_draw("XML-RPC", elgg_echo("xml-rpc/output", array('result' => $result)));
+	
+?>
