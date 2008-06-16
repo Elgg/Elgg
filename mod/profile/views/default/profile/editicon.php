@@ -27,6 +27,6 @@
 		?>
 	</p>
 	<p>
-		<input type="submit" value="<?php echo elgg_echo("upload"); ?>" />
+		<input type="submit" class="submit_button" value="<?php echo elgg_echo("upload"); ?>" />
 	</p>
 	</form>

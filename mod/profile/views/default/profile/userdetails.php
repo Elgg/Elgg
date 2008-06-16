@@ -26,14 +26,19 @@
 					);
 
 ?>
+
+	<table style="margin:0 0 0 20px; width:356px;" >
+	<tr>
+	<td>
+	
 	<h2><a href="<?php echo $vars['entity']->getUrl(); ?>"><?php echo $vars['entity']->name; ?></a></h2>
 	<?php 
 
 		if ($vars['full'] == true) {
 	
 	?>
-	<p><b><?php echo elgg_echo("profile:aboutme"); ?></b></p>
-	<p><?php echo nl2br($vars['entity']->description); ?></p>
+	<p>&nbsp;</p>
+	<p><b><?php echo elgg_echo("profile:aboutme"); ?></b><br /><?php echo nl2br($vars['entity']->description); ?></p>
 	<?php
 
 		if (is_array($vars['config']->profile) && sizeof($vars['config']->profile) > 0)
@@ -89,3 +94,7 @@
 		}
 	
 	?>
+	
+	</td>
+	</tr>
+	</table>
