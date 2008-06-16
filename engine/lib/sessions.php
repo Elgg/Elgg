@@ -53,16 +53,34 @@
 		
 		function authenticate($username, $password) {
             
-            $dbpassword = md5($password);
-            
-            if ($user = get_user_by_username($username)) {
-                 if ($user->password == $dbpassword) {
-                 	return $user;
-                 }
-            }
+			if (pam_authenticate(array('username' => $username, 'password' => $password)))
+				return get_user_by_username($username);
             
             return false;
 			
+		}
+		
+		/**
+		 * Hook into the PAM system which accepts a username and password and attempts to authenticate
+		 * it against a known user.
+		 *
+		 * @param array $credentials Associated array of credentials passed to pam_authenticate. This function expects
+		 * 		'username' and 'password' (cleartext).
+		 */
+		function pam_auth_userpass($credentials = NULL)
+		{
+			if (is_array($credentials) && ($credentials['username']) && ($credentials['password']))
+			{
+				$dbpassword = md5($credentials['password']);
+            
+	            if ($user = get_user_by_username($credentials['username'])) {
+	                 if ($user->password == $dbpassword) {
+	                 	return true;
+	                 }
+	            }
+			}
+			
+			return false;
 		}
 		
 	/**
@@ -190,6 +208,9 @@
 	        
 	        register_action("login",true);
     		register_action("logout");
+    		
+    		// Register a default PAM handler
+    		register_pam_handler('pam_auth_userpass');
     		
     		return true;
 	        
