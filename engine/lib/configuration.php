@@ -30,7 +30,7 @@
 			if ($site_guid == 0)
 				$site_guid = (int) $CONFIG->site_id;
 			$CONFIG->$name = $value;
-			$value = serialize($value);
+			$value = sanitise_string(serialize($value));
 			return insert_data("insert into {$CONFIG->dbprefix}config set name = '{$name}', value = '{$value}', site_guid = {$site_guid}");
 			
 		}
@@ -59,6 +59,33 @@
 			}
 			return false;
 			
+		}
+		
+		/**
+		 * Gets all the configuration details in the config database for a given site.
+		 *
+		 * @param int $site_guid Optionally, the GUID of the site (current site is assumed by default)
+		 */
+		function get_all_config($site_guid = 0)
+		{
+			global $CONFIG;
+			
+			$site_guid = (int) $site_guid;
+			
+			if ($site_guid == 0)
+				$site_guid = (int) $CONFIG->site_id;
+				
+			if ($result = get_data("select * from {$CONFIG->dbprefix}config where site_guid = {$site_guid}")) {
+				foreach ($result as $r)
+				{	
+					$name = $r->name;
+					$value = $r->value;
+					$CONFIG->$name = unserialize($value);
+				}
+				
+				return true;
+			}
+			return false;
 		}
 
 	/**
@@ -102,8 +129,6 @@
 			if (empty($CONFIG->sitename))
 				$CONFIG->sitename = "New Elgg site";
 				
-			if (empty($CONFIG->debug))
-				$CONFIG->debug = false;
 
 		}
 		
@@ -129,6 +154,9 @@
 				$CONFIG->sitename = $CONFIG->site->name;
 			}
 			$CONFIG->url = $CONFIG->wwwroot;
+			
+			// Load default settings from database
+			get_all_config();
 			
 			return true;
 			
