@@ -184,7 +184,7 @@ h6 { font-size: 0.8em; }
 }
 
 #layout_maincontent {
-    padding:0px 10px 20px 20px;
+    padding:0px 0 20px 20px;
 }
 #wrapper_maincontent {
 	margin:0;
@@ -318,6 +318,12 @@ h6 { font-size: 0.8em; }
 }
 #customise_editpanel img.more_info {
 	padding-top: 4px;
+}
+.droppable-active {
+		
+}
+.droppable-hover {
+	outline: 1px dotted white;
 }
 .ui-sortable-helper {
 	background: lime;
@@ -527,26 +533,27 @@ a.toggle_customise_edit_panel {
 *************************************** */
 label {
 	font-weight: bold;
-	color:#666;
-	font-size: 100%;
+	color:#333333;
+	font-size: 140%;
 }
 input {
-	font: 110% Arial, Helvetica, sans-serif;
-	width: 220px;
-	padding: 5px 3px 3px 7px;
+	font: 120% Arial, Helvetica, sans-serif;
+	padding: 5px;
 	border: 1px solid #cccccc;
+	color:#666666;
 }
 textarea {
-	font: 110% Arial, Helvetica, sans-serif;
-	width: 480px;
-	height: 140px;
+	font: 120% Arial, Helvetica, sans-serif;
 	border: solid 1px #cccccc;
-	padding: 5px 3px 3px 7px;
+	padding: 5px;
+	color:#666666;
 }
 .submit_button {
 	font: 12px/100% Arial, Helvetica, sans-serif;
-	color: #000000;
-	border: none;
+	font-weight: bold;
+	color: #ffffff;
+	background:#4690d6;
+	border: 1px solid #4690d6;
 	width: auto;
 	height: 25px;
 	padding: 2px 6px 2px 6px;
@@ -554,18 +561,19 @@ textarea {
 	cursor: pointer;
 }
 .submit_button:hover {
-	background: #e4ecf5;
+	background: #0054a7;
 }
 textarea:focus, input[type="text"]:focus {
-	border: solid 1px #3b9acc;
+	border: solid 1px #4690d6;
 	background: #e4ecf5;
+	color:#333333;
 }
 
 .input-text,
 .input-tags,
 .input-url,
 .input-textarea {
-	width:95%;
+	width:100%;
 }
 
 .input-textarea {
