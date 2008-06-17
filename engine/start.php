@@ -128,7 +128,7 @@
 		// Trigger events
 			trigger_elgg_event('boot', 'system');
 		// Forward if we haven't been installed
-			if ((!is_installed() || !is_db_installed()) && !substr_count($_SERVER["PHP_SELF"],"install.php")) {
+			if ((!is_installed() || !is_db_installed()) && !substr_count($_SERVER["PHP_SELF"],"install.php") && !substr_count($_SERVER["PHP_SELF"],"action_handler.php")) {
 					header("Location: install.php");
 					exit;
 			}
