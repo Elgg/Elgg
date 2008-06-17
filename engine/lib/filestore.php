@@ -593,13 +593,14 @@
 	 * @param string $input_name The name of the file input field on the submission form
 	 * @param int $maxwidth The maximum width of the resized image
 	 * @param int $maxheight The maximum height of the resized image
+	 * @param true|false $square If set to true, will take the smallest of maxwidth and maxheight and use it to set the dimensions on all size; the image will be cropped.
 	 * @return false|mixed The contents of the resized image, or false on failure
 	 */
-	function get_resized_image_from_uploaded_file($input_name, $maxwidth, $maxheight) {
+	function get_resized_image_from_uploaded_file($input_name, $maxwidth, $maxheight, $square = false) {
 		// If our file exists ...
 		if (isset($_FILES[$input_name]) && $_FILES[$input_name]['error'] == 0) {
 			
-			return get_resized_image_from_existing_file($_FILES[$input_name]['tmp_name'], $maxwidth, $maxheight);
+			return get_resized_image_from_existing_file($_FILES[$input_name]['tmp_name'], $maxwidth, $maxheight, $square);
 			
 		}
 		
@@ -613,9 +614,10 @@
 	 * @param string $input_name The name of the file input field on the submission form
 	 * @param int $maxwidth The maximum width of the resized image
 	 * @param int $maxheight The maximum height of the resized image
+	 * @param true|false $square If set to true, will take the smallest of maxwidth and maxheight and use it to set the dimensions on all size; the image will be cropped.
 	 * @return false|mixed The contents of the resized image, or false on failure
 	 */
-	function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight) {
+	function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight, $square = false) {
 		
 		// Get the size information from the image
 		if ($imgsizearray = getimagesize($input_name)) {
@@ -628,6 +630,19 @@
 			$height = $imgsizearray[1];
 			$newwidth = $width;
 			$newheight = $height;
+			
+			// Square the image dimensions if we're wanting a square image
+			if ($square) {
+				if ($width < $height) {
+					$height = $width;
+				} else {
+					$width = $height;
+				}
+				
+				$newwidth = $width;
+				$newheight = $height;
+				
+			}
 			
 			if ($width > $maxwidth) {
 				$newheight = floor($height * ($maxwidth / $width));
@@ -649,10 +664,21 @@
 
 				$function = "imagecreatefrom" . $accepted_formats[$imgsizearray['mime']];
 				$newimage = imagecreatetruecolor($newwidth,$newheight);
-				if (is_callable($function) && $oldimage = $function($input_name)) {
 				
-					// Resize and return the image contents!
-					imagecopyresampled($newimage, $oldimage, 0,0,0,0,$newwidth,$newheight,$width,$height);
+				if (is_callable($function) && $oldimage = $function($input_name)) {
+ 				
+					// Crop the image if we need a square
+					if ($square) {
+						$widthoffset = floor(($imgsizearray[0] - $width) / 2);
+						$heightoffset = floor(($imgsizearray[1] - $height) / 2);
+					} else {
+						$widthoffset = 0;
+						$heightoffset = 0;
+					}//else {
+						// Resize and return the image contents!
+						imagecopyresampled($newimage, $oldimage, 0,0,$widthoffset,$heightoffset,$newwidth,$newheight,$width,$height);
+					//}
+					
 					// imagecopyresized($newimage, $oldimage, 0,0,0,0,$newwidth,$newheight,$width,$height);
 					ob_start();
 					imagejpeg($newimage, null, 90);

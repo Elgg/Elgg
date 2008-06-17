@@ -15,10 +15,10 @@
 				isloggedin()
 			) {
 				
-				$tiny = get_resized_image_from_uploaded_file('profileicon',25,25);
-				$small = get_resized_image_from_uploaded_file('profileicon',50,50);
-				$medium = get_resized_image_from_uploaded_file('profileicon',100,100);
-				$large = get_resized_image_from_uploaded_file('profileicon',300,300);
+				$tiny = get_resized_image_from_uploaded_file('profileicon',25,25, true);
+				$small = get_resized_image_from_uploaded_file('profileicon',40,40, true);
+				$medium = get_resized_image_from_uploaded_file('profileicon',100,100, true);
+				$large = get_resized_image_from_uploaded_file('profileicon',200,200);
 				
 				if ($small !== false
 					&& $medium !== false
@@ -40,7 +40,7 @@
 					$filehandler->close();
 					$filehandler->setFilename("profile/" . $_SESSION['user']->username . "tiny.jpg");
 					$filehandler->open("write");
-					$filehandler->write($small);
+					$filehandler->write($tiny);
 					$filehandler->close();
 					
 					$_SESSION['user']->icontime = time();

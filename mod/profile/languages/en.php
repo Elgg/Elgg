@@ -38,6 +38,7 @@
 		 */
 	
 			'profile:saved' => "Your profile was successfully saved.",
+			'profile:icon:uploaded' => "Your profile icon was successfully uploaded.",
 	
 		/**
 		 * Error messages
