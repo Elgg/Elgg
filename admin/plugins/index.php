@@ -22,6 +22,6 @@
 		
 		
 	// Display main admin menu
-		page_draw(elgg_echo("admin:plugins"),elgg_view("admin/plugins"));
+		page_draw(elgg_echo("admin:plugins"),elgg_view_layout("one_column", elgg_view("admin/plugins")));
 		
 ?>

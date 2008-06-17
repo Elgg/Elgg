@@ -18,6 +18,6 @@
 		admin_gatekeeper();
 		
 	// Display main admin menu
-		page_draw(elgg_echo("admin"),elgg_view("admin/main"));
+		page_draw(elgg_echo("admin"),elgg_view_layout("one_column", elgg_view("admin/main")));
 		
 ?>
