@@ -7,6 +7,13 @@ php_flag magic_quotes_gpc off
 
 RewriteEngine on
 
+#
+# If you are installing Elgg to an unusual location (for example your personal public_html directory)
+# then you may need to uncomment this line and modify accordingly:
+#
+# RewriteBase /web/path/to/elgg/root/
+#
+
 RewriteRule ^action\/([A-Za-z\_\-\/]+)$ engine/handlers/action_handler.php?action=$1
 RewriteRule ^actions\/([A-Za-z\_\-\/]+)$ engine/handlers/action_handler.php?action=$1
 

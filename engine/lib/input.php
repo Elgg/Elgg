@@ -21,8 +21,11 @@
 	{
 
 		if (isset($_REQUEST[$variable])) {
-			$value = $_REQUEST[$variable];
-			return trim($_REQUEST[$variable]);
+			
+			if (is_array($_REQUEST[$variable]))
+				return $_REQUEST[$variable];
+			else
+				return trim($_REQUEST[$variable]);
 		}
 		
 		global $CONFIG;

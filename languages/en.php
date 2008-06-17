@@ -17,6 +17,7 @@
 		/**
 		 * Errors
 		 */
+			'exception:title' => "We've encountered a problem.",
 	
 			'InstallationException:CantCreateSite' => "Unable to create a default ElggSite with credentials Name:%s, Url: %s",
 		
@@ -27,7 +28,7 @@
 			
 			'SecurityException:Codeblock' => "Denied access to execute privileged code block",
 			'DatabaseException:WrongCredentials' => "Elgg couldn't connect to the database using the given credentials %s@%s (pw: %s).",
-			'DatabaseException:NoConnect' => "Elgg couldn't select the database %s.",
+			'DatabaseException:NoConnect' => "Elgg couldn't select the database '%s', please check that the database is created and you have access to it.",
 			'SecurityException:FunctionDenied' => "Access to privileged function '%s' is denied.",
 			'DatabaseException:DBSetupIssues' => "There were a number of issues: ",
 			'DatabaseException:ScriptNotFound' => "Elgg couldn't find the requested database script at %s.",
@@ -301,12 +302,37 @@
 		 * Installation and system settings
 		 */
 	
+			'installation:error:htaccess' => "Elgg requires a file called .htaccess to be set in the root directory of its installation. We tried to create it for you, but Elgg doesn't have permission to write to that directory. 
+
+Creating this is easy. Copy the contents of the textbox below into a text editor and save it as .htaccess
+
+",
+			'installation:error:settings' => "Elgg couldn't find its settings file. Most of Elgg's settings will be handled for you, but we need you to supply your database details. To do this:
+
+1. Rename engine/settings.example.php to settings.php in your Elgg installation.
+
+2. Open it with a text editor and enter your MySQL database details. If you don't know these, ask your system administrator or technical support for help.
+
+Alternatively, you can enter your database settings below and we will try and do this for you...",
+	
+			'installation:error:configuration' => "Once you've corrected any configuration issues, press reload to try again.",
+	
 			'installation' => "Installation",
 			'installation:success' => "Elgg's database was installed successfully.",
 			'installation:configuration:success' => "Your initial configuration settings have been saved. Now register your initial user; this will be your first system administrator.",
 	
 			'installation:settings' => "System settings",
 			'installation:settings:description' => "Now that the Elgg database has been successfully installed, you need to enter a couple of pieces of information to get your site fully up and running. We've tried to guess where we could, but you may find that you need to tweak these details.",
+	
+			'installation:settings:dbwizard:prompt' => "Enter your database settings below and hit save:",
+			'installation:settings:dbwizard:label:user' => "Database user",
+			'installation:settings:dbwizard:label:pass' => "Database password",
+			'installation:settings:dbwizard:label:dbname' => "Elgg database",
+			'installation:settings:dbwizard:label:host' => "Database hostname (usually 'localhost')",
+			'installation:settings:dbwizard:label:prefix' => "Database table prefix (usually 'elgg')",
+	
+			'installation:settings:dbwizard:savefail' => "We were unable to save the new settings.php. Please save the following file as engine/settings.php using a text editor.",
+	
 			'sitename' => "The name of your site (eg \"My social networking site\"):",
 			'wwwroot' => "The site URL, followed by a trailing slash:",
 			'path' => "The full path to your site root on your disk, followed by a trailing slash:",

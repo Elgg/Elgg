@@ -12,6 +12,8 @@
 	 * @link http://elgg.org/
 	 */
 
+	
+
 	/**
 	 * Load important prerequisites
 	 */
@@ -22,20 +24,38 @@
 		}
 		
 		if (!@include_once(dirname(__FILE__) . "/lib/elgglib.php")) {		// Main Elgg library
-			throw new InstallationException("Elgg could not load its main library.");
+			echo "Elgg could not load its main library.";
+			exit;
 		}
 		
 		if (!@include_once(dirname(__FILE__) . "/lib/system_log.php")) {		// Logging library
-			throw new InstallationException("Error in installation: could not load the System Log library.");
+			echo "Error in installation: could not load the System Log library.";
+			exit;
 		}
 	
 		if (!@include_once(dirname(__FILE__) . "/lib/export.php")) {		// Export library
-			throw new InstallationException("Error in installation: could not load the Export library.");
+			echo "Error in installation: could not load the Export library.";
+			exit;
 		}
 		
-		if (!@include_once(dirname(__FILE__) . "/lib/languages.php")) {		// Main Elgg library
-			throw new InstallationException("Error in installation: could not load the languages library.");
+		if (!@include_once(dirname(__FILE__) . "/lib/languages.php")) {		// Languages library
+			echo "Error in installation: could not load the languages library.";
+			exit;
 		}
+		
+		if (!@include_once(dirname(__FILE__) . "/lib/input.php")) {		// Input library
+			echo "Error in installation: could not load the input library.";
+			exit;
+		}
+		
+		if (!@include_once(dirname(__FILE__) . "/lib/install.php")) {		// Installation library
+			echo "Error in installation: could not load the installation library.";
+			exit;
+		}
+		
+		// Use fallback view until sanitised
+		$oldview = get_input('view');
+		set_input('view', 'failsafe');
 		
 	/**
 	 * Set light mode default
@@ -119,20 +139,22 @@
 		
 		} else {	// End portion for sanitised installs only
 			
-			throw new InstallationException("Once you've corrected any configuration issues, press reload to try again.");
+			throw new InstallationException(elgg_echo('installation:error:configuration'));
 			
 		}
 		
 		// Autodetect some default configuration settings
 			set_default_config();
+	
 		// Trigger events
 			trigger_elgg_event('boot', 'system');
+			
 		// Forward if we haven't been installed
 			if ((!is_installed() || !is_db_installed()) && !substr_count($_SERVER["PHP_SELF"],"install.php") && !substr_count($_SERVER["PHP_SELF"],"action_handler.php")) {
 					header("Location: install.php");
 					exit;
 			}
-
+			
 		// Trigger events
 			if (!substr_count($_SERVER["PHP_SELF"],"install.php") &&
 				!substr_count($_SERVER["PHP_SELF"],"setup.php") &&
@@ -144,4 +166,7 @@
 				}
 			}
 
+			
+		// System booted, return to normal view
+			set_input('view', $oldview);
 ?>

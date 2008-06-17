@@ -39,6 +39,29 @@
 			
 		}
 		
+		/**
+		 * Copy and create a new settings.php from settings.example.php, substituting the variables in
+		 * $vars where appropriate.
+		 * 
+		 * $vars is an associate array of $key => $value, where $key is the variable text you wish to substitute (eg
+		 * CONFIG_DBNAME will replace {{CONFIG_DBNAME}} in the settings file.
+		 *
+		 * @param array $vars The array of vars
+		 * @param string $in_file Optional input file (if not settings.example.php)
+		 * @return string The file containing substitutions.
+		 */
+		function create_settings(array $vars, $in_file="engine/settings.example.php")
+		{
+			$file = file_get_contents($in_file);
+			
+			if (!$file) return false; 
+			
+			foreach ($vars as $k => $v)
+				$file = str_replace("{{".$k."}}", $v, $file);
+			
+			return $file;
+		}
+		
 	/**
 	 * Initialisation for installation functions
 	 *

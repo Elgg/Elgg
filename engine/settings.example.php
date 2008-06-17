@@ -24,22 +24,22 @@
 	 */
 		
 		// Database username
-			$CONFIG->dbuser = "";
+			$CONFIG->dbuser = "{{CONFIG_DBUSER}}";
 			
 		// Database password
-			$CONFIG->dbpass = "";
+			$CONFIG->dbpass = "{{CONFIG_DBPASS}}";
 
 		// Database name
-			$CONFIG->dbname = "";
+			$CONFIG->dbname = "{{CONFIG_DBNAME}}";
 			
 		// Database server
 		// (For most configurations, you can leave this as 'localhost')
-			$CONFIG->dbhost = "localhost";
+			$CONFIG->dbhost = "{{CONFIG_DBHOST}}";
 			
 		// Database table prefix
 		// If you're sharing a database with other applications, you will want to use this
 		// to differentiate Elgg's tables.
-			$CONFIG->dbprefix = "elgg";
+			$CONFIG->dbprefix = "{{CONFIG_DBPREFIX}}";
 
 	/*
 	 * Multiple database connections

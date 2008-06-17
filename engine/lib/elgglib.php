@@ -515,13 +515,28 @@
 			$sanitised = true;
 			
 			if (!file_exists(dirname(dirname(__FILE__)) . "/settings.php")) {
-				register_error(elgg_view("messages/sanitisation/settings"));
-				$sanitised = false;
+				// See if we are being asked to save the file
+				$save_vars = get_input('db_install_vars');
+				$result = "";
+				if ($save_vars)
+				{
+					$result = create_settings($save_vars, dirname(dirname(__FILE__)) . "/settings.example.php");
+					
+					if (file_put_contents(dirname(dirname(__FILE__)) . "/settings.php", $result))
+						$result = ""; // blank result to stop it being displayed in textarea
+					
+				}
+				
+				// Recheck to see if the file is still missing
+				if (!file_exists(dirname(dirname(__FILE__)) . "/settings.php")) {
+					register_error(elgg_view("messages/sanitisation/settings", array('settings.php' => $result)));
+					$sanitised = false;
+				}
 			}
 
 			if (!file_exists(dirname(dirname(dirname(__FILE__))) . "/.htaccess")) {
 				if (!@copy(dirname(dirname(dirname(__FILE__))) . "/htaccess_dist", dirname(dirname(dirname(__FILE__))) . "/.htaccess")) {
-					register_error(elgg_view("messages/sanitisation/htaccess"));
+					register_error(elgg_view("messages/sanitisation/htaccess", array('.htaccess' => file_get_contents(dirname(dirname(dirname(__FILE__))) . "/htaccess_dist"))));
 					$sanitised = false;
 				}
 			}
@@ -899,7 +914,7 @@
 			error_log("*** FATAL EXCEPTION *** : " . $exception);
 			
 			$body = elgg_view("messages/exceptions/exception",array('object' => $exception));
-			echo page_draw("We've encountered a problem.", $body);
+			echo page_draw(elgg_echo('exception:title'), $body);
 			
 		}
 		
