@@ -91,7 +91,7 @@ a:hover {
 	text-decoration: underline;
 }
 p {
-	margin: 0px 0px 15px;
+	margin: 0px 0px 15px 0;
 }
 img {
 	border: none;
@@ -184,10 +184,11 @@ h6 { font-size: 0.8em; }
 }
 
 #layout_maincontent {
-    padding:0px 0 20px 20px;
+    padding:0px 10px 20px 20px;
 }
 #wrapper_maincontent {
 	margin:0;
+	/* width:785px;*/
 }
 /* subclass for layout_maincontent when showing rhs sidebar */
 .has_sidebar_right {
