@@ -18,6 +18,11 @@
 		global $CONFIG;
 		
 	/**
+	 * We still want to be in failsafe (bit of a hack)
+	 */
+		set_input('view', 'failsafe');
+		
+	/**
 	 * If we're installed, go back to the homepage
 	 */
 		if ((is_installed() && is_db_installed() && datalist_get('installed')))
