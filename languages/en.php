@@ -299,6 +299,18 @@
 			'widgets:save:failure' => "We could not save your widget. Please try again.",
 	
 		/**
+		 * Time
+		 */
+	
+			'friendlytime:justnow' => "less than a minute ago",
+			'friendlytime:minutes' => "about %s minutes ago",
+			'friendlytime:minutes:singular' => "about a minute ago",
+			'friendlytime:hours' => "about %s hours ago",
+			'friendlytime:hours:singular' => "about an hour ago",
+			'friendlytime:days' => "about %s days ago",
+			'friendlytime:days:singular' => "yesterday",
+	
+		/**
 		 * Installation and system settings
 		 */
 	

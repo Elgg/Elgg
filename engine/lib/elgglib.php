@@ -64,7 +64,7 @@
 		}
 		
 	/**
-	 * Templating
+	 * Templating and visual functionality
 	 */
 		
 	/**
@@ -365,7 +365,116 @@
 										);
 			
 		}
+		
+	/**
+	 * Displays a UNIX timestamp in a friendly way (eg "less than a minute ago")
+	 *
+	 * @param int $time A UNIX epoch timestamp
+	 * @return string The friendly time
+	 */
+		function friendly_time(int $time) {
+			
+			$diff = time() - $time;
+			if ($diff < 60) {
+				return elgg_echo("friendlytime:justnow");
+			} else if ($diff < 3600) {
+				$diff = round($diff / 60);
+				if ($diff == 0) $diff = 1;
+				if ($diff > 1)
+					return sprintf(elgg_echo("friendlytime:minutes"),$diff);
+				return sprintf(elgg_echo("friendlytime:minutes:singular"),$diff);
+			} else if ($diff < 86400) {
+				$diff = round($diff / 3600);
+				if ($diff == 0) $diff = 1;
+				if ($diff > 1)
+					return sprintf(elgg_echo("friendlytime:hours"),$diff);
+				return sprintf(elgg_echo("friendlytime:hours:singular"),$diff);
+			} else {
+				$diff = round($diff / 86400);
+				if ($diff == 0) $diff = 1;
+				if ($diff > 1)
+					return sprintf(elgg_echo("friendlytime:days"),$diff);
+				return sprintf(elgg_echo("friendlytime:days:singular"),$diff);
+			}
+			
+		}
 
+		
+
+	/**
+	 * Library loading and handling
+	 */
+
+	/**
+	 * Recursive function designed to load library files on start
+	 * (NB: this does not include plugins.)
+	 *
+	 * @param string $directory Full path to the directory to start with
+	 * @param string $file_exceptions A list of filenames (with no paths) you don't ever want to include
+	 * @param string $file_list A list of files that you know already you want to include
+	 * @return array Array of full filenames
+	 */
+		function get_library_files($directory, $file_exceptions = array(), $file_list = array()) {
+			$extensions_allowed = array('.php'); 	
+			if (is_file($directory) && !in_array($directory,$file_exceptions)) {
+				$file_list[] = $directory;
+			} else if ($handle = opendir($directory)) {
+				while ($file = readdir($handle)) {
+					if (in_array(strrchr($file, '.'), $extensions_allowed) && !in_array($file,$file_exceptions)) {
+						$file_list = get_library_files($directory . "/" . $file, $file_exceptions, $file_list);
+					}
+				}
+			}
+			
+			return $file_list;
+			
+		}
+		
+	/**
+	 * Ensures that the installation has all the correct files, that PHP is configured correctly, and so on.
+	 * Leaves appropriate messages in the error register if not.
+	 *
+	 * @return true|false True if everything is ok (or Elgg is fit enough to run); false if not.
+	 */
+		function sanitised() {
+			
+			$sanitised = true;
+			
+			if (!file_exists(dirname(dirname(__FILE__)) . "/settings.php")) {
+				// See if we are being asked to save the file
+				$save_vars = get_input('db_install_vars');
+				$result = "";
+				if ($save_vars)
+				{
+					$result = create_settings($save_vars, dirname(dirname(__FILE__)) . "/settings.example.php");
+					
+					if (file_put_contents(dirname(dirname(__FILE__)) . "/settings.php", $result))
+						$result = ""; // blank result to stop it being displayed in textarea
+					
+				}
+				
+				// Recheck to see if the file is still missing
+				if (!file_exists(dirname(dirname(__FILE__)) . "/settings.php")) {
+					register_error(elgg_view("messages/sanitisation/settings", array('settings.php' => $result)));
+					$sanitised = false;
+				}
+			}
+
+			if (!file_exists(dirname(dirname(dirname(__FILE__))) . "/.htaccess")) {
+				if (!@copy(dirname(dirname(dirname(__FILE__))) . "/htaccess_dist", dirname(dirname(dirname(__FILE__))) . "/.htaccess")) {
+					register_error(elgg_view("messages/sanitisation/htaccess", array('.htaccess' => file_get_contents(dirname(dirname(dirname(__FILE__))) . "/htaccess_dist"))));
+					$sanitised = false;
+				}
+			}
+				
+			return $sanitised;
+			
+		}
+		
+	/**
+	 * Registers
+	 */
+		
 	/**
 	 * Adds an array with a name to a given generic array register.
 	 * For example, these are used for menus.
@@ -475,79 +584,6 @@
 			return make_register_object($menu_name, $menu_url);
 		}
 		
-	/**
-	 * Library loading and handling
-	 */
-
-	/**
-	 * Recursive function designed to load library files on start
-	 * (NB: this does not include plugins.)
-	 *
-	 * @param string $directory Full path to the directory to start with
-	 * @param string $file_exceptions A list of filenames (with no paths) you don't ever want to include
-	 * @param string $file_list A list of files that you know already you want to include
-	 * @return array Array of full filenames
-	 */
-		function get_library_files($directory, $file_exceptions = array(), $file_list = array()) {
-			$extensions_allowed = array('.php'); 	
-			if (is_file($directory) && !in_array($directory,$file_exceptions)) {
-				$file_list[] = $directory;
-			} else if ($handle = opendir($directory)) {
-				while ($file = readdir($handle)) {
-					if (in_array(strrchr($file, '.'), $extensions_allowed) && !in_array($file,$file_exceptions)) {
-						$file_list = get_library_files($directory . "/" . $file, $file_exceptions, $file_list);
-					}
-				}
-			}
-			
-			return $file_list;
-			
-		}
-		
-	/**
-	 * Ensures that the installation has all the correct files, that PHP is configured correctly, and so on.
-	 * Leaves appropriate messages in the error register if not.
-	 *
-	 * @return true|false True if everything is ok (or Elgg is fit enough to run); false if not.
-	 */
-		function sanitised() {
-			
-			$sanitised = true;
-			
-			if (!file_exists(dirname(dirname(__FILE__)) . "/settings.php")) {
-				// See if we are being asked to save the file
-				$save_vars = get_input('db_install_vars');
-				$result = "";
-				if ($save_vars)
-				{
-					$result = create_settings($save_vars, dirname(dirname(__FILE__)) . "/settings.example.php");
-					
-					if (file_put_contents(dirname(dirname(__FILE__)) . "/settings.php", $result))
-						$result = ""; // blank result to stop it being displayed in textarea
-					
-				}
-				
-				// Recheck to see if the file is still missing
-				if (!file_exists(dirname(dirname(__FILE__)) . "/settings.php")) {
-					register_error(elgg_view("messages/sanitisation/settings", array('settings.php' => $result)));
-					$sanitised = false;
-				}
-			}
-
-			if (!file_exists(dirname(dirname(dirname(__FILE__))) . "/.htaccess")) {
-				if (!@copy(dirname(dirname(dirname(__FILE__))) . "/htaccess_dist", dirname(dirname(dirname(__FILE__))) . "/.htaccess")) {
-					register_error(elgg_view("messages/sanitisation/htaccess", array('.htaccess' => file_get_contents(dirname(dirname(dirname(__FILE__))) . "/htaccess_dist"))));
-					$sanitised = false;
-				}
-			}
-				
-			return $sanitised;
-			
-		}
-		
-	/**
-	 * Registers
-	 */
 		
 	/**
 	 * Message register handling
