@@ -35,10 +35,7 @@
 		function is_installed() {
 			
 			global $CONFIG;
-			if (!empty($CONFIG->path))
-				return true;
-				
-			return false;
+			return datalist_get('installed');
 			
 		}
 		
