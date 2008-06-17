@@ -325,6 +325,10 @@
 		 */
 			'xmlrpc:noinputdata'	=>	"Input data missing",
 	
+		/**
+		 * River
+		 */
+			'river:relationship:friend' => 'is now friends with',
 	);
 	
 	add_translation("en",$english);

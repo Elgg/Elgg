@@ -1,6 +1,6 @@
 <?php
 	/**
-	 * Elgg river user logout 
+	 * Elgg river for dashboard.
 	 * 
 	 * @package Elgg
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
@@ -9,8 +9,13 @@
 	 * @link http://elgg.com/
 	 */
 
-	$log_entry = $vars['log_entry'];
-	$object = $vars['object'];
-	
+	/// Extract the river
+	$river = $vars['river'];
 ?>
-<?php echo $object->name; ?> logged out
+<div id="river">
+	<h1><?php echo elgg_echo('river'); ?></h1>
+	<?	
+	foreach ($river as $r)
+		echo "<div>$r</div>";
+	?>
+</div>
