@@ -182,6 +182,12 @@ h6 { font-size: 0.8em; }
 #wrapper_sidebar_right {
 	margin:0;
 }
+#layout_sidebar_right_narrow {
+	width:160px;
+	min-height: 260px;
+	float:right;
+	padding:0px 0px 20px 10px;
+}
 
 #layout_maincontent {
     padding:0px 10px 20px 20px;
@@ -193,6 +199,9 @@ h6 { font-size: 0.8em; }
 /* subclass for layout_maincontent when showing rhs sidebar */
 .has_sidebar_right {
     margin:0 260px 0 0 !important;
+}
+.has_narrow_sidebar_right {
+    margin:0 190px 0 0 !important;
 }
 /* IE6 fix */
 * html #layout_maincontent { 
@@ -376,11 +385,11 @@ h6 { font-size: 0.8em; }
 #topmenu .usericon {
 	float:right;
 }
-/* temp fix - force user avatar to mini size */
+/* temp fix - force user avatar to mini size 
 #topmenu .usericon img {
 	width:40px;
 	height:40px;
-}
+}*/
 
 /* ***************************************
   COLLAPSABLE BOXES

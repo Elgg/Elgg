@@ -14,20 +14,18 @@
 ?>
 
 <!-- right sidebar -->
-<div id="layout_sidebar_right" style="width:160px;">
+<div id="layout_sidebar_right_narrow">
 <div id="wrapper_sidebar_right">
 
-	<div style="border:1px solid silver;">
 	<?php echo $vars['area2']; ?>
-	</div>
 
 </div><!-- /#wrapper_sidebar_right -->
 <p></p><!-- necessary to avoid an ie7 bug? -->
-</div><!-- /#layout_sidebar_right -->
+</div><!-- /#layout_sidebar_right_narrow -->
 
     
 <!-- main content -->
-<div id="layout_maincontent" class="has_sidebar_right" style="width:600px;">
+<div id="layout_maincontent" class="has_narrow_sidebar_right">
 <div id="wrapper_maincontent">
 
     <?php echo $vars['area1']; ?>
