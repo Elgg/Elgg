@@ -174,8 +174,8 @@
             
             global $CONFIG, $dbcalls;
             
-            if (!callpath_gatekeeper($CONFIG->path . "engine/", true, true))
-            	throw new SecurityException(sprintf(elgg_echo('SecurityException:FunctionDenied'), 'get_data_row()'));
+            //if (!callpath_gatekeeper($CONFIG->path . "engine/", true, true))
+            //	throw new SecurityException(sprintf(elgg_echo('SecurityException:FunctionDenied'), 'get_data_row()'));
             
             $dblink = get_db_link('read');
             
