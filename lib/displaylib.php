@@ -228,7 +228,7 @@ END;
             $run_result .= "<input type=\"text\" name=\"".$parameter[0]."\" value=\"".htmlspecialchars(stripslashes($parameter[1]), ENT_COMPAT, 'utf-8')."\" style=\"width: 95%\" id=\"".$cleanid."\" />";
             break;
         case "weblogtext":
-            $run_result .= "<textarea name=\"".$parameter[0]."\" id=\"".$parameter[0]."\" style=\"width: 95%; height: 200px\">".htmlspecialchars(stripslashes($parameter[1]), ENT_COMPAT, 'utf-8')."</textarea>";
+            $run_result .= "<textarea name=\"".$parameter[0]."\" id=\"".$parameter[0]."\" style=\"width: 95%; height: 200px\">".htmlspecialchars($parameter[1], ENT_COMPAT, 'utf-8')."</textarea>";
             break;
         default:
             if (isset($CFG->display_field_module[$parameter[2]])) {
@@ -270,7 +270,7 @@ function log_on_pane () {
         $body = '<form action="'.url.'login/index.php" method="post">';
 
         if ($CFG->publicreg == true && ($CFG->maxusers == 0 || (count_users('person') < $CFG->maxusers))) {
-            $reg_link = '<a href="' . url . '_invite/register.php">'. __gettext("Register") .'</a> |';
+            $reg_link = '<a href="' . url . 'mod/invite/register.php">'. __gettext("Register") .'</a> |';
         } else {
             $reg_link = "";
         }
@@ -297,7 +297,7 @@ function log_on_pane () {
                                 ' . __gettext("Remember Login") . '</label><br />
                         <small>
                             ' . $reg_link . '
-                            <a href="' . url . '_invite/forgotten_password.php">'. __gettext("Forgotten password") .'</a>
+                            <a href="' . url . 'mod/invite/forgotten_password.php">'. __gettext("Forgotten password") .'</a>
                         </small></p>
                     </td>
                 </tr>
@@ -423,7 +423,7 @@ function display_output_field ($parameter) {
             break;
         case "web":
             $run_result = $parameter[0];
-            if (substr_count($run_result,"http://") == 0) {
+            if (!preg_match('#^\w+://.*$#', $run_result)) { // seems protocol? if not assume http
                 $run_result = "http://" . $run_result;
             }
             $run_result = "<a href=\"" . $run_result . "\" target=\"_blank\">" . $run_result . "</a>";

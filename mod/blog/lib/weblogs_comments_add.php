@@ -37,19 +37,22 @@ END;
                             );
                             
         if (logged_on) {
-            $comment_name = $_SESSION['name'];
+            $comment_name = htmlspecialchars($_SESSION['name'], ENT_COMPAT, 'utf-8');
+            $run_result .= '<input type="hidden" name="postedname" value="'.$comment_name.'" />';
         } else {
             $comment_name = __gettext("Guest");
+
+            $run_result .= templates_draw(array(
+            
+                                    'context' => 'databox1',
+                                    'name' => __gettext("Your name"),
+                                    'column1' => "<input type=\"text\" name=\"postedname\" value=\"".htmlspecialchars($comment_name, ENT_COMPAT, 'utf-8')."\" />"
+            
+                                )
+                                );
+
         }
 
-        $run_result .= templates_draw(array(
-        
-                                'context' => 'databox1',
-                                'name' => __gettext("Your name"),
-                                'column1' => "<input type=\"text\" name=\"postedname\" value=\"".htmlspecialchars($comment_name, ENT_COMPAT, 'utf-8')."\" />"
-        
-                            )
-                            );
         
         $run_result .= templates_draw(array(
         

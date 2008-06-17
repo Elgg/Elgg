@@ -29,8 +29,8 @@ $metatags .= "<script language=\"javascript\" type=\"text/javascript\" src=\"$ur
 $metatags .= "<script language=\"javascript\" type=\"text/javascript\" src=\"$url/mod/contenttoolbar/js/edit.js\"></script>";
 $metatags .= "<link rel=\"stylesheet\" href=\"" . $CFG->wwwroot . "mod/contenttoolbar/css.css\" type=\"text/css\" media=\"screen\" />";
 
-$buttons = implode("&nbsp;",array_map(get_html_button,$contenttoolbarbuttons));
-$js_buttons = implode(",",array_map(get_js_button,$contenttoolbarbuttons));
+$buttons = implode("&nbsp;",array_map('get_html_button',$contenttoolbarbuttons));
+$js_buttons = implode(",",array_map('get_js_button',$contenttoolbarbuttons));
 
 $js_buttons="var toolbar = [$js_buttons];";
 

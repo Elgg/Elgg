@@ -38,7 +38,7 @@ $template_definition[] = array('id'=> 'file_wizard',
                                              )
                          );
                          
-$template['folder'] = file_get_contents(dirname(__FILE__)."/templates/file_folder.html");
-$template['file'] = file_get_contents(dirname(__FILE__)."/templates/file_file.html");
-$template['file_wizard'] = file_get_contents(dirname(__FILE__)."/templates/file_wizard.html");
+templates_add_context('folder', 'mod/file/templates/file_folder.html');
+templates_add_context('file', 'mod/file/templates/file_file.html');
+templates_add_context('file_wizard', 'mod/file/templates/file_wizard.html');
 ?>

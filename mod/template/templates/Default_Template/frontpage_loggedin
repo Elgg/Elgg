@@ -1,6 +1,6 @@
 <h1>Welcome {{name}}</h1>
 <p style="margin-top:20px;">
-    This is {{sitename}}, a social network. Why not check out <a href="{{url}}_weblog/everyone.php">what people are saying</a> right now?
+    This is {{sitename}}, a social network. Why not check out <a href="{{url}}weblog/everyone">what people are saying</a> right now?
 </p>
 <p>
     <a href="{{url}}search/tags.php">Find others</a> with similar interests and goals.
@@ -11,3 +11,4 @@
 <p>
     <a href="{{url}}{{username}}">View your profile</a>! Your portfolio is the main way people find out about you. You can edit your details and choose exactly what you want to share with whom.
 </p>
+

@@ -24,6 +24,8 @@ if (!empty($interesting)) {
         }
         $where2 .= $interestingpost->weblog_post;
     }
+} else {
+    $where2 .= "''";
 }
 $where2 = "ident IN (" . $where2 . ")";
 

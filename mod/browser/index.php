@@ -114,12 +114,12 @@ END;
             $formatted_filter = $db->qstr($filter);
             
             if (empty($filter)) {
-                $search_sql = "SELECT u.ident, u.username, u.name, u.icon, u.user_type, COUNT(m.ident) AS members FROM `".$CFG->prefix."users` u JOIN ".$CFG->prefix."friends m ON m.friend = u.ident WHERE " . $usertypefilter . " GROUP BY u.ident ORDER BY members DESC, name DESC";
-                $count_sql = "SELECT COUNT(DISTINCT u.ident) AS numberofusers, COUNT(m.ident) AS members FROM `".$CFG->prefix."users` u JOIN ".$CFG->prefix."friends m ON m.friend = u.ident WHERE " . $usertypefilter . "";
+                $search_sql = "SELECT u.ident, u.username, u.name, u.icon, u.user_type, COUNT(m.ident) AS members FROM `".$CFG->prefix."users` u LEFT JOIN ".$CFG->prefix."friends m ON m.friend = u.ident WHERE " . $usertypefilter . " GROUP BY u.ident ORDER BY members DESC, name DESC";
+                $count_sql = "SELECT COUNT(DISTINCT u.ident) AS numberofusers, COUNT(m.ident) AS members FROM `".$CFG->prefix."users` u LEFT JOIN ".$CFG->prefix."friends m ON m.friend = u.ident WHERE " . $usertypefilter . "";
             } else {
                 if (empty($searchtype)) {
-                    $search_sql = "SELECT u.ident, u.username, u.name, u.icon, u.user_type, COUNT(m.ident) AS members FROM ".$CFG->prefix."tags t JOIN ".$CFG->prefix."users u ON u.ident = t.owner JOIN ".$CFG->prefix."friends m ON m.friend = u.ident WHERE ($access_string) AND t.tag = $formatted_filter AND " . $usertypefilter . " GROUP BY u.ident ORDER BY members DESC, name DESC";
-                    $count_sql = "SELECT COUNT(DISTINCT u.ident) AS numberofusers, COUNT(m.ident) AS members FROM ".$CFG->prefix."tags t JOIN ".$CFG->prefix."users u ON u.ident = t.owner JOIN ".$CFG->prefix."friends m ON m.friend = u.ident WHERE ($access_string) AND t.tag = $formatted_filter AND " . $usertypefilter . "";
+                    $search_sql = "SELECT u.ident, u.username, u.name, u.icon, u.user_type, COUNT(m.ident) AS members FROM ".$CFG->prefix."tags t JOIN ".$CFG->prefix."users u ON u.ident = t.owner LEFT JOIN ".$CFG->prefix."friends m ON m.friend = u.ident WHERE ($access_string) AND t.tag = $formatted_filter AND " . $usertypefilter . " GROUP BY u.ident ORDER BY members DESC, name DESC";
+                    $count_sql = "SELECT COUNT(DISTINCT u.ident) AS numberofusers, COUNT(m.ident) AS members FROM ".$CFG->prefix."tags t JOIN ".$CFG->prefix."users u ON u.ident = t.owner LEFT JOIN ".$CFG->prefix."friends m ON m.friend = u.ident WHERE ($access_string) AND t.tag = $formatted_filter AND " . $usertypefilter . "";
                 }
             }
             
@@ -160,7 +160,7 @@ END;
                 $blogposts = count_records("weblog_posts", "weblog", $result->ident);
                 $description = get_field("profile_data", "value", "owner", $result->ident, "name", 'minibio');
                 
-                $icon_html = user_icon_html($result->ident);
+                $icon_html = user_icon_html($result->ident, 50);
                 
                 $name = htmlspecialchars($result->name);
                 
@@ -229,15 +229,6 @@ END;
         }
         
         templates_page_setup();
-        
-        $body = templates_draw(array(
-                        'context' => 'contentholder',
-                        'title' => $title,
-                        'body' => $body
-                    )
-                    );
-        
-        
-        echo templates_page_draw(array($title, $body));
+        templates_page_output($title, $body);
 
 ?>

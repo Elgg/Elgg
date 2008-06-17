@@ -52,9 +52,9 @@ $template_definition[] = array(
         )
     );
 
-$template["community_members"] = "<div id=\"networktable\"><table width=\"80%\" cellspacing=\"5\"><tr>{{members}}</tr></table></div>";
-$template["community_member"] = file_get_contents(dirname(__FILE__)."/templates/community_member_view.html");
-$template["community_membership"] = file_get_contents(dirname(__FILE__)."/templates/community_membership_view.html");
-$template["community_create"] = file_get_contents(dirname(__FILE__)."/templates/community_create.html");
+templates_add_context('community_members', "<div id=\"networktable\"><table width=\"80%\" cellspacing=\"5\"><tr>{{members}}</tr></table></div>", false);
+templates_add_context('community_member', 'mod/community/templates/community_member_view.html');
+templates_add_context('community_membership', 'mod/community/templates/community_membership_view.html');
+templates_add_context('community_create', 'mod/community/templates/community_create.html');
 
 ?>

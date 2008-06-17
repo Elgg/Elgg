@@ -5,7 +5,7 @@
  *
  * Created on Apr 9, 2007
  *
- * @author Diego Andrés Ramírez Aragón <diego@somosmas.org>
+ * @author Diego Andrï¿½s Ramï¿½rez Aragï¿½n <diego@somosmas.org>
  */
 /**
  * Defines how many members show in the listings
@@ -39,5 +39,5 @@ define('COMMUNITY_COMPACT_VIEW', false);
   * Defines if its allowed to a community have members of type 'community'
   * Type: boolean
   */
-define('COMMUNITY_ALLOW_COMMUNITY_TYPE_MEMBERS',false);
+define('COMMUNITY_ALLOW_COMMUNITY_TYPE_MEMBERS',true);
 ?>

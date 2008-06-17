@@ -14,10 +14,7 @@
         define("context", $extensionContext);
         templates_page_setup();
 
-        $type = gettext("Blog");
-        if(is_array($CFG->weblog_extensions[$extensionContext]) &&array_key_exists('name',$CFG->weblog_extensions[$extensionContext])){
-          $type = $CFG->weblog_extensions[$extensionContext]['name'];
-        }
+        $type = blog_get_extension($extensionContext, 'name');
 
         $title = run("profile:display:name") . " :: " . $type;
 
@@ -32,17 +29,8 @@
 
         $body = run("content:weblogs:view");
         $body .= run("weblogs:view");
+        $body = '<div id="view_own_blog">' . $body . '</div>';
 
-        $body = templates_draw(array(
-                        'context' => 'contentholder',
-                        'title' => $title,
-                        'body' => "<div id=\"view_own_blog\">" . $body . "</div>"
-                    )
-                    );
-
-        echo templates_page_draw( array(
-                        $title, $body
-                    )
-                    );
+        templates_page_output($title, $body);
 
 ?>

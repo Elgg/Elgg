@@ -20,6 +20,11 @@
       */
      function explodeping_init() {
          global $CFG, $messages;
+
+         // FIXME: workaround to annoying warning when is enabled open_basedir 
+         // restriction
+         if (@ini_get('open_basedir') || !ini_get_bool('allow_url_fopen')) { return;}
+
          if (!$explodeservice = get_record('datalists', 'name', 'explodeservice')) {
              
              ini_set('default_socket_timeout', 20);

@@ -1,0 +1,3 @@
+The overall infrastructure have strong dependences with this 'plugin'.
+I think that it must be moved to a library
+-- Diego

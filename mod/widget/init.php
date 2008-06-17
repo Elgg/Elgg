@@ -1,6 +1,6 @@
 <?php
 
     global $CFG, $template;
-    $template['css'] .= file_get_contents($CFG->dirroot . "mod/widget/css");
+    templates_add_context('css', 'mod/widget/css');
 
 ?>

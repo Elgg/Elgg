@@ -1,0 +1,301 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: O2o v0.1\n"
+"POT-Creation-Date: 2007-01-06 02:52+0000\n"
+"PO-Revision-Date: 2007-02-17 16:14+0000\n"
+"Last-Translator: Nicolás Martín <nicolas@somosmas.org>\n"
+"Language-Team: Spanish (O2O) <nicolas@somosmas.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Rosetta-Export-Date: 2007-01-08 16:18+0000\n"
+
+
+#: forgotten_password.php:14
+msgid "Generate a New Password"
+msgstr "Generar una Nueva Contraseña"
+
+#: index.php:17
+msgid "Invite a Friend"
+msgstr "Invitar a una Conexión"
+
+#: join.php:12
+msgid "Join %s"
+msgstr "Unirse a %s"
+
+#: lib/invite_join_footer.php:11
+msgid "I am at least thirteen years of age."
+msgstr "Tengo al mentos trece años de edad."
+
+#: lib/invite_join_footer.php:12
+msgid "Join"
+msgstr "Unirse"
+
+#: lib/join_noinvite.php:23
+msgid "Your name"
+msgstr "Tu nombre"
+
+#: lib/join_noinvite.php:29
+msgid "Your email address"
+msgstr "Tu dirección de correo electrónico"
+
+#: lib/join_noinvite.php:33
+msgid "Register"
+msgstr "Registrarse"
+
+#: lib/join_noinvite.php:43
+msgid "Self-registration is currently disabled."
+msgstr "El auto-registro está actualmente deshabilitado."
+
+#: lib/password_request.php:7
+msgid "The site administrator has disabled password changing."
+msgstr "El administrador del sitio ha desabilitado los cambios de clave."
+
+#: lib/password_request.php:14
+msgid "To generate a new password at %s!, enter your username below. We will send the address of a unique verification page to you via email click on the link in the body of the message and a new password will be sent to you."
+msgstr "Para generar una nueva clave en %s, ingresa su nombre de usuario abajo. Te enviaremos la dirección de una página única de verificación a tu correo electrónico. Presiona en el vínculo que te enviaremos en el mensaje para generar una nueva contraseña."
+
+#: lib/password_request.php:15
+msgid "This method reduces the chance of a mistakenly reset password."
+msgstr "Este método reduce las posibilidades de resetear la contraseña de forma accidental."
+
+#: lib/password_request.php:31
+msgid "Your username"
+msgstr "Tu nombre de usuario"
+
+#: lib/password_request.php:35
+msgid "Request new password"
+msgstr "Solicitar nueva contraseña"
+
+#: lib/new_password.php:13
+msgid "A new password has been emailed to you at %s. You should be able to use it immediately; your old one has been deactivated."
+msgstr "Se envió una nueva clave a tu correo %s. Debes poder usarlo inmediatamente; tu antigua contraseña ha sido desactivada."
+
+#: lib/new_password.php:30
+msgid "Your %s password"
+msgstr "Tu clave %s"
+
+#: lib/new_password.php:30
+msgid "Your %s password has been reset.\n\nFor your records, your new password is:\n\n\tPassword: %s\n\nPlease consider changing your password as soon as you have logged in for security reasons.\n\nWe hope you continue to enjoy using the system.\n\nRegards,\n\nThe %s Team"
+msgstr "Tu contraseña %s ha sido reseteada.\n\nPara tu registro, tu nueva contraseña es:\n\n\tContraseña: %s\n\nPor favor considera cambiar tu contraseña apenas entres al sistema, por razones de seguridad.\n\nEsperamos que continues disfrutando el sistema.\n\nSaludos,\n\nEl Equipo %s"
+
+#: lib/new_password.php:37
+msgid "Your password request code appears to be invalid. Try generating a new one?"
+msgstr "Tu código de solicitud de contraseña parece ser invalido. Intenta generar uno nuevo"
+
+#: lib/invite_join.php:10
+msgid "register page"
+msgstr "página de registro"
+
+#: lib/invite_join.php:48
+msgid "Your username - (Must be letters only)"
+msgstr "Tu nombre de usuario - (sólo puede contener letras, sin espacios)"
+
+#: lib/invite_join.php:54
+msgid "Enter a password"
+msgstr "Ingresar contraseña"
+
+#: lib/invite_join.php:60
+msgid "Your password again for verification purposes"
+msgstr "Ingresar contraseña de nuevo (para propósitos de verificación)"
+
+#: lib/invite_join.php:84
+msgid "Your invitation code appears to be invalid. Codes only last for seven days; it's possible that yours is older."
+msgstr "Tu código de invitación parece ser inválido. Los códigos sólo duran siete días; es posible que el tuyo sea más antiguo."
+
+#: lib/invite_join.php:87
+msgid "If you still want to join %s, go to the %s."
+msgstr "Si aún quieres unirte a %s, ve a %s."
+
+#: lib/invite_join.php:89
+msgid "If you still want to join %s, it may be worth getting in touch with the person who invited you."
+msgstr "Si aún quieres unirte a %s, puede ser util contactarte con la persona que te invitó."
+
+#: lib/invite_join.php:105
+msgid "To join %s, go to the %s."
+msgstr "Para unirte a %s, ve a %s."
+
+#: lib/invite_join.php:107
+msgid "For the moment, joining %s requires a specially tailored invite code. If you know someone who's a member, it may be worth asking them for one."
+msgstr "Por el momento, unirse a %s requiere un código de invitación especial. Si conoces a alguien que sea actualmente miembro, es recomendable que le preguntes por uno."
+
+#: lib/invite.php:12
+msgid "Their name"
+msgstr "Su nombre"
+
+#: lib/invite.php:18
+msgid "Their email address"
+msgstr "Su correo electrónico"
+
+#: lib/invite_actions.php:37
+msgid "Thank you for registering with %s."
+msgstr "Gracias por registrarte en %s."
+
+#: lib/invite_actions.php:38
+msgid "%s account verification"
+msgstr "Verificación de cuenta %s"
+
+#: lib/invite_actions.php:43
+msgid "They included the following message:"
+msgstr "Ellos han incluido el siguiente mensaje:"
+
+#: lib/invite_actions.php:45
+msgid "has invited you to join"
+msgstr "te ha invitado a unirte"
+
+#: lib/invite_actions.php:45
+msgid "a learning landscape system."
+msgstr "un sistema de articulación."
+
+#: lib/invite_actions.php:49
+msgid "Dear %s,\n\n%s %s\n\nTo join, visit the following URL:\n\n\t%s\n\nYour email address has not been passed onto any third parties, and will be removed from our system within seven days.\n\nRegards,\n\nThe %s team."
+msgstr "Estimado/a %s,\n\n%s %s\n\nPara unirte, visita el siguiente URL:\n\n\t%s\n\nTu dirección de correo no será entregada a terceros, y será eliminada de nuestro sistemo dentro de siete días.\n\nSaludos, El equipo %s."
+
+#: lib/invite_actions.php:51
+msgid "Your invitation was sent to %s at %s. It will be valid for seven days."
+msgstr "La invitación ha sido enviada a %s a %s. Será valida por siete días."
+
+#: lib/invite_actions.php:55
+msgid "User %s already has that email address. Invitation not sent."
+msgstr "El usuario %s ya tiene esa dirección de correo electrónica. No se ha enviado la invitación."
+
+#: lib/invite_actions.php:58
+msgid "Someone with that email address has already been invited to the system. "
+msgstr "Alguien con ese correo electrónico ya ha sido invitado al sistema."
+
+#: lib/invite_actions.php:61
+msgid "Invitation failed: The email address was not valid."
+msgstr "Invitación fallida: La dirección de correo electrónico no era válida."
+
+#: lib/invite_actions.php:64
+msgid "Error: This community has reached its maximum number of users."
+msgstr "Error: Esta comunidad ha alcanzado su número máximo de usuarios."
+
+#: lib/invite_actions.php:67
+msgid "Invitation failed: you are not logged in."
+msgstr "Invitación fallida: no has entrado al sistema."
+
+#: lib/invite_actions.php:70
+msgid "Invitation failed: you must specify both a name and an email address."
+msgstr "Invitación fallida: debes especificar tanto el nombre como la dirección de correo electrónico."
+
+#: lib/invite_actions.php:85
+msgid "Unfortunately this community has reached its account limit and you are unable to join at this time."
+msgstr "Desafortunadamente esta comunidad a llegado a su límite de cuenta y no puedes unirtele en este momento."
+
+#: lib/invite_actions.php:89
+msgid "You must indicate that you are at least 13 years old to join."
+msgstr "Debes indicar primero si eres mayor a 13 años para poderte unir."
+
+#: lib/invite_actions.php:93
+msgid "Error! Invalid invite code."
+msgstr "¡Error! Código de invitación inválido."
+
+#: lib/invite_actions.php:97
+msgid "Error! Invalid password. Your passwords must match and be between 6 and 16 characters in length."
+msgstr "¡Error! Contraseña inválida. Tus contraseñas deben coincidir y deben tener entre 6 y 16 caracteres de longitud."
+
+#: lib/invite_actions.php:101
+msgid "Error! Your username must contain letters and numbers only, cannot be blank, and must be between 3 and 12 characters in length."
+msgstr "¡Error! Tu nombre de usuario sólo debe contener letras y números, no puede dejarse en blanco, y debe tener entre 3 y 12 caracteres de longitud."
+
+#: lib/invite_actions.php:106
+msgid "The username '$username' is already taken by another user. You will need to pick a different one."
+msgstr "El nombre de usuario '$username' ya ha sido tomado por otro usuario. Debes escoger uno distinto."
+
+#: lib/invite_actions.php:151
+msgid "Your account was created! You can now log in using the username and password you supplied. You have been sent an email containing these details for reference purposes."
+msgstr "¡Tu cuenta ha sido creada! Puedes entrar usando el nombre de usuario y contraseña que proporcionaste. Se te ha enviado un correo electrónico con estos detalles para fines de referencia."
+
+#: lib/invite_actions.php:159
+msgid "Your %s account"
+msgstr "Tu cuenta %s"
+
+#: lib/invite_actions.php:182
+msgid "You have been logged on."
+msgstr "Has entrado al sistema."
+
+#: lib/invite_actions.php:184
+msgid "The password for this account is extremely insecure and represents a major security risk. You should change it immediately."
+msgstr "La contraseña para esta cuenta es extremadamente insegura y representa un riesgo de seguridad grande. Debes cambiarla inmediatamente."
+
+#: lib/invite_actions.php:190
+msgid "Unrecognised username or password. The system could not log you on, or you may not have activated your account."
+msgstr "Nombre de usuario o contraseña no reconocidos. El sistemo no pudo autenticarte, o todavía no has activado tu cuenta."
+
+#: lib/invite_actions.php:211
+msgid "Verify your %s account password request"
+msgstr "Verifica tus solicitudes de contraseña de cuenta de %s"
+
+#: lib/invite_actions.php:212
+msgid "A request has been received to generate your account at %s a new password.\n\n"
+msgstr "Se ha recibido una solicitud para generar una nueva contraseña en tu cuenta en %s.\n\n"
+
+#: lib/invite_actions.php:213
+msgid "To confirm this request and receive a new password by email, please click the following link:\n\n\t%s\n\n"
+msgstr "Para confirmar esta solicitud y recibir una nueva contraseña por correo electrónico, por favor presiona en el siguiente vínculo:\n\n\t%s\n\n"
+
+#: lib/invite_actions.php:214
+msgid "Please let us know if you have any further problems.\n\nRegards,\n\nThe %s Team"
+msgstr "Por favor déjanos saber si has tenido algún otro problema.\n\nSaludos,\n\nEl Equipo %s"
+
+#: lib/invite_actions.php:216
+msgid "Your verification email was sent. Please check your inbox."
+msgstr "Tu correo electrónico de verificación ha sido enviado. Por favor revisa tu correo."
+
+#: lib/invite_actions.php:218
+msgid "No user with that username was found."
+msgstr "No se ha encontrado un usuario con ese nombre de usuario."
+
+#: lib/invite_join_mailwithoutpass.php:14
+msgid "Thanks for joining %s!\n\n."
+msgstr "¡Gracias por unirte a %s!\n\n."
+
+#: lib/invite_join_mailwithoutpass.php:15
+msgid "You can log in at any time by visiting %s and entering your login and password.\n\n"
+msgstr "Puedes entrar en cualquier momento visitando %s y entrando tu nombre de usuario y contraseña.\n\n"
+
+#: lib/invite_join_mailwithoutpass.php:16
+msgid "We hope you enjoy using the system.\n\nRegards,\n\nThe %s Team"
+msgstr "Esperamos que disfrutes usando el sistema.\n\nSaludos,\n\nEl Equipo %s"
+
+#: lib/invite_register_welcome.php:12
+msgid "Thank you for registering for an account with %s! Registration is completely free, but before you fill in your details, please take a moment to read the following documents:"
+msgstr "¡Gracias por registrarte para una cuenta con %s! El registro es completamente gratuito, pero primero debes llenar tus detalles, por favor toma un momento para leer los siguientes documentos:"
+
+#: lib/invite_register_welcome.php:13
+msgid "terms and conditions"
+msgstr "términos y condiciones"
+
+#: lib/invite_register_welcome.php:14
+msgid "Privacy policy"
+msgstr "Política de privacidad"
+
+#: lib/invite_register_welcome.php:15
+msgid "When you fill in the details below, we will send an \"invitation code\" to your email address in order to validate it. You must then click on this within seven days to create your account."
+msgstr "Cuando llenes los detalles de abajo, te enviaremos un \"código de invitación\" a tu correo electrónico para poder validarlo. Luego debes presionar en dicho código antes de siete días para poder crear tu cuenta."
+
+#: lib/invite_join_mailwithpass.php:15
+msgid "Thanks for joining %s!\n\nFor your records, your username and password in %s are:\n\n\t"
+msgstr "¡Gracias por unirte a %s!Para tu registro, tu nombre de usuario y contraseña en %s son:\n\n\t"
+
+#: lib/invite_join_mailwithpass.php:16
+msgid "Username: %s\n\tPassword: %s\n\nYou can log in at any time by visiting %s and entering these details into the login form.\n\n"
+msgstr "Nombre de Usuario: %s\n\tContraseña: %s\n\nPuedes entrar en cualquier momento visitando %s y entrando estos detalles en el formulario de ingreso.\n\n"
+
+#: lib/invite_join_welcome.php:13
+msgid "Thank you for registering for an account with %s! Registration is completely free, but before you confirm your details, please take a moment to read the following documents:"
+msgstr "¡Gracias por registrarte para una cuenta con %s! El registro es completamente gratis, pero primero debes confirmar tus detalles, por favor toma un momento para leer los siguientes documentos:"
+
+#: lib/invite_join_welcome.php:16
+msgid "Submitting the form below indicates acceptance of these terms. Please note that currently you must be at least 13 years of age to join the site."
+msgstr "El envío del formulario de abajo indica la aceptación de estos términos."
+
+#: new_password.php:11
+msgid "Get new %s password"
+msgstr "Recibir una nueva contraseña %s"

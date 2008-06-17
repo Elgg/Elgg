@@ -1,0 +1,178 @@
+# Copyright (C) Corporacin Somos ms 2007
+# This file is distributed under the same license as the PACKAGE package.
+# Nicols Martn <nicolas@somosmas.org>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: O2o v0.1\n"
+"POT-Creation-Date: 2007-01-06 02:52+0000\n"
+"PO-Revision-Date: 2007-02-17 16:14+0000\n"
+"Last-Translator: Nicols Martn  nicolas@somosmas.org>\n"
+"Language-Team: Spanish (O2O) <nicolas@somosmas.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Rosetta-Export-Date: 2007-01-08 16:18+0000\n"
+
+#: lib.php:16:
+msgid "Administration"
+msgstr "Administración"
+
+#: lib.php:22:
+msgid "Edit user details"
+msgstr "Editar información del usuario"
+
+#: lib.php:25:
+msgid "Your site picture"
+msgstr "Tu foto"
+
+#: lib.php:31:
+msgid "Main"
+msgstr "Principal"
+
+#: lib.php:35:
+msgid "Add users"
+msgstr "Añadir usuarios"
+
+#: lib.php:39:
+msgid "Manage users"
+msgstr "Gestionar usuarios"
+
+#: lib.php:43:
+msgid "Banned users"
+msgstr "Usuarios no permitidos"
+
+#: lib.php:47:
+msgid "Admin users"
+msgstr "Usuarios administradores"
+
+#: lib.php:51:
+msgid "Manage flagged content"
+msgstr "Gestionar contenido inapropiado"
+
+#: lib.php:55:
+msgid "Spam control"
+msgstr "Control de Spam"
+
+#: lib/admin_spam.php:20:
+msgid "Regular expressions"
+msgstr "Expresiones regulares"
+
+#: lib/admin_spam.php:22:
+msgid "Save"
+msgstr "Guardar"
+
+#: lib/admin_userdetails.php:19:
+msgid "Change username:"
+msgstr "Cambiar el nombre de usuario:"
+
+#: lib/admin_userdetails.php:22:
+msgid "New username: "
+msgstr "Nuewvo nombre de usuario: "
+
+#: lib/admin_userdetails.php:29:
+msgid "Change file quota (in bytes):"
+msgstr "Cambiar quota (en bytes):"
+
+#: lib/admin_userdetails.php:32:
+msgid "New file quota: "
+msgstr "Nueva quota de archivos: "
+
+#: lib/admin_userdetails.php:36:
+msgid "Change icon quota:"
+msgstr "Cambiar la quota de íconos: "
+
+#: lib/admin_userdetails.php:39:
+msgid "New icon quota: "
+msgstr "Nueva quota de íconos"
+
+#: lib/admin_userdetails.php:45:
+msgid "User flags:"
+msgstr "Propiedades del usuario:"
+
+#: lib/admin_userdetails.php:56:
+msgid "Site administrator: "
+msgstr "Administrador de la página web: "
+
+#: lib/admin_userdetails.php:58:
+msgid "Yes"
+msgstr "Si"
+
+#: lib/admin_userdetails.php:72:
+msgid "Banned: "
+msgstr "Prohibido"
+
+#: lib/admin_actions.php:44:
+msgid "Error! The new username must contain letters and numbers only, cannot be blank, and must be between 3 and 12 characters in length."
+msgstr "¡Error! El nuevo nombre de usuario sólo puede contener letras y números, no puede estar vacio, y debe tener entre 3 y 12 caracteres de longitud."
+
+#: lib/admin_actions.php:50:
+msgid "Username was changed to %s."
+msgstr "Se cambió el nombre de usuario a %s."
+
+#: lib/admin_actions.php:58:
+msgid "File quota was changed to %d."
+msgstr "Se cambió la quota a %d."
+
+#: lib/admin_actions.php:65:
+msgid "Icon quota was changed to %d."
+msgstr "Se cambió la quota de íconos a %d."
+
+#: lib/admin_actions.php:80:
+msgid "User flag '%s' set to '%s'"
+msgstr "La propiedad del usuario '%s' fue cambiada a '%s'"
+
+#: lib/admin_actions.php:94:
+msgid "Spam list updated."
+msgstr "Actualizada la lista de spam."
+
+#: lib/admin_actions.php:123:
+msgid "User addition %d failed: at least one field was blank. Username: %s, name: %s, email: %s"
+msgstr "Error agregando al usuario %d: Por lo menos un campo está vacio. Nombre de usuario: %s, nombre: %s, correo electrónico: %s"
+
+#: lib/admin_actions.php:128:
+msgid "New username %d (%s) was invalid; usernames must contain letters and numbers only, cannot be blank, and must be between 3 and 12 characters in length."
+msgstr "El nombre de usuario %d (%s) es inválido; Los nombres de usuario sólo pueden contener letas y números, no pueden estar vacios y deben tener entre 3 y 12 caracteres de longitud."
+
+#: lib/admin_actions.php:134:
+msgid "User addition %d failed: username %s is already in use."
+msgstr "Error agregando el usuario %d: El nombre de usuario %s ya está en uso."
+
+#: lib/admin_actions.php:138:
+msgid "User addition %d failed: email address %s appears to be invalid."
+msgstr "Error agregando al usuario %d: La dirección de correo %s parece ser inválida."
+
+#: lib/admin_actions.php:189:
+msgid "Your new %s account"
+msgstr "Su nueva %s cuenta"
+
+#: lib/admin_actions.php:190:
+msgid "You have been added to %s!\n\nFor your records, your %s username and password are:\n\n\tUsername: %s\n\tPassword: %s\n\nYou can log in at any time by visiting %s and entering these details into the login form.\n\nWe hope you enjoy using the system.\n\nRegards,\n\nThe %s Team"
+msgstr "¡Has sido añadido a %s!\n\nPara tu información, tu %s nombre usuario es: %s\n\n "
+
+#: lib/admin_actions.php:191:
+msgid "User %s was created."
+msgstr "Se creó el usuario %s"
+
+#: lib/display_content_flag_form.php:23:
+msgid "Flag content"
+msgstr "Contenido inapropiado"
+
+#: lib/display_content_flag_form.php:24:
+msgid "To mark this content as obscene or inappropriate, click the 'Flag' button and an administrator will view it in due course."
+msgstr "Para marcar este contenido como obseno o inapropiado, oprime el botón 'Contenido inapropiado' para reportarlo al administrador y el tome las acciones respectivas."
+
+#: lib/display_content_flag_form.php:25:
+msgid "Flag"
+msgstr "Contenido inapropiado"
+
+#: lib/admin_main.php:21:
+msgid "Accounts by type"
+msgstr "Cuentas por tipo"
+
+
+#: lib/admin_main.php:50:
+msgid "File statistics"
+msgstr "Estadísticas de archivos"
+
+

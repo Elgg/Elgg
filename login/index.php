@@ -35,10 +35,15 @@ if (!empty($l) && !empty($p)) {
         if (md5($p) == md5("password")) {
             $messages[] = __gettext("The password for this account is extremely insecure and represents a major security risk. You should change it immediately.");
         }
-        define('redirect_url', $redirect_url);
-        $_SESSION['messages'] = $messages;
-        header("Location: " . redirect_url);
-        exit;
+
+        // override with redirect_url in session
+        if (isset($_SESSION['redirect_url'])) {
+            define('redirect_url', $_SESSION['redirect_url']);
+            unset($_SESSION['redirect_url']);
+        } else {
+            define('redirect_url', $redirect_url);
+        }
+        header_redirect(redirect_url);
     } else {
         $messages[] = __gettext("Unrecognised username or password. The system could not log you on, or you may not have activated your account.");
     }
@@ -49,15 +54,6 @@ if (!empty($l) && !empty($p)) {
 $body = __gettext('Please log in');
 templates_page_setup();
 // display the form.
-echo templates_page_draw( array(
-                                      sitename,
-                                      templates_draw(array(
-                                                           'body' => $body,
-                                                           'title' => __gettext('Log On'),
-                                                           'context' => 'contentholder'
-                                                           )
-                                                     )
-                                      )
-        );
+templates_page_output($CFG->sitename, $body);
 
 ?>

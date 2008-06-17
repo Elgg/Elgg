@@ -15,7 +15,7 @@ $this_folder = optional_param('edit_folder_id',0,PARAM_INT);
 if ($this_folder != 0) {
 
     $folder_details = get_record('file_folders','ident',$this_folder);
-    if (!empty($folder)  && (run("permissions:check", array("files:edit",$folder_details->owner)) || run("permissions:check", array("files:edit",$folder_details->files_owner)))) {
+    if (!empty($folder)  && (permissions_check("files:edit",$folder_details->owner) || permissions_check("files:edit",$folder_details->files_owner))) {
         // $edit = __gettext("Edit this folder"); // gettext variable
         $run_result .= <<< END
     <form action="" method="post">
@@ -191,7 +191,7 @@ $run_result .= <<< END
     <form action="{$CFG->wwwroot}mod/file/action_redirection.php" method="post" enctype="multipart/form-data">
 END;
 
-$title = __gettext("Upload a file");
+$title = __gettext("Upload files");
 
 $body = <<< END
     
@@ -200,7 +200,7 @@ $body = <<< END
                 <td colspan="2"><p>
 END;
 
-$usedquota = get_field_sql('SELECT sum(size) FROM '.$CFG->prefix.'files WHERE owner = ?',array($page_owner));
+$usedquota = get_field_sql('SELECT sum(size) FROM '.$CFG->prefix.'files WHERE files_owner = ?',array($page_owner));
 
 // $totalquota = user_info('file_quota',$USER->ident);
 $totalquota = user_info('file_quota',$page_owner);
@@ -209,9 +209,9 @@ if ($page_owner == $_SESSION['userid']) {
 } else {
     $body .= sprintf(__gettext("Used space: %s Mb."),round(($usedquota / 1000000),4));
 }
-$fileLabel = __gettext("File to upload:"); //gettext variable
-$fileTitle = __gettext("File title:"); //gettext variable
-$fileDesc = __gettext("File Description:"); //gettext variable
+$fileLabel = __gettext("Files to upload:"); //gettext variable
+$fileTitle = __gettext("Title for files:"); //gettext variable
+$fileDesc = __gettext("File description:"); //gettext variable
 $fileAccess = __gettext("Access restrictions:"); //gettext variable
 $body .= <<< END
                 </p></td>
@@ -222,7 +222,11 @@ $body .= <<< END
                     </label>
                 </p></td>
                 <td><p>
-                        <input name="new_file" id="new_file" type="file" />
+                        <input name="new_file1" id="new_file1" type="file" /><br />
+                        <input name="new_file2" id="new_file1" type="file" /><br />
+                        <input name="new_file3" id="new_file1" type="file" /><br />
+                        <input name="new_file4" id="new_file1" type="file" /><br />
+                        <input name="new_file5" id="new_file1" type="file" />
                 </p></td>
             </tr>
             <tr>
@@ -282,7 +286,7 @@ END;
 
 $body .= run("metadata:edit");
             
-$copyright = __gettext("By checking this box, you are asserting that you have the legal right to share this file, and that you understand you are sharing it with other users of the system."); //gettext variable
+$copyright = __gettext("By checking this box, you are asserting that you have the legal right to share these uploaded files, and that you understand you are sharing it with other users of the system."); //gettext variable
 $upload = __gettext("Upload"); //gettext variable
 $body .= <<< END
             

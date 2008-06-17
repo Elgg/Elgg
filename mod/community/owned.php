@@ -23,15 +23,8 @@
     //    protect(1);
 
         $title = run("profile:display:name") . " :: " . __gettext("Owned Communities");
+        $body = run('communities:owned', array($page_owner));
 
-        echo templates_page_draw( array(
-                    $title, templates_draw(array(
-                        'context' => 'contentholder',
-                        'title' => $title,
-                        'body' => run("communities:owned",array($page_owner))
-                    )
-                    )
-                )
-                );
+        templates_page_output($title, $body);
 
 ?>

@@ -44,15 +44,13 @@ if (empty($USER->signingup)) {
     $messages = array();
     if ($mode == 'join') {
         // validate
-        if (!preg_match("/^[A-Za-z0-9]{3,12}$/",$u->username)) {
+        if (!validate_username($u->username)) {
             $messages[] = __gettext("Error! Your username must contain letters and numbers only, cannot be blank, and must be between 3 and 12 characters in length.");
-        }
-
-        if (record_exists('users','username',strtolower($u->username))) {
+        } elseif (!username_is_available(strtolower($u->username))) {
             $messages[] = __gettext("The username '$username' is already taken by another user. You will need to pick a different one.");
         }
 
-        if ($u->password1 != $u->password2 || strlen($u->password1) < 6 || strlen($u->password2) > 16) {
+        if (!validate_password($u->password1, $u->password2)) {
             $messages[] = __gettext("Error! Invalid password. Your passwords must match and be between 6 and 16 characters in length.");
         }
 

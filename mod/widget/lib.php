@@ -38,6 +38,9 @@
         if (!in_array($CFG->prefix . "widget_data",$METATABLES) || !in_array($CFG->prefix . "widgets",$METATABLES)) {
             if (file_exists($CFG->dirroot . "mod/widget/$CFG->dbtype.sql")) {
                 modify_database($CFG->dirroot . "mod/widget/$CFG->dbtype.sql");
+                //reload system
+                header_redirect($CFG->wwwroot);
+
             } else {
                 error("Error: Your database ($CFG->dbtype) is not yet fully supported by the Elgg widgets.  See the mod/widget directory.");
             }

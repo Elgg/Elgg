@@ -21,7 +21,9 @@ if (logged_on) {
     }
     if (count($communitieslist) > 0) {
         $communitieslist = array_unique($communitieslist);
-        $run_result .= " or access IN ('community" . implode("', 'community", $communitieslist) . "') ";
+        if (!empty($run_result))
+            $run_result .= " OR";
+        $run_result .= " access IN ('community" . implode("', 'community", $communitieslist) . "') ";
     }
 }
 

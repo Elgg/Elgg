@@ -62,7 +62,7 @@
             }
             
             // Save access
-            $widget->access = optional_param('_widget_access',"user".$_SESSION['userid']);
+            $widget->access = optional_param('_widget_access',$CFG->default_access);
             update_record('widgets',$widget);
             
             if ($action == "widget:save") {
@@ -118,17 +118,7 @@
         }
         
         // Output to the screen
-        $body = templates_draw(array(
-                        'context' => 'contentholder',
-                        'title' => $title,
-                        'body' => $body
-                    )
-                    );
-        
-        echo templates_page_draw( array(
-                        $title, $body
-                    )
-                    );
+        templates_page_output($title, $body);
     }
-    
+
 ?>

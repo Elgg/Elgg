@@ -14,6 +14,8 @@ $view_filter = optional_param('filter','');
 $view_filter_value = trim(optional_param('filtervalue'));
 
 $where1 = run("users:access_level_sql_where",$_SESSION['userid']);
+$where2 = '';
+$where3 = '';
 
 // if (!isset($_SESSION['friends_posts_cache']) || (time() - $_SESSION['friends_posts_cache']->created > 60)) {
 // $_SESSION['friends_posts_cache']->created = time();
@@ -53,25 +55,25 @@ if(is_array($CFG->weblog_extensions)){
   $where1 = '('.$where1.') ' . $where3;
 }
 
-$removefilter = ' (<a href="' . url . $extensionContext.'/everyone/skip/' . $weblog_offset . '">' . __gettext('Remove filter') . '</a>)';
+$removefilter = ' (<a href="' . url . $extensionContext.'/everyone/skip/' . $weblog_offset . '">' . __gettext("Remove filter") . '</a>)';
 
 switch ($view_filter) {
     case "people":
         $where1 = '(' . $where1 . ') AND owner = weblog';
-        $run_result .= '<p>' . __gettext('Filtered: Showing personal blog posts') . $removefilter . '</p>';
+        $run_result .= '<p>' . __gettext("Filtered: Showing personal blog posts") . $removefilter . '</p>';
         break;
     case "communities":
         $where1 = '(' . $where1 . ') AND owner != weblog';
-        $run_result .= '<p>' . __gettext('Filtered: Showing community blog posts') . $removefilter . '</p>';
+        $run_result .= '<p>' . __gettext("Filtered: Showing community blog posts") . $removefilter . '</p>';
         break;
     case "commented":
         //a join would be better, but doesn't work with users:access_level_sql_where anyway - sven
         $where1 = '(' . $where1 . ') AND (SELECT COUNT(ident) FROM ' . $CFG->prefix . 'weblog_comments WHERE post_id = ' . $CFG->prefix . 'weblog_posts.ident) > 0';
-        $run_result .= '<p>' . __gettext('Filtered: Showing posts with comments') . $removefilter . '</p>';
+        $run_result .= '<p>' . __gettext("Filtered: Showing posts with comments") . $removefilter . '</p>';
         break;
     case "uncommented":
         $where1 = '(' . $where1 . ') AND (SELECT COUNT(ident) FROM ' . $CFG->prefix . 'weblog_comments WHERE post_id = ' . $CFG->prefix . 'weblog_posts.ident) = 0';
-        $run_result .= '<p>' . __gettext('Filtered: Showing posts with no comments') . $removefilter . '</p>';
+        $run_result .= '<p>' . __gettext("Filtered: Showing posts with no comments") . $removefilter . '</p>';
         break;
     case "date":
         //expect a YYYYMMDD value
@@ -86,7 +88,7 @@ switch ($view_filter) {
             if ($start && $end) {
                 $where1 = '(' . $where1 . ') AND (posted BETWEEN ' . $start . ' AND ' . $end . ')';
                 $nicedate = gmstrftime("%B %d, %Y", $start);
-                $run_result .= '<p>' . __gettext('Filtered: Showing posts from ') . $nicedate . $removefilter . '</p>';
+                $run_result .= '<p>' . __gettext("Filtered: Showing posts from ") . $nicedate . $removefilter . '</p>';
                 $view_filter = 'date';
             }
         }
@@ -96,7 +98,7 @@ switch ($view_filter) {
             $sql_filter_value = $db->qstr($view_filter_value); // adodb's escaping + quote-surrounding function
             $html_filter_value = htmlspecialchars($view_filter_value);
             $where1 = '(' . $where1 . ') AND ident IN (SELECT ref FROM ' . $CFG->prefix . 'tags WHERE tag =' . $sql_filter_value . ' AND tagtype = "weblog")';
-            $run_result .= '<p>' . __gettext('Filtered: Showing posts tagged with ') . '"' . $html_filter_value . '"' . $removefilter . '</p>';
+            $run_result .= '<p>' . __gettext("Filtered: Showing posts tagged with ") . '"' . $html_filter_value . '"' . $removefilter . '</p>';
         }
         break;
     default:

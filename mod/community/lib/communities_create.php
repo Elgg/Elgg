@@ -18,6 +18,7 @@
     $communityName = __gettext("Community name:"); // gettext variable
     $communityUsername = __gettext("Username for community (forms part of the community website address):"); // gettext variable
     $buttonValue = __gettext("Create"); // gettext variable
+    $maxlength = isset($CFG->username_maxchars) ? intval($CFG->username_maxchars) : 12;
 
     $fields = templates_draw(array('context' => 'databox1',
                                    'name' => $communityName,
@@ -26,7 +27,7 @@
                             );
     $fields.= templates_draw(array('context' => 'databox1',
                                    'name' => $communityUsername,
-                                   'column1' => "<input type=\"text\" name=\"comm_username\" value=\"$comm_username\" maxlength=\"12\"/>"
+                                   'column1' => "<input type=\"text\" name=\"comm_username\" value=\"$comm_username\" maxlength=\"$maxlength\"/>"
                                    )
                             );
     $run_result .= templates_draw(array('context'=>"community_create",

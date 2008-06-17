@@ -9,7 +9,6 @@ function file_pagesetup() {
     global $CFG;
     global $metatags;
     
-    require_once (dirname(__FILE__)."/default_templates.php");
     require_once (dirname(__FILE__)."/lib/file_config.php");
     $page_owner = $profile_id;
     
@@ -26,20 +25,27 @@ function file_pagesetup() {
     if (defined("context") && context == "files") {
         
         $files_username = user_info('username', $page_owner);
-        
+
+        if ($page_owner != -1) {
+            if ($page_owner == $_SESSION['userid'] && $page_owner != -1) {
+                $PAGE->menu_sub[] = array( 'name' => 'file:rss', 
+			'html' => '<a href="' . $CFG->wwwroot . $_SESSION['username'] . '/files/rss/"><img src="' . $CFG->wwwroot . 'mod/template/icons/rss.png" border="0" alt="rss" /></a>');
+            }
+        }
+
         if ($page_owner == $_SESSION['userid'] && $page_owner != -1) {
             $PAGE->menu_sub[] = array( 'name' => 'file:add',
                                        'html' => a_href( "#addFile",
                                                           __gettext("Add a file or a folder")));
-        }
-        if ($page_owner != -1) {
-            if ($page_owner == $_SESSION['userid'] && $page_owner != -1) {
-                $PAGE->menu_sub[] = array( 'name' => 'file:rss',
-                                           'html' => a_href( $CFG->wwwroot.$_SESSION['username']."/files/rss/", 
-                                                              __gettext("RSS feed for files")));  
-            }
-        }
     }
+	}
+  // Adding the file's selector wizard
+  $options = array('options'=> 'width=600,height=300,left=20,top=20,scrollbars=yes,resizable=yes',
+                   'name'=> 'mediapopup',
+                   // 'url' => $CFG->wwwroot."mod/file/file_include_wizard.php?owner=".$_SESSION['userid']);
+                   'url' => $CFG->wwwroot."mod/file/file_include_wizard.php?owner=".page_owner());
+  add_content_tool_button("mediapopup",__gettext("Add File"), "image.png", "f", $options);
+
 }
 
 function file_init() {
@@ -56,6 +62,7 @@ function file_init() {
         $function['files:init'][] = $CFG->dirroot . "mod/file/lib/files_init.php";
         $function['files:init'][] = $CFG->dirroot . "mod/file/lib/metadata_defaults.php";
         $function['files:init'][] = $CFG->dirroot . "mod/file/lib/inline_mimetypes.php";
+        $function['init'][] = $CFG->dirroot . "mod/file/default_templates.php";
     
     // Mime-type init
         $function['files:metadata:init'][] = $CFG->dirroot . "mod/file/lib/inline_mimetypes.php";
@@ -99,8 +106,8 @@ function file_init() {
     // Allow users to embed files in weblog posts
         $function['weblogs:text:process'][] = $CFG->dirroot . "mod/file/lib/weblogs_text_process.php";
 
-//        $function['weblogs:posts:add:fields'][] = $CFG->dirroot . "mod/file/lib/weblogs_posts_add_fields.php";
-//        $function['weblogs:posts:edit:fields'][] = $CFG->dirroot . "mod/file/lib/weblogs_posts_add_fields.php";
+        $function['weblogs:posts:add:fields'][] = $CFG->dirroot . "mod/file/lib/weblogs_posts_add_fields.php";
+        $function['weblogs:posts:edit:fields'][] = $CFG->dirroot . "mod/file/lib/weblogs_posts_add_fields.php";
                     
     // Log on bar down the right hand side
         $function['display:sidebar'][] = $CFG->dirroot . "mod/file/lib/files_user_info_menu.php";
@@ -137,60 +144,20 @@ function file_init() {
         
    // Delete users
         listen_for_event("user","delete","file_user_delete");
-        
-  // Adding the file's selector wizard
-  $options = array('options'=> 'width=600,height=300,left=20,top=20,scrollbars=yes,resizable=yes',
-                   'name'=> 'mediapopup',
-                   'url' => $CFG->wwwroot."mod/file/file_include_wizard.php?owner=".$_SESSION['userid']);
-  add_content_tool_button("mediapopup",__gettext("Add File"), "image.png", "f", $options);
-        
-
+                
 	// Register a display object function
 	display_set_display_function('file', 'file_displayobject');
+}
 
-	// Register file river hook (if there)
-	if (function_exists('river_save_event'))
-	{
-		river_register_friendlyname_hook('file::file', 'file_get_friendly_name');
+function file_permissions_check($objecttype, $owner){
+    $run_result = null;
 
-		listen_for_event('file','publish', 'file_river_hook');
-		listen_for_event('file','delete', 'file_river_hook');
+	if ($objecttype == "files" || $objecttype == "files:edit") {
+	    if (logged_on && $owner == $_SESSION['userid']) {
+	        $run_result = true;
+	    }
 	}
-}
-
-function file_get_friendly_name($object_type, $object_id)
-{
-	global $CFG;
-
-	$result = get_record_sql("select * from {$CFG->prefix}files where ident = $object_id");
-
-	$filepath = $CFG->wwwroot . user_info("username", $result->owner) . "/files/{$result->folder}/{$result->ident}/" . urlencode($result->originalname);
-
-	return "<a href=\"$filepath\">" . $result->originalname . "</a>";
-}
-
-function file_river_hook( $object_type, $event, $object)
-{
-	global $CFG;
-
-	$userid = ($_SESSION['userid'] == "" ? -1 : $_SESSION['userid']);
-	$object_id = $object->ident;
-	$object_owner = $object->owner;
-	
- 	$filepath = $CFG->wwwroot . user_info("username", $userid) . "/files/{$object->folder}/{$object->ident}/" . urlencode($object->originalname);
-        $name = $object->originalname;
-
-	$username = user_info("username", $userid);
-	if ($userid == false) 
-		$username = __gettext("Anonymous user");
-	
-	if ($event == "publish")
-		river_save_event($userid, $object_id, $object_owner, $object_type, "<a href=\"" . river_get_userurl($userid) . "\">$username</a> uploaded '<a href=\"$filepath\">$name</a>'");
-
-	if ($event == "delete")
-		river_save_event($userid, $object_id, $object_owner, $object_type, "<a href=\"" . river_get_userurl($userid) . "\">$username</a> deleted '$name'");
-
-	return $object;
+	return $run_result;
 }
 	
 function file_displayobject($object_id,$object_type)
@@ -296,7 +263,7 @@ END;
 
 function file_widget_display($widget) {
     global $CFG;
-    $latest_files = widget_get_data("latest_files",$widget->ident);
+    $latest_files = clean_param(widget_get_data("latest_files",$widget->ident),PARAM_INT);
     $html = "<p>" . __gettext("No files found.") . "</p>";
     if ($widget->type == "file::files") {
         $where1 = run("users:access_level_sql_where",$_SESSION['userid']);
@@ -328,7 +295,7 @@ function file_widget_display($widget) {
 }
 
 function file_widget_edit($widget) {
-    $latest_files = widget_get_data("latest_files",$widget->ident);
+    $latest_files = clean_param(widget_get_data("latest_files",$widget->ident),PARAM_INT);
     $body = "";
     $body = "<h2>" . __gettext("Files widget") . "</h2>";
     $body .= "<p>" . __gettext("This widget displays the last couple of files from this account. Simply select the number of latest files below:") . "</p>";
@@ -374,7 +341,6 @@ function file_widget_edit($widget) {
 END;
             
             foreach($folder->idents as $folder->ident_details) {
-                
                 if (run("users:access_level_check",$folder->ident_details->access) == true) {
                     $username = $owner_username;
                     $ident = (int) $folder->ident_details->ident;
@@ -481,13 +447,12 @@ END;
         global $page_owner, $CFG;
 
         $filemenu = "";
-        if (run("permissions:check", array("files:edit", $file->owner))  || run("permissions:check", array("files:edit", $file->files_owner))) {
-                        $areyouSure = __gettext("Are you sure you want to permanently delete this file?"); // gettext variable
+        if (permissions_check("files:edit", $file->owner)  || permissions_check("files:edit", $file->files_owner)) {
                         $delete = __gettext("Delete"); // gettext variable
                         $edit = __gettext("Edit"); // gettext variable
                         $filemenu .= <<< END
             [<a href="{$CFG->wwwroot}mod/file/edit_file.php?edit_file_id={$file->ident}&amp;owner=$page_owner">$edit</a>]
-            [<a href="{$CFG->wwwroot}mod/file/action_redirection.php?action=delete_file&amp;delete_file_id={$file->ident}" onclick="return confirm('$areyouSure')">$delete</a>]
+            [<a href="{$CFG->wwwroot}mod/file/action_redirection.php?action=delete_file&amp;delete_file_id={$file->ident}">$delete</a>]
 END;
         }
         return $filemenu;
@@ -499,13 +464,12 @@ END;
         global $page_owner, $CFG;
         $foldermenu = "";
                 
-        if (run("permissions:check", array("files:edit", $folder->owner))  || run("permissions:check", array("files:edit", $folder->files_owner))) {
-            $areyouSure = __gettext("Are you sure you want to permanently delete this folder?"); // gettext variable
+        if (permissions_check("files:edit", $folder->owner)  || permissions_check("files:edit", $folder->files_owner)) {
             $delete = __gettext("Delete"); // gettext variable
             $edit = __gettext("Edit"); // gettext variable
             $foldermenu = <<< END
             [<a href="{$CFG->wwwroot}mod/file/edit_folder.php?edit_folder_id={$folder->ident}&amp;owner=$page_owner&amp;return_type=parent">$edit</a>]
-            [<a href="{$CFG->wwwroot}mod/file/action_redirection.php?action=delete_folder&amp;delete_folder_id={$folder->ident}" onclick="return confirm('$areyouSure')">$delete</a>]
+            [<a href="{$CFG->wwwroot}mod/file/action_redirection.php?action=delete_folder&amp;delete_folder_id={$folder->ident}">$delete</a>]
 END;
         }
         return $foldermenu;

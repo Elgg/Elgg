@@ -1,0 +1,484 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Elgg Project
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Stoa 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-02-16 15:09-0200\n"
+"PO-Revision-Date: 2007-11-25 18:11-0200\n"
+"Last-Translator: Stoa Team <stoa.usp@gmail.com>\n"
+"Language-Team: Português <i18n@elgg.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Rosetta-Export-Date: 2007-01-08 17:18+0000\n"
+
+#: index.php:17
+msgid "Spam blocking"
+msgstr "Bloqueio de spam"
+
+#: index.php:21
+msgid "Content flags"
+msgstr "Indicadores de conteúdo"
+
+#: index.php:25 lib.php:39
+msgid "Manage users"
+msgstr "Administrar usuários"
+
+#: index.php:29
+msgid "Add multiple"
+msgstr "Adicione vários usuários"
+
+#: index.php:33
+msgid "Administrators"
+msgstr "Administradores"
+
+#: index.php:37
+msgid "Banned"
+msgstr "Expulso"
+
+#: index.php:46
+msgid "Administration"
+msgstr "Administração"
+
+#: lib.php:22
+msgid "Edit user details"
+msgstr "Editar detalhes do usuário"
+
+#: lib.php:25
+msgid "Your site picture"
+msgstr "Sua foto"
+
+#: lib.php:31
+msgid "Main"
+msgstr "Início"
+
+#: lib.php:35 lib/admin_users_add.php:35
+msgid "Add users"
+msgstr "Adicionar usuários"
+
+#: lib.php:43
+msgid "Banned users"
+msgstr "Usuários Banidos"
+
+#: lib.php:47
+msgid "Admin users"
+msgstr "Administradores"
+
+#: lib.php:51
+msgid "Manage flagged content"
+msgstr "Administrar conteúdo marcado"
+
+#: lib.php:55
+msgid "Spam control"
+msgstr "Controle de spam"
+
+#: lib/admin_userdetails.php:19
+msgid "Change username:"
+msgstr "Mudar nome do usuário:"
+
+#: lib/admin_userdetails.php:22
+msgid "New username: "
+msgstr "Novo nome de usuário: "
+
+#: lib/admin_userdetails.php:29
+msgid "Change file quota (in bytes):"
+msgstr "Alterar o limite de espaço em disco (em bytes):"
+
+#: lib/admin_userdetails.php:32
+msgid "New file quota: "
+msgstr "Novo limite de espaço em disco: "
+
+#: lib/admin_userdetails.php:36
+msgid "Change icon quota:"
+msgstr "Alterar limite de ícones:"
+
+#: lib/admin_userdetails.php:39
+msgid "New icon quota: "
+msgstr "Novo limite de ícones: "
+
+#: lib/admin_userdetails.php:45
+msgid "User flags:"
+msgstr "Opções do usuário:"
+
+#: lib/admin_userdetails.php:56
+msgid "Site administrator: "
+msgstr "Administração do site: "
+
+#: lib/admin_userdetails.php:58 lib/admin_userdetails.php:74
+msgid "Yes"
+msgstr "Sim"
+
+#: lib/admin_userdetails.php:58 lib/admin_userdetails.php:74
+msgid "No"
+msgstr "Não"
+
+#: lib/admin_userdetails.php:72
+msgid "Banned: "
+msgstr "Expulso: "
+
+#: lib/admin_banned_users.php:12
+msgid ""
+"The following is a list of all the banned users in the system. You can click "
+"each one to edit their user details as if you were logged in as them, as "
+"well as set user flags (including 'ban user' and 'set user as "
+"administrator')."
+msgstr ""
+"A seguir, uma lista de todos os usuários banidos do sistema. Você pode "
+"clicar em cada um para editar os detalhes dele como se você estivesse online "
+"com o perfil dele, assim como ajustar os atributos dos usuários (incluindo "
+"'banir usuário' e 'tornar usuário um administrador')."
+
+#: lib/admin_banned_users.php:18 lib/admin_users.php:68 lib/admin_main.php:95
+#: lib/admin_admin_users.php:18 lib/admin_users_add.php:20
+msgid "Username"
+msgstr "Nome de Usuário"
+
+#: lib/admin_banned_users.php:19 lib/admin_users.php:67 lib/admin_main.php:96
+#: lib/admin_admin_users.php:19 lib/admin_users_add.php:21
+msgid "Full name"
+msgstr "Nome completo"
+
+#: lib/admin_banned_users.php:20 lib/admin_main.php:97
+#: lib/admin_admin_users.php:20 lib/admin_users_add.php:22
+msgid "Email address"
+msgstr "Email"
+
+#: lib/admin_users.php:10
+msgid ""
+"The following is a list of all the users in the system, 50 users at a time. "
+"You can click each one to edit their user details as if you were logged in "
+"as them, as well as set user flags (including 'ban user' and 'set user as "
+"administrator')."
+msgstr ""
+"A seguir, uma lista de todos os usuários do sistema, 50 usuários por página. "
+"Você pode clicar em cada um para editar os detalhes dele como se você "
+"estivesse online com o perfil dele, assim como ajustar os atributos dos "
+"usuários (incluindo 'banir usuário' e 'tornar usuário um administrador')."
+
+#: lib/admin_users.php:11
+msgid ""
+"If you know the username of the user you would like to edit, you can also "
+"enter it below."
+msgstr ""
+"Se você sabe o nome do usuário que você gostaria de editar, você também pode "
+"digitá-lo abaixo."
+
+#: lib/admin_users.php:16
+msgid "Filter user type"
+msgstr "Filtrar pelo tipo de usuário"
+
+#: lib/admin_users.php:30
+msgid "Enter username"
+msgstr "Entre com o nome do usuário"
+
+#: lib/admin_users.php:32
+msgid "Edit user"
+msgstr "Editar usuário"
+
+#: lib/admin_users.php:41
+msgid "Next"
+msgstr "Próximo"
+
+#: lib/admin_users.php:50
+msgid "Previous"
+msgstr "Anterior"
+
+#: lib/admin_users.php:57
+msgid "Total users"
+msgstr "Total de usuários"
+
+#: lib/admin_users.php:69
+msgid "Extra info"
+msgstr "Informações adicionais"
+
+#: lib/admin_actions.php:13
+msgid ""
+"You have flagged this page as being obscene or inappropriate. An "
+"administrator will investigate this shortly."
+msgstr ""
+"Você marcou esta página como inapropriada e que foge dos <a href=\"http://"
+"stoa.usp.br/termos\">Termos de Uso do Stoa</a>. Logo a equipe do Stoa "
+"investigará isso."
+
+#: lib/admin_actions.php:44
+msgid ""
+"Error! The new username must contain letters and numbers only, cannot be "
+"blank, and must be between 3 and 12 characters in length."
+msgstr ""
+"Erro! O novo nome de usuário deve conter entre 3 e 12 caracteres, somente "
+"letras e números."
+
+#: lib/admin_actions.php:50
+#, php-format
+msgid "Username was changed to %s."
+msgstr "O nome de usuário foi mudado para %s."
+
+#: lib/admin_actions.php:58
+#, php-format
+msgid "File quota was changed to %d."
+msgstr "O limite de espaço para arquivos foi mudado para %d."
+
+#: lib/admin_actions.php:65
+#, php-format
+msgid "Icon quota was changed to %d."
+msgstr "O limite de espaço para ícones foi alterado para %d."
+
+#: lib/admin_actions.php:80
+#, php-format
+msgid "User flag '%s' set to '%s'"
+msgstr "Opção '%s' do usuário ajustada como '%s'"
+
+#: lib/admin_actions.php:94
+msgid "Spam list updated."
+msgstr "Lista de Spam atualizada."
+
+#: lib/admin_actions.php:123
+#, php-format
+msgid ""
+"User addition %d failed: at least one field was blank. Username: %s, name: %"
+"s, email: %s"
+msgstr ""
+"Adição do usuário %d falhou: ao menos um campo estava em branco. Nome do "
+"usuário: %s, nome: %s, email: %s"
+
+#: lib/admin_actions.php:128
+#, php-format
+msgid ""
+"New username %d (%s) was invalid; usernames must contain letters and numbers "
+"only, cannot be blank, and must be between 3 and 12 characters in length."
+msgstr ""
+"Novo nome do usuário %d (%s) era inválido; nomes de usuário devem conter "
+"somente letras e números, não podem ter espaço em branco e devem ter entre 3 "
+"e 12 caracteres."
+
+#: lib/admin_actions.php:132
+#, php-format
+msgid "User addition %d failed: username %s is already in use."
+msgstr "Adição do usuário %d falhou: nome do usuário %s já existe."
+
+#: lib/admin_actions.php:136
+#, php-format
+msgid "User addition %d failed: email address %s appears to be invalid."
+msgstr ""
+"Adição do usuário %d falhou: o endereço de email %s parece ser inválido."
+
+#: lib/admin_actions.php:197
+#, php-format
+msgid "Your new %s account"
+msgstr "Sua conta no %s"
+
+#: lib/admin_actions.php:198
+#, php-format
+msgid ""
+"You have been added to %s!\n"
+"\n"
+"For your records, your %s username and password are:\n"
+"\n"
+"\tUsername: %s\n"
+"\tPassword: %s\n"
+"\n"
+"You can log in at any time by visiting %s and entering these details into "
+"the login form.\n"
+"\n"
+"We hope you enjoy using the system.\n"
+"\n"
+"Regards,\n"
+"\n"
+"The %s Team"
+msgstr ""
+"Obrigado por participar do %s!\n"
+"\n"
+"O seu nome de usuário e senha no %s são:\n"
+"\n"
+"       Nome de Usuário: %s\n"
+"       Senha: %s\n"
+"\n"
+"Você já pode visitar %s e entrar \n"
+"com estes dados no formulário de login\n"
+"no lado direito desta página.\n"
+"\n"
+"Atenciosamente,\n"
+"\n"
+"Equipe do %s"
+
+#: lib/admin_actions.php:199
+#, php-format
+msgid "User %s was created."
+msgstr "Usuário %s foi criado."
+
+#: lib/admin_main.php:9
+msgid "Site statistics"
+msgstr "Estatísticas do site"
+
+#: lib/admin_main.php:21
+msgid "Accounts by type"
+msgstr "Contas por tipo"
+
+#: lib/admin_main.php:36
+msgid "Weblog statistics"
+msgstr "Estatística do blog"
+
+#: lib/admin_main.php:37 lib/admin_main.php:51
+msgid "All-time:"
+msgstr "Todos os tempos:"
+
+#: lib/admin_main.php:38 lib/admin_main.php:40
+#, php-format
+msgid "%u weblog posts, %u comments"
+msgstr "%u mensagens de blog, %u comentários"
+
+#: lib/admin_main.php:39 lib/admin_main.php:52
+msgid "Last 7 days:"
+msgstr "Últimos 7 dias:"
+
+#: lib/admin_main.php:50
+msgid "File statistics"
+msgstr "Estatísticas de arquivos"
+
+#: lib/admin_main.php:51 lib/admin_main.php:52
+#, php-format
+msgid "%u files (%s)"
+msgstr "%u arquivos (%.1f Mb)"
+
+#: lib/admin_main.php:70
+msgid "Database statistics"
+msgstr "Estatísticas do banco de dados"
+
+#: lib/admin_main.php:71
+msgid "Total database size:"
+msgstr "Tamanho total do banco de dados:"
+
+#: lib/admin_main.php:82
+msgid "Elgg Version"
+msgstr "Versão do Elgg"
+
+#: lib/admin_main.php:83
+msgid "Version:"
+msgstr "Versão:"
+
+#: lib/admin_main.php:84
+msgid "Release:"
+msgstr "Lançamento:"
+
+#: lib/admin_main.php:89
+msgid "Users online now"
+msgstr "Usuários online agora"
+
+#: lib/admin_main.php:90
+msgid ""
+"The following users have an active session and have performed an action "
+"within the past 10 minutes."
+msgstr ""
+"Os seguintes usuários possuem uma sessão ativa e realizaram uma ação nos "
+"últimos 10 minutos."
+
+#: lib/admin_main.php:107
+#, php-format
+msgid "%u users in total."
+msgstr "%u usuários no total."
+
+#: lib/admin_admin_users.php:12
+msgid ""
+"The following is a list of all the admin users in the system. You can click "
+"each one to edit their user details as if you were logged in as them, as "
+"well as set user flags (including 'ban user' and 'set user as "
+"administrator')."
+msgstr ""
+"A seguir, uma lista de todos os administradores do sistema. Você pode clicar "
+"em cada um para editar os detalhes dele como se você estivesse online com o "
+"perfil dele, assim como ajustar os atributos dos usuários (incluindo 'banir "
+"usuário' e 'tornar usuário um administrador')."
+
+#: lib/admin_contentflags.php:7
+msgid ""
+"The following pages have been flagged as having obscene or inappropriate "
+"content. They are ordered by number of complaints."
+msgstr ""
+"As seguintes páginas foram denunciadas como possuindo conteúdo obsceno ou "
+"inapropriado. Elas estão ordenadas por número de reclamações."
+
+#: lib/admin_contentflags.php:8
+msgid ""
+"To view the pages in question, click the following links. To remove the "
+"flags, for example if the flag is a false positive or if you've deleted the "
+"offending content, check the appropriate box and click the 'delete' button "
+"below."
+msgstr ""
+"Para ver as páginas em questão, clique nos seguintes links. Para remover a "
+"denúncia, por exemplo se a denúncia não é válida ou se você deletou o "
+"conteúdo ofensivo, cheque a caixa apropriada e clique no botão 'remover' "
+"abaixo."
+
+#: lib/admin_contentflags.php:18
+msgid "Page URL"
+msgstr "URL da página"
+
+#: lib/admin_contentflags.php:19
+msgid "Number of objections"
+msgstr "Número de reclamações"
+
+#: lib/admin_contentflags.php:38
+msgid "Remove flag(s)"
+msgstr "Remover denúncia(s)"
+
+#: lib/admin_contentflags.php:44
+msgid "No content flags were found at present."
+msgstr "Não foram encontradas denúncias."
+
+#: lib/display_content_flag_form.php:23
+msgid "Flag content"
+msgstr "Marcar conteúdo"
+
+#: lib/display_content_flag_form.php:24
+msgid ""
+"To mark this content as obscene or inappropriate, click the 'Flag' button "
+"and an administrator will view it in due course."
+msgstr ""
+"Para indicar este conteúdo como sendo inapropriado e que foge dos <a href="
+"\"http://stoa.usp.br/termos\">Termos de Uso do Stoa</a>, clique no botão "
+"'Denunciar' e um administrador analisará seu conteúdo em breve."
+
+#: lib/display_content_flag_form.php:25
+msgid "Flag"
+msgstr "Denunciar"
+
+#: lib/admin_users_add.php:17
+msgid ""
+"You can create up to 12 users below; passwords will be autogenerated and "
+"emailed to the account owners. You must include all fields, but you may "
+"leave rows blank."
+msgstr ""
+"Aqui você pode criar até 12 usuários; senhas serão geradas automaticamente e "
+"enviadas por email para os donos das contas. Você deve incluir todos os "
+"campos, mas você pode deixar linhas em branco."
+
+#: lib/admin_users_panel.php:8
+msgid "User details"
+msgstr "Detalhes do usuário"
+
+#: lib/admin_spam.php:7
+msgid ""
+"Add regular expressions below, one per line, to block spam. For example, "
+"'foo' will block all comments containing the word foo, (foo|bar) will block "
+"comments containing the word foo or bar."
+msgstr ""
+"Adicione expressões regulares abaixo, uma por linha, para bloquear spam. Por "
+"exemplo, 'panaca' bloqueará todos comentário contendo a palavra panaca, "
+"(panaca|mané) bloqueará comentário contendo as palavras panaca ou mané."
+
+#: lib/admin_spam.php:8
+msgid "Blank lines and lines starting with # will be ignored."
+msgstr "Linhas em branco e linhas começando com # serão ignoradas."
+
+#: lib/admin_spam.php:20
+msgid "Regular expressions"
+msgstr "Expressões regulares"
+
+#: lib/admin_spam.php:22
+msgid "Save"
+msgstr "Salvar"
+

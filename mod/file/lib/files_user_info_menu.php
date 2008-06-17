@@ -13,9 +13,9 @@ if ($page_owner != -1 && $page_owner != $USER->ident) {
     }
     
     if ($posts == 1) {
-        $filesstring = $posts . " file";
+        $filesstring = $posts . " " . __gettext("file");
     } else {
-        $filesstring = $posts . " files";
+        $filesstring = $posts . " " . __gettext("files");
     }
     
     $weblog_username = user_info('username', $profile_id);

@@ -42,6 +42,7 @@ END;
     return $body;
 }
 
+global $page_owner;
 // Add "insert file" field to weblog post uploads
 
 if (isset($parameter)) {

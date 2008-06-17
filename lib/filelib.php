@@ -3,6 +3,7 @@
 function get_mimetype_array() {
     
     $mimeinfo = array (
+		'flv'  => array ('type'=>'video/x-flv', 'icon'=>'video.gif'),
         'xxx'  => array ('type'=>'document/unknown', 'icon'=>'unknown.gif'),
         '3gp'  => array ('type'=>'video/quicktime', 'icon'=>'video.gif'),
         'ai'   => array ('type'=>'application/postscript', 'icon'=>'image.gif'),

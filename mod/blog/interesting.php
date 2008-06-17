@@ -1,38 +1,27 @@
 <?php
 
-    //    ELGG weblog view page
+//    ELGG weblog view page
 
-    // Run includes
-        require_once(dirname(dirname(__FILE__))."/../includes.php");
+// Run includes
+require_once(dirname(dirname(__FILE__))."/../includes.php");
 
-        run("profile:init");
-        run("weblogs:init");
-        run("friends:init");
+run("profile:init");
+run("weblogs:init");
+run("friends:init");
 
-        $extensionContext = trim(optional_param('extension','weblog'));
+$extensionContext = trim(optional_param('extension','weblog'));
 
-        define("context", $extensionContext);
-        templates_page_setup();
+define("context", $extensionContext);
+templates_page_setup();
 
-        $type = __gettext("Interesting posts");
-        if(is_array($CFG->weblog_extensions[$extensionContext]) &&array_key_exists('name',$CFG->weblog_extensions[$extensionContext])){
-          $type = $CFG->weblog_extensions[$extensionContext]['name']. " :: ". __gettext("Interesting");
-        }
-        $title = run("profile:display:name") . " :: ". $type;
+$type = blog_get_extension($extensionContext, 'name');
 
-        $body = run("content:weblogs:view");
-        $body .= run("weblogs:interesting:view");
+$title = run("profile:display:name") . " :: ". $type . " :: " . __gettext('Interesting');
 
-        $body = templates_draw(array(
-                        'context' => 'contentholder',
-                        'title' => $title,
-                        'body' => "<div id=\"view_friends_blogs\">" . $body . "</div>"
-                    )
-                    );
+$body = run("content:weblogs:view");
+$body .= run("weblogs:interesting:view");
+$body = '<div id="view_friends_blogs">' . $body . '</div>';
 
-        echo templates_page_draw( array(
-                        $title, $body
-                    )
-                    );
+templates_page_output($title, $body);
 
 ?>

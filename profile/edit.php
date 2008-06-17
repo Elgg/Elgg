@@ -53,13 +53,8 @@ if ($profile_new = data_submitted()) {
 } else {
     $body = $profile->display_form();
 }   
-$body = templates_draw(array( 'context' => 'contentholder',
-                              'title' => $title,
-                              'body' => $body   ));
 
-print templates_page_draw(array($title, $body));
-
-
+templates_page_output($title, $body);
 
 function profile_update($profile_new) {
 

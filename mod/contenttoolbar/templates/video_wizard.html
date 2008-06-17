@@ -15,7 +15,7 @@
 		</tr>
 		<tr>
 			<td><label>{{video_url_label}}:</label></td>
-			<td><textarea id="video_url" cols="40" rows="5"></textarea></td>
+			<td><textarea id="video_url" cols="40" rows="5" onblur="parseSize(this.value,'video_width','video_height');"></textarea></td>
 		</tr>
 		<tr>
 			<td><label>{{video_size_label}}:</label></td>

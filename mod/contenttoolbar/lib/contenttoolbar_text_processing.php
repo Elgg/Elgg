@@ -8,15 +8,18 @@
  * @param string $parameter String to be processed
  * @param string $run_result String with the result
  * 
- * @author Diego Andrés Ramírez Aragón <diego@somosmas.org>
- * @copyright Diego Andrés Ramírez Aragón - 2007
+ * @author Diego Andrï¿½s Ramï¿½rez Aragï¿½n <diego@somosmas.org>
+ * @copyright Diego Andrï¿½s Ramï¿½rez Aragï¿½n - 2007
 */
 if (isset ($parameter)) {
             $functionbody = <<< END
                 
-                \$width = 240;
-                \$height = 200;
-                \$url = str_replace("&amp;","&",\$matches[1]);
+                \$width = 400;
+                \$height = 300;
+		\$url = trim(\$matches[1]);
+                \$url = str_replace("&amp;","&",\$url);
+		\$url = preg_replace("/youtube.com\/watch\?v\=/","youtube.com/v/",\$url); // youtube
+		\$url = preg_replace("/video.google.com\/videoplay/","video.google.com/googleplayer.swf",\$url); // google video
                 preg_match("/(.*)\@\@(\d+)x(\d+)/i",\$url,\$size);
                 if(count(\$size)==4){
                   \$url = \$size[1];                  

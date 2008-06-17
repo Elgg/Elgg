@@ -7,6 +7,7 @@ global $CFG;
 if (isset($parameter[0])) {
 
     $user_id = (int) $parameter[0];
+    $body = null;
 
     $result = get_records_select('users',"owner = ? AND user_type = ?",array($user_id,'community'));
 
@@ -16,9 +17,6 @@ if (isset($parameter[0])) {
             $friends_name = user_name($info->ident);
             $info->icon = run("icons:get",$info->ident);
             $friends_menu = run("community:infobox:menu",array($info));
-            if (run("permissions:check",array("userdetails:change", $info->ident))) {
-                $friends_menu .= "<a href=\"{$CFG->wwwroot}mod/community/index.php?community_id=".$info->ident."&amp;action=community:delete\">Delete community</a>";
-            }
             $friends_icon = user_icon_html($info->ident,COMMUNITY_ICON_SIZE);
             $link = $CFG->wwwroot.$info->username."/";
 

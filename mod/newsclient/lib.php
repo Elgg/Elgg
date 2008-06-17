@@ -25,7 +25,7 @@ function newsclient_pagesetup() {
             $PAGE->menu_sub[] = array( 'name' => 'newsfeed:subscription',
                                        'html' => a_href( $CFG->wwwroot.$rss_username."/feeds/", 
                                                           __gettext("Feeds")));
-            if (run("permissions:check", "profile") && logged_on) {
+            if (permissions_check("profile",$page_owner) && isloggedin()) {
                 $PAGE->menu_sub[] = array( 'name' => 'newsfeed:subscription:publish:blog',
                                            'html' => a_href( $CFG->wwwroot."_rss/blog.php?profile_name=" . user_info("username",$page_owner), 
                                                               __gettext("Publish to blog")));
@@ -78,9 +78,51 @@ function newsclient_cron() {
 }
 
 function newsclient_init() {
+    global $CFG,$function;
     
-    global $CFG;
-    
+	// Magpie unit for Elgg
+	// ben@elgg.net Oct 17, 2005
+
+	// Library functions
+	require_once ($CFG->dirroot . "mod/newsclient/lib/library.php");
+
+	// Load default template
+	$function['init'][] = $CFG->dirroot . "mod/newsclient/lib/default_template.php";
+
+	// Initialise RSS parser
+	$function['rss:init'][] = $CFG->dirroot . "mod/newsclient/lib/function_init.php";
+	$function['rss:init'][] = $CFG->dirroot . "mod/newsclient/lib/function_actions.php";
+	// Get current contents of a feed (raw)
+	$function['rss:get'][] = $CFG->dirroot . "mod/newsclient/lib/function_get.php";
+	// Display a user's subscriptions
+	$function['rss:subscriptions'][] = $CFG->dirroot . "mod/newsclient/lib/function_subscriptions.php";
+	// Allow a user to publish feeds to their blog
+	$function['rss:subscriptions:publish:blog'][] = $CFG->dirroot . "mod/newsclient/lib/function_subscriptions_publish_to_blog.php";
+	// Load variable containing all subscriptions for a user
+	$function['rss:subscriptions:get'][] = $CFG->dirroot . "mod/newsclient/lib/function_get_subscriptions.php";
+	// Display the most popular subscriptions
+	$function['rss:subscriptions:popular'][] = $CFG->dirroot . "mod/newsclient/lib/function_subscriptions_popular.php";
+	// Update a feed by ID
+	$function['rss:update'][] = $CFG->dirroot . "mod/newsclient/lib/function_update.php";
+	// Update all feeds by user
+	$function['rss:update:all'][] = $CFG->dirroot . "mod/newsclient/lib/function_update_all.php";
+	// Update all feeds in system (for use with cron job)
+	$function['rss:update:all:cron'][] = $CFG->dirroot . "mod/newsclient/lib/function_update_all_cron.php";
+
+	// Permissions check
+	$function['permissions:check'][] = $CFG->dirroot . "mod/newsclient/lib/permissions_check.php";
+
+	// View a user's posts
+	$function['rss:view'][] = $CFG->dirroot . "mod/newsclient/lib/function_view.php";
+	$function['rss:view:feed'][] = $CFG->dirroot . "mod/newsclient/lib/function_view_individual.php";
+	$function['rss:view:post'][] = $CFG->dirroot . "mod/newsclient/lib/function_view_post.php";
+
+	// Is the current user subscribed to a feed?
+	$function['rss:subscribed'][] = $CFG->dirroot . "mod/newsclient/lib/function_is_subscribed.php";
+
+	// Prune feed posts older than a configured age
+	$function['rss:prune'][] = $CFG->dirroot . "mod/newsclient/lib/function_prune.php";
+
     // Delete users
     listen_for_event("user","delete","newsclient_user_delete");
     
@@ -98,6 +140,7 @@ function newsclient_widget_display($widget) {
     
     global $CFG;
     $body = "";
+    $title = "";
         
     $feed_id = widget_get_data("feed_id",$widget->ident);
     $feed_posts = widget_get_data("feed_posts",$widget->ident);

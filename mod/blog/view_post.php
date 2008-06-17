@@ -38,10 +38,7 @@ if (!empty($post)) {
     $profile_id = $post->weblog;
     $page_owner = $post->weblog;
 
-    $type = gettext("Blog");
-    if(is_array($CFG->weblog_extensions[$extensionContext]) &&array_key_exists('name',$CFG->weblog_extensions[$extensionContext])){
-       $type = $CFG->weblog_extensions[$extensionContext]['name'];
-    }
+    $type = blog_get_extension($extensionContext, 'name');
 
     $title = run("profile:display:name") . " :: " . $type . " :: " . stripslashes($post->title);
     templates_page_setup();
@@ -51,17 +48,7 @@ if (!empty($post)) {
 
     $body .= run("weblogs:posts:view:individual",$post);
 
-    $body = templates_draw(array(
-                                 'context' => 'contentholder',
-                                 'title' => $title,
-                                 'body' => $body
-                                 )
-                           );
-
-    echo templates_page_draw( array(
-                                          $title, $body
-                                          )
-             );
+    templates_page_output($title, $body);
 
 }
 

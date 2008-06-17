@@ -9,7 +9,6 @@ $body = '';
         global $page_owner;
         $owner_name = user_info('username',$page_owner);
         if (user_type($page_owner) == "community" && run("permissions:check",array("userdetails:change", $page_owner))) {
-            $title = run("profile:display:name") . " :: ". __gettext("Membership requests") ."";
 
             if ($pending_requests = get_records_sql('SELECT fr.ident AS request_id, u.*  FROM '.$CFG->prefix.'friends_requests fr
                                                      LEFT JOIN '.$CFG->prefix.'users u ON u.ident = fr.owner
@@ -50,13 +49,7 @@ $body = '';
                 $body .= "<p>" . __gettext("You have no pending membership requests.") . "</p>";
             }
 
-            $run_result = templates_draw( array(
-                        'context' => 'contentholder',
-                        'title' => $title,
-                        'body' => $body
-                    )
-                    );
-
+            $run_result = $body;
         }
 
     }

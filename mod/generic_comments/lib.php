@@ -1,15 +1,17 @@
 <?php
 
 function generic_comments_init() {
-	global $CFG, $db,$function, $metatags, $template;
+	global $CFG, $db,$function, $metatags, $template, $METATABLES;
 
 	$metatags .= "<script type=\"text/javascript\" src=\"{$CFG->wwwroot}mod/generic_comments/generic_comments.js\"><!-- generic_comments js --></script>";
 
 	// create the generic_comments and generic watchlist table
-	$tables = $db->Metatables();
+	$tables = $METATABLES;
     if (!in_array($CFG->prefix . "comments",$tables) || !in_array($CFG->prefix . "watchlist",$tables)) {
         if (file_exists($CFG->dirroot . "mod/generic_comments/$CFG->dbtype.sql")) {
             modify_database($CFG->dirroot . "mod/generic_comments/$CFG->dbtype.sql");
+            //reload system
+            header_redirect($CFG->wwwroot);
         } else {
             error("Error: Your database ($CFG->dbtype) is not yet fully supported by the Elgg generic comments.  See the mod/generic_comments directory.");
         }
@@ -29,10 +31,9 @@ function generic_comments_init() {
 	{
 		river_register_friendlyname_hook('file::file', 'generic_comments_get_friendly_name');
 	}
-	$template['embeddedcomments'] = file_get_contents($CFG->dirroot . "mod/generic_comments/comments");
-	$template['embeddedcomment'] = file_get_contents($CFG->dirroot . "mod/generic_comments/comment");
-	
-	$template['css'] .= file_get_contents($CFG->dirroot . "mod/generic_comments/css");
+    templates_add_context('embeddedcomments', 'mod/generic_comments/comments');
+    templates_add_context('embeddedcomment', 'mod/generic_comments/comment');
+    templates_add_context('css', 'mod/generic_comments/css', true, false);
 
 }
 
@@ -87,6 +88,11 @@ END;
 function generic_comments_annotate($object_id,$object_type,$parameters=NULL) {
 	global $CFG;
 	global $page_owner;
+    // prevent some notices
+    $comment_sort = null;
+    $commentsbody = null;
+    $sort_sequence = null;
+
         $owner_username = user_info('username', $page_owner);
 // create a form to display comments for this object, and then display the comments for one page
 	
@@ -230,10 +236,9 @@ END;
 	        foreach($comments as $comment) {
 	            $commentmenu = "";
 	            if (isloggedin() && ($comment->owner == $_SESSION['userid'] || run("permissions:check",array("comment:delete",$_SESSION['userid'],$comment->object_id,$comment->object_type)))) {
-	                $returnConfirm = __gettext("Are you sure you want to permanently delete this comment?");
 	                $Delete = __gettext("Delete");
 	                $commentmenu = <<< END
-	                <a href="{$CFG->wwwroot}mod/generic_comments/action_redirection.php?action=comment:delete&amp;comment_form_type=$comment_form_type&amp;comment_delete={$comment->ident}" onclick="return confirm('$returnConfirm')">$Delete</a>
+	                <a href="{$CFG->wwwroot}mod/generic_comments/action_redirection.php?action=comment:delete&amp;comment_form_type=$comment_form_type&amp;comment_delete={$comment->ident}">$Delete</a>
 END;
 	            }
 	            $comment->postedname = htmlspecialchars($comment->postedname, ENT_COMPAT, 'utf-8');
@@ -599,46 +604,6 @@ function get_url($object_id, $object_type) {
 			}		
 	}
 	return $url; 
-}
-
-// this is a temporary location - the code should be moved into elgglib
-
-/**
- * Returns an array of results from each relevant module
- *
- * This function runs the specified hook function for each module
- * that has the hook (possibly restricted to a supplied list of module names). 
- *
- * @param string $hook the name of the module hook we want to invoke
- * @param int  $object_id the object id to apply the hook to (can be empty)
- * @param string  $object_type the type of the object to apply the hook to (can be empty)
- * @param array $modules an array of module names (can be empty)
- * @param array $modules an array of values keyed by keyed by parameter names to pass to the hook function (can be empty)
- * @return array an array of results keyed by module name
- */
-
-function action($hook,$object_id=0, $object_type='', $modules = NULL, $parameters = NULL ) {
-    global $CFG;
-
-    $results = array();
-    if (!$modules) {
-        //if (!$CFG->plugins) {
-            $CFG->plugins = get_list_of_plugins('mod');
-        //}
-        $modules = $CFG->plugins;
-    }
-    foreach ($modules as $mod) {
-        $mod_function = $mod . '_'.$hook;
-        if (function_exists($mod_function)) {
-           if ($parameters) {
-                $results[$mod] = $mod_function($object_id,$object_type,$parameters);
-            } else {
-                $results[$mod] = $mod_function($object_id,$object_type);
-            }
-        }
-    }
-    
-    return $results;
 }
 
 

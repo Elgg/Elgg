@@ -28,15 +28,6 @@ if ($object_id && $object_type) {
 }
 
 templates_page_setup();    
+templates_page_output($title, $body);
 
-echo templates_page_draw( array(
-                sitename,
-                templates_draw(array(
-                                                'body' => $body,
-                                                'title' => $title,
-                                                'context' => 'contentholder'
-                                            )
-                                            )
-        )
-        );
 ?>

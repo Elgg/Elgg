@@ -20,15 +20,21 @@
         It is NOW of the format:
         
         $obj = new stdClass;
-                                                $obj->name              // Description
-                                                $obj->internal_name     // Short / unique internal name
-                                                $obj->field_type        // Type of field
-                                                $obj->description       // User instructions for entering data
-                                                $obj->user_type         // Type of user that can see this field
-                                                $obj->required          // True/false: whether field is required
-                                                $obj->category          // Category field sits in
-                                                $obj->invisible         // If true, won't display except on edit screen
-                                                $obj->registration      // Will appear on user registration
+	$obj->name              // Description
+	$obj->internal_name     // Short / unique internal name
+	$obj->field_type        // Type of field
+	$obj->description       // User instructions for entering data
+	$obj->user_type         // Type of user that can see this field
+	$obj->required          // True/false: whether field is required
+	$obj->category          // Category field sits in
+	$obj->invisible         // If true, won't display except on edit screen
+	$obj->registration      // Will appear on user registration
+	$obj->col1              // If true, will appear on the profile, first column
+	                        // otherwise, only on the extended profile
+	$obj->default_access    // if $CFG->default_access = 'PUBLIC', set this
+	                        // to 'LOGGED_IN' or 'PRIVATE' to force a field to default to
+				// 'LOGGED_IN'. This is to avoid users making things
+				// public by mistake.
         $data['profile:details'][] = $obj;
 
         Additions to this data structure will input/output a corresponding FOAF field
@@ -73,6 +79,7 @@
                                                                     "category" => __gettext("Basic details"),
                                                                     "invisible" => false,
                                                                     "required" => false,
+								    "col2" => true,
                                                                     ));
         $data['profile:details'][] = (object)(array(
                                                                     "name" => __gettext("Introduction"),
@@ -83,6 +90,7 @@
                                                                     "category" => __gettext("Basic details"),
                                                                     "invisible" => false,
                                                                     "required" => false,
+								    "col2" => true,
                                                                     ));
 
         $data['foaf:profile'][] = array("biography","bio:olb","collated","enclosed");
@@ -109,6 +117,7 @@
                                                                     "invisible" => false,
                                                                     "required" => false,
                                                                     "user_type" => "",
+								    "default_access" => 'PRIVATE',
                                                                     ));
         $data['vcard:profile:adr'][] = array("streetaddress","vCard:Street","collated","enclosed");
 
@@ -193,6 +202,7 @@
                                                                     "invisible" => false,
                                                                     "required" => false,
                                                                     "user_type" => "",
+								    "default_access" => 'PRIVATE',
                                                                     ));
         $data['foaf:profile'][] = array("homephone","foaf:phone","individual","resource");
         
@@ -218,6 +228,7 @@
                                                                     "required" => false,
                                                                     "col2" => true,
                                                                     "user_type" => "",
+								    "default_access" => 'PRIVATE',
                                                                     ));
         $data['foaf:profile'][] = array("workweb","foaf:workplaceHomepage","individual","resource");
         

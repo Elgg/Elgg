@@ -1,0 +1,3 @@
+I merged here the magpie and newsclient functionality.
+The magpie had the rss functionality it must be in lib under vendor
+-- Diego

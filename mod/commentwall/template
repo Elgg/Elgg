@@ -1,0 +1,14 @@
+<div class="commentwall_comment">
+	<div class="commentwall_img">
+		<div class="commentwall_logo">
+			<a href="{{userlink}}"><img src="{{userlogo}}" border="0" /></a>
+		</div>
+	</div>
+
+	<div class="commentwall_details">
+		<div class="commentwall_name">{{usertxt}}</div>
+		<div class="commentwall_date">{{date}}</div>
+		<div class="commentwall_text">{{text}}</div>
+		<div class="commentwall_replybar">{{replybar}}</div>
+	</div>
+</div>

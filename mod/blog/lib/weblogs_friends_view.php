@@ -15,14 +15,15 @@ $weblog_offset = optional_param('weblog_offset',0,PARAM_INT);
 
 $friends = run("friends:get",array($page_owner));
 
-
-$where2 = "weblog IN (" ;
-$first=true;
-// Uncoment the following lines if you want to see your own post in the friends list
-//$where2 .= $page_owner;
-//$first=false;
-
 if (!empty($friends)) {
+
+  $where2 = "weblog IN (" ;
+  $first=true;
+  
+   // Uncoment the following lines if you want to see your own post in the friends list
+   //$where2 .= $page_owner;
+   //$first=false;
+
   foreach($friends as $friend) {
     if (!$first) {
       $where2 .= ", ";
@@ -30,8 +31,12 @@ if (!empty($friends)) {
     $where2 .= $friend->user_id;
     $first=false;
   }
+  $where2 .= ")";
+
+  }
+    else {
+    $where2 = '';
 }
-$where2 .= ")";
 
 //Getting the field from the context extension
 $extensionContext = trim(optional_param('extension','weblog'));
@@ -74,9 +79,16 @@ $where1 = run("users:access_level_sql_where",$_SESSION['userid']);
 // }
 // $posts = $_SESSION['friends_posts_cache']->data;
 error_log('('.$where1.') AND ('.$where2.') '.$where3);
-$posts = get_records_select('weblog_posts','('.$where1.') AND ('.$where2.') '.$where3,null,'posted DESC','*',$weblog_offset,POSTS_PER_PAGE);
-$numberofposts = count_records_select('weblog_posts','('.$where1.') AND ('.$where2.') ' .$where3);
-if (!empty($posts)) {
+
+$posts = array();
+$numberofposts = array();
+
+if (!empty($friends)) {
+  $posts = get_records_select('weblog_posts','('.$where1.') AND ('.$where2.') '.$where3,null,'posted DESC','*',$weblog_offset,POSTS_PER_PAGE);
+  $numberofposts = count_records_select('weblog_posts','('.$where1.') AND ('.$where2.') ' .$where3);
+}
+// Don't update this if you don't have any friends
+if (!empty($friends) && !empty($posts)) {
 
     $lasttime = "";
 
@@ -123,6 +135,14 @@ END;
 }
 else{
   $type =(isset($extraType))?$extraType:$extensionContext;
-  $run_result = "<p>".sprintf(__gettext("Your friends currently don't have any %s"), strtolower($type))."</p>";  
+  
+  if (empty($friends)) {
+ 
+  $run_result = "<p>".sprintf(__gettext("You don't currently have any friends."))."</p>";  
+  }
+  else {
+
+  $run_result = "<p>".sprintf(__gettext("Your friends currently don't have any blog posts."))."</p>";  
+  }
 }
 ?>

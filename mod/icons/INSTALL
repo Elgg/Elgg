@@ -1,0 +1,14 @@
+Elgg icons plug-in
+Curverider <info@curverider.co.uk>
+Initial concept: Dave Tosh and Ben Werdmuller
+Programming and development: Dave Tosh, Ben Werdmuller, Diego Ramírez
+
+
+To use, the 'icons' folder must sit in the 'mod' folder of your Elgg installation.
+
+To go in .htaccess:
+
+RewriteRule ^_icons\/$ mod/icons/index.php
+RewriteRule ^_icon\/user/([-0-9]+)$ mod/icons/icon.php?id=$1
+RewriteRule ^_icon\/user/([-0-9]+)\/([A-Za-z])\/([0-9]+)$ mod/icons/icon.php?id=$1&constraint1=$2&size1=$3
+RewriteRule ^_icon\/user/([-0-9]+)\/([A-Za-z])\/([0-9]+)\/([A-Za-z])\/([0-9]+)$ mod/icons/icon.php?id=$1&constraint1=$2&size1=$3&constraint2=$4&size2=$5

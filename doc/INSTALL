@@ -1,0 +1,112 @@
+For the latest version of these instructions, please check the wiki at:
+http://elgg.org/mod/mediawiki/wiki/index.php/Installation_guide
+
+1. Before You Begin
+1.1 Requirements
+Elgg currently requires the Apache web server with mod_rewrite installed and the ability to send emails, plus PHP 4.3+ and MySQL 4.1+ (Postgres can also be used, though plugin support is limited). 
+Your  Apache configuration  must have AllowOverride set to All for the directory where Elgg is installed.
+You must have the GD library installed.
+For internationalization, you must have gettext support installed on your server and compiled into PHP. If this is not found, Elgg will revert to English.
+You must have a database on the database server ready for use by Elgg. A mySQL database and user can be created in a number of ways.  If you are unfamiliar with setting up mySQL, this tutorial (based on cpanel hosting from a popular hosting company, but applicable to many hosting services) may help:
+http://pluto3.lunarpages.com/tutorials/tutorial_files/cpanel_xv2_mysql.htm
+During the setup process, be sure to write down your database name, database user name, and password. They will be needed during the elgg setup.
+If you have any problems installing, please consider joining http://elgg.org/ and viewing the installation support community there.
+
+Note that if URLs like /username/weblog/ are not working for you, this is an issue with mod_rewrite, and is an error in your Apache installation rather than Elgg. A mod_rewrite primer (written by a third party) is available here:
+http://www.kuro5hin.org/story/2003/7/31/2335/08552#setup
+
+
+1.2 Recommendations
+
+For this release, it is recommended that MySQL has cacheing enabled. Please see the MySQL documentation for instructions, or ask your system administrator.
+
+1.3 Time estimate
+
+Assuming you have satisfied the requirements in 1.1, the installation should not take longer than 20 minutes. This may vary depending on the connection speed to your web server.
+1.4 Upgrading
+Elgg 0.9 marks some changes in the file structure and initial setup. For a first time installation all should work well via the installer which will guide you through the process. Users upgrading their installation from 0.8.* should take care since the main configuration file (config.php) and .htaccess will get overwritten. Make sure to create appropriate backups.
+Steps:
+Backup your existing Elgg home directory
+Backup your Elgg mySQL database
+Remove all your existing Elgg files. If you have installed Elgg in a sub-directory (e.g. /elgg/) then this can be as simple as renaming /elgg/ to /elgg_old/. If elgg has been installed to the root of your web server, consider creating an /elgg_old/ directory and moving all the files from your root folder into it. This step is important as it ensures that  your directory is “clean” for Elgg and that no legacy files from Elgg 0.8 are left behind
+Install Elgg as though it were a new installation (see steps below). Use the same database and  username/password that your previous version of Elgg used (you can check your old config.php which you just moved into /elgg_old/ to be sure)
+Once the install is complete (and you get to the front page of your new Elgg install), you still have some steps to complete:
+It is likely that if you are upgrading from an Elgg version 0.8 or less, your “dataroot” will need to be changed to point to where you set it up in your previous version. To do this, open your old config.php file (/elgg_old/config.php) and find out the path to your dataroot. Copy this setting and enter it into your new config.php file 
+(e.g. $CFG->dataroot = '/home/yourdomain/user_data/';)
+
+Configuration options for dataroot and other settings can also be managed via the Administrative interface (which has moved in Elgg 0.9 from being at /_elggadmin to where it is now – login as “news” user and find the Administration link, then choose Site Administration)	
+
+Reinstalling plugins: If you had installed 3rd party plugins in your previous version of Elgg, they will have to be reinstalled/configured. As structures have changed since v0.8, it is highly recommended that you check for the latest versions of any plugins you use and consult with the plugin author to be certain they have been updated for 0.9+.
+Any customization you made to .htaccess (e.g. to override custom php settings, or setup rewrite rules for plugins will also have to be redone)
+
+
+2. INSTALLING FILES
+WARNING – IF YOU ARE UPGRADING AN EXISTING ELGG INSTALLATION, YOU SHOULD FOLLOW THE “UPGRADING INSTRUCTIONS (1.4)” 
+TO ENSURE YOU DO NOT LOOSE DATA.
+
+
+2.1 Deploy Elgg framework
+Move all files from the distribution package to your web server root directory. This is normally called 'public_html', 'httpdocs' or 'www'. If you like, you can place Elgg in a subdirectory of this; commonly, people will place it in one called 'elgg'.
+2.2 Set Permissions
+In order to continue your setup, you must first adjust permissions of the file config.php and the 'data' folder to allow the web server to write information from the visual installer. 
+Begin with your 'data' directory and assign the correct privileges. To do this you may be able to right click on the folder and set the "CHMOD" value, or you may have to use your command line terminal, navigate to the folder, and type:
+   chmod 777 data
+
+ 
+Next will be adjusting the permissions of the main configuration file 'config.php':
+   chmod 666 config.php
+
+A beginner’s guide to CHMOD is available here:
+http://www.stadtaus.com/en/tutorials/chmod-ftp-file-permissions.php
+
+If you have not yet completed this step, the visual installer will prompt you to correct it before going on.
+ 
+
+
+3. SETTING UP ELGG
+3.1 Configuring the Elgg framework
+The main configuration Ellg is stored in a file called config.php. Elgg now includes a “Visual installer” to help you setup this config file quickly and easily.
+To begin, navigate with your browser to where people will access your site (e.g. http://www.mysite.com/elgg/). You will be greeted by a welcome message telling you that some additional steps are required.  This page will let you edit the required settings for the Elgg framework.
+Take time to read each requested item carefully, as an error in any field could create difficulty with your site.
+When you are finished, click save (make sure you wrote down all the username/password information!). The installer will try to save the settings to config.php (if it can’t, it will instruct you on what to do).
+Typical Settings…
+ 
+A series of prompts may be displayed (indicating various sub-components were setup successfully).
+
+Congratulations. You should now be able to visit your Elgg site…
+ 
+
+3.3 Customize your default homepage and other settings
+Once you've completed the visual installer, you can complete your installation via  the 'Administration' link and choose the 'Site administration' option.
+
+3.4 Log in
+By default, the first user in your Elgg instance is named “News”. You should now be ready to login (username: news, password is what you set it to in the visual installer).  You should log in and change this as soon as possible. All new users will automatically list the news account as a friend, so you should not delete it. This user owns all the public custom templates.
+The news account comes with full administrator access, whether you've upgraded or installed fresh. To change this (we recommend that you do as a matter of urgency for security reasons), create a second account, and give that account administrator privileges using the administrator panel.
+
+3.5 Elgg in a subdirectory and 404 errors
+If you are running Elgg in a subdirectory of your web site, and when browsing around it pages seem to be missing, you may also need to edit the .htaccess file. Below the "RewriteEngine on" line, add a line:
+   RewriteBase /subdirectory/
+changing subdirectory to the location of Elgg relative to your overall web
+For example, if your site is http://example.com/ and Elgg is in http://example.com/sites/elgg/ try adding the line: RewriteBase /sites/elgg/
+If you're not running Elgg in a subdirectory on your site, but still getting lots of 404 errors beyond the front page, you could instead try:
+   RewriteBase /
+3.6 Tell us about it!
+Because Elgg is free and open source, we often don't hear about new installations. You don't have to, but we'd love it if you'd tell us what you're doing with it. Consider joining the community of Elgg users at http://elgg.org and sharing your experiences.
+
+3.7 Cron Tasks
+Several of the tass that Elgg performs occur automatically, but need to be run on a regular schedule (e.g. importing of RSS feeds should occur every 15-30 min). Several 3rd party plugins also use this functionality (e.g. mailblogger, filecrawler, others). To ensure that this happens, all time-sensitive tasks get bundled together and executed by a single file (cron.php, which sits in the elgg main directory).
+
+This file needs to be executed on a regular basis to have the tasks run. There are several ways to accomplish this:
+Setup a cron task Unix/Linux systems include a system utility that performs tasks at a set interval (this system is called cron - hence the name of the file cron.php). With Linux or Unix you schedule your cron jobs by setting up what's called a "crontab." Note: Hosting providers often give a simplified interface to this via CPanel or PLESK that can make setting up your cron jobs easier.)
+Your crontab might look like this:
+30 * * * * /usr/bin/lynx -source http://yourelggsite.com/cron.php or 30 * * * * /usr/bin/wget -O - -q http://yourelggsite.com/cron.php
+On Windows servers, comparable tasks can be setup using the Windows scheduler to launch a web browser to open the http://yourelggsite.com/cron.php file every 30 minutes.
+Alternative For hosts where setting up cron tasks is not possible, you can also use one of many web services (many free) that will execute this file (http://yourelggsite.com/cron.php) on a schedule. One such free service is found at http://www.cronjobs.org/
+Frequency The frequency with which you execute cron.php is up to you. Recommended values are every 5-30 minutes. Plugins that use this method to execute tasks may (usually do) set their own "maximum frequency" so that they aren't executed needlessly.
+
+
+
+4. FURTHER CUSTOMISATION AND DEVELOPMENTS
+Please keep an eye on http://elgg.org/ for forthcoming developments within Elgg, including documentation on how to alter your default templates and writing new functionality into the system.
+Elgg has a rich API for developing enhancements and a strong community of users that contribute to its development. Numerous plugins are available to extend and refine your Elgg installation. To find out what plugins already exist, or to get involved with the development community (coders, designers, and documenters are all welcome), head over to http://elgg.org and find out how you can get involved.
+

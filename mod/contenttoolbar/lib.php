@@ -48,7 +48,9 @@ function contenttoolbar_init(){
 }
 
 function contenttoolbar_widget_edit($widget) {
-  global $CFG, $page_owner;
+  global $CFG, $page_owner, $metatags;
+
+  $metatags .= '<script type="text/javascript" src="'.$CFG->wwwroot.'mod/contenttoolbar/js/edit.js"><!-- edit.js --></script>';
 
   $video_url = widget_get_data("video_url",$widget->ident);
   $video_width = widget_get_data("video_width",$widget->ident);
@@ -59,7 +61,7 @@ function contenttoolbar_widget_edit($widget) {
 
   $body = "<h2>" . __gettext("Video widget") . "</h2>";
   $explanation = __gettext("To embed videos from popular sites like Google Video and Youtube, obtain the embed HTML, paste it in the following form and configure your preferred size:");
-  $video_url_label = __gettext("Video URL");
+  $video_url_label = __gettext("Video embed code");
   $video_size_label = __gettext("Video size");
   $video_button_label = __gettext("Insert Video");
   

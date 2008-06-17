@@ -1,0 +1,14 @@
+Elgg community plug-in
+Curverider <info@curverider.co.uk>
+Initial concept: Dave Tosh and Ben Werdmuller
+Programming and development: Dave Tosh, Ben Werdmuller, Sven Edge and Diego Ramírez
+
+
+To use, the 'friend' folder must sit in the 'mod' folder of your Elgg installation.
+
+To go in .htaccess:
+
+RewriteRule ^([A-Za-z0-9]+)\/friends\/?$ mod/friend/index.php?friends_name=$1
+RewriteRule ^([A-Za-z0-9]+)\/friendsof\/?$ mod/friend/friendsof.php?friends_name=$1
+RewriteRule ^([A-Za-z0-9]+)\/friends\/requests?$ mod/friend/requests.php?friends_name=$1
+RewriteRule ^([A-Za-z0-9]+)\/foaf\/?$ mod/friend/foaf.php?friends_name=$1

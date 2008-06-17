@@ -1,15 +1,61 @@
 <?php
+/**
+ * Returns the HTML to display a user's icon, with event hooks allowing for interception.
+ * Internally passes around a "user_icon" "display" event, with an object
+ * containing the elements 'html', 'icon' (being the icon ID), 'size', 'owner' and 'url'.
+ *
+ * @uses $CFG
+ * @param integer $icon_id  The unique ID of the user we want to display the icon for.
+ * @param integer $size  The size of the icon we want to display (max: 100).
+ * @param boolean $urlonly  If true, returns the URL of the icon rather than the full HTML.
+ * @return string Returns the icon HTML, or the default icon if something went wrong (eg the user didn't exist).
+ */
+function icon_html($icon_id, $size = 100, $urlonly = false) {
+    global $CFG;
+    global $profile_id;
+    $extra = "";
+    $user_icon = new stdClass;
+    $user_icon->size = $size;
+    if ($size < 100) {
+        $extra = "/h/$size/w/$size";
+    }
+    $profile_icon = user_info("icon",$profile_id);
+    $user_type = user_type($profile_id);
+    $user_icon->icon = $icon_id;
+    if ($user_icon->icon != $profile_icon) {
+        $user_icon->url = "{$CFG->wwwroot}_icon/user/{$user_icon->icon}{$extra}";
+        $user_icon->html = "<img src=\"{$user_icon->url}\" border=\"0\" alt=\"user icon\" />";
+        if ($urlonly) {
+            return $user_icon->url;
+        } else {
+            return $user_icon->html;
+        }
+    }
+    if ($urlonly) {
+        return -1;
+    } else {
+        $extensionContext = trim(optional_param('extension','weblog'));
+        if(array_key_exists($extensionContext,$CFG->weblog_extensions)
+           && array_key_exists('icon',$CFG->weblog_extensions[$extensionContext])){
+          $icon  = $CFG->weblog_extensions[$extensionContext]['icon'];
+          return "<img src=\"{$icon}\" border=\"0\" alt=\"default user icon\" width=\"$size\" heigh=\"$size\"/>";
+        }
+        else{
+          return "<img src=\"{$CFG->wwwroot}_icon/user/$profile_icon{$extra}\" border=\"0\" alt=\"default user icon\" />";
+        }
+    }
+}
+
 function blog_pagesetup() {
   // register links --
   global $profile_id;
   global $PAGE;
   global $CFG;
-  require_once (dirname(__FILE__))."/default_template.php";
 
   $page_owner= $profile_id;
 
   // main menu
-  if (isloggedin()) {
+  if (isloggedin() && user_info("user_type", $_SESSION['userid']) != "external") {
 
     if (defined("context") && context == "weblog" && $page_owner == $_SESSION['userid']) {
 
@@ -73,13 +119,13 @@ function blog_init() {
 
   global $CFG, $function;
 
+    
+    // Load default template
+        $function['init'][] = $CFG->dirroot . "mod/blog/default_template.php";
 
     // Functions to perform upon initialisation
         $function['weblogs:init'][] = $CFG->dirroot . "mod/blog/lib/weblogs_init.php";
-        $function['weblogs:init'][] = $CFG->dirroot . "mod/blog/lib/weblogs_actions.php";
-
-    // Load default template
-        include($CFG->dirroot . "mod/blog/default_template.php");
+        $function['weblogs:init'][] = $CFG->dirroot . "mod/blog/lib/weblogs_actions.php";        
 
     // Init for search
         $function['search:init'][] = $CFG->dirroot . "mod/blog/lib/weblogs_init.php";
@@ -98,10 +144,27 @@ function blog_init() {
         //$function['weblogs:view'][] = $CFG->dirroot . "mod/blog/lib/weblogs_post_field_wrapper.php";
         $function['weblogs:view'][] = $CFG->dirroot . "mod/blog/lib/weblogs_view.php";
         $function['weblogs:posts:view'][] = $CFG->dirroot . "mod/blog/lib/weblogs_posts_view.php";
-        $function['weblogs:posts:view:individual'][] = $CFG->dirroot . "mod/blog/lib/weblogs_posts_view.php";
+
+    // Add assign list
+        $function['weblogs:assign:field'][] = $CFG->dirroot. "mod/blog/lib/weblogs_assign_field.php"; 
+        
+    // Put this one before the Flag content form        
+        $index = count($function['weblogs:posts:view:individual']);
+        for($i=0; $i < count($function['weblogs:posts:view:individual']);$i++  ){
+        	$weblog_individual = $function['weblogs:posts:view:individual'][$i];
+          if(strpos($weblog_individual,"flag_form")>0){
+        		$index = $i;
+            $flag_form = $weblog_individual;
+        	}
+        }
+        $function['weblogs:posts:view:individual'][$index] = $CFG->dirroot . "mod/blog/lib/weblogs_posts_view.php";
+        if(!empty($flag_form)){
+        	$function['weblogs:posts:view:individual'][] = $flag_form; 
+        }      
+
         $function['weblogs:friends:view'][] = $CFG->dirroot . "mod/blog/lib/weblogs_friends_view.php";
         $function['weblogs:everyone:view'][] = $CFG->dirroot . "mod/blog/lib/weblogs_all_users_view.php";
-        
+
         // This is necessary to ensure that the blog text process function its the first one to be called
         if(array_key_exists("weblogs:text:process",$function)){
           $function['weblogs:text:process'] = array_merge(array($CFG->dirroot ."mod/blog/lib/weblogs_text_process.php"),$function['weblogs:text:process']);
@@ -149,9 +212,11 @@ function blog_init() {
   $CFG->templates->variables_substitute['blog'][]= "blog_keyword";
   $CFG->templates->variables_substitute['blogsummary'][]= "blog_summary_keyword";
   $CFG->templates->variables_substitute['blogexecutivesummary'][] = "blog_executive_summary_keyword";
+  
   // Delete users
   listen_for_event("user", "delete", "blog_user_delete");
 
+  // Display modules
   if (!isset ($CFG->display_field_module)) {
     $CFG->display_field_module= array ();
   }
@@ -159,6 +224,11 @@ function blog_init() {
   if (!array_key_exists("select", $CFG->display_field_module)) {
     $CFG->display_field_module["select"]= "blog";
   }
+
+  if (!array_key_exists("select_associative", $CFG->display_field_module)) {
+    $CFG->display_field_module["select_associative"]= "blog";
+  }
+
   if (!array_key_exists("selectg", $CFG->display_field_module)) {
     $CFG->display_field_module["selectg"]= "blog";
   }
@@ -172,71 +242,13 @@ function blog_init() {
   if (!array_key_exists("vertical_radio", $CFG->display_field_module)) {
     $CFG->display_field_module["vertical_radio"]= "blog";
   }
-  
+
   if (!isset ($CFG->weblog_extensions)) {
     $CFG->weblog_extensions= array ();
-  }  
-  $CFG->weblog_extensions['weblog']= array ();
-
-
-
-	// Register file river hook (if there)
-	if (function_exists('river_save_event'))
-	{
-		listen_for_event('weblog_post','publish', 'blog_river_hook');
-		listen_for_event('weblog_post','delete', 'blog_river_hook');
-
-		river_register_friendlyname_hook('weblog_post::post', 'blog_get_friendly_name');
-	}
+  }
   
-}
-
-function blog_get_friendly_name($object_type, $object_id)
-{
-	global $CFG;
-
-	if ($object_type == 'weblog_post::post')
-	{
-		$record = get_record_sql("SELECT * from {$CFG->prefix}weblog_posts where ident=$object_id");
-
-		if ($record)
-		{
-			$blog = user_info("username", $record->weblog);
-			$url = river_get_userurl($record->weblog);
-			
-			return sprintf(__gettext("a post in <a href=\"$url\">%s</a>'s weblog"), $blog);
-		}
-	}
-
-	return "";
-}
-
-function blog_river_hook( $object_type, $event, $object)
-{
-	global $CFG;
-
-	$userid = ($_SESSION['userid'] == "" ? -1 : $_SESSION['userid']);
-	$object_id = $object->ident;
-	$object_owner = $object->owner;
-	$title = trim($object->title);
-	$weblogid = $object->weblog;
-
-	$username = user_info("username", $userid);
-	$weblogname = "<a href=\"" . river_get_userurl($weblogid) . "\">". user_info("username", $weblogid) . "</a>'s";
-	if ($userid == $weblogid) $weblogname = __gettext("their");
-
-	$entryurl = $CFG->wwwroot . $username . "/weblog/" . $object->ident . ".html";
-
-	$titletxt = "";	
-	if ($title!="")
-		$titletxt = sprintf( __gettext(" called '%s'"), $title);
-
-	if ($username == false) $username = __gettext("Anonymous user");
-	
-	if ($event == "publish")
-		river_save_event($userid, $object_id, $object_owner, $object_type, "<a href=\"" .  river_get_userurl($userid) . "\">$username</a> left a <a href=\"$entryurl\">post$titletxt</a> in $weblogname blog.");
-
-	return $object;
+  
+  //$CFG->weblog_extensions['weblog']= array ();
 }
 
 function blog_widget_display($widget) {
@@ -246,8 +258,15 @@ function blog_widget_display($widget) {
   $blog_id= widget_get_data("blog_id", $widget->ident);
   $blog_posts= widget_get_data("blog_posts", $widget->ident);
 
+  $style = "<style type=\"text/css\">";
+  $style .= str_replace('{{url}}', $CFG->wwwroot, file_get_contents($CFG->dirroot . "mod/blog/widget_css"));
+  $style .= "</style>";
+  
   $body= "";
-
+  $body .=$style;
+  
+  
+  
   if (empty ($blog_id)) {
     global $page_owner;
     $blog_id= $page_owner;
@@ -256,18 +275,18 @@ function blog_widget_display($widget) {
     $blog_posts= 1;
   }
 
+  $body .='<div class="weblog-post">';
   $where= run("users:access_level_sql_where", $_SESSION['userid']);
   $posts= get_records_sql("select * from " . $CFG->prefix . "weblog_posts where ($where) and weblog = $blog_id order by posted desc limit $blog_posts");
 
   if (is_array($posts) && !empty ($posts)) {
-    foreach ($posts as $post) {
-      $body .= run("weblogs:posts:view", $post);
-    }
+	foreach ($posts as $post) {
+	$body .= run("weblogs:posts:view", $post);
+	}
   }
+  $body .= '</div>';
 
-  return array (
-    'title' => __gettext("Weblog"
-  ), 'content' => $body);
+  return array ('title' => __gettext('Blog').' :: '.htmlspecialchars(user_name($blog_id), ENT_COMPAT, 'utf-8'), 'content' => $body);
 
 }
 
@@ -344,7 +363,7 @@ function blog_keyword($vars) {
 
   if (is_array($posts) && !empty ($posts)) {
     foreach ($posts as $post) {
-      if ($vars[3] != "slim") {
+      if (!isset($vars[3]) || $vars[3] != "slim") {
         $body .= run("weblogs:posts:view", $post);
       } else {
         $body .= "<div class=\"frontpage-blog-contents\">";
@@ -396,7 +415,7 @@ function blog_summary_keyword($vars) {
         function blog_executive_summary_keyword($vars) {
             global $CFG;
             $body = "";
-            
+
             if (!isset($vars[1])) {
                 $blog_posts = 2;
             } else {
@@ -404,14 +423,14 @@ function blog_summary_keyword($vars) {
             }
 
             $where = run("users:access_level_sql_where",$_SESSION['userid']);
-                        
+
             if (!isset($vars[2]) || $vars[2] == "all") {
                 $posts = get_records_sql("select * from ".$CFG->prefix."weblog_posts where ($where) order by posted desc limit $blog_posts");
             } else {
                 $blog_id = (int) user_info_username('ident',$vars[2]);
                 $posts = get_records_sql("select * from ".$CFG->prefix."weblog_posts where ($where) and weblog = $blog_id order by posted desc limit $blog_posts");
             }
-            
+
             if (is_array($posts) && !empty($posts)) {
                 foreach($posts as $post) {
                     $body .= "<div class=\"frontpage-blog-executive-summary\">";
@@ -425,7 +444,7 @@ function blog_summary_keyword($vars) {
                     $body .= "</div>";
                 }
             }
-            
+
             return $body;
         }
 
@@ -485,24 +504,45 @@ function blog_display_input_field($parameter) {
   case "vertical_radio":
     foreach($parameter[6] as $option){
       $run_result .= "<input type=\"radio\" name=\"".$parameter[0]."\" value=\"$option\" id=\"".$cleanid."\" ";
-      if($parameter[1]==$option){$run_result .= " checked ";}
-      $run_result .= " />&nbsp;".$option."&nbsp;&nbsp;";
+      if($parameter[1]==$option){$run_result .= " checked=\"checked\"";}
+      $run_result .= " />".$option."<br>";
+    }
+  break;
+
+  case "vertical_radio_as":
+    foreach($parameter[6] as $key=>$option){
+      $run_result .= "<input type=\"radio\" name=\"".$parameter[0]."\" value=\"$key\" id=\"".$cleanid."\" ";
+      if($parameter[1]==$key){$run_result .= " checked=\"checked\" ";}
+      $run_result .= " />".$option."<br>";
     }
   break;
 
   case "radio":
     foreach($parameter[6] as $option){
       $run_result .= "<input type=\"radio\" name=\"".$parameter[0]."\" value=\"$option\" id=\"".$cleanid."\" ";
-      if($parameter[1]==$option){$run_result .= " checked ";}
-      $run_result .= " />".$option."<br>";
+      if($parameter[1]==$option){$run_result .= " checked=\"checked\" ";}
+      $run_result .= " />&nbsp;".$option."&nbsp;&nbsp;";
     }
+  break;
+
+  case "select_associative":
+      $run_result = "<select name=\"" . $parameter[0] . "\" id=\"" . $cleanid . "\" />";
+      foreach ($parameter[6] as $option_value => $option) {
+        $run_result .= "<option value=\"" . htmlspecialchars(stripslashes($option_value), ENT_COMPAT, 'utf-8') . "\" ";
+        if ($parameter[1] == $option_value) {
+          $run_result .= " selected ";
+        }
+        $run_result .= " >$option</option>";
+
+      }
+      $run_result .= "</select><br>";
   break;
 
   case "select":
     $run_result .= "<select name=\"".$parameter[0]."\" id=\"".$cleanid."\" />";
     foreach($parameter[6] as $option){
       $run_result .="<option value=\"".htmlspecialchars(stripslashes($option), ENT_COMPAT, 'utf-8')."\" ";
-      if($parameter[1]==$option){$run_result .= " selected ";}
+      if($parameter[1]==$option){$run_result .= " selected=\"selected\" ";}
       $run_result .= " >$option</option>";
     }
     $run_result .="</select><br>";
@@ -514,7 +554,7 @@ function blog_display_input_field($parameter) {
       $run_result .="<optgroup label=\"".htmlspecialchars(stripslashes($optiong), ENT_COMPAT, 'utf-8')."\" />";
       foreach($grp as $option){
         $run_result .="<option value=\"".htmlspecialchars(stripslashes($optiong.", $option $optiong"), ENT_COMPAT, 'utf-8')."\" ";
-        if($parameter[1]=="$option $optiong"){$run_result .= " selected ";}
+        if($parameter[1]=="$option $optiong"){$run_result .= " selected=\"selected\"";}
         $run_result .= " >$option</option>
         ";
       }
@@ -522,7 +562,6 @@ function blog_display_input_field($parameter) {
     }
     $run_result .="</select><br>";
   break;
-
   case "date_select":
   case "selectd":
     $par = explode("/",$parameter[1]);
@@ -562,7 +601,99 @@ function blog_display_input_field($parameter) {
   return $run_result;
 }
 
+function blog_display_output_field($parameter){
+  $cleanid= $parameter[0];
+
+  switch ($parameter[1]) {
+    case "radio":
+    case "select":
+    case "selectg":
+    case "vertical_radio":
+    case "select_associative":
+      $run_result .= $parameter[0];
+    break;
+  }
+  return $run_result;
+
+}
+
 function blog_validate_input_field(){
 
 }
+
+/**
+ * Return extension context name
+ *
+ * @param string $name extension context
+ */
+function blog_get_extension($extension=null, $prop=null, $default=null) {
+    global $CFG;
+
+    if (!isset($extension)) {
+        // get from param
+        $extension = trim(optional_param('extension', 'weblog'));
+    }
+    if (!isset($prop)) {
+        $prop = 'name';
+    }
+
+    if ($prop == 'name') {
+        $_default = __gettext('Blog');
+    } else {
+        $_default = null;
+    }
+
+    $default = (isset($default)) ? $default : $_default;
+
+    if (isset($CFG->weblog_extensions[$extension]) &&
+        is_array($CFG->weblog_extensions[$extension]) &&
+        array_key_exists($prop,$CFG->weblog_extensions[$extension])) {
+        // get extension context
+        $type = $CFG->weblog_extensions[$extension][$prop];
+    }
+
+    return isset($type) ? $type : $default;
+}
+
+/**
+ * Returns the extension context given a weblog_post object
+ *
+ * @param object $object A weblog_post object
+ * @return string The object extension context
+ */
+function blog_get_context($object){
+  global $CFG;
+  if(empty($object->extra_value)) {
+    return "weblog";
+  }
+  
+  if(!empty($CFG->weblog_extensions)){
+    foreach($CFG->weblog_extensions as $extension => $config){
+      if(array_key_exists('values',$config) && in_array($object->extra_value,$config['values'])){
+        return strtolower($extension);
+      }
+    }
+  }  
+}
+
+/**
+ * Returns the context type given an weblog_post object
+ *
+ * @param object $object Weblog_post object
+ * @return string The object's extension context type
+ */
+function blog_get_context_type($object){
+  global $CFG;
+  if(empty($object->extra_value)) {
+    return __gettext("Blog post");
+  }
+  
+  if(!empty($CFG->weblog_extensions)){
+    $context = blog_get_context($object);
+    if(array_key_exists('type',$CFG->weblog_extensions[$context])){
+      return $CFG->weblog_extensions[$context]['type'];
+    }
+  }  
+}
+
 ?>

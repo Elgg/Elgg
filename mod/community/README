@@ -1,0 +1,36 @@
+----------------------------------------------------------------
+| COMMUNITY MODULE: Configuration options and Extension points |
+----------------------------------------------------------------
+Configuration Options
+=====================
+
+In 'lib/communities_config.php'
+
+COMMUNITY_MEMBERS_PER_ROW (default value: 2)
+  To configure how many items show per row in:
+    - communities page
+    - comunity members page
+
+COMMUNITY_ICON_SIZE (default value: 70)
+  To configure the icon's size in listings
+
+COMMUNITY_CONTEXT (default value: network)
+  Allows to create a new context for community functions.
+  The default behavior (with value 'network') add the
+  community functions to the 'network' context.
+
+COMMUNITY_COMPACT_VIEW (default value: true)
+  In the compact view you can see your owned and not owned
+  communities in the same page.
+
+Extension points
+================
+This plug-in add the following plug-in hooks:
+
+  plugin_hook("community","publish",$comunity_object);
+  plugin_hook("community","delete",$comunity_id);
+
+If you want to listen for this event you need to register:
+
+  listen_for_event("community","publish",<function name>);
+  listen_for_event("community","delete",<function name>);

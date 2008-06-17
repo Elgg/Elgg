@@ -1,0 +1,17 @@
+Custom Pages elgg plugin
+Pro Soft Resources Inc.
+www.prosoftpeople.com
+
+This plugin allow to administrators to create custom static/dinamic pages inside
+elgg. Supports executing php code and using elgg template keywords.
+
+To install copy this directory to your elgg/mod plugin's directory.
+
+Edit edit your .htaccess, add this line before RewriteBase around line 50:
+
+RewriteRule ^content\/?(.*)?$ mod/pages/index.php?page=$1 [QSA,L]
+RewriteRule ^([A-Za-z0-9]+)\/pages\/?(.*)?$ mod/pages/index.php?profile_name=$1&page=$2  [QSA,L]
+
+Now you can open, as elgg admin, in your browser:  http://your.domain/elgg/content
+
+

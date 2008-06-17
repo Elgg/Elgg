@@ -30,358 +30,6 @@ function templates_shortname_to_file($shortname) {
      return $foldername;
  }
  
-function default_template () {
-
-    global $CFG;
-    global $template;
-    global $template_definition;
-    $sitename = $CFG->sitename;
-
-    $run_result = '';
-
-    $template_definition[] = array(
-                                    'id' => 'css',
-                                    'name' => __gettext("Stylesheet"),
-                                    'description' => __gettext("The Cascading Style Sheet for the template."),
-                                    'glossary' => array(),
-                                    'display'  => 1,
-                                    );
-
-    $template['css'] = file_get_contents($CFG->templatesroot . "Default_Template/css");
-    
-    $template_definition[] = array(
-                                   'id' => 'pageshell',
-                                   'name' => __gettext("Page Shell"),
-                                   'description' => __gettext("The main page shell, including headers and footers."),
-                                   'glossary' => array(
-                                                       '{{metatags}}' => __gettext("Page metatags (mandatory) - must be in the 'head' portion of the page"),
-                                                       '{{title}}' => __gettext("Page title"),
-                                                       '{{menu}}' => __gettext("Menu"),
-                                                       '{{topmenu}}' => __gettext("Status menu"),
-                                                       '{{mainbody}}' => __gettext("Main body"),
-                                                       '{{sidebar}}' => __gettext("Sidebar")
-                                                       )
-                                   );
-    
-    $welcome = __gettext("Welcome"); // gettext variable
-       
-    $template['pageshell'] = file_get_contents($CFG->templatesroot . "Default_Template/pageshell");
-
-    $template['frontpage_loggedout'] = file_get_contents($CFG->templatesroot . "Default_Template/frontpage_loggedout");
-    $template['frontpage_loggedin'] = file_get_contents($CFG->templatesroot . "Default_Template/frontpage_loggedin");
-    
-    // REMOVED stylesheet (was old version and should not have been here)
-    // TODO: extract all Default_Template stuff from lib/templates.php
-
-$template_definition[] = array(
-                                    'id' => 'contentholder',
-                                    'name' => __gettext("Content holder"),
-                                    'description' => __gettext("Contains the main content for a page (as opposed to the sidebar or the title)."),
-                                    'glossary' => array(
-                                                            '{{title}}' => __gettext("The title"),
-                                                            '{{submenu}}' => __gettext("The page submenu"),
-                                                            '{{body}}' => __gettext("The body of the page")
-                                                        )
-                                    );    
-
-    $template['contentholder'] = <<< END
-    
-    <div class="SectionContent">
-    
-    <h1>{{title}}</h1>
-    {{submenu}}
-    </div>
-    {{body}}
-    
-END;
-
-    $template_definition[] = array(
-                                    'id' => 'ownerbox',
-                                    'name' => __gettext("Owner box"),
-                                    'description' => __gettext("A box containing a description of the owner of the current profile."),
-                                    'glossary' => array(
-                                                            '{{name}}' => __gettext("The user's name"),
-                                                            '{{profileurl}}' => __gettext("The URL of the user's profile page, including terminating slash"),
-                                                            '{{usericon}}' => __gettext("The user's icon, if it exists"),
-                                                            '{{tagline}}' => __gettext("A short blurb about the user"),
-                                                            '{{usermenu}}' => __gettext("Links to friend / unfriend a user"),
-                                                            '{{lmshosts}}' => __gettext("Links to any lms hosts the user is attached to"),
-                                                        )
-                                    );
-
-    $tags = __gettext("Tags");
-    $resources = __gettext("Resources");
-    $template['ownerbox'] = <<< END
-    
-    <div class="me">
-        <div style="float: left; width: 70px"><a href="{{profileurl}}">{{usericon}}</a></div>
-        <div style="margin-left: 75px; margin-top: 0px; padding-top: 0px; text-align: left" ><p>
-            <span class="userdetails">{{name}}<br /><a href="{{profileurl}}rss/"><img src="{{url}}mod/template/icons/rss.png" alt="RSS" /></a> | <a href="{{profileurl}}tags/">$tags</a> | <a href="{{profileurl}}newsclient/">$resources</a></span></p>
-            <p>{{tagline}}</p>
-            <p>{{lmshosts}}</p>
-            <p style="margin-bottom: 3px" class="usermenu">{{usermenu}}</p>
-        </div>
-    </div>
-
-END;
-                                    
-    $template_definition[] = array(
-                                    'id' => 'infobox',
-                                    'name' => __gettext("Information Box"),
-                                    'description' => __gettext("A box containing a caption and some text, used extensively throughout the site. For example, the 'friends' box and most page bodies are info boxes. Of course, you can alter this template however you wish - it doesn't need to be an actual box."),
-                                    'glossary' => array(
-                                                            '{{name}}' => __gettext("The title"),
-                                                            '{{contents}}' => __gettext("The contents of the box")
-                                                        )
-                                    );
-    $template['infobox'] = <<< END
-
-<table class="infobox" width="100%">
-    <caption align="top">
-        {{name}}
-    </caption>
-    <tr>
-        <td>
-{{contents}}
-        </td>
-    </tr>
-</table><br />
-END;
-
-    $template_definition[] = array(
-                                    'id' => 'messageshell',
-                                    'name' => __gettext("System message shell"),
-                                    'description' => __gettext("A list of system messages will be placed within the message shell."),
-                                    'glossary' => array(
-                                                            '{{messages}}' => __gettext("The messages")
-                                                        )
-                                    );
-
-    $template['messageshell'] = <<< END
-    
-    <div id="js">{{messages}}</div><br />
-    
-END;
-
-    $template_definition[] = array(
-                                    'id' => 'messages',
-                                    'name' => __gettext("Individual system messages"),
-                                    'description' => __gettext("Each individual system message."),
-                                    'glossary' => array(
-                                                            '{{message}}' => __gettext("The system message")
-                                                        )
-                                    );
-
-    $template['messages'] = <<< END
-
-    <p>
-        {{message}}
-    </p>
-    
-END;
-    
-
-    $template_definition[] = array(
-                                    'id' => 'menu',
-                                    'name' => __gettext("Main menu shell"),
-                                    'description' => __gettext("A list of main menu items will be placed within the menubar shell."),
-                                    'glossary' => array(
-                                                            '{{menuitems}}' => __gettext("The menu items")
-                                                        )
-                                    );
-
-    $template['menu'] = <<< END
-    
-      {{menuitems}}
-END;
-
-    $template_definition[] = array(
-                                    'id' => 'menuitem',
-                                    'name' => __gettext("Individual main menu item"),
-                                    'description' => __gettext("This is the template for each individual main menu item. A series of these is placed within the menubar shell template."),
-                                    'glossary' => array(
-                                                            '{{location}}' => __gettext("The URL of the menu item"),
-                                                            '{{name}}' => __gettext("The menu item's name")
-                                                        )
-                                    );
-
-    $template['menuitem'] = <<< END
-    
-    <li><a href="{{location}}">{{name}}</a></li>
-    
-END;
-
-$template_definition[] = array(
-                                    'id' => 'selectedmenuitem',
-                                    'name' => __gettext("Selected individual main menu item"),
-                                    'description' => __gettext("This is the template for an individual main menu item if it is selected."),
-                                    'glossary' => array(
-                                                            '{{location}}' => __gettext("The URL of the menu item"),
-                                                            '{{name}}' => __gettext("The menu item's name")
-                                                        )
-                                    );
-
-    $template['selectedmenuitem'] = <<< END
-    
-    <li><a class="current" href="{{location}}">{{name}}</a></li>
-    
-END;
-
-    $template_definition[] = array(
-                                    'id' => 'submenu',
-                                    'name' => __gettext("Sub-menubar shell"),
-                                    'description' => __gettext("A list of sub-menu items will be placed within the menubar shell."),
-                                    'glossary' => array(
-                                                            '{{submenuitems}}' => __gettext("The menu items")
-                                                        )
-                                    );
-
-    $template['submenu'] = <<< END
-    
-        <h3>
-            {{submenuitems}}
-        </h3>
-END;
-
-    $template_definition[] = array(
-                                    'id' => 'submenuitem',
-                                    'name' => __gettext("Individual sub-menu item"),
-                                    'description' => __gettext("This is the template for each individual sub-menu item. A series of these is placed within the sub-menubar shell template."),
-                                    'glossary' => array(
-                                                            '{{location}}' => __gettext("The URL of the menu item"),
-                                                            '{{menu}}' => __gettext("The menu item's name")
-                                                        )
-                                    );
-
-    $template['submenuitem'] = <<< END
-    
-    <a href="{{location}}">{{name}}</a>&nbsp;|
-    
-END;
-
-    $template_definition[] = array(
-                                    'id' => 'topmenu',
-                                    'name' => __gettext("Status menubar shell"),
-                                    'description' => __gettext("A list of statusbar menu items will be placed within the status menubar shell."),
-                                    'glossary' => array(
-                                                            '{{topmenuitems}}' => __gettext("The menu items")
-                                                        )
-                                    );
-
-    $template['topmenu'] = <<< END
-    
-        <div id="StatusRight">
-            {{topmenuitems}}
-        </div>
-
-END;
-
-$template_definition[] = array(
-                                    'id' => 'topmenuitem',
-                                    'name' => __gettext("Individual statusbar menu item"),
-                                    'description' => __gettext("This is the template for each individual statusbar menu item. A series of these is placed within the status menubar shell template."),
-                                    'glossary' => array(
-                                                            '{{location}}' => __gettext("The URL of the menu item"),
-                                                            '{{menu}}' => __gettext("The menu item's name")
-                                                        )
-                                    );
-
-    $template['topmenuitem'] = <<< END
-    
-    [<a href="{{location}}">{{name}}</a>]&nbsp;
-    
-END;
-
-    $template_definition[] = array(
-                                    'id' => 'databox',
-                                    'name' => __gettext("Data input box (two columns)"),
-                                    'description' => __gettext("This is mostly used whenever some input is taken from the user. For example, each of the fields in the profile edit screen is a data input box."),
-                                    'glossary' => array(
-                                                            '{{name}}' => __gettext("The name for the data we're inputting"),
-                                                            '{{column1}}' => __gettext("The first item of data"),
-                                                            '{{column2}}' => __gettext("The second item of data")
-                                                        )
-                                    );
-
-    $template['databox'] = <<< END
-
-<div class="infobox">
-    <table width="95%" class="profiletable" align="center" style="margin-bottom: 3px">
-    <tr>
-
-        <td width="20%" class="fieldname" valign="top">
-            <p><b>{{name}}</b></p>
-        </td>
-        <td width="50%" valign="top">
-            <p>{{column1}}</p>
-        </td>
-        <td width="30%" valign="top">
-            <p>{{column2}}</p>
-        </td>
-    </tr>
-    </table>
-</div>
-        
-END;
-
-    $template_definition[] = array(
-                                    'id' => 'databox1',
-                                    'name' => __gettext("Data input box (one column)"),
-                                    'description' => __gettext("A single-column version of the data box."),
-                                    'glossary' => array(
-                                                            '{{name}}' => __gettext("The name of the data we're inputting"),
-                                                            '{{column1}}' => __gettext("The data itself")
-                                                        )
-                                    );
-
-    $template['databox1'] = <<< END
-
-<div class="infobox">
-    <table width="95%" class="profiletable" align="center" style="margin-bottom: 3px">
-    <tr>
-
-        <td width="20%" class="fieldname" valign="top">
-            <p><b>{{name}}</b></p>
-        </td>
-        <td width="80%" valign="top">
-            <p>{{column1}}</p>
-        </td>
-    </tr>
-    </table>
-</div>
-        
-END;
-
-    $template_definition[] = array(
-                                    'id' => 'databoxvertical',
-                                    'name' => __gettext("Data input box (vertical)"),
-                                    'description' => __gettext("A slightly different version of the data box, used on this edit page amongst other places."),
-                                    'glossary' => array(
-                                                            '{{name}}' => __gettext("Name of the data we\'re inputting"),
-                                                            '{{contents}}' => __gettext("The data itself")
-                                                        )
-                                    );
-
-    $template['databoxvertical'] = <<< END
-<div class="infobox">
-    <table width="95%" class="fileTable" align="center" style="margin-bottom: 3px">
-        <tr>
-            <td class="fieldname">
-                <p><b>{{name}}</b></p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p>{{contents}}</p>
-            </td>
-        </tr>
-    </table>
-</div>
-        
-END;
-return $run_result;
-}
-
 function templates_main () {
 
     global $PAGE;
@@ -421,7 +69,7 @@ function templates_main () {
         $PAGE->menu_sub[] = array( 'name' => 'template:edit',
                                    'html' => templates_draw(array( 'context' => 'submenuitem',
                                                                    'name' => __gettext("Change theme"),
-                                                                   'location' => url . '_templates/')));
+                                                                   'location' => url . 'mod/template/')));
     }
 
     return $run_result;
@@ -446,7 +94,7 @@ function templates_page_setup (){
         $PAGE->menu_top [] = array( 'name' => 'admin',
                                     //'html' => a_href("{$CFG->wwwroot}_admin/",
                                     //                "Administration"));
-                                    'html' => "<li><a href=\"" . $CFG->wwwroot . "_admin/\">" . __gettext("Administration") . "</a></li>");
+                                    'html' => "<li><a href=\"" . $CFG->wwwroot . "mod/admin/\">" . __gettext("Administration") . "</a></li>");
     }
     
     if (logged_on) {
@@ -463,55 +111,6 @@ function templates_page_setup (){
                                   'html' => "<li><a href=\"" . $CFG->wwwroot . "login/logout.php\">" . __gettext("Log off") . "</a></li>");
     };
 
-    if (defined("context") && context == "account") {
-        $PAGE->menu_sub[] = array(
-                                  'name' => 'user:edit',
-                                  'html' => a_href("{$CFG->wwwroot}_userdetails/",
-                                                   __gettext("Edit user details")));
-        $PAGE->menu_sub[] = array(
-                                  'name' => 'user:icon',
-                                  'html' => a_href("{$CFG->wwwroot}_icons/",
-                                                   __gettext("Your site picture")));
-    }
-
-    if (defined("context") && context == "admin" && logged_on && user_flag_get("admin", $_SESSION['userid'])) {
-        $PAGE->menu_sub[] = array(
-                                  'name' => 'admin',
-                                  'html' => a_href("{$CFG->wwwroot}_admin/",
-                                                   __gettext("Main")));
-   
-        $PAGE->menu_sub[] = array(
-                                  'name' => 'admin:useradd',
-                                  'html' => a_href("{$CFG->wwwroot}_admin/users_add.php",
-                                                   __gettext("Add users")));
-
-        $PAGE->menu_sub[] = array(
-                                  'name' => 'admin:users',
-                                  'html' => a_href("{$CFG->wwwroot}_admin/users.php",
-                                                   __gettext("Manage users")));
-
-        $PAGE->menu_sub[] = array(
-                                  'name' => 'admin:users',
-                                  'html' => a_href("{$CFG->wwwroot}_admin/users.php?flag=banned",
-                                                   __gettext("Banned users")));
-
-        $PAGE->menu_sub[] = array(
-                                  'name' => 'admin:users',
-                                  'html' => a_href("{$CFG->wwwroot}_admin/users.php?flag=admin",
-                                                   __gettext("Admin users")));
-
-        $PAGE->menu_sub[] = array(
-                                  'name' => 'admin:flaggedcontent',
-                                  'html' => a_href("{$CFG->wwwroot}_admin/flags.php",
-                                                   __gettext("Manage flagged content")));
-   
-        $PAGE->menu_sub[] = array(
-                                  'name' => 'admin:spam',
-                                  'html' => a_href("{$CFG->wwwroot}_admin/antispam.php",
-                                                   __gettext("Spam control")));
-            
-    }
-
 
     //
     // Give a chance to all registered modules
@@ -521,11 +120,11 @@ function templates_page_setup (){
             $mod_pagesetup = $mod . '_pagesetup';
             if (function_exists($mod_pagesetup)) {
                 $mod_pagesetup();
-            } else {
-                notify("Function $mod_pagesetup doesn't exist!");
             }
         }
     }
+  // Init global JS context
+  templates_js_setup();
 }
 
 function templates_page_draw ($param) {
@@ -716,10 +315,10 @@ function templates_draw ($parameter) {
     // Get template details
         if (!isset($template_name)) {
             if (!isset($page_owner) || $page_owner == -1) {
-                $template_name = "Default_Template";
+                $template_name = $CFG->default_template;
             } else {
-                if (!$template_name = user_info('template_name',$page_owner)) {
-                    $template_name = "Default_Template";
+                if (!$template_name = user_info('template_name',$page_owner)) { // override Default_Template
+                    $template_name = $CFG->default_template;
                 }
             }
         }
@@ -730,8 +329,11 @@ function templates_draw ($parameter) {
             $template_name = $t;
         }
 
+        // TODO: Load templates on demand with backward compatibility
+        templates_load_context($parameter['context']);
+
     // Grab the template content
-        if ($template_name == "Default_Template" || ($parameter['context'] != "css" && $parameter['context'] != "pageshell")) {
+        if ($template_name == $CFG->default_template || ($parameter['context'] != "css" && $parameter['context'] != "pageshell")) {
             $template_element = $template[$parameter['context']];
         } else {
             if (!isset($page_template_cache[$parameter['context']])) {
@@ -852,23 +454,24 @@ function templates_edit () {
     global $template;
     global $template_definition;
     global $USER;
+    global $CFG;
 
     if (!isset($parameter)) {
     // Get template details
         if (!$template_name = user_info('template_name',$USER->ident)) {
-            $template_name = "Default_Template";
+            $template_name = $CFG->default_template;
         }
     } else {
         if (!is_array($parameter)) {
             $template_name = trim($parameter);
         } else {
-            $template_name = "Default_Template";
+            $template_name = $CFG->default_template;
         }
     }
 
     // Grab title, see if we can edit the template
         $editable = 0;
-        if ($template_name == "Default_Template") {
+        if ($template_name == $CFG->default_template) {
             $templatetitle = __gettext("Default Theme");
         } else {
             if ($templatestuff = get_record('templates','shortname',$template_name)) {
@@ -877,13 +480,13 @@ function templates_edit () {
                     $editable = 1;
                 }
                 if (($templatestuff->owner != $USER->ident) && ($templatestuff->public != 'yes')) {
-                    $template_name = 'Default_Template';
+                    $template_name = $CFG->default_template;
                 }
             }
         }
     
     // Grab the template content
-        if ($template_name == "Default_Template") {
+        if ($template_name == $CFG->default_template) {
             $current_template = $template;
         } else {
             
@@ -1126,7 +729,7 @@ END;
             }
             $name .=" /> ";
             $column1 = "<b>" . $template['name'] . "</b>";
-            $column2 = "<a href=\"".url."_templates/preview.php?template_preview=".$template['shortname']."\" target=\"preview\">" . __gettext("Preview") . "</a>";
+            $column2 = "<a href=\"".url."mod/template/preview.php?template_preview=".$template['shortname']."\" target=\"preview\">" . __gettext("Preview") . "</a>";
             $panel .=templates_draw(array(
                                                         'context' => 'adminTable',
                                                         'name' => $name,
@@ -1158,10 +761,10 @@ END;
                     }
                     $name .=" /> ";
                     $column1 = "<b>" . $template->name . "</b>";
-                    $column2 = "<a href=\"".url."_templates/preview.php?template_preview=".$template->shortname."\" target=\"preview\">" . __gettext("Preview") . "</a>";
+                    $column2 = "<a href=\"".url."mod/template/preview.php?template_preview=".$template->shortname."\" target=\"preview\">" . __gettext("Preview") . "</a>";
 
-                    $column2 .= " | <a href=\"".url."_templates/edit.php?id=".$template->ident."\" >". __gettext("Edit") ."</a>";
-                    $column2 .= " | <a href=\"".url."_templates/?action=deletetemplate&amp;delete_template_id=".$template->ident."\"  onclick=\"return confirm('" . __gettext("Are you sure you want to permanently remove this template?") . "')\">" . __gettext("Delete") . "</a>";
+                    $column2 .= " | <a href=\"".url."mod/template/edit.php?id=".$template->ident."\" >". __gettext("Edit") ."</a>";
+                    $column2 .= " | <a href=\"".url."mod/template/?action=deletetemplate&amp;delete_template_id=".$template->ident."\"  onclick=\"return confirm('" . __gettext("Are you sure you want to permanently remove this template?") . "')\">" . __gettext("Delete") . "</a>";
                     $panel .=templates_draw(array(
                                                         'context' => 'adminTable',
                                                         'name' => $name,
@@ -1340,7 +943,8 @@ function templates_variables_substitute ($param) {
                                  )
                 . "\n</style>\n";
             }
-            $result .= $metatags;
+            // locate css at end
+            $result = $metatags . "\n" . $result;
             break;
             
         case 'perf':
@@ -1439,7 +1043,7 @@ END;
             } else {
                 $vars[1] = "'town'";
             }
-            if ($tags = get_records_sql("SELECT tag, count(ident) as numtags FROM `".$CFG->prefix."tags` WHERE access = 'public' and tagtype=".$vars[1]." group by tag order by numtags desc limit 20")) {
+            if ($tags = get_records_sql("SELECT tag, count(ident) as numtags FROM `".$CFG->prefix."tags` WHERE access = 'PUBLIC' and tagtype=".$vars[1]." group by tag order by numtags desc limit 20")) {
                 $tag_count = 0;
                 foreach($tags as $tag) {
                     $result .= "<a href=\"".url."tag/".urlencode(htmlspecialchars(strtolower($tag->tag), ENT_COMPAT, 'utf-8'))."\" title=\"".htmlspecialchars($tag->tag, ENT_COMPAT, 'utf-8')." (" .$tag->numtags. ")\">";
@@ -1455,12 +1059,12 @@ END;
             
         case "populartags":
             $result = "";
-            if (isset($vars[1])) {
-                $vars[1] = (int) $vars[1];
-            } else {
-                $vars[1] = "20";
-            }
-            if ($tags = get_records_sql("SELECT tag, count(ident) as numtags FROM `".$CFG->prefix."tags` WHERE access = 'public' and tag!='' group by tag having numtags > 1 order by ident desc limit " . $vars[1])) {
+	    if (isset($vars[1])) { 
+	      $vars[1] = (int) $vars[1]; 
+	    } else { 
+	      $vars[1] = "20"; 
+            } 
+            if ($tags = get_records_sql("SELECT tag, count(ident) as numtags FROM `".$CFG->prefix."tags` WHERE access = 'PUBLIC' and tag!='' group by tag having numtags > 1 order by ident desc limit " . $vars[1])) {
                 $max = 0;
                 foreach($tags as $tag) {
                     if ($tag->numtags > $max) {
@@ -1557,6 +1161,203 @@ function menu_join ($separator, $menuarray) {
         array_push($html, $entry['html']);
     }
     return join($separator, $html);
+}
+
+/**
+ * Adds new template context
+ * @param string $context  Context identificator
+ * @param string $tpl      Template path relative to dirroot or inline template
+ * @param bool   $is_file  Template is file or inline
+ * @param bool   $override To override existing context
+ */
+function templates_add_context($context, $tpl, $is_file=true, $override=false) {
+    // TODO: this function should go int mod's?
+    global $template, $template_files, $CFG;
+
+    if (!isset($template)) $template = array();
+    if (!isset($template_files)) $template_files = array();
+
+    if (!empty($context)) {
+        // clean file path string
+        if ($is_file) {
+            // FIXME: backward compatiblity, allow templatesroot full path
+            if (substr_count($tpl, $CFG->templatesroot) > 0) {
+                $file_path = $tpl;
+            } else {
+                //$file_path = $CFG->dirroot . clean_filename($tpl);
+                // clean_filename replaces / directory separator
+                $file_path = $CFG->dirroot . $tpl;
+            }
+        }
+
+        if ($is_file) {
+            if ($override) {
+                $template_files[$context] = array();
+            }
+
+            $template_files[$context][] = $file_path;
+        } else {
+            // inline template, backwards compatibility
+            if (!$override && isset($template[$context])) {
+                // append to existing context
+                $template[$context] = $template[$context] . $tpl;
+            } else {
+                $template[$context] = $tpl;
+            }
+        }
+    }
+}
+
+/**
+ * Load context if template is file 
+ * @param string $context Context identificator
+ */
+function templates_load_context($context) {
+    // TOOD: review check
+    // currently check if starts with $CFG->dirrot and is file readable
+    global $template, $template_files, $CFG;
+
+    static $loaded;
+
+    if (!isset($loaded)) $loaded = array();
+    if (!isset($template)) $template = array();
+    if (!isset($template_files)) $template_files = array();
+
+    if (!isset($loaded[$context])) {
+        if (isset($template_files[$context])) {
+            if (!isset($template[$context])) {
+                $template[$context] = '';
+            }
+
+            // load templates from files
+            foreach ($template_files[$context] as $k => $tpl) {
+                // TODO: check again if is readable?
+                if (is_readable($tpl)) {
+                    $content = @file_get_contents($tpl);
+                    $template[$context] = $template[$context] . @file_get_contents($tpl);
+                    //print_object('Loaded: ' . $tpl);
+                } else {
+                    trigger_error(__FUNCTION__.": template file does not exists (context: $context, file: $tpl)", E_USER_ERROR);
+                }
+            }
+        } else {
+            // do nothing if not file
+        }
+
+        $loaded[$context] = true;
+    }
+}
+
+/**
+ * Outputs html page
+ * @param string $title   The title of the page
+ * @param string $body    The body of the content    
+ * @param string $context Optional template context
+ * @param string $sidebar Optional sidebar content 
+ */
+function templates_page_output($title, $body, $context=null, $sidebar=null) {
+    // hook pre-output page
+    // @rho i think no needed because there is already
+    //      _init and _pagesetup
+
+    if (!isset($context)) $context = 'contentholder';
+
+
+    if ($context !== false) {
+        // allow title with html tags or specialchars
+        $body = templates_draw(array(
+            'context' => $context,
+            'title' => $title,
+            'body' => $body,
+            ));
+    }
+
+    // clean title for <title> tag
+    $title = htmlspecialchars_decode(strip_tags($title), ENT_COMPAT);
+
+    // print output!
+    echo templates_page_draw(array($title, $body, $sidebar));
+
+    // hook post-output
+    action('end');
+
+    // end execution
+    exit();
+}
+
+/**
+ * Add a JS file to the specified JavaScript context.
+ *
+ * For add JS libraries in the global space use the 'global' context
+ *
+ * @param string $context The JS library context
+ * @param string $path Path to the library. It must be relatative to $CFG->dirroot
+ * @param boolean $external Specifies if the library must to be loaded using their own <script> tag
+ * @param boolean $overwrite if you are overwriting a JS configuration
+ */
+function templates_add_js_context($context,$path,$external=true,$overwrite=false){
+  global $CFG,$js_files;
+
+  if(!empty($context)){
+    if(!array_key_exists($context,$js_files)||$overwrite){
+      $js_files[$context] = array();
+    }
+    if(file_exists($CFG->dirroot.$path)){
+      $js_files[$context][]=array('path'=>$path,'external'=>$external);
+    }
+  }
+}
+
+/**
+ * Setup the JS libraries for the specified context
+ *
+ * @param string $context Context to be loaded (default: global)
+ */
+function templates_js_setup($context="global"){
+  global $CFG,$PAGE,$js_files,$metatags;
+  $resp = "";
+  
+  if(!$PAGE->js_setup[$context]){
+    $inlinefiles = null;
+    foreach($js_files as $js_context => $files){
+      if($context == $js_context){
+        foreach($files as $file){
+          if($file['external']){
+            $resp.="\n<script type=\"text/JavaScript\" language=\"JavaScript\" src=\"{$CFG->wwwroot}{$file['path']}\"><!-- $context JS library--></script>\n";
+          }
+          else{
+            $inlinefiles.=file_get_contents($CFG->dirroot.$file['path']);
+          }
+        }
+      }
+    }
+    if($inlinefiles!=null){
+      //@todo Add JS compress
+      $inlinefiles=str_replace("{{url}}",$CFG->wwwroot,$inlinefiles);
+      $resp.="\n<script type=\"text/JavaScript\" language=\"JavaScript\">$inlinefiles</script>\n";
+  
+    }
+    $PAGE->js_setup[$context]=true;
+    $metatags.=$resp;
+  }
+}
+
+/**
+ * This function checks if the specified JS context is available (configured) or not
+ *
+ * @param string $context Context to be checked
+ * @return boolean True if the context is avaible, false if not
+ */
+function templates_js_available($context){
+  global $js_files;
+  return array_key_exists($context,$js_files);
+}
+
+// backward compatiblity for php < 5
+if (!function_exists('htmlspecialchars_decode')) {
+    function htmlspecialchars_decode($string, $quote_style=ENT_COMPAT) {
+        return strtr($string, array_flip(get_html_translation_table(HTML_SPECIALCHARS/*, $quote_style*/)));
+    }
 }
 
 

@@ -626,7 +626,7 @@ img.profile-photo {
    float:left;
    margin:3px;
    background:#fff;
-   border:1 solid #ccc;
+   border:1px solid #ccc;
 }
 
 #commentwall_form_-1 {
@@ -637,7 +637,7 @@ img.profile-photo {
 
 #commentwall_form_-1 textarea {
    width:98%;
-   margin5px 0 5px 0;
+   margin:5px 0 5px 0;
 }
 
 #commentwall_title {
@@ -709,4 +709,19 @@ img.profile-photo {
 .commentwall_replybar a {
    padding:0;
    margin:0;
+}
+
+#confirm-form {
+	width: 70%;
+	margin: 30px auto;
+	text-align: center;
+	font-size: 1.2em;
+	border: 1px #eee solid;
+	background: #f8f8f8;
+}
+
+#confirm-form h3 {
+	font-size: 1.2em;
+	padding: 10px;
+	padding-top: 20px;
 }

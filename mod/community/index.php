@@ -16,17 +16,9 @@
         define("context", $context);
         templates_page_setup();
 
-    // Whose friends are we looking at?
-        global $page_owner;
-
-    // You must be logged on to view this!
-    //    protect(1);
-
         $title = run("profile:display:name") . " :: " . __gettext("Communities");
+        $body = run('communities:editpage');
 
-        echo templates_page_draw( array(
-                    $title, run("communities:editpage")
-                )
-                );
+        templates_page_output($title, $body);
 
 ?>

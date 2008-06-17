@@ -1,0 +1,15 @@
+Elgg community plug-in
+Curverider <info@curverider.co.uk>
+Initial concept: Dave Tosh and Ben Werdmuller
+Programming and development: Dave Tosh, Ben Werdmuller, Sven Edge and Diego Ramírez
+
+
+To use, the 'invite' folder must sit in the 'mod' folder of your Elgg installation.
+
+To go in .htaccess, before the forwarder rules:
+
+ReWriteRule ^register$ mod/invite/register.php
+ReWriteRule ^invite\/join\/([A-Za-z0-9]+)$ mod/invite/join.php?invitecode=$1
+RewriteRule ^invite\/$ mod/invite/index.php
+RewriteRule ^forgottenpassword$ mod/invite/forgotten_password.php
+RewriteRule ^newpassword\/([A-Za-z0-9]+)$ mod/invite/forgotten_password.php?passwordcode=$1

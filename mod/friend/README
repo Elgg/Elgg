@@ -1,0 +1,18 @@
+-------------------------------------------------------------
+| FRIEND MODULE: Configuration options and Extension points |
+-------------------------------------------------------------
+Configuration Options
+=====================
+
+In 'lib/friends_config.php'
+
+FRIENDS_PER_ROW (default value: 2)
+  To configure how many items show per row in:
+    - friends page
+    - friends of page
+
+FRIENDS_ICON_SIZE (default value: 70)
+  To configure the icon's size in listings
+
+FRIENDS_FOAF (default value: true)
+  To configure if the FOAF link is showed or not

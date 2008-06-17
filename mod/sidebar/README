@@ -1,0 +1,100 @@
+New sidebar plugin
+==================
+
+This plugins allow to manage in a better way the sidebar. 
+And adds per-block user configuration (show/hide).
+
+Plugin functions
+================
+
+/**
+ * Adds new block to sidebar stack
+ *
+ * @param integer $weigth the weight/position of the block
+ * @param string $id unique block identificator
+ * @param bool $userdetails allow users to show/hide (true or false)
+ * @param string $label label to show on account settings
+ * @param string $class optional css class
+ */
+function sidebar_add($weight, $id, $body, $userdetails=false, $label=null, $class=null)
+
+
+/**
+ * Removes a block or blocks from sidebar
+ *
+ * @param mixed $id block identificator to remove, string or array of id's
+ * @param bool $overrideall if all blocks will be removed except provided $id 
+ */
+function sidebar_remove($id, $overrideall=false)
+
+How to use
+==========
+
+- On legacy sidebar code
+
+Usually sidebar elements are attached to $function['display:sidebar'],
+for example blog sidebar menu:
+
+[code]
+
+$function['display:sidebar'][] = $CFG->dirroot . 'mod/blog/lib/weblogs_user_info_menu.php';
+
+[/code]
+
+You must define new function on _init, for example:
+
+[code]
+
+$function['sidebar:blog'][] = $CFG->dirroot . 'mod/blog/lib/weblogs_user_info_menu.php';
+
+[/code]
+
+Then in _pagesetup, add the sidebar element:
+
+[code]
+
+$blog_menu = run('sidebar:blog'); // get the output of legacy sidebar
+$blog_menu = sidebar_legacy_wrap($blog_menu); // remove legacy unneeded html code <li></li>
+
+sidebar_add(20, 'sidebar-blog', $blog_menu, true, "Your blog"); // add the block to sidebar with weight 20
+
+[/code]
+
+
+- On new plugins
+
+Just build your block body as usual:
+
+[code]
+
+$body = templates_draw(array(
+	'context' => 'sidebarholder',
+	'title' => 'My new block',
+	'body' => 'Hello world',
+	));
+
+sidebar_add(50, 'sidebar-myblock', $body, true, "new block");
+
+Or use a function to render sidebar block
+
+// my function to render block
+function myplugin_sidebar() {
+	//...
+	return $body;
+}
+// use function name as identificator
+sidebar_add(50, 'myplugin_sidebar', null, true, "new block");
+
+[/code]
+
+That's all.
+
+And yes, you can use negative values on weight ;-)
+
+- Removing sidebaa blocks
+
+As simple as: sidebar_remove('sidebar-myblock');
+
+--
+Rolando Espinoza La fuente <rho@prosoftpeople.com>
+Pro Soft Resources Inc.

@@ -1,0 +1,39 @@
+Elgg version 0.9
+Copyright (C) 2004-2007 Curverider Ltd
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  
+USA
+
+ABOUT:
+
+Release packaged by Misja Hoebe <misja@curverider.co.uk>
+Initial concept and development by David Tosh <dave@curverider.co.uk> 
+and Ben Werdmuller <ben@curverider.co.uk>
+
+Open source community facilitated by Curverider Ltd., Oxford, UK
+
+COMMUNITY SUPPORT
+
+Elgg development is community driven, the community site is at http://elgg.org.
+A forum is available at http://elgg.org/mod/vanillaforum/vanilla/, the 
+documentation wiki is at http://elgg.org/mod/mediawiki/wiki/.
+
+Please report any issues in the Elgg tracker at http://elgg.org/trac/
+
+Elgg 0.9 is released under the GNU Public License (GPL), which
+is supplied in this distribution as LICENSE.
+
+For installation instructions, please see the global INSTALL file and related 
+indtallation documents in the doc/ directory of this distribution.

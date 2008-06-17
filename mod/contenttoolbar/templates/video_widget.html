@@ -5,7 +5,7 @@
 		</tr>
 		<tr>
 			<td><label>{{video_url_label}}:</label></td>
-			<td><textarea id="video_url" name="widget_data[video_url]" cols="50" rows="6">{{video_url}}</textarea></td>
+			<td><textarea id="video_url" name="widget_data[video_url]" cols="50" rows="6" onblur="parseSize(this.value,'video_width','video_height');" >{{video_url}}</textarea></td>
 		</tr>
 		<tr>
 			<td><label>{{video_size_label}}:</label></td>

@@ -15,9 +15,16 @@ switch ($action) {
         $post->access = trim(optional_param('new_weblog_access'));
         $post->icon = optional_param('new_weblog_icon',user_info("icon",$_SESSION['userid']),PARAM_INT);
         if (logged_on && !empty($post->body) && !empty($post->access) && run("permissions:check", "weblog")) {
+
             $post->posted = time();
             $post->owner = $USER->ident;
             $post->weblog = $page_owner;
+            if(isset($CFG->assign_field) && $CFG->assign_field){
+            	$assigned = optional_param('assign_to',null,PARAM_INT);
+              if(!empty($assigned)){
+                $post->weblog = $assigned;
+              } 
+            }
 
             $post = plugin_hook("weblog_post","create",$post);
 
@@ -33,12 +40,19 @@ switch ($action) {
                 $post = plugin_hook("weblog_post","publish",$post);
                 $rssresult = run("weblogs:rss:publish", array($page_owner, false));
                 $rssresult = run("profile:rss:publish", array($page_owner, false));
-                if (user_type($page_owner) == "person") {
-                    $messages[] = __gettext("Your post has been added to your weblog.");
+                $type = strtolower(blog_get_extension($extensionContext, 'type', 'post'));
+
+                // redirect to post view 
+                define('redirect_url', url.user_info('username', $post->weblog)."/{$extensionContext}/{$post->ident}.html");
+                if (user_type($post->weblog) == "person") {
+                    $messages[] = sprintf(__gettext("Your %s has been added."),$type);
                 }
+                else{
+                    $messages[] = sprintf(__gettext("Your %s has been added to the %s group."),$type,user_info("name",$post->weblog));                	
+                }
+            } else {
+                define('redirect_url', url.user_info('username', $post->weblog)."/{$extensionContext}/");
             }
-            // define('redirect_url',url . $_SESSION['username'] . "/weblog/");
-            define('redirect_url',url . user_info("username",$page_owner) . "/$extensionContext/");
         } else {
             $messages[] = __gettext("Your post wasn't added to the blog. This was probably because it was empty, or you don't currently have permission to post in this blog.");
         }
@@ -55,7 +69,7 @@ switch ($action) {
         if (logged_on && !empty($post->body) && !empty($post->access) && !empty($post->ident)) {
             $exists = false;
             if ($oldpost = get_record('weblog_posts','ident',$post->ident)) {
-                if (run("permissions:check", array("weblog:edit", $oldpost->owner))) {
+	      if (run("permissions:check", array("weblog:edit", $oldpost->owner,$oldpost->weblog))) {
                     $exists = true;
                 }
             }
@@ -113,9 +127,11 @@ switch ($action) {
     // Delete a weblog post
     case "delete_weblog_post":
         $id = optional_param('delete_post_id',0,PARAM_INT);
+        require_confirm(__gettext('Are you sure you want to permanently delete this weblog post?'));
+
         if (logged_on && !empty($id)) {
             if ($post_info = get_record('weblog_posts','ident',$id)) {
-                if (run("permissions:check", array("weblog:edit", $post_info->owner))) {
+	      if (run("permissions:check", array("weblog:edit", $post_info->owner,$post_info->weblog))) {
                     $post_info = plugin_hook("weblog_post","delete",$post_info);
                     if (!empty($post_info)) {
                         delete_records('weblog_posts','ident',$id);
@@ -157,6 +173,8 @@ switch ($action) {
                             $comment->ident = $insert_id;
                             $comment = plugin_hook("weblog_comment","publish",$comment);
 
+                            $messages[] = __gettext("Your comment has been added."); // gettext variable
+
                             // If we're logged on and not the owner of this post, add post to our watchlist
                             if (logged_on && $comment->owner != $post->owner) {
                                 delete_records('weblog_watchlist','weblog_post',$comment->post_id,'owner',$comment->owner);
@@ -173,7 +191,6 @@ switch ($action) {
                                 $message .= sprintf(__gettext("To reply and see other comments on this blog post, click here: %s"), $CFG->wwwroot . user_info("username",$post->weblog) . "/weblog/" . $post->ident . ".html");
                                 $message = wordwrap($message);
                                 message_user($post->owner,$comment->owner,stripslashes($post->title),$message);
-                                $messages[] = __gettext("Your comment has been added."); // gettext variable
                             }
                             
 	                        // If river plugin installed then note comment
@@ -189,7 +206,7 @@ switch ($action) {
 									$username = __gettext("Anonymous user");
 								}
 					
-								river_save_event($comment->owner, $comment->ident, $comment->owner, "weblog_post::post", $username . " <a href=\"$commenturl\">" . __gettext("commented on") . "</a> " . river_get_friendly_id("weblog_post::post", $comment->post_id));
+								river_save_event($post->owner, $comment->ident, $comment->owner, "weblog_post::post", $username . " <a href=\"$commenturl\">" . __gettext("commented on") . "</a> " . river_get_friendly_id("weblog_post::post", $comment->post_id));
 								
 							}
                         }
@@ -199,6 +216,8 @@ switch ($action) {
                 }
                 define('redirect_url',url . user_info("username",$post->owner) . "/$extensionContext/" . $commentbackup->post_id . ".html");
             }
+        } else {
+            $messages[] = __gettext("Your comment body or name is empty.");
         }
         break;
 
@@ -206,6 +225,8 @@ switch ($action) {
     // Delete a weblog comment
     case "weblog_comment_delete":
         $comment_id = optional_param('weblog_comment_delete',0,PARAM_INT);
+        require_confirm(__gettext('Are you sure you want to permanently delete this weblog comment?'));
+
         if (logged_on && !empty($comment_id)) {
             $commentinfo = get_record_sql('SELECT wc.*,wp.owner AS postowner,wp.ident AS postid
                                            FROM '.$CFG->prefix.'weblog_comments wc
@@ -225,11 +246,7 @@ switch ($action) {
 }
 
 if (defined('redirect_url')) {
-
-    $_SESSION['messages'] = $messages;
-    header("Location: " . redirect_url);
-    exit;
-
+    header_redirect(redirect_url);
 }
 
 ?>

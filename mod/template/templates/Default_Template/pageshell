@@ -20,9 +20,7 @@
 	<div id="content-holder-inner">   
 		<div id="splitpane-sidebar"><!-- open splitpane-sidebar div -->
 		    <div id="sidebar-contents">
-			<ul><!-- open sidebar lists -->
 			{{sidebar}}
-			</ul><!-- close sidebar lists -->
 			</div>
 			<div id="sidebar-bottom"></div><!-- used to provide the rounded bottom -->
 		</div><!-- close splitpane-sidebar div -->

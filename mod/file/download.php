@@ -25,7 +25,9 @@ if (!empty($id)) {
             if ($file->access == 'PUBLIC' || $file->owner == $_SESSION['userid'] || run("users:access_level_check",$file->access) == true) {
                 
                 // Then output some appropriate headers and send the file data!
-                if ($file->access == 'PUBLIC') {
+                // TODO: bug on ie, if using ssl force public cache control
+                //       using port, $_SERVER['HTTPS'] does not work always
+                if ($file->access == 'PUBLIC' || isset($_SERVER['HTTPS']) || $_SERVER['SERVER_PORT'] == 443) {
                     header("Pragma: public");
                     header("Cache-Control: public");
                 } else {

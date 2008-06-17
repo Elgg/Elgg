@@ -133,13 +133,13 @@ END;
                 if (sizeof($profilecat) > 0) {
                     foreach($profilecat as $cat => $html) {
                         
-                        $body .= "<div class=\"tabbertab\" title=\"$cat\">";
-                        $body .= $html;
-                        $body .= "</div>";
-                        
+                        if ($html) {
+                            $body .= "<div class=\"tabbertab\" title=\"$cat\">";
+                            $body .= $html;
+                            $body .= "</div>";
+                        }
                     }
                 }
-                
             }
             
             $submitMsg = __gettext("Submit details:");
@@ -240,15 +240,23 @@ END;
             if (!$value = get_record('profile_data','name',$fname,'owner',$page_owner)) {
                 $value = "";
                 $value->value = "";
-                $value->access = $CFG->default_access;
-            }
+		if(isset($field->default_access)) { // default access can be set on a per profile field basis
+		  $value->access = $field->default_access;
+		} else {
+		  $value->access = $CFG->default_access;
+		}
+	    }
         } else {
             $value = "";
             $value->value = $data['profile:preload'][$fname];
             if (!isset($data['profile:preload:access'][$fname])) {
-                $value->access = $CFG->default_access;
+	      if(isset($field->default_access)) {
+		$value->access = $field->default_access;
+	      } else {
+		$value->access = $CFG->default_access;
+	      }
             } else {
-                $value->access = $data['profile:preload:access'][$fname];
+	      $value->access = $data['profile:preload:access'][$fname];
             }
             
         }
@@ -267,9 +275,13 @@ END;
         }
 
         $column1 = display_input_field(array("profiledetails[" . $fname . "]",$value->value,$ftype,$fname,@$value->ident,$page_owner));
-        $column2 = "<label>". __gettext("Access Restriction:") ."<br />";
-        $column2 .= run("display:access_level_select",array("profileaccess[".$fname . "]",$value->access)) . "</label>";
-        
+        if(!$finvisible) {
+	  $column2 = "<label>". __gettext("Access Restriction:") ."<br />";
+	  $column2 .= run("display:access_level_select",array("profileaccess[".$fname . "]",$value->access)) . "</label>";
+        } else {
+	  $column2 = __gettext("Invisible field");
+	}
+
         $run_result .=templates_draw(array(
                                            'context' => 'databox',
                                            'name'    => $name,
@@ -854,39 +866,39 @@ END;
 
     
         // Initialisation for the search function
-        $function['search:init'][] = path . "units/profile/function_init.php";
-        $function['search:init'][] = path . "units/profile/function_editfield_defaults.php";
-        $function['search:all:tagtypes'][] = path . "units/profile/function_search_all_tagtypes.php";
-        $function['search:all:tagtypes:rss'][] = path . "units/profile/function_search_all_tagtypes_rss.php";
+        $function['search:init'][] = path . "mod/profile/lib/function_init.php";
+        $function['search:init'][] = path . "mod/profile/lib/function_editfield_defaults.php";
+        $function['search:all:tagtypes'][] = path . "mod/profile/lib/function_search_all_tagtypes.php";
+        $function['search:all:tagtypes:rss'][] = path . "mod/profile/lib/function_search_all_tagtypes_rss.php";
         
         // Function to search through profiles
-        $function['search:display_results'][] = path . "units/profile/function_search.php";
-        $function['search:display_results:rss'][] = path . "units/profile/function_search_rss.php";
+        $function['search:display_results'][] = path . "mod/profile/lib/function_search.php";
+        $function['search:display_results:rss'][] = path . "mod/profile/lib/function_search_rss.php";
         
         // Functions to view and edit individual profile fields        
-        $function['profile:editfield:display'][] = path . "units/profile/function_editfield_display.php";
-        $function['profile:field:display'][] = path . "units/profile/function_field_display.php";
+        $function['profile:editfield:display'][] = path . "mod/profile/lib/function_editfield_display.php";
+        $function['profile:field:display'][] = path . "mod/profile/lib/function_field_display.php";
     
         // Function to view all profile fields
-        $function['profile:view'][] = path . "units/profile/function_view.php";
+        $function['profile:view'][] = path . "mod/profile/lib/function_view.php";
         
         // Function to display user's name
-        $function['profile:display:name'][] = path . "units/profile/function_display_name.php";
+        $function['profile:display:name'][] = path . "mod/profile/lib/function_display_name.php";
         
-        $function['profile:user:info'][] = path . "units/profile/profile_user_info.php";
+        $function['profile:user:info'][] = path . "mod/profile/lib/profile_user_info.php";
     
         // Descriptive text
-        $function['content:profile:edit'][] = path . "units/profile/content_edit.php";
+        $function['content:profile:edit'][] = path . "mod/profile/lib/content_edit.php";
 
         // Establish permissions
-        $function['permissions:check'][] = path . "units/profile/permissions_check.php";
+        $function['permissions:check'][] = path . "mod/profile/lib/permissions_check.php";
         
         // FOAF
-        $function['foaf:generate:fields'][] = path . "units/profile/generate_foaf_fields.php";
-        $function['vcard:generate:fields:adr'][] = path . "units/profile/generate_vcard_adr_fields.php";
+        $function['foaf:generate:fields'][] = path . "mod/profile/lib/generate_foaf_fields.php";
+        $function['vcard:generate:fields:adr'][] = path . "mod/profile/lib/generate_vcard_adr_fields.php";
                 
         // Actions to perform when an access group is deleted
-        $function['groups:delete'][] = path . "units/profile/groups_delete.php";
+        $function['groups:delete'][] = path . "mod/profile/lib/groups_delete.php";
         
     }
 

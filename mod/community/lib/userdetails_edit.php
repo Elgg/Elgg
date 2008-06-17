@@ -102,6 +102,20 @@ END;
 
 END;
 
+    if (context == "admin") {
+        
+        $blurb = __gettext("Deleting this account is permanent and absolutely cannot be undone. Only click this button if you're really sure!");
+        $deleteaccount = __gettext("Delete community account");
+        $body .= templates_draw(array(
+            'context' => 'databox',
+            'name' => $blurb,
+            'column1' => "<a href=\"index.php?action=user:delete&profile_id=$page_owner\">{$deleteaccount}</a>",
+            ));
+
+    }
+
+
+
     $run_result .= $body;
     }
 

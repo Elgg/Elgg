@@ -103,6 +103,8 @@ if ($action) {
 	    // Delete a comment
 	    case "comment:delete":
 	        $comment_id = optional_param('comment_delete',0,PARAM_INT);
+            require_confirm(__gettext('Are you sure you want to permanently delete this comment?'));
+
 	        if (logged_on && !empty($comment_id)) {
 	            $comment = get_record('comments','ident',$comment_id);
 	            $comment = plugin_hook("comment","delete",$comment);

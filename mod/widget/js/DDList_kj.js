@@ -109,10 +109,10 @@ YAHOO.example.DDList.prototype.onDragDrop = function(e, id) {
 			        current_el.className = 'sortListWorking';
 			        if (el.id.charAt(0) == 'h') {
 				        // add to end
-				        var sUrl = wwwroot+'mod/widget/ajax_add_widget.php?display_id='+clone_i+'&type='+el2.id.substring(4)+'&column='+el.column;
+				        var sUrl = wwwroot+'mod/widget/ajax_add_widget.php?display_id='+clone_i+'&type='+el2.id.substring(4)+'&column='+el.column+'&owner='+user_id;
 			        } else {
 				        // add before el
-			        	var sUrl = wwwroot+'mod/widget/ajax_add_widget.php?display_id='+clone_i+'&type='+el2.id.substring(4)+'&column='+el.column+'&before='+el.id.substring(4);
+			        	var sUrl = wwwroot+'mod/widget/ajax_add_widget.php?display_id='+clone_i+'&type='+el2.id.substring(4)+'&column='+el.column+'&before='+el.id.substring(4)+'&owner='+user_id;
 		        	}
 			        clone_i ++;	        
 			        // Initiate the HTTP GET request. 

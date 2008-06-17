@@ -6,10 +6,16 @@ global $USER;
 global $CFG;
 global $SESSION;
 global $PAGE;
+global $js_files;
 
 /// First try to detect some attacks on older buggy PHP versions
 if (isset($_REQUEST['GLOBALS']) || isset($_COOKIE['GLOBALS']) || isset($_FILES['GLOBALS'])) {
     die('Fatal: Illegal GLOBALS overwrite attempt detected!');
+}
+
+// TODO: Can't run in safe mode
+if (ini_get_bool('safe_mode')) {
+    die("Fatal: Your server has safe_mode set to ON, elgg can't run with safe_mode enabled.");
 }
 
 // set up perf.
@@ -33,10 +39,10 @@ header('P3P:CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT
 if (!isset($CFG->tagline)) {
     $CFG->tagline = "";
 }
-if (empty($CFG->debug)) {
+if (!isset($CFG->debug)) {
     $CFG->debug = 0;
 }
-if (empty($CFG->publicinvite)) {
+if (!isset($CFG->publicinvite)) {
     $CFG->publicinvite = $CFG->publicreg;
 }
 if (empty($CFG->emailfilter)) {
@@ -57,7 +63,7 @@ if (empty($CFG->defaultlocale)) {
     $CFG->defaultlocale = 'en';
 }
 
-if (empty($CFG->disable_templatechanging)) {
+if (empty($CFG->disable_usertemplates)) {
     $CFG->disable_usertemplates = false;
 }
 
@@ -168,10 +174,27 @@ if (!empty($CFG->logsql)) {
 
 
 /// Set error reporting back to normal
-if (empty($CFG->debug)) {
+if (!isset($CFG->debug)) {
     $CFG->debug = 7;
 }
-error_reporting($CFG->debug);
+
+// if not debug log errors
+// else if enabled show raw errors on screen
+if ($CFG->debug < 2047) {
+    // always log errors
+    @ini_set('log_errors', '1');
+    @ini_set('error_log', $CFG->dataroot . 'errors.log');
+    // hide error of screen, handled by error handler function
+    @ini_set('display_errors', '0');
+    // handle errors
+    //TODO: work on better error handler
+    set_error_handler('elgg_error_handler');
+} else {
+    //force display errors on screen
+    @ini_set('display_errors', '1');
+    @ini_set('display_startup_errors', '1'); // maybe not good idea...
+    error_reporting($CFG->debug);
+}
 
 /// File permissions on created directories in the $CFG->dataroot
 
@@ -186,7 +209,7 @@ if (empty($CFG->filepermissions)) {
 }
 
 if (!is_writable($CFG->dataroot)) {
-    $messages[] = "Your current dataroot directory, $CFG->dataroot is not writable by the webserver!";
+    die("Your current dataroot directory, <strong>$CFG->dataroot</strong> is not writable by the webserver!");
 }
 
 /// Set up session handling
@@ -403,6 +426,21 @@ if (!isset($PAGE->menu       )) { $PAGE->menu        = array();}
 if (!isset($PAGE->menu_sub   )) { $PAGE->menu_sub    = array();}
 if (!isset($PAGE->menu_top   )) { $PAGE->menu_top    = array();}
 if (!isset($PAGE->menu_bottom)) { $PAGE->menu_bottom = array();}
+if (!isset($PAGE->js_setup   )) { $PAGE->js_setup = array();}
+
+// Setting up global.js for make available ELGG_WWWROOT for JavaScript
+if(!isset($js_files)){
+  $js_files = array();
+  $js_files['global'][]=array("path"=>"lib/global.js","external"=>false);
+}
+
+//
+// Set default template
+//
+if (!isset($CFG->default_template) ||
+    !is_readable($CFG->templatesroot . $CFG->default_template . '/pageshell')) {
+    $CFG->default_template = 'Default_Template';
+}
 
 //////
 ////// Define what modules we have, and load their libraries
@@ -468,6 +506,7 @@ if (empty($CFG->noreplyaddress)) {
     $CFG->noreplyaddress = 'noreply@'.preg_replace('/([a-zA-z]*:\/\/)([a-zA-Z0-9-.]*)([:0-9]*)(\/*.*)/','$2',$CFG->wwwroot);
 }
 
+
 /***
  *** init_performance_info() {
  ***
@@ -493,6 +532,64 @@ function init_performance_info() {
     }
     if (function_exists('posix_times')) {
         $PERF->startposixtimes = posix_times();  
+    }
+}
+
+/**
+ * Basic error handler
+ */
+function elgg_error_handler($errno, $errmsg, $errfile, $errline, $errcontext) {
+    global $CFG;
+
+    $date = date('Y-m-d H:i:s');
+    $fatal = "$errmsg (# $errno)";
+    $file = "Error in line $errline of file $errfile";
+    $script = "Script: {$_SERVER['PHP_SELF']}";
+
+    switch ($errno) {
+        case E_USER_NOTICE:
+        case E_NOTICE:
+            if ($CFG->debug == 2047) {
+                $msg = sprintf("%s\nNotice: %s \n %s\n%s\n",$date,$fatal,$file,$script);
+                error_log($msg);
+            }
+            break;
+        case E_USER_WARNING:
+        case E_WARNING:
+        case E_CORE_WARNING:
+        case E_COMPILE_WARNING:
+            //log errors if debug enabled
+            if ($CFG->debug >= 7) {
+                $msg = "$date\nWarning: $fatal\n$file\n$script\n";
+                $msg = sprintf("%s\nWarning: %s\n%s\%s\n",$date,$fatal,$file,$script);
+                error_log($msg);
+            }
+            break;
+        case E_USER_ERROR:
+        case E_ERROR:
+        case E_PARSE:
+        case E_CORE_ERROR:
+        case E_COMPILE_ERROR:
+            $msg = "<em>$date</em>\n";
+            $msg .= "<p><code>Error: $fatal</code></p>\n";
+            $msg .= "<p><code>$file</code></p>\n";
+            $msg .= "<p><code>$script</code></p>\n";
+
+            if ($CFG->debug > 0) {
+                echo "<p><em>Disable debug mode if you do not want to display errors on screen browser</em></p>\n";
+                echo $msg;
+            } else {
+                echo "<h2>Our apologies, the system can't complete your request</h2>\n";
+                echo "<p><em>{$CFG->sitename} team</em><br/>";
+                echo "<a href=\"{$CFG->wwwroot}\">{$CFG->wwwroot}</a></p>";
+
+            }
+            error_log(strip_tags($msg));
+            // halt
+            die; 
+            break;
+        default:
+            break;
     }
 }
 

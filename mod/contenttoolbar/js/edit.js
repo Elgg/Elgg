@@ -323,7 +323,7 @@ function insertAtCarret(edid,value){
 * @author Diego Andrés Ramírez Aragón <diego@somosmas.org>
 */
 function parseEmbed(text){
-var embedpattern = /<embed[\w\s\"=;:.&\?\/-]*>\s*<\/embed>/;
+var embedpattern = /<(embed|object)[\w\s\"=;:.&\?\/-]*>.*<\/(embed|object)>/;
 var urlpattern = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?\"/; 
 var embed = text.match(embedpattern);
 
@@ -334,6 +334,26 @@ url=urlpattern.exec(embed[0]);
 if(url==null) return null;
 
 return url[0].substr(0,url[0].length-1);
+}
+
+/**
+ * Auto detect embed object size
+ * @author Rolando Espinoza La fuente <rho@prosoftpeople.com>
+ */
+function parseSize(text, wid, hid) {
+var embedpattern = /<(embed|object)[\w\s\"=;:.&\?\/-]*>.*<\/(embed|object)>/;
+var sizew = /width=\"(\d+)\"/;
+var sizeh = /height=\"(\d+)\"/;
+var embed = text.match(embedpattern);
+
+if(embed==null) return null;
+
+width = sizew.exec(embed[0]);
+height = sizeh.exec(embed[0]);
+
+if (width!=null) {document.getElementById(wid).value=width[1];}
+if (height!=null) {document.getElementById(hid).value=height[1];}
+
 }
 
 /**

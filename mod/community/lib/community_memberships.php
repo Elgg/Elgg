@@ -1,13 +1,10 @@
 <?php
 global $CFG;
 global $page_owner;
- 
+
 if ($page_owner != -1) {
     if (user_type($page_owner) == "person" || user_type($page_owner) == "external") {
-        if ($result = get_records_sql('SELECT DISTINCT u.ident,u.username,u.name FROM '.$CFG->prefix.'friends f
-                                       JOIN '.$CFG->prefix.'users u ON u.ident = f.friend
-                                       WHERE f.owner = ? AND u.user_type = ? AND u.owner != ?',
-                                      array($page_owner,'community',$page_owner))) {
+        if ($result = run('community:membership:data',array($page_owner))) {
             $body = "<ul>";
             foreach($result as $row) {
                 $row->name = run("profile:display:name",$row->ident);
@@ -27,9 +24,7 @@ if ($page_owner != -1) {
         }
     } else if (user_type($page_owner) == "community") {
         $friends = array();
-        if ($result = get_records_sql('SELECT DISTINCT u.ident,1 FROM '.$CFG->prefix.'friends f
-                                JOIN '.$CFG->prefix.'users u ON u.ident = f.owner
-                                WHERE f.friend = ? LIMIT 8',array($page_owner))) {
+        if ($result = run('community:members:data',array($page_owner,8))) {
             foreach($result as $row) {
                 $friends[] = (int)$row->ident;
             }
@@ -40,7 +35,7 @@ if ($page_owner != -1) {
                            array(
                                  __gettext("Members"),
                                  $friends,
-                                 "<a href=\"".$CFG->wwwroot.user_info('username',$page_owner)."/community/members\">" . __gettext("Members") . "</a>"
+                                 "<a href=\"".$CFG->wwwroot.user_info('username',$page_owner)."/community/members\">[" . __gettext("View all members") . "]</a>"
                                  )
                            );
         $run_result .= "</li>";

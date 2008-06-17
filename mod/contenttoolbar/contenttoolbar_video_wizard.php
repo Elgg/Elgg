@@ -25,7 +25,7 @@ $metatags .= "<script language=\"javascript\" type=\"text/javascript\" src=\"$ur
 $metatags .= "<link rel=\"stylesheet\" href=\"" . $CFG->wwwroot . "mod/contenttoolbar/wizard.css\" type=\"text/css\" media=\"screen\" />";
 
 $explanation = __gettext("To embed videos from popular sites like Google Video and Youtube, obtain the embed HTML, paste it in the following form and configure your preferred size:");
-$video_url_label = __gettext("Video URL");
+$video_url_label = __gettext("Video embed code");
 $video_size_label = __gettext("Video size");
 $video_button_label = __gettext("Insert video");
 $error_msg = __gettext("We had trouble understanding this code. Are you sure this is the embed HTML for your video?");

@@ -5,10 +5,10 @@ global $CFG;
 if (isset($parameter[0])) {
 
     $user_id = (int) $parameter[0];
+    $body = null;
 
-    $result = get_records_sql('SELECT u.*, f.ident AS friendident FROM '.$CFG->prefix.'friends f
-                               JOIN '.$CFG->prefix.'users u ON u.ident = f.friend
-                               WHERE f.owner = ? AND u.user_type = ?', array($user_id,'community'));
+    $result = run('community:membership:data',array($user_id,true));
+
     $i = 1;
     if (!empty($result)) {
         $owned = array();

@@ -39,6 +39,6 @@ $template_definition[] = array(
   )
 );
 
-$template["contenttoolbar"] = file_get_contents(dirname(__FILE__)."/templates/contenttoolbar.html");
-$template["video_wizard"] = file_get_contents(dirname(__FILE__)."/templates/video_wizard.html");
+templates_add_context('contenttoolbar', 'mod/contenttoolbar/templates/contenttoolbar.html');
+templates_add_context('video_wizard', 'mod/contenttoolbar/templates/video_wizard.html');
 ?>

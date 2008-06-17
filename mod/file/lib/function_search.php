@@ -43,7 +43,7 @@ if (isset($parameter) && $parameter[0] == "file" && $handle) {
             $f = $folders[$keys[0]];
             if (!empty($f)) {
                 // $name = stripslashes($f->userfullname);
-                $name = run("profile:display:name",$f->userid);
+                $name = user_info("name", $f->userid);
             }
             
             $run_result .= "<h2>" . sprintf(__gettext("Folders owned by '%s' in category '%s'"),$name,$parameter[1])."</h2>\n";
@@ -81,7 +81,7 @@ if (isset($parameter) && $parameter[0] == "file" && $handle) {
             $f = $files[$keys[0]];
             if (!empty($f)) {
                 // $name = stripslashes($f->userfullname);
-                $name = run("profile:display:name",$f->userid);
+                $name = user_info("name", $f->userid);
                 $username = $f->username;
             }
             $folder_names = array();

@@ -5,6 +5,8 @@
 // and things like auth plugins
 // but we don't have those yet, so...
 
+define('context','external');
+
 $starttime = microtime();
 
 require_once(dirname(__FILE__)."/includes.php");

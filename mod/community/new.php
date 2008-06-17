@@ -11,27 +11,16 @@
         //run("friends:init");
         run("communities:init");
 
+        require_login();
+
         $context = (defined('COMMUNITY_CONTEXT'))?COMMUNITY_CONTEXT:"network";
 
         define("context", $context);
         templates_page_setup();
 
-    // Whose friends are we looking at?
-        global $page_owner;
-
-    // You must be logged on to view this!
-    //    protect(1);
-
         $title = run("profile:display:name") . " :: " . __gettext("Owned Communities");
+        $body = run('communities:create', array($page_owner));
 
-        echo templates_page_draw( array(
-                    $title, templates_draw(array(
-                        'context' => 'contentholder',
-                        'title' => $title,
-                        'body' => run("communities:create",array($page_owner))
-                    )
-                    )
-                )
-                );
+        templates_page_output($title, $body);
 
 ?>

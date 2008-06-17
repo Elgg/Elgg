@@ -1,0 +1,90 @@
+label {
+ margin: 0;
+ padding: 0;
+}
+
+input {
+   width: auto;
+   font-size: 1em;
+	line-height: 1.2em;
+   font-weight:normal;
+	padding: 2px 4px;
+}
+
+textarea {
+   background-color: #FFF;
+   color: #000;
+   border: 1px solid #CCC;
+   font-size: 1em;
+   padding: 3px;
+	margin: 0 0 5px;
+	width:100%;
+	height:360px;
+}
+
+.form-item {
+	padding: 10px;
+	border-bottom: 1px #ddd dotted;
+	clear: both;
+}
+
+.form-item .input-label {
+	float: left;
+	text-align: right;
+	font-weight: bold;
+	width: 150px;		
+}
+
+.form-item .input-text {
+	width: 300px;
+}
+
+.form-item .input-numeric {
+	width: 35px;
+	text-align: right;
+}
+
+.form-item .input-disabled {
+	color: #ccc;
+}
+
+
+.form-item input,
+.form-item select {
+	margin-left: 10px;
+	border: 1px #ccc solid;
+	background: #eee;
+	color: #333;
+}
+
+.form-item input:focus, 
+.form-tiem select:focus {
+	background: #fff;
+	color: #000;
+}
+
+.form-item span {
+	display: block;
+	font-size: 0.9em;
+	color: #666;
+	padding-top: 5px;
+	padding-left: 160px;
+	line-height: 1.2em;
+}
+
+.form-buttons {
+	text-align: center;
+}
+
+.form-error {
+	background: #f7dad8;
+}
+
+.checkbox {
+ background: #fff;
+ border: none;
+ margin: 0;
+ padding: 0;
+}
+
+

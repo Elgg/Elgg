@@ -9,18 +9,8 @@ if (isset($parameter[0])) {
     $community_name = user_info('username',$community_id);
     $community_owner = user_info('owner',$community_id);
 
-    if(COMMUNITY_ALLOW_COMMUNITY_TYPE_MEMBERS){
-      $result = get_records_sql('SELECT u.*, f.ident AS friendident FROM '.$CFG->prefix.'friends f
-                               JOIN '.$CFG->prefix.'users u ON u.ident = f.owner
-                               WHERE f.friend = ?',array($community_id));
-      
-    }
-    else{
-      $result = get_records_sql('SELECT u.*, f.ident AS friendident FROM '.$CFG->prefix.'friends f
-                               JOIN '.$CFG->prefix.'users u ON u.ident = f.owner
-                               WHERE f.friend = ? AND u.user_type = ?',array($community_id,'person'));
-    }
-
+    $result = run('community:members:data',array($community_id));
+    $members = '';
     $i = 1;
     if (!empty($result)) {
         foreach($result as $key => $info) {

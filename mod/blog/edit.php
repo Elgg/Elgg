@@ -9,6 +9,8 @@
         run("profile:init");
         run("friends:init");
 
+        require_login();
+
         global $page_owner;
         if (!logged_on) {
             $page_owner = -1;
@@ -23,25 +25,13 @@
         define("context", $extensionContext);
         templates_page_setup();
 
-        $type = (array_key_exists('name',$CFG->weblog_extensions[$extensionContext]))?
-                $CFG->weblog_extensions[$extensionContext]['name']
-                :__gettext("Blog");
+        $type = blog_get_extension($extensionContext, 'name');
 
         $title = run("profile:display:name") . " :: " . $type;
 
         $body = run("content:weblogs:edit");
         $body .= run("weblogs:edit");
 
-        $body = templates_draw(array(
-                        'context' => 'contentholder',
-                        'title' => $title,
-                        'body' => $body
-                    )
-                    );
-
-        echo templates_page_draw( array(
-                    $title, $body
-                )
-                );
+        templates_page_output($title, $body);
 
 ?>

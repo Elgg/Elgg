@@ -16,7 +16,7 @@
     // Whose files are we looking at?
 
         global $CFG, $page_owner, $owner, $folder;
-        $title = run("profile:display:name") . " :: ". __gettext("Files") ."";
+        $title = user_info("name", page_owner()) . " :: ". __gettext("Files") ."";
 
         $folder_object = get_record('file_folders','files_owner',$owner,'ident',$folder);
 
@@ -31,15 +31,6 @@
             $body .= $CFG->folders->handler[$folder_object->handler]->function_name($folder_object);
         }
         
-        echo templates_page_draw( array(
-                    $title,
-                    templates_draw(array(
-                            'context' => 'contentholder',
-                            'title' => $title,
-                            'body' => $body
-                        )
-                        )
-                )
-                );
+        templates_page_output($title, $body);
                 
 ?>

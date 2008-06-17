@@ -54,6 +54,17 @@ if (!$maintables) {
                 }
                 //execute_sql("update ".$CFG->prefix."users set email = ". $db->qstr($CFG->sysadminemail) ." where username = 'news'");
                 set_field('users', 'email', $CFG->sysadminemail, 'username', 'news');
+                // store sysadminemail in db
+                set_config('sysadminemail', $CFG->sysadminemail);
+
+                // change initial administrator if it's set
+                /*
+                if (!empty($CFG->newsinitialusername)) {
+                    set_field('users', 'name', 'Administrator', 'username', 'news');
+                    set_field('users', 'username', $CFG->newsinitialusername, 'username', 'news');
+                }
+                 */
+
             } else {
                 $db->debug = false;
                 error("Error: Main databases NOT set up successfully");

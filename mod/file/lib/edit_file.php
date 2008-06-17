@@ -8,7 +8,7 @@ if (!empty($file_id)) {
     $file = get_record_sql('SELECT f.*,u.username FROM '.$CFG->prefix.'files f 
                                     JOIN '.$CFG->prefix.'users u ON u.ident = f.owner 
                                     WHERE f.ident = ?',array($file_id));
-    if (!empty($file)  && (run("permissions:check", array("files:edit",$file->owner)) || run("permissions:check", array("files:edit",$file->files_owner)))) {
+    if (!empty($file)  && (permissions_check("files:edit",$file->owner) || permissions_check("files:edit",$file->files_owner))) {
         $page_owner = $file->files_owner;
         
         $description = stripslashes($file->description);

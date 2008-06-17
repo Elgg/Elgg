@@ -27,7 +27,7 @@
 /**
  * Contains the reknown class "t3lib_div" with general purpose functions
  *
- * $Id: class.t3lib_div.php,v 1.93 2005/12/26 23:59:37 kurfuerst Exp $
+ * $Id: class.t3lib_div.php,v 1.2 2005/10/17 15:48:29 stronk7 Exp $
  * Revised for TYPO3 3.6 July/2003 by Kasper Skaarhoj
  * XHTML compliant
  * Usage counts are based on search 22/2 2003 through whole source including tslib/
@@ -466,11 +466,11 @@ class t3lib_div {
 	 * Truncate string
 	 * Returns a new string of max. $chars length.
 	 * If the string is longer, it will be truncated and appended with '...'.
-	 * DEPRECATED. Works ONLY for single-byte charsets! USE t3lib_div::fixed_lgd_cs() instead
+	 * DEPRECIATED. Works ONLY for single-byte charsets! USE t3lib_div::fixed_lgd_cs() instead
 	 * Usage: 39
 	 *
-	 * @param	string		string to truncate
-	 * @param	integer		must be an integer with an absolute value of at least 4. if negative the string is cropped from the right end.
+	 * @param	string		$string 	string to truncate
+	 * @param	integer		$chars 	must be an integer with an absolute value of at least 4. if negative the string is cropped from the right end.
 	 * @param	string		String to append to the output if it is truncated, default is '...'
 	 * @return	string		new string
 	 * @see fixed_lgd_pre()
@@ -492,11 +492,11 @@ class t3lib_div {
 	 * Returns a new string of max. $chars length.
 	 * If the string is longer, it will be truncated and prepended with '...'.
 	 * This works like fixed_lgd, but is truncated in the start of the string instead of the end
-	 * DEPRECATED. Use either fixed_lgd() or fixed_lgd_cs() (with negative input value for $chars)
+	 * DEPRECIATED. Use either fixed_lgd() or fixed_lgd_cs() (with negative input value for $chars)
 	 * Usage: 6
 	 *
-	 * @param	string		string to truncate
-	 * @param	integer		must be an integer of at least 4
+	 * @param	string		$string 	string to truncate
+	 * @param	integer		$chars 	must be an integer of at least 4
 	 * @return	string		new string
 	 * @see fixed_lgd()
 	 */
@@ -509,8 +509,8 @@ class t3lib_div {
 	 * Use only from backend!
 	 * Usage: 75
 	 *
-	 * @param	string		string to truncate
-	 * @param	integer		must be an integer with an absolute value of at least 4. if negative the string is cropped from the right end.
+	 * @param	string		$string 	string to truncate
+	 * @param	integer		$chars 	must be an integer with an absolute value of at least 4. if negative the string is cropped from the right end.
 	 * @return	string		New string
 	 * @see fixed_lgd()
 	 */
@@ -623,8 +623,8 @@ class t3lib_div {
 	/**
 	 * Match fully qualified domain name with list of strings with wildcard
 	 *
-	 * @param	string		The current remote IP address for instance, typ. REMOTE_ADDR
-	 * @param	string		A comma-list of domain names to match with. *-wildcard allowed but cannot be part of a string, so it must match the full host name (eg. myhost.*.com => correct, myhost.*domain.com => wrong)
+	 * @param	string		$baseIP is the current remote IP address for instance, typ. REMOTE_ADDR
+	 * @param	string		$list is a comma-list of domain names to match with. *-wildcard allowed but cannot be part of a string, so it must match the full host name (eg. myhost.*.com => correct, myhost.*domain.com => wrong)
 	 * @return	boolean		True if a domain name mask from $list matches $baseIP
 	 */
 	function cmpFQDN($baseIP, $list)        {
@@ -665,8 +665,8 @@ class t3lib_div {
 	 * Removes an item from a comma-separated list of items.
 	 * Usage: 1
 	 *
-	 * @param	string		element to remove
-	 * @param	string		comma-separated list of items (string)
+	 * @param	string		$element  	element to remove
+	 * @param	string		$list 	comma-separated list of items (string)
 	 * @return	string		new comma-separated list of items
 	 */
 	function rmFromList($element,$list)	{
@@ -681,7 +681,7 @@ class t3lib_div {
 	 * Expand a comma-separated list of integers with ranges (eg 1,3-5,7 becomes 1,3,4,5,7).
 	 * Ranges are limited to 1000 values per range.
 	 *
-	 * @param	string		comma-separated list of integers with ranges (string)
+	 * @param	string		$list 	comma-separated list of integers with ranges (string)
 	 * @return	string		new comma-separated list of items
 	 * @author	Martin Kutschker <martin.kutschker@activesolution.at>
 	 */
@@ -751,23 +751,6 @@ class t3lib_div {
 	}
 
 	/**
-	 * Returns true if the current TYPO3 version (or compatibility version) is compatible to the input version
-	 *
-	 * @param	string		Minimum version number required (format x.y.z)
-	 * @return	boolean		true or false
-	 */
-	function compat_version($verNumberStr)	{
-		global $TYPO3_CONF_VARS;
-		$currVersionStr = $TYPO3_CONF_VARS['SYS']['compat_version']?$TYPO3_CONF_VARS['SYS']['compat_version']:TYPO3_version;
-
-		if (t3lib_div::int_from_ver($currVersionStr) < t3lib_div::int_from_ver($verNumberStr))	{
-			return FALSE;
-		} else {
-			return TRUE;
-		}
-	}
-
-	/**
 	 * Makes a positive integer hash out of the first 7 chars from the md5 hash of the input
 	 * Usage: 5
 	 *
@@ -797,7 +780,7 @@ class t3lib_div {
 	 * Usage: 16
 	 *
 	 * @param	string		Accept multiple parameters wich can be comma-separated lists of values and arrays.
-	 * @param	mixed		$secondParameter: Dummy field, which if set will show a warning!
+	 * @param	mixed		$secondParameter: Dummy field, which is set will show a warning!
 	 * @return	string		Returns the list without any duplicates of values, space around values are trimmed
 	 */
 	function uniqueList($in_list, $secondParameter=NULL)	{
@@ -904,7 +887,7 @@ class t3lib_div {
 
 	/**
 	 * strtoupper which converts danish (and other characters) characters as well
-	 * (DEPRECATED, use t3lib_cs::conv_case() instead or for HTML output, wrap your content in <span class="uppercase">...</span>)
+	 * (DEPRECIATED, use t3lib_cs::conv_case() instead or for HTML output, wrap your content in <span class="uppercase">...</span>)
 	 * Usage: 0
 	 *
 	 * @param	string		String to process
@@ -919,7 +902,7 @@ class t3lib_div {
 	/**
 	 * Change umlaut characters to plain ASCII with normally two character target
 	 * Only known characters will be converted, so don't expect a result for any character.
-	 * (DEPRECATED: Works only for western europe single-byte charsets! Use t3lib_cs::specCharsToASCII() instead!)
+	 * (DEPRECIATED: Works only for western europe single-byte charsets! Use t3lib_cs::specCharsToASCII() instead!)
 	 *
 	 * ä => ae, Ö => Oe
 	 *
@@ -1209,8 +1192,8 @@ class t3lib_div {
 	 * Please note that the order of parameters is reverse compared to the php4-function in_array()!!!
 	 * Usage: 3
 	 *
-	 * @param	array		one-dimensional array of items
-	 * @param	string		item to check for
+	 * @param	array		$in_array		one-dimensional array of items
+	 * @param	string		$item 	item to check for
 	 * @return	boolean		true if $item is in the one-dimensional array $in_array
 	 * @internal
 	 */
@@ -2092,7 +2075,7 @@ class t3lib_div {
 		$content = '';
 
 			// (Proxy support implemented by Arco <arco@appeltaart.mine.nu>)
-		if ((substr($url,0,7)=='http://') && ($GLOBALS['TYPO3_CONF_VARS']['SYS']['curlUse']=='1'))	{
+		if((substr($url,0,7)=='http://') && ($GLOBALS['TYPO3_CONF_VARS']['SYS']['curlUse']=='1'))	{
 			//external URL without error checking.
 			$ch = curl_init();
 			curl_setopt ($ch,CURLOPT_URL, $url);
@@ -2113,17 +2096,13 @@ class t3lib_div {
 			$content=curl_exec ($ch);
 			curl_close ($ch);
 			return $content;
-		} elseif (function_exists('file_get_contents'))	{
-			return file_get_contents($url);
-		} elseif ($fd = fopen($url,'rb'))    {
+		} elseif($fd = fopen($url,'rb'))    {
 			while (!feof($fd))	{
-				$content.=fread($fd, 4096);
+				$content.=fread($fd, 5000);
 			}
 			fclose($fd);
 			return $content;
 		}
-
-		return false;
 	}
 
 	/**
@@ -2135,23 +2114,14 @@ class t3lib_div {
 	 * @return	boolean		True if the file was successfully opened and written to.
 	 */
 	function writeFile($file,$content)	{
-		if (!@is_file($file))	{ $changePermissions=true; }
+		if($fd = fopen($file,'wb'))	{
+			fwrite( $fd, $content);
+			fclose( $fd );
 
-		if ($fd = fopen($file,'wb'))	{
-			$res = fwrite($fd,$content);
-			fclose($fd );
-
-			if (!$res)	{
-				return false;
-			}
-			if ($changePermissions)	{	// Change the permissions only if the file has just been created
-				t3lib_div::fixPermissions($file);
-			}
+			t3lib_div::fixPermissions($file);	// Change the permissions of the file
 
 			return true;
 		}
-
-		return false;
 	}
 
 	/**
@@ -2498,9 +2468,9 @@ class t3lib_div {
 	 * @return	void
 	 */
 	function debug($var="",$brOrHeader=0)	{
-		if ($brOrHeader && !t3lib_div::testInt($brOrHeader))	{
-			echo '<table class="typo3-debug" border="0" cellpadding="0" cellspacing="0" bgcolor="white" style="border:0px; margin-top:3px; margin-bottom:3px;"><tr><td style="background-color:#bbbbbb; font-family: verdana,arial; font-weight: bold; font-size: 10px;">'.htmlspecialchars((string)$brOrHeader).'</td></tr><tr><td>';
-		} elseif ($brOrHeader<0)	{
+		if ($brOrHeader && !t3lib_div::testInt($brOrHeader)) {
+			echo '<table border="0" cellpadding="0" cellspacing="0" bgcolor="white" style="border:0px; margin-top:3px; margin-bottom:3px;"><tr><td style="background-color:#bbbbbb; font-family: verdana,arial; font-weight: bold; font-size: 10px;">'.htmlspecialchars((string)$brOrHeader).'</td></tr><td>';
+		} elseif ($brOrHeader<0) {
 			for($a=0;$a<abs(intval($brOrHeader));$a++){echo '<br />';}
 		}
 
@@ -2510,75 +2480,22 @@ class t3lib_div {
 			echo '<b>|Object:<pre>';
 			print_r($var);
 			echo '</pre>|</b>';
-		} elseif ((string)$var!='')	{
+		} elseif ((string)$var!='') {
 			echo '<b>|'.htmlspecialchars((string)$var).'|</b>';
 		} else {
 			echo '<b>| debug |</b>';
 		}
 
-		if ($brOrHeader && !t3lib_div::testInt($brOrHeader))	{
+		if ($brOrHeader && !t3lib_div::testInt($brOrHeader)) {
 			echo '</td></tr></table>';
-		} elseif ($brOrHeader>0)	{
+		} elseif ($brOrHeader>0) {
 			for($a=0;$a<intval($brOrHeader);$a++){echo '<br />';}
 		}
 	}
 
-	/**
-	 *
-	 */
-	function debug_trail()	{
-		if (function_exists('debug_backtrace'))	{
-			$trail = debug_backtrace();
-			$trail = array_reverse($trail);
-			array_pop($trail);
 
-			$path = array();
-			foreach($trail as $dat)	{
-				$path[] = $dat['class'].$dat['type'].$dat['function'];
-			}
 
-			return implode(' // ',$path);
-		} else return 'N/A';
-	}
 
-	function debugRows($rows,$header)	{
-		if (is_array($rows))	{
-			reset($rows);
-			$firstEl = current($rows);
-			if (is_array($firstEl))	{
-				$headerColumns = array_keys($firstEl);
-				$tRows = array();
-
-					// Header:
-				$tRows[] = '<tr><td colspan="'.count($headerColumns).'" style="background-color:#bbbbbb; font-family: verdana,arial; font-weight: bold; font-size: 10px;"><strong>'.htmlspecialchars($header).'</strong></td></tr>';
-				$tCells = array();
-				foreach($headerColumns as $key)	{
-					$tCells[] = '
-							<td><font face="Verdana,Arial" size="1"><strong>'.htmlspecialchars($key).'</strong></font></td>';
-				}
-				$tRows[] = '
-						<tr>'.implode('',$tCells).'
-						</tr>';
-
-					// Rows:
-				foreach($rows as $singleRow)	{
-					$tCells = array();
-					foreach($headerColumns as $key)	{
-						$tCells[] = '
-							<td><font face="Verdana,Arial" size="1">'.htmlspecialchars($singleRow[$key]).'</font></td>';
-					}
-					$tRows[] = '
-						<tr>'.implode('',$tCells).'
-						</tr>';
-				}
-
-				$table = '
-					<table border="1" cellpadding="1" cellspacing="0" bgcolor="white">'.implode('',$tRows).'
-					</table>';
-				echo $table;
-			} else debug('Empty array of rows',$header);
-		} else debug('No array of rows',$header);
-	}
 
 
 
@@ -3207,7 +3124,6 @@ class t3lib_div {
 	 * @return	array		Value of $LOCAL_LANG found in the included file. If that array is found it's returned. Otherwise an empty array
 	 */
 	function readLLfile($fileRef,$langKey)	{
-
 		$file = t3lib_div::getFileAbsFileName($fileRef);
 		if ($file)	{
 			$baseFile = ereg_replace('\.(php|xml)$', '', $file);
@@ -3364,8 +3280,6 @@ class t3lib_div {
 	 * @return	array		An array with two num. keys: key0: The data structure is returned in this key (array) UNLESS an error happend in which case an error string is returned (string). key1: The used sheet key value!
 	 */
 	function resolveSheetDefInDS($dataStructArray,$sheet='sDEF')	{
-		if (!is_array ($dataStructArray)) return 'Data structure must be an array';
-
 		if (is_array($dataStructArray['sheets']))	{
 			$singleSheet = FALSE;
 			if (!isset($dataStructArray['sheets'][$sheet]))	{
@@ -3929,10 +3843,9 @@ class t3lib_div {
 	 * Explode a string (normally a list of filenames) with whitespaces by considering quotes in that string. This is mostly needed by the imageMagickCommand function above.
 	 *
 	 * @param	string		The whole parameters string
-	 * @param	boolean		If set, the elements of the resulting array are unquoted.
 	 * @return	array		Exploded parameters
 	 */
-	function unQuoteFilenames($parameters,$unQuote=FALSE)	{
+	function unQuoteFilenames($parameters)	{
 		$paramsArr = explode(' ', trim($parameters));
 
 		$quoteActive = -1;	// Whenever a quote character (") is found, $quoteActive is set to the element number inside of $params. A value of -1 means that there are not open quotes at the current position.
@@ -3950,11 +3863,6 @@ class t3lib_div {
 			}
 		}
 
-		if($unQuote) {
-			foreach($paramsArr as $key=>$val) {
-				$paramsArr[$key]=preg_replace('/(^"|"$)/','',$val);
-			}
-		}
 		return $paramsArr;
 	}
 }

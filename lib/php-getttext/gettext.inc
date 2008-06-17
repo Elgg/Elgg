@@ -98,14 +98,19 @@ function _get_codeset($domain=null) {
  * Convert the given string to the encoding set by bind_textdomain_codeset.
  */
 function _encode($text) {
-	$source_encoding = mb_detect_encoding($text);
-	$target_encoding = _get_codeset();
-	if ($source_encoding != $target_encoding) {
-		return mb_convert_encoding($text, $target_encoding, $source_encoding);
-	}
-	else {
-		return $text;
-	}
+    // TODO: check support for mbstring functions
+    if (extension_loaded('mbstring')) {
+        $source_encoding = mb_detect_encoding($text);
+        $target_encoding = _get_codeset();
+        if ($source_encoding != $target_encoding) {
+            return mb_convert_encoding($text, $target_encoding, $source_encoding);
+        }
+        else {
+            return $text;
+        }
+    } else {
+        return $text;
+    }
 }
 
 
@@ -128,7 +133,7 @@ function _setlocale($category, $locale) {
     } else {
         $ret = 0;
         if (function_exists('setlocale')) // I don't know if this ever happens ;)
-           $ret = setlocale($category, $locale);
+			$ret = setlocale($category, $locale);
         if (($ret and $locale == '') or ($ret == $locale)) {
             $EMULATEGETTEXT = 0;
             $CURRENTLOCALE = $ret;

@@ -71,7 +71,9 @@ if (isset($parameter)) {
     } else {
         $usericon = $specialicon;
     }
-
+    if ($usericon == 0) { 
+      $usericon = -1;
+    }
     // Allow plugins to set the name on the post
     $specialname = run("weblogs:posts:getname",$post);
     if (empty($specialname)) {
@@ -84,26 +86,22 @@ if (isset($parameter)) {
     $title .= htmlspecialchars($post->title, ENT_COMPAT, 'utf-8');
 
     if ($post->owner != $post->weblog) {
-
-        if ($post_authors[$post->owner]->icon == -1) {
+        if (empty($specialicon) && $post_authors[$post->owner]->icon == -1) {
             $usericon = $post_authors[$post->weblog]->icon;
         }
 
-        $fullname .= " @ " . $post_authors[$post->weblog]->fullname;
+        //$fullname .= " @ " . $post_authors[$post->weblog]->fullname;
+        $fullname = sprintf(__gettext("%s - %s"),$post_authors[$post->weblog]->fullname,$fullname);
         $username = user_info('username', $post->weblog);
     }
 
     //Getting the field from the context extension
     $extensionContext = trim(optional_param('extension','weblog'));
-    if(array_key_exists($extensionContext,$CFG->weblog_extensions)
-        && isset($CFG->weblog_extensions[$extensionContext]['type'])
-        && isset($CFG->weblog_extensions[$extensionContext]['field'])
-        && isset($CFG->weblog_extensions[$extensionContext]['values'])){
-        $extraType  = $CFG->weblog_extensions[$extensionContext]['type'];
-        $extraField = $CFG->weblog_extensions[$extensionContext]['field'];
-        $extraValue = $CFG->weblog_extensions[$extensionContext]['values'];
-        $filter = $extraType;
-    }
+    $extraType = blog_get_extension($extensionContext, 'type');
+    $extraField = blog_get_extension($extensionContext, 'field');
+    $extraValue = blog_get_extension($extensionContext, 'values');
+    $extraTypes = blog_get_extension($extensionContext, 'extra_type', array());
+    $filter = $extraType;
 
     $body = run("weblogs:text:process", $post->body);
     $More = __gettext("More");
@@ -124,13 +122,12 @@ if (isset($parameter)) {
 END;
     }
     // if ($post->owner == $_SESSION['userid'] && logged_on) {
-    if (run("permissions:check",array("weblog:edit",$post->owner))) {
+    if (run("permissions:check",array("weblog:edit",$post->owner,$post->weblog))) {
         $Edit = __gettext("Edit");
-        $returnConfirm = __gettext("Are you sure you want to permanently delete this weblog post?");
         $Delete = __gettext("Delete");
         $links = <<< END
                     | <a href="{$CFG->wwwroot}{$username}/$extensionContext/edit/{$post->ident}">$Edit</a> |
-                    <a href="{$CFG->wwwroot}mod/blog/action_redirection.php?action=delete_weblog_post&amp;delete_post_id={$post->ident}&amp;extension={$extensionContext}" onclick="return confirm('$returnConfirm')">$Delete</a>
+                    <a href="{$CFG->wwwroot}mod/blog/action_redirection.php?action=delete_weblog_post&amp;delete_post_id={$post->ident}&amp;extension={$extensionContext}">$Delete</a>
 END;
     } else {
         $links = "";
@@ -183,10 +180,9 @@ END;
                 foreach($comments as $comment) {
                     $commentmenu = "";
                     if (logged_on && ($comment->owner == $_SESSION['userid'] || run("permissions:check",array("weblog:edit",$post->owner)))) {
-                        $returnConfirm = __gettext("Are you sure you want to permanently delete this weblog comment?");
                         $Delete = __gettext("Delete");
                         $commentmenu = <<< END
-                        <a href="{$CFG->wwwroot}mod/blog/action_redirection.php?action=weblog_comment_delete&amp;weblog_comment_delete={$comment->ident}&amp;extension={$extensionContext}" onclick="return confirm('$returnConfirm')">$Delete</a>
+                        <a href="{$CFG->wwwroot}mod/blog/action_redirection.php?action=weblog_comment_delete&amp;weblog_comment_delete={$comment->ident}&amp;extension={$extensionContext}">$Delete</a>
 END;
                     }
                     $comment->postedname = htmlspecialchars($comment->postedname, ENT_COMPAT, 'utf-8');
@@ -199,7 +195,7 @@ END;
                         $comment->icon = '<a href="' . url . $commentownerusername . '/">' . user_icon_html($comment->owner,50) . "</a>";
                         $comment->body = run("weblogs:text:process", array($comment->body, false));
                     } else {
-                        $comment->icon = "<img src=\"" . $CFG->wwwroot . "_icons/data/default.png\" width=\"50\" height=\"50\" align=\"left\" alt=\"\" />";
+                        $comment->icon = user_icon_html(-1,50);
                         $comment->body = run("weblogs:text:process", array($comment->body, true));
                     }
 
@@ -229,7 +225,7 @@ END;
                                                 'context' => 'weblogpost',
                                                 'date' => $date,
                                                 'username' => $username,
-                                                'usericon' => user_icon_html(user_info_username("ident",$username)),
+                                                'usericon' => icon_html($usericon/*user_info_username("ident",$username)*/),
                                                 'body' => $body,
                                                 'fullname' => $fullname,
                                                 'title' => $postTitle,
@@ -270,12 +266,12 @@ END;
                                             'context' => 'weblogpost',
                                             'date' => $date,
                                             'username' => $username,
-                                            'usericon' => user_icon_html(user_info_username("ident",$username)),
+                                            'usericon' => icon_html($usericon/*user_info_username("ident",$username)*/),
                                             'body' => $body,
                                             'fullname' => $fullname,
                                             'title' => $postTitle,
-                                            //'commentslink' => $comments,
-                                            'links' => $comments . $links,
+                                            'commentslink' => $comments,
+                                            'links' => $links,
                                             'postedby' => $postedby
                                             )
                                       );

@@ -25,18 +25,27 @@ function community_pagesetup() {
     global $PAGE;
     global $CFG;
     global $USER;
-    global $metatags;
 
     require_once (dirname(__FILE__)."/default_template.php");
     require_once (dirname(__FILE__)."/lib/communities_config.php");
-
-    $metatags .= "<link rel=\"stylesheet\" href=\"" . $CFG->wwwroot . "mod/community/css.css\" type=\"text/css\" media=\"screen\" />";
 
     $page_owner = $profile_id;
 
     $usertype = user_type($page_owner);
 
     $username= user_info('username', $page_owner);
+
+    if (isloggedin()) {
+        if(COMMUNITY_CONTEXT!="network"){
+          if (defined("context") && context == COMMUNITY_CONTEXT /*&& $page_owner == $_SESSION['userid']*/) {
+            $PAGE->menu[] = array( 'name' => 'community',
+                                   'html' => "<li><a href=\"{$CFG->wwwroot}{$_SESSION['username']}/communities\" class=\"selected\" >" .__gettext("Your Communities").'</a></li>');
+          } else{
+                $PAGE->menu[] = array( 'name' => 'community',
+                                       'html' => "<li><a href=\"{$CFG->wwwroot}{$_SESSION['username']}/communities\" >" .__gettext("Your Communities").'</a></li>');
+          }
+        }
+    }
 
     if ($usertype == "community") {
 
@@ -75,7 +84,11 @@ function community_pagesetup() {
               $PAGE->menu_sub[] = array( 'name' => 'community:requests',
                                          'html' => a_href("{$CFG->wwwroot}{$username}/community/requests",
                                                            __gettext("View membership requests")));
-            }
+
+              $PAGE->menu_sub[] = array( 'name' => 'community:invite',
+                                         'html' => a_href("{$CFG->wwwroot}{$username}/community/invite",
+                                                           __gettext("Invite people")));
+              }
         }
         
         if (defined("context") && context == "profile") {
@@ -95,7 +108,6 @@ function community_pagesetup() {
     
             }
         }
-        
     } else if ($usertype == "person") {
 
         if (defined("context") && context == COMMUNITY_CONTEXT) {
@@ -128,27 +140,31 @@ function community_pagesetup() {
     $PAGE->search_menu[] = array( 'name' => __gettext("Communities"),
                                   'user_type' => 'community');
 
+    // Add membership requests to the personal network page
+    if (defined("context") && context == "network" && isloggedin() && $page_owner == $_SESSION['userid']) {
+          $PAGE->menu_sub[] = array( 'name' => 'membership:invites',
+                                   'html' => a_href( "{$CFG->wwwroot}{$username}/communities/invitations",
+                                                      __gettext("Community invitations")));
+    }
 }
 
 function community_init() {
         global $CFG,$function;
 
     // Add communities to access levels
-        include($CFG->dirroot . "mod/community/lib/communities_access_levels.php");
+        $function['init'][] = $CFG->dirroot . "mod/community/lib/communities_access_levels.php";
         $function['userdetails:init'][] = $CFG->dirroot . "mod/community/lib/userdetails_actions.php";
 
     // Communities actions
         $function['communities:init'][] = $CFG->dirroot . "mod/community/lib/communities_config.php";
         $function['communities:init'][] = $CFG->dirroot . "mod/community/lib/communities_actions.php";
 
-    // Communities modifications of friends actions
-        //$function['friends:init'][] = $CFG->dirroot . "mod/community/lib/communities_actions.php";
-
     // Communities bar down the right hand side
         $function['display:sidebar'][] = $CFG->dirroot . "mod/community/lib/communities_owned.php";
         $function['display:sidebar'][] = $CFG->dirroot . "mod/community/lib/community_memberships.php";
 
     // 'Communities' aspect to the little menus beneath peoples' icons
+        $function['community:infobox:menu'][] = $CFG->dirroot . "mod/community/lib/user_info_menu.php";
         $function['users:infobox:menu:text'][] = $CFG->dirroot . "mod/community/lib/user_info_menu_text.php";
 
     // Permissions for communities
@@ -177,59 +193,34 @@ function community_init() {
     // Edit profile details
         $function['userdetails:edit'][] = $CFG->dirroot . "mod/community/lib/userdetails_edit.php";
 
+    // Get the community members
+        $function['community:members:data'][] = $CFG->dirroot ."mod/community/lib/community_members_data.php";
+        $function['community:members:count'][] = $CFG->dirroot ."mod/community/lib/community_members_count.php";
+        $function['community:membership'][] = $CFG->dirroot ."mod/community/lib/community_membership.php";
+        $function['community:membership:check'][] = $CFG->dirroot ."mod/community/lib/community_membership_check.php";
+        $function['community:membership:data'][] = $CFG->dirroot ."mod/community/lib/community_membership_data.php";
+
+    // Add/ Remove community members
+        $function['community:member:add'][] = $CFG->dirroot ."mod/community/lib/community_member_add.php";
+        $function['community:member:remove'][] = $CFG->dirroot ."mod/community/lib/community_member_remove.php";
+
+    // Add owner as member
+        listen_for_event("community","publish","community_owner_as_member");
+
     // Delete users
         listen_for_event("user","delete","community_user_delete");
         
-    // Register file river hook (if there)
-    	if (function_exists('river_save_event'))
-    	{
-    		listen_for_event('community','publish', 'community_river_hook');
-    		listen_for_event('community','delete', 'community_river_hook');
-    
-    		river_register_friendlyname_hook('community::community', 'community_get_friendly_name');
-    	}
-        
+        register_user_type('community');
 }
 
-function community_get_friendly_name($object_type, $object_id)
-{
-	global $CFG;
+function community_owner_as_member($object_type,$event,$object){
+  global $messages;
+  if($object_type=="community" && $event=="publish" && !empty($object->ident)){
+    $_messages = run('community:member:add',array($object->ident));
+    $messages = array_merge($messages,$_messages);
 
-	if ($object_type == 'community::community')
-	{
-		$record = get_record_sql("SELECT * from {$CFG->prefix}users where ident=$object_id and user_type = 'community'");
-
-		if ($record)
-		{
-			$community = user_info("name", $record->ident);
-			$url = river_get_userurl($record->ident);
-			
-			return sprintf(__gettext("the community <a href=\"$url\">%s</a>"), $community);
-		}
-	}
-
-	return "";
-}
-
-function community_river_hook( $object_type, $event, $object)
-{
-	global $CFG;
-
-	$userid = ($_SESSION['userid'] == "" ? -1 : $_SESSION['userid']);
-	$object_id = $object->ident;
-	$object_owner = $object->owner;
-	$title = trim($object->name);
-
-	$username = user_info("name", $userid);
-	$weblogname = "<a href=\"" . river_get_userurl($userid) . "\">". user_info("name", $object_id) . "</a>'s";
-	if ($userid == $object_owner) $weblogname = __gettext("their");
-
-	if ($username == false) $username = __gettext("Anonymous user");
-	
-	if ($event == "publish")
-		river_save_event($userid, $object_id, $object_owner, $object_type, "<a href=\"" .  river_get_userurl($userid) . "\">$username</a> created the community <a href=\"{$CFG->wwwroot}{$object->username}\">{$object->name}</a>.");
-
-	return $object;
+  }
+  return $object;
 }
 
 function community_user_delete($object_type, $event, $object) {
@@ -255,6 +246,33 @@ function community_user_delete($object_type, $event, $object) {
 //          $members = get_records("friends","friend",$page_owner);
 
     return $object;
+}
+
+function community_permissions_check($object_type, $object_owner) {
+    $result = null;
+
+    switch ($object_type) {
+        case 'files':
+            // members have access to upload files or create directories
+            if (run('community:membership:check', array($_SESSION['userid'], $object_owner))) {
+                $result = true;
+            }
+            break;
+        case 'files:edit':
+            // community owner can edit all files
+            if (record_exists('users', 'ident', $object_owner, 'owner', $_SESSION['userid'])) {
+                $result = true;
+            }
+            break;
+        case 'profile':
+            // owner can edit profile
+            if (record_exists('users', 'ident', $object_owner, 'owner', $_SESSION['userid'])) {
+                $result = true;
+            }
+            break;
+    }
+
+    return $result;
 }
 
 

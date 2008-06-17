@@ -1,0 +1,11 @@
+.weblog-title {
+	margin:10px 0 10px 10px;
+}
+
+.post {
+	margin:10px 0 10px 10px;
+}
+
+.info {
+	margin:10px 0 0px 0px;
+}

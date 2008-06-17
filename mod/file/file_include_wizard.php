@@ -44,6 +44,7 @@
       $folders[$folder->parent][$folder->ident]="$folder->name";
      }
  }
+ $directories = '';
  $keys = array_keys($folders);
  for($i=0;$i<count($keys);$i++){
    if(is_array($folders[$keys[$i]])){
@@ -70,16 +71,19 @@
  $user_files = get_records_sql("select * from {$CFG->prefix}files where folder = {$folder_id} and files_owner = {$owner}");
 
  if(!empty($user_files)){
-   $files.="<ul>";
+   $files="<ul>";
    foreach($user_files as $file){
      $file_name = (!empty($file->title))?$file->title:$file->originalname;
      $extension = strtolower(substr($file->originalname,strpos($file->originalname,".")+1));
      $type=(array_key_exists($extension,get_mimetype_array()))?" $extension":"";
      if(ALLOW_WIZARD_FILE_DELETE){
+        //FIXME: set form key to pass require_confirm
+        $form_key = elggform_key_get('confirm');
+
        $redirect_url = "{$CFG->wwwroot}mod/file/file_include_wizard.php?owner={$owner}&folder={$folder_id}";
        $delete_msg = __gettext("Are you sure you want to permanently delete this file?");
        $delete="&nbsp;&nbsp;";
-       $delete.="<a onclick=\"return confirm('$delete_msg')\" href=\"{$CFG->wwwroot}mod/file/action_redirection.php?action=delete_file&delete_file_id={$file->ident}&redirection=".rawurlencode($redirect_url)."\">";
+       $delete.="<a onclick=\"return confirm('$delete_msg')\" href=\"{$CFG->wwwroot}mod/file/action_redirection.php?action=delete_file&delete_file_id={$file->ident}&redirection=".rawurlencode($redirect_url)."&amp;form_key=$form_key\">";
        $delete.="<img src=\"{$CFG->wwwroot}mod/file/fileicons/del.png\" border=\"0\"></a>";
      }
      $files.="<li><a class=\"mediafile$type\" href=\"#\" onclick=\"{$function_name}('$field','$file->ident')\">$file_name</a>$delete</li>";

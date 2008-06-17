@@ -496,8 +496,8 @@ CREATE TABLE `prefix_feeds` (
 
 CREATE TABLE `prefix_messages` (
   `ident` int(11) NOT NULL auto_increment,
-  `title` text NOT NULL default '',
-  `body` text NOT NULL default '',
+  `title` text NOT NULL,
+  `body` text NOT NULL,
   `from_id` int(11) NOT NULL,
   `to_id` int(11) NOT NULL,
   `posted` int(11) NOT NULL,

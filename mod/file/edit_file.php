@@ -16,20 +16,11 @@
     // Whose files are we looking at?
 
         global $page_owner;
-        $title = run("profile:display:name") . " :: " . __gettext("Edit File");
+        $title = user_info("name", page_owner()) . " :: " . __gettext("Edit File");
 
         $body = run("content:files:edit");
         $body .= run("files:edit");
         
-        echo templates_page_draw( array(
-                    $title,
-                    templates_draw(array(
-                            'context' => 'contentholder',
-                            'title' => $title,
-                            'body' => $body
-                        )
-                        )
-                )
-                );
+        templates_page_output($title, $body);
                 
 ?>

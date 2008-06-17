@@ -3,12 +3,18 @@
 /**
  * Library of functions for handling input validation 
  * and some HTML generation
- * This library is a combination of bits of lib/weblib.php
+ * 
+ * This library incorporates portions of bits of lib/weblib.php
  * and lib/moodlelib.php from moodle
  * http://moodle.org || http://sourceforge.net/projects/moodle
- * Copyright (C) 2001-2003  Martin Dougiamas  http://dougiamas.com 
+ * 
+ * @copyright Copyright (C) 2001-2003  Martin Dougiamas  http://dougiamas.com 
+ * @author Curverider Ltd
  * @author Martin Dougiamas and many others
+ * @link http://elgg.org/
  * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
+ * @package elgg
+ * @subpackage elgg.lib
  */
 
 
@@ -442,7 +448,7 @@ function sesskey() {
  * @return bool|string Returns "true" if mail was sent OK, "emailstop" if email
  *          was blocked by user and "false" if there was another sort of error.
  */
-function email_to_user($user, $from, $subject, $messagetext, $messagehtml='', $attachment='', $attachname='', $usetrueaddress=true, $repyto='', $replytoname='') {
+function email_to_user($user, $from, $subject, $messagetext, $messagehtml='', $attachment='', $attachname='', $usetrueaddress=true, $replyto='', $replytoname='') {
 
     global $CFG;
     $textlib = textlib_get_instance();
@@ -563,6 +569,8 @@ function email_to_user($user, $from, $subject, $messagetext, $messagehtml='', $a
             $mail->AddAttachment($attachment, $attachname, 'base64', $mimetype);
         }
     }
+
+    $mail = plugin_hook("mail","create",$mail);
 
     if ($mail->Send()) {
         //        set_send_count($user); // later
@@ -1066,7 +1074,7 @@ function cleardoubleslashes ($path) {
  *
  * @return string The remote IP address
  */
- function getremoteaddr() {
+function getremoteaddr() {
     if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
         return cleanremoteaddr($_SERVER['HTTP_CLIENT_IP']);
     }
@@ -1259,10 +1267,10 @@ function get_performance_info() {
     // Grab the load average for the last minute
     // /proc will only work under some linux configurations
     // while uptime is there under MacOSX/Darwin and other unices
-    if (is_readable('/proc/loadavg') && $loadavg = @file('/proc/loadavg')) {
+    if (!@ini_get('open_basedir') && is_readable('/proc/loadavg') && $loadavg = @file('/proc/loadavg')) {
         list($server_load) = explode(' ', $loadavg[0]);
         unset($loadavg);
-    } else if ( function_exists('is_executable') && is_executable('/usr/bin/uptime') && $loadavg = `/usr/bin/uptime` ) {
+    } else if (!@ini_get('open_basedir') && function_exists('is_executable') && is_executable('/usr/bin/uptime') && $loadavg = `/usr/bin/uptime` ) {
         if (preg_match('/load averages?: (\d+[\.:]\d+)/', $loadavg, $matches)) {
             $server_load = $matches[1];
         } else {
@@ -2018,6 +2026,97 @@ function print_textfield ($name, $value, $alt = '',$size=50,$maxlength= 0,$retur
 
 }
 
+/**
+ * Check if system reached account limit
+ * @return boolean
+ */
+function maxusers_limit() {
+    global $CFG;
+
+    $limit = isset($CFG->maxusers) ? intval($CFG->maxusers) : 0;
+
+    if ($limit > 0 && count_users('person') >= $limit) {
+        return true;
+    }
+    
+    return false;
+}
+
+/**
+ * Validates username 
+ * @param string $username The username to validate
+ * @return boolean
+ */
+function validate_username($username) {
+    global $CFG;
+
+    $minchars = isset($CFG->username_minchars) ? intval($CFG->username_minchars) : 3;
+    $maxchars = isset($CFG->username_maxchars) ? intval($CFG->username_maxchars) : 12;
+
+    // TODO: modifying regex needs update rewrite rules
+    $regex = sprintf('/^[A-Za-z0-9]{%d,%d}$/i', $minchars, $maxchars); // letters and numbers only
+
+    // TODO: should allow plugins to extend validation?
+
+    if (!preg_match($regex, $username)) {
+        return false;
+    }
+    
+    return true;
+}
+
+/**
+ * Check if username is available
+ * @param string $username The username to check availability 
+ * @return boolean
+ */
+function username_is_available($username) {
+
+    if (!validate_username($username)) {
+        return false;
+    }
+
+    if (record_exists('users', 'username', $username)) {
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * Validates password
+ * @param string $password1 The password to validate
+ * @param string $password2 The 2nd password to verify that match
+ * @return boolean
+ */
+function validate_password($password1, $password2=null) {
+    global $CFG;
+
+    $minchars = isset($CFG->password_minchars) ? intval($CFG->password_minchars) : 6;
+    $maxchars = isset($CFG->password_maxchars) ? intval($CFG->password_maxchars) : 32;
+
+    // TODO: should allow plugins to extend validate?
+    // could help to enforce passwords
+
+    if (empty($password1) || (empty($password2) || $password1 != $password2)) {
+        return false;
+    }
+
+    // TODO: from units/users/userdetails_actions.php
+    /*
+    if (!preg_match('/^[a-z0-9]*$/i', $password1)) { // only allow letters and numbers
+        return false;
+    }
+     */
+
+    $len = strlen($password1);
+
+    if ($len < $minchars || $len > $maxchars) {
+        return  false;
+    }
+    
+    return true;
+}
 
 /**
  * Validates an email to make sure it makes sense and adheres
@@ -3277,7 +3376,7 @@ function authenticate_account($username,$password) {
     if (user_flag_get("banned", $user->ident)) { // this needs to change.
         $ok = false;
         $user = false;
-        $USER = false;
+        $USER = fill_legacy_user_session(null); // guest user
         global $messages;
         $messages[] = __gettext("You have been banned from the system!");
         return false;
@@ -3301,39 +3400,81 @@ function cookied_login() {
     global $USER;
     if((!empty($_COOKIE[AUTH_COOKIE])) && $ticket = md5($_COOKIE[AUTH_COOKIE])) {
         if ($user = get_record('users','code',$ticket)) {
-            $USER = $user;
+            $user = (array) $user;
+            foreach ($user as $attr => $val){
+                $USER->$attr = $val;
+            }
             
             /*** TODO: Create Proper Abstraction Interface - don't use file binding -- ugh ***/
-            if (!user_flag_get("banned",$USER->ident)) {
+            if (!check_banned()) {
                 $USER = init_user_var($USER);
                 return true;
-            } else {
-                global $messages;
-                $messages[] = __gettext("You have been banned from the system!");
-                return false;
             }
         }
     }
 }
 
 /**
- * elgg doesn't have a 'login' page yet, but it will so this can stay here for now
+ * Check if current user is banned
  */
-function require_login() {
-    global $USER, $SESSION,$FULLME;
+function check_banned() {
+    global $CFG, $USER;
+
+    static $banned;
+
+    if (!isset($banned) && user_flag_get("banned",$USER->ident)) {
+        // Seek and destroy user data!!!
+        $_SESSION = array();
+        session_destroy();
+
+        // Destroy cookie! yummie yummie
+        setcookie(session_name(), '', time()-84600, $CFG->cookiepath);
+
+        // Clear magic code
+        setcookie(AUTH_COOKIE, '', time()-84600, $CFG->cookiepath);
+
+        // Now becomes into guest
+        $USER = fill_legacy_user_session();
+
+        // For human deception... :D
+        $_SESSION['messages'][] = __gettext('You have been banned from the system!');
+
+        $banned = true;
+    }
+
+    return $banned;
+}
+
+/**
+ * Require login, if not logged redirect to login page and set return url
+ *
+ * @param string $flag required user's flag
+ * @param mixed $required_uid require user id on array of user's id
+ */
+function require_login($user_flag=null, $required_uid=null) {
+    global $USER, $SESSION,$FULLME,$CFG, $messages;
     
     // Check to see if there's a persistent cookie
     cookied_login();
     
     // First check that the user is logged in to the site.
-    if (empty($USER->loggedin) || $USER->site != $CFG->wwwroot) {
-        $SESSION->wantsurl = $FULLME;
-        if (!empty($_SERVER['HTTP_REFERER'])) {
-            $SESSION->fromurl  = $_SERVER['HTTP_REFERER'];
-        }
-        $USER = NULL;
-        redirect($CFG->wwwroot .'login/index.php');
-        exit;
+    if (!isloggedin()) {
+        // back to this page
+        $_SESSION['redirect_url'] = $_SERVER['REQUEST_URI'];
+        header_redirect($CFG->wwwroot . 'login/index.php', __gettext('You need to log in to see this page.'));
+    }
+
+    // check for required uid's, if not admin
+    if (isset($required_uid) && !isadmin()
+        && ((is_array($required_uid) && !in_array($_SERVER['userid'], $required_uid))
+            || $_SESSION['userid'] == $required_uid))
+    {
+        header_redirect($CFG->wwwroot . $USER->username, __gettext("Sorry, but you don't have access to this page."));
+    }
+
+    // Check user's flag
+    if (isset($user_flag) && !isadmin() && !user_flag_get($user_flag, $_SESSION['userid'])) {
+        header_redirect($CFG->wwwroot . $USER->username, __gettext("Sorry, but you don't have access to this page."));
     }
 
     // Make sure current IP matches the one for this session (if required)
@@ -3348,6 +3489,43 @@ function require_login() {
 
     return true;
 }
+
+/**
+ * Redirects to other url using header() function
+ *
+ * @param string $url url to redirect
+ * @param string $message optional message
+ * @param string $status http status
+ */
+function header_redirect($url, $message=null, $status=null) {
+    global $messages;
+    // add message
+    if (isset($messages)) {
+        $messages[] = $message;
+    }
+    // save messages
+    $_SESSION['messages'] = $messages;
+
+    // echo status code
+    switch ($status) {
+        case '301':
+        case 'permanent':
+            header('HTTP/1.1 301 Moved Permanently');
+            break;
+        case '403':
+        case 'denied':
+            header('HTTP/1.0 404 Not Found');
+            break;
+        case '404':
+        case 'notfound':
+            header('HTTP/1.1 403 Access Denied');
+            break;
+    }
+    // redirect and exit
+    header('Location: ' . $url);
+    exit();
+}
+
 
 
 function remember_login($id) {
@@ -3384,7 +3562,116 @@ function isloggedin() {
     if (empty($USER->ident) && empty($USER->loggedin)) {
         cookied_login();
     }
-    return (!empty($USER->ident) && !empty($USER->loggedin));
+    $loggedin = (!empty($USER->ident) && !empty($USER->loggedin));
+
+    // check if user is banned
+    if ($loggedin && check_banned()) {
+        $loggedin = false;
+    }
+
+    return $loggedin;
+}
+
+/**
+ * Request confirmation to perform some action
+ *
+ * @param string $message Message to show on request
+ * @param mixed $vars array of parameters to re-send needed to continue action
+ * @return bool true if sucessful confirmed
+ */
+function require_confirm($message, $vars=null) {
+    global $CFG;
+
+    $form_key = optional_param('form_key');
+
+    // check if pass key verification
+    if (elggform_key_check($form_key, 'confirm')) {
+        // pass form key verification
+        return true;
+    }
+    else {
+        // build form key and show form
+        $form_key = elggform_key_get('confirm');
+        $title = __gettext('Please confirm your action');
+
+        $sContinue = __gettext('Continue');
+        $sBack = __gettext('Back');
+
+        // add form key
+        $vars['form_key'] = $form_key;
+
+        // add parameters
+        $inputs = '';
+        foreach ($vars as $name => $value) {
+            $value = htmlspecialchars($value, ENT_COMPAT, 'utf-8'); // prevent messing code
+            $inputs .= "<input type=\"hidden\" id=\"{$name}\" name=\"{$name}\" value=\"{$value}\" />\n";
+        }
+
+        // add buttons
+        //$inputs .= "<input type=\"button\" value=\"{$sBack}\" onclick=\"history.back()\" />\n";
+        $inputs .= "<a href=\"#\" onclick=\"history.back(); return false;\">{$sBack}</a> or ";
+        $inputs .= "<input type=\"submit\" name=\"submit\" value=\"{$sContinue}\" />\n";
+
+        $body = "<div id=\"confirm-form\">\n";
+        $body .= "<form name=\"confirm-form\" action=\"\" method=\"post\">\n";
+        $body .= templates_draw(array(
+            'context' => 'databox',
+            'name' => $message,
+            'column1' => $inputs,
+            ));
+
+        $body .= "</form>\n";
+        $body .= "</div>\n";
+
+        // show form
+        templates_page_output($title, $body);
+    }
+
+    return false;
+}
+
+/**
+ * Generate a secret key to use in forms
+ *
+ * @param string $form_name form name identificator
+ * @return string generated key
+ */
+function elggform_key_get($form_name) {
+    //build secret key
+    $form_key = md5($_SESSION['userid'] . time());
+    //store secret in session
+    $_SESSION['form'][$form_name] = array('key' => $form_key, 'timestamp' => time());
+    // return key
+    return $form_key;
+}
+
+/**
+ * Check form secret key
+ *
+ * @param string $form_key key to check
+ * @param string $form_name form name identificator
+ * @return bool true if key matchs
+ */
+function elggform_key_check($form_key, $form_name) {
+    // clear old keys based on timestamp, delta 1 day
+    if (isset($_SESSION['form'][$form_name]['timestamp'])
+        && $_SESSION['form'][$form_name]['timestamp'] < time() - 86400) {
+        unset($_SESSION['form'][$form_name]);
+    }
+
+    // check if pass key verification
+    if (!empty($form_key)
+        && !empty($_SESSION['form'][$form_name]['key'])
+        && $form_key == $_SESSION['form'][$form_name]['key']) {
+        // pass form key verification
+        $result = true;
+    } else {
+        $result = false;        
+    }
+
+    // clear anyway
+    unset($_SESSION['form'][$form_name]);
+    return $result;
 }
 
 function get_string($s) {
@@ -3476,20 +3763,29 @@ function get_config($name=NULL) {
     global $CFG;
 
     if (!empty($name)) { // the user is asking for a specific value
-        return get_record('datalists', 'name', $name);
+        // return config from cfg object if it's set
+        if (!isset($CFG->$name)) {
+            $CFG->$name = get_record('datalists', 'name', $name);
+        }
+
+        return $CFG->$name;
     }
 
     // this was originally in setup.php
     if ($configs = get_records('datalists')) {
         $localcfg = (array)$CFG;
+        $forcedcfg = (array)get_manual_config();
         foreach ($configs as $config) {
             if (!isset($localcfg[$config->name])) {
                 $localcfg[$config->name] = $config->value;
             } else {
-                if ($localcfg[$config->name] != $config->value ) {
+                if ($localcfg[$config->name] != $config->value && !in_array($config->name, array_keys($forcedcfg))) {
                     // complain if the DB has a different
                     // value than config.php does
-                    error_log("\$CFG->{$config->name} in config.php ({$localcfg[$config->name]}) overrides database setting ({$config->value})");
+                    //error_log("\$CFG->{$config->name} in config.php ({$localcfg[$config->name]}) overrides database setting ({$config->value})");
+
+                    //Rho: override config values with ones provided in database
+                    $localcfg[$config->name] = $config->value;
                 }
             }
         }
@@ -3501,6 +3797,12 @@ function get_config($name=NULL) {
         return $CFG;
     }
 
+}
+
+function get_manual_config() {
+    $CFG = new Stdclass;
+    include(dirname(dirname(__FILE__)) . '/config.php');
+    return (array)$CFG;
 }
 
 function guest_user() {
@@ -4188,11 +4490,14 @@ function activate_urls ($str) {
  * @return integer
  */
 function page_owner() {
-    
+
+    global $page_owner; 
     static $owner, $called;
     if (!$called) {
         
-        $owner = optional_param('owner',-1,PARAM_INT);
+        // use page_owner global if exists
+        $default = empty($page_owner) ? -1 : $page_owner;
+        $owner = optional_param('owner',$default,PARAM_INT);
         if ($allmods = get_list_of_plugins('mod') ) {
            foreach ($allmods as $mod) {
                $mod_page_owner = $mod . '_page_owner';
@@ -4209,6 +4514,115 @@ function page_owner() {
     }
     
     return $owner;
+}
+
+/**
+ *  Returns whether or not the current logged in user has permission to edit
+ *  a resource owned by a given account.
+ *  @param string $objecttype The type of object
+ *  @param int $owner The owning account's ident
+ *  @return boolean $permissions True or false
+ */
+
+function permissions_check($objecttype, $owner) {
+    
+    static $permissions_check;
+
+    if (empty($objecttype) || !is_numeric($owner)) {
+        trigger_error(__FUNCTION__.": invalid arguments (object type: $objecttype, owner: $owner)");
+    }
+
+    // admins have access to everything
+    if (isadmin()) {
+        return true;
+    }
+    
+    if (isset($permissions_check[$objecttype][$owner])) {
+        return $permissions_check[$objecttype][$owner];
+    }
+    
+    if ($allmods = get_list_of_plugins('mod')) {
+        foreach ($allmods as $mod) {
+            $mod_permissions_check = $mod . "_permissions_check";
+            if (function_exists($mod_permissions_check)) {
+                if ($value = $mod_permissions_check($objecttype, $owner)) {
+                    $permissions_check[$objecttype][$owner] = $value;
+                    return $value;
+                }
+            }
+        }
+    }
+    
+    return false;
+    
+}
+
+/*
+ * Returns size in human readable format
+ * @param string $size The size in bytes
+ * @param string $format The printf-like output format
+ * @return string 
+ */
+
+function size_readable($size, $format=null) {
+    $size = (int)$size;
+    $format = empty($format) ? '%.2f %s' : (string)$format;
+
+    $sizes = array(
+        'Gb' => 1073741824,
+        'Mb' => 1048576,
+        'Kb' => 1024,
+        'bytes' => 1,
+        );
+
+    $result = '';
+
+    foreach ($sizes as $unit => $bytes) {
+        if ($size > $bytes) {
+            $result = sprintf($format, $size/$bytes, $unit);
+            break;
+        }
+    }
+
+    return $result;
+}
+
+/**
+ * Returns an array of results from each relevant module
+ *
+ * This function runs the specified hook function for each module
+ * that has the hook (possibly restricted to a supplied list of module names). 
+ *
+ * @param string $hook the name of the module hook we want to invoke
+ * @param int  $object_id the object id to apply the hook to (can be empty)
+ * @param string  $object_type the type of the object to apply the hook to (can be empty)
+ * @param array $modules an array of module names (can be empty)
+ * @param array $modules an array of values keyed by keyed by parameter names to pass to the hook function (can be empty)
+ * @return array an array of results keyed by module name
+ */
+
+function action($hook,$object_id=0, $object_type='', $modules = NULL, $parameters = NULL ) {
+    global $CFG;
+
+    $results = array();
+    if (!$modules) {
+        //if (!$CFG->plugins) {
+            $CFG->plugins = get_list_of_plugins('mod');
+        //}
+        $modules = $CFG->plugins;
+    }
+    foreach ($modules as $mod) {
+        $mod_function = $mod . '_'.$hook;
+        if (function_exists($mod_function)) {
+           if ($parameters) {
+                $results[$mod] = $mod_function($object_id,$object_type,$parameters);
+            } else {
+                $results[$mod] = $mod_function($object_id,$object_type);
+            }
+        }
+    }
+    
+    return $results;
 }
 
 ?>

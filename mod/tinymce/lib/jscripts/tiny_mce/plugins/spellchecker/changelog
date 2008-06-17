@@ -1,0 +1,28 @@
+Version 1.0.5 (2007-05-28)
+	Fixed issue where FF was crashing if you hide a element. Workaround for FF bug.
+Version 1.0.4 (2007-04-23)
+	Fixed so that it's easier to debug. Invalid server responses is displayed.
+	Fixed bug where CURL could have SSL but not fsockopen.
+	Fixed bug where magic quotes wasn't handled correctly.
+	Fixed encoding bug of ' characters.
+Version 1.0.3.1 (2007-01-10)
+	Added fix for Gecko browsers starting to produce spans instead of strong/em etc after a spellcheck.
+Version 1.0.3 (2007-01-09)
+	Fixed bug where spellchecker was stealing focus in explorer.
+	Fixed bug where IE produced two words on a spellcheck after chars inside the word was removed.
+	Fixed so that curl isn't required for the Google speller class if you use PHP 4.3.0+.
+	Fixed issue with version not being displayed in about dialog.
+	Fixed bug where focus on windows where lost if they executed a cleanup.
+	Fixed typo on the spellchecker_report_misspellings option, added missing s.
+	Fixed issue with progress dialog not being presented correctly. Contributed by Mike Engelhart.
+Version 1.0.2 (2006-08-02)
+	Added new spellchecker_report_mispellings option, contributed by Jeremy B.
+	Fixed various regexp bugs and issues. Some where contributed by Jeremy B.
+	Fixed the Google speller class so it uses curl, patch contributed by Yuriy Kramar.
+	Fixed encoding issues with language specific characters, patch contributed by codepit.
+	Fixed bug where the spellchecker wasn't working in MSIE if the editor was placed in a P tag.
+Version 1.0.1 (2006-05-05)
+	Since sourceforge has a serious bug when it comes to replacing files with the same name this release was necessary.
+	Goggle spellchecker class was added.
+Version 1.0 (2006-05-03)
+	Official first release.

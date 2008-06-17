@@ -48,7 +48,7 @@
 	 * null on failure
 	 */
 
-	function ldap_init_connection($host, $port, $protocol_ver, $bind_dn='', $bind_pwd='') {
+	function ldap_init_connection($host, $port, $protocol_version, $bind_dn='', $bind_pwd='') {
 
 		global $messages;
 
@@ -56,7 +56,7 @@
 
         $ds = @ldap_connect($host, $port);
 
-        @ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, $version);
+        @ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, $protocol_version);
 
         // Start the LDAP bind process
 
@@ -89,6 +89,8 @@
 	 */
 
 	function ldap_do_auth($ds, $basedn, $username, $password, $filter_attr, $search_attr) {
+
+	global $messages;
 
         $sr = @ldap_search($ds, $basedn, $filter_attr ."=". $username, array_values($search_attr));
 
@@ -126,24 +128,15 @@
 	}
 
 	/**
-	  * checks if the LDAP username is valid by elgg
-	  * TODO - this should be a library function somewhere.
-	  * IMPORTANT - Currently (1Jun07) this differs from the normal elgg 
-	  * username check as LDAP can have long usernames and non-alphanum
-	  * characters. A clear policy needs to be decided on in this matter
-	  */
-
-	function elgg_valid_username($username){
-        return preg_match("/^[A-Za-z0-9.\-]{3,20}$/",$username);
-	}
-
-	/**
 	  * creates an entry in the elgg database for the given username and 
 	  * password and LDAP entry
 	  */
 
 	function ldap_create_elgg_user($username, $password, $user_info) {
-		if(! elgg_valid_username($username)) {
+
+		global $messages;
+
+		if(!validate_username($username)) {
             $messages[] = __gettext("Error! LDAP Username does not meet Elgg requirements");
         } else {
             // Does the user already exist?
@@ -162,15 +155,36 @@
                 $user->user_type = 'person';
                 $user->owner = -1;
 
-                $user_id = insert_record('users',$user);
+                $user = plugin_hook("user", "create", $user);
+                
+                if (!empty($user)) {
+                    $user_id = insert_record('users', $user);
 
-                if (!empty($user_id)) {
-                    $rssresult = run("weblogs:rss:publish", array($uid, false));
-                    $rssresult = run("files:rss:publish", array($uid, false));
-                    $rssresult = run("profile:rss:publish", array($uid, false));
+                    if (!empty($user_id)) {
+                        $user->ident = $user_id;
+                        // adds "virtual" friend, so that user has at least one connection
+                        $owner = 0;
+                        $f = new StdClass;
+                        $f->owner = $owner;
+                        $f->friend = $user_id;
+                        insert_record('friends',$f);
+                        $f->owner = $user_id;
+                        $f->friend = $owner;
+                        insert_record('friends',$f);
+
+                        $user = plugin_hook("user", "publish", $user);
+                        
+                        $rssresult = run("weblogs:rss:publish", array($user_id, false));
+                        $rssresult = run("files:rss:publish", array($user_id, false));
+                        $rssresult = run("profile:rss:publish", array($user_id, false));
+                        
+                        $messages[] = sprintf(__gettext("User %s was created."), $username);
+                    } else {
+                        // User creation failed
+                        $messages[] = sprintf(__gettext("User addition %d failed: Unknown reason, please contact you system administrator."), $username);
+                    }
                 } else {
-                    // User creation failed
-                    $messages[] = sprintf(__gettext("User addition %d failed: Unknown reason, please contact you system administrator."), $username);
+                    $messages[] = sprintf(__gettext("User addition %d failed: an event listener failed to return the object."), $username);
                 }
             }
         }
@@ -184,7 +198,7 @@
     function ldap_authenticate_user_login($username, $password) {
         global $CFG, $messages;
 
-        if (!function_exists(ldap_connect)) {
+        if (!function_exists('ldap_connect')) {
             $messages[] = 'No PHP LDAP module available, please contact the system administrator.';
             return false;
         }
@@ -254,7 +268,7 @@
 
             	// If we need to create the user
 
-            	if ($CFG->ldap_user_create == true) {
+            	if (username_is_available($username) && $CFG->ldap_user_create == true) {
             		ldap_create_elgg_user($username, $password,$ldap_user_info);
 				}
 

@@ -35,12 +35,12 @@ END;
         if (user_type($page_owner) == "person") {
             $personalWeblog = __gettext("Personal blog");
             $body .= <<< END
-                <li><a href="{$CFG->wwwroot}{$weblog_username}/weblog/">$personalWeblog</a> (<a href="{$CFG->wwwroot}{$weblog_username}/weblog/rss"><img src="{$CFG->wwwroot}mod/template/icons/rss.png" alt="RSS" border="0" /></a>)</li>
+                <li><a href="{$CFG->wwwroot}{$weblog_username}/weblog/">$personalWeblog</a> <a href="{$CFG->wwwroot}{$weblog_username}/weblog/rss"><img src="{$CFG->wwwroot}mod/template/icons/rss.png" alt="RSS" border="0" /></a></li>
 END;
         } else if (user_type($page_owner) == "community") {
             $communityWeblog = __gettext("Community blog");
             $body .= <<< END
-                <li><a href="{$CFG->wwwroot}{$weblog_username}/weblog/">$communityWeblog</a> (<a href="{$CFG->wwwroot}{$weblog_username}/weblog/rss"><img src="{$CFG->wwwroot}mod/template/icons/rss.png" alt="RSS" border="0" /></a>)</li>
+                <li><a href="{$CFG->wwwroot}{$weblog_username}/weblog/">$communityWeblog</a> <a href="{$CFG->wwwroot}{$weblog_username}/weblog/rss"><img src="{$CFG->wwwroot}mod/template/icons/rss.png" alt="RSS" border="0" /></a></li>
 END;
         }
         $blogArchive = __gettext("Weblog Archive");

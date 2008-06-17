@@ -7,11 +7,17 @@
         global $CFG;
         $CFG->display_field_module['profile_photo'] = "profile_photo";
         listen_for_event("user","publish","profile_photo_user_publish");
+        
+        // Trick to set data if the checkbox hasn't been ticked, solves access setting problem for profile picture 
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['profiledetails']['profilephoto']) && isset($_POST['_profile_photo_name']))
+        {
+            $_POST['profiledetails']['profilephoto'] = $_POST['_profile_photo_name'];
+        }
     }
 
     function profile_photo_user_publish($object_type, $event, $object) {
         global $data;
-        if ($object_type == "user" && $event == "publish" && is_array($data['profile:details']) && !empty($data['profile:details'])) {
+        if ($object_type == "user" && $event == "publish" && isset($data['profile:details']) && is_array($data['profile:details']) && !empty($data['profile:details'])) {
             foreach($data['profile:details'] as $profileitem) {
                 if ($profileitem->field_type == "profile_photo") {
                     $profile_data = new stdClass;
@@ -40,6 +46,7 @@
                 $html .= "<label for=\"$cleanid\"><input name=\"".$parameter[0]."\" type=\"checkbox\" id=\"$cleanid\" value=\"photo\" />";
                 $html .= __gettext("Click here to remove this photo.");
                 $html .= "</label>";
+                $html .= '<input type="hidden" name="_profile_photo_name" value="'.$file->value.'"/>';
             } else {
                 $html .= "<input name=\"profile_photo_".$parameter[3]."\" type=\"file\" /><br />";
                 $html .= "<label for=\"$cleanid\"><input name=\"".$parameter[0]."\" type=\"checkbox\" id=\"$cleanid\" value=\"photo\" />";

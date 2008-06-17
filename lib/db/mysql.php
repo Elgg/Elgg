@@ -327,34 +327,34 @@ function main_upgrade($oldversion=0) {
         // Clean up slashes
         
         execute_sql("update {$CFG->prefix}weblog_posts set title = replace(title,'\\\\\'','\'')");
-        execute_sql("update {$CFG->prefix}weblog_posts set title = replace(title,'\\\"','\"')");
+        execute_sql("update {$CFG->prefix}weblog_posts set title = replace(title,'\\\\\"','\"')");
         execute_sql("update {$CFG->prefix}weblog_posts set body = replace(body,'\\\\\'','\'')");
-        execute_sql("update {$CFG->prefix}weblog_posts set body = replace(body,'\\\"','\"')");
+        execute_sql("update {$CFG->prefix}weblog_posts set body = replace(body,'\\\\\"','\"')");
         
         execute_sql("update {$CFG->prefix}weblog_comments set body = replace(body,'\\\\\'','\'')");
-        execute_sql("update {$CFG->prefix}weblog_comments set body = replace(body,'\\\"','\"')");
+        execute_sql("update {$CFG->prefix}weblog_comments set body = replace(body,'\\\\\"','\"')");
         execute_sql("update {$CFG->prefix}weblog_comments set postedname = replace(postedname,'\\\\\'','\'')");
         execute_sql("update {$CFG->prefix}weblog_comments set postedname = replace(postedname,'\\\"','\"')");
         
         execute_sql("update {$CFG->prefix}tags set tag = replace(tag,'\\\\\'','\'')");
-        execute_sql("update {$CFG->prefix}tags set tag = replace(tag,'\\\"','\"')");
+        execute_sql("update {$CFG->prefix}tags set tag = replace(tag,'\\\\\"','\"')");
         
         execute_sql("update {$CFG->prefix}files set title = replace(title,'\\\\\'','\'')");
-        execute_sql("update {$CFG->prefix}files set title = replace(title,'\\\"','\"')");
+        execute_sql("update {$CFG->prefix}files set title = replace(title,'\\\\\"','\"')");
         execute_sql("update {$CFG->prefix}files set description = replace(description,'\\\\\'','\'')");
-        execute_sql("update {$CFG->prefix}files set description = replace(description,'\\\"','\"')");
+        execute_sql("update {$CFG->prefix}files set description = replace(description,'\\\\\"','\"')");
         
         execute_sql("update {$CFG->prefix}file_folders set name = replace(name,'\\\\\'','\'')");
-        execute_sql("update {$CFG->prefix}file_folders set name = replace(name,'\\\"','\"')");
+        execute_sql("update {$CFG->prefix}file_folders set name = replace(name,'\\\\\"','\"')");
         
         execute_sql("update {$CFG->prefix}profile_data set value = replace(value,'\\\\\'','\'')");
-        execute_sql("update {$CFG->prefix}profile_data set value = replace(value,'\\\"','\"')");
+        execute_sql("update {$CFG->prefix}profile_data set value = replace(value,'\\\\\"','\"')");
         
         execute_sql("update {$CFG->prefix}users set name = replace(name,'\\\\\'','\'')");
-        execute_sql("update {$CFG->prefix}users set name = replace(name,'\\\"','\"')");
+        execute_sql("update {$CFG->prefix}users set name = replace(name,'\\\\\"','\"')");
         
         execute_sql("update {$CFG->prefix}groups set name = replace(name,'\\\\\'','\'')");
-        execute_sql("update {$CFG->prefix}groups set name = replace(name,'\\\"','\"')");
+        execute_sql("update {$CFG->prefix}groups set name = replace(name,'\\\\\"','\"')");
         
     }
     

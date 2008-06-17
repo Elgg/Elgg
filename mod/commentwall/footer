@@ -1,0 +1,3 @@
+<div id="commentwall_footer">
+	<p>{{prevbutton}} {{nextbutton}}</p>
+</div>

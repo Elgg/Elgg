@@ -108,6 +108,9 @@ END;
 }
 else{
   $type =(isset($extraType))?$extraType:$extensionContext;
-  $run_result = "<p>".sprintf(__gettext("You currently don't have any %s"), strtolower($type))."</p>";
+  $emptyText = "<p>".sprintf(__gettext("There is no content in this %s yet."), strtolower($type))."</p>";
+  $empty = run("weblog:nocontent:description",$type);
+  $emptyText = (empty($empty))?$emptyText:$empty;
+  $run_result = $emptyText;
 }
 ?>

@@ -40,6 +40,7 @@ class ElggProfile2 extends ElggProfile {
         // $first_column_fields = array('biography','likes','dislikes');
         // $id_block_fields = array('gender','town','country','birth_date');
 
+        
         // Cycle through all defined profile detail fields and display them
 
         $allvalues = get_records('profile_data','owner',$this->id);
@@ -105,10 +106,21 @@ class ElggProfile2 extends ElggProfile {
                                                            'column1' => "<a href=\"{$CFG->wwwroot}profile/extended.php?profile_name={$username}\">" . __gettext("Click here to view extended profile") . "</a>"
                                                            )
                                    );
-        $run_result .= '</div>'."\n".'<div class="profile_secondary">'."\n";
+        $run_result .= '</div>'."\n";        
+        $run_result .= '<div class="profile_secondary">'."\n";
+        
         $run_result .= $secondcol;
         $run_result .= "</div>\n";
         $run_result .= '<div class="profile_main_bottom"></div>'."</div>\n";
+
+                
+        // Draw the user's comment wall
+		if (function_exists("commentwall_displayonprofile")) {
+			
+			$offset = optional_param('offset', 0);
+			$limit = optional_param('limit', 3);
+			$run_result .= commentwall_displayonprofile($page_owner, $limit, $offset); 
+		}  
         
         $view = array();
         $view['body'] = $run_result;
@@ -296,13 +308,6 @@ $title = $profile->display_name();
 // $title = 'Profile';
 $view  = $profile->view();
 
-$body  = templates_draw( array(
-                               'context' => 'contentholder',
-                               'title' => $title,
-                               'body' => $view['body'],
-                               ));
-
-//echo templates_page_draw(array($title, $body, NULL, $view['widgets']));
-echo templates_page_draw(array($title, $body));
+templates_page_output($title, $view['body']);
 
 ?>

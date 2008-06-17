@@ -6,10 +6,10 @@
 // This is compared against the values stored in the database to determine
 // whether upgrades should be performed (see lib/db/*.php)
 
-   $version = 2007070501;  // YYYYMMDD   = Elgg Date
+   $version = 2008061701;  // YYYYMMDD   = Elgg Date
                            //         X  = Elgg Point release (0,1,2...)
                            //          Y = Interim incrementer
 
-   $release = '0.8.2';    // Human-friendly version name
+   $release = '0.9.2';    // Human-friendly version name
 
 ?>

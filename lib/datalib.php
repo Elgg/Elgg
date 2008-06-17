@@ -41,7 +41,7 @@ function execute_sql($command, $feedback=true) {
 
     if ($result) {
         // elggcache_purge(); // TODO - should probably be here, given function can do anything, but very inefficient
-        if ($feedback) {
+        if ($feedback && $CFG->debug > 7) {
             notify(__gettext('Success'), 'notifysuccess');
         }
         return true;
@@ -692,7 +692,7 @@ function get_record_sql($sql, $values=null, $expectmultiple=false, $nolimit=fals
             notify('Very strange error in get_record_sql !');
             print_object($rs);
         }
-        print_continue("$CFG->wwwroot/$CFG->admin/config.php");
+        //print_continue("$CFG->wwwroot/$CFG->admin/config.php");
     }
 }
 
@@ -833,7 +833,7 @@ function get_recordset_list($table, $field='', $values=null, $sort='', $fields='
         $select = '';
     }
 
-    get_recordset_select($table, $select, $values, $sort, $fields, $limitfrom, $limitnum);
+    return get_recordset_select($table, $select, $values, $sort, $fields, $limitfrom, $limitnum);
 }
 
 /**

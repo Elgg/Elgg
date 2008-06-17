@@ -39,7 +39,7 @@
                 $widget = new stdClass;
                 $widget->owner = $page_owner;
                 $widget->type = $widget_type;
-                $widget->access = "user" . $_SESSION['userid'];
+                $widget->access = $CFG->default_access;
                 $widget->location = "profile";
                 $widget->location_id = 0;               
                 $widget_id = insert_record('widgets',$widget);
@@ -75,6 +75,10 @@
                     $body .= "</div>";
                     $body .= "</form>";
                     
+                    if ($i % 2 == 1 ||
+                        $i == (sizeof($CFG->widgets->list)-1)) {
+                        $body .= "</div>\n";
+                    }
                 }
                 
             }                
@@ -83,17 +87,6 @@
             $body = "<p>" . __gettext("You do not have permission to add widgets to this profile.") . "</p>";
         }
         
-    // Output to the screen
-        $body = templates_draw(array(
-                        'context' => 'contentholder',
-                        'title' => $title,
-                        'body' => $body
-                    )
-                    );
-        
-        echo templates_page_draw( array(
-                        $title, $body
-                    )
-                    );
-    
+        templates_page_output($title, $body);
+
 ?>

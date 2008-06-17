@@ -309,16 +309,6 @@ END;
 }
 
 // Output to the screen
-$body = templates_draw(array(
-                'context' => 'contentholder',
-                'title' => $title,
-                'body' => $body
-            )
-            );
-
-echo templates_page_draw( array(
-                $title, $body
-            )
-            );
+templates_page_output($title, $body);
 
 ?>

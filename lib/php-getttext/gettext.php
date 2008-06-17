@@ -109,9 +109,9 @@ class gettext_reader {
 
     $this->STREAM = $Reader;
     $magic = $this->readint();
-    if ($magic == ($MAGIC1 & 0xFFFFFFFF)) { // CHANGED FROM UPSTREAM
+    if ($magic == $MAGIC1) {
       $this->BYTEORDER = 0;
-    } elseif ($magic == ($MAGIC2 & 0xFFFFFFFF)) { // CHANGED FROM UPSTREAM
+    } elseif ($magic == $MAGIC2) {
       $this->BYTEORDER = 1;
     } else {
       $this->error = 1; // not MO file

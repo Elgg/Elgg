@@ -1,0 +1,344 @@
+forgotten_password.php:14:        $title = __gettext("Generate a New Password");
+index.php:17:            $title = __gettext("Invite a Friend");
+invitegroup.php:22:            $title = ($guest_type=="community")?__gettext("Join a community"):__gettext("Invite to a community");
+join.php:12:        $title = sprintf(__gettext("Join %s"),sitename);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:1:forgotten_password.php:14:        $title = __gettext("Generate a New Password");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:2:index.php:17:            $title = __gettext("Invite a Friend");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:3:invitegroup.php:17:            $title = __gettext("Invite a Community");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:4:join.php:12:        $title = sprintf(__gettext("Join %s"),sitename);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:5:lib/.svn/text-base/join_noinvite.php.svn-base:23:                                                'name' => __gettext("Your name"),
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:6:lib/.svn/text-base/join_noinvite.php.svn-base:29:                                                'name' => __gettext("Your email address"),
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:7:lib/.svn/text-base/join_noinvite.php.svn-base:33:            $buttonValue = __gettext("Register");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:8:lib/.svn/text-base/join_noinvite.php.svn-base:43:  $nope = __gettext("Self-registration is currently disabled."); // gettext variable
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:9:lib/.svn/text-base/password_request.php.svn-base:7:    $nope = __gettext('The site administrator has disabled password changing.');
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:10:lib/.svn/text-base/password_request.php.svn-base:14:    $desc = sprintf(__gettext("To generate a new password at %s!, enter your username below. We will send the address of a unique verification page to you via email click on the link in the body of the message and a new password will be sent to you."), $sitename); // gettext variable
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:11:lib/.svn/text-base/password_request.php.svn-base:15:    $thismethod = __gettext("This method reduces the chance of a mistakenly reset password.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:12:lib/.svn/text-base/password_request.php.svn-base:31:                                    'name' => __gettext("Your username"),
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:13:lib/.svn/text-base/password_request.php.svn-base:35:    $request = __gettext("Request new password"); // gettext variable
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:14:lib/.svn/text-base/invitegroup.php.svn-base:19:      $communities[$community->ident].=" (".__gettext("Owner").")";
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:15:lib/.svn/text-base/invitegroup.php.svn-base:22:      $communities[$community->ident].=" (".__gettext("Member").")";
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:16:lib/.svn/text-base/invitegroup.php.svn-base:37:                                                        'name' => __gettext("Invitation for").":",
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:17:lib/.svn/text-base/invitegroup.php.svn-base:43:                                                        'name' => __gettext("To the group").":",
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:18:lib/.svn/text-base/invitegroup.php.svn-base:50:                                                        'name' => __gettext("An optional message").":",
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:19:lib/.svn/text-base/invitegroup.php.svn-base:55:$invite = __gettext("Invite");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:20:lib/.svn/text-base/invitegroup.php.svn-base:68:  $run_result .= "<p>".__gettext("Your currently don't have any community to invite someone!")."</p>";
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:21:lib/.svn/text-base/invitegroup.php.svn-base:71:  $run_result .= __gettext("No guest was specified to make this invitation!");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:22:lib/.svn/text-base/new_password.php.svn-base:13:        $passwordDesc = sprintf(__gettext("A new password has been emailed to you at %s. You should be able to use it immediately; your old one has been deactivated."),$details->email);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:23:lib/.svn/text-base/new_password.php.svn-base:30:        email_to_user($details, null, sprintf(__gettext("Your %s password"), $sitename), sprintf(__gettext("Your %s password has been reset.\n\nFor your records, your new password is:\n\n\tPassword: %s\n\nPlease consider changing your password as soon as you have logged in for security reasons.\n\nWe hope you continue to enjoy using the system.\n\nRegards,\n\nThe %s Team"),$sitename, $newpassword, $sitename));
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:24:lib/.svn/text-base/new_password.php.svn-base:37:        $passwordDesc2 = __gettext("Your password request code appears to be invalid. Try generating a new one?");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:25:lib/.svn/text-base/new_password.php.svn-base:49:    $passwordDesc3 = __gettext("Your password request code appears to be invalid. Try generating a new one?");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:26:lib/.svn/text-base/invite_join.php.svn-base:10:$registrationpage = "<a href=\"".$CFG->wwwroot."register\">".__gettext("register page")."</a>";
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:27:lib/.svn/text-base/invite_join.php.svn-base:42:                                            'name' => __gettext("Your name"),
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:28:lib/.svn/text-base/invite_join.php.svn-base:48:                                            'name' => __gettext("Your username - (Must be letters only)"),
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:29:lib/.svn/text-base/invite_join.php.svn-base:54:                                            'name' => __gettext("Enter a password"),
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:30:lib/.svn/text-base/invite_join.php.svn-base:60:                                            'name' => __gettext("Your password again for verification purposes"),
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:31:lib/.svn/text-base/invite_join.php.svn-base:72:  $buttonValue = __gettext("Join"); // gettext variable
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:32:lib/.svn/text-base/invite_join.php.svn-base:84:        $invalid = __gettext("Your invitation code appears to be invalid. Codes only last for seven days; it's possible that yours is older.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:33:lib/.svn/text-base/invite_join.php.svn-base:87:            $invalid .= sprintf(__gettext("If you still want to join %s, go to the %s."),$sitename,$registrationpage);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:34:lib/.svn/text-base/invite_join.php.svn-base:89:            $invalid .= sprintf(__gettext("If you still want to join %s, it may be worth getting in touch with the person who invited you."),$sitename);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:35:lib/.svn/text-base/invite_join.php.svn-base:105:        $invite = sprintf(__gettext("To join %s, go to the %s."),$sitename,$registrationpage);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:36:lib/.svn/text-base/invite_join.php.svn-base:107:        $invite = sprintf(__gettext("For the moment, joining %s requires a specially tailored invite code. If you know someone who's a member, it may be worth asking them for one."),$sitename);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:37:lib/.svn/text-base/invite.php.svn-base:12:                                                        'name' => __gettext("Their name"),
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:38:lib/.svn/text-base/invite.php.svn-base:18:                                                        'name' => __gettext("Their email address"),
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:39:lib/.svn/text-base/invite.php.svn-base:25:                                                        'name' => __gettext("An optional message"),
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:40:lib/.svn/text-base/invite.php.svn-base:30:        $run_result .="<p><input type=\"submit\" value=\"".__gettext("Invite")."\" /></p>";
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:41:lib/.svn/text-base/invite_actions.php.svn-base:37:                                $greetingstext = sprintf(__gettext("Thank you for registering with %s."),$sitename);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:42:lib/.svn/text-base/invite_actions.php.svn-base:38:                                $subjectline = sprintf(__gettext("%s account verification"),$sitename);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:43:lib/.svn/text-base/invite_actions.php.svn-base:43:                                  $invitetext = __gettext("They included the following message:") . "\n\n----------\n" . $invitetext . "\n----------";
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:44:lib/.svn/text-base/invite_actions.php.svn-base:45:                                $greetingstext = $USER->name . " " . __gettext("has invited you to join") ." $sitename, ". __gettext("a learning landscape system.") ."";
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:45:lib/.svn/text-base/invite_actions.php.svn-base:46:                                $subjectline = $USER->name . " " . __gettext("has invited you to join") ." $sitename";
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:46:lib/.svn/text-base/invite_actions.php.svn-base:49:                              $emailmessage = sprintf(__gettext("Dear %s,\n\n%s %s\n\nTo join, visit the following URL:\n\n\t%s\n\nYour email address has not been passed onto any third parties, and will be removed from our system within seven days.\n\nRegards,\n\nThe %s team."),$strippedname,$greetingstext,$invitetext,$url, $sitename);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:47:lib/.svn/text-base/invite_actions.php.svn-base:51:                              $messages[] = sprintf(__gettext("Your invitation was sent to %s at %s. It will be valid for seven days."),$strippedname,$invite->email);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:48:lib/.svn/text-base/invite_actions.php.svn-base:55:                              $messages[] = sprintf(__gettext("User %s already has that email address. Invitation not sent."),$user_url);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:49:lib/.svn/text-base/invite_actions.php.svn-base:58:                             $messages[] = __gettext("Someone with that email address has already been invited to the system. ");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:50:lib/.svn/text-base/invite_actions.php.svn-base:61:                         $messages[] = __gettext("Invitation failed: The email address was not valid.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:51:lib/.svn/text-base/invite_actions.php.svn-base:64:                     $messages[] = __gettext("Error: This community has reached its maximum number of users.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:52:lib/.svn/text-base/invite_actions.php.svn-base:67:                 $messages[] = __gettext("Invitation failed: you are not logged in.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:53:lib/.svn/text-base/invite_actions.php.svn-base:70:                 $messages[] = __gettext("Invitation failed: you must specify both a name and an email address.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:54:lib/.svn/text-base/invite_actions.php.svn-base:85:                 $messages[] = __gettext("Unfortunately this community has reached its account limit and you are unable to join at this time.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:55:lib/.svn/text-base/invite_actions.php.svn-base:89:                 $messages[] = __gettext("You must indicate that you are at least 13 years old to join.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:56:lib/.svn/text-base/invite_actions.php.svn-base:93:                 $messages[] = __gettext("Error! Invalid invite code.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:57:lib/.svn/text-base/invite_actions.php.svn-base:97:                 $messages[] = __gettext("Error! Invalid password. Your passwords must match and be between 6 and 16 characters in length.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:58:lib/.svn/text-base/invite_actions.php.svn-base:101:                 $messages[] = __gettext("Error! Your username must contain letters and numbers only, cannot be blank, and must be between 3 and 12 characters in length.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:59:lib/.svn/text-base/invite_actions.php.svn-base:106:                 $messages[] = __gettext("The username '$username' is already taken by another user. You will need to pick a different one.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:60:lib/.svn/text-base/invite_actions.php.svn-base:151:                 $_SESSION['messages'][] = __gettext("Your account was created! You can now log in using the username and password you supplied. You have been sent an email containing these details for reference purposes.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:61:lib/.svn/text-base/invite_actions.php.svn-base:159:                   email_to_user($u,null,sprintf(__gettext("Your %s account"),$sitename),$msg);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:62:lib/.svn/text-base/invite_actions.php.svn-base:166:                   email_to_user($u,null,sprintf(__gettext("Your %s account"),$sitename),$msg);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:63:lib/.svn/text-base/invite_actions.php.svn-base:182:                        $messages[] = __gettext("You have been logged on.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:64:lib/.svn/text-base/invite_actions.php.svn-base:184:                            $_SESSION['messages'][] = __gettext("The password for this account is extremely insecure and represents a major security risk. You should change it immediately.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:65:lib/.svn/text-base/invite_actions.php.svn-base:190:                        $messages[] = __gettext("Unrecognised username or password. The system could not log you on, or you may not have activated your account.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:66:lib/.svn/text-base/invite_actions.php.svn-base:211:                 email_to_user($user,null,sprintf(__gettext("Verify your %s account password request"),$sitename),
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:67:lib/.svn/text-base/invite_actions.php.svn-base:212:                               sprintf(__gettext("A request has been received to generate your account at %s a new password.\n\n")
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:68:lib/.svn/text-base/invite_actions.php.svn-base:213:               .__gettext("To confirm this request and receive a new password by email, please click the following link:\n\n\t%s\n\n")
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:69:lib/.svn/text-base/invite_actions.php.svn-base:214:                                               .__gettext("Please let us know if you have any further problems.\n\nRegards,\n\nThe %s Team")
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:70:lib/.svn/text-base/invite_actions.php.svn-base:216:                 $messages[] = __gettext("Your verification email was sent. Please check your inbox.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:71:lib/.svn/text-base/invite_actions.php.svn-base:218:                 $messages[] = __gettext("No user with that username was found.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:72:lib/.svn/text-base/invite_join_mailwithoutpass.php.svn-base:14:  $run_result=sprintf(__gettext("Thanks for joining %s!\n\n.")
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:73:lib/.svn/text-base/invite_join_mailwithoutpass.php.svn-base:15:                                        .__gettext("You can log in at any time by visiting %s and entering your login and password.\n\n")
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:74:lib/.svn/text-base/invite_join_mailwithoutpass.php.svn-base:16:                                        .__gettext("We hope you enjoy using the system.\n\nRegards,\n\nThe %s Team")
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:75:lib/.svn/text-base/invite_join_footer.php.svn-base:11:  $correctAge = __gettext("I am at least thirteen years of age."); // gettext variable
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:76:lib/.svn/text-base/invite_join_footer.php.svn-base:12:  $buttonValue = __gettext("Join"); // gettext variable
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:77:lib/.svn/text-base/invite_register_welcome.php.svn-base:12: $partOne = sprintf(__gettext("Thank you for registering for an account with %s! Registration is completely free, but before you fill in your details, please take a moment to read the following documents:"),$sitename); // gettext variable
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:78:lib/.svn/text-base/invite_register_welcome.php.svn-base:13: $terms = __gettext("terms and conditions"); // gettext variable
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:79:lib/.svn/text-base/invite_register_welcome.php.svn-base:14: $privacy = __gettext("Privacy policy"); // gettext variable
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:80:lib/.svn/text-base/invite_register_welcome.php.svn-base:15: $partFour = __gettext("When you fill in the details below, we will send an \"invitation code\" to your email address in order to validate it. You must then click on this within seven days to create your account."); // gettext variable
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:81:lib/.svn/text-base/invite_join_mailwithpass.php.svn-base:15:  $run_result= sprintf(__gettext("Thanks for joining %s!\n\nFor your records, your username and password in %s are:\n\n\t")
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:82:lib/.svn/text-base/invite_join_mailwithpass.php.svn-base:16:                                        .__gettext("Username: %s\n\tPassword: %s\n\nYou can log in at any time by visiting %s and entering these details into the login form.\n\n")
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:83:lib/.svn/text-base/invite_join_mailwithpass.php.svn-base:17:                                        .__gettext("We hope you enjoy using the system.\n\nRegards,\n\nThe %s Team")
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:84:lib/.svn/text-base/invite_join_welcome.php.svn-base:13:  $thankYou = sprintf(__gettext("Thank you for registering for an account with %s! Registration is completely free, but before you confirm your details, please take a moment to read the following documents:"), $sitename);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:85:lib/.svn/text-base/invite_join_welcome.php.svn-base:14:  $terms = __gettext("terms and conditions"); // gettext variable
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:86:lib/.svn/text-base/invite_join_welcome.php.svn-base:15:  $privacy = __gettext("Privacy policy"); // gettext variable
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:87:lib/.svn/text-base/invite_join_welcome.php.svn-base:16:  $age = __gettext("Submitting the form below indicates acceptance of these terms. Please note that currently you must be at least 13 years of age to join the site."); // gettext variable
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:88:lib/invite_join_footer.php:11:  $correctAge = __gettext("I am at least thirteen years of age."); // gettext variable
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:89:lib/invite_join_footer.php:12:  $buttonValue = __gettext("Join"); // gettext variable
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:90:lib/join_noinvite.php:23:                                                'name' => __gettext("Your name"),
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:91:lib/join_noinvite.php:29:                                                'name' => __gettext("Your email address"),
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:92:lib/join_noinvite.php:33:            $buttonValue = __gettext("Register");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:93:lib/join_noinvite.php:43:  $nope = __gettext("Self-registration is currently disabled."); // gettext variable
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:94:lib/password_request.php:7:    $nope = __gettext('The site administrator has disabled password changing.');
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:95:lib/password_request.php:14:    $desc = sprintf(__gettext("To generate a new password at %s!, enter your username below. We will send the address of a unique verification page to you via email click on the link in the body of the message and a new password will be sent to you."), $sitename); // gettext variable
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:96:lib/password_request.php:15:    $thismethod = __gettext("This method reduces the chance of a mistakenly reset password.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:97:lib/password_request.php:31:                                    'name' => __gettext("Your username"),
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:98:lib/password_request.php:35:    $request = __gettext("Request new password"); // gettext variable
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:99:lib/invitegroup.php:19:      $communities[$community->ident].=" (".__gettext("Owner").")";
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:100:lib/invitegroup.php:22:      $communities[$community->ident].=" (".__gettext("Member").")";
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:101:lib/invitegroup.php:37:                                                        'name' => __gettext("Invitation for").":",
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:102:lib/invitegroup.php:43:                                                        'name' => __gettext("To the group").":",
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:103:lib/invitegroup.php:50:                                                        'name' => __gettext("An optional message").":",
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:104:lib/invitegroup.php:55:$invite = __gettext("Invite");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:105:lib/invitegroup.php:68:  $run_result .= "<p>".__gettext("Your currently don't have any community to invite someone!")."</p>";
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:106:lib/invitegroup.php:71:  $run_result .= __gettext("No guest was specified to make this invitation!");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:107:lib/new_password.php:13:        $passwordDesc = sprintf(__gettext("A new password has been emailed to you at %s. You should be able to use it immediately; your old one has been deactivated."),$details->email);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:108:lib/new_password.php:30:        email_to_user($details, null, sprintf(__gettext("Your %s password"), $sitename), sprintf(__gettext("Your %s password has been reset.\n\nFor your records, your new password is:\n\n\tPassword: %s\n\nPlease consider changing your password as soon as you have logged in for security reasons.\n\nWe hope you continue to enjoy using the system.\n\nRegards,\n\nThe %s Team"),$sitename, $newpassword, $sitename));
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:109:lib/new_password.php:37:        $passwordDesc2 = __gettext("Your password request code appears to be invalid. Try generating a new one?");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:110:lib/new_password.php:49:    $passwordDesc3 = __gettext("Your password request code appears to be invalid. Try generating a new one?");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:111:lib/invite_join.php:10:$registrationpage = "<a href=\"".$CFG->wwwroot."register\">".__gettext("register page")."</a>";
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:112:lib/invite_join.php:42:                                            'name' => __gettext("Your name"),
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:113:lib/invite_join.php:48:                                            'name' => __gettext("Your username - (Must be letters only)"),
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:114:lib/invite_join.php:54:                                            'name' => __gettext("Enter a password"),
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:115:lib/invite_join.php:60:                                            'name' => __gettext("Your password again for verification purposes"),
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:116:lib/invite_join.php:72:  $buttonValue = __gettext("Join"); // gettext variable
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:117:lib/invite_join.php:84:        $invalid = __gettext("Your invitation code appears to be invalid. Codes only last for seven days; it's possible that yours is older.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:118:lib/invite_join.php:87:            $invalid .= sprintf(__gettext("If you still want to join %s, go to the %s."),$sitename,$registrationpage);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:119:lib/invite_join.php:89:            $invalid .= sprintf(__gettext("If you still want to join %s, it may be worth getting in touch with the person who invited you."),$sitename);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:120:lib/invite_join.php:105:        $invite = sprintf(__gettext("To join %s, go to the %s."),$sitename,$registrationpage);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:121:lib/invite_join.php:107:        $invite = sprintf(__gettext("For the moment, joining %s requires a specially tailored invite code. If you know someone who's a member, it may be worth asking them for one."),$sitename);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:122:lib/invite.php:12:                                                        'name' => __gettext("Their name"),
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:123:lib/invite.php:18:                                                        'name' => __gettext("Their email address"),
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:124:lib/invite.php:25:                                                        'name' => __gettext("An optional message"),
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:125:lib/invite.php:30:        $run_result .="<p><input type=\"submit\" value=\"".__gettext("Invite")."\" /></p>";
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:126:lib/invite_actions.php:37:                                $greetingstext = sprintf(__gettext("Thank you for registering with %s."),$sitename);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:127:lib/invite_actions.php:38:                                $subjectline = sprintf(__gettext("%s account verification"),$sitename);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:128:lib/invite_actions.php:43:                                  $invitetext = __gettext("They included the following message:") . "\n\n----------\n" . $invitetext . "\n----------";
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:129:lib/invite_actions.php:45:                                $greetingstext = $USER->name . " " . __gettext("has invited you to join") ." $sitename, ". __gettext("a learning landscape system.") ."";
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:130:lib/invite_actions.php:46:                                $subjectline = $USER->name . " " . __gettext("has invited you to join") ." $sitename";
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:131:lib/invite_actions.php:49:                              $emailmessage = sprintf(__gettext("Dear %s,\n\n%s %s\n\nTo join, visit the following URL:\n\n\t%s\n\nYour email address has not been passed onto any third parties, and will be removed from our system within seven days.\n\nRegards,\n\nThe %s team."),$strippedname,$greetingstext,$invitetext,$url, $sitename);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:132:lib/invite_actions.php:51:                              $messages[] = sprintf(__gettext("Your invitation was sent to %s at %s. It will be valid for seven days."),$strippedname,$invite->email);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:133:lib/invite_actions.php:55:                              $messages[] = sprintf(__gettext("User %s already has that email address. Invitation not sent."),$user_url);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:134:lib/invite_actions.php:58:                             $messages[] = __gettext("Someone with that email address has already been invited to the system. ");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:135:lib/invite_actions.php:61:                         $messages[] = __gettext("Invitation failed: The email address was not valid.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:136:lib/invite_actions.php:64:                     $messages[] = __gettext("Error: This community has reached its maximum number of users.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:137:lib/invite_actions.php:67:                 $messages[] = __gettext("Invitation failed: you are not logged in.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:138:lib/invite_actions.php:70:                 $messages[] = __gettext("Invitation failed: you must specify both a name and an email address.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:139:lib/invite_actions.php:85:                 $messages[] = __gettext("Unfortunately this community has reached its account limit and you are unable to join at this time.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:140:lib/invite_actions.php:89:                 $messages[] = __gettext("You must indicate that you are at least 13 years old to join.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:141:lib/invite_actions.php:93:                 $messages[] = __gettext("Error! Invalid invite code.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:142:lib/invite_actions.php:97:                 $messages[] = __gettext("Error! Invalid password. Your passwords must match and be between 6 and 16 characters in length.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:143:lib/invite_actions.php:101:                 $messages[] = __gettext("Error! Your username must contain letters and numbers only, cannot be blank, and must be between 3 and 12 characters in length.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:144:lib/invite_actions.php:106:                 $messages[] = __gettext("The username '$username' is already taken by another user. You will need to pick a different one.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:145:lib/invite_actions.php:151:                 $_SESSION['messages'][] = __gettext("Your account was created! You can now log in using the username and password you supplied. You have been sent an email containing these details for reference purposes.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:146:lib/invite_actions.php:159:                   email_to_user($u,null,sprintf(__gettext("Your %s account"),$sitename),$msg);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:147:lib/invite_actions.php:166:                   email_to_user($u,null,sprintf(__gettext("Your %s account"),$sitename),$msg);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:148:lib/invite_actions.php:182:                        $messages[] = __gettext("You have been logged on.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:149:lib/invite_actions.php:184:                            $_SESSION['messages'][] = __gettext("The password for this account is extremely insecure and represents a major security risk. You should change it immediately.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:150:lib/invite_actions.php:190:                        $messages[] = __gettext("Unrecognised username or password. The system could not log you on, or you may not have activated your account.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:151:lib/invite_actions.php:211:                 email_to_user($user,null,sprintf(__gettext("Verify your %s account password request"),$sitename),
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:152:lib/invite_actions.php:212:                               sprintf(__gettext("A request has been received to generate your account at %s a new password.\n\n")
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:153:lib/invite_actions.php:213:               .__gettext("To confirm this request and receive a new password by email, please click the following link:\n\n\t%s\n\n")
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:154:lib/invite_actions.php:214:                                               .__gettext("Please let us know if you have any further problems.\n\nRegards,\n\nThe %s Team")
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:155:lib/invite_actions.php:216:                 $messages[] = __gettext("Your verification email was sent. Please check your inbox.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:156:lib/invite_actions.php:218:                 $messages[] = __gettext("No user with that username was found.");
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:157:lib/invite_join_mailwithoutpass.php:14:  $run_result=sprintf(__gettext("Thanks for joining %s!\n\n.")
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:158:lib/invite_join_mailwithoutpass.php:15:                                        .__gettext("You can log in at any time by visiting %s and entering your login and password.\n\n")
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:159:lib/invite_join_mailwithoutpass.php:16:                                        .__gettext("We hope you enjoy using the system.\n\nRegards,\n\nThe %s Team")
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:160:lib/invite_register_welcome.php:12: $partOne = sprintf(__gettext("Thank you for registering for an account with %s! Registration is completely free, but before you fill in your details, please take a moment to read the following documents:"),$sitename); // gettext variable
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:161:lib/invite_register_welcome.php:13: $terms = __gettext("terms and conditions"); // gettext variable
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:162:lib/invite_register_welcome.php:14: $privacy = __gettext("Privacy policy"); // gettext variable
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:163:lib/invite_register_welcome.php:15: $partFour = __gettext("When you fill in the details below, we will send an \"invitation code\" to your email address in order to validate it. You must then click on this within seven days to create your account."); // gettext variable
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:164:lib/invite_join_mailwithpass.php:15:  $run_result= sprintf(__gettext("Thanks for joining %s!\n\nFor your records, your username and password in %s are:\n\n\t")
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:165:lib/invite_join_mailwithpass.php:16:                                        .__gettext("Username: %s\n\tPassword: %s\n\nYou can log in at any time by visiting %s and entering these details into the login form.\n\n")
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:166:lib/invite_join_mailwithpass.php:17:                                        .__gettext("We hope you enjoy using the system.\n\nRegards,\n\nThe %s Team")
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:167:lib/invite_join_welcome.php:13:  $thankYou = sprintf(__gettext("Thank you for registering for an account with %s! Registration is completely free, but before you confirm your details, please take a moment to read the following documents:"), $sitename);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:168:lib/invite_join_welcome.php:14:  $terms = __gettext("terms and conditions"); // gettext variable
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:169:lib/invite_join_welcome.php:15:  $privacy = __gettext("Privacy policy"); // gettext variable
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:170:lib/invite_join_welcome.php:16:  $age = __gettext("Submitting the form below indicates acceptance of these terms. Please note that currently you must be at least 13 years of age to join the site."); // gettext variable
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:171:new_password.php:11:        $title = sprintf(__gettext("Get new %s password"), sitename);
+languages/es_CO/LC_MESSAGES/.svn/text-base/strings.txt.svn-base:172:register.php:11:        $title = sprintf(__gettext("Join %s"), sitename);
+lib/.svn/text-base/join_noinvite.php.svn-base:23:                                                'name' => __gettext("Your name"),
+lib/.svn/text-base/join_noinvite.php.svn-base:29:                                                'name' => __gettext("Your email address"),
+lib/.svn/text-base/join_noinvite.php.svn-base:33:            $buttonValue = __gettext("Register");
+lib/.svn/text-base/join_noinvite.php.svn-base:43:  $nope = __gettext("Self-registration is currently disabled."); // gettext variable
+lib/.svn/text-base/password_request.php.svn-base:7:    $nope = __gettext('The site administrator has disabled password changing.');
+lib/.svn/text-base/password_request.php.svn-base:14:    $desc = sprintf(__gettext("To generate a new password at %s!, enter your username below. We will send the address of a unique verification page to you via email click on the link in the body of the message and a new password will be sent to you."), $sitename); // gettext variable
+lib/.svn/text-base/password_request.php.svn-base:15:    $thismethod = __gettext("This method reduces the chance of a mistakenly reset password.");
+lib/.svn/text-base/password_request.php.svn-base:31:                                    'name' => __gettext("Your username"),
+lib/.svn/text-base/password_request.php.svn-base:35:    $request = __gettext("Request new password"); // gettext variable
+lib/.svn/text-base/invitegroup.php.svn-base:26:      $communities[$community->ident].=" (".__gettext("Owner").")";
+lib/.svn/text-base/invitegroup.php.svn-base:29:      $communities[$community->ident].=" (".__gettext("Member").")";
+lib/.svn/text-base/invitegroup.php.svn-base:37:  $invitationField = ($guest_info->user_type=="community")?__gettext("Adding"):__gettext("Invitation for");
+lib/.svn/text-base/invitegroup.php.svn-base:39:  $invite = ($action=="join_group")?__gettext("Join"):__gettext("Invite");
+lib/.svn/text-base/invitegroup.php.svn-base:53:                                                        'name' => __gettext("To the community").":",
+lib/.svn/text-base/invitegroup.php.svn-base:61:                                                        'name' => __gettext("An optional message").":",
+lib/.svn/text-base/invitegroup.php.svn-base:79:  $run_result .= "<p>".__gettext("Your currently don't have any community to invite someone!")."</p>";
+lib/.svn/text-base/invitegroup.php.svn-base:82:  $run_result .= __gettext("No guest was specified to make this invitation!");
+lib/.svn/text-base/new_password.php.svn-base:13:        $passwordDesc = sprintf(__gettext("A new password has been emailed to you at %s. You should be able to use it immediately; your old one has been deactivated."),$details->email);
+lib/.svn/text-base/new_password.php.svn-base:30:        email_to_user($details, null, sprintf(__gettext("Your %s password"), $sitename), sprintf(__gettext("Your %s password has been reset.\n\nFor your records, your new password is:\n\n\tPassword: %s\n\nPlease consider changing your password as soon as you have logged in for security reasons.\n\nWe hope you continue to enjoy using the system.\n\nRegards,\n\nThe %s Team"),$sitename, $newpassword, $sitename));
+lib/.svn/text-base/new_password.php.svn-base:37:        $passwordDesc2 = __gettext("Your password request code appears to be invalid. Try generating a new one?");
+lib/.svn/text-base/new_password.php.svn-base:49:    $passwordDesc3 = __gettext("Your password request code appears to be invalid. Try generating a new one?");
+lib/.svn/text-base/invite_join.php.svn-base:10:$registrationpage = "<a href=\"".$CFG->wwwroot."register\">".__gettext("register page")."</a>";
+lib/.svn/text-base/invite_join.php.svn-base:42:                                            'name' => __gettext("Your name"),
+lib/.svn/text-base/invite_join.php.svn-base:48:                                            'name' => __gettext("Your username - (Must be letters only)"),
+lib/.svn/text-base/invite_join.php.svn-base:54:                                            'name' => __gettext("Enter a password"),
+lib/.svn/text-base/invite_join.php.svn-base:60:                                            'name' => __gettext("Your password again for verification purposes"),
+lib/.svn/text-base/invite_join.php.svn-base:72:  $buttonValue = __gettext("Join"); // gettext variable
+lib/.svn/text-base/invite_join.php.svn-base:84:        $invalid = __gettext("Your invitation code appears to be invalid. Codes only last for seven days; it's possible that yours is older.");
+lib/.svn/text-base/invite_join.php.svn-base:87:            $invalid .= sprintf(__gettext("If you still want to join %s, go to the %s."),$sitename,$registrationpage);
+lib/.svn/text-base/invite_join.php.svn-base:89:            $invalid .= sprintf(__gettext("If you still want to join %s, it may be worth getting in touch with the person who invited you."),$sitename);
+lib/.svn/text-base/invite_join.php.svn-base:105:        $invite = sprintf(__gettext("To join %s, go to the %s."),$sitename,$registrationpage);
+lib/.svn/text-base/invite_join.php.svn-base:107:        $invite = sprintf(__gettext("For the moment, joining %s requires a specially tailored invite code. If you know someone who's a member, it may be worth asking them for one."),$sitename);
+lib/.svn/text-base/invite.php.svn-base:12:                                                        'name' => __gettext("Their name"),
+lib/.svn/text-base/invite.php.svn-base:18:                                                        'name' => __gettext("Their email address"),
+lib/.svn/text-base/invite.php.svn-base:25:                                                        'name' => __gettext("An optional message"),
+lib/.svn/text-base/invite.php.svn-base:30:        $run_result .="<p><input type=\"submit\" value=\"".__gettext("Invite")."\" /></p>";
+lib/.svn/text-base/invite_actions.php.svn-base:37:                                $greetingstext = sprintf(__gettext("Thank you for registering with %s."),$sitename);
+lib/.svn/text-base/invite_actions.php.svn-base:38:                                $subjectline = sprintf(__gettext("%s account verification"),$sitename);
+lib/.svn/text-base/invite_actions.php.svn-base:43:                                  $invitetext = __gettext("They included the following message:") . "\n\n----------\n" . $invitetext . "\n----------";
+lib/.svn/text-base/invite_actions.php.svn-base:45:                                $greetingstext = $USER->name . " " . __gettext("has invited you to join") ." $sitename, ". __gettext("a learning landscape system.") ."";
+lib/.svn/text-base/invite_actions.php.svn-base:46:                                $subjectline = $USER->name . " " . __gettext("has invited you to join") ." $sitename";
+lib/.svn/text-base/invite_actions.php.svn-base:49:                              $emailmessage = sprintf(__gettext("Dear %s,\n\n%s %s\n\nTo join, visit the following URL:\n\n\t%s\n\nYour email address has not been passed onto any third parties, and will be removed from our system within seven days.\n\nRegards,\n\nThe %s team."),$strippedname,$greetingstext,$invitetext,$url, $sitename);
+lib/.svn/text-base/invite_actions.php.svn-base:51:                              $messages[] = sprintf(__gettext("Your invitation was sent to %s at %s. It will be valid for seven days."),$strippedname,$invite->email);
+lib/.svn/text-base/invite_actions.php.svn-base:55:                              $messages[] = sprintf(__gettext("User %s already has that email address. Invitation not sent."),$user_url);
+lib/.svn/text-base/invite_actions.php.svn-base:58:                             $messages[] = __gettext("Someone with that email address has already been invited to the system. ");
+lib/.svn/text-base/invite_actions.php.svn-base:61:                         $messages[] = __gettext("Invitation failed: The email address was not valid.");
+lib/.svn/text-base/invite_actions.php.svn-base:64:                     $messages[] = __gettext("Error: This community has reached its maximum number of users.");
+lib/.svn/text-base/invite_actions.php.svn-base:67:                 $messages[] = __gettext("Invitation failed: you are not logged in.");
+lib/.svn/text-base/invite_actions.php.svn-base:70:                 $messages[] = __gettext("Invitation failed: you must specify both a name and an email address.");
+lib/.svn/text-base/invite_actions.php.svn-base:85:                 $messages[] = __gettext("Unfortunately this community has reached its account limit and you are unable to join at this time.");
+lib/.svn/text-base/invite_actions.php.svn-base:89:                 $messages[] = __gettext("You must indicate that you are at least 13 years old to join.");
+lib/.svn/text-base/invite_actions.php.svn-base:93:                 $messages[] = __gettext("Error! Invalid invite code.");
+lib/.svn/text-base/invite_actions.php.svn-base:97:                 $messages[] = __gettext("Error! Invalid password. Your passwords must match and be between 6 and 16 characters in length.");
+lib/.svn/text-base/invite_actions.php.svn-base:101:                 $messages[] = __gettext("Error! Your username must contain letters and numbers only, cannot be blank, and must be between 3 and 12 characters in length.");
+lib/.svn/text-base/invite_actions.php.svn-base:106:                 $messages[] = __gettext("The username '$username' is already taken by another user. You will need to pick a different one.");
+lib/.svn/text-base/invite_actions.php.svn-base:151:                 $_SESSION['messages'][] = __gettext("Your account was created! You can now log in using the username and password you supplied. You have been sent an email containing these details for reference purposes.");
+lib/.svn/text-base/invite_actions.php.svn-base:159:                   email_to_user($u,null,sprintf(__gettext("Your %s account"),$sitename),$msg);
+lib/.svn/text-base/invite_actions.php.svn-base:166:                   email_to_user($u,null,sprintf(__gettext("Your %s account"),$sitename),$msg);
+lib/.svn/text-base/invite_actions.php.svn-base:182:                        $messages[] = __gettext("You have been logged on.");
+lib/.svn/text-base/invite_actions.php.svn-base:184:                            $_SESSION['messages'][] = __gettext("The password for this account is extremely insecure and represents a major security risk. You should change it immediately.");
+lib/.svn/text-base/invite_actions.php.svn-base:190:                        $messages[] = __gettext("Unrecognised username or password. The system could not log you on, or you may not have activated your account.");
+lib/.svn/text-base/invite_actions.php.svn-base:211:                 email_to_user($user,null,sprintf(__gettext("Verify your %s account password request"),$sitename),
+lib/.svn/text-base/invite_actions.php.svn-base:212:                               sprintf(__gettext("A request has been received to generate your account at %s a new password.\n\n")
+lib/.svn/text-base/invite_actions.php.svn-base:213:               .__gettext("To confirm this request and receive a new password by email, please click the following link:\n\n\t%s\n\n")
+lib/.svn/text-base/invite_actions.php.svn-base:214:                                               .__gettext("Please let us know if you have any further problems.\n\nRegards,\n\nThe %s Team")
+lib/.svn/text-base/invite_actions.php.svn-base:216:                 $messages[] = __gettext("Your verification email was sent. Please check your inbox.");
+lib/.svn/text-base/invite_actions.php.svn-base:218:                 $messages[] = __gettext("No user with that username was found.");
+lib/.svn/text-base/invite_join_mailwithoutpass.php.svn-base:14:  $run_result=sprintf(__gettext("Thanks for joining %s!\n\n.")
+lib/.svn/text-base/invite_join_mailwithoutpass.php.svn-base:15:                                        .__gettext("You can log in at any time by visiting %s and entering your login and password.\n\n")
+lib/.svn/text-base/invite_join_mailwithoutpass.php.svn-base:16:                                        .__gettext("We hope you enjoy using the system.\n\nRegards,\n\nThe %s Team")
+lib/.svn/text-base/invite_join_footer.php.svn-base:11:  $correctAge = __gettext("I am at least thirteen years of age."); // gettext variable
+lib/.svn/text-base/invite_join_footer.php.svn-base:12:  $buttonValue = __gettext("Join"); // gettext variable
+lib/.svn/text-base/invite_register_welcome.php.svn-base:12: $partOne = sprintf(__gettext("Thank you for registering for an account with %s! Registration is completely free, but before you fill in your details, please take a moment to read the following documents:"),$sitename); // gettext variable
+lib/.svn/text-base/invite_register_welcome.php.svn-base:13: $terms = __gettext("terms and conditions"); // gettext variable
+lib/.svn/text-base/invite_register_welcome.php.svn-base:14: $privacy = __gettext("Privacy policy"); // gettext variable
+lib/.svn/text-base/invite_register_welcome.php.svn-base:15: $partFour = __gettext("When you fill in the details below, we will send an \"invitation code\" to your email address in order to validate it. You must then click on this within seven days to create your account."); // gettext variable
+lib/.svn/text-base/invite_join_mailwithpass.php.svn-base:15:  $run_result= sprintf(__gettext("Thanks for joining %s!\n\nFor your records, your username and password in %s are:\n\n\t")
+lib/.svn/text-base/invite_join_mailwithpass.php.svn-base:16:                                        .__gettext("Username: %s\n\tPassword: %s\n\nYou can log in at any time by visiting %s and entering these details into the login form.\n\n")
+lib/.svn/text-base/invite_join_mailwithpass.php.svn-base:17:                                        .__gettext("We hope you enjoy using the system.\n\nRegards,\n\nThe %s Team")
+lib/.svn/text-base/invite_join_welcome.php.svn-base:13:  $thankYou = sprintf(__gettext("Thank you for registering for an account with %s! Registration is completely free, but before you confirm your details, please take a moment to read the following documents:"), $sitename);
+lib/.svn/text-base/invite_join_welcome.php.svn-base:14:  $terms = __gettext("terms and conditions"); // gettext variable
+lib/.svn/text-base/invite_join_welcome.php.svn-base:15:  $privacy = __gettext("Privacy policy"); // gettext variable
+lib/.svn/text-base/invite_join_welcome.php.svn-base:16:  $age = __gettext("Submitting the form below indicates acceptance of these terms. Please note that currently you must be at least 13 years of age to join the site."); // gettext variable
+lib/invite_join_footer.php:11:  $correctAge = __gettext("I am at least thirteen years of age."); // gettext variable
+lib/invite_join_footer.php:12:  $buttonValue = __gettext("Join"); // gettext variable
+lib/join_noinvite.php:23:                                                'name' => __gettext("Your name"),
+lib/join_noinvite.php:29:                                                'name' => __gettext("Your email address"),
+lib/join_noinvite.php:33:            $buttonValue = __gettext("Register");
+lib/join_noinvite.php:43:  $nope = __gettext("Self-registration is currently disabled."); // gettext variable
+lib/password_request.php:7:    $nope = __gettext('The site administrator has disabled password changing.');
+lib/password_request.php:14:    $desc = sprintf(__gettext("To generate a new password at %s!, enter your username below. We will send the address of a unique verification page to you via email click on the link in the body of the message and a new password will be sent to you."), $sitename); // gettext variable
+lib/password_request.php:15:    $thismethod = __gettext("This method reduces the chance of a mistakenly reset password.");
+lib/password_request.php:31:                                    'name' => __gettext("Your username"),
+lib/password_request.php:35:    $request = __gettext("Request new password"); // gettext variable
+lib/invitegroup.php:26:      $communities[$community->ident].=" (".__gettext("Owner").")";
+lib/invitegroup.php:29:      $communities[$community->ident].=" (".__gettext("Member").")";
+lib/invitegroup.php:37:  $invitationField = ($guest_info->user_type=="community")?__gettext("Adding"):__gettext("Invitation for");
+lib/invitegroup.php:39:  $invite = ($action=="join_group")?__gettext("Join"):__gettext("Invite");
+lib/invitegroup.php:53:                                                        'name' => __gettext("To the community").":",
+lib/invitegroup.php:61:                                                        'name' => __gettext("An optional message").":",
+lib/invitegroup.php:79:  $run_result .= "<p>".__gettext("Your currently don't have any community to invite someone!")."</p>";
+lib/invitegroup.php:82:  $run_result .= __gettext("No guest was specified to make this invitation!");
+lib/new_password.php:13:        $passwordDesc = sprintf(__gettext("A new password has been emailed to you at %s. You should be able to use it immediately; your old one has been deactivated."),$details->email);
+lib/new_password.php:30:        email_to_user($details, null, sprintf(__gettext("Your %s password"), $sitename), sprintf(__gettext("Your %s password has been reset.\n\nFor your records, your new password is:\n\n\tPassword: %s\n\nPlease consider changing your password as soon as you have logged in for security reasons.\n\nWe hope you continue to enjoy using the system.\n\nRegards,\n\nThe %s Team"),$sitename, $newpassword, $sitename));
+lib/new_password.php:37:        $passwordDesc2 = __gettext("Your password request code appears to be invalid. Try generating a new one?");
+lib/new_password.php:49:    $passwordDesc3 = __gettext("Your password request code appears to be invalid. Try generating a new one?");
+lib/invite_join.php:10:$registrationpage = "<a href=\"".$CFG->wwwroot."register\">".__gettext("register page")."</a>";
+lib/invite_join.php:42:                                            'name' => __gettext("Your name"),
+lib/invite_join.php:48:                                            'name' => __gettext("Your username - (Must be letters only)"),
+lib/invite_join.php:54:                                            'name' => __gettext("Enter a password"),
+lib/invite_join.php:60:                                            'name' => __gettext("Your password again for verification purposes"),
+lib/invite_join.php:72:  $buttonValue = __gettext("Join"); // gettext variable
+lib/invite_join.php:84:        $invalid = __gettext("Your invitation code appears to be invalid. Codes only last for seven days; it's possible that yours is older.");
+lib/invite_join.php:87:            $invalid .= sprintf(__gettext("If you still want to join %s, go to the %s."),$sitename,$registrationpage);
+lib/invite_join.php:89:            $invalid .= sprintf(__gettext("If you still want to join %s, it may be worth getting in touch with the person who invited you."),$sitename);
+lib/invite_join.php:105:        $invite = sprintf(__gettext("To join %s, go to the %s."),$sitename,$registrationpage);
+lib/invite_join.php:107:        $invite = sprintf(__gettext("For the moment, joining %s requires a specially tailored invite code. If you know someone who's a member, it may be worth asking them for one."),$sitename);
+lib/invite.php:12:                                                        'name' => __gettext("Their name"),
+lib/invite.php:18:                                                        'name' => __gettext("Their email address"),
+lib/invite.php:25:                                                        'name' => __gettext("An optional message"),
+lib/invite.php:30:        $run_result .="<p><input type=\"submit\" value=\"".__gettext("Invite")."\" /></p>";
+lib/invite_actions.php:37:                                $greetingstext = sprintf(__gettext("Thank you for registering with %s."),$sitename);
+lib/invite_actions.php:38:                                $subjectline = sprintf(__gettext("%s account verification"),$sitename);
+lib/invite_actions.php:43:                                  $invitetext = __gettext("They included the following message:") . "\n\n----------\n" . $invitetext . "\n----------";
+lib/invite_actions.php:45:                                $greetingstext = $USER->name . " " . __gettext("has invited you to join") ." $sitename, ". __gettext("a learning landscape system.") ."";
+lib/invite_actions.php:46:                                $subjectline = $USER->name . " " . __gettext("has invited you to join") ." $sitename";
+lib/invite_actions.php:49:                              $emailmessage = sprintf(__gettext("Dear %s,\n\n%s %s\n\nTo join, visit the following URL:\n\n\t%s\n\nYour email address has not been passed onto any third parties, and will be removed from our system within seven days.\n\nRegards,\n\nThe %s team."),$strippedname,$greetingstext,$invitetext,$url, $sitename);
+lib/invite_actions.php:51:                              $messages[] = sprintf(__gettext("Your invitation was sent to %s at %s. It will be valid for seven days."),$strippedname,$invite->email);
+lib/invite_actions.php:55:                              $messages[] = sprintf(__gettext("User %s already has that email address. Invitation not sent."),$user_url);
+lib/invite_actions.php:58:                             $messages[] = __gettext("Someone with that email address has already been invited to the system. ");
+lib/invite_actions.php:61:                         $messages[] = __gettext("Invitation failed: The email address was not valid.");
+lib/invite_actions.php:64:                     $messages[] = __gettext("Error: This community has reached its maximum number of users.");
+lib/invite_actions.php:67:                 $messages[] = __gettext("Invitation failed: you are not logged in.");
+lib/invite_actions.php:70:                 $messages[] = __gettext("Invitation failed: you must specify both a name and an email address.");
+lib/invite_actions.php:85:                 $messages[] = __gettext("Unfortunately this community has reached its account limit and you are unable to join at this time.");
+lib/invite_actions.php:89:                 $messages[] = __gettext("You must indicate that you are at least 13 years old to join.");
+lib/invite_actions.php:93:                 $messages[] = __gettext("Error! Invalid invite code.");
+lib/invite_actions.php:97:                 $messages[] = __gettext("Error! Invalid password. Your passwords must match and be between 6 and 16 characters in length.");
+lib/invite_actions.php:101:                 $messages[] = __gettext("Error! Your username must contain letters and numbers only, cannot be blank, and must be between 3 and 12 characters in length.");
+lib/invite_actions.php:106:                 $messages[] = __gettext("The username '$username' is already taken by another user. You will need to pick a different one.");
+lib/invite_actions.php:151:                 $_SESSION['messages'][] = __gettext("Your account was created! You can now log in using the username and password you supplied. You have been sent an email containing these details for reference purposes.");
+lib/invite_actions.php:159:                   email_to_user($u,null,sprintf(__gettext("Your %s account"),$sitename),$msg);
+lib/invite_actions.php:166:                   email_to_user($u,null,sprintf(__gettext("Your %s account"),$sitename),$msg);
+lib/invite_actions.php:182:                        $messages[] = __gettext("You have been logged on.");
+lib/invite_actions.php:184:                            $_SESSION['messages'][] = __gettext("The password for this account is extremely insecure and represents a major security risk. You should change it immediately.");
+lib/invite_actions.php:190:                        $messages[] = __gettext("Unrecognised username or password. The system could not log you on, or you may not have activated your account.");
+lib/invite_actions.php:211:                 email_to_user($user,null,sprintf(__gettext("Verify your %s account password request"),$sitename),
+lib/invite_actions.php:212:                               sprintf(__gettext("A request has been received to generate your account at %s a new password.\n\n")
+lib/invite_actions.php:213:               .__gettext("To confirm this request and receive a new password by email, please click the following link:\n\n\t%s\n\n")
+lib/invite_actions.php:214:                                               .__gettext("Please let us know if you have any further problems.\n\nRegards,\n\nThe %s Team")
+lib/invite_actions.php:216:                 $messages[] = __gettext("Your verification email was sent. Please check your inbox.");
+lib/invite_actions.php:218:                 $messages[] = __gettext("No user with that username was found.");
+lib/invite_join_mailwithoutpass.php:14:  $run_result=sprintf(__gettext("Thanks for joining %s!\n\n.")
+lib/invite_join_mailwithoutpass.php:15:                                        .__gettext("You can log in at any time by visiting %s and entering your login and password.\n\n")
+lib/invite_join_mailwithoutpass.php:16:                                        .__gettext("We hope you enjoy using the system.\n\nRegards,\n\nThe %s Team")
+lib/invite_register_welcome.php:12: $partOne = sprintf(__gettext("Thank you for registering for an account with %s! Registration is completely free, but before you fill in your details, please take a moment to read the following documents:"),$sitename); // gettext variable
+lib/invite_register_welcome.php:13: $terms = __gettext("terms and conditions"); // gettext variable
+lib/invite_register_welcome.php:14: $privacy = __gettext("Privacy policy"); // gettext variable
+lib/invite_register_welcome.php:15: $partFour = __gettext("When you fill in the details below, we will send an \"invitation code\" to your email address in order to validate it. You must then click on this within seven days to create your account."); // gettext variable
+lib/invite_join_mailwithpass.php:15:  $run_result= sprintf(__gettext("Thanks for joining %s!\n\nFor your records, your username and password in %s are:\n\n\t")
+lib/invite_join_mailwithpass.php:16:                                        .__gettext("Username: %s\n\tPassword: %s\n\nYou can log in at any time by visiting %s and entering these details into the login form.\n\n")
+lib/invite_join_mailwithpass.php:17:                                        .__gettext("We hope you enjoy using the system.\n\nRegards,\n\nThe %s Team")
+lib/invite_join_welcome.php:13:  $thankYou = sprintf(__gettext("Thank you for registering for an account with %s! Registration is completely free, but before you confirm your details, please take a moment to read the following documents:"), $sitename);
+lib/invite_join_welcome.php:14:  $terms = __gettext("terms and conditions"); // gettext variable
+lib/invite_join_welcome.php:15:  $privacy = __gettext("Privacy policy"); // gettext variable
+lib/invite_join_welcome.php:16:  $age = __gettext("Submitting the form below indicates acceptance of these terms. Please note that currently you must be at least 13 years of age to join the site."); // gettext variable
+new_password.php:11:        $title = sprintf(__gettext("Get new %s password"), sitename);
+register.php:11:        $title = sprintf(__gettext("Join %s"), sitename);

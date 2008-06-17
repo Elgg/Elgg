@@ -1,0 +1,15 @@
+Elgg version 0.9 upgrade instructions
+
+Misja Hoebe <misja@curverider.co.uk>
+December 2007
+
+Elgg 0.9 marks some changes in the file structure and initial setup. For a first 
+time installation all should work well via the installer which will guide you 
+through the process. Users upgrading their installation from 0.8.* should take care 
+since the main configuration file (config.php) and .htacces will get overwritten. 
+Make sure to make the appropriate backups.
+
+PLEASE NOTE: Elgg 0.9 contains integration with the Explode service at
+http://ex.plode.us/. From time to time, Elgg will ping Explode to let it know
+it exists. If you don't want this to happen, you must delete the folder at
+/mod/explodeping.

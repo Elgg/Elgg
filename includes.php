@@ -4,7 +4,8 @@
 
     // All installation specific parameters should be in a file 
     // that is not part of the standard distribution.
-        if (!file_exists(dirname(__FILE__)."/config.php")) {
+        //TODO: disabled this message, go directly to installer
+        if (false && !file_exists(dirname(__FILE__)."/config.php")) {
             $message = <<< END
 <html>
 <head>
@@ -13,7 +14,7 @@
 <body>
     <h1>Elgg isn't ready to run just yet.</h1>
     <p>
-        There isn't a whole lot of work to do to get up and running, but
+        There is not a whole lot of work to do to get up and running, but
         there is a bit. Here's what you have to do:
     </p>
     <ol>
@@ -29,7 +30,19 @@
 END;
             die($message);
         }
-        require_once(dirname(__FILE__)."/config.php");
+
+    // Default config values
+        require_once(dirname(__FILE__).'/lib/config-defaults.php');
+    // override config values
+        if (is_readable(dirname(__FILE__).'/config.php')) {
+            require_once(dirname(__FILE__)."/config.php");
+        }
+
+    // Check if should go to install
+        if (empty($CFG->dbname) || empty($CFG->dbuser)) {
+            header('Location: install.php');
+            exit();
+        }
 
     // Check for .htaccess
         if (!file_exists(dirname(__FILE__)."/.htaccess")) {
@@ -39,7 +52,7 @@ END;
     <title>Elgg installation</title>
 </head>
 <body>
-    <h1>Elgg still isn't ready to run just yet. (Sorry.)</h1>
+    <h1>Elgg still is not ready to run just yet. (Sorry.)</h1>
     <p>
         You're going to need to rename the <i>htaccess-dist</i> file that
         came with your installation (it's in the main installation directory)
@@ -68,7 +81,7 @@ END;
         }
 
     // Check config values make sense
-        require_once(dirname(__FILE__).'/sanitychecks.php');
+        require_once(dirname(__FILE__).'/lib/sanitychecks.php');
 
     /***************************************************************************
     *    HELPER LIBRARIES
@@ -90,11 +103,20 @@ END;
     *    CORE FUNCTIONALITY LIBRARIES
     ****************************************************************************/
 
+    
     // Load setup.php which will initialize database connections and such like.
         require_once($CFG->dirroot.'lib/setup.php');
 
-    // Load required system files: do not edit this line.
-        require_once(dirname(__FILE__)."/includes_system.php");
+    // Language / internationalisation
+    //@todo All the libraries has a strong dependence with this 'plugin'
+        require_once($CFG->dirroot . "mod/gettext/lib.php");
+
+
+    // Plug-in engine (must be loaded first)
+        require($CFG->dirroot . "lib/engine.php");
+
+    // XML parsing
+        require($CFG->dirroot . "lib/xmllib.php");
 
     // User functions
         require_once($CFG->dirroot.'lib/userlib.php');
@@ -103,44 +125,9 @@ END;
         require_once($CFG->dirroot.'lib/dbsetup.php');
 
     /***************************************************************************
-    *    PLUGIN INITIALISATION
-    ****************************************************************************/
-
-    // XMLRPC
-        @include($CFG->dirroot . "units/rpc/main.php");
-
-    /***************************************************************************
-    *    CONTENT MODULES
-    *    This should make languages easier, although some kind of
-    *    selection process will be required
-    ****************************************************************************/
-
-    // General
-        include_once($CFG->dirroot . "content/general/main.php");
-    // Main index
-        include_once($CFG->dirroot . "content/mainindex/main.php");
-    // User-related
-        include_once($CFG->dirroot . "content/users/main.php");
-
-    /***************************************************************************
-    *    HELP MODULES
-    ****************************************************************************/
-
-    // Include main
-        // include_once($CFG->dirroot . "help/mainindex/main.php");
-
-    // Visual editor (tinyMCE)
-        @include($CFG->dirroot . "units/tinymce/main.php");
-
-    // Calendaring system
-    //    require($CFG->dirroot . "units/calendar/main.php");
-
-    /***************************************************************************
     *    START-OF-PAGE RUNNING
     ****************************************************************************/
 
-        run("init");
-        
         if ($allmods = get_list_of_plugins('mod') ) {
             foreach ($allmods as $mod) {
                 $mod_init = $mod . '_init';
@@ -150,12 +137,13 @@ END;
            }
         }
 
+        run("init");
+
     // Walled garden checking: if we're not logged in,
     // and walled garden functionality is turned on, redirect to
     // the logon screen
-        if (!empty($CFG->walledgarden) && (context != "external" || !defined("context")) && !logged_on) {
-            header("Location: " . $CFG->wwwroot . "login/index.php");
-            exit();
+        if (!empty($CFG->walledgarden) && (!defined("context") || context != 'external') && !logged_on) {
+            require_login();
         }
 
 ?>

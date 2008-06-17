@@ -203,7 +203,7 @@ class upload_manager {
 
             foreach (array_keys($this->files) as $i) {
 
-                if (!$this->files[$i]['clear']) {
+	      if ( !isset($this->files[$i]['clear']) || !$this->files[$i]['clear'] ) {
                     // not ok to save
                     continue;
                 }
@@ -229,7 +229,7 @@ class upload_manager {
         if (empty($savedsomething)) {
             $this->status = false;
             if ((empty($this->config->allownull) && !empty($this->inputname)) || (empty($this->inputname) && empty($this->config->allownullmultiple))) {
-                notify(__gettext('No file was found - are you sure you selected one to upload?'));
+                //notify(__gettext('No file was found - are you sure you selected one to upload?'));
             }
             return false;
         }
@@ -256,6 +256,9 @@ class upload_manager {
      * @param array $exceptions Full paths of files to KEEP.
      */
     function delete_other_files($destination, $exceptions=null) {
+        
+        $deletedsomething = false; 
+
         if ($filestodel = get_directory_list($destination)) {
             foreach ($filestodel as $file) {
                 if (!is_array($exceptions) || !in_array($file, $exceptions)) {
@@ -556,7 +559,7 @@ function clam_handle_infected_file($file, $userid=0, $basiconly=false) {
  * @return boolean
  */
 function clam_replace_infected_file($file) {
-    $newcontents = __gettext('This file that has been uploaded was found to contain a virus and has been moved or delted and the user notified.');
+    $newcontents = __gettext('This file that has been uploaded was found to contain a virus and has been moved or deleted and the user notified.');
     if (!$f = fopen($file, 'w')) {
         return false;
     }
@@ -777,6 +780,9 @@ function make_upload_directory($directory, $shownotices=true) {
     }
     
     $dirarray = explode('/', $directory);
+
+    // remove trailing slash, if present
+	$currdir = rtrim($currdir, '/');
     
     foreach ($dirarray as $dir) {
         $currdir = $currdir .'/'. $dir;

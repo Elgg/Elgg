@@ -1,11 +1,13 @@
 <?php
 
     function toolbar_pagesetup() {
+        /*
         global $CFG, $metatags;
         require_once($CFG->dirroot.'lib/filelib.php'); // to ensure file_get_contents()
         $css = file_get_contents($CFG->dirroot . "mod/toolbar/css");
         $css = str_replace("{{url}}", $CFG->wwwroot, $css);
         $metatags .= $css;
+        */
     }
     
     function toolbar_init() {
@@ -23,6 +25,15 @@
         } else {
             $toolbar = file_get_contents($CFG->dirroot . "mod/toolbar/toolbarloggedout.inc");
         }
+        
+        if (isset($vars[1]) && $vars[1] == 'box') {
+        	$css = file_get_contents($CFG->dirroot . "mod/toolbar/css-box");
+        } else {
+        	$css = file_get_contents($CFG->dirroot . "mod/toolbar/css");
+        }
+        $css = str_replace("{{url}}", $CFG->wwwroot, $css);
+        $toolbar .= "{$css}";
+        
         $toolbar = str_replace("{{url}}", $CFG->wwwroot, $toolbar);
         $toolbar = str_replace("{{menu}}", templates_variables_substitute(array(array(),"menu")), $toolbar);
         $toolbar = str_replace("{{topmenu}}", templates_variables_substitute(array(array(),"topmenu")), $toolbar);
