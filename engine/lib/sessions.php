@@ -20,6 +20,7 @@
 	 */
 		function isloggedin() {
 			
+			if (!is_installed()) return false;
 			if ((isset($_SESSION['guid'])) && ($_SESSION['guid'] > 0))
 				return true;
 			return false;
