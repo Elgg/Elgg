@@ -35,6 +35,8 @@ CREATE TABLE `prefix_entities` (
 	
 	`time_created` int(11) NOT NULL,
 	`time_updated` int(11) NOT NULL,
+
+	`enabled` enum ('yes', 'no') NOT NULL default 'yes',
 	
 	primary key (`guid`),
     KEY `site_guid` (`site_guid`)

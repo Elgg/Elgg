@@ -101,17 +101,20 @@
 		{
 			$sql = "";
 			
+			if ($table_prefix)
+					$table_prefix = sanitise_string($table_prefix) . ".";
+			
 			if (!is_privileged())
 			{
 				$access = get_access_list();
 				
-				if ($table_prefix)
-					$table_prefix = sanitise_string($table_prefix) . ".";
-					
 				$sql = " ({$table_prefix}access_id in {$access} or ({$table_prefix}access_id = 0 and {$table_prefix}owner_guid = {$_SESSION['id']}))";
 			}
 			else
 				$sql = " 1 ";
+				
+			// Only return 'active' objects
+			$sql .= " and {$table_prefix}enabled='yes'";
 			
 			return $sql;
 		}
