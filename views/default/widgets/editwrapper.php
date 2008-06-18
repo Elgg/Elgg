@@ -23,7 +23,7 @@
 
 	<p>
 		<label>
-			<?php echo elgg_echo('access'); ?>
+			<?php echo elgg_echo('access'); ?>:
 			<?php echo elgg_view('input/access', array('internalname' => 'params[access_id]','value' => $vars['entity']->access_id)); ?>
 		</label>
 	</p>
