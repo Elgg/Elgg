@@ -1,31 +1,39 @@
 $(document).ready(function () {
 
-	// close all drawer elements
+	// elggtoolbar - close all drawer elements on pageload
 	$('li.drawer ul').hide();
 	
-	// register click handler for elggtoolbar and define onclick function
+	// elggtoolbar
 	$('h2.drawer-handle').click(function () {	
 		$('li.drawer ul:visible').slideUp('medium').prev().removeClass('open');
 		$(this).addClass('open').next().slideDown('fast');
 	return false;
 	});
 	
-	// register click function for toggling box contents
+	// toggle widget box contents
 	$('a.toggle_box_contents').bind('click', toggleContent);
 	
-	// click function for box contents edit panel
+	// toggle widget box edit panel
 	$('a.toggle_box_edit_panel').click(function () {
 		$(this.parentNode.parentNode).children("[class=collapsable_box_editpanel]").slideToggle("fast");
 		return false;
     });
+
     
-	// click function for customise edit panel
+	// toggle customise edit panel
 	$('a.toggle_customise_edit_panel').click(function () {
 		$('div#customise_editpanel').slideToggle("fast");
 		return false;
-    });     
+    }); 
     
-	// click function for customise panel - remove widget
+    
+    // more info buttons
+    setupMoreInfoButton();
+    
+    widget_moreinfo();
+       
+    
+	// remove widget button
 	$('img.remove_me').click(function () {
 		$(this.parentNode.parentNode.parentNode.parentNode.parentNode).fadeOut("medium", function () {
 			$(this).remove();
@@ -87,6 +95,7 @@ $(document).ready(function () {
 		drop: function(ev, ui) {
 			$(this).append($(ui.draggable).clone() ); 
 			$(this).droppable("disable");
+			
 			$('img.remove_me').click(function () {
 					$(this.parentNode.parentNode.parentNode.parentNode.parentNode).fadeOut("medium", function () {
 					$(this).remove();
@@ -96,6 +105,9 @@ $(document).ready(function () {
 				});
 			return false;
 			});
+			
+			setupMoreInfoButton(); 
+			
 			$els.sortable( "refresh" );
 			
 			var widgetNameRight = outputWidgetList('#rightsidebar_widgets');
@@ -108,6 +120,7 @@ $(document).ready(function () {
 		drop: function(ev, ui) {
 			$(this).append($(ui.draggable).clone() ); 
 			$(this).droppable("disable");
+			
 			$('img.remove_me').click(function () {
 					$(this.parentNode.parentNode.parentNode.parentNode.parentNode).fadeOut("medium", function () {
 					$(this).remove();
@@ -116,8 +129,10 @@ $(document).ready(function () {
 					document.getElementById('debugField1').value = widgetNameMain;
 				});
 			return false;
-				
 			});
+			
+			setupMoreInfoButton();
+			
 			$els.sortable( "refresh" );
 			
 			var widgetNameMain = outputWidgetList('#main_widgets');
@@ -150,13 +165,11 @@ jQuery.fn.makeDelimitedList = function(elementAttribute) {
 
 
 function outputWidgetList(forElement) {
-	//return( $("input[@name='handler']", forElement ).makeDelimitedList("value") );	
-	return( $("input[@name='handler'], input[@name='guid']", forElement ).makeDelimitedList("value") );
-	
+	return( $("input[@name='handler'], input[@name='guid']", forElement ).makeDelimitedList("value") );	
 }
 
 
-// toggle box content
+// toggle widget box contents
 var toggleContent = function(e) {
 	var targetContent = $('div.collapsable_box_content', this.parentNode.parentNode);
 		if (targetContent.css('display') == 'none') {
@@ -174,5 +187,41 @@ var toggleContent = function(e) {
 	return false;
 };
 
+
+// widget more info button
+function setupMoreInfoButton() {
+	$('img.more_info').click(function () {			
+		// grab widget description from hidden field			
+		//var widgetdescription = $("input[@name='description']", this.parentNode.parentNode.parentNode ).attr('value');
+		
+		//document.getElementById('debugField3').value = widgetdescription;
+													
+	return false;
+	}); 	
+}
+
+
+function widget_moreinfo() {			
+
+	$("img.more_info").hover(function(e){											  
+		
+		var widgetdescription = $("input[@name='description']", this.parentNode.parentNode.parentNode ).attr('value');
+
+		$("body").append("<p id='widget_moreinfo'><b>"+ widgetdescription +" </b><br />and there is room for a slightly <br />longer description spanning <br />several lines.</p>");
+
+		$("#widget_moreinfo")
+			.css("top",(e.pageY + 10) + "px")
+			.css("left",(e.pageX + 10) + "px")
+			.fadeIn("fast");		
+    },
+	function(){
+		$("#widget_moreinfo").remove();
+    });	
+	$("img.more_info").mousemove(function(e){
+		$("#widget_moreinfo")
+			.css("top",(e.pageY + 10) + "px")
+			.css("left",(e.pageX + 10) + "px");
+	});			
+};
 
 

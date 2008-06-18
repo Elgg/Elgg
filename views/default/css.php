@@ -255,7 +255,7 @@ h6 { font-size: 0.8em; }
   CUSTOMISE PANEL (PROFILE & DASHBOARD)
 *************************************** */
 #customise_editpanel {
-	/* display:none;*/
+	display:none;
 	margin: -20px 0 20px 20px;
 	padding:20px;
 	background: #dedede;
@@ -328,6 +328,14 @@ h6 { font-size: 0.8em; }
 }
 #customise_editpanel img.more_info {
 	padding-top: 4px;
+}
+#widget_moreinfo {
+	position:absolute;
+	border:1px solid #333333;
+	background:#e4ecf5;
+	color:#333333;
+	padding:5px;
+	display:none;
 }
 .droppable-active {
 		
@@ -680,3 +688,11 @@ input[type="submit"] {
 *************************************** */
 
 
+	
+	
+	
+	
+	
+	
+	
+	

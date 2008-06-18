@@ -43,16 +43,14 @@
 	</h3>
 </td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_remove.gif" class="remove_me" /></a></td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_info.gif" class="more_info" /></a></td>
+<td width="17px" align="right"><a href="javascript:void(0);"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_info.gif" class="more_info" /></a></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_drag.gif" class="drag_handle" /></a></td>
 </tr></table>
 
 <?php
-
 	}
-
 ?>
-<br />
+
 </div>
 
 
@@ -145,7 +143,8 @@
 <textarea type="textarea" value="Right widgets" style="display:none" name="debugField2" id="debugField2" /><?php echo $sidebarwidgetstring; ?></textarea>
 <input type="hidden" name="context" value="<?php echo get_context(); ?>" />
 <input type="hidden" name="owner" value="<?php echo page_owner(); ?>" />
-<input type="submit" value="Save changes" class="submit_button" />
+<input type="submit" value="Save changes" class="submit_button" onclick="$('a.toggle_customise_edit_panel').click();" />
+
 </form>
 </div><!-- /customise_editpanel -->
 
@@ -192,7 +191,6 @@
 		}
 	
 	?>
-	
 	
 </div><!-- /#wrapper_maincontent -->
 <p></p><!-- necessary to avoid an ie7 bug? -->
