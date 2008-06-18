@@ -942,7 +942,7 @@
 		else
 		{	
 			// Object not cached, load it.
-			if ($CONFIG->debug)
+			if (isset($CONFIG->debug) && $CONFIG->debug == true)
 				error_log("** GUID:$guid loaded from DB");
 			
 			$access = get_access_sql_suffix();

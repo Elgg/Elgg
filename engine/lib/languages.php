@@ -79,7 +79,7 @@
 		function register_translations($path) {
 			global $CONFIG;
 			
-			if ($CONFIG->debug) error_log("Translations loaded from : $path");
+			if (isset($CONFIG->debug) && $CONFIG->debug == true) error_log("Translations loaded from : $path");
 			
 			if ($handle = opendir($path)) {
 				while ($language = readdir($handle)) {

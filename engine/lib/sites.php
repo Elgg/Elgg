@@ -239,7 +239,7 @@
 		else
 		{
 			// Object not cached, load it.
-			if ($CONFIG->debug)
+			if (isset($CONFIG->debug) && $CONFIG->debug == true)
 				error_log("** Sub part of GUID:$guid loaded from DB");
 		
 			return get_data_row("SELECT * from {$CONFIG->dbprefix}sites_entity where guid=$guid");
