@@ -33,6 +33,7 @@
 			
 			datalist_set('default_site',$site->getGUID());
 			
+			set_config('view', get_input('view'), $site->getGUID());
 			set_config('language', get_input('language'), $site->getGUID());
 			
 			$debug = get_input('debug');

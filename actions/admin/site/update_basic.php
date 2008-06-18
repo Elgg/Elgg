@@ -31,6 +31,8 @@
 			
 			set_config('language', get_input('language'), $site->getGUID());
 			
+			set_config('view', get_input('view'), $site->getGUID());
+			
 			$debug = get_input('debug');
 			if ($debug)
 				set_config('debug', 1, $site->getGUID());

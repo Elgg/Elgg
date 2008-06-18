@@ -27,7 +27,7 @@
 		
 <?php
 
-		foreach(array('sitename','wwwroot','path','dataroot', 'language') as $field) {
+		foreach(array('sitename','wwwroot','path','dataroot', 'language', 'view') as $field) {
 
 ?>
 		<p>
