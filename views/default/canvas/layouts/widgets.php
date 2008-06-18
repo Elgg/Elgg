@@ -34,6 +34,7 @@
 	<h3>
 		<?php echo $widget->name; ?>
 		<input type="hidden" name="handler" value="<?php echo htmlentities($handler); ?>" />
+		<input type="hidden" name="description" value="<?php echo htmlentities($widget->description); ?>" />
 		<input type="hidden" name="guid" value="0" />
 	</h3>
 </td>
