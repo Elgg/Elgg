@@ -129,6 +129,8 @@
 			if (empty($CONFIG->sitename))
 				$CONFIG->sitename = "New Elgg site";
 				
+			if (empty($CONFIG->language))
+				$CONFIG->language = "en";
 
 		}
 		

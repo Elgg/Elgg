@@ -29,6 +29,8 @@
 			datalist_set('path',get_input('path'));
 			datalist_set('dataroot',get_input('dataroot'));
 			
+			set_config('language', get_input('language'), $site->getGUID());
+			
 			system_message(elgg_echo("admin:configuration:success"));
 			
 			header("Location: {$CONFIG->wwwroot}admin/site/");

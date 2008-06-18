@@ -33,6 +33,8 @@
 			
 			datalist_set('default_site',$site->getGUID());
 			
+			set_config('language', get_input('language'), $site->getGUID());
+			
 			system_message(elgg_echo("installation:configuration:success"));
 			
 			header("Location: ../../register.php");
