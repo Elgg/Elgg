@@ -298,6 +298,8 @@
 	
 			'widgets' => "Widgets",
 			'widget' => "Widget",
+			'widgets:panel:save:success' => "Your widgets were successfully saved.",
+			'widgets:panel:save:failure' => "There was a problem saving your widgets. Please try again.",
 			'widgets:save:success' => "The widget was successfully saved.",
 			'widgets:save:failure' => "We could not save your widget. Please try again.",
 	
