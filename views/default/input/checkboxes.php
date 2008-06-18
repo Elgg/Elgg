@@ -19,7 +19,8 @@
 	 */
 
     foreach($vars['options'] as $option) {
-        if (!in_array($option,$vars['value'])) {
+        //if (!in_array($option,$vars['value'])) {
+    	if ($option != $vars['value']) {
             $selected = "";
         } else {
             $selected = "checked = \"checked\"";

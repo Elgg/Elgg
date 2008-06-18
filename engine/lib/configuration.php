@@ -14,6 +14,25 @@
 
 	
 	/**
+	 * Unset a config option.
+	 *
+	 * @param string $name The name of the field.
+	 * @param int $site_guid Optionally, the GUID of the site (current site is assumed by default).
+	 * @return mixed
+	 */
+		function unset_config($name, $site_guid = 0) 
+		{
+			global $CONFIG;
+			
+			$name = mysql_real_escape_string($name);
+			$site_guid = (int) $site_guid;
+			if ($site_guid == 0)
+				$site_guid = (int) $CONFIG->site_id;
+				
+			return delete_data("delete from {$CONFIG->dbprefix}config where name='$name' and site_guid=$site_guid");
+		}
+
+	/**
 	 * Sets a configuration value
 	 *
 	 * @param string $name The name of the configuration value
@@ -24,6 +43,10 @@
 		function set_config($name, $value, $site_guid = 0) {
 			
 			global $CONFIG;
+			
+			// Unset existing
+			unset_config($name,$site_guid);
+			
 			$name = mysql_real_escape_string($name);
 			$value = mysql_real_escape_string($value);
 			$site_guid = (int) $site_guid;
@@ -31,6 +54,7 @@
 				$site_guid = (int) $CONFIG->site_id;
 			$CONFIG->$name = $value;
 			$value = sanitise_string(serialize($value));
+			
 			return insert_data("insert into {$CONFIG->dbprefix}config set name = '{$name}', value = '{$value}', site_guid = {$site_guid}");
 			
 		}

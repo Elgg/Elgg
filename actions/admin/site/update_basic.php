@@ -31,6 +31,13 @@
 			
 			set_config('language', get_input('language'), $site->getGUID());
 			
+			$debug = get_input('debug');
+			if ($debug)
+				set_config('debug', 1, $site->getGUID());
+			else
+				unset_config('debug', $site->getGUID());
+				
+			
 			system_message(elgg_echo("admin:configuration:success"));
 			
 			header("Location: {$CONFIG->wwwroot}admin/site/");
