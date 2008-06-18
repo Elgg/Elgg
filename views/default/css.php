@@ -591,7 +591,7 @@ textarea:focus, input[type="text"]:focus {
 }
 
 /* ***************************************
-	LOGIN / HOMEPAGE
+	LOGIN / REGISTER
 *************************************** */
 #login-box {
     text-align:left;
@@ -599,8 +599,17 @@ textarea:focus, input[type="text"]:focus {
     width:300px;
     padding:10px;
     background: #ffffff;
+    margin-left: 20px;
 }
 
+#register-box {
+    text-align:left;
+    border:1px solid #ddd;
+    width:300px;
+    padding:10px;
+    background: #ffffff;
+    margin-left: 40px;
+}
 /* ***************************************
 	MAIN CONTENT ELEMENTS
 *************************************** */
