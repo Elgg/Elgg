@@ -24,7 +24,7 @@
 			 
 ?>
 
-<select name="<?php echo $vars['internalname']; ?>" <?php echo $vars['js']; ?>>
+<select name="<?php echo $vars['internalname']; ?>" <?php if (isset($vars['js'])) echo $vars['js']; ?>>
 <?php
 
     foreach($vars['options'] as $key => $option) {

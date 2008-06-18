@@ -133,6 +133,9 @@
 					}
 					$widgetorder[$order] = $widget; 
 				}
+				
+				ksort($widgetorder);
+				
 				return $widgetorder;
 																		
 			}
@@ -303,12 +306,90 @@
 			
 		}
 		
+		function reorder_widgets_from_panel($panelstring1, $panelstring2, $context, $owner) {
+			
+			$return = true;
+			
+			$mainwidgets = explode('::',$panelstring1);
+			$sidewidgets = explode('::',$panelstring2);
+			
+			$handlers = array();
+			$guids = array();
+			
+			if (is_array($mainwidgets) && sizeof($mainwidgets) > 0) {
+				foreach($mainwidgets as $widget) {
+					
+					$guid = (int) $widget;
+
+					if ("{$guid}" == "{$widget}") {
+						$guids[1][] = $widget;
+					} else {
+						$handlers[1][] = $widget;
+					}
+					
+				}
+			}
+			if (is_array($sidewidgets) && sizeof($sidewidgets) > 0) {
+				foreach($sidewidgets as $widget) {
+					
+					$guid = (int) $widget;
+
+					if ("{$guid}" == "{$widget}") {
+						$guids[2][] = $widget;
+					} else {
+						$handlers[2][] = $widget;
+					}
+					
+				}
+			}
+			
+			// Reorder existing widgets or delete ones that have vanished
+			foreach (array(1,2) as $column) {
+				if ($dbwidgets = get_widgets($owner,$context,$column)) {
+					
+					foreach($dbwidgets as $dbwidget) {
+						if (in_array($dbwidget->getGUID(),$guids[1]) || in_array($dbwidget->getGUID(),$guids[2])) {
+							if (in_array($dbwidget->getGUID(),$guids[1])) {
+								$pos = array_search($dbwidget->getGUID(),$guids[1]);
+								$col = 1;
+							} else {
+								$pos = array_search($dbwidget->getGUID(),$guids[2]);
+								$col = 2;
+							}
+							$pos = ($pos + 1) * 10;
+							$dbwidget->column = $col;
+							$dbwidget->order = $pos;
+						} else {
+							if (!$dbwidget->delete())
+								$return = false;
+						}
+					}
+					
+				}
+				// Add new ones
+				if (sizeof($guids[$column]) > 0) {
+					foreach($guids[$column] as $key => $guid) {
+						if ($guid == 0) {
+							$pos = ($key + 1) * 10;
+							$handler = $handlers[$column][$key];
+							if (!add_widget($owner,$handler,$context,$pos,$column))
+								$return = false;
+						}
+					}
+				}
+			}
+			
+			return $return;
+			
+		}
+		
 	/**
 	 * Function to initialise widgets functionality on Elgg init
 	 *
 	 */
 		function widgets_init() {
 			
+			register_action('widgets/reorder');
 			register_action('widgets/save');
 			register_action('widgets/add');
 			
