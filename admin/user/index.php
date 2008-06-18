@@ -18,7 +18,7 @@
 		admin_gatekeeper();
 		
 	// Are we performing a search
-		$search = get_input('search');
+		$search = get_input('s');
 		$limit = get_input('limit', 10);
 		$offset = get_input('offset', 0);
 		

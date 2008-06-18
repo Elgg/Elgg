@@ -13,7 +13,7 @@
 <div id="search-box">
 	<form>
 	<b><?php echo elgg_echo('admin:user:label:search'); ?></b>
-	<input type="text" name="search"  />
+	<input type="text" name="s"  />
 	<input type="submit" name="<?php echo elgg_echo('admin:user:label:seachbutton'); ?>" 
 		value="<?php echo elgg_echo('admin:user:label:seachbutton'); ?>" />
 	</form> 
