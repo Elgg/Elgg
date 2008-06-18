@@ -143,7 +143,9 @@
 				
 				$CONFIG->wwwroot .= $request;
 				*/
-				$CONFIG->wwwroot = "http://" . $_SERVER['HTTP_HOST'] . str_replace("//","/",str_replace($_SERVER['DOCUMENT_ROOT'],"",$CONFIG->path));
+				$pathpart = str_replace("//","/",str_replace($_SERVER['DOCUMENT_ROOT'],"",$CONFIG->path));
+				if (substr($pathpart,0,1) != "/") $pathpart = "/" . $pathpart; 
+				$CONFIG->wwwroot = "http://" . $_SERVER['HTTP_HOST'] . $pathpart;
 		
 			}
 		
