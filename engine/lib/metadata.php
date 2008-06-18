@@ -370,17 +370,18 @@
 	 * @param string $order_by Optional ordering.
 	 * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
 	 */
-	function find_metadata($meta_name = "", $meta_value = "", $entity_type = "", $entity_subtype = "", $limit = 10, $offset = 0, $order_by = "e.time_created desc", $site_guid = 0)
+	function find_metadata($meta_name = "", $meta_value = "", $entity_type = "", $entity_subtype = "", $limit = 10, $offset = 0, $order_by = "", $site_guid = 0)
 	{
 		global $CONFIG;
 		
 		$meta_n = get_metastring_id($meta_name);
 		$meta_v = get_metastring_id($meta_value);
-			
+		
 		$entity_type = sanitise_string($entity_type);
 		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
 		$limit = (int)$limit;
 		$offset = (int)$offset;
+		if ($order_by == "") $order_by = "e.time_created desc";
 		$order_by = sanitise_string($order_by);
 		$site_guid = (int) $site_guid;
 		if ($site_guid == 0)
@@ -420,8 +421,11 @@
 	 * @param int $offset
 	 * @param string $order_by Optional ordering.
 	 * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
+	 * @param true|false $count If set to true, returns the total number of entities rather than a list. (Default: false)
+	 * 
+	 * @return int|array A list of entities, or a count if $count is set to true
 	 */
-	function get_entities_from_metadata($meta_name, $meta_value = "", $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "e.time_created desc", $site_guid = 0)
+	function get_entities_from_metadata($meta_name, $meta_value = "", $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0, $count = false)
 	{
 		global $CONFIG;
 		
@@ -432,6 +436,7 @@
 		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
 		$limit = (int)$limit;
 		$offset = (int)$offset;
+		if ($order_by == "") $order_by = "e.time_created desc";
 		$order_by = sanitise_string($order_by);
 		$site_guid = (int) $site_guid;
 		$owner_guid = (int) $owner_guid;
@@ -455,13 +460,49 @@
 		if ($owner_guid > 0)
 			$where[] = "e.owner_guid = {$owner_guid}";
 		
-		$query = "SELECT distinct e.* from {$CONFIG->dbprefix}entities e JOIN {$CONFIG->dbprefix}metadata m on e.guid = m.entity_guid where";
+		if (!$count) {
+			$query = "SELECT distinct e.* "; 
+		} else {
+			$query = "SELECT count(e.guid) as total ";
+		}
+			
+		$query .= "from {$CONFIG->dbprefix}entities e JOIN {$CONFIG->dbprefix}metadata m on e.guid = m.entity_guid where";
 		foreach ($where as $w)
 			$query .= " $w and ";
 		$query .= get_access_sql_suffix("e"); // Add access controls
-		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
-
-		return get_data($query, "entity_row_to_elggstar");
+		
+		if (!$count) {
+			$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
+			return get_data($query, "entity_row_to_elggstar");
+		} else {
+			if ($row = get_data_row($query))
+				return $row->total;
+		}
+		return false;
+	}
+	
+	/**
+	 * Return a list of entities suitable for display based on the given search criteria.
+	 * 
+	 * @see elgg_view_entity_list
+	 * 
+	 * @param mixed $meta_name Metadata name to search on
+	 * @param mixed $meta_value The value to match, optionally
+	 * @param string $entity_type The type of entity to look for, eg 'site' or 'object'
+	 * @param string $entity_subtype The subtype of the entity
+	 * @param int $limit Number of entities to display per page
+	 * 
+	 * @return string A list of entities suitable for display
+	 */
+	function list_entities_from_metadata($meta_name, $meta_value = "", $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10) {
+		
+		$offset = (int) get_input('offset');
+		$limit = (int) $limit;
+		$count = get_entities_from_metadata($meta_name, $meta_value, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, "", 0, true);
+		$entities = get_entities_from_metadata($meta_name, $meta_value, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, "", 0, false);
+		
+		return elgg_view_entity_list($entities, $count, $offset, $limit);
+		
 	}
 
 	/**
@@ -474,9 +515,10 @@
 	 * @param int $offset
 	 * @param string $order_by Optional ordering.
 	 * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
-	 * @return array List of ElggEntities
+	 * @param true|false $count If set to true, returns the total number of entities rather than a list. (Default: false)
+	 * @return int|array List of ElggEntities, or the total number if count is set to false
 	 */
-	function get_entities_from_metadata_multi($meta_array, $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "e.time_created desc", $site_guid = 0)
+	function get_entities_from_metadata_multi($meta_array, $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0, $count = false)
 	{
 		global $CONFIG;
 		
@@ -503,6 +545,7 @@
 		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
 		$limit = (int)$limit;
 		$offset = (int)$offset;
+		if ($order_by == "") $order_by = "e.time_created desc";
 		$order_by = sanitise_string($order_by);
 		$owner_guid = (int) $owner_guid;
 		
@@ -521,13 +564,50 @@
 		if ($owner_guid > 0)
 			$where[] = "e.owner_guid = {$owner_guid}";
 		
-		$query = "SELECT distinct e.* from {$CONFIG->dbprefix}entities e {$join} where";
+		if ($count) {
+			$query = "SELECT count(e.guid) as total ";
+		} else {
+			$query = "SELECT distinct e.* "; 
+		}
+			
+		$query .= " from {$CONFIG->dbprefix}entities e {$join} where";
 		foreach ($where as $w)
 			$query .= " $w and ";
 		$query .= get_access_sql_suffix("e"); // Add access controls
-		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
-
-		return get_data($query, "entity_row_to_elggstar");
+		
+		if (!$count) {
+			$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
+			return get_data($query, "entity_row_to_elggstar");
+		} else {
+			if ($count = get_data_row($query)) {
+				return $count->total;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Returns a viewable list of entities based on the given search criteria.
+	 *
+	 * @see elgg_view_entity_list
+	 * 
+	 * @param array $meta_array Array of 'name' => 'value' pairs
+	 * @param string $entity_type The type of entity to look for, eg 'site' or 'object'
+	 * @param string $entity_subtype The subtype of the entity.
+	 * @param int $limit 
+	 * @param int $offset
+	 * @param string $order_by Optional ordering.
+	 * @return string List of ElggEntities suitable for display
+	 */
+	function list_entities_from_metadata_multi($meta_array, $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10) {
+		
+		$offset = (int) get_input('offset');
+		$limit = (int) $limit;
+		$count = get_entities_from_metadata_multi($meta_array, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, "", $site_guid, true);
+		$entities = get_entities_from_metadata_multi($meta_array, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, "", $site_guid, false);
+	
+		return elgg_view_entity_list($entities, $count, $offset, $limit);
+		
 	}
 	
 	/**

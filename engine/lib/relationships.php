@@ -486,6 +486,31 @@
 		return false;
 		
 	}
+
+	/**
+	 * Returns a viewable list of entities by relationship
+	 *
+	 * @see elgg_view_entity_list
+	 * 
+	 * @param string $relationship The relationship eg "friends_of"
+	 * @param int $relationship_guid The guid of the entity to use query
+	 * @param bool $inverse_relationship Reverse the normal function of the query to instead say "give me all entities for whome $relationship_guid is a $relationship of"
+	 * @param string $type The type of entity (eg 'object')
+	 * @param string $subtype The entity subtype
+	 * @param int $owner_guid The owner (default: all)
+	 * @param int $limit The number of entities to display on a page
+	 * @return string The viewable list of entities
+	 */
+	function list_entities_from_relationship($relationship, $relationship_guid, $inverse_relationship = false, $type = "", $subtype = "", $owner_guid = 0, $limit = 0) {
+		
+		$limit = (int) $limit;
+		$offset = (int) get_input('offset');
+		$count = get_entities_from_relationship($relationship, $relationship_guid, $inverse_relationship, $type, $subtype, $owner_guid, "", $limit, 0, true);
+		$entities = get_entities_from_relationship($relationship, $relationship_guid, $inverse_relationship, $type, $subtype, $owner_guid, "", $limit, 0, true);
+		
+		return elgg_view_entity_list($entities, $count, $offset, $Limit);
+		
+	}
 	
 	/**** HELPER FUNCTIONS FOR RELATIONSHIPS OF TYPE 'ATTACHED' ****/
 	

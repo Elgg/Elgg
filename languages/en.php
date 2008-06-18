@@ -201,6 +201,9 @@
 	
 			'search' => "Search",
 			'searchtitle' => "Search: %s",
+			'notfound' => "No results found.",
+			'next' => "Next",
+			'previous' => "Previous",
 	
 		/**
 		 * Account

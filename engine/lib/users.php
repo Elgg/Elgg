@@ -526,6 +526,27 @@
 		$total = get_entities('object', $subtype, $user_guid, "time_created desc", null, null, true);
 		return $total;
 	}
+
+	/**
+	 * Displays a list of user objects of a particular subtype, with navigation.
+	 *
+	 * @see elgg_view_entity_list
+	 * 
+	 * @param int $user_guid The GUID of the user
+	 * @param string $subtype The object subtype
+	 * @param int $limit The number of entities to display on a page
+	 * @return string The list in a form suitable to display
+	 */
+	function list_user_objects($user_guid, $subtype = "", $limit = 10) {
+		
+		$offset = (int) get_input('offset');
+		$limit = (int) $limit;
+		$count = (int) count_user_objects($user_guid, $subtype);
+		$entities = get_user_objects($user_guid, $subtype, $limit, $offset);
+		
+		return elgg_view_entity_list($entities, $count, $offset, $limit);
+		
+	}
 	
 /**
 	 * Obtains a list of objects owned by a user's friends
@@ -565,6 +586,27 @@
 		return 0;
 	}
 
+	/**
+	 * Displays a list of a user's friends' objects of a particular subtype, with navigation.
+	 *
+	 * @see elgg_view_entity_list
+	 * 
+	 * @param int $user_guid The GUID of the user
+	 * @param string $subtype The object subtype
+	 * @param int $limit The number of entities to display on a page
+	 * @return string The list in a form suitable to display
+	 */
+	function list_user_friends_objects($user_guid, $subtype = "", $limit = 10) {
+		
+		$offset = (int) get_input('offset');
+		$limit = (int) $limit;
+		$count = (int) count_user_friends_objects($user_guid, $subtype);
+		$entities = get_user_friends_objects($user_guid, $subtype, $limit, $offset);
+		
+		return elgg_view_entity_list($entities, $count, $offset, $limit);
+		
+	}
+	
 	/**
 	 * Get user objects by an array of metadata
 	 *

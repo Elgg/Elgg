@@ -17,19 +17,11 @@
 		
 	// Get input
 		$tag = get_input('tag');
-		$offset = get_input('offset',0);
 		$subtype = get_input('subtype');
 		$objecttype = get_input('object');
 		
-		$body = "";
-		
-		if ($entities = get_entities_from_metadata("",$tag,"",$subtype,0,15,$offset)) {
-			
-			foreach($entities as $entity) {
-				$body .= elgg_view_entity($entity);
-			}
-			
-		}
+		$body = list_entities_from_metadata("", $tag, "", $subtype);
+		$body = elgg_view_layout('one_column',$body);
 		
 		page_draw(sprintf(elgg_echo('searchtitle'),$tag),$body);
 

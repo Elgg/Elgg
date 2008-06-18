@@ -239,6 +239,54 @@
 		}
 		
 	/**
+	 * Returns a view of a list of entities, plus navigation. It is intended that this function
+	 * be called from other wrapper functions.
+	 * 
+	 * @see list_entities
+	 * @see list_user_objects
+	 * @see list_user_friends_objects
+	 * @see list_entities_from_metadata
+	 * @see list_entities_from_metadata_multi
+	 * @see list_entities_from_relationships
+	 * @see list_site_members
+	 *
+	 * @param array $entities List of entities
+	 * @param int $count The total number of entities across all pages
+	 * @param int $offset The current indexing offset
+	 * @param int $limit The number of entities to display per page
+	 * @return string The list of entities
+	 */
+		function elgg_view_entity_list($entities, $count, $offset, $limit) {
+			
+			$count = (int) $count;
+			$offset = (int) $offset;
+			$limit = (int) $limit;
+			
+			$html = "";
+			
+			$nav = elgg_view('navigation/pagination',array(
+			
+												'baseurl' => $_SERVER['REQUEST_URI'],
+												'offset' => $offset,
+												'count' => $count,
+			
+														));
+			
+			$html .= $nav;
+														
+			if (is_array($entities) && sizeof($entities) > 0) {
+				foreach($entities as $entity) {
+					$html .= elgg_view_entity($entity, "", false);
+				}
+			}
+			
+			$html .= $nav;
+			
+			return $html;
+			
+		}
+		
+	/**
 	 * Displays an internal layout for the use of a plugin canvas.
 	 * Takes a variable number of parameters, which are made available 
 	 * in the views as $vars['area1'] .. $vars['areaN'].

@@ -1016,7 +1016,7 @@
 	 * @param boolean $count Set to true to get a count rather than the entities themselves (limits and offsets don't apply in this context). Defaults to false.
 	 * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites. 
 	 */
-	function get_entities($type = "", $subtype = "", $owner_guid = 0, $order_by = "time_created desc", $limit = 10, $offset = 0, $count = false, $site_guid = 0)
+	function get_entities($type = "", $subtype = "", $owner_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0)
 	{
 		global $CONFIG;
 		
@@ -1026,6 +1026,7 @@
 		$type = sanitise_string($type);
 		$subtype = get_subtype_id($type, $subtype);
 		
+		if ($order_by == "") $order_by = "time_created desc";
 		$order_by = sanitise_string($order_by);
 		$limit = (int)$limit;
 		$offset = (int)$offset;
@@ -1071,6 +1072,27 @@
 			$total = get_data_row($query);
 			return $total->total;
 		}
+	}
+	
+	/**
+	 * Returns a viewable list of entities
+	 *
+	 * @see elgg_view_entity_list
+	 * 
+	 * @param string $type The type of entity (eg "user", "object" etc)
+	 * @param string $subtype The arbitrary subtype of the entity
+	 * @param int $owner_guid The GUID of the owning user
+	 * @param int $limit The number of entities to display per page (default: 10)
+	 * @return string A viewable list of entities
+	 */
+	function list_entities($type= "", $subtype = "", $owner_guid = 0, $limit = 10) {
+		
+		$offset = (int) get_input('offset');
+		$count = get_entities($type, $subtype, $owner_guid, "", $limit, $offset, true);
+		$entities = get_entities($type, $subtype, $owner_guid, "", $limit, $offset);
+
+		return elgg_view_entity_list($entities, $count, $offset, $limit);
+		
 	}
 	
 	/**
