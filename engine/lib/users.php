@@ -684,6 +684,27 @@
 	}
 	
 	/**
+	 * Searches for a user based on a complete or partial name or username using full text searching.
+	 * 
+	 * IMPORTANT NOTE: With MySQL's default setup:
+	 * 1) $criteria must be 4 or more characters long
+	 * 2) If $criteria matches greater than 50% of results NO RESULTS ARE RETURNED!
+	 *
+	 * @param string $criteria The partial or full name or username.
+	 */
+	function search_for_user($criteria)
+	{
+		global $CONFIG;
+		
+		$criteria = sanitise_string($criteria);
+		$access = get_access_sql_suffix("e");
+		
+		$query = "select e.* from {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}users_entity u on e.guid=u.guid where match(u.name,u.username) against ('$criteria') and $access";
+		
+		return get_data($query, "entity_row_to_elggstar");
+	}
+	
+	/**
 	 * Registers a user, returning false if the username already exists
 	 *
 	 * @param string $username The username of the new user

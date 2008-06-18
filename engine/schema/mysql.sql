@@ -104,7 +104,8 @@ CREATE TABLE `prefix_objects_entity` (
   `title` text NOT NULL,
   `description` text NOT NULL,
 
-  PRIMARY KEY  (`guid`)
+  PRIMARY KEY  (`guid`),
+  FULLTEXT KEY (`title`,`description`)
 )  ;
 
 -- Extra information relating to "sites"
@@ -116,7 +117,8 @@ CREATE TABLE `prefix_sites_entity` (
   `url` varchar(255) NOT NULL, 
    
   PRIMARY KEY  (`guid`),
-  UNIQUE KEY (`url`)
+  UNIQUE KEY (`url`),
+  FULLTEXT KEY (`name`,`description`, `url`)
 )  ;
 
 -- Extra information relating to "users"
@@ -138,7 +140,8 @@ CREATE TABLE `prefix_users_entity` (
   
   PRIMARY KEY  (`guid`),
   KEY `password` (`password`),
-  FULLTEXT KEY `name` (`name`)
+  FULLTEXT KEY `name` (`name`),
+  FULLTEXT KEY (`name`,`username`)
 ) ENGINE=MyISAM;
 
 

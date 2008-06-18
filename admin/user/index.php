@@ -18,12 +18,6 @@
 		admin_gatekeeper();
 		
 		
-	// Display user browser
-
-	// if search, perform search
-		
-		
-	// extend user view with ban etc? - Or extend across the board (for admin only)
 		
 	// Display main admin menu
 		page_draw(elgg_echo("admin:user"),elgg_view_layout("one_column", elgg_view("admin/user")));
