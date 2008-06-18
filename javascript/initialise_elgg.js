@@ -27,13 +27,15 @@ $(document).ready(function () {
     
 	// click function for customise panel - remove widget
 	$('img.remove_me').click(function () {
-		//$(this.parentNode.parentNode.parentNode.parentNode.parentNode).fadeOut("medium");
 		$(this.parentNode.parentNode.parentNode.parentNode.parentNode).fadeOut("medium", function () {
 			$(this).remove();
-			var widgetNameMain = ($('#main_widgets').text()).replace(/[\n]/g, ',');
-			var widgetNameRight = ($('#rightsidebar_widgets').text()).replace(/[\n]/g, ',');	
+			
+			var widgetNameMain = outputWidgetList('#main_widgets');
 			document.getElementById('debugField1').value = widgetNameMain;
+			
+			var widgetNameRight = outputWidgetList('#rightsidebar_widgets');
 			document.getElementById('debugField2').value = widgetNameRight;
+
 		  });
 
 		return false;
@@ -61,9 +63,8 @@ $(document).ready(function () {
 		stop: function(e,ui) {			
 			$(this).sortable( "refresh" );
 			
-			var widgetNameMain = ($('#main_widgets').text()).replace(/[\n]/g, ',');
-			var widgetNameRight = ($('#rightsidebar_widgets').text()).replace(/[\n]/g, ',');	
-			//alert('widgetName = ' +widgetName);
+			var widgetNameRight = outputWidgetList('#rightsidebar_widgets');
+			var widgetNameMain = outputWidgetList('#main_widgets');
 			document.getElementById('debugField1').value = widgetNameMain;
 			document.getElementById('debugField2').value = widgetNameRight;
 		}
@@ -89,13 +90,15 @@ $(document).ready(function () {
 			$('img.remove_me').click(function () {
 					$(this.parentNode.parentNode.parentNode.parentNode.parentNode).fadeOut("medium", function () {
 					$(this).remove();
-					var widgetNameMain = ($('#rightsidebar_widgets').text()).replace(/[\n]/g, ',');
-					document.getElementById('debugField2').value = widgetNameMain;
+					
+					var widgetNameRight = outputWidgetList('#rightsidebar_widgets');
+					document.getElementById('debugField2').value = widgetNameRight;
 				});
 			return false;
 			});
 			$els.sortable( "refresh" );
-			var widgetNameRight = ($('#rightsidebar_widgets').text()).replace(/[\n]/g, ',');	
+			
+			var widgetNameRight = outputWidgetList('#rightsidebar_widgets');
 			document.getElementById('debugField2').value = widgetNameRight;
 		 }
 	});
@@ -108,20 +111,50 @@ $(document).ready(function () {
 			$('img.remove_me').click(function () {
 					$(this.parentNode.parentNode.parentNode.parentNode.parentNode).fadeOut("medium", function () {
 					$(this).remove();
-					var widgetNameMain = ($('#main_widgets').text()).replace(/[\n]/g, ',');
+					
+					var widgetNameMain = outputWidgetList('#main_widgets');
 					document.getElementById('debugField1').value = widgetNameMain;
 				});
 			return false;
 				
 			});
 			$els.sortable( "refresh" );
-			var widgetNameMain = ($('#main_widgets').text()).replace(/[\n]/g, ',');
+			
+			var widgetNameMain = outputWidgetList('#main_widgets');
 			document.getElementById('debugField1').value = widgetNameMain;
 		 }
 	});
 
     
 });
+
+
+jQuery.fn.makeDelimitedList = function(elementAttribute) {
+	
+	var delimitedListArray = new Array();
+
+	var listDelimiter = "::";
+
+	// Loop over each element in the stack and add the elementAttribute to the array
+	this.each(function(e) {
+			var listElement = $(this);
+	
+			// Add the attribute value to our values array
+			delimitedListArray[delimitedListArray.length] = listElement.attr(elementAttribute);
+		}
+	);
+
+	// Return value list by joining the array
+	return(delimitedListArray.join(listDelimiter));
+}
+
+
+function outputWidgetList(forElement) {
+	//return( $("input[@name='handler']", forElement ).makeDelimitedList("value") );	
+	return( $("input[@name='handler'], input[@name='guid']", forElement ).makeDelimitedList("value") );
+	
+}
+
 
 // toggle box content
 var toggleContent = function(e) {
@@ -140,3 +173,6 @@ var toggleContent = function(e) {
 		}
 	return false;
 };
+
+
+
