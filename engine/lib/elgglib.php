@@ -264,7 +264,7 @@
 			
 			$html = "";
 			
-			$nav = elgg_view('navigation/pagination',array(
+			$html .= elgg_view('navigation/pagination',array(
 			
 												'baseurl' => $_SERVER['REQUEST_URI'],
 												'offset' => $offset,
@@ -280,7 +280,8 @@
 				}
 			}
 			
-			$html .= $nav;
+			if ($count)
+				$html .= $nav;
 			
 			return $html;
 			

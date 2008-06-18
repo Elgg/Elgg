@@ -41,7 +41,11 @@
 
 	if ($count == 0) {
 		
-		echo elgg_echo("notfound");
+		static $notfounddisplayed;
+		if (!isset($notfounddisplayed)) {
+			echo elgg_echo("notfound");
+			$notfounddisplayed = true;
+		}
 		
 	}
 
