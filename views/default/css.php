@@ -558,6 +558,12 @@ textarea {
 	padding: 5px;
 	color:#666666;
 }
+textarea:focus, input[type="text"]:focus {
+	border: solid 1px #4690d6;
+	background: #e4ecf5;
+	color:#333333;
+}
+
 .submit_button {
 	font: 12px/100% Arial, Helvetica, sans-serif;
 	font-weight: bold;
@@ -570,13 +576,21 @@ textarea {
 	margin:10px 0 10px 0;
 	cursor: pointer;
 }
-.submit_button:hover {
+.submit_button:hover, input[type="submit"]:hover {
 	background: #0054a7;
 }
-textarea:focus, input[type="text"]:focus {
-	border: solid 1px #4690d6;
-	background: #e4ecf5;
-	color:#333333;
+
+input[type="submit"] {
+	font: 12px/100% Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #ffffff;
+	background:#4690d6;
+	border: 1px solid #4690d6;
+	width: auto;
+	height: 25px;
+	padding: 2px 6px 2px 6px;
+	margin:10px 0 10px 0;
+	cursor: pointer;
 }
 
 .input-text,
@@ -628,6 +642,10 @@ textarea:focus, input[type="text"]:focus {
 	margin-right:50px;
 }
 #searchform input.search_input {
+	-moz-border-radius-bottomleft:4px;
+	-moz-border-radius-bottomright:4px;
+	-moz-border-radius-topleft:4px;
+	-moz-border-radius-topright:4px;
 	background-color:#FFFFFF;
 	border:1px solid #BBBBBB;
 	color:#999999;
@@ -638,6 +656,10 @@ textarea:focus, input[type="text"]:focus {
 	width:180px;
 }
 #searchform input.search_submit_button {
+	-moz-border-radius-bottomleft:4px;
+	-moz-border-radius-bottomright:4px;
+	-moz-border-radius-topleft:4px;
+	-moz-border-radius-topright:4px;
 	color:#ffffff;
 	background: #cccccc;
 	border:none;
@@ -656,6 +678,5 @@ textarea:focus, input[type="text"]:focus {
 /* ***************************************
 	END
 *************************************** */
-
 
 
