@@ -16,4 +16,6 @@
 	
 		echo elgg_view("admin/user_opt/search");
 		
+		if ($vars['list']) echo $vars['list'];
+		
 ?>

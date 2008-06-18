@@ -691,17 +691,40 @@
 	 * 2) If $criteria matches greater than 50% of results NO RESULTS ARE RETURNED!
 	 *
 	 * @param string $criteria The partial or full name or username.
+	 * @param int $limit Limit of the search.
+	 * @param int $offset Offset.
+	 * @param string $order_by The order.
+	 * @param boolean $count Whether to return the count of results or just the results. 
 	 */
-	function search_for_user($criteria)
+	function search_for_user($criteria, $limit = 10, $offset = 0, $order_by = "", $count = false)
 	{
 		global $CONFIG;
 		
 		$criteria = sanitise_string($criteria);
+		$limit = (int)$limit;
+		$offset = (int)$offset;
+		$order_by = sanitise_string($order_by);
+		
 		$access = get_access_sql_suffix("e");
 		
-		$query = "select e.* from {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}users_entity u on e.guid=u.guid where match(u.name,u.username) against ('$criteria') and $access";
+		if ($order_by == "") $order_by = "e.time_created desc";
 		
-		return get_data($query, "entity_row_to_elggstar");
+		if ($count) {
+			$query = "SELECT count(e.guid) as total ";
+		} else {
+			$query = "SELECT e.* "; 
+		}
+		$query .= "from {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}users_entity u on e.guid=u.guid where match(u.name,u.username) against ('$criteria') and $access";
+		
+		if (!$count) {
+			$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
+			return get_data($query, "entity_row_to_elggstar");
+		} else {
+			if ($count = get_data_row($query)) {
+				return $count->total;
+			}
+		}
+		return false;
 	}
 	
 	/**

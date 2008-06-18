@@ -17,9 +17,20 @@
 	// Make sure only valid admin users can see this
 		admin_gatekeeper();
 		
+	// Are we performing a search
+		$search = get_input('search');
+		$limit = get_input('limit', 10);
+		$offset = get_input('offset', 0);
 		
+		if ($search){
+			$entities = search_for_user($search, $limit, $offset, "",false);
+			$count = search_for_user($search, $limit, $offset, "",true);
+		
+			$result = elgg_view_entity_list($entities, $count, $offset, $limit);
+		} else
+			$result = list_entities_from_metadata("", $tag, "user", "");
 		
 	// Display main admin menu
-		page_draw(elgg_echo("admin:user"),elgg_view_layout("one_column", elgg_view("admin/user")));
+		page_draw(elgg_echo("admin:user"),elgg_view_layout("one_column", elgg_view("admin/user", array('list' => $result))));
 		
 ?>
