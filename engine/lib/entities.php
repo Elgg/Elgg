@@ -473,6 +473,14 @@
 		}
 		
 		/**
+		 * Disable this entity.
+		 */
+		public function disable()
+		{
+			return disable_entity($this->get('guid'));
+		}
+		
+		/**
 		 * Delete this entity.
 		 */
 		public function delete() 
@@ -1093,6 +1101,29 @@
 
 		return elgg_view_entity_list($entities, $count, $offset, $limit);
 		
+	}
+	
+	/**
+	 * Disable an entity but not delete it.
+	 *
+	 * @param int $guid
+	 */
+	function disable_entity($guid)
+	{
+		global $CONFIG;
+		
+		$guid = (int)$guid;
+		if ($entity = get_entity($guid)) {
+			if (trigger_elgg_event('delete',$entity->type,$entity)) {
+				if ($entity->canEdit()) {
+					
+					$res = update_data("UPDATE {$CONFIG->dbprefix}entities set enabled='no' where guid={$guid}");
+					
+					return $res;
+				} 
+			}
+		}
+		return false;
 	}
 	
 	/**

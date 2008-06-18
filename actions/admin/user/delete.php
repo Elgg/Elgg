@@ -10,6 +10,8 @@
 	 * @link http://elgg.org/
 	 */
 
+	require_once("../../../engine/start.php");
+
 	// block non-admin users
 	admin_gatekeeper();
 	
@@ -26,4 +28,7 @@
 	}
 	else
 		system_message(elgg_echo('admin:user:delete:no'));
+		
+	header("Location: {$CONFIG->wwwroot}admin/user/");
+	exit;
 ?>

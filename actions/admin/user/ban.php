@@ -10,6 +10,8 @@
 	 * @link http://elgg.org/
 	 */
 
+	require_once("../../../engine/start.php");
+	
 	// block non-admin users
 	admin_gatekeeper();
 	
@@ -19,13 +21,14 @@
 	
 	if ( ($obj instanceof ElggUser) && ($obj->canEdit()))
 	{
-		
-		// TODO: Ban user
-		throw new NotImplementedException("WRITEME");
-		
-		
-		
+		if ($obj->disable())
+			system_message(elgg_echo('admin:user:ban:yes'));
+		else
+			system_message(elgg_echo('admin:user:ban:no'));
 	}
 	else
 		system_message(elgg_echo('admin:user:ban:no'));
+		
+	header("Location: {$CONFIG->wwwroot}admin/user/");
+	exit;
 ?>
