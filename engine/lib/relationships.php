@@ -427,7 +427,7 @@
 	 * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
 	 * @return array|int|false An array of entities, or the number of entities, or false on failure
 	 */
-	function get_entities_from_relationship($relationship, $relationship_guid, $inverse_relationship = false, $type = "", $subtype = "", $owner_guid = 0, $order_by = "time_created desc", $limit = 10, $offset = 0, $count = false, $site_guid = 0)
+	function get_entities_from_relationship($relationship, $relationship_guid, $inverse_relationship = false, $type = "", $subtype = "", $owner_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0)
 	{
 		global $CONFIG;
 		
@@ -437,6 +437,7 @@
 		$type = sanitise_string($type);
 		$subtype = get_subtype_id($type, $subtype);
 		$owner_guid = (int)$owner_guid;
+		if ($order_by == "") $order_by = "time_created desc";
 		$order_by = sanitise_string($order_by);
 		$limit = (int)$limit;
 		$offset = (int)$offset;
@@ -501,13 +502,13 @@
 	 * @param int $limit The number of entities to display on a page
 	 * @return string The viewable list of entities
 	 */
-	function list_entities_from_relationship($relationship, $relationship_guid, $inverse_relationship = false, $type = "", $subtype = "", $owner_guid = 0, $limit = 0) {
+	function list_entities_from_relationship($relationship, $relationship_guid, $inverse_relationship = false, $type = "", $subtype = "", $owner_guid = 0, $limit = 10) {
 		
 		$limit = (int) $limit;
 		$offset = (int) get_input('offset');
 		$count = get_entities_from_relationship($relationship, $relationship_guid, $inverse_relationship, $type, $subtype, $owner_guid, "", $limit, 0, true);
-		$entities = get_entities_from_relationship($relationship, $relationship_guid, $inverse_relationship, $type, $subtype, $owner_guid, "", $limit, 0, true);
-		
+		$entities = get_entities_from_relationship($relationship, $relationship_guid, $inverse_relationship, $type, $subtype, $owner_guid, "", $limit, 0);
+
 		return elgg_view_entity_list($entities, $count, $offset, $Limit);
 		
 	}
