@@ -199,7 +199,13 @@
 		 * River
 		 */
 			'river' => "River",
-			
+			'river:widget:noactivity' => 'We could not find any activity.',
+			'river:widget:title' => "%s activity.",
+			'river:widget:description' => "Show your latest activity.",
+			'river:widget:title:friends' => "%s friends activity.",
+			'river:widget:description:friends' => "Show what your friends are up to.",
+	
+			'river:relationship:friend' => 'is now friends with',
 			
 		/**
 		 * Search
@@ -378,16 +384,6 @@ Alternatively, you can enter your database settings below and we will try and do
 		 */
 			'xmlrpc:noinputdata'	=>	"Input data missing",
 	
-		/**
-		 * River
-		 */
-			'river:widget:noactivity' => 'User has no visible activity.',
-			'river:widget:title' => "%s activity.",
-			'river:widget:description' => "Show your latest activity.",
-			'river:widget:title:friends' => "%s friends activity.",
-			'river:widget:description:friends' => "Show what your friends are up to.",
-	
-			'river:relationship:friend' => 'is now friends with',
 			
 	);
 	
