@@ -110,4 +110,29 @@
 		return $river;
 	}
 
+	/**
+	 * Simplify drawing a river for a given user.
+	 *
+	 * @param int $guid The user
+	 * @param unknown_type $limit Limit
+	 * @param unknown_type $offset Offset
+	 * @param string $view Optional view to use to display the river (dashboard is assumed)
+	 */
+	function elgg_view_river($guid, $limit = 10, $offset = 0, $view = 'river/dashboard')
+	{
+		return elgg_view($view, array('river' => get_river_entries($guid,"", $limit, $offset)));
+	}
+	
+	/**
+	 * Simplify drawing a river for a given user, showing their friend's activity
+	 *
+	 * @param int $guid The user
+	 * @param unknown_type $limit Limit
+	 * @param unknown_type $offset Offset
+	 * @param string $view Optional view to use to display the river (dashboard is assumed)
+	 */
+	function elgg_view_friend_river($guid, $limit = 10, $offset = 0, $view = 'river/dashboard')
+	{
+		return elgg_view($view, array('river' => get_river_entries($guid,"", $limit, $offset)));
+	}
 ?>
