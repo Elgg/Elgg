@@ -11,9 +11,12 @@
 	 * @link http://elgg.org/
 	 */
 
+	static $widgettypes;
+	if (!isset($widgettypes)) $widgettypes = get_widget_types();
+	
 	if ($vars['entity'] instanceof ElggObject && $vars['entity']->getSubtype() == 'widget') {
 		$handler = $vars['entity']->handler;
-		$title = $vars['entity']->title;
+		$title = $widgettypes[$vars['entity']->handler]->name;
 	} else {
 		$handler = "error";
 		$title = elgg_echo("error"); 
