@@ -168,6 +168,8 @@ CREATE TABLE `prefix_annotations` (
 	`access_id` int(11) NOT NULL,
 	
 	`time_created` int(11) NOT NULL,
+
+	`enabled` enum ('yes', 'no') NOT NULL default 'yes',
 	
 	PRIMARY KEY (`id`)
 ) ;
