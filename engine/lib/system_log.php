@@ -100,9 +100,13 @@
 	function system_log($object, $event)
 	{
 		global $CONFIG;
+		static $logcache;
 
 		if ($object instanceof Loggable)
 		{
+			
+			if (!is_array($logcache)) $logcache = array();
+			
 			// Has loggable interface, extract the necessary information and store
 			$object_id = (int)$object->getSystemLogID();
 			$object_class = $object->getClassName();
@@ -110,8 +114,17 @@
 			$time = time();
 			$performed_by = (int)$_SESSION['guid'];
 			
-			// Create log
-			return insert_data("INSERT into {$CONFIG->dbprefix}system_log (object_id, object_class, event, performed_by_guid, time_created) VALUES ('$object_id','$object_class','$event',$performed_by, '$time')");
+			// Create log if we haven't already created it
+			if (!isset($logcache[$time][$object_id][$event])) {
+				if (insert_data("INSERT into {$CONFIG->dbprefix}system_log (object_id, object_class, event, performed_by_guid, time_created) VALUES ('$object_id','$object_class','$event',$performed_by, '$time')")) {
+					$logcache[$time][$object_id][$event] = true;
+					return true;
+				}
+				return false;
+			}
+			
+			return true;
+			
 		}
 	}
 	
