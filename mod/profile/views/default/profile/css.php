@@ -14,16 +14,24 @@
 
 #user_menu p {
 	margin: 0px;
-	padding: 5px;
-	padding-top: 0px;
 }
 
 #user_menu p.user_menu_name {
 	background-color: #888;
-	padding-top: 5px;
-	margin-bottom: 5px;
+	padding: 3px;
 }
 
 #user_menu p.user_menu_name b {
 	color: #fff;
+}
+
+#user_menu p a {
+	padding: 3px;
+	display: block;
+}
+
+#user_menu p a:hover {
+	background-color: #336699;
+	color: #fff;
+	text-decoration: none;
 }
