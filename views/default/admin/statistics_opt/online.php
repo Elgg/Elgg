@@ -11,11 +11,10 @@
 	 */
 
 	// users online
-	$users_online = get_number_online();
+	$users_online = get_online_users();
 ?>
 
 <div>
     <h2><?php echo sprintf(elgg_echo('admin:statistics:label:onlineusers'), 10); ?></h2>
+    <?php echo $users_online; ?>
 </div>
-
-TODO: Writeme

@@ -728,6 +728,29 @@
 	}
 	
 	/**
+	 * A function that returns a maximum of $limit users who have done something within the last 
+	 * $seconds seconds.
+	 *
+	 * @param int $seconds Number of seconds (default 600 = 10min)
+	 * @param int $limit Limit, default 10.
+	 * @param int $offset Offset, defualt 0.
+	 */
+	function find_active_users($seconds = 600, $limit = 10, $offset = 0)
+	{
+		global $CONFIG;
+		
+		$seconds = (int)$seconds;
+		$limit = (int)$limit;
+		$offset = (int)$offset;
+		
+		$time = time() - $seconds;
+		
+		$query = "SELECT * from {$CONFIG->dbprefix}entities where type='user' and time_updated>=$time order by time_updated desc limit $offset, $limit";
+		
+		return get_data($query, "entity_row_to_elggstar");
+	}
+	
+	/**
 	 * Registers a user, returning false if the username already exists
 	 *
 	 * @param string $username The username of the new user

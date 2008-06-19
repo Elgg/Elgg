@@ -79,13 +79,16 @@
 	}
         
 	/**
-	 * Return a list of how many users are currently online.
-	 * 
-	 * @param int $limit Number of users to return
+	 * Return a list of how many users are currently online, rendered as a view.
  	 */
-	function get_online_users($limit = 10)
+	function get_online_users()
 	{
-		// TODO: Writeme
+		$objects = find_active_users();
+		
+		if ($objects)
+		{
+			return elgg_view_entity_list($objects, count($objects), 0, 10);
+		}
 	}
         
     /**
