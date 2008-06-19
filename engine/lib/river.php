@@ -90,7 +90,10 @@
 							));
 							
 							if (!empty($tam)) {
-								$tam = elgg_view("river/wrapper",array('entry' => $tam, 'log' => $log));
+								$tam = elgg_view("river/wrapper",array(
+											'entry' => $tam, 
+											'log' => $log,
+											'object' => $object));
 							}
 							
 							if ($tam)
