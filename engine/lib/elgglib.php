@@ -264,7 +264,7 @@
 			
 			$html = "";
 			
-			$html .= elgg_view('navigation/pagination',array(
+			$nav = elgg_view('navigation/pagination',array(
 			
 												'baseurl' => $_SERVER['REQUEST_URI'],
 												'offset' => $offset,
