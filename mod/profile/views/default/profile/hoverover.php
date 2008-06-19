@@ -20,24 +20,7 @@
 
 <?php
 
-	if (isloggedin()) {
-		if ($_SESSION['user']->getGUID() != $vars['entity']->getGUID()) {
-			if ($vars['entity']->isFriend()) {
-				echo "<p class=\"user_menu_removefriend\"><a href=\"{$vars['url']}action/friends/remove?friend={$vars['entity']->getGUID()}\">" . elgg_echo("friend:remove") . "</a></p>";
-			} else {
-				echo "<p><a href=\"{$vars['url']}action/friends/add?friend={$vars['entity']->getGUID()}\">" . elgg_echo("friend:add") . "</a></p>";
-			}
-		}
-	}
+	echo elgg_view("profile/hoverover/actions",$vars);
+	echo elgg_view("profile/hoverover/links",$vars);
 
 ?>
-
-	<p class="user_menu_profile">
-		<a href="<?php echo $vars['entity']->getURL(); ?>"><?php echo elgg_echo("profile"); ?></a>
-	</p>
-	<p class="user_menu_friends">
-		<a href="<?php echo $vars['url']; ?>pg/friends/<?php echo $vars['entity']->username; ?>/"><?php echo elgg_echo("friends"); ?></a>	
-	</p>
-	<p class="user_menu_friends_of">
-		<a href="<?php echo $vars['url']; ?>pg/friendsof/<?php echo $vars['entity']->username; ?>/"><?php echo elgg_echo("friends:of"); ?></a>	
-	</p>
