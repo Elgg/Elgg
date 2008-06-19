@@ -133,6 +133,8 @@
 			'NotImplementedException:XMLRPCMethodNotImplemented' => "XML-RPC method call '%s' not implemented.",
 			'InvalidParameterException:UnexpectedReturnFormat' => "Call to method '%s' returned an unexpected result.",
 			'CallException:NotRPCCall' => "Call does not appear to be a valid XML-RPC call",
+	
+			'PluginException:NoPluginName' => "The plugin name could not be found",
 			
 		/**
 		 * User details

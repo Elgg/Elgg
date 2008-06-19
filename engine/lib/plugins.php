@@ -75,6 +75,52 @@
 			return false;
 		}
 		
+		/**
+		 * Register a plugin with a manifest.
+		 *
+		 * It is passed an associated array of values. Currently the following fields are recognised:
+		 * 
+		 * 'author', 'description', 'version', 'website' & 'copyright'.
+		 * 
+		 * @param array $manifest An associative array representing the manifest.
+		 */
+		function register_plugin_manifest(array $manifest)
+		{
+			global $CONFIG;
+			
+			if (!is_array($CONFIG->plugin_manifests))
+				$CONFIG->plugin_manifests = array();
+				
+			$plugin_name = get_plugin_name();
+			
+			if ($plugin_name)
+			{
+				$CONFIG->plugin_manifests[$plugin_name] = $manifest;
+			}
+			else
+				throw new PluginException(elgg_echo('PluginException:NoPluginName'));
+		}
+		
+		/**
+		 * Register a basic plugin manifest.
+		 *
+		 * @param string $author The author.
+		 * @param string $description A description of the plugin (don't forget to internationalise this string!)
+		 * @param string $version The version
+		 * @param string $website A link to the plugin's website
+		 * @param string $copyright Copyright information
+		 * @return bool
+		 */
+		function register_plugin_manifest_basic($author, $description, $version, $website = "", $copyright = "")
+		{
+			return register_plugin_manifest(array(
+				'version' => $version,
+				'author' => $author,
+				'description' => $description,
+				'website' => $website,
+				'copyright' => $copyright
+			));
+		}
 	/**
 	 * PluginException
 	 *  
