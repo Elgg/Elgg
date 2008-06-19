@@ -1,7 +1,7 @@
 <?php
 
 	/**
-	 * Elgg user display
+	 * Adds metatags to load Javascript required for the profile
 	 * 
 	 * @package ElggProfile
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
@@ -9,9 +9,8 @@
 	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.com/
 	 * 
-	 * @uses $vars['entity'] The user entity
 	 */
 
-		echo elgg_view_layout("one_column",elgg_view("profile/userdetails",$vars));
-	
 ?>
+
+	<script type="text/javascript" src="<?php echo $vars['url']; ?>mod/profile/profile.js" ></script>

@@ -56,6 +56,10 @@
 				register_page_handler('profile','profile_page_handler');
 				register_page_handler('icon','profile_icon_handler');
 				
+			// Add Javascript reference to the page header
+				extend_view('metatags','profile/metatags');
+				extend_view('css','profile/css');
+				
 		}
 		
 	/**

@@ -36,7 +36,14 @@
 		} else {
 			$align = "";
 		}
+		
+	// Get the hoverover menu
+		$hoverover = elgg_view('profile/hoverover',$vars);
+		$hoverover = htmlentities($hoverover);
+		$hoverover = str_replace("\n","",$hoverover);
+		$hoverover = str_replace("\r","",$hoverover);
+		$hoverover = str_replace("\t","",$hoverover);
 			
 ?>
 
-	<a href="<?php echo $vars['entity']->getURL(); ?>"><img src="<?php echo $vars['url']; ?>pg/icon/<?php echo $username; ?>/<?php echo $vars['size']; ?>/<?php echo $icontime; ?>.jpg" border="0" <?php echo $align; ?> title="<?php echo $name; ?>" <?php echo $vars['js']; ?> /></a>
+	<a href="<?php echo $vars['entity']->getURL(); ?>" class="icon" rel="<?php echo $hoverover; ?>"><img src="<?php echo $vars['url']; ?>pg/icon/<?php echo $username; ?>/<?php echo $vars['size']; ?>/<?php echo $icontime; ?>.jpg" border="0" <?php echo $align; ?> title="<?php echo $name; ?>" <?php echo $vars['js']; ?> /></a>
