@@ -10,8 +10,12 @@
 	 */
 
 	$owner = page_owner_entity();
+	$limit = 8;
+	
+	if ($vars['entity']->limit)
+		$limit = $vars['entity']->limit;
 ?>
 <h1><?php echo sprintf(elgg_echo('river:widget:title:friends'), $owner->name . "'s") ?></h1>
 <?php
-	echo elgg_view_friend_river($owner->guid);
+	echo elgg_view_friend_river($owner->guid, $limit);
 ?>

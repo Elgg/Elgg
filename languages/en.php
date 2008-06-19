@@ -199,12 +199,7 @@
 		 * River
 		 */
 			'river' => "River",
-			'river:widget:noactivity' => 'We could not find any activity.',
-			'river:widget:title' => "%s activity.",
-			'river:widget:description' => "Show your latest activity.",
-			'river:widget:title:friends' => "%s friends activity.",
-			'river:widget:description:friends' => "Show what your friends are up to.",
-	
+			
 			'river:relationship:friend' => 'is now friends with',
 			
 		/**
