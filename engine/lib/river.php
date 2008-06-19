@@ -133,6 +133,6 @@
 	 */
 	function elgg_view_friend_river($guid, $limit = 10, $offset = 0, $view = 'river/dashboard')
 	{
-		return elgg_view($view, array('river' => get_river_entries($guid,"", $limit, $offset)));
+		return elgg_view($view, array('river' => get_river_entries($guid,"friend", $limit, $offset)));
 	}
 ?>
