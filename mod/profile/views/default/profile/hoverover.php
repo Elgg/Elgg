@@ -36,8 +36,8 @@
 		<a href="<?php echo $vars['entity']->getURL(); ?>"><?php echo elgg_echo("profile"); ?></a>
 	</p>
 	<p class="user_menu_friends">
-		<a href="<?php echo $vars['url']; ?>pg/friends/bwerdmuller/"><?php echo elgg_echo("friends"); ?></a>	
+		<a href="<?php echo $vars['url']; ?>pg/friends/<?php echo $vars['entity']->username; ?>/"><?php echo elgg_echo("friends"); ?></a>	
 	</p>
 	<p class="user_menu_friends_of">
-		<a href="<?php echo $vars['url']; ?>pg/friendsof/bwerdmuller/"><?php echo elgg_echo("friends:of"); ?></a>	
+		<a href="<?php echo $vars['url']; ?>pg/friendsof/<?php echo $vars['entity']->username; ?>/"><?php echo elgg_echo("friends:of"); ?></a>	
 	</p>
