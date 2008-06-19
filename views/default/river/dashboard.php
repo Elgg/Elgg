@@ -13,9 +13,13 @@
 	$river = $vars['river'];
 ?>
 <div id="river">
-	<h1><?php echo elgg_echo('river'); ?></h1>
 	<?	
-	foreach ($river as $r)
-		echo "<div>$r</div>";
+	if (($river) && (count($river)>0))
+	{
+		foreach ($river as $r)
+			echo "<div>$r</div>";
+	}
+	else
+		echo elgg_echo('river:widget:noactivity');
 	?>
 </div>

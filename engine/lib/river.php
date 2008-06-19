@@ -29,7 +29,7 @@
 	 * @param string $relationship Limit return results to only those users who $by_user has $relationship with.
 	 * @param int $limit Maximum number of events to show
 	 * @param int $offset An offset
-	 * @return array
+	 * @return array of river entities rendered with the appropriate view.
 	 */
 	function get_river_entries($by_user = "", $relationship = "", $limit = 10, $offset = 0)
 	{
@@ -44,16 +44,16 @@
 		
 		// River objects
 		$river = array();
-		
+	
 		do
 		{
 			$log_events = get_system_log($by_user, "","", $cnt, $off);
-			
+		
 			if (!$log_events)
 				$exit = true;
 			else
 			{
-				
+			
 				foreach ($log_events as $log)
 				{
 					// See if we have access to the object we're talking about
@@ -71,7 +71,7 @@
 							(!$relationship) || 
 							(
 								($relationship) &&
-								(check_entity_relationship($by_user, $relationship, $log->getObjectOwnerGUID()))
+								(check_entity_relationship($by_user, $relationship, $tmp->getObjectOwnerGUID()))
 							)
 						)
 						{
