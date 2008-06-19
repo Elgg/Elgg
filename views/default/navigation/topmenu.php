@@ -26,7 +26,7 @@
 </div>
 
 <div id="header_search">
-<form id="searchform" action="#" method="get">
+<form id="searchform" action="<?php echo $vars['url']; ?>search/" method="get">
 	<input type="text" size="21" name="tag" value="Search" onclick="if (this.value=='Search') { this.value='' }" class="search_input" />
 	<input type="submit" value="Go" class="search_submit_button" />
 </form>    
