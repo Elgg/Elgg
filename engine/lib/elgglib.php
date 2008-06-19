@@ -131,7 +131,7 @@
 		        $_SESSION['view'] = "default";
 		        
 		        // If we have a config default view for this site then use that instead of 'default'
-		        if (/*(is_installed()) && */(!empty($CONFIG->view)))
+		        if (/*(is_installed()) && */(!empty($CONFIG->view)) && (trim($CONFIG->view)!=""))
 		        	$_SESSION['view'] = $CONFIG->view;
 		    }
 		    if (empty($viewtype) && is_callable('get_input'))
