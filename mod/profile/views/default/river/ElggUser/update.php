@@ -7,6 +7,4 @@
 
 ?>
 
-<p class="river_profile_update">
-	<?php echo $string; ?>
-</p>
+<?php echo $string; ?>

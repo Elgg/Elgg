@@ -89,6 +89,10 @@
 								'object' => $object
 							));
 							
+							if (!empty($tam)) {
+								$tam = elgg_view("river/wrapper",array('entry' => $tam, 'log' => $log));
+							}
+							
 							if ($tam)
 							{
 								$river[] = $tam;
