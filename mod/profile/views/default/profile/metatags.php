@@ -13,4 +13,10 @@
 
 ?>
 
-	<script type="text/javascript" src="<?php echo $vars['url']; ?>mod/profile/profile.js" ></script>
+	<!--  
+
+		Removed for now.
+
+		<script type="text/javascript" src="<?php echo $vars['url']; ?>mod/profile/profile.js" ></script>
+		
+	-->
