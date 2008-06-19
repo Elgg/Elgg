@@ -187,6 +187,50 @@
 		}
 		
 	/**
+	 * Returns whether the specified view exists
+	 *
+	 * @param string $view The view name
+	 * @param string $viewtype The type of view
+	 * @return true|false Depending on success
+	 */
+		function elgg_view_exists($view, $viewtype = "") {
+			
+				global $CONFIG;
+			
+			// If we haven't been asked for a specific view, assume default
+			    if (empty($_SESSION['view'])) {
+			        $_SESSION['view'] = "default";
+			        
+			        // If we have a config default view for this site then use that instead of 'default'
+			        if (/*(is_installed()) && */(!empty($CONFIG->view)) && (trim($CONFIG->view)!=""))
+			        	$_SESSION['view'] = $CONFIG->view;
+			    }
+			    if (empty($viewtype) && is_callable('get_input'))
+			        $viewtype = get_input('view');
+			    if (empty($viewtype)) {
+			        $viewtype = $_SESSION['view'];
+			    }
+			    
+			    
+				if (!isset($CONFIG->views->locations[$view])) {
+		    		if (!isset($CONFIG->viewpath)) {
+						$location = dirname(dirname(dirname(__FILE__))) . "/views/";		    			
+		    		} else {
+		    			$location = $CONFIG->viewpath;
+		    		}
+		    	} else {
+		    		$location = $CONFIG->views->locations[$view];
+		    	}
+		    	
+		    	if (file_exists($location . "{$viewtype}/{$view}.php")) {
+		    		return true;
+		    	}
+		    	
+		    	return false;
+			
+		}
+		
+	/**
 	 * When given an entity, views it intelligently.
 	 * 
 	 * Expects a view to exist called entity-type/subtype, or for the entity to have a parameter
@@ -202,6 +246,9 @@
 	 * @return string HTML (etc) to display
 	 */
 		function elgg_view_entity(ElggEntity $entity, $viewtype = "", $full = false, $bypass = true, $debug = false) {
+			
+			global $autofeed;
+			$autofeed = true;
 			
 			$view = $entity->view;
 			if (is_string($view)) {
@@ -231,11 +278,17 @@
 			$subtype = $entity->getSubtype();
 			if (empty($subtype)) { $subtype = $entity_type; }
 
-			return elgg_view("{$entity_type}/{$subtype}",array(
+			if (elgg_view_exists("{$entity_type}/{$subtype}")) {
+				return elgg_view("{$entity_type}/{$subtype}",array(
+																	'entity' => $entity,
+																	'full' => $full
+																	), $viewtype, $bypass, $debug);
+			} else {
+				return elgg_view("{$entity_type}/default",array(
 																'entity' => $entity,
 																'full' => $full
 																), $viewtype, $bypass, $debug);
-			
+			}
 		}
 		
 	/**
@@ -303,9 +356,14 @@
 				$param_array['area' . $arg] = func_get_arg($arg);
 				$arg++;		
 			}
-			return elgg_view("canvas/layouts/{$layout}",$param_array);
+			if (elgg_view_exists("canvas/layouts/{$layout}")) {
+				return elgg_view("canvas/layouts/{$layout}",$param_array);
+			} else {
+				return elgg_view("canvas/default",$param_array);
+			}
 				
 		}
+
 		
 	/**
 	 * Sets an alternative function to handle templates, which will be passed to by elgg_view.
@@ -1301,6 +1359,19 @@
 		return false;
 	}
 	
-	
+	/**
+	 * Get the full URL of the current page.
+	 *
+	 * @return string The URL
+	 */
+	function full_url()
+	{
+		$s = empty($_SERVER["HTTPS"]) ? '' : ($_SERVER["HTTPS"] == "on") ? "s" : "";
+		$protocol = substr(strtolower($_SERVER["SERVER_PROTOCOL"]), 0, strpos(strtolower($_SERVER["SERVER_PROTOCOL"]), "/")) . $s;
+		$port = ($_SERVER["SERVER_PORT"] == "80") ? "" : (":".$_SERVER["SERVER_PORT"]);
+		return $protocol . "://" . $_SERVER['SERVER_NAME'] . $port . $_SERVER['REQUEST_URI'];
+	}
+
+		
 	
 ?>

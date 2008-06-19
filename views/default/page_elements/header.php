@@ -26,6 +26,23 @@
 			$title = $vars['config']->sitename . ": " . $vars['title'];
 		}
 		
+		global $autofeed;
+		if (isset($autofeed) && $autofeed == true) {
+			$url = full_url();
+			if (substr_count($url,'?')) {
+				$url .= "&view=rss";
+			} else {
+				$url .= "?view=rss";
+			}
+			$feedref = <<<END
+			
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="{$url}" />
+			
+END;
+		} else {
+			$feedref = "";
+		}
+		
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -38,7 +55,12 @@
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>javascript/initialise_elgg.js"></script>
 	<!-- include the default css file -->
 	<link rel="stylesheet" href="<?php echo $vars['url']; ?>_css/css.css" type="text/css" />
-	<?php echo elgg_view('metatags',$vars); ?>
+	<?php 
+
+		echo $feedref;
+		echo elgg_view('metatags',$vars); 
+		
+	?>
 </head>
 
 <body>

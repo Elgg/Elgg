@@ -38,7 +38,7 @@
     <foaf:name><?php echo $owner->name; ?></foaf:name>
     <foaf:homepage rdf:resource="<?php echo $owner->getURL(); ?>" />
     <foaf:mbox_sha1sum><?php echo sha1("mailto:" . $owner->email); ?></foaf:mbox_sha1sum>
-    <!--  TODO <foaf:img rdf:resource="http://p-userpic.livejournal.com/74250113/9186" /> -->
+    <foaf:img rdf:resource="<?php echo $vars['url']; ?>pg/icon/<?php echo $owner->username; ?>/large/icon.jpg" />
 	<?php
 
 		echo $vars['body'];
