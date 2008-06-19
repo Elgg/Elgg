@@ -27,10 +27,14 @@ $(document).ready(function () {
     }); 
     
     
-    // more info buttons
-    setupMoreInfoButton();
-    
+    // bind more info buttons (wrapped in a function so it can be called when new widgets are dragged/created)
+    //setupMoreInfoButton();
     widget_moreinfo();
+    
+    // widget hover class
+	$("table.draggable_widget").bind("mouseenter mouseleave", function(e){
+		$(this).toggleClass("draggable_widget_over");
+	});
        
     
 	// remove widget button
@@ -106,7 +110,7 @@ $(document).ready(function () {
 			return false;
 			});
 			
-			setupMoreInfoButton(); 
+			widget_moreinfo(); 
 			
 			$els.sortable( "refresh" );
 			
@@ -131,7 +135,7 @@ $(document).ready(function () {
 			return false;
 			});
 			
-			setupMoreInfoButton();
+			widget_moreinfo();
 			
 			$els.sortable( "refresh" );
 			
@@ -201,9 +205,9 @@ function setupMoreInfoButton() {
 }
 
 
-function widget_moreinfo() {			
+function widget_moreinfo() {
 
-	$("img.more_info").hover(function(e){											  
+	$("img.more_info").hover(function(e) {										  
 		
 		var widgetdescription = $("input[@name='description']", this.parentNode.parentNode.parentNode ).attr('value');
 
@@ -212,16 +216,18 @@ function widget_moreinfo() {
 		$("#widget_moreinfo")
 			.css("top",(e.pageY + 10) + "px")
 			.css("left",(e.pageX + 10) + "px")
-			.fadeIn("fast");		
+			.fadeIn("medium");		
     },
-	function(){
+	function() {
 		$("#widget_moreinfo").remove();
     });	
-	$("img.more_info").mousemove(function(e){
-		$("#widget_moreinfo")
-			.css("top",(e.pageY + 10) + "px")
-			.css("left",(e.pageX + 10) + "px");
-	});			
+    
+	$("img.more_info").mousemove(function(e) {
+		//$("#widget_moreinfo")
+		//	.css("top",(e.pageY + 10) + "px")
+		//	.css("left",(e.pageX + 10) + "px");
+	});	
+		
 };
 
 

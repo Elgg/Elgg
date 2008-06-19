@@ -287,6 +287,11 @@ h6 { font-size: 0.8em; }
 	background: #cccccc;
 	margin: 10px 0 0 0;
 	vertical-align:text-top;
+	border:1px solid #cccccc;
+}
+
+.draggable_widget_over {
+	border: 1px solid white !important;
 }
 
 #widget_picker_gallery {
