@@ -82,6 +82,8 @@
 			// TODO: Add admin console options here
 			if (isadminloggedin())
 			{
+				if ($_SESSION['id']!=$vars['entity']->guid)
+				{
 ?>				
 				<p>
 					<a href="<?php echo $vars['url']; ?>actions/admin/user/ban?guid=<?php echo $vars['entity']->guid; ?>"><?php echo elgg_echo("ban"); ?></a>
@@ -90,6 +92,7 @@
 					<a href="<?php echo $vars['url']; ?>actions/admin/user/delete?guid=<?php echo $vars['entity']->guid; ?>"><?php echo elgg_echo("delete"); ?></a>
 				</p>	
 <?php 
+				}
 			}
 		}
 	
