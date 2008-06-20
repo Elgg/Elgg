@@ -119,6 +119,7 @@
 		 * 	<field key="description" value="My plugin description, keep it short" />
 		 *  <field key="website" value="http://www.elgg.org/" />
 		 *  <field key="copyright" value="(C) Curverider 2008" />
+		 *  <field key="licence" value="GNU Public License version 2" />
 		 * </plugin_manifest>
 		 *
 		 * @param string $plugin Plugin name.
