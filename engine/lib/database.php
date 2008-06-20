@@ -129,9 +129,6 @@
             
             global $CONFIG, $dbcalls;
             
-            if (!callpath_gatekeeper($CONFIG->path . "engine/", true, true))
-            	throw new SecurityException(sprintf(elgg_echo('SecurityException:FunctionDenied'), 'get_data()'));
-            
             $dblink = get_db_link('read');
             
             $resultarray = array();
@@ -174,9 +171,6 @@
             
             global $CONFIG, $dbcalls;
             
-            if (!callpath_gatekeeper($CONFIG->path . "engine/", true, true))
-            	throw new SecurityException(sprintf(elgg_echo('SecurityException:FunctionDenied'), 'get_data_row()'));
-            
             $dblink = get_db_link('read');
             
             $dbcalls++;
@@ -213,9 +207,6 @@
             
             global $CONFIG, $dbcalls;
             
-            if (!callpath_gatekeeper($CONFIG->path . "engine/", true, true))
-            	throw new SecurityException(sprintf(elgg_echo('SecurityException:FunctionDenied'), 'insert_data()'));
-            
             $dblink = get_db_link('write');
             
             $dbcalls++;
@@ -244,9 +235,6 @@
         function update_data($query) {
             
             global $dbcalls, $CONFIG;
-            
-            if (!callpath_gatekeeper($CONFIG->path . "engine/", true, true))
-            	throw new SecurityException(sprintf(elgg_echo('SecurityException:FunctionDenied'), 'update_data()'));
             
             $dblink = get_db_link('write');
             
@@ -277,9 +265,6 @@
         function delete_data($query) {
             
             global $dbcalls, $CONFIG;
-            
-            if (!callpath_gatekeeper($CONFIG->path . "engine/", true, true))
-            	throw new SecurityException(sprintf(elgg_echo('SecurityException:FunctionDenied'), 'delete_data()'));
             
             $dblink = get_db_link('write');
             
