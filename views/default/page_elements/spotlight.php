@@ -26,7 +26,19 @@
 		<p>Here's all the edit controls for this widget</p>
 	</div><!-- /collapsable_box_editpanel -->
 	<div class="collapsable_box_content">
-		<p><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" border="0" width=100% height=184px /></p>
+<?php
+
+	$context = get_context();
+	if (!empty($context) && elgg_view_exists("spotlight/{$context}")) {
+		echo elgg_view("spotlight/{$context}");
+	} else {
+		echo elgg_view("spotlight/default");
+	}
+	
+	
+	
+
+?>
 	</div><!-- /.collapsable_box_content -->
 </div><!-- /.collapsable_box -->
 	
