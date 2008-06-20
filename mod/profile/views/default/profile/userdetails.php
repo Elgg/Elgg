@@ -13,9 +13,9 @@
 	 */
 
 	if ($vars['full'] == true) {
-		$iconsize = "large";
-	} else {
 		$iconsize = "medium";
+	} else {
+		$iconsize = "small";
 	}
 	echo elgg_view(
 						"profile/icon", array(
