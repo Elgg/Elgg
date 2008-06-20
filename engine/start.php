@@ -126,16 +126,8 @@
 					throw new InstallationException("Could not load {$file}");
 			}
 			
-		// Determine light mode
-			$lm = strtolower(get_input('lightmode'));
-			if ($lm == 'true') $lightmode = true;
-			
 		// Set default config
 			set_default_config();
-			
-		// Load plugins, if we're not in light mode
-			if (!$lightmode)
-				load_plugins();
 		
 		} else {	// End portion for sanitised installs only
 			
@@ -148,6 +140,19 @@
 	
 		// Trigger events
 			trigger_elgg_event('boot', 'system');
+			
+		// Load plugins
+		
+			// Determine light mode
+			$lm = strtolower(get_input('lightmode'));
+			if ($lm == 'true') $lightmode = true;
+			
+			// Load plugins, if we're not in light mode
+			if (!$lightmode) {
+				load_plugins();
+				
+				trigger_elgg_event('plugins_boot', 'system');
+			}
 			
 		// Forward if we haven't been installed
 			if ((!is_installed() || !is_db_installed()) && !substr_count($_SERVER["PHP_SELF"],"install.php") && !substr_count($_SERVER["PHP_SELF"],"css.php") && !substr_count($_SERVER["PHP_SELF"],"action_handler.php")) {

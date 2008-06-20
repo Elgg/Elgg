@@ -1345,13 +1345,14 @@
 		$callstack = debug_backtrace();
 		$call_paths = array();
 		foreach ($callstack as $call)
-			$call_paths[] = sanitise_string($call['path']);
-		
+			$call_paths[] = sanitise_string($call['file']);
+	
 		// Get privileged paths
-		$paths = get_data("SELECT * from {$CONFIG->dbprefix}privileged_paths");	
+		$paths = get_data("SELECT * from {$CONFIG->dbprefix}privileged_paths");
+	
 		foreach ($paths as $p)
-		{
-			if (in_array($CONFIG->path . $p->path, $call_paths))
+		{ 
+			if (in_array( $p->path, $call_paths))
 				return true;
 		}
 		
