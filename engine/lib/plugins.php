@@ -154,11 +154,16 @@
 		
 		/**
 		 * Shorthand function for finding the plugin settings.
+		 * 
+		 * @param string $plugin_name Optional plugin name, if not specified then it is detected from where you
+		 * 								are calling from.
 		 */
-		function find_plugin_settings()
+		function find_plugin_settings($plugin_name = "")
 		{
 			$plugins = get_entities('object', 'plugin');
-			$plugin_name = get_plugin_name();
+			$plugin_name = sanitise_string($plugin_name);
+			if (!$plugin_name)
+				$plugin_name = get_plugin_name();
 			
 			if ($plugins)
 			{
@@ -175,10 +180,11 @@
 		 *
 		 * @param string $name The name - note, can't be "title".
 		 * @param mixed $value The value.
+		 * @param string $plugin_name Optional plugin name, if not specified then it is detected from where you are calling from.
 		 */
-		function set_plugin_setting($name, $value)
+		function set_plugin_setting($name, $value, $plugin_name = "")
 		{
-			$plugin = find_plugin_settings();
+			$plugin = find_plugin_settings($plugin_name);
 			
 			if (!$plugin)
 				$plugin = new ElggPlugin();
@@ -197,10 +203,11 @@
 		 * Get setting for a plugin.
 		 *
 		 * @param string $name The name.
+		 * @param string $plugin_name Optional plugin name, if not specified then it is detected from where you are calling from.
 		 */
-		function get_plugin_setting($name)
+		function get_plugin_setting($name, $plugin_name = "")
 		{
-			$plugin = find_plugin_settings();
+			$plugin = find_plugin_settings($plugin_name);
 			
 			if ($plugin)
 				return $plugin->$name;
@@ -212,10 +219,11 @@
 		 * Clear a plugin setting.
 		 *
 		 * @param string $name The name.
+		 * @param string $plugin_name Optional plugin name, if not specified then it is detected from where you are calling from.
 		 */
-		function clear_plugin_setting($name)
+		function clear_plugin_setting($name, $plugin_name = "")
 		{
-			$plugin = find_plugin_settings();
+			$plugin = find_plugin_settings($plugin_name);
 			
 			if ($plugin)
 				return $plugin->clearMetaData($name);
