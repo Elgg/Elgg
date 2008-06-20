@@ -58,8 +58,8 @@
 				if ($handle = opendir($CONFIG->pluginspath)) {
 					while ($mod = readdir($handle)) {
 						if (!in_array($mod,array('.','..','.svn','CVS')) && is_dir($CONFIG->pluginspath . "/" . $mod)) {
-							if (is_plugin_enabled($mod))
-							{
+							//if (is_plugin_enabled($mod))
+							//{
 								if (!@include($CONFIG->pluginspath . $mod . "/start.php"))
 									throw new PluginException(sprintf(elgg_echo('PluginException:MisconfiguredPlugin'), $mod));
 								if (is_dir($CONFIG->pluginspath . $mod . "/views/default")) {
@@ -68,7 +68,7 @@
 								if (is_dir($CONFIG->pluginspath . $mod . "/languages")) {
 									register_translations($CONFIG->pluginspath . $mod . "/languages/");
 								}
-							}
+							//}
 						}
 					}
 				}
