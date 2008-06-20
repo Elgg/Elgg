@@ -265,6 +265,7 @@
 		{
 			global $CONFIG;
 			
+			$plugin = sanitise_string($plugin);
 			$site_guid = (int) $site_guid;
 			if ($site_guid == 0)
 				$site_guid = $CONFIG->site_guid;
@@ -298,6 +299,7 @@
 		{
 			global $CONFIG;
 			
+			$plugin = sanitise_string($plugin);
 			$site_guid = (int) $site_guid;
 			if ($site_guid == 0)
 				$site_guid = $CONFIG->site_guid;

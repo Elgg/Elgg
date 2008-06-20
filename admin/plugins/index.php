@@ -18,10 +18,7 @@
 	// Make sure only valid admin users can see this
 		admin_gatekeeper();
 		
-		// get list of plugins, itterate through - permit enable/disable & further config.
-		
-		
 	// Display main admin menu
-		page_draw(elgg_echo("admin:plugins"),elgg_view_layout("one_column", elgg_view("admin/plugins")));
+		page_draw(elgg_echo("admin:plugins"),elgg_view_layout("one_column", elgg_view("admin/plugins", array('installed_plugins' => get_installed_plugins()))));
 		
 ?>

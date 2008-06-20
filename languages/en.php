@@ -247,6 +247,13 @@
 			'admin:plugins:description' => "This admin panel allows you to control and configure tools installed on your site.",
 			'admin:plugins:opt:linktext' => "Configure tools...",
 			'admin:plugins:opt:description' => "Configure the tools installed on the site. ",
+			'admin:plugins:label:author' => "Author",
+			'admin:plugins:label:copyright' => "Copyright",
+			'admin:plugins:label:website' => "URL",
+			'admin:plugins:disable:yes' => "Plugin %s was disabled successfully.",
+			'admin:plugins:disable:no' => "Plugin %s could not be disabled.",
+			'admin:plugins:enable:yes' => "Plugin %s was enabled successfully.",
+			'admin:plugins:enable:no' => "Plugin %s could not be enabled.",
 	
 			'admin:statistics' => "Statistics",
 			'admin:statistics:description' => "This admin panel will allow you to view statistics about your site.",
@@ -278,6 +285,8 @@
 			'load' => "Load",
 			'upload' => "Upload",
 			'ban' => "Ban",
+			'enable' => "Enable",
+			'disable' => "Disable",
 	
 		/**
 		 * Generic data words

@@ -14,9 +14,31 @@
 	// Description of what's going on
 		echo "<p>" . nl2br(elgg_echo("admin:plugins:description")) . "</p>";
 
+		$limit = get_input('limit', 10);
+		$offset = get_input('offset', 0);
 		
-?>		
-		TODO: Writeme - add automatic plugin config
 		
-			Enable/disable is system level thing.
-			Config is a link to a config/PLUGINNAME/view ...? with the plugin registering a config action?
+	// Get the installed plugins
+		$installed_plugins = $vars['installed_plugins'];
+		$count = count($installed_plugins);
+		
+	// Display list of plugins
+		$n = 0;
+		foreach ($installed_plugins as $plugin => $data)
+		{
+			if (($n>=$offset) && ($n < $offset+$limit))
+				echo elgg_view("admin/plugins_opt/plugin", array('plugin' => $plugin, 'details' => $data));
+			
+			$n++;
+		}
+		
+	// Diplay nav
+		if ($count) 
+		{
+			 elgg_view('navigation/pagination',array(
+												'baseurl' => $_SERVER['REQUEST_URI'],
+												'offset' => $offset,
+												'count' => $count,
+														));
+		}
+?>
