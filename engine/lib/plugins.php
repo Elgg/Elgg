@@ -163,7 +163,7 @@
 			
 			if ($plugins)
 			{
-				foreach ($plugins as $plugins)
+				foreach ($plugins as $plugin)
 					if (strcmp($plugin->title, $plugin_name)==0)
 						return $plugin;
 			}
@@ -182,14 +182,16 @@
 		{
 			$plugin = find_plugin_settings($plugin_name);
 			
-			if (!$plugin)
+			if (!$plugin) 
 				$plugin = new ElggPlugin();
 				
 			if ($name!='title') 
 			{
+				$plugin->title = $plugin_name;
 				$plugin->$name = $value;
-				
 				$plugin->save();
+				
+				return $plugin->getGUID();
 			}
 			
 			return false;
@@ -390,6 +392,9 @@
 		{
 			// Now run this stuff, but only once
 			run_function_once("plugin_run_once");
+			
+			// Register some actions
+			register_action("plugins/settings/save", false, "", true);
 		}
 		
 		// Register a startup event

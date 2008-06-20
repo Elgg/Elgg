@@ -201,6 +201,11 @@
 			'river' => "River",
 			
 			'river:relationship:friend' => 'is now friends with',
+		/**
+		 * Plugins
+		 */
+			'plugins:settings:save:ok' => "Settings for the %s plugin were saved successfully.",
+			'plugins:settings:save:fail' => "There was a problem saving settings for the %s plugin.",
 			
 		/**
 		 * Search

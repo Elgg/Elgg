@@ -9,5 +9,25 @@
 	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.org/
 	 */
+
+	$entity = $vars['entity'];
+	$plugin = $vars['plugin'];
+	
 ?>
-// render a plugin & settings
+<div>
+	<form action="<?php echo $vars['url']; ?>action/plugins/settings/save" method="post">
+	
+		<?php 
+			echo elgg_view("settings/{$plugin}/edit",$vars);
+		?>
+	
+		<p>
+			<input type="hidden" name="plugin" value="<?php echo $plugin ?>" />
+			<input type="submit" value="<?php
+	
+				echo elgg_echo('save');			
+			
+			?>" />
+		</p>
+	</form>
+</div>

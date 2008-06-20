@@ -31,9 +31,9 @@
 		<div><?php echo elgg_echo('admin:plugins:label:website') . ": "; ?><a href="<?php echo $manifest['website']; ?>"><?php echo $manifest['website']; ?></a></div>
 	<?php } ?>
 	
-	<?php if ($plugin_object = find_plugin_settings($plugin)) { ?>
+	<?php if (elgg_view("settings/{$plugin}/edit")) { ?>
 		<div id="<?php echo $plugin; ?>_settings">
-			<?php echo elgg_view("object/plugin", array('plugin_object' => $plugin_object)) ?>
+			<?php echo elgg_view("object/plugin", array('plugin' => $plugin, 'entity' => find_plugin_settings($plugin))) ?>
 		</div>
 	<?php } ?>
 	
