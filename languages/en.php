@@ -305,6 +305,10 @@
 	
 			'widgets' => "Widgets",
 			'widget' => "Widget",
+			'layout:customise' => "Customise layout",
+			'widgets:gallery' => "Widget gallery",
+			'widgets:maincontent' => "Main content area widgets",
+			'widgets:sidebar' => "Sidebar widgets",
 			'widgets:panel:save:success' => "Your widgets were successfully saved.",
 			'widgets:panel:save:failure' => "There was a problem saving your widgets. Please try again.",
 			'widgets:save:success' => "The widget was successfully saved.",

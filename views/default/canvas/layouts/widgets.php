@@ -26,7 +26,7 @@
 <div id="customise_editpanel">
 
 <div id="widget_picker_gallery">
-<h2>Widget gallery</h2>
+<h2><?php echo elgg_echo("widgets:gallery"); ?></h2>
 
 <?php
 
@@ -61,7 +61,7 @@
 <td width="300px">
 
 <div id="main_widgets">
-<h2>Main content area widgets</h2>
+<h2><?php echo elgg_echo("widgets:maincontent"); ?></h2>
 <?php
 	$mainwidgetstring = "";
 	if (is_array($area1widgets) && sizeof($area1widgets) > 0) {
@@ -97,7 +97,7 @@
 
 <td width="240px">
 <div id="rightsidebar_widgets">
-<h2>Right sidebar widgets</h2>
+<h2><?php echo elgg_echo("widgets:sidebar"); ?></h2>
 
 <?php
 	$sidebarwidgetstring = "";
@@ -149,7 +149,8 @@
 </div><!-- /customise_editpanel -->
 
 <!-- temporary customise button here -->
-<a href="javascript:void(0);" class="toggle_customise_edit_panel">Customise Layout</a>
+<a href="javascript:void(0);" class="toggle_customise_edit_panel"><?php echo elgg_echo("layout:customise"); ?></a>
+<br />
 
 <?php
 			
