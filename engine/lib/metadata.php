@@ -399,7 +399,7 @@
 		if ($meta_value!="")
 			$where[] = "m.value_id='$meta_v'";
 		if ($site_guid > 0)
-			$where[] = "e.site_guid = {$site_guid}";
+			$where[] = "m.entity_guid = {$site_guid}";
 		
 		$query = "SELECT m.*, n.string as name, v.string as value from {$CONFIG->dbprefix}entities e JOIN {$CONFIG->dbprefix}metadata m on e.guid = m.entity_guid JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id JOIN {$CONFIG->dbprefix}metastrings n on m.name_id = n.id where";
 		foreach ($where as $w)

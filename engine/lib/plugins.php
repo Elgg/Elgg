@@ -232,6 +232,93 @@
 		}
 		
 		/**
+		 * Enable a plugin for a site (default current site)
+		 *
+		 * @param string $plugin The plugin name.
+		 * @param int $site_guid The site id, if not specified then this is detected.
+		 */
+		function enable_plugin($plugin, $site_guid = 0)
+		{
+			global $CONFIG;
+			
+			$site_guid = (int) $site_guid;
+			if ($site_guid == 0)
+				$site_guid = $CONFIG->site_guid;
+				
+			$site = get_entity($site_guid);
+			if (!($site instanceof ElggSite))
+				throw new InvalidClassException(sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $site_guid, "ElggSite"));
+				
+			$enabled = $site->getMetaData('enabled_plugins');
+			$new_enabled = array();
+			if ($enabled)
+			{
+				if (!is_array($enabled))
+					$new_enabled[] = $enabled;
+				else
+					$new_enabled = $enabled;
+			}
+			$new_enabled[] = $plugin;
+			$new_enabled = array_unique($new_enabled);
+			
+			return $site->setMetaData('enabled_plugins', $new_enabled);
+		}
+		
+		/**
+		 * Disable a plugin for a site (default current site)
+		 *
+		 * @param string $plugin The plugin name.
+		 * @param int $site_guid The site id, if not specified then this is detected.
+		 */
+		function disable_plugin($plugin, $site_guid = 0)
+		{
+			global $CONFIG;
+			
+			$site_guid = (int) $site_guid;
+			if ($site_guid == 0)
+				$site_guid = $CONFIG->site_guid;
+				
+			$site = get_entity($site_guid);
+			if (!($site instanceof ElggSite))
+				throw new InvalidClassException(sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $site_guid, "ElggSite"));
+				
+			$enabled = $site->getMetaData('enabled_plugins');
+			$new_enabled = array();
+		
+			foreach ($enabled as $plug)
+				if ($plugin != $plug)
+					$new_enabled[] = $plug;
+					
+			return $site->setMetaData('enabled_plugins', $new_enabled);
+		}
+		
+		/**
+		 * Return whether a plugin is enabled or not.
+		 *
+		 * @param string $plugin The plugin name.
+		 * @param int $site_guid The site id, if not specified then this is detected.
+		 * @return bool
+		 */
+		function is_plugin_enabled($plugin, $site_guid = 0)
+		{
+			global $CONFIG;
+			
+			$site_guid = (int) $site_guid;
+			if ($site_guid == 0)
+				$site_guid = $CONFIG->site_guid;
+				
+			$site = get_entity($site_guid);
+			if (!($site instanceof ElggSite))
+				throw new InvalidClassException(sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $site_guid, "ElggSite"));
+				
+			$enabled = find_metadata("enabled_plugins", $plugin, "site", "", 10, 0, "", $site_guid);
+			if ($enabled)
+				return true;
+				
+			return false;
+		}
+		
+		/**
 		 * Run once and only once.
 		 */
 		function plugin_run_once()
