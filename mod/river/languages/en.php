@@ -6,7 +6,6 @@
 		 * Manifest
 		 */
 		
-		'river:manifest:description' => "Provide a list of your or your friends recent activity!",
 	
 		'river:widget:noactivity' => 'We could not find any activity.',
 		'river:widget:title' => "Activity",

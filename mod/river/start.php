@@ -15,8 +15,6 @@
 	 */
 	function river_init() 
 	{
-		register_plugin_manifest_basic("Marcus Povey", elgg_echo('river:manifest:description'), "1.0", "http://www.elgg.org", "(C) Curverider 2008");
-		
 		add_widget_type('river_widget',elgg_echo('river:widget:title'), elgg_echo('river:widget:description'));
 		add_widget_type('river_widget_friends',elgg_echo('river:widget:title:friends'), elgg_echo('river:widget:description:friends'));
 	}
