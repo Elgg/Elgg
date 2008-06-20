@@ -17,8 +17,11 @@
 		if (!isloggedin()) forward();
 		
 	// Get current user for now
-		if (!$user = page_owner_entity()) {
+		if ($user = page_owner()) {
+			$user = page_owner_entity();			
+		} else {
 			$user = $_SESSION['user'];
+			set_page_owner($user->getGUID());
 		}
 		
 	// Get form, if we're allowed to edit

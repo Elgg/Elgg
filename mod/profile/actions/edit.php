@@ -22,7 +22,13 @@
 		}
 		
 	// Save stuff if we can, and forward to the user's profile
-		$user = $_SESSION['user'];
+		
+		if ($user = page_owner()) {
+			$user = page_owner_entity();			
+		} else {
+			$user = $_SESSION['user'];
+			set_page_owner($user->getGUID());
+		}
 		if ($user->canEdit()) {
 			
 			// Save stuff
