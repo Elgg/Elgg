@@ -1314,7 +1314,6 @@
 		// Test path first
 		if (can_path_execute_privileged_codeblock())
 		{
-
 			// Test to see if we can actually execute code by calling any other functions
 			if (trigger_elgg_event("execute_privileged_codeblock", "all"))
 			{
@@ -1352,7 +1351,7 @@
 		$paths = get_data("SELECT * from {$CONFIG->dbprefix}privileged_paths");	
 		foreach ($paths as $p)
 		{
-			if (in_array($CONFIG->path . "$p", $call_paths))
+			if (in_array($CONFIG->path . $p->path, $call_paths))
 				return true;
 		}
 		
