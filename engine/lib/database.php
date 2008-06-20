@@ -258,7 +258,7 @@
             }
             
             if (mysql_query("$query", $dblink))
-            	return mysql_affected_rows();
+            	return true; //return mysql_affected_rows();
             	
            	if (mysql_errno($dblink))
 				throw new DatabaseException(mysql_error($dblink) . " QUERY: " . $query);
