@@ -15,6 +15,9 @@
 
 	global $CONFIG;
 	
+	// block non-admin users
+	admin_gatekeeper();
+	
 	if (get_input('settings') == 'go') {
 		
 		if (datalist_get('default_site')) {
