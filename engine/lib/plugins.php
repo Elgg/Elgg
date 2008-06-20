@@ -395,6 +395,9 @@
 			
 			// Register some actions
 			register_action("plugins/settings/save", false, "", true);
+			
+			register_action('admin/plugins/enable', false, "", true); // Enable
+			register_action('admin/plugins/disable', false, "", true); // Disable
 		}
 		
 		// Register a startup event
