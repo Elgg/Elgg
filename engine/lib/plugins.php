@@ -58,8 +58,8 @@
 				if ($handle = opendir($CONFIG->pluginspath)) {
 					while ($mod = readdir($handle)) {
 						if (!in_array($mod,array('.','..','.svn','CVS')) && is_dir($CONFIG->pluginspath . "/" . $mod)) {
-							//if (is_plugin_enabled($mod))
-							//{
+							if (is_plugin_enabled($mod))
+							{
 								if (!@include($CONFIG->pluginspath . $mod . "/start.php"))
 									throw new PluginException(sprintf(elgg_echo('PluginException:MisconfiguredPlugin'), $mod));
 								if (is_dir($CONFIG->pluginspath . $mod . "/views/default")) {
@@ -68,7 +68,7 @@
 								if (is_dir($CONFIG->pluginspath . $mod . "/languages")) {
 									register_translations($CONFIG->pluginspath . $mod . "/languages/");
 								}
-							//}
+							}
 						}
 					}
 				}
@@ -109,50 +109,43 @@
 		}
 		
 		/**
-		 * Register a plugin with a manifest.
+		 * Load and parse a plugin manifest from a plugin XML file.
+		 * 
+		 * Example file:
+		 * 
+		 * <plugin_manifest>
+		 * 	<field key="author" value="Marcus Povey" />
+		 *  <field key="version" value="1.0" />
+		 * 	<field key="description" value="My plugin description, keep it short" />
+		 *  <field key="website" value="http://www.elgg.org/" />
+		 *  <field key="copyright" value="(C) Curverider 2008" />
+		 * </plugin_manifest>
 		 *
-		 * It is passed an associated array of values. Currently the following fields are recognised:
-		 * 
-		 * 'author', 'description', 'version', 'website' & 'copyright'.
-		 * 
-		 * @param array $manifest An associative array representing the manifest.
+		 * @param string $plugin Plugin name.
+		 * @return array of values
 		 */
-		function register_plugin_manifest(array $manifest)
+		function load_plugin_manifest($plugin)
 		{
 			global $CONFIG;
 			
-			if (!is_array($CONFIG->plugin_manifests))
-				$CONFIG->plugin_manifests = array();
-				
-			$plugin_name = get_plugin_name();
+			$xml = xml_2_object(file_get_contents($CONFIG->pluginspath . $plugin. "/manifest.xml"));
 			
-			if ($plugin_name)
+			if ($xml)
 			{
-				$CONFIG->plugin_manifests[$plugin_name] = $manifest;
+				$elements = array();
+				
+				foreach ($xml->children as $element)
+				{
+					$key = $element->attributes['key'];
+					$value = $element->attributes['value'];
+					
+					$elements[$key] = $value;
+				}
+				
+				return $elements;
 			}
-			else
-				throw new PluginException(elgg_echo('PluginException:NoPluginName'));
-		}
-		
-		/**
-		 * Register a basic plugin manifest.
-		 *
-		 * @param string $author The author.
-		 * @param string $description A description of the plugin (don't forget to internationalise this string!)
-		 * @param string $version The version
-		 * @param string $website A link to the plugin's website
-		 * @param string $copyright Copyright information
-		 * @return bool
-		 */
-		function register_plugin_manifest_basic($author, $description, $version, $website = "", $copyright = "")
-		{
-			return register_plugin_manifest(array(
-				'version' => $version,
-				'author' => $author,
-				'description' => $description,
-				'website' => $website,
-				'copyright' => $copyright
-			));
+			
+			return false;
 		}
 		
 		/**
@@ -232,6 +225,34 @@
 				return $plugin->clearMetaData($name);
 			
 			return false;
+		}
+		
+		/**
+		 * Return an array of installed plugins.
+		 */
+		function get_installed_plugins()
+		{
+			global $CONFIG;
+			
+			$installed_plugins = array();
+			
+			if (!empty($CONFIG->pluginspath)) {
+				
+				if ($handle = opendir($CONFIG->pluginspath)) {
+					
+					while ($mod = readdir($handle)) {
+						
+						if (!in_array($mod,array('.','..','.svn','CVS')) && is_dir($CONFIG->pluginspath . "/" . $mod)) {
+							
+							$installed_plugins[$mod] = array();
+							$installed_plugins[$mod]['active'] = is_plugin_enabled($mod);
+							$installed_plugins[$mod]['manifest'] = load_plugin_manifest($mod);
+						}
+					}
+				}
+			}
+			
+			return $installed_plugins;
 		}
 		
 		/**
