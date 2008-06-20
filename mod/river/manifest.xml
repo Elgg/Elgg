@@ -5,4 +5,5 @@
 	<field key="description" value="Provide a list of your or your friends recent activity!" />
 	<field key="website" value="http://www.elgg.org/" />
 	<field key="copyright" value="(C) Curverider 2008" />
+	<field key="licence" value="GNU Public License version 2" />
 </plugin_manifest>

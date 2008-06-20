@@ -249,6 +249,7 @@
 			'admin:plugins:opt:description' => "Configure the tools installed on the site. ",
 			'admin:plugins:label:author' => "Author",
 			'admin:plugins:label:copyright' => "Copyright",
+			'admin:plugins:label:licence' => "Licence",
 			'admin:plugins:label:website' => "URL",
 			'admin:plugins:disable:yes' => "Plugin %s was disabled successfully.",
 			'admin:plugins:disable:no' => "Plugin %s could not be disabled.",
