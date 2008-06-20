@@ -19,12 +19,9 @@
 	
 <div class="collapsable_box no_space_after">
 	<div class="collapsable_box_header">
-		<a href="javascript:void(0);" class="toggle_box_contents">-</a><a href="javascript:void(0);" class="toggle_box_edit_panel">edit</a>
-		<h1>Spotlight</h1>
+		<a href="javascript:void(0);" class="toggle_box_contents">-</a>
+		<h1><?php echo elgg_echo("spotlight"); ?></h1>
 	</div>
-	<div class="collapsable_box_editpanel">
-		<p>Here's all the edit controls for this widget</p>
-	</div><!-- /collapsable_box_editpanel -->
 	<div class="collapsable_box_content">
 <?php
 

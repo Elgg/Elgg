@@ -301,6 +301,7 @@
 			'title' => "Title",
 			'description' => "Description",
 			'tags' => "Tags",
+			'spotlight' => "Spotlight",
 	
 		/**
 		 * Input / output strings
