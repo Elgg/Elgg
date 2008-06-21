@@ -14,4 +14,4 @@
 	 */
 ?>
 
-		<p><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" border="0" width=100% height=184px /></p>
+		<p><img src="<?php echo $vars['url']; ?>_graphics/temp_spotlight.gif" border="0" width=100% height=184px /></p>

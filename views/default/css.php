@@ -239,7 +239,7 @@ h6 { font-size: 0.8em; }
 }
 #layout_spotlight .collapsable_box_content p {
 	padding:0;
-	background: url(<?php echo $vars['url']; ?>_graphics/temp_spotlight.gif) repeat-x left top;
+	/* background: url(<?php echo $vars['url']; ?>_graphics/temp_spotlight.gif) repeat-x left top; */
 }
 #layout_footer {
 	background: url(<?php echo $vars['url']; ?>_graphics/footer_back.gif) repeat-x left top;
