@@ -148,8 +148,6 @@
 </form>
 </div><!-- /customise_editpanel -->
 
-<!-- temporary customise button here -->
-<a href="javascript:void(0);" class="toggle_customise_edit_panel"><?php echo elgg_echo("layout:customise"); ?></a>
 <br />
 
 <?php
@@ -160,6 +158,8 @@
 
 <!-- right sidebar -->
 <div id="layout_sidebar_right">
+<!-- temporary customise button here -->
+<a href="javascript:void(0);" class="toggle_customise_edit_panel">Customise Layout</a><br /><br />
 <div id="wrapper_sidebar_right">
 
 

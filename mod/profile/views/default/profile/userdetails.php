@@ -20,14 +20,14 @@
 	echo elgg_view(
 						"profile/icon", array(
 												'entity' => $vars['entity'],
-												'align' => "right",
+												'align' => "left",
 												'size' => $iconsize,
 											  )
 					);
 
 ?>
 
-	<table style="margin:0 0 0 20px; width:356px;" >
+	<table style="margin:0 0 0 10px; width:310px;" >
 	<tr>
 	<td>
 	
