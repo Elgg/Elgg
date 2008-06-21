@@ -42,6 +42,9 @@
 			else
 				unset_config('debug', $site->getGUID());
 			
+			// activate profile by default
+			enable_plugin('profile', $site->getGUID());
+				
 			system_message(elgg_echo("installation:configuration:success"));
 			
 			header("Location: ../../register.php");
