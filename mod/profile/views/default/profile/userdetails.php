@@ -17,6 +17,11 @@
 	} else {
 		$iconsize = "small";
 	}
+	
+	// display the users name
+	echo "<h2><a href=\"" . $vars['entity']->getUrl() . "\">" . $vars['entity']->name . "</a></h2>";
+	
+	// get the user's main profile picture
 	echo elgg_view(
 						"profile/icon", array(
 												'entity' => $vars['entity'],
@@ -27,17 +32,13 @@
 
 ?>
 
-	<table style="margin:0 0 0 10px; width:310px;" >
-	<tr>
-	<td>
-	
-	<h2><a href="<?php echo $vars['entity']->getUrl(); ?>"><?php echo $vars['entity']->name; ?></a></h2>
+	<div style="margin:0 0 0 210px; width:300px;" >
+
 	<?php 
 
 		if ($vars['full'] == true) {
 	
 	?>
-	<p>&nbsp;</p>
 	<p><b><?php echo elgg_echo("profile:aboutme"); ?></b><br /><?php echo nl2br($vars['entity']->description); ?></p>
 	<?php
 
@@ -98,6 +99,4 @@
 	
 	?>
 	
-	</td>
-	</tr>
-	</table>
+	</div>
