@@ -75,7 +75,7 @@
 	 * to load any more files
 	 */
 		
-		if (sanitised()) {	// Begin portion for sanitised installs only
+		if ($sanitised = sanitised()) {	// Begin portion for sanitised installs only
 	
 		 /**
 		 * Load the system settings
@@ -143,19 +143,22 @@
 			
 		// Load plugins
 		
+			$installed = is_installed();
+			$db_installed = is_db_installed();
+			
 			// Determine light mode
 			$lm = strtolower(get_input('lightmode'));
 			if ($lm == 'true') $lightmode = true;
 			
 			// Load plugins, if we're not in light mode
-			if (!$lightmode) {
+			if (($installed) && ($db_installed) && ($sanitised) && (!$lightmode)) {
 				load_plugins();
 				
 				trigger_elgg_event('plugins_boot', 'system');
 			}
 			
 		// Forward if we haven't been installed
-			if ((!is_installed() || !is_db_installed()) && !substr_count($_SERVER["PHP_SELF"],"install.php") && !substr_count($_SERVER["PHP_SELF"],"css.php") && !substr_count($_SERVER["PHP_SELF"],"action_handler.php")) {
+			if ((!$installed || !$db_installed) && !substr_count($_SERVER["PHP_SELF"],"install.php") && !substr_count($_SERVER["PHP_SELF"],"css.php") && !substr_count($_SERVER["PHP_SELF"],"action_handler.php")) {
 					header("Location: install.php");
 					exit;
 			}
