@@ -18,6 +18,9 @@
 		$iconsize = "small";
 	}
 	
+	//wrap the icon and links in a div
+	echo "<div style=\"float:left;width:200px;\">";
+	
 	// display the users name
 	echo "<h2><a href=\"" . $vars['entity']->getUrl() . "\">" . $vars['entity']->name . "</a></h2>";
 	
@@ -29,6 +32,12 @@
 												'size' => $iconsize,
 											  )
 					);
+    
+    //display relevant links			
+    echo "<div style=\"clear:both\">" . elgg_view("profile/profilelinks", array("entity" => $vars['entity'])) . "</div>";
+    
+    //close the icon and links div
+    echo "</div>";
 
 ?>
 
