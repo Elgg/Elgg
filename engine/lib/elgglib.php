@@ -241,7 +241,7 @@
 	 * @param ElggEntity $entity The entity to display
 	 * @param string $viewtype Optionally, the type of view that we're using (most commonly 'default')
 	 * @param boolean $full Determines whether or not to display the full version of an object, or a smaller version for use in aggregators etc
-	 * @param boolean $debug If set to true, elgg_view will bypass any specified alternative template handler; by default, it will hand off to this if requested (see set_template_handler)
+	 * @param boolean $bypass If set to true, elgg_view will bypass any specified alternative template handler; by default, it will hand off to this if requested (see set_template_handler)
 	 * @param boolean $debug If set to true, the viewer will complain if it can't find a view
 	 * @return string HTML (etc) to display
 	 */
@@ -290,7 +290,49 @@
 																), $viewtype, $bypass, $debug);
 			}
 		}
-		
+
+	/**
+	 * When given an annotation, views it intelligently.
+	 * 
+	 * This function expects annotation views to be of the form annotation/name, where name
+	 * is the type of annotation. 
+	 *
+	 * @param ElggAnnotation $annotation The annotation to display
+	 * @param string $viewtype Optionally, the type of view that we're using (most commonly 'default')
+	 * @param boolean $full Determines whether or not to display the full version of an object, or a smaller version for use in aggregators etc
+	 * @param boolean $bypass If set to true, elgg_view will bypass any specified alternative template handler; by default, it will hand off to this if requested (see set_template_handler)
+	 * @param boolean $debug If set to true, the viewer will complain if it can't find a view
+	 * @return string HTML (etc) to display
+	 */
+		function elgg_view_annotation(ElggAnnotation $annotation, $viewtype = "", $bypass = true, $debug = false) {
+			
+			global $autofeed;
+			$autofeed = true;
+			
+			$view = $annotation->view;
+			if (is_string($view)) {
+				return elgg_view($view,array('annotation' => $annotation), $viewtype, $bypass, $debug);
+			}
+			
+			$name = $annotation->name;
+			$intname = (int) $name;
+			if ("{$intname}" == "{$name}") {
+				$name = get_metastring($intname);
+			}
+			if (empty($name)) { return ""; }
+
+			if (elgg_view_exists("annotation/{$name}")) {
+				return elgg_view("annotation/{$name}",array(
+																	'annotation' => $annotation,
+																	), $viewtype, $bypass, $debug);
+			} else {
+				return elgg_view("annotation/default",array(
+																'annotation' => $annotation,
+																), $viewtype, $bypass, $debug);
+			}
+		}
+				
+	
 	/**
 	 * Returns a view of a list of entities, plus navigation. It is intended that this function
 	 * be called from other wrapper functions.

@@ -29,6 +29,26 @@
 			
 		return false;
 	}
+	
+	/**
+	 * When given an ID, returns the corresponding metastring
+	 *
+	 * @param int $id Metastring ID
+	 * @return string Metastring
+	 */
+	function get_metastring($id) {
+		
+		global $CONFIG;
+		
+		$id = (int) $id;
+		
+		$row = get_data_row("SELECT * from {$CONFIG->dbprefix}metastrings where id='$id' limit 1");
+		if ($row)
+			return $row->string;
+			
+		return false;
+		
+	}
 
 	/**
 	 * Add a metastring.
