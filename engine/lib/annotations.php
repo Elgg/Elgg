@@ -278,6 +278,30 @@
 		return get_data($query, "row_to_elggannotation");
 		
 	}
+	
+	/**
+	 * Returns a human-readable list of annotations on a particular entity.
+	 *
+	 * @param int $entity_guid The entity GUID
+	 * @param string $name The name of the kind of annotation
+	 * @param int $limit The number of annotations to display at once
+	 * @param true|false $asc Whether or not the annotations are displayed in ascending order. (Default: true)
+	 * @return string HTML (etc) version of the annotation list
+	 */
+	function list_annotations($entity_guid, $name = "", $limit = 25, $asc = true) {
+		
+		if ($asc) {
+			$asc = "asc";
+		} else {
+			$asc = "desc";
+		}
+		$count = count_annotations($entity_guid, "", "", $name);
+		$offset = (int) get_input("annoff",0);
+		$annotations = get_annotations($entity_guid, "", "", $name, "", "", $limit, $offset, $asc);
+		
+		return elgg_view_annotation_list($annotations, $count, $offset, $limit);
+		
+	}
 
 	/**
 	 * Return the sum of a given integer annotation.

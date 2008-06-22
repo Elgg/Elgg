@@ -27,11 +27,16 @@
 	} else {
 		$count = $vars['count'];
 	}
+	if (!isset($vars['word'])) {
+		$word = "offset";
+	} else {
+		$word = $vars['word'];
+	}
 	
 	$totalpages = ceil($count / $limit);
 	$currentpage = ceil($offset / $limit) + 1;
 
-	$baseurl = preg_replace('/[\&\?]offset\=[0-9]*/',"",$vars['baseurl']);
+	$baseurl = preg_replace('/[\&\?]'.$word.'\=[0-9]*/',"",$vars['baseurl']);
 
 ?>
 

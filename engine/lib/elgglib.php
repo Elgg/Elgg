@@ -381,6 +381,49 @@
 			return $html;
 			
 		}
+
+	/**
+	 * Returns a view of a list of annotations, plus navigation. It is intended that this function
+	 * be called from other wrapper functions.
+	 * 
+	 * @param array $annotations List of annotations
+	 * @param int $count The total number of annotations across all pages
+	 * @param int $offset The current indexing offset
+	 * @param int $limit The number of annotations to display per page
+	 * @return string The list of annotations
+	 */
+		
+		function elgg_view_annotation_list($annotations, $count, $offset, $limit) {
+			
+			$count = (int) $count;
+			$offset = (int) $offset;
+			$limit = (int) $limit;
+			
+			$html = "";
+			
+			$nav = elgg_view('navigation/pagination',array(
+			
+												'baseurl' => $_SERVER['REQUEST_URI'],
+												'offset' => $offset,
+												'count' => $count,
+												'word' => 'annoff',
+			
+														));
+			
+			$html .= $nav;
+														
+			if (is_array($annotations) && sizeof($annotations) > 0) {
+				foreach($annotations as $annotation) {
+					$html .= elgg_view_annotation($annotation, "", false);
+				}
+			}
+			
+			if ($count)
+				$html .= $nav;
+			
+			return $html;
+			
+		}
 		
 	/**
 	 * Displays an internal layout for the use of a plugin canvas.
