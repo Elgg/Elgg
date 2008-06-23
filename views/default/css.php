@@ -221,7 +221,7 @@ h6 { font-size: 0.8em; }
 
 #wrapper_maincontent .collapsable_box_content  {
 	margin:0;
-	padding:0;
+	/* padding:0; */
 }
 
 #layout_spotlight {
