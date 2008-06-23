@@ -26,7 +26,7 @@
 		foreach ($installed_plugins as $plugin => $data)
 		{
 			if (($n>=$offset) && ($n < $offset+$limit))
-				echo elgg_view("usersettings/plugins_opt/plugin", array('plugin' => $plugin, 'details' => $data));
+				echo elgg_view("settings/plugins_opt/plugin", array('plugin' => $plugin, 'details' => $data));
 			
 			$n++;
 		}
