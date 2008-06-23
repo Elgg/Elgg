@@ -61,9 +61,9 @@
 		
 		$prevurl = $baseurl;
 		if (substr_count($baseurl,'?')) {
-			$prevurl .= "&offset=" . $prevoffset;
+			$prevurl .= "&{$word}=" . $prevoffset;
 		} else {
-			$prevurl .= "?offset=" . $prevoffset;
+			$prevurl .= "?{$word}=" . $prevoffset;
 		}
 		
 		echo "<a href=\"{$prevurl}\">&laquo; ". elgg_echo("previous") ."</a> ";
@@ -77,9 +77,9 @@
 		
 		$nexturl = $baseurl;
 		if (substr_count($baseurl,'?')) {
-			$nexturl .= "&offset=" . $nextoffset;
+			$nexturl .= "&{$word}=" . $nextoffset;
 		} else {
-			$nexturl .= "?offset=" . $nextoffset;
+			$nexturl .= "?{$word}=" . $nextoffset;
 		}
 		
 		echo " <a href=\"{$nexturl}\">" . elgg_echo("next") . " &raquo;</a>";
