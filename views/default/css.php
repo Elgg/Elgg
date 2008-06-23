@@ -718,6 +718,31 @@ input[type="submit"] {
 	padding:0px 10px 20px 20px;
 }
 
+
+/* ***************************************
+	RIVER
+*************************************** */
+.river_item p {
+	margin:0;
+	padding:0 0 0 20px;
+}
+.river_item {
+	border-bottom:1px solid #dddddd;
+	padding:2px 0 2px 0;
+}
+.river_item_time {
+	font-size:smaller;
+	color:#666666;
+}
+.river_user_login {
+	background: url(<?php echo $vars['url']; ?>_graphics/dummy_river_icon.gif) no-repeat left top;
+}
+.river_user_update {
+	background: url(<?php echo $vars['url']; ?>_graphics/dummy_river_icon.gif) no-repeat left top;
+}
+
+
+
 /* ***************************************
 	END
 *************************************** */
