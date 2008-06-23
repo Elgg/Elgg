@@ -22,6 +22,9 @@
 	
 			'profile:edit' => "Edit profile",
 			'profile:editicon' => "Change your profile picture",
+			'profile:icon' => "Profile icon",
+			'profile:createicon' => "Create your avatar",
+			'profile:createicon:instructions' => "Click and drag to crop your image",
 	
 			'profile:aboutme' => "About me", 
 			'profile:description' => "About me", 

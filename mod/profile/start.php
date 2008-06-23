@@ -119,6 +119,7 @@
 		global $CONFIG;
 		register_action("profile/edit",false,$CONFIG->pluginspath . "profile/actions/edit.php");
 		register_action("profile/iconupload",false,$CONFIG->pluginspath . "profile/actions/iconupload.php");
+		register_action("profile/cropicon",false,$CONFIG->pluginspath . "profile/actions/cropicon.php");
 
 	// Define widgets for use in this context
 		use_widgets('profile');

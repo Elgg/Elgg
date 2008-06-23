@@ -617,7 +617,7 @@
 	 * @param true|false $square If set to true, will take the smallest of maxwidth and maxheight and use it to set the dimensions on all size; the image will be cropped.
 	 * @return false|mixed The contents of the resized image, or false on failure
 	 */
-	function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight, $square = false) {
+	function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight, $square = false, $x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0) {
 		
 		// Get the size information from the image
 		if ($imgsizearray = getimagesize($input_name)) {
@@ -669,11 +669,25 @@
  				
 					// Crop the image if we need a square
 					if ($square) {
-						$widthoffset = floor(($imgsizearray[0] - $width) / 2);
-						$heightoffset = floor(($imgsizearray[1] - $height) / 2);
+						if ($x1 == 0 && $y1 == 0 && $x2 == 0 && $y2 ==0) {
+							$widthoffset = floor(($imgsizearray[0] - $width) / 2);
+							$heightoffset = floor(($imgsizearray[1] - $height) / 2);
+						} else {
+							$widthoffset = $x1;
+							$heightoffset = $y1;
+							$width = ($x2 - $x1);
+							$height = $width;
+						}
 					} else {
-						$widthoffset = 0;
-						$heightoffset = 0;
+						if ($x1 == 0 && $y1 == 0 && $x2 == 0 && $y2 ==0) {
+							$widthoffset = 0;
+							$heightoffset = 0;
+						} else {
+							$widthoffset = $x1;
+							$heightoffset = $y1;
+							$width = ($x2 - $x1);
+							$height = ($y2 - $y1);
+						}
 					}//else {
 						// Resize and return the image contents!
 						imagecopyresampled($newimage, $oldimage, 0,0,$widthoffset,$heightoffset,$newwidth,$newheight,$width,$height);

@@ -35,7 +35,7 @@
 	
 <?php
 
-    echo "Your current master photo: <br />";
+    echo elgg_echo("profile:createicon:instructions") . ": <br />";
     //display the current user photo 
     $user_master_image = $vars['url'] . "pg/icon/" . $_SESSION['user']->username . "/master/" . $_SESSION['user']->icontime . ".jpg";
     
@@ -106,9 +106,11 @@
 </script>
 
 <p>
-<img id="user_avatar" src="<?php echo $user_master_image; ?>" alt="User profile photo"
+<img id="user_avatar" src="<?php echo $user_master_image; ?>" alt="<?php echo elgg_echo("profile:icon"); ?>"
  style="float: left; margin-right: 10px;" />
+ <br />
 </p>
+
  <div style="float: right; margin-left: 10px; margin-top:-200px;">
   <p style="background: #eee; border: solid 1px #ddd; margin: 0; padding: 10px;">
    <b>Selection coordinates:</b><br />
@@ -126,10 +128,11 @@
   </p>
  </div>
  
-<form name="" action="" />
-    <input type="hidden" name="x_1" value="" id="x_1" />
-    <input type="hidden" name="x_2" value="" id="x_2" />
-    <input type="hidden" name="y_1" value="" id="y_1" />
-    <input type="hidden" name="y_2" value="" id="y_2" />
-    <input type="submit" name="submit" value="create your avatar" />
+<form action="<?php echo $vars['url']; ?>action/profile/cropicon" method="post" />
+	<input type="hidden" name="username" value="<?php echo $vars['user']->username; ?>" />
+	<input type="hidden" name="x_1" value="<?php echo $vars['user']->x1; ?>" id="x_1" />
+    <input type="hidden" name="x_2" value="<?php echo $vars['user']->x2; ?>" id="x_2" />
+    <input type="hidden" name="y_1" value="<?php echo $vars['user']->y1; ?>" id="y_1" />
+    <input type="hidden" name="y_2" value="<?php echo $vars['user']->y2; ?>" id="y_2" />
+  <input type="submit" name="submit" value="<?php echo elgg_echo("profile:createicon"); ?>" />
 </form>

@@ -23,7 +23,8 @@
 				
 				if ($small !== false
 					&& $medium !== false
-					&& $large !== false) {
+					&& $large !== false
+					&& $tiny !== false) {
 				
 					$filehandler = new ElggFile();
 					$filehandler->owner_guid = $_SESSION['user']->getGUID();
