@@ -24,6 +24,6 @@
 	else
 		system_message(sprintf(elgg_echo('admin:plugins:enable:no'), $plugin));		
 		
-	header("Location: {$CONFIG->wwwroot}admin/plugins/");
+	forward($_SERVER['HTTP_REFERER']);
 	exit;
 ?>
