@@ -15,6 +15,6 @@
 ?>
 
 <div>
-    <h2><?php echo sprintf(elgg_echo('admin:statistics:label:onlineusers'), 10); ?></h2>
+    <h2><?php echo elgg_echo('admin:statistics:label:onlineusers'); ?></h2>
     <?php echo $users_online; ?>
 </div>
