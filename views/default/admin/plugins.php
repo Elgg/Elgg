@@ -35,7 +35,7 @@
 	// Diplay nav
 		if ($count) 
 		{
-			 elgg_view('navigation/pagination',array(
+			 echo elgg_view('navigation/pagination',array(
 												'baseurl' => $_SERVER['REQUEST_URI'],
 												'offset' => $offset,
 												'count' => $count,
