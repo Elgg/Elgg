@@ -52,19 +52,56 @@
             marginTop: '-' + Math.round(scaleY * selection.y1) + 'px' 
          }); } 
          
+         var $x1, $y1, $x2, $y2, $w, $h;
+ 
+        function selectChange(img, selection){
+           $x1.text(selection.x1);
+           $y1.text(selection.y1);
+           $x2.text(selection.x2);
+           $y2.text(selection.y2);
+           $w.text(selection.width);
+           $h.text(selection.height);
+         }     
+         
         $(document).ready(function () { 
+            $x1 = $('#x1');
+            $y1 = $('#y1');
+            $x2 = $('#x2');
+            $y2 = $('#y2');
+            $w = $('#w');
+            $h = $('#h');
+            
             $('<div><img src="<?php echo $user_master_image; ?>" style="position: relative;" /></div>') 
             .css({ float: 'left', position: 'relative', overflow: 'hidden', width: '100px', height: '100px' }) 
             .insertAfter($('#user_avatar')); 
         }); 
         
         $(window).load(function () { 
+            
+            $('#user_avatar').imgAreaSelect({ selectionOpacity: 0, onSelectEnd: selectChange });
             $('#user_avatar').imgAreaSelect({ aspectRatio: '1:1', onSelectChange: preview });
-            $('#user_avatar').imgAreaSelect({ x1: 100, y1: 100, x2: 200, y2: 200 }); 
+  
         });
+ 
 </script>
 
 <p>
 <img id="user_avatar" src="<?php echo $user_master_image; ?>" alt="User profile photo"
  style="float: left; margin-right: 10px;" />
 </p>
+ <div style="float: right; margin-left: 10px; margin-top:-200px;">
+  <p style="background: #eee; border: solid 1px #ddd; margin: 0; padding: 10px;">
+   <b>Selection coordinates:</b><br />
+
+   <b>X<sub>1</sub>:</b> <span id="x1"></span><br />
+   <b>Y<sub>1</sub>:</b> <span id="y1"></span><br />
+   <b>X<sub>2</sub>:</b> <span id="x2"></span><br />
+
+   <b>Y<sub>2</sub>:</b> <span id="y2"></span><br />
+   <br />
+   <b>Selection dimensions:</b><br />
+   <b>Width:</b> <span id="w"></span><br />
+   <b>Height:</b> <span id="h"></span>
+
+  </p>
+ </div>
