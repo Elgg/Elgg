@@ -13,7 +13,7 @@
 
 ?>
 
-<form action="<?php echo $vars['url']; ?>action/widgets/save" method="post">
+<form id="widgetform<?php echo $vars['entity']->getGUID(); ?>" action="<?php echo $vars['url']; ?>action/widgets/save" method="post">
 
 	<?php
 
@@ -37,3 +37,19 @@
 	</p>
 
 </form>
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+	$("#widgetform<?php echo $vars['entity']->getGUID(); ?>").submit(function () {
+	
+		var variables = $("#widgetform<?php echo $vars['entity']->getGUID(); ?>").serialize();
+		$.post($("#widgetform<?php echo $vars['entity']->getGUID(); ?>").attr("action"),variables,function() {
+			$("#widget<?php echo $vars['entity']->getGUID(); ?>").load("<?php echo $vars['url']; ?>pg/view/<?php echo $vars['entity']->getGUID(); ?>?shell=no&username=<?php echo page_owner_entity()->username; ?>&context=<?php echo get_context(); ?>");
+		});
+		return false;
+	
+	});
+
+}); 
+</script>

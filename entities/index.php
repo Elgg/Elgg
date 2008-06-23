@@ -17,6 +17,12 @@
 
 	// Get the GUID of the entity we want to view
 		$guid = (int) get_input('guid');
+		$shell = get_input('shell');
+		if ($shell == "no") {
+			$shell = false;
+		} else {
+			$shell = true;
+		}
 		
 	// Get the entity, if possible
 		if ($entity = get_entity($guid)) {
@@ -32,6 +38,10 @@
 		}
 		
 	// Display the page
-		page_draw("", $body);
+		if ($shell) {
+			page_draw("", $body);
+		} else {
+			echo $body;
+		}
 
 ?>
