@@ -207,6 +207,40 @@
 			
 			return false;
 		}
+		
+		/**
+		 * Set a user specific setting for a plugin.
+		 *
+		 * @param string $name The name - note, can't be "title".
+		 * @param mixed $value The value.
+		 * @param string $plugin_name Optional plugin name, if not specified then it is detected from where you are calling from.
+		 */
+		function set_plugin_usersetting($name, $value, $plugin_name = "")
+		{
+			
+		}
+		
+		/**
+		 * Get a user specific setting for a plugin.
+		 *
+		 * @param string $name The name.
+		 * @param string $plugin_name Optional plugin name, if not specified then it is detected from where you are calling from.
+		 */
+		function get_plugin_usersetting($name, $plugin_name = "")
+		{
+			
+		}
+		
+		/**
+		 * Clear a user specific plugin setting.
+		 *
+		 * @param string $name The name.
+		 * @param string $plugin_name Optional plugin name, if not specified then it is detected from where you are calling from.
+		 */
+		function clear_plugin_usersetting($name, $plugin_name = "")
+		{
+			
+		}
 			
 		/**
 		 * Set a setting for a plugin.
