@@ -45,7 +45,7 @@
 					$filehandler->close();
 					$filehandler->setFilename("profile/" . $_SESSION['user']->username . "master.jpg");
 					$filehandler->open("write");
-					$filehandler->write($master);
+                    $filehandler->write($master);
 					$filehandler->close();
 					
 					$_SESSION['user']->icontime = time();
@@ -62,6 +62,10 @@
 				
 			}
 			
-		if (isloggedin()) forward($_SESSION['user']->getURL());
+	    //forward the user back to the upload page to crop
+	    
+	    $url = $vars['url'] . "mod/profile/editicon.php";
+			
+		if (isloggedin()) forward($url);
 
 ?>
