@@ -16,8 +16,8 @@
 	<?	
 	if (($river) && (count($river)>0))
 	{
-		foreach ($river as $r)
-			echo "<div>$r</div>";
+		foreach ($river as $r) echo $r;
+			//echo "<div>$r</div>";
 	}
 	else
 		echo elgg_echo('river:widget:noactivity');
