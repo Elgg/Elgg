@@ -66,7 +66,7 @@
 			$prevurl .= "?offset=" . $prevoffset;
 		}
 		
-		echo "<a href=\"{$prevurl}\">&lt;&lt; ". elgg_echo("previous") ."</a> ";
+		echo "<a href=\"{$prevurl}\">&laquo; ". elgg_echo("previous") ."</a> ";
 		
 	}
 
@@ -82,7 +82,7 @@
 			$nexturl .= "?offset=" . $nextoffset;
 		}
 		
-		echo " <a href=\"{$nexturl}\">" . elgg_echo("next") . " &gt;&gt;</a>";
+		echo " <a href=\"{$nexturl}\">" . elgg_echo("next") . " &raquo;</a>";
 		
 	}
 
