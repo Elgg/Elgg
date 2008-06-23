@@ -44,8 +44,8 @@
 					$filehandler->write($tiny);
 					$filehandler->close();
 					$filehandler->setFilename("profile/" . $_SESSION['user']->username . "master.jpg");
-					$filehandler->open("master");
-					$filehandler->write($tiny);
+					$filehandler->open("write");
+					$filehandler->write($master);
 					$filehandler->close();
 					
 					$_SESSION['user']->icontime = time();
