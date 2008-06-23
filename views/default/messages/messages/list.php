@@ -17,6 +17,13 @@
 	if (!empty($vars['object']) && is_array($vars['object'])) {
 
 ?>
+<!-- used to fade out the system messages after 3 seconds -->
+<script>
+    $(document).ready(function () {
+      $('.messages').animate({opacity: 1.0}, 3000) //this holds the div without change for 3 seconds
+      $('.messages').fadeOut('slow'); //fade it out
+    });  
+</script>
 
 	<div class="messages">
 		<div class="messages-errors">
