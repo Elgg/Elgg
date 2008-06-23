@@ -211,7 +211,6 @@
 			        $viewtype = $_SESSION['view'];
 			    }
 			    
-			    
 				if (!isset($CONFIG->views->locations[$view])) {
 		    		if (!isset($CONFIG->viewpath)) {
 						$location = dirname(dirname(dirname(__FILE__))) . "/views/";		    			
@@ -278,7 +277,7 @@
 			$subtype = $entity->getSubtype();
 			if (empty($subtype)) { $subtype = $entity_type; }
 
-			if (elgg_view_exists("{$entity_type}/{$subtype}")) {
+			if (elgg_view_exists("{$entity_type}/{$subtype}",$viewtype)) {
 				return elgg_view("{$entity_type}/{$subtype}",array(
 																	'entity' => $entity,
 																	'full' => $full
