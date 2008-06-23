@@ -29,6 +29,6 @@
 	else
 		system_message(elgg_echo('admin:user:delete:no'));
 		
-	header("Location: {$CONFIG->wwwroot}admin/user/");
+	forward($_SERVER['HTTP_REFERER']);
 	exit;
 ?>
