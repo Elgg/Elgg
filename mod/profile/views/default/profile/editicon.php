@@ -43,9 +43,10 @@
 
 <script>
 
+    //function to display a preview of the users cropped section
     function preview(img, selection) {
-        var origWidth = $("#user_avatar").width();
-        var origHeight = $("#user_avatar").height();
+        var origWidth = $("#user_avatar").width(); //get the width of the users master photo
+        var origHeight = $("#user_avatar").height(); //get the height of the users master photo
         var scaleX = 100 / selection.width; 
         var scaleY = 100 / selection.height; 
         $('#user_avatar + div > img').css({ 
@@ -53,20 +54,33 @@
             height: Math.round(scaleY * origHeight) + 'px', 
             marginLeft: '-' + Math.round(scaleX * selection.x1) + 'px', 
             marginTop: '-' + Math.round(scaleY * selection.y1) + 'px' 
-         }); } 
-         
-        var $x1, $y1, $x2, $y2, $w, $h;
+         }); 
+    } 
+        
+    //variables for the newly cropped avatar
+    var $x1, $y1, $x2, $y2, $w, $h;
         
         function selectChange(img, selection){
+            
+           //delete this once we have tested, it is for the coordinate display
            $x1.text(selection.x1);
            $y1.text(selection.y1);
            $x2.text(selection.x2);
            $y2.text(selection.y2);
            $w.text(selection.width);
            $h.text(selection.height);
+           
+           //populate the form with the correct coordinates once a user has cropped their image
+           document.getElementById('x_1').value = selection.x1;
+           document.getElementById('x_2').value = selection.x2;
+           document.getElementById('y_1').value = selection.y1;
+           document.getElementById('y_2').value = selection.y2;
+           
          }     
          
-        $(document).ready(function () { 
+        $(document).ready(function () {
+            
+            //get and set the coordinates
             $x1 = $('#x1');
             $y1 = $('#y1');
             $x2 = $('#x2');
@@ -76,12 +90,15 @@
             
             $('<div><img src="<?php echo $user_master_image; ?>" style="position: relative;" /></div>') 
             .css({ float: 'left', position: 'relative', overflow: 'hidden', width: '100px', height: '100px' }) 
-            .insertAfter($('#user_avatar')); 
+            .insertAfter($('#user_avatar'));
+            
         }); 
         
         $(window).load(function () { 
             
+            //this produces the coordinates
             $('#user_avatar').imgAreaSelect({ selectionOpacity: 0, onSelectEnd: selectChange });
+            //show the preview
             $('#user_avatar').imgAreaSelect({ aspectRatio: '1:1', onSelectChange: preview });
   
         });
@@ -108,3 +125,11 @@
 
   </p>
  </div>
+ 
+<form name="" action="" />
+    <input type="hidden" name="x_1" value="" id="x_1" />
+    <input type="hidden name="x_2" value="" id="x_2" />
+    <input type="hidden" name="y_1" value="" id="y_1" />
+    <input type="hidden" name="y_2" value="" id="y_2" />
+    <input type="submit" name="submit" value="create your avatar" />
+</form>
