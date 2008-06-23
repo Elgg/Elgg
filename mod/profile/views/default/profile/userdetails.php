@@ -48,7 +48,6 @@
 		if ($vars['full'] == true) {
 	
 	?>
-	<p><b><?php echo elgg_echo("profile:aboutme"); ?></b><br /><?php echo nl2br($vars['entity']->description); ?></p>
 	<?php
 
 		if (is_array($vars['config']->profile) && sizeof($vars['config']->profile) > 0)
@@ -109,3 +108,4 @@
 	?>
 	
 	</div>
+	<p><b><?php echo elgg_echo("profile:aboutme"); ?></b><br /><?php echo nl2br($vars['entity']->description); ?></p>
