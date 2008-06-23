@@ -128,7 +128,7 @@
  
 <form name="" action="" />
     <input type="hidden" name="x_1" value="" id="x_1" />
-    <input type="hidden name="x_2" value="" id="x_2" />
+    <input type="hidden" name="x_2" value="" id="x_2" />
     <input type="hidden" name="y_1" value="" id="y_1" />
     <input type="hidden" name="y_2" value="" id="y_2" />
     <input type="submit" name="submit" value="create your avatar" />
