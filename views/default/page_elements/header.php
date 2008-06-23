@@ -72,7 +72,6 @@ END;
 <div id="wrapper_header">
 	<!-- display the page title -->
 	<h1><a href="<?php echo $vars['url']; ?>"><?php echo $vars['config']->sitename; ?></a></h1>
-	<h2><?php echo $vars['title']; ?></h2>
 	<!-- display top level navigation -->
 	<?php echo elgg_view('navigation/topmenu'); ?>
 </div><!-- /#wrapper_header -->

@@ -251,6 +251,11 @@ h6 { font-size: 0.8em; }
 #layout_footer a {
    color:white;
 }
+
+.page_title {
+   padding:0px 10px 20px 20px;
+}
+
 /* ***************************************
   CUSTOMISE PANEL (PROFILE & DASHBOARD)
 *************************************** */

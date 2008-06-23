@@ -59,6 +59,7 @@
 
 <!-- canvas -->
 <div id="layout_canvas">
+<h2 class="page_title"><?php echo $vars['title']; ?></h2>
 <?php echo $vars['body']; ?>
 <div class="clearfloat"></div>
 </div><!-- /#layout_canvas -->
