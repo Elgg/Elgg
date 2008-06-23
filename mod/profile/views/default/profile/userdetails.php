@@ -22,7 +22,7 @@
 	echo "<div style=\"float:left;width:200px;\">";
 	
 	// display the users name
-	echo "<h2><a href=\"" . $vars['entity']->getUrl() . "\">" . $vars['entity']->name . "</a></h2>";
+	// echo "<h2><a href=\"" . $vars['entity']->getUrl() . "\">" . $vars['entity']->name . "</a></h2>";
 	
 	// get the user's main profile picture
 	echo elgg_view(
