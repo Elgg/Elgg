@@ -11,7 +11,7 @@
 	 */
 ?>
 <div class="admin-menu-option">
-	<h2><?php echo elgg_echo('admin:statistics'); ?> </h2>
-	<p><?php echo elgg_echo('admin:statistics:opt:description'); ?><br />
-	<a href="<?php echo $CONFIG->wwwroot . "pg/admin/statistics/"; ?>"><?php echo elgg_echo('admin:statistics:opt:linktext'); ?></a></p>
+	<h2><?php echo elgg_echo('usersettings:statistics'); ?> </h2>
+	<p><?php echo elgg_echo('usersettings:statistics:opt:description'); ?><br />
+	<a href="<?php echo $CONFIG->wwwroot . "pg/usersettings/statistics/"; ?>"><?php echo elgg_echo('usersettings:statistics:opt:linktext'); ?></a></p>
 </div>

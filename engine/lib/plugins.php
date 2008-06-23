@@ -171,6 +171,42 @@
 			
 			return false;
 		}
+		
+		/**
+		 * Find the plugin settings for a user.
+		 *
+		 * @param string $plugin_name Plugin name.
+		 * @param int $user_guid The guid who's settings to retrieve.
+		 */
+		function find_plugin_usersettings($plugin_name = "", $user_guid = 0)
+		{
+			$plugin_name = sanitise_string($plugin_name);
+			$user_guid = (int)$user_guid;
+			
+			if (!$plugin_name)
+				$plugin_name = get_plugin_name();
+				
+			if ($user_guid == 0) $user_guid = $_SESSION['user']->guid;
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			return false;
+		}
 			
 		/**
 		 * Set a setting for a plugin.

@@ -282,6 +282,26 @@
 			'admin:user:delete:no' => "Can not delete user",
 			'admin:user:delete:yes' => "User deleted",
 			
+		/**
+		 * User settings
+		 */
+			'usersettings:description' => "The user settings panel allows you to control all your personal settings, from user management to how plugins behave. Choose an option below to get started.",
+	
+			'usersettings:statistics' => "Your statistics",
+			'usersettings:statistics:description' => "This panel will allow you to view statistics about you.",
+			'usersettings:statistics:opt:description' => "View statistical information about users and objects on your site.",
+			'usersettings:statistics:opt:linktext' => "View statistics...",
+	
+			'usersettings:user' => "Your settings",
+			'usersettings:user:opt:description' => "This allows you to control user settings.",
+			'usersettings:user:opt:linktext' => "Configure your user settings...",
+	
+			'usersettings:plugins' => "Tools",
+			'usersettings:plugins:opt:description' => "Configure settings for your active tools.",
+			'usersettings:plugins:opt:linktext' => "Configure your tools...",
+	
+			'usersettings:plugins:description' => "This panel allows you to control and configure the personal settings for the tools installed by your system administrator.",
+			
 	
 		/**
 		 * Generic action words

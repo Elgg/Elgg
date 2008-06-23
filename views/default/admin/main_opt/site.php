@@ -13,5 +13,5 @@
 <div class="admin-menu-option">
 	<h2><?php echo elgg_echo('admin:site'); ?> </h2>
 	<p><?php echo elgg_echo('admin:site:opt:description'); ?><br />
-	<a href="<?php echo $CONFIG->wwwroot . "admin/site/"; ?>"><?php echo elgg_echo('admin:site:opt:linktext'); ?></a></p>
+	<a href="<?php echo $CONFIG->wwwroot . "pg/admin/site/"; ?>"><?php echo elgg_echo('admin:site:opt:linktext'); ?></a></p>
 </div>

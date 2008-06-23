@@ -119,7 +119,6 @@
 			asort($files);
 	
 		// Include them
-		
 			foreach($files as $file) {
 				if (isset($CONFIG->debug) && $CONFIG->debug) error_log("Loading $file..."); 
 				if (!@include_once($file))

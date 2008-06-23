@@ -12,13 +12,14 @@
 
 	$entity = $vars['entity'];
 	$plugin = $vars['plugin'];
-	
+	$prefix = $vars['prefix']; // Do we want to show admin settings (default) or user settings
+
 ?>
 <div>
 	<form action="<?php echo $vars['url']; ?>action/plugins/settings/save" method="post">
 	
 		<?php 
-			echo elgg_view("settings/{$plugin}/edit",$vars);
+			echo elgg_view("{$prefix}settings/{$plugin}/edit",$vars);
 		?>
 	
 		<p>
