@@ -42,18 +42,21 @@
 ?>
 
 <script>
-    function preview(img, selection) { 
+
+    function preview(img, selection) {
+        var origWidth = $("#user_avatar").width();
+        var origHeight = $("#user_avatar").height();
         var scaleX = 100 / selection.width; 
         var scaleY = 100 / selection.height; 
         $('#user_avatar + div > img').css({ 
-            width: Math.round(scaleX * 600) + 'px', 
-            height: Math.round(scaleY * 500) + 'px', 
+            width: Math.round(scaleX * origWidth) + 'px', 
+            height: Math.round(scaleY * origHeight) + 'px', 
             marginLeft: '-' + Math.round(scaleX * selection.x1) + 'px', 
             marginTop: '-' + Math.round(scaleY * selection.y1) + 'px' 
          }); } 
          
-         var $x1, $y1, $x2, $y2, $w, $h;
- 
+        var $x1, $y1, $x2, $y2, $w, $h;
+        
         function selectChange(img, selection){
            $x1.text(selection.x1);
            $y1.text(selection.y1);
