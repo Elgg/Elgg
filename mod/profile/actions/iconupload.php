@@ -19,6 +19,7 @@
 				$small = get_resized_image_from_uploaded_file('profileicon',40,40, true);
 				$medium = get_resized_image_from_uploaded_file('profileicon',100,100, true);
 				$large = get_resized_image_from_uploaded_file('profileicon',200,200);
+				$master = get_resized_image_from_uploaded_file('profileicon',600,600);
 				
 				if ($small !== false
 					&& $medium !== false
@@ -40,6 +41,10 @@
 					$filehandler->close();
 					$filehandler->setFilename("profile/" . $_SESSION['user']->username . "tiny.jpg");
 					$filehandler->open("write");
+					$filehandler->write($tiny);
+					$filehandler->close();
+					$filehandler->setFilename("profile/" . $_SESSION['user']->username . "master.jpg");
+					$filehandler->open("master");
 					$filehandler->write($tiny);
 					$filehandler->close();
 					
