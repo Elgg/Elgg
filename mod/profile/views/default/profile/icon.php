@@ -27,7 +27,7 @@
 		}
 			
 	// Get size
-		if (!in_array($vars['size'],array('small','medium','large','tiny')))
+		if (!in_array($vars['size'],array('small','medium','large','tiny','master')))
 			$vars['size'] = "medium";
 			
 	// Get any align and js
