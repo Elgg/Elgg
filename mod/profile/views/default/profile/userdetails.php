@@ -13,9 +13,9 @@
 	 */
 
 	if ($vars['full'] == true) {
-		$iconsize = "medium";
+		$iconsize = "large";
 	} else {
-		$iconsize = "small";
+		$iconsize = "medium";
 	}
 	
 	//wrap the icon and links in a div
@@ -79,20 +79,25 @@
 			
 		}
 	
-		if ($vars['entity']->canEdit()) {
-	
 	?>
-	<p>
-		<a href="<?php echo $vars['url']; ?>mod/profile/edit.php"><?php echo elgg_echo("edit"); ?></a>
-	</p>
-	<?php
+	</div>
+	<p><b><?php echo elgg_echo("profile:aboutme"); ?></b><br /><?php echo nl2br($vars['entity']->description); ?></p>
 
+<?php
+	
+	if ($vars['entity']->canEdit()) {
+
+?>
+		<p>
+			<a href="<?php echo $vars['url']; ?>mod/profile/edit.php"><?php echo elgg_echo("edit"); ?></a>
+		</p>
+<?php
+
+	}
 		
 			// TODO: Add admin console options here
-			if (isadminloggedin())
-			{
-				if ($_SESSION['id']!=$vars['entity']->guid)
-				{
+			if (isadminloggedin()){
+				if ($_SESSION['id']!=$vars['entity']->guid){
 ?>				
 				<p>
 					<a href="<?php echo $vars['url']; ?>actions/admin/user/ban?guid=<?php echo $vars['entity']->guid; ?>"><?php echo elgg_echo("ban"); ?></a>
@@ -103,9 +108,4 @@
 <?php 
 				}
 			}
-		}
-	
-	?>
-	
-	</div>
-	<p><b><?php echo elgg_echo("profile:aboutme"); ?></b><br /><?php echo nl2br($vars['entity']->description); ?></p>
+?>
