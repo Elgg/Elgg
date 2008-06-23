@@ -309,6 +309,7 @@
 		 */
 	
 			'save' => "Save",
+			'saving' => "Saving ...",
 			'update' => "Update",
 			'edit' => "Edit",
 			'delete' => "Delete",

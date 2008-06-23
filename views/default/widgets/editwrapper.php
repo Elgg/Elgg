@@ -11,9 +11,11 @@
 	 * @link http://elgg.org/
 	 */
 
+	$guid = $vars['entity']->getGUID();
+
 ?>
 
-<form id="widgetform<?php echo $vars['entity']->getGUID(); ?>" action="<?php echo $vars['url']; ?>action/widgets/save" method="post">
+<form id="widgetform<?php echo $guid; ?>" action="<?php echo $vars['url']; ?>action/widgets/save" method="post">
 
 	<?php
 
@@ -28,8 +30,8 @@
 		</label>
 	</p>
 	<p>
-		<input type="hidden" name="guid" value="<?php echo $vars['entity']->getGUID(); ?>" />
-		<input type="submit" value="<?php
+		<input type="hidden" name="guid" value="<?php echo $guid; ?>" />
+		<input type="submit" id="submit<?php echo $guid; ?>" value="<?php
 
 			echo elgg_echo('save');			
 		
@@ -41,11 +43,14 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
-	$("#widgetform<?php echo $vars['entity']->getGUID(); ?>").submit(function () {
+	$("#widgetform<?php echo $guid; ?>").submit(function () {
 	
-		var variables = $("#widgetform<?php echo $vars['entity']->getGUID(); ?>").serialize();
-		$.post($("#widgetform<?php echo $vars['entity']->getGUID(); ?>").attr("action"),variables,function() {
-			$("#widget<?php echo $vars['entity']->getGUID(); ?>").load("<?php echo $vars['url']; ?>pg/view/<?php echo $vars['entity']->getGUID(); ?>?shell=no&username=<?php echo page_owner_entity()->username; ?>&context=<?php echo get_context(); ?>");
+		$("#submit<?php echo $guid; ?>").attr("disabled","disabled");
+		$("#submit<?php echo $guid; ?>").attr("value","<?php echo elgg_echo("saving"); ?>");
+	
+		var variables = $("#widgetform<?php echo $guid; ?>").serialize();
+		$.post($("#widgetform<?php echo $guid; ?>").attr("action"),variables,function() {
+			$("#widget<?php echo $guid; ?>").load("<?php echo $vars['url']; ?>pg/view/<?php echo $guid; ?>?shell=no&username=<?php echo page_owner_entity()->username; ?>&context=<?php echo get_context(); ?>");
 		});
 		return false;
 	
