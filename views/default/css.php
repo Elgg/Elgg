@@ -82,6 +82,8 @@ body {
 a {
 	color: #4690d6;
 	text-decoration: none;
+	-moz-outline-style: none;
+	outline: none;
 }
 a:visited {
 	color: #336699;
@@ -251,11 +253,6 @@ h6 { font-size: 0.8em; }
 #layout_footer a {
    color:white;
 }
-
-.page_title {
-   padding:0px 10px 20px 20px;
-}
-
 /* ***************************************
   CUSTOMISE PANEL (PROFILE & DASHBOARD)
 *************************************** */
@@ -412,9 +409,19 @@ h6 { font-size: 0.8em; }
 /* ***************************************
   COLLAPSABLE BOXES
 *************************************** */
-/* temp. customise button */
-a.toggle_customise_edit_panel {
+/* open 'customise page' panel button */
+a.toggle_customise_edit_panel { 
 	float:right;
+	color: #4690d6;
+	background: #f5f5f5;
+	border:1px solid #cccccc;
+	padding: 5px 10px 5px 10px;
+	margin:0 0 20px 0;
+}
+a.toggle_customise_edit_panel:hover { 
+	color: #ffffff;
+	background: #0054a7;
+	text-decoration:none;
 }
 
 .collapsable_box {
@@ -588,6 +595,8 @@ textarea:focus, input[type="text"]:focus {
 	color: #ffffff;
 	background:#4690d6;
 	border: 1px solid #4690d6;
+	-webkit-border-radius: 3px; 
+	-moz-border-radius: 3px;
 	width: auto;
 	height: 25px;
 	padding: 2px 6px 2px 6px;
@@ -604,6 +613,8 @@ input[type="submit"] {
 	color: #ffffff;
 	background:#4690d6;
 	border: 1px solid #4690d6;
+	-webkit-border-radius: 3px; 
+	-moz-border-radius: 3px;
 	width: auto;
 	height: 25px;
 	padding: 2px 6px 2px 6px;
@@ -660,10 +671,8 @@ input[type="submit"] {
 	margin-right:50px;
 }
 #searchform input.search_input {
-	-moz-border-radius-bottomleft:4px;
-	-moz-border-radius-bottomright:4px;
-	-moz-border-radius-topleft:4px;
-	-moz-border-radius-topright:4px;
+	-webkit-border-radius: 3px; 
+	-moz-border-radius: 3px;
 	background-color:#FFFFFF;
 	border:1px solid #BBBBBB;
 	color:#999999;
@@ -674,10 +683,8 @@ input[type="submit"] {
 	width:180px;
 }
 #searchform input.search_submit_button {
-	-moz-border-radius-bottomleft:4px;
-	-moz-border-radius-bottomright:4px;
-	-moz-border-radius-topleft:4px;
-	-moz-border-radius-topright:4px;
+	-webkit-border-radius: 3px; 
+	-moz-border-radius: 3px;
 	color:#ffffff;
 	background: #cccccc;
 	border:none;
@@ -691,6 +698,24 @@ input[type="submit"] {
 }
 #searchform input.search_submit_button:hover {
 	color:#000000;
+}
+.widget_status_statusmessage {
+	font-size:1.2em;
+	line-height:1.2em;
+	font-weight:bold;
+	color:#666666;
+	background:#fdffc3;
+	padding:3px;
+}
+
+.widget_status_messagetimestamp {
+	font-size:0.9em;
+	color:#999999;
+	margin:0;
+}
+
+.page_title {
+	padding:0px 10px 20px 20px;
 }
 
 /* ***************************************

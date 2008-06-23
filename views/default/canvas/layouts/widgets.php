@@ -148,8 +148,6 @@
 </form>
 </div><!-- /customise_editpanel -->
 
-<br />
-
 <?php
 			
 		}
@@ -158,9 +156,17 @@
 
 <!-- right sidebar -->
 <div id="layout_sidebar_right">
-<!-- temporary customise button here -->
-<a href="javascript:void(0);" class="toggle_customise_edit_panel">Customise Layout</a><br /><br />
 <div id="wrapper_sidebar_right">
+
+<?php 
+   if($_SESSION['user']->guid == page_owner()){
+?>
+	<!-- customise page button -->
+	<a href="javascript:void(0);" class="toggle_customise_edit_panel">Customise Layout</a>
+	<div style="clear:both;"></div>
+<?php
+ }
+?>
 
 
 	<?php if (isset($vars['area2'])) echo $vars['area2']; ?>
