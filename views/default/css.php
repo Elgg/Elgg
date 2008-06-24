@@ -714,8 +714,52 @@ input[type="submit"] {
 	margin:0;
 }
 
-.page_title {
-	padding:0px 10px 20px 20px;
+/* ***************************************
+	PROFILE
+*************************************** */
+#profile_info {
+	margin:0 0 20px 0;
+	border-bottom:1px solid #cccccc;
+}
+#profile_menu_wrapper p {
+	border-bottom:1px solid #cccccc;
+	padding:0 0 0 3px;
+}
+#profile_menu_wrapper p:first-child {
+	border-top:1px solid #cccccc;
+}
+#profile_menu_wrapper p:hover {
+	background:#4690d6;
+}
+#profile_menu_wrapper a:hover {
+	color:#ffffff;
+	text-decoration:none;
+}
+p.user_menu_friends {
+	margin:0;
+}
+#profile_info_column_left {
+	float:left;
+	width:200px;
+	margin: 0 20px 0 0;
+}
+#profile_info_column_right {
+	float:left;
+	width:305px;
+}
+#profile_info_column_left img {
+	padding:0 0 20px 0;
+}
+#profile_info_column_right p {
+	margin:7px 0 7px 0;
+	line-height:1.3em;
+}
+#profile_info_wide p {
+	margin:7px 0 7px 0;
+	line-height:1.4em;
+}
+#profile_info_wide .profile_info_edit_buttons {
+	margin:0;
 }
 
 
@@ -747,7 +791,9 @@ input[type="submit"] {
 	END
 *************************************** */
 
-
+.page_title {
+	padding:0px 10px 20px 20px;
+}
 	
 	
 	

@@ -18,11 +18,11 @@
 		$iconsize = "medium";
 	}
 	
-	//wrap the icon and links in a div
-	echo "<div style=\"float:left;width:200px;\">";
+	// wrap all profile info
+	echo "<div id=\"profile_info\">";
 	
-	// display the users name
-	// echo "<h2><a href=\"" . $vars['entity']->getUrl() . "\">" . $vars['entity']->name . "</a></h2>";
+	// wrap the icon and links in a div
+	echo "<div id=\"profile_info_column_left\">";
 	
 	// get the user's main profile picture
 	echo elgg_view(
@@ -34,16 +34,19 @@
 					);
     
     //display relevant links			
-    echo "<div style=\"clear:both\">" . elgg_view("profile/profilelinks", array("entity" => $vars['entity'])) . "</div>";
+    echo "<div style=\"clear:both\"></div>" . elgg_view("profile/profilelinks", array("entity" => $vars['entity']));
     
-    //close the icon and links div
+    // close the icon and links div
     echo "</div>";
 
 ?>
 
-	<div style="margin:0 0 0 210px; width:300px;" >
+	<div id="profile_info_column_right" >
 
 	<?php 
+	
+	// display the users name
+	echo "<h2><a href=\"" . $vars['entity']->getUrl() . "\">" . $vars['entity']->name . "</a></h2> <br />";
 
 		if ($vars['full'] == true) {
 	
@@ -80,7 +83,11 @@
 		}
 	
 	?>
-	</div>
+	</div><!-- /#profile_info_column_right -->
+	
+	<div style="clearfloat"></div>
+	
+	<div id="profile_info_wide">
 	<p><b><?php echo elgg_echo("profile:aboutme"); ?></b><br /><?php echo nl2br($vars['entity']->description); ?></p>
 
 <?php
@@ -88,7 +95,7 @@
 	if ($vars['entity']->canEdit()) {
 
 ?>
-		<p>
+		<p class="profile_info_edit_buttons">
 			<a href="<?php echo $vars['url']; ?>mod/profile/edit.php"><?php echo elgg_echo("edit"); ?></a>
 		</p>
 <?php
@@ -109,3 +116,7 @@
 				}
 			}
 ?>
+
+</div><!-- /#profile_info_wide -->
+
+</div><!-- /#profile_info -->

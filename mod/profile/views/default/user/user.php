@@ -12,6 +12,6 @@
 	 * @uses $vars['entity'] The user entity
 	 */
 
-		echo elgg_view_layout("one_column",elgg_view("profile/userdetails",$vars));
+		echo elgg_view("profile/userdetails",$vars);
 	
 ?>

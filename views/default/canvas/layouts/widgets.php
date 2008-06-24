@@ -201,7 +201,7 @@
 	
 </div><!-- /#wrapper_maincontent -->
 <p></p><!-- necessary to avoid an ie7 bug? -->
-</div><!-- /#layout_maincontent -->	
+</div><!-- /#layout_maincontent .has_sidebar_right -->	
 
 <!-- This clearing element should immediately follow the #layout_maincontent to force the #container to contain all child floats -->
 <div class="clearfloat"></div>

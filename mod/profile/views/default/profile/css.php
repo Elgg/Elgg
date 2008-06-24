@@ -2,6 +2,8 @@
 
 ?>
 
+/* 
+
 #user_menu {
 	position:absolute;
 	border:1px solid #333333;
@@ -35,3 +37,5 @@
 	color: #fff;
 	text-decoration: none;
 }
+
+*/
