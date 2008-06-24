@@ -20,6 +20,14 @@
 	
 	// wrap all profile info
 	echo "<div id=\"profile_info\">";
+
+?>
+
+<table>
+<tr>
+<td>
+
+<?php	
 	
 	// wrap the icon and links in a div
 	echo "<div id=\"profile_info_column_left\">";
@@ -28,19 +36,22 @@
 	echo elgg_view(
 						"profile/icon", array(
 												'entity' => $vars['entity'],
-												'align' => "left",
+												//'align' => "left",
 												'size' => $iconsize,
 											  )
 					);
-    
-    //display relevant links			
-    echo "<div style=\"clear:both\"></div>" . elgg_view("profile/profilelinks", array("entity" => $vars['entity']));
+
+    // display relevant links			
+    echo elgg_view("profile/profilelinks", array("entity" => $vars['entity']));
     
     // close the icon and links div
     echo "</div>";
 
 ?>
-
+<!-- /#profile_info_column_left -->
+</td>
+<td>
+	
 	<div id="profile_info_column_right" >
 
 	<?php 
@@ -84,9 +95,11 @@
 	
 	?>
 	</div><!-- /#profile_info_column_right -->
-	
-	<div style="clearfloat"></div>
-	
+
+</td>
+</tr>
+</table>
+
 	<div id="profile_info_wide">
 	<p><b><?php echo elgg_echo("profile:aboutme"); ?></b><br /><?php echo nl2br($vars['entity']->description); ?></p>
 
@@ -97,7 +110,7 @@
 ?>
 		<p class="profile_info_edit_buttons">
 			<a href="<?php echo $vars['url']; ?>mod/profile/edit.php"><?php echo elgg_echo("edit"); ?></a>
-		</p>
+		
 <?php
 
 	}
@@ -106,17 +119,16 @@
 			if (isadminloggedin()){
 				if ($_SESSION['id']!=$vars['entity']->guid){
 ?>				
-				<p>
-					<a href="<?php echo $vars['url']; ?>actions/admin/user/ban?guid=<?php echo $vars['entity']->guid; ?>"><?php echo elgg_echo("ban"); ?></a>
-				</p>		
-				<p>
-					<a href="<?php echo $vars['url']; ?>actions/admin/user/delete?guid=<?php echo $vars['entity']->guid; ?>"><?php echo elgg_echo("delete"); ?></a>
-				</p>	
+				
+				&nbsp; <a href="<?php echo $vars['url']; ?>actions/admin/user/ban?guid=<?php echo $vars['entity']->guid; ?>"><?php echo elgg_echo("ban"); ?></a>
+				
+				&nbsp; <a href="<?php echo $vars['url']; ?>actions/admin/user/delete?guid=<?php echo $vars['entity']->guid; ?>"><?php echo elgg_echo("delete"); ?></a>
+					
 <?php 
 				}
 			}
 ?>
-
+</p>
 </div><!-- /#profile_info_wide -->
 
 </div><!-- /#profile_info -->
