@@ -447,7 +447,18 @@
 			}
 				
 		}
-
+	
+	/**
+	 * Returns a view for the page title
+	 *
+	 * @param string $title The page title
+	 * @return string The HTML (etc)
+	 */
+		function elgg_view_title($title) {
+			
+			return elgg_view('page_elements/title', array('title' => $title));
+			
+		}
 		
 	/**
 	 * Sets an alternative function to handle templates, which will be passed to by elgg_view.
