@@ -31,6 +31,7 @@
 	</p>
 	<p>
 		<input type="hidden" name="guid" value="<?php echo $guid; ?>" />
+		<input type="hidden" name="noforward" value="true" />
 		<input type="submit" id="submit<?php echo $guid; ?>" value="<?php
 
 			echo elgg_echo('save');			
@@ -48,6 +49,7 @@ $(document).ready(function() {
 		$("#submit<?php echo $guid; ?>").attr("disabled","disabled");
 		$("#submit<?php echo $guid; ?>").attr("value","<?php echo elgg_echo("saving"); ?>");
 		$("#widgetcontent<?php echo $guid; ?>").html('<?php echo elgg_view('ajax/loader',array('slashes' => true)); ?>');
+		$("#widget<?php echo $guid; ?>").add(".toggle_box_edit_panel").click();
 	
 		var variables = $("#widgetform<?php echo $guid; ?>").serialize();
 		$.post($("#widgetform<?php echo $guid; ?>").attr("action"),variables,function() {
