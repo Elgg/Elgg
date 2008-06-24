@@ -622,9 +622,6 @@
 		// Get the size information from the image
 		if ($imgsizearray = getimagesize($input_name)) {
 		
-			// Get the contents of the file
-			$filecontents = file_get_contents($input_name);
-			
 			// Get width and height
 			$width = $imgsizearray[0];
 			$height = $imgsizearray[1];
@@ -656,7 +653,7 @@
 			$accepted_formats = array(
 											'image/jpeg' => 'jpeg',
 											'image/png' => 'png',
-											'image/gif' => 'png'
+											'image/gif' => 'gif'
 									);
 			
 			// If it's a file we can manipulate ...
