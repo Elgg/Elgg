@@ -192,11 +192,7 @@
 		
 		public function delete(ElggFile $file)
 		{
-			$unlink = unlink($this->getFilenameOnFilestore($file));
-			if ($unlink)
-				return $file->delete();
-	
-			return false;
+			return unlink($this->getFilenameOnFilestore($file));
 		}
 		
 		public function seek($f, $position)
@@ -446,8 +442,9 @@
 		public function delete()
 		{
 			$fs = $this->getFilestore();
-			
-			return $fs->delete($this);
+			if ($fs->delete($this)) {
+				return parent::delete();
+			}
 		}
 		
 		/**
