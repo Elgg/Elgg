@@ -305,6 +305,12 @@
 	 */
         function get_db_tables() {
         	global $CONFIG;
+        	static $tables, $count;
+        	
+        	if (isset($tables)) {
+        		return $tables;
+        	}
+        	
         	$result = get_data("show tables");
         	        	 	
         	$tables = array();
