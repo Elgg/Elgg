@@ -89,7 +89,7 @@
 								$subtype = "";
 							}
 							
-							if (!empty($subtype) && elgg_view_exists("river/{$subtype}/event")) {
+							if (!empty($subtype) && elgg_view_exists("river/{$subtype}/{$event}")) {
 								$tam = elgg_view("river/{$subtype}/$event", array(
 									'performed_by' => $by_user_obj,
 									'log_entry' => $log,
