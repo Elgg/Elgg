@@ -199,7 +199,7 @@
 		if ($row)
 		{
 			// We have already cached this object, so retrieve its value from the cache
-			if ($CONFIG->debug)
+			if (isset($CONFIG->debug) && $CONFIG->debug)
 				error_log("** Retrieving sub part of GUID:$guid from cache");
 				
 			return $row;
