@@ -84,11 +84,12 @@
 								$by_user_obj = get_entity($log->performed_by_guid);
 							}
 							if ($object instanceof ElggEntity) {
-								$subtype = $object->subtype;
+								$subtype = $object->getSubtype();
 							} else {
 								$subtype = "";
 							}
-							if (!empty($subtype) && elgg_view_exists("river/{$subtype}/event")) {
+							
+														if (!empty($subtype) && elgg_view_exists("river/{$subtype}/event")) {
 								$tam = elgg_view("river/{$subtype}/$event", array(
 									'performed_by' => $by_user_obj,
 									'log_entry' => $log,
