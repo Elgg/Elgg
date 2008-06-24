@@ -21,6 +21,7 @@
 			$user = page_owner_entity();			
 		} else {
 			$user = $_SESSION['user'];
+			if (!$user) $user = get_entity($_SESSION['id']);
 			set_page_owner($user->getGUID());
 		}
 		
