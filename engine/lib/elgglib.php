@@ -262,12 +262,13 @@
 							);
 			
 			$entity_class = get_class($entity);
+			
 			if (isset($classes[$entity_class])) {
 				$entity_type = $classes[$entity_class];
 			} else {
 				foreach($classes as $class => $type) {
-					if (is_subclass_of($entity,$class)) {
-						$entity_type = $class;
+					if ($entity instanceof $class) {
+						$entity_type = $type;
 						break;
 					}
 				}
@@ -275,6 +276,7 @@
 			if (!isset($entity_class)) return false;
 			
 			$subtype = $entity->getSubtype();
+			
 			if (empty($subtype)) { $subtype = $entity_type; }
 
 			if (elgg_view_exists("{$entity_type}/{$subtype}",$viewtype)) {
