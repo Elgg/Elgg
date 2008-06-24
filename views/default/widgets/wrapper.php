@@ -12,6 +12,9 @@
 	 */
 
 	static $widgettypes;
+	
+	$callback = get_input('callback');
+	
 	if (!isset($widgettypes)) $widgettypes = get_widget_types();
 	
 	if ($vars['entity'] instanceof ElggObject && $vars['entity']->getSubtype() == 'widget') {
@@ -21,6 +24,8 @@
 		$handler = "error";
 		$title = elgg_echo("error"); 
 	}
+	
+	if ($callback != "true") {
 	
 ?>
 
@@ -51,7 +56,25 @@
 	
 	?>
 	<div class="collapsable_box_content">
-		<?php echo elgg_view("widgets/{$handler}/view",$vars); ?>
+		<?php 
+		
+	} // end if callback != "true"
+
+		echo "<div id=\"widgetcontent{$vars['entity']->getGUID()}\">";
+	
+		echo elgg_view("widgets/{$handler}/view",$vars); 
+		
+		echo "</div>";
+		
+	if ($callback != "true") {
+		
+		?>
 	</div><!-- /.collapsable_box_content -->
 	</div><!-- /.collapsable_box -->
 	</div>
+	
+<?php
+
+	}
+
+?>

@@ -47,10 +47,13 @@ $(document).ready(function() {
 	
 		$("#submit<?php echo $guid; ?>").attr("disabled","disabled");
 		$("#submit<?php echo $guid; ?>").attr("value","<?php echo elgg_echo("saving"); ?>");
+		$("#widgetcontent<?php echo $guid; ?>").html('<?php echo elgg_view('ajax/loader',array('slashes' => true)); ?>');
 	
 		var variables = $("#widgetform<?php echo $guid; ?>").serialize();
 		$.post($("#widgetform<?php echo $guid; ?>").attr("action"),variables,function() {
-			$("#widget<?php echo $guid; ?>").load("<?php echo $vars['url']; ?>pg/view/<?php echo $guid; ?>?shell=no&username=<?php echo page_owner_entity()->username; ?>&context=<?php echo get_context(); ?>");
+			$("#submit<?php echo $guid; ?>").attr("disabled","");
+			$("#submit<?php echo $guid; ?>").attr("value","<?php echo elgg_echo("save"); ?>");
+			$("#widgetcontent<?php echo $guid; ?>").load("<?php echo $vars['url']; ?>pg/view/<?php echo $guid; ?>?shell=no&username=<?php echo page_owner_entity()->username; ?>&context=<?php echo get_context(); ?>&callback=true");
 		});
 		return false;
 	
