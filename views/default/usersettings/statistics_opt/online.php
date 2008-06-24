@@ -1,0 +1,30 @@
+<?php
+	/**
+	 * Elgg statistics screen showing online users.
+	 * 
+	 * @package Elgg
+	 * @subpackage Core
+	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+	 * @author Marcus Povey
+	 * @copyright Curverider Ltd 2008
+	 * @link http://elgg.org/
+	 */
+
+	$user = $_SESSION['user'];
+	
+	$logged_in = 0;
+	$log = get_system_log($_SESSION['user']->guid, "login", "ElggUser", 1);
+	if ($log)
+		$logged_in=$log[0]->time_created;
+	
+?>
+<div>
+	<h2><?php echo elgg_echo('usersettings:statistics:yourdetails'); ?></h2>
+	
+	<table>
+		<tr><td><?php echo elgg_echo('usersettings:statistics:label:name'); ?></td><td><?php echo $user->name; ?></td></tr>
+		<tr><td><?php echo elgg_echo('usersettings:statistics:label:email'); ?></td><td><?php echo $user->email; ?></td></tr>
+		<tr><td><?php echo elgg_echo('usersettings:statistics:label:membersince'); ?></td><td><?php echo date("r",$user->time_created); ?></td></tr>
+		<tr><td><?php echo elgg_echo('usersettings:statistics:label:lastlogin'); ?></td><td><?php echo date("r",$logged_in); ?></td></tr>
+	</table>
+</div>

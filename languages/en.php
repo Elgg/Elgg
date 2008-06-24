@@ -302,6 +302,13 @@
 	
 			'usersettings:plugins:description' => "This panel allows you to control and configure the personal settings for the tools installed by your system administrator.",
 			'usersettings:statistics:label:numentities' => "Your entities",
+	
+			'usersettings:statistics:yourdetails' => "Your details",
+			'usersettings:statistics:label:name' => "Full name",
+			'usersettings:statistics:label:email' => "Email",
+			'usersettings:statistics:label:membersince' => "Member since",
+			'usersettings:statistics:label:lastlogin' => "Last logged in",
+	
 			
 	
 		/**

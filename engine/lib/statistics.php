@@ -95,7 +95,8 @@
 		
 		
 		
-		extend_elgg_admin_page('usersettings/statistics_opt/numentities', 'usersettings/statistics'); 
+		extend_elgg_settings_page('usersettings/statistics_opt/online', 'usersettings/statistics');
+		extend_elgg_settings_page('usersettings/statistics_opt/numentities', 'usersettings/statistics');  
 	}
 	
 	/// Register init function
