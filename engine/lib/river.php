@@ -83,11 +83,24 @@
 							} else {
 								$by_user_obj = get_entity($log->performed_by_guid);
 							}
-							$tam = elgg_view("river/$class/$event", array(
-								'performed_by' => $by_user_obj,
-								'log_entry' => $log,
-								'object' => $object
-							));
+							if ($object instanceof ElggEntity) {
+								$subtype = $object->subtype;
+							} else {
+								$subtype = "";
+							}
+							if (!empty($subtype) && elgg_view_exists("river/{$subtype}/event")) {
+								$tam = elgg_view("river/{$subtype}/$event", array(
+									'performed_by' => $by_user_obj,
+									'log_entry' => $log,
+									'object' => $object
+								));
+							} else {
+								$tam = elgg_view("river/$class/$event", array(
+									'performed_by' => $by_user_obj,
+									'log_entry' => $log,
+									'object' => $object
+								));
+							}
 							
 							if (!empty($tam)) {
 								$tam = elgg_view("river/wrapper",array(
