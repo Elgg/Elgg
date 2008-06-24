@@ -18,5 +18,5 @@
 		
 
 	// Display main admin menu
-		page_draw(elgg_echo("usersettings:plugins"),elgg_view_layout("one_column",elgg_view("usersettings/plugins")));
+		page_draw(elgg_echo("usersettings:plugins"),elgg_view_layout("one_column",elgg_view("usersettings/plugins", array('installed_plugins' => get_installed_plugins()))));
 ?>

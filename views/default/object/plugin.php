@@ -16,7 +16,7 @@
 
 ?>
 <div>
-	<form action="<?php echo $vars['url']; ?>action/plugins/settings/save" method="post">
+	<form action="<?php echo $vars['url']; ?>action/plugins/<?php echo $prefix; ?>settings/save" method="post">
 	
 		<?php 
 			echo elgg_view("{$prefix}settings/{$plugin}/edit",$vars);

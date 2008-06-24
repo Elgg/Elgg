@@ -177,6 +177,7 @@
 		 *
 		 * @param string $plugin_name Plugin name.
 		 * @param int $user_guid The guid who's settings to retrieve.
+		 * @return array of settings in an associative array minus prefix.
 		 */
 		function find_plugin_usersettings($plugin_name = "", $user_guid = 0)
 		{
@@ -188,22 +189,24 @@
 				
 			if ($user_guid == 0) $user_guid = $_SESSION['user']->guid;
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+			// Get metadata for user
+			$all_metadata = get_metadata_for_entity($user_guid);
+			if ($all_metadata)
+			{
+				$prefix = "plugin:settings:$plugin_name:";
+				$return = new stdClass;
+				
+				foreach ($all_metadata as $meta)
+				{
+					$name = substr($meta->name, strlen($prefix));
+					$value = $meta->value;
+					
+					if (strpos($meta->name, $prefix) === 0)
+						$return->$name = $value;
+				}
+
+				return $return;			
+			}
 			
 			return false;
 		}
@@ -213,11 +216,31 @@
 		 *
 		 * @param string $name The name - note, can't be "title".
 		 * @param mixed $value The value.
+		 * @param int $user_guid Optional user.
 		 * @param string $plugin_name Optional plugin name, if not specified then it is detected from where you are calling from.
 		 */
-		function set_plugin_usersetting($name, $value, $plugin_name = "")
+		function set_plugin_usersetting($name, $value, $user_guid = 0, $plugin_name = "")
 		{
+			$plugin_name = sanitise_string($plugin_name);
+			$user_guid = (int)$user_guid;
+			$name = sanitise_string($name);
 			
+			if (!$plugin_name)
+				$plugin_name = get_plugin_name();
+				
+			if ($user_guid == 0) $user_guid = $_SESSION['user']->guid;
+			
+			$user = get_entity($user_guid);
+			if (($user) && ($user instanceof ElggUser))
+			{
+				$prefix = "plugin:settings:$plugin_name:$name";
+				$user->$prefix = $value;
+				$user->save();
+				
+				return true;
+			}
+			
+			return false;
 		}
 		
 		/**
@@ -226,20 +249,25 @@
 		 * @param string $name The name.
 		 * @param string $plugin_name Optional plugin name, if not specified then it is detected from where you are calling from.
 		 */
-		function get_plugin_usersetting($name, $plugin_name = "")
+		function get_plugin_usersetting($name, $user_guid = 0, $plugin_name = "")
 		{
+			$plugin_name = sanitise_string($plugin_name);
+			$user_guid = (int)$user_guid;
+			$name = sanitise_string($name);
 			
-		}
-		
-		/**
-		 * Clear a user specific plugin setting.
-		 *
-		 * @param string $name The name.
-		 * @param string $plugin_name Optional plugin name, if not specified then it is detected from where you are calling from.
-		 */
-		function clear_plugin_usersetting($name, $plugin_name = "")
-		{
+			if (!$plugin_name)
+				$plugin_name = get_plugin_name();
+				
+			if ($user_guid == 0) $user_guid = $_SESSION['user']->guid;
 			
+			$user = get_entity($user_guid);
+			if (($user) && ($user instanceof ElggUser))
+			{
+				$prefix = "plugin:settings:$plugin_name:$name";
+				return $user->$prefix;
+			}
+			
+			return false;
 		}
 			
 		/**
@@ -466,6 +494,7 @@
 			
 			// Register some actions
 			register_action("plugins/settings/save", false, "", true);
+			register_action("plugins/usersettings/save");
 			
 			register_action('admin/plugins/enable', false, "", true); // Enable
 			register_action('admin/plugins/disable', false, "", true); // Disable

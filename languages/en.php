@@ -206,6 +206,8 @@
 		 */
 			'plugins:settings:save:ok' => "Settings for the %s plugin were saved successfully.",
 			'plugins:settings:save:fail' => "There was a problem saving settings for the %s plugin.",
+			'plugins:usersettings:save:ok' => "User settings for the %s plugin were saved successfully.",
+			'plugins:usersettings:save:fail' => "There was a problem saving  user settings for the %s plugin.",
 			
 		/**
 		 * Search
