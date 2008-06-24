@@ -174,13 +174,7 @@
 
 		if (is_array($area2widgets) && sizeof($area2widgets) > 0)
 		foreach($area2widgets as $widget) {
-			// echo elgg_view_entity($widget);
-			
-?>
-
-	<script type="text/javascript" src="<?php echo $vars['url']; ?>pg/view/<?php echo $widget->getGUID(); ?>?view=js"></script>
-
-<?
+			echo elgg_view_entity($widget);
 		}
 	
 	?>
