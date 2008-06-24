@@ -735,7 +735,7 @@ input[type="submit"] {
 	color:#ffffff;
 	text-decoration:none;
 }
-p.user_menu_friends {
+p.user_menu_friends, p.user_menu_profile, p.user_menu_removefriend, p.user_menu_friends_of {
 	margin:0;
 }
 #profile_info_column_left {
