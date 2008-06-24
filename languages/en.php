@@ -210,6 +210,14 @@
 			'plugins:usersettings:save:fail' => "There was a problem saving  user settings for the %s plugin.",
 			
 		/**
+		 * Notifications
+		 */
+			'notifications:usersettings' => "Notification settings",
+			'notifications:methods' => "Please specify which methods you want to permit.",
+	
+			'notifications:usersettings:save:ok' => "Your notification settings were successfully saved.",
+			'notifications:usersettings:save:fail' => "There was a problem saving your notification settings.",
+		/**
 		 * Search
 		 */
 	
@@ -327,6 +335,9 @@
 			'ban' => "Ban",
 			'enable' => "Enable",
 			'disable' => "Disable",
+	
+			'yes' => "Yes",
+			'no' => "No",
 	
 		/**
 		 * Generic data words

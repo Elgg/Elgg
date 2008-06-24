@@ -85,6 +85,70 @@
 	}
 	
 	/**
+	 * Get the notification settings for a given user.
+	 *
+	 * @param int $user_guid The user id
+	 * @return stdClass 
+	 */
+	function get_user_notification_settings($user_guid = 0)
+	{
+		$user_guid = (int)$user_guid;
+		
+		if ($user_guid == 0) 
+			$user_guid = $_SESSION['user']->guid;
+		
+		$all_metadata = get_metadata_for_entity($user_guid);
+		if ($all_metadata)
+		{
+			$prefix = "notification:method:";
+			$return = new stdClass;
+			
+			foreach ($all_metadata as $meta)
+			{
+				$name = substr($meta->name, strlen($prefix));
+				$value = $meta->value;
+				
+				if (strpos($meta->name, $prefix) === 0)
+					$return->$name = $value;
+			}
+
+			return $return;			
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Set a user notification pref.
+	 *
+	 * @param int $user_guid The user id.
+	 * @param string $method The delivery method (eg. email)
+	 * @param bool $value On(true) or off(false).
+	 * @return bool
+	 */
+	function set_user_notification_setting($user_guid, $method, $value)
+	{
+		$user_guid = (int)$user_guid;
+		$method = sanitise_string($method);
+
+		if ($user_guid == 0) 
+			$user_guid = $_SESSION['user']->guid;
+			
+		$user = get_entity($user_guid);
+		
+		if (($user) && ($user instanceof ElggUser))
+		{			
+			$prefix = "notification:method:$method";
+			$user->$prefix = $value;
+			$user->save();
+		
+			return true;
+		}
+			
+		return false;
+	}
+	
+	/**
 	 * Notification exception.
 	 * @author Marcus Povey
 	 */
@@ -121,7 +185,13 @@
 	 */
 	function notification_init()
 	{
+		// Register a notification handler for the default email method
 		register_notification_handler("email", "email_notify_handler");
+		
+		// Add settings view to user settings & register action
+		extend_elgg_settings_page('notifications/settings/usersettings', 'usersettings/user');
+		register_action("notifications/settings/usersettings/save");
+		
 	}
 
 	// Register a startup event
