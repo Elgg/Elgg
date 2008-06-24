@@ -12,5 +12,11 @@
 	 */
 
 	header("Content-Type: text/xml");
-	echo $vars['body'];
+
+	
 ?>
+<odd>
+<?php 
+echo $vars['body'];
+?>
+</odd>

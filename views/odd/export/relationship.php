@@ -13,8 +13,10 @@
 
 	$r = $vars['relationship'];
 	
-	$odd = new ODDDocument();
-	$odd->addElement($r->export());
+	//$odd = new ODDDocument();
+	//$odd->addElement($r->export());
 	
-	echo $odd;
+	//echo $odd;
+	
+	echo $r->export();
 ?>

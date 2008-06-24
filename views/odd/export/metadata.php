@@ -14,8 +14,10 @@
 	$m = $vars['metadata'];
 	$uuid = $vars['uuid'];
 	
-	$odd = new ODDDocument();
-	$odd->addElement($m->export());
+	//$odd = new ODDDocument();
+	//$odd->addElement($m->export());
 	
-	echo $odd;
+	//echo $odd;
+	
+	echo $m->export();
 ?>

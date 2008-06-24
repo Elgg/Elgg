@@ -12,5 +12,8 @@
 	 */
 
 	$entity = $vars['entity'];
-	echo export($entity->guid);
+	$serialised = exportAsArray($vars['entity']->guid);
+	foreach ($serialised as $s)
+		echo $s;
+		
 ?>
