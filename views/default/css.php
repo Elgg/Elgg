@@ -789,6 +789,12 @@ p.user_menu_friends_of {
 .river_user_update {
 	background: url(<?php echo $vars['url']; ?>_graphics/dummy_river_icon.gif) no-repeat left top;
 }
+.river_annotate {
+	background: url(<?php echo $vars['url']; ?>_graphics/dummy_river_icon.gif) no-repeat left top;
+}
+.river_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/dummy_river_icon.gif) no-repeat left top;
+}
 
 
 /* ***************************************
