@@ -302,7 +302,9 @@
 		
 		$id = (int)$id;
 		
-		return row_to_elggrelationship(get_data_row("delete from {$CONFIG->dbprefix}entity_relationships where id=$id"));
+		$result = delete_data("delete from {$CONFIG->dbprefix}entity_relationships where id=$id");
+		
+		return $result;
 	}
 	
 	/**
@@ -323,7 +325,18 @@
 		$relationship = sanitise_string($relationship);
 		$guid_two = (int)$guid_two;
 			
-		return insert_data("INSERT into {$CONFIG->dbprefix}entity_relationships (guid_one, relationship, guid_two) values ($guid_one, '$relationship', $guid_two)");
+		$result = insert_data("INSERT into {$CONFIG->dbprefix}entity_relationships (guid_one, relationship, guid_two) values ($guid_one, '$relationship', $guid_two)");
+		
+		if ($result!==false) {
+			$obj = get_relationship($result);
+			if (trigger_elgg_event('create', $relationship, $obj)) {
+				return true;
+			} else {
+				delete_relationship($result);
+			}
+		}
+				
+		return false;
 	}
 	
 	/**
@@ -620,10 +633,40 @@
 		
 		return $returnvalue;
 	}
+
+    /**
+     * An event listener which will notify users based on certain events.
+     *
+     * @param unknown_type $event
+     * @param unknown_type $object_type
+     * @param unknown_type $object
+     */
+	function relationship_notification_hook($event, $object_type, $object)
+	{
+		global $CONFIG;
+		
+		if (
+			($object instanceof ElggRelationship) &&
+			($event == 'create') &&
+			($object_type == 'friend')
+		)
+		{
+			$user_one = get_entity($object->guid_one);
+			$user_two = get_entity($object->guid_two);
+			
+			// Notify target user
+			return notify_user($object->guid_two, $object->guid_one, sprintf(elgg_echo('friend:newfriend:subject'), $user_two->name), 
+				sprintf(elgg_echo("friend:newfriend:body"), $user_one->name, $CONFIG->site->url . "pg/profile/" . $user_one->username)
+			); 
+		}
+	}
 	
 	/** Register the import hook */
 	register_plugin_hook("import", "all", "import_relationship_plugin_hook", 3);
 	
 	/** Register the hook, ensuring entities are serialised first */
 	register_plugin_hook("export", "all", "export_relationship_plugin_hook", 3);
+	
+	/** Register event to listen to some events **/
+	register_elgg_event_handler('create','friend','relationship_notification_hook');
 ?>

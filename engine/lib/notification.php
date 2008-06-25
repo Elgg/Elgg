@@ -67,7 +67,7 @@
 	 */
 	function notify_user($to, $from, $subject, $message, array $params = NULL, $methods_override = "")
 	{
-		global $NOTIFICATION_HANDLERS;
+		global $NOTIFICATION_HANDLERS, $CONFIG;
 	
 		// Sanitise
 		if (!is_array($to))
@@ -108,15 +108,19 @@
 			
 				if ((!$NOTIFICATION_HANDLERS[$method]) || (!$handler))
 					throw new NotificationException(sprintf(elgg_echo('NotificationException:NoHandlerFound'), $method));
+
+				if ($CONFIG->debug)
+					error_log("Sending message to $guid using $method");
 					
 				// Trigger handler and retrieve result.
 				$result[$guid][$method] = $handler(
 					$from ? get_entity($from) : NULL, 	// From entity
 					get_entity($guid), 					// To entity
 					$subject,							// The subject
-					sanitise_string($message), 			// Message
+					$message, 			// Message
 					$params								// Params
 				);
+				
 			}
 			
 		}

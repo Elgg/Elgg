@@ -439,6 +439,15 @@ Alternatively, you can enter your database settings below and we will try and do
 			'welcome' => "Welcome %s",
 			'welcome_message' => "Welcome to this Elgg installation.",
 	
+		/**
+		 * Emails
+		 */
+			'friend:newfriend:subject' => "%s has made you a friend!",
+			'friend:newfriend:body' => "%s has made you a friend!
+
+Check them out: %s
+
+You cannot reply to this email.",
 	
 		/**
 		 * XML-RPC
