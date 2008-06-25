@@ -544,6 +544,21 @@
 		return false;
 	}
 	
+	/**
+	 * Retrieve a site and return the domain portion of its url.
+	 *
+	 * @param int $guid
+	 */
+	function get_site_domain($guid)
+	{
+		$guid = (int)$guid;
+		
+		$site = get_entity($site);
+		if ($site instanceof ElggSite)
+			return parse_url($site->url, 'host');
+		
+		return false;
+	}
 	
 	/**
 	 * Initialise site handling

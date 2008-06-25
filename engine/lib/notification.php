@@ -28,15 +28,23 @@
 	 * This function registers a handler for a given notification type (eg "email")
 	 *
 	 * @param string $method The method
-	 * @param string $handler The handler function, in the format "handler($to_guid, $message, array $params = NULL)"
+	 * @param string $handler The handler function, in the format "handler(ElggEntity $from, ElggUser $to, $subject, $message, array $params = NULL)". This function should return false on failure, and true/a tracking message ID on success.
+	 * @param array $params A associated array of other parameters for this handler defining some properties eg. supported message length or rich text support.
 	 */
-	function register_notification_handler($method, $handler)
+	function register_notification_handler($method, $handler, $params = NULL)
 	{
 		global $NOTIFICATION_HANDLERS;
 		
 		if (is_callable($handler)) 
 		{
-			$NOTIFICATION_HANDLERS[$method] = $handler;
+			$NOTIFICATION_HANDLERS[$method] = new stdClass;
+
+			$NOTIFICATION_HANDLERS[$method]->handler = $handler;
+			if ($params)
+			{
+				foreach ($params as $k => $v)
+					$NOTIFICATION_HANDLERS[$method]->$k = $v;
+			}
 			
 			return true;
 		}
@@ -45,43 +53,75 @@
 	}
 	
 	/**
-	 * Send a notification message using a pre-registered method.
+	 * Notify a user via their preferences.
 	 *
-	 * @param mixed $method The method used as a string, or an array if multiple methods should be used. 
-	 * @param mixed $to Either a guid or an array of guid's to notify
-	 * @param string $message A message
-	 * @param array $params Optional method specific parameters as an associative array, for example "subject", "from"
-	 * @return boolean
+	 * @param mixed $to Either a guid or an array of guid's to notify.
+	 * @param int $from GUID of the sender, which may be a user, site or object.
+	 * @param string $subject Message subject.
+	 * @param string $message Message body.
+	 * @param array $params Misc additional parameters specific to various methods.
+	 * @param mixed $methods_override A string, or an array of strings specifying the delivery methods to use - or leave blank
+	 * 				for delivery using the user's chosen delivery methods.
+	 * @return array Compound array of each delivery user/delivery method's success or failure.
 	 * @throws NotificationException
 	 */
-	function notify($method, $to, $message, array $params = NULL)
+	function notify_user($to, $from, $subject, $message, array $params = NULL, $methods_override = "")
 	{
 		global $NOTIFICATION_HANDLERS;
-		
+	
 		// Sanitise
 		if (!is_array($to))
-			$to = (int)$to;
+			$to = array((int)$to);
+		$from = (int)$from;
+		$subject = sanitise_string($subject);
 			
-		if (!$method)
-			throw new NotificationException(elgg_echo('NotificationException:NoNotificationMethod'));
+		// Get notification methods
+		if (($methods_override) && (!is_array($methods_override)))
+			$methods_override = array($methods_override);
 			
-		if (!is_array($method))
-			$method = array($method);
-			
-		if ((!array_key_exists($method, $NOTIFICATION_HANDLERS)) || (!is_callable($NOTIFICATION_HANDLERS[$method])))
-			throw new NotificationExceptions(sprintf(elgg_echo('NotificationException:NoHandlerFound'), $method));
-			
-		if (!is_array($to))
-			$to = array($to);
-			
+		$result = array();
+		
 		foreach ($to as $guid)
-		{	
-			foreach ($method as $m)
-				if (!$NOTIFICATION_HANDLERS[$m]((int)$guid, sanitise_string($m), $params))
-					throw new NotificationException(sprintf(elgg_echo('NotificationException:ErrorNotifyingGuid'), $guid));
-		}
+		{
+			// Results for a user are...
+			$result[$guid] = array();
 			
-		return true;
+			// Are we overriding delivery?
+			$methods = $methods_override;
+			if (!$methods)
+			{
+				$tmp = (array)get_user_notification_settings($guid);
+				$methods = array(); 
+				foreach($tmp as $k => $v)
+					if ($v) $methods[] = $k; // Add method if method is turned on for user!
+			}
+			
+			if ((!$methods) || (count($methods)==0))
+				throw new NotificationException(elgg_echo('NotificationException:NoNotificationMethod'));
+			
+			// Deliver
+			foreach ($methods as $method)
+			{
+				// Extract method details from list
+				$details = $NOTIFICATION_HANDLERS[$method];
+				$handler = $details->handler;
+			
+				if ((!$NOTIFICATION_HANDLERS[$method]) || (!$handler))
+					throw new NotificationException(sprintf(elgg_echo('NotificationException:NoHandlerFound'), $method));
+					
+				// Trigger handler and retrieve result.
+				$result[$guid][$method] = $handler(
+					$from ? get_entity($from) : NULL, 	// From entity
+					get_entity($guid), 					// To entity
+					$subject,							// The subject
+					sanitise_string($message), 			// Message
+					$params								// Params
+				);
+			}
+			
+		}
+		
+		return $result;
 	}
 	
 	/**
@@ -154,25 +194,38 @@
 	 */
 	class NotificationException extends Exception {}
 
-
+	
 	/**
 	 * Send a notification via email.
-	 * 
-	 * Parameters accept "from" and "subject" as values.
+	 *
+	 * @param ElggEntity $from The from user/site/object
+	 * @param ElggUser $to To which user?
+	 * @param string $subject The subject of the message.
+	 * @param string $message The message body
+	 * @param array $params Optional parameters (none taken in this instance)
+	 * @return bool
 	 */
-	function email_notify_handler($to_guid, $message, array $params = NULL)
+	function email_notify_handler(ElggEntity $from, ElggUser $to, $subject, $message, array $params = NULL)
 	{
-		$to_guid = (int)$to_guid;
+		global $CONFIG;
 		
-		$entity = get_entity($to_guid);
+		if (!$from)
+			throw new NotificationException(sprintf(elgg_echo('NotificationException:MissingParameter'), 'from'));
+			 
+		if (!$to)
+			throw new NotificationException(sprintf(elgg_echo('NotificationException:MissingParameter'), 'to'));
 		
-		if ((!($entity instanceof ElggUser)) || ($entity->email==""))
-			throw new NotificationException(sprintf(elgg_echo('NotificationException:NoEmailAddress'), $to_guid));
-		
-		
-		$to = $entity->email;
-		$subject = $params['subject'];
-		$from = $params['from'];
+		if ($to->email=="")
+			throw new NotificationException(sprintf(elgg_echo('NotificationException:NoEmailAddress'), $to->guid));			
+			
+		$to = $to->email;
+		if ($from->email)
+			$from = $from->email; // Handle users
+		else if ($from->url)
+			$from = 'noreply@' . parse_url($from->url, 'host'); // Handle anything with a url 
+		else {
+			$from = 'noreply@' . get_site_domain($CONFIG->site_guid); // Handle a fallback
+		}
 		
 		$headers = "From: $from\r\n";
 				
@@ -191,7 +244,6 @@
 		// Add settings view to user settings & register action
 		extend_elgg_settings_page('notifications/settings/usersettings', 'usersettings/user');
 		register_action("notifications/settings/usersettings/save");
-		
 	}
 
 	// Register a startup event

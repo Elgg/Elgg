@@ -82,6 +82,7 @@
 			'NotificationException:NoHandlerFound' => "No handler found for '%s' or it was not callable.",
 			'NotificationException:ErrorNotifyingGuid' => "There was an error while notifying %d",
 			'NotificationException:NoEmailAddress' => "Could not get the email address for GUID:%d",
+			'NotificationException:MissingParameter' => "Missing a required parameter, '%s'",
 			
 			'DatabaseException:WhereSetNonQuery' => "Where set contains non WhereQueryComponent",
 			'DatabaseException:SelectFieldsMissing' => "Fields missing on a select style query",
