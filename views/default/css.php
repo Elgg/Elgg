@@ -86,10 +86,10 @@ a {
 	outline: none;
 }
 a:visited {
-	color: #336699;
+	color: #0054a7;
 }
 a:hover {
-	color: #003366;
+	color: #0054a7;
 	text-decoration: underline;
 }
 p {
@@ -234,14 +234,13 @@ h6 { font-size: 0.8em; }
 }
 #wrapper_spotlight .collapsable_box_content  {
 	margin:0;
-	padding:0 0 10px 0;
-	background: #dfdfdf;
-	height:184px;
+	padding:20px 20px 10px 20px;
+	background: url(<?php echo $vars['url']; ?>_graphics/spotlight_back.gif) repeat-x left bottom;
+	min-height:60px;
 	border:none;
 }
 #layout_spotlight .collapsable_box_content p {
 	padding:0;
-	/* background: url(<?php echo $vars['url']; ?>_graphics/temp_spotlight.gif) repeat-x left top; */
 }
 #layout_footer {
 	background: url(<?php echo $vars['url']; ?>_graphics/footer_back.gif) repeat-x left top;
@@ -391,7 +390,7 @@ h6 { font-size: 0.8em; }
     list-style:none;
 }
 #topmenu li a {
-    color:#3399cc;
+    color:#4690d6;
     margin:0 10px 0 10px;
 }
 #topmenu li a:hover {
@@ -535,13 +534,13 @@ a.toggle_customise_edit_panel:hover {
 }
 .elggtoolbar li a {
 	text-decoration: none;
-	color: #3399cc;
+	color: #4690d6;
 	line-height:0.5em;
 	padding-left:5px;
 }
 .elggtoolbar li a:hover {
 	text-decoration: underline;
-	color: #003366;
+	color: #0054a7;
 }
 .elggtoolbar h2.drawer-handle {
 	margin: 0;
@@ -653,12 +652,14 @@ input[type="submit"] {
     background: #ffffff;
     margin-left: 40px;
 }
+
 /* ***************************************
 	MAIN CONTENT ELEMENTS
 *************************************** */
 .elggtoolbar .elggtoolbar_header h1,
 .collapsable_box_header h1 {
-	color: #4690d6;
+	/*color: #4690d6;*/
+	color: #0054a7;
 	font-size:1.25em;
 	line-height: 1.2em;
 }
@@ -796,6 +797,20 @@ p.user_menu_friends_of {
 	font-size: 1.6em;
 	font-family:Arial,Helvetica,sans-serif;
 	width:94%;
+}
+
+/* ***************************************
+	SPOTLIGHT
+*************************************** */
+#wrapper_spotlight #spotlight_table h2 {
+	color:#4690d6;
+	font-size:1.25em;
+	line-height:1.2em;
+}
+#wrapper_spotlight #spotlight_table li {
+	list-style: square;
+	line-height: 1.2em;
+	margin:5px 20px 5px 0;
 }
 
 
