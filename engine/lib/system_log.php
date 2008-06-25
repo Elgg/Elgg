@@ -64,7 +64,13 @@
 	{
 		global $CONFIG;
 		
-		$by_user = (int)$by_user;
+		if (is_array($by_user) && sizeof($by_user) > 0) {
+			foreach($by_user as $key => $val) {
+				$by_user[$key] = (int) $val;
+			}
+		} else {
+			$by_user = (int)$by_user;
+		}
 		$event = sanitise_string($event);
 		$class = sanitise_string($class);
 		$limit = (int)$limit;
@@ -72,8 +78,11 @@
 		
 		$where = array();
 		
-		if ($by_user != "")
+		if (is_int($by_user) && $by_user > 0) {
 			$where[] = "performed_by_guid=$by_user";
+		} else if (is_array($by_user)) {
+			$where [] = "performed_by_guid in (". implode(",",$by_user) .")";
+		}
 		if ($event != "")
 			$where[] = "event='$event'";
 		if ($class!=="")

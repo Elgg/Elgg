@@ -36,9 +36,14 @@
 		// set start limit and offset
 		$cnt = $limit; // Didn' cast to int here deliberately
 		$off = $offset; // here too
-		$by_user = (int)$by_user;
-		if ($by_user)
-			$by_user_obj = get_entity($by_user);
+		
+		if (is_array($by_user) && sizeof($by_user) > 0) {
+			foreach($by_user as $key => $val) {
+				$by_user[$key] = (int) $val;
+			}
+		} else {
+			$by_user = (int)$by_user;
+		}
 		
 		$exit = false;
 		
@@ -130,6 +135,25 @@
 		
 		return $river;
 	}
+	
+	/**
+	 * Extract a list of river events from the current system log, from a given user's friends.
+	 *
+	 * @seeget_river_entries 
+	 * @param int $by_user The user whose friends we're checking for.
+	 * @param int $limit Maximum number of events to show
+	 * @param int $offset An offset
+	 * @return array of river entities rendered with the appropriate view.
+	 */
+	function get_river_entries_friends($by_user, $limit = 10, $offset = 0) {
+		if ($friends = get_user_friends($by_user)) {
+			$friendsarray = array();
+			foreach($friends as $friend) {
+				$friendsarray[] = $friend->getGUID();
+			}
+		}
+		return get_river_entries($friendsarray,"",$limit,$offset);
+	}
 
 	/**
 	 * Simplify drawing a river for a given user.
@@ -154,6 +178,6 @@
 	 */
 	function elgg_view_friend_river($guid, $limit = 10, $offset = 0, $view = 'river/dashboard')
 	{
-		return elgg_view($view, array('river' => get_river_entries($guid,"friend", $limit, $offset)));
+		return elgg_view($view, array('river' => get_river_entries_friends($guid, $limit, $offset)));
 	}
 ?>
