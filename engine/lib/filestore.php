@@ -74,14 +74,6 @@
 		abstract public function tell($f);
 		
 		/**
-		 * Get the contents of the whole file.
-		 *
-		 * @param mixed $f The file handle.
-		 * @return mixed The file contents.
-		 */
-		abstract public function grabFile($f);
-		
-		/**
 		 * Close a given file handle.
 		 *
 		 * @param mixed $f
@@ -122,6 +114,14 @@
 		 */
 		abstract public function setParameters(array $parameters);
 
+		/**
+		 * Get the contents of the whole file.
+		 *
+		 * @param mixed $f The file handle.
+		 * @return mixed The file contents.
+		 */
+		abstract public function grabFile(ElggFile $file);
+		
 	}
 	
 	/**
