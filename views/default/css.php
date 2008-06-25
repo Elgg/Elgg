@@ -792,10 +792,7 @@ p.user_menu_friends_of {
 /* ***************************************
 	MESSAGING
 *************************************** */
-.item_timestamp {
-	font-size:smaller;
-	color:#666666;
-}
+
 
 
 
