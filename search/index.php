@@ -18,9 +18,14 @@
 	// Get input
 		$tag = get_input('tag');
 		$subtype = get_input('subtype');
-		$objecttype = get_input('object');
+		if (!$objecttype = get_input('object')) {
+			$objecttype = "";
+		}
+		if (!$md_type = get_input('tagtype')) {
+			$md_type = "";			
+		}
 		
-		$body = list_entities_from_metadata("", $tag, "", $subtype);
+		$body = list_entities_from_metadata($md_type, $tag, $objecttype, $subtype);
 		$body = elgg_view_layout('one_column',$body);
 		
 		page_draw(sprintf(elgg_echo('searchtitle'),$tag),$body);
