@@ -11,6 +11,8 @@
 	 * @link http://elgg.org/
 	 */
 
+	require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
+
 	// Get variables
 		$username = get_input('username');
 		$password = get_input('password');

@@ -554,8 +554,10 @@
 		$guid = (int)$guid;
 		
 		$site = get_entity($site);
-		if ($site instanceof ElggSite)
-			return parse_url($site->url, 'host');
+		if ($site instanceof ElggSite) {
+			$breakdown = parse_url($site->url);
+			return $breakdown['host'];
+		}
 		
 		return false;
 	}

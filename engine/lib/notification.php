@@ -110,7 +110,7 @@
 					throw new NotificationException(sprintf(elgg_echo('NotificationException:NoHandlerFound'), $method));
 
 				if ($CONFIG->debug)
-					error_log("Sending message to $guid using $method");
+					error_log("Sending message to $guid using $method");					
 					
 				// Trigger handler and retrieve result.
 				$result[$guid][$method] = $handler(
@@ -226,7 +226,10 @@
 		if ($from->email)
 			$from = $from->email; // Handle users
 		else if ($from->url)
-			$from = 'noreply@' . parse_url($from->url, 'host'); // Handle anything with a url 
+		{
+			$breakdown = parse_url($from->url);
+			$from = 'noreply@' . $breakdown['host']; // Handle anything with a url
+		} 
 		else {
 			$from = 'noreply@' . get_site_domain($CONFIG->site_guid); // Handle a fallback
 		}

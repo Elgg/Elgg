@@ -11,9 +11,7 @@
 	 */
 
 	require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
-
-	// Ensure we are logged in
-	gatekeeper();
+	global $CONFIG;
 
 	// Get user id
 	$user_guid = (int)get_input('u');
@@ -24,9 +22,13 @@
 	
 	if ( ($code) && ($user) )
 	{
-		if (validate_email($user_guid, $code))	
+		if (validate_email($user_guid, $code)) {
 			system_message(elgg_echo('email:confirm:success'));
-		else
+		
+			$user = get_entity($user_guid);
+			notify_user($user_guid, $CONFIG->site->guid, elgg_echo('email:validate:success:subject'), sprintf(elgg_echo('email:validate:success:body'), $user->username), NULL, 'email');
+			
+		} else
 			system_message(elgg_echo('email:confirm:fail'));
 	}
 	else

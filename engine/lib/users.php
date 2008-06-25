@@ -784,10 +784,10 @@
 			$user->validated_email = false;
 			
 			// Work out validate link
-			$link = $CONFIG->site->url . "action/email/confirm/?u=$user_guid&c=" . generate_email_validation_code($user_guid, $user->email);
-			
+			$link = $CONFIG->site->url . "action/email/confirm?u=$user_guid&c=" . generate_email_validation_code($user_guid, $user->email);
+
 			// Send validation email
-			return notify_user($user->guid, $CONFIG->site_guid, elgg_echo('email:validate:subject'), sprintf(elgg_echo('email:validate:body'), $user->username, $link), NULL, 'email');
+			return notify_user($user->guid, $CONFIG->site->guid, elgg_echo('email:validate:subject'), sprintf(elgg_echo('email:validate:body'), $user->username, $link), NULL, 'email');
 			
 		}
 		
@@ -899,7 +899,7 @@
 		register_action("register",true);
    		register_action("friends/add");
    		register_action("friends/remove");
-		
+		register_action("email/confirm");
 	}
 	
 	//register actions *************************************************************

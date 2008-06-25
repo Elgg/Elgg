@@ -460,6 +460,10 @@ Please confirm your email address by clicking on the link below:
 
 %s
 ",
+			'email:validate:success:subject' => "Email validated!",
+			'email:validate:success:body' => "Hi %s,
+			
+Congratulations, you have successfully validated your email address.",
 	
 		/**
 		 * XML-RPC
