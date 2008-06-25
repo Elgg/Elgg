@@ -226,6 +226,16 @@
 			
 			// If ok then add it
 			$id = insert_data("INSERT into {$CONFIG->dbprefix}metadata (entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id) VALUES ($entity_guid, '$name','$value','$value_type', $owner_guid, $time, $access_id)");
+			
+			if ($id!==false) {
+				$obj = get_metadata($id);
+				if (trigger_elgg_event('create', $name, $obj)) {
+					return true;
+				} else {
+					delete_metadata($id);
+				}
+			}
+			
 		} else if ($existing) {
 // TODO: Check... are you sure you meant to do this Ben? :)			
 			$id = $existing->id;
@@ -282,7 +292,17 @@
 		if (!$name) return false;
 		
 		// If ok then add it
-		return update_data("UPDATE {$CONFIG->dbprefix}metadata set value_id='$value', value_type='$value_type', access_id=$access_id, owner_guid=$owner_guid where id=$id and name_id='$name'");
+		$result = update_data("UPDATE {$CONFIG->dbprefix}metadata set value_id='$value', value_type='$value_type', access_id=$access_id, owner_guid=$owner_guid where id=$id and name_id='$name'");
+		if ($result!==false) {
+			$obj = get_metadata($id);
+			if (trigger_elgg_event('update', $name, $obj)) {
+				return true;
+			} else {
+				delete_metadata($id);
+			}
+		}
+			
+		return $result;
 	}
 	
 	/**

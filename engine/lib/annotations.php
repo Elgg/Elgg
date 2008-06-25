@@ -176,7 +176,17 @@
 		system_log($entity, 'annotate');
 		
 		// If ok then add it
-		return insert_data("INSERT into {$CONFIG->dbprefix}annotations (entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id) VALUES ($entity_guid,'$name',$value,'$value_type', $owner_guid, $time, $access_id)");
+		$result = insert_data("INSERT into {$CONFIG->dbprefix}annotations (entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id) VALUES ($entity_guid,'$name',$value,'$value_type', $owner_guid, $time, $access_id)");
+		if ($result!==false) {
+			$obj = get_annotation($result);
+			if (trigger_elgg_event('create', $name, $obj)) {
+				return true;
+			} else {
+				delete_annotation($result);
+			}
+		}
+		
+		return $result;
 	}
 	
 	/**
@@ -213,7 +223,17 @@
 		if (!$name) return false;
 		
 		// If ok then add it		
-		return update_data("UPDATE {$CONFIG->dbprefix}annotations set value_id='$value', value_type='$value_type', access_id=$access_id, owner_guid=$owner_guid where id=$annotation_id and name_id='$name' and $access");
+		$result = update_data("UPDATE {$CONFIG->dbprefix}annotations set value_id='$value', value_type='$value_type', access_id=$access_id, owner_guid=$owner_guid where id=$annotation_id and name_id='$name' and $access");
+		if ($result!==false) {
+			$obj = get_annotation($annotation_id);
+			if (trigger_elgg_event('update', $name, $obj)) {
+				return true;
+			} else {
+				delete_annotation($annotation_id);
+			}
+		}
+		
+		return $result;
 	}
 	
 	/**
