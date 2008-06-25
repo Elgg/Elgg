@@ -211,12 +211,23 @@ function widget_moreinfo() {
 		
 		var widgetdescription = $("input[@name='description']", this.parentNode.parentNode.parentNode ).attr('value');
 
-		$("body").append("<p id='widget_moreinfo'><b>"+ widgetdescription +" </b><br />and there is room for a slightly <br />longer description spanning <br />several lines.</p>");
-
-		$("#widget_moreinfo")
-			.css("top",(e.pageY + 10) + "px")
-			.css("left",(e.pageX + 10) + "px")
-			.fadeIn("medium");		
+		$("body").append("<p id='widget_moreinfo'><b>"+ widgetdescription +" </b></p>");
+		
+		// alert('e.pageX = '+e.pageX);
+		
+		if (e.pageX < 900) {
+			$("#widget_moreinfo")
+				.css("top",(e.pageY + 10) + "px")
+				.css("left",(e.pageX + 10) + "px")
+				.fadeIn("medium");	
+		}	
+		else {
+			$("#widget_moreinfo")
+				.css("top",(e.pageY + 10) + "px")
+				.css("left",(e.pageX - 210) + "px")
+				.fadeIn("medium");		
+		}			
+				
     },
 	function() {
 		$("#widget_moreinfo").remove();

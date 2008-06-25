@@ -342,6 +342,7 @@ h6 { font-size: 0.8em; }
 	color:#333333;
 	padding:5px;
 	display:none;
+	width: 200px;
 }
 .droppable-active {
 		
