@@ -24,8 +24,12 @@
 		if (!$md_type = get_input('tagtype')) {
 			$md_type = "";			
 		}
+		$owner_guid = get_input('owner_guid',0);
+		if (substr_count($owner_guid,',')) {
+			$owner_guid = explode(",",$owner_guid);
+		}
 		
-		$body = list_entities_from_metadata($md_type, $tag, $objecttype, $subtype);
+		$body = list_entities_from_metadata($md_type, $tag, $objecttype, $subtype, $owner_guid);
 		$body = elgg_view_layout('one_column',$body);
 		
 		page_draw(sprintf(elgg_echo('searchtitle'),$tag),$body);

@@ -459,7 +459,13 @@
 		if ($order_by == "") $order_by = "e.time_created desc";
 		$order_by = sanitise_string($order_by);
 		$site_guid = (int) $site_guid;
-		$owner_guid = (int) $owner_guid;
+		if (is_array($owner_guid)) {
+			foreach($owner_guid as $key => $guid) {
+				$owner_guid[$key] = (int) $guid;
+			}
+		} else {
+			$owner_guid = (int) $owner_guid;
+		}
 		if ($site_guid == 0)
 			$site_guid = $CONFIG->site_guid;
 			
@@ -477,7 +483,9 @@
 			$where[] = "m.value_id='$meta_v'";
 		if ($site_guid > 0)
 			$where[] = "e.site_guid = {$site_guid}";
-		if ($owner_guid > 0)
+		if (is_array($owner_guid)) {
+			$where[] = "e.owner_guid in (".implode(",",$owner_guid).")";
+		} else if ($owner_guid > 0)
 			$where[] = "e.owner_guid = {$owner_guid}";
 		
 		if (!$count) {
