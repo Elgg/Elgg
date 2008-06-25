@@ -93,7 +93,12 @@
 		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
 		$entity_type = sanitise_string($entity_type);
 		
-		$owner_guid = (int) $owner_guid;
+		if (is_array($owner_guid)) {
+			foreach($owner_guid as $key => $val)
+				$owner_guid[$key] = (int) $val;
+		} else {
+			$owner_guid = (int) $owner_guid;
+		}
 		
 		if ($site_guid < 0) {
 			$site_guid = $CONFIG->site_id;
@@ -120,14 +125,16 @@
 		if ($entity_type != "") {
 			$query .= " and e.type = '{$entity_type}' ";
 		}
-		if ($owner_guid > 0) {
+		if (is_array($owner_guid)) {
+			$query .= " and e.owner_guid in (".implode(",",$owner_guid).")";
+		} else if (is_int($owner_guid)) {
 			$query .= " and e.owner_guid = {$owner_guid} ";
 		}
 		
 		$query .= " and (e.access_id in {$access} or (e.access_id = 0 and e.owner_guid = {$_SESSION['id']}))";
 		
 		$query .= " group by msvalue.string having total > {$threshold} order by total desc limit {$limit} ";
-		
+
 		return get_data($query);
 		
 	}
