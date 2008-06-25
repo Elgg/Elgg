@@ -11,10 +11,10 @@
 	 * @link http://elgg.com/
 	 */
 
-	if (isset($vars['object']) && $vars['object'] instanceof ElggEntity) {
+	if (isset($vars['entity']) && $vars['entity'] instanceof ElggEntity) {
 		
-		$subtype = $vars['object']->subtype;
-		if (empty($subtype)) $subtype = $vars['object']->type;
+		$subtype = $vars['entity']->subtype;
+		if (empty($subtype)) $subtype = $vars['entity']->type;
 		if (empty($subtype)) $subtype = "general";
 		
 	}

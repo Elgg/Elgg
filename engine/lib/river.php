@@ -93,13 +93,13 @@
 								$tam = elgg_view("river/{$subtype}/$event", array(
 									'performed_by' => $by_user_obj,
 									'log_entry' => $log,
-									'object' => $object
+									'entity' => $object
 								));
 							} else {
 								$tam = elgg_view("river/$class/$event", array(
 									'performed_by' => $by_user_obj,
 									'log_entry' => $log,
-									'object' => $object
+									'entity' => $object
 								));
 							}
 							
@@ -107,7 +107,7 @@
 								$tam = elgg_view("river/wrapper",array(
 											'entry' => $tam, 
 											'log' => $log,
-											'object' => $object));
+											'entity' => $object));
 							}
 							
 							if ($tam)
