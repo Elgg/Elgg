@@ -74,6 +74,14 @@
 		abstract public function tell($f);
 		
 		/**
+		 * Get the contents of the whole file.
+		 *
+		 * @param mixed $f The file handle.
+		 * @return mixed The file contents.
+		 */
+		abstract public function grabFile($f);
+		
+		/**
 		 * Close a given file handle.
 		 *
 		 * @param mixed $f
@@ -192,7 +200,12 @@
 		
 		public function delete(ElggFile $file)
 		{
-			return unlink($this->getFilenameOnFilestore($file));
+			$filename = $this->getFilenameOnFilestore($file);
+			if (file_exists($filename)) {
+				return unlink($filename);
+			} else {
+				return true;
+			}
 		}
 		
 		public function seek($f, $position)
@@ -224,6 +237,12 @@
 			if ((!$owner) || (!$owner->username)) throw InvalidParameterException(elgg_echo('InvalidParameterException:MissingOwner'));
 			
 			return $this->dir_root . $this->make_file_matrix($owner->username) . $file->getFilename();
+		}
+		
+		public function grabFile(ElggFile $file) {
+			
+			return file_get_contents($file->getFilenameOnFilestore());
+			
 		}
 		
 		/**
@@ -417,6 +436,18 @@
 			$fs = $this->getFilestore();
 			
 			return $fs->read($this->handle, $length, $offset);
+		}
+		
+		/**
+		 * Gets the full contents of this file.
+		 *
+		 * @return mixed The file contents.
+		 */
+		public function grabFile() {
+			
+			$fs = $this->getFilestore();
+			return $fs->grabFile($this);
+			
 		}
 		
 		/**
