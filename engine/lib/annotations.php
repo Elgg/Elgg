@@ -172,6 +172,9 @@
 		$name = add_metastring($name);
 		if (!$name) return false;
 		
+		$entity = get_entity($entity_guid);
+		system_log($entity, 'annotate');
+		
 		// If ok then add it
 		return insert_data("INSERT into {$CONFIG->dbprefix}annotations (entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id) VALUES ($entity_guid,'$name',$value,'$value_type', $owner_guid, $time, $access_id)");
 	}
