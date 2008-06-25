@@ -790,9 +790,13 @@ p.user_menu_friends_of {
 
 
 /* ***************************************
-	MESSAGING
+	STATUS
 *************************************** */
-
+.collapsable_box_editpanel .textarea-status {
+	font-size: 1.6em;
+	font-family:Arial,Helvetica,sans-serif;
+	width:94%;
+}
 
 
 
