@@ -93,6 +93,7 @@
 		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
 		$entity_type = sanitise_string($entity_type);
 		
+		if ($owner_guid != "")
 		if (is_array($owner_guid)) {
 			foreach($owner_guid as $key => $val)
 				$owner_guid[$key] = (int) $val;
