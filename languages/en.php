@@ -442,12 +442,24 @@ Alternatively, you can enter your database settings below and we will try and do
 		/**
 		 * Emails
 		 */
+			'email:confirm:success' => "You have confirmed your email address!",
+			'email:confirm:fail' => "Your email address could not be verified...",
+	
 			'friend:newfriend:subject' => "%s has made you a friend!",
 			'friend:newfriend:body' => "%s has made you a friend!
 
 Check them out: %s
 
 You cannot reply to this email.",
+	
+	
+			'email:validate:subject' => "Please confirm your email address!",
+			'email:validate:body' => "Hi %s,
+
+Please confirm your email address by clicking on the link below:
+
+%s
+",
 	
 		/**
 		 * XML-RPC

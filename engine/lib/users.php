@@ -751,6 +751,67 @@
 	}
 	
 	/**
+	 * Generate a validation code for a given user's email address.
+	 *
+	 * @param int $user_guid The user id
+	 * @param string $email_address The email address
+	 */
+	function generate_email_validation_code($user_guid, $email_address)
+	{
+		global $CONFIG;
+		
+		return md5($user_guid . $email_address . $CONFIG->site->url); // Note I bind to site URL, this is important on multisite!
+	}
+	
+	/**
+	 * Send out a validation request for a given user. 
+	 * This function assumes that a user has already been created and that the email address has been
+	 * saved in the email field in the database.
+	 *
+	 * @param int $user_guid The user.
+	 * @return bool
+	 */
+	function request_email_validation($user_guid)
+	{
+		global $CONFIG;
+		
+		$user_guid = (int)$user_guid;
+		
+		$user = get_entity($user_guid);
+		if (($user) && ($user instanceof ElggUser))
+		{
+			// Clear existing status
+			$user->validated_email = false;
+			
+			// Work out validate link
+			$link = $CONFIG->site->url . "action/email/confirm/?u=$user_guid&c=" . generate_email_validation_code($user_guid, $user->email);
+			
+			// Send validation email
+			return notify_user($user->guid, $CONFIG->site_guid, elgg_echo('email:validate:subject'), sprintf(elgg_echo('email:validate:body'), $user->username, $link), NULL, 'email');
+			
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Validate a user email address against the code provided, and if valid set the appropriate flag
+	 *
+	 * @param int $user_guid User GUID
+	 * @param string $code The code provided on validation.
+	 */
+	function validate_email($user_guid, $code)
+	{
+		$user = get_entity($user_guid);
+		
+		$valid = ($code == generate_email_validation_code($user_guid, $user->email));
+		if ($valid)
+			$user->validated_email = true;
+		
+		return $valid;
+	}
+	
+	/**
 	 * Registers a user, returning false if the username already exists
 	 *
 	 * @param string $username The username of the new user
@@ -795,9 +856,10 @@
 				datalist_set('admin_registered',1);
 			}
 			
-			return $user->getGUID();
+			// Send email validation request
+			request_email_validation($user->getGUID());
 			
-		
+			return $user->getGUID();
 	}
 	
 	/**
