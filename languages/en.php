@@ -252,6 +252,11 @@
 			'user:password:fail:notsame' => "The two passwords are not the same!",
 			'user:password:fail:tooshort' => "Password is too short!",
 	
+			'user:set:language' => "Language settings",
+			'user:language:label' => "Your language",
+			'user:language:success' => "Your language settings have been updated.",
+			'user:language:fail' => "Your language settings could not be saved.",
+	
 		/**
 		 * Administration
 		 */

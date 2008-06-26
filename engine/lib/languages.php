@@ -57,7 +57,10 @@
 		function elgg_echo($message_key, $language = "") {
 			
 			global $CONFIG;
-			
+
+			if ((empty($language)) && ($_SESSION['user']->language))
+				$language = $_SESSION['user']->language;
+	
 			if ((empty($language)) && (isset($CONFIG->language)))
 				$language = $CONFIG->language;
 				

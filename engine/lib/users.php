@@ -926,6 +926,10 @@
 		// Add email settings
 		extend_elgg_settings_page('user/settings/email', 'usersettings/user', 1);
 		register_action("email/save");
+		
+		// Add language settings
+		extend_elgg_settings_page('user/settings/language', 'usersettings/user', 1);
+		register_action("user/language");
 	}
 	
 	//register actions *************************************************************
