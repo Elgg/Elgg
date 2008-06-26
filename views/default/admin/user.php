@@ -14,6 +14,8 @@
 	// Description of what's going on
 		echo "<p>" . nl2br(elgg_echo("admin:user:description")) . "</p>";
 	
+		echo elgg_view("admin/user_opt/adduser");
+		
 		echo elgg_view("admin/user_opt/search");
 		
 		if ($vars['list']) echo $vars['list'];

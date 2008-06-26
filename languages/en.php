@@ -146,6 +146,7 @@
 			'username' => "Username",
 			'password' => "Password",
 			'passwordagain' => "Password (again for verification)",
+			'admin_option' => "Make this user an admin?",
 	
 		/**
 		 * Access

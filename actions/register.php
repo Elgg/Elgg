@@ -20,14 +20,23 @@
 		$email = get_input('email');
 		$name = get_input('name');
 		
+		$admin = get_input('admin');
+		
 	// For now, just try and register the user
 		if (
 			(
 				(trim($password)!="") &&
 				(strcmp($password, $password2)==0) 
 			) &&
-			(register_user($username, $password, $name, $email))
+			($guid = register_user($username, $password, $name, $email))
 		) {
+			if (($guid) && ($admin))
+			{
+				admin_gatekeeper(); // Only admins can make someone an admin
+				$new_user = get_entity($guid);
+				$new_user->admin = 'yes';
+			}
+			
 			system_message(sprintf(elgg_echo("registerok"),$CONFIG->sitename));
 		} else {
 			system_message(elgg_echo("registerbad"));

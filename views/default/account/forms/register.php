@@ -11,6 +11,9 @@
 	 * @link http://elgg.org/
 	 */
 	 
+	$admin_option = false;
+	if (($_SESSION['user']->admin) && ($vars['show_admin'])) 
+		$admin_option = true;
 ?>
 
 	<h2><?php echo elgg_echo('register'); ?></h2>
@@ -21,6 +24,13 @@
 			<label><?php echo elgg_echo('username'); ?><br /><input name="username" type="text" class="general-textarea" /></label><br />
 			<label><?php echo elgg_echo('password'); ?><br /><input name="password" type="password" class="general-textarea" /></label><br />
 			<label><?php echo elgg_echo('passwordagain'); ?><br /><input name="password2" type="password" class="general-textarea" /></label><br />
+			<?php
+				if ($admin_option) {
+?>		
+			<label><?php echo elgg_echo('admin_option'); ?><br /><input type="checkbox" name="admin" /></label>			
+<?php 			
+				}
+			 ?>
 			<input type="submit" name="submit" class="submit_button" value="<?php echo elgg_echo('register'); ?>" /></p>
 			<input type="hidden" name="action" value="register" />
 	    </form>
