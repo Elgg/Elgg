@@ -13,7 +13,6 @@
 	// Work out number of users
 	$users_stats = get_number_users();
 	
-	$users_online = get_number_online();
 	
 	global $CONFIG;
 	
