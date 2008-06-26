@@ -12,6 +12,10 @@
 	 * @uses $vars['entity'] The user entity
 	 */
 
-		echo elgg_view("profile/userdetails",$vars);
+		if ($vars['full']) {
+			echo elgg_view("profile/userdetails",$vars);
+		} else {
+			echo elgg_view("profile/listing",$vars);
+		}
 	
 ?>
