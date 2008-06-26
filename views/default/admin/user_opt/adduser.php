@@ -13,4 +13,4 @@
 ?>
 
 
-<?php echo elgg_view('account/forms/register'); ?>
+<?php echo elgg_view('account/forms/register', array('show_admin'=>true)); ?>
