@@ -18,14 +18,26 @@
 	 * 
 	 */
 
-    foreach($vars['options'] as $option) {
+    foreach($vars['options'] as $label => $option) {
         //if (!in_array($option,$vars['value'])) {
-    	if ($option != $vars['value']) {
-            $selected = "";
+        if (is_array($vars['value'])) {
+        	if (!in_array($option,$vars['value'])) {
+	            $selected = "";
+	        } else {
+	            $selected = "checked = \"checked\"";
+	        }
         } else {
-            $selected = "checked = \"checked\"";
+	    	if ($option != $vars['value']) {
+	            $selected = "";
+	        } else {
+	            $selected = "checked = \"checked\"";
+	        }
         }
-        echo "<label><input type=\"checkbox\" {$vars['js']} name=\"{$vars['internalname']}[]\" {$selected} value=\"".htmlentities($option)."\" {$selected} />{$option}</label><br />";
+        $labelint = (int) $label;
+        if ("{$label}" == "{$labelint}") {
+        	$label = $option;
+        }
+        echo "<label><input type=\"checkbox\" {$vars['js']} name=\"{$vars['internalname']}[]\" {$selected} value=\"".htmlentities($option)."\" {$selected} />{$label}</label><br />";
     }
 
 ?> 
