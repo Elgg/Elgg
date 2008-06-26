@@ -72,10 +72,10 @@
 		{
 			if (is_array($credentials) && ($credentials['username']) && ($credentials['password']))
 			{
-				$dbpassword = md5($credentials['password']);
+				//$dbpassword = md5($credentials['password']);
             
 	            if ($user = get_user_by_username($credentials['username'])) {
-	                 if ($user->password == $dbpassword) {
+	                 if ($user->password == generate_user_password($user, $credentials['password'])) {
 	                 	return true;
 	                 }
 	            }

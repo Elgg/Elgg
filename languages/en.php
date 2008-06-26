@@ -244,6 +244,14 @@
 			'user:name:success' => "Successfully changed your name on the system.",
 			'user:name:fail' => "Could not change your name on the system.",
 	
+			'user:set:password' => "Account password",
+			'user:password:label' => "Your new password",
+			'user:password2:label' => "Your new password again",
+			'user:password:success' => "Password changed",
+			'user:password:fail' => "Could not change your password on the system.",
+			'user:password:fail:notsame' => "The two passwords are not the same!",
+			'user:password:fail:tooshort' => "Password is too short!",
+	
 		/**
 		 * Administration
 		 */

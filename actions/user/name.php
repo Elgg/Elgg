@@ -24,7 +24,7 @@
 	else
 		$user = get_entity($user_id);
 		
-	if ($user)
+	if (($user) && ($name))
 	{
 		$user->name = $name;
 		if ($user->save())

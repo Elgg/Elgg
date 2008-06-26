@@ -813,6 +813,19 @@
 	}
 	
 	/**
+	 * Generate a password for a user, currently uses MD5.
+	 * 
+	 * Later may introduce salting etc.
+	 *
+	 * @param ElggUser $user The user this is being generated for.
+	 * @param string $password Password in clear text
+	 */
+	function generate_user_password(ElggUser $user, $password)
+	{
+		return md5($password);
+	}
+	
+	/**
 	 * Registers a user, returning false if the username already exists
 	 *
 	 * @param string $username The username of the new user
@@ -846,10 +859,10 @@
 		// Otherwise ...
 			$user = new ElggUser();
 			$user->username = $username;
-			$user->password = md5($password);
 			$user->email = $email;
 			$user->name = $name;
 			$user->access_id = 2;
+			$user->password = generate_user_password($user, $password);
 			$user->save();
 			
 			if (!$admin) {
@@ -905,6 +918,10 @@
 		// User name change
 		extend_elgg_settings_page('user/settings/name', 'usersettings/user', 1);
 		register_action("user/name");
+		
+		// User password change
+		extend_elgg_settings_page('user/settings/password', 'usersettings/user', 1);
+		register_action("user/password");
 		
 		// Add email settings
 		extend_elgg_settings_page('user/settings/email', 'usersettings/user', 1);
