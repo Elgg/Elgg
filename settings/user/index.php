@@ -18,5 +18,9 @@
 		
 
 	// Display main admin menu
-		page_draw(elgg_echo("usersettings:user"),elgg_view_layout("one_column",elgg_view("usersettings/user")));
+		page_draw(
+					elgg_echo("usersettings:user"),
+					elgg_view_layout("one_column",
+					elgg_view("usersettings/form"))
+				  );
 ?>

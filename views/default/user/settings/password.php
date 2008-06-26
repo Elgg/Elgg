@@ -15,19 +15,9 @@
 	if ($user) {
 ?>
 	<h2><?php echo elgg_echo('user:set:password'); ?></h2>
-	<form action="<?php echo $vars['url']; ?>action/user/password" method="post">
 	<p>
 		<?php echo elgg_echo('user:password:label'); ?> : <input type="password" name="password" value="" />
 		<?php echo elgg_echo('user:password2:label'); ?> : <input type="password" name="password2" value="" />
 	</p>
-	
-	<p>
-		<input type="submit" value="<?php
-
-			echo elgg_echo('save');			
-		
-		?>" />
-	</p>
-	</form>
 
 <?php } ?>

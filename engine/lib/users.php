@@ -915,21 +915,36 @@
    		register_action("friends/remove");
 		register_action("email/confirm");
 
+		register_action("usersettings/save");
+		
 		// User name change
 		extend_elgg_settings_page('user/settings/name', 'usersettings/user', 1);
-		register_action("user/name");
+		//register_action("user/name");
 		
 		// User password change
 		extend_elgg_settings_page('user/settings/password', 'usersettings/user', 1);
-		register_action("user/password");
+		//register_action("user/password");
 		
 		// Add email settings
 		extend_elgg_settings_page('user/settings/email', 'usersettings/user', 1);
-		register_action("email/save");
+		//register_action("email/save");
 		
 		// Add language settings
 		extend_elgg_settings_page('user/settings/language', 'usersettings/user', 1);
-		register_action("user/language");
+		//register_action("user/language");
+		
+		register_plugin_hook('usersettings:save','user','users_settings_save');
+		
+	}
+	
+	function users_settings_save() {
+		
+		global $CONFIG;
+		@include($CONFIG->path . "actions/user/name.php");
+		@include($CONFIG->path . "actions/user/password.php");
+		@include($CONFIG->path . "actions/email/save.php");
+		@include($CONFIG->path . "actions/user/language.php");
+		
 	}
 	
 	//register actions *************************************************************

@@ -35,6 +35,6 @@
 	else
 		system_message(elgg_echo('user:language:fail'));
 	
-	forward($_SERVER['HTTP_REFERER']);
-	exit;
+	//forward($_SERVER['HTTP_REFERER']);
+	//exit;
 ?>

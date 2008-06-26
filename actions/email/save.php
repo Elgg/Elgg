@@ -26,18 +26,20 @@
 		
 	if ($user)
 	{
-		$user->email = $email;
-		if ($user->save())
-		{
-			request_email_validation($user->getGUID());
-			system_message(elgg_echo('email:save:success'));
+		if ($user->email != $email) {
+			$user->email = $email;
+			if ($user->save())
+			{
+				request_email_validation($user->getGUID());
+				system_message(elgg_echo('email:save:success'));
+			}
+			else
+				system_message(elgg_echo('email:save:fail'));
 		}
-		else
-			system_message(elgg_echo('email:save:fail'));
 	}
 	else
 		system_message(elgg_echo('email:save:fail'));
 	
-	forward($_SERVER['HTTP_REFERER']);
-	exit;
+	//forward($_SERVER['HTTP_REFERER']);
+	//exit;
 ?>

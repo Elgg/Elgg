@@ -16,7 +16,6 @@
 	if ($user) {
 ?>
 	<h2><?php echo elgg_echo('user:set:language'); ?></h2>
-	<form action="<?php echo $vars['url']; ?>action/user/language" method="post">
 	<p>
 		<?php echo elgg_echo('user:language:label'); ?> : <input type="text" name="language" value="<?php
 			if ($user->language)
@@ -25,14 +24,5 @@
 				echo $CONFIG->language;
 		 ?>" />
 	</p>
-	
-	<p>
-		<input type="submit" value="<?php
-
-			echo elgg_echo('save');			
-		
-		?>" />
-	</p>
-	</form>
 
 <?php } ?>

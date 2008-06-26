@@ -43,9 +43,7 @@
 		else
 			system_message(elgg_echo('user:password:fail:tooshort'));
 	}
-	else
-		system_message(elgg_echo('user:password:fail'));
 	
-	forward($_SERVER['HTTP_REFERER']);
-	exit;
+	//forward($_SERVER['HTTP_REFERER']);
+	//exit;
 ?>

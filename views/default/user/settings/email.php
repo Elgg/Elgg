@@ -15,18 +15,8 @@
 	if ($user) {
 ?>
 	<h2><?php echo elgg_echo('email:settings'); ?></h2>
-	<form action="<?php echo $vars['url']; ?>action/email/save" method="post">
 	<p>
 		<?php echo elgg_echo('email:address:label'); ?> : <input type="text" name="email" value="<?php echo $user->email; ?>" />
 	</p>
-	
-	<p>
-		<input type="submit" value="<?php
-
-			echo elgg_echo('save');			
-		
-		?>" />
-	</p>
-	</form>
 
 <?php } ?>

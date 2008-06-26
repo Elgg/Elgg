@@ -22,9 +22,9 @@
 		if (!$result)
 		{
 			system_message(elgg_echo('notifications:usersettings:save:fail'));
-			forward($_SERVER['HTTP_REFERER']);
+			//forward($_SERVER['HTTP_REFERER']);
 			
-			exit;
+			//exit;
 		}
 	}
 	
@@ -33,5 +33,5 @@
 	else
 		system_message(elgg_echo('notifications:usersettings:save:fail'));
 	
-	forward($_SERVER['HTTP_REFERER']);
+	//forward($_SERVER['HTTP_REFERER']);
 ?>

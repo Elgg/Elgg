@@ -15,18 +15,8 @@
 	if ($user) {
 ?>
 	<h2><?php echo elgg_echo('user:set:name'); ?></h2>
-	<form action="<?php echo $vars['url']; ?>action/user/name" method="post">
 	<p>
 		<?php echo elgg_echo('user:name:label'); ?> : <input type="text" name="name" value="<?php echo $user->name; ?>" />
 	</p>
-	
-	<p>
-		<input type="submit" value="<?php
-
-			echo elgg_echo('save');			
-		
-		?>" />
-	</p>
-	</form>
 
 <?php } ?>

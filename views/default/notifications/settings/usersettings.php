@@ -13,7 +13,6 @@
 	global $NOTIFICATION_HANDLERS;
 	$notification_settings = get_user_notification_settings();
 ?>
-<form action="<?php echo $vars['url']; ?>action/notifications/settings/usersettings/save" method="post">
 	<h2><?php echo elgg_echo('notifications:usersettings'); ?></h2>
 	
 	<p><?php echo elgg_echo('notifications:methods'); ?>
@@ -36,11 +35,3 @@
 		}
 ?>
 	</table>
-	<p>
-		<input type="submit" value="<?php
-
-			echo elgg_echo('save');			
-		
-		?>" />
-	</p>
-</form>
