@@ -27,7 +27,7 @@
 		
 <?php
 
-		foreach(array('sitename','wwwroot','path','dataroot', 'language', 'view') as $field) {
+		foreach(array('sitename','wwwroot','path','dataroot', 'view') as $field) {
 
 ?>
 		<p>
@@ -42,6 +42,15 @@
 		}
 
 ?>
+		<p>
+			<?php echo elgg_echo('language'); ?>
+			<?php
+				$languages = get_installed_translations();
+				
+				echo elgg_view("input/pulldown", array('internalname' => 'language', 'value' => $vars['config']->language, 'options_values' => $languages));
+			?>
+		</p>
+
 		<p>
 			<?php echo elgg_echo('debug'); ?><br />
 			<?php 

@@ -361,8 +361,8 @@
 	
 			'resetpassword' => "Reset password",
 	
-			'yes' => "Yes",
-			'no' => "No",
+			'option:yes' => "Yes",
+			'option:no' => "No",
 	
 		/**
 		 * Generic data words
@@ -451,7 +451,7 @@ Alternatively, you can enter your database settings below and we will try and do
 			'wwwroot' => "The site URL, followed by a trailing slash:",
 			'path' => "The full path to your site root on your disk, followed by a trailing slash:",
 			'dataroot' => "The full path to the directory where uploaded files will be stored, followed by a trailing slash:",
-			'language' => "The default language code for your site, e.g. 'en' for English, 'fr' for French, 'ru' for Russian:",
+			'language' => "The default language for your site:",
 			'debug' => "Debug mode provides extra information which can be used to diagnose faults, however it can slow your system down so should only be used if you are having problems:",
 			'debug:label' => "Turn on debug mode",
 			'view' => "Enter the view which will be used as the default for your site (e.g. 'mobile') or leave this blank for the default view:",

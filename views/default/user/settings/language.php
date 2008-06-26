@@ -17,12 +17,17 @@
 ?>
 	<h2><?php echo elgg_echo('user:set:language'); ?></h2>
 	<p>
-		<?php echo elgg_echo('user:language:label'); ?> : <input type="text" name="language" value="<?php
+	
+		<?php echo elgg_echo('user:language:label'); ?> : <?php
+
+			$value = $CONFIG->language;
 			if ($user->language)
-				echo $user->language;
-			else
-				echo $CONFIG->language;
-		 ?>" />
+				$value = $user->language;
+			
+			echo elgg_view("input/pulldown", array('internalname' => 'language', 'value' => $value, 'options_values' => get_installed_translations()));
+		
+		 ?> 
+
 	</p>
 
 <?php } ?>
