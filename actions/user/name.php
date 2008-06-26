@@ -1,6 +1,6 @@
 <?php
 	/**
-	 * Action for saving a new email address for a user and triggering a confirmation.
+	 * Action for changing a user's name
 	 * 
 	 * @package Elgg
 	 * @subpackage Core
@@ -15,7 +15,7 @@
 
 	gatekeeper();
 	
-	$email = get_input('email');
+	$name = get_input('name');
 	$user_id = get_input('guid');
 	$user = "";
 	
@@ -26,17 +26,14 @@
 		
 	if ($user)
 	{
-		$user->email = $email;
+		$user->name = $name;
 		if ($user->save())
-		{
-			request_email_validation($user->getGUID());
-			system_message(elgg_echo('email:save:success'));
-		}
+			system_message(elgg_echo('user:name:success'));
 		else
-			system_message(elgg_echo('email:save:fail'));
+			system_message(elgg_echo('user:name:fail'));
 	}
 	else
-		system_message(elgg_echo('email:save:fail'));
+		system_message(elgg_echo('user:name:fail'));
 	
 	forward($_SERVER['HTTP_REFERER']);
 	exit;

@@ -248,10 +248,6 @@
 		// Register a notification handler for the default email method
 		register_notification_handler("email", "email_notify_handler");
 		
-		// Add email settings
-		extend_elgg_settings_page('notifications/settings/email', 'usersettings/user');
-		register_action("email/save");
-		
 		// Add settings view to user settings & register action
 		extend_elgg_settings_page('notifications/settings/usersettings', 'usersettings/user');
 		register_action("notifications/settings/usersettings/save");

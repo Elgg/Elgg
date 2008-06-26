@@ -901,6 +901,14 @@
    		register_action("friends/add");
    		register_action("friends/remove");
 		register_action("email/confirm");
+
+		// User name change
+		extend_elgg_settings_page('user/settings/name', 'usersettings/user', 1);
+		register_action("user/name");
+		
+		// Add email settings
+		extend_elgg_settings_page('user/settings/email', 'usersettings/user', 1);
+		register_action("email/save");
 	}
 	
 	//register actions *************************************************************

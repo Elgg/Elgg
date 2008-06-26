@@ -239,6 +239,11 @@
 			'registerok' => "You have successfully registered for %s.",
 			'registerbad' => "Your registration was unsuccessful. The username may already exist, or your passwords might not match.",
 	
+			'user:set:name' => "Account name settings",
+			'user:name:label' => "Your name",
+			'user:name:success' => "Successfully changed your name on the system.",
+			'user:name:fail' => "Could not change your name on the system.",
+	
 		/**
 		 * Administration
 		 */
