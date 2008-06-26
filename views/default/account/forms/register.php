@@ -27,7 +27,7 @@
 			<?php
 				if ($admin_option) {
 ?>		
-			<label><?php echo elgg_echo('admin_option'); ?><br /><input type="checkbox" name="admin" /></label>			
+			<label><?php echo elgg_echo('admin_option'); ?><br /><input type="checkbox" name="admin" /></label>	<br />		
 <?php 			
 				}
 			 ?>
