@@ -95,6 +95,21 @@
 				error_log("Missing translation path $path");
 		}
 		
+	/**
+	 * Return an array of installed translations as an associative array "two letter code" => "native language name".
+	 */
+		function get_installed_translations()
+		{
+			global $CONFIG;
+			
+			$installed = array();
+			
+			foreach ($CONFIG->translations as $k => $v)
+				$installed[$k] = elgg_echo($k, $k);
+			
+			return $installed;
+		}
+		
 		register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
 
 ?>
