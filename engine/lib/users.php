@@ -745,7 +745,8 @@
 		
 		$time = time() - $seconds;
 		
-		$query = "SELECT * from {$CONFIG->dbprefix}entities where type='user' and time_updated>=$time order by time_updated desc limit $offset, $limit";
+		//$query = "SELECT * from {$CONFIG->dbprefix}entities where type='user' and time_updated>=$time order by time_updated desc limit $offset, $limit";
+		$query = "SELECT distinct e.* from {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}system_log s on e.guid=s.performed_by_guid where e.type='user' and s.time_created>=$time order by s.time_created desc limit $offset,$limit";
 		
 		return get_data($query, "entity_row_to_elggstar");
 	}
