@@ -311,6 +311,9 @@
 			'admin:user:ban:yes' => "User banned.",
 			'admin:user:delete:no' => "Can not delete user",
 			'admin:user:delete:yes' => "User deleted",
+	
+			'admin:user:resetpassword:yes' => "Password reset, user notified.",
+			'admin:user:resetpassword:no' => "Password could not be reset.",
 			
 		/**
 		 * User settings
@@ -355,6 +358,8 @@
 			'ban' => "Ban",
 			'enable' => "Enable",
 			'disable' => "Disable",
+	
+			'resetpassword' => "Reset password",
 	
 			'yes' => "Yes",
 			'no' => "No",
@@ -489,6 +494,12 @@ Please confirm your email address by clicking on the link below:
 			'email:validate:success:body' => "Hi %s,
 			
 Congratulations, you have successfully validated your email address.",
+	
+	
+			'email:resetpassword:subject' => "Password reset!",
+			'email:resetpassword:body' => "Hi %s,
+			
+Your password has been reset to: %s",
 	
 		/**
 		 * XML-RPC

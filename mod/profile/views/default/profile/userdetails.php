@@ -123,6 +123,8 @@
 				&nbsp; <a href="<?php echo $vars['url']; ?>actions/admin/user/ban?guid=<?php echo $vars['entity']->guid; ?>"><?php echo elgg_echo("ban"); ?></a>
 				
 				&nbsp; <a href="<?php echo $vars['url']; ?>actions/admin/user/delete?guid=<?php echo $vars['entity']->guid; ?>"><?php echo elgg_echo("delete"); ?></a>
+				
+				&nbsp; <a href="<?php echo $vars['url']; ?>actions/admin/user/resetpassword?guid=<?php echo $vars['entity']->guid; ?>"><?php echo elgg_echo("resetpassword"); ?></a>
 					
 <?php 
 				}

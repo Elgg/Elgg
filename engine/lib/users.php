@@ -813,6 +813,17 @@
 	}
 	
 	/**
+	 * Simple function that will generate a random clear text password suitable for feeding into generate_user_password().
+	 *
+	 * @see generate_user_password
+	 * @return string
+	 */
+	function generate_random_cleartext_password()
+	{
+		return substr(md5(microtime()), 0, 8);
+	}
+	
+	/**
 	 * Generate a password for a user, currently uses MD5.
 	 * 
 	 * Later may introduce salting etc.
