@@ -93,6 +93,9 @@
 							} else {
 								$subtype = "";
 							}
+							if ($subtype == "widget") {
+								$subtype = "widget/" . $object->handler;
+							}
 							
 							if (!empty($subtype) && elgg_view_exists("river/{$subtype}/{$event}")) {
 								$tam = elgg_view("river/{$subtype}/$event", array(
