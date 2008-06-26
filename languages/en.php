@@ -442,6 +442,12 @@ Alternatively, you can enter your database settings below and we will try and do
 		/**
 		 * Emails
 		 */
+			'email:settings' => "Email settings",
+			'email:address:label' => "Your email address",
+			
+			'email:save:success' => "New email address saved, verification requested.",
+			'email:save:fail' => "Your new email address could not be saved.",
+	
 			'email:confirm:success' => "You have confirmed your email address!",
 			'email:confirm:fail' => "Your email address could not be verified...",
 	
