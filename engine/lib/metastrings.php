@@ -14,6 +14,7 @@
 	/** Cache metastrings for a page */
 	$METASTRINGS_CACHE = array();
 	
+	/** Keep a record of strings we know don't exist */
 	$METASTRINGS_DEADNAME_CACHE = array();
 
 	/**
