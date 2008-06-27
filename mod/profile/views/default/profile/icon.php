@@ -53,18 +53,13 @@
 		<a href="<?php echo $vars['entity']->getURL(); ?>"><h3><?php echo $vars['entity']->name; ?></h3></a>
 		<?php
 
-			$links = elgg_view('profile/menu/actions',$vars);
+			echo elgg_view('profile/menu/actions',$vars);
 			if ($vars['entity']->getGUID() == $vars['user']->getGUID()) {
-				$links .= elgg_view('profile/menu/linksownpage',$vars);
+				echo elgg_view('profile/menu/linksownpage',$vars);
 			} else {
-				$links .= elgg_view('profile/menu/links',$vars);
+				echo elgg_view('profile/menu/links',$vars);
 			}
-			
-			$links = preg_replace('/\<p.*\>/','',$links);
-			$links = preg_replace('/\<\/p.*\>/','',$links);
-			
-			echo $links;
-		
+					
 		?>
 
 	</div>	
