@@ -798,6 +798,30 @@ p.user_menu_friends_of {
 
 
 /* ***************************************
+	SEARCH LISTINGS	
+*************************************** */
+
+.search_listing {
+	display: block;
+	background-color: #eee;
+	padding: 5px;
+	margin-bottom: 10px;
+}
+
+.search_listing_icon {
+	position: absolute;
+}
+	
+.search_listing_info {
+	margin-left: 60px;
+	height: 40px;
+}
+	
+.search_listing_info p {
+	margin: 0px;
+}
+
+/* ***************************************
 	STATUS
 *************************************** */
 .collapsable_box_editpanel .textarea-status {

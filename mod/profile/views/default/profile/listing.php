@@ -14,9 +14,9 @@
 
 ?>
 
-	<div class="profile_listing">
+	<div class="search_listing">
 	
-		<div class="profile_listing_icon">
+		<div class="search_listing_icon">
 			<?php
 
 				echo elgg_view(
@@ -28,7 +28,7 @@
 			
 			?>
 		</div>
-		<div class="profile_listing_info">
+		<div class="search_listing_info">
 			<p><b><?php
 
 				echo "<a href=\"" . $vars['entity']->getUrl() . "\">" . $vars['entity']->name . "</a>";
