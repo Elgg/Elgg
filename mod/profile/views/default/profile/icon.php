@@ -36,13 +36,6 @@
 		} else {
 			$align = "";
 		}
-		
-	// Get the hoverover menu
-		$hoverover = elgg_view('profile/hoverover',$vars);
-		$hoverover = htmlentities($hoverover);
-		$hoverover = str_replace("\n","",$hoverover);
-		$hoverover = str_replace("\r","",$hoverover);
-		$hoverover = str_replace("\t","",$hoverover);
 			
 ?>
 
@@ -52,15 +45,18 @@
 	<div class="sub_menu">
 		<a href="<?php echo $vars['entity']->getURL(); ?>"><h3><?php echo $vars['entity']->name; ?></h3></a>
 		<?php
-
-			$actions = elgg_view('profile/menu/actions',$vars);
-			if (!empty($actions)) {
-				
-				echo "<div class=\"item_line\">{$actions}</div>";
-				
-			}
-			if ($vars['entity']->getGUID() == $vars['user']->getGUID()) {
-				echo elgg_view('profile/menu/linksownpage',$vars);
+			if (isloggedin()) {
+				$actions = elgg_view('profile/menu/actions',$vars);
+				if (!empty($actions)) {
+					
+					echo "<div class=\"item_line\">{$actions}</div>";
+					
+				}
+				if ($vars['entity']->getGUID() == $vars['user']->getGUID()) {
+					echo elgg_view('profile/menu/linksownpage',$vars);
+				} else {
+					echo elgg_view('profile/menu/links',$vars);
+				}					
 			} else {
 				echo elgg_view('profile/menu/links',$vars);
 			}
@@ -68,5 +64,5 @@
 		?>
 
 	</div>	
-	<a href="<?php echo $vars['entity']->getURL(); ?>" class="icon" rel="<?php echo $hoverover; ?>"><img src="<?php echo $vars['url']; ?>pg/icon/<?php echo $username; ?>/<?php echo $vars['size']; ?>/<?php echo $icontime; ?>.jpg" border="0" <?php echo $align; ?> title="<?php echo $name; ?>" <?php echo $vars['js']; ?> /></a>
+	<a href="<?php echo $vars['entity']->getURL(); ?>" class="icon" ><img src="<?php echo $vars['url']; ?>pg/icon/<?php echo $username; ?>/<?php echo $vars['size']; ?>/<?php echo $icontime; ?>.jpg" border="0" <?php echo $align; ?> title="<?php echo $name; ?>" <?php echo $vars['js']; ?> /></a>
 </div>
