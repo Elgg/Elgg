@@ -481,7 +481,17 @@
             return $comments;
            
         }
-		
+
+	/**
+	 * Count the number of comments attached to an entity
+	 *
+	 * @param ElggEntity $entity
+	 * @return int Number of comments
+	 */
+        function elgg_count_comments($entity) {
+        	return count_annotations($entity_guid, "", "", $name);
+        }
+        
 	/**
 	 * Wrapper function to display search listings.
 	 *
