@@ -53,7 +53,12 @@
 		<a href="<?php echo $vars['entity']->getURL(); ?>"><h3><?php echo $vars['entity']->name; ?></h3></a>
 		<?php
 
-			echo elgg_view('profile/menu/actions',$vars);
+			$actions = elgg_view('profile/menu/actions',$vars);
+			if (!empty($actions)) {
+				
+				echo "<div class=\"item_line\">{$actions}</div>";
+				
+			}
 			if ($vars['entity']->getGUID() == $vars['user']->getGUID()) {
 				echo elgg_view('profile/menu/linksownpage',$vars);
 			} else {
