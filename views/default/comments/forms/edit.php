@@ -22,7 +22,11 @@
 				</h3>
 				<p>
 					<label><?php echo elgg_echo("generic_comments:text"); ?><br />
-					    <textarea name="generic_comment" value="" id="generic_comment" class="expanding" /></textarea>
+						<?php
+
+							echo elgg_view('input/longtext',array('internalname' => 'generic_comment'));
+						
+						?>
 					</label>
 				</p>
 				<p>

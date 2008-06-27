@@ -12,22 +12,29 @@
 	 * 
 	 */
 
+	$owner = get_user($vars['annotation']->owner_guid);
+
 ?>
 
 
-	    <div class="generic_comment"><!-- start of generic_comment div -->
+	<div class="generic_comment"><!-- start of generic_comment div -->
 	    
-	        <div style="float:left;width:60px;">	        
-    			    <?php
-    					    echo elgg_view("profile/icon",array('entity' => get_entity($vars['annotation']->owner_guid), 'size' => 'tiny'));
-    			    ?>
-    	    </div>
-    	    <p>
-    	        <?php echo get_user($vars['annotation']->owner_guid)->username . " on " . friendly_time($vars['annotation']->time_created); ?>
-    		</p>
+		<div class="generic_comment_icon">	        
+    		<?php
+    			echo elgg_view("profile/icon",
+    						array(
+    							'entity' => $owner, 
+    							'size' => 'small'));
+    		?>
+		</div>
+		<div class="generic_comment_details">
     		
 		    <!-- output the actual comment -->
 		    <p><?php echo elgg_view("output/longtext",array("value" => $vars['annotation']->value)); ?></p>
+		    
+		    <p class="generic_comment_owner">
+    	        <a href="<?php echo $owner->getURL(); ?>"><?php echo $owner->name; ?></a> <?php echo friendly_time($vars['annotation']->time_created); ?>
+    		</p>
 		    
 		    <?php
                 
@@ -39,7 +46,7 @@
 		        <?php
 
 			        echo elgg_view("output/confirmlink",array(
-														'href' => $vars['url'] . "action/comments/delete&annotation_id=" . $vars['annotation']->id,
+														'href' => $vars['url'] . "action/comments/delete?annotation_id=" . $vars['annotation']->id,
 														'text' => elgg_echo('delete'),
 														'confirm' => elgg_echo('deleteconfirm'),
 													));
@@ -50,5 +57,5 @@
             <?php
 			    } //end of can edit if statement
 		    ?>
-		
-		</div><!-- end of generic_comment div -->
+		</div><!-- end of generic_comment_details -->
+	</div><!-- end of generic_comment div -->

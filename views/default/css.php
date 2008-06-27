@@ -494,6 +494,27 @@ a.toggle_customise_edit_panel:hover {
     margin:20px 20px 0px 20px;
 }
 
+/* ***************************************
+	COMMENTS
+*************************************** */
+
+.generic_comment {
+	margin-bottom: 50px;
+	padding-bottom: 10px;
+}
+.generic_comment_icon {
+	position: absolute;
+}
+.generic_comment_details {
+	margin-left: 60px;
+	border: 0px;
+	border-bottom: 1px;
+	border-style: solid;
+}
+.generic_comment_owner {
+	font-size: 80%;
+	margin: 0px;
+}
 
 /* ***************************************
 	ELGG TOOLBAR
