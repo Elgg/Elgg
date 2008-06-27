@@ -32,8 +32,11 @@
 			$owner_guid = explode(",",$owner_guid);
 		}
 		
-		$body = list_entities_from_metadata($md_type, $tag, $objecttype, $subtype, $owner_guid, 10, false);
-		$body = elgg_view_layout('one_column',$body);
+		if (!empty($tag)) {
+			$body = elgg_view_title(elgg_echo('searchtitle'),$tag);
+			$body .= list_entities_from_metadata($md_type, $tag, $objecttype, $subtype, $owner_guid, 10, false);
+			$body = elgg_view_layout('one_column',$body);
+		}
 		
 		page_draw(sprintf(elgg_echo('searchtitle'),$tag),$body);
 
