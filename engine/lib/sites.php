@@ -374,16 +374,17 @@
 	 *
 	 * @param int $site_guid The GUID of the site
 	 * @param int $limit The number of members to display on a page
+	 * @param true|false $fullview Whether or not to display the full view (default: true)
 	 * @return string A displayable list of members
 	 */
-	function list_site_members($site_guid, $limit = 10) {
+	function list_site_members($site_guid, $limit = 10, $fullview = true) {
 		
 		$offset = (int) get_input('offset');
 		$limit = (int) $limit;
 		$count = (int) get_entities_from_relationship("member_of_site", $site_guid, true, "user", "", 0, "time_created desc", $limit, $offset, true);
 		$entities = get_site_members($site_guid, $limit, $offset);
 		
-		return elgg_view_entity_list($entities, $count, $offset, $limit);
+		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview);
 		
 	}
 	

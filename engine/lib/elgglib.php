@@ -350,9 +350,10 @@
 	 * @param int $count The total number of entities across all pages
 	 * @param int $offset The current indexing offset
 	 * @param int $limit The number of entities to display per page
+	 * @param true|false $fullview Whether or not to display the full view (default: true)
 	 * @return string The list of entities
 	 */
-		function elgg_view_entity_list($entities, $count, $offset, $limit) {
+		function elgg_view_entity_list($entities, $count, $offset, $limit, $fullview = true) {
 			
 			$count = (int) $count;
 			$offset = (int) $offset;
@@ -372,7 +373,7 @@
 														
 			if (is_array($entities) && sizeof($entities) > 0) {
 				foreach($entities as $entity) {
-					$html .= elgg_view_entity($entity, "", false);
+					$html .= elgg_view_entity($entity, "", $fullview);
 				}
 			}
 			

@@ -1091,15 +1091,16 @@
 	 * @param string $subtype The arbitrary subtype of the entity
 	 * @param int $owner_guid The GUID of the owning user
 	 * @param int $limit The number of entities to display per page (default: 10)
+	 * @param true|false $fullview Whether or not to display the full view (default: true)
 	 * @return string A viewable list of entities
 	 */
-	function list_entities($type= "", $subtype = "", $owner_guid = 0, $limit = 10) {
+	function list_entities($type= "", $subtype = "", $owner_guid = 0, $limit = 10, $fullview = true) {
 		
 		$offset = (int) get_input('offset');
 		$count = get_entities($type, $subtype, $owner_guid, "", $limit, $offset, true);
 		$entities = get_entities($type, $subtype, $owner_guid, "", $limit, $offset);
 
-		return elgg_view_entity_list($entities, $count, $offset, $limit);
+		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview);
 		
 	}
 	

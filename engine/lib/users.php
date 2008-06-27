@@ -535,16 +535,17 @@
 	 * @param int $user_guid The GUID of the user
 	 * @param string $subtype The object subtype
 	 * @param int $limit The number of entities to display on a page
+	 * @param true|false $fullview Whether or not to display the full view (default: true)
 	 * @return string The list in a form suitable to display
 	 */
-	function list_user_objects($user_guid, $subtype = "", $limit = 10) {
+	function list_user_objects($user_guid, $subtype = "", $limit = 10, $fullview = true) {
 		
 		$offset = (int) get_input('offset');
 		$limit = (int) $limit;
 		$count = (int) count_user_objects($user_guid, $subtype);
 		$entities = get_user_objects($user_guid, $subtype, $limit, $offset);
 		
-		return elgg_view_entity_list($entities, $count, $offset, $limit);
+		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview);
 		
 	}
 	
@@ -594,16 +595,17 @@
 	 * @param int $user_guid The GUID of the user
 	 * @param string $subtype The object subtype
 	 * @param int $limit The number of entities to display on a page
+	 * @param true|false $fullview Whether or not to display the full view (default: true)
 	 * @return string The list in a form suitable to display
 	 */
-	function list_user_friends_objects($user_guid, $subtype = "", $limit = 10) {
+	function list_user_friends_objects($user_guid, $subtype = "", $limit = 10, $fullview = true) {
 		
 		$offset = (int) get_input('offset');
 		$limit = (int) $limit;
 		$count = (int) count_user_friends_objects($user_guid, $subtype);
 		$entities = get_user_friends_objects($user_guid, $subtype, $limit, $offset);
 		
-		return elgg_view_entity_list($entities, $count, $offset, $limit);
+		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview);
 		
 	}
 	
