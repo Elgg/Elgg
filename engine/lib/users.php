@@ -12,6 +12,12 @@
 	 * @link http://elgg.org/
 	 */
 
+	/// Map a username to a cached GUID
+	$USERNAME_TO_GUID_MAP_CACHE = array();
+	
+	/// Map a user code to a cached GUID
+	$CODE_TO_GUID_MAP_CACHE = array();
+
 	/**
 	 * ElggUser
 	 * 
@@ -656,12 +662,19 @@
 	 */
 	function get_user_by_username($username)
 	{
-		global $CONFIG;
+		global $CONFIG, $USERNAME_TO_GUID_MAP_CACHE;
 		
 		$username = sanitise_string($username);
+		
+		// Caching
+		if ( (isset($USERNAME_TO_GUID_MAP_CACHE[$username])) && (retrieve_cached_entity($USERNAME_TO_GUID_MAP_CACHE[$username])) )
+			return retrieve_cached_entity($USERNAME_TO_GUID_MAP_CACHE[$username]);
+		
 		$row = get_data_row("SELECT * from {$CONFIG->dbprefix}users_entity where username='$username'");
-		if ($row)
-			return new ElggUser($row); 
+		if ($row) {
+			$USERNAME_TO_GUID_MAP_CACHE[$username] = $row->guid;
+			return new ElggUser($row);
+		} 
 		
 		return false;
 	}
@@ -674,13 +687,19 @@
 	 */
 	function get_user_by_code($code)
 	{
-		global $CONFIG;
+		global $CONFIG, $CODE_TO_GUID_MAP_CACHE;
 		
 		$code = sanitise_string($code);
+		
+		// Caching
+		if ( (isset($CODE_TO_GUID_MAP_CACHE[$code])) && (retrieve_cached_entity($CODE_TO_GUID_MAP_CACHE[$code])) )
+			return retrieve_cached_entity($CODE_TO_GUID_MAP_CACHE[$code]);
+		
 		$row = get_data_row("SELECT * from {$CONFIG->dbprefix}users_entity where code='$code'");
-	
-		if ($row)
-			return new ElggUser($row); 
+		if ($row) {
+			$CODE_TO_GUID_MAP_CACHE[$code] = $row->guid;
+			return new ElggUser($row);
+		} 
 		
 		return false;
 	}
