@@ -648,7 +648,19 @@
 			
 		}
 
-		
+	/**
+	 * When given a title, returns a version suitable for inclusion in a URL
+	 *
+	 * @param string $title The title
+	 * @return string The optimised title
+	 */
+		function friendly_title($title) {
+			$title = trim($title);
+			$title = strtolower($title);
+			$title = preg_replace("/[^\w ]/","",$title); 
+			$title = str_replace(" ","-",$title);
+			return $title;
+		}
 
 	/**
 	 * Library loading and handling
