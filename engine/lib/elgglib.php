@@ -1178,6 +1178,8 @@
 	 * Data lists
 	 */
 		
+	$DATALIST_CACHE = array();
+		
 	/**
 	 * Get the value of a particular piece of data in the datalist
 	 *
@@ -1186,13 +1188,17 @@
 	 */	
 		function datalist_get($name) {
 			
-			global $CONFIG;
+			global $CONFIG, $DATALIST_CACHE;
 			
 			// We need this, because sometimes datalists are received before the database is created
 			if (!is_db_installed()) return false;
 			
 			$name = sanitise_string($name);
+			if (isset($DATALIST_CACHE[$name]))
+				return $DATALIST_CACHE[$name];
+			
 			if ($row = get_data_row("select value from {$CONFIG->dbprefix}datalists where name = '{$name}'")) {
+				$DATALIST_CACHE[$name] = $row->value;
 				return $row->value;
 			}
 			return false;
@@ -1208,11 +1214,16 @@
 	 */
 		function datalist_set($name, $value) {
 			
-			global $CONFIG;
+			global $CONFIG, $DATALIST_CACHE;
+			
 			$name = sanitise_string($name);
 			$value = sanitise_string($value);
+			
 			delete_data("delete from {$CONFIG->dbprefix}datalists where name = '{$name}'");
 			insert_data("insert into {$CONFIG->dbprefix}datalists set name = '{$name}', value = '{$value}'");
+			
+			$DATALIST_CACHE[$name] = $value;
+			
 			return true;
 			
 		}
