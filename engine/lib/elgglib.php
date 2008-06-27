@@ -489,7 +489,7 @@
 	 * @return int Number of comments
 	 */
         function elgg_count_comments($entity) {
-        	return count_annotations($entity_guid, "", "", $name);
+        	return count_annotations($entity->getGUID(), "", "", "generic_comment");
         }
         
 	/**
