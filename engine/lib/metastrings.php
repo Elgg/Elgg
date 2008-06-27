@@ -13,6 +13,8 @@
 
 	/** Cache metastrings for a page */
 	$METASTRINGS_CACHE = array();
+	
+	$METASTRINGS_DEADNAME_CACHE = array();
 
 	/**
 	 * Return the meta string id for a given tag, or false.
@@ -22,7 +24,7 @@
 	 */
 	function get_metastring_id($string)
 	{
-		global $CONFIG, $METASTRINGS_CACHE;
+		global $CONFIG, $METASTRINGS_CACHE, $METASTRINGS_DEADNAME_CACHE;
 		
 		$string = sanitise_string($string);
 		$result = array_search($string, $METASTRINGS_CACHE);
@@ -34,6 +36,10 @@
 			return $result;
 		}
 			
+		// See if we have previously looked for this and found nothing
+		if (in_array($string, $METASTRINGS_DEADNAME_CACHE))
+			return false;
+		
 		$row = get_data_row("SELECT * from {$CONFIG->dbprefix}metastrings where string='$string' limit 1");
 		if ($row) { 
 			$METASTRINGS_CACHE[$row->id] = $row->string; // Cache it
@@ -43,6 +49,8 @@
 				
 			return $row->id;
 		}
+		else
+			$METASTRINGS_DEADNAME_CACHE[$string] = $string;
 			
 		return false;
 	}
@@ -90,7 +98,7 @@
 	 */
 	function add_metastring($string)
 	{
-		global $CONFIG, $METASTRINGS_CACHE;
+		global $CONFIG, $METASTRINGS_CACHE, $METASTRINGS_DEADNAME_CACHE;
 		
 		$sanstring = sanitise_string($string);
 		
@@ -98,8 +106,10 @@
 		if ($id) return $id;
 		
 		$result = insert_data("INSERT into {$CONFIG->dbprefix}metastrings (string) values ('$sanstring')");
-		if ($result)
+		if ($result) {
 			$METASTRINGS_CACHE[$result] = $string;
+			if (isset($METASTRINGS_DEADNAME_CACHE[$string])) unset($METASTRINGS_DEADNAME_CACHE[$string]);
+		}
 			
 		return $result;
 	}
