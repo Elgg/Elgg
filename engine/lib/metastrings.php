@@ -11,6 +11,9 @@
 	 * @link http://elgg.org/
 	 */
 
+	/** Cache metastrings for a page */
+	$METASTRINGS_CACHE = array();
+
 	/**
 	 * Return the meta string id for a given tag, or false.
 	 * 
@@ -19,13 +22,21 @@
 	 */
 	function get_metastring_id($string)
 	{
-		global $CONFIG;
+		global $CONFIG, $METASTRINGS_CACHE;
 		
 		$string = sanitise_string($string);
-		
+		$result = array_search($string, $METASTRINGS_CACHE);
+		if ($result!==false)
+			return $result;
+			
 		$row = get_data_row("SELECT * from {$CONFIG->dbprefix}metastrings where string='$string' limit 1");
-		if ($row)
+		if ($row) { 
+			$METASTRINGS_CACHE[$row->id] = $row->string; // Cache it
+			if ($CONFIG->debug)
+				error_log("Returning id for string {$row->string} from cache.");
+				
 			return $row->id;
+		}
 			
 		return false;
 	}
@@ -38,13 +49,21 @@
 	 */
 	function get_metastring($id) {
 		
-		global $CONFIG;
+		global $CONFIG, $METASTRINGS_CACHE;
 		
 		$id = (int) $id;
 		
+		if (isset($METASTRINGS_CACHE[$id]))
+			return $METASTRINGS_CACHE[$id];
+		
 		$row = get_data_row("SELECT * from {$CONFIG->dbprefix}metastrings where id='$id' limit 1");
-		if ($row)
+		if ($row) {
+			$METASTRINGS_CACHE[$id] = $row->string; // Cache it
+			if ($CONFIG->debug)
+				error_log("Returning string {$row->string} from cache.");
+			
 			return $row->string;
+		}
 			
 		return false;
 		
@@ -59,14 +78,18 @@
 	 */
 	function add_metastring($string)
 	{
-		global $CONFIG;
+		global $CONFIG, $METASTRINGS_CACHE;
 		
 		$sanstring = sanitise_string($string);
 		
 		$id = get_metastring_id($string);
 		if ($id) return $id;
 		
-		return insert_data("INSERT into {$CONFIG->dbprefix}metastrings (string) values ('$sanstring')");
+		$result = insert_data("INSERT into {$CONFIG->dbprefix}metastrings (string) values ('$sanstring')");
+		if ($result)
+			$METASTRINGS_CACHE[$result] = $string;
+			
+		return $result;
 	}
 	
 ?>
