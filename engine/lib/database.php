@@ -11,6 +11,8 @@
 	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.org/
 	 */
+
+	$DB_PROFILE = array();
 	
 	/**
 	 * Connect to the database server and use the Elgg database for a particular database link
@@ -77,6 +79,27 @@
 		}
 		
 	/**
+	 * Shutdown hook to display profiling information about db (debug mode)
+	 */
+	function db_profiling_shutdown_hook()
+	{
+		global $CONFIG, $DB_PROFILE, $dbcalls;
+		
+		if ($CONFIG->debug)
+		{
+			error_log("***************** DB PROFILING ********************");
+			
+			$DB_PROFILE = array_count_values($DB_PROFILE);
+			
+			foreach ($DB_PROFILE as $k => $v)
+				error_log("$v times: '$k' ");
+			
+			error_log("DB Queries for this page: $dbcalls");
+			error_log("***************************************************");
+		}
+	}
+		
+	/**
 	 * Alias to setup_db_connections, for use in the event handler
 	 *
 	 * @param string $event The event type
@@ -84,6 +107,7 @@
 	 * @param mixed $object Used for nothing in this context
 	 */
 		function init_db($event, $object_type, $object = null) {
+			register_shutdown_function('db_profiling_shutdown_hook');
 			setup_db_connections();
 			return true;
 		}
@@ -127,7 +151,7 @@
     
         function get_data($query, $callback = "") {
             
-            global $CONFIG, $dbcalls;
+            global $CONFIG, $dbcalls, $DB_PROFILE;
             
             $dblink = get_db_link('read');
             
@@ -136,6 +160,8 @@
             
         	if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
             {
+            	$DB_PROFILE[] = $query;
+            	
             	error_log("--- DB QUERY --- $query");
             	error_log("--- EXPLANATION --- " . print_r(explain_query($query,$dblink), true));
             }
@@ -169,7 +195,7 @@
     
         function get_data_row($query) {
             
-            global $CONFIG, $dbcalls;
+            global $CONFIG, $dbcalls, $DB_PROFILE;
             
             $dblink = get_db_link('read');
             
@@ -177,6 +203,8 @@
             
         	if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
             {
+            	$DB_PROFILE[] = $query;
+            	
             	error_log("--- DB QUERY --- $query");
             	error_log("--- EXPLANATION --- " . print_r(explain_query($query,$dblink), true));
             }
@@ -205,7 +233,7 @@
     
         function insert_data($query) {
             
-            global $CONFIG, $dbcalls;
+            global $CONFIG, $dbcalls, $DB_PROFILE;
             
             $dblink = get_db_link('write');
             
@@ -213,6 +241,8 @@
             
         	if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
             {
+            	$DB_PROFILE[] = $query;
+            	
             	error_log("--- DB QUERY --- $query");
             }
             
@@ -234,7 +264,7 @@
     
         function update_data($query) {
             
-            global $dbcalls, $CONFIG;
+            global $dbcalls, $CONFIG, $DB_PROFILE;
             
             $dblink = get_db_link('write');
             
@@ -242,6 +272,8 @@
             
        		if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
             {
+            	$DB_PROFILE[] = $query; 
+            	
             	error_log("--- DB QUERY --- $query");
             }
             
@@ -264,7 +296,7 @@
     
         function delete_data($query) {
             
-            global $dbcalls, $CONFIG;
+            global $dbcalls, $CONFIG, $DB_PROFILE;
             
             $dblink = get_db_link('write');
             
@@ -272,6 +304,8 @@
             
         	if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
             {
+            	$DB_PROFILE[] = $query;
+            	
             	error_log("--- DB QUERY --- $query");
             }
             
