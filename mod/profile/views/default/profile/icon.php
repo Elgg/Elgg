@@ -51,16 +51,6 @@
 
 	<div class="sub_menu">
 		<a href="<?php echo $vars['entity']->getURL(); ?>"><h3><?php echo $vars['entity']->name; ?></h3></a>
-<!-- <a href="#" class="item_line">Remove friend</a>
-		<a href="#">Friends</a>
-		<a href="#">Friends of</a>
-
-		<a href="#" class="item_line">Recent activity</a>
-		<a href="#">Visit blog</a>
-		<a href="#" class="item_line">Send private message</a>
-		<a href="#" class="item_line">Ban</a>
-		<a href="#">Edit</a>
-		<a href="#">Report</a> -->
 		<?php
 
 			$links = elgg_view('profile/menu/actions',$vars);
