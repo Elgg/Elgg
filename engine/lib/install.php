@@ -19,10 +19,19 @@
 	 */
 		function is_db_installed() {
 			
+			global $CONFIG;
+
+			if (isset($CONFIG->db_installed)) {
+				return $CONFIG->db_installed;
+			}
+			
 			$tables = get_db_tables();
 			if (!$tables) {
 				return false;
 			}
+			
+			$CONFIG->db_installed = true; // Set flag if db is installed (if false then we want to check every time)
+			
 			return true;
 			
 		}
