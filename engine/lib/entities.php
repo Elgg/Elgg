@@ -14,6 +14,9 @@
 	/// Cache objects in order to minimise database access.
 	$ENTITY_CACHE = array();
 	
+	/// Cache subtype searches
+	$SUBTYPE_CACHE = array();
+	
 	/**
 	 * ElggEntity The elgg entity superclass
 	 * This class holds methods for accessing the main entities table.
@@ -763,17 +766,21 @@
 	 */
 	function get_subtype_id($type, $subtype)
 	{
-		global $CONFIG;
+		global $CONFIG, $SUBTYPE_CACHE;
 		
 		$type = sanitise_string($type);
 		$subtype = sanitise_string($subtype);
 	
 		if ($subtype=="") return $subtype;
 		
+		// Todo: cache here? Or is looping less efficient that going to the db each time?
+		
 		$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes where type='$type' and subtype='$subtype'");
 
-		if ($result)
+		if ($result) {
+			$SUBTYPE_CACHE[$result->id] = $result;
 			return $result->id;
+		}
 		
 		return 0;
 	}
@@ -787,15 +794,20 @@
 	 */
 	function get_subtype_from_id($subtype_id)
 	{
-		global $CONFIG;
+		global $CONFIG, $SUBTYPE_CACHE;
 		
 		$subtype_id = (int)$subtype_id;
 		
 		if (!$subtype_id) return false;
 		
+		if (isset($SUBTYPE_CACHE[$subtype_id]))
+			return $SUBTYPE_CACHE[$subtype_id]->subtype;
+		
 		$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes where id=$subtype_id");
-		if ($result)
+		if ($result) {
+			$SUBTYPE_CACHE[$subtype_id] = $result;
 			return $result->subtype;
+		}
 		
 		return false;
 	}
@@ -809,14 +821,18 @@
 	 */
 	function get_subtype_class($type, $subtype)
 	{
-		global $CONFIG;
+		global $CONFIG, $SUBTYPE_CACHE;
 		
 		$type = sanitise_string($type);
 		$subtype = sanitise_string($subtype);
 		
+		// Todo: cache here? Or is looping less efficient that going to the db each time?
+		
 		$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes where type='$type' and subtype='$subtype'");
-		if ($result)
+		if ($result) {
+			$SUBTYPE_CACHE[$result->id] = $result;
 			return $result->class;
+		}
 		
 		return NULL;
 	}
@@ -829,15 +845,20 @@
 	 */
 	function get_subtype_class_from_id($subtype_id)
 	{
-		global $CONFIG;
+		global $CONFIG, $SUBTYPE_CACHE;
 		
 		$subtype_id = (int)$subtype_id;
 		
 		if (!$subtype_id) return false;
 		
+		if (isset($SUBTYPE_CACHE[$subtype_id]))
+			return $SUBTYPE_CACHE[$subtype_id]->class;
+		
 		$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes where id=$subtype_id");
-		if ($result)
+		if ($result) {
+			$SUBTYPE_CACHE[$subtype_id] = $result;
 			return $result->class;
+		}
 		
 		return NULL;
 	}
