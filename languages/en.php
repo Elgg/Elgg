@@ -510,6 +510,7 @@ Your password has been reset to: %s",
 		 * Comments
 		 */
 	
+			'comments:count' => "%s comments",
 			'generic_comments:add' => "Add a comment",
 			'generic_comments:text' => "Comment",
 			'generic_comment:posted' => "Your comment was successfully posted.",
