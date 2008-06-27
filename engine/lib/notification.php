@@ -96,33 +96,32 @@
 					if ($v) $methods[] = $k; // Add method if method is turned on for user!
 			}
 			
-			if ((!$methods) || (count($methods)==0))
-				throw new NotificationException(elgg_echo('NotificationException:NoNotificationMethod'));
-			
-			// Deliver
-			foreach ($methods as $method)
+			if ($methods)
 			{
-				// Extract method details from list
-				$details = $NOTIFICATION_HANDLERS[$method];
-				$handler = $details->handler;
-			
-				if ((!$NOTIFICATION_HANDLERS[$method]) || (!$handler))
-					throw new NotificationException(sprintf(elgg_echo('NotificationException:NoHandlerFound'), $method));
-
-				if ($CONFIG->debug)
-					error_log("Sending message to $guid using $method");					
-					
-				// Trigger handler and retrieve result.
-				$result[$guid][$method] = $handler(
-					$from ? get_entity($from) : NULL, 	// From entity
-					get_entity($guid), 					// To entity
-					$subject,							// The subject
-					$message, 			// Message
-					$params								// Params
-				);
+				// Deliver
+				foreach ($methods as $method)
+				{
+					// Extract method details from list
+					$details = $NOTIFICATION_HANDLERS[$method];
+					$handler = $details->handler;
 				
-			}
-			
+					if ((!$NOTIFICATION_HANDLERS[$method]) || (!$handler))
+						throw new NotificationException(sprintf(elgg_echo('NotificationException:NoHandlerFound'), $method));
+	
+					if ($CONFIG->debug)
+						error_log("Sending message to $guid using $method");					
+						
+					// Trigger handler and retrieve result.
+					$result[$guid][$method] = $handler(
+						$from ? get_entity($from) : NULL, 	// From entity
+						get_entity($guid), 					// To entity
+						$subject,							// The subject
+						$message, 			// Message
+						$params								// Params
+					);
+					
+				}
+			}		
 		}
 		
 		return $result;
