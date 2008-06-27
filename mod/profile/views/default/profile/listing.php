@@ -12,36 +12,20 @@
 	 * @uses $vars['entity'] The user entity
 	 */
 
+		$icon = elgg_view(
+				"profile/icon", array(
+										'entity' => $vars['entity'],
+										'size' => 'small',
+									  )
+			);
+	
+		$info = "<p><b><a href=\"" . $vars['entity']->getUrl() . "\">" . $vars['entity']->name . "</a></b></p>";
+	
+		$location = $vars['entity']->location;
+		if (!empty($location)) {
+			$info .= "<p>" . elgg_echo("profile:location") . ": " . elgg_view("output/tags",array('value' => $vars['entity']->location)) . "</p>";
+		}
+		
+		echo elgg_view_listing($icon, $info);
+			
 ?>
-
-	<div class="search_listing">
-	
-		<div class="search_listing_icon">
-			<?php
-
-				echo elgg_view(
-						"profile/icon", array(
-												'entity' => $vars['entity'],
-												'size' => 'small',
-											  )
-					);
-			
-			?>
-		</div>
-		<div class="search_listing_info">
-			<p><b><?php
-
-				echo "<a href=\"" . $vars['entity']->getUrl() . "\">" . $vars['entity']->name . "</a>";
-			
-			?></b></p>
-			<?php
-
-				$location = $vars['entity']->location;
-				if (!empty($location)) {
-					echo "<p>" . elgg_echo("profile:location") . ": " . elgg_view("output/tags",array('value' => $vars['entity']->location)) . "</p>";
-				}
-			
-			?>
-		</div>		
-	
-	</div>

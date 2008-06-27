@@ -463,6 +463,17 @@
 		}
 		
 	/**
+	 * Wrapper function to display search listings.
+	 *
+	 * @param string $icon The icon for the listing
+	 * @param string $info Any information that needs to be displayed.
+	 * @return string The HTML (etc) representing the listing
+	 */		
+		function elgg_view_listing($icon, $info) {
+			return elgg_view('search/listing',array('icon' => $icon, 'info' => $info));			
+		}
+		
+	/**
 	 * Sets an alternative function to handle templates, which will be passed to by elgg_view.
 	 * This function must take the $view and $vars parameters from elgg_view:
 	 * 
