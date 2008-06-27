@@ -29,7 +29,7 @@
 		if ($result!==false) {
 			
 			if ($CONFIG->debug)
-				error_log("Returning id for string:$string from cache.");
+				error_log("** Returning id for string:$string from cache.");
 			
 			return $result;
 		}
@@ -39,7 +39,7 @@
 			$METASTRINGS_CACHE[$row->id] = $row->string; // Cache it
 			
 			if ($CONFIG->debug)
-				error_log("Cacheing {$row->string}");
+				error_log("** Cacheing string '{$row->string}'");
 				
 			return $row->id;
 		}
@@ -62,7 +62,7 @@
 		if (isset($METASTRINGS_CACHE[$id])) {
 			
 			if ($CONFIG->debug)
-				error_log("Returning string for id:$id from cache.");
+				error_log("** Returning string for id:$id from cache.");
 			
 			return $METASTRINGS_CACHE[$id];
 		}
@@ -72,7 +72,7 @@
 			$METASTRINGS_CACHE[$id] = $row->string; // Cache it
 			
 			if ($CONFIG->debug)
-				error_log("Cacheing {$row->string}");
+				error_log("** Cacheing string '{$row->string}'");
 			
 			return $row->string;
 		}
