@@ -26,14 +26,20 @@
 		
 		$string = sanitise_string($string);
 		$result = array_search($string, $METASTRINGS_CACHE);
-		if ($result!==false)
+		if ($result!==false) {
+			
+			if ($CONFIG->debug)
+				error_log("Returning id for string:$string from cache.");
+			
 			return $result;
+		}
 			
 		$row = get_data_row("SELECT * from {$CONFIG->dbprefix}metastrings where string='$string' limit 1");
 		if ($row) { 
 			$METASTRINGS_CACHE[$row->id] = $row->string; // Cache it
+			
 			if ($CONFIG->debug)
-				error_log("Returning id for string {$row->string} from cache.");
+				error_log("Cacheing {$row->string}");
 				
 			return $row->id;
 		}
@@ -53,14 +59,20 @@
 		
 		$id = (int) $id;
 		
-		if (isset($METASTRINGS_CACHE[$id]))
+		if (isset($METASTRINGS_CACHE[$id])) {
+			
+			if ($CONFIG->debug)
+				error_log("Returning string for id:$id from cache.");
+			
 			return $METASTRINGS_CACHE[$id];
+		}
 		
 		$row = get_data_row("SELECT * from {$CONFIG->dbprefix}metastrings where id='$id' limit 1");
 		if ($row) {
 			$METASTRINGS_CACHE[$id] = $row->string; // Cache it
+			
 			if ($CONFIG->debug)
-				error_log("Returning string {$row->string} from cache.");
+				error_log("Cacheing {$row->string}");
 			
 			return $row->string;
 		}
