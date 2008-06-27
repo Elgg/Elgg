@@ -46,4 +46,22 @@
 			
 ?>
 
+<div class="usericon">
+<div class="avatar_menu_button"><img src="graphics/avatar_menu_arrow.gif" width="15" height="15" class="arrow" /></div>
+
+	<div class="sub_menu">
+		<a href="#"><h3>User Name</h3></a>
+		<a href="#" class="item_line">Remove friend</a>
+		<a href="#">Friends</a>
+		<a href="#">Friends of</a>
+
+		<a href="#" class="item_line">Recent activity</a>
+		<a href="#">Visit blog</a>
+		<a href="#" class="item_line">Send private message</a>
+		<a href="#" class="item_line">Ban</a>
+		<a href="#">Edit</a>
+		<a href="#">Report</a>
+
+	</div>	
 	<a href="<?php echo $vars['entity']->getURL(); ?>" class="icon" rel="<?php echo $hoverover; ?>"><img src="<?php echo $vars['url']; ?>pg/icon/<?php echo $username; ?>/<?php echo $vars['size']; ?>/<?php echo $icontime; ?>.jpg" border="0" <?php echo $align; ?> title="<?php echo $name; ?>" <?php echo $vars['js']; ?> /></a>
+</div>

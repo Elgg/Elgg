@@ -1,16 +1,18 @@
 <?php
 
 	/**
-	 * Adds metatags to load Javascript required for the profile
+	 * Elgg profile JS
 	 * 
 	 * @package ElggProfile
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
 	 * @author Ben Werdmuller <ben@curverider.co.uk>
 	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.com/
-	 * 
 	 */
 
-?>
+	// Get engine
+		require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
-	<script type="text/javascript" src="<?php echo $vars['url']; ?>mod/profile/javascript.php" ></script>
+		echo elgg_view('profile/javascript');
+
+?>

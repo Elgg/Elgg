@@ -19,11 +19,9 @@
      if (isloggedin()) {
 ?>
 <div id="topmenu">
-<div class="usericon">
 <?php
 	echo elgg_view("profile/icon",array('entity' => $vars['user'], 'size' => 'small'));
 ?>
-</div>
 
 <div id="header_search">
 <form id="searchform" action="<?php echo $vars['url']; ?>search/" method="get">
