@@ -91,7 +91,7 @@
 			
 			$DB_PROFILE = array_count_values($DB_PROFILE);
 			
-			foreach ($DB_PROFILE as $k => $v)
+			foreach ($DB_PROFILE as $k => $v) 
 				error_log("$v times: '$k' ");
 			
 			error_log("DB Queries for this page: $dbcalls");
