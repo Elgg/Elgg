@@ -58,7 +58,7 @@
 			
 			global $CONFIG;
 
-			if ((empty($language)) && ($_SESSION['user']->language))
+			if ((empty($language)) && (isset($_SESSION['user'])) && ($_SESSION['user']->language))
 				$language = $_SESSION['user']->language;
 	
 			if ((empty($language)) && (isset($CONFIG->language)))
