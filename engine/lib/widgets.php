@@ -178,9 +178,10 @@
 				$widget->handler = $handler;
 				$widget->context = $context;
 				$widget->column = $column;
+				$widget->order = $order;
 				if (!$widget->save())
 					return false;
-				save_widget_location($widget, $order, $column);
+				// save_widget_location($widget, $order, $column);
 				return true;
 				
 			}
