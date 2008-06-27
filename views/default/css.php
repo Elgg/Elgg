@@ -253,7 +253,7 @@ h6 { font-size: 0.8em; }
    color:white;
 }
 /* ***************************************
-  CUSTOMISE PANEL (PROFILE & DASHBOARD)
+  WIDGET PICKER (PROFILE & DASHBOARD)
 *************************************** */
 #customise_editpanel {
 	display:none;
@@ -261,26 +261,85 @@ h6 { font-size: 0.8em; }
 	padding:20px;
 	background: #dedede;
 }
+
+/* Top area - instructions */
+.customise_editpanel_instructions {
+	width:510px;
+	padding:0 0 10px 0;
+}
+.customise_editpanel_instructions h2 {
+	padding:0 0 10px 0;
+}
+.customise_editpanel_instructions p {
+	margin:0 0 5px 0;
+	line-height: 1.4em;
+}
+
+/* RHS (widget gallery area) */
+#customise_editpanel_rhs {
+	float:right;
+	width:230px;
+	background:white;
+}
+#customise_editpanel #customise_editpanel_rhs h2 {
+	color:#333333;
+	font-size: 1.4em;
+	margin:0;
+	padding:6px;
+}
+#widget_picker_gallery {
+	/* float:right;*/
+	border-top:1px solid #cccccc;
+	background:white;
+	width:210px;
+	height:350px;
+	padding:10px;
+	overflow:scroll;
+	overflow-x:hidden;
+}
+
+/* main page widget area */
 #customise_page_view {
 	width:490px;
 	padding:10px;
-	background:#666666;
+	margin:0 0 10px 0;
+	background:white;
 }
+#customise_page_view h2 {
+	border-top:1px solid #cccccc;
+	border-right:1px solid #cccccc;
+	border-left:1px solid #cccccc;
+	margin:0;
+	padding:5px;
+	color: #0054a7;
+	background: #f5f5f5;
+	font-size:1.25em;
+	line-height: 1.2em;
+}
+#customise_page_view h2.mainwidgets {
+	width:255px;
+}
+
 #main_widgets {
-	padding-bottom:40px;
-	min-height: 200px;
+	width:255px;
+	margin:0 10px 0 0;
+	padding:5px 5px 40px 5px;
+	min-height: 190px;
+	border:1px solid #cccccc;
 }
 #rightsidebar_widgets {
-	padding-bottom:40px;
-	min-height: 200px;
+	width:200px;
+	padding:5px 5px 40px 5px;
+	min-height: 190px;
+	border:1px solid #cccccc;
 }
-#customise_editpanel h2 {
-	color:white;
-	font-size: 1.2em;
+
+/* IE6 fix */
+* html #main_widgets { 
+	height: 190px;
 }
-#customise_editpanel #widget_picker_gallery h2 {
-	color:#333333;
-	font-size: 1.2em;
+* html #rightsidebar_widgets { 
+	height: 190px;
 }
 
 #customise_editpanel table.draggable_widget {
@@ -291,19 +350,6 @@ h6 { font-size: 0.8em; }
 	border:1px solid #cccccc;
 }
 
-.draggable_widget_over {
-	border: 1px solid white !important;
-}
-
-#widget_picker_gallery {
-	float:right;
-	border:1px solid black;
-	width:210px;
-	height:198px;
-	padding:10px;
-	overflow:auto;
-	overflow-x:hidden;
-}
 #widget_picker_gallery table.draggable_widget {
 	width:200px;
 	background: #cccccc;
@@ -344,16 +390,31 @@ h6 { font-size: 0.8em; }
 	display:none;
 	width: 200px;
 }
-.droppable-active {
-		
-}
+/* droppable area hover class  */
 .droppable-hover {
-	outline: 1px dotted white;
+	/* outline: 2px dotted red; */
+	background:#fdffc3;
 }
+/* target drop area class */
+.placeholder {
+	border:2px dashed #AAA;
+	width:196px !important;
+	margin: 10px 0 10px 0;
+}
+/* class of widget while dragging */
 .ui-sortable-helper {
-	background: lime;
+	background: #4690d6;
+	color:white;
 	padding: 4px;
 	margin: 10px 0 0 0;
+}
+/* IE6 fix */
+* html .placeholder { 
+	margin: 0;
+}
+/* IE7 */
+*:first-child+html .placeholder {
+	margin: 0;
 }
 /* IE6 fix */
 * html .ui-sortable-helper h3 { 
@@ -370,10 +431,7 @@ h6 { font-size: 0.8em; }
 	padding-top: 4px;
 }
 
-.placeholder {
-	border:2px dashed #AAA;
-	margin: 10px 0 10px 0;
-}
+
 
 /* ***************************************
   TOPMENU (IN HEADER)
@@ -494,27 +552,6 @@ a.toggle_customise_edit_panel:hover {
     margin:20px 20px 0px 20px;
 }
 
-/* ***************************************
-	COMMENTS
-*************************************** */
-
-.generic_comment {
-	margin-bottom: 50px;
-	padding-bottom: 10px;
-}
-.generic_comment_icon {
-	position: absolute;
-}
-.generic_comment_details {
-	margin-left: 60px;
-	border: 0px;
-	border-bottom: 1px;
-	border-style: solid;
-}
-.generic_comment_owner {
-	font-size: 80%;
-	margin: 0px;
-}
 
 /* ***************************************
 	ELGG TOOLBAR
@@ -819,6 +856,29 @@ p.user_menu_friends_of {
 
 
 /* ***************************************
+	COMMENTS
+*************************************** */
+
+.generic_comment {
+	margin-bottom: 50px;
+	padding-bottom: 10px;
+}
+.generic_comment_icon {
+	position: absolute;
+}
+.generic_comment_details {
+	margin-left: 60px;
+	border: 0px;
+	border-bottom: 1px;
+	border-style: solid;
+}
+.generic_comment_owner {
+	font-size: 80%;
+	margin: 0px;
+}
+
+
+/* ***************************************
 	SEARCH LISTINGS	
 *************************************** */
 
@@ -846,9 +906,6 @@ p.user_menu_friends_of {
 	height: 40px;
 }
 	
-.search_listing_info p {
-	margin: 0px;
-}
 
 /* ***************************************
 	STATUS

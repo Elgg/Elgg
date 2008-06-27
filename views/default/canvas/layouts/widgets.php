@@ -25,8 +25,10 @@
 
 <div id="customise_editpanel">
 
-<div id="widget_picker_gallery">
+<div id="customise_editpanel_rhs">
 <h2><?php echo elgg_echo("widgets:gallery"); ?></h2>
+<div id="widget_picker_gallery">
+
 
 <?php
 
@@ -42,7 +44,7 @@
 		<input type="hidden" name="guid" value="0" />
 	</h3>
 </td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_remove.gif" class="remove_me" /></a></td>
+<td width="17px" align="right"><!-- <a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_remove.gif" class="remove_me" /></a> --></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_info.gif" class="more_info" /></a></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_drag.gif" class="drag_handle" /></a></td>
 </tr></table>
@@ -51,6 +53,19 @@
 	}
 ?>
 
+<br /><!-- bit of space at the bottom of the widget gallery -->
+
+</div><!-- /#customise_editpanel_rhs -->
+</div><!-- /#widget_picker_gallery -->
+
+
+<div class="customise_editpanel_instructions">
+<h2>Add widgets to your page</h2>
+<p>
+Choose the features you want to add to your page by dragging them from the <b>Widget gallery</b> to either the <b>Main content area</b> or the <b>Sidebar</b>, and position them where you would like them to appear.
+</p>
+<p>To remove a widget drag it back to the <b>Widget gallery</b>.
+</p>
 </div>
 
 
@@ -58,10 +73,10 @@
 <table>
 <tr>
 
-<td width="300px">
-
+<td>
+<h2 class="mainwidgets"><?php echo elgg_echo("widgets:maincontent"); ?></h2>
 <div id="main_widgets">
-<h2><?php echo elgg_echo("widgets:maincontent"); ?></h2>
+
 <?php
 	$mainwidgetstring = "";
 	if (is_array($area1widgets) && sizeof($area1widgets) > 0) {
@@ -82,7 +97,7 @@
 		<input type="hidden" name="guid" value="<?php echo $widget->getGUID(); ?>" />
 	</h3>
 </td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_remove.gif" class="remove_me" /></a></td>
+<td width="17px" align="right"><!-- <a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_remove.gif" class="remove_me" /></a> --></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_info.gif" class="more_info" /></a></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_drag.gif" class="drag_handle" /></a></td>
 </tr></table>
@@ -95,9 +110,10 @@
 </div>
 </td>
 
-<td width="240px">
-<div id="rightsidebar_widgets">
+<td>
+
 <h2><?php echo elgg_echo("widgets:sidebar"); ?></h2>
+<div id="rightsidebar_widgets">
 
 <?php
 	$sidebarwidgetstring = "";
@@ -119,7 +135,7 @@
 		<input type="hidden" name="guid" value="<?php echo $widget->getGUID(); ?>" />
 	</h3>
 </td>
-<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_remove.gif" class="remove_me" /></a></td>
+<td width="17px" align="right"><!-- <a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_remove.gif" class="remove_me" /></a> --></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_info.gif" class="more_info" /></a></td>
 <td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_drag.gif" class="drag_handle" /></a></td>
 </tr></table>

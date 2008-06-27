@@ -27,36 +27,11 @@ $(document).ready(function () {
     }); 
     
     
-    // bind more info buttons (wrapped in a function so it can be called when new widgets are dragged/created)
-    //setupMoreInfoButton();
-    widget_moreinfo();
-    
-    // widget hover class
-	$("table.draggable_widget").bind("mouseenter mouseleave", function(e){
-		$(this).toggleClass("draggable_widget_over");
-	});
-       
-    
-	// remove widget button
-	$('img.remove_me').click(function () {
-		$(this.parentNode.parentNode.parentNode.parentNode.parentNode).fadeOut("medium", function () {
-			$(this).remove();
-			
-			var widgetNameMain = outputWidgetList('#main_widgets');
-			document.getElementById('debugField1').value = widgetNameMain;
-			
-			var widgetNameRight = outputWidgetList('#rightsidebar_widgets');
-			document.getElementById('debugField2').value = widgetNameRight;
 
-		  });
-
-		return false;
-    });
-
-	// draggable, droppable, and sortable elements
-	
+	//////////////////
+	// WIDGET GALLERY
 	// sortable widgets
-	var els = ['#main_widgets', '#rightsidebar_widgets'];
+	var els = ['#main_widgets', '#rightsidebar_widgets', '#widget_picker_gallery'];
 	var $els = $(els.toString());
 	
 	$els.sortable({
@@ -64,17 +39,18 @@ $(document).ready(function () {
 		handle: '.drag_handle',
 		cursor: 'move',
 		revert: true,
-		opacity: 0.8,
+		opacity: 1.0,
 		appendTo: 'body',
 		placeholder: 'placeholder',
 		connectWith: els,
-		start:function(e,ui) {	// prevent droppable drop function from running when resorting main lists
-			$('#rightsidebar_widgets').droppable("disable");
-			$('#main_widgets').droppable("disable");		
+		start:function(e,ui) {
+			// prevent droppable drop function from running when re-sorting main lists
+			//$('#rightsidebar_widgets').droppable("disable");
+			//$('#main_widgets').droppable("disable");	
 		},
-		stop: function(e,ui) {			
+		stop: function(e,ui) {	
+			// refresh list before updating hidden fields with new widget order		
 			$(this).sortable( "refresh" );
-			
 			var widgetNameRight = outputWidgetList('#rightsidebar_widgets');
 			var widgetNameMain = outputWidgetList('#main_widgets');
 			document.getElementById('debugField1').value = widgetNameMain;
@@ -82,17 +58,57 @@ $(document).ready(function () {
 		}
 	});
 	
-	// define draggable widgets from gallery
-	$("#widget_picker_gallery .draggable_widget").draggable({
-		helper: 'clone',
-		containment: '#customise_editpanel',
-		start: function(ev, ui) {
-			$('#rightsidebar_widgets').droppable("enable");
-			$('#main_widgets').droppable("enable");
-		}
+    // bind more info buttons
+    // it's wrapped in a function so it can be called when new widgets are created
+    widget_moreinfo();
+
+	// setup hover class for dragged widgets
+	$("#rightsidebar_widgets").droppable({
+		accept: ".draggable_widget",
+		hoverClass: 'droppable-hover'
 	});
+	$("#main_widgets").droppable({
+		accept: ".draggable_widget",
+		hoverClass: 'droppable-hover'
+	});
+
+
+    /*
+    // widget hover class
+	$("table.draggable_widget").bind("mouseenter mouseleave", function(e){
+		$(this).toggleClass("draggable_widget_over");
+	});
+    
+*/
+/*
+
+	// remove widget button
+	$('img.remove_me').click(function () {
+		$(this.parentNode.parentNode.parentNode.parentNode.parentNode).fadeOut("medium", function () {
+			$(this).remove();
+			// updating hidden fields with new widget order
+			var widgetNameMain = outputWidgetList('#main_widgets');
+			document.getElementById('debugField1').value = widgetNameMain;
+			var widgetNameRight = outputWidgetList('#rightsidebar_widgets');
+			document.getElementById('debugField2').value = widgetNameRight;
+		  });
+
+		return false;
+    });
+
+*/	
+	// define draggable widgets from gallery
+	//$("#widget_picker_gallery .draggable_widget").draggable({
+	//	helper: 'clone',
+	//	containment: '#customise_editpanel',
+	//	start: function(ev, ui) {
+	//		$('#rightsidebar_widgets').droppable("enable");
+	//		$('#main_widgets').droppable("enable");
+	//	}
+	//});
 	
 	// define what happens when new widgets are dragged from the gallery 
+/*
 	$("#rightsidebar_widgets").droppable({
 		accept: ".draggable_widget",
 		hoverClass: 'droppable-hover',
@@ -118,6 +134,10 @@ $(document).ready(function () {
 			document.getElementById('debugField2').value = widgetNameRight;
 		 }
 	});
+
+*/	
+/*
+
 	$("#main_widgets").droppable({
 		accept: ".draggable_widget",
 		hoverClass: 'droppable-hover',
@@ -144,8 +164,9 @@ $(document).ready(function () {
 		 }
 	});
 
-    
-});
+
+*/    
+}); /* end document ready function */
 
 
 jQuery.fn.makeDelimitedList = function(elementAttribute) {
@@ -212,8 +233,6 @@ function widget_moreinfo() {
 		var widgetdescription = $("input[@name='description']", this.parentNode.parentNode.parentNode ).attr('value');
 
 		$("body").append("<p id='widget_moreinfo'><b>"+ widgetdescription +" </b></p>");
-		
-		// alert('e.pageX = '+e.pageX);
 		
 		if (e.pageX < 900) {
 			$("#widget_moreinfo")
