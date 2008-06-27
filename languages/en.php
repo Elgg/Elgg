@@ -506,7 +506,18 @@ Your password has been reset to: %s",
 		 */
 			'xmlrpc:noinputdata'	=>	"Input data missing",
 	
-			
+		/**
+		 * Comments
+		 */
+	
+			'generic_comments:add' => "Add a comment",
+			'generic_comments:text' => "Comment",
+			'generic_comment:posted' => "Your comment was successfully posted.",
+			'generic_comment:deleted' => "Your comment was successfully deleted.",
+			'generic_comment:blank' => "Sorry; you need to actually put something in your comment before we can save it.",
+			'generic_comment:notfound' => "Sorry; we could not find the specified item.",
+			'generic_comment:notdeleted' => "Sorry; we could not delete this comment.",
+			'generic_comment:failure' => "An unexpected error occurred when adding your comment. Please try again.",
 	
 		/**
 		 * Languages according to ISO 639-1

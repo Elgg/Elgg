@@ -321,7 +321,7 @@
 				$name = get_metastring($intname);
 			}
 			if (empty($name)) { return ""; }
-
+			
 			if (elgg_view_exists("annotation/{$name}")) {
 				return elgg_view("annotation/{$name}",array(
 																	'annotation' => $annotation,
@@ -413,7 +413,7 @@
 														));
 			
 			$html .= $nav;
-														
+
 			if (is_array($annotations) && sizeof($annotations) > 0) {
 				foreach($annotations as $annotation) {
 					$html .= elgg_view_annotation($annotation, "", false);
@@ -422,7 +422,7 @@
 			
 			if ($count)
 				$html .= $nav;
-			
+				
 			return $html;
 			
 		}
@@ -462,6 +462,25 @@
 			return elgg_view('page_elements/title', array('title' => $title));
 			
 		}
+		
+	/**
+	 * Automatically views comments and a comment form relating to the given entity
+	 *
+	 * @param ElggEntity $entity The entity to comment on
+	 * @return string|false The HTML (etc) for the comments, or false on failure
+	 */
+		function elgg_view_comments($entity){
+            
+			if (!($entity instanceof ElggEntity)) return false;
+            
+            $comments = list_annotations($entity->getGUID(),'generic_comment');
+            
+            //display the comment form
+            $comments .= elgg_view('comments/forms/edit',array('entity' => $entity));
+            
+            return $comments;
+           
+        }
 		
 	/**
 	 * Wrapper function to display search listings.
@@ -1491,7 +1510,13 @@
 		$port = ($_SERVER["SERVER_PORT"] == "80") ? "" : (":".$_SERVER["SERVER_PORT"]);
 		return $protocol . "://" . $_SERVER['SERVER_NAME'] . $port . $_SERVER['REQUEST_URI'];
 	}
-
-		
+	
+	function elgg_init() {
+		// Important actions
+			register_action('comments/add');
+			register_action('comments/delete');
+	}
+	
+	register_elgg_event_handler('init','system','elgg_init');
 	
 ?>
