@@ -15,6 +15,9 @@
 	// Load Elgg engine
 		require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
 		
+	// Set context
+		set_context('search');
+		
 	// Get input
 		$tag = get_input('tag');
 		$subtype = get_input('subtype');
