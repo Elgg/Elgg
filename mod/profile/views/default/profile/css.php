@@ -2,30 +2,45 @@
 
 ?>
 
-	.profile_listing {
+/* ***************************************
+	AVATAR CONTEXTUAL MENU
+*************************************** */	
 	
-		display: block;
-		background-color: #eee;
-		padding: 5px;
-		margin-bottom: 10px;
-	
-	}
+.usericon {
+	position:relative;
+}
 
-	.profile_listing_icon {
-	
-		position: absolute;
-	
-	}
-	
-	.profile_listing_info {
-	
-		margin-left: 60px;
-		height: 40px;
-	
-	}
-	
-	.profile_listing_info p {
-	
-		margin: 0px;
-	
-	}
+.avatar_menu_button {
+	width:15px;
+	height:15px;
+	position:absolute;
+	cursor:pointer;
+	display:none;
+	right:0;
+	bottom:0;
+}
+
+.usericon div.sub_menu { 
+	z-index:9999; 
+	display:none; 
+	position:absolute; 
+	padding:2px; 
+	margin:0; 
+	border-top:solid 1px #E5E5E5; 
+	border-left:solid 1px #E5E5E5; 
+	border-right:solid 1px #999999; 
+	border-bottom:solid 1px #999999;  
+	width:160px; 
+	background:#FFFFFF; 
+	text-align:left;
+}
+
+* html .usericon div.sub_menu {  } /* IE6 */
+*+html .usericon div.sub_menu {  } /* IE7 */
+
+.usericon div.sub_menu a {margin:0;padding:2px;}
+.usericon div.sub_menu a:link, 
+.usericon div.sub_menu a:visited, 
+.usericon div.sub_menu a:hover{ display:block;}	
+.usericon div.sub_menu a:hover{ background:#cccccc; text-decoration:none;}
+.usericon a.item_line { border-top:solid 1px #dddddd;}
