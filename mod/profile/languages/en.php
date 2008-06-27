@@ -36,7 +36,7 @@
 			'profile:mobile' => "Mobile phone",
 			'profile:website' => "Website",
 
-			'profile:river:update' => "%s updated his or her profile",
+			'profile:river:update' => "%s updated their profile",
 	
 		/**
 		 * Status messages
