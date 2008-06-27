@@ -812,8 +812,12 @@ p.user_menu_friends_of {
 	position: absolute;
 }
 
-.search_listing_icon .user_icon .icon {
+.search_listing_icon img {
 	width: 40px;
+}
+
+.search_listing_icon .avatar_menu_button img {
+	width: 15px;
 }
 	
 .search_listing_info {
