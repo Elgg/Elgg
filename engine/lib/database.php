@@ -162,8 +162,8 @@
             {
             	$DB_PROFILE[] = $query;
             	
-            	error_log("--- DB QUERY --- $query");
-            	error_log("--- EXPLANATION --- " . print_r(explain_query($query,$dblink), true));
+            	//error_log("--- DB QUERY --- $query");
+            	//error_log("--- EXPLANATION --- " . print_r(explain_query($query,$dblink), true));
             }
             
             if ($result = mysql_query("$query", $dblink)) {
@@ -205,8 +205,8 @@
             {
             	$DB_PROFILE[] = $query;
             	
-            	error_log("--- DB QUERY --- $query");
-            	error_log("--- EXPLANATION --- " . print_r(explain_query($query,$dblink), true));
+            	//error_log("--- DB QUERY --- $query");
+            	//error_log("--- EXPLANATION --- " . print_r(explain_query($query,$dblink), true));
             }
             
             if ($result = mysql_query("$query", $dblink)) {
@@ -243,7 +243,7 @@
             {
             	$DB_PROFILE[] = $query;
             	
-            	error_log("--- DB QUERY --- $query");
+            	//error_log("--- DB QUERY --- $query");
             }
             
             if (mysql_query("$query", $dblink)) 
@@ -274,7 +274,7 @@
             {
             	$DB_PROFILE[] = $query; 
             	
-            	error_log("--- DB QUERY --- $query");
+            	//error_log("--- DB QUERY --- $query");
             }
             
             if (mysql_query("$query", $dblink))
@@ -306,7 +306,7 @@
             {
             	$DB_PROFILE[] = $query;
             	
-            	error_log("--- DB QUERY --- $query");
+            	//error_log("--- DB QUERY --- $query");
             }
             
             if (mysql_query("$query", $dblink)) 
