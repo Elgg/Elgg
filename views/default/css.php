@@ -811,6 +811,10 @@ p.user_menu_friends_of {
 .search_listing_icon {
 	position: absolute;
 }
+
+.search_listing_icon img {
+	width: 40px;
+}
 	
 .search_listing_info {
 	margin-left: 60px;
