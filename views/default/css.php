@@ -812,7 +812,7 @@ p.user_menu_friends_of {
 	position: absolute;
 }
 
-.search_listing_icon img {
+.search_listing_icon .user_icon .icon {
 	width: 40px;
 }
 	
