@@ -791,6 +791,8 @@
 		
 		$subtype_id = (int)$subtype_id;
 		
+		if (!$subtype_id) return false;
+		
 		$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes where id=$subtype_id");
 		if ($result)
 			return $result->subtype;
@@ -829,7 +831,9 @@
 	{
 		global $CONFIG;
 		
-		$subtype = (int)$subtype_id;
+		$subtype_id = (int)$subtype_id;
+		
+		if (!$subtype_id) return false;
 		
 		$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes where id=$subtype_id");
 		if ($result)
