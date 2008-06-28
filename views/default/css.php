@@ -7,7 +7,6 @@
 	 * @package Elgg
 	 * @subpackage Core
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author (s) Pete Harris / David Tosh
 	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.org/
 	 * 
@@ -920,8 +919,13 @@ p.user_menu_friends_of {
 }
 	
 .search_listing_info {
-	margin-left: 60px;
+	margin-left: 50px;
 	height: 40px;
+}
+
+.search_listing_info p {
+	margin:0 0 3px 0;
+	line-height:1.2em;
 }
 	
 
@@ -932,6 +936,16 @@ p.user_menu_friends_of {
 	font-size: 1.6em;
 	font-family:Arial,Helvetica,sans-serif;
 	width:94%;
+}
+/* friends status on 'friends of' page */
+.friends_status {
+	float:right;
+	width:500px;
+	text-align:right;
+	margin: 0 4px 0 0;
+}
+.status_timestamp {
+	color:#666666;	
 }
 
 /* ***************************************
@@ -954,11 +968,6 @@ p.user_menu_friends_of {
 
 .page_title {
 	padding:0px 10px 20px 0px;
-}
-	
-.search_listing_info p {
-	margin:0 0 3px 0;
-	line-height:1.2em;
 }
 	
 	
