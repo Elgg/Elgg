@@ -956,6 +956,10 @@ p.user_menu_friends_of {
 	padding:0px 10px 20px 0px;
 }
 	
+.search_listing_info p {
+	margin:0 0 3px 0;
+	line-height:1.2em;
+}
 	
 	
 	
