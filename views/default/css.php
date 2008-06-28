@@ -680,6 +680,24 @@ input[type="submit"] {
 	cursor: pointer;
 }
 
+.cancel_button {
+	font: 12px/100% Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #999999;
+	background:#dddddd;
+	border: 1px solid #999999;
+	-webkit-border-radius: 3px; 
+	-moz-border-radius: 3px;
+	width: auto;
+	height: 25px;
+	padding: 2px 6px 2px 6px;
+	margin:10px 0 10px 10px;
+	cursor: pointer;
+}
+.cancel_button:hover {
+	background: #cccccc;
+}
+
 .input-text,
 .input-tags,
 .input-url,

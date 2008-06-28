@@ -160,6 +160,7 @@ Choose the features you want to add to your page by dragging them from the <b>Wi
 <input type="hidden" name="context" value="<?php echo get_context(); ?>" />
 <input type="hidden" name="owner" value="<?php echo page_owner(); ?>" />
 <input type="submit" value="Save changes" class="submit_button" onclick="$('a.toggle_customise_edit_panel').click();" />
+<input type="button" value="Cancel" class="cancel_button" onclick="$('a.toggle_customise_edit_panel').click();" />
 
 </form>
 </div><!-- /customise_editpanel -->
