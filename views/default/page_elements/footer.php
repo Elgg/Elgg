@@ -17,7 +17,43 @@
 <div class="clearfloat"></div>
 
 <div id="layout_footer">
-<p><a href="http://elgg.com/">Elgg</a></p>
+<table width="958" height="79" border="1" cellpadding="0" cellspacing="0">
+	<tr>
+		<td width="310" height="50">
+		<a href="http://www.elgg.org" target="_blank">
+		<img src="<?php echo $vars['url']; ?>_graphics/footer_logo.gif" border="0" />
+		</a>
+		</td>
+		
+		<td width="648" height="50" align="right">
+		<p class="footer_toolbar_links">
+		|  <a href="">Dashboard</a>
+		|  <a href="">Profile</a>
+		|  <a href="">Messages</a>
+		|  <a href="">Shouts</a>
+		|  <a href="">Blog</a>
+		|  <a href="">Forums</a>
+		|  <a href="">Sharing</a>
+		|  <a href="">Files</a>  |
+		</p>
+		</td>
+	</tr>
+	
+	<tr>
+		<td width="310" height="28">
+		<p><small>Copyright &copy; 2008 elgg.org. All rights reserved.</small></p>
+		</td>
+		
+		<td width="648" height="28" align="right">
+		<p class="footer_legal_links"><small>
+		 | <a href="">Privacy Statement</a>
+		 | <a href="">Security Statement</a>
+		 | <a href="">Terms of Use</a> |
+		</small>
+		</p>
+		</td>
+	</tr>
+</table>
 </div><!-- /#layout_footer -->
 
 <div class="clearfloat"></div>

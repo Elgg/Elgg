@@ -252,12 +252,22 @@ h6 { font-size: 0.8em; }
 	background: url(<?php echo $vars['url']; ?>_graphics/footer_back.gif) repeat-x left top;
 	height:80px;
 }
-#layout_footer p {
-   padding:20px;
+#layout_footer table {
+   margin:0 0 0 20px;
 }
-#layout_footer a {
+#layout_footer a, #layout_footer p {
    color:white;
+   margin:0;
 }
+#layout_footer .footer_toolbar_links {
+	text-align:right;
+	padding:15px 0 0 0;
+	font-size:1.2em;
+}
+#layout_footer .footer_legal_links {
+	text-align:right;
+}
+
 /* ***************************************
   WIDGET PICKER (PROFILE & DASHBOARD)
 *************************************** */
@@ -558,18 +568,18 @@ a.toggle_customise_edit_panel:hover {
     background:#F7DAD8;
     color:#000000;
     padding:3px 10px 3px 10px;
-    margin:20px 20px 0px 20px;
+    margin:20px 20px 0px 180px;
     z-index: 99999;
     position:absolute;
-    width:936px;
+    width:776px;
 }
 /* IE6 fix */
 * html .messages { 
-	width:777px;
+	margin:20px 20px 0px 20px;
 }
 /* IE7 */
 *:first-child+html .messages {
-	width:777px;
+	margin:20px 20px 0px 20px;
 }
 
 /* ***************************************
@@ -993,8 +1003,9 @@ p.user_menu_friends_of {
 	padding:0px 10px 20px 0px;
 }
 	
-	
-	
+#forums, #forum_topics, #topic_posts {
+	background:white;
+}	
 	
 	
 	
