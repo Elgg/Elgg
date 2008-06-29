@@ -77,6 +77,7 @@ body {
 	background: #4690d6;
 	font: 75%/1.5  "Lucida Grande", "Lucida Sans", Verdana, sans-serif;
 	color: #333333;
+	background: url(<?php echo $vars['url']; ?>_graphics/page_back_linen.gif) repeat left top;
 }
 a {
 	color: #4690d6;
@@ -135,14 +136,15 @@ h6 { font-size: 0.8em; }
 #page_container {
 	margin:0;
 	padding:0;
+	background: url(<?php echo $vars['url']; ?>_graphics/page_back_linen_shadow.gif) repeat-y center top;
 }
 #page_wrapper {
 	width:998px;
-	margin:4px auto;
+	margin:0 auto;
 	min-height: 300px;
-	background: white;
-	border-right: 1px solid #666666;
-	border-bottom: 1px solid #000000;
+	background: #f4f4f4;
+	border-right: 1px solid #333333;
+	border-bottom: 1px solid #333333;
 }
 
 #layout_header {
@@ -151,6 +153,7 @@ h6 { font-size: 0.8em; }
 	width:100%;
 	height:67px;
 	border-bottom:1px solid #4690d6;
+	background:white;
 }
 #wrapper_header {
 	margin:0;
@@ -208,7 +211,7 @@ h6 { font-size: 0.8em; }
 * html #layout_maincontent { 
 	height:360px;
 }
-
+/* 
 #wrapper_sidebar_right .collapsable_box_content {
 	border-left: 1px solid #cccccc;
 	border-right: 1px solid #cccccc;
@@ -217,7 +220,7 @@ h6 { font-size: 0.8em; }
 #wrapper_sidebar_right .collapsable_box_header {
 	border: 1px solid #cccccc;
 }
-
+*/
 #wrapper_maincontent .collapsable_box_content  {
 	margin:0;
 	/* padding:0; */
@@ -240,6 +243,10 @@ h6 { font-size: 0.8em; }
 }
 #layout_spotlight .collapsable_box_content p {
 	padding:0;
+}
+#wrapper_spotlight .collapsable_box_header  {
+	border-left: none;
+	border-right: none;
 }
 #layout_footer {
 	background: url(<?php echo $vars['url']; ?>_graphics/footer_back.gif) repeat-x left top;
@@ -457,11 +464,6 @@ h6 { font-size: 0.8em; }
 #topmenu .usericon {
 	float:right;
 }
-/* temp fix - force user avatar to mini size 
-#topmenu .usericon img {
-	width:40px;
-	height:40px;
-}*/
 
 /* ***************************************
   COLLAPSABLE BOXES
@@ -496,14 +498,22 @@ a.toggle_customise_edit_panel:hover {
 	border-top:2px solid #4690d6;
 	padding: 5px 10px 5px 10px;
 	margin:0;
+	
+	border-left: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
+	border-bottom: 1px solid #cccccc;
 }
 .collapsable_box_content {
 	padding: 10px;
 	margin:0;
 	height:auto;
-	border-left:2px solid white;
+	/* border-left:2px solid white;
 	border-right:2px solid white;
-	border-bottom:2px solid white;
+	border-bottom:2px solid white; */
+	
+	border-left: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
+	border-bottom: 1px solid #cccccc;
 }
 .collapsable_box_editpanel {
 	display: none;
@@ -546,11 +556,21 @@ a.toggle_customise_edit_panel:hover {
 .messages {
     border:1px solid #D3322A;
     background:#F7DAD8;
-    color:#000;
+    color:#000000;
     padding:3px 10px 3px 10px;
     margin:20px 20px 0px 20px;
+    z-index: 99999;
+    position:absolute;
+    width:936px;
 }
-
+/* IE6 fix */
+* html .messages { 
+	width:777px;
+}
+/* IE7 */
+*:first-child+html .messages {
+	width:777px;
+}
 
 /* ***************************************
 	ELGG TOOLBAR
@@ -588,7 +608,7 @@ a.toggle_customise_edit_panel:hover {
 	padding: 3px 3px 3px 10px;
 }
 .elggtoolbar li {
-	background: white;
+	background: #f4f4f4;
 }
 .elggtoolbar li a {
 	text-decoration: none;
@@ -603,7 +623,7 @@ a.toggle_customise_edit_panel:hover {
 .elggtoolbar h2.drawer-handle {
 	margin: 0;
 	padding: 1px 1px 1px 10px;
-	background-color: #f4f4f4;
+	background-color: white;
 	border-top: 1px solid #999999;
 	cursor: pointer;
 	font-size: 100%;
@@ -796,7 +816,10 @@ input[type="submit"] {
 *************************************** */
 #profile_info {
 	margin:0 0 20px 0;
+	padding:10px;
 	border-bottom:1px solid #cccccc;
+	border-right:1px solid #cccccc;
+	background: white;
 }
 #profile_menu_wrapper {
 	margin:10px 0 10px 0;
@@ -828,7 +851,7 @@ p.user_menu_friends_of {
 }
 #profile_info_column_right {
 	float:left;
-	width:296px;
+	width:260px;
 }
 #profile_info_column_right p {
 	margin:7px 0 7px 0;
