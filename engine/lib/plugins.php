@@ -287,6 +287,7 @@
 			if ($name!='title') 
 			{
 				$plugin->title = $plugin_name;
+				$plugin->access_id = 2;
 				$plugin->$name = $value;
 				$plugin->save();
 				
