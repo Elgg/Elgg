@@ -12,5 +12,9 @@
 	 */
 ?>
 
-
-<?php echo elgg_view('account/forms/register', array('show_admin'=>true)); ?>
+<div>
+	<?php echo elgg_echo('admin:user:adduser:label'); ?>
+</div>
+<div id="add_user_showhide">
+<?php echo elgg_view('account/forms/useradd', array('show_admin'=>true)); ?>
+</div>

@@ -943,7 +943,8 @@
 		register_page_handler('friends','friends_page_handler');
 		register_page_handler('friendsof','friends_of_page_handler');
 		register_action("register",true);
-   		register_action("friends/add");
+   		register_action("useradd",true);
+		register_action("friends/add");
    		register_action("friends/remove");
 		register_action("email/confirm");
 

@@ -240,6 +240,10 @@
 			'registerok' => "You have successfully registered for %s.",
 			'registerbad' => "Your registration was unsuccessful. The username may already exist, or your passwords might not match.",
 	
+			'adduser' => "Add User",
+			'adduser:ok' => "You have successfully added a new user.",
+			'adduser:bad' => "The new user could not be created.",
+	
 			'user:set:name' => "Account name settings",
 			'user:name:label' => "Your name",
 			'user:name:success' => "Successfully changed your name on the system.",
@@ -270,6 +274,7 @@
 			
 			'admin:user' => "User Administration",
 			'admin:user:description' => "This admin panel allows you to control user settings for your site. Choose an option below to get started.",
+			'admin:user:adduser:label' => "Click here to add a new user...",
 			'admin:user:opt:linktext' => "Configure users...",
 			'admin:user:opt:description' => "Configure users and account information. ",
 			
