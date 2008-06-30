@@ -57,16 +57,17 @@
 	?>
 	<div class="collapsable_box_content">
 		<?php 
+
+		echo "<div id=\"widgetcontent{$vars['entity']->getGUID()}\">";
+		
 		
 	} // end if callback != "true"
 
-		echo "<div id=\"widgetcontent{$vars['entity']->getGUID()}\">";
-	
 		echo elgg_view("widgets/{$handler}/view",$vars); 
 		
-		echo "</div>";
-		
 	if ($callback != "true") {
+		
+		echo "</div>";
 		
 		?>
 	</div><!-- /.collapsable_box_content -->
