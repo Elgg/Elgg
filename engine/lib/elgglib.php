@@ -351,9 +351,10 @@
 	 * @param int $offset The current indexing offset
 	 * @param int $limit The number of entities to display per page
 	 * @param true|false $fullview Whether or not to display the full view (default: true)
+	 * @param string $viewtype "list" or "gallery" for search pages only (default: "list")
 	 * @return string The list of entities
 	 */
-		function elgg_view_entity_list($entities, $count, $offset, $limit, $fullview = true) {
+		function elgg_view_entity_list($entities, $count, $offset, $limit, $fullview = true, $viewtype = "list") {
 			
 			$count = (int) $count;
 			$offset = (int) $offset;
@@ -361,7 +362,23 @@
 			
 			$html = "";
 			
-			$nav = elgg_view('navigation/pagination',array(
+			$context = get_context();
+			
+			$nav = "";
+			
+			if ($context == "search" && $count > 0) {
+				$viewtype = get_input('search_viewtype','list');
+				$nav .= elgg_view("navigation/viewtype",array(
+			
+												'baseurl' => $_SERVER['REQUEST_URI'],
+												'offset' => $offset,
+												'count' => $count,
+												'viewtype' => $viewtype,
+			
+														));
+			}
+			
+			$nav .= elgg_view('navigation/pagination',array(
 			
 												'baseurl' => $_SERVER['REQUEST_URI'],
 												'offset' => $offset,
@@ -370,11 +387,16 @@
 														));
 			
 			$html .= $nav;
-														
-			if (is_array($entities) && sizeof($entities) > 0) {
-				foreach($entities as $entity) {
-					$html .= elgg_view_entity($entity, "", $fullview);
+
+			if ($viewtype == "list") {
+				if (is_array($entities) && sizeof($entities) > 0) {
+					foreach($entities as $entity) {
+						$html .= elgg_view_entity($entity, "", $fullview);
+					}
 				}
+			} else {
+				if (is_array($entities) && sizeof($entities) > 0)
+					$html .= elgg_view("navigation/gallery",array('entities' => $entities));
 			}
 			
 			if ($count)

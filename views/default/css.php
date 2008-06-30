@@ -960,6 +960,32 @@ p.user_menu_friends_of {
 	margin:0 0 3px 0;
 	line-height:1.2em;
 }
+
+.search_gallery_item {
+	border:1px dotted silver;
+    background-color: white;
+    width: 210px;
+    height: 200px;
+}
+
+.search_gallery_item .search_listing {
+	background: none;
+	text-align: center;
+}
+
+.search_gallery_item .search_listing_icon {
+	position: absolute;
+	margin-bottom: 20px;
+}
+
+.search_gallery_item .search_listing_info {
+	margin: 5px;
+}
+
+.search_gallery_item .search_listing_info p {
+	margin: 5px;
+	margin-bottom: 10px;
+}
 	
 
 /* ***************************************

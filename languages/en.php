@@ -229,6 +229,10 @@
 			'next' => "Next",
 			'previous' => "Previous",
 	
+			'viewtype:change' => "Change listing type",
+			'viewtype:list' => "List view",
+			'viewtype:gallery' => "Gallery",
+	
 		/**
 		 * Account
 		 */
