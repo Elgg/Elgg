@@ -319,6 +319,9 @@
 	
 			'admin:user:resetpassword:yes' => "Password reset, user notified.",
 			'admin:user:resetpassword:no' => "Password could not be reset.",
+	
+			'admin:user:makeadmin:yes' => "User is now an admin.",
+			'admin:user:makeadmin:no' => "We could not make this user an admin.",
 			
 		/**
 		 * User settings
@@ -365,6 +368,7 @@
 			'disable' => "Disable",
 	
 			'resetpassword' => "Reset password",
+			'makeadmin' => "Make admin",
 	
 			'option:yes' => "Yes",
 			'option:no' => "No",
