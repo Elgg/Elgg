@@ -39,6 +39,9 @@
 <table class="draggable_widget" cellspacing="0"><tr><td width="149px">
 	<h3>
 		<?php echo $widget->name; ?>
+		<input type="hidden" name="multiple" value="<?php echo $widgettypes[$widget->handler]->multiple; ?>" />
+		<input type="hidden" name="side" value="<?php echo in_array('side',$widgettypes[$widget->handler]->positions); ?>" />
+		<input type="hidden" name="main" value="<?php echo in_array('main',$widgettypes[$widget->handler]->positions); ?>" />
 		<input type="hidden" name="handler" value="<?php echo htmlentities($handler); ?>" />
 		<input type="hidden" name="description" value="<?php echo htmlentities($widget->description); ?>" />
 		<input type="hidden" name="guid" value="0" />
@@ -93,6 +96,9 @@ Choose the features you want to add to your page by dragging them from the <b>Wi
 		<input type="hidden" name="handler" value="<?php 
 			echo $widget->handler; 
 		?>" />
+		<input type="hidden" name="multiple" value="<?php echo $widgettypes[$widget->handler]->multiple; ?>" />
+		<input type="hidden" name="side" value="<?php echo in_array('side',$widgettypes[$widget->handler]->positions); ?>" />
+		<input type="hidden" name="main" value="<?php echo in_array('main',$widgettypes[$widget->handler]->positions); ?>" />
 		<input type="hidden" name="description" value="<?php echo htmlentities($widgettypes[$widget->handler]->description); ?>" />
 		<input type="hidden" name="guid" value="<?php echo $widget->getGUID(); ?>" />
 	</h3>
@@ -131,6 +137,9 @@ Choose the features you want to add to your page by dragging them from the <b>Wi
 		<input type="hidden" name="handler" value="<?php 
 			echo $widget->handler; 
 		?>" />
+		<input type="hidden" name="multiple" value="<?php echo $widgettypes[$widget->handler]->multiple; ?>" />
+		<input type="hidden" name="side" value="<?php echo in_array('side',$widgettypes[$widget->handler]->positions); ?>" />
+		<input type="hidden" name="main" value="<?php echo in_array('main',$widgettypes[$widget->handler]->positions); ?>" />
 		<input type="hidden" name="description" value="<?php echo htmlentities($widgettypes[$widget->handler]->description); ?>" />
 		<input type="hidden" name="guid" value="<?php echo $widget->getGUID(); ?>" />
 	</h3>

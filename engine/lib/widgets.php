@@ -196,10 +196,13 @@
 	 * @param string $handler The identifier for the widget handler
 	 * @param string $name The name of the widget type
 	 * @param string $description A description for the widget type
+	 * @param string $context A comma-separated list of contexts where this widget is allowed (default: 'all')
+	 * @param true|false $multiple Whether or not multiple instances of this widget are allowed on a single dashboard (default: false)
+	 * @param string $position A comma-separated list of positions on the page (side or main) where this widget is allowed (default: "side,main")
 	 * @return true|false Depending on success
 	 */
 		
-		function add_widget_type($handler, $name, $description) {
+		function add_widget_type($handler, $name, $description, $context = "all", $multiple = false, $positions = "side,main") {
 
 			if (!empty($handler) && !empty($name)) {
 				
@@ -214,6 +217,9 @@
 				$handlerobj = new stdClass;
 				$handlerobj->name = $name;
 				$handlerobj->description = $description;
+				$handlerobj->context = explode(",",$context);
+				$handlerobj->multiple = $multiple;
+				$handlerobj->positions = explode(",",$positions);
 					
 				$CONFIG->widgets->handlers[$handler] = $handlerobj;
 
@@ -255,6 +261,15 @@
 			if (!empty($CONFIG->widgets) 
 				&& !empty($CONFIG->widgets->handlers) 
 				&& is_array($CONFIG->widgets->handlers)) {
+					
+					$context = get_context();
+					
+					foreach($CONFIG->widgets->handlers as $key => $handler) {
+						if (!in_array('all',$handler->context) &&
+							!in_array($context,$handler->context)) {
+								unset($CONFIG->widgets->handlers[$key]);
+						}
+					}
 					
 					return $CONFIG->widgets->handlers;
 					
