@@ -464,7 +464,7 @@
 					$this->attributes[$key] = $value;
 				
 				// Increment the portion counter
-				$this->attributes['tables_loaded'] ++;
+				if (!$this->isFullyLoaded()) $this->attributes['tables_loaded'] ++;
 				
 				// Cache object handle
 				if ($this->attributes['guid']) cache_entity($this); 
