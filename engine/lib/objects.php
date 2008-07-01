@@ -31,6 +31,7 @@
 		{
 			parent::initialise_attributes();
 			
+			$this->attributes['container_guid'] = $_SESSION['id'];
 			$this->attributes['type'] = "object";
 			$this->attributes['title'] = "";
 			$this->attributes['description'] = "";
@@ -136,7 +137,7 @@
 				return false;
 			
 			// Now save specific stuff
-			return create_object_entity($this->get('guid'), $this->get('title'), $this->get('description'));
+			return create_object_entity($this->get('guid'), $this->get('title'), $this->get('description'), $this->get('container_guid'));
 		}
 		
 		/**
@@ -172,6 +173,29 @@
 			return add_site_object($this->getGUID(), $site_guid); 
 		}
 
+		/**
+		 * Set the container for this object.
+		 *
+		 * @param int $container_guid The ID of the container.
+		 * @return bool
+		 */
+		function setContainer($container_guid)
+		{
+			$container_guid = (int)$container_guid;
+			
+			return $this->set('container_guid', $container_guid);
+		}
+		
+		/**
+		 * Return the container GUID of this object.
+		 *
+		 * @return int
+		 */
+		function getContainer()
+		{
+			return $this->get('container_guid');
+		}
+		
 		/**
 		 * Get the collections associated with a object.
 		 *
@@ -218,17 +242,20 @@
 	 * Create or update the extras table for a given object.
 	 * Call create_entity first.
 	 * 
-	 * @param int $guid
-	 * @param string $title
-	 * @param string $description
+	 * @param int $guid The guid of the entity you're creating (as obtained by create_entity)
+	 * @param string $title The title of the object
+	 * @param string $description The object's description
+	 * @param int $container_guid The object's container guid (defaults to the current logged in user)
 	 */
-	function create_object_entity($guid, $title, $description)
+	function create_object_entity($guid, $title, $description, $container_guid = 0)
 	{
 		global $CONFIG;
 		
 		$guid = (int)$guid;
 		$title = sanitise_string($title);
 		$description = sanitise_string($description);
+		$container_guid = (int)$container_guid;
+		if (!$container_guid) $container_guid = $_SESSION['guid'];
 		
 		$row = get_entity_as_row($guid);
 		
@@ -236,7 +263,7 @@
 		{
 			// Core entities row exists and we have access to it
 			if ($exists = get_data_row("select guid from {$CONFIG->dbprefix}objects_entity where guid = {$guid}")) {
-				$result = update_data("UPDATE {$CONFIG->dbprefix}objects_entity set title='$title', description='$description' where guid=$guid");
+				$result = update_data("UPDATE {$CONFIG->dbprefix}objects_entity set title='$title', description='$description', container_guid=$container_guid where guid=$guid");
 				if ($result!=false)
 				{
 					// Update succeeded, continue
@@ -252,7 +279,7 @@
 			{
 				
 				// Update failed, attempt an insert.
-				$result = insert_data("INSERT into {$CONFIG->dbprefix}objects_entity (guid, title, description) values ($guid, '$title','$description')");
+				$result = insert_data("INSERT into {$CONFIG->dbprefix}objects_entity (guid, container_guid, title, description) values ($guid, $container_guid, '$title','$description')");
 				if ($result!==false) {
 					$entity = get_entity($guid);
 					if (trigger_elgg_event('create',$entity->type,$entity)) {
@@ -302,7 +329,7 @@
 	 * @param int $limit Limit of the search.
 	 * @param int $offset Offset.
 	 * @param string $order_by The order.
-	 * @param boolean $count Whether to return the count of results or just the results. 
+	 * @param boolean $count Whether to return the count of results or just the results.
 	 */
 	function search_for_object($criteria, $limit = 10, $offset = 0, $order_by = "", $count = false)
 	{
@@ -312,6 +339,7 @@
 		$limit = (int)$limit;
 		$offset = (int)$offset;
 		$order_by = sanitise_string($order_by);
+		$container_guid = (int)$container_guid;
 		
 		$access = get_access_sql_suffix("e");
 		
@@ -351,4 +379,80 @@
 		return get_entities_from_relationship("member_of_site", $object_guid, false, "site", "", 0, "time_created desc", $limit, $offset);
 	}
 		
+	/**
+	 * Return an array of objects in a given container.
+	 * @see get_entities()
+	 *
+	 * @param string $subtype The subtype
+	 * @param int $owner_guid Owner
+	 * @param int $site_guid The site
+	 * @param int $container_guid The container (defaults to current page owner)
+	 * @param string $order_by Order
+	 * @param unknown_type $limit Limit on number of elements to return, by default 10.
+	 * @param unknown_type $offset Where to start, by default 0.
+	 * @param unknown_type $count Whether to return the entities or a count of them.
+	 */
+	function get_objects_in_container($subtype = "", $owner_guid = 0, $site_guid = 0, $container_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = false)
+	{
+		global $CONFIG;
+		
+		if ($subtype === false || $subtype === null || $subtype === 0)
+			return false;
+			
+		$subtype = get_subtype_id('object', $subtype);
+		
+		if ($order_by == "") $order_by = "e.time_created desc";
+		$order_by = sanitise_string($order_by);
+		$limit = (int)$limit;
+		$offset = (int)$offset;
+		$site_guid = (int) $site_guid;
+		if ($site_guid == 0)
+			$site_guid = $CONFIG->site_guid;
+		
+		$container_guid = (int)$container_guid;
+		if ($container_guid == 0)
+			$container_guid = page_owner();
+				
+		$where = array();
+		
+		$where[] = "e.type='object'";
+		if ($subtype!=="")
+			$where[] = "e.subtype=$subtype";
+		if ($owner_guid != "") {
+			if (!is_array($owner_guid)) {
+				$owner_guid = (int) $owner_guid;
+				$where[] = "e.owner_guid = '$owner_guid'";
+			} else if (sizeof($owner_guid) > 0) {
+				// Cast every element to the owner_guid array to int
+				$owner_guid = array_map("sanitise_int", $owner_guid);
+				$owner_guid = implode(",",$owner_guid);
+				$where[] = "e.owner_guid in ({$owner_guid})";
+			}
+		}
+		if ($site_guid > 0)
+			$where[] = "e.site_guid = {$site_guid}";
+
+		if ($container_guid > 0)
+			$where[] = "o.container_guid = {$container_guid}";
+			
+		if (!$count) {
+			$query = "SELECT * from {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}objects_entity o on e.guid=o.guid where ";
+		} else {
+			$query = "select count(e.guid) as total from {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}objects_entity o on e.guid=o.guid where ";
+		}
+		foreach ($where as $w)
+			$query .= " $w and ";
+		$query .= get_access_sql_suffix('e'); // Add access controls
+		if (!$count) {
+			$query .= " order by $order_by";
+			if ($limit) $query .= " limit $offset, $limit"; // Add order and limit
+
+			$dt = get_data($query, "entity_row_to_elggstar");
+			return $dt;
+		} else {
+			$total = get_data_row($query);
+			return $total->total;
+		}
+		
+	}
 ?>
