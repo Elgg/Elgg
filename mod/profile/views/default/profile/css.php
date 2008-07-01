@@ -44,3 +44,8 @@
 .usericon div.sub_menu a:hover{ display:block;}	
 .usericon div.sub_menu a:hover{ background:#cccccc; text-decoration:none;}
 .usericon .item_line { border-top:solid 1px #dddddd;}
+
+
+#profile_icon_wrapper {
+	float:left;
+}

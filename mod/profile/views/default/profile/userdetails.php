@@ -32,6 +32,7 @@
 	// wrap the icon and links in a div
 	echo "<div id=\"profile_info_column_left\">";
 	
+	echo "<div id=\"profile_icon_wrapper\">";
 	// get the user's main profile picture
 	echo elgg_view(
 						"profile/icon", array(
@@ -43,6 +44,8 @@
 
     // display relevant links			
     echo elgg_view("profile/profilelinks", array("entity" => $vars['entity']));
+    echo "</div>";
+    
     
     // close the icon and links div
     echo "</div>";
