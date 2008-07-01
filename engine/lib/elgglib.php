@@ -396,7 +396,7 @@
 				}
 			} else {
 				if (is_array($entities) && sizeof($entities) > 0)
-					$html .= elgg_view("navigation/gallery",array('entities' => $entities));
+					$html .= elgg_view("search/gallery",array('entities' => $entities));
 			}
 			
 			if ($count)
