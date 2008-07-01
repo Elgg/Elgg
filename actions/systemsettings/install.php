@@ -47,6 +47,9 @@
 			
 			// activate groups by default
 			enable_plugin('groups', $site->getGUID());
+			
+			// activate river by default
+			enable_plugin('river', $site->getGUID());
 				
 			system_message(elgg_echo("installation:configuration:success"));
 			
