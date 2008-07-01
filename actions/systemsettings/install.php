@@ -44,6 +44,9 @@
 			
 			// activate profile by default
 			enable_plugin('profile', $site->getGUID());
+			
+			// activate groups by default
+			enable_plugin('groups'), $site->getGUID());
 				
 			system_message(elgg_echo("installation:configuration:success"));
 			
