@@ -199,7 +199,7 @@ h6 { font-size: 0.8em; }
 }
 #wrapper_maincontent {
 	margin:0;
-	/* width:785px;*/
+	
 }
 /* subclass for layout_maincontent when showing rhs sidebar */
 .has_sidebar_right {
@@ -212,6 +212,18 @@ h6 { font-size: 0.8em; }
 * html #layout_maincontent { 
 	height:360px;
 }
+
+
+#wrapper_maincontent.single_column {
+	/* width:785px;*/
+	background: white;
+	padding:20px;
+	border-bottom:1px solid #cccccc;
+	border-right:1px solid #cccccc;
+}
+
+
+
 /* 
 #wrapper_sidebar_right .collapsable_box_content {
 	border-left: 1px solid #cccccc;
@@ -339,7 +351,7 @@ h6 { font-size: 0.8em; }
 	margin:0 0 0 20px;
 }
 #elgg_topbar_container_left img {
-	margin:2px 0 0 30px;
+	margin:2px 0 0 5px;
 }
 #elgg_topbar_container_right {
 	padding:4px 0 0 0;
@@ -848,12 +860,30 @@ input[type="submit"] {
 	LOGIN / REGISTER
 *************************************** */
 #login-box {
+	margin-top: 20px;
     text-align:left;
     border:1px solid #ddd;
     width:300px;
     padding:10px;
     background: #ffffff;
-    margin-left: 20px;
+}
+#login-box-openid {
+	margin-top: 20px;
+    text-align:left;
+    border:1px solid #ddd;
+    width:300px;
+    padding:10px;
+    background: #ffffff;
+}
+#login-box h2,
+#login-box-openid h2,
+#register-box h2,
+#add-box h2 {
+	color: #0054a7;
+	font-size:1.5em;
+	line-height: 1.5em;
+	margin:0 0 20px 0;
+	border-bottom: 1px solid #ddd;
 }
 
 #register-box {
@@ -862,7 +892,6 @@ input[type="submit"] {
     width:300px;
     padding:10px;
     background: #ffffff;
-    margin-left: 40px;
 }
 
 
@@ -1033,12 +1062,11 @@ p.user_menu_friends_of {
 	line-height:1.2em;
 }
 
-.search_gallery_item td {
+.search_gallery_item {
 	border:1px dotted silver;
     background-color: white;
     width: 210px;
     height: 200px;
-    margin: 5px;
 }
 
 .search_gallery_item .search_listing {
@@ -1064,12 +1092,14 @@ p.user_menu_friends_of {
 	margin-bottom: 10px;
 }
 
-.search_gallery_item {
+.search_gallery_item td {
 	border:1px dotted silver;
     background-color: white;
     width: 210px;
     height: 200px;
+    margin: 5px;
 }
+
 
 .search_gallery_item .search_listing {
 	background: none;

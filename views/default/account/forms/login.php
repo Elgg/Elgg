@@ -12,8 +12,8 @@
 	 */
 	 
 ?>
-	<h2><?php echo elgg_echo('login'); ?></h2>
-	<div id="login-box">
+	
+	<div id="login-box">	<h2><?php echo elgg_echo('login'); ?></h2>
 		<form action="<?php echo $vars['url']; ?>action/login" method="POST">
 			<p><label><?php echo elgg_echo('username'); ?><br /><input name="username" type="text" class="general-textarea" /></label>
 			<br />

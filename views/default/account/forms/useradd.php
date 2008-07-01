@@ -15,8 +15,9 @@
 		$admin_option = true;
 ?>
 
-	<h2><?php echo elgg_echo('adduser'); ?></h2>
+	
 	<div id="add-box">
+	<h2><?php echo elgg_echo('adduser'); ?></h2>
 		<form action="<?php echo $vars['url']; ?>action/useradd" method="POST">
 			<p><label><?php echo elgg_echo('name'); ?>: <input name="name" type="text" class="general-textarea" /></label><br />
 			<label><?php echo elgg_echo('email'); ?>: <input name="email" type="text" class="general-textarea" /></label><br />

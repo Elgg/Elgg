@@ -15,7 +15,7 @@
 
 <!-- main content -->
 <div id="layout_maincontent">
-<div id="wrapper_maincontent">
+<div id="wrapper_maincontent" class="single_column">
 
 <?php echo $vars['area1']; ?>
 
