@@ -1017,8 +1017,8 @@
 					return new ElggObject($row);
 				case 'user' : 
 					return new ElggUser($row);
-				case 'collection' : 
-					return new ElggCollection($row); 
+				case 'group' : 
+					return new ElggGroup($row); 
 				case 'site' : 
 					return new ElggSite($row); 
 				default: throw new InstallationException(sprintf(elgg_echo('InstallationException:TypeNotSupported'), $row->type));
