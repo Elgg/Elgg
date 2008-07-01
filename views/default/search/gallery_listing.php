@@ -1,7 +1,7 @@
 <?php
 
 	/**
-	 * Elgg search listing
+	 * Elgg search listing: gallery view
 	 * 
 	 * @package Elgg
 	 * @subpackage Core
@@ -11,22 +11,18 @@
 	 * @link http://elgg.org/
 	 */
 
-	if (isset($vars['search_viewtype']) && $vars['search_viewtype'] == "gallery") {
-		
-		echo elgg_view("search/gallery_listing",$vars);
-		
-	} else {
-
 ?>
 
 	<div class="search_listing">
 	
-		<div class="search_listing_icon">
-			<?php
-
-				echo $vars['icon'];
+		<div class="search_listing_header">
 			
-			?>
+				<?php
+	
+					echo $vars['icon'];
+				
+				?>
+			
 		</div>
 		<div class="search_listing_info">
 			<?php
@@ -37,9 +33,3 @@
 		</div>		
 	
 	</div>
-	
-<?php
-
-	}
-
-?>
