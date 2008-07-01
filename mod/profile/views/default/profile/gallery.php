@@ -30,11 +30,6 @@
 			);
 	
 		$info .= "<p><b><a href=\"" . $vars['entity']->getUrl() . "\">" . $vars['entity']->name . "</a></b></p>";
-	
-		$location = $vars['entity']->location;
-		if (!empty($location)) {
-			$info .= "<p>" . elgg_echo("profile:location") . ": " . elgg_view("output/tags",array('value' => $vars['entity']->location)) . "</p>";
-		}
 		
 		// echo elgg_view_listing($icon, $info);
 		echo elgg_view('search/gallery_listing',array('icon' => $icon, 'info' => $info));
