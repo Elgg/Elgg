@@ -130,6 +130,7 @@ h4 { font-size: 1.0em; }
 h5 { font-size: 0.9em; }
 h6 { font-size: 0.8em; }
 
+
 /* ***************************************
     PAGE LAYOUT - MAIN STRUCTURE
 *************************************** */
@@ -149,7 +150,7 @@ h6 { font-size: 0.8em; }
 
 #layout_header {
 	text-align:left;
-	position:relative;
+	/* position:relative; */
 	width:100%;
 	height:67px;
 	border-bottom:1px solid #4690d6;
@@ -267,6 +268,134 @@ h6 { font-size: 0.8em; }
 #layout_footer .footer_legal_links {
 	text-align:right;
 }
+
+
+/* ***************************************
+  ELGG TOPBAR
+*************************************** */
+#elgg_topbar {
+	background:#333333 url(<?php echo $vars['url']; ?>_graphics/toptoolbar_background.gif) repeat-x top left;
+	color:#eeeeee;
+	border-bottom:1px solid #000000;
+	min-width:998px;
+	position:relative;
+	width:100%;
+	height:24px;
+}
+
+#elgg_topbar_container_left {
+	float:left;
+	height:24px;
+	left:0px;
+	top:0px;
+	position:absolute;
+	text-align:left;
+	width:50%;
+}
+
+#elgg_topbar_container_right {
+	float:right;
+	height:24px;
+	position:absolute;
+	right:0px;
+	top:0px;
+	width:120px;
+	text-align:right;
+}
+
+#elgg_topbar_container_search {
+	float:right;
+	height:21px;
+	width:280px;
+	position:relative;
+	right:120px;
+	text-align:right;
+	margin:3px 0 0 0;
+}
+
+#elgg_topbar_container_left .toolbarlinks,
+#elgg_topbar_container_left .toolbarimages {
+	float:left;
+}
+#elgg_topbar_container_left .toolbarlinks {
+	margin:3px 0 0 0;
+}
+#elgg_topbar_container_left .toolbarlinks a {
+	/* margin:0 0 0 20px;*/
+	color:#4690d6;
+}
+#elgg_topbar_container_left .toolbarlinks a:hover {
+	color:#eeeeee;
+}
+#elgg_topbar_container_left a.loggedinuser {
+	color:#eeeeee;
+	font-weight:bold;
+	margin:0 0 0 5px;
+}
+#elgg_topbar_container_left a.pagelinks {
+	margin:0 0 0 30px;
+}
+#elgg_topbar_container_left a.usersettings {
+	margin:0 0 0 20px;
+}
+#elgg_topbar_container_left img {
+	margin:2px 0 0 30px;
+}
+#elgg_topbar_container_right {
+	padding:4px 0 0 0;
+}
+#elgg_topbar_container_right img  {
+	float:right;
+	margin:0 20px 0 0;
+	cursor:pointer;
+}
+#elgg_topbar_container_right a {
+	color:#eeeeee;
+	margin:0 5px 0 0;
+}
+
+#elgg_topbar_panel {
+	background:#333333;
+	color:#eeeeee;
+	height:200px;
+	width:100%;
+	padding:10px 20px 10px 20px;
+	display:none;
+	position:relative;
+}
+
+#searchform input.search_input {
+	-webkit-border-radius: 3px; 
+	-moz-border-radius: 3px;
+	background-color:#FFFFFF;
+	border:1px solid #BBBBBB;
+	color:#999999;
+	font-size:12px;
+	font-weight:bold;
+	margin:0pt;
+	padding:2px;
+	width:180px;
+	
+	height:12px;
+}
+#searchform input.search_submit_button {
+	-webkit-border-radius: 3px; 
+	-moz-border-radius: 3px;
+	color:#ffffff;
+	background: #cccccc;
+	border:none;
+	font-size:12px;
+	font-weight:bold;
+	margin:0px;
+	padding:2px;
+	width:auto;
+	height:18px;
+	cursor:pointer;
+}
+#searchform input.search_submit_button:hover {
+	color:#000000;
+}
+
 
 /* ***************************************
   WIDGET PICKER (PROFILE & DASHBOARD)
@@ -448,33 +577,6 @@ h6 { font-size: 0.8em; }
 }
 
 
-
-/* ***************************************
-  TOPMENU (IN HEADER)
-*************************************** */
-#topmenu {
-    position:absolute;
-    top:10px;
-    right:20px;
-    width: 700px;
-    height:47px;
-    text-align: right;
-}
-#topmenu li {
-    display:inline;
-    list-style:none;
-}
-#topmenu li a {
-    color:#4690d6;
-    margin:0 10px 0 10px;
-}
-#topmenu li a:hover {
-    color:#000000;
-}
-#topmenu .usericon {
-	float:right;
-}
-
 /* ***************************************
   COLLAPSABLE BOXES
 *************************************** */
@@ -560,6 +662,7 @@ a.toggle_customise_edit_panel:hover {
 	margin: 0 0 0 0;
 }
 
+
 /* ***************************************
   System messages
 *************************************** */
@@ -581,6 +684,7 @@ a.toggle_customise_edit_panel:hover {
 *:first-child+html .messages {
 	margin:20px 20px 0px 20px;
 }
+
 
 /* ***************************************
 	ELGG TOOLBAR
@@ -649,6 +753,7 @@ a.toggle_customise_edit_panel:hover {
 	background: #cccccc;
 	border-bottom: none;
 }
+
 
 /* ***************************************
 	GENERAL FORM ELEMENTS
@@ -738,6 +843,7 @@ input[type="submit"] {
 	height: 200px;
 }
 
+
 /* ***************************************
 	LOGIN / REGISTER
 *************************************** */
@@ -759,6 +865,7 @@ input[type="submit"] {
     margin-left: 40px;
 }
 
+
 /* ***************************************
 	MAIN CONTENT ELEMENTS
 *************************************** */
@@ -770,42 +877,6 @@ input[type="submit"] {
 	line-height: 1.2em;
 }
 
-.logo {
-	margin-left:21px;
-	margin-top:7px;
-}
-#header_search {
-	margin-right:50px;
-}
-#searchform input.search_input {
-	-webkit-border-radius: 3px; 
-	-moz-border-radius: 3px;
-	background-color:#FFFFFF;
-	border:1px solid #BBBBBB;
-	color:#999999;
-	font-size:13px;
-	font-weight:bold;
-	margin:0pt;
-	padding:2px;
-	width:180px;
-}
-#searchform input.search_submit_button {
-	-webkit-border-radius: 3px; 
-	-moz-border-radius: 3px;
-	color:#ffffff;
-	background: #cccccc;
-	border:none;
-	font-size:12px;
-	font-weight:bold;
-	margin:0px;
-	padding:0px;
-	width:auto;
-	height:20px;
-	cursor:pointer;
-}
-#searchform input.search_submit_button:hover {
-	color:#000000;
-}
 .widget_status_statusmessage {
 	font-size:1.2em;
 	line-height:1.2em;
@@ -820,6 +891,7 @@ input[type="submit"] {
 	color:#999999;
 	margin:0;
 }
+
 
 /* ***************************************
 	PROFILE
@@ -1007,6 +1079,7 @@ p.user_menu_friends_of {
 	color:#666666;	
 }
 
+
 /* ***************************************
 	SPOTLIGHT
 *************************************** */
@@ -1020,6 +1093,7 @@ p.user_menu_friends_of {
 	line-height: 1.2em;
 	margin:5px 20px 5px 0;
 }
+
 
 /* ***************************************
 	END

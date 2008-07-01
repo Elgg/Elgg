@@ -64,6 +64,8 @@ END;
 </head>
 
 <body>
+
+<?php echo elgg_view('page_elements/elgg_topbar', $vars); ?>
 	
 <div id="page_container">
 <div id="page_wrapper">
@@ -72,7 +74,5 @@ END;
 <div id="wrapper_header">
 	<!-- display the page title -->
 	<h1><a href="<?php echo $vars['url']; ?>"><?php echo $vars['config']->sitename; ?></a></h1>
-	<!-- display top level navigation -->
-	<?php echo elgg_view('navigation/topmenu'); ?>
 </div><!-- /#wrapper_header -->
 </div><!-- /#layout_header -->
