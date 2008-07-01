@@ -31,7 +31,7 @@
 	<div class="toolbarlinks">
 		<a href="<?php echo $_SESSION['user']->getURL(); ?>" class="loggedinuser"><?php echo $_SESSION['user']->username; ?></a>
 		<a href="<?php echo $vars['url']; ?>pg/dashboard/" class="pagelinks"><?php echo elgg_echo('dashboard'); ?></a>
-		<a href="<?php echo $_SESSION['user']->getURL(); ?>" class="usersettings"><?php echo elgg_echo('settings'); ?></a>
+		<a href="<?php echo $vars['url']; ?>settings/" class="usersettings"><?php echo elgg_echo('settings'); ?></a>
 		
 		<?php
 		
