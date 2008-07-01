@@ -21,5 +21,22 @@
 			}
 		}
 	}
-
+	
+	if (isadminloggedin()){
+		if ($_SESSION['user']->getGUID() != $vars['entity']->guid){
+?>				
+				
+				<p class="user_menu_banuser"><a href="<?php echo $vars['url']; ?>actions/admin/user/ban?guid=<?php echo $vars['entity']->guid; ?>"><?php echo elgg_echo("ban"); ?></a></p>
+				
+				<p class="user_menu_delete"><a href="<?php echo $vars['url']; ?>actions/admin/user/delete?guid=<?php echo $vars['entity']->guid; ?>"><?php echo elgg_echo("delete"); ?></a></p>
+				
+				<p class="user_menu_resetpassword"><a href="<?php echo $vars['url']; ?>actions/admin/user/resetpassword?guid=<?php echo $vars['entity']->guid; ?>"><?php echo elgg_echo("resetpassword"); ?></a></p>
+				
+				<?php if (!$vars['entity']->admin) { ?>
+					<p class="user_menu_makeadmin"><a href="<?php echo $vars['url']; ?>actions/admin/user/makeadmin?guid=<?php echo $vars['entity']->guid; ?>"><?php echo elgg_echo("makeadmin"); ?></a></p>
+				<?php } ?>
+					
+<?php 
+		}
+	}
 ?>
