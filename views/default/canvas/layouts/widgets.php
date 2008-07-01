@@ -18,6 +18,13 @@
 		$area1widgets = get_widgets(page_owner(),get_context(),1);
 		$area2widgets = get_widgets(page_owner(),get_context(),2);
 		
+		if (empty($area1widgets) && empty($area2widgets)) {
+			
+			if (isset($area3)) $area1 = $area3;
+			if (isset($area4)) $area2 = $area3;
+			
+		}
+		
 		if (is_array($widgettypes) && sizeof($widgettypes) > 0 && $owner->canEdit()) {
 
 			
