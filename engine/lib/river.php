@@ -84,10 +84,10 @@
 							$tam = "";
 							
 							// test if view exist and if so
-							if (isset($by_user_obj) && $by_user_obj instanceof ElggUser) {
-							} else {
+							//if (isset($by_user_obj) && $by_user_obj instanceof ElggUser) {
+							//} else {
 								$by_user_obj = get_entity($log->performed_by_guid);
-							}
+							//}
 							if ($object instanceof ElggEntity) {
 								$subtype = $object->getSubtype();
 							} else {
