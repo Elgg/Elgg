@@ -21,7 +21,7 @@
 		if (empty($area1widgets) && empty($area2widgets)) {
 			
 			if (isset($area3)) $area1 = $area3;
-			if (isset($area4)) $area2 = $area3;
+			if (isset($area4)) $area2 = $area4;
 			
 		}
 		
