@@ -46,7 +46,7 @@
 	if(isloggedin()){
 		echo elgg_view("navigation/toolbox", $vars); 
 	}else{
-		echo "<img src=\"{$vars['url']}_graphics/skyscraper.gif\" alt=\"sample skyscraper ad\" />";
+		//echo "<img src=\"{$vars['url']}_graphics/skyscraper.gif\" alt=\"sample skyscraper ad\" />";
 	}
 
 ?>

@@ -1004,6 +1004,9 @@ p.user_menu_friends_of {
 .river_create {
 	background: url(<?php echo $vars['url']; ?>_graphics/dummy_river_icon.gif) no-repeat left top;
 }
+.river_2_update {
+	background: url(<?php echo $vars['url']; ?>_graphics/dummy_river_icon.gif) no-repeat left top;
+}
 
 
 /* ***************************************
