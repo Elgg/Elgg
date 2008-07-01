@@ -61,18 +61,28 @@
 		echo "<div id=\"widgetcontent{$vars['entity']->getGUID()}\">";
 		
 		
-	} // end if callback != "true"
+	} else { // end if callback != "true"
 
-		echo elgg_view("widgets/{$handler}/view",$vars); 
+		echo elgg_view("widgets/{$handler}/view",$vars);
+
+	}
 		
 	if ($callback != "true") {
-		
+		echo elgg_view('ajax/loader');
 		echo "</div>";
 		
 		?>
 	</div><!-- /.collapsable_box_content -->
 	</div><!-- /.collapsable_box -->
 	</div>
+	
+<script type="text/javascript">
+$(document).ready(function() {
+
+	$("#widgetcontent<?php echo $vars['entity']->getGUID(); ?>").load("<?php echo $vars['url']; ?>pg/view/<?php echo $vars['entity']->getGUID(); ?>?shell=no&username=<?php echo page_owner_entity()->username; ?>&context=<?php echo get_context(); ?>&callback=true");
+
+});
+</script>
 	
 <?php
 
