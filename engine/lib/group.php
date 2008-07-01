@@ -109,6 +109,17 @@
 		}
 		
 		/**
+		 * Returns whether the given user (or current user) has the ability to write to this group.
+		 *
+		 * @param int $user_guid The user.
+		 * @return bool
+		 */
+		public function can_write_to_container($user_guid = 0)
+		{
+			return can_write_to_container($user_guid, $this->getGUID());
+		}
+		
+		/**
 		 * Get objects contained in this group.
 		 *
 		 * @param int $limit
@@ -122,6 +133,50 @@
 		public function getObjects($limit = 10, $offset = 0, $subtype = "", $owner_guid = 0, $site_guid = 0, $order_by = "") 
 		{
 			return get_objects_in_group($this->getGUID(), $subtype, $owner_guid, $site_guid, $order_by, $limit, $offset, false);
+		}
+		
+		/**
+		 * Get a list of group members.
+		 *
+		 * @param int $limit
+		 * @param int $offset
+		 * @return mixed
+		 */
+		public function getMembers($limit = 10, $offset = 0)
+		{
+			return get_group_members($this->getGUID(), $limit, $offset);
+		}
+		
+		/**
+		 * Return whether a given user is a member of this group or not.
+		 *
+		 * @param ElggUser $user The user
+		 * @return bool
+		 */
+		public function isMember(ElggUser $user)
+		{
+			return is_group_member($this->getGUID(), $user->getGUID());
+		}
+		
+		/**
+		 * Join an elgg user to this group.
+		 *
+		 * @param ElggUser $user
+		 * @return bool
+		 */
+		public function join(ElggUser $user)
+		{
+			return join_group($this->getGUID(), $user->getGUID());
+		}
+		
+		/**
+		 * Remove a user from the group.
+		 *
+		 * @param int $guid GUID of the user
+		 */
+		public function leave($guid)
+		{
+			return leave_group($this->getGUID(), $user->getGUID());
 		}
 		
 		/**
@@ -179,6 +234,37 @@
 		}
 	}
 
+	/**
+	 * Determine whether a given user is able to write to a given group.
+	 *
+	 * @param int $user_guid The user guid, or 0 for $_SESSION['user']->getGUID()
+	 * @param int $container_guid The container, or 0 for the current page owner.
+	 */
+	function can_write_to_container($user_guid = 0, $container_guid = 0)
+	{
+		global $CONFIG;
+		
+		$user_guid = (int)$user_guid;
+		if (!$user_guid) $user_guid = $_SESSION['user']->getGUID();
+		$user = get_entity($user_guid);
+		
+		$container_guid = (int)$container_guid;
+		if (!$container_guid) $container_guid = page_owner();
+		$container = get_entity($container_guid);
+
+		if (($container) && ($user))
+		{
+			// Basics, see if the user is a member of the group.
+			if (!$container->isMember($user)) return false;
+			
+			// See if anyone else has anything to say
+			return trigger_plugin_hook('group_permissions_check',$entity->type,array('container' => $container, 'user' => $user), false);
+			
+		}
+		
+		return false;
+	}
+	
 	/**
 	 * Get the group entity.
 	 *
@@ -413,5 +499,53 @@
 			return $total->total;
 		}
 		
+		/**
+		 * Return a list of this group's members.
+		 * 
+		 * @param int $group_guid The ID of the container/group.
+		 * @param int $limit The limit
+		 * @param int $offset The offset
+		 * @param int $site_guid The site
+		 * @param bool $count Return the users (false) or the count of them (true)
+		 * @return mixed
+		 */
+		function get_group_members($group_guid, $limit = 10, $offset = 0, $site_guid = 0, $count = false)
+		{
+			return get_entities_from_relationship('member', $group_guid, true, 'user', '', 0, "", $limit, $offset, $count, $site_guid);
+		}
+		
+		/**
+		 * Return whether a given user is a member of the group or not.
+		 * 
+		 * @param int $group_guid The group ID
+		 * @param int $user_guid The user guid
+		 * @return bool
+		 */
+		function is_group_member($group_guid, $user_guid)
+		{
+			return check_entity_relationship($user_guid, 'member', $group_guid);
+		}
+		
+		/**
+		 * Join a user to a group.
+		 * 
+		 * @param int $group_guid The group.
+		 * @param int $user_guid The user.
+		 */
+		function join_group($group_guid, $user_guid)
+		{
+			return add_entity_relationship($user_guid, 'member', $group_guid);
+		}
+		
+		/**
+		 * Remove a user from a group.
+		 * 
+		 * @param int $group_guid The group.
+		 * @param int $user_guid The user.
+		 */
+		function leave_group($group_guid, $user_guid)
+		{
+			return remove_entity_relationship($user_guid, 'member', $group_guid);
+		}
 	}
 ?>
