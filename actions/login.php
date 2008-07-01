@@ -29,6 +29,7 @@
         
         if ($result) {
             system_message(elgg_echo('loginok'));
+            forward("pg/dashboard/");
         } else {
             system_message(elgg_echo('loginerror'));
         }
