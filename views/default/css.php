@@ -353,6 +353,10 @@ h6 { font-size: 0.8em; }
 #elgg_topbar_container_left img {
 	margin:2px 0 0 5px;
 }
+#elgg_topbar_container_left .user_mini_avatar {
+	border:1px solid #eeeeee;
+	margin:0 0 0 20px;
+}
 #elgg_topbar_container_right {
 	padding:4px 0 0 0;
 }

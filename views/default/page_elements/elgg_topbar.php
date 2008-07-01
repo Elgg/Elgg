@@ -22,10 +22,10 @@
 
 <div id="elgg_topbar_container_left">
 	<div class="toolbarimages">
-		<a href=""><img src="<?php echo $vars['url']; ?>_graphics/elgg_toolbar_logo.gif" /></a>
+		<a href="http://www.elgg.org" target="_blank"><img src="<?php echo $vars['url']; ?>_graphics/elgg_toolbar_logo.gif" /></a>
 		
 		<!-- new icon size needed 16px square - mini -->
-		<a href=""><img src="<?php echo $vars['url']; ?>pg/icon/<?php echo $_SESSION['user']->username; ?>/topbar/<?php echo $_SESSION['user']->timecreated; ?>.jpg"></a>
+		<a href="<?php echo $_SESSION['user']->getURL(); ?>"><img class="user_mini_avatar" src="<?php echo $vars['url']; ?>pg/icon/<?php echo $_SESSION['user']->username; ?>/topbar/<?php echo $_SESSION['user']->timecreated; ?>.jpg"></a>
 		
 	</div>
 	<div class="toolbarlinks">
