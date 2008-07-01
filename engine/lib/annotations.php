@@ -239,7 +239,7 @@
 	/**
 	 * Get a list of annotations for a given object/user/annotation type.
 	 *
-	 * @param int $entity_guid
+	 * @param int|array $entity_guid
 	 * @param string $entity_type
 	 * @param string $entity_subtype
 	 * @param string $name
@@ -253,7 +253,17 @@
 	{
 		global $CONFIG;
 		
-		$entity_guid = (int)$entity_guid;
+		if (is_array($entity_guid)) {
+			if (sizeof($entity_guid) > 0) {
+				foreach($entity_guid as $key => $val) {
+					$entity_guid[$key] = (int) $val;			
+				}
+			} else {
+				$entity_guid = 0;
+			}
+		} else {
+			$entity_guid = (int)$entity_guid;
+		}
 		$entity_type = sanitise_string($entity_type);
 		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
 		if ($name)
@@ -285,8 +295,11 @@
 		
 		$where = array();
 		
-		if ($entity_guid != 0)
+		if ($entity_guid != 0 && !is_array($owner_guid)) {
 			$where[] = "a.entity_guid=$entity_guid";
+		} else if (is_array($owner_guid)) {
+			$where[] = "a.entity_guid in (". implode(",",$entity_guid) . ")";
+		}
 			
 		if ($entity_type != "")
 			$where[] = "e.type='$entity_type'";
