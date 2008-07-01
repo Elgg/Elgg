@@ -26,7 +26,7 @@ CREATE TABLE `prefix_config` (
 CREATE TABLE `prefix_entities` (
 	`guid` bigint(20) unsigned  NOT NULL auto_increment,
 	
-	`type` enum ('object', 'user', 'container', 'site') NOT NULL,
+	`type` enum ('object', 'user', 'group', 'site') NOT NULL,
 	`subtype` int(11) NULL,
 	
 	`owner_guid` bigint(20) unsigned NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE `prefix_entities` (
 CREATE TABLE `prefix_entity_subtypes` (
 	`id` int(11) NOT NULL auto_increment,
 	
-	`type` enum ('object', 'user', 'container', 'site') NOT NULL,
+	`type` enum ('object', 'user', 'group', 'site') NOT NULL,
 	`subtype` varchar(50) NOT NULL,
 	
 	class varchar(50) NOT NULL default '',
@@ -86,6 +86,7 @@ INSERT INTO `prefix_access_groups` (`id`, `name`, `site_guid`) VALUES
 (1, 'LOGGED_IN', 0),
 (2, 'PUBLIC', 0);
 
+
 -- Access containers 
 CREATE TABLE `prefix_access_group_membership` (
   `user_guid` int(11) NOT NULL,
@@ -102,7 +103,7 @@ CREATE TABLE `prefix_access_group_membership` (
 -- Extra information relating to "objects"
 CREATE TABLE `prefix_objects_entity` (
   `guid` bigint(20) unsigned  NOT NULL,
-  `container_guid` bigint(20) unsigned NOT NULL,
+  `group_guid` bigint(20) unsigned NOT NULL,
   
   `title` text NOT NULL,
   `description` text NOT NULL,
@@ -145,6 +146,17 @@ CREATE TABLE `prefix_users_entity` (
   KEY `password` (`password`),
   FULLTEXT KEY `name` (`name`),
   FULLTEXT KEY (`name`,`username`)
+) ENGINE=MyISAM;
+
+-- Extra information relating to "groups"
+CREATE TABLE `prefix_groups_entity` 
+  `guid` bigint(20) unsigned  NOT NULL,
+  
+  `name` text NOT NULL,
+  `description` text NOT NULL,
+   
+  PRIMARY KEY  (`guid`),
+  FULLTEXT KEY (`name`,`description`)
 ) ENGINE=MyISAM;
 
 --
