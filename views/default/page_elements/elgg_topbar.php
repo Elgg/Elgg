@@ -26,11 +26,7 @@
 		<a href=""><img src="<?php echo $vars['url']; ?>_graphics/avatar_mini.gif" /></a>
 		
 		<!-- new icon size needed 16px square - mini -->
-		<!--  
-		<?php
-			echo elgg_view("profile/icon",array('entity' => $vars['user'], 'size' => 'mini'));
-		?>
-		-->
+		<!-- <a href=""><img src="<?php echo $vars['url']; ?>pg/icon/<?php echo $_SESSION['user']->username; ?>/elgg_topbar/<?php echo $_SESSION['user']->timecreated; ?>.jpg"></a> -->
 		
 		
 	</div>
