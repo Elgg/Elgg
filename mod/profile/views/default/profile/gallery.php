@@ -13,13 +13,13 @@
 	 */
 	 
 	    //grab the users status message with metadata 'state' set to current if it exists
-		if($get_status = get_entities_from_metadata("state", "current", "object", "status", $vars['entity']->guid)){
+/*		if($get_status = get_entities_from_metadata("state", "current", "object", "status", $vars['entity']->guid)){
     		    
             foreach($get_status as $s) {
 	            $info = elgg_view("status/friends_view", array('entity' => $s));
             }
     		    
-		}
+		} */
 
 
 		$icon = elgg_view(
