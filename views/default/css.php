@@ -1033,11 +1033,12 @@ p.user_menu_friends_of {
 	line-height:1.2em;
 }
 
-.search_gallery_item {
+.search_gallery_item td {
 	border:1px dotted silver;
     background-color: white;
     width: 210px;
     height: 200px;
+    margin: 5px;
 }
 
 .search_gallery_item .search_listing {
