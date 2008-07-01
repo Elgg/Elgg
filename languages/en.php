@@ -45,6 +45,8 @@
 			
 			'InvalidParameterException:NonElggSite' => "Passing a non-ElggSite to an ElggSite constructor!",
 			
+			'InvalidParameterException:NonElggGroup' => "Passing a non-ElggGroup to an ElggGroup constructor!",
+	
 			'IOException:UnableToSaveNew' => "Unable to save new %s",
 			
 			'InvalidParameterException:GUIDNotForExport' => "GUID has not been specified during export, this should never happen.",
