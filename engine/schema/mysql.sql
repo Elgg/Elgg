@@ -70,8 +70,8 @@ CREATE TABLE `prefix_entity_relationships` (
 -- *** Access controls ***
 --
 
--- Table structure for table `access_containers`
-CREATE TABLE `prefix_access_containers` (
+-- Table structure for table `access_groups`
+CREATE TABLE `prefix_access_groups` (
   `id` int(11) NOT NULL,
   `name` varchar(16) NOT NULL,
   `owner_guid` bigint(20) unsigned NOT NULL,
@@ -80,17 +80,17 @@ CREATE TABLE `prefix_access_containers` (
   KEY `name` (`name`)
 )  ;
 
--- Dumping data for table `access_containers`
-INSERT INTO `prefix_access_containers` (`id`, `name`, `site_guid`) VALUES
+-- Dumping data for table `access_groups`
+INSERT INTO `prefix_access_groups` (`id`, `name`, `site_guid`) VALUES
 (0, 'PRIVATE', 0),
 (1, 'LOGGED_IN', 0),
 (2, 'PUBLIC', 0);
 
 -- Access containers 
-CREATE TABLE `prefix_access_container_membership` (
+CREATE TABLE `prefix_access_group_membership` (
   `user_guid` int(11) NOT NULL,
-  `access_container_id` int(11) NOT NULL,
-  PRIMARY KEY  (`user_guid`,`access_container_id`)
+  `access_group_id` int(11) NOT NULL,
+  PRIMARY KEY  (`user_guid`,`access_group_id`)
 )  ;
 
 
