@@ -31,7 +31,7 @@
 				echo elgg_view_entity($entity);
 				echo "</td>";
 				$col++;
-				if ($col > 4) {
+				if ($col > 3) {
 					echo "</tr>";
 					$col = 0;
 				}					
