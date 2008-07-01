@@ -244,7 +244,7 @@
 	 * @param string $entity_subtype
 	 * @param string $name
 	 * @param mixed $value
-	 * @param int $owner_id
+	 * @param int|array $owner_guid
 	 * @param int $limit
 	 * @param int $offset
 	 * @param string $order_by
@@ -264,7 +264,17 @@
 				$name = 0;
 		}
 		if ($value != "") $value = get_metastring_id($value);
-		$owner_guid = (int)$owner_guid;
+		if (is_array($owner_guid)) {
+			if (sizeof($owner_guid) > 0) {
+				foreach($owner_guid as $key => $val) {
+					$owner_guid[$key] = (int) $val;
+				}
+			} else {
+				$owner_guid = 0;
+			}
+		} else {
+			$owner_guid = (int)$owner_guid;
+		}
 		$limit = (int)$limit;
 		$offset = (int)$offset;
 		if($order_by == 'asc')
@@ -284,8 +294,12 @@
 		if ($entity_subtype != "")
 			$where[] = "e.subtype='$entity_subtype'";
 		
-		if ($owner_guid != 0)
+		if ($owner_guid != 0 && !is_array($owner_guid)) {
 			$where[] = "a.owner_guid=$owner_guid";
+		} else {
+			if (is_array($owner_guid))
+				$where[] = "a.owner_guid in (" . implode(",",$owner_guid) . ")";
+		}
 			
 		if ($name !== "")
 			$where[] = "a.name_id='$name'";
