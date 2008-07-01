@@ -15,7 +15,7 @@
 				isloggedin()
 			) {
 				
-				$toolbar = get_resized_image_from_uploaded_file('profileicon',16,16, true);
+				$topbar = get_resized_image_from_uploaded_file('profileicon',16,16, true);
 				$tiny = get_resized_image_from_uploaded_file('profileicon',25,25, true);
 				$small = get_resized_image_from_uploaded_file('profileicon',40,40, true);
 				$medium = get_resized_image_from_uploaded_file('profileicon',100,100, true);
@@ -45,9 +45,9 @@
 					$filehandler->open("write");
 					$filehandler->write($tiny);
 					$filehandler->close();
-					$filehandler->setFilename("profile/" . $_SESSION['user']->username . "toolbar.jpg");
+					$filehandler->setFilename("profile/" . $_SESSION['user']->username . "topbar.jpg");
 					$filehandler->open("write");
-					$filehandler->write($toolbar);
+					$filehandler->write($topbar);
 					$filehandler->close();
 					$filehandler->setFilename("profile/" . $_SESSION['user']->username . "master.jpg");
 					$filehandler->open("write");

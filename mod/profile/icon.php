@@ -20,7 +20,7 @@
 		
 	// Get the size
 		$size = strtolower(get_input('size'));
-		if (!in_array($size,array('large','medium','small','tiny','master','toolbar')))
+		if (!in_array($size,array('large','medium','small','tiny','master','topbar')))
 			$size = "medium";
 		
 	// Try and get the icon
