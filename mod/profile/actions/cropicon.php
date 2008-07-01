@@ -22,6 +22,7 @@
 		$filehandler->setFilename("profile/" . $user->username . "master" . ".jpg");
 		$filename = $filehandler->getFilenameOnFilestore();
 		
+		$toolbar = get_resized_image_from_existing_file($filename,16,16, true, $x1, $y1, $x2, $y2);
 		$tiny = get_resized_image_from_existing_file($filename,25,25, true, $x1, $y1, $x2, $y2);
 		$small = get_resized_image_from_existing_file($filename,40,40, true, $x1, $y1, $x2, $y2);
 		$medium = get_resized_image_from_existing_file($filename,100,100, true, $x1, $y1, $x2, $y2);
@@ -43,6 +44,10 @@
 					$filehandler->setFilename("profile/" . $_SESSION['user']->username . "tiny.jpg");
 					$filehandler->open("write");
 					$filehandler->write($tiny);
+					$filehandler->close();
+					$filehandler->setFilename("profile/" . $_SESSION['user']->username . "toolbar.jpg");
+					$filehandler->open("write");
+					$filehandler->write($toolbar);
 					$filehandler->close();
 					
 					$user->x1 = $x1;
