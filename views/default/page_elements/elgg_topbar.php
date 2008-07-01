@@ -23,15 +23,13 @@
 <div id="elgg_topbar_container_left">
 	<div class="toolbarimages">
 		<a href=""><img src="<?php echo $vars['url']; ?>_graphics/elgg_toolbar_logo.gif" /></a>
-		<a href=""><img src="<?php echo $vars['url']; ?>_graphics/avatar_mini.gif" /></a>
 		
 		<!-- new icon size needed 16px square - mini -->
-		<!-- <a href=""><img src="<?php echo $vars['url']; ?>pg/icon/<?php echo $_SESSION['user']->username; ?>/elgg_topbar/<?php echo $_SESSION['user']->timecreated; ?>.jpg"></a> -->
-		
+		<a href=""><img src="<?php echo $vars['url']; ?>pg/icon/<?php echo $_SESSION['user']->username; ?>/topbar/<?php echo $_SESSION['user']->timecreated; ?>.jpg"></a>
 		
 	</div>
 	<div class="toolbarlinks">
-		<a href="" class="loggedinuser">Pete</a>
+		<a href="" class="loggedinuser"><?php echo $_SESSION['user']->username; ?></a>
 		<a href="<?php echo $vars['url']; ?>pg/dashboard/" class="pagelinks"><?php echo elgg_echo('dashboard'); ?></a>
 		<a href="" class="usersettings"><?php echo elgg_echo('settings'); ?></a>
 		
