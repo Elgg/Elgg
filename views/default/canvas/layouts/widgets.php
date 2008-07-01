@@ -20,8 +20,8 @@
 		
 		if (empty($area1widgets) && empty($area2widgets)) {
 			
-			if (isset($area3)) $area1 = $area3;
-			if (isset($area4)) $area2 = $area4;
+			if (isset($vars['area3'])) $vars['area1'] = $vars['area3'];
+			if (isset($vars['area4'])) $vars['area2'] = $vars['area4'];
 			
 		}
 		

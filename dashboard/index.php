@@ -23,7 +23,7 @@
 		$title = elgg_echo('dashboard');
 		
 	// Try and get the user from the username and set the page body accordingly
-		$body = elgg_view_layout('widgets',"");
+		$body = elgg_view_layout('widgets',"","",elgg_echo("dashboard:nowidgets"));
 		
 		page_draw($title, $body);
 		

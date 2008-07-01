@@ -167,6 +167,7 @@
 		 */
 	
 			'dashboard' => "Dashboard",
+			'dashboard:nowidgets' => "Your dashboard is your gateway into the site. Click 'Customise Layout' to add widgets to keep track of content and your life within the system.", 
 	
 		/**
 		 * Profile
