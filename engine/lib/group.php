@@ -20,7 +20,7 @@
 	{
 		protected function initialise_attributes()
 		{
-			initialise_entity_cache();
+			parent::initialise_attributes();
 			
 			$this->attributes['type'] = "group";
 			$this->attributes['name'] = "";
