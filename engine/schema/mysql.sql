@@ -26,7 +26,7 @@ CREATE TABLE `prefix_config` (
 CREATE TABLE `prefix_entities` (
 	`guid` bigint(20) unsigned  NOT NULL auto_increment,
 	
-	`type` enum ('object', 'user', 'collection', 'site') NOT NULL,
+	`type` enum ('object', 'user', 'container', 'site') NOT NULL,
 	`subtype` int(11) NULL,
 	
 	`owner_guid` bigint(20) unsigned NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE `prefix_entities` (
 CREATE TABLE `prefix_entity_subtypes` (
 	`id` int(11) NOT NULL auto_increment,
 	
-	`type` enum ('object', 'user', 'collection', 'site') NOT NULL,
+	`type` enum ('object', 'user', 'container', 'site') NOT NULL,
 	`subtype` varchar(50) NOT NULL,
 	
 	class varchar(50) NOT NULL default '',
@@ -70,8 +70,8 @@ CREATE TABLE `prefix_entity_relationships` (
 -- *** Access controls ***
 --
 
--- Table structure for table `access_groups`
-CREATE TABLE `prefix_access_groups` (
+-- Table structure for table `access_containers`
+CREATE TABLE `prefix_access_containers` (
   `id` int(11) NOT NULL,
   `name` varchar(16) NOT NULL,
   `owner_guid` bigint(20) unsigned NOT NULL,
@@ -80,17 +80,17 @@ CREATE TABLE `prefix_access_groups` (
   KEY `name` (`name`)
 )  ;
 
--- Dumping data for table `access_groups`
-INSERT INTO `prefix_access_groups` (`id`, `name`, `site_guid`) VALUES
+-- Dumping data for table `access_containers`
+INSERT INTO `prefix_access_containers` (`id`, `name`, `site_guid`) VALUES
 (0, 'PRIVATE', 0),
 (1, 'LOGGED_IN', 0),
 (2, 'PUBLIC', 0);
 
--- Access groups 
-CREATE TABLE `prefix_access_group_membership` (
+-- Access containers 
+CREATE TABLE `prefix_access_container_membership` (
   `user_guid` int(11) NOT NULL,
-  `access_group_id` int(11) NOT NULL,
-  PRIMARY KEY  (`user_guid`,`access_group_id`)
+  `access_container_id` int(11) NOT NULL,
+  PRIMARY KEY  (`user_guid`,`access_container_id`)
 )  ;
 
 
@@ -102,6 +102,7 @@ CREATE TABLE `prefix_access_group_membership` (
 -- Extra information relating to "objects"
 CREATE TABLE `prefix_objects_entity` (
   `guid` bigint(20) unsigned  NOT NULL,
+  `container_guid` bigint(20) unsigned NOT NULL,
   
   `title` text NOT NULL,
   `description` text NOT NULL,
@@ -145,10 +146,6 @@ CREATE TABLE `prefix_users_entity` (
   FULLTEXT KEY `name` (`name`),
   FULLTEXT KEY (`name`,`username`)
 ) ENGINE=MyISAM;
-
-
--- TODO: Collection
-
 
 --
 -- *** Annotations and tags ***
