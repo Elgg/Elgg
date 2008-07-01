@@ -59,7 +59,12 @@
 			// Add Javascript reference to the page header
 				extend_view('metatags','profile/metatags');
 				extend_view('css','profile/css');
-				
+
+			// Extend context menu with admin links
+			if (isadminloggedin())
+			{
+	   			 extend_view('profile/menu/links','profile/menu/adminlinks');
+			}
 		}
 		
 	/**
