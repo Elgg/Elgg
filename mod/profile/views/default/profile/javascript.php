@@ -16,7 +16,7 @@
 
 ?>
 
-$(document).ready(function() {
+function setup_avatar_menu() {
 
 	// avatar image menu link
 	$("div.usericon img").mouseover(function() {
@@ -90,6 +90,12 @@ $(document).ready(function() {
 				$(".avatar_menu_button").hide();
 			}
 	});			   
-							   
+	
+
+}
+
+$(document).ready(function() {
+
+	setup_avatar_menu();						   
 								   
 });

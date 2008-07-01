@@ -65,6 +65,18 @@
 
 		echo elgg_view("widgets/{$handler}/view",$vars);
 
+?>
+
+<script language="javascript">
+ $(document).ready(function(){
+   	setup_avatar_menu();
+ });
+
+</script>
+
+
+<?php
+		
 	}
 		
 	if ($callback != "true") {
