@@ -115,7 +115,6 @@
 
 	}
 		
-			// TODO: Add admin console options here
 ?>
 </p>
 </div><!-- /#profile_info_wide -->
