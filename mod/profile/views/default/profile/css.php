@@ -5,6 +5,9 @@
 /* ***************************************
 	AVATAR CONTEXTUAL MENU
 *************************************** */	
+#profile_icon_wrapper {
+	float:left;
+}
 	
 .usericon {
 	position:relative;
@@ -45,7 +48,4 @@
 .usericon div.sub_menu a:hover{ background:#cccccc; text-decoration:none;}
 .usericon .item_line { border-top:solid 1px #dddddd;}
 
-
-#profile_icon_wrapper {
-	float:left;
-}
+.usericon div.sub_menu h3 {font-size:1.2em;}

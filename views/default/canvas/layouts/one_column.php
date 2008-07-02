@@ -14,7 +14,7 @@
 ?>
 
 <!-- main content -->
-<div id="layout_maincontent">
+<div id="layout_maincontent" class="no_sidebar">
 <div id="wrapper_maincontent" class="single_column">
 
 <?php echo $vars['area1']; ?>

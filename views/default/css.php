@@ -77,7 +77,7 @@ body {
 	background: #4690d6;
 	font: 75%/1.5  "Lucida Grande", "Lucida Sans", Verdana, sans-serif;
 	color: #333333;
-	background: url(<?php echo $vars['url']; ?>_graphics/page_back_linen.gif) repeat left top;
+	background: url(<?php echo $vars['url']; ?>_graphics/page_back_linen.gif) repeat left 1px;
 }
 a {
 	color: #4690d6;
@@ -213,7 +213,9 @@ h6 { font-size: 0.8em; }
 	height:360px;
 }
 
-
+#layout_maincontent.no_sidebar {
+    padding:0px 0px 20px 20px !important;
+}
 #wrapper_maincontent.single_column {
 	/* width:785px;*/
 	background: white;
@@ -1026,12 +1028,10 @@ p.user_menu_friends_of {
 }
 .generic_comment_details {
 	margin-left: 60px;
-	border: 0px;
-	border-bottom: 1px;
-	border-style: solid;
+	border-bottom: 1px solid #aaaaaa;
 }
 .generic_comment_owner {
-	font-size: 80%;
+	color:#666666;
 	margin: 0px;
 }
 
