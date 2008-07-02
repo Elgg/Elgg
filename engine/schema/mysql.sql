@@ -149,7 +149,7 @@ CREATE TABLE `prefix_users_entity` (
 ) ENGINE=MyISAM;
 
 -- Extra information relating to "groups"
-CREATE TABLE `prefix_groups_entity` 
+CREATE TABLE `prefix_groups_entity` (
   `guid` bigint(20) unsigned  NOT NULL,
   
   `name` text NOT NULL,
