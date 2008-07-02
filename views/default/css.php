@@ -907,6 +907,7 @@ input[type="submit"] {
 *************************************** */
 #wrapper_header h1 {
 	margin:10px 0 0 0;
+	letter-spacing: -0.03em;
 }
 
 
@@ -918,20 +919,7 @@ input[type="submit"] {
 	line-height: 1.2em;
 }
 
-.widget_status_statusmessage {
-	font-size:1.2em;
-	line-height:1.2em;
-	font-weight:bold;
-	color:#666666;
-	background:#fdffc3;
-	padding:3px;
-}
 
-.widget_status_messagetimestamp {
-	font-size:0.9em;
-	color:#999999;
-	margin:0;
-}
 
 
 /* ***************************************
@@ -1111,27 +1099,6 @@ p.user_menu_friends_of {
 	margin: 5px;
 	margin-bottom: 10px;
 }
-	
-
-/* ***************************************
-	STATUS
-*************************************** */
-.collapsable_box_editpanel .textarea-status {
-	font-size: 1.6em;
-	font-family:Arial,Helvetica,sans-serif;
-	width:94%;
-}
-/* friends status on 'friends of' page */
-.friends_status {
-	float:right;
-	width:500px;
-	text-align:right;
-	margin: 0 4px 0 0;
-}
-.status_timestamp {
-	color:#666666;	
-}
-
 
 /* ***************************************
 	SPOTLIGHT
