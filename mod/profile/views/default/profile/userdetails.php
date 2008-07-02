@@ -73,9 +73,12 @@
 					$value = $vars['entity']->$shortname;
 					if (!empty($value)) {
 					
-	?>
+				//This function controls the alternating class
+                $even_odd = ( 'odd' != $even_odd ) ? 'odd' : 'even';					
+	
 
-	<p>
+	echo "<p class=\"{$even_odd}\">";
+	?>
 		<b><?php
 
 			echo elgg_echo("profile:{$shortname}");

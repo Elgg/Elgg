@@ -191,7 +191,11 @@ h6 { font-size: 0.8em; }
 	width:160px;
 	min-height: 260px;
 	float:right;
-	padding:0px 0px 20px 10px;
+	/* padding:0px 0px 20px 10px;*/
+	background: white;
+	padding:10px;
+	border-bottom:1px solid #cccccc;
+	border-right:1px solid #cccccc;
 }
 
 #layout_maincontent {
@@ -218,6 +222,12 @@ h6 { font-size: 0.8em; }
 }
 #wrapper_maincontent.single_column {
 	/* width:785px;*/
+	background: white;
+	padding:20px;
+	border-bottom:1px solid #cccccc;
+	border-right:1px solid #cccccc;
+}
+#wrapper_maincontent.content_area {
 	background: white;
 	padding:20px;
 	border-bottom:1px solid #cccccc;
@@ -855,7 +865,7 @@ input[type="submit"] {
 .input-tags,
 .input-url,
 .input-textarea {
-	width:100%;
+	width:98%;
 }
 
 .input-textarea {
@@ -908,6 +918,11 @@ input[type="submit"] {
 #wrapper_header h1 {
 	margin:10px 0 0 0;
 	letter-spacing: -0.03em;
+}
+
+/* title within main content area */
+.page_title {
+	padding:0px 10px 20px 0px;
 }
 
 
@@ -963,10 +978,15 @@ p.user_menu_friends_of {
 #profile_info_column_right {
 	float:left;
 	width:260px;
+	/* width:100%; */
 }
 #profile_info_column_right p {
 	margin:7px 0 7px 0;
 	line-height:1.3em;
+	padding:2px 4px 2px 4px;
+}
+#profile_info_column_right .odd {
+	background:#f5f5f5;
 }
 #profile_info_wide p {
 	margin:7px 0 7px 0;
@@ -1034,7 +1054,7 @@ p.user_menu_friends_of {
 	
 .search_listing_info {
 	margin-left: 50px;
-	height: 40px;
+	min-height: 40px;
 }
 
 .search_listing_info p {
@@ -1129,16 +1149,23 @@ p.user_menu_friends_of {
 	border:1px solid red;
 }
 
+
+/* ***************************************
+	GENERIC COMMENTS
+*************************************** */
+.generic_comment_owner {
+	font-size: 90%;
+	color:#666666;
+}
+
+
 /* ***************************************
 	END
 *************************************** */
 
-.page_title {
-	padding:0px 10px 20px 0px;
-}
-	
+/* not needed? - replaced by #wrapper_maincontent.single_column */
 #forums, #forum_topics, #topic_posts {
-	background:white;
+	/* background:white;*/
 }	
 	
 	
