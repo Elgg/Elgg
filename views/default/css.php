@@ -649,17 +649,18 @@ a.toggle_customise_edit_panel:hover {
 	display: none;
 	background: #dedede;
 	padding:5px 10px 5px 10px;
-	font-size: 9px;
+	/* font-size: 9px;*/
 }
 .collapsable_box_header a.toggle_box_contents {
 	color: #4690d6;
 	cursor:pointer;
-	font-size:16px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:20px;
 	font-weight: bold;
 	text-decoration:none;
 	float:right;
 	margin: 0;
-	margin-top: -4px;
+	margin-top: -7px;
 }
 .collapsable_box_header a.toggle_box_edit_panel {
 	color: #4690d6;
@@ -904,6 +905,11 @@ input[type="submit"] {
 /* ***************************************
 	MAIN CONTENT ELEMENTS
 *************************************** */
+#wrapper_header h1 {
+	margin:10px 0 0 0;
+}
+
+
 .elggtoolbar .elggtoolbar_header h1,
 .collapsable_box_header h1 {
 	/*color: #4690d6;*/
@@ -1012,27 +1018,6 @@ p.user_menu_friends_of {
 }
 .river_2_update {
 	background: url(<?php echo $vars['url']; ?>_graphics/dummy_river_icon.gif) no-repeat left top;
-}
-
-
-/* ***************************************
-	COMMENTS
-*************************************** */
-
-.generic_comment {
-	margin-bottom: 50px;
-	padding-bottom: 10px;
-}
-.generic_comment_icon {
-	position: absolute;
-}
-.generic_comment_details {
-	margin-left: 60px;
-	border-bottom: 1px solid #aaaaaa;
-}
-.generic_comment_owner {
-	color:#666666;
-	margin: 0px;
 }
 
 
@@ -1162,6 +1147,20 @@ p.user_menu_friends_of {
 	margin:5px 20px 5px 0;
 }
 
+
+/* ***************************************
+	PLUGIN SETTINGS
+*************************************** */
+#plugin_details {
+	margin:0 0 20px 0;
+	padding:10px;
+}
+#plugin_details.active {
+	border:1px solid lime;
+}
+#plugin_details.not-active {
+	border:1px solid red;
+}
 
 /* ***************************************
 	END
