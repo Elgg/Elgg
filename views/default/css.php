@@ -1012,22 +1012,46 @@ p.user_menu_friends_of {
 	font-size:smaller;
 	color:#666666;
 }
-.river_user_login {
-	background: url(<?php echo $vars['url']; ?>_graphics/dummy_river_icon.gif) no-repeat left top;
-}
 .river_user_update {
-	background: url(<?php echo $vars['url']; ?>_graphics/dummy_river_icon.gif) no-repeat left top;
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_profile.gif) no-repeat left top;
 }
 .river_annotate {
-	background: url(<?php echo $vars['url']; ?>_graphics/dummy_river_icon.gif) no-repeat left top;
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_comment.gif) no-repeat left top;
 }
 .river_create {
-	background: url(<?php echo $vars['url']; ?>_graphics/dummy_river_icon.gif) no-repeat left top;
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/dummy_river_icon.gif) no-repeat left top;
 }
-.river_2_update {
-	background: url(<?php echo $vars['url']; ?>_graphics/dummy_river_icon.gif) no-repeat left top;
+.river_sharing_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_shares.gif) no-repeat left top;
+}
+.river_status_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_status.gif) no-repeat left top;
+}
+.river_file_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_files.gif) no-repeat left top;
+}
+.river_widget_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_plugin.gif) no-repeat left top;
+}
+.river_forums_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_forum.gif) no-repeat left top;
+}
+.river_widget_update {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_messageboard.gif) no-repeat left top;
+}
+.river_blog_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_blog.gif) no-repeat left top;
 }
 
+/* 
+STILL TO ADD
+
+feed - river icon:
+background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_feed.gif) no-repeat left top;
+
+private message - river icon:
+background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_privatemessage.gif) no-repeat left top;
+*/
 
 /* ***************************************
 	SEARCH LISTINGS	
