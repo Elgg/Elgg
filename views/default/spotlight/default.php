@@ -23,8 +23,7 @@
 							<td colspan="3" align="left" valign="top">
 							<h2>Help tip / Announcement</h2>
 							
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in. <a href="">more&hellip;</a><p>
-							
+							<p>Welcome to this Elgg spotlight area. This is a new feature introduced in Elgg v1.0 and we hope you will find it useful. Every plugin within Elgg can set its own content to be displayed in this space. This can include author infomation, help documents or tutorial videos. <a href="">more&hellip;</a><p>
 							</td>
 						</tr>
 						
