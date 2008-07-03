@@ -172,9 +172,9 @@
 		/**
 		 * Remove a user from the group.
 		 *
-		 * @param int $guid GUID of the user
+		 * @param ElggUser $user
 		 */
-		public function leave($guid)
+		public function leave(ElggUser $user)
 		{
 			return leave_group($this->getGUID(), $user->getGUID());
 		}
