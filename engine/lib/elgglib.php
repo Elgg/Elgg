@@ -258,7 +258,7 @@
 								'ElggUser' => 'user',
 								'ElggObject' => 'object',
 								'ElggSite' => 'site',
-								'ElggCollection' => 'collection'
+								'ElggGroup' => 'group'
 							);
 			
 			$entity_class = get_class($entity);
