@@ -194,7 +194,7 @@
 			foreach ($this->attributes as $k => $v)
 				$attr .= ($v!="") ? "$k=\"$v\" " : "";
 			
-			$body = $this->getBody();
+			$body = htmlentities($this->getBody());
 			$tag = $this->getTagName();
 			
 			$end = "/>";
