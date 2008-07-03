@@ -498,54 +498,54 @@
 			$total = get_data_row($query);
 			return $total->total;
 		}
-		
-		/**
-		 * Return a list of this group's members.
-		 * 
-		 * @param int $group_guid The ID of the container/group.
-		 * @param int $limit The limit
-		 * @param int $offset The offset
-		 * @param int $site_guid The site
-		 * @param bool $count Return the users (false) or the count of them (true)
-		 * @return mixed
-		 */
-		function get_group_members($group_guid, $limit = 10, $offset = 0, $site_guid = 0, $count = false)
-		{
-			return get_entities_from_relationship('member', $group_guid, true, 'user', '', 0, "", $limit, $offset, $count, $site_guid);
-		}
-		
-		/**
-		 * Return whether a given user is a member of the group or not.
-		 * 
-		 * @param int $group_guid The group ID
-		 * @param int $user_guid The user guid
-		 * @return bool
-		 */
-		function is_group_member($group_guid, $user_guid)
-		{
-			return check_entity_relationship($user_guid, 'member', $group_guid);
-		}
-		
-		/**
-		 * Join a user to a group.
-		 * 
-		 * @param int $group_guid The group.
-		 * @param int $user_guid The user.
-		 */
-		function join_group($group_guid, $user_guid)
-		{
-			return add_entity_relationship($user_guid, 'member', $group_guid);
-		}
-		
-		/**
-		 * Remove a user from a group.
-		 * 
-		 * @param int $group_guid The group.
-		 * @param int $user_guid The user.
-		 */
-		function leave_group($group_guid, $user_guid)
-		{
-			return remove_entity_relationship($user_guid, 'member', $group_guid);
-		}
+	}
+	
+	/**
+	 * Return a list of this group's members.
+	 * 
+	 * @param int $group_guid The ID of the container/group.
+	 * @param int $limit The limit
+	 * @param int $offset The offset
+	 * @param int $site_guid The site
+	 * @param bool $count Return the users (false) or the count of them (true)
+	 * @return mixed
+	 */
+	function get_group_members($group_guid, $limit = 10, $offset = 0, $site_guid = 0, $count = false)
+	{
+		return get_entities_from_relationship('member', $group_guid, true, 'user', '', 0, "", $limit, $offset, $count, $site_guid);
+	}
+	
+	/**
+	 * Return whether a given user is a member of the group or not.
+	 * 
+	 * @param int $group_guid The group ID
+	 * @param int $user_guid The user guid
+	 * @return bool
+	 */
+	function is_group_member($group_guid, $user_guid)
+	{
+		return check_entity_relationship($user_guid, 'member', $group_guid);
+	}
+	
+	/**
+	 * Join a user to a group.
+	 * 
+	 * @param int $group_guid The group.
+	 * @param int $user_guid The user.
+	 */
+	function join_group($group_guid, $user_guid)
+	{
+		return add_entity_relationship($user_guid, 'member', $group_guid);
+	}
+	
+	/**
+	 * Remove a user from a group.
+	 * 
+	 * @param int $group_guid The group.
+	 * @param int $user_guid The user.
+	 */
+	function leave_group($group_guid, $user_guid)
+	{
+		return remove_entity_relationship($user_guid, 'member', $group_guid);
 	}
 ?>
