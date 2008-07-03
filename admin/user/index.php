@@ -22,15 +22,20 @@
 		$limit = get_input('limit', 10);
 		$offset = get_input('offset', 0);
 		
+		$context = get_context();
+		set_context('search');
+		
 		if ($search){
 			$entities = search_for_user($search, $limit, $offset, "",false);
 			$count = search_for_user($search, $limit, $offset, "",true);
 		
-			$result = elgg_view_entity_list($entities, $count, $offset, $limit);
+			$result = elgg_view_entity_list($entities, $count, $offset, $limit, false);
 		} else
-			$result = list_entities_from_metadata("", $tag, "user", "");
+			$result = list_entities_from_metadata("", $tag, "user", "",0, $limit, false);
 		
+			
+			
 	// Display main admin menu
 		page_draw(elgg_echo("admin:user"),elgg_view_layout("one_column", elgg_view("admin/user", array('list' => $result))));
-		
+		set_context($context);
 ?>
