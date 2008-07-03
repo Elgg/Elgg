@@ -17,8 +17,11 @@
 	 * 
 	 */
 
-		$vars['options'] = array();
-		$vars['options'] = get_write_access_array();
+		if (!is_array($vars['options']))
+		{
+			$vars['options'] = array();
+			$vars['options'] = get_write_access_array();
+		}
 		
 		if (is_array($vars['options']) && sizeof($vars['options']) > 0) {	 
 			 
