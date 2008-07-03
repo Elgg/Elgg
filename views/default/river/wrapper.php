@@ -13,7 +13,7 @@
 
 	if (isset($vars['entity']) && $vars['entity'] instanceof ElggEntity) {
 		
-		$subtype = $vars['entity']->subtype;
+		$subtype = $vars['entity']->getSubtype();
 		if (empty($subtype)) $subtype = $vars['entity']->type;
 		if (empty($subtype)) $subtype = "general";
 		
