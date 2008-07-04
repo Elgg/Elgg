@@ -21,9 +21,9 @@
 		if (isloggedin()) 
 		{
 			add_menu(elgg_echo('groups'), $CONFIG->wwwroot . "pg/groups/" . $_SESSION['user']->username,array(
-				menu_item(elgg_echo('groups:new'), $CONFIG->wwwroot."pg/groups/" . $_SESSION['user']->username . "/new/"),
-				menu_item(elgg_echo('groups:yours'), $CONFIG->wwwroot . "pg/groups/" . $_SESSION['user']->username),
-				menu_item(elgg_echo('groups:all'), $CONFIG->wwwroot . "pg/groups/" . $_SESSION['user']->username . "/world/"),
+				menu_item(elgg_echo('groups:new'), $CONFIG->wwwroot."pg/groups/new/"),
+				menu_item(elgg_echo('groups:yours'), $CONFIG->wwwroot . "pg/groups/owned/" . $_SESSION['user']->username),
+				menu_item(elgg_echo('groups:all'), $CONFIG->wwwroot . "pg/groups/world/"),
 			),'groups');
 		}
 		else
@@ -50,6 +50,8 @@
 		
 		register_action("groups/addtogroup",false, $CONFIG->pluginspath . "groups/actions/addtogroup.php");
 		
+		// Use group widgets
+		use_widgets('groups');
 		
 		// For now, we'll hard code the groups profile items as follows:
 		// TODO make this user configurable
@@ -80,27 +82,31 @@
 	{
 		global $CONFIG;
 		
-		// The username should be the file we're getting
-		if (isset($page[0])) {
-			set_input('username',$page[0]);
-		}
 		
-		if (isset($page[1])) 
+		if (isset($page[0]))
 		{
-    		switch($page[1]) 
-    		{
-    			case "new":  
-    				include($CONFIG->pluginspath . "groups/new.php");
+			// See what context we're using
+			switch($page[0])
+			{
+				case "new" :
+					include($CONFIG->pluginspath . "groups/new.php");
           		break;
     			case "world":  
    					include($CONFIG->pluginspath . "groups/all.php");
           		break;
-    		}
-		}
-		else
-		{
-			// Include the standard profile index
-			include($CONFIG->pluginspath . "groups/index.php");
+    			case "owned" :
+    				// Owned by a user
+    				if (isset($page[1]))
+    					set_input('username',$page[1]);
+    					
+    				include($CONFIG->pluginspath . "groups/index.php");	
+    			break;
+    				
+    			default:
+    				set_input('group_guid', $page[0]);
+    				include($CONFIG->pluginspath . "groups/groupprofile.php");
+    			break;
+			}
 		}
 		
 	}
@@ -115,7 +121,9 @@
 		
 		global $CONFIG;
 		
-		return $CONFIG->url . "pg/view/" . $entity->getGUID() . "/";
+		$title = friendly_title($entity->title);
+		
+		return $CONFIG->url . "pg/groups/{$entity->guid}/$title/";
 		
 	}
 	

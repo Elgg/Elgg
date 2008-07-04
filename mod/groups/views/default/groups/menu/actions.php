@@ -33,12 +33,6 @@
 			}	
 		}
 		
-		// edit
-		if ($_SESSION['user']->getGUID() == $vars['entity']->owner_guid)
-		{
-		?>
-			<p><a href="<?php echo $vars['url']; ?>mod/groups/edit.php?group_guid=<?php echo $vars['entity']->getGUID(); ?>"><?php echo elgg_echo("edit"); ?></a></p>
-		<?php 
-		}
+		
 	}
 ?>
