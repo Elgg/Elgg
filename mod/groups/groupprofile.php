@@ -10,15 +10,16 @@
 	 */
 
 	$group_guid = get_input('group_guid');
+	set_context('groups');
+	
 	
 	$group = get_entity($group_guid);
 	
 	
-	$body = elgg_view('group/group', array('entity' => $group, 'user' => $_SESSION['user'], 'full' => true));
+	$body = elgg_view_layout('one_column', elgg_view('group/group', array('entity' => $group, 'user' => $_SESSION['user'], 'full' => true)));
 	
-	
-	// TODO: Add widgets etc
+	$body .= elgg_view_layout('widgets', "", "", elgg_echo('groups:nowidgets'));
 	
 	// Finally draw the page
-	page_draw($group->name, elgg_view_layout('one_column', $body));
+	page_draw($group->name, $body);
 ?>

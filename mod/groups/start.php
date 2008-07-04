@@ -53,6 +53,9 @@
 		// Use group widgets
 		use_widgets('groups');
 		
+		// Add a page owner
+		add_page_owner_handler('groups_page_owner_handler');
+		
 		// For now, we'll hard code the groups profile items as follows:
 		// TODO make this user configurable
 		
@@ -71,6 +74,23 @@
 			'website' => 'url',
 							   
 		);
+	}
+	
+	/**
+	 * Set a page owner handler.
+	 *
+	 */
+	function groups_page_owner_handler()
+	{
+		$group_guid = get_input('group_guid');
+		if ($group_guid)
+		{
+			$group = get_entity($group_guid);
+			if ($group instanceof ElggGroup)
+				return $group->owner_guid;
+		}
+		
+		return false;
 	}
 	
 	/**

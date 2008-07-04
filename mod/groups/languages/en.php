@@ -77,6 +77,7 @@ or click below to confirm request:
 %s",
 	
 			'groups:river:member' => 'is now a member of',
+			'groups:nowidgets' => 'No widgets defined!',
 	
 	);
 					
