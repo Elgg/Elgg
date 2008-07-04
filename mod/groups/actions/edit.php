@@ -45,6 +45,15 @@
 		}
 	}
 	
+	// Validate create
+	if (!$group->title)
+	{
+		system_message(elgg_echo("groups:notitle"));
+		
+		forward($_SERVER['HTTP_REFERER']);
+		exit;
+	}
+	
 	// Get access
 	$group->access_id = get_input('access_id', 0);
 	

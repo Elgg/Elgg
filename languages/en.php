@@ -379,6 +379,8 @@
 			'enable' => "Enable",
 			'disable' => "Disable",
 	
+			'invite' => "Invite",
+	
 			'resetpassword' => "Reset password",
 			'makeadmin' => "Make admin",
 	

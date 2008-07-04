@@ -36,9 +36,13 @@
 			'groups:joinrequest' => 'Request membership',
 			'groups:join' => 'Join group',
 			'groups:leave' => 'Leave group',
+			'groups:invite' => 'Invite friends',
+			'groups:inviteto' => "Invite friends to '%s'",
+			'groups:nofriends' => "You have no friends left who have not been invited to this group.",
 	
 	
 			'groups:privategroup' => 'This group is private, requesting membership.',
+			'groups:notitle' => 'Groups must have a title',
 			'groups:cantjoin' => 'Can not join group',
 			'groups:cantleave' => 'Could not leave group',
 			'groups:addedtogroup' => 'Successfully added the user to the group',

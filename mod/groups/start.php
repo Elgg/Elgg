@@ -123,8 +123,7 @@
     					set_input('username',$page[1]);
     					
     				include($CONFIG->pluginspath . "groups/index.php");	
-    			break;
-    				
+    			break;    				
     			default:
     				set_input('group_guid', $page[0]);
     				include($CONFIG->pluginspath . "groups/groupprofile.php");
