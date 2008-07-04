@@ -1037,7 +1037,7 @@ p.user_menu_friends_of {
 	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_forum.gif) no-repeat left top;
 }
 .river_widget_update {
-	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_messageboard.gif) no-repeat left top;
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_plugin.gif) no-repeat left top;	
 }
 .river_blog_create {
 	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_blog.gif) no-repeat left top;
@@ -1045,6 +1045,8 @@ p.user_menu_friends_of {
 
 /* 
 STILL TO ADD
+messageboard
+background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_messageboard.gif) no-repeat left top;
 
 feed - river icon:
 background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_feed.gif) no-repeat left top;
