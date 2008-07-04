@@ -1172,6 +1172,19 @@ background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_priv
 	margin:5px 20px 5px 0;
 }
 
+/* ***************************************
+	FRIENDS
+*************************************** */
+/* friends widget */
+#widget_friends_list {
+	display:table;
+	width:100%;
+}
+.widget_friends_singlefriend {
+	float:left;
+	margin:0 5px 5px 0;
+}
+
 
 /* ***************************************
 	PLUGIN SETTINGS
