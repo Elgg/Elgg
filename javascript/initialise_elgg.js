@@ -71,102 +71,18 @@ $(document).ready(function () {
 		accept: ".draggable_widget",
 		hoverClass: 'droppable-hover'
 	});
-
-
-    /*
-    // widget hover class
-	$("table.draggable_widget").bind("mouseenter mouseleave", function(e){
-		$(this).toggleClass("draggable_widget_over");
-	});
-    
-*/
-/*
-
-	// remove widget button
-	$('img.remove_me').click(function () {
-		$(this.parentNode.parentNode.parentNode.parentNode.parentNode).fadeOut("medium", function () {
-			$(this).remove();
-			// updating hidden fields with new widget order
-			var widgetNameMain = outputWidgetList('#main_widgets');
-			document.getElementById('debugField1').value = widgetNameMain;
-			var widgetNameRight = outputWidgetList('#rightsidebar_widgets');
-			document.getElementById('debugField2').value = widgetNameRight;
-		  });
-
-		return false;
-    });
-
-*/	
-	// define draggable widgets from gallery
-	//$("#widget_picker_gallery .draggable_widget").draggable({
-	//	helper: 'clone',
-	//	containment: '#customise_editpanel',
-	//	start: function(ev, ui) {
-	//		$('#rightsidebar_widgets').droppable("enable");
-	//		$('#main_widgets').droppable("enable");
-	//	}
-	//});
-	
-	// define what happens when new widgets are dragged from the gallery 
-/*
-	$("#rightsidebar_widgets").droppable({
-		accept: ".draggable_widget",
-		hoverClass: 'droppable-hover',
-		drop: function(ev, ui) {
-			$(this).append($(ui.draggable).clone() ); 
-			$(this).droppable("disable");
-			
-			$('img.remove_me').click(function () {
-					$(this.parentNode.parentNode.parentNode.parentNode.parentNode).fadeOut("medium", function () {
-					$(this).remove();
-					
-					var widgetNameRight = outputWidgetList('#rightsidebar_widgets');
-					document.getElementById('debugField2').value = widgetNameRight;
-				});
-			return false;
-			});
-			
-			widget_moreinfo(); 
-			
-			$els.sortable( "refresh" );
-			
-			var widgetNameRight = outputWidgetList('#rightsidebar_widgets');
-			document.getElementById('debugField2').value = widgetNameRight;
-		 }
-	});
-
-*/	
-/*
-
-	$("#main_widgets").droppable({
-		accept: ".draggable_widget",
-		hoverClass: 'droppable-hover',
-		drop: function(ev, ui) {
-			$(this).append($(ui.draggable).clone() ); 
-			$(this).droppable("disable");
-			
-			$('img.remove_me').click(function () {
-					$(this.parentNode.parentNode.parentNode.parentNode.parentNode).fadeOut("medium", function () {
-					$(this).remove();
-					
-					var widgetNameMain = outputWidgetList('#main_widgets');
-					document.getElementById('debugField1').value = widgetNameMain;
-				});
-			return false;
-			});
-			
-			widget_moreinfo();
-			
-			$els.sortable( "refresh" );
-			
-			var widgetNameMain = outputWidgetList('#main_widgets');
-			document.getElementById('debugField1').value = widgetNameMain;
-		 }
-	});
-
-
-*/    
+   
 }); /* end document ready function */
+
+
+
+
+
+
+
+
+
+
 
 
 jQuery.fn.makeDelimitedList = function(elementAttribute) {
@@ -189,9 +105,13 @@ jQuery.fn.makeDelimitedList = function(elementAttribute) {
 }
 
 
+
+
 function outputWidgetList(forElement) {
 	return( $("input[@name='handler'], input[@name='guid']", forElement ).makeDelimitedList("value") );	
 }
+
+
 
 
 // toggle widget box contents
@@ -213,6 +133,8 @@ var toggleContent = function(e) {
 };
 
 
+
+
 // widget more info button
 function setupMoreInfoButton() {
 	$('img.more_info').click(function () {			
@@ -224,6 +146,8 @@ function setupMoreInfoButton() {
 	return false;
 	}); 	
 }
+
+
 
 
 function widget_moreinfo() {
@@ -259,5 +183,40 @@ function widget_moreinfo() {
 	});	
 		
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
