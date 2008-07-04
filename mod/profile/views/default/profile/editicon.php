@@ -5,7 +5,7 @@
 	 * 
 	 * @package ElggProfile
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Ben Werdmuller <ben@curverider.co.uk>
+	 * @author Curverider
 	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.com/
 	 * 
@@ -61,14 +61,6 @@
     var $x1, $y1, $x2, $y2, $w, $h;
         
         function selectChange(img, selection){
-            
-           //delete this once we have tested, it is for the coordinate display
-           $x1.text(selection.x1);
-           $y1.text(selection.y1);
-           $x2.text(selection.x2);
-           $y2.text(selection.y2);
-           $w.text(selection.width);
-           $h.text(selection.height);
            
            //populate the form with the correct coordinates once a user has cropped their image
            document.getElementById('x_1').value = selection.x1;
@@ -110,24 +102,6 @@
  style="float: left; margin-right: 10px;" />
  <br />
 </p>
-
- <div style="float: right; margin-left: 10px; margin-top:-200px;">
-  <p style="background: #eee; border: solid 1px #ddd; margin: 0; padding: 10px;">
-   <b>Selection coordinates:</b><br />
-
-   <b>X<sub>1</sub>:</b> <span id="x1"></span><br />
-   <b>Y<sub>1</sub>:</b> <span id="y1"></span><br />
-   <b>X<sub>2</sub>:</b> <span id="x2"></span><br />
-
-   <b>Y<sub>2</sub>:</b> <span id="y2"></span><br />
-   <br />
-   <b>Selection dimensions:</b><br />
-   <b>Width:</b> <span id="w"></span><br />
-   <b>Height:</b> <span id="h"></span>
-
-  </p>
- </div>
- 
 <form action="<?php echo $vars['url']; ?>action/profile/cropicon" method="post" />
 	<input type="hidden" name="username" value="<?php echo $vars['user']->username; ?>" />
 	<input type="hidden" name="x_1" value="<?php echo $vars['user']->x1; ?>" id="x_1" />
@@ -136,3 +110,5 @@
     <input type="hidden" name="y_2" value="<?php echo $vars['user']->y2; ?>" id="y_2" />
   <input type="submit" name="submit" value="<?php echo elgg_echo("profile:createicon"); ?>" />
 </form>
+
+<div class="clearfloat"></div>
