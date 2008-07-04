@@ -27,6 +27,7 @@
 			'groups:interests' => 'Interests',
 			'groups:website' => 'Website',
 			'groups:membership' => "Membership",
+			'groups:owner' => "Owner",
 	
 			'groups:noaccess' => 'No access to group',
 			'groups:cantedit' => 'You can not edit this group',
@@ -74,6 +75,8 @@ You are now a member of the '%s' group! Click below to begin posting!
 or click below to confirm request:
 
 %s",
+	
+			'groups:river:member' => 'is now a member of',
 	
 	);
 					
