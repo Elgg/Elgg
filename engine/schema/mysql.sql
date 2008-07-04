@@ -103,7 +103,7 @@ CREATE TABLE `prefix_access_group_membership` (
 -- Extra information relating to "objects"
 CREATE TABLE `prefix_objects_entity` (
   `guid` bigint(20) unsigned  NOT NULL,
-  `group_guid` bigint(20) unsigned NOT NULL,
+  `container_guid` bigint(20) unsigned NOT NULL,
   
   `title` text NOT NULL,
   `description` text NOT NULL,
