@@ -12,7 +12,7 @@
 
 	$performed_by = $vars['performed_by'];
 	$log_entry = $vars['log_entry'];
-	$object = $vars['object'];
+	$object = $vars['entity'];
 	
 	// Find out what type of relationship we're dealing with (will only display a few)
 	if ($object instanceof ElggRelationship)
