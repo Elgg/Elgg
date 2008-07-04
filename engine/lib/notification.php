@@ -73,7 +73,7 @@
 		if (!is_array($to))
 			$to = array((int)$to);
 		$from = (int)$from;
-		$subject = sanitise_string($subject);
+		//$subject = sanitise_string($subject);
 			
 		// Get notification methods
 		if (($methods_override) && (!is_array($methods_override)))
