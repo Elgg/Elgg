@@ -22,6 +22,7 @@
 			'groups:new' => "Create a new group",
 			'groups:edit' => "Edit a group",
 	
+			'groups:icon' => 'Group icon (leave blank to leave unchanged)',
 			'groups:title' => 'Group title',
 			'groups:description' => 'Description',
 			'groups:interests' => 'Interests',
