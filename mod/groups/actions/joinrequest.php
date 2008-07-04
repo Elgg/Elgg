@@ -17,18 +17,22 @@
 	$user_guid = get_input('user_guid');
 	$group_guid = get_input('group_guid');
 	
-	$user = get_entity($user_guid);	
-	$group = get_entity($group);
+	$user = NULL;
+	if (!$user_guid) $user = $_SESSION['user'];
+	else
+		$user = get_entity($user_guid);
+		
+	$group = get_entity($group_guid);
 	
 	if (!$group->isMember($user))
-	{
+	{ 
 		$invites = $user->group_invite;
-		
+
 		if ($invites)
 		{
 			foreach ($invites as $invite)
 			{
-				if ($invite = $group->getGUID())
+				if ($invite == $group->getGUID())
 				{
 					if ($group->join($user))
 					{
@@ -45,25 +49,36 @@
 				}
 			
 			}
-			
-			// else email membership requiest
-			// set flag
-			
-			if (!$user->setMetaData('group_join_request', $group->getGUID(), "", true))
-				system_message(elgg_echo("groups:joinrequestnotmade"));
-			else
-			{
-				// Send email
-				if (notify_user($group->owner_guid, "", 
-						sprintf(elgg_echo('groups:request:subject'), $user->name, $group->title), 
-						sprintf(elgg_echo('groups:request:body'), $group->getOwner()->name, $user->name, $group->title, $user->getURL(), "http://{$CONFIG->url}action/groups/addtogroup?user_guid={$user->guid}&group_guid={$group->guid}"),
-						NULL, "email"))
-					system_message(elgg_echo("groups:joinrequestmade"));
-				else
-					system_message(elgg_echo("groups:joinrequestnotmade"));
-			}
 		}
+	
+		// else email membership requiest
+		// set flag
 		
+		// Permit multiple values
+		$methods = $user->group_join_request;
+		if (($methods) && (!is_array($methods)))
+			$methods = array($methods);
+		if (!$methods) $methods=array();
+		$methods[] = $group->getGUID();
+		$methods = array_unique($methods);
+		
+		//if (!$user->setMetaData('group_join_request', $group->getGUID(), "", true))
+		if (!$user->group_join_request = $methods)
+			system_message(elgg_echo("groups:joinrequestnotmade"));
+		else
+		{
+		
+			// Send email
+			if (notify_user($group->owner_guid, $user->getGUID(), 
+					sprintf(elgg_echo('groups:request:subject'), $user->name, $group->title), 
+					sprintf(elgg_echo('groups:request:body'), $group->getOwner()->name, $user->name, $group->title, $user->getURL(), "{$CONFIG->url}action/groups/addtogroup?user_guid={$user->guid}&group_guid={$group->guid}"),
+					NULL, "email"))
+				system_message(elgg_echo("groups:joinrequestmade"));
+			else
+				system_message(elgg_echo("groups:joinrequestnotmade"));
+		}
+	
+	
 	}
 	else
 		system_message(elgg_echo('groups:alreadymember'));

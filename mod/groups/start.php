@@ -48,7 +48,7 @@
 		register_action("groups/leave",false, $CONFIG->pluginspath . "groups/actions/leave.php");
 		register_action("groups/joinrequest",false, $CONFIG->pluginspath . "groups/actions/joinrequest.php");
 		
-		register_action("groups/adduser",false, $CONFIG->pluginspath . "groups/actions/adduser.php");
+		register_action("groups/addtogroup",false, $CONFIG->pluginspath . "groups/actions/addtogroup.php");
 		
 		
 		// For now, we'll hard code the groups profile items as follows:

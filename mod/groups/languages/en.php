@@ -50,30 +50,30 @@
 			'groups:userinvited' => 'User has been invited.',
 			'groups:usernotinvited' => 'User could not be invited.',
 	
-			'groups:invite:subject' => '%s you have been invited to join \'%s\'!',
-			'groups:invite:body' => 'Hi %s,
+			'groups:invite:subject' => "%s you have been invited to join %s!",
+			'groups:invite:body' => "Hi %s,
 
-You have been invited to join the \'%s\' group, click below to confirm:
+You have been invited to join the '%s' group, click below to confirm:
 
-%s',
+%s",
 
-			'groups:welcome:subject' => 'Welcome to the \'%s\' group!',
-			'groups:welcome:body' => 'Hi %s!
+			'groups:welcome:subject' => "Welcome to the %s group!",
+			'groups:welcome:body' => "Hi %s!
 		
-You are now a member of the \'%s\' group! Click below to begin posting!
+You are now a member of the '%s' group! Click below to begin posting!
 
-%s',
+%s",
 	
-			'groups:request:subject' => '%s has requested to join \'%s\'',
-			'groups:request:body' => 'Hi %s,
+			'groups:request:subject' => "%s has requested to join %s",
+			'groups:request:body' => "Hi %s,
 
-%s has requested to join the \'%s\' group, click below to view their profile:
+%s has requested to join the '%s' group, click below to view their profile:
 
 %s
 
 or click below to confirm request:
 
-%s',
+%s",
 	
 	);
 					
