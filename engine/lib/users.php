@@ -735,7 +735,10 @@
 		} else {
 			$query = "SELECT e.* "; 
 		}
-		$query .= "from {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}users_entity u on e.guid=u.guid where match(u.name,u.username) against ('$criteria') and $access";
+		$query .= "from {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}users_entity u on e.guid=u.guid where ";
+		// $query .= " match(u.name,u.username) against ('$criteria') ";
+		$query .= "(u.name like \"%{$criteria}%\" or u.username like \"%{$criteria}%\")";
+		$query .= " and $access";
 		
 		if (!$count) {
 			$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
@@ -970,6 +973,31 @@
 		//register_action("user/language");
 		
 		register_plugin_hook('usersettings:save','user','users_settings_save');
+		register_plugin_hook('search','all','search_list_users_by_name');
+		
+	}
+	
+	/**
+	 * Returns a formatted list of users suitable for injecting into search.
+	 *
+	 */
+	function search_list_users_by_name($hook, $user, $returnvalue, $tag) {
+
+		// Change this to set the number of users that display on the search page
+		$threshold = 4;
+		
+		if ($users = search_for_user($tag,$threshold)) {
+			
+			$countusers = search_for_user($tag,0,0,"",true);
+			
+			$return = elgg_view('user/search/startblurb',array('count' => $countusers, 'tag' => $tag));
+			foreach($users as $user) {
+				$return .= elgg_view_entity($user);
+			}
+			$return .= elgg_view('user/search/finishblurb',array('count' => $countusers, 'threshold' => $threshold, 'tag' => $tag));
+			return $return;
+			
+		}
 		
 	}
 	

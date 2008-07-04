@@ -236,6 +236,11 @@
 			'viewtype:list' => "List view",
 			'viewtype:gallery' => "Gallery",
 	
+			'tag:search:startblurb' => "Items with tags matching '%s':",
+
+			'user:search:startblurb' => "Users matching '%s':",
+			'user:search:finishblurb' => "To view more, click here.",
+	
 		/**
 		 * Account
 		 */

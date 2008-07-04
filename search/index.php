@@ -33,7 +33,10 @@
 		}
 		
 		if (!empty($tag)) {
-			$body = elgg_view_title(sprintf(elgg_echo('searchtitle'),$tag));
+			$body = "";
+			$body .= elgg_view_title(sprintf(elgg_echo('searchtitle'),$tag));
+			$body .= trigger_plugin_hook('search','',$tag,"");
+			$body .= elgg_view('search/startblurb',array('tag' => $tag));
 			$body .= list_entities_from_metadata($md_type, $tag, $objecttype, $subtype, $owner_guid, 10, false);
 			$body = elgg_view_layout('one_column',$body);
 		}
