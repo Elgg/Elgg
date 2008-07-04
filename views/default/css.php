@@ -1003,59 +1003,68 @@ p.user_menu_friends_of {
 .river_item p {
 	margin:0;
 	padding:0 0 0 20px;
+	line-height:1.3em;
 }
 .river_item {
 	border-bottom:1px solid #dddddd;
 	padding:2px 0 2px 0;
 }
 .river_item_time {
-	font-size:smaller;
+	font-size:90%;
 	color:#666666;
 }
+/* IE6 fix */
+* html .river_item p { 
+	padding:3px 0 3px 20px;
+}
+/* IE7 */
+*:first-child+html .river_item p {
+	min-height:17px;
+}
 .river_user_update {
-	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_profile.gif) no-repeat left top;
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_profile.gif) no-repeat left -1px;
 }
 .river_annotate {
-	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_comment.gif) no-repeat left top;
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_comment.gif) no-repeat left -1px;
 }
 .river_create {
-	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/dummy_river_icon.gif) no-repeat left top;
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/dummy_river_icon.gif) no-repeat left -1px;
 }
 .river_sharing_create {
-	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_shares.gif) no-repeat left top;
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_shares.gif) no-repeat left -1px;
 }
 .river_status_create {
-	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_status.gif) no-repeat left top;
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_status.gif) no-repeat left -1px;
 }
 .river_file_create {
-	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_files.gif) no-repeat left top;
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_files.gif) no-repeat left -1px;
 }
 .river_widget_create {
-	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_plugin.gif) no-repeat left top;
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_plugin.gif) no-repeat left -1px;
 }
 .river_forums_create {
-	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_forum.gif) no-repeat left top;
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_forum.gif) no-repeat left -1px;
 }
 .river_widget_update {
-	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_plugin.gif) no-repeat left top;	
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_plugin.gif) no-repeat left -1px;	
 }
 .river_blog_create {
-	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_blog.gif) no-repeat left top;
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_blog.gif) no-repeat left -1px;
 }
 .river_forumtopic_create {
-	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_forum.gif) no-repeat left top;
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_forum.gif) no-repeat left -1px;
 }
 
 /* 
 STILL TO ADD
 messageboard
-background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_messageboard.gif) no-repeat left top;
+background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_messageboard.gif) no-repeat left -1px;
 
 feed - river icon:
-background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_feed.gif) no-repeat left top;
+background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_feed.gif) no-repeat left -1px;
 
 private message - river icon:
-background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_privatemessage.gif) no-repeat left top;
+background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_privatemessage.gif) no-repeat left -1px;
 */
 
 /* ***************************************
