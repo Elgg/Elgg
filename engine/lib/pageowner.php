@@ -74,6 +74,7 @@
      * (Such functions are required to return false if they don't know)
      * @uses $CONFIG
      * @param string $functionname The name of the function to call
+     * @return mixed The guid of the owner or false
      */
 
         function add_page_owner_handler($functionname) {

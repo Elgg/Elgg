@@ -142,9 +142,9 @@
 		 * @param int $offset
 		 * @return mixed
 		 */
-		public function getMembers($limit = 10, $offset = 0)
+		public function getMembers($limit = 10, $offset = 0, $count = false)
 		{
-			return get_group_members($this->getGUID(), $limit, $offset);
+			return get_group_members($this->getGUID(), $limit, $offset, 0 , $count);
 		}
 		
 		/**

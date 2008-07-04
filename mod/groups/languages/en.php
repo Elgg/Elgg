@@ -77,8 +77,15 @@ or click below to confirm request:
 %s",
 	
 			'groups:river:member' => 'is now a member of',
-			'groups:nowidgets' => 'No widgets defined!',
 	
+			'groups:nowidgets' => 'No widgets have been defined for this group.',
+	
+	
+			'groups:widgets:members:title' => 'Group members',
+			'groups:widgets:members:description' => 'List the members of a group.',
+			'groups:widgets:members:label:displaynum' => 'List the members of a group.',
+			'groups:widgets:members:label:pleaseedit' => 'Please configure this widget.',
+		
 	);
 					
 	add_translation("en",$english);
