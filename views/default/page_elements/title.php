@@ -16,11 +16,11 @@
 	$page_owner = page_owner();
 	$page_owner_user = get_user($page_owner);
 
-	if($_SESSION['user']->getGUID() != $page_owner_user->guid){
+	/*if($_SESSION['user']->getGUID() != $page_owner_user->guid){
 		$user_name = $page_owner_user->username . "'s";
 	} else {
  		$user_name = elgg_echo('Your');
-	}
+	}*/
 
 	if($page_owner) {
 		$icon = elgg_view("profile/icon",array('entity' => $page_owner_user, 'size' => 'small'));
