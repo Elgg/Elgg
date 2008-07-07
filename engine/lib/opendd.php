@@ -295,7 +295,7 @@
 				$odd->setAttribute($k,$v);
 				
 			// Body
-			$odd->setBody($element->content);
+			$odd->setBody(html_entity_decode($element->content));
 		}
 		
 		return $odd;
