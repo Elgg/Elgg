@@ -1223,7 +1223,13 @@ table.search_gallery {
 #forums, #forum_topics, #topic_posts {
 	/* background:white;*/
 }	
-	
+
+/* tag icon */	
+.object_tag_string {
+	background: url(<?php echo $vars['url']; ?>_graphics/icon_tag.gif) no-repeat left 2px;
+	padding:0 0 0 14px;
+	margin:0;
+}
 	
 	
 	
