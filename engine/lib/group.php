@@ -449,7 +449,7 @@
 	 * @param unknown_type $offset Where to start, by default 0.
 	 * @param unknown_type $count Whether to return the entities or a count of them.
 	 */
-	function get_objects_in_group($group_id, $subtype = "", $owner_guid = 0, $site_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = false)
+	function get_objects_in_group($group_guid, $subtype = "", $owner_guid = 0, $site_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = false)
 	{
 		global $CONFIG;
 		
@@ -513,6 +513,174 @@
 	}
 	
 	/**
+	 * Get all the entities from metadata from a group.
+	 *
+	 * @param int $group_guid The ID of the group.
+	 * @param mixed $meta_name 
+	 * @param mixed $meta_value
+	 * @param string $entity_type The type of entity to look for, eg 'site' or 'object'
+	 * @param string $entity_subtype The subtype of the entity.
+	 * @param int $limit 
+	 * @param int $offset
+	 * @param string $order_by Optional ordering.
+	 * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
+	 * @param true|false $count If set to true, returns the total number of entities rather than a list. (Default: false)
+	 */
+	function get_entities_from_metadata_groups($group_guid, $meta_name, $meta_value = "", $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0, $count = false)
+	{
+		global $CONFIG;
+		
+		$meta_n = get_metastring_id($meta_name);
+		$meta_v = get_metastring_id($meta_value);
+			
+		$entity_type = sanitise_string($entity_type);
+		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
+		$limit = (int)$limit;
+		$offset = (int)$offset;
+		if ($order_by == "") $order_by = "e.time_created desc";
+		$order_by = sanitise_string($order_by);
+		$site_guid = (int) $site_guid;
+		if (is_array($owner_guid)) {
+			foreach($owner_guid as $key => $guid) {
+				$owner_guid[$key] = (int) $guid;
+			}
+		} else {
+			$owner_guid = (int) $owner_guid;
+		}
+		if ($site_guid == 0)
+			$site_guid = $CONFIG->site_guid;
+			
+		$container_guid = (int)$group_guid;
+		if ($container_guid == 0)
+			$container_guid = page_owner();
+			
+		//$access = get_access_list();
+			
+		$where = array();
+		
+		if ($entity_type!="")
+			$where[] = "e.type='$entity_type'";
+		if ($entity_subtype)
+			$where[] = "e.subtype=$entity_subtype";
+		if ($meta_name!="")
+			$where[] = "m.name_id='$meta_n'";
+		if ($meta_value!="")
+			$where[] = "m.value_id='$meta_v'";
+		if ($site_guid > 0)
+			$where[] = "e.site_guid = {$site_guid}";
+		if ($container_guid > 0)
+			$where[] = "o.container_guid = {$container_guid}";
+		if (is_array($owner_guid)) {
+			$where[] = "e.owner_guid in (".implode(",",$owner_guid).")";
+		} else if ($owner_guid > 0)
+			$where[] = "e.owner_guid = {$owner_guid}";
+		
+		if (!$count) {
+			$query = "SELECT distinct e.* "; 
+		} else {
+			$query = "SELECT count(e.guid) as total ";
+		}
+			
+		$query .= "from {$CONFIG->dbprefix}entities e JOIN {$CONFIG->dbprefix}metadata m on e.guid = m.entity_guid join {$CONFIG->dbprefix}objects_entity o on e.guid = o.guid where";
+		foreach ($where as $w)
+			$query .= " $w and ";
+		$query .= get_access_sql_suffix("e"); // Add access controls
+		
+		if (!$count) {
+			$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
+			return get_data($query, "entity_row_to_elggstar");
+		} else {
+			if ($row = get_data_row($query))
+				return $row->total;
+		}
+		return false;
+	}
+	
+	/**
+	 * As get_entities_from_metadata_groups() but with multiple entities.
+	 *
+	 * @param int $group_guid The ID of the group.
+	 * @param array $meta_array Array of 'name' => 'value' pairs
+	 * @param string $entity_type The type of entity to look for, eg 'site' or 'object'
+	 * @param string $entity_subtype The subtype of the entity.
+	 * @param int $limit 
+	 * @param int $offset
+	 * @param string $order_by Optional ordering.
+	 * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
+	 * @param true|false $count If set to true, returns the total number of entities rather than a list. (Default: false)
+	 * @return int|array List of ElggEntities, or the total number if count is set to false
+	 */
+	function get_entities_from_metadata_groups_multi($group_guid, $meta_array, $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0, $count = false)
+	{
+		global $CONFIG;
+		
+		if (!is_array($meta_array) || sizeof($meta_array) == 0) {
+			return false;
+		}
+		
+		$where = array();
+		
+		$mindex = 1;
+		$join = "";
+		foreach($meta_array as $meta_name => $meta_value) {
+			$meta_n = get_metastring_id($meta_name);
+			$meta_v = get_metastring_id($meta_value);
+			$join .= " JOIN {$CONFIG->dbprefix}metadata m{$mindex} on e.guid = m{$mindex}.entity_guid join {$CONFIG->dbprefix}objects_entity o on e.guid = o.guid "; 
+			if ($meta_name!="")
+				$where[] = "m{$mindex}.name_id='$meta_n'";
+			if ($meta_value!="")
+				$where[] = "m{$mindex}.value_id='$meta_v'";
+			$mindex++;
+		}
+			
+		$entity_type = sanitise_string($entity_type);
+		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
+		$limit = (int)$limit;
+		$offset = (int)$offset;
+		if ($order_by == "") $order_by = "e.time_created desc";
+		$order_by = sanitise_string($order_by);
+		$owner_guid = (int) $owner_guid;
+		
+		$site_guid = (int) $site_guid;
+		if ($site_guid == 0)
+			$site_guid = $CONFIG->site_guid;
+			
+		//$access = get_access_list();
+		
+		if ($entity_type!="")
+			$where[] = "e.type = '{$entity_type}'";
+		if ($entity_subtype)
+			$where[] = "e.subtype = {$entity_subtype}";
+		if ($site_guid > 0)
+			$where[] = "e.site_guid = {$site_guid}";
+		if ($owner_guid > 0)
+			$where[] = "e.owner_guid = {$owner_guid}";
+		if ($container_guid > 0)
+			$where[] = "o.container_guid = {$container_guid}";
+		
+		if ($count) {
+			$query = "SELECT count(e.guid) as total ";
+		} else {
+			$query = "SELECT distinct e.* "; 
+		}
+			
+		$query .= " from {$CONFIG->dbprefix}entities e {$join} where";
+		foreach ($where as $w)
+			$query .= " $w and ";
+		$query .= get_access_sql_suffix("e"); // Add access controls
+		
+		if (!$count) {
+			$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
+			return get_data($query, "entity_row_to_elggstar");
+		} else {
+			if ($count = get_data_row($query)) {
+				return $count->total;
+			}
+		}
+		return false;
+	}
+	
+	/**
 	 * Return a list of this group's members.
 	 * 
 	 * @param int $group_guid The ID of the container/group.
@@ -560,4 +728,8 @@
 	{
 		return remove_entity_relationship($user_guid, 'member', $group_guid);
 	}
+	
+	
+	
+	
 ?>
