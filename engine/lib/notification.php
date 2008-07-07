@@ -206,9 +206,10 @@
 	 * @param string $subject The subject of the message.
 	 * @param string $message The message body
 	 * @param array $params Optional parameters (none taken in this instance)
+	 * @param bool $hide_sender If true (default) hide the sender's email address (use noreply@site...)
 	 * @return bool
 	 */
-	function email_notify_handler(ElggEntity $from, ElggUser $to, $subject, $message, array $params = NULL)
+	function email_notify_handler(ElggEntity $from, ElggUser $to, $subject, $message, array $params = NULL, $hide_sender = true)
 	{
 		global $CONFIG;
 		
@@ -222,16 +223,21 @@
 			throw new NotificationException(sprintf(elgg_echo('NotificationException:NoEmailAddress'), $to->guid));			
 			
 		$to = $to->email;
-		if ($from->email)
-			$from = $from->email; // Handle users
-		else if ($from->url)
+		if (!$hide_sender)
 		{
-			$breakdown = parse_url($from->url);
-			$from = 'noreply@' . $breakdown['host']; // Handle anything with a url
-		} 
-		else {
-			$from = 'noreply@' . get_site_domain($CONFIG->site_guid); // Handle a fallback
+			if ($from->email)
+				$from = $from->email; // Handle users
+			else if ($from->url)
+			{
+				$breakdown = parse_url($from->url);
+				$from = 'noreply@' . $breakdown['host']; // Handle anything with a url
+			} 
+			else {
+				$from = 'noreply@' . get_site_domain($CONFIG->site_guid); // Handle a fallback
+			}
 		}
+		else
+			$from = 'noreply@' . get_site_domain($CONFIG->site_guid); // Handle a fallback
 		
 		$headers = "From: $from\r\n";
 				
