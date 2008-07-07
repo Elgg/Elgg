@@ -17,9 +17,6 @@
 ?>
  
     <form action="<?php echo $vars['url']; ?>action/comments/add" method="post">
-				<h3>
-					<?php echo elgg_echo("generic_comments:add"); ?>
-				</h3>
 				<p>
 					<label><?php echo elgg_echo("generic_comments:text"); ?><br />
 						<?php
