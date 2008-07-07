@@ -197,6 +197,21 @@
 		}
 		
 		/**
+		 * As getContainer(), but returns the whole entity.
+		 *
+		 * @return mixed ElggGroup object or false.
+		 */
+		function getContainerEntity()
+		{
+			$result = get_entity($this->getContainer());
+			
+			if (($result) && ($result instanceof ElggGroup))
+				return $result;
+				
+			return false;
+		}
+		
+		/**
 		 * Get the collections associated with a object.
 		 *
 		 * @param string $subtype Optionally, the subtype of result we want to limit to
