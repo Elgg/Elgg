@@ -26,7 +26,7 @@
 		
 	if (($user instanceof ElggUser) && ($group instanceof ElggGroup))
 	{
-		if ($group->access_id == 2)
+		if ($group->isPublicMembership())
 		{
 			if ($group->join($user))
 			{

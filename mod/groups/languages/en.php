@@ -28,6 +28,7 @@
 			'groups:interests' => 'Interests',
 			'groups:website' => 'Website',
 			'groups:membership' => "Membership",
+			'groups:access' => "Access permissions",
 			'groups:owner' => "Owner",
 	
 			'groups:noaccess' => 'No access to group',

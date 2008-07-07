@@ -54,6 +54,15 @@
 		exit;
 	}
 	
+	// Group membership
+	switch (get_input('membership'))
+	{
+		case 0: $group->membership = 0;
+		case 1 :$group->membership = 1; break;
+		case 2:
+		default: $group->membership = 2;
+	}
+	
 	// Get access
 	$group->access_id = get_input('access_id', 0);
 	

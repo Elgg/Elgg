@@ -17,7 +17,7 @@
 		}
 		else
 		{
-			if ($vars['entity']->access_id == 2)
+			if ($vars['entity']->isPublicMembership())
 			{
 				?><p><a href="<?php echo $vars['url']; ?>action/groups/join?group_guid=<?php echo $vars['entity']->getGUID(); ?>"><?php echo elgg_echo("groups:join"); ?></a></p><?php		
 			}

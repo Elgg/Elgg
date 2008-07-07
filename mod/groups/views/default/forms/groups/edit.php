@@ -47,7 +47,14 @@
 	<p>
 		<label>
 			<?php echo elgg_echo('groups:membership'); ?><br />
-			<?php echo elgg_view('input/access', array('internalname' => 'access_id','value' => $access_id, 'options' => array( 0 => 'Private', 2=>'Public'))); ?>
+			<?php echo elgg_view('input/access', array('internalname' => 'membership','value' => $vars['entity']->membership, 'options' => array( 0 => 'Private', 2=>'Public'))); ?>
+		</label>
+	</p>
+	
+	<p>
+		<label>
+			<?php echo elgg_echo('groups:access'); ?><br />
+			<?php echo elgg_view('input/access', array('internalname' => 'access_id','value' => $vars['entity']->access_id )); ?>
 		</label>
 	</p>
 

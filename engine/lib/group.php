@@ -148,6 +148,18 @@
 		}
 		
 		/**
+		 * Returns whether the current group is public membership or not.
+		 * @return bool
+		 */
+		public function isPublicMembership()
+		{
+			if ($this->membership == 2)
+				return true;
+			
+			return false;
+		}
+		
+		/**
 		 * Return whether a given user is a member of this group or not.
 		 *
 		 * @param ElggUser $user The user
