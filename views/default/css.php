@@ -1100,11 +1100,22 @@ background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_priv
 	line-height:1.2em;
 }
 
+table.search_gallery {
+	border-spacing: 5px;
+	margin:0 0 20px 0;
+}
+.search_gallery td {
+	padding: 5px;
+}
+
 .search_gallery_item {
 	border:1px dotted silver;
     background-color: white;
-    width: 210px;
-    height: 200px;
+    width: 179px;
+    height: 179px;
+}
+.search_gallery_item:hover {
+	border:1px dotted black;
 }
 
 .search_gallery_item .search_listing {
@@ -1130,13 +1141,7 @@ background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_priv
 	margin-bottom: 10px;
 }
 
-.search_gallery_item td {
-	border:1px dotted silver;
-    background-color: white;
-    width: 210px;
-    height: 200px;
-    margin: 5px;
-}
+
 
 
 .search_gallery_item .search_listing {
