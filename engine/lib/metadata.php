@@ -77,7 +77,7 @@
 		function canEdit() {
 			
 			if ($entity = get_entity($this->get('entity_guid'))) {
-				return $entity->canEdit();
+				return $entity->canEditMetadata();
 			}
 			return false;
 			

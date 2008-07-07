@@ -340,6 +340,16 @@
 		}
 		
 		/**
+		 * Determines whether or not the specified user (by default the current one) can edit metadata on the entity 
+		 *
+		 * @param int $user_guid The user GUID, optionally (defaults to the currently logged in user)
+		 * @return true|false
+		 */
+		function canEditMetadata($user_guid = 0) {
+			return can_edit_entity_metadata($this->getGUID(), $user_guid);
+		}
+		
+		/**
 		 * Obtain this entity's access ID
 		 *
 		 * @return int The access ID
@@ -1327,6 +1337,30 @@
 		} else {		
 			return false;
 			
+		}
+		
+	}
+	
+	/**
+	 * Determines whether or not the specified user can edit metadata on the specified entity.
+	 * 
+	 * This is extendible by registering a plugin hook taking in the parameters 'entity' and 'user',
+	 * which are the entity and user entities respectively
+	 * 
+	 * @see register_plugin_hook 
+	 *
+	 * @param int $entity_guid The GUID of the entity
+	 * @param int $user_guid The GUID of the user
+	 * @return true|false Whether the specified user can edit the specified entity.
+	 */
+	function can_edit_entity_metadata($entity_guid, $user_guid = 0) {
+		
+		if ($entity = get_entity($entity_guid)) {
+			$return = can_edit_entity($entity_guid, $user_guid);
+			$return = trigger_plugin_hook('permissions_check:metadata',$entity->type,null,$return);
+			return $return;
+		} else {
+			return false;
 		}
 		
 	}
