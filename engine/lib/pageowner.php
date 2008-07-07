@@ -34,7 +34,7 @@
 	            	return 0;
 	            }
 	        }
-	        if ($owner = get_input("owner_id")) {
+	        if ($owner = get_input("owner_guid")) {
 	            if ($user = get_user($owner)) {
 	            	return $user->getGUID();
 	            } else {
