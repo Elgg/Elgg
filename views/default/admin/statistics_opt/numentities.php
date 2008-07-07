@@ -20,7 +20,6 @@
         <?php
             foreach ($entity_stats as $k => $entry)
             {
-                echo "<table>";
                 foreach ($entry as $a => $b)
                 {
                     if ($a == "__base__") 
@@ -34,7 +33,6 @@
                         </tr>
 END;
                 }
-                echo "</table>";
             }
         ?>
     </table>

@@ -118,7 +118,7 @@
 		 */
 		public function getObjectFromID($id) { return get_metadata($id); }
 	}
-	
+
 	/**
 	 * Convert a database row to a new ElggMetadata
 	 *

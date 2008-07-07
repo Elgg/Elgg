@@ -769,8 +769,7 @@
 		
 		$time = time() - $seconds;
 		
-		//$query = "SELECT * from {$CONFIG->dbprefix}entities where type='user' and time_updated>=$time order by time_updated desc limit $offset, $limit";
-		$query = "SELECT distinct e.* from {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}system_log s on e.guid=s.performed_by_guid where e.type='user' and s.time_created>=$time order by s.time_created desc limit $offset,$limit";
+		$query = "SELECT distinct e.* from {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}users_entity u on e.guid = u.guid where u.last_action >= {$time} order by u.last_action desc limit {$offset},{$limit}";
 		
 		return get_data($query, "entity_row_to_elggstar");
 	}
@@ -937,6 +936,20 @@
 			set_page_owner($user->getGUID());
 		}
 		require_once(dirname(dirname(dirname(__FILE__))) . "/friends/of.php");
+		
+	}
+
+	/**
+	 * Sets the last action time of the given user to right now.
+	 *
+	 * @param int $user_guid The user GUID
+	 */
+	function set_last_action($user_guid) {
+		
+		$user_guid = (int) $user_guid;
+		global $CONFIG;
+		$time = time();
+		update_data("update {$CONFIG->dbprefix}users_entity set prev_last_action = last_action, last_action = {$time} where guid = {$user_guid}");
 		
 	}
 	

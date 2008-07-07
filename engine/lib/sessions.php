@@ -204,7 +204,7 @@
 	            }
 	        }
 	        if ($_SESSION['id'] > 0) {
-	            // set_last_action($_SESSION['id']);
+	            set_last_action($_SESSION['id']);
 	        }
 	        
 	        register_action("login",true);

@@ -1357,7 +1357,7 @@
 		
 		if ($entity = get_entity($entity_guid)) {
 			$return = can_edit_entity($entity_guid, $user_guid);
-			$return = trigger_plugin_hook('permissions_check:metadata',$entity->type,null,$return);
+			$return = trigger_plugin_hook('permissions_check:metadata',$entity->type,array('entity' => $entity, 'user' => $user),$return);
 			return $return;
 		} else {
 			return false;

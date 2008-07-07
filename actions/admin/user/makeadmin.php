@@ -32,5 +32,5 @@
 		system_message(elgg_echo('admin:user:makeadmin:no'));
 	
 	forward($_SERVER['HTTP_REFERER']);
-	exit;
+
 ?>
