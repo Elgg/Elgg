@@ -395,6 +395,7 @@
 			'description' => "Description",
 			'tags' => "Tags",
 			'spotlight' => "Spotlight",
+			'all' => "All",
 	
 		/**
 		 * Input / output strings
