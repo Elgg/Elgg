@@ -17,6 +17,8 @@
 		if (empty($subtype)) $subtype = $vars['entity']->type;
 		if (empty($subtype)) $subtype = "general";
 		
+	} else if ($vars['log']->object_class == "ElggRelationship") {
+		$subtype = "relationship_" . $vars['entity']->relationship;
 	}
 
 ?>
