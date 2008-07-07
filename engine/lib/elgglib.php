@@ -644,9 +644,9 @@
 	 * @param int $time A UNIX epoch timestamp
 	 * @return string The friendly time
 	 */
-		function friendly_time(int $time) {
+		function friendly_time($time) {
 			
-			$diff = time() - $time;
+			$diff = time() - ((int) $time);
 			if ($diff < 60) {
 				return elgg_echo("friendlytime:justnow");
 			} else if ($diff < 3600) {
