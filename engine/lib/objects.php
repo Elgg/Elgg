@@ -219,7 +219,7 @@
 		 * @param int $offset Any indexing offset
 		 * @return unknown
 		 */
-		public function getCollections($subtype="", $limit = 10, $offset = 0) { get_object_collections($this->getGUID(), $subtype, $limit, $offset); }
+		//public function getCollections($subtype="", $limit = 10, $offset = 0) { get_object_collections($this->getGUID(), $subtype, $limit, $offset); }
 		
 	}
 
