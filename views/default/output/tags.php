@@ -49,7 +49,7 @@
                $tagstr .= "<a href=\"{$vars['url']}search/?tag=".urlencode($tag) . "{$type}{$subtype}{$object}\">{$tag}</a>";
            }
         }
-        echo $tagstr;
+         echo "<div class=\"object_tag_string\">" . $tagstr . "</div>";
         
     }
 ?>
