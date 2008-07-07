@@ -316,7 +316,7 @@
 			'admin:statistics:label:numentities' => "Entities on site",
 			'admin:statistics:label:numusers' => "Number of users",
 			'admin:statistics:label:numonline' => "Number of users online",
-			'admin:statistics:label:onlineusers' => "User's online now",
+			'admin:statistics:label:onlineusers' => "Users online now",
 			'admin:statistics:label:version' => "Elgg version",
 			'admin:statistics:label:version:release' => "Release",
 			'admin:statistics:label:version:version' => "Version",
