@@ -13,6 +13,21 @@
 	 * @uses $vars['title'] The page title
 	 */
 
-?>
+	$page_owner = page_owner();
+	$page_owner_user = get_user($page_owner);
 
-<h2 class="page_title"><?php echo $vars['title']; ?></h2>
+	if($_SESSION['user']->getGUID() != $page_owner_user->guid){
+		$user_name = $page_owner_user->username . "'s";
+	} else {
+ 		$user_name = elgg_echo('Your');
+	}
+
+	if($page_owner) {
+		$icon = elgg_view("profile/icon",array('entity' => $page_owner_user, 'size' => 'small'));
+		$info = $user_name . " " . $vars['title'];
+		echo elgg_view_listing($icon, $info);
+	} else {
+		echo "<h2 class=\"page_title\">" . $vars['title'] . "</h2>";
+	}
+
+?>
