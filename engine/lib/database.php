@@ -85,7 +85,7 @@
 	{
 		global $CONFIG, $DB_PROFILE, $dbcalls;
 		
-		if ($CONFIG->debug)
+		if (isset($CONFIG->debug) && $CONFIG->debug)
 		{
 			error_log("***************** DB PROFILING ********************");
 			

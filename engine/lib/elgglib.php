@@ -171,7 +171,7 @@
 			        if (!$success && isset($CONFIG->debug) && $CONFIG->debug == true) {
 			            error_log(" [This view ({$view}) does not exist] ");
 			        }
-			    } else if ($CONFIG->debug == true && !file_exists($location . "{$viewtype}/{$view}.php")) {
+			    } else if (isset($CONFIG->debug) && $CONFIG->debug == true && !file_exists($location . "{$viewtype}/{$view}.php")) {
 			    	error_log($location . "{$viewtype}/{$view}.php");
 			    	error_log(" [This view ({$view}) does not exist] ");
 			    }

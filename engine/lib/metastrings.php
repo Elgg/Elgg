@@ -31,7 +31,7 @@
 		$result = array_search($string, $METASTRINGS_CACHE);
 		if ($result!==false) {
 			
-			if ($CONFIG->debug)
+			if (isset($CONFIG->debug) && $CONFIG->debug)
 				error_log("** Returning id for string:$string from cache.");
 			
 			return $result;
@@ -45,7 +45,7 @@
 		if ($row) { 
 			$METASTRINGS_CACHE[$row->id] = $row->string; // Cache it
 			
-			if ($CONFIG->debug)
+			if (isset($CONFIG->debug) && $CONFIG->debug)
 				error_log("** Cacheing string '{$row->string}'");
 				
 			return $row->id;

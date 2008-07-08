@@ -70,7 +70,7 @@
 			
 	    //forward the user back to the upload page to crop
 	    
-	    $url = $vars['url'] . "mod/profile/editicon.php";
+	    $url = "mod/profile/editicon.php";
 			
 		if (isloggedin()) forward($url);
 
