@@ -25,7 +25,7 @@
 		$icon = elgg_view(
 				"profile/icon", array(
 										'entity' => $vars['entity'],
-										'size' => 'large',
+										'size' => 'medium',
 									  )
 			);
 	
