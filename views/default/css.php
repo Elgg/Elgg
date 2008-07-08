@@ -1214,6 +1214,27 @@ table.search_gallery {
 	color:#666666;
 }
 
+.generic_comment {
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+}
+
+.generic_comment_icon {
+	position: absolute;
+}
+
+.generic_comment_details {
+	margin-left: 60px;
+	border-bottom: 1px solid #aaaaaa;
+}
+
+.generic_comment_owner {
+	color:#666666;
+	margin: 0px;
+	font-size:90%;
+}
+
+
 
 /* ***************************************
 	END
