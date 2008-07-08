@@ -179,6 +179,7 @@
 				$widget->context = $context;
 				$widget->column = $column;
 				$widget->order = $order;
+				$widget->access_id = 1;
 				if (!$widget->save())
 					return false;
 				// save_widget_location($widget, $order, $column);
