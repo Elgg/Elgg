@@ -19,12 +19,17 @@ RewriteRule ^cron\/$ engine/handlers/cron_handler.php
 RewriteRule ^action\/([A-Za-z\_\-\/]+)$ engine/handlers/action_handler.php?action=$1
 RewriteRule ^actions\/([A-Za-z\_\-\/]+)$ engine/handlers/action_handler.php?action=$1
 
+RewriteRule ^odd\/([0-9]+)$ services/export/handler.php?view=odd&guid=$1
 RewriteRule ^odd\/([0-9]+)\/$ services/export/handler.php?view=odd&guid=$1
-RewriteRule ^odd\/([0-9]+)\/([A-Za-z]+)\/([A-Za-z]+)\/$ services/export/handler.php?view=odd&guid=$1&type=$2&idname=$3
+RewriteRule ^odd\/([0-9]+)\/([A-Za-z]+)\/([A-Za-z\_]+)\/$ services/export/handler.php?view=odd&guid=$1&type=$2&idname=$3
+
+RewriteRule ^php\/([0-9]+)$ services/export/handler.php?view=php&guid=$1
 RewriteRule ^php\/([0-9]+)\/$ services/export/handler.php?view=php&guid=$1
-RewriteRule ^php\/([0-9]+)\/([A-Za-z]+)\/([A-Za-z]+)\/$ services/export/handler.php?view=php&guid=$1&type=$2&idname=$3
+RewriteRule ^php\/([0-9]+)\/([A-Za-z]+)\/([A-Za-z\_]+)\/$ services/export/handler.php?view=php&guid=$1&type=$2&idname=$3
+
+RewriteRule ^json\/([0-9]+)$ services/export/handler.php?view=json&guid=$1
 RewriteRule ^json\/([0-9]+)\/$ services/export/handler.php?view=json&guid=$1
-RewriteRule ^json\/([0-9]+)\/([A-Za-z]+)\/([A-Za-z]+)\/$ services/export/handler.php?view=json&guid=$1&type=$2&idname=$3
+RewriteRule ^json\/([0-9]+)\/([A-Za-z]+)\/([A-Za-z\_]+)\/$ services/export/handler.php?view=json&guid=$1&type=$2&idname=$3
 
 RewriteRule ^\_css\/css\.css$ _css/css.php
 
