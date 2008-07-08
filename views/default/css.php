@@ -1054,6 +1054,9 @@ p.user_menu_friends_of {
 .river_forumtopic_create {
 	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_forum.gif) no-repeat left -1px;
 }
+.river_relationship_friend_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_friends.gif) no-repeat left -1px;
+}
 
 /* 
 STILL TO ADD
