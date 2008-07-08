@@ -241,7 +241,7 @@
 		
 		$headers = "From: $from\r\n";
 				
-		return mail($to, $subject, $message, $headers);
+		return mail($to, $subject, wordwrap($message), $headers);
 	}
 
 	/**

@@ -502,7 +502,9 @@ Alternatively, you can enter your database settings below and we will try and do
 			'friend:newfriend:subject' => "%s has made you a friend!",
 			'friend:newfriend:body' => "%s has made you a friend!
 
-Check them out: %s
+To view their profile, click here:
+
+	%s
 
 You cannot reply to this email.",
 	
@@ -543,6 +545,23 @@ Your password has been reset to: %s",
 			'generic_comment:notfound' => "Sorry; we could not find the specified item.",
 			'generic_comment:notdeleted' => "Sorry; we could not delete this comment.",
 			'generic_comment:failure' => "An unexpected error occurred when adding your comment. Please try again.",
+	
+			'generic_comment:email:subject' => 'You have a new comment!',
+			'generic_comment:email:body' => "You have a new comment on your item \"%s\" from %s. It reads:
+
+			
+%s
+
+
+To reply or view the original item, click here:
+
+	%s
+
+To view %s's profile, click here:
+
+	%s
+
+You cannot reply to this email.",
 	
 		/**
 		 * Languages according to ISO 639-1
