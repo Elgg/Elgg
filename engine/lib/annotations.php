@@ -330,6 +330,92 @@
 	}
 	
 	/**
+	 * Return a list of entities which are annotated with a specific annotation. 
+	 * These can be ordered by when the annotation was created/updated.
+	 * 
+	 * @param string $entity_type Type of entity.
+	 * @param string $entity_subtype Subtype of entity.
+	 * @param string $name Name of annotation.
+	 * @param string $value Value of annotation.
+	 * @param int $owner_guid Owner.
+	 * @param int $group_guid Group container. Currently this is only supported if $entity_type == 'object'
+	 * @param int $limit Maximum number of results to return.
+	 * @param int $offset Place to start.
+	 * @param string $order_by How to order results.
+	 */
+	function get_entities_from_annotations($entity_type = "", $entity_subtype = "", $name = "", $value = "", $owner_guid = 0, $group_guid = 0, $limit = 10, $offset = 0, $order_by = "asc")
+	{
+		global $CONFIG;
+		
+		$entity_type = sanitise_string($entity_type);
+		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
+		if ($name)
+		{
+			$name = get_metastring_id($name);
+		
+			if ($name === false)
+				$name = 0;
+		}
+		if ($value != "") $value = get_metastring_id($value);
+		if (is_array($owner_guid)) {
+			if (sizeof($owner_guid) > 0) {
+				foreach($owner_guid as $key => $val) {
+					$owner_guid[$key] = (int) $val;
+				}
+			} else {
+				$owner_guid = 0;
+			}
+		} else {
+			$owner_guid = (int)$owner_guid;
+		}
+		$group_guid = (int)$group_guid;
+		
+		$limit = (int)$limit;
+		$offset = (int)$offset;
+		if($order_by == 'asc')
+		    $order_by = "a.time_created asc";
+		    
+		if($order_by == 'desc')
+		    $order_by = "a.time_created desc";
+		
+		$where = array();
+		
+		if ($entity_type != "")
+			$where[] = "e.type='$entity_type'";
+			
+		if ($entity_subtype != "")
+			$where[] = "e.subtype='$entity_subtype'";
+		
+		if ($owner_guid != 0 && !is_array($owner_guid)) {
+			$where[] = "a.owner_guid=$owner_guid";
+		} else {
+			if (is_array($owner_guid))
+				$where[] = "a.owner_guid in (" . implode(",",$owner_guid) . ")";
+		}
+		
+		if (($group_guid != 0) && ($entity_type=='object'))
+			$where[] = "o.container_guid = $group_guid";
+			
+		if ($name !== "")
+			$where[] = "a.name_id='$name'";
+			
+		if ($value != "")
+			$where[] = "a.value_id='$value'";
+			
+		
+		$query = "SELECT e.*, n.string as name, v.string as value from {$CONFIG->dbprefix}annotations a JOIN {$CONFIG->dbprefix}entities e on a.entity_guid = e.guid JOIN {$CONFIG->dbprefix}metastrings v on a.value_id=v.id JOIN {$CONFIG->dbprefix}metastrings n on a.name_id = n.id ";
+		if (($group_guid != 0) && ($entity_type=='object')) $query .= "JOIN {$CONFIG->dbprefix}objects_entity o on o.guid = e.guid";
+		$query .= " where";
+		    
+		foreach ($where as $w)
+			$query .= " $w and ";
+		$query .= get_access_sql_suffix("a"); // Add access controls
+		$query .= " order by $order_by limit $offset,$limit"; // Add order and limit   
+		   
+		return get_data($query, "row_to_elggannotation");
+	}
+	
+	/**
 	 * Returns a human-readable list of annotations on a particular entity.
 	 *
 	 * @param int $entity_guid The entity GUID
