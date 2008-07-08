@@ -22,7 +22,7 @@
         
         echo <<< END
         
-<script language="JavaScript" SRC="{$vars['url']}engine/vendors/calendarpopup/CalendarPopup.js"></script>
+<script language="JavaScript" src="{$vars['url']}vendors/calendarpopup/CalendarPopup.js"></script>
         
 END;
         $calendarjs = 1;
