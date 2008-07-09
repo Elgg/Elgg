@@ -1141,6 +1141,25 @@
 	}
 	
 	/**
+	 * Returns a viewable list of entities contained in a number of groups.
+	 *
+	 * @param string $subtype The arbitrary subtype of the entity
+	 * @param int $owner_guid The GUID of the owning user
+	 * @param int $container_guid The GUID of the containing group
+	 * @param int $limit The number of entities to display per page (default: 10)
+	 * @param true|false $fullview Whether or not to display the full view (default: true)
+	 * @return string A viewable list of entities
+	 */
+	function list_entities_groups($subtype = "", $owner_guid = 0, $container_guid = 0, $limit = 10, $fullview = true)
+	{
+		$offset = (int) get_input('offset');
+		$count = get_objects_in_group($container_guid, $subtype, $owner_guid, 0, "", $limit, $offset, true);
+		$entities = get_objects_in_group($container_guid, $subtype, $owner_guid, 0, "", $limit, $offset);
+
+		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview);
+	}
+	
+	/**
 	 * Disable an entity but not delete it.
 	 *
 	 * @param int $guid
