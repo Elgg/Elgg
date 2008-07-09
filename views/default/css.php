@@ -223,13 +223,13 @@ h6 { font-size: 0.8em; }
 #wrapper_maincontent.single_column {
 	/* width:785px;*/
 	background: white;
-	padding:20px;
+	padding:14px 20px 20px 20px;
 	border-bottom:1px solid #cccccc;
 	border-right:1px solid #cccccc;
 }
 #wrapper_maincontent.content_area {
 	background: white;
-	padding:20px;
+	padding:14px 20px 20px 20px;
 	border-bottom:1px solid #cccccc;
 	border-right:1px solid #cccccc;
 }
@@ -1244,7 +1244,7 @@ table.search_gallery {
 
 
 /* ***************************************
-	END
+	STUFF BELOW NEEDS SORTING
 *************************************** */
 
 /* not needed? - replaced by #wrapper_maincontent.single_column */
@@ -1257,18 +1257,6 @@ table.search_gallery {
 	background: url(<?php echo $vars['url']; ?>_graphics/icon_tag.gif) no-repeat left 2px;
 	padding:0 0 0 14px;
 	margin:0;
-}
-
-/* page titles */
-#canvas_header {
-	margin:0 0 20px 0;
-	padding:0 0 5px 0;
-	border-bottom:1px solid #4690d6;
-}
-	
-#canvas_header #canvas_header_content h2 {
-
-
 }	
 
 /* profile picture upload n crop page */	
@@ -1302,7 +1290,75 @@ table.search_gallery {
 	height: 100px;
 }	
 	
+/* ***************************************
+	page titles and submenu
+*************************************** */
+/* page titles 
+#canvas_header {
+	margin:0 0 20px 0;
+	padding:0 0 5px 0;
+	border-bottom:1px solid #4690d6;
+}
+*/
 	
+#canvas_header #canvas_header_content h2 {
+
+
+}	
+#canvas_header_content {
+	margin:0 0 10px 0;
+	padding:0 0 5px 0;
+	border-bottom:1px solid #4690d6;
+}
+/*
+#wrapper_maincontent.single_column {
+	margin:0;
+	padding:10px 20px;
+}
+*/
+#canvas_header_submenu {
+	margin:10px 0 10px 0;
+	padding: 0;
+	border-bottom: 1px solid #cccccc;
+	display:table;
+	width:100%;
+}
+
+#canvas_header_submenu ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+#canvas_header_submenu li {
+	float: left;
+	border: 1px solid #ffffff;
+	border-bottom-width: 0;
+	margin: 0;
+}
+
+#canvas_header_submenu a {
+	text-decoration: none;
+	display: block;
+	padding: 0.24em 1em;
+	color: #666666;
+	text-align: center;
+}
+
+#canvas_header_submenu a:hover {
+	color: #4690d6;
+}
+
+#canvas_header_submenu .selected {
+	border-color: #cccccc;
+}
+
+#canvas_header_submenu .selected a {
+	position: relative;
+	top: 1px;
+	background: white;
+	color: #4690d6;
+}
 	
 	
 	
