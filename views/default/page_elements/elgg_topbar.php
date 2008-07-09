@@ -29,11 +29,14 @@
 		
 	</div>
 	<div class="toolbarlinks">
-		<a href="<?php echo $_SESSION['user']->getURL(); ?>" class="loggedinuser"><?php echo $_SESSION['user']->username; ?></a>
+		<a href="<?php echo $_SESSION['user']->getURL(); ?>" class="pagelinks"><?php echo elgg_echo('profile'); ?></a>  <!-- class="loggedinuser" <?php echo $_SESSION['user']->username; ?></a> -->
 		<a href="<?php echo $vars['url']; ?>pg/dashboard/" class="pagelinks"><?php echo elgg_echo('dashboard'); ?></a>
 		<a href="<?php echo $vars['url']; ?>settings/" class="usersettings"><?php echo elgg_echo('settings'); ?></a>
 		
 		<?php
+
+				//allow people to extend this top menu
+				echo elgg_view('elgg_topbar/extend', $vars);
 		
 				// The administration link is for admin or site admin users only
 				if ($vars['user']->admin || $vars['user']->siteadmin) { 
@@ -81,4 +84,3 @@
 <?php
     }
 ?>
-
