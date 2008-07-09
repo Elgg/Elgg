@@ -14,14 +14,8 @@
 	header("Content-Type: text/xml");
 	
 	echo "<?xml version='1.0'?>\n";
+
 	
-	if (!$owner = page_owner_entity()) {
-		if (!isloggedin()) {
-			exit;
-		} else {
-			$owner = $vars['user'];
-		}
-	}
 	
 	// Set title
 		if (empty($vars['title'])) {
