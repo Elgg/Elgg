@@ -481,9 +481,56 @@
 	 */
 		function elgg_view_title($title) {
 			
-			return elgg_view('page_elements/title', array('title' => $title));
+			$title = elgg_view('page_elements/title', array('title' => $title));
+			
+			return $title;
 			
 		}
+		
+	/**
+	 * Adds an item to the submenu
+	 *
+	 * @param string $label The human-readable label
+	 * @param string $link The URL of the submenu item
+	 */
+		function add_submenu_item($label, $link) {
+			
+			global $CONFIG;
+			add_to_register('submenu',$label,$link);
+			
+		}
+		
+	/**
+	 * Gets a formatted list of submenu items
+	 *
+	 * @return string List of items
+	 */
+		function get_submenu() {
+			
+			$submenu = "";
+			
+			if ($submenu_register = get_register('submenu')) {
+				foreach($submenu_register as $item) {
+					
+					if (substr_count($item->value, $item->value)) {
+						$selected = true;
+					} else {
+						$selected = false;
+					}
+					$submenu .= elgg_view('canvas_header/submenu_template',
+									array(
+											'href' => $item->value, 
+											'label' => $item->name,
+											'selected' => $selected,
+										));
+					
+				}
+			}
+			
+			return $submenu;
+			
+		}
+		
 		
 	/**
 	 * Automatically views comments and a comment form relating to the given entity
@@ -778,7 +825,7 @@
 			
 			global $CONFIG;
 			
-			if (empty($register_name) || empty($subregister_name) || empty($children_array))
+			if (empty($register_name) || empty($subregister_name))
 				return false;
 			
 			if (!isset($CONFIG->registers))
