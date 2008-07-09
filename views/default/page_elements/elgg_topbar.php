@@ -24,26 +24,28 @@
 	<div class="toolbarimages">
 		<a href="http://www.elgg.org" target="_blank"><img src="<?php echo $vars['url']; ?>_graphics/elgg_toolbar_logo.gif" /></a>
 		
-		<!-- new icon size needed 16px square - mini -->
 		<a href="<?php echo $_SESSION['user']->getURL(); ?>"><img class="user_mini_avatar" src="<?php echo $vars['url']; ?>pg/icon/<?php echo $_SESSION['user']->username; ?>/topbar/<?php echo $_SESSION['user']->timecreated; ?>.jpg"></a>
 		
 	</div>
 	<div class="toolbarlinks">
 		<a href="<?php echo $_SESSION['user']->getURL(); ?>" class="pagelinks"><?php echo elgg_echo('profile'); ?></a>  <!-- class="loggedinuser" <?php echo $_SESSION['user']->username; ?></a> -->
 		<a href="<?php echo $vars['url']; ?>pg/dashboard/" class="pagelinks"><?php echo elgg_echo('dashboard'); ?></a>
+		
+		<?php
+		//allow people to extend this top menu
+		echo elgg_view('elgg_topbar/extend', $vars);
+		?>
+		
 		<a href="<?php echo $vars['url']; ?>settings/" class="usersettings"><?php echo elgg_echo('settings'); ?></a>
 		
 		<?php
-
-				//allow people to extend this top menu
-				echo elgg_view('elgg_topbar/extend', $vars);
 		
-				// The administration link is for admin or site admin users only
-				if ($vars['user']->admin || $vars['user']->siteadmin) { 
+			// The administration link is for admin or site admin users only
+			if ($vars['user']->admin || $vars['user']->siteadmin) { 
 		
 		?>
 		
-				<a href="<?php echo $vars['url']; ?>pg/admin/" class="usersettings"><?php echo elgg_echo("admin"); ?></a>
+			<a href="<?php echo $vars['url']; ?>pg/admin/" class="usersettings"><?php echo elgg_echo("admin"); ?></a>
 		
 		<?php
 		

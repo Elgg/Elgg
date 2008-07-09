@@ -314,7 +314,7 @@ h6 { font-size: 0.8em; }
 	top:0px;
 	position:absolute;
 	text-align:left;
-	width:50%;
+	width:60%;
 }
 
 #elgg_topbar_container_right {
@@ -330,7 +330,7 @@ h6 { font-size: 0.8em; }
 #elgg_topbar_container_search {
 	float:right;
 	height:21px;
-	width:280px;
+	/*width:280px;*/
 	position:relative;
 	right:120px;
 	text-align:right;
@@ -344,24 +344,28 @@ h6 { font-size: 0.8em; }
 #elgg_topbar_container_left .toolbarlinks {
 	margin:3px 0 0 0;
 }
-#elgg_topbar_container_left .toolbarlinks a {
-	/* margin:0 0 0 20px;*/
-	color:#4690d6;
-}
-#elgg_topbar_container_left .toolbarlinks a:hover {
-	color:#eeeeee;
-}
 #elgg_topbar_container_left a.loggedinuser {
 	color:#eeeeee;
 	font-weight:bold;
 	margin:0 0 0 5px;
 }
 #elgg_topbar_container_left a.pagelinks {
-	margin:0 0 0 30px;
+	color:white;
+	margin:0 15px 0 5px;
 }
+#elgg_topbar_container_left a.pagelinks:hover {
+	color:#4690d6;
+}
+
 #elgg_topbar_container_left a.usersettings {
 	margin:0 0 0 20px;
+	color:#4690d6;
 }
+#elgg_topbar_container_left a.usersettings:hover {
+	color:#eeeeee;
+}
+
+
 #elgg_topbar_container_left img {
 	margin:2px 0 0 5px;
 }
