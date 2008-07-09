@@ -64,8 +64,8 @@
 
 			//add submenu options
 				if (get_context() == "profile") {
-					add_submenu_item("Edit Details", $CONFIG->wwwroot . "mod/profile/edit.php");
-					add_submenu_item("Edit profile picture", $CONFIG->wwwroot . "mod/profile/editicon.php");
+					add_submenu_item(elgg_echo('profile:editdetails'), $CONFIG->wwwroot . "mod/profile/edit.php");
+					add_submenu_item(elgg_echo('profile:editicon'), $CONFIG->wwwroot . "mod/profile/editicon.php");
 				}
 
 			// Extend context menu with admin links
