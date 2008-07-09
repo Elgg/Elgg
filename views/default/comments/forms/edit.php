@@ -12,7 +12,7 @@
 	 * @uses $vars['entity']
 	 */
 	 
-	 if (isset($vars['entity'])) {
+	 if (isset($vars['entity']) && isloggedon()) {
 	 
 ?>
  
