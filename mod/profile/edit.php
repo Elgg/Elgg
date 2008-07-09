@@ -28,7 +28,8 @@
 	// Get form, if we're allowed to edit
 		if ($user->canEdit()) {
 			
-			$area1 = elgg_view("profile/edit",array('entity' => $user));
+    		$area1 = elgg_view_title(elgg_echo('profile:edit'));
+			$area1 .= elgg_view("profile/edit",array('entity' => $user));
 			 
 		} else {
 			

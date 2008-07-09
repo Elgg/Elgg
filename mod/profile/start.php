@@ -59,6 +59,8 @@
 			// Add Javascript reference to the page header
 				extend_view('metatags','profile/metatags');
 				extend_view('css','profile/css');
+				if (get_context() == "profile")
+				    extend_view('canvas_header/submenu','profile/submenu');
 
 			// Extend context menu with admin links
 			if (isadminloggedin())
