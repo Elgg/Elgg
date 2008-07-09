@@ -1,0 +1,7 @@
+kses hooks
+==========
+
+Sometimes you want to perform one more action on all data that kses will
+filter. There is a special function for that purpose called kses_hook(). kses
+calls it from its main function kses(), so if you insert some code in
+kses_hook(), it will always be called to change all data that kses sees.

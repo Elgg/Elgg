@@ -1,0 +1,15 @@
+kses whitelisted URL protocols
+==============================
+
+From kses 0.2.0, it has a function that checks all attribute values for URL
+protocols and only allows the protocols given in a whitelist.
+
+If you call kses the old way with two parameters - a string and an
+$allowed_html array - it will take its own default array, which whitelists the
+protocols http, https, ftp, news, nntp, telnet, gopher and mailto. Pretty
+reasonable, but anyone who wants to change it just calls the kses() function
+with a third parameter, like this:
+
+$string = kses($string, $allowed_html, array('http', 'https'));
+
+Note that you shouldn't include any colon after http or other protocol names.

@@ -1,0 +1,7 @@
+kses stripping everything
+=========================
+
+Sometimes you want to use kses for stripping all (X)HTML tags from a document.
+You do it by calling kses like this:
+
+$doc = kses($doc, array());
