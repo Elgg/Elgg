@@ -17,9 +17,11 @@
 <!-- grab the required js for icon cropping -->
 <script type="text/javascript" src="<?php echo $vars['url']; ?>mod/profile/views/default/js/jquery.imgareaselect-0.4.2.js"></script>
 
-<div id="current_user_avatar" style="float:right;width:200px;">
+<p><?php echo elgg_echo('profile:profilepictureinstructions'); ?></p>
 
-	<p><?php echo elgg_echo('profile:currentavatar'); ?>:</p>
+<div id="current_user_avatar">
+
+	<label><?php echo elgg_echo('profile:currentavatar'); ?></label>
 	<?php 
 		
 		$user_avatar = $vars['url'] . "pg/icon/" . $_SESSION['user']->username . "/medium/" . $_SESSION['user']->icontime . ".jpg";
@@ -31,32 +33,29 @@
 
 <div id="profile_picture_form">
 	<form action="<?php echo $vars['url']; ?>action/profile/iconupload" method="post" enctype="multipart/form-data">
-	<p>
-		<?php echo elgg_echo("profile:editicon"); ?>:
-	</p>
-	<p>
+	<p><label><?php echo elgg_echo("profile:editicon"); ?></label><br />
+	
 		<?php
 
 			echo elgg_view("input/file",array('internalname' => 'profileicon'));
 		
 		?>
-	</p>
-	<p>
-		<input type="submit" class="submit_button" value="<?php echo elgg_echo("upload"); ?>" />
+		<br /><input type="submit" class="submit_button" value="<?php echo elgg_echo("upload"); ?>" />
 	</p>
 	</form>
 </div>
 	
+<div id="profile_picture_croppingtool">	
+<label><?php echo elgg_echo('profile:profilepicturecroppingtool'); ?></label><br />
+<p>	
 <?php
 
-    echo "<hr>";
-   echo "<h3>Create a new avatar:</h3>";
-    echo elgg_echo("profile:createicon:instructions") . ": <br />";
+    echo elgg_echo("profile:createicon:instructions");
     //display the current user photo 
     $user_master_image = $vars['url'] . "pg/icon/" . $_SESSION['user']->username . "/master/" . $_SESSION['user']->icontime . ".jpg";
     
 ?>
-
+</p>
 <script>
 
     //function to display a preview of the users cropped section
@@ -65,7 +64,7 @@
         var origHeight = $("#user_avatar").height(); //get the height of the users master photo
         var scaleX = 100 / selection.width; 
         var scaleY = 100 / selection.height; 
-        $('#user_avatar + div > img').css({ 
+        $('#user_avatar_preview > img').css({ 
             width: Math.round(scaleX * origWidth) + 'px', 
             height: Math.round(scaleY * origHeight) + 'px', 
             marginLeft: '-' + Math.round(scaleX * selection.x1) + 'px', 
@@ -96,9 +95,11 @@
             $w = $('#w');
             $h = $('#h');
             
-            $('<div><img src="<?php echo $user_master_image; ?>" style="position: relative;" /></div>') 
-            .css({ float: 'left', position: 'relative', overflow: 'hidden', width: '100px', height: '100px' }) 
+            
+            $('<div id="user_avatar_preview"><img src="<?php echo $user_master_image; ?>" /></div>') 
             .insertAfter($('#user_avatar'));
+            
+            $('<div id="user_avatar_preview_title"><label>Preview</label></div>').insertBefore($('#user_avatar_preview'));
             
         }); 
         
@@ -114,17 +115,20 @@
 </script>
 
 <p>
-<img id="user_avatar" src="<?php echo $user_master_image; ?>" alt="<?php echo elgg_echo("profile:icon"); ?>"
- style="float: left; margin-right: 10px;" />
- <br />
+<img id="user_avatar" src="<?php echo $user_master_image; ?>" alt="<?php echo elgg_echo("profile:icon"); ?>" />
 </p>
+
+<div class="clearfloat"></div>
+
 <form action="<?php echo $vars['url']; ?>action/profile/cropicon" method="post" />
 	<input type="hidden" name="username" value="<?php echo $vars['user']->username; ?>" />
 	<input type="hidden" name="x_1" value="<?php echo $vars['user']->x1; ?>" id="x_1" />
     <input type="hidden" name="x_2" value="<?php echo $vars['user']->x2; ?>" id="x_2" />
     <input type="hidden" name="y_1" value="<?php echo $vars['user']->y1; ?>" id="y_1" />
     <input type="hidden" name="y_2" value="<?php echo $vars['user']->y2; ?>" id="y_2" />
-  <input type="submit" name="submit" value="<?php echo elgg_echo("profile:createicon"); ?>" />
+	<input type="submit" name="submit" value="<?php echo elgg_echo("profile:createicon"); ?>" />
 </form>
 
+</div>
 <div class="clearfloat"></div>
+
