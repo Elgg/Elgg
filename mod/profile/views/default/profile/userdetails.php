@@ -57,6 +57,20 @@
 	
 	<div id="profile_info_column_right" >
 
+	<?php
+	
+		if ($vars['entity']->canEdit()) {
+
+	?>
+		<p class="profile_info_edit_buttons">
+			<a href="<?php echo $vars['url']; ?>mod/profile/edit.php"><?php echo elgg_echo("edit"); ?></a>
+		</p>
+	<?php
+
+		}
+		
+	?>
+
 	<?php 
 	
 	// display the users name
@@ -109,20 +123,6 @@
 	<div id="profile_info_wide">
 	<p><b><?php echo elgg_echo("profile:aboutme"); ?></b><br /><?php echo nl2br($vars['entity']->description); ?></p>
 
-<?php
-	
-	if ($vars['entity']->canEdit()) {
-
-?>
-		<p class="profile_info_edit_buttons">
-			<a href="<?php echo $vars['url']; ?>mod/profile/edit.php"><?php echo elgg_echo("edit"); ?></a>
-		
-<?php
-
-	}
-		
-?>
-</p>
 </div><!-- /#profile_info_wide -->
 
 </div><!-- /#profile_info -->
