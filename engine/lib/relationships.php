@@ -520,8 +520,8 @@
 		
 		$limit = (int) $limit;
 		$offset = (int) get_input('offset');
-		$count = get_entities_from_relationship($relationship, $relationship_guid, $inverse_relationship, $type, $subtype, $owner_guid, "", $limit, 0, true);
-		$entities = get_entities_from_relationship($relationship, $relationship_guid, $inverse_relationship, $type, $subtype, $owner_guid, "", $limit, 0);
+		$count = get_entities_from_relationship($relationship, $relationship_guid, $inverse_relationship, $type, $subtype, $owner_guid, "", $limit, $offset, true);
+		$entities = get_entities_from_relationship($relationship, $relationship_guid, $inverse_relationship, $type, $subtype, $owner_guid, "", $limit, $offset);
 
 		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview);
 		
