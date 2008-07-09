@@ -1254,6 +1254,56 @@ table.search_gallery {
 	padding:0 0 0 14px;
 	margin:0;
 }
+
+/* page titles */
+#canvas_header {
+	margin:0 0 20px 0;
+	padding:0 0 5px 0;
+	border-bottom:1px solid #4690d6;
+}
+	
+#canvas_header #canvas_header_content h2 {
+
+
+}	
+
+/* profile picture upload n crop page */	
+#profile_picture_form {
+	height:145px;
+}	
+#current_user_avatar {
+	float:left;
+	width:160px;
+	height:130px;
+	border-right:1px solid #cccccc;
+	margin:0 20px 0 0;
+}	
+#profile_picture_croppingtool {
+	border-top: 1px solid #cccccc;
+	margin:20px 0 0 0;
+	padding:10px 0 0 0;
+}	
+#profile_picture_croppingtool #user_avatar {
+	float: left;
+	margin-right: 20px;
+}	
+#profile_picture_croppingtool #applycropping {
+
+}
+#profile_picture_croppingtool #user_avatar_preview {
+	float: left;
+	position: relative;
+	overflow: hidden;
+	width: 100px;
+	height: 100px;
+}	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

@@ -21,12 +21,14 @@
 			'profile:user' => "%s's profile",
 	
 			'profile:edit' => "Edit profile",
-			'profile:editicon' => "Change your profile picture",
-			'profile:icon' => "Profile icon",
+			'profile:editicon' => "Upload a new profile picture",
+			'profile:profilepictureinstructions' => "The profile picture is the image that's displayed on your profile page. <br /> You can change it as often as you'd like. (File formats accepted: GIF, JPG or PNG)",
+			'profile:icon' => "Profile picture",
 			'profile:createicon' => "Create your avatar",
-			'profile:currentavatar' => "Your current avatar",
-			'profile:createicon:header' => "Upload your profile picture",
-			'profile:createicon:instructions' => "Click and drag to crop your main profile photo into a cool avatar",
+			'profile:currentavatar' => "Current avatar",
+			'profile:createicon:header' => "Profile picture",
+			'profile:profilepicturecroppingtool' => "Profile picture cropping tool",
+			'profile:createicon:instructions' => "Click and drag a square below to match how you want your picture cropped.  A preview of your cropped picture will appear in the box on the right.  When you are happy with the preview, click 'Create your avatar'. This cropped image will be used throughout the site as your avatar. ",
 	
 			'profile:aboutme' => "About me", 
 			'profile:description' => "About me", 
@@ -45,7 +47,7 @@
 		 */
 	
 			'profile:saved' => "Your profile was successfully saved.",
-			'profile:icon:uploaded' => "Your profile icon was successfully uploaded.",
+			'profile:icon:uploaded' => "Your profile picture was successfully uploaded.",
 	
 		/**
 		 * Error messages
@@ -54,7 +56,7 @@
 			'profile:noaccess' => "You do not have permission to edit this profile.",
 			'profile:notfound' => "Sorry; we could not find the specified profile.",
 			'profile:cantedit' => "Sorry; you do not have permission to edit this profile.",
-			'profile:icon:notfound' => "Sorry; there was a problem uploading your profile icon.",
+			'profile:icon:notfound' => "Sorry; there was a problem uploading your profile picture.",
 	
 	);
 					
