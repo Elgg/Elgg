@@ -546,6 +546,11 @@
 
 					case 'tables_split' :	// We don't want to export the internal counter variables.
 					case 'tables_loaded' :  // Or this one
+						
+					case 'enabled' :		// Useless to an importer
+						
+					case 'email' :
+					case 'password' : 		// Definitely don't want these two
 					break;
 					
 					case 'time_created' :	// Created = published
