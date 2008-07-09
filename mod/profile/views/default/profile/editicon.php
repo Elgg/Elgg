@@ -17,6 +17,19 @@
 <!-- grab the required js for icon cropping -->
 <script type="text/javascript" src="<?php echo $vars['url']; ?>mod/profile/views/default/js/jquery.imgareaselect-0.4.2.js"></script>
 
+<div id="current_user_avatar" style="float:right;width:200px;">
+
+	<p><?php echo elgg_echo('profile:currentavatar'); ?>:</p>
+	<?php 
+		
+		$user_avatar = $vars['url'] . "pg/icon/" . $_SESSION['user']->username . "/medium/" . $_SESSION['user']->icontime . ".jpg";
+		echo "<img src=\"{$user_avatar}\" alt=\"avatar\" />";
+
+	?>
+
+</div>
+
+<div id="profile_picture_form">
 	<form action="<?php echo $vars['url']; ?>action/profile/iconupload" method="post" enctype="multipart/form-data">
 	<p>
 		<?php echo elgg_echo("profile:editicon"); ?>:
@@ -32,9 +45,12 @@
 		<input type="submit" class="submit_button" value="<?php echo elgg_echo("upload"); ?>" />
 	</p>
 	</form>
+</div>
 	
 <?php
 
+    echo "<hr>";
+   echo "<h3>Create a new avatar:</h3>";
     echo elgg_echo("profile:createicon:instructions") . ": <br />";
     //display the current user photo 
     $user_master_image = $vars['url'] . "pg/icon/" . $_SESSION['user']->username . "/master/" . $_SESSION['user']->icontime . ".jpg";

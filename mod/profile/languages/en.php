@@ -24,7 +24,9 @@
 			'profile:editicon' => "Change your profile picture",
 			'profile:icon' => "Profile icon",
 			'profile:createicon' => "Create your avatar",
-			'profile:createicon:instructions' => "Click and drag to crop your image",
+			'profile:currentavatar' => "Your current avatar",
+			'profile:createicon:header' => "Upload your profile picture",
+			'profile:createicon:instructions' => "Click and drag to crop your main profile photo into a cool avatar",
 	
 			'profile:aboutme' => "About me", 
 			'profile:description' => "About me", 

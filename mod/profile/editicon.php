@@ -15,9 +15,13 @@
 		
 	// Make sure we're logged in
 		if (!isloggedin()) forward();
+
+	// set title
+		$area1 = elgg_view_title(elgg_echo('profile:createicon:header'));
+		$area1 .= elgg_view("profile/editicon");
 		
 	// Get the form and correct canvas area
-		$body = elgg_view_layout("one_column", elgg_view("profile/editicon"));
+		$body = elgg_view_layout("one_column", $area1);
 		
 	// Draw the page
 		page_draw(elgg_echo("profile:editicon"),$body);
