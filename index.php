@@ -17,20 +17,20 @@
 		require_once(dirname(__FILE__) . "/engine/start.php");
 		
 		
+		if (!trigger_plugin_hook('index','system',null,false)) {
 	
-	
-	/**
-      * Check to see if user is logged in, if not display login form
-      **/
-    if ($_SESSION['id'] != -1){
-        //Load the sample welcome page
-        echo page_draw(null, elgg_view("welcome"));         
-    } else {
-        //Load the front page
-        echo page_draw(null, elgg_view("login"));
-	}
+			/**
+		      * Check to see if user is logged in, if not display login form
+		      **/
+		    if ($_SESSION['id'] != -1){
+		        //Load the sample welcome page
+		        echo page_draw(null, elgg_view("welcome"));         
+		    } else {
+		        //Load the front page
+		        echo page_draw(null, elgg_view("login"));
+			}
 		
-
+		}
 
 
 
