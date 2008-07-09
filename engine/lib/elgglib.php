@@ -512,7 +512,7 @@
 			if ($submenu_register = get_register('submenu')) {
 				foreach($submenu_register as $item) {
 					
-					if (substr_count($item->value, $item->value)) {
+					if (substr_count($_SERVER['REQUEST_URI'], $item->value)) {
 						$selected = true;
 					} else {
 						$selected = false;
