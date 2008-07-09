@@ -1311,6 +1311,10 @@ table.search_gallery {
 	border-bottom:1px solid #4690d6;
 }
 */
+#canvas_header_icon {
+	float:left;
+	margin:0 10px 0 0;
+}
 	
 #canvas_header #canvas_header_content h2 {
 
