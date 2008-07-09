@@ -981,8 +981,12 @@ p.user_menu_friends_of {
 }
 #profile_info_column_right {
 	float:left;
-	width:260px;
+	width:280px;
 	/* width:100%; */
+}
+/* IE6 fix */
+* html #profile_info_column_right { 
+	width:270px;
 }
 #profile_info_column_right p {
 	margin:7px 0 7px 0;
@@ -996,8 +1000,15 @@ p.user_menu_friends_of {
 	margin:7px 0 7px 0;
 	line-height:1.4em;
 }
-#profile_info_wide .profile_info_edit_buttons {
+#profile_info_column_right .profile_info_edit_buttons {
+	float:right;
 	margin:0;
+	padding:0;
+}
+#profile_info_column_right .profile_info_edit_buttons a {
+	margin:0;
+	padding:2px 4px 2px 4px;
+	border:1px solid #4690d6;
 }
 
 
