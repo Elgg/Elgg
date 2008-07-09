@@ -70,52 +70,56 @@
 		
 	}
 
-	$currentpage = round($offset / $limit) + 1;
-	$allpages = ceil($count / $limit);
-	
-	$i = 1;
-	$pagesarray = array();
-	while ($i <= $allpages && $i <= 3) {
-		$pagesarray[] = $i;
-		$i++;
-	}
-	$i = $currentpage - 1;
-	while ($i <= $allpages && $i <= ($currentpage + 1)) {
-		if ($i > 0 && !in_array($i,$pagesarray))
+	if ($offset > 0 || $offset < ($count - $limit)) {
+		
+		$currentpage = round($offset / $limit) + 1;
+		$allpages = ceil($count / $limit);
+		
+		$i = 1;
+		$pagesarray = array();
+		while ($i <= $allpages && $i <= 3) {
 			$pagesarray[] = $i;
-		$i++;
-	}
-	$i = $allpages - 2;
-	while ($i <= $allpages) {
-		if ($i > 0 && !in_array($i,$pagesarray))
-			$pagesarray[] = $i;
-		$i++;
-	}
-	
-	sort($pagesarray);
-	
-	$prev = 0;
-	foreach($pagesarray as $i) {
-
-		if (($i - $prev) > 1) {
-			
-			echo " ... ";
-			
+			$i++;
+		}
+		$i = $currentpage - 1;
+		while ($i <= $allpages && $i <= ($currentpage + 1)) {
+			if ($i > 0 && !in_array($i,$pagesarray))
+				$pagesarray[] = $i;
+			$i++;
+		}
+		$i = $allpages - 2;
+		while ($i <= $allpages) {
+			if ($i > 0 && !in_array($i,$pagesarray))
+				$pagesarray[] = $i;
+			$i++;
 		}
 		
-		$counturl = $baseurl;
-		$curoffset = (($i - 1) * $limit);
-		if (substr_count($baseurl,'?')) {
-			$counturl .= "&{$word}=" . $curoffset;
-		} else {
-			$counturl .= "?{$word}=" . $curoffset;
+		sort($pagesarray);
+		
+		$prev = 0;
+		foreach($pagesarray as $i) {
+		
+			if (($i - $prev) > 1) {
+				
+				echo " ... ";
+				
+			}
+			
+			$counturl = $baseurl;
+			$curoffset = (($i - 1) * $limit);
+			if (substr_count($baseurl,'?')) {
+				$counturl .= "&{$word}=" . $curoffset;
+			} else {
+				$counturl .= "?{$word}=" . $curoffset;
+			}
+			if ($curoffset != $offset) {
+				echo " <a href=\"{$counturl}\">{$i}</a> ";
+			} else {
+				echo " {$i} ";
+			}
+			$prev = $i;
+		
 		}
-		if ($curoffset != $offset) {
-			echo " <a href=\"{$counturl}\">{$i}</a> ";
-		} else {
-			echo " {$i} ";
-		}
-		$prev = $i;
 
 	}
 	
