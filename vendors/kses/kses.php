@@ -426,6 +426,7 @@ function kses_array_lc($inarray)
 {
   $outarray = array();
 
+  if (sizeof($inarray))
   foreach ($inarray as $inkey => $inval)
   {
     $outkey = strtolower($inkey);
