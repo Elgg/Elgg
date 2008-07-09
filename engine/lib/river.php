@@ -140,6 +140,117 @@
 	}
 	
 	/**
+	 * Extract entities from the system log and produce them as an OpenDD stream.
+	 * This stream can be subscribed to and reconstructed on another system as an activity stream.
+	 *
+	 * @param int $by_user The user who initiated the event.
+	 * @param string $relationship Limit return results to only those users who $by_user has $relationship with.
+	 * @param int $limit Maximum number of events to show
+	 * @param int $offset An offset
+	 * @return ODDDocument
+	 */
+	function get_river_entries_as_opendd($by_user = "", $relationship = "", $limit = 10, $offset = 0)
+	{
+		// set start limit and offset
+		$cnt = $limit; // Didn' cast to int here deliberately
+		$off = $offset; // here too
+		
+		if (is_array($by_user) && sizeof($by_user) > 0) {
+			foreach($by_user as $key => $val) {
+				$by_user[$key] = (int) $val;
+			}
+		} else {
+			$by_user = (int)$by_user;
+		}
+		
+		$exit = false;
+		
+		// River objects
+		$river = new ODDDocument();
+	
+		do
+		{
+			$log_events = get_system_log($by_user, "","", $cnt, $off);
+		
+			if (!$log_events)
+				$exit = true;
+			else
+			{
+			
+				foreach ($log_events as $log)
+				{
+					// See if we have access to the object we're talking about
+					$event = $log->event;
+					$class = $log->object_class;
+					$tmp = new $class();
+					$object = $tmp->getObjectFromID($log->object_id);
+					
+					// Exists and we have access to it
+					// if (is_a($object, $class))
+					if ($object instanceof $class)
+					{
+						// If no relationship defined or it matches $relationship
+						if (
+							(!$relationship) || 
+							(
+								($relationship) &&
+								(check_entity_relationship($by_user, $relationship, $tmp->getObjectOwnerGUID()))
+							)
+						)
+						{
+							$relationship_obj = NULL;
+							
+							// Handle updates of entities
+							if ($object instanceof ElggEntity)
+							{
+								$relationship_obj = new ODDRelationship(
+									guid_to_uuid($log->performed_by_guid),
+									$log->event,
+									guid_to_uuid($log->object_id)
+								);
+							}
+							
+							// Handle updates of metadata
+							if ($object instanceof ElggExtender)
+							{
+								$odd = $object->export();
+								$relationship_obj = new ODDRelationship(
+									guid_to_uuid($log->performed_by_guid),
+									$log->event,
+									$odd->getAttribute('uuid')
+								);
+							}
+							
+							// Handle updates of relationships
+							if ($object instanceof ElggRelationship)
+							{
+								$relationship_obj = $object->export(); // I figure this is what you're actually interested in in this instance.
+							}
+							
+							// If we have handled it then add it to the document
+							if ($relationship_obj) {
+								$relationship_obj->setPublished($log->time_created); 
+								$river->addElement($relationship_obj);
+							}
+							
+						}
+					}
+					
+					// Increase offset
+					$off++;
+				}
+			}
+						
+		} while (
+			($cnt > 0) &&
+			(!$exit)
+		);
+		
+		return $river;
+		
+	}
+	
+	/**
 	 * Extract a list of river events from the current system log, from a given user's friends.
 	 *
 	 * @seeget_river_entries 
