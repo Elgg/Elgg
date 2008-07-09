@@ -539,7 +539,7 @@
 	 * @return string|false The HTML (etc) for the comments, or false on failure
 	 */
 		function elgg_view_comments($entity){
-            
+
 			if (!($entity instanceof ElggEntity)) return false;
             
 			if ($comments = trigger_plugin_hook('comments',$entity->getType(),array('entity' => $entity),false)) {
