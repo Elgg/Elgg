@@ -17,7 +17,8 @@
 			$owner = $_SESSION['user'];
 		}
 		
-		$area1 = list_entities_from_relationship('friend',$owner->getGUID(),false,'user','',0,10,false);
+		$area1 = elgg_view_title(elgg_echo('Friends'));
+		$area1 .= list_entities_from_relationship('friend',$owner->getGUID(),false,'user','',0,10,false);
 		$body = elgg_view_layout('one_column',$area1);
 		
 		echo page_draw(sprintf(elgg_echo("friends:owned"),$owner->name),$body);
