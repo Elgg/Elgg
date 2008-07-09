@@ -276,7 +276,6 @@
 			if (!isset($entity_class)) return false;
 			
 			$subtype = $entity->getSubtype();
-			
 			if (empty($subtype)) { $subtype = $entity_type; }
 
 			if (elgg_view_exists("{$entity_type}/{$subtype}",$viewtype)) {

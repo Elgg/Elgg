@@ -389,7 +389,11 @@
 		 *
 		 * @return string The entity subtype
 		 */
-		public function getSubtype() { return get_subtype_from_id($this->get('subtype')); }
+		public function getSubtype() {
+			if (!((int) $this->guid > 0)) return $this->get('subtype'); // If this object hasn't been saved, then return the subtype string.
+			
+			return get_subtype_from_id($this->get('subtype')); 
+		}
 		
 		/**
 		 * Gets the UNIX epoch time that this entity was created
