@@ -77,17 +77,17 @@
 		
 		$i = 1;
 		$pagesarray = array();
-		while ($i <= $allpages && $i <= 3) {
+		while ($i <= $allpages && $i <= 4) {
 			$pagesarray[] = $i;
 			$i++;
 		}
-		$i = $currentpage - 1;
-		while ($i <= $allpages && $i <= ($currentpage + 1)) {
+		$i = $currentpage - 2;
+		while ($i <= $allpages && $i <= ($currentpage + 2)) {
 			if ($i > 0 && !in_array($i,$pagesarray))
 				$pagesarray[] = $i;
 			$i++;
 		}
-		$i = $allpages - 2;
+		$i = $allpages - 3;
 		while ($i <= $allpages) {
 			if ($i > 0 && !in_array($i,$pagesarray))
 				$pagesarray[] = $i;
