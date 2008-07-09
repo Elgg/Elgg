@@ -496,12 +496,18 @@
             
 			if (!($entity instanceof ElggEntity)) return false;
             
-            $comments = list_annotations($entity->getGUID(),'generic_comment');
-            
-            //display the comment form
-            $comments .= elgg_view('comments/forms/edit',array('entity' => $entity));
-            
-            return $comments;
+			if ($comments = trigger_plugin_hook('comments',$entity->getType(),array('entity' => $entity),false)) {
+
+				return $comments;
+
+			} else {
+	            $comments = list_annotations($entity->getGUID(),'generic_comment');
+	            
+	            //display the comment form
+	            $comments .= elgg_view('comments/forms/edit',array('entity' => $entity));
+	            
+	            return $comments;
+			}
            
         }
 
