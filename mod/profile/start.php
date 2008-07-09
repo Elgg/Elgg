@@ -27,13 +27,13 @@
 				register_entity_url_handler('profile_url','user','all');
 			
 			// Set up menu for logged in users
-				if (isloggedin()) {
-					add_menu(elgg_echo('profile'), $CONFIG->wwwroot . "pg/profile/" . $_SESSION['user']->username,array(
-						menu_item(elgg_echo('profile:yours'),$CONFIG->wwwroot . "pg/profile/" . $_SESSION['user']->username),
-						menu_item(elgg_echo('profile:edit'),$CONFIG->wwwroot."mod/profile/edit.php"),
-						menu_item(elgg_echo('profile:editicon'),$CONFIG->wwwroot."mod/profile/editicon.php"),
-					),'profile');
-				}
+			//	if (isloggedin()) {
+			//		add_menu(elgg_echo('profile'), $CONFIG->wwwroot . "pg/profile/" . $_SESSION['user']->username,array(
+			//			menu_item(elgg_echo('profile:yours'),$CONFIG->wwwroot . "pg/profile/" . $_SESSION['user']->username),
+			//			menu_item(elgg_echo('profile:edit'),$CONFIG->wwwroot."mod/profile/edit.php"),
+			//			menu_item(elgg_echo('profile:editicon'),$CONFIG->wwwroot."mod/profile/editicon.php"),
+			//		),'profile');
+			//	}
 				
 			// For now, we'll hard code the profile items as follows:
 			// TODO make this user configurable
@@ -61,6 +61,12 @@
 				extend_view('css','profile/css');
 				if (get_context() == "profile")
 				    extend_view('canvas_header/submenu','profile/submenu');
+
+			//add submenu options
+				if (get_context() == "profile") {
+					add_submenu_item("Edit Details", $CONFIG->wwwroot . "mod/profile/edit.php");
+					add_submenu_item("Edit profile picture", $CONFIG->wwwroot . "mod/profile/editicon.php");
+				}
 
 			// Extend context menu with admin links
 			if (isadminloggedin())

@@ -30,6 +30,9 @@
 			'profile:profilepicturecroppingtool' => "Profile picture cropping tool",
 			'profile:createicon:instructions' => "Click and drag a square below to match how you want your picture cropped.  A preview of your cropped picture will appear in the box on the right.  When you are happy with the preview, click 'Create your avatar'. This cropped image will be used throughout the site as your avatar. ",
 	
+			'profile:editdetails' => "Edit details",
+			'profile:editicon' => "Edit profile icon",
+	
 			'profile:aboutme' => "About me", 
 			'profile:description' => "About me", 
 			'profile:location' => "Location",
