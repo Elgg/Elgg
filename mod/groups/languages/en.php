@@ -91,6 +91,11 @@ or click below to confirm request:
 			'groups:widgets:members:description' => 'List the members of a group.',
 			'groups:widgets:members:label:displaynum' => 'List the members of a group.',
 			'groups:widgets:members:label:pleaseedit' => 'Please configure this widget.',
+	
+			'groups:widgets:entities:title' => "Objects in group",
+			'groups:widgets:entities:description' => "List the objects saved in this group",
+			'groups:widgets:entities:label:displaynum' => 'List the objects of a group.',
+			'groups:widgets:entities:label:pleaseedit' => 'Please configure this widget.',
 		
 	);
 					
