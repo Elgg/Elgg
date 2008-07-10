@@ -517,6 +517,9 @@
 					} else {
 						$selected = false;
 					}
+					
+					$submenu .= "<!-- {$item->value} {$_SERVER['REQUEST_URI']} -->";
+					
 					$submenu .= elgg_view('canvas_header/submenu_template',
 									array(
 											'href' => $item->value, 
@@ -564,6 +567,10 @@
 	 * @return int Number of comments
 	 */
         function elgg_count_comments($entity) {
+        	
+        	if ($commentno = trigger_plugin_hook('comments:count',$entity->getType(),array('entity' => $entity),false)) {
+        		return $commentno;
+        	} else 
         	return count_annotations($entity->getGUID(), "", "", "generic_comment");
         }
         
