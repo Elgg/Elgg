@@ -374,8 +374,9 @@ h6 { font-size: 0.8em; }
 	margin:0 0 0 20px;
 }
 #elgg_topbar_container_right {
-	padding:4px 0 0 0;
+	padding:3px 0 0 0;
 }
+/*
 #elgg_topbar_container_right img  {
 	float:right;
 	margin:0 20px 0 0;
@@ -384,6 +385,16 @@ h6 { font-size: 0.8em; }
 #elgg_topbar_container_right a {
 	color:#eeeeee;
 	margin:0 5px 0 0;
+}
+*/
+#elgg_topbar_container_right a {
+	color:#eeeeee;
+	margin:0 5px 0 0;
+	background:transparent url(<?php echo $vars['url']; ?>_graphics/elgg_toolbar_logout.gif) no-repeat right -1px;
+	padding:0 21px 0 0;
+}
+#elgg_topbar_container_right a:hover {
+	background:transparent url(<?php echo $vars['url']; ?>_graphics/elgg_toolbar_logout_over.gif) no-repeat right -1px;
 }
 
 #elgg_topbar_panel {

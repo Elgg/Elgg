@@ -61,7 +61,7 @@
 
 
 <div id="elgg_topbar_container_right">
-		<img src="<?php echo $vars['url']; ?>_graphics/elgg_toolbar_logout.gif" /><a href="<?php echo $vars['url']; ?>action/logout"><small><?php echo elgg_echo('logout'); ?></small></a>
+		<a href="<?php echo $vars['url']; ?>action/logout"><small><?php echo elgg_echo('logout'); ?></small></a>
 </div>
 
 <div id="elgg_topbar_container_search">
