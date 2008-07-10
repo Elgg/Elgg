@@ -301,10 +301,16 @@
 				// Save the params to the widget 
 				if (is_array($params) && sizeof($params) > 0) {
 					foreach($params as $name => $value) {
+						error_log("ERP: $name". print_r($value, true));
 						if (!empty($name) && !in_array($name,array(
 								'guid','owner_guid','site_guid'
 																	))) {
-							$widget->$name = $value;
+							if (is_array($value))
+							{
+								error_log("ERP: Here");
+								$widget->setMetaData($name, $value, "", true);
+							}else
+								$widget->$name = $value;
 						}
 					}
 					$widget->save();
