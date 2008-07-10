@@ -479,9 +479,9 @@
 	 * @param string $title The page title
 	 * @return string The HTML (etc)
 	 */
-		function elgg_view_title($title) {
+		function elgg_view_title($title, $submenu = true) {
 			
-			$title = elgg_view('page_elements/title', array('title' => $title));
+			$title = elgg_view('page_elements/title', array('title' => $title, 'submenu' => $submenu));
 			
 			return $title;
 			
