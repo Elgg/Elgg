@@ -99,10 +99,16 @@
 				}
 			} else {
 				$file = $_SERVER["SCRIPT_NAME"];
-				$file = str_replace("\\","/",$file);
-				$file = str_replace("//","/",$file);
-				if (preg_match("/mod\/([a-zA-Z0-9\-\_]*)\//",$file,$matches)) {
-					return $matches[1];
+				if (substr_count($file,'handlers/pagehandler')) {
+					if (preg_match("/pg\/([a-zA-Z0-9\-\_]*)\//",$_SERVER['REQUEST_URI'],$matches)) {
+						return $matches[1];
+					}
+				} else {
+					$file = str_replace("\\","/",$file);
+					$file = str_replace("//","/",$file);
+					if (preg_match("/mod\/([a-zA-Z0-9\-\_]*)\//",$file,$matches)) {
+						return $matches[1];
+					}
 				}
 			}
 			return false;
