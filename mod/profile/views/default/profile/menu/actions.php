@@ -17,7 +17,7 @@
 			if ($vars['entity']->isFriend()) {
 				echo "<p class=\"user_menu_removefriend\"><a href=\"{$vars['url']}action/friends/remove?friend={$vars['entity']->getGUID()}\">" . elgg_echo("friend:remove") . "</a></p>";
 			} else {
-				echo "<p><a href=\"{$vars['url']}action/friends/add?friend={$vars['entity']->getGUID()}\">" . elgg_echo("friend:add") . "</a></p>";
+				echo "<p class=\"user_menu_addfriend\"><a href=\"{$vars['url']}action/friends/add?friend={$vars['entity']->getGUID()}\">" . elgg_echo("friend:add") . "</a></p>";
 			}
 		}
 	}

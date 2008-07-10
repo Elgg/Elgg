@@ -700,6 +700,20 @@ a.toggle_customise_edit_panel:hover {
   System messages
 *************************************** */
 .messages {
+    /* 
+    border:1px solid #D3322A;
+    background:#F7DAD8;
+    */
+    border:1px solid #00cc00;
+    background:#ccffcc;
+    color:#000000;
+    padding:3px 10px 3px 10px;
+    margin:20px 20px 0px 180px;
+    z-index: 99999;
+    position:absolute;
+    width:776px;
+}
+.messages_error {
     border:1px solid #D3322A;
     background:#F7DAD8;
     color:#000000;
@@ -713,8 +727,14 @@ a.toggle_customise_edit_panel:hover {
 * html .messages { 
 	margin:20px 20px 0px 20px;
 }
+* html .messages_error { 
+	margin:20px 20px 0px 20px;
+}
 /* IE7 */
 *:first-child+html .messages {
+	margin:20px 20px 0px 20px;
+}
+*:first-child+html .messages_error {
 	margin:20px 20px 0px 20px;
 }
 

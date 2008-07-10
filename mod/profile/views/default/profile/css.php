@@ -46,6 +46,26 @@
 .usericon div.sub_menu a:visited, 
 .usericon div.sub_menu a:hover{ display:block;}	
 .usericon div.sub_menu a:hover{ background:#cccccc; text-decoration:none;}
-.usericon .item_line { border-top:solid 1px #dddddd;}
+.usericon .item_line { }
 
-.usericon div.sub_menu h3 {font-size:1.2em;}
+.usericon div.sub_menu h3 {font-size:1.2em;padding-bottom:3px;border-bottom:solid 1px #dddddd;}
+
+.user_menu_addfriend,
+.user_menu_removefriend,
+.user_menu_profile,
+.user_menu_friends,
+.user_menu_friends_of,
+.user_menu_blog,
+.user_menu_file,
+.user_menu_messages,
+.user_menu_admin {
+	margin:0;
+	padding:0;
+}
+.user_menu_admin {
+	border-bottom:solid 1px #dddddd;
+	border-top:solid 1px #dddddd;
+}
+.user_menu_admin a {
+	color:#cc0033;
+}
