@@ -14,7 +14,7 @@
 	// Description of what's going on
 		echo "<p>" . nl2br(elgg_echo("admin:plugins:description")) . "</p>";
 
-		$limit = get_input('limit', 50);
+		$limit = get_input('limit', 10);
 		$offset = get_input('offset', 0);
 		
 		
@@ -26,13 +26,14 @@
 		$n = 0;
 		foreach ($installed_plugins as $plugin => $data)
 		{
-			if (($n>=$offset) && ($n < $offset+$limit))
+			//if (($n>=$offset) && ($n < $offset+$limit))
 				echo elgg_view("admin/plugins_opt/plugin", array('plugin' => $plugin, 'details' => $data));
 			
 			$n++;
 		}
 		
 	// Diplay nav
+	/*
 		if ($count) 
 		{
 			 echo elgg_view('navigation/pagination',array(
@@ -41,4 +42,5 @@
 												'count' => $count,
 														));
 		}
+	*/
 ?>
