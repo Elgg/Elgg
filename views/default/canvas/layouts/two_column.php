@@ -26,7 +26,7 @@
     
 <!-- main content -->
 <div id="layout_maincontent" class="has_sidebar_right">
-<div id="wrapper_maincontent">
+<div id="wrapper_maincontent" class="content_area">
     <h2><?php echo $vars['title']; ?></h2>
     <?php echo $vars['area1']; ?>
 	

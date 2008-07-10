@@ -186,6 +186,10 @@ h6 { font-size: 0.8em; }
 }
 #wrapper_sidebar_right {
 	margin:0;
+	background: white;
+	padding:10px;
+	border-bottom:1px solid #cccccc;
+	border-right:1px solid #cccccc;
 }
 #layout_sidebar_right_narrow {
 	width:160px;
