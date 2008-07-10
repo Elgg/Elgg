@@ -184,12 +184,17 @@ h6 { font-size: 0.8em; }
 	float:right;
 	padding:0px 0px 20px 10px;
 }
-#wrapper_sidebar_right {
+
+#wrapper_sidebar_right.double_column {
 	margin:0;
 	background: white;
-	padding:10px;
+	padding:14px 10px 14px 10px;
 	border-bottom:1px solid #cccccc;
 	border-right:1px solid #cccccc;
+}
+
+#wrapper_sidebar_right {
+	margin:0;
 }
 #layout_sidebar_right_narrow {
 	width:160px;

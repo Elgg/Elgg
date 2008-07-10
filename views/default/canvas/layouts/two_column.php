@@ -15,7 +15,7 @@
 
 <!-- right sidebar -->
 <div id="layout_sidebar_right">
-<div id="wrapper_sidebar_right">
+<div id="wrapper_sidebar_right" class="double_column">
 
 	<?php echo $vars['area2']; ?>
 
