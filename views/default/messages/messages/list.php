@@ -26,7 +26,6 @@
 </script>
 
 	<div class="messages">
-		<div class="messages-errors">
 
 <?php
 
@@ -36,7 +35,7 @@
 			}
 
 ?>
-		</div>
+
 	</div>
 	
 <?php

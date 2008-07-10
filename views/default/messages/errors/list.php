@@ -17,16 +17,22 @@
 		if (!empty($vars['object']) && is_array($vars['object'])) {
 
 ?>
+<!-- used to fade out the system messages after 3 seconds -->
+<script>
+    $(document).ready(function () {
+      $('.messages_error').animate({opacity: 1.0}, 3000) //this holds the div without change for 3 seconds
+      $('.messages_error').fadeOut('slow'); //fade it out
+    });  
+</script>
 
-	<div class="messages">
-		<div class="messages-errors">
+	<div class="messages_error">
 
 <?php
 			foreach($vars['object'] as $error) {
 				echo elgg_view('messages/errors/error',array('object' => $error));
 			}
 ?>
-		</div>
+
 	</div>
 <?php
 		}
