@@ -25,13 +25,15 @@
 		$display = "<div id=\"canvas_header\">";
 		$display .= "<div id=\"canvas_header_icon\">" . $icon . "</div>";
 		$display .= "<div id=\"canvas_header_content\">" . $info . "</div>";
-		$display .= "<div id=\"canvas_header_submenu\">" . $submenu . "</div>"; // plugins can extend this to add menu options
+		if (!empty($submenu))
+			$display .= "<div id=\"canvas_header_submenu\">" . $submenu . "</div>"; // plugins can extend this to add menu options
 		$display .= "</div>";
 	} else {
 		$info = "<h2>" . $vars['title'] . "</h2>";
 		$display = "<div id=\"canvas_header\">";
 		$display .= "<div id=\"canvas_header_content\">" . $info . "</div>";
-		$display .= "<div id=\"canvas_header_submenu\">" . $submenu . "</div>"; // plugins can extend this to add menu options
+		if (!empty($submenu))
+			$display .= "<div id=\"canvas_header_submenu\">" . $submenu . "</div>"; // plugins can extend this to add menu options
 		$display .= "</div>";
 	}
 
