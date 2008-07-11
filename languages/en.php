@@ -429,12 +429,12 @@
 		 * Time
 		 */
 	
-			'friendlytime:justnow' => "less than a minute ago",
-			'friendlytime:minutes' => "about %s minutes ago",
-			'friendlytime:minutes:singular' => "about a minute ago",
-			'friendlytime:hours' => "about %s hours ago",
-			'friendlytime:hours:singular' => "about an hour ago",
-			'friendlytime:days' => "about %s days ago",
+			'friendlytime:justnow' => "just now",
+			'friendlytime:minutes' => "%s minutes ago",
+			'friendlytime:minutes:singular' => "a minute ago",
+			'friendlytime:hours' => "%s hours ago",
+			'friendlytime:hours:singular' => "an hour ago",
+			'friendlytime:days' => "%s days ago",
 			'friendlytime:days:singular' => "yesterday",
 	
 		/**
