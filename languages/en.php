@@ -94,7 +94,7 @@
 			
 			'InvalidParameterException:NoEntityFound' => "No entity found, it either doesn't exist or you don't have access to it.",
 			
-			
+			'InvalidParameterException:GUIDNotFound' => "GUID:%s could not be found, or you can not access it.",
 			'InvalidParameterException:IdNotExistForGUID' => "Sorry, '%s' does not exist for guid:%d",
 			'InvalidParameterException:CanNotExportType' => "Sorry, I don't know how to export '%s'",
 			'InvalidParameterException:NoDataFound' => "Could not find any data.",

@@ -30,7 +30,12 @@
 		($id_or_name=="")
 	)
 	{
-		page_draw("GUID:$guid", elgg_view("export/entity", array("entity" => get_entity($guid), "uuid" => guid_to_uuid($guid))));
+		$entity = get_entity($guid);
+		
+		if (!$entity) 
+			throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:GUIDNotFound'), $guid));
+			
+		page_draw("GUID:$guid", elgg_view("export/entity", array("entity" => $entity, "uuid" => guid_to_uuid($guid))));
 	}
 	
 	// Export an individual attribute
@@ -42,6 +47,9 @@
 	{
 		// Get a uuid
 		$entity = get_entity($guid);
+		if (!$entity) 
+			throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:GUIDNotFound'), $guid));
+			
 		$uuid = guid_to_uuid($entity->getGUID()) . "$type/$id_or_name/";
 		
 		switch ($type)
