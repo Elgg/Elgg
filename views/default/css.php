@@ -75,7 +75,7 @@ body {
 	margin:0 auto;
 	padding:0;
 	background: #4690d6;
-	font: 75%/1.5  "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "Lucida", Verdana, sans-serif;
+	font: 75%/1.5  "Lucida Grande", Verdana, sans-serif;
 	color: #333333;
 	background: url(<?php echo $vars['url']; ?>_graphics/page_back_linen.gif) repeat left 1px;
 }
