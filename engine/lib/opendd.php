@@ -40,7 +40,12 @@
 		public function __construct(array $elements = NULL)
 		{
 			if ($elements)
-				$this->elements = $elements;
+			{
+				if (is_array($elements))
+					$this->elements = $elements;
+				else
+					$this->addElement($elements);
+			}
 			else
 				$this->elements = array();
 		}
@@ -52,7 +57,9 @@
 		 */
 		public function getVersion() { return $this->ODDSupportedVersion; }
 		
-		public function addElement(ODD $element) { $this->elements[] = $element; }
+		public function getNumElements() { return count($this->elements); }
+		
+		public function addElement(ODD $element) { if (!is_array($this->elements)) $this->elements = array(); $this->elements[] = $element; }
 		public function addElements(array $elements)
 		{
 			foreach ($elements as $element)
@@ -178,6 +185,13 @@
 		{
 			$this->attributes['published'] = date("r", $time);
 		}
+		
+		/**
+		 * Return the published time as a unix timestamp.
+		 *
+		 * @return int or false on failure.
+		 */
+		public function getPublishedAsTime() { return strtotime($this->attributes['published']); }
 		
 		/**
 		 * For serialisation, implement to return a string name of the tag eg "header" or "metadata".
