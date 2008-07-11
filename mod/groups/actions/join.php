@@ -36,7 +36,7 @@
 				exit;
 			}
 			else
-				system_message(elgg_echo("groups:cantjoin"));
+				register_error(elgg_echo("groups:cantjoin"));
 		}
 		else
 		{
@@ -47,7 +47,7 @@
 		}
 	}
 	else
-		system_message(elgg_echo("groups:cantjoin"));
+		register_error(elgg_echo("groups:cantjoin"));
 		
 	forward($_SERVER['HTTP_REFERER']);
 	exit;

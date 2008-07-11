@@ -29,10 +29,10 @@
 		if ($group->leave($user))
 			system_message(elgg_echo("groups:left"));
 		else
-			system_message(elgg_echo("groups:cantleave"));
+			register_error(elgg_echo("groups:cantleave"));
 	}
 	else
-		system_message(elgg_echo("groups:cantleave"));
+		register_error(elgg_echo("groups:cantleave"));
 		
 	forward($_SERVER['HTTP_REFERER']);
 	exit;

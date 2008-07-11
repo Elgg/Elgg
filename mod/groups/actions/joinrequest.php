@@ -75,13 +75,13 @@
 					NULL, "email"))
 				system_message(elgg_echo("groups:joinrequestmade"));
 			else
-				system_message(elgg_echo("groups:joinrequestnotmade"));
+				register_error(elgg_echo("groups:joinrequestnotmade"));
 		}
 	
 	
 	}
 	else
-		system_message(elgg_echo('groups:alreadymember'));
+		register_error(elgg_echo('groups:alreadymember'));
 		
 	forward($_SERVER['HTTP_REFERER']);
 	exit;	

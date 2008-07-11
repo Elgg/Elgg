@@ -31,7 +31,7 @@
 	$group = new ElggGroup($group_guid); // load if present, if not create a new group
 	if (($group_guid) && (!$group->canEdit()))
 	{
-		system_message(elgg_echo("groups:cantedit"));
+		register_error(elgg_echo("groups:cantedit"));
 		
 		forward($_SERVER['HTTP_REFERER']);
 		exit;
@@ -48,7 +48,7 @@
 	// Validate create
 	if (!$group->title)
 	{
-		system_message(elgg_echo("groups:notitle"));
+		register_error(elgg_echo("groups:notitle"));
 		
 		forward($_SERVER['HTTP_REFERER']);
 		exit;

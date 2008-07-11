@@ -33,7 +33,7 @@
 	
 	if (!($feed instanceof ElggObject))
 	{
-		system_message(elgg_echo("opendd:notobject"));
+		register_error(elgg_echo("opendd:notobject"));
 		
 		forward($_SERVER['HTTP_REFERER']);
 		exit;
@@ -51,7 +51,7 @@
 	if ($feed->save())
 		system_message(elgg_echo("opendd:feedok"));
 	else
-		system_message(elgg_echo("opendd:feednotok"));
+		register_error(elgg_echo("opendd:feednotok"));
 	
 	forward($_SERVER['HTTP_REFERER']);
 	exit;

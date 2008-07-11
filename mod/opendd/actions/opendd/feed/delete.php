@@ -28,11 +28,11 @@
 			$returnurl = $CONFIG->url . "mod/opendd/";
 		}
 		else
-			system_message(elgg_echo("opendd:notdeleted"));
+			register_error(elgg_echo("opendd:notdeleted"));
 		
 	}
 	else
-		system_message(elgg_echo("opendd:notobject"));
+		register_error(elgg_echo("opendd:notobject"));
 
 		
 		

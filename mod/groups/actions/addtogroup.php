@@ -55,7 +55,7 @@
 							
 						}
 						else
-							system_message(elgg_echo("groups:cantjoin"));
+							register_error(elgg_echo("groups:cantjoin"));
 						
 						$requested = true;
 					}
@@ -75,7 +75,7 @@
 				// Set invite flag
 				//if (!$user->setMetaData('group_invite', $group->getGUID(), "", true))
 				if (!$user->group_invite = $methods)
-					system_message(elgg_echo("groups:usernotinvited"));
+					register_error(elgg_echo("groups:usernotinvited"));
 				else
 				{
 					// Send email
@@ -85,12 +85,12 @@
 							NULL, "email"))
 						system_message(elgg_echo("groups:userinvited"));
 					else
-						system_message(elgg_echo("groups:usernotinvited"));
+						register_error(elgg_echo("groups:usernotinvited"));
 				}
 			}
 		}
 		else
-			system_message(elgg_echo("groups:notowner"));
+			register_error(elgg_echo("groups:notowner"));
 	}
 			
 	forward($forward_url);

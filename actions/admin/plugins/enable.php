@@ -22,7 +22,7 @@
 	if (enable_plugin($plugin))
 		system_message(sprintf(elgg_echo('admin:plugins:enable:yes'), $plugin));
 	else
-		system_message(sprintf(elgg_echo('admin:plugins:enable:no'), $plugin));		
+		register_error(sprintf(elgg_echo('admin:plugins:enable:no'), $plugin));		
 		
 	forward($_SERVER['HTTP_REFERER']);
 	exit;
