@@ -359,49 +359,19 @@
 			$offset = (int) $offset;
 			$limit = (int) $limit;
 			
-			$html = "";
-			
 			$context = get_context();
 			
-			$nav = "";
-			
-			if ($context == "search" && $count > 0) {
-				$viewtype = get_input('search_viewtype','list');
-				$nav .= elgg_view("navigation/viewtype",array(
-			
-												'baseurl' => $_SERVER['REQUEST_URI'],
-												'offset' => $offset,
-												'count' => $count,
-												'viewtype' => $viewtype,
-			
-														));
-			}
-			
-			$nav .= elgg_view('navigation/pagination',array(
-			
-												'baseurl' => $_SERVER['REQUEST_URI'],
-												'offset' => $offset,
-												'count' => $count,
-												'limit' => $limit,
-			
-														));
-			
-			$html .= $nav;
-
-			if ($viewtype == "list") {
-				if (is_array($entities) && sizeof($entities) > 0) {
-					foreach($entities as $entity) {
-						$html .= elgg_view_entity($entity, "", $fullview);
-					}
-				}
-			} else {
-				if (is_array($entities) && sizeof($entities) > 0)
-					$html .= elgg_view("search/gallery",array('entities' => $entities));
-			}
-			
-			if ($count)
-				$html .= $nav;
-			
+			$html = elgg_view('search/entity_list',array(
+													'entities' => $entities,
+													'count' => $count,
+													'offset' => $offset,
+													'limit' => $limit,
+													'baseurl' => $_SERVER['REQUEST_URI'],
+													'fullview' => $fullview,
+													'context' => $context, 
+													'viewtype' => get_input('search_viewtype','list'), 
+												  ));
+				
 			return $html;
 			
 		}
