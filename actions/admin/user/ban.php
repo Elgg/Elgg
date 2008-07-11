@@ -24,10 +24,10 @@
 		if ($obj->disable())
 			system_message(elgg_echo('admin:user:ban:yes'));
 		else
-			system_message(elgg_echo('admin:user:ban:no'));
+			register_error(elgg_echo('admin:user:ban:no'));
 	}
 	else
-		system_message(elgg_echo('admin:user:ban:no'));
+		register_error(elgg_echo('admin:user:ban:no'));
 		
 	forward($_SERVER['HTTP_REFERER']);
 	exit;

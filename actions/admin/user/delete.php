@@ -24,10 +24,10 @@
 		if (delete_entity($guid))
 			system_message(elgg_echo('admin:user:delete:yes'));
 		else
-			system_message(elgg_echo('admin:user:delete:no'));
+			register_error(elgg_echo('admin:user:delete:no'));
 	}
 	else
-		system_message(elgg_echo('admin:user:delete:no'));
+		register_error(elgg_echo('admin:user:delete:no'));
 		
 	forward($_SERVER['HTTP_REFERER']);
 	exit;

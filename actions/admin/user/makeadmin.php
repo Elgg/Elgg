@@ -26,10 +26,10 @@
 		if ($result)
 			system_message(elgg_echo('admin:user:makeadmin:yes'));
 		else
-			system_message(elgg_echo('admin:user:makeadmin:no'));
+			register_error(elgg_echo('admin:user:makeadmin:no'));
 	}
 	else
-		system_message(elgg_echo('admin:user:makeadmin:no'));
+		register_error(elgg_echo('admin:user:makeadmin:no'));
 	
 	forward($_SERVER['HTTP_REFERER']);
 

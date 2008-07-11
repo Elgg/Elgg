@@ -32,10 +32,10 @@
 			
 			notify_user($obj->guid, $CONFIG->site->guid, elgg_echo('email:resetpassword:subject'), sprintf(elgg_echo('email:resetpassword:body'), $obj->username, $password), NULL, 'email');
 		} else
-			system_message(elgg_echo('admin:user:resetpassword:no'));
+			register_error(elgg_echo('admin:user:resetpassword:no'));
 	}
 	else
-		system_message(elgg_echo('admin:user:resetpassword:no'));
+		register_error(elgg_echo('admin:user:resetpassword:no'));
 		
 	forward($_SERVER['HTTP_REFERER']);
 	exit;
