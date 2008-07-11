@@ -116,12 +116,19 @@
 		 * @return array
 		 */
 		public function export()
-		{			
-			return new ODDRelationship(
+		{		
+			global $CONFIG;
+		
+			$uuid = $CONFIG->wwwroot  . "odd/{$this->guid_one}/relationship/{$this->id}/";	
+			$relationship = new ODDRelationship(
 				guid_to_uuid($this->guid_one),
 				$this->relationship,
 				guid_to_uuid($this->guid_two)
 			);
+			
+			$relationship->setAttribute('uuid', $uuid);
+			
+			return $relationship;
 		}
 		
 		// IMPORTABLE INTERFACE ////////////////////////////////////////////////////////////

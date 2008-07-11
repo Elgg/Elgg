@@ -92,7 +92,7 @@
 		if ($r)
 		{
 			if (
-				($r->guid_one!=$entity->guid) ||
+				($r->guid_one!=$entity->guid) &&
 				($r->guid_two!=$entity->guid)
 			)
 				throw new InvalidParameterException(elgg_echo('InvalidParameterException:DoesNotBelongOrRefer'));
