@@ -30,10 +30,10 @@
 		if ($user->save())
 			system_message(elgg_echo('user:name:success'));
 		else
-			system_message(elgg_echo('user:name:fail'));
+			register_error(elgg_echo('user:name:fail'));
 	}
 	else
-		system_message(elgg_echo('user:name:fail'));
+		register_error(elgg_echo('user:name:fail'));
 	
 	//forward($_SERVER['HTTP_REFERER']);
 	//exit;

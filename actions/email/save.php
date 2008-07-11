@@ -34,11 +34,11 @@
 				system_message(elgg_echo('email:save:success'));
 			}
 			else
-				system_message(elgg_echo('email:save:fail'));
+				register_error(elgg_echo('email:save:fail'));
 		}
 	}
 	else
-		system_message(elgg_echo('email:save:fail'));
+		register_error(elgg_echo('email:save:fail'));
 	
 	//forward($_SERVER['HTTP_REFERER']);
 	//exit;

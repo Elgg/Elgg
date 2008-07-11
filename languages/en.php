@@ -408,6 +408,7 @@
 		 * Import / export
 		 */
 			'importsuccess' => "Import of data was successful",
+			'importfail' => "OpenDD import of data failed.",
 			
 		/**
 		 * Widgets

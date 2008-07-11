@@ -16,7 +16,7 @@
 		$params = $_REQUEST['params'];
 		$pageurl = get_input('pageurl');
 		$noforward = get_input('noforward',false);
-		
+
 		$result = false;
 		
 		if (!empty($guid)) {
@@ -28,7 +28,7 @@
 		if ($result) {
 			system_message(elgg_echo('widgets:save:success'));
 		} else {
-			system_message(elgg_echo('widgets:save:failure'));
+			register_error(elgg_echo('widgets:save:failure'));
 		}
 		
 		if (!$noforward)

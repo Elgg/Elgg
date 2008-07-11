@@ -21,7 +21,7 @@
 		
 		if (!$result)
 		{
-			system_message(elgg_echo('notifications:usersettings:save:fail'));
+			register_error(elgg_echo('notifications:usersettings:save:fail'));
 			//forward($_SERVER['HTTP_REFERER']);
 			
 			//exit;
@@ -31,7 +31,7 @@
 	if ($result)
 		system_message(elgg_echo('notifications:usersettings:save:ok'));
 	else
-		system_message(elgg_echo('notifications:usersettings:save:fail'));
+		register_error(elgg_echo('notifications:usersettings:save:fail'));
 	
 	//forward($_SERVER['HTTP_REFERER']);
 ?>

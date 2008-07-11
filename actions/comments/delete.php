@@ -29,7 +29,7 @@
 			$url = "";
 		}
 		
-		system_message(elgg_echo("generic_comment:notdeleted"));
+		register_error(elgg_echo("generic_comment:notdeleted"));
 		forward($entity->getURL());
 
 ?>

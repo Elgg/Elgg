@@ -29,10 +29,10 @@
 			notify_user($user_guid, $CONFIG->site->guid, elgg_echo('email:validate:success:subject'), sprintf(elgg_echo('email:validate:success:body'), $user->username), NULL, 'email');
 			
 		} else
-			system_message(elgg_echo('email:confirm:fail'));
+			register_error(elgg_echo('email:confirm:fail'));
 	}
 	else
-		system_message(elgg_echo('email:confirm:fail'));
+		register_error(elgg_echo('email:confirm:fail'));
 	
 	forward($_SERVER['HTTP_REFERER']);
 	exit;

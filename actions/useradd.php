@@ -41,7 +41,7 @@
 		
 		system_message(sprintf(elgg_echo("adduser:ok"),$CONFIG->sitename));
 	} else {
-		system_message(elgg_echo("adduser:bad"));
+		register_error(elgg_echo("adduser:bad"));
 	}
 
 	forward($_SERVER['HTTP_REFERER']);

@@ -25,7 +25,7 @@
 			
 		} else {
 			
-			system_message(sprintf(elgg_echo("friends:add:failure"),$friend->name));
+			register_error(sprintf(elgg_echo("friends:add:failure"),$friend->name));
 			
 		}
 		

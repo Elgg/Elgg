@@ -39,7 +39,7 @@
 			
 			system_message(sprintf(elgg_echo("registerok"),$CONFIG->sitename));
 		} else {
-			system_message(elgg_echo("registerbad"));
+			register_error(elgg_echo("registerbad"));
 		}
 
 ?>

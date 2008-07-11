@@ -25,7 +25,7 @@
 		// Error?
 		if (!$result)
 		{
-			system_message(sprintf(elgg_echo('plugins:settings:save:fail'), $plugin));
+			register_error(sprintf(elgg_echo('plugins:settings:save:fail'), $plugin));
 			
 			forward($_SERVER['HTTP_REFERER']);
 			

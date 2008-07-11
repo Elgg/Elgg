@@ -19,7 +19,7 @@
         if ($result) {
             system_message(elgg_echo('logoutok'));
         } else {
-            system_message(elgg_echo('logouterror'));
+            register_error(elgg_echo('logouterror'));
         }
 
 ?>

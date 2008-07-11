@@ -39,12 +39,12 @@
 					system_message(elgg_echo("generic_comment:posted"));
 					
 				} else {
-					system_message(elgg_echo("generic_comment:failure"));
+					register_error(elgg_echo("generic_comment:failure"));
 				}
 				
 		} else {
 		
-			system_message(elgg_echo("generic_comment:notfound"));
+			register_error(elgg_echo("generic_comment:notfound"));
 			
 		}
 		

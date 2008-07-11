@@ -31,7 +31,7 @@
             system_message(elgg_echo('loginok'));
             forward("pg/dashboard/");
         } else {
-            system_message(elgg_echo('loginerror'));
+            register_error(elgg_echo('loginerror'));
         }
       
 ?>

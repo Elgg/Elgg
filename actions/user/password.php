@@ -35,13 +35,13 @@
 				if ($user->save())
 					system_message(elgg_echo('user:password:success'));
 				else
-					system_message(elgg_echo('user:password:fail'));
+					register_error(elgg_echo('user:password:fail'));
 			}
 			else
-				system_message(elgg_echo('user:password:fail:notsame'));
+				register_error(elgg_echo('user:password:fail:notsame'));
 		}
 		else
-			system_message(elgg_echo('user:password:fail:tooshort'));
+			register_error(elgg_echo('user:password:fail:tooshort'));
 	}
 	
 	//forward($_SERVER['HTTP_REFERER']);
