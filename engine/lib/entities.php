@@ -1304,7 +1304,7 @@
 					{
 						case 'object' : $tmp = new ElggObject($row); break;
 						case 'user' : $tmp = new ElggUser($row); break;
-						case 'collection' : $tmp = new ElggCollection($row); break; 
+						case 'group' : $tmp = new ElggGroup($row); break; 
 						case 'site' : $tmp = new ElggSite($row); break; 
 						default: throw new InstallationException(sprintf(elgg_echo('InstallationException:TypeNotSupported'), $class));
 					}
