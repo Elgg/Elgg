@@ -46,6 +46,11 @@
 		protected $temp_metadata;
 				
 		/**
+		 * Temporary cache for annotations, permitting meta data access before a guid has obtained.
+		 */
+		protected $temp_annotations;
+		
+		/**
 		 * Initialise the attributes array. 
 		 * This is vital to distinguish between metadata and base parameters.
 		 * 
@@ -60,6 +65,7 @@
 			// Create attributes array if not already created
 			if (!is_array($this->attributes)) $this->attributes = array();
 			if (!is_array($this->temp_metadata)) $this->temp_metadata = array();
+			if (!is_array($this->temp_annotations)) $this->temp_annotations = array();
 			
 			$this->attributes['guid'] = "";
 			$this->attributes['type'] = "";
@@ -230,7 +236,12 @@
 		 */
 		function annotate($name, $value, $access_id = 0, $owner_id = 0, $vartype = "") 
 		{ 
-			return create_annotation($this->getGUID(), $name, $value, $vartype, $owner_id, $access_id);
+			if ((int) $this->guid > 0) {
+				return create_annotation($this->getGUID(), $name, $value, $vartype, $owner_id, $access_id);
+			} else {
+				$this->temp_annotations[$name] = $value;
+			}
+			return true;
 		}
 		
 		/**
@@ -243,7 +254,11 @@
 		 */
 		function getAnnotations($name, $limit = 50, $offset = 0, $order="asc") 
 		{ 
-			return get_annotations($this->getGUID(), "", "", $name, "", 0, $limit, $offset, $order);
+			if ((int) ($this->guid) > 0) {
+				return get_annotations($this->getGUID(), "", "", $name, "", 0, $limit, $offset, $order);
+			} else {
+				return $this->temp_annotations[$name];
+			}
 		}
 		
 		/**
