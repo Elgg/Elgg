@@ -1283,6 +1283,60 @@
 	}
 	
 	/**
+	 * Utility function used by import_entity_plugin_hook() to process an ODDEntity into an unsaved ElggEntity.
+	 *
+	 * @param ODDEntity $element The OpenDD element
+	 * @return ElggEntity the unsaved entity which should be populated by items.
+	 */
+	function oddentity_to_elggentity(ODDEntity $element)
+	{
+		$class = $element->getAttribute('class');
+		$subclass = $element->getAttribute('subclass');
+		
+		// See if we already have imported this uuid
+		$tmp = get_entity_from_uuid($element->getAttribute('uuid'));
+		
+		if (!$tmp)
+		{
+			// Construct new class with owner from session
+			$classname = get_subtype_class($class, $subclass);
+			if ($classname!="")
+			{
+				if (class_exists($classname))
+				{
+					$tmp = new $classname();
+					
+					if (!($tmp instanceof ElggEntity))
+						throw new ClassException(sprintf(elgg_echo('ClassException:ClassnameNotClass', $classname, get_class())));
+				}
+				else
+					error_log(sprintf(elgg_echo('ClassNotFoundException:MissingClass'), $classname));	
+			}
+			else
+			{
+				switch ($class)
+				{
+					case 'object' : $tmp = new ElggObject($row); break;
+					case 'user' : $tmp = new ElggUser($row); break;
+					case 'group' : $tmp = new ElggGroup($row); break; 
+					case 'site' : $tmp = new ElggSite($row); break; 
+					default: throw new InstallationException(sprintf(elgg_echo('InstallationException:TypeNotSupported'), $class));
+				}
+			}
+		}
+		
+		if ($tmp)
+		{
+			if (!$tmp->import($element))
+				throw new ImportException(sprintf(elgg_echo('ImportException:ImportFailed'), $element->getAttribute('uuid')));
+			
+			return $tmp;
+		}
+		
+		return NULL;
+	}
+	
+	/**
 	 * Import an entity.
 	 * This function checks the passed XML doc (as array) to see if it is a user, if so it constructs a new 
 	 * elgg user and returns "true" to inform the importer that it's been handled.
@@ -1295,42 +1349,10 @@
 		
 		if ($element instanceof ODDEntity)
 		{
-			$class = $element->getAttribute('class');
-			$subclass = $element->getAttribute('subclass');
-			
-			// See if we already have imported this uuid
-			$tmp = get_entity_from_uuid($element->getAttribute('uuid'));
-			
-			if (!$tmp)
-			{
-				// Construct new class with owner from session
-				$classname = get_subtype_class($class, $subclass);
-				if ($classname!="")
-				{
-					$tmp = new $classname();
-					
-					if (!($tmp instanceof ElggEntity))
-						throw new ClassException(sprintf(elgg_echo('ClassException:ClassnameNotClass', $classname, get_class())));
-						
-				}
-				else
-				{
-					switch ($class)
-					{
-						case 'object' : $tmp = new ElggObject($row); break;
-						case 'user' : $tmp = new ElggUser($row); break;
-						case 'group' : $tmp = new ElggGroup($row); break; 
-						case 'site' : $tmp = new ElggSite($row); break; 
-						default: throw new InstallationException(sprintf(elgg_echo('InstallationException:TypeNotSupported'), $class));
-					}
-				}
-			}
+			$tmp = oddentity_to_elggentity($element);
 			
 			if ($tmp)
 			{
-				if (!$tmp->import($element))
-					throw new ImportException(sprintf(elgg_echo('ImportException:ImportFailed'), $element->getAttribute('uuid')));
-					
 				if (!$tmp->save()) // Make sure its saved
 					throw new ImportException(sprintf(elgg_echo('ImportException:ProblemSaving'), $element->getAttribute('uuid')));
 	
@@ -1342,6 +1364,7 @@
 				
 				return $tmp;
 			}
+			
 		}
 	}
 	
