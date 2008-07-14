@@ -332,7 +332,7 @@ h6 { font-size: 0.8em; }
 	position:absolute;
 	right:0px;
 	top:0px;
-	width:120px;
+	/* width:120px;*/
 	text-align:right;
 }
 
@@ -399,11 +399,20 @@ h6 { font-size: 0.8em; }
 #elgg_topbar_container_right a {
 	color:#eeeeee;
 	margin:0 5px 0 0;
-	background:transparent url(<?php echo $vars['url']; ?>_graphics/elgg_toolbar_logout.gif) no-repeat right -1px;
+	background:transparent url(<?php echo $vars['url']; ?>_graphics/elgg_toolbar_logout.gif) no-repeat right top;
 	padding:0 21px 0 0;
+	display:block;
+}
+/* IE6 fix */
+* html #elgg_topbar_container_right a { 
+	height: 22px;
+}
+/* IE7 */
+*:first-child+html #elgg_topbar_container_right a {
+	height: 22px;
 }
 #elgg_topbar_container_right a:hover {
-	background:transparent url(<?php echo $vars['url']; ?>_graphics/elgg_toolbar_logout_over.gif) no-repeat right -1px;
+	background:transparent url(<?php echo $vars['url']; ?>_graphics/elgg_toolbar_logout_over.gif) no-repeat right top;
 }
 
 #elgg_topbar_panel {
@@ -417,8 +426,8 @@ h6 { font-size: 0.8em; }
 }
 
 #searchform input.search_input {
-	-webkit-border-radius: 3px; 
-	-moz-border-radius: 3px;
+	-webkit-border-radius: 4px; 
+	-moz-border-radius: 4px;
 	background-color:#FFFFFF;
 	border:1px solid #BBBBBB;
 	color:#999999;
@@ -431,9 +440,9 @@ h6 { font-size: 0.8em; }
 	height:12px;
 }
 #searchform input.search_submit_button {
-	-webkit-border-radius: 3px; 
-	-moz-border-radius: 3px;
-	color:#ffffff;
+	-webkit-border-radius: 4px; 
+	-moz-border-radius: 4px;
+	color:#333333;
 	background: #cccccc;
 	border:none;
 	font-size:12px;
@@ -445,7 +454,8 @@ h6 { font-size: 0.8em; }
 	cursor:pointer;
 }
 #searchform input.search_submit_button:hover {
-	color:#000000;
+	color:#ffffff;
+	background: #0054a7;
 }
 
 
@@ -860,8 +870,8 @@ textarea:focus, input[type="text"]:focus {
 	color: #ffffff;
 	background:#4690d6;
 	border: 1px solid #4690d6;
-	-webkit-border-radius: 3px; 
-	-moz-border-radius: 3px;
+	-webkit-border-radius: 4px; 
+	-moz-border-radius: 4px;
 	width: auto;
 	height: 25px;
 	padding: 2px 6px 2px 6px;
@@ -878,8 +888,8 @@ input[type="submit"] {
 	color: #ffffff;
 	background:#4690d6;
 	border: 1px solid #4690d6;
-	-webkit-border-radius: 3px; 
-	-moz-border-radius: 3px;
+	-webkit-border-radius: 4px; 
+	-moz-border-radius: 4px;
 	width: auto;
 	height: 25px;
 	padding: 2px 6px 2px 6px;
@@ -893,8 +903,8 @@ input[type="submit"] {
 	color: #999999;
 	background:#dddddd;
 	border: 1px solid #999999;
-	-webkit-border-radius: 3px; 
-	-moz-border-radius: 3px;
+	-webkit-border-radius: 4px; 
+	-moz-border-radius: 4px;
 	width: auto;
 	height: 25px;
 	padding: 2px 6px 2px 6px;
