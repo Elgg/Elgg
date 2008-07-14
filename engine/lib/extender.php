@@ -270,7 +270,7 @@
 		// Set time if appropriate
 		$attr_time = $element->getAttribute('published');
 		if ($attr_time)
-			$entity->set('time_created', $attr_time);
+			$entity->set('time_updated', $attr_time);
 			
 		return true;
 	}
