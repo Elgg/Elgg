@@ -406,6 +406,7 @@ h6 { font-size: 0.8em; }
 /* IE6 fix */
 * html #elgg_topbar_container_right a { 
 	height: 22px;
+	width: 120px;
 }
 /* IE7 */
 *:first-child+html #elgg_topbar_container_right a {
