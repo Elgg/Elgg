@@ -111,14 +111,9 @@
 			}
 			
 			// No, so see if its in the meta data for this entity
-			if ((int) ($this->guid) > 0) {
-				$meta = $this->getMetaData($name);
-				if ($meta)
-					return $meta;
-			} else {
-				if (isset($this->temp_metadata[$name]))
-					return $this->temp_metadata[$name];
-			}
+			$meta = $this->getMetaData($name);
+			if ($meta)
+				return $meta;
 			
 			// Can't find it, so return null
 			return null;
@@ -149,12 +144,9 @@
 					
 				$this->attributes[$name] = $value;
 			}
-			else if ((int) $this->guid > 0) {
+			else 
 				return $this->setMetaData($name, $value);
-			} else {
-				$this->temp_metadata[$name] = $value;
-			}
-			
+		
 			return true;
 		}
 			
@@ -165,7 +157,12 @@
 		 */
 		public function getMetaData($name)
 		{
-			$md = get_metadata_byname($this->getGUID(), $name);
+			if ((int) ($this->guid) > 0) {
+				$md = get_metadata_byname($this->getGUID(), $name);
+			} else {
+				if (isset($this->temp_metadata[$name]))
+					return $this->temp_metadata[$name];
+			}
 
 			if ($md && !is_array($md)) {
 				return $md->value;
