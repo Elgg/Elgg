@@ -59,6 +59,14 @@ function setup_avatar_menu() {
 					.css("left",(avatar.width()-166) + "px")
 					.fadeIn('normal');		
 			}	
+			
+			// fix for z-index / jquery bug in IE - TO DO: wrap this in a conditional statement - no need to do this calculation for other browsers
+			$(this).css("z-index", parseInt( new Date().getTime()/1000 ));
+			avatar.css("z-index", parseInt( new Date().getTime()/1000 ));
+			submenu.css("z-index", parseInt( new Date().getTime()/1000 ));
+			
+			//alert("z-index = " +avatar.css("z-index"));
+			
 			// change arrow to 'on' state
 			$(this).attr('src','<?php echo $vars['url']; ?>_graphics/avatar_menu_arrow_open.gif');	
 		}
