@@ -388,6 +388,7 @@
 					// If no fatal errors while extracting the necessary data then continue
 					if (($subject) && ($object) && ($event) && ($statement))
 					{			
+						$tam = "";
 						// We have constructed the information 
 						
 						if ($object instanceof ElggEntity) {
@@ -410,7 +411,7 @@
 							
 						}
 						
-						if (!empty($tam)) {
+						if ((!empty($tam)) && (trim($tam)!="")) {
 							$tam = elgg_view("river/wrapper",array(
 										'entry' => $tam, 
 										'time' => $time,
