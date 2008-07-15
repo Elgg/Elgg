@@ -8,9 +8,9 @@
 	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.com/
 	 */	
-include ("../../../../../../engine/start.php");
+//include ("../../../../../../engine/start.php");
 
-$vars['entity'] = get_entity(80);
+//$vars['entity'] = get_entity(80);
 
 	$owner = page_owner_entity();
 	$limit = 8;

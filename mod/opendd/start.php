@@ -196,7 +196,7 @@
 	 */
 	function opendd_odd_to_elgg(ODDDocument $element)
 	{
-		global $uuid_array, $elgg_array;
+		global $uuid_array, $elgg_array, $CONFIG;
 		
 		$count = $element->getNumElements();
 		
@@ -249,7 +249,6 @@
 			
 			$tmp = array();
 			// Go through the elements
-			$spoo;
 			foreach ($element as $e)
 			{
 				$uuid = $e->getAttribute('uuid');
@@ -257,7 +256,7 @@
 				// if entity then create
 				if ($e instanceof ODDEntity) {
 					$tmp[$uuid] = oddentity_to_elggentity($e);
-					$spoo = $uuid;
+					$tmp[$uuid]->setURL($CONFIG->url . "mod/opendd/viewuuid.php?uuid=" . urlencode($uuid));
 				}
 				
 				// if metadata then add to entity
@@ -278,10 +277,7 @@
 	/**
 	 * ISSUES
 	 * 
-	 * - opendd feed doesn't work
 	 * - all entities need to be public on target
-	 * - setobject on statement is incorrect
-	 * - NEED WAY TO GET CLASS!
 	 * 
 	 */
 	
@@ -298,8 +294,15 @@
 	 */
 	function opendd_aggregate_remote_river(array $feeds, $limit = 10, $offset = 0)
 	{	
-		global $uuid_array, $elgg_array;
-				
+		global $uuid_array, $elgg_array, $CONFIG;
+
+		// if this not an array, turn it into one
+		if (!is_array($feeds))
+			$feeds = array($feeds);
+			
+		// ensure there are no duplicates
+		$feeds = array_unique($feeds);
+		
 		$river = array();
 		$opendd_elements = array();
 		$opendd_published = array();
