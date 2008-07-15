@@ -433,7 +433,7 @@ END;
 	{
 		global $XML_RPC_HANDLERS;
 		
-		$XML_RPC_HANDLERS['$method'] = $handler;
+		$XML_RPC_HANDLERS[$method] = $handler;
 	}
 	
 	/**
