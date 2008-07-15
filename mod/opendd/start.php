@@ -328,12 +328,10 @@
 			{
 				$elements = $feed_data->getElements();
 				foreach ($elements as $e)
-					$opendd_elements[] = $e; 
-					
-				
+					$opendd_elements[] = $e; 	
 			}
 		}
-		
+
 		foreach ($opendd_elements as $k => $v)
 			$opendd_published[$k] = $v->getPublishedAsTime();
 		
@@ -344,7 +342,6 @@
 		foreach ($opendd_published as $k => $v)
 			$sorted_odd_elements[] = $opendd_elements[$k];
 
-	
 		// Array of ODD objects mapped to uuid
 		$uuid_array = array();
 		
