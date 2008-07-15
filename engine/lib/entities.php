@@ -192,13 +192,24 @@
 				remove_metadata($this->getGUID(), $name);
 				$multiple = true;
 				foreach ($value as $v) {
-					if (!create_metadata($this->getGUID(), $name, $v, $value_type, $this->getOwner(), $this->getAccessID(), $multiple)) return false; 
+					if ((int) $this->guid > 0) {
+						if (!create_metadata($this->getGUID(), $name, $v, $value_type, $this->getOwner(), $this->getAccessID(), $multiple)) return false;
+					} else {
+						$this->temp_metadata[$name] = $value;
+					}
 				}
 					
 				return true;
 			}
 			else
-				return create_metadata($this->getGUID(), $name, $value, $value_type, $this->getOwner(), $this->getAccessID());
+			{
+				if ((int) $this->guid > 0) {
+					return create_metadata($this->getGUID(), $name, $value, $value_type, $this->getOwner(), $this->getAccessID());
+				} else {
+					$this->temp_metadata[$name] = $value;
+					return true;
+				}
+			}
 		}
 		
 		/**
