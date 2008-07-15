@@ -41,6 +41,11 @@
 		protected $attributes;
 
 		/**
+		 * If set, overrides the value of getURL()
+		 */
+		protected $url_override;
+		
+		/**
 		 * Temporary cache for metadata, permitting meta data access before a guid has obtained.
 		 */
 		protected $temp_metadata;
@@ -437,7 +442,21 @@
 		 *
 		 * @return string The URL
 		 */
-		public function getURL() { return get_entity_url($this->getGUID()); }
+		public function getURL() {
+			if (!empty($this->url_override)) return $this->url_override;
+			return get_entity_url($this->getGUID()); 
+		}
+		
+		/**
+		 * Overrides the URL returned by getURL
+		 *
+		 * @param string $url The new item URL
+		 * @return string The URL
+		 */
+		public function setURL($url) {
+			$this->url_override = $url;
+			return $url;
+		}
 		
 		/**
 		 * Tests to see whether the object has been fully loaded.
