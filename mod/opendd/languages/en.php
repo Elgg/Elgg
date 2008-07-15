@@ -45,7 +45,10 @@
 			'opendd:published' => "Published",
 	
 			'opendd:nodata' => "There was a problem getting the feed, response: %s",
+			'opendd:noriver' => "No data currently available.",
 	
+			'opendd:widgets:elsewhere:title' => "Friends elsewhere",
+			'opendd:widgets:elsewhere:description' => "This widget uses OpenDD to display your friends on other sites.",
 	);
 					
 	add_translation("en",$english);

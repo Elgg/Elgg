@@ -254,7 +254,7 @@
 		$type = $element->getAttribute('type');
 		$attr_name = $element->getAttribute('name');
 		$attr_val = $element->getBody();
-	
+
 		switch ($type)
 		{
 			case 'annotation' : 

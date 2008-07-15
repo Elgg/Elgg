@@ -11,6 +11,8 @@
 
 	require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 	
+	gatekeeper();
+	
 	$entity = get_entity(get_input('feed_guid'));
 	$limit = get_input("limit", 10);
 	$offset = get_input("offset", 0);
