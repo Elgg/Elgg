@@ -69,9 +69,7 @@
 			$this->methodname = $xml->children[0]->content;
 			
 			// parameters 
-			$this->params = $xml->children[1]->children;
-			
-			print_r($this);
+			$this->params = $xml->children[1]->children;			
 		}
 	}
 	

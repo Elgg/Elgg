@@ -23,7 +23,7 @@
 	
 	// Set some defaults
 	$result = null;
-	$view = 'xml'; // Set default view regardless
+	$_SESSION['view'] = 'xml'; // Set default view regardless
 
 	// Get the post data
 	$input = get_post_data();
@@ -43,6 +43,6 @@
 		throw new APIException(elgg_echo('APIException:ApiResultUnknown'));
 
 	// Output result
-	page_draw("XML-RPC", elgg_echo("xml-rpc/output", array('result' => $result)));
+	page_draw("XML-RPC", elgg_view("xml-rpc/output", array('result' => $result)));
 	
 ?>
