@@ -449,7 +449,8 @@ END;
 		// Go through and see if we have a handler
 		if (isset($XML_RPC_HANDLERS[$parameters->getMethodName()]))
 		{
-			$result = $handler($parameters);
+		    $handler = $XML_RPC_HANDLERS[$parameters->getMethodName()];
+			$result  = $handler($parameters);
 			
 			if (!($result instanceof XMLRPCResponse))
 				throw new InvalidParameterException(elgg_echo('InvalidParameterException:UnexpectedReturnFormat'));
