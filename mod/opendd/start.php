@@ -330,10 +330,12 @@
 				foreach ($elements as $e)
 					$opendd_elements[] = $e; 
 					
-				foreach ($opendd_elements as $k => $v)
-					$opendd_published[$k] = $v->getPublishedAsTime();
+				
 			}
 		}
+		
+		foreach ($opendd_elements as $k => $v)
+			$opendd_published[$k] = $v->getPublishedAsTime();
 		
 		// Sort by date (desc)
 		arsort($opendd_published);
