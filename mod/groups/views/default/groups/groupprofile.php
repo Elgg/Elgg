@@ -46,7 +46,7 @@
 			<div id="groups_info_column_right">
 			
 					<?php  
-						echo "<h2><a href=\"" . $vars['entity']->getURL() . "\">" . $vars['entity']->title . "</a></h2> <br />"; 
+						echo "<h2><a href=\"" . $vars['entity']->getURL() . "\">" . $vars['entity']->name . "</a></h2> <br />"; 
 						
 					?>
 						

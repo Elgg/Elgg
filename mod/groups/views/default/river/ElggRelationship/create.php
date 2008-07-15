@@ -29,7 +29,7 @@
 				{
 					echo "<a href=\"{$user->getURL()}\">{$user->name}</a> ";
 					echo elgg_echo("groups:river:member");
-					echo " '<a href=\"{$group->getURL()}\">{$group->title}</a>'";
+					echo " '<a href=\"{$group->getURL()}\">{$group->name}</a>'";
 				}
 		
 			break;

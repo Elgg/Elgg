@@ -46,7 +46,7 @@
 	}
 	
 	// Validate create
-	if (!$group->title)
+	if (!$group->name)
 	{
 		register_error(elgg_echo("groups:notitle"));
 		

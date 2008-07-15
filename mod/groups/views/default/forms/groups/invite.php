@@ -15,7 +15,7 @@
 	
 	
 ?>
-<h2><?php echo sprintf(elgg_echo('groups:inviteto'), $group->title); ?></h2>
+<h2><?php echo sprintf(elgg_echo('groups:inviteto'), $group->name); ?></h2>
 <form action="<?php echo $vars['url']; ?>action/groups/addtogroup" method="post">
 
 	<?php

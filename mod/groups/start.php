@@ -144,7 +144,7 @@
 		
 		global $CONFIG;
 		
-		$title = friendly_title($entity->title);
+		$title = friendly_title($entity->name);
 		
 		return $CONFIG->url . "pg/groups/{$entity->guid}/$title/";
 		

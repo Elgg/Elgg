@@ -70,8 +70,8 @@
 		
 			// Send email
 			if (notify_user($group->owner_guid, $user->getGUID(), 
-					sprintf(elgg_echo('groups:request:subject'), $user->name, $group->title), 
-					sprintf(elgg_echo('groups:request:body'), $group->getOwner()->name, $user->name, $group->title, $user->getURL(), "{$CONFIG->url}action/groups/addtogroup?user_guid={$user->guid}&group_guid={$group->guid}"),
+					sprintf(elgg_echo('groups:request:subject'), $user->name, $group->name), 
+					sprintf(elgg_echo('groups:request:body'), $group->getOwner()->name, $user->name, $group->name, $user->getURL(), "{$CONFIG->url}action/groups/addtogroup?user_guid={$user->guid}&group_guid={$group->guid}"),
 					NULL, "email"))
 				system_message(elgg_echo("groups:joinrequestmade"));
 			else

@@ -23,7 +23,7 @@
 			'groups:edit' => "Edit a group",
 	
 			'groups:icon' => 'Group icon (leave blank to leave unchanged)',
-			'groups:title' => 'Group title',
+			'groups:name' => 'Group name',
 			'groups:description' => 'Description',
 			'groups:interests' => 'Interests',
 			'groups:website' => 'Website',
