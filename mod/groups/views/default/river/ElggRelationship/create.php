@@ -10,31 +10,31 @@
 	 * @link http://elgg.com/
 	 */
 
-	$performed_by = $vars['performed_by'];
-	$log_entry = $vars['log_entry'];
-	$object = $vars['entity'];
+	$statement = $vars['statement'];
 	
-	// Find out what type of relationship we're dealing with (will only display a few)
-	if ($object instanceof ElggRelationship)
+	$performed_by = $statement->getSubject();
+	$event = $statement->getEvent();
+	$object = $statement->getObject();
+	
+	if (is_array($object))
 	{
-		
-		switch ($object->relationship)
+		switch ($object['relationship'])
 		{
 			// Friending
 			case 'member' :
-				
-				$user = get_entity($object->guid_one);
-				$group = get_entity($object->guid_two);
-				
+				$user = $object['subject'];
+				$group = $object['object'];
+			
 				if (($user instanceof ElggUser) && ($group instanceof ElggGroup))
 				{
 					echo "<a href=\"{$user->getURL()}\">{$user->name}</a> ";
 					echo elgg_echo("groups:river:member");
 					echo " '<a href=\"{$group->getURL()}\">{$group->title}</a>'";
 				}
-				
+		
 			break;
 		}
 	}
+	
 		
 ?>

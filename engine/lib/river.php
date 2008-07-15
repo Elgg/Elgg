@@ -12,6 +12,139 @@
 	 */
 
 	/**
+	 * @class ElggRiverComponent Component passed to river views.
+	 * This class represents all the necessary information for constructing a river article - this includes:
+	 *  - The user who performed the action
+	 *  - The object the action was performed on
+	 *  - The event performed
+	 *  - Any related objects
+	 * 
+	 * @author Marcus Povey
+	 */
+	class ElggRiverStatement
+	{
+		/**
+		 * Object in question (may be a relationship event or a metadata event). In the case of a relationship this is an array containing 
+		 * the objects that the relationship is established between. in the case of metadata it consists of 
+		 */
+		private $object;
+		
+		/**
+		 * The log event (create / update etc).
+		 */
+		private $log_event; 
+		
+		/**
+		 * The subject who created this event (the user).
+		 */
+		private $subject;
+		
+		/**
+		 * Create the statement.
+		 *
+		 * @param ElggUser $subject The subject (the user who created this)
+		 * @param string $event The event.
+		 * @param mixed $object The object, either an ElggEntity or an associated array 
+		 * 	('subject' => ElggEntity, 'relationship' => relationship, 'object' => ElggEntity) or 
+		 *  ('subject' => ElggEntity, 'object' => ElggEntity)
+		 */
+		public function __construct(ElggUser $subject, $event, $object)
+		{
+			$this->setSubject($subject);
+			$this->setEvent($event);
+			$this->setObject($object);
+		}
+		
+		/**
+		 * Set the subject.
+		 *
+		 * @param ElggEntity $subject The subject.
+		 */
+		public function setSubject(ElggEntity $subject) { $this->subject = $subject; }
+		
+		/**
+		 * Return the user that created this event - the subject of the statement.
+		 * @return ElggUser
+		 */
+		public function getSubject() { return $this->subject; }
+		
+		/**
+		 * Return the user who initiated this event (an alias of getSubject();
+		 * @return ElggUser
+		 */
+		public function getByUser() { return $this->getSubject(); }
+		
+		/**
+		 * Set the object.
+		 *
+		 * @param mixed $object ElggEntity or array.
+		 * @return bool
+		 */
+		public function setObject($object)
+		{
+			if (is_array($object))
+			{
+				/*if (
+					(!isset($object['subject'])) ||
+					(
+						(!($object['subject'] instanceof ElggEntity)) ||
+						(!($object['subject'] instanceof ElggExtender))
+					)
+				)
+					return false;
+				
+				if ( (!isset($object['object'])) || (!($object['object'] instanceof ElggEntity)) )
+					return false;
+					*/
+				$this->object = $object;
+				
+				return true;
+			}
+			else if ($object instanceof ElggEntity)
+			{
+				$this->object = $object;
+				
+				return true;
+			}
+			
+			return false;
+		}
+		
+		/**
+		 * Return the accusitive object of the statement. This is either an object in isolation, or an array containing
+		 * the parts of the statement.
+		 * 
+		 * E.g. 
+		 * 
+		 * 	For the statement "User X created object Y", this function will return object Y.
+		 *  
+		 * 	However, for a statement "User X is now friends with User Y" you are essentially making the system level statement
+		 *  "User X has created a relationship of type friend between Y and Z" (where X is almost always going to be the same as Y).. therefore
+		 *  this function will return a three element array associative containing the relationship type, plus the elements the relationship 
+		 *  is between ['subject', 'relationship', 'object'].
+		 * 
+		 *  Also, if you are updating a bit of metadata about an object this a two element array: ['subject', 'object'].
+		 *  Which is making the statement "User X updated some Metadata (subject) about object (object) Y
+		 * 
+		 * @return mixed
+		 */
+		public function getObject() { return $this->object; }
+		
+		/**
+		 * Set the log event.
+		 *
+		 * @param string $event The event - e.g. "update".
+		 */
+		public function setEvent($event) { $this->log_event = $event; }
+		
+		/**
+		 * Return the event in the system log that this action relates to (eg, "create", "update").
+		 * @return string
+		 */
+		public function getEvent() { return $this->log_event; }
+	}
+
+	/**
 	 * Extract a list of river events from the current system log.
 	 * This function retrieves the objects from the system log and will attempt to render 
 	 * the view "river/CLASSNAME/EVENT" where CLASSNAME is the class of the object the system event is referring to,
@@ -83,11 +216,25 @@
 							// See if anything can handle it
 							$tam = "";
 							
-							// test if view exist and if so
-							//if (isset($by_user_obj) && $by_user_obj instanceof ElggUser) {
-							//} else {
-								$by_user_obj = get_entity($log->performed_by_guid);
-							//}
+							// Construct the statement
+							$by_user_obj = get_entity($log->performed_by_guid);
+							$statement_object = $object;
+							if ($object instanceof ElggRelationship) {
+								
+								$statement_object = array(
+									'subject' => get_entity($object->guid_one),
+									'relationship' => $object->relationship,
+									'object' => get_entity($object->guid_two) 
+								);
+							} else if ($object instanceof ElggExtender) {
+								$statement_object = array(
+									'subject' => $object,
+									'object' => get_entity($object->entity_guid) 
+								);
+							}
+							$statement = new ElggRiverStatement($by_user_obj, $event, $statement_object);
+							
+							
 							if ($object instanceof ElggEntity) {
 								$subtype = $object->getSubtype();
 							} else {
@@ -99,23 +246,21 @@
 							
 							if (!empty($subtype) && elgg_view_exists("river/{$subtype}/{$event}")) {
 								$tam = elgg_view("river/{$subtype}/$event", array(
-									'performed_by' => $by_user_obj,
-									'log_entry' => $log,
-									'entity' => $object
+									'statement' => $statement
 								));
-							} else {
+							} else if (elgg_view_exists("river/$class/$event")) {
 								$tam = elgg_view("river/$class/$event", array(
-									'performed_by' => $by_user_obj,
-									'log_entry' => $log,
-									'entity' => $object
+									'statement' => $statement
 								));
 							}
 							
 							if (!empty($tam)) {
 								$tam = elgg_view("river/wrapper",array(
-											'entry' => $tam, 
-											'log' => $log,
-											'entity' => $object));
+											'entry' => $tam,
+											'time' => $log->time_created,
+											'event' => $event,
+											'statement' => $statement 
+								));
 							}
 							
 							if ($tam)
@@ -224,7 +369,13 @@
 							// Handle updates of relationships
 							if ($object instanceof ElggRelationship)
 							{
-								$relationship_obj = $object->export(); // I figure this is what you're actually interested in in this instance.
+								$odd = $object->export();
+								$relationship_obj = new ODDRelationship(
+									guid_to_uuid($log->performed_by_guid),
+									$log->event,
+									$odd->getAttribute('uuid')
+								);
+								//$relationship_obj = $object->export(); // I figure this is what you're actually interested in in this instance.
 							}
 							
 							// If we have handled it then add it to the document
