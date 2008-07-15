@@ -11,23 +11,27 @@
 	 * @link http://elgg.com/
 	 */
 
-	if (isset($vars['entity']) && $vars['entity'] instanceof ElggEntity) {
+	$statement = $vars['statement'];
+	$time = $vars['time'];
+	$event = $vars['event'];
+	$entry = $vars['entry'];
+	
+	if ($statement->getObject() instanceof ElggEntity) {
 		
-		$subtype = $vars['entity']->getSubtype();
-		if (empty($subtype)) $subtype = $vars['entity']->type;
+		$obj = $statement->getObject();
+		$subtype = $obj->getSubtype();
+		if (empty($subtype)) $subtype = $obj->type;
 		if (empty($subtype)) $subtype = "general";
-		
-	} else if ($vars['log']->object_class == "ElggRelationship") {
-		$subtype = "relationship_" . $vars['entity']->relationship;
+	} else if (is_array($statement->getObject())) {
+		$obj = $statement->getObject();
+		$subtype = "relationship_" . $obj['relationship'];
 	}
-
 ?>
-
 <div class="river_item">
 
 	<div class="river_<?php echo $subtype; ?>">
-		<div class="river_<?php echo $vars['log']->event; ?>">
-			<p class="river_<?php echo $subtype; ?>_<?php echo $vars['log']->event; ?>">
+		<div class="river_<?php echo $event; ?>">
+			<p class="river_<?php echo $subtype; ?>_<?php echo $event; ?>">
 				<?php
 		
 					echo $vars['entry'];
@@ -36,7 +40,7 @@
 				<span class="river_item_time">
 					(<?php
 		
-						echo friendly_time($vars['log']->time_created);
+						echo friendly_time($time);
 					
 					?>)
 				</span>

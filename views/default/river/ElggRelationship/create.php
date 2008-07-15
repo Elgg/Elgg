@@ -10,21 +10,22 @@
 	 * @link http://elgg.com/
 	 */
 
-	$performed_by = $vars['performed_by'];
-	$log_entry = $vars['log_entry'];
-	$object = $vars['entity'];
+	$statement = $vars['statement'];
 	
-	// Find out what type of relationship we're dealing with (will only display a few)
-	if ($object instanceof ElggRelationship)
+	$performed_by = $statement->getSubject();
+	$event = $statement->getEvent();
+	$object = $statement->getObject();
+	
+	if (is_array($object))
 	{
-		switch ($object->relationship)
+		switch ($object['relationship'])
 		{
 			// Friending
 			case 'friend' :
 			case 'friends' : // 'friends' shouldn't be used, but just incase :)
 				
 				// Get second object
-				$userb = get_entity($object->guid_two);
+				$userb = $object['object'];
 				
 				// Only users can be friends
 				if (($performed_by instanceof ElggUser) && ($userb instanceof ElggUser))
