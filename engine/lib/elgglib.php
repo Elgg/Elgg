@@ -67,6 +67,59 @@
 	 * Templating and visual functionality
 	 */
 		
+		$CURRENT_SYSTEM_VIEWTYPE = "";
+		
+		/**
+		 * Override the view mode detection for the elgg view system.
+		 * 
+		 * This function will force any further views to be rendered using $viewtype. Remember to call elgg_set_viewtype() with
+		 * no parameters to reset.
+		 *
+		 * @param string $viewtype The view type, e.g. 'rss', or 'default'.
+		 * @return bool
+		 */
+		function elgg_set_viewtype($viewtype = "")
+		{
+			global $CURRENT_SYSTEM_VIEWTYPE;
+			
+			$CURRENT_SYSTEM_VIEWTYPE = $viewtype;
+			
+			return true;
+		}
+		
+		/**
+		 * Return the current view type used by the elgg view system.
+		 * 
+		 * By default, this function will return a value based on the default for your system or from the command line
+		 * view parameter. However, you may force a given view type by calling elgg_set_viewtype()
+		 *
+		 * @return string The view.
+		 */
+		function elgg_get_viewtype()
+		{
+			global $CURRENT_SYSTEM_VIEWTYPE, $CONFIG;
+			
+			$viewtype = NULL;
+			
+			if ($CURRENT_SYSTEM_VIEWTYPE != "")
+				return $CURRENT_SYSTEM_VIEWTYPE;
+				
+			if (empty($_SESSION['view'])) {
+		        $_SESSION['view'] = "default";
+		        
+		        // If we have a config default view for this site then use that instead of 'default'
+		        if (/*(is_installed()) && */(!empty($CONFIG->view)) && (trim($CONFIG->view)!=""))
+		        	$_SESSION['view'] = $CONFIG->view;
+		    }
+				
+		    if (empty($viewtype) && is_callable('get_input'))
+		        $viewtype = get_input('view');
+		        
+		    if (empty($viewtype)) 
+		        $viewtype = $_SESSION['view'];
+		    
+		    return $viewtype;
+		}
 		
 	/**
 	 * Handles templating views
@@ -75,12 +128,11 @@
 	 * 
 	 * @param string $view The name and location of the view to use
 	 * @param array $vars Any variables that the view requires, passed as an array
-	 * @param string $viewtype Optionally, the type of view that we're using (most commonly 'default')
 	 * @param boolean $bypass If set to true, elgg_view will bypass any specified alternative template handler; by default, it will hand off to this if requested (see set_template_handler)
 	 * @param boolean $debug If set to true, the viewer will complain if it can't find a view
 	 * @return string The HTML content
 	 */
-		function elgg_view($view, $vars = "", $viewtype = "", $bypass = true, $debug = false) {
+		function elgg_view($view, $vars = "", $bypass = true, $debug = false) {
 
 		    global $CONFIG;
 		    static $usercache;
@@ -126,28 +178,17 @@
 		    	$template_handler = $CONFIG->template_handler;
 		    	return $template_handler($view, $vars);
 		    }
+		
 		    
-		// If we haven't been asked for a specific view, assume default
-		    if (empty($_SESSION['view'])) {
-		        $_SESSION['view'] = "default";
-		        
-		        // If we have a config default view for this site then use that instead of 'default'
-		        if (/*(is_installed()) && */(!empty($CONFIG->view)) && (trim($CONFIG->view)!=""))
-		        	$_SESSION['view'] = $CONFIG->view;
-		    }
-		    if (empty($viewtype) && is_callable('get_input'))
-		        $viewtype = get_input('view');
-		    if (empty($viewtype)) {
-		        $viewtype = $_SESSION['view'];
-		    }
+		// Get the current viewtype
+			$viewtype = elgg_get_viewtype(); 
 		
 		// Set up any extensions to the requested view
 		    if (isset($CONFIG->views->extensions[$view])) {
 		    	$viewlist = $CONFIG->views->extensions[$view];
 		    } else {
 		    	$viewlist = array(500 => $view);
-		    }
-//error_log("cccccccccccccccccccccccccccccccccc ". $viewtype );		    
+		    }	    
 		// Start the output buffer, find the requested view file, and execute it
 		    ob_start();
 		    foreach($viewlist as $priority => $view) {
@@ -162,7 +203,6 @@
 		    		$view_location = $CONFIG->views->locations[$view];
 		    	}
 		    	
-//error_log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ". $view_location . "{$viewtype}/{$view}.php"  );
 		    			    	
 			    if (file_exists($view_location . "{$viewtype}/{$view}.php") && !@include($view_location . "{$viewtype}/{$view}.php")) {
 			        $success = false;
@@ -176,7 +216,6 @@
 			            error_log(" [This view ({$view}) does not exist] ");
 			        }
 			    } else if (isset($CONFIG->debug) && $CONFIG->debug == true && !file_exists($view_location . "{$viewtype}/{$view}.php")) {
-//error_log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb ". $view_location . "{$viewtype}/{$view}.php"  );
 		    	
 			    	error_log($view_location . "{$viewtype}/{$view}.php");
 			    	error_log(" [This view ({$view}) does not exist] ");
@@ -187,8 +226,8 @@
 		    }
 
 		// Save the output buffer into the $content variable
-		    $content = ob_get_clean();
-
+		$content = ob_get_clean();
+		
 		// Return $content
 		    return $content;
 		
@@ -198,26 +237,14 @@
 	 * Returns whether the specified view exists
 	 *
 	 * @param string $view The view name
-	 * @param string $viewtype The type of view
 	 * @return true|false Depending on success
 	 */
-		function elgg_view_exists($view, $viewtype = "") {
+		function elgg_view_exists($view) {
 			
 				global $CONFIG;
 			
-			// If we haven't been asked for a specific view, assume default
-			    if (empty($_SESSION['view'])) {
-			        $_SESSION['view'] = "default";
-			        
-			        // If we have a config default view for this site then use that instead of 'default'
-			        if (/*(is_installed()) && */(!empty($CONFIG->view)) && (trim($CONFIG->view)!=""))
-			        	$_SESSION['view'] = $CONFIG->view;
-			    }
-			    if (empty($viewtype) && is_callable('get_input'))
-			        $viewtype = get_input('view');
-			    if (empty($viewtype)) {
-			        $viewtype = $_SESSION['view'];
-			    }
+			// Detect view type
+			    $viewtype = elgg_get_viewtype();
 			    
 				if (!isset($CONFIG->views->locations[$view])) {
 		    		if (!isset($CONFIG->viewpath)) {
@@ -246,20 +273,19 @@
 	 * to receive. 
 	 *
 	 * @param ElggEntity $entity The entity to display
-	 * @param string $viewtype Optionally, the type of view that we're using (most commonly 'default')
 	 * @param boolean $full Determines whether or not to display the full version of an object, or a smaller version for use in aggregators etc
 	 * @param boolean $bypass If set to true, elgg_view will bypass any specified alternative template handler; by default, it will hand off to this if requested (see set_template_handler)
 	 * @param boolean $debug If set to true, the viewer will complain if it can't find a view
 	 * @return string HTML (etc) to display
 	 */
-		function elgg_view_entity(ElggEntity $entity, $viewtype = "", $full = false, $bypass = true, $debug = false) {
+		function elgg_view_entity(ElggEntity $entity, $full = false, $bypass = true, $debug = false) {
 			
 			global $autofeed;
 			$autofeed = true;
 			
 			$view = $entity->view;
 			if (is_string($view)) {
-				return elgg_view($view,array('entity' => $entity), $viewtype, $bypass, $debug);
+				return elgg_view($view,array('entity' => $entity), $bypass, $debug);
 			}
 			
 			$classes = array(
@@ -286,16 +312,16 @@
 			$subtype = $entity->getSubtype();
 			if (empty($subtype)) { $subtype = $entity_type; }
 
-			if (elgg_view_exists("{$entity_type}/{$subtype}",$viewtype)) {
+			if (elgg_view_exists("{$entity_type}/{$subtype}")) {
 				return elgg_view("{$entity_type}/{$subtype}",array(
 																	'entity' => $entity,
 																	'full' => $full
-																	), $viewtype, $bypass, $debug);
+																	), $bypass, $debug);
 			} else {
 				return elgg_view("{$entity_type}/default",array(
 																'entity' => $entity,
 																'full' => $full
-																), $viewtype, $bypass, $debug);
+																), $bypass, $debug);
 			}
 		}
 
@@ -306,20 +332,19 @@
 	 * is the type of annotation. 
 	 *
 	 * @param ElggAnnotation $annotation The annotation to display
-	 * @param string $viewtype Optionally, the type of view that we're using (most commonly 'default')
 	 * @param boolean $full Determines whether or not to display the full version of an object, or a smaller version for use in aggregators etc
 	 * @param boolean $bypass If set to true, elgg_view will bypass any specified alternative template handler; by default, it will hand off to this if requested (see set_template_handler)
 	 * @param boolean $debug If set to true, the viewer will complain if it can't find a view
 	 * @return string HTML (etc) to display
 	 */
-		function elgg_view_annotation(ElggAnnotation $annotation, $viewtype = "", $bypass = true, $debug = false) {
+		function elgg_view_annotation(ElggAnnotation $annotation, $bypass = true, $debug = false) {
 			
 			global $autofeed;
 			$autofeed = true;
 			
 			$view = $annotation->view;
 			if (is_string($view)) {
-				return elgg_view($view,array('annotation' => $annotation), $viewtype, $bypass, $debug);
+				return elgg_view($view,array('annotation' => $annotation), $bypass, $debug);
 			}
 			
 			$name = $annotation->name;
@@ -332,11 +357,11 @@
 			if (elgg_view_exists("annotation/{$name}")) {
 				return elgg_view("annotation/{$name}",array(
 																	'annotation' => $annotation,
-																	), $viewtype, $bypass, $debug);
+																	), $bypass, $debug);
 			} else {
 				return elgg_view("annotation/default",array(
 																'annotation' => $annotation,
-																), $viewtype, $bypass, $debug);
+																), $bypass, $debug);
 			}
 		}
 				
