@@ -38,6 +38,10 @@
 				}
 			$user->save();
 
+			// Notify of profile update
+			trigger_elgg_event('profileupdate',$user->type,$user);
+			
+			
 			system_message(elgg_echo("profile:saved"));
 			
 			// Forward to the user's profile

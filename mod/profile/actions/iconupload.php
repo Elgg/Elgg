@@ -57,6 +57,8 @@
 					$_SESSION['user']->icontime = time();
 					
 					system_message(elgg_echo("profile:icon:uploaded"));
+					
+					trigger_elgg_event('profileiconupdate',$_SESSION['user']->type,$_SESSION['user']);
 				
 				} else {
 					system_message(elgg_echo("profile:icon:notfound"));					

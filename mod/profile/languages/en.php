@@ -44,6 +44,7 @@
 			'profile:website' => "Website",
 
 			'profile:river:update' => "%s updated their profile",
+			'profile:river:iconupdate' => "%s updated their profile icon",
 	
 		/**
 		 * Status messages
