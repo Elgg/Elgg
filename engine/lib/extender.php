@@ -257,6 +257,7 @@
 
 		switch ($type)
 		{
+			case 'volatile' : break; // Ignore volatile items
 			case 'annotation' : 
 				$entity->annotate($attr_name, $attr_val);
 			break;

@@ -602,11 +602,11 @@
 					case 'owner_guid' :			// Convert owner guid to uuid, this will be stored in metadata
 						 $k = 'owner_uuid';
 						 $v = guid_to_uuid($v);
-						 $meta = new ODDMetadata($uuid . "attr/$k/", $uuid, $k, $v);
+						 $meta = new ODDMetaData($uuid . "attr/$k/", $uuid, $k, $v);
 					break; 	
 					
 					default : 
-						$meta = new ODDMetadata($uuid . "attr/$k/", $uuid, $k, $v);
+						$meta = new ODDMetaData($uuid . "attr/$k/", $uuid, $k, $v);
 				}
 				
 				// set the time of any metadata created
@@ -616,6 +616,17 @@
 					$tmp[] = $meta;
 				}
 			}
+			
+			// Now we do something a bit special.
+			/*
+			 * This provides a rendered view of the entity to foreign sites.
+			 */
+			
+			elgg_set_viewtype('default');
+			$view = elgg_view_entity($this, 'default');
+			elgg_set_viewtype();
+					
+			$tmp[] = new ODDMetaData($uuid . "volatile/renderedentity/", $uuid, 'renderedentity', $view , 'volatile');
 			
 			
 			return $tmp;
