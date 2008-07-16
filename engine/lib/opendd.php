@@ -209,12 +209,12 @@
 			foreach ($this->attributes as $k => $v)
 				$attr .= ($v!="") ? "$k=\"$v\" " : "";
 			
-			$body = htmlentities($this->getBody(), NULL, 'UTF-8');
+			$body = $this->getBody();
 			$tag = $this->getTagName();
 			
 			$end = "/>";
 			if ($body!="")
-				$end = ">$body</{$tag}>";
+				$end = "><![CDATA[$body]]></{$tag}>";
 			
 			return "<{$tag} $attr" . $end . "\n";  
 		}
@@ -310,7 +310,13 @@
 				$odd->setAttribute($k,$v);
 				
 			// Body
-			$odd->setBody(html_entity_decode($element->content, NULL, 'UTF-8'));
+			$body = $element->content;
+			$a = stripos($body, "<![CDATA");
+			$b = strripos($body, "]]>");
+			if (($body) && ($a!==false) && ($b!==false))
+				$body = substr($body, $a+8, $b-($a+8));
+			
+			$odd->setBody($body);
 		}
 		
 		return $odd;
