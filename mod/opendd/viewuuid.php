@@ -30,7 +30,7 @@
 	if ($body=="")
 	{
 		$entity = opendd_odd_to_elgg($odd);
-		$body = elgg_view_entity($entity, "", true);
+		$body = elgg_view_entity($entity, true);
 	}
 	
 	$body = elgg_view_layout('one_column',$body);

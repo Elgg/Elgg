@@ -13,7 +13,7 @@
 
 		if (isset($vars['entity'])) {
 
-			echo elgg_view_entity($vars['entity'],'default',true,false);
+			echo elgg_view_entity($vars['entity'],true,false);
 			
 		}
 

@@ -34,7 +34,7 @@
 			if ($viewtype == "list") {
 				if (is_array($entities) && sizeof($entities) > 0) {
 					foreach($entities as $entity) {
-						$html .= elgg_view_entity($entity, "", $fullview);
+						$html .= elgg_view_entity($entity, $fullview);
 					}
 				}
 			} else {

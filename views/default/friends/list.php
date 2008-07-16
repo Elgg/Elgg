@@ -18,7 +18,7 @@
 			
 			foreach($vars['friends'] as $friend) {
 				
-				echo elgg_view_entity($friend,"",false);
+				echo elgg_view_entity($friend);
 				
 			}
 			

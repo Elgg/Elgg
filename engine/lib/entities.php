@@ -623,7 +623,7 @@
 			 */
 			
 			elgg_set_viewtype('default');
-			$view = elgg_view_entity($this, 'default');
+			$view = elgg_view_entity($this);
 			elgg_set_viewtype();
 					
 			$tmp[] = new ODDMetaData($uuid . "volatile/renderedentity/", $uuid, 'renderedentity', $view , 'volatile');
