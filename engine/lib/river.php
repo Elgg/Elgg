@@ -411,7 +411,7 @@
 	 * @return array of river entities rendered with the appropriate view.
 	 */
 	function get_river_entries_friends($by_user, $limit = 10, $offset = 0) {
-		if ($friends = get_user_friends($by_user)) {
+		if ($friends = get_user_friends($by_user, "", 9999)) {
 			$friendsarray = array();
 			foreach($friends as $friend) {
 				$friendsarray[] = $friend->getGUID();
