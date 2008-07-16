@@ -150,18 +150,25 @@
 	}
 	
 	/**
-	 * Removes metadata on an entity with a particular name
+	 * Removes metadata on an entity with a particular name, optionally with a given value.
 	 *
 	 * @param int $entity_guid The entity GUID
-	 * @param string $name The name of the entity
+	 * @param string $name The name of the metadata
+	 * @param string $value The optional value of the item (useful for removing a single item in a multiple set)
 	 * @return true|false Depending on success
 	 */
-	function remove_metadata($entity_guid, $name) {
+	function remove_metadata($entity_guid, $name, $value = "") {
 		
 		global $CONFIG;
 		$entity_guid = (int) $entity_guid;
-		$name = sanitise_string(trim($name));
-		if ($existing = get_data("SELECT * from {$CONFIG->dbprefix}metadata WHERE entity_guid = $entity_guid and name_id=" . add_metastring($name))) {
+		$name = sanitise_string($name);
+		$value = sanitise_string($value);
+
+		$query = "SELECT * from {$CONFIG->dbprefix}metadata WHERE entity_guid = $entity_guid and name_id=" . add_metastring($name);
+		if ($value!="")
+			$query .= " and value_id=" . add_metastring($value);
+		
+		if ($existing = get_data($query)) {
 			foreach($existing as $ex)
 				delete_metadata($ex->id);
 			return true;

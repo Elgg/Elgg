@@ -32,6 +32,10 @@
 			{
 				system_message(elgg_echo("groups:joined"));
 				
+				// Remove any invite or join request flags
+				remove_metadata($user->guid, 'group_invite', $group->guid);
+				remove_metadata($user->guid, 'group_join_request', $group->guid);
+				
 				forward($group->getURL());
 				exit;
 			}
