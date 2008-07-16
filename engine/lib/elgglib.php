@@ -67,6 +67,7 @@
 	 * Templating and visual functionality
 	 */
 		
+		
 	/**
 	 * Handles templating views
 	 *
@@ -146,36 +147,43 @@
 		    } else {
 		    	$viewlist = array(500 => $view);
 		    }
-		    
+//error_log("cccccccccccccccccccccccccccccccccc ". $viewtype );		    
 		// Start the output buffer, find the requested view file, and execute it
 		    ob_start();
 		    foreach($viewlist as $priority => $view) {
-		    
+		    	
 		    	if (!isset($CONFIG->views->locations[$view])) {
 		    		if (!isset($CONFIG->viewpath)) {
-						$location = dirname(dirname(dirname(__FILE__))) . "/views/";		    			
+						$view_location = dirname(dirname(dirname(__FILE__))) . "/views/";		    			
 		    		} else {
-		    			$location = $CONFIG->viewpath;
+		    			$view_location = $CONFIG->viewpath;
 		    		}
 		    	} else {
-		    		$location = $CONFIG->views->locations[$view];
+		    		$view_location = $CONFIG->views->locations[$view];
 		    	}
-			    if (file_exists($location . "{$viewtype}/{$view}.php") && !@include($location . "{$viewtype}/{$view}.php")) {
+		    	
+//error_log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ". $view_location . "{$viewtype}/{$view}.php"  );
+		    			    	
+			    if (file_exists($view_location . "{$viewtype}/{$view}.php") && !@include($view_location . "{$viewtype}/{$view}.php")) {
 			        $success = false;
 			        
 			        if ($viewtype != "default") {
-			            if (@include($location . "default/{$view}.php")) {
+			            if (@include($view_location . "default/{$view}.php")) {
 			                $success = true;
 			            }
 			        }
 			        if (!$success && isset($CONFIG->debug) && $CONFIG->debug == true) {
 			            error_log(" [This view ({$view}) does not exist] ");
 			        }
-			    } else if (isset($CONFIG->debug) && $CONFIG->debug == true && !file_exists($location . "{$viewtype}/{$view}.php")) {
-			    	error_log($location . "{$viewtype}/{$view}.php");
+			    } else if (isset($CONFIG->debug) && $CONFIG->debug == true && !file_exists($view_location . "{$viewtype}/{$view}.php")) {
+//error_log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb ". $view_location . "{$viewtype}/{$view}.php"  );
+		    	
+			    	error_log($view_location . "{$viewtype}/{$view}.php");
 			    	error_log(" [This view ({$view}) does not exist] ");
 			    }
 		    
+			    
+			    
 		    }
 
 		// Save the output buffer into the $content variable
@@ -1505,12 +1513,12 @@
 	 * 
 	 * @return bool
 	 */
-	function is_privileged()
+	/*function is_privileged()
 	{
 		global $CONFIG;
 		
 		return call_gatekeeper('execute_privileged_codeblock', $CONFIG->path . 'engine/lib/elgglib.php');
-	}
+	}*/
 	
 	/**
 	 * Execute a function as a privileged user.
@@ -1526,7 +1534,7 @@
 	 * @return the result of the executed codeblock
 	 * @throws SecurityException
 	 */
-	function execute_privileged_codeblock($function, array $params = null)
+	/*function execute_privileged_codeblock($function, array $params = null)
 	{
 		// Test path first
 		if (can_path_execute_privileged_codeblock())
@@ -1548,13 +1556,13 @@
 		}
 		
 		throw new SecurityException(elgg_echo("SecurityException:Codeblock"));
-	}
+	}*/
 	
 	/**
 	 * Validate that a given path has privileges to execute a piece of privileged code.
 	 * 
 	 */
-	function can_path_execute_privileged_codeblock()
+	/*function can_path_execute_privileged_codeblock()
 	{
 		global $CONFIG;
 		
@@ -1574,7 +1582,7 @@
 		}
 		
 		return false;
-	}
+	}*/
 	
 	/**
 	 * Get the full URL of the current page.
