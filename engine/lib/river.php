@@ -229,7 +229,7 @@
 							} else if ($object instanceof ElggExtender) {
 								$statement_object = array(
 									'subject' => $object,
-									'object' => get_entity($object->entity_guid) 
+									'object' => $object->getEntity(), 
 								);
 							}
 							$statement = new ElggRiverStatement($by_user_obj, $event, $statement_object);
