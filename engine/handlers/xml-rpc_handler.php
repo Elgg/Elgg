@@ -23,7 +23,7 @@
 	
 	// Set some defaults
 	$result = null;
-	$_SESSION['view'] = 'xml'; // Set default view regardless
+	set_input('view', 'xml'); // Set default view regardless
 
 	// Get the post data
 	$input = get_post_data();
