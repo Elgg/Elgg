@@ -17,17 +17,17 @@
 	// Get the GUID of the user to friend
 		$friend_guid = get_input('friend');
 		$friend = get_entity($friend_guid);
+		$errors = false;
 
 	// Get the user
-		if ($_SESSION['user']->removeFriend($friend_guid) && get_class($friend) == "ElggUser") {
-			
-			system_message(sprintf(elgg_echo("friends:remove:successful"),$friend->name));
-			
-		} else {
-			
+		try{
+			$_SESSION['user']->removeFriend($friend_guid) && get_class($friend) == "ElggUser";
+		} catch (Exception $e) {
 			register_error(sprintf(elgg_echo("friends:remove:failure"),$friend->name));
-			
+			$errors = true;
 		}
+		if (!$errors)
+			system_message(sprintf(elgg_echo("friends:remove:successful"),$friend->name));			
 		
 	// Forward to the user friends page
 		forward("pg/friends/" . $_SESSION['user']->username . "/");

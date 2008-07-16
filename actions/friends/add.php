@@ -18,16 +18,17 @@
 		$friend_guid = get_input('friend');
 		$friend = get_entity($friend_guid);
 
+		$errors = false;
+		
 	// Get the user
-		if ($_SESSION['user']->addFriend($friend_guid)) {
-			
-			system_message(sprintf(elgg_echo("friends:add:successful"),$friend->name));
-			
-		} else {
-			
+		try {
+			$_SESSION['user']->addFriend($friend_guid);
+		} catch (Exception $e) {
 			register_error(sprintf(elgg_echo("friends:add:failure"),$friend->name));
-			
+			$errors = true;
 		}
+		if (!$errors)
+			system_message(sprintf(elgg_echo("friends:add:successful"),$friend->name));
 		
 	// Forward to the user friends page
 		forward("pg/friends/" . $_SESSION['user']->username . "/");
