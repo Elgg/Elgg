@@ -1120,6 +1120,9 @@ p.user_menu_friends_of {
 .river_blog_create {
 	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_blog.gif) no-repeat left -1px;
 }
+.river_blog_update {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_blog.gif) no-repeat left -1px;
+}
 .river_forumtopic_create {
 	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_forum.gif) no-repeat left -1px;
 }
