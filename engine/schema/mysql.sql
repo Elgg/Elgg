@@ -72,7 +72,7 @@ CREATE TABLE `prefix_entity_relationships` (
 
 -- Table structure for table `access_collections`
 CREATE TABLE `prefix_access_collections` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL auto_increment,
   `name` varchar(16) NOT NULL,
   `owner_guid` bigint(20) unsigned NOT NULL,
   `site_guid` bigint(20) unsigned NOT NULL default '0',
