@@ -19,7 +19,7 @@
 	 * @param int $user_id User ID; defaults to currently logged in user
 	 * @param int $site_id Site ID; defaults to current site 
 	 * @param boolean $flush If set to true, will refresh the access list from the database
-	 * @return string A list of access groups suitable for injection in an SQL call
+	 * @return string A list of access collections suitable for injection in an SQL call
 	 */
 		function get_access_list($user_id = 0, $site_id = 0, $flush = false) {
 			
@@ -50,7 +50,7 @@
 	 * @param int $user_id User ID; defaults to currently logged in user
 	 * @param int $site_id Site ID; defaults to current site 
 	 * @param boolean $flush If set to true, will refresh the access list from the database
-	 * @return array An array of access groups suitable for injection in an SQL call
+	 * @return array An array of access collections suitable for injection in an SQL call
 	 */
 		function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
 			
@@ -70,24 +70,24 @@
 			
 			if (empty($access_array[$user_id]) || $flush == true) {
 				
-				$query = "select am.access_group_id from {$CONFIG->dbprefix}access_group_membership am ";
-				$query .= " left join {$CONFIG->dbprefix}access_groups ag on ag.id = am.access_group_id ";
+				$query = "select am.access_collection_id from {$CONFIG->dbprefix}access_collection_membership am ";
+				$query .= " left join {$CONFIG->dbprefix}access_collections ag on ag.id = am.access_collection_id ";
 				$query .= " where am.user_guid = {$user_id} and (ag.site_guid = {$site_id} or ag.site_guid = 0)";
 				
 				$tmp_access_array = array(2);
 				if (isloggedin())
 					$tmp_access_array[] = 1;
 				
-				if ($groups = get_data($query)) {
-					foreach($groups as $group)
-						$tmp_access_array[] = $group->access_group_id;
+				if ($collections = get_data($query)) {
+					foreach($collections as $collection)
+						$tmp_access_array[] = $collection->access_collection_id;
 				}
 				
 				$access_array[$user_id] = $tmp_access_array;
 				
 			}
 			
-			$access_array_temp = trigger_plugin_hook('access:groups','user',array('user' => $user, 'site_id' => $site_id),$access_array[$user_id]);
+			$access_array_temp = trigger_plugin_hook('access:collections','user',array('user' => $user, 'site_id' => $site_id),$access_array[$user_id]);
 			
 			return $access_array_temp;
 			
@@ -148,35 +148,35 @@
 			
 			if (empty($access_array[$user_id]) || $flush == true) {
 				
-				$query = "select ag.* from {$CONFIG->dbprefix}access_groups ag ";
+				$query = "select ag.* from {$CONFIG->dbprefix}access_collections ag ";
 				$query .= " where (ag.site_guid = {$site_id} or ag.site_guid = 0)";
 				$query .= " and (ag.owner_guid = {$user_id} or ag.owner_guid = 0)";
 				
 				$tmp_access_array = array();
-				if ($groups = get_data($query)) {
-					foreach($groups as $group)
-						$tmp_access_array[$group->id] = elgg_echo($group->name);
+				if ($collections = get_data($query)) {
+					foreach($collections as $collection)
+						$tmp_access_array[$collection->id] = elgg_echo($collection->name);
 				}
 				
 				$access_array[$user_id] = $tmp_access_array;
 				
 			}
 			
-			$tmp_access_array = trigger_plugin_hook('access:groups:write','user',array('user' => $user, 'site_id' => $site_id),$tmp_access_array);
+			$tmp_access_array = trigger_plugin_hook('access:collections:write','user',array('user' => $user, 'site_id' => $site_id),$tmp_access_array);
 			
 			return $tmp_access_array;
 			
 		}
 
 		/**
-		 * Creates a new access control group owned by the specified user.
+		 * Creates a new access control collection owned by the specified user.
 		 *
-		 * @param string $name The name of the group.
+		 * @param string $name The name of the collection.
 		 * @param int $owner_guid The GUID of the owner (default: currently logged in user).
 		 * @param int $site_guid The GUID of the site (default: current site).
-		 * @return int|false Depending on success (the group ID if successful).
+		 * @return int|false Depending on success (the collection ID if successful).
 		 */
-		function create_access_group($name, $owner_guid = 0, $site_guid = 0) {
+		function create_access_collection($name, $owner_guid = 0, $site_guid = 0) {
 			
 			$name = trim($name);
 			if (empty($name)) return false;
@@ -187,24 +187,24 @@
 			
 			global $CONFIG;
 			
-			return insert_data("insert into {$CONFIG->dbprefix}access_groups set name = '{$name}', owner_guid = {$owner_guid}, site_guid = {$site_guid}");
+			return insert_data("insert into {$CONFIG->dbprefix}access_collections set name = '{$name}', owner_guid = {$owner_guid}, site_guid = {$site_guid}");
 			
 		}
 		
 		/**
-		 * Deletes a specified access group
+		 * Deletes a specified access collection
 		 *
-		 * @param int $group_id The group ID
+		 * @param int $collection_id The collection ID
 		 * @return true|false Depending on success
 		 */
-		function delete_access_group($group_id) {
+		function delete_access_collection($collection_id) {
 			
-			$group_id = (int) $group_id;
-			$groups = get_write_access_array();
-			if (in_array($group_id,$groups)) {
+			$collection_id = (int) $collection_id;
+			$collections = get_write_access_array();
+			if (in_array($collection_id,$collections)) {
 				global $CONFIG;
-				delete_data("delete from {$CONFIG->dbprefix}access_group_membership where access_group_id = {$group_id}");
-				delete_data("delete from {$CONFIG->dbprefix}access_groups where id = {$group_id}");
+				delete_data("delete from {$CONFIG->dbprefix}access_collection_membership where access_collection_id = {$collection_id}");
+				delete_data("delete from {$CONFIG->dbprefix}access_collections where id = {$collection_id}");
 				return true;
 			} else {
 				return false;
@@ -213,22 +213,22 @@
 		}
 		
 		/**
-		 * Adds a user to the specified user group
+		 * Adds a user to the specified user collection
 		 *
 		 * @param int $user_guid The GUID of the user to add
-		 * @param int $group_id The ID of the group to add them to
+		 * @param int $collection_id The ID of the collection to add them to
 		 * @return true|false Depending on success
 		 */
-		function add_user_to_access_group($user_guid, $group_id) {
+		function add_user_to_access_collection($user_guid, $collection_id) {
 			
-			$group_id = (int) $group_id;
+			$collection_id = (int) $collection_id;
 			$user_guid = (int) $user_guid;
-			$groups = get_write_access_array();
+			$collections = get_write_access_array();
 			
-			if (in_array($group_id, $groups) && $user = get_user($user_guid)) {
+			if (in_array($collection_id, $collections) && $user = get_user($user_guid)) {
 				
 				global $CONFIG;
-				insert_data("insert into {$CONFIG->dbprefix}access_group_membership set access_group_id = {$group_id}, user_guid = {$user_guid}");
+				insert_data("insert into {$CONFIG->dbprefix}access_collection_membership set access_collection_id = {$collection_id}, user_guid = {$user_guid}");
 				return true;
 				
 			}
@@ -238,22 +238,22 @@
 		}
 
 		/**
-		 * Removes a user from an access group
+		 * Removes a user from an access collection
 		 *
 		 * @param int $user_guid The user GUID
-		 * @param int $group_id The access group ID
+		 * @param int $collection_id The access collection ID
 		 * @return true|false Depending on success
 		 */
-		function remove_user_from_access_group($user_guid, $group_id) {
+		function remove_user_from_access_collection($user_guid, $collection_id) {
 			
-			$group_id = (int) $group_id;
+			$collection_id = (int) $collection_id;
 			$user_guid = (int) $user_guid;
-			$groups = get_write_access_array();
+			$collections = get_write_access_array();
 			
-			if (in_array($group_id, $groups) && $user = get_user($user_guid)) {
+			if (in_array($collection_id, $collections) && $user = get_user($user_guid)) {
 				
 				global $CONFIG;
-				delete_data("delete from {$CONFIG->dbprefix}access_group_membership where access_group_id = {$group_id} and user_guid = {$user_guid}");
+				delete_data("delete from {$CONFIG->dbprefix}access_collection_membership where access_collection_id = {$collection_id} and user_guid = {$user_guid}");
 				return true;
 				
 			}
