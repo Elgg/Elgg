@@ -162,7 +162,7 @@
 				
 			}
 			
-			$tmp_access_array = trigger_plugin_hook('access','user',array('user' => $user, 'site_id' => $site_id),$tmp_access_array);
+			$tmp_access_array = trigger_plugin_hook('access:groups:write','user',array('user' => $user, 'site_id' => $site_id),$tmp_access_array);
 			
 			return $tmp_access_array;
 			
