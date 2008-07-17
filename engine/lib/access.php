@@ -160,6 +160,100 @@
 			
 		}
 
+		/**
+		 * Creates a new access control group owned by the specified user.
+		 *
+		 * @param string $name The name of the group.
+		 * @param int $owner_guid The GUID of the owner (default: currently logged in user).
+		 * @param int $site_guid The GUID of the site (default: current site).
+		 * @return int|false Depending on success (the group ID if successful).
+		 */
+		function create_access_group($name, $owner_guid = 0, $site_guid = 0) {
+			
+			$name = trim($name);
+			if (empty($name)) return false;
+			
+			if ($user_id == 0) $user_id = $_SESSION['id'];
+			if (($site_id == 0) && (isset($CONFIG->site_id))) $site_id = $CONFIG->site_id;
+			$name = sanitise_string($name);
+			
+			global $CONFIG;
+			
+			return insert_data("insert into {$CONFIG->dbprefix}access_groups set name = '{$name}', owner_guid = {$owner_guid}, site_guid = {$site_guid}");
+			
+		}
+		
+		/**
+		 * Deletes a specified access group
+		 *
+		 * @param int $group_id The group ID
+		 * @return true|false Depending on success
+		 */
+		function delete_access_group($group_id) {
+			
+			$group_id = (int) $group_id;
+			$groups = get_write_access_array();
+			if (in_array($group_id,$groups)) {
+				global $CONFIG;
+				delete_data("delete from {$CONFIG->dbprefix}access_group_membership where access_group_id = {$group_id}");
+				delete_data("delete from {$CONFIG->dbprefix}access_groups where id = {$group_id}");
+				return true;
+			} else {
+				return false;
+			}
+			
+		}
+		
+		/**
+		 * Adds a user to the specified user group
+		 *
+		 * @param int $user_guid The GUID of the user to add
+		 * @param int $group_id The ID of the group to add them to
+		 * @return true|false Depending on success
+		 */
+		function add_user_to_access_group($user_guid, $group_id) {
+			
+			$group_id = (int) $group_id;
+			$user_guid = (int) $user_guid;
+			$groups = get_write_access_array();
+			
+			if (in_array($group_id, $groups) && $user = get_user($user_guid)) {
+				
+				global $CONFIG;
+				insert_data("insert into {$CONFIG->dbprefix}access_group_membership set access_group_id = {$group_id}, user_guid = {$user_guid}");
+				return true;
+				
+			}
+			
+			return false;
+			
+		}
+
+		/**
+		 * Removes a user from an access group
+		 *
+		 * @param int $user_guid The user GUID
+		 * @param int $group_id The access group ID
+		 * @return true|false Depending on success
+		 */
+		function remove_user_from_access_group($user_guid, $group_id) {
+			
+			$group_id = (int) $group_id;
+			$user_guid = (int) $user_guid;
+			$groups = get_write_access_array();
+			
+			if (in_array($group_id, $groups) && $user = get_user($user_guid)) {
+				
+				global $CONFIG;
+				delete_data("delete from {$CONFIG->dbprefix}access_group_membership where access_group_id = {$group_id} and user_guid = {$user_guid}");
+				return true;
+				
+			}
+			
+			return false;
+			
+		}
+		
 	/**
 	 * Some useful constant definitions
 	 */
