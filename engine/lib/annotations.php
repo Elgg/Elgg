@@ -342,8 +342,9 @@
 	 * @param int $limit Maximum number of results to return.
 	 * @param int $offset Place to start.
 	 * @param string $order_by How to order results.
+	 * @param boolean $count Whether to count entities rather than return them
 	 */
-	function get_entities_from_annotations($entity_type = "", $entity_subtype = "", $name = "", $value = "", $owner_guid = 0, $group_guid = 0, $limit = 10, $offset = 0, $order_by = "asc")
+	function get_entities_from_annotations($entity_type = "", $entity_subtype = "", $name = "", $value = "", $owner_guid = 0, $group_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $count = false)
 	{
 		global $CONFIG;
 		
@@ -403,16 +404,57 @@
 			$where[] = "a.value_id='$value'";
 			
 		
-		$query = "SELECT e.*, n.string as name, v.string as value from {$CONFIG->dbprefix}annotations a JOIN {$CONFIG->dbprefix}entities e on a.entity_guid = e.guid JOIN {$CONFIG->dbprefix}metastrings v on a.value_id=v.id JOIN {$CONFIG->dbprefix}metastrings n on a.name_id = n.id ";
+		if ($count) {
+			$query = "count distinct (e.guid) as total ";
+		} else {
+			$query = "SELECT distinct e.*, n.string as name, v.string as value ";			
+		}
+		$query .= "from {$CONFIG->dbprefix}annotations a JOIN {$CONFIG->dbprefix}entities e on a.entity_guid = e.guid JOIN {$CONFIG->dbprefix}metastrings v on a.value_id=v.id JOIN {$CONFIG->dbprefix}metastrings n on a.name_id = n.id ";
 		if (($group_guid != 0) && ($entity_type=='object')) $query .= "JOIN {$CONFIG->dbprefix}objects_entity o on o.guid = e.guid";
 		$query .= " where";
 		    
 		foreach ($where as $w)
 			$query .= " $w and ";
 		$query .= get_access_sql_suffix("a"); // Add access controls
-		$query .= " order by $order_by limit $offset,$limit"; // Add order and limit   
-		   
-		return get_data($query, "row_to_elggannotation");
+		
+		if ($count) {
+			$row = get_data_row($query);
+			return $row->total;
+		} else {
+			$query .= " order by $order_by limit $offset,$limit"; // Add order and limit
+			return get_data($query, "row_to_elggannotation");
+		}    
+	}
+	
+	/**
+	 * Lists entities
+	 *
+	 * @see elgg_view_entity_list
+	 * 
+	 * @param string $entity_type Type of entity.
+	 * @param string $entity_subtype Subtype of entity.
+	 * @param string $name Name of annotation.
+	 * @param string $value Value of annotation.
+	 * @param int $limit Maximum number of results to return.
+	 * @param int $owner_guid Owner.
+	 * @param int $group_guid Group container. Currently this is only supported if $entity_type == 'object'
+	 * @param boolean $asc Whether to list in ascending or descending order (default: desc)
+	 * @param boolean $fullview Whether to display the entities in full
+	 * @return string Formatted entity list
+	 */
+	function list_entities_from_annotations($entity_type = "", $entity_subtype = "", $name = "", $value = "", $limit = 10, $owner_guid = 0, $group_guid = 0, $asc = false, $fullview = true) {
+		
+		if ($asc) {
+			$asc = "asc";
+		} else {
+			$asc = "desc";
+		}
+		$count = get_entities_from_annotations($entity_type, $entity_subtype, $name, $value, $owner_guid, $group_guid, null, null, $asc, true);
+		$offset = (int) get_input("offset",0);
+		$entities = get_entities_from_annotations($entity_type, $entity_subtype, $name, $value, $owner_guid, $group_guid, null, null, $asc);
+		
+		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview);
+		
 	}
 	
 	/**
