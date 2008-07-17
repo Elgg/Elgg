@@ -1289,6 +1289,45 @@
 		
 		return true;
 	}
+	
+	/**
+	 * A plugin hook to get certain volitile (generated on the fly) attributes about an entity in order to export them.
+	 *
+	 * @param unknown_type $hook
+	 * @param unknown_type $entity_type
+	 * @param unknown_type $returnvalue
+	 * @param unknown_type $params The parameters, passed 'guid' and 'varname'
+	 * @return unknown
+	 */
+	function volatile_data_export_plugin_hook($hook, $entity_type, $returnvalue, $params)
+	{
+		$guid = (int)$params['guid'];
+		$variable_name = sanitise_string($params['varname']);
+		
+		if (($hook == 'volatile') && ($entity_type == 'metadata'))
+		{
+			if (($guid) && ($variable_name))
+			{
+				switch ($variable_name)
+				{
+					case 'renderedentity' :
+						elgg_set_viewtype('default');
+						$view = elgg_view_entity(get_entity($guid));
+						elgg_set_viewtype();
+						
+						$tmp = new ElggMetadata();
+						$tmp->type = 'volatile';
+						$tmp->name = 'renderedentity';
+						$tmp->value = $view;
+						$tmp->entity_guid = $guid;
+						
+						return $tmp;
+				
+					break;
+				}
+			}
+		}
+	}
 
 	/**
 	 * Handler called by trigger_plugin_hook on the "export" event.
@@ -1562,6 +1601,9 @@
 	
 	/** Register the hook, ensuring entities are serialised first */
 	register_plugin_hook("export", "all", "export_entity_plugin_hook", 0);
+	
+	/** Hook to get certain named bits of volatile data about an entity */
+	register_plugin_hook('volatile', 'metadata', 'volatile_data_export_plugin_hook');
 	
 	/** Register init system event **/
 	register_elgg_event_handler('init','system','entities_init');
