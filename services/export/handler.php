@@ -79,7 +79,6 @@
 				$r = get_relationship($id_or_name);
 			break;
 			case 'volatile' :
-				error_log("******************* ID NAME $id_or_name $uuid");
 				$m = trigger_plugin_hook('volatile', 'metadata', array('guid' => $guid, 'varname' => $id_or_name));
 			break;
 				
