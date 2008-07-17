@@ -21,7 +21,8 @@
 		function isloggedin() {
 			
 			if (!is_installed()) return false;
-			if ((isset($_SESSION['guid'])) && ($_SESSION['guid'] > 0))
+			if ((isset($_SESSION['guid'])) && ($_SESSION['guid'] > 0) && (isset($_SESSION['id'])) && ($_SESSION['id'] > 0) )
+			
 				return true;
 			return false;
 			
@@ -140,6 +141,7 @@
             	$_SESSION['user']->code = "";
             	$_SESSION['user']->save();
             }
+            
             unset($_SESSION['username']);
             unset($_SESSION['name']);
             unset($_SESSION['code']);
