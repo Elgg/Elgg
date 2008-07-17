@@ -57,8 +57,8 @@
 		add_page_owner_handler('groups_page_owner_handler');
 		
 		// Add some widgets
-		add_widget_type('group_members_widget',elgg_echo('groups:widgets:members:title'), elgg_echo('groups:widgets:members:description'));
-		add_widget_type('group_entities_widget',elgg_echo('groups:widgets:entities:title'), elgg_echo('groups:widgets:entities:description'));
+		add_widget_type('group_members_widget',elgg_echo('groups:widgets:members:title'), elgg_echo('groups:widgets:members:description'), 'groups');
+		add_widget_type('group_entities_widget',elgg_echo('groups:widgets:entities:title'), elgg_echo('groups:widgets:entities:description'), 'groups');
 		
 		// For now, we'll hard code the groups profile items as follows:
 		// TODO make this user configurable
