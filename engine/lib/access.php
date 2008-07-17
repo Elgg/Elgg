@@ -65,6 +65,9 @@
 			$user_id = (int) $user_id;
 			$site_id = (int) $site_id;
 			
+			if (!$user = get_entity($user_id))
+				$user = null;
+			
 			if (empty($access_array[$user_id]) || $flush == true) {
 				
 				$query = "select am.access_group_id from {$CONFIG->dbprefix}access_group_membership am ";
@@ -84,7 +87,9 @@
 				
 			}
 			
-			return $access_array[$user_id];
+			$access_array_temp = trigger_plugin_hook('access:groups','user',array('user' => $user, 'site_id' => $site_id),$access_array[$user_id]);
+			
+			return $access_array_temp;
 			
 		}
 		
@@ -138,6 +143,9 @@
 			$user_id = (int) $user_id;
 			$site_id = (int) $site_id;
 			
+			if (!$user = get_entity($user_id))
+				$user = null;
+			
 			if (empty($access_array[$user_id]) || $flush == true) {
 				
 				$query = "select ag.* from {$CONFIG->dbprefix}access_groups ag ";
@@ -150,13 +158,13 @@
 						$tmp_access_array[$group->id] = elgg_echo($group->name);
 				}
 				
-				$tmp_access_array = trigger_plugin_hook('access','user',array('user_id' => $user_id, 'site_id' => $site_id),$tmp_access_array);
-				
 				$access_array[$user_id] = $tmp_access_array;
 				
 			}
 			
-			return $access_array[$user_id];
+			$tmp_access_array = trigger_plugin_hook('access','user',array('user' => $user, 'site_id' => $site_id),$tmp_access_array);
+			
+			return $tmp_access_array;
 			
 		}
 
