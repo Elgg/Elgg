@@ -374,10 +374,10 @@
 		$limit = (int)$limit;
 		$offset = (int)$offset;
 		if($order_by == 'asc')
-		    $order_by = "a.time_created asc";
+		    $order_by = "maxtime asc";
 		    
 		if($order_by == 'desc')
-		    $order_by = "a.time_created desc";
+		    $order_by = "maxtime desc";
 		
 		$where = array();
 		
@@ -405,11 +405,14 @@
 			
 		
 		if ($count) {
-			$query = "count distinct (e.guid) as total ";
+			$query = "SELECT count(distinct e.guid) as total ";
 		} else {
-			$query = "SELECT distinct e.*, n.string as name, v.string as value ";			
+			$query = "SELECT e.*, max(a.time_created) as maxtime ";			
 		}
-		$query .= "from {$CONFIG->dbprefix}annotations a JOIN {$CONFIG->dbprefix}entities e on a.entity_guid = e.guid JOIN {$CONFIG->dbprefix}metastrings v on a.value_id=v.id JOIN {$CONFIG->dbprefix}metastrings n on a.name_id = n.id ";
+		$query .= "from {$CONFIG->dbprefix}annotations a JOIN {$CONFIG->dbprefix}entities e on e.guid = a.entity_guid ";
+		if ($value != "")
+			$query .= " JOIN {$CONFIG->dbprefix}metastrings v on a.value_id=v.id";
+		
 		if (($group_guid != 0) && ($entity_type=='object')) $query .= "JOIN {$CONFIG->dbprefix}objects_entity o on o.guid = e.guid";
 		$query .= " where";
 		    
@@ -421,8 +424,8 @@
 			$row = get_data_row($query);
 			return $row->total;
 		} else {
-			$query .= " order by $order_by limit $offset,$limit"; // Add order and limit
-			return get_data($query, "row_to_elggannotation");
+			$query .= " group by a.entity_guid order by $order_by limit $offset,$limit"; // Add order and limit
+			return get_data($query, "entity_row_to_elggstar");
 		}    
 	}
 	
@@ -451,8 +454,8 @@
 		}
 		$count = get_entities_from_annotations($entity_type, $entity_subtype, $name, $value, $owner_guid, $group_guid, null, null, $asc, true);
 		$offset = (int) get_input("offset",0);
-		$entities = get_entities_from_annotations($entity_type, $entity_subtype, $name, $value, $owner_guid, $group_guid, null, null, $asc);
-		
+		$entities = get_entities_from_annotations($entity_type, $entity_subtype, $name, $value, $owner_guid, $group_guid, $limit, $offset, $asc);
+
 		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview);
 		
 	}
