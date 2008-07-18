@@ -90,7 +90,11 @@
 				
 				$access_array[$user_id] = $tmp_access_array;
 				
+			} else {
+				$tmp_access_array = $access_array[$user_id];
 			}
+			
+			$tmp_access_array = trigger_plugin_hook('access:collections','user',array('user_id' => $user_id, 'site_id' => $site_id),$tmp_access_array);
 			
 			return $access_array[$user_id];
 			
@@ -159,13 +163,15 @@
 						$tmp_access_array[$collection->id] = $collection->name;
 				}
 				
-				$tmp_access_array = trigger_plugin_hook('access','user',array('user_id' => $user_id, 'site_id' => $site_id),$tmp_access_array);
-				
 				$access_array[$user_id] = $tmp_access_array;
 				
+			} else {
+				$tmp_access_array = $access_array[$user_id];
 			}
 			
-			return $access_array[$user_id];
+			$tmp_access_array = trigger_plugin_hook('access:collections:write','user',array('user_id' => $user_id, 'site_id' => $site_id),$tmp_access_array);
+			
+			return $tmp_access_array;
 			
 		}
 
