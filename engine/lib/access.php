@@ -154,7 +154,7 @@
 				
 				$query = "select ag.* from {$CONFIG->dbprefix}access_collections ag ";
 				$query .= " where (ag.site_guid = {$site_id} or ag.site_guid = 0)";
-				$query .= " and (ag.owner_guid = {$user_id} or ag.owner_guid = 0)";
+				$query .= " and (ag.owner_guid = {$user_id})";
 				$query .= " and ag.id > 3";
 				
 				$tmp_access_array = array(0 => elgg_echo("PRIVATE"), 1 => elgg_echo("LOGGED_IN"), 2 => elgg_echo("PUBLIC"));
