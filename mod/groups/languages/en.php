@@ -14,7 +14,7 @@
 		/**
 		 * Menu items and titles
 		 */
-	
+			
 			'groups' => "Groups",
 			'groups:yours' => "Your groups",
 			'groups:user' => "%s's groups",
@@ -42,6 +42,7 @@
 			'groups:inviteto' => "Invite friends to '%s'",
 			'groups:nofriends' => "You have no friends left who have not been invited to this group.",
 	
+			'groups:group' => "Group",
 	
 			'groups:privategroup' => 'This group is private, requesting membership.',
 			'groups:notitle' => 'Groups must have a title',

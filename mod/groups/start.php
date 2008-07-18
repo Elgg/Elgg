@@ -67,7 +67,7 @@
 		// where key is the array key below
 		$CONFIG->group = array(
 		
-			'title' => 'text',
+			'name' => 'text',
 			'description' => 'longtext',
 			//'location' => 'tags',
 			'interests' => 'tags',
@@ -149,6 +149,88 @@
 		return $CONFIG->url . "pg/groups/{$entity->guid}/$title/";
 		
 	}
+	
+	/**
+	 * Groups created, so add users to access lists.
+	 */
+	function groups_create_event_listener($event, $object_type, $object)
+	{
+		if (($event == 'create') && ($object_type == 'group') && ($object instanceof ElggGroup))
+		{
+			$group_id = create_access_collection(elgg_echo('groups:group') . ": " . $object->name);
+			if ($group_id)
+			{
+				 $object->group_acl = $group_id;
+			}
+			else
+				return false;
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Hook to listen to read access control requests and return all the groups you are a member of.
+	 */
+	function groups_read_acl_plugin_hook($hook, $entity_type, $returnvalue, $params)
+	{
+		//error_log("READ: " . var_export($returnvalue));
+		$user = $_SESSION['user'];
+		if ($user)
+		{
+			$membership = get_users_membership($user->guid);
+			
+			if ($membership)
+			{					
+				foreach ($membership as $group)
+					$returnvalue[$user->guid][$group->group_acl] = elgg_echo('groups:group') . ": " . $group->name; 
+					
+				return $returnvalue;
+			}
+		}
+	}
+	
+	/**
+	 * Return the write access for the current group if the user has write access to it.
+	 */
+	function groups_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $params)
+	{
+		$group_guid = get_input('group_guid');
+		
+		if ($group_guid)
+		{
+			$group = get_entity($group_guid);
+			
+			if (($group) && ($group->can_write_to_container($_SESSION['user']->guid)))
+			{
+				$returnvalue[$group->group_acl] = elgg_echo('groups:group') . ": " . $group->name;
+			
+				return $returnvalue;
+			}
+		}
+	}
+	
+	/**
+	 * Groups deleted, so remove access lists.
+	 */
+	function groups_delete_event_listener($event, $object_type, $object)
+	{
+		delete_access_collection($object->access_id);
+		
+		return true;
+	}
+	
+	// Register a handler for create groups
+	register_elgg_event_handler('create', 'group', 'groups_create_event_listener');
+
+	// Register a handler for delete groups
+	register_elgg_event_handler('delete', 'group', 'groups_delete_event_listener');
+	
+	// Read access permissions
+	register_plugin_hook('access:collections', 'all', 'groups_read_acl_plugin_hook');
+	
+	// Write access permissions
+	register_plugin_hook('access:collections:write', 'all', 'groups_write_acl_plugin_hook');
 	
 	// Make sure the groups initialisation function is called on initialisation
 	register_elgg_event_handler('init','system','groups_init');

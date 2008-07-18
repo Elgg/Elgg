@@ -729,7 +729,15 @@
 		return remove_entity_relationship($user_guid, 'member', $group_guid);
 	}
 	
-	
+	/**
+	 * Return all groups a user is a member of.
+	 *
+	 * @param unknown_type $user_guid
+	 */
+	function get_users_membership($user_guid)
+	{
+		return get_entities_from_relationship('member', $user_guid, true);
+	}
 	
 	
 ?>
