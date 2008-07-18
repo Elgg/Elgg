@@ -1007,11 +1007,13 @@
 		global $CONFIG;
 		
 		$user_guid = (int)$user_guid;
-		if (!$user_guid) $user_guid = $_SESSION['user']->getGUID();
+		if (!$user_guid) $user_guid = (int) $_SESSION['guid'];
 		$user = get_entity($user_guid);
 		
 		$container_guid = (int)$container_guid;
 		if (!$container_guid) $container_guid = page_owner();
+		
+		if (!$container_guid) return true;
 		
 		$container = get_entity($container_guid);
 
@@ -1192,13 +1194,13 @@
 			if (!is_array($owner_guid)) {
 				$owner_array = array($owner_guid);
 				$owner_guid = (int) $owner_guid;
-				$where[] = "owner_guid = '$owner_guid'";
+			//	$where[] = "owner_guid = '$owner_guid'";
 			} else if (sizeof($owner_guid) > 0) {
-				$owner_array = $owner_guid;
+				$owner_array = array_map('sanitise_int', $owner_guid);
 				// Cast every element to the owner_guid array to int
-				$owner_guid = array_map("sanitise_int", $owner_guid);
-				$owner_guid = implode(",",$owner_guid);
-				$where[] = "owner_guid in ({$owner_guid})";
+			//	$owner_guid = array_map("sanitise_int", $owner_guid);
+			//	$owner_guid = implode(",",$owner_guid);
+			//	$where[] = "owner_guid in ({$owner_guid})";
 			}
 			if (is_null($container_guid)) {
 				$container_guid = $owner_array;
