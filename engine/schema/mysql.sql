@@ -80,12 +80,6 @@ CREATE TABLE `prefix_access_collections` (
   KEY `name` (`name`)
 ) AUTO_INCREMENT=3;
 
--- Dumping data for table `access_collections`
-INSERT INTO `prefix_access_collections` (`id`, `name`, `site_guid`) VALUES
-(0, 'PRIVATE', 0),
-(1, 'LOGGED_IN', 0),
-(2, 'PUBLIC', 0);
-
 
 -- Access containers 
 CREATE TABLE `prefix_access_collection_membership` (
