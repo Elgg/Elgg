@@ -997,6 +997,42 @@
 	}
 	
 	/**
+	 * Determine whether a given user is able to write to a given container.
+	 *
+	 * @param int $user_guid The user guid, or 0 for $_SESSION['user']->getGUID()
+	 * @param int $container_guid The container, or 0 for the current page owner.
+	 */
+	function can_write_to_container($user_guid = 0, $container_guid = 0)
+	{
+		global $CONFIG;
+		
+		$user_guid = (int)$user_guid;
+		if (!$user_guid) $user_guid = $_SESSION['user']->getGUID();
+		$user = get_entity($user_guid);
+		
+		$container_guid = (int)$container_guid;
+		if (!$container_guid) $container_guid = page_owner();
+		
+		$container = get_entity($container_guid);
+
+		if (($container) && ($user))
+		{
+			// Basics, see if the user is a member of the group.
+			if ($container instanceof ElggGroup)
+				if (!$container->isMember($user)) return false;
+
+			// If the user can edit the container, they can also write to it
+			if ($container->canEdit()) return true;
+				
+			// See if anyone else has anything to say
+			return trigger_plugin_hook('container_permissions_check',$entity->type,array('container' => $container, 'user' => $user), false);
+			
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Create a new entity of a given type.
 	 * 
 	 * @param string $type The type of the entity (site, user, object).
@@ -1018,7 +1054,10 @@
 		if ($site_guid == 0)
 			$site_guid = $CONFIG->site_guid;
 		$site_guid = (int) $site_guid;
-					
+		if ($container_guid == 0) $container_guid = $owner_guid;
+		
+		if (!can_write_to_container($owner_guid, $container_guid)) return false; 
+		
 		if ($type=="") throw new InvalidParameterException(elgg_echo('InvalidParameterException:EntityTypeNotSet'));
 
 		return insert_data("INSERT into {$CONFIG->dbprefix}entities (type, subtype, owner_guid, site_guid, container_guid, access_id, time_created, time_updated) values ('$type',$subtype, $owner_guid, $site_guid, $container_guid, $access_id, $time, $time)"); 

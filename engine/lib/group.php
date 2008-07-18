@@ -276,38 +276,6 @@
 	}
 
 	/**
-	 * Determine whether a given user is able to write to a given group.
-	 *
-	 * @param int $user_guid The user guid, or 0 for $_SESSION['user']->getGUID()
-	 * @param int $container_guid The container, or 0 for the current page owner.
-	 */
-	function can_write_to_container($user_guid = 0, $container_guid = 0)
-	{
-		global $CONFIG;
-		
-		$user_guid = (int)$user_guid;
-		if (!$user_guid) $user_guid = $_SESSION['user']->getGUID();
-		$user = get_entity($user_guid);
-		
-		$container_guid = (int)$container_guid;
-		if (!$container_guid) $container_guid = page_owner();
-		$container = get_entity($container_guid);
-
-		if (($container) && ($user))
-		{
-			// Basics, see if the user is a member of the group.
-			if ($container instanceof ElggGroup)
-				if (!$container->isMember($user)) return false;
-			
-			// See if anyone else has anything to say
-			return trigger_plugin_hook('group_permissions_check',$entity->type,array('container' => $container, 'user' => $user), false);
-			
-		}
-		
-		return false;
-	}
-	
-	/**
 	 * Get the group entity.
 	 *
 	 * @param int $guid
