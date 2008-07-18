@@ -121,7 +121,7 @@
 </table>
 
 	<div id="profile_info_wide">
-	<p><b><?php echo elgg_echo("profile:aboutme"); ?></b><br /><?php echo nl2br($vars['entity']->description); ?></p>
+	<p><b><?php echo elgg_echo("profile:aboutme"); ?></b><br /><?php echo autop($vars['entity']->description); ?></p>
 
 </div><!-- /#profile_info_wide -->
 

@@ -12,6 +12,6 @@
 	 * @link http://elgg.org/
 	 */
 
-	echo nl2br(elgg_echo('installation:error:htaccess'));
+	echo autop(elgg_echo('installation:error:htaccess'));
 ?>
 <textarea cols="120" rows="30"><?php echo $vars['.htaccess']; ?></textarea>

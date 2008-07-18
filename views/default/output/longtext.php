@@ -15,5 +15,5 @@
 	 * 
 	 */
 
-    echo nl2br($vars['value']);
+    echo autop($vars['value']);
 ?>

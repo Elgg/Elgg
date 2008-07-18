@@ -17,7 +17,7 @@
 	global $CONFIG;
 ?>
 <!-- 
-<?php echo get_class($vars['object']); ?>: <?php echo nl2br($vars['object']->getMessage()); ?>
+<?php echo get_class($vars['object']); ?>: <?php echo autop($vars['object']->getMessage()); ?>
 
 
 <?php if ($CONFIG->debug) { ?>

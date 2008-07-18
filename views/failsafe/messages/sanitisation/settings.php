@@ -24,7 +24,7 @@
 	else
 	{
 		
-		echo nl2br(elgg_echo('installation:error:settings'));
+		echo autop(elgg_echo('installation:error:settings'));
 ?>
 <div>
 	<h2><?php echo elgg_echo('installation:settings:dbwizard:prompt'); ?></h2>

@@ -21,7 +21,7 @@
 		<span title="<?php echo get_class($vars['object']); ?>">
 		<?php
 
-			echo nl2br($vars['object']->getMessage());
+			echo autop($vars['object']->getMessage());
 		
 		?>
 		</span>
@@ -32,7 +32,7 @@
 	<p class="messages-exception-detail">
 		<?php
 
-			echo nl2br(htmlentities(print_r($vars['object'], true)));
+			echo autop(htmlentities(print_r($vars['object'], true)));
 		
 		?>
 	</p>

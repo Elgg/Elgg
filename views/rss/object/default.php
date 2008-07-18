@@ -25,5 +25,5 @@
 	  <pubDate><?php echo date("r",$vars['entity']->time_created) ?></pubDate>
 	  <link><?php echo $vars['entity']->getURL(); ?></link>
 	  <title><![CDATA[<?php echo $title; ?>]]></title>
-	  <description><![CDATA[<?php echo (nl2br($vars['entity']->description)); ?>]]></description>
+	  <description><![CDATA[<?php echo (autop($vars['entity']->description)); ?>]]></description>
 	</item>

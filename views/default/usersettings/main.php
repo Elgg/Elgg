@@ -12,5 +12,5 @@
 	 */
 
 	// Description of what's going on
-		echo "<p>" . nl2br(elgg_echo("usersettings:description")) . "</p>";
+		echo "<p>" . autop(elgg_echo("usersettings:description")) . "</p>";
 ?>

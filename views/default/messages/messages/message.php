@@ -16,5 +16,5 @@
 ?>
 
 	<p>
-		<?php echo nl2br($vars['object']); ?>
+		<?php echo autop($vars['object']); ?>
 	</p>

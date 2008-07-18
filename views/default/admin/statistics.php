@@ -12,6 +12,6 @@
 
 	global $CONFIG;
 	
-	echo "<p>" . nl2br(elgg_echo("admin:statistics:description")) . "</p>";
+	echo "<p>" . autop(elgg_echo("admin:statistics:description")) . "</p>";
          
 ?>

@@ -11,7 +11,7 @@
 	 */
 
 	// Description of what's going on
-		echo "<p>" . nl2br(elgg_echo("usersettings:plugins:description")) . "</p>";
+		echo "<p>" . autop(elgg_echo("usersettings:plugins:description")) . "</p>";
 
 		$limit = get_input('limit', 10);
 		$offset = get_input('offset', 0);
