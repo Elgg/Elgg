@@ -19,4 +19,4 @@
 
 ?>
 
-<input type="text" <?php echo $vars['js']; ?> name="<?php echo $vars['internalname']; ?>" value="<?php echo $vars['value']; ?>" class="input-text"/> 
+<input type="text" <?php echo $vars['js']; ?> name="<?php echo $vars['internalname']; ?>" value="<?php echo htmlentities($vars['value']); ?>" class="input-text"/> 
