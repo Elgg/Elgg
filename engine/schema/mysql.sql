@@ -78,7 +78,7 @@ CREATE TABLE `prefix_access_collections` (
   `site_guid` bigint(20) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `name` (`name`)
-)  ;
+) AUTO_INCREMENT=3;
 
 -- Dumping data for table `access_collections`
 INSERT INTO `prefix_access_collections` (`id`, `name`, `site_guid`) VALUES
