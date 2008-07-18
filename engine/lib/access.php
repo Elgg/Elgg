@@ -65,9 +65,6 @@
 			$user_id = (int) $user_id;
 			$site_id = (int) $site_id;
 			
-			if (!$user = get_entity($user_id))
-				$user = null;
-			
 			if (empty($access_array[$user_id]) || $flush == true) {
 				
 				$query = "select am.access_collection_id from {$CONFIG->dbprefix}access_collection_membership am ";
@@ -87,9 +84,7 @@
 				
 			}
 			
-			$access_array_temp = trigger_plugin_hook('access:collections','user',array('user' => $user, 'site_id' => $site_id),$access_array[$user_id]);
-			
-			return $access_array_temp;
+			return $access_array[$user_id];
 			
 		}
 		
@@ -143,9 +138,6 @@
 			$user_id = (int) $user_id;
 			$site_id = (int) $site_id;
 			
-			if (!$user = get_entity($user_id))
-				$user = null;
-			
 			if (empty($access_array[$user_id]) || $flush == true) {
 				
 				$query = "select ag.* from {$CONFIG->dbprefix}access_collections ag ";
@@ -158,13 +150,13 @@
 						$tmp_access_array[$collection->id] = elgg_echo($collection->name);
 				}
 				
+				$tmp_access_array = trigger_plugin_hook('access','user',array('user_id' => $user_id, 'site_id' => $site_id),$tmp_access_array);
+				
 				$access_array[$user_id] = $tmp_access_array;
 				
 			}
 			
-			$tmp_access_array = trigger_plugin_hook('access:collections:write','user',array('user' => $user, 'site_id' => $site_id),$tmp_access_array);
-			
-			return $tmp_access_array;
+			return $access_array[$user_id];
 			
 		}
 
@@ -201,7 +193,7 @@
 			
 			$collection_id = (int) $collection_id;
 			$collections = get_write_access_array();
-			if (in_array($collection_id,$collections)) {
+			if (array_key_exists($collection_id, $collections)) {
 				global $CONFIG;
 				delete_data("delete from {$CONFIG->dbprefix}access_collection_membership where access_collection_id = {$collection_id}");
 				delete_data("delete from {$CONFIG->dbprefix}access_collections where id = {$collection_id}");
@@ -210,6 +202,22 @@
 				return false;
 			}
 			
+		}
+		
+		/**
+		 * Get a specified access collection
+		 *
+		 * @param int $collection_id The collection ID
+		 * @return array|false Depending on success
+		 */
+		function get_access_collection($collection_id) {
+    		
+    		$collection_id = (int) $collection_id;
+    		global $CONFIG;
+    		$get_collection = get_data("SELECT * FROM {$CONFIG->dbprefix}access_collections WHERE id = {$collection_id}");
+    		
+    		return $get_collection;
+    		
 		}
 		
 		/**
@@ -225,7 +233,7 @@
 			$user_guid = (int) $user_guid;
 			$collections = get_write_access_array();
 			
-			if (in_array($collection_id, $collections) && $user = get_user($user_guid)) {
+			if (array_key_exists($collection_id, $collections) && $user = get_user($user_guid)) {
 				
 				global $CONFIG;
 				insert_data("insert into {$CONFIG->dbprefix}access_collection_membership set access_collection_id = {$collection_id}, user_guid = {$user_guid}");
@@ -250,7 +258,7 @@
 			$user_guid = (int) $user_guid;
 			$collections = get_write_access_array();
 			
-			if (in_array($collection_id, $collections) && $user = get_user($user_guid)) {
+			if (array_key_exists($collection_id, $collections) && $user = get_user($user_guid)) {
 				
 				global $CONFIG;
 				delete_data("delete from {$CONFIG->dbprefix}access_collection_membership where access_collection_id = {$collection_id} and user_guid = {$user_guid}");
@@ -259,6 +267,44 @@
 			}
 			
 			return false;
+			
+		}
+		
+		/**
+		 * Get all of a users collections
+		 *
+		 * @param int $owner_guid The user ID
+		 * @return true|false Depending on success
+		 */
+		function get_user_access_collections($owner_guid) {
+			
+			$owner_guid = (int) $owner_guid;
+			
+			global $CONFIG;
+			
+			$collections = get_data("SELECT * FROM {$CONFIG->dbprefix}access_collections WHERE owner_guid = {$owner_guid}");
+			
+			return $collections;
+			
+		}
+		
+		/**
+		 * Get all of members of a friend collection
+		 *
+		 * @param int $collection The collection's ID
+		 * @return ElggUser entities if successful, false if not
+		 */
+		function get_members_of_access_collection($collection) {
+    		
+    		$collection = (int)$collection;
+    		
+    		global $CONFIG;
+		
+		    $query = "select e.* from {$CONFIG->dbprefix}access_collection_membership m join {$CONFIG->dbprefix}entities e on e.guid = m.user_guid WHERE m.access_collection_id = {$collection}";
+		    
+			$collection_members = get_data($query, "entity_row_to_elggstar");
+			
+			return $collection_members;
 			
 		}
 		
