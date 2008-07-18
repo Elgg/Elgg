@@ -570,7 +570,7 @@
 			foreach($friends as $friend) {
 				$friendguids[] = $friend->getGUID();
 			}
-			return get_entities('object',$subtype,$friendguids, "time_created desc", $limit, $offset, false, 0, $friendguids);
+			return get_entities('object',$subtype,$friendguids, "time_created desc", $limit, $offset, false, 0, array_merge(array(0),$friendguids));
 		}
 		return false;
 	}
@@ -588,7 +588,7 @@
 			foreach($friends as $friend) {
 				$friendguids[] = $friend->getGUID();
 			}
-			return get_entities('object',$subtype,$friendguids, "time_created desc", $limit, $offset, true, 0, $friendguids);
+			return get_entities('object',$subtype,$friendguids, "time_created desc", $limit, $offset, true, 0, array_merge(array(0),$friendguids));
 		}
 		return 0;
 	}
