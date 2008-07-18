@@ -1201,7 +1201,7 @@
 				$where[] = "owner_guid in ({$owner_guid})";
 			}
 			if (is_null($container_guid)) {
-				$container_guid = array_merge(array(0 => 0),$owner_array);
+				$container_guid = $owner_array;
 			}
 		}
 		if ($site_guid > 0)

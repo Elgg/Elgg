@@ -517,7 +517,7 @@
 	 * @return false|array An array of ElggObjects or false, depending on success
 	 */
 	function get_user_objects($user_guid, $subtype = "", $limit = 10, $offset = 0) {
-		$ntt = get_entities('object',$subtype, $user_guid, "time_created desc", $limit, $offset,false,0,array(0,$user_guid));
+		$ntt = get_entities('object',$subtype, $user_guid, "time_created desc", $limit, $offset,false,0,$user_guid);
 		return $ntt;
 	}
 	
@@ -529,7 +529,7 @@
 	 * @return int The number of objects the user owns (of this subtype)
 	 */
 	function count_user_objects($user_guid, $subtype = "") {
-		$total = get_entities('object', $subtype, $user_guid, "time_created desc", null, null, true, 0, array(0, $user_guid));
+		$total = get_entities('object', $subtype, $user_guid, "time_created desc", null, null, true, 0, $user_guid);
 		return $total;
 	}
 
@@ -570,7 +570,7 @@
 			foreach($friends as $friend) {
 				$friendguids[] = $friend->getGUID();
 			}
-			return get_entities('object',$subtype,$friendguids, "time_created desc", $limit, $offset, false, 0, array_merge(array(0),$friendguids));
+			return get_entities('object',$subtype,$friendguids, "time_created desc", $limit, $offset, false, 0, $friendguids);
 		}
 		return false;
 	}
@@ -588,7 +588,7 @@
 			foreach($friends as $friend) {
 				$friendguids[] = $friend->getGUID();
 			}
-			return get_entities('object',$subtype,$friendguids, "time_created desc", $limit, $offset, true, 0, array_merge(array(0),$friendguids));
+			return get_entities('object',$subtype,$friendguids, "time_created desc", $limit, $offset, true, 0, $friendguids);
 		}
 		return 0;
 	}
