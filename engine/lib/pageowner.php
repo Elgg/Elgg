@@ -35,7 +35,7 @@
 	            }
 	        }
 	        if ($owner = get_input("owner_guid")) {
-	            if ($user = get_user($owner)) {
+	            if ($user = get_entity($owner)) {
 	            	return $user->getGUID();
 	            } else {
 	            	return 0;
@@ -62,7 +62,7 @@
             global $CONFIG;
 	        $page_owner = page_owner();
 	        if ($page_owner > 0)
-	        	return get_user($page_owner);
+	        	return get_entity($page_owner);
 	        	
 			return false;
             

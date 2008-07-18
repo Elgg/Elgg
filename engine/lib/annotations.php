@@ -395,7 +395,7 @@
 		}
 		
 		if (($group_guid != 0) && ($entity_type=='object'))
-			$where[] = "o.container_guid = $group_guid";
+			$where[] = "e.container_guid = $group_guid";
 			
 		if ($name !== "")
 			$where[] = "a.name_id='$name'";

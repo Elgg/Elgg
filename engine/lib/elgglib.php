@@ -163,7 +163,7 @@
 		    }
 		    if ($vars['page_owner'] != -1) {
 		        if (!isset($usercache[$vars['page_owner']])) {
-		    	       $vars['page_owner_user'] = get_user($vars['page_owner']);
+		    	       $vars['page_owner_user'] = get_entity($vars['page_owner']);
 		    	       $usercache[$vars['page_owner']] = $vars['page_owner_user'];
 		        } else {
 		            $vars['page_owner_user'] = $usercache[$vars['page_owner']];

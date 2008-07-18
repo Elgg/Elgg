@@ -31,6 +31,7 @@ CREATE TABLE `prefix_entities` (
 	
 	`owner_guid` bigint(20) unsigned NOT NULL,
     `site_guid` bigint(20) unsigned NOT NULL,
+    `container_guid` bigint(20) unsigned NOT NULL,
 	`access_id` int(11) NOT NULL,
 	
 	`time_created` int(11) NOT NULL,
@@ -97,7 +98,6 @@ CREATE TABLE `prefix_access_collection_membership` (
 -- Extra information relating to "objects"
 CREATE TABLE `prefix_objects_entity` (
   `guid` bigint(20) unsigned  NOT NULL,
-  `container_guid` bigint(20) unsigned NOT NULL,
   
   `title` text NOT NULL,
   `description` text NOT NULL,

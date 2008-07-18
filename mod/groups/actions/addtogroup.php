@@ -21,12 +21,11 @@
 		$user_guid = array($user_guid);
 	$group_guid = get_input('group_guid');
 	
-	
+	if (sizeof($user_guid))
 	foreach ($user_guid as $u_id)
 	{
 		$requested = false;
-		$user = get_entity($u_id);	
-		$group = get_entity($group_guid);
+		if ($user = get_entity($u_id) && $group = get_entity($group_guid)) {
 	
 		if ($_SESSION['user']->getGUID() == $group->owner_guid)
 		{
@@ -89,10 +88,10 @@
 				}
 			}
 		}
-		else
-			register_error(elgg_echo("groups:notowner"));
+			else
+				register_error(elgg_echo("groups:notowner"));
+		}
 	}
 			
 	forward($forward_url);
-	exit;	
 ?>

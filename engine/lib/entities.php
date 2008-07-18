@@ -76,6 +76,7 @@
 			$this->attributes['type'] = "";
 			$this->attributes['subtype'] = "";
 			$this->attributes['owner_guid'] = $_SESSION['guid'];
+			$this->attributes['container_guid'] = $_SESSION['guid'];
 			$this->attributes['site_guid'] = 0;
 			$this->attributes['access_id'] = 0;
 			$this->attributes['time_created'] = "";
@@ -483,7 +484,7 @@
 			}
 			else
 			{ 
-				$this->attributes['guid'] = create_entity($this->attributes['type'], $this->attributes['subtype'], $this->attributes['owner_guid'], $this->attributes['access_id']); // Create a new entity (nb: using attribute array directly 'cos set function does something special!)
+				$this->attributes['guid'] = create_entity($this->attributes['type'], $this->attributes['subtype'], $this->attributes['owner_guid'], $this->attributes['access_id'], $this->attributes['site_guid'], $this->attributes['container_guid']); // Create a new entity (nb: using attribute array directly 'cos set function does something special!)
 				if (!$this->attributes['guid']) throw new IOException(elgg_echo('IOException:BaseEntitySaveFailed')); 
 				
 				// Save any unsaved metadata
@@ -969,7 +970,7 @@
 	 * @param int $owner_guid
 	 * @param int $access_id
 	 */
-	function update_entity($guid, $owner_guid,  $access_id)
+	function update_entity($guid, $owner_guid, $access_id)
 	{
 		global $CONFIG, $ENTITY_CACHE;
 		
@@ -1005,7 +1006,7 @@
 	 * @param int $site_guid The site to add this entity to. Leave as 0 (default) for the current site.
 	 * @return mixed The new entity's GUID, or false on failure
 	 */
-	function create_entity($type, $subtype, $owner_guid, $access_id, $site_guid = 0)
+	function create_entity($type, $subtype, $owner_guid, $access_id, $site_guid = 0, $container_guid = 0)
 	{
 		global $CONFIG;
 	
@@ -1020,7 +1021,7 @@
 					
 		if ($type=="") throw new InvalidParameterException(elgg_echo('InvalidParameterException:EntityTypeNotSet'));
 
-		return insert_data("INSERT into {$CONFIG->dbprefix}entities (type, subtype, owner_guid, site_guid, access_id, time_created, time_updated) values ('$type',$subtype, $owner_guid, $site_guid, $access_id, $time, $time)"); 
+		return insert_data("INSERT into {$CONFIG->dbprefix}entities (type, subtype, owner_guid, site_guid, container_guid, access_id, time_created, time_updated) values ('$type',$subtype, $owner_guid, $site_guid, $container_guid, $access_id, $time, $time)"); 
 	}
 	
 	/**
@@ -1120,9 +1121,11 @@
 	 * @param int $limit The number of entities to return; 10 by default
 	 * @param int $offset The indexing offset, 0 by default
 	 * @param boolean $count Set to true to get a count rather than the entities themselves (limits and offsets don't apply in this context). Defaults to false.
-	 * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites. 
+	 * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
+	 * @param int|array $container_guid The container or containers to get entities from (default: all containers).
+	 * @return array A list of entities. 
 	 */
-	function get_entities($type = "", $subtype = "", $owner_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0)
+	function get_entities($type = "", $subtype = "", $owner_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0, $container_guid = null)
 	{
 		global $CONFIG;
 		
@@ -1160,6 +1163,16 @@
 		if ($site_guid > 0)
 			$where[] = "site_guid = {$site_guid}";
 
+		if (!is_null($container_guid)) {
+			if (is_array($container_guid)) {
+				foreach($container_guid as $key => $val) $container_guid[$key] = (int) $val;
+				$where[] = "container_guid in (" . implode(",",$container_guid) . ")";
+			} else {
+				$container_guid = (int) $container_guid;
+				$where[] = "container_guid = {$container_guid}";
+			}
+		}
+			
 		if (!$count) {
 			$query = "SELECT * from {$CONFIG->dbprefix}entities where ";
 		} else {

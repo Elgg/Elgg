@@ -148,6 +148,34 @@
 		}
 		
 		/**
+		 * For compatibility with ElggUser
+		 */
+		public function getFriends($subtype = "", $limit = 10, $offset = 0) { 
+			return get_group_members($this->getGUID(), $limit, $offset); 
+		}
+		
+		/**
+		 * For compatibility with ElggUser
+		 */
+		public function getFriendsOf($subtype = "", $limit = 10, $offset = 0) { 
+			return get_group_members($this->getGUID(), $limit, $offset); 
+		}
+		
+		/**
+		 * For compatibility with ElggUser
+		 */
+		public function isFriend() {
+			return $this->isMember();
+		}
+		
+		/**
+		 * For compatibility with ElggUser
+		 */
+		public function isFriendOf() {
+			return $this->isMember();
+		}
+		
+		/**
 		 * Returns whether the current group is public membership or not.
 		 * @return bool
 		 */
@@ -165,8 +193,9 @@
 		 * @param ElggUser $user The user
 		 * @return bool
 		 */
-		public function isMember(ElggUser $user)
+		public function isMember($user = 0)
 		{
+			if ($user == 0) $user = $_SESSION['user'];
 			return is_group_member($this->getGUID(), $user->getGUID());
 		}
 		
@@ -267,7 +296,8 @@
 		if (($container) && ($user))
 		{
 			// Basics, see if the user is a member of the group.
-			if (!$container->isMember($user)) return false;
+			if ($container instanceof ElggGroup)
+				if (!$container->isMember($user)) return false;
 			
 			// See if anyone else has anything to say
 			return trigger_plugin_hook('group_permissions_check',$entity->type,array('container' => $container, 'user' => $user), false);
@@ -358,6 +388,7 @@
 		
 		return false;
 	}
+	
 	
 	/**
 	 * Delete a group's extra data.
@@ -490,7 +521,7 @@
 			$where[] = "e.site_guid = {$site_guid}";
 
 		if ($container_guid > 0)
-			$where[] = "o.container_guid = {$container_guid}";
+			$where[] = "e.container_guid = {$container_guid}";
 			
 		if (!$count) {
 			$query = "SELECT * from {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}objects_entity o on e.guid=o.guid where ";
@@ -569,7 +600,7 @@
 		if ($site_guid > 0)
 			$where[] = "e.site_guid = {$site_guid}";
 		if ($container_guid > 0)
-			$where[] = "o.container_guid = {$container_guid}";
+			$where[] = "e.container_guid = {$container_guid}";
 		if (is_array($owner_guid)) {
 			$where[] = "e.owner_guid in (".implode(",",$owner_guid).")";
 		} else if ($owner_guid > 0)
@@ -656,7 +687,7 @@
 		if ($owner_guid > 0)
 			$where[] = "e.owner_guid = {$owner_guid}";
 		if ($container_guid > 0)
-			$where[] = "o.container_guid = {$container_guid}";
+			$where[] = "e.container_guid = {$container_guid}";
 		
 		if ($count) {
 			$query = "SELECT count(e.guid) as total ";

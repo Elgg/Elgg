@@ -260,17 +260,14 @@
 	 * @param int $guid The guid of the entity you're creating (as obtained by create_entity)
 	 * @param string $title The title of the object
 	 * @param string $description The object's description
-	 * @param int $container_guid The object's container guid (defaults to the current logged in user)
 	 */
-	function create_object_entity($guid, $title, $description, $container_guid = 0)
+	function create_object_entity($guid, $title, $description)
 	{
 		global $CONFIG;
 		
 		$guid = (int)$guid;
 		$title = sanitise_string($title);
 		$description = sanitise_string($description);
-		$container_guid = (int)$container_guid;
-		if (!$container_guid) $container_guid = $_SESSION['guid'];
 		
 		$row = get_entity_as_row($guid);
 		
@@ -278,7 +275,7 @@
 		{
 			// Core entities row exists and we have access to it
 			if ($exists = get_data_row("select guid from {$CONFIG->dbprefix}objects_entity where guid = {$guid}")) {
-				$result = update_data("UPDATE {$CONFIG->dbprefix}objects_entity set title='$title', description='$description', container_guid=$container_guid where guid=$guid");
+				$result = update_data("UPDATE {$CONFIG->dbprefix}objects_entity set title='$title', description='$description' where guid=$guid");
 				if ($result!=false)
 				{
 					// Update succeeded, continue
@@ -294,7 +291,7 @@
 			{
 				
 				// Update failed, attempt an insert.
-				$result = insert_data("INSERT into {$CONFIG->dbprefix}objects_entity (guid, container_guid, title, description) values ($guid, $container_guid, '$title','$description')");
+				$result = insert_data("INSERT into {$CONFIG->dbprefix}objects_entity (guid, title, description) values ($guid, '$title','$description')");
 				if ($result!==false) {
 					$entity = get_entity($guid);
 					if (trigger_elgg_event('create',$entity->type,$entity)) {

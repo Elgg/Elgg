@@ -14,7 +14,7 @@
 	 */
 
 	$page_owner = page_owner();
-	$page_owner_user = get_user($page_owner);
+	$page_owner_user = get_entity($page_owner);
 
 	$submenu = get_submenu(); // elgg_view('canvas_header/submenu');
 	if (!empty($submenu)) $submenu = "<ul>" . $submenu . "</ul>";
