@@ -77,7 +77,15 @@
 				
 				if ($collections = get_data($query)) {
 					foreach($collections as $collection)
-						$tmp_access_array[] = $collection->access_collection_id;
+						if (!empty($collection->access_collection_id)) $tmp_access_array[] = $collection->access_collection_id;
+				}
+				
+				$query = "select ag.id from {$CONFIG->dbprefix}access_collections ag  ";
+				$query .= " where ag.owner_guid = {$user_id} and (ag.site_guid = {$site_id} or ag.site_guid = 0)";
+				
+				if ($collections = get_data($query)) {
+					foreach($collections as $collection)
+						if (!empty($collection->id)) $tmp_access_array[] = $collection->id;
 				}
 				
 				$access_array[$user_id] = $tmp_access_array;
