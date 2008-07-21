@@ -13,6 +13,8 @@
 	
 	$limit = get_input("limit", 10);
 	$offset = get_input("offset", 0);
+	
+	$title = sprintf(elgg_echo("groups:yours"),page_owner_entity()->name);
 
 	// Get objects
 	$context = get_context();
@@ -21,8 +23,10 @@
 	$objects = list_entities("group", "", page_owner(), $limit, false);
 	set_context($context);
 	
-	$body = elgg_view_layout('one_column',$objects);
+	$body = elgg_view_title($title);
+	$body .= $objects;
+	$body = elgg_view_layout('one_column',$body);
 	
 	// Finally draw the page
-	page_draw(sprintf(elgg_echo("groups:yours"),page_owner_entity()->name), $body);
+	page_draw($title, $body);
 ?>

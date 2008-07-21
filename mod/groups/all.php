@@ -27,10 +27,13 @@
 		
 	set_context($context);
 	
-	$body = elgg_view_layout('one_column',$objects);
+	$title = sprintf(elgg_echo("groups:all"),page_owner_entity()->name);
+	$body = elgg_view_title($title);
+	$body .= $objects;
+	$body = elgg_view_layout('one_column',$body);
 	
 	// Finally draw the page
-	page_draw(sprintf(elgg_echo("groups:all"),page_owner_entity()->name), $body);
+	page_draw($title, $body);
 
 
 

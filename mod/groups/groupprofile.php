@@ -15,8 +15,9 @@
 	
 	$group = get_entity($group_guid);
 	
-	
-	$body = elgg_view_layout('one_column', elgg_view('group/group', array('entity' => $group, 'user' => $_SESSION['user'], 'full' => true)));
+	$body = elgg_view_title($group->name);
+	$body .= elgg_view('group/group', array('entity' => $group, 'user' => $_SESSION['user'], 'full' => true));
+	$body = elgg_view_layout('one_column', $body);
 	
 	//$body .= elgg_view_layout('widgets', "", "", elgg_echo('groups:nowidgets'));
 	

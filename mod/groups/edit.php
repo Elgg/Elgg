@@ -15,13 +15,18 @@
 	$group_guid = get_input('group_guid');
 	$group = get_entity($group_guid);
 	
+	$title = elgg_echo("groups:new");
+	$body = elgg_view_title($title);
+	
 	if (($group) && ($group->canEdit()))
 	{
-		$body = elgg_view_layout('one_column', elgg_view("forms/groups/edit", array('entity' => $group)));
+		$body .= elgg_view("forms/groups/edit", array('entity' => $group));
 			 
 	} else {
-		$body = elgg_echo("groups:noaccess");
+		$body .= elgg_echo("groups:noaccess");
 	}
 	
-	page_draw(elgg_echo("groups:new"), $body);
+	$body = elgg_view_layout('one_column', $body);
+	
+	page_draw($title, $body);
 ?>
