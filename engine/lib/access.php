@@ -120,7 +120,10 @@
 			//{
 				$access = get_access_list();
 				
-				$sql = " ({$table_prefix}access_id in {$access} or ({$table_prefix}access_id = 0 and {$table_prefix}owner_guid = {$_SESSION['id']}))";
+				$owner = $_SESSION['id'];
+				if (!$owner) $owner = -1;
+				
+				$sql = " ({$table_prefix}access_id in {$access} or ({$table_prefix}access_id = 0 and {$table_prefix}owner_guid = $owner))";
 			//}
 			//else
 			//	$sql = " 1 ";
