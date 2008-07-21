@@ -17,6 +17,8 @@
 	$offset = get_input("offset", 0);
 	$view = get_input("view");
 
+	$title = sprintf(elgg_echo("opendd:your"),page_owner_entity()->name);
+	
 	$opendd = get_river_entries_as_opendd(page_owner(), "", $limit, $offset);
 
 	if ($view=='odd')
@@ -54,6 +56,8 @@
 			$cnt++;
 		}
 		
+		$body = elgg_view_title($title);
+		
 		$context = get_context();
 		set_context('search');
 		$body .= elgg_view_entity_list($objects, $cnt, $offset, $limit, false);
@@ -71,6 +75,6 @@
 		$body = elgg_view_layout('one_column',$body);
 		
 		// Finally draw the page
-		page_draw(sprintf(elgg_echo("opendd:your"),page_owner_entity()->name), $body);
+		page_draw($title, $body);
 	}
 ?>

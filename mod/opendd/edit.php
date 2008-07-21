@@ -11,9 +11,11 @@
 
 	require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 	
-	$form = elgg_view('forms/opendd/subscribe', array('entity' => get_entity(get_input('feed_guid'))));
+	$title = elgg_echo("opendd:edit");
+	$form = elgg_view_title($title);
+	$form .= elgg_view('forms/opendd/subscribe', array('entity' => get_entity(get_input('feed_guid'))));
 	
 	$body = elgg_view_layout('one_column',$form);
 	
-	page_draw(elgg_echo("opendd:edit"), $body);
+	page_draw($title, $body);
 ?>

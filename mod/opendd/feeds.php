@@ -11,6 +11,7 @@
 
 	$limit = get_input("limit", 10);
 	$offset = get_input("offset", 0);
+	$title = elgg_echo("opendd:feeds");
 	
 	$context = get_context();
 	
@@ -19,7 +20,7 @@
 		
 	set_context($context);
 	
-	$body = elgg_view_layout('one_column', $objects);
+	$body = elgg_view_layout('one_column', elgg_view_title($title) . $objects);
 	
-	page_draw(elgg_echo("opendd:feeds"), $body);
+	page_draw($title, $body);
 ?>

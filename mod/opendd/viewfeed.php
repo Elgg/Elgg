@@ -16,6 +16,7 @@
 	$entity = get_entity(get_input('feed_guid'));
 	$limit = get_input("limit", 10);
 	$offset = get_input("offset", 0);
+	
 		
 	$body = elgg_view('opendd/profile', array('entity' => $entity));
 	
@@ -72,6 +73,9 @@
 	else
 		$body .= sprintf(elgg_echo('opendd:nodata'), $http_response_header[0]);
 	
+	
+	$title = $entity->feedurl;
+		
 	// Finally draw the page
-	page_draw($vars['entity']->feedurl,elgg_view_layout('one_column', $body));
+	page_draw($title,elgg_view_layout('one_column', elgg_view_title($title) . $body));
 ?>

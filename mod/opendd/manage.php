@@ -13,6 +13,7 @@
 
 	$limit = get_input("limit", 10);
 	$offset = get_input("offset", 0);
+	$title = elgg_echo("opendd:manage");
 	
 	$form = elgg_view('forms/opendd/subscribe');
 
@@ -23,7 +24,7 @@
 		
 	set_context($context);
 	
-	$body = elgg_view_layout('one_column',$form . $objects);
+	$body = elgg_view_layout('one_column',elgg_view_title($title) . $form . $objects);
 	
-	page_draw(elgg_echo("opendd:manage"), $body);
+	page_draw($title, $body);
 ?>
