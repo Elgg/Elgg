@@ -39,4 +39,4 @@
     }
     
 ?>
-<input type="text" <?php echo $vars['js']; ?> name="<?php echo $vars['internalname']; ?>" value="<?php echo htmlentities($tags); ?>" class="input-tags"/> 
+<input type="text" <?php if ($vars['disabled']) echo ' disabled="yes" '; ?><?php echo $vars['js']; ?> name="<?php echo $vars['internalname']; ?>" value="<?php echo htmlentities($tags); ?>" class="input-tags"/> 

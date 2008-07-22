@@ -22,7 +22,7 @@
 ?>
 
 
-<select name="<?php echo $vars['internalname']; ?>" <?php echo $vars['js']; ?>>
+<select name="<?php echo $vars['internalname']; ?>" <?php echo $vars['js']; ?> <?php if ($vars['disabled']) echo ' disabled="yes" '; ?>>
 <?php
 	if ($vars['options_values'])
 	{

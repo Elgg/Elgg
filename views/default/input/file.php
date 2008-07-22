@@ -21,4 +21,4 @@
     }
 
 ?>
-<input type="file" size="30" <?php echo $vars['js']; ?>name="<?php echo $vars['internalname']; ?>" />
+<input type="file" size="30" <?php echo $vars['js']; ?>name="<?php echo $vars['internalname']; ?>" <?php if ($vars['disabled']) echo ' disabled="yes" '; ?> />

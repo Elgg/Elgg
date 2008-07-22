@@ -37,7 +37,9 @@
         if ("{$label}" == "{$labelint}") {
         	$label = $option;
         }
-        echo "<label><input type=\"checkbox\" {$vars['js']} name=\"{$vars['internalname']}[]\" {$selected} value=\"".htmlentities($option)."\" {$selected} />{$label}</label><br />";
+        
+        if ($vars['disabled']) $disabled = ' disabled="yes" '; 
+        echo "<label><input type=\"checkbox\" $disabled {$vars['js']} name=\"{$vars['internalname']}[]\" {$selected} value=\"".htmlentities($option)."\" {$selected} />{$label}</label><br />";
     }
 
 ?> 

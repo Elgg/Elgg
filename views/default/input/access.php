@@ -27,7 +27,7 @@
 			 
 ?>
 
-<select name="<?php echo $vars['internalname']; ?>" <?php if (isset($vars['js'])) echo $vars['js']; ?>>
+<select name="<?php echo $vars['internalname']; ?>" <?php if (isset($vars['js'])) echo $vars['js']; ?> <?php if ($vars['disabled']) echo ' disabled="yes" '; ?>>
 <?php
 
     foreach($vars['options'] as $key => $option) {
