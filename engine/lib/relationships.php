@@ -478,9 +478,9 @@
 		if ($subtype)
 			$where[] = "e.subtype=$subtype";
 		if ($owner_guid != "")
-			$where[] = "e.owner_guid='$owner_guid'";
+			$where[] = "e.container_guid='$owner_guid'";
 		if ($site_guid > 0)
-			$where[] = "e.site_guid = {$site_guid}";
+			$where[] = "e.container_guid = {$site_guid}";
 		
 		// Select what we're joining based on the options
 		$joinon = "e.guid = r.guid_one";

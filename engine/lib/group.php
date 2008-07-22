@@ -540,12 +540,12 @@
 		if ($owner_guid != "") {
 			if (!is_array($owner_guid)) {
 				$owner_guid = (int) $owner_guid;
-				$where[] = "e.owner_guid = '$owner_guid'";
+				$where[] = "e.container_guid = '$owner_guid'";
 			} else if (sizeof($owner_guid) > 0) {
 				// Cast every element to the owner_guid array to int
 				$owner_guid = array_map("sanitise_int", $owner_guid);
 				$owner_guid = implode(",",$owner_guid);
-				$where[] = "e.owner_guid in ({$owner_guid})";
+				$where[] = "e.container_guid in ({$owner_guid})";
 			}
 		}
 		if ($site_guid > 0)
@@ -633,9 +633,9 @@
 		if ($container_guid > 0)
 			$where[] = "e.container_guid = {$container_guid}";
 		if (is_array($owner_guid)) {
-			$where[] = "e.owner_guid in (".implode(",",$owner_guid).")";
+			$where[] = "e.container_guid in (".implode(",",$owner_guid).")";
 		} else if ($owner_guid > 0)
-			$where[] = "e.owner_guid = {$owner_guid}";
+			$where[] = "e.container_guid = {$owner_guid}";
 		
 		if (!$count) {
 			$query = "SELECT distinct e.* "; 

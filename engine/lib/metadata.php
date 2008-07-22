@@ -598,7 +598,7 @@
 		if ($site_guid > 0)
 			$where[] = "e.site_guid = {$site_guid}";
 		if ($owner_guid > 0)
-			$where[] = "e.owner_guid = {$owner_guid}";
+			$where[] = "e.container_guid = {$owner_guid}";
 		
 		if ($count) {
 			$query = "SELECT count(e.guid) as total ";
