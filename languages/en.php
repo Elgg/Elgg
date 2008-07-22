@@ -397,6 +397,8 @@
 			'spotlight' => "Spotlight",
 			'all' => "All",
 	
+			'by' => 'by',
+	
 		/**
 		 * Input / output strings
 		 */
