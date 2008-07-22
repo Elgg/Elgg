@@ -15,6 +15,8 @@
 
 	$group = $vars['entity'];
 	
+	if ($group instanceof ElggGroup) {
+	
 	// Get size
 	if (!in_array($vars['size'],array('small','medium','large','tiny','master','topbar')))
 		$vars['size'] = "medium";
@@ -38,3 +40,9 @@
 <div class="groupicon">
 <a href="<?php echo $vars['entity']->getURL(); ?>" class="icon" ><img src="<?php echo $vars['url']; ?>mod/groups/graphics/icon.php?group_guid=<?php echo $group->getGUID(); ?>&size=<?php echo $vars['size']; ?>" border="0" <?php echo $align; ?> title="<?php echo $name; ?>" <?php echo $vars['js']; ?> /></a>
 </div>
+
+<?php
+
+	}
+
+?>
