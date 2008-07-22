@@ -14,7 +14,7 @@
 
         echo "<div id=\"profile_menu_wrapper\">"; //start the wrapper div
 	    echo elgg_view("groups/menu/actions",$vars);
-	    echo elgg_view("groups/menu/ownerlinks",$vars); 
+	    echo elgg_view("groups/menu/links",$vars); 
 	    echo "</div>"; //close wrapper div 
 	    
     } else {
