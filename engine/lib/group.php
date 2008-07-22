@@ -120,6 +120,15 @@
 			return can_write_to_container($user_guid, $this->getGUID());
 		}
 		
+		public function get($name) {
+			
+			if ($name == 'username') {
+				return 'group:' . $this->getGUID();
+			}
+			return parent::get($name);
+			
+		}
+		
 	/**
 	 * Start friendable compatibility block:
 	 * 
@@ -227,6 +236,7 @@
 			return get_group_members($this->getGUID(), $limit, $offset, 0 , $count);
 		}
 
+		
 		
 		/**
 		 * Returns whether the current group is public membership or not.
@@ -790,6 +800,5 @@
 	{
 		return get_entities_from_relationship('member', $user_guid, true);
 	}
-	
 	
 ?>

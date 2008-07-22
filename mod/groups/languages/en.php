@@ -24,6 +24,7 @@
 	
 			'groups:icon' => 'Group icon (leave blank to leave unchanged)',
 			'groups:name' => 'Group name',
+			'groups:username' => 'Group short name (displayed in URLs, alphanumeric characters only)',
 			'groups:description' => 'Description',
 			'groups:interests' => 'Interests',
 			'groups:website' => 'Website',

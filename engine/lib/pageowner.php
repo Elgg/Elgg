@@ -28,17 +28,20 @@
             }
             
 	        if ($username = get_input("username")) {
+	        	if (substr_count($username,'group:')) {
+	            	preg_match('/group\:([0-9]+)/i',$username,$matches);
+	            	$guid = $matches[1];
+	            	if ($entity = get_entity($guid)) {
+	            		return $entity->getGUID();
+	            	}
+	            }
 	            if ($user = get_user_by_username($username)) {
 	            	return $user->getGUID();
-	            } else {
-	            	return 0;
 	            }
 	        }
 	        if ($owner = get_input("owner_guid")) {
 	            if ($user = get_entity($owner)) {
 	            	return $user->getGUID();
-	            } else {
-	            	return 0;
 	            }
 	        }
             if (!empty($CONFIG->page_owner_handlers) && is_array($CONFIG->page_owner_handlers)) {
