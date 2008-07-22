@@ -31,7 +31,6 @@
 		{
 			parent::initialise_attributes();
 			
-			$this->attributes['container_guid'] = $_SESSION['id'];
 			$this->attributes['type'] = "object";
 			$this->attributes['title'] = "";
 			$this->attributes['description'] = "";
@@ -61,7 +60,7 @@
 				// Is $guid is an ElggObject? Use a copy constructor
 				else if ($guid instanceof ElggObject)
 				{					
-					 foreach ($guid->attributes as $key => $value)
+					 foreach ($guid->attributes as $key => $value) 
 					 	$this->attributes[$key] = $value;
 				}
 				
