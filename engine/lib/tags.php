@@ -127,9 +127,9 @@
 			$query .= " and e.type = '{$entity_type}' ";
 		}
 		if (is_array($owner_guid)) {
-			$query .= " and e.owner_guid in (".implode(",",$owner_guid).")";
+			$query .= " and e.container_guid in (".implode(",",$owner_guid).")";
 		} else if (is_int($owner_guid)) {
-			$query .= " and e.owner_guid = {$owner_guid} ";
+			$query .= " and e.container_guid = {$owner_guid} ";
 		}
 		
 		$query .= " and (e.access_id in {$access} or (e.access_id = 0 and e.owner_guid = {$_SESSION['id']}))";

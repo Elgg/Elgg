@@ -491,9 +491,9 @@
 		if ($site_guid > 0)
 			$where[] = "e.site_guid = {$site_guid}";
 		if (is_array($owner_guid)) {
-			$where[] = "e.owner_guid in (".implode(",",$owner_guid).")";
+			$where[] = "e.container_guid in (".implode(",",$owner_guid).")";
 		} else if ($owner_guid > 0)
-			$where[] = "e.owner_guid = {$owner_guid}";
+			$where[] = "e.container_guid = {$owner_guid}";
 		
 		if (!$count) {
 			$query = "SELECT distinct e.* "; 
