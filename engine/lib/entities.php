@@ -487,11 +487,19 @@
 				$this->attributes['guid'] = create_entity($this->attributes['type'], $this->attributes['subtype'], $this->attributes['owner_guid'], $this->attributes['access_id'], $this->attributes['site_guid'], $this->attributes['container_guid']); // Create a new entity (nb: using attribute array directly 'cos set function does something special!)
 				if (!$this->attributes['guid']) throw new IOException(elgg_echo('IOException:BaseEntitySaveFailed')); 
 				
-				// Save any unsaved metadata
+				// Save any unsaved metadata TODO: How to capture extra information (access id etc)
 				if (sizeof($this->temp_metadata) > 0) {
 					foreach($this->temp_metadata as $name => $value) {
 						$this->$name = $value;
 						unset($this->temp_metadata[$name]);
+					}
+				}
+				
+				// Save any unsaved annotations metadata. TODO: How to capture extra information (access id etc)
+				if (sizeof($this->temp_annotations) > 0) {
+					foreach($this->temp_annotations as $name => $value) {
+						$this->annotate($name, $value);
+						unset($this->temp_annotations[$name]);
 					}
 				}
 				
