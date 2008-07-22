@@ -27,6 +27,7 @@
 	 * @subpackage Core
 	 */
 	class ElggUser extends ElggEntity
+		implements Friendable
 	{
 		/**
 		 * Initialise the attributes array. 

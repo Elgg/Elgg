@@ -17,6 +17,7 @@
 	 * @author Marcus Povey
 	 */
 	class ElggGroup extends ElggEntity
+		implements Friendable
 	{
 		protected function initialise_attributes()
 		{
@@ -119,21 +120,100 @@
 			return can_write_to_container($user_guid, $this->getGUID());
 		}
 		
+	/**
+	 * Start friendable compatibility block:
+	 * 
+	 * 	public function addFriend($friend_guid);
+		public function removeFriend($friend_guid);
+		public function isFriend();
+		public function isFriendsWith($user_guid);
+		public function isFriendOf($user_guid);
+		public function getFriends($subtype = "", $limit = 10, $offset = 0);
+		public function getFriendsOf($subtype = "", $limit = 10, $offset = 0);
+		public function getObjects($subtype="", $limit = 10, $offset = 0);
+		public function getFriendsObjects($subtype = "", $limit = 10, $offset = 0);
+		public function countObjects($subtype = "");
+	 */
+		
+		/**
+		 * For compatibility with Friendable
+		 */
+		public function addFriend($friend_guid) {
+			return $this->join(get_entity($friend_guid));
+		}
+		
+		/**
+		 * For compatibility with Friendable
+		 */
+		public function removeFriend($friend_guid) {
+			return $this->leave(get_entity($friend_guid));
+		}
+
+		/**
+		 * For compatibility with Friendable
+		 */
+		public function isFriend() {
+			return $this->isMember();
+		}
+		
+		/**
+		 * For compatibility with Friendable
+		 */
+		public function isFriendsWith($user_guid) {
+			return $this->isMember($user_guid);
+		}
+		
+		/**
+		 * For compatibility with Friendable
+		 */
+		public function isFriendOf($user_guid) {
+			return $this->isMember($user_guid);
+		}
+		
+		/**
+		 * For compatibility with Friendable
+		 */
+		public function getFriends($subtype = "", $limit = 10, $offset = 0) { 
+			return get_group_members($this->getGUID(), $limit, $offset); 
+		}
+		
+		/**
+		 * For compatibility with Friendable
+		 */
+		public function getFriendsOf($subtype = "", $limit = 10, $offset = 0) { 
+			return get_group_members($this->getGUID(), $limit, $offset); 
+		}
+		
 		/**
 		 * Get objects contained in this group.
 		 *
+		 * @param string $subtype
 		 * @param int $limit
 		 * @param int $offset
-		 * @param string $subtype
-		 * @param int $owner_guid
-		 * @param int $site_guid
-		 * @param string $order_by
 		 * @return mixed
 		 */
-		public function getObjects($limit = 10, $offset = 0, $subtype = "", $owner_guid = 0, $site_guid = 0, $order_by = "") 
+		public function getObjects($subtype="", $limit = 10, $offset = 0) 
 		{
-			return get_objects_in_group($this->getGUID(), $subtype, $owner_guid, $site_guid, $order_by, $limit, $offset, false);
+			return get_objects_in_group($this->getGUID(), $subtype, 0, 0, "", $limit, $offset, false);
 		}
+		
+		/**
+		 * For compatibility with Friendable
+		 */
+		public function getFriendsObjects($subtype = "", $limit = 10, $offset = 0) {
+			return get_objects_in_group($this->getGUID(), $subtype, 0, 0, "", $limit, $offset, false);
+		}
+		
+		/**
+		 * For compatibility with Friendable
+		 */
+		public function countObjects($subtype = "") {
+			return get_objects_in_group($this->getGUID(), $subtype, 0, 0, "", 10, 0, true);
+		}
+		
+	/**
+	 * End friendable compatibility block
+	 */
 		
 		/**
 		 * Get a list of group members.
@@ -146,34 +226,7 @@
 		{
 			return get_group_members($this->getGUID(), $limit, $offset, 0 , $count);
 		}
-		
-		/**
-		 * For compatibility with ElggUser
-		 */
-		public function getFriends($subtype = "", $limit = 10, $offset = 0) { 
-			return get_group_members($this->getGUID(), $limit, $offset); 
-		}
-		
-		/**
-		 * For compatibility with ElggUser
-		 */
-		public function getFriendsOf($subtype = "", $limit = 10, $offset = 0) { 
-			return get_group_members($this->getGUID(), $limit, $offset); 
-		}
-		
-		/**
-		 * For compatibility with ElggUser
-		 */
-		public function isFriend() {
-			return $this->isMember();
-		}
-		
-		/**
-		 * For compatibility with ElggUser
-		 */
-		public function isFriendOf() {
-			return $this->isMember();
-		}
+
 		
 		/**
 		 * Returns whether the current group is public membership or not.
