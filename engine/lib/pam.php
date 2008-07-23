@@ -21,14 +21,19 @@
 	 * 
 	 * @param string $handler The handler function in the format 
 	 * 		pam_handler($credentials = NULL);
+	 * @param string $importance The importance - "sufficient" or "required"
 	 */
-	function register_pam_handler($handler)
+	function register_pam_handler($handler, $importance = "sufficient")
 	{
 		global $_PAM_HANDLERS;
 		
 		if (is_callable($handler))
 		{
-			$_PAM_HANDLERS[$handler] = $handler;
+			$_PAM_HANDLERS[$handler] = new stdClass;
+			
+			$_PAM_HANDLERS[$handler]->handler = $handler;
+			$_PAM_HANDLERS[$handler]->importance = strtolower($importance);
+			
 			return true;
 		}
 		
@@ -49,27 +54,38 @@
 	{
 		global $_PAM_HANDLERS, $_PAM_HANDLERS_MSG;
 		
+		$authenticated = false;
+		
 		foreach ($_PAM_HANDLERS as $k => $v)
 		{
+			$handler = $v->handler;
+			$importance = $v->importance;
+			
 			try {
 				// Execute the handler 
-				if ($v($credentials))
+				if ($handler($credentials))
 				{
 					// Explicitly returned true
 					$_PAM_HANDLERS_MSG[$k] = "Authenticated!";
 
-					return true;
+					$authenticated = true;
 				}
 				else
+				{
 					$_PAM_HANDLERS_MSG[$k] = "Not Authenticated.";
+					
+					// If this is required then abort.
+					if ($importance == 'required')
+						return false;
+				}
 			} 
 			catch (Exception $e)
 			{
 				$_PAM_HANDLERS_MSG[$k] = "$e";
 			}	
 		}
-		
-		return false;
+
+		return $authenticated;
 	}
 	
 ?>
