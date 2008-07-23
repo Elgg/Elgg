@@ -132,6 +132,7 @@
 			'SecurityException:InvalidPostHash' => "POST data hash is invalid - Expected %s but got %s.",
 			'SecurityException:DupePacket' => "Packet signature already seen.",
 			'SecurityException:InvalidAPIKey' => "Invalid or missing API Key.",
+			'NotImplementedException:CallMethodNotImplemented' => "Call method '%s' is currently not supported.",
 	
 			'NotImplementedException:XMLRPCMethodNotImplemented' => "XML-RPC method call '%s' not implemented.",
 			'InvalidParameterException:UnexpectedReturnFormat' => "Call to method '%s' returned an unexpected result.",

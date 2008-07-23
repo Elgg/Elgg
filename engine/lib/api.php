@@ -247,12 +247,12 @@
 	 * 					type => 'int' | 'bool' | 'float' | 'string' | 'array'
 	 * 					required => true (default) | false  
 	 * 	 )
+	 * @param string $description Optional human readable description of the function.
 	 * @param string $call_method Define what call method should be used for this function.
 	 * @param bool $require_auth Whether this requires a user authentication token or not (default is true)
-	 * @param string $description Optional human readable description of the function.
 	 * @return bool
 	 */
-	function expose_function($method, $function, array $parameters = NULL, $call_method = "GET", $require_auth = true, $description = "")
+	function expose_function($method, $function, array $parameters = NULL, $description = "", $call_method = "GET", $require_auth = true,)
 	{
 		global $METHODS;
 		
@@ -429,7 +429,7 @@
 	}
 	
 	// Expose some system api functions
-	expose_function("system.api.list", "list_all_apis", NULL, "GET", false, "List all available API calls on the system.");
+	expose_function("system.api.list", "list_all_apis", NULL, "List all available API calls on the system.");
 
 	
 	// PAM AUTH HMAC functions ////////////////////////////////////////////////////////////////
@@ -679,6 +679,142 @@
 			
 		return false;
 	}
+	
+	// Client api functions ///////////////////////////////////////////////////////////////////
+	
+	$APICLIENT_LAST_CALL = NULL; 
+	$APICLIENT_LAST_CALL_RAW = ""; 
+	$APICLIENT_LAST_ERROR = NULL; 
+	
+	/**
+	 * Utility function to serialise a header array into its text representation.
+	 * 
+	 * @param $headers array The array of headers "key" => "value"
+	 * @return string 
+	 */
+	function serialise_api_headers(array $headers)
+	{
+		$headers_str = "";
+
+		foreach ($headers as $k => $v)
+			$headers_str .= trim($k) . ": " . trim($v) . "\r\n";
+
+		return trim($headers_str);		
+	}
+	
+	/**
+	 * Send a raw API call to an elgg api endpoint.
+	 *
+	 * @param array $keys The api keys.
+	 * @param string $url URL of the endpoint.
+	 * @param array $call Associated array of "variable" => "value"
+	 * @param string $method GET or POST
+	 * @param string $post_data The post data
+	 * @param string $content_type The content type
+	 * @return stdClass The unserialised response object
+	 */
+	function send_api_call(array $keys, $url, array $call, $method = 'GET', $post_data = '', $content_type = 'application/octet-stream')
+	{
+		global $APICLIENT_LAST_CALL, $APICLIENT_LAST_CALL_RAW, $APICLIENT_LAST_ERROR; 
+		
+		$headers = array();
+		$encoded_params = array();
+		
+		switch (strtoupper($method))
+		{
+			case 'GET' :
+			case 'POST' : $method = strtoupper($method); break;
+			default: throw new NotImplementedException(sprintf(elgg_echo('NotImplementedException:CallMethodNotImplemented'), $method));
+		}
+		
+		// Time
+		$time = microtime(true); 
+		
+		// Hard code the format - we're using PHP, so lets use PHP serialisation.
+		$method['format'] = "php";
+
+		// URL encode all the parameters
+		foreach ($method as $k => $v){
+			$encoded_params[] = urlencode($k).'='.urlencode($v);
+		}
+
+		$params = implode('&', $encoded_params);
+		
+		// Put together the query string
+		$url = $url . "?" . $params;
+		
+		// Construct headers
+		if ($method == 'POST') $posthash = calculate_posthash($postdata, 'md5');
+		
+		$headers['X-Elgg-apikey'] = $keys['public'];
+		$headers['X-Elgg-time'] = $time;
+		$headers['X-Elgg-hmac-algo'] = 'sha1';
+		$headers['X-Elgg-hmac'] = calculate_hmac('sha1', 
+									$time,
+									$keys['public'],
+									$keys['private'],
+									$params,
+									$posthash
+		);
+		if ($method == 'POST') 
+		{
+			$headers['X-Elgg-posthash'] = $posthash;
+			$headers['X-Elgg-posthash-algo'] = 'md5';
+			$headers['Content-type'] = $content_type;
+			$headers['Content-Length'] = strlen($postdata);
+		}
+		
+		// Opt array
+		$http_opts = array(
+			'method' => $method,
+			'header' => serialise_api_headers($headers)
+		);
+		if ($method == 'POST') $http_opts['content'] = $post_data;
+		
+		$opts = array('http' => $http_opts);
+		
+		// Send context
+		$context = stream_context_create($opts);
+		
+		// Send the query and get the result and decode.
+		$APICLIENT_LAST_CALL_RAW = file_get_contents($url, false, $context);
+		$APICLIENT_LAST_CALL = unserialize($APICLIENT_LAST_CALL_RAW);
+		
+		if (($APICLIENT_LAST_CALL) && ($APICLIENT_LAST_CALL->status!=0))
+			$APICLIENT_LAST_ERROR = $APICLIENT_LAST_CALL;
+		
+		return $APICLIENT_LAST_CALL;
+	}
+
+	/**
+	 * Send a GET call
+	 *
+	 * @param string $url URL of the endpoint.
+	 * @param array $call Associated array of "variable" => "value"
+	 * @param array $keys The keys dependant on chosen authentication method
+	 * @return stdClass The unserialised response object
+	 */
+	function send_api_get_call($url, array $call, array $keys) { return send_api_call($keys, $url, $call); }
+	
+	/**
+	 * Send a GET call
+	 *
+	 * @param string $url URL of the endpoint.
+	 * @param array $call Associated array of "variable" => "value"
+	 * @param array $keys The keys dependant on chosen authentication method
+	 * @param string $post_data The post data
+	 * @param string $content_type The content type
+	 * @return stdClass The unserialised response object
+	 */
+	function send_api_post_call($url, array $call, array $keys, $post_data, $content_type = 'application/octet-stream') { return send_api_call($url, $call, 'POST', $post_data, $content_type); }
+	
+	/**
+	 * Return a key array suitable for the API client using the standard authentication method based on api-keys and secret keys.
+	 *
+	 * @param string $secret_key Your secret key
+	 * @param string $api_key Your api key
+	 */
+	function get_standard_api_key_array($secret_key, $api_key) { return array('public' => $api_key, 'private' => $api_key); }
 	
 	// Error handler functions ////////////////////////////////////////////////////////////////
 	
