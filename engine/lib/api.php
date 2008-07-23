@@ -191,7 +191,7 @@
 	 * 					required => true (default) | false  
 	 * 				)
 	 * 			)
-	 * 			"require_auth" => true (default) | false
+	 * 			"require_auth_token" => true (default) | false
 	 * 			"description" => "Some human readable description"
 	 * 		)
 	 *  )
@@ -249,10 +249,11 @@
 	 * 	 )
 	 * @param string $description Optional human readable description of the function.
 	 * @param string $call_method Define what call method should be used for this function.
-	 * @param bool $require_auth Whether this requires a user authentication token or not (default is true)
+	 * @param bool $require_auth_token Whether this requires a user authentication token or not (default is true).
+	 * @param bool $anonymous Can anonymous (non-authenticated in any way) users execute this call. 
 	 * @return bool
 	 */
-	function expose_function($method, $function, array $parameters = NULL, $description = "", $call_method = "GET", $require_auth = true)
+	function expose_function($method, $function, array $parameters = NULL, $description = "", $call_method = "GET", $require_auth_token = true, $anonymous = false)
 	{
 		global $METHODS;
 		
@@ -279,7 +280,9 @@
 				
 			$METHODS[$method]["description"] = $description;
 			
-			$METHODS[$method]["require_auth"] = $require_auth;
+			$METHODS[$method]["require_auth_token"] = $require_auth_token;
+			
+			$METHODS[$method]["anonymous"] = $anonymous;
 			
 			return true;
 		}
@@ -313,101 +316,96 @@
 			{
 				$serialised_parameters = "";
 				
-				$validated_userid = validate_user_token($CONFIG->site_id, $token); 
-			
-				if ((!$METHODS[$method]["require_auth"]) || ($validated_userid) || (isloggedin()))
-				{
-					// If we have parameters then we need to sanitise the parameters.
-					if ((isset($METHODS[$method]["parameters"])) && (is_array($METHODS[$method]["parameters"]))) 
-					{
-						foreach ($METHODS[$method]["parameters"] as $key => $value)
-						{
-							if (
-								(is_array($value)) 			// Check that this is an array
-								&& (isset($value['type']))		// Check we have a type defined
-							)
-							{
-								// Check that the variable is present in the request
-	
-								if (
-									(!isset($parameters[$key])) &&				// No parameter
-									((!isset($value['required'])) || ($value['required']!=true)) // and not optional
-								)
-									throw new APIException(sprintf(elgg_echo('APIException:MissingParameterInMethod'), $key, $method));
-								else
-								{
-									// Avoid debug error
-									if (isset($parameters[$key]))
-									{
-										// Set variables casting to type.	
-										switch (strtolower($value['type']))
-										{
-											case 'int':
-											case 'integer' : $serialised_parameters .= "," . (int)trim($parameters[$key]); break;
-											case 'bool':
-											case 'boolean': 
-														if (strcasecmp(trim($parameters[$key]), "false")==0) 
-															$parameters[$key]='';
-																
-														$serialised_parameters .= "," . (bool)trim($parameters[$key]); 
-														break;
-											case 'string': $serialised_parameters .= ",'" .  (string)mysql_real_escape_string(trim($parameters[$key])) . "'"; 
-														break;
-											case 'float': $serialised_parameters .= "," . (float)trim($parameters[$key]); 
-														break;
-											case 'array':
-															$array = "array(";
-															
-															if (is_array($parameters[$key]))
-															{
-																foreach ($parameters[$key] as $k => $v)
-																{
-																	$k = sanitise_string($k);
-																	$v = sanitise_string($v);
-																	
-																	$array .= "'$k'=>'$v',";
-																}
-																
-																$array = trim($array,",");
-															}
-															else
-																throw APIException(sprintf(elgg_echo('APIException:ParameterNotArray'), $key));
-																
-															$array .= ")";
-															
-															$serialised_parameters .= $array;
-														break;
 				
-											default : throw new APIException(sprintf(elgg_echo('APIException:UnrecognisedTypeCast'), $value['type'], $key, $method));
-										}
+				// If we have parameters then we need to sanitise the parameters.
+				if ((isset($METHODS[$method]["parameters"])) && (is_array($METHODS[$method]["parameters"]))) 
+				{
+					foreach ($METHODS[$method]["parameters"] as $key => $value)
+					{
+						if (
+							(is_array($value)) 			// Check that this is an array
+							&& (isset($value['type']))		// Check we have a type defined
+						)
+						{
+							// Check that the variable is present in the request
+
+							if (
+								(!isset($parameters[$key])) &&				// No parameter
+								((!isset($value['required'])) || ($value['required']!=true)) // and not optional
+							)
+								throw new APIException(sprintf(elgg_echo('APIException:MissingParameterInMethod'), $key, $method));
+							else
+							{
+								// Avoid debug error
+								if (isset($parameters[$key]))
+								{
+									// Set variables casting to type.	
+									switch (strtolower($value['type']))
+									{
+										case 'int':
+										case 'integer' : $serialised_parameters .= "," . (int)trim($parameters[$key]); break;
+										case 'bool':
+										case 'boolean': 
+													if (strcasecmp(trim($parameters[$key]), "false")==0) 
+														$parameters[$key]='';
+															
+													$serialised_parameters .= "," . (bool)trim($parameters[$key]); 
+													break;
+										case 'string': $serialised_parameters .= ",'" .  (string)mysql_real_escape_string(trim($parameters[$key])) . "'"; 
+													break;
+										case 'float': $serialised_parameters .= "," . (float)trim($parameters[$key]); 
+													break;
+										case 'array':
+														$array = "array(";
+														
+														if (is_array($parameters[$key]))
+														{
+															foreach ($parameters[$key] as $k => $v)
+															{
+																$k = sanitise_string($k);
+																$v = sanitise_string($v);
+																
+																$array .= "'$k'=>'$v',";
+															}
+															
+															$array = trim($array,",");
+														}
+														else
+															throw APIException(sprintf(elgg_echo('APIException:ParameterNotArray'), $key));
+															
+														$array .= ")";
+														
+														$serialised_parameters .= $array;
+													break;
+			
+										default : throw new APIException(sprintf(elgg_echo('APIException:UnrecognisedTypeCast'), $value['type'], $key, $method));
 									}
 								}
 							}
-							else
-								throw new APIException(sprintf(elgg_echo('APIException:InvalidParameter'), $key, $method));
 						}
+						else
+							throw new APIException(sprintf(elgg_echo('APIException:InvalidParameter'), $key, $method));
 					}
-					
-					// Execute function: Construct function and calling parameters
-					$function = $METHODS[$method]["function"];
-					$serialised_parameters = trim($serialised_parameters, ", ");
-					
-					$result = eval("return $function($serialised_parameters);");
-				
-					// Sanity check result
-					if ($result instanceof GenericResult) // If this function returns an api result itself, just return it
-						return $result; 
-						
-					if ($result === FALSE)
-						throw new APIException(sprintf(elgg_echo('APIException:FunctionParseError'), $function, $serialised_parameters));
-						
-					if ($result ===  NULL)
-						throw new APIException(sprintf(elgg_echo('APIException:FunctionNoReturn'), $function, $serialised_parameters)); // If no value
-					
-					return SuccessResult::getInstance($result); // Otherwise assume that the call was successful and return it as a success object.	
 				}
-				else
-					throw new SecurityException(elgg_echo('SecurityException:AuthTokenExpired'), GenericResult::$RESULT_FAIL_AUTHTOKEN); 
+				
+				// Execute function: Construct function and calling parameters
+				$function = $METHODS[$method]["function"];
+				$serialised_parameters = trim($serialised_parameters, ", ");
+				
+				$result = eval("return $function($serialised_parameters);");
+			
+				// Sanity check result
+				if ($result instanceof GenericResult) // If this function returns an api result itself, just return it
+					return $result; 
+					
+				if ($result === FALSE)
+					throw new APIException(sprintf(elgg_echo('APIException:FunctionParseError'), $function, $serialised_parameters));
+					
+				if ($result ===  NULL)
+					throw new APIException(sprintf(elgg_echo('APIException:FunctionNoReturn'), $function, $serialised_parameters)); // If no value
+				
+				return SuccessResult::getInstance($result); // Otherwise assume that the call was successful and return it as a success object.	
+			 
 			}	
 			else
 				throw new CallException(sprintf(elgg_echo('CallException:InvalidCallMethod'), $method, $METHODS[$method]["call_method"]));
@@ -616,6 +614,49 @@
 	
 	// PAM functions //////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Function that examines whether an authentication token is present returning true if it is, OR the requested 
+	 * method doesn't require one.
+	 *
+	 * @param unknown_type $credentials
+	 */
+	function pam_auth_usertoken($credentials = NULL)
+	{
+		global $METHODS, $CONFIG;
+		
+		$method = get_input('method');
+		$token = get_input('token');
+		
+		if (($method) && ($token))
+		{
+			$validated_userid = validate_user_token($CONFIG->site_id, $token); 
+			
+			if ((!$METHODS[$method]["require_auth_token"]) || ($validated_userid) || (isloggedin()))
+				return true;
+			else
+				throw new SecurityException(elgg_echo('SecurityException:AuthTokenExpired'), GenericResult::$RESULT_FAIL_AUTHTOKEN);
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Test to see whether a given function has been declared as anonymous access (it doesn't require any auth token)
+	 *
+	 * @param unknown_type $credentials
+	 */
+	function pam_auth_anonymous_method($credentials = NULL)
+	{
+		global $METHODS, $CONFIG;
+		
+		$method = get_input('method');
+		
+		if ((isset($METHODS[$method]["anonymous"])) && ($METHODS[$method]["anonymous"]))
+			return true;
+		
+		return false;
+	}
+	
 	/**
 	 * See if the user has a valid login sesson.
 	 */

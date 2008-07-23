@@ -14,7 +14,7 @@
 	/**
 	 *  Start the Elgg engine
 	 */
-	require_once('../engine/start.php');
+	require_once("../../engine/start.php");
 	global $CONFIG;
 
 	// Register the error handler
@@ -31,6 +31,8 @@
 	// Register some default PAM methods, plugins can add their own
 	register_pam_handler('pam_auth_session');
 	register_pam_handler('pam_auth_hmac');
+	register_pam_handler('pam_auth_usertoken', 'required'); // Either token present and valid OR method doesn't require one.
+	register_pam_handler('pam_auth_anonymous_method'); // Support anonymous functions
 	
 	// Get parameter variables
 	$method = get_input('method');
