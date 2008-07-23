@@ -1433,9 +1433,209 @@ table.search_gallery {
 }
 	
 	
+/* ***************************************
+	friends collections accordian
+*************************************** */	
+ul#friends_collections_accordian {
+	margin: 0 0 0 0;
+	padding: 0;
+	border-bottom:1px solid #cccccc;
+}
+#friends_collections_accordian li {
+	margin: 0 0 0 0;
+	padding: 0;
+	list-style-type: none;
+	color: #666666;
+}
+#friends_collections_accordian li h2 {
+	background:#efefef;
+	color: #999999;
+	padding:4px 2px 4px 6px;
+	margin:0;
+	border-top:1px solid #cccccc;
+	font-size:1.2em;
+	cursor:pointer;
+}
+#friends_collections_accordian li h2:hover {
+	background:#4690D6;
+	color:white;
+}
+
+#friends_collections_accordian .friends_picker {
+	background:white;
+	padding:0;
+	display:none;
+}
+#friends_collections_accordian .friends_collections_controls {
+	font-size:70%;
+	float:right;
+}
+#friends_collections_accordian .friends_collections_controls a {
+	color:#999999;
+	font-weight:normal;
+}
+
+div.expandall {
+	margin: 20px 0 0 0;
+	padding:0;
+}
+div.expandall p {
+	cursor:pointer;
+	color:#999999;
+	text-align:right;
+	margin: 0;
+	padding:0;
+
+}
 	
 	
+/* ***************************************
+	friends picker
+*************************************** */		
+.friendsPicker_container h3 { font-size:3em; text-align: left; margin:0 0 20px 0; color:#999999; }
+
+.friendsPicker .friendsPicker_container .panel ul {
+	text-align: left;
+	margin: 0;
+	padding:0;
+}
+
+.friendsPicker_wrapper {
+	margin: 0;
+	padding:0;
+	position: relative;
+	width: 100%;
+}
+
+.friendsPicker {
+	/*position: relative;*/
+	overflow: hidden; 
+	margin: 0;
+	padding:0;
+	width: 755px;
+	height: 270px;
+	/*clear: right;*/
+	background: white;
+
+}
+
+.friendsPicker .friendsPicker_container { /* long container used to house end-to-end panels. Width is calculated in JS  */
+	position: relative;
+	left: 0; top: 0;
+	width: 100%;
+	list-style-type: none;
+	/* -moz-user-select: none; */
+}
+
+.friendsPicker .friendsPicker_container .panel {
+	float:left;
+	height: 100%;
+	position: relative;
+	width: 755px;
+	margin: 0;
+	padding:0;
+}
+
+.friendsPicker .friendsPicker_container .panel .wrapper {
+	margin: 0;
+	padding: 10px;
+	background: #efefef;
+	min-height: 230px;
+
+}
+
+.friendsPickerNavigation {
+	margin: 0 0 20px 0;
+	padding:0;
 	
+}
+
+.friendsPickerNavigation ul {
+	list-style: none;
+}
+
+.friendsPickerNavigation ul li {
+	float: left;
+	margin:0;
+	background:white;
+}
+
+.friendsPickerNavigation a {
+	font-weight: bold;
+	text-align: center;
+	background: white;
+	color: #999999;
+	text-decoration: none;
+	display: block;
+	padding: 0;
+	width:20px;
+}
+
+.tabHasContent {
+	background: white; color:#333333 !important;
+}
+/* 
+.friendsPickerNavigation li.tab22 a { background: white; color:#333333; }
+*/
+.friendsPickerNavigation li a:hover {
+	background: lime;
+	color:white;
+}
+
+.friendsPickerNavigation li a.current {
+	background: #4690D6;
+	color:white !important;
+}
+
+.friendsPickerNavigationAll {
+	margin:0px 0 0 20px;
+	float:left;
+}
+.friendsPickerNavigationAll a {
+	font-weight: bold;
+	text-align: left;
+	font-size:0.8em;
+	background: white;
+	color: #999999;
+	text-decoration: none;
+	display: block;
+	padding: 0 4px 0 4px;
+	width:auto;
+}
+.friendsPickerNavigationAll a:hover {
+	background: #4690D6;
+	color:white;
+}
+
+.friendsPickerNavigationL, .friendsPickerNavigationR {
+	position: absolute;
+	top: 120px;
+	text-indent: -9000em;
+}
+
+.friendsPickerNavigationL a, .friendsPickerNavigationR a {
+	display: block;
+	height: 87px;
+	width: 43px;
+}
+
+.friendsPickerNavigationL {
+	right: 78px;
+	z-index:1;
+}
+
+.friendsPickerNavigationR {
+	right: 20px;
+	z-index:1;
+}
+
+.friendsPickerNavigationL {
+	background: url("<?php echo $vars['url']; ?>_graphics/friends_picker_arrow_left.gif") no-repeat center;
+}
+
+.friendsPickerNavigationR {
+	background: url("<?php echo $vars['url']; ?>_graphics/friends_picker_arrow_right.gif") no-repeat center;
+}	
 	
 	
 	
