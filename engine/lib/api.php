@@ -252,7 +252,7 @@
 	 * @param bool $require_auth Whether this requires a user authentication token or not (default is true)
 	 * @return bool
 	 */
-	function expose_function($method, $function, array $parameters = NULL, $description = "", $call_method = "GET", $require_auth = true,)
+	function expose_function($method, $function, array $parameters = NULL, $description = "", $call_method = "GET", $require_auth = true)
 	{
 		global $METHODS;
 		
