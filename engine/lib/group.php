@@ -109,17 +109,6 @@
 			return remove_object_from_group($this->getGUID(), $guid);
 		}
 		
-		/**
-		 * Returns whether the given user (or current user) has the ability to write to this group.
-		 *
-		 * @param int $user_guid The user.
-		 * @return bool
-		 */
-		public function can_write_to_container($user_guid = 0)
-		{
-			return can_write_to_container($user_guid, $this->getGUID());
-		}
-		
 		public function get($name) {
 			
 			if ($name == 'username') {

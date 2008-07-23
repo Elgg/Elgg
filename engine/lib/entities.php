@@ -379,6 +379,17 @@
 		}
 		
 		/**
+		 * Returns whether the given user (or current user) has the ability to write to this group.
+		 *
+		 * @param int $user_guid The user.
+		 * @return bool
+		 */
+		public function canWriteToContainer($user_guid = 0)
+		{
+			return can_write_to_container($user_guid, $this->getGUID());
+		}
+		
+		/**
 		 * Obtain this entity's access ID
 		 *
 		 * @return int The access ID
