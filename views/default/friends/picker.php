@@ -46,6 +46,7 @@
 ?>
 
 <div class="friends_picker">
+	<div class="friendsPicker_wrapper">
 	<div id="friendsPicker<?php echo $friendspicker; ?>">
 		<div class="friendsPicker_container">
 <?php
@@ -77,7 +78,7 @@
 
 			<td>
 			
-				<input type="checkbox" name="shares[]" value="<?php echo $options[$label]; ?>" />
+				<input type="checkbox" name="<?php echo $internalname; ?>[]" value="<?php echo $options[$label]; ?>" />
 			
 			</td>
 
@@ -120,6 +121,7 @@
 		
 ?>
 		</div>
+	</div>
 	</div>
 </div>
 
