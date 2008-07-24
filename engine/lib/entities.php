@@ -618,6 +618,18 @@
 					case 'time_created' :	// Created = published
 						$odd->setAttribute('published', date("r", $v));
 					break;
+					
+					case 'site_guid' : // Container
+						$k = 'site_uuid';
+						$v = guid_to_uuid($v);
+						$meta = new ODDMetaData($uuid . "attr/$k/", $uuid, $k, $v);
+					break;
+					
+					case 'container_guid' : // Container
+						$k = 'container_uuid';
+						$v = guid_to_uuid($v);
+						$meta = new ODDMetaData($uuid . "attr/$k/", $uuid, $k, $v);
+					break;
 
 					case 'owner_guid' :			// Convert owner guid to uuid, this will be stored in metadata
 						 $k = 'owner_uuid';
