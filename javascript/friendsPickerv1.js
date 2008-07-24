@@ -89,11 +89,11 @@ jQuery.fn.friendsPicker = function(settings) {
 		});
 		
 		// manually add class to corresponding tab for panels that have content - needs to be automated eventually
-		$("div#friendsPickerNavigation"  + j + " li.tab3 a").addClass("tabHasContent");
-		$("div#friendsPickerNavigation"  + j + " li.tab6 a").addClass("tabHasContent");
-		$("div#friendsPickerNavigation"  + j + " li.tab9 a").addClass("tabHasContent");
-		$("div#friendsPickerNavigation"  + j + " li.tab17 a").addClass("tabHasContent");
-		$("div#friendsPickerNavigation"  + j + " li.tab22 a").addClass("tabHasContent");
+		//$("div#friendsPickerNavigation"  + j + " li.tab3 a").addClass("tabHasContent");
+		//$("div#friendsPickerNavigation"  + j + " li.tab6 a").addClass("tabHasContent");
+		//$("div#friendsPickerNavigation"  + j + " li.tab9 a").addClass("tabHasContent");
+		//$("div#friendsPickerNavigation"  + j + " li.tab17 a").addClass("tabHasContent");
+		//$("div#friendsPickerNavigation"  + j + " li.tab22 a").addClass("tabHasContent");
 		
 		// generate link to 'all friends in collection' - removed for now
 		//$("div#friendsPickerNavigation" + j).append("<div class='friendsPickerNavigationAll'><a href='#' >Collection members<\/a></div><br />");

@@ -132,15 +132,20 @@
 	});
 </script>
 <script>
+	jQuery(window).bind("load", function() {
 	// manually add class to corresponding tab for panels that have content - needs to be automated eventually
 <?php
-
 	if (sizeof($users) > 0)
+		$chararray = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		foreach($users as $letter => $gumph) {
+			$tab = strpos($chararray, $letter) + 1;
+			if (is_array($gumph) && sizeof($gumph)) {
 ?>
-	$("div#friendsPickerNavigation"  + j + " li.tab3 <?php echo $letter; ?>").addClass("tabHasContent");
+	$("div#friendsPickerNavigation<?php echo $friendspicker - 1; ?> li.tab<?php echo $tab; ?> a").addClass("tabHasContent");
 <?php			
+			}
 		}
 
 ?>
+	});
 </script>
