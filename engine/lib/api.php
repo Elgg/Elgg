@@ -410,7 +410,7 @@
 			else
 				throw new CallException(sprintf(elgg_echo('CallException:InvalidCallMethod'), $method, $METHODS[$method]["call_method"]));
 		}
-		
+	
 		// Return an error if not found
 		throw new APIException(sprintf(elgg_echo('APIException:MethodCallNotImplemented'), $method)); 
 	}
