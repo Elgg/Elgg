@@ -195,6 +195,8 @@
 			'friends:none' => "This user hasn't added anyone as a friend yet.",
 			'friends:none:you' => "You haven't added anyone as a friend! Search for your interests to begin finding people to follow.",
 	
+			'friends:none:found' => "No friends were found.",
+	
 			'friends:of:none' => "Nobody has added this user as a friend yet.",
 			'friends:of:none:you' => "Nobody has added you as a friend yet. Start adding content and fill in your profile to let people find you!",
 	

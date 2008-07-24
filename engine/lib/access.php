@@ -326,6 +326,26 @@
 			
 		}
 		
+		/**
+		 * Displays a user's access collections, using the friends/collections view
+		 *
+		 * @param int $owner_guid The GUID of the owning user
+		 * @return string A formatted rendition of the collections
+		 */
+		function elgg_view_access_collections($owner_guid) {
+			
+			if ($collections = get_user_access_collections($owner_guid)) {
+				
+				foreach($collections as $key => $collection) {
+					$collections[$key]->entities = get_members_of_access_collection($collection->id);
+				}
+				
+			}
+			
+			return elgg_view('friends/collections',array('collections' => $collections));
+			
+		}
+		
 	/**
 	 * Some useful constant definitions
 	 */

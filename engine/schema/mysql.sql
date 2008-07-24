@@ -74,13 +74,11 @@ CREATE TABLE `prefix_entity_relationships` (
 -- Table structure for table `access_collections`
 CREATE TABLE `prefix_access_collections` (
   `id` int(11) NOT NULL auto_increment,
-  `name` varchar(16) NOT NULL,
+  `name` text NOT NULL,
   `owner_guid` bigint(20) unsigned NOT NULL,
   `site_guid` bigint(20) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`),
-  KEY `name` (`name`)
 ) AUTO_INCREMENT=3;
-
 
 -- Access containers 
 CREATE TABLE `prefix_access_collection_membership` (
