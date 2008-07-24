@@ -22,7 +22,7 @@
 		}
 
 	// We need to count the number of friends pickers on the page.
-		static $friendspicker;
+		global $friendspicker;
 		if (!isset($friendspicker)) $friendspicker = 0;
 		$friendspicker++;
 
