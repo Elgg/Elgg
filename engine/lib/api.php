@@ -761,10 +761,11 @@
 		$headers = array();
 		$encoded_params = array();
 		
+		$method = strtoupper($method);
 		switch (strtoupper($method))
 		{
 			case 'GET' :
-			case 'POST' : $method = strtoupper($method); break;
+			case 'POST' :  break;
 			default: throw new NotImplementedException(sprintf(elgg_echo('NotImplementedException:CallMethodNotImplemented'), $method));
 		}
 		
@@ -847,7 +848,7 @@
 	 * @param string $content_type The content type
 	 * @return stdClass The unserialised response object
 	 */
-	function send_api_post_call($url, array $call, array $keys, $post_data, $content_type = 'application/octet-stream') { return send_api_call($url, $call, 'POST', $post_data, $content_type); }
+	function send_api_post_call($url, array $call, array $keys, $post_data, $content_type = 'application/octet-stream') { return send_api_call($keys, $url, $call, 'POST', $post_data, $content_type); }
 	
 	/**
 	 * Return a key array suitable for the API client using the standard authentication method based on api-keys and secret keys.
