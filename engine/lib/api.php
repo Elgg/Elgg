@@ -237,7 +237,7 @@
 	/**
 	 * Expose an arbitrary function as an api call.
 	 * 
-	 * Limitations: Currently can not expose functions which expect objects or arrays.
+	 * Limitations: Currently can not expose functions which expect objects.
 	 * 
 	 * @param string $method The api name to expose this as, eg "myapi.dosomething"
 	 * @param string $function Your function callback.
@@ -770,10 +770,10 @@
 		$time = microtime(true); 
 		
 		// Hard code the format - we're using PHP, so lets use PHP serialisation.
-		$method['format'] = "php";
+		$call['format'] = "php";
 
 		// URL encode all the parameters
-		foreach ($method as $k => $v){
+		foreach ($call as $k => $v){
 			$encoded_params[] = urlencode($k).'='.urlencode($v);
 		}
 
@@ -783,7 +783,7 @@
 		$url = $url . "?" . $params;
 		
 		// Construct headers
-		if ($method == 'POST') $posthash = calculate_posthash($postdata, 'md5');
+		if ($method == 'POST') $posthash = calculate_posthash($post_data, 'md5');
 		
 		$headers['X-Elgg-apikey'] = $keys['public'];
 		$headers['X-Elgg-time'] = $time;
@@ -800,7 +800,7 @@
 			$headers['X-Elgg-posthash'] = $posthash;
 			$headers['X-Elgg-posthash-algo'] = 'md5';
 			$headers['Content-type'] = $content_type;
-			$headers['Content-Length'] = strlen($postdata);
+			$headers['Content-Length'] = strlen($post_data);
 		}
 		
 		// Opt array
