@@ -13,7 +13,7 @@
 	/**
 	 * The api for the pinger.
 	 */
-	$NOTIFICATION_SERVER = "http://ping.elgg.org/services/api/rest.php";
+	$NOTIFICATION_SERVER = "http://hub/~icewing/Workingdirectory/elggnew/services/api/rest.php"; //"http://ping.elgg.org/services/api/rest.php";
 	
 	
 	/**
@@ -30,12 +30,12 @@
 		
 		return send_api_post_call($NOTIFICATION_SERVER,
 			array(
-				'method' => 'elgg.system.ping'
-			),
-			array(
+				'method' => 'elgg.system.ping',
+			
 				'version' => $version,
 				'release' => $release,
 			),
+			NULL,
 			$export,
 			'text/xml'
 		);
