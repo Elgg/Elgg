@@ -207,7 +207,7 @@
 			else
 			{
 				if ((int) $this->guid > 0) {
-					return create_metadata($this->getGUID(), $name, $value, $value_type, $this->getOwner(), $this->getAccessID());
+					return create_metadata($this->getGUID(), $name, $value, $value_type, $this->getOwner(), $this->getAccessID(), $multiple);
 				} else {
 					$this->temp_metadata[$name] = $value;
 					return true;
