@@ -627,15 +627,12 @@
 		$method = get_input('method');
 		$token = get_input('token');
 		
-		if (($method) && ($token))
-		{
-			$validated_userid = validate_user_token($CONFIG->site_id, $token); 
-			
-			if ((!$METHODS[$method]["require_auth_token"]) || ($validated_userid) || (isloggedin()))
-				return true;
-			else
-				throw new SecurityException(elgg_echo('SecurityException:AuthTokenExpired'), GenericResult::$RESULT_FAIL_AUTHTOKEN);
-		}
+		$validated_userid = validate_user_token($CONFIG->site_id, $token); 
+		
+		if ((!$METHODS[$method]["require_auth_token"]) || ($validated_userid) || (isloggedin()))
+			return true;
+		else
+			throw new SecurityException(elgg_echo('SecurityException:AuthTokenExpired'), GenericResult::$RESULT_FAIL_AUTHTOKEN);
 		
 		return false;
 	}
