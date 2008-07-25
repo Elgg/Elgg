@@ -35,7 +35,7 @@
 				'version' => $version,
 				'release' => $release,
 			),
-			NULL,
+			array(),
 			$export,
 			'text/xml'
 		);
