@@ -57,6 +57,14 @@
 				echo elgg_view("input/checkboxes", array('options' => array(elgg_echo('debug:label')), 'internalname' => 'debug', 'value' => ($vars['config']->debug ? elgg_echo('debug:label') : "") )); 
 			?>
 		</p>
+		
+		<p>
+			<?php echo elgg_echo('usage'); ?><br />
+			<?php 
+				echo elgg_view("input/checkboxes", array('options' => array(elgg_echo('usage:label')), 'internalname' => 'usage', 'value' => ($vars['config']->site_ping ? elgg_echo('usage') : "") )); 
+			?>
+		</p>
+		
 		<p>
 			<input type="hidden" name="settings" value="go" />
 			<input type="submit" value="<?php echo elgg_echo("save"); ?>" />
