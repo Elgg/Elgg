@@ -160,6 +160,66 @@ h6 { font-size: 0.8em; }
 	margin:0;
 	padding:10px 20px 20px 20px;
 }
+
+#layout_canvas {
+	margin:20px 20px 20px 20px;
+	min-height: 360px;
+}
+
+/* canvas layout: 2 column left sidebar */
+#two_column_left_sidebar {
+	width:170px;
+	margin:0;
+	min-height:360px;
+	float:left;
+	background: white;
+	padding:20px;
+	border-bottom:1px solid #cccccc;
+	border-right:1px solid #cccccc;
+}
+
+#two_column_left_sidebar_maincontent {
+	width:685px;
+	margin:0 0 0 20px;
+	min-height: 360px;
+	float:left;
+	background: white;
+	padding:20px;
+	border-bottom:1px solid #cccccc;
+	border-right:1px solid #cccccc;
+}
+
+/* canvas layout: 2 column right sidebar */
+#two_column_right_sidebar_maincontent {
+	width:685px;
+	margin:0 20px 0 0;
+	min-height:360px;
+	float:left;
+	background: white;
+	padding:20px;
+	border-bottom:1px solid #cccccc;
+	border-right:1px solid #cccccc;
+}
+
+#two_column_right_sidebar {
+	width:170px;
+	margin:0;
+	min-height: 360px;
+	float:left;
+	background: white;
+	padding:20px;
+	border-bottom:1px solid #cccccc;
+	border-right:1px solid #cccccc;
+}
+
+#owner_block {
+	background:#FDFFC3;
+}
+
+
+
+
+
 #layout_sidebar_left {
 	width: 160px;
 	float: left;
@@ -173,10 +233,7 @@ h6 { font-size: 0.8em; }
 	margin:0;
 }
 
-#layout_canvas {
-	margin:20px 20px 20px 160px;
-	min-height: 360px;
-}
+
 
 #layout_sidebar_right {
 	width:250px; /* 260-10*/
@@ -229,13 +286,18 @@ h6 { font-size: 0.8em; }
 #layout_maincontent.no_sidebar {
     padding:0px 0px 20px 20px !important;
 }
+
+/*
+
 #wrapper_maincontent.single_column {
-	/* width:785px;*/
 	background: white;
 	padding:14px 20px 20px 20px;
 	border-bottom:1px solid #cccccc;
 	border-right:1px solid #cccccc;
 }
+
+*/
+
 #wrapper_maincontent.content_area {
 	background: white;
 	padding:14px 20px 20px 20px;
@@ -938,6 +1000,8 @@ input[type="submit"] {
     width:300px;
     padding:10px;
     background: #ffffff;
+    
+    float:left;
 }
 #login-box-openid {
 	margin-top: 20px;
@@ -946,6 +1010,9 @@ input[type="submit"] {
     width:300px;
     padding:10px;
     background: #ffffff;
+    
+    float:left;
+    margin-left: 20px;
 }
 #login-box h2,
 #login-box-openid h2,
