@@ -13,9 +13,9 @@
 
 		require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
 		set_context('search');
-		$body = list_entities("","",0,10,false);
+		$area2 = list_entities("","",0,10,false);
 		set_context('entities');
-		$body = elgg_view_layout('one_column',$body);
+		$body = elgg_view_layout('two_column_left_sidebar',$area1, $area2);
 		echo page_draw("",$body);
 
 ?>
