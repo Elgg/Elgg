@@ -32,6 +32,7 @@
 	list-style-position:outside;
 	/*position:relative;
 	line-height:1.5em;*/
+	z-index: 999999;
 }
 
 #tools_menu {
