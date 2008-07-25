@@ -13,7 +13,7 @@
 	/**
 	 * The api for the pinger.
 	 */
-	$NOTIFICATION_SERVER = "http://hub/~icewing/Workingdirectory/elggnew/services/api/rest.php"; //"http://ping.elgg.org/services/api/rest.php";
+	$NOTIFICATION_SERVER = "http://ping.elgg.org/services/api/rest.php";
 	
 	
 	/**
