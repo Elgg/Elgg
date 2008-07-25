@@ -35,35 +35,11 @@
 <!-- display any system messages -->
 <?php echo elgg_view('messages/list', array('object' => $vars['sysmessages'])); ?>
 
-
-
-<!-- left sidebar -->
-<div id="layout_sidebar_left">
-<div id="wrapper_sidebar_left">
-    
-<?php 
-	//if logged in, display the toolbar, else display a sample ad
-	if(isloggedin()){
-		echo elgg_view("navigation/toolbox", $vars); 
-	}else{
-		//echo "<img src=\"{$vars['url']}_graphics/skyscraper.gif\" alt=\"sample skyscraper ad\" />";
-	}
-
-?>
-
-<?php echo $vars['sidebar']; ?>
-
-</div><!-- /#wrapper_sidebar_left -->
-</div><!-- /#layout_sidebar_left -->
-
-
 <!-- canvas -->
 <div id="layout_canvas">
-
-<?php echo $vars['body']; ?>
-<div class="clearfloat"></div>
+    <?php echo $vars['body']; ?>
+    <div class="clearfloat"></div>
 </div><!-- /#layout_canvas -->
-
 
 
 <!-- spotlight -->
