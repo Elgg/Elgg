@@ -180,6 +180,7 @@
 			if (isset($CONFIG->site) && (get_class($CONFIG->site) == "ElggSite")) {
 				$CONFIG->wwwroot = $CONFIG->site->url;
 				$CONFIG->sitename = $CONFIG->site->name;
+				$CONFIG->sitedescription = $CONFIG->site->description;
 			}
 			$CONFIG->url = $CONFIG->wwwroot;
 			

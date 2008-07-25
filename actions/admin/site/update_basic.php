@@ -44,8 +44,10 @@
 				unset_config('debug', $site->getGUID());
 				
 			
-			$site->save();
-			system_message(elgg_echo("admin:configuration:success"));
+			if ($site->save())
+				system_message(elgg_echo("admin:configuration:success"));
+			else
+				register_error(elgg_echo("admin:configuration:fail"));
 			
 			header("Location: {$CONFIG->wwwroot}admin/site/");
 			exit;
