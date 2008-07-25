@@ -770,7 +770,7 @@
 		$time = microtime(true); 
 		
 		// Hard code the format - we're using PHP, so lets use PHP serialisation.
-		$call['format'] = "php";
+		$call['view'] = "php";
 
 		// URL encode all the parameters
 		foreach ($call as $k => $v){
@@ -785,20 +785,24 @@
 		// Construct headers
 		if ($method == 'POST') $posthash = calculate_posthash($post_data, 'md5');
 		
-		$headers['X-Elgg-apikey'] = $keys['public'];
-		$headers['X-Elgg-time'] = $time;
-		$headers['X-Elgg-hmac-algo'] = 'sha1';
-		$headers['X-Elgg-hmac'] = calculate_hmac('sha1', 
-									$time,
-									$keys['public'],
-									$keys['private'],
-									$params,
-									$posthash
-		);
+		if ((isset($keys['public'])) && (isset($keys['private'])))
+		{
+			$headers['X-Elgg-apikey'] = $keys['public'];
+			$headers['X-Elgg-time'] = $time;
+			$headers['X-Elgg-hmac-algo'] = 'sha1';
+			$headers['X-Elgg-hmac'] = calculate_hmac('sha1', 
+										$time,
+										$keys['public'],
+										$keys['private'],
+										$params,
+										$posthash
+			);
+		}
 		if ($method == 'POST') 
 		{
 			$headers['X-Elgg-posthash'] = $posthash;
 			$headers['X-Elgg-posthash-algo'] = 'md5';
+			
 			$headers['Content-type'] = $content_type;
 			$headers['Content-Length'] = strlen($post_data);
 		}
