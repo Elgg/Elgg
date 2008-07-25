@@ -109,7 +109,7 @@
 
 			foreach($menu as $item) {
     			
-    			echo "<li><a href=\"{$item->value}">" . $item->name . "</a></li>";
+    			echo "<li><a href=\"{$item->value}\">" . $item->name . "</a></li>";
     			
 			} 
 				
