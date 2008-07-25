@@ -43,6 +43,11 @@
 			else
 				unset_config('debug', $site->getGUID());
 				
+			$usage = get_input('usage');
+			if ($usage)
+				unset_config('ping_home', $site->getGUID());
+			else
+				set_config('ping_home', 'disabled', $site->getGUID());
 			
 			if ($site->save())
 				system_message(elgg_echo("admin:configuration:success"));

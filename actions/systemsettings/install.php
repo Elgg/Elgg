@@ -42,6 +42,12 @@
 				set_config('debug', 1, $site->getGUID());
 			else
 				unset_config('debug', $site->getGUID());
+				
+			$usage = get_input('usage');
+			if ($usage)
+				unset_config('ping_home', $site->getGUID());
+			else
+				set_config('ping_home', 'disabled', $site->getGUID());
 			
 			// activate profile by default
 			enable_plugin('profile', $site->getGUID());

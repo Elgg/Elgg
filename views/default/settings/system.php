@@ -60,8 +60,12 @@
 		
 		<p>
 			<?php echo elgg_echo('usage'); ?><br />
-			<?php 
-				echo elgg_view("input/checkboxes", array('options' => array(elgg_echo('usage:label')), 'internalname' => 'usage', 'value' => ($vars['config']->site_ping ? elgg_echo('usage') : "") )); 
+			<?php
+				$on = elgg_echo('usage:label');
+				
+				if (isset($CONFIG->ping_home))
+					$on = ($vars['config']->ping_home!='disabled' ? elgg_echo('usage:label') : "");
+				echo elgg_view("input/checkboxes", array('options' => array(elgg_echo('usage:label')), 'internalname' => 'usage', 'value' => $on )); 
 			?>
 		</p>
 		

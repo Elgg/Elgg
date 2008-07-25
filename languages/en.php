@@ -485,7 +485,7 @@ Alternatively, you can enter your database settings below and we will try and do
 			'language' => "The default language for your site:",
 			'debug' => "Debug mode provides extra information which can be used to diagnose faults, however it can slow your system down so should only be used if you are having problems:",
 			'debug:label' => "Turn on debug mode",
-			'usage' => "This option lets Elgg send anonymous usage statistics back to Curverider",
+			'usage' => "This option lets Elgg send anonymous usage statistics back to Curverider.",
 			'usage:label' => "Send anonymous usage statistics",
 			'view' => "Enter the view which will be used as the default for your site (e.g. 'mobile') or leave this blank for the default view:",
 	

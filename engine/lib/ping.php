@@ -48,7 +48,7 @@
 	{	
 		global $CONFIG;
 		
-		if ($CONFIG->ping_home)
+		if ((!isset($CONFIG->ping_home)) || ($CONFIG->ping_home!='disabled'))
 		{
 			// Now run this stuff, but only once
 			run_function_once("ping_run_once");
