@@ -187,42 +187,13 @@ Choose the features you want to add to your page by dragging them from the <b>Wi
 		
 ?>
 
+<!-- profile box -->
+<?php echo $vars['area1']; ?>
+
+
 <!-- right sidebar -->
-<div id="layout_sidebar_right">
-<div id="wrapper_sidebar_right">
-
-<?php 
-   if($_SESSION['user']->guid == page_owner()){
-?>
-	<!-- customise page button -->
-	<a href="javascript:void(0);" class="toggle_customise_edit_panel">Customise Layout</a>
-	<div style="clear:both;"></div>
-<?php
- }
-?>
-
-
-	<?php if (isset($vars['area2'])) echo $vars['area2']; ?>
-	<?php
-
-		if (is_array($area2widgets) && sizeof($area2widgets) > 0)
-		foreach($area2widgets as $widget) {
-			echo elgg_view_entity($widget);
-		}
+<div id="widgets_left">
 	
-	?>
-
-
-</div><!-- /#wrapper_sidebar_right -->
-<p></p><!-- necessary to avoid an ie7 bug? -->
-</div><!-- /#layout_sidebar_right -->
-
-    
-<!-- main content -->
-<div id="layout_maincontent" class="has_sidebar_right">
-<div id="wrapper_maincontent">
-
-	<?php echo $vars['area1']; ?>
 	<?php
 
 		if (is_array($area1widgets) && sizeof($area1widgets) > 0)
@@ -232,9 +203,38 @@ Choose the features you want to add to your page by dragging them from the <b>Wi
 	
 	?>
 	
-</div><!-- /#wrapper_maincontent -->
-<p></p><!-- necessary to avoid an ie7 bug? -->
-</div><!-- /#layout_maincontent .has_sidebar_right -->	
+</div><!-- /#widgets_left -->
 
-<!-- This clearing element should immediately follow the #layout_maincontent to force the #container to contain all child floats -->
-<div class="clearfloat"></div>
+    
+<!-- main content -->
+<div id="widgets_middle">
+	
+	<?php if (isset($vars['area2'])) echo $vars['area2']; ?>
+	<?php
+
+		if (is_array($area2widgets) && sizeof($area2widgets) > 0)
+		foreach($area2widgets as $widget) {
+			echo elgg_view_entity($widget);
+		}
+	
+	?>
+	
+</div><!-- /#widgets_middle -->
+
+<?php 
+   if($_SESSION['user']->guid == page_owner()){
+?>
+	<!-- customise page button -->
+	<a href="javascript:void(0);" class="toggle_customise_edit_panel">Edit widgets</a>
+	<!-- <div style="clear:both;"></div> -->
+<?php
+ }
+?>
+
+<div id="widgets_right">
+<!-- this is where we need another widget column adding -->
+
+</div><!-- /#widgets_right -->	
+
+
+<!-- <div class="clearfloat"></div> -->

@@ -75,7 +75,7 @@ body {
 	margin:0 auto;
 	padding:0;
 	background: #4690d6;
-	font: 75%/1.5  "Lucida Grande", Verdana, sans-serif;
+	font: 80%/1.5  "Lucida Grande", Verdana, sans-serif;
 	color: #333333;
 	background: url(<?php echo $vars['url']; ?>_graphics/page_back_linen.gif) repeat left 1px;
 }
@@ -142,6 +142,7 @@ h6 { font-size: 0.8em; }
 #page_wrapper {
 	width:998px;
 	margin:0 auto;
+	padding:0;
 	min-height: 300px;
 	background: #f4f4f4;
 	border-right: 1px solid #333333;
@@ -150,7 +151,6 @@ h6 { font-size: 0.8em; }
 
 #layout_header {
 	text-align:left;
-	/* position:relative; */
 	width:100%;
 	height:67px;
 	border-bottom:1px solid #4690d6;
@@ -162,14 +162,16 @@ h6 { font-size: 0.8em; }
 }
 
 #layout_canvas {
-	margin:20px 20px 20px 20px;
+	margin:0;
+	padding:0;
 	min-height: 360px;
 }
+
 
 /* canvas layout: 1 column, no sidebar */
 #one_column {
 	width:918px;
-	margin:0;
+	margin:20px;
 	min-height: 360px;
 	background: white;
 	padding:20px;
@@ -180,7 +182,7 @@ h6 { font-size: 0.8em; }
 /* canvas layout: 2 column left sidebar */
 #two_column_left_sidebar {
 	width:170px;
-	margin:0;
+	margin:20px 0 20px 20px;
 	min-height:360px;
 	float:left;
 	background: white;
@@ -191,7 +193,7 @@ h6 { font-size: 0.8em; }
 
 #two_column_left_sidebar_maincontent {
 	width:685px;
-	margin:0 0 0 20px;
+	margin:20px;
 	min-height: 360px;
 	float:left;
 	background: white;
@@ -203,7 +205,7 @@ h6 { font-size: 0.8em; }
 /* canvas layout: 2 column right sidebar */
 #two_column_right_sidebar_maincontent {
 	width:685px;
-	margin:0 20px 0 0;
+	margin:20px;
 	min-height:360px;
 	float:left;
 	background: white;
@@ -214,7 +216,7 @@ h6 { font-size: 0.8em; }
 
 #two_column_right_sidebar {
 	width:170px;
-	margin:0;
+	margin:20px 20px 20px 0;
 	min-height: 360px;
 	float:left;
 	background: white;
@@ -223,10 +225,79 @@ h6 { font-size: 0.8em; }
 	border-right:1px solid #cccccc;
 }
 
+/* canvas layout: widgets (profile and dashboard) */
+#widgets_left {
+	width:306px;
+	margin:20px;
+	min-height:360px;
+	float:left;
+	background: white;
+	padding:0;
+}
+#widgets_middle {
+	width:306px;
+	margin:20px 0 20px 0;
+	min-height:360px;
+	float:left;
+	background: white;
+	padding:0;
+}
+#widgets_right {
+	width:306px;
+	margin:20px;
+	min-height:360px;
+	float:left;
+	background: white;
+	padding:0;
+}
+
+
+
+/* IE 6 temp fix  - for when page has no widgets */
+* html #widgets_left { 
+	height:360px;
+}
+* html #widgets_middle { 
+	height:360px;
+}
+* html #widgets_right { 
+	height:360px;
+}
 
 
 
 
+/* IE6 layout fixes */
+* html #profile_info_column_right {
+	margin:0 0 0 10px;
+}
+* html #two_column_left_sidebar {
+	width:170px;
+	margin:20px 10px 20px 10px;
+}
+* html #two_column_left_sidebar_maincontent {
+	width:685px;
+	margin:20px 10px 20px 10px;
+}
+* html #profile_info {
+
+}
+* html #widgets_left {
+	margin:20px 20px 20px 10px;
+}
+* html #widgets_middle {
+	margin:20px 20px 20px 0px;
+}
+* html #widgets_right {
+	margin:20px 0px 20px 0px;
+}
+* html a.toggle_customise_edit_panel { 
+	margin:20px 0px 0px 0px;
+}
+/* IE7 */
+*:first-child+html #wrapper_spotlight .collapsable_box_content {
+	width:958px;
+}
 
 
 #owner_block {
@@ -354,6 +425,7 @@ h6 { font-size: 0.8em; }
 
 #layout_spotlight {
 	padding:0;
+	margin:0;
 }
 #wrapper_spotlight {
 	margin:0;
@@ -441,6 +513,7 @@ h6 { font-size: 0.8em; }
 #elgg_topbar_container_left .toolbarlinks,
 #elgg_topbar_container_left .toolbarimages {
 	float:left;
+	margin-right:20px;
 }
 #elgg_topbar_container_left .toolbarlinks {
 	margin:3px 0 0 0;
@@ -555,9 +628,26 @@ h6 { font-size: 0.8em; }
 /* ***************************************
   WIDGET PICKER (PROFILE & DASHBOARD)
 *************************************** */
+/* open 'customise page' panel button */
+a.toggle_customise_edit_panel { 
+	float:left;
+	color: #4690d6;
+	background: white;
+	border:1px solid #cccccc;
+	padding: 5px 10px 5px 10px;
+	margin:20px 20px 0px 20px;
+	width:284px;
+	text-align: right;
+}
+a.toggle_customise_edit_panel:hover { 
+	color: #ffffff;
+	background: #0054a7;
+	text-decoration:none;
+}
+
 #customise_editpanel {
 	display:none;
-	margin: -20px 0 20px 20px;
+	margin: 0;
 	padding:20px;
 	background: #dedede;
 }
@@ -735,20 +825,6 @@ h6 { font-size: 0.8em; }
 /* ***************************************
   COLLAPSABLE BOXES
 *************************************** */
-/* open 'customise page' panel button */
-a.toggle_customise_edit_panel { 
-	float:right;
-	color: #4690d6;
-	background: #f5f5f5;
-	border:1px solid #cccccc;
-	padding: 5px 10px 5px 10px;
-	margin:0 0 20px 0;
-}
-a.toggle_customise_edit_panel:hover { 
-	color: #ffffff;
-	background: #0054a7;
-	text-decoration:none;
-}
 
 .collapsable_box {
 	margin: 0 0 20px 0;
@@ -823,15 +899,11 @@ a.toggle_customise_edit_panel:hover {
   System messages
 *************************************** */
 .messages {
-    /* 
-    border:1px solid #D3322A;
-    background:#F7DAD8;
-    */
     border:1px solid #00cc00;
     background:#ccffcc;
     color:#000000;
     padding:3px 10px 3px 10px;
-    margin:20px 20px 0px 180px;
+    margin:20px 20px 0px 20px;
     z-index: 99999;
     position:absolute;
     width:776px;
@@ -841,7 +913,7 @@ a.toggle_customise_edit_panel:hover {
     background:#F7DAD8;
     color:#000000;
     padding:3px 10px 3px 10px;
-    margin:20px 20px 0px 180px;
+    margin:20px 20px 0px 20px;
     z-index: 99999;
     position:absolute;
     width:776px;
@@ -1093,12 +1165,29 @@ input[type="submit"] {
 	PROFILE
 *************************************** */
 #profile_info {
-	margin:0 0 20px 0;
-	padding:10px;
+	margin:20px 20px 0 20px;
+	padding:20px;
 	border-bottom:1px solid #cccccc;
 	border-right:1px solid #cccccc;
 	background: white;
 }
+#profile_info_column_left {
+	float:left;
+	width:306px;
+	padding: 0;
+}
+#profile_info_column_middle {
+	float:left;
+	width:306px;
+}
+#profile_info_column_right {
+	float:left;
+	width:286px;
+	margin:0 0 0 20px;
+}
+
+
+
 #profile_menu_wrapper {
 	margin:10px 0 10px 0;
 }
@@ -1122,43 +1211,44 @@ p.user_menu_removefriend,
 p.user_menu_friends_of {
 	margin:0;
 }
-#profile_info_column_left {
-	float:left;
-	width:200px;
-	padding: 0 20px 0 0;
-}
-#profile_info_column_right {
-	float:left;
-	width:280px;
-	/* width:100%; */
-}
-/* IE6 fix */
-* html #profile_info_column_right { 
-	width:270px;
-}
-#profile_info_column_right p {
+
+#profile_info_column_middle p {
 	margin:7px 0 7px 0;
 	line-height:1.3em;
 	padding:2px 4px 2px 4px;
 }
-#profile_info_column_right .odd {
+/* profile owner name */
+#profile_info_column_middle h2 {
+	padding:0 0 14px 0;
+	margin:0;
+}
+#profile_info_column_middle .odd {
 	background:#f5f5f5;
 }
-#profile_info_wide p {
+#profile_info_column_right p {
 	margin:7px 0 7px 0;
 	line-height:1.4em;
 }
+/* edit profile button */
 #profile_info_column_right .profile_info_edit_buttons {
 	float:right;
 	margin:0;
 	padding:0;
 }
 #profile_info_column_right .profile_info_edit_buttons a {
+	color: #4690d6;
+	background: #f5f5f5;
+	border:1px solid #cccccc;
+	padding: 2px 3px 2px 3px;
 	margin:0;
-	padding:2px 4px 2px 4px;
-	border:1px solid #4690d6;
+	text-align: right;
+	display:block;
 }
-
+#profile_info_column_right .profile_info_edit_buttons a:hover { 
+	color: #ffffff;
+	background: #0054a7;
+	text-decoration:none;
+}
 
 /* ***************************************
 	RIVER

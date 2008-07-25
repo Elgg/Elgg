@@ -23,7 +23,7 @@
 
 ?>
 
-<table>
+<table cellspacing="0">
 <tr>
 <td>
 
@@ -55,26 +55,11 @@
 </td>
 <td>
 	
-	<div id="profile_info_column_right" >
-
-	<?php
-	
-		if ($vars['entity']->canEdit()) {
-
-	?>
-		<p class="profile_info_edit_buttons">
-			<a href="<?php echo $vars['url']; ?>mod/profile/edit.php"><?php echo elgg_echo("edit"); ?></a>
-		</p>
-	<?php
-
-		}
-		
-	?>
-
+	<div id="profile_info_column_middle" >
 	<?php 
 	
 	// display the users name
-	echo "<h2><a href=\"" . $vars['entity']->getUrl() . "\">" . $vars['entity']->name . "</a></h2> <br />";
+	echo "<h2><a href=\"" . $vars['entity']->getUrl() . "\">" . $vars['entity']->name . "</a></h2>";
 
 		if ($vars['full'] == true) {
 	
@@ -114,15 +99,33 @@
 		}
 	
 	?>
-	</div><!-- /#profile_info_column_right -->
+	</div><!-- /#profile_info_column_middle -->
 
+
+</td>
+<td>
+	<div id="profile_info_column_right">
+		<?php
+	
+		if ($vars['entity']->canEdit()) {
+
+	?>
+		<p class="profile_info_edit_buttons">
+			<a href="<?php echo $vars['url']; ?>mod/profile/edit.php"><?php echo elgg_echo("profile:editdetails"); ?></a>
+		</p>
+	<?php
+
+		}
+		
+	?>
+	
+	
+	<p><b><?php echo elgg_echo("profile:aboutme"); ?></b><br /><?php echo autop($vars['entity']->description); ?></p>
+	</div><!-- /#profile_info_column_right -->
 </td>
 </tr>
 </table>
 
-	<div id="profile_info_wide">
-	<p><b><?php echo elgg_echo("profile:aboutme"); ?></b><br /><?php echo autop($vars['entity']->description); ?></p>
 
-</div><!-- /#profile_info_wide -->
 
 </div><!-- /#profile_info -->

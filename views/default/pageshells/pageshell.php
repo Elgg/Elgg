@@ -35,11 +35,15 @@
 <!-- display any system messages -->
 <?php echo elgg_view('messages/list', array('object' => $vars['sysmessages'])); ?>
 
+
 <!-- canvas -->
 <div id="layout_canvas">
-    <?php echo $vars['body']; ?>
-    <div class="clearfloat"></div>
+
+<?php echo $vars['body']; ?>
+
+<div class="clearfloat"></div>
 </div><!-- /#layout_canvas -->
+
 
 
 <!-- spotlight -->
