@@ -12,6 +12,7 @@
 
 	/**
 	 * The api for the pinger.
+	 * TODO: Have this configurable and/or updatable
 	 */
 	$NOTIFICATION_SERVER = "http://ping.elgg.org/services/api/rest.php";
 	
