@@ -77,7 +77,7 @@ CREATE TABLE `prefix_access_collections` (
   `name` text NOT NULL,
   `owner_guid` bigint(20) unsigned NOT NULL,
   `site_guid` bigint(20) unsigned NOT NULL default '0',
-  PRIMARY KEY  (`id`),
+  PRIMARY KEY  (`id`)
 ) AUTO_INCREMENT=3;
 
 -- Access containers 
