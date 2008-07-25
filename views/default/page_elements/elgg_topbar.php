@@ -79,16 +79,6 @@
 
 </div><!-- /#elgg_topbar -->
 
-
-<!-- elgg user settings panel -->
-<!--
-<div id="elgg_topbar_panel">
-
-<p>user settings here</p>
-
-</div>
--->
-<!-- /#elgg_topbar_panel -->
 <div style="clear:both;"></div>
 
 <?php
