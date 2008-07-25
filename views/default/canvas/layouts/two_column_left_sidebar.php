@@ -15,14 +15,18 @@
 <!-- left sidebar -->
 <div id="two_column_left_sidebar">
 
-<?php echo $vars['area2']; ?>
+    <div id="owner_block">
+		<?php echo $vars['area1']; ?>
+	</div>
+
+    <?php echo $vars['area3']; ?>
 
 </div><!-- /two_column_left_sidebar -->
 
 <!-- main content -->
 <div id="two_column_left_sidebar_maincontent">
 
-<?php echo $vars['area1']; ?>
+<?php echo $vars['area2']; ?>
 
 </div><!-- /two_column_left_sidebar_maincontent -->
 
