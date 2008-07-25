@@ -478,6 +478,7 @@ Alternatively, you can enter your database settings below and we will try and do
 			'installation:settings:dbwizard:savefail' => "We were unable to save the new settings.php. Please save the following file as engine/settings.php using a text editor.",
 	
 			'sitename' => "The name of your site (eg \"My social networking site\"):",
+			'sitedescription' => "Short description of your site (optional)",
 			'wwwroot' => "The site URL, followed by a trailing slash:",
 			'path' => "The full path to your site root on your disk, followed by a trailing slash:",
 			'dataroot' => "The full path to the directory where uploaded files will be stored, followed by a trailing slash:",

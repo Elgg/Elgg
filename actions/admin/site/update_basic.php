@@ -26,6 +26,7 @@
 			if (!($site instanceof ElggSite)) 
 				throw new InstallationException(elgg_echo('InvalidParameterException:NonElggSite'));
 			
+			$site->description = get_input('sitedescription');
 			$site->name = get_input('sitename');
 			$site->url = get_input('wwwroot');
 			

@@ -20,6 +20,7 @@
 			$site = new ElggSite();
 			$site->name = get_input('sitename');
 			$site->url = get_input('wwwroot');
+			$site->description = get_input('sitedescription');
 			$site->access_id = 2; // The site is public
 			$guid = $site->save();
 			
