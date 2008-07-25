@@ -14,11 +14,8 @@
 ?>
 
 <!-- main content -->
-<div id="layout_maincontent" class="no_sidebar">
-<div id="wrapper_maincontent" class="single_column">
+<div id="one_column">
 
 <?php echo $vars['area1']; ?>
 
-</div><!-- /#wrapper_maincontent -->
-<p></p><!-- necessary to avoid an ie7 bug? -->
-</div><!-- /#layout_maincontent -->	
+</div><!-- /one_column -->	

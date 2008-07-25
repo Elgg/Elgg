@@ -166,6 +166,17 @@ h6 { font-size: 0.8em; }
 	min-height: 360px;
 }
 
+/* canvas layout: 1 column, no sidebar */
+#one_column {
+	width:918px;
+	margin:0;
+	min-height: 360px;
+	background: white;
+	padding:20px;
+	border-right: 1px solid #cccccc;
+	border-bottom: 1px solid #cccccc;
+}
+
 /* canvas layout: 2 column left sidebar */
 #two_column_left_sidebar {
 	width:170px;
@@ -212,12 +223,19 @@ h6 { font-size: 0.8em; }
 	border-right:1px solid #cccccc;
 }
 
+
+
+
+
+
+
 #owner_block {
 	background:#FDFFC3;
 }
 
 
 
+/*
 
 
 #layout_sidebar_left {
@@ -236,7 +254,7 @@ h6 { font-size: 0.8em; }
 
 
 #layout_sidebar_right {
-	width:250px; /* 260-10*/
+	width:250px; 
 	min-height: 260px;
 	float:right;
 	padding:0px 0px 20px 10px;
@@ -257,7 +275,6 @@ h6 { font-size: 0.8em; }
 	width:160px;
 	min-height: 260px;
 	float:right;
-	/* padding:0px 0px 20px 10px;*/
 	background: white;
 	padding:10px;
 	border-bottom:1px solid #cccccc;
@@ -271,14 +288,20 @@ h6 { font-size: 0.8em; }
 	margin:0;
 	
 }
+
+*/
 /* subclass for layout_maincontent when showing rhs sidebar */
+
+/*
 .has_sidebar_right {
     margin:0 260px 0 0 !important;
 }
 .has_narrow_sidebar_right {
     margin:0 190px 0 0 !important;
 }
+*/
 /* IE6 fix */
+/*
 * html #layout_maincontent { 
 	height:360px;
 }
@@ -286,6 +309,7 @@ h6 { font-size: 0.8em; }
 #layout_maincontent.no_sidebar {
     padding:0px 0px 20px 20px !important;
 }
+*/
 
 /*
 
@@ -297,6 +321,7 @@ h6 { font-size: 0.8em; }
 }
 
 */
+/*
 
 #wrapper_maincontent.content_area {
 	background: white;
@@ -305,6 +330,7 @@ h6 { font-size: 0.8em; }
 	border-right:1px solid #cccccc;
 }
 
+*/
 
 
 /* 
@@ -317,10 +343,14 @@ h6 { font-size: 0.8em; }
 	border: 1px solid #cccccc;
 }
 */
+/*
 #wrapper_maincontent .collapsable_box_content  {
 	margin:0;
-	/* padding:0; */
 }
+
+
+*/
+
 
 #layout_spotlight {
 	padding:0;
@@ -1426,36 +1456,18 @@ table.search_gallery {
 }	
 	
 /* ***************************************
-	page titles and submenu
+	owner block
 *************************************** */
-/* page titles 
-#canvas_header {
-	margin:0 0 20px 0;
-	padding:0 0 5px 0;
-	border-bottom:1px solid #4690d6;
-}
-*/
-#canvas_header_icon {
+#owner_block_icon {
 	float:left;
 	margin:0 10px 0 0;
-}
-	
-#canvas_header #canvas_header_content h2 {
-
-
 }	
-#canvas_header_content {
+#owner_block_content {
 	margin:0 0 10px 0;
 	padding:0 0 5px 0;
 	border-bottom:1px solid #4690d6;
 }
-/*
-#wrapper_maincontent.single_column {
-	margin:0;
-	padding:10px 20px;
-}
-*/
-#canvas_header_submenu {
+#owner_block_submenu {
 	margin:10px 0 10px 0;
 	padding: 0;
 	border-bottom: 1px solid #cccccc;
@@ -1463,11 +1475,12 @@ table.search_gallery {
 	width:100%;
 }
 
-#canvas_header_submenu ul {
+#owner_block ul {
 	list-style: none;
 	padding: 0;
 	margin: 0;
 }
+/*
 
 #canvas_header_submenu li {
 	float: left;
@@ -1499,7 +1512,8 @@ table.search_gallery {
 	color: #4690d6;
 }
 	
-	
+
+*/	
 /* ***************************************
 	friends collections accordian
 *************************************** */	
