@@ -20,6 +20,16 @@
 		} else {
 			$internalname = $vars['internalname'];
 		}
+		
+	// Initialise values
+		if (!isset($vars['value'])) {
+			$vars['value'] = array();
+		} else {
+			if (!is_array($vars['value'])) {
+				$vars['value'] = (int) $vars['value'];
+				$vars['value'] = array($vars['value']);
+			}
+		}
 
 	// We need to count the number of friends pickers on the page.
 		global $friendspicker;
@@ -27,6 +37,7 @@
 		$friendspicker++;
 
 		$users = array();
+		$activeletters = array();
 		
 	// Sort users by letter
 		if (is_array($vars['entities']) && sizeof($vars['entities']))
@@ -73,12 +84,19 @@
 					//echo "<p>" . $user->name . "</p>";
 					$label = elgg_view("profile/icon",array('entity' => $friend, 'size' => 'tiny')); 
 					$options[$label] = $friend->getGUID();
+					if (in_array($friend->getGUID(),$vars['value'])) {
+						$checked = "checked = \"checked\"";
+						if (!in_array($letter,$activeletters))
+							$activeletters[] = $letter;
+					} else {
+						$checked = "";
+					}
 
 ?>
 
 			<td>
 			
-				<input type="checkbox" name="<?php echo $internalname; ?>[]" value="<?php echo $options[$label]; ?>" />
+				<input type="checkbox" <?php echo $checked; ?> name="<?php echo $internalname; ?>[]" value="<?php echo $options[$label]; ?>" />
 			
 			</td>
 
@@ -135,15 +153,13 @@
 	jQuery(window).bind("load", function() {
 	// manually add class to corresponding tab for panels that have content - needs to be automated eventually
 <?php
-	if (sizeof($users) > 0)
+	if (sizeof($activeletters) > 0)
 		$chararray = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-		foreach($users as $letter => $gumph) {
+		foreach($activeletters as $letter) {
 			$tab = strpos($chararray, $letter) + 1;
-			if (is_array($gumph) && sizeof($gumph)) {
 ?>
 	$("div#friendsPickerNavigation<?php echo $friendspicker - 1; ?> li.tab<?php echo $tab; ?> a").addClass("tabHasContent");
-<?php			
-			}
+<?php
 		}
 
 ?>

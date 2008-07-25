@@ -310,17 +310,24 @@
 		 * Get all of members of a friend collection
 		 *
 		 * @param int $collection The collection's ID
+		 * @param true|false $idonly If set to true, will only return the members' IDs (default: false)
 		 * @return ElggUser entities if successful, false if not
 		 */
-		function get_members_of_access_collection($collection) {
+		function get_members_of_access_collection($collection, $idonly = false) {
     		
     		$collection = (int)$collection;
     		
     		global $CONFIG;
 		
-		    $query = "select e.* from {$CONFIG->dbprefix}access_collection_membership m join {$CONFIG->dbprefix}entities e on e.guid = m.user_guid WHERE m.access_collection_id = {$collection}";
-		    
-			$collection_members = get_data($query, "entity_row_to_elggstar");
+    		if (!$idonly) {
+		    	$query = "select e.* from {$CONFIG->dbprefix}access_collection_membership m join {$CONFIG->dbprefix}entities e on e.guid = m.user_guid WHERE m.access_collection_id = {$collection}";	    
+				$collection_members = get_data($query, "entity_row_to_elggstar");
+    		} else {
+    			$query = "select e.guid from {$CONFIG->dbprefix}access_collection_membership m join {$CONFIG->dbprefix}entities e on e.guid = m.user_guid WHERE m.access_collection_id = {$collection}";
+    			$collection_members = get_data($query);
+    			foreach($collection_members as $key => $val)
+    				$collection_members[$key] = $val->guid;
+    		}
 			
 			return $collection_members;
 			
@@ -337,7 +344,8 @@
 			if ($collections = get_user_access_collections($owner_guid)) {
 				
 				foreach($collections as $key => $collection) {
-					$collections[$key]->entities = get_members_of_access_collection($collection->id);
+					$collections[$key]->members = get_members_of_access_collection($collection->id, true);
+					$collections[$key]->entities = get_user_friends($owner_guid,"",9999);
 				}
 				
 			}

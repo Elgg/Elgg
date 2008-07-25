@@ -19,7 +19,7 @@
 			$coll = $vars['collection'];
 
 			if (is_array($vars['collection']->entities)) {
-				$count = sizeof($vars['collection']->entities);
+				$count = sizeof($vars['collection']->members);
 			} else {
 				$count = 0;
 			}
@@ -35,8 +35,9 @@
 			echo " ({$count}) </h2>";
         	
         	// Ben - this is where the friends picker view needs to go
-        	if($members = $vars['collection']->entities){
-				echo elgg_view('friends/picker',array('entities' => $members));
+        	if($friends = $vars['collection']->entities){
+        		$members = $vars['collection']->members;
+				echo elgg_view('friends/picker',array('entities' => $friends, 'value' => $members));
     	    }
     	    
     	    // close friends_picker div and the accordian list item
