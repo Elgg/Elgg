@@ -27,11 +27,13 @@
 		
 		// Get export
 		$export = export($CONFIG->site_id);
+		$site = get_entity($CONFIG->site_id);
 		
 		return send_api_post_call($NOTIFICATION_SERVER,
 			array(
 				'method' => 'elgg.system.ping',
 			
+				'url'	  => $site->url,
 				'version' => $version,
 				'release' => $release,
 			),
