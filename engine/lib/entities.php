@@ -198,7 +198,19 @@
 					if ((int) $this->guid > 0) {
 						if (!create_metadata($this->getGUID(), $name, $v, $value_type, $this->getOwner(), $this->getAccessID(), $multiple)) return false;
 					} else {
-						$this->temp_metadata[$name] = $value;
+						if (($multiple) && (isset($this->temp_metadata[$name])))
+						{
+							if (!is_array($this->temp_metadata[$name]))
+							{
+								$tmp = $this->temp_metadata[$name];
+								$this->temp_metadata[$name] = array();
+								$this->temp_metadata[$name][] = $tmp;
+							}
+							
+							$this->temp_metadata[$name][] = $value;
+						}
+						else
+							$this->temp_metadata[$name] = $value;
 					}
 				}
 					
@@ -209,7 +221,22 @@
 				if ((int) $this->guid > 0) {
 					return create_metadata($this->getGUID(), $name, $value, $value_type, $this->getOwner(), $this->getAccessID(), $multiple);
 				} else {
-					$this->temp_metadata[$name] = $value;
+					//$this->temp_metadata[$name] = $value;
+					
+					if (($multiple) && (isset($this->temp_metadata[$name])))
+					{
+						if (!is_array($this->temp_metadata[$name]))
+						{
+							$tmp = $this->temp_metadata[$name];
+							$this->temp_metadata[$name] = array();
+							$this->temp_metadata[$name][] = $tmp;
+						}
+						
+						$this->temp_metadata[$name][] = $value;
+					}
+					else
+						$this->temp_metadata[$name] = $value;
+							
 					return true;
 				}
 			}
