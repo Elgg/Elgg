@@ -13,21 +13,22 @@
 	/**
 	 * The api for the pinger.
 	 */
-	$NOTIFICATION_SERVER = "http://ping.elgg.org/services/api/rest.php";
+	$NOTIFICATION_SERVER = "http://hub/~icewing/Workingdirectory/elggnew/services/api/rest.php"; //"http://ping.elgg.org/services/api/rest.php";
 	
 	
 	/**
 	 * Run once and only once.
+	 * 
+	 * @param ElggSite $site The site who's information to use
 	 */
-	function ping_run_once()
+	function ping_home(ElggSite $site)
 	{
 		global $NOTIFICATION_SERVER, $CONFIG;
 	
 		include_once($CONFIG->path . "version.php");
 		
 		// Get export
-		$export = export($CONFIG->site_id);
-		$site = get_entity($CONFIG->site_id);
+		$export = export($site->guid);
 		
 		return send_api_post_call($NOTIFICATION_SERVER,
 			array(
@@ -42,21 +43,4 @@
 			'text/xml'
 		);
 	}
-	
-	/** 
-	 * Notify the server.
-	 */
-	function ping_init()
-	{	
-		global $CONFIG;
-		
-		if ((!isset($CONFIG->ping_home)) || ($CONFIG->ping_home!='disabled'))
-		{
-			// Now run this stuff, but only once
-		//	run_function_once("ping_run_once");
-		}
-	}
-	
-	// Register a startup event
-	register_elgg_event_handler('init','system','ping_init');	
 ?>

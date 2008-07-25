@@ -54,6 +54,12 @@
 			
 			// activate river by default
 			enable_plugin('river', $site->getGUID());
+			
+			// Now ping home
+			if ((!isset($usage)) || ($usage!='disabled'))
+			{
+				ping_home($site);
+			}
 				
 			system_message(elgg_echo("installation:configuration:success"));
 			
