@@ -12,6 +12,10 @@
 	 * @link http://elgg.org/
 	 * 
 	 */
+	 
+	 // get the tools menu
+	$menu = get_register('menu');
+
 ?>
 
 <div class="clearfloat"></div>
@@ -27,14 +31,14 @@
 		
 		<td width="648" height="50" align="right">
 		<p class="footer_toolbar_links">
-		|  <a href="">Dashboard</a>
-		|  <a href="">Profile</a>
-		|  <a href="">Messages</a>
-		|  <a href="">Shouts</a>
-		|  <a href="">Blog</a>
-		|  <a href="">Forums</a>
-		|  <a href="">Sharing</a>
-		|  <a href="">Files</a>  |
+		<?php
+			foreach($menu as $item) {
+    			
+    				echo "| <a href=\"{$item->value}\">" . $item->name . "</a></li>";
+    			
+			} 
+		?>
+		|
 		</p>
 		</td>
 	</tr>
