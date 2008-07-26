@@ -144,13 +144,15 @@
 </div>
 
 <script type="text/javascript">
-	jQuery(window).bind("load", function() {
+	//jQuery(window).bind("load", function() {
+	$(document).ready(function () {
 		// initialise picker
 		$("div#friendsPicker<?php echo $friendspicker; ?>").friendsPicker();
 	});
 </script>
 <script>
-	jQuery(window).bind("load", function() {
+	//jQuery(window).bind("load", function() {
+	$(document).ready(function () {
 	// manually add class to corresponding tab for panels that have content - needs to be automated eventually
 <?php
 	if (sizeof($activeletters) > 0)

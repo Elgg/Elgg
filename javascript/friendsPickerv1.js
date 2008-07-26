@@ -12,7 +12,7 @@ jQuery.fn.friendsPicker = function(settings) {
 		var container = $(this);
 		container.addClass("friendsPicker");
 		// set panelwidth manually as it's hidden initially
-		var panelWidth = 755;
+		var panelWidth = 685;
 
 		// count the panels in the container
 		var panelCount = container.find("div.panel").size();
@@ -96,8 +96,8 @@ jQuery.fn.friendsPicker = function(settings) {
 		//$("div#friendsPickerNavigation"  + j + " li.tab22 a").addClass("tabHasContent");
 		
 		// generate link to 'all friends in collection' - removed for now
-		//$("div#friendsPickerNavigation" + j).append("<div class='friendsPickerNavigationAll'><a href='#' >Collection members<\/a></div><br />");
-		$("div#friendsPickerNavigation" + j).append("<br />");
+		$("div#friendsPickerNavigation" + j).append("<div class='friendsPickerNavigationAll'><a href='#' >Collection members<\/a></div><br />");
+		//$("div#friendsPickerNavigation" + j).append("<br />");
 
 		
 		j++;

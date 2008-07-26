@@ -1683,7 +1683,7 @@ div.expandall p {
 	overflow: hidden; 
 	margin: 0;
 	padding:0;
-	width: 755px;
+	width: 685px;
 	height: 270px;
 	/*clear: right;*/
 	background: white;
@@ -1692,7 +1692,8 @@ div.expandall p {
 
 .friendsPicker .friendsPicker_container { /* long container used to house end-to-end panels. Width is calculated in JS  */
 	position: relative;
-	left: 0; top: 0;
+	left: 0;
+	top: 0;
 	width: 100%;
 	list-style-type: none;
 	/* -moz-user-select: none; */
@@ -1702,7 +1703,7 @@ div.expandall p {
 	float:left;
 	height: 100%;
 	position: relative;
-	width: 755px;
+	width: 685px;
 	margin: 0;
 	padding:0;
 }
@@ -1712,17 +1713,17 @@ div.expandall p {
 	padding: 10px;
 	background: #efefef;
 	min-height: 230px;
-
 }
 
 .friendsPickerNavigation {
-	margin: 0 0 20px 0;
+	margin: 0 0 10px 0;
 	padding:0;
 	
 }
 
 .friendsPickerNavigation ul {
 	list-style: none;
+	padding-left: 0;
 }
 
 .friendsPickerNavigation ul li {
@@ -1745,12 +1746,10 @@ div.expandall p {
 .tabHasContent {
 	background: white; color:#333333 !important;
 }
-/* 
-.friendsPickerNavigation li.tab22 a { background: white; color:#333333; }
-*/
+
 .friendsPickerNavigation li a:hover {
-	background: lime;
-	color:white;
+	background: #333333;
+	color:white !important;
 }
 
 .friendsPickerNavigation li a.current {
@@ -1780,18 +1779,22 @@ div.expandall p {
 
 .friendsPickerNavigationL, .friendsPickerNavigationR {
 	position: absolute;
-	top: 120px;
+	top: 46px;
 	text-indent: -9000em;
 }
 
 .friendsPickerNavigationL a, .friendsPickerNavigationR a {
 	display: block;
+/*
 	height: 87px;
+	width: 43px;
+*/
+	height: 43px;
 	width: 43px;
 }
 
 .friendsPickerNavigationL {
-	right: 78px;
+	right: 58px;
 	z-index:1;
 }
 
@@ -1807,6 +1810,21 @@ div.expandall p {
 .friendsPickerNavigationR {
 	background: url("<?php echo $vars['url']; ?>_graphics/friends_picker_arrow_right.gif") no-repeat center;
 }	
+	
+	
+	
+/* temp. force profile pic size */	
+#profile_info_column_left #profile_icon_wrapper .usericon a.icon img {
+	width:276px;
+}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
