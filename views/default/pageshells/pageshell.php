@@ -44,11 +44,14 @@
 <div class="clearfloat"></div>
 </div><!-- /#layout_canvas -->
 
-
-
-<!-- spotlight -->
-<?php echo elgg_view('page_elements/spotlight', $vars); ?>
-
+<?php
+	if(isloggedin()){
+?>
+		<!-- spotlight -->
+		<?php echo elgg_view('page_elements/spotlight', $vars); ?>
+<?php
+	}
+?>
 
 <!-- footer -->
 <?php echo elgg_view('page_elements/footer', $vars); ?>
