@@ -187,54 +187,76 @@ Choose the features you want to add to your page by dragging them from the <b>Wi
 		
 ?>
 
-<!-- profile box -->
-<?php echo $vars['area1']; ?>
 
-
-<!-- right sidebar -->
-<div id="widgets_left">
-	
-	<?php
-
-		if (is_array($area1widgets) && sizeof($area1widgets) > 0)
-		foreach($area1widgets as $widget) {
-			echo elgg_view_entity($widget);
+<table cellspacing="0" id="widget_table">
+  <tr>
+    <td colspan="2" align="left" valign="top">
+		<!-- profile box -->
+		<?php echo $vars['area1']; ?>
+	</td>
+    <td rowspan="2" align="left" valign="top">
+		<?php 
+		if($_SESSION['user']->guid == page_owner()){
+		?>
+		<!-- customise page button -->
+		<a href="javascript:void(0);" class="toggle_customise_edit_panel">Edit page</a>
+		<!-- <div style="clear:both;"></div> -->
+		<?php
 		}
+		?>
+
+		<div id="widgets_right">
+		<!-- this is where we need another widget column adding -->
+		
+		</div><!-- /#widgets_right -->	    
+    </td>
+  </tr>
+  <tr>
+	<td align="left" valign="top">
 	
-	?>
+		<!-- left widgets -->
+		<div id="widgets_left">
+		
+		<?php
+		
+			if (is_array($area1widgets) && sizeof($area1widgets) > 0)
+			foreach($area1widgets as $widget) {
+				echo elgg_view_entity($widget);
+			}
+		
+		?>
+		
+		</div><!-- /#widgets_left -->
 	
-</div><!-- /#widgets_left -->
+	</td>
+	<td align="left" valign="top">
+	
+		<!-- widgets middle -->
+		<div id="widgets_middle">
+		
+		<?php if (isset($vars['area2'])) echo $vars['area2']; ?>
+		<?php
+		
+			if (is_array($area2widgets) && sizeof($area2widgets) > 0)
+			foreach($area2widgets as $widget) {
+				echo elgg_view_entity($widget);
+			}
+		
+		?>
+		
+		</div><!-- /#widgets_middle -->
+	
+	</td>
+	</tr>
+</table>
+
+
 
     
-<!-- main content -->
-<div id="widgets_middle">
-	
-	<?php if (isset($vars['area2'])) echo $vars['area2']; ?>
-	<?php
 
-		if (is_array($area2widgets) && sizeof($area2widgets) > 0)
-		foreach($area2widgets as $widget) {
-			echo elgg_view_entity($widget);
-		}
-	
-	?>
-	
-</div><!-- /#widgets_middle -->
 
-<?php 
-   if($_SESSION['user']->guid == page_owner()){
-?>
-	<!-- customise page button -->
-	<a href="javascript:void(0);" class="toggle_customise_edit_panel">Edit widgets</a>
-	<!-- <div style="clear:both;"></div> -->
-<?php
- }
-?>
 
-<div id="widgets_right">
-<!-- this is where we need another widget column adding -->
 
-</div><!-- /#widgets_right -->	
 
 
 <!-- <div class="clearfloat"></div> -->

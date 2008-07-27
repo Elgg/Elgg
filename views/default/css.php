@@ -230,7 +230,6 @@ h6 { font-size: 0.8em; }
 	width:306px;
 	margin:20px;
 	min-height:360px;
-	float:left;
 	background: white;
 	padding:0;
 }
@@ -238,19 +237,22 @@ h6 { font-size: 0.8em; }
 	width:306px;
 	margin:20px 0 20px 0;
 	min-height:360px;
-	float:left;
 	background: white;
 	padding:0;
 }
 #widgets_right {
 	width:306px;
-	margin:20px;
-	min-height:360px;
+	margin:20px 20px 20px 20px;
+	min-height:760px;
 	float:left;
 	background: white;
 	padding:0;
 }
-
+#widget_table td {
+	border:0;
+	padding:0;
+	margin:0;
+}
 
 
 /* IE 6 temp fix  - for when page has no widgets */
@@ -630,7 +632,8 @@ h6 { font-size: 0.8em; }
 *************************************** */
 /* open 'customise page' panel button */
 a.toggle_customise_edit_panel { 
-	float:left;
+	float:right;
+	clear:right;
 	color: #4690d6;
 	background: white;
 	border:1px solid #cccccc;
@@ -1165,7 +1168,7 @@ input[type="submit"] {
 	PROFILE
 *************************************** */
 #profile_info {
-	margin:20px 20px 0 20px;
+	margin:20px 0px 0 20px;
 	padding:20px;
 	border-bottom:1px solid #cccccc;
 	border-right:1px solid #cccccc;
@@ -1173,23 +1176,25 @@ input[type="submit"] {
 }
 #profile_info_column_left {
 	float:left;
-	width:306px;
 	padding: 0;
+	margin:0 20px 0 0;
 }
 #profile_info_column_middle {
 	float:left;
-	width:306px;
+	width:100%;
+	padding: 0;
 }
 #profile_info_column_right {
-	float:left;
-	width:286px;
-	margin:0 0 0 20px;
+	width:590px;
+	margin:0 0 0 0;
+	padding: 0;
 }
 
 
 
 #profile_menu_wrapper {
 	margin:10px 0 10px 0;
+	width:auto;
 }
 #profile_menu_wrapper p {
 	border-bottom:1px solid #cccccc;
@@ -1199,6 +1204,7 @@ input[type="submit"] {
 }
 #profile_menu_wrapper a {
 	display:block;
+	width:180px;
 	padding:0 0 0 3px;
 }
 #profile_menu_wrapper a:hover {
@@ -1230,24 +1236,15 @@ p.user_menu_friends_of {
 	line-height:1.4em;
 }
 /* edit profile button */
-#profile_info_column_right .profile_info_edit_buttons {
+.profile_info_edit_buttons {
 	float:right;
 	margin:0;
 	padding:0;
 }
-#profile_info_column_right .profile_info_edit_buttons a {
-	color: #4690d6;
-	background: #f5f5f5;
-	border:1px solid #cccccc;
-	padding: 2px 3px 2px 3px;
+.profile_info_edit_buttons a {
+	padding: 0;
 	margin:0;
 	text-align: right;
-	display:block;
-}
-#profile_info_column_right .profile_info_edit_buttons a:hover { 
-	color: #ffffff;
-	background: #0054a7;
-	text-decoration:none;
 }
 
 /* ***************************************
@@ -1815,8 +1812,10 @@ div.expandall p {
 	
 /* temp. force profile pic size */	
 #profile_info_column_left #profile_icon_wrapper .usericon a.icon img {
+/*
 	width:276px;
-}
+
+*/}
 	
 	
 	

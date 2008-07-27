@@ -56,6 +56,22 @@
 <td>
 	
 	<div id="profile_info_column_middle" >
+			<?php
+	
+		if ($vars['entity']->canEdit()) {
+
+	?>
+		<p class="profile_info_edit_buttons">
+			<a href="<?php echo $vars['url']; ?>mod/profile/edit.php"><?php echo elgg_echo("profile:editdetails"); ?></a>
+		</p>
+	<?php
+
+		}
+		
+	?>
+	
+	
+	
 	<?php 
 	
 	// display the users name
@@ -101,29 +117,19 @@
 	?>
 	</div><!-- /#profile_info_column_middle -->
 
-
-</td>
-<td>
-	<div id="profile_info_column_right">
-		<?php
-	
-		if ($vars['entity']->canEdit()) {
-
-	?>
-		<p class="profile_info_edit_buttons">
-			<a href="<?php echo $vars['url']; ?>mod/profile/edit.php"><?php echo elgg_echo("profile:editdetails"); ?></a>
-		</p>
-	<?php
-
-		}
-		
-	?>
-	
-	
-	<p><b><?php echo elgg_echo("profile:aboutme"); ?></b><br /><?php echo autop($vars['entity']->description); ?></p>
-	</div><!-- /#profile_info_column_right -->
 </td>
 </tr>
+
+<tr>
+<td colspan="2">
+	<div id="profile_info_column_right">	
+	<p><b><?php echo elgg_echo("profile:aboutme"); ?></b><br /><?php echo autop($vars['entity']->description); ?></p>
+	</div><!-- /#profile_info_column_right -->
+
+</td>
+</tr>
+
+
 </table>
 
 
