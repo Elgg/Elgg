@@ -24,7 +24,7 @@
 <?php
 			foreach($vars['object'] as $error) {
 				echo elgg_view('messages/errors/error',array('object' => $error));
-				echo "<hr />";
+				//echo "<hr />";
 			}
 ?>
 		</div>

@@ -17,7 +17,7 @@
 		/**
 		 * Errors
 		 */
-			'exception:title' => "We've encountered a problem.",
+			'exception:title' => "Welcome to Elgg.",
 	
 			'InstallationException:CantCreateSite' => "Unable to create a default ElggSite with credentials Name:%s, Url: %s",
 		

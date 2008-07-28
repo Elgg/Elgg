@@ -17,7 +17,7 @@
 	global $CONFIG;
 ?>
 
-	<p class="messages-exception">
+	<p class="messages-exception" style="background:#FDFFC3;display:block;padding:10px;">
 		<span title="<?php echo get_class($vars['object']); ?>">
 		<?php
 
@@ -28,8 +28,8 @@
 	</p>
 	
 	<?php if ($CONFIG->debug) { ?>
-	<hr />
-	<p class="messages-exception-detail">
+	<!-- <hr /> -->
+	<p class="messages-exception-detail" style="background:#FDFFC3;display:block;padding:10px;">
 		<?php
 
 			echo autop(htmlentities(print_r($vars['object'], true)));
