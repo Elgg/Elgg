@@ -32,9 +32,13 @@
 	<?php } ?>
 	
 	<?php if (elgg_view("settings/{$plugin}/edit")) { ?>
+	<hr />
+	<div id="pluginsettings">
 		<div id="<?php echo $plugin; ?>_settings">
 			<?php echo elgg_view("object/plugin", array('plugin' => $plugin, 'entity' => find_plugin_settings($plugin))) ?>
 		</div>
+	</div>
+	<hr />
 	<?php } ?>
 	
 	<div>
