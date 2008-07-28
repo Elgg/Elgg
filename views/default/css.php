@@ -1520,6 +1520,10 @@ table.search_gallery {
 	background: #4690d6 url(<?php echo $vars['url']; ?>_graphics/tools_over.png) repeat-x top left;
 }
 
+/* IE 6 - remove transparent png in menu */
+* html #owner_block ul li a:hover {
+	background: #4690d6;
+}
 
 
 
@@ -1827,6 +1831,10 @@ div.expandall p {
 #tools_menu ul a:hover {
 	color:white;
 	background: #4690d6 url(<?php echo $vars['url']; ?>_graphics/tools_over.png) repeat-x top left;
+}
+/* IE 6 - remove transparent png in menu */
+* html #tools_menu ul a:hover {
+	background: #4690d6;
 }
 
 #tools_menu li ul a {
