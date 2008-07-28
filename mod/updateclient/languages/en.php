@@ -14,6 +14,11 @@
 	
 		'updateclient:label:core' => 'Core',
 		'updateclient:label:plugins' => 'Plugins',
+	
+		'updateclient:settings:days' => 'Check for updates every',
+		'updateclient:days' => 'days',
+	
+		'updateclient:settings:server' => 'Update server'
 	);
 					
 	add_translation("en", $english);

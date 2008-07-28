@@ -10,7 +10,24 @@
 	 */	
 
 
-	// update server
-		
-	// notifcation period
 ?>
+
+<p>
+	<h3><?php echo elgg_echo('updateclient:settings:server'); ?>: </h3>
+	<?php
+		$server = ($vars['entity']->updateserver ? $vars['entity']->updateserver : 'http://updates.elgg.org/services/api/rest.php');
+		echo elgg_view('input/text', array('internalname' => 'params[updateserver]', 'value' => $server));
+	?>
+</p>
+<p>
+	<?php echo elgg_echo('updateclient:settings:days'); ?>
+	
+	<select name="params[days]">
+		<option value="7" <?php if ($vars['entity']->days == 7) echo " selected=\"yes\" "; ?>>7</option>
+		<option value="14" <?php if ((!$vars['entity']->days) || ($vars['entity']->days == 14)) echo " selected=\"yes\" "; ?>>14</option>
+		<option value="21" <?php if ($vars['entity']->days == 21) echo " selected=\"yes\" "; ?>>21</option>
+		<option value="28" <?php if ($vars['entity']->days == 28) echo " selected=\"yes\" "; ?>>28</option>
+	</select>
+	
+	<?php echo elgg_echo('updateclient:days'); ?>.
+</p>
