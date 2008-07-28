@@ -43,7 +43,7 @@
 
 ?>
 
-<table class="draggable_widget" cellspacing="0"><tr><td width="149px">
+<table class="draggable_widget" cellspacing="0"><tr><td>
 	<h3>
 		<?php echo $widget->name; ?>
 		<input type="hidden" name="multiple" value="<?php echo $widgettypes[$widget->handler]->multiple; ?>" />
@@ -80,12 +80,68 @@ Choose the features you want to add to your page by dragging them from the <b>Wi
 
 
 <div id="customise_page_view">
-<table>
-<tr>
+
+<table cellspacing="0">
+  <tr>
+    <td colspan="2" align="left" valign="top">
+    
+    
+    <h2 class="profile_box"><?php echo elgg_echo("widgets:profilebox"); ?></h2>
+    <div id="profile_box_widgets">
+    <p><small>(Fixed position on page)</small></p>
+    </div>
+    
+    </td>
+    
+    
+    <td rowspan="2" align="left" valign="top">
+		<h2><?php echo elgg_echo("widgets:rightcolumn"); ?></h2>
+		<div id="rightcolumn_widgets">
+		
+		<?php
+			$sidebarwidgetstring = "";
+			if (is_array($area2widgets) && sizeof($area2widgets) > 0) {
+				foreach($area2widgets as $widget) {
+					if (!empty($sidebarwidgetstring)) {
+						$sidebarwidgetstring .= "::";
+					}
+					$sidebarwidgetstring .= "{$widget->handler}::{$widget->getGUID()}";
+		?>
+		
+		<table class="draggable_widget" cellspacing="0"><tr><td width="149px">
+			<h3>
+				<?php echo $widgettypes[$widget->handler]->name; ?>
+				<input type="hidden" name="handler" value="<?php 
+					echo $widget->handler; 
+				?>" />
+				<input type="hidden" name="multiple" value="<?php echo $widgettypes[$widget->handler]->multiple; ?>" />
+				<input type="hidden" name="side" value="<?php echo in_array('side',$widgettypes[$widget->handler]->positions); ?>" />
+				<input type="hidden" name="main" value="<?php echo in_array('main',$widgettypes[$widget->handler]->positions); ?>" />
+				<input type="hidden" name="description" value="<?php echo htmlentities($widgettypes[$widget->handler]->description); ?>" />
+				<input type="hidden" name="guid" value="<?php echo $widget->getGUID(); ?>" />
+			</h3>
+		</td>
+		<td width="17px" align="right"><!-- <a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_remove.gif" class="remove_me" /></a> --></td>
+		<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_info.gif" class="more_info" /></a></td>
+		<td width="17px" align="right"><a href="#"><img src="<?php echo $vars['url']; ?>_graphics/icon_customise_drag.gif" class="drag_handle" /></a></td>
+		</tr></table>
+		
+		<?php
+					
+				}
+			}
+		?>
+		
+		</div>
+    </td><!-- /rightcolumn td -->
+    
+  </tr>
+  
+  <tr>
 
 <td>
-<h2 class="mainwidgets"><?php echo elgg_echo("widgets:maincontent"); ?></h2>
-<div id="main_widgets">
+<h2><?php echo elgg_echo("widgets:leftcolumn"); ?></h2>
+<div id="leftcolumn_widgets">
 
 <?php
 	$mainwidgetstring = "";
@@ -125,8 +181,8 @@ Choose the features you want to add to your page by dragging them from the <b>Wi
 
 <td>
 
-<h2><?php echo elgg_echo("widgets:sidebar"); ?></h2>
-<div id="rightsidebar_widgets">
+<h2><?php echo elgg_echo("widgets:middlecolumn"); ?></h2>
+<div id="middlecolumn_widgets">
 
 <?php
 	$sidebarwidgetstring = "";
@@ -164,6 +220,11 @@ Choose the features you want to add to your page by dragging them from the <b>Wi
 
 </div>
 </td>
+
+
+
+
+
 
 </tr>
 </table>

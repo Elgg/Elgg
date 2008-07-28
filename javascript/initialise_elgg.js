@@ -31,7 +31,7 @@ $(document).ready(function () {
 	//////////////////
 	// WIDGET GALLERY
 	// sortable widgets
-	var els = ['#main_widgets', '#rightsidebar_widgets', '#widget_picker_gallery'];
+	var els = ['#leftcolumn_widgets', '#middlecolumn_widgets', '#rightcolumn_widgets', '#widget_picker_gallery' ];
 	var $els = $(els.toString());
 	
 	$els.sortable({
@@ -45,14 +45,14 @@ $(document).ready(function () {
 		connectWith: els,
 		start:function(e,ui) {
 			// prevent droppable drop function from running when re-sorting main lists
-			//$('#rightsidebar_widgets').droppable("disable");
-			//$('#main_widgets').droppable("disable");	
+			//$('#middlecolumn_widgets').droppable("disable");
+			//$('#leftcolumn_widgets').droppable("disable");	
 		},
 		stop: function(e,ui) {	
 			// refresh list before updating hidden fields with new widget order		
 			$(this).sortable( "refresh" );
-			var widgetNameRight = outputWidgetList('#rightsidebar_widgets');
-			var widgetNameMain = outputWidgetList('#main_widgets');
+			var widgetNameRight = outputWidgetList('#middlecolumn_widgets');
+			var widgetNameMain = outputWidgetList('#leftcolumn_widgets');
 			document.getElementById('debugField1').value = widgetNameMain;
 			document.getElementById('debugField2').value = widgetNameRight;
 		}
@@ -63,11 +63,15 @@ $(document).ready(function () {
     widget_moreinfo();
 
 	// setup hover class for dragged widgets
-	$("#rightsidebar_widgets").droppable({
+	$("#rightcolumn_widgets").droppable({
 		accept: ".draggable_widget",
 		hoverClass: 'droppable-hover'
 	});
-	$("#main_widgets").droppable({
+	$("#middlecolumn_widgets").droppable({
+		accept: ".draggable_widget",
+		hoverClass: 'droppable-hover'
+	});
+	$("#leftcolumn_widgets").droppable({
 		accept: ".draggable_widget",
 		hoverClass: 'droppable-hover'
 	});

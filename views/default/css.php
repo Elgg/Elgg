@@ -657,7 +657,7 @@ a.toggle_customise_edit_panel:hover {
 
 /* Top area - instructions */
 .customise_editpanel_instructions {
-	width:510px;
+	width:690px;
 	padding:0 0 10px 0;
 }
 .customise_editpanel_instructions h2 {
@@ -671,7 +671,7 @@ a.toggle_customise_edit_panel:hover {
 /* RHS (widget gallery area) */
 #customise_editpanel_rhs {
 	float:right;
-	width:230px;
+	width:230px; /* was 230px */
 	background:white;
 }
 #customise_editpanel #customise_editpanel_rhs h2 {
@@ -684,8 +684,8 @@ a.toggle_customise_edit_panel:hover {
 	/* float:right;*/
 	border-top:1px solid #cccccc;
 	background:white;
-	width:210px;
-	height:350px;
+	width:210px; /* was 210px */
+	height:440px;
 	padding:10px;
 	overflow:scroll;
 	overflow-x:hidden;
@@ -693,7 +693,7 @@ a.toggle_customise_edit_panel:hover {
 
 /* main page widget area */
 #customise_page_view {
-	width:490px;
+	width:656px;
 	padding:10px;
 	margin:0 0 10px 0;
 	background:white;
@@ -704,35 +704,60 @@ a.toggle_customise_edit_panel:hover {
 	border-left:1px solid #cccccc;
 	margin:0;
 	padding:5px;
+	width:200px;
 	color: #0054a7;
 	background: #f5f5f5;
 	font-size:1.25em;
 	line-height: 1.2em;
 }
-#customise_page_view h2.mainwidgets {
-	width:255px;
+
+#profile_box_widgets {
+	width:422px;
+	margin:0 10px 10px 0;
+	padding:5px 5px 0px 5px;
+	min-height: 50px;
+	border:1px solid #cccccc;
+	background: #f5f5f5;
+}
+#customise_page_view h2.profile_box {
+	width:422px;
+	color: #999999;
+}
+#profile_box_widgets p {
+	color:#999999;
 }
 
-#main_widgets {
-	width:255px;
+#leftcolumn_widgets {
+	width:200px;
 	margin:0 10px 0 0;
 	padding:5px 5px 40px 5px;
 	min-height: 190px;
 	border:1px solid #cccccc;
 }
-#rightsidebar_widgets {
+#middlecolumn_widgets {
 	width:200px;
+	margin:0 10px 0 0;
 	padding:5px 5px 40px 5px;
 	min-height: 190px;
 	border:1px solid #cccccc;
 }
+#rightcolumn_widgets {
+	width:200px;
+	margin:0;
+	padding:5px 5px 40px 5px;
+	min-height: 288px;
+	border:1px solid #cccccc;
+}
 
 /* IE6 fix */
-* html #main_widgets { 
+* html #leftcolumn_widgets { 
 	height: 190px;
 }
-* html #rightsidebar_widgets { 
+* html #middlecolumn_widgets { 
 	height: 190px;
+}
+* html #rightcolumn_widgets { 
+	height: 338px;
 }
 
 #customise_editpanel table.draggable_widget {
@@ -759,7 +784,7 @@ a.toggle_customise_edit_panel:hover {
 }
 #widget_picker_gallery table.draggable_widget h3 {
 	word-wrap:break-word;
-	width:140px;
+	width:145px;/* was 140px */
 	line-height: 1.1em;
 	overflow: hidden;
 	padding:4px;
@@ -909,7 +934,7 @@ a.toggle_customise_edit_panel:hover {
     margin:20px 20px 0px 20px;
     z-index: 99999;
     position:absolute;
-    width:776px;
+    width:611px;
 }
 .messages_error {
     border:1px solid #D3322A;
@@ -919,7 +944,7 @@ a.toggle_customise_edit_panel:hover {
     margin:20px 20px 0px 20px;
     z-index: 99999;
     position:absolute;
-    width:776px;
+    width:611px;
 }
 /* IE6 fix */
 * html .messages { 
@@ -1362,6 +1387,7 @@ background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_priv
 table.search_gallery {
 	border-spacing: 5px;
 	margin:0 0 20px 0;
+	background: #f5f5f5;
 }
 .search_gallery td {
 	padding: 5px;
@@ -1370,11 +1396,17 @@ table.search_gallery {
 .search_gallery_item {
 	border:1px dotted silver;
     background-color: white;
-    width: 179px;
+    /*
+	width: 179px;
     height: 179px;
+	*/
 }
 .search_gallery_item:hover {
 	border:1px dotted black;
+}
+/* temp force image width until upload size is changed */
+.search_gallery_item img {
+    width: 153px;
 }
 
 .search_gallery_item .search_listing {
@@ -1809,15 +1841,90 @@ div.expandall p {
 }	
 	
 	
-	
-/* temp. force profile pic size */	
-#profile_info_column_left #profile_icon_wrapper .usericon a.icon img {
-/*
-	width:276px;
 
-*/}
+/* ***************************************
+	Top bar - tools menu
+*************************************** */
+#tools_menu, #tools_menu ul{
+	margin:0;
+	padding:0;
+	display:inline;
+	float:left;
+	list-style-type:none;
+	list-style-position:outside;
+	/*position:relative;
+	line-height:1.5em;*/
+	z-index: 999999;
+}
+
+#tools_menu {
+	margin:0pt 15px 0pt 5px;
+}
+
+#tools_menu a {
+	display:block;
+	padding:3px;
+	color:white;
+	text-decoration:none;
+}
+
+#tools_menu a:hover {
+	background-color:#4690d6;
+}
+.tools_menu_on {
+	background:#4690d6;
+}
+
+#tools_menu li {
+	float:left;
+	position:relative;
+}
+
+#tools_menu ul {
+	position:absolute;
+	display:none;
+	top:24px;
+	border-top:1px solid #333;
+	border-bottom:1px solid #4690d6;
 	
-	
+	width:134px;
+}
+
+#tools_menu ul a {
+	border-left:1px solid #4690d6;
+	border-right:1px solid #4690d6;
+	color:#4690d6;
+	padding:2px 6px 2px 6px;
+	background: white;
+}
+
+#tools_menu ul a:hover {
+	color:white;
+	background: #4690d6 url(<?php echo $vars['url']; ?>_graphics/tools_over.png) repeat-x top left;
+}
+
+#tools_menu li ul a {
+	width:120px;
+	height:auto;
+	float:left;
+}
+
+#tools_menu ul ul{
+	top:auto;
+}	
+
+#tools_menu li ul ul {
+	left:120px;
+	margin:0px 0 0 13px;
+}
+
+#tools_menu li:hover ul ul, #tools_menu li:hover ul ul ul, #tools_menu li:hover ul ul ul ul{
+	display:none;
+
+}
+#tools_menu li:hover ul, #tools_menu li li:hover ul, #tools_menu li li li:hover ul, #tools_menu li li li li:hover ul{
+	display:block;
+}
 	
 	
 	
