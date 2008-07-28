@@ -20,7 +20,7 @@
 		// Set up the menu for logged in users
 		if (isloggedin()) 
 		{
-			add_menu(elgg_echo('groups'), $CONFIG->wwwroot . "pg/groups/" . $_SESSION['user']->username,array(
+			add_menu(elgg_echo('groups'), $CONFIG->wwwroot . "pg/groups/owned/" . $_SESSION['user']->username,array(
 				menu_item(elgg_echo('groups:new'), $CONFIG->wwwroot."pg/groups/new/"),
 				menu_item(elgg_echo('groups:yours'), $CONFIG->wwwroot . "pg/groups/owned/" . $_SESSION['user']->username),
 				menu_item(elgg_echo('groups:all'), $CONFIG->wwwroot . "pg/groups/world/"),
