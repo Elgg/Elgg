@@ -31,7 +31,10 @@
 	if ($obj_url) $info .= "</a>";
 	$info .= " " . elgg_echo($entry->event) . "</b></p>";
 	
-	$info .= "<div>" . elgg_echo('by') . " <a href=\"".$by->getURL()."\">{$by->name}</a> ".date('r', $entry->time_created )."</div>";
 	
+	$info .= "<div>";
+	if ($by) $info .= elgg_echo('by') . " <a href=\"".$by->getURL()."\">{$by->name}</a> ";
+	$info .= " " .date('r', $entry->time_created )."</div>";
+
 	echo elgg_view_listing($icon, $info);
 ?>
