@@ -100,7 +100,7 @@
 			$query .= " order by time_created desc";
 			$query .= " limit $offset, $limit"; // Add order and limit
 		}
-	 
+	
 		if ($count)
 		{
 			if ($numrows = get_data_row($query))
