@@ -102,6 +102,42 @@
 	}
 	
 	/**
+	 * Return a specific log entry.
+	 *
+	 * @param int $entry_id The log entry
+	 */
+	function get_log_entry($entry_id)
+	{
+		global $CONFIG;
+		
+		$entry_id = (int)$entry_id;
+		
+		return get_data_row("SELECT * from {$CONFIG->dbprefix}system_log where id=$entry_id");
+	}
+	
+	/**
+	 * Return the object referred to by a given log entry
+	 *
+	 * @param int $entry_id The log entry
+	 */
+	function get_object_from_log_entry($entry_id)
+	{
+		$entry = get_log_entry($entry_id);
+		
+		if ($entry)
+		{
+			$class = $entry->object_class;
+			$tmp = new $class();
+			$object = $tmp->getObjectFromID($entry->object_id);
+			
+			if ($object)
+				return $object;
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Log a system event related to a specific object.
 	 * 
 	 * This is called by the event system and should not be called directly.
