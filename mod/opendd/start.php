@@ -51,7 +51,7 @@
 	}
 	
 	/**
-	 * Group page handler
+	 * Opendd page handler
 	 *
 	 * @param array $page Array of page elements, forwarded by the page handling mechanism
 	 */
