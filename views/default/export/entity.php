@@ -27,7 +27,7 @@
 		<div>
 			<table>
 				<tr>
-				<td><b><?php echo $k; ?></b></td>
+				<td><b><?php echo $k; ?>: </b></td>
 				<td><?php echo $v; ?></td> 
 				</tr>
 			</table>
@@ -36,6 +36,8 @@
 		}
 	?>
 </div>
+
+<?php if ($metadata) { ?>
 <div id="metadata">
 <h2>Metadata</h2>	
 	<?php
@@ -45,7 +47,7 @@
 		<div>
 			<table>
 				<tr>
-				<td><b><?php echo $m->name; ?></b></td>
+				<td><b><?php echo $m->name; ?>: </b></td>
 				<td><?php echo $m->value; ?></td> 
 				</tr>
 			</table>
@@ -55,7 +57,9 @@
 	?>
 	
 </div>
+<?php } ?>
 
+<?php if ($annotations) { ?>
 <div id="annotations">
 <h2>Annotations</h2>	
 	<?php
@@ -65,7 +69,7 @@
 		<div>
 			<table>
 				<tr>
-				<td><b><?php echo $a->name; ?></b></td>
+				<td><b><?php echo $a->name; ?>: </b></td>
 				<td><?php echo $a->value; ?></td> 
 				</tr>
 			</table>
@@ -74,7 +78,9 @@
 		}
 	?>
 </div>
+<?php } ?>
 
+<?php if ($relationships) { ?>
 <div id="relationship">
 <h2>Relationships</h2>	
 	<?php
@@ -84,7 +90,7 @@
 		<div>
 			<table>
 				<tr>
-				<td><b><?php echo $r->relationship; ?></b></td>
+				<td><b><?php echo $r->relationship; ?>: </b></td>
 				<td><?php echo $r->guid_two; ?></td> 
 				</tr>
 			</table>
@@ -93,3 +99,4 @@
 		}
 	?>
 </div>
+<?php } ?>
