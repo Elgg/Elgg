@@ -51,10 +51,15 @@ $(document).ready(function () {
 		stop: function(e,ui) {	
 			// refresh list before updating hidden fields with new widget order		
 			$(this).sortable( "refresh" );
-			var widgetNameRight = outputWidgetList('#middlecolumn_widgets');
-			var widgetNameMain = outputWidgetList('#leftcolumn_widgets');
-			document.getElementById('debugField1').value = widgetNameMain;
-			document.getElementById('debugField2').value = widgetNameRight;
+			
+			var widgetNamesLeft = outputWidgetList('#leftcolumn_widgets');
+			var widgetNamesMiddle = outputWidgetList('#middlecolumn_widgets');
+			var widgetNamesRight = outputWidgetList('#rightcolumn_widgets');
+			
+			document.getElementById('debugField1').value = widgetNamesLeft;
+			document.getElementById('debugField2').value = widgetNamesMiddle;
+			document.getElementById('debugField3').value = widgetNamesRight;
+			
 		}
 	});
 	
@@ -75,6 +80,10 @@ $(document).ready(function () {
 		accept: ".draggable_widget",
 		hoverClass: 'droppable-hover'
 	});
+
+
+
+
    
 }); /* end document ready function */
 
@@ -116,6 +125,20 @@ function outputWidgetList(forElement) {
 }
 
 
+// widget panel collapsed/expanded state
+function widget_state(forWidget) {
+
+	var thisWidgetState = $.cookie(forWidget);
+
+	if (thisWidgetState == 'collapsed') {
+	
+		forWidget = "#" + forWidget;
+		
+		$(forWidget).find("div.collapsable_box_content").hide();
+		$(forWidget).find("a.toggle_box_contents").html('+');
+		$(forWidget).find("a.toggle_box_edit_panel").fadeOut('medium');
+	};	
+}
 
 
 // toggle widget box contents
@@ -126,30 +149,24 @@ var toggleContent = function(e) {
 			$(this).html('-');
 			$(this.parentNode).children("[class=toggle_box_edit_panel]").fadeIn('medium');
 			
+			// set cookie for widget panel open-state
+			var thisWidgetName = $(this.parentNode.parentNode.parentNode).attr('id');
+			$.cookie(thisWidgetName, 'expanded', { expires: 365 });
+			
+			
 		} else {
 			targetContent.slideUp(400);
 			$(this).html('+');
 			$(this.parentNode).children("[class=toggle_box_edit_panel]").fadeOut('medium');
 			// make sure edit pane is closed
 			$(this.parentNode.parentNode).children("[class=collapsable_box_editpanel]").hide();
+			
+			// set cookie for widget panel closed-state
+			var thisWidgetName = $(this.parentNode.parentNode.parentNode).attr('id');
+			$.cookie(thisWidgetName, 'collapsed', { expires: 365 });			
 		}
 	return false;
 };
-
-
-
-
-// widget more info button
-function setupMoreInfoButton() {
-	$('img.more_info').click(function () {			
-		// grab widget description from hidden field			
-		//var widgetdescription = $("input[@name='description']", this.parentNode.parentNode.parentNode ).attr('value');
-		
-		//document.getElementById('debugField3').value = widgetdescription;
-													
-	return false;
-	}); 	
-}
 
 
 
@@ -189,7 +206,47 @@ function widget_moreinfo() {
 };
 
 
-
+jQuery.cookie = function(name, value, options) {
+    if (typeof value != 'undefined') { // name and value given, set cookie
+        options = options || {};
+        if (value === null) {
+            value = '';
+            options.expires = -1;
+        }
+        var expires = '';
+        if (options.expires && (typeof options.expires == 'number' || options.expires.toUTCString)) {
+            var date;
+            if (typeof options.expires == 'number') {
+                date = new Date();
+                date.setTime(date.getTime() + (options.expires * 24 * 60 * 60 * 1000));
+            } else {
+                date = options.expires;
+            }
+            expires = '; expires=' + date.toUTCString(); // use expires attribute, max-age is not supported by IE
+        }
+        // CAUTION: Needed to parenthesize options.path and options.domain
+        // in the following expressions, otherwise they evaluate to undefined
+        // in the packed version for some reason...
+        var path = options.path ? '; path=' + (options.path) : '';
+        var domain = options.domain ? '; domain=' + (options.domain) : '';
+        var secure = options.secure ? '; secure' : '';
+        document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
+    } else { // only name given, get cookie
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+};
 
 
 

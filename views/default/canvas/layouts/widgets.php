@@ -236,9 +236,9 @@ Choose the features you want to add to your page by dragging them from the <b>Wi
 </div><!-- /#customise_page_view -->
 
 <form action="<?php echo $vars['url']; ?>action/widgets/reorder" method="post">
-<textarea type="textarea" value="Main widgets" style="display:none" name="debugField1" id="debugField1" /><?php echo $mainwidgetstring; ?></textarea>
-<textarea type="textarea" value="Right widgets" style="display:none" name="debugField2" id="debugField2" /><?php echo $sidebarwidgetstring; ?></textarea>
-<textarea type="textarea" value="Left widgets" style="display:none" name="debugField3" id="debugField3" /><?php echo $leftbarwidgetstring; ?></textarea>
+<textarea type="textarea" value="Left widgets"   style="display:none" name="debugField1" id="debugField1" /><?php echo $mainwidgetstring; ?></textarea>
+<textarea type="textarea" value="Middle widgets" style="display:none" name="debugField2" id="debugField2" /><?php echo $sidebarwidgetstring; ?></textarea>
+<textarea type="textarea" value="Right widgets"  style="display:none" name="debugField3" id="debugField3" /><?php echo $leftbarwidgetstring; ?></textarea>
 
 <input type="hidden" name="context" value="<?php echo get_context(); ?>" />
 <input type="hidden" name="owner" value="<?php echo page_owner(); ?>" />
@@ -290,7 +290,7 @@ Choose the features you want to add to your page by dragging them from the <b>Wi
 			foreach($area1widgets as $widget) {
 				echo elgg_view_entity($widget);
 			}
-		
+
 		?>
 		
 		</div><!-- /#widgets_left -->
