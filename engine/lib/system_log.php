@@ -91,7 +91,7 @@
 			
 		$select = "*";
 		if ($count) $select = "count(*)";
-		$query = "SELECT $select; from {$CONFIG->dbprefix}system_log where 1 ";
+		$query = "SELECT $select from {$CONFIG->dbprefix}system_log where 1 ";
 		foreach ($where as $w)
 			$query .= " and $w";
 		
