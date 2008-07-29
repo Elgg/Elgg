@@ -102,7 +102,7 @@ Choose the features you want to add to your page by dragging them from the <b>Wi
     
     <td rowspan="2" align="left" valign="top">
 		<h2><?php echo elgg_echo("widgets:rightcolumn"); ?></h2>
-		<div id="rightcolumn_widgets">
+		<div id="rightcolumn_widgets" <?php if(get_context() == "profile")echo "class=\"long\""; ?>>
 		
 		<?php
 			$sidebarwidgetstring = "";
