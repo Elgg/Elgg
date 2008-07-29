@@ -59,8 +59,9 @@
 	 * @param string $class The class of object it effects.
 	 * @param int $limit Maximum number of responses to return.
 	 * @param int $offset Offset of where to start.
+	 * @param bool $count Return count or not
 	 */
-	function get_system_log($by_user = "", $event = "", $class = "", $limit = 10, $offset = 0)
+	function get_system_log($by_user = "", $event = "", $class = "", $limit = 10, $offset = 0, $count = false)
 	{
 		global $CONFIG;
 		
@@ -88,12 +89,14 @@
 		if ($class!=="")
 			$where[] = "object_class='$class'";
 			
-		$query = "SELECT * from {$CONFIG->dbprefix}system_log where 1 ";
+		$select = "*";
+		if ($count) $select = "count(*)";
+		$query = "SELECT $select; from {$CONFIG->dbprefix}system_log where 1 ";
 		foreach ($where as $w)
 			$query .= " and $w";
 		
 		$query .= " order by time_created desc";
-		$query .= " limit $offset, $limit"; // Add order and limit
+		if (!$count) $query .= " limit $offset, $limit"; // Add order and limit
 		
 		return get_data($query);
 	}
