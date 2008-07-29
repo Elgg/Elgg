@@ -22,8 +22,11 @@
 		set_page_owner($_SESSION['user']->getGUID());
 		$title = elgg_echo('dashboard');
 		
+	// wrap intro message in a div
+		$intro_message = "<div id=\"dashboard_info\">" . elgg_echo("dashboard:nowidgets") . "</div>";
+		
 	// Try and get the user from the username and set the page body accordingly
-		$body = elgg_view_layout('widgets',"","",elgg_echo("dashboard:nowidgets"));
+		$body = elgg_view_layout('widgets',"","",$intro_message);
 		
 		page_draw($title, $body);
 		
