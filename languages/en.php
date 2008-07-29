@@ -254,6 +254,7 @@
 			'register' => "Register",
 			'registerok' => "You have successfully registered for %s.",
 			'registerbad' => "Your registration was unsuccessful. The username may already exist, or your passwords might not match.",
+			'registerdisabled' => "Registration has been disabled by the system administrator",
 	
 			'adduser' => "Add User",
 			'adduser:ok' => "You have successfully added a new user.",

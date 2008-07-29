@@ -11,6 +11,7 @@
 	 * @link http://elgg.org/
 	 */
 	 
+	global $CONFIG;
 ?>
 	
 	<div id="login-box">	<h2><?php echo elgg_echo('login'); ?></h2>
@@ -19,6 +20,6 @@
 			<br />
 			<label><?php echo elgg_echo('password'); ?><br /><input name="password" type="password" class="general-textarea" /></label><br />
 			<input type="submit" name="submit" class="submit_button" value="<?php echo elgg_echo('login'); ?>" /></p>
-			<p><a href="<?php echo $vars['url']; ?>register.php"><?php echo elgg_echo('register'); ?></a></p>
+			<?php if (!$CONFIG->disable_registration) { ?><p><a href="<?php echo $vars['url']; ?>register.php"><?php echo elgg_echo('register'); ?></a></p><?php } ?>
 	    </form>
 	</div>

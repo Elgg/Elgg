@@ -12,6 +12,7 @@
 	 */
 
 	require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
+	global $CONFIG;
 
 	// Get variables
 		$username = get_input('username');
@@ -22,24 +23,30 @@
 		
 		$admin = get_input('admin');
 		
+		
+		if (!$CONFIG->disable_registration)
+		{
 	// For now, just try and register the user
-		if (
-			(
-				(trim($password)!="") &&
-				(strcmp($password, $password2)==0) 
-			) &&
-			($guid = register_user($username, $password, $name, $email))
-		) {
-			if (($guid) && ($admin))
-			{
-				admin_gatekeeper(); // Only admins can make someone an admin
-				$new_user = get_entity($guid);
-				$new_user->admin = 'yes';
+			if (
+				(
+					(trim($password)!="") &&
+					(strcmp($password, $password2)==0) 
+				) &&
+				($guid = register_user($username, $password, $name, $email))
+			) {
+				if (($guid) && ($admin))
+				{
+					admin_gatekeeper(); // Only admins can make someone an admin
+					$new_user = get_entity($guid);
+					$new_user->admin = 'yes';
+				}
+				
+				system_message(sprintf(elgg_echo("registerok"),$CONFIG->sitename));
+			} else {
+				register_error(elgg_echo("registerbad"));
 			}
-			
-			system_message(sprintf(elgg_echo("registerok"),$CONFIG->sitename));
-		} else {
-			register_error(elgg_echo("registerbad"));
 		}
+		else
+			register_error(elgg_echo('registerdisabled'));
 
 ?>
