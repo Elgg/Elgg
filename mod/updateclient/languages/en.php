@@ -18,7 +18,16 @@
 		'updateclient:settings:days' => 'Check for updates every',
 		'updateclient:days' => 'days',
 	
-		'updateclient:settings:server' => 'Update server'
+		'updateclient:settings:server' => 'Update server',
+	
+		'updateclient:message:title' => 'New version of Elgg released!',
+		'updateclient:message:body' => 'A new version of Elgg (%s %s) codenamed %s has been released!
+		
+Go here to download: %s
+
+Or scroll down and read the release notes:
+
+%s',
 	);
 					
 	add_translation("en", $english);
