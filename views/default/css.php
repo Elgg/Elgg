@@ -181,7 +181,7 @@ h6 { font-size: 0.8em; }
 
 /* canvas layout: 2 column left sidebar */
 #two_column_left_sidebar {
-	width:170px;
+	width:210px;
 	margin:20px 0 20px 20px;
 	min-height:360px;
 	float:left;
@@ -230,23 +230,29 @@ h6 { font-size: 0.8em; }
 	width:306px;
 	margin:20px;
 	min-height:360px;
+/*
 	background: white;
-	padding:0;
+
+*/	padding:0;
 }
 #widgets_middle {
 	width:306px;
 	margin:20px 0 20px 0;
 	min-height:360px;
+/*
 	background: white;
-	padding:0;
+
+*/	padding:0;
 }
 #widgets_right {
 	width:306px;
 	margin:20px 20px 20px 20px;
-	min-height:760px;
+	min-height:360px;
 	float:left;
+/*
 	background: white;
-	padding:0;
+
+*/	padding:0;
 }
 #widget_table td {
 	border:0;
@@ -586,7 +592,7 @@ a.toggle_customise_edit_panel:hover {
 	border-top:1px solid #cccccc;
 	background:white;
 	width:210px; /* was 210px */
-	height:440px;
+	height:340px;
 	padding:10px;
 	overflow:scroll;
 	overflow-x:hidden;
@@ -646,10 +652,13 @@ a.toggle_customise_edit_panel:hover {
 	width:200px;
 	margin:0;
 	padding:5px 5px 40px 5px;
-	min-height: 288px;
+	min-height: 190px;
 	border:1px solid #cccccc;
 }
 
+#rightcolumn_widgets.long {
+	min-height: 288px;
+}
 /* IE6 fix */
 * html #leftcolumn_widgets { 
 	height: 190px;
@@ -658,6 +667,9 @@ a.toggle_customise_edit_panel:hover {
 	height: 190px;
 }
 * html #rightcolumn_widgets { 
+	height: 190px;
+}
+* html #rightcolumn_widgets.long { 
 	height: 338px;
 }
 
@@ -1116,7 +1128,13 @@ input[type="submit"] {
 	margin:0 0 0 0;
 	padding: 0;
 }
-
+#dashboard_info {
+	margin:20px 0px 0 20px;
+	padding:20px;
+	border-bottom:1px solid #cccccc;
+	border-right:1px solid #cccccc;
+	background: white;
+}
 
 
 #profile_menu_wrapper {
@@ -1131,7 +1149,11 @@ input[type="submit"] {
 }
 #profile_menu_wrapper a {
 	display:block;
+	width:200px;
+/*
 	width:180px;
+
+*/	
 	padding:0 0 0 3px;
 }
 #profile_menu_wrapper a:hover {

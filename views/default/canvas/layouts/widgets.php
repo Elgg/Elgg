@@ -85,16 +85,15 @@ Choose the features you want to add to your page by dragging them from the <b>Wi
   <tr>
     <td colspan="2" align="left" valign="top">
     
-    
     <?php
-	    if(get_context() == "profile"){ 
+	if(get_context() == "profile"){ 
     ?>
     		<h2 class="profile_box"><?php echo elgg_echo("widgets:profilebox"); ?></h2>
     		<div id="profile_box_widgets">
-    		<p><small>(<?php echo elgg_echo("widgets:fixed"); ?>)</small></p>
+    		<p><small>(Fixed position on page)</small></p>
     		</div>
     <?php
-	    } 
+	} 
     ?>
     
     </td>
@@ -103,7 +102,6 @@ Choose the features you want to add to your page by dragging them from the <b>Wi
     <td rowspan="2" align="left" valign="top">
 		<h2><?php echo elgg_echo("widgets:rightcolumn"); ?></h2>
 		<div id="rightcolumn_widgets" <?php if(get_context() == "profile")echo "class=\"long\""; ?>>
-		
 		<?php
 			$sidebarwidgetstring = "";
 			if (is_array($area2widgets) && sizeof($area2widgets) > 0) {
@@ -240,6 +238,8 @@ Choose the features you want to add to your page by dragging them from the <b>Wi
 <form action="<?php echo $vars['url']; ?>action/widgets/reorder" method="post">
 <textarea type="textarea" value="Main widgets" style="display:none" name="debugField1" id="debugField1" /><?php echo $mainwidgetstring; ?></textarea>
 <textarea type="textarea" value="Right widgets" style="display:none" name="debugField2" id="debugField2" /><?php echo $sidebarwidgetstring; ?></textarea>
+<textarea type="textarea" value="Left widgets" style="display:none" name="debugField3" id="debugField3" /><?php echo $leftbarwidgetstring; ?></textarea>
+
 <input type="hidden" name="context" value="<?php echo get_context(); ?>" />
 <input type="hidden" name="owner" value="<?php echo page_owner(); ?>" />
 <input type="submit" value="Save changes" class="submit_button" onclick="$('a.toggle_customise_edit_panel').click();" />
@@ -258,7 +258,7 @@ Choose the features you want to add to your page by dragging them from the <b>Wi
 <table cellspacing="0" id="widget_table">
   <tr>
     <td colspan="2" align="left" valign="top">
-		<!-- profile box -->
+		<!-- profile box or 'dashboard info' notice -->
 		<?php echo $vars['area1']; ?>
 	</td>
     <td rowspan="2" align="left" valign="top">
@@ -318,12 +318,3 @@ Choose the features you want to add to your page by dragging them from the <b>Wi
 </table>
 
 
-
-    
-
-
-
-
-
-
-<!-- <div class="clearfloat"></div> -->
