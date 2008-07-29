@@ -50,10 +50,10 @@
 				set_config('ping_home', 'disabled', $site->getGUID());
 			
 			// Now ping home
-			if ((!isset($usage)) || ($usage!='disabled'))
-			{
-				ping_home($site);
-			}
+			//if ((!isset($usage)) || ($usage!='disabled'))
+			//{
+			//	ping_home($site);
+			//}
 				
 			if ($site->save())
 				system_message(elgg_echo("admin:configuration:success"));
