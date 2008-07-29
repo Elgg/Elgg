@@ -424,6 +424,7 @@
 			'layout:customise' => "Customise layout",
 			'widgets:gallery' => "Widget gallery",
 			'widgets:leftcolumn' => "Left widgets",
+			'widgets:fixed' => "Fixed position",
 			'widgets:middlecolumn' => "Middle widgets",
 			'widgets:rightcolumn' => "Right widgets",
 			'widgets:profilebox' => "Profile box",

@@ -86,10 +86,16 @@ Choose the features you want to add to your page by dragging them from the <b>Wi
     <td colspan="2" align="left" valign="top">
     
     
-    <h2 class="profile_box"><?php echo elgg_echo("widgets:profilebox"); ?></h2>
-    <div id="profile_box_widgets">
-    <p><small>(Fixed position on page)</small></p>
-    </div>
+    <?php
+	    if(get_context() == "profile"){ 
+    ?>
+    		<h2 class="profile_box"><?php echo elgg_echo("widgets:profilebox"); ?></h2>
+    		<div id="profile_box_widgets">
+    		<p><small>(<?php echo elgg_echo("widgets:fixed"); ?>)</small></p>
+    		</div>
+    <?php
+	    } 
+    ?>
     
     </td>
     
