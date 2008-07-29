@@ -90,15 +90,26 @@
 			$where[] = "object_class='$class'";
 			
 		$select = "*";
-		if ($count) $select = "count(*)";
+		if ($count) $select = "count(*) as count";
 		$query = "SELECT $select from {$CONFIG->dbprefix}system_log where 1 ";
 		foreach ($where as $w)
 			$query .= " and $w";
 		
-		$query .= " order by time_created desc";
-		if (!$count) $query .= " limit $offset, $limit"; // Add order and limit
-		
-		return get_data($query);
+		if (!$count)
+		{
+			$query .= " order by time_created desc";
+			$query .= " limit $offset, $limit"; // Add order and limit
+		}
+	 
+		if ($count)
+		{
+			if ($numrows = get_data_row($query))
+				return $numrows->count;
+		}
+		else
+			return get_data($query);
+			
+		return false;
 	}
 	
 	/**
