@@ -49,11 +49,12 @@
 			else
 				set_config('ping_home', 'disabled', $site->getGUID());
 			
-			// activate profile by default
+			// activate some plugins by default
 			enable_plugin('profile', $site->getGUID());
-			
-			// activate river by default
 			enable_plugin('river', $site->getGUID());
+			enable_plugin('updateclient', $site->getGUID());
+			enable_plugin('logbrowser', $site->getGUID());
+			
 			
 			// Now ping home
 			if ((!isset($usage)) || ($usage!='disabled'))
