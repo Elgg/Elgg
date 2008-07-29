@@ -9,11 +9,16 @@
 	 * @link http://elgg.com/
 	 */	
 
+	$DEFAULT_UPDATE_SERVER;
+
 	/**
 	 * Client update initialisation.
 	 */
 	function updateclient_init()
 	{
+		global $DEFAULT_UPDATE_SERVER;
+		
+		$DEFAULT_UPDATE_SERVER = 'http://updates.elgg.org/services/api/rest.php';
 		
 		// Register a page handler, so we can have nice URLs
 		register_page_handler('updateclient','updateclient_page_handler');
@@ -68,7 +73,7 @@
 	 */
 	function updateclient_notify_message($subject, $message)
 	{
-		notify_user(2,1,$subject,$message);
+		return send_admin_message($subject, $message);
 	}
 	
 	/**
@@ -78,17 +83,18 @@
 	 */
 	function updateclient_check_core()
 	{
-		global $CONFIG;
+		global $CONFIG, $DEFAULT_UPDATE_SERVER;
 		
 		// Phone home and check core
 		$url = get_plugin_setting('updateserver', 'updateclient');
+		if (!$url) $url = $DEFAULT_UPDATE_SERVER;
 		
 		$result = send_api_get_call($url, array('method' => 'elgg.system.getlatestversion'), array());
 		
 		if (($result) && ($result->status == 0))
 		{
 			$result = $result->result;
-			
+		
 			include_once($CONFIG->url . "version.php");
 		
 			if (
@@ -100,11 +106,11 @@
 				updateclient_notify_message(
 					elgg_echo('updateclient:message:title'),
 					sprintf(elgg_echo('updateclient:message:body'),
-						$release['release'],
-						$release['version'],
-						$release['codename'],
-						$release['url'],
-						$release['notes']
+						$result['release'],
+						$result['version'],
+						$result['codename'],
+						$result['url'],
+						$result['notes']
 					)
 				);
 				

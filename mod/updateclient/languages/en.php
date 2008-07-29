@@ -21,7 +21,7 @@
 		'updateclient:settings:server' => 'Update server',
 	
 		'updateclient:message:title' => 'New version of Elgg released!',
-		'updateclient:message:body' => 'A new version of Elgg (%s %s) codenamed %s has been released!
+		'updateclient:message:body' => 'A new version of Elgg (%s %s) codenamed "%s" has been released!
 		
 Go here to download: %s
 

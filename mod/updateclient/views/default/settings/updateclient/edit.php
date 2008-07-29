@@ -9,13 +9,13 @@
 	 * @link http://elgg.com/
 	 */	
 
-
+	global $DEFAULT_UPDATE_SERVER;
 ?>
 
 <p>
 	<h3><?php echo elgg_echo('updateclient:settings:server'); ?>: </h3>
 	<?php
-		$server = ($vars['entity']->updateserver ? $vars['entity']->updateserver : 'http://updates.elgg.org/services/api/rest.php');
+		$server = ($vars['entity']->updateserver ? $vars['entity']->updateserver : $DEFAULT_UPDATE_SERVER);
 		echo elgg_view('input/text', array('internalname' => 'params[updateserver]', 'value' => $server));
 	?>
 </p>
