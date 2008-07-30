@@ -26,4 +26,6 @@
 		system_message(elgg_echo('importsuccess'));
 	else
 		register_error(elgg_echo('importfail'));
+		
+	forward($_SERVER['HTTP_REFERER']);
 ?>
