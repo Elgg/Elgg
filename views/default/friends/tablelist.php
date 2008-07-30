@@ -18,7 +18,7 @@
 			
 ?>
 
-	<table>
+	<table cellspacing="0" id="collectionMembersTable" style="margin:10px;">
 		<tr>
 <?php
 			
@@ -31,7 +31,7 @@
 			<td style="width:25px">
 				<?php echo elgg_view("profile/icon",array('entity' => $entity, 'size' => 'tiny')); ?> 
 			</td>
-			<td style="width: 300px; padding: 5px;">
+			<td style="width: 200px; padding: 5px;">
 <?php
 
 					echo $entity->name;
@@ -42,20 +42,22 @@
 <?php
 				
 				$column++;
-				if ($column > 1) {
+				if ($column == 3) {
 					echo "</tr><tr>";
 					$column = 0;
 				}
 				
 			}
-			if ($column > 0) echo "</tr>";
+			
 			
 ?>
 
-	</table>
+	
 
 <?php
 			}
+		if ($column < 3 && $column != 0) echo "</tr>";	
+		echo "</table>";
 		}
 
 ?>

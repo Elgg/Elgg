@@ -139,7 +139,7 @@
 ?>
 				</div>
 			</td>
-			<td style="width: 300px; padding: 5px;">
+			<td style="width: 200px; padding: 5px;">
 <?php
 
 					echo $friend->name;
