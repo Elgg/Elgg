@@ -12,12 +12,9 @@
 	 */
 
 	$m = $vars['metadata'];
+	$e = get_entity($m->entity_guid);
 ?>
 <div>
-	<table>
-		<tr>
-		<td><b><?php echo $m->name; ?></b></td>
-		<td><?php echo $m->value; ?></td> 
-		</tr>
-	</table>
+	<p><?php if ($e) echo "<a href=\"" . $e->getURL() . "\">GUID:{$m->entity_guid}</a>"; else echo "GUID:".$m->entity_guid;
+	?>: <b><?php echo $m->name; ?></b> <?php echo $m->value; ?></p>
 </div>
