@@ -434,6 +434,7 @@
 												'offset' => $offset,
 												'count' => $count,
 												'word' => 'annoff',
+												'nonefound' => false,
 			
 														));
 			

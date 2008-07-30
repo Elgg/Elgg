@@ -32,6 +32,11 @@
 	} else {
 		$word = $vars['word'];
 	}
+	if (isset($vars['nonefound'])) {
+		$nonefound = $vars['nonefound'];
+	} else {
+		$nonefound = true;
+	}
 	
 	$totalpages = ceil($count / $limit);
 	$currentpage = ceil($offset / $limit) + 1;
@@ -47,7 +52,7 @@
 	if ($count == 0) {
 		
 		static $notfounddisplayed;
-		if (!isset($notfounddisplayed)) {
+		if (!isset($notfounddisplayed) && $nonefound) {
 			echo elgg_echo("notfound");
 			$notfounddisplayed = true;
 		}
