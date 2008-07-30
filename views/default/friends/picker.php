@@ -191,10 +191,8 @@
 ?>
 
 <script type="text/javascript">
-	$(document).ready(function () {
 		// initialise picker
 		$("div#friendsPicker<?php echo $friendspicker; ?>").friendsPicker();
-	});
 </script>
 <script>
 	$(document).ready(function () {
