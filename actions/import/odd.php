@@ -14,7 +14,7 @@
 	 */
 
 	// Safety
-	gatekeeper();
+	admin_gatekeeper();
 	
 	// Get input
 	$data = get_input($data);
