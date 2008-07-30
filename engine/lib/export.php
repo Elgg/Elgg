@@ -70,7 +70,7 @@
 	{
 		global $CONFIG;
 		
-		return $CONFIG->wwwroot  . "odd/$guid/";
+		return $CONFIG->wwwroot  . "export/odd/$guid/";
 	}
 	
 	/**
