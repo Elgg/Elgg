@@ -57,6 +57,19 @@
 ?>
 
 <div class="friends_picker">
+
+
+
+<div id="friendsPickerNavigationTabs">
+<ul>
+<li class="selected"><a href="#">Collection members</a></li>
+<li><a href="#">Edit collection</a></li>
+</ul>
+</div>
+
+
+
+
 	<div class="friendsPicker_wrapper">
 	<div id="friendsPicker<?php echo $friendspicker; ?>">
 		<div class="friendsPicker_container">
@@ -144,16 +157,14 @@
 </div>
 
 <script type="text/javascript">
-	//jQuery(window).bind("load", function() {
 	$(document).ready(function () {
 		// initialise picker
 		$("div#friendsPicker<?php echo $friendspicker; ?>").friendsPicker();
 	});
 </script>
 <script>
-	//jQuery(window).bind("load", function() {
 	$(document).ready(function () {
-	// manually add class to corresponding tab for panels that have content - needs to be automated eventually
+	// manually add class to corresponding tab for panels that have content
 <?php
 	if (sizeof($activeletters) > 0)
 		$chararray = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';

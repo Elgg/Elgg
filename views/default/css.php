@@ -1635,7 +1635,6 @@ div.expandall p {
 	text-align:right;
 	margin: 0;
 	padding:0;
-
 }
 	
 	
@@ -1666,7 +1665,6 @@ div.expandall p {
 	height: 270px;
 	/*clear: right;*/
 	background: white;
-
 }
 
 .friendsPicker .friendsPicker_container { /* long container used to house end-to-end panels. Width is calculated in JS  */
@@ -1698,7 +1696,10 @@ div.expandall p {
 	margin: 0 0 10px 0;
 	padding:0;
 	
-}
+/*
+	display:none;
+
+*/}
 
 .friendsPickerNavigation ul {
 	list-style: none;
@@ -1789,6 +1790,53 @@ div.expandall p {
 .friendsPickerNavigationR {
 	background: url("<?php echo $vars['url']; ?>_graphics/friends_picker_arrow_right.gif") no-repeat center;
 }	
+
+
+/* picker tabbed navigation */
+#friendsPickerNavigationTabs {
+	margin:10px 0 10px 0;
+	padding: 0;
+	border-bottom: 1px solid #cccccc;
+	display:table;
+	width:100%;
+}
+
+#friendsPickerNavigationTabs ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+#friendsPickerNavigationTabs li {
+	float: left;
+	border: 1px solid #ffffff;
+	border-bottom-width: 0;
+	margin: 0;
+}
+
+#friendsPickerNavigationTabs a {
+	text-decoration: none;
+	display: block;
+	padding: 0.24em 1em;
+	color: #666666;
+	text-align: center;
+}
+
+#friendsPickerNavigationTabs a:hover {
+	color: #4690d6;
+}
+
+#friendsPickerNavigationTabs .selected {
+	border-color: #cccccc;
+}
+
+#friendsPickerNavigationTabs .selected a {
+	position: relative;
+	top: 1px;
+	background: white;
+	color: #4690d6;
+}
+
 	
 	
 

@@ -28,13 +28,13 @@
         	
         	//as collections are private, check that the logged in user is the owner
         	if($coll->owner_guid == $_SESSION['user']->getGUID())
-        	    echo "<div class=\"friends_collections_controls\"> (<a href=\"" . $vars['url'] . "mod/friends/edit.php?collection={$coll->id}\">" . elgg_echo('edit') . "</a>) (<a href=\"" . $vars['url'] . "action/friends/deletecollection?collection={$coll->id}\">" . elgg_echo('delete') . "</a>)";
+        	    echo "<div class=\"friends_collections_controls\"> <a href=\"" . $vars['url'] . "action/friends/deletecollection?collection={$coll->id}\" class=\"delete_collection\"><img src=\"" . $vars['url'] ."_graphics/icon_customise_remove.gif\"/></a>";
         	    
 			echo "</div>";
 			echo $coll->name;
 			echo " ({$count}) </h2>";
         	
-        	// Ben - this is where the friends picker view needs to go
+        	// individual collection panels
         	if($friends = $vars['collection']->entities){
         		$members = $vars['collection']->members;
 				echo elgg_view('friends/picker',array('entities' => $friends, 'value' => $members));

@@ -96,8 +96,10 @@ jQuery.fn.friendsPicker = function(settings) {
 		//$("div#friendsPickerNavigation"  + j + " li.tab22 a").addClass("tabHasContent");
 		
 		// generate link to 'all friends in collection' - removed for now
-		$("div#friendsPickerNavigation" + j).append("<div class='friendsPickerNavigationAll'><a href='#' >Collection members<\/a></div><br />");
-		//$("div#friendsPickerNavigation" + j).append("<br />");
+		//$("div#friendsPickerNavigation" + j).append("<div class='friendsPickerNavigationAll'><a href='#' >Collection members<\/a></div><br />");
+		$("div#friendsPickerNavigation" + j).append("<br />");
+		
+		$("div#friendsPickerNavigation" + j).hide();
 
 		
 		j++;
