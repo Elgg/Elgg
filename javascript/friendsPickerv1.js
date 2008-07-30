@@ -99,7 +99,7 @@ jQuery.fn.friendsPicker = function(settings) {
 		//$("div#friendsPickerNavigation" + j).append("<div class='friendsPickerNavigationAll'><a href='#' >Collection members<\/a></div><br />");
 		$("div#friendsPickerNavigation" + j).append("<br />");
 		
-		$("div#friendsPickerNavigation" + j).hide();
+		//$("div#friendsPickerNavigation" + j).hide();
 
 		
 		j++;

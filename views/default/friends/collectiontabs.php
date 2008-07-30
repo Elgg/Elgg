@@ -36,7 +36,7 @@ $(document).ready(function () {
 		$('#friends_picker_placeholder<?php echo $friendspicker + 1; ?>').load('<?php echo $vars['url']; ?>friends/pickercallback.php?username=<?php echo $_SESSION['user']->username; ?>&type=list&members=<?php echo $members; ?>');
 		
 		// remove selected state from previous tab
-		$(this).parent().parent().find("#friendsPickerNavigationTabs li").removeClass("selected");
+		$(this).parent().parent().find("li.selected").removeClass("selected");
 		// add selected class to current tab
 		$(this).parent().addClass("selected");
 				
@@ -48,7 +48,7 @@ $(document).ready(function () {
 		$('#friends_picker_placeholder<?php echo $friendspicker + 1; ?>').load('<?php echo $vars['url']; ?>friends/pickercallback.php?username=<?php echo $_SESSION['user']->username; ?>&type=picker&members=<?php echo $members; ?>&friends=<?php echo $friends; ?>');
 
 		// remove selected state from previous tab
-		$(this).parent().parent().find("#friendsPickerNavigationTabs li").removeClass("selected");
+		$(this).parent().parent().find("li.selected").removeClass("selected");
 		// add selected class to current tab
 		$(this).parent().addClass("selected");
 	
