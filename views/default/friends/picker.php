@@ -80,6 +80,8 @@
 	
 	}
 	
+	if (!isset($vars['replacement'])) {
+	
 ?>
 
 
@@ -170,7 +172,9 @@
 	</div>
 	
 <?php
-
+	} else {
+		echo $vars['replacement']; 
+	}
 	if (!$callback) {
 
 ?>
