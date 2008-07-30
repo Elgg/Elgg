@@ -415,7 +415,7 @@
 				$nameid = $extender->id;
 				if ($type == 'volatile')
 					$nameid== $extender->name;
-				$url = $CONFIG->wwwroot  . "$view/$guid/$type/$nameid/";
+				$url = $CONFIG->wwwroot  . "export/$view/$guid/$type/$nameid/";
 			} 
 			return $url;
 	}
