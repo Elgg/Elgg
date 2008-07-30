@@ -383,8 +383,13 @@
 							$dbwidget->column = $col;
 							$dbwidget->order = $pos;
 						} else {
-							if (!$dbwidget->delete())
+							$dbguid = $dbwidget->getGUID();
+							if (!$dbwidget->delete()) {
 								$return = false;
+							} else {
+								// Remove state cookie
+								setcookie('widget' + $dbquid, null);
+							}
 						}
 					}
 					
