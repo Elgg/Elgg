@@ -74,7 +74,7 @@
 	
 ?>
 
-	<div class="friends_picker_placeholder<?php echo $friendspicker; ?>">
+	<div id="friends_picker_placeholder<?php echo $friendspicker; ?>">
 
 <?php
 	
