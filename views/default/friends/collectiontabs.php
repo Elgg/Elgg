@@ -1,4 +1,3 @@
-/*
 <?php
 
 	global $friendspicker;
@@ -22,18 +21,6 @@
 
 <div id="friendsPickerNavigationTabs">
 <ul>
-<li class="selected"><a href='#' onclick='$("#friends_picker_placeholder<?php echo $friendspicker + 1; ?>").load("<?php echo $vars['url']; ?>friends/pickercallback.php?username=<?php echo $_SESSION['user']->username; ?>&type=list&members=<?php echo $members; ?>"); return false;'>Collection members</a></li>
-<li><a href="#" onclick='$("#friends_picker_placeholder<?php echo $friendspicker + 1; ?>").load("<?php echo $vars['url']; ?>friends/pickercallback.php?username=<?php echo $_SESSION['user']->username; ?>&type=picker&members=<?php echo $members; ?>&friends=<?php echo $friends; ?>"); return false;'>Edit collection</a></li>
-</ul>
-</div>
-*/
-
-<?php
-
-?>
-
-<div id="friendsPickerNavigationTabs">
-<ul>
 <li class="selected"><a href="#" class="collectionmembers">Collection members</a></li>
 
 <li><a href="#" class="editmembers">Edit collection</a></li>
@@ -46,7 +33,7 @@ $(document).ready(function () {
 
 	$('a.collectionmembers').click(function () {
 		// load collection members pane
-		$('#friends_picker_placeholder<?php echo $friendspicker; ?>').load('collectionMembers.php');
+		$('#friends_picker_placeholder<?php echo $friendspicker + 1; ?>').load('<?php echo $vars['url']; ?>friends/pickercallback.php?username=<?php echo $_SESSION['user']->username; ?>&type=list&members=<?php echo $members; ?>');
 		
 		// remove selected state from previous tab
 		$(this).parent().parent().find("#friendsPickerNavigationTabs li").removeClass("selected");
@@ -58,7 +45,7 @@ $(document).ready(function () {
 
 	$('a.editmembers').click(function () {
 		// load friends picker pane
-		$('#friends_picker_placeholder<?php echo $friendspicker; ?>').load('friendsPicker.php');
+		$('#friends_picker_placeholder<?php echo $friendspicker + 1; ?>').load('<?php echo $vars['url']; ?>friends/pickercallback.php?username=<?php echo $_SESSION['user']->username; ?>&type=picker&members=<?php echo $members; ?>&friends=<?php echo $friends; ?>');
 
 		// remove selected state from previous tab
 		$(this).parent().parent().find("#friendsPickerNavigationTabs li").removeClass("selected");
