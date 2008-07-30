@@ -9,7 +9,10 @@
 	 * @link http://elgg.com/
 	 */
 
+	require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
+	admin_gatekeeper();
+	
 	$context = get_context();
 	set_context('search');
 	
