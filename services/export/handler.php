@@ -2,7 +2,7 @@
 	/**
 	 * Open Document Definition Handler.
 	 * This file acts as the endpoint for ODD UUID url requests, exporting the requested data as an
-	 * ODD XML file. 
+	 * OpenDD XML file. 
 	 * 
 	 * @package Elgg
 	 * @subpackage Core

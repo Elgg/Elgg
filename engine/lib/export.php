@@ -70,7 +70,7 @@
 	{
 		global $CONFIG;
 		
-		return $CONFIG->wwwroot  . "export/odd/$guid/";
+		return $CONFIG->wwwroot  . "export/opendd/$guid/";
 	}
 	
 	/**
@@ -224,7 +224,7 @@
 	{
 		global $CONFIG;
 		
-		register_action("import/odd", false);
+		register_action("import/opendd", false);
 	}
 	
 	// Register a startup event
