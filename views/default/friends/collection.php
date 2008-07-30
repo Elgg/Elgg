@@ -37,7 +37,8 @@
         	// individual collection panels
         	if($friends = $vars['collection']->entities){
         		$members = $vars['collection']->members;
-				echo elgg_view('friends/picker',array('entities' => $friends, 'value' => $members));
+        		$content = elgg_view('friends/tablelist',array('entities' => $members));
+				echo elgg_view('friends/picker',array('entities' => $friends, 'value' => $members, 'content' => $content));
     	    }
     	    
     	    // close friends_picker div and the accordian list item

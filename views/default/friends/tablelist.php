@@ -24,7 +24,8 @@
 			
 			$column = 0;
 			foreach($vars['entities'] as $entity) {
-				
+				if (!($entity instanceof ElggEntity)) $entity = get_entity($entity);
+					if ($entity) {
 ?>
 
 			<td style="width:25px">
@@ -54,7 +55,7 @@
 	</table>
 
 <?php
-			
+			}
 		}
 
 ?>
