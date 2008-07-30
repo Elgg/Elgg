@@ -37,8 +37,7 @@
         	// individual collection panels
         	if($friends = $vars['collection']->entities){
         		$members = $vars['collection']->members;
-        		$content = elgg_view('friends/tablelist',array('entities' => $members));
-        		$content .= elgg_view('friends/collectiontabs', array('members' => $members, 'friends' => $friends, 'collection' => $vars['collection']));
+        		$content = elgg_view('friends/collectiontabs', array('members' => $members, 'friends' => $friends, 'collection' => $vars['collection']));
 				echo elgg_view('friends/picker',array('entities' => $friends, 'value' => $members, 'content' => $content, 'replacement' => ''));
     	    }
     	    
