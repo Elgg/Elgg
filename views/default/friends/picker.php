@@ -31,6 +31,13 @@
 			}
 		}
 
+	// Initialise whether we're calling back or not
+		if (isset($vars['callback'])) {
+			$callback = $vars['callback'];
+		} else {
+			$callback = false;
+		}
+		
 	// We need to count the number of friends pickers on the page.
 		global $friendspicker;
 		if (!isset($friendspicker)) $friendspicker = 0;
@@ -54,6 +61,8 @@
 				
 			}
 		
+	if (!$callback) {
+			
 ?>
 
 <div class="friends_picker">
@@ -62,10 +71,16 @@
 
 	if (isset($vars['content'])) echo $vars['content'];
 
+	
 ?>
 
+	<div class="friends_picker_placeholder<?php echo $friendspicker; ?>">
 
-
+<?php
+	
+	}
+	
+?>
 
 
 
@@ -153,7 +168,22 @@
 		</div>
 	</div>
 	</div>
+	
+<?php
+
+	if (!$callback) {
+
+?>
+	
+	</div>
 </div>
+
+
+<?php
+
+	}
+
+?>
 
 <script type="text/javascript">
 	$(document).ready(function () {
