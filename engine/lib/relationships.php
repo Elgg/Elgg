@@ -117,9 +117,7 @@
 		 */
 		public function export()
 		{		
-			global $CONFIG;
-		
-			$uuid = $CONFIG->wwwroot  . "odd/{$this->guid_one}/relationship/{$this->id}/";	
+			$uuid = guid_to_uuid($this->guid_one) . "relationship/{$this->id}/";	
 			$relationship = new ODDRelationship(
 				guid_to_uuid($this->guid_one),
 				$this->relationship,
