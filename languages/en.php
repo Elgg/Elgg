@@ -403,6 +403,10 @@
 	
 			'by' => 'by',
 	
+			'annotations' => "Annotations",
+			'relationships' => "Relationships",
+			'metadata' => "Metadata",
+	
 		/**
 		 * Input / output strings
 		 */

@@ -25,12 +25,7 @@
 		{
 ?>
 		<div>
-			<table>
-				<tr>
-				<td><b><?php echo $k; ?>: </b></td>
-				<td><?php echo $v; ?></td> 
-				</tr>
-			</table>
+			<p><b><?php echo $k; ?>: </b><?php echo $v; ?></p>
 		</div>
 <?php
 		}
@@ -39,18 +34,13 @@
 
 <?php if ($metadata) { ?>
 <div id="metadata">
-<h2>Metadata</h2>	
+<h2><?php echo elgg_echo('metadata'); ?></h2>	
 	<?php
 		foreach ($metadata as $m)
 		{
 ?>
 		<div>
-			<table>
-				<tr>
-				<td><b><?php echo $m->name; ?>: </b></td>
-				<td><?php echo $m->value; ?></td> 
-				</tr>
-			</table>
+			<p><b><?php echo $m->name; ?>: </b><?php echo $m->value; ?></p>
 		</div>
 <?php
 		}
@@ -61,17 +51,14 @@
 
 <?php if ($annotations) { ?>
 <div id="annotations">
-<h2>Annotations</h2>	
+<h2><?php echo elgg_echo('annotations'); ?></h2>	
 	<?php
 		foreach ($annotations as $a)
 		{
 ?>
 		<div>
 			<table>
-				<tr>
-				<td><b><?php echo $a->name; ?>: </b></td>
-				<td><?php echo $a->value; ?></td> 
-				</tr>
+				<p><b><?php echo $a->name; ?>: </b><?php echo $a->value; ?></p>
 			</table>
 		</div>
 <?php
@@ -82,17 +69,14 @@
 
 <?php if ($relationships) { ?>
 <div id="relationship">
-<h2>Relationships</h2>	
+<h2><?php echo elgg_echo('relationships'); ?></h2>	
 	<?php
 		foreach ($relationships as $r)
 		{
 ?>
 		<div>
 			<table>
-				<tr>
-				<td><b><?php echo $r->relationship; ?>: </b></td>
-				<td><?php echo $r->guid_two; ?></td> 
-				</tr>
+				<p><b><?php echo $r->relationship; ?>: </b><?php echo $r->guid_two; ?></p>
 			</table>
 		</div>
 <?php
