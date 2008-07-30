@@ -107,6 +107,16 @@
 		{ 
 			return delete_relationship($this->id); 
 		}
+		
+		/**
+		 * Get a URL for this relationship.
+		 *
+		 * @return string
+		 */
+		public function getURL()
+		{
+			return get_relationship_url($this->id);
+		}
 	
 		// EXPORTABLE INTERFACE ////////////////////////////////////////////////////////////
 		
@@ -530,6 +540,73 @@
 
 		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview);
 		
+	}
+	
+	/**
+	 * Sets the URL handler for a particular relationship type
+	 *
+	 * @param string $function_name The function to register
+	 * @param string $relationship_type The relationship type.
+	 * @return true|false Depending on success
+	 */
+	function register_relationship_url_handler($function_name, $relationship_type = "all") {
+		global $CONFIG;
+		
+		if (!is_callable($function_name)) return false;
+		
+		if (!isset($CONFIG->relationship_url_handler)) {
+			$CONFIG->relationship_url_handler = array();
+		}
+		
+		$CONFIG->relationship_url_handler[$relationship_type] = $function_name;
+		
+		return true;
+		
+	}
+	
+	/**
+	 * Get the url for a given relationship.
+	 *
+	 * @param unknown_type $id
+	 * @return unknown
+	 */
+	function get_relationship_url($id)
+	{
+		global $CONFIG;
+		
+		$id = (int)$id;
+		
+		if ($relationship = get_relationship($id))
+		{
+			$view = elgg_get_viewtype(); 
+				
+			$guid = $relationship->guid_one;
+			$type = $relationship->relationship;
+			
+			$url = "";
+			
+			$function = "";
+			if (isset($CONFIG->relationship_url_handler[$type]))
+				$function = $CONFIG->relationship_url_handler[$type];
+			if (isset($CONFIG->relationship_url_handler['all']))
+				$function = $CONFIG->relationship_url_handler['all'];
+				
+			if (is_callable($function)) {
+				$url = $function($relationship);
+			}
+			
+			if ($url == "") {
+				
+				$nameid = $relationship->id;
+				
+				$url = $CONFIG->wwwroot  . "export/$view/$guid/relationship/$nameid/";
+			} 
+			
+			return $url;
+			
+		}
+		
+		return false;
 	}
 	
 	/**** HELPER FUNCTIONS FOR RELATIONSHIPS OF TYPE 'ATTACHED' ****/

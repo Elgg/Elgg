@@ -375,7 +375,7 @@
 		if (!isset($CONFIG->extender_url_handler[$extender_type])) {
 			$CONFIG->extender_url_handler[$extender_type] = array();
 		}
-		$CONFIG->entity_url_handler[$extender_type][$extender_name] = $function_name;
+		$CONFIG->extender_url_handler[$extender_type][$extender_name] = $function_name;
 		
 		return true;
 		
@@ -391,33 +391,32 @@
 	{
 		global $CONFIG;
 		
-		
 		$view = elgg_get_viewtype(); 
 			
-			$guid = $extender->entity_guid;
-			$type = $extender->type;
+		$guid = $extender->entity_guid;
+		$type = $extender->type;
+		
+		$url = "";
+		
+		$function = "";
+		if (isset($CONFIG->extender_url_handler[$type][$extender->name]))
+			$function = $CONFIG->extender_url_handler[$type][$extender->name];
+		if (isset($CONFIG->extender_url_handler[$type]['all']))
+			$function = $CONFIG->extender_url_handler[$type]['all'];
+		if (isset($CONFIG->extender_url_handler['all']['all']))
+			$function = $CONFIG->extender_url_handler['all']['all'];
 			
-			$url = "";
-			
-			$function = "";
-			if (isset($CONFIG->extender_url_handler[$type][$extender->name]))
-				$function = $CONFIG->extender_url_handler[$type][$extender->name];
-			if (isset($CONFIG->extender_url_handler[$type]['all']))
-				$function = $CONFIG->extender_url_handler[$type]['all'];
-			if (isset($CONFIG->extender_url_handler['all']['all']))
-				$function = $CONFIG->extender_url_handler['all']['all'];
-				
-			if (is_callable($function)) {
-				$url = $function($extender);
-			}
-			
-			if ($url == "") {
-				$nameid = $extender->id;
-				if ($type == 'volatile')
-					$nameid== $extender->name;
-				$url = $CONFIG->wwwroot  . "export/$view/$guid/$type/$nameid/";
-			} 
-			return $url;
+		if (is_callable($function)) {
+			$url = $function($extender);
+		}
+		
+		if ($url == "") {
+			$nameid = $extender->id;
+			if ($type == 'volatile')
+				$nameid== $extender->name;
+			$url = $CONFIG->wwwroot  . "export/$view/$guid/$type/$nameid/";
+		} 
+		return $url;
 	}
 	
 	/** Register the hook */
