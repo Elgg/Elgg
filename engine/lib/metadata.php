@@ -108,6 +108,13 @@
 		{ 
 			return delete_metadata($this->id); 
 		}
+		
+		/**
+		 * Get a url for this item of metadata.
+		 *
+		 * @return string
+		 */
+		public function getURL() { return get_metadata_url($this->id); }
 	
 		// SYSTEM LOG INTERFACE ////////////////////////////////////////////////////////////
 
@@ -726,6 +733,58 @@
 		
 		return $valuearray;
 		
+	}
+	
+	/**
+	 * Get the URL for this item of metadata, by default this links to the export handler in the current view.
+	 *
+	 * @param int $id
+	 */
+	function get_metadata_url($id)
+	{
+		$id = (int)$id;
+		
+		global $CONFIG;
+		
+		if ($extender = get_metadata($id)) {
+
+			$view = elgg_get_viewtype(); 
+			
+			$guid = $extender->entity_guid;
+			$type = $extender->type;
+			
+			$url = "";
+			
+			/*if (isset($CONFIG->entity_url_handler[$entity->getType()][$entity->getSubType()])) {
+				$function =  $CONFIG->entity_url_handler[$entity->getType()][$entity->getSubType()];
+				if (is_callable($function)) {
+					$url = $function($entity);
+				}
+			}
+			if (isset($CONFIG->entity_url_handler[$entity->getType()]['all'])) {
+				$function =  $CONFIG->entity_url_handler[$entity->getType()]['all'];
+				if (is_callable($function)) {
+					$url = $function($entity);
+				}
+			}
+			if (isset($CONFIG->entity_url_handler['all']['all'])) {
+				$function =  $CONFIG->entity_url_handler['all']['all'];
+				if (is_callable($function)) {
+					$url = $function($entity);
+				}
+			}*/
+			
+
+			if ($url == "") {
+				$nameid = $extender->id;
+				if ($type == 'volatile')
+					$nameid== $extender->name;
+				$url = $CONFIG->wwwroot  . "$view/$guid/$type/$nameid/";
+			} 
+			return $url;
+			
+		} 
+		return false;
 	}
 	
 	/** Register the hook */
