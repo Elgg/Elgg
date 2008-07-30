@@ -744,49 +744,22 @@
 	{
 		$id = (int)$id;
 		
-		global $CONFIG;
-		
 		if ($extender = get_metadata($id)) {
-
-			$view = elgg_get_viewtype(); 
-			
-			$guid = $extender->entity_guid;
-			$type = $extender->type;
-			
-			$url = "";
-			
-			/*if (isset($CONFIG->entity_url_handler[$entity->getType()][$entity->getSubType()])) {
-				$function =  $CONFIG->entity_url_handler[$entity->getType()][$entity->getSubType()];
-				if (is_callable($function)) {
-					$url = $function($entity);
-				}
-			}
-			if (isset($CONFIG->entity_url_handler[$entity->getType()]['all'])) {
-				$function =  $CONFIG->entity_url_handler[$entity->getType()]['all'];
-				if (is_callable($function)) {
-					$url = $function($entity);
-				}
-			}
-			if (isset($CONFIG->entity_url_handler['all']['all'])) {
-				$function =  $CONFIG->entity_url_handler['all']['all'];
-				if (is_callable($function)) {
-					$url = $function($entity);
-				}
-			}*/
-			
-
-			if ($url == "") {
-				$nameid = $extender->id;
-				if ($type == 'volatile')
-					$nameid== $extender->name;
-				$url = $CONFIG->wwwroot  . "$view/$guid/$type/$nameid/";
-			} 
-			return $url;
-			
+			return get_extender_url($extender);	
 		} 
 		return false;
 	}
 	
+	/**
+	 * Register a metadata url handler.
+	 *
+	 * @param string $function_name The function.
+	 * @param string $extender_name The name, default 'all'.
+	 */
+	function register_metadata_url_handler($function_name, $extender_name = "all") {
+		return register_extender_url_handler($function_name, 'metadata', $extender_name);
+	}
+		
 	/** Register the hook */
 	register_plugin_hook("export", "all", "export_metadata_plugin_hook", 2);
 ?>

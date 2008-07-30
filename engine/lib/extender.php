@@ -354,6 +354,72 @@
 		
 	}
 	
+	/**
+	 * Sets the URL handler for a particular extender type and name.
+	 * It is recommended that you do not call this directly, instead use one of the wrapper functions in the
+	 * subtype files.
+	 *
+	 * @param string $function_name The function to register
+	 * @param string $extender_type Extender type
+	 * @param string $extender_name The name of the extender
+	 * @return true|false Depending on success
+	 */
+	function register_extender_url_handler($function_name, $extender_type = "all", $extender_name = "all") {
+		global $CONFIG;
+		
+		if (!is_callable($function_name)) return false;
+		
+		if (!isset($CONFIG->extender_url_handler)) {
+			$CONFIG->extender_url_handler = array();
+		}
+		if (!isset($CONFIG->extender_url_handler[$extender_type])) {
+			$CONFIG->extender_url_handler[$extender_type] = array();
+		}
+		$CONFIG->entity_url_handler[$extender_type][$extender_name] = $function_name;
+		
+		return true;
+		
+	}
+	
+	/**
+	 * Get the URL of a given elgg extender. 
+	 * Used by get_annotation_url and get_metadata_url.
+	 *
+	 * @param ElggExtender $extender
+	 */
+	function get_extender_url(ElggExtender $extender)
+	{
+		global $CONFIG;
+		
+		
+		$view = elgg_get_viewtype(); 
+			
+			$guid = $extender->entity_guid;
+			$type = $extender->type;
+			
+			$url = "";
+			
+			$function = "";
+			if (isset($CONFIG->extender_url_handler[$type][$extender->name]))
+				$function = $CONFIG->extender_url_handler[$type][$extender->name];
+			if (isset($CONFIG->extender_url_handler[$type]['all']))
+				$function = $CONFIG->extender_url_handler[$type]['all'];
+			if (isset($CONFIG->extender_url_handler['all']['all']))
+				$function = $CONFIG->extender_url_handler['all']['all'];
+				
+			if (is_callable($function)) {
+				$url = $function($extender);
+			}
+			
+			if ($url == "") {
+				$nameid = $extender->id;
+				if ($type == 'volatile')
+					$nameid== $extender->name;
+				$url = $CONFIG->wwwroot  . "$view/$guid/$type/$nameid/";
+			} 
+			return $url;
+	}
+	
 	/** Register the hook */
 	register_plugin_hook("import", "all", "import_extender_plugin_hook", 2);
 	
