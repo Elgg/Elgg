@@ -280,7 +280,7 @@ h6 { font-size: 0.8em; }
 	margin:0 0 0 10px;
 }
 * html #two_column_left_sidebar {
-	width:170px;
+	width:210px;
 	margin:20px 10px 20px 10px;
 }
 * html #two_column_left_sidebar_maincontent {
@@ -473,7 +473,7 @@ h6 { font-size: 0.8em; }
 #elgg_topbar_container_right a {
 	color:#eeeeee;
 	margin:0 5px 0 0;
-	background:transparent url(<?php echo $vars['url']; ?>_graphics/elgg_toolbar_logout.gif) no-repeat right top;
+	background:transparent url(<?php echo $vars['url']; ?>_graphics/elgg_toolbar_logout.gif) no-repeat top right;
 	padding:0 21px 0 0;
 	display:block;
 }
@@ -487,7 +487,7 @@ h6 { font-size: 0.8em; }
 	height: 22px;
 }
 #elgg_topbar_container_right a:hover {
-	background:transparent url(<?php echo $vars['url']; ?>_graphics/elgg_toolbar_logout_over.gif) no-repeat right top;
+	background-position: right -21px;
 }
 
 #elgg_topbar_panel {
@@ -1790,6 +1790,18 @@ div.expandall p {
 .friendsPickerNavigationR {
 	background: url("<?php echo $vars['url']; ?>_graphics/friends_picker_arrow_right.gif") no-repeat center;
 }	
+
+.friends_collections_controls a.delete_collection {
+	display:block;
+	cursor: pointer;
+	width:14px;
+	height:14px;
+	margin:0 3px 0 0;
+	background: url("<?php echo $vars['url']; ?>_graphics/icon_customise_remove.png") no-repeat 0 0;
+}
+.friends_collections_controls a.delete_collection:hover {
+	background-position: 0 -16px;
+}
 
 
 /* picker tabbed navigation */
