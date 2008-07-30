@@ -187,6 +187,7 @@
 
 	}
 
+	if (!isset($vars['replacement'])) {
 ?>
 
 <script type="text/javascript">
@@ -211,3 +212,9 @@
 ?>
 	});
 </script>
+
+<?php
+
+	}
+
+?>
