@@ -12,7 +12,6 @@
 	 */
 	 
 	 $collection_id = get_input('collection_id');
-	 $collection_name = get_input('collection_name');
 	 $friends = get_input('friend');
 	 
 	 //chech the collection exists and the current user owners it
