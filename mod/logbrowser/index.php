@@ -19,6 +19,8 @@
 	$limit = get_input('limit', 10);
 	$offset = get_input('offset');
 	
+	$title = elgg_echo("logbrowser");
+	
 	// Get log entries
 	$log = get_system_log("", "","",$limit, $offset);
 	$count = get_system_log("", "","",$limit, $offset, true);
@@ -35,7 +37,7 @@
 	$result = elgg_view_entity_list($log_entries, $count, $offset, $limit, false);
 		
 // Display main admin menu
-	page_draw(elgg_echo("logbrowser"),elgg_view_layout("one_column", $result));
+	page_draw($title,elgg_view_layout("one_column", elgg_view_title($title).$result));
 	set_context($context);
 
 ?>
