@@ -39,9 +39,13 @@
 		}
 		
 	// We need to count the number of friends pickers on the page.
-		global $friendspicker;
-		if (!isset($friendspicker)) $friendspicker = 0;
-		$friendspicker++;
+		if (!isset($vars['friendspicker'])) {
+			global $friendspicker;
+			if (!isset($friendspicker)) $friendspicker = 0;
+			$friendspicker++;
+		} else {
+			$friendspicker = $vars['friendspicker'];
+		}
 
 		$users = array();
 		$activeletters = array();
@@ -192,8 +196,9 @@
 
 <script type="text/javascript">
 		// initialise picker
-		$("div#friendsPicker<?php echo $friendspicker; ?>").friendsPicker();
+		$("div#friendsPicker<?php echo $friendspicker; ?>").friendsPicker(<?php echo $friendspicker; ?>);
 </script>
+$("div#friendsPicker<?php echo $friendspicker; ?>").friendsPicker(<?php echo $friendspicker; ?>);
 <script>
 	$(document).ready(function () {
 	// manually add class to corresponding tab for panels that have content
@@ -203,7 +208,7 @@
 		foreach($activeletters as $letter) {
 			$tab = strpos($chararray, $letter) + 1;
 ?>
-	$("div#friendsPickerNavigation<?php echo $friendspicker - 1; ?> li.tab<?php echo $tab; ?> a").addClass("tabHasContent");
+	$("div#friendsPickerNavigation<?php echo $friendspicker; ?> li.tab<?php echo $tab; ?> a").addClass("tabHasContent");
 <?php
 		}
 

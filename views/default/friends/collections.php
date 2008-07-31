@@ -14,6 +14,8 @@
 	 * @uses $vars['collections'] The array of friends collections
 	 */
 
+		if (!isset($friendspicker)) $friendspicker = 0;
+
 		if (is_array($vars['collections']) && sizeof($vars['collections'])) {
 			
 			echo "<div class=\"expandall\"><p>expand all</p></div>";
@@ -21,7 +23,8 @@
 			
 			foreach($vars['collections'] as $collection) {
 				
-				echo elgg_view('friends/collection',array('collection' => $collection));
+				$friendspicker++;
+				echo elgg_view('friends/collection',array('collection' => $collection, 'friendspicker' => $friendspicker));
 				
 			}
 			

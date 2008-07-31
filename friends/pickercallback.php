@@ -25,6 +25,8 @@
 			$members = array();
 		}
 		
+		$friendspicker = (int) get_input('friendspicker',0);
+		
 	// Get page owner (bomb out if there isn't one)
 		$pageowner = page_owner_entity();
 		if (!$pageowner) { forward(); exit; }
@@ -39,7 +41,8 @@
 								$content = elgg_view('friends/picker',array(
 												'entities' => $friends,
 												'value' => $members,
-												'callback' => true
+												'callback' => true,
+												'friendspicker' => $friendspicker,
 																			));
 								break;
 			

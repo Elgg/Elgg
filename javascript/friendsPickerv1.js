@@ -3,10 +3,12 @@
 // create a separate namespace for each picker - so we can have multiple pickers per page
 var j = 0;
 
-jQuery.fn.friendsPicker = function(settings) {
+jQuery.fn.friendsPicker = function(iterator) {
 
+	j = iterator;
+	var settings; 
 	settings = $.extend({ easeFunc: "easeOutExpo", easeTime: 1000, toolTip: false }, settings);
-	 
+	
 	return this.each(function() {
 	
 		var container = $(this);
@@ -102,7 +104,7 @@ jQuery.fn.friendsPicker = function(settings) {
 		//$("div#friendsPickerNavigation" + j).hide();
 
 		
-		j++;
+		//j++;
   });
 };
 
