@@ -17,7 +17,7 @@
 	admin_gatekeeper();
 	
 	// Get input
-	$data = get_input($data);
+	$data = get_input('data');
 	
 	// Import 
 	$return = import($data);
