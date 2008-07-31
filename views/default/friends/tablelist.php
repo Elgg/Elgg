@@ -59,5 +59,7 @@
 		if ($column < 3 && $column != 0) echo "</tr>";	
 		echo "</table>";
 		}
+		
+		if (isset($vars['content'])) echo $vars['content'];
 
 ?>

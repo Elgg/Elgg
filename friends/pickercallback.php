@@ -27,6 +27,7 @@
 		}*/
 		$collection = (int) get_input('collection',0);
 		$members = get_members_of_access_collection($collection, true);
+		if (!$members) $members = array();
 		
 		$friendspicker = (int) get_input('friendspicker',0);
 		
@@ -38,7 +39,8 @@
 		switch($type) {
 			
 			case 'list':		
-								$content = elgg_view('friends/tablelist',array('entities' => $members));
+								$js_segment = elgg_view('friends/tablelistcountupdate',array('friendspicker' => $friendspicker, 'count' => sizeof($members)));
+								$content = elgg_view('friends/tablelist',array('entities' => $members, 'content' => $js_segment));
 								break;
 			default:			$friends = $pageowner->getFriends('',9999);
 								$content = elgg_view('friends/picker',array(

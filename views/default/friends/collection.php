@@ -17,8 +17,8 @@
 	 */
 
 			$coll = $vars['collection'];
-
-			if (is_array($vars['collection']->entities)) {
+			
+			if (is_array($vars['collection']->members)) {
 				$count = sizeof($vars['collection']->members);
 			} else {
 				$count = 0;
@@ -32,7 +32,7 @@
         	    
 			echo "</div>";
 			echo $coll->name;
-			echo " ({$count}) </h2>";
+			echo " (<span id=\"friends_membership_count{$vars['friendspicker']}\">{$count}</span>) </h2>";
         	
         	// individual collection panels
         	if($friends = $vars['collection']->entities){
