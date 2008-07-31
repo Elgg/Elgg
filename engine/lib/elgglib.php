@@ -121,6 +121,28 @@
 		    return $viewtype;
 		}
 		
+		/**
+		 * Return the location of a given view.
+		 *
+		 * @param string $view The view.
+		 */
+		function elgg_get_view_location($view)
+		{
+			global $CONFIG;
+		
+			if (!isset($CONFIG->views->locations[$view])) {
+	    		if (!isset($CONFIG->viewpath)) {
+					return dirname(dirname(dirname(__FILE__))) . "/views/";		    			
+	    		} else {
+	    			return $CONFIG->viewpath;
+	    		}
+	    	} else {
+	    		return $CONFIG->views->locations[$view];
+	    	}
+	    	
+	    	return false;
+		}
+		
 	/**
 	 * Handles templating views
 	 *
@@ -193,15 +215,7 @@
 		    ob_start();
 		    foreach($viewlist as $priority => $view) {
 		    	
-		    	if (!isset($CONFIG->views->locations[$view])) {
-		    		if (!isset($CONFIG->viewpath)) {
-						$view_location = dirname(dirname(dirname(__FILE__))) . "/views/";		    			
-		    		} else {
-		    			$view_location = $CONFIG->viewpath;
-		    		}
-		    	} else {
-		    		$view_location = $CONFIG->views->locations[$view];
-		    	}
+		    	$view_location = elgg_get_view_location($view);
 		    	
 		    			    	
 			    if (file_exists($view_location . "{$viewtype}/{$view}.php") && !@include($view_location . "{$viewtype}/{$view}.php")) {
