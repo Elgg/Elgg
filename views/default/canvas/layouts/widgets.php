@@ -72,7 +72,7 @@
 <div class="customise_editpanel_instructions">
 <h2>Add widgets to your page</h2>
 <p>
-Choose the features you want to add to your page by dragging them from the <b>Widget gallery</b> to either the <b>Main content area</b> or the <b>Sidebar</b>, and position them where you would like them to appear.
+Choose the features you want to add to your page by dragging them from the <b>Widget gallery</b> on the right, to any of the three widget areas below, and position them where you would like them to appear.
 </p>
 <p>To remove a widget drag it back to the <b>Widget gallery</b>.
 </p>

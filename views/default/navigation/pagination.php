@@ -71,7 +71,7 @@
 			$prevurl .= "?{$word}=" . $prevoffset;
 		}
 		
-		echo "<a href=\"{$prevurl}\">&laquo; ". elgg_echo("previous") ."</a> ";
+		echo "<a href=\"{$prevurl}\" class=\"pagination_previous\">&laquo; ". elgg_echo("previous") ."</a> ";
 		
 	}
 
@@ -118,9 +118,9 @@
 				$counturl .= "?{$word}=" . $curoffset;
 			}
 			if ($curoffset != $offset) {
-				echo " <a href=\"{$counturl}\">{$i}</a> ";
+				echo " <a href=\"{$counturl}\" class=\"pagination_number\">{$i}</a> ";
 			} else {
-				echo " {$i} ";
+				echo "<span class=\"pagination_currentpage\"> {$i} </span>";
 			}
 			$prev = $i;
 		
@@ -140,7 +140,7 @@
 			$nexturl .= "?{$word}=" . $nextoffset;
 		}
 		
-		echo " <a href=\"{$nexturl}\">" . elgg_echo("next") . " &raquo;</a>";
+		echo " <a href=\"{$nexturl}\" class=\"pagination_next\">" . elgg_echo("next") . " &raquo;</a>";
 		
 	}
 

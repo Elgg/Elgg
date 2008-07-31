@@ -86,7 +86,7 @@ a {
 	outline: none;
 }
 a:visited {
-	color: #0054a7;
+	/* color: #0054a7; */
 }
 a:hover {
 	color: #0054a7;
@@ -1944,7 +1944,67 @@ div.expandall p {
 }
 	
 	
-	
+
+
+/* ***************************************
+	Pagination
+*************************************** */
+.pagination {
+	margin:0 0 20px 0;
+	display: table;
+}
+
+.pagination .pagination_number {
+	display:block;
+	float:left;
+	background:#ffffff;
+	border:1px solid #4690d6;
+	text-align: center;
+	color:#4690d6;
+	font-size: 12px;
+	font-weight: normal;
+	margin:0 6px 0 0;
+	padding:0px 4px;
+	cursor: pointer;
+}
+.pagination .pagination_number:hover,
+.pagination .pagination_number:hover {
+	background:#4690d6;
+	color:white;
+	text-decoration: none;
+}
+.pagination .pagination_previous,
+.pagination .pagination_next {
+	display:block;
+	float:left;
+	border:1px solid #4690d6;
+	color:#4690d6;
+	text-align: center;
+	font-size: 12px;
+	font-weight: normal;
+	margin:0 6px 0 0;
+	padding:0px 4px;
+	cursor: pointer;
+}
+.pagination .pagination_previous:hover,
+.pagination .pagination_next:hover {
+	background:#4690d6;
+	color:white;
+	text-decoration: none;
+}
+.pagination .pagination_currentpage {
+	display:block;
+	float:left;
+	background:#4690d6;
+	border:1px solid #4690d6;
+	text-align: center;
+	color:white;
+	font-size: 12px;
+	font-weight: bold;
+	margin:0 6px 0 0;
+	padding:0px 4px;
+	cursor: pointer;
+}
 	
 	
 	
