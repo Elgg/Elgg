@@ -1873,16 +1873,17 @@ div.expandall p {
 
 #tools_menu a {
 	display:block;
-	padding:3px;
+	padding:3px 13px 3px 3px;
 	color:white;
 	text-decoration:none;
+	background: url(<?php echo $vars['url']; ?>_graphics/toolbar_arrow.png) no-repeat right 8px;
 }
 
 #tools_menu a:hover {
-	background-color:#4690d6;
+	background: #4690d6 url(<?php echo $vars['url']; ?>_graphics/toolbar_arrow.png) no-repeat right bottom;
 }
-.tools_menu_on {
-	background:#4690d6;
+#tools_menu a.tools_menu_on {
+	background: #4690d6 url(<?php echo $vars['url']; ?>_graphics/toolbar_arrow.png) no-repeat right bottom;
 }
 
 #tools_menu li {
@@ -1905,14 +1906,14 @@ div.expandall p {
 	border-right:1px solid #333333;
 	color:#4690d6;
 	padding:2px 6px 2px 6px;
-	background: #DEDEDE;
+	background: #DEDEDE !important;
 	border-top:1px solid #f5f5f5;
 	border-bottom:1px solid #999999;
 }
 
 #tools_menu ul a:hover {
 	color:white;
-	background: #4690d6 url(<?php echo $vars['url']; ?>_graphics/tools_over.png) repeat-x top left;
+	background: #4690d6 url(<?php echo $vars['url']; ?>_graphics/tools_over.png) repeat-x top left !important;
 }
 /* IE 6 - remove transparent png in menu */
 * html #tools_menu ul a:hover {
