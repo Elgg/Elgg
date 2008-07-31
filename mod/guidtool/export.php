@@ -9,14 +9,12 @@
 	 * @link http://elgg.com/
 	 */
 
-	admin_gatekeeper();
+	$entity_guid = get_input('entity_guid');
 	
-	$format = get_input('format', 'opendd');
-
 	// Render the file upload page
-	$title = elgg_echo("guidtool:import");
+	$title = elgg_echo('guidbrowser:export');
 	$body = elgg_view_title($title);
-	$body .= elgg_view("forms/guidtool/import", array('format' => $format, 'forward_url'));
+	$body .= elgg_view("forms/guidtool/export", array('entity_guid' => $entity_guid));
 	
 	$body = elgg_view_layout('one_column', $body);
 	

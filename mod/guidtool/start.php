@@ -42,8 +42,37 @@
 		{
 			switch ($page[0])
 			{
-				case 'import' : 
-					include($CONFIG->pluginspath . "guidtool/import.php"); 
+				case 'view' :
+				case 'export':
+					
+					if ((isset($page[1]) && (!empty($page[1])))) {
+						add_submenu_item('GUID:'.$page[1], $CONFIG->url . "pg/guidtool/view/{$page[1]}/");
+						add_submenu_item(elgg_echo('guidbrowser:export'), $CONFIG->url . "pg/guidtool/export/{$page[1]}/");
+						
+						set_input('entity_guid', $page[1]);
+						if ($page[0] == 'view')
+							include($CONFIG->pluginspath . "guidtool/view.php");
+						else
+						{
+							if ((isset($page[2]) && (!empty($page[2])))) {
+								set_input('format', $page[2]); 
+								include($CONFIG->pluginspath . "guidtool/export.php");
+							} else {
+								set_input('forward_url', $CONFIG->url . "pg/guidtool/export/$page[1]/"); 
+								include($CONFIG->pluginspath . "guidtool/format_picker.php");
+							} 	
+						}
+					}
+					else include($CONFIG->pluginspath . "guidtool/index.php"); 
+				break;
+				case 'import' :
+					if ((isset($page[1]) && (!empty($page[1])))) {
+						set_input('format', $page[1]);
+						include($CONFIG->pluginspath . "guidtool/import.php");
+					} else {
+						set_input('forward_url', $CONFIG->url . "pg/guidtool/import/");  
+						include($CONFIG->pluginspath . "guidtool/format_picker.php");
+					} 
 				break;
 				default:
 					include($CONFIG->pluginspath . "guidtool/index.php"); 
@@ -53,7 +82,24 @@
 			include($CONFIG->pluginspath . "guidtool/index.php"); 
 	}
 	
-	
+	/**
+	 * Get a list of import actions
+	 *
+	 */
+	function guidtool_get_import_actions()
+	{
+		global $CONFIG;
+		
+		$return = array();
+		
+		foreach ($CONFIG->actions as $action => $handler)
+		{
+			if (strpos($action, "import/")===0)
+				$return[] = substr($action, 7);
+		}
+		
+		return $return;
+	}
 	
 	// Initialise log
 	register_elgg_event_handler('init','system','guidtool_init');

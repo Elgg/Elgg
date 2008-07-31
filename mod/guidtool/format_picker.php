@@ -9,16 +9,17 @@
 	 * @link http://elgg.com/
 	 */
 
+	global $CONFIG;
+	
 	admin_gatekeeper();
 	
-	$format = get_input('format', 'opendd');
+	$formats = guidtool_get_import_actions();
 
-	// Render the file upload page
-	$title = elgg_echo("guidtool:import");
+	$title = elgg_echo("guidtool:pickformat");
 	$body = elgg_view_title($title);
-	$body .= elgg_view("forms/guidtool/import", array('format' => $format, 'forward_url'));
+	$body .= elgg_view('forms/guidtool/format', array('formats' => $formats));
 	
 	$body = elgg_view_layout('one_column', $body);
-	
+		
 	page_draw($title, $body);
 ?>

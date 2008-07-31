@@ -19,6 +19,10 @@
 			'guidtool:browse' => 'Browse GUID',
 			'guidtool:import' => 'Import',
 			'guidtool:import:desc' => 'Paste the data you want to import in following window, this must be in "%s" format.',
+	
+			'guidtool:pickformat' => 'Please select the format that you wish to import or export.',
+	
+			'guidbrowser:export' => 'Export',
 	);
 					
 	add_translation("en",$english);

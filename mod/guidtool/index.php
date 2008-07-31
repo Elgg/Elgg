@@ -19,9 +19,25 @@
 	$limit = get_input('limit', 10);
 	$offset = get_input('offset');
 	
+	$title = elgg_echo("guidtool");
 	
+	// Get entities
+	$entities = get_entities("","","","",$limit, $offset);
+	$count = get_entities("","","","",$limit, $offset, true);
+	
+	$wrapped_entries = array();
+	
+	foreach ($entities as $e)
+	{
+		$tmp = new ElggObject();
+		$tmp->subtype = 'guidtoolwrapper';
+		$tmp->entity = $e;
+		$wrapped_entries[] = $tmp;
+	}
+	
+	$body = elgg_view_title($title) . elgg_view_entity_list($wrapped_entries, $count, $offset, $limit, false);
 	
 // Display main admin menu
-	page_draw(elgg_echo("guidtool"),elgg_view_layout("one_column", $body));
+	page_draw($title,elgg_view_layout("one_column", $body));
 	set_context($context);
 ?>
