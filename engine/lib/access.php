@@ -202,6 +202,33 @@
 		}
 		
 		/**
+		 * Updates the membership in an access collection.
+		 *
+		 * @param int $collection_id The ID of the collection.
+		 * @param array $members Array of member GUIDs
+		 * @return true|false Depending on success
+		 */
+		function update_access_collection($collection_id, $members) {
+			
+			global $CONFIG;
+			$collection_id = (int) $collection_id;
+			
+			if ($collection = get_access_collection($collection_id)) {
+				delete_data("delete from {$CONFIG->dbprefix}access_collection_membership where access_collection_id = {$collection_id}");
+			}
+			
+			if (is_array($members) && sizeof($members) > 0) {
+				foreach($members as $member) {
+					$member = (int) $member;
+					add_user_to_access_collection($member, $collection_id);
+				}
+				return true;
+			}
+			
+			return false;
+		}
+		
+		/**
 		 * Deletes a specified access collection
 		 *
 		 * @param int $collection_id The collection ID
@@ -232,7 +259,7 @@
     		
     		$collection_id = (int) $collection_id;
     		global $CONFIG;
-    		$get_collection = get_data("SELECT * FROM {$CONFIG->dbprefix}access_collections WHERE id = {$collection_id}");
+    		$get_collection = get_data_row("SELECT * FROM {$CONFIG->dbprefix}access_collections WHERE id = {$collection_id}");
     		
     		return $get_collection;
     		
@@ -252,7 +279,7 @@
 			$collections = get_write_access_array();
 			
 			if (array_key_exists($collection_id, $collections) && $user = get_user($user_guid)) {
-				
+
 				global $CONFIG;
 				insert_data("insert into {$CONFIG->dbprefix}access_collection_membership set access_collection_id = {$collection_id}, user_guid = {$user_guid}");
 				return true;

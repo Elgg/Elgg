@@ -11,42 +11,11 @@
 	 * @link http://elgg.org/
 	 */
 	 
-	 //must be logged in
-	 gatekeeper();
-	 
 	 $collection_id = get_input('collection_id');
 	 $collection_name = get_input('collection_name');
+	 $friends = get_input('friend');
 	 
-	 //$friends = get_input('friends_collection');
-	 
-	 //chech the colelction exists and the current user owners it
-	 if($full_collection = get_access_collection($collection_id)){
-	 
-        //first check to make sure that a collection name has been set and create the new colection
-        if($collection_name){
-        
-            //create the collection
-            $create_collection = create_access_collection($collection_name, $_SESSION['user']->getGUID());
-        
-        
-            // Success message
-    		system_message(elgg_echo("friends:collectionadded"));
-    		// Forward to the collections page
-    		forward("pg/collections/" . $_SESSION['user']->username);
-        
-        } else {
-        
-            register_error(elgg_echo("friends:nocollectionname"));
-		
-        }
-        
-    } else {
-        
-        register_error(elgg_echo("friends:nocollectionname"));
-        
-    }
-        
-    // Forward to the add collection page
-    forward("pg/collections/add");    
+	 //chech the collection exists and the current user owners it
+	 update_access_collection($collection_id, $friends);
 	 
 ?>

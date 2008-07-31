@@ -36,16 +36,14 @@
         	
         	// individual collection panels
         	if($friends = $vars['collection']->entities){
-        		$members = $vars['collection']->members;
-        		$implodedmemberslist = implode(',',$members);
-        		$content = elgg_view('friends/collectiontabs', array('members' => $members, 'friends' => $friends, 'collection' => $vars['collection'], 'friendspicker' => $vars['friendspicker']));
+        		$content = elgg_view('friends/collectiontabs', array('owner' => $_SESSION['user'], 'collection' => $vars['collection'], 'friendspicker' => $vars['friendspicker']));
 				echo elgg_view('friends/picker',array('entities' => $friends, 'value' => $members, 'content' => $content, 'replacement' => '', 'friendspicker' => $vars['friendspicker']));
 				?>
 				
 <script type="text/javascript">
 $(document).ready(function () {
 		
-		$('#friends_picker_placeholder<?php echo $vars['friendspicker']; ?>').load('<?php echo $vars['url']; ?>friends/pickercallback.php?username=<?php echo $_SESSION['user']->username; ?>&type=list&members=<?php echo $implodedmemberslist; ?>');
+		$('#friends_picker_placeholder<?php echo $vars['friendspicker']; ?>').load('<?php echo $vars['url']; ?>friends/pickercallback.php?username=<?php echo $_SESSION['user']->username; ?>&type=list&collection=<?php echo $vars['collection']->id; ?>');
 				
     });
 </script>

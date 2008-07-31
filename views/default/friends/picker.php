@@ -50,6 +50,14 @@
 		$users = array();
 		$activeletters = array();
 		
+	// Are we displaying form tags and submit buttons?
+	// (If we've been given a target, then yes! Otherwise, no.)
+		if (isset($vars['formtarget'])) {
+			$formtarget = $vars['formtarget'];
+		} else {
+			$formtarget = false;
+		}
+		
 	// Sort users by letter
 		if (is_array($vars['entities']) && sizeof($vars['entities']))
 			foreach($vars['entities'] as $user) {
@@ -86,9 +94,39 @@
 	
 	if (!isset($vars['replacement'])) {
 	
+		if ($formtarget) {
 ?>
 
+	<script language="text/javascript">
+		$(function() { // onload...do
+		$('#collectionMembersForm<?php echo $friendspicker; ?>').submit(function() {
+			var inputs = [];
+			$(':input', this).each(function() {
+				inputs.push(this.name + '=' + escape(this.value));
+			});
+			jQuery.ajax({
+				type: "POST",
+				data: inputs.join('&'),
+				url: this.action,
+				success: function(){
+     				$('a.collectionmembers<?php echo $friendspicker; ?>').click();
+   				}
 
+			});
+			return false;
+        })
+      })
+
+	</script>
+
+	<!-- Collection members form -->
+	<form id="collectionMembersForm<?php echo $friendspicker; ?>" action="<?php echo $formtarget; ?>" method="post"> <!-- action="" method=""> -->
+
+<?php
+
+		}
+
+?>
 
 	<div class="friendsPicker_wrapper">
 	<div id="friendsPicker<?php echo $friendspicker; ?>">
@@ -172,11 +210,26 @@
 		
 ?>
 		</div>
-		<!-- Collection members form -->
-		<form id="collectionMembersForm"> <!-- action="" method=""> -->
-		<input type="submit" class="submit_button" value="Save changes" onclick="$('a.collectionmembers<?php echo $friendspicker; ?>').click();"/>
-		<input type="button" class="cancel_button" value="Cancel" onclick="$('a.collectionmembers<?php echo $friendspicker; ?>').click();" />
+		
+<?php
+
+	if ($formtarget) {
+
+		if (isset($vars['formcontents']))
+			echo $vars['formcontents'];
+		
+?>
+		<input type="submit" class="submit_button" value="<?php echo elgg_echo('save'); ?>" />
+		<!--  onclick="$('a.collectionmembers<?php echo $friendspicker; ?>').click();"  -->
+		<input type="button" class="cancel_button" value="<?php echo elgg_echo('cancel'); ?>" onclick="$('a.collectionmembers<?php echo $friendspicker; ?>').click();" />
 		</form>
+		
+<?php
+
+	}
+
+?>
+		
 	</div>
 	</div>
 	

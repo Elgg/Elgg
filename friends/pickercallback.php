@@ -13,17 +13,20 @@
 
 	// Load Elgg engine
 		require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
+		global $CONFIG;
 
 	// Get callback type (list or picker)
 		$type = get_input('type','picker');
 		
 	// Get list of members if applicable
-		$members = get_input('members','');
+		/*$members = get_input('members','');
 		if (!empty($members)) {
 			$members = explode(',',$members);
 		} else {
 			$members = array();
-		}
+		}*/
+		$collection = (int) get_input('collection',0);
+		$members = get_members_of_access_collection($collection, true);
 		
 		$friendspicker = (int) get_input('friendspicker',0);
 		
@@ -43,6 +46,8 @@
 												'value' => $members,
 												'callback' => true,
 												'friendspicker' => $friendspicker,
+												'formcontents' => elgg_view('friends/forms/collectionfields',array('collection' => get_access_collection($collection))),
+												'formtarget' => $CONFIG->wwwroot . 'action/friends/editcollection', 
 																			));
 								break;
 			

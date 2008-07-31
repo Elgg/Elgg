@@ -397,6 +397,7 @@
 		 */
 	
 			'save' => "Save",
+			'cancel' => "Cancel",
 			'saving' => "Saving ...",
 			'update' => "Update",
 			'edit' => "Edit",

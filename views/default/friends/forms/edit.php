@@ -3,11 +3,12 @@
 	/**
 	 * Elgg friend collections add/edit 
 	 * 
-	 * @package ElggFriends
+	 * @package Elgg
+	 * @subpackage Core
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Dave Tosh <dave@elgg.com>
+	 * @author Curverider Ltd
 	 * @copyright Curverider Ltd 2008
-	 * @link http://elgg.com/
+	 * @link http://elgg.org/
 	 * 
 	 * @uses $vars['object'] Optionally, the collection edit
 	 */
