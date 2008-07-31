@@ -46,6 +46,11 @@
 		protected $url_override;
 		
 		/**
+		 * Icon override, overrides the value of getIcon().
+		 */
+		protected $icon_override;
+		
+		/**
 		 * Temporary cache for metadata, permitting meta data access before a guid has obtained.
 		 */
 		protected $temp_metadata;
@@ -495,6 +500,36 @@
 		public function setURL($url) {
 			$this->url_override = $url;
 			return $url;
+		}
+		
+		/**
+		 * Return a url for the entity's icon, trying multiple alternatives.
+		 *
+		 * @param string $size Either 'large','medium','small' or 'tiny'
+		 * @return string The url or false if no url could be worked out.
+		 */
+		public function getIcon($size = 'medium')
+		{
+			if (isset($this->icon_override[$size])) return $this->icon_override[$size];
+			return elgg_get_entity_icon_url($this, $size);
+		}
+		
+		/**
+		 * Set an icon override for an icon and size.
+		 *
+		 * @param string $url The url of the icon.
+		 * @param string $size The size its for.
+		 * @return bool
+		 */
+		public function setIcon($url, $size = 'medium')
+		{
+			$url = sanitise_string($url);
+			$size = sanitise_string($size);
+			
+			if (!$this->icon_override) $this->icon_override = array();
+			$this->icon_override[$size] = $url;
+			
+			return true;
 		}
 		
 		/**
@@ -1631,6 +1666,7 @@
 		}
 		
 	}
+	
 	
 	/**
 	 * Gets the URL for an entity, given a particular GUID
