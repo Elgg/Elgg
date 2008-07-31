@@ -28,7 +28,7 @@
         	
         	//as collections are private, check that the logged in user is the owner
         	if($coll->owner_guid == $_SESSION['user']->getGUID())
-        	    echo "<div class=\"friends_collections_controls\"> <a href=\"" . $vars['url'] . "action/friends/deletecollection?collection={$coll->id}\" class=\"delete_collection\"> </a>";
+        	    echo "<div class=\"friends_collections_controls\"> <a href=\"" . $vars['url'] . "action/friends/deletecollection?collection={$coll->id}\" class=\"delete_collection\" onclick=\"$('div.friends_picker').empty();\"> </a>";
         	    
 			echo "</div>";
 			echo $coll->name;
