@@ -19,7 +19,7 @@
 		$obj_url = $object->getURL();
 	
 	$icon = elgg_view(
-			"logbrowser/icon", array(
+			"graphics/icon", array(
 			'entity' => $vars['entity'],
 			'size' => 'small',
 		  )

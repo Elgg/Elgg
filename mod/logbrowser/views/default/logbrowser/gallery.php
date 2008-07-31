@@ -18,13 +18,7 @@
 	if (is_callable(array($object, 'getURL')))
 		$obj_url = $object->getURL();
 	
-	$icon = elgg_view(
-			"logbrowser/icon", array(
-			'entity' => $vars['entity'],
-			'size' => 'small',
-		  )
-		);
-
+	
 	$info .= "<p><b>"; 
 	if ($obj_url) $info .= "<a href=\"$obj_url\">";
 	$info .= "{$entry->object_class}";
