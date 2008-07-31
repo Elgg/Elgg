@@ -1662,7 +1662,7 @@ div.expandall p {
 	margin: 0;
 	padding:0;
 	width: 685px;
-	height: 270px;
+	height: 300px;
 	/*clear: right;*/
 	background: white;
 }

@@ -172,6 +172,11 @@
 		
 ?>
 		</div>
+		<!-- Collection members form -->
+		<form id="collectionMembersForm"> <!-- action="" method=""> -->
+		<input type="submit" class="submit_button" value="Save changes" onclick="$('a.collectionmembers<?php echo $friendspicker; ?>').click();"/>
+		<input type="button" class="cancel_button" value="Cancel" onclick="$('a.collectionmembers<?php echo $friendspicker; ?>').click();" />
+		</form>
 	</div>
 	</div>
 	
@@ -182,7 +187,7 @@
 	if (!$callback) {
 
 ?>
-	
+			
 	</div>
 </div>
 
@@ -198,7 +203,6 @@
 		// initialise picker
 		$("div#friendsPicker<?php echo $friendspicker; ?>").friendsPicker(<?php echo $friendspicker; ?>);
 </script>
-$("div#friendsPicker<?php echo $friendspicker; ?>").friendsPicker(<?php echo $friendspicker; ?>);
 <script>
 	$(document).ready(function () {
 	// manually add class to corresponding tab for panels that have content
