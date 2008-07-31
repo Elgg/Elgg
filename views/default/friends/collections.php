@@ -43,7 +43,7 @@ $(document).ready(function(){
 
 $('#friends_collections_accordian h2').click(function () {
 	$(this.parentNode).children("[class=friends_picker]").slideToggle("fast");
-	return false;
+	//return false;
 });
     
 // global more info expand all/close all
