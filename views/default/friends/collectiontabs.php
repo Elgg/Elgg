@@ -11,7 +11,7 @@
 	
 	$friends = "";
 	if (isset($vars['friends'])) {
-		foreach($friends as $friend) {
+		foreach($vars['friends'] as $friend) {
 			if (!empty($friends)) $friends .= ",";
 			$friends .= $friend->getGUID();
 		}

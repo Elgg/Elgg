@@ -37,8 +37,20 @@
         	// individual collection panels
         	if($friends = $vars['collection']->entities){
         		$members = $vars['collection']->members;
+        		$implodedmemberslist = implode(',',$members);
         		$content = elgg_view('friends/collectiontabs', array('members' => $members, 'friends' => $friends, 'collection' => $vars['collection']));
 				echo elgg_view('friends/picker',array('entities' => $friends, 'value' => $members, 'content' => $content, 'replacement' => ''));
+				global $friendspicker;
+				?>
+				
+<script type="text/javascript">
+$(document).ready(function () {
+		
+		$('#friends_picker_placeholder<?php echo $friendspicker; ?>').load('<?php echo $vars['url']; ?>friends/pickercallback.php?username=<?php echo $_SESSION['user']->username; ?>&type=list&members=<?php echo $implodedmemberslist; ?>');
+				
+    });
+</script>
+				<?php
     	    }
     	    
     	    // close friends_picker div and the accordian list item
