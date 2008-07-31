@@ -216,9 +216,9 @@
 			 'friends:collectionfriends' => "Friends in collection",
 			 'friends:collectionedit' => "Edit this collection",
 			 'friends:nocollections' => "You do not yet have any collections.",
-			 'friends:collectiondeleted' => "That collection has been deleted.",
-			 'friends:collectiondeletefailed' => "We were unable to delete that collection, either you don't have permission, or some other problem has occurred.",
-			 'friends:collectionadded' => "Your collection was successful created",
+			 'friends:collectiondeleted' => "Your collection has been deleted.",
+			 'friends:collectiondeletefailed' => "We were unable to delete the collection. Either you don't have permission, or some other problem has occurred.",
+			 'friends:collectionadded' => "Your collection was successfuly created",
 			 'friends:nocollectionname' => "You need to give your collection a name before it can be created.",
 		
 	        'friends:river:created' => "%s added the friends widget.",

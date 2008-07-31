@@ -22,7 +22,7 @@
 		
 		if($get_collection){
     		
-    		if(array_pop($get_collection)->owner_guid == $_SESSION['user']->getGUID()){
+    		if($get_collection->owner_guid == $_SESSION['user']->getGUID()){
 		    
 	            $delete_collection = delete_access_collection($collection_id);
 	        
@@ -32,14 +32,14 @@
 	        } else {
     	        
     	        // Failure message
-		        system_message(elgg_echo("friends:collectiondeletefailed"));
+		        register_error(elgg_echo("friends:collectiondeletefailed"));
 		        
 	        }
 		
 		} else {
     		
     		// Failure message
-		    system_message(elgg_echo("friends:collectiondeletefailed"));
+		    register_error(elgg_echo("friends:collectiondeletefailed"));
 		    
 	    }
 	    
