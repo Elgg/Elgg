@@ -915,6 +915,16 @@
 	}
 	
 	/**
+	 * Adds collection submenu items 
+	 *
+	 */
+	function collections_submenu_items() {
+		global $CONFIG;
+		add_submenu_item(elgg_echo('friends:collections'), $CONFIG->wwwroot . "pg/collections/" . $_SESSION['user']->username);
+		add_submenu_item(elgg_echo('friends:collections:add'),$CONFIG->wwwroot."pg/collections/add");
+	}
+	
+	/**
 	 * Page handler for friends
 	 *
 	 */
@@ -922,6 +932,9 @@
 		
 		if (isset($page_elements[0]) && $user = get_user_by_username($page_elements[0])) {
 			set_page_owner($user->getGUID());
+		}
+		if ($_SESSION['guid'] == page_owner()) {
+			collections_submenu_items();
 		}
 		require_once(dirname(dirname(dirname(__FILE__))) . "/friends/index.php");
 		
@@ -936,7 +949,34 @@
 		if (isset($page_elements[0]) && $user = get_user_by_username($page_elements[0])) {
 			set_page_owner($user->getGUID());
 		}
+		if ($_SESSION['guid'] == page_owner()) {
+			collections_submenu_items();
+		}
 		require_once(dirname(dirname(dirname(__FILE__))) . "/friends/of.php");
+		
+	}
+	
+	/**
+	 * Page handler for friends of
+	 *
+	 */
+	function collections_page_handler($page_elements) {
+		
+		if (isset($page_elements[0])) {
+			if ($page_elements[0] == "add") {
+				set_page_owner($_SESSION['guid']);
+				collections_submenu_items();
+				require_once(dirname(dirname(dirname(__FILE__))) . "/friends/add.php"); 
+			} else {
+				if ($user = get_user_by_username($page_elements[0])) {
+					set_page_owner($user->getGUID());
+					if ($_SESSION['guid'] == page_owner()) {
+						collections_submenu_items();
+					}
+					require_once(dirname(dirname(dirname(__FILE__))) . "/friends/collections.php");
+				}
+			}
+		}
 		
 	}
 
@@ -960,13 +1000,29 @@
 	 */
 	function users_init() {
 		
+		// Set up menu for logged in users
+			if (isloggedin())
+				add_menu(elgg_echo('friends'), $CONFIG->wwwroot . "pg/friends/" . $_SESSION['user']->username);
+    		
+    	//add submenu options
+			if (get_context() == "friends" || 
+				get_context() == "friendsof" || 
+				get_context() == "collections") {
+				add_submenu_item(elgg_echo('friends'),$CONFIG->wwwroot."pg/friends/" . page_owner_entity()->username);
+				add_submenu_item(elgg_echo('friends:of'),$CONFIG->wwwroot."pg/friendsof/" . page_owner_entity()->username);
+			}
+		
 		register_page_handler('friends','friends_page_handler');
 		register_page_handler('friendsof','friends_of_page_handler');
+		register_page_handler('collections','collections_page_handler');
 		register_action("register",true);
    		register_action("useradd",true);
 		register_action("friends/add");
    		register_action("friends/remove");
 		register_action("email/confirm");
+		register_action('friends/addcollection');
+		register_action('friends/deletecollection');
+        register_action('friends/editcollection');
 
 		register_action("usersettings/save");
 		
@@ -985,6 +1041,7 @@
 		// Add language settings
 		extend_elgg_settings_page('user/settings/language', 'usersettings/user', 1);
 		//register_action("user/language");
+		
 		
 		register_plugin_hook('usersettings:save','user','users_settings_save');
 		register_plugin_hook('search','all','search_list_users_by_name');
