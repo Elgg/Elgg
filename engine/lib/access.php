@@ -213,16 +213,21 @@
 			global $CONFIG;
 			$collection_id = (int) $collection_id;
 			
-			if ($collection = get_access_collection($collection_id)) {
-				delete_data("delete from {$CONFIG->dbprefix}access_collection_membership where access_collection_id = {$collection_id}");
-			}
+			$collections = get_write_access_array();
 			
-			if (is_array($members) && sizeof($members) > 0) {
-				foreach($members as $member) {
-					$member = (int) $member;
-					add_user_to_access_collection($member, $collection_id);
+			if (array_key_exists($collection_id, $collections)) {
+			
+				delete_data("delete from {$CONFIG->dbprefix}access_collection_membership where access_collection_id = {$collection_id}");
+				
+				if (is_array($members) && sizeof($members) > 0) {
+					foreach($members as $member) {
+						$member = (int) $member;
+						if (get_user($member))
+							insert_data("insert into {$CONFIG->dbprefix}access_collection_membership set access_collection_id = {$collection_id}, user_guid = {$member}");
+					}
+					return true;
 				}
-				return true;
+			
 			}
 			
 			return false;

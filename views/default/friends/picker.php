@@ -102,7 +102,9 @@
 		$('#collectionMembersForm<?php echo $friendspicker; ?>').submit(function() {
 			var inputs = [];
 			$(':input', this).each(function() {
-				inputs.push(this.name + '=' + escape(this.value));
+				if (this.type != 'checkbox' || (this.type == 'checkbox' && this.checked != false)) {
+					inputs.push(this.name + '=' + escape(this.value));
+				}
 			});
 			jQuery.ajax({
 				type: "POST",
