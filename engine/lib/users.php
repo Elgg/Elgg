@@ -1116,6 +1116,9 @@
 	 */
 	function users_init() {
 		
+		// Load config
+			global $CONFIG;
+		
 		// Set up menu for logged in users
 			if (isloggedin())
 				add_menu(elgg_echo('friends'), $CONFIG->wwwroot . "pg/friends/" . $_SESSION['user']->username);
