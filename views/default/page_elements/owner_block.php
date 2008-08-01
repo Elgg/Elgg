@@ -38,7 +38,7 @@
 			if (substr_count($url2,'?')) {
 				$url2 .= "&view=odd";
 			} else {
-				$url2 .= "?view=odd";
+				$url2 .= "?view=opendd";
 			}
 			$label = elgg_echo('feed:rss');
 			$label2 = elgg_echo('feed:odd');

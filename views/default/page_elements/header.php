@@ -37,7 +37,7 @@
 			if (substr_count($url2,'?')) {
 				$url2 .= "&view=odd";
 			} else {
-				$url2 .= "?view=odd";
+				$url2 .= "?view=opendd";
 			}
 			$feedref = <<<END
 			
