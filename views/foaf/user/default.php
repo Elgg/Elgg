@@ -1,8 +1,7 @@
 <?php
 
 	/**
-	 * Elgg friends list (FOAF)
-	 * Lists a user's friends
+	 * Elgg default user view
 	 * 
 	 * @package Elgg
 	 * @subpackage Core
@@ -10,18 +9,13 @@
 	 * @author Curverider Ltd
 	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.org/
-	 * 
-	 * @uses $vars['friends'] The array of ElggUser objects
 	 */
 
-		if (is_array($vars['friends']) && sizeof($vars['friends']) > 0) {
-			
-			foreach($vars['friends'] as $friend) {
-				
+		$friend = $vars['entity'];
+
 ?>
 
     <foaf:knows>
-
       <foaf:Person>
         <foaf:nick><?php echo $friend->username; ?></foaf:nick>
         <foaf:member_name><?php echo $friend->name; ?></foaf:member_name>
@@ -29,12 +23,3 @@
         <foaf:homepage rdf:resource="<?php echo $friend->getURL(); ?>"/>
       </foaf:Person>
     </foaf:knows>
-
-
-<?php
-				
-			}
-			
-		}
-
-?>
