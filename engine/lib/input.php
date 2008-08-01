@@ -16,8 +16,9 @@
 	 * 
 	 * @param $variable string The variable we want to return.
 	 * @param $default mixed A default value for the variable if it is not found.
+	 * @param $filter_result If true then the result is filtered for bad tags.
 	 */
-	function get_input($variable, $default = "")
+	function get_input($variable, $default = "", $filter_result = true)
 	{
 
 		if (isset($_REQUEST[$variable])) {
@@ -28,11 +29,14 @@
 				$var = trim($_REQUEST[$variable]);
 			}
 			
-			global $CONFIG;
-			if (@include_once(dirname(dirname(dirname(__FILE__)))) . "/vendors/kses/kses.php") {
-				$var = kses($var, $CONFIG->allowedtags);
+			if ($filter_result)
+			{
+				global $CONFIG;
+				if (@include_once(dirname(dirname(dirname(__FILE__)))) . "/vendors/kses/kses.php") {
+					$var = kses($var, $CONFIG->allowedtags);
+				}
 			}
-			
+				
 			return $var;
 			
 		}
