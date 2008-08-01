@@ -302,6 +302,11 @@
 			'user:language:success' => "Your language settings have been updated.",
 			'user:language:fail' => "Your language settings could not be saved.",
 	
+			'user:username:notfound' => 'Username %s not found.',
+	
+			'user:password:resetreq:success' => 'Successfully requested a new password, email sent',
+			'user:password:resetreq:fail' => 'Could not request a new password.',
+	
 		/**
 		 * Administration
 		 */
@@ -568,6 +573,18 @@ Congratulations, you have successfully validated your email address.",
 			'email:resetpassword:body' => "Hi %s,
 			
 Your password has been reset to: %s",
+	
+	
+			'email:resetreq:subject' => "Request for new password.",
+			'email:resetreq:body' => "Hi %s,
+			
+Somebody (from the IP address %s) has requested a new password for their account.
+
+If you requested this click on the link below, otherwise ignore this email.
+
+%s
+",
+
 	
 		/**
 		 * XML-RPC

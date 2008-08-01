@@ -776,6 +776,94 @@
 	}
 	
 	/**
+	 * Generate and send a password request email to a given user's registered email address.
+	 *
+	 * @param int $user_guid
+	 */
+	function send_new_password_request($user_guid)
+	{
+		global $CONFIG;
+		
+		$user_guid = (int)$user_guid;
+		
+		$user = get_entity($user_guid);
+		if ($user)
+		{
+			// generate code
+			$code = generate_random_cleartext_password();
+			create_metadata($user_guid, 'conf_code', $code,'', 0, 0);
+			
+			// generate link
+			$link = $CONFIG->site->url . "action/user/passwordreset?u=$user_guid&c=$code";
+			
+			// generate email
+			$email = sprintf(elgg_echo('email:resetreq:body'), $user->name, $_SERVER['REMOTE_ADDR'], $link);
+			
+			return notify_user($user->guid, $CONFIG->site->guid, elgg_echo('email:resetreq:subject'), $email, NULL, 'email');
+
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Low level function to reset a given user's password. 
+	 * 
+	 * This can only be called from execute_new_password_request().
+	 * 
+	 * @param int $user_guid The user.
+	 * @param string $password password text (which will then be converted into a hash and stored)
+	 */
+	function force_user_password_reset($user_guid, $password)
+	{
+		global $CONFIG;
+		
+		if (call_gatekeeper('execute_new_password_request', __FILE__))
+		{
+			$user = get_entity($user_guid);
+			
+			if ($user)
+			{
+				$hash = generate_user_password($user, $password);
+				
+				return update_data("UPDATE {$CONFIG->dbprefix}users_entity set password='$hash' where guid=$user_guid");
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Validate and execute a password reset for a user.
+	 *
+	 * @param int $user_guid The user id
+	 * @param string $conf_code Confirmation code as sent in the request email.
+	 */
+	function execute_new_password_request($user_guid, $conf_code)
+	{
+		global $CONFIG;
+		
+		$user_guid = (int)$user_guid;
+		
+		$user = get_entity($user_guid);
+		if (($user) && ($user->conf_code == $conf_code))
+		{
+			$password = generate_random_cleartext_password();
+			
+			if (force_user_password_reset($user_guid, $password))
+			{
+				remove_metadata($user_guid, 'conf_code');
+				
+				$email = sprintf(elgg_echo('email:resetpassword:body'), $user->name, $password);
+				
+				return notify_user($user->guid, $CONFIG->site->guid, elgg_echo('email:resetpassword:subject'), $email, NULL, 'email');
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Generate a validation code for a given user's email address.
 	 *
 	 * @param int $user_guid The user id
@@ -799,6 +887,21 @@
 		$user_guid = (int)$user_guid;
 		
 		return create_metadata($user_guid, 'validated_email', $status,'', 0, 2);
+	}
+	
+	/**
+	 * Return whether a given user has validated their email address.
+	 *
+	 * @param int $user_guid
+	 */
+	function get_email_validation_status($user_guid)
+	{
+		$user = get_entity($user_guid);
+		
+		if ($user)
+			return $user->validated_email;
+		
+		return false;
 	}
 	
 	/**
@@ -1038,6 +1141,9 @@
         register_action('friends/editcollection');
 
 		register_action("usersettings/save");
+		
+		register_action("user/passwordreset");
+		register_action("user/requestnewpassword");
 		
 		// User name change
 		extend_elgg_settings_page('user/settings/name', 'usersettings/user', 1);
