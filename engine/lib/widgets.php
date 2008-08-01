@@ -53,7 +53,7 @@
 	 *
 	 * @param ElggObject $widget The widget entity
 	 * @param int $order The order within the column
-	 * @param int $column The column (1 or 2)
+	 * @param int $column The column (1, 2 or 3)
 	 * @return true|false Depending on success
 	 */
 		function save_widget_location(ElggObject $widget, $order, $column) {
@@ -66,7 +66,7 @@
 						return false;
 					
 					// Sanitise the column value
-					if ($column != 1 || $column != 2)
+					if ($column != 1 || $column != 2 || $column != 3)
 						$column = 1;
 						
 					$widget->column = (int) $column;
@@ -163,7 +163,7 @@
 	 * @param string $handler The handler for this widget
 	 * @param string $context The page context for this widget
 	 * @param int $order The order to display this widget in
-	 * @param int $column The column to display this widget in (1 or 2)
+	 * @param int $column The column to display this widget in (1, 2 or 3)
 	 * @return true|false Depending on success
 	 */
 		function add_widget($user_guid, $handler, $context, $order = 0, $column = 1) {
@@ -329,12 +329,13 @@
 			
 		}
 		
-		function reorder_widgets_from_panel($panelstring1, $panelstring2, $context, $owner) {
+		function reorder_widgets_from_panel($panelstring1, $panelstring2, $panelstring3, $context, $owner) {
 			
 			$return = true;
 			
 			$mainwidgets = explode('::',$panelstring1);
 			$sidewidgets = explode('::',$panelstring2);
+			$rightwidgets = explode('::',$panelstring3);
 			
 			$handlers = array();
 			$guids = array();
@@ -365,9 +366,22 @@
 					
 				}
 			}
+			if (is_array($rightwidgets) && sizeof($rightwidgets) > 0) {
+				foreach($rightwidgets as $widget) {
+					
+					$guid = (int) $widget;
+
+					if ("{$guid}" == "{$widget}") {
+						$guids[3][] = $widget;
+					} else {
+						$handlers[3][] = $widget;
+					}
+					
+				}
+			}
 			
 			// Reorder existing widgets or delete ones that have vanished
-			foreach (array(1,2) as $column) {
+			foreach (array(1,2,3) as $column) {
 				if ($dbwidgets = get_widgets($owner,$context,$column)) {
 					
 					foreach($dbwidgets as $dbwidget) {
@@ -375,9 +389,12 @@
 							if (in_array($dbwidget->getGUID(),$guids[1])) {
 								$pos = array_search($dbwidget->getGUID(),$guids[1]);
 								$col = 1;
-							} else {
+							} else if (in_array($dbwidget->getGUID(),$guids[2])) {
 								$pos = array_search($dbwidget->getGUID(),$guids[2]);
 								$col = 2;
+							} else {
+								$pos = array_search($dbwidget->getGUID(),$guids[3]);
+								$col = 3;
 							}
 							$pos = ($pos + 1) * 10;
 							$dbwidget->column = $col;

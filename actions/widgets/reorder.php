@@ -17,8 +17,9 @@
 		
 		$maincontent = get_input('debugField1');
 		$sidebar = get_input('debugField2');
+		$rightbar = get_input('debugField3');
 		
-		$result = reorder_widgets_from_panel($maincontent, $sidebar, $context, $owner);
+		$result = reorder_widgets_from_panel($maincontent, $sidebar, $rightbar, $context, $owner);
 		
 		if ($result) {
 			system_message(elgg_echo('widgets:panel:save:success'));

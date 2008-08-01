@@ -17,8 +17,9 @@
 		
 		$area1widgets = get_widgets(page_owner(),get_context(),1);
 		$area2widgets = get_widgets(page_owner(),get_context(),2);
+		$area3widgets = get_widgets(page_owner(),get_context(),3);
 		
-		if (empty($area1widgets) && empty($area2widgets)) {
+		if (empty($area1widgets) && empty($area2widgets) && empty($area3widgets)) {
 			
 			if (isset($vars['area3'])) $vars['area1'] = $vars['area3'];
 			if (isset($vars['area4'])) $vars['area2'] = $vars['area4'];
@@ -104,8 +105,8 @@ Choose the features you want to add to your page by dragging them from the <b>Wi
 		<div id="rightcolumn_widgets" <?php if(get_context() == "profile")echo "class=\"long\""; ?>>
 		<?php
 			$sidebarwidgetstring = "";
-			if (is_array($area2widgets) && sizeof($area2widgets) > 0) {
-				foreach($area2widgets as $widget) {
+			if (is_array($area3widgets) && sizeof($area3widgets) > 0) {
+				foreach($area3widgets as $widget) {
 					if (!empty($sidebarwidgetstring)) {
 						$sidebarwidgetstring .= "::";
 					}
@@ -259,7 +260,7 @@ Choose the features you want to add to your page by dragging them from the <b>Wi
   <tr>
     <td colspan="2" align="left" valign="top">
 		<!-- profile box or 'dashboard info' notice -->
-		<?php echo $vars['area1']; ?>
+		<?php if (isset($vars['area1'])) echo $vars['area1']; ?>
 	</td>
     <td rowspan="2" align="left" valign="top">
 		<?php 
@@ -273,7 +274,14 @@ Choose the features you want to add to your page by dragging them from the <b>Wi
 		?>
 
 		<div id="widgets_right">
-		<!-- this is where we need another widget column adding -->
+		<?php
+		
+			if (is_array($area3widgets) && sizeof($area3widgets) > 0)
+			foreach($area3widgets as $widget) {
+				echo elgg_view_entity($widget);
+			}
+
+		?>
 		
 		</div><!-- /#widgets_right -->	    
     </td>
