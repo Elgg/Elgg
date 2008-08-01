@@ -1139,6 +1139,7 @@
 		register_action('friends/addcollection');
 		register_action('friends/deletecollection');
         register_action('friends/editcollection');
+        register_action("user/spotlight");
 
 		register_action("usersettings/save");
 		

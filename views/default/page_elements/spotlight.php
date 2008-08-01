@@ -19,10 +19,31 @@
 	
 <div class="collapsable_box no_space_after">
 	<div class="collapsable_box_header">
-		<a href="javascript:void(0);" class="toggle_box_contents">-</a>
+<?php
+
+	$closed = false;
+	if ($_SESSION['user'] instanceof ElggUser) {
+		if ($_SESSION['user']->spotlightclosed) {
+			
+			$closed = true;
+			
+		}
+	}
+	if ($closed) {
+?>
+		<a href="javascript:void(0);" class="toggle_box_contents" onClick="$.post('<?php echo $vars['url']; ?>action/user/spotlight?closed=false')">+</a>
+<?php			
+		} else {
+?>
+		<a href="javascript:void(0);" class="toggle_box_contents" onClick="$.post('<?php echo $vars['url']; ?>action/user/spotlight?closed=true')">-</a>
+<?php
+
+		}
+
+?>
 		<h1><?php echo elgg_echo("spotlight"); ?></h1>
 	</div>
-	<div class="collapsable_box_content">
+	<div class="collapsable_box_content" <?php if ($closed) echo "style=\"display:none\"" ?>>
 <?php
 
 	$context = get_context();
