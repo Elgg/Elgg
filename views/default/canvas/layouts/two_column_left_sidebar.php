@@ -15,9 +15,11 @@
 <!-- left sidebar -->
 <div id="two_column_left_sidebar">
 
-    <div id="owner_block">
-		<?php echo $vars['area1']; ?>
-	</div>
+    <?php
+
+    	echo elgg_view('page_elements/owner_block',array('content' => $vars['area1']));
+    
+    ?>
 
     <?php echo $vars['area3']; ?>
 

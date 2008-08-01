@@ -559,9 +559,10 @@
 	 * Returns a view for the page title
 	 *
 	 * @param string $title The page title
+	 * @param string $submenu Should a submenu be displayed? (default false, use not recommended)
 	 * @return string The HTML (etc)
 	 */
-		function elgg_view_title($title, $submenu = true) {
+		function elgg_view_title($title, $submenu = false) {
 			
 			$title = elgg_view('page_elements/title', array('title' => $title, 'submenu' => $submenu));
 			
