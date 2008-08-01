@@ -16,7 +16,7 @@
 	{
 		global $CONFIG;
 		
-		if (isloggedin())
+		if (isadminloggedin())
 		{
 			add_menu(elgg_echo('guidtool'), $CONFIG->wwwroot . "pg/guidtool/",array(
 				menu_item(elgg_echo('guidtool:browse'), $CONFIG->wwwroot."pg/guidtool/"),
