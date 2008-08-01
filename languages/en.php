@@ -226,6 +226,11 @@
 	        'friends:river:delete' => "%s removed their friends widget.",
 	        'friends:river:add' => "%s add someone as a friend.",
 	
+		/**
+		 * Feeds
+		 */
+			'feed:rss' => 'Subscribe to feed',
+			'feed:odd' => 'Syndicate OpenDD',
 	
 		/**
 		 * River
