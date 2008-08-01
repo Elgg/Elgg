@@ -1660,7 +1660,7 @@
 		if ($entity = get_entity($entity_guid)) {
 			
 			$return = null;
-			
+		
 			if ($metadata->owner_guid == 0) $return = true;
 			if (is_null($return))
 				$return = can_edit_entity($entity_guid, $user_guid);

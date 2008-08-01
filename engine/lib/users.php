@@ -789,6 +789,19 @@
 	}
 	
 	/**
+	 * Set the email validation status for a user.
+	 *
+	 * @param int $user_guid The user
+	 * @param bool $status The status 
+	 */
+	function set_email_validation_status($user_guid, $status)
+	{
+		$user_guid = (int)$user_guid;
+		
+		return create_metadata($user_guid, 'validated_email', $status,'', 0, 2);
+	}
+	
+	/**
 	 * Send out a validation request for a given user. 
 	 * This function assumes that a user has already been created and that the email address has been
 	 * saved in the email field in the database.
@@ -806,7 +819,7 @@
 		if (($user) && ($user instanceof ElggUser))
 		{
 			// Clear existing status
-			$user->validated_email = false;
+			set_email_validation_status($user_guid, false);
 			
 			// Work out validate link
 			$link = $CONFIG->site->url . "action/email/confirm?u=$user_guid&c=" . generate_email_validation_code($user_guid, $user->email);
@@ -831,7 +844,7 @@
 		
 		$valid = ($code == generate_email_validation_code($user_guid, $user->email));
 		if ($valid)
-			$user->validated_email = true;
+			set_email_validation_status($user_guid, true);
 		
 		return $valid;
 	}
