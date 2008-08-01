@@ -230,34 +230,30 @@ h6 { font-size: 0.8em; }
 	width:306px;
 	margin:20px;
 	min-height:360px;
-/*
-	background: white;
-
-*/	padding:0;
+	/* background: white; */
+	padding:0;
 }
 #widgets_middle {
 	width:306px;
 	margin:20px 0 20px 0;
-	min-height:360px;
-/*
-	background: white;
-
-*/	padding:0;
+	/* min-height:360px; */
+	/* background: white; */
+	padding:0;
 }
 #widgets_right {
 	width:306px;
 	margin:20px 20px 20px 20px;
-	min-height:360px;
+	/* min-height:360px; */
 	float:left;
-/*
-	background: white;
-
-*/	padding:0;
+	/* background: white; */
+	padding:0;
 }
 #widget_table td {
 	border:0;
 	padding:0;
 	margin:0;
+	text-align: left;
+	vertical-align: top;
 }
 
 
@@ -314,23 +310,6 @@ h6 { font-size: 0.8em; }
 *:first-child+html #wrapper_spotlight .collapsable_box_content {
 	width:958px;
 }
-
-
-/* ***************************************
-  PAGE-OWNER BLOCK
-*************************************** */
-#owner_block {
-	background:#FDFFC3;
-	padding:10px;
-}
-
-
-
-
-
-
-
-
 
 #layout_spotlight {
 	padding:0;
@@ -1120,7 +1099,7 @@ input[type="submit"] {
 }
 #profile_info_column_middle {
 	float:left;
-	width:100%;
+	width:368px;
 	padding: 0;
 }
 #profile_info_column_right {
@@ -1199,10 +1178,14 @@ p.user_menu_friends_of {
 /* ***************************************
 	RIVER
 *************************************** */
+#river {
+	border-top:1px solid #dddddd;
+}
 .river_item p {
 	margin:0;
-	padding:0 0 0 20px;
-	line-height:1.3em;
+	padding:2px 0 0 20px;
+	line-height:1.1em;
+	min-height:17px;
 }
 .river_item {
 	border-bottom:1px solid #dddddd;
@@ -1499,19 +1482,27 @@ table.search_gallery {
 }	
 	
 /* ***************************************
-	owner block
+  PAGE-OWNER BLOCK
 *************************************** */
+#owner_block {
+	/* background:#FDFFC3; */
+	padding:10px;
+	border-bottom:1px dashed #cccccc;
+}
 #owner_block_icon {
 	float:left;
 	margin:0 10px 0 0;
 }	
 #owner_block_content {
 	margin:0 0 10px 0;
-	padding:0 0 5px 0;
+	padding:3px 0 0 0;
+	min-height:30px;
 	border-bottom:1px solid #4690d6;
+	
+	font-weight: bold;
 }
 #owner_block_submenu {
-	margin:10px 0 10px 0;
+	margin:20px 0 20px 0;
 	padding: 0;
 	border-bottom: 1px solid #cccccc;
 /*

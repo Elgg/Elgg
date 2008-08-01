@@ -258,11 +258,11 @@ Choose the features you want to add to your page by dragging them from the <b>Wi
 
 <table cellspacing="0" id="widget_table">
   <tr>
-    <td colspan="2" align="left" valign="top">
+    <td colspan="2" align="left" valign="top" height="1px">
 		<!-- profile box or 'dashboard info' notice -->
 		<?php if (isset($vars['area1'])) echo $vars['area1']; ?>
 	</td>
-    <td rowspan="2" align="left" valign="top">
+    <td rowspan="2" align="left" valign="top" height="100%">
 		<?php 
 		if($_SESSION['user']->guid == page_owner()){
 		?>
