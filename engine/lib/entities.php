@@ -403,11 +403,12 @@
 		/**
 		 * Determines whether or not the specified user (by default the current one) can edit metadata on the entity 
 		 *
+		 * @param ElggMetadata $metadata The piece of metadata to specifically check
 		 * @param int $user_guid The user GUID, optionally (defaults to the currently logged in user)
 		 * @return true|false
 		 */
-		function canEditMetadata($user_guid = 0) {
-			return can_edit_entity_metadata($this->getGUID(), $user_guid);
+		function canEditMetadata($metadata = null, $user_guid = 0) {
+			return can_edit_entity_metadata($this->getGUID(), $user_guid, $metadata);
 		}
 		
 		/**
@@ -1651,16 +1652,23 @@
 	 *
 	 * @param int $entity_guid The GUID of the entity
 	 * @param int $user_guid The GUID of the user
+	 * @param ElggMetadata $metadata The metadata to specifically check (if any; default null)
 	 * @return true|false Whether the specified user can edit the specified entity.
 	 */
-	function can_edit_entity_metadata($entity_guid, $user_guid = 0) {
+	function can_edit_entity_metadata($entity_guid, $user_guid = 0, $metadata = null) {
 		
 		if ($entity = get_entity($entity_guid)) {
-			$return = can_edit_entity($entity_guid, $user_guid);
+			
+			$return = null;
+			
+			if ($metadata->owner_guid == 0) $return = true;
+			if (is_null($return))
+				$return = can_edit_entity($entity_guid, $user_guid);
 			
 			$user = get_entity($user_guid);
-			$return = trigger_plugin_hook('permissions_check:metadata',$entity->type,array('entity' => $entity, 'user' => $user),$return);
+			$return = trigger_plugin_hook('permissions_check:metadata',$entity->type,array('entity' => $entity, 'user' => $user, 'metadata' => $metadata),$return);
 			return $return;
+
 		} else {
 			return false;
 		}
