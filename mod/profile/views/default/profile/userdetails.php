@@ -123,7 +123,8 @@
 <tr>
 <td colspan="2">
 	<div id="profile_info_column_right">	
-	<p><b><?php echo elgg_echo("profile:aboutme"); ?></b><br /><?php echo autop($vars['entity']->description); ?></p>
+	<p class="profile_aboutme_title"><b><?php echo elgg_echo("profile:aboutme"); ?></b></p>
+	<?php echo autop($vars['entity']->description); ?>
 	</div><!-- /#profile_info_column_right -->
 
 </td>

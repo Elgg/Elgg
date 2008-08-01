@@ -71,15 +71,16 @@ blockquote, q {
 	DEFAULTS
 *************************************** */
 
-/* elgg open source		blue 		#4690d6 */
-/* elgg open source		dark blue 	#0054a7 */
+/* elgg open source		blue 			#4690d6 */
+/* elgg open source		dark blue 		#0054a7 */
+/* elgg open source		light yellow 	#FDFFC3 */
 
 body {
 	text-align:left;
 	margin:0 auto;
 	padding:0;
 	background: #4690d6;
-	font: 80%/1.5  "Lucida Grande", Verdana, sans-serif;
+	font: 80%/1.4  "Lucida Grande", Verdana, sans-serif;
 	color: #333333;
 	background: url(<?php echo $vars['url']; ?>_graphics/page_back_linen.gif) repeat left 1px;
 }
@@ -701,6 +702,10 @@ h6 { font-size: 0.8em; }
 	float:right;
 	margin: 3px 10px 0 0;
 }
+.collapsable_box_editpanel label {
+	font-weight: normal;
+	font-size: 100%;
+}
 /* used for collapsing a content box */
 .display_none {
 	display:none;
@@ -936,7 +941,6 @@ p.user_menu_friends_of {
 
 #profile_info_column_middle p {
 	margin:7px 0 7px 0;
-	line-height:1.3em;
 	padding:2px 4px 2px 4px;
 }
 /* profile owner name */
@@ -948,19 +952,19 @@ p.user_menu_friends_of {
 	background:#f5f5f5;
 }
 #profile_info_column_right p {
-	margin:7px 0 7px 0;
-	line-height:1.4em;
+	margin:0 0 7px 0;
+}
+#profile_info_column_right .profile_aboutme_title {
+	margin:0;
+	padding:0;
+	line-height:1em;
 }
 /* edit profile button */
 .profile_info_edit_buttons {
 	float:right;
-	margin:0;
-	padding:0;
-}
-.profile_info_edit_buttons a {
-	padding: 0;
-	margin:0;
-	text-align: right;
+	margin:0  !important;
+	padding:0 !important;
+	font-size: 90%;
 }
 
 /* ***************************************
@@ -1225,19 +1229,44 @@ table.search_gallery {
   PAGE-OWNER BLOCK
 *************************************** */
 #owner_block {
-	/* background:#FDFFC3; */
+	background: url(<?php echo $vars['url']; ?>_graphics/owner_block_back.jpg) no-repeat left top;
 	padding:10px;
 	border-bottom:1px dashed #cccccc;
 }
 #owner_block_icon {
 	float:left;
 	margin:0 10px 0 0;
-}	
+}
+#owner_block_rss_feed {
+	margin:0 0 4px 0;
+}
+#owner_block_odd_feed {
+	padding:0 0 7px 0;
+	border-bottom:1px solid #cccccc;
+}
+#owner_block_rss_feed a {
+	font-size: 90%;
+	color:#999999;
+	padding:0 0 4px 20px;
+	background: url(<?php echo $vars['url']; ?>_graphics/icon_rss.gif) no-repeat left top;
+}
+#owner_block_odd_feed a {
+	font-size: 90%;
+	color:#999999;
+	padding:0 0 4px 20px;
+	background: url(<?php echo $vars['url']; ?>_graphics/icon_odd.gif) no-repeat left top;
+}
+#owner_block_rss_feed a:hover {
+	color: #0054a7;
+}
+#owner_block_odd_feed a:hover {
+	color: #0054a7;
+}
 #owner_block_content {
-	margin:0 0 10px 0;
+	margin:0 0 4px 0;
 	padding:3px 0 0 0;
-	min-height:30px;
-	border-bottom:1px solid #4690d6;
+	min-height:35px;
+	border-bottom:1px solid #cccccc;
 	
 	font-weight: bold;
 }
@@ -1264,20 +1293,22 @@ table.search_gallery {
 	padding: 0;
 	margin: 0;
 	color:#4690d6;
-	padding:2px 6px 2px 6px;
+	padding:4px 6px 4px 6px;
 	border-top: 1px solid #cccccc;
+	font-weight: bold;
+	line-height: 1.1em;
 }
 
 #owner_block ul li a:hover {
 	color:white;
-	background: #4690d6 url(<?php echo $vars['url']; ?>_graphics/tools_over.png) repeat-x top left;
+	background: #4690d6; /*  url(<?php echo $vars['url']; ?>_graphics/tools_over.png) repeat-x top left; */
 }
 
-/* IE 6 - remove transparent png in menu */
+/* IE 6 - remove transparent png in menu 
 * html #owner_block ul li a:hover {
 	background: #4690d6;
 }
-
+*/
 
 /* ***************************************
 	PAGINATION
