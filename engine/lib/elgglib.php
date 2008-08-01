@@ -159,6 +159,12 @@
 		    global $CONFIG;
 		    static $usercache;
 		    
+		// Trigger the pagesetup event
+			if (!isset($CONFIG->pagesetupdone)) {
+				trigger_elgg_event('pagesetup','system');
+				$CONFIG->pagesetupdone = true;
+			}
+		    
 		    if (!is_array($usercache)) {
 		        $usercache = array();
 		    }
@@ -770,6 +776,7 @@
 	 */
 		function page_draw($title, $body, $sidebar = "") {
 
+			// Draw the page
 			echo elgg_view('pageshells/pageshell', array(
 												'title' => $title,
 												'body' => $body,
