@@ -75,7 +75,12 @@
 			{
 				//$dbpassword = md5($credentials['password']);
             
+				
 	            if ($user = get_user_by_username($credentials['username'])) {
+	            	// Let admins log in without validating their email, but normal users must have validated their email
+					if ((!$user->admin) && (!$user->validated_email))
+						return false;
+	            	
 	                 if ($user->password == generate_user_password($user, $credentials['password'])) {
 	                 	return true;
 	                 }
