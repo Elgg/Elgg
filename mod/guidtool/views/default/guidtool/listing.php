@@ -21,7 +21,8 @@
 		  )
 		);
 
-	$info .= "<p><b><a href=\"{$CONFIG->url}pg/guidtool/view/{$entity->guid}/\">" . get_class($entity) . "</a></b></p>";
+	$strap = $entity->title ? $entity->title : $entity->name; 	
+	$info .= "<p><b><a href=\"{$CONFIG->url}pg/guidtool/view/{$entity->guid}/\">" . get_class($entity) . "</a></b> $strap</p>";
 	
 	$info .= "<div>";
 	if ($by) $info .= elgg_echo('by') . " <a href=\"".$by->getURL()."\">{$by->name}</a> ";
