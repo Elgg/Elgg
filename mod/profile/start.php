@@ -25,15 +25,6 @@
 			// Register a URL handler for users - this means that profile_url()
 			// will dictate the URL for all ElggUser objects
 				register_entity_url_handler('profile_url','user','all');
-			
-			// Set up menu for logged in users
-			//	if (isloggedin()) {
-			//		add_menu(elgg_echo('profile'), $CONFIG->wwwroot . "pg/profile/" . $_SESSION['user']->username,array(
-			//			menu_item(elgg_echo('profile:yours'),$CONFIG->wwwroot . "pg/profile/" . $_SESSION['user']->username),
-			//			menu_item(elgg_echo('profile:edit'),$CONFIG->wwwroot."mod/profile/edit.php"),
-			//			menu_item(elgg_echo('profile:editicon'),$CONFIG->wwwroot."mod/profile/editicon.php"),
-			//		),'profile');
-			//	}
 				
 			// For now, we'll hard code the profile items as follows:
 			// TODO make this user configurable
@@ -42,6 +33,7 @@
 					// Language short codes must be of the form "profile:key"
 					// where key is the array key below
 					'description' => 'longtext',
+					'briefdescription' => 'text',
 					'location' => 'tags',
 					'interests' => 'tags',
 					'skills' => 'tags',

@@ -22,6 +22,12 @@
 			}
 			$display = "<div id=\"owner_block_icon\">" . $icon . "</div>";
 			$display .= "<div id=\"owner_block_content\">" . $info . "</div>";
+			
+			if ($owner->briefdescription) {
+			    $desc = $owner->briefdescription;
+			    $display .= "<div id=\"owner_block_desc\">" . $desc . "</div>";
+		    }
+		    
 		}
 		echo $display;
 		

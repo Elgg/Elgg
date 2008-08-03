@@ -34,7 +34,8 @@
 			'profile:editicon' => "Edit profile icon",
 	
 			'profile:aboutme' => "About me", 
-			'profile:description' => "About me", 
+			'profile:description' => "About me",
+			'profile:briefdescription' => "Brief description",
 			'profile:location' => "Location",
 			'profile:skills' => "Skills",  
 			'profile:interests' => "Interests", 
