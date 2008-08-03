@@ -15,15 +15,16 @@
 	 */
 	function groups_init()
 	{
-		global $CONFIG;
+    	
+    	global $CONFIG;
 		
 		// Set up the menu for logged in users
 		if (isloggedin()) 
 		{
 			add_menu(elgg_echo('groups'), $CONFIG->wwwroot . "pg/groups/owned/" . $_SESSION['user']->username,array(
-				menu_item(elgg_echo('groups:new'), $CONFIG->wwwroot."pg/groups/new/"),
-				menu_item(elgg_echo('groups:yours'), $CONFIG->wwwroot . "pg/groups/owned/" . $_SESSION['user']->username),
-				menu_item(elgg_echo('groups:all'), $CONFIG->wwwroot . "pg/groups/world/"),
+				//menu_item(elgg_echo('groups:new'), $CONFIG->wwwroot."pg/groups/new/"),
+				//menu_item(elgg_echo('groups:yours'), $CONFIG->wwwroot . "pg/groups/owned/" . $_SESSION['user']->username),
+				//menu_item(elgg_echo('groups:all'), $CONFIG->wwwroot . "pg/groups/world/"),
 			),'groups');
 		}
 		else
@@ -71,15 +72,36 @@
 		
 			'name' => 'text',
 			'description' => 'longtext',
-			//'location' => 'tags',
+			'briefdescription' => 'text',
 			'interests' => 'tags',
-			//'skills' => 'tags',
-			//'contactemail' => 'email',
-			//'phone' => 'text',
-			//'mobile' => 'text',
 			'website' => 'url',
 							   
 		);
+	}
+	
+	/**
+	 * Sets up submenus for the groups system.  Triggered on pagesetup.
+	 *
+	 */
+	function groups_submenus() {
+		
+		global $CONFIG;
+		
+		// Add submenu options
+			if (get_context() == "groups") {
+				if ((page_owner() == $_SESSION['guid'] || !page_owner()) && isloggedin()) {
+					add_submenu_item(sprintf(elgg_echo('groups:new'), $CONFIG->wwwroot."pg/groups/new/"));
+					add_submenu_item(sprintf(elgg_echo('groups:yours'), $CONFIG->wwwroot . "pg/groups/owned/" . $_SESSION['user']->username));
+					add_submenu_item(elgg_echo('groups:all'), $CONFIG->wwwroot . "pg/groups/world/");
+				} else if (page_owner()) {
+					$page_owner = page_owner_entity();
+					add_submenu_item(sprintf(elgg_echo('groups:yours'), $CONFIG->wwwroot . "pg/groups/owned/" . $page_owner->username));
+					add_submenu_item(elgg_echo('groups:all'), $CONFIG->wwwroot . "pg/groups/world/");
+				} else {
+					add_submenu_item(elgg_echo('groups:all'), $CONFIG->wwwroot . "pg/groups/world/");
+				}
+			}
+		
 	}
 	
 	/**
@@ -236,4 +258,5 @@
 	
 	// Make sure the groups initialisation function is called on initialisation
 	register_elgg_event_handler('init','system','groups_init');
+	register_elgg_event_handler('pagesetup','system','groups_submenus');
 ?>

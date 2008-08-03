@@ -28,9 +28,9 @@
 	set_context($context);
 	
 	$title = sprintf(elgg_echo("groups:all"),page_owner_entity()->name);
-	$body = elgg_view_title($title);
-	$body .= $objects;
-	$body = elgg_view_layout('one_column',$body);
+	$area2 = elgg_view_title($title);
+	$area2 .= $objects;
+	$body = elgg_view_layout('two_column_left_sidebar',$area1, $area2);
 	
 	// Finally draw the page
 	page_draw($title, $body);

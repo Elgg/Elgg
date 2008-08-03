@@ -16,17 +16,17 @@
 	$group = get_entity($group_guid);
 	$title = elgg_echo("groups:invite");
 
-	$body = elgg_view_title($title);
+	$area2 = elgg_view_title($title);
 	
 	if (($group) && ($group->canEdit()))
 	{	
-		$body .= elgg_view("forms/groups/invite", array('entity' => $group));
+		$area2 .= elgg_view("forms/groups/invite", array('entity' => $group));
 			 
 	} else {
-		$body .= elgg_echo("groups:noaccess");
+		$area2 .= elgg_echo("groups:noaccess");
 	}
 	
-	$body = elgg_view_layout('one_column', $body);
+	$body = elgg_view_layout('two_column_left_sidebar', $area1, $area2);
 	
 	page_draw($title, $body);
 ?>

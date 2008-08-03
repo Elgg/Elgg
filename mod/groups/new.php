@@ -13,10 +13,10 @@
 
 	// Render the file upload page
 	$title = elgg_echo("groups:new");
-	$body = elgg_view_title($title);
-	$body .= elgg_view("forms/groups/edit");
+	$area2 = elgg_view_title($title);
+	$area2 .= elgg_view("forms/groups/edit");
 	
-	$body = elgg_view_layout('one_column', $body);
+	$body = elgg_view_layout('two_column_left_sidebar', $area1, $area2);
 	
 	page_draw($title, $body);
 ?>

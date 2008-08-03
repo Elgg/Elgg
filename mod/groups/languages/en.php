@@ -26,6 +26,7 @@
 			'groups:name' => 'Group name',
 			'groups:username' => 'Group short name (displayed in URLs, alphanumeric characters only)',
 			'groups:description' => 'Description',
+			'groups:briefdescription' => 'Brief description',
 			'groups:interests' => 'Interests',
 			'groups:website' => 'Website',
 			'groups:membership' => "Membership",

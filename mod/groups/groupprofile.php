@@ -17,11 +17,9 @@
 	
 	set_page_owner($group_guid);
 	
-	$body = elgg_view_title($group->name);
-	$body .= elgg_view('group/group', array('entity' => $group, 'user' => $_SESSION['user'], 'full' => true));
-	$body = elgg_view_layout('one_column', $body);
-	
-	//$body .= elgg_view_layout('widgets', "", "", elgg_echo('groups:nowidgets'));
+	$area2 = elgg_view_title($group->name);
+	$area2 .= elgg_view('group/group', array('entity' => $group, 'user' => $_SESSION['user'], 'full' => true));
+	$body = elgg_view_layout('two_column_left_sidebar', $area1, $area2);
 	
 	// Finally draw the page
 	page_draw($group->name, $body);
