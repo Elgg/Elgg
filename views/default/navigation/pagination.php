@@ -42,6 +42,9 @@
 	$currentpage = ceil($offset / $limit) + 1;
 
 	$baseurl = preg_replace('/[\&\?]'.$word.'\=[0-9]*/',"",$vars['baseurl']);
+	
+	//only display if there is content to paginate through
+	if ($count >= $limit){
 
 ?>
 
@@ -49,15 +52,15 @@
 	<p>
 <?php
 
-	if ($count == 0) {
+	//if ($count == 0) {
 		
-		static $notfounddisplayed;
-		if (!isset($notfounddisplayed) && $nonefound) {
-			echo elgg_echo("notfound");
-			$notfounddisplayed = true;
-		}
+	//	static $notfounddisplayed;
+	//	if (!isset($notfounddisplayed) && $nonefound) {
+	//		echo elgg_echo("notfound");
+	//		$notfounddisplayed = true;
+	//	}
 		
-	}
+	//}
 
 	if ($offset > 0) {
 		
@@ -147,3 +150,7 @@
 ?>
 	</p>
 </div>
+
+<?php
+    } // end of pagination check if statement
+?>
