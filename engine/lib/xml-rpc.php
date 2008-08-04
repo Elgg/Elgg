@@ -415,6 +415,76 @@ END;
 		}
 	}
 	
+	
+	// Helper functions ///////////////////////////////////////////////////////////////////////
+	
+	/**
+	 * parse XMLRPCCall parameters
+	 * 
+	 * Convert an XMLRPCCall result array into native data types
+	 *
+	 * @param array $parameters
+	 * @return array
+	 */
+	function xmlrpc_parse_params($parameters)
+	{
+	    $result = array();
+	    
+	    foreach ($parameters as $parameter)
+	    {
+	        $result[] = xmlrpc_scalar_value($parameter);
+	    }
+	    
+	    return $result;
+	}
+
+	/**
+	 * Extract the scalar value of an XMLObject type result array
+	 *
+	 * @param XMLObject $object
+	 * @return mixed
+	 */
+	function xmlrpc_scalar_value($object)
+	{
+	    if ($object->name == 'param')
+	    {
+	        $object = $object->children[0]->children[0];
+	    }
+	
+	    switch ($object->name)
+	    {
+	        case 'string':
+	            return $object->content;
+	        case 'array':
+	            foreach ($object->children[0]->children as $child)
+	            {
+	                $value[] = xmlrpc_scalar_value($child);
+	            }
+	            return $value;
+	        case 'struct':
+	            foreach ($object->children as $child)
+	            {
+	                $value[$child->children[0]->content] = xmlrpc_scalar_value($child->children[1]->children[0]);
+	            }
+	            return $value;
+	        case 'boolean':
+	            return (boolean) $object->content;
+	        case 'int':
+	            return (int) $object->content;
+	        case 'double':
+	            return (double) $object->content;
+	        case 'dateTime.iso8601':
+	            return (int) strtotime($object->content);
+	        case 'base64':
+	            return base64_decode($object->content);
+	        case 'value':
+	            return xmlrpc_scalar_value($object->children[0]);
+	        default:
+	            // TODO unsupported, throw an error
+	            return false;
+	    }
+	}
+	
 	// Functions for adding handlers //////////////////////////////////////////////////////////
 
 	/** XML-RPC Handlers */
