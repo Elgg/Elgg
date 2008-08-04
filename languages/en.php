@@ -171,10 +171,67 @@
 			'dashboard:nowidgets' => "Your dashboard is your gateway into the site. Click 'Customise Layout' to add widgets to keep track of content and your life within the system.", 
 	
 		/**
+		 * Groups
+		 */
+	
+			'item:group' => "Groups",
+	
+		/**
 		 * Profile
 		 */
 	
 			'profile' => "Profile",
+			'user' => "User",
+
+		/**
+		 * Profile menu items and titles
+		 */
+	
+			'profile:yours' => "Your profile",
+			'profile:user' => "%s's profile",
+	
+			'profile:edit' => "Edit profile",
+			'profile:editicon' => "Upload a new profile picture",
+			'profile:profilepictureinstructions' => "The profile picture is the image that's displayed on your profile page. <br /> You can change it as often as you'd like. (File formats accepted: GIF, JPG or PNG)",
+			'profile:icon' => "Profile picture",
+			'profile:createicon' => "Create your avatar",
+			'profile:currentavatar' => "Current avatar",
+			'profile:createicon:header' => "Profile picture",
+			'profile:profilepicturecroppingtool' => "Profile picture cropping tool",
+			'profile:createicon:instructions' => "Click and drag a square below to match how you want your picture cropped.  A preview of your cropped picture will appear in the box on the right.  When you are happy with the preview, click 'Create your avatar'. This cropped image will be used throughout the site as your avatar. ",
+	
+			'profile:editdetails' => "Edit details",
+			'profile:editicon' => "Edit profile icon",
+	
+			'profile:aboutme' => "About me", 
+			'profile:description' => "About me",
+			'profile:briefdescription' => "Brief description",
+			'profile:location' => "Location",
+			'profile:skills' => "Skills",  
+			'profile:interests' => "Interests", 
+			'profile:contactemail' => "Contact email",
+			'profile:phone' => "Telephone",
+			'profile:mobile' => "Mobile phone",
+			'profile:website' => "Website",
+
+			'profile:river:update' => "%s updated their profile",
+			'profile:river:iconupdate' => "%s updated their profile icon",
+	
+		/**
+		 * Profile status messages
+		 */
+	
+			'profile:saved' => "Your profile was successfully saved.",
+			'profile:icon:uploaded' => "Your profile picture was successfully uploaded.",
+	
+		/**
+		 * Profile error messages
+		 */
+	
+			'profile:noaccess' => "You do not have permission to edit this profile.",
+			'profile:notfound' => "Sorry; we could not find the specified profile.",
+			'profile:cantedit' => "Sorry; you do not have permission to edit this profile.",
+			'profile:icon:notfound' => "Sorry; there was a problem uploading your profile picture.",
 	
 		/**
 		 * Friends
@@ -382,13 +439,12 @@
 			'usersettings:description' => "The user settings panel allows you to control all your personal settings, from user management to how plugins behave. Choose an option below to get started.",
 	
 			'usersettings:statistics' => "Your statistics",
-			'usersettings:statistics:description' => "This panel will allow you to view statistics about you.",
 			'usersettings:statistics:opt:description' => "View statistical information about users and objects on your site.",
-			'usersettings:statistics:opt:linktext' => "View statistics...",
+			'usersettings:statistics:opt:linktext' => "Account statistics",
 	
 			'usersettings:user' => "Your settings",
 			'usersettings:user:opt:description' => "This allows you to control user settings.",
-			'usersettings:user:opt:linktext' => "Configure your user settings...",
+			'usersettings:user:opt:linktext' => "Change your settings",
 	
 			'usersettings:plugins' => "Tools",
 			'usersettings:plugins:opt:description' => "Configure settings for your active tools.",
@@ -467,6 +523,7 @@
 	
 			'widgets' => "Widgets",
 			'widget' => "Widget",
+			'item:object:widget' => "Widgets",
 			'layout:customise' => "Customise layout",
 			'widgets:gallery' => "Widget gallery",
 			'widgets:leftcolumn' => "Left widgets",

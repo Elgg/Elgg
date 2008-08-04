@@ -33,19 +33,28 @@
 		return extend_view($view, $new_settings_view, $priority);
 	}
 
+	function usersettings_pagesetup() {
+		
+		// Get config
+			global $CONFIG;
+		
+		// Menu options
+			if (get_context() == "settings") {
+				add_submenu_item(elgg_echo('usersettings:user:opt:linktext'),$CONFIG->wwwroot . "pg/settings/user?username=" . $_SESSION['user']->username);
+				add_submenu_item(elgg_echo('profile:editicon'), $CONFIG->wwwroot . 'mod/profile/editicon.php');
+				add_submenu_item(elgg_echo('usersettings:statistics:opt:linktext'),$CONFIG->wwwroot . "pg/settings/statistics?username=" . $_SESSION['user']->username);
+			}
+	}
+	
 	/**
 	 * Initialise the admin page.
 	 */
 	function usersettings_init()
 	{
-		// Add plugin main menu option (last)
-		extend_elgg_settings_page('usersettings/main_opt/statistics', 'usersettings/main');
-		extend_elgg_settings_page('usersettings/main_opt/user', 'usersettings/main'); 
-		extend_elgg_settings_page('usersettings/main_opt/plugins', 'usersettings/main', 999); // Always last
 
 	}
 	
 	/// Register init function
-	register_elgg_event_handler('init','system','usersettings_init');
+	register_elgg_event_handler('pagesetup','system','usersettings_pagesetup');
 	
 ?>

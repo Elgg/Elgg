@@ -19,9 +19,6 @@
 			// Get config
 				global $CONFIG;
 			
-			// Load the language file
-				register_translations($CONFIG->pluginspath . "profile/languages/");
-			
 			// Register a URL handler for users - this means that profile_url()
 			// will dictate the URL for all ElggUser objects
 				register_entity_url_handler('profile_url','user','all');

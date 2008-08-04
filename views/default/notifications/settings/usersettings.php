@@ -27,8 +27,16 @@
 				<td><?php echo $k; ?>: </td>
 
 				<td>
-					<input type="radio" name="method[<?php echo $k; ?>]" value="yes" <?php if ($notification_settings->$k) echo "checked=\"yes\" "; ?>/><?php echo elgg_echo("option:yes"); ?><br />
-					<input type="radio" name="method[<?php echo $k; ?>]" value="no" <?php if (!$notification_settings->$k) echo "checked=\"yes\" "; ?>/><?php echo elgg_echo("option:no"); ?>
+<?php
+
+	if ($notification_settings->k) {
+		$val = "yes";
+	} else {
+		$val = "no";
+	}
+	echo elgg_view('input/radio',array('internalname' => "method[{$k}]", 'options' => array('yes','no'), 'value' => $val));
+
+?>				
 				</td>
 			</tr>
 <?php

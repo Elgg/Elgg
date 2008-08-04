@@ -16,7 +16,12 @@
 ?>
 	<h2><?php echo elgg_echo('email:settings'); ?></h2>
 	<p>
-		<?php echo elgg_echo('email:address:label'); ?> : <input type="text" name="email" value="<?php echo $user->email; ?>" />
+		<?php echo elgg_echo('email:address:label'); ?>:
+		<?php
+
+			echo elgg_view('input/email',array('internalname' => 'email', 'value' => $user->email));
+		
+		?> 
 	</p>
 
 <?php } ?>

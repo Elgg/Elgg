@@ -18,7 +18,7 @@
 	<h2><?php echo elgg_echo('user:set:language'); ?></h2>
 	<p>
 	
-		<?php echo elgg_echo('user:language:label'); ?> : <?php
+		<?php echo elgg_echo('user:language:label'); ?>: <?php
 
 			$value = $CONFIG->language;
 			if ($user->language)

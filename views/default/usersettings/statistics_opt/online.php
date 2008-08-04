@@ -18,13 +18,13 @@
 		$logged_in=$log[0]->time_created;
 	
 ?>
-<div>
-	<h2><?php echo elgg_echo('usersettings:statistics:yourdetails'); ?></h2>
+<div class="usersettings_statistics">
+	<h3><?php echo elgg_echo('usersettings:statistics:yourdetails'); ?></h3>
 	
 	<table>
-		<tr><td><?php echo elgg_echo('usersettings:statistics:label:name'); ?></td><td><?php echo $user->name; ?></td></tr>
-		<tr><td><?php echo elgg_echo('usersettings:statistics:label:email'); ?></td><td><?php echo $user->email; ?></td></tr>
-		<tr><td><?php echo elgg_echo('usersettings:statistics:label:membersince'); ?></td><td><?php echo date("r",$user->time_created); ?></td></tr>
-		<tr><td><?php echo elgg_echo('usersettings:statistics:label:lastlogin'); ?></td><td><?php echo date("r",$logged_in); ?></td></tr>
+		<tr><td style="width: 250px"><?php echo elgg_echo('usersettings:statistics:label:name'); ?></td><td><?php echo $user->name; ?></td></tr>
+		<tr><td style="width: 250px"><?php echo elgg_echo('usersettings:statistics:label:email'); ?></td><td><?php echo $user->email; ?></td></tr>
+		<tr><td style="width: 250px"><?php echo elgg_echo('usersettings:statistics:label:membersince'); ?></td><td><?php echo date("r",$user->time_created); ?></td></tr>
+		<tr><td style="width: 250px"><?php echo elgg_echo('usersettings:statistics:label:lastlogin'); ?></td><td><?php echo date("r",$logged_in); ?></td></tr>
 	</table>
 </div>

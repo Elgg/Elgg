@@ -45,7 +45,7 @@
 		echo elgg_view('elgg_topbar/extend', $vars);
 		?>
 		
-		<a href="<?php echo $vars['url']; ?>settings/" class="usersettings"><?php echo elgg_echo('settings'); ?></a>
+		<a href="<?php echo $vars['url']; ?>pg/settings/" class="usersettings"><?php echo elgg_echo('settings'); ?></a>
 		
 		<?php
 		

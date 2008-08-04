@@ -16,7 +16,12 @@
 ?>
 	<h2><?php echo elgg_echo('user:set:name'); ?></h2>
 	<p>
-		<?php echo elgg_echo('user:name:label'); ?> : <input type="text" name="name" value="<?php echo $user->name; ?>" />
+		<?php echo elgg_echo('user:name:label'); ?>:
+		<?php
+
+			echo elgg_view('input/text',array('internalname' => 'name', 'value' => $user->name));
+
+		?> 
 	</p>
 
 <?php } ?>

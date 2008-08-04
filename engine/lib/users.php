@@ -1113,6 +1113,25 @@
 	}
 	
 	/**
+	 * Sets up user-related menu items
+	 *
+	 */
+	function users_pagesetup() {
+		
+		// Load config
+			global $CONFIG;
+			
+		//add submenu options
+			if (get_context() == "friends" || 
+				get_context() == "friendsof" || 
+				get_context() == "collections") {
+				add_submenu_item(elgg_echo('friends'),$CONFIG->wwwroot."pg/friends/" . page_owner_entity()->username);
+				add_submenu_item(elgg_echo('friends:of'),$CONFIG->wwwroot."pg/friendsof/" . page_owner_entity()->username);
+			}
+		
+	}
+	
+	/**
 	 * Users initialisation function, which establishes the page handler
 	 *
 	 */
@@ -1124,14 +1143,6 @@
 		// Set up menu for logged in users
 			if (isloggedin())
 				add_menu(elgg_echo('friends'), $CONFIG->wwwroot . "pg/friends/" . $_SESSION['user']->username);
-    		
-    	//add submenu options
-			if (get_context() == "friends" || 
-				get_context() == "friendsof" || 
-				get_context() == "collections") {
-				add_submenu_item(elgg_echo('friends'),$CONFIG->wwwroot."pg/friends/" . page_owner_entity()->username);
-				add_submenu_item(elgg_echo('friends:of'),$CONFIG->wwwroot."pg/friendsof/" . page_owner_entity()->username);
-			}
 		
 		register_page_handler('friends','friends_page_handler');
 		register_page_handler('friendsof','friends_of_page_handler');
@@ -1210,5 +1221,6 @@
 	//register actions *************************************************************
    
    		register_elgg_event_handler('init','system','users_init',0);
+   		register_elgg_event_handler('pagesetup','system','users_pagesetup',0);
 	
 ?>

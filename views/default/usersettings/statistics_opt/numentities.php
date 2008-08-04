@@ -17,27 +17,31 @@
 	if ($entity_stats)
 	{
 ?>
-<div>    
-    <h2><?php echo elgg_echo('usersettings:statistics:label:numentities'); ?></h2>
+<div class="usersettings_statistics">
+    <h3><?php echo elgg_echo('usersettings:statistics:label:numentities'); ?></h3>
     <table>
         <?php
             foreach ($entity_stats as $k => $entry)
             {
-                echo "<table>";
                 foreach ($entry as $a => $b)
                 {
-                    if ($a == "__base__") 
-                        $a=$k;
-                    else
-                        $a = "$k $a";
+                    if ($a == "__base__") {
+                        $a = elgg_echo("item:{$k}");
+                        if (empty($a))
+                        	$a = $k;
+                	} else {
+                    		$a = elgg_echo("item:{$k}:{$a}");
+                    		if (empty($a)) {
+								$a = "$k $a";
+                    		}
+                    	 }
                     echo <<< END
                         <tr>
-                            <td><b>$a :</b></td>
-                            <td>$b</td>
+                            <td style="width: 250px"><b>{$a}:</b></td>
+                            <td>{$b}</td>
                         </tr>
 END;
                 }
-                echo "</table>";
             }
         ?>
     </table>

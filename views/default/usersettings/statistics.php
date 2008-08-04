@@ -10,7 +10,4 @@
 	 * @link http://elgg.org/
 	 */
 
-	global $CONFIG;
-	
-	echo "<p>" . autop(elgg_echo("usersettings:statistics:description")) . "</p>";
 ?>

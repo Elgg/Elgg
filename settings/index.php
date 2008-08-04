@@ -12,15 +12,8 @@
 
 	// Get the Elgg framework
 		require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
-
-	// Make sure only valid users can see this
-		gatekeeper();
 		
+	// Forward to the user settings
+		forward('pg/settings/user');
 		
-		
-		/// Default settings
-		
-		
-	// Display main admin menu
-		page_draw(elgg_echo("admin"),elgg_view_layout("one_column", elgg_view("usersettings/main")));
 ?>

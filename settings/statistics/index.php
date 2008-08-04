@@ -15,8 +15,7 @@
 
 	// Make sure only valid admin users can see this
 		gatekeeper();
-		
 
 	// Display main admin menu
-		page_draw(elgg_echo("usersettings:statistics"),elgg_view_layout("one_column",elgg_view("usersettings/statistics")));
+		page_draw(elgg_echo("usersettings:statistics"),elgg_view_layout('two_column_left_sidebar','',elgg_view_title(elgg_echo("usersettings:statistics")) . elgg_view("usersettings/statistics")));
 ?>

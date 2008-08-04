@@ -14,10 +14,15 @@
 	
 	if ($user) {
 ?>
-	<h2><?php echo elgg_echo('user:set:password'); ?></h2>
+	<h3><?php echo elgg_echo('user:set:password'); ?></h3>
 	<p>
-		<?php echo elgg_echo('user:password:label'); ?> : <input type="password" name="password" value="" />
-		<?php echo elgg_echo('user:password2:label'); ?> : <input type="password" name="password2" value="" />
+		<?php echo elgg_echo('user:password:label'); ?>: 
+		<?php
+			echo elgg_view('input/password',array('internalname' => 'password'));
+		?><br />
+		<?php echo elgg_echo('user:password2:label'); ?>: <?php
+			echo elgg_view('input/password',array('internalname' => 'password2'));
+		?>
 	</p>
 
 <?php } ?>
