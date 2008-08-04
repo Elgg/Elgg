@@ -38,6 +38,6 @@
 	$body = elgg_view_title($title) . elgg_view_entity_list($wrapped_entries, $count, $offset, $limit, false);
 	
 // Display main admin menu
-	page_draw($title,elgg_view_layout("one_column", $body));
+	page_draw($title,elgg_view_layout("two_column_left_sidebar", '', $body));
 	set_context($context);
 ?>

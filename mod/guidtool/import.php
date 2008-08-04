@@ -18,7 +18,7 @@
 	$body = elgg_view_title($title);
 	$body .= elgg_view("forms/guidtool/import", array('format' => $format, 'forward_url'));
 	
-	$body = elgg_view_layout('one_column', $body);
+	$body = elgg_view_layout('two_column_left_sidebar', '', $body);
 	
 	page_draw($title, $body);
 ?>

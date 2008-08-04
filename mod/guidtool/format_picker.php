@@ -19,7 +19,7 @@
 	$body = elgg_view_title($title);
 	$body .= elgg_view('forms/guidtool/format', array('formats' => $formats));
 	
-	$body = elgg_view_layout('one_column', $body);
+	$body = elgg_view_layout('two_column_left_sidebar', '', $body);
 		
 	page_draw($title, $body);
 ?>

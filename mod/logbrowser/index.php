@@ -37,7 +37,7 @@
 	$result = elgg_view_entity_list($log_entries, $count, $offset, $limit, false);
 		
 // Display main admin menu
-	page_draw($title,elgg_view_layout("one_column", elgg_view_title($title).$result));
+	page_draw($title,elgg_view_layout("two_column_left_sidebar", '', elgg_view_title($title).$result));
 	set_context($context);
 
 ?>
