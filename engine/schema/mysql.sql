@@ -124,6 +124,7 @@ CREATE TABLE `prefix_users_entity` (
   `name` text NOT NULL,
   `username` varchar(12) NOT NULL default '',
   `password` varchar(32) NOT NULL default '',
+  `salt`     varchar(8)  NOT NULL default '',
   `email` text NOT NULL,
   `language` varchar(6)  NOT NULL default '',
   `code` varchar(32) NOT NULL default '',

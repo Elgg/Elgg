@@ -43,6 +43,7 @@
 			$this->attributes['name'] = "";
 			$this->attributes['username'] = "";
 			$this->attributes['password'] = "";
+			$this->attributes['salt'] = "";
 			$this->attributes['email'] = "";
 			$this->attributes['language'] = "";
 			$this->attributes['code'] = "";
@@ -157,7 +158,7 @@
 				return false;
 		
 			// Now save specific stuff
-			return create_user_entity($this->get('guid'), $this->get('name'), $this->get('username'), $this->get('password'), $this->get('email'), $this->get('language'), $this->get('code'));
+			return create_user_entity($this->get('guid'), $this->get('name'), $this->get('username'), $this->get('password'), $this->get('salt'), $this->get('email'), $this->get('language'), $this->get('code'));
 		}
 		
 		/**
@@ -353,20 +354,20 @@
 	 * @param string $description
 	 * @param string $url
 	 */
-	function create_user_entity($guid, $name, $username, $password, $email, $language, $code)
+	function create_user_entity($guid, $name, $username, $password, $salt, $email, $language, $code)
 	{
 		global $CONFIG;
 		
-		$guid = (int)$guid;
-		$name = sanitise_string($name);
-		$username = sanitise_string($username);
+		$guid = (int)$guid;	
+		$name = sanitise_string($name);	
+		$username = sanitise_string($username);		
 		$password = sanitise_string($password);
+		$salt = sanitise_string($salt);
 		$email = sanitise_string($email);
 		$language = sanitise_string($language);
 		$code = sanitise_string($code);
 		
 		$row = get_entity_as_row($guid);
-		
 		if ($row)
 		{
 			// Exists and you have access to it
@@ -387,7 +388,7 @@
 			else
 			{
 				// Update failed, attempt an insert.
-				$result = insert_data("INSERT into {$CONFIG->dbprefix}users_entity (guid, name, username, password, email, language, code) values ($guid, '$name', '$username', '$password', '$email', '$language', '$code')");
+				$result = insert_data("INSERT into {$CONFIG->dbprefix}users_entity (guid, name, username, password, salt, email, language, code) values ($guid, '$name', '$username', '$password', '$salt', '$email', '$language', '$code')");
 				if ($result!==false) {
 					$entity = get_entity($guid);
 					if (trigger_elgg_event('create',$entity->type,$entity)) {
@@ -960,7 +961,7 @@
 	 */
 	function generate_random_cleartext_password()
 	{
-		return substr(md5(microtime()), 0, 8);
+		return substr(md5(microtime() . rand()), 0, 8);
 	}
 	
 	/**
@@ -973,7 +974,7 @@
 	 */
 	function generate_user_password(ElggUser $user, $password)
 	{
-		return md5($password);
+		return md5($password . $user->salt);
 	}
 	
 	/**
@@ -1013,6 +1014,7 @@
 			$user->email = $email;
 			$user->name = $name;
 			$user->access_id = 2;
+			$user->salt = generate_random_cleartext_password(); // Note salt generated before password!
 			$user->password = generate_user_password($user, $password);
 			$user->save();
 			

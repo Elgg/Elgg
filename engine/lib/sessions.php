@@ -80,7 +80,7 @@
 	            	// Let admins log in without validating their email, but normal users must have validated their email
 					if ((!$user->admin) && (!$user->validated_email))
 						return false;
-	            	
+	          	
 	                 if ($user->password == generate_user_password($user, $credentials['password'])) {
 	                 	return true;
 	                 }
@@ -102,7 +102,7 @@
 		function login(ElggUser $user, $persistent = false) {
             
             global $CONFIG;
-                 
+               
             $_SESSION['user'] = $user;
             $_SESSION['guid'] = $user->getGUID();
             $_SESSION['id'] = $_SESSION['guid'];
