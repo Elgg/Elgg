@@ -19,14 +19,28 @@
 		if (isadminloggedin())
 		{
 			add_menu(elgg_echo('guidtool'), $CONFIG->wwwroot . "pg/guidtool/",array(
-				menu_item(elgg_echo('guidtool:browse'), $CONFIG->wwwroot."pg/guidtool/"),
-				menu_item(elgg_echo('guidtool:import'), $CONFIG->wwwroot."pg/guidtool/import/"),
+//				menu_item(elgg_echo('guidtool:browse'), $CONFIG->wwwroot."pg/guidtool/"),
+//				menu_item(elgg_echo('guidtool:import'), $CONFIG->wwwroot."pg/guidtool/import/"),
 			),'guidtool');
 			
 		}
 		
 		// Register a page handler, so we can have nice URLs
 		register_page_handler('guidtool','guidtool_page_handler');
+	}
+	
+	/**
+	 * Post init gumph.
+	 */
+	function guidtool_page_setup()
+	{
+		global $CONFIG;
+		
+		if (get_context()=='guidtool')
+		{
+			add_submenu_item(elgg_echo('guidtool:browse'), $CONFIG->wwwroot."pg/guidtool/");
+			add_submenu_item(elgg_echo('guidtool:import'), $CONFIG->wwwroot."pg/guidtool/import/");
+		}
 	}
 	
 	/**
@@ -103,4 +117,5 @@
 	
 	// Initialise log
 	register_elgg_event_handler('init','system','guidtool_init');
+	register_elgg_event_handler('pagesetup','system','guidtool_page_setup');
 ?>

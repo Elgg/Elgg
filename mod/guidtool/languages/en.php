@@ -16,7 +16,7 @@
 		 */
 	
 			'guidtool' => 'GUID Tool',
-			'guidtool:browse' => 'Browse GUID',
+			'guidtool:browse' => 'Browse GUIDs',
 			'guidtool:import' => 'Import',
 			'guidtool:import:desc' => 'Paste the data you want to import in following window, this must be in "%s" format.',
 	

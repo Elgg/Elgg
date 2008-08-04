@@ -13,13 +13,14 @@
 
 	admin_gatekeeper();
 	
+	$title = elgg_echo("guidtool");
+	$body = elgg_view_title($title);
+	
 	$context = get_context();
 	set_context('search');
 	
 	$limit = get_input('limit', 10);
-	$offset = get_input('offset');
-	
-	$title = elgg_echo("guidtool");
+	$offset = get_input('offset');	
 	
 	// Get entities
 	$entities = get_entities("","","","",$limit, $offset);
@@ -35,9 +36,10 @@
 		$wrapped_entries[] = $tmp;
 	}
 	
-	$body = elgg_view_title($title) . elgg_view_entity_list($wrapped_entries, $count, $offset, $limit, false);
+	$body .= elgg_view_entity_list($wrapped_entries, $count, $offset, $limit, false);
+	
+	set_context($context);
 	
 // Display main admin menu
 	page_draw($title,elgg_view_layout("two_column_left_sidebar", '', $body));
-	set_context($context);
 ?>
