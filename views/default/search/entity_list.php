@@ -8,8 +8,14 @@
 		$baseurl = $vars['baseurl'];
 		$context = $vars['context'];
 		$viewtype = $vars['viewtype'];
+		
+		if (isset($vars['viewtypetoggle'])) {
+			$viewtypetoggle = $vars['viewtypetoggle'];
+		} else {
+			$viewtypetoggle = true;
+		}
 
-			if ($context == "search" && $count > 0) {
+			if ($context == "search" && $count > 0 && $viewtypetoggle) {
 				$nav .= elgg_view("navigation/viewtype",array(
 			
 												'baseurl' => $baseurl,

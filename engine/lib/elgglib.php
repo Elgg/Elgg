@@ -467,10 +467,10 @@
 	 * @param int $offset The current indexing offset
 	 * @param int $limit The number of entities to display per page
 	 * @param true|false $fullview Whether or not to display the full view (default: true)
-	 * @param string $viewtype "list" or "gallery" for search pages only (default: "list")
+	 * @param true|false $viewtypetoggle Whether or not to allow users to toggle to gallery view
 	 * @return string The list of entities
 	 */
-		function elgg_view_entity_list($entities, $count, $offset, $limit, $fullview = true, $viewtype = "list") {
+		function elgg_view_entity_list($entities, $count, $offset, $limit, $fullview = true, $viewtypetoggle = true) {
 			
 			$count = (int) $count;
 			$offset = (int) $offset;
@@ -486,6 +486,7 @@
 													'baseurl' => $_SERVER['REQUEST_URI'],
 													'fullview' => $fullview,
 													'context' => $context, 
+													'viewtypetoggle' => $viewtypetoggle,
 													'viewtype' => get_input('search_viewtype','list'), 
 												  ));
 				
