@@ -19,6 +19,10 @@
 	
 	$area2 = elgg_view_title($group->name);
 	$area2 .= elgg_view('group/group', array('entity' => $group, 'user' => $_SESSION['user'], 'full' => true));
+	
+	//group profile 'items' - these are not real widgets, just contents to display
+	$area2 .= elgg_view('groups/items',array('entity' => $group));
+	
 	$body = elgg_view_layout('two_column_left_sidebar', $area1, $area2);
 	
 	// Finally draw the page

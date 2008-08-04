@@ -29,6 +29,7 @@
 			'groups:briefdescription' => 'Brief description',
 			'groups:interests' => 'Interests',
 			'groups:website' => 'Website',
+			'groups:members' => 'Group members',
 			'groups:membership' => "Membership",
 			'groups:access' => "Access permissions",
 			'groups:owner' => "Owner",
