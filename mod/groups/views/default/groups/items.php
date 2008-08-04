@@ -10,19 +10,19 @@
 	 * @link http://elgg.com/
 	 */
 	 
-	 //members
-	 echo "<div id=\"group_members\" style=\"float:right;width:200px;\">";
+	//members
+	 echo "<div class=\"group_narrow_column\" style=\"float:right;width:200px;\">";
 	 echo elgg_view("groups/members",array('entity' => $vars['entity']));
 	 echo "</div>";
 	 
-	 //forums
-	 echo "<div id=\"group_forums\">";
-	 echo elgg_view("groups/forums",array('entity' => $vars['entity']));
+	 //narrow column
+	 echo "<div class=\"group_narrow_column\" style=\"float:right;width:200px;\">";
+	 echo elgg_view("groups/narrow_column",array('entity' => $vars['entity']));
 	 echo "</div>";
 	 
-	 //messageboard
-	 echo "<div id=\"group_messageboard\">";
-	 echo elgg_view("groups/messageboard",array('entity' => $vars['entity']));
+	 //wider column
+	 echo "<div id=\"group_wide_column\">";
+	 echo elgg_view("groups/wide_column",array('entity' => $vars['entity']));
 	 echo "</div>";	 
 	 
 ?>
