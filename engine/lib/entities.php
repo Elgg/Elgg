@@ -1096,7 +1096,7 @@
 	 * @param int $user_guid The user guid, or 0 for $_SESSION['user']->getGUID()
 	 * @param int $container_guid The container, or 0 for the current page owner.
 	 */
-	function can_write_to_container($user_guid = 0, $container_guid = 0)
+	function can_write_to_container($user_guid = 0, $container_guid = 0, $entity_type = 'all')
 	{
 		global $CONFIG;
 		
@@ -1122,7 +1122,7 @@
 				if (!$container->isMember($user)) return false;
 				
 			// See if anyone else has anything to say
-			return trigger_plugin_hook('container_permissions_check',$entity->type,array('container' => $container, 'user' => $user), false);
+			return trigger_plugin_hook('container_permissions_check',$entity_type,array('container' => $container, 'user' => $user), false);
 			
 		}
 		
@@ -1153,7 +1153,7 @@
 		$site_guid = (int) $site_guid;
 		if ($container_guid == 0) $container_guid = $owner_guid;
 		
-		if (!can_write_to_container($owner_guid, $container_guid)) return false; 
+		if (!can_write_to_container($owner_guid, $container_guid, $type)) return false; 
 		
 		if ($type=="") throw new InvalidParameterException(elgg_echo('InvalidParameterException:EntityTypeNotSet'));
 
