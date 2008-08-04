@@ -16,6 +16,10 @@
 	// Make sure only valid admin users can see this
 		gatekeeper();
 		
+	// Make sure we don't open a security hole ...
+		if (!page_owner_entity()->canEdit()) {
+			set_page_owner($_SESSION['guid']);
+		}
 
 	// Display main admin menu
 		page_draw(

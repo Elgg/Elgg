@@ -11,7 +11,7 @@
 	 */
 
 	global $CONFIG;
-	$user = $_SESSION['user'];
+	$user = page_owner_entity();
 	
 	if ($user) {
 ?>

@@ -10,7 +10,7 @@
 	 * @link http://elgg.org/
 	 */
 
-	$user = $_SESSION['user'];
+	$user = page_owner_entity();
 	
 	if ($user) {
 ?>
