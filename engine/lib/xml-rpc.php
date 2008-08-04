@@ -521,7 +521,7 @@ END;
 			$result  = $handler($parameters);
 			
 			if (!($result instanceof XMLRPCResponse))
-				throw new InvalidParameterException(elgg_echo('InvalidParameterException:UnexpectedReturnFormat'));
+				throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:UnexpectedReturnFormat'), $parameters->getMethodName()));
 				
 			// Result in right format, return it.
 			return $result;
