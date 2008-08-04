@@ -64,7 +64,7 @@
 				
 			system_message(elgg_echo("installation:configuration:success"));
 			
-			header("Location: ../../register.php");
+			header("Location: ../../account/register.php");
 			exit;
 			
 		}

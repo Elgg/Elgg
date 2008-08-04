@@ -20,6 +20,6 @@
 			<br />
 			<label><?php echo elgg_echo('password'); ?><br /><input name="password" type="password" class="general-textarea" /></label><br />
 			<input type="submit" name="submit" class="submit_button" value="<?php echo elgg_echo('login'); ?>" /></p>
-			<?php if (!$CONFIG->disable_registration) { ?><p><a href="<?php echo $vars['url']; ?>register.php"><?php echo elgg_echo('register'); ?></a></p><?php } ?>
+			<p><?php if (!$CONFIG->disable_registration) { ?><a href="<?php echo $vars['url']; ?>account/register.php"><?php echo elgg_echo('register'); ?></a> : <?php } ?> <a href="<?php echo $vars['url']; ?>account/forgotten_password.php"><?php echo elgg_echo('user:password:lost'); ?></a></p>
 	    </form>
 	</div>
