@@ -56,6 +56,8 @@
 END;
 		}
 		
+		echo elgg_view('owner_block/extend');
+		
 	// Have we been asked to inject any content? If so, display it
 		if (isset($vars['content']))
 			echo $vars['content'];
