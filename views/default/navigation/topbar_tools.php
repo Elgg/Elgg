@@ -45,9 +45,7 @@
 
 <script type="text/javascript">
 function tools_menu(){
-$(" #tools_menu ul ").css({display: "none"}); // opera + ie fix
 $(" #tools_menu li").hover(function(){
-		$(this).find('ul:first').css("display", "none");
         $(this).find('ul:first').slideDown("fast");
 		$(this).parent().parent().parent().find("#tools_menu a").addClass('tools_menu_on');
 		

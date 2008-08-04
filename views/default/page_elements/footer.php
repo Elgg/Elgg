@@ -24,9 +24,11 @@
 <table width="958" height="79" border="1" cellpadding="0" cellspacing="0">
 	<tr>
 		<td width="310" height="50">
+		<!--
 		<a href="http://www.elgg.org" target="_blank">
 		<img src="<?php echo $vars['url']; ?>_graphics/footer_logo.gif" border="0" />
 		</a>
+		-->
 		</td>
 		
 		<td width="648" height="50" align="right">
