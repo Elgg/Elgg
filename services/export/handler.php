@@ -22,6 +22,8 @@
 	$id_or_name = get_input("idname"); // Either a number or the key name (if attribute)
 	
 	
+	$body = "";
+	$title = "";
 	
 	// Only export the GUID
 	if (
@@ -35,7 +37,8 @@
 		if (!$entity) 
 			throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:GUIDNotFound'), $guid));
 			
-		page_draw("GUID:$guid", elgg_view("export/entity", array("entity" => $entity, "uuid" => guid_to_uuid($guid))));
+		$title = "GUID:$guid";
+		$body = elgg_view("export/entity", array("entity" => $entity, "uuid" => guid_to_uuid($guid)));
 	}
 	
 	// Export an individual attribute
@@ -96,7 +99,8 @@
 			if ($m->entity_guid!=$entity->guid)
 				throw new InvalidParameterException(elgg_echo('InvalidParameterException:DoesNotBelong'));
 			
-			page_draw("$type:$id_or_name", elgg_view("export/metadata", array("metadata" => $m, "uuid" => $uuid)));
+			$title = "$type:$id_or_name";
+			$body = elgg_view("export/metadata", array("metadata" => $m, "uuid" => $uuid));
 		}
 		
 		// Exporting relationship
@@ -108,7 +112,8 @@
 			)
 				throw new InvalidParameterException(elgg_echo('InvalidParameterException:DoesNotBelongOrRefer'));
 			
-			page_draw("$type:$id_or_name", elgg_view("export/relationship", array("relationship" => $r, "uuid" => $uuid)));
+			$title = "$type:$id_or_name";
+			$body = elgg_view("export/relationship", array("relationship" => $r, "uuid" => $uuid));
 		}
 	}
 	
@@ -116,4 +121,5 @@
 	else
 		throw new InvalidParameterException(elgg_echo('InvalidParameterException:MissingParameter'));
 	
+	page_draw($title, elgg_view_layout('one_column',elgg_view_title($title) . $body));
 ?>
