@@ -430,6 +430,8 @@
 			'option:yes' => "Yes",
 			'option:no' => "No",
 	
+			'unknown' => 'Unknown',
+	
 		/**
 		 * Generic data words
 		 */
@@ -630,6 +632,15 @@ To view %s's profile, click here:
 	%s
 
 You cannot reply to this email.",
+	
+		/**
+		 * Entities
+		 */
+			'entity:default:strapline' => 'Created %s by %s',
+			'entity:default:missingsupport:popup' => 'This entity cannot be displayed correctly. This may be because it requires support provided by a plugin that is no longer installed.',
+	
+			'entity:delete:success' => 'Entity %s has been deleted',
+			'entity:delete:fail' => 'Entity %s could not be deleted',
 	
 		/**
 		 * Languages according to ISO 639-1
