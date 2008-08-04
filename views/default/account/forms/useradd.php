@@ -19,11 +19,16 @@
 	<div id="add-box">
 	<h2><?php echo elgg_echo('adduser'); ?></h2>
 		<form action="<?php echo $vars['url']; ?>action/useradd" method="POST">
-			<p><label><?php echo elgg_echo('name'); ?>: <input name="name" type="text" class="general-textarea" /></label><br />
-			<label><?php echo elgg_echo('email'); ?>: <input name="email" type="text" class="general-textarea" /></label><br />
-			<label><?php echo elgg_echo('username'); ?>: <input name="username" type="text" class="general-textarea" /></label><br />
-			<label><?php echo elgg_echo('password'); ?>: <input name="password" type="password" class="general-textarea" /></label><br />
-			<label><?php echo elgg_echo('passwordagain'); ?>: <input name="password2" type="password" class="general-textarea" /></label><br />
+			<p><label><?php echo elgg_echo('name'); ?>:
+			<?php echo elgg_view('input/text', array('internalname' => 'name')); ?></label><br />
+			<label><?php echo elgg_echo('email'); ?>: 
+			<?php echo elgg_view('input/email', array('internalname' => 'email')); ?></label><br />
+			<label><?php echo elgg_echo('username'); ?>:
+			<?php echo elgg_view('input/text', array('internalname' => 'username')); ?></label><br />
+			<label><?php echo elgg_echo('password'); ?>: 
+			<?php echo elgg_view('input/password', array('internalname' => 'password')); ?></label><br />
+			<label><?php echo elgg_echo('passwordagain'); ?>:
+			<?php echo elgg_view('input/password', array('internalname' => 'password2')); ?></label><br />
 			<?php
 				if ($admin_option) {
 ?>		

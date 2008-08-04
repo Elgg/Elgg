@@ -53,6 +53,20 @@
 		// Register some actions
 		register_action('admin/site/update_basic', false, "", true); // Register basic site admin action
 	}
+	
+	function admin_pagesetup() {
+		
+		if (get_context() == 'admin') {
+			
+			global $CONFIG;
+			add_submenu_item(elgg_echo('admin:statistics'), $CONFIG->wwwroot . 'pg/admin/statistics/');
+			add_submenu_item(elgg_echo('admin:site'), $CONFIG->wwwroot . 'pg/admin/site/');
+			add_submenu_item(elgg_echo('admin:user'), $CONFIG->wwwroot . 'pg/admin/user/');
+			add_submenu_item(elgg_echo('admin:plugins'), $CONFIG->wwwroot . 'pg/admin/plugins/');
+			
+		}
+		
+	}
 
 	/**
 	 * Admin permissions system
@@ -117,8 +131,9 @@
 		return delete_entity($guid);
 	}
 	
-	/// Register init function
+	/// Register init functions
 	register_elgg_event_handler('init','system','admin_init');
+	register_elgg_event_handler('pagesetup','system','admin_pagesetup');
 	
 	// Register a plugin hook for permissions
 	register_plugin_hook('permissions_check','all','admin_permissions');

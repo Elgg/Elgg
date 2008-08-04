@@ -11,9 +11,14 @@
 	 */
 ?>
 <div id="search-box">
-	<form>
+	<form action="<?php echo $vars['url']; ?>search/" method="get">
 	<b><?php echo elgg_echo('admin:user:label:search'); ?></b>
-	<input type="text" name="s"  />
+	<?php
+
+		echo elgg_view('input/text',array('internalname' => 'tag'));
+	
+	?>
+	<input type="hidden" name="object" value="user" />
 	<input type="submit" name="<?php echo elgg_echo('admin:user:label:seachbutton'); ?>" 
 		value="<?php echo elgg_echo('admin:user:label:seachbutton'); ?>" />
 	</form> 

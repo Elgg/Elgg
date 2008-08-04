@@ -16,8 +16,6 @@
 
 	// Make sure only valid admin users can see this
 		admin_gatekeeper();
-		
-	// Display main admin menu
-		page_draw(elgg_echo("admin"),elgg_view_layout("one_column", elgg_view("admin/main")));
+		forward('pg/admin/statistics/')
 		
 ?>
