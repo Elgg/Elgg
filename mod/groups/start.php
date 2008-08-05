@@ -63,6 +63,9 @@
 		
 		extend_view('profile/icon','groups/icon');
 		
+		// Write access permissions
+		register_plugin_hook('access:collections:write', 'all', 'groups_write_acl_plugin_hook');
+		
 		// For now, we'll hard code the groups profile items as follows:
 		// TODO make this user configurable
 		
@@ -221,6 +224,7 @@
 	 */
 	function groups_read_acl_plugin_hook($hook, $entity_type, $returnvalue, $params)
 	{
+		
 		//error_log("READ: " . var_export($returnvalue));
 		$user = $_SESSION['user'];
 		if ($user)
@@ -231,7 +235,6 @@
 			{					
 				foreach ($membership as $group)
 					$returnvalue[$user->guid][$group->group_acl] = elgg_echo('groups:group') . ": " . $group->name; 
-					
 				return $returnvalue;
 			}
 		}
@@ -265,19 +268,47 @@
 		return true;
 	}
 	
+	/**
+	 * Listens to a group join event and adds a user to the group's access control
+	 *
+	 */
+	function groups_user_join_event_listener($event, $object_type, $object) {
+		
+		$group = $object['group'];
+		$user = $object['user'];
+		$acl = $group->group_acl;
+		
+		add_user_to_access_collection($user->guid, $acl);
+		
+		return true;
+		
+	}
+	
+	/**
+	 * Listens to a group leave event and removes a user from the group's access control
+	 *
+	 */
+	function groups_user_leave_event_listener($event, $object_type, $object) {
+		
+		$group = $object['group'];
+		$user = $object['user'];
+		$acl = $group->group_acl;
+
+		remove_user_from_access_collection($user->guid, $acl);
+		
+		return true;
+		
+	}
+	
 	// Register a handler for create groups
 	register_elgg_event_handler('create', 'group', 'groups_create_event_listener');
 
 	// Register a handler for delete groups
 	register_elgg_event_handler('delete', 'group', 'groups_delete_event_listener');
 	
-	// Read access permissions
-	register_plugin_hook('access:collections', 'all', 'groups_read_acl_plugin_hook');
-	
-	// Write access permissions
-	register_plugin_hook('access:collections:write', 'all', 'groups_write_acl_plugin_hook');
-	
 	// Make sure the groups initialisation function is called on initialisation
 	register_elgg_event_handler('init','system','groups_init');
+	register_elgg_event_handler('join','group','groups_user_join_event_listener');
+	register_elgg_event_handler('leave','group','groups_user_leave_event_listener');
 	register_elgg_event_handler('pagesetup','system','groups_submenus');
 ?>

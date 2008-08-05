@@ -24,7 +24,6 @@
 		function get_access_list($user_id = 0, $site_id = 0, $flush = false) {
 			
 			global $CONFIG;
-			static $access_list;
 			
 			if (!isset($access_list))
 				$access_list = array();
@@ -34,11 +33,7 @@
 			$user_id = (int) $user_id;
 			$site_id = (int) $site_id;
 			
-			if (empty($access_list[$user_id]) || $flush == true) {
-				
-				$access_list[$user_id] = "(" . implode(",",get_access_array($user_id, $site_id, $flush)) . ")";
-				
-			}
+			$access_list[$user_id] = "(" . implode(",",get_access_array($user_id, $site_id, $flush)) . ")";
 			
 			return $access_list[$user_id];
 			
@@ -55,13 +50,13 @@
 		function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
 			
 			global $CONFIG;
-			static $access_array;
 			
 			if (!isset($access_array))
 				$access_array = array();
 			
 			if ($user_id == 0) $user_id = $_SESSION['guid'];
-			if (($site_id == 0) && (isset($CONFIG->site_id))) $site_id = $CONFIG->site_id;
+			
+			if (($site_id == 0) && (isset($CONFIG->site_guid))) $site_id = $CONFIG->site_guid;
 			$user_id = (int) $user_id;
 			$site_id = (int) $site_id;
 			
@@ -188,14 +183,14 @@
 		 */
 		function create_access_collection($name, $owner_guid = 0, $site_guid = 0) {
 			
+			global $CONFIG;
+			
 			$name = trim($name);
 			if (empty($name)) return false;
 			
 			if ($user_id == 0) $user_id = $_SESSION['id'];
 			if (($site_id == 0) && (isset($CONFIG->site_id))) $site_id = $CONFIG->site_id;
 			$name = sanitise_string($name);
-			
-			global $CONFIG;
 			
 			return insert_data("insert into {$CONFIG->dbprefix}access_collections set name = '{$name}', owner_guid = {$owner_guid}, site_guid = {$site_guid}");
 			
