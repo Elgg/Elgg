@@ -99,7 +99,7 @@
 				if ($page_owner->isMember($_SESSION['user'])) {
 					add_submenu_item(elgg_echo('groups:leave'), $CONFIG->wwwroot . "action/groups/leave?groups_guid=" . $page_owner->getGUID());
 				} else {
-					if ($vars['entity']->isPublicMembership())
+					if ($page_owner->isPublicMembership())
 					{
 						add_submenu_item(elgg_echo('groups:join'),$CONFIG->wwwroot . "action/groups/join?group_guid={$page_owner->getGUID()}");		
 					}
