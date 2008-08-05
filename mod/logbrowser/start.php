@@ -17,16 +17,20 @@
 	{
 		global $CONFIG;
 		
-		if (isadminloggedin())
-		{
-			add_menu(elgg_echo('logbrowser'), $CONFIG->wwwroot . "pg/logbrowser/",array(
-				menu_item(elgg_echo('logbrowser:browse'), $CONFIG->wwwroot."pg/logbrowser/"),
-			),'logbrowser');
-			
-		}
-		
 		// Register a page handler, so we can have nice URLs
 		register_page_handler('logbrowser','logbrowser_page_handler');
+	}
+	
+	/**
+	 * Adding the log browser to the admin menu
+	 *
+	 */
+	function logbrowser_pagesetup()
+	{
+		if (get_context() == 'admin' && isadminloggedin()) {
+			global $CONFIG;
+			add_submenu_item(elgg_echo('logbrowser:browser'), $CONFIG->wwwroot . 'pg/logbrowser/');
+		}
 	}
 	
 	/**
@@ -44,6 +48,7 @@
 	
 	
 	
-	// Initialise log
+	// Initialise log browser
 	register_elgg_event_handler('init','system','logbrowser_init');
+	register_elgg_event_handler('pagesetup','system','logbrowser_pagesetup');
 ?>

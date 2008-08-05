@@ -12,14 +12,12 @@
 	require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
 	admin_gatekeeper();
-	
-	$context = get_context();
-	set_context('search');
+	set_context('admin');
 	
 	$limit = get_input('limit', 10);
 	$offset = get_input('offset');
 	
-	$title = elgg_echo("logbrowser");
+	$title = elgg_view_title(elgg_echo('logbrowser'));
 	
 	// Get log entries
 	$log = get_system_log("", "","",$limit, $offset);
@@ -33,11 +31,11 @@
 		$tmp->entry = $l;
 		$log_entries[] = $tmp;
 	}
-	
-	$result = elgg_view_entity_list($log_entries, $count, $offset, $limit, false);
+	set_context('search');
+	$result = elgg_view_entity_list($log_entries, $count, $offset, $limit, false);#
+	set_context('admin');
 		
 // Display main admin menu
-	page_draw($title,elgg_view_layout("two_column_left_sidebar", '', elgg_view_title($title).$result));
-	set_context($context);
+	page_draw($title,elgg_view_layout("two_column_left_sidebar", '', $title.$result));
 
 ?>
