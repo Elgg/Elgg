@@ -34,6 +34,6 @@
 	/**
 	 * Load the front page
 	 */
-		echo page_draw(elgg_echo("installation:settings"), elgg_view("settings/install"));
+		echo page_draw(elgg_echo("installation:settings"), elgg_view_layout("one_column", elgg_view("settings/install")));
 
 ?>
