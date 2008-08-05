@@ -426,7 +426,7 @@ h6 { font-size: 0.8em; }
 
 #elgg_topbar_container_left a.usersettings {
 	margin:0 0 0 20px;
-	color:#4690d6;
+	color:#999999;
 }
 #elgg_topbar_container_left a.usersettings:hover {
 	color:#eeeeee;
