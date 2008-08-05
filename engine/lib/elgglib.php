@@ -283,71 +283,7 @@
 		    	return false;
 			
 		}
-		
-	/**
-	 * Get the icon for an entity
-	 *
-	 * @param ElggEntity $entity The entity (passed an entity rather than a guid to handle non-created entities)
-	 * @param string $size
-	 */
-		function elgg_get_entity_icon_url(ElggEntity $entity, $size = 'medium')
-		{
-			global $CONFIG;
-			
-			$size = sanitise_string($size);
-			switch (strtolower($size))
-			{
-				case 'master':
-				case 'large' : $size = 'large'; break;
-				
-				case 'topbar' : 
-				case 'tiny' : $size = 'tiny'; break;
-				
-				case 'small' : $size = 'small'; break;
-				
-				case 'medium' :
-				default: $size = 'medium';
-			}
-			
-			$url = false;
-			
-			$view = elgg_get_viewtype();
-			$location = elgg_get_view_location($view);
-			
-			// Use the object/subtype 
-			$type = $entity->type;
-			$subtype = $entity->subtype;
-			
-			if (!$url)
-			{
-				$tmp_url = $location . "{$view}/graphics/icons/$type/$subtype/$size.png";
-				if (file_exists($tmp_url))
-					$url = $tmp_url;
-			}
-			
-			// Get the default for the object
-			if (!$url)
-			{
-				$tmp_url = $location . "{$view}/graphics/icons/$type/default/$size.png";
-				if (file_exists($tmp_url))
-					$url = $tmp_url;
-			}
-		
-			// If url still blank then attempt to use the view's defaults
-			if (!$url)
-			{
-				$tmp_url = $location . "{$view}/graphics/icons/default/$size.png";
-				if (file_exists($tmp_url))
-					$url = $tmp_url;
-			}
-			
-			// If all else fails
-			if (!$url)
-				$url = $CONFIG->url . "_graphics/icons/default/$size.png";
-			
-			return $url;
-		}
-		
+	
 	/**
 	 * When given an entity, views it intelligently.
 	 * 
@@ -755,7 +691,7 @@
 			if ($handle = opendir($folder)) {
 				while ($view = readdir($handle)) {
 					if (!in_array($view,array('.','..','.svn','CVS')) && !is_dir($folder . "/" . $view)) {
-						if (substr_count($view,".php") > 0) {
+						if ((substr_count($view,".php") > 0) || (substr_count($view,".png") > 0)) {
 							if (!empty($view_base)) { $view_base_new = $view_base . "/"; } else { $view_base_new = ""; }
 							set_view_location($view_base_new . str_replace(".php","",$view), $base_location_path);
 						}
@@ -765,6 +701,7 @@
 					}
 				}
 			}
+			
 			
 		}
 		

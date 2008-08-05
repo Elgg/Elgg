@@ -512,7 +512,7 @@
 		public function getIcon($size = 'medium')
 		{
 			if (isset($this->icon_override[$size])) return $this->icon_override[$size];
-			return elgg_get_entity_icon_url($this, $size);
+			return get_entity_icon_url($this, $size);
 		}
 		
 		/**
@@ -1676,7 +1676,48 @@
 		
 	}
 	
+		
+	/**
+	 * Get the icon for an entity
+	 *
+	 * @param ElggEntity $entity The entity (passed an entity rather than a guid to handle non-created entities)
+	 * @param string $size
+	 */
+	function get_entity_icon_url(ElggEntity $entity, $size = 'medium')
+	{
+		global $CONFIG;
+		
+		$size = sanitise_string($size);
+		switch (strtolower($size))
+		{
+			case 'master':
+			case 'large' : $size = 'large'; break;
+			
+			case 'topbar' : 
+			case 'tiny' : $size = 'tiny'; break;
+			
+			case 'small' : $size = 'small'; break;
+			
+			case 'medium' :
+			default: $size = 'medium';
+		}
+		
+		$url = false;
+		
+		$viewtype = elgg_get_viewtype();
+		
+		// Step one, see if anyone knows how to render this in the current view
+		$url = trigger_plugin_hook('entity:icon:url', $type, array('entity' => $entity, 'viewtype' => $viewtype, 'size' => $size), $url);
+		if (!file_exists($url))
+			$url = false; // If not exist then don't use the url
+		
+		// Fail, so use default
+		if (!$url)
+			$url = $CONFIG->url . "_graphics/icons/default/$size.png";
 	
+		return $url;
+	}
+		
 	/**
 	 * Gets the URL for an entity, given a particular GUID
 	 *
@@ -1745,6 +1786,40 @@
 	}
 	
 	/**
+	 * Default Icon URL handler for entities.
+	 * This will attempt to find a default entity for the current view and return a url. This is registered at
+	 * a low priority so that other handlers will pick it up first.
+	 *
+	 * @param unknown_type $hook
+	 * @param unknown_type $entity_type
+	 * @param unknown_type $returnvalue
+	 * @param unknown_type $params
+	 */
+	function default_entity_url_hook($hook, $entity_type, $returnvalue, $params)
+	{
+		global $CONFIG;
+		
+		if ((!$returnvalue) && ($hook == 'entity:icon:url'))
+		{
+			$entity = $params['entity'];
+			$type = $entity->type;
+			$subtype = get_subtype_from_id($entity->subtype);
+			$viewtype = $params['viewtype'];
+			$size = $params['size'];
+			
+			$url = $CONFIG->url . "views/$viewtype/graphics/icons/$type/$subtype/$size.png";
+			
+			if (!file_exists($url))
+				$url = $CONFIG->url . "views/$viewtype/graphics/icons/$type/default/$size.png";
+			
+			if (!file_exists($url))
+				$url = $CONFIG->url . "views/$viewtype/graphics/icons/default/$size.png";
+			
+			return $url;
+		}
+	}
+	
+	/**
 	 * Page handler for generic entities view system
 	 *
 	 * @param array $page Page elements from pain page handler
@@ -1773,6 +1848,9 @@
 	
 	/** Hook to get certain named bits of volatile data about an entity */
 	register_plugin_hook('volatile', 'metadata', 'volatile_data_export_plugin_hook');
+	
+	/** Hook for rendering a default icon for entities */
+	register_plugin_hook('entity:icon:url', 'all', 'default_entity_url_hook', 700);
 	
 	/** Register init system event **/
 	register_elgg_event_handler('init','system','entities_init');
