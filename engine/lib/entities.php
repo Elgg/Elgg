@@ -1708,7 +1708,7 @@
 		
 		// Step one, see if anyone knows how to render this in the current view
 		$url = trigger_plugin_hook('entity:icon:url', $type, array('entity' => $entity, 'viewtype' => $viewtype, 'size' => $size), $url);
-		if (!file_exists($url))
+		if(!@getimagesize($url))
 			$url = false; // If not exist then don't use the url
 		
 		// Fail, so use default
@@ -1809,12 +1809,12 @@
 			
 			$url = $CONFIG->url . "views/$viewtype/graphics/icons/$type/$subtype/$size.png";
 			
-			if (!file_exists($url))
+			if(!@getimagesize($url))
 				$url = $CONFIG->url . "views/$viewtype/graphics/icons/$type/default/$size.png";
 			
-			if (!file_exists($url))
+			if(!@getimagesize($url))
 				$url = $CONFIG->url . "views/$viewtype/graphics/icons/default/$size.png";
-			
+		
 			return $url;
 		}
 	}
