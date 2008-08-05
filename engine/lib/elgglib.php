@@ -28,7 +28,9 @@
 			global $CONFIG;
 			if (!headers_sent()) {
 				 
-				 $_SESSION['last_forward_from'] = current_page_url();
+				 $current_page = current_page_url();
+				 if (strpos($current_page, $CONFIG->wwwroot . "action") ===false)
+				 	$_SESSION['last_forward_from'] = current_page_url();
 				 
 				 $_SESSION['messages'] = system_messages();
 				 if (substr_count($location, 'http://') == 0) {
