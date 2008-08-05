@@ -21,7 +21,7 @@
 	 echo "</div>";
 	 
 	 //wider column
-	 echo "<div id=\"group_wide_column\">";
+	 echo "<div id=\"group_wide_column\" style=\"width:450px;\">";
 	 echo elgg_view("groups/wide_column",array('entity' => $vars['entity']));
 	 echo "</div>";	 
 	 
