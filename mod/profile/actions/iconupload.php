@@ -20,7 +20,7 @@
 				$small = get_resized_image_from_uploaded_file('profileicon',40,40, true);
 				$medium = get_resized_image_from_uploaded_file('profileicon',100,100, true);
 				$large = get_resized_image_from_uploaded_file('profileicon',200,200);
-				$master = get_resized_image_from_uploaded_file('profileicon',600,600);
+				$master = get_resized_image_from_uploaded_file('profileicon',550,550);
 				
 				if ($small !== false
 					&& $medium !== false
