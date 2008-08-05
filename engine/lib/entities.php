@@ -199,9 +199,9 @@
 			{
 				unset($this->temp_metadata[$name]);
 				remove_metadata($this->getGUID(), $name);
-				$multiple = true;
 				foreach ($value as $v) {
 					if ((int) $this->guid > 0) {
+						$multiple = true;
 						if (!create_metadata($this->getGUID(), $name, $v, $value_type, $this->getOwner(), $this->getAccessID(), $multiple)) return false;
 					} else {
 						if (($multiple) && (isset($this->temp_metadata[$name])))
@@ -224,6 +224,7 @@
 			}
 			else
 			{
+				unset($this->temp_metadata[$name]);
 				if ((int) $this->guid > 0) {
 					return create_metadata($this->getGUID(), $name, $value, $value_type, $this->getOwner(), $this->getAccessID(), $multiple);
 				} else {
