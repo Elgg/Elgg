@@ -87,11 +87,34 @@
 		
 		global $CONFIG;
 		
+		// Get the page owner entity
+			$page_owner = page_owner_entity();
+		
+		// Submenu items for all group pages
+			if ($page_owner instanceof ElggGroup) {
+				if ($page_owner->canEdit()) {
+					add_submenu_item(elgg_echo('groups:edit'),$CONFIG->wwwroot . "mod/groups/edit.php?group_guid=" . $page_owner->getGUID());
+					add_submenu_item(elgg_echo('groups:invite'),$CONFIG->wwwroot . "mod/groups/invite.php?group_guid={$page_owner->getGUID()}");
+				}
+				if ($page_owner->isMember($_SESSION['user'])) {
+					add_submenu_item(elgg_echo('groups:leave'), $CONFIG->wwwroot . "action/groups/leave?groups_guid=" . $page_owner->getGUID());
+				} else {
+					if ($vars['entity']->isPublicMembership())
+					{
+						add_submenu_item(elgg_echo('groups:join'),$CONFIG->wwwroot . "action/groups/join?group_guid={$page_owner->getGUID()}");		
+					}
+					else
+					{
+						add_submenu_item(elgg_echo('groups:joinrequest'),$CONFIG->wwwroot . "action/groups/joinrequest?group_guid={$page_owner->getGUID()}");		
+					}
+				}
+			}
+		
 		// Add submenu options
 			if (get_context() == "groups") {
 				if ((page_owner() == $_SESSION['guid'] || !page_owner()) && isloggedin()) {
-					add_submenu_item(sprintf(elgg_echo('groups:new'), $CONFIG->wwwroot."pg/groups/new/"));
-					add_submenu_item(sprintf(elgg_echo('groups:yours'), $CONFIG->wwwroot . "pg/groups/owned/" . $_SESSION['user']->username));
+					add_submenu_item(elgg_echo('groups:new'), $CONFIG->wwwroot."pg/groups/new/");
+					add_submenu_item(elgg_echo('groups:yours'), $CONFIG->wwwroot . "pg/groups/owned/" . $_SESSION['user']->username);
 					add_submenu_item(elgg_echo('groups:all'), $CONFIG->wwwroot . "pg/groups/world/");
 				} else if (page_owner()) {
 					$page_owner = page_owner_entity();
@@ -219,15 +242,13 @@
 	 */
 	function groups_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $params)
 	{
-		$group_guid = get_input('group_guid');
+		$page_owner = page_owner_entity();
 		
-		if ($group_guid)
+		if ($page_owner instanceof ElggGroup)
 		{
-			$group = get_entity($group_guid);
-			
-			if (($group) && ($group->can_write_to_container($_SESSION['user']->guid)))
+			if (can_write_to_container())
 			{
-				$returnvalue[$group->group_acl] = elgg_echo('groups:group') . ": " . $group->name;
+				$returnvalue[$page_owner->group_acl] = elgg_echo('groups:group') . ": " . $page_owner->name;
 			
 				return $returnvalue;
 			}

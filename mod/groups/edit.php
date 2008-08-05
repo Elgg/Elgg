@@ -14,7 +14,8 @@
 
 	$group_guid = get_input('group_guid');
 	$group = get_entity($group_guid);
-	
+	set_page_owner($group_guid);
+
 	$title = elgg_echo("groups:new");
 	$body = elgg_view_title($title);
 	

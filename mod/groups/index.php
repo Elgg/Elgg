@@ -17,13 +17,12 @@
 	$title = sprintf(elgg_echo("groups:yours"),page_owner_entity()->name);
 
 	// Get objects
-	$context = get_context();
+	$area2 = elgg_view_title($title);
 	
 	set_context('search');
 	$objects = list_entities("group", "", page_owner(), $limit, false);
-	set_context($context);
+	set_context('groups');
 	
-	$area2 = elgg_view_title($title);
 	$area2 .= $objects;
 	$body = elgg_view_layout('two_column_left_sidebar',$area1, $area2);
 	

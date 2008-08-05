@@ -11,9 +11,11 @@
 
 	require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 	gatekeeper();
-
-	$group_guid = get_input('group_guid');
+	
+	$group_guid = (int) get_input('group_guid');
 	$group = get_entity($group_guid);
+	set_page_owner($group_guid);
+
 	$title = elgg_echo("groups:invite");
 
 	$area2 = elgg_view_title($title);

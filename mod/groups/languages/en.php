@@ -20,7 +20,7 @@
 			'groups:user' => "%s's groups",
 			'groups:all' => "All groups",
 			'groups:new' => "Create a new group",
-			'groups:edit' => "Edit a group",
+			'groups:edit' => "Edit group",
 	
 			'groups:icon' => 'Group icon (leave blank to leave unchanged)',
 			'groups:name' => 'Group name',

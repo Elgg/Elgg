@@ -32,9 +32,6 @@
 												'size' => $iconsize,
 											  )
 					);
-
-				    // 	display relevant links			
-    				echo elgg_view("groups/grouplinks", array("entity" => $vars['entity']));
     				?>
 				
 				</div>
