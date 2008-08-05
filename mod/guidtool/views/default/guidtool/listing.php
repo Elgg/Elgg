@@ -16,7 +16,7 @@
 	
 	$icon = elgg_view(
 			'graphics/icon', array(
-			'entity' => $vars['entity'],
+			'entity' => $entity,
 			'size' => 'small',
 		  )
 		);
