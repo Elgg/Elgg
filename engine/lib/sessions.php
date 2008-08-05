@@ -229,7 +229,10 @@
 	 *
 	 */
 		function gatekeeper() {
-			if (!isloggedin()) forward();
+			if (!isloggedin()) {
+				$_SESSION['last_forward_from'] = current_page_url();
+				forward();
+			}
 		}
 		
 		/**
@@ -239,7 +242,10 @@
 		function admin_gatekeeper()
 		{
 			gatekeeper();
-			if (!$_SESSION['user']->admin && !$_SESSION['user']->siteadmin) forward();
+			if (!$_SESSION['user']->admin && !$_SESSION['user']->siteadmin) {
+				$_SESSION['last_forward_from'] = current_page_url();
+				forward();
+			}
 		}
 		
 		register_elgg_event_handler("boot","system","session_init",1);
