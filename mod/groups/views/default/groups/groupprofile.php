@@ -18,38 +18,9 @@
 ?>
 	
 <table>
-	<tr>
+	<tr>	
 		<td>
-		
 			<div id="groups_info_column_left">
-				<div id="groups_icon_wrapper">
-				
-					<?php
-					echo elgg_view(
-						"groups/icon", array(
-												'entity' => $vars['entity'],
-												//'align' => "left",
-												'size' => $iconsize,
-											  )
-					);
-    				?>
-				
-				</div>
-			</div>
-			
-			<div id="group_admins">
-							<?php
-							
-								echo "<p><b>" . elgg_echo("groups:owner") . "</b></p>";
-								echo "<p><a href=\"" . get_user($vars['entity']->owner_guid)->getURL() . "\">" . get_user($vars['entity']->owner_guid)->name . "</a></p>";
-								
-							?>
-			</div>
-			
-		</td>
-		
-		<td>
-			<div id="groups_info_column_right">
 			
 					<?php
 						
@@ -83,6 +54,34 @@
 						
 					?>
 			</div>
+		</td>
+		<td>
+		
+			<div id="groups_info_column_right">
+				<div id="groups_icon_wrapper">
+				
+					<?php
+					echo elgg_view(
+						"groups/icon", array(
+												'entity' => $vars['entity'],
+												//'align' => "left",
+												'size' => $iconsize,
+											  )
+					);
+    				?>
+				
+				</div>
+			</div>
+			
+			<div id="group_admins">
+							<?php
+							
+								echo "<p><b>" . elgg_echo("groups:owner") . "</b></p>";
+								echo "<p><a href=\"" . get_user($vars['entity']->owner_guid)->getURL() . "\">" . get_user($vars['entity']->owner_guid)->name . "</a></p>";
+								
+							?>
+			</div>
+			
 		</td>
 	</tr>
 </table>
