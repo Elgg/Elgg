@@ -1,4 +1,4 @@
-<?php
+eems <?php
 
 	/**
 	 * Elgg CSS
@@ -403,14 +403,17 @@ h6 { font-size: 0.8em; }
 	margin:3px 0 0 0;
 }
 
-#elgg_topbar_container_left .toolbarlinks,
-#elgg_topbar_container_left .toolbarlinks2,
 #elgg_topbar_container_left .toolbarimages {
 	float:left;
 	margin-right:20px;
 }
+#elgg_topbar_container_left .toolbarlinks {
+	margin:0 0 10px 0;
+	float:left;
+}
 #elgg_topbar_container_left .toolbarlinks2 {
 	margin:3px 0 0 0;
+	float:left;
 }
 #elgg_topbar_container_left a.loggedinuser {
 	color:#eeeeee;
@@ -1034,8 +1037,8 @@ p.user_menu_friends_of {
 .river_create {
 	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/dummy_river_icon.gif) no-repeat left -1px;
 }
-.river_sharing_create {
-	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_shares.gif) no-repeat left -1px;
+.river_bookmarks_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_bookmarks.gif) no-repeat left -1px;
 }
 .river_status_create {
 	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_status.gif) no-repeat left -1px;
@@ -1066,6 +1069,9 @@ p.user_menu_friends_of {
 }
 .river_relationship_friend_create {
 	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_friends.gif) no-repeat left -1px;
+}
+.river_relationship_member_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_forum.gif) no-repeat left -1px;
 }
 
 /* 
