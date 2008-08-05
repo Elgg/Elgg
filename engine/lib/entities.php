@@ -197,6 +197,7 @@
 		{
 			if (is_array($value))
 			{
+				unset($this->temp_metadata[$name]);
 				remove_metadata($this->getGUID(), $name);
 				$multiple = true;
 				foreach ($value as $v) {
