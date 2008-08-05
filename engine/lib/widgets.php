@@ -385,7 +385,7 @@
 				if ($dbwidgets = get_widgets($owner,$context,$column)) {
 					
 					foreach($dbwidgets as $dbwidget) {
-						if (in_array($dbwidget->getGUID(),$guids[1]) || in_array($dbwidget->getGUID(),$guids[2])) {
+						if (in_array($dbwidget->getGUID(),$guids[1]) || in_array($dbwidget->getGUID(),$guids[2]) || in_array($dbwidget->getGUID(),$guids[3])) {
 							if (in_array($dbwidget->getGUID(),$guids[1])) {
 								$pos = array_search($dbwidget->getGUID(),$guids[1]);
 								$col = 1;
