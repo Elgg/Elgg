@@ -26,7 +26,7 @@
 			
 		}
 		
-		if (is_array($widgettypes) && sizeof($widgettypes) > 0 && $owner->canEdit()) {
+		if (is_array($widgettypes) && sizeof($widgettypes) > 0 && $owner && $owner->canEdit()) {
 
 			
 ?>
