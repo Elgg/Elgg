@@ -37,16 +37,20 @@
 				</div>
 			</div>
 			
+			<div id="group_admins">
+							<?php
+							
+								echo "<p><b>" . elgg_echo("groups:owner") . "</b></p>";
+								echo "<p><a href=\"" . get_user($vars['entity']->owner_guid)->getURL() . "\">" . get_user($vars['entity']->owner_guid)->name . "</a></p>";
+								
+							?>
+			</div>
+			
 		</td>
 		
 		<td>
 			<div id="groups_info_column_right">
 			
-					<?php  
-						echo "<h2><a href=\"" . $vars['entity']->getURL() . "\">" . $vars['entity']->name . "</a></h2> <br />"; 
-						
-					?>
-						
 					<?php
 						
 						if ($vars['full'] == true) {
@@ -78,22 +82,6 @@
 						
 						
 					?>
-					
-					<div id="groups_owner">
-							<?php
-							
-								echo "<b>" . elgg_echo("groups:owner") . "</b>";
-								
-								echo elgg_view(
-											"profile/icon", array(
-												'entity' => get_entity($vars['entity']->owner_guid),
-												//'align' => "left",
-												'size' => 'small',
-											  )
-					);
-
-							?>
-					</div>
 			</div>
 		</td>
 	</tr>
