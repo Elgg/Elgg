@@ -1,4 +1,4 @@
-eems <?php
+<?php
 
 	/**
 	 * Elgg CSS
@@ -1030,6 +1030,9 @@ p.user_menu_friends_of {
 	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_profile.gif) no-repeat left -1px;
 }
 .river_user_profileupdate {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_profile.gif) no-repeat left -1px;
+}
+.river_user_profileiconupdate {
 	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_profile.gif) no-repeat left -1px;
 }
 .river_annotate {
