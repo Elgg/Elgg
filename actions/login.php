@@ -29,7 +29,14 @@
         
         if ($result) {
             system_message(elgg_echo('loginok'));
-            forward("pg/dashboard/");
+            if ($_SESSION['last_forward_from'])
+            {
+            	$forward_url = $_SESSION['last_forward_from'];
+            	$_SESSION['last_forward_from'] = "";
+            	forward($forward_url);
+            }
+            else
+            	forward("pg/dashboard/");
         } else {
             register_error(elgg_echo('loginerror'));
         }

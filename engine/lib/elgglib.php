@@ -25,13 +25,18 @@
 	 */
 
 		function forward($location = "") {
-			
+			global $CONFIG;
 			if (!headers_sent()) {
+				 
+				 $_SESSION['last_forward_from'] = current_page_url();
+				 
 				 $_SESSION['messages'] = system_messages();
 				 if (substr_count($location, 'http://') == 0) {
-				 	global $CONFIG;
+				 	
 				 	$location = $CONFIG->url . $location;
 				 }
+				 
+				 
 				 header("Location: {$location}");
 				 exit;
 			}
@@ -56,7 +61,7 @@
 			if (($url['user']) || $url['pass']) $page .="@";
 			
 			$page .= $url['host'];
-			$page = trim($page, "/"); $page.="/";
+			$page = trim($page, "/"); //$page.="/";
 			
 			$page .= $_SERVER['REQUEST_URI'];
 			
