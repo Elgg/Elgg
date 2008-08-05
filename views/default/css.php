@@ -404,11 +404,12 @@ h6 { font-size: 0.8em; }
 }
 
 #elgg_topbar_container_left .toolbarlinks,
+#elgg_topbar_container_left .toolbarlinks2,
 #elgg_topbar_container_left .toolbarimages {
 	float:left;
 	margin-right:20px;
 }
-#elgg_topbar_container_left .toolbarlinks {
+#elgg_topbar_container_left .toolbarlinks2 {
 	margin:3px 0 0 0;
 }
 #elgg_topbar_container_left a.loggedinuser {
@@ -419,14 +420,35 @@ h6 { font-size: 0.8em; }
 #elgg_topbar_container_left a.pagelinks {
 	color:white;
 	margin:0 15px 0 5px;
+	display:block;
+	padding:3px;
 }
 #elgg_topbar_container_left a.pagelinks:hover {
-	color:#4690d6;
+	background: #4690d6;
+	text-decoration: none;
+}
+#elgg_topbar_container_left a.privatemessages {
+	background:transparent url(<?php echo $vars['url']; ?>_graphics/toolbar_messages_icon.gif) no-repeat left 2px;
+	padding:0 0 0 16px;
+	margin:0 15px 0 5px;
+}
+#elgg_topbar_container_left a.privatemessages:hover {
+	text-decoration: none;
+}
+#elgg_topbar_container_left a.privatemessages_new {
+	background:transparent url(<?php echo $vars['url']; ?>_graphics/toolbar_messages_icon.gif) no-repeat left bottom;
+	padding:0 0 0 18px;
+	margin:0 15px 0 5px;
+	color:white;
+}
+#elgg_topbar_container_left a.privatemessages_new:hover {
+	text-decoration: none;
 }
 
 #elgg_topbar_container_left a.usersettings {
 	margin:0 0 0 20px;
 	color:#999999;
+	padding:3px;
 }
 #elgg_topbar_container_left a.usersettings:hover {
 	color:#eeeeee;
