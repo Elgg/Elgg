@@ -13,11 +13,14 @@
 	
 	$format = $vars['format'];
 	if (!$format) $format = 'opendd';
+	
+	
+	$formbody = "<p>" . sprintf(elgg_echo('guidtool:import:desc'), $format) . "</p>" .
+	elgg_view('input/longtext', array('internalname' => 'data')) . elgg_view('input/submit', array('value' => elgg_echo("save")));
 ?>
 <div>
-<form action="<?php echo $CONFIG->url; ?>action/import/<?php echo $format; ?>" method="post">
-	<p><?php echo sprintf(elgg_echo('guidtool:import:desc'), $format); ?></p>
-	<?php echo elgg_view('input/longtext', array('internalname' => 'data')); ?>
-	<input type="submit" class="submit_button" value="<?php echo elgg_echo("save"); ?>" />
-</form>
+<?php
+	echo elgg_view('input/form', array('body' => $formbody, 'action' => "{$CONFIG->url}action/import/$format"))
+?>
+
 </div>
