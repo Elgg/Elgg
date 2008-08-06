@@ -1633,7 +1633,11 @@
 			if (!is_null($user))
 			{
 				if ($entity->getOwner() == $user->getGUID()) return true;
+				if ($entity->container_guid == $user->getGUID()) return true;
 				if ($entity->type == "user" && $entity->getGUID() == $user->getGUID()) return true;
+				if ($container_entity = get_entity($entity->container_guid)) {
+					if ($container_entity->canEdit()) return true;
+				}
 			}
 				
 			return trigger_plugin_hook('permissions_check',$entity->type,array('entity' => $entity, 'user' => $user),false);
