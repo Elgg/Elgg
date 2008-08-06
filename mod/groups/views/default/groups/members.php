@@ -13,6 +13,7 @@
 	 //var_export($vars['entity']);
 ?>
 
+<div id="group_members">
 <h2><?php echo elgg_echo("groups:members"); ?></h2>
 
 <?php
@@ -25,3 +26,4 @@
     }
     
 ?>
+</div>
