@@ -1669,7 +1669,7 @@ div.expandall p {
 #friendsPickerNavigationTabs a {
 	text-decoration: none;
 	display: block;
-	padding: 0.24em 1em;
+	padding: 0.22em 1em;
 	color: #666666;
 	text-align: center;
 }
@@ -1688,7 +1688,6 @@ div.expandall p {
 	background: white;
 	color: #4690d6;
 }
-
 	
 	
 
@@ -2002,7 +2001,7 @@ a.toggle_customise_edit_panel:hover {
 /* ***************************************
 	STUFF BELOW NEEDS SORTING
 *************************************** */
-
+/* Breadcrumbs */
 #pages_breadcrumbs {
 	font-size: 80%;
 	color:#999999;
@@ -2029,9 +2028,18 @@ a.toggle_customise_edit_panel:hover {
 	line-height:1.2em;
 }
 
-/* not needed? - replaced by #wrapper_maincontent.single_column */
-#forums, #forum_topics, #topic_posts {
-	/* background:white;*/
+#sidebar_page_tree {
+	margin:10px;
+}
+
+#sidebar_page_tree h3 {
+	background:#F5F5F5;
+	border-top:2px solid #4690D6;
+	margin:0 0 5px 0;
+	padding:5px;
+	color:#0054A7;
+	font-size:1.25em;
+	line-height:1.2em;
 }	
 
 /* tag icon */	
