@@ -1922,6 +1922,93 @@ a.toggle_customise_edit_panel:hover {
 	padding-top: 4px;
 }
 
+/* ***************************************
+	GROUPS
+*************************************** */
+/* general page titles in main content area */
+#content_area_user_title h2 {	
+	background:#F5F5F5;
+	border-top:2px solid #4690D6;
+	margin:0 0 5px 0;
+	padding:5px;
+	color:#0054A7;
+	font-size:1.35em;
+	line-height:1.2em;
+}
+
+#content_area_group_title h2 {
+	background:#FDFFC3;
+	padding:5px;
+	margin:0 0 10px 0;
+	border-top:2px solid #4690D6;
+	color:#0054A7;
+	font-size:1.35em;
+	line-height:1.2em;
+}
+
+#two_column_left_sidebar_maincontent #owner_block_content {
+	margin:0 0 10px 0 !important;
+}
+
+#groups_info_column_left {
+	float:left:
+	width:465px;
+	margin-left:220px;
+}
+
+#groups_info_column_left .odd {
+	background:#f5f5f5;
+}
+#groups_info_column_left p {
+	margin:0 0 7px 0;
+	padding:2px 4px;
+}
+
+#groups_info_column_right {
+	float:left;
+	width:220px;
+}
+#group_stats {
+	width:180px;
+	background: #eeeeee;
+	padding:10px 10px 1px 10px;
+	margin:10px 0 20px 0;
+}
+#group_members {
+	margin:10px;
+}
+
+.right_column {
+	clear:left;
+	float:right;
+	width:330px;
+}
+#left_column {
+	width:330px;
+	float:left;
+	margin:0 20px 0 0;
+
+}
+#group_members h2,
+.right_column h2,
+#left_column h2 {
+	background:#F5F5F5;
+	border-top:2px solid #4690D6;
+	margin:0 0 5px 0;
+	padding:5px;
+	color:#0054A7;
+	font-size:1.25em;
+	line-height:1.2em;
+}
+
+#left_column #mb_input_wrapper {
+	background:white;
+	border:none;
+	padding:0px;
+}
+#left_column #mb_input_wrapper .input_textarea {
+	width:318px;
+}
 
 /* ***************************************
 	STUFF BELOW NEEDS SORTING
@@ -1969,76 +2056,4 @@ a.toggle_customise_edit_panel:hover {
 	width: 100px;
 	height: 100px;
 }	
-	
-	
-/* ***************************************
-	old elgg tools in sidebar
-*************************************** 
-.elggtoolbar .elggtoolbar_header {
-	color: #4690d6;
-	background: #f5f5f5;
-	border-top:2px solid #333333;
-	border-bottom:1px solid #999999;
-	padding: 5px 10px 5px 10px;
-	margin:0;
-}
-
-.elggtoolbar {
-	border-left:2px solid #333333;
-	border-right:2px solid #333333;
-	border-bottom:2px solid #333333;
-	margin: 0 0 20px 0;
-}
-
-.elggtoolbar ul.drawers {
-	width: 136px;
-	margin: 0;
-	padding: 0;
-	
-}
-.elggtoolbar li.drawer ul li {
-	line-height: 1.2em;
-	margin: 0;
-	padding: 3px 0 3px 0;
-}
-.elggtoolbar ul {
-	list-style: none;
-	margin: 0;
-	padding: 3px 3px 3px 10px;
-}
-.elggtoolbar li {
-	background: #f4f4f4;
-}
-.elggtoolbar li a {
-	text-decoration: none;
-	color: #4690d6;
-	line-height:0.5em;
-	padding-left:5px;
-}
-.elggtoolbar li a:hover {
-	text-decoration: underline;
-	color: #0054a7;
-}
-.elggtoolbar h2.drawer-handle {
-	margin: 0;
-	padding: 1px 1px 1px 10px;
-	background-color: white;
-	border-top: 1px solid #999999;
-	cursor: pointer;
-	font-size: 100%;
-	font-weight: normal;
-	line-height: 2em;
-}
-.elggtoolbar h2.drawer-handle:hover {
-	background-color: #cccccc;
-}
-.elggtoolbar h2.drawer-handle.open {
-	color:#000000;
-	font-weight: bold;
-	background: #cccccc;
-	border-bottom: none;
-}
-
-*/	
-	
 	

@@ -34,8 +34,7 @@
 	<div id="group_stats"><!-- start of group_stats -->
 	    <?php
 							
-		    echo "<p><b>" . elgg_echo("groups:owner") . "</b></p>";
-		    echo "<p><a href=\"" . get_user($vars['entity']->owner_guid)->getURL() . "\">" . get_user($vars['entity']->owner_guid)->name . "</a></p>";
+		    echo "<p><b>" . elgg_echo("groups:owner") . ": </b><a href=\"" . get_user($vars['entity']->owner_guid)->getURL() . "\">" . get_user($vars['entity']->owner_guid)->name . "</a></p>";
 								
 	    ?>
 	    <p>Members: 210<br />
