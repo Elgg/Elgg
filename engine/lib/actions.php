@@ -108,6 +108,89 @@
         	register_action("error");
         	return true;
         }
+
+       	/**
+       	 * Action gatekeeper.
+       	 * This function verifies form input for security features (like a generated token), and forwards
+       	 * the page if they are invalid.
+       	 * 
+       	 * Place at the head of actions.
+       	 */
+        function action_gatekeeper()
+        {
+        	$token = get_input('__elgg_token');
+        	$action = get_input('__elgg_action');
+        	$ts = get_input('__elgg_ts');
+        	$session_id = session_id();
+        	
+        	if (($token) && ($action) && ($ts) && ($session_id))
+        	{
+	        	// generate token, check with input and forward if invalid
+	        	$generated_token = generate_action_token($action, $ts);
+	        	
+	        	// Validate token
+	        	if (strcmp($token, $generated_token)==0)
+	        	{
+        	
+	        		// TODO: Validate time to ensure its not crazy
+	        		
+	        		
+	        		return true;
+	        	}
+	        	else
+	        		register_error(elgg_echo('actiongatekeeper:tokeninvalid'));
+        	}
+        	else
+        		register_error(elgg_echo('actiongatekeeper:missingfields'));
+        		
+        	forward();
+        	exit;
+        }
+        
+        /**
+         * Generate a token for the current user suitable for being placed in a hidden field in action forms.
+         * 
+         * @param string $action The action being called
+         * @param int $timestamp Unix timestamp
+         */
+        function generate_action_token($action, $timestamp)
+        {
+        	// Get input values
+        	$site_secret = get_site_secret();
+        	
+        	// Current session id
+        	$session_id = session_id();
+        	
+        	if (($site_secret) && ($session_id))
+        		return md5($site_secret.$action.$timestamp.$session_id);
+        	
+        	return false;
+        }
+       
+        /**
+         * Initialise the site secret.
+         *
+         */
+        function init_site_secret()
+        {
+        	$secret = md5(rand().microtime());
+        	if (datalist_set('__site_secret__', $secret))
+        		return $secret;
+        		
+        	return false;
+        }
+        
+        /**
+         * Retrieve the site secret.
+         *
+         */
+        function get_site_secret()
+        {
+        	$secret = datalist_get('__site_secret__');
+        	if (!$secret) $secret = init_site_secret();
+        	
+        	return $secret;
+        }
         
     // Register some actions ***************************************************
     
