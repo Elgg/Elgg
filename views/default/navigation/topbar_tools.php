@@ -46,11 +46,9 @@
 <script type="text/javascript">
 function tools_menu(){
 $(" #tools_menu li").hover(function(){
-        $(this).find('ul:first').slideDown("fast");
 		$(this).parent().parent().parent().find("#tools_menu a").addClass('tools_menu_on');
 		
 		},function(){
-		$(this).find('ul:first').slideUp("fast");
 		$(this).parent().parent().parent().find("#tools_menu a").removeClass('tools_menu_on');
 		});
 }
@@ -61,4 +59,3 @@ $(" #tools_menu li").hover(function(){
 	tools_menu();
 });
 </script>
-
