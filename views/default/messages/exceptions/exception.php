@@ -15,25 +15,30 @@
 	 */
 
 	global $CONFIG;
-?>
-
+	 
+	$class = get_class($vars['object']);
+	$message = autop($vars['object']->getMessage());
+	
+	$body = <<< END
 	<p class="messages-exception">
-		<span title="<?php echo get_class($vars['object']); ?>">
-		<?php
-
-			echo autop($vars['object']->getMessage());
-		
-		?>
+		<span title="$class">
+			$message
 		</span>
 	</p>
-	
-	<?php if ($CONFIG->debug) { ?>
-	<hr />
-	<p class="messages-exception-detail">
-		<?php
+END;
 
-			echo autop(htmlentities(print_r($vars['object'], true)));
-		
-		?>
-	</p>
-	<?php } ?>
+	if ($CONFIG->debug)
+	{
+		$details = autop(htmlentities(print_r($vars['object'], true)));
+		$body .= <<< END
+		<hr />
+		<p class="messages-exception-detail">
+			$details
+		</p>
+END;
+	}
+	
+	$title = $message;
+	
+	page_draw($title, elgg_view_layout("one_column", elgg_view_title($title) . $body));
+?>
