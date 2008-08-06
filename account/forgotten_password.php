@@ -13,7 +13,9 @@
 	require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
 	
 	if (!isloggedin()) {
-		echo page_draw(elgg_echo('user:password:lost'), elgg_view_title(elgg_echo('user:password:lost')) . elgg_view("account/forms/forgotten_password"));
+		$body = elgg_view_title(elgg_echo('user:password:lost')) . elgg_view("account/forms/forgotten_password");
+		
+		echo page_draw(elgg_echo('user:password:lost'), elgg_view_layout("one_column", $body));
 	} else {
 		forward();
 	}
