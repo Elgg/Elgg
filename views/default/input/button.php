@@ -15,8 +15,11 @@
 	 * @uses $vars['js'] Any Javascript to enter into the input tag
 	 * @uses $vars['internalname'] The name of the input field
 	 * @uses $vars['type'] Submit or reset, defaults to submit.
+	 * @uses $vars['src'] Src of an image
 	 * 
 	 */
+
+	global $CONFIG;
 
 	$type = strtolower($vars['type']);
 	switch ($type)
@@ -29,6 +32,7 @@
 	
 	$value = htmlentities($vars['value']);
 	$name = $vars['internalname'];
-	
+	$src = $vars['src'];
+	if (strpos($src,$CONFIG->wwwroot)===false) $src = ""; // blank src if trying to access an offsite image.
 ?>
-<input type="<?php echo $type; ?>" class="<?php echo $type; ?>_button" <?php echo $vars['js']; ?> value="<?php $value; ?>" />
+<input type="<?php echo $type; ?>" class="<?php echo $type; ?>_button" <?php echo $vars['js']; ?> value="<?php $value; ?>" src="<?php echo $src; ?>" />
