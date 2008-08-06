@@ -1143,11 +1143,12 @@ table.search_gallery {
 .search_gallery_item:hover {
 	border:1px dotted black;
 }
-/* temp force image width until upload size is changed */
+/* 
+temp force image width until upload size is changed 
 .search_gallery_item img {
     width: 153px;
 }
-
+*/
 .search_gallery_item .search_listing {
 	background: none;
 	text-align: center;
