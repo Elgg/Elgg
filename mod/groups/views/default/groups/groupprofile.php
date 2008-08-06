@@ -17,7 +17,7 @@
 	
 ?>
 
-<div id="groups_info_column_right" style="float:right;width:200px;border-left:1px solid #efefef;padding:5px;"><!-- start of groups_info_column_right -->
+<div id="groups_info_column_right"><!-- start of groups_info_column_right -->
     <div id="groups_icon_wrapper"><!-- start of groups_icon_wrapper -->
 				
         <?php
@@ -31,7 +31,7 @@
         ?>
 				
     </div><!-- end of groups_icon_wrapper -->
-	<div id="group_stats" style="background:#efefef;margin:10px 0 10px 0;border:1px solid #ccc;"><!-- start of group_stats -->
+	<div id="group_stats"><!-- start of group_stats -->
 	    <?php
 							
 		    echo "<p><b>" . elgg_echo("groups:owner") . "</b></p>";
@@ -44,7 +44,7 @@
     </div><!-- end of group_stats -->
 </div><!-- end of groups_info_column_right -->
 
-<div id="groups_info_column_left" style="width:460px;"><!-- start of groups_info_column_left --> 
+<div id="groups_info_column_left"><!-- start of groups_info_column_left --> 
     <?php
         if ($vars['full'] == true) {
 	        if (is_array($vars['config']->group) && sizeof($vars['config']->group) > 0){

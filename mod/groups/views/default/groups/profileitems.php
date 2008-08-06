@@ -10,13 +10,13 @@
 	 * @link http://elgg.com/
 	 */
 	 
-	 //narrow column
-	 echo "<div class=\"right_column\" style=\"float:right;width:330px;border:1px solid #efefef;\">";
+	 //right column
+	 echo "<div class=\"right_column\">";
 	 echo elgg_view("groups/right_column",array('entity' => $vars['entity']));
 	 echo "</div>";
 	 
-	 //wider column
-	 echo "<div id=\"left_column\" style=\"width:330px;border:1px solid #efefef;\">";
+	 //left column
+	 echo "<div id=\"left_column\">";
 	 echo elgg_view("groups/left_column",array('entity' => $vars['entity']));
 	 echo "</div>";	 
 	 
