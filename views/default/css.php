@@ -1334,14 +1334,17 @@ temp force image width until upload size is changed
 	padding: 0;
 	margin: 0;
 }
-
+#owner_block ul li.selected a {
+	background: url(<?php echo $vars['url']; ?>_graphics/owner_block_menu_arrow.gif) no-repeat left 6px;
+	padding-left:10px;
+}
 #owner_block ul li a {
 	text-decoration: none;
 	display: block;
 	padding: 0;
 	margin: 0;
 	color:#4690d6;
-	padding:4px 6px 4px 6px;
+	padding:4px 6px 4px 10px;
 	border-top: 1px solid #cccccc;
 	font-weight: bold;
 	line-height: 1.1em;
