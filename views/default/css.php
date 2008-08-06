@@ -1925,17 +1925,6 @@ a.toggle_customise_edit_panel:hover {
 /* ***************************************
 	GROUPS
 *************************************** */
-/* general page titles in main content area */
-#content_area_user_title h2 {	
-	background:#F5F5F5;
-	border-top:2px solid #4690D6;
-	margin:0 0 5px 0;
-	padding:5px;
-	color:#0054A7;
-	font-size:1.35em;
-	line-height:1.2em;
-}
-
 #content_area_group_title h2 {
 	background:#FDFFC3;
 	padding:5px;
@@ -2013,6 +2002,32 @@ a.toggle_customise_edit_panel:hover {
 /* ***************************************
 	STUFF BELOW NEEDS SORTING
 *************************************** */
+
+#pages_breadcrumbs {
+	font-size: 80%;
+	color:#999999;
+	padding:0;
+	margin:0 0 10px 0;
+}
+#pages_breadcrumbs a {
+	color:#999999;
+	text-decoration: none;
+}
+#pages_breadcrumbs a:hover {
+	color: #0054a7;
+	text-decoration: underline;
+}
+
+/* general page titles in main content area */
+#content_area_user_title h2 {	
+	background:#F5F5F5;
+	border-top:2px solid #4690D6;
+	margin:0 0 5px 0;
+	padding:5px;
+	color:#0054A7;
+	font-size:1.35em;
+	line-height:1.2em;
+}
 
 /* not needed? - replaced by #wrapper_maincontent.single_column */
 #forums, #forum_topics, #topic_posts {
