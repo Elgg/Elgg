@@ -217,7 +217,7 @@
 	        if ($_SESSION['id'] > 0) {
 	            set_last_action($_SESSION['id']);
 	        }
-	        print_r($_SESSION);
+	        
 	        register_action("login",true);
     		register_action("logout");
     		
