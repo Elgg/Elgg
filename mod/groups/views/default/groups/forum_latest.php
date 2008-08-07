@@ -9,7 +9,7 @@
                 $count_annotations = $f->countAnnotations("group_topic_post");
                  
         	    echo "<div class=\"forum_latest\">";
-    	        echo "<div class=\"topic_title\"><p>" . $f->title . " (Replies: " . $count_annotations . ")</p></div>";
+    	        echo "<div class=\"topic_title\"><p><a href=\"{$vars['url']}mod/groups/topicposts.php?topic={$f->guid}&group_guid={$vars['entity']->guid}\">" . $f->title . "</a> (Replies: " . $count_annotations . ")</p></div>";
     	        echo "<div class=\"topic_owner_icon\">" . elgg_view('profile/icon',array('entity' => $f->getOwnerEntity(), 'size' => 'tiny')) . "</div>";	
     	        echo "</div>";
     	        
