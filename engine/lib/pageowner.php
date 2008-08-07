@@ -67,8 +67,8 @@
 	        if ($page_owner > 0)
 	        	return get_entity($page_owner);
 	        	
-			//return false;
-            return new ElggDummy();
+			return false;
+            //return new ElggDummy();
         }
         
     /**
