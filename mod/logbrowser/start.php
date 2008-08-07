@@ -22,6 +22,12 @@
 		
 		// Extend CSS
 		extend_view('css','logbrowser/css');
+		
+		// Extend context menu with admin logbrowsre link
+			if (isadminloggedin())
+			{
+	   			 extend_view('profile/menu/links','logbrowser/adminlinks');
+			}
 	}
 	
 	/**

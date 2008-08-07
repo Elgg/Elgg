@@ -22,6 +22,8 @@
 			'logbrowser:starttime' => 'Beginning time (for example "last monday", "1 hour ago")',
 			'logbrowser:endtime' => 'End time',
 	
+			'logbrowser:explore' => 'Explore log',
+	
 	);
 					
 	add_translation("en",$english);
