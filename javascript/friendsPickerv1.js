@@ -1,11 +1,11 @@
-// elgg friendsPicker jquery plugin
-
-// create a separate namespace for each picker - so we can have multiple pickers per page
-var j = 0;
+/*
+	elgg friendsPicker plugin
+	
+	adapted from Niall Doherty's excellent Coda-Slider - http://www.ndoherty.com/coda-slider
+*/
 
 jQuery.fn.friendsPicker = function(iterator) {
 
-	j = iterator;
 	var settings; 
 	settings = $.extend({ easeFunc: "easeOutExpo", easeTime: 1000, toolTip: false }, settings);
 	
@@ -31,19 +31,19 @@ jQuery.fn.friendsPicker = function(iterator) {
 		container.each(function(i) {
 			
 			// generate Left and Right arrows
-			$(this).before("<div class='friendsPickerNavigationL' id='friendsPickerNavigationL" + j + "'><a href='#'>Left</a><\/div>");
-			$(this).after("<div class='friendsPickerNavigationR' id='friendsPickerNavigationR" + j + "'><a href='#'>Right</a><\/div>");
+			$(this).before("<div class='friendsPickerNavigationL' id='friendsPickerNavigationL" + iterator + "'><a href='#'>Left</a><\/div>");
+			$(this).after("<div class='friendsPickerNavigationR' id='friendsPickerNavigationR" + iterator + "'><a href='#'>Right</a><\/div>");
 			
 			// generate a-z tabs
-			$(this).before("<div class='friendsPickerNavigation' id='friendsPickerNavigation" + j + "'><ul><\/ul><\/div>");
+			$(this).before("<div class='friendsPickerNavigation' id='friendsPickerNavigation" + iterator + "'><ul><\/ul><\/div>");
 			
 			$(this).find("div.panel").each(function(individualTabItemNumber) {
 				
-				$("div#friendsPickerNavigation" + j + " ul").append("<li class='tab" + (individualTabItemNumber+1) + "'><a href='#" + (individualTabItemNumber+1) + "'>" + $(this).attr("title") + "<\/a><\/li>");		
+				$("div#friendsPickerNavigation" + iterator + " ul").append("<li class='tab" + (individualTabItemNumber+1) + "'><a href='#" + (individualTabItemNumber+1) + "'>" + $(this).attr("title") + "<\/a><\/li>");		
 			});
 			
 			// tabs navigation
-			$("div#friendsPickerNavigation" + j + " a").each(function(individualTabItemNumber) {
+			$("div#friendsPickerNavigation" + iterator + " a").each(function(individualTabItemNumber) {
 				// calc friendsPickerNavigationWidth by summing width of each li
 				friendsPickerNavigationWidth += $(this).parent().width();
 				// set-up individual tab clicks
@@ -56,7 +56,7 @@ jQuery.fn.friendsPicker = function(iterator) {
 			});
 			
 			// Right arow click function
-			$("div#friendsPickerNavigationR" + j + " a").click(function() {
+			$("div#friendsPickerNavigationR" + iterator + " a").click(function() {
 				if (currentPanel == panelCount) {
 					var distanceToMoveFriendsPicker_container = 0;
 					currentPanel = 1; 
@@ -71,7 +71,7 @@ jQuery.fn.friendsPicker = function(iterator) {
 			});
 			
 			// Left arrow click function
-			$("div#friendsPickerNavigationL" + j + " a").click(function() {
+			$("div#friendsPickerNavigationL" + iterator + " a").click(function() {
 				if (currentPanel == 1) {
 					var distanceToMoveFriendsPicker_container = - (panelWidth*(panelCount - 1));
 					currentPanel = panelCount;
@@ -86,25 +86,14 @@ jQuery.fn.friendsPicker = function(iterator) {
 			});
 						
 				// apply 'current' class to currently selected tab link
-				$("div#friendsPickerNavigation" + j + " a:eq(0)").addClass("current");
+				$("div#friendsPickerNavigation" + iterator + " a:eq(0)").addClass("current");
 			
 		});
 		
-		// manually add class to corresponding tab for panels that have content - needs to be automated eventually
-		//$("div#friendsPickerNavigation"  + j + " li.tab3 a").addClass("tabHasContent");
-		//$("div#friendsPickerNavigation"  + j + " li.tab6 a").addClass("tabHasContent");
-		//$("div#friendsPickerNavigation"  + j + " li.tab9 a").addClass("tabHasContent");
-		//$("div#friendsPickerNavigation"  + j + " li.tab17 a").addClass("tabHasContent");
-		//$("div#friendsPickerNavigation"  + j + " li.tab22 a").addClass("tabHasContent");
-		
-		// generate link to 'all friends in collection' - removed for now
-		//$("div#friendsPickerNavigation" + j).append("<div class='friendsPickerNavigationAll'><a href='#' >Collection members<\/a></div><br />");
-		$("div#friendsPickerNavigation" + j).append("<br />");
-		
-		//$("div#friendsPickerNavigation" + j).hide();
 
+		$("div#friendsPickerNavigation" + iterator).append("<br />");
+		//$("div#friendsPickerNavigation" + iterator).hide();
 		
-		//j++;
   });
 };
 
