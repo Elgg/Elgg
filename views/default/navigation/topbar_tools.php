@@ -21,8 +21,9 @@
 		
 ?>
 
-<ul id="tools_menu">
-    <li><a href="#">Tools</a>
+<ul id="topbardropdownmenu">
+    <li class="drop"><a href="#">Tools<!--[if IE 7]><!--></a><!--<![endif]-->
+    <!--[if lte IE 6]><table><tr><td><![endif]-->
       <ul>
       <?php
 
@@ -34,6 +35,7 @@
 				
      ?>
       </ul>
+      <!--[if lte IE 6]></td></tr></table></a><![endif]-->
     </li>
 </ul>
 
@@ -42,20 +44,3 @@
 		}
 
 ?>
-
-<script type="text/javascript">
-function tools_menu(){
-$(" #tools_menu li").hover(function(){
-		$(this).parent().parent().parent().find("#tools_menu a").addClass('tools_menu_on');
-		
-		},function(){
-		$(this).parent().parent().parent().find("#tools_menu a").removeClass('tools_menu_on');
-		});
-}
-
- 
- 
- $(document).ready(function(){					
-	tools_menu();
-});
-</script>

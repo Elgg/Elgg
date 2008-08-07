@@ -262,7 +262,7 @@ h6 { font-size: 0.8em; }
 }
 
 
-/* IE 6 temp fix  - for when page has no widgets */
+/* IE 6 fixes */
 * html #widgets_left { 
 	height:360px;
 }
@@ -271,6 +271,7 @@ h6 { font-size: 0.8em; }
 }
 * html #widgets_right { 
 	height:360px;
+	float:none;
 }
 
 
@@ -308,9 +309,24 @@ h6 { font-size: 0.8em; }
 
 */
 }
+
 * html a.toggle_customise_edit_panel { 
-	margin:20px 0px 0px 0px;
+	float:none;
+	clear:none;
+	color: #4690d6;
+	background: white;
+	border:1px solid #cccccc;
+	padding: 5px 10px 5px 10px;
+	margin:20px 20px 0px 20px;
+	width:284px;
+	display:block;
+	text-align: right;
 }
+
+* html #dashboard_info {
+	width:585px;
+}
+
 /* IE7 */
 *:first-child+html #wrapper_spotlight .collapsable_box_content {
 	width:958px;
@@ -545,85 +561,84 @@ h6 { font-size: 0.8em; }
 /* ***************************************
 	TOP BAR - VERTICAL TOOLS MENU
 *************************************** */
-#tools_menu, #tools_menu ul{
+#topbardropdownmenu, #topbardropdownmenu ul {
 	margin:0;
 	padding:0;
 	display:inline;
 	float:left;
-	list-style-type:none;
-	list-style-position:outside;
-	/*position:relative;
-	line-height:1.5em;*/
-	z-index: 999999;
+	list-style-type: none;
+	z-index: 99999;
 }
-#tools_menu {
+#topbardropdownmenu {
 	margin:0pt 15px 0pt 5px;
 }
-#tools_menu a {
+#topbardropdownmenu ul {
+	/* width:134px; */
+}
+/* Tools link in top menu */
+#topbardropdownmenu a, #topbardropdownmenu a:visited {
 	display:block;
 	padding:3px 13px 3px 3px;
-	color:white;
 	text-decoration:none;
-	background: url(<?php echo $vars['url']; ?>_graphics/toolbar_arrow.png) no-repeat right 8px;
-}
-#tools_menu a:hover {
-	background: #4690d6 url(<?php echo $vars['url']; ?>_graphics/toolbar_arrow.png) no-repeat right bottom;
-}
-#tools_menu a.tools_menu_on {
-	background: #4690d6 url(<?php echo $vars['url']; ?>_graphics/toolbar_arrow.png) no-repeat right bottom;
-}
-#tools_menu li {
-	float:left;
-	position:relative;
-}
-#tools_menu ul {
-	position:absolute;
-	display:none;
-	top:24px;
-	border-top:1px solid #333;
-	border-bottom:1px solid #333333;
-	
-	width:134px;
-}
-#tools_menu ul a {
-	border-left:1px solid #f5f5f5;
-	border-right:1px solid #333333;
-	color:#4690d6;
-	padding:2px 6px 2px 6px;
-	background: #DEDEDE !important;
-	border-top:1px solid #f5f5f5;
-	border-bottom:1px solid #999999;
-}
-#tools_menu ul a:hover {
 	color:white;
-	background: #4690d6 !important; /* url(<?php echo $vars['url']; ?>_graphics/tools_over.png) repeat-x top left !important; */
-	border-left:1px solid #99ccff;
-	border-top:1px solid #99ccff;
 }
-/* IE 6 - remove transparent png in menu 
-* html #tools_menu ul a:hover {
-	background: #4690d6;
-}
-*/
-#tools_menu li ul a {
+#topbardropdownmenu li ul a {
 	width:120px;
 	height:auto;
 	float:left;
 }
-#tools_menu ul ul{
-	top:auto;
-}	
-#tools_menu li ul ul {
-	left:120px;
-	margin:0px 0 0 13px;
-}
-#tools_menu li:hover ul ul, #tools_menu li:hover ul ul ul, #tools_menu li:hover ul ul ul ul{
-	display:none;
-}
-#tools_menu li:hover ul, #tools_menu li li:hover ul, #tools_menu li li li:hover ul, #tools_menu li li li li:hover ul{
-	display:block;
+
+/* menu list items */
+#topbardropdownmenu li {float:left; position:relative; background:#cccccc;}
+#topbardropdownmenu ul a {
+	border-left:1px solid #f5f5f5;
+	border-right:1px solid #333333;
+	color:#4690d6 !important;
+	padding:2px 6px 2px 6px !important;
+	background: #DEDEDE !important;
+	border-top:1px solid #f5f5f5;
+	border-bottom:1px solid #999999;
 }
 
+/* IE7 */
+#topbardropdownmenu li:hover {position:relative;}
+/* Make the Tools nav color persist */
+#topbardropdownmenu li:hover > a {background: #4690d6 url(<?php echo $vars['url']; ?>_graphics/toolbar_arrow.png) no-repeat right -18px;}
+#topbardropdownmenu li ul {display:none;width:134px !important;}
+#topbardropdownmenu li:hover > ul {
+	display:block;
+	position:absolute; 
+	top:-11px;
+	left:80px;
+	padding:10px 30px 30px 30px;
+	background:transparent url(<?php echo $vars['url']; ?>_graphics/spacer.gif); 
+	/* width:134px; */
+}
+/* Position the first sub level beneath the top level links */
+#topbardropdownmenu > li:hover > ul {
+	left:-30px;
+	top:16px;
+}
+#topbardropdownmenu li a:active, #topbardropdownmenu li a:focus {
+	background:#4690d6;
+	color:white;
+}
+#topbardropdownmenu li.drop {
+	background: url(<?php echo $vars['url']; ?>_graphics/toolbar_arrow.png) no-repeat right 9px;	
+}
+/* dropdown list links hover */
+#topbardropdownmenu li.drop ul li a:hover {
+	color:white !important;
+	background: #4690d6 !important;
+	border-left:1px solid #99ccff;
+	border-top:1px solid #99ccff;	
+}
+/* IE6 ONLY - make the sublevels appear */
+* html #topbardropdownmenu li ul {visibility:hidden; display:block; position:absolute; top:-11px; left:80px; padding:10px 30px 30px 30px; background:transparent url(<?php echo $vars['url']; ?>_graphics/spacer.gif);}
+#topbardropdownmenu li a:hover ul {visibility:visible; left:-30px; top:14px; lef\t:-31px; to\p:15px;}
+#topbardropdownmenu table {position:absolute; border-collapse:collapse; top:0; left:0; z-index:99999; font-size:1em;}
+* html #topbardropdownmenu li.drop {background: url(<?php echo $vars['url']; ?>_graphics/toolbar_arrow_ie.gif) no-repeat right 9px;}
+* html #topbardropdownmenu li a:hover {position:relative; background:#4690d6 url(<?php echo $vars['url']; ?>_graphics/toolbar_arrow_ie.gif) no-repeat right -18px;}
 
 
 /* ***************************************
@@ -635,7 +650,7 @@ h6 { font-size: 0.8em; }
     color:#000000;
     padding:3px 10px 3px 10px;
     margin:20px 20px 0px 20px;
-    z-index: 99999;
+    z-index: 9999;
     position:absolute;
     /* width:611px; */
     width:936px;
@@ -646,7 +661,7 @@ h6 { font-size: 0.8em; }
     color:#000000;
     padding:3px 10px 3px 10px;
     margin:20px 20px 0px 20px;
-    z-index: 99999;
+    z-index: 9999;
     position:absolute;
     width:936px;
 }
