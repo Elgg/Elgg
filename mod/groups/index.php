@@ -14,7 +14,7 @@
 	$limit = get_input("limit", 10);
 	$offset = get_input("offset", 0);
 	
-	$title = sprintf(elgg_echo("groups:yours"),page_owner_entity()->name);
+	$title = sprintf(elgg_echo("groups:owned"),page_owner_entity()->name);
 
 	// Get objects
 	$area2 = elgg_view_title($title);

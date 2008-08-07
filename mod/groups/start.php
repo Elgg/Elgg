@@ -21,7 +21,7 @@
 		// Set up the menu for logged in users
 		if (isloggedin()) 
 		{
-			add_menu(elgg_echo('groups'), $CONFIG->wwwroot . "pg/groups/owned/" . $_SESSION['user']->username,'groups');
+			add_menu(elgg_echo('groups'), $CONFIG->wwwroot . "pg/groups/member/" . $_SESSION['user']->username,'groups');
 			add_menu(elgg_echo('groups:alldiscussion'),$CONFIG->wwwroot."mod/groups/discussions.php");
 		}
 		else
@@ -119,7 +119,8 @@
 			if (get_context() == "groups") {
 				if ((page_owner() == $_SESSION['guid'] || !page_owner()) && isloggedin()) {
 					add_submenu_item(elgg_echo('groups:new'), $CONFIG->wwwroot."pg/groups/new/");
-					add_submenu_item(elgg_echo('groups:yours'), $CONFIG->wwwroot . "pg/groups/owned/" . $_SESSION['user']->username);
+					add_submenu_item(elgg_echo('groups:owned'), $CONFIG->wwwroot . "pg/groups/owned/" . $_SESSION['user']->username);
+					add_submenu_item(elgg_echo('groups:yours'), $CONFIG->wwwroot . "pg/groups/member/" . $_SESSION['user']->username);
 					add_submenu_item(elgg_echo('groups:all'), $CONFIG->wwwroot . "pg/groups/world/");
 				} else if (page_owner()) {
 					$page_owner = page_owner_entity();
@@ -180,6 +181,13 @@
     					set_input('username',$page[1]);
     					
     				include($CONFIG->pluginspath . "groups/index.php");	
+    			break;
+    			case "member" :
+    				// User is a member of
+    				if (isset($page[1]))
+    					set_input('username',$page[1]);
+    					
+    				include($CONFIG->pluginspath . "groups/membership.php");	
     			break;    				
     			default:
     				set_input('group_guid', $page[0]);

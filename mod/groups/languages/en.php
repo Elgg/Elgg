@@ -16,6 +16,7 @@
 		 */
 			
 			'groups' => "Groups",
+			'groups:owned' => "Groups you own",
 			'groups:yours' => "Your groups",
 			'groups:user' => "%s's groups",
 			'groups:all' => "All groups",
