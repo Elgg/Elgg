@@ -61,7 +61,7 @@
 	 * @param int $offset Offset of where to start.
 	 * @param bool $count Return count or not
 	 */
-	function get_system_log($by_user = "", $event = "", $class = "", $limit = 10, $offset = 0, $count = false)
+	function get_system_log($by_user = "", $event = "", $class = "", $limit = 10, $offset = 0, $count = false, $timebefore = 0, $timeafter = 0)
 	{
 		global $CONFIG;
 		
@@ -92,6 +92,11 @@
 			$where[] = "event='$event'";
 		if ($class!=="")
 			$where[] = "object_class='$class'";
+			
+		if ($timebefore)
+			$where [] = "time_created < " . ((int) $timebefore);
+		if ($timeafter)
+			$where [] = "time_created > " . ((int) $timeafter);
 			
 		$select = "*";
 		if ($count) $select = "count(*) as count";
