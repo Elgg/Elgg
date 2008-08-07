@@ -185,6 +185,7 @@
 	                $code = md5($code);
 	                $_SESSION['guid'] = 0;
 	                $_SESSION['id'] = 0;
+	                $_SESSION['user'] = new ElggDummy();
 	                if ($user = get_user_by_code($code)) {
                     	$_SESSION['user'] = $user;
                         $_SESSION['id'] = $user->getGUID();
@@ -192,6 +193,7 @@
                         $_SESSION['code'] = $_COOKIE['elggperm'];
 	                }
 	            } else {
+	            	$_SESSION['user'] = new ElggDummy();
 	                $_SESSION['id'] = 0;
 	                $_SESSION['guid'] = 0;
 	            }
@@ -201,11 +203,13 @@
 	                if ($user = get_user_by_code($code)) {
 	                	$_SESSION['user'] = $user;
 	                } else {
-	                	unset($_SESSION['user']);
+	                	//unset($_SESSION['user']);
+	                	$_SESSION['user'] = new ElggDummy();
 	                	$_SESSION['guid'] = 0;
 	                	$_SESSION['id'] = 0;
 	                }
 	            } else {
+	            	$_SESSION['user'] = new ElggDummy();
 	            	$_SESSION['guid'] = 0;
 	                $_SESSION['id'] = 0;
 	            }
@@ -213,7 +217,7 @@
 	        if ($_SESSION['id'] > 0) {
 	            set_last_action($_SESSION['id']);
 	        }
-	        
+	        print_r($_SESSION);
 	        register_action("login",true);
     		register_action("logout");
     		
