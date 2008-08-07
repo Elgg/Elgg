@@ -67,7 +67,7 @@
 			'groups:posts' => 'Posts',
 			'groups:lastperson' => 'Last person',
 			'groups:when' => 'When',
-			'grouptopic:notcreated' => 'No topics have been created',
+			'grouptopic:notcreated' => 'No topics have been created.',
 			'groups:topicopen' => 'Open',
 			'groups:topicclosed' => 'Closed',
 			'groups:topicresolved' => 'Resolved',
