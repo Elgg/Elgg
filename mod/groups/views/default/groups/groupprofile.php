@@ -37,9 +37,7 @@
 		    echo "<p><b>" . elgg_echo("groups:owner") . ": </b><a href=\"" . get_user($vars['entity']->owner_guid)->getURL() . "\">" . get_user($vars['entity']->owner_guid)->name . "</a></p>";
 								
 	    ?>
-	    <p>Members: 210<br />
-	    Latest Activity: 2 hours ago<br />
-	    Number of files: 50</p>
+	    <p><?php echo elgg_echo('groups:members') . ": " . get_entities_from_relationship('member', $vars['entity']->guid, true, 'user', '', 0, '', 9999, 0, true); ?></p>
     </div><!-- end of group_stats -->
 </div><!-- end of groups_info_column_right -->
 
