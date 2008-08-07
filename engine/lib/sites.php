@@ -89,23 +89,6 @@
 		}
 		
 		/**
-		 * Class member get overloading
-		 *
-		 * @param string $name
-		 * @return mixed
-		 */
-		function __get($name) { return $this->get($name); }
-		
-		/**
-		 * Class member set overloading
-		 *
-		 * @param string $name
-		 * @param mixed $value
-		 * @return mixed
-		 */
-		function __set($name, $value) { return $this->set($name, $value); }
-		
-		/**
 		 * Override the load function.
 		 * This function will ensure that all data is loaded (were possible), so
 		 * if only part of the ElggSite is loaded, it'll load the rest.

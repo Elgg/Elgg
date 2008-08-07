@@ -185,6 +185,44 @@
 		}
 		
 		/**
+		 * Class member get overloading
+		 *
+		 * @param string $name
+		 * @return mixed
+		 */
+		function __get($name) { return $this->get($name); }
+		
+		/**
+		 * Class member set overloading
+		 *
+		 * @param string $name
+		 * @param mixed $value
+		 * @return mixed
+		 */
+		function __set($name, $value) { return $this->set($name, $value); }
+		
+		/**
+		 * Supporting isset.
+		 *
+		 * @param string $name The name of the attribute or metadata.
+		 * @return bool
+		 */
+		function __isset($name) { if ($this->$name!="") return true; else return false; }
+		
+		/**
+		 * Supporting unsetting of magic attributes.
+		 *
+		 * @param string $name The name of the attribute or metadata.
+		 */
+		function __unset($name)
+		{
+			if (array_key_exists($name, $this->attributes))
+				$this->attributes[$name] = "";
+			else
+				$this->clearMetaData($name);
+		}
+		
+		/**
 		 * Set a piece of metadata.
 		 * 
 		 * @param string $name
