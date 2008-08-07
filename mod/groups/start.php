@@ -21,11 +21,7 @@
 		// Set up the menu for logged in users
 		if (isloggedin()) 
 		{
-			add_menu(elgg_echo('groups'), $CONFIG->wwwroot . "pg/groups/owned/" . $_SESSION['user']->username,array(
-				//menu_item(elgg_echo('groups:new'), $CONFIG->wwwroot."pg/groups/new/"),
-				//menu_item(elgg_echo('groups:yours'), $CONFIG->wwwroot . "pg/groups/owned/" . $_SESSION['user']->username),
-				//menu_item(elgg_echo('groups:all'), $CONFIG->wwwroot . "pg/groups/world/"),
-			),'groups');
+			add_menu(elgg_echo('groups'), $CONFIG->wwwroot . "pg/groups/owned/" . $_SESSION['user']->username,'groups');
 		}
 		else
 		{
@@ -61,7 +57,9 @@
 		add_widget_type('group_members_widget',elgg_echo('groups:widgets:members:title'), elgg_echo('groups:widgets:members:description'), 'groups');
 		add_widget_type('group_entities_widget',elgg_echo('groups:widgets:entities:title'), elgg_echo('groups:widgets:entities:description'), 'groups');
 		
+		//extend some views
 		extend_view('profile/icon','groups/icon');
+		extend_view('css','groups/css');
 		
 		// Write access permissions
 		register_plugin_hook('access:collections:write', 'all', 'groups_write_acl_plugin_hook');
@@ -100,7 +98,7 @@
 					add_submenu_item(elgg_echo('groups:invite'),$CONFIG->wwwroot . "mod/groups/invite.php?group_guid={$page_owner->getGUID()}");
 				}
 				if ($page_owner->isMember($_SESSION['user'])) {
-					add_submenu_item(elgg_echo('groups:leave'), $CONFIG->wwwroot . "action/groups/leave?groups_guid=" . $page_owner->getGUID());
+					add_submenu_item(elgg_echo('groups:leave'), $CONFIG->wwwroot . "action/groups/leave?group_guid=" . $page_owner->getGUID());
 				} else {
 					if ($page_owner->isPublicMembership())
 					{
@@ -111,6 +109,9 @@
 						add_submenu_item(elgg_echo('groups:joinrequest'),$CONFIG->wwwroot . "action/groups/joinrequest?group_guid={$page_owner->getGUID()}");		
 					}
 				}
+				
+				add_submenu_item(elgg_echo('groups:forum'),$CONFIG->wwwroot . "pg/groups/forum/{$page_owner->getGUID()}/");		
+					
 			}
 		
 		// Add submenu options
@@ -167,6 +168,10 @@
           		break;
     			case "world":  
    					include($CONFIG->pluginspath . "groups/all.php");
+          		break;
+          		case "forum":
+          		    set_input('group_guid', $page[1]);
+   					include($CONFIG->pluginspath . "groups/forum.php");	
           		break;
     			case "owned" :
     				// Owned by a user
@@ -311,4 +316,12 @@
 	register_elgg_event_handler('join','group','groups_user_join_event_listener');
 	register_elgg_event_handler('leave','group','groups_user_leave_event_listener');
 	register_elgg_event_handler('pagesetup','system','groups_submenus');
+	
+	// Register actions
+    global $CONFIG;
+	register_action("groups/addtopic",false,$CONFIG->pluginspath . "groups/actions/forums/addtopic.php",true);
+	register_action("groups/deletetopic",false,$CONFIG->pluginspath . "groups/actions/forums/deletetopic.php",true);
+	register_action("groups/addpost",false,$CONFIG->pluginspath . "groups/actions/forums/addpost.php",true);
+	register_action("groups/edittopic",false,$CONFIG->pluginspath . "groups/actions/forums/edittopic.php",true);
+		
 ?>

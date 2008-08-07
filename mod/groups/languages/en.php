@@ -46,6 +46,29 @@
 			'groups:nofriends' => "You have no friends left who have not been invited to this group.",
 	
 			'groups:group' => "Group",
+			
+			/*
+			  Group forum strings
+			*/
+			
+			'groups:forum' => 'Group forum',
+			'groups:addtopic' => 'Add a topic',
+			'groups:edittopic' => 'Edit topic',
+			'groups:topicmessage' => 'Topic message',
+			'groups:topicstatus' => 'Topic status',
+			'groups:reply' => 'Post a comment',
+			'groups:topic' => 'Topic',
+			'groups:posts' => 'Posts',
+			'groups:lastperson' => 'Last person',
+			'groups:when' => 'When',
+			'grouptopic:notcreated' => 'No topics have been created',
+			'groups:topicopen' => 'Open',
+			'groups:topicclosed' => 'Closed',
+			'groups:topicresolved' => 'Resolved',
+			'groups:topicsticky' => 'Sticky',
+			'groups:topicisclosed' => 'This topic is closed',
+			'groups:topiccloseddesc' => 'This topic has now been closed and is not accepting new comments',
+			
 	
 			'groups:privategroup' => 'This group is private, requesting membership.',
 			'groups:notitle' => 'Groups must have a title',

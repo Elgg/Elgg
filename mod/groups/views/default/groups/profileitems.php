@@ -12,6 +12,7 @@
 	 
 	 //right column
 	 echo "<div class=\"right_column\">";
+	 echo elgg_view("groups/forum_latest",array('entity' => $vars['entity']));
 	 echo elgg_view("groups/right_column",array('entity' => $vars['entity']));
 	 echo "</div>";
 	 
