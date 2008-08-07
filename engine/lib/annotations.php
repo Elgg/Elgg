@@ -450,9 +450,10 @@
 	 * @param int $group_guid Group container. Currently this is only supported if $entity_type == 'object'
 	 * @param boolean $asc Whether to list in ascending or descending order (default: desc)
 	 * @param boolean $fullview Whether to display the entities in full
+	 * @param boolean $viewtypetoggle Determines whether or not the 'gallery' view can be displayed (default: no)
 	 * @return string Formatted entity list
 	 */
-	function list_entities_from_annotations($entity_type = "", $entity_subtype = "", $name = "", $value = "", $limit = 10, $owner_guid = 0, $group_guid = 0, $asc = false, $fullview = true) {
+	function list_entities_from_annotations($entity_type = "", $entity_subtype = "", $name = "", $value = "", $limit = 10, $owner_guid = 0, $group_guid = 0, $asc = false, $fullview = true, $viewtypetoggle = false) {
 		
 		if ($asc) {
 			$asc = "asc";
@@ -463,7 +464,7 @@
 		$offset = (int) get_input("offset",0);
 		$entities = get_entities_from_annotations($entity_type, $entity_subtype, $name, $value, $owner_guid, $group_guid, $limit, $offset, $asc);
 
-		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview);
+		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle);
 		
 	}
 	
