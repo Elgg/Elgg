@@ -48,6 +48,8 @@
 	
 			'groups:group' => "Group",
 			
+			'item:object:groupforumtopic' => "Forum topics",
+	
 			/*
 			  Group forum strings
 			*/
