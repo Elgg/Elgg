@@ -29,7 +29,7 @@
 	{
 		if (get_context() == 'admin' && isadminloggedin()) {
 			global $CONFIG;
-			add_submenu_item(elgg_echo('logbrowser:browser'), $CONFIG->wwwroot . 'pg/logbrowser/');
+			add_submenu_item(elgg_echo('logbrowser'), $CONFIG->wwwroot . 'pg/logbrowser/');
 		}
 	}
 	
