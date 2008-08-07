@@ -22,6 +22,7 @@
 		if (isloggedin()) 
 		{
 			add_menu(elgg_echo('groups'), $CONFIG->wwwroot . "pg/groups/owned/" . $_SESSION['user']->username,'groups');
+			add_menu(elgg_echo('groups:alldiscussion'),$CONFIG->wwwroot."mod/groups/discussions.php");
 		}
 		else
 		{
