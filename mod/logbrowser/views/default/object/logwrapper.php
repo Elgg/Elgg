@@ -21,17 +21,17 @@
 ?>
 	<table class="log_entry">
 		<tr>
-			<td class="log_entry_user">
-			<?php if ($by) {echo "<a href=\"".$by->getURL()."\">{$by->name}</a>"; } else echo "&nbsp;"; ?>
-			<td>
 			<td class="log_entry_time">
 			<?php echo date('r', $entry->time_created ); ?>
 			</td>
+			<td class="log_entry_user">
+			<?php if ($by) {echo "<a href=\"".$by->getURL()."\">{$by->name}</a>"; } else echo "&nbsp;"; ?>
+			<td>
 			<td class="log_entry_item">
 			<?php 
-					if ($obj_url) $info .= "<a href=\"$obj_url\">";
-					$info .= "{$entry->object_class}";
-					if ($obj_url) $info .= "</a>"; 
+					if ($obj_url) echo "<a href=\"$obj_url\">";
+					echo "{$entry->object_class}";
+					if ($obj_url) echo "</a>"; 
 			?>
 			</td>
 			<td class="log_entry_action">

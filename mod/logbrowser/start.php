@@ -19,6 +19,9 @@
 		
 		// Register a page handler, so we can have nice URLs
 		register_page_handler('logbrowser','logbrowser_page_handler');
+		
+		// Extend CSS
+		extend_view('css','logbrowser/css');
 	}
 	
 	/**
