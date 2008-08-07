@@ -12,6 +12,11 @@
 
 	global $CONFIG;
 	
-	echo "<p>" . autop(elgg_echo("admin:statistics:description")) . "</p>";
+	// echo "<p>" . autop(elgg_echo("admin:statistics:description")) . "</p>";
          
 ?>
+
+	<p>
+		<?php echo elgg_echo('admin:statistics:description'); ?>
+		<a href="http://elgg.org/"><?php echo elgg_echo('learnmore'); ?></a>
+	</p>
