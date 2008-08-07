@@ -30,7 +30,7 @@
     //get the group and topic title
     $info .= "<p>" . elgg_echo('group') . ": <a href=\"{$group->getURL()}\">{$group->name}</a></p>";
     
-	$info .= "<p>" . elgg_echo('topic') . ": <a href=\"{$vars['url']}mod/groups/topicposts.php?topic={$vars['entity']->guid}&group_guid={$group->guid}\">{$title}</a></p>";
+	$info .= "<p>" . elgg_echo('groups:topic') . ": <a href=\"{$vars['url']}mod/groups/topicposts.php?topic={$vars['entity']->guid}&group_guid={$group->guid}\">{$title}</a></p>";
 	//get the forum description
 	$info .= $description;
 	
