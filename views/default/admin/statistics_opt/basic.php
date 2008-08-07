@@ -18,15 +18,15 @@
 	
 	include_once($CONFIG->path . "version.php");
 ?>
-<div>
+<div class="admin_statistics">
     <h2><?php echo elgg_echo('admin:statistics:label:basic'); ?></h2>
     <table>
     	<tr>
-            <td><b><?php echo elgg_echo('admin:statistics:label:version'); ?> :</b></td>
+            <td style="width: 250px"><b><?php echo elgg_echo('admin:statistics:label:version'); ?> :</b></td>
             <td><?php echo elgg_echo('admin:statistics:label:version:release'); ?> - <?php echo $release; ?>, <?php echo elgg_echo('admin:statistics:label:version:version'); ?> - <?php echo $version; ?></td>
         </tr>
         <tr>
-            <td><b><?php echo elgg_echo('admin:statistics:label:numusers'); ?> :</b></td>
+            <td style="width: 250px"><b><?php echo elgg_echo('admin:statistics:label:numusers'); ?> :</b></td>
             <td><?php echo $users_stats; ?></td>
         </tr>
 

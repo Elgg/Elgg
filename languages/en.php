@@ -1,6 +1,12 @@
 <?php
 
 	$english = array(
+
+		/**
+		 * Sites
+		 */
+	
+			'item:site' => 'Sites',
 	
 		/**
 		 * Sessions
@@ -174,6 +180,7 @@
 		 * Groups
 		 */
 	
+			'group' => "Group", 
 			'item:group' => "Groups",
 	
 		/**
@@ -182,6 +189,7 @@
 	
 			'profile' => "Profile",
 			'user' => "User",
+			'item:user' => "Users",
 
 		/**
 		 * Profile menu items and titles
