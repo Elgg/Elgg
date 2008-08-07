@@ -55,6 +55,7 @@
 			'groups:forum' => 'Group forum',
 			'groups:addtopic' => 'Add a topic',
 			'groups:forumlatest' => 'Forum latest',
+			'groupspost:success' => 'Your comment was succesfully posted',
 			'groups:alldiscussion' => 'Latest discussion',
 			'groups:edittopic' => 'Edit topic',
 			'groups:topicmessage' => 'Topic message',
