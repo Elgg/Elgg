@@ -23,8 +23,6 @@
 	$enctype = $vars['enctype'];
 	$method = $vars['method']; if (!$method) $method = 'POST';
 
-// TODO: Token generation
-
 	// Generate a security header
 	$ts = time();
 	$token = generate_action_token($action, $ts);
