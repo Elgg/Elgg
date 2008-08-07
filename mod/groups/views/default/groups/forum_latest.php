@@ -1,14 +1,22 @@
-<h2>Forum latest</h2>
+<h2><?php echo elgg_echo("groups:forumlatest"); ?></h2>
 <?php
 
-//get the latest from the group files
-// Display them
-	   // list_entities_from_annotations($entity_type = "", $entity_subtype = "", $name = "", $value = "", $limit = 10, $owner_guid = 0, $group_guid = 0, $asc = false, $fullview = true) {
-		
-		set_context('search');
-	   // $forum_topics = list_entities_from_annotations("object", "groupforumtopic", "group_topic_post", "", 5, 0, 3, false, true);
-	    set_context('forums');
-	    
-	    echo $forum_topics;
+    $forum = get_entities_from_annotations("object", "groupforumtopic", "group_topic_post", "", 0, $vars['entity']->guid, 4, 0, "asc", false);
+	
+    if($forum){
+        foreach($forum as $f){
+        	    
+                $count_annotations = $f->countAnnotations("group_topic_post");
+                 
+        	    echo "<div class=\"forum_latest\">";
+    	        echo "<div class=\"topic_title\"><p>" . $f->title . " (Replies: " . $count_annotations . ")</p></div>";
+    	        echo "<div class=\"topic_owner_icon\">" . elgg_view('profile/icon',array('entity' => $f->getOwnerEntity(), 'size' => 'tiny')) . "</div>";	
+    	        echo "</div>";
+    	        
+        }
+    }else{
+        
+        echo elgg_echo("grouptopic:notcreated");
+    }
 	    
 ?>

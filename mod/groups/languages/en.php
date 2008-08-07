@@ -53,6 +53,7 @@
 			
 			'groups:forum' => 'Group forum',
 			'groups:addtopic' => 'Add a topic',
+			'groups:forumlatest' => 'Forum latest',
 			'groups:edittopic' => 'Edit topic',
 			'groups:topicmessage' => 'Topic message',
 			'groups:topicstatus' => 'Topic status',
