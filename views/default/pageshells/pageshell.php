@@ -17,6 +17,9 @@
 	 * @uses $vars['messages'] A 2d array of various message registers, passed from system_messages()
 	 */
 
+	// Set the content type
+	header("Content-type: text/html; charset=iso-8859-1");
+
 	// Set title
 		if (empty($vars['title'])) {
 			$title = $vars['config']->sitename;
