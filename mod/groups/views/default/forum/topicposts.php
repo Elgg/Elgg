@@ -50,7 +50,7 @@
 		        <?php
              				
 			        echo elgg_view("output/confirmlink",array(
-														'href' => $vars['url'] . "action/groups/forums/deletetopic?topic=" . $vars['entity']->entity_guid . "&group=" . (int)get_input('group_guid'),
+														'href' => $vars['url'] . "action/groups/deletepost?post=" . $vars['entity']->id . "&topic=" . get_input('topic') . "&group=" . get_input('group_guid'),
                 										'text' => elgg_echo('delete'),
 														'confirm' => elgg_echo('deleteconfirm'),
 													));
