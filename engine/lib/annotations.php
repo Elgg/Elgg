@@ -211,8 +211,8 @@
 		global $CONFIG;
 
 		$annotation_id = (int)$annotation_id;
-		$name = sanitise_string(trim($name));
-		$value = sanitise_string(trim($value));
+		$name = (trim($name));
+		$value = (trim($value));
 		$value_type = detect_extender_valuetype($value, sanitise_string(trim($value_type)));
 		
 		$owner_guid = (int)$owner_guid;
