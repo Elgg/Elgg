@@ -278,7 +278,11 @@
 			$user_guid = (int) $user_guid;
 			$collections = get_write_access_array();
 			
-			if (array_key_exists($collection_id, $collections) && $user = get_user($user_guid)) {
+			if (!($collection = get_access_collection($collection_id)))
+				return false;
+			
+			if ((array_key_exists($collection_id, $collections) || $collection->owner_guid == 0)
+					&& $user = get_user($user_guid)) {
 
 				global $CONFIG;
 				insert_data("insert into {$CONFIG->dbprefix}access_collection_membership set access_collection_id = {$collection_id}, user_guid = {$user_guid}");
@@ -303,7 +307,10 @@
 			$user_guid = (int) $user_guid;
 			$collections = get_write_access_array();
 			
-			if (array_key_exists($collection_id, $collections) && $user = get_user($user_guid)) {
+			if (!($collection = get_access_collection($collection_id)))
+				return false;
+			
+			if ((array_key_exists($collection_id, $collections) || $collection->owner_guid == 0) && $user = get_user($user_guid)) {
 				
 				global $CONFIG;
 				delete_data("delete from {$CONFIG->dbprefix}access_collection_membership where access_collection_id = {$collection_id} and user_guid = {$user_guid}");

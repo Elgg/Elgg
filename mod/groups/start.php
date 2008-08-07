@@ -211,8 +211,8 @@
 	 */
 	function groups_create_event_listener($event, $object_type, $object)
 	{
-		if (($event == 'create') && ($object_type == 'group') && ($object instanceof ElggGroup))
-		{
+		//if (($event == 'create') && ($object_type == 'group') && ($object instanceof ElggGroup))
+		//{
 			$group_id = create_access_collection(elgg_echo('groups:group') . ": " . $object->name);
 			if ($group_id)
 			{
@@ -220,7 +220,7 @@
 			}
 			else
 				return false;
-		}
+		//}
 		
 		return true;
 	}
@@ -283,7 +283,7 @@
 		$group = $object['group'];
 		$user = $object['user'];
 		$acl = $group->group_acl;
-		
+
 		add_user_to_access_collection($user->guid, $acl);
 		
 		return true;
