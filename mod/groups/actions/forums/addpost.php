@@ -21,7 +21,6 @@
 		$topic_guid = (int) get_input('topic_guid');
 		$group_guid = (int) get_input('group_guid');
 		$post = get_input('topic_post');
-		$access = get_input('access');
 		
 	// Let's see if we can get an entity with the specified GUID, and that it's a group forum topic
 		if ($topic = get_entity($topic_guid)) {
@@ -30,7 +29,7 @@
     			//check the user posted a message
     		    if($post){
 	                // If posting the comment was successful, say so
-				    if ($topic->annotate('group_topic_post',$post,$access, $_SESSION['guid'])) {
+				    if ($topic->annotate('group_topic_post',$post,$topic->access_id, $_SESSION['guid'])) {
 					
 					    system_message(elgg_echo("groupspost:success"));
 					
