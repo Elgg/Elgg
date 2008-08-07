@@ -415,7 +415,7 @@
 			'admin:plugins:enable:no' => "Plugin %s could not be enabled.",
 	
 			'admin:statistics' => "Statistics",
-			'admin:statistics:description' => "This admin panel will allow you to view statistics about your site.",
+			'admin:statistics:description' => "This is an overview of statistics on your site. If you need more detailed statistics, a professional administration feature is available from Curverider.",
 			'admin:statistics:opt:description' => "View statistical information about users and objects on your site.",
 			'admin:statistics:opt:linktext' => "View statistics...",
 			'admin:statistics:label:basic' => "Basic site statistics",
