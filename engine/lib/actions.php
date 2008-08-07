@@ -131,11 +131,16 @@
 	        	// Validate token
 	        	if (strcmp($token, $generated_token)==0)
 	        	{
-        	
-	        		// TODO: Validate time to ensure its not crazy
+	        		$hour = 60*60;
+	        		$now = time();
 	        		
-	        		
-	        		return true;
+	        		// Validate time to ensure its not crazy
+	        		if (($ts>$now-$hour) && ($ts<$now+$hour))
+	        		{
+	        			return true;
+	        		}
+	        		else
+	        			register_error(elgg_echo('actiongatekeeper:timeerror'));
 	        	}
 	        	else
 	        		register_error(elgg_echo('actiongatekeeper:tokeninvalid'));
