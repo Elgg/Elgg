@@ -11,20 +11,23 @@
 	 
 ?>
 
-<h2><?php echo elgg_echo("groups:forum"); ?></h2>
- <div id="forum_topics"><!-- start of the forum_topics div -->
-    
+<div id="content_area_group_title"><h2><?php echo elgg_echo("groups:forum"); ?></h2></div>
+
 <?php
     //only show the add link if the user is a member
     if(page_owner_entity()->isMember($vars['user'])){
      
 ?>
         <!-- display the add a topic link -->
-        <p>[<a href="<?php echo $vars['url']; ?>mod/groups/addtopic.php?group_guid=<?php echo get_input('group_guid'); ?>"><?php echo elgg_echo("groups:addtopic"); ?></a>]</p>
+        <a href="<?php echo $vars['url']; ?>mod/groups/addtopic.php?group_guid=<?php echo get_input('group_guid'); ?>" class="add_topic_button"><?php echo elgg_echo("groups:addtopic"); ?></a>
 
 <?php
     }
-?>   
+?> 
+
+<div id="forum_topics"><!-- start of the forum_topics div -->
+    
+  
         <!-- display the forum title -->
         <h2><?php echo get_entity(get_input("forum"))->title; ?></h2>
         
@@ -62,7 +65,7 @@
                 <table width="100%" border="0" cellpadding="0" cellspacing="0">
                 <tr>
                     <td>
-                        <a href="<?php echo $vars['url']; ?>mod/groups/topicposts.php?topic=<?php echo $topic->guid; ?>&group_guid=<?php echo $topic->container_guid; ?>"><?php echo $topic->title; ?></a>
+                        <p class="topic_title"><a href="<?php echo $vars['url']; ?>mod/groups/topicposts.php?topic=<?php echo $topic->guid; ?>&group_guid=<?php echo $topic->container_guid; ?>"><?php echo $topic->title; ?></a></p>
                         <!-- display edit and delete links if the user has privileges -->
         		        <?php
         
@@ -70,7 +73,7 @@
                 			if ($topic->canEdit()) {
                 				
                 		?>
-                				<a href="<?php echo $vars['url']; ?>mod/groups/edittopic.php?topic=<?php echo $topic->guid; ?>&group=<?php echo $topic->container_guid; ?>"><?php echo elgg_echo("edit"); ?></a>
+                				<a href="<?php echo $vars['url']; ?>mod/groups/edittopic.php?topic=<?php echo $topic->guid; ?>&group=<?php echo $topic->container_guid; ?>"><?php echo elgg_echo("edit"); ?></a> &nbsp; 
                 				<?php
                 				 
                 				    // display the delete link to those allowed to delete

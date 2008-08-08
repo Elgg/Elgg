@@ -61,6 +61,8 @@
 .topic_title {
 	font-size: 1.2em;
 	line-height: 1.1em;
+	margin:0;
+	padding:0 0 4px 0;
 }
 
 .forum_topics {
@@ -106,4 +108,30 @@
     padding:3px 0 0 0;
     margin:0;
 }
+
+a.add_topic_button {
+	font: 12px/100% Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #ffffff;
+	background:#4690d6;
+	border: 2px solid #4690d6;
+	-webkit-border-radius: 4px; 
+	-moz-border-radius: 4px;
+	/*
+	width: auto;
+	height: 25px;
+	*/
+	padding: 4px 6px 4px 6px;
+	margin:0;
+	cursor: pointer;
+	display:table;
+}
+a.add_topic_button:hover {
+	background: #0054a7;
+	border: 2px solid #0054a7;
+	text-decoration: none;
+}
+
+
+
 

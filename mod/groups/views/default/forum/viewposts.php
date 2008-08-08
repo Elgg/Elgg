@@ -13,9 +13,9 @@
 ?>
 
 <div id="topic_posts"><!-- open the topic_posts div -->
-      <p><a href="<?php echo $vars['url']; ?>pg/groups/forum/<?php echo $vars['entity']->container_guid; ?>/"><?php echo elgg_echo("groups:forum"); ?></a> &raquo; <?php echo $vars['entity']->title; ?></a></p>
+<div id="pages_breadcrumbs"><b><a href="<?php echo $vars['url']; ?>pg/groups/forum/<?php echo $vars['entity']->container_guid; ?>/"><?php echo elgg_echo("groups:forum"); ?></a></b> > <?php echo $vars['entity']->title; ?></div>
     <!-- grab the topic title -->
-        <h2><?php echo $vars['entity']->title; ?></h2>
+        <div id="content_area_group_title"><h2><?php echo $vars['entity']->title; ?></h2></div>
   
 <?php
     //display follow up comments
