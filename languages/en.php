@@ -170,11 +170,33 @@
 			'access' => "Access",
 	
 		/**
-		 * Dashboard
+		 * Dashboard and widgets
 		 */
 	
 			'dashboard' => "Dashboard",
-			'dashboard:nowidgets' => "Your dashboard is your gateway into the site. Click 'Edit page' to add widgets to keep track of content and your life within the system.", 
+			'dashboard:nowidgets' => "Your dashboard is your gateway into the site. Click 'Edit page' to add widgets to keep track of content and your life within the system.",
+
+			'widgets:add' => 'Add widgets to your page',
+			'widgets:add:description' => "Choose the features you want to add to your page by dragging them from the <b>Widget gallery</b> on the right, to any of the three widget areas below, and position them where you would like them to appear.
+
+To remove a widget drag it back to the <b>Widget gallery</b>.",
+			'widgets:position:fixed' => '(Fixed position on page)',
+	
+			'widgets' => "Widgets",
+			'widget' => "Widget",
+			'item:object:widget' => "Widgets",
+			'layout:customise' => "Customise layout",
+			'widgets:gallery' => "Widget gallery",
+			'widgets:leftcolumn' => "Left widgets",
+			'widgets:fixed' => "Fixed position",
+			'widgets:middlecolumn' => "Middle widgets",
+			'widgets:rightcolumn' => "Right widgets",
+			'widgets:profilebox' => "Profile box",
+			'widgets:panel:save:success' => "Your widgets were successfully saved.",
+			'widgets:panel:save:failure' => "There was a problem saving your widgets. Please try again.",
+			'widgets:save:success' => "The widget was successfully saved.",
+			'widgets:save:failure' => "We could not save your widget. Please try again.",
+			
 	
 		/**
 		 * Groups
@@ -526,25 +548,6 @@
 		 */
 			'importsuccess' => "Import of data was successful",
 			'importfail' => "OpenDD import of data failed.",
-			
-		/**
-		 * Widgets
-		 */
-	
-			'widgets' => "Widgets",
-			'widget' => "Widget",
-			'item:object:widget' => "Widgets",
-			'layout:customise' => "Customise layout",
-			'widgets:gallery' => "Widget gallery",
-			'widgets:leftcolumn' => "Left widgets",
-			'widgets:fixed' => "Fixed position",
-			'widgets:middlecolumn' => "Middle widgets",
-			'widgets:rightcolumn' => "Right widgets",
-			'widgets:profilebox' => "Profile box",
-			'widgets:panel:save:success' => "Your widgets were successfully saved.",
-			'widgets:panel:save:failure' => "There was a problem saving your widgets. Please try again.",
-			'widgets:save:success' => "The widget was successfully saved.",
-			'widgets:save:failure' => "We could not save your widget. Please try again.",
 	
 		/**
 		 * Time

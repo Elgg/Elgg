@@ -71,12 +71,8 @@
 
 
 <div class="customise_editpanel_instructions">
-<h2>Add widgets to your page</h2>
-<p>
-Choose the features you want to add to your page by dragging them from the <b>Widget gallery</b> on the right, to any of the three widget areas below, and position them where you would like them to appear.
-</p>
-<p>To remove a widget drag it back to the <b>Widget gallery</b>.
-</p>
+<h2><?php echo elgg_echo('widgets:add'); ?></h2>
+<?php echo autop(elgg_echo('widgets:add:description')); ?>
 </div>
 
 
@@ -91,7 +87,7 @@ Choose the features you want to add to your page by dragging them from the <b>Wi
     ?>
     		<h2 class="profile_box"><?php echo elgg_echo("widgets:profilebox"); ?></h2>
     		<div id="profile_box_widgets">
-    		<p><small>(Fixed position on page)</small></p>
+    		<p><small><?php echo elgg_echo('widgets:position:fixed'); ?></small></p>
     		</div>
     <?php
 	} 
@@ -243,8 +239,8 @@ Choose the features you want to add to your page by dragging them from the <b>Wi
 
 <input type="hidden" name="context" value="<?php echo get_context(); ?>" />
 <input type="hidden" name="owner" value="<?php echo page_owner(); ?>" />
-<input type="submit" value="Save changes" class="submit_button" onclick="$('a.toggle_customise_edit_panel').click();" />
-<input type="button" value="Cancel" class="cancel_button" onclick="$('a.toggle_customise_edit_panel').click();" />
+<input type="submit" value="<?php echo elgg_echo('save'); ?>" class="submit_button" onclick="$('a.toggle_customise_edit_panel').click();" />
+<input type="button" value="<?php echo elgg_echo('cancel'); ?>" class="cancel_button" onclick="$('a.toggle_customise_edit_panel').click();" />
 
 </form>
 </div><!-- /customise_editpanel -->
