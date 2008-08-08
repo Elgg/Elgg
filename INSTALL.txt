@@ -1,0 +1,59 @@
+
+Elgg 1.0 installation
+
+This is a placeholder file, and will be rewritten before the official
+launch. However, here are some basic instructions.  Commercial
+support is available for Elgg; email info@elgg.com for more details.
+
+
+CORE REQUIREMENTS
+
+    * Apache web server with the following modules:
+          o mod_rewrite
+          o PHP (see below) 
+    * MySQL 5+
+    * PHP 5.2+ as an Apache mod (not in CGI mode or safe mode) 
+      with the following libraries:
+          o GD
+          o JSON 
+
+It is recommended that you increase the memory available to PHP
+threads beyond the standard 8 or 12M, and increase the maximum
+uploaded filesize (which defaults to 2M). In both cases, this 
+can be found in your php.ini. 
+
+INSTRUCTIONS
+
+1.  Upload Elgg
+
+Upload Elgg to your site's document root. Create a folder for 
+Elgg to store files, preferably underneath the document root. 
+Make sure that the folder has the proper permissions, for example:
+
+chmod 777 /home/mysite/data
+Create a database
+
+Create a database for Elgg to store its data. Because of Elgg's 
+ability to host multiple sites you will only have to do this once.
+
+2.  Setup
+
+Once you've completed the previous step, point your browser to your 
+site. You'll be greeted by the Elgg installer. Once it's set up a
+few essential files, the installer will ask for the database details
+(database username, password, database name and table prefix) if not
+already set up in the previous step, and some basic details for 
+setting up your first (primary) Elgg site, where Elgg will already
+have guessed some initial values:
+
+    * The name of your site
+    * The site URL
+    * The full path to your site root on your disk
+    * The full path to the directory where uploaded files will be stored (the data folder you created earlier)
+    * The default language code for your site
+    * The type of default view (for example mobile, iphone or default) 
+
+After this step you will be prompted to create an initial user. This
+user will be the first system administrator. This is the last step, 
+and you'll be ready to start working with your new Elgg site.
+ 
