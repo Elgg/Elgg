@@ -238,8 +238,15 @@
 		else*/
 		$from = 'noreply@' . get_site_domain($CONFIG->site_guid); // Handle a fallback
 		
-		$headers = "From: $from\r\n";
-				
+		mb_internal_encoding('UTF-8');
+		$site = get_entity($CONFIG->site_guid);
+		$sitename = mb_encode_mimeheader($site->name,"UTF-8", "B");
+		$headers = "From: $sitename <$from>\r\n"
+			. "Content-Type: text/plain; charset=UTF-8; format=flowed\r\n"
+    		. "MIME-Version: 1.0\r\n"
+    		. "Content-Transfer-Encoding: 8bit\r\n";
+		$subject = 	mb_encode_mimeheader($subject,"UTF-8", "B");	
+    		
 		return mail($to, $subject, wordwrap($message), $headers);
 	}
 
