@@ -19,6 +19,8 @@ USA
 
 ABOUT:
 
+See CONTRIBUTORS.txt for development credits.
+
 Elgg concept originally by:
 Ben Werdmuller <ben@elgg.com> and David Tosh <dave@elgg.com>
 
