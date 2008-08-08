@@ -119,14 +119,13 @@
         function action_gatekeeper()
         {
         	$token = get_input('__elgg_token');
-        	$action = get_input('__elgg_action');
         	$ts = get_input('__elgg_ts');
         	$session_id = session_id();
         	
-        	if (($token) && ($action) && ($ts) && ($session_id))
+        	if (($token) && ($ts) && ($session_id))
         	{
 	        	// generate token, check with input and forward if invalid
-	        	$generated_token = generate_action_token($action, $ts);
+	        	$generated_token = generate_action_token($ts);
 	        	
 	        	// Validate token
 	        	if (strcmp($token, $generated_token)==0)
@@ -140,7 +139,6 @@
 	        			$returnval = true; // We have already got this far, so unless anything else says something to the contry we assume we're ok
 	        			
 	        			return trigger_plugin_hook('action_gatekeeper:permissions:check', 'all', array(
-	        				'action' => $action,
 	        				'token' => $token,
 	        				'time' => $ts
 	        			), $returnval);
@@ -161,10 +159,9 @@
         /**
          * Generate a token for the current user suitable for being placed in a hidden field in action forms.
          * 
-         * @param string $action The action being called
          * @param int $timestamp Unix timestamp
          */
-        function generate_action_token($action, $timestamp)
+        function generate_action_token($timestamp)
         {
         	// Get input values
         	$site_secret = get_site_secret();
@@ -173,7 +170,7 @@
         	$session_id = session_id();
         	
         	if (($site_secret) && ($session_id))
-        		return md5($site_secret.$action.$timestamp.$session_id);
+        		return md5($site_secret.$timestamp.$session_id);
         	
         	return false;
         }

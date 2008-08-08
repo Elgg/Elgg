@@ -25,9 +25,8 @@
 
 	// Generate a security header
 	$ts = time();
-	$token = generate_action_token($action, $ts);
+	$token = generate_action_token($ts);
 	$security_header = elgg_view('input/hidden', array('internalname' => '__elgg_token', 'value' => $token));
-	$security_header .= elgg_view('input/hidden', array('internalname' => '__elgg_action', 'value' => $action));
 	$security_header .= elgg_view('input/hidden', array('internalname' => '__elgg_ts', 'value' => $ts));
 ?>
 <form action="<?php echo $action; ?>" method="<?php echo $method; ?>" <?php if ($enctype!="") echo "enctype=\"$enctype\""; ?>>
