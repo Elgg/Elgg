@@ -32,7 +32,7 @@
 	<p class="messages-exception-detail" style="background:#FDFFC3;display:block;padding:10px;">
 		<?php
 
-			echo autop(htmlentities(print_r($vars['object'], true)));
+			echo autop(htmlentities(print_r($vars['object'], true), null, 'UTF-8'));
 		
 		?>
 	</p>

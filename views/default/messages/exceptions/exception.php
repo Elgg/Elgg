@@ -29,7 +29,7 @@ END;
 
 	if ($CONFIG->debug)
 	{
-		$details = autop(htmlentities(print_r($vars['object'], true)));
+		$details = autop(htmlentities(print_r($vars['object'], true), null, 'UTF-8'));
 		$body .= <<< END
 		<hr />
 		<p class="messages-exception-detail">

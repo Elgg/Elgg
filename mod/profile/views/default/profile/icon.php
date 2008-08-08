@@ -19,7 +19,7 @@
 
 		if ($vars['entity'] instanceof ElggUser) {
 			
-		$name = htmlentities($vars['entity']->name);
+		$name = htmlentities($vars['entity']->name, null, 'UTF-8');
 		$username = $vars['entity']->username;
 		
 		if ($icontime = $vars['entity']->icontime) {
