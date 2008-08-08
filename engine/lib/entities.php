@@ -1158,8 +1158,13 @@
 			if ($container->canEdit()) return true;
 			
 			// Basics, see if the user is a member of the group.
-			if ($container instanceof ElggGroup)
-				if (!$container->isMember($user)) return false;
+			if ($container instanceof ElggGroup) {
+				if (!$container->isMember($user)) {
+					return false;
+				} else {
+					return true;
+				}
+			}
 				
 			// See if anyone else has anything to say
 			return trigger_plugin_hook('container_permissions_check',$entity_type,array('container' => $container, 'user' => $user), false);
