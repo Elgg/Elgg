@@ -19,10 +19,14 @@
 	 * 								 the value displayed on the button. Replaces $vars['options'] when defined. 
 	 */
 
+
+	$class = $vars['class'];
+	if (!$class) $class = "input-pulldown";
+
 ?>
 
 
-<select name="<?php echo $vars['internalname']; ?>" <?php echo $vars['js']; ?> <?php if ($vars['disabled']) echo ' disabled="yes" '; ?>>
+<select name="<?php echo $vars['internalname']; ?>" <?php echo $vars['js']; ?> <?php if ($vars['disabled']) echo ' disabled="yes" '; ?> class="<?php echo $class; ?>">
 <?php
 	if ($vars['options_values'])
 	{

@@ -17,6 +17,9 @@
 	 * @uses $vars['options'] An array of strings representing the options for the radio field
 	 * 
 	 */
+	
+	$class = $vars['class'];
+	if (!$class) $class = "input-radio";
 
     foreach($vars['options'] as $option => $label) {
         if ($option != $vars['value']) {
@@ -26,7 +29,7 @@
         }
         
         if ($vars['disabled']) $disabled = ' disabled="yes" '; 
-        echo "<label><input type=\"radio\" $disabled {$vars['js']} name=\"{$vars['internalname']}\" value=\"".htmlentities($option)."\" {$selected} />{$label}</label><br />";
+        echo "<label><input type=\"radio\" $disabled {$vars['js']} name=\"{$vars['internalname']}\" value=\"".htmlentities($option)."\" {$selected} class=\"$class\" />{$label}</label><br />";
     }
 
 ?> 

@@ -14,9 +14,11 @@
 	 * @uses $vars['value'] The current value, if any
 	 * @uses $vars['js'] Any Javascript to enter into the input tag
 	 * @uses $vars['internalname'] The name of the input field
-	 * 
+	 * @uses $vars['class'] Class override
 	 */
 
+	$class = $vars['class'];
+	if (!$class) $class = "input-url";
 ?>
 
-<input type="text" <?php if ($vars['disabled']) echo ' disabled="yes" '; ?> <?php echo $vars['js']; ?> name="<?php echo $vars['internalname']; ?>" value="<?php echo $vars['value']; ?>" class="input-url"/> 
+<input type="text" <?php if ($vars['disabled']) echo ' disabled="yes" '; ?> <?php echo $vars['js']; ?> name="<?php echo $vars['internalname']; ?>" value="<?php echo $vars['value']; ?>" class="<?php echo $class; ?>"/> 

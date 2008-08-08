@@ -20,6 +20,9 @@
 	 */
 
 	global $CONFIG;
+	
+	$class = $vars['class'];
+	if (!$class) $class = "submit_button";
 
 	$type = strtolower($vars['type']);
 	switch ($type)
@@ -35,4 +38,4 @@
 	$src = $vars['src'];
 	if (strpos($src,$CONFIG->wwwroot)===false) $src = ""; // blank src if trying to access an offsite image.
 ?>
-<input type="<?php echo $type; ?>" class="<?php echo $type; ?>_button" <?php echo $vars['js']; ?> value="<?php echo $value; ?>" src="<?php echo $src; ?>" />
+<input type="<?php echo $type; ?>" class="<?php echo $type; ?>_button" <?php echo $vars['js']; ?> value="<?php echo $value; ?>" src="<?php echo $src; ?>" class="<?php echo $class; ?>" />

@@ -17,6 +17,9 @@
 	 * 
 	 */
 
+	$class = $vars['class'];
+	if (!$class) $class = "input-access";
+
 		if (!is_array($vars['options']))
 		{
 			$vars['options'] = array();
@@ -27,7 +30,7 @@
 			 
 ?>
 
-<select name="<?php echo $vars['internalname']; ?>" <?php if (isset($vars['js'])) echo $vars['js']; ?> <?php if ($vars['disabled']) echo ' disabled="yes" '; ?>>
+<select name="<?php echo $vars['internalname']; ?>" <?php if (isset($vars['js'])) echo $vars['js']; ?> <?php if ($vars['disabled']) echo ' disabled="yes" '; ?> class="<?php echo $class; ?>">
 <?php
 
     foreach($vars['options'] as $key => $option) {

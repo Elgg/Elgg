@@ -18,6 +18,9 @@
 	 * 
 	 */
 
+	$class = $vars['class'];
+	if (!$class) $class = "input-checkboxes";
+
     foreach($vars['options'] as $label => $option) {
         //if (!in_array($option,$vars['value'])) {
         if (is_array($vars['value'])) {
@@ -39,7 +42,7 @@
         }
         
         if ($vars['disabled']) $disabled = ' disabled="yes" '; 
-        echo "<label><input type=\"checkbox\" $disabled {$vars['js']} name=\"{$vars['internalname']}[]\" {$selected} value=\"".htmlentities($option)."\" {$selected} />{$label}</label><br />";
+        echo "<label><input type=\"checkbox\" $disabled {$vars['js']} name=\"{$vars['internalname']}[]\" {$selected} value=\"".htmlentities($option)."\" {$selected} class=\"$class\" />{$label}</label><br />";
     }
 
 ?> 

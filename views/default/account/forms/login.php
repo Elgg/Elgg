@@ -12,14 +12,19 @@
 	 */
 	 
 	global $CONFIG;
+	
+	$form_body = "<p><label>" . elgg_echo('username') . "<br />" . elgg_view('input/text', array('internalname' => 'username', 'class' => 'general-textarea')) . "</label>";
+	$form_body .= "<br />";
+	$form_body .= "<label>" . elgg_echo('password') . "<br />" . elgg_view('input/password', array('internalname' => 'password', 'class' => 'general-textarea')) . "</label><br />";
+	$form_body .= elgg_view('input/submit', array('value' => elgg_echo('login'))) . "</p>";
+	$form_body .= "<p>";
+	$form_body .= (!isset($CONFIG->disable_registration) || !($CONFIG->disable_registration)) ? "<a href=\"{$vars['url']}account/register.php\">" . elgg_echo('register') . "</a> : " : "";
+	$form_body .= "<a href=\"{$vars['url']}account/forgotten_password.php\">" . elgg_echo('user:password:lost') . "</a></p>";  
+	
+	//<input name=\"username\" type=\"text\" class="general-textarea" /></label>
 ?>
 	
 	<div id="login-box">	<h2><?php echo elgg_echo('login'); ?></h2>
-		<form action="<?php echo $vars['url']; ?>action/login" method="POST">
-			<p><label><?php echo elgg_echo('username'); ?><br /><input name="username" type="text" class="general-textarea" /></label>
-			<br />
-			<label><?php echo elgg_echo('password'); ?><br /><input name="password" type="password" class="general-textarea" /></label><br />
-			<input type="submit" name="submit" class="submit_button" value="<?php echo elgg_echo('login'); ?>" /></p>
-			<p><?php if (!isset($CONFIG->disable_registration) || !($CONFIG->disable_registration)) { ?><a href="<?php echo $vars['url']; ?>account/register.php"><?php echo elgg_echo('register'); ?></a> : <?php } ?> <a href="<?php echo $vars['url']; ?>account/forgotten_password.php"><?php echo elgg_echo('user:password:lost'); ?></a></p>
-	    </form>
+		<?php echo elgg_view('input/form', array('body' => $form_body, 'action' => "{$vars['url']}action/login")); ?>
+		
 	</div>

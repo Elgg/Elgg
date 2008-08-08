@@ -15,8 +15,11 @@
 	 * @uses $vars['js'] Any Javascript to enter into the input tag
 	 * @uses $vars['internalname'] The name of the input field
 	 * @uses $vars['value'] An array of tags
-	 * 
+	 * @uses $vars['class'] Class override
 	 */
+
+	$class = $vars['class'];
+	if (!$class) $class = "input-tags";
 
     $tags = "";
     if (!empty($vars['value'])) {
@@ -39,4 +42,4 @@
     }
     
 ?>
-<input type="text" <?php if ($vars['disabled']) echo ' disabled="yes" '; ?><?php echo $vars['js']; ?> name="<?php echo $vars['internalname']; ?>" value="<?php echo htmlentities($tags); ?>" class="input-tags"/> 
+<input type="text" <?php if ($vars['disabled']) echo ' disabled="yes" '; ?><?php echo $vars['js']; ?> name="<?php echo $vars['internalname']; ?>" value="<?php echo htmlentities($tags); ?>" class="<?php echo $class; ?>"/> 

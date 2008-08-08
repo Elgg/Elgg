@@ -9,11 +9,11 @@
 	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.org/
 	 */
+
+	$form_body = "<p>" . elgg_echo('user:password:text') . "</p>";
+	$form_body .= "<p><b>". elgg_echo('username') . "</b> " . elgg_view('input/text', array('internalname' => 'username')) . "</p>";
+	$form_body .= "<p>" . elgg_view('input/submit', array('value' => elgg_echo('request'))) . "</p>";
 ?>
 <div id="forgotten_box">
-	<form action="<?php echo $vars['url']; ?>actions/user/requestnewpassword" method="post">
-		<p><?php echo elgg_echo('user:password:text'); ?></p>
-		<p><b><?php echo elgg_echo('username'); ?></b> <?php echo elgg_view('input/text', array('internalname' => 'username')); ?></p>
-		<p><input type="submit" name="submit" class="submit_button" value="<?php echo elgg_echo('request'); ?>" /></p>
-	</form>
+	<?php echo elgg_view('input/form', array('action' => "{$vars['url']}actions/user/requestnewpassword", 'body' => $form_body)); ?>
 </div>

@@ -15,8 +15,13 @@
 	 * @uses $vars['js'] Any Javascript to enter into the input tag
 	 * @uses $vars['internalname'] The name of the input field
 	 * @uses $vars['disabled'] If true then control is read-only
+	 * @uses $vars['class'] Class override
 	 */
 
+	
+	$class = $vars['class'];
+	if (!$class) $class = "input-text";
+	
 ?>
 
-<input type="text" <?php if ($vars['disabled']) echo ' disabled="yes" '; ?> <?php echo $vars['js']; ?> name="<?php echo $vars['internalname']; ?>" value="<?php echo htmlentities($vars['value']); ?>" class="input-text"/> 
+<input type="text" <?php if ($vars['disabled']) echo ' disabled="yes" '; ?> <?php echo $vars['js']; ?> name="<?php echo $vars['internalname']; ?>" value="<?php echo htmlentities($vars['value']); ?>" class="<?php echo $class ?>"/> 

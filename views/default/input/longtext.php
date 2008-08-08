@@ -17,6 +17,9 @@
 	 * 
 	 */
 
+	$class = $vars['class'];
+	if (!$class) $class = "input-textarea";
+	
 ?>
 
-<textarea class="input-textarea" name="<?php echo $vars['internalname']; ?>" <?php if ($vars['disabled']) echo ' disabled="yes" '; ?> <?php echo $vars['js']; ?>><?php echo $vars['value']; ?></textarea> 
+<textarea class="<?php echo $class; ?>" name="<?php echo $vars['internalname']; ?>" <?php if ($vars['disabled']) echo ' disabled="yes" '; ?> <?php echo $vars['js']; ?>><?php echo $vars['value']; ?></textarea> 
