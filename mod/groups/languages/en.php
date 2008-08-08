@@ -19,7 +19,7 @@
 			'groups:owned' => "Groups you own",
 			'groups:yours' => "Your groups",
 			'groups:user' => "%s's groups",
-			'groups:all' => "All groups",
+			'groups:all' => "All site groups",
 			'groups:new' => "Create a new group",
 			'groups:edit' => "Edit group",
 	
