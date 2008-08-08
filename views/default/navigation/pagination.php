@@ -109,7 +109,7 @@
 		
 			if (($i - $prev) > 1) {
 				
-				echo " ... ";
+				echo "<span class=\"pagination_more\">...</span>";
 				
 			}
 			

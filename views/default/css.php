@@ -1397,12 +1397,24 @@ temp force image width until upload size is changed
 	padding:0px 4px;
 	cursor: pointer;
 }
-.pagination .pagination_number:hover,
 .pagination .pagination_number:hover {
 	background:#4690d6;
 	color:white;
 	text-decoration: none;
 }
+.pagination .pagination_more {
+	display:block;
+	float:left;
+	background:#ffffff;
+	border:1px solid #ffffff;
+	text-align: center;
+	color:#4690d6;
+	font-size: 12px;
+	font-weight: normal;
+	margin:0 6px 0 0;
+	padding:0px 4px;
+}
+
 .pagination .pagination_previous,
 .pagination .pagination_next {
 	display:block;
