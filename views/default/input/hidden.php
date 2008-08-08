@@ -17,4 +17,4 @@
 	 * 
 	 */
 ?>
-<input type="hidden" <?php echo $vars['js']; ?> name="<?php echo $vars['internalname']; ?>" value="<?php echo htmlentities($vars['value']); ?>" /> 
+<input type="hidden" <?php echo $vars['js']; ?> name="<?php echo $vars['internalname']; ?>" value="<?php echo htmlentities($vars['value'], null, 'UTF-8'); ?>" /> 
