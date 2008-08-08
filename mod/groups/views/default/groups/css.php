@@ -58,10 +58,6 @@
     border:none;
 }
 
-
-
-
-
 .topic_title {
 	font-size: 1.2em;
 	line-height: 1.1em;
@@ -83,3 +79,31 @@
 	background-color:#f5f5f5;
 	padding: 4px;
 }
+
+
+/* latest discussions on group page */
+#latest_discussion_widget {
+	margin:0 0 20px 0;
+}
+.forum_latest {
+	margin:0 0 10px 0;
+}
+.forum_latest .topic_owner_icon {
+	position:absolute;
+}
+.forum_latest .topic_title {
+	margin-left:35px;
+}
+.forum_latest .topic_title p {
+	font-size: 0.8em;
+	line-height: 1.0em;
+    padding:0;
+    margin:0;
+}
+
+.forum_latest p.topic_replies {
+	color:#999999;
+    padding:3px 0 0 0;
+    margin:0;
+}
+
