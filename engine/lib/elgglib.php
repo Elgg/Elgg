@@ -775,6 +775,7 @@
 			$title = strtolower($title);
 			$title = preg_replace("/[^\w ]/","",$title); 
 			$title = str_replace(" ","-",$title);
+			$title = str_replace("--","-",$title);
 			return $title;
 		}
 
