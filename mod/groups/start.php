@@ -328,10 +328,10 @@
 	
 	// Register actions
     global $CONFIG;
-	register_action("groups/addtopic",false,$CONFIG->pluginspath . "groups/actions/forums/addtopic.php",true);
-	register_action("groups/deletetopic",false,$CONFIG->pluginspath . "groups/actions/forums/deletetopic.php",true);
-	register_action("groups/addpost",false,$CONFIG->pluginspath . "groups/actions/forums/addpost.php",true);
-	register_action("groups/edittopic",false,$CONFIG->pluginspath . "groups/actions/forums/edittopic.php",true);
-	register_action("groups/deletepost",false,$CONFIG->pluginspath . "groups/actions/forums/deletepost.php",true);
+	register_action("groups/addtopic",false,$CONFIG->pluginspath . "groups/actions/forums/addtopic.php");
+	register_action("groups/deletetopic",false,$CONFIG->pluginspath . "groups/actions/forums/deletetopic.php");
+	register_action("groups/addpost",false,$CONFIG->pluginspath . "groups/actions/forums/addpost.php");
+	register_action("groups/edittopic",false,$CONFIG->pluginspath . "groups/actions/forums/edittopic.php");
+	register_action("groups/deletepost",false,$CONFIG->pluginspath . "groups/actions/forums/deletepost.php");
 	
 ?>
