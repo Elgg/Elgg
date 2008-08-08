@@ -75,6 +75,7 @@ blockquote, q {
 /* elgg open source		dark blue 		#0054a7 */
 /* elgg open source		light yellow 	#FDFFC3 */
 
+
 body {
 	text-align:left;
 	margin:0 auto;
