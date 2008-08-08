@@ -49,9 +49,10 @@ have guessed some initial values:
     * The name of your site
     * The site URL
     * The full path to your site root on your disk
-    * The full path to the directory where uploaded files will be stored (the data folder you created earlier)
+    * The full path to the directory where uploaded files will be 
+      stored (the data folder you created earlier)
     * The default language code for your site
-    * The type of default view (for example mobile, iphone or default) 
+    * The type of default view (leave as default for now) 
 
 After this step you will be prompted to create an initial user. This
 user will be the first system administrator. This is the last step, 
