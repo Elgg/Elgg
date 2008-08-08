@@ -62,7 +62,7 @@
 	        $grouptopic->status = $status; // the current status i.e sticky, closed, resolved, open
 	           
     // now add the topic message as an annotation
-        $grouptopic->annotate('group_topic_post',$message,$access, $user);   
+        	$grouptopic->annotate('group_topic_post',$message,$access, $user);   
 	        
 	// Success message
 			system_message(elgg_echo("grouptopic:created"));

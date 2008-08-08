@@ -14,7 +14,7 @@
 		require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 		
 	//get_input('group_guid');
-		set_page_owner((int)get_input('group_guid'));
+		set_page_owner(get_input('group_guid'));
 		if (!(page_owner_entity() instanceof ElggGroup)) forward();
 		
     // get the entity from id
@@ -22,7 +22,7 @@
          
     // Display them
 	    $area2 = elgg_view("forum/viewposts", array('entity' => $topic));
-	    $body = elgg_view_layout("two_column_left_sidebar", $area1, $area2);
+	    $body = elgg_view_layout("two_column_left_sidebar", '' , $area2);
 		
 	// Display page
 		page_draw($topic->title,$body);

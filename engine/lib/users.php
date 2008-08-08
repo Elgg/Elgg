@@ -1175,7 +1175,8 @@
 
 		// Change this to set the number of users that display on the search page
 		$threshold = 4;
-		
+
+		if (!get_input('offset'))
 		if ($users = search_for_user($tag,$threshold)) {
 			
 			$countusers = search_for_user($tag,0,0,"",true);
