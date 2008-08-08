@@ -26,7 +26,7 @@
 		/**
 		 * @class ElggPlugin Object representing a plugin's settings for a given site.
 		 * This class is currently a stub, allowing a plugin to saving settings in an object's metadata for each site.
-		 * @author Marcus Povey
+		 * @author Curverider Ltd
 		 */
 		class ElggPlugin extends ElggObject
 		{
@@ -130,7 +130,7 @@
 		 * Example file:
 		 * 
 		 * <plugin_manifest>
-		 * 	<field key="author" value="Marcus Povey" />
+		 * 	<field key="author" value="Curverider Ltd" />
 		 *  <field key="version" value="1.0" />
 		 * 	<field key="description" value="My plugin description, keep it short" />
 		 *  <field key="website" value="http://www.elgg.org/" />

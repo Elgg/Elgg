@@ -6,7 +6,7 @@
 	 * @package Elgg
 	 * @subpackage Exceptions
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @author Curverider Ltd <info@elgg.com>
 	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.org/
 	 */
@@ -17,7 +17,7 @@
 	 * IOException 
 	 * An IO Exception, throw when an IO Exception occurs. Subclass for specific IO Exceptions.
 	 * 
-	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @author Curverider Ltd <info@elgg.com>
 	 * @package Elgg
 	 * @subpackage Exceptions
 	 */
@@ -27,7 +27,7 @@
 	 * ClassException 
 	 * A class Exception, throw when there is a class error.
 	 * 
-	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @author Curverider Ltd <info@elgg.com>
 	 * @package Elgg
 	 * @subpackage Exceptions
 	 */
@@ -37,7 +37,7 @@
 	 * ConfigurationException 
 	 * There is a configuration error
 	 * 
-	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @author Curverider Ltd <info@elgg.com>
 	 * @package Elgg
 	 * @subpackage Exceptions
 	 */
@@ -47,7 +47,7 @@
 	 * SecurityException 
 	 * An Security Exception, throw when a Security Exception occurs. Subclass for specific Security Execeptions (access problems etc)
 	 * 
-	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @author Curverider Ltd <info@elgg.com>
 	 * @package Elgg
 	 * @subpackage Exceptions
 	 */
@@ -57,7 +57,7 @@
 	 * ClassNotFoundException 
 	 * An database exception, throw when a database exception happens, subclass if more detail is needed.
 	 * 
-	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @author Curverider Ltd <info@elgg.com>
 	 * @package Elgg
 	 * @subpackage Exceptions
 	 */
@@ -67,7 +67,7 @@
 	 * APIException
 	 * The API Exception class, thrown by the API layer when an API call has an issue.
 	 * 
-	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @author Curverider Ltd <info@elgg.com>
 	 * @package Elgg
 	 * @subpackage Exceptions
 	 */
@@ -77,7 +77,7 @@
 	 * CallException
 	 * An exception thrown when there is a problem calling something.
 	 * 
-	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @author Curverider Ltd <info@elgg.com>
 	 * @package Elgg
 	 * @subpackage Exceptions
 	 */
@@ -87,7 +87,7 @@
 	 * Data format exception
 	 * An exception thrown when there is a problem in the format of some data.
 	 * 
-	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @author Curverider Ltd <info@elgg.com>
 	 * @package Elgg
 	 * @subpackage Exceptions
 	 */
@@ -99,7 +99,7 @@
 	 * InvalidClassException 
 	 * An invalid class Exception, throw when a class is invalid.
 	 * 
-	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @author Curverider Ltd <info@elgg.com>
 	 * @package Elgg
 	 * @subpackage Exceptions
 	 */
@@ -109,7 +109,7 @@
 	 * ClassNotFoundException 
 	 * An Class not found Exception, throw when an class can not be found occurs.
 	 * 
-	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @author Curverider Ltd <info@elgg.com>
 	 * @package Elgg
 	 * @subpackage Exceptions
 	 */
@@ -121,7 +121,7 @@
 	 * InstallationException
 	 * Thrown when there is a major problem with the installation.
 	 * 
-	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @author Curverider Ltd <info@elgg.com>
 	 * @package Elgg
 	 * @subpackage Exceptions
 	 */
@@ -134,7 +134,7 @@
 	 * Thrown when a method or function has not been implemented, primarily used in development... you should
 	 * not see these!
 	 * 
-	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @author Curverider Ltd <info@elgg.com>
 	 * @package Elgg
 	 * @subpackage Exceptions
 	 */
@@ -144,7 +144,7 @@
 	 * InvalidParameterException
 	 * A parameter is invalid.
 	 * 
-	 * @author Marcus Povey <marcus@dushka.co.uk>
+	 * @author Curverider Ltd <info@elgg.com>
 	 * @package Elgg
 	 * @subpackage Exceptions
 	 */

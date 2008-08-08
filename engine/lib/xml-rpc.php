@@ -6,7 +6,7 @@
 	 * @package Elgg
 	 * @subpackage Core
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Marcus Povey
+	 * @author Curverider Ltd
 	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.org/
 	 */
@@ -16,7 +16,7 @@
 	/**
 	 * @class XMLRPCCall
 	 * This class represents 
-	 * @author Marcus Povey
+	 * @author Curverider Ltd
 	 */
 	class XMLRPCCall
 	{
@@ -77,7 +77,7 @@
 
 	/**
 	 * @class XMLRPCParameter Superclass for all RPC parameters.
-	 * @author Marcus Povey
+	 * @author Curverider Ltd
 	 */
 	abstract class XMLRPCParameter
 	{
@@ -89,7 +89,7 @@
 	
 	/**
 	 * @class XMLRPCIntParameter An Integer.
-	 * @author Marcus Povey
+	 * @author Curverider Ltd
 	 */
 	class XMLRPCIntParameter extends XMLRPCParameter
 	{
@@ -108,7 +108,7 @@
 	
 	/**
 	 * @class XMLRPCBoolParameter A boolean.
-	 * @author Marcus Povey
+	 * @author Curverider Ltd
 	 */
 	class XMLRPCBoolParameter extends XMLRPCParameter
 	{
@@ -128,7 +128,7 @@
 	
 	/**
 	 * @class XMLRPCStringParameter A string.
-	 * @author Marcus Povey
+	 * @author Curverider Ltd
 	 */
 	class XMLRPCStringParameter extends XMLRPCParameter
 	{
@@ -148,7 +148,7 @@
 	
 	/**
 	 * @class XMLRPCDoubleParameter A double precision signed floating point number.
-	 * @author Marcus Povey
+	 * @author Curverider Ltd
 	 */
 	class XMLRPCDoubleParameter extends XMLRPCParameter
 	{
@@ -167,7 +167,7 @@
 	
 	/**
 	 * @class XMLRPCDateParameter An ISO8601 data and time.
-	 * @author Marcus Povey
+	 * @author Curverider Ltd
 	 */
 	class XMLRPCDateParameter extends XMLRPCParameter
 	{
@@ -194,7 +194,7 @@
 	
 	/**
 	 * @class XMLRPCBase64Parameter A base 64 encoded blob of binary.
-	 * @author Marcus Povey
+	 * @author Curverider Ltd
 	 */
 	class XMLRPCBase64Parameter extends XMLRPCParameter
 	{
@@ -218,7 +218,7 @@
 	
 	/**
 	 * @class XMLRPCStructParameter A structure containing other XMLRPCParameter objects.
-	 * @author Marcus Povey
+	 * @author Curverider Ltd
 	 */
 	class XMLRPCStructParameter extends XMLRPCParameter
 	{
@@ -270,7 +270,7 @@ END;
 	
 	/**
 	 * @class XMLRPCArrayParameter An array containing other XMLRPCParameter objects.
-	 * @author Marcus Povey
+	 * @author Curverider Ltd
 	 */
 	class XMLRPCArrayParameter extends XMLRPCParameter
 	{
@@ -323,7 +323,7 @@ END;
 	
 	/**
 	 * @class XMLRPCResponse XML-RPC Response. 
-	 * @author Marcus Povey
+	 * @author Curverider Ltd
 	 */
 	abstract class XMLRPCResponse
 	{
@@ -351,7 +351,7 @@ END;
 
 	/**
 	 * @class XMLRPCSuccessResponse
-	 * @author Marcus Povey
+	 * @author Curverider Ltd
 	 */
 	class XMLRPCSuccessResponse extends XMLRPCResponse
 	{
@@ -376,7 +376,7 @@ END;
 
 	/**
 	 * @class XMLRPCErrorResponse
-	 * @author Marcus Povey
+	 * @author Curverider Ltd
 	 */
 	class XMLRPCErrorResponse extends XMLRPCResponse
 	{		

@@ -5,7 +5,7 @@
 	 * @package Elgg
 	 * @subpackage Core
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Marcus Povey
+	 * @author Curverider Ltd
 	 * @version 0.4
 	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.org/
@@ -16,7 +16,7 @@
 	/**
 	 * @class ODDDocument ODD Document container.
 	 * This class is used during import and export to construct.
-	 * @author Marcus Povey
+	 * @author Curverider Ltd
 	 */
 	class ODDDocument implements Iterator
 	{
@@ -142,7 +142,7 @@
 	 * Open Data Definition (ODD) superclass.
 	 * @package Elgg
 	 * @subpackage Core
-	 * @author Marcus Povey
+	 * @author Curverider Ltd
 	 */
 	abstract class ODD
 	{		
@@ -225,7 +225,7 @@
 	 * ODD Entity class.
 	 * @package Elgg
 	 * @subpackage Core
-	 * @author Marcus Povey
+	 * @author Curverider Ltd
 	 */
 	class ODDEntity extends ODD
 	{
@@ -245,7 +245,7 @@
 	 * ODD Metadata class.
 	 * @package Elgg
 	 * @subpackage Core
-	 * @author Marcus Povey
+	 * @author Curverider Ltd
 	 */
 	class ODDMetaData extends ODD
 	{
@@ -268,7 +268,7 @@
 	 * ODD Relationship class.
 	 * @package Elgg
 	 * @subpackage Core
-	 * @author Marcus Povey
+	 * @author Curverider Ltd
 	 */
 	class ODDRelationship extends ODD
 	{

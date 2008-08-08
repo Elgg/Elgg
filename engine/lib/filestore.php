@@ -7,7 +7,7 @@
 	 * @package Elgg
 	 * @subpackage API
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Marcus Povey
+	 * @author Curverider Ltd
 	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.org/
 	 */
@@ -17,7 +17,7 @@
 	/**
 	 * @class ElggFilestore
 	 * This class defines the interface for all elgg data repositories.
-	 * @author Marcus Povey
+	 * @author Curverider Ltd
 	 */
 	abstract class ElggFilestore
 	{
@@ -127,7 +127,7 @@
 	/**
 	 * @class ElggDiskFilestore
 	 * This class uses disk storage to save data.
-	 * @author Marcus Povey
+	 * @author Curverider Ltd
 	 */
 	class ElggDiskFilestore extends ElggFilestore
 	{
@@ -312,7 +312,7 @@
 	 * 		there are many occasions where you may want access to file data on datastores using the ElggFile interface
 	 * 		but do not want to create an Entity reference to it in the system (temporary files for example).
 	 * 
-	 * @author Marcus Povey
+	 * @author Curverider Ltd
 	 */
 	class ElggFile extends ElggObject
 	{
