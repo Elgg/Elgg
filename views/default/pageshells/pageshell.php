@@ -18,7 +18,7 @@
 	 */
 
 	// Set the content type
-	header("Content-type: text/html; charset=iso-8859-1");
+	header("Content-type: text/html; charset=UTF-8");
 
 	// Set title
 		if (empty($vars['title'])) {

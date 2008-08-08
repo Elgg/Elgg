@@ -52,6 +52,7 @@
 		if ($shell) {
 			page_draw("", $body);
 		} else {
+			header("Content-type: text/html; charset=UTF-8");
 			echo $body;
 		}
 
