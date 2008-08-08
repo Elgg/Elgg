@@ -14,8 +14,8 @@
 		require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 		
 	//get_input('group_guid');
-	set_page_owner((int)get_input('group_guid'));
-	if (!(page_owner_entity() instanceof ElggGroup)) forward();
+		set_page_owner((int)get_input('group_guid'));
+		if (!(page_owner_entity() instanceof ElggGroup)) forward();
 		
     // get the entity from id
         $topic = get_entity(get_input('topic'));

@@ -13,6 +13,8 @@
 	// Load Elgg engine
 		require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 		
+		gatekeeper();
+		
 	get_input('group');
 	$page_owner = set_page_owner((int)get_input('group'));
 	

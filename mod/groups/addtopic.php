@@ -13,9 +13,11 @@
 	// Load Elgg engine
 		require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 		
-	$page_owner = set_page_owner((int)get_input('group_guid'));
+		gatekeeper();
 		
-	if (!(page_owner_entity() instanceof ElggGroup)) forward();
+		$page_owner = set_page_owner((int)get_input('group_guid'));
+		
+		if (!(page_owner_entity() instanceof ElggGroup)) forward();
 		
 	// sort the display
 	    $area2 = elgg_view("forms/forums/addtopic");
