@@ -66,7 +66,7 @@
 		?>
 
 	</div>	
-	<a href="<?php echo $vars['entity']->getURL(); ?>" class="icon" ><img src="<?php echo $vars['url']; ?>pg/icon/<?php echo $username; ?>/<?php echo $vars['size']; ?>/<?php echo $icontime; ?>.jpg" border="0" <?php echo $align; ?> title="<?php echo $vars['entity']->name; ?>" <?php echo $vars['js']; ?> /></a>
+	<a href="<?php echo $vars['entity']->getURL(); ?>" class="icon" ><img src="<?php echo $vars['url']; ?>pg/icon/<?php echo $username; ?>/<?php echo $vars['size']; ?>/<?php echo $icontime; ?>.jpg" border="0" <?php echo $align; ?> title="<?php echo htmlentities($vars['entity']->name, null, 'UTF-8'); ?>" <?php echo $vars['js']; ?> /></a>
 </div>
 
 <?php
