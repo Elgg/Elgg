@@ -321,7 +321,7 @@ h6 { font-size: 0.8em; }
 	margin:20px 20px 0px 20px;
 	width:284px;
 	display:block;
-	text-align: right;
+	text-align: left;
 }
 
 * html #dashboard_info {
@@ -1733,7 +1733,7 @@ a.toggle_customise_edit_panel {
 	padding: 5px 10px 5px 10px;
 	margin:20px 20px 0px 20px;
 	width:284px;
-	text-align: right;
+	text-align: left;
 }
 a.toggle_customise_edit_panel:hover { 
 	color: #ffffff;
