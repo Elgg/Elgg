@@ -4,6 +4,7 @@
 	adapted from Niall Doherty's excellent Coda-Slider - http://www.ndoherty.com/coda-slider
 */
 
+
 jQuery.fn.friendsPicker = function(iterator) {
 
 	var settings; 
