@@ -15,7 +15,6 @@
 
 ?>
 
-
 /* ***************************************
 	RESET BASE STYLES
 *************************************** */
@@ -1382,8 +1381,8 @@ temp force image width until upload size is changed
 	PAGINATION
 *************************************** */
 .pagination {
-	margin:0 0 20px 0;
-	display: table;
+	margin:10px 0 20px 0;
+	/* display: table; */
 }
 
 .pagination .pagination_number {

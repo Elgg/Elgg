@@ -49,7 +49,6 @@
 ?>
 
 <div class="pagination">
-	<p>
 <?php
 
 	//if ($count == 0) {
@@ -148,9 +147,8 @@
 	}
 
 ?>
-	</p>
+<br class="clearfloat" />
 </div>
-
 <?php
     } // end of pagination check if statement
 ?>
