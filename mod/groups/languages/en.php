@@ -34,7 +34,9 @@
 			'groups:membership' => "Membership",
 			'groups:access' => "Access permissions",
 			'groups:owner' => "Owner",
-	
+	        'groups:widget:num_display' => 'Number of groups to display',
+	        'groups:widget:membership' => 'Group membership',
+	        'groups:widgets:description' => 'Display the groups you are a member of on your profile',
 			'groups:noaccess' => 'No access to group',
 			'groups:cantedit' => 'You can not edit this group',
 			'groups:saved' => 'Group saved',

@@ -55,8 +55,10 @@
 		add_page_owner_handler('groups_page_owner_handler');
 		
 		// Add some widgets
-		add_widget_type('group_members_widget',elgg_echo('groups:widgets:members:title'), elgg_echo('groups:widgets:members:description'), 'groups');
-		add_widget_type('group_entities_widget',elgg_echo('groups:widgets:entities:title'), elgg_echo('groups:widgets:entities:description'), 'groups');
+		//add_widget_type('group_members_widget',elgg_echo('groups:widgets:members:title'), elgg_echo('groups:widgets:members:description'), 'groups');
+		//add_widget_type('group_entities_widget',elgg_echo('groups:widgets:entities:title'), elgg_echo('groups:widgets:entities:description'), 'groups');
+		add_widget_type('a_users_groups',elgg_echo('groups:widget:membership'), elgg_echo('groups:widgets:description'), 'profile');
+		
 		
 		//extend some views
 		extend_view('profile/icon','groups/icon');
