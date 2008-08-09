@@ -449,7 +449,7 @@ h6 { font-size: 0.8em; }
 }
 #elgg_topbar_container_left a.privatemessages {
 	background:transparent url(<?php echo $vars['url']; ?>_graphics/toolbar_messages_icon.gif) no-repeat left 2px;
-	padding:0 0 0 16px;
+	padding:0 0 4px 16px;
 	margin:0 15px 0 5px;
 }
 #elgg_topbar_container_left a.privatemessages:hover {
@@ -505,12 +505,12 @@ h6 { font-size: 0.8em; }
 }
 /* IE6 fix */
 * html #elgg_topbar_container_right a { 
-	height: 22px;
+	height: 20px;
 	width: 120px;
 }
 /* IE7 */
 *:first-child+html #elgg_topbar_container_right a {
-	height: 22px;
+	height: 20px;
 }
 #elgg_topbar_container_right a:hover {
 	background-position: right -21px;
