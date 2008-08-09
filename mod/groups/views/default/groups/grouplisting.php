@@ -19,6 +19,7 @@
 		);
 
 	$info .= "<p><b><a href=\"" . $vars['entity']->getUrl() . "\">" . $vars['entity']->name . "</a></b></p>";
+    $info .= "<p>" . $vars['entity']->briefdescription . "</p>";
 
 	// num users, last activity, owner etc
 
