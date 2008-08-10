@@ -122,7 +122,7 @@ CREATE TABLE `prefix_users_entity` (
   `guid` bigint(20) unsigned  NOT NULL,
   
   `name` text NOT NULL,
-  `username` varchar(12) NOT NULL default '',
+  `username` varchar(128) NOT NULL default '',
   `password` varchar(32) NOT NULL default '',
   `salt`     varchar(8)  NOT NULL default '',
   `email` text NOT NULL,
