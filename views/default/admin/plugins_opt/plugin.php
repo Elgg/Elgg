@@ -20,8 +20,19 @@
 	$active = $details['active'];
 	$manifest = $details['manifest'];
 ?>
-<div id="plugin_details" class="<?php if ($active) echo "active"; else "not-active" ?>">
-	<div><h2><?php echo $plugin; ?></h2></div>
+<div class="plugin_details <?php if ($active) echo "active"; else echo "not-active" ?>"> 
+	<div class="admin_plugin_enable_disable">
+		<?php if ($active) { ?>
+			<a href="<?php echo $vars['url']; ?>actions/admin/plugins/disable?plugin=<?php echo $plugin; ?>"><?php echo elgg_echo("disable"); ?></a>
+		<?php } else { ?>
+			<a href="<?php echo $vars['url']; ?>actions/admin/plugins/enable?plugin=<?php echo $plugin; ?>"><?php echo elgg_echo("enable"); ?></a>
+		<?php } ?>
+	</div>
+
+	<h3><?php echo $plugin; ?></h3>
+	<p><a class="manifest_details"><?php echo elgg_echo("more info"); ?></a></p>
+
+	<div class="manifest_file">
 	
 	<?php if ($manifest) { ?>
 		<div><?php echo $manifest['description'] ?></div>
@@ -30,6 +41,8 @@
 		<div><?php echo elgg_echo('admin:plugins:label:licence') . ": ". $manifest['licence'] ?></div>
 		<div><?php echo elgg_echo('admin:plugins:label:website') . ": "; ?><a href="<?php echo $manifest['website']; ?>"><?php echo $manifest['website']; ?></a></div>
 	<?php } ?>
+
+	</div>
 	
 	<?php if (elgg_view("settings/{$plugin}/edit")) { ?>
 	<hr />
@@ -41,11 +54,4 @@
 	<hr />
 	<?php } ?>
 	
-	<div>
-		<?php if ($active) { ?>
-			<a href="<?php echo $vars['url']; ?>actions/admin/plugins/disable?plugin=<?php echo $plugin; ?>"><?php echo elgg_echo("disable"); ?></a>
-		<?php } else { ?>
-			<a href="<?php echo $vars['url']; ?>actions/admin/plugins/enable?plugin=<?php echo $plugin; ?>"><?php echo elgg_echo("enable"); ?></a>
-		<?php } ?>
-	</div>
 </div>
