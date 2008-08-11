@@ -11,7 +11,8 @@
 	 * @link http://elgg.org/
 	 */
 
-
+		action_gatekeeper();
+		
 		$guid = get_input('guid');
 		$params = $_REQUEST['params'];
 		$pageurl = get_input('pageurl');

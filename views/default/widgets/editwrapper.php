@@ -13,33 +13,14 @@
 
 	$guid = $vars['entity']->getGUID();
 
+	
+	$form_body = $vars['body'];
+	$form_body .= "<p><label>" . elgg_echo('access') . ": " . elgg_view('input/access', array('internalname' => 'params[access_id]','value' => $vars['entity']->access_id)) . "</label></p>";
+	$form_body .= "<p>" . elgg_view('input/hidden', array('internalname' => 'guid', 'value' => $guid)) . elgg_view('input/hidden', array('internalname' => 'noforward', 'value' => 'true')) . elgg_view('input/submit', array('internalname' => "submit$guid", 'value' => elgg_echo('save'))) . "</p>";
+
+	echo elgg_view('input/form', array('internalid' => "widgetform$guid", 'body' => $form_body, 'action' => "{$vars['url']}action/widgets/save"))	
 ?>
 
-<form id="widgetform<?php echo $guid; ?>" action="<?php echo $vars['url']; ?>action/widgets/save" method="post">
-
-	<?php
-
-		echo $vars['body'];
-	
-	?>
-
-	<p>
-		<label>
-			<?php echo elgg_echo('access'); ?>:
-			<?php echo elgg_view('input/access', array('internalname' => 'params[access_id]','value' => $vars['entity']->access_id)); ?>
-		</label>
-	</p>
-	<p>
-		<input type="hidden" name="guid" value="<?php echo $guid; ?>" />
-		<input type="hidden" name="noforward" value="true" />
-		<input type="submit" id="submit<?php echo $guid; ?>" value="<?php
-
-			echo elgg_echo('save');			
-		
-		?>" />
-	</p>
-
-</form>
 
 <script type="text/javascript">
 $(document).ready(function() {
