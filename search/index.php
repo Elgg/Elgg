@@ -43,9 +43,10 @@
 						$label = 'item:' . $object_type;
 						if (!empty($object_subtype)) $label .= ':' . $object_subtype;
 						global $CONFIG;
-						add_submenu_item(elgg_echo($label), $CONFIG->wwwroot . "search/?tag=". urlencode($tag) ."&object=". urlencode($object_type) ."&tagtype=" . urlencode($md_type) . "&owner_guid=" . urlencode($owner_guid));
+						add_submenu_item(elgg_echo($label), $CONFIG->wwwroot . "search/?tag=". urlencode($tag) ."&subtype=" . $object_subtype . "&object=". urlencode($object_type) ."&tagtype=" . urlencode($md_type) . "&owner_guid=" . urlencode($owner_guid));
 					}
 			}
+			add_submenu_item(elgg_echo('all'), $CONFIG->wwwroot . "search/?tag=". urlencode($tag) ."&owner_guid=" . urlencode($owner_guid));
 			
 		}
 		
