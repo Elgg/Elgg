@@ -18,6 +18,8 @@
 	 * 
 	 */
 	
+	$id = $vars['internalid'];
+	$name = $vars['internalname'];
 	$body = $vars['body'];
 	$action = $vars['action'];
 	$enctype = $vars['enctype'];
@@ -29,7 +31,7 @@
 	$security_header = elgg_view('input/hidden', array('internalname' => '__elgg_token', 'value' => $token));
 	$security_header .= elgg_view('input/hidden', array('internalname' => '__elgg_ts', 'value' => $ts));
 ?>
-<form action="<?php echo $action; ?>" method="<?php echo $method; ?>" <?php if ($enctype!="") echo "enctype=\"$enctype\""; ?>>
+<form <?php if ($id) { ?>id="<?php echo $id; ?>" <?php } ?> <?php if ($name) { ?>name="<?php echo $name; ?>" <?php } ?> action="<?php echo $action; ?>" method="<?php echo $method; ?>" <?php if ($enctype!="") echo "enctype=\"$enctype\""; ?>>
 <?php echo $security_header; ?>
 <?php echo $body; ?>
 </form>
