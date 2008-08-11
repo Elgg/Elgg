@@ -27,7 +27,10 @@
 	            $delete_collection = delete_access_collection($collection_id);
 	        
 	            // Success message
-		        system_message(elgg_echo("friends:collectiondeleted"));
+		        if ($delete_collection) 
+		        	system_message(elgg_echo("friends:collectiondeleted"));
+		        else
+		        	register_error(elgg_echo("friends:collectiondeletefailed"));
 		        
 	        } else {
     	        
