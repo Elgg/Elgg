@@ -1122,11 +1122,9 @@ background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_priv
 .search_listing_icon {
 	position: absolute;
 }
-
 .search_listing_icon img {
 	width: 40px;
 }
-
 .search_listing_icon .avatar_menu_button img {
 	width: 15px;
 }
@@ -1135,10 +1133,15 @@ background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_priv
 	margin-left: 50px;
 	min-height: 40px;
 }
-
 .search_listing_info p {
 	margin:0 0 3px 0;
 	line-height:1.2em;
+}
+.search_listing_info p.owner_timestamp {
+	margin:0;
+	padding:0;
+	color:#666666;
+	font-size: 90%;
 }
 
 table.search_gallery {
@@ -2072,9 +2075,8 @@ a.toggle_customise_edit_panel:hover {
 }
 
 /* ***************************************
-	STUFF BELOW NEEDS SORTING
+	BREADCRUMBS
 *************************************** */
-/* Breadcrumbs */
 #pages_breadcrumbs {
 	font-size: 80%;
 	color:#999999;
@@ -2090,6 +2092,10 @@ a.toggle_customise_edit_panel:hover {
 	text-decoration: underline;
 }
 
+
+/* ***************************************
+	MISC.
+*************************************** */
 /* general page titles in main content area */
 #content_area_user_title h2 {	
 	background:#F5F5F5;
@@ -2152,7 +2158,74 @@ a.toggle_customise_edit_panel:hover {
 	width: 100px;
 	height: 100px;
 }	
-	
+
+
+/* ***************************************
+	SETTINGS & ADMIN
+*************************************** */
+
+.settings_form h3,
+.usersettings_statistics h3,
+.admin_statistics h3,
+#admin_users_online h3 {
+	background:#e4e4e4;
+	border-bottom:1px solid #d0d0d0;
+	color:#666666;
+	font-size:1.1em;
+	line-height:1em;
+	margin:30px 0 10px 0;
+	padding:5px;	
+}
+.settings_form label,
+.admin_debug label,
+.admin_usage label {
+	color:#333333;
+	font-size:100%;
+	font-weight:normal;
+}
+.settings_form {
+	border-bottom:1px solid #cccccc;
+	padding:0 0 20px 0;
+}
+.admin_usage {
+	border-bottom:1px solid #cccccc;
+	padding:0 0 20px 0;
+}
+
+.usersettings_statistics .odd,
+.admin_statistics .odd {
+	background:#f5f5f5;
+}
+.usersettings_statistics .even,
+.admin_statistics .even {
+	background:#ffffff;
+}
+.usersettings_statistics td,
+.admin_statistics td {
+	padding:2px 4px 2px 4px;
+}
+.usersettings_statistics td.column_one,
+.admin_statistics td.column_one {
+	width:200px;
+}
+
+/* add user pane on user admin */
+#add_user_showhide #add-box {
+	padding:20px;
+	background: #dedede;
+}
+.admin_adduser_link {
+	margin:0 0 20px 0;
+}
+#search-box {
+	margin:0 0 20px 0;
+}
+
 .manifest_file {
 	display:none;
 }
+
+
+
+
+
