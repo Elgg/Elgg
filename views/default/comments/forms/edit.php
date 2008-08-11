@@ -14,25 +14,11 @@
 	 
 	 if (isset($vars['entity']) && isloggedin()) {
 	 
-?>
- 
-    <form action="<?php echo $vars['url']; ?>action/comments/add" method="post">
-				<p>
-					<label><?php echo elgg_echo("generic_comments:text"); ?><br />
-						<?php
-
-							echo elgg_view('input/longtext',array('internalname' => 'generic_comment'));
-						
-						?>
-					</label>
-				</p>
-				<p>
-					<input type="hidden" name="entity_guid" value="<?php echo $vars['entity']->getGUID(); ?>" /> 
-					<input type="submit" value="<?php echo elgg_echo("save"); ?>" />
-				</p>
-	</form>
-	
-<?php
+		 $form_body = "<p><label>".elgg_echo("generic_comments:text")."<br />" . elgg_view('input/longtext',array('internalname' => 'generic_comment')) . "</label></p>";
+		 $form_body .= "<p>" . elgg_view('input/hidden', array('internalname' => 'entity_guid', 'value' => $vars['entity']->getGUID()));
+		 $form_body .= elgg_view('input/submit', array('value' => elgg_echo("save"))) . "</p>";
+		 
+		 echo elgg_view('input/form', array('body' => $form_body, 'action' => "{$vars['url']}action/comments/add"));
 
     }
     
