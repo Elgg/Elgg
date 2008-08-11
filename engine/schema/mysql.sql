@@ -136,6 +136,7 @@ CREATE TABLE `prefix_users_entity` (
   `prev_last_login` int(11) NOT NULL default '0',
   
   PRIMARY KEY  (`guid`),
+  UNIQUE KEY (`username`),
   KEY `password` (`password`),
   FULLTEXT KEY `name` (`name`),
   FULLTEXT KEY (`name`,`username`)
