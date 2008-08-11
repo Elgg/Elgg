@@ -138,10 +138,15 @@
 	        		{
 	        			$returnval = true; // We have already got this far, so unless anything else says something to the contry we assume we're ok
 	        			
-	        			return trigger_plugin_hook('action_gatekeeper:permissions:check', 'all', array(
+	        			$returnval = trigger_plugin_hook('action_gatekeeper:permissions:check', 'all', array(
 	        				'token' => $token,
 	        				'time' => $ts
 	        			), $returnval);
+	        			
+	        			if ($returnval)
+	        				return true;
+	        			else
+	        				register_error(elgg_echo('actiongatekeeper:pluginprevents'));
 	        		}
 	        		else
 	        			register_error(elgg_echo('actiongatekeeper:timeerror'));
