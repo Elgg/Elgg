@@ -29,7 +29,24 @@
 		}
 		$owner_guid = get_input('owner_guid',0);
 		if (substr_count($owner_guid,',')) {
-			$owner_guid = explode(",",$owner_guid);
+			$owner_guid_array = explode(",",$owner_guid);
+		} else {
+			$owner_guid_array = $owner_guid;
+		}
+		
+	// Set up submenus
+		if ($object_types = get_registered_entity_types()) {
+			
+			foreach($object_types as $object_type => $subtype_array) {
+				if (is_array($subtype_array) && sizeof($subtype_array))
+					foreach($subtype_array as $object_subtype) {
+						$label = 'item:' . $object_type;
+						if (!empty($object_subtype)) $label .= ':' . $object_subtype;
+						global $CONFIG;
+						add_submenu_item(elgg_echo($label), $CONFIG->wwwroot . "search/?tag=". urlencode($tag) ."&object=". urlencode($object_type) ."&tagtype=" . urlencode($md_type) . "&owner_guid=" . urlencode($owner_guid));
+					}
+			}
+			
 		}
 		
 		if (!empty($tag)) {
@@ -37,7 +54,7 @@
 			$body .= elgg_view_title(sprintf(elgg_echo('searchtitle'),$tag));
 			$body .= trigger_plugin_hook('search','',$tag,"");
 			$body .= elgg_view('search/startblurb',array('tag' => $tag));
-			$body .= list_entities_from_metadata($md_type, $tag, $objecttype, $subtype, $owner_guid, 10, false, false);
+			$body .= list_entities_from_metadata($md_type, $tag, $objecttype, $subtype, $owner_guid_array, 10, false, false);
 			$body = elgg_view_layout('two_column_left_sidebar','',$body);
 		}
 		

@@ -776,4 +776,14 @@
 		return get_entities_from_relationship('member', $user_guid, true);
 	}
 	
+	/**
+	 * Performs initialisation functions for groups
+	 *
+	 */
+	function group_init() {
+		register_entity_type('group','');
+	}
+	
+	register_elgg_event_handler('init','system','group_init');
+	
 ?>

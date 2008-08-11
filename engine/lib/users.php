@@ -1161,6 +1161,8 @@
 		extend_elgg_settings_page('user/settings/language', 'usersettings/user', 1);
 		//register_action("user/language");
 		
+		// Register the user type
+		register_entity_type('user','');
 		
 		register_plugin_hook('usersettings:save','user','users_settings_save');
 		register_plugin_hook('search','all','search_list_users_by_name');
@@ -1176,7 +1178,9 @@
 		// Change this to set the number of users that display on the search page
 		$threshold = 4;
 
-		if (!get_input('offset'))
+		$object = get_input('object');
+		
+		if (!get_input('offset') && (empty($object) || $object == 'user'))
 		if ($users = search_for_user($tag,$threshold)) {
 			
 			$countusers = search_for_user($tag,0,0,"",true);

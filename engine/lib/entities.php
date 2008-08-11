@@ -1869,6 +1869,70 @@
 	}
 	
 	/**
+	 * Registers and entity type and subtype to return in search and other places.
+	 * A description in the elgg_echo languages file of the form item:type:subtype
+	 * is also expected.
+	 *
+	 * @param string $type The type of entity (object, site, user, group)
+	 * @param string $subtype The subtype to register (may be blank)
+	 * @return true|false Depending on success
+	 */
+	function register_entity_type($type, $subtype) {
+		
+		global $CONFIG;
+		
+		$type = strtolower($type);
+		if (!in_array($type,array('object','site','group','user'))) return false;
+		
+		if (!isset($CONFIG->registered_entities)) $CONFIG->registered_entities = array();
+		$CONFIG->registered_entities[$type][] = $subtype;
+		
+		return true;
+		
+	}
+	
+	/**
+	 * Returns registered entity types and subtypes
+	 * 
+	 * @see register_entity_type
+	 *
+	 * @param string $type The type of entity (object, site, user, group) or blank for all
+	 * @return array|false Depending on whether entities have been registered
+	 */
+	function get_registered_entity_types($type = '') {
+		
+		global $CONFIG;
+		
+		if (!isset($CONFIG->registered_entities)) return false;
+		if (!empty($type)) $type = strtolower($type);
+		if (!empty($type) && empty($CONFIG->registered_entities[$type])) return false;
+		
+		if (empty($type))
+			return $CONFIG->registered_entities;
+			
+		return $CONFIG->registered_entities[$type];
+		
+	}
+	
+	/**
+	 * Determines whether or not the specified entity type and subtype have been registered in the system
+	 *
+	 * @param string $type The type of entity (object, site, user, group)
+	 * @param string $subtype The subtype (may be blank)
+	 * @return true|false Depending on whether or not the type has been registered
+	 */
+	function is_registered_entity_type($type, $subtype) {
+		
+		global $CONFIG;
+		
+		if (!isset($CONFIG->registered_entities)) return false;
+		$type = strtolower($type);
+		if (empty($CONFIG->registered_entities[$type])) return false;
+		if (in_array($subtype, $CONFIG->registered_entities[$type])) return true;
+		
+	}
+	
+	/**
 	 * Page handler for generic entities view system
 	 *
 	 * @param array $page Page elements from pain page handler
