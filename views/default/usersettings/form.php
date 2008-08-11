@@ -1,15 +1,7 @@
-<form action="<?php echo $vars['url']; ?>action/usersettings/save" method="post" >
-
-	<div class="settings_form">
 <?php
 
-	echo elgg_view("usersettings/user");
+	$form_body = "<div class=\"settings_form\">" . elgg_view("usersettings/user") . "</div>";
+	$form_body .= "<p>" . elgg_view('input/submit', array('value' => elgg_echo('save'))) . "</p>";
 
+	echo elgg_view('input/form', array('action' => "{$vars['url']}action/usersettings/save", 'body' => $form_body));
 ?>
-	</div>
-
-	<p>
-		<input type="submit" value="<?php echo elgg_echo('save'); ?>" />
-	</p>
-
-</form>

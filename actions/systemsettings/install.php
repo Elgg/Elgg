@@ -13,6 +13,8 @@
 	 * @link http://elgg.org/
 	 */
 
+	if (is_installed()) gatekeeper();
+
 	if (get_input('settings') == 'go') {
 		
 		if (!datalist_get('default_site')) {

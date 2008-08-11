@@ -20,58 +20,32 @@
 		} else {
 			$action = $vars['action'];
 		}
-
-?>
-
-	<form action="<?php echo $action; ?>" method="post">
 		
-<?php
-
+		$form_body = "";
 		foreach(array('sitename','sitedescription', 'wwwroot','path','dataroot', 'view') as $field) {
-
-?>
-		<p>
-			<?php echo elgg_echo($field); ?><br />
-			<?php 
-				echo elgg_view("input/text",array('internalname' => $field, 'value' => $vars['config']->$field)); 
-			?>
-		</p>
-	
-<?php
-
+			$form_body .= "<p>";
+			$form_body .= elgg_echo($field) . "<br />";
+			$form_body .= elgg_view("input/text",array('internalname' => $field, 'value' => $vars['config']->$field));
+			$form_body .= "</p>";
 		}
+		
+		$languages = get_installed_translations();
+		$form_body .= "<p>" . elgg_echo('language') . elgg_view("input/pulldown", array('internalname' => 'language', 'value' => $vars['config']->language, 'options_values' => $languages)) . "</p>";
+		
+		$form_body .= "<p>" . elgg_echo('debug') . "<br />" .elgg_view("input/checkboxes", array('options' => array(elgg_echo('debug:label')), 'internalname' => 'debug', 'value' => ($vars['config']->debug ? elgg_echo('debug:label') : "") )) . "</p>";
+		
+		$form_body .= "<p>" . elgg_echo('usage') . "<br />";
+		$on = elgg_echo('usage:label');
 
+		if (isset($CONFIG->ping_home))
+			$on = ($vars['config']->ping_home!='disabled' ? elgg_echo('usage:label') : "");
+		$form_body .= elgg_view("input/checkboxes", array('options' => array(elgg_echo('usage:label')), 'internalname' => 'usage', 'value' => $on )); 
+		$form_body .= "</p>";
+		
+		$form_body .= elgg_view('input/hidden', array('internalname' => 'settings', 'value' => 'go'));
+		
+		$form_body .= elgg_view('input/submit', array('value' => elgg_echo("save")));
+		
+		echo elgg_view('input/form', array('action' => $action, 'body' => $form_body));
+		
 ?>
-		<p>
-			<?php echo elgg_echo('language'); ?>
-			<?php
-				$languages = get_installed_translations();
-				
-				echo elgg_view("input/pulldown", array('internalname' => 'language', 'value' => $vars['config']->language, 'options_values' => $languages));
-			?>
-		</p>
-
-		<p>
-			<?php echo elgg_echo('debug'); ?><br />
-			<?php 
-				echo elgg_view("input/checkboxes", array('options' => array(elgg_echo('debug:label')), 'internalname' => 'debug', 'value' => ($vars['config']->debug ? elgg_echo('debug:label') : "") )); 
-			?>
-		</p>
-		
-		<p>
-			<?php echo elgg_echo('usage'); ?><br />
-			<?php
-				$on = elgg_echo('usage:label');
-				
-				if (isset($CONFIG->ping_home))
-					$on = ($vars['config']->ping_home!='disabled' ? elgg_echo('usage:label') : "");
-				echo elgg_view("input/checkboxes", array('options' => array(elgg_echo('usage:label')), 'internalname' => 'usage', 'value' => $on )); 
-			?>
-		</p>
-		
-		<p>
-			<input type="hidden" name="settings" value="go" />
-			<input type="submit" value="<?php echo elgg_echo("save"); ?>" />
-		</p>
-	
-	</form>

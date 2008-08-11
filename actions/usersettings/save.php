@@ -13,6 +13,7 @@
 	global $CONFIG;
 
 	gatekeeper();
+	action_gatekeeper();
 	
 	trigger_plugin_hook('usersettings:save','user');
 	
