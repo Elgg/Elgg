@@ -27,7 +27,7 @@
 
 	// Generate a security header
 	$security_header = "";
-	if ($vars['disable_security']==true)
+	if ($vars['disable_security']!=true)
 	{
 		$ts = time();
 		$token = generate_action_token($ts);
