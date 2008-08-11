@@ -32,9 +32,9 @@
 		$languages = get_installed_translations();
 		$form_body .= "<p>" . elgg_echo('language') . elgg_view("input/pulldown", array('internalname' => 'language', 'value' => $vars['config']->language, 'options_values' => $languages)) . "</p>";
 		
-		$form_body .= "<p>" . elgg_echo('debug') . "<br />" .elgg_view("input/checkboxes", array('options' => array(elgg_echo('debug:label')), 'internalname' => 'debug', 'value' => ($vars['config']->debug ? elgg_echo('debug:label') : "") )) . "</p>";
+		$form_body .= "<p class=\"admin_debug\">" . elgg_echo('debug') . "<br />" .elgg_view("input/checkboxes", array('options' => array(elgg_echo('debug:label')), 'internalname' => 'debug', 'value' => ($vars['config']->debug ? elgg_echo('debug:label') : "") )) . "</p>";
 		
-		$form_body .= "<p>" . elgg_echo('usage') . "<br />";
+		$form_body .= "<p class=\"admin_usage\">" . elgg_echo('usage') . "<br />";
 		$on = elgg_echo('usage:label');
 
 		if (isset($CONFIG->ping_home))
