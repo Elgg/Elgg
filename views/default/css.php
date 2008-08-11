@@ -1243,17 +1243,60 @@ temp force image width until upload size is changed
 /* ***************************************
 	PLUGIN SETTINGS
 *************************************** */
-#plugin_details {
-	margin:0 0 20px 0;
-	padding:10px;
+.plugin_details {
+	margin:0 0 10px 0;
+	padding:5px 10px 5px 10px;
 }
-#plugin_details.active {
-	border:1px solid lime;
+.active {
+	border:1px solid #00cc00;
+    background:#ccffcc;
 }
-#plugin_details.not-active {
-	border:1px solid red;
+.not-active {
+    border:1px solid #D3322A;
+    background:#F7DAD8;
 }
-
+.plugin_details p {
+	margin:0;
+	padding:4px 0 0 0;
+}
+.plugin_details a.manifest_details {
+	cursor:pointer;
+	font-size:80%;
+}
+.not-active .admin_plugin_enable_disable a {
+	float:right;
+	font: 12px/100% Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #ffffff;
+	background:#4690d6;
+	border: 1px solid #4690d6;
+	-webkit-border-radius: 4px; 
+	-moz-border-radius: 4px;
+	width: auto;
+	padding: 4px;
+	margin:5px 0 0 0;
+	cursor: pointer;
+}
+.not-active .admin_plugin_enable_disable a:hover {
+	background: #0054a7;
+}
+.active .admin_plugin_enable_disable a {
+	float:right;
+	font: 12px/100% Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #ffffff;
+	background:#999999;
+	border: 1px solid #999999;
+	-webkit-border-radius: 4px; 
+	-moz-border-radius: 4px;
+	width: auto;
+	padding: 4px;
+	margin:5px 0 0 0;
+	cursor: pointer;
+}
+.active .admin_plugin_enable_disable a:hover {
+	background: #333333;
+}
 
 /* ***************************************
 	GENERIC COMMENTS
@@ -2110,3 +2153,6 @@ a.toggle_customise_edit_panel:hover {
 	height: 100px;
 }	
 	
+.manifest_file {
+	display:none;
+}
