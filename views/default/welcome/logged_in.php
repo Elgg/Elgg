@@ -17,7 +17,7 @@
 
 		//add various views to area1
 		$area1 = "<h2>" . sprintf(elgg_echo("welcome"),$vars['user']->name) . "</h2>"; 
-		$area1 .= elgg_echo("welcome_message") . "<br />";
+		$area1 .= "<p>" . elgg_echo("welcome_message") . "</p><br />";
 		$url = $vars['url'] . "action/logout";
 		$area1 .= "<a href=" . $url . ">" . elgg_echo('logout') . "</a>";
 

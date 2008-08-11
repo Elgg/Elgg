@@ -16,7 +16,7 @@
 	<?php
 
 		//add various views to area1
-		$area1 = elgg_echo("welcome_message");
+		$area1 = "<p>" . elgg_echo("welcome_message") . "</p>";
 		$area1 .= elgg_view("account/forms/login");
 
 		//send area one to the appropriate canvas layout

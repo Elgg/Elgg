@@ -451,12 +451,14 @@ h6 { font-size: 0.8em; }
 	background:transparent url(<?php echo $vars['url']; ?>_graphics/toolbar_messages_icon.gif) no-repeat left 2px;
 	padding:0 0 4px 16px;
 	margin:0 15px 0 5px;
+	cursor:pointer;
 }
 #elgg_topbar_container_left a.privatemessages:hover {
 	text-decoration: none;
+	background:transparent url(<?php echo $vars['url']; ?>_graphics/toolbar_messages_icon.gif) no-repeat left -36px;
 }
 #elgg_topbar_container_left a.privatemessages_new {
-	background:transparent url(<?php echo $vars['url']; ?>_graphics/toolbar_messages_icon.gif) no-repeat left bottom;
+	background:transparent url(<?php echo $vars['url']; ?>_graphics/toolbar_messages_icon.gif) no-repeat left -17px;
 	padding:0 0 0 18px;
 	margin:0 15px 0 5px;
 	color:white;
