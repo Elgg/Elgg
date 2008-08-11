@@ -50,15 +50,25 @@
 			
 		}
 		
+		if (empty($objecttype) && empty($subtype)) {
+			$title = sprintf(elgg_echo('searchtitle'),$tag); 
+		} else {
+			if (empty($objecttype)) $objecttype = 'object';
+			$itemtitle = 'item:' . $objecttype;
+			if (!empty($subtype)) $itemtitle .= ':' . $subtype;
+			$itemtitle = elgg_echo($itemtitle);
+			$title = sprintf(elgg_echo('advancedsearchtitle'),$itemtitle,$tag);
+		}
+		
 		if (!empty($tag)) {
 			$body = "";
-			$body .= elgg_view_title(sprintf(elgg_echo('searchtitle'),$tag));
+			$body .= elgg_view_title($title); // elgg_view_title(sprintf(elgg_echo('searchtitle'),$tag));
 			$body .= trigger_plugin_hook('search','',$tag,"");
-			$body .= elgg_view('search/startblurb',array('tag' => $tag));
+			// $body .= elgg_view('search/startblurb',array('tag' => $tag));
 			$body .= list_entities_from_metadata($md_type, $tag, $objecttype, $subtype, $owner_guid_array, 10, false, false);
 			$body = elgg_view_layout('two_column_left_sidebar','',$body);
 		}
 		
-		page_draw(sprintf(elgg_echo('searchtitle'),$tag),$body);
+		page_draw($title,$body);
 
 ?>

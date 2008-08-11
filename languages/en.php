@@ -347,6 +347,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	
 			'search' => "Search",
 			'searchtitle' => "Search: %s",
+			'advancedsearchtitle' => "%s with results matching %s",
 			'notfound' => "No results found.",
 			'next' => "Next",
 			'previous' => "Previous",
