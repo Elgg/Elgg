@@ -25,9 +25,13 @@ $(document).ready(function () {
 		$('div#customise_editpanel').slideToggle("fast");
 		return false;
     }); 
-    
-    
 
+	// toggle plugin's more info on admin tools admin
+	$('a.manifest_details').click(function () {
+		$(this.parentNode.parentNode).children("[class=manifest_file]").slideToggle("fast");
+		return false;
+	});
+  
 	//////////////////
 	// WIDGET GALLERY
 	// sortable widgets
