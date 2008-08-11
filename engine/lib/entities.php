@@ -1313,9 +1313,6 @@
 		if ($subtype === false || $subtype === null || $subtype === 0)
 			return false;
 		
-		$type = sanitise_string($type);
-		$subtype = get_subtype_id($type, $subtype);
-		
 		if ($order_by == "") $order_by = "time_created desc";
 		$order_by = sanitise_string($order_by);
 		$limit = (int)$limit;
@@ -1326,10 +1323,36 @@
 				
 		$where = array();
 		
-		if ($type != "")
-			$where[] = "type='$type'";
-		if ($subtype!=="")
-			$where[] = "subtype=$subtype";
+		if (is_array($type)) {
+			
+			$tempwhere = "";
+			if (sizeof($type))
+			foreach($type as $typekey => $subtypearray) {
+				foreach($subtypearray as $subtypeval) {
+					$typekey = sanitise_string($typekey);
+					if (!empty($subtypeval)) {
+						$subtypeval = (int) get_subtype_id($typekey, $subtypeval);
+					} else {
+						$subtypeval = 0;
+					}
+					if (!empty($tempwhere)) $tempwhere .= " or ";
+					$tempwhere .= "(type = '{$typekey}' and subtype = {$subtypeval})";
+				}								
+			}
+			if (!empty($tempwhere)) $where[] = "({$tempwhere})";
+			
+		} else {
+		
+			$type = sanitise_string($type);
+			$subtype = get_subtype_id($type, $subtype);
+			
+			if ($type != "")
+				$where[] = "type='$type'";
+			if ($subtype!=="")
+				$where[] = "subtype=$subtype";
+				
+		}
+			
 		if ($owner_guid != "") {
 			if (!is_array($owner_guid)) {
 				$owner_array = array($owner_guid);
@@ -1370,7 +1393,6 @@
 		if (!$count) {
 			$query .= " order by $order_by";
 			if ($limit) $query .= " limit $offset, $limit"; // Add order and limit
-
 			$dt = get_data($query, "entity_row_to_elggstar");
 			return $dt;
 		} else {
@@ -1943,6 +1965,40 @@
 			set_input('guid',$page[0]);
 			@include($CONFIG->path . "entities/index.php");
 		}
+	}
+	
+	/**
+	 * Returns a viewable list of entities based on the registered types
+	 *
+	 * @see elgg_view_entity_list
+	 * 
+	 * @param string $type The type of entity (eg "user", "object" etc)
+	 * @param string $subtype The arbitrary subtype of the entity
+	 * @param int $owner_guid The GUID of the owning user
+	 * @param int $limit The number of entities to display per page (default: 10)
+	 * @param true|false $fullview Whether or not to display the full view (default: true)
+	 * @param true|false $viewtypetoggle Whether or not to allow gallery view 
+	 * @return string A viewable list of entities
+	 */
+	function list_registered_entities($owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = false) {
+		
+		$typearray = array();
+		
+		if ($object_types = get_registered_entity_types()) {
+			foreach($object_types as $object_type => $subtype_array) {
+				if (is_array($subtype_array) && sizeof($subtype_array))
+					foreach($subtype_array as $object_subtype) {
+						$typearray[$object_type][] = $object_subtype;
+					}
+			}
+		}
+		
+		$offset = (int) get_input('offset');
+		$count = get_entities($typearray, '', $owner_guid, "", $limit, $offset, true);
+		$entities = get_entities($typearray, '', $owner_guid, "", $limit, $offset);
+
+		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle);
+		
 	}
 	
 	/**

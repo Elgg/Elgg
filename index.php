@@ -22,13 +22,15 @@
 			/**
 		      * Check to see if user is logged in, if not display login form
 		      **/
-		    if ($_SESSION['id'] != -1){
-		        //Load the sample welcome page
-		        echo page_draw(null, elgg_view("welcome"));         
-		    } else {
-		        //Load the front page
-		        echo page_draw(null, elgg_view("login"));
-			}
+				
+				if (isloggedin()) forward('pg/dashboard');
+			
+	        //Load the front page
+		        $content = list_registered_entities();
+		        global $autofeed;
+		        $autofeed = false;
+		        $content = elgg_view_layout('two_column_left_sidebar', '', $content, elgg_view("account/forms/login"));
+		        echo page_draw(null, $content);
 		
 		}
 

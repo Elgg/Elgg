@@ -19,9 +19,6 @@
 		$area1 = "<p>" . elgg_echo("welcome_message") . "</p>";
 		$area1 .= elgg_view("account/forms/login");
 
-		//send area one to the appropriate canvas layout
-		$body = elgg_view_layout("one_column", $area1);
-
 		//draw to screen
 		echo $body;	
 	?>
