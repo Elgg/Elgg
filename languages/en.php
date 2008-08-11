@@ -368,7 +368,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'settings' => "Settings",
 	
 			'register' => "Register",
-			'registerok' => "You have successfully registered for %s, please confirm your email address by clicking on the link we sent you.",
+			'registerok' => "You have successfully registered for %s. To activate your account, please confirm your email address by clicking on the link we sent you.",
 			'registerbad' => "Your registration was unsuccessful. The username may already exist, or your passwords might not match.",
 			'registerdisabled' => "Registration has been disabled by the system administrator",
 	
