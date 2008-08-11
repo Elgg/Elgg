@@ -26,10 +26,14 @@
 	$method = $vars['method']; if (!$method) $method = 'POST';
 
 	// Generate a security header
-	$ts = time();
-	$token = generate_action_token($ts);
-	$security_header = elgg_view('input/hidden', array('internalname' => '__elgg_token', 'value' => $token));
-	$security_header .= elgg_view('input/hidden', array('internalname' => '__elgg_ts', 'value' => $ts));
+	$security_header = "";
+	if ($vars['disable_security']==true)
+	{
+		$ts = time();
+		$token = generate_action_token($ts);
+		$security_header = elgg_view('input/hidden', array('internalname' => '__elgg_token', 'value' => $token));
+		$security_header .= elgg_view('input/hidden', array('internalname' => '__elgg_ts', 'value' => $ts));
+	}
 ?>
 <form <?php if ($id) { ?>id="<?php echo $id; ?>" <?php } ?> <?php if ($name) { ?>name="<?php echo $name; ?>" <?php } ?> action="<?php echo $action; ?>" method="<?php echo $method; ?>" <?php if ($enctype!="") echo "enctype=\"$enctype\""; ?>>
 <?php echo $security_header; ?>
