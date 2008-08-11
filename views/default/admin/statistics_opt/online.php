@@ -16,7 +16,7 @@
 	get_context('admin');
 ?>
 
-<div>
-    <h2><?php echo elgg_echo('admin:statistics:label:onlineusers'); ?></h2>
+<div class="admin_users_online">
+    <h3><?php echo elgg_echo('admin:statistics:label:onlineusers'); ?></h3>
     <?php echo $users_online; ?>
 </div>

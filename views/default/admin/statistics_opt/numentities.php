@@ -15,7 +15,7 @@
 	$entity_stats = get_entity_statistics();
 ?>
 <div class="admin_statistics">
-    <h2><?php echo elgg_echo('admin:statistics:label:numentities'); ?></h2>
+    <h3><?php echo elgg_echo('admin:statistics:label:numentities'); ?></h3>
     <table>
         <?php
             foreach ($entity_stats as $k => $entry)
@@ -23,6 +23,10 @@
             	arsort($entry);
                 foreach ($entry as $a => $b)
                 {
+                    
+                    //This function controls the alternating class
+                	$even_odd = ( 'odd' != $even_odd ) ? 'odd' : 'even';
+
                     if ($a == "__base__") {
                     	$a = elgg_echo("item:{$k}");
                     	if (empty($a)) 
@@ -38,8 +42,8 @@
                     		}
                     	  }
                     echo <<< END
-                        <tr>
-                            <td style="width: 250px">{$a}:</td>
+                        <tr class="{$even_odd}">
+                            <td class="column_one">{$a}:</td>
                             <td>{$b}</td>
                         </tr>
 END;
