@@ -14,6 +14,7 @@
 	require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
 
 	admin_gatekeeper(); // Only admins can make someone an admin
+	action_gatekeeper();
 	
 	// Get variables
 	$username = get_input('username');
@@ -23,6 +24,7 @@
 	$name = get_input('name');
 	
 	$admin = get_input('admin');
+	if (is_array($admin)) $admin = $admin[0];
 	
 	// For now, just try and register the user
 	if (

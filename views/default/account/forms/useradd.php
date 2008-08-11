@@ -13,29 +13,22 @@
 	$admin_option = false;
 	if (($_SESSION['user']->admin) && ($vars['show_admin'])) 
 		$admin_option = true;
+		
+	$form_body = "<p><label>" . elgg_echo('name') . "<br />" . elgg_view('input/text' , array('internalname' => 'name')) . "</label><br />";
+	
+	$form_body .= "<label>" . elgg_echo('email') . "<br />" . elgg_view('input/text' , array('internalname' => 'email')) . "</label><br />";
+	$form_body .= "<label>" . elgg_echo('username') . "<br />" . elgg_view('input/text' , array('internalname' => 'username')) . "</label><br />";
+	$form_body .= "<label>" . elgg_echo('password') . "<br />" . elgg_view('input/password' , array('internalname' => 'password')) . "</label><br />";
+	$form_body .= "<label>" . elgg_echo('passwordagain') . "<br />" . elgg_view('input/password' , array('internalname' => 'password2')) . "</label><br />";
+	
+	if ($admin_option)
+		$form_body .= elgg_view('input/checkboxes', array('internalname' => "admin", 'options' => array(elgg_echo('admin_option'))));
+	
+	$form_body .= elgg_view('input/submit', array('internalname' => 'submit', 'value' => elgg_echo('register'))) . "</p>";
 ?>
 
 	
 	<div id="add-box">
 	<h2><?php echo elgg_echo('adduser'); ?></h2>
-		<form action="<?php echo $vars['url']; ?>action/useradd" method="POST">
-			<p><label><?php echo elgg_echo('name'); ?>:
-			<?php echo elgg_view('input/text', array('internalname' => 'name')); ?></label><br />
-			<label><?php echo elgg_echo('email'); ?>: 
-			<?php echo elgg_view('input/email', array('internalname' => 'email')); ?></label><br />
-			<label><?php echo elgg_echo('username'); ?>:
-			<?php echo elgg_view('input/text', array('internalname' => 'username')); ?></label><br />
-			<label><?php echo elgg_echo('password'); ?>: 
-			<?php echo elgg_view('input/password', array('internalname' => 'password')); ?></label><br />
-			<label><?php echo elgg_echo('passwordagain'); ?>:
-			<?php echo elgg_view('input/password', array('internalname' => 'password2')); ?></label><br />
-			<?php
-				if ($admin_option) {
-?>		
-			<label><?php echo elgg_echo('admin_option'); ?> <input type="checkbox" name="admin" /></label>	<br />		
-<?php 			
-				}
-			 ?>
-			<input type="submit" name="submit" class="submit_button" value="<?php echo elgg_echo('adduser'); ?>" /></p>
-	    </form>
+		<?php echo elgg_view('input/form', array('action' => "{$vars['url']}action/useradd", 'body' => $form_body)) ?>
 	</div>
