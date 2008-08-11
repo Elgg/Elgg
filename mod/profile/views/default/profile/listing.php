@@ -33,7 +33,7 @@
 	
 		$location = $vars['entity']->location;
 		if (!empty($location)) {
-			$info .= "<p>" . elgg_echo("profile:location") . ": " . elgg_view("output/tags",array('value' => $vars['entity']->location)) . "</p>";
+			$info .= "<p class=\"owner_timestamp\">" . elgg_echo("profile:location") . ": " . elgg_view("output/tags",array('value' => $vars['entity']->location)) . "</p>";
 		}
 		
 		echo elgg_view_listing($icon, $info);
