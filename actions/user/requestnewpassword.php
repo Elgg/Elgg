@@ -13,6 +13,8 @@
 	require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 	global $CONFIG;
 	
+	action_gatekeeper();
+	
 	$username = get_input('username');
 	
 	$user = get_user_by_username($username);
