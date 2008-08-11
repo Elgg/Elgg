@@ -19,7 +19,7 @@
 		<?php echo elgg_echo('user:password:label'); ?>: 
 		<?php
 			echo elgg_view('input/password',array('internalname' => 'password'));
-		?><br />
+		?></p><p>
 		<?php echo elgg_echo('user:password2:label'); ?>: <?php
 			echo elgg_view('input/password',array('internalname' => 'password2'));
 		?>

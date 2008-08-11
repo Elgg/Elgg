@@ -15,7 +15,7 @@
 	
 	if ($user) {
 ?>
-	<h2><?php echo elgg_echo('user:set:language'); ?></h2>
+	<h3><?php echo elgg_echo('user:set:language'); ?></h3>
 	<p>
 	
 		<?php echo elgg_echo('user:language:label'); ?>: <?php

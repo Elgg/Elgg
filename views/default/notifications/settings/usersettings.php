@@ -13,7 +13,7 @@
 	global $NOTIFICATION_HANDLERS;
 	$notification_settings = get_user_notification_settings(page_owner());
 ?>
-	<h2><?php echo elgg_echo('notifications:usersettings'); ?></h2>
+	<h3><?php echo elgg_echo('notifications:usersettings'); ?></h3>
 	
 	<p><?php echo elgg_echo('notifications:methods'); ?>
 	
