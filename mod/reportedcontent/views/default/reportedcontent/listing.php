@@ -14,7 +14,6 @@
             echo "<p class=\"reported_detail\"><b>" . elgg_echo('reportedcontent:objecturl') . ": </b><a href=\"{$report->address}\">" . $report->address . "</a></p>";
             echo "<p class=\"reported_detail\"><b>" . elgg_echo('reportedcontent:reason') . ": </b>" .$report->description . "</p>";
             echo "<p class=\"reported_detail\">[<a href=\"\">" . elgg_echo('reportedcontent:archive') . "</a>] - [<a href=\"\">" . elgg_echo('reportedcontent:delete') . "</a>]</p>";
-            echo elgg_view_comments($report);
             echo "</div>";
             
         }
