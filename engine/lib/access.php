@@ -83,6 +83,11 @@
 						if (!empty($collection->id)) $tmp_access_array[] = $collection->id;
 				}
 				
+				if ($user = get_entity($user_id)) {
+					if ($user instanceof ElggUser && $user->admin)
+						$tmp_access_array[] = 0;
+				}
+				
 				$access_array[$user_id] = $tmp_access_array;
 				
 			} else {
