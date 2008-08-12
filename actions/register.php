@@ -30,26 +30,39 @@
 		if (!$CONFIG->disable_registration)
 		{
 	// For now, just try and register the user
-			if (
-				(
-					(trim($password)!="") &&
-					(strcmp($password, $password2)==0) 
-				) &&
-				($guid = register_user($username, $password, $name, $email))
-			) {
-				if (($guid) && ($admin))
-				{
-					admin_gatekeeper(); // Only admins can make someone an admin
-					$new_user = get_entity($guid);
-					$new_user->admin = 'yes';
+	
+			try {
+				if (
+					(
+						(trim($password)!="") &&
+						(strcmp($password, $password2)==0) 
+					) &&
+					($guid = register_user($username, $password, $name, $email))
+				) {
+					if (($guid) && ($admin))
+					{
+						admin_gatekeeper(); // Only admins can make someone an admin
+						$new_user = get_entity($guid);
+						$new_user->admin = 'yes';
+					}
+					
+					system_message(sprintf(elgg_echo("registerok"),$CONFIG->sitename));
+					
+					forward(); // Forward on success, assume everything else is an error...
+				} else {
+					register_error(elgg_echo("registerbad"));
 				}
-				
-				system_message(sprintf(elgg_echo("registerok"),$CONFIG->sitename));
-			} else {
-				register_error(elgg_echo("registerbad"));
+			} catch (RegistrationException $r) {
+				register_error($r->getMessage());
 			}
 		}
 		else
 			register_error(elgg_echo('registerdisabled'));
+			
+		$qs = explode('?',$_SERVER['HTTP_REFERER']);
+		$qs = $qs[0];
+		$qs .= "?u=" . urlencode($username) . "&e=" . urlencode($email) . "&n=" . urlencode($name);
+		
+		forward($qs);
 
 ?>

@@ -370,8 +370,14 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	
 			'register' => "Register",
 			'registerok' => "You have successfully registered for %s. To activate your account, please confirm your email address by clicking on the link we sent you.",
-			'registerbad' => "Your registration was unsuccessful. The username may already exist, or your passwords might not match.",
+			'registerbad' => "Your registration was unsuccessful. The username may already exist, your passwords might not match, or your username or password may be too short.",
 			'registerdisabled' => "Registration has been disabled by the system administrator",
+	
+			'registration:notemail' => 'The email address you provided does not appear to be a valid email address.',
+			'registration:userexists' => 'That username already exists',
+			'registration:usernametooshort' => 'Your username must be a minimum of 4 characters long.',
+			'registration:passwordtooshort' => 'The password must be a minimum of 6 characters long.',
+			'registration:dupeemail' => 'This email address has already been registered.',
 	
 			'adduser' => "Add User",
 			'adduser:ok' => "You have successfully added a new user.",

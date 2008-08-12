@@ -690,6 +690,23 @@
 	}
 	
 	/**
+	 * Get an array of users from their
+	 *
+	 * @param string $email Email address.
+	 * @return Array of users
+	 */
+	function get_user_by_email($email)
+	{
+		global $CONFIG;
+		
+		$email = sanitise_string($email);
+		
+		$query = "SELECT e.* from {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}users_entity u on e.guid=u.guid where email='$email'";
+		
+		return get_data($query, 'entity_row_to_elggstar');
+	}
+	
+	/**
 	 * Searches for a user based on a complete or partial name or username using full text searching.
 	 * 
 	 * IMPORTANT NOTE: With MySQL's default setup:
@@ -937,6 +954,25 @@
 	}
 	
 	/**
+	 * Validates an email address.
+	 *
+	 * @param string $address Email address.
+	 * @return bool
+	 */
+	function is_email_address($address)
+	{
+		// TODO: Make this better!
+		
+		if (strpos($address, '@')=== false) 
+			return false;
+		
+		if (strpos($address, '.')=== false)
+			return false;
+			
+		return true;
+	}
+	
+	/**
 	 * Simple function that will generate a random clear text password suitable for feeding into generate_user_password().
 	 *
 	 * @see generate_user_password
@@ -967,12 +1003,18 @@
 	 * @param string $password The password
 	 * @param string $name The user's display name
 	 * @param string $email Their email address
+	 * @param bool $allow_multiple_emails Allow the same email address to be registered multiple times?
 	 * @return int|false The new user's GUID; false on failure
 	 */
-	function register_user($username, $password, $name, $email) {
+	function register_user($username, $password, $name, $email, $allow_multiple_emails = false) {
 		
 		// Load the configuration
 			global $CONFIG;
+			
+			$username = sanitise_string($username);
+			$password = sanitise_string($password);
+			$name = sanitise_string($name);
+			$email = sanitise_string($email);
 			
 		// A little sanity checking
 			if (empty($username)
@@ -982,10 +1024,24 @@
 					return false;
 				}	
 			
+			if (!is_email_address($email)) throw new RegistrationException(elgg_echo('registration:notemail'));
+			
+			if (strlen($username)<4) throw new RegistrationException(elgg_echo('registration:usernametooshort'));
+			
+			if (strlen($password)<6) throw new RegistrationException(elgg_echo('registration:passwordtooshort'));
+				
 		// Check to see if $username exists already
 			if ($user = get_user_by_username($username)) {
-				return false;
+				//return false;
+				throw new RegistrationException(elgg_echo('registration:userexists'));
 			}
+			
+		// If we're not allowed multiple emails then see if this address has been used before
+			if ((!$allow_multiple_emails) && (get_user_by_email($email)))
+			{
+				throw new RegistrationException(elgg_echo('registration:dupeemail'));
+			}
+			
 			
 		// Check to see if we've registered the first admin yet.
 		// If not, this is the first admin user!
