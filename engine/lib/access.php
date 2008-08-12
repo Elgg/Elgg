@@ -83,10 +83,10 @@
 						if (!empty($collection->id)) $tmp_access_array[] = $collection->id;
 				}
 				
-				if ($user = get_entity($user_id)) {
+				/*if ($user = get_entity($user_id)) {
 					if ($user instanceof ElggUser && $user->admin)
 						$tmp_access_array[] = 0;
-				}
+				}*/
 				
 				$access_array[$user_id] = $tmp_access_array;
 				
@@ -123,12 +123,12 @@
 				$owner = $_SESSION['id'];
 				if (!$owner) $owner = -1;
 				
-				if ($owner_entity = get_entity($owner)) {
+				/*if ($owner_entity = get_entity($owner)) {
 					if ($owner_entity instanceof ElggUser)
 						if ($owner_entity->admin)
 							$sql = " (1 = 1) ";
 				}
-				if (empty($sql))
+				if (empty($sql))*/
 					$sql = " ({$table_prefix}access_id in {$access} or ({$table_prefix}access_id = 0 and {$table_prefix}owner_guid = $owner))";
 			//}
 			//else
