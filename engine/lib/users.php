@@ -1065,9 +1065,6 @@
 			// Turn on email notifications by default
 			set_user_notification_setting($user->getGUID(), 'email', true);
 			
-			// Send email validation request
-			request_email_validation($user->getGUID());
-			
 			return $user->getGUID();
 	}
 	

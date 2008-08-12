@@ -46,6 +46,9 @@
 						$new_user->admin = 'yes';
 					}
 					
+					// Send email validation on register only
+					request_email_validation($guid);
+					
 					system_message(sprintf(elgg_echo("registerok"),$CONFIG->sitename));
 					
 					forward(); // Forward on success, assume everything else is an error...

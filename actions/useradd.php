@@ -27,23 +27,27 @@
 	if (is_array($admin)) $admin = $admin[0];
 	
 	// For now, just try and register the user
-	if (
-		(
-			(trim($password)!="") &&
-			(strcmp($password, $password2)==0) 
-		) &&
-		($guid = register_user($username, $password, $name, $email))
-	) {
-		if (($guid) && ($admin))
-		{
+	try {
+		if (
+			(
+				(trim($password)!="") &&
+				(strcmp($password, $password2)==0) 
+			) &&
+			($guid = register_user($username, $password, $name, $email, true))
+		) {
+			if (($guid) && ($admin))
+			{
+				
+				$new_user = get_entity($guid);
+				$new_user->admin = 'yes';
+			}
 			
-			$new_user = get_entity($guid);
-			$new_user->admin = 'yes';
+			system_message(sprintf(elgg_echo("adduser:ok"),$CONFIG->sitename));
+		} else {
+			register_error(elgg_echo("adduser:bad"));
 		}
-		
-		system_message(sprintf(elgg_echo("adduser:ok"),$CONFIG->sitename));
-	} else {
-		register_error(elgg_echo("adduser:bad"));
+	} catch (RegistrationException $r) {
+		register_error($r->getMessage());
 	}
 
 	forward($_SERVER['HTTP_REFERER']);
