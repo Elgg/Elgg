@@ -26,7 +26,11 @@
 				if (isloggedin()) forward('pg/dashboard');
 			
 	        //Load the front page
+	        	global $CONFIG;
+	        	$title = elgg_view_title($CONFIG->site->title);
+	        	set_context('search');
 		        $content = list_registered_entities();
+		        set_context('main');
 		        global $autofeed;
 		        $autofeed = false;
 		        $content = elgg_view_layout('two_column_left_sidebar', '', $content, elgg_view("account/forms/login"));
