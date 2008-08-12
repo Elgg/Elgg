@@ -20,7 +20,10 @@
 
 	<?php
 
-		echo elgg_view('sharing/invite',array('shares' => $shares, 'owner' => $owner, 'group' => $group));
+	if ($friends = get_entities_from_relationship('friend',$owner->getGUID(),false,'user','')) {
+		echo elgg_view('friends/picker',array('entities' => $friends, 'internalname' => 'user_guid'));	
+	}
+		// echo elgg_view('sharing/invite',array('shares' => $shares, 'owner' => $owner, 'group' => $group));
 	
 	?>
 	<input type="hidden" name="forward_url" value="<?php echo $forward_url; ?>" />
