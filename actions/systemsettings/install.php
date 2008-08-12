@@ -13,7 +13,7 @@
 	 * @link http://elgg.org/
 	 */
 
-	if (is_installed()) gatekeeper();
+	if (is_installed()) forward();
 
 	if (get_input('settings') == 'go') {
 		
