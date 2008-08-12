@@ -56,17 +56,22 @@
 END;
 		}
 		
-		//is the bookmark plugin installed?
-		if(is_plugin_enabled('bookmarks')){
+		//the follow are for logged in users only
+		if(isloggedin()){
+		
+    		//is the bookmark plugin installed?
+    		if(is_plugin_enabled('bookmarks')){
+    
+    		  	$label3 = elgg_echo('bookmarks:this');
+    			echo "<div id=\"owner_block_bookmark_this\"><a href=\"javascript:location.href='". $CONFIG->wwwroot . "mod/bookmarks/add.php?address='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)\">{$label3}</a></div>";
+    
+    		}
+    
+    		//report this button
+    		$label4 = elgg_echo('Report this');
+    		echo "<div id=\"owner_block_report_this\"><a href=\"javascript:location.href='". $CONFIG->wwwroot . "mod/reportedcontent/add.php?address='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)\">{$label4}</a></div>";
 
-		  	$label3 = elgg_echo('bookmarks:this');
-			echo "<div id=\"owner_block_bookmark_this\"><a href=\"javascript:location.href='". $CONFIG->wwwroot . "mod/bookmarks/add.php?address='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)\">{$label3}</a></div>";
-
-		}
-
-		//report this button
-		$label4 = elgg_echo('Report this');
-		echo "<div id=\"owner_block_report_this\"><a href=\"\">{$label4}</a></div>";
+	    }
 
 		
 		echo elgg_view('owner_block/extend');
