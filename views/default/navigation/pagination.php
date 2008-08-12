@@ -44,22 +44,12 @@
 	$baseurl = preg_replace('/[\&\?]'.$word.'\=[0-9]*/',"",$vars['baseurl']);
 	
 	//only display if there is content to paginate through or if we already have an offset
-	if ($count >= $limit || $offset > 0){
+	if ($count > $limit || $offset > 0){
 
 ?>
 
 <div class="pagination">
 <?php
-
-	//if ($count == 0) {
-		
-	//	static $notfounddisplayed;
-	//	if (!isset($notfounddisplayed) && $nonefound) {
-	//		echo elgg_echo("notfound");
-	//		$notfounddisplayed = true;
-	//	}
-		
-	//}
 
 	if ($offset > 0) {
 		
