@@ -123,7 +123,13 @@
 				$owner = $_SESSION['id'];
 				if (!$owner) $owner = -1;
 				
-				$sql = " ({$table_prefix}access_id in {$access} or ({$table_prefix}access_id = 0 and {$table_prefix}owner_guid = $owner))";
+				if ($owner_entity = get_entity($owner)) {
+					if ($owner_entity instanceof ElggUser)
+						if ($owner_entity->admin)
+							$sql = " (1 = 1) ";
+				}
+				if (empty($sql))
+					$sql = " ({$table_prefix}access_id in {$access} or ({$table_prefix}access_id = 0 and {$table_prefix}owner_guid = $owner))";
 			//}
 			//else
 			//	$sql = " 1 ";
