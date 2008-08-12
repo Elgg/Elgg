@@ -2035,8 +2035,11 @@ a.toggle_customise_edit_panel:hover {
 #group_stats {
 	width:180px;
 	background: #eeeeee;
-	padding:10px 10px 1px 10px;
+	padding:10px;
 	margin:10px 0 20px 0;
+}
+#group_stats p {
+	margin:0;
 }
 #group_members {
 	margin:10px;

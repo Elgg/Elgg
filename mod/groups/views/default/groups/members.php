@@ -26,4 +26,5 @@
     }
     
 ?>
+<br class="clearfloat" />
 </div>

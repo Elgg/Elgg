@@ -83,7 +83,7 @@
 }
 
 
-/* latest discussions on group page */
+/* latest discussions widget on groups homepage */
 #latest_discussion_widget {
 	margin:0 0 20px 0;
 }
@@ -130,6 +130,15 @@ a.add_topic_button:hover {
 	background: #0054a7;
 	border: 2px solid #0054a7;
 	text-decoration: none;
+}
+
+/* group files widget on group homepage */
+#filerepo_widget_layout {
+	margin:0 0 20px 0;
+}
+/* group pages widget on groups homepage */
+#group_pages_widget {
+	margin:0 0 20px 0;
 }
 
 
