@@ -26,9 +26,7 @@
 		}
 		else
 		{
-			add_menu(elgg_echo('groups'), $CONFIG->wwwroot . "mod/groups/",array(
-						menu_item(elgg_echo('groups:all'),$CONFIG->wwwroot."mod/groups/all.php"),
-					));
+			add_menu(elgg_echo('groups'), $CONFIG->wwwroot . "pg/groups/world/");
 		}
 		
 		// Register a page handler, so we can have nice URLs
