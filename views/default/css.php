@@ -1343,12 +1343,20 @@ temp force image width until upload size is changed
 	margin:0 10px 0 0;
 }
 #owner_block_rss_feed {
-	border-top:1px solid #cccccc;
+	/* border-top:1px solid #cccccc; */
 	margin:0 0 4px 0;
 	padding:5px 0 0 0;
 }
 #owner_block_odd_feed {
 	padding:0 0 7px 0;
+	/* border-bottom:1px solid #cccccc; */
+}
+#owner_block_bookmark_this {
+	margin:0 0 4px 0;
+}
+#owner_block_report_this {
+	padding:0 0 7px 0;
+	margin:0 0 4px 0;
 	border-bottom:1px solid #cccccc;
 }
 #owner_block_rss_feed a {
@@ -1363,17 +1371,31 @@ temp force image width until upload size is changed
 	padding:0 0 4px 20px;
 	background: url(<?php echo $vars['url']; ?>_graphics/icon_odd.gif) no-repeat left top;
 }
-#owner_block_rss_feed a:hover {
+#owner_block_bookmark_this a {
+	font-size: 90%;
+	color:#999999;
+	padding:0 0 4px 20px;
+	background: url(<?php echo $vars['url']; ?>_graphics/icon_bookmarkthis.gif) no-repeat left top;
+}
+#owner_block_report_this a {
+	font-size: 90%;
+	color:#999999;
+	padding:0 0 4px 20px;
+	background: url(<?php echo $vars['url']; ?>_graphics/icon_reportthis.gif) no-repeat left top;
+}
+#owner_block_rss_feed a:hover,
+#owner_block_odd_feed a:hover,
+#owner_block_bookmark_this a:hover,
+#owner_block_report_this a:hover {
 	color: #0054a7;
 }
-#owner_block_odd_feed a:hover {
-	color: #0054a7;
-}
+
 #owner_block_desc {
-	padding:4px 0 0 0;
+	padding:4px 0 4px 0;
 	margin:0 0 5px 0;
 	line-height: 1.2em;
 	border-top:1px solid #cccccc;
+	border-bottom:1px solid #cccccc;
 	color:#666666;
 }
 #owner_block_content {
