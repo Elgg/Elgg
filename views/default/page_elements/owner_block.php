@@ -13,6 +13,7 @@
 	 * 
 	 */
 
+		if (page_owner()) {
 		echo "<div id=\"owner_block\">";
 	// Is there a page owner?
 		if ($owner = page_owner_entity()) {
@@ -87,5 +88,6 @@ END;
 			echo "<div id=\"owner_block_submenu\">" . $submenu . "</div>"; // plugins can extend this to add menu options
 			
 		echo "</div>";
+		}
 
 ?>
