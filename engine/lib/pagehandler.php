@@ -106,7 +106,7 @@
 
 		$script = str_replace("..","",$script);
 		$callpath = $CONFIG->path . $handler . "/" . $page;
-		if (!include($callpath)) {
+		if (!@include($callpath)) {
 			if (substr_count($callpath,'.php') == 0) {
 				if (substr($callpath,strlen($callpath) - 1, 1) != "/")
 					$callpath .= "/";
