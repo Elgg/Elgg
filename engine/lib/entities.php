@@ -632,7 +632,7 @@
 		protected function load($guid)
 		{		
 			$row = get_entity_as_row($guid); 
-		
+			
 			if ($row)
 			{
 				// Create the array if necessary - all subclasses should test before creating
@@ -661,6 +661,14 @@
 		public function disable()
 		{
 			return disable_entity($this->get('guid'));
+		}
+		
+		/**
+		 * Re-enable this entity.
+		 */
+		public function enable()
+		{
+			return enable_entity($this->get('guid'));
 		}
 		
 		/**
@@ -1464,6 +1472,20 @@
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Enable an entity again.
+	 *
+	 * @param int $guid
+	 */
+	function enable_entity($guid)
+	{
+		global $CONFIG;
+		
+		$guid = (int)$guid;
+		return update_data("UPDATE {$CONFIG->dbprefix}entities set enabled='yes' where guid={$guid}");
+		
 	}
 	
 	/**
