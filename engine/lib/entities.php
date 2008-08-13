@@ -1492,8 +1492,24 @@
 		global $CONFIG;
 		
 		$guid = (int)$guid;
-		return update_data("UPDATE {$CONFIG->dbprefix}entities set enabled='yes' where guid={$guid}");
 		
+		// Override access only visible entities
+		$access_status = access_get_show_hidden_status();
+		access_show_hidden_entities(true);
+		
+		if ($entity = get_entity($guid)) {
+			if (trigger_elgg_event('delete',$entity->type,$entity)) {
+				if ($entity->canEdit()) {
+					
+					access_show_hidden_entities($access_status);
+				
+					return update_data("UPDATE {$CONFIG->dbprefix}entities set enabled='yes' where guid={$guid}");
+				}
+			}
+		}
+		
+		access_show_hidden_entities($access_status);
+		return false;
 	}
 	
 	/**
