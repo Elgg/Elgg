@@ -129,6 +129,23 @@
 		return $returnvalue;
 	}
 	
+	/**
+	 * Get some information about the current session
+	 *
+	 * @param unknown_type $hook
+	 * @param unknown_type $entity_type
+	 * @param unknown_type $returnvalue
+	 * @param unknown_type $params
+	 */
+	function diagnostics_session_hook($hook, $entity_type, $returnvalue, $params)
+	{
+		global $CONFIG;
+		
+		$returnvalue .= sprintf(elgg_echo('diagnostics:report:session'), print_r($_SESSION, true));
+		
+		return $returnvalue;
+	}
+	
 	// Initialise log browser
 	register_elgg_event_handler('init','system','diagnostics_init');
 	register_elgg_event_handler('pagesetup','system','diagnostics_pagesetup');
@@ -137,4 +154,5 @@
 	register_plugin_hook("diagnostics:report", "all", "diagnostics_plugins_hook", 2); // Now the plugins
 	register_plugin_hook("diagnostics:report", "all", "diagnostics_sigs_hook", 1); // Now the signatures
 	
+	register_plugin_hook("diagnostics:report", "all", "diagnostics_session_hook"); // Session
 ?>

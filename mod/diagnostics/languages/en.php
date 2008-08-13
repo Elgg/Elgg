@@ -28,6 +28,10 @@ Generated %s by %s
 Elgg Release %s, version %s
 
 ------------------------------------------------------------------------',
+			'diagnostics:report:session' => '
+Current session:
+%s
+------------------------------------------------------------------------',
 			'diagnostics:report:plugins' => '
 Installed plugins and details:
 
