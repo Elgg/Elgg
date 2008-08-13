@@ -13,8 +13,8 @@
 	 * 
 	 */
 
-		if (page_owner()) {
-		echo "<div id=\"owner_block\">";
+		$contents = "";
+
 	// Is there a page owner?
 		if ($owner = page_owner_entity()) {
 			$icon = elgg_view("profile/icon",array('entity' => $owner, 'size' => 'tiny'));
@@ -29,8 +29,8 @@
 			    $display .= "<div id=\"owner_block_desc\">" . $desc . "</div>";
 		    }
 		    
+		    $contents .= $display;
 		}
-		echo $display;
 		
 	// Are there feeds to display?
 		global $autofeed;
@@ -49,7 +49,7 @@
 			}
 			$label = elgg_echo('feed:rss');
 			$label2 = elgg_echo('feed:odd');
-			echo <<<END
+			$contents .= <<<END
 
 	<div id="owner_block_rss_feed"><a href="{$url}">{$label}</a></div>
 	<div id="owner_block_odd_feed"><a href="{$url2}">{$label2}</a></div>
@@ -64,30 +64,33 @@ END;
     		if(is_plugin_enabled('bookmarks')){
     
     		  	$label3 = elgg_echo('bookmarks:this');
-    			echo "<div id=\"owner_block_bookmark_this\"><a href=\"javascript:location.href='". $CONFIG->wwwroot . "mod/bookmarks/add.php?address='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)\">{$label3}</a></div>";
+    			$contents .= "<div id=\"owner_block_bookmark_this\"><a href=\"javascript:location.href='". $CONFIG->wwwroot . "mod/bookmarks/add.php?address='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)\">{$label3}</a></div>";
     
     		}
     
     		//report this button
     		$label4 = elgg_echo('Report this');
-    		echo "<div id=\"owner_block_report_this\"><a href=\"javascript:location.href='". $CONFIG->wwwroot . "mod/reportedcontent/add.php?address='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)\">{$label4}</a></div>";
+    		$contents .= "<div id=\"owner_block_report_this\"><a href=\"javascript:location.href='". $CONFIG->wwwroot . "mod/reportedcontent/add.php?address='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)\">{$label4}</a></div>";
 
 	    }
 
 		
-		echo elgg_view('owner_block/extend');
+		$contents .= elgg_view('owner_block/extend');
 		
 	// Have we been asked to inject any content? If so, display it
 		if (isset($vars['content']))
-			echo $vars['content'];
+			$contets .= $vars['content'];
 		
 	// Initialise the submenu
 		$submenu = get_submenu(); // elgg_view('canvas_header/submenu');
 		if (!empty($submenu)) $submenu = "<ul>" . $submenu . "</ul>";
 		if (!empty($submenu))
-			echo "<div id=\"owner_block_submenu\">" . $submenu . "</div>"; // plugins can extend this to add menu options
+			$contents .= "<div id=\"owner_block_submenu\">" . $submenu . "</div>"; // plugins can extend this to add menu options
 			
-		echo "</div>";
+		if (!empty($contents)) {
+			echo "<div id=\"owner_block\">";
+			echo $contents;
+			echo "</div>";
 		}
 
 ?>
