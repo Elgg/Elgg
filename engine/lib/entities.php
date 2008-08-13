@@ -86,7 +86,7 @@
 			$this->attributes['access_id'] = 0;
 			$this->attributes['time_created'] = "";
 			$this->attributes['time_updated'] = "";
-			$this->attributes['enabled'] = "";
+			$this->attributes['enabled'] = "yes";
 			
 			// There now follows a bit of a hack
 			/* Problem: To speed things up, some objects are split over several tables, this means that it requires
@@ -1163,24 +1163,23 @@
 	function can_write_to_container($user_guid = 0, $container_guid = 0, $entity_type = 'all')
 	{
 		global $CONFIG;
-		
+	
 		$user_guid = (int)$user_guid;
 		if (!$user_guid) $user_guid = (int) $_SESSION['guid'];
 		$user = get_entity($user_guid);
 		
 		$container_guid = (int)$container_guid;
 		if (!$container_guid) $container_guid = page_owner();
-		
 		if (!$container_guid) return true;
-		
+
 		$container = get_entity($container_guid);
-		
+
 		if (($container) && ($user))
 		{
-			
+
 			// If the user can edit the container, they can also write to it
 			if ($container->canEdit()) return true;
-			
+		
 			// Basics, see if the user is a member of the group.
 			if ($container instanceof ElggGroup) {
 				if (!$container->isMember($user)) {
@@ -1189,7 +1188,7 @@
 					return true;
 				}
 			}
-				
+			
 			// See if anyone else has anything to say
 			return trigger_plugin_hook('container_permissions_check',$entity_type,array('container' => $container, 'user' => $user), false);
 			

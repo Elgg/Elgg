@@ -651,12 +651,13 @@
 		global $CONFIG, $USERNAME_TO_GUID_MAP_CACHE;
 		
 		$username = sanitise_string($username);
+		$access = get_access_sql_suffix('e');
 		
 		// Caching
 		if ( (isset($USERNAME_TO_GUID_MAP_CACHE[$username])) && (retrieve_cached_entity($USERNAME_TO_GUID_MAP_CACHE[$username])) )
 			return retrieve_cached_entity($USERNAME_TO_GUID_MAP_CACHE[$username]);
 		
-		$row = get_data_row("SELECT * from {$CONFIG->dbprefix}users_entity where username='$username'");
+		$row = get_data_row("SELECT e.* from {$CONFIG->dbprefix}users_entity u join {$CONFIG->dbprefix}entities e on e.guid=u.guid where u.username='$username' ");
 		if ($row) {
 			$USERNAME_TO_GUID_MAP_CACHE[$username] = $row->guid;
 			return new ElggUser($row);
@@ -677,11 +678,13 @@
 		
 		$code = sanitise_string($code);
 		
+		$access = get_access_sql_suffix('e');
+		
 		// Caching
 		if ( (isset($CODE_TO_GUID_MAP_CACHE[$code])) && (retrieve_cached_entity($CODE_TO_GUID_MAP_CACHE[$code])) )
 			return retrieve_cached_entity($CODE_TO_GUID_MAP_CACHE[$code]);
 		
-		$row = get_data_row("SELECT * from {$CONFIG->dbprefix}users_entity where code='$code'");
+		$row = get_data_row("SELECT e.* from {$CONFIG->dbprefix}users_entity u join {$CONFIG->dbprefix}entities e on e.guid=u.guid where u.code='$code' and $access");
 		if ($row) {
 			$CODE_TO_GUID_MAP_CACHE[$code] = $row->guid;
 			return new ElggUser($row);
@@ -702,7 +705,9 @@
 		
 		$email = sanitise_string($email);
 		
-		$query = "SELECT e.* from {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}users_entity u on e.guid=u.guid where email='$email'";
+		$access = get_access_sql_suffix('e');
+		
+		$query = "SELECT e.* from {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}users_entity u on e.guid=u.guid where email='$email' and $access";
 		
 		return get_data($query, 'entity_row_to_elggstar');
 	}
@@ -1027,6 +1032,10 @@
 					return false;
 				}	
 			
+			// See if it exists and is disabled
+			$access_status = access_get_show_hidden_status();
+			access_show_hidden_entities(true);
+				
 			if (!is_email_address($email)) throw new RegistrationException(elgg_echo('registration:notemail'));
 			
 			if (strlen($username)<4) throw new RegistrationException(elgg_echo('registration:usernametooshort'));
@@ -1045,6 +1054,7 @@
 				throw new RegistrationException(elgg_echo('registration:dupeemail'));
 			}
 			
+			access_show_hidden_entities($access_status);
 			
 		// Check to see if we've registered the first admin yet.
 		// If not, this is the first admin user!
@@ -1057,7 +1067,7 @@
 			$user->name = $name;
 			$user->access_id = 2;
 			$user->salt = generate_random_cleartext_password(); // Note salt generated before password!
-			$user->password = generate_user_password($user, $password);
+			$user->password = generate_user_password($user, $password); 
 			$user->save();
 			
 			if (!$admin) {
@@ -1183,6 +1193,8 @@
 				return true;
 			
 		}
+		
+		return $returnvalue;
 	}
 	
 	/**
@@ -1261,7 +1273,7 @@
 		
 		// Handle a special case for newly created users when the user is not logged in
 		// TODO: handle this better!
-		//register_plugin_hook('permissions_check','user','new_user_enable_permissions_check');
+		register_plugin_hook('permissions_check','all','new_user_enable_permissions_check');
 	}
 	
 	/**
