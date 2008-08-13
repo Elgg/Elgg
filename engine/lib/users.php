@@ -150,10 +150,11 @@
 		 */
 		public function delete() 
 		{ 
-			if (!parent::delete())
+			if (!delete_user_entity($this->get('guid')))
 				return false;
 				
-			return delete_user_entity($this->get('guid'));
+			return parent::delete();
+				
 		}
 				
 		/**

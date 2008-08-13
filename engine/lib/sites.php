@@ -135,10 +135,10 @@
 		 */
 		public function delete() 
 		{ 
-			if (!parent::delete())
+			if (!delete_site_entity($this->get('guid')))
 				return false;
 				
-			return delete_site_entity($this->get('guid'));
+			return parent::delete();
 		}
 		
 		/**

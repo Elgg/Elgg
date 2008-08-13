@@ -21,7 +21,7 @@
 	
 	if ( ($obj instanceof ElggUser) && ($obj->canEdit()))
 	{
-		if (delete_entity($guid))
+		if ($obj->delete())
 			system_message(elgg_echo('admin:user:delete:yes'));
 		else
 			register_error(elgg_echo('admin:user:delete:no'));
