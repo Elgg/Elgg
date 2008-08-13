@@ -22,8 +22,8 @@
 	$name = $vars['internalname'];
 	$body = $vars['body'];
 	$action = $vars['action'];
-	$enctype = $vars['enctype'];
-	$method = $vars['method']; if (!$method) $method = 'POST';
+	if (isset($vars['enctype'])) { $enctype = $vars['enctype']; } else { $enctype = ''; }
+	if (isset($vars['method'])) { $method = $vars['method']; } else { $method = 'POST'; }
 
 	// Generate a security header
 	$security_header = "";

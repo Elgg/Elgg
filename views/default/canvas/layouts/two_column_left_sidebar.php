@@ -21,14 +21,14 @@
     
     ?>
 
-    <?php echo $vars['area3']; ?>
+    <?php if (isset($vars['area3'])) echo $vars['area3']; ?>
 
 </div><!-- /two_column_left_sidebar -->
 
 <!-- main content -->
 <div id="two_column_left_sidebar_maincontent">
 
-<?php echo $vars['area2']; ?>
+<?php if (isset($vars['area2'])) echo $vars['area2']; ?>
 
 </div><!-- /two_column_left_sidebar_maincontent -->
 
