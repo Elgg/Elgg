@@ -1133,6 +1133,13 @@
 		}
 		
 	}
+	
+	/**
+	 * Page handler for dashboard
+	 */
+	function dashboard_page_handler($page_elements) {
+		@require_once(dirname(dirname(dirname(__FILE__))) . "/dashboard/index.php");
+	}
 
 	/**
 	 * Sets the last action time of the given user to right now.
@@ -1183,6 +1190,7 @@
 		register_page_handler('friends','friends_page_handler');
 		register_page_handler('friendsof','friends_of_page_handler');
 		register_page_handler('collections','collections_page_handler');
+		register_page_handler('dashboard','dashboard_page_handler');
 		register_action("register",true);
    		register_action("useradd",true);
 		register_action("friends/add");
