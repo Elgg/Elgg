@@ -657,10 +657,12 @@
 		
 		/**
 		 * Disable this entity.
+		 * 
+		 * @param string $reason Optional reason
 		 */
-		public function disable()
+		public function disable($reason = "")
 		{
-			return disable_entity($this->get('guid'));
+			return disable_entity($this->get('guid'), $reason);
 		}
 		
 		/**
@@ -1454,16 +1456,22 @@
 	/**
 	 * Disable an entity but not delete it.
 	 *
-	 * @param int $guid
+	 * @param int $guid The guid
+	 * @param string $reason Optional reason
 	 */
-	function disable_entity($guid)
+	function disable_entity($guid, $reason = "")
 	{
 		global $CONFIG;
 		
 		$guid = (int)$guid;
+		$reason = sanitise_string($reason);
+		
 		if ($entity = get_entity($guid)) {
 			if (trigger_elgg_event('delete',$entity->type,$entity)) {
 				if ($entity->canEdit()) {
+					
+					if ($reason)
+						$entity->disable_reason = $reason;				
 					
 					$res = update_data("UPDATE {$CONFIG->dbprefix}entities set enabled='no' where guid={$guid}");
 					
