@@ -540,17 +540,39 @@
 		function get_submenu() {
 			
 			$submenu = "";
+			global $CONFIG;
 			
 			if ($submenu_register = get_register('submenu')) {
-				foreach($submenu_register as $item) {
-
-					if (substr_count($item->value, $_SERVER['REQUEST_URI'])) {
-						$selected = true;
-					} else {
-						$selected = false;
+				
+				$preselected = false;
+				$comparevals = array();
+				$maxcompareval = 999999;
+				
+				foreach($submenu_register as $key => $item) {
+					
+					$comparevals[$key] = (levenshtein($item->value, $_SERVER['REQUEST_URI']));
+					if ($comparevals[$key] < $maxcompareval) {
+						$maxcompareval = $comparevals[$key];
+						$preselected = $key;
 					}
 					
-					$submenu .= "<!-- {$item->value} {$_SERVER['REQUEST_URI']} -->";
+				}
+				
+				foreach($submenu_register as $key => $item) {
+
+					if (!$preselected) {
+						if (substr_count($item->value, $_SERVER['REQUEST_URI'])) {
+							$selected = true;
+						} else {
+							$selected = false;
+						}
+					} else {
+						if ($key == $preselected) {
+							$selected = true;
+						} else {
+							$selected = false;
+						}
+					}
 					
 					$submenu .= elgg_view('canvas_header/submenu_template',
 									array(
