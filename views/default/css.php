@@ -2188,7 +2188,6 @@ a.toggle_customise_edit_panel:hover {
 /* ***************************************
 	SETTINGS & ADMIN
 *************************************** */
-
 .settings_form h3,
 .usersettings_statistics h3,
 .admin_statistics h3,
@@ -2234,7 +2233,7 @@ a.toggle_customise_edit_panel:hover {
 	width:200px;
 }
 
-/* add user pane on user admin */
+/* add user pane - on user admin */
 #add_user_showhide #add-box {
 	padding:20px;
 	background: #dedede;
