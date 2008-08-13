@@ -35,12 +35,11 @@
 			) &&
 			($guid = register_user($username, $password, $name, $email, true))
 		) {
+			$new_user = get_entity($guid);
 			if (($guid) && ($admin))
-			{
-				
-				$new_user = get_entity($guid);
 				$new_user->admin = 'yes';
-			}
+			
+			$new_user->admin_created = true;
 			
 			system_message(sprintf(elgg_echo("adduser:ok"),$CONFIG->sitename));
 		} else {
