@@ -863,27 +863,35 @@ input[type="submit"] {
 #login-box .login-textarea {
 	width:155px;
 }
+#login-box label,
+#register-box label {
+	font-size: 1.2em;
+	color:gray;
+}
+#login-box input[type="text"],
+#login-box input[type="password"],
+#register-box input[type="text"],
+#register-box input[type="password"] {
+	margin:0 0 10px 0;
+}
 
 #login-box-openid {
-	margin-top: 20px;
+	margin: 10px;
     text-align:left;
-    border:1px solid #ddd;
-    width:300px;
     padding:10px;
     background: #ffffff;
-    
-    float:left;
-    margin-left: 20px;
 }
 #login-box h2,
 #login-box-openid h2,
 #register-box h2,
 #add-box h2 {
-	color: #0054a7;
-	font-size:1.5em;
-	line-height: 1.5em;
-	margin:0 0 20px 0;
-	border-bottom: 1px solid #ddd;
+	background:#F5F5F5;
+	border-top:2px solid #4690D6;
+	color:#0054A7;
+	font-size:1.35em;
+	line-height:1.2em;
+	margin:0pt 0pt 5px;
+	padding:5px;
 }
 
 #register-box {
