@@ -45,13 +45,14 @@
 	</div>
 	
 	<?php if (elgg_view("settings/{$plugin}/edit")) { ?>
-	<hr />
+	<p><a class="pluginsettings_toggle"><?php echo elgg_echo("settings"); ?></a></p>
 	<div id="pluginsettings">
-		<div id="<?php echo $plugin; ?>_settings">
-			<?php echo elgg_view("object/plugin", array('plugin' => $plugin, 'entity' => find_plugin_settings($plugin))) ?>
-		</div>
+		<hr />
+			<div id="<?php echo $plugin; ?>_settings">
+				<?php echo elgg_view("object/plugin", array('plugin' => $plugin, 'entity' => find_plugin_settings($plugin))) ?>
+			</div>
+		<hr />
 	</div>
-	<hr />
 	<?php } ?>
 	
 </div>
