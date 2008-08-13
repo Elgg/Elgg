@@ -107,8 +107,9 @@
 		 * TODO: DELETE once Query classes are fully integrated
 		 * 
 		 * @param string $table_prefix Optional xxx. prefix for the access code.
+		 * @param bool $active_only Option to select only active entities or include deactive ones. 
 		 */
-		function get_access_sql_suffix($table_prefix = "")
+		function get_access_sql_suffix($table_prefix = "", $active_only = true)
 		{
 			$sql = "";
 			
@@ -129,7 +130,8 @@
 				if (empty($sql))
 					$sql = " ({$table_prefix}access_id in {$access} or ({$table_prefix}access_id = 0 and {$table_prefix}owner_guid = $owner))";
 
-			$sql .= " and {$table_prefix}enabled='yes'";
+			if ($active_only)
+				$sql .= " and {$table_prefix}enabled='yes'";
 			
 			return $sql;
 		}
