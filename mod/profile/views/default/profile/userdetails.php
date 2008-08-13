@@ -62,7 +62,7 @@
 
 	?>
 		<p class="profile_info_edit_buttons">
-			<a href="<?php echo $vars['url']; ?>mod/profile/edit.php"><?php echo elgg_echo("profile:editdetails"); ?></a>
+			<a href="<?php echo $vars['url']; ?>mod/profile/edit.php?username=<?php echo $vars['entity']->username; ?>"><?php echo elgg_echo("profile:editdetails"); ?></a>
 		</p>
 	<?php
 
