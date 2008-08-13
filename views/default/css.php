@@ -855,15 +855,15 @@ input[type="submit"] {
 	LOGIN / REGISTER
 *************************************** */
 #login-box {
-	margin-top: 20px;
+	margin: 10px;
     text-align:left;
-    border:1px solid #ddd;
-    width:300px;
     padding:10px;
     background: #ffffff;
-    
-    float:left;
 }
+#login-box .login-textarea {
+	width:155px;
+}
+
 #login-box-openid {
 	margin-top: 20px;
     text-align:left;
