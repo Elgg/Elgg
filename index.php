@@ -27,13 +27,13 @@
 			
 	        //Load the front page
 	        	global $CONFIG;
-	        	$title = elgg_view_title($CONFIG->site->title);
+	        	$title = elgg_view_title(elgg_echo('content:latest'));
 	        	set_context('search');
 		        $content = list_registered_entities();
 		        set_context('main');
 		        global $autofeed;
 		        $autofeed = false;
-		        $content = elgg_view_layout('two_column_left_sidebar', '', $content, elgg_view("account/forms/login"));
+		        $content = elgg_view_layout('two_column_left_sidebar', '', $title . $content, elgg_view("account/forms/login"));
 		        echo page_draw(null, $content);
 		
 		}

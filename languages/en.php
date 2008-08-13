@@ -527,6 +527,9 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	
 			'learnmore' => "Click here to learn more.",
 	
+			'content' => "content",
+			'content:latest' => 'Latest activity',
+	
 		/**
 		 * Generic data words
 		 */
