@@ -24,7 +24,7 @@
 	$class = $vars['class'];
 	if (!$class) $class = "submit_button";
 
-	$type = strtolower($vars['type']);
+	if (isset($vars['type'])) { $type = strtolower($vars['type']); } else { $type = 'submit'; }
 	switch ($type)
 	{
 		case 'button' : $type='button'; break;

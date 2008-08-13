@@ -18,8 +18,8 @@
 	 * 
 	 */
 	
-	$id = $vars['internalid'];
-	$name = $vars['internalname'];
+	if (isset($vars['internalid'])) { $id = $vars['internalid']; } else { $id = ''; }
+	if (isset($vars['internalname'])) { $name = $vars['internalname']; } else { $name = ''; }
 	$body = $vars['body'];
 	$action = $vars['action'];
 	if (isset($vars['enctype'])) { $enctype = $vars['enctype']; } else { $enctype = ''; }
