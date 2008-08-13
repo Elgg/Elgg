@@ -1485,7 +1485,8 @@
 				if ($entity->canEdit()) {
 					
 					if ($reason)
-						$entity->disable_reason = $reason;				
+						create_metadata($guid, 'disable_reason', $reason,'', 0, 2);
+						//$entity->disable_reason = $reason;				
 					
 					$res = update_data("UPDATE {$CONFIG->dbprefix}entities set enabled='no' where guid={$guid}");
 					
@@ -1517,7 +1518,10 @@
 					
 					access_show_hidden_entities($access_status);
 				
-					return update_data("UPDATE {$CONFIG->dbprefix}entities set enabled='yes' where guid={$guid}");
+					$result = update_data("UPDATE {$CONFIG->dbprefix}entities set enabled='yes' where guid={$guid}");
+					$entity->clearMetaData('disable_reason');
+					
+					return $result;
 				}
 			}
 		}

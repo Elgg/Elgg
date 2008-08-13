@@ -541,7 +541,7 @@
 		
 	}
 	
-/**
+	/**
 	 * Obtains a list of objects owned by a user's friends
 	 *
 	 * @param int $user_guid The GUID of the user to get the friends of
@@ -771,8 +771,10 @@
 		$offset = (int)$offset;
 		
 		$time = time() - $seconds;
+
+		$access = get_access_sql_suffix("e");
 		
-		$query = "SELECT distinct e.* from {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}users_entity u on e.guid = u.guid where u.last_action >= {$time} order by u.last_action desc limit {$offset},{$limit}";
+		$query = "SELECT distinct e.* from {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}users_entity u on e.guid = u.guid where u.last_action >= {$time} and $access order by u.last_action desc limit {$offset},{$limit}";
 		
 		return get_data($query, "entity_row_to_elggstar");
 	}
@@ -1157,6 +1159,33 @@
 	}
 	
 	/**
+	 * A permissions plugin hook that grants access to users if they are newly created - allows
+	 * for email activation.
+	 * 
+	 * TODO: Do this in a better way!
+	 *
+	 * @param unknown_type $hook
+	 * @param unknown_type $entity_type
+	 * @param unknown_type $returnvalue
+	 * @param unknown_type $params
+	 */
+	function new_user_enable_permissions_check($hook, $entity_type, $returnvalue, $params)
+	{
+		$entity = $params['entity'];
+		$user = $params['user'];
+		if (($entity) && ($entity instanceof ElggUser))
+		{
+			if (
+				(($entity->disable_reason == 'new_user') || (
+					$entity->last_action == 0 && $entity->last_login == 0
+				)) 
+				&& (!isloggedin()))
+				return true;
+			
+		}
+	}
+	
+	/**
 	 * Sets up user-related menu items
 	 *
 	 */
@@ -1229,6 +1258,10 @@
 		register_plugin_hook('usersettings:save','user','users_settings_save');
 		register_plugin_hook('search','all','search_list_users_by_name');
 		
+		
+		// Handle a special case for newly created users when the user is not logged in
+		// TODO: handle this better!
+		//register_plugin_hook('permissions_check','user','new_user_enable_permissions_check');
 	}
 	
 	/**

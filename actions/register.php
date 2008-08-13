@@ -51,7 +51,7 @@
 					request_email_validation($guid);
 					
 					// Now disable
-					$new_user->disable('new_user');
+					//$new_user->disable('new_user');
 					
 					system_message(sprintf(elgg_echo("registerok"),$CONFIG->sitename));
 					
