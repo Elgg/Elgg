@@ -100,6 +100,34 @@
 		}
 		
 		/**
+		 * Override the default behaviour and allow results to show hidden entities as well.
+		 * THIS IS A HACK.
+		 * 
+		 * TODO: Replace this with query object!
+		 */
+		$ENTITY_SHOW_HIDDEN_OVERRIDE = false;
+		
+		/**
+		 * This will be replaced. Do not use in plugins!
+		 *
+		 * @param bool $show
+		 */
+		function access_show_hidden_entities($show_hidden)
+		{
+			global $ENTITY_SHOW_HIDDEN_OVERRIDE;  
+			$ENTITY_SHOW_HIDDEN_OVERRIDE = $show_hidden;  
+		}
+		
+		/**
+		 * This will be replaced. Do not use in plugins!
+		 */
+		function access_get_show_hidden_status()
+		{
+			global $ENTITY_SHOW_HIDDEN_OVERRIDE;  
+			return $ENTITY_SHOW_HIDDEN_OVERRIDE;
+		}
+		
+		/**
 		 * Add access restriction sql code to a given query.
 		 * 
 		 * Note that if this code is executed in privileged mode it will return blank.
@@ -107,10 +135,11 @@
 		 * TODO: DELETE once Query classes are fully integrated
 		 * 
 		 * @param string $table_prefix Optional xxx. prefix for the access code.
-		 * @param bool $active_only Option to select only active entities or include deactive ones. 
 		 */
-		function get_access_sql_suffix($table_prefix = "", $active_only = true)
+		function get_access_sql_suffix($table_prefix = "")
 		{
+			global $ENTITY_SHOW_HIDDEN_OVERRIDE;  
+			
 			$sql = "";
 			
 			if ($table_prefix)
@@ -130,7 +159,7 @@
 				if (empty($sql))
 					$sql = " ({$table_prefix}access_id in {$access} or ({$table_prefix}access_id = 0 and {$table_prefix}owner_guid = $owner))";
 
-			if ($active_only)
+			if (!$ENTITY_SHOW_HIDDEN_OVERRIDE)
 				$sql .= " and {$table_prefix}enabled='yes'";
 			
 			return $sql;
