@@ -46,6 +46,7 @@
 		extend_elgg_admin_page('admin/main_opt/plugins', 'admin/main', 999); // Always last
 
 		register_action('admin/user/ban', false, "", true);
+		register_action('admin/user/unban', false, "", true);
 		register_action('admin/user/delete', false, "", true);
 		register_action('admin/user/resetpassword', false, "", true);
 		register_action('admin/user/makeadmin', false, "", true);

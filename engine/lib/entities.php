@@ -86,6 +86,7 @@
 			$this->attributes['access_id'] = 0;
 			$this->attributes['time_created'] = "";
 			$this->attributes['time_updated'] = "";
+			$this->attributes['enabled'] = "";
 			
 			// There now follows a bit of a hack
 			/* Problem: To speed things up, some objects are split over several tables, this means that it requires
@@ -671,6 +672,19 @@
 		public function enable()
 		{
 			return enable_entity($this->get('guid'));
+		}
+		
+		/**
+		 * Is this entity enabled?
+		 *
+		 * @return boolean
+		 */
+		public function isEnabled()
+		{
+			if ($this->enabled)
+				return true;
+				
+			return false;
 		}
 		
 		/**
