@@ -21,7 +21,7 @@
 				$info = $owner->name;
 			}
 			$display = "<div id=\"owner_block_icon\">" . $icon . "</div>";
-			$display .= "<div id=\"owner_block_content\">" . $info . "</div>";
+			$display .= "<div id=\"owner_block_content\">" . $info . "</div><br class=\"clearfloat\" />";
 			
 			if ($owner->briefdescription) {
 			    $desc = $owner->briefdescription;
