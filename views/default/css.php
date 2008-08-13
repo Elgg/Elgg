@@ -693,7 +693,7 @@ h6 { font-size: 0.8em; }
 
 .collapsable_box {
 	margin: 0 0 20px 0;
-	background: white;
+	/* background: white; */
 	height:auto;
 }
 /* IE6 fix */
@@ -715,10 +715,7 @@ h6 { font-size: 0.8em; }
 	padding: 10px;
 	margin:0;
 	height:auto;
-	/* border-left:2px solid white;
-	border-right:2px solid white;
-	border-bottom:2px solid white; */
-	
+	background: white;
 	border-left: 1px solid #cccccc;
 	border-right: 1px solid #cccccc;
 	border-bottom: 1px solid #cccccc;
@@ -2188,6 +2185,7 @@ a.toggle_customise_edit_panel:hover {
 /* ***************************************
 	SETTINGS & ADMIN
 *************************************** */
+
 .settings_form h3,
 .usersettings_statistics h3,
 .admin_statistics h3,
@@ -2233,7 +2231,7 @@ a.toggle_customise_edit_panel:hover {
 	width:200px;
 }
 
-/* add user pane - on user admin */
+/* add user pane on user admin */
 #add_user_showhide #add-box {
 	padding:20px;
 	background: #dedede;
