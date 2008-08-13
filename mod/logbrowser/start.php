@@ -26,7 +26,7 @@
 		// Extend context menu with admin logbrowsre link
 			if (isadminloggedin())
 			{
-	   			 extend_view('profile/menu/links','logbrowser/adminlinks');
+	   			 extend_view('profile/menu/links','logbrowser/adminlinks',10000);
 			}
 	}
 	
