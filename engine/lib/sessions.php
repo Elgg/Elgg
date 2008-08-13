@@ -202,6 +202,8 @@
 	                $code = md5($_SESSION['code']);
 	                if ($user = get_user_by_code($code)) {
 	                	$_SESSION['user'] = $user;
+	                	$_SESSION['id'] = $user->getGUID();
+                        $_SESSION['guid'] = $_SESSION['id'];
 	                } else {
 	                	unset($_SESSION['user']);
 	                	// $_SESSION['user'] = new ElggDummy();
