@@ -106,14 +106,14 @@
 
 		$script = str_replace("..","",$script);
 		$callpath = $CONFIG->path . $handler . "/" . $page;
-		if (!@include($callpath)) {
-			if (substr_count($callpath,'.php') == 0) {
+		if (!file_exists($callpath) || is_dir($callpath) || substr_count($callpath,'.php') == 0) {
 				if (substr($callpath,strlen($callpath) - 1, 1) != "/")
 					$callpath .= "/";
 				$callpath .= "index.php";
 				if (!include($callpath))
 					return false; 
-			}
+		} else {
+			 include($callpath);
 		}
 		
 		return true;
