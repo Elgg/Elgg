@@ -69,8 +69,11 @@ END;
     		}
     
     		//report this button
-    		$label4 = elgg_echo('Report this');
-    		$contents .= "<div id=\"owner_block_report_this\"><a href=\"javascript:location.href='". $CONFIG->wwwroot . "mod/reportedcontent/add.php?address='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)\">{$label4}</a></div>";
+    		if (is_plugin_enabled('reportedcontent'))
+    		{
+	    		$label4 = elgg_echo('Report this');
+	    		$contents .= "<div id=\"owner_block_report_this\"><a href=\"javascript:location.href='". $CONFIG->wwwroot . "mod/reportedcontent/add.php?address='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)\">{$label4}</a></div>";
+    		}
 
 	    }
 
