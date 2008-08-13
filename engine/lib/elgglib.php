@@ -1334,7 +1334,10 @@
 					break;
 
 				default:
-					error_log("DEBUG: " . $error); 
+					global $CONFIG;
+					if (isset($CONFIG->debug)) {
+						error_log("DEBUG: " . $error); 
+					}
 					// register_error("DEBUG: " . $error);
 			}
 			
