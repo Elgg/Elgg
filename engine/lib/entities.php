@@ -681,7 +681,7 @@
 		 */
 		public function isEnabled()
 		{
-			if ($this->enabled)
+			if ($this->enabled == 'yes')
 				return true;
 				
 			return false;
