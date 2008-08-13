@@ -39,15 +39,19 @@
 					) &&
 					($guid = register_user($username, $password, $name, $email))
 				) {
+					
+					$new_user = get_entity($guid);
 					if (($guid) && ($admin))
 					{
 						admin_gatekeeper(); // Only admins can make someone an admin
-						$new_user = get_entity($guid);
 						$new_user->admin = 'yes';
 					}
 					
 					// Send email validation on register only
 					request_email_validation($guid);
+					
+					// Now disable
+					$new_user->disable('new_user');
 					
 					system_message(sprintf(elgg_echo("registerok"),$CONFIG->sitename));
 					
