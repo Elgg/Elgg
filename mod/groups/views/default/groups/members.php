@@ -21,7 +21,7 @@
     $members = $vars['entity']->getMembers(9999);
     foreach($members as $mem){
            
-        echo "<div class=\"member_icon\" style=\"float:left;margin:4px;\">" . elgg_view("profile/icon",array('entity' => $mem, 'size' => 'tiny')) . "</div>";   
+        echo "<div class=\"member_icon\">" . elgg_view("profile/icon",array('entity' => $mem, 'size' => 'tiny')) . "</div>";   
            
     }
     
