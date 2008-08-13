@@ -83,18 +83,17 @@
 						if (!empty($collection->id)) $tmp_access_array[] = $collection->id;
 				}
 				
-				/*if ($user = get_entity($user_id)) {
-					if ($user instanceof ElggUser && $user->admin)
-						$tmp_access_array[] = 0;
-				}*/
+				global $is_admin;
+				
+				if (isset($is_admin) && $is_admin == true) {
+					$tmp_access_array[] = 0;
+				}
 				
 				$access_array[$user_id] = $tmp_access_array;
 				
 			} else {
 				$tmp_access_array = $access_array[$user_id];
 			}
-			
-			$tmp_access_array = trigger_plugin_hook('access:collections','user',array('user_id' => $user_id, 'site_id' => $site_id),$tmp_access_array);
 			
 			return $access_array[$user_id];
 			
@@ -116,25 +115,20 @@
 			if ($table_prefix)
 					$table_prefix = sanitise_string($table_prefix) . ".";
 			
-			//if (!is_privileged())
-			//{
 				$access = get_access_list();
 				
 				$owner = $_SESSION['id'];
 				if (!$owner) $owner = -1;
 				
-				/*if ($owner_entity = get_entity($owner)) {
-					if ($owner_entity instanceof ElggUser)
-						if ($owner_entity->admin)
-							$sql = " (1 = 1) ";
-				}
-				if (empty($sql))*/
-					$sql = " ({$table_prefix}access_id in {$access} or ({$table_prefix}access_id = 0 and {$table_prefix}owner_guid = $owner))";
-			//}
-			//else
-			//	$sql = " 1 ";
+				global $is_admin;
 				
-			// Only return 'active' objects
+				if (isset($is_admin) && $is_admin == true) {
+					$sql = " (1 = 1) ";
+				}
+
+				if (empty($sql))
+					$sql = " ({$table_prefix}access_id in {$access} or ({$table_prefix}access_id = 0 and {$table_prefix}owner_guid = $owner))";
+
 			$sql .= " and {$table_prefix}enabled='yes'";
 			
 			return $sql;
