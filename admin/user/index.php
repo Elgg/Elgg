@@ -17,6 +17,9 @@
 	// Make sure only valid admin users can see this
 		admin_gatekeeper();
 		
+	// Set admin user for user block
+		set_page_owner($_SESSION['guid']);
+
 	// Are we performing a search
 		$search = get_input('s');
 		$limit = get_input('limit', 10);
