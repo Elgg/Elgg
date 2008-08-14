@@ -254,6 +254,9 @@
     	if (is_callable('mb_encode_mimeheader')) {
 			$subject = mb_encode_mimeheader($subject,"UTF-8", "B");
     	}	
+    	
+    	// Strip tags from message
+    	$message = strip_tags($message);
     		
 		return mail($to, $subject, wordwrap($message), $headers);
 	}
