@@ -138,7 +138,7 @@ h6 { font-size: 0.8em; }
 
 
 /* ***************************************
-    PAGE LAYOUT - MAIN STRUCTURE
+    PAGE LAYOUT - MAIN STRUCTURE 
 *************************************** */
 #page_container {
 	margin:0;
@@ -1127,6 +1127,11 @@ background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_priv
 .search_listing_icon {
 	position: absolute;
 }
+/* IE 6 fix */
+* html .search_listing_icon {
+	float:left;
+}
+
 .search_listing_icon img {
 	width: 40px;
 }
@@ -1137,6 +1142,10 @@ background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_priv
 .search_listing_info {
 	margin-left: 50px;
 	min-height: 40px;
+}
+/* IE 6 fix */
+* html .search_listing_info {
+	height:40px;
 }
 .search_listing_info p {
 	margin:0 0 3px 0;
@@ -1161,20 +1170,11 @@ table.search_gallery {
 .search_gallery_item {
 	border:1px dotted silver;
     background-color: white;
-    /*
-	width: 179px;
-    height: 179px;
-	*/
 }
 .search_gallery_item:hover {
 	border:1px dotted black;
 }
-/* 
-temp force image width until upload size is changed 
-.search_gallery_item img {
-    width: 153px;
-}
-*/
+
 .search_gallery_item .search_listing {
 	background: none;
 	text-align: center;
@@ -1197,9 +1197,6 @@ temp force image width until upload size is changed
 	margin: 5px;
 	margin-bottom: 10px;
 }
-
-
-
 
 .search_gallery_item .search_listing {
 	background: none;
