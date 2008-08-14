@@ -86,7 +86,6 @@ END;
 		
 	// Initialise the submenu
 		$submenu = get_submenu(); // elgg_view('canvas_header/submenu');
-		if (!empty($submenu)) $submenu = "<ul>" . $submenu . "</ul>";
 		if (!empty($submenu))
 			$contents .= "<div id=\"owner_block_submenu\">" . $submenu . "</div>"; // plugins can extend this to add menu options
 			
