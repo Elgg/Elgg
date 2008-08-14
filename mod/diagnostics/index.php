@@ -13,7 +13,9 @@
 
 	admin_gatekeeper();
 	set_context('admin');
-	
+	// Set admin user for user block
+		set_page_owner($_SESSION['guid']);
+
 	$title = elgg_view_title(elgg_echo('diagnostics'));
 	
 	$body .= elgg_echo('diagnostics:description');
