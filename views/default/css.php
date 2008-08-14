@@ -1582,7 +1582,7 @@ div.expandall p {
 }
 	
 /* ***************************************
-	FRIENDS PICKER
+	FRIENDS PICKER SLIDER
 *************************************** */		
 .friendsPicker_container h3 { font-size:3em; text-align: left; margin:0 0 20px 0; color:#999999; }
 
@@ -1600,7 +1600,7 @@ div.expandall p {
 }
 
 .friendsPicker {
-	/*position: relative;*/
+	position: relative;
 	overflow: hidden; 
 	margin: 0;
 	padding:0;
@@ -1638,11 +1638,7 @@ div.expandall p {
 .friendsPickerNavigation {
 	margin: 0 0 10px 0;
 	padding:0;
-	
-/*
-	display:none;
-
-*/}
+}
 
 .friendsPickerNavigation ul {
 	list-style: none;
@@ -1708,10 +1704,6 @@ div.expandall p {
 
 .friendsPickerNavigationL a, .friendsPickerNavigationR a {
 	display: block;
-/*
-	height: 87px;
-	width: 43px;
-*/
 	height: 43px;
 	width: 43px;
 }
@@ -1798,7 +1790,7 @@ div.expandall p {
 /* ***************************************
   WIDGET PICKER (PROFILE & DASHBOARD)
 *************************************** */
-/* open 'customise page' panel button */
+/* 'edit page' button */
 a.toggle_customise_edit_panel { 
 	float:right;
 	clear:right;
@@ -1839,7 +1831,7 @@ a.toggle_customise_edit_panel:hover {
 /* RHS (widget gallery area) */
 #customise_editpanel_rhs {
 	float:right;
-	width:230px; /* was 230px */
+	width:230px;
 	background:white;
 }
 #customise_editpanel #customise_editpanel_rhs h2 {
@@ -1849,10 +1841,9 @@ a.toggle_customise_edit_panel:hover {
 	padding:6px;
 }
 #widget_picker_gallery {
-	/* float:right;*/
 	border-top:1px solid #cccccc;
 	background:white;
-	width:210px; /* was 210px */
+	width:210px; 
 	height:340px;
 	padding:10px;
 	overflow:scroll;
@@ -1958,7 +1949,7 @@ a.toggle_customise_edit_panel:hover {
 }
 #widget_picker_gallery table.draggable_widget h3 {
 	word-wrap:break-word;
-	width:145px;/* was 140px */
+	width:145px;
 	line-height: 1.1em;
 	overflow: hidden;
 	padding:4px;
@@ -1984,7 +1975,6 @@ a.toggle_customise_edit_panel:hover {
 }
 /* droppable area hover class  */
 .droppable-hover {
-	/* outline: 2px dotted red; */
 	background:#fdffc3;
 }
 /* target drop area class */

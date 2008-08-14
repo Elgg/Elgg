@@ -30,16 +30,13 @@ jQuery.fn.friendsPicker = function(iterator) {
 		
 		// generate appropriate nav for each container
 		container.each(function(i) {
-			
 			// generate Left and Right arrows
 			$(this).before("<div class='friendsPickerNavigationL' id='friendsPickerNavigationL" + iterator + "'><a href='#'>Left</a><\/div>");
 			$(this).after("<div class='friendsPickerNavigationR' id='friendsPickerNavigationR" + iterator + "'><a href='#'>Right</a><\/div>");
 			
 			// generate a-z tabs
 			$(this).before("<div class='friendsPickerNavigation' id='friendsPickerNavigation" + iterator + "'><ul><\/ul><\/div>");
-			
 			$(this).find("div.panel").each(function(individualTabItemNumber) {
-				
 				$("div#friendsPickerNavigation" + iterator + " ul").append("<li class='tab" + (individualTabItemNumber+1) + "'><a href='#" + (individualTabItemNumber+1) + "'>" + $(this).attr("title") + "<\/a><\/li>");		
 			});
 			
@@ -88,13 +85,9 @@ jQuery.fn.friendsPicker = function(iterator) {
 						
 				// apply 'current' class to currently selected tab link
 				$("div#friendsPickerNavigation" + iterator + " a:eq(0)").addClass("current");
-			
 		});
-		
 
-		$("div#friendsPickerNavigation" + iterator).append("<br />");
-		//$("div#friendsPickerNavigation" + iterator).hide();
-		
+		$("div#friendsPickerNavigation" + iterator).append("<br />");		
   });
 };
 
