@@ -21,15 +21,16 @@
 	<table cellspacing="0" id="collectionMembersTable" style="margin:10px;">
 		<tr>
 <?php
-			
 			$column = 0;
 			foreach($vars['entities'] as $entity) {
 				if (!($entity instanceof ElggEntity)) $entity = get_entity($entity);
 					if ($entity instanceof ElggEntity) {
 ?>
 
-			<td style="width:25px">
+			<td style="width:25px;">
+			<div style="width: 25px; margin-bottom: 15px;">
 				<?php echo elgg_view("profile/icon",array('entity' => $entity, 'size' => 'tiny')); ?> 
+			</div>
 			</td>
 			<td style="width: 200px; padding: 5px;">
 <?php

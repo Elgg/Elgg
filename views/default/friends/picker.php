@@ -193,7 +193,10 @@
 <?php
 					
 					$col++;
-					if ($col == 3) echo "</tr>";
+					if ($col == 3){
+						echo "</tr>";
+						$col = 0;
+					}
 				}
 				if ($col < 3) echo "</tr>";
 				
