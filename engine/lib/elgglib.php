@@ -561,17 +561,19 @@
 					
 					foreach($submenu_register_group as $key => $item) {
 						
-						$comparevals[$key] = (levenshtein($item->value, $_SERVER['REQUEST_URI']));
-						if ($comparevals[$key] < $maxcompareval) {
-							$maxcompareval = $comparevals[$key];
-							$preselected = $key;
+						if (substr_count($item->value, $_SERVER['REQUEST_URI'])) {
+							$comparevals[$key] = levenshtein($item->value, $_SERVER['REQUEST_URI']);
+							if ($comparevals[$key] < $maxcompareval) {
+								$maxcompareval = $comparevals[$key];
+								$preselected = $key;
+							}
 						}
 						
 					}
 					
 					foreach($submenu_register_group as $key => $item) {
 	
-						if (!$preselected) {
+						if ($preselected === false) {
 							if (substr_count($item->value, $_SERVER['REQUEST_URI'])) {
 								$selected = true;
 							} else {
