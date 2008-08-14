@@ -525,7 +525,7 @@
 	 * @param string $label The human-readable label
 	 * @param string $link The URL of the submenu item
 	 */
-		function add_submenu_item($label, $link, $group = 'main') {
+		function add_submenu_item($label, $link, $group = 'a') {
 			
 			global $CONFIG;
 			if (!isset($CONFIG->submenu)) $CONFIG->submenu = array();
