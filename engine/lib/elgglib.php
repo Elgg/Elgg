@@ -525,10 +525,15 @@
 	 * @param string $label The human-readable label
 	 * @param string $link The URL of the submenu item
 	 */
-		function add_submenu_item($label, $link) {
+		function add_submenu_item($label, $link, $group = 'main') {
 			
 			global $CONFIG;
-			add_to_register('submenu',$label,$link);
+			if (!isset($CONFIG->submenu)) $CONFIG->submenu = array();
+			if (!isset($CONFIG->submenu[$group])) $CONFIG->submenu[$group] = array();
+			$item = new stdClass;
+			$item->value = $link;
+			$item->name = $label;
+			$CONFIG->submenu[$group][] = $item; 
 			
 		}
 		
@@ -539,52 +544,66 @@
 	 */
 		function get_submenu() {
 			
-			$submenu = "";
+			$submenu_total = "";
 			global $CONFIG;
 			
-			if ($submenu_register = get_register('submenu')) {
+			if (isset($CONFIG->submenu) && $submenu_register = $CONFIG->submenu) {
 				
 				$preselected = false;
 				$comparevals = array();
 				$maxcompareval = 999999;
 				
-				foreach($submenu_register as $key => $item) {
+				asort($CONFIG->submenu);
+				
+				foreach($submenu_register as $groupname => $submenu_register_group) {
+				
+					$submenu = "";
 					
-					$comparevals[$key] = (levenshtein($item->value, $_SERVER['REQUEST_URI']));
-					if ($comparevals[$key] < $maxcompareval) {
-						$maxcompareval = $comparevals[$key];
-						$preselected = $key;
+					foreach($submenu_register_group as $key => $item) {
+						
+						$comparevals[$key] = (levenshtein($item->value, $_SERVER['REQUEST_URI']));
+						if ($comparevals[$key] < $maxcompareval) {
+							$maxcompareval = $comparevals[$key];
+							$preselected = $key;
+						}
+						
 					}
+					
+					foreach($submenu_register_group as $key => $item) {
+	
+						if (!$preselected) {
+							if (substr_count($item->value, $_SERVER['REQUEST_URI'])) {
+								$selected = true;
+							} else {
+								$selected = false;
+							}
+						} else {
+							if ($key == $preselected) {
+								$selected = true;
+							} else {
+								$selected = false;
+							}
+						}
+						
+						$submenu .= elgg_view('canvas_header/submenu_template',
+										array(
+												'href' => $item->value, 
+												'label' => $item->name,
+												'selected' => $selected,
+											));
+						
+					}
+					
+					$submenu_total .= elgg_view('canvas_header/submenu_group', array(
+												'submenu' => $submenu,
+												'group_name' => $groupname
+											));
 					
 				}
 				
-				foreach($submenu_register as $key => $item) {
-
-					if (!$preselected) {
-						if (substr_count($item->value, $_SERVER['REQUEST_URI'])) {
-							$selected = true;
-						} else {
-							$selected = false;
-						}
-					} else {
-						if ($key == $preselected) {
-							$selected = true;
-						} else {
-							$selected = false;
-						}
-					}
-					
-					$submenu .= elgg_view('canvas_header/submenu_template',
-									array(
-											'href' => $item->value, 
-											'label' => $item->name,
-											'selected' => $selected,
-										));
-					
-				}
 			}
 			
-			return $submenu;
+			return $submenu_total;
 			
 		}
 		
