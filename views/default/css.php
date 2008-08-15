@@ -275,12 +275,10 @@ h6 { font-size: 0.8em; }
 	float:none;
 }
 
-
-
-
 /* IE6 layout fixes */
-* html #profile_info_column_right {
-	margin:0 0 0 10px;
+* html #profile_info_column_left {
+	margin:0 10px 0 0;
+	width:200px;
 }
 * html #two_column_left_sidebar {
 	width:210px;
@@ -290,27 +288,6 @@ h6 { font-size: 0.8em; }
 	width:685px;
 	margin:20px 10px 20px 10px;
 }
-* html #profile_info {
-
-}
-* html #widgets_left {
-/*
-	margin:20px 20px 20px 10px;
-
-*/
-}
-* html #widgets_middle {
-/*
-	margin:20px 20px 20px 0px;
-
-*/}
-* html #widgets_right {
-/*
-	margin:20px 0px 20px 0px;
-
-*/
-}
-
 * html a.toggle_customise_edit_panel { 
 	float:none;
 	clear:none;
@@ -970,7 +947,7 @@ input[type="submit"] {
 
 #profile_menu_wrapper {
 	margin:10px 0 10px 0;
-	width:auto;
+	width:200px;
 }
 #profile_menu_wrapper p {
 	border-bottom:1px solid #cccccc;
@@ -980,11 +957,7 @@ input[type="submit"] {
 }
 #profile_menu_wrapper a {
 	display:block;
-	width:200px;
-/*
-	width:180px;
-
-*/	
+	/* width:200px; */	
 	padding:0 0 0 3px;
 }
 #profile_menu_wrapper a:hover {
@@ -1106,22 +1079,9 @@ p.user_menu_friends_of {
 	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_forum.gif) no-repeat left -1px;
 }
 
-/* 
-STILL TO ADD
-messageboard
-background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_messageboard.gif) no-repeat left -1px;
-
-feed - river icon:
-background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_feed.gif) no-repeat left -1px;
-
-private message - river icon:
-background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_privatemessage.gif) no-repeat left -1px;
-*/
-
 /* ***************************************
 	SEARCH LISTINGS	
 *************************************** */
-
 .search_listing {
 	display: block;
 	background-color: #eee;
