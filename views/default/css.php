@@ -1390,7 +1390,7 @@ table.search_gallery {
 }
 
 #owner_block_desc {
-	padding:0 0 4px 0;
+	padding:4px 0 4px 0;
 	margin:0 0 0 0;
 	line-height: 1.2em;
 	border-bottom:1px solid #cccccc;
@@ -1401,7 +1401,12 @@ table.search_gallery {
 	padding:3px 0 0 0;
 	min-height:35px;
 	font-weight: bold;
+}
+.ownerblockline {
+	padding:0;
+	margin:0;
 	border-bottom:1px solid #cccccc;
+	height:1px;
 }
 #owner_block_submenu {
 	margin:20px 0 20px 0;
