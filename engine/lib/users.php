@@ -775,7 +775,7 @@
 		$offset = (int) get_input('offset');
 		$limit = (int) $limit;
 		$count = (int) search_for_user($tag, 10, 0, '', true);
-		$entities = search_for_user($tag, $limit, 0);
+		$entities = search_for_user($tag, $limit, $offset);
 		
 		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview);
 		
