@@ -44,7 +44,7 @@
 	$baseurl = preg_replace('/[\&\?]'.$word.'\=[0-9]*/',"",$vars['baseurl']);
 	
 	//only display if there is content to paginate through or if we already have an offset
-	if ($count > $limit || $offset > 0){
+	if (($count > $limit || $offset > 0) && get_context() != 'widget') {
 
 ?>
 

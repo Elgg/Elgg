@@ -91,7 +91,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
-	$("#widgetcontent<?php echo $vars['entity']->getGUID(); ?>").load("<?php echo $vars['url']; ?>pg/view/<?php echo $vars['entity']->getGUID(); ?>?shell=no&username=<?php echo page_owner_entity()->username; ?>&context=<?php echo get_context(); ?>&callback=true");
+	$("#widgetcontent<?php echo $vars['entity']->getGUID(); ?>").load("<?php echo $vars['url']; ?>pg/view/<?php echo $vars['entity']->getGUID(); ?>?shell=no&username=<?php echo page_owner_entity()->username; ?>&context=widget&callback=true");
 
 	// run function to check for widgets collapsed/expanded state
 	var forWidget = "widget<?php echo $vars['entity']->getGUID(); ?>";
