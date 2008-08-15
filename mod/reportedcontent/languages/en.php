@@ -15,7 +15,7 @@
 		 * Menu items and titles
 		 */
 	
-			'item:content:reported_content' => 'Reported items',
+			'item:object:reported_content' => 'Reported items',
 			'reportedcontent' => 'Reported content',
 			'reportedcontent:this' => 'Report this',
 			'reportedcontent:none' => 'There is no reported content',
