@@ -760,6 +760,28 @@
 	}
 	
 	/**
+	 * Displays a list of user objects that have been searched for.
+	 *
+	 * @see elgg_view_entity_list
+	 * 
+	 * @param int $user_guid The GUID of the user
+	 * @param string $subtype The object subtype
+	 * @param int $limit The number of entities to display on a page
+	 * @param true|false $fullview Whether or not to display the full view (default: true)
+	 * @return string The list in a form suitable to display
+	 */
+	function list_user_search($tag, $limit = 10) {
+		
+		$offset = (int) get_input('offset');
+		$limit = (int) $limit;
+		$count = (int) search_for_user($tag, 10, 0, '', true);
+		$entities = search_for_user($tag, $limit, 0);
+		
+		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview);
+		
+	}
+	
+	/**
 	 * A function that returns a maximum of $limit users who have done something within the last 
 	 * $seconds seconds.
 	 *

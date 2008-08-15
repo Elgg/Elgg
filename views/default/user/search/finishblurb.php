@@ -3,13 +3,11 @@
 	if ($vars['count'] > $vars['threshold']) {
 
 ?>
-<p>
-	<?php 
+<p><a href="<?php echo $vars['url']; ?>search/users.php?tag=<?php echo urlencode($vars['tag']); ?>"><?php 
 	
 		echo elgg_echo("user:search:finishblurb"); 
 	
-	?>
-</p>
+	?></a></p>
 <?php
 
 	}
