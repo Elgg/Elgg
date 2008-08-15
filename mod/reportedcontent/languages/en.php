@@ -22,6 +22,7 @@
 			'reportedcontent:title' => 'Page title',
 			'reportedcontent:delete' => 'Delete it',
 			'reportedcontent:archive' => 'Archive it',
+			'reportedcontent:visit' => 'Visit reported item',
 			'reportedcontent:by' => 'Report by',
 			'reportedcontent:objecttitle' => 'Object title',
 			'reportedcontent:objecturl' => 'Object url',
