@@ -463,6 +463,11 @@ h6 { font-size: 0.8em; }
 	margin:0 15px 0 5px;
 	color:white;
 }
+/* IE6 */
+* html #elgg_topbar_container_left a.privatemessages_new { background-position: left -18px; } 
+/* IE7 */
+*+html #elgg_topbar_container_left a.privatemessages_new { background-position: left -18px; } 
+
 #elgg_topbar_container_left a.privatemessages_new:hover {
 	text-decoration: none;
 }

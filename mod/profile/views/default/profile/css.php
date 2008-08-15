@@ -46,7 +46,6 @@
 .usericon div.sub_menu a:visited, 
 .usericon div.sub_menu a:hover{ display:block;}	
 .usericon div.sub_menu a:hover{ background:#cccccc; text-decoration:none;}
-.usericon .item_line { }
 
 .usericon div.sub_menu h3 {font-size:1.2em;padding-bottom:3px;border-bottom:solid 1px #dddddd;}
 

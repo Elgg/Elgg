@@ -42,16 +42,16 @@
 											  )
 					);
 
-    // display relevant links			
-    echo elgg_view("profile/profilelinks", array("entity" => $vars['entity']));
+
     echo "</div>";
-    
-    
-    // close the icon and links div
+    echo "<div class=\"clearfloat\"></div>";
+     // display relevant links			
+    echo elgg_view("profile/profilelinks", array("entity" => $vars['entity']));
+       
+    // close profile_info_column_left
     echo "</div>";
 
 ?>
-<!-- /#profile_info_column_left -->
 </td>
 <td>
 	
