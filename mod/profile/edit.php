@@ -37,6 +37,8 @@
 			
 		}
 		
+		$area1 = "";
+		
     // get the required canvas area
         $body = elgg_view_layout("two_column_left_sidebar", $area1, $area2);
 		

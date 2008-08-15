@@ -82,7 +82,7 @@ END;
 		
 	// Have we been asked to inject any content? If so, display it
 		if (isset($vars['content']))
-			$contets .= $vars['content'];
+			$contents .= $vars['content'];
 		
 	// Initialise the submenu
 		$submenu = get_submenu(); // elgg_view('canvas_header/submenu');
