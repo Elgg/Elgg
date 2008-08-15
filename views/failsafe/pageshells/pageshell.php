@@ -113,6 +113,20 @@
 			text-align: left;
 			vertical-align: middle;
 		}
+		
+		.messages {
+		    border:1px solid #00cc00;
+		    background:#ccffcc;
+		    color:#000000;
+		    padding:3px 10px 3px 10px;
+		}
+		.messages_error {
+		    border:1px solid #D3322A;
+		    background:#F7DAD8;
+		    color:#000000;
+		    padding:3px 10px 3px 10px;
+		  
+		}
 		</style>
 		
 		
