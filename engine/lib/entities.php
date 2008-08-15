@@ -1346,8 +1346,7 @@
 				
 		$where = array();
 		
-		if (is_array($type)) {
-			
+		if (is_array($type)) {			
 			$tempwhere = "";
 			if (sizeof($type))
 			foreach($type as $typekey => $subtypearray) {
@@ -2045,13 +2044,13 @@
 	 * @param true|false $viewtypetoggle Whether or not to allow gallery view 
 	 * @return string A viewable list of entities
 	 */
-	function list_registered_entities($owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = false) {
+	function list_registered_entities($owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = false, $allowedtypes = true) {
 		
 		$typearray = array();
 		
 		if ($object_types = get_registered_entity_types()) {
 			foreach($object_types as $object_type => $subtype_array) {
-				if (is_array($subtype_array) && sizeof($subtype_array))
+				if (is_array($subtype_array) && sizeof($subtype_array) && (in_array($object_type,$allowedtypes) || $allowedtypes === true))
 					foreach($subtype_array as $object_subtype) {
 						$typearray[$object_type][] = $object_subtype;
 					}
