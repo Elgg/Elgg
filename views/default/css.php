@@ -650,23 +650,6 @@ h6 { font-size: 0.8em; }
     position:absolute;
     width:936px;
 }
-/* IE6 fix 
-* html .messages { 
-	margin:20px 20px 0px 20px;
-}
-* html .messages_error { 
-	margin:20px 20px 0px 20px;
-}
-*/
-/* IE7 
-*:first-child+html .messages {
-	margin:20px 20px 0px 20px;
-}
-*:first-child+html .messages_error {
-	margin:20px 20px 0px 20px;
-}
-*/
-
 
 
 /* ***************************************
@@ -1401,11 +1384,13 @@ table.search_gallery {
 	background: #4690d6; /*  url(<?php echo $vars['url']; ?>_graphics/tools_over.png) repeat-x top left; */
 }
 
-/* IE 6 - remove transparent png in menu 
-* html #owner_block ul li a:hover {
-	background: #4690d6;
+/* IE 6 + 7 menu arrow position fix */
+* html #owner_block ul li.selected a {
+	background-position: left 8px;
 }
-*/
+*:first-child+html #owner_block ul li.selected a {
+	background-position: left 8px;
+}
 
 /* ***************************************
 	PAGINATION
