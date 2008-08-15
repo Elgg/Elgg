@@ -1354,20 +1354,20 @@ table.search_gallery {
 #owner_block_submenu {
 	margin:20px 0 20px 0;
 	padding: 0;
-	border-bottom: 1px solid #cccccc;	
+	/* border-bottom: 1px solid #cccccc; */	
 	width:100%;
 }
 
-#owner_block ul {
+#owner_block_submenu ul {
 	list-style: none;
 	padding: 0;
 	margin: 0;
 }
-#owner_block ul li.selected a {
+#owner_block_submenu ul li.selected a {
 	background: url(<?php echo $vars['url']; ?>_graphics/owner_block_menu_arrow.gif) no-repeat left 6px;
 	padding-left:10px;
 }
-#owner_block ul li a {
+#owner_block_submenu ul li a {
 	text-decoration: none;
 	display: block;
 	padding: 0;
@@ -1379,18 +1379,48 @@ table.search_gallery {
 	line-height: 1.1em;
 }
 
-#owner_block ul li a:hover {
+#owner_block_submenu ul li a:hover {
 	color:white;
-	background: #4690d6; /*  url(<?php echo $vars['url']; ?>_graphics/tools_over.png) repeat-x top left; */
+	background: #4690d6;
 }
 
 /* IE 6 + 7 menu arrow position fix */
-* html #owner_block ul li.selected a {
+* html #owner_block_submenu ul li.selected a {
 	background-position: left 8px;
 }
-*:first-child+html #owner_block ul li.selected a {
+*:first-child+html #owner_block_submenu ul li.selected a {
 	background-position: left 8px;
 }
+
+#owner_block_submenu .submenu_group {
+	border-bottom: 1px solid #cccccc;
+	margin:22px 0 0 0;
+}
+
+/* filetypes filter menu */
+#owner_block_submenu .submenu_group .submenu_group_filetypes ul li a {
+	color:#666666;
+}
+#owner_block_submenu .submenu_group .submenu_group_filetypes ul li.selected a {
+	background: url(<?php echo $vars['url']; ?>_graphics/owner_block_menu_dot.gif) no-repeat left 7px;
+}
+#owner_block_submenu .submenu_group .submenu_group_filetypes ul li a:hover {
+	color:white;
+	background: #999999;
+}
+
+/* pages actions menu */
+#owner_block_submenu .submenu_group .submenu_group_pagesactions ul li a {
+	color:#666666;
+}
+#owner_block_submenu .submenu_group .submenu_group_pagesactions ul li.selected a {
+	background: url(<?php echo $vars['url']; ?>_graphics/owner_block_menu_dot.gif) no-repeat left 7px;
+}
+#owner_block_submenu .submenu_group .submenu_group_pagesactions ul li a:hover {
+	color:white;
+	background: #999999;
+}
+
 
 /* ***************************************
 	PAGINATION
