@@ -62,5 +62,7 @@
 	
 	//register action
 	register_action('reportedcontent/add',false,$CONFIG->pluginspath . "reportedcontent/actions/add.php");
+	register_action('reportedcontent/delete',false,$CONFIG->pluginspath . "reportedcontent/actions/delete.php");
+	register_action('reportedcontent/archive',false,$CONFIG->pluginspath . "reportedcontent/actions/archive.php");
 	
 ?>

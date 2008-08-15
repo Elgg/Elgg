@@ -15,14 +15,17 @@
 		 * Menu items and titles
 		 */
 	
-			'item:object:reported_content' => 'Reported items',
 			'reportedcontent' => 'Reported content',
 			'reportedcontent:this' => 'Report this',
 			'reportedcontent:none' => 'There is no reported content',
 			'reportedcontent:report' => 'Report to admin',
 			'reportedcontent:title' => 'Page title',
+			'reportedcontent:deleted' => 'The reported content has been deleted',
+			'reportedcontent:notdeleted' => 'We were not able to delete that report',
 			'reportedcontent:delete' => 'Delete it',
+			'reportedcontent:areyousure' => 'Are you sure you want to delete?',
 			'reportedcontent:archive' => 'Archive it',
+			'reportedcontent:archived' => 'The report has been archived',
 			'reportedcontent:visit' => 'Visit reported item',
 			'reportedcontent:by' => 'Report by',
 			'reportedcontent:objecttitle' => 'Object title',

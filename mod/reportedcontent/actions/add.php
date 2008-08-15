@@ -27,6 +27,7 @@
 		
     		if ($entity->save()) {
     			system_message(elgg_echo('reportedcontent:success'));
+    			$entity->state = "active";
     			forward($address);
     		} else {
     			register_error(elgg_echo('reportedcontent:failed'));
