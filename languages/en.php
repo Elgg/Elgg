@@ -14,7 +14,7 @@
 			
 			'login' => "Log in",
 			'loginok' => "You have been logged in.",
-			'loginerror' => "We couldn't log you in. Make sure your details are correct and please try again.",
+			'loginerror' => "We couldn't log you in. This may be because you haven't validated your account yet, or the details you supplied were incorrect. Make sure your details are correct and please try again.",
 	
 			'logout' => "Log out",
 			'logoutok' => "You have been logged out.",
