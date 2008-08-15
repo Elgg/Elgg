@@ -25,69 +25,74 @@
 	foreach ($user_guid as $u_id)
 	{
 		$requested = false;
-		if ($user = get_entity($u_id) && $group = get_entity($group_guid)) {
-	
-		if ($_SESSION['user']->getGUID() == $group->owner_guid)
-		{
-			$requests = $user->group_join_request;
-			
-			if ($requests)
+		
+		$user = get_entity($u_id);
+		$group = get_entity($group_guid);
+		if ( $user && $group) {
+		
+			if ($_SESSION['user']->getGUID() == $group->owner_guid)
 			{
-				foreach ($requests as $request) 
+				$requests = $user->group_join_request;
+				
+				if ($requests)
 				{
-					if ($request == $group->getGUID())
+					foreach ($requests as $request) 
 					{
-						
-						// User has requested to join this group previously, so we can safely add them
-	
-						// add them
-						if ((!$group->isMember($user)) && ($group->join($user)))
+						if ($request == $group->getGUID())
 						{
 							
-							// send welcome email
-							notify_user($user->getGUID(), $group->owner_guid, 
-								sprintf(elgg_echo('groups:welcome:subject'), $group->name), 
-								sprintf(elgg_echo('groups:welcome:body'), $user->name, $group->name, $group->getURL()),
-								NULL, "email");
+							// User has requested to join this group previously, so we can safely add them
+		
+							// add them
+							if ((!$group->isMember($user)) && ($group->join($user)))
+							{
 								
-							system_message(elgg_echo('groups:addedtogroup'));
+								// send welcome email
+								notify_user($user->getGUID(), $group->owner_guid, 
+									sprintf(elgg_echo('groups:welcome:subject'), $group->name), 
+									sprintf(elgg_echo('groups:welcome:body'), $user->name, $group->name, $group->getURL()),
+									NULL, "email");
+									
+								system_message(elgg_echo('groups:addedtogroup'));
+								
+							}
+							else
+								register_error(elgg_echo("groups:cantjoin"));
 							
+							$requested = true;
 						}
+					}
+				}
+					
+				if (!$requested) 
+				{
+					// Not found in request array, so send an invite and set invite flag
+					$methods = $user->group_invite;
+					if (($methods) && (!is_array($methods)))
+						$methods = array($methods);
+					if (!$methods) $methods=array();
+					$methods[] = $group->getGUID();
+					$methods = array_unique($methods);
+					
+					// Set invite flag
+					//if (!$user->setMetaData('group_invite', $group->getGUID(), "", true))
+					if (!$user->setMetaData('group_invite', $methods)) {
+					//if (!$user->group_invite = $methods) { 
+						register_error(elgg_echo("groups:usernotinvited"));
+					}
+					else
+					{
+						// Send email
+						if (notify_user($user->getGUID(), $group->owner_guid, 
+								sprintf(elgg_echo('groups:invite:subject'), $user->name, $group->name), 
+								sprintf(elgg_echo('groups:invite:body'), $user->name, $group->name, "{$CONFIG->url}action/groups/join?user_guid={$user->guid}&group_guid={$group->guid}"),
+								NULL, "email"))
+							system_message(elgg_echo("groups:userinvited"));
 						else
-							register_error(elgg_echo("groups:cantjoin"));
-						
-						$requested = true;
+							register_error(elgg_echo("groups:usernotinvited"));
 					}
 				}
 			}
-				
-			if (!$requested) 
-			{
-				// Not found in request array, so send an invite and set invite flag
-				$methods = $user->group_invite;
-				if (($methods) && (!is_array($methods)))
-					$methods = array($methods);
-				if (!$methods) $methods=array();
-				$methods[] = $group->getGUID();
-				$methods = array_unique($methods);
-				
-				// Set invite flag
-				//if (!$user->setMetaData('group_invite', $group->getGUID(), "", true))
-				if (!$user->group_invite = $methods)
-					register_error(elgg_echo("groups:usernotinvited"));
-				else
-				{
-					// Send email
-					if (notify_user($user->getGUID(), $group->owner_guid, 
-							sprintf(elgg_echo('groups:invite:subject'), $user->name, $group->name), 
-							sprintf(elgg_echo('groups:invite:body'), $user->name, $group->name, "{$CONFIG->url}action/groups/join?user_guid={$user->guid}&group_guid={$group->guid}"),
-							NULL, "email"))
-						system_message(elgg_echo("groups:userinvited"));
-					else
-						register_error(elgg_echo("groups:usernotinvited"));
-				}
-			}
-		}
 			else
 				register_error(elgg_echo("groups:notowner"));
 		}

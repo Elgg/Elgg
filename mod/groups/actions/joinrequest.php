@@ -30,6 +30,9 @@
 
 		if ($invites)
 		{
+			if (!is_array($invites))
+				$invites = array($invites);
+			
 			foreach ($invites as $invite)
 			{
 				if ($invite == $group->getGUID())
