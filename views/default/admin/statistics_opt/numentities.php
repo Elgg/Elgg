@@ -13,6 +13,7 @@
 	
 	// Get entity statistics
 	$entity_stats = get_entity_statistics();
+	$even_odd = "";
 ?>
 <div class="admin_statistics">
     <h3><?php echo elgg_echo('admin:statistics:label:numentities'); ?></h3>

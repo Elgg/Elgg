@@ -100,6 +100,8 @@
 	function default_page_handler($page, $handler) {
 		
 		global $CONFIG;
+		$script = "";
+		
 		$page = implode('/',$page);
 		if (($questionmark = strripos($page, '?')))
 			$page = substr($page, 0, $questionmark);

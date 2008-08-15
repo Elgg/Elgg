@@ -11,7 +11,8 @@
 	 * 
 	 * @uses $vars['entity'] The user entity
 	 */
-	 
+		$info = "";	 
+
 	    //grab the users status message with metadata 'state' set to current if it exists
 		if($get_status = get_entities_from_metadata("state", "current", "object", "status", $vars['entity']->guid)){
     		    

@@ -9,6 +9,9 @@
 		$context = $vars['context'];
 		$viewtype = $vars['viewtype'];
 		
+		$html = "";
+		$nav = "";
+		
 		if (isset($vars['viewtypetoggle'])) {
 			$viewtypetoggle = $vars['viewtypetoggle'];
 		} else {
