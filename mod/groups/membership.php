@@ -22,7 +22,7 @@
 	
 	set_context('search');
 	//$objects = list_entities("group", "", page_owner(), $limit, false);
-	$objects = list_entities_from_relationship('member',page_owner(),false,'group','',0,10,false);
+	$objects = list_entities_from_relationship('member',page_owner(),false,'group','',0,10,false, true);
 	set_context('groups');
 	
 	$area2 .= $objects;
