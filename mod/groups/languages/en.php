@@ -74,6 +74,7 @@
 			'groups:topicopen' => 'Open',
 			'groups:topicclosed' => 'Closed',
 			'groups:topicresolved' => 'Resolved',
+			'groupstopic:deleted' => 'The topic has been deleted',
 			'groups:topicsticky' => 'Sticky',
 			'groups:topicisclosed' => 'This topic is closed',
 			'groups:topiccloseddesc' => 'This topic has now been closed and is not accepting new comments',
