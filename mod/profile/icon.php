@@ -44,6 +44,7 @@
 		}
 		
 		header("Content-type: image/jpeg");
+		header('Expires: ' . date('r',time() + 864000));
 		header("Pragma: public");
 		header("Cache-Control: public");
 		echo $contents;

@@ -60,10 +60,23 @@ END;
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery-ui-personalized-1.5.packed.js"></script>
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>javascript/initialise_elgg.js"></script>
 	
+<?php
+
+	global $pickerinuse;
+	if (isset($pickerinuse) && $pickerinuse == true) {
+
+?>
+	
 	<!-- only needed on pages where we have friends collections and/or the friends picker-->
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery-easing.1.2.pack.js"></script>
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery-easing-compatibility.1.2.pack.js"></script>
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>javascript/friendsPickerv1.js"></script>
+	
+<?php
+
+	}
+
+?>
 	
 	<!-- include the default css file -->
 	<link rel="stylesheet" href="<?php echo $vars['url']; ?>_css/css.css" type="text/css" />

@@ -14,6 +14,10 @@
 	 * @uses $vars['entities'] The array of ElggUser objects
 	 */
 
+	// Let the system know that the friends picker is in use
+		global $pickerinuse;
+		$pickerinuse = true;
+
 	// Initialise internalname
 		if (!isset($vars['internalname'])) {
 			$internalname = "friend";

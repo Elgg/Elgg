@@ -12,6 +12,9 @@
 	 */
 
 	    header("Content-type: text/css");
+		header('Expires: ' . date('r',time() + 864000));
+		header("Pragma: public");
+		header("Cache-Control: public");
 	
 	    require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
 	    
