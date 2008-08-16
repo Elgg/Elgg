@@ -2079,7 +2079,7 @@ a.toggle_customise_edit_panel:hover {
 .settings_form h3,
 .usersettings_statistics h3,
 .admin_statistics h3,
-#admin_users_online h3 {
+.admin_users_online h3 {
 	background:#e4e4e4;
 	border-bottom:1px solid #d0d0d0;
 	color:#666666;
