@@ -24,7 +24,6 @@
 }
 
 .usericon div.sub_menu { 
-	/* z-index:9999; */
 	display:none; 
 	position:absolute; 
 	padding:2px; 

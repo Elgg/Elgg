@@ -18,12 +18,15 @@
 
 ?>
 
+var submenuLayer = 1000;
+
 function setup_avatar_menu() {
 
 	// avatar image menu link
 	$("div.usericon img").mouseover(function() {
 		// find nested avatar_menu_button and show
 		$(this.parentNode.parentNode).children("[class=avatar_menu_button]").show();
+		//$(this.parentNode.parentNode).css("z-index", submenuLayer);
 	})
 	.mouseout(function() { 
 		if($(this).parent().parent().find("div.sub_menu").css('display')!="block"){
@@ -62,12 +65,13 @@ function setup_avatar_menu() {
 					.fadeIn('normal');		
 			}	
 			
-			// fix for z-index / jquery bug
-			//$(this).css("z-index", parseInt( new Date().getTime()/100000000 ));
-			//avatar.css("z-index",  parseInt( new Date().getTime()/100000000 ));
+			// fix for ie z-index bug
 			//submenu.css("z-index", parseInt( new Date().getTime()/100000000 ));
 			
-			//alert("submenu z-index = " +submenu.css("z-index"));
+			avatar.css("z-index",  submenuLayer);
+			submenu.css("z-index", submenuLayer+1);
+						
+			submenuLayer++;
 			
 			// change arrow to 'on' state
 			$(this).attr('src','<?php echo $vars['url']; ?>_graphics/avatar_menu_arrow_open.gif');	
@@ -77,6 +81,8 @@ function setup_avatar_menu() {
 		$("div.sub_menu:visible").not(submenu).hide();
 		$(".usericon img.arrow").not(this).attr('src','<?php echo $vars['url']; ?>_graphics/avatar_menu_arrow.gif');
 		$(".avatar_menu_button").not(this).hide();
+		
+		//alert("submenuLayer = " +submenu.css("z-index"));
 	})
 	// hover arrow each time mouseover enters arrow graphic (eg. when menu is already shown)
 	.mouseover(function() { $(this).attr('src','<?php echo $vars['url']; ?>_graphics/avatar_menu_arrow_hover.gif'); })
