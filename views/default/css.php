@@ -552,13 +552,10 @@ h6 { font-size: 0.8em; }
 	display:inline;
 	float:left;
 	list-style-type: none;
-	z-index: 99999;
+	z-index: 99999999;
 }
 #topbardropdownmenu {
 	margin:0pt 15px 0pt 5px;
-}
-#topbardropdownmenu ul {
-	/* width:134px; */
 }
 /* Tools link in top menu */
 #topbardropdownmenu a, #topbardropdownmenu a:visited {

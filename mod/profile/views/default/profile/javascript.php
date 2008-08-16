@@ -62,12 +62,12 @@ function setup_avatar_menu() {
 					.fadeIn('normal');		
 			}	
 			
-			// fix for z-index / jquery bug in IE - TO DO: wrap this in a conditional statement - no need to do this calculation for other browsers
-			$(this).css("z-index", parseInt( new Date().getTime()/1000 ));
-			avatar.css("z-index", parseInt( new Date().getTime()/1000 ));
-			submenu.css("z-index", parseInt( new Date().getTime()/1000 ));
+			// fix for z-index / jquery bug
+			//$(this).css("z-index", parseInt( new Date().getTime()/100000000 ));
+			//avatar.css("z-index",  parseInt( new Date().getTime()/100000000 ));
+			//submenu.css("z-index", parseInt( new Date().getTime()/100000000 ));
 			
-			//alert("z-index = " +avatar.css("z-index"));
+			//alert("submenu z-index = " +submenu.css("z-index"));
 			
 			// change arrow to 'on' state
 			$(this).attr('src','<?php echo $vars['url']; ?>_graphics/avatar_menu_arrow_open.gif');	
