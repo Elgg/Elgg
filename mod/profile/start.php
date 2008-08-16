@@ -61,7 +61,7 @@
 			// Extend context menu with admin links
 			if (isadminloggedin())
 			{
-	   			 extend_view('profile/menu/links','profile/menu/adminlinks',10000);
+	   			 extend_view('profile/menu/links','profile/menu/adminwrapper',10000);
 			}
 		}
 		
