@@ -1399,7 +1399,7 @@ table.search_gallery {
 
 /* IE 6 + 7 menu arrow position fix */
 * html #owner_block_submenu ul li.selected a {
-	background-position: left 8px;
+	background-position: left 10px;
 }
 *:first-child+html #owner_block_submenu ul li.selected a {
 	background-position: left 8px;
