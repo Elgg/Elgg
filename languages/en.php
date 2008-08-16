@@ -383,6 +383,8 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'adduser' => "Add User",
 			'adduser:ok' => "You have successfully added a new user.",
 			'adduser:bad' => "The new user could not be created.",
+			
+			'item:object:reported_content' => "Reported items",
 	
 			'user:set:name' => "Account name settings",
 			'user:name:label' => "Your name",
