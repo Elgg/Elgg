@@ -175,7 +175,8 @@
 	margin:0 0 10px 0;
 }
 .forum_latest .topic_owner_icon {
-	position:absolute;
+	position:relative;
+	float:left;
 }
 .forum_latest .topic_title {
 	margin-left:35px;
