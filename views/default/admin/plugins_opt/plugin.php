@@ -41,18 +41,16 @@
 		<div><?php echo elgg_echo('admin:plugins:label:licence') . ": ". $manifest['licence'] ?></div>
 		<div><?php echo elgg_echo('admin:plugins:label:website') . ": "; ?><a href="<?php echo $manifest['website']; ?>"><?php echo $manifest['website']; ?></a></div>
 	<?php } ?>
-
-	</div>
 	
 	<?php if (elgg_view("settings/{$plugin}/edit")) { ?>
 	<p><a class="pluginsettings_toggle"><?php echo elgg_echo("settings"); ?></a></p>
 	<div id="pluginsettings">
-		<hr />
 			<div id="<?php echo $plugin; ?>_settings">
 				<?php echo elgg_view("object/plugin", array('plugin' => $plugin, 'entity' => find_plugin_settings($plugin))) ?>
 			</div>
-		<hr />
 	</div>
 	<?php } ?>
+
+	</div>
 	
 </div>
