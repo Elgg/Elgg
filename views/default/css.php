@@ -1194,7 +1194,7 @@ table.search_gallery {
 
 
 /* ***************************************
-	PLUGIN SETTINGS
+	ADMIN AREA - PLUGIN SETTINGS
 *************************************** */
 .plugin_details {
 	margin:0 0 10px 0;
@@ -1261,6 +1261,7 @@ table.search_gallery {
 #updateclient_settings h3 {
 	padding:0;
 	margin:0;
+	border:none;
 }
 
 /* ***************************************
