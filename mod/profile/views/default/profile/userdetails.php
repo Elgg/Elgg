@@ -39,6 +39,7 @@
 												'entity' => $vars['entity'],
 												//'align' => "left",
 												'size' => $iconsize,
+												'override' => true,
 											  )
 					);
 

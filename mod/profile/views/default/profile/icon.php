@@ -38,9 +38,15 @@
 		} else {
 			$align = "";
 		}
-			
-?>
 
+	// Override
+		if (isset($vars['override']) && $vars['override'] == true) {
+			$override = true;
+		} else $override = false;
+		
+		if (!$override) {
+		
+?>
 <div class="usericon">
 <div class="avatar_menu_button"><img src="<?php echo $vars['url']; ?>_graphics/avatar_menu_arrow.gif" width="15" height="15" class="arrow" /></div>
 
@@ -66,11 +72,20 @@
 		?>
 
 	</div>	
-	<a href="<?php echo $vars['entity']->getURL(); ?>" class="icon" ><img src="<?php echo $vars['url']; ?>pg/icon/<?php echo $username; ?>/<?php echo $vars['size']; ?>/<?php echo $icontime; ?>.jpg" border="0" <?php echo $align; ?> title="<?php echo htmlentities($vars['entity']->name, null, 'UTF-8'); ?>" <?php echo $vars['js']; ?> /></a>
+	<a href="<?php echo $vars['entity']->getURL(); ?>" class="icon" ><?php 
+		
+	} 
+	
+	?><img src="<?php echo $vars['url']; ?>pg/icon/<?php echo $username; ?>/<?php echo $vars['size']; ?>/<?php echo $icontime; ?>.jpg" border="0" <?php echo $align; ?> title="<?php echo htmlentities($vars['entity']->name, null, 'UTF-8'); ?>" <?php echo $vars['js']; ?> /><?php
+
+		if (!$override) {
+	
+	?></a>
 </div>
 
 <?php
 
 	}
+		}
 
 ?>
