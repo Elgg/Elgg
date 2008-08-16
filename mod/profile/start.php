@@ -44,6 +44,7 @@
 			// Register a page handler, so we can have nice URLs
 				register_page_handler('profile','profile_page_handler');
 				register_page_handler('icon','profile_icon_handler');
+				register_page_handler('iconjs','profile_iconjs_handler');
 				
 			// Add Javascript reference to the page header
 				extend_view('metatags','profile/metatags');
@@ -100,6 +101,17 @@
 			}
 			// Include the standard profile index
 			include($CONFIG->pluginspath . "profile/icon.php");
+			
+		}
+		
+	/**
+	 * Icon JS
+	 */
+		function profile_iconjs_handler($page) {
+			
+			global $CONFIG;
+
+			include($CONFIG->pluginspath . "profile/javascript.php");
 			
 		}
 		

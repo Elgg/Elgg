@@ -22,7 +22,23 @@
 	//var_export($vars['profile']);
 	if (is_array($vars['config']->profile) && sizeof($vars['config']->profile) > 0)
 		foreach($vars['config']->profile as $shortname => $valtype) {
-			
+			if ($metadata = get_metadata_byname($vars['entity']->guid, $shortname)) {
+				if (is_array($metadata)) {
+					$value = '';
+					foreach($metadata as $md) {
+						if (!empty($value)) $value .= ', ';
+						$value .= $md->value;
+						$access_id = $md->access_id;
+					}
+				} else {
+					$value = $metadata->value;
+					$access_id = $metadata->access_id;
+				}
+			} else {
+				$value = '';
+				$access_id = 1;
+			}
+
 ?>
 
 	<p>
@@ -30,13 +46,14 @@
 			<?php echo elgg_echo("profile:{$shortname}") ?><br />
 			<?php echo elgg_view("input/{$valtype}",array(
 															'internalname' => $shortname,
-															'value' => $vars['entity']->$shortname,
+															'value' => $value,
 															)); ?>
 		</label>
+			<?php echo elgg_view('input/access',array('internalname' => 'accesslevel['.$shortname.']', 'value' => $access_id)); ?>
 	</p>
 
 <?php
-			
+
 		}
 
 ?>

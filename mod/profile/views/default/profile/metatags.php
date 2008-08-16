@@ -13,4 +13,4 @@
 
 ?>
 
-	<script type="text/javascript" src="<?php echo $vars['url']; ?>mod/profile/javascript.php" ></script>
+	<script type="text/javascript" src="<?php echo $vars['url']; ?>pg/iconjs/profile.js" ></script>

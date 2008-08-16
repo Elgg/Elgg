@@ -15,8 +15,12 @@
 
 	// Get profile fields
 		$input = array();
+		$accesslevel = get_input('accesslevel');
+		if (!is_array($accesslevel)) $accesslevel = array();
+		
 		foreach($CONFIG->profile as $shortname => $valuetype) {
 			$input[$shortname] = get_input($shortname);
+			
 			if ($valuetype == 'tags')
 				$input[$shortname] = string_to_tag_array($input[$shortname]);
 		}
@@ -34,7 +38,22 @@
 			// Save stuff
 			if (sizeof($input) > 0)
 				foreach($input as $shortname => $value) {
-					$user->$shortname = $value;
+					
+					//$user->$shortname = $value;
+					remove_metadata($user->guid, $shortname);
+					if (isset($accesslevel[$shortname])) {
+						$access_id = (int) $accesslevel[$shortname];
+					} else {
+						$access_id = 0;
+					}
+					if (is_array($value)) {
+						foreach($value as $interval) {
+							create_metadata($user->guid, $shortname, $interval, 'text', $user->guid, $access_id, true);
+						}
+					} else {
+						create_metadata($user->guid, $shortname, $value, 'text', $user->guid, $access_id);
+					}
+					
 				}
 			$user->save();
 

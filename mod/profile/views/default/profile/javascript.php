@@ -13,6 +13,8 @@
 	 */
 
 		header("Content-type: text/javascript");
+		header("Pragma: public");
+		header("Cache-Control: public");
 
 ?>
 
