@@ -739,7 +739,8 @@
 					case 'enabled' :		// Useless to an importer
 						
 					case 'email' :
-					case 'password' : 		// Definitely don't want these two
+					case 'salt' :
+					case 'password' : 		// Definitely don't want these three
 					break;
 					
 					case 'time_created' :	// Created = published
