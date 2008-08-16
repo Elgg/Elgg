@@ -28,8 +28,8 @@ Generated %s by %s
 Elgg Release %s, version %s
 
 ------------------------------------------------------------------------',
-			'diagnostics:report:session' => '
-Current session:
+			'diagnostics:report:php' => '
+PHP info:
 %s
 ------------------------------------------------------------------------',
 			'diagnostics:report:plugins' => '
@@ -42,6 +42,12 @@ Installed files and checksums:
 
 %s
 ------------------------------------------------------------------------',
+			'diagnostics:report:globals' => '
+Global variables:
+
+%s
+------------------------------------------------------------------------',
+	
 	);
 					
 	add_translation("en",$english);
