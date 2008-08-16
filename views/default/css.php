@@ -1250,6 +1250,18 @@ table.search_gallery {
 .active .admin_plugin_enable_disable a:hover {
 	background: #333333;
 }
+.pluginsettings {
+	margin:20px 0 0 0;
+}
+.pluginsettings h3 {
+	padding:0 0 5px 0;
+	margin:0 0 5px 0;
+	border-bottom:1px solid #999999;
+}
+#updateclient_settings h3 {
+	padding:0;
+	margin:0;
+}
 
 /* ***************************************
 	GENERIC COMMENTS
