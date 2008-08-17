@@ -124,7 +124,7 @@
 					add_submenu_item(elgg_echo('groups:all'), $CONFIG->wwwroot . "pg/groups/world/", 'groupslinks');
 				} else if (page_owner()) {
 					$page_owner = page_owner_entity();
-					add_submenu_item(elgg_echo('groups:yours'), $CONFIG->wwwroot . "pg/groups/owned/" . $page_owner->username, 'groupslinks');
+					if (isloggedin()) add_submenu_item(elgg_echo('groups:yours'), $CONFIG->wwwroot . "pg/groups/owned/" . $_SESSION['user']->username, 'groupslinks');
 					add_submenu_item(elgg_echo('groups:all'), $CONFIG->wwwroot . "pg/groups/world/", 'groupslinks');
 				} else {
 					add_submenu_item(elgg_echo('groups:all'), $CONFIG->wwwroot . "pg/groups/world/", 'groupslinks');
