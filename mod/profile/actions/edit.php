@@ -47,8 +47,11 @@
 						$access_id = 0;
 					}
 					if (is_array($value)) {
+						$i = 0;
 						foreach($value as $interval) {
-							create_metadata($user->guid, $shortname, $interval, 'text', $user->guid, $access_id, true);
+							$i++;
+							if ($i == 1) { $multiple = false; } else { $multiple = true; }
+							create_metadata($user->guid, $shortname, $interval, 'text', $user->guid, $access_id, $multiple);
 						}
 					} else {
 						create_metadata($user->guid, $shortname, $value, 'text', $user->guid, $access_id);
