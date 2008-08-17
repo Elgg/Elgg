@@ -36,7 +36,6 @@
 							<ul>
 								<li><a href="http://elgg.org/features.php">Features</a></li>
 								<li><a href="http://elgg.org/about.php">About Elgg</a></li>
-								<li>Sed do eiusmod tempor incididunt</li>
 							</ul>
 							
 							</td>
@@ -74,7 +73,7 @@
 			<li><a href="http://docs.elgg.org/wiki/Tutorials/Blog">Simple blog tutorial (plugin)</a></li>
 			<li><a href="http://docs.elgg.org/wiki/Tutorials/Wysiwyg">Simple plugin tutorial</a></li>
 			<li><a href="http://docs.elgg.org/wiki/Widgets#Simple_Example">Simple widget example</a></li>
-			<li><a href="">Populating this spotlight area</a></li>
+			<li><a href="http://docs.elgg.org/wiki/Views/SystemViews">Populating this spotlight area</a></li>
 		</ul>
 		<!-- /spotlight RHS content -->
 		<a href="http://elgg.com"><img src="http://news.elgg.org/mod/standaloneblog/graphics/elgg_com_badge.gif"></a>
