@@ -74,10 +74,11 @@
 			'groups:topicopen' => 'Open',
 			'groups:topicclosed' => 'Closed',
 			'groups:topicresolved' => 'Resolved',
-			'groupstopic:deleted' => 'The topic has been deleted',
+			'grouptopic:created' => 'Your topic was created.',
+			'groupstopic:deleted' => 'The topic has been deleted.',
 			'groups:topicsticky' => 'Sticky',
-			'groups:topicisclosed' => 'This topic is closed',
-			'groups:topiccloseddesc' => 'This topic has now been closed and is not accepting new comments',
+			'groups:topicisclosed' => 'This topic is closed.',
+			'groups:topiccloseddesc' => 'This topic has now been closed and is not accepting new comments.',
 			
 	
 			'groups:privategroup' => 'This group is private, requesting membership.',
