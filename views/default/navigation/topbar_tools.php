@@ -18,6 +18,11 @@
 		//var_export($menu);
 
 		if (is_array($menu) && sizeof($menu) > 0) {
+			$alphamenu = array();
+			foreach($menu as $item) {
+				$alphamenu[$item->name] = $item;
+			}
+			ksort($alphamenu);
 		
 ?>
 
@@ -27,7 +32,7 @@
       <ul>
       <?php
 
-			foreach($menu as $item) {
+			foreach($alphamenu as $item) {
     			
     			echo "<li><a href=\"{$item->value}\">" . $item->name . "</a></li>";
     			
