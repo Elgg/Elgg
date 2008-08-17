@@ -305,11 +305,6 @@ h6 { font-size: 0.8em; }
 	width:585px;
 }
 
-/* IE7 */
-*:first-child+html #wrapper_spotlight .collapsable_box_content {
-	width:958px;
-}
-
 #layout_spotlight {
 	padding:0;
 	margin:0;
@@ -319,10 +314,29 @@ h6 { font-size: 0.8em; }
 	padding:0;
 	height:auto;
 }
+/* ***************************************
+	SPOTLIGHT
+*************************************** */
+/* IE7 */
+*:first-child+html #wrapper_spotlight .collapsable_box_content {
+	width:958px;
+}
+
+#wrapper_spotlight #spotlight_table h2 {
+	color:#4690d6;
+	font-size:1.25em;
+	line-height:1.2em;
+}
+#wrapper_spotlight #spotlight_table li {
+	list-style: square;
+	line-height: 1.2em;
+	margin:5px 20px 5px 0;
+	color:#4690d6;
+}
 #wrapper_spotlight .collapsable_box_content  {
 	margin:0;
 	padding:20px 20px 10px 20px;
-	background: url(<?php echo $vars['url']; ?>_graphics/spotlight_back.gif) repeat-x left bottom;
+	background: #ffffff url(<?php echo $vars['url']; ?>_graphics/spotlight_back.gif) repeat-x left top;
 	min-height:60px;
 	border:none;
 }
@@ -333,6 +347,9 @@ h6 { font-size: 0.8em; }
 	border-left: none;
 	border-right: none;
 }
+/* ***************************************
+	FOOTER
+*************************************** */
 #layout_footer {
 	background: url(<?php echo $vars['url']; ?>_graphics/footer_back.gif) repeat-x left top;
 	height:80px;
@@ -469,33 +486,19 @@ h6 { font-size: 0.8em; }
 #elgg_topbar_container_right {
 	padding:3px 0 0 0;
 }
-/*
-#elgg_topbar_container_right img  {
-	float:right;
-	margin:0 20px 0 0;
-	cursor:pointer;
-}
-#elgg_topbar_container_right a {
-	color:#eeeeee;
-	margin:0 5px 0 0;
-}
-*/
 #elgg_topbar_container_right a {
 	color:#eeeeee;
 	margin:0 5px 0 0;
 	background:transparent url(<?php echo $vars['url']; ?>_graphics/elgg_toolbar_logout.gif) no-repeat top right;
 	padding:0 21px 0 0;
 	display:block;
+	height:20px;
 }
 /* IE6 fix */
 * html #elgg_topbar_container_right a { 
-	height: 20px;
 	width: 120px;
 }
-/* IE7 */
-*:first-child+html #elgg_topbar_container_right a {
-	height: 20px;
-}
+
 #elgg_topbar_container_right a:hover {
 	background-position: right -21px;
 }
@@ -1163,19 +1166,6 @@ table.search_gallery {
 	margin-bottom: 10px;
 }
 
-/* ***************************************
-	SPOTLIGHT
-*************************************** */
-#wrapper_spotlight #spotlight_table h2 {
-	color:#4690d6;
-	font-size:1.25em;
-	line-height:1.2em;
-}
-#wrapper_spotlight #spotlight_table li {
-	list-style: square;
-	line-height: 1.2em;
-	margin:5px 20px 5px 0;
-}
 
 /* ***************************************
 	FRIENDS
