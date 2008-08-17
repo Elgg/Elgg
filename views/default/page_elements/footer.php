@@ -21,13 +21,13 @@
 <div class="clearfloat"></div>
 
 <div id="layout_footer">
-<table width="958" height="79" border="1" cellpadding="0" cellspacing="0">
+<table width="958" height="79" border="0" cellpadding="0" cellspacing="0">
 	<tr>
-		<td width="310" height="50">
+		<td width="210" height="50">
 
 		</td>
 		
-		<td width="648" height="50" align="right">
+		<td width="748" height="50" align="right">
 		<p class="footer_toolbar_links">
 		<?php
 			foreach($menu as $item) {
@@ -42,13 +42,13 @@
 	</tr>
 	
 	<tr>
-		<td width="310" height="28">
+		<td width="210" height="28">
 		<a href="http://www.elgg.org" target="_blank">
 		<img src="<?php echo $vars['url']; ?>_graphics/powered_by_elgg_badge_drk_bckgnd.gif" border="0" />
 		</a>
 		</td>
 		
-		<td width="648" height="28" align="right">
+		<td width="748" height="28" align="right">
 		<p class="footer_legal_links"><small>
 		 Powered by Elgg, the leading open source social networking platform
 		</small>
