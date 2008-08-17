@@ -576,6 +576,7 @@
 	
 						if ($preselected === false) {
 							if (substr_count($item->value, $_SERVER['REQUEST_URI'])) {
+								$preselected = $key;
 								$selected = true;
 							} else {
 								$selected = false;
