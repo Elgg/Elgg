@@ -2138,7 +2138,9 @@ a.toggle_customise_edit_panel:hover {
 	display:none;
 }
 
-
-
+/* force tinyMCE editor initial width for safari */
+.mceLayout {
+	width:683px;
+}
 
 
