@@ -225,6 +225,16 @@ a.add_topic_button:hover {
 	margin:0 0 20px 0;
 }
 
+/* latest discussion listing */
+p.latest_discussion_info {
+	float:right;
+	width:220px;
+}
+
+span.timestamp {
+	color:#666666;
+	font-size: 90%;
+}
 
 
 

@@ -23,9 +23,9 @@
                     $last_user = $last->owner_guid;
                 }
                 
-    $info = "<p style=\"float:right;\">" . elgg_echo('created') . " " . $forum_created . ", " . elgg_echo('with') . " " . $counter . " " . elgg_echo('posts') . "<br />last updated " . friendly_time($last_time) . "<br />by <a href=\"" . get_user($last_user)->getURL() . "\">" . get_user($last_user)->username . "</a></p>";
+    $info = "<p class=\"latest_discussion_info\">" . elgg_echo('created') . " " . $forum_created . ", " . elgg_echo('with') . " " . $counter . " " . elgg_echo('posts') . "<br /><span class=\"timestamp\">last updated " . friendly_time($last_time) . "<br />by <a href=\"" . get_user($last_user)->getURL() . "\">" . get_user($last_user)->username . "</a></span></p>";
 	//get the group avatar
-	$icon = elgg_view("profile/icon",array('entity' => $group, 'size' => 'tiny'));
+	$icon = elgg_view("profile/icon",array('entity' => $group, 'size' => 'small'));
     //get the group and topic title
     $info .= "<p>" . elgg_echo('group') . ": <a href=\"{$group->getURL()}\">{$group->name}</a></p>";
     
