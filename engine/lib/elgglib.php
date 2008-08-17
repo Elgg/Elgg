@@ -553,7 +553,8 @@
 				$comparevals = array();
 				$maxcompareval = 999999;
 				
-				asort($CONFIG->submenu);
+				//asort($submenu_register);
+				ksort($submenu_register);
 				
 				foreach($submenu_register as $groupname => $submenu_register_group) {
 				
