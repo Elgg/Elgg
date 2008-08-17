@@ -159,7 +159,7 @@
 					if ($col == 0) echo "<tr>";
 					
 					//echo "<p>" . $user->name . "</p>";
-					$label = elgg_view("profile/icon",array('entity' => $friend, 'size' => 'tiny')); 
+					$label = elgg_view("profile/icon",array('entity' => $friend, 'size' => 'tiny', 'override' => true)); 
 					$options[$label] = $friend->getGUID();
 					if (in_array($friend->getGUID(),$vars['value'])) {
 						$checked = "checked = \"checked\"";
