@@ -71,7 +71,6 @@ div.usericon a.icon img {
 	padding:0;
 }
 .user_menu_admin {
-	border-bottom:solid 1px #dddddd;
 	border-top:solid 1px #dddddd;
 }
 .user_menu_admin a {

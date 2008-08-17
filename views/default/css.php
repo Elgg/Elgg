@@ -557,6 +557,9 @@ h6 { font-size: 0.8em; }
 #topbardropdownmenu {
 	margin:0pt 15px 0pt 5px;
 }
+#topbardropdownmenu ul {
+	/* width:134px; */
+}
 /* Tools link in top menu */
 #topbardropdownmenu a, #topbardropdownmenu a:visited {
 	display:block;
@@ -950,6 +953,9 @@ p.user_menu_removefriend,
 p.user_menu_friends_of {
 	margin:0;
 }
+#profile_menu_wrapper .user_menu_admin {
+	border-top:none;
+}
 
 #profile_info_column_middle p {
 	margin:7px 0 7px 0;
@@ -1070,13 +1076,8 @@ p.user_menu_friends_of {
 }
 
 .search_listing_icon {
-	position: absolute;
-}
-/* IE 6 fix */
-* html .search_listing_icon {
 	float:left;
 }
-
 .search_listing_icon img {
 	width: 40px;
 }
@@ -1275,7 +1276,7 @@ table.search_gallery {
 }
 
 .generic_comment_icon {
-	position: absolute;
+	float:left;
 }
 
 .generic_comment_details {
