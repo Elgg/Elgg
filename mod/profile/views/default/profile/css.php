@@ -36,9 +36,9 @@
 	background:#FFFFFF; 
 	text-align:left;
 }
-
-* html .usericon div.sub_menu {  } /* IE6 */
-*+html .usericon div.sub_menu {  } /* IE7 */
+div.usericon a.icon img {
+	z-index:10;
+}
 
 .usericon div.sub_menu a {margin:0;padding:2px;}
 .usericon div.sub_menu a:link, 

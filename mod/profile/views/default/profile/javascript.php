@@ -65,10 +65,9 @@ function setup_avatar_menu() {
 					.fadeIn('normal');		
 			}	
 			
-			// fix for ie z-index bug
-			//submenu.css("z-index", parseInt( new Date().getTime()/100000000 ));
-			
+			// force z-index - workaround for IE z-index bug			
 			avatar.css("z-index",  submenuLayer);
+			avatar.find("a.icon img").css("z-index",  submenuLayer);
 			submenu.css("z-index", submenuLayer+1);
 						
 			submenuLayer++;
