@@ -50,9 +50,7 @@
 		
 		<td width="648" height="28" align="right">
 		<p class="footer_legal_links"><small>
-		 | <a href="">Privacy Statement</a>
-		 | <a href="">Security Statement</a>
-		 | <a href="">Terms of Use</a> |
+		 Powered by Elgg, the leading open source social networking platform
 		</small>
 		</p>
 		</td>
