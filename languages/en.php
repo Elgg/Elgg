@@ -535,6 +535,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	
 			'content' => "content",
 			'content:latest' => 'Latest activity',
+			'content:latest:blurb' => 'Alternatively, click here to view the latest content from across the site.',
 	
 		/**
 		 * Generic data words

@@ -1789,6 +1789,9 @@
 		// Important actions
 			register_action('comments/add');
 			register_action('comments/delete');
+		// Menu
+			global $CONFIG;
+			add_menu(elgg_echo('content:latest'), $CONFIG->wwwroot . 'dashboard/latest.php');
 	}
 	
 	register_elgg_event_handler('init','system','elgg_init');

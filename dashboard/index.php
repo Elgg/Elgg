@@ -23,7 +23,7 @@
 		$title = elgg_echo('dashboard');
 		
 	// wrap intro message in a div
-		$intro_message = "<div id=\"dashboard_info\">" . elgg_echo("dashboard:nowidgets") . "</div>";
+		$intro_message = elgg_view('dashboard/blurb');
 		
 	// Try and get the user from the username and set the page body accordingly
 		$body = elgg_view_layout('widgets',"","",$intro_message);
