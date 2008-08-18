@@ -1498,6 +1498,26 @@
 	}
 	
 	/**
+	 * Disables all of a user's entities
+	 *
+	 * @param int $owner_guid The owner GUID
+	 * @return true|false Depending on success
+	 */
+	function disable_entities($owner_guid) {
+
+		global $CONFIG;
+		$owner_guid = (int) $owner_guid;
+		if ($entity = get_entity($owner_guid)) {
+			if ($entity->canEdit()) {
+				$res = update_data("UPDATE {$CONFIG->dbprefix}entities set enabled='no' where owner_guid={$owner_guid} or container_guid = {$owner_guid}");
+				return $res;
+			}
+		}
+		return false;
+		
+	}
+	
+	/**
 	 * Enable an entity again.
 	 *
 	 * @param int $guid
