@@ -557,9 +557,6 @@
 				ksort($submenu_register);
 				
 				foreach($submenu_register as $groupname => $submenu_register_group) {
-				
-					$submenu = "";
-					
 					foreach($submenu_register_group as $key => $item) {
 						
 						if (substr_count($item->value, $_SERVER['REQUEST_URI'])) {
@@ -567,22 +564,29 @@
 							if ($comparevals[$key] < $maxcompareval) {
 								$maxcompareval = $comparevals[$key];
 								$preselected = $key;
+								$preselectedgroup = $groupname;
 							}
 						}
 						
 					}
+				}
+				
+				foreach($submenu_register as $groupname => $submenu_register_group) {
+				
+					$submenu = "";
 					
 					foreach($submenu_register_group as $key => $item) {
 	
 						if ($preselected === false) {
 							if (substr_count($item->value, $_SERVER['REQUEST_URI'])) {
 								$preselected = $key;
+								$preselectedgroup = $groupname;
 								$selected = true;
 							} else {
 								$selected = false;
 							}
 						} else {
-							if ($key == $preselected) {
+							if ($key == $preselected && $groupname == $preselectedgroup) {
 								$selected = true;
 							} else {
 								$selected = false;
