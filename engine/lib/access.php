@@ -316,8 +316,6 @@
 			
 			if (!($collection = get_access_collection($collection_id)))
 				return false;
-			
-				system_message("$collection_id $user_guid collection");
 				
 			if ((array_key_exists($collection_id, $collections) || $collection->owner_guid == 0)
 					&& $user = get_user($user_guid)) {
