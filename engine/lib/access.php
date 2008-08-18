@@ -189,7 +189,7 @@
 				$query = "select ag.* from {$CONFIG->dbprefix}access_collections ag ";
 				$query .= " where (ag.site_guid = {$site_id} or ag.site_guid = 0)";
 				$query .= " and (ag.owner_guid = {$user_id})";
-				$query .= " and ag.id > 3";
+				$query .= " and ag.id >= 3";
 				
 				$tmp_access_array = array(0 => elgg_echo("PRIVATE"), 1 => elgg_echo("LOGGED_IN"), 2 => elgg_echo("PUBLIC"));
 				if ($collections = get_data($query)) {
@@ -225,10 +225,10 @@
 			if (empty($name)) return false;
 			
 			if ($user_id == 0) $user_id = $_SESSION['id'];
-			if (($site_id == 0) && (isset($CONFIG->site_id))) $site_id = $CONFIG->site_id;
+			if (($site_id == 0) && (isset($CONFIG->site_guid))) $site_id = $CONFIG->site_guid;
 			$name = sanitise_string($name);
 			
-			return insert_data("insert into {$CONFIG->dbprefix}access_collections set name = '{$name}', owner_guid = {$owner_guid}, site_guid = {$site_guid}");
+			return insert_data("insert into {$CONFIG->dbprefix}access_collections set name = '{$name}', owner_guid = {$owner_guid}, site_guid = {$site_id}");
 			
 		}
 		
@@ -317,6 +317,8 @@
 			if (!($collection = get_access_collection($collection_id)))
 				return false;
 			
+				system_message("$collection_id $user_guid collection");
+				
 			if ((array_key_exists($collection_id, $collections) || $collection->owner_guid == 0)
 					&& $user = get_user($user_guid)) {
 
