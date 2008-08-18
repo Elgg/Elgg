@@ -5,7 +5,7 @@ The core Elgg team is:
 
 Ben Werdmuller <ben@elgg.com>
 http://ben.elgg.com/
-http://twitter.com/bwerdmuller
+http://twitter.com/benwerd
 
 David Tosh <dave@elgg.com>
 http://dave.elgg.com/
