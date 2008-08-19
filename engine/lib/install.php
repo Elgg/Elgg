@@ -12,6 +12,40 @@
 	 * @link http://elgg.org/
 	 */
 
+		/**
+		 * Check that the installed version of PHP meets the minimum requirements (currently 5.2 or greater).
+		 * 
+		 * @return bool
+		 */
+		function php_check_version()
+		{
+			if (version_compare(phpversion(), '5.2.0', '>='))
+				return true;
+				
+			return false;
+		}
+	
+		/**
+		 * Validate the platform Elgg is being installed on.
+		 *
+		 * @throws ConfigurationException if the validation fails.
+		 * @return bool
+		 */
+		function validate_platform()
+		{
+			// Get database version
+			if (!db_check_version())
+				throw new ConfigurationException(elgg_echo('ConfigurationException:BadDatabaseVersion'));
+			
+			// Now check PHP
+			if (!php_check_version())
+				throw new ConfigurationException(elgg_echo('ConfigurationException:BadPHPVersion'));
+				
+			// TODO: Consider checking for installed modules etc
+				
+			return true;
+		}
+
 	/**
 	 * Returns whether or not the database has been installed
 	 *

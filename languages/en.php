@@ -145,6 +145,9 @@
 			'CallException:NotRPCCall' => "Call does not appear to be a valid XML-RPC call",
 	
 			'PluginException:NoPluginName' => "The plugin name could not be found",
+	
+			'ConfigurationException:BadDatabaseVersion' => "The database backend you have installed doesn't meet the basic requirements to run Elgg. Please consult your documentation.",
+			'ConfigurationException:BadPHPVersion' => "You need at least PHP version 5.2 to run Elgg.",
 			
 		/**
 		 * User details

@@ -195,7 +195,7 @@
 		    } else {
 		    	$vars['page_owner'] = -1;
 		    }
-		    if ($vars['page_owner'] != -1) {
+		    if (($vars['page_owner'] != -1) && (is_installed())) {
 		        if (!isset($usercache[$vars['page_owner']])) {
 		    	       $vars['page_owner_user'] = get_entity($vars['page_owner']);
 		    	       $usercache[$vars['page_owner']] = $vars['page_owner_user'];

@@ -410,6 +410,27 @@
         	
         }
         
+        /**
+         * This function, called by validate_platform(), will check whether the installed version of
+         * MySQL meets the minimum required.
+         *
+         * TODO: If multiple dbs are supported check which db is supported and use the appropriate code to validate
+         * the appropriate version.
+         * 
+         * @return bool
+         */
+        function db_check_version()
+        {
+        	$version = mysql_get_server_info();
+        	
+        	$points = explode('.', $version);
+        	
+        	if ($points[0] < 5)
+        		return false;
+
+        	return true;
+        }
+        
 	/**
 	 * Sanitise a string for database use
 	 *

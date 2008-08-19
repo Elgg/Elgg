@@ -21,19 +21,19 @@
 		<span title="<?php echo get_class($vars['object']); ?>">
 		<?php
 
-			echo autop($vars['object']->getMessage());
+			echo nl2br($vars['object']->getMessage());
 		
 		?>
 		</span>
 	</p>
 	
-	<?php if ($CONFIG->debug) { ?>
-	<!-- <hr /> -->
+ 	<?php if ($CONFIG->debug) { ?>
+	
 	<p class="messages-exception-detail" style="background:#FDFFC3;display:block;padding:10px;">
 		<?php
 
-			echo autop(htmlentities(print_r($vars['object'], true), null, 'UTF-8'));
+			echo nl2br(htmlentities(print_r($vars['object'], true), null, 'UTF-8'));
 		
 		?>
 	</p>
-	<?php } ?>
+	<?php } ?> 

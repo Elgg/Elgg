@@ -28,6 +28,7 @@
 	 * Install the database
 	 */
 		if (!is_db_installed()) {
+			validate_platform();
 			run_sql_script(dirname(__FILE__) . "/engine/schema/mysql.sql");
 			init_site_secret();
 			system_message(elgg_echo("installation:success"));
