@@ -110,7 +110,7 @@
 			if ($CURRENT_SYSTEM_VIEWTYPE != "")
 				return $CURRENT_SYSTEM_VIEWTYPE;
 				
-			if (empty($_SESSION['view'])) {
+			if ((empty($_SESSION['view'])) || ( (trim($CONFIG->view!="")) && ($_SESSION['view']!=$CONFIG->view) )) {
 		        $_SESSION['view'] = "default";
 		        
 		        // If we have a config default view for this site then use that instead of 'default'
