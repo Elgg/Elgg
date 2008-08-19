@@ -345,7 +345,13 @@
         		return $tables;
         	}
         	
-        	$result = get_data("show tables");
+        	try{
+        		$result = get_data("show tables");
+        	} catch (DatabaseException $d)
+        	{
+        		// Likely we can't handle an exception here, so just return false.
+        		return false;
+        	}
         	        	 	
         	$tables = array();
         	
