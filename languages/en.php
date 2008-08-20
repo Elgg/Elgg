@@ -621,7 +621,7 @@ Alternatively, you can enter your database settings below and we will try and do
 			'installation:wwwroot' => "The site URL, followed by a trailing slash:",
 			'installation:path' => "The full path to your site root on your disk, followed by a trailing slash:",
 			'installation:dataroot' => "The full path to the directory where uploaded files will be stored, followed by a trailing slash:",
-			'installation:dataroot:warning' => "You must create this directory manually. If possible, it should not sit within your site URL.",
+			'installation:dataroot:warning' => "You must create this directory manually. It should sit in a different directory to your Elgg installation.",
 			'installation:language' => "The default language for your site:",
 			'installation:debug' => "Debug mode provides extra information which can be used to diagnose faults, however it can slow your system down so should only be used if you are having problems:",
 			'installation:debug:label' => "Turn on debug mode",
