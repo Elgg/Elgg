@@ -68,7 +68,8 @@
 			color:#333333;
 			font-size: 140%;
 		}
-		input[type="text"] {
+		input[type="text"],
+		input[type="password"]  {
 			font: 120% Arial, Helvetica, sans-serif;
 			padding: 5px;
 			border: 1px solid #cccccc;
