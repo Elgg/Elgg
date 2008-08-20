@@ -30,7 +30,7 @@
 				throw new InstallationException(elgg_echo('InstallationException:DatarootBlank'));
 				
 			// That it's valid
-			if (strpos($dataroot, $path)!==false)
+			if (stripos($dataroot, $path)!==false)
 				throw new InstallationException(sprintf(elgg_echo('InstallationException:DatarootUnderPath'), $dataroot));
 			
 			// Check data root is writable
