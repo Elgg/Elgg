@@ -13,7 +13,7 @@
 	$river = $vars['river'];
 ?>
 <div id="river">
-	<?	
+	<?php
 	if (($river) && (count($river)>0))
 	{
 		foreach ($river as $r) echo $r;
