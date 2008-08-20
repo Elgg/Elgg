@@ -3,16 +3,69 @@
 # License http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
 # Link http://elgg.org/
 
-php_flag magic_quotes_gpc off
+<IfModule !mod_rewrite.c>
+    # ugly ugly hack to detect missing mod_rewrite
+    # RedirectMatch must be to an absolute destination, so forces 500 error...
+    ErrorDocument 500 "Elgg error: Apache does not have mod_rewrite loaded. Please check your Apache setup."
+    RedirectMatch 302 .* index.php
+</IfModule>
+
+<Files "htaccess-dist">
+    order allow,deny
+    deny from all
+</Files>
+
+# Don't listing directory
+Options -Indexes
+
+# Follow symbolic links
+Options +FollowSymLinks
+
+# Default handler
+DirectoryIndex index.php
+
+# php 4, apache 1.x
+<IfModule mod_php4.c>
+    ErrorDocument 500 "Elgg error: Elgg does not support PHP 4."
+    RedirectMatch 302 .* index.php
+</IfModule>
+
+# php 4, apache 2
+<IfModule sapi_apache2.c>
+    ErrorDocument 500 "Elgg error: Elgg does not support PHP 4."
+    RedirectMatch 302 .* index.php
+</IfModule>
+
+# php 5, apache 1 and 2
+<IfModule mod_php5.c>
+	# default memory limit to 64Mb
+	php_value memory_limit 64M
+	# to make sure register global is off
+	php_value register_globals 0
+	# max post size to 8Mb
+	php_value post_max_size 8388608
+	# upload size limit to 5Mb	
+	php_value upload_max_filesize 5242880
+	# hide errors, enable only if debug enabled
+	php_value display_errors 0
+</IfModule>
+
+<IfModule mod_rewrite.c>
 
 RewriteEngine on
 
+# If Elgg is in a subdirectory on your site, you might need to add a RewriteBase line
+# containing the path from your site root to elgg's root. e.g. If your site is
+# http://example.com/ and Elgg is in http://example.com/sites/elgg/, you might need 
 #
-# If you are installing Elgg to an unusual location (for example your personal public_html directory)
-# then you may need to uncomment this line and modify accordingly:
+#RewriteBase /sites/elgg/
 #
-# RewriteBase /web/path/to/elgg/root/
+# here, only without the # in front.
 #
+# If you're not running Elgg in a subdirectory on your site, but still getting lots
+# of 404 errors beyond the front page, you could instead try:
+#
+#RewriteBase /
 
 RewriteRule ^cron\/$ engine/handlers/cron_handler.php
 
@@ -30,3 +83,5 @@ RewriteRule ^pg\/([A-Za-z\_\-]+)$ engine/handlers/pagehandler.php?handler=$1
 
 RewriteRule xml-rpc.php engine/handlers/xml-rpc_handler.php
 RewriteRule mt/mt-xmlrpc.cgi engine/handlers/xml-rpc_handler.php
+
+</IfModule>
