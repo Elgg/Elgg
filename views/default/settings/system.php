@@ -25,7 +25,10 @@
 		foreach(array('sitename','sitedescription', 'wwwroot','path','dataroot', 'view') as $field) {
 			$form_body .= "<p>";
 			$form_body .= elgg_echo($field) . "<br />";
-			$form_body .= elgg_view("input/text",array('internalname' => $field, 'value' => $vars['config']->$field));
+			$warning = elgg_echo('installation:warning:' . $field);
+			if ($warning != 'installation:warning:' . $field) echo "<b>" . $warning . "</b><br />";
+			$value = $vars['config']->$field;
+			$form_body .= elgg_view("input/text",array('internalname' => $field, 'value' => $value));
 			$form_body .= "</p>";
 		}
 		

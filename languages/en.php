@@ -605,7 +605,7 @@ Alternatively, you can enter your database settings below and we will try and do
 			'installation:configuration:success' => "Your initial configuration settings have been saved. Now register your initial user; this will be your first system administrator.",
 	
 			'installation:settings' => "System settings",
-			'installation:settings:description' => "Now that the Elgg database has been successfully installed, you need to enter a couple of pieces of information to get your site fully up and running. We've tried to guess where we could, but you may find that you need to tweak these details.",
+			'installation:settings:description' => "Now that the Elgg database has been successfully installed, you need to enter a couple of pieces of information to get your site fully up and running. We've tried to guess where we could, but <b>you should check these details.</b>",
 	
 			'installation:settings:dbwizard:prompt' => "Enter your database settings below and hit save:",
 			'installation:settings:dbwizard:label:user' => "Database user",
@@ -616,17 +616,18 @@ Alternatively, you can enter your database settings below and we will try and do
 	
 			'installation:settings:dbwizard:savefail' => "We were unable to save the new settings.php. Please save the following file as engine/settings.php using a text editor.",
 	
-			'sitename' => "The name of your site (eg \"My social networking site\"):",
-			'sitedescription' => "Short description of your site (optional)",
-			'wwwroot' => "The site URL, followed by a trailing slash:",
-			'path' => "The full path to your site root on your disk, followed by a trailing slash:",
-			'dataroot' => "The full path to the directory where uploaded files will be stored, followed by a trailing slash:",
-			'language' => "The default language for your site:",
-			'debug' => "Debug mode provides extra information which can be used to diagnose faults, however it can slow your system down so should only be used if you are having problems:",
-			'debug:label' => "Turn on debug mode",
-			'usage' => "This option lets Elgg send anonymous usage statistics back to Curverider.",
-			'usage:label' => "Send anonymous usage statistics",
-			'view' => "Enter the view which will be used as the default for your site (e.g. 'mobile') or leave this blank for the default view:",
+			'installation:sitename' => "The name of your site (eg \"My social networking site\"):",
+			'installation:sitedescription' => "Short description of your site (optional)",
+			'installation:wwwroot' => "The site URL, followed by a trailing slash:",
+			'installation:path' => "The full path to your site root on your disk, followed by a trailing slash:",
+			'installation:dataroot' => "The full path to the directory where uploaded files will be stored, followed by a trailing slash:",
+			'installation:dataroot:warning' => "You must create this directory manually. If possible, it should not sit within your site URL.",
+			'installation:language' => "The default language for your site:",
+			'installation:debug' => "Debug mode provides extra information which can be used to diagnose faults, however it can slow your system down so should only be used if you are having problems:",
+			'installation:debug:label' => "Turn on debug mode",
+			'installation:usage' => "This option lets Elgg send anonymous usage statistics back to Curverider.",
+			'installation:usage:label' => "Send anonymous usage statistics",
+			'installation:view' => "Enter the view which will be used as the default for your site or leave this blank for the default view (if in doubt, leave as default):",
 	
 		/**
 		 * Welcome
