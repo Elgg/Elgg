@@ -13,11 +13,30 @@
 	 * @link http://elgg.org/
 	 */
 
+	elgg_set_viewtype('failsafe'); // Set failsafe again incase we get an exception thrown
+	
 	if (is_installed()) forward();
 
 	if (get_input('settings') == 'go') {
 		
 		if (!datalist_get('default_site')) {
+			
+			// Sanitise
+			$path = sanitise_filepath(get_input('path'));
+			$dataroot = sanitise_filepath(get_input('dataroot'));
+			
+			// Blank?
+			if ($dataroot == "/")
+				throw new InstallationException(elgg_echo('InstallationException:DatarootBlank'));
+				
+			// That it's valid
+			if (strpos($dataroot, $path)!==false)
+				throw new InstallationException(sprintf(elgg_echo('InstallationException:DatarootUnderPath'), $dataroot));
+			
+			// Check data root is writable
+			if (!is_writable($dataroot))
+				throw new InstallationException(sprintf(elgg_echo('InstallationException:DatarootNotWritable'), $dataroot));
+			
 			
 			$site = new ElggSite();
 			$site->name = get_input('sitename');
@@ -31,8 +50,8 @@
 			
 			datalist_set('installed',time());
 			
-			datalist_set('path',get_input('path'));
-			datalist_set('dataroot',get_input('dataroot'));
+			datalist_set('path', $path);
+			datalist_set('dataroot', $dataroot);
 			
 			datalist_set('default_site',$site->getGUID());
 			

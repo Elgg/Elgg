@@ -65,6 +65,25 @@
 			
 	}
 	
+	/**
+	 * Sanitise file paths for input, ensuring that they begin and end with slashes etc.
+	 *
+	 * @param string $path The path
+	 * @return string
+	 */
+	function sanitise_filepath($path)
+	{
+		// Convert to correct UNIX paths
+		$path = str_replace('\\', '/', $path);
+		
+		// Sort trailing slash
+		$path = trim($path);
+		$path = rtrim($path, " /");
+		$path = $path . "/";
+		
+		return $path;
+	}
+	
 	    /**
         * Takes a string and turns any URLs into formatted links
         * 

@@ -31,8 +31,8 @@
 			$site->name = get_input('sitename');
 			$site->url = get_input('wwwroot');
 			
-			datalist_set('path',get_input('path'));
-			datalist_set('dataroot',get_input('dataroot'));
+			datalist_set('path',sanitise_filepath(get_input('path')));
+			datalist_set('dataroot',sanitise_filepath(get_input('dataroot')));
 			
 			set_config('language', get_input('language'), $site->getGUID());
 			

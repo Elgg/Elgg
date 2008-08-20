@@ -149,6 +149,11 @@
 			'ConfigurationException:BadDatabaseVersion' => "The database backend you have installed doesn't meet the basic requirements to run Elgg. Please consult your documentation.",
 			'ConfigurationException:BadPHPVersion' => "You need at least PHP version 5.2 to run Elgg.",
 			
+	
+			'InstallationException:DatarootNotWritable' => "Your data directory %s is not writable.",
+			'InstallationException:DatarootUnderPath' => "Your data directory %s must be outside of your install path.",
+			'InstallationException:DatarootBlank' => "You have not specified a data directory.",
+	
 		/**
 		 * User details
 		 */
