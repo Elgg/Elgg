@@ -18,7 +18,7 @@
 
 ?>
 
-	<div class="messages">
+	<div class="database_settings">
 		<div class="messages-errors">
 
 <?php

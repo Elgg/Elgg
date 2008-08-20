@@ -68,11 +68,16 @@
 			color:#333333;
 			font-size: 140%;
 		}
-		input {
+		input[type="text"] {
 			font: 120% Arial, Helvetica, sans-serif;
 			padding: 5px;
 			border: 1px solid #cccccc;
 			color:#666666;
+			width:566px;
+		}
+		.database_settings input[type="text"],
+		.database_settings input[type="password"] {
+			width:220px;
 		}
 		textarea {
 			font: 120% Arial, Helvetica, sans-serif;
