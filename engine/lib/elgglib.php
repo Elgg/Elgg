@@ -62,6 +62,9 @@
 			if (($url['user']) || $url['pass']) $page .="@";
 			
 			$page .= $url['host'];
+			
+			if ($url['port']) $page .= ":" . $url['port'];
+			
 			$page = trim($page, "/"); //$page.="/";
 			
 			$page .= $_SERVER['REQUEST_URI'];
