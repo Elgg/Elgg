@@ -80,7 +80,7 @@
 			enable_plugin('diagnostics', $site->getGUID());
 			
 			// Now ping home
-			if ($usage=='')
+			if ($usage)
 			{
 				ping_home($site);
 			}
