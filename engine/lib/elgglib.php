@@ -32,7 +32,7 @@
 				 if (strpos($current_page, $CONFIG->wwwroot . "action") ===false)
 				 
 				 $_SESSION['messages'] = system_messages();
-				 if (substr_count($location, 'http://') == 0) {
+				 if ((substr_count($location, 'http://') == 0) && (substr_count($location, 'https://') == 0)) {
 				 	
 				 	$location = $CONFIG->url . $location;
 				 }
