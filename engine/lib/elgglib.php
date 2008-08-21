@@ -255,7 +255,10 @@
 		    }
 
 		// Save the output buffer into the $content variable
-		$content = ob_get_clean();
+			$content = ob_get_clean();
+			
+		// Plugin hook
+			$content = trigger_plugin_hook('display','view',array('view' => $view),$content);
 		
 		// Return $content
 		    return $content;
