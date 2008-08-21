@@ -196,6 +196,7 @@
 	            	//$_SESSION['user'] = new ElggDummy();
 	                $_SESSION['id'] = 0;
 	                $_SESSION['guid'] = 0;
+	                $_SESSION['code'] = "";
 	            }
 	        } else {
 	            if (!empty($_SESSION['code'])) {
@@ -209,11 +210,13 @@
 	                	// $_SESSION['user'] = new ElggDummy();
 	                	$_SESSION['guid'] = 0;
 	                	$_SESSION['id'] = 0;
+	                	$_SESSION['code'] = "";
 	                }
 	            } else {
 	            	//$_SESSION['user'] = new ElggDummy();
 	            	$_SESSION['guid'] = 0;
 	                $_SESSION['id'] = 0;
+	                $_SESSION['code'] = "";
 	            }
 	        }
 	        if ($_SESSION['id'] > 0) {
