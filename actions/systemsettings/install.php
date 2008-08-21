@@ -65,6 +65,8 @@
 				unset_config('debug', $site->getGUID());
 				
 			$usage = get_input('usage');
+			if (is_array($usage)) $usage = $usage[0];
+			
 			if ($usage)
 				unset_config('ping_home', $site->getGUID());
 			else
@@ -77,9 +79,8 @@
 			enable_plugin('logbrowser', $site->getGUID());
 			enable_plugin('diagnostics', $site->getGUID());
 			
-			
 			// Now ping home
-			if ($usage!='disabled')
+			if ($usage=='')
 			{
 				ping_home($site);
 			}
