@@ -1619,6 +1619,21 @@
 		
 		return false;
 	}
+	
+	/**
+	 * Returns true or false depending on whether a PHP .ini setting is on or off
+	 *
+	 * @param string $ini_get_arg The INI setting
+	 * @return true|false Depending on whether it's on or off
+	 */
+	function ini_get_bool($ini_get_arg) {
+	    $temp = ini_get($ini_get_arg);
+	    
+	    if ($temp == '1' or strtolower($temp) == 'on') {
+	        return true;
+	    }
+	    return false;
+	}
 
 	/**
 	 * A utility function which returns true if the code is currently running with 
