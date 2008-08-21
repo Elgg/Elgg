@@ -79,7 +79,7 @@
 			
 			
 			// Now ping home
-			if ((!isset($usage)) || ($usage!='disabled'))
+			if ($usage!='disabled')
 			{
 				ping_home($site);
 			}
