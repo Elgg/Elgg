@@ -447,7 +447,7 @@
 		
 		$CONFIG->allowedprotocols = array('http', 'https', 'ftp', 'news', 'mailto', 'rtsp', 'teamspeak', 'gopher', 'mms',
                            'color', 'callto', 'cursor', 'text-align', 'font-size', 'font-weight', 'font-style', 
-                           'border', 'margin', 'padding');
+                           'border', 'margin', 'padding', 'float');
 	}
 	
 	register_elgg_event_handler('init','system','input_init');
