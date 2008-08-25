@@ -1028,6 +1028,78 @@
 	}
 	
 	/**
+	 * Simple function which ensures that a username contains only valid characters.
+	 * 
+	 * This should only permit chars that are valid on the file system as well.
+	 *
+	 * @param string $username
+	 * @throws RegistrationException on invalid
+	 */
+	function validate_username($username)
+	{
+		// Basic, check length
+		if (strlen($username)<4) throw new RegistrationException(elgg_echo('registration:usernametooshort'));
+		
+		// Blacklist for bad characters (partially nicked from mediawiki)
+		
+		$blacklist = '/[' .
+			'\x{0080}-\x{009f}' . # iso-8859-1 control chars
+			'\x{00a0}' .          # non-breaking space
+			'\x{2000}-\x{200f}' . # various whitespace
+			'\x{2028}-\x{202f}' . # breaks and control chars
+			'\x{3000}' .          # ideographic space
+			'\x{e000}-\x{f8ff}' . # private use
+			']/u';
+		
+		if (
+			preg_match($blacklist, $username) ||	
+		
+			// Belts and braces TODO: Tidy into main unicode
+			(strpos($username, '.')!==false) ||
+			(strpos($username, '/')!==false) ||
+			(strpos($username, '\\')!==false) ||
+			(strpos($username, '"')!==false) ||
+			(strpos($username, '\'')!==false) ||
+			(strpos($username, '*')!==false) ||
+			(strpos($username, '&')!==false) 
+		)
+			throw new RegistrationException(elgg_echo('registration:invalidchars'));
+		 
+		$result = true;
+		return $result = trigger_plugin_hook('registeruser:validate:username', 'all', array('username' => $username), $result);
+	}
+	
+	/**
+	 * Simple validation of a password.
+	 *
+	 * @param string $password
+	 * @throws RegistrationException on invalid
+	 */
+	function validate_password($password)
+	{
+		if (strlen($password)<6) throw new RegistrationException(elgg_echo('registration:passwordtooshort'));
+			
+		$result = true;
+		return $result = trigger_plugin_hook('registeruser:validate:password', 'all', array('password' => $password), $result);
+	}
+	
+	/**
+	 * Simple validation of a email.
+	 *
+	 * @param string $address
+	 * @throws RegistrationException on invalid
+	 * @return bool
+	 */
+	function validate_email_address($address)
+	{
+		if (!is_email_address($address)) throw new RegistrationException(elgg_echo('registration:notemail'));
+		
+		// Got here, so lets try a hook (defaulting to ok)
+		$result = true;
+		return $result = trigger_plugin_hook('registeruser:validate:email', 'all', array('email' => $address), $result);
+	}
+	
+	/**
 	 * Registers a user, returning false if the username already exists
 	 *
 	 * @param string $username The username of the new user
@@ -1059,11 +1131,14 @@
 			$access_status = access_get_show_hidden_status();
 			access_show_hidden_entities(true);
 				
-			if (!is_email_address($email)) throw new RegistrationException(elgg_echo('registration:notemail'));
+			// Validate email address
+			if (!validate_email_address($email)) throw new RegistrationException(elgg_echo('registration:emailnotvalid'));
 			
-			if (strlen($username)<4) throw new RegistrationException(elgg_echo('registration:usernametooshort'));
+			// Validate password
+			if (!validate_password($password)) throw new RegistrationException(elgg_echo('registration:passwordnotvalid'));
 			
-			if (strlen($password)<6) throw new RegistrationException(elgg_echo('registration:passwordtooshort'));
+			// Validate the username
+			if (!validate_username($username)) throw new RegistrationException(elgg_echo('registration:usernamenotvalid'));
 				
 		// Check to see if $username exists already
 			if ($user = get_user_by_username($username)) {

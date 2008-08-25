@@ -260,6 +260,39 @@
 		}
 		
 		/**
+		 * Multibyte string tokeniser.
+		 * 
+		 * Splits a string into an array. Will fail safely if mbstring is not installed (although this may still
+		 * not handle .
+		 *
+		 * @param string $string String
+		 * @param string $charset The charset, defaults to UTF8
+		 * @return array
+		 */
+		private function mb_str_split($string, $charset = 'UTF8')
+		{
+			if (is_callable('mb_substr'))
+			{
+				$length = mb_strlen($string);
+				$array = array();
+				
+				while ($length)
+				{
+					$array[] = mb_substr($string, 0, 1, $charset);
+					$string = mb_substr($string, 1, $length, $charset);
+					
+					$length = mb_strlen($string);
+				}
+				
+				return $array;
+			}
+			else
+				return str_split($string);
+			
+			return false;
+		}
+		
+		/**
 		 * Construct the filename matrix.
 		 *
 		 * @param string $filename
@@ -268,16 +301,19 @@
 		{
 			$matrix = "";
 			
-			$len = strlen($filename);
+			$name = $filename;
+			$filename = $this->mb_str_split($filename);
+			if (!$filename) return false;
+			
+			$len = count($filename);
 			if ($len>$this->matrix_depth)
 				$len = $this->matrix_depth;
 			
 			for ($n = 0; $n < $len; $n++) {
-				if (ctype_alnum($filename[$n]))
-					$matrix .= $filename[$n] . "/";
+				$matrix .= $filename[$n] . "/";
 			}	
 	
-			return $matrix.$filename."/";
+			return $matrix.$name."/";
 		}
 		
 		public function getParameters()
