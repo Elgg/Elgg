@@ -57,13 +57,19 @@
 	/**
 	 * Return the number of users registered in the system.
 	 *
+	 * @param bool $show_deactivated 
 	 * @return int
 	 */
-	function get_number_users()
+	function get_number_users($show_deactivated = false)
 	{
 		global $CONFIG;
             
-		$result = get_data_row("SELECT count(*) as count from {$CONFIG->dbprefix}entities where type='user'");
+		$access = "";
+		
+		if (!$show_deactivated)
+			$access = "and " . get_access_sql_suffix();
+		
+		$result = get_data_row("SELECT count(*) as count from {$CONFIG->dbprefix}entities where type='user' $access");
             
 		if ($result)
 			return $result->count;

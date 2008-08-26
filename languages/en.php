@@ -543,6 +543,9 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	
 			'unknown' => 'Unknown',
 	
+			'active' => 'Active',
+			'total' => 'Total',
+	
 			'learnmore' => "Click here to learn more.",
 	
 			'content' => "content",
