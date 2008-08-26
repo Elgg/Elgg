@@ -27,7 +27,7 @@
 ?>
 
 <ul id="topbardropdownmenu">
-    <li class="drop"><a href="#">Tools<!--[if IE 7]><!--></a><!--<![endif]-->
+    <li class="drop"><a href="#"><?php echo(elgg_echo('tools')); ?><!--[if IE 7]><!--></a><!--<![endif]-->
     <!--[if lte IE 6]><table><tr><td><![endif]-->
       <ul>
       <?php

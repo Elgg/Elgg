@@ -21,7 +21,7 @@
 		
 ?>
 <div class="elggtoolbar">
-<div class="elggtoolbar_header"><h1>Your tools</h1></div>
+<div class="elggtoolbar_header"><h1><?php echo(elgg_echo('tools:yours')); ?></h1></div>
 <ul class="drawers">
 
 <?php

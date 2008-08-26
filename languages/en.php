@@ -182,6 +182,7 @@
 		 */
 	
 			'dashboard' => "Dashboard",
+            'dashboard:configure' => "Edit page",
 			'dashboard:nowidgets' => "Your dashboard is your gateway into the site. Click 'Edit page' to add widgets to keep track of content and your life within the system.",
 
 			'widgets:add' => 'Add widgets to your page',
@@ -376,6 +377,8 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	
 			'account' => "Account",
 			'settings' => "Settings",
+            'tools' => "Tools",
+            'tools:yours' => "Your tools",
 	
 			'register' => "Register",
 			'registerok' => "You have successfully registered for %s. To activate your account, please confirm your email address by clicking on the link we sent you.",

@@ -263,7 +263,7 @@
 		if($_SESSION['user']->guid == page_owner()){
 		?>
 		<!-- customise page button -->
-		<a href="javascript:void(0);" class="toggle_customise_edit_panel">Edit page</a>
+		<a href="javascript:void(0);" class="toggle_customise_edit_panel"><?php echo(elgg_echo('dashboard:configure')); ?></a>
 		<!-- <div style="clear:both;"></div> -->
 		<?php
 		}
