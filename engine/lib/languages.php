@@ -86,7 +86,7 @@
 			
 			if ($handle = opendir($path)) {
 				while ($language = readdir($handle)) {
-					if (!in_array($language,array('.','..','.svn','CVS')) && !is_dir($path . $language)) {
+					if (!in_array($language,array('.','..','.svn','CVS', '.DS_Store', 'Thumbs.db',)) && !is_dir($path . $language)) {
 						@include($path . $language);
 					}
 				}

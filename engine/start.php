@@ -108,6 +108,8 @@
 	
 			$file_exceptions = array(
 										'.','..',
+										'.DS_Store',
+										'Thumbs.db',
 										'.svn',
 										'CVS','cvs',
 										'settings.php','settings.example.php','languages.php','exceptions.php','elgglib.php','database.php','actions.php','sessions.php'
