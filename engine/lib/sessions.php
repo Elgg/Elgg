@@ -156,6 +156,8 @@
             
             setcookie("elggperm", "", (time()-(86400 * 30)),"/");
             
+            session_destroy();
+            
             return true;
         }
 		
