@@ -128,6 +128,9 @@
 	            setcookie("elggperm", "", (time()-(86400 * 30)),"/");
             	return false;
             }
+            
+            // Users privilege has been elevated, so change the session id (help prevent session hijacking)
+	        session_regenerate_id(); 
 
 			return true;
 				
