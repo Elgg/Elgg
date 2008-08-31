@@ -174,8 +174,11 @@
         	// Current session id
         	$session_id = session_id();
         	
+        	// Get user agent
+        	$ua = $_SERVER['HTTP_USER_AGENT'];
+        	
         	if (($site_secret) && ($session_id))
-        		return md5($site_secret.$timestamp.$session_id);
+        		return md5($site_secret.$timestamp.$session_id.$ua);
         	
         	return false;
         }

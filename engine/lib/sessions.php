@@ -163,6 +163,13 @@
             
             return true;
         }
+        
+        function get_session_fingerprint()
+        {
+        	global $CONFIG;
+        	
+        	return md5($_SERVER['HTTP_USER_AGENT'] );
+        }
 		
 	/**
 	 * Initialises the system session and potentially logs the user in
@@ -183,6 +190,20 @@
 			
 			session_name('Elgg');
 	        session_start();
+	        
+	        // Do some sanity checking by generating a fingerprint (makes some XSS attacks harder)
+	        if (isset($_SESSION['__elgg_fingerprint']))
+			{
+			    if ($_SESSION['__elgg_fingerprint'] != get_session_fingerprint())
+			    {
+			    	session_destroy();
+			    	return false;
+			    }
+			}
+			else
+			{
+			    $_SESSION['__elgg_fingerprint'] = get_session_fingerprint();
+			}
 	        
 	        if (empty($_SESSION['guid'])) {
 	            if (isset($_COOKIE['elggperm'])) {            
