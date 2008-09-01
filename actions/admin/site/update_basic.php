@@ -61,7 +61,8 @@
 			else
 				register_error(elgg_echo("admin:configuration:fail"));
 			
-			header("Location: {$CONFIG->wwwroot}admin/site/");
+			//header("Location: {$CONFIG->wwwroot}admin/site/");
+			forward($_SERVER['HTTP_REFERER']);
 			exit;
 			
 		}
