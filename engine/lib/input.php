@@ -93,7 +93,7 @@
         
        function parse_urls($text) {
            
-            if (preg_match_all('/(?<!href=["\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\'\!\(\)]+)/ie', $text, $urls))   {
+            if (preg_match_all('/(?<!=["\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\'\!\(\)]+)/ie', $text, $urls))   {
                
                 foreach (array_unique($urls[1]) AS $url){
                     $urltext = $url;
