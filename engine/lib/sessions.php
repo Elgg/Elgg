@@ -204,6 +204,9 @@
 			{
 			    $_SESSION['__elgg_fingerprint'] = get_session_fingerprint();
 			}
+			
+			// Generate a simple token
+			if (!isset($_SESSION['__elgg_session'])) $_SESSION['__elgg_session'] = md5(microtime().rand());
 	        
 	        if (empty($_SESSION['guid'])) {
 	            if (isset($_COOKIE['elggperm'])) {            

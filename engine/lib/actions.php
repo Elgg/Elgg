@@ -177,8 +177,11 @@
         	// Get user agent
         	$ua = $_SERVER['HTTP_USER_AGENT'];
         	
+        	// Session token
+        	$st = $_SESSION['__elgg_session'];
+        	
         	if (($site_secret) && ($session_id))
-        		return md5($site_secret.$timestamp.$session_id.$ua);
+        		return md5($site_secret.$timestamp.$session_id.$ua.$st);
         	
         	return false;
         }
