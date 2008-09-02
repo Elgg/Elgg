@@ -20,7 +20,7 @@ CREATE TABLE `prefix_config` (
   `value` text NOT NULL,
   `site_guid` int(11) NOT NULL,
   PRIMARY KEY  (`name`,`site_guid`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- Define entities. 
 CREATE TABLE `prefix_entities` (
@@ -41,7 +41,7 @@ CREATE TABLE `prefix_entities` (
 	
 	primary key (`guid`),
     KEY `site_guid` (`site_guid`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- Entity subtypes - lets you subtype one of the main objects (sites/objects/etc)
 CREATE TABLE `prefix_entity_subtypes` (
@@ -54,7 +54,7 @@ CREATE TABLE `prefix_entity_subtypes` (
 	
 	PRIMARY KEY (`id`),
 	UNIQUE KEY (`type`, `subtype`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- Describe relationships between entities, can describe friendships but also site membership, depending on context
 CREATE TABLE `prefix_entity_relationships` (
@@ -65,7 +65,7 @@ CREATE TABLE `prefix_entity_relationships` (
   `guid_two` bigint(20) unsigned  NOT NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY (`guid_one`,`relationship`,`guid_two`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- *** Access controls ***
@@ -78,14 +78,14 @@ CREATE TABLE `prefix_access_collections` (
   `owner_guid` bigint(20) unsigned NOT NULL,
   `site_guid` bigint(20) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) AUTO_INCREMENT=3  ENGINE=MyISAM;
+) AUTO_INCREMENT=3  ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- Access containers 
 CREATE TABLE `prefix_access_collection_membership` (
   `user_guid` int(11) NOT NULL,
   `access_collection_id` int(11) NOT NULL,
   PRIMARY KEY  (`user_guid`,`access_collection_id`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 --
@@ -102,7 +102,7 @@ CREATE TABLE `prefix_objects_entity` (
 
   PRIMARY KEY  (`guid`),
   FULLTEXT KEY (`title`,`description`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- Extra information relating to "sites"
 CREATE TABLE `prefix_sites_entity` (
@@ -115,7 +115,7 @@ CREATE TABLE `prefix_sites_entity` (
   PRIMARY KEY  (`guid`),
   UNIQUE KEY (`url`),
   FULLTEXT KEY (`name`,`description`, `url`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- Extra information relating to "users"
 CREATE TABLE `prefix_users_entity` (
@@ -140,7 +140,7 @@ CREATE TABLE `prefix_users_entity` (
   KEY `password` (`password`),
   FULLTEXT KEY `name` (`name`),
   FULLTEXT KEY (`name`,`username`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- Extra information relating to "groups"
 CREATE TABLE `prefix_groups_entity` (
@@ -151,7 +151,7 @@ CREATE TABLE `prefix_groups_entity` (
    
   PRIMARY KEY  (`guid`),
   FULLTEXT KEY (`name`,`description`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- *** Annotations and tags ***
@@ -175,7 +175,7 @@ CREATE TABLE `prefix_annotations` (
 	`enabled` enum ('yes', 'no') NOT NULL default 'yes',
 	
 	PRIMARY KEY (`id`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- Table structure for metadata
 CREATE TABLE `prefix_metadata` (
@@ -196,7 +196,7 @@ CREATE TABLE `prefix_metadata` (
 	
 	PRIMARY KEY (`id`)
 	
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- Meta strings table (avoids storing text strings more than once)
 CREATE TABLE `prefix_metastrings` (
@@ -205,7 +205,7 @@ CREATE TABLE `prefix_metastrings` (
 	
 	PRIMARY KEY (`id`),
 	FULLTEXT KEY `string` (`string`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- *** Misc ***
@@ -223,7 +223,7 @@ CREATE TABLE `prefix_api_users` (
 	
 	unique key (api_key),
 	primary key (id)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- API Sessions
 CREATE TABLE `prefix_users_apisessions` (
@@ -237,14 +237,14 @@ CREATE TABLE `prefix_users_apisessions` (
 	
 	PRIMARY KEY  (`id`),
 	UNIQUE KEY (`user_guid`,`site_guid`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- Datalists for things like db version
 CREATE TABLE `prefix_datalists` (
   `name` varchar(32) NOT NULL,
   `value` text NOT NULL,
   KEY `name` (`name`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- System log
 CREATE TABLE `prefix_system_log` (
@@ -259,11 +259,11 @@ CREATE TABLE `prefix_system_log` (
 	`time_created` int(11) NOT NULL,
 	
 	PRIMARY KEY  (`id`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- Privileged paths, added to by the admin panel
 CREATE TABLE `prefix_privileged_paths` (
 	`path` varchar(128) NOT NULL,
 	
 	PRIMARY KEY (`path`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
