@@ -36,7 +36,7 @@
 			'reportedcontent:address' => 'Location of the item',
 			'reportedcontent:success' => 'Your report has been sent to the site admin',
 			'reportedcontent:failing' => 'Your report could not be sent',
-			'reportedcontent:report' => 'Report this',
+			'reportedcontent:report' => 'Report this', 
 	
 	);
 					
