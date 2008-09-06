@@ -14,6 +14,7 @@
 	
 	// block non-admin users
 	admin_gatekeeper();
+	action_gatekeeper();
 	
 	// Get the user 
 	$guid = get_input('guid');
