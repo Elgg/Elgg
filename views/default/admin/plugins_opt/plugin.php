@@ -19,13 +19,16 @@
 	
 	$active = $details['active'];
 	$manifest = $details['manifest'];
+	
+	$ts = time();
+	$token = generate_action_token($ts);
 ?>
 <div class="plugin_details <?php if ($active) echo "active"; else echo "not-active" ?>"> 
 	<div class="admin_plugin_enable_disable">
 		<?php if ($active) { ?>
-			<a href="<?php echo $vars['url']; ?>actions/admin/plugins/disable?plugin=<?php echo $plugin; ?>"><?php echo elgg_echo("disable"); ?></a>
+			<a href="<?php echo $vars['url']; ?>actions/admin/plugins/disable?plugin=<?php echo $plugin; ?>&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("disable"); ?></a>
 		<?php } else { ?>
-			<a href="<?php echo $vars['url']; ?>actions/admin/plugins/enable?plugin=<?php echo $plugin; ?>"><?php echo elgg_echo("enable"); ?></a>
+			<a href="<?php echo $vars['url']; ?>actions/admin/plugins/enable?plugin=<?php echo $plugin; ?>&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("enable"); ?></a>
 		<?php } ?>
 	</div>
 

@@ -15,6 +15,9 @@
 	// block non-admin users
 	admin_gatekeeper();
 	
+	// Validate the action
+	action_gatekeeper();
+	
 	// Get the user 
 	$plugin = get_input('plugin');
 	
