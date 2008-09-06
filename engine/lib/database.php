@@ -346,7 +346,7 @@
         	}
         	
         	try{
-        		$result = get_data("show tables");
+        		$result = get_data("show tables like '" . $CONFIG->dbprefix . "%'");
         	} catch (DatabaseException $d)
         	{
         		// Likely we can't handle an exception here, so just return false.
