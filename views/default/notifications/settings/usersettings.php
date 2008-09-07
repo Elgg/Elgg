@@ -12,6 +12,7 @@
 
 	global $NOTIFICATION_HANDLERS;
 	$notification_settings = get_user_notification_settings(page_owner());
+	
 ?>
 	<h3><?php echo elgg_echo('notifications:usersettings'); ?></h3>
 	
@@ -29,12 +30,12 @@
 				<td>
 <?php
 
-	if ($notification_settings->k) {
+	if ($notification_settings->$k) {
 		$val = "yes";
 	} else {
 		$val = "no";
 	}
-	echo elgg_view('input/radio',array('internalname' => "method[{$k}]", 'options' => array('yes','no'), 'value' => $val));
+	echo elgg_view('input/radio',array('internalname' => "method[{$k}]", 'options' => array('yes' => 'yes','no' => 'no'), 'value' => $val));
 
 ?>				
 				</td>

@@ -14,14 +14,14 @@
 	 * @uses $vars['value'] The current value, if any
 	 * @uses $vars['js'] Any Javascript to enter into the input tag
 	 * @uses $vars['internalname'] The name of the input field
-	 * @uses $vars['options'] An array of strings representing the options for the radio field
+	 * @uses $vars['options'] An array of strings representing the options for the radio field as "label" => option
 	 * 
 	 */
 	
 	$class = $vars['class'];
 	if (!$class) $class = "input-radio";
 
-    foreach($vars['options'] as $option => $label) {
+    foreach($vars['options'] as $label => $option) {
         if ($option != $vars['value']) {
             $selected = "";
         } else {

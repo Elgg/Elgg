@@ -14,7 +14,7 @@
 	 * @uses $vars['value'] The current value, if any
 	 * @uses $vars['js'] Any Javascript to enter into the input tag
 	 * @uses $vars['internalname'] The name of the input field
-	 * @uses $vars['options'] An array of strings representing the options for the checkbox field
+	 * @uses $vars['options'] An array of strings representing the label => options for the checkbox field
 	 * 
 	 */
 
