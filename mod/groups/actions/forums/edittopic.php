@@ -69,7 +69,7 @@
 			}
 			
            // Success message
-				system_message(elgg_echo("forumtopic:edited"));
+				system_message(elgg_echo("groups:forumtopic:edited"));
 				
 		    }
         }

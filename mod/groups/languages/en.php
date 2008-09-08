@@ -135,6 +135,7 @@ or click below to confirm request:
 			'groups:widgets:entities:label:displaynum' => 'List the objects of a group.',
 			'groups:widgets:entities:label:pleaseedit' => 'Please configure this widget.',
 		
+			'groups:forumtopic:edited' => 'Forum topic successfully edited.',
 	);
 					
 	add_translation("en",$english);
