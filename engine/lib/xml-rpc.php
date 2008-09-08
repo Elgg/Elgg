@@ -102,7 +102,7 @@
 		
 		function __toString() 
 		{
-			return "<value><i4>{$this->value}</i4></value>\n";
+			return "<value><i4>{$this->value}</i4></value>";
 		}
 	}
 	
@@ -122,7 +122,7 @@
 		function __toString() 
 		{
 			$code = ($this->value) ? "1" : "0";
-			return "<value><boolean>{$code}</boolean></value>\n";
+			return "<value><boolean>{$code}</boolean></value>";
 		}
 	}
 	
@@ -142,7 +142,7 @@
 		function __toString() 
 		{
 			$value = htmlentities($this->value);
-			return "<value><string>{$value}</string></value>\n";
+			return "<value><string>{$value}</string></value>";
 		}
 	}
 	
@@ -161,7 +161,7 @@
 		
 		function __toString() 
 		{
-			return "<value><double>{$this->value}</double></value>\n";
+			return "<value><double>{$this->value}</double></value>";
 		}
 	}
 	
@@ -188,7 +188,7 @@
 		function __toString() 
 		{
 			$value = date('c', $this->value);
-			return "<value><dateTime.iso8601>{$value}</dateTime.iso8601></value>\n";
+			return "<value><dateTime.iso8601>{$value}</dateTime.iso8601></value>";
 		}
 	}
 	
@@ -212,7 +212,7 @@
 		
 		function __toString() 
 		{
-			return "<value><base64>{$value}</base64></value>\n";
+			return "<value><base64>{$value}</base64></value>";
 		}
 	}
 	
@@ -260,11 +260,7 @@
 				$params .= "<member><name>$k</name>$v</member>";
 			}
 			
-			return <<< END
-<struct>
-	$params
-</struct>
-END;
+			return "<struct>$params</struct>";
 		}
 	}
 	
@@ -311,13 +307,7 @@ END;
 				$params .= "$value";
 			}
 			
-			return <<< END
-<array>
-	<data>
-	$params
-	</data>
-</array>
-END;
+			return "<array><data>$params</data></array>";
 		}
 	}
 	
@@ -364,13 +354,7 @@ END;
 			foreach ($this->parameters as $param)
 				$params .= "<param>$param</param>\n";
 			
-			return <<< END
-<methodResponse>
-	<params>
-		$params
-	</params>
-</methodResponse>
-END;
+			return "<methodResponse><params>$params</params></methodResponse>";
 		}
 	}
 
@@ -403,15 +387,7 @@ END;
 		 */
 		public function __toString()
 		{
-			return <<< END
-<methodResponse>
-	<fault>
-		<value>
-			{$this->parameters[0]}
-		</value>
-	</fault>
-</methodResponse>
-END;
+			return "<methodResponse><fault><value>{$this->parameters[0]}</value></fault></methodResponse>";
 		}
 	}
 	
