@@ -131,6 +131,26 @@
 			return round(($lang / $en) * 100, 2);
 		}
 		
+	/**
+	 * Return the translation keys missing from a given language.
+	 */
+		function get_missing_language_keys($language)
+		{
+			global $CONFIG;
+			
+			$missing = array();
+			
+			foreach ($CONFIG->translations['en'] as $k => $v)
+			{
+				if (!isset($CONFIG->translations[$language][$k])) $missing[] = $k;
+			}
+			
+			if (count($missing))
+				return $missing;
+				
+			return false;
+		}
+		
 		register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
 
 ?>
