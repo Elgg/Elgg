@@ -2,6 +2,9 @@
 	/**
 	 * translation by RONNEL Jérémy
 	 * jeremy.ronnel@elbee.fr
+	 * 
+	 * Modified by Laurent Grangeau
+	 * laurent.grangeau@gmail.com
 	 */
      
 	$french = array(
@@ -18,11 +21,11 @@
 			
 			'login' => "Connexion",
 			'loginok' => "Vous êtes désormais connecté.",
-			'loginerror' => "Nous n'avons pas pu vous connecter. Vérifiez votre nom d'utilisateur et votre mot de passe avant de ré-essayer.",
+			'loginerror' => "Nous n'avons pas pu vous connecter. Vérifiez votre nom d'utilisateur et votre mot de passe avant de réessayer.",
 	
 			'logout' => "Déconnexion",
 			'logoutok' => "Vous avez été déconnecté.",
-			'logouterror' => "Nous n'avaons pas pu vous connecter. Essayez de nouveau.",
+			'logouterror' => "Nous n'avons pas pu vous connecter. Essayez de nouveau.",
 	
 		/**
 		 * Errors
@@ -32,9 +35,9 @@
 			'InstallationException:CantCreateSite' => "Impossibilité de créer le site Elgg %s à l'adresse %s",
 		
 			'actionundefined' => "L'action demandée (%s) n'est pas définie par le système.",
-			'actionloggedout' => "Désolé, vous devez être connecté pour éxecuter cette action.",
+			'actionloggedout' => "Désolé, vous devez être connecté pour exécuter cette action.",
 	
-			'notfound' => "La resource demandée n'a pas été trouvée, ou peut être vous n'avez pas les autorisations nécessaire pour y accéder.",
+			'notfound' => "La ressource demandée n'a pas été trouvée, ou peut être vous n'avez pas les autorisations nécessaire pour y accéder.",
 			
 			'SecurityException:Codeblock' => "Accès non autorisé pour la création de block.",
 			'DatabaseException:WrongCredentials' => "Elgg n'a pas pu se connecter à la base de données %s@%s (pw: %s).",
@@ -44,18 +47,18 @@
 			'DatabaseException:ScriptNotFound' => "Elgg n'a pas pu atteindre le script de données à %s.",
 			
 			'IOException:FailedToLoadGUID' => "Chargement échoué de %s avec le GUID:%d",
-			'InvalidParameterException:NonElggObject' => "Types incompatibles, objet de type non-Elgg vers un constructeur d'objet Elgg!",
-			'InvalidParameterException:UnrecognisedValue' => "Valeur de type non reconnu passé en argument.",
+			'InvalidParameterException:NonElggObject' => "Types incompatibles, objet de type non-Elgg vers un constructeur d'objet Elgg !",
+			'InvalidParameterException:UnrecognisedValue' => "Valeur de type non reconnu passée en argument.",
 			
 			'InvalidClassException:NotValidElggStar' => "GUID:%d n'est pas valide %s",
 			
 			'PluginException:MisconfiguredPlugin' => "%s est un plugin non configuré.",
 			
-			'InvalidParameterException:NonElggUser' => "Types incompatibles, utilisateur de type non-Elgg vers un constructeur d'utilisateur Elgg!",
+			'InvalidParameterException:NonElggUser' => "Types incompatibles, utilisateur de type non-Elgg vers un constructeur d'utilisateur Elgg !",
 			
-			'InvalidParameterException:NonElggSite' => "Types incompatibles, site de type non-Elgg vers un constructeur de site Elgg!",
+			'InvalidParameterException:NonElggSite' => "Types incompatibles, site de type non-Elgg vers un constructeur de site Elgg !",
 			
-			'InvalidParameterException:NonElggGroup' => "Types incompatibles, groupe de type non-Elgg vers un constructeur de groupe Elgg!",
+			'InvalidParameterException:NonElggGroup' => "Types incompatibles, groupe de type non-Elgg vers un constructeur de groupe Elgg !",
 	
 			'IOException:UnableToSaveNew' => "Impossible de sauvegarder nouveau %s",
 			
@@ -88,7 +91,7 @@
 			'InvalidParameterException:UnrecognisedFileMode' => "Mode de fichier non-reconnu : '%s'",
 			'InvalidParameterException:MissingOwner' => "Tous les fichiers doivent avoir un propriétaire",
 			'IOException:CouldNotMake' => "Impossible de faire %s",
-			'IOException:MissingFileName' => "Vous devez spécifié un nom avant d'ouvrir un fichier.",
+			'IOException:MissingFileName' => "Vous devez spécifier un nom avant d'ouvrir un fichier.",
 			'ClassNotFoundException:NotFoundNotSavedWithFile' => "Fichier stockés non trouvé ou classes non sauvegardée avec le fichier!",
 			'NotificationException:NoNotificationMethod' => "Aucune méthode de notification spécifiée.",
 			'NotificationException:NoHandlerFound' => "Aucune fonction trouvée pour '%s' ou elle ne peut être appelé.",
@@ -96,16 +99,16 @@
 			'NotificationException:NoEmailAddress' => "Impossible de trouver une adresse email pour GUID:%d",
 			'NotificationException:MissingParameter' => "Un argument obligatoire a été omis, '%s'",
 			
-			'DatabaseException:WhereSetNonQuery' => "Where set contains non WhereQueryComponent",
+			'DatabaseException:WhereSetNonQuery' => "La requête where ne contient pas de WhereQueryComponent",
 			'DatabaseException:SelectFieldsMissing' => "Des champs sont manquants sur la requête de sélection.",
 			'DatabaseException:UnspecifiedQueryType' => "Type de requête non-reconnue ou non-spécifiée.",
 			'DatabaseException:NoTablesSpecified' => "Aucune table spécifiée pour la requête.",
-			'DatabaseException:NoACL' => "No access control was provided on query",
+			'DatabaseException:NoACL' => "Pas de liste d'accès fourni pour la requête",
 			
-			'InvalidParameterException:NoEntityFound' => "Aucune entité trouvé, soit elle est innexistante, soit vous n'y avez pas accès.",
+			'InvalidParameterException:NoEntityFound' => "Aucune entité trouvée, soit elle est inexistante, soit vous n'y avez pas accès.",
 			
-			'InvalidParameterException:GUIDNotFound' => "GUID:%s n'a pas été trouvé ou vous n'y avez pas accès.",
-			'InvalidParameterException:IdNotExistForGUID' => "Désolé, '%s' n'existe pas pour guid:%d",
+			'InvalidParameterException:GUIDNotFound' => "GUID : %s n'a pas été trouvé ou vous n'y avez pas accès.",
+			'InvalidParameterException:IdNotExistForGUID' => "Désolé, '%s' n'existe pas pour guid : %d",
 			'InvalidParameterException:CanNotExportType' => "Désolé, je ne sais pas comment exporter '%s'",
 			'InvalidParameterException:NoDataFound' => "Aucune donnée trouvée.",
 			'InvalidParameterException:DoesNotBelong' => "N'appartient pas à l'entité.",
@@ -122,9 +125,9 @@
 			'APIException:ParameterNotArray' => "%s n'est semble t-il pas un tableau.",
 			'APIException:UnrecognisedTypeCast' => "Type %s non reconnu pour la variable '%s' pour la fonction '%s'",
 			'APIException:InvalidParameter' => "Paramètre invalide pour '%s' pour la fonction '%s'.",
-			'APIException:FunctionParseError' => "%s(%s) has a parsing error.",
+			'APIException:FunctionParseError' => "%s(%s) a une erreur d'analyse.",
 			'APIException:FunctionNoReturn' => "%s(%s) ne retourne aucune valeur.",
-			'SecurityException:AuthTokenExpired' => "Authentication token either missing, invalid or expired.",
+			'SecurityException:AuthTokenExpired' => "Le jeton d'authentification est manquant, invalide ou expiré.",
 			'CallException:InvalidCallMethod' => "%s doit être appelé en utilisant '%s'",
 			'APIException:MethodCallNotImplemented' => "L'appel à la méthode '%s' n'a pas été implémenté.",
 			'APIException:AlgorithmNotSupported' => "L'algorithme '%s' n'est pas supporté ou a été désactivé.",
@@ -139,8 +142,8 @@
 			'APIException:MissingPOSTHash' => "X-Elgg-posthash manquant dans l'entête",
 			'APIException:MissingPOSTAlgo' => "X-Elgg-posthash_algo manquant dans l'entête",
 			'APIException:MissingContentType' => "Le content-type est manquant pour les données postées",
-			'SecurityException:InvalidPostHash' => "POST data hash is invalid - Expected %s but got %s.",
-			'SecurityException:DupePacket' => "Packet signature already seen.",
+			'SecurityException:InvalidPostHash' => "La signature des données POST est invalide.%s attendu mais %s reçu.",
+			'SecurityException:DupePacket' => "La signature du paquet a déjà été envoyée.",
 			'SecurityException:InvalidAPIKey' => "API Key invalide ou non-reconnue.",
 			'NotImplementedException:CallMethodNotImplemented' => "La méthode '%s' n'est pas supportée actuellement.",
 	
@@ -166,7 +169,7 @@
 			'username' => "Nom d'utilisateur",
 			'password' => "Mot de passe",
 			'passwordagain' => "Confirmation du mot de passe",
-			'admin_option' => "Définir cet utilisateur comme administrateur?",
+			'admin_option' => "Définir cet utilisateur comme administrateur ?",
 	
 		/**
 		 * Access
@@ -188,7 +191,7 @@
 			'dashboard:nowidgets' => "Votre tableau de bord est votre page d'accueil sur le site. Cliquez sur 'Configurer la page' pour ajouter des widgets pour garder un oeil sur le contenu ou votre activité sur le site.",
 
 			'widgets:add' => "Ajouter un widget à votre page",
-			'widgets:add:description' => "Choisissez les fonctionnalités à faire apparaître en glissant un élément de <b>la liste de Widgets</b> sur la droite, vers l'une des trois zones ci-dessous. Positionnez-les selons vos désirs.
+			'widgets:add:description' => "Choisissez les fonctionnalités à faire apparaître en glissant un élément de <b>la liste de Widgets</b> sur la droite, vers l'une des trois zones ci-dessous. Positionnez-les selon vos désirs.
 
 Pour retirer un widget, glissez le vers <b>la liste de Widgets</b>.",
 			'widgets:position:fixed' => "(Position modifiée sur la page)",
@@ -199,7 +202,7 @@ Pour retirer un widget, glissez le vers <b>la liste de Widgets</b>.",
 			'layout:customise' => "Personnaliser la mise en page",
 			'widgets:gallery' => "Liste des widgets",
 			'widgets:leftcolumn' => "Côté gauche",
-			'widgets:fixed' => "Position modifée",
+			'widgets:fixed' => "Position modifiée",
 			'widgets:middlecolumn' => "Milieu",
 			'widgets:rightcolumn' => "Côté droit",
 			'widgets:profilebox' => "Boite de profil",
@@ -232,14 +235,14 @@ Pour retirer un widget, glissez le vers <b>la liste de Widgets</b>.",
 			'profile:user' => "Le profil de %s",
 	
 			'profile:edit' => "Edit profile",
-			'profile:editicon' => "Upload a new profile picture",
+			'profile:editicon' => "Uploader une nouvelle image de profil",
 			'profile:profilepictureinstructions' => "Un avatar est une image qui sera associée à votre profil. <br /> Vous pouvez la changer autant de fois que vous le souhaitez. (Formats de fichiers acceptés: GIF, JPG ou PNG)",
 			'profile:icon' => "Avatar",
 			'profile:createicon' => "Créer votre avatar",
 			'profile:currentavatar' => "Avatar actuel",
 			'profile:createicon:header' => "Avatar",
 			'profile:profilepicturecroppingtool' => "Outil de retaillage de l'avatar",
-			'profile:createicon:instructions' => "Cliquez, maintenez le clic et glissez pour créer, à l'endroit désiré, à la taille désirée, une miniature de votre avatar.  Un apercu sera disponible sur la droite de l'image.  Une fois la sélection réalisée, cliquez sur 'Créer la miniature' pour sauver les modifications. Cette miniature sera visualisable par les autres utilisateurs lors de leur navigation sur le site.",
+			'profile:createicon:instructions' => "Cliquez, maintenez le clic et glissez pour créer, à l'endroit désiré, à la taille désirée, une miniature de votre avatar.  Un aperçu sera disponible sur la droite de l'image.  Une fois la sélection réalisée, cliquez sur 'Créer la miniature' pour sauver les modifications. Cette miniature sera visualisable par les autres utilisateurs lors de leur navigation sur le site.",
 	
 			'profile:editdetails' => "Editer mon profil",
 			'profile:editicon' => "Editer mon avatar",
@@ -328,7 +331,7 @@ Pour retirer un widget, glissez le vers <b>la liste de Widgets</b>.",
 		 * Feeds
 		 */
 			'feed:rss' => "Souscrire au flux RSS",
-			'feed:odd' => "Syndicate OpenDD",
+			'feed:odd' => "Souscrire au flux OpenDD",
 	
 		/**
 		 * River
@@ -408,8 +411,8 @@ Pour retirer un widget, glissez le vers <b>la liste de Widgets</b>.",
 			'user:password2:label' => "Confirmer le nouveau mot de passe",
 			'user:password:success' => "Le mot de passe a été sauvegarder.",
 			'user:password:fail' => "Une erreur s'est produite lors de la sauvegarde du mot de passe.",
-			'user:password:fail:notsame' => "Les mots de passe diffèrent!",
-			'user:password:fail:tooshort' => "Le mot de passe est trop court!",
+			'user:password:fail:notsame' => "Les mots de passe diffèrent !",
+			'user:password:fail:tooshort' => "Le mot de passe est trop court !",
 	
 			'user:set:language' => "Langue du compte utilisateur",
 			'user:language:label' => "Votre langue",
@@ -435,7 +438,7 @@ Pour retirer un widget, glissez le vers <b>la liste de Widgets</b>.",
 			'admin:description' => "Le panneau d'administration vous permet de controler les fonctionnalités et l'aspect du site, Choisissez une option ci-dessous pour continuer.",
 			
 			'admin:user' => "Gestion des utilisateurs",
-			'admin:user:description' => "Ce panneau de configuration vous permez de gérer les inscriptions à votre site. Choisissez une option ci-dessous pour continuer.",
+			'admin:user:description' => "Ce panneau de configuration vous permet de gérer les inscriptions à votre site. Choisissez une option ci-dessous pour continuer.",
 			'admin:user:adduser:label' => "Ajouter un nouvel utilisateur.",
 			'admin:user:opt:linktext' => "Configurer les utilisateurs.",
 			'admin:user:opt:description' => "Configurer les utilisateurs et leurs informations.",
@@ -460,7 +463,7 @@ Pour retirer un widget, glissez le vers <b>la liste de Widgets</b>.",
 	
 			'admin:statistics' => "Statistiques",
 			'admin:statistics:description' => "Visualiser les statistiques d'accès à votre site. Pour plus d'informations un outil plus complet est disponible.",
-			'admin:statistics:opt:description' => "Visualiser les stiatisques relatives aux utilisateurs et objets du site.",
+			'admin:statistics:opt:description' => "Visualiser les statistiques relatives aux utilisateurs et objets du site.",
 			'admin:statistics:opt:linktext' => "Voir les statistiques...",
 			'admin:statistics:label:basic' => "Statistiques basiques du site",
 			'admin:statistics:label:numentities' => "Les entités du site",
@@ -475,7 +478,7 @@ Pour retirer un widget, glissez le vers <b>la liste de Widgets</b>.",
 			'admin:user:label:seachbutton' => "Rechercher", 
 	
 			'admin:user:ban:no' => "L'utilisateur ne peut pas être banni",
-			'admin:user:ban:yes' => "L'utilisateur banni!",
+			'admin:user:ban:yes' => "Utilisateur banni !",
 			'admin:user:unban:no' => "L'utilisateur ne peut pas être réintégré au site",
 			'admin:user:unban:yes' => "Utilisateur réintégré",
 			'admin:user:delete:no' => "L'utilisateur ne peut pas être supprimé",
@@ -490,7 +493,7 @@ Pour retirer un widget, glissez le vers <b>la liste de Widgets</b>.",
 		/**
 		 * User settings
 		 */
-			'usersettings:description' => "Le panneau d'aministration de compte vous permettra de modifier vos informations, ainsi que le fonctionnement de vos outils. Choisissez une options pour continuer.",
+			'usersettings:description' => "Le panneau d'administration de compte vous permettra de modifier vos informations, ainsi que le fonctionnement de vos outils. Choisissez une options pour continuer.",
 	
 			'usersettings:statistics' => "Vos statistiques",
 			'usersettings:statistics:opt:description' => "Visualiser les statistiques des utilisateurs et des objets sur votre espace.",
@@ -532,6 +535,7 @@ Pour retirer un widget, glissez le vers <b>la liste de Widgets</b>.",
 			'enable' => "Activé",
 			'disable' => "Désactivé",
 			'request' => "Requête",
+			'complete' => "Complété",
 	
 			'invite' => "Inviter",
 	
@@ -563,20 +567,20 @@ Pour retirer un widget, glissez le vers <b>la liste de Widgets</b>.",
 	
 			'annotations' => "Annotations",
 			'relationships' => "Relations",
-			'metadata' => "Metadata",
+			'metadata' => "Métadata",
 	
 		/**
 		 * Input / output strings
 		 */
 
 			'deleteconfirm' => "Etes vous sur de vouloir supprimer cet élément?",
-			'fileexists' => "Un fichier a déjà été uploadé. Pour le remplacer sélectionnez le ci-dessous:",
+			'fileexists' => "Un fichier a déjà été uploadé. Pour le remplacer, sélectionnez-le ci-dessous:",
 	
 		/**
 		 * Import / export
 		 */
-			'importsuccess' => "L'importation des données a été réalisée avec succès",
-			'importfail' => "L'importation OpenDD des données a échouée.",
+			'importsuccess' => "L'import des données a été réalisée avec succès",
+			'importfail' => "L'import OpenDD des données a échouée.",
 	
 		/**
 		 * Time
@@ -603,11 +607,11 @@ La création de ce fichier est facile. Copiez-collez le texte ci-dessous dans un
 
 1. Renommez 'engine/settings.example.php' en 'settings.php' dans le répertoire d'installation de Elgg.
 
-2. Editer le fichier avec le bloc-note et entrez les informations relatives à votre base de données MySQL. Si vous ne les connaissez pas contacter votre administrateur ou le support technique.
+2. Editer le fichier avec le bloc-notes et entrez les informations relatives à votre base de données MySQL. Si vous ne les connaissez pas contacter votre administrateur ou le support technique.
 
 Elgg peut créer ce fichier pour vous, entrez les informations ci-dessous...",
 	
-			'installation:error:configuration' => "Une fois les corrections de configuration apportées, pressez 'Ré-essayer'.",
+			'installation:error:configuration' => "Une fois les corrections de configuration apportées, pressez 'Réessayer'.",
 	
 			'installation' => "Installation",
 			'installation:success' => "La base de données a été créée avec succès.",
@@ -626,13 +630,13 @@ Elgg peut créer ce fichier pour vous, entrez les informations ci-dessous...",
 			'installation:settings:dbwizard:savefail' => "La création du fichier 'settings.php' a échoué. Copiez-collez le texte ci-dessous dans un fichier texte 'engine/settings.php'.",
 	
 			'installation:sitename' => "Nom du site (par exemple \"Ma communauté\"):",
-			'installation:sitedescription' => "Brève description du site (optionel)",
+			'installation:sitedescription' => "Brève description du site (optionnel)",
 			'installation:wwwroot' => "Adresse du site internet suivi de '\' :",
 			'installation:path' => "Chemin physique des fichiers sur le serveur suivi de '\' :",
 			'installation:dataroot' => "Chemin complet où héberger les fichiers uploadés par les utilisateurs suivi de '\' :",
-            'installation:dataroot:warning' => "Vous devez créer ce dossier manuellement. Il doit se trouver en dehors de votre isntallation de Elgg.",
+            'installation:dataroot:warning' => "Vous devez créer ce dossier manuellement. Il doit se trouver en dehors de votre installation de Elgg.",
 			'installation:language' => "Langue par défaut du site :",
-			'installation:debug' => "Le mode de debugage permet de mettre en évidence certaines erreurs de fonctionnement, cependant il ralenti l'accès au site, il est à utiliser uniquement en cas de problème :",
+			'installation:debug' => "Le mode de débogage permet de mettre en évidence certaines erreurs de fonctionnement, cependant il ralenti l'accès au site, il est à utiliser uniquement en cas de problème :",
 			'installation:debug:label' => "Activer le mode debug",
 			'installation:usage' => "Cette option permet l'envoie de statistiques anonyme vers Curverider.",
 			'installation:usage:label' => "Envoyer des statistiques anonymement",
@@ -657,8 +661,8 @@ Elgg peut créer ce fichier pour vous, entrez les informations ci-dessous...",
 			'email:confirm:success' => "Adresse email confirmée !",
 			'email:confirm:fail' => "Votre email n'a pas pu été vérifié...",
 	
-			'friend:newfriend:subject' => "%s est devenu(e) votre ami(e)!",
-			'friend:newfriend:body' => "%s est devenu(e) votre ami(e)!
+			'friend:newfriend:subject' => "%s est devenu(e) votre ami(e) !",
+			'friend:newfriend:body' => "%s est devenu(e) votre ami(e) !
 
 Pour voir son profil cliquez ici:
 
@@ -667,15 +671,15 @@ Pour voir son profil cliquez ici:
 Ne répondez pas à ce mail.",
 	
 	
-			'email:validate:subject' => "%s, veuillez confirmer votre adresse email!",
-			'email:validate:body' => "Hi %s,
+			'email:validate:subject' => "%s, veuillez confirmer votre adresse email !",
+			'email:validate:body' => "Salut %s,
 
 Veuillez s'il vous plait confirmer votre adresse email en suivant le lien suivant:
 
 %s
 ",
-			'email:validate:success:subject' => "Email validé %s!",
-			'email:validate:success:body' => "Hi %s,
+			'email:validate:success:subject' => "Email validé %s !",
+			'email:validate:success:body' => "Salut %s,
 			
 Féliciations, votre adresse email a été validée, vous pouvez désormais vous connecter sur notre site.
 
@@ -683,13 +687,13 @@ Merci.",
 	
 	
 			'email:resetpassword:subject' => "Mot de passe réinitialisé !",
-			'email:resetpassword:body' => "Hi %s,
+			'email:resetpassword:body' => "Salut %s,
 			
 Voici votre nouveau mot de passe : %s",
 	
 	
 			'email:resetreq:subject' => "Mot de passe oublié ?!",
-			'email:resetreq:body' => "Hi %s,
+			'email:resetreq:body' => "Salut %s,
 			
 Une personne (avec l'adresse IP %s) a réclamé un nouveau mot de passe pour votre compte.
 
@@ -702,7 +706,7 @@ S'il s'agit bien de vous, cliquez sur le lien suivant, autrement veuillez ignore
 		/**
 		 * XML-RPC
 		 */
-			'xmlrpc:noinputdata'	=>	"Données d'entrées manquantes.",
+			'xmlrpc:noinputdata' => "Données d'entrées manquantes.",
 	
 		/**
 		 * Comments
@@ -718,7 +722,7 @@ S'il s'agit bien de vous, cliquez sur le lien suivant, autrement veuillez ignore
 			'generic_comment:notdeleted' => "Une erreur est survenue lors de l'enregistrement de votre commentaire.",
 			'generic_comment:failure' => "Une erreur est survenue lors de la sauvegarde de votre commentaire, veuillez recommencer.",
 	
-			'generic_comment:email:subject' => "Vous avez un nouveau commentaire!",
+			'generic_comment:email:subject' => "Vous avez un nouveau commentaire !",
 			'generic_comment:email:body' => "Vous avez un nouveau commentaire sur l'objet \"%s\" de %s. Voici son contenu :
 
 			
@@ -729,7 +733,7 @@ Pour répondre ou voir le contenu de référence, suivez le lien :
 
 	%s
 
-Pour voir le profil de %s's profile, suivez ce lien :
+Pour voir le profil de %s, suivez ce lien :
 
 	%s
 
@@ -742,7 +746,7 @@ Ne répondez pas à ce mail.",
 			'entity:default:missingsupport:popup' => "Impossible d'afficher le contenu correctement. Le problème réside sans doute dans la disparition d'un plugin supprimé, veuillez contacter l'administrateur du site.",
 	
 			'entity:delete:success' => "Le contenu %s a été supprimé",
-			'entity:delete:fail' => "Une erreur est survenue lors de la suppresion de %s. Impossible de supprimer le contenu.",
+			'entity:delete:fail' => "Une erreur est survenue lors de la suppression de %s. Impossible de supprimer le contenu.",
 	
 	
 		/**
@@ -858,7 +862,7 @@ Ne répondez pas à ce mail.",
 			"sa" => "Sanskrit",
 			"sd" => "Sindhi",
 			"sg" => "Sangro",
-			"sh" => "Serbo-Croatian",
+			"sh" => "Serbo-Croate",
 			"si" => "Singhalese",
 			"sk" => "Slovak",
 			"sl" => "Slovène",
