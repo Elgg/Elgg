@@ -243,7 +243,7 @@
 			
 			if ($id!==false) {
 				$obj = get_metadata($id);
-				if (trigger_elgg_event('create', $name, $obj)) {
+				if (trigger_elgg_event('create', 'metadata', $obj)) {
 					return true;
 				} else {
 					delete_metadata($id);
@@ -309,7 +309,7 @@
 		$result = update_data("UPDATE {$CONFIG->dbprefix}metadata set value_id='$value', value_type='$value_type', access_id=$access_id, owner_guid=$owner_guid where id=$id and name_id='$name'");
 		if ($result!==false) {
 			$obj = get_metadata($id);
-			if (trigger_elgg_event('update', $name, $obj)) {
+			if (trigger_elgg_event('update', 'metadata', $obj)) {
 				return true;
 			} else {
 				delete_metadata($id);
