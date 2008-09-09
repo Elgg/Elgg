@@ -535,6 +535,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'enable' => "Enable",
 			'disable' => "Disable",
 			'request' => "Request",
+			'complete' => "Complete",
 	
 			'invite' => "Invite",
 	
@@ -556,6 +557,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'content:latest:blurb' => 'Alternatively, click here to view the latest content from across the site.',
 	
 			'link:text' => 'view link',
+	
 	
 		/**
 		 * Generic data words

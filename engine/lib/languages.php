@@ -105,9 +105,30 @@
 			$installed = array();
 			
 			foreach ($CONFIG->translations as $k => $v)
+			{
 				$installed[$k] = elgg_echo($k, $k);
+				
+				if ((isadminloggedin()) && ($k!='en'))
+					$installed[$k] .= " (" . get_language_completeness($k) . "% " . elgg_echo('complete') . ")";
+			}
 			
 			return $installed;
+		}
+		
+	/**
+	 * Return the level of completeness for a given language code (compared to english)
+	 */
+		function get_language_completeness($language)
+		{
+			global $CONFIG;
+			
+			$language = sanitise_string($language);
+			
+			$en = count($CONFIG->translations['en']);
+			
+			$lang = count($CONFIG->translations[$language]);
+			
+			return round(($lang / $en) * 100, 2);
 		}
 		
 		register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
