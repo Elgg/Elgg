@@ -109,7 +109,7 @@
 				$installed[$k] = elgg_echo($k, $k);
 				
 				$completeness = get_language_completeness($k);
-				if ((isadminloggedin()) && ($completeness<100))//&& ($k!='en'))
+				if ((isadminloggedin()) && ($completeness<100) && ($k!='en'))
 					$installed[$k] .= " (" . $completeness . "% " . elgg_echo('complete') . ")";
 			}
 			
@@ -127,13 +127,17 @@
 			
 			$en = count($CONFIG->translations['en']);
 			
-			$lang = count($CONFIG->translations[$language]);
+			$missing = get_missing_language_keys($language);
+			if ($missing) $missing = count($missing); else $missing = 0;
+			
+			//$lang = count($CONFIG->translations[$language]);
+			$lang = $en - $missing;
 			
 			return round(($lang / $en) * 100, 2);
 		}
 		
 	/**
-	 * Return the translation keys missing from a given language.
+	 * Return the translation keys missing from a given language, or those that are identical to the english version.
 	 */
 		function get_missing_language_keys($language)
 		{
@@ -143,7 +147,9 @@
 			
 			foreach ($CONFIG->translations['en'] as $k => $v)
 			{
-				if (!isset($CONFIG->translations[$language][$k])) $missing[] = $k;
+				if ((!isset($CONFIG->translations[$language][$k])) 
+				|| ($CONFIG->translations[$language][$k] == $CONFIG->translations['en'][$k])) 
+					$missing[] = $k;
 			}
 			
 			if (count($missing))
