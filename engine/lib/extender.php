@@ -245,7 +245,7 @@
 			
 		// This is crude
 		if (is_int($value)) return 'integer';
-		if (is_numeric($value)) return 'integer';
+		if (is_numeric($value)) return 'text'; // Catch floating point values which are not integer
 		
 		return 'text';
 	}
