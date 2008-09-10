@@ -1,29 +1,45 @@
 <?php
+     /**
+	 * Elgg Core language pack
+	 * 
+	 * @package ElggCore
+	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+	 * @author Curverider Ltd
+	 * @copyright Curverider Ltd 2008
+	 * @link http://elgg.com/
+	 * ****************************************
+     * @Italian Language Pack
+     * @Core System
+     * @version: beta 
+     * @revision: 2063
+     * @translation by Lord55  
+     * @link http://www.nobilityofequals.com
+     ****************************************/
 
 	$italian = array(
 
 		/**
-		 * Sites
+		 * Sites   ###Siti###
 		 */
 	
 			'item:site' => 'Siti',
 	
 		/**
-		 * Sessions
+		 * Sessions   ###Sessioni###
 		 */
 			
-			'login' => "Log in",
-			'loginok' => "Hai effettuato l'accesso.",
-			'loginerror' => "We couldn't log you in. This may be because you haven't validated your account yet, or the details you supplied were incorrect. Make sure your details are correct and please try again.",
+			'login' => "Entra",
+			'loginok' => "Sei entrato.",
+			'loginerror' => "Non possiamo farti entrare. Questo può accadere perchè non hai ancora validato il tuo account, o i dati che hai fornito non erano corretti. Assicurati che i tuoi dati siano corretti e per favore riprova.",
 	
-			'logout' => "Log out",
-			'logoutok' => "Non hai effettuato l'accesso.",
-			'logouterror' => "We couldn't log you out. Please try again.",
+			'logout' => "Esci",
+			'logoutok' => "Sei uscito.",
+			'logouterror' => "Non possiamo farti uscire. Per favore riprova.",
 	
 		/**
-		 * Errors
+		 * Errors   ###Errori###
 		 */
-			'exception:title' => "Benvenuto su Elgg.",
+			'exception:title' => "Benvenuto  Elgg.",
 	
 			'InstallationException:CantCreateSite' => "Unable to create a default ElggSite with credentials Name:%s, Url: %s",
 		
@@ -43,9 +59,9 @@
 			'InvalidParameterException:NonElggObject' => "Passing a non-ElggObject to an ElggObject constructor!",
 			'InvalidParameterException:UnrecognisedValue' => "Unrecognised value passed to constuctor.",
 			
-			'InvalidClassException:NotValidElggStar' => "GUID:%d non è un valido %s",
+			'InvalidClassException:NotValidElggStar' => "GUID:%d is not a valid %s",
 			
-			'PluginException:MisconfiguredPlugin' => "%s è un plugin configurato male.",
+			'PluginException:MisconfiguredPlugin' => "%s is a misconfigured plugin.",
 			
 			'InvalidParameterException:NonElggUser' => "Passing a non-ElggUser to an ElggUser constructor!",
 			
@@ -59,13 +75,13 @@
 			'InvalidParameterException:NonArrayReturnValue' => "Entity serialisation function passed a non-array returnvalue parameter",
 			
 			'ConfigurationException:NoCachePath' => "Cache path set to nothing!",
-			'IOException:NotDirectory' => "%s non è una cartella.",
+			'IOException:NotDirectory' => "%s is not a directory.",
 			
 			'IOException:BaseEntitySaveFailed' => "Unable to save new object's base entity information!",
 			'InvalidParameterException:UnexpectedODDClass' => "import() passed an unexpected ODD class",
 			'InvalidParameterException:EntityTypeNotSet' => "Entity type must be set.",
 			
-			'ClassException:ClassnameNotClass' => "%s non è un %s.",
+			'ClassException:ClassnameNotClass' => "%s is not a %s.",
 			'ClassNotFoundException:MissingClass' => "Class '%s' was not found, missing plugin?",
 			'InstallationException:TypeNotSupported' => "Type %s is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.",
 
@@ -152,70 +168,70 @@
 	
 			'InstallationException:DatarootNotWritable' => "Your data directory %s is not writable.",
 			'InstallationException:DatarootUnderPath' => "Your data directory %s must be outside of your install path.",
-			'InstallationException:DatarootBlank' => "You have not specified a data directory.",
+			'InstallationException:DatarootBlank' => "Non hai specificato una cartella dati.",
 	
 		/**
-		 * User details
+		 * User details   ###Visualizza nome###
 		 */
 
-			'name' => "Visualizza nome",
-			'email' => "Indirizzo email",
-			'username' => "Username",
+			'name' => "Vedi nome",
+			'email' => "Indirizzo Email",
+			'username' => "Nome utente",
 			'password' => "Password",
-			'passwordagain' => "Password (ancora per verifica)",
-			'admin_option' => "Fai diventare questo utente amministratore?",
+			'passwordagain' => "Password (di nuovo per la verifica)",
+			'admin_option' => "Nomina questo utente Amministratore?",
 	
 		/**
-		 * Access
+		 * Access   ###Accesso###
 		 */
 	
 			'ACCESS_PRIVATE' => "Privato",
-			'ACCESS_LOGGED_IN' => "Utenti loggati",
+			'ACCESS_LOGGED_IN' => "Membri",
 			'ACCESS_PUBLIC' => "Pubblico",
 			'PRIVATE' => "Privato",
-			'LOGGED_IN' => "Utenti loggati",
+			'LOGGED_IN' => "Membri",
 			'PUBLIC' => "Pubblico",
-			'access' => "Accesso",
+			'access' => "Accedi",
 	
 		/**
-		 * Dashboard and widgets
+		 * Dashboard and widgets   ###Dashboard e widget###
 		 */
 	
 			'dashboard' => "Dashboard",
-            'dashboard:configure' => "Edit page",
-			'dashboard:nowidgets' => "Your dashboard is your gateway into the site. Click 'Edit page' to add widgets to keep track of content and your life within the system.",
+            'dashboard:configure' => "Modifica pagina",
+			'dashboard:nowidgets' => "La Dashboard è la tua porta d'ingresso nel sito. Clicca 'Modifica pagina' per aggiungere i Widget che ti permetteranno di tenere traccia di tutte le interazioni dentro il sistema.",
 
-			'widgets:add' => 'Aggiungi widget alla tua pagina',
-			'widgets:add:description' => "Choose the features you want to add to your page by dragging them from the <b>Widget gallery</b> on the right, to any of the three widget areas below, and position them where you would like them to appear.
+			'widgets:add' => 'Aggiungi Widget alla tua pagina',
+			'widgets:add:description' => "Scegli le caratteristiche che vorresti aggiungere alla tua pagina spostandoli dalla <b>Galleria-Widget</b> sulla destra, su una delle tre aree-Widget qui sotto, e posizionali dove vorresti farli apparire.
 
-To remove a widget drag it back to the <b>Widget gallery</b>.",
-			'widgets:position:fixed' => '(Posizione fissa nella pagina)',
+Per rimuovere un Widget, riportalo indietro nella <b>Galleria-Widget</b>.",
+			'widgets:position:fixed' => '(Posizione sistemata sulla pagina)',
 	
-			'widgets' => "Widgets",
+			'widgets' => "Widget",
 			'widget' => "Widget",
-			'item:object:widget' => "Widgets",
-			'layout:customise' => "Personalizza il layout",
-			'widgets:gallery' => "Galleria widget",
-			'widgets:leftcolumn' => "Left widgets",
-			'widgets:fixed' => "Posizione fissa",
-			'widgets:middlecolumn' => "Middle widgets",
-			'widgets:rightcolumn' => "Right widgets",
-			'widgets:profilebox' => "Profile box",
-			'widgets:panel:save:success' => "Your widgets were successfully saved.",
-			'widgets:panel:save:failure' => "There was a problem saving your widgets. Please try again.",
-			'widgets:save:success' => "Il widget è stato salvato con successo.",
-			'widgets:save:failure' => "Non sono riuscito a salvare il tuo widget. Prova ancora.",
+			'item:object:widget' => "Widget",
+			'layout:customise' => "Personalizza la grafica",
+			'widgets:gallery' => "Galleria Widget",
+			'widgets:leftcolumn' => "Sinistra-Area Widget",
+			'widgets:fixed' => "Posizione sistemata",
+			'widgets:middlecolumn' => "Centro-Area Widget",
+			'widgets:rightcolumn' => "Destra-Area Widget",
+			'widgets:profilebox' => "Modulo profilo",
+			'widgets:panel:save:success' => "Il tuo Widget è stato salvato con successo.",
+			'widgets:panel:save:failure' => "C'è stato un problema nel salvare il tuo Widget. Per favore riprova.",
+			'widgets:save:success' => "Il Widget è stato salvato con successo.",
+			'widgets:save:failure' => "Non possiamo salvare il tuo widget. Per favore riprova.",
 			
 	
 		/**
-		 * Groups
+		 * Groups   ###Gruppi###
 		 */
 	
 			'group' => "Gruppo", 
 			'item:group' => "Gruppi",
 	
 		/**
-		 * Profile
+		 * Profile   ###Profilo###
 		 */
 	
 			'profile' => "Profilo",
@@ -223,236 +239,236 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'item:user' => "Utenti",
 
 		/**
-		 * Profile menu items and titles
+		 * Profile menu items and titles   ####Argomenti del menu profilo e titoli###
 		 */
 	
-			'profile:yours' => "Il tuo profilo",
+			'profile:yours' => "Tuo profilo",
 			'profile:user' => "Profilo di %s",
 	
-			'profile:edit' => "Modifica il profilo",
-			'profile:editicon' => "Carica una nuova immagine per il porfilo",
-			'profile:profilepictureinstructions' => "The profile picture is the image that's displayed on your profile page. <br /> You can change it as often as you'd like. (File formats accepted: GIF, JPG or PNG)",
-			'profile:icon' => "Immagine profilo",
-			'profile:createicon' => "Create your avatar",
-			'profile:currentavatar' => "Current avatar",
-			'profile:createicon:header' => "Immagine profilo",
-			'profile:profilepicturecroppingtool' => "Profile picture cropping tool",
-			'profile:createicon:instructions' => "Click and drag a square below to match how you want your picture cropped.  A preview of your cropped picture will appear in the box on the right.  When you are happy with the preview, click 'Create your avatar'. This cropped image will be used throughout the site as your avatar. ",
+			'profile:edit' => "Modifica profilo",
+			'profile:editicon' => "Invia una nuova foto nel profilo",
+			'profile:profilepictureinstructions' => "La Foto-profilo è un'immagine che viene visualizzata sulla tua pagina-profilo. <br /> Potrai cambiarla quante volte vorrai. (Formati file accettati: GIF, JPG o PNG)",
+			'profile:icon' => "Foto del profilo",
+			'profile:createicon' => "Crea il tuo avatar",
+			'profile:currentavatar' => "Avatar corrente",
+			'profile:createicon:header' => "Foto del profilo",
+			'profile:profilepicturecroppingtool' => "Tool di ritaglio foto del profilo",
+			'profile:createicon:instructions' => "Clicca e trascina un quadrato qui sotto per definire quanta immagine vuoi tagliare. Un'anteprima dell'immagina tagliata apparirà nel riquadro sulla destra. Quando sarai contento dell'anteprima, clicca 'Crea il tuo avatar'. Questa immagine tagliata sarà utilizzata in ogni parte del sito come il tuo avatar. ",
 	
-			'profile:editdetails' => "Edit details",
-			'profile:editicon' => "Edit profile icon",
+			'profile:editdetails' => "Modifica dettagli",
+			'profile:editicon' => "Modifica icona del profilo",
 	
-			'profile:aboutme' => "About me", 
-			'profile:description' => "About me",
-			'profile:briefdescription' => "Brief description",
-			'profile:location' => "Indirizzo",
-			'profile:skills' => "Conoscenze",  
+			'profile:aboutme' => "Chi sono", 
+			'profile:description' => "Chi sono",
+			'profile:briefdescription' => "Descrizione breve",
+			'profile:location' => "Località",
+			'profile:skills' => "Attitudini",  
 			'profile:interests' => "Interessi", 
-			'profile:contactemail' => "Email",
+			'profile:contactemail' => "Indirizzo email",
 			'profile:phone' => "Telefono",
 			'profile:mobile' => "Cellulare",
 			'profile:website' => "Sito Web",
 
 			'profile:river:update' => "%s ha aggiornato il suo profilo",
-			'profile:river:iconupdate' => "%s ha aggiornato l'icona del profilo",
+			'profile:river:iconupdate' => "%s ha aggiornato l'icona sul suo profilo",
 	
 		/**
-		 * Profile status messages
+		 * Profile status messages   ###Messaggi sullo stato del profilo###
 		 */
 	
 			'profile:saved' => "Il tuo profilo è stato salvato con successo.",
-			'profile:icon:uploaded' => "L'immagine del tuo profilo è stata caricata con successo.",
+			'profile:icon:uploaded' => "La foto sul tuo profilo è stata inviata con successo.",
 	
 		/**
-		 * Profile error messages
+		 * Profile error messages   ###Messaggio di errore sul profilo###
 		 */
 	
-			'profile:noaccess' => "Non hai i permessi per modificare questo profilo.",
-			'profile:notfound' => "Sorry; we could not find the specified profile.",
-			'profile:cantedit' => "Sorry; you do not have permission to edit this profile.",
-			'profile:icon:notfound' => "Sorry; there was a problem uploading your profile picture.",
+			'profile:noaccess' => "Non hai il permesso di modificare questo profilo.",
+			'profile:notfound' => "Scusaci; non possiamo trovare il profilo specificato.",
+			'profile:cantedit' => "Scusaci; non hai il permesso di modificare questo profilo.",
+			'profile:icon:notfound' => "Scusaci; c'è un problema nell'inviare la tua foto sul profilo.",
 	
 		/**
-		 * Friends
+		 * Friends   ###Amici###
 		 */
 	
 			'friends' => "Amici",
-			'friends:yours' => "I tuoi amici",
+			'friends:yours' => "Tuoi amici",
 			'friends:owned' => "Amici di %s",
 			'friend:add' => "Aggiungi amico",
 			'friend:remove' => "Rimuovi amico",
 	
-			'friends:add:successful' => "You have successfully added %s as a friend.",
-			'friends:add:failure' => "We couldn't add %s as a friend. Please try again.",
+			'friends:add:successful' => "Hai aggiunto con successo %s come un amico.",
+			'friends:add:failure' => "Non possiamo aggiungere %s come un amico. Per favore riprova.",
 	
-			'friends:remove:successful' => "You have successfully removed %s from your friends.",
-			'friends:remove:failure' => "We couldn't remove %s from your friends. Please try again.",
+			'friends:remove:successful' => "Hai rimosso con successo %s dai tuoi amici.",
+			'friends:remove:failure' => "Non possiamo rimuovere %s dai tuoi amici. Per favore riprova.",
 	
-			'friends:none' => "This user hasn't added anyone as a friend yet.",
-			'friends:none:you' => "You haven't added anyone as a friend! Search for your interests to begin finding people to follow.",
+			'friends:none' => "Questo utente non ha ancora aggiunto nessuno come amico.",
+			'friends:none:you' => "Non hai aggiunto nessuno come amico! Inizia a cercare in base ai tuoi interessi gli amici da seguire.",
 	
-			'friends:none:found' => "No friends were found.",
+			'friends:none:found' => "Nessun amico è stato trovato.",
 	
-			'friends:of:none' => "Nobody has added this user as a friend yet.",
-			'friends:of:none:you' => "Nobody has added you as a friend yet. Start adding content and fill in your profile to let people find you!",
+			'friends:of:none' => "Nessuno ancora ha aggiunto questo utente come amico.",
+			'friends:of:none:you' => "Nessuno ti ha ancora aggiunto come amico. Inizia aggiungendo contenuti e a riempire il tuo profilo per permettere alle persone di preferirti!",
 	
-			'friends:of' => "Friends of",
-			'friends:of:owned' => "People who have made %s a friend",
+			'friends:of' => "Amici di",
+			'friends:of:owned' => "Persone che hanno fatto di %s un amico",
 
-			 'friends:num_display' => "Numbero di amini da visualizzare",
-			 'friends:icon_size' => "Grandezza icona",
+			 'friends:num_display' => "Numero di amici da visualizzare",
+			 'friends:icon_size' => "Dimensione icona",
 			 'friends:tiny' => "minuscola",
 			 'friends:small' => "piccola",
 			 'friends' => "Amici",
 			 'friends:of' => "Amici di",
-			 'friends:collections' => "Collections of friends",
-			 'friends:collections:add' => "New friends collection",
+			 'friends:collections' => "Collezione di amici",
+			 'friends:collections:add' => "Nuova collezione di amici",
 			 'friends:addfriends' => "Aggiungi amici",
-			 'friends:collectionname' => "Collection name",
-			 'friends:collectionfriends' => "Friends in collection",
-			 'friends:collectionedit' => "Edit this collection",
-			 'friends:nocollections' => "You do not yet have any collections.",
-			 'friends:collectiondeleted' => "Your collection has been deleted.",
-			 'friends:collectiondeletefailed' => "We were unable to delete the collection. Either you don't have permission, or some other problem has occurred.",
-			 'friends:collectionadded' => "Your collection was successfuly created",
-			 'friends:nocollectionname' => "You need to give your collection a name before it can be created.",
+			 'friends:collectionname' => "Collezione di nomi",
+			 'friends:collectionfriends' => "Amici nella collezione",
+			 'friends:collectionedit' => "Modifica questa collezione",
+			 'friends:nocollections' => "Non hai ancora nessuna collezione.",
+			 'friends:collectiondeleted' => "La tua collezione è stata cancellata.",
+			 'friends:collectiondeletefailed' => "Non siamo abilitati a cancellare la collezione. We were unable to delete the collection. Nemmeno tu hai il permesso, o qualche altro problema è avvenuto.",
+			 'friends:collectionadded' => "La tua collezione è stata creata con successo.",
+			 'friends:nocollectionname' => "Devi dare alla tua collezione un nome prima di poterla salvare.",
 		
-	        'friends:river:created' => "%s added the friends widget.",
-	        'friends:river:updated' => "%s updated their friends widget.",
-	        'friends:river:delete' => "%s removed their friends widget.",
-	        'friends:river:add' => "%s add someone as a friend.",
+	        'friends:river:created' => "%s ha aggiunto il widget Amici.",
+	        'friends:river:updated' => "%s ha aggiornato il suo widget Amici.",
+	        'friends:river:delete' => "%s ha rimosso il suo widget Amici.",
+	        'friends:river:add' => "%s ha aggiunto qualcuno come amico.",
 	
 		/**
-		 * Feeds
+		 * Feeds   ###Feeds###
 		 */
-			'feed:rss' => 'Sottoscrivi al feed',
-			'feed:odd' => 'Syndicate OpenDD',
+			'feed:rss' => 'Sottoscriviti al feed',
+			'feed:odd' => 'Sincronizza con OpenDD',
 	
 		/**
-		 * River
+		 * River   ###River###
 		 */
 			'river' => "River",			
-			'river:relationship:friend' => 'è amico di',
+			'river:relationship:friend' => 'è ora amico con',
 
 		/**
-		 * Plugins
+		 * Plugins   ###Plugin###
 		 */
-			'plugins:settings:save:ok' => "Settings for the %s plugin were saved successfully.",
-			'plugins:settings:save:fail' => "There was a problem saving settings for the %s plugin.",
-			'plugins:usersettings:save:ok' => "User settings for the %s plugin were saved successfully.",
-			'plugins:usersettings:save:fail' => "There was a problem saving  user settings for the %s plugin.",
+			'plugins:settings:save:ok' => "I settaggi per il plugin %s sono stati salvati con successo.",
+			'plugins:settings:save:fail' => "C'è stato un problema nel salvare i settaggi per il plugin %s.",
+			'plugins:usersettings:save:ok' => "I settaggi-utente per il plugin %s sono stati salvati con successo.",
+			'plugins:usersettings:save:fail' => "C'è stato un problema nel salvare i settaggi-utente per il plugin %s.",
 			
 		/**
-		 * Notifications
+		 * Notifications   ###Notifiche###
 		 */
-			'notifications:usersettings' => "Notification settings",
-			'notifications:methods' => "Please specify which methods you want to permit.",
+			'notifications:usersettings' => "Configurazione Notifiche",
+			'notifications:methods' => "Per favore specifica quale metodo vuoi permettere.",
 	
-			'notifications:usersettings:save:ok' => "Your notification settings were successfully saved.",
-			'notifications:usersettings:save:fail' => "There was a problem saving your notification settings.",
+			'notifications:usersettings:save:ok' => "La configurazione-Notifiche è stata salvata con successo.",
+			'notifications:usersettings:save:fail' => "C'è stato un problema nel salvare la tua configurazione-Notifiche.",
 		/**
-		 * Search
+		 * Search   ###Ricerca###
 		 */
 	
-			'search' => "Cerca",
-			'searchtitle' => "Cerca: %s",
-			'users:searchtitle' => "Searching for users: %s",
-			'advancedsearchtitle' => "%s with results matching %s",
+			'search' => "Ricerca",
+			'searchtitle' => "Ricerca: %s",
+			'users:searchtitle' => "Ricercando per utenti: %s",
+			'advancedsearchtitle' => "%s con risultati trovati %s",
 			'notfound' => "Nessun risultato trovato.",
-			'next' => "Prossimo",
-			'previous' => "Precedente",
+			'next' => "Avanti",
+			'previous' => "Indietro",
 	
-			'viewtype:change' => "Change listing type",
-			'viewtype:list' => "List view",
-			'viewtype:gallery' => "Gallery",
+			'viewtype:change' => "Cambia il tipo di lista",
+			'viewtype:list' => "Vedi lista",
+			'viewtype:gallery' => "Galleria",
 	
-			'tag:search:startblurb' => "Items with tags matching '%s':",
+			'tag:search:startblurb' => "Argomenti con tags trovati '%s':",
 
-			'user:search:startblurb' => "Users matching '%s':",
-			'user:search:finishblurb' => "To view more, click here.",
+			'user:search:startblurb' => "Utenti trovati '%s':",
+			'user:search:finishblurb' => "Vedi altri, clicca qui.",
 	
 		/**
-		 * Account
+		 * Account  ###Account###
 		 */
 	
 			'account' => "Account",
-			'settings' => "Preferenze",
+			'settings' => "Settaggi",
             'tools' => "Tools",
-            'tools:yours' => "Your tools",
+            'tools:yours' => "I tuoi Tools",
 	
-			'register' => "Register",
-			'registerok' => "You have successfully registered for %s. To activate your account, please confirm your email address by clicking on the link we sent you.",
-			'registerbad' => "Your registration was unsuccessful. The username may already exist, your passwords might not match, or your username or password may be too short.",
-			'registerdisabled' => "Registration has been disabled by the system administrator",
+			'register' => "Registrati",
+			'registerok' => "Hai registrato con successo %s. Per attivare il tuo account,per favore conferma il tuo indirizzo email cliccando sul link che ti abbia inviato.",
+			'registerbad' => "La tua registrazione non è avvenuta con successo. Il tuo nome-utente può essere già in uso, la tua password può non essere valida, o il tuo nome-utente o password possono essere troppo brevi.",
+			'registerdisabled' => "La registrazione è stata disabilitata dall'amministratore del sistema.",
 	
-			'registration:notemail' => 'The email address you provided does not appear to be a valid email address.',
-			'registration:userexists' => 'That username already exists',
-			'registration:usernametooshort' => 'Your username must be a minimum of 4 characters long.',
-			'registration:passwordtooshort' => 'The password must be a minimum of 6 characters long.',
-			'registration:dupeemail' => 'This email address has already been registered.',
-			'registration:invalidchars' => 'Sorry, your email address contains invalid characters.',
-			'registration:emailnotvalid' => 'Sorry, the email address you entered is invalid on this system',
-			'registration:passwordnotvalid' => 'Sorry, the password you entered is invalid on this system',
-			'registration:usernamenotvalid' => 'Sorry, the username you entered is invalid on this system',
+			'registration:notemail' => 'Un Indirizzo email fornito non sembra essere un valido indirizzo email.',
+			'registration:userexists' => 'Quel nome-utente già esiste',
+			'registration:usernametooshort' => 'Il tuo nome-utente deve avere una lunghezza di minimo 4 caratteri.',
+			'registration:passwordtooshort' => 'La password deve avere una lunghezza di minimo 6 caratteri.',
+			'registration:dupeemail' => 'Questo indirizzo email è già stato registrato.',
+			'registration:invalidchars' => 'Scusaci, il tuo indirizzo email contiene caratteri non validi.',
+			'registration:emailnotvalid' => 'Scusaci,un indirizzo email che hai inserito non è valido su questo sistema',
+			'registration:passwordnotvalid' => 'Scusaci, la password che hai inserito non è valida su questo sistema',
+			'registration:usernamenotvalid' => 'Scusaci, il nome-utente che hai inserito non è valido su questo sistema',
 	
-			'adduser' => "Aggiungi Utente",
-			'adduser:ok' => "You have successfully added a new user.",
-			'adduser:bad' => "The new user could not be created.",
+			'adduser' => "Aggiugi utente",
+			'adduser:ok' => "Hai aggiunto con successo un nuovo utente.",
+			'adduser:bad' => "Il nuovo utente non può essere creato.",
 			
-			'item:object:reported_content' => "Reported items",
+			'item:object:reported_content' => "Riporta argomento",
 	
-			'user:set:name' => "Account name settings",
+			'user:set:name' => "Configurazione del Nome-Account",
 			'user:name:label' => "Il tuo nome",
-			'user:name:success' => "Successfully changed your name on the system.",
-			'user:name:fail' => "Could not change your name on the system.",
+			'user:name:success' => "Hai cambiato con successo il tuo nome su questo sistema.",
+			'user:name:fail' => "Non puoi cambiare il tuo nome su questo sistema.",
 	
-			'user:set:password' => "Account password",
-			'user:password:label' => "Your new password",
-			'user:password2:label' => "Your new password again",
+			'user:set:password' => "Password-Account",
+			'user:password:label' => "La tua nuova password",
+			'user:password2:label' => "La tua nuova password di nuovo",
 			'user:password:success' => "Password cambiata",
-			'user:password:fail' => "Non puoi cambiare la password in questo sito.",
-			'user:password:fail:notsame' => "Le due password non coincidono!",
-			'user:password:fail:tooshort' => "La password è troppo corta!",
+			'user:password:fail' => "Non puoi cambiare la password su questo sistema.",
+			'user:password:fail:notsame' => "Le due passwords non sono identiche!",
+			'user:password:fail:tooshort' => "La Password è troppo breve!",
 	
-			'user:set:language' => "Preferenze lingua",
+			'user:set:language' => "Configurazione Lingua",
 			'user:language:label' => "La tua lingua",
-			'user:language:success' => "Your language settings have been updated.",
-			'user:language:fail' => "Your language settings could not be saved.",
+			'user:language:success' => "La configurazione della tua lingua è stata aggiornata.",
+			'user:language:fail' => "La configurazione della tua lingua non può essere salvata.",
 	
-			'user:username:notfound' => 'Username %s non trovato.',
+			'user:username:notfound' => 'Nome-utente %s non trovato.',
 	
-			'user:password:lost' => 'Password dimenticata',
-			'user:password:resetreq:success' => 'Richiesta nuova password, email spedita',
+			'user:password:lost' => 'Password persa',
+			'user:password:resetreq:success' => 'Richiesta nuova password avvenuta con successo, email inviata',
 			'user:password:resetreq:fail' => 'Non puoi richiedere una nuova password.',
 	
-			'user:password:text' => 'To generate a new password, enter your username below. We will send the address of a unique verification page to you via email click on the link in the body of the message and a new password will be sent to you.',
+			'user:password:text' => 'Per generare una nuova password, inserisci il tuo nome-utente qui sotto. Ti manderemo per email un indirizzo di una pagina di verifica univoca, clicca sul link nel corpo del messaggio e una nuova password ti sarà inviata.',
 	
 		/**
-		 * Administration
+		 * Administration   ###Amministrazione###
 		 */
 
-			'admin:configuration:success' => "Your settings have been saved.",
-			'admin:configuration:fail' => "Your settings could not be saved.",
+			'admin:configuration:success' => "I tuoi settaggi sono stati salvati.",
+			'admin:configuration:fail' => "I tuoi settaggi non possono essere salvati.",
 	
-			'admin' => "Administration",
-			'admin:description' => "The admin panel allows you to control all aspects of the system, from user management to how plugins behave. Choose an option below to get started.",
+			'admin' => "Amministrazione",
+			'admin:description' => "Il pannello amministrativo ti permette di controllare tutti gli aspetti del sistema, dall'amministrazione dell'utente a come far funzionare i plugin. Scegli un'opzione qui sotto per iniziare.",
 			
-			'admin:user' => "User Administration",
-			'admin:user:description' => "This admin panel allows you to control user settings for your site. Choose an option below to get started.",
-			'admin:user:adduser:label' => "Click here to add a new user...",
-			'admin:user:opt:linktext' => "Configure users...",
-			'admin:user:opt:description' => "Configure users and account information. ",
+			'admin:user' => "Amministrazione Utante",
+			'admin:user:description' => "Questo pannello di amministrazione ti permette di controllare i settaggi dell'utente per il tuo sito. Scegli un'opzione qui sotto per iniziare.",
+			'admin:user:adduser:label' => "Clicca qui per aggiungere un nuovo utente...",
+			'admin:user:opt:linktext' => "Configura gli utenti...",
+			'admin:user:opt:description' => "Configura gli utenti e l'informazione sull'account. ",
 			
-			'admin:site' => "Site Administration",
-			'admin:site:description' => "This admin panel allows you to control global settings for your site. Choose an option below to get started.",
-			'admin:site:opt:linktext' => "Configure site...",
-			'admin:site:opt:description' => "Configure the site technical and non-technical settings. ",
+			'admin:site' => "Amministrazione sito",
+			'admin:site:description' => "Questo pannello amministrativo ti permette di controllare i settaggi globali per il tuo sito. Scegli un'opzione qui sotto per iniziare.",
+			'admin:site:opt:linktext' => "Configura il sito...",
+			'admin:site:opt:description' => "Configura i settaggi tecnici e non-tecnici del sito. ",
 			
-			'admin:plugins' => "Tool Administration",
-			'admin:plugins:description' => "This admin panel allows you to control and configure tools installed on your site.",
-			'admin:plugins:opt:linktext' => "Configure tools...",
-			'admin:plugins:opt:description' => "Configure the tools installed on the site. ",
-			'admin:plugins:label:author' => "Author",
+			'admin:plugins' => "Amministrazione Tool",
+			'admin:plugins:description' => "Questo pannello di ammministrazione ti permette di controllare e configurara i Tools installati sul tuo sito.",
+			'admin:plugins:opt:linktext' => "Configura i Tools...",
+			'admin:plugins:opt:description' => "Configura i Tools installati sul sito. ",
+			'admin:plugins:label:author' => "Autore",
 			'admin:plugins:label:copyright' => "Copyright",
 			'admin:plugins:label:licence' => "Licenza",
 			'admin:plugins:label:website' => "URL",
@@ -536,6 +552,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'enable' => "Attiva",
 			'disable' => "Disattiva",
 			'request' => "Richiedi",
+			'complete' => "Completo",
 	
 			'invite' => "Invita",
 	
@@ -758,10 +775,18 @@ Non puoi rispondere a questa email.",
 			'actiongatekeeper:timeerror' => 'Il Modulo è scaduto,per favore riaggiorna e prova di nuovo.',
 			'actiongatekeeper:pluginprevents' => 'Una estensione ha impedito a questo Modulo di poter essere inviato.',
 	
+/*****************************************************************************************************/	
+	    /**
+		 * Custom  ###Personalizzazione###
+		 * !!!Put here your custom words!!! ###!!!Inserisci qui le tue parole personalizzate!!!###
+		 */
+		
+/*****************************************************************************************************/			
+		
+		
 		/**
 		 * Languages according to ISO 639-1 #### Lingue in base all' ISO 639-1 		 
-Albanese		sq 	
-Arabo 		    ar 	
+         !!!IMPORTANTE: sono state inserite solo le lingue a cui segue "//" !!!
 Azero 		    az 	
 Armeno 		    hy 	
 Basco 		    eu 	
@@ -769,26 +794,17 @@ Bielorusso 		be
 Bulgaro 		bg 	
 Catalano 		ca 	
 Ceco 		    cs 	
-Cinese 		    zh 	
 Coreano 		ko 	
 Corso 		    co 	
 Croato 		    hr 	
 Danese 		    da 	
-Ebraico 		he 	
 Estone 		    et 	
 Faroese 		fo 	
-Finlandese 		fi 	
-Francese 		fr 	
 Gaelico 		gd 	
 Galiziano 		gl 	
 Gallese 		cy 	
-Giapponese 		ja 	
-Greco moderno   el 	
 Hindi 		    hi 	
-Indonesiano     id 	
-Inglese 		en 	
 Islandese 		is 	
-Italiano 		it 	
 Kazako 		    kk 	
 Latino 		    la 	
 Lettone 		lv 	
@@ -798,44 +814,20 @@ Malgascio 		mg
 Maltese 		mt 	
 Moldavo 		mo 	
 Mongolo 		mn 	
-Norvegese 		no 	
-Norvegese Bokmal 		nb 	
-Norvegese Nynorsk 		nn 	
-Olandese 		nl 	
 Osseto 		    os 	
 Pashtun 		ps 	
-Persiano 		fa 	
-Polacco 		pl 	
-Portoghese 		pt 	
-Provenzale / Occitano    oc 	
+Persiano 		fa 		
 Rumeno 		    ro 	
-Russo 		    ru 	
 Sanscrito 		sa 	
 Serbo 		    sr 	
 Singalese 		si 	
-Slovacco 		sk 	
-Sloveno 		sl 	
-Somalo 		    so 	
-Spagnolo 		es 	
-Svedese 		sv 	
-Swahili 		sw 	
-Tamil 		    ta 	
-Tedesco 		de 	
-Thailandese     th 	
-Turco 		    tr 	
-Turkmeno 		tk 	
-Ucraino 		uk 	
-Ungherese 		hu 	
-Urdu 		    ur 	
-Uzbeko 		    uz 	
-Vietnamita 		vi 	
-Yiddish 		yi 	
+Slovacco 		sk 		
 		 */
 			"aa" => "Afar",
 			"ab" => "Abkhazian",
 			"af" => "Afrikaans",
 			"am" => "Amharic",
-			"ar" => "Arabic",
+			"ar" => "Arabo",//
 			"as" => "Assamese",
 			"ay" => "Aymara",
 			"az" => "Azerbaijani",
@@ -852,41 +844,40 @@ Yiddish 		yi
 			"cs" => "Czech",
 			"cy" => "Welsh",
 			"da" => "Danish",
-			"de" => "Tedesco",
+			"de" => "Tedesco",//
 			"dz" => "Bhutani",
-			"el" => "Greco",
-			"en" => "Inglese",
+			"el" => "Greco moderno",//
+			"en" => "Inglese",//
 			"eo" => "Esperanto",
-			"es" => "Spagnolo",
+			"es" => "Spagnolo",//
 			"et" => "Estonian",
 			"eu" => "Basque",
 			"fa" => "Persian",
-			"fi" => "Finnish",
+			"fi" => "Finlandese",//
 			"fj" => "Fiji",
 			"fo" => "Faeroese",
-			"fr" => "Francese",
+			"fr" => "Francese",//
 			"fy" => "Frisian",
 			"ga" => "Irish",
 			"gd" => "Scots / Gaelic",
 			"gl" => "Galician",
 			"gn" => "Guarani",
 			"gu" => "Gujarati",
-			"he" => "Hebrew",
+			"he" => "Ebraico",//
 			"ha" => "Hausa",
 			"hi" => "Hindi",
 			"hr" => "Croatian",
-			"hu" => "Hungarian",
+			"hu" => "Ungherese",//
 			"hy" => "Armenian",
 			"ia" => "Interlingua",
-			"id" => "Indonesian",
+			"id" => "Indonesiano",//
 			"ie" => "Interlingue",
 			"ik" => "Inupiak",
-			//"in" => "Indonesian",
 			"is" => "Icelandic",
-			"it" => "Italiano",
+			"it" => "Italiano",//
 			"iu" => "Inuktitut",
 			"iw" => "Hebrew (obsolete)",
-			"ja" => "Japanese",
+			"ja" => "Giapponese",//
 			"ji" => "Yiddish (obsolete)",
 			"jw" => "Javanese",
 			"ka" => "Georgian",
@@ -915,20 +906,20 @@ Yiddish 		yi
 			"my" => "Burmese",
 			"na" => "Nauru",
 			"ne" => "Nepali",
-			"nl" => "Dutch",
-			"no" => "Norwegian",
-			"oc" => "Occitan",
+			"nl" => "Olandese",//
+			"no" => "Norvegese",//
+			"oc" => "Provenzale / Occitano",//
 			"om" => "(Afan) Oromo",
 			"or" => "Oriya",
 			"pa" => "Punjabi",
-			"pl" => "Polish",
+			"pl" => "Polacco",//
 			"ps" => "Pashto / Pushto",
-			"pt" => "Portuguese",
+			"pt" => "Portoghese",//
 			"qu" => "Quechua",
 			"rm" => "Rhaeto-Romance",
 			"rn" => "Kirundi",
 			"ro" => "Romanian",
-			"ru" => "Russian",
+			"ru" => "Russo",//
 			"rw" => "Kinyarwanda",
 			"sa" => "Sanskrit",
 			"sd" => "Sindhi",
@@ -936,43 +927,42 @@ Yiddish 		yi
 			"sh" => "Serbo-Croatian",
 			"si" => "Singhalese",
 			"sk" => "Slovak",
-			"sl" => "Slovenian",
+			"sl" => "Sloveno",//
 			"sm" => "Samoan",
 			"sn" => "Shona",
-			"so" => "Somali",
-			"sq" => "Albanian",
+			"so" => "Somalo ",//
+			"sq" => "Albanese",//
 			"sr" => "Serbian",
 			"ss" => "Siswati",
 			"st" => "Sesotho",
 			"su" => "Sundanese",
-			"sv" => "Swedish",
-			"sw" => "Swahili",
-			"ta" => "Tamil",
+			"sv" => "Svedese ",//
+			"sw" => "Swahili",//
+			"ta" => "Tamil",//
 			"te" => "Tegulu",
 			"tg" => "Tajik",
-			"th" => "Thai",
+			"th" => "Thailandese",//
 			"ti" => "Tigrinya",
-			"tk" => "Turkmen",
+			"tk" => "Turkmeno",//
 			"tl" => "Tagalog",
 			"tn" => "Setswana",
 			"to" => "Tonga",
-			"tr" => "Turkish",
+			"tr" => "Turco",//
 			"ts" => "Tsonga",
 			"tt" => "Tatar",
 			"tw" => "Twi",
 			"ug" => "Uigur",
-			"uk" => "Ukrainian",
-			"ur" => "Urdu",
-			"uz" => "Uzbek",
-			"vi" => "Vietnamese",
+			"uk" => "Ucraino",//
+			"ur" => "Urdu",//
+			"uz" => "Uzbeko ",//
+			"vi" => "Vietnamita",//
 			"vo" => "Volapuk",
 			"wo" => "Wolof",
 			"xh" => "Xhosa",
-			//"y" => "Yiddish",
-			"yi" => "Yiddish",
+			"yi" => "Yiddish", //
 			"yo" => "Yoruba",
 			"za" => "Zuang",
-			"zh" => "Chinese",
+			"zh" => "Cinese",//
 			"zu" => "Zulu",
 	);
 	
