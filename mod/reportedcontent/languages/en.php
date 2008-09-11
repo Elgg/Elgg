@@ -38,6 +38,7 @@
 			'reportedcontent:failing' => 'Your report could not be sent',
 			'reportedcontent:report' => 'Report this', 
 	
+			'reportedcontent:failed' => 'Sorry, the attempt to report this content has failed.',
 	);
 					
 	add_translation("en",$english);
