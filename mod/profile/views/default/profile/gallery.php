@@ -29,7 +29,13 @@
 									  )
 			);
 	
-		$info .= "<p><b><a href=\"" . $vars['entity']->getUrl() . "\">" . $vars['entity']->name . "</a></b></p>";
+		$rel = "";
+		if (page_owner() == $vars['entity']->guid)
+			$rel = 'me';
+		else if (check_entity_relationship(page_owner(), 'friend', $vars['entity']->guid))
+			$rel = 'friend';
+		
+		$info .= "<p><b><a href=\"" . $vars['entity']->getUrl() . "\" rel=\"$rel\">" . $vars['entity']->name . "</a></b></p>";
 		
 		// echo elgg_view_listing($icon, $info);
 		echo elgg_view('search/gallery_listing',array('icon' => $icon, 'info' => $info));

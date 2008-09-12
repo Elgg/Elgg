@@ -75,8 +75,15 @@
 	
 	<?php 
 	
+	// Simple XFN
+	$rel = "";
+	if (page_owner() == $vars['entity']->guid)
+		$rel = 'me';
+	else if (check_entity_relationship(page_owner(), 'friend', $vars['entity']->guid))
+		$rel = 'friend';
+		
 	// display the users name
-	echo "<h2><a href=\"" . $vars['entity']->getUrl() . "\">" . $vars['entity']->name . "</a></h2>";
+	echo "<h2><a href=\"" . $vars['entity']->getUrl() . "\" rel=\"$rel\">" . $vars['entity']->name . "</a></h2>";
 
 		if ($vars['full'] == true) {
 	
