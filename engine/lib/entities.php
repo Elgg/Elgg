@@ -1508,9 +1508,11 @@
 		global $CONFIG;
 		$owner_guid = (int) $owner_guid;
 		if ($entity = get_entity($owner_guid)) {
-			if ($entity->canEdit()) {
-				$res = update_data("UPDATE {$CONFIG->dbprefix}entities set enabled='no' where owner_guid={$owner_guid} or container_guid = {$owner_guid}");
-				return $res;
+			if (trigger_elgg_event('disable',$entity->type,$entity)) {
+				if ($entity->canEdit()) {
+					$res = update_data("UPDATE {$CONFIG->dbprefix}entities set enabled='no' where owner_guid={$owner_guid} or container_guid = {$owner_guid}");
+					return $res;
+				}
 			}
 		}
 		return false;
@@ -1533,7 +1535,7 @@
 		access_show_hidden_entities(true);
 		
 		if ($entity = get_entity($guid)) {
-			if (trigger_elgg_event('delete',$entity->type,$entity)) {
+			if (trigger_elgg_event('enable',$entity->type,$entity)) {
 				if ($entity->canEdit()) {
 					
 					access_show_hidden_entities($access_status);
