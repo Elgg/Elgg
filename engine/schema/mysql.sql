@@ -40,7 +40,14 @@ CREATE TABLE `prefix_entities` (
 	`enabled` enum ('yes', 'no') NOT NULL default 'yes',
 	
 	primary key (`guid`),
-    KEY `site_guid` (`site_guid`)
+	KEY `type` (`type`),
+	KEY `subtype` (`subtype`),
+	KEY `owner_guid` (`owner_guid`),
+	KEY `site_guid` (`site_guid`),
+	KEY `container_guid` (`container_guid`),
+	KEY `access_id` (`access_id`),
+	KEY `time_created` (`time_created`),
+	KEY `time_updated` (`time_updated`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- Entity subtypes - lets you subtype one of the main objects (sites/objects/etc)
@@ -77,6 +84,7 @@ CREATE TABLE `prefix_access_collections` (
   `name` text NOT NULL,
   `owner_guid` bigint(20) unsigned NOT NULL,
   `site_guid` bigint(20) unsigned NOT NULL default '0',
+
   PRIMARY KEY  (`id`)
 ) AUTO_INCREMENT=3  ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -90,7 +98,7 @@ CREATE TABLE `prefix_access_collection_membership` (
 
 --
 -- *** Entity superclass details ***
--- NB: Asside from GUID, these should now have any field names incommon with the entities table.
+-- NB: Aside from GUID, these should now have any field names in common with the entities table.
 --
 
 -- Extra information relating to "objects"
@@ -138,6 +146,8 @@ CREATE TABLE `prefix_users_entity` (
   PRIMARY KEY  (`guid`),
   UNIQUE KEY (`username`),
   KEY `password` (`password`),
+  KEY `email` (`email`(50)),
+  KEY `code` (`code`),
   FULLTEXT KEY `name` (`name`),
   FULLTEXT KEY (`name`,`username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -174,7 +184,13 @@ CREATE TABLE `prefix_annotations` (
 
 	`enabled` enum ('yes', 'no') NOT NULL default 'yes',
 	
-	PRIMARY KEY (`id`)
+	PRIMARY KEY (`id`),
+	KEY `entity_guid` (`entity_guid`),
+	KEY `name_id` (`name_id`),
+	KEY `value_id` (`value_id`),
+	KEY `owner_guid` (`owner_guid`),
+	KEY `access_id` (`access_id`)
+
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- Table structure for metadata
@@ -194,8 +210,13 @@ CREATE TABLE `prefix_metadata` (
 
 	`enabled` enum ('yes', 'no') NOT NULL default 'yes',
 	
-	PRIMARY KEY (`id`)
-	
+	PRIMARY KEY (`id`),
+	KEY `entity_guid` (`entity_guid`),
+	KEY `name_id` (`name_id`),
+	KEY `value_id` (`value_id`),
+	KEY `owner_guid` (`owner_guid`),
+	KEY `access_id` (`access_id`)
+
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- Meta strings table (avoids storing text strings more than once)
@@ -204,7 +225,7 @@ CREATE TABLE `prefix_metastrings` (
 	`string` TEXT NOT NULL,
 	
 	PRIMARY KEY (`id`),
-	FULLTEXT KEY `string` (`string`)
+	KEY `string` (`string`(50))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
@@ -236,7 +257,8 @@ CREATE TABLE `prefix_users_apisessions` (
   	`expires` int(11) NOT NULL,
 	
 	PRIMARY KEY  (`id`),
-	UNIQUE KEY (`user_guid`,`site_guid`)
+	UNIQUE KEY (`user_guid`,`site_guid`),
+	KEY `token` (`token`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- Datalists for things like db version
@@ -258,12 +280,11 @@ CREATE TABLE `prefix_system_log` (
 	
 	`time_created` int(11) NOT NULL,
 	
-	PRIMARY KEY  (`id`)
+	PRIMARY KEY  (`id`),
+	KEY `object_id` (`object_id`),
+	KEY `object_class` (`object_class`),
+	KEY `event` (`event`),
+	KEY `performed_by_guid` (`performed_by_guid`),
+	KEY `time_created` (`time_created`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- Privileged paths, added to by the admin panel
-CREATE TABLE `prefix_privileged_paths` (
-	`path` varchar(128) NOT NULL,
-	
-	PRIMARY KEY (`path`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
