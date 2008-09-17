@@ -155,6 +155,12 @@
 			'InstallationException:DatarootBlank' => "You have not specified a data directory.",
 	
 		/**
+		 * API
+		 */
+			'system.api.list' => "List all available API calls on the system.",
+			'auth.gettoken' => "This API call lets a user log in, returning an authentication token which can be used in leu of a username and password for authenticating further calls.",
+	
+		/**
 		 * User details
 		 */
 
