@@ -259,7 +259,7 @@ CREATE TABLE `prefix_users_apisessions` (
 	PRIMARY KEY  (`id`),
 	UNIQUE KEY (`user_guid`,`site_guid`),
 	KEY `token` (`token`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MEMORY;
 
 -- Datalists for things like db version
 CREATE TABLE `prefix_datalists` (
