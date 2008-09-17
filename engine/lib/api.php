@@ -175,6 +175,83 @@
 			return new ErrorResult($message, $code, $exception);
 		}
 	}
+	
+	// Caching of HMACs ///////////////////////////////////////////////////////////////////////	
+	
+	/**
+	 * ElggHMACCache
+	 * Store cached data in a temporary database, only used by the HMAC stuff.
+	 * 
+	 * @author Curverider Ltd <info@elgg.com>
+	 * @package Elgg
+	 * @subpackage API
+	 */
+	class ElggHMACCache extends ElggCache
+	{
+		/**
+		 * Set the Elgg cache.
+		 *
+		 * @param int $max_age Maximum age in seconds, 0 if no limit.
+		 */
+		function __construct($max_age = 0)
+		{
+			$this->set_variable("max_age", $max_age);
+		}
+	
+		/**
+		 * Save a key
+		 *
+		 * @param string $key
+		 * @param string $data
+		 * @return boolean
+		 */
+		public function save($key, $data)
+		{
+			global $CONFIG;
+			
+			$key = sanitise_string($key);
+			$time = time();
+			
+			return insert_data("INSERT into {$CONFIG->dbprefix}hmac_cache (hmac, ts) VALUES ('$key', '$time')");
+		}
+		
+		/**
+		 * Load a key
+		 *
+		 * @param string $key
+		 * @param int $offset
+		 * @param int $limit
+		 * @return string
+		 */
+		public function load($key, $offset = 0, $limit = null)
+		{
+			global $CONFIG;
+			
+			$key = sanitise_string($key);
+			
+			$row = get_data_row("SELECT * from {$CONFIG->dbprefix}hmac_cache where hmac='$key'");
+			if ($row)
+				return $row->hmac;
+			
+			return false;
+		}
+		
+		/**
+		 * Clean out old stuff.
+		 *
+		 */
+		public function __destruct()
+		{
+			global $CONFIG;
+			
+			$time = time();
+			$age = (int)$this->get_variable("max_age");
+			
+			$expires = $time-$age;
+			
+			delete_data("DELETE from {$CONFIG->dbprefix}hmac_cache where ts<$expires");
+		}
+	}
 
 	// API Call functions /////////////////////////////////////////////////////////////////////	
 	
@@ -552,22 +629,14 @@
 	 * This function will do two things. Firstly it verifys that a $hmac hasn't been seen before, and 
 	 * secondly it will add the given hmac to the cache.
 	 * 
-	 * TODO : REWRITE TO NOT USE ZEND
-	 * 
 	 * @param $hmac The hmac string.
 	 * @return bool True if replay detected, false if not.
 	 */
 	function cache_hmac_check_replay($hmac)
 	{
-		global $CONFIG;
-
-		$cache_dir = $CONFIG->cache_path;
-		if (!$cache_dir)
-			throw new ConfigurationException(elgg_echo('ConfigurationException:CacheDirNotSet'));
-			
-		$cache = new ElggFileCache($cache_dir, 90000); // cache lifetime is 25 hours (see time window in get_and_validate_api_headers() )
+		$cache = new ElggHMACCache(90000); // cache lifetime is 25 hours (see time window in get_and_validate_api_headers() )
 		
-		if (!$result = $cache->load($hmac))
+		if (!$cache->load($hmac))
 		{
 			$cache->save($hmac, $hmac);
 			
