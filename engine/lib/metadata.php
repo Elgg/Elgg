@@ -428,10 +428,14 @@
 			$where[] = "e.type='$entity_type'";
 		if ($entity_subtype)
 			$where[] = "e.subtype=$entity_subtype";
-		if ($meta_name!="")
+		if ($meta_name!="") {
+			if (!$meta_v) return false; // The value is set, but we didn't get a value... so something went wrong.
 			$where[] = "m.name_id='$meta_n'";
-		if ($meta_value!="")
+		}
+		if ($meta_value!="") {
+			if (!$meta_v) return false; // The value is set, but we didn't get a value... so something went wrong.
 			$where[] = "m.value_id='$meta_v'";
+		}
 		if ($site_guid > 0)
 			$where[] = "m.entity_guid = {$site_guid}";
 		
