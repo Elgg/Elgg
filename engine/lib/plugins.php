@@ -12,6 +12,9 @@
 		 * @link http://elgg.org/
 		 */
 
+		
+		/// Cache enabled plugins per page
+		$ENABLED_PLUGINS_CACHE = NULL;
 
 		/**
 		 * PluginException
@@ -445,22 +448,23 @@
 		 */
 		function is_plugin_enabled($plugin, $site_guid = 0)
 		{
-			//return execute_privileged_codeblock('__is_plugin_enabled_priv', array('plugin'=>$plugin, 'site_guid' => $site_guid));
-				// Does this need to be in privileged? Doesn't seem to...
-			
-			global $CONFIG;
+			global $CONFIG, $ENABLED_PLUGINS_CACHE;
 			
 			$site_guid = (int) $site_guid;
 			if ($site_guid == 0)
 				$site_guid = $CONFIG->site_guid;
 				
-			$site = get_entity($site_guid);
-			if (!($site instanceof ElggSite))
-				throw new InvalidClassException(sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $site_guid, "ElggSite"));
 				
-			$enabled = find_metadata("enabled_plugins", $plugin, "site", "", 10, 0, "", $site_guid);
-			if ($enabled)
-				return true;
+			if (!$ENABLED_PLUGINS_CACHE) {
+				$site = get_entity($site_guid);
+				if (!($site instanceof ElggSite))
+					throw new InvalidClassException(sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $site_guid, "ElggSite"));
+			
+				$ENABLED_PLUGINS_CACHE = $site->enabled_plugins;
+			}
+				
+			foreach ($ENABLED_PLUGINS_CACHE as $e)
+				if ($e == $plugin) return true;
 				
 			return false;
 		}
