@@ -186,7 +186,7 @@
 			
 			// Create log if we haven't already created it
 			if (!isset($logcache[$time][$object_id][$event])) {
-				if (insert_data("INSERT into {$CONFIG->dbprefix}system_log (object_id, object_class, event, performed_by_guid, time_created) VALUES ('$object_id','$object_class','$event',$performed_by, '$time')")) {
+				if (insert_data("INSERT DELAYED into {$CONFIG->dbprefix}system_log (object_id, object_class, event, performed_by_guid, time_created) VALUES ('$object_id','$object_class','$event',$performed_by, '$time')")) {
 					$logcache[$time][$object_id][$event] = true;
 					return true;
 				}
