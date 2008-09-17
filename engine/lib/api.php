@@ -207,6 +207,25 @@
 	}
 	
 	/**
+	 * Obtain a token for a user.
+	 *
+	 * @param string $username The username
+	 * @param string $password The password
+	 */
+	function obtain_user_token($username, $password)
+	{
+		global $CONFIG;
+		
+		$site = $CONFIG->site_id;
+		$token = md5(mt_rand(). microtime() . $username . $password);
+		
+		if (insert_data("INSERT into {$CONFIG->dbprefix}users_apisessions (user_guid, site_guid, token, expires) values () on duplicate key update token='$token'"))
+			return $token;
+			
+		return false;
+	}
+	
+	/**
 	 * Validate a token against a given site. 
 	 * 
 	 * A token registered with one site can not be used from a different apikey(site), so be aware of this
@@ -427,8 +446,38 @@
 	}
 	
 	// Expose some system api functions
-	expose_function("system.api.list", "list_all_apis", NULL, "List all available API calls on the system.");
+	expose_function("system.api.list", "list_all_apis", NULL, elgg_echo("system.api.list"), "GET", false);
 
+	/**
+	 * The auth.gettoken API.
+	 * This API call lets a user log in, returning an authentication token which can be used
+	 * in leu of a username and password login from then on.
+	 * 
+	 * @param string username Username
+	 * @param string password Clear text password
+	 */
+	function auth_gettoken($username, $password)
+	{
+		if (authenticate($username, $password))
+		{
+			$token = obtain_user_token($username, $password);
+			if ($token)
+				return $token;
+		}
+		
+		return new ErrorResult();
+	}
+	
+	// The authentication token api
+	expose_function("auth.gettoken", "auth_gettoken", array(
+		"username" => array (
+  			'string'
+  		),
+  		"password" => array (
+  			'string'
+		)
+	), elgg_echo('auth.gettoken'), "GET", false, false);
+	
 	
 	// PAM AUTH HMAC functions ////////////////////////////////////////////////////////////////
 	
