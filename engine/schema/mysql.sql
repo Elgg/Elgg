@@ -264,8 +264,10 @@ CREATE TABLE `prefix_users_apisessions` (
 -- HMAC Cache protecting against Replay attacks
 CREATE TABLE `prefix_hmac_cache` (
 	`hmac` varchar(255) NOT NULL,
+	`ts` int(11) NOT NULL,
 
-	PRIMARY KEY  (`hmac`)
+	PRIMARY KEY  (`hmac`),
+	KEY `ts` (`ts`)
 ) ENGINE=MEMORY;
 
 -- Datalists for things like db version
