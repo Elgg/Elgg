@@ -50,6 +50,7 @@
 		function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
 			
 			global $CONFIG;
+			static $access_array;
 			
 			if (!isset($access_array))
 				$access_array = array();
