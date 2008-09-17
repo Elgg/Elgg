@@ -466,32 +466,6 @@
 		}
 		
 		/**
-		 * Privileged execution so code can run before user logged in.
-		 *
-		 * @param array $params
-		 * @return bool
-		 */
-		/*function __is_plugin_enabled_priv(array $params = null)
-		{
-			global $CONFIG;
-			
-			$plugin = $params['plugin'];
-			$site_guid = (int) $params['site_guid'];
-			if ($site_guid == 0)
-				$site_guid = $CONFIG->site_guid;
-				
-			$site = get_entity($site_guid);
-			if (!($site instanceof ElggSite))
-				throw new InvalidClassException(sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $site_guid, "ElggSite"));
-				
-			$enabled = find_metadata("enabled_plugins", $plugin, "site", "", 10, 0, "", $site_guid);
-			if ($enabled)
-				return true;
-				
-			return false;
-		}*/
-		
-		/**
 		 * Run once and only once.
 		 */
 		function plugin_run_once()
