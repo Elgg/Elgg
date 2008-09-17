@@ -10,7 +10,9 @@
 	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.org/
 	 */
-	
+
+	require_once('cache.php');
+
 	// Result classes /////////////////////////////////////////////////////////////////////////
 
 	/**
