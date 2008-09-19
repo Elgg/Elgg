@@ -381,7 +381,9 @@ Pour retirer un widget, glissez le vers <b>la liste de Widgets</b>.",
 	
 			'account' => "Compte",
 			'settings' => "Configuration",
-	
+            'tools' => "Outils",
+            'tools:yours' => "Vos outils",
+			
 			'register' => "Inscription",
 			'registerok' => "L'inscription de %s a bien été prise en compte. Pour activer votre compte, veuillez cliquer sur le lien se trouvant dans le mail que nous venons de vous envoyer.",
 			'registerbad' => "Une erreur est survenue durant l'inscription. Le nom d'utilisateur existe déjà peut-être, vos mots de passe ne coïncident pas, ou peut être que votre nom d'utilisateur ou mot de passe sont trop court.",
@@ -532,10 +534,10 @@ Pour retirer un widget, glissez le vers <b>la liste de Widgets</b>.",
 			'upload' => "Charger",
 			'ban' => "Bannir",
 			'unban' => "Réintégrer",
-			'enable' => "Activé",
-			'disable' => "Désactivé",
+			'enable' => "Activer",
+			'disable' => "Désactiver",
 			'request' => "Requête",
-			'complete' => "Complété",
+			'complete' => "Compléter",
 	
 			'invite' => "Inviter",
 	
@@ -547,7 +549,7 @@ Pour retirer un widget, glissez le vers <b>la liste de Widgets</b>.",
 	
 			'unknown' => "Inconnu",
 	
-			'learnmore' => "Cliquez pour connaître d'avantage.",
+			'learnmore' => "Cliquer pour connaître d'avantage.",
 	
 			'content' => "contenu",
 			'content:latest' => "Dernières activités",
@@ -567,7 +569,7 @@ Pour retirer un widget, glissez le vers <b>la liste de Widgets</b>.",
 	
 			'annotations' => "Annotations",
 			'relationships' => "Relations",
-			'metadata' => "Métadata",
+			'metadata' => "Métadonnées",
 	
 		/**
 		 * Input / output strings
