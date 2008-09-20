@@ -49,7 +49,7 @@
 		        }
 		        
 		    // Connect to database
-		        if (!$dblink[$dblinkname] = mysql_pconnect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, true))
+		        if (!$dblink[$dblinkname] = mysql_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, true))
 		        	throw new DatabaseException(sprintf(elgg_echo('DatabaseException:WrongCredentials'), $CONFIG->dbuser, $CONFIG->dbhost, $CONFIG->debug ? $CONFIG->dbpass : "****"));
 		        if (!mysql_select_db($CONFIG->dbname, $dblink[$dblinkname]))
 		        	throw new DatabaseException(sprintf(elgg_echo('DatabaseException:NoConnect'), $CONFIG->dbname));
