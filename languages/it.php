@@ -11,7 +11,7 @@
      * @Italian Language Pack
      * @Core System
      * @version: beta 
-     * @revision: 2063
+     * @revision: 2097
      * @translation by Lord55  
      * @link http://www.nobilityofequals.com
      ****************************************/
@@ -25,7 +25,7 @@
 			'item:site' => 'Siti',
 	
 		/**
-		 * Sessions   ###Sessioni###
+		 * Sessions   ###Sessioni###  OK
 		 */
 			
 			'login' => "Entra",
@@ -160,29 +160,36 @@
 			'InvalidParameterException:UnexpectedReturnFormat' => "Call to method '%s' returned an unexpected result.",
 			'CallException:NotRPCCall' => "Call does not appear to be a valid XML-RPC call",
 	
-			'PluginException:NoPluginName' => "The plugin name could not be found",
+			'PluginException:NoPluginName' => "Il nome del Plugin installato non può essere trovato",
 	
-			'ConfigurationException:BadDatabaseVersion' => "The database backend you have installed doesn't meet the basic requirements to run Elgg. Please consult your documentation.",
-			'ConfigurationException:BadPHPVersion' => "You need at least PHP version 5.2 to run Elgg.",
+			'ConfigurationException:BadDatabaseVersion' => "Il backend del database che hai installato non incontra le condizioni di base per far funzionare Elgg. Per favore consulta la tua documentazione.",
+			'ConfigurationException:BadPHPVersion' => "Necessiti almeno della versione PHP version 5.2 per far funzionare Elgg.",
 			
 	
-			'InstallationException:DatarootNotWritable' => "Your data directory %s is not writable.",
-			'InstallationException:DatarootUnderPath' => "Your data directory %s must be outside of your install path.",
+			'InstallationException:DatarootNotWritable' => "La tua cartella dati %s non è scrivibile.",
+			'InstallationException:DatarootUnderPath' => "La tua cartella dati %s deve stare fuori dal tuo percorso di installazione.",
 			'InstallationException:DatarootBlank' => "Non hai specificato una cartella dati.",
+			
+		/**
+		 * API  OK
+		 */
+			'system.api.list' => "Elenca tutte le chiamate di API disponibili sul sito.",
+			'auth.gettoken' => "Questa chiamata dell'API permette il login dell'utente, facendo ritornare un token di  autenticazione il quale può essere usato in sostituzione di username e password per ulteriori chiamate di autenticazione.",
+	
 	
 		/**
-		 * User details   ###Visualizza nome###
+		 * User details   ###Visualizza nome###   OK
 		 */
 
-			'name' => "Vedi nome",
+			'name' => "Nome pubblico",
 			'email' => "Indirizzo Email",
 			'username' => "Nome utente",
 			'password' => "Password",
-			'passwordagain' => "Password (di nuovo per la verifica)",
+			'passwordagain' => "Password (ripetila per la verifica)",
 			'admin_option' => "Nomina questo utente Amministratore?",
 	
 		/**
-		 * Access   ###Accesso###
+		 * Access   ###Accesso###   OK
 		 */
 	
 			'ACCESS_PRIVATE' => "Privato",
@@ -194,15 +201,15 @@
 			'access' => "Accedi",
 	
 		/**
-		 * Dashboard and widgets   ###Dashboard e widget###
+		 * Dashboard and widgets   ###Dashboard e widget###  OK
 		 */
 	
 			'dashboard' => "Dashboard",
             'dashboard:configure' => "Modifica pagina",
-			'dashboard:nowidgets' => "La Dashboard è la tua porta d'ingresso nel sito. Clicca 'Modifica pagina' per aggiungere i Widget che ti permetteranno di tenere traccia di tutte le interazioni dentro il sistema.",
+			'dashboard:nowidgets' => "La Dashboard è la tua porta d'ingresso nel sito. Clicca su 'Modifica pagina' per aggiungere i Widget che ti permetteranno di tenere traccia di tutte le interazioni dentro il sistema.",
 
-			'widgets:add' => 'Aggiungi Widget alla tua pagina',
-			'widgets:add:description' => "Scegli le caratteristiche che vorresti aggiungere alla tua pagina spostandoli dalla <b>Galleria-Widget</b> sulla destra, su una delle tre aree-Widget qui sotto, e posizionali dove vorresti farli apparire.
+			'widgets:add' => 'Aggiungi i Widget alla tua pagina.',
+			'widgets:add:description' => "Scegli le caratteristiche che vorresti aggiungere alla tua pagina personale spostando i Widget dalla <b>Galleria-Widget</b> (qui a destra), su una delle tre Aree-Widget qui sotto e posizionali dove vorresti farli apparire.
 
 Per rimuovere un Widget, riportalo indietro nella <b>Galleria-Widget</b>.",
 			'widgets:position:fixed' => '(Posizione sistemata sulla pagina)',
@@ -211,7 +218,7 @@ Per rimuovere un Widget, riportalo indietro nella <b>Galleria-Widget</b>.",
 			'widget' => "Widget",
 			'item:object:widget' => "Widget",
 			'layout:customise' => "Personalizza la grafica",
-			'widgets:gallery' => "Galleria Widget",
+			'widgets:gallery' => "Galleria-Widget",
 			'widgets:leftcolumn' => "Sinistra-Area Widget",
 			'widgets:fixed' => "Posizione sistemata",
 			'widgets:middlecolumn' => "Centro-Area Widget",
@@ -222,16 +229,15 @@ Per rimuovere un Widget, riportalo indietro nella <b>Galleria-Widget</b>.",
 			'widgets:save:success' => "Il Widget è stato salvato con successo.",
 			'widgets:save:failure' => "Non possiamo salvare il tuo widget. Per favore riprova.",
 			
-	
-		/**
-		 * Groups   ###Gruppi###
+	     /**
+		 * Groups   ###Gruppi###  OK
 		 */
 	
 			'group' => "Gruppo", 
 			'item:group' => "Gruppi",
 	
 		/**
-		 * Profile   ###Profilo###
+		 * Profile   ###Profilo###  OK
 		 */
 	
 			'profile' => "Profilo",
@@ -239,10 +245,10 @@ Per rimuovere un Widget, riportalo indietro nella <b>Galleria-Widget</b>.",
 			'item:user' => "Utenti",
 
 		/**
-		 * Profile menu items and titles   ####Argomenti del menu profilo e titoli###
+		 * Profile menu items and titles   ####Argomenti del menu profilo e titoli###   OK
 		 */
 	
-			'profile:yours' => "Tuo profilo",
+			'profile:yours' => "Il tuo profilo",
 			'profile:user' => "Profilo di %s",
 	
 			'profile:edit' => "Modifica profilo",
@@ -252,11 +258,11 @@ Per rimuovere un Widget, riportalo indietro nella <b>Galleria-Widget</b>.",
 			'profile:createicon' => "Crea il tuo avatar",
 			'profile:currentavatar' => "Avatar corrente",
 			'profile:createicon:header' => "Foto del profilo",
-			'profile:profilepicturecroppingtool' => "Tool di ritaglio foto del profilo",
+			'profile:profilepicturecroppingtool' => "Strumento di ritaglio per la Foto-Profilo",
 			'profile:createicon:instructions' => "Clicca e trascina un quadrato qui sotto per definire quanta immagine vuoi tagliare. Un'anteprima dell'immagina tagliata apparirà nel riquadro sulla destra. Quando sarai contento dell'anteprima, clicca 'Crea il tuo avatar'. Questa immagine tagliata sarà utilizzata in ogni parte del sito come il tuo avatar. ",
 	
 			'profile:editdetails' => "Modifica dettagli",
-			'profile:editicon' => "Modifica icona del profilo",
+			'profile:editicon' => "Modifica Foto-Profilo",
 	
 			'profile:aboutme' => "Chi sono", 
 			'profile:description' => "Chi sono",
@@ -273,14 +279,14 @@ Per rimuovere un Widget, riportalo indietro nella <b>Galleria-Widget</b>.",
 			'profile:river:iconupdate' => "%s ha aggiornato l'icona sul suo profilo",
 	
 		/**
-		 * Profile status messages   ###Messaggi sullo stato del profilo###
+		 * Profile status messages   ###Messaggi sullo stato del profilo###  OK
 		 */
 	
 			'profile:saved' => "Il tuo profilo è stato salvato con successo.",
 			'profile:icon:uploaded' => "La foto sul tuo profilo è stata inviata con successo.",
 	
 		/**
-		 * Profile error messages   ###Messaggio di errore sul profilo###
+		 * Profile error messages   ###Messaggio di errore sul profilo###   OK
 		 */
 	
 			'profile:noaccess' => "Non hai il permesso di modificare questo profilo.",
@@ -289,11 +295,11 @@ Per rimuovere un Widget, riportalo indietro nella <b>Galleria-Widget</b>.",
 			'profile:icon:notfound' => "Scusaci; c'è un problema nell'inviare la tua foto sul profilo.",
 	
 		/**
-		 * Friends   ###Amici###
+		 * Friends   ###Amici###   OK
 		 */
 	
 			'friends' => "Amici",
-			'friends:yours' => "Tuoi amici",
+			'friends:yours' => "I tuoi amici",
 			'friends:owned' => "Amici di %s",
 			'friend:add' => "Aggiungi amico",
 			'friend:remove' => "Rimuovi amico",
@@ -305,7 +311,7 @@ Per rimuovere un Widget, riportalo indietro nella <b>Galleria-Widget</b>.",
 			'friends:remove:failure' => "Non possiamo rimuovere %s dai tuoi amici. Per favore riprova.",
 	
 			'friends:none' => "Questo utente non ha ancora aggiunto nessuno come amico.",
-			'friends:none:you' => "Non hai aggiunto nessuno come amico! Inizia a cercare in base ai tuoi interessi gli amici da seguire.",
+			'friends:none:you' => "Non hai aggiunto nessuno come amico! Inizia a cercare in base ai tuoi interessi, gli amici da seguire.",
 	
 			'friends:none:found' => "Nessun amico è stato trovato.",
 	
@@ -321,8 +327,8 @@ Per rimuovere un Widget, riportalo indietro nella <b>Galleria-Widget</b>.",
 			 'friends:small' => "piccola",
 			 'friends' => "Amici",
 			 'friends:of' => "Amici di",
-			 'friends:collections' => "Collezione di amici",
-			 'friends:collections:add' => "Nuova collezione di amici",
+			 'friends:collections' => "Collezioni di amici",
+			 'friends:collections:add' => "Crea collezione di amici",
 			 'friends:addfriends' => "Aggiungi amici",
 			 'friends:collectionname' => "Collezione di nomi",
 			 'friends:collectionfriends' => "Amici nella collezione",
@@ -339,19 +345,19 @@ Per rimuovere un Widget, riportalo indietro nella <b>Galleria-Widget</b>.",
 	        'friends:river:add' => "%s ha aggiunto qualcuno come amico.",
 	
 		/**
-		 * Feeds   ###Feeds###
+		 * Feeds   ###Feeds###  OK
 		 */
 			'feed:rss' => 'Sottoscriviti al feed',
 			'feed:odd' => 'Sincronizza con OpenDD',
 	
 		/**
-		 * River   ###River###
+		 * River   ###River###   OK
 		 */
 			'river' => "River",			
 			'river:relationship:friend' => 'è ora amico con',
 
 		/**
-		 * Plugins   ###Plugin###
+		 * Plugins   ###Plugin###    OK
 		 */
 			'plugins:settings:save:ok' => "I settaggi per il plugin %s sono stati salvati con successo.",
 			'plugins:settings:save:fail' => "C'è stato un problema nel salvare i settaggi per il plugin %s.",
@@ -359,45 +365,45 @@ Per rimuovere un Widget, riportalo indietro nella <b>Galleria-Widget</b>.",
 			'plugins:usersettings:save:fail' => "C'è stato un problema nel salvare i settaggi-utente per il plugin %s.",
 			
 		/**
-		 * Notifications   ###Notifiche###
+		 * Notifications   ###Notifiche###  OK
 		 */
-			'notifications:usersettings' => "Configurazione Notifiche",
-			'notifications:methods' => "Per favore specifica quale metodo vuoi permettere.",
+			'notifications:usersettings' => "Configurazione delle Notifiche",
+			'notifications:methods' => "Per favore specifica il metodo che vuoi permettere.",
 	
 			'notifications:usersettings:save:ok' => "La configurazione-Notifiche è stata salvata con successo.",
 			'notifications:usersettings:save:fail' => "C'è stato un problema nel salvare la tua configurazione-Notifiche.",
 		/**
-		 * Search   ###Ricerca###
+		 * Search   ###Ricerca###   OK
 		 */
 	
 			'search' => "Ricerca",
 			'searchtitle' => "Ricerca: %s",
 			'users:searchtitle' => "Ricercando per utenti: %s",
-			'advancedsearchtitle' => "%s con risultati trovati %s",
+			'advancedsearchtitle' => "%s trovati coi risultati %s.",
 			'notfound' => "Nessun risultato trovato.",
 			'next' => "Avanti",
 			'previous' => "Indietro",
 	
-			'viewtype:change' => "Cambia il tipo di lista",
-			'viewtype:list' => "Vedi lista",
+			'viewtype:change' => "Cambia il tipo di visualizzazione",
+			'viewtype:list' => "Elenco",
 			'viewtype:gallery' => "Galleria",
 	
-			'tag:search:startblurb' => "Argomenti con tags trovati '%s':",
+			'tag:search:startblurb' => "Argomenti con tags '%s' trovati:",
 
-			'user:search:startblurb' => "Utenti trovati '%s':",
+			'user:search:startblurb' => "Utenti risultanti come '%s':",
 			'user:search:finishblurb' => "Vedi altri, clicca qui.",
 	
 		/**
-		 * Account  ###Account###
+		 * Account  ###Account###  OK
 		 */
 	
 			'account' => "Account",
 			'settings' => "Settaggi",
-            'tools' => "Tools",
-            'tools:yours' => "I tuoi Tools",
+            'tools' => "Strumenti",
+            'tools:yours' => "I tuoi Strumenti",
 	
 			'register' => "Registrati",
-			'registerok' => "Hai registrato con successo %s. Per attivare il tuo account,per favore conferma il tuo indirizzo email cliccando sul link che ti abbia inviato.",
+			'registerok' => "Ti sei registrato con successo su %s. Per attivare il tuo account,per favore conferma il tuo indirizzo email cliccando sul link che ti abbiamo inviato.",
 			'registerbad' => "La tua registrazione non è avvenuta con successo. Il tuo nome-utente può essere già in uso, la tua password può non essere valida, o il tuo nome-utente o password possono essere troppo brevi.",
 			'registerdisabled' => "La registrazione è stata disabilitata dall'amministratore del sistema.",
 	
@@ -418,33 +424,33 @@ Per rimuovere un Widget, riportalo indietro nella <b>Galleria-Widget</b>.",
 			'item:object:reported_content' => "Riporta argomento",
 	
 			'user:set:name' => "Configurazione del Nome-Account",
-			'user:name:label' => "Il tuo nome",
+			'user:name:label' => "Il tuo Nome pubblico",
 			'user:name:success' => "Hai cambiato con successo il tuo nome su questo sistema.",
 			'user:name:fail' => "Non puoi cambiare il tuo nome su questo sistema.",
 	
-			'user:set:password' => "Password-Account",
-			'user:password:label' => "La tua nuova password",
-			'user:password2:label' => "La tua nuova password di nuovo",
+			'user:set:password' => "Configurazione della Password-Account",
+			'user:password:label' => "La tua nuova Password",
+			'user:password2:label' => "Ripeti la Password per la verifica",
 			'user:password:success' => "Password cambiata",
 			'user:password:fail' => "Non puoi cambiare la password su questo sistema.",
 			'user:password:fail:notsame' => "Le due passwords non sono identiche!",
 			'user:password:fail:tooshort' => "La Password è troppo breve!",
 	
-			'user:set:language' => "Configurazione Lingua",
+			'user:set:language' => "Configurazione della Lingua",
 			'user:language:label' => "La tua lingua",
 			'user:language:success' => "La configurazione della tua lingua è stata aggiornata.",
 			'user:language:fail' => "La configurazione della tua lingua non può essere salvata.",
 	
 			'user:username:notfound' => 'Nome-utente %s non trovato.',
 	
-			'user:password:lost' => 'Password persa',
+			'user:password:lost' => 'Password dimenticata',
 			'user:password:resetreq:success' => 'Richiesta nuova password avvenuta con successo, email inviata',
 			'user:password:resetreq:fail' => 'Non puoi richiedere una nuova password.',
 	
-			'user:password:text' => 'Per generare una nuova password, inserisci il tuo nome-utente qui sotto. Ti manderemo per email un indirizzo di una pagina di verifica univoca, clicca sul link nel corpo del messaggio e una nuova password ti sarà inviata.',
+			'user:password:text' => 'Per generare una nuova Password, inserisci il tuo Nome-utente qui sotto. Ti invieremo per email un indirizzo di una pagina di verifica univoca, clicca sul link nel corpo del messaggio e una nuova password ti sarà inviata.',
 	
 		/**
-		 * Administration   ###Amministrazione###
+		 * Administration   ###Amministrazione###   OK
 		 */
 
 			'admin:configuration:success' => "I tuoi settaggi sono stati salvati.",
@@ -453,33 +459,33 @@ Per rimuovere un Widget, riportalo indietro nella <b>Galleria-Widget</b>.",
 			'admin' => "Amministrazione",
 			'admin:description' => "Il pannello amministrativo ti permette di controllare tutti gli aspetti del sistema, dall'amministrazione dell'utente a come far funzionare i plugin. Scegli un'opzione qui sotto per iniziare.",
 			
-			'admin:user' => "Amministrazione Utante",
-			'admin:user:description' => "Questo pannello di amministrazione ti permette di controllare i settaggi dell'utente per il tuo sito. Scegli un'opzione qui sotto per iniziare.",
+			'admin:user' => "Amministrazione Utente",
+			'admin:user:description' => "Questo pannello amministrativo ti permette di controllare i settaggi degli utenti per il tuo sito. Scegli un'opzione qui sotto per iniziare.",
 			'admin:user:adduser:label' => "Clicca qui per aggiungere un nuovo utente...",
 			'admin:user:opt:linktext' => "Configura gli utenti...",
 			'admin:user:opt:description' => "Configura gli utenti e l'informazione sull'account. ",
 			
-			'admin:site' => "Amministrazione sito",
+			'admin:site' => "Amministrazione Sito",
 			'admin:site:description' => "Questo pannello amministrativo ti permette di controllare i settaggi globali per il tuo sito. Scegli un'opzione qui sotto per iniziare.",
 			'admin:site:opt:linktext' => "Configura il sito...",
 			'admin:site:opt:description' => "Configura i settaggi tecnici e non-tecnici del sito. ",
 			
-			'admin:plugins' => "Amministrazione Tool",
-			'admin:plugins:description' => "Questo pannello di ammministrazione ti permette di controllare e configurara i Tools installati sul tuo sito.",
-			'admin:plugins:opt:linktext' => "Configura i Tools...",
-			'admin:plugins:opt:description' => "Configura i Tools installati sul sito. ",
+			'admin:plugins' => "Amministrazione Strumenti",
+			'admin:plugins:description' => "Questo pannello ammministrativo ti permette di controllare e configurara gli Strumenti installati sul tuo sito.",
+			'admin:plugins:opt:linktext' => "Configura gli Strumenti...",
+			'admin:plugins:opt:description' => "Configura gli Strumenti installati sul sito. ",
 			'admin:plugins:label:author' => "Autore",
 			'admin:plugins:label:copyright' => "Copyright",
 			'admin:plugins:label:licence' => "Licenza",
 			'admin:plugins:label:website' => "URL",
-			'admin:plugins:disable:yes' => "Plugin %s è stato disabilitato con successo.",
-			'admin:plugins:disable:no' => "Plugin %s non può essere disabilitato.",
-			'admin:plugins:enable:yes' => "Plugin %s è stato abilitato con successo.",
-			'admin:plugins:enable:no' => "Plugin %s non può essere abilitato.",
+			'admin:plugins:disable:yes' => "Il plugin %s è stato disabilitato con successo.",
+			'admin:plugins:disable:no' => "Il plugin %s non può essere disabilitato.",
+			'admin:plugins:enable:yes' => "Il plugin %s è stato abilitato con successo.",
+			'admin:plugins:enable:no' => "Il plugin %s non può essere abilitato.",
 	
 			'admin:statistics' => "Statistiche",
-			'admin:statistics:description' => "Questa è una visione d'insieme delle statistiche sul tuo sito. Se hai bisogno di statistiche più dettagliate , è disponibile un servizio amministrativo professionale.",
-			'admin:statistics:opt:description' => "Visualizza i dati statistici riguardo gli utenti e gli oggetti sul tuo sito.",
+			'admin:statistics:description' => "Questa è una visione d'insieme delle statistiche sul tuo sito. Se hai bisogno di statistiche più dettagliate, è disponibile un servizio amministrativo professionale.",
+			'admin:statistics:opt:description' => "Visualizza i dati statistici riguardanti gli utenti e gli oggetti sul tuo sito.",
 			'admin:statistics:opt:linktext' => "Visualizza le statistiche...",
 			'admin:statistics:label:basic' => "Statistiche di base del sito",
 			'admin:statistics:label:numentities' => "Entità sul sito",
@@ -493,11 +499,11 @@ Per rimuovere un Widget, riportalo indietro nella <b>Galleria-Widget</b>.",
 			'admin:user:label:search' => "Cerca utenti:",
 			'admin:user:label:seachbutton' => "Ricerca", 
 	
-			'admin:user:ban:no' => "Non puoi bandire l'utente",
+			'admin:user:ban:no' => "Non puoi bandire l'utente.",
 			'admin:user:ban:yes' => "Utente esiliato.",
-			'admin:user:unban:no' => "Non puoi riattivare l'utente",
+			'admin:user:unban:no' => "Non puoi riattivare l'utente.",
 			'admin:user:unban:yes' => "Utente riammesso.",
-			'admin:user:delete:no' => "Non puoi cancellare l'utente",
+			'admin:user:delete:no' => "Non puoi cancellare l'utente.",
 			'admin:user:delete:yes' => "Utente cancellato.",
 	
 			'admin:user:resetpassword:yes' => "Password cambiata, l'utente è stato avvertito.",
@@ -507,9 +513,9 @@ Per rimuovere un Widget, riportalo indietro nella <b>Galleria-Widget</b>.",
 			'admin:user:makeadmin:no' => "Non possiamo nominare questo utente come amministratore.",
 			
 		/**
-		 * User settings   ### Settaggi dell' utente ###
+		 * User settings   ### Settaggi dell' utente ###  OK
 		 */
-			'usersettings:description' => "Il pannello dei settaggi utente ti permette di controllare tutti i tuoi settaggi personali, dall'amministrazione dell'utente a come i plugins si comportano. Scegli un'opzione qui sotto per iniziare.",
+			'usersettings:description' => "Il pannello dei settaggi utente ti permette di controllare tutti i tuoi settaggi personali: dall'amministrazione dell'utente a come i plugins si comportano. Scegli un'opzione qui sotto per iniziare.",
 	
 			'usersettings:statistics' => "Le tue statistiche",
 			'usersettings:statistics:opt:description' => "Visualizza i dati statistici riguardo gli utenti e gli oggetti sul tuo sito.",
@@ -517,14 +523,14 @@ Per rimuovere un Widget, riportalo indietro nella <b>Galleria-Widget</b>.",
 	
 			'usersettings:user' => "I tuoi settaggi",
 			'usersettings:user:opt:description' => "Questo ti permette di controllare i settaggi dell'utente.",
-			'usersettings:user:opt:linktext' => "Cambia i tuoi settaggi.",
+			'usersettings:user:opt:linktext' => "Cambia i tuoi settaggi",
 	
 			'usersettings:plugins' => "Strumenti",
 			'usersettings:plugins:opt:description' => "Configura i settaggi per i tuoi strumenti attivi.",
 			'usersettings:plugins:opt:linktext' => "Configura i tuoi strumenti...",
 	
-			'usersettings:plugins:description' => "Questo pannello ti permette di controllare e configurare i settaggi personali per gli strumenti installati dal tuo amministratore di sistema.",
-			'usersettings:statistics:label:numentities' => "Le tue ???entità???",
+			'usersettings:plugins:description' => "Questo pannello ti permette di controllare e configurare i settaggi personali per gli Strumenti installati dal tuo amministratore di sistema.",
+			'usersettings:statistics:label:numentities' => "Le tue entità",
 	
 			'usersettings:statistics:yourdetails' => "I tuoi dettagli",
 			'usersettings:statistics:label:name' => "Nome completo",
@@ -536,7 +542,7 @@ Per rimuovere un Widget, riportalo indietro nella <b>Galleria-Widget</b>.",
 			
 	
 		/**
-		 * Generic action words   ### Parole di azione generica ###
+		 * Generic action words   ### Parole di azione generica ###  OK ---ma vedi note
 		 */
 	
 			'save' => "Salva",
@@ -559,8 +565,8 @@ Per rimuovere un Widget, riportalo indietro nella <b>Galleria-Widget</b>.",
 			'resetpassword' => "Modifica password",
 			'makeadmin' => "Nominalo amministratore",
 	
-			'option:yes' => "Si",
-			'option:no' => "No",
+			'option:yes' => "Si", //manca richiamo in /settings/user?
+			'option:no' => "No",  //manca in /settings/user?
 	
 			'unknown' => 'Sconosciuto',
 	
@@ -570,11 +576,16 @@ Per rimuovere un Widget, riportalo indietro nella <b>Galleria-Widget</b>.",
 			'learnmore' => "Clicca qui per imparare di più.",
 	
 			'content' => "contenuto",
-			'content:latest' => 'Attività recente',
-			'content:latest:blurb' => 'In alternativa,clicca qui per vedere il contunuto recente sul sito.',
+			'content:latest' => 'Attività recenti',
+			'content:latest:blurb' => 'In alternativa,clicca qui per vedere le attività recenti del sito.',
+			
+			'link:text' => 'Vedi link',
 	
 		/**
-		 * Generic data words  ### Parole di valore generico ###
+		 * Generic data words  ### Parole di valore generico ###   OK
+Metadata:"catalogare sotto un altro nome"
+I metadata sono "dati sui dati", ovvero informazioni, generalmente strutturate e scandite in campi, relative a documenti primari "a testo pieno" (full-text), che ne permettono una più efficiente organizzazione e recupero. 
+La loro funzione è permettere o comunque facilitare il raggiungimento dei seguenti obiettivi:
 		 */
 	
 			'title' => "Titolo",
@@ -587,23 +598,23 @@ Per rimuovere un Widget, riportalo indietro nella <b>Galleria-Widget</b>.",
 	
 			'annotations' => "Annotazioni",
 			'relationships' => "Relazioni",
-			'metadata' => "Metadata",
+			'metadata' => "Metadati",
 	
 		/**
-		 * Input / output strings  ### Input / output stringhe###
+		 * Input / output strings  ### Input / output stringhe###  OK
 		 */
 
 			'deleteconfirm' => "Sei sicuro di voler cancellare questo articolo?",
-			'fileexists' => "Un file è già stato inviato. Per rimpiazzarlo,selezionalo qui sotto:",
+			'fileexists' => "Un file è già stato inviato. Per rimpiazzarlo, selezionalo qui sotto:",
 	
 		/**
-		 * Import / export  ### Importa/Esporta###
+		 * Import / export  ### Importa/Esporta###  OK
 		 */
 			'importsuccess' => "L'importazione del valore è stata fatta con successo",
 			'importfail' => "L'importazione OpenDD del valore è fallita.",
 	
 		/**
-		 * Time   ### Tempo ###
+		 * Time   ### Tempo ###  OK
 		 */
 	
 			'friendlytime:justnow' => "proprio ora",
@@ -615,7 +626,7 @@ Per rimuovere un Widget, riportalo indietro nella <b>Galleria-Widget</b>.",
 			'friendlytime:days:singular' => "ieri",
 	
 		/**
-		 * Installation and system settings   ### Installazione e configurazioni del sistema ###
+		 * Installation and system settings   ### Installazione e configurazioni del sistema ###   OK
 		 */
 	
 			'installation:error:htaccess' => "Elgg richiede un file chiamato .htaccess per essere collocato nella cartella root della sua installazione. Abbiamo provato a creala per te, ma Elgg non ha il permesso per scrivere in quella cartella. 
@@ -623,7 +634,7 @@ Per rimuovere un Widget, riportalo indietro nella <b>Galleria-Widget</b>.",
 La creazione di questo file è facile. Copia i contenuti del riquadro sottostante in un programma di testo e salvalo come .htaccess
 
 ",
-			'installation:error:settings' => "Elgg non può trovare i propri file di configurazione. Molte settaggi di Elgg saranno configurati per te, ma è necessario che tu ci fornisca i dettagli del tuo database.Per fare questo: 
+			'installation:error:settings' => "Elgg non può trovare i propri file di configurazione. Molte settaggi di Elgg saranno configurati per te, ma è necessario che tu ci fornisca i dettagli del tuo database. Per fare questo: 
 
 1. Rinomina engine/settings.example.php a settings.php nella tua installazione di Elgg.
 
@@ -663,19 +674,19 @@ In alternativa,puoi inserire la configurazione del tuo database qui sotto e noi 
 			'installation:view' => "Inserisci la visualizzazione di base che sarà usata per il tuo sito o lascialo vuoto per la visualizzazione di default (se sei nel dubbio, lascialo in default):",
 	
 		/**
-		 * Welcome
+		 * Welcome  ###Benvenuto###  OK
 		 */
 	
 			'welcome' => "Benvenuto %s",
 			'welcome_message' => "Benvenuto a questa installazione di Elgg.",
 	
 		/**
-		 * Emails   ### Posta Elettronica ###
+		 * Emails   ### Posta Elettronica ###  OK
 		 */
-			'email:settings' => "Configurazioni delle Email",
+			'email:settings' => "Configurazione dell' Email",
 			'email:address:label' => "Il tuo indirizzo email ",
 			
-			'email:save:success' => "Il nuovo indirizzo email è salvato, verifica richiesta.",
+			'email:save:success' => "Il nuovo indirizzo email è salvato, verifica la richiesta.",
 			'email:save:fail' => "Il tuo nuovo indirizzo email non può essere salvato.",
 	
 			'email:confirm:success' => "Hai confermato il tuo indirizzo email!",
@@ -715,19 +726,19 @@ La tua password è stata ricambiata: %s",
 			
 Qualcuno (dall'indirizzo IP %s) ha richiesto una nuova password per il proprio account.
 
-Se questa è stata richiesta da te,clicca sul link sottostante,altrimenti ignora questa email.
+Se questa è stata richiesta da te, clicca sul link sottostante, altrimenti ignora questa email.
 
 %s
 ",
 
 	
 		/**
-		 * XML-RPC
+		 * XML-RPC   OK
 		 */
 			'xmlrpc:noinputdata'	=>	"Valore immesso mancante",
 	
 		/**
-		 * Comments   ###  Commenti
+		 * Comments   ###Commenti###  OK
 		 */
 	
 			'comments:count' => "%s commenti",
@@ -757,8 +768,8 @@ Per visualizzare il profilo di %s, clicca qui:
 
 Non puoi rispondere a questa email.",
 	
-		/**
-		 * Entities   ### ???? entità o valore ????
+			/**
+		 * Entities   ###Entità###  OK
 		 */
 			'entity:default:strapline' => 'Creati %s da %s',
 			'entity:default:missingsupport:popup' => 'Questa entità non può essere visualizzata correttamente. Questo può accadere perchè è necessario il supporto fornito da un plugin che non è più installato.',
@@ -768,10 +779,17 @@ Non puoi rispondere a questa email.",
 	
 	
 		/**
-		 * Action gatekeeper   ###  ??? Azione portiere/custode???
+		 * Action gatekeeper   ###Intervento del controllore d’accesso###   OK
+Token:
+Letteralmente: segno, simbolo, emblema
+Token si solito si lascia in inglese.
+In generale un token è un oggetto che rappresenta qualcosaltro.
+1) In una rete Token Ring, il token rappresenta la presenza nel pacchetto di un messaggio inviato da un computer e destinato ad un altro computer della rete.
+2) Nella programmazione, il codice sorgente si può suddividere in 5 classi di tokens (costanti, identificatori, operatori, parole riservate e separatori), in accordo con le regole del linguaggio di programmazione.
+3) Un token di sicurezza è un dispositivo fisico che, insieme a qualcosa in possesso dell'utente (come un codice), consente l'utilizzo di un servizio.
 		 */
-			'actiongatekeeper:missingfields' => 'Il Modulo è mancante di __???nota/segno/simbolo/indice/??? o __ts campi.',
-			'actiongatekeeper:tokeninvalid' => 'La ???nota/segno/simbolo/indice/??? fornita dal modulo non corrisponde a quella generata dal server.',
+			'actiongatekeeper:missingfields' => 'Il Modulo è mancante di __token or __ts campi.',
+			'actiongatekeeper:tokeninvalid' => 'Il Token fornito dal modulo non corrisponde a quello generato dal server.',
 			'actiongatekeeper:timeerror' => 'Il Modulo è scaduto,per favore riaggiorna e prova di nuovo.',
 			'actiongatekeeper:pluginprevents' => 'Una estensione ha impedito a questo Modulo di poter essere inviato.',
 	
@@ -789,7 +807,6 @@ Non puoi rispondere a questa email.",
          !!!IMPORTANTE: sono state inserite solo le lingue a cui segue "//" !!!
 Azero 		    az 	
 Armeno 		    hy 	
-Basco 		    eu 	
 Bielorusso 		be 	
 Bulgaro 		bg 	
 Catalano 		ca 	
@@ -820,8 +837,7 @@ Persiano 		fa
 Rumeno 		    ro 	
 Sanscrito 		sa 	
 Serbo 		    sr 	
-Singalese 		si 	
-Slovacco 		sk 		
+Singalese 		si 		
 		 */
 			"aa" => "Afar",
 			"ab" => "Abkhazian",
@@ -851,7 +867,7 @@ Slovacco 		sk
 			"eo" => "Esperanto",
 			"es" => "Spagnolo",//
 			"et" => "Estonian",
-			"eu" => "Basque",
+			"eu" => "Basco",//
 			"fa" => "Persian",
 			"fi" => "Finlandese",//
 			"fj" => "Fiji",
@@ -926,7 +942,7 @@ Slovacco 		sk
 			"sg" => "Sangro",
 			"sh" => "Serbo-Croatian",
 			"si" => "Singhalese",
-			"sk" => "Slovak",
+			"sk" => "Slovacco",//
 			"sl" => "Sloveno",//
 			"sm" => "Samoan",
 			"sn" => "Shona",
