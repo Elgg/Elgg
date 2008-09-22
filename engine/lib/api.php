@@ -737,6 +737,8 @@
 	/**
 	 * Function that examines whether an authentication token is present returning true if it is, OR the requested 
 	 * method doesn't require one.
+	 * 
+	 * If a token is present and a validated user id is returned, that user is logged in to the current session.
 	 *
 	 * @param unknown_type $credentials
 	 */
@@ -748,6 +750,9 @@
 		$token = get_input('token');
 		
 		$validated_userid = validate_user_token($CONFIG->site_id, $token); 
+		
+		if ($validated_userid)
+			login(get_entity($validated_userid));
 		
 		if ((!$METHODS[$method]["require_auth_token"]) || ($validated_userid) || (isloggedin()))
 			return true;
