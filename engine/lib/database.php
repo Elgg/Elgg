@@ -400,7 +400,11 @@
         			$statement = trim($statement);
         			$statement = str_replace("prefix_",$CONFIG->dbprefix,$statement);
         			if (!empty($statement)) {
-        				$result = update_data($statement);
+        				try {
+        					$result = update_data($statement);
+        				} catch (DatabaseException $e) {
+        					$errors[] = $e->getMessage();
+        				}
         			}
         		}
         		if (!empty($errors)) {
@@ -412,6 +416,47 @@
         		
         	} else {
         		throw new DatabaseException(sprintf(elgg_echo('DatabaseException:ScriptNotFound'), $scriptlocation));
+        	}
+        	
+        }
+        
+        function db_upgrade($version) {
+        	
+        	global $CONFIG;
+        	
+        	// Elgg and its database must be installed to upgrade it!
+        	if (!is_db_installed() || !is_installed()) return false;
+        	
+        	$version = (int) $version;
+        	
+        	if ($handle = opendir($CONFIG->path . 'engine/schema/upgrades/')) {
+        		
+        		$sqlupgrades = array();
+        		
+        		while ($sqlfile = readdir($handle)) {
+        			
+        			if (!is_dir($CONFIG->path . 'engine/schema/upgrades/' . $sqlfile)) {
+        				if (preg_match('/([0-9]*)\.sql/',$sqlfile,$matches)) {
+        					$sql_version = (int) $matches[1];
+        					if ($sql_version > $version) {
+        						$sqlupgrades[] = $sqlfile;
+        					}
+        				}
+        			}
+        			
+        		}
+        		
+        		asort($sqlupgrades);
+        		if (sizeof($sqlupgrades) > 0) {
+        			foreach($sqlupgrades as $sqlfile) {
+        				try {
+        					run_sql_script($CONFIG->path . 'engine/schema/upgrades/' . $sqlfile);
+        				} catch (DatabaseException $e) {
+        					error_log($e->getmessage());
+        				}
+        			}
+        		}
+        		
         	}
         	
         }

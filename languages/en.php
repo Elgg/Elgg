@@ -653,6 +653,8 @@ Alternatively, you can enter your database settings below and we will try and do
 			'installation:usage' => "This option lets Elgg send anonymous usage statistics back to Curverider.",
 			'installation:usage:label' => "Send anonymous usage statistics",
 			'installation:view' => "Enter the view which will be used as the default for your site or leave this blank for the default view (if in doubt, leave as default):",
+
+			'upgrade:db' => 'Your database was upgraded.',
 	
 		/**
 		 * Welcome

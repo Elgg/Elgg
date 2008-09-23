@@ -18,6 +18,39 @@ ALTER TABLE `prefix_users_apisessions` DEFAULT CHARACTER SET utf8;
 ALTER TABLE `prefix_datalists` DEFAULT CHARACTER SET utf8;
 ALTER TABLE `prefix_system_log` DEFAULT CHARACTER SET utf8;
 
+-- Drop keys to avoid errors (grr)
+
+ALTER TABLE `prefix_entities` DROP KEY `type`;
+ALTER TABLE `prefix_entities` DROP KEY `subtype`;
+ALTER TABLE `prefix_entities` DROP KEY `owner_guid`;
+ALTER TABLE `prefix_entities` DROP KEY `container_guid`;
+ALTER TABLE `prefix_entities` DROP KEY `access_id`;
+ALTER TABLE `prefix_entities` DROP KEY `time_created`;
+ALTER TABLE `prefix_entities` DROP KEY `time_updated`;
+
+ALTER TABLE `prefix_users_entity` DROP  KEY `email`;
+ALTER TABLE `prefix_users_entity` DROP  KEY `code`;
+
+ALTER TABLE `prefix_annotations` DROP KEY `entity_guid`;
+ALTER TABLE `prefix_annotations` DROP KEY `name_id`;
+ALTER TABLE `prefix_annotations` DROP KEY `value_id`;
+ALTER TABLE `prefix_annotations` DROP KEY `owner_guid`;
+ALTER TABLE `prefix_annotations` DROP KEY `access_id`;
+
+ALTER TABLE `prefix_metadata` DROP KEY `entity_guid`;
+ALTER TABLE `prefix_metadata` DROP KEY `name_id`;
+ALTER TABLE `prefix_metadata` DROP KEY `value_id`;
+ALTER TABLE `prefix_metadata` DROP KEY `owner_guid`;
+ALTER TABLE `prefix_metadata` DROP KEY `access_id`;
+
+ALTER TABLE `prefix_users_apisessions` DROP KEY `token`;
+
+ALTER TABLE `prefix_system_log` DROP KEY `object_id`;
+ALTER TABLE `prefix_system_log` DROP KEY `object_class`;
+ALTER TABLE `prefix_system_log` DROP KEY `event`;
+ALTER TABLE `prefix_system_log` DROP KEY `performed_by_guid`;
+ALTER TABLE `prefix_system_log` DROP KEY `time_created`;
+
 -- New keys
 
 ALTER TABLE `prefix_entities` ADD KEY `type` (`type`);
