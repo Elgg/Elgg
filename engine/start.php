@@ -53,6 +53,11 @@
 			exit;
 		}
 		
+		if (!@include_once(dirname(__FILE__) . "/lib/cache.php")) {		// Installation library
+			echo "Error in installation: could not load the cache library.";
+			exit;
+		}
+		
 		// Use fallback view until sanitised
 		$oldview = get_input('view');
 		set_input('view', 'failsafe');
