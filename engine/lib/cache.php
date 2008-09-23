@@ -39,7 +39,13 @@
 		 * @param string $variable
 		 * @param string $value
 		 */
-		public function set_variable($variable, $value) { $this->variables[$variable] = $value;	}
+		public function set_variable($variable, $value) 
+		{
+			if (!isarray($this->variables))
+				$this->variables = array();
+			
+			$this->variables[$variable] = $value;	
+		}
 		
 		/**
 		 * Get variables for this cache.
