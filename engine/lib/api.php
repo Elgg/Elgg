@@ -681,6 +681,26 @@
 	}
 	
 	/**
+	 * Generate a new API user for a site, returning a new keypair on success.
+	 *
+	 * @param int $site_guid The GUID of the site.
+	 */
+	function create_api_user($site_guid)
+	{
+		global $CONFIG;
+		
+		$site_guid = (int)$site_guid;
+		
+		$public = sha1(rand().$site_guid.microtime());
+		$secret = sha1(rand().$site_guid.microtime().$public);
+		
+		if (insert_data("INSERT into {$CONFIG->dbprefix}api_users (site_guid, api_key, secret) values ($site_guid, '$public', '$private')"))
+			return get_api_user($site_guid, $public);
+			
+		return false;
+	}
+	
+	/**
 	 * This function looks at the super-global variable $_SERVER and extracts the various
 	 * header variables needed to pass to the validation functions after performing basic validation.
 	 *
