@@ -20,7 +20,7 @@
 		<?php
 
 			echo elgg_view('input/text',array('internalname' => 'name', 'value' => $user->name));
-
+			echo elgg_view('input/hidden',array('internalname' => 'guid', 'value' => $user->guid));
 		?> 
 	</p>
 
