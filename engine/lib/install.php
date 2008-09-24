@@ -19,7 +19,7 @@
 		 */
 		function php_check_version()
 		{
-			if (
+			if ( // TODO: Remove this when Redhat pulls its finger out
 				(version_compare(phpversion(), '5.1.6', '>=')) &&
 				(version_compare(phpversion(), '5.2.0', '<'))
 			)
