@@ -1087,12 +1087,21 @@
 	
 	// Initialisation & pagehandler ///////////////////////////////////////////////////////////
 	
+	/**
+	 * Initialise the API subsystem.
+	 *
+	 */
 	function api_init()
 	{
 		// Register a page handler, so we can have nice URLs
 		register_page_handler('api','api_endpoint_handler');
 	}
 	
+	/**
+	 * Register a page handler for the various API endpoints.
+	 *
+	 * @param array $page
+	 */
 	function api_endpoint_handler($page) 
 	{
 		global $CONFIG;
