@@ -294,9 +294,13 @@
 		global $CONFIG;
 		
 		$site = $CONFIG->site_id;
-		$token = md5(mt_rand(). microtime() . $username . $password);
+		$user = get_user_by_username($username);
+		$time = time();
+		$token = md5(rand(). microtime() . $username . $password . $time . $site);
 		
-		if (insert_data("INSERT into {$CONFIG->dbprefix}users_apisessions (user_guid, site_guid, token, expires) values () on duplicate key update token='$token'"))
+		if (!$user) return false; 
+		
+		if (insert_data("INSERT into {$CONFIG->dbprefix}users_apisessions (user_guid, site_guid, token, expires) values ({$user->guid}, $site, '$token', '$time') on duplicate key update token='$token'"))
 			return $token;
 			
 		return false;
