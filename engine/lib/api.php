@@ -749,8 +749,11 @@
 		
 		$validated_userid = validate_user_token($CONFIG->site_id, $token); 
 		
-		if ($validated_userid)
-			login(get_entity($validated_userid));
+		if ($validated_userid) {
+			$u = get_entity($validated_userid);
+			if (!$u) return false; // Could we get the user?
+			if (!login($u)) return false; // Fail if we couldn't log the user in (likely means they were banned).
+		}
 		
 		if ((!$METHODS[$method]["require_auth_token"]) || ($validated_userid) || (isloggedin()))
 			return true;
