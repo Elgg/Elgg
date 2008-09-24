@@ -548,10 +548,10 @@
 	// The authentication token api
 	expose_function("auth.gettoken", "auth_gettoken", array(
 		"username" => array (
-  			'string'
+  			'type' => 'string'
   		),
   		"password" => array (
-  			'string'
+  			'type' => 'string'
 		)
 	), elgg_echo('auth.gettoken'), "GET", false, false);
 	
