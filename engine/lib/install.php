@@ -19,7 +19,13 @@
 		 */
 		function php_check_version()
 		{
-			if (version_compare(phpversion(), '5.2.0', '>='))
+			if (
+				(version_compare(phpversion(), '5.1.6', '>=')) &&
+				(version_compare(phpversion(), '5.2.0', '<'))
+			)
+				register_error(elgg_echo('configurationwarning:phpversion'));
+			
+			if (version_compare(phpversion(), '5.1.6', '>='))
 				return true;
 				
 			return false;
