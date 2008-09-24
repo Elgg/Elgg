@@ -1085,4 +1085,37 @@
 		);
 	}
 	
+	// Initialisation & pagehandler ///////////////////////////////////////////////////////////
+	
+	function api_init()
+	{
+		// Register a page handler, so we can have nice URLs
+		register_page_handler('api','api_endpoint_handler');
+	}
+	
+	function api_endpoint_handler($page) 
+	{
+		global $CONFIG;
+		
+		// Which view
+		if ($page[1])
+		{
+			elgg_set_viewtype($page[1]);
+			
+		}
+		
+		// Which endpoint
+		if ($page[0])
+		{
+			switch ($page[0])
+			{
+				case 'rest' :
+				default : include($CONFIG->path . "services/api/rest.php");
+			}
+		} 
+	}
+	
+	
+	register_elgg_event_handler('init','system','api_init');
+	
 ?>
