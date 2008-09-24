@@ -43,7 +43,7 @@
 	{
 		// Authenticated somehow, now execute.
 		$token = "";
-		$params = $_REQUEST;
+		$params = $CONFIG->input;// Use $CONFIG->input instead of $_REQUEST since this is called by the pagehandler
 		if (isset($params['auth_token'])) $token = $params['auth_token'];
 
 		$result = execute_method($method, $params, $token);
