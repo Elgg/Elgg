@@ -647,7 +647,7 @@
 	}
 	
 	/**
-	 * Find an API User's details based on the provided public api key.
+	 * Find an API User's details based on the provided public api key. These users are not users in the traditional sense.
 	 *
 	 * @param int $site_guid The GUID of the site.
 	 * @param string $api_key The API Key
@@ -661,6 +661,23 @@
 		$site_guid = (int)$site_guid;
 		
 		return get_data_row("SELECT * from {$CONFIG->dbprefix}api_users where api_key='$api_key' and site_guid=$site_guid and active=1");	
+	}
+	
+	/**
+	 * Revoke an api user key.
+	 *
+	 * @param int $site_guid The GUID of the site.
+	 * @param string $api_key The API Key (public).
+	 */
+	function remove_api_user($site_guid, $api_key)
+	{
+		global $CONFIG;
+		
+		$keypair = get_api_user($site_guid, $api_key);
+		if ($keypair)
+			return delete_data("DELETE from {$CONFIG->dbprefix}api_users where id={$keypair->id}");
+			
+		return false;
 	}
 	
 	/**
