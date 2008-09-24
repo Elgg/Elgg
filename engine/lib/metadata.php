@@ -152,8 +152,9 @@
 
 		$id = (int)$id;
 		$access = get_access_sql_suffix("e");
+		$md_access = get_access_sql_suffix("m");
 				
-		return row_to_elggmetadata(get_data_row("SELECT m.*, n.string as name, v.string as value from {$CONFIG->dbprefix}metadata m JOIN {$CONFIG->dbprefix}entities e on e.guid = m.entity_guid JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id JOIN {$CONFIG->dbprefix}metastrings n on m.name_id = n.id where m.id=$id and $access"));
+		return row_to_elggmetadata(get_data_row("SELECT m.*, n.string as name, v.string as value from {$CONFIG->dbprefix}metadata m JOIN {$CONFIG->dbprefix}entities e on e.guid = m.entity_guid JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id JOIN {$CONFIG->dbprefix}metastrings n on m.name_id = n.id where m.id=$id and $access and $md_access"));
 	}
 	
 	/**
@@ -365,9 +366,14 @@
 		global $CONFIG;
 	
 		$meta_name = get_metastring_id($meta_name);
+		
+		if (empty($meta_name)) return false;
+		
 		$entity_guid = (int)$entity_guid;
 		$access = get_access_sql_suffix("e");
-		$result = get_data("SELECT m.*, n.string as name, v.string as value from {$CONFIG->dbprefix}metadata m JOIN {$CONFIG->dbprefix}entities e ON e.guid = m.entity_guid JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id JOIN {$CONFIG->dbprefix}metastrings n on m.name_id = n.id where m.entity_guid=$entity_guid and m.name_id='$meta_name' and $access", "row_to_elggmetadata");
+		$md_access = get_access_sql_suffix("m");
+
+		$result = get_data("SELECT m.*, n.string as name, v.string as value from {$CONFIG->dbprefix}metadata m JOIN {$CONFIG->dbprefix}entities e ON e.guid = m.entity_guid JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id JOIN {$CONFIG->dbprefix}metastrings n on m.name_id = n.id where m.entity_guid=$entity_guid and m.name_id='$meta_name' and $access and $md_access", "row_to_elggmetadata");
 		if (!$result) 
 			return false;
 		
@@ -388,8 +394,9 @@
 	
 		$entity_guid = (int)$entity_guid;
 		$access = get_access_sql_suffix("e");
+		$md_access = get_access_sql_suffix("e");
 		
-		return get_data("SELECT m.*, n.string as name, v.string as value from {$CONFIG->dbprefix}metadata m JOIN {$CONFIG->dbprefix}entities e ON e.guid = m.entity_guid JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id JOIN {$CONFIG->dbprefix}metastrings n on m.name_id = n.id where m.entity_guid=$entity_guid and $access", "row_to_elggmetadata");
+		return get_data("SELECT m.*, n.string as name, v.string as value from {$CONFIG->dbprefix}metadata m JOIN {$CONFIG->dbprefix}entities e ON e.guid = m.entity_guid JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id JOIN {$CONFIG->dbprefix}metastrings n on m.name_id = n.id where m.entity_guid=$entity_guid and $access and $md_access", "row_to_elggmetadata");
 	}
 
 	/**
@@ -443,6 +450,7 @@
 		foreach ($where as $w)
 			$query .= " $w and ";
 		$query .= get_access_sql_suffix("e"); // Add access controls
+		$query .= ' and ' . get_access_sql_suffix("m"); // Add access controls
 		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
 
 		return get_data($query, "row_to_elggmetadata");
@@ -516,6 +524,7 @@
 		foreach ($where as $w)
 			$query .= " $w and ";
 		$query .= get_access_sql_suffix("e"); // Add access controls
+		$query .= ' and ' . get_access_sql_suffix("m"); // Add access controls
 		
 		if (!$count) {
 			$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
@@ -622,6 +631,7 @@
 		foreach ($where as $w)
 			$query .= " $w and ";
 		$query .= get_access_sql_suffix("e"); // Add access controls
+		$query .= ' and ' . get_access_sql_suffix("e"); // Add access controls
 		
 		if (!$count) {
 			$query .= " order by $order_by limit $offset, $limit"; // Add order and limit

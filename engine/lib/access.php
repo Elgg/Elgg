@@ -25,7 +25,7 @@
 			
 			global $CONFIG;
 			
-			if (!isset($access_list))
+			//if (!isset($access_list))
 				$access_list = array();
 			
 			if ($user_id == 0) $user_id = $_SESSION['id'];
@@ -52,7 +52,7 @@
 			global $CONFIG;
 			static $access_array;
 			
-			if (!isset($access_array))
+			//if (!isset($access_array))
 				$access_array = array();
 			
 			if ($user_id == 0) $user_id = $_SESSION['guid'];
