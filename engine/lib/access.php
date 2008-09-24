@@ -23,9 +23,9 @@
 	 */
 		function get_access_list($user_id = 0, $site_id = 0, $flush = false) {
 			
-			global $CONFIG;
+			global $CONFIG, $init_finished;
 			
-			//if (!isset($access_list))
+			if (!isset($access_list) || !$init_finished)
 				$access_list = array();
 			
 			if ($user_id == 0) $user_id = $_SESSION['id'];
@@ -52,7 +52,7 @@
 			global $CONFIG;
 			static $access_array;
 			
-			//if (!isset($access_array))
+			if (!isset($access_array) || !$init_finished)
 				$access_array = array();
 			
 			if ($user_id == 0) $user_id = $_SESSION['guid'];
@@ -431,4 +431,20 @@
 		define('ACCESS_PRIVATE',0);
 		define('ACCESS_LOGGED_IN',1);
 		define('ACCESS_PUBLIC',2);
+		
+		global $init_finished;
+		$init_finished = false;
+		
+	/**
+	 * A quick and dirty way to make sure the access permissions have been correctly set up
+	 *
+	 */
+		function access_init() {
+			global $init_finished;
+			$init_finished = true;
+		}
+		
+	// This function will let us know when 'init' has finished
+		register_elgg_event_handler('init','system','access_init',9999);
+		
 ?>
