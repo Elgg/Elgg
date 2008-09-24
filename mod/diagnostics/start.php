@@ -61,7 +61,9 @@
 	{
 		global $CONFIG;
 		
-		include_once($CONFIG->path . "version.php");
+		// Get version information
+		$version = get_version();
+		$release = get_version(true);
 		
 		$returnvalue .= sprintf(elgg_echo('diagnostics:report:basic'), $release, $version);
 		

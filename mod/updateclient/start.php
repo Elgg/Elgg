@@ -95,7 +95,9 @@
 		{
 			$result = $result->result;
 		
-			include_once($CONFIG->url . "version.php");
+			// Get version information
+			$version = get_version();
+			$release = get_version(true);
 		
 			if (
 				($version != $result['version']) ||

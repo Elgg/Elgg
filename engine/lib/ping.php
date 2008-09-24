@@ -26,7 +26,9 @@
 	{
 		global $NOTIFICATION_SERVER, $CONFIG;
 	
-		include_once($CONFIG->path . "version.php");
+		// Get version information
+		$version = get_version();
+		$release = get_version(true);
 		
 		// Get export
 		$export = export($site->guid);

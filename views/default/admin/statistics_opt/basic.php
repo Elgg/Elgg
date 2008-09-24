@@ -17,7 +17,10 @@
 	
 	global $CONFIG;
 	
-	include_once($CONFIG->path . "version.php");
+	// Get version information
+	$version = get_version();
+	$release = get_version(true);
+	
 ?>
 <div class="admin_statistics">
     <h3><?php echo elgg_echo('admin:statistics:label:basic'); ?></h3>
