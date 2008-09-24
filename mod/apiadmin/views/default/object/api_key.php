@@ -14,9 +14,12 @@
 	$public_label = elgg_echo('apiadmin:public');
 	$private_label = elgg_echo('apiadmin:private');
 	$revoke_label = elgg_echo('apiadmin:revoke');
+	
+	$ts = time();
+	$token = generate_action_token($ts);
 		
 		
-	$info = "<div><p><b>{$entity->title}</b> <a href=\"{$CONFIG->url}actions/apiadmin/revokekey?keyid={$entity->guid}\">$revoke_label</a></p></div>";
+	$info = "<div><p><b>{$entity->title}</b> <a href=\"{$CONFIG->url}actions/apiadmin/revokekey?keyid={$entity->guid}&__elgg_token=$token&__elgg_ts=$ts\">$revoke_label</a></p></div>";
 	$info .= "<div><p><b>$public_label:</b> {$entity->public}<br />"; 
 	if (isadminloggedin()) {
 		// Only show secret portion to admins
