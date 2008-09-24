@@ -694,7 +694,7 @@
 		$public = sha1(rand().$site_guid.microtime());
 		$secret = sha1(rand().$site_guid.microtime().$public);
 		
-		if (insert_data("INSERT into {$CONFIG->dbprefix}api_users (site_guid, api_key, secret) values ($site_guid, '$public', '$private')"))
+		if (insert_data("INSERT into {$CONFIG->dbprefix}api_users (site_guid, api_key, secret) values ($site_guid, '$public', '$secret')"))
 			return get_api_user($site_guid, $public);
 			
 		return false;
