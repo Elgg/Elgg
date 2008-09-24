@@ -18,7 +18,7 @@
 	{
 		global $DEFAULT_UPDATE_SERVER;
 		
-		$DEFAULT_UPDATE_SERVER = 'http://updates.elgg.org/services/api/rest.php';
+		$DEFAULT_UPDATE_SERVER = 'http://updates.elgg.org/pg/api/rest/php/';
 		
 		// Register a page handler, so we can have nice URLs
 		register_page_handler('updateclient','updateclient_page_handler');
