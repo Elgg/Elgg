@@ -154,6 +154,7 @@
 			'InstallationException:DatarootUnderPath' => "Your data directory %s must be outside of your install path.",
 			'InstallationException:DatarootBlank' => "You have not specified a data directory.",
 	
+			'SecurityException:authenticationfailed' => "User could not be authenticated",
 		/**
 		 * API
 		 */

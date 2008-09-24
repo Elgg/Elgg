@@ -546,7 +546,7 @@
 				return $token;
 		}
 		
-		return new ErrorResult();
+		throw new SecurityException(elgg_echo('SecurityException:authenticationfailed'));
 	}
 	
 	// The authentication token api
