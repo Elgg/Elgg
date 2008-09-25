@@ -284,6 +284,32 @@
 	}
 	
 	/**
+	 * This function analyses all expected parameters for a given method, returning them in an associated array from
+	 * input. 
+	 * 
+	 * This ensures that they are sanitised and that no superfluous commands are registered. It also means that 
+	 * hmacs work through the page handler.
+	 *
+	 * @param string $method The method
+	 * @return Array containing commands and values, including method and api
+	 */
+	function get_parameters_for_method($method)
+	{
+		global $CONFIG, $METHODS;
+
+		$method = sanitise_string($method);
+		$sanitised = array();
+		
+		foreach ($CONFIG->input as $k => $v)
+		{
+			if ((isset($METHODS[$method]['parameters'][$k])) || ($k == 'auth_token') || ($k == 'method'))
+				$sanitised[$k] = get_input($k); // Make things go through the sanitiser	
+		}
+	
+		return $sanitised;
+	}
+	
+	/**
 	 * Obtain a token for a user.
 	 *
 	 * @param string $username The username
@@ -640,14 +666,14 @@
 	function cache_hmac_check_replay($hmac)
 	{
 		$cache = new ElggHMACCache(90000); // cache lifetime is 25 hours (see time window in get_and_validate_api_headers() )
-		
+	
 		if (!$cache->load($hmac))
-		{
+		{	
 			$cache->save($hmac, $hmac);
-			
+		
 			return false;
 		}
-		
+				
 		return true;
 	}
 	
@@ -716,7 +742,7 @@
 	{
 		$result = new stdClass;
 		
-		$result->method = $_SERVER['REQUEST_METHOD'];
+		$result->method = get_call_method(); 
 		if (($result->method != "GET") && ($result->method!= "POST")) // Only allow these methods
 			throw new APIException(elgg_echo('APIException:NotGetOrPost'));
 
@@ -738,7 +764,7 @@
 		if (($result->time<(microtime(true)-86400.00)) || ($result->time>(microtime(true)+86400.00))) // Basic timecheck, think about making this smaller if we get loads of users and the cache gets really big.
 			throw new APIException(elgg_echo('APIException:TemporalDrift'));
 		
-		$result->get_variables = $_SERVER['QUERY_STRING'];
+		$result->get_variables = get_parameters_for_method(get_input('method')); //$_SERVER['QUERY_STRING'];
 		if ($result->get_variables == "")
 			throw new APIException(elgg_echo('APIException:NoQueryString'));
 
@@ -791,15 +817,16 @@
 		
 		$validated_userid = validate_user_token($CONFIG->site_id, $token); 
 		
-		if ($validated_userid) {
+		if ($validated_userid) {			
 			$u = get_entity($validated_userid);
 			if (!$u) return false; // Could we get the user?
 			if (!login($u)) return false; // Fail if we couldn't log the user in (likely means they were banned).
+			
 		}
 		
-		if ((!$METHODS[$method]["require_auth_token"]) || ($validated_userid) || (isloggedin()))
+		if ((!$METHODS[$method]["require_auth_token"]) || ($validated_userid) || (isloggedin())) {
 			return true;
-		else
+		} else
 			throw new SecurityException(elgg_echo('SecurityException:AuthTokenExpired'), ErrorResult::$RESULT_FAIL_AUTHTOKEN);
 		
 		return false;
@@ -845,14 +872,20 @@
 			// Get the secret key
 			$secret_key = $api_user->secret;
 		
+			// Serialise parameters
+			$encoded_params = array();
+			foreach ($api_header->get_variables as $k => $v)
+				$encoded_params[] = urlencode($k).'='.urlencode($v);
+			$params = implode('&', $encoded_params);		
+			
 			// Validate HMAC
 			$hmac = calculate_hmac($api_header->hmac_algo, 
 					$api_header->time, 
 					$api_header->api_key, 
 					$secret_key, 
-					$api_header->get_variables, 
+					$params, 
 					$api_header->method == 'POST' ? $api_header->posthash : "");
-				
+		
 			if (strcmp(
 				$api_header->hmac,
 				$hmac	
@@ -861,6 +894,7 @@
 				// Now make sure this is not a replay
 				if (!cache_hmac_check_replay($hmac)) 
 				{
+					
 					// Validate post data
 					if ($api_header->method=="POST")
 					{
@@ -878,10 +912,29 @@
 					throw new SecurityException(elgg_echo('SecurityException:DupePacket'));
 			}
 			else 
-				throw new SecurityException("HMAC is invalid.  {$api_header->hmac} != [calc]$hmac = {$api_header->hmac_algo}(**SECRET KEY**, time:{$api_header->time}, apikey:{$api_header->api_key}, get_vars:{$api_header->get_variables}" . ($api_header->method=="POST"? "posthash:$api_header->posthash}" : ")"));
+				throw new SecurityException("HMAC is invalid.  {$api_header->hmac} != [calc]$hmac = {$api_header->hmac_algo}(**SECRET KEY**, time:{$api_header->time}, apikey:{$api_header->api_key}, get_vars:{$params}" . ($api_header->method=="POST"? "posthash:$api_header->posthash}" : ")"));
 		}
 		else
 			throw new SecurityException(elgg_echo('SecurityException:InvalidAPIKey'),ErrorResult::$RESULT_FAIL_APIKEY_INVALID);
+			
+		return false;
+	}
+	
+	/**
+	 * A bit of a hack. Basically, this combines session and hmac, so that one of them must evaluate to true in order 
+	 * to proceed.
+	 * 
+	 * This ensures that this and auth_token are evaluated separately.
+	 *
+	 * @param unknown_type $credentials
+	 */
+	function pam_auth_session_or_hmac($credentials = NULL)
+	{
+		if (pam_auth_session($credentials))
+			return true;
+			
+		if (pam_auth_hmac($credentials))
+			return true;
 			
 		return false;
 	}
@@ -921,7 +974,7 @@
 	 */
 	function send_api_call(array $keys, $url, array $call, $method = 'GET', $post_data = '', $content_type = 'application/octet-stream')
 	{
-		global $APICLIENT_LAST_CALL, $APICLIENT_LAST_CALL_RAW, $APICLIENT_LAST_ERROR; 
+		global $APICLIENT_LAST_CALL, $APICLIENT_LAST_CALL_RAW, $APICLIENT_LAST_ERROR, $CONFIG; 
 		
 		$headers = array();
 		$encoded_params = array();
@@ -937,10 +990,13 @@
 		// Time
 		$time = microtime(true); 
 
-		// URL encode all the parameters
+		// URL encode all the parameters, ensuring auth_token (if present) is at the end!
 		foreach ($call as $k => $v){
-			$encoded_params[] = urlencode($k).'='.urlencode($v);
+			if ($k!='auth_token')
+				$encoded_params[] = urlencode($k).'='.urlencode($v);
 		}
+		if ($call['auth_token'])
+			$encoded_params[] = urlencode('auth_token').'='.urlencode($call['auth_token']);
 
 		$params = implode('&', $encoded_params);
 		
@@ -986,6 +1042,8 @@
 		$context = stream_context_create($opts);
 		
 		// Send the query and get the result and decode.
+		if ((isset($CONFIG->debug)) && ($CONFIG->debug))
+			error_log("APICALL: $url");
 		$APICLIENT_LAST_CALL_RAW = file_get_contents($url, false, $context);
 	
 		$APICLIENT_LAST_CALL = unserialize($APICLIENT_LAST_CALL_RAW);

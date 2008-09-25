@@ -29,21 +29,20 @@
 		throw new SecurityException(elgg_echo('SecurityException:APIAccessDenied'));
 
 	// Register some default PAM methods, plugins can add their own
-	register_pam_handler('pam_auth_session');
-	register_pam_handler('pam_auth_hmac');
+	register_pam_handler('pam_auth_session_or_hmac'); // Command must either be authenticated by a hmac or the user is already logged in
 	register_pam_handler('pam_auth_usertoken', 'required'); // Either token present and valid OR method doesn't require one.
 	register_pam_handler('pam_auth_anonymous_method'); // Support anonymous functions
 	
 	// Get parameter variables
 	$method = get_input('method');
 	$result = null;
-	
+
 	// Authenticate session
 	if (pam_authenticate())
 	{
 		// Authenticated somehow, now execute.
-		$token = "";
-		$params = $CONFIG->input;// Use $CONFIG->input instead of $_REQUEST since this is called by the pagehandler
+		$token = "";		
+		$params = get_parameters_for_method($method); // Use $CONFIG->input instead of $_REQUEST since this is called by the pagehandler
 		if (isset($params['auth_token'])) $token = $params['auth_token'];
 
 		$result = execute_method($method, $params, $token);

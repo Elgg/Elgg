@@ -102,7 +102,9 @@
 		function login(ElggUser $user, $persistent = false) {
             
             global $CONFIG;
-               
+error_log('*****************************************');             
+error_log(print_r($_SESSION, true));    
+error_log('*****************************************');           
             $_SESSION['user'] = $user;
             $_SESSION['guid'] = $user->getGUID();
             $_SESSION['id'] = $_SESSION['guid'];
