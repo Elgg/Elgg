@@ -349,6 +349,8 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'plugins:settings:save:fail' => "There was a problem saving settings for the %s plugin.",
 			'plugins:usersettings:save:ok' => "User settings for the %s plugin were saved successfully.",
 			'plugins:usersettings:save:fail' => "There was a problem saving  user settings for the %s plugin.",
+	
+			'item:object:plugin' => 'Plugin configuration settings',
 			
 		/**
 		 * Notifications
