@@ -60,7 +60,7 @@
 		{
 			$handler = $v->handler;
 			$importance = $v->importance;
-			
+		
 			try {
 				// Execute the handler 
 				if ($handler($credentials))
@@ -73,18 +73,22 @@
 				else
 				{
 					$_PAM_HANDLERS_MSG[$k] = "Not Authenticated.";
-					
+				
 					// If this is required then abort.
 					if ($importance == 'required')
 						return false;
 				}
 			} 
 			catch (Exception $e)
-			{
+			{		
 				$_PAM_HANDLERS_MSG[$k] = "$e";
+				
+				// If this is required then abort.
+				if ($importance == 'required')
+					return false;
 			}	
 		}
-
+		
 		return $authenticated;
 	}
 	
