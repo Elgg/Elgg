@@ -31,7 +31,10 @@
 	
 			'apiadmin:revoke' => 'Revoke key',
 			'apiadmin:public' => 'Public',
-			'apiadmin:private' => 'Private',	
+			'apiadmin:private' => 'Private',
+
+	
+			'item:object:api_key' => 'API Keys',
 	);
 					
 	add_translation("en",$english);
