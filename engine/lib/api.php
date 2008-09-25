@@ -296,11 +296,12 @@
 		$site = $CONFIG->site_id;
 		$user = get_user_by_username($username);
 		$time = time();
+		$time += 60*60;
 		$token = md5(rand(). microtime() . $username . $password . $time . $site);
 		
 		if (!$user) return false; 
 		
-		if (insert_data("INSERT into {$CONFIG->dbprefix}users_apisessions (user_guid, site_guid, token, expires) values ({$user->guid}, $site, '$token', '$time') on duplicate key update token='$token'"))
+		if (insert_data("INSERT into {$CONFIG->dbprefix}users_apisessions (user_guid, site_guid, token, expires) values ({$user->guid}, $site, '$token', '$time') on duplicate key update token='$token', expires='$time'"))
 			return $token;
 			
 		return false;
@@ -327,9 +328,9 @@
 		
 		$time = time();
 		
-		$user = get_data_row("SELECT * from {$CONFIG->dbprefix}users_apisessions where token='$token' and site_guid=$site and expires>$time");
+		$user = get_data_row("SELECT * from {$CONFIG->dbprefix}users_apisessions where token='$token' and site_guid=$site and $time < expires");
 		if ($user)
-			return $user->user_id;
+			return $user->user_guid;
 		
 		return false;
 	}
@@ -786,7 +787,7 @@
 		global $METHODS, $CONFIG;
 		
 		$method = get_input('method');
-		$token = get_input('token');
+		$token = get_input('auth_token');
 		
 		$validated_userid = validate_user_token($CONFIG->site_id, $token); 
 		
@@ -799,7 +800,7 @@
 		if ((!$METHODS[$method]["require_auth_token"]) || ($validated_userid) || (isloggedin()))
 			return true;
 		else
-			throw new SecurityException(elgg_echo('SecurityException:AuthTokenExpired'), GenericResult::$RESULT_FAIL_AUTHTOKEN);
+			throw new SecurityException(elgg_echo('SecurityException:AuthTokenExpired'), ErrorResult::$RESULT_FAIL_AUTHTOKEN);
 		
 		return false;
 	}
@@ -947,6 +948,7 @@
 		$url = $url . "?" . $params;
 		
 		// Construct headers
+		$posthash = "";
 		if ($method == 'POST') $posthash = calculate_posthash($post_data, 'md5');
 		
 		if ((isset($keys['public'])) && (isset($keys['private'])))
