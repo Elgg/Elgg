@@ -891,10 +891,10 @@
 					$params, 
 					$api_header->method == 'POST' ? $api_header->posthash : "");
 		
-			if (strcmp(
+			if ((strcmp(
 				$api_header->hmac,
 				$hmac	
-			)==0)
+			)==0) && ($api_header->hmac) && ($hmac))
 			{
 				// Now make sure this is not a replay
 				if (!cache_hmac_check_replay($hmac)) 
