@@ -41,7 +41,7 @@
 		 */
 		public function set_variable($variable, $value) 
 		{
-			if (!isarray($this->variables))
+			if (!is_array($this->variables))
 				$this->variables = array();
 			
 			$this->variables[$variable] = $value;	
