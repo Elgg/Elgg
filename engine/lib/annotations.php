@@ -630,7 +630,9 @@
 		global $CONFIG;
 		
 		$guid = (int)$guid;
-		$name = get_metastring_id($name);
+		
+		if (!empty($name))
+			$name = get_metastring_id($name);
 		
 		$entity_guid = (int) $guid;
 		if ($entity = get_entity($entity_guid)) {
