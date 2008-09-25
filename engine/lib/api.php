@@ -628,6 +628,11 @@
 	 */
 	function calculate_hmac($algo, $time, $api_key, $secret_key, $get_variables, $post_hash = "")
 	{
+		global $CONFIG;
+		
+		if ((isset($CONFIG)) && ($CONFIG->debug))
+			error_log("HMAC Parts: $algo, $time, $api_key, $secret_key, $get_variables, $post_hash");
+		
 		$ctx = hash_init(map_api_hash($algo), HASH_HMAC, $secret_key);
 
 		hash_update($ctx, trim($time));
