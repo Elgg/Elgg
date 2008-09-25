@@ -935,9 +935,6 @@
 		
 		// Time
 		$time = microtime(true); 
-		
-		// Hard code the format - we're using PHP, so lets use PHP serialisation.
-		$call['view'] = "php";
 
 		// URL encode all the parameters
 		foreach ($call as $k => $v){
@@ -988,6 +985,7 @@
 		
 		// Send the query and get the result and decode.
 		$APICLIENT_LAST_CALL_RAW = file_get_contents($url, false, $context);
+	
 		$APICLIENT_LAST_CALL = unserialize($APICLIENT_LAST_CALL_RAW);
 		
 		if (($APICLIENT_LAST_CALL) && ($APICLIENT_LAST_CALL->status!=0))
