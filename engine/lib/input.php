@@ -21,6 +21,11 @@
 	function get_input($variable, $default = "", $filter_result = true)
 	{
 
+		global $CONFIG;
+		
+		if (isset($CONFIG->input[$variable]))
+			return $CONFIG->input[$variable];
+		
 		if (isset($_REQUEST[$variable])) {
 			
 			if (is_array($_REQUEST[$variable])) {
@@ -40,11 +45,6 @@
 			return $var;
 			
 		}
-		
-		global $CONFIG;
-		
-		if (isset($CONFIG->input[$variable]))
-			return $CONFIG->input[$variable];
 
 		return $default;
 
