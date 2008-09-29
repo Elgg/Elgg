@@ -220,24 +220,24 @@
 		
 		if ($to->email=="")
 			throw new NotificationException(sprintf(elgg_echo('NotificationException:NoEmailAddress'), $to->guid));			
-			
+
+		// To 
 		$to = $to->email;
-		/*if (!$hide_sender)
-		{
-			if ($from->email)
-				$from = $from->email; // Handle users
-			else if ($from->url)
-			{
-				$breakdown = parse_url($from->url);
-				$from = 'noreply@' . $breakdown['host']; // Handle anything with a url
-			} 
-			else {
-				$from = 'noreply@' . get_site_domain($CONFIG->site_guid); // Handle a fallback
-			}
-		}
-		else*/
-		$from = 'noreply@' . get_site_domain($CONFIG->site_guid); // Handle a fallback
 		
+		// From
+		$site = get_entity($CONFIG->site_guid);
+		if ((isset($from->email)) && (!($from instanceof ElggUser))) // If there's an email address, use it - but only if its not from a user.
+			$from = $from->from;
+		else if (($site) && (isset($site->email))) // Has the current site got a from email address?
+			$from = $site->email;
+		else if (isset($from->url)) // If we have a url then try and use that.
+		{
+			$breakdown = parse_url($from->url);
+			$from = 'noreply@' . $breakdown['host']; // Handle anything with a url
+		}
+		else // If all else fails, use the domain of the site.
+			$from = 'noreply@' . get_site_domain($CONFIG->site_guid); 
+	
 		if (is_callable('mb_internal_encoding')) {
 			mb_internal_encoding('UTF-8');
 		}
@@ -246,7 +246,7 @@
 		if (is_callable('mb_encode_mimeheader')) {
 			$sitename = mb_encode_mimeheader($site->name,"UTF-8", "B");
 		}
-		$headers = "From: $sitename <$from>\r\n"
+		$headers = "From: \"$sitename\" <$from>\r\n"
 			. "Content-Type: text/plain; charset=UTF-8; format=flowed\r\n"
     		. "MIME-Version: 1.0\r\n"
     		. "Content-Transfer-Encoding: 8bit\r\n";
