@@ -150,7 +150,7 @@
 			{
 				$name = substr($meta->name, strlen($prefix));
 				$value = $meta->value;
-				
+			
 				if (strpos($meta->name, $prefix) === 0)
 					$return->$name = $value;
 			}
@@ -276,6 +276,13 @@
 		register_plugin_hook('usersettings:save','user','notification_user_settings_save');
 		
 		//register_action("notifications/settings/usersettings/save");
+		
+		
+		// Register some APIs
+		expose_function('user.notification.get', 'get_user_notification_settings', array(
+			'user_guid' => array ('type' => 'int')
+		), elgg_echo('user.notification.get'));
+		
 	}
 	
 	function notification_user_settings_save() {
