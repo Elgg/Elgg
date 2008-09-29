@@ -29,6 +29,7 @@
 			
 			$site->description = get_input('sitedescription');
 			$site->name = get_input('sitename');
+			$site->email = get_input('siteemail');
 			$site->url = get_input('wwwroot');
 			
 			datalist_set('path',sanitise_filepath(get_input('path')));
@@ -49,6 +50,12 @@
 				unset_config('ping_home', $site->getGUID());
 			else
 				set_config('ping_home', 'disabled', $site->getGUID());
+				
+			$api = get_input('api');
+			if ($api)
+				unset_config('disable_api', $site->getGUID());
+			else
+				set_config('disable_api', 'disabled', $site->getGUID());
 			
 			// Now ping home
 			//if ((!isset($usage)) || ($usage!='disabled'))

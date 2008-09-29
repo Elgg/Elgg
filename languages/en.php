@@ -658,6 +658,11 @@ Alternatively, you can enter your database settings below and we will try and do
 			'installation:usage:label' => "Send anonymous usage statistics",
 			'installation:view' => "Enter the view which will be used as the default for your site or leave this blank for the default view (if in doubt, leave as default):",
 
+			'installation:siteemail' => "Site email address (used when sending system emails)",
+	
+			'installation:disableapi' => "Elgg comes with an flexible and extendible API that enables applications use certain Elgg features remotely",
+			'installation:disableapi:label' => "Enable the RESTful API",
+	
 			'upgrade:db' => 'Your database was upgraded.',
 	
 		/**

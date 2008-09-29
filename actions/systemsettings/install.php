@@ -42,6 +42,7 @@
 			$site->name = get_input('sitename');
 			$site->url = get_input('wwwroot');
 			$site->description = get_input('sitedescription');
+			$site->email = get_input('siteemail');
 			$site->access_id = 2; // The site is public
 			$guid = $site->save();
 			
@@ -71,6 +72,13 @@
 				unset_config('ping_home', $site->getGUID());
 			else
 				set_config('ping_home', 'disabled', $site->getGUID());
+				
+			$api = get_input('api');
+			if ($api)
+				unset_config('disable_api', $site->getGUID());
+			else
+				set_config('disable_api', 'disabled', $site->getGUID());
+			
 			
 			// activate some plugins by default
 			enable_plugin('profile', $site->getGUID());
