@@ -362,6 +362,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'notifications:usersettings:save:fail' => "There was a problem saving your notification settings.",
 	
 			'user.notification.get' => 'Return the notification settings for a given user.',
+			'user.notification.set' => 'Set the notification settings for a given user.',
 		/**
 		 * Search
 		 */

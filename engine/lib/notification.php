@@ -283,6 +283,12 @@
 			'user_guid' => array ('type' => 'int')
 		), elgg_echo('user.notification.get'));
 		
+		expose_function('user.notification.set', 'set_user_notification_settings', array(
+			'user_guid' => array ('type' => 'int'),
+			'method' => array ('type' => 'string'),
+			'value' => array ('type' => 'bool')
+		), elgg_echo('user.notification.set'));
+		
 	}
 	
 	function notification_user_settings_save() {
