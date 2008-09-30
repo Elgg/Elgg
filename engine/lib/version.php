@@ -67,6 +67,8 @@
 	 */
 		function version_boot() {
 			
+			if (!is_installed()) return false;
+			
 			if (version_upgrade_check()) {
 				version_upgrade();
 			}
