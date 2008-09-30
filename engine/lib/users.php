@@ -440,7 +440,7 @@
 		$friend_guid = (int) $friend_guid;
 		if (!$friend = get_entity($friend_guid)) return false;
 		if (!$user = get_entity($user_guid)) return false;
-		if (get_class($user) != "ElggUser" || get_class($friend) != "ElggUser") return false;
+		if ( (!($user instanceof ElggUser)) || (!($friend instanceof ElggUser)) ) return false;
 		return add_entity_relationship($user_guid, "friend", $friend_guid);
 	}
 	

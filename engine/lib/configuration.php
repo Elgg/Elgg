@@ -177,7 +177,7 @@
 			$dataroot = datalist_get('dataroot');
 			if (!empty($dataroot))
 				$CONFIG->dataroot = $dataroot;
-			if (isset($CONFIG->site) && (get_class($CONFIG->site) == "ElggSite")) {
+			if (isset($CONFIG->site) && ($CONFIG->site instanceof ElggSite)) {
 				$CONFIG->wwwroot = $CONFIG->site->url;
 				$CONFIG->sitename = $CONFIG->site->name;
 				$CONFIG->sitedescription = $CONFIG->site->description;
