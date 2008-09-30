@@ -407,6 +407,8 @@
 			$new_enabled[] = $plugin;
 			$new_enabled = array_unique($new_enabled);
 			
+			trigger_elgg_event('plugin_enable', $plugin);
+			
 			return $site->setMetaData('enabled_plugins', $new_enabled);
 		}
 		
@@ -435,6 +437,8 @@
 			foreach ($enabled as $plug)
 				if ($plugin != $plug)
 					$new_enabled[] = $plug;
+					
+			trigger_elgg_event('plugin_disable', $plugin);
 					
 			return $site->setMetaData('enabled_plugins', $new_enabled);
 		}
