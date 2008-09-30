@@ -54,6 +54,11 @@
             		(!$CONFIG->actions[$action]['admin'])
             	) {
 	                if ($CONFIG->actions[$action]['public'] || $_SESSION['id'] != -1) {
+	                	
+	                	// Trigger action event TODO: This is only called before the primary action is called. We need to rethink actions for 1.5
+	                	trigger_elgg_event('action', $action);
+	                	
+	                	// Include action
 		                if (@include($CONFIG->actions[$action]['file'])) {
 		                } else {
 		                    register_error(sprintf(elgg_echo('actionundefined'),$action));
