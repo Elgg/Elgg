@@ -60,10 +60,13 @@
 	                	$event_result = trigger_plugin_hook('action', $action, null, $event_result);
 	                	
 	                	// Include action
-		                if (($event_result) && (@include($CONFIG->actions[$action]['file']))) {
-		                } else {
-		                    register_error(sprintf(elgg_echo('actionundefined'),$action));
-		                }
+	                	if ($event_result) // Event_result being false doesn't produce an error - since i assume this will be handled in the hook itself. TODO make this better!
+	                	{
+			                if (@include($CONFIG->actions[$action]['file'])) {
+			                } else {
+			                    register_error(sprintf(elgg_echo('actionundefined'),$action));
+			                }
+	                	}
 	                } else {
 	                    register_error(elgg_echo('actionloggedout'));
 	                }
