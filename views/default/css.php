@@ -4,6 +4,8 @@
 	 * Elgg CSS
 	 * The standard CSS file
 	 * 
+	 * Updated 30Sept - new messages/notifcation system
+	 * 
 	 * @package Elgg
 	 * @subpackage Core
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
@@ -633,25 +635,51 @@ h6 { font-size: 0.8em; }
   SYSTEM MESSSAGES
 *************************************** */
 .messages {
-    border:1px solid #00cc00;
     background:#ccffcc;
     color:#000000;
     padding:3px 10px 3px 10px;
-    margin:20px 20px 0px 20px;
     z-index: 9999;
-    position:absolute;
+	/* border:1px solid #00cc00; */
+    /* margin:20px 20px 0px 20px; */
+    /* position:absolute; */
     /* width:611px; */
-    width:936px;
+    /* width:936px; */
+	margin:0;
+	position:fixed;
+	top:-60px;
+	width:969px;
+	-webkit-border-radius: 4px; 
+	-moz-border-radius: 4px;
+	border:4px solid #00CC00;
 }
 .messages_error {
-    border:1px solid #D3322A;
+    border:4px solid #D3322A;
     background:#F7DAD8;
     color:#000000;
     padding:3px 10px 3px 10px;
-    margin:20px 20px 0px 20px;
     z-index: 9999;
-    position:absolute;
-    width:936px;
+    /* margin:20px 20px 0px 20px; */
+    /* position:absolute; */
+    /* width:936px; */
+	margin:0;
+	position:fixed;
+	top:-60px;
+	width:969px;
+	-webkit-border-radius: 4px; 
+	-moz-border-radius: 4px;
+}
+.closeMessages {
+	float:right;
+	margin-top:17px;
+}
+.closeMessages a {
+	color:#666666;
+	cursor: pointer;
+	text-decoration: underline;
+	font-size: 80%;
+}
+.closeMessages a:hover {
+	color:black;
 }
 
 
