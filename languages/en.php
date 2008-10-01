@@ -156,6 +156,8 @@
 			'InstallationException:DatarootBlank' => "You have not specified a data directory.",
 	
 			'SecurityException:authenticationfailed' => "User could not be authenticated",
+	
+			'CronException:unknownperiod' => '%s is not a recognised period.',
 		/**
 		 * API
 		 */

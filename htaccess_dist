@@ -67,8 +67,6 @@ RewriteEngine on
 #
 #RewriteBase /
 
-RewriteRule ^cron\/$ engine/handlers/cron_handler.php
-
 RewriteRule ^action\/([A-Za-z\_\-\/]+)$ engine/handlers/action_handler.php?action=$1
 RewriteRule ^actions\/([A-Za-z\_\-\/]+)$ engine/handlers/action_handler.php?action=$1
 

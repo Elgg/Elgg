@@ -14,16 +14,20 @@
 	require_once("../start.php");
 	global $CONFIG;
 	
+	// Get basic parameters
+	$period = get_input('period');
+	if (!$period) throw new CronException(sprintf(elgg_echo('CronException:unknownperiod'), $period));
+	
 	// Get a list of parameters
 	$params = array();
 	$params['time'] = time();
 	
-	foreach ($_REQUEST[] as $k => $v)
+	foreach ($CONFIG->input as $k => $v)
 		$params[$k] = $v;
 	
 	// Trigger hack
 	$std_out = ""; // Data to return to
-	$std_out = trigger_plugin_hook('system', 'cron', $params, $std_out);
+	$std_out = trigger_plugin_hook('cron', $period, $params, $std_out);
 	
 	// Return event
 	echo $std_out;

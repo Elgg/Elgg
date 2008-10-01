@@ -1,0 +1,59 @@
+<?php
+	/**
+	 * Elgg cron library.
+	 * 
+	 * @package Elgg
+	 * @subpackage Core
+	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+	 * @author Curverider Ltd
+	 * @copyright Curverider Ltd 2008
+	 * @link http://elgg.org/
+	 */
+
+	/** The cron exception. */
+	class CronException extends Exception {}
+
+	/**
+	 * Initialisation 
+	 *
+	 */
+	function cron_init()
+	{
+		// Register a pagehandler for cron
+		register_page_handler('cron','cron_page_handler');
+	}
+		
+	/**
+	 * Cron handler for redirecting pages.
+	 *
+	 * @param unknown_type $page
+	 */
+	function cron_page_handler($page) 
+	{
+		global $CONFIG;
+		
+		if ($page[0])
+		{
+			switch (strtolower($page[0]))
+			{
+				case 'hourly' : 
+				case 'daily'  :
+				case 'weekly' :
+				case 'monthly':
+				case 'yearly' : 
+				case 'reboot' : set_input('period', $page[0]); break; 
+				default : throw new CronException(sprintf(elgg_echo('CronException:unknownperiod'), $page[0]));
+			}
+			
+			// Include cron handler
+			include($CONFIG->path . "engine/handlers/cron_handler.php");
+		}
+		else
+			include($CONFIG->pluginspath . "ss_sms/index.php"); 
+	}
+
+
+	// Register a startup event
+	register_elgg_event_handler('init','system','cron_init');	
+
+?>
