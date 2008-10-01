@@ -482,6 +482,19 @@
         	return true;
         }
         
+    /**
+     * Sanitise a string for database use, but with the option of escaping extra characters.
+     */
+        function sanitise_string_special($string, $extra_escapeable = '')
+        {
+        	$string = sanitise_string($string);
+        	
+        	for ($n = 0; $n < strlen($extra_escapeable); $n++)
+        		$string = str_replace($extra_escapeable[$n], "\\" . $extra_escapeable[$n], $string);
+        		
+        	return $string;
+        }
+        
 	/**
 	 * Sanitise a string for database use
 	 *
