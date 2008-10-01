@@ -517,7 +517,7 @@
 		if (!$count) {
 			$query = "SELECT distinct e.* "; 
 		} else {
-			$query = "SELECT count(e.guid) as total ";
+			$query = "SELECT count(distinct e.guid) as total ";
 		}
 			
 		$query .= "from {$CONFIG->dbprefix}entities e JOIN {$CONFIG->dbprefix}metadata m on e.guid = m.entity_guid where";
@@ -622,7 +622,7 @@
 			$where[] = "e.container_guid = {$owner_guid}";
 		
 		if ($count) {
-			$query = "SELECT count(e.guid) as total ";
+			$query = "SELECT count(distinct e.guid) as total ";
 		} else {
 			$query = "SELECT distinct e.* "; 
 		}
