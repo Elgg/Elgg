@@ -485,7 +485,7 @@
 		if ($order_by == "") $order_by = "e.time_created desc";
 		$order_by = sanitise_string($order_by);
 		$site_guid = (int) $site_guid;
-		if (is_array($owner_guid)) {
+		if ((is_array($owner_guid) && (count($owner_guid)))) {
 			foreach($owner_guid as $key => $guid) {
 				$owner_guid[$key] = (int) $guid;
 			}
