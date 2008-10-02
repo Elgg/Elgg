@@ -93,7 +93,7 @@
 			$page_owner = page_owner_entity();
 		
 		// Submenu items for all group pages
-			if ($page_owner instanceof ElggGroup) {
+			/*if ($page_owner instanceof ElggGroup) {
 				if ($page_owner->canEdit()) {
 					add_submenu_item(elgg_echo('groups:edit'),$CONFIG->wwwroot . "mod/groups/edit.php?group_guid=" . $page_owner->getGUID(), '1groupsactions');
 					add_submenu_item(elgg_echo('groups:invite'),$CONFIG->wwwroot . "mod/groups/invite.php?group_guid={$page_owner->getGUID()}", '1groupsactions');
@@ -113,22 +113,28 @@
 				
 				add_submenu_item(elgg_echo('groups:forum'),$CONFIG->wwwroot . "pg/groups/forum/{$page_owner->getGUID()}/", '1groupslinks');		
 					
-			}
+			}*/
 		
 		// Add submenu options
-			if (get_context() == "groups") {
+			if ($page_owner instanceof ElggGroup && get_context() == 'groups') {
 				if ((page_owner() == $_SESSION['guid'] || !page_owner()) && isloggedin()) {
-					add_submenu_item(elgg_echo('groups:new'), $CONFIG->wwwroot."pg/groups/new/", '1groupslinks');
-					add_submenu_item(elgg_echo('groups:owned'), $CONFIG->wwwroot . "pg/groups/owned/" . $_SESSION['user']->username, '1groupslinks');
-					add_submenu_item(elgg_echo('groups:yours'), $CONFIG->wwwroot . "pg/groups/member/" . $_SESSION['user']->username, '1groupslinks');
-					add_submenu_item(elgg_echo('groups:all'), $CONFIG->wwwroot . "pg/groups/world/", '1groupslinks');
+				//	add_submenu_item(elgg_echo('groups:new'), $CONFIG->wwwroot."pg/groups/new/", '1groupslinks');
+				//	add_submenu_item(elgg_echo('groups:owned'), $CONFIG->wwwroot . "pg/groups/owned/" . $_SESSION['user']->username, '1groupslinks');
+				//	add_submenu_item(elgg_echo('groups:yours'), $CONFIG->wwwroot . "pg/groups/member/" . $_SESSION['user']->username, '1groupslinks');
+				//	add_submenu_item(elgg_echo('groups:all'), $CONFIG->wwwroot . "pg/groups/world/", '1groupslinks');
+                                  add_submenu_item(elgg_echo('groups:forum'),$CONFIG->wwwroot . "pg/groups/forum/{$page_owner->getGUID()}/", '1groupslinks');	
 				} else if (page_owner()) {
 					$page_owner = page_owner_entity();
 					if (isloggedin()) add_submenu_item(elgg_echo('groups:yours'), $CONFIG->wwwroot . "pg/groups/owned/" . $_SESSION['user']->username, '1groupslinks');
-					add_submenu_item(elgg_echo('groups:all'), $CONFIG->wwwroot . "pg/groups/world/", '1groupslinks');
+					add_submenu_item(elgg_echo('groups:all'), $CONFIG->wwwroot . "pg/groups/world/", '1groupslinks');	
 				} else {
 					add_submenu_item(elgg_echo('groups:all'), $CONFIG->wwwroot . "pg/groups/world/", '1groupslinks');
 				}
+			} else if (get_context() == 'groups') {
+				add_submenu_item(elgg_echo('groups:new'), $CONFIG->wwwroot."pg/groups/new/", '1groupslinks');
+				add_submenu_item(elgg_echo('groups:owned'), $CONFIG->wwwroot . "pg/groups/owned/" . $_SESSION['user']->username, '1groupslinks');
+				add_submenu_item(elgg_echo('groups:yours'), $CONFIG->wwwroot . "pg/groups/member/" . $_SESSION['user']->username, '1groupslinks');
+				add_submenu_item(elgg_echo('groups:all'), $CONFIG->wwwroot . "pg/groups/world/", '1groupslinks');
 			}
 		
 	}
@@ -169,6 +175,8 @@
 					include($CONFIG->pluginspath . "groups/new.php");
           		break;
     			case "world":  
+					set_context('groups');
+					set_page_owner(0);
    					include($CONFIG->pluginspath . "groups/all.php");
           		break;
           		case "forum":
