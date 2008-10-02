@@ -148,5 +148,6 @@
 	
 	// Register a plugin hook for permissions
 	register_plugin_hook('permissions_check','all','admin_permissions');
+	register_plugin_hook('container_permissions_check','all','admin_permissions');
 	
 ?>
