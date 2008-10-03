@@ -901,7 +901,7 @@
 	 * @param int $user_guid The user id
 	 * @param string $email_address The email address
 	 */
-	function generate_email_validation_code($user_guid, $email_address)
+	/*function generate_email_validation_code($user_guid, $email_address)
 	{
 		global $CONFIG;
 		
@@ -914,7 +914,7 @@
 	 * @param int $user_guid The user
 	 * @param bool $status The status 
 	 */
-	function set_email_validation_status($user_guid, $status)
+	/*function set_email_validation_status($user_guid, $status)
 	{
 		$user_guid = (int)$user_guid;
 		
@@ -926,7 +926,7 @@
 	 *
 	 * @param int $user_guid
 	 */
-	function get_email_validation_status($user_guid)
+	/*function get_email_validation_status($user_guid)
 	{
 		$user = get_entity($user_guid);
 		
@@ -944,7 +944,7 @@
 	 * @param int $user_guid The user.
 	 * @return bool
 	 */
-	function request_email_validation($user_guid)
+	/*function request_email_validation($user_guid)
 	{
 		global $CONFIG;
 		
@@ -973,7 +973,7 @@
 	 * @param int $user_guid User GUID
 	 * @param string $code The code provided on validation.
 	 */
-	function validate_email($user_guid, $code)
+	/*function validate_email($user_guid, $code)
 	{
 		$user = get_entity($user_guid);
 		
@@ -982,6 +982,29 @@
 			set_email_validation_status($user_guid, true);
 		
 		return $valid;
+	}
+	
+	/**
+	 * Trigger an event requesting that a user guid be validated somehow - either by email address or some other way.
+	 *
+	 * This event invalidates any existing values and returns
+	 * 
+	 * @param unknown_type $user_guid
+	 */
+	function request_email_validation($user_guid)
+	{
+		$user = get_entity($user_guid);
+		
+		if (($user) && ($user instanceof ElggUser))
+		{
+			// invalidate any existing validations
+			create_metadata($user_guid, 'validated', false,'', 0, 2);
+			create_metadata($user_guid, 'validated_method', '','', 0, 2);
+			
+			// request validation
+			trigger_elgg_event('user', 'validate', $user);
+			
+		}
 	}
 	
 	/**
