@@ -896,92 +896,20 @@
 	}
 	
 	/**
-	 * Generate a validation code for a given user's email address.
+	 * Set the validation status for a user.
 	 *
-	 * @param int $user_guid The user id
-	 * @param string $email_address The email address
-	 */
-	/*function generate_email_validation_code($user_guid, $email_address)
-	{
-		global $CONFIG;
-		
-		return md5($user_guid . $email_address . $CONFIG->site->url); // Note I bind to site URL, this is important on multisite!
-	}
-	
-	/**
-	 * Set the email validation status for a user.
-	 *
-	 * @param int $user_guid The user
-	 * @param bool $status The status 
-	 */
-	/*function set_email_validation_status($user_guid, $status)
-	{
-		$user_guid = (int)$user_guid;
-		
-		return create_metadata($user_guid, 'validated_email', $status,'', 0, 2);
-	}
-	
-	/**
-	 * Return whether a given user has validated their email address.
-	 *
-	 * @param int $user_guid
-	 */
-	/*function get_email_validation_status($user_guid)
-	{
-		$user = get_entity($user_guid);
-		
-		if ($user)
-			return $user->validated_email;
-		
-		return false;
-	}
-	
-	/**
-	 * Send out a validation request for a given user. 
-	 * This function assumes that a user has already been created and that the email address has been
-	 * saved in the email field in the database.
-	 *
-	 * @param int $user_guid The user.
+	 * @param bool $status Validated (true) or false
+	 * @param string $method Optional method to say how a user was validated
 	 * @return bool
 	 */
-	/*function request_email_validation($user_guid)
+	function set_user_validation_status($user_guid, $status, $method = '')
 	{
-		global $CONFIG;
+		if (!$status) $method = '';
 		
-		$user_guid = (int)$user_guid;
-		
-		$user = get_entity($user_guid);
-		if (($user) && ($user instanceof ElggUser))
-		{
-			// Clear existing status
-			set_email_validation_status($user_guid, false);
+		create_metadata($user_guid, 'validated', $status,'', 0, 2);
+		create_metadata($user_guid, 'validated_method', $method,'', 0, 2);
 			
-			// Work out validate link
-			$link = $CONFIG->site->url . "action/email/confirm?u=$user_guid&c=" . generate_email_validation_code($user_guid, $user->email);
-
-			// Send validation email
-			return notify_user($user->guid, $CONFIG->site->guid, sprintf(elgg_echo('email:validate:subject'), $user->username), sprintf(elgg_echo('email:validate:body'), $user->name, $link), NULL, 'email');
-			
-		}
-		
-		return false;
-	}
-	
-	/**
-	 * Validate a user email address against the code provided, and if valid set the appropriate flag
-	 *
-	 * @param int $user_guid User GUID
-	 * @param string $code The code provided on validation.
-	 */
-	/*function validate_email($user_guid, $code)
-	{
-		$user = get_entity($user_guid);
-		
-		$valid = ($code == generate_email_validation_code($user_guid, $user->email));
-		if ($valid)
-			set_email_validation_status($user_guid, true);
-		
-		return $valid;
+		return true;
 	}
 	
 	/**
@@ -991,15 +919,14 @@
 	 * 
 	 * @param unknown_type $user_guid
 	 */
-	function request_email_validation($user_guid)
+	function request_user_validation($user_guid)
 	{
 		$user = get_entity($user_guid);
 		
 		if (($user) && ($user instanceof ElggUser))
 		{
 			// invalidate any existing validations
-			create_metadata($user_guid, 'validated', false,'', 0, 2);
-			create_metadata($user_guid, 'validated_method', '','', 0, 2);
+			set_user_validation_status($user_guid, false);
 			
 			// request validation
 			trigger_elgg_event('user', 'validate', $user);
@@ -1358,7 +1285,6 @@
    		register_action("useradd",true);
 		register_action("friends/add");
    		register_action("friends/remove");
-		register_action("email/confirm");
 		register_action('friends/addcollection');
 		register_action('friends/deletecollection');
         register_action('friends/editcollection');
