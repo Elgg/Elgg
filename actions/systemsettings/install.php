@@ -86,6 +86,7 @@
 			enable_plugin('updateclient', $site->getGUID());
 			enable_plugin('logbrowser', $site->getGUID());
 			enable_plugin('diagnostics', $site->getGUID());
+			enable_plugin('uservalidationbyemail', $site->getGUID());
 			
 			// Now ping home
 			if ($usage)
