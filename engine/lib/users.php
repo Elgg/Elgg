@@ -922,7 +922,7 @@
 	function request_user_validation($user_guid)
 	{
 		$user = get_entity($user_guid);
-		
+
 		if (($user) && ($user instanceof ElggUser))
 		{
 			// invalidate any existing validations
