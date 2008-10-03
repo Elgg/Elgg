@@ -50,8 +50,8 @@
 					if (!$new_user->admin)
 						$new_user->disable('new_user');	// Now disable if not an admin
 					
-					// Send email validation on register only
-					request_email_validation($guid);
+					// Send user validation request on register only
+					request_user_validation($guid);
 					
 					
 					system_message(sprintf(elgg_echo("registerok"),$CONFIG->sitename));
