@@ -34,6 +34,9 @@
 		}
 	}
 
+	// An event to tell any interested plugins of the change is settings
+	trigger_elgg_event('plugin_settings_save', $plugin, find_plugin_settings($plugin));
+	
 	system_message(sprintf(elgg_echo('plugins:settings:save:ok'), $plugin));
 	forward($_SERVER['HTTP_REFERER']);
 ?>
