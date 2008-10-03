@@ -106,7 +106,7 @@
 			if (!$file) return false; 
 			
 			foreach ($vars as $k => $v)
-				$file = str_replace("{{".$k."}}", sanitise_string($v), $file);
+				$file = str_replace("{{".$k."}}", $v, $file);
 			
 			return $file;
 		}
