@@ -699,18 +699,6 @@ To view their profile, click here:
 You cannot reply to this email.",
 	
 	
-			'email:validate:subject' => "%s please confirm your email address!",
-			'email:validate:body' => "Hi %s,
-
-Please confirm your email address by clicking on the link below:
-
-%s
-",
-			'email:validate:success:subject' => "Email validated %s!",
-			'email:validate:success:body' => "Hi %s,
-			
-Congratulations, you have successfully validated your email address.",
-	
 	
 			'email:resetpassword:subject' => "Password reset!",
 			'email:resetpassword:body' => "Hi %s,
