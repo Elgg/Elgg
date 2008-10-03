@@ -56,8 +56,8 @@
 			db_upgrade($dbversion);
 			datalist_set('version', get_version());
 			system_message(elgg_echo('upgrade:db'));
-			forward();
-			exit;
+			//forward();
+			//exit;
 			
 		}
 		
