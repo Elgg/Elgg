@@ -639,18 +639,14 @@ h6 { font-size: 0.8em; }
     color:#000000;
     padding:3px 10px 3px 10px;
     z-index: 9999;
-	/* border:1px solid #00cc00; */
-    /* margin:20px 20px 0px 20px; */
-    /* position:absolute; */
-    /* width:611px; */
-    /* width:936px; */
 	margin:0;
 	position:fixed;
-	top:0px;
+	top:30px;
 	width:969px;
 	-webkit-border-radius: 4px; 
 	-moz-border-radius: 4px;
 	border:4px solid #00CC00;
+	cursor: pointer;
 }
 .messages_error {
     border:4px solid #D3322A;
@@ -658,15 +654,13 @@ h6 { font-size: 0.8em; }
     color:#000000;
     padding:3px 10px 3px 10px;
     z-index: 9999;
-    /* margin:20px 20px 0px 20px; */
-    /* position:absolute; */
-    /* width:936px; */
 	margin:0;
 	position:fixed;
-	top:0px;
+	top:30px;
 	width:969px;
 	-webkit-border-radius: 4px; 
 	-moz-border-radius: 4px;
+	cursor: pointer;
 }
 .closeMessages {
 	float:right;
@@ -675,7 +669,7 @@ h6 { font-size: 0.8em; }
 .closeMessages a {
 	color:#666666;
 	cursor: pointer;
-	text-decoration: underline;
+	text-decoration: none;
 	font-size: 80%;
 }
 .closeMessages a:hover {

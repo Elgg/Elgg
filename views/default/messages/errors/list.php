@@ -20,11 +20,17 @@
 <!-- used to fade out the system messages after 3 seconds -->
 <script>
 $(document).ready(function () {
-	$('.messages_error').animate({top:"3px", opacity: 1.0}, 1000); 
+	$('.messages_error').animate({top:"30px", opacity: 1.0}, 1000); 
 	$('.messages_error').animate({opacity: 1.0}, 6000);
 	$('.messages_error').fadeOut('slow');
       
 	$('span.closeMessages a').click(function () {
+		$(".messages_error").stop();
+		$('.messages_error').fadeOut('slow');
+	return false;
+    });
+    
+	$('div.messages_error').click(function () {
 		$(".messages_error").stop();
 		$('.messages_error').fadeOut('slow');
 	return false;
@@ -34,7 +40,7 @@ $(document).ready(function () {
 </script>
 
 	<div class="messages_error">
-	<span class="closeMessages"><a href="#">dismiss message</a></span>
+	<span class="closeMessages"><a href="#">click to dismiss</a></span>
 
 <?php
 			foreach($vars['object'] as $error) {

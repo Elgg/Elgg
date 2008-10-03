@@ -20,7 +20,7 @@
 <!-- used to fade out the system messages after 3 seconds -->
 <script>
 $(document).ready(function () {
-	$('.messages').animate({top:"3px", opacity: 1.0}, 1000); 
+	$('.messages').animate({top:"30px", opacity: 1.0}, 1000); 
 	$('.messages').animate({opacity: 1.0}, 6000);
 	$('.messages').fadeOut('slow');
       
@@ -29,12 +29,17 @@ $(document).ready(function () {
 		$('.messages').fadeOut('slow');
 	return false;
     });
-
+    
+	$('div.messages').click(function () {
+		$(".messages").stop();
+		$('.messages').fadeOut('slow');
+	return false;
+    });
 });  
 </script>
 
 	<div class="messages">
-	<span class="closeMessages"><a href="#">dismiss message</a></span>
+	<span class="closeMessages"><a href="#">click to dismiss</a></span>
 <?php
 
 		
