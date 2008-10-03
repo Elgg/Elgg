@@ -67,8 +67,11 @@
 			$link = $CONFIG->site->url . "action/email/confirm?u=$user_guid&c=" . uservalidationbyemail_generate_code($user_guid, $user->email);
 
 			// Send validation email
-			return notify_user($user->guid, $CONFIG->site->guid, sprintf(elgg_echo('email:validate:subject'), $user->username), sprintf(elgg_echo('email:validate:body'), $user->name, $link), NULL, 'email');
-			
+			$result = notify_user($user->guid, $CONFIG->site->guid, sprintf(elgg_echo('email:validate:subject'), $user->username), sprintf(elgg_echo('email:validate:body'), $user->name, $link), NULL, 'email');
+			if ($result)
+				system_message(elgg_echo('uservalidationbyemail:registerok'));
+				
+			return $result;
 		}
 		
 		return false;

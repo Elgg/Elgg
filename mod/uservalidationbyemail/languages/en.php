@@ -23,6 +23,8 @@ Please confirm your email address by clicking on the link below:
 			
 Congratulations, you have successfully validated your email address.",
 	
+		'uservalidationbyemail:registerok' => "To activate your account, please confirm your email address by clicking on the link we sent you."
+	
 	);
 					
 	add_translation("en",$english);
