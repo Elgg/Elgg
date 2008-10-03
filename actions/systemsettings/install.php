@@ -81,13 +81,22 @@
 			
 			
 			// activate some plugins by default
-			enable_plugin('profile', $site->getGUID());
-			enable_plugin('river', $site->getGUID());
-			enable_plugin('updateclient', $site->getGUID());
-			enable_plugin('logbrowser', $site->getGUID());
-			enable_plugin('diagnostics', $site->getGUID());
-			enable_plugin('uservalidationbyemail', $site->getGUID());
-			
+			if (isset($CONFIG->default_plugins))
+			{
+				$plugins = explode(',', $CONFIG->default_plugins);
+				foreach ($plugins as $plugin)
+					enable_plugin(trim($plugins), $site->getGUID());
+			}
+			else
+			{
+				enable_plugin('profile', $site->getGUID());
+				enable_plugin('river', $site->getGUID());
+				enable_plugin('updateclient', $site->getGUID());
+				enable_plugin('logbrowser', $site->getGUID());
+				enable_plugin('diagnostics', $site->getGUID());
+				enable_plugin('uservalidationbyemail', $site->getGUID());
+			}
+				
 			// Now ping home
 			if ($usage)
 			{
