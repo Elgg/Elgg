@@ -646,7 +646,7 @@ h6 { font-size: 0.8em; }
     /* width:936px; */
 	margin:0;
 	position:fixed;
-	top:-60px;
+	top:0px;
 	width:969px;
 	-webkit-border-radius: 4px; 
 	-moz-border-radius: 4px;
@@ -663,7 +663,7 @@ h6 { font-size: 0.8em; }
     /* width:936px; */
 	margin:0;
 	position:fixed;
-	top:-60px;
+	top:0px;
 	width:969px;
 	-webkit-border-radius: 4px; 
 	-moz-border-radius: 4px;
