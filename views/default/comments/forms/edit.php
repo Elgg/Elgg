@@ -14,9 +14,6 @@
 	 
 	 if (isset($vars['entity']) && isloggedin()) {
     	 
-    	 //if the ratings plugin has been installed, display here
-    	 echo elgg_view('ratings/forms/edit',array('entity' => $vars['entity']));
-	 
 		 $form_body = "<p><label>".elgg_echo("generic_comments:text")."<br />" . elgg_view('input/longtext',array('internalname' => 'generic_comment')) . "</label></p>";
 		 $form_body .= "<p>" . elgg_view('input/hidden', array('internalname' => 'entity_guid', 'value' => $vars['entity']->getGUID()));
 		 $form_body .= elgg_view('input/submit', array('value' => elgg_echo("save"))) . "</p>";
