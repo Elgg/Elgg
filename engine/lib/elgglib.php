@@ -1827,6 +1827,18 @@
 		
 	}
 	
+	function js_page_handler($page) {
+		
+		if (is_array($page) && sizeof($page)) {
+			header('Content-type: text/javascript');
+			$js = str_replace('.js','',$page[0]);
+			echo elgg_view('js/' . $js);
+			
+			exit;
+		}
+		
+	}
+	
 	function elgg_init() {
 		// Important actions
 			register_action('comments/add');
@@ -1834,6 +1846,8 @@
 		// Menu
 			global $CONFIG;
 			add_menu(elgg_echo('content:latest'), $CONFIG->wwwroot . 'dashboard/latest.php');
+		// Page handler for JS
+			register_page_handler('js','js_page_handler');
 	}
 	
 	register_elgg_event_handler('init','system','elgg_init');
