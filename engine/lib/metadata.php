@@ -547,18 +547,19 @@
 	 * @param string $entity_subtype The subtype of the entity
 	 * @param int $limit Number of entities to display per page
 	 * @param true|false $fullview Whether or not to display the full view (default: true)
-	 * @param true|false $viewtypetoggle Whether or not to allow users to toggle to the gallery view
+	 * @param true|false $viewtypetoggle Whether or not to allow users to toggle to the gallery view. Default: true
+	 * @param true|false $pagination Display pagination? Default: true
 	 * 
 	 * @return string A list of entities suitable for display
 	 */
-	function list_entities_from_metadata($meta_name, $meta_value = "", $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = true) {
+	function list_entities_from_metadata($meta_name, $meta_value = "", $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true) {
 		
 		$offset = (int) get_input('offset');
 		$limit = (int) $limit;
 		$count = get_entities_from_metadata($meta_name, $meta_value, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, "", 0, true);
 		$entities = get_entities_from_metadata($meta_name, $meta_value, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, "", 0, false);
 		
-		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle);
+		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle, $pagination);
 		
 	}
 
@@ -656,16 +657,18 @@
 	 * @param int $offset
 	 * @param string $order_by Optional ordering.
 	 * @param true|false $fullview Whether or not to display the full view (default: true)
+	 * @param true|false $viewtypetoggle Whether or not to allow users to toggle to the gallery view. Default: true
+	 * @param true|false $pagination Display pagination? Default: true
 	 * @return string List of ElggEntities suitable for display
 	 */
-	function list_entities_from_metadata_multi($meta_array, $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $fullview = true) {
+	function list_entities_from_metadata_multi($meta_array, $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true) {
 		
 		$offset = (int) get_input('offset');
 		$limit = (int) $limit;
 		$count = get_entities_from_metadata_multi($meta_array, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, "", $site_guid, true);
 		$entities = get_entities_from_metadata_multi($meta_array, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, "", $site_guid, false);
 	
-		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview);
+		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle, $pagination);
 		
 	}
 	

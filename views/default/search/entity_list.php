@@ -8,6 +8,7 @@
 		$baseurl = $vars['baseurl'];
 		$context = $vars['context'];
 		$viewtype = $vars['viewtype'];
+		$pagination = $vars['pagination'];
 		
 		$html = "";
 		$nav = "";
@@ -29,7 +30,8 @@
 														));
 			}
 			
-			$nav .= elgg_view('navigation/pagination',array(
+			if ($pagination)
+				$nav .= elgg_view('navigation/pagination',array(
 			
 												'baseurl' => $baseurl,
 												'offset' => $offset,

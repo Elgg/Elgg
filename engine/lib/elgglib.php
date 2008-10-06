@@ -479,7 +479,7 @@
 	 * @param true|false $viewtypetoggle Whether or not to allow users to toggle to gallery view
 	 * @return string The list of entities
 	 */
-		function elgg_view_entity_list($entities, $count, $offset, $limit, $fullview = true, $viewtypetoggle = true) {
+		function elgg_view_entity_list($entities, $count, $offset, $limit, $fullview = true, $viewtypetoggle = true, $pagination = true) {
 			
 			$count = (int) $count;
 			$offset = (int) $offset;
@@ -497,6 +497,7 @@
 													'context' => $context, 
 													'viewtypetoggle' => $viewtypetoggle,
 													'viewtype' => get_input('search_viewtype','list'), 
+													'pagination' => $pagination
 												  ));
 				
 			return $html;

@@ -1436,15 +1436,16 @@
 	 * @param int $limit The number of entities to display per page (default: 10)
 	 * @param true|false $fullview Whether or not to display the full view (default: true)
 	 * @param true|false $viewtypetoggle Whether or not to allow gallery view 
+	 * @param true|false $pagination Display pagination? Default: true
 	 * @return string A viewable list of entities
 	 */
-	function list_entities($type= "", $subtype = "", $owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = false) {
+	function list_entities($type= "", $subtype = "", $owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = false, $navigation = true) {
 		
 		$offset = (int) get_input('offset');
 		$count = get_entities($type, $subtype, $owner_guid, "", $limit, $offset, true);
 		$entities = get_entities($type, $subtype, $owner_guid, "", $limit, $offset);
 
-		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle);
+		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle, $navigation);
 		
 	}
 	
