@@ -211,6 +211,16 @@
 		 */
 		public function getObjectOwnerGUID() { return $this->owner_guid; }
 		
+		/**
+		 * Return a type of the object - eg. object, group, user, relationship, metadata, annotation etc
+		 */
+		public function getType() { return 'relationship'; }
+		
+		/**
+		 * Return a subtype. For metadata & annotations this is the 'name' and for relationship this is the relationship type.
+		 */
+		public function getSubtype() { return $this->relationship; } 
+		
 		// ITERATOR INTERFACE //////////////////////////////////////////////////////////////
 		/*
 		 * This lets an entity's attributes be displayed using foreach as a normal array.

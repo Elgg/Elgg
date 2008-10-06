@@ -161,6 +161,16 @@
 		 */
 		public function getObjectOwnerGUID() { return $this->owner_guid; }
 		
+		/**
+		 * Return a type of the object - eg. object, group, user, relationship, metadata, annotation etc
+		 */
+		public function getType() { return $this->type; }
+		
+		/**
+		 * Return a subtype. For metadata & annotations this is the 'name' and for relationship this is the relationship type.
+		 */
+		public function getSubtype() { return $this->name; }
+		
 		
 		// ITERATOR INTERFACE //////////////////////////////////////////////////////////////
 		/*

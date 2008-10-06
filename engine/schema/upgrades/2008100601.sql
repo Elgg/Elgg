@@ -1,0 +1,2 @@
+ALTER TABLE `prefix_system_log` ADD COLUMN `object_type` varchar(128) NOT NULL AFTER `object_class`;
+ALTER TABLE `prefix_system_log` ADD COLUMN `object_subtype` varchar(128) NOT NULL AFTER `object_type`;

@@ -282,7 +282,10 @@ CREATE TABLE `prefix_system_log` (
 	`id` int(11) NOT NULL auto_increment,
 	
 	`object_id` int(11) NOT NULL,
+
 	`object_class` varchar(128) NOT NULL,
+	`object_type` varchar(128) NOT NULL,
+	`object_subtype` varchar(128) NOT NULL,
 	
 	`event` varchar(128) NOT NULL,
 	`performed_by_guid` int(11) NOT NULL,

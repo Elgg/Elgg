@@ -39,6 +39,16 @@
 		public function getClassName();
 		
 		/**
+		 * Return a type of the object - eg. object, group, user, relationship, metadata, annotation etc
+		 */
+		public function getType();
+		
+		/**
+		 * Return a subtype. For metadata & annotations this is the 'name' and for relationship this is the relationship type.
+		 */
+		public function getSubtype();
+		
+		/**
 		 * For a given ID, return the object associated with it.
 		 * This is used by the river functionality primarily.
 		 * This is useful for checking access permissions etc on objects.
@@ -57,11 +67,13 @@
 	 * @param int $by_user The user who initiated the event.
 	 * @param string $event The event you are searching on.
 	 * @param string $class The class of object it effects.
+	 * @param string $type The type
+	 * @param string $subtype The subtype.
 	 * @param int $limit Maximum number of responses to return.
 	 * @param int $offset Offset of where to start.
 	 * @param bool $count Return count or not
 	 */
-	function get_system_log($by_user = "", $event = "", $class = "", $limit = 10, $offset = 0, $count = false, $timebefore = 0, $timeafter = 0, $object_id = 0)
+	function get_system_log($by_user = "", $event = "", $class = "", $type = "", $subtype = "", $limit = 10, $offset = 0, $count = false, $timebefore = 0, $timeafter = 0, $object_id = 0)
 	{
 		global $CONFIG;
 		
@@ -75,6 +87,8 @@
 		}
 		$event = sanitise_string($event);
 		$class = sanitise_string($class);
+		$type = sanitise_string($type);
+		$subtype = sanitise_string($subtype);
 		$limit = (int)$limit;
 		$offset = (int)$offset;
 		
@@ -92,6 +106,10 @@
 			$where[] = "event='$event'";
 		if ($class!=="")
 			$where[] = "object_class='$class'";
+		if ($type != "")
+			$where[] = "object_type='$type'";
+		if ($subtype!=="")
+			$where[] = "object_subtype='$subtype'";
 			
 		if ($timebefore)
 			$where[] = "time_created < " . ((int) $timebefore);
@@ -180,13 +198,15 @@
 			// Has loggable interface, extract the necessary information and store
 			$object_id = (int)$object->getSystemLogID();
 			$object_class = $object->getClassName();
+			$object_type = $object->getType();
+			$object_subtype = $object->getSubtype();
 			$event = sanitise_string($event);
 			$time = time();
 			$performed_by = (int)$_SESSION['guid'];
 			
 			// Create log if we haven't already created it
 			if (!isset($logcache[$time][$object_id][$event])) {
-				if (insert_data("INSERT DELAYED into {$CONFIG->dbprefix}system_log (object_id, object_class, event, performed_by_guid, time_created) VALUES ('$object_id','$object_class','$event',$performed_by, '$time')")) {
+				if (insert_data("INSERT DELAYED into {$CONFIG->dbprefix}system_log (object_id, object_class, object_type, object_subtype, event, performed_by_guid, time_created) VALUES ('$object_id','$object_class','$object_type', '$object_subtype', '$event',$performed_by, '$time')")) {
 					$logcache[$time][$object_id][$event] = true;
 					return true;
 				}
