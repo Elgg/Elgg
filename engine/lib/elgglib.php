@@ -347,7 +347,7 @@
 				$location = $CONFIG->viewpath;
 				$viewtype = elgg_get_viewtype();
 				$root = $location . $viewtype . '/' . $view_root;
-				echo $root;
+				
 				if (file_exists($root) && is_dir($root)) {
 					$val = get_views($root, $view_root);
 					if (!is_array($treecache[$view_root])) $treecache[$view_root] = array();
