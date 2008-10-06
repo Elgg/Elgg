@@ -295,6 +295,8 @@ CREATE TABLE `prefix_system_log` (
 	PRIMARY KEY  (`id`),
 	KEY `object_id` (`object_id`),
 	KEY `object_class` (`object_class`),
+	KEY `object_type` (`object_type`),
+	KEY `object_subtype` (`object_subtype`),
 	KEY `event` (`event`),
 	KEY `performed_by_guid` (`performed_by_guid`),
 	KEY `time_created` (`time_created`)

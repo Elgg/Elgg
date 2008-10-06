@@ -166,11 +166,227 @@
 	 */
 	function get_river_entries($by_user = "", $relationship = "", $limit = 10, $offset = 0)
 	{
-		// set start limit and offset
-		$cnt = $limit; // Didn' cast to int here deliberately
-		$off = $offset; // here too
+		global $CONFIG;
+		
+		$limit = (int)$limit;
+		$offset = (int)$offset;
+		$relationship = sanitise_string($relationship);
 		
 		if (is_array($by_user) && sizeof($by_user) > 0) {
+			foreach($by_user as $key => $val) {
+				$by_user[$key] = (int) $val;
+			}
+		} else {
+			$by_user = array((int)$by_user);
+		}
+		
+		// Get all potential river events from available view
+		$river_events = array(); 
+		foreach (elgg_view_tree('river') as $view)
+		{
+			$fragments = explode('/', $view);
+
+			if ((isset($fragments[0])) && ($fragments[0] == 'river'))
+			{
+				if (isset($fragments[1]))
+				{
+					$f = array();
+					for ($n = 1; $n < count($fragments); $n++)
+					{
+						$val = sanitise_string($fragments[$n]);
+						switch($n)
+						{
+							case 1: $key = 'type'; break;
+							case 2: $key = 'subtype'; break;
+							case 3: $key = 'event'; break;
+						}
+						$f[$key] = $val;
+					}
+					$river_events[] = $f; 
+					
+				}
+			}
+		}
+		// Construct query
+		
+			// Objects
+			$n = 0;
+			foreach ($river_events as $details)
+			{
+				// Get what we're talking about
+				if ($n>0) $obj_query .= " or ";
+			
+				if ($details['subtype'] == 'default') $details['subtype'] = '';
+				
+				$obj_query .= "( sl.object_type='{$details['type']}' and sl.object_subtype='{$details['subtype']}' and sl.event='{$details['event']}' )";
+			
+				$n++;
+			}
+			
+		
+			// User
+			$user = "sl.performed_by_guid in (".implode(',', $by_user).")";
+			
+			// Relationship
+			$relationship_query = "";
+			$relationship_join = "";
+			if ($relationship)
+			{
+				$relationship_join = " join {$CONFIG->dbprefix}entity_relationships r on sl.performed_by_guid=r.entity_guid ";
+				$relationship_query = "r.relationship = '$relationship'";
+			}
+			
+			$query = "SELECT sl.* from {$CONFIG->dbprefix}system_log sl $relationship_join where $user and $relationship_query ($obj_query) order by sl.time_created desc  limit $offset, $limit";
+	
+		
+		// fetch data from system log (needs optimisation)
+		error_log("MARCUS $query");
+		$log_data = get_data($query);
+		
+		
+		// until count reached, loop through and render
+		$river = array();
+		
+		if ($log_data)
+		{
+			foreach ($log_data as $log)
+			{
+				// See if we have access to the object we're talking about
+				$event = $log->event;
+				$class = $log->object_class;
+				$type = $log->object_type;
+				$subtype = $log->object_subtype;
+				$tmp = new $class();
+				$object = $tmp->getObjectFromID($log->object_id);	
+				$by_user_obj = get_entity($log->performed_by_guid);
+				
+				// Belts and braces
+				if ($object instanceof $class)
+				{
+					$tam = "";
+					
+					// Construct the statement
+					$statement_object = $object; // Simple object, we don't need to do more
+							
+					// This is a relationship, slighty more complicated
+					if ($object instanceof ElggRelationship) {
+								
+						$statement_object = array(
+							'subject' => get_entity($object->guid_one),
+							'relationship' => $object->relationship,// Didn' cast to int here deliberately
+							'object' => get_entity($object->guid_two) 
+						);
+						
+					// Metadata or annotations, also slightly more complicated
+					} else if ($object instanceof ElggExtender) {
+						$statement_object = array(
+							'subject' => $object,
+							'object' => get_entity($object->entity_guid)  
+						);
+					}
+
+					// Put together a river statement
+					$statement = new ElggRiverStatement($by_user_obj, $event, $statement_object);
+					
+					// Now construct and call the appropriate views
+					
+					if ($subtype == "widget") { // Special case for widgets
+						$subtype = "widget/" . $object->handler;
+					}
+					if ($subtype == '')
+						$subtype = 'default';
+						
+					$tam = elgg_view("river/$type/$subtype/$event", array(
+						'statement' => $statement
+					));
+					
+					
+					// Giftwrap
+					if (!empty($tam)) {
+						$tam = elgg_view("river/wrapper",array(
+									'entry' => $tam,
+									'time' => $log->time_created,
+									'event' => $event,
+									'statement' => $statement 
+						));
+					}
+					
+					$river[] = $tam;
+				}
+			}
+		}
+		
+		return $river;
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		// Construct query
+		/*
+			// Events and objects
+			$n = 0;
+			$obj_query = "";
+			foreach ($river_events as $object => $events)
+			{
+				$object = sanitise_string($object);
+				
+				if ($n>0) $obj_query .= " or ";
+				
+				$obj_query .= "( sl.object_class='$object' and sl.event in ('".implode("','", $events)."') )";
+				
+				$n++;
+			}
+			
+			// User
+			$user = "sl.performed_by_guid in (".implode(',', $by_user).")";
+			
+			// Relationship
+			$relationship_query = "";
+			$relationship_join = "";
+			if ($relationship)
+			{
+				$relationship_join = " join {$CONFIG->dbprefix}entity_relationships r on sl.performed_by_guid=r.entity_guid ";
+				$relationship_query = "r.relationship = '$relationship'";
+			}
+			
+			$query = "SELECT sl.* from {$CONFIG->dbprefix}system_log sl $relationship_join where $user and $relationship_query ($obj_query) order by sl.time_created desc  limit $offset, $limit";
+	
+		
+			
+			
+			
+			
+		// set start limit and offset
+		$cnt = $limit; 
+		$off = $offset; 
+		
+		if (is_array($by_user) && sizeof($by_user) > 0) {// Didn' cast to int here deliberately
 			foreach($by_user as $key => $val) {
 				$by_user[$key] = (int) $val;
 			}
@@ -185,6 +401,7 @@
 	
 		do
 		{
+			//$log_events = get_data($query); 
 			$log_events = get_system_log($by_user, "","", $cnt, $off);
 		
 			if (!$log_events)
@@ -223,7 +440,7 @@
 								
 								$statement_object = array(
 									'subject' => get_entity($object->guid_one),
-									'relationship' => $object->relationship,
+									'relationship' => $object->relationship,// Didn' cast to int here deliberately
 									'object' => get_entity($object->guid_two) 
 								);
 							} else if ($object instanceof ElggExtender) {
@@ -281,7 +498,7 @@
 			(!$exit)
 		);
 		
-		return $river;
+		return $river;*/
 	}
 	
 	/**
