@@ -769,6 +769,54 @@
 	}
 	
 	/**
+	 * Mark entities with a particular type and subtype as having access permissions
+	 * that can be changed independently from their parent entity
+	 *
+	 * @param string $type The type - object, user, etc
+	 * @param string $subtype The subtype; all subtypes by default
+	 */
+	function register_metadata_as_independent($type, $subtype = '*') {
+		global $CONFIG;
+		if (!isset($CONFIG->independents)) $CONFIG->independents = array();
+		$CONFIG->independents[$type][$subtype] = true;
+	}
+	
+	/**
+	 * Determines whether entities of a given type and subtype should not change
+	 * their metadata in line with their parent entity 
+	 *
+	 * @param string $type The type - object, user, etc
+	 * @param string $subtype The entity subtype
+	 * @return true|false
+	 */
+	function is_metadata_independent($type, $subtype) {
+		global $CONFIG;
+		if (empty($CONFIG->independents)) return false;
+		if (!empty($CONFIG->independents[$type][$subtype])
+			|| !empty($CONFIG->independents[$type]['*'])) return true;
+		return false;
+	}
+	
+	/**
+	 * When an entity is updated, resets the access ID on all of its child metadata
+	 *
+	 * @param string $event The name of the event
+	 * @param string $object_type The type of object
+	 * @param ElggEntity $object The entity itself
+	 */
+	function metadata_update($event, $object_type, $object) {
+		if ($object instanceof ElggEntity) {
+			if (!is_metadata_independent($object->getType(), $object->getSubtype())) {
+				global $CONFIG;
+				$access_id = (int) $object->access_id;
+				$guid = (int) $object->getGUID();
+				update_data("update {$CONFIG->dbprefix}metadata set access_id = {$access_id} where entity_guid = {$guid}");
+			}
+		}	
+		return true;	
+	}
+	
+	/**
 	 * Register a metadata url handler.
 	 *
 	 * @param string $function_name The function.
@@ -780,4 +828,7 @@
 		
 	/** Register the hook */
 	register_plugin_hook("export", "all", "export_metadata_plugin_hook", 2);
+	/** Call a function whenever an entity is updated **/
+	register_elgg_event_handler('update','all','metadata_update');
+	
 ?>

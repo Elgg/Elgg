@@ -23,6 +23,9 @@
 			// will dictate the URL for all ElggUser objects
 				register_entity_url_handler('profile_url','user','all');
 				
+			// Metadata on users needs to be independent
+				register_metadata_as_independent('user');
+				
 			// For now, we'll hard code the profile items as follows:
 			// TODO make this user configurable
 				$CONFIG->profile = array(
