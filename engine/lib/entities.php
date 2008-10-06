@@ -1895,14 +1895,12 @@
 				if (is_callable($function)) {
 					$url = $function($entity);
 				}
-			}
-			if (isset($CONFIG->entity_url_handler[$entity->getType()]['all'])) {
+			} elseif (isset($CONFIG->entity_url_handler[$entity->getType()]['all'])) {
 				$function =  $CONFIG->entity_url_handler[$entity->getType()]['all'];
 				if (is_callable($function)) {
 					$url = $function($entity);
 				}
-			}
-			if (isset($CONFIG->entity_url_handler['all']['all'])) {
+			} elseif (isset($CONFIG->entity_url_handler['all']['all'])) {
 				$function =  $CONFIG->entity_url_handler['all']['all'];
 				if (is_callable($function)) {
 					$url = $function($entity);
