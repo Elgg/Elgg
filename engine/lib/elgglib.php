@@ -312,10 +312,10 @@
 					if (file_exists($dir) && is_dir($dir)) {
 						if ($handle = opendir($dir)) {
 							while ($view = readdir($handle)) {
-								if (!in_array($view, array('.','..'))) {
-									if (is_dir($view)) {
+								if (!in_array($view, array('.','..','.svn','CVS'))) {
+									if (is_dir($dir . '/' . $view)) {
 										if ($val = get_views($dir . '/' . $view, $base . '/' . $view)) {
-											array_merge($return, $val);
+											$return = array_merge($return, $val);
 										}
 									} else {
 										$view = str_replace('.php','',$view);
