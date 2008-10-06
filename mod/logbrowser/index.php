@@ -42,8 +42,8 @@
 	$title = elgg_view_title(elgg_echo('logbrowser'));
 	
 	// Get log entries
-	$log = get_system_log($user, "", "", $limit, $offset, false, $timeupper, $timelower);
-	$count = get_system_log($user, "", "", $limit, $offset, true, $timeupper, $timelower);
+	$log = get_system_log($user, "", "", "","", $limit, $offset, false, $timeupper, $timelower);
+	$count = get_system_log($user, "", "", "","", $limit, $offset, true, $timeupper, $timelower);
 	$log_entries = array();
 	
 	foreach ($log as $l)
