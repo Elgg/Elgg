@@ -299,6 +299,7 @@ CREATE TABLE `prefix_system_log` (
 	KEY `object_subtype` (`object_subtype`),
 	KEY `event` (`event`),
 	KEY `performed_by_guid` (`performed_by_guid`),
-	KEY `time_created` (`time_created`)
+	KEY `time_created` (`time_created`),
+	KEY `river_key` (`object_type`, `object_subtype`, `event`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
