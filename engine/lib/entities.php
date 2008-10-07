@@ -1953,7 +1953,7 @@
 	 * @param unknown_type $returnvalue
 	 * @param unknown_type $params
 	 */
-	function default_entity_url_hook($hook, $entity_type, $returnvalue, $params)
+	function default_entity_icon_hook($hook, $entity_type, $returnvalue, $params)
 	{
 		global $CONFIG;
 		
@@ -2106,7 +2106,7 @@
 	register_plugin_hook('volatile', 'metadata', 'volatile_data_export_plugin_hook');
 	
 	/** Hook for rendering a default icon for entities */
-	register_plugin_hook('entity:icon:url', 'all', 'default_entity_url_hook', 700);
+	register_plugin_hook('entity:icon:url', 'all', 'default_entity_icon_hook', 1000);
 	
 	/** Register init system event **/
 	register_elgg_event_handler('init','system','entities_init');
