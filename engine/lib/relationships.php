@@ -540,9 +540,10 @@
 	 * @param int $limit The number of entities to display on a page
 	 * @param true|false $fullview Whether or not to display the full view (default: true)
 	 * @param true|false $viewtypetoggle Whether or not to allow gallery view 
+	 * @param true|false $pagination Whether to display pagination (default: true)
 	 * @return string The viewable list of entities
 	 */
-	function list_entities_from_relationship($relationship, $relationship_guid, $inverse_relationship = false, $type = "", $subtype = "", $owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = false) {
+	function list_entities_from_relationship($relationship, $relationship_guid, $inverse_relationship = false, $type = "", $subtype = "", $owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = false, $pagination = true) {
 		
 		$limit = (int) $limit;
 		$offset = (int) get_input('offset');

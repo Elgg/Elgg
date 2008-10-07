@@ -13,7 +13,7 @@
 	$owner = $vars['entity']->owner_guid;
       
     //$groups = get_users_membership($owner);
-    $groups = list_entities_from_relationship('member',$owner,false,'group','',0,$number,false);
+    $groups = list_entities_from_relationship('member',$owner,false,'group','',0,$number,false,false,false);
 	
     echo $groups;
       
