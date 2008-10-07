@@ -26,7 +26,6 @@
 	 */
 	function uservalidationbyemail_email_validation($event, $object_type, $object)
 	{
-		error_log('EMAIL : '.$event." $object_type");
 		if (($object) && ($object instanceof ElggUser))
 		{
 			uservalidationbyemail_request_validation($object->guid);
@@ -66,7 +65,7 @@
 			// Work out validate link
 			$link = $CONFIG->site->url . "action/email/confirm?u=$user_guid&c=" . uservalidationbyemail_generate_code($user_guid, $user->email);
 
-			// Send validation email
+			// Send validation email		
 			$result = notify_user($user->guid, $CONFIG->site->guid, sprintf(elgg_echo('email:validate:subject'), $user->username), sprintf(elgg_echo('email:validate:body'), $user->name, $link), NULL, 'email');
 			if ($result)
 				system_message(elgg_echo('uservalidationbyemail:registerok'));
