@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 	/**
 	 * Elgg groups plugin language pack
 	 * 
