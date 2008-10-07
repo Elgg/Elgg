@@ -86,7 +86,7 @@
 		
 		if ($objects)
 		{
-			return elgg_view_entity_list($objects, count($objects), 0, 10, false);
+			return elgg_view_entity_list($objects, count($objects), 0, 9999, false);
 		}
 	}
         
