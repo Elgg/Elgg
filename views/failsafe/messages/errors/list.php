@@ -23,10 +23,10 @@
     background:#F7DAD8;
     color:#000000;
     padding:3px 10px 3px 10px;
-    margin:20px 20px 0px 20px;
+    margin:20px 0px 0px 0px;
     z-index: 9999;
     position:absolute;
-    width:936px;
+    width:645px;
 }
 </style>
 	<div class="database_settings">
