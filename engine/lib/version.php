@@ -12,6 +12,57 @@
 	 */
 
 	/**
+	 * Run any php upgrade scripts which are required
+	 *
+	 * @param unknown_type $version
+	 */
+	function upgrade_code($version) 
+	{
+		global $CONFIG;
+		
+		// Elgg and its database must be installed to upgrade it!
+        if (!is_db_installed() || !is_installed()) return false;
+		
+		$version = (int) $version;
+        	
+        if ($handle = opendir($CONFIG->path . 'engine/lib/upgrades/')) {
+        		
+        	$upgrades = array();
+        	
+        	while ($updatefile = readdir($handle)) {
+        		
+        		// Look for upgrades and add to upgrades list
+        		if (!is_dir($CONFIG->path . 'engine/lib/upgrades/' . $updatefile)) {
+        			if (preg_match('/([0-9]*)\.php/',$updatefile,$matches)) {
+        				$core_version = (int) $matches[1];
+        				if ($core_version > $version) {
+        					$upgrades[] = $updatefile;
+        				}
+        			}
+        		}
+        		
+        	}
+        	
+        	// Sort and execute
+        	asort($upgrades);
+        	if (sizeof($upgrades) > 0) {
+        		foreach($upgrades as $upgrade) {
+        			try {
+        				@include($CONFIG->path . 'engine/lib/upgrades/' . $upgrade);
+        			} catch (Exception $e) {
+        				error_log($e->getmessage());
+        			}	
+        			
+        		}
+        	}
+
+        	return true;
+        }
+        	
+        return false;
+	}
+
+	/**
 	 * Get the current version information
 	 *
 	 * @param true|false $humanreadable Whether to return a human readable version (default: false)
@@ -53,11 +104,17 @@
 		function version_upgrade() {
 			
 			$dbversion = (int) datalist_get('version');
+			
+			// Upgrade database
 			db_upgrade($dbversion);
-			datalist_set('version', get_version());
 			system_message(elgg_echo('upgrade:db'));
-			//forward();
-			//exit;
+			
+			// Upgrade core
+			if (upgrade_code($dbversion))
+				system_message(elgg_echo('upgrade:core'));
+			
+			// Update the version
+			datalist_set('version', get_version());
 			
 		}
 		

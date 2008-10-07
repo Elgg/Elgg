@@ -669,6 +669,7 @@ Alternatively, you can enter your database settings below and we will try and do
 			'installation:disableapi:label' => "Enable the RESTful API",
 	
 			'upgrade:db' => 'Your database was upgraded.',
+			'upgrade:core' => 'Your elgg installation was upgraded',
 	
 		/**
 		 * Welcome
