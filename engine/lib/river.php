@@ -240,7 +240,6 @@
 	
 		
 		// fetch data from system log (needs optimisation)
-		error_log("MARCUS $query");
 		$log_data = get_data($query);
 		
 		
