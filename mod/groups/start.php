@@ -36,7 +36,7 @@
 		register_entity_url_handler('groups_url','group','all');
 		
 		// Register an icon handler for groups
-		register_page_handler('icon','groups_icon_handler');
+		register_page_handler('groupicon','groups_icon_handler');
 		
 		// Register some actions
 		register_action("groups/edit",false, $CONFIG->pluginspath . "groups/actions/edit.php");
@@ -79,6 +79,9 @@
 			'website' => 'url',
 							   
 		);
+		
+		// Now override icons
+		register_plugin_hook('entity:icon:url', 'group', 'groups_groupicon_hook');
 	}
 	
 	/**
@@ -197,6 +200,27 @@
 	}
 	
 	/**
+	 * Handle group icons.
+	 *
+	 * @param unknown_type $page
+	 */
+	function groups_icon_handler($page) {
+			
+		global $CONFIG;
+		
+		// The username should be the file we're getting
+		if (isset($page[0])) {
+			set_input('group_guid',$page[0]);
+		}
+		if (isset($page[1])) {
+			set_input('size',$page[1]);
+		}
+		// Include the standard profile index
+		include($CONFIG->pluginspath . "groups/graphics/icon.php");
+		
+	}
+	
+	/**
 	 * Populates the ->getUrl() method for group objects
 	 *
 	 * @param ElggEntity $entity File entity
@@ -310,6 +334,44 @@
 		
 		return true;
 		
+	}
+
+	/**
+	 * This hooks into the getIcon API and provides nice user icons for users where possible.
+	 *
+	 * @param unknown_type $hook
+	 * @param unknown_type $entity_type
+	 * @param unknown_type $returnvalue
+	 * @param unknown_type $params
+	 * @return unknown
+	 */
+	function groups_groupicon_hook($hook, $entity_type, $returnvalue, $params)
+	{
+		global $CONFIG;
+		
+		if ((!$returnvalue) && ($hook == 'entity:icon:url') && ($params['entity'] instanceof ElggGroup))
+		{
+			$entity = $params['entity'];
+			$type = $entity->type;
+			$viewtype = $params['viewtype'];
+			$size = $params['size'];
+			
+			if ($icontime = $entity->icontime) {
+				$icontime = "{$icontime}";
+			} else {
+				$icontime = "default";
+			}
+			
+			$filehandler = new ElggFile();
+			$filehandler->owner_guid = $entity->owner_guid;
+			$filehandler->setFilename("groups/" . $entity->guid . $size . ".jpg");
+			
+			if ($filehandler->exists()) {
+				$url = $CONFIG->url . "pg/groupicon/{$entity->guid}/$size/$icontime.jpg";
+			
+				return $url;
+			}
+		}
 	}
 	
 	// Register a handler for create groups

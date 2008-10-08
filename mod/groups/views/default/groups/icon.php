@@ -38,7 +38,7 @@
 ?>
 
 <div class="groupicon">
-<a href="<?php echo $vars['entity']->getURL(); ?>" class="icon" ><img src="<?php echo $vars['url']; ?>mod/groups/graphics/icon.php?group_guid=<?php echo $group->getGUID(); ?>&size=<?php echo $vars['size']; ?>" border="0" <?php echo $align; ?> title="<?php echo $name; ?>" <?php echo $vars['js']; ?> /></a>
+<a href="<?php echo $vars['entity']->getURL(); ?>" class="icon" ><img src="<?php echo $vars['entity']->getIcon($vars['size']); ?>" border="0" <?php echo $align; ?> title="<?php echo $name; ?>" <?php echo $vars['js']; ?> /></a>
 </div>
 
 <?php
