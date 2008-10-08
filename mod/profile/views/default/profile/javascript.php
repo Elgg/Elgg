@@ -5,7 +5,7 @@
 	 * 
 	 * @package ElggProfile
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Pete Harris <pete@elgg.com>
+	 * @author Curverider
 	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.com/
 	 * 
@@ -26,27 +26,34 @@ function setup_avatar_menu() {
 	$("div.usericon img").mouseover(function() {
 		// find nested avatar_menu_button and show
 		$(this.parentNode.parentNode).children("[class=avatar_menu_button]").show();
+		$(this.parentNode.parentNode).children("div.avatar_menu_button").addClass("avatar_menu_arrow");
 		//$(this.parentNode.parentNode).css("z-index", submenuLayer);
 	})
 	.mouseout(function() { 
-		if($(this).parent().parent().find("div.sub_menu").css('display')!="block"){
+		if($(this).parent().parent().find("div.sub_menu").css('display')!="block") {
+			$(this.parentNode.parentNode).children("div.avatar_menu_button").removeClass("avatar_menu_arrow");
+			$(this.parentNode.parentNode).children("div.avatar_menu_button").removeClass("avatar_menu_arrow_on");
+			$(this.parentNode.parentNode).children("div.avatar_menu_button").removeClass("avatar_menu_arrow_hover");
 			$(this.parentNode.parentNode).children("[class=avatar_menu_button]").hide();
 		}
 		else {
+			$(this.parentNode.parentNode).children("div.avatar_menu_button").removeClass("avatar_menu_arrow");
+			$(this.parentNode.parentNode).children("div.avatar_menu_button").removeClass("avatar_menu_arrow_on");
+			$(this.parentNode.parentNode).children("div.avatar_menu_button").removeClass("avatar_menu_arrow_hover");
 			$(this.parentNode.parentNode).children("[class=avatar_menu_button]").show();
+			$(this.parentNode.parentNode).children("div.avatar_menu_button").addClass("avatar_menu_arrow");
 		}
 	});
 
 
 	// avatar contextual menu
-	$(".avatar_menu_button img.arrow").click(function(e) { 
+	$(".avatar_menu_button img").click(function(e) { 
 		
 		var submenu = $(this).parent().parent().find("div.sub_menu");
 		
 		// close submenu if arrow is clicked & menu already open
 		if(submenu.css('display') == "block") {
-			submenu.hide(); 		
-			$(this).attr('src','<?php echo $vars['url']; ?>_graphics/avatar_menu_arrow_hover.gif');									
+			//submenu.hide(); 		
 		}
 		else {
 			// get avatar dimensions
@@ -73,25 +80,38 @@ function setup_avatar_menu() {
 			submenuLayer++;
 			
 			// change arrow to 'on' state
-			$(this).attr('src','<?php echo $vars['url']; ?>_graphics/avatar_menu_arrow_open.gif');	
+			$(this.parentNode.parentNode).children("div.avatar_menu_button").removeClass("avatar_menu_arrow");
+			$(this.parentNode.parentNode).children("div.avatar_menu_button").removeClass("avatar_menu_arrow_hover");
+			$(this.parentNode.parentNode).children("div.avatar_menu_button").addClass("avatar_menu_arrow_on");
 		}
 		
 		// hide any other open submenus and reset arrows
 		$("div.sub_menu:visible").not(submenu).hide();
-		$(".usericon img.arrow").not(this).attr('src','<?php echo $vars['url']; ?>_graphics/avatar_menu_arrow.gif');
-		$(".avatar_menu_button").not(this).hide();
-		
+		$(".avatar_menu_button").removeClass("avatar_menu_arrow");
+		$(".avatar_menu_button").removeClass("avatar_menu_arrow_on");
+		$(".avatar_menu_button").removeClass("avatar_menu_arrow_hover");
+		$(".avatar_menu_button").hide();
+		$(this.parentNode.parentNode).children("div.avatar_menu_button").addClass("avatar_menu_arrow_on");
+		$(this.parentNode.parentNode).children("div.avatar_menu_button").show();
 		//alert("submenuLayer = " +submenu.css("z-index"));
 	})
 	// hover arrow each time mouseover enters arrow graphic (eg. when menu is already shown)
-	.mouseover(function() { $(this).attr('src','<?php echo $vars['url']; ?>_graphics/avatar_menu_arrow_hover.gif'); })
+	.mouseover(function() {
+		$(this.parentNode.parentNode).children("div.avatar_menu_button").removeClass("avatar_menu_arrow_on");
+		$(this.parentNode.parentNode).children("div.avatar_menu_button").removeClass("avatar_menu_arrow");
+		$(this.parentNode.parentNode).children("div.avatar_menu_button").addClass("avatar_menu_arrow_hover");
+	})
 	// if menu not shown revert arrow, else show 'menu open' arrow
 	.mouseout(function() { 
 		if($(this).parent().parent().find("div.sub_menu").css('display')!="block"){
-			$(this).attr('src','<?php echo $vars['url']; ?>_graphics/avatar_menu_arrow.gif');
+			$(this.parentNode.parentNode).children("div.avatar_menu_button").removeClass("avatar_menu_arrow_hover");
+			$(this.parentNode.parentNode).children("div.avatar_menu_button").removeClass("avatar_menu_arrow");
+			$(this.parentNode.parentNode).children("div.avatar_menu_button").addClass("avatar_menu_arrow");
 		}
 		else {
-			$(this).attr('src','<?php echo $vars['url']; ?>_graphics/avatar_menu_arrow_open.gif');
+			$(this.parentNode.parentNode).children("div.avatar_menu_button").removeClass("avatar_menu_arrow_hover");
+			$(this.parentNode.parentNode).children("div.avatar_menu_button").removeClass("avatar_menu_arrow");
+			$(this.parentNode.parentNode).children("div.avatar_menu_button").addClass("avatar_menu_arrow_on");
 		}
 	});
 	
@@ -101,7 +121,9 @@ function setup_avatar_menu() {
 			var target = $(event.target);
 			if (target.parents(".usericon").length == 0) {				
 				$(".usericon div.sub_menu").fadeOut();
-				$(".usericon img.arrow").attr('src','<?php echo $vars['url']; ?>_graphics/avatar_menu_arrow.gif');
+				$(".avatar_menu_button").removeClass("avatar_menu_arrow");
+				$(".avatar_menu_button").removeClass("avatar_menu_arrow_on");
+				$(".avatar_menu_button").removeClass("avatar_menu_arrow_hover");
 				$(".avatar_menu_button").hide();
 			}
 	});			   

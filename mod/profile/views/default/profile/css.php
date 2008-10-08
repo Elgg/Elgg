@@ -22,7 +22,21 @@
 	right:0;
 	bottom:0;
 }
-
+.avatar_menu_arrow {
+	background: url(<?php echo $vars['url']; ?>_graphics/avatar_menu_arrow.gif) no-repeat top left;
+	width:15px;
+	height:15px;
+}
+.avatar_menu_arrow_on {
+	background: url(<?php echo $vars['url']; ?>_graphics/avatar_menu_arrow_open.gif) no-repeat top left;
+	width:15px;
+	height:15px;
+}
+.avatar_menu_arrow_hover {
+	background: url(<?php echo $vars['url']; ?>_graphics/avatar_menu_arrow_hover.gif) no-repeat top left;
+	width:15px;
+	height:15px;
+}
 .usericon div.sub_menu { 
 	display:none; 
 	position:absolute; 

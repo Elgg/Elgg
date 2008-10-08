@@ -48,7 +48,7 @@
 		
 ?>
 <div class="usericon">
-<div class="avatar_menu_button"><img src="<?php echo $vars['url']; ?>_graphics/avatar_menu_arrow.gif" width="15" height="15" class="arrow" /></div>
+<div class="avatar_menu_button"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" border="0" width="15px" height="15px" /></div>
 
 	<div class="sub_menu">
 		<a href="<?php echo $vars['entity']->getURL(); ?>"><h3><?php echo $vars['entity']->name; ?></h3></a>
