@@ -35,7 +35,7 @@
 <rss version='2.0'   xmlns:dc='http://purl.org/dc/elements/1.1/'>
 	<channel xml:base=''>
 		<title><![CDATA[<?php echo $title; ?>]]></title>
-		<link><?php echo $url; ?></link>
+		<link><?php echo htmlentities($url); ?></link>
 		<?php
 
 			echo $vars['body'];
