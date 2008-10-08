@@ -1873,9 +1873,17 @@
 		// Fail, so use default
 		if (!$url) {
 
-			$test = elgg_view("icon/entity/default/{$size}",array('entity' => $entity));
-			if (!empty($test)) return $test;
+			$type = $entity->getType();
+			$subtype = $entity->getSubtype();
+			
+			if (!empty($subtype)) {
+				$overrideurl = elgg_view("icon/{$type}/{$subtype}/{$size}",array('entity' => $entity));
+				if (!empty($overrideurl)) return $overrideurl;
+			}
 
+			$overrideurl = elgg_view("icon/{$type}/default/{$size}",array('entity' => $entity));
+			if (!empty($overrideurl)) return $overrideurl;
+			
 			$url = $CONFIG->url . "_graphics/icons/default/$size.png";
 		}
 	

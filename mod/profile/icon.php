@@ -39,11 +39,6 @@
 		if (!$success) {
 			
 			global $CONFIG;
-			$test = elgg_view("icon/user/default/{$size}",array('entity' => $entity));
-			if (!empty($test)) {
-				header("Location: {$test}");
-				exit;
-			}
 			$contents = @file_get_contents($CONFIG->pluginspath . "profile/graphics/default{$size}.jpg");
 			
 		}
