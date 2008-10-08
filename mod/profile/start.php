@@ -165,7 +165,7 @@
 				$filehandler->owner_guid = $entity->getGUID();
 				$filehandler->setFilename("profile/" . $username . $size . ".jpg");
 				
-				if ($filehandler->open("read")) {
+				if ($filehandler->exists()) {
 					$url = $CONFIG->url . "pg/icon/$username/$size/$icontime.jpg";
 					
 				

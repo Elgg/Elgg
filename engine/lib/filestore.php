@@ -117,10 +117,17 @@
 		/**
 		 * Get the contents of the whole file.
 		 *
-		 * @param mixed $f The file handle.
+		 * @param mixed $file The file handle.
 		 * @return mixed The file contents.
 		 */
 		abstract public function grabFile(ElggFile $file);
+		
+		/**
+		 * Return whether a file physically exists or not.
+		 *
+		 * @param ElggFile $file
+		 */
+		abstract public function exists(ElggFile $file);
 		
 	}
 	
@@ -243,6 +250,11 @@
 			
 			return file_get_contents($file->getFilenameOnFilestore());
 			
+		}
+		
+		public function exists(ElggFile $file)
+		{
+			return file_exists($this->getFilenameOnFilestore($file));
 		}
 		
 		/**
@@ -554,6 +566,13 @@
 			$fs = $this->getFilestore();
 			
 			return $fs->eof($this->handle);
+		}
+		
+		public function exists()
+		{
+			$fs = $this->getFilestore();
+			
+			return $fs->exists($this);
 		}
 		
 		/**
