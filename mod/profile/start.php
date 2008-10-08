@@ -66,6 +66,9 @@
 			{
 	   			 extend_view('profile/menu/links','profile/menu/adminwrapper',10000);
 			}
+			
+			// Now override icons
+			register_plugin_hook('entity:icon:url', 'user', 'profile_usericon_hook');
 		}
 		
 	/**
@@ -129,6 +132,48 @@
 			return $CONFIG->wwwroot . "pg/profile/" . $user->username;
 		}
 		
+	/**
+	 * This hooks into the getIcon API and provides nice user icons for users where possible.
+	 *
+	 * @param unknown_type $hook
+	 * @param unknown_type $entity_type
+	 * @param unknown_type $returnvalue
+	 * @param unknown_type $params
+	 * @return unknown
+	 */
+		function profile_usericon_hook($hook, $entity_type, $returnvalue, $params)
+		{
+			global $CONFIG;
+			
+			if ((!$returnvalue) && ($hook == 'entity:icon:url') && ($params['entity'] instanceof ElggUser))
+			{
+				$entity = $params['entity'];
+				$type = $entity->type;
+				$subtype = get_subtype_from_id($entity->subtype);
+				$viewtype = $params['viewtype'];
+				$size = $params['size'];
+				$username = $entity->username;
+				
+				if ($icontime = $entity->icontime) {
+					$icontime = "{$icontime}";
+				} else {
+					$icontime = "default";
+				}
+				
+				
+				$filehandler = new ElggFile();
+				$filehandler->owner_guid = $entity->getGUID();
+				$filehandler->setFilename("profile/" . $username . $size . ".jpg");
+				
+				if ($filehandler->open("read")) {
+					$url = $CONFIG->url . "pg/icon/$username/$size/$icontime.jpg";
+					
+				
+					return $url;
+				} 
+			}
+		}
+		
 	// Make sure the profile initialisation function is called on initialisation
 		register_elgg_event_handler('init','system','profile_init',1);
 		
@@ -137,6 +182,8 @@
 		register_action("profile/edit",false,$CONFIG->pluginspath . "profile/actions/edit.php");
 		register_action("profile/iconupload",false,$CONFIG->pluginspath . "profile/actions/iconupload.php");
 		register_action("profile/cropicon",false,$CONFIG->pluginspath . "profile/actions/cropicon.php");
+		
+		
 
 	// Define widgets for use in this context
 		use_widgets('profile');

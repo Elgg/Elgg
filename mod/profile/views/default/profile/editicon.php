@@ -24,7 +24,7 @@
 	<label><?php echo elgg_echo('profile:currentavatar'); ?></label>
 	<?php 
 		
-		$user_avatar = $vars['url'] . "pg/icon/" . $_SESSION['user']->username . "/medium/" . $_SESSION['user']->icontime . ".jpg";
+		$user_avatar = $_SESSION['user']->getIcon('medium');//$vars['url'] . "pg/icon/" . $_SESSION['user']->username . "/medium/" . $_SESSION['user']->icontime . ".jpg";
 		echo "<img src=\"{$user_avatar}\" alt=\"avatar\" />";
 
 	?>

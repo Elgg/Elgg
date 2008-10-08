@@ -1853,7 +1853,8 @@
 			case 'master':
 			case 'large' : $size = 'large'; break;
 			
-			case 'topbar' : 
+			case 'topbar' : $size = 'topbar'; break;
+			
 			case 'tiny' : $size = 'tiny'; break;
 			
 			case 'small' : $size = 'small'; break;
@@ -1864,10 +1865,10 @@
 		
 		$url = false;
 		
-		$viewtype = elgg_get_viewtype();
+		$viewtype = elgg_get_viewtype(); 
 		
 		// Step one, see if anyone knows how to render this in the current view
-		$url = trigger_plugin_hook('entity:icon:url', $type, array('entity' => $entity, 'viewtype' => $viewtype, 'size' => $size), $url);
+		$url = trigger_plugin_hook('entity:icon:url', $entity->getType(), array('entity' => $entity, 'viewtype' => $viewtype, 'size' => $size), $url);
 		if(!@getimagesize($url))
 			$url = false; // If not exist then don't use the url
 		
