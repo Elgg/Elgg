@@ -1972,7 +1972,8 @@
 			if(!@getimagesize($CONFIG->path . $url))
 				$url = "views/$viewtype/graphics/icons/default/$size.png";
 		
-			return $CONFIG->url . $url;
+			if (@getimagesize($CONFIG->path . $url))
+				return $CONFIG->url . $url;
 		}
 	}
 	
