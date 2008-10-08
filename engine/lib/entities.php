@@ -1871,8 +1871,13 @@
 		$url = trigger_plugin_hook('entity:icon:url', $entity->getType(), array('entity' => $entity, 'viewtype' => $viewtype, 'size' => $size), $url);
 		
 		// Fail, so use default
-		if (!$url)
+		if (!$url) {
+
+			$test = elgg_view("icon/entity/default/{$size}",array('entity' => $entity));
+			if (!empty($test)) return $test;
+
 			$url = $CONFIG->url . "_graphics/icons/default/$size.png";
+		}
 	
 		return $url;
 	}
