@@ -39,7 +39,7 @@ $(document).ready(function () {
 </script>
 
 	<div class="messages">
-	<span class="closeMessages"><a href="#">click to dismiss</a></span>
+	<span class="closeMessages"><a href="#"><?php echo elgg_echo('systemmessages:dismiss'); ?></a></span>
 <?php
 
 		

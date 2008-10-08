@@ -596,6 +596,14 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 
 			'deleteconfirm' => "Are you sure you want to delete this item?",
 			'fileexists' => "A file has already been uploaded. To replace it, select it below:",
+			
+			
+	    /**
+         * System messages
+         **/
+
+			'systemmessages:dismiss' => "click to dismiss",
+
 	
 		/**
 		 * Import / export

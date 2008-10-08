@@ -40,7 +40,7 @@ $(document).ready(function () {
 </script>
 
 	<div class="messages_error">
-	<span class="closeMessages"><a href="#">click to dismiss</a></span>
+	<span class="closeMessages"><a href="#"><?php echo elgg_echo('systemmessages:dismiss'); ?></a></span>
 
 <?php
 			foreach($vars['object'] as $error) {
