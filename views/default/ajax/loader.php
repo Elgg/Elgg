@@ -13,7 +13,7 @@
 
 	$loader = <<< END
 	
-	<div align="center"><img src="{$vars['url']}_graphics/ajax_loader.gif" /></div>
+	<div align="center" class="ajax_loader"></div>
 	
 END;
 

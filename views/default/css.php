@@ -2165,4 +2165,8 @@ a.toggle_customise_edit_panel:hover {
 	width:683px;
 }
 
-
+div.ajax_loader {
+	background: url(<?php echo $vars['url']; ?>_graphics/ajax_loader.gif) no-repeat top center;
+	width:100%;
+	height:33px;
+}
