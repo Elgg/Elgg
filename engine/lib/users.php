@@ -1006,7 +1006,7 @@
 			preg_match($blacklist, $username) ||	
 		
 			// Belts and braces TODO: Tidy into main unicode
-			(strpos($username, '.')!==false) ||
+			//(strpos($username, '.')!==false) ||
 			(strpos($username, '/')!==false) ||
 			(strpos($username, '\\')!==false) ||
 			(strpos($username, '"')!==false) ||
