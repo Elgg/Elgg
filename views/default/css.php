@@ -1947,15 +1947,16 @@ a.toggle_customise_edit_panel:hover {
 	overflow: hidden;
 	padding:4px;
 }
-#customise_editpanel img.drag_handle {
-	cursor:move;
-	padding-top: 4px;
-}
-#customise_editpanel img.remove_me {
-	padding-top: 4px;
-}
 #customise_editpanel img.more_info {
-	padding-top: 4px;
+	background: url(<?php echo $vars['url']; ?>_graphics/icon_customise_info.gif) no-repeat top left;
+	cursor:pointer;
+}
+#customise_editpanel img.drag_handle {
+	background: url(<?php echo $vars['url']; ?>_graphics/icon_customise_drag.gif) no-repeat top left;
+	cursor:move;
+}
+#customise_editpanel img {
+	margin-top:4px;
 }
 #widget_moreinfo {
 	position:absolute;
