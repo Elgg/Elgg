@@ -99,7 +99,24 @@
 				'website' => 'url',
 			);
 			
-			// TODO: Have an admin interface which replaces the above with defaults from a database if present.
+			// TODO: Have an admin interface for this
+			
+			$n = 0;
+			$loaded_defaults = array();
+			while ($translation = get_plugin_setting("admin_defined_profile_$n", 'profile'))
+			{
+				// Add a translation
+				add_translation(get_current_language(), array("profile:admin_defined_profile_$n" => $translation));
+				
+				// Detect type
+				$type = get_plugin_setting("admin_defined_profile_type_$n", 'profile');
+				if (!$type) $type = 'text';
+				
+				// Set array
+				$loaded_defaults["profile:admin_defined_profile_$n"] = $type;
+			}
+			if (count($loaded_defaults))
+				$profile_defaults = $loaded_defaults;
 			
 			$CONFIG->profile = trigger_plugin_hook('profile:fields', 'profile', NULL, $profile_defaults);
 		}
