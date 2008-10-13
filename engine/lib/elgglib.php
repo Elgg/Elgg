@@ -1479,13 +1479,9 @@
 			if (isset($DATALIST_CACHE[$name]))
 				return $DATALIST_CACHE[$name];
 			
-			try {
-				if ($row = get_data_row("select value from {$CONFIG->dbprefix}datalists where name = '{$name}'")) {
-					$DATALIST_CACHE[$name] = $row->value;
-					return $row->value;
-				}
-			} catch (DatabaseException $e) {
-				return false; // Likely can't handle the exception so just return false.
+			if ($row = get_data_row("select value from {$CONFIG->dbprefix}datalists where name = '{$name}'")) {
+				$DATALIST_CACHE[$name] = $row->value;
+				return $row->value;
 			}
 			return false;
 			
