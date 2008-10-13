@@ -214,15 +214,18 @@
 			foreach ($river_events as $details)
 			{
 				// Get what we're talking about
-				if ($n>0) $obj_query .= " or ";
 			
 				if ($details['subtype'] == 'default') $details['subtype'] = '';
 				
-				$obj_query .= "( sl.object_type='{$details['type']}' and sl.object_subtype='{$details['subtype']}' and sl.event='{$details['event']}' )";
+				if (($details['type']) && ($details['event'])) {
+					if ($n>0) $obj_query .= " or ";
+					
+					$obj_query .= "( sl.object_type='{$details['type']}' and sl.object_subtype='{$details['subtype']}' and sl.event='{$details['event']}' )";
+					
+					$n++;
+				}
 			
-				$n++;
-			}
-			
+			}		
 		
 			// User
 			$user = "sl.performed_by_guid in (".implode(',', $by_user).")";
@@ -238,7 +241,7 @@
 			
 			$query = "SELECT sl.* from {$CONFIG->dbprefix}system_log sl $relationship_join where $user and $relationship_query ($obj_query) order by sl.time_created desc  limit $offset, $limit";
 	
-		
+
 		// fetch data from system log (needs optimisation)
 		$log_data = get_data($query);
 		
