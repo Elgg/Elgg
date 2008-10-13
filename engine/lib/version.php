@@ -118,21 +118,4 @@
 			
 		}
 		
-	/**
-	 * Runs an upgrade check on boot.
-	 *
-	 */
-		function version_boot() {
-			
-			if (!is_installed()) return false;
-			
-			if (version_upgrade_check()) {
-				version_upgrade();
-			}
-			
-		}
-		
-	// Register the boot handler for version
-		register_elgg_event_handler("boot","system","version_boot");
-
 ?>

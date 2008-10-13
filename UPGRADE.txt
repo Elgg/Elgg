@@ -1,0 +1,6 @@
+ELGG 1.x UPGRADE INSTRUCTIONS
+
+1. Download the new version of Elgg from elgg.org or a mirror.
+2. Delete your existing elgg files (apart from any files which you have modified - settings.php, custom plugins etc)
+3. Visit http://YOUR.ELGG.SITE/upgrade.php
+
