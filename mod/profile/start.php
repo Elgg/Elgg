@@ -99,6 +99,8 @@
 				'website' => 'url',
 			);
 			
+			// TODO: Have an admin interface which replaces the above with defaults from a database if present.
+			
 			$CONFIG->profile = trigger_plugin_hook('profile:fields', 'profile', NULL, $profile_defaults);
 		}
 		
