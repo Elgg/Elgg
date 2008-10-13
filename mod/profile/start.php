@@ -226,7 +226,7 @@
 		
 	// Make sure the profile initialisation function is called on initialisation
 		register_elgg_event_handler('init','system','profile_init',1);
-		register_elgg_event_handler('init','system','profile_fields_setup', 10000);
+		register_elgg_event_handler('init','system','profile_fields_setup', 10000); // Ensure this runs after other plugins
 		
 		
 	// Register actions
