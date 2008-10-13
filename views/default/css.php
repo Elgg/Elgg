@@ -1707,16 +1707,21 @@ div.expandall p {
 }
 
 .friendsPickerNavigationR {
-	right: 20px;
+	right: 10px;
 	z-index:1;
 }
 
 .friendsPickerNavigationL {
-	background: url("<?php echo $vars['url']; ?>_graphics/friends_picker_arrow_left.gif") no-repeat center;
+	background: url("<?php echo $vars['url']; ?>_graphics/friends_picker_arrows.gif") no-repeat left top;
 }
-
 .friendsPickerNavigationR {
-	background: url("<?php echo $vars['url']; ?>_graphics/friends_picker_arrow_right.gif") no-repeat center;
+	background: url("<?php echo $vars['url']; ?>_graphics/friends_picker_arrows.gif") no-repeat -60px top;
+}
+.friendsPickerNavigationL:hover {
+	background: url("<?php echo $vars['url']; ?>_graphics/friends_picker_arrows.gif") no-repeat left -44px;
+}
+.friendsPickerNavigationR:hover {
+	background: url("<?php echo $vars['url']; ?>_graphics/friends_picker_arrows.gif") no-repeat -60px -44px;
 }	
 
 .friends_collections_controls a.delete_collection {
@@ -1966,7 +1971,6 @@ a.toggle_customise_edit_panel:hover {
 	padding:5px;
 	display:none;
 	width: 200px;
-	line-height:1.1em;
 }
 /* droppable area hover class  */
 .droppable-hover {
