@@ -105,7 +105,7 @@
 							   
 		);
 		
-		$CONFIG->profile = trigger_plugin_hook('profile:fields', 'group', NULL, $profile_defaults);
+		$CONFIG->group = trigger_plugin_hook('profile:fields', 'group', NULL, $profile_defaults);
 	}
 	
 	/**
