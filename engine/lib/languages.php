@@ -48,6 +48,26 @@
 		}
 		
 	/**
+	 * Detect the current language being used by the current site or logged in user.
+	 *
+	 */
+	function get_current_language()
+	{
+		global $CONFIG;
+		
+		if ((isset($_SESSION['user'])) && ($_SESSION['user']->language))
+			$language = $_SESSION['user']->language;
+	
+		if ((empty($language)) && (isset($CONFIG->language)))
+			$language = $CONFIG->language;
+			
+		if (empty($language))
+			$language = 'en';
+			
+		return $language;
+	}
+		
+	/**
 	 * Given a message shortcode, returns an appropriately translated full-text string 
 	 *
 	 * @param string $message_key The short message code
