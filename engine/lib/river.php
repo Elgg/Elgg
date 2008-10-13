@@ -145,6 +145,86 @@
 	}
 
 	/**
+	 * Perform a somewhat complicated query to extract river data from the system log based on available views.
+	 * 
+	 * NOTE: Do not use this function directly. It is called elsewhere and is subject to change without warning.
+	 *
+	 * @param unknown_type $by_user
+	 * @param unknown_type $relationship
+	 * @param unknown_type $limit
+	 * @param unknown_type $offset
+	 * @return unknown
+	 */
+	function __get_river_from_log($by_user = "", $relationship = "", $limit = 10, $offset = 0)
+	{
+		global $CONFIG;
+		
+		// Get all potential river events from available view
+		$river_events = array(); 
+		foreach (elgg_view_tree('river') as $view)
+		{
+			$fragments = explode('/', $view);
+
+			if ((isset($fragments[0])) && ($fragments[0] == 'river'))
+			{
+				if (isset($fragments[1]))
+				{
+					$f = array();
+					for ($n = 1; $n < count($fragments); $n++)
+					{
+						$val = sanitise_string($fragments[$n]);
+						switch($n)
+						{
+							case 1: $key = 'type'; break;
+							case 2: $key = 'subtype'; break;
+							case 3: $key = 'event'; break;
+						}
+						$f[$key] = $val;
+					}
+					$river_events[] = $f; 
+					
+				}
+			}
+		}
+		// Construct query
+		
+		// Objects
+		$n = 0;
+		foreach ($river_events as $details)
+		{
+			// Get what we're talking about
+		
+			if ($details['subtype'] == 'default') $details['subtype'] = '';
+			
+			if (($details['type']) && ($details['event'])) {
+				if ($n>0) $obj_query .= " or ";
+				
+				$obj_query .= "( sl.object_type='{$details['type']}' and sl.object_subtype='{$details['subtype']}' and sl.event='{$details['event']}' )";
+				
+				$n++;
+			}
+		
+		}		
+	
+		// User
+		$user = "sl.performed_by_guid in (".implode(',', $by_user).")";
+		
+		// Relationship
+		$relationship_query = "";
+		$relationship_join = "";
+		if ($relationship)
+		{
+			$relationship_join = " join {$CONFIG->dbprefix}entity_relationships r on sl.performed_by_guid=r.entity_guid ";
+			$relationship_query = "r.relationship = '$relationship'";
+		}
+		
+		$query = "SELECT sl.* from {$CONFIG->dbprefix}system_log sl $relationship_join where $user and $relationship_query ($obj_query) order by sl.time_created desc  limit $offset, $limit";
+
+		// fetch data from system log (needs optimisation)
+		return get_data($query);
+	}
+	
+	/**
 	 * Extract a list of river events from the current system log.
 	 * This function retrieves the objects from the system log and will attempt to render 
 	 * the view "river/CLASSNAME/EVENT" where CLASSNAME is the class of the object the system event is referring to,
@@ -180,71 +260,8 @@
 			$by_user = array((int)$by_user);
 		}
 		
-		// Get all potential river events from available view
-		$river_events = array(); 
-		foreach (elgg_view_tree('river') as $view)
-		{
-			$fragments = explode('/', $view);
-
-			if ((isset($fragments[0])) && ($fragments[0] == 'river'))
-			{
-				if (isset($fragments[1]))
-				{
-					$f = array();
-					for ($n = 1; $n < count($fragments); $n++)
-					{
-						$val = sanitise_string($fragments[$n]);
-						switch($n)
-						{
-							case 1: $key = 'type'; break;
-							case 2: $key = 'subtype'; break;
-							case 3: $key = 'event'; break;
-						}
-						$f[$key] = $val;
-					}
-					$river_events[] = $f; 
-					
-				}
-			}
-		}
-		// Construct query
-		
-			// Objects
-			$n = 0;
-			foreach ($river_events as $details)
-			{
-				// Get what we're talking about
-			
-				if ($details['subtype'] == 'default') $details['subtype'] = '';
-				
-				if (($details['type']) && ($details['event'])) {
-					if ($n>0) $obj_query .= " or ";
-					
-					$obj_query .= "( sl.object_type='{$details['type']}' and sl.object_subtype='{$details['subtype']}' and sl.event='{$details['event']}' )";
-					
-					$n++;
-				}
-			
-			}		
-		
-			// User
-			$user = "sl.performed_by_guid in (".implode(',', $by_user).")";
-			
-			// Relationship
-			$relationship_query = "";
-			$relationship_join = "";
-			if ($relationship)
-			{
-				$relationship_join = " join {$CONFIG->dbprefix}entity_relationships r on sl.performed_by_guid=r.entity_guid ";
-				$relationship_query = "r.relationship = '$relationship'";
-			}
-			
-			$query = "SELECT sl.* from {$CONFIG->dbprefix}system_log sl $relationship_join where $user and $relationship_query ($obj_query) order by sl.time_created desc  limit $offset, $limit";
-	
-
-		// fetch data from system log (needs optimisation)
-		$log_data = get_data($query);
-		
+		// Get river data
+		$log_data = __get_river_from_log($by_user, $relationship, $limit, $offset);
 		
 		// until count reached, loop through and render
 		$river = array();
@@ -334,107 +351,83 @@
 	 */
 	function get_river_entries_as_opendd($by_user = "", $relationship = "", $limit = 10, $offset = 0)
 	{
-		// set start limit and offset
-		$cnt = $limit; // Didn' cast to int here deliberately
-		$off = $offset; // here too
+		global $CONFIG;
+		
+		$limit = (int)$limit;
+		$offset = (int)$offset;
+		$relationship = sanitise_string($relationship);
 		
 		if (is_array($by_user) && sizeof($by_user) > 0) {
 			foreach($by_user as $key => $val) {
 				$by_user[$key] = (int) $val;
 			}
 		} else {
-			$by_user = (int)$by_user;
+			$by_user = array((int)$by_user);
 		}
 		
-		$exit = false;
+		// Get river data
+		$log_data = __get_river_from_log($by_user, $relationship, $limit, $offset);
 		
 		// River objects
-		$river = new ODDDocument();
-	
-		do
+		$river = new ODDDocument();	
+		if ($log_data)
 		{
-			$log_events = get_system_log($by_user, "","", $cnt, $off);
-		
-			if (!$log_events)
-				$exit = true;
-			else
-			{
-			
-				foreach ($log_events as $log)
+			foreach ($log_data as $log)
+			{		
+				$event = $log->event;
+				$class = $log->object_class;
+				$type = $log->object_type;
+				$subtype = $log->object_subtype;
+				$tmp = new $class();
+				$object = $tmp->getObjectFromID($log->object_id);	
+				$by_user_obj = get_entity($log->performed_by_guid);
+				
+				// Belts and braces
+				if ($object instanceof $class)
 				{
-					// See if we have access to the object we're talking about
-					$event = $log->event;
-					$class = $log->object_class;
-					$tmp = new $class();
-					$object = $tmp->getObjectFromID($log->object_id);
-					
-					// Exists and we have access to it
-					// if (is_a($object, $class))
-					if ($object instanceof $class)
+					$relationship_obj = NULL;
+							
+					// Handle updates of entities
+					if ($object instanceof ElggEntity)
 					{
-						// If no relationship defined or it matches $relationship
-						if (
-							(!$relationship) || 
-							(
-								($relationship) &&
-								(check_entity_relationship($by_user, $relationship, $tmp->getObjectOwnerGUID()))
-							)
-						)
-						{
-							$relationship_obj = NULL;
-							
-							// Handle updates of entities
-							if ($object instanceof ElggEntity)
-							{
-								$relationship_obj = new ODDRelationship(
-									guid_to_uuid($log->performed_by_guid),
-									$log->event,
-									guid_to_uuid($log->object_id)
-								);
-							}
-							
-							// Handle updates of metadata
-							if ($object instanceof ElggExtender)
-							{
-								$odd = $object->export();
-								$relationship_obj = new ODDRelationship(
-									guid_to_uuid($log->performed_by_guid),
-									$log->event,
-									$odd->getAttribute('uuid')
-								);
-							}
-							
-							// Handle updates of relationships
-							if ($object instanceof ElggRelationship)
-							{
-								$odd = $object->export();
-								$relationship_obj = new ODDRelationship(
-									guid_to_uuid($log->performed_by_guid),
-									$log->event,
-									$odd->getAttribute('uuid')
-								);
-								//$relationship_obj = $object->export(); // I figure this is what you're actually interested in in this instance.
-							}
-							
-							// If we have handled it then add it to the document
-							if ($relationship_obj) {
-								$relationship_obj->setPublished($log->time_created); 
-								$river->addElement($relationship_obj);
-							}
-							
-						}
+						$relationship_obj = new ODDRelationship(
+							guid_to_uuid($log->performed_by_guid),
+							$log->event,
+							guid_to_uuid($log->object_id)
+						);
 					}
-					
-					// Increase offset
-					$off++;
+							
+					// Handle updates of metadata
+					if ($object instanceof ElggExtender)
+					{
+						$odd = $object->export();
+						$relationship_obj = new ODDRelationship(
+							guid_to_uuid($log->performed_by_guid),
+							$log->event,
+							$odd->getAttribute('uuid')
+						);
+					}
+							
+					// Handle updates of relationships
+					if ($object instanceof ElggRelationship)
+					{
+						$odd = $object->export();
+						$relationship_obj = new ODDRelationship(
+							guid_to_uuid($log->performed_by_guid),
+							$log->event,
+							$odd->getAttribute('uuid')
+						);
+					}
+							
+					// If we have handled it then add it to the document
+					if ($relationship_obj) {
+						$relationship_obj->setPublished($log->time_created); 
+						$river->addElement($relationship_obj);
+					}
 				}
 			}
-						
-		} while (
-			($cnt > 0) &&
-			(!$exit)
-		);
-		
+			
+		}		
 		return $river;
 		
 	}
