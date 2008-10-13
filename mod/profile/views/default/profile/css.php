@@ -23,17 +23,17 @@
 	bottom:0;
 }
 .avatar_menu_arrow {
-	background: url(<?php echo $vars['url']; ?>_graphics/avatar_menu_arrow.gif) no-repeat top left;
+	background: url(<?php echo $vars['url']; ?>_graphics/avatar_menu_arrows.gif) no-repeat left top;
 	width:15px;
 	height:15px;
 }
 .avatar_menu_arrow_on {
-	background: url(<?php echo $vars['url']; ?>_graphics/avatar_menu_arrow_open.gif) no-repeat top left;
+	background: url(<?php echo $vars['url']; ?>_graphics/avatar_menu_arrows.gif) no-repeat left -16px;
 	width:15px;
 	height:15px;
 }
 .avatar_menu_arrow_hover {
-	background: url(<?php echo $vars['url']; ?>_graphics/avatar_menu_arrow_hover.gif) no-repeat top left;
+	background: url(<?php echo $vars['url']; ?>_graphics/avatar_menu_arrows.gif) no-repeat left -32px;
 	width:15px;
 	height:15px;
 }
