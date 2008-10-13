@@ -28,7 +28,10 @@
 				
 			// For now, we'll hard code the profile items as follows:
 			// TODO make this user configurable
-				$CONFIG->profile = array(
+			
+				
+				
+				/*$CONFIG->profile = array(
 				
 					// Language short codes must be of the form "profile:key"
 					// where key is the array key below
@@ -42,7 +45,7 @@
 					'mobile' => 'text',
 					'website' => 'url',
 									   
-				);
+				);*/
 				
 			// Register a page handler, so we can have nice URLs
 				register_page_handler('profile','profile_page_handler');
@@ -69,6 +72,34 @@
 			
 			// Now override icons
 			register_plugin_hook('entity:icon:url', 'user', 'profile_usericon_hook');
+					
+			
+		}
+		
+	/**
+	 * This function loads a set of default fields into the profile, then triggers a hook letting other plugins to edit
+	 * add and delete fields.
+	 *
+	 * Note: This is a secondary system:init call and is run at a super low priority to guarantee that it is called after all
+	 * other plugins have initialised.
+	 */
+		function profile_fields_setup()
+		{
+			global $CONFIG;
+			
+			$profile_defaults = array (
+				'description' => 'longtext',
+				'briefdescription' => 'text',
+				'location' => 'tags',
+				'interests' => 'tags',
+				'skills' => 'tags',
+				'contactemail' => 'email',
+				'phone' => 'text',
+				'mobile' => 'text',
+				'website' => 'url',
+			);
+			
+			$CONFIG->profile = trigger_plugin_hook('profile:fields', 'profile', NULL, $profile_defaults);
 		}
 		
 	/**
@@ -176,6 +207,8 @@
 		
 	// Make sure the profile initialisation function is called on initialisation
 		register_elgg_event_handler('init','system','profile_init',1);
+		register_elgg_event_handler('init','system','profile_fields_setup', 10000);
+		
 		
 	// Register actions
 		global $CONFIG;
