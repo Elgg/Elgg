@@ -70,7 +70,32 @@
 		
 		// Language short codes must be of the form "groups:key"
 		// where key is the array key below
-		$CONFIG->group = array(
+		/*$CONFIG->group = array(
+		
+			'name' => 'text',
+			'description' => 'longtext',
+			'briefdescription' => 'text',
+			'interests' => 'tags',
+			'website' => 'url',
+							   
+		);*/
+		
+		// Now override icons
+		register_plugin_hook('entity:icon:url', 'group', 'groups_groupicon_hook');
+	}
+	
+	/**
+	 * This function loads a set of default fields into the profile, then triggers a hook letting other plugins to edit
+	 * add and delete fields.
+	 *
+	 * Note: This is a secondary system:init call and is run at a super low priority to guarantee that it is called after all
+	 * other plugins have initialised.
+	 */
+	function groups_fields_setup()
+	{
+		global $CONFIG;
+		
+		$profile_defaults = array(
 		
 			'name' => 'text',
 			'description' => 'longtext',
@@ -80,8 +105,7 @@
 							   
 		);
 		
-		// Now override icons
-		register_plugin_hook('entity:icon:url', 'group', 'groups_groupicon_hook');
+		$CONFIG->profile = trigger_plugin_hook('profile:fields', 'group', NULL, $profile_defaults);
 	}
 	
 	/**
@@ -382,6 +406,7 @@
 	
 	// Make sure the groups initialisation function is called on initialisation
 	register_elgg_event_handler('init','system','groups_init');
+	register_elgg_event_handler('init','system','groups_fields_setup', 10000); // Ensure this runs after other plugins
 	register_elgg_event_handler('join','group','groups_user_join_event_listener');
 	register_elgg_event_handler('leave','group','groups_user_leave_event_listener');
 	register_elgg_event_handler('pagesetup','system','groups_submenus');
