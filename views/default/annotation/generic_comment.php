@@ -30,7 +30,7 @@
 		<div class="generic_comment_details">
     		
 		    <!-- output the actual comment -->
-		    <p><?php echo elgg_view("output/longtext",array("value" => $vars['annotation']->value)); ?></p>
+		    <?php echo elgg_view("output/longtext",array("value" => $vars['annotation']->value)); ?>
 		    
 		    <p class="generic_comment_owner">
     	        <a href="<?php echo $owner->getURL(); ?>"><?php echo $owner->name; ?></a> <?php echo friendly_time($vars['annotation']->time_created); ?>
