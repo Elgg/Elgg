@@ -17,7 +17,7 @@
       * @param string $string
       * @return array
       */
-        function filter_string(string $string) {
+        function filter_string($string) {
             
         	// Convert it to lower and trim
         	   $string = strtolower($string);
@@ -38,7 +38,7 @@
         	   $terms = explode(' ',$string);
         	   
             // Remove any blacklist terms
-               $terms = array_filter($terms, 'remove_blacklist');
+               //$terms = array_filter($terms, 'remove_blacklist');
         	    
                return $terms;
 
@@ -53,6 +53,9 @@
         function remove_blacklist($input) {
         	
         	global $CONFIG;
+        	
+        	if (!is_array($CONFIG->wordblacklist))
+        		return $input;
         	
         	if (strlen($input) < 3 || in_array($input,$CONFIG->wordblacklist))
         	   return false;
