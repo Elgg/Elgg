@@ -229,6 +229,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 		 */
 	
 			'profile' => "Profile",
+			'profile:edit:default' => 'Edit default profile',
 			'user' => "User",
 			'item:user' => "Users",
 
@@ -265,6 +266,20 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 
 			'profile:river:update' => "%s updated their profile",
 			'profile:river:iconupdate' => "%s updated their profile icon",
+	
+			'profile:label' => "Profile label",
+			'profile:type' => "Profile type",
+	
+			'profile:editdefault:fail' => 'Default profile could not be saved',
+			'profile:editdefault:success' => 'Item successfully added to default profile',
+	
+			
+			'profile:editdefault:delete:fail' => 'Removed default profile item field failed',
+			'profile:editdefault:delete:success' => 'Default profile item deleted!',
+	
+			'profile:defaultprofile:reset' => 'Default system profile reset',
+	
+			'profile:resetdefault' => 'Reset default profile',
 	
 		/**
 		 * Profile status messages
