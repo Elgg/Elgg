@@ -64,7 +64,8 @@
         // Set the shout words blacklist, these do not become tags when the string is converted
         // Any language packs should include their own!
         
-            GLOBAL $CONFIG;
+        function social_init() {
+            global $CONFIG;
 		        $CONFIG->wordblacklist = array(
 	            'and',
 	            'the',
@@ -101,5 +102,8 @@
 				'whoever',
 				'whomever',
 	        );
+        }
+
+        register_elgg_event_handler("init","system","social_init");
 	 
 ?>
