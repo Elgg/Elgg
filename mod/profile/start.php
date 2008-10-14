@@ -49,6 +49,7 @@
 				
 			// Register a page handler, so we can have nice URLs
 				register_page_handler('profile','profile_page_handler');
+				register_page_handler('defaultprofile','profileedit_page_handler');
 				register_page_handler('icon','profile_icon_handler');
 				register_page_handler('iconjs','profile_iconjs_handler');
 				
@@ -113,7 +114,9 @@
 				if (!$type) $type = 'text';
 				
 				// Set array
-				$loaded_defaults["profile:admin_defined_profile_$n"] = $type;
+				$loaded_defaults["admin_defined_profile_$n"] = $type;
+				
+				$n++;
 			}
 			if (count($loaded_defaults))
 				$profile_defaults = $loaded_defaults;
@@ -137,6 +140,38 @@
 			// Include the standard profile index
 			include($CONFIG->pluginspath . "profile/index.php");
 			
+		}
+		
+	/**
+	 * Profile edit page handler
+	 *
+	 * @param array $page Array of page elements, forwarded by the page handling mechanism
+	 */
+		function profileedit_page_handler($page) {
+			
+			global $CONFIG;
+			
+			// The username should be the file we're getting
+			if (isset($page[0])) {
+				switch ($page[0])
+				{
+					case 'edit' :
+					default: include($CONFIG->pluginspath . "profile/defaultprofile.php");
+				}
+			}
+			
+		}
+		
+	/**
+	 * Pagesetup function
+	 *
+	 */
+		function profile_pagesetup()
+		{
+			if (get_context() == 'admin' && isadminloggedin()) {
+				global $CONFIG;
+				add_submenu_item(elgg_echo('profile:edit:default'), $CONFIG->wwwroot . 'pg/defaultprofile/edit/');
+			}
 		}
 		
 	/**
@@ -228,13 +263,17 @@
 		register_elgg_event_handler('init','system','profile_init',1);
 		register_elgg_event_handler('init','system','profile_fields_setup', 10000); // Ensure this runs after other plugins
 		
+		register_elgg_event_handler('pagesetup','system','profile_pagesetup');
+		
 		
 	// Register actions
 		global $CONFIG;
 		register_action("profile/edit",false,$CONFIG->pluginspath . "profile/actions/edit.php");
 		register_action("profile/iconupload",false,$CONFIG->pluginspath . "profile/actions/iconupload.php");
 		register_action("profile/cropicon",false,$CONFIG->pluginspath . "profile/actions/cropicon.php");
-		
+		register_action("profile/editdefault",false,$CONFIG->pluginspath . "profile/actions/editdefault.php", true);
+		register_action("profile/editdefault/delete",false,$CONFIG->pluginspath . "profile/actions/deletedefaultprofileitem.php", true);
+		register_action("profile/editdefault/reset",false,$CONFIG->pluginspath . "profile/actions/resetdefaultprofile.php", true);
 		
 
 	// Define widgets for use in this context
