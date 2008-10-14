@@ -1273,6 +1273,9 @@ table.search_gallery {
 	margin:0;
 	border:none;
 }
+.input-access {
+	margin:5px 0 0 0;
+}
 
 /* ***************************************
 	GENERIC COMMENTS
