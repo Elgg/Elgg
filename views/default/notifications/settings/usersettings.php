@@ -25,7 +25,7 @@
 		{	
 ?>
 			<tr>
-				<td><?php echo $k; ?>: </td>
+				<td><?php echo elgg_echo($k); ?>: </td>
 
 				<td>
 <?php
@@ -35,7 +35,7 @@
 	} else {
 		$val = "no";
 	}
-	echo elgg_view('input/radio',array('internalname' => "method[{$k}]", 'options' => array('yes' => 'yes','no' => 'no'), 'value' => $val));
+	echo elgg_view('input/radio',array('internalname' => "method[{$k}]", 'options' => array(elgg_echo('option:yes') => 'yes',elgg_echo('option:no') => 'no'), 'value' => $val));
 
 ?>				
 				</td>
