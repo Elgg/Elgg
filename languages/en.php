@@ -352,6 +352,13 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 		 */
 			'feed:rss' => 'Subscribe to feed',
 			'feed:odd' => 'Syndicate OpenDD',
+			
+		/**
+          * links
+		 **/
+
+			'link:view' => 'view link',
+
 	
 		/**
 		 * River
