@@ -1,9 +1,9 @@
 <?php
 	/**
-	 * Russian Translation 0.1
+	 * Translators
+	 * Olga Ivannikova
+	 * Pillgrim
 	 * 
-	 * Change history:
-	 * 0.1 : Olga Ivannikova <olga-ivannikova@rambler.ru>
 	 */
 
 	$russian = array(
@@ -12,7 +12,7 @@
 		 * Sites
 		 */
 	
-			'item:site' => 'Sites',
+			'item:site' => 'Сайты',
 	
 		/**
 		 * Sessions
@@ -23,216 +23,215 @@
 			'loginerror' => "Пароль или имя не найдены. Система не может авторизовать вас.",
 	
 			'logout' => "Выйти",
-			'logoutok' => "You have been logged out.",
-			'logouterror' => "We couldn't log you out. Please try again.",
+			'logoutok' => "Вы вышли из системы.",
+			'logouterror' => "Ошибка при выходе. Пожалуйста попробуйте еще раз.",
 	
 		/**
 		 * Errors
 		 */
-			'exception:title' => "Добро пожаловать.",
+			'exception:title' => "Добро пожаловать в Elgg.",
 	
-			'InstallationException:CantCreateSite' => "Unable to create a default ElggSite with credentials Name:%s, Url: %s",
+			'InstallationException:CantCreateSite' => "Не удалось создать ElggSite по умолчанию со следующими настройками Имя:%s, Url: %s",
 		
-			'actionundefined' => "The requested action (%s) was not defined in the system.",
-			'actionloggedout' => "Sorry, you cannot perform this action while logged out.",
+			'actionundefined' => "Указанное действие (%s) не зарегистрировано в системе.",
+			'actionloggedout' => "Извините, что бы сделать это необходимо войти в систему.",
 	
-			'notfound' => "The requested resource could not be found, or you do not have access to it.",
+			'notfound' => "Указанный объект не найден, или у вас нет прав на доступ к нему.",
 			
-			'SecurityException:Codeblock' => "Denied access to execute privileged code block",
-			'DatabaseException:WrongCredentials' => "Elgg couldn't connect to the database using the given credentials %s@%s (pw: %s).",
-			'DatabaseException:NoConnect' => "Elgg couldn't select the database '%s', please check that the database is created and you have access to it.",
-			'SecurityException:FunctionDenied' => "Access to privileged function '%s' is denied.",
-			'DatabaseException:DBSetupIssues' => "There were a number of issues: ",
-			'DatabaseException:ScriptNotFound' => "Elgg couldn't find the requested database script at %s.",
+			'SecurityException:Codeblock' => "Доступ на выполнение привилегированного участка кода запрещён",
+			'DatabaseException:WrongCredentials' => "Невозможно установить соединение с базой данных %s@%s (pw: %s).",
+			'DatabaseException:NoConnect' => "Невозможно выбрать базу данных '%s', убедитесь что она существует и у вас есть к ней доступ.",
+			'SecurityException:FunctionDenied' => "Доступ к привилегированной функции '%s' запрещён.",
+			'DatabaseException:DBSetupIssues' => "Произошли следующие проблемы: ",
+			'DatabaseException:ScriptNotFound' => "Невозможно найти запрошенный скрипт в %s.",
 			
-			'IOException:FailedToLoadGUID' => "Failed to load new %s from GUID:%d",
-			'InvalidParameterException:NonElggObject' => "Passing a non-ElggObject to an ElggObject constructor!",
-			'InvalidParameterException:UnrecognisedValue' => "Unrecognised value passed to constuctor.",
+			'IOException:FailedToLoadGUID' => "Не удалось загрузить %s из GUID:%d",
+			'InvalidParameterException:NonElggObject' => "Передан не-ElggObject в конструктор ElggObject!",
+			'InvalidParameterException:UnrecognisedValue' => "Неизвестное значение предано в конструктор.",
 			
 			'InvalidClassException:NotValidElggStar' => "GUID:%d недействителен %s",
 			
-			'PluginException:MisconfiguredPlugin' => "%s is a misconfigured plugin.",
+			'PluginException:MisconfiguredPlugin' => "Приложение %s установленно некорректно.",
 			
-			'InvalidParameterException:NonElggUser' => "Passing a non-ElggUser to an ElggUser constructor!",
+			'InvalidParameterException:NonElggUser' => "Передан не-ElggUser в конструктор ElggUser!",
 			
-			'InvalidParameterException:NonElggSite' => "Passing a non-ElggSite to an ElggSite constructor!",
+			'InvalidParameterException:NonElggSite' => "Передан не-ElggSite в конструктор ElggSite!",
 			
-			'InvalidParameterException:NonElggGroup' => "Passing a non-ElggGroup to an ElggGroup constructor!",
+			'InvalidParameterException:NonElggGroup' => "Передан не--ElggGroup в конструктор ElggGroup!",
 	
 			'IOException:UnableToSaveNew' => "Невозможно сохранить новый %s",
 			
-			'InvalidParameterException:GUIDNotForExport' => "GUID has not been specified during export, this should never happen.",
-			'InvalidParameterException:NonArrayReturnValue' => "Entity serialisation function passed a non-array returnvalue parameter",
+			'InvalidParameterException:GUIDNotForExport' => "GUID не был указан во врему экспорта, этого никогда не должно было произойти.",
+			'InvalidParameterException:NonArrayReturnValue' => "В функцию сериализации Сущность передан параметр returnvalue не являющийся массивом",
 			
-			'ConfigurationException:NoCachePath' => "Cache path set to nothing!",
-			'IOException:NotDirectory' => "%s is not a directory.",
+			'ConfigurationException:NoCachePath' => "Путь к кэшу пуст!",
+			'IOException:NotDirectory' => "%s не является директорией.",
 			
-			'IOException:BaseEntitySaveFailed' => "Unable to save new object's base entity information!",
-			'InvalidParameterException:UnexpectedODDClass' => "import() passed an unexpected ODD class",
-			'InvalidParameterException:EntityTypeNotSet' => "Entity type must be set.",
+			'IOException:BaseEntitySaveFailed' => "Невозможно сохранить базовую информацию об новой сущности!",
+			'InvalidParameterException:UnexpectedODDClass' => "import() передал неожиданный класс ODD",
+			'InvalidParameterException:EntityTypeNotSet' => "Тип сущности должен быть установлен.",
 			
 			'ClassException:ClassnameNotClass' => "%s не %s.",
-			'ClassNotFoundException:MissingClass' => "Class '%s' was not found, missing plugin?",
-			'InstallationException:TypeNotSupported' => "Type %s is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.",
+			'ClassNotFoundException:MissingClass' => "Класс '%s' не найден, возможно не установлен нужны плагин?",
+			'InstallationException:TypeNotSupported' => "Тип %s не поддерживается. Это указывает на проблемы в вашей копии Elgg, скорее всего после неудачного обновления.",
 
-			'ImportException:ImportFailed' => "Could not import element %d",
-			'ImportException:ProblemSaving' => "There was a problem saving %s",
-			'ImportException:NoGUID' => "New entity created but has no GUID, this should not happen.",
+			'ImportException:ImportFailed' => "Невозможно импортировать элемент %d",
+			'ImportException:ProblemSaving' => "При сохранении %s случилась ошибка",
+			'ImportException:NoGUID' => "Создана новая сущность без GUID, этого не должно никогда случаться.",
 			
-			'ImportException:GUIDNotFound' => "Entity '%d' could not be found.",
-			'ImportException:ProblemUpdatingMeta' => "There was a problem updating '%s' on entity '%d'",
+			'ImportException:GUIDNotFound' => "Сущность '%d' не найдена.",
+			'ImportException:ProblemUpdatingMeta' => "При обновлении свойства '%s' сущности '%d' произошла ошибка",
 			
-			'ExportException:NoSuchEntity' => "No such entity GUID:%d", 
+			'ExportException:NoSuchEntity' => "Нет такой сущности GUID:%d", 
 			
-			'ImportException:NoODDElements' => "No OpenDD elements found in import data, import failed.",
-			'ImportException:NotAllImported' => "Not all elements were imported.",
+			'ImportException:NoODDElements' => "Не найдены OpenDD элементы в импортированных данных, import не удался.",
+			'ImportException:NotAllImported' => "Не все элементы были импортированы.",
 			
-			'InvalidParameterException:UnrecognisedFileMode' => "Unrecognised file mode '%s'",
-			'InvalidParameterException:MissingOwner' => "All files must have an owner!",
-			'IOException:CouldNotMake' => "Could not make %s",
-			'IOException:MissingFileName' => "You must specify a name before opening a file.",
-			'ClassNotFoundException:NotFoundNotSavedWithFile' => "Filestore not found or class not saved with file!",
-			'NotificationException:NoNotificationMethod' => "No notification method specified.",
-			'NotificationException:NoHandlerFound' => "No handler found for '%s' or it was not callable.",
-			'NotificationException:ErrorNotifyingGuid' => "There was an error while notifying %d",
-			'NotificationException:NoEmailAddress' => "Could not get the email address for GUID:%d",
-			'NotificationException:MissingParameter' => "Missing a required parameter, '%s'",
+			'InvalidParameterException:UnrecognisedFileMode' => "Неизвестный режим файла  '%s'",
+			'InvalidParameterException:MissingOwner' => "Все файлы должны иметь владельца!",
+			'IOException:CouldNotMake' => "Невозможно создать %s",
+			'IOException:MissingFileName' => "Необходимо указать имя перед открытием файла.",
+			'ClassNotFoundException:NotFoundNotSavedWithFile' => "Filestore не найден или имя класса не сохранёно с файлом!",
+			'NotificationException:NoNotificationMethod' => "Не указан метод уведомления.",
+			'NotificationException:NoHandlerFound' => "Нет обработчика для '%s', или его не возможно вызвать.",
+			'NotificationException:ErrorNotifyingGuid' => "Случилась ошибка при уведомлении %d",
+			'NotificationException:NoEmailAddress' => "Невозможно получить email адрес для GUID:%d",
+			'NotificationException:MissingParameter' => "Не хватает обязательного параметра '%s'",
 			
-			'DatabaseException:WhereSetNonQuery' => "Where set contains non WhereQueryComponent",
-			'DatabaseException:SelectFieldsMissing' => "Fields missing on a select style query",
-			'DatabaseException:UnspecifiedQueryType' => "Unrecognised or unspecified query type.",
-			'DatabaseException:NoTablesSpecified' => "No tables specified for query.",
-			'DatabaseException:NoACL' => "No access control was provided on query",
+			'DatabaseException:WhereSetNonQuery' => "Where часть запроса содержит несовместимые с WhereQueryComponent компоненты",
+			'DatabaseException:SelectFieldsMissing' => "Нет полей в SELECT запросе",
+			'DatabaseException:UnspecifiedQueryType' => "В запросе не указан тип запроса.",
+			'DatabaseException:NoTablesSpecified' => "В запросе не указаны таблицы.",
+			'DatabaseException:NoACL' => "В запросе не указаны настройки доступа",
 			
-			'InvalidParameterException:NoEntityFound' => "No entity found, it either doesn't exist or you don't have access to it.",
+			'InvalidParameterException:NoEntityFound' => "Сущность не найдена, она либо не существует, либо у вас нет доступа к ней.",
 			
-			'InvalidParameterException:GUIDNotFound' => "GUID:%s could not be found, or you can not access it.",
-			'InvalidParameterException:IdNotExistForGUID' => "Sorry, '%s' does not exist for guid:%d",
-			'InvalidParameterException:CanNotExportType' => "Sorry, I don't know how to export '%s'",
-			'InvalidParameterException:NoDataFound' => "Could not find any data.",
-			'InvalidParameterException:DoesNotBelong' => "Does not belong to entity.",
-			'InvalidParameterException:DoesNotBelongOrRefer' => "Does not belong to entity or refer to entity.",
-			'InvalidParameterException:MissingParameter' => "Missing parameter, you need to provide a GUID.",
+			'InvalidParameterException:GUIDNotFound' => "GUID:%s не найден, либо у вас нет доступа к нему.",
+			'InvalidParameterException:IdNotExistForGUID' => "Извините, '%s' не существует для guid:%d",
+			'InvalidParameterException:CanNotExportType' => "Извините, не знаю как экспортировать '%s'",
+			'InvalidParameterException:NoDataFound' => "Данные не найдены.",
+			'InvalidParameterException:DoesNotBelong' => "Не принадлежит сущности.",
+			'InvalidParameterException:DoesNotBelongOrRefer' => "Не принадлежит сущности и не указывает на сущность.",
+			'InvalidParameterException:MissingParameter' => "Не хватает параметра, необходимо указать GUID.",
 			
-			'SecurityException:APIAccessDenied' => "Sorry, API access has been disabled by the administrator.",
-			'SecurityException:NoAuthMethods' => "No authentication methods were found that could authenticate this API request.",
-			'APIException:ApiResultUnknown' => "API Result is of an unknown type, this should never happen.", 
+			'SecurityException:APIAccessDenied' => "Извините, доступ к API был отключен администратором.",
+			'SecurityException:NoAuthMethods' => "Не удалось найти подходящего метода для авторизации данного API запроса.",
+			'APIException:ApiResultUnknown' => "Тип результата API запроса неопределён, этого не должно было никогда случиться.", 
 			
-			'ConfigurationException:NoSiteID' => "No site ID has been specified.",
-			'InvalidParameterException:UnrecognisedMethod' => "Unrecognised call method '%s'",
-			'APIException:MissingParameterInMethod' => "Missing parameter %s in method %s",
-			'APIException:ParameterNotArray' => "%s does not appear to be an array.",
-			'APIException:UnrecognisedTypeCast' => "Unrecognised type in cast %s for variable '%s' in method '%s'",
-			'APIException:InvalidParameter' => "Invalid parameter found for '%s' in method '%s'.",
-			'APIException:FunctionParseError' => "%s(%s) has a parsing error.",
-			'APIException:FunctionNoReturn' => "%s(%s) returned no value.",
-			'SecurityException:AuthTokenExpired' => "Authentication token either missing, invalid or expired.",
-			'CallException:InvalidCallMethod' => "%s must be called using '%s'",
-			'APIException:MethodCallNotImplemented' => "Method call '%s' has not been implemented.",
-			'APIException:AlgorithmNotSupported' => "Algorithm '%s' is not supported or has been disabled.",
-			'ConfigurationException:CacheDirNotSet' => "Cache directory 'cache_path' not set.",
-			'APIException:NotGetOrPost' => "Request method must be GET or POST",
-			'APIException:MissingAPIKey' => "Missing X-Elgg-apikey HTTP header",
-			'APIException:MissingHmac' => "Missing X-Elgg-hmac header",
-			'APIException:MissingHmacAlgo' => "Missing X-Elgg-hmac-algo header",
-			'APIException:MissingTime' => "Missing X-Elgg-time header",
-			'APIException:TemporalDrift' => "X-Elgg-time is too far in the past or future. Epoch fail.",
-			'APIException:NoQueryString' => "No data on the query string",
-			'APIException:MissingPOSTHash' => "Missing X-Elgg-posthash header",
-			'APIException:MissingPOSTAlgo' => "Missing X-Elgg-posthash_algo header",
-			'APIException:MissingContentType' => "Missing content type for post data",
-			'SecurityException:InvalidPostHash' => "POST data hash is invalid - Expected %s but got %s.",
-			'SecurityException:DupePacket' => "Packet signature already seen.",
-			'SecurityException:InvalidAPIKey' => "Invalid or missing API Key.",
-			'NotImplementedException:CallMethodNotImplemented' => "Call method '%s' is currently not supported.",
+			'ConfigurationException:NoSiteID' => "Не указан ID сайта.",
+			'InvalidParameterException:UnrecognisedMethod' => "Неизвестный метод '%s'",
+			'APIException:MissingParameterInMethod' => "Не хватает параметра %s в методе %s",
+			'APIException:ParameterNotArray' => "%s не является массивом.",
+			'APIException:UnrecognisedTypeCast' => "Неизвестный тип при касте %s переменной '%s' в методе '%s'",
+			'APIException:InvalidParameter' => "Невалидный параметр найден для '%s' в методе '%s'.",
+			'APIException:FunctionParseError' => "Ошибка парсинга %s(%s).",
+			'APIException:FunctionNoReturn' => "%s(%s) не вернул значения.",
+			'SecurityException:AuthTokenExpired' => "Авторизационный token не передан, не валиден или просрочен.",
+			'CallException:InvalidCallMethod' => "%s должен вызываться при помощи '%s'",
+			'APIException:MethodCallNotImplemented' => "Метод '%s' не существует.",
+			'APIException:AlgorithmNotSupported' => "Алгоритм '%s' не поддерживается или выключен.",
+			'ConfigurationException:CacheDirNotSet' => "Директория для кэша 'cache_path' не установлена.",
+			'APIException:NotGetOrPost' => "Метод должен быть GET или POST",
+			'APIException:MissingAPIKey' => "Не хватает X-Elgg-apikey HTTP заголовка",
+			'APIException:MissingHmac' => "Не хватает X-Elgg-hmac заголовка",
+			'APIException:MissingHmacAlgo' => "Не хватает X-Elgg-hmac-algo заголовка",
+			'APIException:MissingTime' => "Не хватает X-Elgg-time заголовка",
+			'APIException:TemporalDrift' => "X-Elgg-time в слишком отдалённом будущем.",
+			'APIException:NoQueryString' => "Нет данных в строке запроса",
+			'APIException:MissingPOSTHash' => "Не хватает X-Elgg-posthash заголовка",
+			'APIException:MissingPOSTAlgo' => "Не хватает X-Elgg-posthash_algo заголовка",
+			'APIException:MissingContentType' => "Не указан тип содержимого для POST запроса",
+			'SecurityException:InvalidPostHash' => "Hash для POST данных не валиден - ождался %s, а получен %s.",
+			'SecurityException:DupePacket' => "Подпись пакета повторяется.",
+			'SecurityException:InvalidAPIKey' => "Не валидный или пустой API Key.",
+			'NotImplementedException:CallMethodNotImplemented' => "Вызов метода '%s' пока не поддерживается.",
 	
-			'NotImplementedException:XMLRPCMethodNotImplemented' => "XML-RPC method call '%s' not implemented.",
-			'InvalidParameterException:UnexpectedReturnFormat' => "Call to method '%s' returned an unexpected result.",
-			'CallException:NotRPCCall' => "Call does not appear to be a valid XML-RPC call",
+			'NotImplementedException:XMLRPCMethodNotImplemented' => "XML-RPC вызов метода '%s' не поддерживается.",
+			'InvalidParameterException:UnexpectedReturnFormat' => "Метод '%s' вернул неожиданный результат.",
+			'CallException:NotRPCCall' => "Вызов не похож на валидный XML-RPC запрос",
 	
-			'PluginException:NoPluginName' => "The plugin name could not be found",
+			'PluginException:NoPluginName' => "Приложение не найдено",
 	
-			'ConfigurationException:BadDatabaseVersion' => "The database backend you have installed doesn't meet the basic requirements to run Elgg. Please consult your documentation.",
-			'ConfigurationException:BadPHPVersion' => "You need at least PHP version 5.2 to run Elgg.",
-			'configurationwarning:phpversion' => "Elgg requires at least PHP version 5.2, you can install it on 5.1.6 but some features may not work. Use at your own risk.",
+			'ConfigurationException:BadDatabaseVersion' => "База данных не соответствует требованиям Elgg. Пожалуйста, проконсультируйтесь с документацией.",
+			'ConfigurationException:BadPHPVersion' => "Необходим PHP версии не менее 5.2 что бы запустить Elgg.",
+			'configurationwarning:phpversion' => "Elgg нуждается по крайней мере в PHP версии 5.2, возможно будет работать с ограничениями на 5.1.6. Используйте на ваш страх и риск.",
+			
 	
-	
-			'InstallationException:DatarootNotWritable' => "Your data directory %s is not writable.",
-			'InstallationException:DatarootUnderPath' => "Your data directory %s must be outside of your install path.",
-			'InstallationException:DatarootBlank' => "You have not specified a data directory.",
-	
-			'SecurityException:authenticationfailed' => "User could not be authenticated",
-		/**
-		 * API
-		 */
-			'system.api.list' => "List all available API calls on the system.",
-			'auth.gettoken' => "This API call lets a user log in, returning an authentication token which can be used in leu of a username and password for authenticating further calls.",
+			'InstallationException:DatarootNotWritable' => "Директория для данных %s не имеет прав на запись.",
+			'InstallationException:DatarootUnderPath' => "Директория для данных %s должна находится вне пути, в котором находится Elgg.",
+			'InstallationException:DatarootBlank' => "Директория для данных не указана.",
+
+			'SecurityException:authenticationfailed' => "Пользователь не может быть авторизован",
+			'CronException:unknownperiod' => '%s не является правильным периодом.',
+			
+			'system.api.list' => "Выводит список всех доступных API вызовов в системе.",
+			'auth.gettoken' => "Этот вызов API позволяет пользователю войти в систему, возвращая token авторизации, который может быть использован вместо имени пользователя и пароля",
+
 	
 		/**
 		 * User details
 		 */
-
-			'name' => "Имя",
-			'email' => "Адрес эл. почты",
-			'username' => "Имя пользователя",
+			'name' => "Отображаемое имя",
+			'email' => "Адрес электронной почты",
+			'username' => "Логин",
 			'password' => "Пароль",
-			'passwordagain' => "Повторите пароль",
-			'admin_option' => "Сделать пользователя администратором?",
+			'passwordagain' => "Пароль (повтор для проверки)",
+			'admin_option' => "Сделать этого пользователя администратором?",
 	
 		/**
 		 * Access
 		 */
 	
-			'ACCESS_PRIVATE' => "Приватный",
-			'ACCESS_LOGGED_IN' => "Человек онлайн",
-			'ACCESS_PUBLIC' => "Публичный",
-			'PRIVATE' => "Приватный",
-			'LOGGED_IN' => "Человек онлайн",
-			'PUBLIC' => "Публичный",
+			'ACCESS_PRIVATE' => "Только себе",
+			'ACCESS_LOGGED_IN' => "Зарегистрированным пользователям",
+			'ACCESS_PUBLIC' => "Всем",
+			'PRIVATE' => "Только себе",
+			'LOGGED_IN' => "Зарегистрированным пользователям",
+			'PUBLIC' => "Всем",
 			'access' => "Доступ",
 	
 		/**
 		 * Dashboard and widgets
 		 */
 	
-			'dashboard' => "Dashboard",
-            'dashboard:configure' => "Редактировать страницу",
-			'dashboard:nowidgets' => "Your dashboard is your gateway into the site. Click 'Edit page' to add widgets to keep track of content and your life within the system.",
+			'dashboard' => "Панель инструментов",
+			'dashboard:configure' => "Настроить вид",
+			'dashboard:nowidgets' => "Это Ваша главная страница. Нажмите 'Редактировать' что бы добавить виджеты, позволяющие следить за происходящим в системе.",
 
-			'widgets:add' => 'Add widgets to your page',
-			'widgets:add:description' => "Choose the features you want to add to your page by dragging them from the <b>Widget gallery</b> on the right, to any of the three widget areas below, and position them where you would like them to appear.
+			'widgets:add' => 'Добавить виджеты на вашу страницу',
+			'widgets:add:description' => "Выбирите интересующие вас виджеты перетащив их мышью из <b>Галлереи</b> в правой части страницы в любую из 3-х колонок ниже, и расположите в том порядке, в котором они должны отображаться.
 
-To remove a widget drag it back to the <b>Widget gallery</b>.",
-			'widgets:position:fixed' => '(Fixed position on page)',
+Чтобы удалить виджет, переместите его обратно в <b>Галлерею</b>.",
+			'widgets:position:fixed' => '(Фиксированная позиция на странице)',
 	
-			'widgets' => "Widgets",
-			'widget' => "Widget",
-			'item:object:widget' => "Widgets",
-			'layout:customise' => "Customise layout",
-			'widgets:gallery' => "Widget gallery",
-			'widgets:leftcolumn' => "Left widgets",
-			'widgets:fixed' => "Fixed position",
-			'widgets:middlecolumn' => "Middle widgets",
-			'widgets:rightcolumn' => "Right widgets",
-			'widgets:profilebox' => "Profile box",
-			'widgets:panel:save:success' => "Your widgets were successfully saved.",
-			'widgets:panel:save:failure' => "There was a problem saving your widgets. Please try again.",
-			'widgets:save:success' => "The widget was successfully saved.",
-			'widgets:save:failure' => "We could not save your widget. Please try again.",
+			'widgets' => "Виджеты",
+			'widget' => "Виджет",
+			'item:object:widget' => "Виджеты",
+			'layout:customise' => "Настроить расположение",
+			'widgets:gallery' => "Галлерея",
+			'widgets:leftcolumn' => "Левая колонка",
+			'widgets:fixed' => "Фиксированная позиция",
+			'widgets:middlecolumn' => "Средняя колонка",
+			'widgets:rightcolumn' => "Правая колонка",
+			'widgets:profilebox' => "Блок личных данных",
+			'widgets:panel:save:success' => "Настройки виджетов успешно сохранены.",
+			'widgets:panel:save:failure' => "При сохранении виджетов, произошла какая-то ошибка. Попробуйте ещё раз.",
+			'widgets:save:success' => "Виджет успешно сохранён.",
+			'widgets:save:failure' => "Невозможно сохранить виджет, попробуйте ещё раз.",
 			
 	
 		/**
 		 * Groups
 		 */
 	
-			'group' => "Группа", 
+			'group' => "Группы", 
 			'item:group' => "Группы",
 	
 		/**
 		 * Profile
 		 */
 	
-			'profile' => "Профайл",
+			'profile' => "Личные данные",
 			'user' => "Пользователь",
 			'item:user' => "Пользователи",
 
@@ -240,51 +239,146 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 		 * Profile menu items and titles
 		 */
 	
-			'profile:yours' => "Ваш профайл",
-			'profile:user' => "%s's profile",
+			'profile:yours' => "Ваши личные данные",
+			'profile:user' => "Личные данные пользователя %s",
 	
-			'profile:edit' => "Редактировать профайл",
-			'profile:editicon' => "Upload a new profile picture",
-			'profile:profilepictureinstructions' => "The profile picture is the image that's displayed on your profile page. <br /> You can change it as often as you'd like. (File formats accepted: GIF, JPG or PNG)",
-			'profile:icon' => "Profile picture",
-			'profile:createicon' => "Создать ваш аватор",
-			'profile:currentavatar' => "Current avatar",
-			'profile:createicon:header' => "Profile picture",
-			'profile:profilepicturecroppingtool' => "Profile picture cropping tool",
-			'profile:createicon:instructions' => "Click and drag a square below to match how you want your picture cropped.  A preview of your cropped picture will appear in the box on the right.  When you are happy with the preview, click 'Create your avatar'. This cropped image will be used throughout the site as your avatar. ",
+			'profile:edit' => "Редактировать личные данные",
+			'profile:editicon' => "Закачать новое фото",
+			'profile:profilepictureinstructions' => "Моё фото - это картинка, которая будет показываться на странице вашего профайла. <br /> Вы можете её менять так часто, как пожелаете. (Разрешённые форматы: GIF, JPG или PNG)",
+			'profile:icon' => "Моё фото",
+			'profile:createicon' => "Сохранить",
+			'profile:currentavatar' => "Текущее",
+			'profile:createicon:header' => "Моё фото",
+			'profile:profilepicturecroppingtool' => "Выбор границ",
+			'profile:createicon:instructions' => "Нажмите и, удерживая кнопку мыши, укажите область, которую вы хотите обрезать на вашей картинке. Предварительный просмотр вашей обрезанной картинки появится справа.  Когда вы будете удовлетворены картинкой в предварительном просмотре, нажмите <b>'Сохранить'</b>. Это обрезанное изображение будет использоваться как ваше фото во всех разделах сайта.",
 	
-			'profile:editdetails' => "Редактировать детали",
-			'profile:editicon' => "Edit profile icon",
+			'profile:editdetails' => "Редактировать",
+			'profile:editicon' => "Моё фото",
 	
-			'profile:aboutme' => "О себе", 
-			'profile:description' => "О себе",
-			'profile:briefdescription' => "Краткое описание",
-			'profile:location' => "Местонахождение",
-			'profile:skills' => "Навыки", 
+			'profile:aboutme' => "Обо мне", 
+			'profile:description' => "Обо мне",
+			'profile:briefdescription' => "Коротко о себе",
+			'profile:location' => "Город, Страна",
+			'profile:skills' => "Навыки",  
 			'profile:interests' => "Интересы", 
 			'profile:contactemail' => "Контактный имэйл",
 			'profile:phone' => "Telephone",
 			'profile:mobile' => "Мобильныйтелефон",
 			'profile:website' => "Веб-сайт",
 
-			'profile:river:update' => "%s updated their profile",
-			'profile:river:iconupdate' => "%s updated their profile icon",
+			'name' => "Отображаемое имя",
+			'email' => "Адрес электронной почты",
+			'username' => "Логин",
+			'password' => "Пароль",
+			'passwordagain' => "Пароль (повтор для проверки)",
+			'admin_option' => "Сделать этого пользователя администратором?",
+	
+		/**
+		 * Access
+		 */
+	
+			'ACCESS_PRIVATE' => "Только себе",
+			'ACCESS_LOGGED_IN' => "Зарегистрированным пользователям",
+			'ACCESS_PUBLIC' => "Всем",
+			'PRIVATE' => "Только себе",
+			'LOGGED_IN' => "Зарегистрированным пользователям",
+			'PUBLIC' => "Всем",
+			'access' => "Доступ",
+	
+		/**
+		 * Dashboard and widgets
+		 */
+	
+			'dashboard' => "Панель инструментов",
+			'dashboard:configure' => "Настроить вид",
+			'dashboard:nowidgets' => "Это Ваша главная страница. Нажмите 'Редактировать' что бы добавить виджеты, позволяющие следить за происходящим в системе.",
+
+			'widgets:add' => 'Добавить виджеты на вашу страницу',
+			'widgets:add:description' => "Выбирите интересующие вас виджеты перетащив их мышью из <b>Галлереи</b> в правой части страницы в любую из 3-х колонок ниже, и расположите в том порядке, в котором они должны отображаться.
+
+Чтобы удалить виджет, переместите его обратно в <b>Галлерею</b>.",
+			'widgets:position:fixed' => '(Фиксированная позиция на странице)',
+	
+			'widgets' => "Виджеты",
+			'widget' => "Виджет",
+			'item:object:widget' => "Виджеты",
+			'layout:customise' => "Настроить расположение",
+			'widgets:gallery' => "Галлерея",
+			'widgets:leftcolumn' => "Левая колонка",
+			'widgets:fixed' => "Фиксированная позиция",
+			'widgets:middlecolumn' => "Средняя колонка",
+			'widgets:rightcolumn' => "Правая колонка",
+			'widgets:profilebox' => "Блок личных данных",
+			'widgets:panel:save:success' => "Настройки виджетов успешно сохранены.",
+			'widgets:panel:save:failure' => "При сохранении виджетов, произошла какая-то ошибка. Попробуйте ещё раз.",
+			'widgets:save:success' => "Виджет успешно сохранён.",
+			'widgets:save:failure' => "Невозможно сохранить виджет, попробуйте ещё раз.",
+			
+	
+		/**
+		 * Groups
+		 */
+	
+			'group' => "Группы", 
+			'item:group' => "Группы",
+	
+		/**
+		 * Profile
+		 */
+	
+			'profile' => "Личные данные",
+			'user' => "Пользователь",
+			'item:user' => "Пользователи",
+
+		/**
+		 * Profile menu items and titles
+		 */
+	
+			'profile:yours' => "Ваши личные данные",
+			'profile:user' => "Личные данные пользователя %s",
+	
+			'profile:edit' => "Редактировать личные данные",
+			'profile:editicon' => "Закачать новое фото",
+			'profile:profilepictureinstructions' => "Моё фото - это картинка, которая будет показываться на странице вашего профайла. <br /> Вы можете её менять так часто, как пожелаете. (Разрешённые форматы: GIF, JPG или PNG)",
+			'profile:icon' => "Моё фото",
+			'profile:createicon' => "Сохранить",
+			'profile:currentavatar' => "Текущее",
+			'profile:createicon:header' => "Моё фото",
+			'profile:profilepicturecroppingtool' => "Выбор границ",
+			'profile:createicon:instructions' => "Нажмите и, удерживая кнопку мыши, укажите область, которую вы хотите обрезать на вашей картинке. Предварительный просмотр вашей обрезанной картинки появится справа.  Когда вы будете удовлетворены картинкой в предварительном просмотре, нажмите <b>'Сохранить'</b>. Это обрезанное изображение будет использоваться как ваше фото во всех разделах сайта.",
+	
+			'profile:editdetails' => "Редактировать",
+			'profile:editicon' => "Моё фото",
+	
+			'profile:aboutme' => "Обо мне", 
+			'profile:description' => "Обо мне",
+			'profile:briefdescription' => "Коротко о себе",
+			'profile:location' => "Город, Страна",
+			'profile:skills' => "Навыки",  
+			'profile:interests' => "Интересы", 
+			'profile:contactemail' => "Контактный email",
+			'profile:phone' => "Домашний телефон",
+			'profile:mobile' => "Мобильный телефон",
+			'profile:website' => "Вебсайт",
+
+			'profile:river:update' => "%s обновил свои личные данные",
+			'profile:river:iconupdate' => "%s обновил своё фото",
 	
 		/**
 		 * Profile status messages
 		 */
 	
 			'profile:saved' => "Профайл успешно сохранён.",
-			'profile:icon:uploaded' => "Your profile picture was successfully uploaded.",
+			'profile:icon:uploaded' => "Ваше фото успешно сохранено.",
 	
 		/**
 		 * Profile error messages
 		 */
 	
-			'profile:noaccess' => "You do not have permission to edit this profile.",
-			'profile:notfound' => "Sorry; we could not find the specified profile.",
-			'profile:cantedit' => "Sorry; you do not have permission to edit this profile.",
-			'profile:icon:notfound' => "Sorry; there was a problem uploading your profile picture.",
+			'profile:noaccess' => "У вас нет прав на редактирование данных этого пользователя.",
+			'profile:notfound' => "Извините, мы не можем найти данные указанного пользователя.",
+			'profile:cantedit' => "Извините, у вас нет прав на редактирование данных этого пользователя.",
+			'profile:icon:notfound' => "Извините, не удалось сохранить ваше фото.",
 	
 		/**
 		 * Friends
@@ -292,7 +386,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	
 			'friends' => "Друзья",
 			'friends:yours' => "Ваши друзья",
-			'friends:owned' => "%s's friends",
+			'friends:owned' => "Друзья пользователя %s",
 			'friend:add' => "Добавить друга",
 			'friend:remove' => "Убрать из друзей",
 	
@@ -300,47 +394,47 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'friends:add:failure' => "Невозможно добавить %s в друзья. Попробуйте ещё раз.",
 	
 			'friends:remove:successful' => "Выуспешно убрали %s из друзей.",
-			'friends:remove:failure' => "We couldn't remove %s from your friends. Please try again.",
+			'friends:remove:failure' => "Мы не смогли удалить пользователя %s из списка ваших друзей. Попробуйте ещё раз.",
 	
-			'friends:none' => "This user hasn't added anyone as a friend yet.",
-			'friends:none:you' => "You haven't added anyone as a friend! Search for your interests to begin finding people to follow.",
+			'friends:none' => "У этого пользователя пока нет друзей.",
+			'friends:none:you' => "У вас пока нет друзей! Воспользуйтесь поиском что бы найти ваших старых друзей или найти новых друзей по интересам.",
 	
-			'friends:none:found' => "No friends were found.",
+			'friends:none:found' => "Не найдено ни одно друга.",
 	
-			'friends:of:none' => "Nobody has added this user as a friend yet.",
-			'friends:of:none:you' => "Nobody has added you as a friend yet. Start adding content and fill in your profile to let people find you!",
+			'friends:of:none' => "Никто не добавил данного пользователя как своего друга.",
+			'friends:of:none:you' => "Никто вас не добавил как своего друга. Заполните свои личные данные что бы вас было легче найти!",
 	
 			'friends:of' => "Friends of",
 			'friends:of:owned' => "Люди, которые добавили %s в друзья",
 
-			 'friends:num_display' => "Number of friends to display",
-			 'friends:icon_size' => "Icon size",
-			 'friends:tiny' => "tiny",
-			 'friends:small' => "small",
+			 'friends:num_display' => "Количество друзей на одной странице",
+			 'friends:icon_size' => "Размер фото",
+			 'friends:tiny' => "крошечный",
+			 'friends:small' => "маленький",
 			 'friends' => "Друзья",
-			 'friends:of' => "Friends of",
-			 'friends:collections' => "Collections of friends",
-			 'friends:collections:add' => "New friends collection",
+			 'friends:of' => "Чей друг",
+			 'friends:collections' => "Группы друзей",
+			 'friends:collections:add' => "Создать группу друзей",
 			 'friends:addfriends' => "Добавить друзей",
-			 'friends:collectionname' => "Collection name",
-			 'friends:collectionfriends' => "Friends in collection",
-			 'friends:collectionedit' => "Edit this collection",
-			 'friends:nocollections' => "You do not yet have any collections.",
-			 'friends:collectiondeleted' => "Your collection has been deleted.",
-			 'friends:collectiondeletefailed' => "We were unable to delete the collection. Either you don't have permission, or some other problem has occurred.",
-			 'friends:collectionadded' => "Your collection was successfuly created",
-			 'friends:nocollectionname' => "You need to give your collection a name before it can be created.",
+			 'friends:collectionname' => "Название группы",
+			 'friends:collectionfriends' => "Друзья в группе",
+			 'friends:collectionedit' => "Редактировать эту группу",
+			 'friends:nocollections' => "У вас нет групп друзей.",
+			 'friends:collectiondeleted' => "Группа была удалена.",
+			 'friends:collectiondeletefailed' => "Мы не смогли удалить группу. Либо у вас нет прав, либо случилась какая-то другая ошибка.",
+			 'friends:collectionadded' => "Ваша группа была успешно создана",
+			 'friends:nocollectionname' => "Необходимо указать название группы что бы её создать.",
 		
-	        'friends:river:created' => "%s added the friends widget.",
-	        'friends:river:updated' => "%s updated their friends widget.",
-	        'friends:river:delete' => "%s removed their friends widget.",
-	        'friends:river:add' => "%s add someone as a friend.",
+	        'friends:river:created' => "%s добавил себе виджет 'Друзья'.",
+	        'friends:river:updated' => "%s обновил виджет 'Друзья'.",
+	        'friends:river:delete' => "%s удалил виджет 'Друзья'.",
+	        'friends:river:add' => "%s добавил себе друга.",
 	
 		/**
 		 * Feeds
 		 */
-			'feed:rss' => 'Subscribe to feed',
-			'feed:odd' => 'Syndicate OpenDD',
+			'feed:rss' => 'Подписаться на ленту',
+			'feed:odd' => 'Синхронизировать через OpenDD',
 	
 		/**
 		 * River
@@ -351,13 +445,12 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 		/**
 		 * Plugins
 		 */
-			'plugins:settings:save:ok' => "Settings for the %s plugin were saved successfully.",
-			'plugins:settings:save:fail' => "There was a problem saving settings for the %s plugin.",
-			'plugins:usersettings:save:ok' => "User settings for the %s plugin were saved successfully.",
-			'plugins:usersettings:save:fail' => "There was a problem saving  user settings for the %s plugin.",
-	
-			'item:object:plugin' => 'Plugin configuration settings',
+			'plugins:settings:save:ok' => "Настройки для приложения %s успешно сохранены.",
+			'plugins:settings:save:fail' => "Настройки для приложения %s не сохранены.",
+			'plugins:usersettings:save:ok' => "Пользовательские настройки для приложения %s успешно сохранены.",
+			'plugins:usersettings:save:fail' => "Пользовательский настройки для приложения %s не сохранены.",
 			
+			'item:object:plugin' => 'Настройки приложения',
 		/**
 		 * Notifications
 		 */
@@ -368,7 +461,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'notifications:usersettings:save:fail' => "Не удалось сохранить изменения настроек оповещения.",
 	
 			'user.notification.get' => 'Вернуться с настройкам оповещения данного пользователя.',
-			'user.notification.set' => 'Set the notification settings for a given user.',
+			'user.notification.set' => 'Устанавливает настройки уведомлений для указанного пользователя.',
 		/**
 		 * Search
 		 */
@@ -376,56 +469,56 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'search' => "Поиск",
 			'searchtitle' => "Поиск: %s",
 			'users:searchtitle' => "Поиск пользователей: %s",
-			'advancedsearchtitle' => "%s with results matching %s",
+			'advancedsearchtitle' => "%s среди результатов, подходящих под %s",
 			'notfound' => "Ваш запрос не дал результатов.",
 			'next' => "Дальше",
-			'previous' => "Previous",
+			'previous' => "Назад",
 	
-			'viewtype:change' => "Change listing type",
-			'viewtype:list' => "List view",
-			'viewtype:gallery' => "Gallery",
+			'viewtype:change' => "Изменить вид",
+			'viewtype:list' => "Список",
+			'viewtype:gallery' => "Галлерея",
 	
-			'tag:search:startblurb' => "Items with tags matching '%s':",
+			'tag:search:startblurb' => "Записи, отвечающие запросу '%s':",
 
-			'user:search:startblurb' => "Users matching '%s':",
-			'user:search:finishblurb' => "To view more, click here.",
+			'user:search:startblurb' => "Пользователи, отвечающие запросу '%s':",
+			'user:search:finishblurb' => "Нажмите сюда, что бы увидеть больше.",
 	
 		/**
 		 * Account
 		 */
 	
-			'account' => "Account",
+			'account' => "Учётная запись",
 			'settings' => "Настройки",
-            'tools' => "Tools",
-            'tools:yours' => "Your tools",
+            'tools' => "Приложения",
+            'tools:yours' => "Мои приложения",
 	
-			'register' => "Register",
-			'registerok' => "You have successfully registered for %s. To activate your account, please confirm your email address by clicking on the link we sent you.",
-			'registerbad' => "Your registration was unsuccessful. The username may already exist, your passwords might not match, or your username or password may be too short.",
-			'registerdisabled' => "Registration has been disabled by the system administrator",
+			'register' => "Регистрация",
+			'registerok' => "Вы успешно зарегистрировались в %s. Чтобы активировать аккаунт, пожалуйста подтвердите email адрес перейдя по ссылке, которую мы вам выслали.",
+			'registerbad' => "Регистрация не возможна. Имя пользователя уже занято, либо пароли не совпадают, либо имя пользователя или пароль слишком короткие.",
+			'registerdisabled' => "Регистрация новых пользователей отключена администратором.",
 	
-			'registration:notemail' => 'The email address you provided does not appear to be a valid email address.',
-			'registration:userexists' => 'That username already exists',
-			'registration:usernametooshort' => 'Your username must be a minimum of 4 characters long.',
-			'registration:passwordtooshort' => 'The password must be a minimum of 6 characters long.',
-			'registration:dupeemail' => 'This email address has already been registered.',
-			'registration:invalidchars' => 'Sorry, your email address contains invalid characters.',
-			'registration:emailnotvalid' => 'Sorry, the email address you entered is invalid on this system',
-			'registration:passwordnotvalid' => 'Sorry, the password you entered is invalid on this system',
-			'registration:usernamenotvalid' => 'Sorry, the username you entered is invalid on this system',
+			'registration:notemail' => 'Адрес электронной почты, указанный вами, не корректен.',
+			'registration:userexists' => 'Такой пользователь уже зарегистрирован в системе',
+			'registration:usernametooshort' => 'Имя пользователя должно быть длиной не менее 4 символов.',
+			'registration:passwordtooshort' => 'Пароль должен быть длиной не менее 6 символов.',
+			'registration:dupeemail' => 'Этот адрес электронной почты уже используется в системе.',
+			'registration:invalidchars' => 'Имя пользователя содержит недопустимые символы.',
+			'registration:emailnotvalid' => 'Такой адрес электронной почты недопустим',
+			'registration:passwordnotvalid' => 'Такой пароль недопустим',
+			'registration:usernamenotvalid' => 'Такое имя пользователя не допустимо',
 	
-			'adduser' => "Добавить пользоваетля",
-			'adduser:ok' => "You have successfully added a new user.",
-			'adduser:bad' => "The new user could not be created.",
+			'adduser' => "Добавить пользователя",
+			'adduser:ok' => "Вы успешно добавили нового пользователя.",
+			'adduser:bad' => "Новый пользователь не может быть создан.",
 			
-			'item:object:reported_content' => "Reported items",
+			'item:object:reported_content' => "Нарушения",
 	
-			'user:set:name' => "Account name settings",
-			'user:name:label' => "Your name",
-			'user:name:success' => "Successfully changed your name on the system.",
-			'user:name:fail' => "Could not change your name on the system.",
+			'user:set:name' => "Имя пользователя",
+			'user:name:label' => "Ваше имя",
+			'user:name:success' => "Ваше имя успешно изменено.",
+			'user:name:fail' => "Не удалось изменить ваше имя.",
 	
-			'user:set:password' => "Account password",
+			'user:set:password' => "Пароль",
 			'user:password:label' => "Новый пароль",
 			'user:password2:label' => "Повторите новый пароль",
 			'user:password:success' => "Пароль изменён",
@@ -433,18 +526,18 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'user:password:fail:notsame' => "Пароли не совпадают!",
 			'user:password:fail:tooshort' => "Пароль слишком короткий!",
 	
-			'user:set:language' => "Настройки языка",
-			'user:language:label' => "Your language",
-			'user:language:success' => "Your language settings have been updated.",
-			'user:language:fail' => "Your language settings could not be saved.",
+			'user:set:language' => "Языковые настройки",
+			'user:language:label' => "Ваш язык",
+			'user:language:success' => "Ваши языковые настройки успешно сохранены.",
+			'user:language:fail' => "Не удалось сохранить ваши языковые настройки.",
 	
-			'user:username:notfound' => 'Username %s not found.',
+			'user:username:notfound' => 'Пользователь %s не найден.',
 	
-			'user:password:lost' => 'Забыли пароль',
-			'user:password:resetreq:success' => 'Successfully requested a new password, email sent',
-			'user:password:resetreq:fail' => 'Could not request a new password.',
+			'user:password:lost' => 'Забыл пароль',
+			'user:password:resetreq:success' => 'Новый пароль успешно установлен, инструкции высланы по почте',
+			'user:password:resetreq:fail' => 'Не возможно сбросить пароль.',
 	
-			'user:password:text' => 'To generate a new password, enter your username below. We will send the address of a unique verification page to you via email click on the link in the body of the message and a new password will be sent to you.',
+			'user:password:text' => 'Что бы сбросить пароль, введите ваш логин ниже. Мы вышлем вам уникальный адрес страницы, на который вам надо будет зайти, что бы получить новый пароль.',
 	
 		/**
 		 * Administration
@@ -453,83 +546,83 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'admin:configuration:success' => "Изменения были сохранены.",
 			'admin:configuration:fail' => "Изменения не были сохранены.",
 	
-			'admin' => "Администрация",
-			'admin:description' => "The admin panel allows you to control all aspects of the system, from user management to how plugins behave. Choose an option below to get started.",
+			'admin' => "Администрирование",
+			'admin:description' => "Административная панель позволяет вам управлять всеми аспектами системы, от управления пользователями до поведения приложений.",
 			
-			'admin:user' => "User Administration",
-			'admin:user:description' => "This admin panel allows you to control user settings for your site. Choose an option below to get started.",
-			'admin:user:adduser:label' => "Click here to add a new user...",
-			'admin:user:opt:linktext' => "Configure users...",
-			'admin:user:opt:description' => "Configure users and account information. ",
+			'admin:user' => "Управление пользователями",
+			'admin:user:description' => "Эта страница позволяет менять настройки вашего сайта.",
+			'admin:user:adduser:label' => "Кликнуть тут что бы добавить нового пользователя...",
+			'admin:user:opt:linktext' => "Настроить пользователей...",
+			'admin:user:opt:description' => "Настроить пользователей и информацию об аккаунтах. ",
 			
-			'admin:site' => "Site Administration",
-			'admin:site:description' => "This admin panel allows you to control global settings for your site. Choose an option below to get started.",
-			'admin:site:opt:linktext' => "Configure site...",
-			'admin:site:opt:description' => "Configure the site technical and non-technical settings. ",
+			'admin:site' => "Управление сайтом",
+			'admin:site:description' => "Эта страница позволяет вам управлять глобальными настройками вашего сайта.",
+			'admin:site:opt:linktext' => "Настроить сайт...",
+			'admin:site:opt:description' => "Установить технические и нетехнические настройки. ",
 			
-			'admin:plugins' => "Tool Administration",
-			'admin:plugins:description' => "This admin panel allows you to control and configure tools installed on your site.",
-			'admin:plugins:opt:linktext' => "Configure tools...",
-			'admin:plugins:opt:description' => "Configure the tools installed on the site. ",
-			'admin:plugins:label:author' => "Author",
-			'admin:plugins:label:copyright' => "Copyright",
-			'admin:plugins:label:licence' => "Licence",
+			'admin:plugins' => "Управление приложениями",
+			'admin:plugins:description' => "Эта страница позволяет вам управлять приложениями, установленными на вашем сайте.",
+			'admin:plugins:opt:linktext' => "Настроить приложения...",
+			'admin:plugins:opt:description' => "Настроить установленные на сайте приложения. ",
+			'admin:plugins:label:author' => "Автор",
+			'admin:plugins:label:copyright' => "Копирайт",
+			'admin:plugins:label:licence' => "Лицензия",
 			'admin:plugins:label:website' => "URL",
-			'admin:plugins:disable:yes' => "Plugin %s was disabled successfully.",
-			'admin:plugins:disable:no' => "Plugin %s could not be disabled.",
-			'admin:plugins:enable:yes' => "Plugin %s was enabled successfully.",
-			'admin:plugins:enable:no' => "Plugin %s could not be enabled.",
+			'admin:plugins:disable:yes' => "Приложение %s было успешно выключено.",
+			'admin:plugins:disable:no' => "Не удалось выключить приложение %s.",
+			'admin:plugins:enable:yes' => "Приложение %s было успешно включено.",
+			'admin:plugins:enable:no' => "Не удалось включить приложение %s.",
 	
 			'admin:statistics' => "Статистика",
-			'admin:statistics:description' => "This is an overview of statistics on your site. If you need more detailed statistics, a professional administration feature is available.",
-			'admin:statistics:opt:description' => "View statistical information about users and objects on your site.",
-			'admin:statistics:opt:linktext' => "Просмотреть статистику...",
-			'admin:statistics:label:basic' => "Basic site statistics",
-			'admin:statistics:label:numentities' => "Entities on site",
+			'admin:statistics:description' => "Это обзорная статистика вашего сайта. Если вам нужна более детальная статистика, вы можете воспользоваться профессиональными услугами.",
+			'admin:statistics:opt:description' => "Просмотреть статистику о пользователях и объектах на вашем сайте.",
+			'admin:statistics:opt:linktext' => "Посмотреть статистику...",
+			'admin:statistics:label:basic' => "Статистика сайта",
+			'admin:statistics:label:numentities' => "Объекты",
 			'admin:statistics:label:numusers' => "Количество ползователей",
 			'admin:statistics:label:numonline' => "Количество пользователей в сети",
 			'admin:statistics:label:onlineusers' => "Пользователей в сети",
 			'admin:statistics:label:version' => "Версия Elgg",
-			'admin:statistics:label:version:release' => "Release",
+			'admin:statistics:label:version:release' => "Релиз",
 			'admin:statistics:label:version:version' => "Версия",
 	
 			'admin:user:label:search' => "Найти пользователей:",
 			'admin:user:label:seachbutton' => "Поиск", 
 	
-			'admin:user:ban:no' => "Can not ban user",
-			'admin:user:ban:yes' => "User banned.",
-			'admin:user:unban:no' => "Can not unban user",
-			'admin:user:unban:yes' => "User un-banned.",
+			'admin:user:ban:no' => "Невозможно забанить пользователя",
+			'admin:user:ban:yes' => "Пользователь забанен.",
+			'admin:user:unban:no' => "Невозможно разбанить пользователя",
+			'admin:user:unban:yes' => "Пользователь разбанен.",
 			'admin:user:delete:no' => "Невозможно удалить пользователя",
 			'admin:user:delete:yes' => "Пользователь удалён",
 	
-			'admin:user:resetpassword:yes' => "Password reset, user notified.",
-			'admin:user:resetpassword:no' => "Password could not be reset.",
+			'admin:user:resetpassword:yes' => "Пароль сброшен, пользователь уведомлён.",
+			'admin:user:resetpassword:no' => "Не удалось сбросить пароль.",
 	
-			'admin:user:makeadmin:yes' => "Пользователь теперь администратор.",
-			'admin:user:makeadmin:no' => "We could not make this user an admin.",
+			'admin:user:makeadmin:yes' => "Пользователю даны права администратора.",
+			'admin:user:makeadmin:no' => "Не удалось дать пользователю права администратора.",
 			
 		/**
 		 * User settings
 		 */
-			'usersettings:description' => "The user settings panel allows you to control all your personal settings, from user management to how plugins behave. Choose an option below to get started.",
+			'usersettings:description' => "Страница управления пользовательскими настройками позволяет вам контролировать все ваши персональные настройки, от управления пользователями до поведения приложений.",
 	
 			'usersettings:statistics' => "Ваша статистика",
-			'usersettings:statistics:opt:description' => "View statistical information about users and objects on your site.",
-			'usersettings:statistics:opt:linktext' => "Account statistics",
+			'usersettings:statistics:opt:description' => "Просмотр статистической информации о пользователях и объетах вашего сайта.",
+			'usersettings:statistics:opt:linktext' => "Моя статистика",
 	
-			'usersettings:user' => "Ваши настройки",
-			'usersettings:user:opt:description' => "This allows you to control user settings.",
-			'usersettings:user:opt:linktext' => "Change your settings",
+			'usersettings:user' => "Мои настройки",
+			'usersettings:user:opt:description' => "Это позволяет менять пользовательские настройки.",
+			'usersettings:user:opt:linktext' => "Мои настройки",
 	
-			'usersettings:plugins' => "Tools",
-			'usersettings:plugins:opt:description' => "Configure settings for your active tools.",
-			'usersettings:plugins:opt:linktext' => "Configure your tools...",
+			'usersettings:plugins' => "Приложения",
+			'usersettings:plugins:opt:description' => "Настроить активные приложения.",
+			'usersettings:plugins:opt:linktext' => "Настроить активные приложения...",
 	
-			'usersettings:plugins:description' => "This panel allows you to control and configure the personal settings for the tools installed by your system administrator.",
-			'usersettings:statistics:label:numentities' => "Your entities",
+			'usersettings:plugins:description' => "Эта страница позволяет вам контролировать и настраивать установленные в системе приложения.",
+			'usersettings:statistics:label:numentities' => "Мои объекты",
 	
-			'usersettings:statistics:yourdetails' => "Ваши детали",
+			'usersettings:statistics:yourdetails' => "Мои детали",
 			'usersettings:statistics:label:name' => "Полное имя",
 			'usersettings:statistics:label:email' => "Адрес эл. почты",
 			'usersettings:statistics:label:membersince' => "Дата создания",
@@ -543,16 +636,16 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	
 			'save' => "Сохранить",
 			'cancel' => "Отменить",
-			'saving' => "Saving ...",
+			'saving' => "Сохранение ...",
 			'update' => "Обновить",
 			'edit' => "Редактировать",
 			'delete' => "Удалить",
-			'load' => "Load",
-			'upload' => "Загрузить",
-			'ban' => "Ban",
-			'unban' => "Unban",
-			'enable' => "Enable",
-			'disable' => "Disable",
+			'load' => "Загрузить",
+			'upload' => "Закачать",
+			'ban' => "Забанить",
+			'unban' => "Разбанить",
+			'enable' => "Включить",
+			'disable' => "Выключить",
 			'request' => "Запросить",
 			'complete' => "Завершить",
 	
@@ -569,14 +662,13 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'active' => 'Активный',
 			'total' => 'Общий',
 	
-			'learnmore' => "Click here to learn more.",
+			'learnmore' => "Нажмите здесь, что бы узнать больше.",
 	
-			'content' => "content",
-			'content:latest' => 'Latest activity',
-			'content:latest:blurb' => 'Alternatively, click here to view the latest content from across the site.',
-	
-			'link:text' => 'view link',
-	
+			'content' => "содержимое",
+			'content:latest' => 'Последние события',
+			'content:latest:blurb' => 'Нажмите сюда, что бы посмотреть последние посты со всего сайта.',
+			
+			'link:text' => 'дальше &raquo;',
 	
 		/**
 		 * Generic data words
@@ -586,26 +678,32 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'description' => "Описание",
 			'tags' => "Тэги",
 			'spotlight' => "Spotlight",
-			'all' => "All",
+			'all' => "Все",
 	
-			'by' => 'by',
+			'by' => 'от',
 	
-			'annotations' => "Annotations",
-			'relationships' => "Relationships",
-			'metadata' => "Metadata",
+			'annotations' => "Аннотации",
+			'relationships' => "Связи",
+			'metadata' => "Метаданные",
 	
 		/**
 		 * Input / output strings
 		 */
 
-			'deleteconfirm' => "Are you sure you want to delete this item?",
-			'fileexists' => "A file has already been uploaded. To replace it, select it below:",
+			'deleteconfirm' => "Вы уверены, что хотите удалит этот объект?",
+			'fileexists' => "Файл уже отправлен на сервер. Что бы заменить его, выберите его ниже:",
+			
+		/**
+         * System messages
+         **/
+            'systemmessages:dismiss' => "закрыть",
+
 	
 		/**
 		 * Import / export
 		 */
-			'importsuccess' => "Import of data was successful",
-			'importfail' => "OpenDD import of data failed.",
+			'importsuccess' => "Импорт данных завершился успешно",
+			'importfail' => "OpenDD импорт данных .",
 	
 		/**
 		 * Time
@@ -636,50 +734,52 @@ Creating this is easy. Copy the contents of the textbox below into a text editor
 
 Alternatively, you can enter your database settings below and we will try and do this for you...",
 	
-			'installation:error:configuration' => "Once you've corrected any configuration issues, press reload to try again.",
+			'installation:error:configuration' => "После исправления всех проблем конфигурации, обновите страницу что бы попытаться ещё раз.",
 	
-			'installation' => "Installation",
-			'installation:success' => "Elgg's database was installed successfully.",
-			'installation:configuration:success' => "Your initial configuration settings have been saved. Now register your initial user; this will be your first system administrator.",
+			'installation' => "Инсталляция",
+			'installation:success' => "База данных Elgg успешно установлена.",
+			'installation:configuration:success' => "Ваши настройки сохранены. Теперь зарегистрируйте первого пользователя, который будет являться администратором.",
 	
 			'installation:settings' => "Системные настройки",
-			'installation:settings:description' => "Now that the Elgg database has been successfully installed, you need to enter a couple of pieces of information to get your site fully up and running. We've tried to guess where we could, but <b>you should check these details.</b>",
+			'installation:settings:description' => "Теперь, когда база данных была успешно установлена, необходимо настроить остальные аспекты сайта. Мы попробовали автоматически определить настройки, но <b>вам следует их перепроверить.</b>",
 	
-			'installation:settings:dbwizard:prompt' => "Enter your database settings below and hit save:",
-			'installation:settings:dbwizard:label:user' => "Database user",
-			'installation:settings:dbwizard:label:pass' => "Database password",
-			'installation:settings:dbwizard:label:dbname' => "Elgg database",
-			'installation:settings:dbwizard:label:host' => "Database hostname (usually 'localhost')",
-			'installation:settings:dbwizard:label:prefix' => "Database table prefix (usually 'elgg')",
+			'installation:settings:dbwizard:prompt' => "Настройте доступ к базе данных и нажмите 'Сохранить':",
+			'installation:settings:dbwizard:label:user' => "Пользователь",
+			'installation:settings:dbwizard:label:pass' => "Пароль",
+			'installation:settings:dbwizard:label:dbname' => "База данных",
+			'installation:settings:dbwizard:label:host' => "Хост (обычно 'localhost')",
+			'installation:settings:dbwizard:label:prefix' => "Префикс таблиц (обычно 'elgg')",
 	
-			'installation:settings:dbwizard:savefail' => "We were unable to save the new settings.php. Please save the following file as engine/settings.php using a text editor.",
+			'installation:settings:dbwizard:savefail' => "Не удалось сохранить settings.php. Пожалуйста, сохраните следующую информацию в файл engine/settings.php используя текстовый редактор.",
 	
-			'installation:sitename' => "The name of your site (eg \"My social networking site\"):",
-			'installation:sitedescription' => "Short description of your site (optional)",
-			'installation:wwwroot' => "The site URL, followed by a trailing slash:",
-			'installation:path' => "The full path to your site root on your disk, followed by a trailing slash:",
-			'installation:dataroot' => "The full path to the directory where uploaded files will be stored, followed by a trailing slash:",
-			'installation:dataroot:warning' => "You must create this directory manually. It should sit in a different directory to your Elgg installation.",
-			'installation:language' => "The default language for your site:",
-			'installation:debug' => "Debug mode provides extra information which can be used to diagnose faults, however it can slow your system down so should only be used if you are having problems:",
-			'installation:debug:label' => "Turn on debug mode",
-			'installation:usage' => "This option lets Elgg send anonymous usage statistics back to Curverider.",
-			'installation:usage:label' => "Send anonymous usage statistics",
-			'installation:view' => "Enter the view which will be used as the default for your site or leave this blank for the default view (if in doubt, leave as default):",
+			'installation:sitename' => "Название вашего сайта (например \"Моя социальная сеть\"):",
+			'installation:sitedescription' => "Краткое описание вашего сайта (не обязательно)",
+			'installation:wwwroot' => "URL вашего сайта, заканчивающийся на /:",
+			'installation:path' => "Полный путь к корневой директории сайта на сервере, заканчивающийся на /:",
+			'installation:dataroot' => "Полный путь к директории, в которой будут храниться закачанные на сайт файлы, заканчивающийся на /:",
+			'installation:dataroot:warning' => "Вам придётся создать её самостоятельно. Она должна находится вне директории в которую установлен Elgg.",
+			'installation:language' => "Язык сайта по умолчанию:",
+			'installation:debug' => "Режим отладки предоставляет дополнительную инофрмацию для диагностики ошибок, но это может замедлить системы, поэтому режим должен быть использован только для отладки:",
+			'installation:debug:label' => "Включить режим отладки",
+			'installation:usage' => "Это позволит Elgg посылать анонимную статистику использования разработчикам Elgg.",
+			'installation:usage:label' => "Отсылать анонимную статистику использования",
+			'installation:view' => "Укажите, какой view должен быть использован по умолчанию для сайта, или оставьте пустым, что бы использовался default:",
 
-			'installation:siteemail' => "Site email address (used when sending system emails)",
-	
-			'installation:disableapi' => "Elgg comes with an flexible and extendible API that enables applications use certain Elgg features remotely",
-			'installation:disableapi:label' => "Enable the RESTful API",
-	
-			'upgrade:db' => 'Your database was upgraded.',
+			'installation:disableapi' => "Elgg предоставляет гибкое и расширяемое API, которое позволяет приложениям использовать некоторые возможности Elgg удалённо",
+			'installation:disableapi:label' => "Включить RESTful API",
+			
+			'installation:siteemail' => "Обратный адрес электронной почты, который будет использоваться для посылки системных писем",
+			
+			'upgrade:db' => 'База данных была обновлена.',
+			'upgrade:core' => 'Ваша копия Elgg была обновлена.',
+
 	
 		/**
 		 * Welcome
 		 */
 	
-			'welcome' => "Welcome %s",
-			'welcome_message' => "Welcome to this Elgg installation.",
+			'welcome' => "Привет %s",
+			'welcome_message' => "Рады привествовать вас в свежеустановленной системе.",
 	
 		/**
 		 * Emails
@@ -696,38 +796,38 @@ Alternatively, you can enter your database settings below and we will try and do
 			'friend:newfriend:subject' => "%s добавил вас в друзья!",
 			'friend:newfriend:body' => "%s добавил вас в друзья!
 
-To view their profile, click here:
+Что бы посмотреть его профайл, нажмите сюда:
 
 	%s
 
-You cannot reply to this email.",
+Не надо отвечать на это письмо.",
 	
 	
-			'email:validate:subject' => "%s please confirm your email address!",
-			'email:validate:body' => "Hi %s,
+			'email:validate:subject' => "%s, пожалуйста, подтвердите адрес!",
+			'email:validate:body' => "Привет %s,
 
-Please confirm your email address by clicking on the link below:
+Пожалуйста, подтвердите ваш адрес электронной почты нажав на ссылку ниже:
 
 %s
 ",
-			'email:validate:success:subject' => "Email validated %s!",
-			'email:validate:success:body' => "Hi %s,
+			'email:validate:success:subject' => "Адрес электронной почты проверен!",
+			'email:validate:success:body' => "Привет, %s,
 			
-Congratulations, you have successfully validated your email address.",
+Поздравляем, ваш адрес электронной почты успешно проверен.",
 	
 	
-			'email:resetpassword:subject' => "Пароль изменён!",
-			'email:resetpassword:body' => "Hi %s,
+			'email:resetpassword:subject' => "Пароль сброшен!",
+			'email:resetpassword:body' => "Привет %s,
 			
-Your password has been reset to: %s",
+Ваш пароль был сброшен, новый пароль: %s",
 	
 	
 			'email:resetreq:subject' => "Запрос нового пароля.",
-			'email:resetreq:body' => "Hi %s,
+			'email:resetreq:body' => "Привет %s,
 			
-Somebody (from the IP address %s) has requested a new password for their account.
+Кто-то (IP адрес %s) запросил новый пароль для вашего аккаунта.
 
-If you requested this click on the link below, otherwise ignore this email.
+Если это были вы, нажмите на ссылку ниже, иначе просто проигнорируйте это сообщение.
 
 %s
 ",
@@ -736,7 +836,7 @@ If you requested this click on the link below, otherwise ignore this email.
 		/**
 		 * XML-RPC
 		 */
-			'xmlrpc:noinputdata'	=>	"Input data missing",
+			'xmlrpc:noinputdata'	=>	"Отсутствуют входные данные",
 	
 		/**
 		 * Comments
@@ -745,47 +845,51 @@ If you requested this click on the link below, otherwise ignore this email.
 			'comments:count' => "%s комментарии",
 			'generic_comments:add' => "Добавить комментарий",
 			'generic_comments:text' => "Комментарий",
-			'generic_comment:posted' => "Your comment was successfully posted.",
-			'generic_comment:deleted' => "Your comment was successfully deleted.",
-			'generic_comment:blank' => "Sorry; you need to actually put something in your comment before we can save it.",
-			'generic_comment:notfound' => "Sorry; we could not find the specified item.",
-			'generic_comment:notdeleted' => "Sorry; we could not delete this comment.",
-			'generic_comment:failure' => "An unexpected error occurred when adding your comment. Please try again.",
+			'generic_comment:posted' => "Ваш комментарий успешно добавлен.",
+			'generic_comment:deleted' => "Ваш комментарий успешно удалён.",
+			'generic_comment:blank' => "Извините, нельзя добавить пустой комментарий.",
+			'generic_comment:notfound' => "Извините, мы не можем найти указанный объект.",
+			'generic_comment:notdeleted' => "Извините, мы не можем удалить этот комментарий.",
+			'generic_comment:failure' => "Не удалоcь добавить ваш комментарий. Попробуйте ещё раз.",
 	
-			'generic_comment:email:subject' => 'У вас новый комментарий!',
-			'generic_comment:email:body' => "You have a new comment on your item \"%s\" from %s. It reads:
+			'generic_comment:email:subject' => 'Вы получили новый комментарий!',
+			'generic_comment:email:body' => "Вы получили новый комментарий на ваше \"%s\" от %s:
 
 			
 %s
 
 
-To reply or view the original item, click here:
+Что бы ответить или просто посмотреть оригинальный объект, перейдите по ссылке:
 
 	%s
 
-To view %s's profile, click here:
+Что бы посмотреть профайл пользователя %s, перейдите по ссылке:
 
 	%s
 
-You cannot reply to this email.",
+Не надо отвечать на это письмо.",
 	
 		/**
 		 * Entities
 		 */
-			'entity:default:strapline' => 'Created %s by %s',
-			'entity:default:missingsupport:popup' => 'This entity cannot be displayed correctly. This may be because it requires support provided by a plugin that is no longer installed.',
+			'entity:default:strapline' => 'Добавлено %s пользователем %s',
+			'entity:default:missingsupport:popup' => 'Этот объект не может быть корректно отображён. Возможно, это случилось потому, что был удалёно приложение, которое умеет его отображать.',
 	
-			'entity:delete:success' => 'Entity %s has been deleted',
-			'entity:delete:fail' => 'Entity %s could not be deleted',
+			'entity:delete:success' => 'Объект %s успешно удалён',
+			'entity:delete:fail' => 'Объект %s не может быть удалён',
 	
 	
 		/**
 		 * Action gatekeeper
 		 */
-			'actiongatekeeper:missingfields' => 'Form is missing __token or __ts fields',
-			'actiongatekeeper:tokeninvalid' => 'Token provided by form does not match that generated by server.',
-			'actiongatekeeper:timeerror' => 'Form has expired, please refresh and try again.',
-			'actiongatekeeper:pluginprevents' => 'A extension has prevented this form from being submitted.',
+			'actiongatekeeper:missingfields' => 'В форме не хватает полей __token или __ts',
+			'actiongatekeeper:tokeninvalid' => 'Токен в  форме не соответствует токену, сгенерированному на сервере.',
+			'actiongatekeeper:timeerror' => 'Форма потеряла актуальность, пожалуйста обновите страницу и попробуйте ещё раз.',
+			'actiongatekeeper:pluginprevents' => 'Какое-то браузерное расширение не позволило отправить эту форму.',
+		/**
+		 * Extras
+		 */
+	        'more info' => 'больше &raquo;',
 	
 		/**
 		 * Languages according to ISO 639-1
