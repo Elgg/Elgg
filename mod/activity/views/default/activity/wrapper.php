@@ -1,0 +1,51 @@
+<?php
+
+	/**
+	 * Elgg activity item wrapper.
+	 * Wraps all river items.
+	 * 
+	 * @package Elgg
+	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+	 * @author Curverider
+	 * @copyright Curverider Ltd 2008
+	 * @link http://elgg.com/
+	 */
+
+	$statement = $vars['statement'];
+	$time = $vars['time'];
+	$event = $vars['event'];
+	$entry = $vars['entry'];
+	
+	if ($statement->getObject() instanceof ElggEntity) {
+		
+		$obj = $statement->getObject();
+		$subtype = $obj->getSubtype();
+		if (empty($subtype)) $subtype = $obj->type;
+		if (empty($subtype)) $subtype = "general";
+	} else if (is_array($statement->getObject())) {
+		$obj = $statement->getObject();
+		$subtype = "relationship_" . $obj['relationship'];
+	}
+?>
+<div class="activity_item">
+
+	<div class="activity_<?php echo $subtype; ?>">
+		<div class="activity_<?php echo $event; ?>">
+			<p class="activity_<?php echo $subtype; ?>_<?php echo $event; ?>">
+				<?php
+		
+					echo $vars['entry'];
+				
+				?>
+				<span class="activity_item_time">
+					(<?php
+		
+						echo friendly_time($time);
+					
+					?>)
+				</span>
+			</p>
+		</div>
+	</div>
+
+</div>
