@@ -224,7 +224,7 @@
 		}
 		
 		$query = "SELECT sl.* from {$CONFIG->dbprefix}system_log sl $relationship_join where $user and $relationship_query ($obj_query) order by sl.time_created desc  limit $offset, $limit";
-echo $query;
+
 		// fetch data from system log (needs optimisation)
 		return get_data($query);
 	}
