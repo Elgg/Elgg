@@ -1974,6 +1974,7 @@ a.toggle_customise_edit_panel:hover {
 	padding:5px;
 	display:none;
 	width: 200px;
+	line-height: 1.2em;
 }
 /* droppable area hover class  */
 .droppable-hover {
