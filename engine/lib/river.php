@@ -161,7 +161,8 @@
 		
 		// Get all potential river events from available view
 		$river_events = array(); 
-		foreach (elgg_view_tree('river') as $view)
+		$river_views = elgg_view_tree('river');
+		foreach ($river_views as $view)
 		{
 			$fragments = explode('/', $view);
 
