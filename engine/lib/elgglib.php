@@ -296,6 +296,35 @@
 			
 		}
 		
+		/**
+		 * Internal function for retrieving views used by elgg_view_tree
+		 *
+		 * @param unknown_type $dir
+		 * @param unknown_type $base
+		 * @return unknown
+		 */
+		function get_views($dir, $base) {
+				
+			$return = array();
+			if (file_exists($dir) && is_dir($dir)) {
+				if ($handle = opendir($dir)) {
+					while ($view = readdir($handle)) {
+						if (!in_array($view, array('.','..','.svn','CVS'))) {
+							if (is_dir($dir . '/' . $view)) {
+								if ($val = get_views($dir . '/' . $view, $base . '/' . $view)) {
+									$return = array_merge($return, $val);
+								}
+							} else {
+								$view = str_replace('.php','',$view);
+								$return[] = $base . '/' . $view;
+							}
+						}
+					}
+				}
+			}
+			return $return;
+		}
+
 	/**
 	 * When given a partial view root (eg 'js' or 'page_elements'), returns an array of views underneath it
 	 *
@@ -306,33 +335,12 @@
 			
 				global $CONFIG;
 				static $treecache;
-				
-				function get_views($dir, $base) {
-					$return = array();
-					if (file_exists($dir) && is_dir($dir)) {
-						if ($handle = opendir($dir)) {
-							while ($view = readdir($handle)) {
-								if (!in_array($view, array('.','..','.svn','CVS'))) {
-									if (is_dir($dir . '/' . $view)) {
-										if ($val = get_views($dir . '/' . $view, $base . '/' . $view)) {
-											$return = array_merge($return, $val);
-										}
-									} else {
-										$view = str_replace('.php','',$view);
-										$return[] = $base . '/' . $view;
-									}
-								}
-							}
-						}
-					}
-					return $return;
-				}
-				
+			
 			// Has the treecache been initialised?
-				if (!isset($treecache)) $treecache = array();
+				if (!isset($treecache)) $treecache = array();			
 			// A little light internal caching
 				if (!empty($treecache[$view_root])) return $treecache[$view_root];
-				
+			
 			// Examine $CONFIG->views->locations
 				if (isset($CONFIG->views->locations)) {
 					foreach($CONFIG->views->locations as $view => $path) {
@@ -342,18 +350,18 @@
 						}
 					}
 				}
-			
+	
 			// Now examine core
 				$location = $CONFIG->viewpath;
 				$viewtype = elgg_get_viewtype();
 				$root = $location . $viewtype . '/' . $view_root;
-				
-				if (file_exists($root) && is_dir($root)) {
-					$val = get_views($root, $view_root);
-					if (!is_array($treecache[$view_root])) $treecache[$view_root] = array();
+			
+				if (file_exists($root) && is_dir($root)) {				
+					$val = get_views($root, $view_root);				
+					if (!is_array($treecache[$view_root])) $treecache[$view_root] = array();				
 					$treecache[$view_root] = array_merge($treecache[$view_root], $val);
 				}
-			
+
 				return $treecache[$view_root];
 		}
 	
