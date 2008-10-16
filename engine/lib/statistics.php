@@ -82,7 +82,7 @@
  	 */
 	function get_online_users()
 	{
-		$objects = find_active_users();
+		$objects = find_active_users(600,9999);
 		
 		if ($objects)
 		{
