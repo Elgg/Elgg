@@ -158,7 +158,7 @@
 	function __get_river_from_log($by_user = "", $relationship = "", $limit = 10, $offset = 0)
 	{
 		global $CONFIG;
-		
+	
 		// Get all potential river events from available view
 		$river_events = array(); 
 		$river_views = elgg_view_tree('river');
@@ -200,7 +200,11 @@
 			if (($details['type']) && ($details['event'])) {
 				if ($n>0) $obj_query .= " or ";
 				
-				$obj_query .= "( sl.object_type='{$details['type']}' and sl.object_subtype='{$details['subtype']}' and sl.event='{$details['event']}' )";
+				$access = "";
+				if ($details['type']!='relationship')
+					$access = " and " . get_access_sql_suffix('sl');
+				 
+				$obj_query .= "( sl.object_type='{$details['type']}' and sl.object_subtype='{$details['subtype']}' and sl.event='{$details['event']}' $access )";
 				
 				$n++;
 			}
@@ -220,7 +224,7 @@
 		}
 		
 		$query = "SELECT sl.* from {$CONFIG->dbprefix}system_log sl $relationship_join where $user and $relationship_query ($obj_query) order by sl.time_created desc  limit $offset, $limit";
-
+echo $query;
 		// fetch data from system log (needs optimisation)
 		return get_data($query);
 	}

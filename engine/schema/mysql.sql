@@ -289,6 +289,8 @@ CREATE TABLE `prefix_system_log` (
 	
 	`event` varchar(50) NOT NULL,
 	`performed_by_guid` int(11) NOT NULL,
+
+	`access_id` int(11) NOT NULL,
 	
 	`time_created` int(11) NOT NULL,
 	
@@ -299,6 +301,7 @@ CREATE TABLE `prefix_system_log` (
 	KEY `object_subtype` (`object_subtype`),
 	KEY `event` (`event`),
 	KEY `performed_by_guid` (`performed_by_guid`),
+	KEY `access_id` (`access_id`),
 	KEY `time_created` (`time_created`),
 	KEY `river_key` (`object_type`, `object_subtype`, `event`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
