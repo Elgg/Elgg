@@ -80,7 +80,8 @@ div.usericon a.icon img {
 .user_menu_blog,
 .user_menu_file,
 .user_menu_messages,
-.user_menu_admin {
+.user_menu_admin,
+.user_menu_pages {
 	margin:0;
 	padding:0;
 }
