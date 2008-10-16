@@ -45,6 +45,125 @@
 				parent::__construct($guid);
 			}
 		}
+		
+		/**
+		 * Returns a list of plugins to load, in the order that they should be loaded.
+		 *
+		 * @return array List of plugins
+		 */
+		function get_plugin_list() {
+
+			global $CONFIG;
+			
+			if (!empty($CONFIG->pluginlistcache))
+				return $CONFIG->pluginlistcache;
+			
+			if ($site = get_entity($CONFIG->site_guid)) {
+				
+				$pluginorder = $site->pluginorder;
+				if (!empty($pluginorder)) {
+					
+					$plugins = unserialize($pluginorder);
+					
+					$CONFIG->pluginlistcache = $plugins;
+					return $plugins;
+					
+				} else {
+					
+					$plugins = array();
+						
+					if ($handle = opendir($CONFIG->pluginspath)) {
+						while ($mod = readdir($handle)) {
+							if (!in_array($mod,array('.','..','.svn','CVS')) && is_dir($CONFIG->pluginspath . "/" . $mod)) {
+								$plugins[] = $mod;
+							}
+						}
+					}
+						
+					sort($plugins);
+					
+					$CONFIG->pluginlistcache = $plugins;
+					return $plugins;
+					
+				}
+				
+			}
+			
+			return false;
+			
+		}
+		
+		/**
+		 * Regenerates the list of known plugins and saves it to the current site
+		 *
+		 * @param array $pluginorder Optionally, a list of existing plugins and their orders
+		 * @return array The new list of plugins and their orders
+		 */
+		function regenerate_plugin_list($pluginorder = false) {
+			
+			global $CONFIG;
+			
+			$CONFIG->pluginlistcache = null;
+			
+			if ($site = get_entity($CONFIG->site_guid)) {
+				
+				if (empty($pluginorder)) {
+					$pluginorder = $site->pluginorder;
+					$pluginorder = unserialize($pluginorder);
+				} else {
+					ksort($pluginorder);
+				}
+
+				if (empty($pluginorder)) {
+					$pluginorder = array();
+				}
+				
+				$max = 0;
+				if (sizeof($pluginorder))
+					foreach($pluginorder as $key => $plugin) {
+						if (is_dir($CONFIG->pluginspath . "/" . $plugin)) { 
+							if ($key > $max)
+								$max = $key;
+						} else {
+							unset($pluginorder[$key]);
+						}
+					}
+					
+				// Add new plugins to the end
+				if ($handle = opendir($CONFIG->pluginspath)) {
+					while ($mod = readdir($handle)) {
+						if (!in_array($mod,array('.','..','.svn','CVS')) && is_dir($CONFIG->pluginspath . "/" . $mod)) {
+							if (!in_array($mod, $pluginorder)) {
+								$max = $max + 10;
+								$pluginorder[$max] = $mod;
+							}
+						}
+					}
+				}
+				
+				ksort($pluginorder);
+				
+				// Now reorder the keys ..
+				$key = 10;
+				$plugins = array();
+				if (sizeof($pluginorder))
+					foreach($pluginorder as $plugin) {
+						$plugins[$key] = $plugin;
+						$key = $key + 10;
+					}
+				
+				$plugins = serialize($plugins);
+				
+				$site->pluginorder = $plugins;
+				
+				return $plugins;
+					
+			}
+			
+			return false;
+			
+		}
+		
 
 		/**
 		 * For now, loads plugins directly
@@ -58,34 +177,21 @@
 			global $CONFIG;
 			if (!empty($CONFIG->pluginspath)) {
 				
-				$plugins = array();
+				$plugins = get_plugin_list();
 				
-				if ($handle = opendir($CONFIG->pluginspath)) {
-					while ($mod = readdir($handle)) {
-						if (!in_array($mod,array('.','..','.svn','CVS')) && is_dir($CONFIG->pluginspath . "/" . $mod)) {
-							if (is_plugin_enabled($mod)) {
-								
-								$plugins[] = $mod;
-								
+				if (sizeof($plugins))
+					foreach($plugins as $mod) {
+						if (is_plugin_enabled($mod)) {
+							if (!@include($CONFIG->pluginspath . $mod . "/start.php"))
+								throw new PluginException(sprintf(elgg_echo('PluginException:MisconfiguredPlugin'), $mod));
+							if (is_dir($CONFIG->pluginspath . $mod . "/views/default")) {
+								autoregister_views("",$CONFIG->pluginspath . $mod . "/views/default",$CONFIG->pluginspath . $mod . "/views/");
+							}
+							if (is_dir($CONFIG->pluginspath . $mod . "/languages")) {
+								register_translations($CONFIG->pluginspath . $mod . "/languages/");
 							}
 						}
 					}
-					
-					sort($plugins);
-					
-					if (sizeof($plugins))
-						foreach($plugins as $mod) {
-								if (!@include($CONFIG->pluginspath . $mod . "/start.php"))
-									throw new PluginException(sprintf(elgg_echo('PluginException:MisconfiguredPlugin'), $mod));
-								if (is_dir($CONFIG->pluginspath . $mod . "/views/default")) {
-									autoregister_views("",$CONFIG->pluginspath . $mod . "/views/default",$CONFIG->pluginspath . $mod . "/views/");
-								}
-								if (is_dir($CONFIG->pluginspath . $mod . "/languages")) {
-									register_translations($CONFIG->pluginspath . $mod . "/languages/");
-								}
-						}
-
-				}
 				
 			}
 			
@@ -359,18 +465,14 @@
 			
 			if (!empty($CONFIG->pluginspath)) {
 				
-				if ($handle = opendir($CONFIG->pluginspath)) {
-					
-					while ($mod = readdir($handle)) {
-						
-						if (!in_array($mod,array('.','..','.svn','CVS')) && is_dir($CONFIG->pluginspath . "/" . $mod)) {
-							
-							$installed_plugins[$mod] = array();
-							$installed_plugins[$mod]['active'] = is_plugin_enabled($mod);
-							$installed_plugins[$mod]['manifest'] = load_plugin_manifest($mod);
-						}
-					}
+				$plugins = get_plugin_list();
+				
+				foreach($plugins as $mod) {
+					$installed_plugins[$mod] = array();
+					$installed_plugins[$mod]['active'] = is_plugin_enabled($mod);
+					$installed_plugins[$mod]['manifest'] = load_plugin_manifest($mod);
 				}
+				
 			}
 			
 			return $installed_plugins;
@@ -497,6 +599,9 @@
 			
 			register_action('admin/plugins/enable', false, "", true); // Enable
 			register_action('admin/plugins/disable', false, "", true); // Disable
+			
+			register_action('admin/plugins/reorder', false, "", true); // Disable
+			
 		}
 		
 		// Register a startup event

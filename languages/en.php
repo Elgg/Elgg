@@ -574,6 +574,11 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'request' => "Request",
 			'complete' => "Complete",
 	
+			'up' => 'Up',
+			'down' => 'Down',
+			'top' => 'Top',
+			'bottom' => 'Bottom',
+	
 			'invite' => "Invite",
 	
 			'resetpassword' => "Reset password",

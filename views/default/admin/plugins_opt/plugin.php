@@ -23,7 +23,25 @@
 	$ts = time();
 	$token = generate_action_token($ts);
 ?>
-<div class="plugin_details <?php if ($active) echo "active"; else echo "not-active" ?>"> 
+<div class="plugin_details <?php if ($active) echo "active"; else echo "not-active" ?>">
+	<div class="admin_plugin_reorder">
+		<?php
+			if ($vars['order'] > 10) {
+?>
+			<a href="<?php echo $vars['url']; ?>actions/admin/plugins/reorder?plugin=<?php echo $plugin; ?>&order=1&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("top"); ?></a>
+			<a href="<?php echo $vars['url']; ?>actions/admin/plugins/reorder?plugin=<?php echo $plugin; ?>&order=<?php echo $vars['order'] - 11; ?>&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("up"); ?></a>
+<?php
+			}
+		?> 
+		<?php
+			if ($vars['order'] < $vars['maxorder']) {
+?>
+			<a href="<?php echo $vars['url']; ?>actions/admin/plugins/reorder?plugin=<?php echo $plugin; ?>&order=<?php echo $vars['order'] + 11; ?>&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("down"); ?></a>
+			<a href="<?php echo $vars['url']; ?>actions/admin/plugins/reorder?plugin=<?php echo $plugin; ?>&order=<?php echo $vars['maxorder'] + 11; ?>&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("bottom"); ?></a>
+<?php
+			}
+		?> 
+	</div>
 	<div class="admin_plugin_enable_disable">
 		<?php if ($active) { ?>
 			<a href="<?php echo $vars['url']; ?>actions/admin/plugins/disable?plugin=<?php echo $plugin; ?>&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("disable"); ?></a>
