@@ -14,7 +14,7 @@
 	$plugin = $vars['plugin'];
 	$prefix = $vars['prefix']; // Do we want to show admin settings (default) or user settings
 	
-	$form_body = elgg_view("{$prefix}settings/{$plugin}/edit",$vars);
+	$form_body = elgg_view("{$prefix}settings/{$plugin}/edit", $vars);
 	$form_body .= "<p>" . elgg_view('input/hidden', array('internalname' => 'plugin', 'value' => $plugin)) . elgg_view('input/submit', array('value' => elgg_echo('save'))) . "</p>";
 	
 

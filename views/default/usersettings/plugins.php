@@ -16,7 +16,6 @@
 		$limit = get_input('limit', 10);
 		$offset = get_input('offset', 0);
 		
-		
 	// Get the installed plugins
 		$installed_plugins = $vars['installed_plugins'];
 		$count = count($installed_plugins);
@@ -25,19 +24,10 @@
 		$n = 0;
 		foreach ($installed_plugins as $plugin => $data)
 		{
-			if (($n>=$offset) && ($n < $offset+$limit))
+			if (is_plugin_enabled($plugin))
 				echo elgg_view("usersettings/plugins_opt/plugin", array('plugin' => $plugin, 'details' => $data));
 			
-			$n++;
 		}
 		
-	// Diplay nav
-		if ($count) 
-		{
-			 echo elgg_view('navigation/pagination',array(
-												'baseurl' => $_SERVER['REQUEST_URI'],
-												'offset' => $offset,
-												'count' => $count,
-														));
-		}
+	
 ?>

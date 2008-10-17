@@ -17,11 +17,11 @@
 			set_page_owner($_SESSION['guid']);
 			
 	// Make sure we don't open a security hole ...
-		if (!page_owner_entity()->canEdit()) {
+		if ((!page_owner_entity()) || (!page_owner_entity()->canEdit())) {
 			set_page_owner($_SESSION['guid']);
 		}
 		
 	// Forward to the user settings
-		forward('pg/settings/user?username=' . page_owner_entity()->username);
+		forward('pg/settings/user/' . page_owner_entity()->username . "/");
 		
 ?>

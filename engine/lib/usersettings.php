@@ -40,10 +40,33 @@
 		
 		// Menu options
 			if (get_context() == "settings") {
-				add_submenu_item(elgg_echo('usersettings:user:opt:linktext'),$CONFIG->wwwroot . "pg/settings/user?username=" . $_SESSION['user']->username);
+				add_submenu_item(elgg_echo('usersettings:user:opt:linktext'),$CONFIG->wwwroot . "pg/settings/user/{$_SESSION['user']->username}/");
 				add_submenu_item(elgg_echo('profile:editicon'), $CONFIG->wwwroot . 'mod/profile/editicon.php');
-				add_submenu_item(elgg_echo('usersettings:statistics:opt:linktext'),$CONFIG->wwwroot . "pg/settings/statistics?username=" . $_SESSION['user']->username);
+				add_submenu_item(elgg_echo('usersettings:plugins:opt:linktext'),$CONFIG->wwwroot . "pg/settings/plugins/{$_SESSION['user']->username}/");
+				add_submenu_item(elgg_echo('usersettings:statistics:opt:linktext'),$CONFIG->wwwroot . "pg/settings/statistics/{$_SESSION['user']->username}/");
 			}
+	}
+	
+	function usersettings_page_handler($page)
+	{
+		global $CONFIG;
+		
+		$path = $CONFIG->path . "settings/index.php";
+		
+		if ($page[0])
+		{
+			switch ($page[0])
+			{
+				case 'user' : $path = $CONFIG->path . "settings/user.php"; break;
+				case 'statistics' : $path = $CONFIG->path . "settings/statistics.php"; break;
+				case 'plugins' : $path = $CONFIG->path . "settings/plugins.php"; break;
+			}
+		}
+		
+		if ($page[1])
+			set_input('username', $page[1]);
+			
+		include($path);
 	}
 	
 	/**
@@ -51,10 +74,12 @@
 	 */
 	function usersettings_init()
 	{
-
+		// Page handler
+		register_page_handler('settings','usersettings_page_handler');
 	}
 	
 	/// Register init function
+	register_elgg_event_handler('init','system','usersettings_init');
 	register_elgg_event_handler('pagesetup','system','usersettings_pagesetup');
 	
 ?>

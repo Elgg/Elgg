@@ -11,13 +11,13 @@
 	 */
 
 	// Get the Elgg framework
-		require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
+		require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
 
 	// Make sure only valid admin users can see this
 		gatekeeper();
 		
 	// Make sure we don't open a security hole ...
-		if (!page_owner_entity()->canEdit()) {
+		if ((!page_owner_entity()) || (!page_owner_entity()->canEdit())) {
 			set_page_owner($_SESSION['guid']);
 		}
 
