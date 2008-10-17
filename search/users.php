@@ -27,7 +27,7 @@
 			$body .= elgg_view_title($title); // elgg_view_title(sprintf(elgg_echo('searchtitle'),$tag));
 			$body .= elgg_view('user/search/startblurb',array('tag' => $tag));
 			$body .= list_user_search($tag);
-			$body = elgg_view_layout('two_column_left_sidebar','',$body);
+			//$body = elgg_view_layout('two_column_left_sidebar','',$body);
 		} else {
 			$title = elgg_echo('item:user');
 			$body .= elgg_view_title($title);
