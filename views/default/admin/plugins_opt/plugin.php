@@ -41,7 +41,7 @@
 <?php
 			}
 		?> 
-	</div>
+	</div><div class="clearfloat"></div>
 	<div class="admin_plugin_enable_disable">
 		<?php if ($active) { ?>
 			<a href="<?php echo $vars['url']; ?>actions/admin/plugins/disable?plugin=<?php echo $plugin; ?>&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("disable"); ?></a>

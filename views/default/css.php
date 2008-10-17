@@ -1013,6 +1013,16 @@ p.user_menu_friends_of {
 /* ***************************************
 	RIVER
 *************************************** */
+.activity_item p {
+	margin:0;
+	padding:2px 0 0 0;
+	line-height:1.1em;
+	min-height:17px;	
+}
+.activity_item .activity_item_time {
+	font-size:90%;
+	color:#666666;
+}
 #river {
 	border-top:1px solid #dddddd;
 }
@@ -1209,6 +1219,14 @@ table.search_gallery {
 .plugin_details {
 	margin:0 0 10px 0;
 	padding:5px 10px 5px 10px;
+}
+.admin_plugin_reorder {
+	float:right;
+	width:200px;
+	text-align: right;
+}
+.admin_plugin_reorder a {
+	padding-left:10px;
 }
 .active {
 	border:1px solid #00cc00;
