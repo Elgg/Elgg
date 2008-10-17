@@ -290,8 +290,11 @@ CREATE TABLE `prefix_system_log` (
 	`event` varchar(50) NOT NULL,
 	`performed_by_guid` int(11) NOT NULL,
 
+	`owner_guid` int(11) NOT NULL,
 	`access_id` int(11) NOT NULL,
 	
+	`enabled` enum ('yes', 'no') NOT NULL default 'yes',
+
 	`time_created` int(11) NOT NULL,
 	
 	PRIMARY KEY  (`id`),
