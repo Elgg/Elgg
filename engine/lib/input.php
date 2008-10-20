@@ -38,7 +38,13 @@
 			{
 				global $CONFIG;
 				if (@include_once(dirname(dirname(dirname(__FILE__)))) . "/vendors/kses/kses.php") {
-					$var = kses($var, $CONFIG->allowedtags, $CONFIG->allowedprotocols);
+					if (!is_array($var)) {
+						$var = kses($var, $CONFIG->allowedtags, $CONFIG->allowedprotocols);
+					} else {
+						foreach($var as $key => $el) {
+							$var[$key] = kses($el, $CONFIG->allowedtags, $CONFIG->allowedprotocols);
+						}
+					}
 				}
 			}
 				
