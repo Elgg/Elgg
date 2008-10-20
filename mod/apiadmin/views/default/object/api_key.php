@@ -27,8 +27,9 @@
 		// Fetch key
 		$keypair = get_api_user($CONFIG->site_id, $entity->public);
 	
-		$info .= "<b>$private_label:</b> {$keypair->secret}</p></div>"; 
+		$info .= "<b>$private_label:</b> {$keypair->secret}</p>"; 
 	}
+	$info .= "</div>";
 	
 	echo elgg_view_listing($icon, $info);
 ?>
