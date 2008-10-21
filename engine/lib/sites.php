@@ -277,7 +277,7 @@
 					// Update succeeded, continue
 					$entity = get_entity($guid);
 					if (trigger_elgg_event('update',$entity->type,$entity)) {
-						return true;
+						return $guid;
 					} else {
 						delete_entity($guid);
 					}
@@ -290,7 +290,7 @@
 				if ($result!==false) {
 					$entity = get_entity($guid);
 					if (trigger_elgg_event('create',$entity->type,$entity)) {
-						return true;
+						return $guid;
 					} else {
 						delete_entity($guid);
 					}
