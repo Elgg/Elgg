@@ -135,10 +135,28 @@
 		 */
 		public function delete() 
 		{ 
+			global $CONFIG;
+			if ($CONFIG->site->getGUID() == $this->guid)
+				throw new SecurityException('SecurityException:deletedisablecurrentsite');	
+			
 			if (!delete_site_entity($this->get('guid')))
 				return false;
 				
 			return parent::delete();
+		}
+		
+		/**
+		 * Disable override to add safety rail.
+		 *
+		 * @param unknown_type $reason
+		 */
+		public function disable($reason = "")
+		{
+			global $CONFIG;
+			if ($CONFIG->site->getGUID() == $this->guid)
+				throw new SecurityException('SecurityException:deletedisablecurrentsite');	
+				
+			return parent::disable($reason);
 		}
 		
 		/**

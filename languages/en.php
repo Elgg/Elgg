@@ -158,6 +158,8 @@
 			'SecurityException:authenticationfailed' => "User could not be authenticated",
 	
 			'CronException:unknownperiod' => '%s is not a recognised period.',
+	
+			'SecurityException:deletedisablecurrentsite' => 'You can not delete or disable the site you are currently viewing!',
 		/**
 		 * API
 		 */
