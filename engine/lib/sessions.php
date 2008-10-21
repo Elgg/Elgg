@@ -188,6 +188,9 @@
 			
 			if (!is_db_installed()) return false;
 			
+			// Use database for sessions
+			//session_set_save_handler("__elgg_session_open", "__elgg_session_close", "__elgg_session_read", "__elgg_session_write", "__elgg_session_destroy", "__elgg_session_gc");
+				
 			session_name('Elgg');
 	        session_start();
 	        
@@ -284,6 +287,76 @@
 				$_SESSION['last_forward_from'] = current_page_url();
 				forward();
 			}
+		}
+		
+		/**
+		 * DB Based session handling code.
+		 */
+		function __elgg_session_open($save_path, $session_name)
+		{
+			return true;
+		}
+		
+		/**
+		 * DB Based session handling code.
+		 */
+		function __elgg_session_close()
+		{
+			return true;
+		}
+		
+		/**
+		 * DB Based session handling code.
+		 */
+		function __elgg_session_read($id)
+		{
+			global $CONFIG;
+			
+			$id = sanitise_string($id);
+			
+			$result = get_data("SELECT * from {$CONFIG->dbprefix}users_sessions where session='$id'");
+			if ($result)
+				return $result->data;
+				
+			return '';
+		}
+		
+		/**
+		 * DB Based session handling code.
+		 */
+		function __elgg_session_write($id, $sess_data)
+		{
+			global $CONFIG;
+			
+			$id = sanitise_string($id);
+			$sess_data = sanitise_string($sess_data);
+			$time = time();
+			
+			return (bool)insert_data("INSERT INTO {$CONFIG->dbprefix}users_sessions (session, ts, data) VALUES ('$id', '$time', '$sess_data') ON DUPLICATE set ts='$time', data='$sess_data'");
+		}
+		
+		/**
+		 * DB Based session handling code.
+		 */
+		function __elgg_session_destroy($id)
+		{
+			global $CONFIG;
+			
+			$id = sanitise_string($id);
+
+			return (bool)delete_data("DELETE from {$CONFIG->dbprefix}users_sessions where session='$id'");
+		}
+		
+		/**
+		 * DB Based session handling code.
+		 */
+		function __elgg_session_gc($maxlifetime)
+		{
+			global $CONFIG;
+			
+			$life = time()-$maxlifetime;
+
+			return (bool)delete_data("DELETE from {$CONFIG->dbprefix}users_sessions where ts<'$life'");
 		}
 		
 		register_elgg_event_handler("boot","system","session_init",1);
