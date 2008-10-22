@@ -15,6 +15,10 @@ ELGG='http://www.example.com/'
 
 # The crontab
 @reboot $GET ${ELGG}pg/cron/reboot/
+* * * * * $GET ${ELGG}pg/cron/minute/
+*/5 * * * * $GET ${ELGG}pg/cron/fiveminute/
+15,30,45,59 * * * * $GET ${ELGG}pg/cron/fifteenmin/
+30,59 * * * * $GET ${ELGG}pg/cron/halfhour/
 @hourly $GET ${ELGG}pg/cron/hourly/
 @daily $GET ${ELGG}pg/cron/daily/
 @weekly $GET ${ELGG}pg/cron/weekly/

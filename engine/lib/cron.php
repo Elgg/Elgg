@@ -36,6 +36,10 @@
 		{
 			switch (strtolower($page[0]))
 			{
+				case 'minute' :
+				case 'fiveminute' :
+				case 'fifteenmin' :
+				case 'halfhour' :
 				case 'hourly' : 
 				case 'daily'  :
 				case 'weekly' :
