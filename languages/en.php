@@ -579,6 +579,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'complete' => "Complete",
 			'open' => 'Open',
 			'close' => 'Close',
+			'reply' => "Reply",
 	
 			'up' => 'Up',
 			'down' => 'Down',
