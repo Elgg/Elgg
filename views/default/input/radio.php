@@ -27,6 +27,10 @@
         } else {
             $selected = "checked = \"checked\"";
         }
+        $labelint = (int) $label;
+        if ("{$label}" == "{$labelint}") {
+        	$label = $option;
+        }
         
         if ($vars['disabled']) $disabled = ' disabled="yes" '; 
         echo "<label><input type=\"radio\" $disabled {$vars['js']} name=\"{$vars['internalname']}\" value=\"".htmlentities($option, null, 'UTF-8')."\" {$selected} class=\"$class\" />{$label}</label><br />";
