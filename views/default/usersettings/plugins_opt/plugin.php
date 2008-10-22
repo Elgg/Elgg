@@ -28,11 +28,6 @@
 <div id="user_plugin_details">
 	<div><h2><?php echo $plugin; ?></h2></div>
 	
-	<?php if ($manifest) { ?>
-		<div><?php echo $manifest['description'] ?></div>
-		<div><?php echo elgg_echo('admin:plugins:label:author') . ": ". $manifest['author'] ?></div>
-	<?php } ?>
-	
 	<div id="<?php echo $plugin; ?>_settings">
 		<?php echo elgg_view("object/plugin", array('plugin' => $plugin, 'entity' => find_plugin_usersettings($plugin, $user_guid), 'prefix' => 'user')) ?>
 	</div>
