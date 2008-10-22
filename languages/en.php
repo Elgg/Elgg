@@ -577,6 +577,8 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'disable' => "Disable",
 			'request' => "Request",
 			'complete' => "Complete",
+			'open' => 'Open',
+			'close' => 'Close',
 	
 			'up' => 'Up',
 			'down' => 'Down',
