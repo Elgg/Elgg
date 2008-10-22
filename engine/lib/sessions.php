@@ -117,7 +117,7 @@
             
             if (($persistent))
 				setcookie("elggperm", $code, (time()+(86400 * 30)),"/");
-            
+         
             if (!$user->save() || !trigger_elgg_event('login','user',$user)) {
             	unset($_SESSION['username']);
 	            unset($_SESSION['name']);
@@ -186,9 +186,12 @@
 	 */
 		function session_init($event, $object_type, $object) {
 			
+			global $DB_PREFIX, $CONFIG;
+			
 			if (!is_db_installed()) return false;
 			
 			// Use database for sessions
+			$DB_PREFIX = $CONFIG->dbprefix; // HACK to allow access to prefix after object distruction
 			//session_set_save_handler("__elgg_session_open", "__elgg_session_close", "__elgg_session_read", "__elgg_session_write", "__elgg_session_destroy", "__elgg_session_gc");
 				
 			session_name('Elgg');
@@ -294,6 +297,9 @@
 		 */
 		function __elgg_session_open($save_path, $session_name)
 		{
+			global $sess_save_path;
+			$sess_save_path = $save_path;
+			
 			return true;
 		}
 		
@@ -310,13 +316,25 @@
 		 */
 		function __elgg_session_read($id)
 		{
-			global $CONFIG;
+			global $DB_PREFIX;
 			
 			$id = sanitise_string($id);
 			
-			$result = get_data("SELECT * from {$CONFIG->dbprefix}users_sessions where session='$id'");
-			if ($result)
-				return $result->data;
+			try {
+error_log("marcus SELECT * from {$CONFIG->dbprefix}users_sessions where session='$id'");				
+				$result = get_data("SELECT * from {$DB_PREFIX}users_sessions where session='$id'");
+				if ($result)
+					return (string)$result->data;
+					
+			} catch (DatabaseException $e) {
+error_log('marcus here');				
+				// Fall back to file store in this case, since this likely means that the database hasn't been upgraded
+				global $sess_save_path;
+
+				$sess_file = "$sess_save_path/sess_$id";
+error_log("marcus $sess_file");				
+				return (string) @file_get_contents($sess_file);
+			}
 				
 			return '';
 		}
@@ -326,13 +344,34 @@
 		 */
 		function __elgg_session_write($id, $sess_data)
 		{
-			global $CONFIG;
+			global $DB_PREFIX;
 			
-			$id = sanitise_string($id);
-			$sess_data = sanitise_string($sess_data);
+			$id = sanitise_string($id);			
 			$time = time();
 			
-			return (bool)insert_data("INSERT INTO {$CONFIG->dbprefix}users_sessions (session, ts, data) VALUES ('$id', '$time', '$sess_data') ON DUPLICATE set ts='$time', data='$sess_data'");
+			try {
+				$sess_data_sanitised = sanitise_string($sess_data);
+
+				error_log("marcus REPLACE INTO {$DB_PREFIX}users_sessions (session, ts, data) VALUES ('$id', '$time', '$sess_data_sanitised')");
+				if (insert_data("REPLACE INTO {$DB_PREFIX}users_sessions (session, ts, data) VALUES ('$id', '$time', '$sess_data_sanitised')")!==false)
+					return true;
+					
+			} catch (DatabaseException $e) {
+				// Fall back to file store in this case, since this likely means that the database hasn't been upgraded
+				global $sess_save_path;
+
+  				$sess_file = "$sess_save_path/sess_$id";
+  				if ($fp = @fopen($sess_file, "w")) {
+    				$return = fwrite($fp, $sess_data);
+    				fclose($fp);
+    				return $return;
+  				}
+  				
+  				else
+  					error_log('marcus FAILED TO WRITe ' . print_r($CONFIG, true));
+			}
+			
+			return false;
 		}
 		
 		/**
@@ -340,11 +379,22 @@
 		 */
 		function __elgg_session_destroy($id)
 		{
-			global $CONFIG;
+			global $DB_PREFIX;
 			
 			$id = sanitise_string($id);
 
-			return (bool)delete_data("DELETE from {$CONFIG->dbprefix}users_sessions where session='$id'");
+			try {
+error_log("marcus DELETE from {$CONFIG->dbprefix}users_sessions where session='$id'")	;			
+				return (bool)delete_data("DELETE from {$DB_PREFIX}users_sessions where session='$id'");
+			} catch (DatabaseException $e) {
+				// Fall back to file store in this case, since this likely means that the database hasn't been upgraded
+				global $sess_save_path;
+
+				$sess_file = "$sess_save_path/sess_$id";
+				return(@unlink($sess_file));
+			}
+			
+			return false;
 		}
 		
 		/**
@@ -352,11 +402,24 @@
 		 */
 		function __elgg_session_gc($maxlifetime)
 		{
-			global $CONFIG;
+			global $DB_PREFIX;
 			
 			$life = time()-$maxlifetime;
 
-			return (bool)delete_data("DELETE from {$CONFIG->dbprefix}users_sessions where ts<'$life'");
+			try {
+				return (bool)delete_data("DELETE from {$DB_PREFIX}users_sessions where ts<'$life'");
+			} catch (DatabaseException $e) {
+				// Fall back to file store in this case, since this likely means that the database hasn't been upgraded
+				global $sess_save_path;
+
+				foreach (glob("$sess_save_path/sess_*") as $filename) {
+					if (filemtime($filename) < $life) {
+						@unlink($filename);
+					}
+				}
+			}
+			
+			return true;
 		}
 		
 		register_elgg_event_handler("boot","system","session_init",1);
