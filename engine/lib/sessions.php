@@ -192,7 +192,7 @@
 			
 			// Use database for sessions
 			$DB_PREFIX = $CONFIG->dbprefix; // HACK to allow access to prefix after object distruction
-			//session_set_save_handler("__elgg_session_open", "__elgg_session_close", "__elgg_session_read", "__elgg_session_write", "__elgg_session_destroy", "__elgg_session_gc");
+			session_set_save_handler("__elgg_session_open", "__elgg_session_close", "__elgg_session_read", "__elgg_session_write", "__elgg_session_destroy", "__elgg_session_gc");
 				
 			session_name('Elgg');
 	        session_start();
@@ -320,19 +320,18 @@
 			
 			$id = sanitise_string($id);
 			
-			try {
-error_log("marcus SELECT * from {$CONFIG->dbprefix}users_sessions where session='$id'");				
-				$result = get_data("SELECT * from {$DB_PREFIX}users_sessions where session='$id'");
+			try {		
+				$result = get_data_row("SELECT * from {$DB_PREFIX}users_sessions where session='$id'");			
+				
 				if ($result)
 					return (string)$result->data;
 					
 			} catch (DatabaseException $e) {
-error_log('marcus here');				
+				
 				// Fall back to file store in this case, since this likely means that the database hasn't been upgraded
 				global $sess_save_path;
 
-				$sess_file = "$sess_save_path/sess_$id";
-error_log("marcus $sess_file");				
+				$sess_file = "$sess_save_path/sess_$id";			
 				return (string) @file_get_contents($sess_file);
 			}
 				
@@ -352,7 +351,6 @@ error_log("marcus $sess_file");
 			try {
 				$sess_data_sanitised = sanitise_string($sess_data);
 
-				error_log("marcus REPLACE INTO {$DB_PREFIX}users_sessions (session, ts, data) VALUES ('$id', '$time', '$sess_data_sanitised')");
 				if (insert_data("REPLACE INTO {$DB_PREFIX}users_sessions (session, ts, data) VALUES ('$id', '$time', '$sess_data_sanitised')")!==false)
 					return true;
 					
@@ -383,8 +381,7 @@ error_log("marcus $sess_file");
 			
 			$id = sanitise_string($id);
 
-			try {
-error_log("marcus DELETE from {$CONFIG->dbprefix}users_sessions where session='$id'")	;			
+			try {		
 				return (bool)delete_data("DELETE from {$DB_PREFIX}users_sessions where session='$id'");
 			} catch (DatabaseException $e) {
 				// Fall back to file store in this case, since this likely means that the database hasn't been upgraded
