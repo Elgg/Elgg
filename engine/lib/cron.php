@@ -53,7 +53,7 @@
 			include($CONFIG->path . "engine/handlers/cron_handler.php");
 		}
 		else
-			include($CONFIG->pluginspath . "ss_sms/index.php"); 
+			forward(); 
 	}
 
 
