@@ -27,7 +27,7 @@
 }
 
 #groups_info_column_left {
-	float:left:
+	float:left;
 	width:465px;
 	margin-left:220px;
 }
