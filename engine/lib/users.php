@@ -1061,7 +1061,7 @@
 	 * @param int $friend_guid Optionally, GUID of a user this user will friend once fully registered 
 	 * @return int|false The new user's GUID; false on failure
 	 */
-	function register_user($username, $password, $name, $email, $allow_multiple_emails = false, $friend_guid = 0) {
+	function register_user($username, $password, $name, $email, $allow_multiple_emails = false, $friend_guid = 0, $invitecode = '') {
 		
 		// Load the configuration
 			global $CONFIG;
@@ -1120,10 +1120,13 @@
 			$user->password = generate_user_password($user, $password); 
 			$user->save();
 			
-		// If $friend_guid has been set
+		// If $friend_guid has been set, make mutual friends
 			if ($friend_guid) {
 				if ($friend_user = get_user($friend_guid)) {
-					$user->addFriend($friend_guid);
+					if ($invitecode == generate_invite_code($friend_user->username)) {
+						$user->addFriend($friend_guid);
+						$friend_user->addFriend($user->guid);
+					}
 				}
 			}
 			
@@ -1136,6 +1139,19 @@
 			set_user_notification_setting($user->getGUID(), 'email', true);
 			
 			return $user->getGUID();
+	}
+	
+	/**
+	 * Generates a unique invite code for a user
+	 *
+	 * @param string $username The username of the user sending the invitation
+	 * @return string Invite code
+	 */
+	function generate_invite_code($username) {
+		
+		$secret = datalist_get('__site_secret__');
+		return md5($username . $secret);
+		
 	}
 	
 	/**

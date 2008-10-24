@@ -23,6 +23,7 @@
 		$email = get_input('email');
 		$name = get_input('name');
 		$friend_guid = (int) get_input('friend_guid',0);
+		$invitecode = get_input('invitecode');
 		
 		$admin = get_input('admin');
 		if (is_array($admin)) $admin = $admin[0];
@@ -38,7 +39,7 @@
 						(trim($password)!="") &&
 						(strcmp($password, $password2)==0) 
 					) &&
-					($guid = register_user($username, $password, $name, $email, $friend_guid))
+					($guid = register_user($username, $password, $name, $email, false, $friend_guid, $invitecode))
 				) {
 					
 					$new_user = get_entity($guid);
@@ -69,7 +70,7 @@
 			
 		$qs = explode('?',$_SERVER['HTTP_REFERER']);
 		$qs = $qs[0];
-		$qs .= "?u=" . urlencode($username) . "&e=" . urlencode($email) . "&n=" . urlencode($name);
+		$qs .= "?u=" . urlencode($username) . "&e=" . urlencode($email) . "&n=" . urlencode($name) . "&friend_guid=" . $friend_guid;
 		
 		forward($qs);
 
