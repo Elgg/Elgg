@@ -458,9 +458,9 @@
 		 * @param int $user_guid The user.
 		 * @return bool
 		 */
-		public function canWriteToContainer($user_guid = 0, $entity = null)
+		public function canWriteToContainer($user_guid = 0)
 		{
-			return can_write_to_container($user_guid, $this->getGUID(), 'all', $entity);
+			return can_write_to_container($user_guid, $this->getGUID());
 		}
 		
 		/**
@@ -1161,10 +1161,8 @@
 	 *
 	 * @param int $user_guid The user guid, or 0 for $_SESSION['user']->getGUID()
 	 * @param int $container_guid The container, or 0 for the current page owner.
-	 * @param string $entity_type The type of entity, or all for all
-	 * @param ElggEntity $entity Optionally, the entity 
 	 */
-	function can_write_to_container($user_guid = 0, $container_guid = 0, $entity_type = 'all', $entity = null)
+	function can_write_to_container($user_guid = 0, $container_guid = 0, $entity_type = 'all')
 	{
 		global $CONFIG;
 	
@@ -1194,7 +1192,7 @@
 			}
 			
 			// See if anyone else has anything to say
-			return trigger_plugin_hook('container_permissions_check',$entity_type,array('container' => $container, 'user' => $user, 'entity' => $entity), false);
+			return trigger_plugin_hook('container_permissions_check',$entity_type,array('container' => $container, 'user' => $user), false);
 			
 		}
 		
@@ -1224,18 +1222,8 @@
 			$site_guid = $CONFIG->site_guid;
 		$site_guid = (int) $site_guid;
 		if ($container_guid == 0) $container_guid = $owner_guid;
-
-		$temptity = new ElggEntity();
-		$temptity->type = $type;
-		$temptity->subtype = $subtype;
-		$temptity->owner_guid = $owner_guid;
-		$temptity->access_id = $access_id;
-		$temptity->site_guid = $site_guid;
-		$temptity->container_guid = $container_guid;
-		$temptity->time_created = $time;
-		$temptity->time_updated = $time;
 		
-		if (!can_write_to_container($owner_guid, $container_guid, $type, $temptity)) return false; 
+		if (!can_write_to_container($owner_guid, $container_guid, $type)) return false; 
 		
 		if ($type=="") throw new InvalidParameterException(elgg_echo('InvalidParameterException:EntityTypeNotSet'));
 
