@@ -18,4 +18,3 @@
 					
 	add_translation("ru",$russian);
 ?>
-
