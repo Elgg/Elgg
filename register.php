@@ -16,9 +16,11 @@
 	 */
 		require_once(dirname(__FILE__) . "/engine/start.php");
 
+		$friend_guid = (int) get_input('friend_guid',0);
+		
 	// If we're not logged in, display the registration page
 		if (!isloggedin()) {
-			echo page_draw(elgg_echo('register'), elgg_view("account/forms/register"));
+			echo page_draw(elgg_echo('register'), elgg_view("account/forms/register", array('friend_guid' => $friend_guid)));
 	// Otherwise, forward to the index page
 		} else {
 			forward();
