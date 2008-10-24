@@ -29,6 +29,7 @@
 	if ($admin_option)
 		$form_body .= elgg_view('input/checkboxes', array('internalname' => "admin", 'options' => array(elgg_echo('admin_option'))));
 	
+	$form_body .= elgg_view('input/hidden', array('internalname' => 'friend_guid', 'value' => $vars['friend_guid']));
 	$form_body .= elgg_view('input/hidden', array('internalname' => 'action', 'value' => 'register'));
 	$form_body .= elgg_view('input/submit', array('internalname' => 'submit', 'value' => elgg_echo('register'))) . "</p>";
 ?>
