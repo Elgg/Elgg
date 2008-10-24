@@ -22,6 +22,7 @@
 		$password2 = get_input('password2');
 		$email = get_input('email');
 		$name = get_input('name');
+		$friend_guid = (int) get_input('friend_guid',0);
 		
 		$admin = get_input('admin');
 		if (is_array($admin)) $admin = $admin[0];
@@ -37,7 +38,7 @@
 						(trim($password)!="") &&
 						(strcmp($password, $password2)==0) 
 					) &&
-					($guid = register_user($username, $password, $name, $email))
+					($guid = register_user($username, $password, $name, $email, $friend_guid))
 				) {
 					
 					$new_user = get_entity($guid);
