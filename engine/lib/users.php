@@ -1058,9 +1058,10 @@
 	 * @param string $name The user's display name
 	 * @param string $email Their email address
 	 * @param bool $allow_multiple_emails Allow the same email address to be registered multiple times?
+	 * @param int $friend_guid Optionally, GUID of a user this user will friend once fully registered 
 	 * @return int|false The new user's GUID; false on failure
 	 */
-	function register_user($username, $password, $name, $email, $allow_multiple_emails = false) {
+	function register_user($username, $password, $name, $email, $allow_multiple_emails = false, $friend_guid = 0) {
 		
 		// Load the configuration
 			global $CONFIG;
@@ -1118,6 +1119,13 @@
 			$user->salt = generate_random_cleartext_password(); // Note salt generated before password!
 			$user->password = generate_user_password($user, $password); 
 			$user->save();
+			
+		// If $friend_guid has been set
+			if ($friend_guid) {
+				if ($friend_user = get_user($friend_guid)) {
+					$user->addFriend($friend_guid);
+				}
+			}
 			
 			if (!$admin) {
 				$user->admin = true;
