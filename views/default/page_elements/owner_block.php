@@ -94,7 +94,7 @@ END;
 		if (!empty($contents)) {
 			echo "<div id=\"owner_block\">";
 			echo $contents;
-			echo "</div>";
+			echo "</div><div id=\"owner_block_bottom\"></div>";
 		}
 
 ?>
