@@ -233,6 +233,30 @@
 	}
 	
 	/**
+	 * This function creates an archive copy of the system log.
+	 */
+	function archive_log()
+	{
+		global $CONFIG;
+		
+		$now = time(); // Take a snapshot of now
+		
+		// create table
+		if (!update_data("CREATE TABLE {$CONFIG->dbprefix}system_log_$now as SELECT * from {$CONFIG->dbprefix}system_log WHERE time_created<=$now"))
+			return false;
+
+		// alter table to engine
+		if (!update_data("ALTER TABLE {$CONFIG->dbprefix}system_log_$now engine=archive"))
+			return false;
+	
+		// delete
+		if (!delete_data("DELETE from {$CONFIG->dbprefix}system_log WHERE id in (select id from {$CONFIG->dbprefix}system_log_$now)")) // Don't delete on time since we are running in a concurrent environment
+			return false;
+	
+		return true;
+	}
+	
+	/**
 	 * System log listener.
 	 * This function listens to all events in the system and logs anything appropriate.
 	 *
