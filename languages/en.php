@@ -243,7 +243,6 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'profile:user' => "%s's profile",
 	
 			'profile:edit' => "Edit profile",
-			'profile:editicon' => "Upload a new profile picture",
 			'profile:profilepictureinstructions' => "The profile picture is the image that's displayed on your profile page. <br /> You can change it as often as you'd like. (File formats accepted: GIF, JPG or PNG)",
 			'profile:icon' => "Profile picture",
 			'profile:createicon' => "Create your avatar",
