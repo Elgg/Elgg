@@ -98,7 +98,8 @@
                         <p>
                             <?php
                                 //display the last user to post
-                                echo get_user($last_user)->name;
+                                if ($u = get_user($last_user))
+                                	echo $u->name;
                              ?>
                         </p>
                     </td>

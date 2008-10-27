@@ -127,7 +127,8 @@
 						add_submenu_item(elgg_echo('groups:invite'),$CONFIG->wwwroot . "mod/groups/invite.php?group_guid={$page_owner->getGUID()}", '1groupsactions');
 					}
 					if ($page_owner->isMember($_SESSION['user'])) {
-						add_submenu_item(elgg_echo('groups:leave'), $CONFIG->wwwroot . "action/groups/leave?group_guid=" . $page_owner->getGUID(), '1groupsactions');
+						if ($page_owner->getOwner() != $_SESSION['guid'])
+							add_submenu_item(elgg_echo('groups:leave'), $CONFIG->wwwroot . "action/groups/leave?group_guid=" . $page_owner->getGUID(), '1groupsactions');
 					} else {
 						if ($page_owner->isPublicMembership())
 						{

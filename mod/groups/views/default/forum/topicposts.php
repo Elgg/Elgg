@@ -21,13 +21,17 @@
                 <td>
                     <?php
                         //get infomation about the owner of the comment
-                        $post_owner = get_user($vars['entity']->owner_guid);
-                        
-                        //display the user icon
-                        echo "<div class=\"post_icon\">" . elgg_view("profile/icon",array('entity' => $post_owner, 'size' => 'small')) . "</div>";
-                        
-                        //display the user name
-                        echo "<p><b>" . $post_owner->name . "</b><br />";
+                        if ($post_owner = get_user($vars['entity']->owner_guid)) {
+	                        
+	                        //display the user icon
+	                        echo "<div class=\"post_icon\">" . elgg_view("profile/icon",array('entity' => $post_owner, 'size' => 'small')) . "</div>";
+	                        
+	                        //display the user name
+	                        echo "<p><b>" . $post_owner->name . "</b><br />";
+	                        
+                        } else {
+                        	echo "<p>";
+                        }
                         
                         //display the date of the comment
                         echo "<small>" . friendly_time($vars['entity']->time_created) . "</small></p>";

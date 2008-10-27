@@ -26,10 +26,14 @@
 	
 	if (($user instanceof ElggUser) && ($group instanceof ElggGroup))
 	{
-		if ($group->leave($user))
-			system_message(elgg_echo("groups:left"));
-		else
+		if ($group->getOwner() != $_SESSION['guid']) {
+			if ($group->leave($user))
+				system_message(elgg_echo("groups:left"));
+			else
+				register_error(elgg_echo("groups:cantleave"));
+		} else {
 			register_error(elgg_echo("groups:cantleave"));
+		}
 	}
 	else
 		register_error(elgg_echo("groups:cantleave"));
