@@ -19,6 +19,7 @@
 					$token = generate_action_token($ts);
 					
 ?>
+				<a href="<?php echo $vars['url']; ?>pg/settings/user/<?php echo $vars['entity']->username; ?>/"><?php echo elgg_echo('profile:editdetails'); ?></a>
 				<?php 
 				if ($vars['entity']->isEnabled()) {
 					?><a href="<?php echo $vars['url']; ?>actions/admin/user/ban?guid=<?php echo $vars['entity']->guid; ?>&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("ban"); ?></a><?php
