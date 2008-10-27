@@ -43,7 +43,7 @@
 		$owner = $vars['entity']->getOwnerEntity();
 		$ownertxt = elgg_echo('unknown');
 		if ($owner)
-			"<a href=\"" . $owner->getURL() . "\">" . $owner->name ."</a>";
+			$ownertxt = "<a href=\"" . $owner->getURL() . "\">" . $owner->name ."</a>";
 		
 		$info .= "<div>".sprintf(elgg_echo("entity:default:strapline"),
 						friendly_time($vars['entity']->time_created),
@@ -57,4 +57,3 @@
 	
 		echo elgg_view_listing($icon, $info);
 	}
-?>
