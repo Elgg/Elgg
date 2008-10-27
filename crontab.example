@@ -14,6 +14,7 @@ GET='/usr/bin/GET'
 ELGG='http://www.example.com/'
 
 # The crontab
+# Don't edit below this line!
 @reboot $GET ${ELGG}pg/cron/reboot/
 * * * * * $GET ${ELGG}pg/cron/minute/
 */5 * * * * $GET ${ELGG}pg/cron/fiveminute/
