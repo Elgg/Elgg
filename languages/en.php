@@ -815,6 +815,11 @@ You cannot reply to this email.",
 			'actiongatekeeper:pluginprevents' => 'A extension has prevented this form from being submitted.',
 	
 		/**
+		 * Word blacklists
+		 */
+			'word:blacklist' => 'and, the, then, but, she, his, her, him, one, not, also, about, now, hence, however, still, likewise, otherwise, therefore, conversely, rather, consequently, furthermore, nevertheless, instead, meanwhile, accordingly, this, seems, what, whom, whose, whoever, whomever',
+	
+		/**
 		 * Languages according to ISO 639-1
 		 */
 			"aa" => "Afar",

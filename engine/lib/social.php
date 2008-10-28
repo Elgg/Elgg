@@ -64,47 +64,63 @@
         	
         }
         
-        // Set the shout words blacklist, these do not become tags when the string is converted
-        // Any language packs should include their own!
-        
+
+        /**
+         * Initialise.
+         *
+         * Sets a blacklist of words in the current language. This is a comma separated list in word:blacklist.
+         */       
         function social_init() {
             global $CONFIG;
-		        $CONFIG->wordblacklist = array(
-	            'and',
-	            'the',
-	            'then',
-	            'but',
-	            'she',
-	            'his',
-	            'her',
-	            'him',
-	            'one',
-	            'not',
-	            'also',
-	            'about',
-	            'now',
-				'hence',
-				'however',
-				'still',
-				'likewise',
-				'otherwise',
-				'therefore',
-				'conversely',
-				'rather',
-	            'consequently',
-				'furthermore',
-				'nevertheless',
-				'instead',
-				'meanwhile',
-				'accordingly',
-				'this',
-				'seems',
-				'what',
-				'whom',
-				'whose',
-				'whoever',
-				'whomever',
-	        );
+            
+            	$CONFIG->wordblacklist = array();
+            	
+            	$list = explode(',', elgg_echo('word:blacklist'));
+            	if ($list)
+            	{
+            		foreach ($list as $l)
+            			$CONFIG->wordblacklist[] = trim($l);
+            	}
+            	else	
+            	{	            
+            		// Fallback - shouldn't happen
+					$CONFIG->wordblacklist = array(
+			            'and',
+			            'the',
+			            'then',
+			            'but',
+			            'she',
+			            'his',
+			            'her',
+			            'him',
+			            'one',
+			            'not',
+			            'also',
+			            'about',
+			            'now',
+						'hence',
+						'however',
+						'still',
+						'likewise',
+						'otherwise',
+						'therefore',
+						'conversely',
+						'rather',
+			            'consequently',
+						'furthermore',
+						'nevertheless',
+						'instead',
+						'meanwhile',
+						'accordingly',
+						'this',
+						'seems',
+						'what',
+						'whom',
+						'whose',
+						'whoever',
+						'whomever',
+			        );
+            	}
         }
 
         register_elgg_event_handler("init","system","social_init");
