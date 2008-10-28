@@ -138,6 +138,36 @@ h4 { font-size: 1.0em; }
 h5 { font-size: 0.9em; }
 h6 { font-size: 0.8em; }
 
+dt {
+	margin: 0;
+	padding: 0;
+	font-weight: bold;
+}
+dd {
+	margin: 0 0 1em 1em;
+	padding: 0;
+}
+pre, code {
+	font-family:Monaco,"Courier New",Courier,monospace;
+	font-size:12px;
+	background:#EBF5FF;
+	overflow:auto;
+}
+code {
+	padding:2px 3px;
+}
+pre {
+	padding:3px 15px;
+	margin:0px 0 15px 0;
+	line-height:1.3em;
+}
+blockquote {
+	padding:3px 15px;
+	margin:0px 0 15px 0;
+	line-height:1.3em;
+	background:#fdffc3;
+	border:none !important;
+}
 
 /* ***************************************
     PAGE LAYOUT - MAIN STRUCTURE
