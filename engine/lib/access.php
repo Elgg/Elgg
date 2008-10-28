@@ -55,7 +55,7 @@
 			global $CONFIG;
 			static $access_array;
 			
-			if (!isset($access_array) || !$init_finished)
+			if (!isset($access_array) || (!isset($init_finished)) || (!$init_finished))
 				$access_array = array();
 				
 			if ($user_id == 0) $user_id = $_SESSION['guid'];
