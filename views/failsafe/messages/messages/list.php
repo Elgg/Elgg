@@ -26,8 +26,8 @@
     padding:3px 10px 3px 10px;
     margin:20px 0px 0px 0px;
     z-index: 9999;
-    position:absolute;
-    width:645px;
+    position:relative;
+    width:95%;
 }
 </style>
 
