@@ -29,7 +29,7 @@
 #groups_info_column_left {
 	float:left;
 	width:465px;
-	margin-left:220px;
+	/* margin-left:221px; */
 }
 
 #groups_info_column_left .odd {
