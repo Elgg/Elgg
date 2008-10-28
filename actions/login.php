@@ -18,7 +18,7 @@
     
         $username = get_input('username');
         $password = get_input("password");
-        $persistent = get_input("persistent");
+        $persistent = get_input("persistent", false);
         
     // If all is present and correct, try to log in  
     	$result = false;          

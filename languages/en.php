@@ -467,6 +467,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	
 			'user:password:text' => 'To generate a new password, enter your username below. We will send the address of a unique verification page to you via email click on the link in the body of the message and a new password will be sent to you.',
 	
+			'user:persistent' => 'Remember me',
 		/**
 		 * Administration
 		 */
