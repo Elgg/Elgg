@@ -55,7 +55,7 @@ END;
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title><?php echo $title; ?></title>
-	<!-- include links to jQuery here? -->
+
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery-1.2.6.pack.js"></script>
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery-ui-personalized-1.5.packed.js"></script>
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>pg/js/initialise_elgg.js"></script>
