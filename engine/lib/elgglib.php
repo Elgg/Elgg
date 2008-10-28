@@ -139,14 +139,16 @@
 		{
 			global $CONFIG;
 		
-			if (!isset($CONFIG->views->locations[$view])) {
+			$viewtype = elgg_get_viewtype();
+			
+			if (!isset($CONFIG->views->locations[$viewtype][$view])) {
 	    		if (!isset($CONFIG->viewpath)) {
 					return dirname(dirname(dirname(__FILE__))) . "/views/";		    			
 	    		} else {
 	    			return $CONFIG->viewpath;
 	    		}
 	    	} else {
-	    		return $CONFIG->views->locations[$view];
+	    		return $CONFIG->views->locations[$viewtype][$view];
 	    	}
 	    	
 	    	return false;
@@ -278,14 +280,14 @@
 			// Detect view type
 			    $viewtype = elgg_get_viewtype();
 			    
-				if (!isset($CONFIG->views->locations[$view])) {
+				if (!isset($CONFIG->views->locations[$viewtype][$view])) {
 		    		if (!isset($CONFIG->viewpath)) {
 						$location = dirname(dirname(dirname(__FILE__))) . "/views/";		    			
 		    		} else {
 		    			$location = $CONFIG->viewpath;
 		    		}
 		    	} else {
-		    		$location = $CONFIG->views->locations[$view];
+		    		$location = $CONFIG->views->locations[$viewtype][$view];
 		    	}
 		    	
 		    	if (file_exists($location . "{$viewtype}/{$view}.php")) {
@@ -336,14 +338,17 @@
 				global $CONFIG;
 				static $treecache;
 			
+			// Get viewtype
+				$viewtype = elgg_get_viewtype();
+				
 			// Has the treecache been initialised?
 				if (!isset($treecache)) $treecache = array();			
 			// A little light internal caching
 				if (!empty($treecache[$view_root])) return $treecache[$view_root];
 			
 			// Examine $CONFIG->views->locations
-				if (isset($CONFIG->views->locations)) {
-					foreach($CONFIG->views->locations as $view => $path) {
+				if (isset($CONFIG->views->locations[$viewtype])) {
+					foreach($CONFIG->views->locations[$viewtype] as $view => $path) {
 						$pos = strpos($view,$view_root);
 						if ($pos === 0) {
 							$treecache[$view_root][] = $view; 
@@ -769,9 +774,10 @@
 	 * @param string $view_name The name of the view to extend
 	 * @param int $priority The priority, from 0 to 1000, to add at (lowest numbers will be displayed first)
 	 */
-		function extend_view($view, $view_name, $priority = 501) {
+		function extend_view($view, $view_name, $priority = 501, $viewtype = '') {
 			
 			global $CONFIG;
+			
 			if (!isset($CONFIG->views)) {
 				$CONFIG->views = new stdClass;
 			}
@@ -795,16 +801,26 @@
 	 * @param string $view The name of the view
 	 * @param string $location The base location path
 	 */
-		function set_view_location($view, $location) {
+		function set_view_location($view, $location, $viewtype = '') {
 			
 			global $CONFIG;
+			
+			if (empty($viewtype))
+				$viewtype = 'default';
+			
 			if (!isset($CONFIG->views)) {
 				$CONFIG->views = new stdClass;
 			}
 			if (!isset($CONFIG->views->locations)) {
-				$CONFIG->views->locations = array($view => $location);
+				$CONFIG->views->locations = array($viewtype => array(
+																	$view => $location
+																));
+			} else if (!isset($CONFIG->views->locations[$viewtype])) {
+				$CONFIG->views->locations[$viewtype] = array(
+																	$view => $location
+																);
 			} else {
-				$CONFIG->views->locations[$view] = $location;
+				$CONFIG->views->locations[$viewtype][$view] = $location;
 			}
 			
 		}
@@ -815,8 +831,9 @@
 	 * @param string $view_base The base of the view name
 	 * @param string $folder The folder to begin looking in
 	 * @param string $base_location_path The base views directory to use with set_view_location
+	 * @param string $viewtype The type of view we're looking at (default, rss, etc)
 	 */		
-		function autoregister_views($view_base, $folder, $base_location_path) {
+		function autoregister_views($view_base, $folder, $base_location_path, $viewtype) {
 			
 			if (!isset($i)) $i = 0;
 			if ($handle = opendir($folder)) {
@@ -824,11 +841,11 @@
 					if (!in_array($view,array('.','..','.svn','CVS')) && !is_dir($folder . "/" . $view)) {
 						if ((substr_count($view,".php") > 0) || (substr_count($view,".png") > 0)) {
 							if (!empty($view_base)) { $view_base_new = $view_base . "/"; } else { $view_base_new = ""; }
-							set_view_location($view_base_new . str_replace(".php","",$view), $base_location_path);
+							set_view_location($view_base_new . str_replace(".php","",$view), $base_location_path, $viewtype);
 						}
 					} else if (!in_array($view,array('.','..','.svn','CVS')) && is_dir($folder . "/" . $view)) {
 						if (!empty($view_base)) { $view_base_new = $view_base . "/"; } else { $view_base_new = ""; }
-						autoregister_views($view_base_new . $view, $folder . "/" . $view, $base_location_path);
+						autoregister_views($view_base_new . $view, $folder . "/" . $view, $base_location_path, $viewtype);
 					}
 				}
 			}
