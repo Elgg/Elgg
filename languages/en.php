@@ -234,6 +234,8 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'profile:edit:default' => 'Edit default profile',
 			'user' => "User",
 			'item:user' => "Users",
+			'riveritem:single:user' => 'a user',
+			'riveritem:plural:user' => 'some users',
 
 		/**
 		 * Profile menu items and titles
@@ -770,6 +772,9 @@ If you requested this click on the link below, otherwise ignore this email.
 		 */
 	
 			'comments:count' => "%s comments",
+			
+			'riveraction:annotation:generic_comment' => '%s commented on %s',
+	
 			'generic_comments:add' => "Add a comment",
 			'generic_comments:text' => "Comment",
 			'generic_comment:posted' => "Your comment was successfully posted.",
