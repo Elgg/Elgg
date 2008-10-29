@@ -79,7 +79,7 @@
 			'groups:topicsticky' => 'Sticky',
 			'groups:topicisclosed' => 'This topic is closed.',
 			'groups:topiccloseddesc' => 'This topic has now been closed and is not accepting new comments.',
-			
+			'grouptopic:error' => 'Your group topic could not be created. Please try again or contact a system administrator.',
 	
 			'groups:privategroup' => 'This group is private, requesting membership.',
 			'groups:notitle' => 'Groups must have a title',
