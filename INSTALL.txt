@@ -76,17 +76,21 @@ access this.
 
 4. Install your crontab (UNIX ONLY)
 
-Cron is a UNIX command which allows programs to be run at set times of
-the day.
+Cron is a UNIX command which allows programs to be run at set 
+times of the day.
 
-If you want to take advantage of some of the maintenance functions 
-such as log rotation or garbage collection, you must install a cron tab
-to trigger these events.
+If you want to take advantage of some of the maintenance 
+functions such as log rotation or garbage collection, you must 
+install a cron tab to trigger these events.
 
-There is an example crontab called crontab.example, edit this with the 
-details of your site and install it with the command.
+We have provided an example crontab as /crontab.example. Edit this 
+with a text editor to provide the details of your site, rename it
+to another filename (eg 'crontab.mine') and install it with the 
+following command:
 
-	crontab crontab.example 
+   			crontab crontab.mine 
+   			
+Substitute your filename for 'crontab.mine'.
 
 5. Visit your Elgg site
 

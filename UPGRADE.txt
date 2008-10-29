@@ -20,7 +20,11 @@ ELGG UPGRADE INSTRUCTIONS
    functions such as log rotation or garbage collection, you must 
    install a cron tab to trigger these events.
 
-   There is an example crontab called crontab.example, edit this 
-   with the details of your site and install it with the command.
+   We have provided an example crontab as /crontab.example. Edit this 
+   with a text editor to provide the details of your site, rename it
+   to another filename (eg 'crontab.mine') and install it with the 
+   following command:
 
-   			crontab crontab.example 
+   			crontab crontab.mine 
+   			
+   Substitute your filename for 'crontab.mine'.
