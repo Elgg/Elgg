@@ -74,13 +74,25 @@ about this, ask your system administrator), create a new database for
 Elgg. Make sure you know the username and password necessary to 
 access this.
 
+4. Install your crontab (UNIX ONLY)
 
-4. Visit your Elgg site
+Cron is a UNIX command which allows programs to be run at set times of
+the day.
+
+If you want to take advantage of some of the maintenance functions 
+such as log rotation or garbage collection, you must install a cron tab
+to trigger these events.
+
+There is an example crontab called crontab.example, edit this with the 
+details of your site and install it with the command.
+
+	crontab crontab.example 
+
+5. Visit your Elgg site
 
 Once you've performed these steps, visit your Elgg site in your web 
 browser. Elgg will take you through the rest of the installation 
 process from there.
-
 
 A note on settings and .htaccess
 
