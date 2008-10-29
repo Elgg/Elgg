@@ -52,11 +52,11 @@
 	 */
 		function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
 			
-			global $CONFIG;
+			global $CONFIG, $init_finished;
 			static $access_array, $acm, $ac; // Caches. $ac* flag whether we have executed a query previously, and stop it being run again if no data is returned.
 			
 			if (!isset($access_array) || (!isset($init_finished)) || (!$init_finished))
-				$access_array = array();
+				$access_array = array(); 
 				
 			if ($user_id == 0) $user_id = $_SESSION['guid'];
 			
@@ -74,28 +74,20 @@
 				if (isloggedin())
 					$tmp_access_array[] = 1;
 				
-				if (!$ac)
-				{
-					if ($collections = get_data($query)) {
-						foreach($collections as $collection)
-							if (!empty($collection->access_collection_id)) $tmp_access_array[] = $collection->access_collection_id;
-					}
+				if ($collections = get_data($query)) {
+					foreach($collections as $collection)
+						if (!empty($collection->access_collection_id)) $tmp_access_array[] = $collection->access_collection_id;
+						
 				}
-					
-				$ac = true; // We don't want to run this query again
 					
 				$query = "select ag.id from {$CONFIG->dbprefix}access_collections ag  ";
 				$query .= " where ag.owner_guid = {$user_id} and (ag.site_guid = {$site_id} or ag.site_guid = 0)";
 				
-				if (!$acm)
-				{
-					if ($collections = get_data($query)) {
-						foreach($collections as $collection)
-							if (!empty($collection->id)) $tmp_access_array[] = $collection->id;
-					}
-				} 
-				
-				$acm = true; // We don't want to run this query again
+				if ($collections = get_data($query)) {
+					foreach($collections as $collection)
+						if (!empty($collection->id)) $tmp_access_array[] = $collection->id;
+				}
+				 
 				
 				global $is_admin;
 				
