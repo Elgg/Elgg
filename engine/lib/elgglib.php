@@ -541,6 +541,7 @@
 												'baseurl' => $_SERVER['REQUEST_URI'],
 												'offset' => $offset,
 												'count' => $count,
+												'limit' => $limit,
 												'word' => 'annoff',
 												'nonefound' => false,
 			
