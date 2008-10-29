@@ -1,14 +1,4 @@
 $(document).ready(function () {
-
-	// elggtoolbar - close all drawer elements on pageload
-	$('li.drawer ul').hide();
-	
-	// elggtoolbar
-	$('h2.drawer-handle').click(function () {	
-		$('li.drawer ul:visible').slideUp('medium').prev().removeClass('open');
-		$(this).addClass('open').next().slideDown('fast');
-	return false;
-	});
 	
 	// toggle widget box contents
 	$('a.toggle_box_contents').bind('click', toggleContent);

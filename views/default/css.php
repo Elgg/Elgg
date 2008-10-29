@@ -4,7 +4,7 @@
 	 * Elgg CSS
 	 * The standard CSS file
 	 * 
-	 * Updated 30Sept - new messages/notifcation system
+	 * Updated 29 Oct - v1.1
 	 * 
 	 * @package Elgg
 	 * @subpackage Core
@@ -94,7 +94,7 @@ a {
 	outline: none;
 }
 a:visited {
-	/* color: #0054a7; */
+	
 }
 a:hover {
 	color: #0054a7;
@@ -186,7 +186,6 @@ blockquote {
 	border-right: 1px solid #333333;
 	border-bottom: 1px solid #333333;
 }
-
 #layout_header {
 	text-align:left;
 	width:100%;
@@ -198,7 +197,10 @@ blockquote {
 	margin:0;
 	padding:10px 20px 20px 20px;
 }
-
+#wrapper_header h1 {
+	margin:10px 0 0 0;
+	letter-spacing: -0.03em;
+}
 #layout_canvas {
 	margin:0;
 	padding:0;
@@ -240,50 +242,22 @@ blockquote {
 	border-right:1px solid #cccccc;
 }
 
-/* canvas layout: 2 column right sidebar */
-#two_column_right_sidebar_maincontent {
-	width:685px;
-	margin:20px;
-	min-height:360px;
-	float:left;
-	background: white;
-	padding:20px;
-	border-bottom:1px solid #cccccc;
-	border-right:1px solid #cccccc;
-}
-
-#two_column_right_sidebar {
-	width:170px;
-	margin:20px 20px 20px 0;
-	min-height: 360px;
-	float:left;
-	background: white;
-	padding:20px;
-	border-bottom:1px solid #cccccc;
-	border-right:1px solid #cccccc;
-}
-
 /* canvas layout: widgets (profile and dashboard) */
 #widgets_left {
 	width:306px;
 	margin:20px;
 	min-height:360px;
-	/* background: white; */
 	padding:0;
 }
 #widgets_middle {
 	width:306px;
 	margin:20px 0 20px 0;
-	/* min-height:360px; */
-	/* background: white; */
 	padding:0;
 }
 #widgets_right {
 	width:306px;
 	margin:20px 20px 20px 20px;
-	/* min-height:360px; */
 	float:left;
-	/* background: white; */
 	padding:0;
 }
 #widget_table td {
@@ -293,7 +267,6 @@ blockquote {
 	text-align: left;
 	vertical-align: top;
 }
-
 
 /* IE 6 fixes */
 * html #widgets_left { 
@@ -332,11 +305,9 @@ blockquote {
 	display:block;
 	text-align: left;
 }
-
 * html #dashboard_info {
 	width:585px;
 }
-
 #layout_spotlight {
 	padding:0;
 	margin:0;
@@ -353,7 +324,6 @@ blockquote {
 *:first-child+html #wrapper_spotlight .collapsable_box_content {
 	width:958px;
 }
-
 #wrapper_spotlight #spotlight_table h2 {
 	color:#4690d6;
 	font-size:1.25em;
@@ -415,7 +385,6 @@ blockquote {
 	width:100%;
 	height:24px;
 }
-
 #elgg_topbar_container_left {
 	float:left;
 	height:24px;
@@ -425,7 +394,6 @@ blockquote {
 	text-align:left;
 	width:60%;
 }
-
 #elgg_topbar_container_right {
 	float:right;
 	height:24px;
@@ -435,7 +403,6 @@ blockquote {
 	/* width:120px;*/
 	text-align:right;
 }
-
 #elgg_topbar_container_search {
 	float:right;
 	height:21px;
@@ -445,7 +412,6 @@ blockquote {
 	text-align:right;
 	margin:3px 0 0 0;
 }
-
 #elgg_topbar_container_left .toolbarimages {
 	float:left;
 	margin-right:20px;
@@ -506,8 +472,6 @@ blockquote {
 #elgg_topbar_container_left a.usersettings:hover {
 	color:#eeeeee;
 }
-
-
 #elgg_topbar_container_left img {
 	margin:2px 0 0 5px;
 }
@@ -530,11 +494,9 @@ blockquote {
 * html #elgg_topbar_container_right a { 
 	width: 120px;
 }
-
 #elgg_topbar_container_right a:hover {
 	background-position: right -21px;
 }
-
 #elgg_topbar_panel {
 	background:#333333;
 	color:#eeeeee;
@@ -544,7 +506,6 @@ blockquote {
 	display:none;
 	position:relative;
 }
-
 #searchform input.search_input {
 	-webkit-border-radius: 4px; 
 	-moz-border-radius: 4px;
@@ -556,7 +517,6 @@ blockquote {
 	margin:0pt;
 	padding:2px;
 	width:180px;
-	
 	height:12px;
 }
 #searchform input.search_submit_button {
@@ -591,9 +551,6 @@ blockquote {
 }
 #topbardropdownmenu {
 	margin:0pt 15px 0pt 5px;
-}
-#topbardropdownmenu ul {
-	/* width:134px; */
 }
 /* Tools link in top menu */
 #topbardropdownmenu a, #topbardropdownmenu a:visited {
@@ -632,7 +589,6 @@ blockquote {
 	left:80px;
 	padding:10px 30px 30px 30px;
 	background:transparent url(<?php echo $vars['url']; ?>_graphics/spacer.gif); 
-	/* width:134px; */
 }
 /* Position the first sub level beneath the top level links */
 #topbardropdownmenu > li:hover > ul {
@@ -710,10 +666,8 @@ blockquote {
 /* ***************************************
   COLLAPSABLE BOXES
 *************************************** */
-
 .collapsable_box {
 	margin: 0 0 20px 0;
-	/* background: white; */
 	height:auto;
 }
 /* IE6 fix */
@@ -726,10 +680,14 @@ blockquote {
 	border-top:2px solid #4690d6;
 	padding: 5px 10px 5px 10px;
 	margin:0;
-	
 	border-left: 1px solid #cccccc;
 	border-right: 1px solid #cccccc;
 	border-bottom: 1px solid #cccccc;
+}
+.collapsable_box_header h1 {
+	color: #0054a7;
+	font-size:1.25em;
+	line-height: 1.2em;
 }
 .collapsable_box_content {
 	padding: 10px;
@@ -744,7 +702,6 @@ blockquote {
 	display: none;
 	background: #dedede;
 	padding:5px 10px 5px 10px;
-	/* font-size: 9px;*/
 }
 .collapsable_box_header a.toggle_box_contents {
 	color: #4690d6;
@@ -807,7 +764,6 @@ textarea:focus, input[type="text"]:focus {
 	background: #e4ecf5;
 	color:#333333;
 }
-
 .submit_button {
 	font: 12px/100% Arial, Helvetica, sans-serif;
 	font-weight: bold;
@@ -840,7 +796,6 @@ input[type="submit"] {
 	margin:10px 0 10px 0;
 	cursor: pointer;
 }
-
 .cancel_button {
 	font: 12px/100% Arial, Helvetica, sans-serif;
 	font-weight: bold;
@@ -925,31 +880,6 @@ input[type="submit"] {
 
 
 /* ***************************************
-	MAIN CONTENT ELEMENTS
-*************************************** */
-#wrapper_header h1 {
-	margin:10px 0 0 0;
-	letter-spacing: -0.03em;
-}
-
-/* title within main content area */
-.page_title {
-	padding:0px 10px 20px 0px;
-}
-
-
-.elggtoolbar .elggtoolbar_header h1,
-.collapsable_box_header h1 {
-	/*color: #4690d6;*/
-	color: #0054a7;
-	font-size:1.25em;
-	line-height: 1.2em;
-}
-
-
-
-
-/* ***************************************
 	PROFILE
 *************************************** */
 #profile_info {
@@ -981,8 +911,6 @@ input[type="submit"] {
 	border-right:1px solid #cccccc;
 	background: white;
 }
-
-
 #profile_menu_wrapper {
 	margin:10px 0 10px 0;
 	width:200px;
@@ -995,7 +923,6 @@ input[type="submit"] {
 }
 #profile_menu_wrapper a {
 	display:block;
-	/* width:200px; */	
 	padding:0 0 0 3px;
 }
 #profile_menu_wrapper a:hover {
@@ -1139,7 +1066,6 @@ p.user_menu_friends_of {
 	padding: 5px;
 	margin-bottom: 10px;
 }
-
 .search_listing_icon {
 	float:left;
 }
@@ -1149,7 +1075,6 @@ p.user_menu_friends_of {
 .search_listing_icon .avatar_menu_button img {
 	width: 15px;
 }
-	
 .search_listing_info {
 	margin-left: 50px;
 	min-height: 40px;
@@ -1168,7 +1093,6 @@ p.user_menu_friends_of {
 	color:#666666;
 	font-size: 90%;
 }
-
 table.search_gallery {
 	border-spacing: 5px;
 	margin:0 0 20px 0;
@@ -1177,7 +1101,6 @@ table.search_gallery {
 .search_gallery td {
 	padding: 5px;
 }
-
 .search_gallery_item {
 	border:1px dotted silver;
     background-color: white;
@@ -1185,44 +1108,35 @@ table.search_gallery {
 .search_gallery_item:hover {
 	border:1px dotted black;
 }
-
 .search_gallery_item .search_listing {
 	background: none;
 	text-align: center;
 }
-
 .search_gallery_item .search_listing_header {
 	text-align: center;
 }
-
 .search_gallery_item .search_listing_icon {
 	position: relative;
 	text-align: center;
 }
-
 .search_gallery_item .search_listing_info {
 	margin: 5px;
 }
-
 .search_gallery_item .search_listing_info p {
 	margin: 5px;
 	margin-bottom: 10px;
 }
-
 .search_gallery_item .search_listing {
 	background: none;
 	text-align: center;
 }
-
 .search_gallery_item .search_listing_icon {
 	position: absolute;
 	margin-bottom: 20px;
 }
-
 .search_gallery_item .search_listing_info {
 	margin: 5px;
 }
-
 .search_gallery_item .search_listing_info p {
 	margin: 5px;
 	margin-bottom: 10px;
@@ -1332,21 +1246,17 @@ table.search_gallery {
 	font-size: 90%;
 	color:#666666;
 }
-
 .generic_comment {
 	margin-bottom: 10px;
 	padding-bottom: 10px;
 }
-
 .generic_comment_icon {
 	float:left;
 }
-
 .generic_comment_details {
 	margin-left: 60px;
 	border-bottom: 1px solid #aaaaaa;
 }
-
 .generic_comment_owner {
 	color:#666666;
 	margin: 0px;
@@ -1405,7 +1315,6 @@ table.search_gallery {
 #owner_block_report_this a:hover {
 	color: #0054a7;
 }
-
 #owner_block_desc {
 	padding:4px 0 4px 0;
 	margin:0 0 0 0;
@@ -1428,10 +1337,8 @@ table.search_gallery {
 #owner_block_submenu {
 	margin:20px 0 20px 0;
 	padding: 0;
-	/* border-bottom: 1px solid #cccccc; */	
 	width:100%;
 }
-
 #owner_block_submenu ul {
 	list-style: none;
 	padding: 0;
@@ -1452,7 +1359,6 @@ table.search_gallery {
 	font-weight: bold;
 	line-height: 1.1em;
 }
-
 #owner_block_submenu ul li a:hover {
 	color:white;
 	background: #4690d6;
@@ -1501,9 +1407,7 @@ table.search_gallery {
 *************************************** */
 .pagination {
 	margin:10px 0 20px 0;
-	/* display: table; */
 }
-
 .pagination .pagination_number {
 	display:block;
 	float:left;
@@ -1534,7 +1438,6 @@ table.search_gallery {
 	margin:0 6px 0 0;
 	padding:0px 4px;
 }
-
 .pagination .pagination_previous,
 .pagination .pagination_next {
 	display:block;
@@ -1568,8 +1471,6 @@ table.search_gallery {
 	cursor: pointer;
 }
 
-
-
 	
 /* ***************************************
 	FRIENDS COLLECTIONS ACCORDIAN
@@ -1598,7 +1499,6 @@ ul#friends_collections_accordian {
 	background:#4690D6;
 	color:white;
 }
-
 #friends_collections_accordian .friends_picker {
 	background:white;
 	padding:0;
@@ -1612,7 +1512,6 @@ ul#friends_collections_accordian {
 	color:#999999;
 	font-weight:normal;
 }
-
 div.expandall {
 	margin: 20px 0 0 0;
 	padding:0;
@@ -1625,6 +1524,7 @@ div.expandall p {
 	padding:0;
 }
 	
+	
 /* ***************************************
 	FRIENDS PICKER SLIDER
 *************************************** */		
@@ -1635,14 +1535,12 @@ div.expandall p {
 	margin: 0;
 	padding:0;
 }
-
 .friendsPicker_wrapper {
 	margin: 0;
 	padding:0;
 	position: relative;
 	width: 100%;
 }
-
 .friendsPicker {
 	position: relative;
 	overflow: hidden; 
@@ -1650,19 +1548,15 @@ div.expandall p {
 	padding:0;
 	width: 685px;
 	height: 300px;
-	/*clear: right;*/
 	background: white;
 }
-
 .friendsPicker .friendsPicker_container { /* long container used to house end-to-end panels. Width is calculated in JS  */
 	position: relative;
 	left: 0;
 	top: 0;
 	width: 100%;
 	list-style-type: none;
-	/* -moz-user-select: none; */
 }
-
 .friendsPicker .friendsPicker_container .panel {
 	float:left;
 	height: 100%;
@@ -1671,30 +1565,25 @@ div.expandall p {
 	margin: 0;
 	padding:0;
 }
-
 .friendsPicker .friendsPicker_container .panel .wrapper {
 	margin: 0;
 	padding: 10px;
 	background: #efefef;
 	min-height: 230px;
 }
-
 .friendsPickerNavigation {
 	margin: 0 0 10px 0;
 	padding:0;
 }
-
 .friendsPickerNavigation ul {
 	list-style: none;
 	padding-left: 0;
 }
-
 .friendsPickerNavigation ul li {
 	float: left;
 	margin:0;
 	background:white;
 }
-
 .friendsPickerNavigation a {
 	font-weight: bold;
 	text-align: center;
@@ -1705,21 +1594,17 @@ div.expandall p {
 	padding: 0;
 	width:20px;
 }
-
 .tabHasContent {
 	background: white; color:#333333 !important;
 }
-
 .friendsPickerNavigation li a:hover {
 	background: #333333;
 	color:white !important;
 }
-
 .friendsPickerNavigation li a.current {
 	background: #4690D6;
 	color:white !important;
 }
-
 .friendsPickerNavigationAll {
 	margin:0px 0 0 20px;
 	float:left;
@@ -1739,29 +1624,24 @@ div.expandall p {
 	background: #4690D6;
 	color:white;
 }
-
 .friendsPickerNavigationL, .friendsPickerNavigationR {
 	position: absolute;
 	top: 46px;
 	text-indent: -9000em;
 }
-
 .friendsPickerNavigationL a, .friendsPickerNavigationR a {
 	display: block;
 	height: 43px;
 	width: 43px;
 }
-
 .friendsPickerNavigationL {
 	right: 58px;
 	z-index:1;
 }
-
 .friendsPickerNavigationR {
 	right: 10px;
 	z-index:1;
 }
-
 .friendsPickerNavigationL {
 	background: url("<?php echo $vars['url']; ?>_graphics/friends_picker_arrows.gif") no-repeat left top;
 }
@@ -1774,7 +1654,6 @@ div.expandall p {
 .friendsPickerNavigationR:hover {
 	background: url("<?php echo $vars['url']; ?>_graphics/friends_picker_arrows.gif") no-repeat -60px -44px;
 }	
-
 .friends_collections_controls a.delete_collection {
 	display:block;
 	cursor: pointer;
@@ -1787,7 +1666,6 @@ div.expandall p {
 	background-position: 0 -16px;
 }
 
-
 /* picker tabbed navigation */
 #friendsPickerNavigationTabs {
 	margin:10px 0 10px 0;
@@ -1796,20 +1674,17 @@ div.expandall p {
 	display:table;
 	width:100%;
 }
-
 #friendsPickerNavigationTabs ul {
 	list-style: none;
 	padding: 0;
 	margin: 0;
 }
-
 #friendsPickerNavigationTabs li {
 	float: left;
 	border: 1px solid #ffffff;
 	border-bottom-width: 0;
 	margin: 0;
 }
-
 #friendsPickerNavigationTabs a {
 	text-decoration: none;
 	display: block;
@@ -1817,22 +1692,18 @@ div.expandall p {
 	color: #666666;
 	text-align: center;
 }
-
 #friendsPickerNavigationTabs a:hover {
 	color: #4690d6;
 }
-
 #friendsPickerNavigationTabs .selected {
 	border-color: #cccccc;
 }
-
 #friendsPickerNavigationTabs .selected a {
 	position: relative;
 	top: 1px;
 	background: white;
 	color: #4690d6;
 }
-	
 	
 
 	
@@ -1856,7 +1727,6 @@ a.toggle_customise_edit_panel:hover {
 	background: #0054a7;
 	text-decoration:none;
 }
-
 #customise_editpanel {
 	display:none;
 	margin: 0;
@@ -1918,7 +1788,6 @@ a.toggle_customise_edit_panel:hover {
 	font-size:1.25em;
 	line-height: 1.2em;
 }
-
 #profile_box_widgets {
 	width:422px;
 	margin:0 10px 10px 0;
@@ -1934,7 +1803,6 @@ a.toggle_customise_edit_panel:hover {
 #profile_box_widgets p {
 	color:#999999;
 }
-
 #leftcolumn_widgets {
 	width:200px;
 	margin:0 10px 0 0;
@@ -1956,7 +1824,6 @@ a.toggle_customise_edit_panel:hover {
 	min-height: 190px;
 	border:1px solid #cccccc;
 }
-
 #rightcolumn_widgets.long {
 	min-height: 288px;
 }
@@ -1981,7 +1848,6 @@ a.toggle_customise_edit_panel:hover {
 	vertical-align:text-top;
 	border:1px solid #cccccc;
 }
-
 #widget_picker_gallery table.draggable_widget {
 	width:200px;
 	background: #cccccc;
@@ -2066,7 +1932,6 @@ a.toggle_customise_edit_panel:hover {
 }
 
 
-
 /* ***************************************
 	BREADCRUMBS
 *************************************** */
@@ -2099,11 +1964,9 @@ a.toggle_customise_edit_panel:hover {
 	font-size:1.35em;
 	line-height:1.2em;
 }
-
 #sidebar_page_tree {
 	margin:10px;
 }
-
 #sidebar_page_tree h3 {
 	background:#F5F5F5;
 	border-top:2px solid #4690D6;
@@ -2156,7 +2019,6 @@ a.toggle_customise_edit_panel:hover {
 /* ***************************************
 	SETTINGS & ADMIN
 *************************************** */
-
 .settings_form h3,
 .usersettings_statistics h3,
 .admin_statistics h3,
