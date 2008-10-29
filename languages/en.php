@@ -231,7 +231,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 		 */
 	
 			'profile' => "Profile",
-			'profile:edit:default' => 'Edit default profile',
+			'profile:edit:default' => 'Replace profile fields',
 			'user' => "User",
 			'item:user' => "Users",
 			'riveritem:single:user' => 'a user',
