@@ -234,15 +234,20 @@
 	
 	/**
 	 * This function creates an archive copy of the system log.
+	 * 
+	 * @param int $offset An offset in seconds from now to archive (useful for log rotation)
 	 */
-	function archive_log()
+	function archive_log($offset = 0)
 	{
 		global $CONFIG;
 		
+		$offset = (int)$offset;
 		$now = time(); // Take a snapshot of now
+		
+		$ts = $now - $offset;
 	
 		// create table
-		if (!update_data("CREATE TABLE {$CONFIG->dbprefix}system_log_$now as SELECT * from {$CONFIG->dbprefix}system_log WHERE time_created<=$now"))
+		if (!update_data("CREATE TABLE {$CONFIG->dbprefix}system_log_$now as SELECT * from {$CONFIG->dbprefix}system_log WHERE time_created<=$ts"))
 			return false;
 
 		// alter table to engine

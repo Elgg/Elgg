@@ -36,7 +36,20 @@
 	function logrotate_cron($hook, $entity_type, $returnvalue, $params)
 	{
 		$resulttext = elgg_echo("logrotate:logrotated");
-		if (!archive_log())
+		
+		$day = 86400;
+		
+		$offset = 0;
+		$period = get_plugin_setting('period','logrotate');
+		switch ($period)
+		{
+			case 'weekly': $offset = $day * 7; break;
+			case 'yearly' : $offset = $day * 365; break;
+			case 'monthly' :  // assume 28 days even if a month is longer. Won't cause data loss.
+			default: $offset = $day * 28;;
+		}
+		
+		if (!archive_log($offset))
 			$resulttext = elgg_echo("logrotate:lognotrotated");
 			
 		return $returnvalue . $resulttext;
