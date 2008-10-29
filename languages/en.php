@@ -712,7 +712,8 @@ Alternatively, you can enter your database settings below and we will try and do
 	
 			'installation:disableapi' => "Elgg comes with an flexible and extendible API that enables applications use certain Elgg features remotely",
 			'installation:disableapi:label' => "Enable the RESTful API",
-	
+
+			'upgrading' => 'Upgrading',
 			'upgrade:db' => 'Your database was upgraded.',
 			'upgrade:core' => 'Your elgg installation was upgraded',
 	

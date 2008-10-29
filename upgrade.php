@@ -15,9 +15,14 @@
 
 	// Include elgg engine
 	require_once(dirname(__FILE__) . "/engine/start.php");
-
-	if (version_upgrade_check()) {
-		version_upgrade();
+	
+	if (get_input('upgrade') == 'upgrade') {
+		if (version_upgrade_check()) {
+			version_upgrade();
+		}
+	} else {
+		global $CONFIG;
+		echo elgg_view('settings/upgrading');
 	}
 	
 	forward();
