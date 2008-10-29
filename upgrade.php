@@ -23,6 +23,7 @@
 	} else {
 		global $CONFIG;
 		echo elgg_view('settings/upgrading');
+		exit;
 	}
 	
 	forward();
