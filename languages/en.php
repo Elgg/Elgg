@@ -710,7 +710,7 @@ Alternatively, you can enter your database settings below and we will try and do
 
 			'installation:siteemail' => "Site email address (used when sending system emails)",
 	
-			'installation:disableapi' => "Elgg comes with an flexible and extendible API that enables applications use certain Elgg features remotely",
+			'installation:disableapi' => "The RESTful API is a flexible and extensible interface that enables applications to use certain Elgg features remotely.",
 			'installation:disableapi:label' => "Enable the RESTful API",
 
 			'upgrading' => 'Upgrading',
