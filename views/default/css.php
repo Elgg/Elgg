@@ -843,13 +843,15 @@ input[type="submit"] {
 	font-size: 1.2em;
 	color:gray;
 }
+#login-box p.loginbox {
+	margin:10px 0 0 0;
+}
 #login-box input[type="text"],
 #login-box input[type="password"],
 #register-box input[type="text"],
 #register-box input[type="password"] {
 	margin:0 0 10px 0;
 }
-
 #login-box-openid {
 	margin: 10px;
     text-align:left;
@@ -868,7 +870,6 @@ input[type="submit"] {
 	margin:0pt 0pt 5px;
 	padding:5px;
 }
-
 #register-box {
     text-align:left;
     border:1px solid #ddd;
@@ -877,7 +878,10 @@ input[type="submit"] {
     background: #ffffff;
     margin:20px;
 }
-
+#persistent_login label {
+	font-size:1.0em;
+	font-weight: normal;
+}
 
 /* ***************************************
 	PROFILE
