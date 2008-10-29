@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin_manifest>
-	<field key="author" value="Marcus Povey" />
+	<field key="author" value="Curverider Ltd" />
 	<field key="version" value="1.0" />
 	<field key="description" value="Simple user account validation via email." />
 	<field key="website" value="http://www.elgg.org/" />
