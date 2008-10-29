@@ -127,7 +127,7 @@
 
 </td>
 </tr>
-
+<?php if (!isset($CONFIG->profile_using_custom)) {?>
 <tr>
 <td colspan="2">
 	<div id="profile_info_column_right">	
@@ -137,7 +137,7 @@
 
 </td>
 </tr>
-
+<?php } ?>
 
 </table>
 

@@ -118,8 +118,10 @@
 				
 				$n++;
 			}
-			if (count($loaded_defaults))
+			if (count($loaded_defaults)) {
+				$CONFIG->profile_using_custom = true;
 				$profile_defaults = $loaded_defaults;
+			}
 			
 			$CONFIG->profile = trigger_plugin_hook('profile:fields', 'profile', NULL, $profile_defaults);
 		}
