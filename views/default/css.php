@@ -285,6 +285,10 @@ blockquote {
 	margin:0 10px 0 0;
 	width:200px;
 }
+/* IE7 */
+*:first-child+html #profile_info_column_left {
+	width:200px;
+}
 * html #two_column_left_sidebar {
 	width:210px;
 	margin:20px 10px 20px 10px;
