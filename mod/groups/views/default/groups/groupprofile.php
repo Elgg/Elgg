@@ -47,7 +47,7 @@
 	        if (is_array($vars['config']->group) && sizeof($vars['config']->group) > 0){
 								
 		        foreach($vars['config']->group as $shortname => $valtype) {
-			        if ($shortname != "title") {
+			        if ($shortname != "name") {
 				        $value = $vars['entity']->$shortname;
 										
 					    if (!empty($value)) {
