@@ -1,4 +1,4 @@
-Elgg version 1.0
+Elgg version 1.1
 Copyright (c) 2008 Curverider Ltd
 
 This program is free software; you can redistribute it and/or modify
