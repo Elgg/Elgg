@@ -370,6 +370,16 @@
         	return $tables;
         }
         
+    /**
+     * Run an optimize query on a mysql tables. Useful for executing after major data changes. 
+     *
+     */
+    	function optimize_table($table)
+    	{
+    		$table = sanitise_string($table);
+    		return update_data("optimize table $table");
+    	}
+        
 	/**
 	 * Get the last database error for a particular database link
 	 *

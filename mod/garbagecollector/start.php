@@ -41,16 +41,8 @@
 		
 		// Garbage collect metastrings
 		$resulttext .= elgg_echo('garbagecollector:gc:metastrings');
-		$query = "
-			DELETE 
-			from {$CONFIG->dbprefix}metastrings where 
-			( 
-				(id not in (select name_id from {$CONFIG->dbprefix}metadata)) AND 
-				(id not in (select value_id from {$CONFIG->dbprefix}metadata)) AND 
-				(id not in (select name_id from {$CONFIG->dbprefix}annotations)) AND 
-				(id not in (select value_id from {$CONFIG->dbprefix}annotations))   
-			)";
-		if (delete_data($query)!==false) {
+		
+		if (delete_orphaned_metastrings()!==false) {
 			$resulttext .= elgg_echo('garbagecollector:ok');
 		} else
 			$resulttext .= elgg_echo('garbagecollector:error');
@@ -62,7 +54,7 @@
 		foreach ($tables as $table) {
 			$resulttext .= sprintf(elgg_echo('garbagecollector:optimize'), $table);
 			
-			if (update_data("optimize table $table")!==false)
+			if (optimize_table($table)!==false)
 				$resulttext .= elgg_echo('garbagecollector:ok');
 			else
 				$resulttext .= elgg_echo('garbagecollector:error');

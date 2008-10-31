@@ -115,4 +115,25 @@
 		return $result;
 	}
 	
+	/**
+	 * Delete any orphaned entries in metastrings. This is run by the garbage collector.
+	 * 
+	 */
+	function delete_orphaned_metastrings()
+	{
+		global $CONFIG;
+		
+		$query = "
+			DELETE 
+			from {$CONFIG->dbprefix}metastrings where 
+			( 
+				(id not in (select name_id from {$CONFIG->dbprefix}metadata)) AND 
+				(id not in (select value_id from {$CONFIG->dbprefix}metadata)) AND 
+				(id not in (select name_id from {$CONFIG->dbprefix}annotations)) AND 
+				(id not in (select value_id from {$CONFIG->dbprefix}annotations))   
+			)";
+			
+		return delete_data($query);
+	}
+	
 ?>
