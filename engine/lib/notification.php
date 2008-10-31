@@ -227,7 +227,7 @@
 		// From
 		$site = get_entity($CONFIG->site_guid);
 		if ((isset($from->email)) && (!($from instanceof ElggUser))) // If there's an email address, use it - but only if its not from a user.
-			$from = $from->from;
+			$from = $from->email;
 		else if (($site) && (isset($site->email))) // Has the current site got a from email address?
 			$from = $site->email;
 		else if (isset($from->url)) // If we have a url then try and use that.
