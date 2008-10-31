@@ -221,6 +221,9 @@
 		if ($to->email=="")
 			throw new NotificationException(sprintf(elgg_echo('NotificationException:NoEmailAddress'), $to->guid));			
 
+		// Sanitise subject
+		$subject = preg_replace("/(\r\n|\r|\n)/", " ", $subject); // Strip line endings
+			
 		// To 
 		$to = $to->email;
 		
@@ -255,8 +258,10 @@
 			$subject = mb_encode_mimeheader($subject,"UTF-8", "B");
     	}	
     	
-    	// Strip tags from message
-    	$message = strip_tags($message);
+		// Format message
+    	$message = strip_tags($message); // Strip tags from message
+    	$message = preg_replace("/(\r\n|\r)/", "\n", $message); // Convert to unix line endings in body
+    	$message = preg_replace("/^From/", ">From", $message); // Change lines starting with From to >From  	
     		
 		return mail($to, $subject, wordwrap($message), $headers);
 	}
