@@ -37,39 +37,37 @@
 	{
 		global $CONFIG;
 		
-		$resulttext = elgg_echo('garbagecollector');
+		echo elgg_echo('garbagecollector');
 		
 		// Garbage collect metastrings
-		$resulttext .= elgg_echo('garbagecollector:gc:metastrings');
+		echo elgg_echo('garbagecollector:gc:metastrings');
 		
 		if (delete_orphaned_metastrings()!==false) {
-			$resulttext .= elgg_echo('garbagecollector:ok');
+			echo elgg_echo('garbagecollector:ok');
 		} else
-			$resulttext .= elgg_echo('garbagecollector:error');
+			echo elgg_echo('garbagecollector:error');
 			
-		$resulttext .= "\n";
+		echo "\n";
 		
 		// Now, because we are nice, trigger a plugin hook to let other plugins do some GC
-		$returnvalue = true;
+		$rv = true;
 		$period = get_plugin_setting('period','garbagecollector');
-		$returnvalue = trigger_plugin_hook('system', 'gc', array('period' => $period));
-		
+		trigger_plugin_hook('system', 'gc', array('period' => $period));
+	
 		// Now we optimize all tables
 		$tables = get_db_tables();
 		foreach ($tables as $table) {
-			$resulttext .= sprintf(elgg_echo('garbagecollector:optimize'), $table);
+			echo sprintf(elgg_echo('garbagecollector:optimize'), $table);
 			
 			if (optimize_table($table)!==false)
-				$resulttext .= elgg_echo('garbagecollector:ok');
+				echo elgg_echo('garbagecollector:ok');
 			else
-				$resulttext .= elgg_echo('garbagecollector:error');
+				echo elgg_echo('garbagecollector:error');
 
-			$resulttext .= "\n";
+			echo "\n";
 		}
 			
-		$resulttext .= elgg_echo('garbagecollector:done');
-			
-		return $returnvalue . $resulttext;
+		echo elgg_echo('garbagecollector:done');
 	}
 	
 	// Initialise plugin

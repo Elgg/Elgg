@@ -27,8 +27,13 @@
 	
 	// Trigger hack
 	$std_out = ""; // Data to return to
-	$std_out = trigger_plugin_hook('cron', $period, $params, $std_out);
+	$old_stdout = "";
+	ob_start();
+	
+	$old_stdout = trigger_plugin_hook('cron', $period, $params, $old_stdout);
+		
+	$std_out = ob_get_clean();
 	
 	// Return event
-	echo $std_out;
+	echo $std_out . $old_stdout;
 ?>
