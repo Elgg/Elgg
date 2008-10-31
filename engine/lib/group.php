@@ -775,7 +775,7 @@
 	 */
 	function get_users_membership($user_guid)
 	{
-		return get_entities_from_relationship('member', $user_guid, true);
+		return get_entities_from_relationship('member', $user_guid, false);
 	}
 	
 	/**
