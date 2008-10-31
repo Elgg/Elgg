@@ -16,7 +16,7 @@
 	
 	
 	$strap = $entity->title ? $entity->title : $entity->name; 	
-	$info .= "<p><b><a href=\"{$CONFIG->url}pg/guidtool/view/{$entity->guid}/\">" . get_class($entity) . " " . get_subtype_from_id($entity->subtype) . "</a></b> $strap</p>";
+	$info .= "<p><b><a href=\"{$CONFIG->url}pg/guidtool/view/{$entity->guid}/\">[GUID:{$entity->guid}] " . get_class($entity) . " " . get_subtype_from_id($entity->subtype) . "</a></b> $strap</p>";
 	
 	$desc = $entity->description ? substr($entity->description, 0, 100) : "";
 	$info .= "<p>$desc</p>";
