@@ -15,8 +15,10 @@
     $description = autop($vars['entity']->description);
     $group =  get_entity($vars['entity']->container_guid);
     $forum_created = friendly_time($vars['entity']->time_created);
+    if (isloggedin()) {
     $counter = $vars['entity']->countAnnotations("group_topic_post");
     $last_post = $vars['entity']->getAnnotations("group_topic_post", 1, 0, "desc");
+    }
                 //get the time and user
                 foreach($last_post as $last){
                     $last_time = $last->time_created;
@@ -31,7 +33,8 @@
 	//get the group avatar
 	$icon = elgg_view("profile/icon",array('entity' => $group, 'size' => 'small'));
     //get the group and topic title
-    $info .= "<p>" . elgg_echo('group') . ": <a href=\"{$group->getURL()}\">{$group->name}</a></p>";
+    if ($group instanceof ElggGroup)
+    	$info .= "<p>" . elgg_echo('group') . ": <a href=\"{$group->getURL()}\">{$group->name}</a></p>";
     
 	$info .= "<p>" . elgg_echo('topic') . ": <a href=\"{$vars['url']}mod/groups/topicposts.php?topic={$vars['entity']->guid}&group_guid={$group->guid}\">{$title}</a></p>";
 	//get the forum description
