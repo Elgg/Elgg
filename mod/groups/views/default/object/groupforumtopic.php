@@ -27,9 +27,9 @@
                 
     $info = "<p class=\"latest_discussion_info\">" . elgg_echo('created') . " " . $forum_created . ", " . elgg_echo('with') . " " . $counter . " " . elgg_echo('posts') . "<br /><span class=\"timestamp\">last updated " . friendly_time($last_time);
     if ($u = get_user($last_user)) {
-    	$info .= "<br />by <a href=\"" . $u->getURL() . "\">" . $u->username . "</a></span>";
+    	$info .= "<br />by <a href=\"" . $u->getURL() . "\">" . $u->username . "</a>";
     }
-    $info .= '</p>';
+    $info .= '</span></p>';
 	//get the group avatar
 	$icon = elgg_view("profile/icon",array('entity' => $group, 'size' => 'small'));
     //get the group and topic title
