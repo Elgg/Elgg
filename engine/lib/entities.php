@@ -12,10 +12,10 @@
 	 */
 
 	/// Cache objects in order to minimise database access.
-	$ENTITY_CACHE = array();
+	$ENTITY_CACHE = NULL;
 	
 	/// Cache subtype searches
-	$SUBTYPE_CACHE = array();
+	$SUBTYPE_CACHE = NULL;
 	
 	/**
 	 * ElggEntity The elgg entity superclass
@@ -920,8 +920,8 @@
 	{
 		global $ENTITY_CACHE;
 		
-		if (!is_array($ENTITY_CACHE))
-			$ENTITY_CACHE = array();
+		if (!$ENTITY_CACHE)
+			$ENTITY_CACHE = new ElggStaticVariableCache('entity_cache'); // TODO: Replace with memcache?
 	}
 	
 	/**
@@ -935,8 +935,8 @@
 		
 		$guid = (int)$guid;
 			
-		unset($ENTITY_CACHE[$guid]);
-				
+		//unset($ENTITY_CACHE[$guid]);
+		$ENTITY_CACHE->delete($guid);		
 	}
 	
 	/**
@@ -1012,6 +1012,9 @@
 		$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes where type='$type' and subtype='$subtype'");
 
 		if ($result) {
+			
+			if (!$SUBTYPE_CACHE) $SUBTYPE_CACHE = new ElggStaticVariableCache('subtype_cache');
+			
 			$SUBTYPE_CACHE[$result->id] = $result;
 			return $result->id;
 		}
@@ -1039,6 +1042,9 @@
 		
 		$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes where id=$subtype_id");
 		if ($result) {
+			
+			if (!$SUBTYPE_CACHE) $SUBTYPE_CACHE = new ElggStaticVariableCache('subtype_cache');
+			
 			$SUBTYPE_CACHE[$subtype_id] = $result;
 			return $result->subtype;
 		}
@@ -1064,6 +1070,9 @@
 		
 		$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes where type='$type' and subtype='$subtype'");
 		if ($result) {
+			
+			if (!$SUBTYPE_CACHE) $SUBTYPE_CACHE = new ElggStaticVariableCache('subtype_cache');
+			
 			$SUBTYPE_CACHE[$result->id] = $result;
 			return $result->class;
 		}
@@ -1090,6 +1099,9 @@
 		
 		$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes where id=$subtype_id");
 		if ($result) {
+			
+			if (!$SUBTYPE_CACHE) $SUBTYPE_CACHE = new ElggStaticVariableCache('subtype_cache');
+			
 			$SUBTYPE_CACHE[$subtype_id] = $result;
 			return $result->class;
 		}
