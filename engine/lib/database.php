@@ -158,7 +158,7 @@
             
             $resultarray = array();
             
-            if (!$DB_QUERY_CACHE) $DB_QUERY_CACHE = array();
+            if (!$DB_QUERY_CACHE) $DB_QUERY_CACHE = new ElggStaticVariableCache('db_query_cache'); //array();
        		if (isset($DB_QUERY_CACHE[$query])) {
        			if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
             		error_log ("$query results returned from cache");
@@ -209,7 +209,7 @@
             
             $dblink = get_db_link('read');
             
-            if (!$DB_QUERY_CACHE) $DB_QUERY_CACHE = array();
+            if (!$DB_QUERY_CACHE) $DB_QUERY_CACHE = new ElggStaticVariableCache('db_query_cache'); //array();
         	if (isset($DB_QUERY_CACHE[$query])) {
         		if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
             		error_log ("$query results returned from cache");
@@ -265,7 +265,10 @@
             }
             
             // Invalidate query cache
-            $DB_QUERY_CACHE = array();
+            if ($DB_QUERY_CACHE)
+            	$DB_QUERY_CACHE->clear();
+            else
+            	$DB_QUERY_CACHE = new ElggStaticVariableCache('db_query_cache'); //array();
             if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
             	error_log("Query cache invalidated");
             
@@ -301,7 +304,10 @@
             }
             
             // Invalidate query cache
-            $DB_QUERY_CACHE = array();
+            if ($DB_QUERY_CACHE)
+            	$DB_QUERY_CACHE->clear();
+            else
+            	$DB_QUERY_CACHE = new ElggStaticVariableCache('db_query_cache'); //array();
             if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
             	error_log("Query cache invalidated");
             
@@ -338,7 +344,10 @@
             }
             
             // Invalidate query cache
-            $DB_QUERY_CACHE = array();
+            if ($DB_QUERY_CACHE)
+            	$DB_QUERY_CACHE->clear();
+            else
+            	$DB_QUERY_CACHE = new ElggStaticVariableCache('db_query_cache'); //array();
             if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
             	error_log("Query cache invalidated");
             
