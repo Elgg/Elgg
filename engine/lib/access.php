@@ -66,9 +66,9 @@
 			
 			if (empty($access_array[$user_id]) || $flush == true) {
 				
-				$query = "select am.access_collection_id from {$CONFIG->dbprefix}access_collection_membership am ";
-				$query .= " left join {$CONFIG->dbprefix}access_collections ag on ag.id = am.access_collection_id ";
-				$query .= " where am.user_guid = {$user_id} and (ag.site_guid = {$site_id} or ag.site_guid = 0)";
+				$query = "SELECT am.access_collection_id FROM {$CONFIG->dbprefix}access_collection_membership am ";
+				$query .= " LEFT JOIN {$CONFIG->dbprefix}access_collections ag ON ag.id = am.access_collection_id ";
+				$query .= " WHERE am.user_guid = {$user_id} AND (ag.site_guid = {$site_id} OR ag.site_guid = 0)";
 				
 				$tmp_access_array = array(2);
 				if (isloggedin())
@@ -80,8 +80,8 @@
 						
 				}
 					
-				$query = "select ag.id from {$CONFIG->dbprefix}access_collections ag  ";
-				$query .= " where ag.owner_guid = {$user_id} and (ag.site_guid = {$site_id} or ag.site_guid = 0)";
+				$query = "SELECT ag.id FROM {$CONFIG->dbprefix}access_collections ag  ";
+				$query .= " WHERE ag.owner_guid = {$user_id} AND (ag.site_guid = {$site_id} OR ag.site_guid = 0)";
 				
 				if ($collections = get_data($query)) {
 					foreach($collections as $collection)
@@ -192,10 +192,10 @@
 			
 			if (empty($access_array[$user_id]) || $flush == true) {
 				
-				$query = "select ag.* from {$CONFIG->dbprefix}access_collections ag ";
-				$query .= " where (ag.site_guid = {$site_id} or ag.site_guid = 0)";
-				$query .= " and (ag.owner_guid = {$user_id})";
-				$query .= " and ag.id >= 3";
+				$query = "SELECT ag.* FROM {$CONFIG->dbprefix}access_collections ag ";
+				$query .= " WHERE (ag.site_guid = {$site_id} OR ag.site_guid = 0)";
+				$query .= " AND (ag.owner_guid = {$user_id})";
+				$query .= " AND ag.id >= 3";
 				
 				$tmp_access_array = array(0 => elgg_echo("PRIVATE"), 1 => elgg_echo("LOGGED_IN"), 2 => elgg_echo("PUBLIC"));
 				if ($collections = get_data($query)) {
@@ -396,10 +396,10 @@
     		global $CONFIG;
 		
     		if (!$idonly) {
-		    	$query = "select e.* from {$CONFIG->dbprefix}access_collection_membership m join {$CONFIG->dbprefix}entities e on e.guid = m.user_guid WHERE m.access_collection_id = {$collection}";	    
+		    	$query = "SELECT e.* FROM {$CONFIG->dbprefix}access_collection_membership m JOIN {$CONFIG->dbprefix}entities e ON e.guid = m.user_guid WHERE m.access_collection_id = {$collection}";	    
 				$collection_members = get_data($query, "entity_row_to_elggstar");
     		} else {
-    			$query = "select e.guid from {$CONFIG->dbprefix}access_collection_membership m join {$CONFIG->dbprefix}entities e on e.guid = m.user_guid WHERE m.access_collection_id = {$collection}";
+    			$query = "SELECT e.guid FROM {$CONFIG->dbprefix}access_collection_membership m JOIN {$CONFIG->dbprefix}entities e ON e.guid = m.user_guid WHERE m.access_collection_id = {$collection}";
     			$collection_members = get_data($query);
     			foreach($collection_members as $key => $val)
     				$collection_members[$key] = $val->guid;

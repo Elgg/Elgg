@@ -1409,7 +1409,7 @@
 		if (!$count) {
 			$query = "SELECT * from {$CONFIG->dbprefix}entities where ";
 		} else {
-			$query = "select count(guid) as total from {$CONFIG->dbprefix}entities where ";
+			$query = "SELECT count(guid) as total from {$CONFIG->dbprefix}entities where ";
 		}
 		foreach ($where as $w)
 			$query .= " $w and ";

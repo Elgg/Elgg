@@ -401,7 +401,7 @@
 	{
 		function __construct() 
 		{
-			$this->query_type = "select";	
+			$this->query_type = "SELECT";	
 		}
 	}
 	
@@ -415,7 +415,7 @@
 	{
 		function __construct() 
 		{
-			$this->query_type = "insert into";	
+			$this->query_type = "INSERT INTO";	
 		}
 	}
 	
@@ -429,7 +429,7 @@
 	{
 		function __construct() 
 		{
-			$this->query_type = "delete from";	
+			$this->query_type = "DELETE FROM";	
 		}
 	}
 	
@@ -443,7 +443,7 @@
 	{
 		function __construct() 
 		{
-			$this->query_type = "update";	
+			$this->query_type = "UPDATE";	
 		}
 	}
 	

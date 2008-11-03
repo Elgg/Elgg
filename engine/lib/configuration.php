@@ -75,7 +75,7 @@
 			$site_guid = (int) $site_guid;
 			if ($site_guid == 0)
 				$site_guid = (int) $CONFIG->site_id;
-			if ($result = get_data_row("select value from {$CONFIG->dbprefix}config where name = '{$name}' and site_guid = {$site_guid}")) {
+			if ($result = get_data_row("SELECT value from {$CONFIG->dbprefix}config where name = '{$name}' and site_guid = {$site_guid}")) {
 				$result = $result->value;
 				$result = unserialize($result->value);
 				$CONFIG->$name = $result;
@@ -99,7 +99,7 @@
 			if ($site_guid == 0)
 				$site_guid = (int) $CONFIG->site_id;
 				
-			if ($result = get_data("select * from {$CONFIG->dbprefix}config where site_guid = {$site_guid}")) {
+			if ($result = get_data("SELECT * from {$CONFIG->dbprefix}config where site_guid = {$site_guid}")) {
 				foreach ($result as $r)
 				{	
 					$name = $r->name;

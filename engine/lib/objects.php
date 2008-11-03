@@ -256,7 +256,7 @@
 		if ($row)
 		{
 			// Core entities row exists and we have access to it
-			if ($exists = get_data_row("select guid from {$CONFIG->dbprefix}objects_entity where guid = {$guid}")) {
+			if ($exists = get_data_row("SELECT guid from {$CONFIG->dbprefix}objects_entity where guid = {$guid}")) {
 				$result = update_data("UPDATE {$CONFIG->dbprefix}objects_entity set title='$title', description='$description' where guid=$guid");
 				if ($result!=false)
 				{

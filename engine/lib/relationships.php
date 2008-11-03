@@ -380,7 +380,7 @@
 		$relationship = sanitise_string($relationship);
 		$guid_two = (int)$guid_two;
 			
-		if ($row = get_data_row("select guid_one from {$CONFIG->dbprefix}entity_relationships where guid_one=$guid_one and relationship='$relationship' and guid_two=$guid_two limit 1")) {
+		if ($row = get_data_row("SELECT guid_one FROM {$CONFIG->dbprefix}entity_relationships WHERE guid_one=$guid_one AND relationship='$relationship' AND guid_two=$guid_two limit 1")) {
 			return true;
 		}
 		return false;
@@ -506,9 +506,9 @@
 			$joinon = "e.guid = r.guid_two";	
 			
 		if ($count) {
-			$query = "select count(distinct e.guid) as total ";
+			$query = "SELECT count(distinct e.guid) as total ";
 		} else {
-			$query = "select distinct e.* ";
+			$query = "SELECT distinct e.* ";
 		}
 		$query .= " from {$CONFIG->dbprefix}entity_relationships r JOIN {$CONFIG->dbprefix}entities e on $joinon where ";
 		foreach ($where as $w)

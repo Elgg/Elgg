@@ -143,7 +143,7 @@
 		$annotation_id = (int) $annotation_id;
 		$access = get_access_sql_suffix("a");
 		
-		return row_to_elggannotation(get_data_row("select a.*, n.string as name, v.string as value from {$CONFIG->dbprefix}annotations a JOIN {$CONFIG->dbprefix}metastrings n on a.name_id = n.id JOIN {$CONFIG->dbprefix}metastrings v on a.value_id = v.id where a.id=$annotation_id and $access"));			
+		return row_to_elggannotation(get_data_row("SELECT a.*, n.string as name, v.string as value from {$CONFIG->dbprefix}annotations a JOIN {$CONFIG->dbprefix}metastrings n on a.name_id = n.id JOIN {$CONFIG->dbprefix}metastrings v on a.value_id = v.id where a.id=$annotation_id and $access"));			
 	}
 	
 	/**

@@ -364,7 +364,7 @@
 		if ($row)
 		{
 			// Exists and you have access to it
-			if ($exists = get_data_row("select guid from {$CONFIG->dbprefix}groups_entity where guid = {$guid}")) {
+			if ($exists = get_data_row("SELECT guid from {$CONFIG->dbprefix}groups_entity WHERE guid = {$guid}")) {
 				$result = update_data("UPDATE {$CONFIG->dbprefix}groups_entity set name='$name', description='$description' where guid=$guid");
 				if ($result!=false)
 				{
@@ -532,7 +532,7 @@
 		if (!$count) {
 			$query = "SELECT * from {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}objects_entity o on e.guid=o.guid where ";
 		} else {
-			$query = "select count(e.guid) as total from {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}objects_entity o on e.guid=o.guid where ";
+			$query = "SELECT count(e.guid) as total from {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}objects_entity o on e.guid=o.guid where ";
 		}
 		foreach ($where as $w)
 			$query .= " $w and ";
