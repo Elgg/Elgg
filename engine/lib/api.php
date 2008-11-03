@@ -237,6 +237,28 @@
 		}
 		
 		/**
+		 * Invalidate a given key.
+		 *
+		 * @param string $key
+		 * @return bool
+		 */
+		public function delete($key)
+		{
+			global $CONFIG;
+			
+			$key = sanitise_string($key);
+			
+			return delete_data("DELETE from {$CONFIG->dbprefix}hmac_cache where hmac='$key'");
+		}
+		
+		/**
+		 * Clear out all the contents of the cache.
+		 * 
+		 * Not currently implemented in this cache type.
+		 */
+		public function clear() { return true; }
+		
+		/**
 		 * Clean out old stuff.
 		 *
 		 */

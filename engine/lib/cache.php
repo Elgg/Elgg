@@ -19,7 +19,8 @@
 	 * @package Elgg
 	 * @subpackage API
 	 */
-	abstract class ElggCache
+	abstract class ElggCache implements
+		ArrayAccess // Override for array access
 	{
 		/**
 		 * Variables for the cache object.
@@ -62,6 +63,38 @@
 		}
 		
 		/**
+		 * Class member get overloading, returning key using $this->load defaults.
+		 *
+		 * @param string $key
+		 * @return mixed
+		 */
+		function __get($key) { return $this->load($key); }
+		
+		/**
+		 * Class member set overloading, setting a key using $this->save defaults.
+		 *
+		 * @param string $key
+		 * @param mixed $value
+		 * @return mixed
+		 */
+		function __set($key, $value) { return $this->save($key, $value); }
+		
+		/**
+		 * Supporting isset, using $this->load() with default values.
+		 *
+		 * @param string $key The name of the attribute or metadata.
+		 * @return bool
+		 */
+		function __isset($key) { if ($this->load($key)!="") return true; else return false; }
+		
+		/**
+		 * Supporting unsetting of magic attributes.
+		 *
+		 * @param string $key The name of the attribute or metadata.
+		 */
+		function __unset($key) { return $this->delete($key); }
+		
+		/**
 		 * Save data in a cache.
 		 *
 		 * @param string $key
@@ -79,6 +112,110 @@
 		 * @return mixed The stored data or false.
 		 */
 		abstract public function load($key, $offset = 0, $limit = null);
+		
+		/**
+		 * Invalidate a key
+		 *
+		 * @param string $key
+		 * @return bool
+		 */
+		abstract public function delete($key);
+		
+		/**
+		 * Clear out all the contents of the cache.
+		 *
+		 */
+		abstract public function clear();
+		
+		// ARRAY ACCESS INTERFACE //////////////////////////////////////////////////////////
+		function offsetSet($key, $value)
+		{
+     		$this->save($key, $value);
+ 		} 
+ 		
+ 		function offsetGet($key) 
+ 		{
+   			return $this->load($key);
+ 		} 
+ 		
+ 		function offsetUnset($key) 
+ 		{
+   			if ( isset($this->key) ) {
+     			unset($this->key);
+   			}
+ 		} 
+ 		
+ 		function offsetExists($offset) 
+ 		{
+   			return isset($this->$offset);
+ 		} 
+	}
+	
+	/**
+	 * ElggStaticVariableCache
+	 * Dummy cache which stores values in a static array. Using this makes future replacements to other caching back 
+	 * ends (eg memcache) much easier.
+	 * 
+	 * @author Curverider Ltd <info@elgg.com>
+	 * @package Elgg
+	 * @subpackage API
+	 */
+	class ElggStaticVariableCache extends ElggCache
+	{
+		/**
+		 * The cache.
+		 *
+		 * @var unknown_type
+		 */
+		private static $__cache;
+		
+		/**
+		 * ID of a cache to use.
+		 *
+		 * @var unknown_type
+		 */
+		private $cache_id;
+		
+		/**
+		 * Create the variable cache.
+		 * 
+		 * This function creates a variable cache in a static variable in memory, optionally with a given namespace (to avoid overlap).
+		 *
+		 * @param string $cache_id The namespace for this cache to write to - note, namespaces of the same name are shared!
+		 */
+		function __construct($cache_id = 'default')
+		{	
+			$this->cache_id = $cache_id;
+			
+		}
+		
+		public function save($key, $data) 
+		{
+			ElggStaticVariableCache::$__cache[$this->cache_id][$key] = $data;
+			
+			return true;
+		}
+		
+		public function load($key, $offset = 0, $limit = null)
+		{
+			return ElggStaticVariableCache::$__cache[$this->cache_id][$key];
+		}
+		
+		public function delete($key) 
+		{
+			unset(ElggStaticVariableCache::$__cache[$this->cache_id][$key]);
+			
+			return true;
+		}
+		
+		public function clear()
+		{
+			if (!ElggStaticVariableCache::$__cache)
+				ElggStaticVariableCache::$__cache = array();
+				
+			if (!ElggStaticVariableCache::$__cache[$this->cache_id])
+				ElggStaticVariableCache::$__cache[$this->cache_id] = array();
+		}
 	}
 	
 	/**
@@ -188,6 +325,24 @@
 			}
 			
 			return false;
+		}
+		
+		/**
+		 * Invalidate a given key.
+		 *
+		 * @param string $key
+		 * @return bool
+		 */
+		public function delete($key)
+		{
+			$dir = $this->get_variable("cache_path");
+			
+			return unlink($dir.$f);
+		}
+		
+		public function clear()
+		{
+			// TODO : writeme
 		}
 		
 		public function __destruct()
