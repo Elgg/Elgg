@@ -13,7 +13,7 @@
 	 */
 
 	$DB_PROFILE = array();
-	//$DB_QUERY_CACHE = array();
+	$DB_QUERY_CACHE = array();
 	
 	/**
 	 * Connect to the database server and use the Elgg database for a particular database link
@@ -162,7 +162,7 @@
        		if (isset($DB_QUERY_CACHE[$query])) {
        			if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
             		error_log ("$query results returned from cache");
-            	//return $DB_QUERY_CACHE[$query];
+            	return $DB_QUERY_CACHE[$query];
             }
             
             $dbcalls++;
@@ -213,7 +213,7 @@
         	if (isset($DB_QUERY_CACHE[$query])) {
         		if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
             		error_log ("$query results returned from cache");
-            	//return $DB_QUERY_CACHE[$query];
+            	return $DB_QUERY_CACHE[$query];
             }
             
             $dbcalls++;
