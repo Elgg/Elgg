@@ -167,7 +167,7 @@
 		 *
 		 * @var unknown_type
 		 */
-		private static $__cache;
+		public static $__cache;
 		
 		/**
 		 * ID of a cache to use.
@@ -186,7 +186,7 @@
 		function __construct($cache_id = 'default')
 		{	
 			$this->cache_id = $cache_id;
-			
+			$this->clear();
 		}
 		
 		public function save($key, $data) 
