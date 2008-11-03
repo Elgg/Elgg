@@ -71,7 +71,9 @@ CREATE TABLE `prefix_entity_relationships` (
   `relationship` varchar(50) NOT NULL,
   `guid_two` bigint(20) unsigned  NOT NULL,
   PRIMARY KEY  (`id`),
-  UNIQUE KEY (`guid_one`,`relationship`,`guid_two`)
+  UNIQUE KEY (`guid_one`,`relationship`,`guid_two`),
+  KEY `relationship` (`relationship`),
+  KEY `guid_two` (`guid_two`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
@@ -85,7 +87,9 @@ CREATE TABLE `prefix_access_collections` (
   `owner_guid` bigint(20) unsigned NOT NULL,
   `site_guid` bigint(20) unsigned NOT NULL default '0',
 
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  KEY `owner_guid` (`owner_guid`),
+  KEY `site_guid` (`site_guid`)
 ) AUTO_INCREMENT=3  ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- Access containers 
