@@ -198,7 +198,10 @@
 		
 		public function load($key, $offset = 0, $limit = null)
 		{
-			return ElggStaticVariableCache::$__cache[$this->cache_id][$key];
+			if (isset(ElggStaticVariableCache::$__cache[$this->cache_id][$key]))
+				return ElggStaticVariableCache::$__cache[$this->cache_id][$key];
+				
+			return false;
 		}
 		
 		public function delete($key) 
