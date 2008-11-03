@@ -167,7 +167,7 @@
 		 *
 		 * @var unknown_type
 		 */
-		public static $__cache;
+		private static $__cache;
 		
 		/**
 		 * ID of a cache to use.
@@ -210,10 +210,10 @@
 		
 		public function clear()
 		{
-			if (!ElggStaticVariableCache::$__cache)
+			if (!isset(ElggStaticVariableCache::$__cache))
 				ElggStaticVariableCache::$__cache = array();
 				
-			if (!ElggStaticVariableCache::$__cache[$this->cache_id])
+			if (!isset(ElggStaticVariableCache::$__cache[$this->cache_id]))
 				ElggStaticVariableCache::$__cache[$this->cache_id] = array();
 		}
 	}
