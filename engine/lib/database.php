@@ -58,6 +58,9 @@
 		    // Set up cache
 		    	if (!$DB_QUERY_CACHE) 
 		    		$DB_QUERY_CACHE = select_default_memcache('db_query_cache'); //array();
+		    		
+		    	if ($DB_QUERY_CACHE instanceof ElggMemcache)
+		    		$DB_QUERY_CACHE->setDefaultExpiry(30);
 		}
 		
 	/**
