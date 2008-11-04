@@ -103,6 +103,8 @@
 	 * 	1) One or more memcache servers (http://www.danga.com/memcached/)
 	 *  2) PHP memcache wrapper (http://uk.php.net/manual/en/memcache.setup.php)
 	 */
+	//$CONFIG->memcache = true;
+	//
 	//$CONFIG->memcache_servers = array (
 	//	array('server1', 11211),
 	//	array('server2', 11211)
