@@ -94,6 +94,19 @@
 	 * at 0, the next one must be at 1, etc.
 	 */
 	 
+			
+	/**
+	 * Memcache setup (optional)
+	 * This is where you may optionally set up memcache.
+	 * 
+	 * Requirements: 
+	 * 	1) One or more memcache servers (http://www.danga.com/memcached/)
+	 *  2) PHP memcache wrapper (http://uk.php.net/manual/en/memcache.setup.php)
+	 */
+	//$CONFIG->memcache_servers = array (
+	//	array('server1', 11211),
+	//	array('server2', 11211)
+	//);		
 	
 	/**
 	  * Url - I am not sure if this will be here ?
