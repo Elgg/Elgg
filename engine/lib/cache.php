@@ -167,7 +167,7 @@
 		 *
 		 * @var unknown_type
 		 */
-		public static $__cache;
+		private static $__cache;
 		
 		/**
 		 * ID of a cache to use.
