@@ -398,13 +398,18 @@
 	 */
 	function select_default_memcache($namespace = "default")
 	{
-		// hook out to the world ? (can't if using as object cache)
+		global $CONFIG;
+		// TODO : hook out to the world ? (can't if using as object cache)
 		
-		// if nothing then use shared memory cache.
-		
-		// TODO: Use memcache if available?
+		// Try and see if memcache is present & enabled
+		try {
+			if ((isset($CONFIG->memcache) && ($CONFIG->memcache=true)))
+				return new ElggMemcache($namespace);
+		} catch (Exception $e) {
+			if ((isset($CONFIG->debug)) && ($CONFIG->debug == true))
+				error_log("$e");
+		}
 		
 		return new ElggStaticVariableCache($namespace);
-		
 	}
 ?>
