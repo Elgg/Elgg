@@ -182,6 +182,10 @@
 		
 		public function clear()
 		{
+			// DISABLE clearing for now - you must use delete on a specific key.
+			return true;
+			
+			
 			foreach ($this->keys_so_far as $key => $ts)
 				$this->memcache->delete($key, 0);
 				
