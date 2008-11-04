@@ -160,6 +160,10 @@
 			'CronException:unknownperiod' => '%s is not a recognised period.',
 	
 			'SecurityException:deletedisablecurrentsite' => 'You can not delete or disable the site you are currently viewing!',
+	
+			'memcache:notinstalled' => 'PHP memcache module not installed, you must install php5-memcache',
+			'memcache:noservers' => 'No memcache servers defined, please populate the $CONFIG->memcache_servers variable',
+			'memcache:versiontoolow' => 'Memcache needs at least version 2.0.0 to run, you are running %s',
 		/**
 		 * API
 		 */
