@@ -23,7 +23,7 @@
 		function establish_db_link($dblinkname = "readwrite") {
 			
 			// Get configuration, and globalise database link
-		        global $CONFIG, $dblink;
+		        global $CONFIG, $dblink, $DB_QUERY_CACHE;
 		        
 		        if (!isset($dblink)) {
 		        	$dblink = array();
@@ -55,6 +55,9 @@
 		        if (!mysql_select_db($CONFIG->dbname, $dblink[$dblinkname]))
 		        	throw new DatabaseException(sprintf(elgg_echo('DatabaseException:NoConnect'), $CONFIG->dbname));
 			
+		    // Set up cache
+		    	if (!$DB_QUERY_CACHE) 
+		    		$DB_QUERY_CACHE = select_default_memcache('db_query_cache'); //array();
 		}
 		
 	/**
@@ -158,7 +161,6 @@
             
             $resultarray = array();
             
-            if (!$DB_QUERY_CACHE) $DB_QUERY_CACHE = new ElggStaticVariableCache('db_query_cache'); //array();
        		if (isset($DB_QUERY_CACHE[$query])) {
        			if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
             		error_log ("$query results returned from cache");
@@ -209,7 +211,6 @@
             
             $dblink = get_db_link('read');
             
-            if (!$DB_QUERY_CACHE) $DB_QUERY_CACHE = new ElggStaticVariableCache('db_query_cache'); //array();
         	if (isset($DB_QUERY_CACHE[$query])) {
         		if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
             		error_log ("$query results returned from cache");
@@ -265,10 +266,7 @@
             }
             
             // Invalidate query cache
-            if ($DB_QUERY_CACHE)
-            	$DB_QUERY_CACHE->clear();
-            else
-            	$DB_QUERY_CACHE = new ElggStaticVariableCache('db_query_cache'); //array();
+            if ($DB_QUERY_CACHE) $DB_QUERY_CACHE->clear();
             if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
             	error_log("Query cache invalidated");
             
@@ -304,10 +302,7 @@
             }
             
             // Invalidate query cache
-            if ($DB_QUERY_CACHE)
-            	$DB_QUERY_CACHE->clear();
-            else
-            	$DB_QUERY_CACHE = new ElggStaticVariableCache('db_query_cache'); //array();
+            if ($DB_QUERY_CACHE) $DB_QUERY_CACHE->clear();
             if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
             	error_log("Query cache invalidated");
             
@@ -344,10 +339,7 @@
             }
             
             // Invalidate query cache
-            if ($DB_QUERY_CACHE)
-            	$DB_QUERY_CACHE->clear();
-            else
-            	$DB_QUERY_CACHE = new ElggStaticVariableCache('db_query_cache'); //array();
+            if ($DB_QUERY_CACHE) $DB_QUERY_CACHE->clear();
             if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
             	error_log("Query cache invalidated");
             

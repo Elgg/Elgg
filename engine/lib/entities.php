@@ -921,7 +921,7 @@
 		global $ENTITY_CACHE;
 		
 		if (!$ENTITY_CACHE)
-			$ENTITY_CACHE = new ElggStaticVariableCache('entity_cache'); // TODO: Replace with memcache?
+			$ENTITY_CACHE = select_default_memcache('entity_cache'); // TODO: Replace with memcache?
 	}
 	
 	/**
@@ -1013,7 +1013,8 @@
 
 		if ($result) {
 			
-			if (!$SUBTYPE_CACHE) $SUBTYPE_CACHE = new ElggStaticVariableCache('subtype_cache');
+			if (!$SUBTYPE_CACHE) 
+				$SUBTYPE_CACHE = select_default_memcache('subtype_cache');
 			
 			$SUBTYPE_CACHE[$result->id] = $result;
 			return $result->id;
@@ -1043,7 +1044,8 @@
 		$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes where id=$subtype_id");
 		if ($result) {
 			
-			if (!$SUBTYPE_CACHE) $SUBTYPE_CACHE = new ElggStaticVariableCache('subtype_cache');
+			if (!$SUBTYPE_CACHE) 
+				$SUBTYPE_CACHE = select_default_memcache('subtype_cache');
 			
 			$SUBTYPE_CACHE[$subtype_id] = $result;
 			return $result->subtype;
@@ -1071,7 +1073,8 @@
 		$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes where type='$type' and subtype='$subtype'");
 		if ($result) {
 			
-			if (!$SUBTYPE_CACHE) $SUBTYPE_CACHE = new ElggStaticVariableCache('subtype_cache');
+			if (!$SUBTYPE_CACHE) 
+				$SUBTYPE_CACHE = select_default_memcache('subtype_cache');
 			
 			$SUBTYPE_CACHE[$result->id] = $result;
 			return $result->class;
@@ -1100,7 +1103,8 @@
 		$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes where id=$subtype_id");
 		if ($result) {
 			
-			if (!$SUBTYPE_CACHE) $SUBTYPE_CACHE = new ElggStaticVariableCache('subtype_cache');
+			if (!$SUBTYPE_CACHE) 
+				$SUBTYPE_CACHE = select_default_memcache('subtype_cache');
 			
 			$SUBTYPE_CACHE[$subtype_id] = $result;
 			return $result->class;

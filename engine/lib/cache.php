@@ -167,7 +167,7 @@
 		 *
 		 * @var unknown_type
 		 */
-		private static $__cache;
+		public static $__cache;
 		
 		/**
 		 * ID of a cache to use.
@@ -384,5 +384,27 @@
 				}
 			}
 		}
+	}
+	
+	
+	/**
+	 * A simple function that selects the default caching engine. 
+	 * 
+	 * This function provides a central way to get a cache for storing local variables.
+	 * 
+	 * TODO: Do this better & allow plugin overrides.
+	 *
+	 * @param string $namespace Define which memory space to use.
+	 */
+	function select_default_memcache($namespace = "default")
+	{
+		// hook out to the world ? (can't if using as object cache)
+		
+		// if nothing then use shared memory cache.
+		
+		// TODO: Use memcache if available?
+		
+		return new ElggStaticVariableCache($namespace);
+		
 	}
 ?>
