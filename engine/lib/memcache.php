@@ -34,9 +34,9 @@
 		private $memcache;
 		
 		/**
-		 * Expiry of saved items (defaults forever)
+		 * Expiry of saved items (default timeout after an hour to prevent anything getting too stale)
 		 */
-		private $expires = 0;
+		private $expires = 3600;
 		
 		/**
 		 * The version of memcache running
@@ -150,6 +150,7 @@
 			$key = $this->make_memcache_key($key);
 			
 			$this->keys_so_far[$key] = time();
+			$this->save_persistent_keylist();
 			
 			$result = $this->memcache->set($key, $data, null, $this->expires);	
 			if ((isset($CONFIG->debug)) && ($CONFIG->debug == true) && (!$result))
@@ -163,6 +164,7 @@
 			$key = $this->make_memcache_key($key);
 			
 			$this->keys_so_far[$key] = time();
+			$this->save_persistent_keylist();
 
 			$result = $this->memcache->get($key);
 			if ((isset($CONFIG->debug)) && ($CONFIG->debug == true) && (!$result))
@@ -183,9 +185,32 @@
 			foreach ($this->keys_so_far as $key => $ts)
 				$this->memcache->delete($key, 0);
 				
+			$this->clear_persistent_keylist();
 			$this->keys_so_far = array();
 			
 			return true;
+		}
+		
+		private function load_persistent_keylist() 
+		{
+			return $this->memcache->get($this->namespace.':keys_so_far');
+		}
+		
+		private function save_persistent_keylist()
+		{
+			$stored = $this->load_persistent_keylist();
+			if ($stored) $this->keys_so_far = array_merge($this->keys_so_far, $stored);
+			return $this->memcache->set($this->namespace.':keys_so_far', $this->keys_so_far, null, 0);
+		}
+		
+		private function clear_persistent_keylist()
+		{
+			return $this->memcache->delete($this->namespace.':keys_so_far', 0); 
+		}
+		
+		public function __destruct()
+		{
+			$this->save_persistent_keylist();
 		}
 	}
 ?>
