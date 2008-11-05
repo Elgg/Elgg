@@ -150,8 +150,18 @@
 		 */
 		public function getEvent() { return $this->log_event; }
 		
+		/**
+		 * Set when this event occured.
+		 *
+		 * @param int $timestamp Unix TS
+		 */
 		public function setTimestamp($timestamp) { $this->timestamp = $timestamp; }
 		
+		/**
+		 * Retrieve when this event occured.
+		 *
+		 * @return int Unix TS
+		 */
 		public function getTimestamp() { return $this->timestamp; }
 	}
 
