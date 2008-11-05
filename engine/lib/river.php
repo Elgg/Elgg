@@ -230,6 +230,56 @@
 	}
 	
 	/**
+	 * Construct a river statement out of an entry in the system log.
+	 *
+	 * @param stdClass $log_entry
+	 * @return mixed Either an ElggRiverStatement or false
+	 */
+	function construct_riverstatement_from_log($log_entry)
+	{
+		if (!($log_entry instanceof stdClass)) return false;
+		
+		$log = $log_entry;
+		
+		// See if we have access to the object we're talking about
+		$event = $log->event;
+		$class = $log->object_class;
+		$type = $log->object_type;
+		$subtype = $log->object_subtype;
+		$tmp = new $class();
+		$object = $tmp->getObjectFromID($log->object_id);	
+		$by_user_obj = get_entity($log->performed_by_guid);
+				
+		if ( ($object) && ($object instanceof $class))
+		{
+			// Construct the statement
+			$statement_object = $object; // Simple object, we don't need to do more
+					
+			// This is a relationship, slighty more complicated
+			if ($object instanceof ElggRelationship) {
+						
+				$statement_object = array(
+					'subject' => get_entity($object->guid_one),
+					'relationship' => $object->relationship,// Didn' cast to int here deliberately
+					'object' => get_entity($object->guid_two) 
+				);
+				
+			// Metadata or annotations, also slightly more complicated
+			} else if ($object instanceof ElggExtender) {
+				$statement_object = array(
+					'subject' => $object,
+					'object' => get_entity($object->entity_guid)  
+				);
+			}
+
+			// Put together a river statement
+			return new ElggRiverStatement($by_user_obj, $event, $statement_object);
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Extract a list of river events from the current system log.
 	 * This function retrieves the objects from the system log and will attempt to render 
 	 * the view "river/CLASSNAME/EVENT" where CLASSNAME is the class of the object the system event is referring to,
@@ -275,7 +325,8 @@
 		{
 			foreach ($log_data as $log)
 			{
-				// See if we have access to the object we're talking about
+				$statement = construct_riverstatement_from_log($log);
+				
 				$event = $log->event;
 				$class = $log->object_class;
 				$type = $log->object_type;
@@ -285,32 +336,9 @@
 				$by_user_obj = get_entity($log->performed_by_guid);
 				
 				// Belts and braces
-				if ($object instanceof $class)
+				if ($statement)
 				{
 					$tam = "";
-					
-					// Construct the statement
-					$statement_object = $object; // Simple object, we don't need to do more
-							
-					// This is a relationship, slighty more complicated
-					if ($object instanceof ElggRelationship) {
-								
-						$statement_object = array(
-							'subject' => get_entity($object->guid_one),
-							'relationship' => $object->relationship,// Didn' cast to int here deliberately
-							'object' => get_entity($object->guid_two) 
-						);
-						
-					// Metadata or annotations, also slightly more complicated
-					} else if ($object instanceof ElggExtender) {
-						$statement_object = array(
-							'subject' => $object,
-							'object' => get_entity($object->entity_guid)  
-						);
-					}
-
-					// Put together a river statement
-					$statement = new ElggRiverStatement($by_user_obj, $event, $statement_object);
 					
 					// Now construct and call the appropriate views
 					
