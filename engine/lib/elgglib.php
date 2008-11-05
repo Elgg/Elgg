@@ -331,15 +331,17 @@
 	 * When given a partial view root (eg 'js' or 'page_elements'), returns an array of views underneath it
 	 *
 	 * @param string $view_root The root view
+	 * @param string $viewtype Optionally specify a view type other than the current one.
 	 * @return array A list of view names underneath that root view
 	 */
-		function elgg_view_tree($view_root) {
+		function elgg_view_tree($view_root, $viewtype = "") {
 			
 				global $CONFIG;
 				static $treecache;
 			
 			// Get viewtype
-				$viewtype = elgg_get_viewtype();
+				if (!$viewtype)
+					$viewtype = elgg_get_viewtype();
 				
 			// Has the treecache been initialised?
 				if (!isset($treecache)) $treecache = array();			
