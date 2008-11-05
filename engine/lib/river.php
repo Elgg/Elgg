@@ -40,6 +40,11 @@
 		private $subject;
 		
 		/**
+		 * When the event occured.
+		 */
+		private $timestamp;
+		
+		/**
 		 * Create the statement.
 		 *
 		 * @param ElggUser $subject The subject (the user who created this)
@@ -47,12 +52,14 @@
 		 * @param mixed $object The object, either an ElggEntity or an associated array 
 		 * 	('subject' => ElggEntity, 'relationship' => relationship, 'object' => ElggEntity) or 
 		 *  ('subject' => ElggEntity, 'object' => ElggEntity)
+		 * @param int $timestamp The timestamp
 		 */
-		public function __construct(ElggUser $subject, $event, $object)
+		public function __construct(ElggUser $subject, $event, $object, $timestamp)
 		{
 			$this->setSubject($subject);
 			$this->setEvent($event);
 			$this->setObject($object);
+			$this->setTimestamp($timestamp);
 		}
 		
 		/**
@@ -142,6 +149,10 @@
 		 * @return string
 		 */
 		public function getEvent() { return $this->log_event; }
+		
+		public function setTimestamp($timestamp) { $this->timestamp = $timestamp; }
+		
+		public function getTimestamp() { return $this->timestamp; }
 	}
 
 	/**
@@ -273,7 +284,7 @@
 			}
 
 			// Put together a river statement
-			return new ElggRiverStatement($by_user_obj, $event, $statement_object);
+			return new ElggRiverStatement($by_user_obj, $event, $statement_object, $log->time_created);
 		}
 		
 		return false;
