@@ -34,9 +34,9 @@
 		private $memcache;
 		
 		/**
-		 * Expiry of saved items (default timeout after an hour to prevent anything getting too stale)
+		 * Expiry of saved items (default timeout after a day to prevent anything getting too stale)
 		 */
-		private $expires = 3600;
+		private $expires = 86400;
 		
 		/**
 		 * The version of memcache running
