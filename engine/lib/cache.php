@@ -127,6 +127,23 @@
 		 */
 		abstract public function clear();
 		
+		/**
+		 * Add a key only if it doesn't already exist. 
+		 * Implemented simply here, if you extend this class and your caching engine provides a better way then 
+		 * override this accordingly.
+		 *
+		 * @param string $key
+		 * @param string $data
+		 * @return bool
+		 */
+		public function add($key, $data)
+		{
+			if (!isset($this[$key])) 
+				return $this->save($key, $data);
+				
+			return false;
+		}
+		
 		// ARRAY ACCESS INTERFACE //////////////////////////////////////////////////////////
 		function offsetSet($key, $value)
 		{
@@ -388,7 +405,7 @@
 	
 	
 	/**
-	 * A simple function that selects the default caching engine. 
+	 * A simple function that selects the default memory caching engine. 
 	 * 
 	 * This function provides a central way to get a cache for storing local variables.
 	 * 
