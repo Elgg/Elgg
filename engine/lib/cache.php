@@ -85,7 +85,7 @@
 		 * @param string $key The name of the attribute or metadata.
 		 * @return bool
 		 */
-		function __isset($key) { if ($this->load($key)!="") return true; else return false; }
+		function __isset($key) { return (bool)$this->load($key); }
 		
 		/**
 		 * Supporting unsetting of magic attributes.
