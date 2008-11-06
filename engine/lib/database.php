@@ -14,6 +14,7 @@
 
 	$DB_PROFILE = array();
 	$DB_QUERY_CACHE = array();
+	$DB_DELAYED_QUERIES = array();
 	
 	/**
 	 * Connect to the database server and use the Elgg database for a particular database link
@@ -106,6 +107,25 @@
 			error_log("***************************************************");
 		}
 	}
+	
+	/**
+	 * Execute any delayed queries.
+	 */
+	function db_delayedexecution_shutdown_hook()
+	{
+		global $DB_DELAYED_QUERIES, $CONFIG;
+		
+		foreach ($DB_DELAYED_QUERIES as $query_details) {
+			$result = execute_query($query_details['q'], $query_details['l']); // use one of our db functions so it is included in profiling.
+			
+			try {
+				if ( (isset($query_details['h'])) && (is_callable($query_details['h'])))
+					$query_details['h']($result);
+			} catch (Exception $e) { // Suppress all errors since these can't be delt with here
+				if (isset($CONFIG->debug) && $CONFIG->debug) error_log($e);
+			}
+		}
+	}
 		
 	/**
 	 * Alias to setup_db_connections, for use in the event handler
@@ -115,6 +135,7 @@
 	 * @param mixed $object Used for nothing in this context
 	 */
 		function init_db($event, $object_type, $object = null) {
+			register_shutdown_function('db_delayedexecution_shutdown_hook');
 			register_shutdown_function('db_profiling_shutdown_hook');
 			setup_db_connections();
 			return true;
@@ -143,12 +164,82 @@
 		 */
 		function explain_query($query, $link)
 		{
-			if ($result = mysql_query("explain " . $query, $link)) {
+			if ($result = execute_query("explain " . $query, $link)) {
                 return mysql_fetch_object($result);
             }
             
             return false;
 		}
+		
+		/**
+		 * Execute a query.
+		 *
+		 * @param string $query The query
+		 * @param link $dblink the DB link
+		 * @return Returns a the result of mysql_query
+		 */
+		function execute_query($query, $dblink)
+		{
+			global $CONFIG, $dbcalls, $DB_PROFILE, $DB_QUERY_CACHE;
+			
+            $dbcalls++;
+            
+        	if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
+            	$DB_PROFILE[] = $query;
+            	
+            $result = mysql_query($query, $dblink);
+            $DB_QUERY_CACHE[$query] = -1; // Set initial cache to -1
+            	
+            if (mysql_errno($dblink))
+				throw new DatabaseException(mysql_error($dblink) . " QUERY: " . $query);
+				
+			return $result;
+				
+		}
+		
+		/**
+		 * Queue a query for execution after all output has been sent to the user.
+		 *
+		 * You can specify a handler function if you care about the result. This function will accept
+		 * the raw result from mysql_query();
+		 *  
+		 * @param string $query The query to execute
+		 * @param resource $dblink The database link to use
+		 * @param string $handler The handler
+		 */
+		function execute_delayed_query($query, $dblink, $handler = "")
+		{
+			global $DB_DELAYED_QUERIES;
+			
+			if (!isset($DB_DELAYED_QUERIES))
+				$DB_DELAYED_QUERIES = array();
+			
+			// Construct delayed query
+			$delayed_query = array();
+			$delayed_query['q'] = $query;
+			$delayed_query['l'] = $dblink;
+			$delayed_query['h'] = $handler;
+			
+			$DB_DELAYED_QUERIES[] = $delayed_query;
+			
+			return true;
+		}
+		
+		/**
+		 * Write wrapper for execute_delayed_query()
+		 *
+		 * @param string $query The query to execute
+		 * @param string $handler The handler if you care about the result.
+		 */
+		function execute_delayed_write_query($query, $handler = "") { return execute_delayed_query($query, get_db_link('write'), $handler); }
+		
+		/**
+		 * Read wrapper for execute_delayed_query()
+		 *
+		 * @param string $query The query to execute
+		 * @param string $handler The handler if you care about the result.
+		 */
+		function execute_delayed_read_query($query, $handler = "") { return execute_delayed_query($query, get_db_link('read'), $handler); }
 		
 	/**
      * Use this function to get data from the database
@@ -159,24 +250,25 @@
     
         function get_data($query, $callback = "") {
             
-            global $CONFIG, $dbcalls, $DB_PROFILE, $DB_QUERY_CACHE;
+            global $CONFIG, $DB_QUERY_CACHE;
+            
+        	// Is cached?
+        	$cached_query = $DB_QUERY_CACHE[$query];
+			if ($cached_query) {
+       			if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
+            		error_log ("$query results returned from cache");
+            		
+            	if ($cached_query === -1)
+            		return array(); // Last time this query returned nothing, so return an empty array
+            		
+            	return $cached_query;
+            }
             
             $dblink = get_db_link('read');
             
             $resultarray = array();
             
-       		if (isset($DB_QUERY_CACHE[$query])) {
-       			if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
-            		error_log ("$query results returned from cache");
-            	return $DB_QUERY_CACHE[$query];
-            }
-            
-            $dbcalls++;
-            
-        	if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
-            	$DB_PROFILE[] = $query;
-            
-            if ($result = mysql_query("$query", $dblink)) {
+            if ($result = execute_query("$query", $dblink)) {
                 while ($row = mysql_fetch_object($result)) {
                 	if (!empty($callback) && is_callable($callback)) {
                 		$row = $callback($row);
@@ -185,9 +277,6 @@
                 }
             }
             
-            if (mysql_errno($dblink))
-				throw new DatabaseException(mysql_error($dblink) . " QUERY: " . $query);
-				
        		if (empty($resultarray)) {
        			if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
        				error_log("WARNING: DB query \"$query\" returned no results.");
@@ -211,22 +300,23 @@
     
         function get_data_row($query) {
             
-            global $CONFIG, $dbcalls, $DB_PROFILE, $DB_QUERY_CACHE;
+            global $CONFIG, $DB_QUERY_CACHE;
+            
+        	// Is cached
+       		$cached_query = $DB_QUERY_CACHE[$query];
+			if ($cached_query) {
+       			if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
+            		error_log ("$query results returned from cache");
+            		
+            	if ($cached_query === -1)
+            		return false; // Last time this query returned nothing, so return false
+            		
+            	return $cached_query;
+            }
             
             $dblink = get_db_link('read');
             
-        	if (isset($DB_QUERY_CACHE[$query])) {
-        		if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
-            		error_log ("$query results returned from cache");
-            	return $DB_QUERY_CACHE[$query];
-            }
-            
-            $dbcalls++;
-            
-        	if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
-            	$DB_PROFILE[] = $query;
-            
-            if ($result = mysql_query("$query", $dblink)) {
+            if ($result = execute_query("$query", $dblink)) {
             	
             	$row = mysql_fetch_object($result);
             	
@@ -237,9 +327,6 @@
             	
                 if ($row) return $row;
             }
-            
-            if (mysql_errno($dblink))
-				throw new DatabaseException(mysql_error($dblink) . " QUERY: " . $query);
             
 			if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
        				error_log("WARNING: DB query \"$query\" returned no results.");
@@ -256,29 +343,18 @@
     
         function insert_data($query) {
             
-            global $CONFIG, $dbcalls, $DB_PROFILE, $DB_QUERY_CACHE;
+            global $CONFIG, $DB_QUERY_CACHE;
             
             $dblink = get_db_link('write');
-            
-            $dbcalls++;
-            
-        	if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
-            {
-            	$DB_PROFILE[] = $query;
-            	
-            	//error_log("--- DB QUERY --- $query");
-            }
             
             // Invalidate query cache
             if ($DB_QUERY_CACHE) $DB_QUERY_CACHE->clear();
             if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
             	error_log("Query cache invalidated");
             
-            if (mysql_query("$query", $dblink)) 
+            if (execute_query("$query", $dblink)) 
                 return mysql_insert_id($dblink);
                 
-			if (mysql_errno($dblink))
-				throw new DatabaseException(mysql_error($dblink) . " QUERY: " . $query);
                 
 			return false;
         }
@@ -292,30 +368,18 @@
     
         function update_data($query) {
             
-            global $dbcalls, $CONFIG, $DB_PROFILE, $DB_QUERY_CACHE;
+            global $CONFIG, $DB_QUERY_CACHE;
             
             $dblink = get_db_link('write');
-            
-            $dbcalls++;
-            
-       		if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
-            {
-            	$DB_PROFILE[] = $query; 
-            	
-            	//error_log("--- DB QUERY --- $query");
-            }
             
             // Invalidate query cache
             if ($DB_QUERY_CACHE) $DB_QUERY_CACHE->clear();
             if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
             	error_log("Query cache invalidated");
             
-            if (mysql_query("$query", $dblink))
+            if (execute_query("$query", $dblink))
             	return true; //return mysql_affected_rows();
-            	
-           	if (mysql_errno($dblink))
-				throw new DatabaseException(mysql_error($dblink) . " QUERY: " . $query);
-         
+
          	return false;   
             
         }
@@ -329,46 +393,21 @@
     
         function delete_data($query) {
             
-            global $dbcalls, $CONFIG, $DB_PROFILE, $DB_QUERY_CACHE;
+            global $CONFIG, $DB_QUERY_CACHE;
             
             $dblink = get_db_link('write');
-            
-            $dbcalls++;
-            
-        	if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
-            {
-            	$DB_PROFILE[] = $query;
-            	
-            	//error_log("--- DB QUERY --- $query");
-            }
             
             // Invalidate query cache
             if ($DB_QUERY_CACHE) $DB_QUERY_CACHE->clear();
             if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
             	error_log("Query cache invalidated");
             
-            if (mysql_query("$query", $dblink)) 
+            if (execute_query("$query", $dblink)) 
                 return mysql_affected_rows();
-            
-            if (mysql_errno($dblink))
-				throw new DatabaseException(mysql_error($dblink) . " QUERY: " . $query);
-                
+        
 			return false;      
         }
     
-   /**
-    * Returns the number of rows returned by the last select statement, without the need to re-execute the query.
-    *
-    * CANDIDATE FOR DELETION?
-    * 
-    * @return int The number of rows returned by the last statement
-    */
-		function count_last_select() {
-        	$row = get_data_row("SELECT found_rows() as count");
-        	if ($row)
-        		return $row->count;
-        	return 0;
-        }
  
 	/**
 	 * Get the tables currently installed in the Elgg database
