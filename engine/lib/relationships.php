@@ -127,7 +127,7 @@
 		 */
 		public function export()
 		{		
-			$uuid = guid_to_uuid($this->guid_one) . "relationship/{$this->id}/";	
+			$uuid = get_uuid_from_object($this);
 			$relationship = new ODDRelationship(
 				guid_to_uuid($this->guid_one),
 				$this->relationship,

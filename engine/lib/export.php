@@ -62,6 +62,32 @@
 	class ImportException extends DataFormatException {}
 		
 	/**
+	 * Get a UUID from a given object.
+	 * 
+	 * @param $object The object either an ElggEntity, ElggRelationship or ElggExtender
+	 * @return the UUID or false
+	 */
+	function get_uuid_from_object($object)
+	{
+		if ($object instanceof ElggEntity)
+			return guid_to_uuid($object->guid);
+		else if ($object instanceof ElggExtender) {
+			$type = $object->type;
+			if ($type == 'volatile')
+				$uuid = guid_to_uuid($object->entity_guid). $type . "/{$object->name}/";
+			else
+				$uuid = guid_to_uuid($object->entity_guid). $type . "/{$object->id}/";
+				
+			return $uuid;
+		} else if ($object instanceof ElggRelationship) {
+			return guid_to_uuid($object->guid_one) . "relationship/{$object->id}/";	
+		}
+			
+		
+		return false;
+	}
+	
+	/**
 	 * Generate a UUID from a given GUID.
 	 * 
 	 * @param int $guid The GUID of an object.
