@@ -1237,7 +1237,8 @@
 		$user_guid = (int) $user_guid;
 		global $CONFIG;
 		$time = time();
-		update_data("update {$CONFIG->dbprefix}users_entity set prev_last_action = last_action, last_action = {$time} where guid = {$user_guid}");
+		
+		execute_delayed_write_query("UPDATE {$CONFIG->dbprefix}users_entity set prev_last_action = last_action, last_action = {$time} where guid = {$user_guid}");
 		
 	}
 	
