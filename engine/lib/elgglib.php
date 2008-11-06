@@ -1507,7 +1507,7 @@
 			if (isset($DATALIST_CACHE[$name]))
 				return $DATALIST_CACHE[$name];
 			
-			if ($row = get_data_row("SELECT value from {$CONFIG->dbprefix}datalists where name = '{$name}'")) {
+			if ($row = get_data_row("SELECT value from {$CONFIG->dbprefix}datalists where name = '{$name}' limit 1")) {
 				$DATALIST_CACHE[$name] = $row->value;
 				return $row->value;
 			}
