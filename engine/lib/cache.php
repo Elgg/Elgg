@@ -450,13 +450,8 @@
 		// TODO : hook out to the world ? (can't if using as object cache)
 		
 		// Try and see if memcache is present & enabled
-		try {
-			if ((isset($CONFIG->memcache) && ($CONFIG->memcache=true)))
-				return new ElggMemcache($namespace);
-		} catch (Exception $e) {
-			if ((isset($CONFIG->debug)) && ($CONFIG->debug == true))
-				error_log("$e");
-		}
+		if (is_memcache_available())
+			return new ElggMemcache($namespace);
 		
 		return new ElggStaticVariableCache($namespace);
 	}

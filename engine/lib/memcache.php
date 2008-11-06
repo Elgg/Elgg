@@ -213,4 +213,29 @@
 			$this->save_persistent_keylist();
 		}*/
 	}
+	
+	/**
+	 * Return true if memcache is available and configured.
+	 *
+	 * @return bool
+	 */
+	function is_memcache_available()
+	{
+		global $CONFIG;
+		
+		static $memcache_available;
+		
+		if ((!isset($CONFIG->memcache)) || (!$CONFIG->memcache))
+			return false;
+		
+		if (($memcache_available!==true) && ($memcache_available!==false)) // If we haven't set variable to something
+		{
+			try {
+				$tmp = new ElggMemcache();
+				$memcache_available = true; // No exception thrown so we have memcache available
+			} catch (Exception $e) { $memcache_available = false; }
+		}
+		
+		return $memcache_available;
+	}
 ?>
