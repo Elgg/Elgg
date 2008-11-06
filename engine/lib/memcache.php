@@ -16,20 +16,13 @@
 	 * Memcache wrapper class.
 	 * @author Curverider Ltd <info@elgg.com>
 	 */
-	class ElggMemcache extends ElggCache
+	class ElggMemcache extends ElggSharedMemoryCache
 	{
 		/**
 		 * Minimum version of memcached needed to run
 		 *
 		 */
 		private static $MINSERVERVERSION = '1.1.12';
-		
-		/**
-		 * Namespace variable used for key
-		 *
-		 * @var string
-		 */
-		private $namespace;
 		
 		/**
 		 * Memcache object
@@ -62,7 +55,7 @@
 		{	
 			global $CONFIG;
 			
-			$this->namespace = $namespace;
+			$this->setNamespace($namespace);
 			
 			// Do we have memcache?
 			if (!class_exists('Memcache'))
@@ -140,7 +133,7 @@
 		 */
 		private function make_memcache_key($key)
 		{
-			$prefix = $this->namespace . ":";
+			$prefix = $this->getNamespace() . ":";
 			
 			if (strlen($prefix.$key)> 250)
 				$key = md5($key);
@@ -200,19 +193,19 @@
 		
 		/*private function load_persistent_keylist() 
 		{
-			return $this->memcache->get($this->namespace.':keys_so_far');
+			return $this->memcache->get($this->getNamespace().':keys_so_far');
 		}
 		
 		private function save_persistent_keylist()
 		{
 			$stored = $this->load_persistent_keylist();
 			if ($stored) $this->keys_so_far = array_merge($this->keys_so_far, $stored);
-			return $this->memcache->set($this->namespace.':keys_so_far', $this->keys_so_far, null, 0);
+			return $this->memcache->set($this->getNamespace().':keys_so_far', $this->keys_so_far, null, 0);
 		}
 		
 		private function clear_persistent_keylist()
 		{
-			return $this->memcache->delete($this->namespace.':keys_so_far', 0); 
+			return $this->memcache->delete($this->getNamespace().':keys_so_far', 0); 
 		}
 		
 		public function __destruct()

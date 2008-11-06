@@ -169,6 +169,36 @@
 	}
 	
 	/**
+	 * Shared memory cache description.
+	 * Extends ElggCache with functions useful to shared memory style caches (static variables, memcache etc)
+	 */
+	abstract class ElggSharedMemoryCache extends ElggCache
+	{
+		/**
+		 * Namespace variable used to keep various bits of the cache
+		 * separate.
+		 *
+		 * @var string
+		 */
+		private $namespace;
+		
+		/**
+		 * Set the namespace of this cache.
+		 * This is useful for cache types (like memcache or static variables) where there is one large
+		 * flat area of memory shared across all instances of the cache.
+		 *
+		 * @param string $namespace
+		 */
+		public function setNamespace($namespace = "default") { $this->namespace = $namespace; }
+		/**
+		 * Get the namespace currently defined.
+		 *
+		 * @return string
+		 */
+		public function getNamespace() { return $this->namespace; }
+	}
+	
+	/**
 	 * ElggStaticVariableCache
 	 * Dummy cache which stores values in a static array. Using this makes future replacements to other caching back 
 	 * ends (eg memcache) much easier.
@@ -177,7 +207,7 @@
 	 * @package Elgg
 	 * @subpackage API
 	 */
-	class ElggStaticVariableCache extends ElggCache
+	class ElggStaticVariableCache extends ElggSharedMemoryCache
 	{
 		/**
 		 * The cache.
@@ -187,54 +217,55 @@
 		private static $__cache;
 		
 		/**
-		 * ID of a cache to use.
-		 *
-		 * @var unknown_type
-		 */
-		private $cache_id;
-		
-		/**
 		 * Create the variable cache.
 		 * 
 		 * This function creates a variable cache in a static variable in memory, optionally with a given namespace (to avoid overlap).
 		 *
-		 * @param string $cache_id The namespace for this cache to write to - note, namespaces of the same name are shared!
+		 * @param string $namespace The namespace for this cache to write to - note, namespaces of the same name are shared!
 		 */
-		function __construct($cache_id = 'default')
+		function __construct($namespace = 'default')
 		{	
-			$this->cache_id = $cache_id;
+			$this->setNamespace($namespace);
 			$this->clear();
 		}
 		
 		public function save($key, $data) 
 		{
-			ElggStaticVariableCache::$__cache[$this->cache_id][$key] = $data;
+			$namespace = $this->getNamespace();
+			
+			ElggStaticVariableCache::$__cache[$namespace][$key] = $data;
 			
 			return true;
 		}
 		
 		public function load($key, $offset = 0, $limit = null)
 		{
-			if (isset(ElggStaticVariableCache::$__cache[$this->cache_id][$key]))
-				return ElggStaticVariableCache::$__cache[$this->cache_id][$key];
+			$namespace = $this->getNamespace();
+			
+			if (isset(ElggStaticVariableCache::$__cache[$namespace][$key]))
+				return ElggStaticVariableCache::$__cache[$namespace][$key];
 				
 			return false;
 		}
 		
 		public function delete($key) 
 		{
-			unset(ElggStaticVariableCache::$__cache[$this->cache_id][$key]);
+			$namespace = $this->getNamespace();
+			
+			unset(ElggStaticVariableCache::$__cache[$namespace][$key]);
 			
 			return true;
 		}
 		
 		public function clear()
 		{
+			$namespace = $this->getNamespace();
+			
 			if (!isset(ElggStaticVariableCache::$__cache))
 				ElggStaticVariableCache::$__cache = array();
 				
-			if (!isset(ElggStaticVariableCache::$__cache[$this->cache_id]))
-				ElggStaticVariableCache::$__cache[$this->cache_id] = array();
+			if (!isset(ElggStaticVariableCache::$__cache[$namespace]))
+				ElggStaticVariableCache::$__cache[$namespace] = array();
 		}
 	}
 	
