@@ -921,7 +921,7 @@
 		global $ENTITY_CACHE;
 		
 		if (!$ENTITY_CACHE)
-			$ENTITY_CACHE = select_default_memcache('entity_cache'); // TODO: Replace with memcache?
+			$ENTITY_CACHE = array(); //select_default_memcache('entity_cache'); // TODO: Replace with memcache?
 	}
 	
 	/**
@@ -935,8 +935,8 @@
 		
 		$guid = (int)$guid;
 			
-		//unset($ENTITY_CACHE[$guid]);
-		$ENTITY_CACHE->delete($guid);		
+		unset($ENTITY_CACHE[$guid]);
+		//$ENTITY_CACHE->delete($guid);		
 	}
 	
 	/**
@@ -1014,7 +1014,7 @@
 		if ($result) {
 			
 			if (!$SUBTYPE_CACHE) 
-				$SUBTYPE_CACHE = select_default_memcache('subtype_cache');
+				$SUBTYPE_CACHE = array(); //select_default_memcache('subtype_cache');
 			
 			$SUBTYPE_CACHE[$result->id] = $result;
 			return $result->id;
@@ -1045,7 +1045,7 @@
 		if ($result) {
 			
 			if (!$SUBTYPE_CACHE) 
-				$SUBTYPE_CACHE = select_default_memcache('subtype_cache');
+				$SUBTYPE_CACHE = array(); //select_default_memcache('subtype_cache');
 			
 			$SUBTYPE_CACHE[$subtype_id] = $result;
 			return $result->subtype;
@@ -1074,7 +1074,7 @@
 		if ($result) {
 			
 			if (!$SUBTYPE_CACHE) 
-				$SUBTYPE_CACHE = select_default_memcache('subtype_cache');
+				$SUBTYPE_CACHE = array(); //select_default_memcache('subtype_cache');
 			
 			$SUBTYPE_CACHE[$result->id] = $result;
 			return $result->class;
@@ -1104,7 +1104,7 @@
 		if ($result) {
 			
 			if (!$SUBTYPE_CACHE) 
-				$SUBTYPE_CACHE = select_default_memcache('subtype_cache');
+				$SUBTYPE_CACHE = array(); //select_default_memcache('subtype_cache');
 			
 			$SUBTYPE_CACHE[$subtype_id] = $result;
 			return $result->class;
