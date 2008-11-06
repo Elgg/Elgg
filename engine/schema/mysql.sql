@@ -288,7 +288,7 @@ CREATE TABLE `prefix_users_sessions` (
 CREATE TABLE `prefix_datalists` (
   `name` varchar(32) NOT NULL,
   `value` text NOT NULL,
-  KEY `name` (`name`)
+  PRIMARY KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- System log
