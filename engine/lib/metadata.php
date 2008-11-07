@@ -280,6 +280,12 @@
 		if (!$md = get_metadata($id)) return false;
 		if (!$md->canEdit()) return false;
 		
+		// If memcached then we invalidate the cache for this entry
+		static $metabyname_memcache;
+		if ((!$metabyname_memcache) && (is_memcache_available()))
+			$metabyname_memcache = new ElggMemcache('metabyname_memcache');
+		if ($metabyname_memcache) $metabyname_memcache->delete("{$md->entity_guid}:{$md->name_id}");
+		
 		//$name = sanitise_string(trim($name));
 		//$value = sanitise_string(trim($value));
 		$value_type = detect_extender_valuetype($value, sanitise_string(trim($value_type)));
@@ -350,6 +356,12 @@
 		$id = (int)$id;
 		$metadata = get_metadata($id);
 		
+		// Tidy up if memcache is enabled.
+		static $metabyname_memcache;
+		if ((!$metabyname_memcache) && (is_memcache_available()))
+			$metabyname_memcache = new ElggMemcache('metabyname_memcache');
+		if ($metabyname_memcache) $metabyname_memcache->delete("{$metadata->entity_guid}:{$metadata->name_id}");
+		
 		if ($metadata->canEdit())
 			return delete_data("DELETE from {$CONFIG->dbprefix}metadata where id=$id");
 		
@@ -372,11 +384,26 @@
 		$entity_guid = (int)$entity_guid;
 		$access = get_access_sql_suffix("e");
 		$md_access = get_access_sql_suffix("m");
+		
+		// If memcache is available then cache this (cache only by name for now since this is the most common query)
+		static $metabyname_memcache;
+		if ((!$metabyname_memcache) && (is_memcache_available()))
+			$metabyname_memcache = new ElggMemcache('metabyname_memcache');
+		if ($metabyname_memcache) $meta = $metabyname_memcache->load("{$entity_guid}:{$meta_name}");
+		if ($meta) return $meta;	
 
 		$result = get_data("SELECT m.*, n.string as name, v.string as value from {$CONFIG->dbprefix}metadata m JOIN {$CONFIG->dbprefix}entities e ON e.guid = m.entity_guid JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id JOIN {$CONFIG->dbprefix}metastrings n on m.name_id = n.id where m.entity_guid=$entity_guid and m.name_id='$meta_name' and $access and $md_access", "row_to_elggmetadata");
 		if (!$result) 
 			return false;
-		
+			
+		// Cache if memcache available
+		if ($metabyname_memcache)
+		{ 
+			if (count($result) == 1) $r = $result[0]; else $r = $result;
+			$metabyname_memcache->setDefaultExpiry(3600); // This is a bit of a hack - we shorten the expiry on object metadata so that it'll be gone in an hour. This means that deletions and more importantly updates will filter through eventually.
+			$metabyname_memcache->save("{$entity_guid}:{$meta_name}", $r);
+			
+		}
 		if (count($result) == 1)
 			return $result[0];
 			
