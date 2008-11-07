@@ -24,7 +24,7 @@
 		function establish_db_link($dblinkname = "readwrite") {
 			
 			// Get configuration, and globalise database link
-		        global $CONFIG, $dblink, $DB_QUERY_CACHE;
+		        global $CONFIG, $dblink, $DB_QUERY_CACHE, $dbcalls;
 		        
 		        if (!isset($dblink)) {
 		        	$dblink = array();
@@ -184,8 +184,8 @@
 			
             $dbcalls++;
             
-        	if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
-            	$DB_PROFILE[] = $query;
+        	//if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
+            $DB_PROFILE[] = $query;
             	
             $result = mysql_query($query, $dblink);
             $DB_QUERY_CACHE[$query] = -1; // Set initial cache to -1
