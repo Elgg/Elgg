@@ -175,9 +175,9 @@
 				!$lightmode) {
 				// If default settings haven't been installed, forward to the default settings page
 				trigger_elgg_event('init', 'system');
-				if (!datalist_get('default_settings')) {
+				//if (!datalist_get('default_settings')) {
 					//forward("setup.php");
-				}
+				//}
 			}
 
 			
