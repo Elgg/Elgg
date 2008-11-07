@@ -1162,6 +1162,12 @@
 			if (trigger_elgg_event('update',$entity->type,$entity)) {
 				$ret = update_data("UPDATE {$CONFIG->dbprefix}entities set owner_guid='$owner_guid', access_id='$access_id', time_updated='$time' WHERE guid=$guid");
 				
+				// If memcache is available then delete this entry from the cache
+				static $newentity_cache;
+				if ((!$newentity_cache) && (is_memcache_available())) 
+					$newentity_cache = new ElggMemcache('new_entity_cache');
+				if ($newentity_cache) $new_entity = $newentity_cache->delete($guid);
+				
 				// Handle cases where there was no error BUT no rows were updated!
 				if ($ret===false)
 					return false;
@@ -1287,19 +1293,25 @@
 	{
 		if (!($row instanceof stdClass))
 			return $row;
-		// See if there are any registered subtype handler classes for this type and subtype
+			
+		// Create a memcache cache if we can
+		static $newentity_cache;
+		if ((!$newentity_cache) && (is_memcache_available())) 
+			$newentity_cache = new ElggMemcache('new_entity_cache');
+		if ($newentity_cache) $new_entity = $newentity_cache->load($row->guid);
+		if ($new_entity) return $new_entity;
+
+		$new_entity = false;
 
 		$classname = get_subtype_class_from_id($row->subtype);
 		if ($classname!="")
 		{
 			if (class_exists($classname))
 			{
-				$tmp = new $classname($row);
+				$new_entity = new $classname($row);
 				
-				if (!($tmp instanceof ElggEntity))
+				if (!($new_entity instanceof ElggEntity))
 					throw new ClassException(sprintf(elgg_echo('ClassException:ClassnameNotClass'), $classname, get_class()));
-	
-				return $tmp;
 			}
 			else
 				error_log(sprintf(elgg_echo('ClassNotFoundException:MissingClass'), $classname));
@@ -1309,18 +1321,22 @@
 			switch ($row->type)
 			{
 				case 'object' : 
-					return new ElggObject($row);
+					$new_entity = new ElggObject($row); break;
 				case 'user' : 
-					return new ElggUser($row);
+					$new_entity = new ElggUser($row); break;
 				case 'group' : 
-					return new ElggGroup($row); 
+					$new_entity = new ElggGroup($row); break;
 				case 'site' : 
-					return new ElggSite($row); 
+					$new_entity = new ElggSite($row); break;
 				default: throw new InstallationException(sprintf(elgg_echo('InstallationException:TypeNotSupported'), $row->type));
 			}
+			
 		}
 		
-		return false;
+		// Cache entity if we have a cache available
+		if ($newentity_cache) $newentity_cache->save($new_entity->guid, $new_entity);
+		
+		return $new_entity;
 	}
 	
 	/**
@@ -1330,6 +1346,12 @@
 	 */
 	function get_entity($guid)
 	{
+		static $newentity_cache;
+		if ((!$newentity_cache) && (is_memcache_available())) 
+			$newentity_cache = new ElggMemcache('new_entity_cache');
+		if ($newentity_cache) $new_entity = $newentity_cache->load($guid);
+		if ($new_entity) return $new_entity;
+		
 		return entity_row_to_elggstar(get_entity_as_row($guid));
 	}
 	
