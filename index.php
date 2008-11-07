@@ -23,7 +23,7 @@
 		      * Check to see if user is logged in, if not display login form
 		      **/
 				
-				if (isloggedin()) forward('pg/dashboard');
+				if (isloggedin()) forward('pg/dashboard/');
 			
 	        //Load the front page
 	        	global $CONFIG;
