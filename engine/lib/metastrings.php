@@ -41,9 +41,19 @@
 		if (in_array($string, $METASTRINGS_DEADNAME_CACHE))
 			return false;
 		
+		// Experimental memcache
+		static $metastrings_memcache;
+		if ((!$metastrings_memcache) && (is_memcache_available()))
+			$metastrings_memcache = new ElggMemcache('metastrings_memcache');
+		if ($metastrings_memcache) $msfc = $metastrings_memcache->load($string);
+		if ($msfc) return $msfc;
+			
 		$row = get_data_row("SELECT * from {$CONFIG->dbprefix}metastrings where string='$string' limit 1");
 		if ($row) { 
 			$METASTRINGS_CACHE[$row->id] = $row->string; // Cache it
+			
+			// Attempt to memcache it if memcache is available
+			if ($metastrings_memcache) $metastrings_memcache->save($row->string, $row->id);
 			
 			if (isset($CONFIG->debug) && $CONFIG->debug)
 				error_log("** Cacheing string '{$row->string}'");
@@ -122,6 +132,30 @@
 	function delete_orphaned_metastrings()
 	{
 		global $CONFIG;
+		
+		// If memcache is enabled then we need to flush it of deleted values
+		if (is_memcache_enabled())
+		{
+			$select_query = "
+			SELECT * 
+			from {$CONFIG->dbprefix}metastrings where 
+			( 
+				(id not in (select name_id from {$CONFIG->dbprefix}metadata)) AND 
+				(id not in (select value_id from {$CONFIG->dbprefix}metadata)) AND 
+				(id not in (select name_id from {$CONFIG->dbprefix}annotations)) AND 
+				(id not in (select value_id from {$CONFIG->dbprefix}annotations))   
+			)";
+			
+			$dead = get_data($select_query);
+			if ($dead)
+			{
+				static $metastrings_memcache;
+				if (!$metastrings_memcache)
+					$metastrings_memcache = new ElggMemcache('metastrings_memcache');
+				foreach ($dead as $d)
+					$metastrings_memcache->delete($d->string);
+			}
+		}
 		
 		$query = "
 			DELETE 
