@@ -1518,7 +1518,7 @@
 				$DATALIST_CACHE[$name] = $row->value;
 				
 				// Cache it if memcache is available
-				if ($datalist_memcache) $datalist_memcache->save($name, $row-value);
+				if ($datalist_memcache) $datalist_memcache->save($name, $row->value);
 				
 				return $row->value;
 			}
