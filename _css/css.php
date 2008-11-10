@@ -10,13 +10,13 @@
 	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.org/
 	 */
-
-	    header("Content-type: text/css");
-		header('Expires: ' . date('r',time() + 864000));
-		header("Pragma: public");
-		header("Cache-Control: public");
 	
 	    require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
+	    
+	    header("Content-type: text/css", true);
+		header('Expires: ' . date('r',time() + 864000), true);
+		header("Pragma: public", true);
+		header("Cache-Control: public", true);
 	    
 	    $default_css = elgg_view("css");
 	    
