@@ -1937,13 +1937,16 @@
 	function js_page_handler($page) {
 		
 		if (is_array($page) && sizeof($page)) {
+			$js = str_replace('.js','',$page[0]);
+			$return = elgg_view('js/' . $js);
+			
 			header('Content-type: text/javascript');
 			header('Expires: ' . date('r',time() + 864000));
 			header("Pragma: public");
 			header("Cache-Control: public"); 
-			$js = str_replace('.js','',$page[0]);
-			echo elgg_view('js/' . $js);
+			header("Content-Length: " . strlen($return));
 			
+			echo $return;
 			exit;
 		}
 		
