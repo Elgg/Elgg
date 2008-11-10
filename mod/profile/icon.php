@@ -47,6 +47,7 @@
 		header('Expires: ' . date('r',time() + 864000));
 		header("Pragma: public");
 		header("Cache-Control: public");
+		header("Content-Length: " . strlen($contents));
 		echo $contents;
 
 ?>
