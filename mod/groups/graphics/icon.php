@@ -39,5 +39,6 @@
 	header("Content-type: image/jpeg");
 	header("Pragma: public");
 	header("Cache-Control: public");
+	header("Content-Length: " . strlen($contents));
 	echo $contents;
 ?>
