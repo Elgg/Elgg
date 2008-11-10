@@ -56,6 +56,7 @@
 			  Group forum strings
 			*/
 			
+			'group:replies' => 'Replies',
 			'groups:forum' => 'Group forum',
 			'groups:addtopic' => 'Add a topic',
 			'groups:forumlatest' => 'Forum latest',
