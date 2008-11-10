@@ -349,6 +349,8 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			 'friends:collectiondeletefailed' => "We were unable to delete the collection. Either you don't have permission, or some other problem has occurred.",
 			 'friends:collectionadded' => "Your collection was successfuly created",
 			 'friends:nocollectionname' => "You need to give your collection a name before it can be created.",
+			 'friends:expandall' => 'Expand all',
+			 'friends:closeall' => 'Close all',
 		
 	        'friends:river:created' => "%s added the friends widget.",
 	        'friends:river:updated' => "%s updated their friends widget.",
