@@ -40,13 +40,6 @@
 		private $version = 0;
 		
 		/**
-		 * Keys so far.
-		 * This variable holds a list of keys we have seen so that when we call ->clear() we invalidate only those keys.
-		 * TODO: Could this be done better?
-		 */
-		private $keys_so_far = array();
-		
-		/**
 		 * Connect to memcache.
 		 * 
 		 * @param string $cache_id The namespace for this cache to write to - note, namespaces of the same name are shared!
@@ -145,9 +138,6 @@
 		{
 			$key = $this->make_memcache_key($key);
 			
-			$this->keys_so_far[$key] = time();
-			//$this->save_persistent_keylist();
-			
 			$result = $this->memcache->set($key, $data, null, $this->expires);	
 			if ((isset($CONFIG->debug)) && ($CONFIG->debug == true) && (!$result))
 				error_log("MEMCACHE: FAILED TO SAVE $key"); 
@@ -158,9 +148,6 @@
 		public function load($key, $offset = 0, $limit = null)
 		{
 			$key = $this->make_memcache_key($key);
-			
-			$this->keys_so_far[$key] = time();
-			//$this->save_persistent_keylist();
 
 			$result = $this->memcache->get($key);
 			if ((isset($CONFIG->debug)) && ($CONFIG->debug == true) && (!$result))
@@ -181,37 +168,9 @@
 			// DISABLE clearing for now - you must use delete on a specific key.
 			return true;
 			
-			
-			foreach ($this->keys_so_far as $key => $ts)
-				$this->memcache->delete($key, 0);
-				
-			//$this->clear_persistent_keylist();
-			$this->keys_so_far = array();
-			
-			return true;
+			//TODO: Namespaces as in #532
 		}
 		
-		/*private function load_persistent_keylist() 
-		{
-			return $this->memcache->get($this->getNamespace().':keys_so_far');
-		}
-		
-		private function save_persistent_keylist()
-		{
-			$stored = $this->load_persistent_keylist();
-			if ($stored) $this->keys_so_far = array_merge($this->keys_so_far, $stored);
-			return $this->memcache->set($this->getNamespace().':keys_so_far', $this->keys_so_far, null, 0);
-		}
-		
-		private function clear_persistent_keylist()
-		{
-			return $this->memcache->delete($this->getNamespace().':keys_so_far', 0); 
-		}
-		
-		public function __destruct()
-		{
-			$this->save_persistent_keylist();
-		}*/
 	}
 	
 	/**
