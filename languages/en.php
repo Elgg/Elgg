@@ -329,7 +329,6 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'friends:of:none' => "Nobody has added this user as a friend yet.",
 			'friends:of:none:you' => "Nobody has added you as a friend yet. Start adding content and fill in your profile to let people find you!",
 	
-			'friends:of' => "Friends of",
 			'friends:of:owned' => "People who have made %s a friend",
 
 			 'friends:num_display' => "Number of friends to display",
