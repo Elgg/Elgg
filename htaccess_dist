@@ -25,8 +25,10 @@ Options +FollowSymLinks
 DirectoryIndex index.php
 
 # Turn on expiry
-ExpiresActive On
-ExpiresDefault "access plus 10 years"
+<IfModule mod_expires.c>
+	ExpiresActive On
+	ExpiresDefault "access plus 10 years"
+</IfModule>
 
 # php 4, apache 1.x
 <IfModule mod_php4.c>
