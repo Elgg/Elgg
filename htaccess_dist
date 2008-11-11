@@ -54,6 +54,28 @@ ExpiresDefault "access plus 10 years"
 	php_value display_errors 0
 </IfModule>
 
+# Turn on mod_gzip if available
+<IfModule mod_gzip.c>
+	mod_gzip_on yes
+	mod_gzip_dechunk yes
+	mod_gzip_keep_workfiles No
+	mod_gzip_temp_dir /tmp
+	mod_gzip_minimum_file_size 1002
+	mod_gzip_maximum_file_size 1000000
+	mod_gzip_maximum_inmem_size 1000000
+	mod_gzip_item_include file \.htm$
+	mod_gzip_item_include file \.html$
+	mod_gzip_item_include file \.php$
+	mod_gzip_item_include mime ^text/.*
+	mod_gzip_item_include mime ^application/x-httpd-php
+	mod_gzip_item_include mime ^httpd/unix-directory$
+	mod_gzip_item_exclude file "\.css$"
+	mod_gzip_item_exclude file "\.js$"
+	mod_gzip_item_exclude file "\.wml$"
+	mod_gzip_item_exclude reqheader "User-Agent: .*Mozilla/4\..*\["
+	mod_gzip_item_exclude mime ^image/.gif
+</IfModule>
+
 <IfModule mod_rewrite.c>
 
 RewriteEngine on
