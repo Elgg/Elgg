@@ -60,7 +60,7 @@ ExpiresDefault "access plus 10 years"
 	mod_gzip_dechunk yes
 	mod_gzip_keep_workfiles No
 	mod_gzip_temp_dir /tmp
-	mod_gzip_minimum_file_size 1002
+	mod_gzip_minimum_file_size 1000
 	mod_gzip_maximum_file_size 1000000
 	mod_gzip_maximum_inmem_size 1000000
 	mod_gzip_item_include file \.htm$
@@ -74,6 +74,14 @@ ExpiresDefault "access plus 10 years"
 	mod_gzip_item_exclude file "\.wml$"
 	mod_gzip_item_exclude reqheader "User-Agent: .*Mozilla/4\..*\["
 	mod_gzip_item_exclude mime ^image/.gif
+</IfModule>
+
+# Apache2 deflate support if available
+<IfModule mod_deflate.c>
+	AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript
+	BrowserMatch ^Mozilla/4 gzip-only-text/html
+	BrowserMatch ^Mozilla/4\.0[678] no-gzip
+	BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
 </IfModule>
 
 <IfModule mod_rewrite.c>
