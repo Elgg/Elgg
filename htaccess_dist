@@ -24,6 +24,10 @@ Options +FollowSymLinks
 # Default handler
 DirectoryIndex index.php
 
+# Turn on expiry
+ExpiresActive On
+ExpiresDefault "access plus 10 years"
+
 # php 4, apache 1.x
 <IfModule mod_php4.c>
     ErrorDocument 500 "Elgg error: Elgg does not support PHP 4."
