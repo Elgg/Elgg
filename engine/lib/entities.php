@@ -1294,14 +1294,14 @@
 		if (!($row instanceof stdClass))
 			return $row;
 			
+		$new_entity = false;
+			
 		// Create a memcache cache if we can
 		static $newentity_cache;
 		if ((!$newentity_cache) && (is_memcache_available())) 
 			$newentity_cache = new ElggMemcache('new_entity_cache');
 		if ($newentity_cache) $new_entity = $newentity_cache->load($row->guid);
 		if ($new_entity) return $new_entity;
-
-		$new_entity = false;
 
 		$classname = get_subtype_class_from_id($row->subtype);
 		if ($classname!="")
