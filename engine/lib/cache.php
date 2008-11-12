@@ -261,10 +261,10 @@
 		{
 			$namespace = $this->getNamespace();
 			
-			if (!isset(ElggStaticVariableCache::$__cache))
+			//if (!isset(ElggStaticVariableCache::$__cache))
 				ElggStaticVariableCache::$__cache = array();
 				
-			if (!isset(ElggStaticVariableCache::$__cache[$namespace]))
+			//if (!isset(ElggStaticVariableCache::$__cache[$namespace]))
 				ElggStaticVariableCache::$__cache[$namespace] = array();
 		}
 	}
