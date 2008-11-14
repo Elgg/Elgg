@@ -216,9 +216,9 @@
 		{
 			// Get what we're talking about
 		
-			if ($details['subtype'] == 'default') $details['subtype'] = '';
+			if ((isset($details['subtype'])) && ($details['subtype'] == 'default')) $details['subtype'] = '';
 			
-			if (($details['type']) && ($details['event'])) {
+			if ((isset($details['type'])) && (isset($details['event']))) {
 				if ($n>0) $obj_query .= " or ";
 				
 				$access = "";
