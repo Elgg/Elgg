@@ -57,13 +57,13 @@
 			$page = $url['scheme'] . "://";
 	
 			// user/pass
-			if ($url['user']) $page .= $url['user'];
-			if ($url['pass']) $page .= ":".$url['pass'];
+			if ((isset($url['user'])) && ($url['user'])) $page .= $url['user'];
+			if ((isset($url['pass'])) && ($url['pass'])) $page .= ":".$url['pass'];
 			if (($url['user']) || $url['pass']) $page .="@";
 			
 			$page .= $url['host'];
 			
-			if ($url['port']) $page .= ":" . $url['port'];
+			if ((isset($url['port'])) && ($url['port'])) $page .= ":" . $url['port'];
 			
 			$page = trim($page, "/"); //$page.="/";
 			
