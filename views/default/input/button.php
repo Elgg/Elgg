@@ -21,7 +21,7 @@
 
 	global $CONFIG;
 	
-	$class = $vars['class'];
+	if (isset($vars['class'])) $class = $vars['class'];
 	if (!$class) $class = "submit_button";
 
 	if (isset($vars['type'])) { $type = strtolower($vars['type']); } else { $type = 'submit'; }
@@ -34,8 +34,8 @@
 	}
 	
 	$value = htmlentities($vars['value'], null, 'UTF-8');
-	$name = $vars['internalname'];
-	$src = $vars['src'];
+	if (isset($vars['internalname'])) $name = $vars['internalname'];
+	if (isset($vars['src'])) $src = $vars['src'];
 	if (strpos($src,$CONFIG->wwwroot)===false) $src = ""; // blank src if trying to access an offsite image.
 ?>
 <input type="<?php echo $type; ?>" class="<?php echo $type; ?>_button" <?php echo $vars['js']; ?> value="<?php echo $value; ?>" src="<?php echo $src; ?>" class="<?php echo $class; ?>" />
