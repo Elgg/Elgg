@@ -47,9 +47,9 @@
 <table class="draggable_widget" cellspacing="0"><tr><td>
 	<h3>
 		<?php echo $widget->name; ?>
-		<input type="hidden" name="multiple" value="<?php echo $widgettypes[$widget->handler]->multiple; ?>" />
-		<input type="hidden" name="side" value="<?php if (is_array($widgettypes[$widget->handler]->positions)) echo in_array('side',$widgettypes[$widget->handler]->positions); ?>" />
-		<input type="hidden" name="main" value="<?php if (is_array($widgettypes[$widget->handler]->positions)) echo in_array('main',$widgettypes[$widget->handler]->positions); ?>" />
+		<input type="hidden" name="multiple" value="<?php if ((isset($widget->handler)) && (isset($widgettypes[$widget->handler]->multiple))) echo $widgettypes[$widget->handler]->multiple; ?>" />
+		<input type="hidden" name="side" value="<?php if ((isset($widget->handler)) && (isset($widgettypes[$widget->handler])) && (is_array($widgettypes[$widget->handler]->positions))) echo in_array('side',$widgettypes[$widget->handler]->positions); ?>" />
+		<input type="hidden" name="main" value="<?php if ((isset($widget->handler)) && (isset($widgettypes[$widget->handler])) && (is_array($widgettypes[$widget->handler]->positions))) echo in_array('main',$widgettypes[$widget->handler]->positions); ?>" />
 		<input type="hidden" name="handler" value="<?php echo htmlentities($handler); ?>" />
 		<input type="hidden" name="description" value="<?php echo htmlentities($widget->description, null, 'UTF-8'); ?>" />
 		<input type="hidden" name="guid" value="0" />
