@@ -54,13 +54,9 @@
 		// Register some actions
 		register_action('admin/site/update_basic', false, "", true); // Register basic site admin action
 		
-		if (isloggedin()) {
-			if ($_SESSION['user'] instanceof ElggUser) {
-				if ($_SESSION['user']->admin) {
-					global $is_admin;
-					$is_admin = true;
-				}
-			}
+		if (isadminloggedin()) {
+			global $is_admin;
+			$is_admin = true;
 		}
 		
 	}
