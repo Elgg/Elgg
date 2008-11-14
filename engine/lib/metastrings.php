@@ -42,6 +42,7 @@
 			return false;
 		
 		// Experimental memcache
+		$msfc = null;
 		static $metastrings_memcache;
 		if ((!$metastrings_memcache) && (is_memcache_available()))
 			$metastrings_memcache = new ElggMemcache('metastrings_memcache');
