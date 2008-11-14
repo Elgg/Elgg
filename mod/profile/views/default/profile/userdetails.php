@@ -89,7 +89,8 @@
 	
 	?>
 	<?php
-
+		$even_odd = null;
+		
 		if (is_array($vars['config']->profile) && sizeof($vars['config']->profile) > 0)
 			foreach($vars['config']->profile as $shortname => $valtype) {
 				if ($shortname != "description") {
