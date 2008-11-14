@@ -13,7 +13,7 @@
 	 */
 
 	/** Elgg magic session */
-	static $SESSION;
+	global $SESSION;
 
 	/**
 	 * Magic session class.
@@ -23,10 +23,12 @@
 	 * Primarily this is intended to provide a way of supplying "logged in user" details without touching the session 
 	 * (which can cause problems when accessed server side).
 	 * 
-	 * If a value is present in the session then that value is returned, otherwise a plugin hook 'session::get', '$var' is called,
+	 * If a value is present in the session then that value is returned, otherwise a plugin hook 'session:get', '$var' is called,
 	 * where $var is the variable being requested.
 	 * 
 	 * Setting values will store variables in the session in the normal way.
+	 * 
+	 * LIMITATIONS: You can not access multidimensional arrays
 	 * 
 	 * This is EXPERIMENTAL.
 	 */
@@ -35,6 +37,8 @@
 		/** Local cache of trigger retrieved variables */
 		private static $__localcache; 
 		
+		function __isset($key) { return $this->offsetExists($key); }
+				
 		/** Set a value, go straight to session. */
 		function offsetSet($key, $value) { $_SESSION[$key] = $value; } 
  		
@@ -44,21 +48,21 @@
 		 */
  		function offsetGet($key) 
  		{ 
+ 			if (!ElggSession::$__localcache)
+ 				ElggSession::$__localcache = array();
+ 				
  			if (isset($_SESSION[$key]))
  				return $_SESSION[$key];	
  				
- 			if (isset($this->__localcache[$key]))
- 				return $this->__localcache[$key];
+ 			if (isset(ElggSession::$__localcache[$key]))
+ 				return ElggSession::$__localcache[$key];
  			
  			$value = null;
- 			$value = trigger_plugin_hook('session::get', $key, null, $value);
+ 			$value = trigger_plugin_hook('session:get', $key, null, $value);
  			
- 			if (!$this->__localcache)
- 				$this->__localcache = array();
+ 			ElggSession::$__localcache[$key] = $value;
  			
- 			$this->__localcache[$key] = $value;
- 			
-   			return $this->__localcache[$key];
+   			return ElggSession::$__localcache[$key];
  		} 
  		
  		/**
@@ -66,7 +70,7 @@
  		 */
  		function offsetUnset($key) 
  		{
-   			unset($this->__localcache[$key]);
+   			unset(ElggSession::$__localcache[$key]);
 			unset($_SESSION[$key]); 
  		} 
  		
@@ -74,10 +78,13 @@
  		 * Return whether the value is set in either the session or the cache.
  		 */
  		function offsetExists($offset) { 
-			if (isset($this->__localcache[$key]))
+			if (isset(ElggSession::$__localcache[$offset]))
 				return true;
 				
-			return isset($_SESSION[$key]); 
+			if (isset($_SESSION[$offset]))
+				return true;
+
+			if ($this->offsetGet($offset)) return true;
 		}
 	}
 
@@ -89,8 +96,10 @@
 	 */
 		function isloggedin() {
 			
-			if (!is_installed()) return false;
-			if ((isset($_SESSION['guid'])) && ($_SESSION['guid'] > 0) && (isset($_SESSION['id'])) && ($_SESSION['id'] > 0) )
+			global $SESSION;
+			
+			if (!is_installed()) return false; 
+			if ((isset($SESSION['guid'])) && ($SESSION['guid'] > 0) && (isset($SESSION['id'])) && ($SESSION['id'] > 0) )
 			
 				return true;
 			return false;
@@ -106,7 +115,9 @@
 	 */
 		function isadminloggedin()
 		{
-			if ((isloggedin()) && (($_SESSION['user']->admin || $_SESSION['user']->siteadmin)))
+			global $SESSION;
+			
+			if ((isloggedin()) && (($SESSION['user']->admin || $SESSION['user']->siteadmin)))
 				return true;
 				
 			return false;
@@ -287,9 +298,8 @@
 	            if (isset($_COOKIE['elggperm'])) {            
 	                $code = $_COOKIE['elggperm'];
 	                $code = md5($code);
-	                $_SESSION['guid'] = 0;
-	                $_SESSION['id'] = 0;
-	                // $_SESSION['user'] = new ElggDummy();
+	                unset($_SESSION['guid']);//$_SESSION['guid'] = 0;
+	                unset($_SESSION['id']);//$_SESSION['id'] = 0;
 	                if ($user = get_user_by_code($code)) {
                     	$_SESSION['user'] = $user;
                         $_SESSION['id'] = $user->getGUID();
@@ -297,10 +307,9 @@
                         $_SESSION['code'] = $_COOKIE['elggperm'];
 	                }
 	            } else {
-	            	//$_SESSION['user'] = new ElggDummy();
-	                $_SESSION['id'] = 0;
-	                $_SESSION['guid'] = 0;
-	                $_SESSION['code'] = "";
+	            	unset($_SESSION['id']); //$_SESSION['id'] = 0;
+	                unset($_SESSION['guid']);//$_SESSION['guid'] = 0;
+	                unset($_SESSION['code']);//$_SESSION['code'] = "";
 	            }
 	        } else {
 	            if (!empty($_SESSION['code'])) {
@@ -311,16 +320,15 @@
                         $_SESSION['guid'] = $_SESSION['id'];
 	                } else {
 	                	unset($_SESSION['user']);
-	                	// $_SESSION['user'] = new ElggDummy();
-	                	$_SESSION['guid'] = 0;
-	                	$_SESSION['id'] = 0;
-	                	$_SESSION['code'] = "";
+	                	unset($_SESSION['id']); //$_SESSION['id'] = 0;
+		                unset($_SESSION['guid']);//$_SESSION['guid'] = 0;
+		                unset($_SESSION['code']);//$_SESSION['code'] = "";
 	                }
 	            } else {
 	            	//$_SESSION['user'] = new ElggDummy();
-	            	$_SESSION['guid'] = 0;
-	                $_SESSION['id'] = 0;
-	                $_SESSION['code'] = "";
+	            	unset($_SESSION['id']); //$_SESSION['id'] = 0;
+	                unset($_SESSION['guid']);//$_SESSION['guid'] = 0;
+	                unset($_SESSION['code']);//$_SESSION['code'] = "";
 	            }
 	        }
 	        if ($_SESSION['id'] > 0) {
@@ -334,13 +342,13 @@
     		register_pam_handler('pam_auth_userpass');
     		
     		// Initialise the magic session
-    		static $SESSION;
+    		global $SESSION;
     		$SESSION = new ElggSession();
     		
     		return true;
 	        
 		}
-
+		
 	/**
 	 * Used at the top of a page to mark it as logged in users only.
 	 *
@@ -359,7 +367,7 @@
 		function admin_gatekeeper()
 		{
 			gatekeeper();
-			if (!$_SESSION['user']->admin && !$_SESSION['user']->siteadmin) {
+			if (!isadminloggedin()) {
 				$_SESSION['last_forward_from'] = current_page_url();
 				forward();
 			}
