@@ -1508,6 +1508,7 @@
 				return $DATALIST_CACHE[$name];
 				
 			// If memcache enabled then cache value in memcache
+			$value = null;
 			static $datalist_memcache;
 			if ((!$datalist_memcache) && (is_memcache_available()))
 				$datalist_memcache = new ElggMemcache('datalist_memcache');
