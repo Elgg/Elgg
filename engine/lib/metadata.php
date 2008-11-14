@@ -153,7 +153,7 @@
 		$id = (int)$id;
 		$access = get_access_sql_suffix("e");
 		$md_access = get_access_sql_suffix("m");
-				
+
 		return row_to_elggmetadata(get_data_row("SELECT m.*, n.string as name, v.string as value from {$CONFIG->dbprefix}metadata m JOIN {$CONFIG->dbprefix}entities e on e.guid = m.entity_guid JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id JOIN {$CONFIG->dbprefix}metastrings n on m.name_id = n.id where m.id=$id and $access and $md_access"));
 	}
 	
@@ -208,7 +208,7 @@
 		$owner_guid = (int)$owner_guid;
 		$allow_multiple = (boolean)$allow_multiple;
 		
-		if ($owner_guid==0) $owner_guid = $_SESSION['id'];
+		if ($owner_guid==0) $owner_guid = get_loggedin_userid();
 		
 		$access_id = (int)$access_id;
 
@@ -276,10 +276,10 @@
 		global $CONFIG;
 
 		$id = (int)$id;
-	
-		if (!$md = get_metadata($id)) return false;
+
+		if (!$md = get_metadata($id)) return false;	
 		if (!$md->canEdit()) return false;
-		
+	
 		// If memcached then we invalidate the cache for this entry
 		static $metabyname_memcache;
 		if ((!$metabyname_memcache) && (is_memcache_available()))
@@ -291,7 +291,7 @@
 		$value_type = detect_extender_valuetype($value, sanitise_string(trim($value_type)));
 		
 		$owner_guid = (int)$owner_guid;
-		if ($owner_guid==0) $owner_guid = $_SESSION['id'];
+		if ($owner_guid==0) $owner_guid = get_loggedin_userid();
 		
 		$access_id = (int)$access_id;
 		
@@ -386,6 +386,7 @@
 		$md_access = get_access_sql_suffix("m");
 		
 		// If memcache is available then cache this (cache only by name for now since this is the most common query)
+		$meta = null;
 		static $metabyname_memcache;
 		if ((!$metabyname_memcache) && (is_memcache_available()))
 			$metabyname_memcache = new ElggMemcache('metabyname_memcache');

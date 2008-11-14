@@ -23,13 +23,13 @@
 	 */
 		function get_access_list($user_id = 0, $site_id = 0, $flush = false) {
 			
-			global $CONFIG, $init_finished;
+			global $CONFIG, $init_finished, $SESSION;
 			static $access_list;
 			
 			if (!isset($access_list) || !$init_finished)
 				$access_list = array();
 				
-			if ($user_id == 0) $user_id = $_SESSION['id'];
+			if ($user_id == 0) $user_id = $SESSION['id'];
 			if (($site_id == 0) && (isset($CONFIG->site_id))) $site_id = $CONFIG->site_id;
 			$user_id = (int) $user_id;
 			$site_id = (int) $site_id;
@@ -58,7 +58,7 @@
 			if (!isset($access_array) || (!isset($init_finished)) || (!$init_finished))
 				$access_array = array(); 
 				
-			if ($user_id == 0) $user_id = $_SESSION['guid'];
+			if ($user_id == 0) $user_id = get_loggedin_userid();
 			
 			if (($site_id == 0) && (isset($CONFIG->site_guid))) $site_id = $CONFIG->site_guid;
 			$user_id = (int) $user_id;
@@ -70,8 +70,8 @@
 				$query .= " LEFT JOIN {$CONFIG->dbprefix}access_collections ag ON ag.id = am.access_collection_id ";
 				$query .= " WHERE am.user_guid = {$user_id} AND (ag.site_guid = {$site_id} OR ag.site_guid = 0)";
 				
-				$tmp_access_array = array(2);
-				if (isloggedin())
+				$tmp_access_array = array(2); 
+				if (isloggedin()) 
 					$tmp_access_array[] = 1;
 				
 				if ($collections = get_data($query)) {
@@ -153,7 +153,7 @@
 			
 				$access = get_access_list();
 				
-				$owner = $_SESSION['id'];
+				$owner = get_loggedin_userid();
 				if (!$owner) $owner = -1;
 				
 				global $is_admin;
@@ -185,7 +185,7 @@
 			global $CONFIG;
 			static $access_array;
 			
-			if ($user_id == 0) $user_id = $_SESSION['guid'];
+			if ($user_id == 0) $user_id = get_loggedin_userid();
 			if (($site_id == 0) && (isset($CONFIG->site_id))) $site_id = $CONFIG->site_id;
 			$user_id = (int) $user_id;
 			$site_id = (int) $site_id;
@@ -230,7 +230,7 @@
 			$name = trim($name);
 			if (empty($name)) return false;
 			
-			if ($user_id == 0) $user_id = $_SESSION['id'];
+			if ($user_id == 0) $user_id = get_loggedin_userid();
 			if (($site_id == 0) && (isset($CONFIG->site_guid))) $site_id = $CONFIG->site_guid;
 			$name = sanitise_string($name);
 			

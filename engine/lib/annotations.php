@@ -166,7 +166,7 @@
 		$value_type = detect_extender_valuetype($value, sanitise_string(trim($value_type)));
 		
 		$owner_guid = (int)$owner_guid;
-		if ($owner_guid==0) $owner_guid = $_SESSION['id'];
+		if ($owner_guid==0) $owner_guid = get_loggedin_userid();
 		
 		$access_id = (int)$access_id;
 		
@@ -216,7 +216,7 @@
 		$value_type = detect_extender_valuetype($value, sanitise_string(trim($value_type)));
 		
 		$owner_guid = (int)$owner_guid;
-		if ($owner_guid==0) $owner_guid = $_SESSION['id'];
+		if ($owner_guid==0) $owner_guid = get_loggedin_userid();
 		
 		$access_id = (int)$access_id;
 		

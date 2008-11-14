@@ -230,8 +230,8 @@
 		 */
 		public function isMember($user = 0)
 		{
-			if (!($user instanceof ElggUser)) $user = $_SESSION['user'];
-			if (!($_SESSION['user'] instanceof ElggUser)) return false;
+			if (!($user instanceof ElggUser)) $user = get_loggedin_user();
+			if (!($user instanceof ElggUser)) return false;
 			return is_group_member($this->getGUID(), $user->getGUID());
 		}
 		

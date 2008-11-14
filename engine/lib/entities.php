@@ -80,8 +80,10 @@
 			$this->attributes['guid'] = "";
 			$this->attributes['type'] = "";
 			$this->attributes['subtype'] = "";
-			$this->attributes['owner_guid'] = $_SESSION['guid'];
-			$this->attributes['container_guid'] = $_SESSION['guid'];
+			
+			$this->attributes['owner_guid'] = get_loggedin_userid();
+			$this->attributes['container_guid'] = get_loggedin_userid();
+			
 			$this->attributes['site_guid'] = 0;
 			$this->attributes['access_id'] = 0;
 			$this->attributes['time_created'] = "";
@@ -811,7 +813,7 @@
 			$this->attributes['subtype'] = $data->getAttribute('subclass');
 			
 			// Set owner
-			$this->attributes['owner_guid'] = $_SESSION['id']; // Import as belonging to importer.
+			$this->attributes['owner_guid'] = get_loggedin_userid(); // Import as belonging to importer.
 			
 			// Set time
 			$this->attributes['time_created'] = strtotime($data->getAttribute('published'));
@@ -1181,7 +1183,7 @@
 	/**
 	 * Determine whether a given user is able to write to a given container.
 	 *
-	 * @param int $user_guid The user guid, or 0 for $_SESSION['user']->getGUID()
+	 * @param int $user_guid The user guid, or 0 for get_loggedin_userid()
 	 * @param int $container_guid The container, or 0 for the current page owner.
 	 */
 	function can_write_to_container($user_guid = 0, $container_guid = 0, $entity_type = 'all')
@@ -1189,8 +1191,8 @@
 		global $CONFIG;
 	
 		$user_guid = (int)$user_guid;
-		if (!$user_guid) $user_guid = (int) $_SESSION['guid'];
 		$user = get_entity($user_guid);
+		if (!$user) $user = get_loggedin_user();
 		
 		$container_guid = (int)$container_guid;
 		if (!$container_guid) $container_guid = page_owner();
@@ -1347,6 +1349,7 @@
 	function get_entity($guid)
 	{
 		static $newentity_cache;
+		$new_entity = false;
 		if ((!$newentity_cache) && (is_memcache_available())) 
 			$newentity_cache = new ElggMemcache('new_entity_cache');
 		if ($newentity_cache) $new_entity = $newentity_cache->load($guid);
@@ -1806,16 +1809,10 @@
 	 */
 	function can_edit_entity($entity_guid, $user_guid = 0) {
 		global $CONFIG;
-		if ($user_guid == 0) {
-					
-			if (isset($_SESSION['user'])) {			
-				$user = $_SESSION['user'];
-			} else {		
-				$user = null;
-			}
-		} else {		
-			$user = get_entity($user_guid);
-		}
+		
+		$user_guid = (int)$user_guid;
+		$user = get_entity($user_guid);
+		if (!$user) $user = get_loggedin_user();
 
 		if ($entity = get_entity($entity_guid)) {
 			

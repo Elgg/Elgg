@@ -320,7 +320,7 @@
 			if (!$plugin_name)
 				$plugin_name = get_plugin_name();
 				
-			if ($user_guid == 0) $user_guid = $_SESSION['user']->guid;
+			if ($user_guid == 0) $user_guid = get_loggedin_userid();
 			
 			// Get metadata for user
 			$all_metadata = get_metadata_for_entity($user_guid);
@@ -360,10 +360,10 @@
 			
 			if (!$plugin_name)
 				$plugin_name = get_plugin_name();
-				
-			if ($user_guid == 0) $user_guid = $_SESSION['user']->guid;
-			
+							
 			$user = get_entity($user_guid);
+			if (!$user) $user = get_loggedin_user();
+			
 			if (($user) && ($user instanceof ElggUser))
 			{
 				$prefix = "plugin:settings:$plugin_name:$name";
@@ -391,9 +391,9 @@
 			if (!$plugin_name)
 				$plugin_name = get_plugin_name();
 				
-			if ($user_guid == 0) $user_guid = $_SESSION['user']->guid;
-			
 			$user = get_entity($user_guid);
+			if (!$user) $user = get_loggedin_user();
+			
 			if (($user) && ($user instanceof ElggUser))
 			{
 				$prefix = "plugin:settings:$plugin_name:$name";

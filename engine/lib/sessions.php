@@ -87,21 +87,50 @@
 			if ($this->offsetGet($offset)) return true;
 		}
 	}
+	
+		
+	/**
+	 * Return the current logged in user, or null if no user is logged in.
+	 *
+	 * If no user can be found in the current session, a plugin hook - 'session:get' 'user' to give plugin 
+	 * authors another way to provide user details to the ACL system without touching the session.
+	 */
+		function get_loggedin_user()
+		{
+			global $SESSION;
+			
+			return $SESSION['user'];
+		}
+		
+	/**
+	 * Return the current logged in user by id.
+	 * 
+	 * @see get_loggedin_user()
+	 * @return int
+	 */
+		function get_loggedin_userid()
+		{
+			$user = get_loggedin_user();
+			if ($user)
+				return $user->guid;
+				
+			return 0;
+		}
 
 	/**
 	 * Returns whether or not the user is currently logged in
 	 *
-	 * @uses $_SESSION
 	 * @return true|false
 	 */
 		function isloggedin() {
-			
-			global $SESSION;
-			
+						
 			if (!is_installed()) return false; 
-			if ((isset($SESSION['guid'])) && ($SESSION['guid'] > 0) && (isset($SESSION['id'])) && ($SESSION['id'] > 0) )
 			
+			$user = get_loggedin_user();
+			
+			if ((isset($user)) && ($user->guid > 0))
 				return true;
+				
 			return false;
 			
 		}
@@ -109,15 +138,16 @@
 	/**
 	 * Returns whether or not the user is currently logged in and that they are an admin user.
 	 *
-	 * @uses $_SESSION
 	 * @uses isloggedin()
 	 * @return true|false
 	 */
 		function isadminloggedin()
 		{
-			global $SESSION;
+			if (!is_installed()) return false; 
 			
-			if ((isloggedin()) && (($SESSION['user']->admin || $SESSION['user']->siteadmin)))
+			$user = get_loggedin_user();
+			
+			if ((isloggedin()) && (($user->admin || $user->siteadmin)))
 				return true;
 				
 			return false;

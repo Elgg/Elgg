@@ -19,7 +19,7 @@
 		
 	// Set context and title
 		set_context('dashboard');
-		set_page_owner($_SESSION['user']->getGUID());
+		set_page_owner(get_loggedin_userid());
 		$title = elgg_echo('dashboard');
 		
 	// wrap intro message in a div

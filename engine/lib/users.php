@@ -1160,7 +1160,8 @@
 	 */
 	function collections_submenu_items() {
 		global $CONFIG;
-		add_submenu_item(elgg_echo('friends:collections'), $CONFIG->wwwroot . "pg/collections/" . $_SESSION['user']->username);
+		$user = get_loggedin_user();
+		add_submenu_item(elgg_echo('friends:collections'), $CONFIG->wwwroot . "pg/collections/" . $user->username);
 		add_submenu_item(elgg_echo('friends:collections:add'),$CONFIG->wwwroot."pg/collections/add");
 	}
 	
@@ -1300,8 +1301,10 @@
 			global $CONFIG;
 		
 		// Set up menu for logged in users
-			if (isloggedin())
-				add_menu(elgg_echo('friends'), $CONFIG->wwwroot . "pg/friends/" . $_SESSION['user']->username);
+			if (isloggedin()) {
+				$user = get_loggedin_user();
+				add_menu(elgg_echo('friends'), $CONFIG->wwwroot . "pg/friends/" . $user->username);
+			}
 		
 		register_page_handler('friends','friends_page_handler');
 		register_page_handler('friendsof','friends_of_page_handler');

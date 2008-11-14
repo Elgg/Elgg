@@ -132,7 +132,8 @@
 			$query .= " and e.container_guid = {$owner_guid} ";
 		}
 		
-		$query .= " and (e.access_id in {$access} or (e.access_id = 0 and e.owner_guid = {$_SESSION['id']}))";
+		$userid = get_loggedin_userid();
+		$query .= " and (e.access_id in {$access} or (e.access_id = 0 and e.owner_guid = {$userid}))";
 		
 		$query .= " group by msvalue.string having total > {$threshold} order by total desc limit {$limit} ";
 

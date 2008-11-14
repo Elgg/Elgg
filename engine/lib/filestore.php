@@ -239,7 +239,7 @@
 		{
 			$owner = $file->getOwnerEntity();
 			if (!$owner)
-				$owner = $_SESSION['user'];
+				$owner = get_loggedin_user();
 					
 			if ((!$owner) || (!$owner->username)) throw InvalidParameterException(elgg_echo('InvalidParameterException:MissingOwner'));
 			

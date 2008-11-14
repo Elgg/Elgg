@@ -55,8 +55,10 @@
 	{
 		global $CONFIG;
 		
-		if ((isset($_SESSION['user'])) && ($_SESSION['user']->language))
-			$language = $_SESSION['user']->language;
+		$user = get_loggedin_user();
+		
+		if ((isset($user)) && ($user->language))
+			$language = $user->language;
 	
 		if ((empty($language)) && (isset($CONFIG->language)))
 			$language = $CONFIG->language;
@@ -78,8 +80,10 @@
 			
 			global $CONFIG;
 
-			if ((empty($language)) && (isset($_SESSION['user'])) && ($_SESSION['user']->language))
-				$language = $_SESSION['user']->language;
+			$user = get_loggedin_user();
+			
+			if ((empty($language)) && (isset($user)) && ($user->language))
+				$language = $user->language;
 	
 			if ((empty($language)) && (isset($CONFIG->language)))
 				$language = $CONFIG->language;

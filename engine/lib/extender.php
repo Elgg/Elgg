@@ -332,15 +332,9 @@
 		if (!isloggedin())
 			return false;
 		
-		if ($user_guid == 0) {
-			if (isset($_SESSION['user'])) {
-				$user = $_SESSION['user'];
-			} else {
-				$user = null;
-			}
-		} else {
-			$user = get_entity($user_guid);
-		}
+		$user_guid = (int)$user_guid;
+		$user = get_entity($user_guid);
+		if (!$user) $user = get_loggedin_user(); 
 
 		$functionname = "get_{$type}";
 		if (is_callable($functionname)) {
