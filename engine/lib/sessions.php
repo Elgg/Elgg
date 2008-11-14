@@ -52,7 +52,7 @@
  				ElggSession::$__localcache = array();
  				
  			if (isset($_SESSION[$key]))
- 				return $_SESSION[$key];	
+ 				return $_SESSION[$key];
  				
  			if (isset(ElggSession::$__localcache[$key]))
  				return ElggSession::$__localcache[$key];
