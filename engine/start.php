@@ -58,6 +58,11 @@
 			exit;
 		}
 		
+		if (!@include_once(dirname(__FILE__) . "/lib/sessions.php")) {
+			echo ("Error in installation: Elgg could not load the Sessions library");
+			exit;
+		}
+		
 		// Use fallback view until sanitised
 		$oldview = get_input('view');
 		set_input('view', 'failsafe');
@@ -105,9 +110,7 @@
 				throw new InstallationException("Elgg could not load the Actions library");
 			}	
 
-			if (!@include_once(dirname(__FILE__) . "/lib/sessions.php")) {
-				throw new InstallationException("Elgg could not load the Sessions library");
-			}	
+				
 
 		// We don't want to load or reload these files
 	
