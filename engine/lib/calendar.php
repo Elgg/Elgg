@@ -212,7 +212,84 @@
 	 */
 	function get_notable_entities_from_metadata($start_time, $end_time, $meta_name, $meta_value = "", $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0, $count = false)
 	{
-	
+		global $CONFIG;
+		
+		$meta_n = get_metastring_id($meta_name);
+		$meta_v = get_metastring_id($meta_value);
+			
+		$start_time = (int)$start_time;
+		$end_time = (int)$end_time;
+		$entity_type = sanitise_string($entity_type);
+		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
+		$limit = (int)$limit;
+		$offset = (int)$offset;
+		if ($order_by == "") $order_by = "e.time_created desc";
+		$order_by = sanitise_string($order_by);
+		$site_guid = (int) $site_guid;
+		if ((is_array($owner_guid) && (count($owner_guid)))) {
+			foreach($owner_guid as $key => $guid) {
+				$owner_guid[$key] = (int) $guid;
+			}
+		} else {
+			$owner_guid = (int) $owner_guid;
+		}
+		if ($site_guid == 0)
+			$site_guid = $CONFIG->site_guid;
+			
+		//$access = get_access_list();
+			
+		$where = array();
+		
+		if ($entity_type!="")
+			$where[] = "e.type='$entity_type'";
+		if ($entity_subtype)
+			$where[] = "e.subtype=$entity_subtype";
+		if ($meta_name!="")
+			$where[] = "m.name_id='$meta_n'";
+		if ($meta_value!="")
+			$where[] = "m.value_id='$meta_v'";
+		if ($site_guid > 0)
+			$where[] = "e.site_guid = {$site_guid}";
+		if (is_array($owner_guid)) {
+			$where[] = "e.container_guid in (".implode(",",$owner_guid).")";
+		} else if ($owner_guid > 0)
+			$where[] = "e.container_guid = {$owner_guid}";
+			
+		// Add the calendar stuff
+		$cal_join = "
+			JOIN {$CONFIG->dbprefix}metadata cal_start on e.guid=cal_start.entity_guid
+			JOIN {$CONFIG->dbprefix}metastrings cal_start_name on cal_start.name_id=cal_start_name.id
+			JOIN {$CONFIG->dbprefix}metastrings cal_start_value on cal_start.value_id=cal_start_value.id
+			
+			JOIN {$CONFIG->dbprefix}metadata cal_end on e.guid=cal_end.entity_guid
+			JOIN {$CONFIG->dbprefix}metastrings cal_end_name on cal_end.name_id=cal_end_name.id
+			JOIN {$CONFIG->dbprefix}metastrings cal_end_value on cal_end.value_id=cal_end_value.id
+		";	
+		$where[] = "cal_start_name.string='calendar_start'";
+		$where[] = "cal_start_value.string>=$start_time";
+		$where[] = "cal_end_name.string='calendar_end'";
+		$where[] = "cal_end_value.string <= $end_time";
+		
+		if (!$count) {
+			$query = "SELECT distinct e.* "; 
+		} else {
+			$query = "SELECT count(distinct e.guid) as total ";
+		}
+			
+		$query .= "from {$CONFIG->dbprefix}entities e $cal_join JOIN {$CONFIG->dbprefix}metadata m on e.guid = m.entity_guid where";
+		foreach ($where as $w)
+			$query .= " $w and ";
+		$query .= get_access_sql_suffix("e"); // Add access controls
+		$query .= ' and ' . get_access_sql_suffix("m"); // Add access controls
+		
+		if (!$count) {
+			$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
+			return get_data($query, "entity_row_to_elggstar");
+		} else {
+			if ($row = get_data_row($query))
+				return $row->total;
+		}
+		return false;
 		
 	}
 	
