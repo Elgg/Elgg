@@ -276,7 +276,7 @@
 			$query = "SELECT count(distinct e.guid) as total ";
 		}
 			
-		$query .= "from {$CONFIG->dbprefix}entities e $cal_join JOIN {$CONFIG->dbprefix}metadata m on e.guid = m.entity_guid where";
+		$query .= "from {$CONFIG->dbprefix}entities e JOIN {$CONFIG->dbprefix}metadata m on e.guid = m.entity_guid $cal_join where";
 		foreach ($where as $w)
 			$query .= " $w and ";
 		$query .= get_access_sql_suffix("e"); // Add access controls
@@ -313,8 +313,79 @@
 	 */
 	function get_noteable_entities_from_relationship($start_time, $end_time, $relationship, $relationship_guid, $inverse_relationship = false, $type = "", $subtype = "", $owner_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0)
 	{
+		global $CONFIG;
+		
 		$start_time = (int)$start_time;
 		$end_time = (int)$end_time;
+		$relationship = sanitise_string($relationship);
+		$relationship_guid = (int)$relationship_guid;
+		$inverse_relationship = (bool)$inverse_relationship;
+		$type = sanitise_string($type);
+		$subtype = get_subtype_id($type, $subtype);
+		$owner_guid = (int)$owner_guid;
+		if ($order_by == "") $order_by = "time_created desc";
+		$order_by = sanitise_string($order_by);
+		$limit = (int)$limit;
+		$offset = (int)$offset;
+		$site_guid = (int) $site_guid;
+		if ($site_guid == 0)
+			$site_guid = $CONFIG->site_guid;
+		
+		//$access = get_access_list();
+		
+		$where = array();
+		
+		if ($relationship!="")
+			$where[] = "r.relationship='$relationship'";
+		if ($relationship_guid)
+			$where[] = ($inverse_relationship ? "r.guid_two='$relationship_guid'" : "r.guid_one='$relationship_guid'");
+		if ($type != "")
+			$where[] = "e.type='$type'";
+		if ($subtype)
+			$where[] = "e.subtype=$subtype";
+		if ($owner_guid != "")
+			$where[] = "e.container_guid='$owner_guid'";
+		if ($site_guid > 0)
+			$where[] = "e.site_guid = {$site_guid}";
+			
+		// Add the calendar stuff
+		$cal_join = "
+			JOIN {$CONFIG->dbprefix}metadata cal_start on e.guid=cal_start.entity_guid
+			JOIN {$CONFIG->dbprefix}metastrings cal_start_name on cal_start.name_id=cal_start_name.id
+			JOIN {$CONFIG->dbprefix}metastrings cal_start_value on cal_start.value_id=cal_start_value.id
+			
+			JOIN {$CONFIG->dbprefix}metadata cal_end on e.guid=cal_end.entity_guid
+			JOIN {$CONFIG->dbprefix}metastrings cal_end_name on cal_end.name_id=cal_end_name.id
+			JOIN {$CONFIG->dbprefix}metastrings cal_end_value on cal_end.value_id=cal_end_value.id
+		";	
+		$where[] = "cal_start_name.string='calendar_start'";
+		$where[] = "cal_start_value.string>=$start_time";
+		$where[] = "cal_end_name.string='calendar_end'";
+		$where[] = "cal_end_value.string <= $end_time";
+		
+		// Select what we're joining based on the options
+		$joinon = "e.guid = r.guid_one";
+		if (!$inverse_relationship)
+			$joinon = "e.guid = r.guid_two";	
+			
+		if ($count) {
+			$query = "SELECT count(distinct e.guid) as total ";
+		} else {
+			$query = "SELECT distinct e.* ";
+		}
+		$query .= " from {$CONFIG->dbprefix}entity_relationships r JOIN {$CONFIG->dbprefix}entities e on $joinon $cal_join where ";
+		foreach ($where as $w)
+			$query .= " $w and ";
+		$query .= get_access_sql_suffix("e"); // Add access controls
+		if (!$count) {
+			$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
+			return get_data($query, "entity_row_to_elggstar");
+		} else {
+			if ($count = get_data_row($query)) {
+				return $count->total;
+			}
+		}
+		return false;
 	}
 	
 	/**
