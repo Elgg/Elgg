@@ -65,6 +65,182 @@
 	function get_day_end($day = null, $month = null, $year = null) { return mktime(23,59,59,$month,$day,$year); }
 	
 	/**
+	 * Return the notable entities for a given time period.
+	 *
+	 * @param int $start_time The start time as a unix timestamp.
+	 * @param int $end_time The end time as a unix timestamp.
+	 * @param string $type The type of entity (eg "user", "object" etc)
+	 * @param string $subtype The arbitrary subtype of the entity
+	 * @param int $owner_guid The GUID of the owning user
+	 * @param string $order_by The field to order by; by default, time_created desc
+	 * @param int $limit The number of entities to return; 10 by default
+	 * @param int $offset The indexing offset, 0 by default
+	 * @param boolean $count Set to true to get a count rather than the entities themselves (limits and offsets don't apply in this context). Defaults to false.
+	 * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
+	 * @param int|array $container_guid The container or containers to get entities from (default: all containers).
+	 */
+	function get_notable_entities($start_time, $end_time, $type = "", $subtype = "", $owner_guid = 0, $order_by = "asc", $limit = 10, $offset = 0, $count = false, $site_guid = 0, $container_guid = null)
+	{
+		global $CONFIG;
+		
+		if ($subtype === false || $subtype === null || $subtype === 0)
+			return false;
+
+		$start_time = (int)$start_time;
+		$end_time = (int)$end_time;
+		$order_by = sanitise_string($order_by);
+		$limit = (int)$limit;
+		$offset = (int)$offset;
+		$site_guid = (int) $site_guid;
+		if ($site_guid == 0)
+			$site_guid = $CONFIG->site_guid;
+			
+		$where = array();
+		
+		if (is_array($type)) {			
+			$tempwhere = "";
+			if (sizeof($type))
+			foreach($type as $typekey => $subtypearray) {
+				foreach($subtypearray as $subtypeval) {
+					$typekey = sanitise_string($typekey);
+					if (!empty($subtypeval)) {
+						$subtypeval = (int) get_subtype_id($typekey, $subtypeval);
+					} else {
+						$subtypeval = 0;
+					}
+					if (!empty($tempwhere)) $tempwhere .= " or ";
+					$tempwhere .= "(e.type = '{$typekey}' and e.subtype = {$subtypeval})";
+				}								
+			}
+			if (!empty($tempwhere)) $where[] = "({$tempwhere})";
+			
+		} else {
+		
+			$type = sanitise_string($type);
+			$subtype = get_subtype_id($type, $subtype);
+			
+			if ($type != "")
+				$where[] = "e.type='$type'";
+			if ($subtype!=="")
+				$where[] = "e.subtype=$subtype";
+				
+		}
+
+		if ($owner_guid != "") {
+			if (!is_array($owner_guid)) {
+				$owner_array = array($owner_guid);
+				$owner_guid = (int) $owner_guid;
+				$where[] = "e.owner_guid = '$owner_guid'";
+			} else if (sizeof($owner_guid) > 0) {
+				$owner_array = array_map('sanitise_int', $owner_guid);
+				// Cast every element to the owner_guid array to int
+				$owner_guid = implode(",",$owner_guid); //
+				$where[] = "e.owner_guid in ({$owner_guid})" ; //
+			}
+			if (is_null($container_guid)) {
+				$container_guid = $owner_array;
+			}
+		}
+		
+		if ($site_guid > 0)
+			$where[] = "e.site_guid = {$site_guid}";
+			
+		if (!is_null($container_guid)) {
+			if (is_array($container_guid)) {
+				foreach($container_guid as $key => $val) $container_guid[$key] = (int) $val;
+				$where[] = "e.container_guid in (" . implode(",",$container_guid) . ")";
+			} else {
+				$container_guid = (int) $container_guid;
+				$where[] = "e.container_guid = {$container_guid}";
+			}
+		}	
+	
+		// Add the calendar stuff
+		$cal_join = "
+			JOIN {$CONFIG->dbprefix}metadata cal_start on e.guid=cal_start.entity_guid
+			JOIN {$CONFIG->dbprefix}metastrings cal_start_name on cal_start.name_id=cal_start_name.id
+			JOIN {$CONFIG->dbprefix}metastrings cal_start_value on cal_start.value_id=cal_start_value.id
+			
+			JOIN {$CONFIG->dbprefix}metadata cal_end on e.guid=cal_end.entity_guid
+			JOIN {$CONFIG->dbprefix}metastrings cal_end_name on cal_end.name_id=cal_end_name.id
+			JOIN {$CONFIG->dbprefix}metastrings cal_end_value on cal_end.value_id=cal_end_value.id
+		";	
+		$where[] = "cal_start_name.string='calendar_start'";
+		$where[] = "cal_start_value.string>=$start_time";
+		$where[] = "cal_end_name.string='calendar_end'";
+		$where[] = "cal_end_value.string <= $end_time";
+		
+		
+		if (!$count) {
+			$query = "SELECT e.* from {$CONFIG->dbprefix}entities e $cal_join where ";
+		} else {
+			$query = "SELECT count(e.guid) as total from {$CONFIG->dbprefix}entities e $cal_join where ";
+		}
+		foreach ($where as $w)
+			$query .= " $w and ";
+			
+		$query .= get_access_sql_suffix('e'); // Add access controls
+		
+		if (!$count) {
+			$query .= " order by n.calendar_start $order_by";
+			if ($limit) $query .= " limit $offset, $limit"; // Add order and limit
+			$dt = get_data($query, "entity_row_to_elggstar");
+			return $dt;
+		} else {
+			$total = get_data_row($query);
+			return $total->total;
+		}
+		
+	}
+	
+	/**
+	 * Return the notable entities for a given time period based on an item of metadata.
+	 *
+	 * @param int $start_time The start time as a unix timestamp.
+	 * @param int $end_time The end time as a unix timestamp.
+	 * @param mixed $meta_name 
+	 * @param mixed $meta_value
+	 * @param string $entity_type The type of entity to look for, eg 'site' or 'object'
+	 * @param string $entity_subtype The subtype of the entity.
+	 * @param int $limit 
+	 * @param int $offset
+	 * @param string $order_by Optional ordering.
+	 * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
+	 * @param true|false $count If set to true, returns the total number of entities rather than a list. (Default: false)
+	 * 
+	 * @return int|array A list of entities, or a count if $count is set to true
+	 */
+	function get_notable_entities_from_metadata($start_time, $end_time, $meta_name, $meta_value = "", $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0, $count = false)
+	{
+	
+		
+	}
+	
+	/**
+	 * Return the notable entities for a given time period based on their relationship.
+	 *
+	 * @param int $start_time The start time as a unix timestamp.
+	 * @param int $end_time The end time as a unix timestamp.
+	 * @param string $relationship The relationship eg "friends_of"
+	 * @param int $relationship_guid The guid of the entity to use query
+	 * @param bool $inverse_relationship Reverse the normal function of the query to instead say "give me all entities for whome $relationship_guid is a $relationship of"
+	 * @param string $type 
+	 * @param string $subtype
+	 * @param int $owner_guid
+	 * @param string $order_by
+	 * @param int $limit
+	 * @param int $offset
+	 * @param boolean $count Set to true if you want to count the number of entities instead (default false)
+	 * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
+	 * @return array|int|false An array of entities, or the number of entities, or false on failure
+	 */
+	function get_noteable_entities_from_relationship($start_time, $end_time, $relationship, $relationship_guid, $inverse_relationship = false, $type = "", $subtype = "", $owner_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0)
+	{
+		$start_time = (int)$start_time;
+		$end_time = (int)$end_time;
+	}
+	
+	/**
 	 * Get all entities for today.
 	 *
 	 * @param string $type The type of entity (eg "user", "object" etc)
@@ -82,8 +258,7 @@
 		$day_start = get_day_start();
 		$day_end = get_day_end();
 		
-		
-		/// TODO
+		return get_notable_entities($day_start, $day_end, $type, $subtype, $owner_guid, $order_by, $limit, $offset, $count, $site_guid, $container_guid);
 	}
 	
 	/**
@@ -106,7 +281,7 @@
 		$day_start = get_day_start();
 		$day_end = get_day_end();
 		
-		// TODO
+		return get_notable_entities_from_metadata($day_start, $day_end, $meta_name, $meta_value, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, $order_by, $site_guid, $count);
 	}
 	
 	/**
@@ -130,6 +305,6 @@
 		$day_start = get_day_start();
 		$day_end = get_day_end();
 		
-		// TODO
+		return get_notable_entities_from_relationship($day_start, $day_end, $relationship, $relationship_guid, $inverse_relationship, $type, $subtype, $owner_guid, $order_by, $limit, $offset, $count, $site_guid);
 	}
 ?>
