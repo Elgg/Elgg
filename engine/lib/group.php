@@ -311,6 +311,19 @@
 			// Now save specific stuff
 			return create_group_entity($this->get('guid'), $this->get('name'), $this->get('description'));
 		}
+		
+		// EXPORTABLE INTERFACE ////////////////////////////////////////////////////////////
+		
+		/**
+		 * Return an array of fields which can be exported.
+		 */
+		public function getExportableValues()
+		{
+			return array_merge(parent::getExportableValues(), array(
+				'name',
+				'description',
+			));
+		}
 	}
 
 	/**

@@ -203,6 +203,18 @@
 		 */
 		//public function getCollections($subtype="", $limit = 10, $offset = 0) { get_object_collections($this->getGUID(), $subtype, $limit, $offset); }
 		
+		// EXPORTABLE INTERFACE ////////////////////////////////////////////////////////////
+		
+		/**
+		 * Return an array of fields which can be exported.
+		 */
+		public function getExportableValues()
+		{
+			return array_merge(parent::getExportableValues(), array(
+				'title',
+				'description',
+			));
+		}
 	}
 
 	/**

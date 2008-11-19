@@ -14,9 +14,10 @@
 	$m = $vars['metadata'];
 	
 	$export = new stdClass;
+	$exportable_values = $entity->getExportableValues();
 	
-	foreach ($m as $k => $v)
-		$export->$k = $v;
+	foreach ($exportable_values as $v)
+		$export->$v = $m->$v;
 		
 	echo json_encode($export);
 ?>

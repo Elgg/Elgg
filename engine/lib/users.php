@@ -297,6 +297,19 @@
 			return $this->owner_guid;
 		}
 		
+		// EXPORTABLE INTERFACE ////////////////////////////////////////////////////////////
+		
+		/**
+		 * Return an array of fields which can be exported.
+		 */
+		public function getExportableValues()
+		{
+			return array_merge(parent::getExportableValues(), array(
+				'name',
+				'username',
+				'language',
+			));
+		}
 	}
 
 	/**

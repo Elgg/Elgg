@@ -14,9 +14,10 @@
 	$entity = $vars['entity'];
 	
 	$export = new stdClass;
+	$exportable_values = $entity->getExportableValues();
 	
-	foreach ($entity as $k => $v)
-		$export->$k = $v;
+	foreach ($exportable_values as $v)
+		$export->$v = $entity->$v;
 		
 	echo json_encode($export);
 ?>

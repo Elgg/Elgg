@@ -709,14 +709,27 @@
 			$res = delete_entity($this->get('guid'));
 			return $res;
 		}
-
+		
 		// EXPORTABLE INTERFACE ////////////////////////////////////////////////////////////
 		
 		/**
-		 * Export this class into a stdClass containing all necessary fields.
+		 * Return an array of fields which can be exported.
+		 */
+		public function getExportableValues()
+		{
+			return array(
+				'guid',
+				'type',
+				'subtype',
+				'time_created',
+				'container_guid',
+				'owner_guid', 
+			);
+		}
+		
+		/**
+		 * Export this class into an array of ODD Elements containing all necessary fields.
 		 * Override if you wish to return more information than can be found in $this->attributes (shouldn't happen) 
-		 * 
-		 * @return stdClass
 		 */
 		public function export() 
 		{ 
@@ -734,61 +747,53 @@
 			
 			$tmp[] = $odd;
 			
+			$exportable_values = $this->getExportableValues();
+			
 			// Now add its attributes
 			foreach ($this->attributes as $k => $v)
 			{
 				$meta = NULL;
 				
-				switch ($k)
-				{
-					case 'guid' : 			// Dont use guid
-					case 'subtype' :		// The subtype
-					case 'type' : 			// Don't use type
-					case 'access_id' : 		// Don't use access - if can export then its public for you, then importer decides what access to give this object.
-					case 'time_updated' : 	// Don't use date in export
-
-					case 'tables_split' :	// We don't want to export the internal counter variables.
-					case 'tables_loaded' :  // Or this one
+				if (in_array( $k, $exportable_values)) { 
+					switch ($k)
+					{
+						case 'guid' : 			// Dont use guid in OpenDD
+						case 'type' :			// Type and subtype already taken care of
+						case 'subtype' : 
+						break;
 						
-					case 'code' :
-					case 'enabled' :		// Useless to an importer
+						case 'time_created' :	// Created = published
+							$odd->setAttribute('published', date("r", $v));
+						break;
 						
-					case 'email' :
-					case 'salt' :
-					case 'password' : 		// Definitely don't want these three
-					break;
+						case 'site_guid' : // Container
+							$k = 'site_uuid';
+							$v = guid_to_uuid($v);
+							$meta = new ODDMetaData($uuid . "attr/$k/", $uuid, $k, $v);
+						break;
+						
+						case 'container_guid' : // Container
+							$k = 'container_uuid';
+							$v = guid_to_uuid($v);
+							$meta = new ODDMetaData($uuid . "attr/$k/", $uuid, $k, $v);
+						break;
+	
+						case 'owner_guid' :			// Convert owner guid to uuid, this will be stored in metadata
+							 $k = 'owner_uuid';
+							 $v = guid_to_uuid($v);
+							 $meta = new ODDMetaData($uuid . "attr/$k/", $uuid, $k, $v);
+						break; 	
+						
+						default : 
+							$meta = new ODDMetaData($uuid . "attr/$k/", $uuid, $k, $v);
+					}
 					
-					case 'time_created' :	// Created = published
-						$odd->setAttribute('published', date("r", $v));
-					break;
-					
-					case 'site_guid' : // Container
-						$k = 'site_uuid';
-						$v = guid_to_uuid($v);
-						$meta = new ODDMetaData($uuid . "attr/$k/", $uuid, $k, $v);
-					break;
-					
-					case 'container_guid' : // Container
-						$k = 'container_uuid';
-						$v = guid_to_uuid($v);
-						$meta = new ODDMetaData($uuid . "attr/$k/", $uuid, $k, $v);
-					break;
-
-					case 'owner_guid' :			// Convert owner guid to uuid, this will be stored in metadata
-						 $k = 'owner_uuid';
-						 $v = guid_to_uuid($v);
-						 $meta = new ODDMetaData($uuid . "attr/$k/", $uuid, $k, $v);
-					break; 	
-					
-					default : 
-						$meta = new ODDMetaData($uuid . "attr/$k/", $uuid, $k, $v);
-				}
-				
-				// set the time of any metadata created
-				if ($meta)
-				{
-					$meta->setAttribute('published', date("r",$this->time_created));
-					$tmp[] = $meta;
+					// set the time of any metadata created
+					if ($meta)
+					{
+						$meta->setAttribute('published', date("r",$this->time_created));
+						$tmp[] = $meta;
+					}
 				}
 			}
 			

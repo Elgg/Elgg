@@ -12,5 +12,12 @@
 	 */
 
 	$entity = $vars['entity'];
-	echo serialize($entity);
+	
+	$export = new stdClass;
+	$exportable_values = $entity->getExportableValues();
+	
+	foreach ($exportable_values as $v)
+		$export->$v = $entity->$v;
+	
+	echo serialize($export);
 ?>

@@ -121,6 +121,19 @@
 		// EXPORTABLE INTERFACE ////////////////////////////////////////////////////////////
 		
 		/**
+		 * Return an array of fields which can be exported.
+		 */
+		public function getExportableValues()
+		{
+			return array(
+				'id',
+				'guid_one',
+				'relationship',
+				'guid_two' 
+			);
+		}
+		
+		/**
 		 * Export this relationship
 		 *
 		 * @return array

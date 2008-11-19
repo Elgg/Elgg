@@ -14,9 +14,11 @@
 	$r = $vars['relationship'];
 	
 	$export = new stdClass;
+
+	$exportable_values = $entity->getExportableValues();
 	
-	foreach ($r as $k => $v)
-		$export->$k = $v;
+	foreach ($exportable_values as $v)
+		$export->$v = $r->$v;
 		
 	echo json_encode($export);
 ?>

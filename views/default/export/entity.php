@@ -18,16 +18,19 @@
 	$annotations = get_annotations($entity->guid);
 	$relationships = get_entity_relationships($entity->guid);
 	
+	$exportable_values = $entity->getExportableValues();
 ?>
 <div>
 	<?php
 		foreach ($entity as $k => $v)
 		{
+			if ((in_array($k, $exportable_values)) || (isadminloggedin())) {
 ?>
 		<div>
 			<p><b><?php echo $k; ?>: </b><?php echo $v; ?></p>
 		</div>
 <?php
+			}
 		}
 	?>
 </div>

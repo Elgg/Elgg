@@ -12,5 +12,12 @@
 	 */
 
 	$m = $vars['metadata'];
-	echo serialize($m);
+	
+	$export = new stdClass;
+	$exportable_values = $m->getExportableValues();
+	
+	foreach ($exportable_values as $v)
+		$export->$v = $m->$v;
+		
+	echo serialize($export);
 ?>
