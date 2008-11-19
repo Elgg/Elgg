@@ -313,6 +313,18 @@
 			return true;
 		}
 		
+		function setPrivateSetting($name, $value) {
+			return set_private_setting($this->getGUID(), $name, $value);
+		}
+		
+		function getPrivateSetting($name) {
+			return get_private_setting($this->getGUID(), $name);
+		}
+		
+		function removePrivateSetting($name) {
+			return remove_private_setting($this->getGUID(), $name);
+		}
+		
 		/**
 		 * Adds an annotation to an entity. By default, the type is detected automatically; however, 
 		 * it can also be set. Note that by default, annotations are private.
@@ -2166,6 +2178,7 @@
 	function set_private_setting($entity_guid, $name, $value) {
 		
 		global $CONFIG;
+		remove_private_setting($entity_guid, $name);
 		$entity_guid = (int) $entity_guid;
 		$name = mysql_real_escape_string($name);
 		$value = mysql_real_escape_string($value);
