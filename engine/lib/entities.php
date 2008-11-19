@@ -2137,6 +2137,60 @@
 	}
 	
 	/**
+	 * Gets a private setting for an entity.
+	 *
+	 * @param int $entity_guid The entity GUID
+	 * @param string $name The name of the setting
+	 * @return mixed The setting value, or false on failure
+	 */
+	function get_private_setting($entity_guid, $name) {
+		
+		global $CONFIG;
+		$entity_guid = (int) $entity_guid;
+		$name = mysql_real_escape_string($name);
+		if ($setting = get_data_row("select value from {$CONFIG->prefix}private_settings where name = '{$name}' and entity_guid = {$entity_guid}")) {
+			return $setting->value;
+		}
+		return false;
+		
+	}
+	
+	/**
+	 * Sets a private setting for an entity.
+	 *
+	 * @param int $entity_guid The entity GUID
+	 * @param string $name The name of the setting
+	 * @param string $value The value of the setting
+	 * @return mixed The setting ID, or false on failure
+	 */
+	function set_private_setting($entity_guid, $name, $value) {
+		
+		global $CONFIG;
+		$entity_guid = (int) $entity_guid;
+		$name = mysql_real_escape_string($name);
+		$value = mysql_real_escape_string($value);
+		return insert_data("insert into {$CONFIG->prefix}private_settings set name = '{$name}', value = '{$value}' where entity_guid = {$entity_guid}");
+		
+	}
+	
+	/**
+	 * Deletes a private setting for an entity.
+	 *
+	 * @param int $entity_guid The Entity GUID
+	 * @param string $name The name of the setting
+	 * @return true|false depending on success
+	 * 
+	 */
+	function remove_private_setting($entity_guid, $name) {
+		
+		global $CONFIG;
+		$entity_guid = (int) $entity_guid;
+		$name = mysql_real_escape_string($name); 
+		return delete_data("delete from {$CONFIG->prefix}private_settings where name = '{$name}' and entity_guid = {$entity_guid}");
+		
+	}
+	
+	/**
 	 * Entities init function; establishes the page handler
 	 *
 	 */
