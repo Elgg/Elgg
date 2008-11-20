@@ -4,5 +4,5 @@
 	`name` VARCHAR( 32 ) NOT NULL ,
 	`value` TEXT NOT NULL ,
 	PRIMARY KEY ( `id` ) ,
-	INDEX ( `entity_guid` , `name` )
+	UNIQUE KEY ( `entity_guid` , `name` )
 ) ENGINE = MYISAM  DEFAULT CHARSET=utf8;
