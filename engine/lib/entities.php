@@ -2232,6 +2232,20 @@
 	}
 	
 	/**
+	 * Deletes all private settings for an entity.
+	 *
+	 * @param int $entity_guid The Entity GUID
+	 * @return true|false depending on success
+	 * 
+	 */
+	function remove_all_private_settings($entity_guid) {
+		
+		global $CONFIG;
+		$entity_guid = (int) $entity_guid;
+		return delete_data("delete from {$CONFIG->prefix}private_settings where entity_guid = {$entity_guid}");
+	}
+	
+	/**
 	 * Entities init function; establishes the page handler
 	 *
 	 */
