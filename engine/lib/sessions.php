@@ -242,6 +242,9 @@
             // Users privilege has been elevated, so change the session id (help prevent session hijacking)
 	        session_regenerate_id(); 
 
+	        // Update statistics
+	        set_last_login($_SESSION['guid']);
+	        
 			return true;
 				
 		}

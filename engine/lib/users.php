@@ -1257,6 +1257,21 @@
 	}
 	
 	/**
+	 * Sets the last logon time of the given user to right now.
+	 *
+	 * @param int $user_guid The user GUID
+	 */
+	function set_last_login($user_guid) {
+		
+		$user_guid = (int) $user_guid;
+		global $CONFIG;
+		$time = time();
+		
+		execute_delayed_write_query("UPDATE {$CONFIG->dbprefix}users_entity set prev_last_login = last_login, last_login = {$time} where guid = {$user_guid}");
+		
+	}
+	
+	/**
 	 * A permissions plugin hook that grants access to users if they are newly created - allows
 	 * for email activation.
 	 * 
