@@ -15,7 +15,7 @@
 	 * Calendar interface for events.
 	 *
 	 */
-	interface Noteable {
+	interface Notable {
 	
 		/**
 		 * Calendar functionality.
