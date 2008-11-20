@@ -2173,6 +2173,29 @@
 	}
 	
 	/**
+	 * Return an array of all private settings for a given
+	 *
+	 * @param int $entity_guid The entity GUID
+	 */
+	function get_all_private_settings($entity_guid) {
+		global $CONFIG;
+		
+		$entity_guid = (int) $entity_guid;
+		
+		$result = get_data("select * from {$CONFIG->prefix}private_settings where entity_guid = {$entity_guid}");
+		if ($result)
+		{
+			$return = array();
+			foreach ($result as $r)
+				$return[$r->name] = $r->value;
+				
+			return $return;
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Sets a private setting for an entity.
 	 *
 	 * @param int $entity_guid The entity GUID
