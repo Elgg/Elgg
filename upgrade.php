@@ -14,6 +14,7 @@
 	 */
 
 	// Include elgg engine
+	define('upgrading','upgrading');
 	require_once(dirname(__FILE__) . "/engine/start.php");
 	
 	if (get_input('upgrade') == 'upgrade') {

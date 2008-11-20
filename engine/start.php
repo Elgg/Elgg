@@ -175,7 +175,8 @@
 		// Trigger events
 			if (!substr_count($_SERVER["PHP_SELF"],"install.php") &&
 				!substr_count($_SERVER["PHP_SELF"],"setup.php") &&
-				!$lightmode) {
+				!$lightmode
+				&& !(defined('upgrading') && upgrading == 'upgrading')) {
 				// If default settings haven't been installed, forward to the default settings page
 				trigger_elgg_event('init', 'system');
 				//if (!datalist_get('default_settings')) {

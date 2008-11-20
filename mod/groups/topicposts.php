@@ -19,6 +19,7 @@
 		
     // get the entity from id
         $topic = get_entity(get_input('topic'));
+        if (!$topic) forward();
          
     // Display them
 	    $area2 = elgg_view("forum/viewposts", array('entity' => $topic));
