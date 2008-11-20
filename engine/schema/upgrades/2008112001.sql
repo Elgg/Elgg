@@ -21,4 +21,4 @@ CREATE TEMPORARY TABLE __upgrade_2008112001_1 (
 
 DELETE FROM `prefix_metadata` WHERE id in (SELECT id from __upgrade_2008112001_1);
 
---DROP TABLE __upgrade_2008112001_1;
+DROP TABLE __upgrade_2008112001_1;
