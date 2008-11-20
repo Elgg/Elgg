@@ -2164,7 +2164,8 @@
 		
 		global $CONFIG;
 		$entity_guid = (int) $entity_guid;
-		$name = mysql_real_escape_string($name);
+		$name = sanitise_string($name);
+ 		
 		if ($setting = get_data_row("SELECT value from {$CONFIG->dbprefix}private_settings where name = '{$name}' and entity_guid = {$entity_guid}")) {
 			return $setting->value;
 		}
@@ -2188,7 +2189,7 @@
 			$return = array();
 			foreach ($result as $r)
 				$return[$r->name] = $r->value;
-				
+			
 			return $return;
 		}
 		
@@ -2207,9 +2208,9 @@
 		
 		global $CONFIG;
 		$entity_guid = (int) $entity_guid;
-		$name = mysql_real_escape_string($name);
-		$value = mysql_real_escape_string($value);
-				
+		$name = sanitise_string($name);
+		$value = sanitise_string($value);
+		
 		return insert_data("INSERT into {$CONFIG->dbprefix}private_settings (entity_guid, name, value) VALUES ($entity_guid, '{$name}', '{$value}') ON DUPLICATE KEY UPDATE value='$value'");
 		
 	}
@@ -2226,7 +2227,7 @@
 		
 		global $CONFIG;
 		$entity_guid = (int) $entity_guid;
-		$name = mysql_real_escape_string($name); 
+		$name = sanitise_string($name); 
 		return delete_data("DELETE from {$CONFIG->dbprefix}private_settings where name = '{$name}' and entity_guid = {$entity_guid}");
 		
 	}

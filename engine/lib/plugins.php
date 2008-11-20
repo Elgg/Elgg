@@ -44,6 +44,44 @@
 			{			
 				parent::__construct($guid);
 			}
+			
+			/**
+			 * Override entity get and sets in order to save data to private data store.
+			 */
+			public function get($name)
+			{
+				// See if its in our base attribute
+				if (isset($this->attributes[$name])) {
+					return $this->attributes[$name];
+				}
+				
+				// No, so see if its in the private data store.
+				$meta = get_private_setting($this->guid, $name);
+				if ($meta)
+					return $meta;
+				
+				// Can't find it, so return null
+				return null;
+			}
+
+			/**
+			 * Override entity get and sets in order to save data to private data store.
+			 */
+			public function set($name, $value)
+			{
+				if (array_key_exists($name, $this->attributes))
+				{
+					// Check that we're not trying to change the guid! 
+					if ((array_key_exists('guid', $this->attributes)) && ($name=='guid'))
+						return false;
+						
+					$this->attributes[$name] = $value;
+				}
+				else 
+					return set_private_setting($this->guid, $name, $value);
+			
+				return true;
+			}
 		}
 		
 		/**
@@ -294,10 +332,10 @@
 			$plugin_name = sanitise_string($plugin_name);
 			if (!$plugin_name)
 				$plugin_name = get_plugin_name();
-			
+	
 			if ($plugins)
 			{
-				foreach ($plugins as $plugin)
+				foreach ($plugins as $plugin)			
 					if (strcmp($plugin->title, $plugin_name)==0)
 						return $plugin;
 			}
@@ -323,18 +361,18 @@
 			if ($user_guid == 0) $user_guid = get_loggedin_userid();
 			
 			// Get metadata for user
-			$all_metadata = get_metadata_for_entity($user_guid);
+			$all_metadata = get_all_private_settings($user_guid); //get_metadata_for_entity($user_guid);
 			if ($all_metadata)
 			{
 				$prefix = "plugin:settings:$plugin_name:";
 				$return = new stdClass;
 				
-				foreach ($all_metadata as $meta)
+				foreach ($all_metadata as $key => $meta)
 				{
-					$name = substr($meta->name, strlen($prefix));
-					$value = $meta->value;
+					$name = substr($key, strlen($prefix));
+					$value = $meta;
 					
-					if (strpos($meta->name, $prefix) === 0)
+					if (strpos($key, $prefix) === 0)
 						$return->$name = $value;
 				}
 
@@ -367,10 +405,9 @@
 			if (($user) && ($user instanceof ElggUser))
 			{
 				$prefix = "plugin:settings:$plugin_name:$name";
-				$user->$prefix = $value;
-				$user->save();
-				
-				return true;
+				//$user->$prefix = $value;
+				//$user->save();
+				return set_private_setting($user->guid, $prefix, $value);
 			}
 			
 			return false;
@@ -397,7 +434,7 @@
 			if (($user) && ($user instanceof ElggUser))
 			{
 				$prefix = "plugin:settings:$plugin_name:$name";
-				return $user->$prefix;
+				return get_private_setting($user->guid, $prefix); //$user->$prefix;
 			}
 			
 			return false;
@@ -411,7 +448,7 @@
 		 * @param string $plugin_name Optional plugin name, if not specified then it is detected from where you are calling from.
 		 */
 		function set_plugin_setting($name, $value, $plugin_name = "")
-		{
+		{		
 			$plugin = find_plugin_settings($plugin_name);
 			
 			if (!$plugin) 
@@ -421,8 +458,8 @@
 			{
 				$plugin->title = $plugin_name;
 				$plugin->access_id = 2;
-				$plugin->$name = $value;
 				$plugin->save();
+				$plugin->$name = $value;
 				
 				return $plugin->getGUID();
 			}
@@ -439,7 +476,7 @@
 		function get_plugin_setting($name, $plugin_name = "")
 		{
 			$plugin = find_plugin_settings($plugin_name);
-			
+		
 			if ($plugin)
 				return $plugin->$name;
 			
@@ -457,7 +494,7 @@
 			$plugin = find_plugin_settings($plugin_name);
 			
 			if ($plugin)
-				return $plugin->clearMetaData($name);
+				return remove_all_private_settings($plugin->guid); //$plugin->clearMetaData($name);
 			
 			return false;
 		}
