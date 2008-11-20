@@ -281,7 +281,7 @@
         {
         	global $CONFIG;
         	
-        	return md5($_SERVER['HTTP_USER_AGENT'] );
+        	return md5($_SERVER['HTTP_USER_AGENT'] . get_site_secret());
         }
 		
 	/**
