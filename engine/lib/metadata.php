@@ -422,7 +422,7 @@
 	
 		$entity_guid = (int)$entity_guid;
 		$access = get_access_sql_suffix("e");
-		$md_access = get_access_sql_suffix("e");
+		$md_access = get_access_sql_suffix("m");
 		
 		return get_data("SELECT m.*, n.string as name, v.string as value from {$CONFIG->dbprefix}metadata m JOIN {$CONFIG->dbprefix}entities e ON e.guid = m.entity_guid JOIN {$CONFIG->dbprefix}metastrings v on m.value_id = v.id JOIN {$CONFIG->dbprefix}metastrings n on m.name_id = n.id where m.entity_guid=$entity_guid and $access and $md_access", "row_to_elggmetadata");
 	}
