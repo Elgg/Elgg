@@ -1,5 +1,5 @@
  CREATE TABLE  IF NOT EXISTS `prefix_private_settings` (
-	`id` INT NOT NULL ,
+	`id` INT NOT NULL auto_increment,
 	`entity_guid` INT NOT NULL ,
 	`name` VARCHAR( 32 ) NOT NULL ,
 	`value` TEXT NOT NULL ,

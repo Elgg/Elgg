@@ -291,6 +291,16 @@ CREATE TABLE `prefix_datalists` (
   PRIMARY KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- Ultra-private system settings for entities
+CREATE TABLE  IF NOT EXISTS `prefix_private_settings` (
+	`id` INT NOT NULL auto_increment,
+	`entity_guid` INT NOT NULL ,
+	`name` VARCHAR( 32 ) NOT NULL ,
+	`value` TEXT NOT NULL ,
+	PRIMARY KEY ( `id` ) ,
+	INDEX ( `entity_guid` , `name` )
+) ENGINE = MYISAM  DEFAULT CHARSET=utf8;
+
 -- System log
 CREATE TABLE `prefix_system_log` (
 	`id` int(11) NOT NULL auto_increment,
