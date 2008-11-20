@@ -2165,7 +2165,7 @@
 		global $CONFIG;
 		$entity_guid = (int) $entity_guid;
 		$name = mysql_real_escape_string($name);
-		if ($setting = get_data_row("select value from {$CONFIG->dbprefix}private_settings where name = '{$name}' and entity_guid = {$entity_guid}")) {
+		if ($setting = get_data_row("SELECT value from {$CONFIG->dbprefix}private_settings where name = '{$name}' and entity_guid = {$entity_guid}")) {
 			return $setting->value;
 		}
 		return false;
@@ -2182,7 +2182,7 @@
 		
 		$entity_guid = (int) $entity_guid;
 		
-		$result = get_data("select * from {$CONFIG->dbprefix}private_settings where entity_guid = {$entity_guid}");
+		$result = get_data("SELECT * from {$CONFIG->dbprefix}private_settings where entity_guid = {$entity_guid}");
 		if ($result)
 		{
 			$return = array();
@@ -2206,11 +2206,11 @@
 	function set_private_setting($entity_guid, $name, $value) {
 		
 		global $CONFIG;
-		remove_private_setting($entity_guid, $name);
 		$entity_guid = (int) $entity_guid;
 		$name = mysql_real_escape_string($name);
 		$value = mysql_real_escape_string($value);
-		return insert_data("insert into {$CONFIG->dbprefix}private_settings set name = '{$name}', value = '{$value}' where entity_guid = {$entity_guid}");
+				
+		return insert_data("INSERT into {$CONFIG->dbprefix}private_settings (entity_guid, name, value) VALUES ($entity_guid, '{$name}', '{$value}') ON DUPLICATE KEY UPDATE value='$value'");
 		
 	}
 	
@@ -2227,7 +2227,7 @@
 		global $CONFIG;
 		$entity_guid = (int) $entity_guid;
 		$name = mysql_real_escape_string($name); 
-		return delete_data("delete from {$CONFIG->dbprefix}private_settings where name = '{$name}' and entity_guid = {$entity_guid}");
+		return delete_data("DELETE from {$CONFIG->dbprefix}private_settings where name = '{$name}' and entity_guid = {$entity_guid}");
 		
 	}
 	
@@ -2242,7 +2242,7 @@
 		
 		global $CONFIG;
 		$entity_guid = (int) $entity_guid;
-		return delete_data("delete from {$CONFIG->dbprefix}private_settings where entity_guid = {$entity_guid}");
+		return delete_data("DELETE from {$CONFIG->dbprefix}private_settings where entity_guid = {$entity_guid}");
 	}
 	
 	/**
