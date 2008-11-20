@@ -2154,6 +2154,125 @@
 	}
 	
 	/**
+	 * Get entities based on their private data, in a similar way to metadata.
+	 *
+	 * @param string $name The name of the setting
+	 * @param string $value The value of the setting
+	 * @param string $type The type of entity (eg "user", "object" etc)
+	 * @param string $subtype The arbitrary subtype of the entity
+	 * @param int $owner_guid The GUID of the owning user
+	 * @param string $order_by The field to order by; by default, time_created desc
+	 * @param int $limit The number of entities to return; 10 by default
+	 * @param int $offset The indexing offset, 0 by default
+	 * @param boolean $count Set to true to get a count rather than the entities themselves (limits and offsets don't apply in this context). Defaults to false.
+	 * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
+	 * @param int|array $container_guid The container or containers to get entities from (default: all containers).
+	 * @return array A list of entities. 
+	 */
+	function get_entities_from_private_setting($name = "", $value = "", $type = "", $subtype = "", $owner_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0, $container_guid = null)
+	{
+		global $CONFIG;
+		
+		if ($subtype === false || $subtype === null || $subtype === 0)
+			return false;
+					
+		$name = sanitise_string($name);
+		$value = sanitise_string($value);
+			
+		if ($order_by == "") $order_by = "e.time_created desc";
+		$order_by = sanitise_string($order_by);
+		$limit = (int)$limit;
+		$offset = (int)$offset;
+		$site_guid = (int) $site_guid;
+		if ($site_guid == 0)
+			$site_guid = $CONFIG->site_guid;
+				
+		$where = array();
+		
+		if (is_array($type)) {			
+			$tempwhere = "";
+			if (sizeof($type))
+			foreach($type as $typekey => $subtypearray) {
+				foreach($subtypearray as $subtypeval) {
+					$typekey = sanitise_string($typekey);
+					if (!empty($subtypeval)) {
+						$subtypeval = (int) get_subtype_id($typekey, $subtypeval);
+					} else {
+						$subtypeval = 0;
+					}
+					if (!empty($tempwhere)) $tempwhere .= " or ";
+					$tempwhere .= "(e.type = '{$typekey}' and e.subtype = {$subtypeval})";
+				}								
+			}
+			if (!empty($tempwhere)) $where[] = "({$tempwhere})";
+			
+		} else {
+		
+			$type = sanitise_string($type);
+			$subtype = get_subtype_id($type, $subtype);
+			
+			if ($type != "")
+				$where[] = "e.type='$type'";
+			if ($subtype!=="")
+				$where[] = "e.subtype=$subtype";
+				
+		}
+				
+		if ($owner_guid != "") {
+			if (!is_array($owner_guid)) {
+				$owner_array = array($owner_guid);
+				$owner_guid = (int) $owner_guid;
+			//	$where[] = "owner_guid = '$owner_guid'";
+			} else if (sizeof($owner_guid) > 0) {
+				$owner_array = array_map('sanitise_int', $owner_guid);
+				// Cast every element to the owner_guid array to int
+			//	$owner_guid = array_map("sanitise_int", $owner_guid);
+			//	$owner_guid = implode(",",$owner_guid);
+			//	$where[] = "owner_guid in ({$owner_guid})";
+			}
+			if (is_null($container_guid)) {
+				$container_guid = $owner_array;
+			}
+		}
+		if ($site_guid > 0)
+			$where[] = "e.site_guid = {$site_guid}";
+			
+		if (!is_null($container_guid)) {
+			if (is_array($container_guid)) {
+				foreach($container_guid as $key => $val) $container_guid[$key] = (int) $val;
+				$where[] = "e.container_guid in (" . implode(",",$container_guid) . ")";
+			} else {
+				$container_guid = (int) $container_guid;
+				$where[] = "e.container_guid = {$container_guid}";
+			}
+		}
+			
+		if ($name!="")
+			$where[] = "s.name = '$name'";
+		if ($value!="")
+			$where[] = "s.value='$value'";	
+		
+		if (!$count) {
+			$query = "SELECT distinct e.* from {$CONFIG->dbprefix}entities e JOIN {$CONFIG->dbprefix}private_settings s ON e.guid=s.entity_guid where ";
+		} else {
+			$query = "SELECT count(distinct e.guid) as total from {$CONFIG->dbprefix}entities e JOIN {$CONFIG->dbprefix}private_settings s ON e.guid=s.entity_guid where ";
+		}
+		foreach ($where as $w)
+			$query .= " $w and ";
+		$query .= get_access_sql_suffix('e'); // Add access controls
+		if (!$count) {
+			$query .= " order by $order_by";
+			if ($limit) $query .= " limit $offset, $limit"; // Add order and limit
+				
+			$dt = get_data($query, "entity_row_to_elggstar");
+			return $dt;
+		} else {
+			$total = get_data_row($query);
+			return $total->total;
+		}
+	}
+	
+	/**
 	 * Gets a private setting for an entity.
 	 *
 	 * @param int $entity_guid The entity GUID
