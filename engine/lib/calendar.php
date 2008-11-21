@@ -42,16 +42,6 @@
 		public function getCalendarEndTime();
 	}
 	
-	
-	
-	// All of these should either implemented in existing functions (with extra params) or new funcs
-		// get entities by time 
-		// get entities by metadata
-		// get entities by relationship
-		
-	// Implement get/set via metadata
-	
-	
 	/**
 	 * Return a timestamp for the start of a given day (defaults today).
 	 *
@@ -454,5 +444,53 @@
 		$day_end = get_day_end();
 		
 		return get_notable_entities_from_relationship($day_start, $day_end, $relationship, $relationship_guid, $inverse_relationship, $type, $subtype, $owner_guid, $order_by, $limit, $offset, $count, $site_guid);
+	}
+	
+	/**
+	 * Returns a viewable list of entities for a given time period.
+	 *
+	 * @see elgg_view_entity_list
+	 * 
+	 * @param int $start_time The start time as a unix timestamp.
+	 * @param int $end_time The end time as a unix timestamp.
+	 * @param string $type The type of entity (eg "user", "object" etc)
+	 * @param string $subtype The arbitrary subtype of the entity
+	 * @param int $owner_guid The GUID of the owning user
+	 * @param int $limit The number of entities to display per page (default: 10)
+	 * @param true|false $fullview Whether or not to display the full view (default: true)
+	 * @param true|false $viewtypetoggle Whether or not to allow gallery view 
+	 * @param true|false $pagination Display pagination? Default: true
+	 * @return string A viewable list of entities
+	 */
+	function list_notable_entities($start_time, $end_time, $type= "", $subtype = "", $owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = false, $navigation = true) {
+		
+		$offset = (int) get_input('offset');
+		$count =  get_notable_entities($start_time, $end_time, $type, $subtype, $owner_guid, "", $limit, $offset, true);
+		$entities = get_notable_entities($start_time, $end_time,$type, $subtype, $owner_guid, "", $limit, $offset);
+
+		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle, $navigation);
+		
+	}
+	
+	/**
+	 * Return a list of today's entities.
+	 * 
+	 * @see list_notable_entities
+	 *
+	 * @param string $type The type of entity (eg "user", "object" etc)
+	 * @param string $subtype The arbitrary subtype of the entity
+	 * @param int $owner_guid The GUID of the owning user
+	 * @param int $limit The number of entities to display per page (default: 10)
+	 * @param true|false $fullview Whether or not to display the full view (default: true)
+	 * @param true|false $viewtypetoggle Whether or not to allow gallery view 
+	 * @param true|false $pagination Display pagination? Default: true
+	 * @return string A viewable list of entities
+	 */
+	function list_todays_entities($type= "", $subtype = "", $owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = false, $navigation = true) {
+		
+		$day_start = get_day_start();
+		$day_end = get_day_end();
+		
+		return list_notable_entities($day_start, $day_end, $type, $subtype, $owner_guid, $limit, $fullview, $viewtypetoggle, $navigation);
 	}
 ?>
