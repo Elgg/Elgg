@@ -1025,7 +1025,8 @@
 			(strpos($username, '"')!==false) ||
 			(strpos($username, '\'')!==false) ||
 			(strpos($username, '*')!==false) ||
-			(strpos($username, '&')!==false) 
+			(strpos($username, '&')!==false) ||
+			(strpos($username, ' ')!==false)
 		)
 			throw new RegistrationException(elgg_echo('registration:invalidchars'));
 		 
