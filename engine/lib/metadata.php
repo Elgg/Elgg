@@ -753,8 +753,8 @@
 		
 		if (is_string($string)) {
 			$ar = explode(",",$string);
-			array_walk($ar,'trim');
-			array_walk($ar,'strtolower');
+			$ar = array_map('trim', $ar);
+			$ar = array_map('strtolower', $ar);
 			return $ar;
 		}
 		return false;
