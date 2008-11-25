@@ -274,6 +274,18 @@ CREATE TABLE `prefix_hmac_cache` (
 	KEY `ts` (`ts`)
 ) ENGINE=MEMORY;
 
+-- Geocode engine cache
+CREATE TABLE `prefix_geocode_cache` (
+	id     int(11)     auto_increment,
+	location varchar(128),
+	`lat`    varchar(20),
+	`long`   varchar(20),
+	
+	PRIMARY KEY (`id`),
+    KEY `location` (`location`)
+	
+) ENGINE=MEMORY;
+
 -- PHP Session storage
 CREATE TABLE `prefix_users_sessions` (
 	`session` varchar(255) NOT NULL,

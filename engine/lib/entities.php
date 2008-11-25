@@ -17,6 +17,9 @@
 	/// Cache subtype searches
 	$SUBTYPE_CACHE = NULL;
 	
+	/// Require the locatable interface TODO: Move this into start.php?
+	require_once('location.php');
+	
 	/**
 	 * ElggEntity The elgg entity superclass
 	 * This class holds methods for accessing the main entities table.
@@ -27,6 +30,7 @@
 	 */
 	abstract class ElggEntity implements 
 		Notable,    // Calendar interface
+		Locatable,  // Geocoding interface
 		Exportable, // Allow export of data
 		Importable, // Allow import of data
 		Loggable,	// Can events related to this object class be logged
@@ -710,6 +714,53 @@
 			$res = delete_entity($this->get('guid'));
 			return $res;
 		}
+		
+		// LOCATABLE INTERFACE /////////////////////////////////////////////////////////////
+		
+		/** Interface to set the location */
+		public function setLocation($location)
+		{
+			$location = sanitise_string($location);
+			
+			$this->location = $location;
+			
+			return true;
+		}
+		
+		/**
+		 * Set latitude and longitude tags for a given entity.
+		 *
+		 * @param float $lat
+		 * @param float $long
+		 */
+		public function setLatLong($lat, $long)
+		{
+			$lat = sanitise_string($lat);
+			$long = sanitise_string($long);
+			
+			$this->set('geo:lat', $lat);
+			$this->set('geo:long', $long);
+			
+			return true;
+		}
+		
+		/**
+		 * Get the contents of the ->geo:lat field.
+		 *
+		 */
+		public function getLatitude() { return $this->get('geo:lat'); }
+		
+		/**
+		 * Get the contents of the ->geo:lat field.
+		 *
+		 */
+		public function getLongitude() { return $this->get('geo:long'); }
+		
+		/**
+		 * Get the ->location metadata. 
+		 *
+		 */
+		public function getLocation() { return $this->get('location'); }
 		
 		// NOTABLE INTERFACE ///////////////////////////////////////////////////////////////
 		
