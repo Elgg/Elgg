@@ -12,6 +12,59 @@
 	 */
 
 	/**
+	 * Override ElggObject in order to store widget data in ultra-private stores.
+	 */
+	class ElggWidget extends ElggObject
+	{
+		protected function initialise_attributes()
+		{
+			parent::initialise_attributes();
+			
+			$this->attributes['subtype'] = "widget";
+		}
+
+		public function __construct($guid = null) {	parent::__construct($guid); }
+			
+		/**
+		 * Override entity get and sets in order to save data to private data store.
+		 */
+		public function get($name)
+		{
+			// See if its in our base attribute
+			if (isset($this->attributes[$name])) {
+				return $this->attributes[$name];
+			}
+			
+			// No, so see if its in the private data store.
+			$meta = get_private_setting($this->guid, $name);
+			if ($meta)
+				return $meta;
+			
+			// Can't find it, so return null
+			return null;
+		}
+
+		/**
+		 * Override entity get and sets in order to save data to private data store.
+		 */
+		public function set($name, $value)
+		{
+			if (array_key_exists($name, $this->attributes))
+			{
+				// Check that we're not trying to change the guid! 
+				if ((array_key_exists('guid', $this->attributes)) && ($name=='guid'))
+					return false;
+					
+				$this->attributes[$name] = $value;
+			}
+			else 
+				return set_private_setting($this->guid, $name, $value);
+		
+			return true;
+		}
+	}
+
+	/**
 	 * Register a particular context for use with widgets.
 	 *
 	 * @param string $context The context we wish to enable context for
@@ -119,11 +172,15 @@
 	 */
 		function get_widgets($user_guid, $context, $column) {
 			
-			if ($widgets = get_user_objects_by_metadata($user_guid, "widget", array(
+			if ($widgets = get_entities_from_private_setting_multi(array(
+												'column' => $column,
+												'context' => $context), "object", "widget", $user_guid, "", 10000))
+			/*if ($widgets = get_user_objects_by_metadata($user_guid, "widget", array(
 												'column' => $column,
 												'context' => $context, 
 																	), 10000)) {
-
+			*/
+			{
 																		
 				$widgetorder = array();
 				foreach($widgets as $widget) {
@@ -173,16 +230,17 @@
 			
 			if ($user = get_user($user_guid)) {
 				
-				$widget = new ElggObject;
-				$widget->subtype = "widget";
-				$widget->handler = $handler;
-				$widget->context = $context;
-				$widget->column = $column;
-				$widget->order = $order;
+				$widget = new ElggWidget;
 				$widget->owner_guid = $user_guid;
 				$widget->access_id = 1;
 				if (!$widget->save())
 					return false;
+					
+				$widget->handler = $handler;
+				$widget->context = $context;
+				$widget->column = $column;
+				$widget->order = $order;
+				
 				// save_widget_location($widget, $order, $column);
 				return true;
 				
@@ -302,13 +360,13 @@
 				// Save the params to the widget 
 				if (is_array($params) && sizeof($params) > 0) {
 					foreach($params as $name => $value) {
-						error_log("ERP: $name". print_r($value, true));
+						
 						if (!empty($name) && !in_array($name,array(
 								'guid','owner_guid','site_guid'
 																	))) {
 							if (is_array($value))
 							{
-								error_log("ERP: Here");
+								// TODO: Handle arrays securely
 								$widget->setMetaData($name, $value, "", true);
 							}else
 								$widget->$name = $value;
@@ -429,6 +487,16 @@
 			
 		}
 		
+		/**
+		 * Run some things once.
+		 *
+		 */
+		function widget_run_once()
+		{
+			// Register a class
+			add_subtype("object", "widget", "ElggWidget");	
+		}
+
 	/**
 	 * Function to initialise widgets functionality on Elgg init
 	 *
@@ -439,6 +507,8 @@
 			register_action('widgets/save');
 			register_action('widgets/add');
 			
+			// Now run this stuff, but only once
+			run_function_once("widget_run_once");
 		}
 		
 	// Register event
