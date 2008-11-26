@@ -371,7 +371,4 @@
 		return "$document";
 	}
 	
-	
-
-	// input - how? root element handler?
 ?>
