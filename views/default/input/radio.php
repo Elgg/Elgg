@@ -22,7 +22,7 @@
 	if (!$class) $class = "input-radio";
 
     foreach($vars['options'] as $label => $option) {
-        if ($option != $vars['value']) {
+        if (strtolower($option) != strtolower($vars['value'])) {
             $selected = "";
         } else {
             $selected = "checked = \"checked\"";
