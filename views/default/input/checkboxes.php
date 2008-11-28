@@ -20,17 +20,19 @@
 
 	$class = $vars['class'];
 	if (!$class) $class = "input-checkboxes";
-
+	
     foreach($vars['options'] as $label => $option) {
         //if (!in_array($option,$vars['value'])) {
         if (is_array($vars['value'])) {
-        	if (!in_array($option,$vars['value'])) {
+        	$valarray = $vars['value'];
+        	$valarray = array_map('strtolower', $valarray);
+        	if (!in_array(strtolower($option),$valarray)) {
 	            $selected = "";
 	        } else {
 	            $selected = "checked = \"checked\"";
 	        }
         } else {
-	    	if ($option != $vars['value']) {
+	    	if (strtolower($option) != strtolower($vars['value'])) {
 	            $selected = "";
 	        } else {
 	            $selected = "checked = \"checked\"";
