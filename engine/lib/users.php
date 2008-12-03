@@ -837,7 +837,8 @@
 		{
 			// generate code
 			$code = generate_random_cleartext_password();
-			create_metadata($user_guid, 'conf_code', $code,'', 0, 0);
+			//create_metadata($user_guid, 'conf_code', $code,'', 0, 0);
+			set_private_setting($user_guid, 'passwd_conf_code', $code);
 			
 			// generate link
 			$link = $CONFIG->site->url . "action/user/passwordreset?u=$user_guid&c=$code";
@@ -892,13 +893,14 @@
 		$user_guid = (int)$user_guid;
 		
 		$user = get_entity($user_guid);
-		if (($user) && ($user->conf_code == $conf_code))
+		if (($user) && (get_private_setting($user_guid, 'passwd_conf_code') == $conf_code))
 		{
 			$password = generate_random_cleartext_password();
 			
 			if (force_user_password_reset($user_guid, $password))
 			{
-				remove_metadata($user_guid, 'conf_code');
+				//remove_metadata($user_guid, 'conf_code');
+				remove_private_setting($user_guid, 'passwd_conf_code');
 				
 				$email = sprintf(elgg_echo('email:resetpassword:body'), $user->name, $password);
 				
