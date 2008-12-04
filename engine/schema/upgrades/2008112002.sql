@@ -10,7 +10,7 @@ INSERT INTO `prefix_private_settings` (entity_guid, name, `value`)
 
 -- Delete previous settings
 CREATE TEMPORARY TABLE __upgrade_2008112002_1 (
- SELECT distinct meta.id as id from `prefix_metadata meta` 
+ SELECT distinct meta.id as id from `prefix_metadata` meta
 	JOIN `prefix_private_settings` settings ON meta.entity_guid = settings.entity_guid
 
 	JOIN `prefix_entities` e ON e.guid = meta.entity_guid
