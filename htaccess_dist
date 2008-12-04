@@ -80,6 +80,11 @@ DirectoryIndex index.php
 	BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
 </IfModule>
 
+# Configure ETags
+<FilesMatch "\.(jpg|jpeg|gif|png|mp3|flv|mov|avi|3pg|html|htm|swf)$">
+	FileETag MTime Size
+</FilesMatch>
+
 <IfModule mod_rewrite.c>
 
 RewriteEngine on
