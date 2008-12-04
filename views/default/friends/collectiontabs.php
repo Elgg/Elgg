@@ -9,9 +9,9 @@
 
 <div id="friendsPickerNavigationTabs">
 <ul>
-<li class="selected"><a href="#" class="collectionmembers<?php echo $friendspicker; ?>">Collection members</a></li>
+<li class="selected"><a href="#" class="collectionmembers<?php echo $friendspicker . "\">" . elgg_echo('friends:collections:members'); ?></a></li>
 
-<li><a href="#" class="editmembers<?php echo $friendspicker; ?>">Edit collection</a></li>
+<li><a href="#" class="editmembers<?php echo $friendspicker . "\">" . elgg_echo('friends:collections:edit'); ?></a></li>
 
 </ul>
 </div>
