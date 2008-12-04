@@ -327,7 +327,9 @@
 					&& $user = get_user($user_guid)) {
 
 				global $CONFIG;
-				insert_data("insert into {$CONFIG->dbprefix}access_collection_membership set access_collection_id = {$collection_id}, user_guid = {$user_guid}");
+				try {
+					insert_data("insert into {$CONFIG->dbprefix}access_collection_membership set access_collection_id = {$collection_id}, user_guid = {$user_guid}");
+				} catch (DatabaseException $e) {}
 				return true;
 				
 			}
