@@ -2,7 +2,7 @@
 <h2><?php echo elgg_echo('groups:latestdiscussion'); ?></h2>
 <?php
 	
-    $forum = get_entities_from_annotations("object", "groupforumtopic", "group_topic_post", "", 0, $vars['entity']->guid, 4, 0, "asc", false);
+    $forum = get_entities_from_annotations("object", "groupforumtopic", "group_topic_post", "", 0, $vars['entity']->guid, 6, 0, "desc", false);
 	
     if($forum){
         foreach($forum as $f){
