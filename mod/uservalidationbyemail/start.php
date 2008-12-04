@@ -18,7 +18,7 @@
 		register_action("email/confirm",true, $CONFIG->pluginspath . "uservalidationbyemail/actions/email/confirm.php");
 		
 		// Register hook listening to new users.
-		register_elgg_event_handler('user', 'validate', 'uservalidationbyemail_email_validation');
+		register_elgg_event_handler('validate', 'user', 'uservalidationbyemail_email_validation');
 	}
 
 	/**

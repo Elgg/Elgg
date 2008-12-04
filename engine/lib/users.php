@@ -945,7 +945,7 @@
 			set_user_validation_status($user_guid, false);
 			
 			// request validation
-			trigger_elgg_event('user', 'validate', $user);
+			trigger_elgg_event('validate', 'user', $user);
 			
 		}
 	}
