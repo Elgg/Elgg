@@ -4,7 +4,7 @@
 	 * Elgg CSS
 	 * The standard CSS file
 	 * 
-	 * Updated 29 Oct - v1.1
+	 * Updated 5 Dec - v1.1
 	 * 
 	 * @package Elgg
 	 * @subpackage Core
@@ -1024,9 +1024,6 @@ p.user_menu_friends_of {
 }
 .river_annotate {
 	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_comment.gif) no-repeat left -1px;
-}
-.river_create {
-	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/dummy_river_icon.gif) no-repeat left -1px;
 }
 .river_bookmarks_create {
 	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_bookmarks.gif) no-repeat left -1px;
