@@ -86,40 +86,42 @@
 			// Results for a user are...
 			$result[$guid] = array();
 			
-			// Are we overriding delivery?
-			$methods = $methods_override;
-			if (!$methods)
-			{
-				$tmp = (array)get_user_notification_settings($guid);
-				$methods = array(); 
-				foreach($tmp as $k => $v)
-					if ($v) $methods[] = $k; // Add method if method is turned on for user!
-			}
-			
-			if ($methods)
-			{
-				// Deliver
-				foreach ($methods as $method)
+			if ($guid) { // Is the guid > 0? 
+				// Are we overriding delivery?
+				$methods = $methods_override;
+				if (!$methods)
 				{
-					// Extract method details from list
-					$details = $NOTIFICATION_HANDLERS[$method];
-					$handler = $details->handler;
+					$tmp = (array)get_user_notification_settings($guid);
+					$methods = array(); 
+					foreach($tmp as $k => $v)
+						if ($v) $methods[] = $k; // Add method if method is turned on for user!
+				}
 				
-					if ((!$NOTIFICATION_HANDLERS[$method]) || (!$handler))
-						throw new NotificationException(sprintf(elgg_echo('NotificationException:NoHandlerFound'), $method));
-	
-					if ($CONFIG->debug)
-						error_log("Sending message to $guid using $method");					
-						
-					// Trigger handler and retrieve result.
-					$result[$guid][$method] = $handler(
-						$from ? get_entity($from) : NULL, 	// From entity
-						get_entity($guid), 					// To entity
-						$subject,							// The subject
-						$message, 			// Message
-						$params								// Params
-					);
+				if ($methods)
+				{
+					// Deliver
+					foreach ($methods as $method)
+					{
+						// Extract method details from list
+						$details = $NOTIFICATION_HANDLERS[$method];
+						$handler = $details->handler;
 					
+						if ((!$NOTIFICATION_HANDLERS[$method]) || (!$handler))
+							throw new NotificationException(sprintf(elgg_echo('NotificationException:NoHandlerFound'), $method));
+		
+						if ($CONFIG->debug)
+							error_log("Sending message to $guid using $method");					
+							
+						// Trigger handler and retrieve result.
+						$result[$guid][$method] = $handler(
+							$from ? get_entity($from) : NULL, 	// From entity
+							get_entity($guid), 					// To entity
+							$subject,							// The subject
+							$message, 			// Message
+							$params								// Params
+						);
+						
+					}
 				}
 			}		
 		}
