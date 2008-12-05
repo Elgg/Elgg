@@ -155,6 +155,101 @@
 		}
 		
 	/**
+	 * Generate a view hash.
+	 *
+	 * @param string $view The view name
+	 * @param array $vars The view parameters
+	 * @return string The hash.
+	 */	
+		function elgg_get_viewhash($view, $vars)
+		{
+			global $VIEW_CACHE_DISABLED, $CONFIG;
+			
+			if (($VIEW_CACHE_DISABLED) || (!$CONFIG->viewcache)) return false;
+			
+			$unchanged_vars = unserialize(serialize($vars));
+			
+			// This is a bit of a hack, but basically we have to remove things that change on each pageload 
+			if (isset($unchanged_vars['entity']->last_action)) $unchanged_vars['entity']->last_action = 0;
+			if (isset($unchanged_vars['entity']->prev_last_action)) $unchanged_vars['entity']->prev_last_action = 0;
+			
+			if (isset($unchanged_vars['user']->last_action)) $unchanged_vars['user']->last_action = 0;
+			if (isset($unchanged_vars['user']->prev_last_action)) $unchanged_vars['user']->prev_last_action = 0;
+			
+			
+			return md5(current_page_url() . $view . serialize($uncharged_vars)); // This should be enough to stop artefacts
+			
+		}
+		
+	/**
+	 * Cache a view.
+	 *
+	 * @param string $view The content.
+	 * @param string $content The content.
+	 * @param string $viewhash The hash
+	 * @return bool
+	 */
+		function elgg_cache_view($view, $content, $viewhash)
+		{
+			global $view_cache, $VIEW_CACHE_DISABLED, $CONFIG;
+			
+			if (($VIEW_CACHE_DISABLED) || (!$CONFIG->viewcache)) return false;
+			
+			// Cache
+			if ($viewhash)
+			{
+				error_log("MARCUS : Caching $view:$viewhash");
+				$view_cache->save($viewhash, $content);
+				
+				return $viewhash;
+			}
+			
+			return false;
+		}
+		
+	/**
+	 * Get a cached view based on its hash.
+	 *
+	 * @param string $viewhash
+	 * @return string or false on if no cache returned.
+	 */
+		function elgg_get_cached_view($viewhash)
+		{
+			global $view_cache, $VIEW_CACHE_DISABLED, $CONFIG;
+			
+			if (($VIEW_CACHE_DISABLED) || (!$CONFIG->viewcache)) return false;
+			
+			if ((!$view_cache) && (is_memcache_available())) 
+				$view_cache = new ElggMemcache('view_cache');
+			if ($view_cache) {
+				
+				$cached_view = $view_cache->load($viewhash);
+
+				if ($cached_view)
+				{
+					error_log("MARCUS : LOADED $view:$viewhash from cache");
+					return $cached_view;
+				}
+				else
+					error_log("MARCUS : View $view:$viewhash not cached");
+				
+			}
+			
+			return false;
+		}
+		
+	/**
+	 * Temporarily disable view caching.
+	 *
+	 */
+		function elgg_disable_view_cache()
+		{
+			global $VIEW_CACHE_DISABLED;
+			
+			$VIEW_CACHE_DISABLED = true;
+		}
+		
+	/**
 	 * Handles templating views
 	 *
 	 * @see set_template_handler
@@ -211,13 +306,17 @@
 		    if (!isset($vars['js'])) {
 		    	$vars['js'] = "";
 		    }
-		     
+		    
 		// If it's been requested, pass off to a template handler instead
 		    if ($bypass == false && isset($CONFIG->template_handler) && !empty($CONFIG->template_handler)) {
 		    	$template_handler = $CONFIG->template_handler;
 		    	return $template_handler($view, $vars);
 		    }
 		
+		// Attempt to memcache views.
+		    /*$view_hash = elgg_get_viewhash($view, $vars);
+		    $cached_view = elgg_get_cached_view($view_hash);
+		    if ($cached_view) return $cached_view;*/
 		    
 		// Get the current viewtype
 			$viewtype = elgg_get_viewtype(); 
@@ -252,8 +351,6 @@
 			    	error_log(" [This view ({$view}) does not exist] ");
 			    }
 		    
-			    
-			    
 		    }
 
 		// Save the output buffer into the $content variable
@@ -261,6 +358,9 @@
 			
 		// Plugin hook
 			$content = trigger_plugin_hook('display','view',array('view' => $view),$content);
+		
+		// Cache view
+			//elgg_cache_view($view, $content, $view_hash);
 		
 		// Return $content
 		    return $content;
