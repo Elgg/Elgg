@@ -307,10 +307,12 @@ CREATE TABLE `prefix_datalists` (
 CREATE TABLE `prefix_private_settings` (
 	`id` INT NOT NULL auto_increment,
 	`entity_guid` INT NOT NULL ,
-	`name` VARCHAR( 32 ) NOT NULL ,
+	`name` varchar(128) NOT NULL ,
 	`value` TEXT NOT NULL ,
 	PRIMARY KEY ( `id` ) ,
-	UNIQUE KEY ( `entity_guid` , `name` )
+	UNIQUE KEY ( `entity_guid` , `name` ),
+	KEY `name` (`name`),
+	KEY `value` (`value`)
 ) ENGINE = MYISAM  DEFAULT CHARSET=utf8;
 
 -- System log
