@@ -312,7 +312,7 @@ CREATE TABLE `prefix_private_settings` (
 	PRIMARY KEY ( `id` ) ,
 	UNIQUE KEY ( `entity_guid` , `name` ),
 	KEY `name` (`name`),
-	KEY `value` (`value`)
+	KEY `value` (`value` (50))
 ) ENGINE = MYISAM  DEFAULT CHARSET=utf8;
 
 -- System log

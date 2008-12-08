@@ -6,4 +6,4 @@ ALTER TABLE `prefix_private_settings` DROP KEY `name`;
 ALTER TABLE `prefix_private_settings` ADD KEY `name` (`name`);
 
 ALTER TABLE `prefix_private_settings` DROP KEY `value`;
-ALTER TABLE `prefix_private_settings` ADD KEY `value` (`value`);
+ALTER TABLE `prefix_private_settings` ADD KEY `value` (`value` (50));
