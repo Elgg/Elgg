@@ -29,10 +29,12 @@
 		}
 		else
 			register_error(elgg_echo('admin:user:ban:no'));
-	}
-	else
+	} else {
+		$canedit = $obj->canEdit();
+		$isinstance = ($obj instanceof ElggUser);
 		register_error(elgg_echo('admin:user:ban:no'));
+	}
 		
-	forward($_SERVER['HTTP_REFERER']);
+	forward('pg/admin/user/');
 	exit;
 ?>
