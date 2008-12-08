@@ -1485,7 +1485,7 @@
 					if (!is_null($temp_return_value)) $returnvalue = $temp_return_value;
 				}
 			}
-			else
+			//else
 			//if (!isset($CONFIG->hooks['all'][$entity_type]))
 			//	return $returnvalue;
 			
@@ -1496,7 +1496,7 @@
 					if (!is_null($temp_return_value)) $returnvalue = $temp_return_value;
 				}
 			}
-			else
+			//else
 			//if (!isset($CONFIG->hooks[$hook]['all']))
 			//	return $returnvalue;
 			
@@ -1507,7 +1507,7 @@
 					if (!is_null($temp_return_value)) $returnvalue = $temp_return_value;
 				}
 			}
-			else
+			//else
 			//if (!isset($CONFIG->hooks['all']['all']))
 			//	return $returnvalue;
 			
