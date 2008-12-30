@@ -21,7 +21,8 @@
 		if ($owner) {
 			$icon = elgg_view("profile/icon",array('entity' => $owner, 'size' => 'tiny'));
 			if ($owner instanceof ElggUser || $owner instanceof ElggGroup) {
-				$info = $owner->name;
+				//$info = $owner->name;
+				$info = '<a href="' . $owner->getURL() . '">' . $owner->name . '</a>';
 			}
 			$display = "<div id=\"owner_block_icon\">" . $icon . "</div>";
 			$display .= "<div id=\"owner_block_content\">" . $info . "</div><div class=\"clearfloat ownerblockline\"></div>";
