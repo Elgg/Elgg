@@ -65,7 +65,7 @@
 			</label>
 		</p>
 		<p>
-			<input type="submit" value="<?php echo elgg_echo('report'); ?>" />
+			<input type="submit" value="<?php echo elgg_echo('reportedcontent:report'); ?>" />
 		</p>
 	
 	</form>

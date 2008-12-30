@@ -37,6 +37,7 @@
 			'reportedcontent:success' => 'Your report has been sent to the site admin',
 			'reportedcontent:failing' => 'Your report could not be sent',
 			'reportedcontent:report' => 'Report this', 
+			'reportedcontent:moreinfo' => 'More info',
 	
 			'reportedcontent:failed' => 'Sorry, the attempt to report this content has failed.',
 	);
