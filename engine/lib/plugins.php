@@ -215,6 +215,10 @@
 			global $CONFIG;
 			if (!empty($CONFIG->pluginspath)) {
 				
+				// temporary disable all plugins if there is a file called 'disabled' in the plugin dir
+				if (file_exists($CONFIG->pluginspath . "disabled"))
+					return;
+				
 				$plugins = get_plugin_list();
 				
 				if (sizeof($plugins))
