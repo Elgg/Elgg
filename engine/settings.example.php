@@ -113,6 +113,13 @@
 	//);		
 	
 	/**
+	 * Some work-around flags.
+	 */
+	
+	// Try uncommenting the below if your notification emails are not being sent
+	// $CONFIG->broken_mta = true; 
+			
+	/**
 	  * Url - I am not sure if this will be here ?
 	 **/
 	 

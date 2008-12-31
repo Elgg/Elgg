@@ -248,10 +248,18 @@
 		if (is_callable('mb_encode_mimeheader')) {
 			$sitename = mb_encode_mimeheader($site->name,"UTF-8", "B");
 		}
-		$headers = "From: \"$sitename\" <$from>\r\n"
-			. "Content-Type: text/plain; charset=UTF-8; format=flowed\r\n"
-    		. "MIME-Version: 1.0\r\n"
-    		. "Content-Transfer-Encoding: 8bit\r\n";
+		
+		$header_eol = "\r\n";
+		if ( 
+			(isset($CONFIG->broken_mta)) &&
+			($CONFIG->broken_mta)
+		)
+			$header_eol = "\n"; // Allow non-RFC 2822 mail headers to support some broken MTAs
+		
+		$headers = "From: \"$sitename\" <$from>{$header_eol}"
+			. "Content-Type: text/plain; charset=UTF-8; format=flowed{$header_eol}"
+    		. "MIME-Version: 1.0{$header_eol}"
+    		. "Content-Transfer-Encoding: 8bit{$header_eol}";
 
     	if (is_callable('mb_encode_mimeheader')) {
 			$subject = mb_encode_mimeheader($subject,"UTF-8", "B");
