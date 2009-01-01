@@ -57,7 +57,54 @@
 			<?php echo elgg_view('input/access', array('internalname' => 'access_id','value' => $vars['entity']->access_id )); ?>
 		</label>
 	</p>
+    <p>
+			<label>
+				<?php echo elgg_echo('groups:enablepages'); ?><br />
+				<?php
 
+					echo elgg_view("input/radio",array(
+									"internalname" => "pages_enable",
+									"value" => $vars['entity']->pages_enable,
+									'options' => array(
+														elgg_echo('groups:yes') => 'yes',
+														elgg_echo('groups:no') => 'no',
+													   ),
+													));
+				?>
+			</label>
+	</p>
+	<p>
+			<label>
+				<?php echo elgg_echo('groups:enableforum'); ?><br />
+				<?php
+
+					echo elgg_view("input/radio",array(
+									"internalname" => "forum_enable",
+									"value" => $vars['entity']->forum_enable,
+									'options' => array(
+														elgg_echo('groups:yes') => 'yes',
+														elgg_echo('groups:no') => 'no',
+													   ),
+													));
+				?>
+			</label>
+	</p>
+	<p>
+			<label>
+				<?php echo elgg_echo('groups:enablefiles'); ?><br />
+				<?php
+
+					echo elgg_view("input/radio",array(
+									"internalname" => "files_enable",
+									"value" => $vars['entity']->files_enable,
+									'options' => array(
+														elgg_echo('groups:yes') => 'yes',
+														elgg_echo('groups:no') => 'no',
+													   ),
+													));
+				?>
+			</label>
+	</p>
 	<p>
 		<?php
 			if ($vars['entity'])

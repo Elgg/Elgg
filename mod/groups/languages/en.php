@@ -51,6 +51,15 @@
 			'groups:group' => "Group",
 			
 			'item:object:groupforumtopic' => "Forum topics",
+			
+			/*
+			   Group tools
+			*/
+			'groups:enablepages' => 'Enable group pages',
+			'groups:enableforum' => 'Enable group forum',
+			'groups:enablefiles' => 'Enable group files',
+			'groups:yes' => 'yes',
+			'groups:no' => 'no',
 	
 			/*
 			  Group forum strings

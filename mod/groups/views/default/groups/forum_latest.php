@@ -1,3 +1,12 @@
+<?php
+ 
+    // Latest forum discussion for the group home page
+
+    //check to make sure this group forum has been activated
+    if($vars['entity']->forum_enable == 'yes'){
+
+?>
+
 <div id="latest_discussion_widget">
 <h2><?php echo elgg_echo('groups:latestdiscussion'); ?></h2>
 <?php
@@ -23,3 +32,6 @@
 ?>
 <br class="clearfloat" />
 </div>
+<?php
+	}//end of forum active check
+?>

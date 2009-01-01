@@ -66,6 +66,11 @@
 	// Get access
 	$group->access_id = get_input('access_id', 0);
 	
+	// Set group tool options
+	$group->files_enable = get_input('files_enable', 'yes');
+	$group->pages_enable = get_input('pages_enable', 'yes');
+	$group->forum_enable = get_input('forum_enable', 'yes');
+
 	$group->save();
 	
 	if (!$group->isMember($user))
