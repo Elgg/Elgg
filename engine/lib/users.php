@@ -451,6 +451,7 @@
 	function user_add_friend($user_guid, $friend_guid) {
 		$user_guid = (int) $user_guid; 
 		$friend_guid = (int) $friend_guid;
+		if ($user_guid == $friend_guid) return false;
 		if (!$friend = get_entity($friend_guid)) return false;
 		if (!$user = get_entity($user_guid)) return false;
 		if ( (!($user instanceof ElggUser)) || (!($friend instanceof ElggUser)) ) return false;
