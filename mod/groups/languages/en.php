@@ -121,6 +121,18 @@ or click below to confirm request:
 
 %s",
 	
+            /*
+				Forum river items
+			*/
+	
+			'groups:river:member' => 'is now a member of',
+			'groupforum:river:updated' => '%s has updated',
+			'groupforum:river:update' => 'this discussion topic',
+			'groupforum:river:created' => '%s has created',
+			'groupforum:river:create' => 'a new discussion topic',
+			'groupforum:river:posted' => '%s has posted a new comment',
+			'groupforum:river:annotate:create' => 'on this discussion topic',
+
 			'groups:river:member' => 'is now a member of',
 	
 			'groups:nowidgets' => 'No widgets have been defined for this group.',
