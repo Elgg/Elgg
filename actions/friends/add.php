@@ -22,7 +22,7 @@
 		
 	// Get the user
 		try {
-			$_SESSION['user']->addFriend($friend_guid);
+			if (!$_SESSION['user']->addFriend($friend_guid)) $errors = true;
 		} catch (Exception $e) {
 			register_error(sprintf(elgg_echo("friends:add:failure"),$friend->name));
 			$errors = true;
