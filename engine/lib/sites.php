@@ -595,19 +595,21 @@
 			
 			global $CONFIG;
 			
-			if (!is_installed() || !is_db_installed()) return false;
-			
-			$site = trigger_plugin_hook("siteid","system");
-			if ($site === null || $site === false) {
-				$CONFIG->site_id = (int) datalist_get('default_site');
-			} else {
-				$CONFIG->site_id = $site;
+			if (is_installed() && is_db_installed()) {
+				
+				$site = trigger_plugin_hook("siteid","system");
+				if ($site === null || $site === false) {
+					$CONFIG->site_id = (int) datalist_get('default_site');
+				} else {
+					$CONFIG->site_id = $site;
+				}
+				$CONFIG->site_guid = $CONFIG->site_id;
+				$CONFIG->site = get_entity($CONFIG->site_guid);
+				
+				return true;
 			}
-			$CONFIG->site_guid = $CONFIG->site_id;
-			$CONFIG->site = get_entity($CONFIG->site_guid);
 			
 			return true;
-			
 		}
 		
 	// Register event handlers

@@ -169,27 +169,27 @@
 			
 			global $CONFIG;
 			
-			if (!is_installed() || !is_db_installed()) return false;
-			
-			$path = datalist_get('path');
-			if (!empty($path))
-				$CONFIG->path = $path;
-			$dataroot = datalist_get('dataroot');
-			if (!empty($dataroot))
-				$CONFIG->dataroot = $dataroot;
-			if (isset($CONFIG->site) && ($CONFIG->site instanceof ElggSite)) {
-				$CONFIG->wwwroot = $CONFIG->site->url;
-				$CONFIG->sitename = $CONFIG->site->name;
-				$CONFIG->sitedescription = $CONFIG->site->description;
-				$CONFIG->siteemail = $CONFIG->site->email;
+			if (is_installed() || is_db_installed()) {
+				
+				$path = datalist_get('path');
+				if (!empty($path))
+					$CONFIG->path = $path;
+				$dataroot = datalist_get('dataroot');
+				if (!empty($dataroot))
+					$CONFIG->dataroot = $dataroot;
+				if (isset($CONFIG->site) && ($CONFIG->site instanceof ElggSite)) {
+					$CONFIG->wwwroot = $CONFIG->site->url;
+					$CONFIG->sitename = $CONFIG->site->name;
+					$CONFIG->sitedescription = $CONFIG->site->description;
+					$CONFIG->siteemail = $CONFIG->site->email;
+				}
+				$CONFIG->url = $CONFIG->wwwroot;
+				
+				// Load default settings from database
+				get_all_config();
+				
+				return true;
 			}
-			$CONFIG->url = $CONFIG->wwwroot;
-			
-			// Load default settings from database
-			get_all_config();
-			
-			return true;
-			
 		}
 		
 	/**
