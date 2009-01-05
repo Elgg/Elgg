@@ -318,6 +318,17 @@
 			return true;
 		}
 		
+		/**
+		 * Add a relationship.
+		 *
+		 * @param int $guid Relationship to link to.
+		 * @param string $relationship The type of relationship.
+		 */
+		public function addRelationship($guid, $relationship)
+		{
+			return add_entity_relationship($this->getGUID(), $relationship, $guid);
+		}
+		
 		function setPrivateSetting($name, $value) {
 			return set_private_setting($this->getGUID(), $name, $value);
 		}
