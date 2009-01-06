@@ -302,9 +302,9 @@
 		
 		$where = array();
 		
-		if ($entity_guid != 0 && !is_array($owner_guid)) {
+		if ($entity_guid != 0 && !is_array($entity_guid)) {
 			$where[] = "a.entity_guid=$entity_guid";
-		} else if (is_array($owner_guid)) {
+		} else if (is_array($entity_guid)) {
 			$where[] = "a.entity_guid in (". implode(",",$entity_guid) . ")";
 		}
 			
