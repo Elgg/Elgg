@@ -17,10 +17,10 @@
 	} else {
 		$offset = $vars['offset'];
 	}
-	if (!isset($vars['limit'])) {
+	if ((!isset($vars['limit'])) || (!$limit)) {
 		$limit = 10;
 	} else {
-		$limit = $vars['limit'];
+		$limit = (int)$vars['limit'];
 	}
 	if (!isset($vars['count'])) {
 		$count = 0;
