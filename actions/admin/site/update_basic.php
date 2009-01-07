@@ -45,6 +45,12 @@
 			else
 				unset_config('debug', $site->getGUID());
 				
+			$https_login = get_input('https_login'); 
+			if ($https_login)
+				set_config('https_login', 1, $site->getGUID());
+			else
+				unset_config('https_login', $site->getGUID());
+				
 			$usage = get_input('usage');
 			if ($usage)
 				unset_config('ping_home', $site->getGUID());

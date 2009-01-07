@@ -37,6 +37,9 @@
 		
 		$form_body .= "<p class=\"admin_debug\">" . elgg_echo('installation:debug') . "<br />" .elgg_view("input/checkboxes", array('options' => array(elgg_echo('installation:debug:label')), 'internalname' => 'debug', 'value' => ($vars['config']->debug ? elgg_echo('installation:debug:label') : "") )) . "</p>";
 		
+		$form_body .= "<p class=\"admin_debug\">" . elgg_echo('installation:httpslogin') . "<br />" .elgg_view("input/checkboxes", array('options' => array(elgg_echo('installation:httpslogin:label')), 'internalname' => 'https_login', 'value' => ($vars['config']->https_login ? elgg_echo('installation:httpslogin:label') : "") )) . "</p>";
+		
+		
 		$form_body .= "<p class=\"admin_debug\">" . elgg_echo('installation:disableapi') . "<br />";
 		$on = elgg_echo('installation:disableapi:label');
 		if ((isset($CONFIG->disable_api)) && ($CONFIG->disable_api == true))

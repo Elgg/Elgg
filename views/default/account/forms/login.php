@@ -22,10 +22,16 @@
 	$form_body .= "<a href=\"{$vars['url']}account/forgotten_password.php\">" . elgg_echo('user:password:lost') . "</a></p>";  
 	
 	//<input name=\"username\" type=\"text\" class="general-textarea" /></label>
+	
+	$login_url = $vars['url'];
+	if ((isset($CONFIG->https_login)) && ($CONFIG->https_login))
+		$login_url = str_replace("http", "https", $vars['url']);
 ?>
 	
 	<div id="login-box">
 	<h2><?php echo elgg_echo('login'); ?></h2>
-		<?php echo elgg_view('input/form', array('body' => $form_body, 'action' => "{$vars['url']}action/login")); ?>
+		<?php 
+			echo elgg_view('input/form', array('body' => $form_body, 'action' => "{$login_url}action/login"));
+		?>
 		
 	</div>

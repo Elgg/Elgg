@@ -711,6 +711,8 @@ Alternatively, you can enter your database settings below and we will try and do
 			'installation:language' => "The default language for your site:",
 			'installation:debug' => "Debug mode provides extra information which can be used to diagnose faults, however it can slow your system down so should only be used if you are having problems:",
 			'installation:debug:label' => "Turn on debug mode",
+			'installation:httpslogin' => "Enable this to have user logins performed over HTTPS. You will need to have https enabled on your server for this to work.",
+			'installation:httpslogin:label' => "Enable HTTPS logins",
 			'installation:usage' => "This option lets Elgg send anonymous usage statistics back to Curverider.",
 			'installation:usage:label' => "Send anonymous usage statistics",
 			'installation:view' => "Enter the view which will be used as the default for your site or leave this blank for the default view (if in doubt, leave as default):",

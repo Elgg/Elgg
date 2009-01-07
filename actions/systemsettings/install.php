@@ -78,7 +78,12 @@
 				unset_config('disable_api', $site->getGUID());
 			else
 				set_config('disable_api', 'disabled', $site->getGUID());
-			
+				
+			$https_login = get_input('https_login'); 
+			if ($https_login)
+				set_config('https_login', 1, $site->getGUID());
+			else
+				unset_config('https_login', $site->getGUID());
 			
 			// activate some plugins by default
 			if (isset($CONFIG->default_plugins))
