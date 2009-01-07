@@ -24,7 +24,7 @@
 		$members = $group->getMembers($limit, $offset);
 		$count = $group->getMembers($limit, $offset, true);
 		
-		$result = elgg_view_entity_list($members, $count, $offset, $limit, false);
+		$result = elgg_view_entity_list($members, $count, $offset, $limit, false, false, false);
 	}
 	else
 	{
