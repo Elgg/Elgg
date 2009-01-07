@@ -49,6 +49,9 @@
 			'groups:nofriends' => "You have no friends left who have not been invited to this group.",
 	
 			'groups:group' => "Group",
+	
+			'groups:notfound' => "Group not found",
+			'groups:notfound:details' => "The requested group either does not exist or you do not have access to it",
 			
 			'item:object:groupforumtopic' => "Forum topics",
 			

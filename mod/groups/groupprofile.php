@@ -14,20 +14,30 @@
 	
 	
 	$group = get_entity($group_guid);
-	
-	set_page_owner($group_guid);
-	
-	$area2 = elgg_view_title($group->name);
-	$area2 .= elgg_view('group/group', array('entity' => $group, 'user' => $_SESSION['user'], 'full' => true));
-	
-	//group profile 'items' - these are not real widgets, just contents to display
-	$area2 .= elgg_view('groups/profileitems',array('entity' => $group));
-	
-	//group members
-	$area3 = elgg_view('groups/members',array('entity' => $group));
-	
-	$body = elgg_view_layout('two_column_left_sidebar', $area1, $area2, $area3);
-	
+	if ($group) {
+		set_page_owner($group_guid);
+		
+		$title = $group->name;
+		
+		$area2 = elgg_view_title($title);
+		$area2 .= elgg_view('group/group', array('entity' => $group, 'user' => $_SESSION['user'], 'full' => true));
+		
+		//group profile 'items' - these are not real widgets, just contents to display
+		$area2 .= elgg_view('groups/profileitems',array('entity' => $group));
+		
+		//group members
+		$area3 = elgg_view('groups/members',array('entity' => $group));
+		
+		$body = elgg_view_layout('two_column_left_sidebar', $area1, $area2, $area3);
+	} else {
+		$title = elgg_echo('groups:notfound');
+		
+		$area2 = elgg_view_title($title);
+		$area2 .= elgg_echo('groups:notfound:details');
+		
+		$body = elgg_view_layout('two_column_left_sidebar', "", $area2,"");
+	}
+		
 	// Finally draw the page
-	page_draw($group->name, $body);
+	page_draw($title, $body);
 ?>

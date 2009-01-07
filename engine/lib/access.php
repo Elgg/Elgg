@@ -71,31 +71,37 @@
 				$query .= " WHERE am.user_guid = {$user_id} AND (ag.site_guid = {$site_id} OR ag.site_guid = 0)";
 				
 				$tmp_access_array = array(2); 
-				if (isloggedin()) 
+				if (isloggedin()) {
 					$tmp_access_array[] = 1;
-				
-				if ($collections = get_data($query)) {
-					foreach($collections as $collection)
-						if (!empty($collection->access_collection_id)) $tmp_access_array[] = $collection->access_collection_id;
-						
-				}
 					
-				$query = "SELECT ag.id FROM {$CONFIG->dbprefix}access_collections ag  ";
-				$query .= " WHERE ag.owner_guid = {$user_id} AND (ag.site_guid = {$site_id} OR ag.site_guid = 0)";
-				
-				if ($collections = get_data($query)) {
-					foreach($collections as $collection)
-						if (!empty($collection->id)) $tmp_access_array[] = $collection->id;
+					// The following can only return sensible data if the user is logged in.
+					
+					if ($collections = get_data($query)) {
+						foreach($collections as $collection)
+							if (!empty($collection->access_collection_id)) $tmp_access_array[] = $collection->access_collection_id;
+							
+					}
+						
+					$query = "SELECT ag.id FROM {$CONFIG->dbprefix}access_collections ag  ";
+					$query .= " WHERE ag.owner_guid = {$user_id} AND (ag.site_guid = {$site_id} OR ag.site_guid = 0)";
+					
+					if ($collections = get_data($query)) {
+						foreach($collections as $collection)
+							if (!empty($collection->id)) $tmp_access_array[] = $collection->id;
+					}
+					 
+					
+					global $is_admin;
+					
+					if (isset($is_admin) && $is_admin == true) {
+						$tmp_access_array[] = 0;
+					}
+
+					$access_array[$user_id] = $tmp_access_array;
 				}
-				 
+				else
+					return $tmp_access_array; // No user id logged in so we can only access public info
 				
-				global $is_admin;
-				
-				if (isset($is_admin) && $is_admin == true) {
-					$tmp_access_array[] = 0;
-				}
-				
-				$access_array[$user_id] = $tmp_access_array;
 				
 			} else {
 				$tmp_access_array = $access_array[$user_id];
