@@ -1452,7 +1452,7 @@
 		}
 		
 		// Cache entity if we have a cache available
-		if ($newentity_cache) $newentity_cache->save($new_entity->guid, $new_entity);
+		if (($newentity_cache) && ($new_entity)) $newentity_cache->save($new_entity->guid, $new_entity);
 		
 		return $new_entity;
 	}
