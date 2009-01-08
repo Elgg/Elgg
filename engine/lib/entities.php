@@ -1639,7 +1639,7 @@
 		$reason = sanitise_string($reason);
 		
 		if ($entity = get_entity($guid)) {		
-			if (trigger_elgg_event('delete',$entity->type,$entity)) {	
+			if (trigger_elgg_event('disable',$entity->type,$entity)) {	
 				if ($entity->canEdit()) {
 					
 					if ($reason)
