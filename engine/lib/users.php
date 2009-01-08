@@ -402,6 +402,28 @@
 	}
 	
 	/**
+	 * Disables all of a user's entities
+	 *
+	 * @param int $owner_guid The owner GUID
+	 * @return true|false Depending on success
+	 */
+	function disable_user_entities($owner_guid) {
+
+		global $CONFIG;
+		$owner_guid = (int) $owner_guid;
+		if ($entity = get_entity($owner_guid)) {
+			if (trigger_elgg_event('disable',$entity->type,$entity)) {
+				if ($entity->canEdit()) {
+					$res = update_data("UPDATE {$CONFIG->dbprefix}entities set enabled='no' where owner_guid={$owner_guid} or container_guid = {$owner_guid}");
+					return $res;
+				}
+			}
+		}
+		return false;
+		
+	}
+	
+	/**
 	 * Delete a user's extra data.
 	 * 
 	 * @param int $guid
@@ -417,7 +439,7 @@
 		// Check to see if we have access and it exists
 		if ($row) 
 		{
-			disable_entities($guid);
+			disable_user_entities($guid);
 			// Delete any existing stuff
 			return delete_data("DELETE from {$CONFIG->dbprefix}users_entity where guid=$guid");
 		}
