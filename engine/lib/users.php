@@ -162,21 +162,12 @@
 		 *
 		 * @param string $reason Optional reason
 		 */
-		public function ban($reason = "")
-		{
-			if (disable_user_entities($this->guid))
-				return $this->disable($reason);
-				
-			return false;
-		}
+		public function ban($reason = "") { return ban_user($this->guid, $reason); }
 		
 		/**
 		 * Unban this user.
 		 */
-		public function unban()
-		{
-			return enable_entity($this->guid);
-		}
+		public function unban()	{ return unban_user($this->guid); }
 				
 		/**
 		 * Get sites that this user is a member of
@@ -442,6 +433,47 @@
 		}
 		return false;
 		
+	}
+	
+	/**
+	 * Ban a user
+	 *
+	 * @param int $user_guid The user guid
+	 * @param string $reason A reason
+	 */
+	function ban_user($user_guid, $reason = "")
+	{
+		$user_guid = (int)$user_guid;
+		$reason = sanitise_string($reason);
+		
+		$user = get_entity($user_guid);
+		
+		if (($user) && ($user->canEdit()) && ($user instanceof ElggUser))
+		{
+			if (disable_user_entities($user_guid))
+				return $user->disable($reason);
+		}		
+
+		return false;
+	}
+	
+	/**
+	 * Unban a user.
+	 *
+	 * @param int $user_guid Unban a user.
+	 */
+	function unban_user($user_guid)
+	{
+		$user_guid = (int)$user_guid;
+		
+		$user = get_entity($user_guid);
+		
+		if (($user) && ($user->canEdit()) && ($user instanceof ElggUser))
+		{
+			return enable_entity($user_guid);
+		}
+		
+		return false;
 	}
 	
 	/**
