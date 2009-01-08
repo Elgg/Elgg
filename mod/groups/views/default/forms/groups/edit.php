@@ -64,7 +64,7 @@
 
 					echo elgg_view("input/radio",array(
 									"internalname" => "pages_enable",
-									"value" => $vars['entity']->pages_enable,
+									"value" => $vars['entity']->pages_enable ? $vars['entity']->pages_enable : 'yes',
 									'options' => array(
 														elgg_echo('groups:yes') => 'yes',
 														elgg_echo('groups:no') => 'no',
@@ -80,7 +80,7 @@
 
 					echo elgg_view("input/radio",array(
 									"internalname" => "forum_enable",
-									"value" => $vars['entity']->forum_enable,
+									"value" => $vars['entity']->forum_enable ? $vars['entity']->forum_enable : 'yes',
 									'options' => array(
 														elgg_echo('groups:yes') => 'yes',
 														elgg_echo('groups:no') => 'no',
@@ -96,7 +96,7 @@
 
 					echo elgg_view("input/radio",array(
 									"internalname" => "files_enable",
-									"value" => $vars['entity']->files_enable,
+									"value" => $vars['entity']->files_enable ? $vars['entity']->files_enable : 'yes',
 									'options' => array(
 														elgg_echo('groups:yes') => 'yes',
 														elgg_echo('groups:no') => 'no',
