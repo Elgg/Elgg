@@ -152,6 +152,8 @@ CREATE TABLE `prefix_users_entity` (
   KEY `password` (`password`),
   KEY `email` (`email`(50)),
   KEY `code` (`code`),
+  KEY `last_action` (`last_action`),
+  KEY `last_login` (`last_login`),
   FULLTEXT KEY `name` (`name`),
   FULLTEXT KEY (`name`,`username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
