@@ -1412,6 +1412,9 @@
 		if (!($row instanceof stdClass))
 			return $row;
 			
+		if ((!isset($row->guid)) || (!isset($row->subtype)))
+			return $row;
+			
 		$new_entity = false;
 			
 		// Create a memcache cache if we can
