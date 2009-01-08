@@ -22,9 +22,8 @@
 	
 	if ( ($obj instanceof ElggUser) && ($obj->canEdit()))
 	{
-		disable_user_entities($obj->guid);
 		// Now actually disable it
-		if ($obj->disable('banned')) {
+		if ($obj->ban('banned')) {
 			system_message(elgg_echo('admin:user:ban:yes'));
 		}
 		else

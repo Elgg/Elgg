@@ -156,6 +156,27 @@
 			return parent::delete();
 				
 		}
+		
+		/**
+		 * Ban this user.
+		 *
+		 * @param string $reason Optional reason
+		 */
+		public function ban($reason = "")
+		{
+			if (disable_user_entities($this->guid))
+				return $this->disable($reason);
+				
+			return false;
+		}
+		
+		/**
+		 * Unban this user.
+		 */
+		public function unban()
+		{
+			return enable_entity($this->guid);
+		}
 				
 		/**
 		 * Get sites that this user is a member of
