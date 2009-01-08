@@ -426,6 +426,7 @@
 		foreach ($where as $w)
 			$query .= " $w and ";
 		$query .= get_access_sql_suffix("a"); // Add access controls
+		$query .= ' and ' . get_access_sql_suffix("e"); // Add access controls
 		
 		if ($count) {
 			$row = get_data_row($query);
@@ -596,6 +597,7 @@
 		foreach ($where as $w)
 			$query .= " $w and ";
 		$query .= get_access_sql_suffix("a"); // now add access
+		$query .= ' and ' . get_access_sql_suffix("e"); // now add access
 		
 		$row = get_data_row($query);
 		if ($row)
