@@ -742,9 +742,6 @@ Alternatively, you can enter your database settings below and we will try and do
 			'email:save:success' => "New email address saved, verification requested.",
 			'email:save:fail' => "Your new email address could not be saved.",
 	
-			'email:confirm:success' => "You have confirmed your email address!",
-			'email:confirm:fail' => "Your email address could not be verified...",
-	
 			'friend:newfriend:subject' => "%s has made you a friend!",
 			'friend:newfriend:body' => "%s has made you a friend!
 
