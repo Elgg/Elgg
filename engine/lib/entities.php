@@ -1432,7 +1432,7 @@
 				$new_entity = new $classname($row);
 				
 				if (!($new_entity instanceof ElggEntity))
-					throw new ClassException(sprintf(elgg_echo('ClassException:ClassnameNotClass'), $classname, get_class()));
+					throw new ClassException(sprintf(elgg_echo('ClassException:ClassnameNotClass'), $classname, 'ElggEntity'));
 			}
 			else
 				error_log(sprintf(elgg_echo('ClassNotFoundException:MissingClass'), $classname));
