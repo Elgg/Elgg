@@ -543,6 +543,9 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	
 			'admin:user:makeadmin:yes' => "User is now an admin.",
 			'admin:user:makeadmin:no' => "We could not make this user an admin.",
+	
+			'admin:user:removeadmin:yes' => "User is no longer an admin.",
+			'admin:user:removeadmin:no' => "We could not remove administrator privileges from this user.",
 			
 		/**
 		 * User settings
@@ -603,6 +606,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	
 			'resetpassword' => "Reset password",
 			'makeadmin' => "Make admin",
+			'removeadmin' => "Remove admin",
 	
 			'option:yes' => "Yes",
 			'option:no' => "No",

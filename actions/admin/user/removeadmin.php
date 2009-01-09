@@ -23,14 +23,14 @@
 	
 	if ( ($obj instanceof ElggUser) && ($obj->canEdit()))
 	{
-		$obj->admin = 'yes';
-		if ($obj->admin)
-			system_message(elgg_echo('admin:user:makeadmin:yes'));
+		$obj->admin = '';
+		if (!$obj->admin)
+			system_message(elgg_echo('admin:user:removeadmin:yes'));
 		else
-			register_error(elgg_echo('admin:user:makeadmin:no'));
+			register_error(elgg_echo('admin:user:removeadmin:no'));
 	}
 	else
-		register_error(elgg_echo('admin:user:makeadmin:no'));
+		register_error(elgg_echo('admin:user:removeadmin:no'));
 	
 	forward($_SERVER['HTTP_REFERER']);
 
