@@ -637,14 +637,14 @@
 	 * @param true|false $fullview Whether or not to display the full view (default: true)
 	 * @return string The list in a form suitable to display
 	 */
-	function list_user_objects($user_guid, $subtype = "", $limit = 10, $fullview = true) {
+	function list_user_objects($user_guid, $subtype = "", $limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true) {
 		
 		$offset = (int) get_input('offset');
 		$limit = (int) $limit;
 		$count = (int) count_user_objects($user_guid, $subtype);
 		$entities = get_user_objects($user_guid, $subtype, $limit, $offset);
 		
-		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview);
+		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle, $pagination);
 		
 	}
 	
@@ -698,14 +698,14 @@
 	 * @param true|false $viewtypetoggle Whether or not to allow you to flip to gallery mode (default: true)
 	 * @return string The list in a form suitable to display
 	 */
-	function list_user_friends_objects($user_guid, $subtype = "", $limit = 10, $fullview = true, $viewtypetoggle = true) {
+	function list_user_friends_objects($user_guid, $subtype = "", $limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true) {
 		
 		$offset = (int) get_input('offset');
 		$limit = (int) $limit;
 		$count = (int) count_user_friends_objects($user_guid, $subtype);
 		$entities = get_user_friends_objects($user_guid, $subtype, $limit, $offset);
 		
-		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle);
+		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle, $pagination);
 		
 	}
 	
