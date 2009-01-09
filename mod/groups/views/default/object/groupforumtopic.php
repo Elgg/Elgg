@@ -15,20 +15,28 @@
     $description = autop($vars['entity']->description);
     $group =  get_entity($vars['entity']->container_guid);
     $forum_created = friendly_time($vars['entity']->time_created);
-    if (isloggedin()) {
-    $counter = $vars['entity']->countAnnotations("group_topic_post");
-    $last_post = $vars['entity']->getAnnotations("group_topic_post", 1, 0, "desc");
-    }
-                //get the time and user
-                foreach($last_post as $last){
-                    $last_time = $last->time_created;
-                    $last_user = $last->owner_guid;
-                }
-                
-    $info = "<p class=\"latest_discussion_info\">" . elgg_echo('created') . " " . $forum_created . ", " . elgg_echo('with') . " " . $counter . " " . elgg_echo('posts') . "<br /><span class=\"timestamp\">last updated " . friendly_time($last_time);
-    if ($u = get_user($last_user)) {
-    	$info .= "<br />by <a href=\"" . $u->getURL() . "\">" . $u->username . "</a>";
-    }
+    //if (isloggedin()) {
+	    $counter = $vars['entity']->countAnnotations("group_topic_post");
+	    $last_post = $vars['entity']->getAnnotations("group_topic_post", 1, 0, "desc");
+    
+    //}
+
+    //get the time and user
+    if ($last_post) {
+		foreach($last_post as $last)
+		{
+			$last_time = $last->time_created;
+			$last_user = $last->owner_guid;
+		}
+	}
+
+	$u = get_user($last_user);
+	
+    $info = "<p class=\"latest_discussion_info\">" . sprintf(elgg_echo('group:created'), $forum_created, $counter) .  "<br /><span class=\"timestamp\">";
+    if ($last_time) $info.= sprintf(elgg_echo('groups:lastupdated'), friendly_time($last_time), "<br />by <a href=\"" . $u->getURL() . "\">" . $u->username . "</a>");
+    //if ($u = get_user($last_user)) {
+    //	$info .= "<br />by <a href=\"" . $u->getURL() . "\">" . $u->username . "</a>";
+    //}
     $info .= '</span></p>';
 	//get the group avatar
 	$icon = elgg_view("profile/icon",array('entity' => $group, 'size' => 'small'));

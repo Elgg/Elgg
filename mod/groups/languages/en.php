@@ -64,6 +64,9 @@
 			'groups:yes' => 'yes',
 			'groups:no' => 'no',
 	
+			'group:created' => 'Created %s with %d posts',
+			'groups:lastupdated' => 'Last updated %s by %s',
+	
 			/*
 			  Group forum strings
 			*/
