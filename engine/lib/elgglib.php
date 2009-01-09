@@ -592,6 +592,7 @@
 	 * @param int $limit The number of entities to display per page
 	 * @param true|false $fullview Whether or not to display the full view (default: true)
 	 * @param true|false $viewtypetoggle Whether or not to allow users to toggle to gallery view
+	 * @param bool $pagination Whether pagination is offered.
 	 * @return string The list of entities
 	 */
 		function elgg_view_entity_list($entities, $count, $offset, $limit, $fullview = true, $viewtypetoggle = true, $pagination = true) {
