@@ -91,3 +91,10 @@ div.usericon a.icon img {
 .user_menu_admin a {
 	color:#cc0033;
 }
+
+/* Banned user */
+#profile_banned {
+	background-color:#FF8888;
+	border:3px solid #FF0000;
+	padding:2px;
+}

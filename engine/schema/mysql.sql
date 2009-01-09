@@ -140,8 +140,8 @@ CREATE TABLE `prefix_users_entity` (
   `email` text NOT NULL,
   `language` varchar(6)  NOT NULL default '',
   `code` varchar(32) NOT NULL default '',
+  `banned` enum ('yes', 'no') NOT NULL default 'no',
   
-
   `last_action` int(11) NOT NULL default '0',
   `prev_last_action` int(11) NOT NULL default '0',
   `last_login` int(11) NOT NULL default '0',

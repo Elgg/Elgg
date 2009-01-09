@@ -29,6 +29,8 @@
 										'size' => 'small',
 									  )
 			);
+			
+		$banned = $vars['entity']->isBanned();
 	
 		// Simple XFN
 		$rel = "";
@@ -37,11 +39,26 @@
 		else if (check_entity_relationship(page_owner(), 'friend', $vars['entity']->guid))
 			$rel = 'friend';
 		
-		$info .= "<p><b><a href=\"" . $vars['entity']->getUrl() . "\" rel=\"$rel\">" . $vars['entity']->name . "</a></b></p>";
-	
-		$location = $vars['entity']->location;
-		if (!empty($location)) {
-			$info .= "<p class=\"owner_timestamp\">" . elgg_echo("profile:location") . ": " . elgg_view("output/tags",array('value' => $vars['entity']->location)) . "</p>";
+		if (!$banned) {
+			$info .= "<p><b><a href=\"" . $vars['entity']->getUrl() . "\" rel=\"$rel\">" . $vars['entity']->name . "</a></b></p>";
+		
+			$location = $vars['entity']->location;
+			if (!empty($location)) {
+				$info .= "<p class=\"owner_timestamp\">" . elgg_echo("profile:location") . ": " . elgg_view("output/tags",array('value' => $vars['entity']->location)) . "</p>";
+			}
+		}
+		else
+		{
+			$info .= "<p><b><strike>";
+			if (isadminloggedin())
+				$info .= "<a href=\"" . $vars['entity']->getUrl() . "\">";
+			$info .= $vars['entity']->name;
+			if (isadminloggedin())
+				$info .= "</a>";
+			$info .= "</strike></b></p>";
+		
+			$info .= "<p class=\"owner_timestamp\">" . elgg_echo('profile:banned') . "</p>";
+			
 		}
 		
 		echo elgg_view_listing($icon, $info);

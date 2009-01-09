@@ -26,7 +26,7 @@
 	if ( ($obj instanceof ElggUser) && ($obj->canEdit()))
 	{
 		// Now actually disable it
-		if ($obj->enable())
+		if ($obj->unban())
 			system_message(elgg_echo('admin:user:unban:yes'));
 		else
 			register_error(elgg_echo('admin:user:unban:no'));

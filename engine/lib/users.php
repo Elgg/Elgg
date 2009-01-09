@@ -47,6 +47,7 @@
 			$this->attributes['email'] = "";
 			$this->attributes['language'] = "";
 			$this->attributes['code'] = "";
+			$this->attributes['banned'] = "no";
 			$this->attributes['tables_split'] = 2;
 		}
 				
@@ -168,6 +169,13 @@
 		 * Unban this user.
 		 */
 		public function unban()	{ return unban_user($this->guid); }
+		
+		/**
+		 * Is this user banned or not?
+		 *
+		 * @return bool
+		 */
+		public function isBanned() { return $this->banned == 'yes'; }
 				
 		/**
 		 * Get sites that this user is a member of
@@ -443,6 +451,8 @@
 	 */
 	function ban_user($user_guid, $reason = "")
 	{
+		global $CONFIG;
+		
 		$user_guid = (int)$user_guid;
 		$reason = sanitise_string($reason);
 		
@@ -450,8 +460,12 @@
 		
 		if (($user) && ($user->canEdit()) && ($user instanceof ElggUser))
 		{
-			if (disable_user_entities($user_guid))
-				return $user->disable($reason);
+			// Add reason
+			if ($reason)
+				create_metadata($user_guid, 'ban_reason', $reason,'', 0, 2);
+			
+			// Set ban flag
+			return update_data("UPDATE {$CONFIG->dbprefix}users_entity set banned='yes' where guid=$user_guid");
 		}		
 
 		return false;
@@ -464,13 +478,16 @@
 	 */
 	function unban_user($user_guid)
 	{
+		global $CONFIG;
+		
 		$user_guid = (int)$user_guid;
 		
 		$user = get_entity($user_guid);
 		
 		if (($user) && ($user->canEdit()) && ($user instanceof ElggUser))
 		{
-			return enable_entity($user_guid);
+			create_metadata($user_guid, 'ban_reason', '','', 0, 2);
+			return update_data("UPDATE {$CONFIG->dbprefix}users_entity set banned='no' where guid=$user_guid");
 		}
 		
 		return false;

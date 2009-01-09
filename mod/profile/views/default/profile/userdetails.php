@@ -134,9 +134,20 @@
 	<div id="profile_info_column_right">	
 	<p class="profile_aboutme_title"><b><?php echo elgg_echo("profile:aboutme"); ?></b></p>
 	<?php echo autop($vars['entity']->description); ?>
+	
+	<?php if ($vars['entity']->isBanned()) { ?>
+		<div id="profile_banned">	
+		<?php echo elgg_echo('profile:banned'); ?>
+		</div><!-- /#profile_info_column_right -->
+	
+	<?php } ?>
+	
 	</div><!-- /#profile_info_column_right -->
 
 </td>
+
+
+
 </tr>
 <?php } ?>
 

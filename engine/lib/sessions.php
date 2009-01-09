@@ -188,7 +188,7 @@
 				
 	            if ($user = get_user_by_username($credentials['username'])) {
 	            	// Let admins log in without validating their email, but normal users must have validated their email
-					if ((!$user->admin) && (!$user->validated) && (!$user->admin_created))
+					if ((!$user->admin) && (!$user->validated) && (!$user->admin_created) && (!$user->isBanned()))
 						return false;
 	          	
 	                 if ($user->password == generate_user_password($user, $credentials['password'])) {
@@ -212,6 +212,8 @@
 		function login(ElggUser $user, $persistent = false) {
             
             global $CONFIG;
+            
+            if ($user->isBanned()) return false; // User is banned, return false.
           
             $_SESSION['user'] = $user;
             $_SESSION['guid'] = $user->getGUID();
@@ -377,6 +379,13 @@
     		// Initialise the magic session
     		global $SESSION;
     		$SESSION = new ElggSession();
+    		
+    		// Finally we ensure that a user who has been banned with an open session is kicked.
+    		if ((isset($_SESSION['user'])) && ($_SESSION['user']->isBanned()))
+    		{
+    			session_destroy();
+			    return false;
+    		}
     		
     		return true;
 	        

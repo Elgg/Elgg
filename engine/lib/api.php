@@ -847,7 +847,9 @@
 		if ($validated_userid) {			
 			$u = get_entity($validated_userid);
 			if (!$u) return false; // Could we get the user?
-			if (!login($u)) return false; // Fail if we couldn't log the user in (likely means they were banned).
+			if ( (!$u instanceof ElggUser)) return false; // Not an elgg user
+			if ($u->isBanned()) return false; // User is banned
+			if (!login($u)) return false; // Fail if we couldn't log the user in 
 			
 		}
 		

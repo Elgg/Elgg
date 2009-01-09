@@ -68,11 +68,12 @@
 			} else {
 				echo elgg_view('profile/menu/links',$vars);
 			}
-					
 		?>
-
 	</div>	
-	<a href="<?php echo $vars['entity']->getURL(); ?>" class="icon" ><?php 
+	<?php
+		if ((isadminloggedin()) || (!$vars['entity']->isBanned())) {
+	 ?><a href="<?php echo $vars['entity']->getURL(); ?>" class="icon" ><?php 
+		}
 		
 	} 
 	

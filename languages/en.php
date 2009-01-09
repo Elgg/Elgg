@@ -241,6 +241,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'item:user' => "Users",
 			'riveritem:single:user' => 'a user',
 			'riveritem:plural:user' => 'some users',
+	
 
 		/**
 		 * Profile menu items and titles
@@ -271,6 +272,8 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'profile:phone' => "Telephone",
 			'profile:mobile' => "Mobile phone",
 			'profile:website' => "Website",
+	
+			'profile:banned' => 'This user account has been suspended.',
 
 			'profile:river:update' => "%s updated their profile",
 			'profile:river:iconupdate' => "%s updated their profile icon",
