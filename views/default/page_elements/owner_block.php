@@ -54,8 +54,8 @@
 			$label2 = elgg_echo('feed:odd');
 			$contents .= <<<END
 
-	<div id="owner_block_rss_feed"><a href="{$url}">{$label}</a></div>
-	<div id="owner_block_odd_feed"><a href="{$url2}">{$label2}</a></div>
+	<div id="owner_block_rss_feed"><a href="{$url}" rel="nofollow">{$label}</a></div>
+	<div id="owner_block_odd_feed"><a href="{$url2}" rel="nofollow">{$label2}</a></div>
 			
 END;
 		}
