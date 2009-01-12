@@ -112,7 +112,7 @@
 		$query .= " join {$CONFIG->dbprefix}entity_subtypes subtype on subtype.id = e.subtype ";
 		$query .= " join {$CONFIG->dbprefix}metastrings msvalue on msvalue.id = md.value_id ";
 		
-		$query .= " where 1 ";
+		$query .= " where msvalue.string != '' ";
 		
 		if ($metadata_name > 0) {
 			$query .= " and md.name_id = {$metadata_name} ";
