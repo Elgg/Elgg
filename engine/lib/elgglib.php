@@ -1475,7 +1475,11 @@
 		}
 		
 	/**
-	 * Triggers a plugin hook, with various parameters as an array. For example, if you're 
+	 * Triggers a plugin hook, with various parameters as an array. For example, to provide
+	 * a 'foo' hook that concerns an entity of type 'bar', with a parameter called 'param1'
+	 * with value 'value1', that by default returns true, you'd call:
+	 * 
+	 * trigger_plugin_hook('foo', 'bar', array('param1' => 'value1'), true);
 	 *
 	 * @see register_plugin_hook
 	 * @param string $hook The name of the hook to trigger
