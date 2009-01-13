@@ -293,7 +293,8 @@
 					if (trigger_elgg_event('update',$entity->type,$entity)) {
 						return $guid;
 					} else {
-						delete_entity($guid);
+						$entity->delete();
+						//delete_entity($guid);
 					}
 				}
 			}
@@ -306,7 +307,8 @@
 					if (trigger_elgg_event('create',$entity->type,$entity)) {
 						return $guid;
 					} else {
-						delete_entity($guid);
+						$entity->delete();
+						//delete_entity($guid);
 					}
 				}
 			}

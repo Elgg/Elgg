@@ -291,7 +291,8 @@
 					if (trigger_elgg_event('create',$entity->type,$entity)) {
 						return $guid;
 					} else {
-						delete_entity($guid);
+						$entity->delete();
+						//delete_entity($guid);
 					}
 				}
 			}
