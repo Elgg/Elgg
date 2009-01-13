@@ -488,8 +488,6 @@
     				return $return;
   				}
   				
-  				else
-  					error_log('marcus FAILED TO WRITe ' . print_r($CONFIG, true));
 			}
 			
 			return false;
