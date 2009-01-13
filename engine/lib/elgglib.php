@@ -310,7 +310,8 @@
 		// If it's been requested, pass off to a template handler instead
 		    if ($bypass == false && isset($CONFIG->template_handler) && !empty($CONFIG->template_handler)) {
 		    	$template_handler = $CONFIG->template_handler;
-		    	return $template_handler($view, $vars);
+		    	if (is_callable($template_handler))
+		    		return $template_handler($view, $vars);
 		    }
 		
 		// Attempt to memcache views.
