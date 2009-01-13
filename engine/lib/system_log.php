@@ -39,7 +39,7 @@
 		public function getClassName();
 		
 		/**
-		 * Return a type of the object - eg. object, group, user, relationship, metadata, annotation etc
+		 * Return the type of the object - eg. object, group, user, relationship, metadata, annotation etc
 		 */
 		public function getType();
 		
