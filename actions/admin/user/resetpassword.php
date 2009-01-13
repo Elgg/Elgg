@@ -25,6 +25,7 @@
 	{
 		$password = generate_random_cleartext_password();
 		
+		$obj->salt = generate_random_cleartext_password(); // Reset the salt
 		$obj->password = generate_user_password($obj, $password);
 		
 		if ($obj->save())
