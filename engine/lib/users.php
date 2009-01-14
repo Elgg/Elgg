@@ -390,7 +390,7 @@
 			// Exists and you have access to it
 
 			if ($exists = get_data_row("SELECT guid from {$CONFIG->dbprefix}users_entity where guid = {$guid}")) {
-				$result = update_data("UPDATE {$CONFIG->dbprefix}users_entity set name='$name', username='$username', password='$password', email='$email', language='$language', code='$code', last_action = ". time() ." where guid = {$guid}");
+				$result = update_data("UPDATE {$CONFIG->dbprefix}users_entity set name='$name', username='$username', password='$password', salt='$salt', email='$email', language='$language', code='$code', last_action = ". time() ." where guid = {$guid}");
 				if ($result != false)
 				{
 					// Update succeeded, continue

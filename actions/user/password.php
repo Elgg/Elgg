@@ -31,6 +31,7 @@
 		{
 			if ($password == $password2)
 			{
+				$user->salt = generate_random_cleartext_password(); // Reset the salt
 				$user->password = generate_user_password($user, $password);
 				if ($user->save())
 					system_message(elgg_echo('user:password:success'));
