@@ -181,20 +181,90 @@
 		 */
 		function pam_auth_userpass($credentials = NULL)
 		{
+			$max_in_period = 3; // max 3 login attempts in
+			$period_length = 5; // 5 minutes
+			$periods = array();
+			
 			if (is_array($credentials) && ($credentials['username']) && ($credentials['password']))
 			{
 				//$dbpassword = md5($credentials['password']);
             
 				
 	            if ($user = get_user_by_username($credentials['username'])) {
+	            		            	
 	            	// Let admins log in without validating their email, but normal users must have validated their email
 					if ((!$user->admin) && (!$user->validated) && (!$user->admin_created) && (!$user->isBanned()))
 						return false;
 	          	
-	                 if ($user->password == generate_user_password($user, $credentials['password'])) {
+	                 if ($user->password == generate_user_password($user, $credentials['password'])) 
+	                 	
 	                 	return true;
-	                 }
+	                 else 
+	                 	// Password failed, log.
+	                 	log_login_failure($user->guid);
+	                 	
 	            }
+			}
+			
+			return false;
+		}
+		
+		function log_login_failure($user_guid)
+		{
+			$user_guid = (int)$user_guid;
+			$user = get_entity($user_guid);
+			
+			if (($user_guid) && ($user) && ($user instanceof ElggUser))
+			{
+				$fails = (int)$user->getPrivateSetting("login_failures");
+				$fails++;
+				
+				$user->setPrivateSetting("login_failures", $fails);
+				$user->setPrivateSetting("login_failure_$fails", time());
+			}
+		}
+		
+		function reset_login_failure_count($user_guid)
+		{
+			$user_guid = (int)$user_guid;
+			$user = get_entity($user_guid);
+			
+			if (($user_guid) && ($user) && ($user instanceof ElggUser))
+			{
+				$fails = (int)$user->getPrivateSetting("login_failures");
+				
+				if ($fails) {
+					for ($n=1; $n <= $fails; $n++) 
+						$user->removePrivateSetting("login_failure_$n");
+						
+					$user->removePrivateSetting("login_failures");
+				}
+			}
+		}
+		
+		function check_rate_limit_exceeded($user_guid)
+		{
+			$limit = 5;
+			$user_guid = (int)$user_guid;
+			$user = get_entity($user_guid);
+			
+			if (($user_guid) && ($user) && ($user instanceof ElggUser))
+			{
+				$fails = (int)$user->getPrivateSetting("login_failures");
+				if ($fails >= $limit)
+				{
+					$cnt = 0;
+					$time = time();
+					for ($n=$fails; $n>0; $n--)
+					{
+						$f = $user->getPrivateSetting("login_failure_$n");
+						if ($f > $time - (60*5))
+							$cnt++;
+							
+						if ($cnt==$limit) return true; // Limit reached
+					}
+				}
+				
 			}
 			
 			return false;
@@ -214,6 +284,7 @@
             global $CONFIG;
             
             if ($user->isBanned()) return false; // User is banned, return false.
+            if (check_rate_limit_exceeded($user->guid)) return false; // Check rate limit
           
             $_SESSION['user'] = $user;
             $_SESSION['guid'] = $user->getGUID();
@@ -246,6 +317,7 @@
 
 	        // Update statistics
 	        set_last_login($_SESSION['guid']);
+	        reset_login_failure_count($user->guid); // Reset any previous failed login attempts
 	        
 			return true;
 				
