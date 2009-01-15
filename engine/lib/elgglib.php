@@ -2070,6 +2070,16 @@
 		
 	}
 	
+	/**
+	 * This function is a shutdown hook registered on startup which does nothing more than trigger a 
+	 * shutdown event when the script is shutting down, but before database connections have been dropped etc.
+	 *
+	 */
+	function __elgg_shutdown_hook()
+	{
+		trigger_elgg_event('shutdown', 'system');
+	}
+	
 	function elgg_init() {
 		// Important actions
 			register_action('comments/add');
@@ -2079,6 +2089,8 @@
 			add_menu(elgg_echo('content:latest'), $CONFIG->wwwroot . 'dashboard/latest.php');
 		// Page handler for JS
 			register_page_handler('js','js_page_handler');
+		// Register an event triggered at system shutdown	
+			register_shutdown_function('__elgg_shutdown_hook');
 	}
 	
 	register_elgg_event_handler('init','system','elgg_init');
