@@ -1491,7 +1491,7 @@
 	 */
 		function trigger_plugin_hook($hook, $entity_type, $params = null, $returnvalue = null) {
 			global $CONFIG;
-	
+			
 			//if (!isset($CONFIG->hooks) || !isset($CONFIG->hooks[$hook]) || !isset($CONFIG->hooks[$hook][$entity_type]))
 			//	return $returnvalue;
 
