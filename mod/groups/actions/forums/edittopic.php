@@ -26,7 +26,7 @@
 		$topic_guid = get_input('topic');
 		$access = get_input('access_id');
 		$group_guid = get_input('group_guid');
-		$user = $_SESSION['user']->getGUID(); // you need to be logged in to comment on a group forum
+		//$user = $_SESSION['user']->getGUID(); // you need to be logged in to comment on a group forum
 		$status = get_input('status'); // sticky, resolved, closed
 		
 	// Convert string of tags into a preformatted array
@@ -34,46 +34,50 @@
 		
 	// Make sure we actually have permission to edit
 		$topic = get_entity($topic_guid);
+		if ($topic)
+		{
 		
-		if ($topic->getSubtype() == "groupforumtopic") {
-	
-		// Convert string of tags into a preformatted array
-			$tagarray = string_to_tag_array($tags);
+			$user = $topic->getOwner(); 
 			
-		// Make sure the title isn't blank
-			if (empty($title) || empty($message)) {
-				register_error(elgg_echo("groupstopic:blank"));
+			if ($topic->getSubtype() == "groupforumtopic") {
 		
-		// Otherwise, save the forum
-			} else {
+			// Convert string of tags into a preformatted array
+				$tagarray = string_to_tag_array($tags);
 				
-		        $topic->access_id = $access;
-				
-		// Set its title
-				$topic->title = $title;
-				
-		// if no tags are present, clear existing ones
-				if (is_array($tagarray)) {
-					$topic->tags = $tagarray;
-				} else $topic->clearMetadata('tags');
-				
-		// edit metadata
-		       $topic->status = $status; // the current status i.e sticky, closed, resolved
-		       
-        // now let's edit the message annotation
-			   update_annotation($message_id, "group_topic_post", $message, "",$user, $access);
-		       
-		// save the changes
-            if (!$topic->save()) {
-			//		register_error(elgg_echo("forumtopic:error"));
-			}
+			// Make sure the title isn't blank
+				if (empty($title) || empty($message)) {
+					register_error(elgg_echo("groupstopic:blank"));
 			
-           // Success message
-				system_message(elgg_echo("groups:forumtopic:edited"));
+			// Otherwise, save the forum
+				} else {
+					
+			        $topic->access_id = $access;
+					
+			// Set its title
+					$topic->title = $title;
+					
+			// if no tags are present, clear existing ones
+					if (is_array($tagarray)) {
+						$topic->tags = $tagarray;
+					} else $topic->clearMetadata('tags');
+					
+			// edit metadata
+			       $topic->status = $status; // the current status i.e sticky, closed, resolved
+			       
+	        // now let's edit the message annotation
+				   update_annotation($message_id, "group_topic_post", $message, "",$user, $access);
+			       
+			// save the changes
+	            if (!$topic->save()) {
+				//		register_error(elgg_echo("forumtopic:error"));
+				}
 				
-		    }
-        }
-		
+	           // Success message
+					system_message(elgg_echo("groups:forumtopic:edited"));
+					
+			    }
+	        }
+		}
 		// Forward to the group forum page
 	        global $CONFIG;
 	        $url = $CONFIG->wwwroot . "pg/groups/forum/{$group_guid}/";
