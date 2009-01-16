@@ -26,11 +26,14 @@
 		
 	if (($user) && ($language))
 	{
-		$user->language = $language;
-		if ($user->save())
-			system_message(elgg_echo('user:language:success'));
-		else
-			register_error(elgg_echo('user:language:fail'));
+		if (strcmp($language, $user->language)!=0)
+		{
+			$user->language = $language;
+			if ($user->save())
+				system_message(elgg_echo('user:language:success'));
+			else
+				register_error(elgg_echo('user:language:fail'));
+		}
 	}
 	else
 		register_error(elgg_echo('user:language:fail'));

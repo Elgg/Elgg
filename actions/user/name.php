@@ -26,11 +26,14 @@
 		
 	if (($user) && ($name))
 	{
-		$user->name = $name;
-		if ($user->save())
-			system_message(elgg_echo('user:name:success'));
-		else
-			register_error(elgg_echo('user:name:fail'));
+		if (strcmp($name, $user->name)!=0)
+		{
+			$user->name = $name;
+			if ($user->save())
+				system_message(elgg_echo('user:name:success'));
+			else
+				register_error(elgg_echo('user:name:fail'));
+		}
 	}
 	else
 		register_error(elgg_echo('user:name:fail'));

@@ -24,24 +24,28 @@
 	else
 		$user = get_entity($user_id);
 		
-	if ($user)
+	if ($user) 
 	{
-		if (!get_user_by_email($email))
+		if (strcmp($email,$user->email)!=0)
 		{
-		
-			if ($user->email != $email) {
-				$user->email = $email;
-				if ($user->save())
-				{
-					request_user_validation($user->getGUID());
-					system_message(elgg_echo('email:save:success'));
+	
+			if (!get_user_by_email($email))
+			{
+			
+				if ($user->email != $email) {
+					$user->email = $email;
+					if ($user->save())
+					{
+						request_user_validation($user->getGUID());
+						system_message(elgg_echo('email:save:success'));
+					}
+					else
+						register_error(elgg_echo('email:save:fail'));
 				}
-				else
-					register_error(elgg_echo('email:save:fail'));
 			}
+			else
+				register_error(elgg_echo('registration:dupeemail'));
 		}
-		else
-			register_error(elgg_echo('registration:dupeemail'));
 	}
 	else
 		register_error(elgg_echo('email:save:fail'));
