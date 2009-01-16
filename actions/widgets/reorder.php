@@ -24,7 +24,7 @@
 		if ($result) {
 			system_message(elgg_echo('widgets:panel:save:success'));
 		} else {
-			system_message(elgg_echo('widgets:panel:save:failure'));
+			register_error(elgg_echo('widgets:panel:save:failure'));
 		}
 		
 		forward($_SERVER['HTTP_REFERER']);
