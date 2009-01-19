@@ -412,12 +412,14 @@
 				//$user->$prefix = $value;
 				//$user->save();
 				
-				if (trigger_elgg_event('plugin:usersetting', 'user', array(
+				// Hook to validate setting
+				$value = trigger_plugin_hook('plugin:usersetting', 'user', array(
 					'plugin' => $plugin_name,
 					'name' => $name,
 					'value' => $value
-				)))
-					return set_private_setting($user->guid, $prefix, $value);
+				), $value);
+					
+				return set_private_setting($user->guid, $prefix, $value);
 			}
 			
 			return false;
@@ -467,19 +469,19 @@
 				
 			if ($name!='title') 
 			{
-				if (trigger_elgg_event('plugin:setting', 'plugin', array(
+				// Hook to validate setting
+				$value = trigger_plugin_hook('plugin:setting', 'plugin', array(
 					'plugin' => $plugin_name,
 					'name' => $name,
 					'value' => $value
-				)))
-				{
-					$plugin->title = $plugin_name;
-					$plugin->access_id = 2;
-					$plugin->save();
-					$plugin->$name = $value;
-					
-					return $plugin->getGUID();
-				}
+				), $value);
+				
+				$plugin->title = $plugin_name;
+				$plugin->access_id = 2;
+				$plugin->save();
+				$plugin->$name = $value;
+				
+				return $plugin->getGUID();
 			}
 			
 			return false;
