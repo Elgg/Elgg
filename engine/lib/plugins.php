@@ -411,7 +411,13 @@
 				$prefix = "plugin:settings:$plugin_name:$name";
 				//$user->$prefix = $value;
 				//$user->save();
-				return set_private_setting($user->guid, $prefix, $value);
+				
+				if (trigger_elgg_event('plugin:usersetting', 'user', array(
+					'plugin' => $plugin_name,
+					'name' => $name,
+					'value' => $value
+				)))
+					return set_private_setting($user->guid, $prefix, $value);
 			}
 			
 			return false;
@@ -452,7 +458,8 @@
 		 * @param string $plugin_name Optional plugin name, if not specified then it is detected from where you are calling from.
 		 */
 		function set_plugin_setting($name, $value, $plugin_name = "")
-		{		
+		{	
+			if (!$plugin_name) $plugin_name = get_plugin_name();	
 			$plugin = find_plugin_settings($plugin_name);
 			
 			if (!$plugin) 
@@ -460,12 +467,19 @@
 				
 			if ($name!='title') 
 			{
-				$plugin->title = $plugin_name;
-				$plugin->access_id = 2;
-				$plugin->save();
-				$plugin->$name = $value;
-				
-				return $plugin->getGUID();
+				if (trigger_elgg_event('plugin:setting', 'plugin', array(
+					'plugin' => $plugin_name,
+					'name' => $name,
+					'value' => $value
+				)))
+				{
+					$plugin->title = $plugin_name;
+					$plugin->access_id = 2;
+					$plugin->save();
+					$plugin->$name = $value;
+					
+					return $plugin->getGUID();
+				}
 			}
 			
 			return false;
