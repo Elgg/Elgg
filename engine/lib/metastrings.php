@@ -135,7 +135,7 @@
 		global $CONFIG;
 		
 		// If memcache is enabled then we need to flush it of deleted values
-		if (is_memcache_enabled())
+		if (is_memcache_available())
 		{
 			$select_query = "
 			SELECT * 
