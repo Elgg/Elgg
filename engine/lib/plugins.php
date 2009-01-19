@@ -414,6 +414,7 @@
 				
 				// Hook to validate setting
 				$value = trigger_plugin_hook('plugin:usersetting', 'user', array(
+					'user' => $user,
 					'plugin' => $plugin_name,
 					'name' => $name,
 					'value' => $value
