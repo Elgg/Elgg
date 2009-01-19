@@ -605,6 +605,63 @@
 			
 		return false;
 	}
+
+	/**
+	 * Get entities ordered by a mathematical calculation
+	 *
+	 * @param $sum string
+	 * @param $entity_type string
+	 * @param $entity_subtype string
+	 * @param $name string
+	 * @param string $orderdir Default: asc - the sort order
+	 * @return unknown
+	 */
+	function __get_entities_from_annotations_calculate_x($sum = "sum", $entity_type = "", $entity_subtype = "", $name = "", $orderdir = 'desc')
+	{
+		global $CONFIG;
+		
+		$sum = sanitise_string($sum);
+		$entity_type = sanitise_string($entity_type);
+		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
+		$name = get_metastring_id($name);
+		
+		if (empty($name)) return 0;
+		
+		$where = array();
+		
+		if ($entity_type!="")
+			$where[] = "e.type='$entity_type'";
+		if ($entity_subtype)
+			$where[] = "e.subtype=$entity_subtype";
+		if ($name!="")
+			$where[] = "a.name_id='$name'";
+			
+		if ($sum != "count")
+			$where[] = "a.value_type='integer'"; // Limit on integer types
+		
+		$query = "SELECT distinct e.*, $sum(ms.string) as sum from {$CONFIG->dbprefix}entities e JOIN {$CONFIG->dbprefix}annotations a on a.entity_guid = e.guid JOIN {$CONFIG->dbprefix}metastrings ms on a.value_id=ms.id WHERE ";
+		foreach ($where as $w)
+			$query .= " $w and ";
+		$query .= get_access_sql_suffix("a"); // now add access
+		$query .= ' and ' . get_access_sql_suffix("e"); // now add access
+		$query .= ' order by sum ' . $orderdir;
+		
+		return get_data($query, "entity_row_to_elggstar");
+	}
+
+	/**
+	 * Returns entities ordered by the sum of an annotation
+	 *
+	 * @param unknown_type $entity_type
+	 * @param unknown_type $entity_subtype
+	 * @param unknown_type $name
+	 * @param unknown_type $value
+	 * @param unknown_type $owner_guid
+	 * @return unknown
+	 */
+	function get_entities_from_annotation_count($entity_type = "", $entity_subtype = "", $name = "", $value = "", $owner_guid = 0) {
+		return __get_entities_from_annotations_calculate_x('sum',$entity_type,$entity_subtype,$name,$value);
+	}
 	
 	/**
 	 * Delete a given annotation.
