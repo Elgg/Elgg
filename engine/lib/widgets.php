@@ -464,7 +464,7 @@
 								$return = false;
 							} else {
 								// Remove state cookie
-								setcookie('widget' + $dbquid, null);
+								setcookie('widget' + $dbguid, null);
 							}
 						}
 					}
