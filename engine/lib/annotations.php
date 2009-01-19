@@ -616,7 +616,7 @@
 	 * @param string $orderdir Default: asc - the sort order
 	 * @return unknown
 	 */
-	function __get_entities_from_annotations_calculate_x($sum = "sum", $entity_type = "", $entity_subtype = "", $name = "", $orderdir = 'desc')
+	function __get_entities_from_annotations_calculate_x($sum = "sum", $entity_type = "", $entity_subtype = "", $name = "", $owner_guid = 0, $orderdir = 'desc')
 	{
 		global $CONFIG;
 		
@@ -624,6 +624,7 @@
 		$entity_type = sanitise_string($entity_type);
 		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
 		$name = get_metastring_id($name);
+		$owner_guid = (int) $owner_guid;
 		
 		if (empty($name)) return 0;
 		
@@ -631,6 +632,8 @@
 		
 		if ($entity_type!="")
 			$where[] = "e.type='$entity_type'";
+		if ($owner_guid > 0)
+			$where[] = "e.container_guid = $owner_guid";
 		if ($entity_subtype)
 			$where[] = "e.subtype=$entity_subtype";
 		if ($name!="")
@@ -659,8 +662,8 @@
 	 * @param unknown_type $owner_guid
 	 * @return unknown
 	 */
-	function get_entities_from_annotation_count($entity_type = "", $entity_subtype = "", $name = "", $value = "", $owner_guid = 0) {
-		return __get_entities_from_annotations_calculate_x('sum',$entity_type,$entity_subtype,$name,$value);
+	function get_entities_from_annotation_count($entity_type = "", $entity_subtype = "", $name = "", $owner_guid = 0) {
+		return __get_entities_from_annotations_calculate_x('sum',$entity_type,$entity_subtype,$name,$owner_guid);
 	}
 	
 	/**
