@@ -681,8 +681,8 @@
 	 * @param true|false $count
 	 * @return unknown
 	 */
-	function get_entities_from_annotation_count($entity_type = "", $entity_subtype = "", $name = "", $owner_guid = 0, $limit = 10, $offset = 0, $count = false) {
-		return __get_entities_from_annotations_calculate_x('sum',$entity_type,$entity_subtype,$name,$owner_guid,$limit, $offset, $count);
+	function get_entities_from_annotation_count($entity_type = "", $entity_subtype = "", $name = "", $owner_guid = 0, $limit = 10, $offset = 0, $orderdir = 'desc', $count = false) {
+		return __get_entities_from_annotations_calculate_x('sum',$entity_type,$entity_subtype,$name,$owner_guid,$limit, $offset, $orderdir, $count);
 	}
 
 	/**
@@ -699,7 +699,7 @@
 	 * @param boolean $viewtypetoggle Determines whether or not the 'gallery' view can be displayed (default: no)
 	 * @return string Formatted entity list
 	 */
-	function list_entities_from_annotation_count($entity_type = "", $entity_subtype = "", $name = "", $limit = 10, $owner_guid = 0, $group_guid = 0, $asc = false, $fullview = true, $viewtypetoggle = false) {
+	function list_entities_from_annotation_count($entity_type = "", $entity_subtype = "", $name = "", $limit = 10, $owner_guid = 0, $group_guid = 0, $asc = false, $fullview = true, $viewtypetoggle = false, $pagination = true, $orderdir = 'desc') {
 		
 		if ($asc) {
 			$asc = "asc";
@@ -708,10 +708,10 @@
 		}
 		
 		$offset = (int) get_input("offset",0);
-		$count = get_entities_from_annotation_count($entity_type, $entity_subtype, $name, $owner_guid, $limit, $offset, true); 
-		$entities = get_entities_from_annotation_count($entity_type, $entity_subtype, $name, $owner_guid, $limit, $offset, true);
+		$count = get_entities_from_annotation_count($entity_type, $entity_subtype, $name, $owner_guid, $limit, $offset, $orderdir, true); 
+		$entities = get_entities_from_annotation_count($entity_type, $entity_subtype, $name, $owner_guid, $limit, $offset, $orderdir, false);
 
-		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle);
+		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle, $pagination);
 		
 	}
 	
