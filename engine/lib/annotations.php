@@ -613,10 +613,11 @@
 	 * @param $entity_type string
 	 * @param $entity_subtype string
 	 * @param $name string
+	 * @param $limit int
 	 * @param string $orderdir Default: asc - the sort order
 	 * @return unknown
 	 */
-	function __get_entities_from_annotations_calculate_x($sum = "sum", $entity_type = "", $entity_subtype = "", $name = "", $owner_guid = 0, $orderdir = 'desc')
+	function __get_entities_from_annotations_calculate_x($sum = "sum", $entity_type = "", $entity_subtype = "", $name = "", $owner_guid = 0, $limit = 10, $offset = 0, $orderdir = 'desc', $count = false)
 	{
 		global $CONFIG;
 		
@@ -624,6 +625,8 @@
 		$entity_type = sanitise_string($entity_type);
 		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
 		$name = get_metastring_id($name);
+		$limit = (int) $limit;
+		$offset = (int) $offset;
 		$owner_guid = (int) $owner_guid;
 		
 		if (empty($name)) return 0;
@@ -641,16 +644,29 @@
 			
 		if ($sum != "count")
 			$where[] = "a.value_type='integer'"; // Limit on integer types
-		
-		$query = "SELECT distinct e.*, $sum(ms.string) as sum from {$CONFIG->dbprefix}entities e JOIN {$CONFIG->dbprefix}annotations a on a.entity_guid = e.guid JOIN {$CONFIG->dbprefix}metastrings ms on a.value_id=ms.id WHERE ";
+
+		if (!$count) {
+			$query = "SELECT distinct e.*, $sum(ms.string) as sum ";
+		} else {
+			$query = "SELECT count(e.guid) as num, $sum(ms.string) as sum ";
+		}
+		$query .= " from {$CONFIG->dbprefix}entities e JOIN {$CONFIG->dbprefix}annotations a on a.entity_guid = e.guid JOIN {$CONFIG->dbprefix}metastrings ms on a.value_id=ms.id WHERE ";
 		foreach ($where as $w)
 			$query .= " $w and ";
 		$query .= get_access_sql_suffix("a"); // now add access
 		$query .= ' and ' . get_access_sql_suffix("e"); // now add access
 		$query .= ' group by e.guid';
-		$query .= ' order by sum ' . $orderdir;
-				
-		return get_data($query, "entity_row_to_elggstar");
+		
+		if (!$count) {
+			$query .= ' order by sum ' . $orderdir;
+			$query .= ' limit ' . $offset . ' , ' . $limit;
+			return get_data($query, "entity_row_to_elggstar");
+		} else {
+			if ($row = get_data_row($query)) {
+				return $row->num;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -659,12 +675,44 @@
 	 * @param unknown_type $entity_type
 	 * @param unknown_type $entity_subtype
 	 * @param unknown_type $name
-	 * @param unknown_type $value
 	 * @param unknown_type $owner_guid
+	 * @param int $limit
+	 * @param int $offset
+	 * @param true|false $count
 	 * @return unknown
 	 */
-	function get_entities_from_annotation_count($entity_type = "", $entity_subtype = "", $name = "", $owner_guid = 0) {
-		return __get_entities_from_annotations_calculate_x('sum',$entity_type,$entity_subtype,$name,$owner_guid);
+	function get_entities_from_annotation_count($entity_type = "", $entity_subtype = "", $name = "", $owner_guid = 0, $limit = 10, $offset = 0, $count = false) {
+		return __get_entities_from_annotations_calculate_x('sum',$entity_type,$entity_subtype,$name,$owner_guid,$limit, $offset, $count);
+	}
+
+	/**
+	 * Lists entities by the totals of a particular kind of annotation
+	 *
+	 * @param string $entity_type Type of entity.
+	 * @param string $entity_subtype Subtype of entity.
+	 * @param string $name Name of annotation.
+	 * @param int $limit Maximum number of results to return.
+	 * @param int $owner_guid Owner.
+	 * @param int $group_guid Group container. Currently this is only supported if $entity_type == 'object'
+	 * @param boolean $asc Whether to list in ascending or descending order (default: desc)
+	 * @param boolean $fullview Whether to display the entities in full
+	 * @param boolean $viewtypetoggle Determines whether or not the 'gallery' view can be displayed (default: no)
+	 * @return string Formatted entity list
+	 */
+	function list_entities_from_annotation_count($entity_type = "", $entity_subtype = "", $name = "", $limit = 10, $owner_guid = 0, $group_guid = 0, $asc = false, $fullview = true, $viewtypetoggle = false) {
+		
+		if ($asc) {
+			$asc = "asc";
+		} else {
+			$asc = "desc";
+		}
+		
+		$offset = (int) get_input("offset",0);
+		$count = get_entities_from_annotation_count($entity_type, $entity_subtype, $name, $owner_guid, $limit, $offset, true); 
+		$entities = get_entities_from_annotation_count($entity_type, $entity_subtype, $name, $owner_guid, $limit, $offset, true);
+
+		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle);
+		
 	}
 	
 	/**
