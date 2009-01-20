@@ -648,7 +648,8 @@
 		$query .= get_access_sql_suffix("a"); // now add access
 		$query .= ' and ' . get_access_sql_suffix("e"); // now add access
 		$query .= ' order by sum ' . $orderdir;
-		
+		$query .= ' group by e.guid';
+				
 		return get_data($query, "entity_row_to_elggstar");
 	}
 
