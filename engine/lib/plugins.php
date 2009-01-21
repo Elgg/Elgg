@@ -622,6 +622,8 @@
 		{
 			global $CONFIG, $ENABLED_PLUGINS_CACHE;
 			
+			if (!file_exists($CONFIG->pluginspath . $plugin)) return false;
+			
 			$site_guid = (int) $site_guid;
 			if ($site_guid == 0)
 				$site_guid = $CONFIG->site_guid;
