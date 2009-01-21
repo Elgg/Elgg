@@ -765,7 +765,7 @@
 		if ( (isset($USERNAME_TO_GUID_MAP_CACHE[$username])) && (retrieve_cached_entity($USERNAME_TO_GUID_MAP_CACHE[$username])) )
 			return retrieve_cached_entity($USERNAME_TO_GUID_MAP_CACHE[$username]);
 		
-		$row = get_data_row("SELECT e.* from {$CONFIG->dbprefix}users_entity u join {$CONFIG->dbprefix}entities e on e.guid=u.guid where u.username='$username' ");
+		$row = get_data_row("SELECT e.* from {$CONFIG->dbprefix}users_entity u join {$CONFIG->dbprefix}entities e on e.guid=u.guid where u.username='$username' and $access ");
 		if ($row) {
 			$USERNAME_TO_GUID_MAP_CACHE[$username] = $row->guid;
 			return new ElggUser($row);
