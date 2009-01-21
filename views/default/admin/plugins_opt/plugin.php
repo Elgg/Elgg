@@ -50,7 +50,7 @@
 		<?php } ?>
 	</div>
 
-	<h3><?php echo elgg_echo($plugin); ?></h3>
+	<h3><?php echo $plugin; ?></h3>
 	<p><a class="manifest_details"><?php echo elgg_echo("admin:plugins:label:moreinfo"); ?></a></p>
 
 	<div class="manifest_file">
