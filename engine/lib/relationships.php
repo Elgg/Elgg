@@ -363,6 +363,10 @@
 		$relationship = sanitise_string($relationship);
 		$guid_two = (int)$guid_two;
 			
+		// Check for duplicates
+		if (check_entity_relationship($guid_one, $relationship, $guid_two))
+			return false;
+		
 		$result = insert_data("INSERT into {$CONFIG->dbprefix}entity_relationships (guid_one, relationship, guid_two) values ($guid_one, '$relationship', $guid_two)");
 		
 		if ($result!==false) {
