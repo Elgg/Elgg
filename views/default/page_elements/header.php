@@ -1,14 +1,14 @@
 <?php
 
 	/**
-	 * Elgg pageshell when logged out
+	 * Elgg pageshell
 	 * The standard HTML header that displays across the site
 	 * 
 	 * @package Elgg
 	 * @subpackage Core
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
 	 * @author Curverider Ltd
-	 * @copyright Curverider Ltd 2008
+	 * @copyright Curverider Ltd 2009
 	 * @link http://elgg.org/
 	 * 
 	 * @uses $vars['config'] The site configuration settings, imported
@@ -49,7 +49,6 @@ END;
 			$feedref = "";
 		}
 		
-		
 		$version = get_version();
 		$release = get_version(true);
 ?>
@@ -62,39 +61,27 @@ END;
 	<title><?php echo $title; ?></title>
 
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery-1.2.6.pack.js"></script>
-	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery-ui-personalized-1.5.packed.js"></script>
+	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery-ui-personalized-1.5.3.packed.js"></script>
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>pg/js/initialise_elgg.js"></script>
-	
 <?php
-
 	global $pickerinuse;
 	if (isset($pickerinuse) && $pickerinuse == true) {
-
 ?>
-	
-	<!-- only needed on pages where we have friends collections and/or the friends picker-->
-	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery-easing.1.2.pack.js"></script>
-	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery-easing-compatibility.1.2.pack.js"></script>
+	<!-- only needed on pages where we have friends collections and/or the friends picker -->
+	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery.easing.1.3.packed.js"></script>
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>pg/js/friendsPickerv1.js"></script>
-	
 <?php
-
 	}
-
 ?>
-	
 	<!-- include the default css file -->
 	<link rel="stylesheet" href="<?php echo $vars['url']; ?>_css/css.css" type="text/css" />
 	<?php 
-
 		echo $feedref;
 		echo elgg_view('metatags',$vars); 
-		
 	?>
 </head>
 
 <body>
-
 <?php echo elgg_view('page_elements/elgg_topbar', $vars); ?>
 	
 <div id="page_container">

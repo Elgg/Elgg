@@ -1,6 +1,5 @@
 /*
 	elgg friendsPicker plugin
-	
 	adapted from Niall Doherty's excellent Coda-Slider - http://www.ndoherty.com/coda-slider
 */
 
@@ -14,7 +13,7 @@ jQuery.fn.friendsPicker = function(iterator) {
 	
 		var container = $(this);
 		container.addClass("friendsPicker");
-		// set panelwidth manually as it's hidden initially
+		// set panelwidth manually as it's hidden initially - adjust this value for different themes/pagewidths 
 		var panelWidth = 685;
 
 		// count the panels in the container

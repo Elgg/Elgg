@@ -66,10 +66,10 @@ div.usericon a.icon img {
 	border-bottom:solid 1px #dddddd;
 	color: #4690d6;
 	margin:0 !important;
-	background:#ffffff !important;
+	/* background:#ffffff !important; */
 }
 .usericon div.sub_menu h3:hover {
-	background:#cccccc !important;
+	/* background:#cccccc !important; */
 }
 
 .user_menu_addfriend,
@@ -89,7 +89,11 @@ div.usericon a.icon img {
 	border-top:solid 1px #dddddd;
 }
 .user_menu_admin a {
-	color:#cc0033;
+	color:red;
+}
+.user_menu_admin a:hover {
+	color:white !important;
+	background:red !important;
 }
 
 /* Banned user */
