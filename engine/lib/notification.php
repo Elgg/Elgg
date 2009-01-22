@@ -309,7 +309,85 @@
 		@include($CONFIG->path . "actions/notifications/settings/usersettings/save.php");
 		
 	}
+	
+	/**
+	 * Register an entity type and subtype to be eligible for notifications
+	 *
+	 * @param string $entity_type The type of entity
+	 * @param string $object_subtype Its subtype
+	 * @param string $english_name It's English notification string (eg "New blog post")
+	 */
+	function register_notification_object($entity_type, $object_subtype, $english_name) {
+		global $CONFIG;
+		if (!isset($CONFIG->register_objects)) {
+			$CONFIG->register_objects = array();
+		}
+		if (!isset($CONFIG->register_objects[$entity_type])) {
+			$CONFIG->register_objects[$entity_type] = array();
+		}
+		$CONFIG->register_objects[$object_type][$object_subtype] = $english_name;
+	}
+	
+	/**
+	 * Establish a 'notify' relationship between the user and a content author
+	 *
+	 * @param int $user_guid The GUID of the user who wants to follow a user's content
+	 * @param int $author_guid The GUID of the user whose content the user wants to follow
+	 * @return true|false Depending on success
+	 */
+	function register_notification_interest($user_guid, $author_guid) {
+		return add_entity_relationship($user_guid, 'notify', $author_guid);
+	}
+	
+	/**
+	 * Remove a 'notify' relationship between the user and a content author
+	 *
+	 * @param int $user_guid The GUID of the user who is following a user's content
+	 * @param int $author_guid The GUID of the user whose content the user wants to unfollow
+	 * @return true|false Depending on success
+	 */
+	function remove_notification_interest($user_guid, $author_guid) {
+		return remove_entity_relationship($user_guid, 'notify', $author_guid);
+	}
+	
+	/**
+	 * Automatically triggered notification on 'create' events that looks at registered
+	 * objects and attempts to send notifications to anybody who's interested
+	 *
+	 * @see register_notification_object
+	 */
+	function object_notifications($event, $object_type, $object) {
+		
+		// We only want to trigger notification events for ElggEntities
+		if ($object instanceof ElggEntity) {
+			
+			// Get config data
+			global $CONFIG;
+			
+			// Have we registered notifications for this type of entity?
+			if (isset($CONFIG->register_objects[$object->getType()][$object->getSubtype()])) {
+				
+				$descr = $CONFIG->register_objects[$object->getType()][$object->getSubtype()];
+				$string = $descr . ": " . $object->getURL();
+				
+				// Get users interested in content from this person and notify them
+				// (Person defined by container_guid so we can also subscribe to groups if we want)
+				if ($interested_users = get_entities_from_relationship('notify',$object->container_guid,true,'user','',0,'',99999)) {
+					if (is_array($interested_users))
+						foreach($interested_users as $user) {
+							if ($user instanceof ElggUser)
+								notify_user($user->guid,$object->container_guid,$descr,$string);						
+						}
+				}
+				
+			}
+			
+		}
+		
+	}
 
 	// Register a startup event
-	register_elgg_event_handler('init','system','notification_init',0);	
+	register_elgg_event_handler('init','system','notification_init',0);
+	register_elgg_event_handler('create','all','object_notifications');
+
 ?>
