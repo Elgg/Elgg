@@ -383,7 +383,7 @@
 								foreach($tmp as $k => $v)
 									if ($v) {
 
-										$string = trigger_plugin_hook('notify:message',$entity->getType(),array(
+										$string = trigger_plugin_hook('notify:entity:message',$entity->getType(),array(
 											'entity' => $object,
 											'to_entity' => $user,
 											'method' => $v
