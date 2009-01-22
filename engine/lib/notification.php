@@ -383,12 +383,12 @@
 								foreach($tmp as $k => $v)
 									if ($v) {
 
-										$string = trigger_plugin_hook('notify:entity:message',$entity->getType(),array(
+										$methodstring = trigger_plugin_hook('notify:entity:message',$entity->getType(),array(
 											'entity' => $object,
 											'to_entity' => $user,
 											'method' => $v
 																												),$string);
-										notify_user($user->guid,$object->container_guid,$descr,$string,NULL,array($v));
+										notify_user($user->guid,$object->container_guid,$descr,$methodstring,NULL,array($v));
 									}
 							}						
 						}
