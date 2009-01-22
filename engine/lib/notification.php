@@ -375,8 +375,22 @@
 				if ($interested_users = get_entities_from_relationship('notify',$object->container_guid,true,'user','',0,'',99999)) {
 					if (is_array($interested_users))
 						foreach($interested_users as $user) {
-							if ($user instanceof ElggUser)
-								notify_user($user->guid,$object->container_guid,$descr,$string);						
+							if ($user instanceof ElggUser) {
+								$tmp = (array)get_user_notification_settings($guid);
+								$methods = array(); 
+								
+								// TODO: get the specific method to contact each user with - for now just go with their prefs
+								foreach($tmp as $k => $v)
+									if ($v) {
+
+										$string = trigger_plugin_hook('notify:message',$entity->getType(),array(
+											'entity' => $object,
+											'to_entity' => $user,
+											'method' => $v
+																												),$string);
+										notify_user($user->guid,$object->container_guid,$descr,$string,NULL,array($v));
+									}
+							}						
 						}
 				}
 				
