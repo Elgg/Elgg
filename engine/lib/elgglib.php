@@ -1861,6 +1861,20 @@
 	}
 	
 	/**
+	 * Function to be used in array_filter which returns true if $string is not null.
+	 *
+	 * @param string $string
+	 * @return bool
+	 */
+	function is_not_null($string) 
+	{
+		if (($string==='') || ($string===false) || ($string===null)) 
+			return false;
+
+		return true;
+	}
+	
+	/**
 	 * Get the full URL of the current page.
 	 *
 	 * @return string The URL

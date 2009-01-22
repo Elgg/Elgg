@@ -753,8 +753,9 @@
 		
 		if (is_string($string)) {
 			$ar = explode(",",$string);
-			$ar = array_map('trim', $ar);
-			$ar = array_map('strtolower', $ar);
+			$ar = array_map('trim', $ar); // trim blank spaces
+			$ar = array_map('strtolower', $ar); // make lower case
+			$ar = array_filter($ar, 'is_not_null'); // Remove null values
 			return $ar;
 		}
 		return false;
