@@ -70,6 +70,35 @@
 	}
 		
 	/**
+	 * Gets the current language in use by the system or user
+	 *
+	 * @return string The language code (eg "en")
+	 */
+		function get_language() {
+			
+			global $CONFIG;
+			static $lang;
+			
+			if (isset($lang)) return $lang;
+			
+			$user = get_loggedin_user();
+			
+			if ((empty($language)) && (isset($user)) && ($user->language))
+				$language = $user->language;
+	
+			if ((empty($language)) && (isset($CONFIG->language)))
+				$language = $CONFIG->language;
+				
+			if (!empty($lang)) {
+				$lang = $language;
+				return $lang;
+			}
+			
+			return false;
+			
+		}
+	
+	/**
 	 * Given a message shortcode, returns an appropriately translated full-text string 
 	 *
 	 * @param string $message_key The short message code
@@ -79,15 +108,9 @@
 		function elgg_echo($message_key, $language = "") {
 			
 			global $CONFIG;
-
-			$user = get_loggedin_user();
-			
-			if ((empty($language)) && (isset($user)) && ($user->language))
-				$language = $user->language;
-	
-			if ((empty($language)) && (isset($CONFIG->language)))
-				$language = $CONFIG->language;
 				
+			$language = get_language();
+
 			if (isset($CONFIG->translations[$language][$message_key])) {
 				return $CONFIG->translations[$language][$message_key];
 			} else if (isset($CONFIG->translations["en"][$message_key])) {
