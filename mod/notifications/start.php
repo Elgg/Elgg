@@ -18,7 +18,7 @@
 		function notifications_plugin_pagesetup() {
 			global $CONFIG;
 			if (get_context() == 'settings')
-				add_submenu_item(elgg_echo('notifications:subscriptions:changesettings'), $CONFIG->wwwroot . "mod/notifications/",'notifications');
+				add_submenu_item(elgg_echo('notifications:subscriptions:changesettings'), $CONFIG->wwwroot . "mod/notifications/");
 		}
 
 		register_elgg_event_handler('pagesetup','system','notifications_plugin_pagesetup',1000);
