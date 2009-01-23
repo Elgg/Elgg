@@ -4,5 +4,5 @@
 	<field key="version" value="1.0" />
 	<field key="description" value="Provides a poor man's cron trigger to trigger cron scripts based on site visits." />
 	<field key="website" value="http://www.elgg.org/" />
-	<field key="copyright" value="(C) Curverider 2008" />
+	<field key="copyright" value="(C) Curverider 2008-2009" />
 </plugin_manifest>

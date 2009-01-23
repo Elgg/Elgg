@@ -8,7 +8,7 @@
 		 * @subpackage Core
 		 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
 		 * @author Curverider Ltd
-		 * @copyright Curverider Ltd 2008
+		 * @copyright Curverider Ltd 2008-2009
 		 * @link http://elgg.org/
 		 */
 
@@ -293,7 +293,7 @@
 		 *  <field key="version" value="1.0" />
 		 * 	<field key="description" value="My plugin description, keep it short" />
 		 *  <field key="website" value="http://www.elgg.org/" />
-		 *  <field key="copyright" value="(C) Curverider 2008" />
+		 *  <field key="copyright" value="(C) Curverider 2008-2009" />
 		 *  <field key="licence" value="GNU Public License version 2" />
 		 * </plugin_manifest>
 		 *
