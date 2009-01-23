@@ -27,25 +27,23 @@
 ?>
 
 <ul id="topbardropdownmenu">
-    <li class="drop"><a href="#"><?php echo(elgg_echo('tools')); ?><!--[if IE 7]></a><![endif]-->
-    <!--[if lte IE 6]><table><tr><td><![endif]-->
-      <ul>
+    <li class="drop"><a href="#" class="menuitemtools"><?php echo(elgg_echo('tools')); ?></a>
+	  <ul>
       <?php
-
 			foreach($alphamenu as $item) {
-    			
     			echo "<li><a href=\"{$item->value}\">" . $item->name . "</a></li>";
-    			
 			} 
-				
      ?>
       </ul>
-      <!--[if lte IE 6]></td></tr></table></a><![endif]-->
     </li>
 </ul>
 
+<script type="text/javascript">
+  $(function() {
+    $('#topbardropdownmenu').elgg_topbardropdownmenu();
+  });
+</script>
+
 <?php
-
 		}
-
 ?>

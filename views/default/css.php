@@ -388,6 +388,7 @@ blockquote {
 	position:relative;
 	width:100%;
 	height:24px;
+	z-index: 9000; /* if you have multiple position:relative elements, then IE sets up separate Z layer contexts for each one, which ignore each other */
 }
 #elgg_topbar_container_left {
 	float:left;
@@ -542,83 +543,97 @@ blockquote {
 	background: #0054a7;
 }
 
+
 /* ***************************************
 	TOP BAR - VERTICAL TOOLS MENU
 *************************************** */
+/* elgg toolbar menu setup */
 #topbardropdownmenu, #topbardropdownmenu ul {
 	margin:0;
 	padding:0;
 	display:inline;
 	float:left;
 	list-style-type: none;
-	z-index: 99999999;
+	z-index: 5000;
+	position: relative;
 }
 #topbardropdownmenu {
-	margin:0pt 15px 0pt 5px;
+	margin:0pt 20px 0pt 5px;
 }
-/* Tools link in top menu */
-#topbardropdownmenu a, #topbardropdownmenu a:visited {
+#topbardropdownmenu li { 
+	display: block;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	float: left;
+	position: relative;
+}
+#topbardropdownmenu a {
 	display:block;
-	padding:3px 13px 3px 3px;
+}
+#topbardropdownmenu ul {
+	display: none;
+	position: absolute;
+	left: 0;
+	margin: 0;
+	padding: 0;
+}
+/* IE6 fix */
+* html #topbardropdownmenu ul {
+	line-height: 1.1em;
+}
+/* IE6/7 fix */
+#topbardropdownmenu ul a {
+	zoom: 1;
+} 
+#topbardropdownmenu ul li {
+	float: none;
+}   
+/* elgg toolbar menu style */
+#topbardropdownmenu ul {
+	width: 150px;
+}
+#topbardropdownmenu *:hover {
+	background-color: none;
+}
+#topbardropdownmenu a {
+	padding:3px;
 	text-decoration:none;
 	color:white;
 }
-#topbardropdownmenu li ul a {
-	width:120px;
-	height:auto;
-	float:left;
+#topbardropdownmenu li.hover a {
+	background-color: #4690d6;
+	text-decoration: none;
 }
-
-/* menu list items */
-#topbardropdownmenu li {float:left; position:relative; background:#cccccc;}
+#topbardropdownmenu ul li.drop a {
+	font-weight: normal;
+}
+/* IE7 fixes */
+*:first-child+html #elgg_topbar_container_left a.pagelinks {
+	padding-bottom:6px;
+}
+*:first-child+html #topbardropdownmenu li.drop a.menuitemtools {
+	padding-bottom:6px;
+}
+#topbardropdownmenu ul {
+	top: 25px;
+}
+#topbardropdownmenu ul li a {
+	background-color: #999999;/* menu off state color */
+	font-weight: bold;
+	padding-left:6px;
+	padding-top:4px;
+	padding-bottom:0;
+	height:22px;
+	border-bottom: 1px solid white;
+}
+#topbardropdownmenu ul a.hover {
+	background-color: #333333;
+}
 #topbardropdownmenu ul a {
-	border-left:1px solid #f5f5f5;
-	border-right:1px solid #333333;
-	color:#4690d6 !important;
-	padding:2px 6px 2px 6px !important;
-	background: #DEDEDE !important;
-	border-top:1px solid #f5f5f5;
-	border-bottom:1px solid #999999;
+	opacity: 0.9;
+	filter: alpha(opacity=90);
 }
-
-/* IE7 */
-#topbardropdownmenu li:hover {position:relative;}
-/* Make the Tools nav color persist */
-#topbardropdownmenu li:hover > a {background: #4690d6 url(<?php echo $vars['url']; ?>_graphics/toolbar_arrow.png) no-repeat right -18px;}
-#topbardropdownmenu li ul {display:none;width:134px !important;}
-#topbardropdownmenu li:hover > ul {
-	display:block;
-	position:absolute; 
-	top:-11px;
-	left:80px;
-	padding:10px 30px 30px 30px;
-	background:transparent url(<?php echo $vars['url']; ?>_graphics/spacer.gif); 
-}
-/* Position the first sub level beneath the top level links */
-#topbardropdownmenu > li:hover > ul {
-	left:-30px;
-	top:16px;
-}
-#topbardropdownmenu li a:active, #topbardropdownmenu li a:focus {
-	background:#4690d6;
-	color:white;
-}
-#topbardropdownmenu li.drop {
-	background: url(<?php echo $vars['url']; ?>_graphics/toolbar_arrow.png) no-repeat right 9px;	
-}
-/* dropdown list links hover */
-#topbardropdownmenu li.drop ul li a:hover {
-	color:white !important;
-	background: #4690d6 !important;
-	border-left:1px solid #99ccff;
-	border-top:1px solid #99ccff;	
-}
-/* IE6 ONLY - make the sublevels appear */
-* html #topbardropdownmenu li ul {visibility:hidden; display:block; position:absolute; top:-11px; left:80px; padding:10px 30px 30px 30px; background:transparent url(<?php echo $vars['url']; ?>_graphics/spacer.gif);}
-#topbardropdownmenu li a:hover ul {visibility:visible; left:-30px; top:14px; lef\t:-31px; to\p:15px;}
-#topbardropdownmenu table {position:absolute; border-collapse:collapse; top:0; left:0; z-index:99999; font-size:1em;}
-* html #topbardropdownmenu li.drop {background: url(<?php echo $vars['url']; ?>_graphics/toolbar_arrow_ie.gif) no-repeat right 9px;}
-* html #topbardropdownmenu li a:hover {position:relative; background:#4690d6 url(<?php echo $vars['url']; ?>_graphics/toolbar_arrow_ie.gif) no-repeat right -18px;}
 
 
 /* ***************************************
@@ -2095,3 +2110,4 @@ div.ajax_loader {
 	width:100%;
 	height:33px;
 }
+
