@@ -660,7 +660,12 @@
 		foreach ($where as $w)
 			$query .= " $w and ";
 		$query .= get_access_sql_suffix("e"); // Add access controls
-		$query .= ' and ' . get_access_sql_suffix("m"); // Add access controls
+	
+		$mindex = 1;
+		foreach($meta_array as $meta_name => $meta_value) {
+			$query .= ' and ' . get_access_sql_suffix("m{$mindex}"); // Add access controls
+			$mindex++;
+		}
 		
 		if (!$count) {
 			$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
