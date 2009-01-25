@@ -89,9 +89,8 @@
 			if ((empty($language)) && (isset($CONFIG->language)))
 				$language = $CONFIG->language;
 				
-			if (!empty($lang)) {
-				$lang = $language;
-				return $lang;
+			if (!empty($language)) {
+				return $language;
 			}
 			
 			return false;
