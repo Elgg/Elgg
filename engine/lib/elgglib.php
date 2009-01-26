@@ -2095,9 +2095,7 @@
 	}
 	
 	function elgg_init() {
-		// Important actions
-			register_action('comments/add');
-			register_action('comments/delete');
+
 		// Menu
 			global $CONFIG;
 			add_menu(elgg_echo('content:latest'), $CONFIG->wwwroot . 'dashboard/latest.php');
@@ -2106,6 +2104,10 @@
 		// Register an event triggered at system shutdown	
 			register_shutdown_function('__elgg_shutdown_hook');
 	}
+	
+	// Actions
+		register_action('comments/add');
+		register_action('comments/delete');
 	
 	register_elgg_event_handler('init','system','elgg_init');
 	
