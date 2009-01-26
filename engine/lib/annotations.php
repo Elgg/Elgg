@@ -661,7 +661,7 @@
 		if (!$count) {
 			$query = "SELECT distinct e.*, $sum(ms.string) as sum ";
 		} else {
-			$query = "SELECT count(e.guid) as num, $sum(ms.string) as sum ";
+			$query = "SELECT count(distinct e.guid) as num, $sum(ms.string) as sum ";
 		}
 		$query .= " from {$CONFIG->dbprefix}entities e JOIN {$CONFIG->dbprefix}annotations a on a.entity_guid = e.guid JOIN {$CONFIG->dbprefix}metastrings ms on a.value_id=ms.id ";
 		
@@ -674,7 +674,7 @@
 			$query .= " $w and ";
 		$query .= get_access_sql_suffix("a"); // now add access
 		$query .= ' and ' . get_access_sql_suffix("e"); // now add access
-		$query .= ' group by e.guid';
+		if (!$count) $query .= ' group by e.guid';
 		
 		if (!$count) {
 			$query .= ' order by sum ' . $orderdir;
