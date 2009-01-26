@@ -364,6 +364,12 @@
 			// Get config data
 			global $CONFIG;
 			
+			if (trigger_plugin_hook('object:notifications',$object_type,array(
+										'event' => $event,
+										'object_type' => $object_type,
+										'object' => $object,
+									),true)) return true;
+			
 			// Have we registered notifications for this type of entity?
 			if (isset($CONFIG->register_objects[$object->getType()][$object->getSubtype()])) {
 				
