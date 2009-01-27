@@ -137,7 +137,9 @@
 	
 	<?php if ($vars['entity']->isBanned()) { ?>
 		<div id="profile_banned">	
-		<?php echo elgg_echo('profile:banned'); ?>
+		<?php 
+		    // echo elgg_echo('profile:banned'); 
+		?>
 		</div><!-- /#profile_info_column_right -->
 	
 	<?php } ?>
