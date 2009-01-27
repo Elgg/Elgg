@@ -2105,10 +2105,14 @@
 			register_shutdown_function('__elgg_shutdown_hook');
 	}
 	
-	// Actions
+	function elgg_boot() {
+
+		// Actions
 		register_action('comments/add');
 		register_action('comments/delete');
-	
+	}
+		
 	register_elgg_event_handler('init','system','elgg_init');
+	register_elgg_event_handler('boot','system','elgg_boot');
 	
 ?>
