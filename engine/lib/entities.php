@@ -624,7 +624,8 @@
 				return update_entity(
 					$this->get('guid'),
 					$this->get('owner_guid'),
-					$this->get('access_id')
+					$this->get('access_id'),
+					$this->get('container_guid')
 				);
 			}
 			else
@@ -1263,14 +1264,17 @@
 	 * @param int $guid
 	 * @param int $owner_guid
 	 * @param int $access_id
+	 * @param int $container_guid
 	 */
-	function update_entity($guid, $owner_guid, $access_id)
+	function update_entity($guid, $owner_guid, $access_id, $container_guid = null)
 	{
 		global $CONFIG, $ENTITY_CACHE;
 		
 		$guid = (int)$guid;
 		$owner_guid = (int)$owner_guid;
 		$access_id = (int)$access_id;
+		$container_guid = (int) $container_guid;
+		if (is_null($container_guid)) $container_guid = $owner_guid;
 		$time = time();
 
 		$entity = get_entity($guid);
@@ -1278,7 +1282,7 @@
 		if ($entity->canEdit()) {
 			
 			if (trigger_elgg_event('update',$entity->type,$entity)) {
-				$ret = update_data("UPDATE {$CONFIG->dbprefix}entities set owner_guid='$owner_guid', access_id='$access_id', time_updated='$time' WHERE guid=$guid");
+				$ret = update_data("UPDATE {$CONFIG->dbprefix}entities set owner_guid='$owner_guid', access_id='$access_id', container_guid='$container_guid', time_updated='$time' WHERE guid=$guid");
 				
 				// If memcache is available then delete this entry from the cache
 				static $newentity_cache;
