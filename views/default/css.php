@@ -1567,7 +1567,11 @@ div.expandall p {
 	margin: 0;
 	padding:0;
 	width: 685px;
-	height: 300px;
+	
+	height: auto;
+	background: #efefef;
+}
+.friendspicker_savebuttons {
 	background: white;
 }
 .friendsPicker .friendsPicker_container { /* long container used to house end-to-end panels. Width is calculated in JS  */
