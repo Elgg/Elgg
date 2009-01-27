@@ -325,7 +325,7 @@
 		if (!isset($CONFIG->register_objects[$entity_type])) {
 			$CONFIG->register_objects[$entity_type] = array();
 		}
-		$CONFIG->register_objects[$object_type][$object_subtype] = $english_name;
+		$CONFIG->register_objects[$entity_type][$object_subtype] = $english_name;
 	}
 	
 	/**
