@@ -16,7 +16,7 @@
          
 ?>
 
-	<p>
+	<!-- <p>
 		<?php echo elgg_echo('admin:statistics:description'); ?>
 		<a href="http://elgg.com/"><?php echo elgg_echo('learnmore'); ?></a>
-	</p>
+	</p> -->
