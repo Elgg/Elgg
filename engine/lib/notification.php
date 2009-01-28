@@ -113,13 +113,17 @@
 							error_log("Sending message to $guid using $method");					
 							
 						// Trigger handler and retrieve result.
-						$result[$guid][$method] = $handler(
-							$from ? get_entity($from) : NULL, 	// From entity
-							get_entity($guid), 					// To entity
-							$subject,							// The subject
-							$message, 			// Message
-							$params								// Params
-						);
+						try {
+							$result[$guid][$method] = $handler(
+								$from ? get_entity($from) : NULL, 	// From entity
+								get_entity($guid), 					// To entity
+								$subject,							// The subject
+								$message, 			// Message
+								$params								// Params
+							);
+						} catch (Exception $e) {
+							error_log($e->getMessage());
+						}
 						
 					}
 				}
