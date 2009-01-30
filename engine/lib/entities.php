@@ -2115,13 +2115,13 @@
 			
 			$url = "views/$viewtype/graphics/icons/$type/$subtype/$size.png";
 			
-			if (!@getimagesize($CONFIG->path . $url))
+			if (!@file_exists($CONFIG->path . $url))
 				$url = "views/$viewtype/graphics/icons/$type/default/$size.png";
 			
-			if(!@getimagesize($CONFIG->path . $url))
+			if(!@file_exists($CONFIG->path . $url))
 				$url = "views/$viewtype/graphics/icons/default/$size.png";
 		
-			if (@getimagesize($CONFIG->path . $url))
+			if (@file_exists($CONFIG->path . $url))
 				return $CONFIG->url . $url;
 		}
 	}
