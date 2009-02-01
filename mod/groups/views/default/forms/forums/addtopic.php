@@ -74,8 +74,6 @@
 		    <label><?php echo elgg_echo("groups:topicstatus"); ?><br />
 		    <select name="status">
 		        <option value="open" <?php if($status == "") echo "SELECTED";?>><?php echo elgg_echo('groups:topicopen'); ?></option>
-		        <option value="sticky" <?php if($status == "sticky") echo "SELECTED";?>><?php echo elgg_echo('groups:topicsticky'); ?></option>
-		        <option value="resolved" <?php if($status == "resolved") echo "SELECTED";?>><?php echo elgg_echo('groups:topicresolved'); ?></option>
 		        <option value="closed" <?php if($status == "closed") echo "SELECTED";?>><?php echo elgg_echo('groups:topicclosed'); ?></option>
 		    </select>
 		    </label>
