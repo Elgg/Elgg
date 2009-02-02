@@ -1512,10 +1512,10 @@
 				
 		$where = array();
 		
-		if (is_array($type)) {			
+		if (is_array($subtype)) {			
 			$tempwhere = "";
-			if (sizeof($type))
-			foreach($type as $typekey => $subtypearray) {
+			if (sizeof($subtype))
+			foreach($subtype as $typekey => $subtypearray) {
 				foreach($subtypearray as $subtypeval) {
 					$typekey = sanitise_string($typekey);
 					if (!empty($subtypeval)) {
