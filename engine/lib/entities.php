@@ -1324,7 +1324,7 @@
 		{
 
 			// If the user can edit the container, they can also write to it
-			if ($container->canEdit()) return true;
+			if ($container->canEdit($user_guid)) return true;
 		
 			// Basics, see if the user is a member of the group.
 			if ($container instanceof ElggGroup) {
