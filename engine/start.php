@@ -134,9 +134,6 @@
 				if (!@include_once($file))
 					throw new InstallationException("Could not load {$file}");
 			}
-			
-		// Set default config
-			set_default_config();
 		
 		} else {	// End portion for sanitised installs only
 			
