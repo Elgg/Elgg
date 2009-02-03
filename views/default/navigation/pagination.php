@@ -17,7 +17,7 @@
 	} else {
 		$offset = $vars['offset'];
 	}
-	if ((!isset($vars['limit'])) || (!$limit)) {
+	if ((!isset($vars['limit'])) || (!$vars['limit'])) {
 		$limit = 10;
 	} else {
 		$limit = (int)$vars['limit'];
