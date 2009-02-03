@@ -17,6 +17,7 @@
 	action_gatekeeper();
 	
 	// Get variables
+	global $CONFIG;
 	$username = get_input('username');
 	$password = get_input('password');
 	$password2 = get_input('password2');
@@ -40,6 +41,9 @@
 				$new_user->admin = 'yes';
 			
 			$new_user->admin_created = true;
+			
+			
+			notify_user($new_user->guid, $CONFIG->site->guid, elgg_echo('useradd:subject'), sprintf(elgg_echo('useradd:body'), $name, $CONFIG->site->name, $CONFIG->site->url, $username, $password));
 			
 			system_message(sprintf(elgg_echo("adduser:ok"),$CONFIG->sitename));
 		} else {

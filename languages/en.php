@@ -650,6 +650,25 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'deleteconfirm' => "Are you sure you want to delete this item?",
 			'fileexists' => "A file has already been uploaded. To replace it, select it below:",
 			
+		/**
+		 * User add
+		 */
+
+			'useradd:subject' => 'User account created',
+			'useradd:body' => '
+%s,
+
+A user account has been created for you at %s. To log in, visit:
+
+	%s
+
+And log in with these user credentials:
+
+	Username: %s
+	Password: %s
+	
+Once you have logged in, we highly recommend that you change your password.
+',
 			
 	    /**
          * System messages
