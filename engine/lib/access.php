@@ -438,13 +438,6 @@
 			
 		}
 		
-	/**
-	 * Some useful constant definitions
-	 */
-		define('ACCESS_PRIVATE',0);
-		define('ACCESS_LOGGED_IN',1);
-		define('ACCESS_PUBLIC',2);
-		
 		global $init_finished;
 		$init_finished = false;
 		
