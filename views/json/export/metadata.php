@@ -19,5 +19,7 @@
 	foreach ($exportable_values as $v)
 		$export->$v = $m->$v;
 		
-	echo json_encode($export);
+	global $jsonexport;
+	$jsonexport['metadata'][] = $entity;
+	// echo json_encode($export);
 ?>

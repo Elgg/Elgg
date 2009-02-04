@@ -19,5 +19,8 @@
 	foreach ($exportable_values as $v)
 		$export->$v = $entity->$v;
 		
-	echo json_encode($export);
+	$export->url = $entity->getURL();
+		
+	global $jsonexport;
+	$jsonexport[$entity->getType()][$entity->getSubtype()][] = $export;
 ?>

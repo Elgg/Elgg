@@ -15,6 +15,7 @@
 
 	$export = $vars['object'];
 	
-		
-	echo json_encode("$export");
+	global $jsonexport;
+	$jsonexport['exceptions'][] = $export;
+
 ?>

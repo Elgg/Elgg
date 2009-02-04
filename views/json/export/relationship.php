@@ -20,5 +20,7 @@
 	foreach ($exportable_values as $v)
 		$export->$v = $r->$v;
 		
-	echo json_encode($export);
+	global $jsonexport;
+	$jsonexport['relationships'][] = $export;
+	
 ?>

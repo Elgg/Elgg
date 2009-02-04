@@ -11,6 +11,6 @@
 	 * @link http://elgg.org/
 	 */
 
-	echo elgg_view('export/entity', $vars);
+		elgg_view('export/entity', $vars);
 
 ?>
