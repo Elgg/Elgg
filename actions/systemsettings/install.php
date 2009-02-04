@@ -43,7 +43,7 @@
 			$site->url = get_input('wwwroot');
 			$site->description = get_input('sitedescription');
 			$site->email = get_input('siteemail');
-			$site->access_id = 2; // The site is public
+			$site->access_id = ACCESS_PUBLIC;
 			$guid = $site->save();
 			
 			if (!$guid)

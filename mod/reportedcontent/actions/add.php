@@ -13,7 +13,7 @@
 		$title = get_input('title');
 		$description = get_input('description');
 		$address = get_input('address');
-		$access = 0; //this is private and only admins can see it
+		$access = ACCESS_PRIVATE; //this is private and only admins can see it
 		
 		if ($title && $address) {
 			

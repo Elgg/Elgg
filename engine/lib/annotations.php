@@ -156,7 +156,7 @@
 	 * @param int $owner_guid
 	 * @param int $access_id
 	 */
-	function create_annotation($entity_guid, $name, $value, $value_type, $owner_guid, $access_id = 0)
+	function create_annotation($entity_guid, $name, $value, $value_type, $owner_guid, $access_id = ACCESS_PRIVATE)
 	{
 		global $CONFIG;
 

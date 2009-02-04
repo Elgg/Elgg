@@ -232,7 +232,7 @@
 				
 				$widget = new ElggWidget;
 				$widget->owner_guid = $user_guid;
-				$widget->access_id = 1;
+				$widget->access_id = ACCESS_LOGGED_IN;
 				if (!$widget->save())
 					return false;
 					

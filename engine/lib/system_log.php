@@ -207,7 +207,7 @@
 			if (isset($object->access_id))
 				$access_id = $object->access_id;
 			else
-				$access_id = 2;
+				$access_id = ACCESS_PUBLIC;
 			if (isset($object->enabled))
 				$enabled = $object->enabled;
 			else

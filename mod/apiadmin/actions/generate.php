@@ -15,7 +15,7 @@
 			
 			$newkey = new ElggObject();
 			$newkey->subtype = 'api_key';
-			$newkey->access_id = 2;
+			$newkey->access_id = ACCESS_PUBLIC;
 			$newkey->title = $ref;
 			$newkey->public = $keypair->api_key;
 			

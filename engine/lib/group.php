@@ -216,7 +216,7 @@
 		 */
 		public function isPublicMembership()
 		{
-			if ($this->membership == 2)
+			if ($this->membership == ACCESS_PUBLIC)
 				return true;
 			
 			return false;

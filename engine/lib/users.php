@@ -462,7 +462,7 @@
 		{
 			// Add reason
 			if ($reason)
-				create_metadata($user_guid, 'ban_reason', $reason,'', 0, 2);
+				create_metadata($user_guid, 'ban_reason', $reason,'', 0, ACCESS_PUBLIC);
 			
 			// Set ban flag
 			return update_data("UPDATE {$CONFIG->dbprefix}users_entity set banned='yes' where guid=$user_guid");
@@ -486,7 +486,7 @@
 		
 		if (($user) && ($user->canEdit()) && ($user instanceof ElggUser))
 		{
-			create_metadata($user_guid, 'ban_reason', '','', 0, 2);
+			create_metadata($user_guid, 'ban_reason', '','', 0, ACCESS_PUBLIC);
 			return update_data("UPDATE {$CONFIG->dbprefix}users_entity set banned='no' where guid=$user_guid");
 		}
 		
@@ -930,7 +930,7 @@
 		{
 			// generate code
 			$code = generate_random_cleartext_password();
-			//create_metadata($user_guid, 'conf_code', $code,'', 0, 0);
+			//create_metadata($user_guid, 'conf_code', $code,'', 0, ACCESS_PRIVATE);
 			set_private_setting($user_guid, 'passwd_conf_code', $code);
 			
 			// generate link
@@ -1016,8 +1016,8 @@
 	{
 		if (!$status) $method = '';
 		
-		create_metadata($user_guid, 'validated', $status,'', 0, 2);
-		create_metadata($user_guid, 'validated_method', $method,'', 0, 2);
+		create_metadata($user_guid, 'validated', $status,'', 0, ACCESS_PUBLIC);
+		create_metadata($user_guid, 'validated_method', $method,'', 0, ACCESS_PUBLIC);
 			
 		return true;
 	}
@@ -1225,7 +1225,7 @@
 			$user->username = $username;
 			$user->email = $email;
 			$user->name = $name;
-			$user->access_id = 2;
+			$user->access_id = ACCESS_PUBLIC;
 			$user->salt = generate_random_cleartext_password(); // Note salt generated before password!
 			$user->password = generate_user_password($user, $password); 
 			$user->save();

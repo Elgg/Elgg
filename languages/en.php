@@ -186,9 +186,6 @@
 		 * Access
 		 */
 	
-			'ACCESS_PRIVATE' => "Private",
-			'ACCESS_LOGGED_IN' => "Logged in users",
-			'ACCESS_PUBLIC' => "Public",
 			'PRIVATE' => "Private",
 			'LOGGED_IN' => "Logged in users",
 			'PUBLIC' => "Public",

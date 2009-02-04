@@ -196,7 +196,7 @@
 	 * @param int $access_id
 	 * @param bool $allow_multiple
 	 */
-	function create_metadata($entity_guid, $name, $value, $value_type, $owner_guid, $access_id = 0, $allow_multiple = false)
+	function create_metadata($entity_guid, $name, $value, $value_type, $owner_guid, $access_id = ACCESS_PRIVATE, $allow_multiple = false)
 	{
 		global $CONFIG;
 
@@ -336,7 +336,7 @@
 	 * @param int $access_id
 	 * @param bool $allow_multiple
 	 */
-	function create_metadata_from_array($entity_guid, array $name_and_values, $value_type, $owner_guid, $access_id = 0, $allow_multiple = false)
+	function create_metadata_from_array($entity_guid, array $name_and_values, $value_type, $owner_guid, $access_id = ACCESS_PRIVATE, $allow_multiple = false)
 	{
 		foreach ($name_and_values as $k => $v)
 			if (!create_metadata($entity_guid, $k, $v, $value_type, $owner_guid, $access_id, $allow_multiple)) return false;

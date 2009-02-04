@@ -28,6 +28,11 @@
 			exit;
 		}
 		
+		if (!@include_once(dirname(__FILE__) . "/lib/access.php")) {		// Access library
+			echo "Error in installation: could not load the Access library.";
+			exit;
+		}
+	
 		if (!@include_once(dirname(__FILE__) . "/lib/system_log.php")) {		// Logging library
 			echo "Error in installation: could not load the System Log library.";
 			exit;
@@ -120,7 +125,7 @@
 										'Thumbs.db',
 										'.svn',
 										'CVS','cvs',
-										'settings.php','settings.example.php','languages.php','exceptions.php','elgglib.php','database.php','actions.php','sessions.php'
+										'settings.php','settings.example.php','languages.php','exceptions.php','elgglib.php','access.php','database.php','actions.php','sessions.php'
 									);
 	
 		// Get the list of files to include, and alphabetically sort them

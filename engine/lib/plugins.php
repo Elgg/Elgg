@@ -478,7 +478,7 @@
 				), $value);
 				
 				$plugin->title = $plugin_name;
-				$plugin->access_id = 2;
+				$plugin->access_id = ACCESS_PUBLIC;
 				$plugin->save();
 				$plugin->$name = $value;
 				

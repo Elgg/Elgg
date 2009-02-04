@@ -90,7 +90,7 @@
 			$this->attributes['container_guid'] = get_loggedin_userid();
 			
 			$this->attributes['site_guid'] = 0;
-			$this->attributes['access_id'] = 0;
+			$this->attributes['access_id'] = ACCESS_PRIVATE;
 			$this->attributes['time_created'] = "";
 			$this->attributes['time_updated'] = "";
 			$this->attributes['enabled'] = "yes";
@@ -351,7 +351,7 @@
 		 * @param int $owner_id
 		 * @param string $vartype
 		 */
-		function annotate($name, $value, $access_id = 0, $owner_id = 0, $vartype = "") 
+		function annotate($name, $value, $access_id = ACCESS_PRIVATE, $owner_id = 0, $vartype = "") 
 		{ 
 			if ((int) $this->guid > 0) {
 				return create_annotation($this->getGUID(), $name, $value, $vartype, $owner_id, $access_id);
@@ -1650,7 +1650,7 @@
 				if ($entity->canEdit()) {
 					
 					if ($reason)
-						create_metadata($guid, 'disable_reason', $reason,'', 0, 2);
+						create_metadata($guid, 'disable_reason', $reason,'', 0, ACCESS_PUBLIC);
 						//$entity->disable_reason = $reason;				
 					
 					$res = update_data("UPDATE {$CONFIG->dbprefix}entities set enabled='no' where guid={$guid}");
