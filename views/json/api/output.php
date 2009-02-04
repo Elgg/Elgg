@@ -15,5 +15,8 @@
 	$result = $vars['result'];
 	$export = $result->export();
 	
-	echo json_encode($export);
+	// echo json_encode($export);
+	global $jsonexport;
+	$jsonexport['api'][] = $export;
+	
 ?>
