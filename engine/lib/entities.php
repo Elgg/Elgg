@@ -2230,8 +2230,8 @@
 		}
 		
 		$offset = (int) get_input('offset');
-		$count = get_entities($typearray, '', $owner_guid, "", $limit, $offset, true);
-		$entities = get_entities($typearray, '', $owner_guid, "", $limit, $offset);
+		$count = get_entities('', $typearray, $owner_guid, "", $limit, $offset, true); 
+		$entities = get_entities('', $typearray,$owner_guid, "", $limit, $offset); 
 
 		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle);
 		
