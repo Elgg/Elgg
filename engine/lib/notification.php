@@ -386,20 +386,23 @@
 					if (is_array($interested_users))
 						foreach($interested_users as $user) {
 							if ($user instanceof ElggUser) {
-								$tmp = (array)get_user_notification_settings($guid);
-								$methods = array(); 
 								
-								// TODO: get the specific method to contact each user with - for now just go with their prefs
-								foreach($tmp as $k => $v)
-									if ($v) {
-
-										$methodstring = trigger_plugin_hook('notify:entity:message',$entity->getType(),array(
-											'entity' => $object,
-											'to_entity' => $user,
-											'method' => $v
-																												),$string);
-										notify_user($user->guid,$object->container_guid,$descr,$methodstring,NULL,array($v));
-									}
+								if (in_array($object->access_id,get_access_list($user->guid))) {
+									$tmp = (array)get_user_notification_settings($guid);
+									$methods = array(); 
+									
+									// TODO: get the specific method to contact each user with - for now just go with their prefs
+									foreach($tmp as $k => $v)
+										if ($v) {
+	
+											$methodstring = trigger_plugin_hook('notify:entity:message',$entity->getType(),array(
+												'entity' => $object,
+												'to_entity' => $user,
+												'method' => $v
+																													),$string);
+											notify_user($user->guid,$object->container_guid,$descr,$methodstring,NULL,array($v));
+										}
+								}
 							}						
 						}
 				}

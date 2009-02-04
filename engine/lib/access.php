@@ -70,9 +70,9 @@
 				$query .= " LEFT JOIN {$CONFIG->dbprefix}access_collections ag ON ag.id = am.access_collection_id ";
 				$query .= " WHERE am.user_guid = {$user_id} AND (ag.site_guid = {$site_id} OR ag.site_guid = 0)";
 				
-				$tmp_access_array = array(2); 
+				$tmp_access_array = array(ACCESS_PUBLIC); 
 				if (isloggedin()) {
-					$tmp_access_array[] = 1;
+					$tmp_access_array[] = ACCESS_LOGGED_IN;
 					
 					// The following can only return sensible data if the user is logged in.
 					
@@ -94,7 +94,7 @@
 					global $is_admin;
 					
 					if (isset($is_admin) && $is_admin == true) {
-						$tmp_access_array[] = 0;
+						$tmp_access_array[] = ACCESS_PRIVATE;
 					}
 
 					$access_array[$user_id] = $tmp_access_array;
