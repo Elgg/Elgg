@@ -964,8 +964,8 @@
 			
 			if ($user)
 			{
+				$salt = generate_random_cleartext_password(); // Reset the salt
 				$hash = generate_user_password($user, $password);
-				$salt = generate_random_cleartext_password(); // Reset the salt 
 				
 				return update_data("UPDATE {$CONFIG->dbprefix}users_entity set password='$hash', salt='$salt' where guid=$user_guid");
 			}
