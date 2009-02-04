@@ -16,3 +16,11 @@ http://marcuspovey.co.uk/
 http://twitter.com/mapkyca
 
 Pete Harris <pete@elgg.com>
+
+
+Thanks to the following developers for contributing patches for the core Elgg engine.
+
+Diego Andrés Ramírez Aragón <diego@somosmas.org>
+Corporación Somos Más
+
+Cash Costello <cash.costello@gmail.com>
