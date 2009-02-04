@@ -46,7 +46,7 @@
                $type = "";
            }
            if (is_string($tag)) {
-               $tagstr .= "<a href=\"{$vars['url']}search/?tag=".urlencode($tag) . "{$type}{$subtype}{$object}\">{$tag}</a>";
+               $tagstr .= "<a rel=\"tag\" href=\"{$vars['url']}tag/".urlencode($tag) . "{$type}{$subtype}{$object}\">{$tag}</a>";
            }
         }
          echo $tagstr;
