@@ -33,7 +33,7 @@
 			'notfound' => "The requested resource could not be found, or you do not have access to it.",
 			
 			'SecurityException:Codeblock' => "Denied access to execute privileged code block",
-			'DatabaseException:WrongCredentials' => "Elgg couldn't connect to the database using the given credentials %s@%s (pw: %s).",
+			'DatabaseException:WrongCredentials' => "Elgg couldn't connect to the database using the given credentials.",
 			'DatabaseException:NoConnect' => "Elgg couldn't select the database '%s', please check that the database is created and you have access to it.",
 			'SecurityException:FunctionDenied' => "Access to privileged function '%s' is denied.",
 			'DatabaseException:DBSetupIssues' => "There were a number of issues: ",
