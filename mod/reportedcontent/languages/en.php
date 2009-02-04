@@ -40,6 +40,7 @@
 			'reportedcontent:moreinfo' => 'More info',
 	
 			'reportedcontent:failed' => 'Sorry, the attempt to report this content has failed.',
+			'reportedcontent:notarchived' => 'We were not able to archive that report',
 	);
 					
 	add_translation("en",$english);

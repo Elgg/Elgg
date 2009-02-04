@@ -21,6 +21,10 @@
 		if ($reported->getSubtype() == "reported_content" && $reported->canEdit()) {
 	
 		// Delete it!
+				if (!trigger_plugin_hook('reportedcontent:delete', $entity->type, array('entity'=>$entity), true)) {
+	 				register_error(elgg_echo("reportedcontent:notdeleted"));
+	 				forward("pg/reportedcontent/");
+	 			}
 				$rowsaffected = $reported->delete();
 				if ($rowsaffected > 0) {
 		// Success message

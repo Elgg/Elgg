@@ -26,8 +26,13 @@
 		    $entity->access_id = $access;
 		
     		if ($entity->save()) {
-    			system_message(elgg_echo('reportedcontent:success'));
-    			$entity->state = "active";
+     			if (!trigger_plugin_hook('reportedcontent:add', $entity->type, array('entity'=>$entity), true)) {
+     				$entity->delete();
+     				register_error(elgg_echo('reportedcontent:failed'));
+     			} else {
+	    			system_message(elgg_echo('reportedcontent:success'));
+	    			$entity->state = "active";
+     			}
     			forward($address);
     		} else {
     			register_error(elgg_echo('reportedcontent:failed'));

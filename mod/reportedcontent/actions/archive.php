@@ -21,6 +21,10 @@
 		if ($reported->getSubtype() == "reported_content" && $reported->canEdit()) {
 	
 		// change the state
+				if (!trigger_plugin_hook('reportedcontent:archive', $entity->type, array('entity'=>$entity), true)) {
+ 					system_message(elgg_echo("reportedcontent:notarchived"));
+ 					forward("pg/reportedcontent/");
+		 		}
 		        $reported->state = "archived";
 				
 		// Success message
