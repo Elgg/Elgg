@@ -125,6 +125,6 @@ RewriteRule ^pg\/([A-Za-z\_\-]+)$ engine/handlers/pagehandler.php?handler=$1
 RewriteRule xml-rpc.php engine/handlers/xml-rpc_handler.php
 RewriteRule mt/mt-xmlrpc.cgi engine/handlers/xml-rpc_handler.php
 
-RewriteRule ^tag/([A-Za-z0-9\+-]+)/?$ search/?tag=$2
+RewriteRule ^tag/([A-Za-z0-9\+-]+)/?$ search/?tag=$1
 
 </IfModule>
