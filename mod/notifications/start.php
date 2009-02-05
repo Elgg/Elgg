@@ -20,8 +20,13 @@
 			if (get_context() == 'settings')
 				add_submenu_item(elgg_echo('notifications:subscriptions:changesettings'), $CONFIG->wwwroot . "mod/notifications/");
 		}
+		
+		function notifications_plugin_init() {
+			extend_view('css','notifications/css');
+		}
 
 		register_elgg_event_handler('pagesetup','system','notifications_plugin_pagesetup',1000);
+		register_elgg_event_handler('init','system','notifications_plugin_init');
 
 	// Register action
 		global $CONFIG;

@@ -2,8 +2,10 @@
 
 	$english = array(
 	
-		'notifications:subscriptions:changesettings' => 'Content subscriptions',	
-		'notifications:subscriptions:description' => 'Content subscriptions allow you to be notified when one of your friends creates new content. To receive these notifications from your friends, make sure they are selected in the list below:',
+		'notifications:subscriptions:changesettings' => 'Notifications',
+		'notification:method:email' => 'Email',	
+	
+		'notifications:subscriptions:description' => 'To receive notifications from your friends when they create new content, find them below and select the notification method you would like to use.',
 	
 		'notifications:subscriptions:success' => 'Your subscriptions have been saved.',
 	

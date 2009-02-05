@@ -1,9 +1,9 @@
 <?php
 
 	/**
-	 * Elgg notifications plugin save action
+	 * Elgg SMS Client
 	 * 
-	 * @package ElggNotifications
+	 * @package ElggSMS
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
 	 * @author Curverider Ltd
 	 * @copyright Curverider Ltd 2008-2009
@@ -13,17 +13,20 @@
 	// Restrict to logged in users
 		gatekeeper();
 		
-	// Get people
-		$subscriptions = get_input('subscriptions');
-		
-	// Clear existing subscriptions
 		global $SESSION;
-		remove_entity_relationships($SESSION['user']->guid,'notify',false);
+		
+		global $NOTIFICATION_HANDLERS;
+		foreach($NOTIFICATION_HANDLERS as $method => $foo) {
+			$subscriptions[$method] = get_input($method.'subscriptions');
+			remove_entity_relationships($SESSION['user']->guid,'notify' , $method, false);
+		}
 		
 	// Add new ones
-		if (is_array($subscriptions) && !empty($subscriptions)) {
-			foreach($subscriptions as $subscription) {
-				register_notification_interest($SESSION['user']->guid, $subscription);
+		foreach($subscriptions as $key => $subscription)
+		if (is_array($subscription) && !empty($subscription)) {
+			foreach($subscription as $subscriptionperson) {
+				// register_notification_interest($SESSION['user']->guid, $subscription);
+				add_entity_relationship($_SESSION['user']->guid, 'notify' . $key, $subscriptionperson);
 			}
 		}
 		
