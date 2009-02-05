@@ -43,16 +43,26 @@
 
 		$fields = '';
 		$i = 0;
-			foreach($NOTIFICATION_HANDLERS as $method => $foo) {
-				if ($i > 0) $fields .= "<td class=\"spacercolumn\">&nbsp;</td>";
-				$toggle = elgg_echo('toggle');
-				$fields .= <<< END
-				    <td class="{$method}togglefield">
-				    	<a href="#" class="{$method}toggleOn"></a>
-				    </td>
-END;
-				$i++;
+		foreach($NOTIFICATION_HANDLERS as $method => $foo) {
+			$metaname = 'collections_notifications_preferences_' . $method;
+			if ($collections_preferences = $vars['user']->$metaname) {
+				if (!empty($collections_preferences) && !is_array($collections_preferences))
+					$collections_preferences = array($collections_preferences);
+				if (is_array($collections_preferences))
+				if (in_array($collection->id,$collections_preferences)) {
+					$collectionschecked[$method] = 'checked="checked"';
+				} else {
+					$collectionschecked[$method] = '';
+				}
 			}
+			if ($i > 0) $fields .= "<td class=\"spacercolumn\">&nbsp;</td>";
+			$fields .= <<< END
+			    <td class="{$method}togglefield">
+			    <a href="#" border="0" id="{$method}collections" class="{$method}toggleOff" onclick="adjust{$method}_alt('{$method}collections');">
+			    <input type="checkbox" name="{$method}collections[]" id="{$method}checkbox" onclick="adjust{$method}('{$method}collections');" value="{$collection->id}" {$collectionschecked[$method]} /></a></td>
+END;
+			$i++;
+		}
 		echo $fields;
 
 ?>

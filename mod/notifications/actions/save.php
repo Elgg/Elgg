@@ -19,7 +19,10 @@
 		foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 			$subscriptions[$method] = get_input($method.'subscriptions');
 			$personal[$method] = get_input($method.'personal');
+			$collections[$method] = get_input($method.'collections');
 			
+			$metaname = 'collections_notifications_preferences_' . $method;
+			$_SESSION['user']->$metaname = $collections[$method];
 			set_user_notification_setting($_SESSION['user']->guid, $method, ($personal[$method] == '1') ? true : false);
 			remove_entity_relationships($SESSION['user']->guid,'notify' , $method, false);
 		}
