@@ -169,7 +169,7 @@
 				}
 
 				if (empty($sql))
-					$sql = " ({$table_prefix}access_id in {$access} or ({$table_prefix}access_id = 0 and {$table_prefix}owner_guid = $owner))";
+					$sql = " ({$table_prefix}access_id in {$access} or ({$table_prefix}access_id = " . ACCESS_PRIVATE . " and {$table_prefix}owner_guid = $owner))";
 
 			if (!$ENTITY_SHOW_HIDDEN_OVERRIDE)
 				$sql .= " and {$table_prefix}enabled='yes'";
