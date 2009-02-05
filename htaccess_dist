@@ -119,8 +119,8 @@ RewriteRule ^export\/([A-Za-z]+)\/([0-9]+)\/([A-Za-z]+)\/([A-Za-z0-9\_]+)\/$ ser
 
 RewriteRule ^\_css\/css\.css$ _css/css.php
 
-RewriteRule ^pg\/([A-Za-z\_\-]+)\/(.*)$ engine/handlers/pagehandler.php?handler=$1&page=$2
-RewriteRule ^pg\/([A-Za-z\_\-]+)$ engine/handlers/pagehandler.php?handler=$1
+RewriteRule ^pg\/([A-Za-z0-9\_\-]+)\/(.*)$ engine/handlers/pagehandler.php?handler=$1&page=$2
+RewriteRule ^pg\/([A-Za-z0-9\_\-]+)$ engine/handlers/pagehandler.php?handler=$1
 
 RewriteRule xml-rpc.php engine/handlers/xml-rpc_handler.php
 RewriteRule mt/mt-xmlrpc.cgi engine/handlers/xml-rpc_handler.php
