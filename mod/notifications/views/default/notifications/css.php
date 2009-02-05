@@ -40,6 +40,7 @@
 	background: url(<?php echo $vars['url']; ?>mod/notifications/graphics/icon_notifications_email.gif) no-repeat right -36px;
 }
 
+.notification_collections,
 .notification_personal {
 	margin-bottom: 25px;
 }
