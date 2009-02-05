@@ -323,6 +323,10 @@
 	 */
 	function register_notification_object($entity_type, $object_subtype, $english_name) {
 		global $CONFIG;
+		
+		if ($entity_type == '') $entity_type = '__BLANK__';
+		if ($object_subtype == '') $object_subtype = '__BLANK__';
+		
 		if (!isset($CONFIG->register_objects)) {
 			$CONFIG->register_objects = array();
 		}
@@ -375,9 +379,11 @@
 									),true)) return true;
 			
 			// Have we registered notifications for this type of entity?
-			if (isset($CONFIG->register_objects[$object->getType()][$object->getSubtype()])) {
+			$object_type = $object->getType(); if (empty($object_type)) $object_type = '__BLANK__';
+			$object_subtype = $object->getSubtype(); if (empty($object_subtype)) $object_subtype = '__BLANK__';
+			if (isset($CONFIG->register_objects[$object_type][$object_subtype])) {
 				
-				$descr = $CONFIG->register_objects[$object->getType()][$object->getSubtype()];
+				$descr = $CONFIG->register_objects[$object_type][$object_subtype];
 				$string = $descr . ": " . $object->getURL();
 				
 				// Get users interested in content from this person and notify them
