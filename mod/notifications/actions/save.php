@@ -18,6 +18,9 @@
 		global $NOTIFICATION_HANDLERS;
 		foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 			$subscriptions[$method] = get_input($method.'subscriptions');
+			$personal[$method] = get_input($method.'personal');
+			
+			set_user_notification_setting($_SESSION['user']->guid, $method, ($personal[$method] == '1') ? true : false);
 			remove_entity_relationships($SESSION['user']->guid,'notify' , $method, false);
 		}
 		
@@ -25,7 +28,6 @@
 		foreach($subscriptions as $key => $subscription)
 		if (is_array($subscription) && !empty($subscription)) {
 			foreach($subscription as $subscriptionperson) {
-				// register_notification_interest($SESSION['user']->guid, $subscription);
 				add_entity_relationship($_SESSION['user']->guid, 'notify' . $key, $subscriptionperson);
 			}
 		}

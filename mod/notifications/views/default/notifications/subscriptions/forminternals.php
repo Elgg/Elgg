@@ -1,3 +1,6 @@
+	<p class="notification_methods_intro">
+		<?php echo elgg_echo('notifications:subscriptions:description'); ?>
+	</p>
 <?php
 
 	// Get friends and subscriptions

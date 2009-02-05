@@ -23,10 +23,18 @@
 		
 		function notifications_plugin_init() {
 			extend_view('css','notifications/css');
+			global $CONFIG;
+			
+			// Unset the default user settings hook
+			if (isset($CONFIG->hooks['usersettings:save']['user']))
+				foreach($CONFIG->hooks['usersettings:save']['user'] as $key => $function) {
+					if ($function == 'notification_user_settings_save')
+						unset($CONFIG->hooks['usersettings:save']['user'][$key]); 
+				}
 		}
 
 		register_elgg_event_handler('pagesetup','system','notifications_plugin_pagesetup',1000);
-		register_elgg_event_handler('init','system','notifications_plugin_init');
+		register_elgg_event_handler('init','system','notifications_plugin_init',1000);
 
 	// Register action
 		global $CONFIG;

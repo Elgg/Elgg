@@ -19,13 +19,12 @@
 	// Display a description
 ?>
 <div class="notification_methods">
-	<p class="notification_methods_intro">
-		<?php echo elgg_echo('notifications:subscriptions:description'); ?>
-	</p>
 <?php
 
 	echo elgg_view('input/form',array(
-			'body' => elgg_view('notifications/subscriptions/forminternals'),
+			'body' => 	elgg_view('notifications/subscriptions/personal') .
+						elgg_view('notifications/subscriptions/collections') .
+						elgg_view('notifications/subscriptions/forminternals'),
 			'method' => 'post',
 			'action' => $vars['url'] . 'action/notificationsettings/save',
 		));
