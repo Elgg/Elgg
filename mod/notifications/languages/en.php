@@ -5,6 +5,9 @@
 		'notifications:subscriptions:personal:description' => 'Receive notifications when actions are performed on your content',
 		'notifications:subscriptions:personal:title' => 'Personal notifications',
 	
+		'notifications:subscriptions:collections:title' => 'Friends collections',
+		'notifications:subscriptions:collections:description' => 'To toggle settings for members of your friends collections, click the icons below.',
+	
 		'notifications:subscriptions:changesettings' => 'Notifications',
 		'notification:method:email' => 'Email',	
 	

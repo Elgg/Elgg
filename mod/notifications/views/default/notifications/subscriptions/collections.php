@@ -3,7 +3,13 @@
 	if ($collections = get_user_access_collections($vars['user']->guid)) {
 		global $NOTIFICATION_HANDLERS;
 ?>
+<p>
+	<?php echo elgg_echo('notifications:subscriptions:collections:title'); ?>
+</p>
 <div class="notification_personal">
+<p>
+	<?php echo elgg_echo('notifications:subscriptions:collections:description'); ?>
+</p>
 <table id="notificationstable" cellspacing="0" cellpadding="4" border="1" width="100%">
   <tr>
     <td>&nbsp;</td>
