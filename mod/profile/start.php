@@ -266,6 +266,7 @@
 		register_elgg_event_handler('init','system','profile_fields_setup', 10000); // Ensure this runs after other plugins
 		
 		register_elgg_event_handler('pagesetup','system','profile_pagesetup');
+		register_elgg_event_handler('profileupdate','all','object_notifications');
 		
 		
 	// Register actions
