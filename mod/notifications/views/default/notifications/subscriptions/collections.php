@@ -10,6 +10,8 @@
 		for ( var i in members ) {
 			var checked = $('#' + method + 'collections' + id).children("INPUT[type='checkbox']").attr('checked'); 
     		$("#"+method+members[i]).children("INPUT[type='checkbox']").attr('checked', checked);
+    		functioncall = 'adjust' + method + '_alt("'+method+members[i]+'");';
+    		eval(functioncall);
 		} 
 	}
 	
