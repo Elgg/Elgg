@@ -74,8 +74,8 @@
 			if ($i > 0) $fields .= "<td class=\"spacercolumn\">&nbsp;</td>";
 			$fields .= <<< END
 			    <td class="{$method}togglefield">
-			    <a href="#" border="0" id="{$method}collections{$collection->id}" class="{$method}toggleOff" onclick="adjust{$method}_alt('{$method}collections{$collection->id}'); setCollection([{$members}],'{$method}',{$collection->id});">
-			    <input type="checkbox" name="{$method}collections[]" id="{$method}checkbox" onclick="adjust{$method}('{$method}collections{$collection->id}');" value="{$collection->id}" {$collectionschecked[$method]} /></a></td>
+			    <a href="#" border="0" id="{$method}collections{$collection->id}" class="{$method}toggleOff" onclick="adjust{$method}_alt('{$method}collections{$collection->id}'); setCollection([{$members}],'{$method}',{$collection->id}); return false;">
+			    <input type="checkbox" name="{$method}collections[]" id="{$method}checkbox" onclick="adjust{$method}('{$method}collections{$collection->id}'); return false;" value="{$collection->id}" {$collectionschecked[$method]} /></a></td>
 END;
 			$i++;
 		}
