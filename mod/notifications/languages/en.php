@@ -7,6 +7,7 @@
 	
 		'notifications:subscriptions:collections:title' => 'Friends collections',
 		'notifications:subscriptions:collections:description' => 'To toggle settings for members of your friends collections, click the icons below.',
+		'notifications:subscriptions:collections:edit' => 'To edit your friends collections, click here.',
 	
 		'notifications:subscriptions:changesettings' => 'Notifications',
 		'notification:method:email' => 'Email',	

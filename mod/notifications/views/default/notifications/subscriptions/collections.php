@@ -25,6 +25,7 @@
 <div class="notification_personal">
 <p>
 	<?php echo elgg_echo('notifications:subscriptions:collections:description'); ?>
+	<a href="<?php echo $vars['url']; ?>pg/collections/<?php echo $vars['user']->username; ?>"><?php echo elgg_echo('notifications:subscriptions:collections:edit') ?></a>
 </p>
 <table id="notificationstable" cellspacing="0" cellpadding="4" border="1" width="100%">
   <tr>
@@ -46,13 +47,14 @@
 
 	foreach($collections as $collection) {
 		$members = get_members_of_access_collection($collection->id, true);
+		$memberno = sizeof($members);
 		$members = implode(',',$members);
 
 ?>
   <tr>
     <td class="namefield">
     	<p>
-    		<?php echo $collection->name; ?>
+    		<?php echo $collection->name; ?> (<?php echo $memberno; ?>)
     	</p>
     	
     </td>
