@@ -100,4 +100,36 @@
 #activity .activity_relationship_member_create {
 	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_forum.gif) no-repeat left -1px;
 }
+#activity .activity_groupforumtopic_annotate {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_comment.gif) no-repeat left -1px;	
+}
+/* post to wire */
+#activity .activity_thewire_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_thewire.gif) no-repeat left -1px;	
+}
+#activity .activity_groupforumtopic_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_forum.gif) no-repeat left -1px;
+}
+/* comment on page */
+#activity .activity_page_annotate {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_comment.gif) no-repeat left -1px;	
+}
+#activity .activity_page_top_annotate {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_comment.gif) no-repeat left -1px;	
+}
+/* create a page */
+#activity .activity_page_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_pages.gif) no-repeat left -1px;	
+}
+#activity .activity_page_top_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_pages.gif) no-repeat left -1px;	
+}
+/* updated a page */
+#activity .activity_page_update {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_pages.gif) no-repeat left -1px;	
+}
+#activity .activity_page_top_update {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_pages.gif) no-repeat left -1px;	
+}
+
 
