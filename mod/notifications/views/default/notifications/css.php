@@ -3,6 +3,12 @@
 	text-align: left;
 	vertical-align: middle;
 }
+#notificationstable td.namefield p {
+	margin:0;
+	vertical-align: middle;
+	line-height: 1.1em;
+	padding:5px 0 5px 0;
+}
 #notificationstable td.namefield img {
 	padding:6px 10px 6px 3px;
 	float:left;
@@ -44,3 +50,15 @@
 .notification_personal {
 	margin-bottom: 25px;
 }
+
+.settings_form .friendsPicker_container h3 {
+	color:#999999;
+	font-size:3em;
+	margin:0 0 20px;
+	text-align:left;
+	background: none;
+	border-bottom: none;
+}
+
+
+
