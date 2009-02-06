@@ -12,8 +12,8 @@
 			if ($("#"+method+members[i]).children("INPUT[type='checkbox']").attr('checked') != checked) {  
     			$("#"+method+members[i]).children("INPUT[type='checkbox']").attr('checked', checked);
     			functioncall = 'adjust' + method + '_alt("'+method+members[i]+'");';
+    			eval(functioncall);
     		}
-    		eval(functioncall);
 		} 
 	}
 	
