@@ -5,9 +5,9 @@
 ?>
 <div class="notification_personal">
 <div class="notification_methods">
-	<p class="notification_methods_intro">
+	<h3>
 		<?php echo elgg_echo('notifications:subscriptions:personal:title'); ?>
-	</p>
+	</h3>
 </div>
 <table id="notificationstable" cellspacing="0" cellpadding="4" border="1" width="100%">
   <tr>

@@ -18,6 +18,7 @@
 		
 	// Display a description
 ?>
+<div class="settings_form">
 <div class="notification_methods">
 <?php
 
@@ -30,4 +31,5 @@
 		));
 
 ?>
+</div>
 </div>

@@ -3,9 +3,21 @@
 	if ($collections = get_user_access_collections($vars['user']->guid)) {
 		global $NOTIFICATION_HANDLERS;
 ?>
-<p>
+
+<script type="text/javascript">
+	
+	function setCollection(members, method, id) {
+		for ( var i in members ) {
+			var checked = $('#' + method + 'collections' + id).children("INPUT[type='checkbox']").attr('checked'); 
+    		$("#"+method+members[i]).children("INPUT[type='checkbox']").attr('checked', checked);
+		} 
+	}
+	
+</script>
+
+<h3>
 	<?php echo elgg_echo('notifications:subscriptions:collections:title'); ?>
-</p>
+</h3>
 <div class="notification_personal">
 <p>
 	<?php echo elgg_echo('notifications:subscriptions:collections:description'); ?>
@@ -29,6 +41,8 @@
 <?php
 
 	foreach($collections as $collection) {
+		$members = get_members_of_access_collection($collection->id, true);
+		$members = implode(',',$members);
 
 ?>
   <tr>
@@ -58,8 +72,8 @@
 			if ($i > 0) $fields .= "<td class=\"spacercolumn\">&nbsp;</td>";
 			$fields .= <<< END
 			    <td class="{$method}togglefield">
-			    <a href="#" border="0" id="{$method}collections" class="{$method}toggleOff" onclick="adjust{$method}_alt('{$method}collections');">
-			    <input type="checkbox" name="{$method}collections[]" id="{$method}checkbox" onclick="adjust{$method}('{$method}collections');" value="{$collection->id}" {$collectionschecked[$method]} /></a></td>
+			    <a href="#" border="0" id="{$method}collections{$collection->id}" class="{$method}toggleOff" onclick="adjust{$method}_alt('{$method}collections{$collection->id}'); setCollection([{$members}],'{$method}',{$collection->id});">
+			    <input type="checkbox" name="{$method}collections[]" id="{$method}checkbox" onclick="adjust{$method}('{$method}collections{$collection->id}');" value="{$collection->id}" {$collectionschecked[$method]} /></a></td>
 END;
 			$i++;
 		}
