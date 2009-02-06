@@ -8,9 +8,11 @@
 	
 	function setCollection(members, method, id) {
 		for ( var i in members ) {
-			var checked = $('#' + method + 'collections' + id).children("INPUT[type='checkbox']").attr('checked'); 
-    		$("#"+method+members[i]).children("INPUT[type='checkbox']").attr('checked', checked);
-    		functioncall = 'adjust' + method + '_alt("'+method+members[i]+'");';
+			var checked = $('#' + method + 'collections' + id).children("INPUT[type='checkbox']").attr('checked');
+			if ($("#"+method+members[i]).children("INPUT[type='checkbox']").attr('checked') != checked) {  
+    			$("#"+method+members[i]).children("INPUT[type='checkbox']").attr('checked', checked);
+    			functioncall = 'adjust' + method + '_alt("'+method+members[i]+'");';
+    		}
     		eval(functioncall);
 		} 
 	}
