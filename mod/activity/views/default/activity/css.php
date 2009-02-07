@@ -132,4 +132,9 @@
 	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_pages.gif) no-repeat left -1px;	
 }
 
-
+.river_content {
+	margin:10px;
+	padding:4px;
+	border:1px solid #ddd;
+	background:#efefef;
+}
