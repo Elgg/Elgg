@@ -144,7 +144,7 @@ or click below to confirm request:
 			'groupforum:river:updated' => '%s has updated',
 			'groupforum:river:update' => 'this discussion topic',
 			'groupforum:river:created' => '%s has created',
-			'groupforum:river:create' => 'a new discussion topic',
+			'groupforum:river:create' => 'a new discussion topic titled',
 			'groupforum:river:posted' => '%s has posted a new comment',
 			'groupforum:river:annotate:create' => 'on this discussion topic',
 
