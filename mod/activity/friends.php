@@ -28,6 +28,7 @@
 		$autofeed = true;
 		
 		$body = elgg_view('activity/dashboard', array('activity' => $activity));
+		$body .= elgg_view('activity/offset', array('offset' => $offset, 'add_to_url' => 'friends'));
 	} else
 		$body = elgg_echo('activity:nofriendactivity');
 	

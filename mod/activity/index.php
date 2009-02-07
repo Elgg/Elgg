@@ -26,6 +26,8 @@
 			$body = elgg_view('activity/dashboard', array('activity' => activity_get_activity_opendd($limit, $offset, $type, $subtype, page_owner())));
 		else
 			$body = elgg_view('activity/dashboard', array('activity' => activity_get_activity($limit, $offset, $type, $subtype, page_owner())));
+			$body .= elgg_view('activity/offset', array('offset' => $offset, 'add_to_url' => 'own'));
+
 	}
 	else
 		$body = elgg_echo('activity:usernotfound');

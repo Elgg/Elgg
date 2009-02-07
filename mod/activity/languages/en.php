@@ -5,7 +5,7 @@
 	 * @package ElggActivity
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
 	 * @author Curverider Ltd
-	 * @copyright Curverider Ltd 2008-2009
+	 * @copyright Curverider Ltd 2008
 	 * @link http://elgg.com/
 	 */
 
@@ -21,6 +21,8 @@
 		'activity:useasdashboard' => 'Do you wish to use the activity stream as the dashboard?',
 	
 		'activity:noactivity' => 'Sorry, there is currently no activity that matches your search criteria',
+		'activity:forward' => "forward",
+		'activity:back' => "back",
 	
 		'activity:usernotfound' => 'User not found',
 		'activity:nofriendactivity' => 'No activity, perhaps you should add some more friends?',
