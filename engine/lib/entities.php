@@ -1700,21 +1700,38 @@
 	 * Delete a given entity.
 	 * 
 	 * @param int $guid
+	 * @param bool $recursive If true (default) then all entities which are owned or contained by $guid will also be deleted.
+	 * 						   Note: this bypasses ownership of sub items.
 	 */
-	function delete_entity($guid)
+	function delete_entity($guid, $recursive = true)
 	{
 		global $CONFIG;
-		
-		// TODO Make sure this deletes all metadata/annotations/relationships/etc!!
 		
 		$guid = (int)$guid;
 		if ($entity = get_entity($guid)) {
 			if (trigger_elgg_event('delete',$entity->type,$entity)) {
 				if ($entity->canEdit()) {
+					
+					// Delete contained owned and otherwise releated objects (depth first)
+					if ($recursive)
+					{
+						// Temporary token overriding access controls TODO: Do this better.
+						static $__RECURSIVE_DELETE_TOKEN;
+						$__RECURSIVE_DELETE_TOKEN = md5(get_loggedin_userid()); // Make it slightly harder to guess
+						
+						$sub_entities = get_data("SELECT * from {$CONFIG->dbprefix}entities WHERE container_guid=$guid or owner_guid=$guid or site_guid=$guid", 'entity_row_to_elggstar');
+						foreach ($sub_entities as $e)
+							$e->delete();
+							
+						$__RECURSIVE_DELETE_TOKEN = null; 
+					}
+					
+					// Now delete the entity itself
 					$entity->clearMetadata();
 					$entity->clearAnnotations();
 					$entity->clearRelationships();
 					$res = delete_data("DELETE from {$CONFIG->dbprefix}entities where guid={$guid}");
+					
 					return $res;
 				} 
 			}
@@ -2575,12 +2592,27 @@
 		return delete_data("DELETE from {$CONFIG->dbprefix}private_settings where entity_guid = {$entity_guid}");
 	}
 	
+	function recursive_delete_permissions_check($hook, $entity_type, $returnvalue, $params)
+	{
+		static $__RECURSIVE_DELETE_TOKEN;
+		
+		$entity = $params['entity'];
+		
+		if ((isloggedin()) && ($__RECURSIVE_DELETE_TOKEN) && (strcmp($__RECURSIVE_DELETE_TOKEN, md5(get_loggedin_userid()))))
+			return true;
+		
+	}
+	
 	/**
 	 * Entities init function; establishes the page handler
 	 *
 	 */
 	function entities_init() {
 		register_page_handler('view','entities_page_handler');
+		
+		// Allow a permission override for recursive entity deletion
+		// TODO: Can this be done better?
+		register_plugin_hook('permissions_check','all','recursive_delete_permissions_check');
 	}
 	
 	/** Register the import hook */
