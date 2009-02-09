@@ -1639,7 +1639,7 @@
 	 * @param int $guid The guid
 	 * @param string $reason Optional reason
 	 */
-	function disable_entity($guid, $reason = "")
+	function disable_entity($guid, $reason = "", $recursive = true)
 	{
 		global $CONFIG;
 		
@@ -1652,8 +1652,20 @@
 					
 					if ($reason)
 						create_metadata($guid, 'disable_reason', $reason,'', 0, ACCESS_PUBLIC);
-						//$entity->disable_reason = $reason;				
-					
+
+					if ($recursive)
+					{
+						// Temporary token overriding access controls TODO: Do this better.
+						static $__RECURSIVE_DELETE_TOKEN;
+						$__RECURSIVE_DELETE_TOKEN = md5(get_loggedin_userid()); // Make it slightly harder to guess
+						
+						$sub_entities = get_data("SELECT * from {$CONFIG->dbprefix}entities WHERE container_guid=$guid or owner_guid=$guid or site_guid=$guid", 'entity_row_to_elggstar');
+						foreach ($sub_entities as $e)
+							$e->disable($reason);
+							
+						$__RECURSIVE_DELETE_TOKEN = null; 
+					}
+											
 					$res = update_data("UPDATE {$CONFIG->dbprefix}entities set enabled='no' where guid={$guid}");
 					
 					return $res;
