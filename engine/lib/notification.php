@@ -393,7 +393,10 @@
 						foreach($interested_users as $user) {
 							if ($user instanceof ElggUser) {
 								
-								if (in_array($object->access_id,get_access_list($user->guid))) {
+								if ((in_array($object->access_id,get_access_list($user->guid)) ||
+									$object->access_id == ACCESS_PUBLIC ||
+									$object->access_id == ACCESS_LOGGED_IN)
+									&& $object->access_id != ACCESS_PRIVATE) {
 									$tmp = (array)get_user_notification_settings($guid);
 									$methods = array(); 
 									
