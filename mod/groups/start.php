@@ -66,24 +66,61 @@
 		// Write access permissions
 		register_plugin_hook('access:collections:write', 'all', 'groups_write_acl_plugin_hook');
 		
-		// For now, we'll hard code the groups profile items as follows:
-		// TODO make this user configurable
+		// Notification hooks
+		if (is_callable('register_notification_object'))
+			register_notification_object('object', 'groupforumtopic', elgg_echo('groupforumtopic:new'));
+		register_elgg_event_handler('annotate','all','group_object_notifications');
 		
-		// Language short codes must be of the form "groups:key"
-		// where key is the array key below
-		/*$CONFIG->group = array(
-		
-			'name' => 'text',
-			'description' => 'longtext',
-			'briefdescription' => 'text',
-			'interests' => 'tags',
-			'website' => 'url',
-							   
-		);*/
-		
+		// Listen to notification events and supply a more useful message
+		register_plugin_hook('notify:entity:message', 'object', 'groupforumtopic_notify_message');
+				
 		// Now override icons
 		register_plugin_hook('entity:icon:url', 'group', 'groups_groupicon_hook');
 	}
+	
+	/**
+	 * Event handler for group forum posts
+	 *
+	 */
+	function group_object_notifications($event, $object_type, $object) {
+		
+		if (is_callable('object_notifications'))
+		if ($object instanceof ElggObject) {
+			if ($object->getSubtype() == 'groupforumtopic') {
+				object_notifications($event, $object_type, $object);
+			}
+		}
+		
+	}
+	
+		/**
+		 * Returns a more meaningful message
+		 *
+		 * @param unknown_type $hook
+		 * @param unknown_type $entity_type
+		 * @param unknown_type $returnvalue
+		 * @param unknown_type $params
+		 */
+		function groupforumtopic_notify_message($hook, $entity_type, $returnvalue, $params)
+		{
+			$entity = $params['entity'];
+			$to_entity = $params['to_entity'];
+			$method = $params['method'];
+			if (($entity instanceof ElggEntity) && ($entity->getSubtype() == 'groupforumtopic'))
+			{
+				$descr = $entity->description;
+				$title = $entity->title;
+				global $CONFIG;
+				$url = $entity->getURL();
+				$owner = get_entity($entity->container_guid);
+				if ($method == 'sms') {
+					return elgg_echo("groupforumtopic:new") . ': ' . $url . " ({$owner->name}: {$title})";
+				} else {
+					return "{$title}\n({$owner->name})\n\n{$url}";
+				}
+			}
+			return null;
+		}
 	
 	/**
 	 * This function loads a set of default fields into the profile, then triggers a hook letting other plugins to edit

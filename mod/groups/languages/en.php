@@ -55,6 +55,8 @@
 			'groups:notfound:details' => "The requested group either does not exist or you do not have access to it",
 			
 			'item:object:groupforumtopic' => "Forum topics",
+	
+			'groupforumtopic:new' => "New forum post",
 			
 			/*
 			   Group tools
