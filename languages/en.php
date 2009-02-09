@@ -595,6 +595,8 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'reply' => "Reply",
 			'more' => 'More',
 			'comments' => 'Comments',
+			'import' => 'Import',
+			'export' => 'Export',
 	
 			'up' => 'Up',
 			'down' => 'Down',
@@ -627,7 +629,8 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 		/**
 		 * Generic questions
 		 */
-		'question:areyousure' => 'Are you sure?',
+	
+			'question:areyousure' => 'Are you sure?',
 	
 		/**
 		 * Generic data words
