@@ -27,6 +27,10 @@
 		
 		// Register a page handler, so we can have nice URLs
 		register_page_handler('guidtool','guidtool_page_handler');
+		
+		// Register some actions
+		register_action("guidtool/delete",false, $CONFIG->pluginspath . "guidtool/actions/delete.php", true);
+		
 	}
 	
 	/**

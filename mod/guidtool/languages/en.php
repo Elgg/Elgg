@@ -23,6 +23,9 @@
 			'guidtool:pickformat' => 'Please select the format that you wish to import or export.',
 	
 			'guidbrowser:export' => 'Export',
+	
+			'guidtool:deleted' => 'GUID %d deleted',
+			'guidtool:notdeleted' => 'GUID %d not deleted',
 	);
 					
 	add_translation("en",$english);
