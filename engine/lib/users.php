@@ -732,7 +732,6 @@
 	 * This function returns an ElggUser from a given GUID.
 	 * @param int $guid The GUID
 	 * @return ElggUser|false 
-	 * @throws InvalidParameterException if $GUID exists but is not an ElggUser.
 	 */
 	function get_user($guid)
 	{
@@ -740,7 +739,8 @@
 			$result = get_entity($guid);
 		
 		if ((!empty($result)) && (!($result instanceof ElggUser)))
-			throw new InvalidClassException(sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $guid, 'ElggUser'));
+			//throw new InvalidClassException(sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $guid, 'ElggUser'));
+			return false;
 			
 		if (!empty($result))
 			return $result;
