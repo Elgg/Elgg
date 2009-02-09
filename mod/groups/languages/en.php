@@ -22,6 +22,7 @@
 			'groups:all' => "All site groups",
 			'groups:new' => "Create a new group",
 			'groups:edit' => "Edit group",
+			'groups:delete' => 'Delete group',
 	
 			'groups:icon' => 'Group icon (leave blank to leave unchanged)',
 			'groups:name' => 'Group name',
@@ -164,6 +165,12 @@ or click below to confirm request:
 			'groups:widgets:entities:label:pleaseedit' => 'Please configure this widget.',
 		
 			'groups:forumtopic:edited' => 'Forum topic successfully edited.',
+	
+			/**
+			 * Action messages
+			 */
+			'group:deleted' => 'Group and group contents deleted',
+			'group:notdeleted' => 'Group could not be deleted',
 	);
 					
 	add_translation("en",$english);

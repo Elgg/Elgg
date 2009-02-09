@@ -40,6 +40,7 @@
 		
 		// Register some actions
 		register_action("groups/edit",false, $CONFIG->pluginspath . "groups/actions/edit.php");
+		register_action("groups/delete",false, $CONFIG->pluginspath . "groups/actions/delete.php");
 		register_action("groups/join",false, $CONFIG->pluginspath . "groups/actions/join.php");
 		register_action("groups/leave",false, $CONFIG->pluginspath . "groups/actions/leave.php");
 		register_action("groups/joinrequest",false, $CONFIG->pluginspath . "groups/actions/joinrequest.php");
@@ -124,6 +125,7 @@
 				if (isloggedin()) {
 					if ($page_owner->canEdit()) {
 						add_submenu_item(elgg_echo('groups:edit'),$CONFIG->wwwroot . "mod/groups/edit.php?group_guid=" . $page_owner->getGUID(), '1groupsactions');
+						add_submenu_item(elgg_echo('groups:delete'),$CONFIG->wwwroot . "action/groups/delete?group_guid=" . $page_owner->getGUID(), '1groupsactions');
 						add_submenu_item(elgg_echo('groups:invite'),$CONFIG->wwwroot . "mod/groups/invite.php?group_guid={$page_owner->getGUID()}", '1groupsactions');
 					}
 					if ($page_owner->isMember($_SESSION['user'])) {
