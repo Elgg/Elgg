@@ -427,9 +427,10 @@
 	 * @param int $guid_one The GUID of the entity 
 	 * @param string $relationship The name of the relationship (optionally)
 	 * @param true|false $inverse Whether we're deleting inverse relationships (default false)
+	 * @param string $type The type of entity to limit this relationship delete to (defaults to all)
 	 * @return true|false Depending on success
 	 */
-	function remove_entity_relationships($guid_one, $relationship = "", $inverse = false) {
+	function remove_entity_relationships($guid_one, $relationship = "", $inverse = false, $type = '') {
 		
 		global $CONFIG;
 		
@@ -437,15 +438,30 @@
 		
 		if (!empty($relationship)) {
 			$relationship = sanitise_string($relationship);
-			$where = "and relationship='$relationship'";
+			$where = "and er.relationship='$relationship'";
 		} else {
 			$where = "";
 		}
 		
-		if (!$inverse) {
-			return delete_data("DELETE from {$CONFIG->dbprefix}entity_relationships where guid_one=$guid_one {$where}");
+		if (!empty($type)) {
+			$type = sanitise_string($type);
+			if (!$inverse) {
+				$join = " join {$CONFIG->dbprefix}entities e on e.guid = er.guid_two ";
+			} else {
+				$join = " join {$CONFIG->dbprefix}entities e on e.guid = er.guid_one ";
+				$where .= " and ";
+			}
+			$where .= " and e.type = '{$type}' ";
 		} else {
-			return delete_data("DELETE from {$CONFIG->dbprefix}entity_relationships where guid_two=$guid_one {$where}");
+			$join = "";
+		}
+		
+		if (!$inverse) {
+			$sql = "DELETE er from {$CONFIG->dbprefix}entity_relationships as er {$join} where guid_one={$guid_one} {$where}";
+			return delete_data($sql);
+		} else {
+			$sql = "DELETE er from {$CONFIG->dbprefix}entity_relationships as er {$join} where guid_two={$guid_one} {$where}";
+			return delete_data($sql);
 		}
 		
 	}
