@@ -625,6 +625,11 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	
 	
 		/**
+		 * Generic questions
+		 */
+		'question:areyousure' => 'Are you sure?',
+	
+		/**
 		 * Generic data words
 		 */
 	
