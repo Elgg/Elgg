@@ -160,6 +160,8 @@
 	{
 		global $CONFIG;
 
+		$result = false;
+		
 		$entity_guid = (int)$entity_guid;
 		//$name = sanitise_string(trim($name));
 		//$value = sanitise_string(trim($value));
@@ -180,16 +182,19 @@
 		if (!$name) return false;
 		
 		$entity = get_entity($entity_guid);
-		system_log($entity, 'annotate');
 		
-		// If ok then add it
-		$result = insert_data("INSERT into {$CONFIG->dbprefix}annotations (entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id) VALUES ($entity_guid,'$name',$value,'$value_type', $owner_guid, $time, $access_id)");
-		if ($result!==false) {
-			$obj = get_annotation($result);
-			if (trigger_elgg_event('create', 'annotation', $obj)) {
-				return true;
-			} else {
-				delete_annotation($result);
+		if (trigger_elgg_event('annotate',$entity->type,$entity)) {
+			system_log($entity, 'annotate');
+			
+			// If ok then add it
+			$result = insert_data("INSERT into {$CONFIG->dbprefix}annotations (entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id) VALUES ($entity_guid,'$name',$value,'$value_type', $owner_guid, $time, $access_id)");
+			if ($result!==false) {
+				$obj = get_annotation($result);
+				if (trigger_elgg_event('create', 'annotation', $obj)) {
+					return true;
+				} else {
+					delete_annotation($result);
+				}
 			}
 		}
 		
