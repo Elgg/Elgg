@@ -27,6 +27,7 @@
     <td>&nbsp;</td>
 <?php
 	$i = 0; 
+	global $NOTIFICATION_HANDLERS;
 	foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 		if ($i > 0)
 			echo "<td class=\"spacercolumn\">&nbsp;</td>";
@@ -39,7 +40,6 @@
     <td>&nbsp;</td>
   </tr>
 <?php
-		global $NOTIFICATION_HANDLERS;
 		$members = array();
 		if ($friends = get_user_friends($vars['user']->guid,'',9999,0)) {
 			foreach($friends as $friend)
@@ -82,6 +82,7 @@ END;
 		echo $fields;
 
 ?>
+	<td>&nbsp;</td>
   </tr>
 <?php
 
