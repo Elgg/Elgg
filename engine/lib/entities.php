@@ -796,6 +796,7 @@
 				$end = get_day_end($day,$month,$year);
 			
 			$this->calendar_start = $start;	
+			$this->calendar_end = $end;
 				
 			return true;
 		}
