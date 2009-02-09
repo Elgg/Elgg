@@ -3,6 +3,11 @@
 	global $NOTIFICATION_HANDLERS;
 	foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 		$subsbig[$method] = get_entities_from_relationship('notify' . $method,$vars['user']->guid,false,'group','',0,'',99999);
+		$tmparray = array();
+		foreach($subsbig[$method] as $tmpent) {
+			$tmparray[] = $tmpent->guid;
+		}
+		$subsbig[$method] = $tmparray;
 	}
 
 ?>
@@ -13,7 +18,7 @@
 		<?php
 			echo elgg_view('notifications/subscriptions/jsfuncs',$vars);
 		?>
-		<?php echo elgg_view_title(elgg_echo('notifications:subscriptions:groups')); ?>
+		<?php echo elgg_view_title(elgg_echo('notifications:subscriptions:changesettings:groups')); ?>
 		<p>
 			<?php
 
@@ -50,7 +55,7 @@
 				$i = 0;
 				
 				foreach($NOTIFICATION_HANDLERS as $method => $foo) {
-					if (in_array($group->guid,$subs[$method])) {
+					if (in_array($group->guid,$subsbig[$method])) {
 						$checked[$method] = 'checked="checked"';
 					} else {
 						$checked[$method] = '';

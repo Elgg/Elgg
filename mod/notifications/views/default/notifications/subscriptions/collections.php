@@ -1,8 +1,3 @@
-<?php
-
-	if ($collections = get_user_access_collections($vars['user']->guid)) {
-		global $NOTIFICATION_HANDLERS;
-?>
 
 <script type="text/javascript">
 	
@@ -44,7 +39,53 @@
     <td>&nbsp;</td>
   </tr>
 <?php
+		global $NOTIFICATION_HANDLERS;
+		$members = array();
+		if ($friends = get_user_friends($vars['user']->guid,'',9999,0)) {
+			foreach($friends as $friend)
+				$members[] = $friend->guid;
+		}
+		$memberno = sizeof($members);
+		$members = implode(',',$members);
 
+?>
+  <tr>
+    <td class="namefield">
+    	<p>
+    		<?php echo elgg_echo('friends:all'); ?> (<?php echo $memberno; ?>)
+    	</p>
+    </td>
+<?php
+
+		$fields = '';
+		$i = 0;
+		foreach($NOTIFICATION_HANDLERS as $method => $foo) {
+			$metaname = 'collections_notifications_preferences_' . $method;
+			if ($collections_preferences = $vars['user']->$metaname) {
+				if (!empty($collections_preferences) && !is_array($collections_preferences))
+					$collections_preferences = array($collections_preferences);
+				if (is_array($collections_preferences))
+				if (in_array(0,$collections_preferences)) {
+					$collectionschecked[$method] = 'checked="checked"';
+				} else {
+					$collectionschecked[$method] = '';
+				}
+			}
+			if ($i > 0) $fields .= "<td class=\"spacercolumn\">&nbsp;</td>";
+			$fields .= <<< END
+			    <td class="{$method}togglefield">
+			    <a href="#" border="0" id="{$method}collections0" class="{$method}toggleOff" onclick="adjust{$method}_alt('{$method}collections0'); setCollection([{$members}],'{$method}',0);">
+			    <input type="checkbox" name="{$method}collections[]" id="{$method}checkbox" onclick="adjust{$method}('{$method}collections0');" value="0" {$collectionschecked[$method]} /></a></td>
+END;
+			$i++;
+		}
+		echo $fields;
+
+?>
+  </tr>
+<?php
+
+	if ($collections = get_user_access_collections($vars['user']->guid)) {
 	foreach($collections as $collection) {
 		$members = get_members_of_access_collection($collection->id, true);
 		$memberno = sizeof($members);
@@ -92,12 +133,8 @@ END;
 <?php
 
 	}
+}
 
 ?>
 </table>
 </div>
-<?php
-		
-	}
-
-?>

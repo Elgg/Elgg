@@ -20,28 +20,23 @@
 		set_context('settings');
 		
 	// Get the form
-		global $SESSION;
+		global $SESSION, $CONFIG;
 		$people = array();
-		if ($groups_ents = get_entities_from_relationship('notify',$SESSION['user']->guid,false,'group','',0,'',99999)) {
-			foreach($groups_ents as $ent)
-				$groups[] = $ent->guid;
-		}
 		
 		$groupmemberships = get_entities_from_relationship('member',$_SESSION['user']->guid,false,'group','',0,'',9999);
 		
 		$body = elgg_view('input/form',array(
 			'body' => elgg_view('notifications/subscriptions/groupsform',array(
-							'groupsubs' => $groups,
 							'groups' => $groupmemberships
 						)),
 			'method' => 'post',
-			'action' => ''
+			'action' => $CONFIG->wwwroot . 'action/notificationsettings/groupsave'
 		));
 		
 	// Insert it into the correct canvas layout
 		$body = elgg_view_layout('two_column_left_sidebar','',$body);
 		
 	// Draw the page
-		echo page_draw(elgg_echo('notifications:subscriptions:groups'),$body);
+		echo page_draw(elgg_echo('notifications:subscriptions:changesettings:groups'),$body);
 		
 ?>

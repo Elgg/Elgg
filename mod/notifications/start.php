@@ -17,8 +17,11 @@
 	 */
 		function notifications_plugin_pagesetup() {
 			global $CONFIG;
-			if (get_context() == 'settings')
+			if (get_context() == 'settings') {
 				add_submenu_item(elgg_echo('notifications:subscriptions:changesettings'), $CONFIG->wwwroot . "mod/notifications/");
+				if (is_plugin_enabled('groups'))
+					add_submenu_item(elgg_echo('notifications:subscriptions:changesettings:groups'), $CONFIG->wwwroot . "mod/notifications/groups.php");
+			}
 		}
 		
 		function notifications_plugin_init() {
@@ -39,5 +42,6 @@
 	// Register action
 		global $CONFIG;
 		register_action("notificationsettings/save",false,$CONFIG->pluginspath . "notifications/actions/save.php");
+		register_action("notificationsettings/groupsave",false,$CONFIG->pluginspath . "notifications/actions/groupsave.php");
 		
 ?>
