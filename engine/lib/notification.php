@@ -370,7 +370,7 @@
 		if ($object instanceof ElggEntity) {
 			
 			// Get config data
-			global $CONFIG;
+			global $CONFIG, $SESSION;
 			
 			if (trigger_plugin_hook('object:notifications',$object_type,array(
 										'event' => $event,
@@ -396,7 +396,8 @@
 								if ((in_array($object->access_id,get_access_list($user->guid)) ||
 									$object->access_id == ACCESS_PUBLIC ||
 									$object->access_id == ACCESS_LOGGED_IN)
-									&& $object->access_id != ACCESS_PRIVATE) {
+									&& $object->access_id != ACCESS_PRIVATE
+									&& $user->guid != $SESSION['user']->guid) {
 									$tmp = (array)get_user_notification_settings($guid);
 									$methods = array(); 
 									
