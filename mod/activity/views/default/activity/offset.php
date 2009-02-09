@@ -17,11 +17,13 @@
 
 	$offset = $offset + 20;//set new offset
 
-	echo "<div style=\"margin:10px 0 0 0;font-size:16px;\">";
+	echo "<div class=\"pagination\">";
 
+	echo "<a class=\"back\" href=\"{$vars['url']}{$url}?offset={$offset}\"> &laquo; " . elgg_echo('activity:back') . "</a>";
+	
 	if($backset != '-1')
-		echo "<a href=\"{$vars['url']}{$url}?offset={$backset}\">". elgg_echo('activity:forward') . "</a>  ";
+		echo "<a class=\"forward\" href=\"{$vars['url']}{$url}?offset={$backset}\">". elgg_echo('activity:forward') . " &raquo;</a>  ";
 
-	echo "<a href=\"{$vars['url']}{$url}?offset={$offset}\">" . elgg_echo('activity:back') . "</a></div>";
+	echo "</div>";
 	
 ?>

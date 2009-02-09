@@ -138,3 +138,32 @@
 	border:1px solid #ddd;
 	background:#efefef;
 }
+
+.pagination .forward,
+.pagination .back {
+	display:block;
+	float:left;
+	border:1px solid #4690d6;
+	color:#4690d6;
+	text-align: center;
+	font-size: 12px;
+	font-weight: normal;
+	margin:0 6px 0 0;
+	padding:0px 4px;
+	cursor: pointer;
+	-webkit-border-radius: 4px; 
+	-moz-border-radius: 4px;
+}
+.pagination .forward:hover,
+.pagination .back:hover {
+	background:#4690d6;
+	color:white;
+	text-decoration: none;
+}
+.pagination .back {
+	margin:0 20px 0 0;
+}
+
+
+
+
