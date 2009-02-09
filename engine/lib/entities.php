@@ -393,7 +393,7 @@
 		 *
 		 * @param string $name The type of annotation.
 		 */
-		function countAnnotations($name) 
+		function countAnnotations($name = "") 
 		{ 
 			return count_annotations($this->getGUID(), "","",$name);
 		}

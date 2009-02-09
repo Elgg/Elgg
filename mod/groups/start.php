@@ -70,6 +70,7 @@
 		if (is_callable('register_notification_object'))
 			register_notification_object('object', 'groupforumtopic', elgg_echo('groupforumtopic:new'));
 		register_elgg_event_handler('annotate','all','group_object_notifications');
+		register_plugin_hook('object:notifications','object','group_object_notifications_intercept');
 		
 		// Listen to notification events and supply a more useful message
 		register_plugin_hook('notify:entity:message', 'object', 'groupforumtopic_notify_message');
@@ -87,11 +88,33 @@
 		if (is_callable('object_notifications'))
 		if ($object instanceof ElggObject) {
 			if ($object->getSubtype() == 'groupforumtopic') {
-				object_notifications($event, $object_type, $object);
+				if ($object->countAnnotations() > 0)
+					object_notifications($event, $object_type, $object);
 			}
 		}
 		
 	}
+	
+	/**
+	 * Intercepts the notification on group topic creation and prevents a notification from going out
+	 * (because one will be sent on the annotation)
+	 *
+	 * @param unknown_type $hook
+	 * @param unknown_type $entity_type
+	 * @param unknown_type $returnvalue
+	 * @param unknown_type $params
+	 * @return unknown
+	 */
+		function group_object_notifications_intercept($hook, $entity_type, $returnvalue, $params) {
+			if (isset($params)) {
+				if ($params['event'] == 'create' && $params['object'] instanceof ElggObject) {
+					if ($params['object']->getSubtype() == 'groupforumtopic') {
+						return true;
+					}
+				}
+			}
+			return null;
+		}
 	
 		/**
 		 * Returns a more meaningful message

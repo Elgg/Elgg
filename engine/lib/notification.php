@@ -372,11 +372,12 @@
 			// Get config data
 			global $CONFIG, $SESSION;
 			
-			if (trigger_plugin_hook('object:notifications',$object_type,array(
+			$hookresult = trigger_plugin_hook('object:notifications',$object_type,array(
 										'event' => $event,
 										'object_type' => $object_type,
 										'object' => $object,
-									),true)) return true;
+									),false);
+			if ($hookresult === true) return true;
 			
 			// Have we registered notifications for this type of entity?
 			$object_type = $object->getType(); if (empty($object_type)) $object_type = '__BLANK__';
@@ -398,20 +399,20 @@
 									$object->access_id == ACCESS_LOGGED_IN)
 									&& $object->access_id != ACCESS_PRIVATE
 									&& $user->guid != $SESSION['user']->guid) {
-									$tmp = (array)get_user_notification_settings($guid);
-									$methods = array(); 
-									
-									// TODO: get the specific method to contact each user with - for now just go with their prefs
-									foreach($tmp as $k => $v)
-										if ($v) {
-	
-											$methodstring = trigger_plugin_hook('notify:entity:message',$entity->getType(),array(
-												'entity' => $object,
-												'to_entity' => $user,
-												'method' => $v
-																													),$string);
-											notify_user($user->guid,$object->container_guid,$descr,$methodstring,NULL,array($v));
-										}
+										$tmp = (array)get_user_notification_settings($guid);
+										$methods = array(); 
+										
+										// TODO: get the specific method to contact each user with - for now just go with their prefs
+										foreach($tmp as $k => $v)
+											if ($v) {
+		
+												$methodstring = trigger_plugin_hook('notify:entity:message',$entity->getType(),array(
+													'entity' => $object,
+													'to_entity' => $user,
+													'method' => $v
+																														),$string);
+												notify_user($user->guid,$object->container_guid,$descr,$methodstring,NULL,array($v));
+											}
 								}
 							}						
 						}
@@ -425,6 +426,6 @@
 
 	// Register a startup event
 	register_elgg_event_handler('init','system','notification_init',0);
-	register_elgg_event_handler('create','all','object_notifications');
+	register_elgg_event_handler('create','object','object_notifications');
 
 ?>
