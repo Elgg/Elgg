@@ -54,6 +54,9 @@
 		// Register some actions
 		register_action('admin/site/update_basic', false, "", true); // Register basic site admin action
 		
+		// Page handler
+		register_page_handler('admin','admin_settings_page_handler');
+		
 		if (isadminloggedin()) {
 			global $is_admin;
 			$is_admin = true;
@@ -74,6 +77,30 @@
 		}
 		
 	}
+	
+	function admin_settings_page_handler($page)
+	{
+		global $CONFIG;
+		
+		$path = $CONFIG->path . "admin/index.php";
+		
+		if ($page[0])
+		{
+			switch ($page[0])
+			{
+				case 'user' : $path = $CONFIG->path . "admin/user.php"; break;
+				case 'statistics' : $path = $CONFIG->path . "admin/statistics.php"; break;
+				case 'plugins' : $path = $CONFIG->path . "admin/plugins.php"; break;
+				case 'site' : $path = $CONFIG->path . "admin/site.php"; break;
+			}
+		}
+		
+		if ($page[1])
+			set_input('username', $page[1]);
+			
+		include($path);
+	}
+	
 
 	/**
 	 * Admin permissions system
