@@ -15,5 +15,5 @@
 	 * 
 	 */
 
-    echo $vars['value'];
+    echo htmlentities($vars['value'], null, 'UTF-8'); // $vars['value'];
 ?>

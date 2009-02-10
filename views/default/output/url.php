@@ -20,7 +20,7 @@
 	    if ((substr_count($val, "http://") == 0) && (substr_count($val, "https://") == 0)) {
 	        $val = "http://" . $val;
 	    }
-	    echo "<a href=\"{$val}\" target=\"_blank\">{$val}</a>";
+	    echo "<a href=\"{$val}\" target=\"_blank\">". htmlentities($val, null, 'UTF-8'). "</a>";
     }
 
 ?>

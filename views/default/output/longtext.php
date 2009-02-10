@@ -15,5 +15,7 @@
 	 * 
 	 */
 
-    echo autop($vars['value']);
+	global $CONFIG;
+
+    echo autop(filter_tags($vars['value'], $CONFIG->allowedtags, $CONFIG->allowedprotocols));
 ?>

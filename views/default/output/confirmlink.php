@@ -21,4 +21,4 @@
 	if (!$confirm)
 		$confirm = elgg_echo('question:areyousure');
 ?>
-<a href="<?php echo $vars['href']; ?>" onclick="return confirm('<?php echo addslashes($confirm); ?>');"><?php echo $vars['text']; ?></a>
+<a href="<?php echo $vars['href']; ?>" onclick="return confirm('<?php echo addslashes($confirm); ?>');"><?php echo htmlentities($vars['text'], null, 'UTF-8'); ?></a>
