@@ -23,8 +23,10 @@
 	if (elgg_get_viewtype()=='opendd'){
 		$body = elgg_view('activity/dashboard', array('activity' => activity_get_activity_opendd($limit, $offset, $type, $subtype)));
     }else{
-		$body = elgg_view('activity/dashboard', array('activity' => activity_get_activity($limit, $offset, $type, $subtype)));
-		$body .= elgg_view('activity/offset', array('offset' => $offset));
+    	$activity = activity_get_activity($limit, $offset, $type, $subtype);
+		$body = elgg_view('activity/dashboard', array('activity' => $activity));
+		if (count($activity))
+			$body .= elgg_view('activity/offset', array('offset' => $offset));
     }
 	
 	page_draw(elgg_echo('activity:all'),elgg_view_layout("two_column_left_sidebar", '', $title . $body));
