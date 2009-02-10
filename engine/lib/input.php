@@ -36,16 +36,9 @@
 			
 			if ($filter_result)
 			{
+				
 				global $CONFIG;
-				if (@include_once(dirname(dirname(dirname(__FILE__)))) . "/vendors/kses/kses.php") {
-					if (!is_array($var)) {
-						$var = kses($var, $CONFIG->allowedtags, $CONFIG->allowedprotocols);
-					} else {
-						foreach($var as $key => $el) {
-							$var[$key] = kses($el, $CONFIG->allowedtags, $CONFIG->allowedprotocols);
-						}
-					}
-				}
+				$var = filter_tags($var, $CONFIG->allowedtags, $CONFIG->allowedprotocols);
 			}
 				
 			return $var;
@@ -69,6 +62,31 @@
 			$CONFIG->input = array();
 		$CONFIG->input[trim($variable)] = trim($value);
 			
+	}
+	
+	/**
+	 * Filter tags from a given string
+	 * @param $var
+	 * @return mixed The filtered result
+	 */
+	function filter_tags($var, $allowedtags, $allowedprotocols)
+	{
+		$return = false;
+		
+		if (@include_once(dirname(dirname(dirname(__FILE__)))) . "/vendors/kses/kses.php") {
+			if (!is_array($var)) {
+				$return = "";
+				$return = kses($var, $allowedtags, $allowedprotocols);
+			} else {
+				$return = array();
+				
+				foreach($var as $key => $el) {
+					$return[$key] = kses($el, $allowedtags, $allowedprotocols);
+				}
+			}
+		}
+		
+		return $return;
 	}
 	
 	/**
