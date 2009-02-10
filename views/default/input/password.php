@@ -21,4 +21,4 @@
 	if (!$class) $class = "input-password";
 ?>
 
-<input type="password" <?php if ($vars['disabled']) echo ' disabled="yes" '; ?> <?php echo $vars['js']; ?> name="<?php echo $vars['internalname']; ?>" value="<?php echo $vars['value']; ?>" class="<?php echo $class; ?>" /> 
+<input type="password" <?php if ($vars['disabled']) echo ' disabled="yes" '; ?> <?php echo $vars['js']; ?> name="<?php echo $vars['internalname']; ?>" value="<?php echo htmlentities($vars['value'], null, 'UTF-8'); ?>" class="<?php echo $class; ?>" /> 

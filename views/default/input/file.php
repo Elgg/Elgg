@@ -23,4 +23,4 @@
     $class = $vars['class'];
 	if (!$class) $class = "input-file";
 ?>
-<input type="file" size="30" <?php echo $vars['js']; ?>name="<?php echo $vars['internalname']; ?>" <?php if ($vars['disabled']) echo ' disabled="yes" '; ?> class="<?php echo $class; ?>" />
+<input type="file" size="30" <?php echo $vars['js']; ?> name="<?php echo $vars['internalname']; ?>" <?php if ($vars['disabled']) echo ' disabled="yes" '; ?> class="<?php echo $class; ?>" />
