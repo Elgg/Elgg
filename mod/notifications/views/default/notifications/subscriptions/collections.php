@@ -65,7 +65,7 @@
 				if (!empty($collections_preferences) && !is_array($collections_preferences))
 					$collections_preferences = array($collections_preferences);
 				if (is_array($collections_preferences))
-				if (in_array(0,$collections_preferences)) {
+				if (in_array(-1,$collections_preferences)) {
 					$collectionschecked[$method] = 'checked="checked"';
 				} else {
 					$collectionschecked[$method] = '';
@@ -74,8 +74,8 @@
 			if ($i > 0) $fields .= "<td class=\"spacercolumn\">&nbsp;</td>";
 			$fields .= <<< END
 			    <td class="{$method}togglefield">
-			    <a href="#" border="0" id="{$method}collections0" class="{$method}toggleOff" onclick="adjust{$method}_alt('{$method}collections0'); setCollection([{$members}],'{$method}',0);">
-			    <input type="checkbox" name="{$method}collections[]" id="{$method}checkbox" onclick="adjust{$method}('{$method}collections0');" value="0" {$collectionschecked[$method]} /></a></td>
+			    <a href="#" border="0" id="{$method}collections-1" class="{$method}toggleOff" onclick="adjust{$method}_alt('{$method}collections-1'); setCollection([{$members}],'{$method}',-1);">
+			    <input type="checkbox" name="{$method}collections[]" id="{$method}checkbox" onclick="adjust{$method}('{$method}collections-1');" value="-1" {$collectionschecked[$method]} /></a></td>
 END;
 			$i++;
 		}
