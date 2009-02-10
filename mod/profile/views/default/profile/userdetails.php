@@ -101,8 +101,8 @@
                 $even_odd = ( 'odd' != $even_odd ) ? 'odd' : 'even';					
 	
 
-	echo "<p class=\"{$even_odd}\">";
 	?>
+	<p class="<?php echo $even_odd; ?>">
 		<b><?php
 
 			echo elgg_echo("profile:{$shortname}");
@@ -133,7 +133,7 @@
 <td colspan="2">
 	<div id="profile_info_column_right">	
 	<p class="profile_aboutme_title"><b><?php echo elgg_echo("profile:aboutme"); ?></b></p>
-	<?php echo autop($vars['entity']->description); ?>
+	<?php echo autop(filter_tags($vars['entity']->description)); ?>
 	
 	<?php if ($vars['entity']->isBanned()) { ?>
 		<div id="profile_banned">	
