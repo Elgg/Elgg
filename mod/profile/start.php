@@ -234,6 +234,7 @@
 			
 			if ((!$returnvalue) && ($hook == 'entity:icon:url') && ($params['entity'] instanceof ElggUser))
 			{
+				
 				$entity = $params['entity'];
 				$type = $entity->type;
 				$subtype = get_subtype_from_id($entity->subtype);
@@ -247,6 +248,8 @@
 					$icontime = "default";
 				}
 				
+				return $CONFIG->wwwroot . 'mod/profile/icondirect.php/'.$icontime.'/?username='.$entity->username.'&size='.$size;
+				/*
 				
 				$filehandler = new ElggFile();
 				$filehandler->owner_guid = $entity->getGUID();
@@ -257,7 +260,7 @@
 					
 				
 					return $url;
-				} 
+				} */
 			}
 		}
 		
