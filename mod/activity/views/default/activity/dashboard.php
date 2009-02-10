@@ -1,6 +1,10 @@
 <?php
 	/// Extract the activity
 	$activity = $vars['activity'];
+	
+	//include a view which can then be extended by the wire plugin so you can post to the wire right in this view
+	echo elgg_view("activity/thewire");
+
 ?>
 <div id="activity">
 	<?php
