@@ -8,6 +8,7 @@
 	 * @copyright Curverider Ltd 2008-2009
 	 * @link http://elgg.com/
 	 */
+
 ?>
 <form action="<?php echo $vars['url']; ?>action/groups/edit" enctype="multipart/form-data" method="post">
 
@@ -114,6 +115,20 @@
 		?>
 		<input type="hidden" name="user_guid" value="<?php echo page_owner_entity()->guid; ?>" />
 		<input type="submit" class="submit_button" value="<?php echo elgg_echo("save"); ?>" />
+		
 	</p>
 
 </form>
+
+<div id="delete_group_option">
+	<form action="<?php echo $vars['url'] . "action/groups/delete"; ?>">
+		<?php
+			if ($vars['entity'])
+			{ 
+			?>
+			<input type="hidden" name="group_guid" value="<?php echo $vars['entity']->getGUID(); ?>" />
+			<input type="submit" name="delete" value="<?php echo elgg_echo('groups:delete'); ?>" /><?php 
+			}
+		?>
+	</form>
+</div>

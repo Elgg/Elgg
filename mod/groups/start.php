@@ -185,7 +185,7 @@
 				if (isloggedin()) {
 					if ($page_owner->canEdit()) {
 						add_submenu_item(elgg_echo('groups:edit'),$CONFIG->wwwroot . "mod/groups/edit.php?group_guid=" . $page_owner->getGUID(), '1groupsactions');
-						add_submenu_item(elgg_echo('groups:delete'),$CONFIG->wwwroot . "action/groups/delete?group_guid=" . $page_owner->getGUID(), '1groupsactions');
+						//add_submenu_item(elgg_echo('groups:delete'),$CONFIG->wwwroot . "action/groups/delete?group_guid=" . $page_owner->getGUID(), '1groupsactions');
 						add_submenu_item(elgg_echo('groups:invite'),$CONFIG->wwwroot . "mod/groups/invite.php?group_guid={$page_owner->getGUID()}", '1groupsactions');
 					}
 					if ($page_owner->isMember($_SESSION['user'])) {
