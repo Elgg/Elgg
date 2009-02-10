@@ -370,7 +370,7 @@
 		if ($object instanceof ElggEntity) {
 			
 			// Get config data
-			global $CONFIG, $SESSION;
+			global $CONFIG, $SESSION, $NOTIFICATION_HANDLERS;
 			
 			$hookresult = trigger_plugin_hook('object:notifications',$object_type,array(
 										'event' => $event,
@@ -389,7 +389,8 @@
 				
 				// Get users interested in content from this person and notify them
 				// (Person defined by container_guid so we can also subscribe to groups if we want)
-				if ($interested_users = get_entities_from_relationship('notify',$object->container_guid,true,'user','',0,'',99999)) {
+				foreach($NOTIFICATION_HANDLERS as $method => $foo)
+				if ($interested_users = get_entities_from_relationship('notify' . $method,$object->container_guid,true,'user','',0,'',99999)) {
 					if (is_array($interested_users))
 						foreach($interested_users as $user) {
 							if ($user instanceof ElggUser) {
@@ -398,21 +399,15 @@
 									$object->access_id == ACCESS_PUBLIC ||
 									$object->access_id == ACCESS_LOGGED_IN)
 									&& $object->access_id != ACCESS_PRIVATE
-									&& $user->guid != $SESSION['user']->guid) {
-										$tmp = (array)get_user_notification_settings($guid);
-										$methods = array(); 
-										
-										// TODO: get the specific method to contact each user with - for now just go with their prefs
-										foreach($tmp as $k => $v)
-											if ($v) {
+									&& $user->guid != $SESSION['user']->guid
+									&& $entity instanceof ElggEntity) {
 		
 												$methodstring = trigger_plugin_hook('notify:entity:message',$entity->getType(),array(
 													'entity' => $object,
 													'to_entity' => $user,
-													'method' => $v
-																														),$string);
-												notify_user($user->guid,$object->container_guid,$descr,$methodstring,NULL,array($v));
-											}
+													'method' => $method),$string);
+												if (empty($methodstring)) $methodstring = $string;
+												notify_user($user->guid,$object->container_guid,$descr,$methodstring,NULL,array($method));
 								}
 							}						
 						}
