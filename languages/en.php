@@ -558,7 +558,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'usersettings:user:opt:linktext' => "Change your settings",
 	
 			'usersettings:plugins' => "Tools",
-			'usersettings:plugins:opt:description' => "Configure settings for your active tools.",
+			'usersettings:plugins:opt:description' => "Configure settings (if any) for your active tools.",
 			'usersettings:plugins:opt:linktext' => "Configure your tools",
 	
 			'usersettings:plugins:description' => "This panel allows you to control and configure the personal settings for the tools installed by your system administrator.",
