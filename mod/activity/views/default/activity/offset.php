@@ -24,6 +24,6 @@
 	if($backset != '-1')
 		echo "<a class=\"forward\" href=\"{$vars['url']}{$url}?offset={$backset}\">". elgg_echo('activity:forward') . " &raquo;</a>  ";
 
-	echo "</div>";
+	echo "<div class=\"clearfloat\"></div></div>";
 	
 ?>
