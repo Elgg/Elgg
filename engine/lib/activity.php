@@ -85,7 +85,21 @@
 						}
 						$f[$key] = $val;
 					}
-					$activity_events[] = $f; 
+					
+					// Filter result based on parameters
+					$add = true;
+					if ($type) {
+						if (!in_array($f['type'], $type)) $add = false;
+					}
+					if (($add) && ($subtype)) {
+						if (!in_array($f['subtype'], $subtype)) $add = false;
+					}
+					if (($add) && ($event)) {
+						if (!in_array($f['event'], $event)) $add = false;
+					}
+					
+					if ($add)
+						$activity_events[] = $f;
 				}
 				
 				$done[] = $tmp; 
