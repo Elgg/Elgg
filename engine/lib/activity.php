@@ -112,8 +112,6 @@
 		foreach ($activity_events as $details)
 		{
 			// Get what we're talking about
-			
-			// TODO : Filter on type
 		
 			if ($details['subtype'] == 'default') $details['subtype'] = '';
 			
