@@ -312,7 +312,6 @@
 	 * It returns an array of the result of each of these views.
 	 * 
 	 * \TODO: Limit to just one user or just one user's friends
-	 * \TODO: Make this more efficient / reduce DB queries.
 	 * 
 	 * @param int $by_user The user who initiated the event.
 	 * @param string $relationship Limit return results to only those users who $by_user has $relationship with.
