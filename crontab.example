@@ -3,14 +3,14 @@
 # This file is an example of triggering Elgg cron events. Modify and register events 
 # as appropriate.
 #
-# See crontab (5) for more information.
+# See http://docs.elgg.org/wiki/Cron for more information
 #
 # @author Marcus Povey
 
-# Location of GET
+# Location of GET (see: http://docs.elgg.org/wiki/What_is_get)
 GET='/usr/bin/GET'
 
-# Location of your site
+# Location of your site (don't forget the trailing slash!)
 ELGG='http://www.example.com/'
 
 # The crontab
