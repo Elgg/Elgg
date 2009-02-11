@@ -173,6 +173,11 @@ or click below to confirm request:
 			 */
 			'group:deleted' => 'Group and group contents deleted',
 			'group:notdeleted' => 'Group could not be deleted',
+	
+			'grouppost:deleted' => 'Group posting successfully deleted',
+			'grouppost:notdeleted' => 'Group posting could not be deleted',
+			'groupstopic:deleted' => 'Topic deleted',
+			'groupstopic:notdeleted' => 'Topic not deleted',
 	);
 					
 	add_translation("en",$english);
