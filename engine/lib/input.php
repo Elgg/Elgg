@@ -116,12 +116,12 @@
         **/
         
        function parse_urls($text) {
-           
+          
             if (preg_match_all('/(?<!=["\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\'\!\(\)]+)/ie', $text, $urls))   {
                
                 foreach (array_unique($urls[1]) AS $url){
-                    $urltext = $url;
-                    $text = str_replace($url, '<a href="'. $url .'" style="text-decoration:underline;">'. elgg_echo("link:view") .'</a>', $text);
+                	$urltext = str_replace('/', '/<wbr />', $url);
+                    $text = str_replace($url, '<a href="'. $url .'" style="text-decoration:underline;">'. $urltext .'</a>', $text);
                 }
             }
             
