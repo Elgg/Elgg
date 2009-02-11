@@ -853,7 +853,7 @@
 		}
 		$query .= "from {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}users_entity u on e.guid=u.guid where ";
 		// $query .= " match(u.name,u.username) against ('$criteria') ";
-		$query .= "(u.name like \"%{$criteria}%\" or u.username like \"%{$criteria}%\")";
+		$query .= "(u.name like \"{$criteria}%\" or u.username like \"{$criteria}%\")";
 		$query .= " and $access";
 		
 		if (!$count) {
