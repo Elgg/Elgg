@@ -513,7 +513,7 @@ function kses_normalize_entities($string)
 {
 # Disarm all entities by converting & to &amp;
 
-  $string = str_replace('&', '&amp;', $string);
+  // $string = str_replace('&', '&amp;', $string); // [Marcus Povey 20090212: Commented out in ref #561. Needs a better solution. ]
 
 # Change back the allowed entities in our entity whitelist
 
