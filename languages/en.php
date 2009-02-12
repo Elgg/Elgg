@@ -577,6 +577,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 		 */
 	
 			'save' => "Save",
+			'publish' => "Publish",
 			'cancel' => "Cancel",
 			'saving' => "Saving ...",
 			'update' => "Update",
