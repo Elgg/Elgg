@@ -131,6 +131,9 @@
 							$posted_max = 0
                          ) {
                          	
+            // Get config
+            	global $CONFIG;
+                         	
 			// Sanitise variables
 				if (!is_array($subject_guid)) {
 					$subject_guid = (int) $subject_guid;
@@ -156,7 +159,7 @@
 				
 			// Construct 'where' clauses for the river
 				$where = array();
-				$where[] = get_access_sql_suffix();
+				$where[] = str_replace("and enabled='yes'",'',str_replace('owner_guid','subject_guid',get_access_sql_suffix()));
 				
 				if (empty($subject_relationship)) {
 					if (!empty($subject_guid))
