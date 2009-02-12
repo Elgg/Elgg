@@ -69,7 +69,8 @@
 		protected function set($name, $value, $value_type = "") {
 
 			$this->attributes[$name] = $value;
-			$this->attributes['value_type'] = detect_extender_valuetype($value, $value_type);
+			if ($name == 'value')
+				$this->attributes['value_type'] = detect_extender_valuetype($value, $value_type);
 			
 			return true;
 		}	
