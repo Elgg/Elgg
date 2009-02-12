@@ -1742,6 +1742,8 @@
 					$entity->clearMetadata();
 					$entity->clearAnnotations();
 					$entity->clearRelationships();
+					remove_from_river_by_subject($guid);
+					remove_from_river_by_object($guid);
 					$res = delete_data("DELETE from {$CONFIG->dbprefix}entities where guid={$guid}");
 					
 					return $res;
