@@ -365,6 +365,6 @@ CREATE TABLE `prefix_system_log` (
 	KEY `action_type` (`action_type`),
 	KEY `access_id` (`access_id`),
 	KEY `subject_guid` (`subject_guid`),
-	KEY `object_guid` (`object_guid`,),
+	KEY `object_guid` (`object_guid`),
 	KEY `posted` (`posted`)
 ) ENGINE = MYISAM DEFAULT CHARSET=utf8; 
