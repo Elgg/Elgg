@@ -271,7 +271,7 @@
 		$object = $tmp->getObjectFromID($log->object_id);	
 		$by_user_obj = get_entity($log->performed_by_guid);
 				
-		if ( ($object) && ($object instanceof $class))
+		if ( ($object) && ($object instanceof $class) && ($by_user_obj))
 		{
 			// Construct the statement
 			$statement_object = $object; // Simple object, we don't need to do more
