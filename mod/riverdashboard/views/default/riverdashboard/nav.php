@@ -28,9 +28,9 @@
 <div class="riverdashboard_navigation">
 	<div class="riverdashboard_tabs">
 		<p>
-			<a <?php echo $allselect; ?> href="?type=<?php echo $vars['type']; ?>&content=<?php echo $vars['subtype']; ?>">All</a>
-			<a <?php echo $friendsselect; ?> href="?type=<?php echo $vars['type']; ?>&display=friends&content=<?php echo $vars['subtype']; ?>">Friends</a>
-			<a <?php echo $mineselect; ?> href="?type=<?php echo $vars['type']; ?>&display=mine&content=<?php echo $vars['subtype']; ?>">Mine</a>
+			<a <?php echo $allselect; ?> href="?type=<?php echo $vars['type']; ?>&content=<?php echo $vars['subtype']; ?>"><?php echo elgg_echo('all'); ?></a>
+			<a <?php echo $friendsselect; ?> href="?type=<?php echo $vars['type']; ?>&display=friends&content=<?php echo $vars['subtype']; ?>"><?php echo elgg_echo('friends'); ?></a>
+			<a <?php echo $mineselect; ?> href="?type=<?php echo $vars['type']; ?>&display=mine&content=<?php echo $vars['subtype']; ?>"><?php echo elgg_echo('mine'); ?></a>
 		</p>
 	</div>
 	
