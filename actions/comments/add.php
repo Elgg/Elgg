@@ -38,6 +38,9 @@
 					); 
 					
 					system_message(elgg_echo("generic_comment:posted"));
+					//add to river
+					add_to_river('annotation/annotate','comment',$_SESSION['user']->guid,$entity->guid);
+
 					
 				} else {
 					register_error(elgg_echo("generic_comment:failure"));
