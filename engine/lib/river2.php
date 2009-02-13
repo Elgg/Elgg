@@ -149,8 +149,8 @@
 						$object_guid[$key] = (int) $temp;
 					}
 				}
-				if (!empty($type)) $action_type = sanitise_string($type);
-				if (!empty($subtype)) $action_type = sanitise_string($subtype);
+				if (!empty($type)) $type = sanitise_string($type);
+				if (!empty($subtype)) $subtype = sanitise_string($subtype);
 				if (!empty($action_type)) $action_type = sanitise_string($action_type);
 				$limit = (int) $limit;
 				$offset = (int) $offset;
@@ -193,6 +193,8 @@
 				
 			// Construct main SQL
 				$sql = "select id,type,subtype,action_type,access_id,view,subject_guid,object_guid,posted from {$CONFIG->dbprefix}river where {$whereclause} order by posted desc limit {$offset},{$limit}";
+				
+				system_message($sql);
 				
 			// Get data
 				return get_data($sql);
