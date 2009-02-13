@@ -14,10 +14,16 @@
 
 		gatekeeper();
 		
-		$subtype = get_input('content','');
+		$content = get_input('content','');
+		$content = explode(',',$content);
+		$type = $content[0];
+		$subtype = $content[1];
 		$orient = get_input('display');
 		
-		if ($subtype == 'all') $subtype = '';
+		if ($type == 'all') {
+			$type = '';
+			$subtype = '';
+		}
 		
 		switch($orient) {
 			case 'mine':
@@ -32,8 +38,9 @@
 							break;
 		}
 
-		$river = elgg_view_river_items($subject_guid, 0, $relationship_type, '', $subtype, '');
+		$river = elgg_view_river_items($subject_guid, 0, $relationship_type, $type, $subtype, '');
 		$body = elgg_view('riverdashboard/nav',array(
+														'type' => $type,
 														'subtype' => $subtype,
 														'orient' => $orient 
 													));

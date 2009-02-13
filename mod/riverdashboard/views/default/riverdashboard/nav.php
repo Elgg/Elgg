@@ -2,9 +2,15 @@
 
 	$contents = array();
 	$contents['all'] = 'all';
-	if (!empty($vars['config']->registered_entities['object'])) {
-		foreach ($vars['config']->registered_entities['object'] as $object)
-			$contents['item:object:'.$object] = $object;
+	if (!empty($vars['config']->registered_entities)) {
+		foreach ($vars['config']->registered_entities as $type => $ar) {
+			foreach ($vars['config']->registered_entities[$type] as $object) {
+				if (!empty($object )) {
+					$keyname = 'item:'.$type.':'.$object;
+				} else $keyname = 'item:'.$type; 
+				$contents[$keyname] = "{$type},{$object}";
+			}
+		}
 	}
 	
 	$allselect = ''; $friendsselect = ''; $mineselect = '';
@@ -22,9 +28,9 @@
 <div class="riverdashboard_navigation">
 	<div class="riverdashboard_tabs">
 		<p>
-			<a <?php echo $allselect; ?> href="?content=<?php echo $vars['subtype']; ?>">All</a>
-			<a <?php echo $friendsselect; ?> href="?display=friends&content=<?php echo $vars['subtype']; ?>">Friends</a>
-			<a <?php echo $mineselect; ?> href="?display=mine&content=<?php echo $vars['subtype']; ?>">Mine</a>
+			<a <?php echo $allselect; ?> href="?type=<?php echo $vars['type']; ?>&content=<?php echo $vars['subtype']; ?>">All</a>
+			<a <?php echo $friendsselect; ?> href="?type=<?php echo $vars['type']; ?>&display=friends&content=<?php echo $vars['subtype']; ?>">Friends</a>
+			<a <?php echo $mineselect; ?> href="?type=<?php echo $vars['type']; ?>&display=mine&content=<?php echo $vars['subtype']; ?>">Mine</a>
 		</p>
 	</div>
 	
@@ -34,7 +40,7 @@
 				<?php
 		
 					foreach($contents as $label => $content) {
-						if (($vars['subtype'] == $content) ||
+						if (("{$vars['type']},{$vars['subtype']}" == $content) ||
 							(empty($vars['subtype']) && $content == 'all')) {
 							$selected = 'selected="selected"';
 						} else $selected = '';
