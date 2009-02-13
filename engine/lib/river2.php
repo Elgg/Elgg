@@ -194,8 +194,6 @@
 			// Construct main SQL
 				$sql = "select id,type,subtype,action_type,access_id,view,subject_guid,object_guid,posted from {$CONFIG->dbprefix}river where {$whereclause} order by posted desc limit {$offset},{$limit}";
 				
-				system_message($sql);
-				
 			// Get data
 				return get_data($sql);
 			
