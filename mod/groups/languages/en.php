@@ -32,7 +32,7 @@
 			'groups:interests' => 'Interests',
 			'groups:website' => 'Website',
 			'groups:members' => 'Group members',
-			'groups:membership' => "Membership",
+			'groups:membership' => "Group membership permissions",
 			'groups:access' => "Access permissions",
 			'groups:owner' => "Owner",
 	        'groups:widget:num_display' => 'Number of groups to display',
@@ -58,6 +58,12 @@
 	
 			'groupforumtopic:new' => "New forum post",
 			
+			/*
+			 * Access
+			 */
+			'groups:access:private' => 'Closed - Users must be invited',
+			'groups:access:public' => 'Open - Any user may join',
+	
 			/*
 			   Group tools
 			*/

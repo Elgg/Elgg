@@ -49,16 +49,11 @@
 	<p>
 		<label>
 			<?php echo elgg_echo('groups:membership'); ?><br />
-			<?php echo elgg_view('input/access', array('internalname' => 'membership','value' => $vars['entity']->membership, 'options' => array( ACCESS_PRIVATE => elgg_echo('PRIVATE'), ACCESS_PUBLIC => elgg_echo('PUBLIC')))); ?>
+			<?php echo elgg_view('input/access', array('internalname' => 'membership','value' => $vars['entity']->membership, 'options' => array( ACCESS_PRIVATE => elgg_echo('groups:access:private'), ACCESS_PUBLIC => elgg_echo('groups:access:public')))); ?>
 		</label>
 	</p>
 	
-	<p>
-		<label>
-			<?php echo elgg_echo('groups:access'); ?><br />
-			<?php echo elgg_view('input/access', array('internalname' => 'access_id','value' => $vars['entity']->access_id )); ?>
-		</label>
-	</p>
+	
     <p>
 			<label>
 				<?php echo elgg_echo('groups:enablepages'); ?><br />

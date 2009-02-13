@@ -57,14 +57,12 @@
 	// Group membership - should these be treated with same constants as access permissions?
 	switch (get_input('membership'))
 	{
-		case 0: $group->membership = ACCESS_PRIVATE;
-		case 1 :$group->membership = ACCESS_LOGGED_IN; break;
-		case 2:
-		default: $group->membership = ACCESS_PUBLIC;
+		case 2: $group->membership = ACCESS_PUBLIC; break;
+		default: $group->membership = ACCESS_PRIVATE; 
 	}
 	
-	// Get access
-	$group->access_id = get_input('access_id', ACCESS_PRIVATE);
+	// Set access - all groups are public from elgg's point of view.
+	$group->access_id = 2;
 	
 	// Set group tool options
 	$group->files_enable = get_input('files_enable', 'yes');
