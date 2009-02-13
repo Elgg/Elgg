@@ -137,7 +137,7 @@
 		function init_db($event, $object_type, $object = null) {
 			register_shutdown_function('db_delayedexecution_shutdown_hook');
 			register_shutdown_function('db_profiling_shutdown_hook');
-			setup_db_connections();
+			//setup_db_connections(); // [Marcus Povey 20090213: Db connection moved to first db connection attempt]
 			return true;
 		}
 		
@@ -151,12 +151,17 @@
 			
 			global $dblink;
 			
+				
 			if (isset($dblink[$dblinktype])) {
 				return $dblink[$dblinktype];
-			} else {
+			} else if (isset($dblink['readwrite'])) {
 				return $dblink['readwrite'];
 			}
-			
+			else
+			{
+				setup_db_connections();
+				return get_db_link($dblinktype);
+			}
 		}
 		
 		/**
@@ -181,7 +186,7 @@
 		function execute_query($query, $dblink)
 		{
 			global $CONFIG, $dbcalls, $DB_PROFILE, $DB_QUERY_CACHE;
-			
+						
             $dbcalls++;
             
         	//if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
