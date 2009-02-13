@@ -20,6 +20,7 @@
 	
 	$exportable_values = $entity->getExportableValues();
 ?>
+<div class="contentWrapper">
 <div>
 	<?php
 		foreach ($entity as $k => $v)
@@ -87,3 +88,4 @@
 	?>
 </div>
 <?php } ?>
+</div>

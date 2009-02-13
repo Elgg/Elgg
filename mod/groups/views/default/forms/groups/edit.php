@@ -10,6 +10,7 @@
 	 */
 
 ?>
+<div class="contentWrapper">
 <form action="<?php echo $vars['url']; ?>action/groups/edit" enctype="multipart/form-data" method="post">
 
 	<p>
@@ -131,4 +132,5 @@
 			}
 		?>
 	</form>
+</div>
 </div>

@@ -23,7 +23,7 @@
 	
 ?>
 
-<div id="formatpicker">
+<div class="contentWrapper">
 	<form method="get">
 		<select name="format">
 		<?php

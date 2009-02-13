@@ -15,12 +15,12 @@
 	if (!$format) $format = 'opendd';
 	
 	
-	$formbody = "<p>" . sprintf(elgg_echo('guidtool:import:desc'), $format) . "</p>" .
+	$formbody = "<div class=\"contentWrapper\"><p>" . sprintf(elgg_echo('guidtool:import:desc'), $format) . "</p>" .
 	elgg_view('input/longtext', array('internalname' => 'data')) . elgg_view('input/submit', array('value' => elgg_echo("save")));
 ?>
 <div>
 <?php
 	echo elgg_view('input/form', array('body' => $formbody, 'action' => "{$CONFIG->url}action/import/$format"))
 ?>
-
+</div>
 </div>
