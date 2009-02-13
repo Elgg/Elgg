@@ -492,6 +492,9 @@
 			global $autofeed;
 			$autofeed = true;
 			
+			// No point continuing if entity is null.
+			if (!$entity) return ''; 
+			
 			$view = $entity->view;
 			if (is_string($view)) {
 				return elgg_view($view,array('entity' => $entity), $bypass, $debug);
