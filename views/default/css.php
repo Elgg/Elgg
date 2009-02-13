@@ -1232,6 +1232,13 @@ table.search_gallery {
 	cursor:pointer;
 	font-size:80%;
 }
+.plugin_details a.pluginsettings_link {
+	cursor:pointer;
+	font-size:80%;
+}
+.pluginsettings {
+	display:none;
+}
 .not-active .admin_plugin_enable_disable a {
 	float:right;
 	font: 12px/100% Arial, Helvetica, sans-serif;

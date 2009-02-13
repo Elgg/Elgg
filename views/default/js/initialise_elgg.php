@@ -16,7 +16,11 @@ $(document).ready(function () {
 		return false;
 	}); 
 	
-	// toggle plugin's more info on admin tools admin
+	// toggle plugin's settings nad more info on admin tools admin
+	$('a.pluginsettings_link').click(function () {
+		$(this.parentNode.parentNode).children("[class=pluginsettings]").slideToggle("fast");
+		return false;
+	});
 	$('a.manifest_details').click(function () {
 		$(this.parentNode.parentNode).children("[class=manifest_file]").slideToggle("fast");
 		return false;

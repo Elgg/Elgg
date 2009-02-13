@@ -50,7 +50,16 @@
 		<?php } ?>
 	</div>
 
-	<h3><?php echo $plugin; ?></h3>
+	<h3><?php echo $plugin; ?><?php if (elgg_view("settings/{$plugin}/edit")) { ?> <a class="pluginsettings_link">[<?php echo elgg_echo('settings'); ?>]</a><?php } ?></h3>
+	
+	<?php if (elgg_view("settings/{$plugin}/edit")) { ?>
+	<div class="pluginsettings">
+			<div id="<?php echo $plugin; ?>_settings">
+				<?php echo elgg_view("object/plugin", array('plugin' => $plugin, 'entity' => find_plugin_settings($plugin))) ?>
+			</div>
+	</div>
+	<?php } ?>
+	
 	<p><a class="manifest_details"><?php echo elgg_echo("admin:plugins:label:moreinfo"); ?></a></p>
 
 	<div class="manifest_file">
@@ -61,15 +70,6 @@
 		<div><?php echo elgg_echo('admin:plugins:label:copyright') . ": ". $manifest['copyright'] ?></div>
 		<div><?php echo elgg_echo('admin:plugins:label:licence') . ": ". $manifest['licence'] . $manifest['license'] ?></div>
 		<div><?php echo elgg_echo('admin:plugins:label:website') . ": "; ?><a href="<?php echo $manifest['website']; ?>"><?php echo $manifest['website']; ?></a></div>
-	<?php } ?>
-	
-	<?php if (elgg_view("settings/{$plugin}/edit")) { ?>
-	<div class="pluginsettings">
-		<h3><?php echo elgg_echo("settings"); ?></h3>
-			<div id="<?php echo $plugin; ?>_settings">
-				<?php echo elgg_view("object/plugin", array('plugin' => $plugin, 'entity' => find_plugin_settings($plugin))) ?>
-			</div>
-	</div>
 	<?php } ?>
 
 	</div>
