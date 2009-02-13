@@ -59,6 +59,9 @@
 					system_message(elgg_echo("profile:icon:uploaded"));
 					
 					trigger_elgg_event('profileiconupdate',$_SESSION['user']->type,$_SESSION['user']);
+					
+					//add to river
+					add_to_river('river/user/default/profileiconupdate','update',$_SESSION['user']->guid,$_SESSION['user']->guid);
 				
 				} else {
 					system_message(elgg_echo("profile:icon:notfound"));					
