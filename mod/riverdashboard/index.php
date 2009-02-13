@@ -46,6 +46,6 @@
 													));
 		$body .= $river;
 				
-		echo page_draw(elgg_echo('dashboard'),elgg_view_layout('two_column_left_sidebar','',$body));
+		echo page_draw(elgg_echo('dashboard'),elgg_view_layout('sidebar_boxes','',$body));
 
 ?>
