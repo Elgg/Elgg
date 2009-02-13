@@ -238,7 +238,7 @@
 				$offset = (int) get_input('offset',0);
 				
 			// Get river items, if they exist
-				if ($riveritems = get_river_items($subject_guid,$object_guid,$subject_relationship,$type,$subtype,$action_type,$limit,$offset,$posted_min,$posted_max)) {
+				if ($riveritems = get_river_items($subject_guid,$object_guid,$subject_relationship,$type,$subtype,$action_type,($limit + 1),$offset,$posted_min,$posted_max)) {
 
 					return elgg_view('river/item/list',array(
 											'limit' => $limit,
