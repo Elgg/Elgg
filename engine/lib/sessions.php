@@ -192,10 +192,13 @@
 				
 	            if ($user = get_user_by_username($credentials['username'])) {
 	            		            	
-	            	// Let admins log in without validating their email, but normal users must have validated their email
-					if ((!$user->admin) && (!$user->validated) && (!$user->admin_created) && (!$user->isBanned()))
+	            	// Let admins log in without validating their email, but normal users must have validated their email or been admin created
+					if ((!$user->admin) && (!$user->validated) && (!$user->admin_created))
 						return false;
 	          	
+					 // User has been banned, so bin them.
+					 if ($user->isBanned()) return false;
+						
 	                 if ($user->password == generate_user_password($user, $credentials['password'])) 
 	                 	
 	                 	return true;
