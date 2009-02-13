@@ -219,6 +219,30 @@ blockquote {
 	border-bottom: 1px solid #cccccc;
 }
 
+/* canvas layout: 2 column left sidebar with boxes */
+#two_column_left_sidebar_boxes {
+	width:210px;
+	margin:20px 0 20px 20px;
+	min-height:360px;
+	float:left;
+	background: white;
+	padding:0px;
+	border-bottom:1px solid #cccccc;
+	border-right:1px solid #cccccc;
+}
+
+#two_column_left_sidebar_maincontent_boxes {
+	width:685px;
+	margin:20px;
+	min-height: 360px;
+	float:left;
+	background: white;
+	padding:20px;
+	border-bottom:1px solid #cccccc;
+	border-right:1px solid #cccccc;
+}
+
+
 /* canvas layout: 2 column left sidebar */
 #two_column_left_sidebar {
 	width:210px;
