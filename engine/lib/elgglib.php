@@ -1662,7 +1662,7 @@
 			static $datalist_memcache;
 			if ((!$datalist_memcache) && (is_memcache_available()))
 				$datalist_memcache = new ElggMemcache('datalist_memcache');
-			if ($datalist_memcache) $value = $datalist_memcache->delete($name);
+			if ($datalist_memcache) $datalist_memcache->delete($name);
 			
 			//delete_data("delete from {$CONFIG->dbprefix}datalists where name = '{$name}'");
 			insert_data("INSERT into {$CONFIG->dbprefix}datalists set name = '{$name}', value = '{$value}' ON DUPLICATE KEY UPDATE value='{$value}'");
