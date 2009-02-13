@@ -14,7 +14,9 @@
 	global $CONFIG;
 	
 	// Description of what's going on
-		echo "<p>" . autop(elgg_echo("admin:site:description")) . "</p>";
+		echo "<div class=\"contentWrapper\">" . autop(elgg_echo("admin:site:description")) . " ";
 	
 		echo elgg_view("settings/system",array("action" => $CONFIG->wwwroot."action/admin/site/update_basic")); // Always want to do this first.
+		
+		echo "</div>";
 ?>

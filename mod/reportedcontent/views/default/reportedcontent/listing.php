@@ -1,4 +1,7 @@
+
 <?php
+
+	echo "<div class=\"contentWrapper\">";
 
     if($vars['entity']){
         
@@ -15,7 +18,6 @@
     	        $reportedcontent_background = "active_report";
 	        }
 		   
-
             echo "<div class=\"reportedcontent_content {$reportedcontent_background}\">";
             echo "<p class=\"reportedcontent_detail\">";
             if($report->state != 'archived')
@@ -33,5 +35,5 @@
         }
         
     }
-    
+	  echo "</div>";  
 ?>

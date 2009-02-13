@@ -4,7 +4,7 @@
 	$gen_control = elgg_view('input/submit', array('value' => elgg_echo('apiadmin:generate')));
 	
 	$form_body = <<< END
-	<div>
+	<div class="contentWrapper">
 		<p>$ref_label: $ref_control $gen_control</p>
 	</div>
 END;

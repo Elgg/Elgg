@@ -11,14 +11,14 @@
 	}
 
 ?>
-
-<div class="settings_form">
+<?php echo elgg_view_title(elgg_echo('notifications:subscriptions:changesettings:groups')); ?>
+<div class="contentWrapper">
 	<div class="notification_methods">
 
 		<?php
 			echo elgg_view('notifications/subscriptions/jsfuncs',$vars);
 		?>
-		<?php echo elgg_view_title(elgg_echo('notifications:subscriptions:changesettings:groups')); ?>
+		
 		<p>
 			<?php
 

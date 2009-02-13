@@ -12,7 +12,7 @@
 	 */
 
 	// Description of what's going on
-		echo "<p>" . autop(elgg_echo("admin:user:description")) . "</p>";
+		echo "<div class=\"contentWrapper\"><span class=\"contentIntro\">" . autop(elgg_echo("admin:user:description")) . "</span></div>";
 	
 		echo elgg_view("admin/user_opt/adduser");
 		

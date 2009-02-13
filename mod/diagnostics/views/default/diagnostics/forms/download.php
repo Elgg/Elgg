@@ -8,8 +8,7 @@
 	 * @copyright Curverider Ltd 2008-2009
 	 * @link http://elgg.com/
 	 */
-
-	$form_body = elgg_view('input/submit', array('value' => elgg_echo('diagnostics:download')));
 	
-	echo elgg_view('input/form', array('body' => $form_body, 'action' => $CONFIG->url . "actions/diagnostics/download"))
+	$form_body = elgg_view('input/submit', array('value' => elgg_echo('diagnostics:download')));
+	echo elgg_view('input/form', array('body' => $form_body, 'action' => $CONFIG->url . "actions/diagnostics/download"));
 ?>

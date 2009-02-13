@@ -12,7 +12,7 @@
 	 */
 
 	// Description of what's going on
-		echo "<p>" . autop(elgg_echo("admin:plugins:description")) . "</p>";
+		echo "<div class=\"contentWrapper\"><span class=\"contentIntro\">" . autop(elgg_echo("admin:plugins:description")) . "</span></div>";
 
 		$limit = get_input('limit', 10);
 		$offset = get_input('offset', 0);

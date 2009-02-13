@@ -24,12 +24,11 @@
 	$submit_control = elgg_view('input/submit', array('internalname' => elgg_echo('save'), 'value' => elgg_echo('save')));
 	
 	$formbody = <<< END
-		<div>
 			<p>$label_text: $label_control
 			$type_text: $type_control
 			$submit_control</p>
-		</div>
 END;
-
+	echo "<div class=\"contentWrapper\">";
 	echo elgg_view('input/form', array('body' => $formbody, 'action' => $vars['url'] . 'actions/profile/editdefault'));
+	echo "</div>";
 ?>

@@ -11,12 +11,10 @@
 	 */
 
 	global $CONFIG;
-	
-	// echo "<p>" . autop(elgg_echo("admin:statistics:description")) . "</p>";
-         
+	         
 ?>
 
-	<!-- <p>
+	<div class="contentWrapper"><span class="contentIntro">
 		<?php echo elgg_echo('admin:statistics:description'); ?>
 		<a href="http://elgg.com/"><?php echo elgg_echo('learnmore'); ?></a>
-	</p> -->
+	</span></div>
