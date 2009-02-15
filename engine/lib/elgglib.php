@@ -2101,7 +2101,7 @@
 
 		// Menu
 			global $CONFIG;
-			add_menu(elgg_echo('content:latest'), $CONFIG->wwwroot . 'dashboard/latest.php');
+			//add_menu(elgg_echo('content:latest'), $CONFIG->wwwroot . 'dashboard/latest.php');
 		// Page handler for JS
 			register_page_handler('js','js_page_handler');
 			extend_view('js/initialise_elgg','embed/js');
