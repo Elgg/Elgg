@@ -10,6 +10,11 @@
 	 * @link http://elgg.com/
 	 */
 	 
+	 //forum 
+	 echo "<div id=\"fullcolumn\">";
+	 echo elgg_view("groups/forum_latest",array('entity' => $vars['entity']));
+	 echo "</div>";
+	 
 	 //right column
 	 echo "<div class=\"right_column\">";
 	 echo elgg_view("groups/forum_latest",array('entity' => $vars['entity']));
