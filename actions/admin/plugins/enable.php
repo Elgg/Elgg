@@ -27,6 +27,8 @@
 	else
 		register_error(sprintf(elgg_echo('admin:plugins:enable:no'), $plugin));		
 		
+	elgg_view_regenerate_simplecache();
+		
 	forward($_SERVER['HTTP_REFERER']);
 	exit;
 ?>
