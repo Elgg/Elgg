@@ -399,6 +399,59 @@
 			
 		}
 		
+	/**
+	 * Registers a view to be simply cached
+	 * 
+	 * Views cached in this manner must take no parameters and be login agnostic -
+	 * that is to say, they look the same no matter who is logged in (or logged out).
+	 * 
+	 * CSS and the basic jS views are automatically cached like this.
+	 *
+	 * @param string $viewname View name
+	 */
+		function elgg_view_register_simplecache($viewname) {
+			
+			global $CONFIG;
+			
+			if (!isset($CONFIG->views->simplecache))
+				$CONFIG->views->simplecache = array();
+			
+			//if (elgg_view_exists($viewname))
+				$CONFIG->views->simplecache[] = $viewname;				
+			
+		}
+		
+	/**
+	 * Regenerates the simple cache.
+	 * 
+	 * @see elgg_view_register_simplecache
+	 *
+	 */
+		function elgg_view_regenerate_simplecache() {
+			
+			global $CONFIG;
+			
+			if (isset($CONFIG->views->simplecache)) {
+				
+				if (!file_exists($CONFIG->dataroot . 'views_simplecache')) {
+					@mkdir($CONFIG->dataroot . 'views_simplecache');
+				}
+				
+				if (!empty($CONFIG->views->simplecache) && is_array($CONFIG->views->simplecache)) {
+					foreach($CONFIG->views->simplecache as $view) {
+						$viewcontents = elgg_view($view);
+						$viewname = md5($view);
+						if ($handle = fopen($CONFIG->dataroot . 'views_simplecache/' . $viewname, 'w')) {
+							fwrite($handle, $viewcontents);
+							fclose($handle);
+						}
+					}
+				}
+				
+			}
+			
+		}
+		
 		/**
 		 * Internal function for retrieving views used by elgg_view_tree
 		 *
@@ -2107,6 +2160,7 @@
 			extend_view('js/initialise_elgg','embed/js');
 		// Register an event triggered at system shutdown	
 			register_shutdown_function('__elgg_shutdown_hook');
+
 	}
 	
 	function elgg_boot() {
@@ -2114,6 +2168,10 @@
 		// Actions
 		register_action('comments/add');
 		register_action('comments/delete');
+		
+		elgg_view_register_simplecache('css');
+		elgg_view_register_simplecache('js/friendsPickerv1');
+		elgg_view_register_simplecache('js/initialise_elgg');
 	}
 		
 	/**
@@ -2124,6 +2182,6 @@
 		define('ACCESS_PUBLIC',2);
 	
 	register_elgg_event_handler('init','system','elgg_init');
-	register_elgg_event_handler('boot','system','elgg_boot');
+	register_elgg_event_handler('boot','system','elgg_boot',1000);
 	
 ?>

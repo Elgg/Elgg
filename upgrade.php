@@ -21,6 +21,7 @@
 		if (version_upgrade_check()) {
 			version_upgrade();
 		}
+		datalist_set('elgg_view_regenerate_simplecache',0);
 	} else {
 		global $CONFIG;
 		echo elgg_view('settings/upgrading');

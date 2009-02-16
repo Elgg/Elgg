@@ -62,14 +62,14 @@ END;
 
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery-1.2.6.pack.js"></script>
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery-ui-personalized-1.5.3.packed.js"></script>
-	<script type="text/javascript" src="<?php echo $vars['url']; ?>pg/js/initialise_elgg.js"></script>
+	<script type="text/javascript" src="<?php echo $vars['url']; ?>_css/js.php?js=initialise_elgg"></script>
 <?php
 	global $pickerinuse;
 	if (isset($pickerinuse) && $pickerinuse == true) {
 ?>
 	<!-- only needed on pages where we have friends collections and/or the friends picker -->
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery.easing.1.3.packed.js"></script>
-	<script type="text/javascript" src="<?php echo $vars['url']; ?>pg/js/friendsPickerv1.js"></script>
+	<script type="text/javascript" src="<?php echo $vars['url']; ?>_css/js.php?js=friendsPickerv1"></script>
 <?php
 	}
 ?>

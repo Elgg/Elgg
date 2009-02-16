@@ -185,8 +185,9 @@
 					//forward("setup.php");
 				//}
 			}
-
 			
 		// System booted, return to normal view
 			set_input('view', $oldview);
+			
+			run_function_once('elgg_view_regenerate_simplecache',time() - (86400 * 7));
 ?>

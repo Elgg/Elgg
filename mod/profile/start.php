@@ -56,6 +56,7 @@
 			// Add Javascript reference to the page header
 				extend_view('metatags','profile/metatags');
 				extend_view('css','profile/css');
+				extend_view('js/initialise_elgg','profile/javascript');
 				if (get_context() == "profile")
 				    extend_view('canvas_header/submenu','profile/submenu');
 
