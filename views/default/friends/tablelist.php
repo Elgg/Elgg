@@ -18,7 +18,7 @@
 			
 ?>
 
-	<table cellspacing="0" id="collectionMembersTable" style="margin:10px;">
+	<table cellspacing="0" id="collectionMembersTable">
 		<tr>
 <?php
 			$column = 0;

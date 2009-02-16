@@ -25,7 +25,7 @@
 	    }
 
 	    
-	    $form_body = "<p><label>" . elgg_echo("friends:collectionname") . "<br />" .
+	    $form_body = "<div class='contentWrapper'><p><label>" . elgg_echo("friends:collectionname") . "<br />" .
 	    						elgg_view("input/text", array(
 									"internalname" => "collection_name",
 									"value" => $title,
@@ -45,15 +45,15 @@
         
         $form_body .= "</p>";
         
-        $form_body .= "<p><label>" . elgg_echo("friends:addfriends") . "<br />". 
-        				elgg_view('friends/picker',array('entities' => $vars['friends'], 'internalname' => 'friends_collection')) . "</label></p>";
+        $form_body .= "<p><label>" . elgg_echo("friends:addfriends") . "</label>". 
+        				elgg_view('friends/picker',array('entities' => $vars['friends'], 'internalname' => 'friends_collection')) . "</p>";
         				
         $form_body .= "<p>";
         if (isset($vars['collection'])) {
 			$form_body .= elgg_view('input/hidden', array('internalname' => 'collection_id', 'value' => "{$vars['collection'][0]->id}"));
 		}
 		$form_body .= elgg_view('input/submit', array('internalname' => 'submit', 'value' => elgg_echo('save')));
-		$form_body .= "</p>";
+		$form_body .= "</p></div>";
 		
 		echo elgg_view('input/form', array('body' => $form_body, 'action' => "{$vars['url']}action/$action"));
 ?>
