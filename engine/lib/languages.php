@@ -30,7 +30,7 @@
 			global $CONFIG;
 			if (!isset($CONFIG->translations))
 				$CONFIG->translations = array();
-			
+							
 			$country_code = strtolower($country_code);
 			$country_code = trim($country_code);
 			if (is_array($language_array) && sizeof($language_array) > 0 && $country_code != "") {
@@ -40,6 +40,7 @@
 				} else {
 					$CONFIG->translations[$country_code] = array_merge($CONFIG->translations[$country_code],$language_array);
 				}
+				
 				return true;
 				
 			}
@@ -55,37 +56,30 @@
 	{
 		global $CONFIG;
 		
-		$user = get_loggedin_user();
-		
-		if ((isset($user)) && ($user->language))
-			$language = $user->language;
-	
-		if ((empty($language)) && (isset($CONFIG->language)))
-			$language = $CONFIG->language;
+		$language = get_language();
 			
-		if (empty($language))
+		if (!$language)
 			$language = 'en';
 			
 		return $language;
 	}
 		
 	/**
-	 * Gets the current language in use by the system or user
+	 * Gets the current language in use by the system or user.
+	 * 
+	 * [Marcus Povey 20090216: Not sure why this func is necessary.]
 	 *
 	 * @return string The language code (eg "en")
 	 */
 		function get_language() {
 			
 			global $CONFIG;
-			static $lang;
+		
+			$user = get_loggedin_user();  
 			
-			if (isset($lang)) return $lang;
-			
-			$user = get_loggedin_user();
-			
-			if ((empty($language)) && (isset($user)) && ($user->language))
+			if ((empty($language)) && ($user) && ($user->language))
 				$language = $user->language;
-	
+
 			if ((empty($language)) && (isset($CONFIG->language)))
 				$language = $CONFIG->language;
 				
@@ -124,21 +118,52 @@
 	 * When given a full path, finds translation files and loads them
 	 *
 	 * @param string $path Full path
+	 * @param bool $load_all If true all languages are loaded, if false only the current language + en are loaded
 	 */
-		function register_translations($path) {
+		function register_translations($path, $load_all = false) {
 			global $CONFIG;
 			
-			if (isset($CONFIG->debug) && $CONFIG->debug == true) error_log("Translations loaded from : $path");
+			// Make a note of this path just incase we need to register this language later
+			if(!isset($CONFIG->language_paths)) $CONFIG->language_paths = array();
+			$CONFIG->language_paths[] = $path;
 			
+			// Get the current language based on site defaults and user preference
+			$current_language = get_current_language();
+			
+			if (isset($CONFIG->debug) && $CONFIG->debug == true) error_log("Translations loaded from : $path");
+		
 			if ($handle = opendir($path)) {
 				while ($language = readdir($handle)) {
-					if (!in_array($language,array('.','..','.svn','CVS', '.DS_Store', 'Thumbs.db',)) && !is_dir($path . $language)) {
-						@include($path . $language);
-					}
+				
+					if (
+						((in_array($language, array('en.php', $current_language . '.php'))) && (!is_dir($path . $language))) ||
+						(($load_all) && (strpos($language, '.php')!==false) && (!is_dir($path . $language))) 
+					)
+						@include_once($path . $language);
+					
 				}
 			}
 			else
 				error_log("Missing translation path $path");
+				
+		}
+		
+		/** 
+		 * Reload all translations from all registered paths.
+		 * 
+		 * This is only called by functions which need to know all possible translations, namely the
+		 * statistic gathering ones.
+		 * 
+		 * TODO: Better on demand loading based on language_paths array
+		 * 
+		 * @return bool
+		 */
+		function reload_all_translations() 
+		{
+			global $CONFIG;
+			
+			foreach ($CONFIG->language_paths as $path)
+				register_translations($path, true);	
 		}
 		
 	/**
@@ -147,6 +172,9 @@
 		function get_installed_translations()
 		{
 			global $CONFIG;
+			
+			// Ensure that all possible translations are loaded
+			reload_all_translations();
 			
 			$installed = array();
 			
@@ -169,6 +197,9 @@
 		{
 			global $CONFIG;
 			
+			// Ensure that all possible translations are loaded
+			reload_all_translations();
+			
 			$language = sanitise_string($language);
 			
 			$en = count($CONFIG->translations['en']);
@@ -188,6 +219,9 @@
 		function get_missing_language_keys($language)
 		{
 			global $CONFIG;
+			
+			// Ensure that all possible translations are loaded
+			reload_all_translations();
 			
 			$missing = array();
 			

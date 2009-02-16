@@ -98,8 +98,11 @@
 		function get_loggedin_user()
 		{
 			global $SESSION;
-			
-			return $SESSION['user'];
+		
+			if (isset($SESSION))
+				return $SESSION['user'];
+				
+			return false;
 		}
 		
 	/**
@@ -462,6 +465,9 @@
     			session_destroy();
 			    return false;
     		}
+    		
+    		// Since we have loaded a new user, this user may have different language preferences
+    		register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
     		
     		return true;
 	        

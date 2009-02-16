@@ -43,6 +43,11 @@
 			exit;
 		}
 		
+		if (!@include_once(dirname(__FILE__) . "/lib/sessions.php")) {
+			echo ("Error in installation: Elgg could not load the Sessions library");
+			exit;
+		}
+		
 		if (!@include_once(dirname(__FILE__) . "/lib/languages.php")) {		// Languages library
 			echo "Error in installation: could not load the languages library.";
 			exit;
@@ -63,10 +68,7 @@
 			exit;
 		}
 		
-		if (!@include_once(dirname(__FILE__) . "/lib/sessions.php")) {
-			echo ("Error in installation: Elgg could not load the Sessions library");
-			exit;
-		}
+		
 		
 		// Use fallback view until sanitised
 		$oldview = get_input('view');
