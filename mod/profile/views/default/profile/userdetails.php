@@ -85,6 +85,9 @@
 	// display the users name
 	echo "<h2><a href=\"" . $vars['entity']->getUrl() . "\" rel=\"$rel\">" . $vars['entity']->name . "</a></h2>";
 
+	//insert a view that can be extended
+	echo elgg_view("profile/status");
+	
 		if ($vars['full'] == true) {
 	
 	?>
