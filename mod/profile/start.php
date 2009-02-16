@@ -26,6 +26,13 @@
 			// Metadata on users needs to be independent
 				register_metadata_as_independent('user');
 				
+				elgg_view_register_simplecache('icon/user/default/tiny');
+				elgg_view_register_simplecache('icon/user/default/topbar');
+				elgg_view_register_simplecache('icon/user/default/small');
+				elgg_view_register_simplecache('icon/user/default/medium');
+				elgg_view_register_simplecache('icon/user/default/large');
+				elgg_view_register_simplecache('icon/user/default/master');
+				
 			// For now, we'll hard code the profile items as follows:
 			// TODO make this user configurable
 			
