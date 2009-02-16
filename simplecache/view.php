@@ -23,6 +23,8 @@
 		if ($dblink = @mysql_connect($CONFIG->dbhost,$CONFIG->dbuser,$CONFIG->dbpass)) {
 
 			$view = $viewinput['view'];
+			$viewtype = $viewinput['viewtype'];
+			if (empty($viewtype)) $viewtype = 'default';
 			
 		// Get the dataroot
 			if (@mysql_select_db($CONFIG->dbname,$dblink)) {
@@ -30,7 +32,7 @@
 					$row = mysql_fetch_object($result);
 					$dataroot = $row->value;
 				}
-				$filename = $dataroot . 'views_simplecache/' . md5($view);
+				$filename = $dataroot . 'views_simplecache/' . md5($viewtype . $view);
 				if (file_exists($filename))
 					$contents = @file_get_contents($filename);
 				 else {

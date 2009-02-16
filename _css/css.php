@@ -28,6 +28,7 @@
 
 		global $viewinput;
 		$viewinput['view'] = 'css';
+		$viewinput['viewtype'] = $_GET['viewtype'];
 
 		header("Content-type: text/css", true);
 		header('Expires: ' . date('r',time() + 864000), true);

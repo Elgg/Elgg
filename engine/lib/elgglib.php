@@ -440,7 +440,7 @@
 				if (!empty($CONFIG->views->simplecache) && is_array($CONFIG->views->simplecache)) {
 					foreach($CONFIG->views->simplecache as $view) {
 						$viewcontents = elgg_view($view);
-						$viewname = md5($view);
+						$viewname = md5(elgg_get_viewtype() . $view);
 						if ($handle = fopen($CONFIG->dataroot . 'views_simplecache/' . $viewname, 'w')) {
 							fwrite($handle, $viewcontents);
 							fclose($handle);

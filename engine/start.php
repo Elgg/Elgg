@@ -134,6 +134,9 @@
 	
 			$files = get_library_files(dirname(__FILE__) . "/lib",$file_exceptions);
 			asort($files);
+			
+		// Get config
+			global $CONFIG;
 	
 		// Include them
 			foreach($files as $file) {
@@ -190,6 +193,19 @@
 			
 		// System booted, return to normal view
 			set_input('view', $oldview);
+			if (empty($oldview)) {
+				if (empty($CONFIG->view)) 
+					$oldview = 'default';
+				else
+					$oldview = $CONFIG->view;
+			}
 			
-			run_function_once('elgg_view_regenerate_simplecache',time() - (86400 * 7));
+			$lastcached = datalist_get('simplecache_'.$oldview);
+			if ($lastcached < (time() - (86400 * 7))) {
+				elgg_view_regenerate_simplecache();
+				$lastcached = time();
+				datalist_set('simplecache_'.$oldview,$lastcached);
+			}
+			$CONFIG->lastcache = $lastcached;
+			
 ?>
