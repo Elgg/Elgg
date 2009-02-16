@@ -1386,6 +1386,8 @@
 	{
 		global $CONFIG;
 		
+		if (!$guid) return false;
+		
 		$guid = (int) $guid;
 		
 		$row = retrieve_cached_entity_row($guid);
