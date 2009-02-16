@@ -28,7 +28,7 @@
 
 ?>
 
-	<p>
+	<div class="contentWrapper">
 		<?php echo elgg_echo("viewtype:change") ?>:
 		<a href="<?php echo $baseurl; ?>"><?php echo elgg_echo("viewtype:{$viewtype}"); ?></a>
-	</p>
+	</div>
