@@ -448,6 +448,8 @@
 					}
 				}
 				
+				datalist_set('simplecache_lastupdate',0);
+				
 			}
 			
 		}

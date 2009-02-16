@@ -200,10 +200,12 @@
 					$oldview = $CONFIG->view;
 			}
 			
+			$lastupdate = datalist_get('simplecache_lastupdate');
 			$lastcached = datalist_get('simplecache_'.$oldview);
-			if ($lastcached < (time() - (86400 * 7))) {
+			if ($lastupdate == 0 || $lastcached < $lastupdate) {
 				elgg_view_regenerate_simplecache();
 				$lastcached = time();
+				datalist_set('simplecache_lastupdate',$lastcached);
 				datalist_set('simplecache_'.$oldview,$lastcached);
 			}
 			$CONFIG->lastcache = $lastcached;
