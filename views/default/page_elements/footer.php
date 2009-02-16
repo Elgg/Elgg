@@ -14,7 +14,7 @@
 	 */
 	 
 	 // get the tools menu
-	$menu = get_register('menu');
+	//$menu = get_register('menu');
 
 ?>
 
@@ -30,13 +30,8 @@
 		<td width="748" height="50" align="right">
 		<p class="footer_toolbar_links">
 		<?php
-			foreach($menu as $item) {
-    			
-    				echo " | <a href=\"{$item->value}\">" . $item->name . "</a>";
-    			
-			} 
+			echo elgg_view('footer/links');
 		?>
-		|
 		</p>
 		</td>
 	</tr>
