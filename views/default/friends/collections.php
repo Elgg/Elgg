@@ -18,7 +18,6 @@
 
 		if (is_array($vars['collections']) && sizeof($vars['collections'])) {
 			
-			echo "<div class=\"expandall\"><p>".elgg_echo('friends:expandall')."</p></div>";
 			echo "<ul id=\"friends_collections_accordian\">";
 			
 			foreach($vars['collections'] as $collection) {
@@ -44,18 +43,6 @@ $(document).ready(function(){
 $('#friends_collections_accordian h2').click(function () {
 	$(this.parentNode).children("[class=friends_picker]").slideToggle("fast");
 	//return false;
-});
-    
-// global more info expand all/close all
-$('div.expandall p').click(function () {
-	if (this.innerHTML == 'close all') {
-		$('div.friends_picker').slideUp("fast");
-		$('div.expandall p').html('<?php echo elgg_echo('friends:expandall'); ?>');
-}
-else {
-		$('div.friends_picker:hidden').slideDown("fast");
-		$('div.expandall p').html('<?php echo elgg_echo('friends:closeall'); ?>');
-	}
 });
 
 });  
