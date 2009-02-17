@@ -25,13 +25,13 @@
 
 ?>
 
-<div class="riverdashboard_navigation">
-	<div class="riverdashboard_tabs">
-		<p>
-			<a <?php echo $allselect; ?> href="?type=<?php echo $vars['type']; ?>&content=<?php echo $vars['subtype']; ?>"><?php echo elgg_echo('all'); ?></a>
-			<a <?php echo $friendsselect; ?> href="?type=<?php echo $vars['type']; ?>&display=friends&content=<?php echo $vars['subtype']; ?>"><?php echo elgg_echo('friends'); ?></a>
-			<a <?php echo $mineselect; ?> href="?type=<?php echo $vars['type']; ?>&display=mine&content=<?php echo $vars['subtype']; ?>"><?php echo elgg_echo('mine'); ?></a>
-		</p>
+<div class="contentWrapper">
+	<div id="elgg_horizontal_tabbed_nav">
+		<ul>
+			<li><a <?php echo $allselect; ?> href="?type=<?php echo $vars['type']; ?>&content=<?php echo $vars['subtype']; ?>"><?php echo elgg_echo('all'); ?></a></li>
+			<li><a <?php echo $friendsselect; ?> href="?type=<?php echo $vars['type']; ?>&display=friends&content=<?php echo $vars['subtype']; ?>"><?php echo elgg_echo('friends'); ?></a></li>
+			<li><a <?php echo $mineselect; ?> href="?type=<?php echo $vars['type']; ?>&display=mine&content=<?php echo $vars['subtype']; ?>"><?php echo elgg_echo('mine'); ?></a></li>
+		</ul>
 	</div>
 	
 	<div class="riverdashboard_content_select">
@@ -53,4 +53,4 @@
 			<input type="submit" value="<?php echo elgg_echo('filter'); ?>" />
 		</form>
 	</div>
-</div>
+<!-- </div> -->

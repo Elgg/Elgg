@@ -7,7 +7,7 @@
 	
 ?>
 
-<div id="friendsPickerNavigationTabs">
+<div id="elgg_horizontal_tabbed_nav">
 <ul>
 <li class="selected"><a href="#" class="collectionmembers<?php echo $friendspicker . "\">" . elgg_echo('friends:collections:members'); ?></a></li>
 

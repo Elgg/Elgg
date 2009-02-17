@@ -11,8 +11,12 @@
 	 */
 
 		function riverdashboard_init() {
+		
+			extend_view('css','riverdashboard/css');
 			
 			register_page_handler('dashboard','riverdashboard_dashboard');
+			
+			
 			
 		}
 		

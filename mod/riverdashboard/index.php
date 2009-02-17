@@ -51,7 +51,7 @@
 							break;
 		}
 
-		$river = elgg_view_river_items($subject_guid, 0, $relationship_type, $type, $subtype, '');
+		$river = elgg_view_river_items($subject_guid, 0, $relationship_type, $type, $subtype, '') . "</div>";
 		$body .= elgg_view('riverdashboard/nav',array(
 														'type' => $type,
 														'subtype' => $subtype,

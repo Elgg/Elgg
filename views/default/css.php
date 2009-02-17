@@ -2146,3 +2146,47 @@ div.ajax_loader {
 	height:33px;
 }
 
+
+/* reusable elgg horizontal tabbed navigation 
+   (used on friends collections, and external pages mod)
+*/
+#elgg_horizontal_tabbed_nav {
+	margin:10px 0 10px 0;
+	padding: 0;
+	border-bottom: 1px solid #cccccc;
+	display:table;
+	width:100%;
+}
+#elgg_horizontal_tabbed_nav ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+#elgg_horizontal_tabbed_nav li {
+	float: left;
+	border: 1px solid #ffffff;
+	border-bottom-width: 0;
+	margin: 0;
+}
+#elgg_horizontal_tabbed_nav a {
+	text-decoration: none;
+	display: block;
+	padding: 0.22em 1em;
+	color: #666666;
+	text-align: center;
+}
+#elgg_horizontal_tabbed_nav a:hover {
+	color: #4690d6;
+}
+#elgg_horizontal_tabbed_nav .selected {
+	border-color: #cccccc;
+}
+#elgg_horizontal_tabbed_nav .selected a {
+	position: relative;
+	top: 1px;
+	background: white;
+	color: #4690d6;
+}
+
+
+

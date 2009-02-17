@@ -15,11 +15,12 @@
 	
 ?>
 
-<div id="recent_members">
+<div class="sidebarBox">
 <h3>Recent members</h3>
 <?php 
 	foreach($newest_members as $mem){
-		echo "<div style=\"float:left;\">" . elgg_view("profile/icon",array('entity' => $mem, 'size' => 'tiny')) . "</div>";
+		echo "<div class=\"recentMember\">" . elgg_view("profile/icon",array('entity' => $mem, 'size' => 'tiny')) . "</div>";
 	}
 ?>
+<div class="clearfloat"></div>
 </div>

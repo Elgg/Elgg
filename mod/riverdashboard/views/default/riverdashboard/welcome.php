@@ -13,7 +13,7 @@
 	 
 ?>
 
-<div id="welcome_message">
+<div class="contentWrapper">
 <p><b>Welcome <?php echo $_SESSION['user']->name; ?></b></p>
 <p>On this page you will find your gateway to the site and the recent activity from your network.</p>
 </div>

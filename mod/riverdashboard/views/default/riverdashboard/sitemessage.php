@@ -13,6 +13,6 @@
 	 
 ?>
 
-<div id="sitewide_message">
+<div class="contentWrapper">
 <p>This would be a message from the site admin. This would be a message from the site admin. This would be a message from the site admin. This would be a message from the site admin.</p>
 </div>
