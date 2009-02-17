@@ -19,14 +19,31 @@
 		
 		$title = $group->name;
 		
+		// Hide some items from closed groups when the user is not logged in.
+		$view_all = true;
+		
+		if (
+			((!isloggedin()) && (!$group->isPublicMembership())) ||
+			((!$group->isMember(get_loggedin_user()) && (!$group->isPublicMembership())))
+		)
+			$view_all = false;
+		
+		
 		$area2 = elgg_view_title($title);
 		$area2 .= elgg_view('group/group', array('entity' => $group, 'user' => $_SESSION['user'], 'full' => true));
 		
-		//group profile 'items' - these are not real widgets, just contents to display
-		$area2 .= elgg_view('groups/profileitems',array('entity' => $group));
-		
-		//group members
-		$area3 = elgg_view('groups/members',array('entity' => $group));
+		if ($view_all) {
+			//group profile 'items' - these are not real widgets, just contents to display
+			$area2 .= elgg_view('groups/profileitems',array('entity' => $group));
+			
+			//group members
+			$area3 = elgg_view('groups/members',array('entity' => $group));
+		}
+		else
+		{
+			$area2 .= elgg_view('groups/closedmembership', array('entity' => $group, 'user' => $_SESSION['user'], 'full' => true));
+
+		}
 		
 		$body = elgg_view_layout('two_column_left_sidebar', $area1, $area2, $area3);
 	} else {

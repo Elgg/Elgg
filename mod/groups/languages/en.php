@@ -64,6 +64,7 @@
 			'groups:access:private' => 'Closed - Users must be invited',
 			'groups:access:public' => 'Open - Any user may join',
 	
+			'groups:closedgroup' => 'This group has a closed membership, please request to join.',
 			/*
 			   Group tools
 			*/
