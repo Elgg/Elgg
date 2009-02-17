@@ -2167,7 +2167,12 @@
 	 */
 	function __elgg_shutdown_hook()
 	{
+		global $CONFIG, $START_MICROTIME;
+		
 		trigger_elgg_event('shutdown', 'system');
+		
+		if ($CONFIG->debug)
+			error_log("Page {$_SERVER['REQUEST_URI']} generated in ".(float)(microtime(true)-$START_MICROTIME)." seconds"); 
 	}
 	
 	function elgg_init() {

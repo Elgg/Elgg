@@ -12,7 +12,11 @@
 	 * @link http://elgg.org/
 	 */
 
-	
+	/*
+	 * Basic profiling
+	 */
+	global $START_MICROTIME; 
+	$START_MICROTIME = microtime(true);
 
 	/**
 	 * Load important prerequisites
