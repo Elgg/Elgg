@@ -1690,14 +1690,32 @@
 			if ($datalist_memcache) $value = $datalist_memcache->load($name);
 			if ($value) return $value;
 			
-			if ($row = get_data_row("SELECT value from {$CONFIG->dbprefix}datalists where name = '{$name}' limit 1")) {
+			// [Marcus Povey 20090217 : Now retrieving all datalist values on first load as this saves about 9 queries per page]
+			$result = get_data("SELECT * from {$CONFIG->dbprefix}datalists");
+			if ($result)
+			{
+				foreach ($result as $row)
+				{
+					$DATALIST_CACHE[$row->name] = $row->value;
+				
+					// Cache it if memcache is available
+					if ($datalist_memcache) $datalist_memcache->save($name, $row->value);
+				}
+				
+				if (isset($DATALIST_CACHE[$name]))
+					return $DATALIST_CACHE[$name];
+			}
+			
+			
+			/*if ($row = get_data_row("SELECT value from {$CONFIG->dbprefix}datalists where name = '{$name}' limit 1")) {
 				$DATALIST_CACHE[$name] = $row->value;
 				
 				// Cache it if memcache is available
 				if ($datalist_memcache) $datalist_memcache->save($name, $row->value);
 				
 				return $row->value;
-			}
+			}*/
+			
 			return false;
 			
 		}
