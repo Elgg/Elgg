@@ -5,14 +5,14 @@
 	 **/
 	 
 ?>
-<div class="group_search">
+<div class="sidebarBox">
 <h3><?php echo elgg_echo('groups:searchtag'); ?></h3>
 <form id="searchform" action="" method="get">
 	<input type="text" name="group_find" value="Search" onclick="if (this.value=='Search') { this.value='' }" class="search_input" />
 	<input type="submit" value="<?php echo elgg_echo('go'); ?>" class="search_submit_button" />
 </form>
 </div>
-<div class="user_groups_link">
+<div class="sidebarBox">
 <?php
 	if(isloggedin())
 		echo "<p><a href=\"{$vars['url']}pg/groups/member/{$_SESSION['user']->username}\">". elgg_echo('groups:yours') ."</a></p>";
