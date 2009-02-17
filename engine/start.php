@@ -200,14 +200,16 @@
 					$oldview = $CONFIG->view;
 			}
 			
-			$lastupdate = datalist_get('simplecache_lastupdate');
-			$lastcached = datalist_get('simplecache_'.$oldview);
-			if ($lastupdate == 0 || $lastcached < $lastupdate) {
-				elgg_view_regenerate_simplecache();
-				$lastcached = time();
-				datalist_set('simplecache_lastupdate',$lastcached);
-				datalist_set('simplecache_'.$oldview,$lastcached);
+			if (($installed) && ($db_installed)) 
+			{
+				$lastupdate = datalist_get('simplecache_lastupdate');
+				$lastcached = datalist_get('simplecache_'.$oldview);
+				if ($lastupdate == 0 || $lastcached < $lastupdate) {
+					elgg_view_regenerate_simplecache();
+					$lastcached = time();
+					datalist_set('simplecache_lastupdate',$lastcached);
+					datalist_set('simplecache_'.$oldview,$lastcached);
+				}
+				$CONFIG->lastcache = $lastcached;
 			}
-			$CONFIG->lastcache = $lastcached;
-			
 ?>
