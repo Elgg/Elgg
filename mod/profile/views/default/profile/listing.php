@@ -12,7 +12,7 @@
 	 * @uses $vars['entity'] The user entity
 	 */
 		//create a view that a status plugin could extend - in the default case, this is the wire
-	 	$info = elgg_view("profile/status");
+	 	$info = elgg_view("profile/status", array("entity" => $vars['entity']));
 
 
 		$icon = elgg_view(
