@@ -48,6 +48,9 @@
 	//find groups
 	$area1 = elgg_view("groups/find");
 	
+	//menu options
+	$area1 .= elgg_view("groups/side_menu");
+	
 	//featured groups
 	$area1 .= elgg_view("groups/featured");
 		
