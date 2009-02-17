@@ -21,8 +21,8 @@
 		// Set up the menu for logged in users
 		if (isloggedin()) 
 		{
-			add_menu(elgg_echo('groups'), $CONFIG->wwwroot . "pg/groups/member/" . $_SESSION['user']->username,'groups');
-			add_menu(elgg_echo('groups:alldiscussion'),$CONFIG->wwwroot."mod/groups/discussions.php");
+			add_menu(elgg_echo('groups'), $CONFIG->wwwroot . "pg/groups/world/");
+			//add_menu(elgg_echo('groups:alldiscussion'),$CONFIG->wwwroot."mod/groups/discussions.php");
 		}
 		else
 		{

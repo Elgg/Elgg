@@ -58,13 +58,18 @@
 	
 			'groupforumtopic:new' => "New forum post",
 			
+			'groups:count' => "groups created",
+			'groups:open' => "open group",
+			'groups:closed' => "closed group",
+			'groups:member' => "members",
+			'groups:searchtag' => "Search groups by tag",
+			
 			/*
 			 * Access
 			 */
 			'groups:access:private' => 'Closed - Users must be invited',
 			'groups:access:public' => 'Open - Any user may join',
 	
-			'groups:closedgroup' => 'This group has a closed membership, please request to join.',
 			/*
 			   Group tools
 			*/
@@ -76,6 +81,8 @@
 	
 			'group:created' => 'Created %s with %d posts',
 			'groups:lastupdated' => 'Last updated %s by %s',
+			'groups:pages' => 'Group pages',
+			'groups:files' => 'Group files',
 	
 			/*
 			  Group forum strings

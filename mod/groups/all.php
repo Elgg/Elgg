@@ -14,6 +14,9 @@
 	$limit = get_input("limit", 10);
 	$offset = get_input("offset", 0);
 	$tag = get_input("tag");
+	$filter = get_input("filter");
+	if(!$filter)
+		$filter = "newest";
 	
 	
 	// Get objects
@@ -22,15 +25,39 @@
 	set_context('search');
 	if ($tag != "")
 		$objects = list_entities_from_metadata('tags',$tag,'group',"","", $limit, false);
-	else
-		$objects = list_entities('group',"", 0, $limit, false);
+	else{
+		switch($filter){
+			case "newest":
+			$objects = list_entities('group',"", 0, $limit, false);
+			break;
+			case "pop":
+			$objects = list_entities('group',"", 0, $limit, false);
+			break;
+			case "active":
+			$objects = list_entities_from_annotations("object", "groupforumtopic", "group_topic_post", "", 40, 0, 0, false, true);
+			break;
+			case 'default':
+			$objects = list_entities('group',"", 0, $limit, false);
+			break;
+		}
+	}
+	
+	//get a group count
+	$group_count = get_entities("group", "", 0, "", 10, 0, true, 0, null);
+		
+	//find groups
+	$area1 = elgg_view("groups/find");
+	
+	//featured groups
+	$area1 .= elgg_view("groups/featured");
 		
 	set_context($context);
 	
 	$title = sprintf(elgg_echo("groups:all"),page_owner_entity()->name);
 	$area2 = elgg_view_title($title);
+	$area2 .= elgg_view("groups/group_sort_menu", array("count" => $group_count, "filter" => $filter));
 	$area2 .= $objects;
-	$body = elgg_view_layout('two_column_left_sidebar',$area1, $area2);
+	$body = elgg_view_layout('sidebar_boxes',$area1, $area2);
 	
 	// Finally draw the page
 	page_draw($title, $body);
