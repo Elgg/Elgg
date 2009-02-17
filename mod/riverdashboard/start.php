@@ -27,5 +27,11 @@
 		}
 
 		register_plugin_hook('init','system','riverdashboard_init');
+		
+	// Register actions
+		global $CONFIG;
+		register_action("riverdashboard/add",false,$CONFIG->pluginspath . "riverdashboard/actions/add.php");
+		register_action("riverdashboard/delete",false,$CONFIG->pluginspath . "riverdashboard/actions/delete.php");
+
 
 ?>
