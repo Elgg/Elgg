@@ -14,7 +14,7 @@
 		
 			extend_view('css','riverdashboard/css');
 			
-			register_page_handler('dashboard','riverdashboard_dashboard');
+			//register_page_handler('dashboard','riverdashboard_dashboard');
 			
 			
 			
@@ -26,7 +26,7 @@
 			
 		}
 
-		register_event_handler('init','system','riverdashboard_init');
+		register_elgg_event_handler('init','system','riverdashboard_init');
 		
 	// Register actions
 		global $CONFIG;
