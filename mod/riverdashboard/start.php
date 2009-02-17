@@ -26,7 +26,7 @@
 			
 		}
 
-		register_plugin_hook('init','system','riverdashboard_init');
+		register_event_handler('init','system','riverdashboard_init');
 		
 	// Register actions
 		global $CONFIG;
