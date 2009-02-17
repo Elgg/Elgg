@@ -20,6 +20,8 @@
 	if ($vars['entity'] instanceof ElggObject && $vars['entity']->getSubtype() == 'widget') {
 		$handler = $vars['entity']->handler;
 		$title = $widgettypes[$vars['entity']->handler]->name;
+		if (!$title)
+			$title = $handler;
 	} else {
 		$handler = "error";
 		$title = elgg_echo("error"); 
@@ -63,7 +65,10 @@
 		
 	} else { // end if callback != "true"
 
-		echo elgg_view("widgets/{$handler}/view",$vars);
+		if (elgg_view_exists("widgets/{$handler}/view"))
+			echo elgg_view("widgets/{$handler}/view",$vars);
+		else
+			echo elgg_echo('widgets:handlernotfound');
 
 ?>
 
