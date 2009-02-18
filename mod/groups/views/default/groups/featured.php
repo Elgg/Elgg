@@ -6,7 +6,7 @@
 	 
 	
 ?>
-
+<div id="featured_groups">
 <h3><?php echo elgg_echo("groups:featured"); ?></h3>
 
 <?php
@@ -26,3 +26,4 @@
 		}
 	}
 ?>
+</div>
