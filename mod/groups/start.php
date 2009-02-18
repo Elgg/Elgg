@@ -481,5 +481,6 @@
 	register_action("groups/addpost",false,$CONFIG->pluginspath . "groups/actions/forums/addpost.php");
 	register_action("groups/edittopic",false,$CONFIG->pluginspath . "groups/actions/forums/edittopic.php");
 	register_action("groups/deletepost",false,$CONFIG->pluginspath . "groups/actions/forums/deletepost.php");
+	register_action("groups/featured",false,$CONFIG->pluginspath . "groups/actions/featured.php");
 	
 ?>

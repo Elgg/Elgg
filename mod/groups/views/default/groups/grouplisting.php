@@ -25,7 +25,20 @@
 	else
 		$mem = elgg_echo("groups:closed");
 		
-	$info .= "<div style=\"float:right;\">" . $mem . " / " . elgg_echo("groups:member") . " (" . get_group_members($vars['entity']->guid, 10, 0, 0, true) . ")</div>";
+	//for admins display the feature or unfeature option
+	if($vars['entity']->featured_group == "yes"){
+		$url = $vars['url'] . "action/groups/featured?group_guid=" . $vars['entity']->guid . "&action=unfeature";
+		$wording = "Unfeature";
+	}else{
+		$url = $vars['url'] . "action/groups/featured?group_guid=" . $vars['entity']->guid . "&action=feature";
+		$wording = "Make featured";
+	}
+		
+	$info .= "<div style=\"float:right;\">" . $mem . " / " . elgg_echo("groups:member") . " (" . get_group_members($vars['entity']->guid, 10, 0, 0, true) . ")<br />";
+	//if admin, show make featured option
+	if(isadminloggedin())
+		$info .= "<a href=\"{$url}\">{$wording}</a>";
+	$info .= "</div>";
 	$info .= "<p><b><a href=\"" . $vars['entity']->getUrl() . "\">" . $vars['entity']->name . "</a></b></p>";
     $info .= "<p class=\"owner_timestamp\">" . $vars['entity']->description . "</p>";
 

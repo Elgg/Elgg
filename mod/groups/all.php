@@ -52,7 +52,9 @@
 	$area1 .= elgg_view("groups/side_menu");
 	
 	//featured groups
-	$area1 .= elgg_view("groups/featured");
+	$featured_groups = get_entities_from_metadata("featured_group", "yes", "group", "", 0, 10, false, false, false);	
+	$area1 .= elgg_view("groups/featured", array("featured" => $featured_groups));
+		
 		
 	set_context($context);
 	

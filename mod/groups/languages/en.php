@@ -41,7 +41,9 @@
 			'groups:noaccess' => 'No access to group',
 			'groups:cantedit' => 'You can not edit this group',
 			'groups:saved' => 'Group saved',
-	
+			'groups:featured' => 'Featured groups',
+			'groups:featuredon' => 'You have made this group a featured one.',
+			'groups:unfeature' => 'You have removed this group from the featured list',
 			'groups:joinrequest' => 'Request membership',
 			'groups:join' => 'Join group',
 			'groups:leave' => 'Leave group',
