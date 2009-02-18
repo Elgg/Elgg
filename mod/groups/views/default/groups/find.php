@@ -7,9 +7,9 @@
 ?>
 <div class="sidebarBox">
 <h3><?php echo elgg_echo('groups:searchtag'); ?></h3>
-<form id="searchform" action="" method="get">
+<form id="groupssearchform" action="" method="get">
 	<input type="text" name="group_find" value="Search" onclick="if (this.value=='Search') { this.value='' }" class="search_input" />
-	<input type="submit" value="<?php echo elgg_echo('go'); ?>" class="search_submit_button" />
+	<input type="submit" value="<?php echo elgg_echo('go'); ?>" />
 </form>
 </div>
 <div class="sidebarBox">
