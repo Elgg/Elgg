@@ -22,52 +22,52 @@
 	 * Load important prerequisites
 	 */
 		
-		if (!@include_once(dirname(__FILE__) . "/lib/exceptions.php")) {		// Exceptions 
+		if (!include_once(dirname(__FILE__) . "/lib/exceptions.php")) {		// Exceptions 
 			echo "Error in installation: could not load the Exceptions library.";
 			exit;
 		}
 		
-		if (!@include_once(dirname(__FILE__) . "/lib/elgglib.php")) {		// Main Elgg library
+		if (!include_once(dirname(__FILE__) . "/lib/elgglib.php")) {		// Main Elgg library
 			echo "Elgg could not load its main library.";
 			exit;
 		}
 		
-		if (!@include_once(dirname(__FILE__) . "/lib/access.php")) {		// Access library
+		if (!include_once(dirname(__FILE__) . "/lib/access.php")) {		// Access library
 			echo "Error in installation: could not load the Access library.";
 			exit;
 		}
 	
-		if (!@include_once(dirname(__FILE__) . "/lib/system_log.php")) {		// Logging library
+		if (!include_once(dirname(__FILE__) . "/lib/system_log.php")) {		// Logging library
 			echo "Error in installation: could not load the System Log library.";
 			exit;
 		}
 	
-		if (!@include_once(dirname(__FILE__) . "/lib/export.php")) {		// Export library
+		if (!include_once(dirname(__FILE__) . "/lib/export.php")) {		// Export library
 			echo "Error in installation: could not load the Export library.";
 			exit;
 		}
 		
-		if (!@include_once(dirname(__FILE__) . "/lib/sessions.php")) {
+		if (!include_once(dirname(__FILE__) . "/lib/sessions.php")) {
 			echo ("Error in installation: Elgg could not load the Sessions library");
 			exit;
 		}
 		
-		if (!@include_once(dirname(__FILE__) . "/lib/languages.php")) {		// Languages library
+		if (!include_once(dirname(__FILE__) . "/lib/languages.php")) {		// Languages library
 			echo "Error in installation: could not load the languages library.";
 			exit;
 		}
 		
-		if (!@include_once(dirname(__FILE__) . "/lib/input.php")) {		// Input library
+		if (!include_once(dirname(__FILE__) . "/lib/input.php")) {		// Input library
 			echo "Error in installation: could not load the input library.";
 			exit;
 		}
 		
-		if (!@include_once(dirname(__FILE__) . "/lib/install.php")) {		// Installation library
+		if (!include_once(dirname(__FILE__) . "/lib/install.php")) {		// Installation library
 			echo "Error in installation: could not load the installation library.";
 			exit;
 		}
 		
-		if (!@include_once(dirname(__FILE__) . "/lib/cache.php")) {		// Installation library
+		if (!include_once(dirname(__FILE__) . "/lib/cache.php")) {		// Installation library
 			echo "Error in installation: could not load the cache library.";
 			exit;
 		}
@@ -102,14 +102,14 @@
 		 * Load the system settings
 		 */
 			
-			if (!@include_once(dirname(__FILE__) . "/settings.php"))  		// Global settings
+			if (!include_once(dirname(__FILE__) . "/settings.php"))  		// Global settings
 				throw new InstallationException("Elgg could not load the settings file.");
 				
 		/**
 		 * Load and initialise the database
 		 */
 	
-			if (!@include_once(dirname(__FILE__) . "/lib/database.php"))	// Database connection
+			if (!include_once(dirname(__FILE__) . "/lib/database.php"))	// Database connection
 				throw new InstallationException("Elgg could not load the main Elgg database library.");
 				
 		/**
@@ -117,7 +117,7 @@
 		 * except for a few exceptions
 		 */
 			
-			if (!@include_once(dirname(__FILE__) . "/lib/actions.php")) {
+			if (!include_once(dirname(__FILE__) . "/lib/actions.php")) {
 				throw new InstallationException("Elgg could not load the Actions library");
 			}	
 
@@ -145,7 +145,7 @@
 		// Include them
 			foreach($files as $file) {
 				if (isset($CONFIG->debug) && $CONFIG->debug) error_log("Loading $file..."); 
-				if (!@include_once($file))
+				if (!include_once($file))
 					throw new InstallationException("Could not load {$file}");
 			}
 		

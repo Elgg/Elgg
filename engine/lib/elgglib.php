@@ -335,11 +335,11 @@
 		    	$view_location = elgg_get_view_location($view);
 		    	
 		    			    	
-			    if (file_exists($view_location . "{$viewtype}/{$view}.php") && !@include($view_location . "{$viewtype}/{$view}.php")) {
+			    if (file_exists($view_location . "{$viewtype}/{$view}.php") && !include($view_location . "{$viewtype}/{$view}.php")) {
 			        $success = false;
 			        
 			        if ($viewtype != "default") {
-			            if (@include($view_location . "default/{$view}.php")) {
+			            if (include($view_location . "default/{$view}.php")) {
 			                $success = true;
 			            }
 			        }
