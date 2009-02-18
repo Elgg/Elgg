@@ -225,7 +225,7 @@
 					foreach($plugins as $mod) {
 						if (is_plugin_enabled($mod)) {
 							if (file_exists($CONFIG->pluginspath . $mod)) {
-								if (!@include($CONFIG->pluginspath . $mod . "/start.php"))
+								if (!include($CONFIG->pluginspath . $mod . "/start.php"))
 									throw new PluginException(sprintf(elgg_echo('PluginException:MisconfiguredPlugin'), $mod));
 								if (is_dir($CONFIG->pluginspath . $mod . "/views")) {
 									if ($handle = opendir($CONFIG->pluginspath . $mod . "/views")) {
