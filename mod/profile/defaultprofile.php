@@ -41,12 +41,12 @@
 		$n++;
 	}
 	
-	$listing .= elgg_view('input/form', 
+	$listing .= "<div class=\"contentWrapper resetdefaultprofile\">" . elgg_view('input/form', 
 		array(
 			'body' => elgg_view('input/submit', array('value' => elgg_echo('profile:resetdefault'))), 
 			'action' => $CONFIG->wwwroot . 'actions/profile/editdefault/reset'
 		)
-	);
+	) . "</div>";
 	
 	set_context('admin');
 	
