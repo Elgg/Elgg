@@ -15,11 +15,11 @@
 	
 	$allselect = ''; $friendsselect = ''; $mineselect = '';
 	switch($vars['orient']) {
-		case '':		$allselect = 'class="riverdashboard_tabs_selected"';
+		case '':		$allselect = 'class="selected"';
 						break;
-		case 'friends':		$friendsselect = 'class="riverdashboard_tabs_selected"';
+		case 'friends':		$friendsselect = 'class="selected"';
 						break;
-		case 'mine':		$mineselect = 'class="riverdashboard_tabs_selected"';
+		case 'mine':		$mineselect = 'class="selected"';
 						break;
 	}
 
@@ -28,13 +28,13 @@
 <div class="contentWrapper">
 	<div id="elgg_horizontal_tabbed_nav">
 		<ul>
-			<li><a <?php echo $allselect; ?> href="?type=<?php echo $vars['type']; ?>&content=<?php echo $vars['subtype']; ?>"><?php echo elgg_echo('all'); ?></a></li>
-			<li><a <?php echo $friendsselect; ?> href="?type=<?php echo $vars['type']; ?>&display=friends&content=<?php echo $vars['subtype']; ?>"><?php echo elgg_echo('friends'); ?></a></li>
-			<li><a <?php echo $mineselect; ?> href="?type=<?php echo $vars['type']; ?>&display=mine&content=<?php echo $vars['subtype']; ?>"><?php echo elgg_echo('mine'); ?></a></li>
+			<li <?php echo $allselect; ?> ><a href="?type=<?php echo $vars['type']; ?>&content=<?php echo $vars['subtype']; ?>"><?php echo elgg_echo('all'); ?></a></li>
+			<li <?php echo $friendsselect; ?> ><a href="?type=<?php echo $vars['type']; ?>&display=friends&content=<?php echo $vars['subtype']; ?>"><?php echo elgg_echo('friends'); ?></a></li>
+			<li <?php echo $mineselect; ?> ><a href="?type=<?php echo $vars['type']; ?>&display=mine&content=<?php echo $vars['subtype']; ?>"><?php echo elgg_echo('mine'); ?></a></li>
 		</ul>
 	</div>
 	
-	<div class="riverdashboard_content_select">
+	<div class="riverdashboard_filtermenu">
 		<form action="index.php">
 			<select name="content">
 				<?php
@@ -50,7 +50,7 @@
 				?>
 			</select>
 			<input type="hidden" name="display" value="<?php echo htmlentities($vars['orient']); ?>" />
-			<input type="submit" value="<?php echo elgg_echo('filter'); ?>" />
+			<!-- <input type="submit" value="<?php echo elgg_echo('filter'); ?>" /> -->
 		</form>
 	</div>
 <!-- </div> -->

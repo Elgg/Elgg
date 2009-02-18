@@ -25,7 +25,7 @@
 	
 ?>
 
-	<div class="contentWrapper">
+	<div class="contentWrapper welcomemessage">
 	
 <?php
 
