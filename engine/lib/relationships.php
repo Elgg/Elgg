@@ -586,6 +586,111 @@
 		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle, $pagination);
 		
 	}
+
+	/**
+	 * Gets the number of entities by a the number of entities related to them in a particular way.
+	 * This is a good way to get out the users with the most friends, or the groups with the most members.
+	 *
+	 * @param string $relationship The relationship eg "friends_of"
+	 * @param bool $inverse_relationship Reverse the normal function of the query to instead say "give me all entities for whome $relationship_guid is a $relationship of" (default: true)
+	 * @param string $type The type of entity (default: all)
+	 * @param string $subtype The entity subtype (default: all)
+	 * @param int $owner_guid The owner of the entities (default: none)
+	 * @param int $limit
+	 * @param int $offset
+	 * @param boolean $count Set to true if you want to count the number of entities instead (default false)
+	 * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
+	 * @return array|int|false An array of entities, or the number of entities, or false on failure
+	 */
+	
+	function get_entities_by_relationship_count($relationship, $inverse_relationship = true, $type = "", $subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $count = false, $site_guid = 0) {
+		
+		global $CONFIG;
+		
+		$relationship = sanitise_string($relationship);
+		$inverse_relationship = (bool)$inverse_relationship;
+		$type = sanitise_string($type);
+		$subtype = get_subtype_id($type, $subtype);
+		$owner_guid = (int)$owner_guid;
+		$order_by = sanitise_string($order_by);
+		$limit = (int)$limit;
+		$offset = (int)$offset;
+		$site_guid = (int) $site_guid;
+		if ($site_guid == 0)
+			$site_guid = $CONFIG->site_guid;
+		
+		//$access = get_access_list();
+		
+		$where = array();
+		
+		if ($relationship!="")
+			$where[] = "r.relationship='$relationship'";
+		if ($inverse_relationship) {
+			$on = 'e.guid = r.guid_two';
+		} else {
+			$on = 'e.guid = r.guid_one';
+		}
+		if ($type != "")
+			$where[] = "e.type='$type'";
+		if ($subtype)
+			$where[] = "e.subtype=$subtype";
+		if ($owner_guid != "")
+			$where[] = "e.container_guid='$owner_guid'";
+		if ($site_guid > 0)
+			$where[] = "e.site_guid = {$site_guid}";
+		
+		if ($count) {
+			$query = "SELECT count(distinct e.guid) as total ";
+		} else {
+			$query = "SELECT e.*, count(e.guid) as total ";
+		}
+		
+		$query .= " from {$CONFIG->dbprefix}entity_relationships r JOIN {$CONFIG->dbprefix}entities e on {$on} where ";
+		
+		if (!empty($where))
+		foreach ($where as $w)
+			$query .= " $w and ";
+		$query .= get_access_sql_suffix("e"); // Add access controls
+		
+		if (!$count) {
+			$query .= " group by e.guid ";
+			$query .= " order by total desc limit {$offset}, {$limit}"; // Add order and limit
+			return get_data($query, "entity_row_to_elggstar");
+		} else {
+			if ($count = get_data_row($query)) {
+				return $count->total;
+			}
+		}
+		
+		return false;
+			
+	}
+	
+	/**
+	 * Displays a human-readable list of entities
+	 * 
+	 * @param string $relationship The relationship eg "friends_of"
+	 * @param bool $inverse_relationship Reverse the normal function of the query to instead say "give me all entities for whome $relationship_guid is a $relationship of" (default: true)
+	 * @param string $type The type of entity (eg 'object')
+	 * @param string $subtype The entity subtype
+	 * @param int $owner_guid The owner (default: all)
+	 * @param int $limit The number of entities to display on a page
+	 * @param true|false $fullview Whether or not to display the full view (default: true)
+	 * @param true|false $viewtypetoggle Whether or not to allow gallery view 
+	 * @param true|false $pagination Whether to display pagination (default: true)
+	 * @return string The viewable list of entities
+	 */
+	
+	function list_entities_by_relationship_count($relationship, $inverse_relationship = true, $type = "", $subtype = "", $owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = false, $pagination = true) {
+		
+		$limit = (int) $limit;
+		$offset = (int) get_input('offset');
+		$count = get_entities_by_relationship_count($relationship,$inverse_relationship,$type,$subtype,$owner_guid,0,0,true);
+		$entities = get_entities_by_relationship_count($relationship,$inverse_relationship,$type,$subtype,$owner_guid,$limit,$offset);
+
+		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle, $pagination);
+		
+	}
 	
 	/**
 	 * Sets the URL handler for a particular relationship type
