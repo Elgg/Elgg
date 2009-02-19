@@ -21,19 +21,19 @@
 				<a href="<?php echo $vars['url']; ?>pg/settings/user/<?php echo $vars['entity']->username; ?>/"><?php echo elgg_echo('profile:editdetails'); ?></a>
 				<?php 
 				if (!$vars['entity']->isBanned()) {
-					echo elgg_view('output/confirmlink', array('text' => elgg_echo("ban"), 'href' => "{$vars['url']}actions/admin/user/ban?guid={$vars['entity']->guid}&__elgg_token=$token&__elgg_ts=$ts"));
+					echo elgg_view('output/confirmlink', array('text' => elgg_echo("ban"), 'href' => "{$vars['url']}action/admin/user/ban?guid={$vars['entity']->guid}&__elgg_token=$token&__elgg_ts=$ts"));
 				} else {
-					echo elgg_view('output/confirmlink', array('text' => elgg_echo("unban"), 'href' => "{$vars['url']}actions/admin/user/unban?guid={$vars['entity']->guid}&__elgg_token=$token&__elgg_ts=$ts")); 
+					echo elgg_view('output/confirmlink', array('text' => elgg_echo("unban"), 'href' => "{$vars['url']}action/admin/user/unban?guid={$vars['entity']->guid}&__elgg_token=$token&__elgg_ts=$ts")); 
 				}
 				
-				echo elgg_view('output/confirmlink', array('text' => elgg_echo("delete"), 'href' => "{$vars['url']}actions/admin/user/delete?guid={$vars['entity']->guid}&__elgg_token=$token&__elgg_ts=$ts"));
+				echo elgg_view('output/confirmlink', array('text' => elgg_echo("delete"), 'href' => "{$vars['url']}action/admin/user/delete?guid={$vars['entity']->guid}&__elgg_token=$token&__elgg_ts=$ts"));
 
-				echo elgg_view('output/confirmlink', array('text' => elgg_echo("resetpassword"), 'href' => "{$vars['url']}actions/admin/user/resetpassword?guid={$vars['entity']->guid}&__elgg_token=$token&__elgg_ts=$ts"));
+				echo elgg_view('output/confirmlink', array('text' => elgg_echo("resetpassword"), 'href' => "{$vars['url']}action/admin/user/resetpassword?guid={$vars['entity']->guid}&__elgg_token=$token&__elgg_ts=$ts"));
 				
 				if (!$vars['entity']->admin) { 
-					echo elgg_view('output/confirmlink', array('text' => elgg_echo("makeadmin"), 'href' => "{$vars['url']}actions/admin/user/makeadmin?guid={$vars['entity']->guid}&__elgg_token=$token&__elgg_ts=$ts"));
+					echo elgg_view('output/confirmlink', array('text' => elgg_echo("makeadmin"), 'href' => "{$vars['url']}action/admin/user/makeadmin?guid={$vars['entity']->guid}&__elgg_token=$token&__elgg_ts=$ts"));
 				} else {
-					echo elgg_view('output/confirmlink', array('text' => elgg_echo("removeadmin"), 'href' => "{$vars['url']}actions/admin/user/removeadmin?guid={$vars['entity']->guid}&__elgg_token=$token&__elgg_ts=$ts"));
+					echo elgg_view('output/confirmlink', array('text' => elgg_echo("removeadmin"), 'href' => "{$vars['url']}action/admin/user/removeadmin?guid={$vars['entity']->guid}&__elgg_token=$token&__elgg_ts=$ts"));
 				}
 			}
 		}

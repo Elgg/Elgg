@@ -29,6 +29,6 @@
 			$submit_control</p>
 END;
 	echo "<div class=\"contentWrapper\">";
-	echo elgg_view('input/form', array('body' => $formbody, 'action' => $vars['url'] . 'actions/profile/editdefault'));
+	echo elgg_view('input/form', array('body' => $formbody, 'action' => $vars['url'] . 'action/profile/editdefault'));
 	echo "</div>";
 ?>

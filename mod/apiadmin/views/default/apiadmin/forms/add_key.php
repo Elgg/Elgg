@@ -9,5 +9,5 @@
 	</div>
 END;
 
-	echo elgg_view('input/form', array('action' => "{$vars['url']}actions/apiadmin/generate", "body" => $form_body));
+	echo elgg_view('input/form', array('action' => "{$vars['url']}action/apiadmin/generate", "body" => $form_body));
 ?>
