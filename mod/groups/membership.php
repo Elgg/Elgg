@@ -12,10 +12,14 @@
 
 	require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 	
+	gatekeeper();
+	
 	$limit = get_input("limit", 10);
 	$offset = get_input("offset", 0);
 	
-	$title = sprintf(elgg_echo("groups:yours"),page_owner_entity()->name);
+	if (page_owner() == $_SESSION['user']->guid) {
+		$title = elgg_echo("groups:yours");
+	} else $title = sprintf(elgg_echo("groups:owned"),page_owner_entity()->name);
 
 	// Get objects
 	$area2 = elgg_view_title($title);
