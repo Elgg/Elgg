@@ -28,7 +28,7 @@
 		$limit = 4;
 	
 	//grab the river
-	$river = elgg_view_river_items($owner->getGuid(), 0, $content_type, $content[0], $content[1], '', $limit);
+	$river = elgg_view_river_items($owner->getGuid(), 0, $content_type, $content[0], $content[1], '', $limit,0,0,false);
 	
 	//display
 	echo "<div class=\"contentWrapper\">";

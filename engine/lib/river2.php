@@ -232,7 +232,8 @@
 							$action_type = '',
 							$limit = 20,
 							$posted_min = 0,
-							$posted_max = 0) {
+							$posted_max = 0,
+							$pagination = true) {
 								
 			// Get input from outside world and sanitise it
 				$offset = (int) get_input('offset',0);
@@ -244,6 +245,7 @@
 											'limit' => $limit,
 											'offset' => $offset,
 											'items' => $riveritems,
+											'pagination' => $pagination
 										));
 					
 				}
