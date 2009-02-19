@@ -21,6 +21,8 @@
 	
 	$body = elgg_view_layout('two_column_left_sidebar',$area1, $area2);
 	
+	$title = elgg_echo('item:object:groupforumtopic');
+	
 	// Finally draw the page
 	page_draw($title, $body);
 
