@@ -50,7 +50,7 @@
 			//action
 			$action = "riverdashboard/add";
 			$link = elgg_echo("sitemessages:add");
-			$input_area = elgg_view('input/text', array('internalname' => 'sitemessage', 'value' => ''));
+			$input_area = elgg_view('input/plaintext', array('internalname' => 'sitemessage', 'value' => ''));
 			$submit_input = elgg_view('input/submit', array('internalname' => 'submit', 'value' => elgg_echo('save')));
 			$form_body = <<<EOT
 	
