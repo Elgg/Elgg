@@ -260,7 +260,7 @@
 	 * @param boolean $debug If set to true, the viewer will complain if it can't find a view
 	 * @return string The HTML content
 	 */
-		function elgg_view($view, $vars = "", $bypass = true, $debug = false) {
+		function elgg_view($view, $vars = "", $bypass = false, $debug = false) {
 
 		    global $CONFIG;
 		    static $usercache;
