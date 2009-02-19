@@ -194,6 +194,7 @@ or click below to confirm request:
 			'grouppost:notdeleted' => 'Group posting could not be deleted',
 			'groupstopic:deleted' => 'Topic deleted',
 			'groupstopic:notdeleted' => 'Topic not deleted',
+			'groups:deletewarning' => "Are you sure you want to delete this group? There is no undo!",
 	);
 					
 	add_translation("en",$english);
