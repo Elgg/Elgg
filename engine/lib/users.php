@@ -621,10 +621,12 @@
 	 *
 	 * @param int $user_guid The GUID of the owning user
 	 * @param string $subtype Optionally, the subtype of objects
+	 * @param int $timelower The earliest time the entity can have been created. Default: all
+	 * @param int $timeupper The latest time the entity can have been created. Default: all
 	 * @return int The number of objects the user owns (of this subtype)
 	 */
-	function count_user_objects($user_guid, $subtype = "") {
-		$total = get_entities('object', $subtype, $user_guid, "time_created desc", null, null, true, 0, $user_guid);
+	function count_user_objects($user_guid, $subtype = "", $timelower, $timeupper) {
+		$total = get_entities('object', $subtype, $user_guid, "time_created desc", null, null, true, 0, $user_guid,$timelower,$timeupper);
 		return $total;
 	}
 
@@ -645,7 +647,7 @@
 		
 		$offset = (int) get_input('offset');
 		$limit = (int) $limit;
-		$count = (int) count_user_objects($user_guid, $subtype);
+		$count = (int) count_user_objects($user_guid, $subtype,$timelower,$timeupper);
 		$entities = get_user_objects($user_guid, $subtype, $limit, $offset, $timelower, $timeupper);
 		
 		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle, $pagination);
