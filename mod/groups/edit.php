@@ -24,7 +24,7 @@
 		$body .= elgg_view("forms/groups/edit", array('entity' => $group));
 			 
 	} else {
-		$body .= elgg_echo("groups:noaccess");
+		$body .= "<div class=\"contentWrapper\">" . elgg_echo('groups:noaccess') . "</div>";
 	}
 	
 	$body = elgg_view_layout('two_column_left_sidebar', '', $body);
