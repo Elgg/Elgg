@@ -21,7 +21,27 @@
 
 			
 			$username = $_GET['username'];
-			$username = preg_replace('/[^A-Za-z0-9\_\-]/i','',$username);
+			//$username = preg_replace('/[^A-Za-z0-9\_\-]/i','',$username);
+			$blacklist = '/[' .
+			'\x{0080}-\x{009f}' . # iso-8859-1 control chars
+			'\x{00a0}' .          # non-breaking space
+			'\x{2000}-\x{200f}' . # various whitespace
+			'\x{2028}-\x{202f}' . # breaks and control chars
+			'\x{3000}' .          # ideographic space
+			'\x{e000}-\x{f8ff}' . # private use
+			']/u';
+			if (
+				preg_match($blacklist, $username) ||	
+
+				(strpos($username, '/')!==false) ||
+				(strpos($username, '\\')!==false) ||
+				(strpos($username, '"')!==false) ||
+				(strpos($username, '\'')!==false) ||
+				(strpos($username, '*')!==false) ||
+				(strpos($username, '&')!==false) ||
+				(strpos($username, ' ')!==false)
+			) exit;
+			
 			$userarray = str_split($username);
 				
 			$matrix = '';
