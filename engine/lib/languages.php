@@ -139,7 +139,7 @@
 						((in_array($language, array('en.php', $current_language . '.php'))) && (!is_dir($path . $language))) ||
 						(($load_all) && (strpos($language, '.php')!==false) && (!is_dir($path . $language))) 
 					)
-						@include_once($path . $language);
+						include_once($path . $language);
 					
 				}
 			}
