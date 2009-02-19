@@ -325,6 +325,27 @@
 		}
 		
 		/**
+		 * This function checks a plugin manifest 'elgg_version' value against the current install
+		 * returning TRUE if the elgg_version is <= the current install's version.
+		 * @param $manifest_elgg_version_string The build version (eg 2009010201). 
+		 * @return bool
+		 */
+		function check_plugin_compatibility($manifest_elgg_version_string)
+		{
+			$version = get_version();
+			
+			if (strpos($manifest_elgg_version_string, '.')===false)
+			{
+				// Using version
+				$req_version = (int)$manifest_elgg_version_string;
+				
+				return ($version >= $req_version);
+			}
+			
+			return false;
+		}
+		
+		/**
 		 * Shorthand function for finding the plugin settings.
 		 * 
 		 * @param string $plugin_name Optional plugin name, if not specified then it is detected from where you

@@ -20,6 +20,12 @@
 	$active = $details['active'];
 	$manifest = $details['manifest'];
 	
+	// Check elgg version if available
+	$version_check_valid = false;
+	if ($manifest['elgg_version'])
+		$version_check_valid = check_plugin_compatibility($manifest['elgg_version']);
+	
+	
 	$ts = time();
 	$token = generate_action_token($ts);
 ?>
@@ -57,6 +63,17 @@
 			<div id="<?php echo $plugin; ?>_settings">
 				<?php echo elgg_view("object/plugin", array('plugin' => $plugin, 'entity' => find_plugin_settings($plugin))) ?>
 			</div>
+	</div>
+	<?php } ?>
+	
+	<?php if ((!$version_check_valid) || (!isset($manifest['elgg_version']))) { ?>
+	<div id="version_check">
+		<?php 
+			if (!isset($manifest['elgg_version']))
+				echo elgg_echo('admin:plugins:warning:elggversionunknown');
+			else
+				echo elgg_echo('admin:plugins:warning:elggtoolow');
+		?>
 	</div>
 	<?php } ?>
 	
