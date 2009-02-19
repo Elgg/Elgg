@@ -1496,9 +1496,11 @@
 	 * @param boolean $count Set to true to get a count rather than the entities themselves (limits and offsets don't apply in this context). Defaults to false.
 	 * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
 	 * @param int|array $container_guid The container or containers to get entities from (default: all containers).
+	 * @param int $timelower The earliest time the entity can have been created. Default: all
+	 * @param int $timeupper The latest time the entity can have been created. Default: all
 	 * @return array A list of entities. 
 	 */
-	function get_entities($type = "", $subtype = "", $owner_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0, $container_guid = null)
+	function get_entities($type = "", $subtype = "", $owner_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0, $container_guid = null, $timelower = 0, $timeupper = 0)
 	{
 		global $CONFIG;
 		
@@ -1510,6 +1512,8 @@
 		$limit = (int)$limit;
 		$offset = (int)$offset;
 		$site_guid = (int) $site_guid;
+		$timelower = (int) $timelower;
+		$timeupper = (int) $timeupper;
 		if ($site_guid == 0)
 			$site_guid = $CONFIG->site_guid;
 				
@@ -1572,6 +1576,10 @@
 				$where[] = "container_guid = {$container_guid}";
 			}
 		}
+		if ($timelower)
+			$where[] = "time_created >= {$timelower}";
+		if ($timeupper)
+			$where[] = "time_created <= {$timeupper}";
 			
 		if (!$count) {
 			$query = "SELECT * from {$CONFIG->dbprefix}entities where ";
@@ -1633,6 +1641,86 @@
 		$entities = get_objects_in_group($container_guid, $subtype, $owner_guid, 0, "", $limit, $offset);
 
 		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview);
+	}
+	
+	/**
+	 * Returns a list of months containing content specified by the parameters
+	 *
+	 * @param string $type The type of entity
+	 * @param string $subtype The subtype of entity
+	 * @param int $container_guid The container GUID that the entinties belong to
+	 * @param int $site_guid The site GUID
+	 * @return array|false Either an array of timestamps, or false on failure
+	 */
+	function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $site_guid = 0) {
+		
+		global $CONFIG;
+		
+		$site_guid = (int) $site_guid;
+		if ($site_guid == 0)
+			$site_guid = $CONFIG->site_guid;
+				
+		$where = array();
+		
+		if ($type != "") {
+			$type = sanitise_string($type);
+			$where[] = "type='$type'";
+		}
+		
+		if (is_array($subtype)) {			
+			$tempwhere = "";
+			if (sizeof($subtype))
+			foreach($subtype as $typekey => $subtypearray) {
+				foreach($subtypearray as $subtypeval) {
+					$typekey = sanitise_string($typekey);
+					if (!empty($subtypeval)) {
+						$subtypeval = (int) get_subtype_id($typekey, $subtypeval);
+					} else {
+						$subtypeval = 0;
+					}
+					if (!empty($tempwhere)) $tempwhere .= " or ";
+					$tempwhere .= "(type = '{$typekey}' and subtype = {$subtypeval})";
+				}								
+			}
+			if (!empty($tempwhere)) $where[] = "({$tempwhere})";
+			
+		} else {
+		
+			$subtype = get_subtype_id($type, $subtype);
+			
+			if ($subtype!=="")
+				$where[] = "subtype=$subtype";
+				
+		}
+		
+		if ($container_guid !== 0) {
+			if (is_array($container_guid)) {
+				foreach($container_guid as $key => $val) $container_guid[$key] = (int) $val;
+				$where[] = "container_guid in (" . implode(",",$container_guid) . ")";
+			} else {
+				$container_guid = (int) $container_guid;
+				$where[] = "container_guid = {$container_guid}";
+			}
+		}
+		
+		if ($site_guid > 0)
+			$where[] = "site_guid = {$site_guid}";
+		
+		$where[] = get_access_sql_suffix();
+			
+		$sql = "SELECT DISTINCT EXTRACT(YEAR_MONTH FROM FROM_UNIXTIME(time_created)) AS yearmonth FROM {$CONFIG->dbprefix}entities where ";
+		foreach ($where as $w) 
+			$sql .= " $w and ";
+		$sql .= "1=1";
+		if ($result = get_data($sql)) {
+			$endresult = array();
+			foreach($result as $res) {
+				$endresult[] = $res->yearmonth;
+			}
+			return $endresult;
+		}
+		return false;
+		
 	}
 	
 	/**

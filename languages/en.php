@@ -699,6 +699,20 @@ Once you have logged in, we highly recommend that you change your password.
 			'friendlytime:days' => "%s days ago",
 			'friendlytime:days:singular' => "yesterday",
 	
+			'date:month:01' => 'January %s',
+			'date:month:02' => 'February %s',
+			'date:month:03' => 'March %s',
+			'date:month:04' => 'April %s',
+			'date:month:05' => 'May %s',
+			'date:month:06' => 'June %s',
+			'date:month:07' => 'July %s',
+			'date:month:08' => 'August %s',
+			'date:month:09' => 'September %s',
+			'date:month:10' => 'October %s',
+			'date:month:11' => 'November %s',
+			'date:month:12' => 'December %s',
+	
+	
 		/**
 		 * Installation and system settings
 		 */

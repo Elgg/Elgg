@@ -607,10 +607,12 @@
 	 * @param string $subtype Optionally, the subtype of objects
 	 * @param int $limit The number of results to return (default 10)
 	 * @param int $offset Indexing offset, if any
+	 * @param int $timelower The earliest time the entity can have been created. Default: all
+	 * @param int $timeupper The latest time the entity can have been created. Default: all
 	 * @return false|array An array of ElggObjects or false, depending on success
 	 */
-	function get_user_objects($user_guid, $subtype = "", $limit = 10, $offset = 0) {
-		$ntt = get_entities('object',$subtype, $user_guid, "time_created desc", $limit, $offset,false,0,$user_guid);
+	function get_user_objects($user_guid, $subtype = "", $limit = 10, $offset = 0, $timelower = 0, $timeupper = 0) {
+		$ntt = get_entities('object',$subtype, $user_guid, "time_created desc", $limit, $offset,false,0,$user_guid,$timelower, $timeupper);
 		return $ntt;
 	}
 	
@@ -635,14 +637,16 @@
 	 * @param string $subtype The object subtype
 	 * @param int $limit The number of entities to display on a page
 	 * @param true|false $fullview Whether or not to display the full view (default: true)
+	 * @param int $timelower The earliest time the entity can have been created. Default: all
+	 * @param int $timeupper The latest time the entity can have been created. Default: all
 	 * @return string The list in a form suitable to display
 	 */
-	function list_user_objects($user_guid, $subtype = "", $limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true) {
+	function list_user_objects($user_guid, $subtype = "", $limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
 		
 		$offset = (int) get_input('offset');
 		$limit = (int) $limit;
 		$count = (int) count_user_objects($user_guid, $subtype);
-		$entities = get_user_objects($user_guid, $subtype, $limit, $offset);
+		$entities = get_user_objects($user_guid, $subtype, $limit, $offset, $timelower, $timeupper);
 		
 		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle, $pagination);
 		
