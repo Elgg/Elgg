@@ -45,17 +45,17 @@
 			} else {
 				$url .= "?view=rss";
 			}
-			if (substr_count($url2,'?')) {
-				$url2 .= "&view=odd";
-			} else {
-				$url2 .= "?view=opendd";
-			}
+			//if (substr_count($url2,'?')) {
+			//	$url2 .= "&view=odd";
+			//} else {
+			//	$url2 .= "?view=opendd";
+			//}
 			$label = elgg_echo('feed:rss');
-			$label2 = elgg_echo('feed:odd');
+			//$label2 = elgg_echo('feed:odd');
 			$contents .= <<<END
 
 	<div id="owner_block_rss_feed"><a href="{$url}" rel="nofollow">{$label}</a></div>
-	<div id="owner_block_odd_feed"><a href="{$url2}" rel="nofollow">{$label2}</a></div>
+	<!-- <div id="owner_block_odd_feed"><a href="{$url2}" rel="nofollow">{$label2}</a></div> -->
 			
 END;
 		}
