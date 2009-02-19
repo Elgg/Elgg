@@ -34,25 +34,25 @@
 		<?php
 			if ($vars['order'] > 10) {
 ?>
-			<a href="<?php echo $vars['url']; ?>actions/admin/plugins/reorder?plugin=<?php echo $plugin; ?>&order=1&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("top"); ?></a>
-			<a href="<?php echo $vars['url']; ?>actions/admin/plugins/reorder?plugin=<?php echo $plugin; ?>&order=<?php echo $vars['order'] - 11; ?>&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("up"); ?></a>
+			<a href="<?php echo $vars['url']; ?>action/admin/plugins/reorder?plugin=<?php echo $plugin; ?>&order=1&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("top"); ?></a>
+			<a href="<?php echo $vars['url']; ?>action/admin/plugins/reorder?plugin=<?php echo $plugin; ?>&order=<?php echo $vars['order'] - 11; ?>&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("up"); ?></a>
 <?php
 			}
 		?> 
 		<?php
 			if ($vars['order'] < $vars['maxorder']) {
 ?>
-			<a href="<?php echo $vars['url']; ?>actions/admin/plugins/reorder?plugin=<?php echo $plugin; ?>&order=<?php echo $vars['order'] + 11; ?>&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("down"); ?></a>
-			<a href="<?php echo $vars['url']; ?>actions/admin/plugins/reorder?plugin=<?php echo $plugin; ?>&order=<?php echo $vars['maxorder'] + 11; ?>&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("bottom"); ?></a>
+			<a href="<?php echo $vars['url']; ?>action/admin/plugins/reorder?plugin=<?php echo $plugin; ?>&order=<?php echo $vars['order'] + 11; ?>&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("down"); ?></a>
+			<a href="<?php echo $vars['url']; ?>action/admin/plugins/reorder?plugin=<?php echo $plugin; ?>&order=<?php echo $vars['maxorder'] + 11; ?>&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("bottom"); ?></a>
 <?php
 			}
 		?> 
 	</div><div class="clearfloat"></div>
 	<div class="admin_plugin_enable_disable">
 		<?php if ($active) { ?>
-			<a href="<?php echo $vars['url']; ?>actions/admin/plugins/disable?plugin=<?php echo $plugin; ?>&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("disable"); ?></a>
+			<a href="<?php echo $vars['url']; ?>action/admin/plugins/disable?plugin=<?php echo $plugin; ?>&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("disable"); ?></a>
 		<?php } else { ?>
-			<a href="<?php echo $vars['url']; ?>actions/admin/plugins/enable?plugin=<?php echo $plugin; ?>&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("enable"); ?></a>
+			<a href="<?php echo $vars['url']; ?>action/admin/plugins/enable?plugin=<?php echo $plugin; ?>&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("enable"); ?></a>
 		<?php } ?>
 	</div>
 
