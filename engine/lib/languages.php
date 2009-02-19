@@ -125,7 +125,7 @@
 			
 			// Make a note of this path just incase we need to register this language later
 			if(!isset($CONFIG->language_paths)) $CONFIG->language_paths = array();
-			$CONFIG->language_paths[] = $path;
+			$CONFIG->language_paths[$path] = true;
 			
 			// Get the current language based on site defaults and user preference
 			$current_language = get_current_language();
@@ -162,8 +162,13 @@
 		{
 			global $CONFIG;
 			
-			foreach ($CONFIG->language_paths as $path)
-				register_translations($path, true);	
+			static $LANG_RELOAD_ALL_RUN;
+			if ($LANG_RELOAD_ALL_RUN) return null;
+			
+			foreach ($CONFIG->language_paths as $path => $dummy)
+				register_translations($path, true);
+
+			$LANG_RELOAD_ALL_RUN = true;
 		}
 		
 	/**
