@@ -31,7 +31,7 @@
 			$objects = list_entities('group',"", 0, $limit, false);
 			break;
 			case "pop":
-			$objects = list_entities('group',"", 0, $limit, false);
+			$objects = list_entities_by_relationship_count('member',true, "group", "", 0, $limit, true, false, false);
 			break;
 			case "active":
 			$objects = list_entities_from_annotations("object", "groupforumtopic", "group_topic_post", "", 40, 0, 0, false, true);
