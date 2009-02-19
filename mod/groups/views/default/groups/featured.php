@@ -21,7 +21,7 @@
 				);
 				
 			echo "<div class=\"contentWrapper\">" . $icon . " <p><span>" . $group->name . "</span><br />";
-			echo $group->briefdescription . "</p></div>";
+			echo $group->briefdescription . "</p><div class=\"clearfloat\"></div></div>";
 			
 		}
 	}

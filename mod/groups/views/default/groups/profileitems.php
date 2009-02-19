@@ -11,7 +11,7 @@
 	 */
 	 
 	 //forum 
-	 echo "<div id=\"fullcolumn\">";
+	 echo "<div class=\"clearfloat\"></div><div id=\"fullcolumn\">";
 	 echo elgg_view("groups/forum_latest",array('entity' => $vars['entity']));
 	 echo "</div>";
 	 

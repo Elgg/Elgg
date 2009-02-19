@@ -7,7 +7,7 @@
 
 ?>
 
-<div id="latest_discussion_widget">
+<div class="contentWrapper">
 <h2><?php echo elgg_echo('groups:latestdiscussion'); ?></h2>
 <?php
 	
