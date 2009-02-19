@@ -173,7 +173,7 @@
 						if ($entities = get_entities_from_relationship($subject_relationship,$subject_guid,false,'','',0,'',9999)) {
 							$guids = array();
 							foreach($entities as $entity) $guids[] = (int) $entity->guid;
-							$guids[] = $subject_guid;
+							// $guids[] = $subject_guid;
 							$where[] = " subject_guid in (" . implode(',',$guids) . ") "; 
 						}
 				}
