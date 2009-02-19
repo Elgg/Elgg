@@ -768,8 +768,9 @@
 	 *
 	 * @param string $label The human-readable label
 	 * @param string $link The URL of the submenu item
+	 * @param boolean $onclick Used to provide a JS popup to confirm delete
 	 */
-		function add_submenu_item($label, $link, $group = 'a') {
+		function add_submenu_item($label, $link, $group = 'a', $onclick = false) {
 			
 			global $CONFIG;
 			if (!isset($CONFIG->submenu)) $CONFIG->submenu = array();
@@ -777,6 +778,7 @@
 			$item = new stdClass;
 			$item->value = $link;
 			$item->name = $label;
+			$item->onclick = $onclick;
 			$CONFIG->submenu[$group][] = $item; 
 			
 		}
@@ -841,6 +843,7 @@
 										array(
 												'href' => $item->value, 
 												'label' => $item->name,
+												'onclick' => $item->onclick,
 												'selected' => $selected,
 											));
 						
