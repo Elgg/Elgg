@@ -12,10 +12,3 @@
 	<input type="submit" value="<?php echo elgg_echo('go'); ?>" />
 </form>
 </div>
-<div class="sidebarBox">
-<?php
-	if(isloggedin())
-		echo "<p><a href=\"{$vars['url']}pg/groups/member/{$_SESSION['user']->username}\">". elgg_echo('groups:yours') ."</a></p>";
-		
-?>
-</div>

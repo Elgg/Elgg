@@ -1,4 +1,4 @@
-<div class="user_groups_link">
+<div class="sidebarBox">
 <?php
 	if(isloggedin()){
 		echo "<p><a href=\"{$vars['url']}pg/groups/member/{$_SESSION['user']->username}\">". elgg_echo('groups:yours') ."</a></p>";
