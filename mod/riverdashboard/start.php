@@ -16,7 +16,7 @@
 			
 			//register_page_handler('dashboard','riverdashboard_dashboard');
 			
-			
+			add_widget_type('river_widget',elgg_echo('river:widget:title'), elgg_echo('river:widget:description'));
 			
 		}
 		
