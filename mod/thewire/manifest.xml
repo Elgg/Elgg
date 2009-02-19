@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest>
+        <field key="author" value="Curverider" />
+        <field key="version" value="1.5" />
+        <field key="description" value="This is a twitter style, short messaging service." />
+        <field key="website" value="http://www.elgg.org/" />
+        <field key="copyright" value="(C) Curverider 2008-2009" />
+        <field key="recommends" value="smsclient" />
+</plugin_manifest>
