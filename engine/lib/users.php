@@ -185,7 +185,8 @@
 		 * @param int $offset Any indexing offset
 		 */
 		function getSites($subtype="", $limit = 10, $offset = 0) {
-			return get_site_users($this->getGUID(), $subtype, $limit, $offset);
+			// return get_site_users($this->getGUID(), $subtype, $limit, $offset);
+			return get_user_sites($this->getGUID(), $subtype, $limit, $offset);
 		}
 		
 		/**
@@ -195,7 +196,8 @@
 		 * @return true|false
 		 */
 		function addToSite($site_guid) {
-			return add_site_user($this->getGUID(), $site_guid); 
+			// return add_site_user($this->getGUID(), $site_guid); 
+			return add_site_user($site_guid, $this->getGUID());
 		}
 		
 		/**
@@ -205,7 +207,8 @@
 		 * @return true|false
 		 */
 		function removeFromSite($site_guid) {
-			return remove_site_user($this->getGUID(), $site_guid);
+			//return remove_site_user($this->getGUID(), $site_guid);
+			return remove_site_user($site_guid, $this->getGUID());
 		}
 		
 		/**
