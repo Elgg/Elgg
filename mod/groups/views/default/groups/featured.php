@@ -6,7 +6,7 @@
 	 
 	
 ?>
-<div id="featured_groups">
+<div class="sidebarBox featuredgroups">
 <h3><?php echo elgg_echo("groups:featured"); ?></h3>
 
 <?php
@@ -20,8 +20,8 @@
 								  )
 				);
 				
-			echo "<div class=\"featured_group\">" . $icon . " " . $group->name . "<br />";
-			echo $group->briefdescription . "</div>";
+			echo "<div class=\"contentWrapper\">" . $icon . " <p><span>" . $group->name . "</span><br />";
+			echo $group->briefdescription . "</p></div>";
 			
 		}
 	}
