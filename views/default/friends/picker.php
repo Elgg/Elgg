@@ -26,6 +26,10 @@
 			$internalname = $vars['internalname'];
 		}
 		
+	// Are we highlighting default or all?
+		if (empty($vars['highlight'])) $vars['highlight'] = 'default';
+		if ($vars['highlight'] != 'all') $vars['highlight'] = 'default';
+		
 	// Initialise values
 		if (!isset($vars['value'])) {
 			$vars['value'] = array();
@@ -166,9 +170,19 @@
 					//echo "<p>" . $user->name . "</p>";
 					$label = elgg_view("profile/icon",array('entity' => $friend, 'size' => 'tiny', 'override' => true)); 
 					$options[$label] = $friend->getGUID();
+					
+					if ($vars['highlight'] == 'all'
+						&& !in_array($letter,$activeletters)) {
+							$activeletters[] = $letter;
+						}
+						
+					
 					if (in_array($friend->getGUID(),$vars['value'])) {
 						$checked = "checked = \"checked\"";
-						if (!in_array($letter,$activeletters))
+						if (
+								!in_array($letter,$activeletters)
+								&& $vars['highlight'] == 'default'
+							)
 							$activeletters[] = $letter;
 					} else {
 						$checked = "";

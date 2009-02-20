@@ -24,6 +24,7 @@
 	// Let the system know that the friends picker is in use
 		global $pickerinuse;
 		$pickerinuse = true;
+		$chararray = elgg_echo('friendspicker:chararray');
 
 	// Initialise internalname
 		if (!isset($vars['internalname'])) {
@@ -74,8 +75,8 @@
 			foreach($friends as $user) {
 				
 				$letter = strtoupper(substr($user->name,0,1));
-				if ($letter >= "0" && $letter <= "9") {
-					$letter = "0";
+				if (!substr_count($chararray,$letter)) {
+					$letter = "*";
 				}
 				if (!isset($users[$letter])) {
 					$users[$letter] = array();
@@ -147,7 +148,9 @@
 <?php
 
 	// Initialise letters
-		$letter = 'A';
+		$letter = substr($chararray,0,1);
+		$letpos = 0;
+		$chararray .= '*';
 		while (1 == 1) {
 ?>
 			<div class="panel" title="<?php echo $letter; ?>">
@@ -234,8 +237,9 @@ END;
 				</div>
 			</div>
 <?php			
-			if ($letter == 'Z') break;
-			$letter++;
+			$letpos++;
+			if ($letpos == strlen($chararray)) break;
+			$letter = substr($chararray,$letpos,1);
 		}
 		
 ?>

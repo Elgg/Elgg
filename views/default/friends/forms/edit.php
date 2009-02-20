@@ -19,9 +19,11 @@
 		if (isset($vars['collection'])) {
 			$action = "friends/editcollection";
 			$title = $vars['collection'][0]->name;
+			$highlight = 'default';
 		} else  {
 			$action = "friends/addcollection";
 			$title = "";
+			$highlight = 'all';
 	    }
 
 	    
@@ -46,7 +48,7 @@
         $form_body .= "</p>";
         
         $form_body .= "<p><label>" . elgg_echo("friends:addfriends") . "</label>". 
-        				elgg_view('friends/picker',array('entities' => $vars['friends'], 'internalname' => 'friends_collection')) . "</p>";
+        				elgg_view('friends/picker',array('entities' => $vars['friends'], 'internalname' => 'friends_collection', 'highlight' => $highlight)) . "</p>";
         				
         $form_body .= "<p>";
         if (isset($vars['collection'])) {
