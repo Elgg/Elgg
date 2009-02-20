@@ -19,7 +19,7 @@
 
     if($groups){
 		
-		echo "<div class=\"sidebarBox featuredgroups\">";
+		echo "<div class=\"groupmembershipwidget\">";
 
 		foreach($groups as $group){
 			$icon = elgg_view(
@@ -29,8 +29,8 @@
 								  )
 				);
 				
-			echo "<div class=\"contentWrapper\">" . $icon . " <p><span>" . $group->name . "</span><br />";
-			echo $group->briefdescription . "</p><div class=\"clearfloat\"></div></div>";
+			echo "<div class=\"contentWrapper\">" . $icon . " <div class='search_listing_info'><p><span>" . $group->name . "</span><br />";
+			echo $group->briefdescription . "</p></div><div class=\"clearfloat\"></div></div>";
 			
 		}
 		echo "</div>";
