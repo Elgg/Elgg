@@ -232,7 +232,7 @@
 		 *
 		 * @return true|false
 		 */
-		function isFriend() { return user_is_friend($_SESSION['guid'], $this->getGUID()); }
+		function isFriend() { return user_is_friend(get_loggedin_userid(), $this->getGUID()); }
 		
 		/**
 		 * Determines whether this user is friends with another user
