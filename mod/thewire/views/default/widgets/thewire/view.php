@@ -1,4 +1,4 @@
-<p>
+
 	<?php
 
 		// Get any wire notes to display
@@ -23,4 +23,3 @@
 		}
 	
 	?>
-</p>
