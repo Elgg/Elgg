@@ -137,8 +137,10 @@
 				if ($method == 'sms') {
 					return elgg_echo("groupforumtopic:new") . ': ' . $url . " ({$owner->name}: {$title})";
 				} else {
-					return "{$title}\n({$owner->name})\n\n{$url}";
+					$owner = $entity->getOwnerEntity();
+					return $owner->username . ' ' . elgg_echo("groups:viagroups") . ': ' . $title . "\n\n" . $descr . "\n\n" . $entity->getURL();
 				}
+
 			}
 			return null;
 		}
