@@ -15,12 +15,10 @@
 			$time = "<span>" . friendly_time($lw->time_created) . "</span>";
 		}
 	}
-
+	
+	if($latest_wire){
+		echo "<div class=\"profile_status\">";
+		echo $content . " " . $time;
+		echo "</div>";
+	}
 ?>
-
-<div class="profile_status">
-		<?php
-			if($latest_wire)
-				echo $content . " " . $time;
-		?>
-</div>
