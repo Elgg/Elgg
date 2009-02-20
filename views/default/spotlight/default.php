@@ -27,7 +27,13 @@
 	<!-- spotlight LHS content -->
 	<div id="spotlight_table_left_area">
 		<h2>Welcome to Elgg</h2>
-		<p>Elgg is a social networking engine. It provides the necessary functionality to allow you to run your own social networking site, whether publicly (like Facebook) or internally on an Intranet.</p> 
+		<p>
+			Elgg allows you to run your own social networking site, whether publicly (like 
+			Facebook) or privately within your company or organization.
+			<a href="http://elgg.com/">Support and commercial services</a> are available,
+			or you can find new tools for your Elgg site at the
+			<a href="http://community.elgg.org/">Elgg community</a>.  
+		</p> 
 	</div><!-- /spotlight LHS content -->
 	<div class="clearfloat"></div>
 </div>
