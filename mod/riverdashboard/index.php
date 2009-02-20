@@ -19,24 +19,29 @@
 		$type = $content[0];
 		$subtype = $content[1];
 		$orient = get_input('display');
+		$callback = get_input('callback');
 		
 		if ($type == 'all') {
 			$type = '';
 			$subtype = '';
 		}
 
-		//set a view for the wire to extend
-		$area1 = elgg_view("activity/thewire");
+		$body = '';
+		if (empty($callback)) {
 
-		//set a view to display newest members
-		$area1 .= elgg_view("riverdashboard/newestmembers");
+			//set a view for the wire to extend
+			$area1 = elgg_view("activity/thewire");
+	
+			//set a view to display newest members
+			$area1 .= elgg_view("riverdashboard/newestmembers");	
+			
+			//set a view to display a welcome message
+			$body .= elgg_view("riverdashboard/welcome");
+	
+			//set a view to display a site wide message
+			$body .= elgg_view("riverdashboard/sitemessage");
 
-		//set a view to display a welcome message
-		$body = elgg_view("riverdashboard/welcome");
-
-		//set a view to display a site wide message
-		$body .= elgg_view("riverdashboard/sitemessage");
-
+		}
 		
 		switch($orient) {
 			case 'mine':
@@ -52,13 +57,17 @@
 		}
 
 		$river = elgg_view_river_items($subject_guid, 0, $relationship_type, $type, $subtype, '') . "</div>";
-		$body .= elgg_view('riverdashboard/nav',array(
-														'type' => $type,
-														'subtype' => $subtype,
-														'orient' => $orient 
-													));
-		$body .= $river;
-				
-		echo page_draw(elgg_echo('dashboard'),elgg_view_layout('sidebar_boxes',$area1,$body));
+		
+		$nav = elgg_view('riverdashboard/nav',array(
+															'type' => $type,
+															'subtype' => $subtype,
+															'orient' => $orient 
+														));
+		if (empty($callback)) {
+			$body .= elgg_view('riverdashboard/container', array('body' => $nav . $river . elgg_view('riverdashboard/js')));
+			echo page_draw(elgg_echo('dashboard'),elgg_view_layout('sidebar_boxes',$area1,$body));
+		} else {
+			echo $nav . $river . elgg_view('riverdashboard/js');
+		}
 
 ?>
