@@ -18,7 +18,7 @@
 		admin_gatekeeper();
 		
 	// Set admin user for user block
-		set_page_owner($_SESSION['guid']);
+		//set_page_owner($_SESSION['guid']);
 
 	// Are we performing a search
 		$search = get_input('s');

@@ -19,7 +19,7 @@
 		admin_gatekeeper();
 	
 	// Set admin user for user block
-		set_page_owner($_SESSION['guid']);
+		//set_page_owner($_SESSION['guid']);
 
 	// Display main admin menu
 		page_draw(elgg_echo("admin:statistics"),elgg_view_layout("two_column_left_sidebar",'',elgg_view_title(elgg_echo('admin:statistics')) . elgg_view("admin/statistics")));

@@ -19,7 +19,7 @@
 		admin_gatekeeper();
 		
     // Set admin user for user block
-		set_page_owner($_SESSION['guid']);
+		//set_page_owner($_SESSION['guid']);
 		
 	// Regenerate plugin list
 		regenerate_plugin_list();
