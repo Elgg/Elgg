@@ -22,7 +22,7 @@
 	$body = <<< END
 	<p class="messages-exception">
 		<span title="$class">
-			$message
+			<b>$message</b>
 		</span>
 	</p>
 END;
