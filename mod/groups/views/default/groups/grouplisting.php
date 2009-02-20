@@ -34,10 +34,10 @@
 		$wording = "Make featured";
 	}
 		
-	$info .= "<div style=\"float:right;\">" . $mem . " / " . elgg_echo("groups:member") . " (" . get_group_members($vars['entity']->guid, 10, 0, 0, true) . ")<br />";
+	$info .= "<div class=\"groupdetails\"><p>" . $mem . " / " . elgg_echo("groups:member") . " (" . get_group_members($vars['entity']->guid, 10, 0, 0, true) . ")</p>";
 	//if admin, show make featured option
 	if(isadminloggedin())
-		$info .= "<a href=\"{$url}\">{$wording}</a>";
+		$info .= "<p><a href=\"{$url}\">{$wording}</a></p>";
 	$info .= "</div>";
 	$info .= "<p><b><a href=\"" . $vars['entity']->getUrl() . "\">" . $vars['entity']->name . "</a></b></p>";
     $info .= "<p class=\"owner_timestamp\">" . $vars['entity']->description . "</p>";
