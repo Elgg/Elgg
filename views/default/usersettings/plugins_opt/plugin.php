@@ -25,8 +25,8 @@
 	
 	if (elgg_view("usersettings/{$plugin}/edit")) { 
 ?>
-<div id="user_plugin_details">
-	<div><h2><?php echo elgg_echo($plugin); ?></h2></div>
+<div class="contentWrapper">
+	<h3 class="settings"><?php echo elgg_echo($plugin); ?></h3>
 	
 	<div id="<?php echo $plugin; ?>_settings">
 		<?php echo elgg_view("object/plugin", array('plugin' => $plugin, 'entity' => find_plugin_usersettings($plugin, $user_guid), 'prefix' => 'user')) ?>
