@@ -13,6 +13,10 @@
 
 <div id="content_area_group_title"><h2><?php echo elgg_echo("groups:forum"); ?></h2></div>
 
+
+
+<div id="forum_topics"><!-- start of the forum_topics div -->
+
 <?php
     //only show the add link if the user is a member
     if(page_owner_entity()->isMember($vars['user'])){
@@ -23,10 +27,7 @@
 
 <?php
     }
-?> 
-
-<div id="forum_topics"><!-- start of the forum_topics div -->
-    
+?>     
   
         <!-- display the forum title -->
         <h2><?php echo get_entity(get_input("forum"))->title; ?></h2>

@@ -28,6 +28,7 @@
 	    echo elgg_view_title(elgg_echo("groups:addtopic"));
 	    
 ?>
+<div class="contentWrapper">
 	<!-- display the input form -->
 	<form action="<?php echo $vars['url']; ?>action/<?php echo $action; ?>" method="post">
 	
@@ -94,3 +95,4 @@
 		</p>
 	
 	</form>
+</div>

@@ -25,9 +25,10 @@
     	        echo "</div>";
     	        
         }
-    }else{
-        
-        echo elgg_echo("grouptopic:notcreated");
+    } else {
+		echo "<div class=\"forum_latest\">";
+		echo elgg_echo("grouptopic:notcreated");
+		echo "</div>";
     }
 ?>
 <br class="clearfloat" />
