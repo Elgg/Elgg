@@ -11,9 +11,6 @@
 	 * 
 	 * @uses $vars['entity'] The user entity
 	 */
-		//create a view that a status plugin could extend - in the default case, this is the wire
-	 	$info = elgg_view("profile/status", array("entity" => $vars['entity']));
-
 
 		$icon = elgg_view(
 				"profile/icon", array(
@@ -33,7 +30,9 @@
 		
 		if (!$banned) {
 			$info .= "<p><b><a href=\"" . $vars['entity']->getUrl() . "\" rel=\"$rel\">" . $vars['entity']->name . "</a></b></p>";
-		
+			//create a view that a status plugin could extend - in the default case, this is the wire
+	 		$info .= elgg_view("profile/status", array("entity" => $vars['entity']));
+
 			$location = $vars['entity']->location;
 			if (!empty($location)) {
 				$info .= "<p class=\"owner_timestamp\">" . elgg_echo("profile:location") . ": " . elgg_view("output/tags",array('value' => $vars['entity']->location)) . "</p>";
