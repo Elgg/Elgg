@@ -1750,8 +1750,10 @@
 						$__RECURSIVE_DELETE_TOKEN = md5(get_loggedin_userid()); // Make it slightly harder to guess
 						
 						$sub_entities = get_data("SELECT * from {$CONFIG->dbprefix}entities WHERE container_guid=$guid or owner_guid=$guid or site_guid=$guid", 'entity_row_to_elggstar');
-						foreach ($sub_entities as $e)
-							$e->disable($reason);
+						if ($sub_entities) {
+							foreach ($sub_entities as $e)
+								$e->disable($reason);
+						}
 							
 						$__RECURSIVE_DELETE_TOKEN = null; 
 					}
@@ -1822,8 +1824,10 @@
 						$__RECURSIVE_DELETE_TOKEN = md5(get_loggedin_userid()); // Make it slightly harder to guess
 						
 						$sub_entities = get_data("SELECT * from {$CONFIG->dbprefix}entities WHERE container_guid=$guid or owner_guid=$guid or site_guid=$guid", 'entity_row_to_elggstar');
-						foreach ($sub_entities as $e)
-							$e->delete();
+						if ($sub_entities) {
+							foreach ($sub_entities as $e)
+								$e->delete();
+						}
 							
 						$__RECURSIVE_DELETE_TOKEN = null; 
 					}
