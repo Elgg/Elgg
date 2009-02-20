@@ -580,9 +580,9 @@
 		$entity_guid = (int)$entity_guid;
 		$entity_type = sanitise_string($entity_type);
 		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
-		$name = get_metastring_id($name);
+		if ($name != '') $name = get_metastring_id($name);
 		
-		if (empty($name)) return 0;
+		// if (empty($name)) return 0;
 		
 		$where = array();
 		
