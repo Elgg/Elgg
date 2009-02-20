@@ -17,6 +17,7 @@
 	// Let the system know that the friends picker is in use
 		global $pickerinuse;
 		$pickerinuse = true;
+		$chararray = elgg_echo('friendspicker:chararray');
 
 	// Initialise internalname
 		if (!isset($vars['internalname'])) {
@@ -67,8 +68,8 @@
 			foreach($vars['entities'] as $user) {
 				
 				$letter = strtoupper(substr($user->name,0,1));
-				if ($letter >= "0" && $letter <= "9") {
-					$letter = "0";
+				if (!substr_count($chararray,$letter)) {
+					$letter = "*";
 				}
 				if (!isset($users[$letter])) {
 					$users[$letter] = array();
@@ -140,10 +141,14 @@
 <?php
 
 	// Initialise letters
-		$letter = 'A';
+		$chararray .= "*";
+		$letter = substr($chararray,0,1);
+		$letpos = 0;
 		while (1 == 1) {
 ?>
-			<div class="panel" title="<?php echo $letter; ?>">
+			<div class="panel" title="<?php 
+					echo $letter;
+			?>">
 				<div class="wrapper">
 					<h3><?php echo $letter; ?></h3>					
 					
@@ -213,8 +218,11 @@
 				</div>
 			</div>
 <?php			
-			if ($letter == 'Z') break;
-			$letter++;
+			//if ($letter == 'Z') break;
+			if ($letter == substr($chararray,strlen($chararray) - 1,1)) break;
+			//$letter++;
+			$letpos++;
+			$letter = substr($chararray,$letpos,1);
 		}
 		
 ?>
@@ -272,7 +280,7 @@
 	// manually add class to corresponding tab for panels that have content
 <?php
 	if (sizeof($activeletters) > 0)
-		$chararray = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		//$chararray = elgg_echo('friendspicker:chararray');
 		foreach($activeletters as $letter) {
 			$tab = strpos($chararray, $letter) + 1;
 ?>
