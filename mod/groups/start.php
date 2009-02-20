@@ -67,7 +67,6 @@
 		// Notification hooks
 		if (is_callable('register_notification_object'))
 			register_notification_object('object', 'groupforumtopic', elgg_echo('groupforumtopic:new'));
-		register_elgg_event_handler('annotate','all','group_object_notifications');
 		register_plugin_hook('object:notifications','object','group_object_notifications_intercept');
 		
 		// Listen to notification events and supply a more useful message
@@ -82,12 +81,12 @@
 	 *
 	 */
 	function group_object_notifications($event, $object_type, $object) {
-		
 		if (is_callable('object_notifications'))
 		if ($object instanceof ElggObject) {
 			if ($object->getSubtype() == 'groupforumtopic') {
-				if ($object->countAnnotations() > 0)
+				if ($object->countAnnotations('group_topic_post') > 0) {
 					object_notifications($event, $object_type, $object);
+				}
 			}
 		}
 		
@@ -129,16 +128,21 @@
 			$method = $params['method'];
 			if (($entity instanceof ElggEntity) && ($entity->getSubtype() == 'groupforumtopic'))
 			{
+
 				$descr = $entity->description;
 				$title = $entity->title;
 				global $CONFIG;
 				$url = $entity->getURL();
+
+				$msg = get_input('topicmessage');
+				if (empty($msg)) $msg = get_input('topic_post');
+				if (!empty($msg)) $msg = $msg . "\n\n"; else $msg = '';
+				
 				$owner = get_entity($entity->container_guid);
 				if ($method == 'sms') {
 					return elgg_echo("groupforumtopic:new") . ': ' . $url . " ({$owner->name}: {$title})";
 				} else {
-					$owner = $entity->getOwnerEntity();
-					return $owner->username . ' ' . elgg_echo("groups:viagroups") . ': ' . $title . "\n\n" . $descr . "\n\n" . $entity->getURL();
+					return $owner->username . ' ' . elgg_echo("groups:viagroups") . ': ' . $title . "\n\n" . $msg . "\n\n" . $entity->getURL();
 				}
 
 			}
@@ -475,6 +479,7 @@
 	register_elgg_event_handler('join','group','groups_user_join_event_listener');
 	register_elgg_event_handler('leave','group','groups_user_leave_event_listener');
 	register_elgg_event_handler('pagesetup','system','groups_submenus');
+	register_elgg_event_handler('annotate','all','group_object_notifications');
 	
 	// Register actions
     global $CONFIG;
