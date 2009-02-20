@@ -27,6 +27,7 @@
 	// List form elements
 	$n = 0;
 	$loaded_defaults = array();
+	$listing .= "<div class=\"contentWrapper\">";
 	while ($translation = get_plugin_setting("admin_defined_profile_$n", 'profile'))
 	{
 		$type = get_plugin_setting("admin_defined_profile_type_$n", 'profile');
@@ -40,6 +41,7 @@
 		
 		$n++;
 	}
+	$listing .= "</div>";
 	
 	$listing .= "<div class=\"contentWrapper resetdefaultprofile\">" . elgg_view('input/form', 
 		array(
