@@ -406,8 +406,9 @@
 													'entity' => $object,
 													'to_entity' => $user,
 													'method' => $method),$string);
-												if (empty($methodstring)) $methodstring = $string;
-												notify_user($user->guid,$object->container_guid,$descr,$methodstring,NULL,array($method));
+												if (empty($methodstring) && $methodstring !== false) $methodstring = $string;
+												if ($methodstring !== false)
+													notify_user($user->guid,$object->container_guid,$descr,$methodstring,NULL,array($method));
 								}
 							}						
 						}
