@@ -224,6 +224,20 @@
 			return false;
 		}
 		
+	/**
+	 * Returns a human-readable version of the river.
+	 *
+	 * @param int|array $subject_guid Acting entity to restrict to. Default: all
+	 * @param int|array $object_guid Entity being acted on to restrict to. Default: all
+	 * @param string $subject_relationship If set to a relationship type, this will use $subject_guid as the starting point and set the subjects to be all users this entity has this relationship with (eg 'friend'). Default: blank
+	 * @param string $type The type of entity to restrict to. Default: all
+	 * @param string $subtype The subtype of entity to restrict to. Default: all
+	 * @param string $action_type The type of river action to restrict to. Default: all
+	 * @param int $limit The number of items to retrieve. Default: 20
+	 * @param int $posted_min The minimum time period to look at. Default: none
+	 * @param int $posted_max The maximum time period to look at. Default: none
+	 * @return string Human-readable river.
+	 */
 		function elgg_view_river_items($subject_guid = 0,
 							$object_guid = 0,
 							$subject_relationship = '',

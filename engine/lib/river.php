@@ -3,6 +3,8 @@
 	 * Elgg river.
 	 * Functions for listening for and generating the river out of the system log.
 	 * 
+	 * These functions are no longer used in core Elgg.
+	 * 
 	 * @package Elgg
 	 * @subpackage Core
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
