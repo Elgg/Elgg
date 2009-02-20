@@ -23,6 +23,7 @@
 			'groups:new' => "Create a new group",
 			'groups:edit' => "Edit group",
 			'groups:delete' => 'Delete group',
+			'groups:membershiprequests' => 'Manage join requests',
 	
 			'groups:icon' => 'Group icon (leave blank to leave unchanged)',
 			'groups:name' => 'Group name',
@@ -65,6 +66,7 @@
 			'groups:closed' => "closed group",
 			'groups:member' => "members",
 			'groups:searchtag' => "Search groups by tag",
+	
 			
 			/*
 			 * Access
