@@ -40,5 +40,5 @@ END;
 	
 	$title = $message;
 	
-	page_draw($title, elgg_view_layout("one_column", elgg_view_title($title) . $body));
+	echo elgg_view_layout("one_column", elgg_view_title($title) . $body);
 ?>
