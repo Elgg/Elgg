@@ -17,6 +17,7 @@
 		$body = get_input('note');
 		$tags = get_input('thewiretags');
 		$access_id = get_input('access_id');
+		$location = get_input('location');
 		$method = get_input('method');
 		$parent = (int)get_input('parent', 0);
 		if(!$parent)   
@@ -35,7 +36,10 @@
 			
 			if (!thewire_save_post($body, $access_id, $parent, $method)) {
 				register_error(elgg_echo("thewire:error"));
-				forward("mod/thewire/add.php");
+				if($location == "activity")
+					forward("mod/riverdashboard/");
+				else
+					forward("mod/thewire/add.php");
 			}
 	        
 	// Now let's add tags. We can pass an array directly to the object property! Easy.
@@ -46,8 +50,11 @@
 	// Success message
 			system_message(elgg_echo("thewire:posted"));
 	
-	// Forward to the main thewire page
-			forward("mod/thewire/everyone.php");
+	// Forward 
+			if($location == "activity")
+					forward("mod/riverdashboard/");
+			else
+					forward("mod/thewire/add.php");
 				
 		}
 		
