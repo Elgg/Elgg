@@ -38,7 +38,7 @@ END;
 END;
 	}
 	
-	$title = $message;
+	$title = $class;
 	
 	echo elgg_view_layout("one_column", elgg_view_title($title) . $body);
 ?>
