@@ -115,7 +115,9 @@
 	</p>
 
 </form>
+</div>
 
+<div class="contentWrapper">
 <div id="delete_group_option">
 	<form action="<?php echo $vars['url'] . "action/groups/delete"; ?>">
 		<?php
@@ -130,3 +132,6 @@
 	</form>
 </div>
 </div>
+
+
+
