@@ -28,8 +28,9 @@
 		
 		$user = get_entity($u_id);
 		$group = get_entity($group_guid);
-		if ( $user && $group) {
 		
+		if ( $user && $group) {
+			
 			if ($_SESSION['user']->getGUID() == $group->owner_guid)
 			{
 				$requests = $user->group_join_request;
@@ -74,9 +75,15 @@
 					$methods[] = $group->getGUID();
 					$methods = array_unique($methods);
 					
+					$logged_in_user = get_loggedin_user();
+					
 					// Set invite flag
 					//if (!$user->setMetaData('group_invite', $group->getGUID(), "", true))
-					if (!$user->setMetaData('group_invite', $methods)) {
+					if (
+						(!$user->setMetaData('group_invite', $methods)) ||
+						(!$user->isFriend())
+					) 
+					{
 					//if (!$user->group_invite = $methods) { 
 						register_error(elgg_echo("groups:usernotinvited"));
 					}
