@@ -18,7 +18,8 @@
 		<option value="12" <?php if ($vars['entity']->num_display == 12) echo " selected=\"yes\" "; ?>>12</option>
 		<option value="15" <?php if ($vars['entity']->num_display == 15) echo " selected=\"yes\" "; ?>>15</option>
 	</select>
-	
+</p>
+<p>	
 	<?php echo elgg_echo('river:widget:type'); ?>
 	
 	<select name="params[content_type]">
