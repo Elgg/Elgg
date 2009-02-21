@@ -27,8 +27,11 @@
 			register_error(sprintf(elgg_echo("friends:add:failure"),$friend->name));
 			$errors = true;
 		}
-		if (!$errors)
+		if (!$errors){
+			// add to river
+	        add_to_river('friends/river/create','friend',$_SESSION['user']->guid,$friend_guid);
 			system_message(sprintf(elgg_echo("friends:add:successful"),$friend->name));
+		}
 		
 	// Forward to the user friends page
 		forward("pg/friends/" . $_SESSION['user']->username . "/");

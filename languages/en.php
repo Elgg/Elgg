@@ -353,7 +353,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	        'friends:river:created' => "%s added the friends widget.",
 	        'friends:river:updated' => "%s updated their friends widget.",
 	        'friends:river:delete' => "%s removed their friends widget.",
-	        'friends:river:add' => "%s add someone as a friend.",
+	        'friends:river:add' => "%s is now a friend with",
 	
 			'friendspicker:chararray' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
 	
