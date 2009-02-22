@@ -35,7 +35,9 @@
 				// Remove any invite or join request flags
 				remove_metadata($user->guid, 'group_invite', $group->guid);
 				remove_metadata($user->guid, 'group_join_request', $group->guid);
-				
+				// add to river
+	        	add_to_river('river/group/create','join',$user->guid,$group->guid);
+	        	
 				forward($group->getURL());
 				exit;
 			}

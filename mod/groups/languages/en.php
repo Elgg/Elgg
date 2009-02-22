@@ -170,7 +170,7 @@ or click below to confirm request:
 			'groupforum:river:posted' => '%s has posted a new comment',
 			'groupforum:river:annotate:create' => 'on this discussion topic',
 
-			'groups:river:member' => 'is now a member of',
+			'groups:river:member' => '%s is now a member of',
 	
 			'groups:nowidgets' => 'No widgets have been defined for this group.',
 	
