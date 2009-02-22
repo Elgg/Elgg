@@ -57,9 +57,9 @@
 			'groups:notfound' => "Group not found",
 			'groups:notfound:details' => "The requested group either does not exist or you do not have access to it",
 			
-			'item:object:groupforumtopic' => "Forum topics",
+			'item:object:groupforumtopic' => "Discussion topics",
 	
-			'groupforumtopic:new' => "New forum post",
+			'groupforumtopic:new' => "New discussion post",
 			
 			'groups:count' => "groups created",
 			'groups:open' => "open group",
@@ -79,7 +79,7 @@
 			   Group tools
 			*/
 			'groups:enablepages' => 'Enable group pages',
-			'groups:enableforum' => 'Enable group forum',
+			'groups:enableforum' => 'Enable group discussion',
 			'groups:enablefiles' => 'Enable group files',
 			'groups:yes' => 'yes',
 			'groups:no' => 'no',
@@ -94,9 +94,9 @@
 			*/
 			
 			'group:replies' => 'Replies',
-			'groups:forum' => 'Group forum',
+			'groups:forum' => 'Group discussion',
 			'groups:addtopic' => 'Add a topic',
-			'groups:forumlatest' => 'Forum latest',
+			'groups:forumlatest' => 'Latest discussion',
 			'groups:latestdiscussion' => 'Latest discussion',
 			'groupspost:success' => 'Your comment was succesfully posted',
 			'groups:alldiscussion' => 'Latest discussion',
@@ -170,7 +170,7 @@ or click below to confirm request:
 			'groupforum:river:create' => 'a new discussion topic titled',
 			'groupforum:river:posted' => '%s has posted a new comment',
 			'groupforum:river:annotate:create' => 'on this discussion topic',
-
+			
 			'groups:river:member' => '%s is now a member of',
 	
 			'groups:nowidgets' => 'No widgets have been defined for this group.',
