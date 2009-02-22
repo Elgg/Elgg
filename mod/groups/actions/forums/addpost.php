@@ -32,7 +32,9 @@
 				    if ($topic->annotate('group_topic_post',$post,$topic->access_id, $_SESSION['guid'])) {
 					
 					    system_message(elgg_echo("groupspost:success"));
-					
+						// add to river
+	        			add_to_river('river/forum/create','create',$_SESSION['user']->guid,$topic_guid);
+	
 				    } else {
 					    system_message(elgg_echo("groupspost:failure"));
 				    }
