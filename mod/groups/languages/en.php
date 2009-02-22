@@ -118,7 +118,8 @@
 			'groups:topicisclosed' => 'This topic is closed.',
 			'groups:topiccloseddesc' => 'This topic has now been closed and is not accepting new comments.',
 			'grouptopic:error' => 'Your group topic could not be created. Please try again or contact a system administrator.',
-	
+			'groups:forumpost:edited' => "You have successfully edited the forum post.",
+			'groups:forumpost:error' => "There was a problem editing the forum post.",
 			'groups:privategroup' => 'This group is private, requesting membership.',
 			'groups:notitle' => 'Groups must have a title',
 			'groups:cantjoin' => 'Can not join group',

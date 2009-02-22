@@ -21,8 +21,8 @@
 		
 		if ($post = get_annotation($post_id)) {
 			
-			//check that the user can edit
-			if ($post->canEdit()) {
+			//check that the user can edit as well as admin
+			if ($post->canEdit() || ($post->owner_guid == $_SESSION['user']->guid)) {
     			
     			//delete
 				$post->delete();
