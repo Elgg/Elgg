@@ -15,10 +15,11 @@
 	if (!(page_owner_entity() instanceof ElggGroup)) forward();
 	
 	//get any forum topics
-	//$topics = get_entities("object", "groupforumtopic", 0, "", 50, 0, false, 0, get_input('group_guid'));
-	$topics = get_entities_from_annotations("object", "groupforumtopic", "group_topic_post", "", 0, get_input('group_guid'), 20, 0, "desc", false);
-		
-	$area2 = elgg_view("forum/topics", array('entity' => $topics));
+	//get any forum topics
+	$topics = list_entities_from_annotations("object", "groupforumtopic", "group_topic_post", "", 20, 0, get_input('group_guid'), false, false, false);
+	set_context('search');	
+	$area2 = elgg_view("forum/topics", array('topics' => $topics));
+	set_context('groups');
 	
 	$body = elgg_view_layout('two_column_left_sidebar',$area1, $area2);
 	

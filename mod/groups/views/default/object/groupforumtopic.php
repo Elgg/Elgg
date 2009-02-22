@@ -13,14 +13,12 @@
     //get the required variables
     $title = $vars['entity']->title;
     $description = autop($vars['entity']->description);
-    $group =  get_entity($vars['entity']->container_guid);
+    $topic_owner = get_user($vars['entity']->owner_guid);
+    $group = get_entity($vars['entity']->container_guid);
     $forum_created = friendly_time($vars['entity']->time_created);
-    //if (isloggedin()) {
-	    $counter = $vars['entity']->countAnnotations("group_topic_post");
-	    $last_post = $vars['entity']->getAnnotations("group_topic_post", 1, 0, "desc");
-    
-    //}
-
+    $counter = $vars['entity']->countAnnotations("group_topic_post");
+	$last_post = $vars['entity']->getAnnotations("group_topic_post", 1, 0, "desc");
+ 
     //get the time and user
     if ($last_post) {
 		foreach($last_post as $last)
@@ -32,23 +30,35 @@
 
 	$u = get_user($last_user);
 	
-    $info = "<p class=\"latest_discussion_info\">" . sprintf(elgg_echo('group:created'), $forum_created, $counter) .  "<br /><span class=\"timestamp\">";
-    if ($last_time) $info.= sprintf(elgg_echo('groups:lastupdated'), friendly_time($last_time), "<br />by <a href=\"" . $u->getURL() . "\">" . $u->username . "</a>");
-    //if ($u = get_user($last_user)) {
-    //	$info .= "<br />by <a href=\"" . $u->getURL() . "\">" . $u->username . "</a>";
-    //}
-    $info .= '</span></p>';
-	//get the group avatar
-	$icon = elgg_view("profile/icon",array('entity' => $group, 'size' => 'small'));
-    //get the group and topic title
-    if ($group instanceof ElggGroup)
-    	$info .= "<p>" . elgg_echo('group') . ": <a href=\"{$group->getURL()}\">{$group->name}</a></p>";
-    
-	$info .= "<p>" . elgg_echo('topic') . ": <a href=\"{$vars['url']}mod/groups/topicposts.php?topic={$vars['entity']->guid}&group_guid={$group->guid}\">{$title}</a></p>";
-	//get the forum description
-	$info .= $description;
+	//select the correct output depending on where you are
+	if(get_context() == "search"){
 	
-	//display
-	echo elgg_view_listing($icon, $info);
+	    $info = "<p class=\"latest_discussion_info\">" . sprintf(elgg_echo('group:created'), $forum_created, $counter) .  "<br /><span class=\"timestamp\">";
+	    if ($last_time) $info.= sprintf(elgg_echo('groups:lastupdated'), friendly_time($last_time), "<br />by <a href=\"" . $u->getURL() . "\">" . $u->username . "</a>");
+	    $info .= '</span></p>';
+		//get the group avatar
+		$icon = elgg_view("profile/icon",array('entity' => $group, 'size' => 'small'));
+	    //get the group and topic title
+	    if ($group instanceof ElggGroup)
+	    	$info .= "<p>" . elgg_echo('group') . ": <a href=\"{$group->getURL()}\">{$group->name}</a></p>";
+	    
+		$info .= "<p>" . elgg_echo('topic') . ": <a href=\"{$vars['url']}mod/groups/topicposts.php?topic={$vars['entity']->guid}&group_guid={$group->guid}\">{$title}</a></p>";
+		//get the forum description
+		$info .= $description;
+		
+	}else{
+		
+		$info = "<p class=\"latest_discussion_info\"><span class=\"timestamp\">" . sprintf(elgg_echo('group:created'), $forum_created, $counter) . "</span></p>";
+	    //get the user avatar
+		$icon = elgg_view("profile/icon",array('entity' => $topic_owner, 'size' => 'small'));
+	    $info .= "<p>" . elgg_echo('groups:started') . " " . $topic_owner->name . ": <a href=\"{$vars['url']}mod/groups/topicposts.php?topic={$vars['entity']->guid}&group_guid={$group->guid}\">{$title}</a></p>";
+		if ($last_time) $info.= "<p>" . elgg_echo('groups:updated') . " " . friendly_time($last_time) . " by <a href=\"" . $u->getURL() . "\">" . $u->username . "</a></p>";
+	    
+		$info .= $description;
+		
+	}
+		
+		//display
+		echo elgg_view_listing($icon, $info);
 		
 ?>

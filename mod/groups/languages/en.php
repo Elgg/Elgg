@@ -133,8 +133,9 @@
 			'groups:alreadymember' => 'You are already a member of this group!',
 			'groups:userinvited' => 'User has been invited.',
 			'groups:usernotinvited' => 'User could not be invited.',
-	
+			'groups:updated' => "Updated",
 			'groups:invite:subject' => "%s you have been invited to join %s!",
+			'groups:started' => "Started by",
 			'groups:invite:body' => "Hi %s,
 
 You have been invited to join the '%s' group, click below to confirm:
