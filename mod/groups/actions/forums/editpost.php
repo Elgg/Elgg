@@ -23,7 +23,7 @@
 		$post_comment = get_input("postComment");
 		$annotation = get_annotation($post);
 		$commentOwner = $annotation->owner_guid;
-		$access_id = get_input("access_id");
+		$access_id = $annotation->access_id;
 		$topic = get_input("topic");
 		
 		if($annotation){

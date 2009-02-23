@@ -69,7 +69,6 @@
                 	$post = elgg_view('input/hidden', array('internalname' => 'post', 'value' => $vars['entity']->id));
 		  			$topic = elgg_view('input/hidden', array('internalname' => 'topic', 'value' => get_input('topic')));
 		  			$group = elgg_view('input/hidden', array('internalname' => 'group', 'value' => get_input('group_guid')));
-		  			$access = elgg_view('input/hidden', array('internalname' => 'access', 'value' => $vars['entity']->access_id));
 		  			
 					$form_body = <<<EOT
 					
