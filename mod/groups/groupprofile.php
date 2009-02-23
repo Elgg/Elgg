@@ -12,6 +12,8 @@
 	$group_guid = get_input('group_guid');
 	set_context('groups');
 	
+	global $autofeed;
+	$autofeed = true;
 	
 	$group = get_entity($group_guid);
 	if ($group) {

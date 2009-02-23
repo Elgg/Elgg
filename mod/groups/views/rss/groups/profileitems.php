@@ -11,10 +11,10 @@
 	 */
 	 
 	 //right column
-	 echo elgg_view("groups/forum_latest",array('entity' => $vars['entity']));
-	 echo elgg_view("groups/right_column",array('entity' => $vars['entity']));
-	 
-	 //left column
-	 echo elgg_view("groups/left_column",array('entity' => $vars['entity']));	 
+	 if ($forae = get_entities('object','',$vars['entity']->guid)) {
+	 //if ($forae = get_entities_from_annotations("object", "groupforumtopic", "group_topic_post", "", 0, $vars['entity']->guid, 20, 0, "desc", false)) {
+	 	foreach($forae as $forum)
+	 		echo elgg_view_entity($forum);
+	 }
 	 
 ?>
