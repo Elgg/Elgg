@@ -14,6 +14,7 @@
 	/**
 	 * Start the Elgg engine
 	 */
+		define('externalpage',true);
 		require_once(dirname(__FILE__) . "/engine/start.php");
 		
 		

@@ -11,6 +11,7 @@
 	 */
 
 	// Load Elgg engine
+	define('externalpage',true);
 	require_once("../start.php");
 	global $CONFIG;
 
