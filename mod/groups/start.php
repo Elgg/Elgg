@@ -467,6 +467,26 @@
 		}
 	}
 	
+	/**
+	 * A simple function to see who can edit a group discussion post
+	 * @param the comment $entity
+	 * @param user who owns the group $group_owner
+	 * @return boolean
+	 */
+	function groups_can_edit_discussion($entity, $group_owner)
+	{
+		
+		//logged in user
+		$user = $_SESSION['user']->guid;
+		
+		if (($entity->owner_guid == $user) || $group_owner == $user || isadminloggedin()) {
+        	return true;
+    	}else{
+			return false;
+		}
+		
+	}
+	
 	// Register a handler for create groups
 	register_elgg_event_handler('create', 'group', 'groups_create_event_listener');
 

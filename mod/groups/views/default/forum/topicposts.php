@@ -48,8 +48,8 @@
         </table>
 		<?php
 
-		    //if the comment owner is looking at it, or admin they can edit
-			if ($vars['entity']->canEdit() || ($vars['entity']->owner_guid == $_SESSION['user']->guid)) {
+		    //if the comment owner is looking at it, or admin, or group owner they can edit
+		    if (groups_can_edit_discussion($vars['entity'], page_owner_entity()->owner_guid)) {
         ?>
 		        <p class="topic-post-menu">
 		        <?php

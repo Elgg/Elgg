@@ -29,7 +29,7 @@
 		if($annotation){
 			
 			//can edit? Either the comment owner or admin can
-			if($annotation->canedit() || ($commentOwner == $_SESSION['user']->guid)){
+			if(groups_can_edit_discussion($annotation, page_owner_entity()->owner_guid)){
 				
 				update_annotation($post, "group_topic_post", $post_comment, "",$commentOwner, $access_id);
 			    system_message(elgg_echo("groups:forumpost:edited"));
