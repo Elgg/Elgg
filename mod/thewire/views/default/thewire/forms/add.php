@@ -30,18 +30,13 @@ function textCounter(field,cntfield,maxlimit) {
 </script>
 
 	<form action="<?php echo $vars['url']; ?>action/thewire/add" method="post" name="noteForm">
-			<label>
 			<?php
-			    $display .= "<br /><textarea name='note' value='' onKeyDown=\"textCounter(document.noteForm.note,document.noteForm.remLen1,140)\" onKeyUp=\"textCounter(document.noteForm.note,document.noteForm.remLen1,140)\" id=\"thewire_large-textarea\">{$msg}</textarea><br />";
+			    $display .= "<textarea name='note' value='' onKeyDown=\"textCounter(document.noteForm.note,document.noteForm.remLen1,140)\" onKeyUp=\"textCounter(document.noteForm.note,document.noteForm.remLen1,140)\" id=\"thewire_large-textarea\">{$msg}</textarea>";
                 $display .= "<div class='thewire_characters_remaining'><input readonly type=\"text\" name=\"remLen1\" size=\"3\" maxlength=\"3\" value=\"140\" class=\"thewire_characters_remaining_field\">";
                 echo $display;
                 echo elgg_echo("thewire:charleft") . "</div>";
 			?>
-			</label>
 			<input type="hidden" name="method" value="site" />
-			<br />
-			<input type="submit" value="<?php echo elgg_echo('save'); ?>" id="thewire_submit_button" />
-		
-	
+			<input type="submit" value="<?php echo elgg_echo('save'); ?>" />
 	</form>
 </div>
