@@ -16,7 +16,7 @@
 	 echo "</div>";
 	 
 	 //right column
-	 echo "<div class=\"right_column\">";
+	 echo "<div id=\"right_column\">";
 	 echo elgg_view("groups/right_column",array('entity' => $vars['entity']));
 	 echo "</div>";
 	 

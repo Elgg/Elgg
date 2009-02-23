@@ -74,7 +74,7 @@
 	background: white;
 }
 
-.right_column {
+#right_column {
 	clear:left;
 	float:right;
 	width:350px;
@@ -90,12 +90,12 @@
 * html #left_column { 
 	/* width:328px; */
 }
-* html .right_column { 
+* html #right_column { 
 	/* width:328px; */
 }
 
 #group_members h2,
-.right_column h2,
+#right_column h2,
 #left_column h2 {
 	margin:0 0 10px 0;
 	padding:5px;
@@ -274,11 +274,11 @@
 	-webkit-border-radius: 8px; 
 	-moz-border-radius: 8px;
 }
-.right_column .filerepo_widget_singleitem {
+#right_column .filerepo_widget_singleitem {
 	background: #dedede !important;
 	margin:0 10px 5px 10px;
 }
-.right_column .search_listing {
+#right_column .search_listing {
 	background: #dedede !important;
 }
 .forum_latest {
