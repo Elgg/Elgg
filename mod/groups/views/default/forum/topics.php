@@ -28,6 +28,6 @@
 	if($vars['topics'])
 		echo $vars['topics'];
 	else
-		echo "<p>". elgg_echo("grouptopic:notcreated") . "</p>";
+		echo "<div class='contentWrapper'>". elgg_echo("grouptopic:notcreated") . "</div>";
 
 ?>
