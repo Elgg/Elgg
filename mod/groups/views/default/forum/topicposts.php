@@ -61,7 +61,7 @@
 													));
 						
 					//display an edit link that will open up an edit area							
-					echo " <a class=\"manifest_details\">edit</a>";
+					echo " <a class=\"manifest_details\">".elgg_echo('edit')."</a>";
 					echo "<div class=\"manifest_file\">";
 					//get the edit form and details
 					$submit_input = elgg_view('input/submit', array('internalname' => 'submit', 'value' => elgg_echo('save')));
