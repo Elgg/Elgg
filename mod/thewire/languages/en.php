@@ -24,7 +24,8 @@
 			'item:object:thewire' => "Wire posts",
 			'thewire:notedeleted' => "note deleted",
 	
-			'thewire:newpost' => 'New Wire post',
+			'thewire:newpost' => 'New wire post',
+			'thewire:addpost' => 'Post to the wire',
 
 	
         /**
