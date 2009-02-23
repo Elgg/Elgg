@@ -41,7 +41,7 @@
                 <td width="70%">       
                     <?php
                         //display the actual message posted
-                       echo "<p>" . parse_urls(elgg_view("output/longtext",array("value" => $vars['entity']->value))) . "</p>";
+                       echo parse_urls(elgg_view("output/longtext",array("value" => $vars['entity']->value)));
                     ?>
                 </td>
             </tr>
