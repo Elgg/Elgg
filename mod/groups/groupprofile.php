@@ -22,10 +22,8 @@
 		// Hide some items from closed groups when the user is not logged in.
 		$view_all = true;
 		
-		if (
-			((!isloggedin()) && (!$group->isPublicMembership())) ||
-			((!$group->isMember(get_loggedin_user()) && (!$group->isPublicMembership())))
-		)
+		$groupaccess = group_gatekeeper(false);
+		if (!$groupaccess)
 			$view_all = false;
 		
 		

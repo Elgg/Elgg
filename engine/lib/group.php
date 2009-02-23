@@ -794,6 +794,36 @@
 	}
 	
 	/**
+	 * Checks access to a group.
+	 *
+	 * @param boolean $forward If set to true (default), will forward the page; if set to false, will return true or false.
+	 * @return true|false If $forward is set to false.
+	 */
+	function group_gatekeeper($forward = true) {
+
+		$allowed = true;
+		$url = '';
+		
+		if ($group = page_owner_entity()) {
+			if ($group instanceof ElggGroup) {
+				$url = $group->getURL();
+				if (
+					((!isloggedin()) && (!$group->isPublicMembership())) ||
+					((!$group->isMember(get_loggedin_user()) && (!$group->isPublicMembership())))
+				) $allowed = false;
+			}
+		}
+		
+		if ($forward && $allowed == false) {
+			forward($url);
+			exit;
+		}
+		
+		return $allowed;
+		
+	}
+	
+	/**
 	 * Performs initialisation functions for groups
 	 *
 	 */
