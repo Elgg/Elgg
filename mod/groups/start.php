@@ -487,6 +487,19 @@
 		
 	}
 	
+	/**
+	 * Overrides topic post getURL() value.
+	 *
+	 */
+	function group_topicpost_url($annotation) {
+		if ($parent = get_entity($annotation->entity_guid)) {
+			global $CONFIG;
+			return $CONFIG->wwwroot . 'mod/groups/topicposts.php?topic='.$parent->guid.'&amp;group_guid='.$parent->container_guid.'#' . $annotation->id;
+		}
+	}
+	
+	register_extender_url_handler('group_topicpost_url','annotation', 'group_topic_post');
+	
 	// Register a handler for create groups
 	register_elgg_event_handler('create', 'group', 'groups_create_event_listener');
 

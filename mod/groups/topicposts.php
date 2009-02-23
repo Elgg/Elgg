@@ -13,6 +13,10 @@
 	// Load Elgg engine
 		require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 		
+	// We now have RSS on topics
+		global $autofeed;
+		$autofeed = true;
+		
 	//get_input('group_guid');
 		set_page_owner(get_input('group_guid'));
 		if (!(page_owner_entity() instanceof ElggGroup)) forward();

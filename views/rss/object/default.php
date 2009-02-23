@@ -13,8 +13,9 @@
 
 	$title = $vars['entity']->title;
 	if (empty($title)) {
-		$title = substr($vars['entity']->description,0,32);
-		if (strlen($vars['entity']->description) > 32)
+		$subtitle = strip_tags($vars['entity']->description);
+		$title = substr($subtitle,0,32);
+		if (strlen($subtitle) > 32)
 			$title .= " ...";
 	}
 

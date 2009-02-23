@@ -105,7 +105,7 @@
 		 *
 		 * @return string
 		 */
-		public function getURL() { return get_annotation_url($this->guid); }
+		public function getURL() { return get_annotation_url($this->id); }
 	
 		// SYSTEM LOG INTERFACE ////////////////////////////////////////////////////////////
 
@@ -859,7 +859,7 @@
 		
 		if ($extender = get_annotation($id)) {
 			return get_extender_url($extender);	
-		} 
+		}
 		return false;
 	}
 	

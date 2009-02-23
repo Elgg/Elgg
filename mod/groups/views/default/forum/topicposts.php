@@ -20,6 +20,7 @@
 	    <table width="100%">
             <tr>
                 <td>
+                	<a name="<?php echo $vars['entity']->id; ?>"></a>
                     <?php
                         //get infomation about the owner of the comment
                         if ($post_owner = get_user($vars['entity']->owner_guid)) {
