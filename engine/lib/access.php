@@ -111,6 +111,20 @@
 			
 		}
 		
+	/**
+	 * Gets the default access permission for new content
+	 *
+	 * @return int default access id (see ACCESS defines in elgglib.php)  
+	 */
+		function get_default_access()
+		{
+			global $CONFIG;
+			
+			// future: if user has a default access set, override site default access
+			
+			return $CONFIG->default_access;
+		}
+		
 		/**
 		 * Override the default behaviour and allow results to show hidden entities as well.
 		 * THIS IS A HACK.

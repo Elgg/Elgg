@@ -36,7 +36,7 @@
 				}
 			} else {
 				$value = '';
-				$access_id = ACCESS_LOGGED_IN;
+				$access_id = ACCESS_DEFAULT;
 			}
 
 ?>

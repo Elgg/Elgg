@@ -44,6 +44,7 @@
 					if (isset($accesslevel[$shortname])) {
 						$access_id = (int) $accesslevel[$shortname];
 					} else {
+						// this should never be executed since the access level should always be set
 						$access_id = ACCESS_PRIVATE;
 					}
 					if (is_array($value)) {

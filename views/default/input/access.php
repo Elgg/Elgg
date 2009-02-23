@@ -19,6 +19,10 @@
 
 	if (isset($vars['class'])) $class = $vars['class'];
 	if (!$class) $class = "input-access";
+	
+	if (!array_key_exists('value', $vars) || $vars['value'] == ACCESS_DEFAULT)
+		$vars['value'] = get_default_access();
+			
 
 		if ((!isset($vars['options'])) || (!is_array($vars['options'])))
 		{

@@ -232,8 +232,12 @@
 				
 				$widget = new ElggWidget;
 				$widget->owner_guid = $user_guid;
-				$widget->access_id = ACCESS_LOGGED_IN;
-				if (!$widget->save())
+				$widget->access_id = get_default_access();
+				// private widgets don't makes sense, correct?
+				if ($widget->access_id == ACCESS_PRIVATE)
+					$widget->access_id = ACCESS_LOGGED_IN; // change to ACCESS_FRIENDS when implemented
+
+					if (!$widget->save())
 					return false;
 					
 				$widget->handler = $handler;
