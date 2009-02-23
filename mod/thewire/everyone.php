@@ -14,6 +14,9 @@
 		require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 		
 		$area2 = elgg_view_title(elgg_echo("thewire:everyone"));
+		
+		//add form
+		$area2 .= elgg_view("thewire/forms/add");
 
 		$area2 .= list_entities('object','thewire'); // elgg_view("thewire/view",array('entity' => $thewireposts));
 	    $body = elgg_view_layout("two_column_left_sidebar", '', $area2);

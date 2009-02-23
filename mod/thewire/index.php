@@ -23,6 +23,9 @@
 	// title
 	    $area2 = elgg_view_title(elgg_echo("thewire:read"));
 	    
+	//add form
+		$area2 .= elgg_view("thewire/forms/add");
+	    
 	// Display the user's wire
 		$area2 .= list_user_objects($page_owner->getGUID(),'thewire'); // elgg_view("thewire/view",array('entity' => $thewire));
     

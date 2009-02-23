@@ -23,7 +23,7 @@
 			'thewire:charleft' => "characters left",
 			'item:object:thewire' => "Wire posts",
 			'thewire:notedeleted' => "note deleted",
-	
+			'thewire:doing' => "What are you doing, tell everyone on the wire?",
 			'thewire:newpost' => 'New wire post',
 			'thewire:addpost' => 'Post to the wire',
 

@@ -54,7 +54,7 @@
 			if($location == "activity")
 					forward("mod/riverdashboard/");
 			else
-					forward("mod/thewire/add.php");
+					forward("mod/thewire/everyone.php");
 				
 		}
 		

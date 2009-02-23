@@ -15,7 +15,8 @@
 		if (!empty($wire_user)) { $msg = '@' . $wire_user . ' '; } else { $msg = ''; }
 
 ?>
-<div class="contentWrapper">
+<div class="post_to_wire">
+<h3><?php echo elgg_echo("thewire:doing"); ?></h3>
 <script>
 function textCounter(field,cntfield,maxlimit) {
     // if too long...trim it!
