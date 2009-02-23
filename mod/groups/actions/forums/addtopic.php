@@ -63,6 +63,9 @@
 	           
     // now add the topic message as an annotation
         	$grouptopic->annotate('group_topic_post',$message,$access, $user);   
+        	
+    // add to river
+	        add_to_river('river/forum/topic/create','create',$_SESSION['user']->guid,$grouptopic->guid);
 	        
 	// Success message
 			system_message(elgg_echo("grouptopic:created"));
