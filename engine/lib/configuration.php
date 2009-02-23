@@ -177,6 +177,12 @@
 				$dataroot = datalist_get('dataroot');
 				if (!empty($dataroot))
 					$CONFIG->dataroot = $dataroot;
+				$simplecache_enabled = datalist_get('simplecache_enabled');
+				if ($simplecache_enabled !== false) {
+					$CONFIG->simplecache_enabled = $simplecache_enabled;
+				} else {
+					$CONFIG->simplecache_enabled = 1;
+				}
 				if (isset($CONFIG->site) && ($CONFIG->site instanceof ElggSite)) {
 					$CONFIG->wwwroot = $CONFIG->site->url;
 					$CONFIG->sitename = $CONFIG->site->name;

@@ -38,6 +38,8 @@
 		$form_body .= "<p class=\"admin_debug\">" . elgg_echo('admin:site:access:warning') . "<br />";
 		$form_body .= elgg_echo('installation:sitepermissions') . elgg_view('input/access', array('internalname' => 'default_access','value' => $vars['config']->default_access)) . "</p>";
 		
+		$form_body .= "<p class=\"admin_debug\">" . elgg_echo('installation:simplecache:description') . "<br />" .elgg_view("input/checkboxes", array('options' => array(elgg_echo('installation:simplecache:label')), 'internalname' => 'simplecache_enabled', 'value' => ($vars['config']->simplecache_enabled ? elgg_echo('installation:simplecache:label') : "") )) . "</p>";
+		
 		$form_body .= "<p class=\"admin_debug\">" . elgg_echo('installation:debug') . "<br />" .elgg_view("input/checkboxes", array('options' => array(elgg_echo('installation:debug:label')), 'internalname' => 'debug', 'value' => ($vars['config']->debug ? elgg_echo('installation:debug:label') : "") )) . "</p>";
 		
 		$form_body .= "<p class=\"admin_debug\">" . elgg_echo('installation:httpslogin') . "<br />" .elgg_view("input/checkboxes", array('options' => array(elgg_echo('installation:httpslogin:label')), 'internalname' => 'https_login', 'value' => ($vars['config']->https_login ? elgg_echo('installation:httpslogin:label') : "") )) . "</p>";

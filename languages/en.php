@@ -774,7 +774,10 @@ Alternatively, you can enter your database settings below and we will try and do
 	
 			'installation:disableapi' => "The RESTful API is a flexible and extensible interface that enables applications to use certain Elgg features remotely.",
 			'installation:disableapi:label' => "Enable the RESTful API",
-
+	
+			'installation:simplecache:description' => "The simple cache increases performance by caching static content including some CSS and JavaScript files. Normally you will want this on.",
+			'installation:simplecache:label' => "Use simple cache",
+	
 			'upgrading' => 'Upgrading',
 			'upgrade:db' => 'Your database was upgraded.',
 			'upgrade:core' => 'Your elgg installation was upgraded',

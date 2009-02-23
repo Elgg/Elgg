@@ -34,6 +34,22 @@
 			
 			datalist_set('path',sanitise_filepath(get_input('path')));
 			datalist_set('dataroot',sanitise_filepath(get_input('dataroot')));
+			if (get_input('simplecache_enabled')) {
+				datalist_set('simplecache_enabled',1);
+				elgg_view_regenerate_simplecache();
+			} else {
+				datalist_set('simplecache_enabled',0);
+				
+				// purge simple cache
+				if ($handle = opendir($CONFIG->dataroot.'views_simplecache')) {	
+				    while (false !== ($file = readdir($handle))) {
+				    	if ($file != "." && $file != "..") {
+				        	unlink($CONFIG->dataroot.'views_simplecache/'.$file);
+				    	}
+				    }	
+	    			closedir($handle);
+				}
+			}
 			
 			set_config('language', get_input('language'), $site->getGUID());
 			

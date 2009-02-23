@@ -20,24 +20,43 @@
 		$contents = '';
 		if (!isset($viewinput)) $viewinput = $_GET;
 		
-		if ($dblink = @mysql_connect($CONFIG->dbhost,$CONFIG->dbuser,$CONFIG->dbpass)) {
+		if ($mysql_dblink = @mysql_connect($CONFIG->dbhost,$CONFIG->dbuser,$CONFIG->dbpass)) {
 
 			$view = $viewinput['view'];
 			$viewtype = $viewinput['viewtype'];
 			if (empty($viewtype)) $viewtype = 'default';
 			
-		// Get the dataroot
-			if (@mysql_select_db($CONFIG->dbname,$dblink)) {
-				if ($result = mysql_query("select value from {$CONFIG->dbprefix}datalists where name = 'dataroot'",$dblink)) {
-					$row = mysql_fetch_object($result);
-					$dataroot = $row->value;
+			if (@mysql_select_db($CONFIG->dbname,$mysql_dblink)) {
+				// get dataroot and simplecache_enabled in one select for efficiency
+				$simplecache_enabled = true;
+				if (!isset($dataroot)) {
+					if ($result = mysql_query("select name, value from {$CONFIG->dbprefix}datalists where name in ('dataroot','simplecache_enabled')",$mysql_dblink)) {
+						$row = mysql_fetch_object($result);
+						
+						while ($row) {
+							if ($row->name == 'dataroot') {
+								$dataroot = $row->value;
+							} else if ($row->name == 'simplecache_enabled') {
+								$simplecache_enabled = $row->value;
+							}
+							$row = mysql_fetch_object($result);
+						}
+					}
 				}
-				$filename = $dataroot . 'views_simplecache/' . md5($viewtype . $view);
-				if (file_exists($filename))
-					$contents = @file_get_contents($filename);
-				 else {
-				 	echo ''; exit;
-				 }
+				
+				if ($simplecache_enabled) {
+					$filename = $dataroot . 'views_simplecache/' . md5($viewtype . $view);
+					if (file_exists($filename))
+						$contents = @file_get_contents($filename);
+					 else {
+					 	echo ''; exit;
+					 }
+				} else {
+					mysql_close($mysql_dblink);
+					require_once(dirname(dirname(__FILE__)) . "/engine/start.php");    
+					$contents = elgg_view($view);
+					header("Content-Length: " . strlen($contents));
+				}
 			}
 		}
 		

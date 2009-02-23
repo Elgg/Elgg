@@ -17,7 +17,7 @@
 		
 		$contents = '';
 		
-		if ($dblink = @mysql_connect($CONFIG->dbhost,$CONFIG->dbuser,$CONFIG->dbpass)) {
+		if ($mysql_dblink = @mysql_connect($CONFIG->dbhost,$CONFIG->dbuser,$CONFIG->dbpass)) {
 
 			
 			$username = $_GET['username'];
@@ -57,10 +57,19 @@
 				$size = "medium";
 			
 		// Try and get the icon
-			if (@mysql_select_db($CONFIG->dbname,$dblink)) {
-				if ($result = mysql_query("select value from {$CONFIG->dbprefix}datalists where name = 'dataroot'",$dblink)) {
+			if (@mysql_select_db($CONFIG->dbname,$mysql_dblink)) {
+				// get dataroot and simplecache_enabled in one select for efficiency
+				if ($result = mysql_query("select name, value from {$CONFIG->dbprefix}datalists where name in ('dataroot','simplecache_enabled')",$mysql_dblink)) {
+					$simplecache_enabled = true;
 					$row = mysql_fetch_object($result);
-					$dataroot = $row->value;
+					while ($row) {
+						if ($row->name == 'dataroot') {
+							$dataroot = $row->value;
+						} else if ($row->name == 'simplecache_enabled') {
+							$simplecache_enabled = $row->value;
+						}
+						$row = mysql_fetch_object($result);
+					}
 				}
 				$filename = $dataroot . $matrix . "{$username}/profile/" . $username . $size . ".jpg";
 				$contents = @file_get_contents($filename);
@@ -70,13 +79,18 @@
 			
 			global $CONFIG, $viewinput;
 			$viewinput['view'] = 'icon/user/default/'.$size;
-			ob_start();
-			include(dirname(dirname(dirname(__FILE__))).'/simplecache/view.php');
-			$loc = ob_get_clean();
+			if ($simplecache_enabled) {
+				ob_start();
+				include(dirname(dirname(dirname(__FILE__))).'/simplecache/view.php');
+				$loc = ob_get_clean();
+				//$contents = @file_get_contents(dirname(__FILE__) . "/graphics/default{$size}.jpg");
+			} else {
+				mysql_close($mysql_dblink);
+				require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");    
+				$loc = elgg_view($viewinput['view']);
+			}
 			header('Location: ' . $loc);
-			exit;
-			//$contents = @file_get_contents(dirname(__FILE__) . "/graphics/default{$size}.jpg");
-			
+			exit;		
 		}
 		
 		header("Content-type: image/jpeg");
