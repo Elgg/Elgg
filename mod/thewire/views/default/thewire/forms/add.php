@@ -36,16 +36,8 @@ function textCounter(field,cntfield,maxlimit) {
                 $display .= "<div class='thewire_characters_remaining'><input readonly type=\"text\" name=\"remLen1\" size=\"3\" maxlength=\"3\" value=\"140\" class=\"thewire_characters_remaining_field\">";
                 echo $display;
                 echo elgg_echo("thewire:charleft") . "</div>";
-                echo "<label> " .elgg_echo('access'). "</label>";
 			?>
 			</label>
-		<p>
-			<?php
-				
-				echo elgg_view('input/access', array('internalname' => 'access_id', 'value' => 2));
-			
-			?>
-		</p>
 			<input type="hidden" name="method" value="site" />
 			<br />
 			<input type="submit" value="<?php echo elgg_echo('save'); ?>" id="thewire_submit_button" />
