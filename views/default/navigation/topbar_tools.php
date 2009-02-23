@@ -26,7 +26,7 @@
 		
 ?>
 
-<ul id="topbardropdownmenu">
+<ul class="topbardropdownmenu">
     <li class="drop"><a href="#" class="menuitemtools"><?php echo(elgg_echo('tools')); ?></a>
 	  <ul>
       <?php
@@ -40,7 +40,7 @@
 
 <script type="text/javascript">
   $(function() {
-    $('#topbardropdownmenu').elgg_topbardropdownmenu();
+    $('ul.topbardropdownmenu').elgg_topbardropdownmenu();
   });
 </script>
 

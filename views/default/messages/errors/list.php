@@ -20,8 +20,8 @@
 <!-- used to fade out the system messages after 3 seconds -->
 <script>
 $(document).ready(function () {
-	$('.messages_error').animate({top:"30px", opacity: 1.0}, 1000); 
-	$('.messages_error').animate({opacity: 1.0}, 6000);
+	$('.messages_error').animate({opacity: 1.0}, 1000); 
+	$('.messages_error').animate({opacity: 1.0}, 5000);
 	$('.messages_error').fadeOut('slow');
       
 	$('span.closeMessages a').click(function () {

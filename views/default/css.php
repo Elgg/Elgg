@@ -572,7 +572,7 @@ blockquote {
 	TOP BAR - VERTICAL TOOLS MENU
 *************************************** */
 /* elgg toolbar menu setup */
-#topbardropdownmenu, #topbardropdownmenu ul {
+ul.topbardropdownmenu, ul.topbardropdownmenu ul {
 	margin:0;
 	padding:0;
 	display:inline;
@@ -581,10 +581,10 @@ blockquote {
 	z-index: 5000;
 	position: relative;
 }
-#topbardropdownmenu {
+ul.topbardropdownmenu {
 	margin:0pt 20px 0pt 5px;
 }
-#topbardropdownmenu li { 
+ul.topbardropdownmenu li { 
 	display: block;
 	list-style: none;
 	margin: 0;
@@ -592,10 +592,10 @@ blockquote {
 	float: left;
 	position: relative;
 }
-#topbardropdownmenu a {
+ul.topbardropdownmenu a {
 	display:block;
 }
-#topbardropdownmenu ul {
+ul.topbardropdownmenu ul {
 	display: none;
 	position: absolute;
 	left: 0;
@@ -603,46 +603,46 @@ blockquote {
 	padding: 0;
 }
 /* IE6 fix */
-* html #topbardropdownmenu ul {
+* html ul.topbardropdownmenu ul {
 	line-height: 1.1em;
 }
 /* IE6/7 fix */
-#topbardropdownmenu ul a {
+ul.topbardropdownmenu ul a {
 	zoom: 1;
 } 
-#topbardropdownmenu ul li {
+ul.topbardropdownmenu ul li {
 	float: none;
 }   
 /* elgg toolbar menu style */
-#topbardropdownmenu ul {
+ul.topbardropdownmenu ul {
 	width: 150px;
 }
-#topbardropdownmenu *:hover {
+ul.topbardropdownmenu *:hover {
 	background-color: none;
 }
-#topbardropdownmenu a {
+ul.topbardropdownmenu a {
 	padding:3px;
 	text-decoration:none;
 	color:white;
 }
-#topbardropdownmenu li.hover a {
+ul.topbardropdownmenu li.hover a {
 	background-color: #4690d6;
 	text-decoration: none;
 }
-#topbardropdownmenu ul li.drop a {
+ul.topbardropdownmenu ul li.drop a {
 	font-weight: normal;
 }
 /* IE7 fixes */
 *:first-child+html #elgg_topbar_container_left a.pagelinks {
 	padding-bottom:6px;
 }
-*:first-child+html #topbardropdownmenu li.drop a.menuitemtools {
+*:first-child+html ul.topbardropdownmenu li.drop a.menuitemtools {
 	padding-bottom:6px;
 }
-#topbardropdownmenu ul {
+ul.topbardropdownmenu ul {
 	top: 25px;
 }
-#topbardropdownmenu ul li a {
+ul.topbardropdownmenu ul li a {
 	background-color: #999999;/* menu off state color */
 	font-weight: bold;
 	padding-left:6px;
@@ -651,10 +651,10 @@ blockquote {
 	height:22px;
 	border-bottom: 1px solid white;
 }
-#topbardropdownmenu ul a.hover {
+ul.topbardropdownmenu ul a.hover {
 	background-color: #333333;
 }
-#topbardropdownmenu ul a {
+ul.topbardropdownmenu ul a {
 	opacity: 0.9;
 	filter: alpha(opacity=90);
 }

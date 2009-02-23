@@ -78,7 +78,7 @@
 
 </div><!-- /#elgg_topbar -->
 
-<div style="clear:both;"></div>
+<div class="clearfloat"></div>
 
 <?php
     }
