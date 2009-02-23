@@ -10,12 +10,5 @@
 	 */
 	 
 	// If there are any topics to view, view them
-		if (is_array($vars['entity']) && sizeof($vars['entity']) > 0) {		
-
-			foreach($vars['entity'] as $topic) {
-
-				echo elgg_view_entity($topic);
-				
-			}
-		}
+		echo $vars['topics'];
 ?>
