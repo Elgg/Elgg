@@ -50,7 +50,7 @@
 		$title = elgg_echo('groups:notfound');
 		
 		$area2 = elgg_view_title($title);
-		$area2 .= elgg_echo('groups:notfound:details');
+		$area2 .= "<div class='contentWrapper'>" . elgg_echo('groups:notfound:details') . "</div>";
 		
 		$body = elgg_view_layout('two_column_left_sidebar', "", $area2,"");
 	}
