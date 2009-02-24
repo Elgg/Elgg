@@ -82,7 +82,6 @@
 				ob_start();
 				include(dirname(dirname(dirname(__FILE__))).'/simplecache/view.php');
 				$loc = ob_get_clean();
-				echo $loc;
 				header('Location: ' . $loc);
 				exit;
 				//$contents = @file_get_contents(dirname(__FILE__) . "/graphics/default{$size}.jpg");
