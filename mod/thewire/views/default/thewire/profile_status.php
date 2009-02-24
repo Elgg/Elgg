@@ -13,15 +13,16 @@
 	if($latest_wire){
 		foreach($latest_wire as $lw){
 			$content = $lw->description;
-			$time = "<span>(" . friendly_time($lw->time_created) . ")</span>";
+			$time = "<span> (" . friendly_time($lw->time_created) . ")</span>";
 		}
 	}
 	
 	if($latest_wire){
 		echo "<div class=\"profile_status\">";
-		echo $content . " " . $time;
+		echo $content;
 		if($owner == $_SESSION['user']->guid)
-			echo " <a href=\"{$url_to_wire}\">update</a>";
+			echo " <a class=\"status_update\" href=\"{$url_to_wire}\">update</a>";
+		echo $time;
 		echo "</div>";
 	}
 ?>
