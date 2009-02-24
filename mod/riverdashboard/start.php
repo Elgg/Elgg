@@ -12,12 +12,38 @@
 
 		function riverdashboard_init() {
 		
+			global $CONFIG;
+			
+			// Register and optionally replace the dashboard
+			if (get_plugin_setting('useasdashboard', 'riverdashboard') == 'yes')
+				register_page_handler('dashboard','riverdashboard_page_handler');
+		
+			// Page handler
+			register_page_handler('riverdashboard','riverdashboard_page_handler');
+			
 			extend_view('css','riverdashboard/css');
 			
-			//register_page_handler('dashboard','riverdashboard_dashboard');
+			// Activity main menu
+			if (isloggedin())
+			{
+				add_menu(elgg_echo('Activity'), $CONFIG->wwwroot . "mod/riverdashboard/");
+			}
 			
 			add_widget_type('river_widget',elgg_echo('river:widget:title'), elgg_echo('river:widget:description'));
 			
+		}
+		
+		/**
+		 * Page handler for riverdash
+		 *
+		 * @param unknown_type $page
+		 */
+		function riverdashboard_page_handler($page)
+		{
+			global $CONFIG;
+			
+			@include(dirname(__FILE__) . "/index.php");
+			return true;
 		}
 		
 		function riverdashboard_dashboard() {
