@@ -454,6 +454,47 @@
 			
 		}
 		
+	/**
+	 * Enables the simple cache.
+	 * 
+	 * @see elgg_view_register_simplecache
+	 *
+	 */
+		
+		function elgg_view_enable_simplecache() {
+			global $CONFIG;
+			if(!$CONFIG->simplecache_enabled) {
+				datalist_set('simplecache_enabled',1);
+				$CONFIG->simplecache_enabled = 1;
+				elgg_view_regenerate_simplecache();
+			}
+		}
+		
+	/**
+	 * Disables the simple cache.
+	 * 
+	 * @see elgg_view_register_simplecache
+	 *
+	 */
+		
+		function elgg_view_disable_simplecache() {
+			global $CONFIG;
+			if ($CONFIG->simplecache_enabled) {
+				datalist_set('simplecache_enabled',0);
+				$CONFIG->simplecache_enabled = 0;
+					
+				// purge simple cache
+				if ($handle = opendir($CONFIG->dataroot.'views_simplecache')) {	
+				    while (false !== ($file = readdir($handle))) {
+				    	if ($file != "." && $file != "..") {
+				        	unlink($CONFIG->dataroot.'views_simplecache/'.$file);
+				    	}
+				    }	
+	    			closedir($handle);
+				}
+			}
+		}
+		
 		/**
 		 * Internal function for retrieving views used by elgg_view_tree
 		 *

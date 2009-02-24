@@ -71,33 +71,30 @@
 						$row = mysql_fetch_object($result);
 					}
 				}
-				$filename = $dataroot . $matrix . "{$username}/profile/" . $username . $size . ".jpg";
-				$contents = @file_get_contents($filename);
 			}
 		}
-		if (empty($contents)) {
-			
-			global $CONFIG, $viewinput;
-			$viewinput['view'] = 'icon/user/default/'.$size;
-			if ($simplecache_enabled) {
+		if ($simplecache_enabled) {
+			$filename = $dataroot . $matrix . "{$username}/profile/" . $username . $size . ".jpg";
+			$contents = @file_get_contents($filename);
+			if (empty($contents)) {			
+				global $viewinput;
+				$viewinput['view'] = 'icon/user/default/'.$size;
 				ob_start();
 				include(dirname(dirname(dirname(__FILE__))).'/simplecache/view.php');
 				$loc = ob_get_clean();
+				header('Location: ' . $loc);
+				exit;
 				//$contents = @file_get_contents(dirname(__FILE__) . "/graphics/default{$size}.jpg");
-			} else {
-				mysql_close($mysql_dblink);
-				require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");    
-				$loc = elgg_view($viewinput['view']);
+			}	else {		
+				header("Content-type: image/jpeg");
+				header('Expires: ' . date('r',time() + 864000));
+				header("Pragma: public");
+				header("Cache-Control: public");
+				header("Content-Length: " . strlen($contents));
+				echo $contents;
 			}
-			header('Location: ' . $loc);
-			exit;		
+		} else {
+				mysql_close($mysql_dblink);
+				require_once(dirname(__FILE__).'/icon.php');
 		}
-		
-		header("Content-type: image/jpeg");
-		header('Expires: ' . date('r',time() + 864000));
-		header("Pragma: public");
-		header("Cache-Control: public");
-		header("Content-Length: " . strlen($contents));
-		echo $contents;
-
 ?>
