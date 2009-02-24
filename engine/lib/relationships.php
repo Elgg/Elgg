@@ -417,8 +417,12 @@
 		$guid_one = (int)$guid_one;
 		$relationship = sanitise_string($relationship);
 		$guid_two = (int)$guid_two;
-			
-		return delete_data("DELETE from {$CONFIG->dbprefix}entity_relationships where guid_one=$guid_one and relationship='$relationship' and guid_two=$guid_two");
+		
+		if (trigger_elgg_event('delete', $relationship, $obj)) {
+			return delete_data("DELETE from {$CONFIG->dbprefix}entity_relationships where guid_one=$guid_one and relationship='$relationship' and guid_two=$guid_two");
+		} else {
+			return false;
+		}
 	}
 
 	/**
