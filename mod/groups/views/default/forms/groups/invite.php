@@ -21,7 +21,7 @@
 	<?php
 
 	if ($friends = get_entities_from_relationship('friend',$_SESSION['guid'],false,'user','',0,'',9999)) {
-		echo elgg_view('friends/picker',array('entities' => $friends, 'internalname' => 'user_guid'));	
+		echo elgg_view('friends/picker',array('entities' => $friends, 'internalname' => 'user_guid', 'highlight' => 'all'));	
 	}
 		// echo elgg_view('sharing/invite',array('shares' => $shares, 'owner' => $owner, 'group' => $group));
 	
