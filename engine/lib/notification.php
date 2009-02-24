@@ -107,7 +107,7 @@
 						$handler = $details->handler;
 					
 						if ((!$NOTIFICATION_HANDLERS[$method]) || (!$handler))
-							throw new NotificationException(sprintf(elgg_echo('NotificationException:NoHandlerFound'), $method));
+							error_log(sprintf(elgg_echo('NotificationException:NoHandlerFound'), $method));
 		
 						if ($CONFIG->debug)
 							error_log("Sending message to $guid using $method");					
