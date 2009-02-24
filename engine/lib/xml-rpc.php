@@ -504,7 +504,7 @@
 		}
 		
 		// if no handler then throw exception
-		throw new NotImplementedException(sprintf(elgg_echo('NotImplementedException:XMLRPCMethodNotImplemented'), $method));
+		throw new NotImplementedException(sprintf(elgg_echo('NotImplementedException:XMLRPCMethodNotImplemented'), $parameters->getMethodName()));
 	}
 	
 	// Error handler functions ////////////////////////////////////////////////////////////////
