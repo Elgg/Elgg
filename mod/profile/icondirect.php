@@ -82,6 +82,7 @@
 				ob_start();
 				include(dirname(dirname(dirname(__FILE__))).'/simplecache/view.php');
 				$loc = ob_get_clean();
+				echo $loc;
 				header('Location: ' . $loc);
 				exit;
 				//$contents = @file_get_contents(dirname(__FILE__) . "/graphics/default{$size}.jpg");
@@ -95,6 +96,9 @@
 			}
 		} else {
 				mysql_close($mysql_dblink);
+				require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
+				set_input('username',$username);
+				set_input('size',$size);
 				require_once(dirname(__FILE__).'/icon.php');
 		}
 ?>

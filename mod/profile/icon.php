@@ -39,7 +39,10 @@
 		if (!$success) {
 			
 			global $CONFIG;
-			$contents = @file_get_contents($CONFIG->pluginspath . "profile/graphics/default{$size}.jpg");
+			$path = elgg_view('icon/user/default/'.$size);
+			header("Location: {$path}");
+			exit;
+			//$contents = @file_get_contents($CONFIG->pluginspath . "profile/graphics/default{$size}.jpg");
 			
 		}
 		
