@@ -14,5 +14,6 @@
 	else
 		register_error(elgg_echo('group:notdeleted'));
 		
-	forward($_SERVER['HTTP_REFERER']);
+	$url_name = $_SESSION['user']->username;
+	forward("{$vars['url']}pg/groups/member/{$url_name}");
 ?>
