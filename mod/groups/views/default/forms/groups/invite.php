@@ -15,7 +15,7 @@
 	
 	
 ?>
-<h2><?php echo sprintf(elgg_echo('groups:inviteto'), $group->name); ?></h2>
+<div class="contentWrapper">
 <form action="<?php echo $vars['url']; ?>action/groups/addtogroup" method="post">
 
 	<?php
@@ -30,3 +30,4 @@
 	<input type="hidden" name="group_guid" value="<?php echo $group->guid; ?>" />
 	<input type="submit" value="<?php echo elgg_echo('invite'); ?>" />
 </form>
+</div>
