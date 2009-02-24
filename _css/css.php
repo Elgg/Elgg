@@ -26,6 +26,8 @@
 	    echo $default_css;
 		*/
 
+		define('externalpage',true);
+
 		global $viewinput;
 		$viewinput['view'] = 'css';
 		$viewinput['viewtype'] = $_GET['viewtype'];
