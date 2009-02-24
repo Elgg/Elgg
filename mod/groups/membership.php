@@ -13,6 +13,7 @@
 	require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 	
 	gatekeeper();
+	group_gatekeeper();
 	
 	$limit = get_input("limit", 10);
 	$offset = get_input("offset", 0);

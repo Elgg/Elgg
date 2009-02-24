@@ -21,6 +21,8 @@
 		set_page_owner(get_input('group_guid'));
 		if (!(page_owner_entity() instanceof ElggGroup)) forward();
 		
+		group_gatekeeper();
+		
     // get the entity from id
         $topic = get_entity(get_input('topic'));
         if (!$topic) forward();
