@@ -32,8 +32,9 @@
 		// Register a page handler, so we can have nice URLs
 		register_page_handler('groups','groups_page_handler');
 		
-		// Register a URL handler for groups
+		// Register a URL handler for groups and forum topics
 		register_entity_url_handler('groups_url','group','all');
+		register_entity_url_handler('groups_groupforumtopic_url','object','groupforumtopic');
 		
 		// Register an icon handler for groups
 		register_page_handler('groupicon','groups_icon_handler');
@@ -326,6 +327,13 @@
 		$title = friendly_title($entity->name);
 		
 		return $CONFIG->url . "pg/groups/{$entity->guid}/$title/";
+		
+	}
+	
+	function groups_groupforumtopic_url($entity) {
+		
+		global $CONFIG;
+		return $CONFIG->url . 'mod/groups/topicposts.php?topic='. $entity->guid .'&group_guid=' . $entity->container_guid;
 		
 	}
 	
