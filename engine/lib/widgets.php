@@ -232,6 +232,7 @@
 				
 				$widget = new ElggWidget;
 				$widget->owner_guid = $user_guid;
+				$widget->container_guid = $user_guid;
 				$widget->access_id = get_default_access();
 				// private widgets don't makes sense, correct?
 				if ($widget->access_id == ACCESS_PRIVATE)

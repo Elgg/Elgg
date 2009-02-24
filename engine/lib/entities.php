@@ -1320,7 +1320,7 @@
 		if (!$container_guid) return true;
 
 		$container = get_entity($container_guid);
-
+		
 		if (($container) && ($user))
 		{
 
@@ -1368,7 +1368,10 @@
 		$site_guid = (int) $site_guid;
 		if ($container_guid == 0) $container_guid = $owner_guid;
 		
-		if (!can_write_to_container($owner_guid, $container_guid, $type)) return false; 
+		$user = get_loggedin_user();
+		if (!can_write_to_container($user->guid, $owner_guid, $type)) return false;
+		if ($owner_guid != $container_guid)
+			if (!can_write_to_container($user->guid, $container_guid, $type)) return false; 
 		
 		if ($type=="") throw new InvalidParameterException(elgg_echo('InvalidParameterException:EntityTypeNotSet'));
 
