@@ -527,13 +527,13 @@
 			
 		$where = array();
 		
-		if ($entity_type!="")
+		if ($entity_type!=="")
 			$where[] = "e.type='$entity_type'";
 		if ($entity_subtype)
 			$where[] = "e.subtype=$entity_subtype";
-		if ($meta_name!="")
+		if ($meta_name!=="")
 			$where[] = "m.name_id='$meta_n'";
-		if ($meta_value!="")
+		if ($meta_value!=="")
 			$where[] = "m.value_id='$meta_v'";
 		if ($site_guid > 0)
 			$where[] = "e.site_guid = {$site_guid}";
@@ -620,9 +620,9 @@
 			$meta_n = get_metastring_id($meta_name);
 			$meta_v = get_metastring_id($meta_value);
 			$join .= " JOIN {$CONFIG->dbprefix}metadata m{$mindex} on e.guid = m{$mindex}.entity_guid "; 
-			if ($meta_name!="")
+			if ($meta_name!=="")
 				$where[] = "m{$mindex}.name_id='$meta_n'";
-			if ($meta_value!="")
+			if ($meta_value!=="")
 				$where[] = "m{$mindex}.value_id='$meta_v'";
 			$mindex++;
 		}
