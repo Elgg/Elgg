@@ -622,7 +622,7 @@
 			return true;
 		}
 		
-		register_elgg_event_handler("boot","system","session_init",1);
+		register_elgg_event_handler("boot","system","session_init",20);
 
 
 ?>
