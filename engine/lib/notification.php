@@ -383,7 +383,7 @@
 			$object_type = $object->getType(); if (empty($object_type)) $object_type = '__BLANK__';
 			$object_subtype = $object->getSubtype(); if (empty($object_subtype)) $object_subtype = '__BLANK__';
 			if (isset($CONFIG->register_objects[$object_type][$object_subtype])) {
-				
+
 				$descr = $CONFIG->register_objects[$object_type][$object_subtype];
 				$string = $descr . ": " . $object->getURL();
 				
@@ -391,6 +391,7 @@
 				// (Person defined by container_guid so we can also subscribe to groups if we want)
 				foreach($NOTIFICATION_HANDLERS as $method => $foo)
 				if ($interested_users = get_entities_from_relationship('notify' . $method,$object->container_guid,true,'user','',0,'',99999)) {
+					
 					if (is_array($interested_users))
 						foreach($interested_users as $user) {
 							if ($user instanceof ElggUser) {
@@ -400,9 +401,9 @@
 									$object->access_id == ACCESS_LOGGED_IN)
 									&& $object->access_id != ACCESS_PRIVATE
 									&& $user->guid != $SESSION['user']->guid
-									&& $entity instanceof ElggEntity) {
+									&& $object instanceof ElggEntity) {
 		
-												$methodstring = trigger_plugin_hook('notify:entity:message',$entity->getType(),array(
+												$methodstring = trigger_plugin_hook('notify:entity:message',$object->getType(),array(
 													'entity' => $object,
 													'to_entity' => $user,
 													'method' => $method),$string);
