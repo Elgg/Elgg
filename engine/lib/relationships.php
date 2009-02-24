@@ -382,12 +382,12 @@
 	}
 	
 	/**
-	 * Determine whether or not a relationship between two entities exists
+	 * Determine whether or not a relationship between two entities exists and returns the relationship object if it does
 	 *
 	 * @param int $guid_one The GUID of the entity "owning" the relationship
 	 * @param string $relationship The type of relationship
 	 * @param int $guid_two The GUID of the entity the relationship is with
-	 * @return true|false
+	 * @return object|false Depending on success
 	 */
 	function check_entity_relationship($guid_one, $relationship, $guid_two)
 	{
@@ -397,8 +397,8 @@
 		$relationship = sanitise_string($relationship);
 		$guid_two = (int)$guid_two;
 			
-		if ($row = get_data_row("SELECT guid_one FROM {$CONFIG->dbprefix}entity_relationships WHERE guid_one=$guid_one AND relationship='$relationship' AND guid_two=$guid_two limit 1")) {
-			return true;
+		if ($row = get_data_row("SELECT * FROM {$CONFIG->dbprefix}entity_relationships WHERE guid_one=$guid_one AND relationship='$relationship' AND guid_two=$guid_two limit 1")) {
+			return $row;
 		}
 		return false;
 	}
@@ -417,6 +417,9 @@
 		$guid_one = (int)$guid_one;
 		$relationship = sanitise_string($relationship);
 		$guid_two = (int)$guid_two;
+		
+		$obj = check_entity_relationship($guid_one, $relationship, $guid_two);
+		if ($obj == false) return false;
 		
 		if (trigger_elgg_event('delete', $relationship, $obj)) {
 			return delete_data("DELETE from {$CONFIG->dbprefix}entity_relationships where guid_one=$guid_one and relationship='$relationship' and guid_two=$guid_two");
