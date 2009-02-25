@@ -20,7 +20,7 @@
 	
 		'notifications:subscriptions:groups:description' => 'To receive notifications when new content is added to a group you are a member of, find it below and select the notification method you would like to use.',
 	
-		'notifications:subscriptions:success' => 'Your subscription settings have been saved.',
+		'notifications:subscriptions:success' => 'Your notifications settings have been saved.',
 	
 	);
 					
