@@ -790,7 +790,7 @@ Alternatively, you can enter your database settings below and we will try and do
 		 * Welcome
 		 */
 	
-			'welcome' => "Welcome %s",
+			'welcome' => "Welcome",
 			'welcome_message' => "Welcome to this Elgg installation.",
 	
 		/**
