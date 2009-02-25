@@ -242,14 +242,6 @@
 			return false;
 		}
 		
-		/**
-		 * Initialise and register language translations.
-		 *
-		 */
-		function languages_init()
-		{
-			register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
-		}
-
-		register_elgg_event_handler('boot','system','languages_init',11); // Load languages after config.
+		register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
+		
 ?>
