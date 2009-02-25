@@ -774,6 +774,9 @@ Alternatively, you can enter your database settings below and we will try and do
 	
 			'installation:disableapi' => "The RESTful API is a flexible and extensible interface that enables applications to use certain Elgg features remotely.",
 			'installation:disableapi:label' => "Enable the RESTful API",
+			
+			'installation:allow_user_default_access:description' => "If checked, individual users will be allowed to set their own default access level that can over-ride the system default access level.",
+			'installation:allow_user_default_access:label' => "Allow user default access",
 	
 			'installation:simplecache:description' => "The simple cache increases performance by caching static content including some CSS and JavaScript files. Normally you will want this on.",
 			'installation:simplecache:label' => "Use simple cache",
@@ -825,6 +828,14 @@ If you requested this click on the link below, otherwise ignore this email.
 %s
 ",
 
+		/**
+		 * user default access
+		 */
+	
+		'default_access:settings' => "Your default access level",
+		'default_access:label' => "Default access",
+		'user:default_access:success' => "Your new default access level was saved.",
+		'user:default_access:failure' => "Your new default access level could not be saved.",
 	
 		/**
 		 * XML-RPC

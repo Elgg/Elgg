@@ -116,13 +116,27 @@
 	 *
 	 * @return int default access id (see ACCESS defines in elgglib.php)  
 	 */
-		function get_default_access()
+		function get_default_access($user=null)
 		{
 			global $CONFIG;
 			
-			// future: if user has a default access set, override site default access
+			if (!$CONFIG->allow_user_default_access) {
+				return $CONFIG->default_access;
+			}
 			
-			return $CONFIG->default_access;
+			if (!$user) {
+				if (isloggedin()) {
+					$user = $_SESSION['user'];
+				} else {
+					return $CONFIG->default_access;
+				}
+			}
+			
+			if (false !== ($default_access = $user->getPrivateSetting('elgg_default_access'))) {
+				return $default_access;
+			} else {			
+				return $CONFIG->default_access;
+			}
 		}
 		
 		/**

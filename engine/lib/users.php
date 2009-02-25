@@ -1472,6 +1472,10 @@
 		
 		// Add language settings
 		extend_elgg_settings_page('user/settings/language', 'usersettings/user', 1);
+		
+		// Add default access settings
+		extend_elgg_settings_page('user/settings/default_access', 'usersettings/user', 1);
+		
 		//register_action("user/language");
 		
 		// Register the user type
@@ -1520,6 +1524,7 @@
 		@include($CONFIG->path . "actions/user/password.php");
 		@include($CONFIG->path . "actions/email/save.php");
 		@include($CONFIG->path . "actions/user/language.php");
+		@include($CONFIG->path . "actions/user/default_access.php");
 		
 	}
 	

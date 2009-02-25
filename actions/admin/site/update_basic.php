@@ -44,6 +44,12 @@
 			
 			set_config('default_access', get_input('default_access'), $site->getGUID());
 			
+			if (get_input('allow_user_default_access')) {
+				set_config('allow_user_default_access', 1, $site->getGUID());
+			} else {
+				set_config('allow_user_default_access', 0, $site->getGUID());
+			}
+			
 			set_config('view', get_input('view'), $site->getGUID());
 			
 			$debug = get_input('debug');
