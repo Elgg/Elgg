@@ -26,7 +26,7 @@
 		'river:widgets:mine' => "Mine",
 		'river:widget:label:displaynum' => "Number of entries to display:",
 		'river:widget:type' => "Which river would you like to display? One that shows your activity or one that shows your friends activity?",
-	
+		'item:object:sitemessage' => "Site messages",
 	);
 					
 	add_translation("en",$english);
