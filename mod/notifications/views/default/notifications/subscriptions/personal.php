@@ -48,7 +48,7 @@
 			if ($i > 0) $fields .= "<td class=\"spacercolumn\">&nbsp;</td>";
 			$fields .= <<< END
 			    <td class="{$method}togglefield">
-			    <a href="#" border="0" id="{$method}personal" class="{$method}toggleOff" onclick="adjust{$method}_alt('{$method}personal');">
+			    <a href="#" border="0" id="{$method}personal" class="{$method}toggleOff" onclick="adjust{$method}_alt('{$method}personal'); return false;">
 			    <input type="checkbox" name="{$method}personal" id="{$method}checkbox" onclick="adjust{$method}('{$method}personal');" value="1" {$personalchecked[$method]} /></a></td>
 END;
 			$i++;
