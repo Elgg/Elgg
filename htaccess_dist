@@ -10,7 +10,7 @@
     RedirectMatch 302 .* index.php
 </IfModule>
 
-<Files "htaccess-dist">
+<Files "htaccess_dist">
     order allow,deny
     deny from all
 </Files>
