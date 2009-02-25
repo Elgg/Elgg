@@ -189,6 +189,7 @@
 			'PRIVATE' => "Private",
 			'LOGGED_IN' => "Logged in users",
 			'PUBLIC' => "Public",
+			'access:friends:label' => "Friends",
 			'access' => "Access",
 	
 		/**

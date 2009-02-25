@@ -178,31 +178,34 @@
 		 */
 		function get_access_sql_suffix($table_prefix = "")
 		{
-			global $ENTITY_SHOW_HIDDEN_OVERRIDE;  
+			global $ENTITY_SHOW_HIDDEN_OVERRIDE, $CONFIG;  
 			
 			$sql = "";
 			
 			if ($table_prefix)
 					$table_prefix = sanitise_string($table_prefix) . ".";
 			
-				$access = get_access_list();
-				
-				$owner = get_loggedin_userid();
-				if (!$owner) $owner = -1;
-				
-				global $is_admin;
-				
-				if (isset($is_admin) && $is_admin == true) {
-					$sql = " (1 = 1) ";
-				}
+			$access = get_access_list();
+			
+			$owner = get_loggedin_userid();
+			if (!$owner) $owner = -1;
+			
+			global $is_admin;
+			
+			if (isset($is_admin) && $is_admin == true) {
+				$sql = " (1 = 1) ";
+			} else if ($owner != -1) {				
+				$friends_bit = $table_prefix.'access_id = '.ACCESS_FRIENDS.' AND ';
+				$friends_bit .= "{$table_prefix}owner_guid IN (SELECT guid_one FROM {$CONFIG->dbprefix}entity_relationships WHERE relationship='friend' AND guid_two=$owner)";
+				$friends_bit = '('.$friends_bit.') OR ';
+			}
 
-				if (empty($sql))
-					$sql = " ({$table_prefix}access_id in {$access} or ({$table_prefix}access_id = " . ACCESS_PRIVATE . " and {$table_prefix}owner_guid = $owner))";
-
+			if (empty($sql))
+				$sql = " $friends_bit ({$table_prefix}access_id in {$access} or ({$table_prefix}access_id = " . ACCESS_PRIVATE . " and {$table_prefix}owner_guid = $owner))";
+				
 			if (!$ENTITY_SHOW_HIDDEN_OVERRIDE)
 				$sql .= " and {$table_prefix}enabled='yes'";
-			
-			return $sql;
+			return '('.$sql.')';
 		}
 		
 		/**
@@ -231,7 +234,7 @@
 				$query .= " AND (ag.owner_guid = {$user_id})";
 				$query .= " AND ag.id >= 3";
 				
-				$tmp_access_array = array(0 => elgg_echo("PRIVATE"), 1 => elgg_echo("LOGGED_IN"), 2 => elgg_echo("PUBLIC"));
+				$tmp_access_array = array(0 => elgg_echo("PRIVATE"), 1 => elgg_echo("LOGGED_IN"), 2 => elgg_echo("PUBLIC"), ACCESS_FRIENDS => elgg_echo("access:friends:label"));
 				if ($collections = get_data($query)) {
 					foreach($collections as $collection)
 						$tmp_access_array[$collection->id] = $collection->name;

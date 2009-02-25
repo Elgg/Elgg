@@ -2252,6 +2252,7 @@
 		define('ACCESS_PRIVATE',0);
 		define('ACCESS_LOGGED_IN',1);
 		define('ACCESS_PUBLIC',2);
+		define('ACCESS_FRIENDS',-2);
 	
 	register_elgg_event_handler('init','system','elgg_init');
 	register_elgg_event_handler('boot','system','elgg_boot',1000);
