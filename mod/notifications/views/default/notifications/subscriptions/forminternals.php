@@ -74,7 +74,10 @@
 		if (is_array($friends) && sizeof($friends))
 			foreach($friends as $user) {
 				
-				$letter = strtoupper(substr($user->name,0,1));
+				if (is_callable('mb_substr'))
+					$letter = strtoupper(mb_substr($user->name,0,1));
+				else
+					$letter = strtoupper(substr($user->name,0,1));
 				if (!substr_count($chararray,$letter)) {
 					$letter = "*";
 				}
@@ -148,7 +151,10 @@
 <?php
 
 	// Initialise letters
-		$letter = substr($chararray,0,1);
+		if (is_callable('mb_substr'))
+			$letter = mb_substr($chararray,0,1);
+		else
+			$letter = substr($chararray,0,1);
 		$letpos = 0;
 		$chararray .= '*';
 		while (1 == 1) {
@@ -239,7 +245,10 @@ END;
 <?php			
 			$letpos++;
 			if ($letpos == strlen($chararray)) break;
-			$letter = substr($chararray,$letpos,1);
+			if (is_callable('mb_substr'))
+				$letter = mb_substr($chararray,$letpos,1);
+			else
+				$letter = substr($chararray,$letpos,1);
 		}
 		
 ?>

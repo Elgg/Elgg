@@ -71,7 +71,10 @@
 		if (is_array($vars['entities']) && sizeof($vars['entities']))
 			foreach($vars['entities'] as $user) {
 				
-				$letter = strtoupper(substr($user->name,0,1));
+				if (is_callable('mb_substr'))
+					$letter = strtoupper(mb_substr($user->name,0,1));
+				else
+					$letter = strtoupper(substr($user->name,0,1));
 				if (!substr_count($chararray,$letter)) {
 					$letter = "*";
 				}
@@ -146,7 +149,10 @@
 
 	// Initialise letters
 		$chararray .= "*";
-		$letter = substr($chararray,0,1);
+		if (is_callable('mb_substr'))
+			$letter = mb_substr($chararray,0,1);
+		else
+			$letter = substr($chararray,0,1);
 		$letpos = 0;
 		while (1 == 1) {
 ?>
@@ -233,10 +239,18 @@
 			</div>
 <?php			
 			//if ($letter == 'Z') break;
-			if ($letter == substr($chararray,strlen($chararray) - 1,1)) break;
+			
+			if (is_callable('mb_substr'))
+				$substr = mb_substr($chararray,strlen($chararray) - 1,1);
+			else
+				$substr = substr($chararray,strlen($chararray) - 1,1);
+			if ($letter == $substr) break;
 			//$letter++;
 			$letpos++;
-			$letter = substr($chararray,$letpos,1);
+			if (is_callable('mb_substr'))
+				$letter = mb_substr($chararray,$letpos,1);
+			else
+				$letter = substr($chararray,$letpos,1);
 		}
 		
 ?>
