@@ -80,13 +80,12 @@
 			if ((empty($language)) && ($user) && ($user->language))
 				$language = $user->language;
 
-			if ((empty($language)) && (isset($CONFIG->language)))
+			if ((!$language) && ($CONFIG->language))
 				$language = $CONFIG->language;
 				
-			if (!empty($language)) {
+			if ($language) {
 				return $language;
-			}
-			
+			}		
 			return false;
 			
 		}
@@ -129,7 +128,7 @@
 			
 			// Get the current language based on site defaults and user preference
 			$current_language = get_current_language();
-			
+
 			if (isset($CONFIG->debug) && $CONFIG->debug == true) error_log("Translations loaded from : $path");
 		
 			if ($handle = opendir($path)) {
@@ -243,6 +242,14 @@
 			return false;
 		}
 		
-		register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
+		/**
+		 * Initialise and register language translations.
+		 *
+		 */
+		function languages_init()
+		{
+			register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
+		}
 
+		register_elgg_event_handler('boot','system','languages_init',11); // Load languages after config.
 ?>
