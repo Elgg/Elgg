@@ -18,14 +18,19 @@
 	// Validate the action
 	action_gatekeeper();
 	
-	// Get the user 
+	// Get the plugin 
 	$plugin = get_input('plugin');
+	if (!is_array($plugin))
+		$plugin = array($plugin);
 	
-	// Disable
-	if (disable_plugin($plugin))
-		system_message(sprintf(elgg_echo('admin:plugins:disable:yes'), $plugin));
-	else
-		register_error(sprintf(elgg_echo('admin:plugins:disable:no'), $plugin));		
+	foreach ($plugin as $p)
+	{
+		// Disable
+		if (disable_plugin($p))
+			system_message(sprintf(elgg_echo('admin:plugins:disable:yes'), $p));
+		else
+			register_error(sprintf(elgg_echo('admin:plugins:disable:no'), $p));
+	}		
 	
 	elgg_view_regenerate_simplecache();
 		
