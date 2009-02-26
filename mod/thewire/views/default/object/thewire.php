@@ -34,9 +34,9 @@
 	    </div>
 	    
 	    <!-- the actual shout -->
-		<p class="note_body">
+		<div class="note_body">
 
-			<span style='float:right;'>
+			<div class="thewire_options">
 			
 			<a href="<?php echo $vars['url']; ?>mod/thewire/add.php?wire_username=<?php echo $vars['entity']->getOwnerEntity()->username; ?>" class="reply">reply</a>
 		<?php
@@ -48,7 +48,7 @@
 	        }
 */
 	    ?>
-	    <br />
+	    <div class="clearfloat"></div>
 	    		<?php
 				   
 			// if the user looking at thewire post can edit, show the delete link
@@ -63,8 +63,7 @@
 			
 			} //end of can edit if statement
 		?>
-	    
-	    </span>
+	    </div>
 	    
 		
 		<?php
@@ -78,9 +77,8 @@
 		?>
 		
 		
-
-
-		</p>
+		<div class="clearfloat"></div>
+		</div>
 		<div class="note_date">
 		
 		<?php

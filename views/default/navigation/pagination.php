@@ -137,7 +137,7 @@
 	}
 
 ?>
-<br class="clearfloat" />
+<div class="clearfloat"></div>
 </div>
 <?php
     } // end of pagination check if statement
