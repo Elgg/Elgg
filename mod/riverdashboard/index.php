@@ -57,6 +57,8 @@
 		}
 
 		$river = elgg_view_river_items($subject_guid, 0, $relationship_type, $type, $subtype, '') . "</div>";
+		// Replacing callback calls in the nav with something meaningless
+		$river = str_replace('callback=true','replaced=88,334',$river);
 		
 		$nav = elgg_view('riverdashboard/nav',array(
 															'type' => $type,
