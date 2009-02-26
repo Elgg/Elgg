@@ -30,6 +30,8 @@
 		{
 			uservalidationbyemail_request_validation($object->guid);
 		}
+		
+		return true;
 	}
 	
 	/**
