@@ -26,5 +26,5 @@
     }
     
 ?>
-<br class="clearfloat" />
+<div class="clearfloat" /></div>
 </div>

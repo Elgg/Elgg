@@ -34,7 +34,7 @@
 		$wording = "Make featured";
 	}
 		
-	$info .= "<div class=\"groupdetails\"><p>" . $mem . " / " . elgg_echo("groups:member") . " (" . get_group_members($vars['entity']->guid, 10, 0, 0, true) . ")</p>";
+	$info .= "<div class=\"groupdetails\"><p>" . $mem . " / <b>" . get_group_members($vars['entity']->guid, 10, 0, 0, true) ."</b> " . elgg_echo("groups:member") . "</p>";
 	//if admin, show make featured option
 	if(isadminloggedin())
 		$info .= "<p><a href=\"{$url}\">{$wording}</a></p>";

@@ -14,7 +14,7 @@
 ?>
 
 <!-- left sidebar -->
-<div id="two_column_left_sidebar_boxes" style="float:left;width;200px;">
+<div id="two_column_left_sidebar_boxes">
 
      <?php if (isset($vars['area1'])) echo $vars['area1']; ?>
 
