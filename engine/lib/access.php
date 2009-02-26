@@ -168,6 +168,40 @@
 		}
 		
 		/**
+		 * Add annotation restriction
+		 * 
+		 * Returns an SQL fragment that is true (or optionally false) if the given user has 
+		 * added an annotation with the given name to the given entity.
+		 * 
+		 * TODO: This is fairly generic so perhaps it could be moved to annotations.php
+		 * 
+		 * @param string $annotation_name name of the annotation
+	 	 * @param string $entity_guid SQL string that evaluates to the GUID of the entity the annotation should be attached to
+	 	 * @param string $owner_guid SQL string that evaluates to the GUID of the owner of the annotation	 	 * 
+	 	 * @param boolean $exists If set to true, will return true if the annotation exists, otherwise returns false
+	 	 * @return string An SQL fragment suitable for inserting into a WHERE clause
+		 */
+		
+		function get_annotation_sql($annotation_name,$entity_guid,$owner_guid,$exists) {
+			global $CONFIG;
+			
+			if ($exists) {
+				$not = '';
+			} else {
+				$not = 'NOT';
+			}
+			
+			$sql = <<<END
+$not EXISTS (SELECT * FROM {$CONFIG->dbprefix}annotations a 
+INNER JOIN {$CONFIG->dbprefix}metastrings ms ON (a.name_id = ms.id)
+WHERE ms.string = '$annotation_name'
+AND a.entity_guid = $entity_guid
+AND a.owner_guid = $owner_guid)
+END;
+			return $sql;
+		}
+		
+		/**
 		 * Add access restriction sql code to a given query.
 		 * 
 		 * Note that if this code is executed in privileged mode it will return blank.
@@ -181,6 +215,8 @@
 			global $ENTITY_SHOW_HIDDEN_OVERRIDE, $CONFIG;  
 			
 			$sql = "";
+			$friends_bit = "";
+			$enemies_bit = "";
 			
 			if ($table_prefix)
 					$table_prefix = sanitise_string($table_prefix) . ".";
@@ -198,10 +234,23 @@
 				$friends_bit = $table_prefix.'access_id = '.ACCESS_FRIENDS.' AND ';
 				$friends_bit .= "{$table_prefix}owner_guid IN (SELECT guid_one FROM {$CONFIG->dbprefix}entity_relationships WHERE relationship='friend' AND guid_two=$owner)";
 				$friends_bit = '('.$friends_bit.') OR ';
+				
+				if ($CONFIG->user_block_and_filter_enabled) {
+					// check to see if the user is in the entity owner's block list
+					// or if the entity owner is in the user's filter list
+					// if so, disallow access
+					
+					$enemies_bit = get_annotation_sql('elgg_block_list',"{$table_prefix}owner_guid",$owner,false);
+					$enemies_bit = '('.$enemies_bit. ' AND '.get_annotation_sql('elgg_filter_list',$owner,"{$table_prefix}owner_guid",false).')';
+				}
 			}
 
 			if (empty($sql))
 				$sql = " $friends_bit ({$table_prefix}access_id in {$access} or ({$table_prefix}access_id = " . ACCESS_PRIVATE . " and {$table_prefix}owner_guid = $owner))";
+			
+			if ($enemies_bit) {
+				$sql = "$enemies_bit AND ($sql)";
+			}
 				
 			if (!$ENTITY_SHOW_HIDDEN_OVERRIDE)
 				$sql .= " and {$table_prefix}enabled='yes'";
