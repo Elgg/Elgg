@@ -35,7 +35,7 @@
 		        global $autofeed;
 		        $autofeed = false;
 		        $content = elgg_view_layout('two_column_left_sidebar', '', $title . $content, elgg_view("account/forms/login"));
-		        echo page_draw(null, $content);
+		        page_draw(null, $content);
 		
 		}
 

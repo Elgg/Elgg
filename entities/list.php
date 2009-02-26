@@ -16,6 +16,6 @@
 		$area2 = list_entities("","",0,10,false);
 		set_context('entities');
 		$body = elgg_view_layout('two_column_left_sidebar',$area1, $area2);
-		echo page_draw("",$body);
+		page_draw("",$body);
 
 ?>

@@ -23,6 +23,6 @@
 		$body = elgg_view_layout('two_column_left_sidebar','', elgg_view_title(elgg_echo('friends:collections:add')) . $area2);
 		
 	// Draw it
-		echo page_draw(elgg_echo('friends:collections:add'),$body);
+		page_draw(elgg_echo('friends:collections:add'),$body);
 
 ?>

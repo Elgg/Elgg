@@ -31,6 +31,6 @@
 		$body = elgg_view_layout('two_column_left_sidebar', '', $area2);
 		
 	// Draw it
-		echo page_draw(elgg_echo('reportedcontent:add'),$body);
+		page_draw(elgg_echo('reportedcontent:add'),$body);
 
 ?>

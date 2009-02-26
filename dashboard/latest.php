@@ -24,7 +24,7 @@
         $content = list_registered_entities(0,10,true,false,array('object','group'));
         set_context('latest');
         $content = elgg_view_layout('two_column_left_sidebar', '', $title . $content);
-        echo page_draw(elgg_echo('content:latest'), $content);
+        page_draw(elgg_echo('content:latest'), $content);
 		
 
 ?>

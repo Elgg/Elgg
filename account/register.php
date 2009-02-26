@@ -21,7 +21,7 @@
 		
 	// If we're not logged in, display the registration page
 		if (!isloggedin()) {
-			echo page_draw(elgg_echo('register'), elgg_view("account/forms/register", array('friend_guid' => $friend_guid, 'invitecode' => $invitecode)));
+			page_draw(elgg_echo('register'), elgg_view("account/forms/register", array('friend_guid' => $friend_guid, 'invitecode' => $invitecode)));
 	// Otherwise, forward to the index page
 		} else {
 			forward();

@@ -34,6 +34,6 @@
 		$body = elgg_view_layout('two_column_left_sidebar','',$body);
 		
 	// Draw the page
-		echo page_draw(elgg_echo('notifications:subscriptions:changesettings'),$body);
+		page_draw(elgg_echo('notifications:subscriptions:changesettings'),$body);
 		
 ?>

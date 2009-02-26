@@ -65,7 +65,7 @@
 														));
 		if (empty($callback)) {
 			$body .= elgg_view('riverdashboard/container', array('body' => $nav . $river . elgg_view('riverdashboard/js')));
-			echo page_draw(elgg_echo('dashboard'),elgg_view_layout('sidebar_boxes',$area1,$body));
+			page_draw(elgg_echo('dashboard'),elgg_view_layout('sidebar_boxes',$area1,$body));
 		} else {
 			echo $nav . $river . elgg_view('riverdashboard/js');
 		}

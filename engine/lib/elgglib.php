@@ -1701,7 +1701,7 @@
 			ob_end_clean(); // Wipe any existing output buffer
 			
 			$body = elgg_view("messages/exceptions/exception",array('object' => $exception));
-			echo page_draw(elgg_echo('exception:title'), $body);
+			page_draw(elgg_echo('exception:title'), $body);
 			
 		}
 		
