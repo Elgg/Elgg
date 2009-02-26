@@ -14,78 +14,58 @@
 	
 	gatekeeper();
 	
-	$user_guid = get_input('user_guid');
+	$user_guid = get_input('user_guid', get_loggedin_userid());
 	$group_guid = get_input('group_guid');
 	
-	$user = NULL;
-	if (!$user_guid) $user = $_SESSION['user'];
-	else
-		$user = get_entity($user_guid);
-		
+	$user = get_entity($user_guid);
 	$group = get_entity($group_guid);
 	
-	if (!$group->isMember($user))
-	{ 
-		$invites = $user->group_invite;
-
-		if ($invites)
+	// If not a member of this group
+	if (($group) && ($user) && (!$group->isMember($user)))
+	{
+		// If open group or invite exists
+		if (
+			($group->isPublicMembership()) ||
+			(check_entity_relationship($group->guid, 'invited', $user->guid))
+		)
 		{
-			if (!is_array($invites))
-				$invites = array($invites);
-			
-			foreach ($invites as $invite)
+			if ($group->join($user))
 			{
-				if ($invite == $group->getGUID())
-				{
-					if ($group->join($user))
-					{
-						system_message(elgg_echo('groups:joined'));
-						
-						forward($group->getURL());
-						exit;
-					}
-					else
-						system_message(elgg_echo('groups:cantjoin'));
-						
-					forward($_SERVER['HTTP_REFERER']);
-					exit;	
-				}
-			
+				// Remove relationships
+				remove_entity_relationship($group->guid, 'invited', $user->guid);
+				remove_entity_relationship($user->guid, 'membership_request', $group->guid);
+				
+				// Group joined
+				system_message(elgg_echo('groups:joined'));
+				
+				forward($group->getURL());
+				exit;
 			}
+			else
+				system_message(elgg_echo('groups:cantjoin'));
 		}
-	
-		// else email membership requiest
-		// set flag
-		
-		// Permit multiple values
-		$methods = $user->group_join_request;
-		if (($methods) && (!is_array($methods)))
-			$methods = array($methods);
-		if (!$methods) $methods=array();
-		$methods[] = $group->getGUID();
-		$methods = array_unique($methods);
-		
-		//if (!$user->setMetaData('group_join_request', $group->getGUID(), "", true))
-		if (!$user->group_join_request = $methods)
-			system_message(elgg_echo("groups:joinrequestnotmade"));
 		else
 		{
-		
-			// Send email
-			if (notify_user($group->owner_guid, $user->getGUID(), 
-					sprintf(elgg_echo('groups:request:subject'), $user->name, $group->name), 
-					sprintf(elgg_echo('groups:request:body'), $group->getOwnerEntity()->name, $user->name, $group->name, $user->getURL(), "{$CONFIG->url}action/groups/addtogroup?user_guid={$user->guid}&group_guid={$group->guid}"),
-					NULL, "email"))
-				system_message(elgg_echo("groups:joinrequestmade"));
+			// If join request not already made
+			if (!check_entity_relationship($user->guid, 'membership_request', $group->guid))
+			{
+				// Add membership requested
+				add_entity_relationship($user->guid, 'membership_request', $group->guid);
+				
+				// Send email
+				if (notify_user($group->owner_guid, $user->getGUID(), 
+						sprintf(elgg_echo('groups:request:subject'), $user->name, $group->name), 
+						sprintf(elgg_echo('groups:request:body'), $group->getOwnerEntity()->name, $user->name, $group->name, $user->getURL(), "{$CONFIG->url}action/groups/addtogroup?user_guid={$user->guid}&group_guid={$group->guid}"),
+						NULL))
+					system_message(elgg_echo("groups:joinrequestmade"));
+				else
+					register_error(elgg_echo("groups:joinrequestnotmade"));
+			}
 			else
-				register_error(elgg_echo("groups:joinrequestnotmade"));
+				system_message(elgg_echo("groups:joinrequestmade"));
 		}
-	
-	
 	}
-	else
-		register_error(elgg_echo('groups:alreadymember'));
-		
+	
 	forward($_SERVER['HTTP_REFERER']);
-	exit;	
+	
 ?>
