@@ -65,7 +65,7 @@
 			'groups:open' => "open group",
 			'groups:closed' => "closed group",
 			'groups:member' => "members",
-			'groups:searchtag' => "Search groups by tag",
+			'groups:searchtag' => "Search for groups by tag",
 	
 			
 			/*
