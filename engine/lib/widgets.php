@@ -221,9 +221,10 @@
 	 * @param string $context The page context for this widget
 	 * @param int $order The order to display this widget in
 	 * @param int $column The column to display this widget in (1, 2 or 3)
+	 * @param int $access_id If not specified, it is set to the default access level
 	 * @return true|false Depending on success
 	 */
-		function add_widget($user_guid, $handler, $context, $order = 0, $column = 1) {
+		function add_widget($user_guid, $handler, $context, $order = 0, $column = 1, $access_id = null) {
 			
 			if (empty($user_guid) || empty($context) || empty($handler) || !widget_type_exists($handler))
 				return false;
@@ -233,12 +234,13 @@
 				$widget = new ElggWidget;
 				$widget->owner_guid = $user_guid;
 				$widget->container_guid = $user_guid;
-				$widget->access_id = get_default_access();
-				// private widgets don't makes sense, correct?
-				if ($widget->access_id == ACCESS_PRIVATE)
-					$widget->access_id = ACCESS_LOGGED_IN; // change to ACCESS_FRIENDS when implemented
+				if (isset($access_id)) {
+					$widget->access_id = $access_id;
+				} else {
+					$widget->access_id = get_default_access();
+				}
 
-					if (!$widget->save())
+				if (!$widget->save())
 					return false;
 					
 				$widget->handler = $handler;
