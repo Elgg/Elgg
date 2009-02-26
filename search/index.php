@@ -33,6 +33,17 @@
 		} else {
 			$owner_guid_array = $owner_guid;
 		}
+		$friends = (int) get_input('friends',0);
+		if ($friends > 0) {
+			if ($friends = get_user_friends($friends,'',9999)) {
+				$owner_guid_array = array();
+				foreach($friends as $friend) {
+					$owner_guid_array[] = $friend->guid;
+				}
+			} else {
+				$owner_guid = -1;
+			}
+		}
 		
 	// Set up submenus
 		if ($object_types = get_registered_entity_types()) {
