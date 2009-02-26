@@ -82,11 +82,18 @@
 	 *
 	 */
 	function group_object_notifications($event, $object_type, $object) {
+		
+		static $flag;
+		if (!isset($flag)) $flag = 0;
+		
 		if (is_callable('object_notifications'))
 		if ($object instanceof ElggObject) {
 			if ($object->getSubtype() == 'groupforumtopic') {
 				//if ($object->countAnnotations('group_topic_post') > 0) {
+				if ($flag == 0) {
+					$flag = 1;
 					object_notifications($event, $object_type, $object);
+				}
 				//}
 			}
 		}
