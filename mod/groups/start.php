@@ -85,9 +85,9 @@
 		if (is_callable('object_notifications'))
 		if ($object instanceof ElggObject) {
 			if ($object->getSubtype() == 'groupforumtopic') {
-				if ($object->countAnnotations('group_topic_post') > 0) {
+				//if ($object->countAnnotations('group_topic_post') > 0) {
 					object_notifications($event, $object_type, $object);
-				}
+				//}
 			}
 		}
 		
