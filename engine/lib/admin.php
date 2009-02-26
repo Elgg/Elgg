@@ -50,6 +50,7 @@
 		register_action('admin/user/delete', false, "", true);
 		register_action('admin/user/resetpassword', false, "", true);
 		register_action('admin/user/makeadmin', false, "", true);
+		register_action('admin/user/removeadmin', false, "", true);
 		
 		// Register some actions
 		register_action('admin/site/update_basic', false, "", true); // Register basic site admin action
