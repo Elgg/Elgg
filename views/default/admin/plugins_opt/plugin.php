@@ -66,23 +66,33 @@
 	</div>
 	<?php } ?>
 	
-	<?php if ((!$version_check_valid) || (!isset($manifest['elgg_version']))) { ?>
-	<div id="version_check">
-		<?php 
-			if (!isset($manifest['elgg_version']))
-				echo elgg_echo('admin:plugins:warning:elggversionunknown');
-			else
-				echo elgg_echo('admin:plugins:warning:elggtoolow');
-		?>
-	</div>
-	<?php } ?>
+	<?php
+
+		if ($manifest) {
+	
+	?>
+		<div class="plugin_description"><?php echo elgg_view('output/longtext',array('value' => $manifest['description'])); ?></div>
+	<?php
+
+		}
+	
+	?>
 	
 	<p><a class="manifest_details"><?php echo elgg_echo("admin:plugins:label:moreinfo"); ?></a></p>
 
 	<div class="manifest_file">
 	
 	<?php if ($manifest) { ?>
-		<div><?php echo $manifest['description'] ?></div>
+		<?php if ((!$version_check_valid) || (!isset($manifest['elgg_version']))) { ?>
+		<div id="version_check">
+			<?php 
+				if (!isset($manifest['elgg_version']))
+					echo elgg_echo('admin:plugins:warning:elggversionunknown');
+				else
+					echo elgg_echo('admin:plugins:warning:elggtoolow');
+			?>
+		</div>
+		<?php } ?>
 		<div><?php echo elgg_echo('admin:plugins:label:version') . ": ". $manifest['version'] ?></div>
 		<div><?php echo elgg_echo('admin:plugins:label:author') . ": ". $manifest['author'] ?></div>
 		<div><?php echo elgg_echo('admin:plugins:label:copyright') . ": ". $manifest['copyright'] ?></div>
