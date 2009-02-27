@@ -13,9 +13,9 @@
 		'sitemessages:announcements' => "Site announcements",
 		'sitemessages:posted' => "Posted",
 		'sitemessages:river:created' => "Site admin, %s,",
-		'sitemessages:river:create' => "posted a new site wide message",
-		'sitemessages:add' => "add message",
-		'sitemessage:deleted' => "site message deleted",
+		'sitemessages:river:create' => "Posted a new site wide message",
+		'sitemessages:add' => "Add a site-wide message to the river page",
+		'sitemessage:deleted' => "Site message deleted",
 		
 		'river:widget:noactivity' => 'We could not find any activity.',
 		'river:widget:title' => "Activity",
