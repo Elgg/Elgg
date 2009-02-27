@@ -23,10 +23,8 @@
 	if (($group) && ($group->canEdit()))
 	{	
 		
-		
-		
-		
-		
+		$requests = get_entities_from_relationship('membership_request',$group_guid,false,'','',0,'',9999);
+		$area2 .= elgg_view('groups/membershiprequests',array('requests' => $requests));
 			 
 	} else {
 		$area2 .= elgg_echo("groups:noaccess");

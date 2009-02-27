@@ -57,6 +57,8 @@
 			'groups:notfound' => "Group not found",
 			'groups:notfound:details' => "The requested group either does not exist or you do not have access to it",
 			
+			'groups:requests:none' => 'There are no outstanding membership requests at this time.',
+	
 			'item:object:groupforumtopic' => "Discussion topics",
 	
 			'groupforumtopic:new' => "New discussion post",
