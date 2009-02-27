@@ -20,6 +20,8 @@ $(document).ready(function () {
 
 });
 
+	clickflag = 0;
+
 <?php 
 	foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 ?>
