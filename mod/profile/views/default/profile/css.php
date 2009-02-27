@@ -1,10 +1,17 @@
 <?php
 
+	/**
+	 * Elgg Profile 
+	 * 
+	 * @package Profile
+	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+	 * @author Curverider Ltd <info@elgg.com>
+	 * @copyright Curverider Ltd 2008-2009
+	 * @link http://elgg.com/
+	 */
+	 
 ?>
 
-/* ***************************************
-	AVATAR CONTEXTUAL MENU
-*************************************** */	
 #profile_icon_wrapper {
 	float:left;
 }
@@ -66,10 +73,9 @@ div.usericon a.icon img {
 	border-bottom:solid 1px #dddddd;
 	color: #4690d6;
 	margin:0 !important;
-	/* background:#ffffff !important; */
 }
 .usericon div.sub_menu h3:hover {
-	/* background:#cccccc !important; */
+
 }
 
 .user_menu_addfriend,
@@ -94,6 +100,20 @@ div.usericon a.icon img {
 .user_menu_admin a:hover {
 	color:white !important;
 	background:red !important;
+}
+
+.resetdefaultprofile {
+	padding:0 10px 0 10px;
+}
+.resetdefaultprofile input[type="submit"] {
+	background: #dedede;
+	border-color: #dedede;
+	color:#333333;
+}
+.resetdefaultprofile input[type="submit"]:hover {
+	background: red;
+	border-color: red;
+	color:white;
 }
 
 /* Banned user */

@@ -14,7 +14,7 @@ jQuery.fn.friendsPicker = function(iterator) {
 		var container = $(this);
 		container.addClass("friendsPicker");
 		// set panelwidth manually as it's hidden initially - adjust this value for different themes/pagewidths 
-		var panelWidth = 685;
+		var panelWidth = 678;
 
 		// count the panels in the container
 		var panelCount = container.find("div.panel").size();

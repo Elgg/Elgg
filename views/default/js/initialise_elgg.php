@@ -16,7 +16,7 @@ $(document).ready(function () {
 		return false;
 	}); 
 	
-	// toggle plugin's settings and more info on admin tools admin
+	// toggle plugin's settings nad more info on admin tools admin
 	$('a.pluginsettings_link').click(function () {
 		$(this.parentNode.parentNode).children("[class=pluginsettings]").slideToggle("fast");
 		return false;
@@ -252,9 +252,9 @@ $.fn.elgg_topbardropdownmenu = function(options) {
       $.data(subnav, 'cancelHide', false);
       setTimeout(function() {
         if (!$.data(subnav, 'cancelHide')) {
-          $(subnav).slideUp(options.speed);
+          $(subnav).slideUp(100);
         }
-      }, 200);
+      }, 250);
     }
   
     function show() {

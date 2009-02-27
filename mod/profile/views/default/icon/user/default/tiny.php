@@ -1,3 +1,3 @@
 <?php
-	echo $vars['url'] . "mod/profile/graphics/defaulttiny.jpg";
+	echo $vars['url'] . "mod/profile/graphics/defaulttiny.gif";
 ?>
