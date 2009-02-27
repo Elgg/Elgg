@@ -33,7 +33,7 @@
         }
         
         if ($vars['disabled']) $disabled = ' disabled="yes" '; 
-        echo "<label><input type=\"radio\" $disabled {$vars['js']} name=\"{$vars['internalname']}\" value=\"".htmlentities($option, null, 'UTF-8')."\" {$selected} class=\"$class\" />{$label}</label><br />";
+        echo "<label><input type=\"radio\" $disabled {$vars['js']} name=\"{$vars['internalname']}\" value=\"".htmlentities($option, ENT_QUOTES, 'UTF-8')."\" {$selected} class=\"$class\" />{$label}</label><br />";
     }
 
 ?> 

@@ -19,7 +19,7 @@
 
 		if ($vars['entity'] instanceof ElggUser) {
 			
-		$name = htmlentities($vars['entity']->name, null, 'UTF-8');
+		$name = htmlentities($vars['entity']->name, ENT_QUOTES, 'UTF-8');
 		$username = $vars['entity']->username;
 		
 		if ($icontime = $vars['entity']->icontime) {
@@ -77,7 +77,7 @@
 		
 	} 
 	
-	?><img src="<?php echo $vars['entity']->getIcon($vars['size']); ?>" border="0" <?php echo $align; ?> title="<?php echo htmlentities($vars['entity']->name, null, 'UTF-8'); ?>" <?php echo $vars['js']; ?> /><?php
+	?><img src="<?php echo $vars['entity']->getIcon($vars['size']); ?>" border="0" <?php echo $align; ?> title="<?php echo htmlentities($vars['entity']->name, ENT_QUOTES, 'UTF-8'); ?>" <?php echo $vars['js']; ?> /><?php
 
 		if (!$override) {
 	

@@ -39,9 +39,9 @@
 
     foreach($vars['options'] as $key => $option) {
         if ($key != $vars['value']) {
-            echo "<option value=\"{$key}\">". htmlentities($option, null, 'UTF-8') ."</option>";
+            echo "<option value=\"{$key}\">". htmlentities($option, ENT_QUOTES, 'UTF-8') ."</option>";
         } else {
-            echo "<option value=\"{$key}\" selected=\"selected\">". htmlentities($option, null, 'UTF-8') ."</option>";
+            echo "<option value=\"{$key}\" selected=\"selected\">". htmlentities($option, ENT_QUOTES, 'UTF-8') ."</option>";
         }
     }
 

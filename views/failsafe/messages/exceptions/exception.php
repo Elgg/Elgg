@@ -32,7 +32,7 @@
 	<p class="messages-exception-detail" style="background:#FDFFC3;display:block;padding:10px;">
 		<?php
 
-			echo nl2br(htmlentities(print_r($vars['object'], true), null, 'UTF-8'));
+			echo nl2br(htmlentities(print_r($vars['object'], true), ENT_QUOTES, 'UTF-8'));
 		
 		?>
 	</p>

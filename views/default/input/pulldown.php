@@ -32,9 +32,9 @@
 	{
 		foreach($vars['options_values'] as $value => $option) {
 	        if ($value != $vars['value']) {
-	            echo "<option value=\"$value\">". htmlentities($option, null, 'UTF-8') ."</option>";
+	            echo "<option value=\"$value\">". htmlentities($option, ENT_QUOTES, 'UTF-8') ."</option>";
 	        } else {
-	            echo "<option value=\"$value\" selected=\"selected\">". htmlentities($option, null, 'UTF-8') ."</option>";
+	            echo "<option value=\"$value\" selected=\"selected\">". htmlentities($option, ENT_QUOTES, 'UTF-8') ."</option>";
 	        }
 	    }
 	}
@@ -42,9 +42,9 @@
 	{
 	    foreach($vars['options'] as $option) {
 	        if ($option != $vars['value']) {
-	            echo "<option>". htmlentities($option, null, 'UTF-8') ."</option>";
+	            echo "<option>". htmlentities($option, ENT_QUOTES, 'UTF-8') ."</option>";
 	        } else {
-	            echo "<option selected=\"selected\">". htmlentities($option, null, 'UTF-8') ."</option>";
+	            echo "<option selected=\"selected\">". htmlentities($option, ENT_QUOTES, 'UTF-8') ."</option>";
 	        }
 	    }
 	}

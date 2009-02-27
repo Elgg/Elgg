@@ -43,7 +43,7 @@
         
         $disabled = "";
         if ($vars['disabled']) $disabled = ' disabled="yes" '; 
-        echo "<label><input type=\"checkbox\" $disabled {$vars['js']} name=\"{$vars['internalname']}[]\" {$selected} value=\"".htmlentities($option, null, 'UTF-8')."\" {$selected} class=\"$class\" />{$label}</label><br />";
+        echo "<label><input type=\"checkbox\" $disabled {$vars['js']} name=\"{$vars['internalname']}[]\" {$selected} value=\"".htmlentities($option, ENT_QUOTES, 'UTF-8')."\" {$selected} class=\"$class\" />{$label}</label><br />";
     }
 
 ?> 

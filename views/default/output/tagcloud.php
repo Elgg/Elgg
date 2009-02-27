@@ -43,7 +43,7 @@
             if (!empty($cloud)) $cloud .= ", ";
             $size = round((log($tag->total) / log($max)) * 100) + 30;
             if ($size < 60) $size = 60;
-            $cloud .= "<a href=\"" . $vars['url'] . "search/?tag=". urlencode($tag->tag) . $object . $subtype . "\" style=\"font-size: {$size}%\" title=\"".addslashes($tag->tag)." ({$tag->total})\" style=\"text-decoration:none;\">" . htmlentities($tag->tag, null, 'UTF-8') . "</a>";
+            $cloud .= "<a href=\"" . $vars['url'] . "search/?tag=". urlencode($tag->tag) . $object . $subtype . "\" style=\"font-size: {$size}%\" title=\"".addslashes($tag->tag)." ({$tag->total})\" style=\"text-decoration:none;\">" . htmlentities($tag->tag, ENT_QUOTES, 'UTF-8') . "</a>";
         }
         echo $cloud;
 

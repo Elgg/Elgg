@@ -18,7 +18,7 @@
     if (is_int($vars['value'])) {
         echo date("F j, Y", $vars['value']);
     } else {
-        echo htmlentities($vars['value'], null, 'UTF-8');
+        echo htmlentities($vars['value'], ENT_QUOTES, 'UTF-8');
     }
 
 ?>
