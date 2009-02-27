@@ -1418,6 +1418,9 @@ table.search_gallery {
 .contentIntro .enableallplugins {
 	margin-left:10px;
 }
+.contentIntro .disableallplugins {
+	margin-left:20px;
+}
 .contentIntro .enableallplugins, 
 .not-active .admin_plugin_enable_disable a {
 	font: 12px/100% Arial, Helvetica, sans-serif;
