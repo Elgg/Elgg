@@ -20,7 +20,8 @@
 	    
 	//get the required variables
 		$post = get_input("post");
-		$post_comment = get_input("postComment");
+		$field_num = get_input("field_num");
+		$post_comment = get_input("postComment{$field_num}");
 		$annotation = get_annotation($post);
 		$commentOwner = $annotation->owner_guid;
 		$access_id = $annotation->access_id;

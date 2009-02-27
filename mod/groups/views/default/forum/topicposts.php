@@ -68,7 +68,8 @@
 					$submit_input = elgg_view('input/submit', array('internalname' => 'submit', 'value' => elgg_echo('save')));
 					$text_textarea = elgg_view('input/longtext', array('internalname' => 'postComment'.$vars['entity']->id, 'value' => $vars['entity']->value));
                 	$post = elgg_view('input/hidden', array('internalname' => 'post', 'value' => $vars['entity']->id));
-		  			$topic = elgg_view('input/hidden', array('internalname' => 'topic', 'value' => get_input('topic')));
+		  			$field = elgg_view('input/hidden', array('internalname' => 'field_num', 'value' => $vars['entity']->id));
+                	$topic = elgg_view('input/hidden', array('internalname' => 'topic', 'value' => get_input('topic')));
 		  			$group = elgg_view('input/hidden', array('internalname' => 'group', 'value' => get_input('group_guid')));
 		  			
 					$form_body = <<<EOT
@@ -80,6 +81,7 @@
 					$post
 					$topic
 					$group
+					$field
 					<p>
 						$submit_input
 					</p>
