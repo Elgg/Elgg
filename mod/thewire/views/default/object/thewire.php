@@ -26,15 +26,15 @@
 ?>
 <div class="thewire-singlepage">
 	<div class="thewire-post">
-		
+			    
+	    <!-- the actual shout -->
+		<div class="note_body">
+
 	    <div class="thewire_icon">
 	    <?php
 		        echo elgg_view("profile/icon",array('entity' => $vars['entity']->getOwnerEntity(), 'size' => 'small'));
 	    ?>
 	    </div>
-	    
-	    <!-- the actual shout -->
-		<div class="note_body">
 
 			<div class="thewire_options">
 			
