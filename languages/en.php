@@ -433,6 +433,8 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'registerbad' => "Your registration was unsuccessful. The username may already exist, your passwords might not match, or your username or password may be too short.",
 			'registerdisabled' => "Registration has been disabled by the system administrator",
 	
+			'firstadminlogininstructions' => 'Your new Elgg site has been successfully installed and your administrator account created. You can now configure your site further by enabling various installed plugin tools.',
+	
 			'registration:notemail' => 'The email address you provided does not appear to be a valid email address.',
 			'registration:userexists' => 'That username already exists',
 			'registration:usernametooshort' => 'Your username must be a minimum of 4 characters long.',

@@ -39,7 +39,20 @@
             	forward($forward_url);
             }
             else
-            	forward("pg/dashboard/");
+            {
+            	if (
+            		(isadminloggedin()) &&
+            		(!datalist_get('first_admin_login'))
+            	) 
+            	{
+            		system_message(elgg_echo('firstadminlogininstructions'));
+            		
+            		datalist_set('first_admin_login', time());
+            		
+            		forward('pg/admin/plugins');
+            	} else	
+            		forward("pg/dashboard/");
+            }
         } else {
         	$error_msg = elgg_echo('loginerror');
         	// figure out why the login failed
