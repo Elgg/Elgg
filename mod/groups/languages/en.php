@@ -75,7 +75,7 @@
 			 */
 			'groups:access:private' => 'Closed - Users must be invited',
 			'groups:access:public' => 'Open - Any user may join',
-			'groups:closedgroup' => 'This group has a closed membership, please request to join.',
+			'groups:closedgroup' => 'This group has a closed membership. To ask to be added, click the "request membership" menu link.',
 	
 			/*
 			   Group tools
@@ -138,6 +138,7 @@
 			'groups:updated' => "Last comment",
 			'groups:invite:subject' => "%s you have been invited to join %s!",
 			'groups:started' => "Started by",
+			'groups:joinrequest:remove:check' => 'Are you sure you want to remove this join request?',
 			'groups:invite:body' => "Hi %s,
 
 You have been invited to join the '%s' group, click below to confirm:
@@ -203,6 +204,8 @@ or click below to confirm request:
 			'groupstopic:notdeleted' => 'Topic not deleted',
 			'grouptopic:blank' => 'No topic',
 			'groups:deletewarning' => "Are you sure you want to delete this group? There is no undo!",
+	
+			'groups:joinrequestkilled' => 'The join request has been deleted.',
 	);
 					
 	add_translation("en",$english);
