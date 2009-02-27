@@ -54,8 +54,8 @@
 			$submit_input = elgg_view('input/submit', array('internalname' => 'submit', 'value' => elgg_echo('save')));
 			$form_body = <<<EOT
 	
-			<p><a class="manifest_details">{$link}</a></p>
-			<div class="manifest_file">
+			<p><a class="collapsibleboxlink">{$link}</a></p>
+			<div class="collapsible_box">
 				{$input_area}<br />{$submit_input}
 			</div>
 	
@@ -81,8 +81,8 @@ EOT;
 			$submit_input = elgg_view('input/submit', array('internalname' => 'submit', 'value' => elgg_echo('save')));
 			$form_body = <<<EOT
 	
-			<p><a class="manifest_details">{$link}</a></p>
-			<div class="manifest_file">
+			<p><a class="collapsibleboxlink">{$link}</a></p>
+			<div class="collapsible_box">
 				{$input_area}<br />{$submit_input}
 			</div>
 EOT;

@@ -62,8 +62,8 @@
 													));
 						
 					//display an edit link that will open up an edit area							
-					echo " <a class=\"manifest_details\">".elgg_echo('edit')."</a>";
-					echo "<div class=\"manifest_file\">";
+					echo " <a class=\"collapsibleboxlink\">".elgg_echo('edit')."</a>";
+					echo "<div class=\"collapsible_box\">";
 					//get the edit form and details
 					$submit_input = elgg_view('input/submit', array('internalname' => 'submit', 'value' => elgg_echo('save')));
 					$text_textarea = elgg_view('input/longtext', array('internalname' => 'postComment'.$vars['entity']->id, 'value' => $vars['entity']->value));

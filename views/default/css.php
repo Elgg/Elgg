@@ -1232,6 +1232,9 @@ table.search_gallery {
 	cursor:pointer;
 	font-size:80%;
 }
+.manifest_file {	
+	display:none;
+}
 .plugin_details a.pluginsettings_link {
 	cursor:pointer;
 	font-size:80%;
@@ -2019,6 +2022,16 @@ a.toggle_customise_edit_panel:hover {
 	font-size:1.35em;
 	line-height:1.2em;
 }
+.collapsible_box {
+	background:#F5F5F5;
+	padding:5px 10px 5px 10px;
+	margin:4px 0 4px 0;
+	display:none;
+}	
+a.collapsibleboxlink {
+	cursor:pointer;
+	font-size:80%;
+}
 #sidebar_page_tree {
 	margin:10px;
 }
@@ -2129,10 +2142,6 @@ a.toggle_customise_edit_panel:hover {
 }
 #search-box {
 	margin:0 0 20px 0;
-}
-
-.manifest_file {
-	display:none;
 }
 
 /* force tinyMCE editor initial width for safari */
