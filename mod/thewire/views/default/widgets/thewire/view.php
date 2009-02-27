@@ -9,7 +9,11 @@
 			set_page_owner($page_owner->getGUID());
 		}
 		
-		$thewire = $page_owner->getObjects('thewire', $vars['entity']->num_display);
+		$num = $vars['entity']->num_display;
+		if(!$num)
+			$num = 4;
+		
+		$thewire = $page_owner->getObjects('thewire', $num);
 		
 		// If there are any thewire to view, view them
 		if (is_array($thewire) && sizeof($thewire) > 0) {
