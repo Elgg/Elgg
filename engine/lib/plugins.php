@@ -688,8 +688,10 @@
 			
 			register_action('admin/plugins/enable', false, "", true); // Enable
 			register_action('admin/plugins/disable', false, "", true); // Disable
+			register_action('admin/plugins/enableall', false, "", true); // Enable all
+			register_action('admin/plugins/disableall', false, "", true); // Disable all
 			
-			register_action('admin/plugins/reorder', false, "", true); // Disable
+			register_action('admin/plugins/reorder', false, "", true); // Reorder
 			
 		}
 		

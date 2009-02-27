@@ -634,6 +634,8 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	
 			'link:text' => 'view link',
 	
+			'enableall' => 'Enable All',
+			'disableall' => 'Disable All',
 	
 		/**
 		 * Generic questions
