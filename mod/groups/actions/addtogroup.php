@@ -51,7 +51,7 @@
 							notify_user($user->getGUID(), $group->owner_guid, 
 								sprintf(elgg_echo('groups:welcome:subject'), $group->name), 
 								sprintf(elgg_echo('groups:welcome:body'), $user->name, $group->name, $group->getURL()),
-								NULL, "email");
+								NULL);
 								
 							system_message(elgg_echo('groups:addedtogroup'));
 						}
@@ -70,7 +70,7 @@
 							if (notify_user($user->getGUID(), $group->owner_guid, 
 									sprintf(elgg_echo('groups:invite:subject'), $user->name, $group->name), 
 									sprintf(elgg_echo('groups:invite:body'), $user->name, $group->name, "{$CONFIG->url}action/groups/join?user_guid={$user->guid}&group_guid={$group->guid}"),
-									NULL, "email"))
+									NULL))
 								system_message(elgg_echo("groups:userinvited"));
 							else
 								register_error(elgg_echo("groups:usernotinvited"));
