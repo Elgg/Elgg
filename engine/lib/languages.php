@@ -76,8 +76,9 @@
 			global $CONFIG;
 		
 			$user = get_loggedin_user();  
+			$language = false;
 			
-			if ((empty($language)) && ($user) && ($user->language))
+			if (($user) && ($user->language))
 				$language = $user->language;
 
 			if ((!$language) && ($CONFIG->language))
