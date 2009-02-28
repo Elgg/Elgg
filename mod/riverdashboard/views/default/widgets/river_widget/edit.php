@@ -8,6 +8,13 @@
 	 * @copyright Curverider Ltd 2008-2009
 	 * @link http://elgg.com/
 	 */
+	 
+	if(!$vars['entity']->content_type)
+		$content_type = 'mine';
+	else
+		$content_type = $vars['entity']->content_type;
+
+		
 ?>
 <p>
 	<?php echo elgg_echo('river:widget:label:displaynum'); ?>
@@ -23,7 +30,7 @@
 	<?php echo elgg_echo('river:widget:type'); ?>
 	
 	<select name="params[content_type]">
-		<option value="mine" <?php if ($vars['entity']->content_type == 'mine') echo " selected=\"yes\" "; ?>><?php echo elgg_echo("river:widgets:mine");?></option>
-		<option value="friends" <?php if (($vars['entity']->content_type != 'mine')) echo " selected=\"yes\" "; ?>><?php echo elgg_echo("river:widgets:friends");?></option>
+		<option value="mine" <?php if ($content_type == 'mine') echo " selected=\"yes\" "; ?>><?php echo elgg_echo("river:widgets:mine");?></option>
+		<option value="friends" <?php if ($content_type != 'mine') echo " selected=\"yes\" "; ?>><?php echo elgg_echo("river:widgets:friends");?></option>
 	</select>
 </p>
