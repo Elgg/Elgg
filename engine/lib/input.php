@@ -108,6 +108,7 @@
 		return $path;
 	}
 	
+	
 	    /**
         * Takes a string and turns any URLs into formatted links
         * 
@@ -116,16 +117,16 @@
         **/
         
        function parse_urls($text) {
-          
-            if (preg_match_all('/(?<!=["\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\'\!\(\)]+)/ie', $text, $urls))   {
-               
-                foreach (array_unique($urls[1]) AS $url){
-                	$urltext = str_replace('/', '/<wbr />', $url);
-                    $text = str_replace($url, '<a href="'. $url .'" style="text-decoration:underline;">'. $urltext .'</a>', $text);
-                }
-            }
-            
-            return $text;
+       	
+       		return preg_replace_callback('/(?<!=["\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\'\!\(\)]+)/i', 
+       		create_function(
+	            '$matches',
+            	'
+            		$url = $matches[1];
+            		$urltext = str_replace("/", "/<wbr />", $url);
+            		return "<a href=\"$url\" style=\"text-decoration:underline;\">$urltext</a>";
+            	'
+        	), $text);
         }
 	
 	function autop($pee, $br = 1) {
