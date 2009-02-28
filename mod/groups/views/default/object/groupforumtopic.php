@@ -12,7 +12,7 @@
 	 
     //get the required variables
     $title = $vars['entity']->title;
-    $description = autop($vars['entity']->description);
+    $description = get_entity($vars['entity']->description);
     $topic_owner = get_user($vars['entity']->owner_guid);
     $group = get_entity($vars['entity']->container_guid);
     $forum_created = friendly_time($vars['entity']->time_created);
