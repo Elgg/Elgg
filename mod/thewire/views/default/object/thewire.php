@@ -16,7 +16,7 @@
 
 	if (isset($vars['entity'])) {
     		
-    		$user_name = $vars['entity']->getOwnerEntity()->username;
+    		$user_name = $vars['entity']->getOwnerEntity()->name;
     		
     		//if the note is a reply, we need some more info
     		
