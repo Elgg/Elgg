@@ -31,7 +31,7 @@
 		echo "</div>";
     }
 ?>
-<br class="clearfloat" />
+<div class="clearfloat" /></div>
 </div>
 <?php
 	}//end of forum active check
