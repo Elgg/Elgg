@@ -319,7 +319,7 @@ span.timestamp {
 }
 .groupmembershipwidget .contentWrapper .groupicon {
 	float:left;
-	margin:0 10px 10px 0
+	margin:0 10px 0 0;
 }
 .groupmembershipwidget .search_listing_info p {
 	color: #666666;
@@ -334,7 +334,7 @@ span.timestamp {
 }
 .featuredgroups .contentWrapper .groupicon {
 	float:left;
-	margin:0 10px 10px 0
+	margin:0 10px 0 0;
 }
 .featuredgroups .contentWrapper p {
 	margin: 0;

@@ -48,11 +48,13 @@
 		
 	}else{
 		
-		$info = "<p class=\"latest_discussion_info\"><span class=\"timestamp\">" . sprintf(elgg_echo('group:created'), $forum_created, $counter) . "</span></p>";
+		$info = "<p class=\"latest_discussion_info\"><span class=\"timestamp\">" . sprintf(elgg_echo('group:created'), $forum_created, $counter) . "</span>";
+		if ($last_time) $info.= "<br /><span class='timestamp'>" . elgg_echo('groups:updated') . " " . friendly_time($last_time) . " by <a href=\"" . $u->getURL() . "\">" . $u->username . "</a></span>";
+		$info .= "</p>";
+		
 	    //get the user avatar
 		$icon = elgg_view("profile/icon",array('entity' => $topic_owner, 'size' => 'small'));
 	    $info .= "<p>" . elgg_echo('groups:started') . " " . $topic_owner->name . ": <a href=\"{$vars['url']}mod/groups/topicposts.php?topic={$vars['entity']->guid}&group_guid={$group->guid}\">{$title}</a></p>";
-		if ($last_time) $info.= "<p class='owner_timestamp'>" . elgg_echo('groups:updated') . " " . friendly_time($last_time) . " <a href=\"" . $u->getURL() . "\">" . $u->username . "</a></p>";
 	    
 		$info .= $description;
 		
