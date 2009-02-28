@@ -180,6 +180,7 @@
 /* group files widget */
 #filerepo_widget_layout {
 	margin:0 0 20px 0;
+	padding: 0 0 5px 0;
 	background:white;
 	-webkit-border-radius: 8px; 
 	-moz-border-radius: 8px;
