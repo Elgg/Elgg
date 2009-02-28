@@ -9,13 +9,13 @@
 			'thewire' => "The wire",
 			'thewire:user' => "%s's wire",
 			'thewire:posttitle' => "%s's notes on the wire: %s",
-			'thewire:everyone' => "Site wide wire",
+			'thewire:everyone' => "All wire posts",
 	
-			'thewire:read' => "Your wire",
+			'thewire:read' => "Your wire posts",
 			
 			'thewire:strapline' => "%s",
 	
-			'thewire:add' => "Post to your wire",
+			'thewire:add' => "Post to the wire",
 		    'thewire:text' => "A note on the wire",
 			'thewire:reply' => "Reply",
 			'thewire:via' => "via",
