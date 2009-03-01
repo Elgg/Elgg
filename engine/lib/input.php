@@ -60,6 +60,12 @@
 		global $CONFIG;
 		if (!isset($CONFIG->input))
 			$CONFIG->input = array();
+					
+		if (is_array($value))
+		{
+			foreach ($value as $key => $val)
+				$value[$key] = trim($val);
+		}
 		$CONFIG->input[trim($variable)] = trim($value);
 			
 	}
