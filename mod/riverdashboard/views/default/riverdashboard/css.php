@@ -21,13 +21,8 @@
 	margin:0;
 }
 .sidebarBox .last_wirepost .thewire-singlepage .thewire_options {
-	width:auto;
+	display:none;
 }
-/* IE6 */
-* html .sidebarBox .last_wirepost .thewire-singlepage .thewire_options { width:50px; }
-/* IE7 */
-*:first-child+html .sidebarBox .last_wirepost .thewire-singlepage .thewire_options { width:50px; }
-
 .sidebarBox .last_wirepost .thewire-singlepage .note_date {
 	line-height: 1em;
 	padding:3px 0 0 0;
