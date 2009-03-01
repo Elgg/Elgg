@@ -369,7 +369,7 @@ span.timestamp {
 	height:14px;
 	margin:0;
 	background: url("<?php echo $vars['url']; ?>_graphics/icon_customise_remove.png") no-repeat 0 0;
-	text-indent: -9000em;
+	text-indent: 9000em;
 }
 .delete_discussion a:hover {
 	background-position: 0 -16px;
