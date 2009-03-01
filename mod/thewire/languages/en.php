@@ -11,7 +11,7 @@
 			'thewire:posttitle' => "%s's notes on the wire: %s",
 			'thewire:everyone' => "All wire posts",
 	
-			'thewire:read' => "Your wire posts",
+			'thewire:read' => "Wire posts",
 			
 			'thewire:strapline' => "%s",
 	
