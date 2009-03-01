@@ -14,7 +14,7 @@
 	    
 ?>
 	<form action="<?php echo $vars['url']; ?>action/groups/addpost" method="post">
-		<p>
+		<p class="longtext_editarea">
 			<label><?php echo elgg_echo("groups:reply"); ?><br />
 			<?php
 

@@ -1418,9 +1418,6 @@ table.search_gallery {
 .contentIntro .enableallplugins {
 	margin-left:10px;
 }
-.contentIntro .disableallplugins {
-	margin-left:20px;
-}
 .contentIntro .enableallplugins, 
 .not-active .admin_plugin_enable_disable a {
 	font: 12px/100% Arial, Helvetica, sans-serif;
@@ -2367,6 +2364,12 @@ h3.settings {
 /* force tinyMCE editor initial width for safari */
 .mceLayout {
 	width:683px;
+}
+p.longtext_editarea {
+	margin:0 !important;
+}
+.toggle_editor_container {
+	margin:0 0 15px 0;
 }
 /* add/remove longtext tinyMCE editor */
 a.toggle_editor {

@@ -58,7 +58,7 @@
 		</p>
 		
 		<!-- topic message input -->
-		<p>
+		<p class="longtext_editarea">
 			<label><?php echo elgg_echo("groups:topicmessage"); ?><br />
 			<?php
 

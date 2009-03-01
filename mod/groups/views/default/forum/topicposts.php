@@ -75,7 +75,7 @@
 					$form_body = <<<EOT
 					
 					<div class='edit_forum_comments'>
-					<p>	
+					<p class='longtext_editarea'>	
 						$text_textarea
 					</p>
 					$post
