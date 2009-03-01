@@ -357,6 +357,28 @@ span.timestamp {
 	margin:5px 0 0 0;
 }
 
+/* delete post */
+.delete_discussion {
+	
+}
+.delete_discussion a {
+	display:block;
+	float:right;
+	cursor: pointer;
+	width:14px;
+	height:14px;
+	margin:0;
+	background: url("<?php echo $vars['url']; ?>_graphics/icon_customise_remove.png") no-repeat 0 0;
+	text-indent: -9000em;
+}
+.delete_discussion a:hover {
+	background-position: 0 -16px;
+	text-decoration: none;
+}
+/* IE6 */
+* html .delete_discussion a { text-indent: none; font-size: 1px; }
+/* IE7 */
+*:first-child+html .delete_discussion a { text-indent: none; font-size: 1px; }
 
 /* delete group button */
 #delete_group_option input[type="submit"] {
