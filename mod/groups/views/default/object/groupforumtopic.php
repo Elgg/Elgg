@@ -12,7 +12,6 @@
 	 
     //get the required variables
     $title = $vars['entity']->title;
-    $description = get_entity($vars['entity']->description);
     $topic_owner = get_user($vars['entity']->owner_guid);
     $group = get_entity($vars['entity']->container_guid);
     $forum_created = friendly_time($vars['entity']->time_created);
@@ -43,8 +42,7 @@
 	    	$info .= "<p>" . elgg_echo('group') . ": <a href=\"{$group->getURL()}\">{$group->name}</a></p>";
 	    
 		$info .= "<p>" . elgg_echo('topic') . ": <a href=\"{$vars['url']}mod/groups/topicposts.php?topic={$vars['entity']->guid}&group_guid={$group->guid}\">{$title}</a></p>";
-		//get the forum description
-		$info .= $description;
+		
 		
 	}else{
 		
@@ -55,8 +53,16 @@
 	    //get the user avatar
 		$icon = elgg_view("profile/icon",array('entity' => $topic_owner, 'size' => 'small'));
 	    $info .= "<p>" . elgg_echo('groups:started') . " " . $topic_owner->name . ": <a href=\"{$vars['url']}mod/groups/topicposts.php?topic={$vars['entity']->guid}&group_guid={$group->guid}\">{$title}</a></p>";
-	    
-		$info .= $description;
+	    if (groups_can_edit_discussion($vars['entity'], page_owner_entity()->owner_guid)) {
+
+                	// display the delete link to those allowed to delete
+                	$info .= "<div class=\"delete_discussion\">" . elgg_view("output/confirmlink", array(
+                																'href' => $vars['url'] . "action/groups/deletetopic?topic=" . $vars['entity']->guid . "&group=" . $vars['entity']->container_guid,
+                																'text' => elgg_echo('delete'),
+                																'confirm' => elgg_echo('deleteconfirm'),
+                															)) . "</div>";
+                				
+        }
 		
 	}
 		
