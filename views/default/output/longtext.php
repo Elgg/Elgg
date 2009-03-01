@@ -17,5 +17,5 @@
 
 	global $CONFIG;
 
-    echo autop(parse_urls(filter_tags($vars['value'], $CONFIG->allowedtags, $CONFIG->allowedprotocols)));
+    echo autop(parse_urls(filter_tags($vars['value'])));
 ?>

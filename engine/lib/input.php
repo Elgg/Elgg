@@ -35,12 +35,8 @@
 			}
 			
 			if ($filter_result)
-			{
-				
-				global $CONFIG;
-				$var = filter_tags($var, $CONFIG->allowedtags, $CONFIG->allowedprotocols);
-			}
-				
+				$var = filter_tags($var);
+
 			return $var;
 			
 		}
@@ -65,21 +61,32 @@
 		{
 			foreach ($value as $key => $val)
 				$value[$key] = trim($val);
+			
+			$CONFIG->input[trim($variable)] = $value;
 		}
-		$CONFIG->input[trim($variable)] = trim($value);
+		else
+			$CONFIG->input[trim($variable)] = trim($value);
 			
 	}
 	
 	/**
-	 * Filter tags from a given string
-	 * @param $var
-	 * @return mixed The filtered result
+	 * Kses filtering of tags, called on a plugin hook
+	 *
+	 * @param mixed $var Variable to filter
+	 * @return mixed
 	 */
-	function filter_tags($var, $allowedtags, $allowedprotocols)
+	function kses_filter_tags($hook, $entity_type, $returnvalue, $params)
 	{
-		$return = false;
+		$return = $returnvalue;
+		$var = $returnvalue;
 		
 		if (@include_once(dirname(dirname(dirname(__FILE__)))) . "/vendors/kses/kses.php") {
+			
+			global $CONFIG;
+			
+			$allowedtags = $CONFIG->allowedtags; 
+			$allowedprotocols = $CONFIG->allowedprotocols;
+			
 			if (!is_array($var)) {
 				$return = "";
 				$return = kses($var, $allowedtags, $allowedprotocols);
@@ -91,8 +98,18 @@
 				}
 			}
 		}
-		
+	
 		return $return;
+	}
+	
+	/**
+	 * Filter tags from a given string based on registered hooks.
+	 * @param $var
+	 * @return mixed The filtered result
+	 */
+	function filter_tags($var)
+	{
+		return trigger_plugin_hook('validate', 'input', null, $var);
 	}
 	
 	/**
@@ -115,25 +132,24 @@
 	}
 	
 	
-	    /**
-        * Takes a string and turns any URLs into formatted links
-        * 
-        * @param string $text The input string
-        * @return string The output stirng with formatted links
-        **/
-        
-       function parse_urls($text) {
-       	
-       		return preg_replace_callback('/(?<!=["\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\'\!\(\)]+)/i', 
-       		create_function(
-	            '$matches',
-            	'
-            		$url = $matches[1];
-            		$urltext = str_replace("/", "/<wbr />", $url);
-            		return "<a href=\"$url\" style=\"text-decoration:underline;\">$urltext</a>";
-            	'
-        	), $text);
-        }
+    /**
+     * Takes a string and turns any URLs into formatted links
+     * 
+     * @param string $text The input string
+     * @return string The output stirng with formatted links
+     **/
+    function parse_urls($text) {
+       
+       	return preg_replace_callback('/(?<!=["\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\'\!\(\)]+)/i', 
+       	create_function(
+            '$matches',
+            '
+            	$url = $matches[1];
+            	$urltext = str_replace("/", "/<wbr />", $url);
+            	return "<a href=\"$url\" style=\"text-decoration:underline;\">$urltext</a>";
+            '
+        ), $text);
+    }
 	
 	function autop($pee, $br = 1) {
 		$pee = $pee . "\n"; // just to make things a little easier, pad the end
@@ -479,6 +495,9 @@
 		$CONFIG->allowedprotocols = array('http', 'https', 'ftp', 'news', 'mailto', 'rtsp', 'teamspeak', 'gopher', 'mms',
                            'color', 'callto', 'cursor', 'text-align', 'font-size', 'font-weight', 'font-style', 
                            'border', 'margin', 'padding', 'float');
+		
+		// For now, register the kses for processing
+		register_plugin_hook('validate', 'input', 'kses_filter_tags', 1);
 	}
 	
 	register_elgg_event_handler('init','system','input_init');
