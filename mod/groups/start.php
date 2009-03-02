@@ -215,7 +215,7 @@
 					}
 				}
 				
-				if($page_owner->forum_enable == "yes"){ 
+				if($page_owner->forum_enable != "no"){ 
 				    add_submenu_item(elgg_echo('groups:forum'),$CONFIG->wwwroot . "pg/groups/forum/{$page_owner->getGUID()}/", '1groupslinks');
 			    }
 					

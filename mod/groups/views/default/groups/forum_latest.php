@@ -3,7 +3,7 @@
     // Latest forum discussion for the group home page
 
     //check to make sure this group forum has been activated
-    if($vars['entity']->forum_enable == 'yes'){
+    if($vars['entity']->forum_enable != 'no'){
 
 ?>
 
