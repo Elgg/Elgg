@@ -512,7 +512,7 @@
 		// Check to see if we have access and it exists
 		if ($row) 
 		{
-			disable_user_entities($guid);
+			//disable_user_entities($guid);
 			// Delete any existing stuff
 			return delete_data("DELETE from {$CONFIG->dbprefix}users_entity where guid=$guid");
 		}
