@@ -68,7 +68,7 @@
 			}
 
 			if ($dblink = get_db_link('read')) {
-				mysql_query("select * from {$CONFIG->dbprefix}datalists limit 1",$dblink);
+				mysql_query("select name from {$CONFIG->dbprefix}datalists limit 1",$dblink);
 				if (mysql_errno($dblink) > 0) return false;
 			} else return false; 
 			
