@@ -368,8 +368,10 @@
 			$f = $this->create_file($this->sanitise_filename($key));
 			if ($f) 
 			{
-				fseek($f, $offset);
+				//fseek($f, $offset);
+				if (!$limit) $limit = -1;
 				$data = stream_get_contents($f, $limit, $offset);
+				
 				fclose($f);
 				
 				return $data;
