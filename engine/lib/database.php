@@ -599,7 +599,7 @@
         }
         
 	/**
-	 * Wrapper function for Americans
+	 * Wrapper function for alternate English spelling
 	 *
 	 * @param string $string The string to sanitise
 	 * @return string Sanitised string
@@ -620,7 +620,7 @@
         }
         
 	/**
-	 * Wrapper function for Americans
+	 * Wrapper function for alternate English spelling
 	 *
 	 * @param int $int
 	 * @return int Sanitised integer
