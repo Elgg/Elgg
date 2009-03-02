@@ -262,21 +262,23 @@ a.add_topic_button:hover {
 
 
 /* latest discussion listing */
-p.latest_discussion_info {
+.latest_discussion_info {
 	float:right;
-	width:280px;
+	width:300px;
 	text-align: right;
+	margin-left: 10px;
 }
 .groups .search_listing br {
 	height:0;
 	line-height:0;
 }
-
 span.timestamp {
 	color:#666666;
 	font-size: 90%;
 }
-
+.latest_discussion_info .timestamp {
+	font-size: 0.85em;
+}
 /* new groups page */
 .groups .search_listing {
 	border:2px solid #cccccc;
@@ -369,16 +371,15 @@ span.timestamp {
 	height:14px;
 	margin:0;
 	background: url("<?php echo $vars['url']; ?>_graphics/icon_customise_remove.png") no-repeat 0 0;
-	text-indent: 9000em;
 }
 .delete_discussion a:hover {
 	background-position: 0 -16px;
 	text-decoration: none;
 }
 /* IE6 */
-* html .delete_discussion a { text-indent: none; font-size: 1px; }
+* html .delete_discussion a { font-size: 1px; }
 /* IE7 */
-*:first-child+html .delete_discussion a { text-indent: none; font-size: 1px; }
+*:first-child+html .delete_discussion a { font-size: 1px; }
 
 /* delete group button */
 #delete_group_option input[type="submit"] {

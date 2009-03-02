@@ -48,7 +48,7 @@
 		
 	}else{
 		
-		$info = "<p class=\"latest_discussion_info\"><span class=\"timestamp\">" . sprintf(elgg_echo('group:created'), $forum_created, $counter) . "</span>";
+		$info = "<span class=\"latest_discussion_info\"><span class=\"timestamp\">" . sprintf(elgg_echo('group:created'), $forum_created, $counter) . "</span>";
 		if ($last_time) $info.= "<br /><span class='timestamp'>" . elgg_echo('groups:updated') . " " . friendly_time($last_time) . " by <a href=\"" . $u->getURL() . "\">" . $u->name . "</a></span>";
 
 		    if (groups_can_edit_discussion($vars['entity'], page_owner_entity()->owner_guid)) {
@@ -56,18 +56,18 @@
 	                	// display the delete link to those allowed to delete
 	                	$info .= "<br /><span class=\"delete_discussion\">" . elgg_view("output/confirmlink", array(
 	                																'href' => $vars['url'] . "action/groups/deletetopic?topic=" . $vars['entity']->guid . "&group=" . $vars['entity']->container_guid,
-	                																'text' => elgg_echo('delete'),
+	                																'text' => " ",
 	                																'confirm' => elgg_echo('deleteconfirm'),
 	                															)) . "</span>";
 	                				
 	           }		
 		
-		$info .= "</p>";
+		$info .= "</span>";
 		
 	    //get the user avatar
 		$icon = elgg_view("profile/icon",array('entity' => $topic_owner, 'size' => 'small'));
 	    $info .= "<p>" . elgg_echo('groups:started') . " " . $topic_owner->name . ": <a href=\"{$vars['url']}mod/groups/topicposts.php?topic={$vars['entity']->guid}&group_guid={$group->guid}\">{$title}</a></p>";
-
+		$info .= "<div class='clearfloat'></div>";
 		
 	}
 		
