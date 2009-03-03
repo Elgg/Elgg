@@ -1525,9 +1525,10 @@ table.search_gallery {
 #owner_block_odd_feed,
 #owner_block_bookmark_this,
 #owner_block_report_this {
-	padding:2px 0 3px 0;
+	padding:5px 0 0 0;
 }
 #owner_block_report_this {
+	padding-bottom:5px;
 	border-bottom:1px solid #cccccc;
 }
 #owner_block_rss_feed a {
