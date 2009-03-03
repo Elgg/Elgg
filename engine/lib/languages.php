@@ -105,7 +105,9 @@
 			
 			global $CONFIG;
 				
-			$language = get_language();
+			static $CURRENT_LANGUAGE;
+			if ((!$CURRENT_LANGUAGE) && (!$language)) 
+				$CURRENT_LANGUAGE = $language = get_language();
 
 			if (isset($CONFIG->translations[$language][$message_key])) {
 				return $CONFIG->translations[$language][$message_key];
