@@ -1073,7 +1073,7 @@
 												'sysmessages' => system_messages(null,"")
 											  )
 										);
-			$split_output = str_split($output, 8192);
+			$split_output = str_split($output, 1024);
 
     		foreach($split_output as $chunk)
         		echo $chunk; 

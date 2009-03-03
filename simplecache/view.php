@@ -62,7 +62,7 @@
 			}
 		}
 		
-		$split_output = str_split($contents, 8192);
+		$split_output = str_split($contents, 1024);
 
     	foreach($split_output as $chunk)
         	echo $chunk; 
