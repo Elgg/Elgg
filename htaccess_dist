@@ -76,7 +76,7 @@ DirectoryIndex index.php
 #<IfModule mod_deflate.c>
 #	AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript
 #	BrowserMatch ^Mozilla/4 gzip-only-text/html
-#	BrowserMatch ^Mozilla/4\.0[678] no-gzip
+#	BrowserMatch ^Mozilla/4\.[0678] no-gzip
 #	BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
 #	Header append Vary User-Agent env=!dont-vary
 	
