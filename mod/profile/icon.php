@@ -51,6 +51,8 @@
 		header("Pragma: public");
 		header("Cache-Control: public");
 		header("Content-Length: " . strlen($contents));
-		echo $contents;
+		$splitString = str_split($contents, 8192);
+		foreach($splitString as $chunk)
+			echo $chunk;
 
 ?>
