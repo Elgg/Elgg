@@ -155,18 +155,14 @@
 		}
 		
 	/**
-	 * Generate a view hash.
+	 * Generate a view hash [EXPERIMENTAL].
 	 *
 	 * @param string $view The view name
 	 * @param array $vars The view parameters
 	 * @return string The hash.
 	 */	
 		function elgg_get_viewhash($view, $vars)
-		{
-			global $VIEW_CACHE_DISABLED, $CONFIG;
-			
-			if (($VIEW_CACHE_DISABLED) || (!$CONFIG->viewcache)) return false;
-			
+		{			
 			$unchanged_vars = unserialize(serialize($vars));
 			
 			// This is a bit of a hack, but basically we have to remove things that change on each pageload 
@@ -180,32 +176,7 @@
 			return md5(current_page_url() . $view . serialize($uncharged_vars)); // This should be enough to stop artefacts
 			
 		}
-		
-	/**
-	 * Cache a view.
-	 *
-	 * @param string $view The content.
-	 * @param string $content The content.
-	 * @param string $viewhash The hash
-	 * @return bool
-	 */
-		function elgg_cache_view($view, $content, $viewhash)
-		{
-			global $view_cache, $VIEW_CACHE_DISABLED, $CONFIG;
-			
-			if (($VIEW_CACHE_DISABLED) || (!$CONFIG->viewcache)) return false;
-			
-			// Cache
-			if ($viewhash)
-			{
-				error_log("MARCUS : Caching $view:$viewhash");
-				$view_cache->save($viewhash, $content);
-				
-				return $viewhash;
-			}
-			
-			return false;
-		}
+	
 		
 	/**
 	 * Get a cached view based on its hash.
@@ -314,11 +285,7 @@
 		    		return $template_handler($view, $vars);
 		    }
 		
-		// Attempt to memcache views.
-		    /*$view_hash = elgg_get_viewhash($view, $vars);
-		    $cached_view = elgg_get_cached_view($view_hash);
-		    if ($cached_view) return $cached_view;*/
-		    
+		
 		// Get the current viewtype
 			$viewtype = elgg_get_viewtype(); 
 		
@@ -330,6 +297,19 @@
 		    }	    
 		// Start the output buffer, find the requested view file, and execute it
 		    ob_start();
+		    
+		// Attempt to cache views [EXPERIMENTAL] 
+			/*if (ob_get_level()==1) {
+			    $view_hash = elgg_get_viewhash($view, $vars); 
+			    $view_cache = elgg_get_filepath_cache();
+			    $cached_view = $view_cache->load($view_hash);
+			    
+			    if ($cached_view) {
+			    	ob_get_clean();
+			    	return $cached_view;
+			    }
+			}*/
+		    
 		    foreach($viewlist as $priority => $view) {
 		    	
 		    	$view_location = elgg_get_view_location($view);
@@ -354,14 +334,15 @@
 		    
 		    }
 
+	    // Cache view [EXPERIMENTAL]
+		//if (ob_get_level()==1) // Only cache top level view
+		//	$view_cache->save($view_hash, $content);
+				
 		// Save the output buffer into the $content variable
 			$content = ob_get_clean();
 			
 		// Plugin hook
 			$content = trigger_plugin_hook('display','view',array('view' => $view),$content);
-		
-		// Cache view
-			//elgg_cache_view($view, $content, $view_hash);
 		
 		// Return $content
 		    return $content;
