@@ -496,6 +496,21 @@
 		}
 		
 		/**
+		 * This is a factory function which produces an ElggCache object suitable for caching file load paths.
+		 *
+		 * TODO: Can this be done in a cleaner way?
+		 * TODO: Swap to memcache etc?
+		 */
+		function elgg_get_filepath_cache()
+		{
+			global $CONFIG;
+			static $FILE_PATH_CACHE;
+			if (!$FILE_PATH_CACHE) $FILE_PATH_CACHE = new ElggFileCache($CONFIG->dataroot);
+			
+			return $FILE_PATH_CACHE;
+		}
+		
+		/**
 		 * Internal function for retrieving views used by elgg_view_tree
 		 *
 		 * @param unknown_type $dir

@@ -211,9 +211,20 @@
 		 * @subpackage Core
 		 */
 		function load_plugins() {
-
+			
 			global $CONFIG;
+			
+			$cache = elgg_get_filepath_cache();
+			
 			if (!empty($CONFIG->pluginspath)) {
+				
+				// See if we have cached values for things
+				$cached_view_paths = $cache->load('view_paths');
+				if ($cached_view_paths) $CONFIG->views = unserialize($cached_view_paths);
+				
+				$cached_lang_paths = $cache->load('lang_paths');
+				if ($cached_lang_paths) $CONFIG->views = unserialize($cached_lang_paths);
+				
 				
 				// temporary disable all plugins if there is a file called 'disabled' in the plugin dir
 				if (file_exists($CONFIG->pluginspath . "disabled"))
@@ -222,27 +233,37 @@
 				$plugins = get_plugin_list();
 				
 				if (sizeof($plugins))
+				{
 					foreach($plugins as $mod) {
 						if (is_plugin_enabled($mod)) {
 							if (file_exists($CONFIG->pluginspath . $mod)) {
 								if (!include($CONFIG->pluginspath . $mod . "/start.php"))
 									throw new PluginException(sprintf(elgg_echo('PluginException:MisconfiguredPlugin'), $mod));
-								if (is_dir($CONFIG->pluginspath . $mod . "/views")) {
-									if ($handle = opendir($CONFIG->pluginspath . $mod . "/views")) {
-										while ($viewtype = readdir($handle)) {
-											if (!in_array($viewtype,array('.','..','.svn','CVS')) && is_dir($CONFIG->pluginspath . $mod . "/views/" . $viewtype)) {
-												autoregister_views("",$CONFIG->pluginspath . $mod . "/views/" . $viewtype,$CONFIG->pluginspath . $mod . "/views/", $viewtype);
+									
+								if (!$cached_view_paths)
+								{
+									if (is_dir($CONFIG->pluginspath . $mod . "/views")) {
+										if ($handle = opendir($CONFIG->pluginspath . $mod . "/views")) {
+											while ($viewtype = readdir($handle)) {
+												if (!in_array($viewtype,array('.','..','.svn','CVS')) && is_dir($CONFIG->pluginspath . $mod . "/views/" . $viewtype)) {
+													autoregister_views("",$CONFIG->pluginspath . $mod . "/views/" . $viewtype,$CONFIG->pluginspath . $mod . "/views/", $viewtype);
+												}
 											}
 										}
 									}
 								}
+								
 								if (is_dir($CONFIG->pluginspath . $mod . "/languages")) {
 									register_translations($CONFIG->pluginspath . $mod . "/languages/");
 								}
 							}
 						}
 					}
-				
+				}
+
+				// Cache results
+				if (!$cached_view_paths)
+					$cache->save('view_paths', serialize($CONFIG->views));
 			}
 			
 		}
