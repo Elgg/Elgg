@@ -65,6 +65,7 @@
 		
 		$now = time();
 		
+		ob_start();
 		run_function_once('crontrigger_minute', $now - $minute);
 		run_function_once('crontrigger_fiveminute', $now - $fiveminute);
 		run_function_once('crontrigger_fifteenmin', $now - $fifteenmin);
@@ -74,6 +75,7 @@
 		run_function_once('crontrigger_weekly', $now - $week);
 		run_function_once('crontrigger_monthly', $now - $month);
 		run_function_once('crontrigger_yearly', $now - $year);
+		ob_flush();
 	}
 	
 	
