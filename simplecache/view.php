@@ -55,7 +55,7 @@
 					mysql_close($mysql_dblink);
 					require_once(dirname(dirname(__FILE__)) . "/engine/start.php");    
 					$contents = elgg_view($view);
-					header("Content-Length: " . strlen($contents));
+					//header("Content-Length: " . strlen($contents));
 				}
 			}
 		}
