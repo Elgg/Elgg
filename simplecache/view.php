@@ -62,9 +62,10 @@
 			}
 		}
 		
-		// echo $contents;
-		$splitString = str_split($contents, 8192);
-		foreach($splitString as $chunk)
-			echo $chunk;
+		$split_output = str_split($contents, 8192);
+
+    	foreach($split_output as $chunk)
+        	echo $chunk; 
+
 
 ?>

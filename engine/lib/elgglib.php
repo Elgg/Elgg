@@ -1066,14 +1066,17 @@
 		function page_draw($title, $body, $sidebar = "") {
 
 			// Draw the page
-			echo elgg_view('pageshells/pageshell', array(
+			$output = elgg_view('pageshells/pageshell', array(
 												'title' => $title,
 												'body' => $body,
 												'sidebar' => $sidebar,
 												'sysmessages' => system_messages(null,"")
 											  )
 										);
-			
+			$split_output = str_split($output, 8192);
+
+    		foreach($split_output as $chunk)
+        		echo $chunk; 
 		}
 		
 	/**
