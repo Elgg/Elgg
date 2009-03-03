@@ -1307,9 +1307,7 @@
 			if (!isset($CONFIG->menucontexts)) {
 				$CONFIG->menucontexts = array();
 			}
-			if (empty($menu)) {
-				get_plugin_name();
-			}
+			
 			if (empty($context)) {
 				$context = get_plugin_name();
 			}
