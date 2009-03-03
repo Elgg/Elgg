@@ -390,7 +390,7 @@
 		{
 			$dir = $this->get_variable("cache_path");
 			
-			return unlink($dir.$f);
+			return unlink($dir.$key);
 		}
 		
 		public function clear()
