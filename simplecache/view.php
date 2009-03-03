@@ -16,7 +16,7 @@
 		require_once(dirname(dirname(__FILE__)). '/engine/settings.php');
 		
 		global $CONFIG, $viewinput, $override;
-		if (!isset($override)) $override = true;
+		if (!isset($override)) $override = false;
 		
 		$contents = '';
 		if (!isset($viewinput)) $viewinput = $_GET;
