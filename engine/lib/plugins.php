@@ -219,12 +219,8 @@
 			if (!empty($CONFIG->pluginspath)) {
 				
 				// See if we have cached values for things
-				$cached_view_paths = $cache->load('view_paths');
+				$cached_view_paths = $cache->load('view_paths'); 
 				if ($cached_view_paths) $CONFIG->views = unserialize($cached_view_paths);
-				
-				$cached_lang_paths = $cache->load('lang_paths');
-				if ($cached_lang_paths) $CONFIG->views = unserialize($cached_lang_paths);
-				
 				
 				// temporary disable all plugins if there is a file called 'disabled' in the plugin dir
 				if (file_exists($CONFIG->pluginspath . "disabled"))
