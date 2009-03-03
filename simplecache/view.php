@@ -15,7 +15,8 @@
 	// Get DB settings, connect
 		require_once(dirname(dirname(__FILE__)). '/engine/settings.php');
 		
-		global $CONFIG, $viewinput;
+		global $CONFIG, $viewinput, $override;
+		if (!isset($override)) $override = true;
 		
 		$contents = '';
 		if (!isset($viewinput)) $viewinput = $_GET;
@@ -44,7 +45,7 @@
 					}
 				}
 				
-				if ($simplecache_enabled) {
+				if ($simplecache_enabled || $override) {
 					$filename = $dataroot . 'views_simplecache/' . md5($viewtype . $view);
 					if (file_exists($filename))
 						$contents = @file_get_contents($filename);
