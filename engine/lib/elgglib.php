@@ -281,7 +281,7 @@
 		
 		// Load session and configuration variables into $vars
 		    if (isset($_SESSION) /*&& is_array($_SESSION)*/ ) { // $_SESSION will always be an array if it is set
-		        $vars = array_merge($vars, $_SESSION);
+		        $vars += $_SESSION; //= array_merge($vars, $_SESSION);
 		    }
 		    $vars['config'] = array();
 			if (!empty($CONFIG))
