@@ -34,7 +34,7 @@
 		$viewinput['viewtype'] = $_GET['viewtype'];
 
 		header('Content-type: text/javascript');
-		header('Expires: ' . date('r',time() + 864000));
+		header('Expires: ' . date('r',time() + 864000000));
 		header("Pragma: public");
 		header("Cache-Control: public"); 
 		// header("Content-Length: " . strlen($return));

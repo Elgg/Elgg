@@ -35,7 +35,7 @@
 		$override = true;
 		
 		header("Content-type: text/css", true);
-		header('Expires: ' . date('r',time() + 864000), true);
+		header('Expires: ' . date('r',time() + 86400000), true);
 		header("Pragma: public", true);
 		header("Cache-Control: public", true);
 	    // header("Content-Length: " . strlen($default_css));
