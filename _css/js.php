@@ -28,7 +28,8 @@
 
 		define('externalpage',true);
 
-		global $viewinput;
+		global $viewinput, $override;
+		$override = true;
 		$viewinput['view'] = 'js/' . $_GET['js'];
 		$viewinput['viewtype'] = $_GET['viewtype'];
 
