@@ -4,7 +4,7 @@
 	 * Elgg v1.5 Default Theme
 	 * core CSS file
 	 * 
-	 * Updated 27 Feb - v1.5
+	 * Updated 5 March 09
 	 * 
 	 * @package Elgg
 	 * @subpackage Core
@@ -765,6 +765,9 @@ ul.topbardropdownmenu ul a {
 	border-left: 1px solid white;
 	border-right: 1px solid #cccccc;
 	border-bottom: 1px solid #cccccc;
+}
+.collapsable_box_content .contentWrapper {
+	margin-bottom:5px;
 }
 .collapsable_box_editpanel {
 	display: none;
