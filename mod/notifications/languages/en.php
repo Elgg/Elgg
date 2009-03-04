@@ -7,8 +7,8 @@
 		'notifications:subscriptions:personal:description' => 'Receive notifications when actions are performed on your content',
 		'notifications:subscriptions:personal:title' => 'Personal notifications',
 	
-		'notifications:subscriptions:collections:title' => 'Friends collections',
-		'notifications:subscriptions:collections:description' => 'To toggle settings for members of your friends collections, click the icons below.',
+		'notifications:subscriptions:collections:title' => 'Toggle friends collections',
+		'notifications:subscriptions:collections:description' => 'To toggle settings for members of your friends collections, use the icons below. This will affect the corresponding users in the main notification settings panel at the bottom of the page. ',
 		'notifications:subscriptions:collections:edit' => 'To edit your friends collections, click here.',
 	
 		'notifications:subscriptions:changesettings' => 'Notifications',
