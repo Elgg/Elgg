@@ -19,5 +19,5 @@
 	
 ?>
 <div id="export">
-<?php echo elgg_view('output/longtext', array('value' => htmlentities(file_get_contents($CONFIG->url . "export/$format/$entity_guid/"), ENT_QUOTES, 'UTF-8'))) ?>
+<?php echo elgg_view('output/text', array('value' => htmlentities(file_get_contents($CONFIG->url . "export/$format/$entity_guid/"), ENT_QUOTES, 'UTF-8'))) ?>
 </div>

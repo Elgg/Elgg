@@ -16,7 +16,7 @@
 	
 	
 	$formbody = "<div class=\"contentWrapper\"><p>" . sprintf(elgg_echo('guidtool:import:desc'), $format) . "</p>" .
-	elgg_view('input/longtext', array('internalname' => 'data')) . elgg_view('input/submit', array('value' => elgg_echo("save")));
+	elgg_view('input/plaintext', array('internalname' => 'data')) . elgg_view('input/submit', array('value' => elgg_echo("save")));
 ?>
 <div>
 <?php
