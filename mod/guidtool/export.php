@@ -9,6 +9,9 @@
 	 * @link http://elgg.com/
 	 */
 
+	admin_gatekeeper();
+	set_context('admin');
+	
 	$entity_guid = get_input('entity_guid');
 	
 	// Render the file upload page

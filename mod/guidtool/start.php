@@ -16,14 +16,14 @@
 	{
 		global $CONFIG;
 		
-		if (isadminloggedin())
+		/*if (isadminloggedin())
 		{
 			add_menu(elgg_echo('guidtool'), $CONFIG->wwwroot . "pg/guidtool/",array(
 //				menu_item(elgg_echo('guidtool:browse'), $CONFIG->wwwroot."pg/guidtool/"),
 //				menu_item(elgg_echo('guidtool:import'), $CONFIG->wwwroot."pg/guidtool/import/"),
 			),'guidtool');
 			
-		}
+		}*/
 		
 		// Register a page handler, so we can have nice URLs
 		register_page_handler('guidtool','guidtool_page_handler');
@@ -40,7 +40,7 @@
 	{
 		global $CONFIG;
 		
-		if (get_context()=='guidtool')
+		if ((isadminloggedin()) && (get_context()=='admin'))
 		{
 			add_submenu_item(elgg_echo('guidtool:browse'), $CONFIG->wwwroot."pg/guidtool/");
 			add_submenu_item(elgg_echo('guidtool:import'), $CONFIG->wwwroot."pg/guidtool/import/");
@@ -61,11 +61,14 @@
 			switch ($page[0])
 			{
 				case 'view' :
-				case 'export':
-					
 					if ((isset($page[1]) && (!empty($page[1])))) {
 						add_submenu_item('GUID:'.$page[1], $CONFIG->url . "pg/guidtool/view/{$page[1]}/");
 						add_submenu_item(elgg_echo('guidbrowser:export'), $CONFIG->url . "pg/guidtool/export/{$page[1]}/");
+					}
+					
+				case 'export':
+					
+					if ((isset($page[1]) && (!empty($page[1])))) {
 						
 						set_input('entity_guid', $page[1]);
 						if ($page[0] == 'view')

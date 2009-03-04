@@ -12,11 +12,12 @@
 	require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
 	admin_gatekeeper();
+	set_context('admin');
 	
 	$title = elgg_echo("guidtool");
 	$body = elgg_view_title($title);
 	
-	$context = get_context();
+	$context = get_context(); 
 	set_context('search');
 	
 	$limit = get_input('limit', 10);

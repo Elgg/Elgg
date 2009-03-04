@@ -12,6 +12,7 @@
 	global $CONFIG;
 	
 	admin_gatekeeper();
+	set_context('admin');
 	
 	$formats = guidtool_get_import_actions();
 
