@@ -13,7 +13,7 @@
 								 ),false,false,'default');
 				$time = date("r",$item->posted);
 				if ($entity = get_entity($item->object_guid)) {
-					$url = $entity->getURL();
+					$url = str_replace('&','&amp;',$entity->getURL());
 				} else {
 					$url = $vars['url'];
 				}
