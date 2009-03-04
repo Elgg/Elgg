@@ -396,7 +396,8 @@
 						foreach($interested_users as $user) {
 							if ($user instanceof ElggUser) {
 								
-								if (($user->guid != $SESSION['user']->guid) && has_access_to_entity($object,$user)) { 
+								if (($user->guid != $SESSION['user']->guid) && has_access_to_entity($object,$user)
+									&& $object->access_id != ACCESS_PRIVATE) { 
 		
 												$methodstring = trigger_plugin_hook('notify:entity:message',$object->getType(),array(
 													'entity' => $object,
