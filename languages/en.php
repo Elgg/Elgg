@@ -376,6 +376,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 		 */
 			'river' => "River",			
 			'river:relationship:friend' => 'is now friends with',
+			'river:noaccess' => 'You do not have permission to view this item.',
 
 		/**
 		 * Plugins

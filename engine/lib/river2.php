@@ -210,10 +210,15 @@
 		function elgg_view_river_item($item) {
 			if (isset($item->view)) {
 
-				if (elgg_view_exists($item->view)) {
-					$body = elgg_view($item->view,array(
-										'item' => $item
-									 ));
+				$object = get_entity($item->object_guid);
+				if (!$object) {
+					$body = elgg_view('river/item/noaccess');
+				} else {
+					if (elgg_view_exists($item->view)) {
+						$body = elgg_view($item->view,array(
+											'item' => $item
+										 ));
+					}
 				}
 				return elgg_view('river/item/wrapper',array(
 									'item' => $item,
