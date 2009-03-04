@@ -229,9 +229,10 @@
 	 * @param array $vars Any variables that the view requires, passed as an array
 	 * @param boolean $bypass If set to true, elgg_view will bypass any specified alternative template handler; by default, it will hand off to this if requested (see set_template_handler)
 	 * @param boolean $debug If set to true, the viewer will complain if it can't find a view
+	 * @param string $viewtype If set, forces the viewtype for the elgg_view call to be this value (default: standard detection) 
 	 * @return string The HTML content
 	 */
-		function elgg_view($view, $vars = "", $bypass = false, $debug = false) {
+		function elgg_view($view, $vars = "", $bypass = false, $debug = false, $viewtype = '') {
 
 		    global $CONFIG;
 		    static $usercache;
@@ -287,7 +288,8 @@
 		
 		
 		// Get the current viewtype
-			$viewtype = elgg_get_viewtype(); 
+			if (empty($viewtype))
+				$viewtype = elgg_get_viewtype(); 
 		
 		// Set up any extensions to the requested view
 		    if (isset($CONFIG->views->extensions[$view])) {
@@ -313,7 +315,6 @@
 		    foreach($viewlist as $priority => $view) {
 		    	
 		    	$view_location = elgg_get_view_location($view);
-		    	
 		    			    	
 			    if (file_exists($view_location . "{$viewtype}/{$view}.php") && !include($view_location . "{$viewtype}/{$view}.php")) {
 			        $success = false;
@@ -353,14 +354,16 @@
 	 * Returns whether the specified view exists
 	 *
 	 * @param string $view The view name
+	 * @param string $viewtype If set, forces the viewtype
 	 * @return true|false Depending on success
 	 */
-		function elgg_view_exists($view) {
+		function elgg_view_exists($view, $viewtype = '') {
 			
 				global $CONFIG;
 			
 			// Detect view type
-			    $viewtype = elgg_get_viewtype();
+				if (empty($viewtype))
+			    	$viewtype = elgg_get_viewtype();
 			    
 				if (!isset($CONFIG->views->locations[$viewtype][$view])) {
 		    		if (!isset($CONFIG->viewpath)) {
