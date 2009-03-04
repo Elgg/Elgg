@@ -41,6 +41,10 @@
 .sidebarBox input.thewire_characters_remaining_field {
 	background: #dedede;
 }
+.sidebarBox input.thewire_characters_remaining_field:focus {
+	background: #dedede;
+	border:none;
+}
 .sidebarBox input#thewire_submit_button {
 	margin:2px 0 0 0;
 	padding:2px 2px 1px 2px;
