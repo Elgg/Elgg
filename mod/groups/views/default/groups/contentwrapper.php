@@ -1,4 +1,4 @@
-"<div class='contentWrapper groups'>"<?php
+<div class='contentWrapper groups'><?php
 
 	echo $vars['body'];
 
