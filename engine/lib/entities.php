@@ -1285,6 +1285,9 @@
 			if (trigger_elgg_event('update',$entity->type,$entity)) {
 				$ret = update_data("UPDATE {$CONFIG->dbprefix}entities set owner_guid='$owner_guid', access_id='$access_id', container_guid='$container_guid', time_updated='$time' WHERE guid=$guid");
 				
+				if ($entity instanceof ElggObject)
+					update_river_access_by_object($guid,$access_id);
+				
 				// If memcache is available then delete this entry from the cache
 				static $newentity_cache;
 				if ((!$newentity_cache) && (is_memcache_available())) 
@@ -1294,9 +1297,6 @@
 				// Handle cases where there was no error BUT no rows were updated!
 				if ($ret===false)
 					return false;
-
-				if ($entity instanceof ElggObject)
-					update_river_access_by_object($entity->guid,$entity->access_id);
 					
 				return true;
 			}
