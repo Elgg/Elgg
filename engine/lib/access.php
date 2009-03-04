@@ -248,7 +248,7 @@ END;
 			}
 
 			if (empty($sql))
-				$sql = " $friends_bit ({$table_prefix}access_id in {$access} or ({$table_prefix}access_id = " . ACCESS_PRIVATE . " and {$table_prefix}owner_guid = $owner))";
+				$sql = " $friends_bit ({$table_prefix}access_id in {$access} or ({$table_prefix}owner_guid = {$owner}) or ({$table_prefix}access_id = " . ACCESS_PRIVATE . " and {$table_prefix}owner_guid = $owner))";
 			
 			if ($enemies_bit) {
 				$sql = "$enemies_bit AND ($sql)";
