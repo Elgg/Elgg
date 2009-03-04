@@ -17,7 +17,8 @@
 				} else {
 					$url = $vars['url'];
 				}
-				$title = strip_tags($body);
+				//$title = strip_tags($body);
+				$title = $item->view;
 				
 ?>
 	<item>

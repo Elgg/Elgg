@@ -134,12 +134,14 @@
 		 * Return the location of a given view.
 		 *
 		 * @param string $view The view.
+		 * @param string $viewtype The viewtype
 		 */
-		function elgg_get_view_location($view)
+		function elgg_get_view_location($view, $viewtype = '')
 		{
 			global $CONFIG;
 		
-			$viewtype = elgg_get_viewtype();
+			if (empty($viewtype))
+				$viewtype = elgg_get_viewtype();
 			
 			if (!isset($CONFIG->views->locations[$viewtype][$view])) {
 	    		if (!isset($CONFIG->viewpath)) {
@@ -314,7 +316,7 @@
 		    
 		    foreach($viewlist as $priority => $view) {
 		    	
-		    	$view_location = elgg_get_view_location($view);
+		    	$view_location = elgg_get_view_location($view, $viewtype);
 		    			    	
 			    if (file_exists($view_location . "{$viewtype}/{$view}.php") && !include($view_location . "{$viewtype}/{$view}.php")) {
 			        $success = false;
