@@ -18,6 +18,14 @@ http://twitter.com/mapkyca
 Pete Harris <pete@elgg.com>
 
 
+CONTRIBUTING DEVELOPERS
+
+Kevin Jardine <kevin@radagast.biz>
+http://radagast.biz/
+
+Milan Magudia <milan.magudia@thematiccapital.com>
+
+
 Thanks to the following developers for contributing patches for the core Elgg engine.
 
 Diego Andrés Ramírez Aragón <diego@somosmas.org>
