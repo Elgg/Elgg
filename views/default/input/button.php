@@ -35,7 +35,7 @@
 	
 	$value = htmlentities($vars['value'], ENT_QUOTES, 'UTF-8');
 	if (isset($vars['internalname'])) $name = $vars['internalname'];
-	if (isset($vars['src'])) $src = $vars['src'];
+	if (isset($vars['src'])) $src = "src=\"{$vars['src']}\"";
 	if (strpos($src,$CONFIG->wwwroot)===false) $src = ""; // blank src if trying to access an offsite image.
 ?>
-<input name="<?php echo $vars['internalname']; ?>" type="<?php echo $type; ?>" class="<?php echo $class; ?>" <?php echo $vars['js']; ?> value="<?php echo $value; ?>" src="<?php echo $src; ?>" />
+<input name="<?php echo $vars['internalname']; ?>" type="<?php echo $type; ?>" class="<?php echo $class; ?>" <?php echo $vars['js']; ?> value="<?php echo $value; ?>" <?php echo $src; ?> />
