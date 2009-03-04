@@ -260,6 +260,33 @@ END;
 		}
 		
 		/**
+		 * Determines whether the given user has access to the given entity
+		 * 
+		 * @param ElggEntity $entity The entity to check access for.
+		 * @param ElggUser $user Optionally the user to check access for.
+		 * 
+		 * @return boolean True if the user can access the entity
+		 */
+		
+		function has_access_to_entity($entity,$user = null) {
+			global $CONFIG;
+			
+			if (!isset($user)) {
+				$access_bit = get_access_sql_suffix("e");
+			} else {
+				$access_bit = get_access_sql_suffix("e",$user->getGUID());
+			}
+			
+			$query = "SELECT guid from {$CONFIG->dbprefix}entities e WHERE e.guid = ".$entity->getGUID();
+			$query .= " AND ".$access_bit; // Add access controls
+			if (get_data($query)) {
+				return true;
+			} else {
+				return false;
+			}			
+		}
+		
+		/**
 		 * Returns an array of access permissions that the specified user is allowed to save objects with.
 		 * Permissions are of the form ('id' => 'Description')
 		 *
