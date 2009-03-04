@@ -210,7 +210,7 @@ END;
 		 * 
 		 * @param string $table_prefix Optional xxx. prefix for the access code.
 		 */
-		function get_access_sql_suffix($table_prefix = "")
+		function get_access_sql_suffix($table_prefix = "",$owner=null)
 		{
 			global $ENTITY_SHOW_HIDDEN_OVERRIDE, $CONFIG;  
 			
@@ -223,7 +223,9 @@ END;
 			
 			$access = get_access_list();
 			
-			$owner = get_loggedin_userid();
+			if (!isset($owner)) {
+				$owner = get_loggedin_userid();
+			}
 			if (!$owner) $owner = -1;
 			
 			global $is_admin;
