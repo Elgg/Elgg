@@ -105,7 +105,7 @@
 			$site_guid = $CONFIG->site_id;
 		}
 		
-		$access = get_access_list();
+		//$access = get_access_list();
 		
 		$query = "SELECT msvalue.string as tag, count(msvalue.id) as total ";
 		$query .= "FROM {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}metadata md on md.entity_guid = e.guid ";
@@ -133,7 +133,8 @@
 		}
 		
 		$userid = get_loggedin_userid();
-		$query .= " and (e.access_id in {$access} or (e.access_id = " . ACCESS_PRIVATE . " and e.owner_guid = {$userid}))";
+		//$query .= " and (e.access_id in {$access} or (e.access_id = " . ACCESS_PRIVATE . " and e.owner_guid = {$userid}))";
+		$query .= ' and ' . get_access_sql_suffix("e"); // Add access controls
 		
 		$query .= " group by msvalue.string having total > {$threshold} order by total desc limit {$limit} ";
 
