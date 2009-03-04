@@ -20,7 +20,7 @@
         <foaf:nick><?php echo $friend->username; ?></foaf:nick>
         <foaf:member_name><?php echo $friend->name; ?></foaf:member_name>
         <foaf:mbox_sha1sum><?php echo sha1("mailto:" . $friend->email); ?></foaf:mbox_sha1sum>
-        <rdfs:seeAlso rdf:resource="<?php echo $vars['url'] . "pg/profile/" . $friend->username . "/?view=foaf" ?>" />
-        <foaf:homepage rdf:resource="<?php echo $friend->getURL(); ?>"/>
+        <rdfs:seeAlso rdf:resource="<?php echo $vars['url'] . "pg/friends/" . $friend->username . "/?view=foaf" ?>" />
+        <foaf:homepage rdf:resource="<?php echo $friend->getURL(); ?>?view=foaf"/>
       </foaf:Person>
     </foaf:knows>
