@@ -1295,6 +1295,9 @@
 				if ($ret===false)
 					return false;
 
+				if (!($entity instanceof ElggUser))
+					update_river_access_by_object($entity->guid,$entity->access_id);
+					
 				return true;
 			}
 			

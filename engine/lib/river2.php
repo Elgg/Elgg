@@ -102,6 +102,29 @@
 				return delete_data("delete from {$CONFIG->dbprefix}river where object_guid = {$object_guid}");
 												
 		}
+
+	/**
+	 * Sets the access ID on river items for a particular object
+	 *
+	 * @param int $object_guid The GUID of the entity
+	 * @param int $access_id The access ID
+	 * @return true|false Depending on success
+	 */
+		function update_river_access_by_object(
+									$object_guid, $access_id
+											) {
+			
+			// Sanitise
+				$object_guid = (int) $object_guid;
+				$access_id = (int) $access_id;
+				
+			// Load config
+				global $CONFIG;
+				
+			// Remove
+				return update_data("update {$CONFIG->dbprefix}river set access_id = {$access_id} where object_guid = {$object_guid}");
+												
+		}
 		
 	/**
 	 * Retrieves items from the river. All parameters are optional.
@@ -129,7 +152,7 @@
 							$offset = 0,
 							$posted_min = 0,
 							$posted_max = 0
-                         ) {
+                         ) { 
                          	
             // Get config
             	global $CONFIG;
