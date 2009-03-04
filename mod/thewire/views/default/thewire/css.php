@@ -126,6 +126,9 @@ input.thewire_characters_remaining_field {
 	text-align: right;
 	background: white;
 }
+input.thewire_characters_remaining_field:focus {
+	border:none;
+}
 .thewire_characters_remaining {
 	text-align: right;
 }
