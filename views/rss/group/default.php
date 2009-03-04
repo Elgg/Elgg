@@ -14,9 +14,9 @@
 ?>
 
 	<item>
-	  <guid isPermaLink='true'><?php echo $vars['entity']->getURL(); ?></guid>
+	  <guid isPermaLink='true'><?php echo htmlspecialchars($vars['entity']->getURL()); ?></guid>
 	  <pubDate><?php echo date("r",$vars['entity']->time_created) ?></pubDate>
-	  <link><?php echo $vars['entity']->getURL(); ?></link>
+	  <link><?php echo htmlspecialchars($vars['entity']->getURL()); ?></link>
 	  <title><![CDATA[<?php echo (($vars['entity']->name)); ?>]]></title>
 	  <description><![CDATA[<?php echo (autop($vars['entity']->description)); ?>]]></description>
 	</item>
