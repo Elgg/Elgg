@@ -128,6 +128,7 @@ input.thewire_characters_remaining_field {
 }
 input.thewire_characters_remaining_field:focus {
 	border:none;
+	background:white;
 }
 .thewire_characters_remaining {
 	text-align: right;
