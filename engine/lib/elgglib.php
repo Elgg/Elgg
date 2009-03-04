@@ -621,17 +621,20 @@
 			$subtype = $entity->getSubtype();
 			if (empty($subtype)) { $subtype = $entity_type; }
 
+			$contents = '';
 			if (elgg_view_exists("{$entity_type}/{$subtype}")) {
-				return elgg_view("{$entity_type}/{$subtype}",array(
+				$contents = elgg_view("{$entity_type}/{$subtype}",array(
 																	'entity' => $entity,
 																	'full' => $full
 																	), $bypass, $debug);
-			} else {
-				return elgg_view("{$entity_type}/default",array(
+			} 
+			if (empty($contents)) {
+				$contents = elgg_view("{$entity_type}/default",array(
 																'entity' => $entity,
 																'full' => $full
 																), $bypass, $debug);
 			}
+			return $contents;
 		}
 
 	/**
