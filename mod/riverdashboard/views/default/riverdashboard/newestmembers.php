@@ -11,7 +11,7 @@
 	 * 
 	 */
 
-	$newest_members = get_entities_from_metadata('icontime', '', 'user', '', 0, 20);
+	$newest_members = get_entities_from_metadata('icontime', '', 'user', '', 0, 18);
 	
 ?>
 
