@@ -1545,7 +1545,8 @@
 		} else {
 		
 			$type = sanitise_string($type);
-			$subtype = get_subtype_id($type, $subtype);
+			if ($subtype !== "")
+				$subtype = get_subtype_id($type, $subtype);
 			
 			if ($type != "")
 				$where[] = "type='$type'";
