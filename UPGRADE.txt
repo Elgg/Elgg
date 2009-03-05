@@ -11,7 +11,9 @@ ELGG UPGRADE INSTRUCTIONS
 
 3. Visit http://your-elgg-site-URL/upgrade.php
 
-4. If you haven't already done so, install your crontab (UNIX ONLY)
+4. Copy htaccess_dist to .htaccess, replacing your existing version.
+
+5. If you haven't already done so, install your crontab (UNIX ONLY)
 
    Cron is a UNIX command which allows programs to be run at set 
    times of the day.
