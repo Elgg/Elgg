@@ -75,7 +75,7 @@
 		run_function_once('crontrigger_weekly', $now - $week);
 		run_function_once('crontrigger_monthly', $now - $month);
 		run_function_once('crontrigger_yearly', $now - $year);
-		ob_flush();
+		ob_clean();
 	}
 	
 	
