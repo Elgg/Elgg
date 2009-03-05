@@ -82,11 +82,13 @@
  	 */
 	function get_online_users()
 	{
-		$objects = find_active_users(600,9999);
+		$offset = get_input('offset',0);
+		$count = count(find_active_users(600,9999));
+		$objects = find_active_users(600,10,$offset);
 		
 		if ($objects)
 		{
-			return elgg_view_entity_list($objects, count($objects), 0, 10, false);
+			return elgg_view_entity_list($objects, $count,$offset,10,false);
 		}
 	}
         
