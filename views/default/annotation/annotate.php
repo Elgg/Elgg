@@ -6,7 +6,7 @@
 	$subtype = get_subtype_from_id($object->subtype);
 
 	$url = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
-	$string = sprintf(elgg_echo("blog:river:posted"),$url) . " ";
+	$string = sprintf(elgg_echo("river:posted:generic"),$url) . " ";
 	$string .= elgg_echo("{$subtype}:river:annotate") . " <a href=\"" . $object->getURL() . "\">" . $object->title . "</a>";
 
 ?>
