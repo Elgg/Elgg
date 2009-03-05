@@ -16,7 +16,7 @@
 	// Get input data
 		$body = get_input('note');
 		$tags = get_input('thewiretags');
-		$access_id = get_input('access_id');
+		$access_id = ACCESS_DEFAULT;// get_input('access_id');
 		$location = get_input('location');
 		$method = get_input('method');
 		$parent = (int)get_input('parent', 0);
