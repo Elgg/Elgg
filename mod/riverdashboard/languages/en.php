@@ -13,7 +13,7 @@
 		'sitemessages:announcements' => "Site announcements",
 		'sitemessages:posted' => "Posted",
 		'sitemessages:river:created' => "Site admin, %s,",
-		'sitemessages:river:create' => "Posted a new site wide message",
+		'sitemessages:river:create' => "posted a new site wide message",
 		'sitemessages:add' => "Add a site-wide message to the river page",
 		'sitemessage:deleted' => "Site message deleted",
 		
