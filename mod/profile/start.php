@@ -256,19 +256,17 @@
 					$icontime = "default";
 				}
 				
-				return $CONFIG->wwwroot . 'mod/profile/icondirect.php/'.$icontime.'/?username='.$entity->username.'&size='.$size;
-				/*
+				//return $CONFIG->wwwroot . 'mod/profile/icondirect.php/'.$icontime.'/?username='.$entity->username.'&size='.$size;
+				
 				
 				$filehandler = new ElggFile();
 				$filehandler->owner_guid = $entity->getGUID();
 				$filehandler->setFilename("profile/" . $username . $size . ".jpg");
 				
 				if ($filehandler->exists()) {
-					$url = $CONFIG->url . "pg/icon/$username/$size/$icontime.jpg";
-					
-				
-					return $url;
-				} */
+					//$url = $CONFIG->url . "pg/icon/$username/$size/$icontime.jpg";
+					return $CONFIG->wwwroot . 'mod/profile/icondirect.php/'.$icontime.'/?username='.$entity->username.'&size='.$size;
+				}
 			}
 		}
 		
