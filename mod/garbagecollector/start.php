@@ -52,7 +52,7 @@
 		// Now, because we are nice, trigger a plugin hook to let other plugins do some GC
 		$rv = true;
 		$period = get_plugin_setting('period','garbagecollector');
-		trigger_plugin_hook('system', 'gc', array('period' => $period));
+		trigger_plugin_hook('gc', 'system', array('period' => $period));
 	
 		// Now we optimize all tables
 		$tables = get_db_tables();
