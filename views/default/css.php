@@ -220,7 +220,7 @@ blockquote p {
 	margin:0;
 	min-height: 360px;
 	background: #dedede;
-	padding:0;
+	padding:0 0 10px 0;
 	-webkit-border-radius: 8px; 
 	-moz-border-radius: 8px;
 }
