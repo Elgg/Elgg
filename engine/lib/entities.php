@@ -2732,6 +2732,24 @@
 	}
 	
 	/**
+	 * Garbage collect stub and fragments from any broken delete/create calls
+	 *
+	 * @param unknown_type $hook
+	 * @param unknown_type $user
+	 * @param unknown_type $returnvalue
+	 * @param unknown_type $tag
+	 */
+	function entities_gc($hook, $user, $returnvalue, $tag) {
+		global $CONFIG;
+		
+		$tables = array ('sites_entity', 'objects_entity', 'groups_entity', 'users_entity');
+		
+		foreach ($tables as $table) {
+			delete_data("DELETE from {$CONFIG->dbprefix}{$table} where guid NOT IN (SELECT guid from {$CONFIG->dbprefix}entities)");
+		}
+	}
+	
+	/**
 	 * Entities init function; establishes the page handler
 	 *
 	 */
@@ -2742,6 +2760,8 @@
 		// Allow a permission override for recursive entity deletion
 		// TODO: Can this be done better?
 		register_plugin_hook('permissions_check','all','recursive_delete_permissions_check');
+		
+		register_plugin_hook('gc','system','entities_gc');
 	}
 	
 	/** Register the import hook */
