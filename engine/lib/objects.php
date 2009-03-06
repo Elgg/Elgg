@@ -129,7 +129,7 @@
 		public function delete() 
 		{ 
 			if (parent::delete())
-				return delete_object_entity($this->get('guid'));//)
+				return delete_object_entity($this->get('guid'));
 				
 			return false;
 		}
