@@ -261,12 +261,10 @@
 		 */
 		public function delete() 
 		{ 
-			
-			if (!delete_group_entity($this->get('guid')))
-				return false;
+			if (parent::delete())
+				return delete_group_entity($this->get('guid'));
 				
-			return parent::delete();
-				
+			return false;
 		}
 		
 		

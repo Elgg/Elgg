@@ -139,10 +139,10 @@
 			if ($CONFIG->site->getGUID() == $this->guid)
 				throw new SecurityException('SecurityException:deletedisablecurrentsite');	
 			
-			if (!delete_site_entity($this->get('guid')))
-				return false;
+			if (parent::delete)
+				return delete_site_entity($this->get('guid'));
 				
-			return parent::delete();
+			return false;
 		}
 		
 		/**
