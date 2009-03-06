@@ -165,7 +165,7 @@ blockquote {
 	padding:3px 15px;
 	margin:0px 0 15px 0;
 	line-height:1.3em;
-	background:#bbdaf7;
+	background:#EBF5FF;
 	border:none !important;
 	-webkit-border-radius: 5px; 
 	-moz-border-radius: 5px;
@@ -1215,6 +1215,9 @@ p.user_menu_friends_of {
 	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_forum.gif) no-repeat left -1px;
 }
 .river_user_friend {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_friends.gif) no-repeat left -1px;
+}
+.river_user_openid_friend {
 	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_friends.gif) no-repeat left -1px;
 }
 .river_object_relationship_friend_create {
@@ -2417,6 +2420,7 @@ div.ajax_loader {
 	float: left;
 	border: 2px solid #cccccc;
 	border-bottom-width: 0;
+	background: #eeeeee;
 	margin: 0 0 0 10px;
 	-moz-border-radius-topleft:5px;
 	-moz-border-radius-topright:5px;	
@@ -2436,10 +2440,11 @@ div.ajax_loader {
 
 #elgg_horizontal_tabbed_nav a:hover {
 	color: #4690d6;
-	background: #E9E9E9;
+	background: #dedede;
 }
 #elgg_horizontal_tabbed_nav .selected {
 	border-color: #cccccc;
+	background: white;
 }
 #elgg_horizontal_tabbed_nav .selected a {
 	position: relative;
