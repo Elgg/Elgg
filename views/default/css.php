@@ -1250,7 +1250,9 @@ p.user_menu_friends_of {
 .river_object_page_top_comment {
 	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_comment.gif) no-repeat left -1px;
 }
-
+.river_object_page_comment {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_comment.gif) no-repeat left -1px;
+}
 
 /* ***************************************
 	SEARCH LISTINGS	
