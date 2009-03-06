@@ -48,7 +48,7 @@
 				$info .= "</a>";
 			$info .= "</strike></b></p>";
 		
-			$info .= "<p class=\"owner_timestamp\">" . elgg_echo('profile:banned') . "</p>";
+			//$info .= "<p class=\"owner_timestamp\">" . elgg_echo('profile:banned') . "</p>";
 			
 		}
 		
