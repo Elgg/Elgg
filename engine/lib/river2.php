@@ -198,6 +198,8 @@
 							foreach($entities as $entity) $guids[] = (int) $entity->guid;
 							// $guids[] = $subject_guid;
 							$where[] = " subject_guid in (" . implode(',',$guids) . ") "; 
+						} else {
+							return array();
 						}
 				}
 				if (!empty($object_guid))
