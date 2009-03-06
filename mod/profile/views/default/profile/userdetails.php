@@ -136,14 +136,17 @@
 <td colspan="2">
 	<div id="profile_info_column_right">	
 	<p class="profile_aboutme_title"><b><?php echo elgg_echo("profile:aboutme"); ?></b></p>
-	<?php echo autop(filter_tags($vars['entity']->description)); ?>
 	
 	<?php if ($vars['entity']->isBanned()) { ?>
 		<div id="profile_banned">	
 		<?php 
-		    // echo elgg_echo('profile:banned'); 
+		    echo elgg_echo('profile:banned'); 
 		?>
 		</div><!-- /#profile_info_column_right -->
+	
+	<?php } else { ?>
+	
+		<?php echo autop(filter_tags($vars['entity']->description)); ?>
 	
 	<?php } ?>
 	
