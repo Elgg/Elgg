@@ -32,7 +32,7 @@
 		$viewinput['view'] = 'css';
 		$viewinput['viewtype'] = $_GET['viewtype'];
 
-		$override = true;
+		//$override = true;
 		
 		header("Content-type: text/css", true);
 		header('Expires: ' . date('r',time() + 86400000), true);
