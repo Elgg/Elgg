@@ -16,7 +16,7 @@
 	
 ?>
 <div class="contentWrapper">
-<form action="<?php echo $vars['url']; ?>action/groups/addtogroup" method="post">
+<form action="<?php echo $vars['url']; ?>action/groups/invite" method="post">
 
 	<?php
 

@@ -47,6 +47,7 @@
 		register_action("groups/joinrequest",false, $CONFIG->pluginspath . "groups/actions/joinrequest.php");
 		register_action("groups/killrequest",false,$CONFIG->pluginspath . "groups/actions/groupskillrequest.php");
 		register_action("groups/addtogroup",false, $CONFIG->pluginspath . "groups/actions/addtogroup.php");
+		register_action("groups/invite",false, $CONFIG->pluginspath . "groups/actions/invite.php");
 		
 		// Use group widgets
 		use_widgets('groups');

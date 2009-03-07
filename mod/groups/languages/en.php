@@ -135,6 +135,7 @@
 			'groups:alreadymember' => 'You are already a member of this group!',
 			'groups:userinvited' => 'User has been invited.',
 			'groups:usernotinvited' => 'User could not be invited.',
+			'groups:useralreadyinvited' => 'User has already been invited',
 			'groups:updated' => "Last comment",
 			'groups:invite:subject' => "%s you have been invited to join %s!",
 			'groups:started' => "Started by",
