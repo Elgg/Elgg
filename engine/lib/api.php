@@ -154,7 +154,7 @@
 		public function ErrorResult($message, $code = "", Exception $exception = NULL)
 		{
 			if ($code == "")
-				$code = GenericResult::$RESULT_FAIL;
+				$code = ErrorResult::$RESULT_FAIL;
 				
 			if ($exception!=NULL)
 				$this->setResult($exception->__toString());
