@@ -770,6 +770,10 @@
 						}
 					}//else {
 						// Resize and return the image contents!
+						if ($square) {
+							$newheight = $maxheight;
+							$newwidth = $maxwidth;
+						}
 						imagecopyresampled($newimage, $oldimage, 0,0,$widthoffset,$heightoffset,$newwidth,$newheight,$width,$height);
 					//}
 					
