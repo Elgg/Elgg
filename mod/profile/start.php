@@ -255,9 +255,10 @@
 				} else {
 					$icontime = "default";
 				}
-				
-				//return $CONFIG->wwwroot . 'mod/profile/icondirect.php/'.$icontime.'/?username='.$entity->username.'&size='.$size;
-				
+
+				if ($entity->isBanned()) {
+					return elgg_view('icon/user/default/'.$size);
+				}
 				
 				$filehandler = new ElggFile();
 				$filehandler->owner_guid = $entity->getGUID();
