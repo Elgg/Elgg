@@ -107,6 +107,7 @@
 		if ($thumbtiny) {
 			
 			$thumb = new ElggFile();
+			$thumb->owner_guid = $group->owner_guid;
 			$thumb->setMimeType('image/jpeg');
 			
 			$thumb->setFilename($prefix."tiny.jpg");
