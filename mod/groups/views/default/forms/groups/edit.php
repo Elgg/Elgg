@@ -54,14 +54,24 @@
 	</p>
 	
 	
+    <?php
+		if (isset($vars['config']->group_tool_options)) {
+			foreach($vars['config']->group_tool_options as $group_option) {
+				$group_option_toggle_name = $group_option->name."_enable";
+				if ($group_option->default_on) {
+					$group_option_default_value = 'yes';
+				} else {
+					$group_option_default_value = 'no';
+				}
+?>	
     <p>
 			<label>
-				<?php echo elgg_echo('groups:enablepages'); ?><br />
+				<?php echo $group_option->label; ?><br />
 				<?php
 
 					echo elgg_view("input/radio",array(
-									"internalname" => "pages_enable",
-									"value" => $vars['entity']->pages_enable ? $vars['entity']->pages_enable : 'yes',
+									"internalname" => $group_option_toggle_name,
+									"value" => $vars['entity']->$group_option_toggle_name ? $vars['entity']->$group_option_toggle_name : $group_option_default_value,
 									'options' => array(
 														elgg_echo('groups:yes') => 'yes',
 														elgg_echo('groups:no') => 'no',
@@ -70,38 +80,10 @@
 				?>
 			</label>
 	</p>
-	<p>
-			<label>
-				<?php echo elgg_echo('groups:enableforum'); ?><br />
-				<?php
-
-					echo elgg_view("input/radio",array(
-									"internalname" => "forum_enable",
-									"value" => $vars['entity']->forum_enable ? $vars['entity']->forum_enable : 'yes',
-									'options' => array(
-														elgg_echo('groups:yes') => 'yes',
-														elgg_echo('groups:no') => 'no',
-													   ),
-													));
-				?>
-			</label>
-	</p>
-	<p>
-			<label>
-				<?php echo elgg_echo('groups:enablefiles'); ?><br />
-				<?php
-
-					echo elgg_view("input/radio",array(
-									"internalname" => "files_enable",
-									"value" => $vars['entity']->files_enable ? $vars['entity']->files_enable : 'yes',
-									'options' => array(
-														elgg_echo('groups:yes') => 'yes',
-														elgg_echo('groups:no') => 'no',
-													   ),
-													));
-				?>
-			</label>
-	</p>
+	<?php
+		}
+	}
+	?>
 	<p>
 		<?php
 			if ($vars['entity'])

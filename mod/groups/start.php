@@ -73,7 +73,10 @@
 		
 		// Listen to notification events and supply a more useful message
 		register_plugin_hook('notify:entity:message', 'object', 'groupforumtopic_notify_message');
-				
+		
+		// add the forum tool option
+		add_group_tool_option('forum',elgg_echo('groups:enableforum'),true);
+		
 		// Now override icons
 		register_plugin_hook('entity:icon:url', 'group', 'groups_groupicon_hook');
 	}

@@ -65,9 +65,22 @@
 	$group->access_id = 2;
 	
 	// Set group tool options
-	$group->files_enable = get_input('files_enable', 'yes');
-	$group->pages_enable = get_input('pages_enable', 'yes');
-	$group->forum_enable = get_input('forum_enable', 'yes');
+	//$group->files_enable = get_input('files_enable', 'yes');
+	//$group->pages_enable = get_input('pages_enable', 'yes');
+	//$group->forum_enable = get_input('forum_enable', 'yes');
+	
+	// Set group tool options
+	if (isset($CONFIG->group_tool_options)) {
+		foreach($CONFIG->group_tool_options as $group_option) {
+			$group_option_toggle_name = $group_option->name."_enable";
+			if ($group_option->default_on) {
+				$group_option_default_value = 'yes';
+			} else {
+				$group_option_default_value = 'no';
+			}
+			$group->$group_option_toggle_name = get_input($group_option_toggle_name, $group_option_default_value);
+		}
+	}	
 
 	$group->save();
 	
