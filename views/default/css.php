@@ -1217,12 +1217,6 @@ p.user_menu_friends_of {
 .river_user_friend {
 	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_friends.gif) no-repeat left -1px;
 }
-.river_user_openid_friend {
-	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_friends.gif) no-repeat left -1px;
-}
-.river_user_openid_update {
-	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_profile.gif) no-repeat left -1px;
-}
 .river_object_relationship_friend_create {
 	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_friends.gif) no-repeat left -1px;
 }
