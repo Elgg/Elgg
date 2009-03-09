@@ -822,6 +822,31 @@
 	}
 	
 	/**
+	 * Manages group tool options
+	 *
+	 * @param string $name Name of the group tool option
+	 * @param string $label Used for the group edit form
+	 * @param boolean $default_on True if this option should be active by default
+	 * 
+	 **/
+	
+	function add_group_tool_option($name,$label,$default_on=true) {
+		global $CONFIG;
+		
+		if (!isset($CONFIG->group_tool_options)) {
+			$CONFIG->group_tool_options = array();
+		}
+		
+		$group_tool_option = new stdClass;
+		
+		$group_tool_option->name = $name;
+		$group_tool_option->label = $label;
+		$group_tool_option->default_on = $default_on;
+		
+		$CONFIG->group_tool_options[] = $group_tool_option;
+	}
+	
+	/**
 	 * Performs initialisation functions for groups
 	 *
 	 */
