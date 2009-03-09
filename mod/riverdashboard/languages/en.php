@@ -5,7 +5,8 @@
 		'mine' => 'Mine',
 		'filter' => 'Filter',
 		'riverdashboard:useasdashboard' => "Replace the default dashboard with this activity river?",
-
+		'activity' => 'Activity',
+	
 	    /**
 	     * Site messages
            **/

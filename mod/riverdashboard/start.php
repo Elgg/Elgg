@@ -15,19 +15,20 @@
 			global $CONFIG;
 			
 			// Register and optionally replace the dashboard
-			if (get_plugin_setting('useasdashboard', 'riverdashboard') == 'yes')
+			if (get_plugin_setting('useasdashboard', 'riverdashboard') == 'yes') {
 				register_page_handler('dashboard','riverdashboard_page_handler');
+			} else {
+				// Activity main menu
+				if (isloggedin())
+				{
+					add_menu(elgg_echo('activity'), $CONFIG->wwwroot . "mod/riverdashboard/");
+				}
+			}
 		
 			// Page handler
 			register_page_handler('riverdashboard','riverdashboard_page_handler');
 			
 			extend_view('css','riverdashboard/css');
-			
-			// Activity main menu
-			if (isloggedin())
-			{
-				add_menu(elgg_echo('Activity'), $CONFIG->wwwroot . "mod/riverdashboard/");
-			}
 			
 			add_widget_type('river_widget',elgg_echo('river:widget:title'), elgg_echo('river:widget:description'));
 			
