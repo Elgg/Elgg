@@ -50,7 +50,9 @@
 					}
 					
 					// Send user validation request on register only
-					request_user_validation($guid);
+					global $registering_admin;
+					if (!$registering_admin)
+						request_user_validation($guid);
 					
 					if (!$new_user->admin)
 						$new_user->disable('new_user');	// Now disable if not an admin
