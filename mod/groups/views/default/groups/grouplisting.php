@@ -28,10 +28,10 @@
 	//for admins display the feature or unfeature option
 	if($vars['entity']->featured_group == "yes"){
 		$url = $vars['url'] . "action/groups/featured?group_guid=" . $vars['entity']->guid . "&action=unfeature";
-		$wording = "Unfeature";
+		$wording = elgg_echo("groups:makeunfeatured");
 	}else{
 		$url = $vars['url'] . "action/groups/featured?group_guid=" . $vars['entity']->guid . "&action=feature";
-		$wording = "Make featured";
+		$wording = elgg_echo("groups:makefeatured");
 	}
 		
 	$info .= "<div class=\"groupdetails\"><p>" . $mem . " / <b>" . get_group_members($vars['entity']->guid, 10, 0, 0, true) ."</b> " . elgg_echo("groups:member") . "</p>";
