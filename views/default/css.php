@@ -4,7 +4,7 @@
 	 * Elgg v1.5 Default Theme
 	 * core CSS file
 	 * 
-	 * Updated 5 March 09
+	 * Updated 10 March 09
 	 * 
 	 * @package Elgg
 	 * @subpackage Core
@@ -231,7 +231,7 @@ blockquote p {
 	margin:0 20px 0 0;
 	min-height:360px;
 	float:left;
-	background: #e9e9e9;
+	background: #dedede;
 	padding:0px;
 	-webkit-border-radius: 8px; 
 	-moz-border-radius: 8px;
