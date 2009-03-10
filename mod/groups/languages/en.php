@@ -102,6 +102,8 @@
 			'groups:addtopic' => 'Add a topic',
 			'groups:forumlatest' => 'Latest discussion',
 			'groups:latestdiscussion' => 'Latest discussion',
+			'groups:newest' => 'Newest',
+			'groups:popular' => 'Popular',
 			'groupspost:success' => 'Your comment was succesfully posted',
 			'groups:alldiscussion' => 'Latest discussion',
 			'groups:edittopic' => 'Edit topic',
