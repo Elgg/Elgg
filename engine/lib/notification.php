@@ -260,7 +260,11 @@
 		)
 			$header_eol = "\n"; // Allow non-RFC 2822 mail headers to support some broken MTAs
 		
-		$headers = "From: \"$sitename\" <$from>{$header_eol}"
+		$from_email = "\"$sitename\" <$from>";
+		if (strcasecmp(substr(PHP_OS, 0 , 3), 'WIN')) 
+			$from_email = "$from"; // Windows is somewhat broken, so we use a different format from header
+			
+		$headers = "From: $from_email{$header_eol}"
 			. "Content-Type: text/plain; charset=UTF-8; format=flowed{$header_eol}"
     		. "MIME-Version: 1.0{$header_eol}"
     		. "Content-Transfer-Encoding: 8bit{$header_eol}";
