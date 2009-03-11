@@ -2685,7 +2685,9 @@
 		$name = sanitise_string($name);
 		$value = sanitise_string($value);
 		
-		return insert_data("INSERT into {$CONFIG->dbprefix}private_settings (entity_guid, name, value) VALUES ($entity_guid, '{$name}', '{$value}') ON DUPLICATE KEY UPDATE value='$value'");
+		$result = insert_data("INSERT into {$CONFIG->dbprefix}private_settings (entity_guid, name, value) VALUES ($entity_guid, '{$name}', '{$value}') ON DUPLICATE KEY UPDATE value='$value'");
+		if ($result === 0) return true;
+		return $result;
 		
 	}
 	
