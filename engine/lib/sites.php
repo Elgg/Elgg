@@ -139,10 +139,7 @@
 			if ($CONFIG->site->getGUID() == $this->guid)
 				throw new SecurityException('SecurityException:deletedisablecurrentsite');	
 			
-			if (parent::delete)
-				return delete_site_entity($this->get('guid'));
-				
-			return false;
+			return parent::delete;
 		}
 		
 		/**
@@ -318,26 +315,17 @@
 	}
 	
 	/**
+	 * THIS FUNCTION IS DEPRECATED.
+	 * 
 	 * Delete a site's extra data.
 	 * 
 	 * @param int $guid
 	 */
 	function delete_site_entity($guid)
 	{
-		global $CONFIG;
+		system_message(sprintf(elgg_echo('deprecatedfunction'), 'delete_user_entity'));
 		
-		$guid = (int)$guid;
-		
-		$row = get_entity_as_row($guid);
-		
-		// Check to see if we have access and it exists
-		if ($row) 
-		{
-			// Delete any existing stuff
-			return delete_data("DELETE from {$CONFIG->dbprefix}sites_entity where guid=$guid");
-		}
-		
-		return false;
+		return 1; // Always return that we have deleted one row in order to not break existing code.
 	}
 		
 	/**

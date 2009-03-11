@@ -165,6 +165,8 @@
 			'memcache:noservers' => 'No memcache servers defined, please populate the $CONFIG->memcache_servers variable',
 			'memcache:versiontoolow' => 'Memcache needs at least version %s to run, you are running %s',
 			'memcache:noaddserver' => 'Multiple server support disabled, you may need to upgrade your PECL memcache library',
+	
+			'deprecatedfunction' => 'Warning: This code uses the deprecated function \'%s\' and is not compatible with this version of Elgg',
 		/**
 		 * API
 		 */

@@ -723,8 +723,7 @@
 		 */
 		public function delete() 
 		{ 
-			$res = delete_entity($this->get('guid'));
-			return $res;
+			return delete_entity($this->get('guid'));
 		}
 		
 		// LOCATABLE INTERFACE /////////////////////////////////////////////////////////////
@@ -1846,6 +1845,22 @@
 					remove_from_river_by_subject($guid);
 					remove_from_river_by_object($guid);
 					$res = delete_data("DELETE from {$CONFIG->dbprefix}entities where guid={$guid}");
+					if ($res)
+					{
+						$sub_table = "";
+						
+						// Where appropriate delete the sub table
+						switch ($entity->type)
+						{
+							case 'object' : $sub_table = $CONFIG->dbprefix . 'objects_entity'; break;
+							case 'user' :  $sub_table = $CONFIG->dbprefix . 'users_entity'; break;
+							case 'group' :  $sub_table = $CONFIG->dbprefix . 'groups_entity'; break;
+							case 'site' :  $sub_table = $CONFIG->dbprefix . 'sites_entity'; break;
+						}
+						
+						if ($sub_table)
+							delete_data("DELETE from $sub_table where guid={$guid}");
+					}
 					
 					return $res;
 				} 
