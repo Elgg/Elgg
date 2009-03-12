@@ -91,7 +91,7 @@
 			{
 				$plugins = explode(',', $CONFIG->default_plugins);
 				foreach ($plugins as $plugin)
-					enable_plugin(trim($plugins), $site->getGUID());
+					enable_plugin(trim($plugin), $site->getGUID());
 			}
 			else
 			{
