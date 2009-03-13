@@ -175,7 +175,7 @@
 			if (isset($unchanged_vars['user']->prev_last_action)) $unchanged_vars['user']->prev_last_action = 0;
 			
 			
-			return md5(current_page_url() . $view . serialize($uncharged_vars)); // This should be enough to stop artefacts
+			return md5(current_page_url() . $view . serialize($unchanged_vars)); // This should be enough to stop artefacts
 			
 		}
 	
