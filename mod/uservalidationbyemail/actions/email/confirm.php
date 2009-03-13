@@ -40,7 +40,7 @@
 		
 	access_show_hidden_entities($access_status);
 	
-	forward($_SERVER['HTTP_REFERER']);
+	forward();
 	exit;
 
 ?>

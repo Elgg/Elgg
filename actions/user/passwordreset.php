@@ -21,7 +21,7 @@
 	else
 		register_error(elgg_echo('user:password:fail'));
 		
-	forward($_SERVER['HTTP_REFERER']);
+	forward();
 	exit;
 	
 ?>

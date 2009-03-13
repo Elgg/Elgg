@@ -38,6 +38,6 @@
 		register_error(sprintf(elgg_echo('user:username:notfound'), $username));
 		
 	access_show_hidden_entities($access_status);
-	forward($_SERVER['HTTP_REFERER']);
+	forward();
 	exit;
 ?>
