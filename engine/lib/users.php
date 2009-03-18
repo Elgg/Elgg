@@ -1115,7 +1115,7 @@
 			throw new RegistrationException(elgg_echo('registration:invalidchars'));
 		 
 		$result = true;
-		return $result = trigger_plugin_hook('registeruser:validate:username', 'all', array('username' => $username), $result);
+		return trigger_plugin_hook('registeruser:validate:username', 'all', array('username' => $username), $result);
 	}
 	
 	/**
@@ -1129,7 +1129,7 @@
 		if (strlen($password)<6) throw new RegistrationException(elgg_echo('registration:passwordtooshort'));
 			
 		$result = true;
-		return $result = trigger_plugin_hook('registeruser:validate:password', 'all', array('password' => $password), $result);
+		return trigger_plugin_hook('registeruser:validate:password', 'all', array('password' => $password), $result);
 	}
 	
 	/**
@@ -1145,7 +1145,7 @@
 		
 		// Got here, so lets try a hook (defaulting to ok)
 		$result = true;
-		return $result = trigger_plugin_hook('registeruser:validate:email', 'all', array('email' => $address), $result);
+		return trigger_plugin_hook('registeruser:validate:email', 'all', array('email' => $address), $result);
 	}
 	
 	/**
