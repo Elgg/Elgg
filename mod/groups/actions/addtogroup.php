@@ -45,7 +45,8 @@
 							remove_entity_relationship($group->guid, 'invited', $user->guid);
 							remove_entity_relationship($user->guid, 'membership_request', $group->guid);
 						
-							add_entity_relationship($user->guid, 'member', $group->guid);
+							//add_entity_relationship($user->guid, 'member', $group->guid);
+							$group->join($user);
 							
 							// send welcome email
 							notify_user($user->getGUID(), $group->owner_guid, 
