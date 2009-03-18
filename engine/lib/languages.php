@@ -38,10 +38,7 @@
 				if (!isset($CONFIG->translations[$country_code])) {
 					$CONFIG->translations[$country_code] = $language_array;
 				} else {
-					//$CONFIG->translations[$country_code] = array_merge($CONFIG->translations[$country_code],$language_array);
-					$CONFIG->translations[$country_code] += $language_array;
-					//foreach ($language_array as $key => $value)
-					//	$CONFIG->translations[$country_code][$key] = $value;
+					$CONFIG->translations[$country_code] = $language_array += $CONFIG->translations[$country_code];
 				}
 				
 				return true;
