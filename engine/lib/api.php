@@ -479,8 +479,8 @@
 							// Check that the variable is present in the request
 
 							if (
-								(!isset($parameters[$key])) &&				// No parameter
-								((!isset($value['required'])) || ($value['required']!=true)) // and not optional
+								(!isset($parameters[$key])) ||				// No parameter
+								((!isset($value['required'])) || ($value['required']==true)) // Or not optional
 							)
 								throw new APIException(sprintf(elgg_echo('APIException:MissingParameterInMethod'), $key, $method));
 							else
