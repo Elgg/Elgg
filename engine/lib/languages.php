@@ -38,7 +38,7 @@
 				if (!isset($CONFIG->translations[$country_code])) {
 					$CONFIG->translations[$country_code] = $language_array;
 				} else {
-					$CONFIG->translations[$country_code] = $language_array += $CONFIG->translations[$country_code];
+					$CONFIG->translations[$country_code] = $language_array + $CONFIG->translations[$country_code];
 				}
 				
 				return true;
