@@ -33,7 +33,7 @@
 	//display
 	echo "<div class=\"contentWrapper\">";
 	if($type != 'mine')
-		echo "<div class='content_area_user_title'><h2>" . elgg_echo("Friends") . "</h2></div>";
+		echo "<div class='content_area_user_title'><h2>" . elgg_echo("friends") . "</h2></div>";
 	echo $river;
 	echo "</div>";
 	
