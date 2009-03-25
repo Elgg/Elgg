@@ -31,6 +31,6 @@
 	    $body = elgg_view_layout('two_column_left_sidebar', '', $area2);
 		
 	// Display page
-		page_draw(elgg_echo('groups:addtopic'),$body);
+		page_draw(elgg_echo('groups:edittopic'),$body);
 		
 ?>
