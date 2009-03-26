@@ -29,6 +29,7 @@
 			$submit_control</p>
 END;
 	echo "<div class=\"contentWrapper\">";
+	echo "<p>" . elgg_echo('profile:explainchangefields') . "</p>";
 	echo elgg_view('input/form', array('body' => $formbody, 'action' => $vars['url'] . 'action/profile/editdefault'));
 	echo "</div>";
 ?>
