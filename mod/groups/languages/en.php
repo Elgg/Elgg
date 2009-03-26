@@ -30,7 +30,7 @@
 			'groups:username' => 'Group short name (displayed in URLs, alphanumeric characters only)',
 			'groups:description' => 'Description',
 			'groups:briefdescription' => 'Brief description',
-			'groups:interests' => 'Interests',
+			'groups:interests' => 'Tags',
 			'groups:website' => 'Website',
 			'groups:members' => 'Group members',
 			'groups:membership' => "Group membership permissions",
