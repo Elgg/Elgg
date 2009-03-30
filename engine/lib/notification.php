@@ -274,6 +274,7 @@
     	}	
     	
 		// Format message
+		$message = html_entity_decode($message, ENT_COMPAT, 'UTF-8'); // Decode any html entities
     	$message = strip_tags($message); // Strip tags from message
     	$message = preg_replace("/(\r\n|\r)/", "\n", $message); // Convert to unix line endings in body
     	$message = preg_replace("/^From/", ">From", $message); // Change lines starting with From to >From  	
