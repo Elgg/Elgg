@@ -12,9 +12,37 @@
 
 	// Get DB settings, connect
 		require_once(dirname(dirname(dirname(__FILE__))). '/engine/settings.php');
+
+		/**
+		 * UTF safe str_split.
+		 * This is only used here since we don't have access to the file store code.
+		 * TODO: This is a horrible hack, so clean this up!
+		 */
+		function __id_mb_str_split($string, $charset = 'UTF8')
+		{
+			if (is_callable('mb_substr'))
+			{
+				$length = mb_strlen($string);
+				$array = array();
+				
+				while ($length)
+				{
+					$array[] = mb_substr($string, 0, 1, $charset);
+					$string = mb_substr($string, 1, $length, $charset);
+					
+					$length = mb_strlen($string);
+				}
+				
+				return $array;
+			}
+			else
+				return str_split($string);
+			
+			return false;
+		}
 		
 		global $CONFIG;
-		
+			
 		$contents = '';
 		
 		if ($mysql_dblink = @mysql_connect($CONFIG->dbhost,$CONFIG->dbuser,$CONFIG->dbpass)) {
@@ -42,7 +70,7 @@
 				(strpos($username, ' ')!==false)
 			) exit;
 			
-			$userarray = str_split($username);
+			$userarray = __id_mb_str_split($username);
 				
 			$matrix = '';
 			$length = 5;
@@ -50,7 +78,7 @@
 			for ($n = 0; $n < $length; $n++) {
 				$matrix .= $userarray[$n] . "/";
 			}	
-			
+		
 		// Get the size
 			$size = strtolower($_GET['size']);
 			if (!in_array($size,array('large','medium','small','tiny','master','topbar')))
