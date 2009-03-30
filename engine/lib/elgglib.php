@@ -1752,7 +1752,7 @@
 					$DATALIST_CACHE[$row->name] = $row->value;
 				
 					// Cache it if memcache is available
-					if ($datalist_memcache) $datalist_memcache->save($name, $row->value);
+					if ($datalist_memcache) $datalist_memcache->save($row->name, $row->value);
 				}
 				
 				if (isset($DATALIST_CACHE[$name]))
