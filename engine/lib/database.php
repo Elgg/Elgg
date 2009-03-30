@@ -408,7 +408,7 @@
             	error_log("Query cache invalidated");
             
             if (execute_query("$query", $dblink)) 
-                return mysql_affected_rows();
+                return mysql_affected_rows($dblink);
         
 			return false;      
         }
