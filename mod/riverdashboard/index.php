@@ -69,6 +69,7 @@
 			$body .= elgg_view('riverdashboard/container', array('body' => $nav . $river . elgg_view('riverdashboard/js')));
 			page_draw(elgg_echo('dashboard'),elgg_view_layout('sidebar_boxes',$area1,$body));
 		} else {
+			header("Content-type: text/html; charset=UTF-8");
 			echo $nav . $river . elgg_view('riverdashboard/js');
 		}
 
