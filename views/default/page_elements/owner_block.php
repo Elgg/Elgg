@@ -55,7 +55,6 @@
 			$contents .= <<<END
 
 	<div id="owner_block_rss_feed"><a href="{$url}" rel="nofollow">{$label}</a></div>
-	<!-- <div id="owner_block_odd_feed"><a href="{$url2}" rel="nofollow">{$label2}</a></div> -->
 			
 END;
 		}
