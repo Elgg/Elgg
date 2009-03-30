@@ -150,4 +150,9 @@
         	
         }
         
+        if (defined('context')) {
+        	global $CONFIG;
+        	$CONFIG->context = context;
+        }
+        
 ?>
