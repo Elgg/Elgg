@@ -216,7 +216,7 @@
 	
 		$existing = get_data_row("SELECT * from {$CONFIG->dbprefix}metadata WHERE entity_guid = $entity_guid and name_id=" . add_metastring($name) . " limit 1");
 		if (($existing) && (!$allow_multiple) && (isset($value))) 
-		{
+		{ 
 			$id = $existing->id;
 			$result = update_metadata($id, $name, $value, $value_type, $owner_guid, $access_id);
 			
@@ -279,7 +279,7 @@
 
 		if (!$md = get_metadata($id)) return false;	
 		if (!$md->canEdit()) return false;
-	
+
 		// If memcached then we invalidate the cache for this entry
 		static $metabyname_memcache;
 		if ((!$metabyname_memcache) && (is_memcache_available()))
@@ -311,8 +311,8 @@
 		
 		$name = add_metastring($name);
 		if (!$name) return false;
-		
-		// If ok then add it
+
+				// If ok then add it
 		$result = update_data("UPDATE {$CONFIG->dbprefix}metadata set value_id='$value', value_type='$value_type', access_id=$access_id, owner_guid=$owner_guid where id=$id and name_id='$name'");
 		if ($result!==false) {
 			$obj = get_metadata($id);

@@ -89,11 +89,10 @@
 	{
 		$user = get_entity($user_guid);
 		
-		$valid = ($code == uservalidationbyemail_generate_code($user_guid, $user->email));
-		if ($valid)
-			set_user_validation_status($user_guid, true, 'email');
+		if ($code == uservalidationbyemail_generate_code($user_guid, $user->email))
+			return set_user_validation_status($user_guid, true, 'email');
 		
-		return $valid;
+		return false;
 	}
 	
 	// Initialise

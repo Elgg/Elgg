@@ -1004,10 +1004,29 @@
 	{
 		if (!$status) $method = '';
 		
-		create_metadata($user_guid, 'validated', $status,'', 0, ACCESS_PUBLIC);
-		create_metadata($user_guid, 'validated_method', $method,'', 0, ACCESS_PUBLIC);
+		if ($status)
+		{
+			if (
+				(create_metadata($user_guid, 'validated', $status,'', 0, ACCESS_PUBLIC)) &&
+				(create_metadata($user_guid, 'validated_method', $method,'', 0, ACCESS_PUBLIC))
+			)
+				return true;
+		}
+		else
+		{
+			$validated = get_metadata_byname($user_guid,  'validated');
+			$validated_method = get_metadata_byname($user_guid,  'validated_method');
 			
-		return true;
+			if (
+				($validated) &&
+				($validated_method) &&
+				(delete_metadata($validated->id)) &&
+				(delete_metadata($validated_method->id))
+			)
+				return true;
+		}
+			
+		return false;
 	}
 	
 	/**
