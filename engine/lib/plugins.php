@@ -590,7 +590,7 @@
 		 */
 		function enable_plugin($plugin, $site_guid = 0)
 		{
-			global $CONFIG;
+			global $CONFIG, $ENABLED_PLUGINS_CACHE;
 			
 			$plugin = sanitise_string($plugin);
 			$site_guid = (int) $site_guid;
@@ -614,6 +614,7 @@
 			$new_enabled = array_unique($new_enabled);
 			
 			$return = $site->setMetaData('enabled_plugins', $new_enabled);
+			$ENABLED_PLUGINS_CACHE = $new_enabled;
 			
 			return $return; 
 		}
@@ -626,7 +627,7 @@
 		 */
 		function disable_plugin($plugin, $site_guid = 0)
 		{
-			global $CONFIG;
+			global $CONFIG, $ENABLED_PLUGINS_CACHE;
 			
 			$plugin = sanitise_string($plugin);
 			$site_guid = (int) $site_guid;
@@ -645,6 +646,7 @@
 					$new_enabled[] = $plug;
 					
 			$return = $site->setMetaData('enabled_plugins', $new_enabled);
+			$ENABLED_PLUGINS_CACHE = $new_enabled;
 					
 			return $return;
 		}
