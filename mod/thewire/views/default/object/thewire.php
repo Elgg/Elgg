@@ -87,7 +87,7 @@
 								friendly_time($vars['entity']->time_created)
 				);
 				
-				echo " via " . $vars['entity']->method . ".";
+				echo " via " . elgg_echo($vars['entity']->method) . ".";
 			
 		?>
 		</div>
