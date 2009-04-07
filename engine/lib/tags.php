@@ -75,10 +75,12 @@
 	 * @param string $entity_subtype The entity subtype, optionally
 	 * @param int $owner_guid The GUID of the tags owner, optionally
 	 * @param int $site_guid Optionally, the site to restrict to (default is the current site)
+	 * @param int $start_ts Optionally specify a start timestamp for tags used to generate cloud.
+	 * @param int $ent_ts Optionally specify an end timestamp for tags used to generate cloud.
 	 * @return array|false Array of objects with ->tag and ->total values, or false on failure
 	 */
 	
-	function get_tags($threshold = 1, $limit = 10, $metadata_name = "", $entity_type = "object", $entity_subtype = "", $owner_guid = "", $site_guid = -1) {
+	function get_tags($threshold = 1, $limit = 10, $metadata_name = "", $entity_type = "object", $entity_subtype = "", $owner_guid = "", $site_guid = -1, $start_ts = "", $end_ts = "") {
 		
 		global $CONFIG;
 		
@@ -130,6 +132,15 @@
 			$query .= " and e.container_guid in (".implode(",",$owner_guid).")";
 		} else if (is_int($owner_guid)) {
 			$query .= " and e.container_guid = {$owner_guid} ";
+		}
+		if ($start_ts) {
+			$start_ts = (int)$start_ts;
+			$query .= " and e.time_created>=$start_ts";
+		}
+			
+		if ($end_ts) {
+			$end_ts = (int)$end_ts;
+			$query .= " and e.time_created<=$end_ts";
 		}
 		
 		//$userid = get_loggedin_userid();
