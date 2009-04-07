@@ -16,7 +16,7 @@
 ?>
 
 <div class="sidebarBox">
-<h3>Recent members</h3>
+<h3><?php echo elgg_echo('riverdashboard:recentmembers') ?></h3>
 <div class="membersWrapper"><br />
 <?php 
 	foreach($newest_members as $mem){
