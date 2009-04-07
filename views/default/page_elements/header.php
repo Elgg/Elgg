@@ -62,6 +62,7 @@ END;
 
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery-1.2.6.pack.js"></script>
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery-ui-personalized-1.5.3.packed.js"></script>
+	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery.form.js"></script>
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>_css/js.php?lastcache=<?php echo $vars['config']->lastcache; ?>&js=initialise_elgg&viewtype=<?php echo $vars['view']; ?>"></script>
 <?php
 	global $pickerinuse;
