@@ -303,7 +303,7 @@
      * @return object A single database result object
      */ 
     
-        function get_data_row($query) {
+        function get_data_row($query, $callback = "") {
             
             global $CONFIG, $DB_QUERY_CACHE;
             
@@ -329,6 +329,10 @@
             	if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
                 	error_log("$query results cached");
             	$DB_QUERY_CACHE[$query] = $row;
+            	
+            	if (!empty($callback) && is_callable($callback)) {
+                	$row = $callback($row);
+                }
             	
                 if ($row) return $row;
             }
