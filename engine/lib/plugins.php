@@ -133,6 +133,12 @@
 		
 		/**
 		 * Regenerates the list of known plugins and saves it to the current site
+		 * 
+		 * Important: You should regenerate simplecache and the viewpath cache after executing this function
+		 * otherwise you may experience view display artifacts. Do this with the following code:
+		 * 
+		 * 		elgg_view_regenerate_simplecache();
+		 *		elgg_filepath_cache_reset();
 		 *
 		 * @param array $pluginorder Optionally, a list of existing plugins and their orders
 		 * @return array The new list of plugins and their orders
@@ -586,6 +592,12 @@
 		
 		/**
 		 * Enable a plugin for a site (default current site)
+		 * 
+		 * Important: You should regenerate simplecache and the viewpath cache after executing this function
+		 * otherwise you may experience view display artifacts. Do this with the following code:
+		 * 
+		 * 		elgg_view_regenerate_simplecache();
+		 *		elgg_filepath_cache_reset();
 		 *
 		 * @param string $plugin The plugin name.
 		 * @param int $site_guid The site id, if not specified then this is detected.
@@ -623,7 +635,13 @@
 		
 		/**
 		 * Disable a plugin for a site (default current site)
-		 *
+		 * 
+		 * Important: You should regenerate simplecache and the viewpath cache after executing this function
+		 * otherwise you may experience view display artifacts. Do this with the following code:
+		 * 
+		 * 		elgg_view_regenerate_simplecache();
+		 *		elgg_filepath_cache_reset();
+		 * 
 		 * @param string $plugin The plugin name.
 		 * @param int $site_guid The site id, if not specified then this is detected.
 		 */
