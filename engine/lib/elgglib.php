@@ -431,8 +431,14 @@
 		 */
 		function elgg_filepath_cache_save($data)
 		{
-			$cache = elgg_get_filepath_cache();
-			return $cache->save('view_paths', $data);
+			global $CONFIG;
+			
+			if ($CONFIG->viewpath_cache_enabled) {
+				$cache = elgg_get_filepath_cache();
+				return $cache->save('view_paths', $data);
+			}
+			
+			return false;
 		}
 		
 		/**
@@ -441,13 +447,45 @@
 		 */
 		function elgg_filepath_cache_load()
 		{
-			$cache = elgg_get_filepath_cache();
-			$cached_view_paths = $cache->load('view_paths'); 
+			global $CONFIG;
 			
-			if ($cached_view_paths)
-				return $cached_view_paths;
+			if ($CONFIG->viewpath_cache_enabled) {
+				$cache = elgg_get_filepath_cache();
+				$cached_view_paths = $cache->load('view_paths'); 
+				
+				if ($cached_view_paths)
+					return $cached_view_paths;
+			}
 				
 			return NULL;
+		}
+		
+		/**
+		 * Enable the filepath cache.
+		 *
+		 */
+		function elgg_enable_filepath_cache()
+		{
+			global $CONFIG;
+			
+			datalist_set('viewpath_cache_enabled',1);
+			$CONFIG->viewpath_cache_enabled = 1;
+			elgg_filepath_cache_reset();
+		
+		}
+		
+		/**
+		 * Disable filepath cache.
+		 *
+		 */
+		function elgg_disable_filepath_cache()
+		{
+			global $CONFIG;
+			
+			datalist_set('viewpath_cache_enabled',0);
+			$CONFIG->viewpath_cache_enabled = 0;
+			elgg_filepath_cache_reset();
+			
 		}
 		
 		/**

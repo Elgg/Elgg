@@ -39,6 +39,11 @@
 			} else {
 				elgg_view_disable_simplecache();
 			}
+			if (get_input('viewpath_cache_enabled')) {
+				elgg_enable_filepath_cache();
+			} else {
+				elgg_disable_filepath_cache();
+			}
 			
 			set_config('language', get_input('language'), $site->getGUID());
 			

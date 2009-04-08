@@ -183,6 +183,12 @@
 				} else {
 					$CONFIG->simplecache_enabled = 1;
 				}
+				$viewpath_cache_enabled = datalist_get('viewpath_cache_enabled');
+				if ($viewpath_cache_enabled !== false) {
+					$CONFIG->viewpath_cache_enabled = $viewpath_cache_enabled;
+				} else {
+					$CONFIG->viewpath_cache_enabled = 1;
+				}
 				if (isset($CONFIG->site) && ($CONFIG->site instanceof ElggSite)) {
 					$CONFIG->wwwroot = $CONFIG->site->url;
 					$CONFIG->sitename = $CONFIG->site->name;
