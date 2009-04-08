@@ -146,7 +146,10 @@
 	
 	<?php } else { ?>
 	
-		<?php echo autop(filter_tags($vars['entity']->description)); ?>
+		<?php 
+		echo elgg_view('output/longtext', array('value' => $vars['entity']->description));
+		//echo autop(filter_tags($vars['entity']->description)); 
+		?>
 	
 	<?php } ?>
 	

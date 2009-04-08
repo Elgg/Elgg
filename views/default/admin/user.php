@@ -12,7 +12,7 @@
 	 */
 
 	// Description of what's going on
-		echo "<div class=\"contentWrapper\"><span class=\"contentIntro\">" . autop(elgg_echo("admin:user:description")) . "</span></div>";
+		echo "<div class=\"contentWrapper\"><span class=\"contentIntro\">" . elgg_view('output/longtext', array('value' => elgg_echo("admin:user:description"))) . "</span></div>";
 	
 		echo elgg_view("admin/user_opt/adduser");
 		

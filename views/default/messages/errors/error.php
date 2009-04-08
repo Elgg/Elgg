@@ -16,5 +16,5 @@
 ?>
 
 	<p>
-		<?php echo autop($vars['object']); ?>
+		<?php echo elgg_view('output/longtext', array('value' => $vars['object'])); ?>
 	</p>
