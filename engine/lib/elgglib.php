@@ -302,18 +302,6 @@
 		// Start the output buffer, find the requested view file, and execute it
 		    ob_start();
 		    
-		// Attempt to cache views [EXPERIMENTAL] 
-			/*if (ob_get_level()==1) {
-			    $view_hash = elgg_get_viewhash($view, $vars); 
-			    $view_cache = elgg_get_filepath_cache();
-			    $cached_view = $view_cache->load($view_hash);
-			    
-			    if ($cached_view) {
-			    	ob_get_clean();
-			    	return $cached_view;
-			    }
-			}*/
-		    
 		    foreach($viewlist as $priority => $view) {
 		    	
 		    	$view_location = elgg_get_view_location($view, $viewtype);
@@ -337,10 +325,6 @@
 		    
 		    }
 
-	    // Cache view [EXPERIMENTAL]
-		//if (ob_get_level()==1) // Only cache top level view
-		//	$view_cache->save($view_hash, $content);
-				
 		// Save the output buffer into the $content variable
 			$content = ob_get_clean();
 			
@@ -494,6 +478,42 @@
 			if (!$FILE_PATH_CACHE) $FILE_PATH_CACHE = new ElggFileCache($CONFIG->dataroot);
 			
 			return $FILE_PATH_CACHE;
+		}
+		
+		/**
+		 * Function which resets the file path cache.
+		 *
+		 */
+		function elgg_filepath_cache_reset()
+		{
+			$cache = elgg_get_filepath_cache();
+			return $cache->delete('view_paths');
+		}
+		
+		/**
+		 * Saves a filepath cache.
+		 *
+		 * @param mixed $data
+		 */
+		function elgg_filepath_cache_save($data)
+		{
+			$cache = elgg_get_filepath_cache();
+			return $cache->save('view_paths', $data);
+		}
+		
+		/**
+		 * Retrieve the contents of the filepath cache.
+		 *
+		 */
+		function elgg_filepath_cache_load()
+		{
+			$cache = elgg_get_filepath_cache();
+			$cached_view_paths = $cache->load('view_paths'); 
+			
+			if ($cached_view_paths)
+				return $cached_view_paths;
+				
+			return NULL;
 		}
 		
 		/**

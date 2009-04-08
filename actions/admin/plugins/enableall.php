@@ -31,10 +31,7 @@
 	
 	// Regen view cache
 	elgg_view_regenerate_simplecache();
-	
-	// Regen paths cache
-	$cache = elgg_get_filepath_cache();
-	$cache->delete('view_paths');
+	elgg_filepath_cache_reset();
 		
 	forward($_SERVER['HTTP_REFERER']);
 	exit;

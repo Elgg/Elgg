@@ -194,6 +194,10 @@
 				
 				$site->pluginorder = $plugins;
 				
+				// Regenerate caches
+				elgg_view_regenerate_simplecache();
+				elgg_filepath_cache_reset();
+				
 				return $plugins;
 					
 			}
@@ -214,12 +218,10 @@
 			
 			global $CONFIG;
 			
-			$cache = elgg_get_filepath_cache();
-			
 			if (!empty($CONFIG->pluginspath)) {
 				
 				// See if we have cached values for things
-				$cached_view_paths = $cache->load('view_paths'); 
+				$cached_view_paths = elgg_filepath_cache_load();
 				if ($cached_view_paths) $CONFIG->views = unserialize($cached_view_paths);
 				
 				// temporary disable all plugins if there is a file called 'disabled' in the plugin dir
@@ -259,7 +261,7 @@
 
 				// Cache results
 				if (!$cached_view_paths)
-					$cache->save('view_paths', serialize($CONFIG->views));
+					elgg_filepath_cache_save(serialize($CONFIG->views));
 			}
 			
 		}
