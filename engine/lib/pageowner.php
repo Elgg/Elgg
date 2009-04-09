@@ -22,35 +22,56 @@
 
             global $CONFIG;
             
+            $returnval = NULL;
+            
             $setpageowner = set_page_owner();
             if ($setpageowner !== false) {
             	return $setpageowner;
             }
             
-	        if ($username = get_input("username")) {
+	        if ((!isset($returnval)) && ($username = get_input("username"))) {
 	        	if (substr_count($username,'group:')) {
 	            	preg_match('/group\:([0-9]+)/i',$username,$matches);
 	            	$guid = $matches[1];
 	            	if ($entity = get_entity($guid)) {
-	            		return $entity->getGUID();
+	            		$returnval = $entity->getGUID();
 	            	}
 	            }
-	            if ($user = get_user_by_username($username)) {
-	            	return $user->getGUID();
+	            if ((!isset($returnval)) && ($user = get_user_by_username($username))) {
+	            	$returnval = $user->getGUID();
 	            }
 	        }
-	        if ($owner = get_input("owner_guid")) {
+	        
+	        
+	        if ((!isset($returnval)) && ($owner = get_input("owner_guid"))) {
 	            if ($user = get_entity($owner)) {
-	            	return $user->getGUID();
+	            	$returnval = $user->getGUID();
 	            }
 	        }
-            if (!empty($CONFIG->page_owner_handlers) && is_array($CONFIG->page_owner_handlers)) {
+	        
+	        
+            if ((!isset($returnval)) && (!empty($CONFIG->page_owner_handlers) && is_array($CONFIG->page_owner_handlers))) {
                 foreach($CONFIG->page_owner_handlers as $handler) {
-                    if ($guid = $handler()) {
-                        return $guid;
+                    if ((!isset($returnval)) && ($guid = $handler())) {
+                        $returnval = $guid;
                     }
                 }
             }
+            
+            if (isset($returnval)) {
+            	
+            	// Check if this is obtainable, forwarding if not.
+            	/*
+            	 * If the owner entity has been set, but is inaccessible then we forward to the dashboard. This
+            	 * catches a bunch of WSoDs. It doesn't have much of a performance hit since 99.999% of the time the next thing
+            	 * a page does after calling this function is to retrieve the owner entity - which is of course cashed.
+            	 */
+            	$owner_entity = get_entity($returnval);
+            	if (!$owner_entity) forward(); 
+            	
+            	return $returnval;
+            }
+            
             return 0;
             
         }
