@@ -37,6 +37,13 @@
 				 	$location = $CONFIG->url . $location;
 				 }
 				 
+				 // Preserve current viewtype
+				 $viewtype = elgg_get_viewtype(); 
+				 if (($viewtype) && (strcmp($viewtype, 'default')!=0)) {
+				 	$sep = "?";
+				 	if (strpos($location, '?')>0) $sep = "&";
+				 	$location .= "{$sep}view=$viewtype";
+				 }
 				 
 				 header("Location: {$location}");
 				 exit;
