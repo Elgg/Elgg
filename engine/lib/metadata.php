@@ -633,7 +633,13 @@
 		$offset = (int)$offset;
 		if ($order_by == "") $order_by = "e.time_created desc";
 		$order_by = sanitise_string($order_by);
-		$owner_guid = (int) $owner_guid;
+		if ((is_array($owner_guid) && (count($owner_guid)))) {
+			foreach($owner_guid as $key => $guid) {
+				$owner_guid[$key] = (int) $guid;
+			}
+		} else {
+			$owner_guid = (int) $owner_guid;
+		}
 		
 		$site_guid = (int) $site_guid;
 		if ($site_guid == 0)
@@ -647,8 +653,12 @@
 			$where[] = "e.subtype = {$entity_subtype}";
 		if ($site_guid > 0)
 			$where[] = "e.site_guid = {$site_guid}";
-		if ($owner_guid > 0)
+		if (is_array($owner_guid)) {
+			$where[] = "e.container_guid in (".implode(",",$owner_guid).")";
+		} else if ($owner_guid > 0)
 			$where[] = "e.container_guid = {$owner_guid}";
+		//if ($owner_guid > 0)
+		//	$where[] = "e.container_guid = {$owner_guid}";
 		
 		if ($count) {
 			$query = "SELECT count(distinct e.guid) as total ";
