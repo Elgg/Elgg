@@ -196,7 +196,7 @@
 				if ((is_plugin_enabled('smsclient')) && (is_plugin_enabled('smslogin')))
 				{
 					// By this stage the owner should be logged in (requires SMS Login)
-					if (thewire_save_post($object->description, 2, 0, 'sms'))
+					if (thewire_save_post($object->description, get_default_access(), 0, 'sms'))
 						return false;
 					
 				}
