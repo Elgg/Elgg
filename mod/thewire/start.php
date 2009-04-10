@@ -153,6 +153,9 @@
 		 */
 		function thewire_save_post($post, $access_id, $parent=0, $method = "site")
 		{
+			
+			global $SESSION; 
+			
 			// Initialise a new ElggObject
 			$thewire = new ElggObject();
 			
@@ -176,7 +179,7 @@
 			$save = $thewire->save();
 
 			if($save)
-				add_to_river('river/object/thewire/create','create',$_SESSION['user']->guid,$thewire->guid);
+				add_to_river('river/object/thewire/create','create',$SESSION['user']->guid,$thewire->guid);
 	        
 	        return $save;
 
