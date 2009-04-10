@@ -20,5 +20,17 @@
 	$confirm = $vars['confirm'];
 	if (!$confirm)
 		$confirm = elgg_echo('question:areyousure');
+		
+	$link = $vars['href'];
+	
+	if ($vars['is_action'])
+	{
+		$ts = time();
+		$token = generate_action_token($ts);
+    	
+    	$sep = "?";
+		if (strpos($link, '?')>0) $sep = "&";
+		$link = "$link{$sep}__elgg_token=$token&__elgg_ts=$ts";
+	}
 ?>
-<a href="<?php echo $vars['href']; ?>" onclick="return confirm('<?php echo addslashes($confirm); ?>');"><?php echo htmlentities($vars['text'], ENT_QUOTES, 'UTF-8'); ?></a>
+<a href="<?php echo $link; ?>" onclick="return confirm('<?php echo addslashes($confirm); ?>');"><?php echo htmlentities($vars['text'], ENT_QUOTES, 'UTF-8'); ?></a>
