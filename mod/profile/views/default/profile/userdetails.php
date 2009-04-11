@@ -131,7 +131,7 @@
 
 </td>
 </tr>
-<?php if (!isset($CONFIG->profile_using_custom)) {?>
+<?php if (!get_plugin_setting('user_defined_fields', 'profile')) {?>
 <tr>
 <td colspan="2">
 	<div id="profile_info_column_right">	
