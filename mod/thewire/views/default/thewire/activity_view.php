@@ -42,4 +42,7 @@ function textCounter(field,cntfield,maxlimit) {
 			echo $latest_wire;
 		?>
 	</div>
+	
+	<img src="<?php echo $vars['url']; ?>mod/thewire/graphics/river_icon_thewire.gif" alt="the wire" align="left" style="margin-right:5px;"/><a href="<?php echo $vars['url']; ?>mod/thewire/everyone.php" />Read the wire</a>
+
 </div>
