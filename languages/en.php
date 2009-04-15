@@ -167,6 +167,8 @@
 			'memcache:noaddserver' => 'Multiple server support disabled, you may need to upgrade your PECL memcache library',
 	
 			'deprecatedfunction' => 'Warning: This code uses the deprecated function \'%s\' and is not compatible with this version of Elgg',
+	
+			'pageownerunavailable' => 'Warning: The page owner %d is not accessible!',
 		/**
 		 * API
 		 */

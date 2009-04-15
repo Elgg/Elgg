@@ -67,7 +67,14 @@
             	 * a page does after calling this function is to retrieve the owner entity - which is of course cashed.
             	 */
             	$owner_entity = get_entity($returnval);
-            	if (!$owner_entity) forward(); 
+            	if (!$owner_entity) {
+            		
+            		// Log an error
+            		error_log(sprintf(elgg_echo('pageownerunavailable'), $returnval));
+            		
+            		// Forward
+            		forward(); 
+            	}
             	
             	return $returnval;
             }
