@@ -1284,8 +1284,7 @@
 			}
 		}
 	}
-		
-	
+
 	/// Variable holding the default datastore
 	$DEFAULT_FILE_STORE = NULL;
 	
