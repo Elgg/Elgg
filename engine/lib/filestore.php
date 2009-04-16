@@ -933,7 +933,7 @@
 		// Extract file from, save to default filestore (for now)
 		
 		// see if a plugin has set a quota for this user
-		$file_quota = trigger_plugin_hook("$plugin:quotacheck",'user',array('user'=>get_loggedin_user()));
+		$file_quota = trigger_plugin_hook("$plugin:quotacheck",'user',array('container_guid'=>$container_guid));
 		if (!$file_quota) {
 			// no, see if there is a generic quota set
 			$file_quota = get_plugin_setting('quota', $plugin);
@@ -1284,45 +1284,7 @@
 			}
 		}
 	}
-	
-	/**
-	 * Returns an overall file type from the mimetype
-	 *
-	 * @param string $mimetype The MIME type
-	 * @return string The overall type
-	 */
-	function get_general_file_type($mimetype) {
 		
-		switch($mimetype) {
-			
-			case "application/msword":
-										return "document";
-										break;
-			case "application/pdf":
-										return "document";
-										break;
-			
-		}
-		
-		if (substr_count($mimetype,'text/'))
-			return "document";
-			
-		if (substr_count($mimetype,'audio/'))
-			return "audio";
-			
-		if (substr_count($mimetype,'image/'))
-			return "image";
-			
-		if (substr_count($mimetype,'video/'))
-			return "video";
-
-		if (substr_count($mimetype,'opendocument'))
-			return "document";	
-			
-		return "general";
-		
-	}
-	
 	
 	/// Variable holding the default datastore
 	$DEFAULT_FILE_STORE = NULL;
