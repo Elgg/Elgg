@@ -879,6 +879,44 @@
 		return false;
 	}
 	
+	/**
+	 * Returns an overall file type from the mimetype
+	 *
+	 * @param string $mimetype The MIME type
+	 * @return string The overall type
+	 */
+	function file_get_general_file_type($mimetype) {
+		
+		switch($mimetype) {
+			
+			case "application/msword":
+										return "document";
+										break;
+			case "application/pdf":
+										return "document";
+										break;
+			
+		}
+		
+		if (substr_count($mimetype,'text/'))
+			return "document";
+			
+		if (substr_count($mimetype,'audio/'))
+			return "audio";
+			
+		if (substr_count($mimetype,'image/'))
+			return "image";
+			
+		if (substr_count($mimetype,'video/'))
+			return "video";
+
+		if (substr_count($mimetype,'opendocument'))
+			return "document";	
+			
+		return "general";
+		
+	}
+	
 	function file_handle_upload($prefix,$subtype,$plugin) {		
 		$desc = get_input("description");
 		$tags = get_input("tags");
@@ -965,7 +1003,7 @@
 				// Save tags
 				$file->tags = $tags;
 				
-				$file->simpletype = get_general_file_type($uploaded['type']);
+				$file->simpletype = file_get_general_file_type($uploaded['type']);
 				$file->folder = $folder;
 				
 				$result = $file->save();
