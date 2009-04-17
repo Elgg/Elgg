@@ -362,7 +362,7 @@
 			'longdesc' => array (),
 			'vspace' => array (),
 			'src' => array (),
-//			'style' => array (),
+			'style' => array (),
 			'width' => array ()),
 		'ins' => array(
 			'datetime' => array (),
@@ -380,7 +380,7 @@
 			'align' => array (),
 			'dir' => array(),
 			'lang' => array(),
-//			'style' => array (),
+			'style' => array (),
 			'xml:lang' => array()),
 		'pre' => array(
 //			'style' => array(),
