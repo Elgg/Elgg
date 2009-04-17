@@ -378,7 +378,7 @@
 		 */
 		function find_plugin_settings($plugin_name = "")
 		{
-			$plugins = get_entities('object', 'plugin');
+			$plugins = get_entities('object', 'plugin', 0, "", 9999);
 			$plugin_name = sanitise_string($plugin_name);
 			if (!$plugin_name)
 				$plugin_name = get_plugin_name();
