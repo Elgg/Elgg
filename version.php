@@ -13,7 +13,7 @@
 	 * @link http://elgg.org/
 	 */
 
-	   $version = 2009041502;  // YYYYMMDD   = Elgg Date
+	   $version = 2009041701;  // YYYYMMDD   = Elgg Date
 	                           //         XX = Interim incrementer
 	
 	   $release = '1.5';    // Human-friendly version name
