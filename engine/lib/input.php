@@ -290,8 +290,8 @@
 			'dir' => array(),
 			'lang' => array(),
 			'title' => array ()),
-		'code' => array (
-			'style' => array()),
+		'code' => array (),
+//			'style' => array()),
 //		'col' => array(
 //			'align' => array (),
 //			'char' => array (),
