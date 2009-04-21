@@ -130,8 +130,8 @@
 			if (!is_installed()) return false; 
 			
 			$user = get_loggedin_user();
-			
-			if ((isset($user)) && ($user->guid > 0))
+		
+			if ((isset($user)) && ($user instanceof ElggUser) && ($user->guid > 0))
 				return true;
 				
 			return false;
