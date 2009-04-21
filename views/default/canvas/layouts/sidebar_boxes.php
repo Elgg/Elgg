@@ -17,6 +17,7 @@
 <div id="two_column_left_sidebar_boxes">
 
      <?php if (isset($vars['area1'])) echo $vars['area1']; ?>
+	 <?php if (isset($vars['area3'])) echo $vars['area3']; ?>
 
 </div><!-- /two_column_left_sidebar -->
 
