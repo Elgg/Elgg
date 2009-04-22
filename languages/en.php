@@ -276,6 +276,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'profile:website' => "Website",
 	
 			'profile:banned' => 'This user account has been suspended.',
+			'profile:deleteduser' => 'Deleted user',
 
 			'profile:river:update' => "%s updated their profile",
 			'profile:river:iconupdate' => "%s updated their profile icon",

@@ -32,7 +32,8 @@
 	                        echo "<p><b>" . $post_owner->name . "</b><br />";
 	                        
                         } else {
-                        	echo "<p>";
+                        	echo "<div class=\"post_icon\"><img src=\"" . elgg_view('icon/user/default/small') . "\" /></div>";
+                        	echo "<p><b>" . elgg_echo('profile:deleteduser') . "</b><br />";
                         }
                         
                         //display the date of the comment
