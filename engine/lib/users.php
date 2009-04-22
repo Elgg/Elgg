@@ -153,8 +153,8 @@
 		public function delete()
 		{
 			// Delete owned data
-			clear_annotations_by_owner($this->owner_guid);
-			clear_metadata_by_owner($this->owner_guid);
+			clear_annotations_by_owner($this->guid);
+			clear_metadata_by_owner($this->guid);
 			
 			// Delete entity
 			return parent::delete();

@@ -739,6 +739,8 @@
 	 */
 	function clear_metadata_by_owner($owner_guid)
 	{
+		global $CONFIG;
+		
 		$owner_guid = (int)$owner_guid;
 		
 		$metas = get_data("SELECT id from {$CONFIG->dbprefix}metadata WHERE owner_guid=$owner_guid");
@@ -746,7 +748,7 @@
 		
 		foreach ($metas as $id)
 		{
-			if (delete_metadata($id)) // Is this the best way?
+			if (delete_metadata($id->id)) // Is this the best way?
 				$deleted++;
 		}
 		

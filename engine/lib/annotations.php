@@ -829,6 +829,8 @@
 	 */
 	function clear_annotations_by_owner($owner_guid)
 	{
+		global $CONFIG;
+		
 		$owner_guid = (int)$owner_guid;
 		
 		$annotations = get_data("SELECT id from {$CONFIG->dbprefix}annotations WHERE owner_guid=$owner_guid");
@@ -836,7 +838,7 @@
 		
 		foreach ($annotations as $id)
 		{
-			if (delete_annotation($id)) // Is this the best way?
+			if (delete_annotation($id->id)) // Is this the best way?
 				$deleted++;
 		}
 		
