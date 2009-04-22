@@ -823,6 +823,27 @@
 	}
 	
 	/**
+	 * Clear all annotations belonging to a given owner_guid
+	 *
+	 * @param int $owner_guid The owner
+	 */
+	function clear_annotations_by_owner($owner_guid)
+	{
+		$owner_guid = (int)$owner_guid;
+		
+		$annotations = get_data("SELECT id from {$CONFIG->dbprefix}annotations WHERE owner_guid=$owner_guid");
+		$deleted = 0;
+		
+		foreach ($annotations as $id)
+		{
+			if (delete_annotation($id)) // Is this the best way?
+				$deleted++;
+		}
+		
+		return $deleted;
+	}
+	
+	/**
 	 * Handler called by trigger_plugin_hook on the "export" event.
 	 */
 	function export_annotation_plugin_hook($hook, $entity_type, $returnvalue, $params)

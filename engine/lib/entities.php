@@ -1843,7 +1843,7 @@
 					$entity->clearAnnotations();
 					$entity->clearRelationships();
 					remove_from_river_by_subject($guid);
-					remove_from_river_by_object($guid);
+					remove_from_river_by_object($guid);	
 					$res = delete_data("DELETE from {$CONFIG->dbprefix}entities where guid={$guid}");
 					if ($res)
 					{
@@ -2777,6 +2777,7 @@
 		// Allow a permission override for recursive entity deletion
 		// TODO: Can this be done better?
 		register_plugin_hook('permissions_check','all','recursive_delete_permissions_check');
+		register_plugin_hook('permissions_check:metadata','all','recursive_delete_permissions_check');
 		
 		register_plugin_hook('gc','system','entities_gc');
 	}

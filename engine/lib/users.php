@@ -146,6 +146,21 @@
 		}
 		
 		/**
+		 * User specific override of the entity delete method.
+		 *
+		 * @return bool
+		 */
+		public function delete()
+		{
+			// Delete owned data
+			clear_annotations_by_owner($this->owner_guid);
+			clear_metadata_by_owner($this->owner_guid);
+			
+			// Delete entity
+			return parent::delete();
+		}
+		
+		/**
 		 * Ban this user.
 		 *
 		 * @param string $reason Optional reason

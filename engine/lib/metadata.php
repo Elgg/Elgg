@@ -733,6 +733,27 @@
 	}
 	
 	/**
+	 * Clear all annotations belonging to a given owner_guid
+	 *
+	 * @param int $owner_guid The owner
+	 */
+	function clear_metadata_by_owner($owner_guid)
+	{
+		$owner_guid = (int)$owner_guid;
+		
+		$metas = get_data("SELECT id from {$CONFIG->dbprefix}metadata WHERE owner_guid=$owner_guid");
+		$deleted = 0;
+		
+		foreach ($metas as $id)
+		{
+			if (delete_metadata($id)) // Is this the best way?
+				$deleted++;
+		}
+		
+		return $deleted;
+	}
+	
+	/**
 	 * Handler called by trigger_plugin_hook on the "export" event.
 	 */
 	function export_metadata_plugin_hook($hook, $entity_type, $returnvalue, $params)
