@@ -51,6 +51,8 @@
 						$contents = file_get_contents($filename);
 						header("Content-Length: " . strlen($contents));
 					 } else {
+					 	mysql_query("INSERT into {$CONFIG->dbprefix}datalists set name = 'simplecache_lastupdate', value = '0' ON DUPLICATE KEY UPDATE value='0'");
+			
 					 	echo ''; exit;
 					 }
 				} else {
