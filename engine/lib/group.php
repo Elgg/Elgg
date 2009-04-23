@@ -788,6 +788,9 @@
 					((!isloggedin()) && (!$group->isPublicMembership())) ||
 					((!$group->isMember(get_loggedin_user()) && (!$group->isPublicMembership())))
 				) $allowed = false;
+				
+				// Admin override
+				if (isadminloggedin()) $allowed = true;
 			}
 		}
 		
