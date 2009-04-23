@@ -197,6 +197,8 @@ or click below to confirm request:
 		
 			'groups:forumtopic:edited' => 'Forum topic successfully edited.',
 	
+			'groups:allowhiddengroups' => 'Do you want to allow private (invisible) groups?',
+	
 			/**
 			 * Action messages
 			 */
