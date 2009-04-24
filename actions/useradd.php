@@ -13,7 +13,7 @@
 
 	require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
 
-	admin_gatekeeper(); // Only admins can make someone an admin
+	admin_gatekeeper(); // Only admins can add a user
 	action_gatekeeper();
 	
 	// Get variables
@@ -41,6 +41,7 @@
 				$new_user->admin = 'yes';
 			
 			$new_user->admin_created = true;
+			$new_user->created_by_guid = get_loggedin_userid();
 			
 			
 			notify_user($new_user->guid, $CONFIG->site->guid, elgg_echo('useradd:subject'), sprintf(elgg_echo('useradd:body'), $name, $CONFIG->site->name, $CONFIG->site->url, $username, $password));
