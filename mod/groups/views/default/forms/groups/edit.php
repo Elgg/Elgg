@@ -53,6 +53,39 @@
 		</label>
 	</p>
 	
+	<?php
+
+	if (get_plugin_setting('hidden_groups', 'groups') == 'yes')
+	{
+?>
+
+	<p>
+		<label>
+			<?php echo elgg_echo('groups:visibility'); ?><br />
+			<?php 
+			
+			$this_owner = $vars['entity']->owner_guid;
+			if (!$this_owner) $this_owner = get_loggedin_userid();
+			
+			$access = array(ACCESS_FRIENDS => elgg_echo("access:friends:label"), 1 => elgg_echo("LOGGED_IN"), 2 => elgg_echo("PUBLIC"));
+			$collections = get_user_access_collections($this_owner);
+			if (is_array($collections))
+			{
+				foreach ($collections as $c)
+					$access[$c->id] = $c->name;
+			}
+			
+			echo elgg_view('input/access', array('internalname' => 'vis', 'value' =>  ($vars['entity']->access_id ? $vars['entity']->access_id : ACCESS_PUBLIC), 'options' => $access)); 
+			
+			
+			?>
+		</label>
+	</p>
+
+<?php 	
+	}
+	
+	?>
 	
     <?php
 		if (isset($vars['config']->group_tool_options)) {

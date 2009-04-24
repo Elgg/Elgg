@@ -61,8 +61,18 @@
 		default: $group->membership = ACCESS_PRIVATE; 
 	}
 	
-	// Set access - all groups are public from elgg's point of view.
-	$group->access_id = 2;
+	// Set access - all groups are public from elgg's point of view, unless the override is in place
+
+	if (get_plugin_setting('hidden_groups', 'groups') == 'yes')
+	{
+		$visibility = (int)get_input('vis','',false);
+		
+		$group->access_id = $visibility;
+		
+		$group->access_id;
+	}
+	else
+		$group->access_id = 2;
 	
 	// Set group tool options
 	//$group->files_enable = get_input('files_enable', 'yes');
