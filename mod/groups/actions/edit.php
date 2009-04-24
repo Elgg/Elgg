@@ -11,6 +11,8 @@
 
 	// Load configuration
 	global $CONFIG;
+	
+	action_gatekeeper();
 
 	// Get group fields
 	$input = array();

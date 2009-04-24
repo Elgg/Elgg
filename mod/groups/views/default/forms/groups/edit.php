@@ -13,6 +13,8 @@
 <div class="contentWrapper">
 <form action="<?php echo $vars['url']; ?>action/groups/edit" enctype="multipart/form-data" method="post">
 
+	<?php echo elgg_view('input/securitytoken'); ?>
+
 	<p>
 		<label><?php echo elgg_echo("groups:icon"); ?><br />
 		<?php
