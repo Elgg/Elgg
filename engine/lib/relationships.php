@@ -700,6 +700,100 @@
 	}
 	
 	/**
+	 * Gets the number of entities by a the number of entities related to them in a particular way also constrained by
+	 * metadata
+	 *
+	 * @param string $relationship The relationship eg "friends_of"
+	 * @param bool $inverse_relationship Reverse the normal function of the query to instead say "give me all entities for whome $relationship_guid is a $relationship of" (default: true)
+	 * @param String $meta_name The metadata name
+	 * @param String $meta_value The metadata value
+	 * @param string $type The type of entity (default: all)
+	 * @param string $subtype The entity subtype (default: all)
+	 * @param int $owner_guid The owner of the entities (default: none)
+	 * @param int $limit
+	 * @param int $offset
+	 * @param boolean $count Set to true if you want to count the number of entities instead (default false)
+	 * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
+	 * @return array|int|false An array of entities, or the number of entities, or false on failure
+	 */
+	function get_entities_from_relationships_and_meta($relationship, $inverse_relationship = false, $meta_name = "", $meta_value = "", $type = "", $subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $count = false, $site_guid = 0)
+	{
+		
+		global $CONFIG;
+		
+		$relationship = sanitise_string($relationship);
+		$inverse_relationship = (bool)$inverse_relationship;
+		$type = sanitise_string($type);
+		$subtype = get_subtype_id($type, $subtype);
+		$owner_guid = (int)$owner_guid;
+		$order_by = sanitise_string($order_by);
+		$limit = (int)$limit;
+		$offset = (int)$offset;
+		$site_guid = (int) $site_guid;
+		if ($site_guid == 0)
+			$site_guid = $CONFIG->site_guid;
+			
+		$meta_n = get_metastring_id($meta_name);
+		$meta_v = get_metastring_id($meta_value);
+		
+		//$access = get_access_list();
+		
+		$where = array();
+		
+		if ($relationship!="")
+			$where[] = "r.relationship='$relationship'";
+		if ($inverse_relationship) {
+			$on = 'e.guid = r.guid_two';
+		} else {
+			$on = 'e.guid = r.guid_one';
+		}
+		if ($type != "")
+			$where[] = "e.type='$type'";
+		if ($subtype)
+			$where[] = "e.subtype=$subtype";
+		if ($owner_guid != "")
+			$where[] = "e.container_guid='$owner_guid'";
+		if ($site_guid > 0)
+			$where[] = "e.site_guid = {$site_guid}";
+			
+		$metajoin = "";
+		if (($meta_name!=="") || ($meta_value!=="")) {
+			$metajoin = " JOIN {$CONFIG->dbprefix}metadata m on e.guid=m.entity_guid";
+			
+			if ($meta_name!=="")
+				$where[] = "m.name_id='$meta_n'";
+			if ($meta_value!=="")
+				$where[] = "m.value_id='$meta_v'";
+		}
+			
+		if ($count) {
+			$query = "SELECT count(distinct e.guid) as total ";
+		} else {
+			$query = "SELECT distinct e.*, count(e.guid) as total ";
+		}
+		
+		$query .= " from {$CONFIG->dbprefix}entity_relationships r JOIN {$CONFIG->dbprefix}entities e on {$on} {$metajoin} where ";
+		
+		if (!empty($where))
+		foreach ($where as $w)
+			$query .= " $w and ";
+		$query .= get_access_sql_suffix("e"); // Add access controls
+		if (($meta_name!=="") || ($meta_value!=="")) $query .= ' and ' . get_access_sql_suffix("m"); // Add access controls
+		
+		if (!$count) {
+			$query .= " group by e.guid ";
+			$query .= " order by total desc limit {$offset}, {$limit}"; // Add order and limit
+			return get_data($query, "entity_row_to_elggstar");
+		} else {
+			if ($count = get_data_row($query)) {
+				return $count->total;
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Sets the URL handler for a particular relationship type
 	 *
 	 * @param string $function_name The function to register
