@@ -1124,7 +1124,11 @@
 	function validate_username($username)
 	{
 		// Basic, check length
-		if (strlen($username)<4) throw new RegistrationException(elgg_echo('registration:usernametooshort'));
+		if (!isset($CONFIG->minusername)) {
+			$CONFIG->minusername = 4;
+		}
+		
+		if (strlen($CONFIG->minusername)<4) throw new RegistrationException(elgg_echo('registration:usernametooshort'));
 		
 		// Blacklist for bad characters (partially nicked from mediawiki)
 		
