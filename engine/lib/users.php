@@ -465,12 +465,14 @@
 		
 		if (($user) && ($user->canEdit()) && ($user instanceof ElggUser))
 		{
-			// Add reason
-			if ($reason)
-				create_metadata($user_guid, 'ban_reason', $reason,'', 0, ACCESS_PUBLIC);
-			
-			// Set ban flag
-			return update_data("UPDATE {$CONFIG->dbprefix}users_entity set banned='yes' where guid=$user_guid");
+			if (trigger_elgg_event('ban', 'user', $user)) {
+				// Add reason
+				if ($reason)
+					create_metadata($user_guid, 'ban_reason', $reason,'', 0, ACCESS_PUBLIC);
+				
+				// Set ban flag
+				return update_data("UPDATE {$CONFIG->dbprefix}users_entity set banned='yes' where guid=$user_guid");
+			}
 		}		
 
 		return false;
@@ -491,8 +493,10 @@
 		
 		if (($user) && ($user->canEdit()) && ($user instanceof ElggUser))
 		{
-			create_metadata($user_guid, 'ban_reason', '','', 0, ACCESS_PUBLIC);
-			return update_data("UPDATE {$CONFIG->dbprefix}users_entity set banned='no' where guid=$user_guid");
+			if (trigger_elgg_event('unban', 'user', $user)) {
+				create_metadata($user_guid, 'ban_reason', '','', 0, ACCESS_PUBLIC);
+				return update_data("UPDATE {$CONFIG->dbprefix}users_entity set banned='no' where guid=$user_guid");
+			}
 		}
 		
 		return false;
