@@ -31,3 +31,4 @@ ELGG UPGRADE INSTRUCTIONS
    			
    Substitute your filename for 'crontab.mine'.
 
+EOF
