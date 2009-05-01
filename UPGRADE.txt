@@ -30,3 +30,5 @@ ELGG UPGRADE INSTRUCTIONS
    			crontab crontab.mine 
    			
    Substitute your filename for 'crontab.mine'.
+
+E
