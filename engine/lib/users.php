@@ -1123,6 +1123,8 @@
 	 */
 	function validate_username($username)
 	{
+		global $CONFIG;
+		
 		// Basic, check length
 		if (!isset($CONFIG->minusername)) {
 			$CONFIG->minusername = 4;
