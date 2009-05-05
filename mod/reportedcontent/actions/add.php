@@ -26,7 +26,7 @@
 		    $entity->access_id = $access;
 		
     		if ($entity->save()) {
-     			if (!trigger_plugin_hook('reportedcontent:add', $entity->type, array('entity'=>$entity), true)) {
+     			if (!trigger_plugin_hook('reportedcontent:add', $reported->type, array('entity'=>$reported), true)) {
      				$entity->delete();
      				register_error(elgg_echo('reportedcontent:failed'));
      			} else {
