@@ -299,6 +299,11 @@
 		    		return true;
 		    	}
 		    	
+		    	// If we got here then check whether this exists as an extension
+		    		// Note that this currently does not recursively check whether the extended view exists also
+		    	if (isset($CONFIG->views->extensions[$view]))
+		    		return true;
+		    	
 		    	return false;
 			
 		}
