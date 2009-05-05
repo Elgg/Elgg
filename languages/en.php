@@ -809,6 +809,7 @@ Alternatively, you can enter your database settings below and we will try and do
 		 */
 	
 			'welcome' => "Welcome",
+			'welcome:user' => 'Welcome %s',
 			'welcome_message' => "Welcome to this Elgg installation.",
 	
 		/**

@@ -15,5 +15,5 @@
 	 
 ?>
 
-<p>Welcome <?php echo $user; ?></p>
+<p><?php echo sprintf(elgg_echo('welcome:user'), $user); ?></p>
 <p><a href="<?php echo $vars['url']; ?>action/logout">[logout]</a></p>
