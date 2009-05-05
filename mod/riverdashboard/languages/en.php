@@ -7,6 +7,7 @@
 		'riverdashboard:useasdashboard' => "Replace the default dashboard with this activity river?",
 		'activity' => 'Activity',
 		'riverdashboard:recentmembers' => 'Recent members',
+		'riverdashboard:welcome:user' => 'Welcome %s',
 	
 	    /**
 	     * Site messages
