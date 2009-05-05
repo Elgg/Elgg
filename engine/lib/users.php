@@ -1130,7 +1130,8 @@
 			$CONFIG->minusername = 4;
 		}
 		
-		if (strlen($CONFIG->minusername)<4) throw new RegistrationException(elgg_echo('registration:usernametooshort'));
+		if (strlen($username) < $CONFIG->minusername)
+			throw new RegistrationException(elgg_echo('registration:usernametooshort'));
 		
 		// Blacklist for bad characters (partially nicked from mediawiki)
 		
