@@ -1844,6 +1844,7 @@
 					$entity->clearRelationships();
 					remove_from_river_by_subject($guid);
 					remove_from_river_by_object($guid);	
+					remove_all_private_settings($guid);
 					$res = delete_data("DELETE from {$CONFIG->dbprefix}entities where guid={$guid}");
 					if ($res)
 					{
