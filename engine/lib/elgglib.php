@@ -317,6 +317,9 @@
 			
 			global $CONFIG;
 			
+			if (!isset($CONFIG->views))
+				$CONFIG->views = new stdClass;
+			
 			if (!isset($CONFIG->views->simplecache))
 				$CONFIG->views->simplecache = array();
 			

@@ -237,7 +237,7 @@ END;
 				$friends_bit .= "{$table_prefix}owner_guid IN (SELECT guid_one FROM {$CONFIG->dbprefix}entity_relationships WHERE relationship='friend' AND guid_two=$owner)";
 				$friends_bit = '('.$friends_bit.') OR ';
 				
-				if ($CONFIG->user_block_and_filter_enabled) {
+				if ((isset($CONFIG->user_block_and_filter_enabled)) && ($CONFIG->user_block_and_filter_enabled)) {
 					// check to see if the user is in the entity owner's block list
 					// or if the entity owner is in the user's filter list
 					// if so, disallow access
