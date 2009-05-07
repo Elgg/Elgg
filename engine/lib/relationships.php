@@ -704,6 +704,7 @@
 	 * metadata
 	 *
 	 * @param string $relationship The relationship eg "friends_of"
+	 * @param int $relationship_guid The guid of the entity to use query
 	 * @param bool $inverse_relationship Reverse the normal function of the query to instead say "give me all entities for whome $relationship_guid is a $relationship of" (default: true)
 	 * @param String $meta_name The metadata name
 	 * @param String $meta_value The metadata value
@@ -716,15 +717,17 @@
 	 * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
 	 * @return array|int|false An array of entities, or the number of entities, or false on failure
 	 */
-	function get_entities_from_relationships_and_meta($relationship, $inverse_relationship = false, $meta_name = "", $meta_value = "", $type = "", $subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $count = false, $site_guid = 0)
+	function get_entities_from_relationships_and_meta($relationship, $relationship_guid, $inverse_relationship = false, $meta_name = "", $meta_value = "", $type = "", $subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $count = false, $site_guid = 0)
 	{
 		
 		global $CONFIG;
 		
 		$relationship = sanitise_string($relationship);
 		$inverse_relationship = (bool)$inverse_relationship;
+		$relationship_guid = (int)$relationship_guid;
 		$type = sanitise_string($type);
-		$subtype = get_subtype_id($type, $subtype);
+		if ($subtype)
+			$subtype = get_subtype_id($type, $subtype);
 		$owner_guid = (int)$owner_guid;
 		$order_by = sanitise_string($order_by);
 		$limit = (int)$limit;
@@ -742,11 +745,11 @@
 		
 		if ($relationship!="")
 			$where[] = "r.relationship='$relationship'";
-		if ($inverse_relationship) {
-			$on = 'e.guid = r.guid_two';
-		} else {
-			$on = 'e.guid = r.guid_one';
-		}
+			
+		$on = "e.guid = r.guid_one";
+		if (!$inverse_relationship)
+			$on = "e.guid = r.guid_two";
+			
 		if ($type != "")
 			$where[] = "e.type='$type'";
 		if ($subtype)
@@ -755,6 +758,9 @@
 			$where[] = "e.container_guid='$owner_guid'";
 		if ($site_guid > 0)
 			$where[] = "e.site_guid = {$site_guid}";
+		if ($relationship_guid)
+			$where[] = ($inverse_relationship ? "r.guid_two='$relationship_guid'" : "r.guid_one='$relationship_guid'");
+		
 			
 		$metajoin = "";
 		if (($meta_name!=="") || ($meta_value!=="")) {
@@ -783,6 +789,7 @@
 		if (!$count) {
 			$query .= " group by e.guid ";
 			$query .= " order by total desc limit {$offset}, {$limit}"; // Add order and limit
+			
 			return get_data($query, "entity_row_to_elggstar");
 		} else {
 			if ($count = get_data_row($query)) {
