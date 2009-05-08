@@ -89,7 +89,11 @@
 			// activate some plugins by default
 			if (isset($CONFIG->default_plugins))
 			{
-				$plugins = explode(',', $CONFIG->default_plugins);
+				if (!is_array($CONFIG->default_plugins))
+					$plugins = explode(',', $CONFIG->default_plugins);
+				else
+					$CONFIG->default_plugins = $CONFIG->default_plugins;
+					
 				foreach ($plugins as $plugin)
 					enable_plugin(trim($plugin), $site->getGUID());
 			}
