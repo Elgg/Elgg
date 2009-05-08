@@ -106,6 +106,7 @@
 				enable_plugin('diagnostics', $site->getGUID());
 				enable_plugin('uservalidationbyemail', $site->getGUID());
 				enable_plugin('kses', $site->getGUID());
+				enable_plugin('captcha', $site->getGUID());
 			}
 				
 			// Now ping home
