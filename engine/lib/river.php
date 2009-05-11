@@ -3,7 +3,7 @@
 	 * Elgg river.
 	 * Functions for listening for and generating the river out of the system log.
 	 * 
-	 * These functions are no longer used in core Elgg.
+	 * These functions are no longer used in core Elgg and are DEPRECATED.
 	 * 
 	 * @package Elgg
 	 * @subpackage Core
