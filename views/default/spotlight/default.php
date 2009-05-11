@@ -16,7 +16,7 @@
 
 <div id="spotlight_table">
 	<!-- spotlight RHS content -->
-	<div class="spotlightRHS" />
+	<div class="spotlightRHS">
 		<h2>Information</h2>			
 		<ul>
 			<li><a href="http://docs.elgg.org/wiki/Views/SystemViews">Populating this spotlight area</a></li>
