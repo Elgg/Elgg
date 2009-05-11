@@ -29,7 +29,8 @@
 			
 			if ( $user && $group) {
 				
-				if (get_loggedin_userid() == $group->owner_guid)
+				//if (get_loggedin_userid() == $group->owner_guid)
+				if ($group->canEdit())
 				{
 					
 					// If the group is open or the user has requested membership
