@@ -112,7 +112,14 @@
 			// Upgrade core
 			if (upgrade_code($dbversion))
 				system_message(elgg_echo('upgrade:core'));
+				
+			// Now we trigger an event to give the option for plugins to do something
+			$upgrade_details = stdClass;
+			$upgrade_details->from = $dbversion;
+			$upgrade_details->to = get_version();
 			
+			trigger_elgg_event('upgrade', 'upgrade', $upgrade_details);
+				
 			// Update the version
 			datalist_set('version', get_version());
 			
