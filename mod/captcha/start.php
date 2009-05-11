@@ -25,9 +25,18 @@
 		// Default length
 		$CONFIG->captcha_length = 5;
 		
-		// Right, these actions require captcha validation TODO: Put this in config somehow
-		register_plugin_hook("action", "register", "captcha_verify_action_hook");
-		register_plugin_hook("action", "user/requestnewpassword", "captcha_verify_action_hook");
+		// Register a function that provides some default override actions
+		register_plugin_hook('actionlist', 'captcha', 'captcha_actionlist_hook');
+		
+		// Register actions to intercept
+		$actions = array();
+		$actions = trigger_plugin_hook('actionlist', 'captcha', null, $actions);
+		
+		if (($actions) && (is_array($actions)))
+		{
+			foreach ($actions as $action)
+				register_plugin_hook("action", $action, "captcha_verify_action_hook");
+		}
 	}
 	
 	function captcha_page_handler($page) 
@@ -106,6 +115,26 @@
 		register_error(elgg_echo('captcha:captchafail'));
 			
 		return false;
+	}
+	
+	/**
+	 * This function returns an array of actions the captcha will expect a captcha for, other plugins may
+	 * add their own to this list thereby extending the use.
+	 *
+	 * @param unknown_type $hook
+	 * @param unknown_type $entity_type
+	 * @param unknown_type $returnvalue
+	 * @param unknown_type $params
+	 */
+	function captcha_actionlist_hook($hook, $entity_type, $returnvalue, $params)
+	{
+		if (!is_array($returnvalue))
+			$returnvalue = array();
+			
+		$returnvalue[] = 'register';
+		$returnvalue[] = 'user/requestnewpassword';
+			
+		return $returnvalue;
 	}
 	
 	register_elgg_event_handler('init','system','captcha_init');
