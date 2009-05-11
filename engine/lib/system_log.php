@@ -260,21 +260,40 @@
 	}
 	
 	/**
+	 * Default system log handler, allows plugins to override, extend or disable logging.
+	 *
+	 * @param string $event
+	 * @param string $object_type
+	 * @param Loggable $object
+	 * @return unknown
+	 */
+	function system_log_default_logger($event, $object_type, $object)
+	{
+		system_log($object['object'], $object['event']);
+		
+		return true;
+	}
+	
+	/**
 	 * System log listener.
 	 * This function listens to all events in the system and logs anything appropriate.
 	 *
 	 * @param String $event
 	 * @param String $object_type
-	 * @param mixed $object
+	 * @param Loggable $object
 	 */
 	function system_log_listener($event, $object_type, $object)
 	{
-		system_log($object, $event);
+		if (($object_type!='systemlog') && ($event!='log')) 
+			trigger_elgg_event('log', 'systemlog', array('object' => $object, 'event' => $event));
 		
 		return true;
 	}
 	
 	/** Register event to listen to all events **/
 	register_elgg_event_handler('all','all','system_log_listener', 400);
+	
+	/** Register a default system log handler */
+	register_elgg_event_handler('log','systemlog','system_log_default_logger', 999);
 	
 ?>
