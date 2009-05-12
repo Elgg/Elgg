@@ -25,6 +25,7 @@
             
             global $CONFIG;
             
+            
 	        $query = parse_url($_SERVER['REQUEST_URI']);
 			if (isset($query['query'])) {
 				$query = $query['query'];
@@ -62,6 +63,18 @@
 	                	// Include action
 	                	if ($event_result) // Event_result being false doesn't produce an error - since i assume this will be handled in the hook itself. TODO make this better!
 	                	{
+				            /** Refs #749: We now warn if action token is missing. Later this will be replaced with action_gatekeeper() as detailed in #750 */
+				            if (!validate_action_token())
+				            { 
+				            	// Display a temporary warning message - in future versions this will be a hard fail via an action gatekeeper.
+				            	$message = "WARNING: Action $action was called without an action token. It is stongly recommended that you consider doing this. Plugin authors should use 'input/form' or pass is_action=true to 'output/confirmlink' or 'output/url'.";
+				            	
+				            	//if ((!isset($CONFIG->disable_action_token_warning)) || (!$CONFIG->disable_action_token_warning))
+				            	//	register_error($message);
+				            		
+				            	error_log($message);
+				            }
+				            
 			                if (@include($CONFIG->actions[$action]['file'])) {
 			                } else {
 			                    register_error(sprintf(elgg_echo('actionundefined'),$action));
@@ -74,6 +87,8 @@
             } else {
             	register_error(sprintf(elgg_echo('actionundefined'),$action));
             }
+            
+            
             forward($CONFIG->url . $forwarder);
             
         }
@@ -117,15 +132,13 @@
         	register_action("error");
         	return true;
         }
-
-       	/**
-       	 * Action gatekeeper.
-       	 * This function verifies form input for security features (like a generated token), and forwards
-       	 * the page if they are invalid.
-       	 * 
-       	 * Place at the head of actions.
-       	 */
-        function action_gatekeeper()
+        
+        /**
+         * Validate an action token, returning true if valid and false if not
+         *
+         * @return unknown
+         */
+        function validate_action_token()
         {
         	$token = get_input('__elgg_token');
         	$ts = get_input('__elgg_ts');
@@ -165,6 +178,21 @@
         	}
         	else
         		register_error(elgg_echo('actiongatekeeper:missingfields'));
+        		
+        	return false;
+        }
+
+       	/**
+       	 * Action gatekeeper.
+       	 * This function verifies form input for security features (like a generated token), and forwards
+       	 * the page if they are invalid.
+       	 * 
+       	 * Place at the head of actions.
+       	 */
+        function action_gatekeeper()
+        {
+        	if (validate_action_token())
+        		return true;
         		
         	forward();
         	exit;
