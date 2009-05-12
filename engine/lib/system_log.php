@@ -245,15 +245,15 @@
 		$ts = $now - $offset;
 	
 		// create table
-		if (!update_data("CREATE TABLE {$CONFIG->dbprefix}system_log_$now as SELECT * from {$CONFIG->dbprefix}system_log WHERE time_created<=$ts"))
+		if (!update_data("CREATE TABLE {$CONFIG->dbprefix}system_log_$now as SELECT * from {$CONFIG->dbprefix}system_log WHERE time_created<$ts"))
 			return false;
 
+		// delete
+		if (delete_data("DELETE from {$CONFIG->dbprefix}system_log WHERE time_created<$ts)")===false) // Don't delete on time since we are running in a concurrent environment
+			return false;
+			
 		// alter table to engine
 		if (!update_data("ALTER TABLE {$CONFIG->dbprefix}system_log_$now engine=archive"))
-			return false;
-	
-		// delete
-		if (delete_data("DELETE from {$CONFIG->dbprefix}system_log WHERE id in (select id from {$CONFIG->dbprefix}system_log_$now)")===false) // Don't delete on time since we are running in a concurrent environment
 			return false;
 	
 		return true;
