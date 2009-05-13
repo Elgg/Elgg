@@ -18,11 +18,9 @@
 
 	$title = elgg_view_title(elgg_echo('diagnostics'));
 	
-	$body .= "<div class=\"contentWrapper\">";
-	$body .= elgg_echo('diagnostics:description');
-	
-	$body .= elgg_view('diagnostics/forms/download');
-	$body .= "</div>";
+	$body = elgg_view('page_elements/contentwrapper', array('body' => 
+		elgg_echo('diagnostics:description') . elgg_view('diagnostics/forms/download'))
+	);
 	
 	
 	page_draw(elgg_echo('diagnostics'),elgg_view_layout("two_column_left_sidebar", '', $title . $body));

@@ -52,6 +52,27 @@
 			$this->details = $details;
 			$this->debug = $debug;
 		}
+		
+		/**
+		 * Successful execution or not?
+		 *
+		 * @return bool
+		 */
+		public function isSuccess() { return $this->successful; }
+		
+		/**
+		 * Retrieve details.
+		 *
+		 * @return string
+		 */
+		public function getDetails() { return $this->details; }
+		
+		/**
+		 * Retrieve debug.
+		 *
+		 * @return string
+		 */
+		public function getDebug() { return $this->debug; }
 	
 		/**
 		 * Factory function to generate a successful result.
@@ -73,10 +94,12 @@
 	 */
 	function execute_elgg_test($function)
 	{
-		if (is_callable($function))
-			return $function();
+		global $ELGG_TEST_REGISTRY;
+		
+		if ((is_callable($function)) && (isset($ELGG_TEST_REGISTRY[$function]))) // must be callable, and registered (for security)
+			return array('function' => $function, 'result' => $function());
 			
-		return false;
+		return array('function' => $function, 'result' => false);
 	}
 	
 	/**
@@ -113,4 +136,15 @@
 		$ELGG_TEST_REGISTRY[$function] = $description;
 	}
 	
+	/**
+	 * Return a list of available tests.
+	 *
+	 * @return array
+	 */
+	function get_available_tests()
+	{
+		global $ELGG_TEST_REGISTRY;
+		
+		return $ELGG_TEST_REGISTRY;
+	}
 ?>

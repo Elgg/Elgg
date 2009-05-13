@@ -33,6 +33,7 @@
 		if (get_context() == 'admin' && isadminloggedin()) {
 			global $CONFIG;
 			add_submenu_item(elgg_echo('diagnostics'), $CONFIG->wwwroot . 'pg/diagnostics/');
+			add_submenu_item(elgg_echo('diagnostics:unittester'), $CONFIG->wwwroot . 'pg/diagnostics/tests/');
 		}
 	}
 	
@@ -45,8 +46,31 @@
 	{
 		global $CONFIG;
 		
-		// only interested in one page for now
-		include($CONFIG->pluginspath . "diagnostics/index.php"); 
+		if (isset($page[0]))
+		{
+			switch ($page[0])
+			{
+				case 'tests' : 	
+					if ((isset($page[1])) && ($page[1])) {
+						switch ($page[1]) 
+						{
+							case 'all': break; 
+							default: set_input('test_func', $page[1]);
+						}
+						
+						include($CONFIG->pluginspath . "diagnostics/testreport.php"); 
+					}
+					else
+						include($CONFIG->pluginspath . "diagnostics/unittester.php"); 
+				break;
+				default: include($CONFIG->pluginspath . "diagnostics/index.php");  	
+			}
+		}
+		else
+		{
+			// only interested in one page for now
+			include($CONFIG->pluginspath . "diagnostics/index.php");
+		} 
 	}
 	
 	/**
