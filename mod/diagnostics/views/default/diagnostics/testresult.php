@@ -30,7 +30,7 @@
 <div class="testreport">
 	<div class="testreport_<?php echo $testresult_div; ?>">
 		<div class="testreport_header">
-			<p><?php echo $vars['function']; ?> : <?php echo $successmessage; ?></p>
+			<p><b><?php echo $vars['function']; ?> : </b><?php echo $successmessage; ?></p>
 		</div>
 		<div class="testreport_details">
 			<?php echo $result->getDetails(); ?>

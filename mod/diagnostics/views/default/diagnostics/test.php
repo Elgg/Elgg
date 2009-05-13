@@ -13,7 +13,7 @@
 ?>
 <div class="test">
 	<div class="test_header">
-		<?php echo $vars['function']; ?>
+		<b><?php echo $vars['function']; ?></b>
 	</div>
 	<div class="test_description">
 		<?php echo $vars['description']; ?>

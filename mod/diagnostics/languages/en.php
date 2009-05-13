@@ -24,7 +24,9 @@
 	
 			'diagnostics:unittester:testresult:nottestclass' => 'FAIL - Result not a test class',
 			'diagnostics:unittester:testresult:fail' => 'FAIL',
-			'diagnostics:unittester:testresult:success' => 'FAIL',
+			'diagnostics:unittester:testresult:success' => 'SUCCESS',
+	
+			'diagnostics:unittest:example' => 'Example unit test, only available in debug mode.',
 	
 			'diagnostics:unittester:report' => 'Test report for %s',
 	
