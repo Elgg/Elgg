@@ -59,23 +59,30 @@
 	{
 		global $CONFIG;
 		
+		// Handle cases where we are passed an array (shouldn't be but can happen if location is a tag field)
+		if (is_array($location))
+			$location = implode(', ', $location);
+			
 		$location = sanitise_string($location);
 		
 		// Look for cached version
 		$cached_location = get_data_row("SELECT * from {$CONFIG->dbprefix}geocode_cache WHERE location='$location'");
 		
-		// Trigger geocode event
+		if ($cached_location)
+			return array('lat' => $cached_location->lat, 'long' => $cached_location->long);
+		
+		// Trigger geocode event if not cached
 		$return = false;
-		$return = trigger_plugin_hook('geocode', 'location', array('location' => $location, $return));
+		$return = trigger_plugin_hook('geocode', 'location', array('location' => $location), $return);
 		
 		// If returned, cache and return value
 		if (($return) && (is_array($return)))
 		{
-			$lat = (int)$return['lat'];
-			$long = (int)$return['long'];
+			$lat = (float)$return['lat'];
+			$long = (float)$return['long'];
 			
 			// Put into cache at the end of the page since we don't really care that much
-			execute_delayed_write_query("INSERT DELAYED INTO {$CONFIG->dbprefix}geocode_cache (lat, long) VALUES ({$lat}, {$long}) ON DUPLICATE KEY UPDATE lat={$lat} long={$long}");
+			execute_delayed_write_query("INSERT DELAYED INTO {$CONFIG->dbprefix}geocode_cache (location, lat, `long`) VALUES ('$location', '{$lat}', '{$long}') ON DUPLICATE KEY UPDATE lat='{$lat}', `long`='{$long}'");
 		}
 		
 		return $return;

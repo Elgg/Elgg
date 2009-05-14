@@ -284,7 +284,7 @@ CREATE TABLE `prefix_geocode_cache` (
 	`long`   varchar(20),
 	
 	PRIMARY KEY (`id`),
-    KEY `location` (`location`)
+    UNIQUE KEY `location` (`location`)
 	
 ) ENGINE=MEMORY;
 
