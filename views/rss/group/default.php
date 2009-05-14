@@ -28,5 +28,16 @@
 <?php
 			}
 	  ?>
+	  <?php
+			if (
+				($vars['entity'] instanceof Locatable) &&
+				($vars['entity']->getLongitude()) &&
+				($vars['entity']->getLatitude())
+			) {
+				?>
+				<georss:point><?php echo $vars['entity']->getLatitude(); ?> <?php echo $vars['entity']->getLongitude(); ?></georss:point>
+				<?php
+			}
+	  ?>
 	  <?php echo elgg_view('extensions/item'); ?>
 	</item>

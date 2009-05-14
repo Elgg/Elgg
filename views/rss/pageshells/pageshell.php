@@ -32,7 +32,7 @@
 
 ?>
 
-<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" <?php echo elgg_view('extensions/xmlns'); ?> >
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:georss="http://www.georss.org/georss" <?php echo elgg_view('extensions/xmlns'); ?> >
 	<channel xml:base=''>
 		<title><![CDATA[<?php echo $title; ?>]]></title>
 		<link><?php echo htmlentities($url); ?></link>
