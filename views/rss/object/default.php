@@ -27,4 +27,13 @@
 	  <link><?php echo htmlspecialchars($vars['entity']->getURL()); ?></link>
 	  <title><![CDATA[<?php echo $title; ?>]]></title>
 	  <description><![CDATA[<?php echo (autop($vars['entity']->description)); ?>]]></description>
+	  <?php
+			$owner = $vars['entity']->getOwnerEntity();
+			if ($owner)
+			{
+?>
+	  <dc:creator><?php echo $owner->name; ?></dc:creator>
+<?php
+			}
+	  ?>
 	</item>

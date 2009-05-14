@@ -26,4 +26,13 @@
 	  <link><?php echo $vars['entity']->getURL(); ?>#<?php echo $vars['annotation']->id; ?></link>
 	  <title><![CDATA[<?php echo $title; ?>]]></title>
 	  <description><![CDATA[<?php echo (autop($vars['annotation']->value)); ?>]]></description>
+	  <?php
+			$owner = get_entity($vars['entity']->owner);
+			if ($owner)
+			{
+?>
+	  <dc:creator><?php echo $owner->name; ?></dc:creator>
+<?php
+			}
+	  ?>
 	</item>
