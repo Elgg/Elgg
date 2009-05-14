@@ -35,4 +35,5 @@
 <?php
 			}
 	  ?>
+	  <?php echo elgg_view('extensions/item'); ?>
 	</item>

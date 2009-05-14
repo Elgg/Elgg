@@ -32,10 +32,11 @@
 
 ?>
 
-<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" <?php echo elgg_view('extensions/xmlns'); ?> >
 	<channel xml:base=''>
 		<title><![CDATA[<?php echo $title; ?>]]></title>
 		<link><?php echo htmlentities($url); ?></link>
+		<?php echo elgg_view('extensions/channel'); ?>
 		<?php
 
 			echo $vars['body'];
