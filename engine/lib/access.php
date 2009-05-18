@@ -345,7 +345,7 @@ END;
 			$name = trim($name);
 			if (empty($name)) return false;
 			
-			if ($user_id == 0) $user_id = get_loggedin_userid();
+			if ($owner_guid == 0) $owner_guid = get_loggedin_userid();
 			if (($site_id == 0) && (isset($CONFIG->site_guid))) $site_id = $CONFIG->site_guid;
 			$name = sanitise_string($name);
 			
