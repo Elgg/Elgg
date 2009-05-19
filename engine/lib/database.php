@@ -57,7 +57,7 @@
 		        	throw new DatabaseException(sprintf(elgg_echo('DatabaseException:NoConnect'), $CONFIG->dbname));
 			
 		    // Set up cache
-		    	if (!$DB_QUERY_CACHE) 
+		    	if ((!$DB_QUERY_CACHE) && (!$CONFIG->db_disable_query_cache)) 
 		    		$DB_QUERY_CACHE = new ElggStaticVariableCache('db_query_cache'); //array();
 		    		//$DB_QUERY_CACHE = select_default_memcache('db_query_cache'); //array();
 		    		
@@ -193,7 +193,7 @@
             $DB_PROFILE[] = $query;
             	
             $result = mysql_query($query, $dblink);
-            $DB_QUERY_CACHE[$query] = -1; // Set initial cache to -1
+            if ($DB_QUERY_CACHE) $DB_QUERY_CACHE[$query] = -1; // Set initial cache to -1
             	
             if (mysql_errno($dblink))
 				throw new DatabaseException(mysql_error($dblink) . " QUERY: " . $query);
@@ -258,7 +258,7 @@
             global $CONFIG, $DB_QUERY_CACHE;
             
         	// Is cached?
-        	$cached_query = $DB_QUERY_CACHE[$query];
+        	if ($DB_QUERY_CACHE) $cached_query = $DB_QUERY_CACHE[$query];
 			if ($cached_query) {
        			if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
             		error_log ("$query results returned from cache");
@@ -292,7 +292,7 @@
             // Cache result
             if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
             	error_log("$query results cached");
-            $DB_QUERY_CACHE[$query] = $resultarray;
+            if ($DB_QUERY_CACHE) $DB_QUERY_CACHE[$query] = $resultarray;
             
             return $resultarray;
         }
@@ -308,7 +308,7 @@
             global $CONFIG, $DB_QUERY_CACHE;
             
         	// Is cached
-       		$cached_query = $DB_QUERY_CACHE[$query];
+       		if ($DB_QUERY_CACHE) $cached_query = $DB_QUERY_CACHE[$query];
 			if ($cached_query) {
        			if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
             		error_log ("$query results returned from cache");
@@ -328,7 +328,7 @@
             	// Cache result (even if query returned no data
             	if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
                 	error_log("$query results cached");
-            	$DB_QUERY_CACHE[$query] = $row;
+            	if ($DB_QUERY_CACHE) $DB_QUERY_CACHE[$query] = $row;
             	
             	if (!empty($callback) && is_callable($callback)) {
                 	$row = $callback($row);
