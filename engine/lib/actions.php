@@ -75,7 +75,7 @@
 				            	error_log($message);
 				            }
 				            
-			                if (@include($CONFIG->actions[$action]['file'])) {
+			                if (include($CONFIG->actions[$action]['file'])) {
 			                } else {
 			                    register_error(sprintf(elgg_echo('actionundefined'),$action));
 			                }
