@@ -516,7 +516,18 @@
         	
         }
         
-        function db_upgrade($version) {
+        /**
+         * Upgrade the database schema in an ordered sequence.
+         * 
+         * Makes use of schema upgrade files
+         * 
+         * This is a about as core as it comes, so don't start running this from your plugins!
+         *
+         * @param int $version The version you are upgrading from (usually given in the Elgg version format of YYYYMMDDXX - see version.php for example)
+         * @param string $fromdir Optional directory to load upgrades from (default: engine/schema/upgrades/)
+         * @return bool
+         */
+        function db_upgrade($version, $fromdir = "") {
         	
         	global $CONFIG;
         	
@@ -524,14 +535,16 @@
         	if (!is_db_installed() || !is_installed()) return false;
         	
         	$version = (int) $version;
+        	if (!$fromdir)
+        		$fromdir = $CONFIG->path . 'engine/schema/upgrades/';
         	
-        	if ($handle = opendir($CONFIG->path . 'engine/schema/upgrades/')) {
+        	if ($handle = opendir($fromdir)) {
         		
         		$sqlupgrades = array();
         		
         		while ($sqlfile = readdir($handle)) {
         			
-        			if (!is_dir($CONFIG->path . 'engine/schema/upgrades/' . $sqlfile)) {
+        			if (!is_dir($fromdir . $sqlfile)) {
         				if (preg_match('/([0-9]*)\.sql/',$sqlfile,$matches)) {
         					$sql_version = (int) $matches[1];
         					if ($sql_version > $version) {
@@ -546,7 +559,7 @@
         		if (sizeof($sqlupgrades) > 0) {
         			foreach($sqlupgrades as $sqlfile) {
         				try {
-        					run_sql_script($CONFIG->path . 'engine/schema/upgrades/' . $sqlfile);
+        					run_sql_script($fromdir . $sqlfile);
         				} catch (DatabaseException $e) {
         					error_log($e->getmessage());
         				}
