@@ -429,6 +429,9 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 			'user:search:startblurb' => "Users matching '%s':",
 			'user:search:finishblurb' => "To view more, click here.",
 	
+			'group:search:startblurb' => "Groups matching '%s':",
+			'group:search:finishblurb' => "To view more, click here.",
+	
 		/**
 		 * Account
 		 */

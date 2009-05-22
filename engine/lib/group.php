@@ -829,11 +829,105 @@
 	}
 	
 	/**
+	 * Searches for a user based on a complete or partial name or username.
+	 *
+	 * @param string $criteria The partial or full name or username.
+	 * @param int $limit Limit of the search.
+	 * @param int $offset Offset.
+	 * @param string $order_by The order.
+	 * @param boolean $count Whether to return the count of results or just the results. 
+	 */
+	function search_for_group($criteria, $limit = 10, $offset = 0, $order_by = "", $count = false)
+	{
+		global $CONFIG;
+		
+		$criteria = sanitise_string($criteria);
+		$limit = (int)$limit;
+		$offset = (int)$offset;
+		$order_by = sanitise_string($order_by);
+		
+		$access = get_access_sql_suffix("e");
+		
+		if ($order_by == "") $order_by = "e.time_created desc";
+		
+		if ($count) {
+			$query = "SELECT count(e.guid) as total ";
+		} else {
+			$query = "SELECT e.* "; 
+		}
+		$query .= "from {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}groups_entity g on e.guid=g.guid where ";
+		// $query .= " match(u.name,u.username) against ('$criteria') ";
+		$query .= "(g.name like \"%{$criteria}%\" or g.description like \"%{$criteria}%\")";
+		$query .= " and $access";
+		
+		if (!$count) {
+			$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
+			return get_data($query, "entity_row_to_elggstar");
+		} else {
+			if ($count = get_data_row($query)) {
+				return $count->total;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Returns a formatted list of groups suitable for injecting into search.
+	 *
+	 */
+	function search_list_groups_by_name($hook, $user, $returnvalue, $tag) {
+
+		// Change this to set the number of groups that display on the search page
+		$threshold = 4;
+
+		$object = get_input('object');
+		
+		if (!get_input('offset') && (empty($object) || $object == 'group'))
+		if ($groups = search_for_group($tag,$threshold)) {
+			
+			$countgroups = search_for_group($tag,0,0,"",true);
+			
+			$return = elgg_view('group/search/startblurb',array('count' => $countgroups, 'tag' => $tag));
+			foreach($groups as $group) {
+				$return .= elgg_view_entity($group);
+			}
+			$return .= elgg_view('group/search/finishblurb',array('count' => $countgroups, 'threshold' => $threshold, 'tag' => $tag));
+			return $return;
+			
+		}
+		
+	}
+	
+	/**
+	 * Displays a list of group objects that have been searched for.
+	 *
+	 * @see elgg_view_entity_list
+	 * 
+	 * @param string $tag Search criteria
+	 * @param int $limit The number of entities to display on a page
+	 * @return string The list in a form suitable to display
+	 */
+	function list_group_search($tag, $limit = 10) {
+		
+		$offset = (int) get_input('offset');
+		$limit = (int) $limit;
+		$count = (int) search_for_user($tag, 10, 0, '', true);
+		$entities = search_for_group($tag, $limit, $offset);
+		
+		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, false);
+		
+	}
+	
+	/**
 	 * Performs initialisation functions for groups
 	 *
 	 */
 	function group_init() {
+		// Register an entity type
 		register_entity_type('group','');
+		
+		// Register a search hook
+		register_plugin_hook('search','all','search_list_groups_by_name');
 	}
 	
 	register_elgg_event_handler('init','system','group_init');

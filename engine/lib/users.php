@@ -826,11 +826,7 @@
 	}
 	
 	/**
-	 * Searches for a user based on a complete or partial name or username using full text searching.
-	 * 
-	 * IMPORTANT NOTE: With MySQL's default setup:
-	 * 1) $criteria must be 4 or more characters long
-	 * 2) If $criteria matches greater than 50% of results NO RESULTS ARE RETURNED!
+	 * Searches for a user based on a complete or partial name or username.
 	 *
 	 * @param string $criteria The partial or full name or username.
 	 * @param int $limit Limit of the search.
@@ -877,10 +873,8 @@
 	 *
 	 * @see elgg_view_entity_list
 	 * 
-	 * @param int $user_guid The GUID of the user
-	 * @param string $subtype The object subtype
+	 * @param string $tag Search criteria
 	 * @param int $limit The number of entities to display on a page
-	 * @param true|false $fullview Whether or not to display the full view (default: true)
 	 * @return string The list in a form suitable to display
 	 */
 	function list_user_search($tag, $limit = 10) {
