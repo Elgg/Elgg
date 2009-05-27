@@ -325,6 +325,12 @@
 	        set_last_login($_SESSION['guid']);
 	        reset_login_failure_count($user->guid); // Reset any previous failed login attempts
 	        
+	        // Set admin shortcut flag if this is an admin
+			if (isadminloggedin()) {
+				global $is_admin;
+				$is_admin = true;
+			}
+	        
 			return true;
 				
 		}
