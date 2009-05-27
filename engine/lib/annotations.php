@@ -785,8 +785,12 @@
 		$id = (int)$id;
 		
 		$access = get_access_sql_suffix();
+		$annotation = get_annotation($id);
 		
-		return delete_data("DELETE from {$CONFIG->dbprefix}annotations  where id=$id and $access");
+		if (trigger_elgg_event('delete', 'annotation', $annotation))
+			return delete_data("DELETE from {$CONFIG->dbprefix}annotations  where id=$id and $access");
+			
+		return false;
 	}
 	
 	/**

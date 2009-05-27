@@ -362,9 +362,10 @@
 			$metabyname_memcache = new ElggMemcache('metabyname_memcache');
 		if ($metabyname_memcache) $metabyname_memcache->delete("{$metadata->entity_guid}:{$metadata->name_id}");
 		
-		if ($metadata->canEdit())
+		if (($metadata->canEdit()) && (trigger_elgg_event('delete', 'metadata', $obj)))
 			return delete_data("DELETE from {$CONFIG->dbprefix}metadata where id=$id");
 		
+		return false;
 	}
 	
 	/**
