@@ -1076,37 +1076,21 @@
 	
 	function file_add_to_folders($folder,$container_guid,$plugin) {
 		if ($container_guid && ($container = get_entity($container_guid))) {
-			if ($plugin == 'photo') {
-				$folders = $container->elgg_file_albums;
-			} else {
-				$folders = $container->elgg_file_folders;
-			}
+			$folder_field_name = 'elgg_'.$plugin.'_folders';
+			$folders = $container->$folder_field_name;
 			if ($folders) {
 				if (is_array($folders)) {
 					if (!in_array($folder,$folders)) {
 						$folders[] = $folder;
-						if ($plugin == 'photo') {
-							$container->elgg_file_albums = $folders;
-						} else {
-							$container->elgg_file_folders = $folders;
-						}
+						$container->$folder_field_name = $folders;
 					}
 				} else {
 					if ($folders != $folder) {
-						if ($plugin == 'photo') {
-							$container->elgg_file_albums = array($folders,$folder);
-						} else {
-							$container->elgg_file_folders = array($folders,$folder);
-						}
+						$container->$folder_field_name = array($folders,$folder);
 					}
 				}
-			} else {
-				
-				if ($plugin == 'photo') {
-					$container->elgg_file_albums = $folder;
-				} else {
-					$container->elgg_file_folders = $folder;
-				}
+			} else {				
+				$container->$folder_field_name = $folder;
 			}
 		}
 	}
@@ -1234,39 +1218,31 @@
 	}
 	
 	function file_display_thumbnail($file_guid,$size) {
-	// Get file entity
-		if ($file = get_entity($file_guid)) {
-			$subtype = $file->getSubtype();
-			if (($subtype == "file") || ($subtype = "photo")) {
-				
-				$simpletype = $file->simpletype;
-				if ($simpletype == "image") {
-					
-					// Get file thumbnail
-						if ($size == "small") {
-							$thumbfile = $file->smallthumb;
-						} else {
-							$thumbfile = $file->largethumb;
-						}
-						
-					// Grab the file
-						if ($thumbfile && !empty($thumbfile)) {
-							$readfile = new ElggFile();
-							$readfile->owner_guid = $file->owner_guid;
-							$readfile->setFilename($thumbfile);
-							$mime = $file->getMimeType();
-							$contents = $readfile->grabFile();
-							
-							header("Content-type: $mime");
-							echo $contents;
-							exit;
-							
-						} 
-					
+		// Get file entity
+		if ($file = get_entity($file_guid)) {				
+			$simpletype = $file->simpletype;
+			if ($simpletype == "image") {				
+				// Get file thumbnail
+				if ($size == "small") {
+					$thumbfile = $file->smallthumb;
+				} else {
+					$thumbfile = $file->largethumb;
 				}
 				
-			}
-			
+				// Grab the file
+				if ($thumbfile && !empty($thumbfile)) {
+					$readfile = new ElggFile();
+					$readfile->owner_guid = $file->owner_guid;
+					$readfile->setFilename($thumbfile);
+					$mime = $file->getMimeType();
+					$contents = $readfile->grabFile();
+					
+					header("Content-type: $mime");
+					echo $contents;
+					exit;
+					
+				}				
+			}			
 		}
 	}
 	
