@@ -22,7 +22,7 @@
 		$tag = get_input('tag');
 		
 		if (!empty($tag)) {
-			$title = sprintf(elgg_echo('users:searchtitle'),$tag);
+			$title = sprintf(elgg_echo('groups:searchtitle'),$tag);
 			$body = "";
 			$body .= elgg_view_title($title); // elgg_view_title(sprintf(elgg_echo('searchtitle'),$tag));
 			$body .= elgg_view('group/search/startblurb',array('tag' => $tag));
