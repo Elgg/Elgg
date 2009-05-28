@@ -829,9 +829,9 @@
 	}
 	
 	/**
-	 * Searches for a user based on a complete or partial name or username.
+	 * Searches for a group based on a complete or partial name or description
 	 *
-	 * @param string $criteria The partial or full name or username.
+	 * @param string $criteria The partial or full name or description
 	 * @param int $limit Limit of the search.
 	 * @param int $offset Offset.
 	 * @param string $order_by The order.
@@ -911,7 +911,7 @@
 		
 		$offset = (int) get_input('offset');
 		$limit = (int) $limit;
-		$count = (int) search_for_user($tag, 10, 0, '', true);
+		$count = (int) search_for_group($tag, 10, 0, '', true);
 		$entities = search_for_group($tag, $limit, $offset);
 		
 		return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, false);
