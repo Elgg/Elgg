@@ -2352,19 +2352,6 @@
 		}
 	}
 	
-/**
-	 * Page handler for search
-	 *
-	 * @param array $page Page elements from pain page handler
-	 */
-	function search_page_handler($page) {
-		if (isset($page[0])) {
-			global $CONFIG;
-			set_input('tag',$page[0]);
-			include_once($CONFIG->path . "search/index.php");
-		}
-	}
-	
 	/**
 	 * Returns a viewable list of entities based on the registered types
 	 *
@@ -2771,9 +2758,9 @@
 	 * Entities init function; establishes the page handler
 	 *
 	 */
-	function entities_init() {
+	function entities_init() 
+	{
 		register_page_handler('view','entities_page_handler');
-		register_page_handler('search','search_page_handler');
 		
 		// Allow a permission override for recursive entity deletion
 		// TODO: Can this be done better?
