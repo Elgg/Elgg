@@ -33,7 +33,7 @@
 				foreach($query as $queryelement) {
 					$vals = explode('=',$queryelement);
 					if (sizeof($vals) > 1) {
-						set_input(($vals[0]),($vals[1]));
+						set_input(urldecode($vals[0]),urldecode($vals[1]));
 					}
 				}
 			}
