@@ -64,7 +64,7 @@
 	                	if ($event_result) // Event_result being false doesn't produce an error - since i assume this will be handled in the hook itself. TODO make this better!
 	                	{
 				            /** Refs #749: We now warn if action token is missing. Later this will be replaced with action_gatekeeper() as detailed in #750 */
-				            if (!validate_action_token())
+				            if (!validate_action_token(false))
 				            { 
 				            	// Display a temporary warning message - in future versions this will be a hard fail via an action gatekeeper.
 				            	$message = "WARNING: Action $action was called without an action token. It is stongly recommended that you consider doing this. Plugin authors should use 'input/form' or pass is_action=true to 'output/confirmlink' or 'output/url'.";
@@ -138,7 +138,7 @@
          *
          * @return unknown
          */
-        function validate_action_token()
+        function validate_action_token($visibleerrors = true)
         {
         	$token = get_input('__elgg_token');
         	$ts = get_input('__elgg_ts');
@@ -167,16 +167,16 @@
 	        			
 	        			if ($returnval)
 	        				return true;
-	        			else
+	        			else if ($visibleerrors)
 	        				register_error(elgg_echo('actiongatekeeper:pluginprevents'));
 	        		}
-	        		else
+	        		else if ($visibleerrors)
 	        			register_error(elgg_echo('actiongatekeeper:timeerror'));
 	        	}
-	        	else
+	        	else if ($visibleerrors)
 	        		register_error(elgg_echo('actiongatekeeper:tokeninvalid'));
         	}
-        	else
+        	else if ($visibleerrors)
         		register_error(elgg_echo('actiongatekeeper:missingfields'));
         		
         	return false;
