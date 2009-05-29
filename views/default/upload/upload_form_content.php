@@ -95,7 +95,8 @@ if (!$vars['entity']) {
 
 <?php
 		}
-		echo elgg_view("$plugin/folders/select",$vars);
+		//remove folders until they are ready to use
+		//echo elgg_view("$plugin/folders/select",$vars);
 ?>
 		<p>
 			<label>
