@@ -259,7 +259,7 @@
             
         	// Is cached?
         	if ($DB_QUERY_CACHE) $cached_query = $DB_QUERY_CACHE[$query];
-			if ($cached_query) {
+			if ((isset($cached_query)) && ($cached_query)) {
        			if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
             		error_log ("$query results returned from cache");
             		
@@ -309,7 +309,7 @@
             
         	// Is cached
        		if ($DB_QUERY_CACHE) $cached_query = $DB_QUERY_CACHE[$query];
-			if ($cached_query) {
+			if ((isset($cached_query)) && ($cached_query)) {
        			if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
             		error_log ("$query results returned from cache");
             		
