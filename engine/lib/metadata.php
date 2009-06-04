@@ -603,9 +603,10 @@
 	 * @param string $order_by Optional ordering.
 	 * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
 	 * @param true|false $count If set to true, returns the total number of entities rather than a list. (Default: false)
+	 * @param string $meta_array_operator Operator used for joining the metadata array together
 	 * @return int|array List of ElggEntities, or the total number if count is set to false
 	 */
-	function get_entities_from_metadata_multi($meta_array, $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0, $count = false)
+	function get_entities_from_metadata_multi($meta_array, $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0, $count = false, $meta_array_operator = 'and')
 	{
 		global $CONFIG;
 		
@@ -617,16 +618,20 @@
 		
 		$mindex = 1;
 		$join = "";
+		$metawhere = array();
+		$meta_array_operator = sanitise_string($meta_array_operator);
 		foreach($meta_array as $meta_name => $meta_value) {
 			$meta_n = get_metastring_id($meta_name);
 			$meta_v = get_metastring_id($meta_value);
 			$join .= " JOIN {$CONFIG->dbprefix}metadata m{$mindex} on e.guid = m{$mindex}.entity_guid "; 
-			if ($meta_name!=="")
+			/*if ($meta_name!=="")
 				$where[] = "m{$mindex}.name_id='$meta_n'";
 			if ($meta_value!=="")
-				$where[] = "m{$mindex}.value_id='$meta_v'";
+				$where[] = "m{$mindex}.value_id='$meta_v'";*/
+			$metawhere[] = "(m{$mindex}.name_id='$meta_n' AND m{$mindex}.value_id='$meta_v')";
 			$mindex++;
 		}
+		$where[] = "(".implode($meta_array_operator, $metawhere).")";
 			
 		$entity_type = sanitise_string($entity_type);
 		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
