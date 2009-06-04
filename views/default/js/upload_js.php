@@ -1,5 +1,5 @@
 <script>
-number_of_files = 1;
+var number_of_files = 1;
 
 // wait for the DOM to be loaded 
 $(document).ready(function() { 
@@ -16,7 +16,7 @@ $(document).ready(function() {
 	});
 });
 
-function file_generate_bit(bit_label,prefix,class,field_type,field_size) {
+function file_generate_bit(bit_label,prefix,classname,field_type,field_size) {
 	bit = document.createElement('p');
     label = document.createElement('label');
     textnode = document.createTextNode(bit_label);
@@ -25,7 +25,7 @@ function file_generate_bit(bit_label,prefix,class,field_type,field_size) {
     label.appendChild(el);
     el = document.createElement('input');
     el.type = field_type;
-    el.className = class;
+    el.className = classname;
     if (field_size > 0) {
     	el.size = field_size;
     }
