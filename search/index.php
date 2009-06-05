@@ -76,7 +76,7 @@
 			$body .= elgg_view_title($title); // elgg_view_title(sprintf(elgg_echo('searchtitle'),$tag));
 			$body .= trigger_plugin_hook('search','',$tag,"");
 			$body .= elgg_view('search/startblurb',array('tag' => $tag));
-			$body .= list_entities_from_metadata($md_type, $tag, $objecttype, $subtype, $owner_guid_array, 10, false, false);
+			$body .= list_entities_from_metadata($md_type, elgg_strtolower($tag), $objecttype, $subtype, $owner_guid_array, 10, false, false);
 			$body = elgg_view_layout('two_column_left_sidebar','',$body);
 		}
 		

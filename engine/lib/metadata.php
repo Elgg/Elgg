@@ -798,7 +798,7 @@
 		if (is_string($string)) {
 			$ar = explode(",",$string);
 			$ar = array_map('trim', $ar); // trim blank spaces
-			//$ar = array_map('strtolower', $ar); // make lower case : [Marcus Povey 20090210 - Commented out since strtolower is not UTF8 safe]
+			$ar = array_map('elgg_strtolower', $ar); // make lower case : [Marcus Povey 20090605 - Using mb wrapper function using UTF8 safe function where available]
 			$ar = array_filter($ar, 'is_not_null'); // Remove null values
 			return $ar;
 		}

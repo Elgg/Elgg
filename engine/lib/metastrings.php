@@ -21,9 +21,10 @@
 	 * Return the meta string id for a given tag, or false.
 	 * 
 	 * @param string $string The value (whatever that is) to be stored
+	 * @param bool $case_sensitive Do we want to make the query case sensitive?
 	 * @return mixed Integer tag or false.
 	 */
-	function get_metastring_id($string)
+	function get_metastring_id($string, $case_sensitive = true)
 	{
 		global $CONFIG, $METASTRINGS_CACHE, $METASTRINGS_DEADNAME_CACHE;
 		
@@ -49,7 +50,11 @@
 		if ($metastrings_memcache) $msfc = $metastrings_memcache->load($string);
 		if ($msfc) return $msfc;
 			
-		$row = get_data_row("SELECT * from {$CONFIG->dbprefix}metastrings where string='$string' limit 1");
+		// Case sensitive
+		$cs = "";
+		if ($case_sensitive) $cs = " BINARY ";
+		
+		$row = get_data_row("SELECT * from {$CONFIG->dbprefix}metastrings where string=$cs'$string' limit 1");
 		if ($row) { 
 			$METASTRINGS_CACHE[$row->id] = $row->string; // Cache it
 			
@@ -106,15 +111,16 @@
 	 * It returns the id of the tag, whether by creating it or updating it.
 	 * 
 	 * @param string $string The value (whatever that is) to be stored
+	 * @param bool $case_sensitive Do we want to make the query case sensitive?
 	 * @return mixed Integer tag or false.
 	 */
-	function add_metastring($string)
+	function add_metastring($string, $case_sensitive = true)
 	{
 		global $CONFIG, $METASTRINGS_CACHE, $METASTRINGS_DEADNAME_CACHE;
 		
 		$sanstring = sanitise_string($string);
 		
-		$id = get_metastring_id($string);
+		$id = get_metastring_id($string, $case_sensitive);
 		if ($id) return $id;
 		
 		$result = insert_data("INSERT into {$CONFIG->dbprefix}metastrings (string) values ('$sanstring')");
