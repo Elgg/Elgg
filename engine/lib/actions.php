@@ -33,7 +33,7 @@
 				$query = explode('&',$query);
 				if (sizeof($query) > 0) {
 					foreach($query as $queryelement) {
-						$vals = explode('=',$queryelement);
+						$vals = explode('=',$queryelement, 2);
 						if (sizeof($vals) > 1) {
 							set_input(trim($vals[0]),trim($vals[1]));
 						}
