@@ -169,10 +169,11 @@
 			$thewire->access_id = $access_id;
 			
 			// Set its description appropriately
-			if (is_callable('mb_substr'))
-				$thewire->description = mb_substr($post, 0, 160);
+			$thewire->description = elgg_substr(strip_tags($post), 0, 160);
+			/*if (is_callable('mb_substr'))
+				$thewire->description = mb_substr(strip_tags($post), 0, 160);
 			else
-				$thewire->description = substr($post, 0, 160);
+				$thewire->description = substr(strip_tags($post), 0, 160);*/
 			
 		    // add some metadata
 	        $thewire->method = $method; //method, e.g. via site, sms etc

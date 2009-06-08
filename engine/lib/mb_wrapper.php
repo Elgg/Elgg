@@ -42,5 +42,23 @@
 		return strtoupper($string);
 	}
 	
+	/**
+	 * Wrapper function: Returns the result of mb_substr if mb_support is present, else the 
+	 * result of substr is returned.
+	 *
+	 * @param string $string The string.
+	 * @param int $start Start position.
+	 * @param int $length Length.
+	 * @param string $charset The charset (if multibyte support is present) : default 'UTF8'
+	 * @return string
+	 */
+	function elgg_substr($string, $start = 0, $length = null, $charset = 'UTF8')
+	{
+		if (is_callable('mb_substr'))
+			return mb_substr($string, $start, $length, $charset);
+		
+		return substr($string, $start, $length);
+	}
+	
 	// TODO: Other wrapper functions
 ?>
