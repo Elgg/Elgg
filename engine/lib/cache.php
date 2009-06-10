@@ -313,6 +313,7 @@
 				
 			// Create full path
 			$path = $this->get_variable("cache_path") . $matrix;
+			mkdir($path, 0700, true);
 			
 	//		if (!mkdir($path, 0700, true)) throw new IOException("Could not make $path");
 			
