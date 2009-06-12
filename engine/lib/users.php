@@ -1139,22 +1139,15 @@
 			']/u';
 		
 		if (
-			preg_match($blacklist, $username) ||	
-		
-			// Belts and braces TODO: Tidy into main unicode
-			//(strpos($username, '.')!==false) ||
-			(strpos($username, '/')!==false) ||
-			(strpos($username, '\\')!==false) ||
-			(strpos($username, '"')!==false) ||
-			(strpos($username, '\'')!==false) ||
-			(strpos($username, '*')!==false) ||
-			(strpos($username, '&')!==false) ||
-			(strpos($username, ' ')!==false) ||
-			(strpos($username, '?')!==false) ||
-			(strpos($username, '#')!==false) ||
-			(strpos($username, '%')!==false)
+			preg_match($blacklist, $username) 
 		)
 			throw new RegistrationException(elgg_echo('registration:invalidchars'));
+			
+		// Belts and braces TODO: Tidy into main unicode
+		$blacklist2 = '/\\"\'*& ?#%^(){}[]~?<>;|¬`@-+=';
+		for ($n=0; $n < strlen($blacklist2); $n++)
+			if (strpos($username, $blacklist2[$n])!==false)
+				throw new RegistrationException(elgg_echo('registration:invalidchars'));
 		 
 		$result = true;
 		return trigger_plugin_hook('registeruser:validate:username', 'all', array('username' => $username), $result);

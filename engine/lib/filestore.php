@@ -319,6 +319,8 @@
 		 */
 		protected function make_file_matrix($filename)
 		{
+			$invalid_fs_chars = '*\'\\/"!$%^&*.%(){}[]#~?<>;|¬`@-+=';
+			
 			$matrix = "";
 			
 			$name = $filename;
@@ -330,7 +332,13 @@
 				$len = $this->matrix_depth;
 			
 			for ($n = 0; $n < $len; $n++) {
-				$matrix .= $filename[$n] . "/";
+				
+				// Prevent a matrix being formed with unsafe characters
+				$char = $filename[$n];
+				if (strpos($invalid_fs_chars, $char)!==false)
+					$char = '_';
+				
+				$matrix .= $char . "/";
 			}	
 	
 			return $matrix.$name."/";
