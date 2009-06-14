@@ -116,7 +116,7 @@ RewriteEngine on
 #
 #RewriteBase /
 
-RewriteRule ^action\/([A-Za-z\_\-\/]+)$ engine/handlers/action_handler.php?action=$1
+RewriteRule ^action\/([A-Za-z0-9\_\-\/]+)$ engine/handlers/action_handler.php?action=$1
 
 RewriteRule ^export\/([A-Za-z]+)\/([0-9]+)$ services/export/handler.php?view=$1&guid=$2
 RewriteRule ^export\/([A-Za-z]+)\/([0-9]+)\/$ services/export/handler.php?view=$1&guid=$2
