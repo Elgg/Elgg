@@ -40,3 +40,4 @@ function textCounter(field,cntfield,maxlimit) {
 			<input type="submit" value="<?php echo elgg_echo('save'); ?>" />
 	</form>
 </div>
+<?php echo elgg_view('input/urlshortener'); ?>
