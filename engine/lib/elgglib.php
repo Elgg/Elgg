@@ -634,6 +634,21 @@
 																'full' => $full
 																), $bypass, $debug);
 			}
+			if ($full) // Marcus Povey 20090616 : Speculative and low impact approach for fixing #964
+			{
+				$annotations = trigger_plugin_hook('annotations:view', $entity_class, array(
+																						'entity' => $entity,
+																						'full' => $full,
+				
+																						// We already know this, so pass it on.
+																						'type' => $entity_type,
+																						'subtype' => $subtype
+																						)
+				);
+				
+				if ($annotations)
+					$contents .= $annotations;
+			}
 			return $contents;
 		}
 
