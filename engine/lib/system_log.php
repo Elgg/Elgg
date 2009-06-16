@@ -249,7 +249,7 @@
 			return false;
 
 		// delete
-		if (delete_data("DELETE from {$CONFIG->dbprefix}system_log WHERE time_created<$ts)")===false) // Don't delete on time since we are running in a concurrent environment
+		if (delete_data("DELETE from {$CONFIG->dbprefix}system_log WHERE time_created<$ts")===false) // Don't delete on time since we are running in a concurrent environment
 			return false;
 			
 		// alter table to engine
