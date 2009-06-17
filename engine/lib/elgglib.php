@@ -636,16 +636,8 @@
 			}
 			if ($full) // Marcus Povey 20090616 : Speculative and low impact approach for fixing #964
 			{
-				$annotations = trigger_plugin_hook('annotations:view', $entity_class, array(
-																						'entity' => $entity,
-																						'full' => $full,
-				
-																						// We already know this, so pass it on.
-																						'type' => $entity_type,
-																						'subtype' => $subtype
-																						)
-				);
-				
+				$annotations = elgg_view_entity_annotations($entity, $full);
+								
 				if ($annotations)
 					$contents .= $annotations;
 			}
@@ -782,6 +774,30 @@
 				
 			return $html;
 			
+		}
+		
+	/**
+	 * Display a selective rendered list of annotations for a given entity. 
+	 * 
+	 * The list is produced as the result of the entity:annotate plugin hook and is designed to provide a 
+	 * more generic framework to allow plugins to extend the generic display of entities with their own annotation 
+	 * renderings.
+	 * 
+	 * This is called automatically by the framework.
+	 *
+	 * @param ElggEntity $entity
+	 * @param bool $full
+	 */
+		function elgg_view_entity_annotations(ElggEntity $entity, $full = true)
+		{
+			$annotations = trigger_plugin_hook('entity:annotate', $entity_class, 
+				array(
+					'entity' => $entity,
+					'full' => $full,
+				)
+			);
+			
+			return $annotations;
 		}
 		
 	/**
