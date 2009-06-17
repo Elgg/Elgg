@@ -506,9 +506,9 @@
 	 * @param $entity_subtype string
 	 * @param $name string
 	 */
-	function get_annotations_sum($entity_guid, $entity_type = "", $entity_subtype = "", $name = "")
+	function get_annotations_sum($entity_guid, $entity_type = "", $entity_subtype = "", $name = "", $value = "", $value_type = "", $owner_guid = 0)
 	{
-		return __get_annotations_calculate_x("sum", $entity_guid, $entity_type, $entity_subtype, $name);
+		return __get_annotations_calculate_x("sum", $entity_guid, $entity_type, $entity_subtype, $name, $value, $value_type, $owner_guid);
 	}
 	
 	/**
@@ -519,9 +519,9 @@
 	 * @param $entity_subtype string
 	 * @param $name string
 	 */
-	function get_annotations_max($entity_guid, $entity_type = "", $entity_subtype = "", $name = "")
+	function get_annotations_max($entity_guid, $entity_type = "", $entity_subtype = "", $name = "", $value = "", $value_type = "", $owner_guid = 0)
 	{
-		return __get_annotations_calculate_x("max", $entity_guid, $entity_type, $entity_subtype, $name);
+		return __get_annotations_calculate_x("max", $entity_guid, $entity_type, $entity_subtype, $name, $value, $value_type, $owner_guid);
 	}
 	
 	/**
@@ -532,9 +532,9 @@
 	 * @param $entity_subtype string
 	 * @param $name string
 	 */
-	function get_annotations_min($entity_guid, $entity_type = "", $entity_subtype = "", $name = "")
+	function get_annotations_min($entity_guid, $entity_type = "", $entity_subtype = "", $name = "", $value = "", $value_type = "", $owner_guid = 0)
 	{
-		return __get_annotations_calculate_x("min", $entity_guid, $entity_type, $entity_subtype, $name);
+		return __get_annotations_calculate_x("min", $entity_guid, $entity_type, $entity_subtype, $name, $value, $value_type, $owner_guid);
 	}
 	
 	/**
@@ -545,9 +545,9 @@
 	 * @param $entity_subtype string
 	 * @param $name string
 	 */
-	function get_annotations_avg($entity_guid, $entity_type = "", $entity_subtype = "", $name = "")
+	function get_annotations_avg($entity_guid, $entity_type = "", $entity_subtype = "", $name = "", $value = "", $value_type = "", $owner_guid = 0)
 	{
-		return __get_annotations_calculate_x("avg", $entity_guid, $entity_type, $entity_subtype, $name);
+		return __get_annotations_calculate_x("avg", $entity_guid, $entity_type, $entity_subtype, $name, $value, $value_type, $owner_guid);
 	}
 	
 	/**
@@ -560,7 +560,7 @@
 	 */
 	function count_annotations($entity_guid = 0, $entity_type = "", $entity_subtype = "", $name = "", $value = "", $value_type = "", $owner_guid = 0)
 	{
-		return __get_annotations_calculate_x("count", $entity_guid, $entity_type, $entity_subtype, $name);
+		return __get_annotations_calculate_x("count", $entity_guid, $entity_type, $entity_subtype, $name, $value, $value_type, $owner_guid);
 	}
 	
 	/**
@@ -572,7 +572,7 @@
 	 * @param $entity_subtype string
 	 * @param $name string
 	 */
-	function __get_annotations_calculate_x($sum = "avg", $entity_guid, $entity_type = "", $entity_subtype = "", $name = "")
+	function __get_annotations_calculate_x($sum = "avg", $entity_guid, $entity_type = "", $entity_subtype = "", $name = "", $value = "", $value_type = "", $owner_guid = 0)
 	{
 		global $CONFIG;
 		
@@ -581,6 +581,9 @@
 		$entity_type = sanitise_string($entity_type);
 		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
 		if ($name != '') $name = get_metastring_id($name);
+		if ($value != '') $value = get_metastring_id($value);
+		$value_type = sanitise_string($value_type);
+		$owner_guid = (int)$owner_guid;
 		
 		// if (empty($name)) return 0;
 		
@@ -594,6 +597,12 @@
 			$where[] = "e.subtype=$entity_subtype";
 		if ($name!="")
 			$where[] = "a.name_id='$name'";
+		if ($value!="")
+			$where[] = "a.value_id='$value'";
+		if ($value_type!="")
+			$where[] = "a.value_type='$value_type'";
+		if ($owner_guid)
+			$where[] = "a.owner_guid='$owner_guid'";
 			
 		if ($sum != "count")
 			$where[] = "a.value_type='integer'"; // Limit on integer types
