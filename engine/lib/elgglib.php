@@ -790,7 +790,16 @@
 	 */
 		function elgg_view_entity_annotations(ElggEntity $entity, $full = true)
 		{
-			$annotations = trigger_plugin_hook('entity:annotate', $entity_class, 
+			$classes = array(
+								'ElggUser' => 'user',
+								'ElggObject' => 'object',
+								'ElggSite' => 'site',
+								'ElggGroup' => 'group'
+							);
+			
+			$entity_class = get_class($entity);
+			
+			$annotations = trigger_plugin_hook('entity:annotate', $classes[$entity_class], 
 				array(
 					'entity' => $entity,
 					'full' => $full,
