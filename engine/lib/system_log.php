@@ -64,7 +64,7 @@
 	/**
 	 * Retrieve the system log based on a number of parameters.
 	 * 
-	 * @param int $by_user The user who initiated the event.
+	 * @param int or array $by_user The guid(s) of the user(s) who initiated the event.
 	 * @param string $event The event you are searching on.
 	 * @param string $class The class of object it effects.
 	 * @param string $type The type
