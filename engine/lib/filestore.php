@@ -153,9 +153,14 @@
 		 *
 		 * @param string $directory_root Root directory, must end in "/"
 		 */
-		public function __construct($directory_root)
+		public function __construct($directory_root = "")
 		{
-			$this->dir_root = $directory_root;
+			global $CONFIG;
+			
+			if ($directory_root)
+				$this->dir_root = $directory_root;
+			else
+				$this->dir_root = $CONFIG->dataroot;
 		}
 		
 		public function open(ElggFile $file, $mode)
