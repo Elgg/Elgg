@@ -1156,9 +1156,18 @@
 		forward($forward . $container->username);
 	}
 	
-	function file_manage_download($plugin) {
+	/**
+	 * Manage a file download.
+	 *
+	 * @param unknown_type $plugin
+	 * @param unknown_type $file_guid If not specified then file_guid will be found in input.
+	 */
+	function file_manage_download($plugin, $file_guid = "") {
 		// Get the guid
-		$file_guid = get_input("file_guid");
+		$file_guid = (int)$file_guid;
+		
+		if (!$file_guid)
+			$file_guid = (int)get_input("file_guid");
 		
 		// Get the file
 		$file = get_entity($file_guid);
@@ -1183,9 +1192,18 @@
 			register_error(elgg_echo("$plugin:downloadfailed"));
 	}
 	
-	function file_manage_icon_download($plugin) {
+	/**
+	 * Manage the download of a file icon.
+	 *
+	 * @param unknown_type $plugin
+	 * @param unknown_type $file_guid The guid, if not specified this is obtained from the input.
+	 */
+	function file_manage_icon_download($plugin, $file_guid = "") {
 		// Get the guid
-		$file_guid = get_input("file_guid");
+		$file_guid = (int)$file_guid;
+		
+		if (!$file_guid)
+			$file_guid = (int)get_input("file_guid");
 		
 		// Get the file
 		$file = get_entity($file_guid);
