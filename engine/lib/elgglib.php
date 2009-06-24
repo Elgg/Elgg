@@ -173,6 +173,8 @@
 		    global $CONFIG;
 		    static $usercache;
 		    
+		    $view_orig = $view;
+		    
 		// Trigger the pagesetup event
 			if (!isset($CONFIG->pagesetupdone)) {
 				trigger_elgg_event('pagesetup','system');
@@ -263,7 +265,7 @@
 			$content = ob_get_clean();
 			
 		// Plugin hook
-			$content = trigger_plugin_hook('display','view',array('view' => $view),$content);
+			$content = trigger_plugin_hook('display','view',array('view' => $view_orig),$content);
 		
 		// Return $content
 		    return $content;
