@@ -28,7 +28,7 @@
 								$action_type,
 								$subject_guid,
 								$object_guid,
-								$access_id = -1,
+								$access_id = "",
 								$posted = 0
 							  ) {
 							  	
@@ -38,7 +38,7 @@
 				if (!($object = get_entity($object_guid))) return false;
 				if (empty($action_type)) return false;
 				if ($posted == 0) $posted = time();
-				if ($access_id == -1) $access_id = $object->access_id;
+				if ($access_id === "") $access_id = $object->access_id;
 				
 				$type = $object->getType();
 				$subtype = $object->getSubtype();
