@@ -580,8 +580,10 @@
 		$entity_guid = (int)$entity_guid;
 		$entity_type = sanitise_string($entity_type);
 		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
-		if ($name != '') $name = get_metastring_id($name);
-		if ($value != '') $value = get_metastring_id($value);
+		if ($name != '' AND !$name = get_metastring_id($name))
+			return 0;
+		if ($value != '' AND !$value = get_metastring_id($value))
+			return 0;
 		$value_type = sanitise_string($value_type);
 		$owner_guid = (int)$owner_guid;
 		
