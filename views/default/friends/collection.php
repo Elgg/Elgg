@@ -27,12 +27,11 @@
 			echo "<li><h2>";
         	
 			//as collections are private, check that the logged in user is the owner
-			if($coll->owner_guid == $_SESSION['user']->getGUID()) {
+			if(!$coll->owner_guid == $_SESSION['user']->getGUID()) {
 				$confirm = addslashes(elgg_echo('question:areyousure'));
 				echo "<div class=\"friends_collections_controls\"> <a href=\"" . $vars['url'] . "action/friends/deletecollection?collection={$coll->id}\" class=\"delete_collection\" onclick=\"if (!confirm('{$confirm}')) { return false; }; $('div.friends_picker').empty();\"> </a>";
+				echo "</div>";
 			}
-			
-			echo "</div>";
 			echo $coll->name;
 			echo " (<span id=\"friends_membership_count{$vars['friendspicker']}\">{$count}</span>) </h2>";
 			
