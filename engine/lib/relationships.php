@@ -513,7 +513,8 @@
 		$relationship_guid = (int)$relationship_guid;
 		$inverse_relationship = (bool)$inverse_relationship;
 		$type = sanitise_string($type);
-		$subtype = get_subtype_id($type, $subtype);
+		if ($subtype AND !$subtype = get_subtype_id($type, $subtype))
+			return false;
 		$owner_guid = (int)$owner_guid;
 		if ($order_by == "") $order_by = "time_created desc";
 		$order_by = sanitise_string($order_by);
@@ -617,7 +618,8 @@
 		$relationship = sanitise_string($relationship);
 		$inverse_relationship = (bool)$inverse_relationship;
 		$type = sanitise_string($type);
-		$subtype = get_subtype_id($type, $subtype);
+		if ($subtype AND !$subtype = get_subtype_id($type, $subtype))
+			return false;
 		$owner_guid = (int)$owner_guid;
 		$order_by = sanitise_string($order_by);
 		$limit = (int)$limit;
@@ -726,8 +728,8 @@
 		$inverse_relationship = (bool)$inverse_relationship;
 		$relationship_guid = (int)$relationship_guid;
 		$type = sanitise_string($type);
-		if ($subtype)
-			$subtype = get_subtype_id($type, $subtype);
+		if ($subtype AND !$subtype = get_subtype_id($type, $subtype))
+			return false;
 		$owner_guid = (int)$owner_guid;
 		$order_by = sanitise_string($order_by);
 		$limit = (int)$limit;

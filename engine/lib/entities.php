@@ -1493,7 +1493,7 @@
 	 * Return entities matching a given query, or the number thereof
 	 * 
 	 * @param string $type The type of entity (eg "user", "object" etc)
-	 * @param string $subtype The arbitrary subtype of the entity
+	 * @param string|array $subtype The arbitrary subtype of the entity or array(type1 => array('subtype1', ...'subtypeN'), ...)
 	 * @param int $owner_guid The GUID of the owning user
 	 * @param string $order_by The field to order by; by default, time_created desc
 	 * @param int $limit The number of entities to return; 10 by default
@@ -1524,36 +1524,39 @@
 				
 		$where = array();
 		
-		if (is_array($subtype)) {			
+		if (is_array($subtype)) {
 			$tempwhere = "";
 			if (sizeof($subtype))
 			foreach($subtype as $typekey => $subtypearray) {
 				foreach($subtypearray as $subtypeval) {
 					$typekey = sanitise_string($typekey);
 					if (!empty($subtypeval)) {
-						$subtypeval = (int) get_subtype_id($typekey, $subtypeval);
+						if (!$subtypeval = (int) get_subtype_id($typekey, $subtypeval))
+							return false;
 					} else {
+						// @todo: Setting subtype to 0 when $subtype = '' returns entities with
+						// no subtype.  This is different to the non-array behavior
+						// but may be required in some cases.
 						$subtypeval = 0;
 					}
 					if (!empty($tempwhere)) $tempwhere .= " or ";
 					$tempwhere .= "(type = '{$typekey}' and subtype = {$subtypeval})";
-				}								
+				}
 			}
 			if (!empty($tempwhere)) $where[] = "({$tempwhere})";
 			
 		} else {
 		
 			$type = sanitise_string($type);
-			if ($subtype !== "")
-				$subtype = get_subtype_id($type, $subtype);
+			if ($subtype !== "" AND !$subtype = get_subtype_id($type, $subtype))
+				return false;
 			
 			if ($type != "")
 				$where[] = "type='$type'";
 			if ($subtype!=="")
 				$where[] = "subtype=$subtype";
-				
 		}
-			
+
 		if ($owner_guid != "") {
 			if (!is_array($owner_guid)) {
 				$owner_array = array($owner_guid);
@@ -1680,7 +1683,8 @@
 				foreach($subtypearray as $subtypeval) {
 					$typekey = sanitise_string($typekey);
 					if (!empty($subtypeval)) {
-						$subtypeval = (int) get_subtype_id($typekey, $subtypeval);
+						if (!$subtypeval = (int) get_subtype_id($typekey, $subtypeval))
+							return false;
 					} else {
 						$subtypeval = 0;
 					}
@@ -1691,12 +1695,11 @@
 			if (!empty($tempwhere)) $where[] = "({$tempwhere})";
 			
 		} else {
-		
-			$subtype = get_subtype_id($type, $subtype);
-			
-			if ($subtype!=="")
+			if ($subtype AND !$subtype = get_subtype_id($type, $subtype)) {
+				return false;
+			} else {
 				$where[] = "subtype=$subtype";
-				
+			}
 		}
 		
 		if ($container_guid !== 0) {
@@ -2429,7 +2432,9 @@
 				foreach($subtypearray as $subtypeval) {
 					$typekey = sanitise_string($typekey);
 					if (!empty($subtypeval)) {
-						$subtypeval = (int) get_subtype_id($typekey, $subtypeval);
+						if (!$subtypeval = (int) get_subtype_id($typekey, $subtypeval)) {
+							return false;
+						}
 					} else {
 						$subtypeval = 0;
 					}
@@ -2442,7 +2447,9 @@
 		} else {
 		
 			$type = sanitise_string($type);
-			$subtype = get_subtype_id($type, $subtype);
+			if ($subtype AND !$subtype = get_subtype_id($type, $subtype)) {
+				return false;
+			}
 			
 			if ($type != "")
 				$where[] = "e.type='$type'";
@@ -2510,7 +2517,7 @@
 	 *
 	 * @param string $name The name of the setting
 	 * @param string $value The value of the setting
-	 * @param string $type The type of entity (eg "user", "object" etc)
+	 * @param string|array $type The type of entity (eg "user", "object" etc) or array(type1 => array('subtype1', ...'subtypeN'), ...)
 	 * @param string $subtype The arbitrary subtype of the entity
 	 * @param int $owner_guid The GUID of the owning user
 	 * @param string $order_by The field to order by; by default, time_created desc
@@ -2538,27 +2545,29 @@
 				
 		$where = array();
 		
-		if (is_array($type)) {			
+		if (is_array($type)) {
 			$tempwhere = "";
 			if (sizeof($type))
 			foreach($type as $typekey => $subtypearray) {
 				foreach($subtypearray as $subtypeval) {
 					$typekey = sanitise_string($typekey);
 					if (!empty($subtypeval)) {
-						$subtypeval = (int) get_subtype_id($typekey, $subtypeval);
+						if (!$subtypeval = (int) get_subtype_id($typekey, $subtypeval)) {
+							return false;
+						}
 					} else {
 						$subtypeval = 0;
 					}
 					if (!empty($tempwhere)) $tempwhere .= " or ";
 					$tempwhere .= "(e.type = '{$typekey}' and e.subtype = {$subtypeval})";
-				}								
+				}
 			}
 			if (!empty($tempwhere)) $where[] = "({$tempwhere})";
 			
 		} else {
-		
 			$type = sanitise_string($type);
-			$subtype = get_subtype_id($type, $subtype);
+			if ($subtype AND !$subtype = get_subtype_id($type, $subtype))
+				return false;
 			
 			if ($type != "")
 				$where[] = "e.type='$type'";
