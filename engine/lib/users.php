@@ -557,9 +557,28 @@
 	 * @return true|false Depending on success
 	 */
 	function user_remove_friend($user_guid, $friend_guid) {
+		global $CONFIG;
+		
 		$user_guid = (int) $user_guid; 
 		$friend_guid = (int) $friend_guid;
-		return remove_entity_relationship($user_guid, "friend", $friend_guid);
+		if (!remove_entity_relationship($user_guid, "friend", $friend_guid)){
+			return false;
+		}
+		
+		// perform cleanup for access lists.
+		$collections = get_user_access_collections($user_guid);
+		$in_arr = array();
+		foreach ($collections as $collection) {
+			$in_arr[] = $collection->id;
+		}
+		$query = "DELETE FROM `{$CONFIG->dbprefix}access_collection_membership`
+			WHERE `user_guid` = '$friend_guid'
+			AND `access_collection_id` IN(" . implode($in_arr, ',') . ")";
+		delete_data($query);
+		
+		// delete_data() might return nothing if no rows were affected.
+		// the users has been removed already, so we safely return true.
+		return true;
 	}
 	
 	/**
