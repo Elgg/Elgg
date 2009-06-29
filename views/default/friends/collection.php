@@ -26,17 +26,19 @@
 			
 			echo "<li><h2>";
         	
-        	//as collections are private, check that the logged in user is the owner
-        	if($coll->owner_guid == $_SESSION['user']->getGUID())
-        	    echo "<div class=\"friends_collections_controls\"> <a href=\"" . $vars['url'] . "action/friends/deletecollection?collection={$coll->id}\" class=\"delete_collection\" onclick=\"$('div.friends_picker').empty();\"> </a>";
-        	    
+			//as collections are private, check that the logged in user is the owner
+			if($coll->owner_guid == $_SESSION['user']->getGUID()) {
+				$confirm = addslashes(elgg_echo('question:areyousure'));
+				echo "<div class=\"friends_collections_controls\"> <a href=\"" . $vars['url'] . "action/friends/deletecollection?collection={$coll->id}\" class=\"delete_collection\" onclick=\"if (!confirm('{$confirm}')) { return false; }; $('div.friends_picker').empty();\"> </a>";
+			}
+			
 			echo "</div>";
 			echo $coll->name;
 			echo " (<span id=\"friends_membership_count{$vars['friendspicker']}\">{$count}</span>) </h2>";
-        	
-        	// individual collection panels
-        	if($friends = $vars['collection']->entities){
-        		$content = elgg_view('friends/collectiontabs', array('owner' => $_SESSION['user'], 'collection' => $vars['collection'], 'friendspicker' => $vars['friendspicker']));
+			
+			// individual collection panels
+			if($friends = $vars['collection']->entities){
+				$content = elgg_view('friends/collectiontabs', array('owner' => $_SESSION['user'], 'collection' => $vars['collection'], 'friendspicker' => $vars['friendspicker']));
 				echo elgg_view('friends/picker',array('entities' => $friends, 'value' => $members, 'content' => $content, 'replacement' => '', 'friendspicker' => $vars['friendspicker']));
 				?>
 				
@@ -45,12 +47,12 @@ $(document).ready(function () {
 		
 		$('#friends_picker_placeholder<?php echo $vars['friendspicker']; ?>').load('<?php echo $vars['url']; ?>friends/pickercallback.php?username=<?php echo $_SESSION['user']->username; ?>&type=list&collection=<?php echo $vars['collection']->id; ?>');
 				
-    });
+	});
 </script>
 				<?php
-    	    }
-    	    
-    	    // close friends_picker div and the accordian list item
-    	    echo "</li>";
+			}
+			
+			// close friends_picker div and the accordian list item
+			echo "</li>";
 
 ?>
