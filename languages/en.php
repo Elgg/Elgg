@@ -802,7 +802,7 @@ Alternatively, you can enter your database settings below and we will try and do
 			'installation:simplecache:description' => "The simple cache increases performance by caching static content including some CSS and JavaScript files. Normally you will want this on.",
 			'installation:simplecache:label' => "Use simple cache (recommended)",
 	
-			'installation:viewpathcache:description' => "The view filepath cache increases the loading times of plugins by caching the location of their views.",
+			'installation:viewpathcache:description' => "The view filepath cache decreases the loading times of plugins by caching the location of their views.",
 			'installation:viewpathcache:label' => "Use view filepath cache (recommended)",
 	
 			'upgrading' => 'Upgrading',
