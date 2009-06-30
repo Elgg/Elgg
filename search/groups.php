@@ -19,7 +19,7 @@
 		set_context('search');
 		
 	// Get input
-		$tag = get_input('tag');
+		$tag = stripslashes(get_input('tag'));
 		
 		if (!empty($tag)) {
 			$title = sprintf(elgg_echo('groups:searchtitle'),$tag);

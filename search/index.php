@@ -19,15 +19,15 @@
 		set_context('search');
 		
 	// Get input
-		$tag = get_input('tag');
-		$subtype = get_input('subtype');
-		if (!$objecttype = get_input('object')) {
+		$tag = stripslashes(get_input('tag'));
+		$subtype = stripslashes(get_input('subtype'));
+		if (!$objecttype = stripslashes(get_input('object'))) {
 			$objecttype = "";
 		}
-		if (!$md_type = get_input('tagtype')) {
+		if (!$md_type = stripslashes(get_input('tagtype'))) {
 			$md_type = "";			
 		}
-		$owner_guid = get_input('owner_guid',0);
+		$owner_guid = (int)get_input('owner_guid',0);
 		if (substr_count($owner_guid,',')) {
 			$owner_guid_array = explode(",",$owner_guid);
 		} else {
