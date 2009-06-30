@@ -5,7 +5,9 @@
 	$url = $object->getURL();
 
 	$string = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}:</a> ";
-	$string .= $object->description;
+	$desc .= $object->description;
+	$desc = preg_replace('/\@([A-Za-z0-9\_\.\-]*)/i','@<a href="' . $vars['url'] . 'pg/thewire/$1">$1</a>',$desc);
+	$string .= parse_urls($desc);
 
 	$string .= " (<a href=\"{$vars['url']}mod/thewire/add.php?wire_username={$object->getOwnerEntity()->username}\" class=\"reply\">" . elgg_echo('thewire:reply') . "</a>)";
 ?>
