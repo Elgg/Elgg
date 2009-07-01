@@ -23,8 +23,14 @@
 
 		global $CONFIG;
 		
-		if (isset($CONFIG->input[$variable]))
-			return $CONFIG->input[$variable];
+		if (isset($CONFIG->input[$variable])) {
+			$var = $CONFIG->input[$variable];
+			
+			if ($filter_result)
+				$var = filter_tags($var);
+				
+			return $var;
+		}
 		
 		if (isset($_REQUEST[$variable])) {
 			
