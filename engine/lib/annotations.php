@@ -851,6 +851,9 @@
 		$annotations = get_data("SELECT id from {$CONFIG->dbprefix}annotations WHERE owner_guid=$owner_guid");
 		$deleted = 0;
 		
+		if (!$annotations)
+			return 0;
+		
 		foreach ($annotations as $id)
 		{
 			if (delete_annotation($id->id)) // Is this the best way?
