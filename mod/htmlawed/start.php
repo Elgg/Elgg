@@ -52,7 +52,7 @@
 				$return = array();
 				
 				foreach($var as $key => $el) {
-					$return[$key] = htmLawed($var, $htmlawed_config);
+					$return[$key] = htmLawed($el, $htmlawed_config);
 				}
 			}
 		}
