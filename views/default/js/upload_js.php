@@ -1,4 +1,8 @@
 <script>
+/*
+Part of multi file uploader
+*/
+
 var number_of_files = 1;
 
 // wait for the DOM to be loaded 

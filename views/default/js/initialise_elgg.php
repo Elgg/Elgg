@@ -6,7 +6,7 @@ $(document).ready(function () {
 	
 	// toggle widget box edit panel
 	$('a.toggle_box_edit_panel').click(function () {
-		$(this.parentNode.parentNode).children("[class=collapsable_box_editpanel]").slideToggle("fast");
+		$(this.parentNode.parentNode).children(".collapsable_box_editpanel").slideToggle("fast");
 		return false;
 	});
 	
@@ -18,16 +18,16 @@ $(document).ready(function () {
 	
 	// toggle plugin's settings nad more info on admin tools admin
 	$('a.pluginsettings_link').click(function () {
-		$(this.parentNode.parentNode).children("[class=pluginsettings]").slideToggle("fast");
+		$(this.parentNode.parentNode).children(".pluginsettings").slideToggle("fast");
 		return false;
 	});
 	$('a.manifest_details').click(function () {
-		$(this.parentNode.parentNode).children("[class=manifest_file]").slideToggle("fast");
+		$(this.parentNode.parentNode).children(".manifest_file").slideToggle("fast");
 		return false;
 	});
 	// reusable generic hidden panel
 	$('a.collapsibleboxlink').click(function () {
-		$(this.parentNode.parentNode).children("[class=collapsible_box]").slideToggle("fast");
+		$(this.parentNode.parentNode).children(".collapsible_box").slideToggle("fast");
 		return false;
 	});
 	
@@ -39,11 +39,12 @@ $(document).ready(function () {
 	$els.sortable({
 		items: '.draggable_widget',
 		handle: '.drag_handle',
+		forcePlaceholderSize: true,
+		placeholder: 'ui-state-highlight',
 		cursor: 'move',
 		revert: true,
-		opacity: 1.0,
+		opacity: 0.9,
 		appendTo: 'body',
-		placeholder: 'placeholder',
 		connectWith: els,
 		start:function(e,ui) {
 	
@@ -84,7 +85,7 @@ $(document).ready(function () {
 
 // List active widgets for each page column
 function outputWidgetList(forElement) {
-	return( $("input[@name='handler'], input[@name='guid']", forElement ).makeDelimitedList("value") );	
+	return( $("input[name='handler'], input[name='guid']", forElement ).makeDelimitedList("value") );	
 }
 
 // Make delimited list
@@ -126,7 +127,7 @@ var targetContent = $('div.collapsable_box_content', this.parentNode.parentNode)
 	if (targetContent.css('display') == 'none') {
 		targetContent.slideDown(400);
 		$(this).html('-');
-		$(this.parentNode).children("[class=toggle_box_edit_panel]").fadeIn('medium');
+		$(this.parentNode).children(".toggle_box_edit_panel").fadeIn('medium');
 		
 		// set cookie for widget panel open-state
 		var thisWidgetName = $(this.parentNode.parentNode.parentNode).attr('id');
@@ -135,9 +136,9 @@ var targetContent = $('div.collapsable_box_content', this.parentNode.parentNode)
 	} else {
 		targetContent.slideUp(400);
 		$(this).html('+');
-		$(this.parentNode).children("[class=toggle_box_edit_panel]").fadeOut('medium');
+		$(this.parentNode).children(".toggle_box_edit_panel").fadeOut('medium');
 		// make sure edit pane is closed
-		$(this.parentNode.parentNode).children("[class=collapsable_box_editpanel]").hide();
+		$(this.parentNode.parentNode).children(".collapsable_box_editpanel").hide();
 		
 		// set cookie for widget panel closed-state
 		var thisWidgetName = $(this.parentNode.parentNode.parentNode).attr('id');
@@ -150,7 +151,7 @@ var targetContent = $('div.collapsable_box_content', this.parentNode.parentNode)
 function widget_moreinfo() {
 
 	$("img.more_info").hover(function(e) {										  
-	var widgetdescription = $("input[@name='description']", this.parentNode.parentNode.parentNode ).attr('value');
+	var widgetdescription = $("input[name='description']", this.parentNode.parentNode.parentNode ).attr('value');
 	$("body").append("<p id='widget_moreinfo'><b>"+ widgetdescription +" </b></p>");
 	
 		if (e.pageX < 900) {

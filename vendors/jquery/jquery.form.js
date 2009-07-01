@@ -1,6 +1,6 @@
 /*
  * jQuery Form Plugin
- * version: 2.24 (10-MAR-2009)
+ * version: 2.28 (10-MAY-2009)
  * @requires jQuery v1.2.2 or later
  *
  * Examples and documentation at: http://malsup.com/jquery/form/
@@ -53,10 +53,12 @@ $.fn.ajaxSubmit = function(options) {
     if (typeof options == 'function')
         options = { success: options };
 
-    // clean url (don't include hash vaue)
-    var url = this.attr('action') || window.location.href;
-    url = (url.match(/^([^#]+)/)||[])[1];
-    url = url || '';
+    var url = $.trim(this.attr('action'));
+    if (url) {
+	    // clean url (don't include hash vaue)
+	    url = (url.match(/^([^#]+)/)||[])[1];
+   	}
+   	url = url || window.location.href || ''
 
     options = $.extend({
         url:  url,
@@ -139,8 +141,12 @@ $.fn.ajaxSubmit = function(options) {
         if (files[j])
             found = true;
 
+	var multipart = false;
+//	var mp = 'multipart/form-data';
+//	multipart = ($form.attr('enctype') == mp || $form.attr('encoding') == mp);
+
     // options.iframe allows user to force iframe mode
-   if (options.iframe || found) {
+   if (options.iframe || found || multipart) {
        // hack to fix Safari hang (thanks to Tim Molendijk for this)
        // see:  http://groups.google.com/group/jquery-dev/browse_thread/thread/36395b7ab510dd5d
        if (options.closeKeepAlive)
@@ -166,7 +172,7 @@ $.fn.ajaxSubmit = function(options) {
         }
 
         var opts = $.extend({}, $.ajaxSettings, options);
-		var s = jQuery.extend(true, {}, $.extend(true, {}, $.ajaxSettings), opts);
+		var s = $.extend(true, {}, $.extend(true, {}, $.ajaxSettings), opts);
 
         var id = 'jqFormIO' + (new Date().getTime());
         var $io = $('<iframe id="' + id + '" name="' + id + '" src="about:blank" />');
@@ -195,7 +201,7 @@ $.fn.ajaxSubmit = function(options) {
         if (g) $.event.trigger("ajaxSend", [xhr, opts]);
 
 		if (s.beforeSend && s.beforeSend(xhr, s) === false) {
-			s.global && jQuery.active--;
+			s.global && $.active--;
 			return;
         }
         if (xhr.aborted)
@@ -415,8 +421,10 @@ $.fn.formToArray = function(semantic) {
 
         if (semantic && form.clk && el.type == "image") {
             // handle image inputs on the fly when semantic == true
-            if(!el.disabled && form.clk == el)
+            if(!el.disabled && form.clk == el) {
+            	a.push({name: n, value: $(el).val()});
                 a.push({name: n+'.x', value: form.clk_x}, {name: n+'.y', value: form.clk_y});
+            }
             continue;
         }
 
@@ -430,13 +438,11 @@ $.fn.formToArray = function(semantic) {
     }
 
     if (!semantic && form.clk) {
-        // input type=='image' are not found in elements array! handle them here
-        var inputs = form.getElementsByTagName("input");
-        for(var i=0, max=inputs.length; i < max; i++) {
-            var input = inputs[i];
-            var n = input.name;
-            if(n && !input.disabled && input.type == "image" && form.clk == input)
-                a.push({name: n+'.x', value: form.clk_x}, {name: n+'.y', value: form.clk_y});
+        // input type=='image' are not found in elements array! handle it here
+        var $input = $(form.clk), input = $input[0], n = input.name;
+        if (n && !input.disabled && input.type == 'image') {
+        	a.push({name: n, value: $input.val()});
+            a.push({name: n+'.x', value: form.clk_x}, {name: n+'.y', value: form.clk_y});
         }
     }
     return a;

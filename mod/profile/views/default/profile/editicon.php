@@ -16,7 +16,7 @@
 ?>
 <!-- grab the required js for icon cropping -->
 <div class="contentWrapper">
-<script type="text/javascript" src="<?php echo $vars['url']; ?>mod/profile/views/default/js/jquery.imgareaselect-0.4.2.js"></script>
+<script type="text/javascript" src="<?php echo $vars['url']; ?>mod/profile/views/default/js/jquery.imgareaselect-0.8.min.js"></script>
 
 <p><?php echo elgg_echo('profile:profilepictureinstructions'); ?></p>
 
