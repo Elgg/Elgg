@@ -1425,8 +1425,9 @@
 		{
 			if (
 				(($entity->disable_reason == 'new_user') || (
-					$entity->last_action == 0 && $entity->last_login == 0
-				)) 
+					// if this isn't set at all they're a "new user"
+					!$entity->validated
+				))
 				&& (!isloggedin()))
 				return true;
 			
