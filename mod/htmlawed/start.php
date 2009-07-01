@@ -1,0 +1,66 @@
+<?php
+	/**
+	 * Elgg htmLawed tag filtering.
+	 * 
+	 * @package ElgghtmLawed
+	 * @license http://www.gnu.org/licenses/gpl.html GNU Public License version 3
+	 * @author Curverider Ltd
+	 * @author Brett Profitt
+	 * @copyright Curverider Ltd 2008-2009
+	 * @link http://elgg.com/
+	 */
+
+	/**
+	 * Initialise plugin
+	 *
+	 */
+	function htmlawed_init()
+	{
+		/** For now declare allowed tags and protocols here, TODO: Make this configurable */
+		global $CONFIG;
+		$CONFIG->htmlawed_config = array(
+			// seems to handle about everything we need.
+			'safe' => true,
+			'deny_attribute' => 'style',
+			'schemes' => '*:http,https,ftp,news,mailto,rtsp,teamspeak,gopher,mms,callto'
+		);
+		
+		register_plugin_hook('validate', 'input', 'htmlawed_filter_tags', 1);
+	}
+	
+	/**
+	 * htmLawed filtering of tags, called on a plugin hook
+	 *
+	 * @param mixed $var Variable to filter
+	 * @return mixed
+	 */
+	function htmlawed_filter_tags($hook, $entity_type, $returnvalue, $params)
+	{
+		$return = $returnvalue;
+		$var = $returnvalue;
+		
+		if (@include_once(dirname(__FILE__) . "/vendors/htmLawed/htmLawed.php")) {
+			
+			global $CONFIG;
+			
+			$htmlawed_config = $CONFIG->htmlawed_config;
+			
+			if (!is_array($var)) {
+				$return = "";
+				$return = htmLawed($var, $htmlawed_config);
+			} else {
+				$return = array();
+				
+				foreach($var as $key => $el) {
+					$return[$key] = htmLawed($var, $htmlawed_config);
+				}
+			}
+		}
+	
+		return $return;
+	}
+	
+	
+	register_elgg_event_handler('init','system','htmlawed_init');
+        
+?>
