@@ -513,7 +513,10 @@
 		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
 		$limit = (int)$limit;
 		$offset = (int)$offset;
-		if ($order_by == "") $order_by = "e.time_created desc";
+		if ($order_by == "") 
+			$order_by = "e.time_created desc";
+		else
+			$order_by = "e.time_created {$order_by}";
 		$order_by = sanitise_string($order_by);
 		$site_guid = (int) $site_guid;
 		if ((is_array($owner_guid) && (count($owner_guid)))) {
