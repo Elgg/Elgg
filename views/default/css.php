@@ -45,6 +45,9 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 ol, ul {
 	list-style: none;
 }
+em, i {
+	font-style:italic;
+}
 /* tables still need cellspacing="0" (for ie6) */
 table {
 	border-collapse: separate;
