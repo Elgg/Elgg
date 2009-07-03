@@ -21,8 +21,9 @@
 		$CONFIG->htmlawed_config = array(
 			// seems to handle about everything we need.
 			'safe' => true,
-			'deny_attribute' => 'style',
-			'schemes' => '*:http,https,ftp,news,mailto,rtsp,teamspeak,gopher,mms,callto'
+			//'deny_attribute' => 'style',
+			'schemes' => '*: http,https,ftp,news,mailto,rtsp,teamspeak,gopher,mms,callto;'
+				. 'style: color,cursor,text-align,font-size,font-weight,font-style,border,margin,padding,float'
 		);
 		
 		register_plugin_hook('validate', 'input', 'htmlawed_filter_tags', 1);
