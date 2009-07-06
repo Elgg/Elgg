@@ -153,10 +153,11 @@
 			
 				}
 			}
-			
-			// Include the standard profile index
-			include($CONFIG->pluginspath . "profile/index.php");
-			
+			else
+			{
+				// Include the standard profile index
+				include($CONFIG->pluginspath . "profile/index.php");
+			}
 		}
 		
 	/**
