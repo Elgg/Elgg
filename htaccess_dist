@@ -130,6 +130,6 @@ RewriteRule ^pg\/([A-Za-z0-9\_\-]+)$ engine/handlers/pagehandler.php?handler=$1
 RewriteRule xml-rpc.php engine/handlers/xml-rpc_handler.php
 RewriteRule mt/mt-xmlrpc.cgi engine/handlers/xml-rpc_handler.php
 
-RewriteRule ^tag/(.+)/?$ engine/handlers/pagehandler.php?handler=search&page=$1
+RewriteRule ^tag/(.+)/?$ engine/handlers/pagehandler.php?handler=search&page=$1 [B]
 
 </IfModule>

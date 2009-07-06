@@ -26,20 +26,15 @@
 		
 		$query = parse_url($_SERVER['REQUEST_URI']);
 		if (isset($query['query'])) {
-			$query = $query['query'];
-			$query = rawurldecode($query);
-			$query = explode('&',$query);
-			if (sizeof($query) > 0) {
-				foreach($query as $queryelement) {
-					$vals = explode('=',$queryelement, 2);
-					if (sizeof($vals) > 1) {
-						set_input(urldecode($vals[0]),urldecode($vals[1]));
-					}
+			parse_str($query['query'], $query_arr);
+			if (is_array($query_arr)) {
+				foreach($query_arr as $name => $val) {
+					set_input($name, $val);
 				}
 			}
 		}
-
 		$page = explode('/',$page);
+		
 		if (!isset($CONFIG->pagehandler) || empty($handler)) {
 			$result = false;
 		} else if (isset($CONFIG->pagehandler[$handler]) && is_callable($CONFIG->pagehandler[$handler])) {
