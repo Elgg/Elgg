@@ -440,11 +440,15 @@
 	        case 'struct':
 	            foreach ($object->children as $child)
 	            {
-	                $value[$child->children[0]->content] = xmlrpc_scalar_value($child->children[1]->children[0]);
+	            	if (isset($child->children[1]->children[0]))
+	                	$value[$child->children[0]->content] = xmlrpc_scalar_value($child->children[1]->children[0]);
+	                else
+	                	$value[$child->children[0]->content] = $child->children[1]->content;
 	            }
 	            return $value;
 	        case 'boolean':
 	            return (boolean) $object->content;
+	        case 'i4':
 	        case 'int':
 	            return (int) $object->content;
 	        case 'double':
