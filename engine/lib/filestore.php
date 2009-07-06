@@ -971,7 +971,7 @@
 			}
 			if ($plugin == "photo") {
 				// do a mime type test
-				if (in_array($uploaded['type'],array('image/jpeg','image/gif','image/png'))) {
+				if (in_array($uploaded['type'],array('image/jpeg','image/gif','image/png','image/jpg','image/jpe','image/pjpeg','image/x-png'))) {
 					$file = new PhotoPluginFile();
 				} else {
 					$bad_mime_type = true;
