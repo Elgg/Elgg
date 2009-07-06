@@ -13,6 +13,9 @@
 	 * @uses $vars['profile'] Profile items from $CONFIG->profile, defined in profile/start.php for now 
 	 */
 
+	$currentuser = page_owner_entity();
+    if (!$currentuser)
+    	$currentuser=$_SESSION['user'];
 ?>
 <!-- grab the required js for icon cropping -->
 <div class="contentWrapper">
@@ -25,7 +28,7 @@
 	<label><?php echo elgg_echo('profile:currentavatar'); ?></label>
 	<?php 
 		
-		$user_avatar = $_SESSION['user']->getIcon('medium');//$vars['url'] . "pg/icon/" . $_SESSION['user']->username . "/medium/" . $_SESSION['user']->icontime . ".jpg";
+		$user_avatar = $currentuser->getIcon('medium');
 		echo "<img src=\"{$user_avatar}\" alt=\"avatar\" />";
 
 	?>
@@ -34,6 +37,8 @@
 
 <div id="profile_picture_form">
 	<form action="<?php echo $vars['url']; ?>action/profile/iconupload" method="post" enctype="multipart/form-data">
+	<?php echo elgg_view('input/securitytoken'); ?>
+	<input type="hidden" name="username" value="<?php echo $vars['user']->username; ?>" />
 	<p><label><?php echo elgg_echo("profile:editicon"); ?></label><br />
 	
 		<?php
@@ -52,8 +57,10 @@
 <?php
 
     echo elgg_echo("profile:createicon:instructions");
-    //display the current user photo 
-    $user_master_image = $vars['url'] . "pg/icon/" . $_SESSION['user']->username . "/master/" . $_SESSION['user']->icontime . ".jpg";
+    
+    //display the current user photo
+     
+    $user_master_image = $currentuser->getIcon('master');//$vars['url'] . "pg/icon/" . $currentuser->username . "/master/" . $currentuser->icontime . ".jpg";
     
 ?>
 </p>
@@ -122,6 +129,7 @@
 <div class="clearfloat"></div>
 
 <form action="<?php echo $vars['url']; ?>action/profile/cropicon" method="post" />
+	<?php echo elgg_view('input/securitytoken'); ?>
 	<input type="hidden" name="username" value="<?php echo $vars['user']->username; ?>" />
 	<input type="hidden" name="x_1" value="<?php echo $vars['user']->x1; ?>" id="x_1" />
     <input type="hidden" name="x_2" value="<?php echo $vars['user']->x2; ?>" id="x_2" />

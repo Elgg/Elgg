@@ -67,11 +67,7 @@
 				if (get_context() == "profile")
 				    extend_view('canvas_header/submenu','profile/submenu');
 
-			//add submenu options
-				if (get_context() == "profile") {
-					add_submenu_item(elgg_echo('profile:editdetails'), $CONFIG->wwwroot . "mod/profile/edit.php");
-					add_submenu_item(elgg_echo('profile:editicon'), $CONFIG->wwwroot . "mod/profile/editicon.php");
-				}
+			
 
 			// Extend context menu with admin links
 			if (isadminloggedin())
@@ -147,6 +143,17 @@
 			if (isset($page[0])) {
 				set_input('username',$page[0]);
 			}
+			// Any sub pages?
+			if (isset($page[1])) {
+				
+				switch ($page[1])
+				{
+					case 'edit' : include($CONFIG->pluginspath . "profile/edit.php"); break;
+					case 'editicon' : include($CONFIG->pluginspath . "profile/editicon.php"); break;
+			
+				}
+			}
+			
 			// Include the standard profile index
 			include($CONFIG->pluginspath . "profile/index.php");
 			
@@ -165,7 +172,6 @@
 			if (isset($page[0])) {
 				switch ($page[0])
 				{
-					case 'edit' :
 					default: include($CONFIG->pluginspath . "profile/defaultprofile.php");
 				}
 			}
@@ -178,9 +184,18 @@
 	 */
 		function profile_pagesetup()
 		{
+			global $CONFIG;
 			if (get_context() == 'admin' && isadminloggedin()) {
-				global $CONFIG;
+				
 				add_submenu_item(elgg_echo('profile:edit:default'), $CONFIG->wwwroot . 'pg/defaultprofile/edit/');
+			}
+		
+			//add submenu options
+			if (get_context() == "profile") {
+				$page_owner = page_owner_entity();
+				
+				add_submenu_item(elgg_echo('profile:editdetails'), $CONFIG->wwwroot . "pg/profile/{$page_owner->username}/edit/");
+				add_submenu_item(elgg_echo('profile:editicon'), $CONFIG->wwwroot . "pg/profile/{$page_owner->username}/editicon/");
 			}
 		}
 		

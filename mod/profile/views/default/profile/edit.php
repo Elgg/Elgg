@@ -16,7 +16,7 @@
 ?>
 <div class="contentWrapper">
 <form action="<?php echo $vars['url']; ?>action/profile/edit" method="post">
-
+<?php echo elgg_view('input/securitytoken') ?>
 <?php
 
 	//var_export($vars['profile']);

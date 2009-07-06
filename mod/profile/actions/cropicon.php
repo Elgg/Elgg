@@ -10,6 +10,9 @@
 	 * @link http://elgg.com/
 	 */
 
+	gatekeeper();
+	action_gatekeeper();
+
 		$x1 = (int) get_input('x_1',0);
 		$y1 = (int) get_input('y_1',0);
 		$x2 = (int) get_input('x_2',0);

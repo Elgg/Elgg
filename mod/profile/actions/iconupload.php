@@ -10,10 +10,20 @@
 	 * @link http://elgg.com/
 	 */
 
+	gatekeeper();
+	action_gatekeeper();
+	
+	$user = page_owner_entity();
+	if (!$user)
+		$user = $_SESSION['user'];
+		
 	// If we were given a correct icon
 		if (
-				isloggedin()
+				(isloggedin()) &&
+				($user) &&
+				($user->canEdit())
 			) {
+				
 				
 				$topbar = get_resized_image_from_uploaded_file('profileicon',16,16, true);
 				$tiny = get_resized_image_from_uploaded_file('profileicon',25,25, true);
@@ -28,40 +38,40 @@
 					&& $tiny !== false) {
 				
 					$filehandler = new ElggFile();
-					$filehandler->owner_guid = $_SESSION['user']->getGUID();
-					$filehandler->setFilename("profile/" . $_SESSION['user']->username . "large.jpg");
+					$filehandler->owner_guid = $user->getGUID();
+					$filehandler->setFilename("profile/" . $user->username . "large.jpg");
 					$filehandler->open("write");
 					$filehandler->write($large);
 					$filehandler->close();
-					$filehandler->setFilename("profile/" . $_SESSION['user']->username . "medium.jpg");
+					$filehandler->setFilename("profile/" . $user->username . "medium.jpg");
 					$filehandler->open("write");
 					$filehandler->write($medium);
 					$filehandler->close();
-					$filehandler->setFilename("profile/" . $_SESSION['user']->username . "small.jpg");
+					$filehandler->setFilename("profile/" . $user->username . "small.jpg");
 					$filehandler->open("write");
 					$filehandler->write($small);
 					$filehandler->close();
-					$filehandler->setFilename("profile/" . $_SESSION['user']->username . "tiny.jpg");
+					$filehandler->setFilename("profile/" . $user->username . "tiny.jpg");
 					$filehandler->open("write");
 					$filehandler->write($tiny);
 					$filehandler->close();
-					$filehandler->setFilename("profile/" . $_SESSION['user']->username . "topbar.jpg");
+					$filehandler->setFilename("profile/" . $user->username . "topbar.jpg");
 					$filehandler->open("write");
 					$filehandler->write($topbar);
 					$filehandler->close();
-					$filehandler->setFilename("profile/" . $_SESSION['user']->username . "master.jpg");
+					$filehandler->setFilename("profile/" . $user->username . "master.jpg");
 					$filehandler->open("write");
                     $filehandler->write($master);
 					$filehandler->close();
 					
-					$_SESSION['user']->icontime = time();
+					$user->icontime = time();
 					
 					system_message(elgg_echo("profile:icon:uploaded"));
 					
-					trigger_elgg_event('profileiconupdate',$_SESSION['user']->type,$_SESSION['user']);
+					trigger_elgg_event('profileiconupdate',$user->type,$user);
 					
 					//add to river
-					add_to_river('river/user/default/profileiconupdate','update',$_SESSION['user']->guid,$_SESSION['user']->guid);
+					add_to_river('river/user/default/profileiconupdate','update',$user->guid,$user->guid);
 				
 				} else {
 					system_message(elgg_echo("profile:icon:notfound"));					
@@ -75,7 +85,7 @@
 			
 	    //forward the user back to the upload page to crop
 	    
-	    $url = "mod/profile/editicon.php";
+	    $url = "pg/profile/{$user->username}/editicon/";
 			
 		if (isloggedin()) forward($url);
 
