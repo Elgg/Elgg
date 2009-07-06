@@ -35,20 +35,20 @@
 					&& $tiny !== false) {
 				
 					$filehandler = new ElggFile();
-					$filehandler->owner_guid = $_SESSION['user']->getGUID();
-					$filehandler->setFilename("profile/" . $_SESSION['user']->username . "medium.jpg");
+					$filehandler->owner_guid = $user->getGUID();
+					$filehandler->setFilename("profile/" .  $user->username . "medium.jpg");
 					$filehandler->open("write");
 					$filehandler->write($medium);
 					$filehandler->close();
-					$filehandler->setFilename("profile/" . $_SESSION['user']->username . "small.jpg");
+					$filehandler->setFilename("profile/" .  $user->username . "small.jpg");
 					$filehandler->open("write");
 					$filehandler->write($small);
 					$filehandler->close();
-					$filehandler->setFilename("profile/" . $_SESSION['user']->username . "tiny.jpg");
+					$filehandler->setFilename("profile/" .  $user->username . "tiny.jpg");
 					$filehandler->open("write");
 					$filehandler->write($tiny);
 					$filehandler->close();
-					$filehandler->setFilename("profile/" . $_SESSION['user']->username . "topbar.jpg");
+					$filehandler->setFilename("profile/" .  $user->username . "topbar.jpg");
 					$filehandler->open("write");
 					$filehandler->write($topbar);
 					$filehandler->close();
@@ -58,7 +58,7 @@
 					$user->y1 = $y1;
 					$user->y2 = $y2;
 					
-					$_SESSION['user']->icontime = time();
+					 $user->icontime = time();
 					
 					system_message(elgg_echo("profile:icon:uploaded"));
 				
@@ -68,7 +68,7 @@
 			
 	    //forward the user back to the upload page to crop
 	    
-	    $url = $vars['url'] . "mod/profile/editicon.php";
+	    $url = $vars['url'] . "pg/profile/{$user->username}/editicon/";
 			
 		if (isloggedin()) forward($url);
 
