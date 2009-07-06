@@ -100,7 +100,7 @@
             $('<div id="user_avatar_preview"><img src="<?php echo $user_master_image; ?>" /></div>') 
             .insertAfter($('#user_avatar'));
             
-            $('<div id="user_avatar_preview_title"><label>Preview</label></div>').insertBefore($('#user_avatar_preview'));
+            $('<div id="user_avatar_preview_title"><label><?php echo elgg_echo('profile:preview'); ?></label></div>').insertBefore($('#user_avatar_preview'));
             
         }); 
         
