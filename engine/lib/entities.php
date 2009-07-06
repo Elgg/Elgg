@@ -2138,7 +2138,8 @@
 		$size = sanitise_string($size);
 		switch (strtolower($size))
 		{
-			case 'master':
+			case 'master': $size = 'master'; break;
+			 
 			case 'large' : $size = 'large'; break;
 			
 			case 'topbar' : $size = 'topbar'; break;
