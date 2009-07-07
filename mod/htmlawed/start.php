@@ -21,7 +21,8 @@
 		$CONFIG->htmlawed_config = array(
 			// seems to handle about everything we need.
 			'safe' => true,
-			//'deny_attribute' => 'style',
+			'deny_attribute' => 'class',
+			
 			'schemes' => '*: http,https,ftp,news,mailto,rtsp,teamspeak,gopher,mms,callto;'
 				. 'style: color,cursor,text-align,font-size,font-weight,font-style,border,margin,padding,float'
 		);
