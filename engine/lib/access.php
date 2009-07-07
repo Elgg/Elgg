@@ -100,15 +100,16 @@
 					$access_array[$user_id] = $tmp_access_array;
 				}
 				else
-					return $tmp_access_array; // No user id logged in so we can only access public info
+					$tmp_return = $tmp_access_array; // No user id logged in so we can only access public info
 				
 				
 			} else {
 				$tmp_access_array = $access_array[$user_id];
 			}
 			
-			return $access_array[$user_id];
+			$tmp_return = $access_array[$user_id];
 			
+			return trigger_plugin_hook('access:collections:read','user',array('user_id' => $user_id, 'site_id' => $site_id),$tmp_access_array);
 		}
 		
 	/**

@@ -63,8 +63,9 @@
 		extend_view('profile/icon','groups/icon');
 		extend_view('css','groups/css');
 		
-		// Write access permissions
+		// Access permissions
 		register_plugin_hook('access:collections:write', 'all', 'groups_write_acl_plugin_hook');
+		//register_plugin_hook('access:collections:read', 'all', 'groups_read_acl_plugin_hook');
 		
 		// Notification hooks
 		if (is_callable('register_notification_object'))
@@ -373,12 +374,18 @@
 	 */
 	function groups_read_acl_plugin_hook($hook, $entity_type, $returnvalue, $params)
 	{
-		
 		//error_log("READ: " . var_export($returnvalue));
 		$user = $_SESSION['user'];
 		if ($user)
 		{
-			$membership = get_users_membership($user->guid);
+			// Not using this because of recursion.
+			// Joining a group automatically add user to ACL, 
+			// So just see if they're a member of the ACL.
+			//$membership = get_users_membership($user->guid);
+			
+			$members = get_members_of_access_collection($group->group_acl);
+			print_r($members);
+			exit;
 			
 			if ($membership)
 			{					
@@ -395,16 +402,27 @@
 	function groups_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $params)
 	{
 		$page_owner = page_owner_entity();
-		
-		if ($page_owner instanceof ElggGroup)
-		{
-			if (can_write_to_container())
-			{
-				$returnvalue[$page_owner->group_acl] = elgg_echo('groups:group') . ": " . $page_owner->name;
-			
-				return $returnvalue;
+		// get all groups if logged in
+		if ($loggedin = get_loggedin_user()) {
+			$groups = get_entities_from_relationship('member', $loggedin->getGUID());
+			if (is_array($groups)) {
+				foreach ($groups as $group) {
+					$returnvalue[$group->group_acl] = elgg_echo('groups:group') . ': ' . $group->name;
+				}
 			}
 		}
+		
+		// This doesn't seem to do anything.
+		// There are no hooks to override container permissions for groups
+//		
+//		if ($page_owner instanceof ElggGroup)
+//		{
+//			if (can_write_to_container())
+//			{
+//				$returnvalue[$page_owner->group_acl] = elgg_echo('groups:group') . ": " . $page_owner->name;
+//			}
+//		}
+		return $returnvalue;
 	}
 	
 	/**
