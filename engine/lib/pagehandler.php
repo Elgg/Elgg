@@ -24,15 +24,15 @@
 		
 		set_context($handler);
 		
-		$query = parse_url($_SERVER['REQUEST_URI']);
-		if (isset($query['query'])) {
-			parse_str($query['query'], $query_arr);
+		$query = substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], '?')+1);//parse_url($_SERVER['REQUEST_URI']);
+		if (isset($query)) {
+			parse_str($query, $query_arr);
 			if (is_array($query_arr)) {
 				foreach($query_arr as $name => $val) {
 					set_input($name, $val);
 				}
 			}
-		}
+		} 
 		$page = explode('/',$page);
 		
 		if (!isset($CONFIG->pagehandler) || empty($handler)) {
