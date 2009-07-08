@@ -265,7 +265,7 @@
 			$content = ob_get_clean();
 			
 		// Plugin hook
-			$content = trigger_plugin_hook('display','view',array('view' => $view_orig),$content);
+			$content = trigger_plugin_hook('display', 'view', array('view' => $view_orig, 'vars' => $vars), $content);
 		
 		// Return $content
 		    return $content;
