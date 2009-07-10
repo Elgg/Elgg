@@ -82,11 +82,6 @@ END;
 		echo elgg_view('metatags',$vars); 
 	?>
 	
-	<!-- This is a hack fix #1100. -->
-	<script>
-		$(document).ready(function () {
-		}
-	</script>
 </head>
 
 <body>
