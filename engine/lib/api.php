@@ -822,7 +822,15 @@
 	{
 		global $GLOBALS;
 		
-		return $GLOBALS['HTTP_RAW_POST_DATA'];	
+		$postdata = $GLOBALS['HTTP_RAW_POST_DATA'];
+
+		// Attempt another method to return post data (incase always_populate_raw_post_data is switched off)
+		if (!$postdata)
+		{
+			$postdata = file_get_contents('php://input');
+		}
+		
+		return $postdata;
 	}
 	
 	// PAM functions //////////////////////////////////////////////////////////////////////////
