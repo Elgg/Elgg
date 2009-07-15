@@ -45,7 +45,7 @@
 			
 		$contents = '';
 		
-		if ($mysql_dblink = @mysql_connect($CONFIG->dbhost,$CONFIG->dbuser,$CONFIG->dbpass)) {
+		if ($mysql_dblink = @mysql_connect($CONFIG->dbhost,$CONFIG->dbuser,$CONFIG->dbpass, true)) {
 
 			
 			$username = $_GET['username'];

@@ -21,7 +21,7 @@
 		$contents = '';
 		if (!isset($viewinput)) $viewinput = $_GET;
 		
-		if ($mysql_dblink = @mysql_connect($CONFIG->dbhost,$CONFIG->dbuser,$CONFIG->dbpass)) {
+		if ($mysql_dblink = @mysql_connect($CONFIG->dbhost,$CONFIG->dbuser,$CONFIG->dbpass, true)) {
 
 			$view = $viewinput['view'];
 			$viewtype = $viewinput['viewtype'];
