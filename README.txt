@@ -24,12 +24,7 @@ See CONTRIBUTORS.txt for development credits.
 Elgg concept originally by:
 Ben Werdmuller <ben@elgg.com> and David Tosh <dave@elgg.com>
 
-To learn more about enterprise-grade support and services for Elgg,
-contact us via one of the following methods:
-
-Email: info@elgg.com
-Skype: curverider
-Web:   http://elgg.com/
+Commercial services:  http://elgg.com/
 
 The open source project site can be found at http://elgg.org/
 
