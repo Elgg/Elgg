@@ -11,7 +11,7 @@
 	 */
 	 
     //get the required variables
-    $title = $vars['entity']->title;
+    $title = htmlentities($vars['entity']->title, ENT_QUOTES, 'UTF-8');
     //$description = get_entity($vars['entity']->description);
     $topic_owner = get_user($vars['entity']->owner_guid);
     $group = get_entity($vars['entity']->container_guid);
@@ -40,7 +40,7 @@
 		$icon = elgg_view("profile/icon",array('entity' => $group, 'size' => 'small'));
 	    //get the group and topic title
 	    if ($group instanceof ElggGroup)
-	    	$info .= "<p>" . elgg_echo('group') . ": <a href=\"{$group->getURL()}\">{$group->name}</a></p>";
+	    	$info .= "<p>" . elgg_echo('group') . ": <a href=\"{$group->getURL()}\">".htmlentities($group->name, ENT_QUOTES, 'UTF-8') ."</a></p>";
 	    
 		$info .= "<p>" . elgg_echo('topic') . ": <a href=\"{$vars['url']}mod/groups/topicposts.php?topic={$vars['entity']->guid}&group_guid={$group->guid}\">{$title}</a></p>";
 		//get the forum description
