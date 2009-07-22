@@ -50,7 +50,9 @@
             		datalist_set('first_admin_login', time());
             		
             		forward('pg/admin/plugins');
-            	} else	
+            	} else if (get_input('returntoreferer')) {
+            		forward($_SERVER['HTTP_REFERER']);
+            	} else
             		forward("pg/dashboard/");
             }
         } else {
