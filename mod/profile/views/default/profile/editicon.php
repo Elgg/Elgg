@@ -38,13 +38,12 @@
 <div id="profile_picture_form">
 	<form action="<?php echo $vars['url']; ?>action/profile/iconupload" method="post" enctype="multipart/form-data">
 	<?php echo elgg_view('input/securitytoken'); ?>
-	<input type="hidden" name="username" value="<?php echo $vars['user']->username; ?>" />
+	<input type="hidden" name="username" value="<?php echo $currentuser->username; ?>" />
 	<p><label><?php echo elgg_echo("profile:editicon"); ?></label><br />
 	
 		<?php
-
+			
 			echo elgg_view("input/file",array('internalname' => 'profileicon'));
-		
 		?>
 		<br /><input type="submit" class="submit_button" value="<?php echo elgg_echo("upload"); ?>" />
 	</p>
