@@ -60,6 +60,10 @@
 	margin:2px;
 	float:left;
 }
+.sidebarBox .membersWrapper .recentMember .usericon img {
+	width:25px;
+	height:25px;
+}
 /* br necessary for ie6 & 7 */
 .sidebarBox .membersWrapper br {
 	height:0;
