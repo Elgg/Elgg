@@ -548,6 +548,92 @@ END;
 			
 		}
 		
+		/**
+		 * Get entities with the specified access collection id.
+		 * 
+		 * @param $collection_id
+		 * @param $entity_type
+		 * @param $entity_subtype
+		 * @param $owner_guid
+		 * @param $limit
+		 * @param $offset
+		 * @param $order_by
+		 * @param $site_guid
+		 * @param $count
+		 * @return unknown_type
+		 */
+		function get_entities_from_access_collection($collection_id, $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0, $count = false) {
+			global $CONFIG;
+			
+			if (!$collection_id)
+				return false;
+				
+			$entity_type = sanitise_string($entity_type);
+			$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
+			$limit = (int)$limit;
+			$offset = (int)$offset;
+			if ($order_by == "") 
+				$order_by = "e.time_created desc";
+			else
+				$order_by = "e.time_created, {$order_by}";
+			$order_by = sanitise_string($order_by);
+			$site_guid = (int) $site_guid;
+			if ((is_array($owner_guid) && (count($owner_guid)))) {
+				foreach($owner_guid as $key => $guid) {
+					$owner_guid[$key] = (int) $guid;
+				}
+			} else {
+				$owner_guid = (int) $owner_guid;
+			}
+			if ($site_guid == 0)
+				$site_guid = $CONFIG->site_guid;
+				
+			//$access = get_access_list();
+				
+			$where = array("e.access_id = $collection_id");
+			
+			if ($entity_type!=="")
+				$where[] = "e.type='$entity_type'";
+			if ($entity_subtype)
+				$where[] = "e.subtype=$entity_subtype";
+			if ($site_guid > 0)
+				$where[] = "e.site_guid = {$site_guid}";
+			if (is_array($owner_guid)) {
+				$where[] = "e.container_guid in (".implode(",",$owner_guid).")";
+			} else if ($owner_guid > 0)
+				$where[] = "e.container_guid = {$owner_guid}";
+			
+			if (!$count) {
+				$query = "SELECT distinct e.* "; 
+			} else {
+				$query = "SELECT count(distinct e.guid) as total ";
+			}
+				
+			$query .= "from {$CONFIG->dbprefix}entities e where";
+			foreach ($where as $w)
+				$query .= " $w and ";
+			$query .= get_access_sql_suffix("e"); // Add access controls
+			//$query .= ' and ' . get_access_sql_suffix("m"); // Add access controls
+			
+			if (!$count) {
+				$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
+				return get_data($query, "entity_row_to_elggstar");
+			} else {
+				if ($row = get_data_row($query))
+					return $row->total;
+			}
+			return false;
+		}
+		
+		function list_entities_from_access_collection($collection_id, $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true) {
+			$offset = (int) get_input('offset');
+			$limit = (int) $limit;
+			$count = get_entities_from_access_collection($collection_id, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, "", 0, true);
+			$entities = get_entities_from_access_collection($collection_id, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, "", 0, false);
+			
+			return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle, $pagination);
+		}
+		
 		global $init_finished;
 		$init_finished = false;
 		
