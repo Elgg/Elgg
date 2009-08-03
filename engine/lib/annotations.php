@@ -355,13 +355,18 @@
 	 * @param int $offset Place to start.
 	 * @param string $order_by How to order results.
 	 * @param boolean $count Whether to count entities rather than return them
+	 * @param int $timelower The earliest time the annotation can have been created. Default: all
+	 * @param int $timeupper The latest time the annotation can have been created. Default: all
 	 */
-	function get_entities_from_annotations($entity_type = "", $entity_subtype = "", $name = "", $value = "", $owner_guid = 0, $group_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $count = false)
+	function get_entities_from_annotations($entity_type = "", $entity_subtype = "", $name = "", $value = "", $owner_guid = 0, $group_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $count = false, $timelower = 0, $timeupper = 0)
 	{
 		global $CONFIG;
 		
 		$entity_type = sanitise_string($entity_type);
 		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
+		$timelower = (int) $timelower;
+		$timeupper = (int) $timeupper;
+		
 		if ($name)
 		{
 			$name = get_metastring_id($name);
@@ -414,7 +419,11 @@
 			
 		if ($value != "")
 			$where[] = "a.value_id='$value'";
-			
+
+		if ($timelower)
+			$where[] = "a.time_created >= {$timelower}";
+		if ($timeupper)
+			$where[] = "a.time_created <= {$timeupper}";
 		
 		if ($count) {
 			$query = "SELECT count(distinct e.guid) as total ";
