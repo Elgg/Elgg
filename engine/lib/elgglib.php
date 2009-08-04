@@ -172,6 +172,11 @@
 
 		    global $CONFIG;
 		    static $usercache;
+
+		    // basic checking for bad paths
+		    if (strpos($view, '..') !== false) {
+		        return false;
+                    }
 		    
 		    $view_orig = $view;
 		    
