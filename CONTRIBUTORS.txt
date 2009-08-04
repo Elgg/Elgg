@@ -1,7 +1,7 @@
 
 CONTRIBUTORS
 
-The core Elgg team is:
+The core Elgg team:
 
 David Tosh <dave@elgg.com>
 http://twitter.com/davetosh
@@ -16,7 +16,7 @@ http://twitter.com/brettprofitt
 Pete Harris <pete@elgg.com>
 
 
-CONTRIBUTING DEVELOPERS
+CONTRIBUTING/ALUMNI DEVELOPERS
 
 Kevin Jardine <kevin@radagast.biz>
 http://radagast.biz/
@@ -28,7 +28,7 @@ http://benwerd.com/
 http://twitter.com/benwerd
 
 
-Thanks to the following developers for contributing patches or suggestions
+Thanks to the following developers for contributing patches and/or suggestions
 
 Diego Andrés Ramírez Aragón <diego@somosmas.org>
 Corporación Somos Más
