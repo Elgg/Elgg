@@ -625,6 +625,19 @@ END;
 			return false;
 		}
 		
+		/**
+		 * Lists entities from an access collection
+		 * 
+		 * @param $collection_id
+		 * @param $entity_type
+		 * @param $entity_subtype
+		 * @param $owner_guid
+		 * @param $limit
+		 * @param $fullview
+		 * @param $viewtypetoggle
+		 * @param $pagination
+		 * @return str
+		 */
 		function list_entities_from_access_collection($collection_id, $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true) {
 			$offset = (int) get_input('offset');
 			$limit = (int) $limit;
