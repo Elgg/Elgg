@@ -261,9 +261,13 @@
 	 * @param int $offset
 	 * @param string $order_by
 	 */
-	function get_annotations($entity_guid = 0, $entity_type = "", $entity_subtype = "", $name = "", $value = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "asc")
+	function get_annotations($entity_guid = 0, $entity_type = "", $entity_subtype = "", $name = "", 
+	$value = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $timelower = 0, $timeupper = 0)
 	{
 		global $CONFIG;
+		
+		$timelower = (int) $timelower;
+		$timeupper = (int) $timeupper;
 		
 		if (is_array($entity_guid)) {
 			if (sizeof($entity_guid) > 0) {
@@ -331,12 +335,18 @@
 			
 		if ($value != "")
 			$where[] = "a.value_id='$value'";
-		
+			
+		if ($timelower)
+			$where[] = "a.time_created >= {$timelower}";
+		if ($timeupper)
+			$where[] = "a.time_created <= {$timeupper}";
+			
 		$query = "SELECT a.*, n.string as name, v.string as value from {$CONFIG->dbprefix}annotations a JOIN {$CONFIG->dbprefix}entities e on a.entity_guid = e.guid JOIN {$CONFIG->dbprefix}metastrings v on a.value_id=v.id JOIN {$CONFIG->dbprefix}metastrings n on a.name_id = n.id where ";
 		foreach ($where as $w)
 			$query .= " $w and ";
 		$query .= get_access_sql_suffix("a"); // Add access controls
 		$query .= " order by $order_by limit $offset,$limit"; // Add order and limit
+		
 		return get_data($query, "row_to_elggannotation");
 		
 	}
@@ -567,9 +577,9 @@
 	 * @param string $entity_subtype
 	 * @param string $name
 	 */
-	function count_annotations($entity_guid = 0, $entity_type = "", $entity_subtype = "", $name = "", $value = "", $value_type = "", $owner_guid = 0)
+	function count_annotations($entity_guid = 0, $entity_type = "", $entity_subtype = "", $name = "", $value = "", $value_type = "", $owner_guid = 0, $timelower = 0, $timeupper = 0)
 	{
-		return __get_annotations_calculate_x("count", $entity_guid, $entity_type, $entity_subtype, $name, $value, $value_type, $owner_guid);
+		return __get_annotations_calculate_x("count", $entity_guid, $entity_type, $entity_subtype, $name, $value, $value_type, $owner_guid, $timelower, $timeupper);
 	}
 	
 	/**
@@ -581,13 +591,15 @@
 	 * @param $entity_subtype string
 	 * @param $name string
 	 */
-	function __get_annotations_calculate_x($sum = "avg", $entity_guid, $entity_type = "", $entity_subtype = "", $name = "", $value = "", $value_type = "", $owner_guid = 0)
+	function __get_annotations_calculate_x($sum = "avg", $entity_guid, $entity_type = "", $entity_subtype = "", $name = "", $value = "", $value_type = "", $owner_guid = 0, $timelower = 0, $timeupper = 0)
 	{
 		global $CONFIG;
 		
 		$sum = sanitise_string($sum);
 		$entity_guid = (int)$entity_guid;
 		$entity_type = sanitise_string($entity_type);
+		$timeupper = (int)$timeupper;
+		$timelower = (int)$timelower;
 		$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
 		if ($name != '' AND !$name = get_metastring_id($name))
 			return 0;
@@ -614,6 +626,10 @@
 			$where[] = "a.value_type='$value_type'";
 		if ($owner_guid)
 			$where[] = "a.owner_guid='$owner_guid'";
+		if ($timelower)
+			$where[] = "a.time_created >= {$timelower}";
+		if ($timeupper)
+			$where[] = "a.time_created <= {$timeupper}";
 			
 		if ($sum != "count")
 			$where[] = "a.value_type='integer'"; // Limit on integer types
