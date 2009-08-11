@@ -1208,10 +1208,10 @@
 		// Load the configuration
 			global $CONFIG;
 			
-			$username = sanitise_string($username);
-			$password = sanitise_string($password);
-			$name = sanitise_string($name);
-			$email = sanitise_string($email);
+			$username = trim($username);
+			$password = trim($password);
+			$name = trim($name);
+			$email = trim($email);
 			
 		// A little sanity checking
 			if (empty($username)
