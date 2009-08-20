@@ -3,10 +3,8 @@
 	 * Elgg htmLawed tag filtering.
 	 * 
 	 * @package ElgghtmLawed
-	 * @license http://www.gnu.org/licenses/gpl.html GNU Public License version 3
 	 * @author Curverider Ltd
 	 * @author Brett Profitt
-	 * @copyright Curverider Ltd 2008-2009
 	 * @link http://elgg.com/
 	 */
 
