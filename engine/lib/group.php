@@ -744,8 +744,9 @@
 	 */
 	function join_group($group_guid, $user_guid)
 	{
+		$result = add_entity_relationship($user_guid, 'member', $group_guid);
 		trigger_elgg_event('join','group',array('group' => get_entity($group_guid), 'user' => get_entity($user_guid)));
-		return add_entity_relationship($user_guid, 'member', $group_guid);
+		return $result;
 	}
 	
 	/**
@@ -756,8 +757,9 @@
 	 */
 	function leave_group($group_guid, $user_guid)
 	{
+		$result = remove_entity_relationship($user_guid, 'member', $group_guid);
 		trigger_elgg_event('leave','group',array('group' => get_entity($group_guid), 'user' => get_entity($user_guid)));
-		return remove_entity_relationship($user_guid, 'member', $group_guid);
+		return $result;
 	}
 	
 	/**
