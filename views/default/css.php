@@ -1253,7 +1253,13 @@ p.user_menu_friends_of {
 .river_object_page_create {
 	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_pages.gif) no-repeat left -1px;
 }
+.river_object_page_update {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_pages.gif) no-repeat left -1px;
+}
 .river_object_page_top_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_pages.gif) no-repeat left -1px;
+}
+.river_object_page_top_update {
 	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_pages.gif) no-repeat left -1px;
 }
 .river_object_page_top_comment {
