@@ -262,7 +262,7 @@
 	 * @param string $order_by
 	 */
 	function get_annotations($entity_guid = 0, $entity_type = "", $entity_subtype = "", $name = "", 
-	$value = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $timelower = 0, $timeupper = 0)
+	$value = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $timelower = 0, $timeupper = 0, $entity_owner_guid = 0)
 	{
 		global $CONFIG;
 		
@@ -272,7 +272,7 @@
 		if (is_array($entity_guid)) {
 			if (sizeof($entity_guid) > 0) {
 				foreach($entity_guid as $key => $val) {
-					$entity_guid[$key] = (int) $val;			
+					$entity_guid[$key] = (int) $val;
 				}
 			} else {
 				$entity_guid = 0;
@@ -301,6 +301,19 @@
 		} else {
 			$owner_guid = (int)$owner_guid;
 		}
+
+		if (is_array($entity_owner_guid)) {
+			if (sizeof($entity_owner_guid) > 0) {
+				foreach($entity_owner_guid as $key => $val) {
+					$entity_owner_guid[$key] = (int) $val;
+				}
+			} else {
+				$entity_owner_guid = 0;
+			}
+		} else {
+			$entity_owner_guid = (int)$entity_owner_guid;
+		}
+		
 		$limit = (int)$limit;
 		$offset = (int)$offset;
 		if($order_by == 'asc')
@@ -328,6 +341,13 @@
 		} else {
 			if (is_array($owner_guid))
 				$where[] = "a.owner_guid in (" . implode(",",$owner_guid) . ")";
+		}
+		
+		if ($entity_owner_guid != 0 && !is_array($entity_owner_guid)) {
+			$where[] = "e.owner_guid=$entity_owner_guid";
+		} else {
+			if (is_array($entity_owner_guid))
+				$where[] = "e.owner_guid in (" . implode(",",$entity_owner_guid) . ")";
 		}
 			
 		if ($name !== "")
