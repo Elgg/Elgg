@@ -26,6 +26,10 @@
 	{
 		global $CONFIG;
 		
+		if(!get_input('tag')) {
+			set_input('tag', $page[0]);	
+		}
+
 		if (isset($page[0])) {
 			switch ($page[0]) {
 				case 'user' :
