@@ -55,7 +55,9 @@
 						request_user_validation($guid);
 					
 					if (!$new_user->admin)
-						$new_user->disable('new_user');	// Now disable if not an admin
+						$new_user->disable('new_user', false);	// Now disable if not an admin
+						// Don't do a recursive disable.  Any entities owned by the user at this point
+						// are products of plugins that
 					
 					system_message(sprintf(elgg_echo("registerok"),$CONFIG->sitename));
 					

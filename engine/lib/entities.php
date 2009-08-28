@@ -691,10 +691,11 @@
 		 * Disable this entity.
 		 * 
 		 * @param string $reason Optional reason
+		 * @param bool $recursive Recursively disable all contained entities?
 		 */
-		public function disable($reason = "")
+		public function disable($reason = "", $recursive = true)
 		{
-			return disable_entity($this->get('guid'), $reason);
+			return disable_entity($this->get('guid'), $reason, $recursive);
 		}
 		
 		/**
