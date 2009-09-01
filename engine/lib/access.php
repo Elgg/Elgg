@@ -647,6 +647,27 @@ END;
 			return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle, $pagination);
 		}
 		
+	/**
+	 * Return a humanreadable version of an entity's access level
+	 *
+	 * @param $entity_accessid (int) The entity's access id
+	 * @return string e.g. Public, Private etc
+	 **/
+		 
+		function get_readable_access_level($entity_accessid){	
+			$access = (int) $entity_accessid;
+			//get the access level for object in readable string
+			$options = get_write_access_array();
+			foreach($options as $key => $option) {
+				if($key == $access){
+					$entity_acl = htmlentities($option, ENT_QUOTES, 'UTF-8');
+					return $entity_acl;
+					break;
+				}
+	 		}
+	 		return false;
+		}
+		
 		global $init_finished;
 		$init_finished = false;
 		
