@@ -18,7 +18,7 @@
 
 ?>
 <!-- used to fade out the system messages after 3 seconds -->
-<script>
+<script type="text/javascript">
 $(document).ready(function () {
 	$('.messages').animate({opacity: 1.0}, 1000); 
 	$('.messages').animate({opacity: 1.0}, 5000);
