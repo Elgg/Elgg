@@ -515,6 +515,7 @@
 			return false;
 		$owner_guid = (int)$owner_guid;
 		if ($order_by == "") $order_by = "time_created desc";
+		else $order_by = "time_created {$order_by}";
 		$order_by = sanitise_string($order_by);
 		$limit = (int)$limit;
 		$offset = (int)$offset;
