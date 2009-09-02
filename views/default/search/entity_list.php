@@ -9,6 +9,7 @@
 		$context = $vars['context'];
 		$viewtype = $vars['viewtype'];
 		$pagination = $vars['pagination'];
+		$fullview = $vars['fullview']; 
 		
 		$html = "";
 		$nav = "";
