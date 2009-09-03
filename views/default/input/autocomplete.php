@@ -21,21 +21,10 @@
 	global $autocomplete_js_loaded;
 	
 	$internalname = $vars['internalname'];
+	$value = $vars['value'];
 	
-	if(!$internalname)
-		$internalname = 'entity_selected_guid';
-		
-	$internalname_text = $vars['internalname_text'];
-	if(!$internalname_text)
-		$internalname_text = 'selected_text';
-		
-	$value_id = $vars['value_id'];
-	if(!$value_id)
-		$value_id = 0;
-		
-	$value_text = $vars['value_text'];
-	if(!$value_text)
-		$value_text = '';
+	if(!$value)
+		$value= '';
 	
 	if($vars['internal_id'])
 		$id_autocomplete = $vars['internal_id'];
@@ -47,11 +36,11 @@
 	$ac_url = $vars['url'] . 'pg/autocomplete?' . $ac_url_params;
 			
 	if (!isset($autocomplete_js_loaded)) $autocomplete_js_loaded = false;
+	
 ?>
 
 <!-- show the input -->
 	<input type="text" class='autocomplete' name ='<?php echo $internalname; ?>_autocomplete' value='<?php echo $value?>' />
-	<input type="hidden" name="autocomplete_params" value="<?php echo $ac_url_params; ?>" />
 	<input type="hidden" name="<?php echo $internalname; ?>" value='<?php echo $value; ?>' />
 	
 <?php
