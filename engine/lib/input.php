@@ -160,8 +160,152 @@
 	
 		return $pee;
 	}
-        
+	
+	/**
+	 * Page handler for autocomplete endpoint.
+	 * 
+	 * @param $page
+	 * @return unknown_type
+	 */
+	function input_autocomplete_page_handler($page) {
+		global $CONFIG;
+		// only return results to logged in users.
+		if (!$user = get_loggedin_user()) {
+			exit;
+		}
+		
+		if (!$q = get_input('q')) {
+			exit;
+		}
+		
+		$match_on = get_input('match_on', 'all');
+		if ($match_on == 'all' || $match_on[0] == 'all') {
+			$match_on = array('users', 'groups');
+		}
+		
+		if (!is_array($match_on)) {
+			$match_on = array($match_on);
+		}
+		
+		if (get_input('match_owner', false)) {
+			$owner_guid = $user->getGUID();
+			$owner_where = 'AND e.owner_guid = ' . $user->getGUID();
+		} else {
+			$owner_guid = null;
+			$owner_where = '';
+		}
+		
+		$limit = get_input('limit', 10);
+		
+		// grab a list of entities and send them in json.
+		$results = array();
+		foreach ($match_on as $type) {
+			switch ($type) {
+				case 'all':
+					// only need to pull up title from objects.
+					
+					if (!$entities = get_entities(null, null, $owner_guid, null, $limit) AND is_array($entities)) {
+						$results = array_merge($results, $entities);
+					}
+					break;
+					
+				case 'users':
+					$query = "SELECT * FROM {$CONFIG->dbprefix}users_entity as ue, {$CONFIG->dbprefix}entities as e
+						WHERE e.guid = ue.guid
+							AND e.enabled = 'yes'
+							AND ue.banned = 'no'
+							AND (ue.name LIKE '%$q%' OR ue.username LIKE '$q%')
+						LIMIT $limit
+					";
+					
+					if ($entities = get_data($query)) {
+						foreach ($entities as $entity) {
+							$json = json_encode(array(
+								'type' => 'user',
+								'name' => $entity->name,
+								'desc' => $entity->username,
+								//'icon' => elgg_view('profile/icon', array('entity' => get_entity($entity->guid), 'size' => 'tiny', 'override' => 'true')),
+								'icon' => '<img style="float: left;" src="' . get_entity($entity->guid)->getIcon('tiny') . '" />',
+								'guid' => $entity->guid
+							));
+							$results[$entity->name . rand(1,100)] = $json;
+						}
+					}
+					break;
+					
+				case 'groups':
+					// don't return results if groups aren't enabled.
+					if (!is_plugin_enabled('groups')) {
+						continue;
+					}
+					$query = "SELECT * FROM {$CONFIG->dbprefix}groups_entity as ge, {$CONFIG->dbprefix}entities as e
+						WHERE e.guid = ge.guid
+							AND e.enabled = 'yes'
+							$owner_where
+							AND (ge.name LIKE '%$q%' OR ge.description LIKE '%$q%')
+						LIMIT $limit
+					";
+					if ($entities = get_data($query)) {
+						foreach ($entities as $entity) {
+							$json = json_encode(array(
+								'type' => 'group',
+								'name' => $entity->name,
+								'desc' => strip_tags($entity->description),
+								//'icon' => elgg_view('groups/icon', array('entity' => get_entity($entity->guid), 'size' => 'tiny', 'override' => 'true')),
+								'icon' => '<img style="float: left;" src="' . get_entity($entity->guid)->getIcon('tiny') . '" />',
+								'guid' => $entity->guid
+							));
+							//$results[$entity->name . rand(1,100)] = "$json|{$entity->guid}";
+							$results[$entity->name . rand(1,100)] = $json;
+						}
+					}
+					break;
+					
+				case 'friends':
+					$access = get_access_sql_suffix();
+					$query = "SELECT * FROM {$CONFIG->dbprefix}users_entity as ue, {$CONFIG->dbprefix}entity_relationships as er, {$CONFIG->dbprefix}entities as e
+						WHERE er.relationship = 'friend'
+							AND er.guid_one = {$user->getGUID()}
+							AND er.guid_two = ue.guid
+							AND e.guid = ue.guid
+							AND e.enabled = 'yes'
+							AND ue.banned = 'no'
+							AND (ue.name LIKE '%$q%' OR ue.username LIKE '$q%')
+						LIMIT $limit
+					";
+					
+					if ($entities = get_data($query)) {
+						foreach ($entities as $entity) {
+							$json = json_encode(array(
+								'type' => 'user',
+								'name' => $entity->name,
+								'desc' => $entity->username,
+								//'icon' => elgg_view('profile/icon', array('entity' => get_entity($entity->guid), 'size' => 'tiny', 'override' => 'true')),
+								'icon' => '<img style="float: left;" src="' . get_entity($entity->guid)->getIcon('tiny') . '" />',
+								'guid' => $entity->guid
+							));
+							$results[$entity->name . rand(1,100)] = $json;
+						}
+					}
+					break;
+					
+				default:
+					// arbitrary subtype.
+					get_entities(null, $type, $owner_guid);
+					break;
+			}
+		}
+		
+		ksort($results);
+		echo implode($results, "\n");
+		exit;
+	}
+
+	
 	function input_init() {
+		
+		// register an endpoint for live search / autocomplete.
+		register_page_handler('autocomplete', 'input_autocomplete_page_handler');
 		
 		if (ini_get_bool('magic_quotes_gpc') ) {
 		    

@@ -350,8 +350,19 @@ END;
 			if (($site_id == 0) && (isset($CONFIG->site_guid))) $site_id = $CONFIG->site_guid;
 			$name = sanitise_string($name);
 			
-			return insert_data("insert into {$CONFIG->dbprefix}access_collections set name = '{$name}', owner_guid = {$owner_guid}, site_guid = {$site_id}");
+			if (!$id = insert_data("insert into {$CONFIG->dbprefix}access_collections set name = '{$name}', owner_guid = {$owner_guid}, site_guid = {$site_id}")) {
+				return false;
+			}
 			
+			$params = array(
+				'collection_id' => $id
+			);
+			
+			if (!trigger_plugin_hook('access:collections:addcollection', 'collection', $params, true)) {
+				return false;
+			}
+			
+			return $id;
 		}
 		
 		/**
@@ -365,22 +376,33 @@ END;
 			
 			global $CONFIG;
 			$collection_id = (int) $collection_id;
+			$members = (is_array($members)) ? $members : array();
 			
 			$collections = get_write_access_array();
 			
 			if (array_key_exists($collection_id, $collections)) {
-			
-				delete_data("delete from {$CONFIG->dbprefix}access_collection_membership where access_collection_id = {$collection_id}");
+				$cur_members = get_members_of_access_collection($collection_id, true);
+				$cur_members = (is_array($cur_members)) ? $cur_members : array();
+				 
+				$remove_members = array_diff($cur_members, $members);
+				$add_members = array_diff($members, $cur_members);
 				
-				if (is_array($members) && sizeof($members) > 0) {
-					foreach($members as $member) {
-						$member = (int) $member;
-						if (get_user($member))
-							insert_data("insert into {$CONFIG->dbprefix}access_collection_membership set access_collection_id = {$collection_id}, user_guid = {$member}");
-					}
-					return true;
+				$params = array(
+					'collection_id' => $collection_id,
+					'members' => $members,
+					'add_members' => $add_members,
+					'remove_members' => $remove_members
+				);
+				
+				foreach ($add_members as $guid) {
+					add_user_to_access_collection($guid, $collection_id);
 				}
-			
+				
+				foreach ($remove_members as $guid) {
+					remove_user_from_access_collection($guid, $collection_id);
+				}
+				
+				return true;
 			}
 			
 			return false;
@@ -396,6 +418,12 @@ END;
 			
 			$collection_id = (int) $collection_id;
 			$collections = get_write_access_array();
+			$params = array('collection_id' => $collection_id);
+			
+			if (!trigger_plugin_hook('access:collections:deletecollection', 'collection', $params, true)) {
+				return false;
+			}
+			
 			if (array_key_exists($collection_id, $collections)) {
 				global $CONFIG;
 				delete_data("delete from {$CONFIG->dbprefix}access_collection_membership where access_collection_id = {$collection_id}");
@@ -441,8 +469,17 @@ END;
 				
 			if ((array_key_exists($collection_id, $collections) || $collection->owner_guid == 0)
 					&& $user = get_user($user_guid)) {
-
 				global $CONFIG;
+
+				$params = array(
+					'collection_id' => $collection_id,
+					'user_guid' => $user_guid
+				);
+			
+				if (!trigger_plugin_hook('access:collections:add_user', 'collection', $params, true)) {
+					return false;
+				}
+				
 				try {
 					insert_data("insert into {$CONFIG->dbprefix}access_collection_membership set access_collection_id = {$collection_id}, user_guid = {$user_guid}");
 				} catch (DatabaseException $e) {}
@@ -471,8 +508,16 @@ END;
 				return false;
 			
 			if ((array_key_exists($collection_id, $collections) || $collection->owner_guid == 0) && $user = get_user($user_guid)) {
-				
 				global $CONFIG;
+				$params = array(
+					'collection_id' => $collection_id,
+					'user_guid' => $user_guid
+				);
+			
+				if (!trigger_plugin_hook('access:collections:remove_user', 'collection', $params, true)) {
+					return false;
+				}
+				
 				delete_data("delete from {$CONFIG->dbprefix}access_collection_membership where access_collection_id = {$collection_id} and user_guid = {$user_guid}");
 				return true;
 				
