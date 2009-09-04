@@ -511,8 +511,7 @@
 		$relationship_guid = (int)$relationship_guid;
 		$inverse_relationship = (bool)$inverse_relationship;
 		$type = sanitise_string($type);
-		if ($subtype AND !$subtype = get_subtype_id($type, $subtype))
-			return false;
+		$subtype = get_subtype_id($type, $subtype);
 		$owner_guid = (int)$owner_guid;
 		if ($order_by == "") $order_by = "time_created desc";
 		$order_by = sanitise_string($order_by);
