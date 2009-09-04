@@ -161,6 +161,11 @@
 				if ((array_key_exists('guid', $this->attributes)) && ($name=='guid'))
 					return false;
 					
+				// strip out tags from title
+				if ($name == 'title') {
+					$value = strip_tags($value);
+				}
+					
 				$this->attributes[$name] = $value;
 			}
 			else 
