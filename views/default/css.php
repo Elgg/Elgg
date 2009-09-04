@@ -1161,6 +1161,10 @@ p.user_menu_friends_of {
 	font-size:90%;
 	color:#666666;
 }
+.river_item .river_item_useravatar {
+	float:left;
+	margin:0 5px 0 0;
+}
 /* IE6 fix */
 * html .river_item p { 
 	padding:3px 0 3px 20px;
