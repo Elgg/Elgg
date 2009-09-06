@@ -8,5 +8,14 @@
 	 * @link http://elgg.org/
 	 */
 
-	echo elgg_view('object/default', $vars);
+	// sites information (including plugin settings) shouldn't be shown.
+	// there's not a real reason to display a site object
+	// unless specifically overriden with a subtype view.
+	if ($site = $vars['entity']->url) {
+		forward($site);
+	} else {
+		forward();
+	}
+
+	//echo elgg_view('object/default', $vars);
 ?>
