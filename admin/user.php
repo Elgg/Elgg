@@ -31,7 +31,7 @@
 		
 		set_context('search');
 
-		$result = list_entities('user');
+		$result = list_entities('user', '', 0, $limit, false);
 		
 		set_context('admin');
 			
