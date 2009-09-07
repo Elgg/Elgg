@@ -66,14 +66,7 @@ function userPickerBindAutocomplete(e) {
 		formatItem: userPickerFormatItem,
 		formatResult: function (row, i, max) {
 			eval("var info = " + row + ";");
-			//console.log('format result');
-			// upon select, adding the user to the user basket.
-			// this is slightly abusive for this function.
-			// set it to the hidden input name
-			
-			//userPickerAddUser(info.guid);
-
-			// returning the name 
+			// returning the just name
 			return info.name;
 		}
 	});
@@ -85,18 +78,21 @@ function userPickerBindAutocomplete(e) {
 function userPickerFormatItem(row, i, max, term) {
 	eval("var info = " + row + ";");
 	var r = '';
+	var name = info.name.replace(new RegExp("(" + term + ")", "gi"), "<span class=\"user_picker_highlight\">$1</b>");
+	var desc = info.desc.replace(new RegExp("(" + term + ")", "gi"), "<span class=\"user_picker_highlight\">$1</b>");
 	
 	switch (info.type) {
 		case 'user':
 		case 'group':
-			r = info.icon + info.name + ' - ' + info.desc;
+			r = info.icon + name + ' - ' + desc;
 			break;
 			
 		default:
-			r = info.name + ' - ' + info.desc;
+			r = name + ' - ' + desc;
 			break;
 	}
-	return r.replace(new RegExp("(" + term + ")", "gi"), "<b>$1</b>");
+	return r;
+	//return r.replace(new RegExp("(" + term + ")", "gi"), "<span class=\"user_picker_highlight\">$1</b>");
 }
 
 function userPickerAddUser(event, data, formatted) {

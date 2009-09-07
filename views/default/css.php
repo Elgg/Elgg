@@ -2593,6 +2593,10 @@ a.delete_report_button:hover {
 	width:300px;
 }
 
+.ac_results strong {
+	font-weight: bold;
+}
+
 .user_picker .user_picker_entry {
 	clear: both;
 	padding: 1em;
