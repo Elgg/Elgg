@@ -2597,3 +2597,8 @@ a.delete_report_button:hover {
 	clear: both;
 	padding: 1em;
 }
+
+.livesearch_icon {
+	float: left;
+	padding-right: 1em;
+} 

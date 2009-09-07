@@ -167,7 +167,7 @@
 	 * @param $page
 	 * @return unknown_type
 	 */
-	function input_autocomplete_page_handler($page) {
+	function input_livesearch_page_handler($page) {
 		global $CONFIG;
 		// only return results to logged in users.
 		if (!$user = get_loggedin_user()) {
@@ -224,8 +224,7 @@
 								'type' => 'user',
 								'name' => $entity->name,
 								'desc' => $entity->username,
-								//'icon' => elgg_view('profile/icon', array('entity' => get_entity($entity->guid), 'size' => 'tiny', 'override' => 'true')),
-								'icon' => '<img style="float: left;" src="' . get_entity($entity->guid)->getIcon('tiny') . '" />',
+								'icon' => '<img class="livesearch_icon" src="' . get_entity($entity->guid)->getIcon('tiny') . '" />',
 								'guid' => $entity->guid
 							));
 							$results[$entity->name . rand(1,100)] = $json;
@@ -251,8 +250,7 @@
 								'type' => 'group',
 								'name' => $entity->name,
 								'desc' => strip_tags($entity->description),
-								//'icon' => elgg_view('groups/icon', array('entity' => get_entity($entity->guid), 'size' => 'tiny', 'override' => 'true')),
-								'icon' => '<img style="float: left;" src="' . get_entity($entity->guid)->getIcon('tiny') . '" />',
+								'icon' => '<img class="livesearch_icon" src="' . get_entity($entity->guid)->getIcon('tiny') . '" />',
 								'guid' => $entity->guid
 							));
 							//$results[$entity->name . rand(1,100)] = "$json|{$entity->guid}";
@@ -280,8 +278,7 @@
 								'type' => 'user',
 								'name' => $entity->name,
 								'desc' => $entity->username,
-								//'icon' => elgg_view('profile/icon', array('entity' => get_entity($entity->guid), 'size' => 'tiny', 'override' => 'true')),
-								'icon' => '<img style="float: left;" src="' . get_entity($entity->guid)->getIcon('tiny') . '" />',
+								'icon' => '<img class="livesearch_icon" src="' . get_entity($entity->guid)->getIcon('tiny') . '" />',
 								'guid' => $entity->guid
 							));
 							$results[$entity->name . rand(1,100)] = $json;
@@ -305,7 +302,7 @@
 	function input_init() {
 		
 		// register an endpoint for live search / autocomplete.
-		register_page_handler('autocomplete', 'input_autocomplete_page_handler');
+		register_page_handler('livesearch', 'input_livesearch_page_handler');
 		
 		if (ini_get_bool('magic_quotes_gpc') ) {
 		    
