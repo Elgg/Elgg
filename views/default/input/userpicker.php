@@ -136,7 +136,7 @@ $(document).ready(function() {
 	<input class="internalname" type="hidden" name="internalname" value="<?php echo $vars['internalname']; ?>" />
 	<input class="search" type="text" name="user_search" />
 	<span class="controls">
-		<label><input class="all_users" type="checkbox" name="match_on" value="true" />All Users</label>		
+		<label><input class="all_users" type="checkbox" name="match_on" value="true" /><?php echo elgg_echo('userpicker:show_all_users'); ?></label>		
 	</span>
 	<div class="results">
 		<!-- This space will be filled with users, checkboxes and magic. -->
