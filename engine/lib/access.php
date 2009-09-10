@@ -228,10 +228,11 @@ END;
 			if (!$owner) $owner = -1;
 			
 			$access = get_access_list($owner);
+
+			// do NOT use $is_admin global user here, since that only checks against
+			// the current logged in user.
 			
-			global $is_admin;
-			
-			if (isset($is_admin) && $is_admin == true) {
+			if ($owner->admin == 'yes') {
 				$sql = " (1 = 1) ";
 			} else if ($owner != -1) {				
 				$friends_bit = $table_prefix.'access_id = '.ACCESS_FRIENDS.' AND ';
