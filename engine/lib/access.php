@@ -225,14 +225,21 @@ END;
 			if (!isset($owner)) {
 				$owner = get_loggedin_userid();
 			}
-			if (!$owner) $owner = -1;
+			
+			// do NOT use $is_admin global here, since that only checks against
+			// the current logged in user.
+			// Can't use metadata here because because of recursion.
+			// (get_entity, get_*() calls this function.)
+			if (!$owner) { 
+				$owner = -1;
+				$admin = false;
+			} else {
+				$admin = is_admin_user($owner);
+			}
 			
 			$access = get_access_list($owner);
-
-			// do NOT use $is_admin global user here, since that only checks against
-			// the current logged in user.
 			
-			if ($owner->admin == 'yes') {
+			if ($admin) {
 				$sql = " (1 = 1) ";
 			} else if ($owner != -1) {				
 				$friends_bit = $table_prefix.'access_id = '.ACCESS_FRIENDS.' AND ';

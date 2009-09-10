@@ -156,6 +156,41 @@
 			return false;
 		}
 		
+		/**
+		 * Check if the given user is an admin.
+		 * 
+		 * @param $user_guid
+		 * @return bool
+		 */
+		function is_admin_user($user_guid) {
+			global $CONFIG;
+			
+			// caching is done at the db level so no need to here.
+			$query = "SELECT * FROM {$CONFIG->dbprefix}users_entity as e, {$CONFIG->dbprefix}metastrings as ms1, {$CONFIG->dbprefix}metastrings as ms2, {$CONFIG->dbprefix}metadata as md
+				WHERE (
+					ms1.string = 'admin' AND ms2.string = 'yes'
+					AND md.name_id = ms1.id	AND md.value_id = ms2.id
+					AND e.guid = md.entity_guid
+					AND e.guid = {$user_guid}
+					AND e.banned = 'no'
+					)
+				OR (
+					ms1.string = 'admin' AND ms2.string = '1'
+					AND md.name_id = ms1.id	AND md.value_id = ms2.id
+					AND e.guid = md.entity_guid
+					AND e.guid = {$user_guid}
+					AND e.banned = 'no'
+					)";
+
+			// normalizing the results from get_data()
+			// See #1242
+			$info = get_data($query);
+			if (!((is_array($info) && count($info) < 1) || $info === false)) {
+				return true;
+			}
+			return false;
+		}
+		
 	/**
 	 * Perform standard authentication with a given username and password.
 	 * Returns an ElggUser object for use with login.
