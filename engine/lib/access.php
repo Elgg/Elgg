@@ -222,12 +222,12 @@ END;
 			if ($table_prefix)
 					$table_prefix = sanitise_string($table_prefix) . ".";
 			
-			$access = get_access_list();
-			
 			if (!isset($owner)) {
 				$owner = get_loggedin_userid();
 			}
 			if (!$owner) $owner = -1;
+			
+			$access = get_access_list($owner);
 			
 			global $is_admin;
 			
