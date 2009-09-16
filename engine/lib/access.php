@@ -615,7 +615,7 @@ END;
 		 * @param $count
 		 * @return unknown_type
 		 */
-		function get_entities_from_access_collection($collection_id, $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0, $count = false) {
+		function get_entities_from_access_id($collection_id, $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0, $count = false) {
 			global $CONFIG;
 			
 			if (!$collection_id)
@@ -691,11 +691,11 @@ END;
 		 * @param $pagination
 		 * @return str
 		 */
-		function list_entities_from_access_collection($collection_id, $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true) {
+		function list_entities_from_access_id($collection_id, $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true) {
 			$offset = (int) get_input('offset');
 			$limit = (int) $limit;
-			$count = get_entities_from_access_collection($collection_id, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, "", 0, true);
-			$entities = get_entities_from_access_collection($collection_id, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, "", 0, false);
+			$count = get_entities_from_access_id($collection_id, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, "", 0, true);
+			$entities = get_entities_from_access_id($collection_id, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, "", 0, false);
 			
 			return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle, $pagination);
 		}
