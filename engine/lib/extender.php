@@ -80,7 +80,17 @@
 		 */
 		public function getOwner() 
 		{ 
-			return get_user($this->owner_guid); 
+			return $this->owner_guid; 
+		}
+
+		/**
+		 * Return the owner entity
+		 *
+		 * @return mixed
+		 */
+		public function getOwnerEntity()
+		{
+			return get_user($this->owner_guid);
 		}
 		
 		/**
