@@ -60,6 +60,7 @@ function userPickerBindAutocomplete(e) {
 
 	$(e).autocomplete(userPickerURL, {
 		extraParams: params,
+		max: 25,
 		minChars: 1,
 		matchContains: true,
 		autoFill: false,
@@ -134,7 +135,7 @@ $(document).ready(function() {
 ?>
 <div class="user_picker">
 	<input class="internalname" type="hidden" name="internalname" value="<?php echo $vars['internalname']; ?>" />
-	<input class="search" type="text" name="user_search" />
+	<input class="search" type="text" name="user_search" size="30" />
 	<span class="controls">
 		<label><input class="all_users" type="checkbox" name="match_on" value="true" /><?php echo elgg_echo('userpicker:only_friends'); ?></label>		
 	</span>
