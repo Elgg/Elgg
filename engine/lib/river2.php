@@ -23,14 +23,8 @@
 	 * @param int $posted The UNIX epoch timestamp of the river item (default: now)
 	 * @return true|false Depending on success
 	 */
-		function add_to_river(
-								$view,
-								$action_type,
-								$subject_guid,
-								$object_guid,
-								$access_id = "",
-								$posted = 0
-							  ) {
+		function add_to_river($view,$action_type,$subject_guid,$object_guid,$access_id = "",$posted = 0, $annotation_id = 0)
+		{
 							  	
 			// Sanitise variables
 				if (!elgg_view_exists($view)) return false;
@@ -39,10 +33,9 @@
 				if (empty($action_type)) return false;
 				if ($posted == 0) $posted = time();
 				if ($access_id === "") $access_id = $object->access_id;
-				
+				$annotation_id = (int)$annotation_id;
 				$type = $object->getType();
 				$subtype = $object->getSubtype();
-				
 				$action_type = sanitise_string($action_type);
 				
 			// Load config
@@ -57,7 +50,8 @@
 										" view = '{$view}', " .
 										" subject_guid = {$subject_guid}, " .
 										" object_guid = {$object_guid}, " .
-										" posted = {$posted} ");
+										" posted = {$posted}, " .
+										" annotation_id = {$annotation_id} ");
 							  	
 		}
 		
@@ -217,7 +211,7 @@
 				$whereclause = implode(' and ', $where);
 				
 			// Construct main SQL
-				$sql = "select id,type,subtype,action_type,access_id,view,subject_guid,object_guid,posted from {$CONFIG->dbprefix}river where {$whereclause} order by posted desc limit {$offset},{$limit}";
+				$sql = "select id,type,subtype,action_type,access_id,view,subject_guid,object_guid,posted,annotation_id from {$CONFIG->dbprefix}river where {$whereclause} order by posted desc limit {$offset},{$limit}";
 				
 			// Get data
 				return get_data($sql);

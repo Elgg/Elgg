@@ -22,8 +22,8 @@
 		if ($entity = get_entity($entity_guid)) {
 			
 	        // If posting the comment was successful, say so
-				if ($entity->annotate('generic_comment',$comment_text,$entity->access_id, $_SESSION['guid'])) {
-					
+	        	$annotation = create_annotation($entity->guid, 'generic_comment', $comment_text, "", $_SESSION['guid'], $entity->access_id);
+	        	if ($annotation) {
 					if ($entity->owner_guid != $_SESSION['user']->getGUID())
 					notify_user($entity->owner_guid, $_SESSION['user']->getGUID(), elgg_echo('generic_comment:email:subject'), 
 						sprintf(
@@ -36,10 +36,9 @@
 									$_SESSION['user']->getURL()
 								)
 					); 
-					
 					system_message(elgg_echo("generic_comment:posted"));
 					//add to river
-					add_to_river('annotation/annotate','comment',$_SESSION['user']->guid,$entity->guid);
+					add_to_river('annotation/annotate','comment',$_SESSION['user']->guid,$entity->guid, "", 0, $annotation);
 
 					
 				} else {

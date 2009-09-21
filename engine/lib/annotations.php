@@ -191,7 +191,7 @@
 			if ($result!==false) {
 				$obj = get_annotation($result);
 				if (trigger_elgg_event('create', 'annotation', $obj)) {
-					return true;
+					return $result;
 				} else {
 					delete_annotation($result);
 				}
