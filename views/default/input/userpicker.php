@@ -1,6 +1,6 @@
 <?php 
 /**
- * User Picker.  Sends an array of user guids.
+ * User Picker.  Sends an array of user guids. 
  * 
  * @package Elgg
  * @subpackage Core
@@ -105,7 +105,7 @@ function userPickerAddUser(event, data, formatted) {
 	var formatted = userPickerFormatItem(data);
 	
 	// add guid as hidden input and to list.
-	var li = formatted + ' (' + '<a onclick="userPickerRemoveUser(this, ' + info.guid + ')">X</a>)'
+	var li = formatted + ' <a class="delete_collection" onclick="userPickerRemoveUser(this, ' + info.guid + ')"><strong>X</strong></a>'
 	 + '<input type="hidden" name="' + internalName + '[]" value="' + info.guid + '" />';
 	$('<li class="user_picker_entry">').html(li).appendTo(users);
 
@@ -135,7 +135,7 @@ $(document).ready(function() {
 ?>
 <div class="user_picker">
 	<input class="internalname" type="hidden" name="internalname" value="<?php echo $vars['internalname']; ?>" />
-	<input class="search" type="text" name="user_search" size="30" />
+	<input class="search" type="text" name="user_search" size="30"/>
 	<span class="controls">
 		<label><input class="all_users" type="checkbox" name="match_on" value="true" /><?php echo elgg_echo('userpicker:only_friends'); ?></label>		
 	</span>
