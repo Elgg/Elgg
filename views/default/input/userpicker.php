@@ -62,7 +62,7 @@ function userPickerBindAutocomplete(e) {
 		extraParams: params,
 		max: 25,
 		minChars: 1,
-		matchContains: true,
+		matchContains: false,
 		autoFill: false,
 		formatItem: userPickerFormatItem,
 		formatResult: function (row, i, max) {
