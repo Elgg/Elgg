@@ -177,6 +177,11 @@
 		if (!$q = get_input('q')) {
 			exit;
 		}
+
+		$q = mysql_real_escape_string($q);
+
+		// replace mysql vars with escaped strings
+		$q = str_replace(array('_', '%'), array('\_', '\%'), $q);
 		
 		$match_on = get_input('match_on', 'all');
 		if ($match_on == 'all' || $match_on[0] == 'all') {
@@ -214,7 +219,7 @@
 						WHERE e.guid = ue.guid
 							AND e.enabled = 'yes'
 							AND ue.banned = 'no'
-							AND (ue.name LIKE '%$q%' OR ue.username LIKE '$q%')
+							AND (ue.name LIKE '$q%' OR ue.username LIKE '$q%')
 						LIMIT $limit
 					";
 					
@@ -241,7 +246,7 @@
 						WHERE e.guid = ge.guid
 							AND e.enabled = 'yes'
 							$owner_where
-							AND (ge.name LIKE '%$q%' OR ge.description LIKE '%$q%')
+							AND (ge.name LIKE '$q%' OR ge.description LIKE '%$q%')
 						LIMIT $limit
 					";
 					if ($entities = get_data($query)) {
@@ -268,7 +273,7 @@
 							AND e.guid = ue.guid
 							AND e.enabled = 'yes'
 							AND ue.banned = 'no'
-							AND (ue.name LIKE '%$q%' OR ue.username LIKE '$q%')
+							AND (ue.name LIKE '$q%' OR ue.username LIKE '$q%')
 						LIMIT $limit
 					";
 					
