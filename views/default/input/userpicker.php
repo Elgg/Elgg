@@ -61,7 +61,7 @@ function userPickerBindAutocomplete(e) {
 	$(e).autocomplete(userPickerURL, {
 		extraParams: params,
 		max: 25,
-		minChars: 1,
+		minChars: 2,
 		matchContains: false,
 		autoFill: false,
 		formatItem: userPickerFormatItem,
