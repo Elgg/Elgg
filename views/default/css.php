@@ -1,10 +1,10 @@
 <?php
 
 	/**
-	 * Elgg v1.5 Default Theme
+	 * Elgg v1.6 Default Theme
 	 * core CSS file
 	 * 
-	 * Updated 10 March 09
+	 * Updated 30 Sept 09
 	 * 
 	 * @package Elgg
 	 * @subpackage Core
@@ -1146,6 +1146,8 @@ p.user_menu_friends_of {
 #river,
 .river_item_list {
 	border-top:1px solid #dddddd;
+	
+	overflow:hidden;
 }
 .river_item p {
 	margin:0;
