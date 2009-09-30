@@ -20,9 +20,7 @@
 	$form_body .= "<p class=\"loginbox\">";
 	$form_body .= (!isset($CONFIG->disable_registration) || !($CONFIG->disable_registration)) ? "<a href=\"{$vars['url']}account/register.php\">" . elgg_echo('register') . "</a> | " : "";
 	$form_body .= "<a href=\"{$vars['url']}account/forgotten_password.php\">" . elgg_echo('user:password:lost') . "</a></p>";  
-	
-	//<input name=\"username\" type=\"text\" class="general-textarea" /></label>
-	
+		
 	$login_url = $vars['url'];
 	if ((isset($CONFIG->https_login)) && ($CONFIG->https_login))
 		$login_url = str_replace("http", "https", $vars['url']);
@@ -32,6 +30,8 @@
 	<h2><?php echo elgg_echo('login'); ?></h2>
 		<?php 
 			echo elgg_view('input/form', array('body' => $form_body, 'action' => "{$login_url}action/login"));
-		?>
-		
+		?>	
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function() { $('input[name=username]').focus(); });
+	</script>
