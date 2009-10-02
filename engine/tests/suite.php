@@ -21,6 +21,12 @@ require_once( "$test_path/elgg_unit_test.php" );
 
 $suite = new TestSuite( 'Elgg Core Unit Tests' );
 
+// emit a hook to pull in all tests
+$test_files = trigger_plugin_hook('unit_test', 'system', null, array());
+foreach ($test_files as $file) {
+	$suite->addTestFile($file);
+}
+
 if (!$CONFIG->debug) {
 	if ( TextReporter::inCli() )
 	{
