@@ -2771,12 +2771,23 @@
 	}
 	
 	/**
+	 * Runs unit tests for the entities object. 
+	 */
+	function entities_test($hook, $type, $value, $params) {
+		global $CONFIG;
+		$params[] = $CONFIG->path . 'engine/tests/entities.php';
+		return $params;
+	}
+	
+	/**
 	 * Entities init function; establishes the page handler
 	 *
 	 */
 	function entities_init() 
 	{
 		register_page_handler('view','entities_page_handler');
+		
+		register_plugin_hook('unit_test', 'system', 'entities_test'); 
 		
 		// Allow a permission override for recursive entity deletion
 		// TODO: Can this be done better?
