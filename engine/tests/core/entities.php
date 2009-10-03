@@ -1,13 +1,13 @@
 <?php
 /**
- * Elgg Test Skeleton
+ * Elgg Test ElggEntities
  * 
  * @package Elgg
  * @subpackage Test
  * @author Curverider Ltd
  * @link http://elgg.org/
  */
-class ElggCoreSkeletonTest extends ElggCoreUnitTest {
+class ElggCoreEntityTest extends ElggCoreUnitTest {
 
 	/**
 	 * Called before each test object.
@@ -47,3 +47,6 @@ class ElggCoreSkeletonTest extends ElggCoreUnitTest {
 		$this->assertTrue(FALSE);
 	}
 }
+
+// ElggEntity is an abstract class with no abstact methods.
+class ElggEntityTest extends ElggEntity { }
