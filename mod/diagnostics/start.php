@@ -20,12 +20,6 @@
 		
 		// Register some actions
 		register_action("diagnostics/download",false, $CONFIG->pluginspath . "diagnostics/actions/download.php");
-		
-		// If debug on then enable an example test
-		if ((isset($CONFIG->debug)) && ($CONFIG->debug))
-		{
-			register_elgg_test(elgg_echo('diagnostics:unittest:example'), 'diagnostics_test_test');	
-		}
 	}
 	
 	/**
@@ -37,18 +31,7 @@
 		if (get_context() == 'admin' && isadminloggedin()) {
 			global $CONFIG;
 			add_submenu_item(elgg_echo('diagnostics'), $CONFIG->wwwroot . 'pg/diagnostics/');
-			add_submenu_item(elgg_echo('diagnostics:unittester'), $CONFIG->wwwroot . 'pg/diagnostics/tests/');
 		}
-	}
-	
-	function diagnostics_test_test()
-	{
-		ob_start();
-
-		for ($n = 0; $n<5; $n++)
-			echo "$n ";
-		
-		return ElggTestResult::CreateSuccessResult(ob_get_clean());
 	}
 	
 	/**
