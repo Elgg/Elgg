@@ -462,7 +462,7 @@
 		}
 		$query .= "from {$CONFIG->dbprefix}annotations a JOIN {$CONFIG->dbprefix}entities e on e.guid = a.entity_guid ";
 		if ($value != "")
-			$query .= " JOIN {$CONFIG->dbprefix}metastrings v on a.value_id=v.id";
+			$query .= " JOIN {$CONFIG->dbprefix}metastrings v on a.value_id=v.id ";
 		
 		if (($group_guid != 0) && ($entity_type=='object')) $query .= "JOIN {$CONFIG->dbprefix}objects_entity o on o.guid = e.guid";
 		$query .= " where";
