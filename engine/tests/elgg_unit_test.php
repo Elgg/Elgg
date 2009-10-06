@@ -6,7 +6,7 @@ abstract class ElggCoreUnitTest extends UnitTestCase
 	{
 		parent::__construct();
 	}
-	
+
 	public function __destruct()
 	{
 	}

@@ -2775,7 +2775,7 @@
 	 */
 	function entities_test($hook, $type, $value, $params) {
 		global $CONFIG;
-		$params[] = $CONFIG->path . 'engine/tests/entities.php';
+		$params[] = $CONFIG->path . 'engine/tests/core/entities.php';
 		return $params;
 	}
 	
