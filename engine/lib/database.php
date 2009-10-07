@@ -56,6 +56,9 @@
 		        if (!mysql_select_db($CONFIG->dbname, $dblink[$dblinkname]))
 		        	throw new DatabaseException(sprintf(elgg_echo('DatabaseException:NoConnect'), $CONFIG->dbname));
 			
+			// Set DB for UTF8
+				mysql_query("SET NAMES utf8");
+		        	
 		    // Set up cache
 		    	if ((!$DB_QUERY_CACHE) && (!$CONFIG->db_disable_query_cache)) 
 		    		$DB_QUERY_CACHE = new ElggStaticVariableCache('db_query_cache'); //array();
