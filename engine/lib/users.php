@@ -1373,7 +1373,7 @@
 	 * Page handler for dashboard
 	 */
 	function dashboard_page_handler($page_elements) {
-		@require_once(dirname(dirname(dirname(__FILE__))) . "/dashboard/index.php");
+		require_once(dirname(dirname(dirname(__FILE__))) . "/dashboard/index.php");
 	}
 
 	/**
@@ -1550,11 +1550,11 @@
 	function users_settings_save() {
 		
 		global $CONFIG;
-		@include($CONFIG->path . "actions/user/name.php");
-		@include($CONFIG->path . "actions/user/password.php");
-		@include($CONFIG->path . "actions/email/save.php");
-		@include($CONFIG->path . "actions/user/language.php");
-		@include($CONFIG->path . "actions/user/default_access.php");
+		include($CONFIG->path . "actions/user/name.php");
+		include($CONFIG->path . "actions/user/password.php");
+		include($CONFIG->path . "actions/email/save.php");
+		include($CONFIG->path . "actions/user/language.php");
+		include($CONFIG->path . "actions/user/default_access.php");
 		
 	}
 	

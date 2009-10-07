@@ -315,7 +315,7 @@
 	function notification_user_settings_save() {
 		
 		global $CONFIG;
-		@include($CONFIG->path . "actions/notifications/settings/usersettings/save.php");
+		include($CONFIG->path . "actions/notifications/settings/usersettings/save.php");
 		
 	}
 	

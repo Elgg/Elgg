@@ -2358,7 +2358,7 @@
 		if (isset($page[0])) {
 			global $CONFIG;
 			set_input('guid',$page[0]);
-			@include($CONFIG->path . "entities/index.php");
+			include($CONFIG->path . "entities/index.php");
 		}
 	}
 	

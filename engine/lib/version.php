@@ -48,7 +48,7 @@
         	if (sizeof($upgrades) > 0) {
         		foreach($upgrades as $upgrade) {
         			try {
-        				@include($CONFIG->path . 'engine/lib/upgrades/' . $upgrade);
+        				include($CONFIG->path . 'engine/lib/upgrades/' . $upgrade);
         			} catch (Exception $e) {
         				error_log($e->getmessage());
         			}	
@@ -71,7 +71,7 @@
 		function get_version($humanreadable = false) {
 			
 			global $CONFIG;
-			if (@include($CONFIG->path . "version.php")) {
+			if (include($CONFIG->path . "version.php")) {
 				if (!$humanreadable) return $version;
 				return $release;
 			}
