@@ -96,6 +96,26 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$metadata = $this->entity->expose_metadata();
 		$this->assertIdentical($metadata['non_existent'], 'testing');
 	}
+
+	public function testElggEnityGetAndSetAnnotations() {
+		$this->assertFalse(array_key_exists('non_existent', $this->entity->expose_annotations()));
+		$this->assertFalse($this->entity->getAnnotations('non_existent'));
+
+		// set and check temp annotation
+		$this->assertTrue($this->entity->annotate('non_existent', 'testing'));
+		$this->assertIdentical($this->entity->getAnnotations('non_existent'), 'testing');
+		$this->assertTrue(array_key_exists('non_existent', $this->entity->expose_annotations()));
+
+		// save entity and check for annotation
+		$this->save_entity();
+		$this->assertFalse(array_key_exists('non_existent', $this->entity->expose_annotations()));
+		$annotations = $this->entity->getAnnotations('non_existent');
+		$this->assertIsA($annotations[0], 'ElggAnnotation');
+		$this->assertIdentical($annotations[0]->name, 'non_existent');
+
+		// clean up
+		$this->assertTrue($this->entity->delete());
+	}
 	
 	public function testElggEntityCache() {
 		global $ENTITY_CACHE;
@@ -156,8 +176,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$this->assertFalse($this->entity->disable());
 		
 		// save and disable
-		$this->entity->type = 'site';
-		$this->assertNotEqual($this->entity->save(), 0);
+		$this->save_entity();
 		$this->assertTrue($this->entity->disable());
 		
 		// ensure disabled by comparing directly with database
@@ -168,6 +187,12 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$this->assertTrue($this->entity->enable());
 		$this->assertTrue($this->entity->delete());
 	}
+
+	protected function save_entity($type='site')
+	{
+		$this->entity->type = $type;
+		$this->assertNotEqual($this->entity->save(), 0);
+	}
 }
 
 // ElggEntity is an abstract class with no abstact methods.
@@ -176,15 +201,15 @@ class ElggEntityTest extends ElggEntity {
 		$this->initialise_attributes();
 	}
 	
-	public function load($guid) {
-		return parent::load($guid);
-	}
-
 	public function expose_attributes() {
 		return $this->attributes;
 	}
 	
 	public function expose_metadata() {
 		return $this->temp_metadata;
+	}
+
+	public function expose_annotations() {
+		return $this->temp_annotations;
 	}
 }
