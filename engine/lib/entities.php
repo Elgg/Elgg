@@ -5,9 +5,7 @@
 	 * 
 	 * @package Elgg
 	 * @subpackage Core
-
 	 * @author Curverider Ltd <info@elgg.com>
-
 	 * @link http://elgg.org/
 	 */
 
@@ -149,6 +147,8 @@
 		 * Q: Why are we not using __set overload here?
 		 * A: Because overload operators cause problems during subclassing, so we put the code here and
 		 * create overloads in subclasses.
+		 *
+		 * @todo Move "title" logic to applicable extending classes.
 		 * 
 		 * @param string $name
 		 * @param mixed $value  
@@ -203,7 +203,9 @@
 		 * @param string $name
 		 * @return mixed
 		 */
-		function __get($name) { return $this->get($name); }
+		function __get($name) {
+			return $this->get($name);
+		}
 		
 		/**
 		 * Class member set overloading
@@ -212,7 +214,9 @@
 		 * @param mixed $value
 		 * @return mixed
 		 */
-		function __set($name, $value) { return $this->set($name, $value); }
+		function __set($name, $value) {
+			return $this->set($name, $value);
+		}
 		
 		/**
 		 * Supporting isset.
@@ -220,7 +224,14 @@
 		 * @param string $name The name of the attribute or metadata.
 		 * @return bool
 		 */
-		function __isset($name) { if ($this->$name!="") return true; else return false; }
+		function __isset($name) {
+			if ($this->$name!="") {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
 		
 		/**
 		 * Supporting unsetting of magic attributes.
@@ -635,7 +646,8 @@
 			}
 			else
 			{ 
-				$this->attributes['guid'] = create_entity($this->attributes['type'], $this->attributes['subtype'], $this->attributes['owner_guid'], $this->attributes['access_id'], $this->attributes['site_guid'], $this->attributes['container_guid']); // Create a new entity (nb: using attribute array directly 'cos set function does something special!)
+				// Create a new entity (nb: using attribute array directly 'cos set function does something special!)
+				$this->attributes['guid'] = create_entity($this->attributes['type'], $this->attributes['subtype'], $this->attributes['owner_guid'], $this->attributes['access_id'], $this->attributes['site_guid'], $this->attributes['container_guid']);
 				if (!$this->attributes['guid']) throw new IOException(elgg_echo('IOException:BaseEntitySaveFailed')); 
 				
 				// Save any unsaved metadata TODO: How to capture extra information (access id etc)
@@ -2775,7 +2787,7 @@
 	 */
 	function entities_test($hook, $type, $value, $params) {
 		global $CONFIG;
-		$params[] = $CONFIG->path . 'engine/tests/core/entities.php';
+		$params[] = $CONFIG->path . 'engine/tests/objects/entities.php';
 		return $params;
 	}
 	
