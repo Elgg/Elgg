@@ -13,8 +13,7 @@ class ElggCoreSkeletonTest extends ElggCoreUnitTest {
 	 * Called before each test object.
 	 */
 	public function __construct() {
-		// first, hook into ElggCoreUnitTest::__construct()
-		$this->__construct();
+		parent::__construct();
 	}
 
 	/**
@@ -35,8 +34,7 @@ class ElggCoreSkeletonTest extends ElggCoreUnitTest {
 	 * Called after each test object.
 	 */
 	public function __destruct() {
-		// hook into ElggCoreUnitTest::__destruct();
-		$this->__destruct();
+		parent::__destruct();
 	}
 
 	/**

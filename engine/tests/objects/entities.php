@@ -112,6 +112,11 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$annotations = $this->entity->getAnnotations('non_existent');
 		$this->assertIsA($annotations[0], 'ElggAnnotation');
 		$this->assertIdentical($annotations[0]->name, 'non_existent');
+		$this->assertEqual($this->entity->countAnnotations('non_existent'), 1);
+		
+		//  clear annotation
+		$this->assertTrue($this->entity->clearAnnotations());
+		$this->assertEqual($this->entity->countAnnotations('non_existent'), 0);
 
 		// clean up
 		$this->assertTrue($this->entity->delete());

@@ -2787,8 +2787,8 @@
 	 */
 	function entities_test($hook, $type, $value, $params) {
 		global $CONFIG;
-		$params[] = $CONFIG->path . 'engine/tests/objects/entities.php';
-		return $params;
+		$value[] = $CONFIG->path . 'engine/tests/objects/entities.php';
+		return $value;
 	}
 	
 	/**

@@ -364,5 +364,13 @@
 		
 		return get_entities_from_relationship("member_of_site", $object_guid, false, "site", "", 0, "time_created desc", $limit, $offset);
 	}
-		
-?>
+
+/**
+ * Runs unit tests for ElggObject
+ */
+register_plugin_hook('unit_test', 'system', 'objects_test');
+function objects_test($hook, $type, $value, $params) {
+	global $CONFIG;
+	$value[] = "{$CONFIG->path}engine/tests/objects/objects.php";
+	return $value;
+}
