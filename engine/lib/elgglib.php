@@ -719,7 +719,7 @@
 			
 			$context = get_context();
 			
-			$html = elgg_view('search/entity_list',array(
+			$html = elgg_view('entities/entity_list',array(
 													'entities' => $entities,
 													'count' => $count,
 													'offset' => $offset,
@@ -1000,7 +1000,7 @@
 	 * @return string The HTML (etc) representing the listing
 	 */		
 		function elgg_view_listing($icon, $info) {
-			return elgg_view('search/listing',array('icon' => $icon, 'info' => $info));			
+			return elgg_view('entities/entity_listing',array('icon' => $icon, 'info' => $info));			
 		}
 		
 	/**

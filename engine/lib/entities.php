@@ -63,6 +63,13 @@
 		 */
 		protected $temp_annotations;
 		
+
+		/**
+		 * Volatile data structure for this object, allows for storage of data 
+		 * in-memory that isn't sync'd back to the metadata table.
+		 */
+		protected $volatile;
+
 		/**
 		 * Initialise the attributes array. 
 		 * This is vital to distinguish between metadata and base parameters.
@@ -79,6 +86,7 @@
 			if (!is_array($this->attributes)) $this->attributes = array();
 			if (!is_array($this->temp_metadata)) $this->temp_metadata = array();
 			if (!is_array($this->temp_annotations)) $this->temp_annotations = array();
+			if (!is_array($this->volatile)) $this->volatile = array();
 			
 			$this->attributes['guid'] = "";
 			$this->attributes['type'] = "";
@@ -174,6 +182,31 @@
 			return true;
 		}
 			
+
+		/**
+		 * Get a piece of volatile (non-persisted) data on this entity
+		 */
+		public function getVolatileData($name) {
+		    if (!is_array($this->volatile)) $this->volatile = array();
+		    
+		    if (array_key_exists($name, $this->volatile)) {
+			return $this->volatile[$name];
+		    } else {
+			return NULL;
+		    }			
+		}
+
+
+		/**
+		 * Get a piece of volatile (non-persisted) data on this entity
+		 */
+		public function setVolatileData($name, $value) {
+		    if (!is_array($this->volatile)) $this->volatile = array();
+		    
+		    $this->volatile[$name] = $value;
+		}
+
+
 		/**
 		 * Get a given piece of metadata.
 		 * 
@@ -686,6 +719,7 @@
 			{
 				// Create the array if necessary - all subclasses should test before creating
 				if (!is_array($this->attributes)) $this->attributes = array();
+				if (!is_array($this->volatile)) $this->volatile = array();
 				
 				// Now put these into the attributes array as core values
 				$objarray = (array) $row;
