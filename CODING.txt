@@ -1,0 +1,38 @@
+These are the coding standards for Elgg.  All core development, bundled 
+plugins, and tickets attached to Trac are expected to be in this format.
+
+* Unix line endings
+* Hard tabs, 4 character tab spacing.
+* No shortcut tags ( <? or <?= or <% )
+* PHPDoc comments on functions and classes (including methods and declared 
+  members).
+* Mandatory wrapped {}s around any code blocks. 
+	Bad:
+	if (true)
+		foreach($arr as $elem)
+			echo $elem;
+
+	Good:
+	if (true) {
+		foreach($arr as $elem) {
+			echo $elem;
+		}
+	}
+* Name functions and methods using underscore_character().
+* Name classes using CamelCase()
+* Name globals and constants in ALL_CAPS (FALSE, TRUE, NULL, ACCESS_FRIENDS, 
+  $CONFIG).
+* Space functions like_this($required, $optional = TRUE)
+* Space keywords and constructs like this: if (false) { ... }
+* Include variables in strings with double quotes instead of concatenating:
+	Bad: 
+	echo 'Hello, ' . $name . '!  How are you?';
+	
+	Good:
+	echo "Hello, $name!  How are you?"; 
+	
+* Line lengths should be reasonable.  If you are writing lines over 100 
+  characters, please revise the code.
+* Use slash-style comments. (// and /* */)
+* Preferred no closing ?> tag at EOF. (Avoids problems with trailing 
+  whitespace.)

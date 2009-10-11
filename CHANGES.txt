@@ -1,0 +1,13 @@
+Version 1.7.0
+(?? November 2009 from /branches/1.7.x)
+http://code.elgg.org/elgg/.....
+
+ User-visible changes:
+  * UTF8 now saved correctly in database. #1151
+  * Unit tests added at engine/tests/suites.php
+
+ Bugfixes:
+  * Searching by tag with extended characters now works. #1151, #1231
+
+ API changes:
+  * New plugin hook system:unit_test for adding files to unit tests.
