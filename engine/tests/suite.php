@@ -11,6 +11,9 @@
 
 require_once(dirname( __FILE__ ) . '/../start.php');
 
+// Ensure that only logged-in users can see this page
+gatekeeper();
+
 $vendor_path = "$CONFIG->path/vendors/simpletest";
 $test_path = "$CONFIG->path/engine/tests";
 

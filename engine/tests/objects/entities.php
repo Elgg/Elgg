@@ -141,10 +141,9 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		try {
 			$this->entity->save();
 			$this->assertTrue(FALSE);
-		} 
-		catch (Exception $e) {
+		} catch (Exception $e) {
 			$this->assertIsA($e, 'InvalidParameterException');
-			$this->assertIdentical($e->getMessage(), 'Entity type must be set.');
+			$this->assertIdentical($e->getMessage(), elgg_echo('InvalidParameterException:EntityTypeNotSet'));
 		}
 		
 		// set elements
@@ -152,7 +151,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$this->entity->non_existent = 'testing';
 		
 		// save
-		$this->AssertEqual($guid, 0);
+		$this->AssertEqual($this->entity->getGUID(), 0);
 		$guid = $this->entity->save();
 		$this->AssertNotEqual($guid, 0);
 		
@@ -191,6 +190,19 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		// re-enable for deletion to work
 		$this->assertTrue($this->entity->enable());
 		$this->assertTrue($this->entity->delete());
+	}
+	
+	public function testElggEntityExportables() {
+		$exportables = array(
+			'guid',
+			'type',
+			'subtype',
+			'time_created',
+			'container_guid',
+			'owner_guid', 
+		);
+		
+		$this->assertIdentical($exportables, $this->entity->getExportableValues());
 	}
 
 	protected function save_entity($type='site')
