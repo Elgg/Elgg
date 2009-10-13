@@ -139,7 +139,7 @@
 			if ($CONFIG->site->getGUID() == $this->guid)
 				throw new SecurityException('SecurityException:deletedisablecurrentsite');	
 			
-			return parent::delete;
+			return parent::delete();
 		}
 		
 		/**
@@ -603,7 +603,12 @@
 		}
 		
 	// Register event handlers
-
-		register_elgg_event_handler('boot','system','sites_init',2);
-
-?>
+	register_elgg_event_handler('boot','system','sites_init',2);
+	
+	// Register with unit test
+	register_plugin_hook('unit_test', 'system', 'sites_test');
+	function sites_test($hook, $type, $value, $params) {
+		global $CONFIG;
+		$value[] = "{$CONFIG->path}engine/tests/objects/sites.php";
+		return $value;
+	}
