@@ -11,9 +11,6 @@
 
 require_once(dirname( __FILE__ ) . '/../start.php');
 
-// Ensure that only logged-in users can see this page
-gatekeeper();
-
 $vendor_path = "$CONFIG->path/vendors/simpletest";
 $test_path = "$CONFIG->path/engine/tests";
 
@@ -35,9 +32,14 @@ if ($CONFIG->debug > 0) {
 	if (TextReporter::inCli()) {
 		// In CLI error codes are returned.
 		// 0 is success.
+		elgg_set_ignore_access(TRUE);
 		exit ($suite->Run(new TextReporter()) ? 0 : 1 );
 	}
+	// Ensure that only logged-in users can see this page
+	admin_gatekeeper();
+	$old = elgg_set_ignore_access(TRUE);
 	$suite->Run(new HtmlReporter());
+	elgg_set_ignore_access($old);
 } else {
 	// @todo display an error?
 	exit (1);
