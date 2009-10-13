@@ -142,7 +142,7 @@ function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
 				}
 			}
 
-			$ignore_access = elgg_is_ignore_access($user_id);
+			$ignore_access = elgg_check_access_overrides($user_id);
 
 			if ($ignore_access == true) {
 				$tmp_access_array[] = ACCESS_PRIVATE;
@@ -799,7 +799,7 @@ function elgg_get_ignore_access() {
  *
  * @return bool
  */
-function elgg_is_ignore_access($user_guid = null) {
+function elgg_check_access_overrides($user_guid = null) {
 	if (!$user_guid || $user_guid <= 0) {
 		$is_admin = false;
 	} else {
@@ -837,4 +837,4 @@ function access_init() {
 }
 
 // This function will let us know when 'init' has finished
-register_elgg_event_handler('init','system','access_init',9999);
+register_elgg_event_handler('init', 'system', 'access_init', 9999);

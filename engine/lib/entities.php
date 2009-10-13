@@ -1951,7 +1951,7 @@ function delete_entity($guid, $recursive = true) {
 
 	$guid = (int)$guid;
 	if ($entity = get_entity($guid)) {
-		if (trigger_elgg_event('delete',$entity->type,$entity)) {
+		if (trigger_elgg_event('delete', $entity->type, $entity)) {
 			if ($entity->canEdit()) {
 
 				// Delete contained owned and otherwise releated objects (depth first)
@@ -2001,8 +2001,9 @@ function delete_entity($guid, $recursive = true) {
 							break;
 					}
 
-					if ($sub_table)
+					if ($sub_table) {
 						delete_data("DELETE from $sub_table where guid={$guid}");
+					}
 				}
 
 				return $res;
@@ -2227,11 +2228,14 @@ function can_edit_entity($entity_guid, $user_guid = 0) {
 				$return = true;
 			}
 			if ($container_entity = get_entity($entity->container_guid)) {
-				if ($container_entity->canEdit()) $return = true;
+				if ($container_entity->canEdit()) {
+					$return = true;
+				}
 			}
 		}
 
-		return trigger_plugin_hook('permissions_check', $entity->type,array('entity' => $entity, 'user' => $user), $return);
+		return trigger_plugin_hook('permissions_check', $entity->type,
+			array('entity' => $entity, 'user' => $user), $return);
 
 	} else {
 		return false;
@@ -2964,7 +2968,8 @@ function recursive_delete_permissions_check($hook, $entity_type, $returnvalue, $
 		return true;
 	}
 
-	return false;
+	// consult next function
+	return NULL;
 }
 
 /**
