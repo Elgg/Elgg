@@ -26,7 +26,7 @@ class ElggAccess {
 	 * @return bool
 	 */
 	public function get_ignore_access() {
-		return $ignore_access;
+		return $this->ignore_access;
 	}
 
 	/**
@@ -782,7 +782,6 @@ function get_readable_access_level($entity_accessid){
  */
 function elgg_set_ignore_access($ignore = true) {
 	$elgg_access = elgg_get_access_object();
-
 	return $elgg_access->set_ignore_access($ignore);
 }
 
