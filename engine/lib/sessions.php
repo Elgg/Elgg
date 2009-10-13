@@ -171,26 +171,34 @@ function isadminloggedin() {
  * @param $user_guid
  * @return bool
  */
-function is_admin_user($user_guid) {
+function elgg_is_admin_user($user_guid) {
 	global $CONFIG;
 
-	// cannot use metadata here because
+	// cannot use metadata here because of recursion
+
 	// caching is done at the db level so no need to here.
-	$query = "SELECT * FROM {$CONFIG->dbprefix}users_entity as e, {$CONFIG->dbprefix}metastrings as ms1, {$CONFIG->dbprefix}metastrings as ms2, {$CONFIG->dbprefix}metadata as md
+	$query = "SELECT * FROM {$CONFIG->dbprefix}users_entity as e,
+		{$CONFIG->dbprefix}metastrings as ms1,
+		{$CONFIG->dbprefix}metastrings as ms2,
+		{$CONFIG->dbprefix}metadata as md
 		WHERE (
-			ms1.string = 'admin' AND ms2.string = 'yes'
-			AND md.name_id = ms1.id	AND md.value_id = ms2.id
-			AND e.guid = md.entity_guid
-			AND e.guid = {$user_guid}
-			AND e.banned = 'no'
+			(
+				(ms1.string = 'admin' AND ms2.string = 'yes')
+				OR (ms1.string = 'admin' AND ms2.string = '1')
 			)
-		OR (
-			ms1.string = 'admin' AND ms2.string = '1'
 			AND md.name_id = ms1.id	AND md.value_id = ms2.id
 			AND e.guid = md.entity_guid
 			AND e.guid = {$user_guid}
 			AND e.banned = 'no'
 			)";
+//		OR (
+//			ms1.string = 'admin' AND ms2.string = '1'
+//			AND md.name_id = ms1.id	AND md.value_id = ms2.id
+//			AND e.guid = md.entity_guid
+//			AND e.guid = {$user_guid}
+//			AND e.banned = 'no'
+//			)";
+
 
 	// normalizing the results from get_data()
 	// See #1242
@@ -399,11 +407,11 @@ function login(ElggUser $user, $persistent = false) {
 	reset_login_failure_count($user->guid); // Reset any previous failed login attempts
 
 	// Set admin shortcut flag if this is an admin
-	if (isadminloggedin()) {
-		//@todo REMOVE THIS.
-		global $is_admin;
-		$is_admin = true;
-	}
+//	if (isadminloggedin()) {
+//		//@todo REMOVE THIS.
+//		global $is_admin;
+//		$is_admin = true;
+//	}
 
 	return true;
 }

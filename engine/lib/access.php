@@ -12,6 +12,39 @@
  */
 
 /**
+ * Temporary class used to determing if access is being ignored
+ */
+class ElggAccess {
+	/**
+	 * Bypass Elgg's access control if true.
+	 * @var bool
+	 */
+	private $ignore_access;
+
+	/**
+	 * Get current ignore access setting.
+	 * @return bool
+	 */
+	public function get_ignore_access() {
+		return $ignore_access;
+	}
+
+	/**
+	 * Set ignore access.
+	 *
+	 * @param $ignore bool true || false to ignore
+	 * @return bool Previous setting
+	 */
+	public function set_ignore_access($ignore = true) {
+		$prev = $this->ignore_access;
+		$this->ignore_access = $ignore;
+
+		return $prev;
+	}
+}
+
+
+/**
  * Return a string of access_ids for $user_id appropriate for inserting into an SQL IN clause.
  *
  * @uses get_access_array
@@ -109,9 +142,9 @@ function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
 				}
 			}
 
-			$is_admin = is_admin_user($user_id);
+			$ignore_access = elgg_is_ignore_access($user_id);
 
-			if ($is_admin == true) {
+			if ($ignore_access == true) {
 				$tmp_access_array[] = ACCESS_PRIVATE;
 			}
 
@@ -239,10 +272,10 @@ function get_access_sql_suffix($table_prefix = "", $owner = null) {
 		$owner = -1;
 	}
 
-	$is_admin = is_admin_user($owner);
+	$ignore_access = elgg_get_ignore_access($owner);
 	$access = get_access_list($owner);
 
-	if ($is_admin) {
+	if ($ignore_access) {
 		$sql = " (1 = 1) ";
 	} else if ($owner != -1) {
 		$friends_bit = "{$table_prefix}access_id = " . ACCESS_FRIENDS . "
@@ -740,6 +773,56 @@ function get_readable_access_level($entity_accessid){
 		}
 	}
 	return false;
+}
+
+/**
+ * Set if entity access system should be ignored.
+ *
+ * @return bool Previous ignore_access setting.
+ */
+function elgg_set_ignore_access($ignore = true) {
+	$elgg_access = elgg_get_access_object();
+
+	return $elgg_access->set_ignore_access($ignore);
+}
+
+/**
+ * Get current ignore access setting.
+ *
+ * @return bool
+ */
+function elgg_get_ignore_access() {
+	return elgg_get_access_object()->get_ignore_access();
+}
+
+/**
+ * Decides if the access system is being ignored.
+ *
+ * @return bool
+ */
+function elgg_is_ignore_access($user_guid = null) {
+	if (!$user_guid || $user_guid <= 0) {
+		$is_admin = false;
+	} else {
+		$is_admin = elgg_is_admin_user($user_guid);
+	}
+
+	return ($is_admin || elgg_get_ignore_access());
+}
+
+/**
+ * Returns the ElggAccess object.
+ *
+ * @return ElggAccess
+ */
+function elgg_get_access_object() {
+	static $elgg_access;
+
+	if (!$elgg_access) {
+		$elgg_access = new ElggAccess();
+	}
+
+	return $elgg_access;
 }
 
 global $init_finished;
