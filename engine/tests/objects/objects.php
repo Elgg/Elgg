@@ -27,6 +27,7 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 	 * Called after each test method.
 	 */
 	public function tearDown() {
+		$this->swallowErrors();
 		unset($this->entity);
 	}
 
@@ -37,9 +38,6 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 		parent::__destruct();
 	}
 
-	/**
-	 * A basic test that will be called and fail.
-	 */
 	public function testElggObjectConstructor() {
 		$attributes = array();
 		$attributes['guid'] = '';

@@ -19,6 +19,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 	 * Called after each test method.
 	 */
 	public function tearDown() {
+		$this->swallowErrors();
 		unset($this->entity);
 	}
 

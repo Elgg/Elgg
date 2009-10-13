@@ -14,6 +14,8 @@ class ElggCoreSkeletonTest extends ElggCoreUnitTest {
 	 */
 	public function __construct() {
 		parent::__construct();
+		
+		// all code should come after here
 	}
 
 	/**
@@ -27,13 +29,15 @@ class ElggCoreSkeletonTest extends ElggCoreUnitTest {
 	 * Called after each test method.
 	 */
 	public function tearDown() {
-
+		// do not allow SimpleTest to interpret Elgg notices as exceptions
+		$this->swallowErrors();
 	}
 
 	/**
 	 * Called after each test object.
 	 */
 	public function __destruct() {
+		// all code should go above here
 		parent::__destruct();
 	}
 
