@@ -1,44 +1,40 @@
 <?php
+/**
+ * Elgg CSS file
+ *
+ * @package Elgg
+ * @subpackage Core
+ * @author Curverider Ltd
+ * @link http://elgg.org/
+ */
 
-	/**
-	 * Elgg CSS file
-	 * 
-	 * @package Elgg
-	 * @subpackage Core
+/*
 
-	 * @author Curverider Ltd
+require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
 
-	 * @link http://elgg.org/
-	 */
-	
-		/*
+$default_css = elgg_view("css");
 
-	    require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
-	    
-	    $default_css = elgg_view("css");
-	    
-	    header("Content-type: text/css", true);
-		header('Expires: ' . date('r',time() + 864000), true);
-		header("Pragma: public", true);
-		header("Cache-Control: public", true);
-	    header("Content-Length: " . strlen($default_css));
-	       
-	    echo $default_css;
-		*/
+header("Content-type: text/css", true);
+header('Expires: ' . date('r',time() + 864000), true);
+header("Pragma: public", true);
+header("Cache-Control: public", true);
+header("Content-Length: " . strlen($default_css));
 
-		define('externalpage',true);
+echo $default_css;
+*/
 
-		global $viewinput, $override;
-		$viewinput['view'] = 'css';
-		$viewinput['viewtype'] = $_GET['viewtype'];
+define('externalpage',true);
 
-		//$override = true;
-		
-		header("Content-type: text/css", true);
-		header('Expires: ' . date('r',time() + 86400000), true);
-		header("Pragma: public", true);
-		header("Cache-Control: public", true);
-	    // header("Content-Length: " . strlen($default_css));
-		require_once(dirname(dirname(__FILE__)) . '/simplecache/view.php');
-    
-?>
+global $viewinput, $override;
+$viewinput['view'] = 'css';
+$viewinput['viewtype'] = $_GET['viewtype'];
+
+//$override = true;
+
+header("Content-type: text/css", true);
+header('Expires: ' . date('r',time() + 86400000), true);
+header("Pragma: public", true);
+header("Cache-Control: public", true);
+
+// header("Content-Length: " . strlen($default_css));
+require_once(dirname(dirname(__FILE__)) . '/simplecache/view.php');
