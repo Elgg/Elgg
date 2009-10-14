@@ -116,7 +116,7 @@
 	 */
 	class SuccessResult extends GenericResult
 	{
-		public static $RESULT_SUCCESS 	= 0;  // Do not change this from 0
+		public static $RESULT_SUCCESS = 0;  // Do not change this from 0
 
 		public function SuccessResult($result)
 		{	
