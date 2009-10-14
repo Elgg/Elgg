@@ -11,3 +11,4 @@ http://code.elgg.org/elgg/.....
 
  API changes:
   * New plugin hook system:unit_test for adding files to unit tests.
+  * $is_admin global deprecated; use elgg_set_ignore_access() instead.
