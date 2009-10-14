@@ -1,38 +1,32 @@
 <?php
+/**
+ * Elgg widget save action
+ *
+ * @package Elgg
+ * @subpackage Core
+ * @author Curverider Ltd
+ * @link http://elgg.org/
+ */
 
-	/**
-	 * Elgg widget save action
-	 * 
-	 * @package Elgg
-	 * @subpackage Core
+action_gatekeeper();
 
-	 * @author Curverider Ltd
+$guid = get_input('guid');
+$params = $_REQUEST['params'];
+$pageurl = get_input('pageurl');
+$noforward = get_input('noforward',false);
 
-	 * @link http://elgg.org/
-	 */
+$result = false;
 
-		action_gatekeeper();
-		
-		$guid = get_input('guid');
-		$params = $_REQUEST['params'];
-		$pageurl = get_input('pageurl');
-		$noforward = get_input('noforward',false);
+if (!empty($guid)) {
+	$result = save_widget_info($guid,$params);
+}
 
-		$result = false;
-		
-		if (!empty($guid)) {
-			
-			$result = save_widget_info($guid,$params);
-			
-		}
-		
-		if ($result) {
-			system_message(elgg_echo('widgets:save:success'));
-		} else {
-			register_error(elgg_echo('widgets:save:failure'));
-		}
-		
-		if (!$noforward)
-			forward($_SERVER['HTTP_REFERER']);
+if ($result) {
+	system_message(elgg_echo('widgets:save:success'));
+} else {
+	register_error(elgg_echo('widgets:save:failure'));
+}
 
-?>
+if (!$noforward) {
+	forward($_SERVER['HTTP_REFERER']);
+}

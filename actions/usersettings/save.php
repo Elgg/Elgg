@@ -1,22 +1,18 @@
 <?php
-	/**
-	 * Aggregate action for saving settings
-	 * 
-	 * @package Elgg
-	 * @subpackage Core
+/**
+ * Aggregate action for saving settings
+ *
+ * @package Elgg
+ * @subpackage Core
+ * @link http://elgg.org/
+ */
 
+require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
+global $CONFIG;
 
-	 * @link http://elgg.org/
-	 */
+gatekeeper();
+action_gatekeeper();
 
-	require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
-	global $CONFIG;
+trigger_plugin_hook('usersettings:save','user');
 
-	gatekeeper();
-	action_gatekeeper();
-	
-	trigger_plugin_hook('usersettings:save','user');
-	
-	forward($_SERVER['HTTP_REFERER']);
-	
-?>
+forward($_SERVER['HTTP_REFERER']);
