@@ -272,7 +272,7 @@ function get_access_sql_suffix($table_prefix = "", $owner = null) {
 		$owner = -1;
 	}
 
-	$ignore_access = elgg_get_ignore_access($owner);
+	$ignore_access = elgg_check_access_overrides($owner);
 	$access = get_access_list($owner);
 
 	if ($ignore_access) {
@@ -836,5 +836,31 @@ function access_init() {
 	$init_finished = true;
 }
 
+/**
+ * Override permissions system
+ *
+ * @return true|null
+ */
+function elgg_override_permissions_hook($hook, $type, $returnval, $params) {
+	$user_guid = get_loggedin_userid();
+
+	// check for admin
+	if ($user_guid && elgg_is_admin_user($user_guid)) {
+		return true;
+	}
+
+	// check access overrides
+	if ((elgg_check_access_overrides($user_guid))) {
+		return true;
+	}
+
+	// consult other hooks
+	return NULL;
+}
+
 // This function will let us know when 'init' has finished
 register_elgg_event_handler('init', 'system', 'access_init', 9999);
+
+// For overrided permissions
+register_plugin_hook('permissions_check', 'all', 'elgg_override_permissions_hook');
+register_plugin_hook('container_permissions_check', 'all', 'elgg_override_permissions_hook');

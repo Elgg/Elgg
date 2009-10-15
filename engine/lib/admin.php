@@ -104,21 +104,6 @@ function admin_settings_page_handler($page) {
 	include($path);
 }
 
-
-/**
- * Admin permissions system
- *
- * @return true|null True if the current user is an admin.
- */
-function admin_permissions($hook, $type, $returnval, $params) {
-	if (elgg_check_access_overrides()) {
-		return true;
-	}
-
-	// consult other hooks
-	return NULL;
-}
-
 /**
  * Write a persistent message to the administrator's notification window.
  *
@@ -165,7 +150,3 @@ function clear_admin_message($guid) {
 /// Register init functions
 register_elgg_event_handler('init', 'system', 'admin_init');
 register_elgg_event_handler('pagesetup', 'system', 'admin_pagesetup');
-
-// Register a plugin hook for permissions
-register_plugin_hook('permissions_check', 'all', 'admin_permissions');
-register_plugin_hook('container_permissions_check', 'all', 'admin_permissions');
