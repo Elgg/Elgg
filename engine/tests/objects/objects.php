@@ -163,6 +163,25 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 		
 		$this->assertIdentical($exportables, $this->entity->getExportableValues());
 	}
+
+	public function xtestElggObjectAccessOverrides() { 
+		// set entity to private access with no owner. 
+		$entity = $this->entity; 
+		$entity->access_id = ACCESS_PRIVATE; 
+		$entity->owner_guid = 0;
+		$this->assertTrue($entity->save()); 
+		$guid = $entity->getGUID();
+
+		var_dump($guid);
+		// try to grab entity
+		$entity = false;
+		$entity = get_entity($guid);
+		var_dump($entity);
+		$this->assertFalse($entity);
+
+		$old = elgg_set_ignore_access(true); 
+	}
+
 	
 	
 	protected function get_object_row($guid) {

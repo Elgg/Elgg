@@ -36,7 +36,7 @@ if ($CONFIG->debug > 0) {
 		exit ($suite->Run(new TextReporter()) ? 0 : 1 );
 	}
 	// Ensure that only logged-in users can see this page
-	admin_gatekeeper();
+	//admin_gatekeeper();
 	$old = elgg_set_ignore_access(TRUE);
 	$suite->Run(new HtmlReporter());
 	elgg_set_ignore_access($old);
