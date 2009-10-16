@@ -1,16 +1,12 @@
 <?php
-
-	/**
-	 * Elgg 2 column right sidebar canvas layout
-	 * 
-	 * @package Elgg
-	 * @subpackage Core
-
-	 * @author Curverider Ltd
-
-	 * @link http://elgg.org/
-	 */
-
+/**
+ * Elgg 2 column right sidebar canvas layout
+ *
+ * @package Elgg
+ * @subpackage Core
+ * @author Curverider Ltd
+ * @link http://elgg.org/
+ */
 ?>
 
 <div id="blog_edit_page">

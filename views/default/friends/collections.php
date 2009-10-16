@@ -1,53 +1,45 @@
 <?php
+/**
+ * Elgg friends collections
+ * Lists a user's friends collections
+ *
+ * @package Elgg
+ * @subpackage Core
+ * @author Curverider Ltd
+ * @link http://elgg.org/
+ *
+ * @uses $vars['collections'] The array of friends collections
+ */
 
-	/**
-	 * Elgg friends collections
-	 * Lists a user's friends collections
-	 * 
-	 * @package Elgg
-	 * @subpackage Core
+if (!isset($friendspicker)) {
+	$friendspicker = 0;
+}
 
-	 * @author Curverider Ltd
+echo "<div class=\"contentWrapper\">";
 
-	 * @link http://elgg.org/
-	 * 
-	 * @uses $vars['collections'] The array of friends collections
-	 */
+if (is_array($vars['collections']) && sizeof($vars['collections'])) {
+	echo "<ul id=\"friends_collections_accordian\">";
 
-		if (!isset($friendspicker)) $friendspicker = 0;
+	foreach($vars['collections'] as $collection) {
+		$friendspicker++;
+		echo elgg_view('friends/collection',array('collection' => $collection, 'friendspicker' => $friendspicker));
+	}
 
-		echo "<div class=\"contentWrapper\">";
+	echo "</ul>";
 
-		if (is_array($vars['collections']) && sizeof($vars['collections'])) {
-			
-			echo "<ul id=\"friends_collections_accordian\">";
-			
-			foreach($vars['collections'] as $collection) {
-				
-				$friendspicker++;
-				echo elgg_view('friends/collection',array('collection' => $collection, 'friendspicker' => $friendspicker));
-				
-			}
-			
-			echo "</ul>";
-			
-		} else {
-			
-			echo elgg_echo("friends:nocollections");
-			
-		}
-		
-		echo "</div>";
-    
+} else {
+	echo elgg_echo("friends:nocollections");
+}
+
+echo "</div>";
+
 ?>
 
 <script>
 $(document).ready(function(){
-
-$('#friends_collections_accordian h2').click(function () {
-	$(this.parentNode).children("[class=friends_picker]").slideToggle("fast");
-	//return false;
+	$('#friends_collections_accordian h2').click(function () {
+		$(this.parentNode).children("[class=friends_picker]").slideToggle("fast");
+		//return false;
+	});
 });
-
-});  
 </script>

@@ -1,15 +1,11 @@
 <?php
-	/**
-	 * Elgg statistics screen
-	 * 
-	 * @package Elgg
-	 * @subpackage Core
+/**
+ * Elgg statistics screen
+ *
+ * @package Elgg
+ * @subpackage Core
+ * @author Curverider Ltd
+ * @link http://elgg.org/
+ */
 
-	 * @author Curverider Ltd
-
-	 * @link http://elgg.org/
-	 */
-
-	global $CONFIG;
-	         
-?>
+global $CONFIG;

@@ -1,3 +1,15 @@
+<?php
+/**
+ * Elgg comments add form
+ *
+ * @package Elgg
+ * @author Curverider Ltd <info@elgg.com>
+ * @link http://elgg.com/
+ *
+ * @uses $vars['entity']
+ */
+?>
+
 <div id="dashboard_info">
 <p>
 <?php

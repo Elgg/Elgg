@@ -1,18 +1,15 @@
 <?php
+/**
+ * Elgg sample welcome page
+ *
+ * @package Elgg
+ * @subpackage Core
+ * @author Curverider Ltd
+ * @link http://elgg.org/
+ */
 
-    /**
-	 * Elgg sample welcome page
-	 * 
-	 * @package Elgg
-	 * @subpackage Core
+$user = $vars['name'];
 
-	 * @author Curverider Ltd
-
-	 * @link http://elgg.org/
-	 */
-	 
-	 $user = $vars['name'];
-	 
 ?>
 
 <p><?php echo sprintf(elgg_echo('welcome:user'), $user); ?></p>
