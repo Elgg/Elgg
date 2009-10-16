@@ -1,19 +1,16 @@
 <?php
-
-	/**
-	 * Elgg friends picker count updater
-	 * Updates the friends count on a collection
-	 * 
-	 * @package Elgg
-	 * @subpackage Core
-
-	 * @author Curverider Ltd
-
-	 * @link http://elgg.org/
-	 * 
-	 * @uses $vars['count'] The count
-	 * @uses $vars['friendspicker'] The friendspicker counter number
-	 */
+/**
+ * Elgg friends picker count updater
+ * Updates the friends count on a collection
+ *
+ * @package Elgg
+ * @subpackage Core
+ * @author Curverider Ltd
+ * @link http://elgg.org/
+ *
+ * @uses $vars['count'] The count
+ * @uses $vars['friendspicker'] The friendspicker counter number
+ */
 
 ?>
 

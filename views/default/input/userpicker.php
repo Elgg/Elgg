@@ -1,23 +1,23 @@
-<?php 
+<?php
 /**
- * User Picker.  Sends an array of user guids. 
- * 
+ * User Picker.  Sends an array of user guids.
+ *
  * @package Elgg
  * @subpackage Core
  * @author Curverider Ltd
  * @link http://elgg.org/
- * 
+ *
  * @uses $vars['value'] The current value, if any
  * @uses $vars['internalname'] The name of the input field
- * 
- * 
+ *
+ *
  * pops up defaulted to lazy load friends lists in paginated alphabetical order.
- * upon 
- * 
+ * upon
+ *
  * As users are checked they move down to a "users" box.
  * When this happens, a hidden input is created also.
  * 	{$internalnal}[] with the value th GUID.
- * 
+ *
  */
 
 global $user_picker_js_sent;
@@ -81,13 +81,13 @@ function userPickerFormatItem(row, i, max, term) {
 	var r = '';
 	var name = info.name.replace(new RegExp("(" + term + ")", "gi"), "<span class=\"user_picker_highlight\">$1</b>");
 	var desc = info.desc.replace(new RegExp("(" + term + ")", "gi"), "<span class=\"user_picker_highlight\">$1</b>");
-	
+
 	switch (info.type) {
 		case 'user':
 		case 'group':
 			r = info.icon + name + ' - ' + desc;
 			break;
-			
+
 		default:
 			r = name + ' - ' + desc;
 			break;
@@ -103,10 +103,10 @@ function userPickerAddUser(event, data, formatted) {
 	var internalName = picker.find('input.internalname').val();
 	// not sure why formatted isn't.
 	var formatted = userPickerFormatItem(data);
-	
+
 	// add guid as hidden input and to list.
 	var li = formatted + ' <a class="delete_collection" onclick="userPickerRemoveUser(this, ' + info.guid + ')"><strong>X</strong></a>'
-	 + '<input type="hidden" name="' + internalName + '[]" value="' + info.guid + '" />';
+	+ '<input type="hidden" name="' + internalName + '[]" value="' + info.guid + '" />';
 	$('<li class="user_picker_entry">').html(li).appendTo(users);
 
 	$(this).val('');
@@ -137,11 +137,10 @@ $(document).ready(function() {
 	<input class="internalname" type="hidden" name="internalname" value="<?php echo $vars['internalname']; ?>" />
 	<input class="search" type="text" name="user_search" size="30"/>
 	<span class="controls">
-		<label><input class="all_users" type="checkbox" name="match_on" value="true" /><?php echo elgg_echo('userpicker:only_friends'); ?></label>		
+		<label><input class="all_users" type="checkbox" name="match_on" value="true" /><?php echo elgg_echo('userpicker:only_friends'); ?></label>
 	</span>
 	<div class="results">
 		<!-- This space will be filled with users, checkboxes and magic. -->
 	</div>
 	<ul class="users"></ul>
 </div>
-

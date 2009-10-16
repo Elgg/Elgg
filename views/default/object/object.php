@@ -1,15 +1,15 @@
 <?php
-	/**
-	 * Elgg default object view.
-	 * This is a placeholder.
-	 * 
-	 * @package Elgg
-	 * @subpackage Core
-	 * @author Curverider Ltd
-	 * @link http://elgg.org/
-	 */
+/**
+ * Elgg default object view.
+ * This is a placeholder.
+ *
+ * @package Elgg
+ * @subpackage Core
+ * @author Curverider Ltd
+ * @link http://elgg.org/
+ */
 
-	$entity = $vars['entity'];
+$entity = $vars['entity'];
 
 ?>
 <div>
