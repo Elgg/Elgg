@@ -1,18 +1,16 @@
 <?php
-	/**
-	 * Elgg ICAL output
-	 * 
-	 * @package Elgg
-	 * @subpackage Core
-	 * @author Curverider Ltd
-	 * @link http://elgg.org/
-	 * 
-	 */
+/**
+ * Elgg ICAL output
+ *
+ * @package Elgg
+ * @subpackage Core
+ * @author Curverider Ltd
+ * @link http://elgg.org/
+ *
+ */
 
-	for ($i = 1; $i < 8; $i++) {
-		
-		if (isset($vars["area{$i}"]))
-			echo $vars["area{$i}"];
-		
+for ($i = 1; $i < 8; $i++) {
+	if (isset($vars["area{$i}"])) {
+		echo $vars["area{$i}"];
 	}
-?>
+}

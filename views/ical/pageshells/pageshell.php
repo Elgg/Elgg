@@ -1,18 +1,17 @@
 <?php
+/**
+ * Elgg ICAL output pageshell
+ *
+ * @package Elgg
+ * @subpackage Core
+ * @author Curverider Ltd
+ * @link http://elgg.org/
+ *
+ */
 
-	/**
-	 * Elgg ICAL output pageshell
-	 * 
-	 * @package Elgg
-	 * @subpackage Core
-	 * @author Curverider Ltd
-	 * @link http://elgg.org/
-	 * 
-	 */
+header("Content-Type: text/calendar");
 
-	header("Content-Type: text/calendar");	
-	
-	echo $vars['body'];
+echo $vars['body'];
 ?>
 BEGIN:VCALENDAR
 VERSION:2.0

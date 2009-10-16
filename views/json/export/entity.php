@@ -1,24 +1,24 @@
 <?php
-	/**
-	 * Elgg Entity export.
-	 * Displays an entity as JSON
-	 * 
-	 * @package Elgg
-	 * @subpackage Core
-	 * @author Curverider Ltd
-	 * @link http://elgg.org/
-	 */
+/**
+ * Elgg Entity export.
+ * Displays an entity as JSON
+ *
+ * @package Elgg
+ * @subpackage Core
+ * @author Curverider Ltd
+ * @link http://elgg.org/
+ */
 
-	$entity = $vars['entity'];
-	
-	$export = new stdClass;
-	$exportable_values = $entity->getExportableValues();
-	
-	foreach ($exportable_values as $v)
-		$export->$v = $entity->$v;
-		
-	$export->url = $entity->getURL();
-		
-	global $jsonexport;
-	$jsonexport[$entity->getType()][$entity->getSubtype()][] = $export;
-?>
+$entity = $vars['entity'];
+
+$export = new stdClass;
+$exportable_values = $entity->getExportableValues();
+
+foreach ($exportable_values as $v) {
+	$export->$v = $entity->$v;
+}
+
+$export->url = $entity->getURL();
+
+global $jsonexport;
+$jsonexport[$entity->getType()][$entity->getSubtype()][] = $export;

@@ -1,27 +1,19 @@
 <?php
+/**
+ * Elgg JS pageshell
+ *
+ * @package Elgg
+ * @subpackage Core
+ * @author Curverider Ltd
+ * @link http://elgg.org/
+ */
 
-	/**
-	 * Elgg JS pageshell
-	 * 
-	 * @package Elgg
-	 * @subpackage Core
+$body = $vars['body'];
 
-	 * @author Curverider Ltd
+// Remove excess carriage returns
+$body = str_replace("\r",'',$body);
+$body = explode("\n",$body);
 
-	 * @link http://elgg.org/
-	 */
-
-	$body = $vars['body'];
-	
-	// Remove excess carriage returns
-		$body = str_replace("\r",'',$body);
-
-		$body = explode("\n",$body);
-		
-		foreach($body as $line) {
-			
-			echo "document.write('" . addslashes($line) . "');\n";
-			
-		}
-		
-?>
+foreach($body as $line) {
+	echo "document.write('" . addslashes($line) . "');\n";
+}
