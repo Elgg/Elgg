@@ -24,7 +24,7 @@ global $CONFIG;
 	</span>
 </p>
 
-<?php if ($CONFIG->debug) { ?>
+<?php if (isset($CONFIG->debug)) { ?>
 
 <p class="messages-exception-detail" style="background:#FDFFC3;display:block;padding:10px;">
 	<?php

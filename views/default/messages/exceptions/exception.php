@@ -24,7 +24,7 @@ $body = <<< END
 </p>
 END;
 
-if ($CONFIG->debug) {
+if (isset($CONFIG->debug)) {
 	$details = elgg_view('output/longtext', array('value' => htmlentities(print_r($vars['object'], true), ENT_QUOTES, 'UTF-8')));
 	$body .= <<< END
 	<hr />

@@ -28,19 +28,19 @@ foreach ($test_files as $file) {
 }
 
 // Only run tests in debug mode.
-if ($CONFIG->debug > 0) {
-	if (TextReporter::inCli()) {
-		// In CLI error codes are returned.
-		// 0 is success.
-		elgg_set_ignore_access(TRUE);
-		exit ($suite->Run(new TextReporter()) ? 0 : 1 );
-	}
-	// Ensure that only logged-in users can see this page
-	//admin_gatekeeper();
-	$old = elgg_set_ignore_access(TRUE);
-	$suite->Run(new HtmlReporter());
-	elgg_set_ignore_access($old);
-} else {
+if (!isset($CONFIG->debug)) {
 	// @todo display an error?
 	exit (1);
 }
+
+if (TextReporter::inCli()) {
+	// In CLI error codes are returned: 0 is success
+	elgg_set_ignore_access(TRUE);
+	exit ($suite->Run(new TextReporter()) ? 0 : 1 );
+}
+
+// Ensure that only logged-in users can see this page
+//admin_gatekeeper();
+$old = elgg_set_ignore_access(TRUE);
+$suite->Run(new HtmlReporter());
+elgg_set_ignore_access($old);

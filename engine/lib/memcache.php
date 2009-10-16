@@ -77,9 +77,7 @@ class ElggMemcache extends ElggSharedMemoryCache {
 				}
 			}
 		} else {
-			if ((isset($CONFIG->debug)) && ($CONFIG->debug == true)) {
-				error_log(elgg_echo('memcache:noaddserver'));
-			}
+			elgg_log(elgg_echo('memcache:noaddserver'), 'ERROR');
 
 			$server = $CONFIG->memcache_servers[0];
 			if (is_array($server)) {
@@ -131,8 +129,8 @@ class ElggMemcache extends ElggSharedMemoryCache {
 		$key = $this->make_memcache_key($key);
 
 		$result = $this->memcache->set($key, $data, null, $this->expires);
-		if ((isset($CONFIG->debug)) && ($CONFIG->debug == true) && (!$result)) {
-			error_log("MEMCACHE: FAILED TO SAVE $key");
+		if (!$result) {
+			elgg_log("MEMCACHE: FAILED TO SAVE $key", 'ERROR');
 		}
 
 		return $result;
@@ -142,8 +140,8 @@ class ElggMemcache extends ElggSharedMemoryCache {
 		$key = $this->make_memcache_key($key);
 
 		$result = $this->memcache->get($key);
-		if ((isset($CONFIG->debug)) && ($CONFIG->debug == true) && (!$result)) {
-			error_log("MEMCACHE: FAILED TO LOAD $key");
+		if (!$result) {
+			elgg_log("MEMCACHE: FAILED TO LOAD $key", 'ERROR');
 		}
 
 		return $result;

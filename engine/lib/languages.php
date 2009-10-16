@@ -125,10 +125,7 @@ function register_translations($path, $load_all = false) {
 
 	// Get the current language based on site defaults and user preference
 	$current_language = get_current_language();
-
-	if (isset($CONFIG->debug) && $CONFIG->debug == true) {
-		error_log("Translations loaded from : $path");
-	}
+	elgg_log("Translations loaded from: $path");
 
 	if ($handle = opendir($path)) {
 		while ($language = readdir($handle)) {
@@ -140,7 +137,7 @@ function register_translations($path, $load_all = false) {
 			}
 		}
 	} else {
-		error_log("Missing translation path $path");
+		elgg_log("Missing translation path $path", 'ERROR');
 	}
 }
 

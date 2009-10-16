@@ -104,7 +104,7 @@ abstract class GenericResult {
 			$result->result = $resultdata;
 		}
 
-		if ((isset($CONFIG->debug)) && ($CONFIG->debug == true)) {
+		if (isset($CONFIG->debug)) {
 			if (count($ERRORS)) {
 				$result->runtime_errors = $ERRORS;
 			}
@@ -656,9 +656,7 @@ function map_api_hash($algo) {
 function calculate_hmac($algo, $time, $api_key, $secret_key, $get_variables, $post_hash = "") {
 	global $CONFIG;
 
-	if ((isset($CONFIG)) && ($CONFIG->debug)) {
-		error_log("HMAC Parts: $algo, $time, $api_key, $secret_key, $get_variables, $post_hash");
-	}
+	elgg_log("HMAC Parts: $algo, $time, $api_key, $secret_key, $get_variables, $post_hash");
 
 	$ctx = hash_init(map_api_hash($algo), HASH_HMAC, $secret_key);
 
@@ -1115,9 +1113,7 @@ function send_api_call(array $keys, $url, array $call, $method = 'GET', $post_da
 	$context = stream_context_create($opts);
 
 	// Send the query and get the result and decode.
-	if ((isset($CONFIG->debug)) && ($CONFIG->debug)) {
-		error_log("APICALL: $url");
-	}
+	elgg_log("APICALL: $url");
 	$APICLIENT_LAST_CALL_RAW = file_get_contents($url, false, $context);
 
 	$APICLIENT_LAST_CALL = unserialize($APICLIENT_LAST_CALL_RAW);

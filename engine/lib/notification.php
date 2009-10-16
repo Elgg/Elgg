@@ -109,9 +109,7 @@ function notify_user($to, $from, $subject, $message, array $params = NULL, $meth
 						error_log(sprintf(elgg_echo('NotificationException:NoHandlerFound'), $method));
 					}
 
-					if ($CONFIG->debug) {
-						error_log("Sending message to $guid using $method");
-					}
+					elgg_log("Sending message to $guid using $method");
 
 					// Trigger handler and retrieve result.
 					try {

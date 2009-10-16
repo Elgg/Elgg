@@ -11,7 +11,6 @@
  * @link http://elgg.org/
  */
 
-$DB_PROFILE = array();
 $DB_QUERY_CACHE = array();
 $DB_DELAYED_QUERIES = array();
 
@@ -51,7 +50,7 @@ function establish_db_link($dblinkname = "readwrite") {
 	// Connect to database
 	if (!$dblink[$dblinkname] = mysql_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, true)) {
 		$msg = sprintf(elgg_echo('DatabaseException:WrongCredentials'),
-				$CONFIG->dbuser, $CONFIG->dbhost, $CONFIG->debug ? $CONFIG->dbpass : "****");
+				$CONFIG->dbuser, $CONFIG->dbhost, "****");
 		throw new DatabaseException($msg);
 	}
 	if (!mysql_select_db($CONFIG->dbname, $dblink[$dblinkname])) {
@@ -92,20 +91,9 @@ function setup_db_connections() {
  * Shutdown hook to display profiling information about db (debug mode)
  */
 function db_profiling_shutdown_hook() {
-	global $CONFIG, $DB_PROFILE, $dbcalls;
-
-	if (isset($CONFIG->debug) && $CONFIG->debug) {
-		error_log("***************** DB PROFILING ********************");
-
-		$DB_PROFILE = array_count_values($DB_PROFILE);
-
-		foreach ($DB_PROFILE as $k => $v) {
-			error_log("$v times: '$k' ");
-		}
-
-		error_log("DB Queries for this page: $dbcalls");
-		error_log("***************************************************");
-	}
+	global $dbcalls;
+	
+	elgg_log("DB Queries for this page: $dbcalls", 'DEBUG');
 }
 
 /**
@@ -123,7 +111,7 @@ function db_delayedexecution_shutdown_hook() {
 				$query_details['h']($result);
 			}
 		} catch (Exception $e) { // Suppress all errors since these can't be delt with here
-			if (isset($CONFIG->debug) && $CONFIG->debug) {
+			if (isset($CONFIG->debug)) {
 				error_log($e);
 			}
 		}
@@ -183,12 +171,9 @@ function explain_query($query, $link) {
  * @return Returns a the result of mysql_query
  */
 function execute_query($query, $dblink) {
-	global $CONFIG, $dbcalls, $DB_PROFILE, $DB_QUERY_CACHE;
+	global $CONFIG, $dbcalls, $DB_QUERY_CACHE;
 
 	$dbcalls++;
-
-	//if ((isset($CONFIG->debug)) && ($CONFIG->debug==true))
-			$DB_PROFILE[] = $query;
 
 	$result = mysql_query($query, $dblink);
 	if ($DB_QUERY_CACHE) {
@@ -265,9 +250,7 @@ function get_data($query, $callback = "") {
 	}
 
 	if ((isset($cached_query)) && ($cached_query)) {
-		if ((isset($CONFIG->debug)) && ($CONFIG->debug==true)) {
-			error_log ("$query results returned from cache");
-		}
+		elgg_log("$query results returned from cache");
 
 		if ($cached_query === -1) {
 			// Last time this query returned nothing, so return an empty array
@@ -292,19 +275,14 @@ function get_data($query, $callback = "") {
 	}
 
 	if (empty($resultarray)) {
-		if ((isset($CONFIG->debug)) && ($CONFIG->debug==true)) {
-			error_log("WARNING: DB query \"$query\" returned no results.");
-			return false;
-		}
-	}
-
-	if ((isset($CONFIG->debug)) && ($CONFIG->debug==true)) {
-		error_log("$query results cached");
+		elgg_log("DB query \"$query\" returned no results.");
+		return false;
 	}
 
 	// Cache result
 	if ($DB_QUERY_CACHE) {
 		$DB_QUERY_CACHE[$query] = $resultarray;
+		elgg_log("$query results cached");
 	}
 
 	return $resultarray;
@@ -325,9 +303,7 @@ function get_data_row($query, $callback = "") {
 	}
 
 	if ((isset($cached_query)) && ($cached_query)) {
-		if ((isset($CONFIG->debug)) && ($CONFIG->debug==true)) {
-			error_log ("$query results returned from cache");
-		}
+		elgg_log("$query results returned from cache");
 
 		if ($cached_query === -1) {
 			// Last time this query returned nothing, so return false
@@ -344,12 +320,9 @@ function get_data_row($query, $callback = "") {
 		$row = mysql_fetch_object($result);
 
 		// Cache result (even if query returned no data)
-		if ((isset($CONFIG->debug)) && ($CONFIG->debug==true)) {
-			error_log("$query results cached");
-		}
-
 		if ($DB_QUERY_CACHE) {
 			$DB_QUERY_CACHE[$query] = $row;
+			elgg_log("$query results cached");
 		}
 
 		if (!empty($callback) && is_callable($callback)) {
@@ -361,11 +334,8 @@ function get_data_row($query, $callback = "") {
 		}
 	}
 
-	if ((isset($CONFIG->debug)) && ($CONFIG->debug==true)) {
-		error_log("WARNING: DB query \"$query\" returned no results.");
-	}
-
-	return false;
+	elgg_log("$query returned no results.");
+	return FALSE;
 }
 
 /**
@@ -384,9 +354,7 @@ function insert_data($query) {
 		$DB_QUERY_CACHE->clear();
 	}
 
-	if ((isset($CONFIG->debug)) && ($CONFIG->debug==true)) {
-		error_log("Query cache invalidated");
-	}
+	elgg_log("Query cache invalidated");
 
 	if (execute_query("$query", $dblink)) {
 		return mysql_insert_id($dblink);
@@ -409,10 +377,7 @@ function update_data($query) {
 	// Invalidate query cache
 	if ($DB_QUERY_CACHE) {
 		$DB_QUERY_CACHE->clear();
-	}
-
-	if ((isset($CONFIG->debug)) && ($CONFIG->debug==true)) {
-		error_log("Query cache invalidated");
+		elgg_log("Query cache invalidated");
 	}
 
 	if (execute_query("$query", $dblink)) {
@@ -438,10 +403,7 @@ function delete_data($query) {
 	// Invalidate query cache
 	if ($DB_QUERY_CACHE) {
 		$DB_QUERY_CACHE->clear();
-	}
-
-	if ((isset($CONFIG->debug)) && ($CONFIG->debug==true)) {
-		error_log("Query cache invalidated");
+		elgg_log("Query cache invalidated");
 	}
 
 	if (execute_query("$query", $dblink)) {

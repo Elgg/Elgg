@@ -28,10 +28,7 @@ function get_metastring_id($string, $case_sensitive = true) {
 	$string = sanitise_string($string);
 	$result = array_search($string, $METASTRINGS_CACHE);
 	if ($result!==false) {
-		if (isset($CONFIG->debug) && $CONFIG->debug) {
-			error_log("** Returning id for string:$string from cache.");
-		}
-
+		elgg_log("** Returning id for string:$string from cache.");
 		return $result;
 	}
 
@@ -68,9 +65,7 @@ function get_metastring_id($string, $case_sensitive = true) {
 			$metastrings_memcache->save($row->string, $row->id);
 		}
 
-		if (isset($CONFIG->debug) && $CONFIG->debug) {
-			error_log("** Cacheing string '{$row->string}'");
-		}
+		elgg_log("** Cacheing string '{$row->string}'");
 
 		return $row->id;
 	} else {
@@ -92,9 +87,7 @@ function get_metastring($id) {
 	$id = (int) $id;
 
 	if (isset($METASTRINGS_CACHE[$id])) {
-		if ($CONFIG->debug) {
-			error_log("** Returning string for id:$id from cache.");
-		}
+		elgg_log("** Returning string for id:$id from cache.");
 
 		return $METASTRINGS_CACHE[$id];
 	}
@@ -102,10 +95,7 @@ function get_metastring($id) {
 	$row = get_data_row("SELECT * from {$CONFIG->dbprefix}metastrings where id='$id' limit 1");
 	if ($row) {
 		$METASTRINGS_CACHE[$id] = $row->string; // Cache it
-
-		if ($CONFIG->debug) {
-			error_log("** Cacheing string '{$row->string}'");
-		}
+		elgg_log("** Cacheing string '{$row->string}'");
 
 		return $row->string;
 	}

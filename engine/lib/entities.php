@@ -1479,27 +1479,9 @@ function get_entity_as_row($guid) {
 	}
 
 	$guid = (int) $guid;
-
-	/*$row = retrieve_cached_entity_row($guid);
-	if ($row)
-	{
-		// We have already cached this object, so retrieve its value from the cache
-		if (isset($CONFIG->debug) && $CONFIG->debug)
-			error_log("** Retrieving GUID:$guid from cache");
-
-		return $row;
-	}
-	else
-	{*/
-		// Object not cached, load it.
-		if (isset($CONFIG->debug) && $CONFIG->debug == true) {
-			error_log("** GUID:$guid loaded from DB");
-		}
-
-		$access = get_access_sql_suffix();
-
-		return get_data_row("SELECT * from {$CONFIG->dbprefix}entities where guid=$guid and $access");
-	//}
+	$access = get_access_sql_suffix();
+	
+	return get_data_row("SELECT * from {$CONFIG->dbprefix}entities where guid=$guid and $access");
 }
 
 /**

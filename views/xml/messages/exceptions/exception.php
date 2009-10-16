@@ -17,7 +17,7 @@ global $CONFIG;
 <?php echo get_class($vars['object']); ?>: <?php echo autop($vars['object']->getMessage()); ?>
 
 
-<?php if ($CONFIG->debug) { ?>
+<?php if (isset($CONFIG->debug)) { ?>
 <?php
 
 		echo print_r($vars['object'], true);

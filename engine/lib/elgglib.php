@@ -256,22 +256,20 @@ function elgg_view($view, $vars = "", $bypass = false, $debug = false, $viewtype
 	foreach($viewlist as $priority => $view) {
 		$view_location = elgg_get_view_location($view, $viewtype);
 
-		if (file_exists($view_location . "{$viewtype}/{$view}.php")
-			&& !include($view_location . "{$viewtype}/{$view}.php")) {
+		if (file_exists("$view_location$viewtype/$view.php")
+			&& !include("$view_location$viewtype/$view.php")) {
 			$success = false;
 
 			if ($viewtype != "default") {
-				if (include($view_location . "default/{$view}.php")) {
+				if (include("{$view_location}default/$view.php")) {
 					$success = true;
 				}
 			}
-			if (!$success && isset($CONFIG->debug) && $CONFIG->debug == true) {
-				error_log(" [This view ({$view}) does not exist] ");
+			if (!$success) {
+				elgg_log(" [This view ($view) does not exist] ", 'ERROR');
 			}
-		} else if (isset($CONFIG->debug) && $CONFIG->debug == true
-			&& !file_exists($view_location . "{$viewtype}/{$view}.php")) {
-			error_log($view_location . "{$viewtype}/{$view}.php");
-			error_log(" [This view ({$view}) does not exist] ");
+		} else if (!file_exists("$view_location$viewtype/$view.php")) {
+			elgg_log(" [This view ($view) does not exist] ", 'WARNING');
 		}
 
 	}
@@ -1711,12 +1709,12 @@ function trigger_plugin_hook($hook, $entity_type, $params = null, $returnvalue =
  * @param array $vars An array that points to the active symbol table at the point that the error occurred
  */
 function __elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
-	$error = date("Y-m-d H:i:s (T)") . ": \"" . $errmsg . "\" in file " . $filename . " (line " . $linenum . ")";
+	$error = date("Y-m-d H:i:s (T)") . ": \"$errmsg\" in file $filename (line $linenum)";
 
 	switch ($errno) {
 		case E_USER_ERROR:
-			error_log("ERROR: " . $error);
-			register_error("ERROR: " . $error);
+			error_log("ERROR: $error");
+			register_error("ERROR: $error");
 
 			// Since this is a fatal error, we want to stop any further execution but do so gracefully.
 			throw new Exception($error);
@@ -1724,19 +1722,75 @@ function __elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 
 		case E_WARNING :
 		case E_USER_WARNING :
-			error_log("WARNING: " . $error);
-			// register_error("WARNING: " . $error);
+			error_log("WARNING: $error");
 			break;
 
 		default:
 			global $CONFIG;
 			if (isset($CONFIG->debug)) {
-				error_log("DEBUG: " . $error);
+				error_log("NOTICE: $error");
 			}
-			// register_error("DEBUG: " . $error);
 	}
 
 	return true;
+}
+
+/**
+ * Throws a message to the Elgg logger
+ *
+ * The Elgg log is currently implemented such that any messages sent at a level
+ * greater than or equal to the debug setting will be dumped to the screen.
+ *
+ * Note: No messages will be displayed unless debugging has been enabled.
+ *
+ * @param str $message User message
+ * @param str $level NOTICE | WARNING | ERROR | DEBUG
+ * @return bool
+ */
+function elgg_log($message, $level='NOTICE') {
+	global $CONFIG;
+	
+	// only log when debugging is enabled
+	if (isset($CONFIG->debug)) {
+		switch ($level) {
+			case 'DEBUG':
+			case 'ERROR':
+				// always report
+				elgg_dump("$level: $message");
+				break;
+			case 'WARNING':
+				// report execept if user wants only errors
+				if ($config->debug != 'ERROR') {
+					elgg_dump("$level: $message");
+				}
+				break;
+			case 'NOTICE':
+			default:
+				// only report when lowest level is desired
+				if ($config->debug == 'NOTICE') {
+					elgg_dump("$level: $message");
+				}
+				break;
+		}
+		
+		return TRUE;
+	}
+	
+	return FALSE;
+}
+
+/**
+ * Extremely generic var_dump-esque wrapper
+ *
+ * Immediately dumps the given $value to the screen as a human-readable string.
+ *
+ * @param mixed $value
+ * @return void
+ */
+function elgg_dump($value) {
+	echo '<pre>';
+	print_r($value);
+	echo '</pre>';
 }
 
 /**
@@ -2015,7 +2069,7 @@ function callpath_gatekeeper($path, $include_subdirs = true, $strict_mode = fals
 		return false;
 	}
 
-	if ($CONFIG->debug) {
+	if (isset($CONFIG->debug)) {
 		system_message("Gatekeeper'd function called from {$callstack[1]['file']}:{$callstack[1]['line']}\n\nStack trace:\n\n" . print_r($callstack, true));
 	}
 
@@ -2263,13 +2317,12 @@ function js_page_handler($page) {
  *
  */
 function __elgg_shutdown_hook() {
-	global $CONFIG, $START_MICROTIME;
+	global $START_MICROTIME;
 
 	trigger_elgg_event('shutdown', 'system');
-
-	if ($CONFIG->debug) {
-		error_log("Page {$_SERVER['REQUEST_URI']} generated in ".(float)(microtime(true)-$START_MICROTIME)." seconds");
-	}
+	
+	$time = (float)(microtime(TRUE) - $START_MICROTIME);
+	elgg_log("Page {$_SERVER['REQUEST_URI']} generated in $time seconds", 'DEBUG');
 }
 
 /**

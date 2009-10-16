@@ -252,25 +252,7 @@ function get_site_entity_as_row($guid) {
 	global $CONFIG;
 
 	$guid = (int)$guid;
-
-	/*$row = retrieve_cached_entity_row($guid);
-	if ($row)
-	{
-		// We have already cached this object, so retrieve its value from the cache
-		if (isset($CONFIG->debug) && $CONFIG->debug)
-			error_log("** Retrieving sub part of GUID:$guid from cache");
-
-		return $row;
-	}
-	else
-	{*/
-	// Object not cached, load it.
-	if (isset($CONFIG->debug) && $CONFIG->debug == true) {
-		error_log("** Sub part of GUID:$guid loaded from DB");
-	}
-
 	return get_data_row("SELECT * from {$CONFIG->dbprefix}sites_entity where guid=$guid");
-	//}
 }
 
 /**
