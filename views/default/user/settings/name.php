@@ -1,7 +1,7 @@
 <?php
 	/**
 	 * Provide a way of setting your full name.
-	 * 
+	 *
 	 * @package Elgg
 	 * @subpackage Core
 
@@ -11,8 +11,8 @@
 	 */
 
 	$user = page_owner_entity();
-	
-	if ($user) {
+
+if ($user) {
 ?>
 	<h3><?php echo elgg_echo('user:set:name'); ?></h3>
 	<p>
@@ -21,7 +21,8 @@
 
 			echo elgg_view('input/text',array('internalname' => 'name', 'value' => $user->name));
 			echo elgg_view('input/hidden',array('internalname' => 'guid', 'value' => $user->guid));
-		?> 
+		?>
 	</p>
 
-<?php } ?>
+<?php
+}

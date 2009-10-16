@@ -1,3 +1,17 @@
+<?php
+/**
+ * Elgg system settings form
+ * The form to change system settings
+ *
+ * @package Elgg
+ * @subpackage Core
+ * @author Curverider Ltd
+ * @link http://elgg.org/
+ *
+ * @uses $vars['action'] If set, the place to forward the form to (usually action/systemsettings/save)
+ */
+?>
+
 <input type="hidden" name="number_of_files" value="1">
 <?php
 
@@ -23,10 +37,8 @@ if (!$vars['entity']) {
 			<label><?php echo elgg_echo("title"); ?><br />
 			<?php
 
-				echo elgg_view("input/text", array(
-									"internalname" => "title_0"
-													));
-			
+				echo elgg_view("input/text", array("internalname" => "title_0"));
+
 			?>
 			</label>
 		</p>
@@ -35,7 +47,7 @@ if (!$vars['entity']) {
 			<?php
 
 				echo elgg_view("input/file",array('internalname' => 'upload_0'));
-			
+
 			?>
 			</label>
 		</p>
@@ -50,10 +62,10 @@ if (!$vars['entity']) {
 			<?php
 
 				echo elgg_view("input/text", array(
-									"internalname" => "title",
-									"value" => $title,
-													));
-			
+					"internalname" => "title",
+					"value" => $title,
+				));
+
 			?>
 			</label>
 		</p>
@@ -65,9 +77,9 @@ if (!$vars['entity']) {
 			<?php
 
 				echo elgg_view("input/longtext",array(
-									"internalname" => "description",
-									"value" => $description,
-													));
+					"internalname" => "description",
+					"value" => $description,
+				));
 			?>
 			</label>
 		</p>
@@ -77,10 +89,10 @@ if (!$vars['entity']) {
 			<?php
 
 				echo elgg_view("input/tags", array(
-									"internalname" => "tags",
-									"value" => $tags,
-													));
-			
+					"internalname" => "tags",
+					"value" => $tags,
+				));
+
 			?>
 		</label></p>
 <?php
@@ -104,12 +116,12 @@ if (!$vars['entity']) {
 				<?php echo elgg_view('input/access', array('internalname' => 'access_id','value' => $access_id)); ?>
 			</label>
 		</p>
-	
+
 <?php
 
-	if (isset($vars['container_guid']))
+	if (isset($vars['container_guid'])) {
 		echo "<input type=\"hidden\" name=\"container_guid\" value=\"{$vars['container_guid']}\" />";
-	if (isset($vars['entity']))
+	}
+	if (isset($vars['entity'])) {
 		echo "<input type=\"hidden\" name=\"file_guid\" value=\"{$vars['entity']->getGUID()}\" />";
-
-?>
+	}

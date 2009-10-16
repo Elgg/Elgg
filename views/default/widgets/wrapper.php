@@ -1,35 +1,35 @@
 <?php
+/**
+ * Elgg widget wrapper
+ *
+ * @package Elgg
+ * @subpackage Core
+ * @author Curverider Ltd
+ * @link http://elgg.org/
+ */
 
-	/**
-	 * Elgg widget wrapper
-	 * 
-	 * @package Elgg
-	 * @subpackage Core
+static $widgettypes;
 
-	 * @author Curverider Ltd
+$callback = get_input('callback');
 
-	 * @link http://elgg.org/
-	 */
+if (!isset($widgettypes)) {
+	$widgettypes = get_widget_types();
+}
 
-	static $widgettypes;
-	
-	$callback = get_input('callback');
-	
-	if (!isset($widgettypes)) $widgettypes = get_widget_types();
-	
-	if ($vars['entity'] instanceof ElggObject && $vars['entity']->getSubtype() == 'widget') {
-		$handler = $vars['entity']->handler;
-		$title = $widgettypes[$vars['entity']->handler]->name;
-		if (!$title)
-			$title = $handler;
-	} else {
-		$handler = "error";
-		$title = elgg_echo("error"); 
+if ($vars['entity'] instanceof ElggObject && $vars['entity']->getSubtype() == 'widget') {
+	$handler = $vars['entity']->handler;
+	$title = $widgettypes[$vars['entity']->handler]->name;
+	if (!$title) {
+		$title = $handler;
 	}
-	
-	if ($callback != "true") {
-	
-?>
+} else {
+	$handler = "error";
+	$title = elgg_echo("error");
+}
+
+if ($callback != "true") {
+
+	?>
 
 	<div id="widget<?php echo $vars['entity']->getGUID(); ?>">
 	<div class="collapsable_box">
@@ -39,60 +39,53 @@
 	</div>
 	<?php
 
-		if ($vars['entity']->canEdit()) {
-	
-	?>
-	<div class="collapsable_box_editpanel"><?php 
-		
-		echo elgg_view('widgets/editwrapper', 
-						array(
-								'body' => elgg_view("widgets/{$handler}/edit",$vars),
-								'entity' => $vars['entity']
-							  )
-					   ); 
-		
-	?></div><!-- /collapsable_box_editpanel -->
-	<?php
+	if ($vars['entity']->canEdit()) {
+		?>
+		<div class="collapsable_box_editpanel"><?php
 
-		}
-	
+		echo elgg_view('widgets/editwrapper',
+		array(
+			'body' => elgg_view("widgets/{$handler}/edit",$vars),
+			'entity' => $vars['entity']
+			)
+		);
+
+		?></div><!-- /collapsable_box_editpanel -->
+		<?php
+	}
+
 	?>
 	<div class="collapsable_box_content">
-		<?php 
+	<?php
 
-		echo "<div id=\"widgetcontent{$vars['entity']->getGUID()}\">";
-		
-		
-	} else { // end if callback != "true"
-
-		if (elgg_view_exists("widgets/{$handler}/view"))
-			echo elgg_view("widgets/{$handler}/view",$vars);
-		else
-			echo elgg_echo('widgets:handlernotfound');
-
-?>
-
-<script language="javascript">
- $(document).ready(function(){
-   	setup_avatar_menu();
- });
-
-</script>
-
-
-<?php
-		
+	echo "<div id=\"widgetcontent{$vars['entity']->getGUID()}\">";
+} else { // end if callback != "true"
+	if (elgg_view_exists("widgets/{$handler}/view")) {
+		echo elgg_view("widgets/{$handler}/view",$vars);
+	} else {
+		echo elgg_echo('widgets:handlernotfound');
 	}
-		
-	if ($callback != "true") {
+
+	?>
+
+	<script language="javascript">
+	$(document).ready(function(){
+		setup_avatar_menu();
+	});
+
+	</script>
+	<?php
+}
+
+if ($callback != "true") {
 		echo elgg_view('ajax/loader');
 		echo "</div>";
-		
+
 		?>
 	</div><!-- /.collapsable_box_content -->
-	</div><!-- /.collapsable_box -->	
+	</div><!-- /.collapsable_box -->
 	</div>
-	
+
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -105,9 +98,7 @@ $(document).ready(function() {
 
 });
 </script>
-	
+
 <?php
 
-	}
-
-?>
+}
