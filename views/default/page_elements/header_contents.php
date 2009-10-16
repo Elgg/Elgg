@@ -1,17 +1,14 @@
 <?php
+/**
+ * Elgg header contents
+ * This file holds the header output that a user will see
+ *
+ * @package Elgg
+ * @subpackage Core
+ * @author Curverider Ltd
+ * @link http://elgg.org/
+ **/
 
-	/**
-	 * Elgg header contents
-	 * This file holds the header output that a user will see
-	 * 
-	 * @package Elgg
-	 * @subpackage Core
-
-	 * @author Curverider Ltd
-
-	 * @link http://elgg.org/
-	 **/
-	 
 ?>
 
 <div id="page_container">

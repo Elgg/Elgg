@@ -1,19 +1,18 @@
 <?php
-
-	/**
-	 * Elgg top toolbar
-	 * The standard elgg top toolbar
-	 * 
-	 * @package Elgg
-	 * @subpackage Core
-	 * @author Curverider Ltd
-	 * @link http://elgg.org/
-	 * 
-	 */
+/**
+ * Elgg top toolbar
+ * The standard elgg top toolbar
+ *
+ * @package Elgg
+ * @subpackage Core
+ * @author Curverider Ltd
+ * @link http://elgg.org/
+ *
+ */
 ?>
 
 <?php
-     if (isloggedin()) {
+	if (isloggedin()) {
 ?>
 
 <div id="elgg_topbar">
@@ -21,41 +20,40 @@
 <div id="elgg_topbar_container_left">
 	<div class="toolbarimages">
 		<a href="http://www.elgg.org" target="_blank"><img src="<?php echo $vars['url']; ?>_graphics/elgg_toolbar_logo.gif" /></a>
-		
+
 		<a href="<?php echo $_SESSION['user']->getURL(); ?>"><img class="user_mini_avatar" src="<?php echo $_SESSION['user']->getIcon('topbar'); ?>" /></a>
-		
+
 	</div>
 	<div class="toolbarlinks">
 		<a href="<?php echo $vars['url']; ?>pg/dashboard/" class="pagelinks"><?php echo elgg_echo('dashboard'); ?></a>
 	</div>
-        <?php
+		<?php
 
-	        echo elgg_view("navigation/topbar_tools");
+			echo elgg_view("navigation/topbar_tools");
 
-        ?>
-        	
-        	
-        <div class="toolbarlinks2">		
+		?>
+
+		<div class="toolbarlinks2">
 		<?php
 		//allow people to extend this top menu
 		echo elgg_view('elgg_topbar/extend', $vars);
 		?>
-		
+
 		<a href="<?php echo $vars['url']; ?>pg/settings/" class="usersettings"><?php echo elgg_echo('settings'); ?></a>
-		
+
 		<?php
-		
+
 			// The administration link is for admin or site admin users only
-			if ($vars['user']->admin || $vars['user']->siteadmin) { 
-		
+			if ($vars['user']->admin || $vars['user']->siteadmin) {
+
 		?>
-		
+
 			<a href="<?php echo $vars['url']; ?>pg/admin/" class="usersettings"><?php echo elgg_echo("admin"); ?></a>
-		
+
 		<?php
-		
+
 				}
-		
+
 		?>
 	</div>
 
@@ -79,5 +77,4 @@
 <div class="clearfloat"></div>
 
 <?php
-    }
-?>
+	}
