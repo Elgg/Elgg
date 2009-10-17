@@ -1,7 +1,17 @@
 <?php
 /**
- * Elgg PAM library
- * Contains functions for managing authentication using various arbitrary methods
+ * Elgg Simple PAM library
+ * Contains functions for managing authentication.
+ * This is not a full implementation of PAM. It supports a single facility 
+ * (authentication) and only allows one policy at a time. There are two control
+ * flags possible for each module: sufficient or required. The entire chain for 
+ * a policy is processed (or until a required module fails). A module fails by 
+ * returning false or throwing an exception. The order that modules are 
+ * processed is determined by the order they are registered. For an example of
+ * a PAM, see pam_auth_userpass() in sessions.php.
+ * 
+ * For more information on PAMs see:
+ * http://www.freebsd.org/doc/en/articles/pam/index.html
  *
  * @package Elgg
  * @subpackage Core
@@ -36,12 +46,18 @@ function register_pam_handler($handler, $importance = "sufficient") {
 
 /**
  * Attempt to authenticate.
- * This function will go through all registered PAM handlers to see if a user can be authorised.
+ * This function will process all registered PAM handlers or stop when the first 
+ * handler fails. A handler fails by either returning false or throwing an 
+ * exception. The advatange of throwing an exception is that it returns a message
+ * through the global $_PAM_HANDLERS_MSG which can be used in communication with 
+ * a user. The order that handlers are processed is determined by the order that
+ * they were registered.
  *
- * If $credentials are provided the PAM handler should authenticate using the provided credentials, if
- * not then credentials should be prompted for or otherwise retrieved (eg from the HTTP header or $_SESSION).
+ * If $credentials are provided the PAM handler should authenticate using the 
+ * provided credentials, if not then credentials should be prompted for or 
+ * otherwise retrieved (eg from the HTTP header or $_SESSION).
  *
- * @param mixed $credentials Mixed PAM handler specific credentials (eg username,password or hmac etc)
+ * @param mixed $credentials Mixed PAM handler specific credentials (e.g. username, password)
  * @return bool true if authenticated, false if not.
  */
 function pam_authenticate($credentials = NULL) {
