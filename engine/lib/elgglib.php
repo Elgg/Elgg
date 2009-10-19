@@ -1752,23 +1752,26 @@ function elgg_log($message, $level='NOTICE') {
 	
 	// only log when debugging is enabled
 	if (isset($CONFIG->debug)) {
+		// debug to screen or log?
+		$to_screen = !($CONFIG->debug == 'NOTICE');
+		
 		switch ($level) {
 			case 'DEBUG':
 			case 'ERROR':
 				// always report
-				elgg_dump("$level: $message");
+				elgg_dump("$level: $message", $to_screen);
 				break;
 			case 'WARNING':
 				// report execept if user wants only errors
-				if ($config->debug != 'ERROR') {
-					elgg_dump("$level: $message");
+				if ($CONFIG->debug != 'ERROR') {
+					elgg_dump("$level: $message", $to_screen);
 				}
 				break;
 			case 'NOTICE':
 			default:
 				// only report when lowest level is desired
-				if ($config->debug == 'NOTICE') {
-					elgg_dump("$level: $message");
+				if ($CONFIG->debug == 'NOTICE') {
+					elgg_dump("$level: $message", FALSE);
 				}
 				break;
 		}
@@ -1783,14 +1786,23 @@ function elgg_log($message, $level='NOTICE') {
  * Extremely generic var_dump-esque wrapper
  *
  * Immediately dumps the given $value to the screen as a human-readable string.
+ * The $value can instead be written to the system log through the use of the
+ * $to_screen flag.
  *
  * @param mixed $value
+ * @param bool $to_screen
  * @return void
  */
-function elgg_dump($value) {
-	echo '<pre>';
-	print_r($value);
-	echo '</pre>';
+function elgg_dump($value, $to_screen = TRUE) {
+	if ($to_screen == TRUE) {
+		echo '<pre>';
+		print_r($value);
+		echo '</pre>';
+	}
+	else
+	{
+		error_log($value);
+	}
 }
 
 /**

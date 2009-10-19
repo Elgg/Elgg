@@ -38,7 +38,10 @@ $form_body .= "<p class=\"admin_debug\">" . elgg_echo('installation:allow_user_d
 $form_body .= "<p class=\"admin_debug\">" . elgg_echo('installation:simplecache:description') . "<br />" .elgg_view("input/checkboxes", array('options' => array(elgg_echo('installation:simplecache:label')), 'internalname' => 'simplecache_enabled', 'value' => ($vars['config']->simplecache_enabled ? elgg_echo('installation:simplecache:label') : "") )) . "</p>";
 $form_body .= "<p class=\"admin_debug\">" . elgg_echo('installation:viewpathcache:description') . "<br />" .elgg_view("input/checkboxes", array('options' => array(elgg_echo('installation:viewpathcache:label')), 'internalname' => 'viewpath_cache_enabled', 'value' => (($vars['config']->viewpath_cache_enabled) ? elgg_echo('installation:viewpathcache:label') : "") )) . "</p>";
 
-$form_body .= "<p class=\"admin_debug\">" . elgg_echo('installation:debug') . "<br />" .elgg_view("input/checkboxes", array('options' => array(elgg_echo('installation:debug:label')), 'internalname' => 'debug', 'value' => ($vars['config']->debug ? elgg_echo('installation:debug:label') : "") )) . "</p>";
+$debug_options = array('0' => elgg_echo('installation:debug:none'), 'ERROR' => elgg_echo('installation:debug:error'), 'WARNING' => elgg_echo('installation:debug:warning'), 'NOTICE' => elgg_echo('installation:debug:notice'));
+$form_body .= "<p class=\"admin_debug\">" . elgg_echo('installation:debug');
+$form_body .= elgg_view('input/pulldown', array('options_values' => $debug_options, 'internalname' => 'debug', 'value' => $vars['config']->debug));
+$form_body .= '</p>';
 
 $form_body .= "<p class=\"admin_debug\">" . elgg_echo('installation:httpslogin') . "<br />" .elgg_view("input/checkboxes", array('options' => array(elgg_echo('installation:httpslogin:label')), 'internalname' => 'https_login', 'value' => ($vars['config']->https_login ? elgg_echo('installation:httpslogin:label') : "") )) . "</p>";
 

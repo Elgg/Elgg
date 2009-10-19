@@ -5,6 +5,7 @@ http://code.elgg.org/elgg/.....
  User-visible changes:
   * UTF8 now saved correctly in database. #1151
   * Unit tests added at engine/tests/suites.php
+  * Debug values output to screen when enabled in admin settings
 
  Bugfixes:
   * Searching by tag with extended characters now works. #1151, #1231

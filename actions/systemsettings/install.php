@@ -62,7 +62,7 @@ if (get_input('settings') == 'go') {
 
 		$debug = get_input('debug');
 		if ($debug) {
-			set_config('debug', 1, $site->getGUID());
+			set_config('debug', $debug, $site->getGUID());
 		} else {
 			unset_config('debug', $site->getGUID());
 		}
