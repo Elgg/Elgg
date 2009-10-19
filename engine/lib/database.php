@@ -111,9 +111,7 @@ function db_delayedexecution_shutdown_hook() {
 				$query_details['h']($result);
 			}
 		} catch (Exception $e) { // Suppress all errors since these can't be delt with here
-			if (isset($CONFIG->debug)) {
-				error_log($e);
-			}
+			elgg_log($e, 'WARNING');
 		}
 	}
 }
