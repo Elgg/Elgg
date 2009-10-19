@@ -27,30 +27,27 @@ if ((isset($CONFIG->disable_api)) && ($CONFIG->disable_api == true)) {
 	throw new SecurityException(elgg_echo('SecurityException:APIAccessDenied'));
 }
 
-// Register some default PAM methods, plugins can add their own
-register_pam_handler('pam_auth_session_or_hmac'); // Command must either be authenticated by a hmac or the user is already logged in
-register_pam_handler('pam_auth_usertoken', 'required'); // Either token present and valid OR method doesn't require one.
-register_pam_handler('pam_auth_anonymous_method'); // Support anonymous functions
+// plugins should return true to control what API and user authentication handlers are registered
+if (trigger_plugin_hook('rest', 'init', null, false) == false) {
+	// check session - this usually means a REST call from a web browser
+	register_pam_handler('pam_auth_session');
+	// user token can also be used for user authentication
+	register_pam_handler('pam_auth_usertoken');
+
+	// for api authentication, we default to a simple API key check
+	register_api_auth_handler('api_auth_key');
+}
 
 // Get parameter variables
 $method = get_input('method');
 $result = null;
 
-// Authenticate session
-if (pam_authenticate()) {
-	// Authenticated somehow, now execute.
-	$token = "";
-	$params = get_parameters_for_method($method); // Use $CONFIG->input instead of $_REQUEST since this is called by the pagehandler
-	if (isset($params['auth_token'])) {
-		$token = $params['auth_token'];
-	}
+// this will throw an exception if authentication fails
+authenticate_method($method);
 
-	$result = execute_method($method, $params, $token);
-} else {
-	throw new SecurityException(elgg_echo('SecurityException:NoAuthMethods'));
-}
+$result = execute_method($method);
 
-// Finally output
+
 if (!($result instanceof GenericResult)) {
 	throw new APIException(elgg_echo('APIException:ApiResultUnknown'));
 }

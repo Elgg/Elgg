@@ -280,27 +280,261 @@ class ElggHMACCache extends ElggCache {
 	}
 }
 
-// API Call functions /////////////////////////////////////////////////////////////////////
+// Primary Services API Server functions /////////////////////////////////////////////////////////////////////
 
 /**
- * An array holding methods.
+ * A global array holding API methods.
  * The structure of this is
- * 	$METHODS = array (
- * 		"api.method" => array (
+ * 	$API_METHODS = array (
+ * 		$method => array (
  * 			"function" = 'my_function_callback'
  * 			"call_method" = 'GET' | 'POST'
  * 			"parameters" = array (
- * 				"variable" = array ( // NB, the order is the same as defined by your function callback
+ * 				"variable" = array ( // NB, the order should be the same as the function callback
  * 					type => 'int' | 'bool' | 'float' | 'string'
  * 					required => true (default) | false
  * 				)
  * 			)
- * 			"require_auth_token" => true (default) | false
+ * 			"require_api_auth" => true | false (default)
+ * 			"require_user_auth" => true | false (default)
  * 			"description" => "Some human readable description"
  * 		)
  *  )
  */
-$METHODS = array();
+$API_METHODS = array();
+
+/**
+ * Expose a function as a services api call.
+ *
+ * Limitations: Currently can not expose functions which expect objects.
+ *
+ * @param string $method The api name to expose - for example "myapi.dosomething"
+ * @param string $function Your function callback.
+ * @param array $parameters (optional) list of parameters in the same order as in your function, with optional parameters last.
+ * This array should be in the format
+ *   "variable" = array (
+ * 					type => 'int' | 'bool' | 'float' | 'string' | 'array'
+ * 					required => true (default) | false
+ * 	 )
+ * @param string $description (optional) human readable description of the function.
+ * @param string $call_method (optional) Define what http method must be used for this function. Default: GET
+ * @param bool $require_api_auth (optional) (default is false) Does this method require API authorization? (example: API key)
+ * @param bool $require_user_auth (optional) (default is false) Does this method require user authorization?
+ * @return bool
+ */
+function expose_function($method, $function, array $parameters = NULL, $description = "", $call_method = "GET", $require_api_auth = false, $require_user_auth = false) {
+	global $API_METHODS;
+
+	if (($method == "") || ($function == "")) {
+		throw new InvalidParameterException(elgg_echo('InvalidParameterException:APIMethodOrFunctionNotSet'));	
+	}
+	
+	// does not check whether this method has already been exposed - good idea?
+	$API_METHODS[$method] = array();
+
+	// does not check whether callable - done in execute_method()
+	$API_METHODS[$method]["function"] = $function;
+
+	if ($parameters != NULL && !is_array($parameters)) {
+		throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:APIParametersNotArray'), $method));	
+	}
+	
+	if ($parameters != NULL) {
+		// ensure the required flag is set correctly in default case
+		foreach ($parameters as $key => $value) {
+			if (!array_key_exists('required', $value)) {
+				$parameters[$key]['required'] = true;
+			}
+		}
+		
+		$API_METHODS[$method]["parameters"] = $parameters;
+	}
+
+	$call_method = strtoupper($call_method);
+	switch ($call_method) {
+		case 'POST' :
+			$API_METHODS[$method]["call_method"] = 'POST';
+			break;
+		case 'GET' :
+			$API_METHODS[$method]["call_method"] = 'GET';
+			break;
+		default :
+			throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:UnrecognisedHttpMethod'), $call_method, $method));
+	}
+
+	$API_METHODS[$method]["description"] = $description;
+
+	$API_METHODS[$method]["require_api_auth"] = $require_api_auth;
+
+	$API_METHODS[$method]["require_user_auth"] = $require_user_auth;
+
+	return true;
+}
+
+/**
+ * Unregister an API method
+ * @param $method The api name that was exposed  
+ */
+function unexpose_function($method) {
+	global $API_METHODS;
+	
+	if (isset($API_METHODS[$method])) {
+		unset($API_METHODS[$method]);
+	}
+}
+
+/**
+ * Check that the method call has the proper API and user authentication
+ * @return bool
+ */
+function authenticate_method($method) {
+	global $API_METHODS;
+	
+	// method must be exposed
+	if (!isset($API_METHODS[$method])) {
+		throw new APIException(sprintf(elgg_echo('APIException:MethodCallNotImplemented'), $method));
+	}
+	
+	// make sure that POST variables are available if relevant
+	if (get_call_method() === 'POST') {
+		include_post_data();
+	}
+	
+	// check API authentication if required
+	if ($API_METHODS[$method]["require_api_auth"] == true) {
+		if (api_authenticate() == false) {
+			throw new APIException(elgg_echo('APIException:APIAuthenticationFailed'));
+		}
+	}
+	
+	// check user authentication if required
+	if ($API_METHODS[$method]["require_user_auth"] == true) {
+		if (pam_authenticate() == false) {
+			throw new APIException(elgg_echo('APIException:UserAuthenticationFailed'));
+		}
+	}
+	
+	return true;
+}
+
+$API_AUTH_HANDLERS = array();
+
+/**
+ * Register an API authorization handler
+ * 
+ * @param $handler
+ * @param $importance
+ * @return bool
+ */
+function register_api_auth_handler($handler, $importance = "sufficient") {
+	global $API_AUTH_HANDLERS;
+
+	if (is_callable($handler)) {
+		$API_AUTH_HANDLERS[$handler] = new stdClass;
+
+		$API_AUTH_HANDLERS[$handler]->handler = $handler;
+		$API_AUTH_HANDLERS[$handler]->importance = strtolower($importance);
+
+		return true;
+	}
+
+	return false;	
+}
+
+/**
+ * Authenticate an API method call
+ * 
+ * @return bool
+ */
+function api_authenticate() {
+	global $API_AUTH_HANDLERS;
+
+	$authenticated = false;
+
+	foreach ($API_AUTH_HANDLERS as $k => $v) {
+		$handler = $v->handler;
+		$importance = $v->importance;
+
+		try {
+			// Execute the handler
+			if ($handler()) {
+				$authenticated = true;
+			} else {
+				// If this is required then abort.
+				if ($importance == 'required') {
+					return false;
+				}
+			}
+		} catch (Exception $e) {
+			// If this is required then abort.
+			if ($importance == 'required') {
+				return false;
+			}
+		}
+	}
+
+	return $authenticated;
+}
+
+/**
+ * Executes a method.
+ * A method is a function which you have previously exposed using expose_function.
+ *
+ * @param string $method Method, e.g. "foo.bar"
+ * @return GenericResult The result of the execution.
+ * @throws APIException, SecurityException
+ */
+function execute_method($method) {
+	global $API_METHODS, $CONFIG;
+
+	// method must be exposed
+	if (!isset($API_METHODS[$method])) {
+		throw new APIException(sprintf(elgg_echo('APIException:MethodCallNotImplemented'), $method));
+	}
+
+	// function must be callable 
+	if (!(isset($API_METHODS[$method]["function"])) || !(is_callable($API_METHODS[$method]["function"]))) {
+		throw new APIException(sprintf(elgg_echo('APIException:MethodCallNotImplemented'), $method));
+	}
+	
+	// check http call method
+	if (strcmp(get_call_method(), $API_METHODS[$method]["call_method"]) != 0) {
+		throw new CallException(sprintf(elgg_echo('CallException:InvalidCallMethod'), $method, $API_METHODS[$method]["call_method"]));
+	}
+	
+	$parameters = get_parameters_for_method($method);
+	
+	if (verify_parameters($method, $parameters) == false) {
+		// error
+		return false;
+	}
+	
+	$serialised_parameters = serialise_parameters($method, $parameters);
+	
+	// Execute function: Construct function and calling parameters
+	$function = $API_METHODS[$method]["function"];
+	$serialised_parameters = trim($serialised_parameters, ", ");
+
+	$result = eval("return $function($serialised_parameters);");
+
+	// Sanity check result
+	// If this function returns an api result itself, just return it
+	if ($result instanceof GenericResult) {
+		return $result;
+	}
+
+	if ($result === false) {
+		throw new APIException(sprintf(elgg_echo('APIException:FunctionParseError'), $function, $serialised_parameters));
+	}
+
+	if ($result ===  NULL) {
+		// If no value
+		throw new APIException(sprintf(elgg_echo('APIException:FunctionNoReturn'), $function, $serialised_parameters));
+	}
+
+	// Otherwise assume that the call was successful and return it as a success object.
+	return SuccessResult::getInstance($result);
+}
 
 /**
  * Get the request method.
@@ -310,311 +544,312 @@ function get_call_method() {
 }
 
 /**
- * This function analyses all expected parameters for a given method, returning them in an associated array from
- * input.
- *
- * This ensures that they are sanitised and that no superfluous commands are registered. It also means that
- * hmacs work through the page handler.
+ * This function analyses all expected parameters for a given method
+ * 
+ * This function sanitizes the input parameters and returns them in
+ * an associated array. 
  *
  * @param string $method The method
- * @return Array containing commands and values, including method and api
+ * @return array containing parameters as key => value 
  */
 function get_parameters_for_method($method) {
-	global $CONFIG, $METHODS;
+	global $API_METHODS;
 
-	$method = sanitise_string($method);
 	$sanitised = array();
-
-	foreach ($CONFIG->input as $k => $v) {
-		if ((isset($METHODS[$method]['parameters'][$k])) || ($k == 'auth_token') || ($k == 'method')) {
-			// Make things go through the sanitiser
-			$sanitised[$k] = get_input($k);
+	
+	// if there are parameters, sanitize them
+	if (isset($API_METHODS[$method]['parameters'])) {
+		foreach ($API_METHODS[$method]['parameters'] as $k => $v) {
+			$v = get_input($k); // Make things go through the sanitiser
+			if ($v !== '') {
+				$sanitised[$k] = $v;
+			}
 		}
 	}
-
+		
 	return $sanitised;
 }
 
-/**
- * Obtain a token for a user.
- *
- * @param string $username The username
- * @param string $password The password
- */
-function obtain_user_token($username, $password) {
-	global $CONFIG;
 
-	$site = $CONFIG->site_id;
-	$user = get_user_by_username($username);
-	$time = time();
-	$time += 60*60;
-	$token = md5(rand(). microtime() . $username . $password . $time . $site);
+function get_post_data() {
+	global $GLOBALS;
+		
+	$postdata = '';
+	if (isset($GLOBALS['HTTP_RAW_POST_DATA']))
+		$postdata = $GLOBALS['HTTP_RAW_POST_DATA'];
 
-	if (!$user) {
-		return false;
+	// Attempt another method to return post data (incase always_populate_raw_post_data is switched off)
+	if (!$postdata) {
+		$postdata = file_get_contents('php://input');
 	}
-
-	if (insert_data("INSERT into {$CONFIG->dbprefix}users_apisessions
-	(user_guid, site_guid, token, expires) values
-	({$user->guid}, $site, '$token', '$time') on duplicate key update token='$token', expires='$time'")) {
-		return $token;
-	}
-
-
-	return false;
+	
+	return $postdata;
 }
 
 /**
- * Validate a token against a given site.
- *
- * A token registered with one site can not be used from a different apikey(site), so be aware of this
- * during development.
- *
- * @param int $site The ID of the site
- * @param string $token The Token.
- * @return mixed The user id attached to the token or false.
+ * This fixes the post parameters that are munged due to page handler
  */
-function validate_user_token($site, $token) {
-	global $CONFIG;
-
-	$site = (int)$site;
-	$token = sanitise_string($token);
-
-	if (!$site) {
-		throw new ConfigurationException(elgg_echo('ConfigurationException:NoSiteID'));
-	}
-
-	$time = time();
-
-	$user = get_data_row("SELECT * from {$CONFIG->dbprefix}users_apisessions
-		where token='$token' and site_guid=$site and $time < expires");
-
-	if ($user) {
-		return $user->user_guid;
-	}
-
-	return false;
-}
-
-/**
- * Expose an arbitrary function as an api call.
- *
- * Limitations: Currently can not expose functions which expect objects.
- *
- * @param string $method The api name to expose this as, eg "myapi.dosomething"
- * @param string $function Your function callback.
- * @param array $parameters Optional list of parameters in the same order as in your function, with optional parameters last.
- * 	This array should be in the format
- *   "variable" = array (
- * 					type => 'int' | 'bool' | 'float' | 'string' | 'array'
- * 					required => true (default) | false
- * 	 )
- * @param string $description Optional human readable description of the function.
- * @param string $call_method Define what call method should be used for this function.
- * @param bool $require_auth_token Whether this requires a user authentication token or not (default is true).
- * @param bool $anonymous Can anonymous (non-authenticated in any way) users execute this call.
- * @return bool
- */
-function expose_function($method, $function, array $parameters = NULL, $description = "", $call_method = "GET", $require_auth_token = true, $anonymous = false) {
-	global $METHODS;
-
-	if (($method!="") && ($function!="")) {
-		$METHODS[$method] = array();
-
-		$METHODS[$method]["function"] = $function;
-
-		if ($parameters!=NULL) {
-			$METHODS[$method]["parameters"] = $parameters;
+function include_post_data() {
+	
+	$postdata = get_post_data();
+	
+	if (isset($postdata)) {
+		parse_str($postdata, $query_arr);
+		if (is_array($query_arr)) {
+			foreach($query_arr as $name => $val) {
+				set_input($name, $val);
+			}			
 		}
-
-		$call_method = strtoupper($call_method);
-		switch ($call_method) {
-			case 'POST' :
-				$METHODS[$method]["call_method"] = 'POST';
-				break;
-			case 'GET' :
-				$METHODS[$method]["call_method"] = 'GET';
-				break;
-			default :
-				throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:UnrecognisedMethod'), $method));
-		}
-
-		$METHODS[$method]["description"] = $description;
-
-		$METHODS[$method]["require_auth_token"] = $require_auth_token;
-
-		$METHODS[$method]["anonymous"] = $anonymous;
-
-		return true;
 	}
-
-	return false;
 }
 
 /**
- * Executes a method.
- * A method is a function which you have previously exposed using expose_function.
- *
- * @param string $method Method, e.g. "foo.bar"
- * @param array $parameters Array of parameters in the format "variable" => "value", thse will be sanitised before being fed to your handler.
- * @param string $token The authentication token to authorise this method call.
- * @return GenericResult The result of the execution.
- * @throws APIException, SecurityException
+ * Verify that the required parameters are present
+ * @param $method
+ * @param $parameters
+ * @return true on success or exception
  */
-function execute_method($method, array $parameters, $token = "") {
-	global $METHODS, $CONFIG;
+function verify_parameters($method, $parameters) {
+	global $API_METHODS;
+	
+	// are there any parameters for this method
+	if (!(isset($API_METHODS[$method]["parameters"]))) {
+		return true; // no so return
+	}
 
-	// Sanity check
-	$method = sanitise_string($method);
-	$token = sanitise_string($token);
+	// check that the parameters were registered correctly and all required ones are there
+	foreach ($API_METHODS[$method]['parameters'] as $key => $value) {
+		// must be array to describe parameter in expose and type must be defined
+		if (!is_array($value) || !isset($value['type'])) {
+			throw new APIException(sprintf(elgg_echo('APIException:InvalidParameter'), $key, $method));
+		}
+				
+		// Check that the variable is present in the request if required
+		$is_param_required = !isset($value['required']) || $value['required'];
+		if ($is_param_required && !array_key_exists($key, $parameters)) {
+			throw new APIException(sprintf(elgg_echo('APIException:MissingParameterInMethod'), $key, $method));
+		}
+	}
+	
+	return true;
+}
 
-	// See if we can find the method handler
-	if ((isset($METHODS[$method]["function"])) && (is_callable($METHODS[$method]["function"]))) {
-		// See if this is being made with the right call method
-		if (strcmp(get_call_method(), $METHODS[$method]["call_method"])==0) {
-			$serialised_parameters = "";
+/**
+ * Serialize an array of parameters for an API method call
+ * 
+ * @param $method
+ * @param $parameters
+ * @return unknown_type
+ */
+function serialise_parameters($method, $parameters) {
+	global $API_METHODS;
+	
+	// are there any parameters for this method
+	if (!(isset($API_METHODS[$method]["parameters"]))) {
+		return ''; // if not, return
+	}
+	
+	$serialised_parameters = "";
+	foreach ($API_METHODS[$method]['parameters'] as $key => $value) {
 
-			// If we have parameters then we need to sanitise the parameters.
-			if ((isset($METHODS[$method]["parameters"])) && (is_array($METHODS[$method]["parameters"]))) {
-				foreach ($METHODS[$method]["parameters"] as $key => $value) {
-
-					if ((is_array($value)) && (isset($value['type']))) {
-						// Check that the variable is present in the request
-						if ((!isset($parameters[$key]))
-						|| ((!isset($value['required']))
-						|| ($value['required']==true))) {
-								throw new APIException(sprintf(elgg_echo('APIException:MissingParameterInMethod'), $key, $method));
-							} else {
-							// Avoid debug error
-							if (isset($parameters[$key])) {
-								// Set variables casting to type.
-								switch (strtolower($value['type'])) {
-									case 'int':
-									case 'integer' :
-										$serialised_parameters .= "," . (int)trim($parameters[$key]); break;
-									case 'bool':
-									case 'boolean':
-										if (strcasecmp(trim($parameters[$key]), "false")==0) {
-											$parameters[$key]='';
-										}
-
-										$serialised_parameters .= "," . (bool)trim($parameters[$key]);
-										break;
-									case 'string':
-										$serialised_parameters .= ",'" .  (string)mysql_real_escape_string(trim($parameters[$key])) . "'";
-										break;
-									case 'float':
-										$serialised_parameters .= "," . (float)trim($parameters[$key]);
-										break;
-									case 'array':
-										$array = "array(";
-
-										if (is_array($parameters[$key])) {
-											foreach ($parameters[$key] as $k => $v) {
-												$k = sanitise_string($k);
-												$v = sanitise_string($v);
-
-												$array .= "'$k'=>'$v',";
-											}
-
-											$array = trim($array,",");
-										} else {
-											throw APIException(sprintf(elgg_echo('APIException:ParameterNotArray'), $key));
-										}
-
-										$array .= ")";
-
-										$serialised_parameters .= $array;
-										break;
-
-									default :
-										throw new APIException(sprintf(elgg_echo('APIException:UnrecognisedTypeCast'), $value['type'], $key, $method));
-								}
-							}
-						}
-					} else {
-						throw new APIException(sprintf(elgg_echo('APIException:InvalidParameter'), $key, $method));
-					}
+		// avoid warning on parameters that are not required and not present
+		if (!isset($parameters[$key])) {
+			continue;
+		}
+		
+		// Set variables casting to type.	
+		switch (strtolower($value['type']))
+		{
+			case 'int':
+			case 'integer' : 
+				$serialised_parameters .= "," . (int)trim($parameters[$key]); 
+				break;
+			case 'bool':
+			case 'boolean': 
+				// change word false to boolean false
+				if (strcasecmp(trim($parameters[$key]), "false") == 0) { 
+					$parameters[$key] = false;
 				}
-			}
+				
+				$serialised_parameters .= "," . (bool)trim($parameters[$key]); 
+				break;
+			case 'string': 
+				$serialised_parameters .= ",'" .  (string)mysql_real_escape_string(trim($parameters[$key])) . "'"; 
+				break;
+			case 'float': 
+				$serialised_parameters .= "," . (float)trim($parameters[$key]); 
+				break;
+			case 'array':
+				// we can handle an array of strings, maybe ints, definitely not booleans or other arrays										
+				$array = "array(";
+				if (!is_array($parameters[$key]))
+				{
+					throw APIException(sprintf(elgg_echo('APIException:ParameterNotArray'), $key));
+				}
+							
+				foreach ($parameters[$key] as $k => $v)
+				{
+					$k = sanitise_string($k);
+					$v = sanitise_string($v);
+								
+					$array .= "'$k'=>'$v',";
+				}
+							
+				$array = trim($array,",");
+								
+				$array .= ")";
+							
+				$serialised_parameters .= $array;
+				break;
+			default: 
+				throw new APIException(sprintf(elgg_echo('APIException:UnrecognisedTypeCast'), $value['type'], $key, $method));
+		}
+	}
+	
+	return $serialised_parameters;
+}
 
-			// Execute function: Construct function and calling parameters
-			$function = $METHODS[$method]["function"];
-			$serialised_parameters = trim($serialised_parameters, ", ");
+// API authorization handlers /////////////////////////////////////////////////////////////////////
 
-			$result = eval("return $function($serialised_parameters);");
+/**
+ * Confirm that the call includes a valid API key
+ * @return true if good API key - otherwise throws exception
+ */
+function api_auth_key() {
+	global $CONFIG;
+	
+	// check that an API key is present
+	$api_key = get_input('api_key');
+	if ($api_key == "") {
+		throw new APIException(elgg_echo('APIException:MissingAPIKey'));
+	}
+	
+	// check that it is active
+	$api_user = get_api_user($CONFIG->site_id, $api_key);
+	if (!$api_user) {
+		throw new APIException(elgg_echo('APIException:MissingAPIKey'));
+	}
+	
+	return trigger_plugin_hook('api_key', 'use', $api_key, true);
+}
 
-			// Sanity check result
-			// If this function returns an api result itself, just return it
-			if ($result instanceof GenericResult) {
-				return $result;
-			}
 
-			if ($result === FALSE) {
-				throw new APIException(sprintf(elgg_echo('APIException:FunctionParseError'), $function, $serialised_parameters));
-			}
+/**
+ * 
+ * @return true if success - otherwise throws exception
+ */
+function api_auth_hmac() {
+	global $CONFIG;
 
-			if ($result ===  NULL) {
-				// If no value
-				throw new APIException(sprintf(elgg_echo('APIException:FunctionNoReturn'), $function, $serialised_parameters));
-			}
+	// Get api header
+	$api_header = get_and_validate_api_headers();
 
-			// Otherwise assume that the call was successful and return it as a success object.
-			return SuccessResult::getInstance($result);
+	// Pull API user details
+	$api_user = get_api_user($CONFIG->site_id, $api_header->api_key);
 
-		} else {
-			throw new CallException(sprintf(elgg_echo('CallException:InvalidCallMethod'), $method, $METHODS[$method]["call_method"]));
+	if (!$api_user) {
+		throw new SecurityException(elgg_echo('SecurityException:InvalidAPIKey'), ErrorResult::$RESULT_FAIL_APIKEY_INVALID);
+	}
+	
+	// Get the secret key
+	$secret_key = $api_user->secret;
+
+	// get the query string
+	$query = substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], '?') + 1);
+	
+	// calculate expected HMAC
+	$hmac = calculate_hmac(	$api_header->hmac_algo,
+							$api_header->time,
+							$api_header->api_key,
+							$secret_key,
+							$params,
+							$api_header->method == 'POST' ? $api_header->posthash : "");
+
+	
+	if (!(strcmp($api_header->hmac, $hmac) == 0) && !($api_header->hmac) && !($hmac)) {
+		throw new SecurityException("HMAC is invalid.  {$api_header->hmac} != [calc]$hmac");
+	}
+	
+	// Now make sure this is not a replay
+	if (cache_hmac_check_replay($hmac)) {
+		throw new SecurityException(elgg_echo('SecurityException:DupePacket'));
+	}
+	
+	// Validate post data
+	if ($api_header->method=="POST") {
+		$postdata = get_post_data();
+		$calculated_posthash = calculate_posthash($postdata, $api_header->posthash_algo);
+
+		if (strcmp($api_header->posthash, $calculated_posthash)!=0) {
+			throw new SecurityException(sprintf(elgg_echo('SecurityException:InvalidPostHash'), $calculated_posthash, $api_header->posthash));
 		}
 	}
 
-	// Return an error if not found
-	throw new APIException(sprintf(elgg_echo('APIException:MethodCallNotImplemented'), $method));
+	return true;
 }
 
-// System functions ///////////////////////////////////////////////////////////////////////
+// HMAC /////////////////////////////////////////////////////////////////////
 
 /**
- * Simple api to return a list of all api's installed on the system.
- */
-function list_all_apis() {
-	global $METHODS;
-	return $METHODS;
-}
-
-// Expose some system api functions
-expose_function("system.api.list", "list_all_apis", NULL, elgg_echo("system.api.list"), "GET", false);
-
-/**
- * The auth.gettoken API.
- * This API call lets a user log in, returning an authentication token which can be used
- * in leu of a username and password login from then on.
+ * This function looks at the super-global variable $_SERVER and extracts the various
+ * header variables needed to pass to the validation functions after performing basic validation.
  *
- * @param string username Username
- * @param string password Clear text password
+ * @return stdClass Containing all the values.
+ * @throws APIException Detailing any error.
  */
-function auth_gettoken($username, $password) {
-	if (authenticate($username, $password)) {
-		$token = obtain_user_token($username, $password);
-		if ($token) {
-			return $token;
+function get_and_validate_api_headers() {
+	$result = new stdClass;
+
+	$result->method = get_call_method();
+	// Only allow these methods
+	if (($result->method != "GET") && ($result->method != "POST")) {
+		throw new APIException(elgg_echo('APIException:NotGetOrPost'));
+	}
+
+	$result->api_key = $_SERVER['HTTP_X_ELGG_APIKEY'];
+	if ($result->api_key == "") {
+		throw new APIException(elgg_echo('APIException:MissingAPIKey'));
+	}
+
+	$result->hmac = $_SERVER['HTTP_X_ELGG_HMAC'];
+	if ($result->hmac == "") {
+		throw new APIException(elgg_echo('APIException:MissingHmac'));
+	}
+
+	$result->hmac_algo = $_SERVER['HTTP_X_ELGG_HMAC_ALGO'];
+	if ($result->hmac_algo == "") {
+		throw new APIException(elgg_echo('APIException:MissingHmacAlgo'));
+	}
+
+	$result->time = $_SERVER['HTTP_X_ELGG_TIME'];
+	if ($result->time == "") {
+		throw new APIException(elgg_echo('APIException:MissingTime'));
+	}
+
+	// Basic timecheck, think about making this smaller if we get loads of users and the cache gets really big.
+	if (($result->time<(microtime(true)-86400.00)) || ($result->time>(microtime(true)+86400.00))) {
+		throw new APIException(elgg_echo('APIException:TemporalDrift'));
+	}
+
+	if ($result->method == "POST") {
+		$result->posthash = $_SERVER['HTTP_X_ELGG_POSTHASH'];
+		if ($result->posthash == "") {
+			throw new APIException(elgg_echo('APIException:MissingPOSTHash'));
+		}
+
+		$result->posthash_algo = $_SERVER['HTTP_X_ELGG_POSTHASH_ALGO'];
+		if ($result->posthash_algo == "") {
+			throw new APIException(elgg_echo('APIException:MissingPOSTAlgo'));
+		}
+
+		$result->content_type = $_SERVER['CONTENT_TYPE'];
+		if ($result->content_type == "") {
+			throw new APIException(elgg_echo('APIException:MissingContentType'));
 		}
 	}
 
-	throw new SecurityException(elgg_echo('SecurityException:authenticationfailed'));
+	return $result;
 }
-
-// The authentication token api
-expose_function("auth.gettoken", "auth_gettoken", array(
-	"username" => array (
-		'type' => 'string'
-	),
-	"password" => array (
-		'type' => 'string'
-	)
-), elgg_echo('auth.gettoken'), "GET", false, false);
-
-
-// PAM AUTH HMAC functions ////////////////////////////////////////////////////////////////
 
 /**
  * Map various algorithms to their PHP equivs.
@@ -707,6 +942,8 @@ function cache_hmac_check_replay($hmac) {
 	return true;
 }
 
+// API key functions /////////////////////////////////////////////////////////////////////
+
 /**
  * Find an API User's details based on the provided public api key. These users are not users in the traditional sense.
  *
@@ -764,105 +1001,20 @@ function create_api_user($site_guid) {
 	return false;
 }
 
-/**
- * This function looks at the super-global variable $_SERVER and extracts the various
- * header variables needed to pass to the validation functions after performing basic validation.
- *
- * @return stdClass Containing all the values.
- * @throws APIException Detailing any error.
- */
-function get_and_validate_api_headers() {
-	$result = new stdClass;
-
-	$result->method = get_call_method();
-	// Only allow these methods
-	if (($result->method != "GET") && ($result->method!= "POST")) {
-		throw new APIException(elgg_echo('APIException:NotGetOrPost'));
-	}
-
-	$result->api_key = $_SERVER['HTTP_X_ELGG_APIKEY'];
-	if ($result->api_key == "") {
-		throw new APIException(elgg_echo('APIException:MissingAPIKey'));
-	}
-
-	$result->hmac = $_SERVER['HTTP_X_ELGG_HMAC'];
-	if ($result->hmac == "") {
-		throw new APIException(elgg_echo('APIException:MissingHmac'));
-	}
-
-	$result->hmac_algo = $_SERVER['HTTP_X_ELGG_HMAC_ALGO'];
-	if ($result->hmac_algo == "") {
-		throw new APIException(elgg_echo('APIException:MissingHmacAlgo'));
-	}
-
-	$result->time = $_SERVER['HTTP_X_ELGG_TIME'];
-	if ($result->time == "") {
-		throw new APIException(elgg_echo('APIException:MissingTime'));
-	}
-
-	// Basic timecheck, think about making this smaller if we get loads of users and the cache gets really big.
-	if (($result->time<(microtime(true)-86400.00)) || ($result->time>(microtime(true)+86400.00))) {
-		throw new APIException(elgg_echo('APIException:TemporalDrift'));
-	}
-
-	//$_SERVER['QUERY_STRING'];
-	$result->get_variables = get_parameters_for_method(get_input('method'));
-	if ($result->get_variables == "") {
-		throw new APIException(elgg_echo('APIException:NoQueryString'));
-	}
-
-	if ($result->method=="POST") {
-		$result->posthash = $_SERVER['HTTP_X_ELGG_POSTHASH'];
-		if ($result->posthash == "") {
-			throw new APIException(elgg_echo('APIException:MissingPOSTHash'));
-		}
-
-		$result->posthash_algo = $_SERVER['HTTP_X_ELGG_POSTHASH_ALGO'];
-		if ($result->posthash_algo == "") {
-			throw new APIException(elgg_echo('APIException:MissingPOSTAlgo'));
-		}
-
-		$result->content_type = $_SERVER['CONTENT_TYPE'];
-		if ($result->content_type == "") {
-			throw new APIException(elgg_echo('APIException:MissingContentType'));
-		}
-	}
-
-	return $result;
-}
+// User Authorization functions ////////////////////////////////////////////////////////////////
 
 /**
- * Return a sanitised form of the POST data sent to the script
- *
- * @return string
- */
-function get_post_data() {
-	global $GLOBALS;
-
-	$postdata = $GLOBALS['HTTP_RAW_POST_DATA'];
-
-	// Attempt another method to return post data (incase always_populate_raw_post_data is switched off)
-	if (!$postdata) {
-		$postdata = file_get_contents('php://input');
-	}
-
-	return $postdata;
-}
-
-// PAM functions //////////////////////////////////////////////////////////////////////////
-
-/**
- * Function that examines whether an authentication token is present returning true if it is, OR the requested
- * method doesn't require one.
- *
- * If a token is present and a validated user id is returned, that user is logged in to the current session.
+ * Check the user token
+ * This examines whether an authentication token is present and returns true if
+ * it is present and is valid. The user gets logged in so with the current
+ * session code of Elgg, that user will be logged out of all other sessions.
  *
  * @param unknown_type $credentials
+ * @return bool
  */
 function pam_auth_usertoken($credentials = NULL) {
-	global $METHODS, $CONFIG;
+	global $CONFIG;
 
-	$method = get_input('method');
 	$token = get_input('auth_token');
 
 	$validated_userid = validate_user_token($CONFIG->site_id, $token);
@@ -889,28 +1041,7 @@ function pam_auth_usertoken($credentials = NULL) {
 		if (!login($u)) {
 			return false;
 		}
-	}
-
-	if ((!$METHODS[$method]["require_auth_token"]) || ($validated_userid) || (isloggedin())) {
-		return true;
-	} else {
-		throw new SecurityException(elgg_echo('SecurityException:AuthTokenExpired'), ErrorResult::$RESULT_FAIL_AUTHTOKEN);
-	}
-
-	return false;
-}
-
-/**
- * Test to see whether a given function has been declared as anonymous access (it doesn't require any auth token)
- *
- * @param unknown_type $credentials
- */
-function pam_auth_anonymous_method($credentials = NULL) {
-	global $METHODS, $CONFIG;
-
-	$method = get_input('method');
-
-	if ((isset($METHODS[$method]["anonymous"])) && ($METHODS[$method]["anonymous"])) {
+		
 		return true;
 	}
 
@@ -925,90 +1056,66 @@ function pam_auth_session($credentials = NULL) {
 }
 
 /**
- * Secure authentication through headers and HMAC.
+ * Obtain a token for a user.
+ *
+ * @param string $username The username
+ * @param string $password The password
  */
-function pam_auth_hmac($credentials = NULL) {
+function obtain_user_token($username, $password) {
 	global $CONFIG;
 
-	// Get api header
-	$api_header = get_and_validate_api_headers();
+	$site = $CONFIG->site_id;
+	$user = get_user_by_username($username);
+	$time = time();
+	$time += 60*60; // token is good for one hour
+	$token = md5(rand(). microtime() . $username . $password . $time . $site);
 
-	// Pull API user details
-	$api_user = get_api_user($CONFIG->site_id, $api_header->api_key);
+	if (!$user) {
+		return false;
+	}
 
-	if ($api_user) {
-		// Get the secret key
-		$secret_key = $api_user->secret;
-
-		// Serialise parameters
-		$encoded_params = array();
-		foreach ($api_header->get_variables as $k => $v) {
-			$encoded_params[] = urlencode($k).'='.urlencode($v);
-		}
-		$params = implode('&', $encoded_params);
-
-		// Validate HMAC
-		$hmac = calculate_hmac($api_header->hmac_algo,
-			$api_header->time,
-			$api_header->api_key,
-			$secret_key,
-			$params,
-			$api_header->method == 'POST' ? $api_header->posthash : "");
-
-		if ((strcmp($api_header->hmac, $hmac) == 0) && ($api_header->hmac) && ($hmac)) {
-			// Now make sure this is not a replay
-			if (!cache_hmac_check_replay($hmac)) {
-
-				// Validate post data
-				if ($api_header->method=="POST") {
-					$postdata = get_post_data();
-					$calculated_posthash = calculate_posthash($postdata, $api_header->posthash_algo);
-
-					if (strcmp($api_header->posthash, $calculated_posthash)!=0) {
-						throw new SecurityException(sprintf(elgg_echo('SecurityException:InvalidPostHash'), $calculated_posthash, $api_header->posthash));
-					}
-				}
-
-				// If we've passed all the checks so far then we can be reasonably certain that the request is authentic, so return this fact to the PAM engine.
-				return true;
-			} else {
-				throw new SecurityException(elgg_echo('SecurityException:DupePacket'));
-			}
-		} else {
-			throw new SecurityException("HMAC is invalid.  {$api_header->hmac} != [calc]$hmac = {$api_header->hmac_algo}(**SECRET KEY**, time:{$api_header->time}, apikey:{$api_header->api_key}, get_vars:{$params}" . ($api_header->method=="POST"? "posthash:$api_header->posthash}" : ")"));
-		}
-	} else {
-		throw new SecurityException(elgg_echo('SecurityException:InvalidAPIKey'),ErrorResult::$RESULT_FAIL_APIKEY_INVALID);
+	if (insert_data("INSERT into {$CONFIG->dbprefix}users_apisessions
+				(user_guid, site_guid, token, expires) values
+				({$user->guid}, $site, '$token', '$time') on duplicate key update token='$token', expires='$time'")) {
+		return $token;
 	}
 
 	return false;
 }
 
 /**
- * A bit of a hack. Basically, this combines session and hmac, so that one of them must evaluate to true in order
- * to proceed.
+ * Validate a token against a given site.
  *
- * This ensures that this and auth_token are evaluated separately.
+ * A token registered with one site can not be used from a different apikey(site), so be aware of this
+ * during development.
  *
- * @param unknown_type $credentials
+ * @param int $site The ID of the site
+ * @param string $token The Token.
+ * @return mixed The user id attached to the token or false.
  */
-function pam_auth_session_or_hmac($credentials = NULL) {
-	if (pam_auth_session($credentials)) {
-		return true;
+function validate_user_token($site, $token) {
+	global $CONFIG;
+
+	$site = (int)$site;
+	$token = sanitise_string($token);
+
+	if (!$site) {
+		throw new ConfigurationException(elgg_echo('ConfigurationException:NoSiteID'));
 	}
 
-	if (pam_auth_hmac($credentials)) {
-		return true;
+	$time = time();
+
+	$user = get_data_row("SELECT * from {$CONFIG->dbprefix}users_apisessions
+		where token='$token' and site_guid=$site and $time < expires");
+
+	if ($user) {
+		return $user->user_guid;
 	}
 
 	return false;
 }
 
 // Client api functions ///////////////////////////////////////////////////////////////////
-
-$APICLIENT_LAST_CALL = NULL;
-$APICLIENT_LAST_CALL_RAW = "";
-$APICLIENT_LAST_ERROR = NULL;
 
 /**
  * Utility function to serialise a header array into its text representation.
@@ -1038,7 +1145,7 @@ function serialise_api_headers(array $headers) {
  * @return stdClass The unserialised response object
  */
 function send_api_call(array $keys, $url, array $call, $method = 'GET', $post_data = '', $content_type = 'application/octet-stream') {
-	global $APICLIENT_LAST_CALL, $APICLIENT_LAST_CALL_RAW, $APICLIENT_LAST_ERROR, $CONFIG;
+	global $CONFIG;
 
 	$headers = array();
 	$encoded_params = array();
@@ -1114,15 +1221,9 @@ function send_api_call(array $keys, $url, array $call, $method = 'GET', $post_da
 
 	// Send the query and get the result and decode.
 	elgg_log("APICALL: $url");
-	$APICLIENT_LAST_CALL_RAW = file_get_contents($url, false, $context);
+	$results = file_get_contents($url, false, $context);
 
-	$APICLIENT_LAST_CALL = unserialize($APICLIENT_LAST_CALL_RAW);
-
-	if (($APICLIENT_LAST_CALL) && ($APICLIENT_LAST_CALL->status!=0)) {
-		$APICLIENT_LAST_ERROR = $APICLIENT_LAST_CALL;
-	}
-
-	return $APICLIENT_LAST_CALL;
+	return $results;
 }
 
 /**
@@ -1158,7 +1259,40 @@ function send_api_post_call($url, array $call, array $keys, $post_data, $content
  * @param string $api_key Your api key
  */
 function get_standard_api_key_array($secret_key, $api_key) {
-	return array('public' => $api_key, 'private' => $api_key);
+	return array('public' => $api_key, 'private' => $secret_key);
+}
+
+// System functions ///////////////////////////////////////////////////////////////////////
+
+/**
+ * Simple api to return a list of all api's installed on the system.
+ */
+function list_all_apis() {
+	global $API_METHODS;
+	
+	// sort first
+	ksort($API_METHODS);
+	
+	return $API_METHODS;
+}
+
+/**
+ * The auth.gettoken API.
+ * This API call lets a user log in, returning an authentication token which can be used
+ * in leu of a username and password login from then on.
+ *
+ * @param string username Username
+ * @param string password Clear text password
+ */
+function auth_gettoken($username, $password) {
+	if (authenticate($username, $password)) {
+		$token = obtain_user_token($username, $password);
+		if ($token) {
+			return $token;
+		}
+	}
+
+	throw new SecurityException(elgg_echo('SecurityException:authenticationfailed'));
 }
 
 // Error handler functions ////////////////////////////////////////////////////////////////
@@ -1214,25 +1348,13 @@ function __php_api_exception_handler($exception) {
 
 	error_log("*** FATAL EXCEPTION (API) *** : " . $exception);
 
-	page_draw($exception->getMessage(), elgg_view("api/output",
-		array('result' => ErrorResult::getInstance(
-			$exception->getMessage(),
-			$exception->getCode() == 0 ? ErrorResult::$RESULT_FAIL : $exception->getCode(),
-			$exception)
-		))
-	);
+	$code   = $exception->getCode() == 0 ? ErrorResult::$RESULT_FAIL : $exception->getCode(); 
+	$result = new ErrorResult($exception->getMessage(), $code, NULL);
+	
+	page_draw($exception->getMessage(), elgg_view("api/output", array("result" => $result)));
 }
 
-// Initialisation & pagehandler ///////////////////////////////////////////////////////////
-
-/**
- * Initialise the API subsystem.
- *
- */
-function api_init() {
-	// Register a page handler, so we can have nice URLs
-	register_page_handler('api','api_endpoint_handler');
-}
+// Initialisation /////////////////////////////////////////////////////////////
 
 /**
  * Register a page handler for the various API endpoints.
@@ -1255,5 +1377,40 @@ function api_endpoint_handler($page) {
 		}
 	}
 }
+
+/**
+ * Unit tests for API 
+ */
+function api_unit_test($hook, $type, $value, $params) {
+	global $CONFIG;
+	$value[] = $CONFIG->path . 'engine/tests/services/api.php';
+	return $value;
+}
+
+/**
+ * Initialise the API subsystem.
+ *
+ */
+function api_init() {
+	// Register a page handler, so we can have nice URLs
+	register_page_handler('api','api_endpoint_handler');
+	
+	register_plugin_hook('unit_test', 'system', 'api_unit_test');
+	
+	// expose the list of api methods
+	expose_function("system.api.list", "list_all_apis", NULL, elgg_echo("system.api.list"), "GET", false, false);
+	
+	// The authentication token api
+	expose_function("auth.gettoken", 
+					"auth_gettoken", array(
+											'username' => array ('type' => 'string'),
+											'password' => array ('type' => 'string'),
+											), 
+					elgg_echo('auth.gettoken'), 
+					'POST', 
+					false, 
+					false);
+}
+
 
 register_elgg_event_handler('init','system','api_init');
