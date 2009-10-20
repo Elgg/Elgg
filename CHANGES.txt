@@ -13,3 +13,11 @@ http://code.elgg.org/elgg/.....
  API changes:
   * New plugin hook system:unit_test for adding files to unit tests.
   * $is_admin global deprecated; use elgg_set_ignore_access() instead.
+
+ Services API:
+  * Separated user and api authenticate processing
+  * New plugin hook api_key:use for keeping stats on key usage
+  * New plugin hook rest:init so plugins can configure authentication modules
+  * Moved auth.gettoken to POST for increased security
+  * Fixed REST POST bug #1114
+  * Fixed #881, #1216, #1217, #1218, #1219, #1220, #1298 
