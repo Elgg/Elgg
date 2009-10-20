@@ -18,6 +18,7 @@ class ElggCoreServicesApiTest extends ElggCoreUnitTest {
 		$API_METHODS = array();
 	}
 	
+// expose_function
 	public function testExposeFunctionNoMethod() {
 		$this->expectException('InvalidParameterException');
 		expose_function();
@@ -51,7 +52,18 @@ class ElggCoreServicesApiTest extends ElggCoreUnitTest {
 		$this->assertTrue(expose_function('test', 'foo', $parameters));
 		$this->assertIdentical($method, $API_METHODS['test']);
 	}
+
+// unexpose_function
+	public function testUnexposeFunction() {
+		global $API_METHODS;
 		
+		$this->registerFunction();
+		
+		unexpose_function('test');
+		$this->assertIdentical(array(), $API_METHODS);
+	} 
+
+// authenticate_method
 	public function testApiMethodNotImplemented() {
 		global $CONFIG;
 		
@@ -60,6 +72,41 @@ class ElggCoreServicesApiTest extends ElggCoreUnitTest {
 		$this->assertIdentical(sprintf(elgg_echo('APIException:MethodCallNotImplemented'), 'bad.method'), $obj->api[0]->message);
 	}
 
+	public function testAuthenticateForApi() {
+		$this->registerFunction(true, false);
+		
+		$this->expectException('APIException');
+		authenticate_method('test');
+	}
+
+	public function testAuthenticateForUser() {
+		$this->registerFunction(false, true);
+		
+		$this->expectException('APIException');
+		authenticate_method('test');
+	}
+	
+	public function testAuthenticateMethod() {
+		$this->registerFunction(false, false);
+		// anonymous with no user authentication
+		$this->assertTrue(authenticate_method('test'));
+	}
+	
+// api_authenticate
+	public function testApiAuthenticate() {
+		$this->registerFunction(true, false);
+		
+		$this->assertFalse(api_authenticate());
+	}
+	
+// execute_method
+	public function testExecuteMethodNonCallable() {
+		$this->registerFunction();
+		
+		$this->expectException('APIException');
+		execute_method('test');
+	}
+	
 	public function testVerifyParameters() {
 		$this->registerFunction();
 		
@@ -78,14 +125,8 @@ class ElggCoreServicesApiTest extends ElggCoreUnitTest {
 	protected function registerFunction($api_auth = false, $user_auth = false) {
 		$parameters = array('param1' => array('type' => 'int', 'required' => true),
 							'param2' => array('type' => 'bool', 'required' => false), );
-		$method['function'] = 'foo';
-		$method['parameters'] = $parameters;
-		$method['call_method'] = 'GET'; 
-		$method['description'] = '';
-		$method['require_api_auth'] = $api_auth;
-		$method['require_user_auth'] = $user_auth;
 
-		expose_function('test', 'foo', $parameters);
+		expose_function('test', 'foo', $parameters, '', 'GET', $api_auth, $user_auth);
 	}
 	
 }

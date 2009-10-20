@@ -134,6 +134,7 @@ $english = array(
 	'SecurityException:AuthTokenExpired' => "Authentication token either missing, invalid or expired.",
 	'CallException:InvalidCallMethod' => "%s must be called using '%s'",
 	'APIException:MethodCallNotImplemented' => "Method call '%s' has not been implemented.",
+	'APIException:FunctionDoesNotExist' => "Function for method '%s' is not callable",
 	'APIException:AlgorithmNotSupported' => "Algorithm '%s' is not supported or has been disabled.",
 	'ConfigurationException:CacheDirNotSet' => "Cache directory 'cache_path' not set.",
 	'APIException:NotGetOrPost' => "Request method must be GET or POST",

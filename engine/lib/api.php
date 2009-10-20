@@ -494,7 +494,7 @@ function execute_method($method) {
 
 	// function must be callable 
 	if (!(isset($API_METHODS[$method]["function"])) || !(is_callable($API_METHODS[$method]["function"]))) {
-		throw new APIException(sprintf(elgg_echo('APIException:MethodCallNotImplemented'), $method));
+		throw new APIException(sprintf(elgg_echo('APIException:FunctionDoesNotExist'), $method));
 	}
 	
 	// check http call method
