@@ -29,8 +29,7 @@ foreach ($test_files as $file) {
 
 // Only run tests in debug mode.
 if (!isset($CONFIG->debug)) {
-	// @todo display an error?
-	exit (1);
+	exit ('The site must be in debug mode to run unit tests.');
 }
 
 if (TextReporter::inCli()) {

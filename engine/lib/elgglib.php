@@ -266,10 +266,10 @@ function elgg_view($view, $vars = "", $bypass = false, $debug = false, $viewtype
 				}
 			}
 			if (!$success) {
-				elgg_log(" [This view ($view) does not exist] ", 'ERROR');
+				elgg_log("The view $view does not exist", 'ERROR');
 			}
 		} else if (!file_exists("$view_location$viewtype/$view.php")) {
-			elgg_log(" [This view ($view) does not exist] ", 'WARNING');
+			elgg_log("The view $view does not exist", 'WARNING');
 		}
 
 	}
@@ -1756,12 +1756,12 @@ function elgg_log($message, $level='NOTICE') {
 		$to_screen = !($CONFIG->debug == 'NOTICE');
 		
 		switch ($level) {
-			case 'DEBUG':
 			case 'ERROR':
 				// always report
 				elgg_dump("$level: $message", $to_screen);
 				break;
 			case 'WARNING':
+			case 'DEBUG':
 				// report execept if user wants only errors
 				if ($CONFIG->debug != 'ERROR') {
 					elgg_dump("$level: $message", $to_screen);
