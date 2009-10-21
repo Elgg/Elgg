@@ -544,17 +544,24 @@ function find_metadata($meta_name = "", $meta_value = "", $entity_type = "", $en
  * @param string $order_by Optional ordering.
  * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
  * @param true|false $count If set to true, returns the total number of entities rather than a list. (Default: false)
+ * @param true|false $case_sensitive If set to false this searches for the meta data without case sensitivity. (Default: true)
  *
  * @return int|array A list of entities, or a count if $count is set to true
  */
-function get_entities_from_metadata($meta_name, $meta_value = "", $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0, $count = false) {
+function get_entities_from_metadata($meta_name, $meta_value = "", $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0, $count = FALSE, $case_sensitive = TRUE) {
 	global $CONFIG;
 
 	$meta_n = get_metastring_id($meta_name);
-	$meta_v = get_metastring_id($meta_value);
+	$meta_v = get_metastring_id($meta_value, $case_sensitive);
 
 	$entity_type = sanitise_string($entity_type);
-	$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
+	$entity_subtype_id = get_subtype_id($entity_type, $entity_subtype);
+	if ($entity_subtype != "" && $entity_subtype_id == FALSE) {
+		return false;
+	} else {
+		$entity_subtype = $entity_subtype_id;
+	}
+	
 	$limit = (int)$limit;
 	$offset = (int)$offset;
 	if ($order_by == "") {
@@ -590,7 +597,16 @@ function get_entities_from_metadata($meta_name, $meta_value = "", $entity_type =
 		$where[] = "m.name_id='$meta_n'";
 	}
 	if ($meta_value!=="") {
-		$where[] = "m.value_id='$meta_v'";
+		if (is_array($meta_v)) {
+			$meta_v_string = "";
+			foreach ($meta_v as $v) {
+				$meta_v_string .= "'$v',";
+			}
+			$meta_v_string = rtrim($meta_v_string, ",");
+			$where[] = "m.value_id in ($meta_v_string)";
+		} else {
+			$where[] = "m.value_id='$meta_v'";
+		}
 	}
 	if ($site_guid > 0) {
 		$where[] = "e.site_guid = {$site_guid}";
@@ -641,11 +657,11 @@ function get_entities_from_metadata($meta_name, $meta_value = "", $entity_type =
  *
  * @return string A list of entities suitable for display
  */
-function list_entities_from_metadata($meta_name, $meta_value = "", $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true) {
+function list_entities_from_metadata($meta_name, $meta_value = "", $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true, $case_sensitive = true ) {
 	$offset = (int) get_input('offset');
 	$limit = (int) $limit;
-	$count = get_entities_from_metadata($meta_name, $meta_value, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, "", 0, true);
-	$entities = get_entities_from_metadata($meta_name, $meta_value, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, "", 0, false);
+	$count = get_entities_from_metadata($meta_name, $meta_value, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, "", 0, true, $case_sensitive );
+	$entities = get_entities_from_metadata($meta_name, $meta_value, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, "", 0, false, $case_sensitive );
 
 	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle, $pagination);
 }
@@ -973,3 +989,11 @@ function register_metadata_url_handler($function_name, $extender_name = "all") {
 register_plugin_hook("export", "all", "export_metadata_plugin_hook", 2);
 /** Call a function whenever an entity is updated **/
 register_elgg_event_handler('update','all','metadata_update');
+
+// unit testing
+register_plugin_hook('unit_test', 'system', 'metadata_test');
+function metadata_test($hook, $type, $value, $params) {
+	global $CONFIG;
+	$value[] = $CONFIG->path . 'engine/tests/objects/metadata.php';
+	return $value;
+}

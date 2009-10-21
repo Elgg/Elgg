@@ -19,44 +19,63 @@ $METASTRINGS_DEADNAME_CACHE = array();
  * Return the meta string id for a given tag, or false.
  *
  * @param string $string The value (whatever that is) to be stored
- * @param bool $case_sensitive Do we want to make the query case sensitive?
- * @return mixed Integer tag or false.
+ * @param bool $case_sensitive Do we want to make the query case sensitive? If not there may be more than one result
+ * @return int|array|false meta string id, array of ids or false if none found
  */
-function get_metastring_id($string, $case_sensitive = true) {
+function get_metastring_id($string, $case_sensitive = TRUE) {
 	global $CONFIG, $METASTRINGS_CACHE, $METASTRINGS_DEADNAME_CACHE;
 
 	$string = sanitise_string($string);
-	$result = array_search($string, $METASTRINGS_CACHE);
-	if ($result!==false) {
-		elgg_log("** Returning id for string:$string from cache.");
-		return $result;
-	}
+	
+    // caching doesn't work for case insensitive searches
+    if ($case_sensitive) {
+		$result = array_search($string, $METASTRINGS_CACHE);
+		
+		if ($result!==false) {
+			elgg_log("** Returning id for string:$string from cache.");
+			return $result;
+		}
 
-	// See if we have previously looked for this and found nothing
-	if (in_array($string, $METASTRINGS_DEADNAME_CACHE)) {
-		return false;
-	}
-
-	// Experimental memcache
-	$msfc = null;
-	static $metastrings_memcache;
-	if ((!$metastrings_memcache) && (is_memcache_available())) {
-		$metastrings_memcache = new ElggMemcache('metastrings_memcache');
-	}
-	if ($metastrings_memcache) {
-		$msfc = $metastrings_memcache->load($string);
-	}
-	if ($msfc) {
-		return $msfc;
+		// See if we have previously looked for this and found nothing
+		if (in_array($string, $METASTRINGS_DEADNAME_CACHE)) {
+			return false;
+		}
+		
+		// Experimental memcache
+		$msfc = null;
+		static $metastrings_memcache;
+		if ((!$metastrings_memcache) && (is_memcache_available())) {
+			$metastrings_memcache = new ElggMemcache('metastrings_memcache');
+		}
+		if ($metastrings_memcache) {
+			$msfc = $metastrings_memcache->load($string);
+		}
+		if ($msfc) {
+			return $msfc;
+		}
 	}
 
 	// Case sensitive
-	$cs = "";
 	if ($case_sensitive) {
-		$cs = " BINARY ";
+		$query = "SELECT * from {$CONFIG->dbprefix}metastrings where string= BINARY '$string' limit 1";
+	} else {
+		$query = "SELECT * from {$CONFIG->dbprefix}metastrings where strcmp(string,'$string')=0";
 	}
 
-	$row = get_data_row("SELECT * from {$CONFIG->dbprefix}metastrings where string=$cs'$string' limit 1");
+	$row = FALSE;
+	$metaStrings = get_data($query, "entity_row_to_elggstar");
+	if (is_array($metaStrings)) {
+		if (sizeof($metaStrings) > 1) {
+			$ids = array();
+			foreach($metaStrings as $metaString) {
+				$ids[] = $metaString->id;
+			}
+			return $ids;
+		} else {
+			$row = $metaStrings[0];
+		}
+	}
+	
 	if ($row) {
 		$METASTRINGS_CACHE[$row->id] = $row->string; // Cache it
 
