@@ -10,10 +10,13 @@
 	$english = array(
 	
 			'diagnostics' => 'System diagnostics',
-			'diagnostics:unittester' => 'Unit tests',
+			'diagnostics:unittester' => 'Unit Tests',
 	
 			'diagnostics:description' => 'The following diagnostic report is useful for diagnosing any problems with Elgg, and should be attached to any bug reports you file.',
 			'diagnostics:unittester:description' => 'The following are diagnostic tests which are registered by plugins and may be performed in order to debug parts of the Elgg framework.',
+			
+			'diagnostics:unittester:description' => 'Unit tests are useful to detect errors introduced by new plugins or modifications to Elgg.',
+			'diagnostics:unittester:debug' => 'The site must be in debug mode to run unit tests.',
 	
 			'diagnostics:test:executetest' => 'Execute test',
 			'diagnostics:test:executeall' => 'Execute All',
