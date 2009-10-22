@@ -116,6 +116,12 @@ function parse_urls($text) {
 	), $text);
 }
 
+/**
+ *
+ * Adds P tags.
+ * Borrowed from Wordpress.
+ *
+ **/
 function autop($pee, $br = 1) {
 	$pee = $pee . "\n"; // just to make things a little easier, pad the end
 	$pee = preg_replace('|<br />\s*<br />|', "\n\n", $pee);
