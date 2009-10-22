@@ -560,37 +560,6 @@ HORIZONTAL ELGG TOPBAR
 	display:none;
 	position:relative;
 }
-#searchform input.search_input {
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	background-color:#FFFFFF;
-	border:1px solid #BBBBBB;
-	color:#999999;
-	font-size:12px;
-	font-weight:bold;
-	margin:0pt;
-	padding:2px;
-	width:180px;
-	height:12px;
-}
-#searchform input.search_submit_button {
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	color:#333333;
-	background: #cccccc;
-	border:none;
-	font-size:12px;
-	font-weight:bold;
-	margin:0px;
-	padding:2px;
-	width:auto;
-	height:18px;
-	cursor:pointer;
-}
-#searchform input.search_submit_button:hover {
-	color:#ffffff;
-	background: #4690d6;
-}
 
 
 /* ***************************************
@@ -1274,9 +1243,9 @@ p.user_menu_friends_of {
 }
 
 /* ***************************************
-	SEARCH LISTINGS
+	ENTITY LISTINGS
 *************************************** */
-.search_listing {
+.entity_listing {
 	display: block;
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
@@ -1284,80 +1253,80 @@ p.user_menu_friends_of {
 	margin:0 10px 5px 10px;
 	padding:5px;
 }
-.search_listing_icon {
+.entity_listing_icon {
 	float:left;
 }
-.search_listing_icon img {
+.entity_listing_icon img {
 	width: 40px;
 }
-.search_listing_icon .avatar_menu_button img {
+.entity_listing_icon .avatar_menu_button img {
 	width: 15px;
 }
-.search_listing_info {
+.entity_listing_info {
 	margin-left: 50px;
 	min-height: 40px;
 }
 /* IE 6 fix */
-* html .search_listing_info {
+* html .entity_listing_info {
 	height:40px;
 }
-.search_listing_info p {
+.entity_listing_info p {
 	margin:0 0 3px 0;
 	line-height:1.2em;
 }
-.search_listing_info p.owner_timestamp {
+.entity_listing_info p.owner_timestamp {
 	margin:0;
 	padding:0;
 	color:#666666;
 	font-size: 90%;
 }
-table.search_gallery {
+table.entity_gallery {
 	border-spacing: 10px;
 	margin:0 0 0 0;
 }
-.search_gallery td {
+.entity_gallery td {
 	padding: 5px;
 }
-.search_gallery_item {
+.entity_gallery_item {
 	background: white;
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
 	width:170px;
 }
-.search_gallery_item:hover {
+.entity_gallery_item:hover {
 	background: black;
 	color:white;
 }
-.search_gallery_item .search_listing {
+.entity_gallery_item .entity_listing {
 	background: none;
 	text-align: center;
 }
-.search_gallery_item .search_listing_header {
+.entity_gallery_item .entity_listing_header {
 	text-align: center;
 }
-.search_gallery_item .search_listing_icon {
+.entity_gallery_item .entity_listing_icon {
 	position: relative;
 	text-align: center;
 }
-.search_gallery_item .search_listing_info {
+.entity_gallery_item .entity_listing_info {
 	margin: 5px;
 }
-.search_gallery_item .search_listing_info p {
+.entity_gallery_item .entity_listing_info p {
 	margin: 5px;
 	margin-bottom: 10px;
 }
-.search_gallery_item .search_listing {
+.entity_gallery_item .entity_listing {
 	background: none;
 	text-align: center;
 }
-.search_gallery_item .search_listing_icon {
+.entity_gallery_item .entity_listing_icon {
 	position: absolute;
 	margin-bottom: 20px;
 }
-.search_gallery_item .search_listing_info {
+.entity_gallery_item .entity_listing_info {
 	margin: 5px;
 }
-.search_gallery_item .search_listing_info p {
+.entity_gallery_item .entity_listing_info p {
 	margin: 5px;
 	margin-bottom: 10px;
 }
@@ -2376,7 +2345,7 @@ h3.settings {
 .admin_statistics table tr:hover {
 	background: #E4E4E4;
 }
-.admin_users_online .search_listing {
+.admin_users_online .entity_listing {
 	margin:0 0 5px 0;
 	padding:5px;
 	border:2px solid #cccccc;

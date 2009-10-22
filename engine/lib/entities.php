@@ -63,6 +63,13 @@ abstract class ElggEntity implements
 	 */
 	protected $temp_annotations;
 
+ 
+	/**
+	 * Volatile data structure for this object, allows for storage of data 
+	 * in-memory that isn't sync'd back to the metadata table.
+	 */
+	protected $volatile;
+
 	/**
 	 * Initialise the attributes array.
 	 * This is vital to distinguish between metadata and base parameters.
@@ -83,6 +90,9 @@ abstract class ElggEntity implements
 		}
 		if (!is_array($this->temp_annotations)) {
 			$this->temp_annotations = array();
+		}
+		if (!is_array($this->volatile)) {
+			$this->volatile = array();
 		}
 
 		$this->attributes['guid'] = "";
@@ -324,6 +334,35 @@ abstract class ElggEntity implements
 			return remove_metadata($this->getGUID(),$name);
 		}
 	}
+
+	
+	/**
+	 * Get a piece of volatile (non-persisted) data on this entity
+	 */
+	public function getVolatileData($name) {
+		if (!is_array($this->volatile)) {
+			$this->volatile = array();
+		}
+		
+		if (array_key_exists($name, $this->volatile)) {
+			return $this->volatile[$name];
+		} else {
+			return NULL;
+		}			
+	}
+	
+
+	/**
+	 * Set a piece of volatile (non-persisted) data on this entity
+	 */
+	public function setVolatileData($name, $value) {
+		if (!is_array($this->volatile)) {
+			$this->volatile = array();
+		}
+		    
+		$this->volatile[$name] = $value;
+	}
+
 
 	/**
 	 * Remove all entities associated with this entity
