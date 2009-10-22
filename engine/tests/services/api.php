@@ -20,6 +20,7 @@ class ElggCoreServicesApiTest extends ElggCoreUnitTest {
 	
 // expose_function
 	public function testExposeFunctionNoMethod() {
+		
 		$this->expectException('InvalidParameterException');
 		expose_function();
 	}
@@ -32,6 +33,11 @@ class ElggCoreServicesApiTest extends ElggCoreUnitTest {
 	public function testExposeFunctionBadParameters() {
 		$this->expectException('InvalidParameterException');
 		expose_function('test', 'test', 'BAD');
+	}
+	
+	public function testExposeFunctionParametersNotArray() {
+		$this->expectException('InvalidParameterException');
+		expose_function('test', 'test', array('param1' => 'string'));
 	}
 	
 	public function testExposeFunctionBadHttpMethod() {
@@ -101,9 +107,17 @@ class ElggCoreServicesApiTest extends ElggCoreUnitTest {
 	
 // execute_method
 	public function testExecuteMethodNonCallable() {
+		expose_function('test', 'foo');
+		
+		$this->expectException('ApiException');
+		execute_method('test');
+	}
+
+	public function testExecuteMethodWrongMethod() {
 		$this->registerFunction();
 		
-		$this->expectException('APIException');
+		// get when it should be a post
+		$this->expectException('CallException');
 		execute_method('test');
 	}
 	
@@ -120,13 +134,58 @@ class ElggCoreServicesApiTest extends ElggCoreUnitTest {
 	
 	public function testserialise_parameters() {
 		
+		// int and bool
+		$this->registerFunction();
+		$parameters = array('param1' => 1, 'param2' => 0);
+		$s = serialise_parameters('test', $parameters);
+		$this->assertIdentical($s, ',1,false');
+		
+		// string
+		$this->registerFunction(false, false, array('param1' => array('type' => 'string')));
+		$parameters = array('param1' => 'testing');
+		$s = serialise_parameters('test', $parameters);
+		$this->assertIdentical($s, ",'testing'");
+
+		// float
+		$this->registerFunction(false, false, array('param1' => array('type' => 'float')));
+		$parameters = array('param1' => 2.5);
+		$s = serialise_parameters('test', $parameters);
+		$this->assertIdentical($s, ',2.5');
+
+		// indexed array of strings
+		$this->registerFunction(false, false, array('param1' => array('type' => 'array')));
+		$parameters = array('param1' => array('one', 'two'));
+		$s = serialise_parameters('test', $parameters);
+		$this->assertIdentical($s, "array('0'=>'one','1'=>'two')");
+
+		// associative array of strings
+		$this->registerFunction(false, false, array('param1' => array('type' => 'array')));
+		$parameters = array('param1' => array('first' => 'one', 'second' => 'two'));
+		$s = serialise_parameters('test', $parameters);
+		$this->assertIdentical($s, "array('first'=>'one','second'=>'two')");
+
+		// indexed array of strings
+		$this->registerFunction(false, false, array('param1' => array('type' => 'array')));
+		$parameters = array('param1' => array(1, 2));
+		$s = serialise_parameters('test', $parameters);
+		$this->assertIdentical($s, "array('0'=>'1','1'=>'2')");
+
+		// test unknown type
+		$this->registerFunction(false, false, array('param1' => array('type' => 'bad')));
+		$parameters = array('param1' => 'test');
+		$this->expectException('APIException');
+		$s = serialise_parameters('test', $parameters);
 	}
 	
-	protected function registerFunction($api_auth = false, $user_auth = false) {
+	protected function registerFunction($api_auth = false, $user_auth = false, $params = null) {
 		$parameters = array('param1' => array('type' => 'int', 'required' => true),
 							'param2' => array('type' => 'bool', 'required' => false), );
+		
+		if ($params == null) {
+			$params = $parameters;
+		}
 
-		expose_function('test', 'foo', $parameters, '', 'GET', $api_auth, $user_auth);
+		expose_function('test', 'elgg_echo', $params, '', 'POST', $api_auth, $user_auth);
 	}
 	
 }

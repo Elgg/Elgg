@@ -335,8 +335,16 @@ function expose_function($method, $function, array $parameters = NULL, $descript
 	// does not check whether callable - done in execute_method()
 	$API_METHODS[$method]["function"] = $function;
 
-	if ($parameters != NULL && !is_array($parameters)) {
-		throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:APIParametersNotArray'), $method));	
+	if ($parameters != NULL) {	
+		if (!is_array($parameters)) {
+			throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:APIParametersArrayStructure'), $method));
+		}
+		
+		// catch common mistake of not setting up param array correctly
+		$first = current($parameters);
+		if (!is_array($first)) {
+			throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:APIParametersArrayStructure'), $method));
+		}
 	}
 	
 	if ($parameters != NULL) {
@@ -668,10 +676,13 @@ function serialise_parameters($method, $parameters) {
 			case 'boolean': 
 				// change word false to boolean false
 				if (strcasecmp(trim($parameters[$key]), "false") == 0) { 
-					$parameters[$key] = false;
+					$serialised_parameters .= ',false';
+				} else if ($parameters[$key] == 0) {
+					$serialised_parameters .= ',false';
+				} else {
+					$serialised_parameters .= ',true';
 				}
 				
-				$serialised_parameters .= "," . (bool)trim($parameters[$key]); 
 				break;
 			case 'string': 
 				$serialised_parameters .= ",'" .  (string)mysql_real_escape_string(trim($parameters[$key])) . "'"; 
@@ -681,17 +692,18 @@ function serialise_parameters($method, $parameters) {
 				break;
 			case 'array':
 				// we can handle an array of strings, maybe ints, definitely not booleans or other arrays										
-				$array = "array(";
 				if (!is_array($parameters[$key]))
 				{
 					throw APIException(sprintf(elgg_echo('APIException:ParameterNotArray'), $key));
 				}
-							
+									
+				$array = "array(";
+				
 				foreach ($parameters[$key] as $k => $v)
 				{
 					$k = sanitise_string($k);
 					$v = sanitise_string($v);
-								
+									
 					$array .= "'$k'=>'$v',";
 				}
 							
