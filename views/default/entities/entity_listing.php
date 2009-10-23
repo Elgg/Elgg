@@ -1,37 +1,29 @@
 <?php
-
-	/**
-	 * Elgg search listing
-	 * 
-	 * @package Elgg
-	 * @subpackage Core
-
-	 * @author Curverider Ltd
-
-	 * @link http://elgg.org/
-	 */
-
+/**
+ * Elgg entity listing
+ *
+ * @package Elgg
+ * @subpackage Core
+ * @author Curverider Ltd
+ * @link http://elgg.org/
+ */
 ?>
 
-	<div class="entity_listing">
-	
-		<div class="entity_listing_icon">
-			<?php
+<div class="entity_listing">
 
-				echo $vars['icon'];
-			
-			?>
-		</div>
-		<div class="entity_listing_info">
-			<?php
+	<div class="entity_listing_icon">
+		<?php
 
-				echo $vars['info'];
-			
-			?>
-		</div>		
-	
+			echo $vars['icon'];
+
+		?>
 	</div>
-	
-<?php
+	<div class="entity_listing_info">
+		<?php
 
-?>
+			echo $vars['info'];
+
+		?>
+	</div>
+
+</div>
