@@ -18,8 +18,8 @@ plugins, and tickets attached to Trac are expected to be in this format.
 			echo $elem;
 		}
 	}
-* Name functions and methods using underscore_character().
-* Name classes using CamelCase()
+* Name standalone functions using underscore_character().
+* Name classes using CamelCase() and methods using lowerCamelCase().
 * Name globals and constants in ALL_CAPS (FALSE, TRUE, NULL, ACCESS_FRIENDS, 
   $CONFIG).
 * Space functions like_this($required, $optional = TRUE)
