@@ -1535,3 +1535,13 @@ function users_settings_save() {
 //register actions *************************************************************
 register_elgg_event_handler('init','system','users_init',0);
 register_elgg_event_handler('pagesetup','system','users_pagesetup',0);
+
+/**
+ * Runs unit tests for ElggObject
+ */
+register_plugin_hook('unit_test', 'system', 'users_test');
+function users_test($hook, $type, $value, $params) {
+	global $CONFIG;
+	$value[] = "{$CONFIG->path}engine/tests/objects/users.php";
+	return $value;
+}
