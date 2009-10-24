@@ -255,20 +255,25 @@ function elgg_view($view, $vars = "", $bypass = false, $debug = false, $viewtype
 
 	foreach($viewlist as $priority => $view) {
 		$view_location = elgg_get_view_location($view, $viewtype);
+		$view_file = "$view_location$viewtype/$view.php";
 
-		if (file_exists("$view_location$viewtype/$view.php")
-			&& !include("$view_location$viewtype/$view.php")) {
+		// try to include view, defaulting to 'default' view if error.
+
+		if (file_exists($view_file)	&& !include($view_file)) {
 			$success = false;
 
 			if ($viewtype != "default") {
-				if (include("{$view_location}default/$view.php")) {
+				$default_view_file = "{$view_location}default/$view.php";
+				if (file_exists($default_view_file) && include($default_view_file)) {
 					$success = true;
 				}
 			}
+
 			if (!$success) {
-				elgg_log("The view $view does not exist", 'ERROR');
+				elgg_log("The view $view could not be included", 'WARNING');
 			}
-		} else if (!file_exists("$view_location$viewtype/$view.php")) {
+
+		} else if (!file_exists($view_file)) {
 			elgg_log("The view $view does not exist", 'WARNING');
 		}
 
@@ -625,6 +630,7 @@ function elgg_view_entity(ElggEntity $entity, $full = false, $bypass = true, $de
 			}
 		}
 	}
+
 	if (!isset($entity_class)) {
 		return false;
 	}
@@ -1749,12 +1755,12 @@ function __elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
  */
 function elgg_log($message, $level='NOTICE') {
 	global $CONFIG;
-	
+
 	// only log when debugging is enabled
 	if (isset($CONFIG->debug)) {
 		// debug to screen or log?
 		$to_screen = !($CONFIG->debug == 'NOTICE');
-		
+
 		switch ($level) {
 			case 'ERROR':
 				// always report
@@ -1775,10 +1781,10 @@ function elgg_log($message, $level='NOTICE') {
 				}
 				break;
 		}
-		
+
 		return TRUE;
 	}
-	
+
 	return FALSE;
 }
 
@@ -2332,7 +2338,7 @@ function __elgg_shutdown_hook() {
 	global $START_MICROTIME;
 
 	trigger_elgg_event('shutdown', 'system');
-	
+
 	$time = (float)(microtime(TRUE) - $START_MICROTIME);
 	elgg_log("Page {$_SERVER['REQUEST_URI']} generated in $time seconds", 'DEBUG');
 }
