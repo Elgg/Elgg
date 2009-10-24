@@ -254,15 +254,16 @@ END;
  * @param string $table_prefix Optional table. prefix for the access code.
  * @param int $owner
  */
-function get_access_sql_suffix($table_prefix = "", $owner = null) {
+function get_access_sql_suffix($table_prefix = '', $owner = null) {
 	global $ENTITY_SHOW_HIDDEN_OVERRIDE, $CONFIG;
 
 	$sql = "";
 	$friends_bit = "";
 	$enemies_bit = "";
 
-	if ($table_prefix)
+	if ($table_prefix) {
 			$table_prefix = sanitise_string($table_prefix) . ".";
+	}
 
 	if (!isset($owner)) {
 		$owner = get_loggedin_userid();
