@@ -1638,9 +1638,14 @@ function get_entity($guid) {
  *
  * 	count => TRUE|FALSE return a count instead of entities
  *
+ * 	wheres => array() Additional where clauses to AND together
+ *
  * @return array
  */
 function elgg_get_entities(array $options = array()) {
+	global $CONFIG;
+
+	//@todo allow use of singular types that rewrite to plural ones.
 	$defaults = array(
 		'types' => NULL,
 		'subtypes' => NULL,
@@ -1659,13 +1664,17 @@ function elgg_get_entities(array $options = array()) {
 		'created_time_upper' => NULL,
 
 		'count' => FALSE,
+		'wheres' => array()
 	);
 
 	$options = array_merge($defaults, $options);
 
-	global $CONFIG;
+	if (!is_array($options['wheres'])) {
+		$options['wheres'] = array($options['wheres']);
+	}
 
-	$wheres = array();
+	$wheres = $options['wheres'];
+
 	$wheres[] = elgg_get_entity_type_subtype_where_sql('e', $options['types'], $options['subtypes'], $options['type_subtype_pairs']);
 	$wheres[] = elgg_get_entity_site_where_sql('e', $options['site_guids']);
 	$wheres[] = elgg_get_entity_owner_where_sql('e', $options['owner_guids']);
@@ -1787,10 +1796,13 @@ $count = false, $site_guid = 0, $container_guid = null, $timelower = 0, $timeupp
 /**
  * Returns type and subtype SQL appropriate for inclusion in an IN clause.
  *
- * @param $subtype
- * @return unknown_type
+ * @param string $table entity table prefix.
+ * @param NULL|$types
+ * @param NULL|array $subtypes
+ * @param NULL|array $pairs
+ * @return FALSE|string
  */
-function elgg_get_entity_type_subtype_where_sql($prefix, $types, $subtypes = NULL, $pairs = NULL) {
+function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pairs) {
 	// subtype depends upon type.
 	if ($subtypes && !$types) {
 		elgg_log("Cannot set subtypes without type.", 'WARNING');
@@ -1841,9 +1853,9 @@ function elgg_get_entity_type_subtype_where_sql($prefix, $types, $subtypes = NUL
 			}
 		}
 		if ($subtype_ids_str = implode(',', $subtype_ids)) {
-			$wheres[] = "({$prefix}.type = '$type' AND {$prefix}.subtype IN ($subtype_ids_str))";
+			$wheres[] = "({$table}.type = '$type' AND {$table}.subtype IN ($subtype_ids_str))";
 		} else {
-			$wheres[] = "({$prefix}.type = '$type')";
+			$wheres[] = "({$table}.type = '$type')";
 		}
 
 	} else {
@@ -1868,10 +1880,10 @@ function elgg_get_entity_type_subtype_where_sql($prefix, $types, $subtypes = NUL
 				}
 
 				if ($paired_subtype_ids_str = implode(',', $paired_subtype_ids)) {
-					$wheres[] = "({$prefix}.type = '$paired_type' AND {$prefix}.subtype IN ($paired_subtype_ids_str))";
+					$wheres[] = "({$table}.type = '$paired_type' AND {$table}.subtype IN ($paired_subtype_ids_str))";
 				}
 			} else {
-				$wheres[] = "({$prefix}.type = '$paired_type')";
+				$wheres[] = "({$table}.type = '$paired_type')";
 			}
 		}
 	}
@@ -1879,7 +1891,7 @@ function elgg_get_entity_type_subtype_where_sql($prefix, $types, $subtypes = NUL
 	// pairs override the above.  return false if they don't exist.
 	if (is_array($wheres) && count($wheres)) {
 		$where = implode(' OR ', $wheres);
-		return " ($where) ";
+		return "($where)";
 	}
 
 	return '';
@@ -1890,15 +1902,14 @@ function elgg_get_entity_type_subtype_where_sql($prefix, $types, $subtypes = NUL
  * Returns SQL for owner and containers.
  *
  * @todo Probably DRY up once things are settled.
- * @param str $prefix
- * @param array $owner_guids
- * @param array $container_guids
- * @param array $owner_container_pairs optional
- * @return str
+ * @param str $table
+ * @param NULL|array $owner_guids
+ * @return FALSE|str
  */
-function elgg_get_entity_owner_where_sql($prefix, $owner_guids) {
+function elgg_get_entity_owner_where_sql($table, $owner_guids) {
 	// short circuit if nothing requested
-	if (!$owner_guids) {
+	// 0 is a valid owner_guid.
+	if (!$owner_guids && $owner_guids !== 0) {
 		return '';
 	}
 
@@ -1909,32 +1920,33 @@ function elgg_get_entity_owner_where_sql($prefix, $owner_guids) {
 
 	$owner_guids_sanitised = array();
 	foreach ($owner_guids as $owner_guid) {
-		if (!$owner_guid || ($owner_guid != sanitise_int($owner_guid))) {
+		if (($owner_guid != sanitise_int($owner_guid))) {
 			return FALSE;
 		}
 		$owner_guids_sanitised[] = $owner_guid;
 	}
 
 	$where = '';
-	if ($owner_str = implode(',', $owner_guids_sanitised)) {
-		$where = " ({$prefix}.owner_guid IN ($owner_str)) ";
+
+	// implode(',', 0) returns 0.
+	if (FALSE !== $owner_str = implode(',', $owner_guids_sanitised)) {
+		$where = "({$table}.owner_guid IN ($owner_str))";
 	}
 
 	return $where;
 }
 
 /**
- * Returns SQL for owner and containers.
+ * Returns SQL for containers.
  *
- * @param str $prefix
- * @param array $owner_guids
- * @param array $container_guids
- * @param array $owner_container_pairs optional
- * @return str
+ * @param string $table entity table prefix
+ * @param NULL|array $container_guids
+ * @return FALSE|string
  */
-function elgg_get_entity_container_where_sql($prefix, $container_guids) {
+function elgg_get_entity_container_where_sql($table, $container_guids) {
 	// short circuit if nothing is requested.
-	if (!$container_guids) {
+	// 0 is a valid container_guid.
+	if (!$container_guids && $container_guids !== 0) {
 		return '';
 	}
 
@@ -1952,8 +1964,10 @@ function elgg_get_entity_container_where_sql($prefix, $container_guids) {
 	}
 
 	$where = '';
-	if ($container_str = implode(',', $container_guids_sanitised)) {
-		$where = "{$prefix}.container_guid IN ($container_guid)";
+
+	// implode(',', 0) returns 0.
+	if (FALSE !== $container_str = implode(',', $container_guids_sanitised)) {
+		$where = "({$table}.container_guid IN ($container_str))";
 	}
 
 	return $where;
@@ -1962,39 +1976,39 @@ function elgg_get_entity_container_where_sql($prefix, $container_guids) {
 /**
  * Returns SQL where clause for entity time limits.
  *
- * @param $prefix Prefix for entity table name.
- * @param $time_created_upper
- * @param $time_created_lower
- * @param $time_updated_upper
- * @param $time_updated_lower
+ * @param string $table Prefix for entity table name.
+ * @param NULL|int $time_created_upper
+ * @param NULL|int $time_created_lower
+ * @param NULL|int $time_updated_upper
+ * @param NULL|int $time_updated_lower
  *
- * @return mixed FALSE on fail, STR on success.
+ * @return FALSE|str FALSE on fail, string on success.
  */
-function elgg_get_entity_time_where_sql($prefix, $time_created_upper = NULL, $time_created_lower = NULL,
+function elgg_get_entity_time_where_sql($table, $time_created_upper = NULL, $time_created_lower = NULL,
 	$time_updated_upper = NULL, $time_updated_lower = NULL) {
 
 	$wheres = array();
 
 	// exploit PHP's loose typing (quack) to check that they are INTs and not str cast to 0
 	if ($time_created_upper && $time_created_upper == sanitise_int($time_created_upper)) {
-		$wheres[] = "{$prefix}.time_created <= $time_created_upper";
+		$wheres[] = "{$table}.time_created <= $time_created_upper";
 	}
 
 	if ($time_created_lower && $time_created_lower == sanitise_int($time_created_lower)) {
-		$wheres[] = "{$prefix}.time_created >= $time_created_lower";
+		$wheres[] = "{$table}.time_created >= $time_created_lower";
 	}
 
 	if ($time_updated_upper && $time_updated_upper == sanitise_int($time_updated_upper)) {
-		$wheres[] = "{$prefix}.time_updated <= $time_updated_upper";
+		$wheres[] = "{$table}.time_updated <= $time_updated_upper";
 	}
 
 	if ($time_updated_lower && $time_updated_lower == sanitise_int($time_updated_lower)) {
-		$wheres[] = "{$prefix}.time_updated >= $time_updated_lower";
+		$wheres[] = "{$table}.time_updated >= $time_updated_lower";
 	}
 
 	if (is_array($wheres) && count($wheres) > 0) {
 		$where_str = implode(' AND ', $wheres);
-		return " ($where_str) ";
+		return "($where_str)";
 	}
 
 	return '';
@@ -2003,11 +2017,11 @@ function elgg_get_entity_time_where_sql($prefix, $time_created_upper = NULL, $ti
 /**
  * Gets SQL for site entities
  *
- * @param $prefix
- * @param $site_guids
- * @return mixed FALSE on fail, STR on success
+ * @param string $table entity table name
+ * @param NULL|array $site_guids
+ * @return FALSE|string
  */
-function elgg_get_entity_site_where_sql($prefix, $site_guids) {
+function elgg_get_entity_site_where_sql($table, $site_guids) {
 	// short circuit if nothing requested
 	if (!$site_guids) {
 		return '';
@@ -2017,13 +2031,19 @@ function elgg_get_entity_site_where_sql($prefix, $site_guids) {
 		$site_guids = array($site_guids);
 	}
 
-	$site_guids_santitised = array();
+	$site_guids_sanitised = array();
 	foreach ($site_guids as $site_guid) {
-		if (!$site_guid || ($site_guid != santitise_int($site_guids))) {
+		if (!$site_guid || ($site_guid != sanitise_int($site_guids))) {
 			return FALSE;
 		}
-		$site_guids_santitised[] = $site_guid;
+		$site_guids_sanitised[] = $site_guid;
 	}
+
+	if ($site_guids_str = implode(',', $site_guids_sanitised)) {
+		return "({$table}.site_guid IN ($site_guids_str))";
+	}
+
+	return '';
 }
 
 /**
