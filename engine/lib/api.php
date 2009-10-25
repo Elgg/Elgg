@@ -348,8 +348,9 @@ function expose_function($method, $function, array $parameters = NULL, $descript
 	}
 	
 	if ($parameters != NULL) {
-		// ensure the required flag is set correctly in default case
+		// ensure the required flag is set correctly in default case for each parameter
 		foreach ($parameters as $key => $value) {
+			// check if 'required' was specified - if not, make it true
 			if (!array_key_exists('required', $value)) {
 				$parameters[$key]['required'] = true;
 			}
@@ -627,14 +628,13 @@ function verify_parameters($method, $parameters) {
 
 	// check that the parameters were registered correctly and all required ones are there
 	foreach ($API_METHODS[$method]['parameters'] as $key => $value) {
-		// must be array to describe parameter in expose and type must be defined
+		// this tests the expose structure: must be array to describe parameter and type must be defined
 		if (!is_array($value) || !isset($value['type'])) {
 			throw new APIException(sprintf(elgg_echo('APIException:InvalidParameter'), $key, $method));
 		}
 				
 		// Check that the variable is present in the request if required
-		$is_param_required = !isset($value['required']) || $value['required'];
-		if ($is_param_required && !array_key_exists($key, $parameters)) {
+		if ($value['required'] && !array_key_exists($key, $parameters)) {
 			throw new APIException(sprintf(elgg_echo('APIException:MissingParameterInMethod'), $key, $method));
 		}
 	}
@@ -739,9 +739,12 @@ function api_auth_key() {
 	// check that it is active
 	$api_user = get_api_user($CONFIG->site_id, $api_key);
 	if (!$api_user) {
-		throw new APIException(elgg_echo('APIException:MissingAPIKey'));
+		// key is not active or does not exist
+		throw new APIException(elgg_echo('APIException:BadAPIKey'));
 	}
 	
+	// can be used for keeping stats
+	// plugin can also return false to fail this authentication method
 	return trigger_plugin_hook('api_key', 'use', $api_key, true);
 }
 
@@ -957,6 +960,34 @@ function cache_hmac_check_replay($hmac) {
 // API key functions /////////////////////////////////////////////////////////////////////
 
 /**
+ * Generate a new API user for a site, returning a new keypair on success.
+ *
+ * @param int $site_guid The GUID of the site. (default is current site)
+ */
+function create_api_user($site_guid) {
+	global $CONFIG;
+
+	if (!isset($site_guid)) {
+		$site_guid = $CONFIG->site_id;	
+	}
+	
+	$site_guid = (int)$site_guid;
+
+	$public = sha1(rand().$site_guid.microtime());
+	$secret = sha1(rand().$site_guid.microtime().$public);
+
+	$insert = insert_data("INSERT into {$CONFIG->dbprefix}api_users
+		(site_guid, api_key, secret) values
+		($site_guid, '$public', '$secret')");
+
+	if ($insert) {
+		return get_api_user($site_guid, $public);
+	}
+
+	return false;
+}
+
+/**
  * Find an API User's details based on the provided public api key. These users are not users in the traditional sense.
  *
  * @param int $site_guid The GUID of the site.
@@ -989,29 +1020,6 @@ function remove_api_user($site_guid, $api_key) {
 	return false;
 }
 
-/**
- * Generate a new API user for a site, returning a new keypair on success.
- *
- * @param int $site_guid The GUID of the site.
- */
-function create_api_user($site_guid) {
-	global $CONFIG;
-
-	$site_guid = (int)$site_guid;
-
-	$public = sha1(rand().$site_guid.microtime());
-	$secret = sha1(rand().$site_guid.microtime().$public);
-
-	$insert = insert_data("INSERT into {$CONFIG->dbprefix}api_users
-		(site_guid, api_key, secret) values
-		($site_guid, '$public', '$secret')");
-
-	if ($insert) {
-		return get_api_user($site_guid, $public);
-	}
-
-	return false;
-}
 
 // User Authorization functions ////////////////////////////////////////////////////////////////
 
@@ -1029,7 +1037,7 @@ function pam_auth_usertoken($credentials = NULL) {
 
 	$token = get_input('auth_token');
 
-	$validated_userid = validate_user_token($CONFIG->site_id, $token);
+	$validated_userid = validate_user_token($token);
 
 	if ($validated_userid) {
 		$u = get_entity($validated_userid);
@@ -1071,16 +1079,16 @@ function pam_auth_session($credentials = NULL) {
  * Obtain a token for a user.
  *
  * @param string $username The username
- * @param string $password The password
+ * @param int $expire minutes until token expires (default is 60 minutes)
  */
-function obtain_user_token($username, $password) {
+function create_user_token($username, $expire = 60) {
 	global $CONFIG;
 
-	$site = $CONFIG->site_id;
+	$site_guid = $CONFIG->site_id;
 	$user = get_user_by_username($username);
 	$time = time();
-	$time += 60*60; // token is good for one hour
-	$token = md5(rand(). microtime() . $username . $password . $time . $site);
+	$time += 60 * $expire;
+	$token = md5(rand(). microtime() . $username . $time . $site_guid);
 
 	if (!$user) {
 		return false;
@@ -1088,7 +1096,7 @@ function obtain_user_token($username, $password) {
 
 	if (insert_data("INSERT into {$CONFIG->dbprefix}users_apisessions
 				(user_guid, site_guid, token, expires) values
-				({$user->guid}, $site, '$token', '$time') on duplicate key update token='$token', expires='$time'")) {
+				({$user->guid}, $site_guid, '$token', '$time') on duplicate key update token='$token', expires='$time'")) {
 		return $token;
 	}
 
@@ -1101,30 +1109,67 @@ function obtain_user_token($username, $password) {
  * A token registered with one site can not be used from a different apikey(site), so be aware of this
  * during development.
  *
- * @param int $site The ID of the site
  * @param string $token The Token.
+ * @param int $site_guid The ID of the site (default is current site)
  * @return mixed The user id attached to the token or false.
  */
-function validate_user_token($site, $token) {
+function validate_user_token($token, $site_guid) {
 	global $CONFIG;
 
-	$site = (int)$site;
-	$token = sanitise_string($token);
-
-	if (!$site) {
-		throw new ConfigurationException(elgg_echo('ConfigurationException:NoSiteID'));
+	if (!isset($site_guid)) {
+		$site_guid = $CONFIG->site_id;	
 	}
+	
+	$site_guid = (int)$site_guid;
+	$token = sanitise_string($token);
 
 	$time = time();
 
 	$user = get_data_row("SELECT * from {$CONFIG->dbprefix}users_apisessions
-		where token='$token' and site_guid=$site and $time < expires");
+		where token='$token' and site_guid=$site_guid and $time < expires");
 
 	if ($user) {
 		return $user->user_guid;
 	}
 
 	return false;
+}
+
+/**
+ * Remove user token
+ * 
+ * @param string $token
+ * @param int $site_guid The ID of the site (default is current site)
+ * @return bool
+ */
+function remove_user_token($token, $site_guid) {
+	global $CONFIG;
+	
+	if (!isset($site_guid)) {
+		$site_guid = $CONFIG->site_id;	
+	}
+	
+	$site_guid = (int)$site_guid;
+	$token = sanitise_string($token);
+		
+	return delete_data("DELETE from {$CONFIG->dbprefix}users_apisessions 
+		where site_guid=$site_guid and token='$token'");	
+}
+
+/**
+ * Remove expired tokens
+ * 
+ * @return bool
+ */
+function remove_expired_user_tokens() {
+	global $CONFIG;
+	
+	$site_guid = $CONFIG->site_id;
+	
+	$time = time();
+	
+	return delete_data("DELETE from {$CONFIG->dbprefix}users_apisessions 
+		where site_guid=$site_guid and expires < $time");	
 }
 
 // Client api functions ///////////////////////////////////////////////////////////////////
@@ -1298,7 +1343,7 @@ function list_all_apis() {
  */
 function auth_gettoken($username, $password) {
 	if (authenticate($username, $password)) {
-		$token = obtain_user_token($username, $password);
+		$token = create_user_token($username);
 		if ($token) {
 			return $token;
 		}

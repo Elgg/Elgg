@@ -20,34 +20,67 @@ class ElggCoreServicesApiTest extends ElggCoreUnitTest {
 	
 // expose_function
 	public function testExposeFunctionNoMethod() {
-		
-		$this->expectException('InvalidParameterException');
-		expose_function();
+		try {
+			expose_function();
+			$this->assertTrue(FALSE);
+		} catch (Exception $e) {
+			$this->assertIsA($e, 'InvalidParameterException');
+			$this->assertIdentical($e->getMessage(), elgg_echo('InvalidParameterException:APIMethodOrFunctionNotSet'));
+		}
 	}
 	
 	public function testExposeFunctionNoFunction() {
-		$this->expectException('InvalidParameterException');
-		expose_function('test');
+		try {
+			expose_function('test');
+			$this->assertTrue(FALSE);
+		} catch (Exception $e) {
+			$this->assertIsA($e, 'InvalidParameterException');
+			$this->assertIdentical($e->getMessage(), elgg_echo('InvalidParameterException:APIMethodOrFunctionNotSet'));
+		}
 	}
 	
 	public function testExposeFunctionBadParameters() {
-		$this->expectException('InvalidParameterException');
-		expose_function('test', 'test', 'BAD');
+		try {
+			expose_function('test', 'test', 'BAD');
+			$this->assertTrue(FALSE);
+		} catch (Exception $e) {
+			$this->assertIsA($e, 'InvalidParameterException');
+			$this->assertIdentical($e->getMessage(), sprintf(elgg_echo('InvalidParameterException:APIParametersArrayStructure'), 'test'));
+		}
 	}
 	
-	public function testExposeFunctionParametersNotArray() {
-		$this->expectException('InvalidParameterException');
-		expose_function('test', 'test', array('param1' => 'string'));
+	public function testExposeFunctionParametersBadArray() {
+		try {
+			expose_function('test', 'test', array('param1' => 'string'));
+			$this->assertTrue(FALSE);
+		} catch (Exception $e) {
+			$this->assertIsA($e, 'InvalidParameterException');
+			$this->assertIdentical($e->getMessage(), sprintf(elgg_echo('InvalidParameterException:APIParametersArrayStructure'), 'test'));
+		}
 	}
 	
 	public function testExposeFunctionBadHttpMethod() {
-		$this->expectException('InvalidParameterException');
-		expose_function('test', 'test', null, '', 'BAD');
+		try {
+			expose_function('test', 'test', null, '', 'BAD');
+			$this->assertTrue(FALSE);
+		} catch (Exception $e) {
+			$this->assertIsA($e, 'InvalidParameterException');
+			$this->assertIdentical($e->getMessage(), sprintf(elgg_echo('InvalidParameterException:UnrecognisedHttpMethod'), 'BAD', 'test'));
+		}
 	}
 	
 	public function testExposeFunctionSuccess() {
 		global $API_METHODS;
-		$parameters = array('param1' => array('type' => 'int', 'required' => true));
+		// this is a general test but also tests specifically for setting 'required' correctly
+		$parameters = array('param1' => array('type' => 'int', 'required' => true), 
+							'param2' => array('type' => 'bool'),
+							'param3' => array('type' => 'string', 'required' => false), );
+		
+		$this->assertTrue(expose_function('test', 'foo', $parameters));
+		
+		$parameters = array('param1' => array('type' => 'int', 'required' => true), 
+							'param2' => array('type' => 'bool', 'required' => true),
+							'param3' => array('type' => 'string', 'required' => false), );
 		$method['function'] = 'foo';
 		$method['parameters'] = $parameters;
 		$method['call_method'] = 'GET'; 
@@ -55,7 +88,6 @@ class ElggCoreServicesApiTest extends ElggCoreUnitTest {
 		$method['require_api_auth'] = false;
 		$method['require_user_auth'] = false;
 
-		$this->assertTrue(expose_function('test', 'foo', $parameters));
 		$this->assertIdentical($method, $API_METHODS['test']);
 	}
 
@@ -70,26 +102,36 @@ class ElggCoreServicesApiTest extends ElggCoreUnitTest {
 	} 
 
 // authenticate_method
-	public function testApiMethodNotImplemented() {
-		global $CONFIG;
-		
-		$results = send_api_get_call($CONFIG->wwwroot . 'pg/api/rest/json/', array('method' => 'bad.method'));
-		$obj = json_decode($results);
-		$this->assertIdentical(sprintf(elgg_echo('APIException:MethodCallNotImplemented'), 'bad.method'), $obj->api[0]->message);
+	public function testAuthenticateMethodNotImplemented() {
+		try {
+			authenticate_method('BAD');
+			$this->assertTrue(FALSE);
+		} catch (Exception $e) {
+			$this->assertIsA($e, 'APIException');
+			$this->assertIdentical($e->getMessage(), sprintf(elgg_echo('APIException:MethodCallNotImplemented'), 'BAD'));
+		}				
 	}
-
-	public function testAuthenticateForApi() {
-		$this->registerFunction(true, false);
-		
-		$this->expectException('APIException');
-		authenticate_method('test');
+	
+	public function testAuthenticateMethodApiAuth() {
+		$this->registerFunction(true);
+		try {
+			authenticate_method('test');
+			$this->assertTrue(FALSE);
+		} catch (Exception $e) {
+			$this->assertIsA($e, 'APIException');
+			$this->assertIdentical($e->getMessage(), elgg_echo('APIException:APIAuthenticationFailed'));
+		}				
 	}
-
-	public function testAuthenticateForUser() {
+	
+	public function testAuthenticateMethodUserAuth() {
 		$this->registerFunction(false, true);
-		
-		$this->expectException('APIException');
-		authenticate_method('test');
+		try {
+			authenticate_method('test');
+			$this->assertTrue(FALSE);
+		} catch (Exception $e) {
+			$this->assertIsA($e, 'APIException');
+			$this->assertIdentical($e->getMessage(), elgg_echo('APIException:UserAuthenticationFailed'));
+		}				
 	}
 	
 	public function testAuthenticateMethod() {
@@ -98,27 +140,67 @@ class ElggCoreServicesApiTest extends ElggCoreUnitTest {
 		$this->assertTrue(authenticate_method('test'));
 	}
 	
-// api_authenticate
-	public function testApiAuthenticate() {
-		$this->registerFunction(true, false);
-		
-		$this->assertFalse(api_authenticate());
-	}
-	
 // execute_method
+	public function testExecuteMethodNotImplemented() {
+		try {
+			execute_method('BAD');
+			$this->assertTrue(FALSE);
+		} catch (Exception $e) {
+			$this->assertIsA($e, 'APIException');
+			$this->assertIdentical($e->getMessage(), sprintf(elgg_echo('APIException:MethodCallNotImplemented'), 'BAD'));
+		}				
+	}
+
 	public function testExecuteMethodNonCallable() {
 		expose_function('test', 'foo');
 		
-		$this->expectException('ApiException');
-		execute_method('test');
+		try {
+			execute_method('test');
+			$this->assertTrue(FALSE);
+		} catch (Exception $e) {
+			$this->assertIsA($e, 'APIException');
+			$this->assertIdentical($e->getMessage(), sprintf(elgg_echo('APIException:FunctionDoesNotExist'), 'test'));
+		}				
 	}
 
 	public function testExecuteMethodWrongMethod() {
 		$this->registerFunction();
 		
-		// get when it should be a post
-		$this->expectException('CallException');
-		execute_method('test');
+		try {
+			// GET when it should be a POST
+			execute_method('test');
+			$this->assertTrue(FALSE);
+		} catch (Exception $e) {
+			$this->assertIsA($e, 'CallException');
+			$this->assertIdentical($e->getMessage(), sprintf(elgg_echo('CallException:InvalidCallMethod'), 'test', 'POST'));
+		}						
+	}
+
+// verify parameters
+	public function testVerifyParametersTypeNotSet() {
+		$params = array('param1' => array('required' => true));
+		expose_function('test', 'elgg_echo', $params);
+		
+		try {
+			verify_parameters('test', array());
+			$this->assertTrue(FALSE);
+		} catch (Exception $e) {
+			$this->assertIsA($e, 'APIException');
+			$this->assertIdentical($e->getMessage(), sprintf(elgg_echo('APIException:InvalidParameter'), 'param1', 'test'));
+		}						
+	}
+	
+	public function testVerifyParametersMissing() {
+		$params = array('param1' => array('type' => 'int', 'required' => true));
+		expose_function('test', 'elgg_echo', $params);
+		
+		try {
+			verify_parameters('test', array());
+			$this->assertTrue(FALSE);
+		} catch (Exception $e) {
+			$this->assertIsA($e, 'APIException');
+			$this->assertIdentical($e->getMessage(), sprintf(elgg_echo('APIException:MissingParameterInMethod'), 'param1', 'test'));
+		}						
 	}
 	
 	public function testVerifyParameters() {
@@ -126,13 +208,9 @@ class ElggCoreServicesApiTest extends ElggCoreUnitTest {
 		
 		$parameters = array('param1' => 0);
 		$this->assertTrue(verify_parameters('test', $parameters));
-		
-		$parameters = array('param2' => true);
-		$this->expectException('APIException');
-		$this->assertTrue(verify_parameters('test', $parameters));
 	}
 	
-	public function testserialise_parameters() {
+	public function testSerialiseParameters() {
 		
 		// int and bool
 		$this->registerFunction();
@@ -175,6 +253,34 @@ class ElggCoreServicesApiTest extends ElggCoreUnitTest {
 		$parameters = array('param1' => 'test');
 		$this->expectException('APIException');
 		$s = serialise_parameters('test', $parameters);
+	}
+	
+// api key methods
+	public function testApiAuthenticate() {
+		$this->assertFalse(api_authenticate());
+	}
+	
+	public function testApiAuthKeyNoKey() {
+		try {
+			api_auth_key();
+			$this->assertTrue(FALSE);
+		} catch (Exception $e) {
+			$this->assertIsA($e, 'APIException');
+			$this->assertIdentical($e->getMessage(), elgg_echo('APIException:MissingAPIKey'));
+		}
+	}
+
+	public function testApiAuthKeyBadKey() {
+		global $CONFIG;
+		
+		$CONFIG->input['api_key'] = 'BAD';
+		try {
+			api_auth_key();
+			$this->assertTrue(FALSE);
+		} catch (Exception $e) {
+			$this->assertIsA($e, 'APIException');
+			$this->assertIdentical($e->getMessage(), elgg_echo('APIException:BadAPIKey'));
+		}
 	}
 	
 	protected function registerFunction($api_auth = false, $user_auth = false, $params = null) {
