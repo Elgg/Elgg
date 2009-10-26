@@ -59,7 +59,7 @@ function get_metastring_id($string, $case_sensitive = TRUE) {
 	if ($case_sensitive) {
 		$query = "SELECT * from {$CONFIG->dbprefix}metastrings where string= BINARY '$string' limit 1";
 	} else {
-		$query = "SELECT * from {$CONFIG->dbprefix}metastrings where strcmp(string,'$string')=0";
+		$query = "SELECT * from {$CONFIG->dbprefix}metastrings where string = '$string'";
 	}
 
 	$row = FALSE;
