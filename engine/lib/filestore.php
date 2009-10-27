@@ -250,7 +250,7 @@ class ElggDiskFilestore extends ElggFilestore {
 			throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:MissingOwner'), $file->getFilename(), $file->guid));
 		}
 
-		return $this->dir_root . $this->make_file_matrix($owner->username) . $file->getFilename();
+		return $this->dir_root . $this->make_file_matrix($owner->guid) . $file->getFilename();
 	}
 
 	public function grabFile(ElggFile $file) {
@@ -262,8 +262,8 @@ class ElggDiskFilestore extends ElggFilestore {
 	}
 
 	public function getSize($prefix,$container_guid) {
-		if ($container_guid && ($container=get_entity($container_guid)) && ($username = $container->username)) {
-			return get_dir_size($this->dir_root.$this->make_file_matrix($username).$prefix);
+		if ($container_guid) {
+			return get_dir_size($this->dir_root.$this->make_file_matrix($container_guid).$prefix);
 		} else {
 			return false;
 		}
@@ -317,9 +317,56 @@ class ElggDiskFilestore extends ElggFilestore {
 	/**
 	 * Construct the filename matrix.
 	 *
-	 * @param string $filename
+	 * @param int | string $identifier
+	 * @return str
 	 */
-	protected function make_file_matrix($filename) {
+	protected function make_file_matrix($identifier) {
+		if (is_numeric($identifier)) {
+			return $this->user_file_matrix($identifier);
+		}
+		
+		return $this->deprecated_file_matrix($identifier);
+	}
+	
+	/**
+	 * Construct the filename matrix with user info
+	 *
+	 * This method will generate a matrix using the entity's creation time and
+	 * unique guid. This is intended only to determine a user's data directory.
+	 *
+	 * @param int $guid
+	 * @return str
+	 */
+	protected function user_file_matrix($guid) {
+		// lookup the entity
+		$user = get_entity($guid);
+		if ($user->type != 'user')
+		{
+			// only to be used for user directories
+			return FALSE;
+		}
+		
+		if (!$user->time_created) {
+			// fall back to deprecated method
+			return $this->deprecated_file_matrix($user->username);
+		}
+		
+		$time_created = date('Y/m/d', $user->time_created);
+		return "$time_created/$user->guid/";
+	}
+
+	/**
+	 * Construct the filename matrix using a string
+	 *
+	 * Particularly, this is used with a username to generate the file storage
+	 * location.
+	 *
+	 * @deprecated for user directories: use user_file_matrix() instead.
+	 *
+	 * @param str $filename
+	 * @return str
+	 */
+	protected function deprecated_file_matrix($filename) {
 		$invalid_fs_chars = '*\'\\/"!$%^&*.%(){}[]#~?<>;|¬`@-+=';
 
 		$matrix = "";
@@ -1317,3 +1364,11 @@ function filestore_init() {
 
 // Register a startup event
 register_elgg_event_handler('init', 'system', 'filestore_init', 100);
+
+// Unit testing
+register_plugin_hook('unit_test', 'system', 'filestore_test');
+function filestore_test($hook, $type, $value, $params) {
+	global $CONFIG;
+	$value[] = "{$CONFIG->path}engine/tests/objects/filestore.php";
+	return $value;
+}

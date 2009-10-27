@@ -142,6 +142,16 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 		$object->delete();
 	}
 	
+	public function testElggUserSave() {
+		// new object
+		$this->AssertEqual($this->user->getGUID(), 0);
+		$guid = $this->user->save();
+		$this->AssertNotEqual($guid, 0);
+		
+		// clean up
+		$this->user->delete();
+	}
+	
 	
 	protected function fetchUser($guid) {
 		global $CONFIG;
