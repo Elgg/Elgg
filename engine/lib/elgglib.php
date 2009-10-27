@@ -238,7 +238,6 @@ function elgg_view($view, $vars = "", $bypass = false, $debug = false, $viewtype
 		}
 	}
 
-
 	// Get the current viewtype
 	if (empty($viewtype)) {
 		$viewtype = elgg_get_viewtype();
@@ -256,27 +255,16 @@ function elgg_view($view, $vars = "", $bypass = false, $debug = false, $viewtype
 	foreach($viewlist as $priority => $view) {
 		$view_location = elgg_get_view_location($view, $viewtype);
 		$view_file = "$view_location$viewtype/$view.php";
+		$default_view_file = "{$view_location}default/$view.php";
 
 		// try to include view, defaulting to 'default' view if error.
-
-		if (file_exists($view_file)	&& !include($view_file)) {
-			$success = false;
-
-			if ($viewtype != "default") {
-				$default_view_file = "{$view_location}default/$view.php";
-				if (file_exists($default_view_file) && include($default_view_file)) {
-					$success = true;
-				}
+		if (!file_exists($view_file) || !include($view_file)) {
+			if ($viewtype != 'default' && file_exists($default_view_file) && include($default_view_file)) {
+				elgg_log("$viewtype/$view view does not exist.  Using default/$view instead.", 'WARNING');
+			} else {
+				elgg_log("Neither $viewtype/$view nor default/$view view exists.", 'WARNING');
 			}
-
-			if (!$success) {
-				elgg_log("The view $view could not be included", 'WARNING');
-			}
-
-		} else if (!file_exists($view_file)) {
-			elgg_log("The view $view does not exist", 'WARNING');
 		}
-
 	}
 
 	// Save the output buffer into the $content variable
