@@ -819,9 +819,8 @@ $count = FALSE, $case_sensitive = TRUE) {
 		$options['count'] = $count;
 	}
 
-	if ($case_sensitive) {
-		$options['case_sensitive'] = $case_sensitive;
-	}
+	// need to be able to pass false
+	$options['case_sensitive'] = $case_sensitive;
 
 	return elgg_get_entities_from_metadata($options);
 }
