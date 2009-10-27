@@ -1640,6 +1640,8 @@ function get_entity($guid) {
  *
  * 	wheres => array() Additional where clauses to AND together
  *
+ * 	joins => array() Additional joins
+ *
  * @return array
  */
 function elgg_get_entities(array $options = array()) {
@@ -1647,12 +1649,17 @@ function elgg_get_entities(array $options = array()) {
 
 	//@todo allow use of singular types that rewrite to plural ones.
 	$defaults = array(
+		'type' => NULL,
 		'types' => NULL,
 		'subtypes' => NULL,
+		'subtype' => NULL,
 		'type_subtype_pairs' => NULL,
 		'owner_guids' => NULL,
+		'owner_guid' => NULL,
 		'container_guids' => NULL,
+		'container_guid' => NULL,
 		'site_guids' => $CONFIG->site_guid,
+		'site_guid' => NULL,
 
 		'order_by' => 'time_created desc',
 		'limit' => 10,
@@ -1664,11 +1671,16 @@ function elgg_get_entities(array $options = array()) {
 		'created_time_upper' => NULL,
 
 		'count' => FALSE,
-		'wheres' => array()
+		'wheres' => array(),
+		'joins' => array()
 	);
 
 	$options = array_merge($defaults, $options);
 
+	$singulars = array('type', 'subtype', 'owner_guid', 'container_guid', 'site_guid');
+	$options = elgg_normalise_plural_options_array($options, $singulars);
+
+	// evaluate where clauses
 	if (!is_array($options['wheres'])) {
 		$options['wheres'] = array($options['wheres']);
 	}
@@ -1682,6 +1694,9 @@ function elgg_get_entities(array $options = array()) {
 	$wheres[] = elgg_get_entity_time_where_sql('e', $options['created_time_upper'],
 		$options['created_time_lower'], $options['modified_time_upper'], $options['modified_time_lower']);
 
+	// remove identical where clauses
+	$wheres = array_unique($wheres);
+
 	// see if any functions failed
 	// remove empty strings on successful functions
 	foreach ($wheres as $i => $where) {
@@ -1692,18 +1707,40 @@ function elgg_get_entities(array $options = array()) {
 		}
 	}
 
-	if (!$options['count']) {
-		$query = "SELECT * FROM {$CONFIG->dbprefix}entities e WHERE";
-	} else {
-		$query = "SELECT count(guid) as total FROM {$CONFIG->dbprefix}entities e WHERE";
+	// evaluate join clauses
+	if (!is_array($options['joins'])) {
+		$options['joins'] = array($options['joins']);
 	}
+
+	// remove identical join clauses
+	$joins = array_unique($options['joins']);
+
+	foreach ($joins as $i => $join) {
+		if ($join === FALSE) {
+			return FALSE;
+		} elseif (empty($join)) {
+			unset($joins[$i]);
+		}
+	}
+
+	if (!$options['count']) {
+		$query = "SELECT DISTINCT e.* FROM {$CONFIG->dbprefix}entities e ";
+	} else {
+		$query = "SELECT count(DISTINCT e.guid) as total FROM {$CONFIG->dbprefix}entities e ";
+	}
+
+	foreach ($joins as $j) {
+		$query .= " $j ";
+	}
+
+	$query .= ' WHERE ';
 
 	foreach ($wheres as $w) {
 		$query .= " $w AND ";
 	}
 
 	// Add access controls
-	$query .= get_access_sql_suffix();
+	$query .= get_access_sql_suffix('e');
 	if (!$options['count']) {
 		$order_by = sanitise_string($options['order_by']);
 		$query .= " ORDER BY $order_by";
@@ -1714,6 +1751,7 @@ function elgg_get_entities(array $options = array()) {
 			$query .= " LIMIT $offset, $limit";
 		}
 		$dt = get_data($query, "entity_row_to_elggstar");
+		//@todo normalize this to array()
 		return $dt;
 	} else {
 		$total = get_data_row($query);
@@ -1746,15 +1784,27 @@ $count = false, $site_guid = 0, $container_guid = null, $timelower = 0, $timeupp
 
 	$options = array();
 	if ($type) {
-		$options['types'] = $type;
+		if (is_array($type)) {
+			$options['types'] = $type;
+		} else {
+			$options['type'] = $type;
+		}
 	}
 
 	if ($subtype) {
-		$options['subtypes'] = $subtype;
+		if (is_array($subtype)) {
+			$options['subtypes'] = $subtype;
+		} else {
+			$options['subtype'] = $subtype;
+		}
 	}
 
 	if ($owner_guid) {
-		$options['owner_guids'] = $owner_guid;
+		if (is_array($owner_guid)) {
+			$options['owner_guids'] = $owner_guid;
+		} else {
+			$options['owner_guid'] = $owner_guid;
+		}
 	}
 
 	if ($order_by) {
@@ -1826,8 +1876,6 @@ function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pair
 
 		if ($subtypes && !is_array($subtypes)) {
 			$subtypes = array($subtypes);
-		} else {
-			$subtypes = NULL;
 		}
 
 		// subtypes are based upon types, so we need to look at each

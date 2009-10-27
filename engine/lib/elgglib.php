@@ -2123,6 +2123,37 @@ function is_not_null($string) {
 	return true;
 }
 
+
+/**
+ * Normalise the singular keys in an options array
+ * to the plural keys.
+ *
+ * @param $options
+ * @param $singulars
+ * @return array
+ */
+function elgg_normalise_plural_options_array($options, $singulars) {
+	foreach ($singulars as $singular) {
+		$plural = $singular . 's';
+
+		// normalize the singular to plural
+		if (isset($options[$singular]) && $options[$singular] !== NULL && $options[$singular] !== FALSE) {
+			if (isset($options[$plural])) {
+				if (is_array($options[$plural])) {
+					$options[$plural][] = $options[$singlar];
+				} else {
+					$options[$plural] = array($options[$plural], $options[$singular]);
+				}
+			} else {
+				$options[$plural] = array($options[$singular]);
+			}
+		}
+		$options[$singular] = NULL;
+	}
+
+	return $options;
+}
+
 /**
  * Get the full URL of the current page.
  *

@@ -532,9 +532,236 @@ function find_metadata($meta_name = "", $meta_value = "", $entity_type = "", $en
 	return get_data($query, "row_to_elggmetadata");
 }
 
+
+
+/**
+ * Get all entities.
+ *
+ * @param array $options Array in format:
+ *
+ * 	types => NULL|STR entity type
+ *
+ * 	subtypes => NULL|STR entity subtype
+ *
+ * 	type_subtype_pairs => NULL|ARR (type = '$type' AND subtype = '$subtype') pairs
+ *
+ * 	owner_guids => NULL|INT entity guid
+ *
+ * 	container_guids => NULL|INT container_guid
+ *
+ * 	site_guids => NULL (current_site)|INT site_guid
+ *
+ * 	order_by => NULL (time_created desc)|STR SQL order by clause
+ *
+ * 	limit => NULL (10)|INT SQL limit clause
+ *
+ * 	offset => NULL (0)|INT SQL offset clause
+ *
+ * 	time_lower => NULL|INT Time lower boundary in epoch time
+ *
+ * 	time_upper => NULL|INT Time upper boundary in epoch time
+ *
+ * 	count => TRUE|FALSE return a count instead of entities
+ *
+ * 	case_sensitive => TRUE|FALSE case sensitive metadata names
+ *
+ * @return array
+ */
+function elgg_get_entities_from_metadata(array $options = array()) {
+	$defaults = array(
+		'names' => NULL,
+		'name' => NULL,
+		'values' => NULL,
+		'value' => NULL,
+		'name_value_pairs' => NULL,
+		'case_sensitive' => TRUE
+	);
+
+	$options = array_merge($defaults, $options);
+
+	$singulars = array('name', 'value');
+	$options = elgg_normalise_plural_options_array($options, $singulars);
+
+	if (!is_array($options['wheres'])) {
+		$options['wheres'] = array();
+	}
+
+	$clauses = elgg_get_entity_metadata_where_sql('e', $options['names'],
+		$options['values'], $options['name_value_pairs'], $options['case_sensitive']);
+
+	// merge wheres to pass to get_entities()
+	if (isset($options['wheres']) && !is_array($options['wheres'])) {
+		$options['wheres'] = array($options['wheres']);
+	} elseif (!isset($options['wheres'])) {
+		$options['wheres'] = array();
+	}
+
+	$options['wheres'][] = $clauses['wheres'];
+
+	// merge joins to pass to get_entities()
+	if (isset($options['joins']) && !is_array($options['joins'])) {
+		$options['joins'] = array($options['joins']);
+	} elseif (!isset($options['joins'])) {
+		$options['joins'] = array();
+	}
+
+	$options['joins'] = array_merge($options['joins'], $clauses['joins']);
+
+	return elgg_get_entities($options);
+}
+
+/**
+ * Returns metadata name and value SQL where for entities.
+ * nb: $names and $values are not paired. Use $pairs for this.
+ * Pairs default to '=' operand.
+ *
+ * @param $names
+ * @param $values
+ * @return FALSE|array False on fail, array('joins', 'wheres')
+ */
+function elgg_get_entity_metadata_where_sql($prefix, $names = NULL, $values = NULL, $pairs = NULL, $case_sensitive = TRUE) {
+	global $CONFIG;
+
+	// short circuit if nothing requested
+	// 0 is a valid (if not ill-conceived) metadata name.
+	// 0 is also a valid metadata value for FALSE, NULL, or 0
+	if ((!$names && $names !== 0)
+		&& (!$values && $values !== 0)
+		&& (!$pairs && $pairs !== 0)) {
+		return '';
+	}
+
+	// binary forces byte-to-byte comparision of strings, making
+	// it case and diacritical mark sensitive.
+	// only supported on values.
+	$binary = ($case_sensitive) ? ' BINARY ' : '';
+
+	$access = get_access_sql_suffix('md');
+
+	$return = array (
+		'joins' => array (),
+		'wheres' => array()
+	);
+
+	// get names wheres and joins
+	$names_where = '';
+	if ($names !== NULL) {
+		$return['joins'][] = "JOIN {$CONFIG->dbprefix}metadata md on e.guid = md.entity_guid";
+		if (!is_array($names)) {
+			$names = array($names);
+		}
+
+		$sanitised_names = array();
+		foreach ($names as $name) {
+			// normalise to 0.
+			if (!$name) {
+				$name = '0';
+			}
+			$sanitised_names[] = "'$name'";
+		}
+
+		if ($names_str = implode(',', $sanitised_names)) {
+			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msn on md.name_id = msn.id";
+			$names_where = "(msn.string IN ($names_str))";
+		}
+	}
+
+	// get values wheres and joins
+	$values_where = '';
+	if ($values !== NULL) {
+		$return['joins'][] = "JOIN {$CONFIG->dbprefix}metadata md on e.guid = md.entity_guid";
+
+		if (!is_array($values)) {
+			$values = array($values);
+		}
+
+		$sanitised_values = array();
+		foreach ($values as $value) {
+			// normalize to 0
+			if (!$value) {
+				$value = 0;
+			}
+			$sanitised_values[] = "'$value'";
+		}
+
+		if ($values_str = implode(',', $sanitised_values)) {
+			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msv on md.value_id = msv.id";
+			$values_where = "({$binary}msv.string IN ($values_str))";
+		}
+	}
+
+	if ($names_where && $values_where) {
+		// @todo DECIDE IF AND OR OR!
+		// And rationale: Being more specific shouldn't give you more results, should give fewer.
+		$wheres[] = "($names_where AND $values_where AND $access)";
+	} elseif ($names_where) {
+		$wheres[] = "($names_where AND $access)";
+	} elseif ($values_where) {
+		$wheres[] = "($values_where AND $access)";
+	}
+
+	// add pairs
+	// pairs must be in arrays.
+	if (is_array($pairs)) {
+		$return['joins'][] = "JOIN {$CONFIG->dbprefix}metadata md on e.guid = md.entity_guid";
+		$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msn on md.name_id = msn.id";
+		$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msv on md.value_id = msv.id";
+
+		// check if this is an array of pairs or just a single pair.
+		if (isset($pairs['name']) || isset($pairs['value'])) {
+			$pairs = array($pairs);
+		}
+
+		$pair_wheres = array();
+
+		foreach ($pairs as $pair) {
+			// must have at least a name and value
+			if (!isset($pair['name']) || !isset($pair['value'])) {
+				// @todo should probably return false.
+				continue;
+			}
+
+			// case sensitivity can be specified per pair.
+			// default to higher level setting.
+			if (isset($pair['case_sensitive'])) {
+				$pair_binary = ($pair['case_sensitive']) ? ' BINARY ' : '';
+			} else {
+				$pair_binary = $binary;
+			}
+
+			if (isset($pair['operand'])) {
+				$operand = mysql_real_escape_string($pair['operand']);
+			} else {
+				$operand = ' = ';
+			}
+
+			// if the value is an int, don't quote it because str '15' < str '5'
+			// if the operand is IN don't quote it because quoting should be done already.
+			//$value = trim(strtolower($operand)) == 'in' ? $pair['value'] : "'{$pair['value']}'";
+			if (trim(strtolower($operand)) == 'in' || sanitise_int($pair['value'])) {
+				$value = $pair['value'];
+			} else {
+				$value = "'{$pair['value']}'";
+			}
+
+
+			$pair_wheres[] = "(msn.string = '{$pair['name']}' AND {$pair_binary}msv.string $operand $value)";
+		}
+
+		if ($where = implode (' OR ', $pair_wheres)) {
+			$wheres[] = "($where AND $access)";
+		}
+	}
+
+	$return['wheres'] = implode(' OR ', $wheres);
+
+	return $return;
+}
+
 /**
  * Return a list of entities based on the given search criteria.
  *
+ * @deprecated 1.7 use elgg_get_entities_from_metadata().
  * @param mixed $meta_name
  * @param mixed $meta_value
  * @param string $entity_type The type of entity to look for, eg 'site' or 'object'
@@ -548,97 +775,55 @@ function find_metadata($meta_name = "", $meta_value = "", $entity_type = "", $en
  *
  * @return int|array A list of entities, or a count if $count is set to true
  */
-function get_entities_from_metadata($meta_name, $meta_value = "", $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0, $count = FALSE, $case_sensitive = TRUE) {
-	global $CONFIG;
+function get_entities_from_metadata($meta_name, $meta_value = "", $entity_type = "", $entity_subtype = "",
+$owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0,
+$count = FALSE, $case_sensitive = TRUE) {
 
-	$meta_n = get_metastring_id($meta_name);
-	$meta_v = get_metastring_id($meta_value, $case_sensitive);
+	$options = array();
 
-	$entity_type = sanitise_string($entity_type);
-	$entity_subtype_id = get_subtype_id($entity_type, $entity_subtype);
-	if ($entity_subtype != "" && $entity_subtype_id == FALSE) {
-		return false;
-	} else {
-		$entity_subtype = $entity_subtype_id;
-	}
-	
-	$limit = (int)$limit;
-	$offset = (int)$offset;
-	if ($order_by == "") {
-		$order_by = "e.time_created desc";
-	} else {
-		$order_by = "e.time_created, {$order_by}";
-	}
-	$order_by = sanitise_string($order_by);
-	$site_guid = (int) $site_guid;
-	if ((is_array($owner_guid) && (count($owner_guid)))) {
-		foreach($owner_guid as $key => $guid) {
-			$owner_guid[$key] = (int) $guid;
-		}
-	} else {
-		$owner_guid = (int) $owner_guid;
-	}
-	if ($site_guid == 0) {
-		$site_guid = $CONFIG->site_guid;
+	$options['names'] = $meta_name;
+
+	if ($meta_value) {
+		$options['values'] = $meta_value;
 	}
 
-	//$access = get_access_list();
-
-	$where = array();
-
-	if ($entity_type!=="") {
-		$where[] = "e.type='$entity_type'";
+	if ($entity_type) {
+		$options['types'] = $entity_type;
 	}
 
 	if ($entity_subtype) {
-		$where[] = "e.subtype=$entity_subtype";
-	}
-	if ($meta_name!=="") {
-		$where[] = "m.name_id='$meta_n'";
-	}
-	if ($meta_value!=="") {
-		if (is_array($meta_v)) {
-			$meta_v_string = "";
-			foreach ($meta_v as $v) {
-				$meta_v_string .= "'$v',";
-			}
-			$meta_v_string = rtrim($meta_v_string, ",");
-			$where[] = "m.value_id in ($meta_v_string)";
-		} else {
-			$where[] = "m.value_id='$meta_v'";
-		}
-	}
-	if ($site_guid > 0) {
-		$where[] = "e.site_guid = {$site_guid}";
-	}
-	if (is_array($owner_guid)) {
-		$where[] = "e.container_guid in (".implode(",",$owner_guid).")";
-	} else if ($owner_guid > 0) {
-		$where[] = "e.container_guid = {$owner_guid}";
+		$options['subtypes'] = $entity_subtype;
 	}
 
-	if (!$count) {
-		$query = "SELECT distinct e.* ";
-	} else {
-		$query = "SELECT count(distinct e.guid) as total ";
+	if ($owner_guid) {
+		$options['owner'] = $owner_guid;
 	}
 
-	$query .= "from {$CONFIG->dbprefix}entities e JOIN {$CONFIG->dbprefix}metadata m on e.guid = m.entity_guid where";
-	foreach ($where as $w) {
-		$query .= " $w and ";
+	if ($limit) {
+		$options['limit'] = $limit;
 	}
-	$query .= get_access_sql_suffix("e"); // Add access controls
-	$query .= ' and ' . get_access_sql_suffix("m"); // Add access controls
 
-	if (!$count) {
-		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
-		return get_data($query, "entity_row_to_elggstar");
-	} else {
-		if ($row = get_data_row($query)) {
-			return $row->total;
-		}
+	if ($offset) {
+		$options['offset'] = $offset;
 	}
-	return false;
+
+	if ($order_by) {
+		$options['order_by'];
+	}
+
+	if ($site_guid) {
+		$options['site_guid'];
+	}
+
+	if ($count) {
+		$options['count'] = $count;
+	}
+
+	if ($case_sensitive) {
+		$options['case_sensitive'] = $case_sensitive;
+	}
+
+	return elgg_get_entities_from_metadata($options);
 }
 
 /**
