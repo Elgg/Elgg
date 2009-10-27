@@ -1919,7 +1919,6 @@ function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pair
 					if ($paired_subtype && ($paired_subtype_id = get_subtype_id($paired_type, $paired_subtype))) {
 						$paired_subtype_ids[] = $paired_subtype_id;
 					} else {
-						//var_dump("Returning false on:", $paired_type, $paired_subtypes, $paired_subtype, $paired_subtype_id);
 						// @todo should return false.
 						//return FALSE;
 						elgg_log("Paired type-subtype $paired_type:$paired_subtype' does not exist!", 'WARNING');
