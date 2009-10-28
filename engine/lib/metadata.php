@@ -584,10 +584,6 @@ function elgg_get_entities_from_metadata(array $options = array()) {
 	$singulars = array('name', 'value', 'name_value_pair');
 	$options = elgg_normalise_plural_options_array($options, $singulars);
 
-	if (!is_array($options['wheres'])) {
-		$options['wheres'] = array();
-	}
-
 	$clauses = elgg_get_entity_metadata_where_sql('e', $options['names'], $options['values'],
 		$options['name_value_pairs'], $options['name_value_pairs_operator'], $options['case_sensitive']);
 
@@ -617,8 +613,12 @@ function elgg_get_entities_from_metadata(array $options = array()) {
  * nb: $names and $values are not paired. Use $pairs for this.
  * Pairs default to '=' operand.
  *
- * @param $names
- * @param $values
+ * @param $prefix
+ * @param ARR|NULL $names
+ * @param ARR|NULL $values
+ * @param ARR|NULL $pairs array of names / values / operands
+ * @param AND|OR $pair_operator Operator to use to join the where clauses for pairs
+ * @param BOOL $case_sensitive
  * @return FALSE|array False on fail, array('joins', 'wheres')
  */
 function elgg_get_entity_metadata_where_sql($prefix, $names = NULL, $values = NULL, $pairs = NULL, $pair_operator = 'AND', $case_sensitive = TRUE) {
