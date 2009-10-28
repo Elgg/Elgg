@@ -539,31 +539,15 @@ function find_metadata($meta_name = "", $meta_value = "", $entity_type = "", $en
  *
  * @param array $options Array in format:
  *
- * 	types => NULL|STR entity type
+ * 	names => NULL|ARR metadata names
  *
- * 	subtypes => NULL|STR entity subtype
+ * 	values => NULL|ARR metadata values
  *
- * 	type_subtype_pairs => NULL|ARR (type = '$type' AND subtype = '$subtype') pairs
+ * 	name_value_pairs => NULL|ARR (name = 'name', value => 'value', 'operand' => 'AND', 'case_sensitive' => TRUE) entries
  *
- * 	owner_guids => NULL|INT entity guid
+ * 	name_value_pairs_operator => NULL|STR The operator to use for combining (name = value) OPERATOR (name = value)
  *
- * 	container_guids => NULL|INT container_guid
- *
- * 	site_guids => NULL (current_site)|INT site_guid
- *
- * 	order_by => NULL (time_created desc)|STR SQL order by clause
- *
- * 	limit => NULL (10)|INT SQL limit clause
- *
- * 	offset => NULL (0)|INT SQL offset clause
- *
- * 	time_lower => NULL|INT Time lower boundary in epoch time
- *
- * 	time_upper => NULL|INT Time upper boundary in epoch time
- *
- * 	count => TRUE|FALSE return a count instead of entities
- *
- * 	case_sensitive => TRUE|FALSE case sensitive metadata names
+ * 	case_sensitive => BOOL Overal Case sensitive
  *
  * @return array
  */
