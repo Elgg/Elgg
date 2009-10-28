@@ -535,7 +535,7 @@ function find_metadata($meta_name = "", $meta_value = "", $entity_type = "", $en
 
 
 /**
- * Get all entities.
+ * Returns entities based upon metadata.
  *
  * @param array $options Array in format:
  *
@@ -621,7 +621,7 @@ function elgg_get_entities_from_metadata(array $options = array()) {
  * @param BOOL $case_sensitive
  * @return FALSE|array False on fail, array('joins', 'wheres')
  */
-function elgg_get_entity_metadata_where_sql($prefix, $names = NULL, $values = NULL, $pairs = NULL, $pair_operator = 'AND', $case_sensitive = TRUE) {
+function elgg_get_entity_metadata_where_sql($table, $names = NULL, $values = NULL, $pairs = NULL, $pair_operator = 'AND', $case_sensitive = TRUE) {
 	global $CONFIG;
 
 	// short circuit if nothing requested
@@ -648,7 +648,7 @@ function elgg_get_entity_metadata_where_sql($prefix, $names = NULL, $values = NU
 	// get names wheres and joins
 	$names_where = '';
 	if ($names !== NULL) {
-		$return['joins'][] = "JOIN {$CONFIG->dbprefix}metadata md on e.guid = md.entity_guid";
+		$return['joins'][] = "JOIN {$CONFIG->dbprefix}metadata md on {$table}.guid = md.entity_guid";
 		if (!is_array($names)) {
 			$names = array($names);
 		}
@@ -671,7 +671,7 @@ function elgg_get_entity_metadata_where_sql($prefix, $names = NULL, $values = NU
 	// get values wheres and joins
 	$values_where = '';
 	if ($values !== NULL) {
-		$return['joins'][] = "JOIN {$CONFIG->dbprefix}metadata md on e.guid = md.entity_guid";
+		$return['joins'][] = "JOIN {$CONFIG->dbprefix}metadata md on {$table}.guid = md.entity_guid";
 
 		if (!is_array($values)) {
 			$values = array($values);
@@ -717,6 +717,8 @@ function elgg_get_entity_metadata_where_sql($prefix, $names = NULL, $values = NU
 
 		$pair_wheres = array();
 
+		// @todo when the pairs are > 3 should probably split the query up to
+		// denormalize the strings table.
 		$i = 1;
 		foreach ($pairs as $index => $pair) {
 			// @todo move this elsewhere?
@@ -729,7 +731,7 @@ function elgg_get_entity_metadata_where_sql($prefix, $names = NULL, $values = NU
 			}
 
 			// @todo The multiple joins are only needed when the operator is AND
-			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metadata md{$i} on e.guid = md{$i}.entity_guid";
+			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metadata md{$i} on {$table}.guid = md{$i}.entity_guid";
 			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msn{$i} on md{$i}.name_id = msn{$i}.id";
 			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msv{$i} on md{$i}.value_id = msv{$i}.id";
 
