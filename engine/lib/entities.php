@@ -1751,6 +1751,7 @@ function elgg_get_entities(array $options = array()) {
 			$query .= " LIMIT $offset, $limit";
 		}
 		$dt = get_data($query, "entity_row_to_elggstar");
+
 		//@todo normalize this to array()
 		return $dt;
 	} else {
@@ -1777,7 +1778,7 @@ function elgg_get_entities(array $options = array()) {
 function get_entities($type = "", $subtype = "", $owner_guid = 0, $order_by = "", $limit = 10, $offset = 0,
 $count = false, $site_guid = 0, $container_guid = null, $timelower = 0, $timeupper = 0) {
 
-	elgg_log('get_entities() is deprecated in 1.7 by elgg_get_entities()!', 'WARNING');
+	elgg_log('get_entities() was deprecated in 1.7 by elgg_get_entities()!', 'WARNING');
 	// rewrite owner_guid to container_guid to emulate old functionality
 	$container_guid = $owner_guid;
 	$owner_guid = NULL;
@@ -2137,7 +2138,7 @@ function elgg_list_entities($options) {
  * @return unknown_type
  */
 function list_entities($type= "", $subtype = "", $owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = false, $pagination = true) {
-	elgg_log('list_entities() deprecated in 1.7.  Use elgg_list_entities()!', 'WARNING');
+	elgg_log('list_entities() was deprecated in 1.7.  Use elgg_list_entities()!', 'WARNING');
 
 	$options = array();
 
@@ -2452,7 +2453,7 @@ function delete_entity($guid, $recursive = true) {
  * @param int $owner_guid The GUID of the owning user
  */
 function delete_entities($type = "", $subtype = "", $owner_guid = 0) {
-	elgg_log('delete_entities() is deprecated in 1.7 because no one should use it.');
+	elgg_log('delete_entities() was deprecated in 1.7 because no one should use it.');
 	return false;
 }
 
@@ -2974,7 +2975,7 @@ function entities_page_handler($page) {
  * @return unknown_type
  */
 function list_registered_entities($owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = false, $allowedtypes = true) {
-	elgg_log('list_registered_entities() deprecated in 1.7 by elgg_list_registered_entities().', 'WARNING');
+	elgg_log('list_registered_entities() was deprecated in 1.7 by elgg_list_registered_entities().', 'WARNING');
 
 	$options = array();
 

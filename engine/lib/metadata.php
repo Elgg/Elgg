@@ -573,21 +573,23 @@ function elgg_get_entities_from_metadata(array $options = array()) {
 		'name' => NULL,
 		'values' => NULL,
 		'value' => NULL,
+		'name_value_pair' => NULL,
 		'name_value_pairs' => NULL,
+		'name_value_pairs_operator' => 'AND',
 		'case_sensitive' => TRUE
 	);
 
 	$options = array_merge($defaults, $options);
 
-	$singulars = array('name', 'value');
+	$singulars = array('name', 'value', 'name_value_pair');
 	$options = elgg_normalise_plural_options_array($options, $singulars);
 
 	if (!is_array($options['wheres'])) {
 		$options['wheres'] = array();
 	}
 
-	$clauses = elgg_get_entity_metadata_where_sql('e', $options['names'],
-		$options['values'], $options['name_value_pairs'], $options['case_sensitive']);
+	$clauses = elgg_get_entity_metadata_where_sql('e', $options['names'], $options['values'],
+		$options['name_value_pairs'], $options['name_value_pairs_operator'], $options['case_sensitive']);
 
 	// merge wheres to pass to get_entities()
 	if (isset($options['wheres']) && !is_array($options['wheres'])) {
@@ -619,7 +621,7 @@ function elgg_get_entities_from_metadata(array $options = array()) {
  * @param $values
  * @return FALSE|array False on fail, array('joins', 'wheres')
  */
-function elgg_get_entity_metadata_where_sql($prefix, $names = NULL, $values = NULL, $pairs = NULL, $case_sensitive = TRUE) {
+function elgg_get_entity_metadata_where_sql($prefix, $names = NULL, $values = NULL, $pairs = NULL, $pair_operator = 'AND', $case_sensitive = TRUE) {
 	global $CONFIG;
 
 	// short circuit if nothing requested
@@ -632,7 +634,7 @@ function elgg_get_entity_metadata_where_sql($prefix, $names = NULL, $values = NU
 	}
 
 	// binary forces byte-to-byte comparision of strings, making
-	// it case and diacritical mark sensitive.
+	// it case- and diacritical-mark- sensitive.
 	// only supported on values.
 	$binary = ($case_sensitive) ? ' BINARY ' : '';
 
@@ -691,8 +693,6 @@ function elgg_get_entity_metadata_where_sql($prefix, $names = NULL, $values = NU
 	}
 
 	if ($names_where && $values_where) {
-		// @todo DECIDE IF AND OR OR!
-		// And rationale: Being more specific shouldn't give you more results, should give fewer.
 		$wheres[] = "($names_where AND $values_where AND $access)";
 	} elseif ($names_where) {
 		$wheres[] = "($names_where AND $access)";
@@ -703,9 +703,12 @@ function elgg_get_entity_metadata_where_sql($prefix, $names = NULL, $values = NU
 	// add pairs
 	// pairs must be in arrays.
 	if (is_array($pairs)) {
-		$return['joins'][] = "JOIN {$CONFIG->dbprefix}metadata md on e.guid = md.entity_guid";
-		$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msn on md.name_id = msn.id";
-		$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msv on md.value_id = msv.id";
+		$array = array(
+			'name' => 'test',
+			'value' => 5
+		);
+
+		$array = array('test' => 5);
 
 		// check if this is an array of pairs or just a single pair.
 		if (isset($pairs['name']) || isset($pairs['value'])) {
@@ -714,7 +717,22 @@ function elgg_get_entity_metadata_where_sql($prefix, $names = NULL, $values = NU
 
 		$pair_wheres = array();
 
-		foreach ($pairs as $pair) {
+		$i = 1;
+		foreach ($pairs as $index => $pair) {
+			// @todo move this elsewhere?
+			// support shortcut 'n' => 'v' method.
+			if (!is_array($pair)) {
+				$pair = array(
+					'name' => $index,
+					'value' => $pair
+				);
+			}
+
+			// @todo The multiple joins are only needed when the operator is AND
+			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metadata md{$i} on e.guid = md{$i}.entity_guid";
+			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msn{$i} on md{$i}.name_id = msn{$i}.id";
+			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msv{$i} on md{$i}.value_id = msv{$i}.id";
+
 			// must have at least a name and value
 			if (!isset($pair['name']) || !isset($pair['value'])) {
 				// @todo should probably return false.
@@ -744,12 +762,13 @@ function elgg_get_entity_metadata_where_sql($prefix, $names = NULL, $values = NU
 				$value = "'{$pair['value']}'";
 			}
 
-
-			$pair_wheres[] = "(msn.string = '{$pair['name']}' AND {$pair_binary}msv.string $operand $value)";
+			$access = get_access_sql_suffix("md{$i}");
+			$pair_wheres[] = "(msn{$i}.string = '{$pair['name']}' AND {$pair_binary}msv{$i}.string $operand $value AND $access)";
+			$i++;
 		}
 
-		if ($where = implode (' OR ', $pair_wheres)) {
-			$wheres[] = "($where AND $access)";
+		if ($where = implode (" $pair_operator ", $pair_wheres)) {
+			$wheres[] = "($where)";
 		}
 	}
 
@@ -778,6 +797,8 @@ function elgg_get_entity_metadata_where_sql($prefix, $names = NULL, $values = NU
 function get_entities_from_metadata($meta_name, $meta_value = "", $entity_type = "", $entity_subtype = "",
 $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0,
 $count = FALSE, $case_sensitive = TRUE) {
+
+	elgg_log('get_entities_from_metadata() was deprecated in 1.7 by elgg_get_entities()!', 'WARNING');
 
 	$options = array();
 
@@ -851,116 +872,67 @@ function list_entities_from_metadata($meta_name, $meta_value = "", $entity_type 
 }
 
 /**
- * Returns a list of entities based on the given search criteria.
- *
- * @param array $meta_array Array of 'name' => 'value' pairs
- * @param string $entity_type The type of entity to look for, eg 'site' or 'object'
- * @param string $entity_subtype The subtype of the entity.
- * @param int $limit
- * @param int $offset
- * @param string $order_by Optional ordering.
- * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
- * @param true|false $count If set to true, returns the total number of entities rather than a list. (Default: false)
- * @param string $meta_array_operator Operator used for joining the metadata array together
- * @return int|array List of ElggEntities, or the total number if count is set to false
+ * @deprecated 1.7.  Use elgg_get_entities_from_metadata().
+ * @param $meta_array
+ * @param $entity_type
+ * @param $entity_subtype
+ * @param $owner_guid
+ * @param $limit
+ * @param $offset
+ * @param $order_by
+ * @param $site_guid
+ * @param $count
+ * @param $meta_array_operator
+ * @return unknown_type
  */
-function get_entities_from_metadata_multi($meta_array, $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0, $count = false, $meta_array_operator = 'and') {
-	global $CONFIG;
+function get_entities_from_metadata_multi($meta_array, $entity_type = "", $entity_subtype = "",
+$owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0,
+$count = false, $meta_array_operator = 'and') {
+	elgg_log('get_entities_from_metadata_multi() was deprecated in 1.7 by elgg_get_entities_from_metadata()!', 'WARNING');
 
 	if (!is_array($meta_array) || sizeof($meta_array) == 0) {
 		return false;
 	}
 
-	$where = array();
+	$options = array();
 
-	$mindex = 1;
-	$join = "";
-	$metawhere = array();
-	$meta_array_operator = sanitise_string($meta_array_operator);
-	foreach($meta_array as $meta_name => $meta_value) {
-		$meta_n = get_metastring_id($meta_name);
-		$meta_v = get_metastring_id($meta_value);
-		$join .= " JOIN {$CONFIG->dbprefix}metadata m{$mindex} on e.guid = m{$mindex}.entity_guid ";
-		/*if ($meta_name!=="")
-			$where[] = "m{$mindex}.name_id='$meta_n'";
-		if ($meta_value!=="")
-			$where[] = "m{$mindex}.value_id='$meta_v'";*/
-		$metawhere[] = "(m{$mindex}.name_id='$meta_n' AND m{$mindex}.value_id='$meta_v')";
-		$mindex++;
-	}
-	$where[] = "(".implode($meta_array_operator, $metawhere).")";
+	$options['name_value_pairs'] = $meta_array;
 
-	$entity_type = sanitise_string($entity_type);
-	$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
-	$limit = (int)$limit;
-	$offset = (int)$offset;
-	if ($order_by == "") {
-		$order_by = "e.time_created desc";
-	}
-	$order_by = sanitise_string($order_by);
-	if ((is_array($owner_guid) && (count($owner_guid)))) {
-		foreach($owner_guid as $key => $guid) {
-			$owner_guid[$key] = (int) $guid;
-		}
-	} else {
-		$owner_guid = (int) $owner_guid;
-	}
-
-	$site_guid = (int) $site_guid;
-	if ($site_guid == 0) {
-		$site_guid = $CONFIG->site_guid;
-	}
-
-	//$access = get_access_list();
-
-	if ($entity_type!="") {
-		$where[] = "e.type = '{$entity_type}'";
+	if ($entity_type) {
+		$options['types'] = $entity_type;
 	}
 
 	if ($entity_subtype) {
-		$where[] = "e.subtype = {$entity_subtype}";
+		$options['subtypes'] = $entity_subtype;
 	}
 
-	if ($site_guid > 0) {
-		$where[] = "e.site_guid = {$site_guid}";
+	if ($owner_guid) {
+		$options['owner'] = $owner_guid;
 	}
 
-	if (is_array($owner_guid)) {
-		$where[] = "e.container_guid in (".implode(",",$owner_guid).")";
-	} else if ($owner_guid > 0) {
-		$where[] = "e.container_guid = {$owner_guid}";
+	if ($limit) {
+		$options['limit'] = $limit;
 	}
 
-	//if ($owner_guid > 0)
-	//	$where[] = "e.container_guid = {$owner_guid}";
+	if ($offset) {
+		$options['offset'] = $offset;
+	}
+
+	if ($order_by) {
+		$options['order_by'];
+	}
+
+	if ($site_guid) {
+		$options['site_guid'];
+	}
 
 	if ($count) {
-		$query = "SELECT count(distinct e.guid) as total ";
-	} else {
-		$query = "SELECT distinct e.* ";
+		$options['count'] = $count;
 	}
 
-	$query .= " from {$CONFIG->dbprefix}entities e {$join} where";
-	foreach ($where as $w) {
-		$query .= " $w and ";
-	}
-	$query .= get_access_sql_suffix("e"); // Add access controls
+	$options['name_value_pairs_operator'] = $meta_array_operator;
 
-	$mindex = 1;
-	foreach($meta_array as $meta_name => $meta_value) {
-		$query .= ' and ' . get_access_sql_suffix("m{$mindex}"); // Add access controls
-		$mindex++;
-	}
-
-	if (!$count) {
-		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
-		return get_data($query, "entity_row_to_elggstar");
-	} else {
-		if ($count = get_data_row($query)) {
-			return $count->total;
-		}
-	}
-	return false;
+	return elgg_get_entities_from_metadata($options);
 }
 
 /**
