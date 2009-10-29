@@ -571,23 +571,25 @@ function elgg_get_entities_from_metadata(array $options = array()) {
 	$clauses = elgg_get_entity_metadata_where_sql('e', $options['names'], $options['values'],
 		$options['name_value_pairs'], $options['name_value_pairs_operator'], $options['case_sensitive']);
 
-	// merge wheres to pass to get_entities()
-	if (isset($options['wheres']) && !is_array($options['wheres'])) {
-		$options['wheres'] = array($options['wheres']);
-	} elseif (!isset($options['wheres'])) {
-		$options['wheres'] = array();
+	if ($clauses) {
+		// merge wheres to pass to get_entities()
+		if (isset($options['wheres']) && !is_array($options['wheres'])) {
+			$options['wheres'] = array($options['wheres']);
+		} elseif (!isset($options['wheres'])) {
+			$options['wheres'] = array();
+		}
+
+		$options['wheres'] = array_merge($options['wheres'], $clauses['wheres']);
+
+		// merge joins to pass to get_entities()
+		if (isset($options['joins']) && !is_array($options['joins'])) {
+			$options['joins'] = array($options['joins']);
+		} elseif (!isset($options['joins'])) {
+			$options['joins'] = array();
+		}
+
+		$options['joins'] = array_merge($options['joins'], $clauses['joins']);
 	}
-
-	$options['wheres'][] = $clauses['wheres'];
-
-	// merge joins to pass to get_entities()
-	if (isset($options['joins']) && !is_array($options['joins'])) {
-		$options['joins'] = array($options['joins']);
-	} elseif (!isset($options['joins'])) {
-		$options['joins'] = array();
-	}
-
-	$options['joins'] = array_merge($options['joins'], $clauses['joins']);
 
 	return elgg_get_entities($options);
 }
@@ -628,6 +630,8 @@ function elgg_get_entity_metadata_where_sql($table, $names = NULL, $values = NUL
 		'joins' => array (),
 		'wheres' => array()
 	);
+
+	$wheres = array();
 
 	// get names wheres and joins
 	$names_where = '';
@@ -758,7 +762,9 @@ function elgg_get_entity_metadata_where_sql($table, $names = NULL, $values = NUL
 		}
 	}
 
-	$return['wheres'] = implode(' OR ', $wheres);
+	if ($where = implode(' OR ', $wheres)) {
+		$return['wheres'][] = "($where)";
+	}
 
 	return $return;
 }

@@ -506,25 +506,27 @@ function elgg_get_entities_from_relationship($options) {
 	$clauses = elgg_get_entity_relationship_where_sql('e', $options['relationship'],
 		$options['relationship_guid'], $options['inverse_relationship']);
 
-	// merge wheres to pass to get_entities()
-	if (isset($options['wheres']) && !is_array($options['wheres'])) {
-		$options['wheres'] = array($options['wheres']);
-	} elseif (!isset($options['wheres'])) {
-		$options['wheres'] = array();
+	if ($clauses) {
+		// merge wheres to pass to get_entities()
+		if (isset($options['wheres']) && !is_array($options['wheres'])) {
+			$options['wheres'] = array($options['wheres']);
+		} elseif (!isset($options['wheres'])) {
+			$options['wheres'] = array();
+		}
+
+		$options['wheres'] = array_merge($options['wheres'], $clauses['wheres']);
+
+		// merge joins to pass to get_entities()
+		if (isset($options['joins']) && !is_array($options['joins'])) {
+			$options['joins'] = array($options['joins']);
+		} elseif (!isset($options['joins'])) {
+			$options['joins'] = array();
+		}
+
+		$options['joins'] = array_merge($options['joins'], $clauses['joins']);
 	}
 
-	$options['wheres'][] = $clauses['wheres'];
-
-	// merge joins to pass to get_entities()
-	if (isset($options['joins']) && !is_array($options['joins'])) {
-		$options['joins'] = array($options['joins']);
-	} elseif (!isset($options['joins'])) {
-		$options['joins'] = array();
-	}
-
-	$options['joins'] = array_merge($options['joins'], $clauses['joins']);
-
-	return elgg_get_entities($options);
+	return elgg_get_entities_from_metadata($options);
 }
 
 /**
@@ -545,12 +547,13 @@ function elgg_get_entity_relationship_where_sql($table, $relationship = NULL, $r
 	global $CONFIG;
 
 	$wheres = array();
+	$joins = array();
 
 	if ($inverse_relationship) {
-		$joins = array("JOIN {$CONFIG->dbprefix}entity_relationships r on r.guid_one = e.guid");
+		$joins[] = "JOIN {$CONFIG->dbprefix}entity_relationships r on r.guid_one = e.guid";
 		//$wheres[] = "{$table}.guid = {$CONFIG->dbprefix}entity_relationships.guid_two";
 	} else {
-		$joins = array("JOIN {$CONFIG->dbprefix}entity_relationships r on r.guid_two = e.guid");
+		$joins[] = "JOIN {$CONFIG->dbprefix}entity_relationships r on r.guid_two = e.guid";
 		//$wheres[] = "{$table}.guid = {$CONFIG->dbprefix}entity_relationships.guid_one";
 	}
 
@@ -567,28 +570,12 @@ function elgg_get_entity_relationship_where_sql($table, $relationship = NULL, $r
 	}
 
 	if ($where_str = implode(' AND ' , $wheres)) {
-		return array('wheres' => "($where_str)", 'joins' => $joins);
+
+		return array('wheres' => array("($where_str)"), 'joins' => $joins);
 	}
 
 	return '';
 }
-
-/**
- * Return entities matching a given query joining against a relationship.
- *
- * @param string $relationship The relationship eg "friends_of"
- * @param int $relationship_guid The guid of the entity to use query
- * @param bool $inverse_relationship Reverse the normal function of the query to instead say "give me all entities for whome $relationship_guid is a $relationship of"
- * @param string $type
- * @param string $subtype
- * @param int $owner_guid
- * @param string $order_by
- * @param int $limit
- * @param int $offset
- * @param boolean $count Set to true if you want to count the number of entities instead (default false)
- * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
- * @return array|int|false An array of entities, or the number of entities, or false on failure
- */
 
 /**
  * @deprecated 1.7.  Use elgg_get_entities_from_relationship().
@@ -812,100 +799,55 @@ function list_entities_by_relationship_count($relationship, $inverse_relationshi
  * @return array|int|false An array of entities, or the number of entities, or false on failure
  */
 function get_entities_from_relationships_and_meta($relationship, $relationship_guid, $inverse_relationship = false, $meta_name = "", $meta_value = "", $type = "", $subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $count = false, $site_guid = 0) {
-	global $CONFIG;
+	elgg_log('get_entities_from_relationship_and_meta() was deprecated in 1.7 by elgg_get_entities_from_relationship()!', 'WARNING');
 
-	$relationship = sanitise_string($relationship);
-	$inverse_relationship = (bool)$inverse_relationship;
-	$relationship_guid = (int)$relationship_guid;
-	$type = sanitise_string($type);
-	if ($subtype AND !$subtype = get_subtype_id($type, $subtype)) {
-		return false;
+	$options = array();
+
+	$options['relationship'] = $relationship;
+	$options['relationship_guid'] = $relationship_guid;
+	$options['inverse_relationship'] = $inverse_relationship;
+
+	if ($meta_value) {
+		$options['values'] = $meta_value;
 	}
 
-	$owner_guid = (int)$owner_guid;
-	$order_by = sanitise_string($order_by);
-	$limit = (int)$limit;
-	$offset = (int)$offset;
-	$site_guid = (int) $site_guid;
-	if ($site_guid == 0) {
-		$site_guid = $CONFIG->site_guid;
+	if ($entity_type) {
+		$options['types'] = $entity_type;
 	}
 
-	$meta_n = get_metastring_id($meta_name);
-	$meta_v = get_metastring_id($meta_value);
-
-	//$access = get_access_list();
-
-	$where = array();
-
-	if ($relationship!="") {
-		$where[] = "r.relationship='$relationship'";
+	if ($type) {
+		$options['types'] = $type;
 	}
 
-	$on = "e.guid = r.guid_one";
-	if (!$inverse_relationship) {
-		$on = "e.guid = r.guid_two";
+	if (subtype) {
+		$options['subtypes'] = $subtype;
 	}
 
-	if ($type != "") {
-		$where[] = "e.type='$type'";
-	}
-	if ($subtype) {
-		$where[] = "e.subtype=$subtype";
-	}
-	if ($owner_guid != "") {
-		$where[] = "e.container_guid='$owner_guid'";
-	}
-	if ($site_guid > 0) {
-		$where[] = "e.site_guid = {$site_guid}";
-	}
-	if ($relationship_guid) {
-		$where[] = ($inverse_relationship ? "r.guid_two='$relationship_guid'" : "r.guid_one='$relationship_guid'");
+	if ($owner_guid) {
+		$options['owner'] = $owner_guid;
 	}
 
+	if ($limit) {
+		$options['limit'] = $limit;
+	}
 
-	$metajoin = "";
-	if (($meta_name!=="") || ($meta_value!=="")) {
-		$metajoin = " JOIN {$CONFIG->dbprefix}metadata m on e.guid=m.entity_guid";
+	if ($offset) {
+		$options['offset'] = $offset;
+	}
 
-		if ($meta_name!=="") {
-			$where[] = "m.name_id='$meta_n'";
-		}
-		if ($meta_value!=="") {
-			$where[] = "m.value_id='$meta_v'";
-		}
+	if ($order_by) {
+		$options['order_by'];
+	}
+
+	if ($site_guid) {
+		$options['site_guid'];
 	}
 
 	if ($count) {
-		$query = "SELECT count(distinct e.guid) as total ";
-	} else {
-		$query = "SELECT distinct e.*, count(e.guid) as total ";
+		$options['count'] = $count;
 	}
 
-	$query .= " from {$CONFIG->dbprefix}entity_relationships r JOIN {$CONFIG->dbprefix}entities e on {$on} {$metajoin} where ";
-
-	if (!empty($where)) {
-		foreach ($where as $w) {
-			$query .= " $w and ";
-		}
-	}
-	$query .= get_access_sql_suffix("e"); // Add access controls
-	if (($meta_name!=="") || ($meta_value!=="")) {
-		$query .= ' and ' . get_access_sql_suffix("m"); // Add access controls
-	}
-
-	if (!$count) {
-		$query .= " group by e.guid ";
-		$query .= " order by total desc limit {$offset}, {$limit}"; // Add order and limit
-
-		return get_data($query, "entity_row_to_elggstar");
-	} else {
-		if ($count = get_data_row($query)) {
-			return $count->total;
-		}
-	}
-
-	return false;
+	return elgg_get_entities_from_relationship($options);
 }
 
 /**
