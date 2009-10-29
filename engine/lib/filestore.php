@@ -367,32 +367,13 @@ class ElggDiskFilestore extends ElggFilestore {
 	 * @return str
 	 */
 	protected function deprecated_file_matrix($filename) {
-		$invalid_fs_chars = '*\'\\/"!$%^&*.%(){}[]#~?<>;|¬`@-+=';
-
-		$matrix = "";
-
-		$name = $filename;
-		$filename = $this->mb_str_split($filename);
-		if (!$filename) {
-			return false;
-		}
-
-		$len = count($filename);
-		if ($len>$this->matrix_depth) {
-			$len = $this->matrix_depth;
-		}
-
-		for ($n = 0; $n < $len; $n++) {
-			// Prevent a matrix being formed with unsafe characters
-			$char = $filename[$n];
-			if (strpos($invalid_fs_chars, $char)!==false) {
-				$char = '_';
-			}
-
-			$matrix .= $char . "/";
-		}
-
-		return $matrix.$name."/";
+		// throw a warning for using deprecated method
+		$error  = 'Deprecated use of ElggDiskFilestore::make_file_matrix. ';
+		$error .= 'Username passed instead of guid.';
+		elgg_log($error, WARNING);
+		
+		$user = new ElggUser($filename);
+		return $this->user_file_matrix($user->guid);
 	}
 
 	public function getParameters() {

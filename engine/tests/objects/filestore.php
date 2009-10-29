@@ -52,7 +52,7 @@ class ElggCoreFilestoreTest extends ElggCoreUnitTest {
 		
 		// check matrix with username
 		$user_dir = $this->filestore->make_file_matrix($user->username);
-		$this->assertIdentical($user_dir, "f/i/l/e/T/fileTest/");
+		$this->assertIdentical($user_dir, "$created/$user->guid/");
 		
 		// check matrix with guid
 		$guid_dir = $this->filestore->make_file_matrix($user->guid);
