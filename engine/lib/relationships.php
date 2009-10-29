@@ -649,7 +649,7 @@ $count = false, $site_guid = 0) {
 		$options['count'] = $count;
 	}
 
-	return elgg_get_entities_from_metadata($options);
+	return elgg_get_entities_from_relationship($options);
 }
 
 /**
