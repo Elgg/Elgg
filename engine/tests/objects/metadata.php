@@ -50,7 +50,7 @@ class ElggCoreMetadataTest extends ElggCoreUnitTest {
 		$this->delete_metastrings();
 	}
 
-	public function testGetEntitiesFromMetadata() {
+	public function testElggGetEntitiesFromMetadata() {
 		global $CONFIG, $METASTRINGS_CACHE, $METASTRINGS_DEADNAME_CACHE;
 		$METASTRINGS_CACHE = $METASTRINGS_DEADNAME_CACHE = array();
 
@@ -62,16 +62,23 @@ class ElggCoreMetadataTest extends ElggCoreUnitTest {
 		$this->assertTrue(create_metadata($this->object->guid, 'metaUnitTest', 'tested'));
 
 		// check value with improper case
-		$this->assertFalse(get_entities_from_metadata('metaUnitTest', 'Tested', '', '', 0, 10, 0, '', 0, FALSE, TRUE));
+		$options = array('names' => 'metaUnitTest', 'values' => 'Tested', 'limit' => 10, 'case_sensitive' => TRUE);
+		$this->assertFalse(elgg_get_entities_from_metadata($options));
 
 		// compare forced case with ignored case
-		$case_true = get_entities_from_metadata('metaUnitTest', 'tested', '', '', 0, 10, 0, '', 0, FALSE, TRUE);
+		$options = array('names' => 'metaUnitTest', 'values' => 'tested', 'limit' => 10, 'case_sensitive' => TRUE);
+		$case_true = elgg_get_entities_from_metadata($options);
 		$this->assertIsA($case_true, 'array');
 
-		$case_false = get_entities_from_metadata('metaUnitTest', 'Tested', '', '', 0, 10, 0, '', 0, FALSE, FALSE);
+		$options = array('names' => 'metaUnitTest', 'values' => 'Tested', 'limit' => 10, 'case_sensitive' => FALSE);
+		$case_false = elgg_get_entities_from_metadata($options);
 		$this->assertIsA($case_false, 'array');
 
 		$this->assertIdentical($case_true, $case_false);
+		
+		// check deprecated get_entities_from_metadata() function
+		$deprecated = get_entities_from_metadata('metaUnitTest', 'tested', '', '', 0, 10, 0, '', 0, FALSE, TRUE);
+		$this->assertIdentical($deprecated, $case_true);
 
 		// check entity list
 		//$this->dump(list_entities_from_metadata('metaUnitTest', 'Tested', '', '', 0, 10, TRUE, TRUE, TRUE, FALSE));
