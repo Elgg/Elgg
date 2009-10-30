@@ -257,13 +257,24 @@ function elgg_view($view, $vars = "", $bypass = false, $debug = false, $viewtype
 		$view_file = "$view_location$viewtype/$view.php";
 		$default_view_file = "{$view_location}default/$view.php";
 
-		// try to include view, defaulting to 'default' view if error.
+		// try to include view
 		if (!file_exists($view_file) || !include($view_file)) {
-			if ($viewtype != 'default' && file_exists($default_view_file) && include($default_view_file)) {
-				elgg_log("$viewtype/$view view does not exist.  Using default/$view instead.", 'WARNING');
-			} else {
-				elgg_log("Neither $viewtype/$view nor default/$view view exists.", 'WARNING');
+			// requested view does not exist
+			$error = "$viewtype/$view view does not exist.";
+			
+			// attempt to load default view
+			if ($viewtype != 'default') {
+				if (file_exists($default_view_file) && include($default_view_file)) {
+					// default view found
+					$error .= " Using default/$view instead.";
+				} else {
+					// no view found at all
+					$error = "Neither $viewtype/$view nor default/$view view exists.";
+				}
 			}
+			
+			// log warning
+			elgg_log($error, 'WARNING');
 		}
 	}
 
