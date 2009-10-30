@@ -553,23 +553,23 @@ function find_metadata($meta_name = "", $meta_value = "", $entity_type = "", $en
  */
 function elgg_get_entities_from_metadata(array $options = array()) {
 	$defaults = array(
-		'names' => NULL,
-		'name' => NULL,
-		'values' => NULL,
-		'value' => NULL,
-		'name_value_pair' => NULL,
-		'name_value_pairs' => NULL,
-		'name_value_pairs_operator' => 'AND',
-		'case_sensitive' => TRUE
+		'metadata_names' => NULL,
+		'metadata_name' => NULL,
+		'metadata_values' => NULL,
+		'metadata_value' => NULL,
+		'metadata_name_value_pair' => NULL,
+		'metadata_name_value_pairs' => NULL,
+		'metadata_name_value_pairs_operator' => 'AND',
+		'metadata_case_sensitive' => TRUE
 	);
 
 	$options = array_merge($defaults, $options);
 
-	$singulars = array('name', 'value', 'name_value_pair');
+	$singulars = array('metadata_name', 'metadata_value', 'metadata_name_value_pair');
 	$options = elgg_normalise_plural_options_array($options, $singulars);
 
-	$clauses = elgg_get_entity_metadata_where_sql('e', $options['names'], $options['values'],
-		$options['name_value_pairs'], $options['name_value_pairs_operator'], $options['case_sensitive']);
+	$clauses = elgg_get_entity_metadata_where_sql('e', $options['metadata_names'], $options['metadata_values'],
+		$options['metadata_name_value_pairs'], $options['metadata_name_value_pairs_operator'], $options['metadata_case_sensitive']);
 
 	if ($clauses) {
 		// merge wheres to pass to get_entities()
@@ -794,10 +794,10 @@ $count = FALSE, $case_sensitive = TRUE) {
 
 	$options = array();
 
-	$options['names'] = $meta_name;
+	$options['metadata_names'] = $meta_name;
 
 	if ($meta_value) {
-		$options['values'] = $meta_value;
+		$options['metadata_values'] = $meta_value;
 	}
 
 	if ($entity_type) {
@@ -833,7 +833,7 @@ $count = FALSE, $case_sensitive = TRUE) {
 	}
 
 	// need to be able to pass false
-	$options['case_sensitive'] = $case_sensitive;
+	$options['metadata_case_sensitive'] = $case_sensitive;
 
 	return elgg_get_entities_from_metadata($options);
 }
