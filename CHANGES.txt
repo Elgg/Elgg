@@ -18,6 +18,7 @@ http://code.elgg.org/elgg/.....
   * Deprecated get_entities().  Use elgg_get_entities().
   * Deprecated get_entities_from_metadata().  Use elgg_get_entities_from_metadata().
   * Deprecated get_entities_from_relationship() and g_e_f_relationships_and_meta().  Use elgg_get_entities_from_relationship().
+  * Deprecated get_entities_from_access_id(). Use elgg_get_entities_from_access_id().
   * Reorganized directory file path to rely on GUID instead of username.
 
  Services API:

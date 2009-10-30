@@ -656,6 +656,8 @@ function elgg_view_access_collections($owner_guid) {
 /**
  * Get entities with the specified access collection id.
  *
+ * @deprecated 1.7. Use elgg_get_entities_from_access_id()
+ *
  * @param $collection_id
  * @param $entity_type
  * @param $entity_subtype
@@ -668,70 +670,63 @@ function elgg_view_access_collections($owner_guid) {
  * @return unknown_type
  */
 function get_entities_from_access_id($collection_id, $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0, $count = false) {
-	global $CONFIG;
-
+	// log deprecated warning
+	elgg_log('get_entities_from_access_id() was deprecated in 1.7 by elgg_get_entities()!', 'WARNING');
+	
 	if (!$collection_id) {
-		return false;
+		return FALSE;
+	}
+	
+	// build the options using given parameters
+	$options = array();
+	$options['limit'] = $limit;
+	$options['offset'] = $offset;
+	$options['count'] = $count;
+
+	if ($entity_type) {
+		$options['type'] = sanitise_string($entity_type);
+	}
+	
+	if ($entity_subtype) {
+		$options['subtype'] = $entity_subtype;
+	}
+	
+	if ($site_guid) {
+		$options['site_guid'] = $site_guid;
 	}
 
-	$entity_type = sanitise_string($entity_type);
-	$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
-	$limit = (int)$limit;
-	$offset = (int)$offset;
-
-	if ($order_by == "") {
-		$order_by = "e.time_created desc";
-	} else {
-		$order_by = "e.time_created, {$order_by}";
+	if ($order_by) {
+		$options['order_by'] = sanitise_string("e.time_created, $order_by");
 	}
 
-	$order_by = sanitise_string($order_by);
-	$site_guid = (int) $site_guid;
 	if ((is_array($owner_guid) && (count($owner_guid)))) {
-		foreach($owner_guid as $key => $guid) {
-			$owner_guid[$key] = (int) $guid;
+		$options['owner_guids'] = array();
+		foreach($owner_guid as $guid) {
+			$options['owner_guids'][] = $guid;
 		}
-	} else {
-		$owner_guid = (int) $owner_guid;
 	}
-	if ($site_guid == 0)
-		$site_guid = $CONFIG->site_guid;
-
-	//$access = get_access_list();
-
-	$where = array("e.access_id = $collection_id");
-
-	if ($entity_type!=="")
-		$where[] = "e.type='$entity_type'";
-	if ($entity_subtype)
-		$where[] = "e.subtype=$entity_subtype";
-	if ($site_guid > 0)
-		$where[] = "e.site_guid = {$site_guid}";
-	if (is_array($owner_guid)) {
-		$where[] = "e.container_guid in (".implode(",",$owner_guid).")";
-	} else if ($owner_guid > 0)
-		$where[] = "e.container_guid = {$owner_guid}";
-
-	if (!$count) {
-		$query = "SELECT distinct e.* ";
-	} else {
-		$query = "SELECT count(distinct e.guid) as total ";
+	
+	if ($site_guid) {
+		$options['site_guid'] = $site_guid;
 	}
 
-	$query .= "from {$CONFIG->dbprefix}entities e where";
-	foreach ($where as $w)
-		$query .= " $w and ";
-	$query .= get_access_sql_suffix("e"); // Add access controls
-	//$query .= ' and ' . get_access_sql_suffix("m"); // Add access controls
+	return elgg_get_entities_from_access_id($collection_id, $options);
+}
 
-	if (!$count) {
-		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
-		return get_data($query, "entity_row_to_elggstar");
-	} else {
-		if ($row = get_data_row($query))
-			return $row->total;
-	}
-	return false;
+/**
+ * Retrieve entities for a given access collection
+ *
+ * @param int $collection_id
+ * @param array $options @see elgg_get_entities()
+ * @return array
+ * @since 1.7
+ */
+function elgg_get_entities_from_access_id($collection_id, array $options=array()) {
+	// restrict the resultset to access collection provided
+	$options['wheres'] = "e.access_id = '$collection_id'";
+	
+	// return entities with the desired options
+	return elgg_get_entities($options);
 }
 
 /**
