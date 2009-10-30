@@ -27,7 +27,7 @@ if (!trigger_plugin_hook('index','system',null,false)) {
 	global $CONFIG;
 	$title = elgg_view_title(elgg_echo('content:latest'));
 	set_context('search');
-	$content = list_registered_entities(0,10,true,false,array('object','group'));
+	$content = list_registered_entities(0,10,false,false,array('object','group'));
 	set_context('main');
 	global $autofeed;
 	$autofeed = false;
