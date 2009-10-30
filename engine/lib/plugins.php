@@ -356,7 +356,8 @@ function check_plugin_compatibility($manifest_elgg_version_string) {
  * 								are calling from.
  */
 function find_plugin_settings($plugin_name = "") {
-	$plugins = get_entities('object', 'plugin', 0, "", 9999);
+	$options = array('type' => object, 'subtype' => 'plugin', 'limit' => 9999);
+	$plugins = elgg_get_entities($options);
 	$plugin_name = sanitise_string($plugin_name);
 	if (!$plugin_name) {
 		$plugin_name = get_plugin_name();
