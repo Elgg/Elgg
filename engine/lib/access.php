@@ -672,11 +672,11 @@ function elgg_view_access_collections($owner_guid) {
 function get_entities_from_access_id($collection_id, $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0, $count = false) {
 	// log deprecated warning
 	elgg_log('get_entities_from_access_id() was deprecated in 1.7 by elgg_get_entities()!', 'WARNING');
-	
+
 	if (!$collection_id) {
 		return FALSE;
 	}
-	
+
 	// build the options using given parameters
 	$options = array();
 	$options['limit'] = $limit;
@@ -686,11 +686,11 @@ function get_entities_from_access_id($collection_id, $entity_type = "", $entity_
 	if ($entity_type) {
 		$options['type'] = sanitise_string($entity_type);
 	}
-	
+
 	if ($entity_subtype) {
 		$options['subtype'] = $entity_subtype;
 	}
-	
+
 	if ($site_guid) {
 		$options['site_guid'] = $site_guid;
 	}
@@ -705,12 +705,14 @@ function get_entities_from_access_id($collection_id, $entity_type = "", $entity_
 			$options['owner_guids'][] = $guid;
 		}
 	}
-	
+
 	if ($site_guid) {
 		$options['site_guid'] = $site_guid;
 	}
 
-	return elgg_get_entities_from_access_id($collection_id, $options);
+	$options['access_id'] = $collection_id;
+
+	return elgg_get_entities_from_access_id($options);
 }
 
 /**
@@ -721,10 +723,24 @@ function get_entities_from_access_id($collection_id, $entity_type = "", $entity_
  * @return array
  * @since 1.7
  */
-function elgg_get_entities_from_access_id($collection_id, array $options=array()) {
+function elgg_get_entities_from_access_id(array $options=array()) {
 	// restrict the resultset to access collection provided
-	$options['wheres'] = "e.access_id = '$collection_id'";
-	
+	if (!isset($options['access_id'])) {
+		return FALSE;
+	}
+
+	// @todo add support for an array of collection_ids
+	$where = "e.access_id = '{$options['access_id']}'";
+	if (isset($options['wheres'])) {
+		if (is_array($options['wheres'])) {
+			$options['wheres'][] = $where;
+		} else {
+			$options['wheres'] = array($options['wheres'], $where);
+		}
+	} else {
+		$options['wheres'] = array($where);
+	}
+
 	// return entities with the desired options
 	return elgg_get_entities($options);
 }
