@@ -790,7 +790,7 @@ function get_entities_from_metadata($meta_name, $meta_value = "", $entity_type =
 $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0,
 $count = FALSE, $case_sensitive = TRUE) {
 
-	elgg_log('get_entities_from_metadata() was deprecated in 1.7 by elgg_get_entities()!', 'WARNING');
+	elgg_log('get_entities_from_metadata() was deprecated in 1.7 by elgg_get_entities_from_metadata()!', 'WARNING');
 
 	$options = array();
 

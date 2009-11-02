@@ -407,6 +407,253 @@ $value = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $time
 	return get_data($query, "row_to_elggannotation");
 }
 
+
+/**
+ *
+ * @todo Add support for arrays of names and values
+ *
+ * @param $options
+ * @return unknown_type
+ */
+function elgg_get_entities_from_annotations(array $options = array()) {
+	$defaults = array(
+		'annotation_names' => NULL,
+		'annotation_name' => NULL,
+		'annotation_values' => NULL,
+		'annotation_value' => NULL,
+		'annotation_name_value_pair' => NULL,
+		'annotation_name_value_pairs' => NULL,
+		'annotation_name_value_pairs_operator' => 'AND',
+		'annotation_case_sensitive' => TRUE
+	);
+
+	$options = array_merge($defaults, $options);
+
+	$singulars = array('annotation_name', 'annotation_value', 'annotation_name_value_pair');
+	$options = elgg_normalise_plural_options_array($options, $singulars);
+
+	$clauses = elgg_get_entity_annotation_where_sql('e', $options['annotation_names'], $options['annotation_values'],
+		$options['annotation_name_value_pairs'], $options['annotation_name_value_pairs_operator'], $options['annotation_case_sensitive']);
+
+	if ($clauses) {
+		// merge wheres to pass to get_entities()
+		if (isset($options['wheres']) && !is_array($options['wheres'])) {
+			$options['wheres'] = array($options['wheres']);
+		} elseif (!isset($options['wheres'])) {
+			$options['wheres'] = array();
+		}
+
+		$options['wheres'] = array_merge($options['wheres'], $clauses['wheres']);
+
+		// merge joins to pass to get_entities()
+		if (isset($options['joins']) && !is_array($options['joins'])) {
+			$options['joins'] = array($options['joins']);
+		} elseif (!isset($options['joins'])) {
+			$options['joins'] = array();
+		}
+
+		$options['joins'] = array_merge($options['joins'], $clauses['joins']);
+
+		// merge selects to pass to get_entities()
+		if (isset($options['selects']) && !is_array($options['selects'])) {
+			$options['selects'] = array($options['selects']);
+		} elseif (!isset($options['selects'])) {
+			$options['selects'] = array();
+		}
+
+		$options['selects'] = array_merge($options['selects'], $clauses['selects']);
+
+		// @todo overwrites the current order and group bys
+		if ($clauses['order_by']) {
+			$options['order_by'] = $clauses['order_by'];
+		}
+		if ($clauses['group_by']) {
+			$options['group_by'] = $clauses['group_by'];
+		}
+	}
+
+	return elgg_get_entities($options);
+}
+
+/**
+ * Returns annotation name and value SQL where for entities.
+ * nb: $names and $values are not paired. Use $pairs for this.
+ * Pairs default to '=' operand.
+ *
+ * @param $prefix
+ * @param ARR|NULL $names
+ * @param ARR|NULL $values
+ * @param ARR|NULL $pairs array of names / values / operands
+ * @param AND|OR $pair_operator Operator to use to join the where clauses for pairs
+ * @param BOOL $case_sensitive
+ * @return FALSE|array False on fail, array('joins', 'wheres')
+ */
+function elgg_get_entity_annotation_where_sql($table, $names = NULL, $values = NULL, $pairs = NULL, $pair_operator = 'AND', $case_sensitive = TRUE) {
+	global $CONFIG;
+
+	// short circuit if nothing requested
+	// 0 is a valid (if not ill-conceived) annotation name.
+	// 0 is also a valid annotation value for FALSE, NULL, or 0
+	if ((!$names && $names !== 0)
+		&& (!$values && $values !== 0)
+		&& (!$pairs && $pairs !== 0)) {
+		return '';
+	}
+
+	// binary forces byte-to-byte comparision of strings, making
+	// it case- and diacritical-mark- sensitive.
+	// only supported on values.
+	$binary = ($case_sensitive) ? ' BINARY ' : '';
+
+	$access = get_access_sql_suffix('a');
+
+	$return = array (
+		'joins' => array (),
+		'wheres' => array(),
+		'selects' => array()
+	);
+
+	$wheres = array();
+
+	// get names wheres and joins
+	$names_where = '';
+	if ($names !== NULL) {
+		$return['joins'][] = "JOIN {$CONFIG->dbprefix}annotations a on {$table}.guid = a.entity_guid";
+		if (!is_array($names)) {
+			$names = array($names);
+		}
+
+		$sanitised_names = array();
+		foreach ($names as $name) {
+			// normalise to 0.
+			if (!$name) {
+				$name = '0';
+			}
+			$sanitised_names[] = "'$name'";
+		}
+
+		if ($names_str = implode(',', $sanitised_names)) {
+			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msn on a.name_id = msn.id";
+			$names_where = "(msn.string IN ($names_str))";
+		}
+	}
+
+	// get values wheres and joins
+	$values_where = '';
+	if ($values !== NULL) {
+		$return['joins'][] = "JOIN {$CONFIG->dbprefix}annotations a on {$table}.guid = a.entity_guid";
+
+		if (!is_array($values)) {
+			$values = array($values);
+		}
+
+		$sanitised_values = array();
+		foreach ($values as $value) {
+			// normalize to 0
+			if (!$value) {
+				$value = 0;
+			}
+			$sanitised_values[] = "'$value'";
+		}
+
+		if ($values_str = implode(',', $sanitised_values)) {
+			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msv on a.value_id = msv.id";
+			$values_where = "({$binary}msv.string IN ($values_str))";
+		}
+	}
+
+	if ($names_where && $values_where) {
+		$wheres[] = "($names_where AND $values_where AND $access)";
+	} elseif ($names_where) {
+		$wheres[] = "($names_where AND $access)";
+	} elseif ($values_where) {
+		$wheres[] = "($values_where AND $access)";
+	}
+
+	// add pairs
+	// pairs must be in arrays.
+	if (is_array($pairs)) {
+		$array = array(
+			'name' => 'test',
+			'value' => 5
+		);
+
+		$array = array('test' => 5);
+
+		// check if this is an array of pairs or just a single pair.
+		if (isset($pairs['name']) || isset($pairs['value'])) {
+			$pairs = array($pairs);
+		}
+
+		$pair_wheres = array();
+
+		// @todo when the pairs are > 3 should probably split the query up to
+		// denormalize the strings table.
+		$i = 1;
+		foreach ($pairs as $index => $pair) {
+			// @todo move this elsewhere?
+			// support shortcut 'n' => 'v' method.
+			if (!is_array($pair)) {
+				$pair = array(
+					'name' => $index,
+					'value' => $pair
+				);
+			}
+
+			// @todo The multiple joins are only needed when the operator is AND
+			$return['joins'][] = "JOIN {$CONFIG->dbprefix}annotations a{$i} on {$table}.guid = a{$i}.entity_guid";
+			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msn{$i} on a{$i}.name_id = msn{$i}.id";
+			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msv{$i} on a{$i}.value_id = msv{$i}.id";
+
+			// must have at least a name and value
+			if (!isset($pair['name']) || !isset($pair['value'])) {
+				// @todo should probably return false.
+				continue;
+			}
+
+			// case sensitivity can be specified per pair.
+			// default to higher level setting.
+			if (isset($pair['case_sensitive'])) {
+				$pair_binary = ($pair['case_sensitive']) ? ' BINARY ' : '';
+			} else {
+				$pair_binary = $binary;
+			}
+
+			if (isset($pair['operand'])) {
+				$operand = mysql_real_escape_string($pair['operand']);
+			} else {
+				$operand = ' = ';
+			}
+
+			// if the value is an int, don't quote it because str '15' < str '5'
+			// if the operand is IN don't quote it because quoting should be done already.
+			//$value = trim(strtolower($operand)) == 'in' ? $pair['value'] : "'{$pair['value']}'";
+			if (trim(strtolower($operand)) == 'in' || sanitise_int($pair['value'])) {
+				$value = $pair['value'];
+			} else {
+				$value = "'{$pair['value']}'";
+			}
+
+			$access = get_access_sql_suffix("a{$i}");
+			$pair_wheres[] = "(msn{$i}.string = '{$pair['name']}' AND {$pair_binary}msv{$i}.string $operand $value AND $access)";
+			$i++;
+		}
+
+		if ($where = implode (" $pair_operator ", $pair_wheres)) {
+			$wheres[] = "($where)";
+		}
+	}
+
+	if ($where = implode(' OR ', $wheres)) {
+		$return['selects'][] = "max(a.time_created) as maxtime";
+		$return['wheres'][] = "($where)";
+		$return['group_by'] = 'a.entity_guid';
+		$return['order_by'] = 'maxtime asc';
+	}
+
+	return $return;
+}
+
 /**
  * Return a list of entities which are annotated with a specific annotation.
  * These can be ordered by when the annotation was created/updated.
@@ -424,117 +671,72 @@ $value = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $time
  * @param int $timelower The earliest time the annotation can have been created. Default: all
  * @param int $timeupper The latest time the annotation can have been created. Default: all
  */
+
+
+/**
+ * @deprecated 1.7 Use elgg_get_entities_from_annotations()
+ * @param $entity_type
+ * @param $entity_subtype
+ * @param $name
+ * @param $value
+ * @param $owner_guid
+ * @param $group_guid
+ * @param $limit
+ * @param $offset
+ * @param $order_by
+ * @param $count
+ * @param $timelower
+ * @param $timeupper
+ * @return unknown_type
+ */
 function get_entities_from_annotations($entity_type = "", $entity_subtype = "", $name = "", $value = "", $owner_guid = 0, $group_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $count = false, $timelower = 0, $timeupper = 0) {
-	global $CONFIG;
 
-	$entity_type = sanitise_string($entity_type);
-	$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
-	$timelower = (int) $timelower;
-	$timeupper = (int) $timeupper;
+	elgg_log('get_entities_from_annotations() was deprecated in 1.7 by elgg_get_entities_from_annotations()!', 'WARNING');
 
-	if ($name) {
-		$name = get_metastring_id($name);
+	$options = array();
 
-		if ($name === false) {
-			$name = 0;
-		}
-	}
-	if ($value != "") {
-		$value = get_metastring_id($value);
-	}
-	if (is_array($owner_guid)) {
-		if (sizeof($owner_guid) > 0) {
-			foreach($owner_guid as $key => $val) {
-				$owner_guid[$key] = (int) $val;
-			}
-		} else {
-			$owner_guid = 0;
-		}
-	} else {
-		$owner_guid = (int)$owner_guid;
-	}
-	$group_guid = (int)$group_guid;
+	$options['annotation_names'] = $name;
 
-	$limit = (int)$limit;
-	$offset = (int)$offset;
-	if($order_by == 'asc') {
-		$order_by = "maxtime asc";
+	if ($value) {
+		$options['annotation_values'] = $value;
 	}
 
-	if($order_by == 'desc') {
-		$order_by = "maxtime desc";
+	if ($entity_type) {
+		$options['types'] = $entity_type;
 	}
 
-	$where = array();
-
-	if ($entity_type != "") {
-		$where[] = "e.type='$entity_type'";
+	if ($entity_subtype) {
+		$options['subtypes'] = $entity_subtype;
 	}
 
-	if ($entity_subtype != "") {
-		$where[] = "e.subtype='$entity_subtype'";
+	if ($owner_guid) {
+		$options['owner'] = $owner_guid;
 	}
 
-	if ($owner_guid != 0 && !is_array($owner_guid)) {
-		$where[] = "a.owner_guid=$owner_guid";
-	} else {
-		if (is_array($owner_guid)) {
-			$where[] = "a.owner_guid in (" . implode(",",$owner_guid) . ")";
-		}
+	if ($limit) {
+		$options['limit'] = $limit;
 	}
 
-	if (($group_guid != 0) && ($entity_type=='object')) {
-		$where[] = "e.container_guid = $group_guid";
+	if ($offset) {
+		$options['offset'] = $offset;
 	}
 
-	if ($name !== "") {
-		$where[] = "a.name_id='$name'";
+	if ($order_by) {
+		$options['order_by'];
 	}
 
-	if ($value != "") {
-		$where[] = "a.value_id='$value'";
-	}
-
-	if ($timelower) {
-		$where[] = "a.time_created >= {$timelower}";
-	}
-
-	if ($timeupper) {
-		$where[] = "a.time_created <= {$timeupper}";
+	if ($site_guid) {
+		$options['site_guid'];
 	}
 
 	if ($count) {
-		$query = "SELECT count(distinct e.guid) as total ";
-	} else {
-		$query = "SELECT e.*, max(a.time_created) as maxtime ";
+		$options['count'] = $count;
 	}
 
-	$query .= "FROM {$CONFIG->dbprefix}annotations a
-		JOIN {$CONFIG->dbprefix}entities e on e.guid = a.entity_guid ";
+	// need to be able to pass false
+	$options['annotations_case_sensitive'] = $case_sensitive;
 
-	if ($value != "") {
-		$query .= " JOIN {$CONFIG->dbprefix}metastrings v on a.value_id=v.id ";
-	}
-
-	if (($group_guid != 0) && ($entity_type=='object')) {
-		$query .= "JOIN {$CONFIG->dbprefix}objects_entity o on o.guid = e.guid";
-	}
-	$query .= " where";
-
-	foreach ($where as $w) {
-		$query .= " $w and ";
-	}
-
-	$query .= get_access_sql_suffix("a"); // Add access controls
-	$query .= ' and ' . get_access_sql_suffix("e"); // Add access controls
-
-	if ($count) {
-		$row = get_data_row($query);
-		return $row->total;
-	} else {
-		$query .= " group by a.entity_guid order by $order_by limit $offset,$limit"; // Add order and limit
-		return get_data($query, "entity_row_to_elggstar");
-	}
+	return elgg_get_entities_from_annotations($options);
 }
 
 /**

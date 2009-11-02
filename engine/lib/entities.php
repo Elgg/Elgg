@@ -1661,16 +1661,17 @@ function elgg_get_entities(array $options = array()) {
 		'site_guids' => $CONFIG->site_guid,
 		'site_guid' => NULL,
 
-		'order_by' => 'time_created desc',
-		'limit' => 10,
-		'offset' => 0,
-
 		'modified_time_lower' => NULL,
 		'modified_time_upper' => NULL,
 		'created_time_lower' => NULL,
 		'created_time_upper' => NULL,
 
+		'order_by' => 'e.time_created desc',
+		'group_by' => NULL,
+		'limit' => 10,
+		'offset' => 0,
 		'count' => FALSE,
+		'selects' => array(),
 		'wheres' => array(),
 		'joins' => array()
 	);
@@ -1723,16 +1724,28 @@ function elgg_get_entities(array $options = array()) {
 		}
 	}
 
+	// evalutate selects
+	if ($options['selects']) {
+		$selects = '';
+		foreach ($options['selects'] as $select) {
+			$selects = ", $select";
+		}
+	} else {
+		$selects = '';
+	}
+
 	if (!$options['count']) {
-		$query = "SELECT DISTINCT e.* FROM {$CONFIG->dbprefix}entities e ";
+		$query = "SELECT DISTINCT e.*{$selects} FROM {$CONFIG->dbprefix}entities e ";
 	} else {
 		$query = "SELECT count(DISTINCT e.guid) as total FROM {$CONFIG->dbprefix}entities e ";
 	}
 
+	// add joins
 	foreach ($joins as $j) {
 		$query .= " $j ";
 	}
 
+	// add wheres
 	$query .= ' WHERE ';
 
 	foreach ($wheres as $w) {
@@ -1742,8 +1755,13 @@ function elgg_get_entities(array $options = array()) {
 	// Add access controls
 	$query .= get_access_sql_suffix('e');
 	if (!$options['count']) {
-		$order_by = sanitise_string($options['order_by']);
-		$query .= " ORDER BY $order_by";
+		if ($group_by = sanitise_string($options['group_by'])) {
+			$query .= " GROUP BY $group_by";
+		}
+
+		if ($order_by = sanitise_string($options['order_by'])) {
+			$query .= " ORDER BY $order_by";
+		}
 
 		if ($options['limit']) {
 			$limit = sanitise_int($options['limit']);
