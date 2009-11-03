@@ -312,7 +312,7 @@ function get_plugin_name($mainfilename = false) {
 function load_plugin_manifest($plugin) {
 	global $CONFIG;
 
-	$xml = xml_2_object(file_get_contents($CONFIG->pluginspath . $plugin. "/manifest.xml"));
+	$xml = xml_to_object(file_get_contents($CONFIG->pluginspath . $plugin. "/manifest.xml"));
 
 	if ($xml) {
 		$elements = array();

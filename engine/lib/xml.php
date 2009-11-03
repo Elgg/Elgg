@@ -44,23 +44,29 @@
 		
 		$output = "";
 		
-		if (($n==0) || ( is_object($data) && !($data instanceof stdClass))) $output = "<$classname>";
-
-		foreach ($vars as $key => $value)
-		{
+		if (($n==0) || ( is_object($data) && !($data instanceof stdClass))) {
+			$output = "<$classname>";
+		}
+		
+		foreach ($vars as $key => $value) {
 			$output .= "<$key type=\"".gettype($value)."\">";
 			
-			if (is_object($value))
+			if (is_object($value)) {
 				$output .= serialise_object_to_xml($value, $key, $n+1);
-			else if (is_array($value))
+			} else if (is_array($value)) {
 				$output .= serialise_array_to_xml($value, $n+1);
-			else
+			} else if (gettype($value) == "boolean") {
+				$output .= $value ? "true" : "false";
+			} else {
 				$output .= htmlentities($value);
+			}
 			
 			$output .= "</$key>\n";
 		}
 		
-		if (($n==0) || ( is_object($data) && !($data instanceof stdClass))) $output .= "</$classname>\n";
+		if (($n==0) || ( is_object($data) && !($data instanceof stdClass))) {
+			$output .= "</$classname>\n";
+		}
 		
 		return $output;
 	}
@@ -76,31 +82,36 @@
 	{
 		$output = "";
 		
-		if ($n==0) $output = "<array>\n";
+		if ($n==0) {
+			$output = "<array>\n";
+		}
 		
-		foreach ($data as $key => $value)
-		{
+		foreach ($data as $key => $value) {
 			$item = "array_item";
 			
-			if (is_numeric($key))
+			if (is_numeric($key)) {
 				$output .= "<$item name=\"$key\" type=\"".gettype($value)."\">";
-			else
-			{
+			} else {
 				$item = $key;
 				$output .= "<$item type=\"".gettype($value)."\">";
 			}
 			
-			if (is_object($value))
+			if (is_object($value)) {
 				$output .= serialise_object_to_xml($value, "", $n+1);
-			else if (is_array($value))
+			} else if (is_array($value)) {
 				$output .= serialise_array_to_xml($value, $n+1);
-			else
+			} else if (gettype($value) == "boolean") {
+				$output .= $value ? "true" : "false";
+			} else {
 				$output .= htmlentities($value);
+			}
 			
 			$output .= "</$item>\n";
 		}
 		
-		if ($n==0) $output = "</array>\n";
+		if ($n==0) {
+			$output = "</array>\n";
+		}
 		
 		return $output;
 	}
@@ -112,7 +123,7 @@
 	 * 
 	 * @param string $xml The XML.
 	 */
-	function xml_2_object($xml)
+	function xml_to_object($xml)
 	{
 		$parser = xml_parser_create();
 		
@@ -121,38 +132,32 @@
 		xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);	
 		xml_parse_into_struct($parser, $xml, $tags);
 		
- 		xml_parser_free($parser);
- 		
- 		$elements = array(); 
-  		$stack = array();
-  		
-  		foreach ($tags as $tag)
-  		{
+		xml_parser_free($parser);
+		
+		$elements = array(); 
+		$stack = array();
+		
+		foreach ($tags as $tag) {
 			$index = count($elements);
 			
-  			if ($tag['type'] == "complete" || $tag['type'] == "open") 
-  			{
-      			$elements[$index] = new XmlElement;
-      			$elements[$index]->name = $tag['tag'];
-      			$elements[$index]->attributes = $tag['attributes'];
-      			$elements[$index]->content = $tag['value'];
-      			
-      			if ($tag['type'] == "open") 
-      			{ 
-        			$elements[$index]->children = array();
-        			$stack[count($stack)] = &$elements;
-        			$elements = &$elements[$index]->children;
-      			}
-    		}
-    		
-    		if ($tag['type'] == "close") 
-    		{
-      			$elements = &$stack[count($stack) - 1];
-      			unset($stack[count($stack) - 1]);
-    		}
-  		}
-  		
-  		return $elements[0];
+			if ($tag['type'] == "complete" || $tag['type'] == "open") {
+				$elements[$index] = new XmlElement;
+				$elements[$index]->name = $tag['tag'];
+				$elements[$index]->attributes = $tag['attributes'];
+				$elements[$index]->content = $tag['value'];
+				
+				if ($tag['type'] == "open") { 
+					$elements[$index]->children = array();
+					$stack[count($stack)] = &$elements;
+					$elements = &$elements[$index]->children;
+				}
+			}
+			
+			if ($tag['type'] == "close") {
+				$elements = &$stack[count($stack) - 1];
+				unset($stack[count($stack) - 1]);
+			}
+		}
+		
+		return $elements[0];
 	}
-	
-?>

@@ -344,7 +344,7 @@ function ODD_factory(XmlElement $element) {
  */
 function ODD_Import($xml) {
 	// Parse XML to an array
-	$elements = xml_2_object($xml);
+	$elements = xml_to_object($xml);
 
 	// Sanity check 1, was this actually XML?
 	if ((!$elements) || (!$elements->children)) {

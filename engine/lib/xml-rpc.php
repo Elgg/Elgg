@@ -57,7 +57,7 @@
 		 */
 		private function parse($xml)
 		{
-			$xml = xml_2_object($xml);
+			$xml = xml_to_object($xml);
 			
 			// sanity check
 			if ((isset($xml->name)) && (strcasecmp($xml->name, "methodCall")!=0))
