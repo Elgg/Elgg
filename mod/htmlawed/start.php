@@ -30,12 +30,26 @@
 		register_plugin_hook('validate', 'input', 'htmlawed_filter_tags', 1);
 	}
 
+	/**
+	 * Hooked for all elements in htmlawed.
+	 * Used to filter out style attributes we don't want.
+	 *
+	 * @param $element
+	 * @param $attribute_array
+	 * @return unknown_type
+	 */
 	function htmlawed_hook($element, $attribute_array) {
+		// these are the default styles used by tinymce.
 		$allowed_styles = array(
-			'color', 'cursor', 'text-align', 'font-size', 'font-weight', 'font-style', 'border', 'margin', 'padding', 'float'
+			'color', 'cursor', 'text-align', 'vertical-align', 'font-size',
+			'font-weight', 'font-style', 'border', 'border-top',
+			'border-bottom', 'border-left', 'border-right',
+			'margin', 'margin-top', 'margin-bottom', 'margin-left',
+			'margin-right',	'padding', 'float', 'text-decoration'
 		);
 
-		if (array_key_exists('style', $attribute_array)) {
+		// must return something.
+		//if (array_key_exists('style', $attribute_array)) {
 			$string = '';
 
 			foreach ($attribute_array as $attr => $value) {
@@ -44,7 +58,7 @@
 
 					$style_str = '';
 					foreach ($styles as $style) {
-						if (!$style) {
+						if (!trim($style)) {
 							continue;
 						}
 						list($style_attr, $style_value) = explode(':', trim($style));
@@ -67,7 +81,7 @@
 
 			$string = trim($string);
 			return "<$element $string >";
-		}
+		//}
 	}
 
 	/**
