@@ -378,13 +378,11 @@ function login(ElggUser $user, $persistent = false) {
 	$_SESSION['username'] = $user->username;
 	$_SESSION['name'] = $user->name;
 
-	$code = (md5($user->name . $user->username . time() . rand()));
-
-	$user->code = md5($code);
-
-	$_SESSION['code'] = $code;
-
+	// if remember me checked, set cookie with token and store token on user
 	if (($persistent)) {
+		$code = (md5($user->name . $user->username . time() . rand()));
+		$_SESSION['code'] = $code;
+		$user->code = md5($code);
 		setcookie("elggperm", $code, (time()+(86400 * 30)),"/");
 	}
 
@@ -507,46 +505,35 @@ function session_init($event, $object_type, $object) {
 		$_SESSION['__elgg_session'] = md5(microtime().rand());
 	}
 
+	// test whether we have a user session
 	if (empty($_SESSION['guid'])) {
+
+		// clear session variables before checking cookie
+		unset($_SESSION['user']);
+		unset($_SESSION['id']);
+		unset($_SESSION['guid']);
+		unset($_SESSION['code']);
+		
+		// is there a remember me cookie
 		if (isset($_COOKIE['elggperm'])) {
+			// we have a cookie, so try to log the user in
 			$code = $_COOKIE['elggperm'];
 			$code = md5($code);
-			unset($_SESSION['guid']);//$_SESSION['guid'] = 0;
-			unset($_SESSION['id']);//$_SESSION['id'] = 0;
 			if ($user = get_user_by_code($code)) {
+				// we have a user, log him in
 				$_SESSION['user'] = $user;
 				$_SESSION['id'] = $user->getGUID();
 				$_SESSION['guid'] = $_SESSION['id'];
 				$_SESSION['code'] = $_COOKIE['elggperm'];
 			}
-		} else {
-			unset($_SESSION['id']); //$_SESSION['id'] = 0;
-			unset($_SESSION['guid']);//$_SESSION['guid'] = 0;
-			unset($_SESSION['code']);//$_SESSION['code'] = "";
-		}
+		} 
 	} else {
-		if (!empty($_SESSION['code'])) {
-			$code = md5($_SESSION['code']);
-			if ($user = get_user_by_code($code)) {
-				$_SESSION['user'] = $user;
-				$_SESSION['id'] = $user->getGUID();
-						$_SESSION['guid'] = $_SESSION['id'];
-			} else {
-				unset($_SESSION['user']);
-				unset($_SESSION['id']); //$_SESSION['id'] = 0;
-				unset($_SESSION['guid']);//$_SESSION['guid'] = 0;
-				unset($_SESSION['code']);//$_SESSION['code'] = "";
-			}
-		} else {
-			//$_SESSION['user'] = new ElggDummy();
-			unset($_SESSION['id']); //$_SESSION['id'] = 0;
-			unset($_SESSION['guid']);//$_SESSION['guid'] = 0;
-			unset($_SESSION['code']);//$_SESSION['code'] = "";
-		}
+		// we have a session and we have already checked the fingerprint
+		// no need to load user data because it should already be in the session
 	}
 
-	if ($_SESSION['id'] > 0) {
-		set_last_action($_SESSION['id']);
+	if (isset($_SESSION['guid'])) {
+		set_last_action($_SESSION['guid']);
 	}
 
 	register_action("login",true);

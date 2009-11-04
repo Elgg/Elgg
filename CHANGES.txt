@@ -6,6 +6,7 @@ http://code.elgg.org/elgg/.....
   * UTF8 now saved correctly in database. #1151
   * Unit tests added to System diagnostics.
   * Debug values output to screen when enabled in admin settings.
+  * Users can now log in from multiple computers or browsers concurrently
 
  Bugfixes:
   * Searching by tag with extended characters now works. #1151, #1231
