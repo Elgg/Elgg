@@ -45,6 +45,17 @@ function register_pam_handler($handler, $importance = "sufficient") {
 }
 
 /**
+ * Unregisters a PAM handler.
+ *
+ * @param string $handler The PAM handler function name
+ */
+function unregister_pam_handler($handler) {
+	global $_PAM_HANDLERS;
+
+	unset($_PAM_HANDLERS[$handler]);
+}
+
+/**
  * Attempt to authenticate.
  * This function will process all registered PAM handlers or stop when the first 
  * handler fails. A handler fails by either returning false or throwing an 

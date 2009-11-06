@@ -29,6 +29,9 @@ if ((isset($CONFIG->disable_api)) && ($CONFIG->disable_api == true)) {
 
 // plugins should return true to control what API and user authentication handlers are registered
 if (trigger_plugin_hook('rest', 'init', null, false) == false) {
+	// remove normal password pam (does not work by default with REST anyway)
+	unregister_pam_handler('pam_auth_userpass');
+	
 	// check session - this usually means a REST call from a web browser
 	register_pam_handler('pam_auth_session');
 	// user token can also be used for user authentication
