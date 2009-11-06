@@ -344,10 +344,86 @@ function get_object_sites($object_guid, $limit = 10, $offset = 0) {
 /**
  * Runs unit tests for ElggObject
  */
-register_plugin_hook('unit_test', 'system', 'objects_test');
-
 function objects_test($hook, $type, $value, $params) {
 	global $CONFIG;
 	$value[] = "{$CONFIG->path}engine/tests/objects/objects.php";
 	return $value;
 }
+
+
+/**
+ * Returns a formatted list of objects suitable for injecting into search.
+ *
+ */
+function search_list_objects_by_name($hook, $user, $returnvalue, $tag) {
+	// Change this to set the number of users that display on the search page
+	$threshold = 4;
+
+	$object = get_input('object');
+
+	if (!get_input('offset') && (empty($object) || $object == 'user')) {
+		if ($users = search_for_user($tag,$threshold)) {
+			$countusers = search_for_user($tag,0,0,"",true);
+
+			$return = elgg_view('user/search/startblurb',array('count' => $countusers, 'tag' => $tag));
+			foreach($users as $user) {
+				$return .= elgg_view_entity($user);
+			}
+			$return .= elgg_view('user/search/finishblurb',array('count' => $countusers, 'threshold' => $threshold, 'tag' => $tag));
+			return $return;
+
+		}
+	}
+}
+
+/**
+ * Return default results for searches on objects.
+ *
+ * @param unknown_type $hook
+ * @param unknown_type $type
+ * @param unknown_type $value
+ * @param unknown_type $params
+ * @return unknown_type
+ */
+function objects_search_hook($hook, $type, $value, $params) {
+	global $CONFIG;
+
+	$query = $params['query'];
+
+	$join = "JOIN {$CONFIG->dbprefix}objects_entity oe ON e.guid = oe.guid";
+	$params['joins'] = array($join);
+
+	$where = "(oe.guid = e.guid
+		AND (oe.title LIKE '%$query%'
+			OR oe.description LIKE '%$query%'
+			)
+		)";
+	$params['wheres'] = array($where);
+
+	$entities = elgg_get_entities($params);
+	$params['count'] = TRUE;
+	$count = elgg_get_entities($params);
+
+	// no need to continue if nothing here.
+	if (!$count) {
+		return array('entities' => array(), 'count' => $count);
+	}
+
+	// add the volatile data for why these entities have been returned.
+	foreach ($entities as $entity) {
+		$title = search_get_relevant_substring($entity->title, $query, '<strong class="searchMatch">', '</strong>');
+		$entity->setVolatileData('search_matched_title', $title);
+
+		$desc = search_get_relevant_substring($entity->description, $query, '<strong class="searchMatch">', '</strong>');
+		$entity->setVolatileData('search_matched_description', $desc);
+	}
+
+	return array(
+		'entities' => $entities,
+		'count' => $count,
+	);
+}
+
+register_elgg_event_handler('init', 'system', 'objects_init', 0);
+register_plugin_hook('search', 'object', 'objects_search_hook');
+register_plugin_hook('unit_test', 'system', 'objects_test');
