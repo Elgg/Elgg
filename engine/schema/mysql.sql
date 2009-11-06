@@ -365,4 +365,4 @@ CREATE TABLE `prefix_system_log` (
 	KEY `subject_guid` (`subject_guid`),
 	KEY `object_guid` (`object_guid`),
 	KEY `posted` (`posted`)
-) ENGINE = MYISAM DEFAULT CHARSET=utf8; 
+) ENGINE = MYISAM DEFAULT CHARSET=utf8;
