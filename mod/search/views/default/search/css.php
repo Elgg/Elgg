@@ -1,4 +1,4 @@
-.searchtype { 
+.searchtype {
 background: #FFFACD;
 color: black;
 }
@@ -9,8 +9,21 @@ padding: 4px;
 margin: 6px;
 }
 
+.searchListing {
+	display: block;
+	margin-bottom: 2em;
+}
+
+.searchMatch {
+	background-color: #FFFF66;
+}
+
+.searchTitle {
+	text-decoration: underline;
+}
+
 #searchform input.search_input {
-	-webkit-border-radius: 4px; 
+	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	background-color:#FFFFFF;
 	border:1px solid #BBBBBB;
@@ -23,7 +36,7 @@ margin: 6px;
 	height:12px;
 }
 #searchform input.search_submit_button {
-	-webkit-border-radius: 4px; 
+	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	color:#333333;
 	background: #cccccc;
@@ -44,7 +57,7 @@ margin: 6px;
 
 .search_listing {
 	display: block;
-	-webkit-border-radius: 8px; 
+	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
 	background:white;
 	margin:0 10px 5px 10px;
@@ -58,7 +71,7 @@ margin: 6px;
 
 /* override the entity container piece */
 .search_listing .entity_listing {
-	-webkit-border-radius: 0px; 
+	-webkit-border-radius: 0px;
 	-moz-border-radius: 0px;
 	background: transparent;
 	margin: 0;

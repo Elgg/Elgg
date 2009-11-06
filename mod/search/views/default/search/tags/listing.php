@@ -20,7 +20,7 @@ if (!is_array($vars['entities']) || !count($vars['entities'])) {
 }
 
 $title_str = elgg_echo("item:{$vars['params']['type']}:{$vars['params']['subtype']}");
-$body = elgg_view_title($title_str);
+$body = elgg_view_title(elgg_echo('tags'));
 
 echo elgg_view('page_elements/contentwrapper', array('body' => $body));
 
@@ -31,8 +31,9 @@ foreach ($entities as $entity) {
 	} else {
 		$icon = '';
 	}
-	$title = $entity->getVolatileData('search_matched_title');
-	$description = $entity->getVolatileData('search_matched_description');
+	$tags = $entity->getVolatileData('search_matched_tags');
+
+	$entity_html = elgg_view_entity($entity);
 	$url = $entity->getURL();
 	$title = "<a href=\"$url\">$title</a>";
 	$tc = $entity->time_created;
@@ -43,8 +44,8 @@ foreach ($entities as $entity) {
 <span class="searchListing">
 	<h3 class="searchTitle">$title</h3>
 	<span class="searchDetails">
-		<span class="searchDescription">$description</span><br />
-		$icon - $time - <a href="">More $title_str</a> -
+		$entity_html
+		$tags
 	</span>
 </span>
 ___END;
