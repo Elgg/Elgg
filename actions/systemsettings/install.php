@@ -110,6 +110,7 @@ if (get_input('settings') == 'go') {
 			enable_plugin('diagnostics', $site->getGUID());
 			enable_plugin('uservalidationbyemail', $site->getGUID());
 			enable_plugin('htmlawed', $site->getGUID());
+			enable_plugin('search', $site->getGUID());
 		}
 
 		// Now ping home
