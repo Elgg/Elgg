@@ -1218,7 +1218,8 @@ function get_subtype_id($type, $subtype) {
 	$subtype = sanitise_string($subtype);
 
 	if ($subtype=="") {
-		return $subtype;
+		//return $subtype;
+		return FALSE;
 	}
 
 	// Todo: cache here? Or is looping less efficient that going to the db each time?
@@ -1235,7 +1236,7 @@ function get_subtype_id($type, $subtype) {
 		return $result->id;
 	}
 
-	return 0;
+	return FALSE;
 }
 
 /**
@@ -1906,20 +1907,33 @@ function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pair
 
 			$subtype_ids = array();
 			if ($subtypes) {
+				// if there is only one subtype and it is is not 0 and it invalid return false.
+				// if the type is 0 or null, let it through.
+				// if the type is set but the subtype is FALSE, return false.
+				if (count($subtypes) === 1) {
+					if ($subtypes[0] && !get_subtype_id($type, $subtypes[0])) {
+						return FALSE;
+					}
+				}
+
+				// subtypes can be NULL or '' or 0, which means "no subtype"
 				foreach ($subtypes as $subtype) {
-					if (!$subtype_id = get_subtype_id($type, $subtype)) {
+					// if a subtype is sent that doesn't exist
+					if (0 === $subtype || $subtype_id = get_subtype_id($type, $subtype)) {
+						$subtype_ids[] = (0 === $subtype) ? 0 : $subtype_id;
+					} else {
 						// @todo should return false.
 						//return FALSE;
 
 						elgg_log("Type-subtype $type:$subtype' does not exist!", 'WARNING');
 						continue;
-					} else {
-						$subtype_ids[] = $subtype_id;
 					}
 				}
 			}
 		}
-		if ($subtype_ids_str = implode(',', $subtype_ids)) {
+		//if ($subtype_ids_str = implode(',', $subtype_ids)) {
+		if (is_array($subtype_ids) && count($subtype_ids)) {
+			$subtype_ids_str = implode(',', $subtype_ids);
 			$wheres[] = "({$table}.type = '$type' AND {$table}.subtype IN ($subtype_ids_str))";
 		} else {
 			$wheres[] = "({$table}.type = '$type')";
@@ -3518,6 +3532,8 @@ function entities_init() {
 	register_plugin_hook('permissions_check:metadata','all','recursive_delete_permissions_check');
 
 	register_plugin_hook('gc','system','entities_gc');
+
+	register_plugin_hook('search','all','search_list_entities_by_name');
 }
 
 /** Register the import hook */
