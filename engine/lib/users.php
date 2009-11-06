@@ -1532,16 +1532,66 @@ function users_settings_save() {
 	include($CONFIG->path . "actions/user/default_access.php");
 }
 
-//register actions *************************************************************
-register_elgg_event_handler('init','system','users_init',0);
-register_elgg_event_handler('pagesetup','system','users_pagesetup',0);
-
 /**
  * Runs unit tests for ElggObject
  */
-register_plugin_hook('unit_test', 'system', 'users_test');
 function users_test($hook, $type, $value, $params) {
 	global $CONFIG;
 	$value[] = "{$CONFIG->path}engine/tests/objects/users.php";
 	return $value;
 }
+
+/**
+ * Return default results for searches on users.
+ *
+ * @param unknown_type $hook
+ * @param unknown_type $type
+ * @param unknown_type $value
+ * @param unknown_type $params
+ * @return unknown_type
+ */
+function users_search_hook($hook, $type, $value, $params) {
+	global $CONFIG;
+
+	$query = $params['query'];
+
+	$join = "JOIN {$CONFIG->dbprefix}users_entity ue ON e.guid = ue.guid";
+	$params['joins'] = array($join);
+
+	$where = "(ue.guid = e.guid
+		AND (ue.username LIKE '%$query%'
+			OR ue.name LIKE '%$query%'
+			)
+		)";
+	$params['wheres'] = array($where);
+
+	$entities = elgg_get_entities($params);
+	$params['count'] = TRUE;
+	$count = elgg_get_entities($params);
+
+	// no need to continue if nothing here.
+	if (!$count) {
+		return array('entities' => array(), 'count' => $count);
+	}
+
+	// add the volatile data for why these entities have been returned.
+	foreach ($entities as $entity) {
+		$username = search_get_relevant_substring($entity->username, $query, '<strong class="searchMatch">', '</strong>');
+		$entity->setVolatileData('search_matched_title', $username);
+
+		$name = search_get_relevant_substring($entity->name, $query, '<strong class="searchMatch">', '</strong>');
+		$entity->setVolatileData('search_matched_description', $name);
+	}
+
+	return array(
+		'entities' => $entities,
+		'count' => $count,
+	);
+}
+
+
+//register actions *************************************************************
+register_elgg_event_handler('init','system','users_init',0);
+register_elgg_event_handler('pagesetup','system','users_pagesetup',0);
+register_plugin_hook('unit_test', 'system', 'users_test');
+register_plugin_hook('search', 'user', 'users_search_hook');
