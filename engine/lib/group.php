@@ -947,7 +947,7 @@ function group_init() {
 	register_entity_type('group','');
 
 	// Register a search hook
-	register_plugin_hook('search','all','search_list_groups_by_name');
+	register_plugin_hook('search', 'group', 'groups_search_hook');
 }
 
 
@@ -1000,4 +1000,3 @@ function groups_search_hook($hook, $type, $value, $params) {
 }
 
 register_elgg_event_handler('init','system','group_init');
-register_plugin_hook('search', 'group', 'groups_search_hook');
