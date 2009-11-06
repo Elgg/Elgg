@@ -1490,8 +1490,7 @@ function users_init() {
 	register_entity_type('user','');
 
 	register_plugin_hook('usersettings:save','user','users_settings_save');
-	register_plugin_hook('search','all','search_list_users_by_name');
-
+	register_plugin_hook('search', 'user', 'users_search_hook');
 
 	// Handle a special case for newly created users when the user is not logged in
 	// TODO: handle this better!
@@ -1594,4 +1593,3 @@ function users_search_hook($hook, $type, $value, $params) {
 register_elgg_event_handler('init','system','users_init',0);
 register_elgg_event_handler('pagesetup','system','users_pagesetup',0);
 register_plugin_hook('unit_test', 'system', 'users_test');
-register_plugin_hook('search', 'user', 'users_search_hook');
