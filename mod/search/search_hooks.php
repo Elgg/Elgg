@@ -72,14 +72,13 @@ function search_groups_hook($hook, $type, $value, $params) {
 
 	$join = "JOIN {$CONFIG->dbprefix}groups_entity ge ON e.guid = ge.guid";
 	$params['joins'] = array($join);
-	$fields = array('name', 'description');
 
-	$where = search_get_where_sql('ge', $fields, $params);
-
+	$where = "(ge.guid = e.guid
+		AND (ge.name LIKE '%$query%'
+			OR ge.description LIKE '%$query%'
+			)
+		)";
 	$params['wheres'] = array($where);
-
-	//@todo allow sorting by recent time
-	$params['order_by'] = NULL;
 
 	$entities = elgg_get_entities($params);
 	$params['count'] = TRUE;
@@ -122,7 +121,6 @@ function search_users_hook($hook, $type, $value, $params) {
 	$join = "JOIN {$CONFIG->dbprefix}users_entity ue ON e.guid = ue.guid";
 	$params['joins'] = array($join);
 
-	// use like here because of the simplicity of the search
 	$where = "(ue.guid = e.guid
 		AND (ue.username LIKE '%$query%'
 			OR ue.name LIKE '%$query%'
