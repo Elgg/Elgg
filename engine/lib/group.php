@@ -945,58 +945,6 @@ function list_group_search($tag, $limit = 10) {
 function group_init() {
 	// Register an entity type
 	register_entity_type('group','');
-
-	// Register a search hook
-	register_plugin_hook('search', 'group', 'groups_search_hook');
-}
-
-
-/**
- * Return default results for searches on groups.
- *
- * @param unknown_type $hook
- * @param unknown_type $type
- * @param unknown_type $value
- * @param unknown_type $params
- * @return unknown_type
- */
-function groups_search_hook($hook, $type, $value, $params) {
-	global $CONFIG;
-
-	$query = $params['query'];
-
-	$join = "JOIN {$CONFIG->dbprefix}groups_entity ge ON e.guid = ge.guid";
-	$params['joins'] = array($join);
-
-	$where = "(ge.guid = e.guid
-		AND (ge.name LIKE '%$query%'
-			OR ge.description LIKE '%$query%'
-			)
-		)";
-	$params['wheres'] = array($where);
-
-	$entities = elgg_get_entities($params);
-	$params['count'] = TRUE;
-	$count = elgg_get_entities($params);
-
-	// no need to continue if nothing here.
-	if (!$count) {
-		return array('entities' => array(), 'count' => $count);
-	}
-
-	// add the volatile data for why these entities have been returned.
-	foreach ($entities as $entity) {
-		$description = search_get_relevant_substring($entity->description, $query, '<strong class="searchMatch">', '</strong>');
-		$entity->setVolatileData('search_matched_title', $description);
-
-		$name = search_get_relevant_substring($entity->name, $query, '<strong class="searchMatch">', '</strong>');
-		$entity->setVolatileData('search_matched_description', $name);
-	}
-
-	return array(
-		'entities' => $entities,
-		'count' => $count,
-	);
 }
 
 register_elgg_event_handler('init','system','group_init');

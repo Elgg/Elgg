@@ -2,7 +2,9 @@
 
 // $search_type == all || entities || trigger plugin hook
 $search_type = get_input('search_type', 'all');
-$query = sanitise_string(get_input('query', get_input('tag')));
+
+// @todo there is a bug in get_input that makes variables have slashes sometimes.
+$query = sanitise_string(stripslashes(get_input('q', get_input('tag', '', FALSE), FALSE)));
 
 // get limit and offset.  override if on search dashboard, where only 2
 // of each most recent entity types will be shown.
@@ -117,7 +119,7 @@ call search
 
 */
 
-$layout = elgg_view_layout('single_column', '', $results_html);
+$layout = elgg_view_layout('two_column_left_sidebar', '', $results_html);
 
 page_draw($title, $layout);
 

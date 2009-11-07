@@ -13,7 +13,7 @@
 
 <?php
 $entities = $vars['entities'];
-$count = $vars['count'];
+$count = $vars['count'] - count($vars['entities']);
 
 if (!is_array($vars['entities']) || !count($vars['entities'])) {
 	return FALSE;
@@ -21,6 +21,17 @@ if (!is_array($vars['entities']) || !count($vars['entities'])) {
 
 $title_str = elgg_echo("item:{$vars['params']['type']}:{$vars['params']['subtype']}");
 $body = elgg_view_title($title_str);
+
+$query = htmlspecialchars(http_build_query(
+	array(
+		'q' => $vars['params']['query'],
+		'type' => $vars['params']['type'],
+		'subtype' => $vars['params']['subtype']
+	)
+));
+
+$url = "{$vars['url']}pg/search?$query";
+$more = "<a href=\"$url\">+$count more $title_str</a>";
 
 echo elgg_view('page_elements/contentwrapper', array('body' => $body));
 
@@ -44,7 +55,7 @@ foreach ($entities as $entity) {
 	<h3 class="searchTitle">$title</h3>
 	<span class="searchDetails">
 		<span class="searchDescription">$description</span><br />
-		$icon - $time - <a href="">More $title_str</a> -
+		$icon $time - $more</a>
 	</span>
 </span>
 ___END;
