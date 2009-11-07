@@ -34,8 +34,10 @@ if (trigger_plugin_hook('rest', 'init', null, false) == false) {
 	// user token can also be used for user authentication
 	register_pam_handler('pam_auth_usertoken');
 
-	// for api authentication, we default to a simple API key check
-	register_api_auth_handler('api_auth_key');
+	// simple API key check 
+	register_pam_handler('api_auth_key', "sufficient", "api");
+	// hmac 
+	register_pam_handler('api_auth_hmac', "sufficient", "api");
 }
 
 // Get parameter variables

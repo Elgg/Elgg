@@ -257,7 +257,7 @@ class ElggCoreServicesApiTest extends ElggCoreUnitTest {
 	
 // api key methods
 	public function testApiAuthenticate() {
-		$this->assertFalse(api_authenticate());
+		$this->assertFalse(pam_authenticate(null, "api"));
 	}
 	
 	public function testApiAuthKeyNoKey() {

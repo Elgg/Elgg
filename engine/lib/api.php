@@ -411,7 +411,7 @@ function authenticate_method($method) {
 	
 	// check API authentication if required
 	if ($API_METHODS[$method]["require_api_auth"] == true) {
-		if (api_authenticate() == false) {
+		if (pam_authenticate(null, "api") == false) {
 			throw new APIException(elgg_echo('APIException:APIAuthenticationFailed'));
 		}
 	}
@@ -424,65 +424,6 @@ function authenticate_method($method) {
 	}
 	
 	return true;
-}
-
-$API_AUTH_HANDLERS = array();
-
-/**
- * Register an API authorization handler
- * 
- * @param $handler
- * @param $importance
- * @return bool
- */
-function register_api_auth_handler($handler, $importance = "sufficient") {
-	global $API_AUTH_HANDLERS;
-
-	if (is_callable($handler)) {
-		$API_AUTH_HANDLERS[$handler] = new stdClass;
-
-		$API_AUTH_HANDLERS[$handler]->handler = $handler;
-		$API_AUTH_HANDLERS[$handler]->importance = strtolower($importance);
-
-		return true;
-	}
-
-	return false;	
-}
-
-/**
- * Authenticate an API method call
- * 
- * @return bool
- */
-function api_authenticate() {
-	global $API_AUTH_HANDLERS;
-
-	$authenticated = false;
-
-	foreach ($API_AUTH_HANDLERS as $k => $v) {
-		$handler = $v->handler;
-		$importance = $v->importance;
-
-		try {
-			// Execute the handler
-			if ($handler()) {
-				$authenticated = true;
-			} else {
-				// If this is required then abort.
-				if ($importance == 'required') {
-					return false;
-				}
-			}
-		} catch (Exception $e) {
-			// If this is required then abort.
-			if ($importance == 'required') {
-				return false;
-			}
-		}
-	}
-
-	return $authenticated;
 }
 
 /**
@@ -758,7 +699,7 @@ function api_auth_hmac() {
 
 	// Get api header
 	$api_header = get_and_validate_api_headers();
-
+	
 	// Pull API user details
 	$api_user = get_api_user($CONFIG->site_id, $api_header->api_key);
 
@@ -777,7 +718,7 @@ function api_auth_hmac() {
 							$api_header->time,
 							$api_header->api_key,
 							$secret_key,
-							$params,
+							$query,
 							$api_header->method == 'POST' ? $api_header->posthash : "");
 
 	
@@ -842,7 +783,7 @@ function get_and_validate_api_headers() {
 	}
 
 	// Basic timecheck, think about making this smaller if we get loads of users and the cache gets really big.
-	if (($result->time<(microtime(true)-86400.00)) || ($result->time>(microtime(true)+86400.00))) {
+	if (($result->time<(time()-86400)) || ($result->time>(time()+86400))) {
 		throw new APIException(elgg_echo('APIException:TemporalDrift'));
 	}
 
@@ -899,7 +840,7 @@ function map_api_hash($algo) {
  * @param $time string String representation of unix time as stored in X-Searunner-time.
  * @param $api_key string Your api key.
  * @param $secret string Your secret key.
- * @param $get_variables string URLEncoded string representation of the get variable parameters, eg "format=php&method=searunner.test".
+ * @param $get_variables string URLEncoded string representation of the get variable parameters, eg "method=user&guid=2"
  * @param $post_hash string Optional sha1 hash of the post data.
  * @return string The HMAC string.
  */
@@ -1036,8 +977,11 @@ function pam_auth_usertoken($credentials = NULL) {
 	global $CONFIG;
 
 	$token = get_input('auth_token');
-
-	$validated_userid = validate_user_token($token);
+	if (!$token) {
+		return false;	
+	}
+	
+	$validated_userid = validate_user_token($token, $CONFIG->site_id);
 
 	if ($validated_userid) {
 		$u = get_entity($validated_userid);
@@ -1218,17 +1162,11 @@ function send_api_call(array $keys, $url, array $call, $method = 'GET', $post_da
 	}
 
 	// Time
-	$time = microtime(true);
+	$time = time();
 
-	// URL encode all the parameters, ensuring auth_token (if present) is at the end!
+	// URL encode all the parameters
 	foreach ($call as $k => $v){
-		if ($k!='auth_token') {
-			$encoded_params[] = urlencode($k).'='.urlencode($v);
-		}
-	}
-
-	if ($call['auth_token']) {
-		$encoded_params[] = urlencode('auth_token').'='.urlencode($call['auth_token']);
+		$encoded_params[] = urlencode($k).'='.urlencode($v);
 	}
 
 	$params = implode('&', $encoded_params);
