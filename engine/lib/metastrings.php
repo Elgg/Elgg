@@ -29,7 +29,7 @@ function get_metastring_id($string, $case_sensitive = TRUE) {
 	
     // caching doesn't work for case insensitive searches
     if ($case_sensitive) {
-		$result = array_search($string, $METASTRINGS_CACHE);
+		$result = array_search($string, $METASTRINGS_CACHE, true);
 		
 		if ($result!==false) {
 			elgg_log("** Returning id for string:$string from cache.");
@@ -37,7 +37,7 @@ function get_metastring_id($string, $case_sensitive = TRUE) {
 		}
 
 		// See if we have previously looked for this and found nothing
-		if (in_array($string, $METASTRINGS_DEADNAME_CACHE)) {
+		if (in_array($string, $METASTRINGS_DEADNAME_CACHE, true)) {
 			return false;
 		}
 		
