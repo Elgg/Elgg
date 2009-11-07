@@ -2195,17 +2195,9 @@ function list_entities($type= "", $subtype = "", $owner_guid = 0, $limit = 10, $
 		$options['offset'] = $offset;
 	}
 
-	if ($fullview) {
-		$options['full_view'] = $fullview;
-	}
-
-	if ($viewtoggletype) {
-		$options['view_toggle_type'] = $viewtoggletype;
-	}
-
-	if ($pagination) {
-		$options['pagination'] = $pagination;
-	}
+	$options['full_view'] = $fullview;
+	$options['view_toggle_type'] = $viewtoggletype;
+	$options['pagination'] = $pagination;
 
 	return elgg_list_entities($options);
 }
