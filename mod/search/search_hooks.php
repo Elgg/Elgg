@@ -30,7 +30,7 @@ function search_objects_hook($hook, $type, $value, $params) {
 
 	//@todo allow sorting by recent time
 	$params['order_by'] = NULL;
-var_dump($params);
+
 	$entities = elgg_get_entities($params);
 	$params['count'] = TRUE;
 	$count = elgg_get_entities($params);
