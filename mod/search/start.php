@@ -19,17 +19,17 @@ function search_init() {
 	// page handler for search actions and results
 	register_page_handler('search','search_page_handler');
 
-//	// register some default search hooks
-//	register_plugin_hook('search', 'object', 'search_objects_hook');
-//	register_plugin_hook('search', 'user', 'search_users_hook');
-//
-//	// @todo pull this out into groups
-//	register_plugin_hook('search', 'group', 'search_groups_hook');
-//
-//	// tags and comments are a bit different.
-//	// register a search types and a hooks for them.
-//	register_plugin_hook('search_types', 'get_types', 'search_custom_types_tags_hook');
-//	register_plugin_hook('search', 'tags', 'search_tags_hook');
+	// register some default search hooks
+	register_plugin_hook('search', 'object', 'search_objects_hook');
+	register_plugin_hook('search', 'user', 'search_users_hook');
+
+	// @todo pull this out into groups
+	register_plugin_hook('search', 'group', 'search_groups_hook');
+
+	// tags and comments are a bit different.
+	// register a search types and a hooks for them.
+	register_plugin_hook('search_types', 'get_types', 'search_custom_types_tags_hook');
+	register_plugin_hook('search', 'tags', 'search_tags_hook');
 
 	register_plugin_hook('search_types', 'get_types', 'search_custom_types_comments_hook');
 	register_plugin_hook('search', 'comments', 'search_comments_hook');
