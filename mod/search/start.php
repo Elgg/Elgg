@@ -19,17 +19,20 @@ function search_init() {
 	// page handler for search actions and results
 	register_page_handler('search','search_page_handler');
 
-	// register some default search hooks
-	register_plugin_hook('search', 'object', 'search_objects_hook');
-	register_plugin_hook('search', 'user', 'search_users_hook');
+//	// register some default search hooks
+//	register_plugin_hook('search', 'object', 'search_objects_hook');
+//	register_plugin_hook('search', 'user', 'search_users_hook');
+//
+//	// @todo pull this out into groups
+//	register_plugin_hook('search', 'group', 'search_groups_hook');
+//
+//	// tags and comments are a bit different.
+//	// register a search types and a hooks for them.
+//	register_plugin_hook('search_types', 'get_types', 'search_custom_types_tags_hook');
+//	register_plugin_hook('search', 'tags', 'search_tags_hook');
 
-	// @todo pull this out into groups
-	register_plugin_hook('search', 'group', 'search_groups_hook');
-
-	// tags are a bit different.
-	// register a custom search type and a hook for that.
-	register_plugin_hook('search_types', 'get_types', 'search_custom_types_tags_hook');
-	register_plugin_hook('search', 'tags', 'search_tags_hook');
+	register_plugin_hook('search_types', 'get_types', 'search_custom_types_comments_hook');
+	register_plugin_hook('search', 'comments', 'search_comments_hook');
 
 	// get server min and max allowed chars for ft searching
 	$word_lens = get_data('SELECT @@ft_min_word_len as min, @@ft_max_word_len as max');
@@ -327,7 +330,8 @@ function search_get_where_sql($table, $fields, $params) {
 			$likes[] = "$field LIKE '%$query%'";
 		}
 		$likes_str = implode(' OR ', $likes);
-		$where = "($table.guid = e.guid AND	($likes_str))";
+		//$where = "($table.guid = e.guid AND	($likes_str))";
+		$where = "($likes_str))";
 	} else {
 		// if using advanced or paired "s, switch into boolean mode
 		if ((isset($params['advanced_search']) && $params['advanced_search']) || substr_count($query, '"') >= 2 ) {
@@ -338,11 +342,12 @@ function search_get_where_sql($table, $fields, $params) {
 
 		// if short query, use query expansion.
 		if (strlen($query) < 6) {
-			$options .= ' WITH QUERY EXPANSION';
+			//$options .= ' WITH QUERY EXPANSION';
 		}
 		// if query is shorter than the ft_min_word_len switch to literal mode.
 		$fields_str = implode(',', $fields);
-		$where = "($table.guid = e.guid AND (MATCH ($fields_str) AGAINST ('$query' $options)))";
+		//$where = "($table.guid = e.guid AND (MATCH ($fields_str) AGAINST ('$query' $options)))";
+		$where = "(MATCH ($fields_str) AGAINST ('$query' $options))";
 	}
 
 	return $where;

@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg search listing
+ * Elgg tag search listing
  *
  * @package Elgg
  * @subpackage Core

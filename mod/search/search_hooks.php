@@ -30,7 +30,7 @@ function search_objects_hook($hook, $type, $value, $params) {
 
 	//@todo allow sorting by recent time
 	$params['order_by'] = NULL;
-
+var_dump($params);
 	$entities = elgg_get_entities($params);
 	$params['count'] = TRUE;
 	$count = elgg_get_entities($params);
@@ -200,6 +200,82 @@ function search_tags_hook($hook, $type, $value, $params) {
  */
 function search_custom_types_tags_hook($hook, $type, $value, $params) {
 	$value[] = 'tags';
+	return $value;
+}
+
+
+/**
+ * Return default results for searches on comments.
+ *
+ * @param unknown_type $hook
+ * @param unknown_type $type
+ * @param unknown_type $value
+ * @param unknown_type $params
+ * @return unknown_type
+ */
+function search_comments_hook($hook, $type, $value, $params) {
+	global $CONFIG;
+
+	$query = $params['query'];
+	$params['annotation_names'] = array('generic_comment', 'group_topic_post');
+
+	$params['joins'] = array(
+		"JOIN {$CONFIG->dbprefix}annotations a on e.guid = a.entity_guid",
+		"JOIN {$CONFIG->dbprefix}metastrings msn on a.name_id = msn.id",
+		"JOIN {$CONFIG->dbprefix}metastrings msv on a.value_id = msv.id"
+	);
+
+	$fields = array('string');
+	$search_where = search_get_where_sql('msv', $fields, $params);
+
+	$e_access = get_access_sql_suffix('e');
+	$a_access = get_access_sql_suffix('a');
+	// @todo this can probably be done through the api..
+	$q = "SELECT DISTINCT a.*, msv.string as comment FROM {$CONFIG->dbprefix}annotations a
+		JOIN {$CONFIG->dbprefix}metastrings msn ON a.name_id = msn.id
+		JOIN {$CONFIG->dbprefix}metastrings msv ON a.value_id = msv.id
+		JOIN {$CONFIG->dbprefix}entities e ON a.entity_guid = e.guid
+		WHERE msn.string IN ('generic_comment', 'group_topic_post')
+			AND ($search_where)
+			AND $e_access
+			AND $a_access
+
+		LIMIT {$params['offset']}, {$params['limit']}
+		";
+	$comments = get_data($q);
+
+	// need to return actual entities
+	// add the volatile data for why these entities have been returned.
+	$entities = array();
+	foreach ($comments as $comment) {
+		$tags = implode(',', $entity->tags);
+		if (!$entity = get_entity($comment->entity_guid)) {
+			continue;
+		}
+		$comment_str = search_get_relevant_substring($comment->comment, $query, '<strong class="searchMatch">', '</strong>');
+		$entity->setVolatileData('search_matched_comment', $comment_str);
+		$entity->setVolatileData('search_matched_comment_owner_guid', $comment->owner_guid);
+		$entity->setVolatileData('search_matched_comment_time_created', $comment->time_created);
+		$entities[] = $entity;
+	}
+
+	return array(
+		'entities' => $entities,
+		'count' => count($entities),
+	);
+}
+
+/**
+ * Register comments as a custom search type.
+ *
+ * @param unknown_type $hook
+ * @param unknown_type $type
+ * @param unknown_type $value
+ * @param unknown_type $params
+ * @return unknown_type
+ */
+function search_custom_types_comments_hook($hook, $type, $value, $params) {
+	$value[] = 'comments';
 	return $value;
 }
 

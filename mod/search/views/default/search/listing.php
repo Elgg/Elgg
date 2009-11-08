@@ -26,6 +26,8 @@ $query = htmlspecialchars(http_build_query(
 	array(
 		'q' => $vars['params']['query'],
 		'type' => $vars['params']['type'],
+		'limit' => get_input('limit', 10),
+		'offset' => get_input('offset', 0),
 		'subtype' => $vars['params']['subtype']
 	)
 ));
