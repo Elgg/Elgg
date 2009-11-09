@@ -1,3 +1,5 @@
+*** CODING STANDARDS ***
+
 These are the coding standards for Elgg.  All core development, bundled 
 plugins, and tickets attached to Trac are expected to be in this format.
 
@@ -35,4 +37,34 @@ plugins, and tickets attached to Trac are expected to be in this format.
   characters, please revise the code.
 * Use slash-style comments. (// and /* */)
 * Preferred no closing ?> tag at EOF. (Avoids problems with trailing 
-  whitespace.)
+  whitespace, marginal speed improvements.)
+
+
+*** DEPRECATING APIs ***
+
+Occasionally, functions and classes must be deprecated in favor of newer
+replacements.  Since 3rd party plugin authors rely on a consistent API, backward
+compatibility must be maintained, but will not be maintained indefinitely as
+plugin authors are expected to properly update their plugins.  In order to 
+maintain backward compatibility, deprecated APIs will follow these guidelines:
+
+* API changes cannot occur between bugfix versions (1.6.0 - 1.6.1).
+* API changes between minor versions (1.6 - 1.7) must maintain backward
+  compatibility for at least 2 minor versions.  (See procedures, below.)
+* Bugfixes that change the API cannot be included in bugfix versions.
+* API changes between major versions (1.0 - 2.0) can occur without regard to
+  backward compatibility.
+
+The procedures for deprecating an API are as follows:
+
+* The first minor version (1.7) with a deprecated API must include a wrapper
+  function/class (or otherwise appropriate means) to maintain backward
+  compatibility, including any bugs in the original function/class.
+  This wrapper function will use elgg_log('...', 'WARNING') to announce
+  that the function is deprecated.
+* The second minor version (1.8) maintains the backward compatibility wrapper,
+  but in addition to elgg_log(), a register_error() message is also thrown.
+* The third minor version (1.9) removes the wrapper function.  Any use of 
+  the deprecated API should be corrected before this.
+
+The general timeline for three minor releases is 8 to 12 months.
