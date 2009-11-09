@@ -261,7 +261,7 @@ function elgg_view($view, $vars = "", $bypass = false, $debug = false, $viewtype
 		if (!file_exists($view_file) || !include($view_file)) {
 			// requested view does not exist
 			$error = "$viewtype/$view view does not exist.";
-			
+
 			// attempt to load default view
 			if ($viewtype != 'default') {
 				if (file_exists($default_view_file) && include($default_view_file)) {
@@ -272,7 +272,7 @@ function elgg_view($view, $vars = "", $bypass = false, $debug = false, $viewtype
 					$error = "Neither $viewtype/$view nor default/$view view exists.";
 				}
 			}
-			
+
 			// log warning
 			elgg_log($error, 'WARNING');
 		}
@@ -894,19 +894,6 @@ function get_submenu() {
 
 		//asort($submenu_register);
 		ksort($submenu_register);
-
-		foreach($submenu_register as $groupname => $submenu_register_group) {
-			foreach($submenu_register_group as $key => $item) {
-				if (substr_count($item->value, $_SERVER['REQUEST_URI'])) {
-					$comparevals[$key] = levenshtein($item->value, $_SERVER['REQUEST_URI']);
-					if ($comparevals[$key] < $maxcompareval) {
-						$maxcompareval = $comparevals[$key];
-						$preselected = $key;
-						$preselectedgroup = $groupname;
-					}
-				}
-			}
-		}
 
 		foreach($submenu_register as $groupname => $submenu_register_group) {
 			$submenu = "";
