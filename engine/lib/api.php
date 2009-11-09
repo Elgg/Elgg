@@ -722,7 +722,7 @@ function api_auth_hmac() {
 							$api_header->method == 'POST' ? $api_header->posthash : "");
 
 	
-	if (!(strcmp($api_header->hmac, $hmac) == 0) && !($api_header->hmac) && !($hmac)) {
+	if ($api_header->hmac !== $hmac) {
 		throw new SecurityException("HMAC is invalid.  {$api_header->hmac} != [calc]$hmac");
 	}
 	
@@ -782,8 +782,8 @@ function get_and_validate_api_headers() {
 		throw new APIException(elgg_echo('APIException:MissingTime'));
 	}
 
-	// Basic timecheck, think about making this smaller if we get loads of users and the cache gets really big.
-	if (($result->time<(time()-86400)) || ($result->time>(time()+86400))) {
+	// must have been sent in the last 10 minutes
+	if (($result->time<(time()-600)) || ($result->time>(time()+600))) {
 		throw new APIException(elgg_echo('APIException:TemporalDrift'));
 	}
 
@@ -832,17 +832,17 @@ function map_api_hash($algo) {
 }
 
 /**
- * Calculate the HMAC for the query.
- * This function signs an api request using the information provided and is then verified by
- * searunner.
+ * Calculate the HMAC for the http request.
+ * This function signs an api request using the information provided. The signature returned
+ * has been base64 encoded and then url encoded.
  *
- * @param $algo string The HMAC algorithm used as stored in X-Searunner-hmac-algo.
- * @param $time string String representation of unix time as stored in X-Searunner-time.
- * @param $api_key string Your api key.
- * @param $secret string Your secret key.
+ * @param $algo string The HMAC algorithm used
+ * @param $time string String representation of unix time
+ * @param $api_key string Your api key
+ * @param $secret string Your private key
  * @param $get_variables string URLEncoded string representation of the get variable parameters, eg "method=user&guid=2"
  * @param $post_hash string Optional sha1 hash of the post data.
- * @return string The HMAC string.
+ * @return string The HMAC string
  */
 function calculate_hmac($algo, $time, $api_key, $secret_key, $get_variables, $post_hash = "") {
 	global $CONFIG;
@@ -858,7 +858,7 @@ function calculate_hmac($algo, $time, $api_key, $secret_key, $get_variables, $po
 		hash_update($ctx, trim($post_hash));
 	}
 
-	return hash_final($ctx);
+	return urlencode(base64_encode(hash_final($ctx, true)));
 }
 
 /**
