@@ -1769,6 +1769,7 @@ function elgg_get_entities(array $options = array()) {
 			$offset = sanitise_int($options['offset']);
 			$query .= " LIMIT $offset, $limit";
 		}
+
 		$dt = get_data($query, "entity_row_to_elggstar");
 
 		//@todo normalize this to array()
@@ -2009,7 +2010,7 @@ function elgg_get_entity_owner_where_sql($table, $owner_guids) {
 	$where = '';
 
 	// implode(',', 0) returns 0.
-	if (FALSE !== $owner_str = implode(',', $owner_guids_sanitised)) {
+	if (($owner_str = implode(',', $owner_guids_sanitised)) && ($owner_str !== FALSE) && ($owner_str !== '')) {
 		$where = "({$table}.owner_guid IN ($owner_str))";
 	}
 
