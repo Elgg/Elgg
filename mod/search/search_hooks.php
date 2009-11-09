@@ -68,7 +68,7 @@ function search_objects_hook($hook, $type, $value, $params) {
 function search_groups_hook($hook, $type, $value, $params) {
 	global $CONFIG;
 
-	$query = $params['query'];
+	$query = sanitise_string($params['query']);
 
 	$join = "JOIN {$CONFIG->dbprefix}groups_entity ge ON e.guid = ge.guid";
 	$params['joins'] = array($join);
@@ -116,7 +116,7 @@ function search_groups_hook($hook, $type, $value, $params) {
 function search_users_hook($hook, $type, $value, $params) {
 	global $CONFIG;
 
-	$query = $params['query'];
+	$query = sanitise_string($params['query']);
 
 	$join = "JOIN {$CONFIG->dbprefix}users_entity ue ON e.guid = ue.guid";
 	$params['joins'] = array($join);
@@ -216,7 +216,7 @@ function search_custom_types_tags_hook($hook, $type, $value, $params) {
 function search_comments_hook($hook, $type, $value, $params) {
 	global $CONFIG;
 
-	$query = $params['query'];
+	$query = sanitise_string($params['query']);
 	$params['annotation_names'] = array('generic_comment', 'group_topic_post');
 
 	$params['joins'] = array(

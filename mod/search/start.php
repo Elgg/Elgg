@@ -334,6 +334,7 @@ function search_get_where_sql($table, $fields, $params) {
 	// switch to literal mode
 	if (strlen($query) < $CONFIG->search_info['min_chars']) {
 		$likes = array();
+		$query = sanitise_string($query);
 		foreach ($fields as $field) {
 			$likes[] = "$field LIKE '%$query%'";
 		}
@@ -352,6 +353,8 @@ function search_get_where_sql($table, $fields, $params) {
 		if (strlen($query) < 6) {
 			//$options .= ' WITH QUERY EXPANSION';
 		}
+		$query = sanitise_string($query);
+
 		// if query is shorter than the ft_min_word_len switch to literal mode.
 		$fields_str = implode(',', $fields);
 		//$where = "($table.guid = e.guid AND (MATCH ($fields_str) AGAINST ('$query' $options)))";
