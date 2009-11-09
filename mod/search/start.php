@@ -35,11 +35,19 @@ function search_init() {
 	register_plugin_hook('search', 'comments', 'search_comments_hook');
 
 	// get server min and max allowed chars for ft searching
-	$word_lens = get_data('SELECT @@ft_min_word_len as min, @@ft_max_word_len as max');
-
 	$CONFIG->search_info = array();
-	$CONFIG->search_info['min_chars'] = $word_lens[0]->min;
-	$CONFIG->search_info['max_chars'] = $word_lens[0]->max;
+
+	// can't use get_data() here because some servers don't have these globals set,
+	// which throws a db exception.
+	$r = mysql_query('SELECT @@ft_min_word_len as min, @@ft_max_word_len as max');
+	if ($word_lens = mysql_fetch_assoc($r)) {
+		$CONFIG->search_info['min_chars'] = $word_lens['min'];
+		$CONFIG->search_info['max_chars'] = $word_lens['max'];
+	} else {
+		// uhhh these are good numbers.
+		$CONFIG->search_info['min_chars'] = 4;
+		$CONFIG->search_info['max_chars'] = 90;
+	}
 
 	// add in CSS for search elements
 	extend_view('css', 'search/css');
@@ -331,7 +339,7 @@ function search_get_where_sql($table, $fields, $params) {
 		}
 		$likes_str = implode(' OR ', $likes);
 		//$where = "($table.guid = e.guid AND	($likes_str))";
-		$where = "($likes_str))";
+		$where = "($likes_str)";
 	} else {
 		// if using advanced or paired "s, switch into boolean mode
 		if ((isset($params['advanced_search']) && $params['advanced_search']) || substr_count($query, '"') >= 2 ) {

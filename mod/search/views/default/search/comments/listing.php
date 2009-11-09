@@ -21,10 +21,11 @@ $body = elgg_view_title($title_str);
 $query = htmlspecialchars(http_build_query(
 	array(
 		'q' => $vars['params']['query'],
-		'type' => $vars['params']['type'],
+		'entity_type' => $vars['params']['type'],
+		'entity_subtype' => $vars['params']['subtype'],
 		'limit' => get_input('limit', 10),
 		'offset' => get_input('offset', 0),
-		'subtype' => $vars['params']['subtype']
+		'search_type' => 'comments',
 	)
 ));
 

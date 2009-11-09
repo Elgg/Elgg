@@ -278,4 +278,3 @@ function search_custom_types_comments_hook($hook, $type, $value, $params) {
 	$value[] = 'comments';
 	return $value;
 }
-
