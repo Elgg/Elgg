@@ -164,7 +164,8 @@ function search_users_hook($hook, $type, $value, $params) {
 function search_tags_hook($hook, $type, $value, $params) {
 	global $CONFIG;
 
-	$query = $params['query'];
+	// @todo will need to split this up to support searching multiple tags at once.
+	$query = santitise_string($params['query']);
 	$params['metadata_name_value_pair'] = array ('name' => 'tags', 'value' => $query, 'case_sensitive' => FALSE);
 
 	$entities = elgg_get_entities_from_metadata($params);
