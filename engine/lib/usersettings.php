@@ -20,14 +20,14 @@
  *    nb. some pages already exist that you can extend), extend the main view to point to it, and add controls to your
  * 	  new view.
  *
- * At the moment this is essentially a wrapper around extend_view.
+ * At the moment this is essentially a wrapper around elgg_extend_view().
  *
  * @param string $new_settings_view The view associated with the control you're adding
  * @param string $view The view to extend, by default this is 'usersettings/main'.
  * @param int $priority Optional priority to govern the appearance in the list.
  */
 function extend_elgg_settings_page( $new_settings_view, $view = 'usersettings/main', $priority = 500) {
-	return extend_view($view, $new_settings_view, $priority);
+	return elgg_extend_view($view, $new_settings_view, $priority);
 }
 
 function usersettings_pagesetup() {

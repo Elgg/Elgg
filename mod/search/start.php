@@ -50,7 +50,7 @@ function search_init() {
 	}
 
 	// add in CSS for search elements
-	extend_view('css', 'search/css');
+	elgg_extend_view('css', 'search/css');
 }
 
 /**

@@ -19,12 +19,12 @@
 		register_page_handler('logbrowser','logbrowser_page_handler');
 		
 		// Extend CSS
-		extend_view('css','logbrowser/css');
+		elgg_extend_view('css','logbrowser/css');
 		
 		// Extend context menu with admin logbrowsre link
 			if (isadminloggedin())
 			{
-	   			 extend_view('profile/menu/adminlinks','logbrowser/adminlinks',10000);
+	   			 elgg_extend_view('profile/menu/adminlinks','logbrowser/adminlinks',10000);
 			}
 	}
 	

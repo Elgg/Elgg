@@ -1013,8 +1013,9 @@ function set_template_handler($function_name) {
  * @param string $view The view to add to.
  * @param string $view_name The name of the view to extend
  * @param int $priority The priority, from 0 to 1000, to add at (lowest numbers will be displayed first)
+ * @param string $viewtype Not used
  */
-function extend_view($view, $view_name, $priority = 501, $viewtype = '') {
+function elgg_extend_view($view, $view_name, $priority = 501, $viewtype = '') {
 	global $CONFIG;
 
 	if (!isset($CONFIG->views)) {
@@ -1035,6 +1036,18 @@ function extend_view($view, $view_name, $priority = 501, $viewtype = '') {
 
 	$CONFIG->views->extensions[$view][$priority] = "{$view_name}";
 	ksort($CONFIG->views->extensions[$view]);
+}
+
+/**
+ * @deprecated 1.7.  Use elgg_extend_view().
+ * @param $view
+ * @param $view_name
+ * @param $priority
+ * @param $viewtype
+ */
+function extend_view($view, $view_name, $priority = 501, $viewtype = '') {
+	elgg_log('extend_view() was deprecated in 1.7 by elgg_extend_view()!', 'WARNING');
+	elgg_extend_view($view, $view_name, $priority, $viewtype);
 }
 
 /**
@@ -2372,7 +2385,7 @@ function __elgg_shutdown_hook() {
 function elgg_init() {
 	// Page handler for JS
 	register_page_handler('js','js_page_handler');
-	extend_view('js/initialise_elgg','embed/js');
+	elgg_extend_view('js/initialise_elgg','embed/js');
 
 	// Register an event triggered at system shutdown
 	register_shutdown_function('__elgg_shutdown_hook');
