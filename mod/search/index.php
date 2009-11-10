@@ -88,14 +88,14 @@ foreach ($types as $type => $subtypes) {
 foreach ($custom_types as $type) {
 	$label = "search_types:$type";
 
-	$data = http_build_query(array(
+	$data = htmlspecialchars(http_build_query(array(
 		'q' => urlencode($query),
 		'entity_subtype' => $entity_subtype,
 		'entity_type' => urlencode($entity_type),
 		'owner_guid' => urlencode($owner_guid),
 		'search_type' => $type,
 		'friends' => $friends
-	));
+	)));
 
 	$url = "{$CONFIG->wwwroot}pg/search/?$data";
 
