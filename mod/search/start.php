@@ -524,7 +524,10 @@ function search_get_where_sql($table, $fields, $params) {
 		if ((isset($params['advanced_search']) && $params['advanced_search']) || substr_count($query, '"') >= 2 ) {
 			$options = 'IN BOOLEAN MODE';
 		} else {
-			$options = 'IN NATURAL LANGUAGE MODE';
+			// natural language mode is default and this keyword isn't supported
+			// in < 5.1
+			//$options = 'IN NATURAL LANGUAGE MODE';
+			$options = '';
 		}
 
 		// if short query, use query expansion.
