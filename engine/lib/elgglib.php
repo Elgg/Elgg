@@ -1332,10 +1332,13 @@ function get_register($register_name) {
 
 /**
  * Adds an item to the menu register
+ * This is used in the core to create the tools dropdown menu
+ * You can obtain the menu array by calling get_register('menu')
  *
- * @param string $menu_name The name of the top-level menu
+ * @param string $menu_name The name of the menu item
  * @param string $menu_url The URL of the page
- * @param array $menu_children Optionally, an array of submenu items
+ * @param array $menu_children Optionally, an array of submenu items (not currently used)
+ * @param string $context (not used and will likely be deprecated)
  * @return true|false Depending on success
  */
 function add_menu($menu_name, $menu_url, $menu_children = array(), $context = "") {
@@ -1354,6 +1357,7 @@ function add_menu($menu_name, $menu_url, $menu_children = array(), $context = ""
 
 /**
  * Returns a menu item for use in the children section of add_menu()
+ * This is not currently used in the Elgg core
  *
  * @param string $menu_name The name of the menu item
  * @param string $menu_url Its URL
