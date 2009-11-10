@@ -177,9 +177,8 @@ function user_file_matrix($guid) {
 /**
 	Upgrade file locations
  */
-// loop over all users
-$users = get_data("SELECT * FROM {$CONFIG->dbprefix}users_entity");
-foreach ($users as $user) {
+$users = mysql_query("SELECT guid, username FROM {$CONFIG->dbprefix}users_entity");
+while ($user = mysql_fetch_object($users)) {
 	$to = $CONFIG->dataroot . user_file_matrix($user->guid);
 	foreach (array('1_0', '1_1', '1_6') as $version) {
 		$function = "file_matrix_$version";
