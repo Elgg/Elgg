@@ -249,8 +249,12 @@ function search_get_highlighted_relevant_substrings($haystack, $needle, $min_mat
 		}
 		$string = substr($haystack, $offset, $limit - $offset);
 
-		if ($limit-$offset < strlen($haystack)) {
-			$string = "$string...";
+		if ($offset != 0) {
+			$string = "...$string";
+		}
+
+		if ($limit + $offset >= strlen($haystack)) {
+			$string .= '...';
 		}
 
 		$substrings[] = $string;
