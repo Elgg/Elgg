@@ -86,9 +86,9 @@ function search_page_handler($page) {
  * @param unknown_type $max_length
  * @return unknown_type
  */
-function search_get_highlighted_relevant_substrings($haystack, $needle, $min_match_context = 15, $max_length = 250) {
+function search_get_highlighted_relevant_substrings($haystack, $needle, $min_match_context = 15, $max_length = 500) {
 	global $CONFIG;
-	$haystack = strip_tags($haystack);
+	$haystack = url_decode(strip_tags($haystack));
 	$haystack_lc = strtolower($haystack);
 //
 //	$haystack = "Like merge sort, quicksort can also be easily parallelized due to its "
@@ -100,6 +100,7 @@ function search_get_highlighted_relevant_substrings($haystack, $needle, $min_mat
 
 	// for now don't worry about "s or boolean operators
 	$needle = str_replace(array('"', '-', '+', '~'), '', stripslashes(strip_tags($needle)));
+	$needle = url_decode($needle);
 	$words = explode(' ', $needle);
 
 	$min_chars = $CONFIG->search_info['min_chars'];
