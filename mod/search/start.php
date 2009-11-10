@@ -87,8 +87,16 @@ function search_page_handler($page) {
  * @return unknown_type
  */
 function search_get_highlighted_relevant_substrings($haystack, $needle, $min_match_context = 15, $max_length = 250) {
+	global $CONFIG;
 	$haystack = strip_tags($haystack);
 	$haystack_lc = strtolower($haystack);
+//
+//	$haystack = "Like merge sort, quicksort can also be easily parallelized due to its "
+//		. "divide-and-conquer nature. Individual in-place partition operations are difficult "
+//		. "to parallelize, but once divided, different sections of the list can be sorted in parallel.  "
+//		. "If we have p processors, we can divide a list of n ele";
+//
+//	$needle = 'difficult to sort in parallel';
 
 	// for now don't worry about "s or boolean operators
 	$needle = str_replace(array('"', '-', '+', '~'), '', stripslashes(strip_tags($needle)));
@@ -105,8 +113,30 @@ function search_get_highlighted_relevant_substrings($haystack, $needle, $min_mat
 		}
 	}
 
+	/*
+
+	$body_len = 250
+
+	$context = 5-30, 20-45, 75-100, 150
+
+	can pull out context either on:
+		one of each matching term
+		X # of highest matching terms
+
+
+	*/
 	$substr_counts = array();
 	$str_pos = array();
+	// matrices for being and end context lengths.
+	// defaults to min context.  will add additional context later if needed
+	$starts = array();
+	$stops = array();
+
+	// map the words to the starts and stops
+	$words_arg = array();
+	$context_count = 0;
+
+
 	// get the full count of matches.
 	foreach ($words as $word) {
 		$word = strtolower($word);
@@ -114,29 +144,163 @@ function search_get_highlighted_relevant_substrings($haystack, $needle, $min_mat
 		$word_len = strlen($word);
 
 		// find the start positions for the words
-		// get the context for words based upon
 		if ($count > 1) {
 			$str_pos[$word] = array();
 			$offset = 0;
 			while (FALSE !== $pos = strpos($haystack, $word, $offset)) {
 				$str_pos[$word][] = $pos;
+				$starts[] = ($pos - $min_match_context > 0) ? $pos - $min_match_context : 0;
+				$stops[] = $pos + $word_len + $min_match_context;
+				$words_arg[] = $word;
+				$context_count += $min_match_context + $word_len;
 				$offset += $pos + $word_len;
 			}
 		} else {
-			$str_pos[$word] = array(strpos($haystack, $word));
+			$pos = strpos($haystack, $word);
+			$str_pos[$word] = array($pos);
+			$starts[] = ($pos - $min_match_context > 0) ? $pos - $min_match_context : 0;
+			$stops[] = $pos + $word_len + $min_match_context;
+			$context_count += $min_match_context + $word_len;
+			$words_arg[] = $word;
 		}
 		$substr_counts[$word] = $count;
 	}
 
-//A test with multiple words and now more in the subject too because words need to be everywhere
-
 	// sort by order of occurence
-	krsort($substr_counts);
+	//krsort($substr_counts);
 	$full_count = array_sum($substr_counts);
 
+	// figure out what the context needs to be.
+	// take one of each matched phrase
+	// if there are any
+
+//
+//	var_dump($str_pos);
+//	var_dump($substr_counts);
+//	var_dump($context_count);
+
+
+	// sort to put them in order of occurence
+	asort($starts, SORT_NUMERIC);
+	asort($stops, SORT_NUMERIC);
+
+	// offset them correctly
+	$starts[] = 0;
+	$new_stops = array(0);
+	foreach ($stops as $i => $pos) {
+		$new_stops[$i+1] = $pos;
+	}
+	$stops = $new_stops;
+
+	$substrings = array();
+	$len = count($starts);
+
+	$starts = array_merge($starts);
+	$stops = array_merge($stops);
+
+	$offsets = array();
+	$limits = array();
+	$c = 0;
+	foreach ($starts as $i => $start) {
+		$stop = $stops[$i];
+		$offsets[$c] = $start;
+		$limits[$c] = $stop;
+
+		// never need the last one as it's just a displacing entry
+		if ($c+1 == count($starts)) {
+			break;
+		}
+
+		if ($start - $stop < 0) {
+			//var_dump("Looking at c=$c & $start - $stop and going to unset {$limits[$c]}");
+			unset($offsets[$c]);
+			unset($limits[$c]);
+		}
+		$c++;
+	}
+
+	// reset indexes and remove placeholder elements.
+	$limits = array_merge($limits);
+	array_shift($limits);
+	$offsets = array_merge($offsets);
+	array_pop($offsets);
+
+	// figure out if we need to adjust the offsets from the base
+	// this could result in overlapping summaries.
+	// might be nicer to just remove it.
+
+	$total_len = 0;
+	foreach ($offsets as $i => $offset) {
+		$total_len += $limits[$i] - $offset;
+	}
+
+	$add_length = 0;
+	if ($total_length < $max_length) {
+		$add_length = floor((($max_length - $total_len) / count($offsets)) / 2);
+	}
+
+
+	foreach ($offsets as $i => $offset) {
+		$limit = $limits[$i];
+		if ($offset == 0 && $add_length) {
+			$limit += $add_length;
+		} else {
+			$offset = $offset - $add_length;
+		}
+		$string = substr($haystack, $offset, $limit - $offset);
+
+		if ($limit-$offset < strlen($haystack)) {
+			$string = "$string...";
+		}
+
+		$substrings[] = $string;
+	}
+
+	$matched = '';
+	foreach ($substrings as $string) {
+		if (strlen($matched) + strlen($string) < $max_length) {
+			$matched .= $string;
+		}
+	}
+
+	foreach ($words as $word) {
+		$search = "/($word)/i";
+		$replace = "<strong class=\"searchMatch\">$1</strong>";
+		$matched = preg_replace($search, $replace, $matched);
+	}
+
+	return $matched;
+
+
+	// crap below..
 
 
 
+	for ($i=0; $i<$len; $i++) {
+		$start = $starts[$i];
+		$stop = $stops[$i];
+		var_dump("Looking at $i = $start - $stop");
+
+		while ($start - $stop <= 0) {
+			$stop = $stops[$i++];
+			var_dump("New start is $stop");
+		}
+
+		var_dump("$start-$stop");
+	}
+
+	// find the intersecting contexts
+	foreach ($starts as $i => $start_pos) {
+		$words .= "{$words_arg[$i]}\t\t\t";
+		echo "$start_pos\t\t\t";
+	}
+
+	echo "\n";
+
+	foreach ($stops as $i => $stop_pos) {
+		echo "$stop_pos\t\t\t";
+	}
+echo "\n$words\n";
 
 	// get full number of matches against all words to see how many we actually want to look at.
 
@@ -170,8 +334,6 @@ function search_get_highlighted_relevant_substrings($haystack, $needle, $min_mat
 						$word .= " {$words_orig[$word_i]}";
 						unset($words_orig[$word_i]);
 					}
-
-
 				}
 
 				break;
@@ -255,8 +417,12 @@ function search_get_relevant_substring($haystack, $needle, $before = '', $after 
 	}
 
 	// surround if needed
+	// @todo would getting each position of the match then
+	// inserting manually based on the position be faster than preg_replace()?
 	if ($before || $after) {
 		$matched = str_ireplace($needle, $before . $needle . $after, $matched);
+		//$matched = mb_ereg_replace("")
+		// insert before
 	}
 
 	return $matched;

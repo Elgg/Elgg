@@ -43,10 +43,12 @@ function search_objects_hook($hook, $type, $value, $params) {
 	// add the volatile data for why these entities have been returned.
 	foreach ($entities as $entity) {
 		//$title = search_get_highlighted_relevant_substrings($entity->title, $params['query']);
-		$title = search_get_relevant_substring($entity->title, $params['query'], '<strong class="searchMatch">', '</strong>');
+		//$title = search_get_relevant_substring($entity->title, $params['query'], '<strong class="searchMatch">', '</strong>');
+		$title = search_get_highlighted_relevant_substrings($entity->title, $params['query']);
 		$entity->setVolatileData('search_matched_title', $title);
 
-		$desc = search_get_relevant_substring($entity->description, $params['query'], '<strong class="searchMatch">', '</strong>');
+		//$desc = search_get_relevant_substring($entity->description, $params['query'], '<strong class="searchMatch">', '</strong>');
+		$desc = search_get_highlighted_relevant_substrings($entity->description, $params['query']);
 		$entity->setVolatileData('search_matched_description', $desc);
 	}
 
@@ -91,10 +93,10 @@ function search_groups_hook($hook, $type, $value, $params) {
 
 	// add the volatile data for why these entities have been returned.
 	foreach ($entities as $entity) {
-		$description = search_get_relevant_substring($entity->description, $query, '<strong class="searchMatch">', '</strong>');
+		$description = search_get_highlighted_relevant_substrings($entity->description, $query);
 		$entity->setVolatileData('search_matched_title', $description);
 
-		$name = search_get_relevant_substring($entity->name, $query, '<strong class="searchMatch">', '</strong>');
+		$name = search_get_highlighted_relevant_substrings($entity->name, $query);
 		$entity->setVolatileData('search_matched_description', $name);
 	}
 
@@ -139,10 +141,10 @@ function search_users_hook($hook, $type, $value, $params) {
 
 	// add the volatile data for why these entities have been returned.
 	foreach ($entities as $entity) {
-		$username = search_get_relevant_substring($entity->username, $query, '<strong class="searchMatch">', '</strong>');
+		$username = search_get_highlighted_relevant_substrings($entity->username, $query);
 		$entity->setVolatileData('search_matched_title', $username);
 
-		$name = search_get_relevant_substring($entity->name, $query, '<strong class="searchMatch">', '</strong>');
+		$name = search_get_highlighted_relevant_substrings($entity->name, $query);
 		$entity->setVolatileData('search_matched_description', $name);
 	}
 
@@ -180,7 +182,7 @@ function search_tags_hook($hook, $type, $value, $params) {
 	// add the volatile data for why these entities have been returned.
 	foreach ($entities as $entity) {
 		$tags = implode(',', $entity->tags);
-		$tags_str = search_get_relevant_substring($tags, $query, '<strong class="searchMatch">', '</strong>');
+		$tags_str = search_get_highlighted_relevant_substrings($tags, $params['query']);
 		$entity->setVolatileData('search_matched_tags', $tags_str);
 	}
 
@@ -253,7 +255,7 @@ function search_comments_hook($hook, $type, $value, $params) {
 		if (!$entity = get_entity($comment->entity_guid)) {
 			continue;
 		}
-		$comment_str = search_get_relevant_substring($comment->comment, $query, '<strong class="searchMatch">', '</strong>');
+		$comment_str = search_get_highlighted_relevant_substrings($comment->comment, $query);
 		$entity->setVolatileData('search_matched_comment', $comment_str);
 		$entity->setVolatileData('search_matched_comment_owner_guid', $comment->owner_guid);
 		$entity->setVolatileData('search_matched_comment_time_created', $comment->time_created);
