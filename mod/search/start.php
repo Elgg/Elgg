@@ -239,7 +239,7 @@ function search_get_highlighted_relevant_substrings($haystack, $needle, $min_mat
 		$add_length = floor((($max_length - $total_len) / count($offsets)) / 2);
 	}
 
-
+	$lengths = array();
 	foreach ($offsets as $i => $offset) {
 		$limit = $limits[$i];
 		if ($offset == 0 && $add_length) {
@@ -258,19 +258,27 @@ function search_get_highlighted_relevant_substrings($haystack, $needle, $min_mat
 		}
 
 		$substrings[] = $string;
+		$lengths[] = strlen($string);
 	}
 
+	// sort by length of context.
+	asort($lengths);
+
 	$matched = '';
-	foreach ($substrings as $string) {
+	foreach ($lengths as $i => $len) {
+		$string = $substrings[$i];
+
 		if (strlen($matched) + strlen($string) < $max_length) {
 			$matched .= $string;
 		}
 	}
 
+	$i = 1;
 	foreach ($words as $word) {
 		$search = "/($word)/i";
-		$replace = "<strong class=\"searchMatch\">$1</strong>";
+		$replace = "<strong class=\"searchMatch searchMatchColor$i\">$1</strong>";
 		$matched = preg_replace($search, $replace, $matched);
+		$i++;
 	}
 
 	return $matched;

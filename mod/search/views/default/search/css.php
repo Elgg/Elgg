@@ -18,6 +18,27 @@ margin: 6px;
 	background-color: #FFFF66;
 }
 
+.searchMatchColor1 {
+	background-color: #FFFF66;
+}
+
+.searchMatchColor2 {
+	background-color: #A0FFFF;
+}
+
+.searchMatchColor3 {
+	background-color: #FF9999;
+}
+
+.searchMatchColor4 {
+	background-color: #FF66FF;
+}
+
+.searchMatchColor5 {
+	background-color: #99FF99;
+}
+
+
 .searchTitle {
 	text-decoration: underline;
 }
