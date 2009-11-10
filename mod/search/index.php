@@ -89,10 +89,10 @@ foreach ($custom_types as $type) {
 	$label = "search_types:$type";
 
 	$data = htmlspecialchars(http_build_query(array(
-		'q' => urlencode($query),
+		'q' => $query,
 		'entity_subtype' => $entity_subtype,
-		'entity_type' => urlencode($entity_type),
-		'owner_guid' => urlencode($owner_guid),
+		'entity_type' => $entity_type,
+		'owner_guid' => $owner_guid,
 		'search_type' => $type,
 		'friends' => $friends
 	)));
