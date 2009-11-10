@@ -37,14 +37,14 @@ $custom_types = trigger_plugin_hook('search_types', 'get_types', $params, array(
 
 // add submenu items for all and native types
 // @todo should these maintain any existing type / subtype filters or reset?
-$data = http_build_query(array(
-	'q' => urlencode($query),
-	'entity_subtype' => urlencode($subtype),
-	'entity_type' => urlencode($type),
-	'owner_guid' => urlencode($owner_guid),
+$data = htmlspecialchars(http_build_query(array(
+	'q' => $query,
+	'entity_subtype' => $subtype,
+	'entity_type' => $type,
+	'owner_guid' => $owner_guid,
 	'search_type' => 'all',
 	'friends' => $friends
-));
+)));
 $url = "{$CONFIG->wwwroot}pg/search/?$data";
 add_submenu_item(elgg_echo('all'), $url);
 
@@ -54,14 +54,14 @@ foreach ($types as $type => $subtypes) {
 		foreach ($subtypes as $subtype) {
 			$label = "item:$type:$subtype";
 
-			$data = http_build_query(array(
-				'q' => urlencode($query),
-				'entity_subtype' => urlencode($subtype),
-				'entity_type' => urlencode($type),
-				'owner_guid' => urlencode($owner_guid),
+			$data = htmlspecialchars(http_build_query(array(
+				'q' => $query,
+				'entity_subtype' => $subtype,
+				'entity_type' => $type,
+				'owner_guid' => $owner_guid,
 				'search_type' => 'entities',
 				'friends' => $friends
-			));
+			)));
 
 			$url = "{$CONFIG->wwwroot}pg/search/?$data";
 
@@ -70,13 +70,13 @@ foreach ($types as $type => $subtypes) {
 	} else {
 		$label = "item:$type";
 
-		$data = http_build_query(array(
-			'q' => urlencode($query),
-			'entity_type' => urlencode($type),
-			'owner_guid' => urlencode($owner_guid),
+		$data = htmlspecialchars(http_build_query(array(
+			'q' => $query,
+			'entity_type' => $type,
+			'owner_guid' => $owner_guid,
 			'search_type' => 'entities',
 			'friends' => $friends
-		));
+		)));
 
 		$url = "{$CONFIG->wwwroot}pg/search/?$data";
 
