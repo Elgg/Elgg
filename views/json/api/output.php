@@ -13,6 +13,8 @@
 $result = $vars['result'];
 $export = $result->export();
 
-// echo json_encode($export);
 global $jsonexport;
-$jsonexport['api'][] = $export;
+
+// with api calls, we don't want extra baggage found in other json views
+// so we skip the associative array
+$jsonexport = $export;
