@@ -1349,29 +1349,101 @@ function __php_api_exception_handler($exception) {
 	page_draw($exception->getMessage(), elgg_view("api/output", array("result" => $result)));
 }
 
-// Initialisation /////////////////////////////////////////////////////////////
+
+// Services handler ///////////////////////////////////////////
 
 /**
- * Register a page handler for the various API endpoints.
- *
- * @param array $page
+ * Services handler - turns request over to the registered handler
+ * 
+ * @param string $handler 
+ * @param array $request
  */
-function api_endpoint_handler($page) {
+function service_handler($handler, $request) {
 	global $CONFIG;
-
-	// Which view
-	if ($page[1]) {
-		elgg_set_viewtype($page[1]);
-	}
-
-	// Which endpoint
-	if ($page[0]) {
-		switch ($page[0]) {
-			case 'rest' :
-			default : include($CONFIG->path . "services/api/rest.php");
+		
+	// setup the input parameters since this comes through rewrite rule
+	$query = substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], '?')+1);
+	if (isset($query)) {
+		parse_str($query, $query_arr);
+		if (is_array($query_arr)) {
+			foreach($query_arr as $name => $val) {
+				set_input($name, $val);
+			}
 		}
 	}
+
+	set_context('api');
+	
+	$request = explode('/',$request);
+	
+	// after the handler, the first identifier is response format
+	// ex) http://example.org/services/api/rest/xml/?method=test
+	$reponse_format = $request[0];
+	// Which view - xml, json, ...
+	if ($reponse_format) {
+		elgg_set_viewtype($reponse_format);
+	} else {
+		// default to xml
+		elgg_set_viewtype("xml");
+	}
+	
+	if (!isset($CONFIG->servicehandler) || empty($handler)) {
+		// no handlers set or bad url
+		header("HTTP/1.0 404 Not Found");
+		exit;
+	} else if (isset($CONFIG->servicehandler[$handler]) && is_callable($CONFIG->servicehandler[$handler])) {
+		$function = $CONFIG->servicehandler[$handler];
+		$function($page, $handler);
+	} else {
+		// no handler for this web service
+		header("HTTP/1.0 404 Not Found");
+		exit;
+	}
 }
+
+/**
+ * Registers a web services handler 
+ * 
+ * @param string $handler web services type
+ * @param string $function Your function name
+ * @return true|false Depending on success
+ */
+function register_service_handler($handler, $function) {
+	global $CONFIG;
+	if (!isset($CONFIG->servicehandler)) {
+		$CONFIG->servicehandler = array();
+	}
+	if (is_callable($function)) {
+		$CONFIG->servicehandler[$handler] = $function;
+		return true;
+	}
+
+	return false;
+}
+
+/**
+ * Remove a web service
+ * To replace a web service handler, register the desired handler over the old on
+ * with register_service_handler().
+ * 
+ * @param string $handler web services type
+ */
+function unregister_service_handler($handler) {
+	global $CONFIG;
+	if (isset($CONFIG->servicehandler) && isset($CONFIG->servicehandler[$handler])) {
+		unset($CONFIG->servicehandler[$handler]);
+	}
+}
+
+// REST handler //////////////////////////////////////////////////////////////
+
+function rest_handler() {
+	global $CONFIG;
+	
+	require $CONFIG->path . "services/api/rest.php";
+}
+
+// Initialisation /////////////////////////////////////////////////////////////
 
 /**
  * Unit tests for API 
@@ -1388,7 +1460,7 @@ function api_unit_test($hook, $type, $value, $params) {
  */
 function api_init() {
 	// Register a page handler, so we can have nice URLs
-	register_page_handler('api','api_endpoint_handler');
+	register_service_handler('rest','rest_handler');
 	
 	register_plugin_hook('unit_test', 'system', 'api_unit_test');
 	

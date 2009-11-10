@@ -118,6 +118,8 @@ RewriteEngine on
 
 RewriteRule ^action\/([A-Za-z0-9\_\-\/]+)$ engine/handlers/action_handler.php?action=$1
 
+RewriteRule ^services\/api\/([A-Za-z0-9\_\-]+)\/(.*)$ engine/handlers/service_handler.php?handler=$1&request=$2
+
 RewriteRule ^export\/([A-Za-z]+)\/([0-9]+)$ services/export/handler.php?view=$1&guid=$2
 RewriteRule ^export\/([A-Za-z]+)\/([0-9]+)\/$ services/export/handler.php?view=$1&guid=$2
 RewriteRule ^export\/([A-Za-z]+)\/([0-9]+)\/([A-Za-z]+)\/([A-Za-z0-9\_]+)\/$ services/export/handler.php?view=$1&guid=$2&type=$3&idname=$4
