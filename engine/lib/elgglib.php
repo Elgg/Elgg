@@ -294,14 +294,15 @@ function elgg_view($view, $vars = "", $bypass = false, $debug = false, $viewtype
  *
  * @param string $view The view name
  * @param string $viewtype If set, forces the viewtype
+ * @param bool $recurse If false, do not recursively check extensions
  * @return true|false Depending on success
  */
-function elgg_view_exists($view, $viewtype = '') {
+function elgg_view_exists($view, $viewtype = '', $recurse = true) {
 	global $CONFIG;
 
 	// Detect view type
 	if (empty($viewtype)) {
-			$viewtype = elgg_get_viewtype();
+		$viewtype = elgg_get_viewtype();
 	}
 
 	if (!isset($CONFIG->views->locations[$viewtype][$view])) {
@@ -319,9 +320,14 @@ function elgg_view_exists($view, $viewtype = '') {
 	}
 
 	// If we got here then check whether this exists as an extension
-	// Note that this currently does not recursively check whether the extended view exists also
-	if (isset($CONFIG->views->extensions[$view])) {
-		return true;
+	// We optionally recursively check whether the extended view exists also for the viewtype
+	if ($recurse && isset($CONFIG->views->extensions[$view])) {
+		foreach( $CONFIG->views->extensions[$view] as $view_extension ) {
+			// do not recursively check to stay away from infinite loops
+			if (elgg_view_exists($view_extension, $viewtype, false)) {
+				return true;
+			}
+		}
 	}
 
 	return false;
