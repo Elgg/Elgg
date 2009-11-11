@@ -510,14 +510,14 @@ function elgg_disable_filepath_cache() {
  * @param unknown_type $base
  * @return unknown
  */
-function get_views($dir, $base) {
+function elgg_get_views($dir, $base) {
 	$return = array();
 	if (file_exists($dir) && is_dir($dir)) {
 		if ($handle = opendir($dir)) {
 			while ($view = readdir($handle)) {
 				if (!in_array($view, array('.','..','.svn','CVS'))) {
 					if (is_dir($dir . '/' . $view)) {
-						if ($val = get_views($dir . '/' . $view, $base . '/' . $view)) {
+						if ($val = elgg_get_views($dir . '/' . $view, $base . '/' . $view)) {
 							$return = array_merge($return, $val);
 						}
 					} else {
@@ -529,6 +529,16 @@ function get_views($dir, $base) {
 		}
 	}
 	return $return;
+}
+
+/**
+ * @deprecated 1.7.  Use elgg_extend_view().
+ * @param $dir
+ * @param $base
+ */
+function get_views($dir, $base) {
+	elgg_log('get_views() was deprecated in 1.7 by elgg_get_views()!', 'WARNING');
+	elgg_get_views($dir, $base);
 }
 
 /**
@@ -572,7 +582,7 @@ function elgg_view_tree($view_root, $viewtype = "") {
 	$root = $location . $viewtype . '/' . $view_root;
 
 	if (file_exists($root) && is_dir($root)) {
-		$val = get_views($root, $view_root);
+		$val = elgg_get_views($root, $view_root);
 		if (!is_array($treecache[$view_root])) {
 			$treecache[$view_root] = array();
 		}
