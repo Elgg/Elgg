@@ -10,9 +10,9 @@
 
 ?>
 
-<div class="entity_listing">
+<div class="search_listing">
 
-	<div class="entity_listing_header">
+	<div class="search_listing_header">
 
 			<?php
 
@@ -21,7 +21,7 @@
 			?>
 
 	</div>
-	<div class="entity_listing_info">
+	<div class="search_listing_info">
 		<?php
 
 			echo $vars['info'];

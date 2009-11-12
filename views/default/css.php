@@ -1245,7 +1245,7 @@ p.user_menu_friends_of {
 /* ***************************************
 	ENTITY LISTINGS
 *************************************** */
-.entity_listing {
+.search_listing {
 	display: block;
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
@@ -1253,28 +1253,28 @@ p.user_menu_friends_of {
 	margin:0 10px 5px 10px;
 	padding:5px;
 }
-.entity_listing_icon {
+.search_listing_icon {
 	float:left;
 }
-.entity_listing_icon img {
+.search_listing_icon img {
 	width: 40px;
 }
-.entity_listing_icon .avatar_menu_button img {
+.search_listing_icon .avatar_menu_button img {
 	width: 15px;
 }
-.entity_listing_info {
+.search_listing_info {
 	margin-left: 50px;
 	min-height: 40px;
 }
 /* IE 6 fix */
-* html .entity_listing_info {
+* html .search_listing_info {
 	height:40px;
 }
-.entity_listing_info p {
+.search_listing_info p {
 	margin:0 0 3px 0;
 	line-height:1.2em;
 }
-.entity_listing_info p.owner_timestamp {
+.search_listing_info p.owner_timestamp {
 	margin:0;
 	padding:0;
 	color:#666666;
@@ -1297,36 +1297,36 @@ table.entity_gallery {
 	background: black;
 	color:white;
 }
-.entity_gallery_item .entity_listing {
+.entity_gallery_item .search_listing {
 	background: none;
 	text-align: center;
 }
-.entity_gallery_item .entity_listing_header {
+.entity_gallery_item .search_listing_header {
 	text-align: center;
 }
-.entity_gallery_item .entity_listing_icon {
+.entity_gallery_item .search_listing_icon {
 	position: relative;
 	text-align: center;
 }
-.entity_gallery_item .entity_listing_info {
+.entity_gallery_item .search_listing_info {
 	margin: 5px;
 }
-.entity_gallery_item .entity_listing_info p {
+.entity_gallery_item .search_listing_info p {
 	margin: 5px;
 	margin-bottom: 10px;
 }
-.entity_gallery_item .entity_listing {
+.entity_gallery_item .search_listing {
 	background: none;
 	text-align: center;
 }
-.entity_gallery_item .entity_listing_icon {
+.entity_gallery_item .search_listing_icon {
 	position: absolute;
 	margin-bottom: 20px;
 }
-.entity_gallery_item .entity_listing_info {
+.entity_gallery_item .search_listing_info {
 	margin: 5px;
 }
-.entity_gallery_item .entity_listing_info p {
+.entity_gallery_item .search_listing_info p {
 	margin: 5px;
 	margin-bottom: 10px;
 }
@@ -2345,7 +2345,7 @@ h3.settings {
 .admin_statistics table tr:hover {
 	background: #E4E4E4;
 }
-.admin_users_online .entity_listing {
+.admin_users_online .search_listing {
 	margin:0 0 5px 0;
 	padding:5px;
 	border:2px solid #cccccc;
