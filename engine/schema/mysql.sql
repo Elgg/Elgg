@@ -357,6 +357,7 @@ CREATE TABLE `prefix_system_log` (
 	`view` TEXT NOT NULL ,
 	`subject_guid` INT NOT NULL ,
 	`object_guid` INT NOT NULL ,
+	`annotation_id` int(11) NOT NULL,
 	`posted` INT NOT NULL ,
 	PRIMARY KEY ( `id` ) ,
 	KEY `type` (`type`),
@@ -364,5 +365,6 @@ CREATE TABLE `prefix_system_log` (
 	KEY `access_id` (`access_id`),
 	KEY `subject_guid` (`subject_guid`),
 	KEY `object_guid` (`object_guid`),
+	KEY `annotation_id` (`annotation_id`),
 	KEY `posted` (`posted`)
 ) ENGINE = MYISAM DEFAULT CHARSET=utf8;

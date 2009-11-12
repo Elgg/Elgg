@@ -57,8 +57,8 @@ function add_to_river($view,$action_type,$subject_guid,$object_guid,$access_id =
 		" view = '{$view}', " .
 		" subject_guid = {$subject_guid}, " .
 		" object_guid = {$object_guid}, " .
-		" posted = {$posted}, " .
-		" annotation_id = {$annotation_id} ");
+		" annotation_id = {$annotation_id}, " .
+		" posted = {$posted} ");
 }
 
 /**
@@ -119,7 +119,9 @@ function update_river_access_by_object($object_guid, $access_id) {
  *
  * @param int|array $subject_guid Acting entity to restrict to. Default: all
  * @param int|array $object_guid Entity being acted on to restrict to. Default: all
- * @param string $subject_relationship If set to a relationship type, this will use $subject_guid as the starting point and set the subjects to be all users this entity has this relationship with (eg 'friend'). Default: blank
+ * @param string $subject_relationship If set to a relationship type, this will use 
+ * 	$subject_guid as the starting point and set the subjects to be all users this 
+ * 	entity has this relationship with (eg 'friend'). Default: blank
  * @param string $type The type of entity to restrict to. Default: all
  * @param string $subtype The subtype of entity to restrict to. Default: all
  * @param string $action_type The type of river action to restrict to. Default: all
@@ -215,7 +217,8 @@ function get_river_items($subject_guid = 0, $object_guid = 0, $subject_relations
 	$whereclause = implode(' and ', $where);
 
 	// Construct main SQL
-	$sql = "select id,type,subtype,action_type,access_id,view,subject_guid,object_guid,posted,annotation_id from {$CONFIG->dbprefix}river where {$whereclause} order by posted desc limit {$offset},{$limit}";
+	$sql = "select id,type,subtype,action_type,access_id,view,subject_guid,object_guid,annotation_id,posted" .
+	 		" from {$CONFIG->dbprefix}river where {$whereclause} order by posted desc limit {$offset},{$limit}";
 
 	// Get data
 	return get_data($sql);
@@ -254,7 +257,9 @@ function elgg_view_river_item($item) {
  *
  * @param int|array $subject_guid Acting entity to restrict to. Default: all
  * @param int|array $object_guid Entity being acted on to restrict to. Default: all
- * @param string $subject_relationship If set to a relationship type, this will use $subject_guid as the starting point and set the subjects to be all users this entity has this relationship with (eg 'friend'). Default: blank
+ * @param string $subject_relationship If set to a relationship type, this will use 
+ * 	$subject_guid as the starting point and set the subjects to be all users this 
+ * 	entity has this relationship with (eg 'friend'). Default: blank
  * @param string $type The type of entity to restrict to. Default: all
  * @param string $subtype The subtype of entity to restrict to. Default: all
  * @param string $action_type The type of river action to restrict to. Default: all
@@ -272,12 +277,12 @@ function elgg_view_river_items($subject_guid = 0, $object_guid = 0, $subject_rel
 	// Get river items, if they exist
 	if ($riveritems = get_river_items($subject_guid,$object_guid,$subject_relationship,$type,$subtype,$action_type,($limit + 1),$offset,$posted_min,$posted_max)) {
 
-	return elgg_view('river/item/list',array(
-		'limit' => $limit,
-		'offset' => $offset,
-		'items' => $riveritems,
-		'pagination' => $pagination
-	));
+		return elgg_view('river/item/list',array(
+			'limit' => $limit,
+			'offset' => $offset,
+			'items' => $riveritems,
+			'pagination' => $pagination
+		));
 
 	}
 
