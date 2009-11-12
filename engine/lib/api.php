@@ -1398,7 +1398,7 @@ function service_handler($handler, $request) {
 	
 	// after the handler, the first identifier is response format
 	// ex) http://example.org/services/api/rest/xml/?method=test
-	$reponse_format = $request[0];
+	$reponse_format = array_shift($request);
 	// Which view - xml, json, ...
 	if ($reponse_format) {
 		elgg_set_viewtype($reponse_format);
@@ -1413,7 +1413,7 @@ function service_handler($handler, $request) {
 		exit;
 	} else if (isset($CONFIG->servicehandler[$handler]) && is_callable($CONFIG->servicehandler[$handler])) {
 		$function = $CONFIG->servicehandler[$handler];
-		$function($page, $handler);
+		$function($request, $handler);
 	} else {
 		// no handler for this web service
 		header("HTTP/1.0 404 Not Found");
