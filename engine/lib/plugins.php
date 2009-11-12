@@ -49,13 +49,15 @@ class ElggPlugin extends ElggObject {
 		}
 
 		// No, so see if its in the private data store.
+		// get_private_setting() returns false if it doesn't exist
 		$meta = get_private_setting($this->guid, $name);
-		if ($meta) {
-			return $meta;
-		}
 
-		// Can't find it, so return null
-		return null;
+		if ($meta === false) {
+			// Can't find it, so return null 
+			return NULL;
+		}
+			
+		return $meta;
 	}
 
 	/**
