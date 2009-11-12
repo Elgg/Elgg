@@ -310,11 +310,14 @@ $API_METHODS = array();
  *
  * @param string $method The api name to expose - for example "myapi.dosomething"
  * @param string $function Your function callback.
- * @param array $parameters (optional) list of parameters in the same order as in your function, with optional parameters last.
+ * @param array $parameters (optional) List of parameters in the same order as in your function.
+ * Default values may be set for parameters which would allow REST api users flexibility in
+ * what parameters are passed. Generally, optional parameters should be after required parameters.
  * This array should be in the format
  *   "variable" = array (
  * 					type => 'int' | 'bool' | 'float' | 'string' | 'array'
  * 					required => true (default) | false
+ * 					default => value (optional)
  * 	 )
  * @param string $description (optional) human readable description of the function.
  * @param string $call_method (optional) Define what http method must be used for this function. Default: GET
@@ -332,10 +335,12 @@ function expose_function($method, $function, array $parameters = NULL, $descript
 	// does not check whether this method has already been exposed - good idea?
 	$API_METHODS[$method] = array();
 
+	$API_METHODS[$method]["description"] = $description;
+
 	// does not check whether callable - done in execute_method()
 	$API_METHODS[$method]["function"] = $function;
 
-	if ($parameters != NULL) {	
+	if ($parameters != NULL) {
 		if (!is_array($parameters)) {
 			throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:APIParametersArrayStructure'), $method));
 		}
@@ -370,8 +375,6 @@ function expose_function($method, $function, array $parameters = NULL, $descript
 		default :
 			throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:UnrecognisedHttpMethod'), $call_method, $method));
 	}
-
-	$API_METHODS[$method]["description"] = $description;
 
 	$API_METHODS[$method]["require_api_auth"] = $require_api_auth;
 
@@ -510,9 +513,14 @@ function get_parameters_for_method($method) {
 	// if there are parameters, sanitize them
 	if (isset($API_METHODS[$method]['parameters'])) {
 		foreach ($API_METHODS[$method]['parameters'] as $k => $v) {
-			$v = get_input($k); // Make things go through the sanitiser
-			if ($v !== '') {
-				$sanitised[$k] = $v;
+			$param = get_input($k); // Make things go through the sanitiser
+			if ($param !== '') {
+				$sanitised[$k] = $param;
+			} else {
+				// parameter wasn't passed so check for default
+				if (isset($v['default'])) {
+					$sanitised[$k] = $v['default'];
+				}	
 			}
 		}
 	}
@@ -548,7 +556,7 @@ function include_post_data() {
 		if (is_array($query_arr)) {
 			foreach($query_arr as $name => $val) {
 				set_input($name, $val);
-			}			
+			}
 		}
 	}
 }
