@@ -41,4 +41,6 @@ foreach ($str_funcs as $func) {
 ";
 }
 
+eval($eval_statement);
+
 // TODO: Other wrapper functions
