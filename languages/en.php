@@ -143,6 +143,7 @@ $english = array(
 	'APIException:MissingHmac' => "Missing X-Elgg-hmac header",
 	'APIException:MissingHmacAlgo' => "Missing X-Elgg-hmac-algo header",
 	'APIException:MissingTime' => "Missing X-Elgg-time header",
+	'APIException:MissingNonce' => "Missing X-Elgg-nonce header",
 	'APIException:TemporalDrift' => "X-Elgg-time is too far in the past or future. Epoch fail.",
 	'APIException:NoQueryString' => "No data on the query string",
 	'APIException:MissingPOSTHash' => "Missing X-Elgg-posthash header",

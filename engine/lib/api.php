@@ -716,6 +716,7 @@ function api_auth_hmac() {
 	// calculate expected HMAC
 	$hmac = calculate_hmac(	$api_header->hmac_algo,
 							$api_header->time,
+							$api_header->nonce,
 							$api_header->api_key,
 							$secret_key,
 							$query,
@@ -787,6 +788,11 @@ function get_and_validate_api_headers() {
 		throw new APIException(elgg_echo('APIException:TemporalDrift'));
 	}
 
+	$result->nonce = $_SERVER['HTTP_X_ELGG_NONCE'];
+	if ($result->nonce == "") {
+		throw new APIException(elgg_echo('APIException:MissingNonce'));
+	}
+	
 	if ($result->method == "POST") {
 		$result->posthash = $_SERVER['HTTP_X_ELGG_POSTHASH'];
 		if ($result->posthash == "") {
@@ -844,7 +850,7 @@ function map_api_hash($algo) {
  * @param $post_hash string Optional sha1 hash of the post data.
  * @return string The HMAC string
  */
-function calculate_hmac($algo, $time, $api_key, $secret_key, $get_variables, $post_hash = "") {
+function calculate_hmac($algo, $time, $nonce, $api_key, $secret_key, $get_variables, $post_hash = "") {
 	global $CONFIG;
 
 	elgg_log("HMAC Parts: $algo, $time, $api_key, $secret_key, $get_variables, $post_hash");
@@ -852,6 +858,7 @@ function calculate_hmac($algo, $time, $api_key, $secret_key, $get_variables, $po
 	$ctx = hash_init(map_api_hash($algo), HASH_HMAC, $secret_key);
 
 	hash_update($ctx, trim($time));
+	hash_update($ctx, trim($nonce));
 	hash_update($ctx, trim($api_key));
 	hash_update($ctx, trim($get_variables));
 	if (trim($post_hash)!="") {
@@ -1163,6 +1170,9 @@ function send_api_call(array $keys, $url, array $call, $method = 'GET', $post_da
 
 	// Time
 	$time = time();
+	
+	// Nonce
+	$nonce = uniqid('');
 
 	// URL encode all the parameters
 	foreach ($call as $k => $v){
@@ -1183,9 +1193,11 @@ function send_api_call(array $keys, $url, array $call, $method = 'GET', $post_da
 	if ((isset($keys['public'])) && (isset($keys['private']))) {
 		$headers['X-Elgg-apikey'] = $keys['public'];
 		$headers['X-Elgg-time'] = $time;
+		$headers['X-Elgg-nonce'] = $nonce;
 		$headers['X-Elgg-hmac-algo'] = 'sha1';
 		$headers['X-Elgg-hmac'] = calculate_hmac('sha1',
 			$time,
+			$nonce,
 			$keys['public'],
 			$keys['private'],
 			$params,
