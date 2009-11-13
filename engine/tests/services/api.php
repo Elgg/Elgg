@@ -236,6 +236,24 @@ class ElggCoreServicesApiTest extends ElggCoreUnitTest {
 		$s = serialise_parameters('test', $parameters);
 		$this->assertIdentical($s, ",'test\'ing'");
 		
+		// test string with \ in it
+		$this->registerFunction(false, false, array('param1' => array('type' => 'string')));
+		$parameters = array('param1' => 'test\ing');
+		$s = serialise_parameters('test', $parameters);
+		$this->assertIdentical($s, ",'test\\ing'"); 
+		
+		// test string with \' in it
+		$this->registerFunction(false, false, array('param1' => array('type' => 'string')));
+		$parameters = array('param1' => "test\'ing");
+		$s = serialise_parameters('test', $parameters);
+		$this->assertIdentical($s, ",'test\\\\'ing'"); // test\\'ing
+		
+		// test string reported by twall in #1364
+		$this->registerFunction(false, false, array('param1' => array('type' => 'string')));
+		$parameters = array('param1' => '{"html":"<div><img src=\\"http://foo.com\\"/>Blah Blah</div>"}');
+		$s = serialise_parameters('test', $parameters);
+		$this->assertIdentical($s, ",'{\"html\":\"<div><img src=\\\"http://foo.com\\\"/>Blah Blah</div>\"}'");
+		
 		// float
 		$this->registerFunction(false, false, array('param1' => array('type' => 'float')));
 		$parameters = array('param1' => 2.5);
