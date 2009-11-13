@@ -424,7 +424,9 @@ function elgg_get_entities_from_annotations(array $options = array()) {
 		'annotation_name_value_pair' => NULL,
 		'annotation_name_value_pairs' => NULL,
 		'annotation_name_value_pairs_operator' => 'AND',
-		'annotation_case_sensitive' => TRUE
+		'annotation_case_sensitive' => TRUE,
+		'order_by' => 'maxtime desc',
+		'group_by' => 'a.entity_guid'
 	);
 
 	$options = array_merge($defaults, $options);
@@ -463,13 +465,14 @@ function elgg_get_entities_from_annotations(array $options = array()) {
 
 		$options['selects'] = array_merge($options['selects'], $clauses['selects']);
 
-		// @todo overwrites the current order and group bys
+		/* @todo overwrites the current order and group bys
 		if ($clauses['order_by']) {
 			$options['order_by'] = $clauses['order_by'];
 		}
 		if ($clauses['group_by']) {
 			$options['group_by'] = $clauses['group_by'];
 		}
+		*/
 	}
 
 	return elgg_get_entities($options);
@@ -722,11 +725,7 @@ function get_entities_from_annotations($entity_type = "", $entity_subtype = "", 
 	}
 
 	if ($order_by) {
-		$options['order_by'];
-	}
-
-	if ($site_guid) {
-		$options['site_guid'];
+		$options['order_by'] = "maxtime $order_by";
 	}
 
 	if ($count) {
