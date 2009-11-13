@@ -81,10 +81,10 @@ class ElggCoreServicesApiTest extends ElggCoreUnitTest {
 		$parameters = array('param1' => array('type' => 'int', 'required' => true), 
 							'param2' => array('type' => 'bool', 'required' => true),
 							'param3' => array('type' => 'string', 'required' => false), );
+		$method['description'] = '';
 		$method['function'] = 'foo';
 		$method['parameters'] = $parameters;
 		$method['call_method'] = 'GET'; 
-		$method['description'] = '';
 		$method['require_api_auth'] = false;
 		$method['require_user_auth'] = false;
 
@@ -224,6 +224,18 @@ class ElggCoreServicesApiTest extends ElggCoreUnitTest {
 		$s = serialise_parameters('test', $parameters);
 		$this->assertIdentical($s, ",'testing'");
 
+		// test string with " in it
+		$this->registerFunction(false, false, array('param1' => array('type' => 'string')));
+		$parameters = array('param1' => 'test"ing');
+		$s = serialise_parameters('test', $parameters);
+		$this->assertIdentical($s, ',\'test"ing\'');
+		
+		// test string with ' in it
+		$this->registerFunction(false, false, array('param1' => array('type' => 'string')));
+		$parameters = array('param1' => 'test\'ing');
+		$s = serialise_parameters('test', $parameters);
+		$this->assertIdentical($s, ",'test\'ing'");
+		
 		// float
 		$this->registerFunction(false, false, array('param1' => array('type' => 'float')));
 		$parameters = array('param1' => 2.5);

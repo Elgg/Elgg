@@ -634,7 +634,7 @@ function serialise_parameters($method, $parameters) {
 				
 				break;
 			case 'string': 
-				$serialised_parameters .= ",'" .  (string)mysql_real_escape_string(trim($parameters[$key])) . "'"; 
+				$serialised_parameters .= ",'" . addcslashes(trim($parameters[$key]), "'") . "'";
 				break;
 			case 'float': 
 				$serialised_parameters .= "," . (float)trim($parameters[$key]); 
