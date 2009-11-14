@@ -235,9 +235,6 @@ function authenticate($username, $password) {
  * 		'username' and 'password' (cleartext).
  */
 function pam_auth_userpass($credentials = NULL) {
-	$max_in_period = 3; // max 3 login attempts in
-	$period_length = 5; // 5 minutes
-	$periods = array();
 
 	if (is_array($credentials) && ($credentials['username']) && ($credentials['password'])) {
 		if ($user = get_user_by_username($credentials['username'])) {
@@ -247,7 +244,7 @@ function pam_auth_userpass($credentials = NULL) {
 				return false;
 			}
 
-			// User has been banned, so bin them.
+			// User has been banned, so prevent from logging in
 			if ($user->isBanned()) {
 				return false;
 			}
@@ -324,6 +321,7 @@ function reset_login_failure_count($user_guid) {
  * @return bool on exceeded limit.
  */
 function check_rate_limit_exceeded($user_guid) {
+	// 5 failures in 5 minutes causes temporary block on logins	
 	$limit = 5;
 	$user_guid = (int)$user_guid;
 	$user = get_entity($user_guid);
@@ -422,7 +420,7 @@ function login(ElggUser $user, $persistent = false) {
 function logout() {
 	global $CONFIG;
 
-	if (isset($_SESSION['user'])) {
+	if (isset($_SESSION['user'])) {	
 		if (!trigger_elgg_event('logout','user',$_SESSION['user'])) {
 			return false;
 		}
@@ -529,7 +527,19 @@ function session_init($event, $object_type, $object) {
 		} 
 	} else {
 		// we have a session and we have already checked the fingerprint
-		// no need to load user data because it should already be in the session
+		// reload the user object from database in case it has changed during the session
+		if ($user = get_user($_SESSION['guid'])) {
+			$_SESSION['user'] = $user;
+			$_SESSION['id'] = $user->getGUID();
+			$_SESSION['guid'] = $_SESSION['id'];
+			$_SESSION['code'] = $_COOKIE['elggperm'];
+		} else {
+			// user must have been deleted with a session active
+			unset($_SESSION['user']);
+			unset($_SESSION['id']);
+			unset($_SESSION['guid']);
+			unset($_SESSION['code']);
+		}
 	}
 
 	if (isset($_SESSION['guid'])) {
