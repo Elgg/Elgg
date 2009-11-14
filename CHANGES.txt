@@ -13,6 +13,7 @@ http://code.elgg.org/elgg/.....
   * Searching for entities works properly with case-insensitive metadata. #1326
   * Invalid views now default to 'default' view. #1161.
   * Metadata cache now handles a 0 string. #1227
+  * ElggPlugin get() now works with 0. #1286
 
  API changes:
   * New plugin hook system:unit_test for adding files to unit tests.
@@ -31,4 +32,4 @@ http://code.elgg.org/elgg/.....
   * New plugin hook rest:init so plugins can configure authentication modules
   * Moved auth.gettoken to POST for increased security
   * Fixed REST POST bug #1114
-  * Fixed #881, #1214, #1215, #1216, #1217, #1218, #1219, #1220, #1298 
+  * Fixed #881, #1214, #1215, #1216, #1217, #1218, #1219, #1220, #1298, #1364 

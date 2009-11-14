@@ -287,17 +287,17 @@ class ElggHMACCache extends ElggCache {
  * The structure of this is
  * 	$API_METHODS = array (
  * 		$method => array (
+ * 			"description" => "Some human readable description"
  * 			"function" = 'my_function_callback'
- * 			"call_method" = 'GET' | 'POST'
  * 			"parameters" = array (
  * 				"variable" = array ( // NB, the order should be the same as the function callback
  * 					type => 'int' | 'bool' | 'float' | 'string'
  * 					required => true (default) | false
  * 				)
  * 			)
+ * 			"call_method" = 'GET' | 'POST'
  * 			"require_api_auth" => true | false (default)
  * 			"require_user_auth" => true | false (default)
- * 			"description" => "Some human readable description"
  * 		)
  *  )
  */
@@ -306,7 +306,9 @@ $API_METHODS = array();
 /**
  * Expose a function as a services api call.
  *
- * Limitations: Currently can not expose functions which expect objects.
+ * Limitations: Currently cannot expose functions which expect objects.
+ * It also cannot handle arrays of bools or arrays of arrays.
+ * Also, input will be filtered to protect against XSS attacks through the API.
  *
  * @param string $method The api name to expose - for example "myapi.dosomething"
  * @param string $function Your function callback.
@@ -385,7 +387,7 @@ function expose_function($method, $function, array $parameters = NULL, $descript
 
 /**
  * Unregister an API method
- * @param $method The api name that was exposed  
+ * @param string $method The api name that was exposed
  */
 function unexpose_function($method) {
 	global $API_METHODS;
@@ -397,7 +399,9 @@ function unexpose_function($method) {
 
 /**
  * Check that the method call has the proper API and user authentication
- * @return bool
+ * @param string $method The api name that was exposed
+ * @return true or throws an exception
+ * @throws APIException 
  */
 function authenticate_method($method) {
 	global $API_METHODS;
@@ -435,7 +439,7 @@ function authenticate_method($method) {
  *
  * @param string $method Method, e.g. "foo.bar"
  * @return GenericResult The result of the execution.
- * @throws APIException, SecurityException
+ * @throws APIException, CallException
  */
 function execute_method($method) {
 	global $API_METHODS, $CONFIG;
@@ -458,8 +462,7 @@ function execute_method($method) {
 	$parameters = get_parameters_for_method($method);
 	
 	if (verify_parameters($method, $parameters) == false) {
-		// error
-		return false;
+		// if verify_parameters fails, it throws exception which is not caught here
 	}
 	
 	$serialised_parameters = serialise_parameters($method, $parameters);
@@ -491,6 +494,7 @@ function execute_method($method) {
 
 /**
  * Get the request method.
+ * @return string HTTP request method
  */
 function get_call_method() {
 	return $_SERVER['REQUEST_METHOD'];
@@ -528,7 +532,11 @@ function get_parameters_for_method($method) {
 	return $sanitised;
 }
 
-
+/**
+ * Get POST data
+ * Since this is called through a handler, we need to manually get the post data
+ * @return POST data from PHP
+ */
 function get_post_data() {
 	global $GLOBALS;
 		
@@ -566,6 +574,7 @@ function include_post_data() {
  * @param $method
  * @param $parameters
  * @return true on success or exception
+ * @throws APIException
  */
 function verify_parameters($method, $parameters) {
 	global $API_METHODS;
@@ -594,9 +603,10 @@ function verify_parameters($method, $parameters) {
 /**
  * Serialize an array of parameters for an API method call
  * 
- * @param $method
- * @param $parameters
- * @return unknown_type
+ * @param string $method API method name
+ * @param array $parameters Array of parameters
+ * @return string or exception
+ * @throws APIException
  */
 function serialise_parameters($method, $parameters) {
 	global $API_METHODS;
@@ -673,8 +683,9 @@ function serialise_parameters($method, $parameters) {
 // API authorization handlers /////////////////////////////////////////////////////////////////////
 
 /**
- * Confirm that the call includes a valid API key
+ * PAM: Confirm that the call includes a valid API key
  * @return true if good API key - otherwise throws exception
+ * @throws APIException
  */
 function api_auth_key() {
 	global $CONFIG;
@@ -699,8 +710,9 @@ function api_auth_key() {
 
 
 /**
- * 
+ * PAM: Confirm the HMAC signature
  * @return true if success - otherwise throws exception
+ * @throws SecurityException
  */
 function api_auth_hmac() {
 	global $CONFIG;
@@ -757,7 +769,7 @@ function api_auth_hmac() {
 
 /**
  * This function looks at the super-global variable $_SERVER and extracts the various
- * header variables needed to pass to the validation functions after performing basic validation.
+ * header variables needed for the HMAC PAM
  *
  * @return stdClass Containing all the values.
  * @throws APIException Detailing any error.
@@ -791,8 +803,12 @@ function get_and_validate_api_headers() {
 		throw new APIException(elgg_echo('APIException:MissingTime'));
 	}
 
-	// must have been sent in the last 10 minutes
-	if (($result->time<(time()-600)) || ($result->time>(time()+600))) {
+	// Must have been sent within 25 hour period.
+	// 25 hours is more than enough to handle server clock drift.
+	// This values determines how long the HMAC cache needs to store previous
+	// signatures. Heavy use of HMAC is better handled with a shorter sig lifetime.
+	// See cache_hmac_check_replay()  
+	if (($result->time<(time()-90000)) || ($result->time>(time()+90000))) {
 		throw new APIException(elgg_echo('APIException:TemporalDrift'));
 	}
 
@@ -850,13 +866,13 @@ function map_api_hash($algo) {
  * This function signs an api request using the information provided. The signature returned
  * has been base64 encoded and then url encoded.
  *
- * @param $algo string The HMAC algorithm used
- * @param $time string String representation of unix time
- * @param $api_key string Your api key
- * @param $secret string Your private key
- * @param $get_variables string URLEncoded string representation of the get variable parameters, eg "method=user&guid=2"
- * @param $post_hash string Optional sha1 hash of the post data.
- * @return string The HMAC string
+ * @param string $algo The HMAC algorithm used
+ * @param string $time String representation of unix time
+ * @param string $api_key Your api key
+ * @param string $secret Your private key
+ * @param string $get_variables URLEncoded string representation of the get variable parameters, eg "method=user&guid=2"
+ * @param string $post_hash Optional sha1 hash of the post data.
+ * @return string The HMAC signature
  */
 function calculate_hmac($algo, $time, $nonce, $api_key, $secret_key, $get_variables, $post_hash = "") {
 	global $CONFIG;
@@ -881,8 +897,8 @@ function calculate_hmac($algo, $time, $nonce, $api_key, $secret_key, $get_variab
  *
  * TODO: Work out how to handle really large bits of data.
  *
- * @param $postdata string The post data.
- * @param $algo string The algorithm used.
+ * @param string $postdata string The post data.
+ * @param string $algo The algorithm used.
  * @return string The hash.
  */
 function calculate_posthash($postdata, $algo) {
@@ -894,14 +910,15 @@ function calculate_posthash($postdata, $algo) {
 }
 
 /**
- * This function will do two things. Firstly it verifys that a $hmac hasn't been seen before, and
- * secondly it will add the given hmac to the cache.
+ * This function will do two things. Firstly it verifies that a HMAC signature
+ * hasn't been seen before, and secondly it will add the given hmac to the cache.
  *
- * @param $hmac The hmac string.
+ * @param string $hmac The hmac string.
  * @return bool True if replay detected, false if not.
  */
 function cache_hmac_check_replay($hmac) {
-	// cache lifetime is 25 hours (see time window in get_and_validate_api_headers() )
+	// cache lifetime is 25 hours (this should be related to the time drift 
+	// allowed in get_and_validate_headers
 	$cache = new ElggHMACCache(90000);
 
 	if (!$cache->load($hmac)) {
@@ -919,6 +936,7 @@ function cache_hmac_check_replay($hmac) {
  * Generate a new API user for a site, returning a new keypair on success.
  *
  * @param int $site_guid The GUID of the site. (default is current site)
+ * @return stdClass object or false
  */
 function create_api_user($site_guid) {
 	global $CONFIG;
@@ -964,6 +982,7 @@ function get_api_user($site_guid, $api_key) {
  *
  * @param int $site_guid The GUID of the site.
  * @param string $api_key The API Key (public).
+ * @return bool
  */
 function remove_api_user($site_guid, $api_key) {
 	global $CONFIG;
@@ -985,7 +1004,7 @@ function remove_api_user($site_guid, $api_key) {
  * it is present and is valid. The user gets logged in so with the current
  * session code of Elgg, that user will be logged out of all other sessions.
  *
- * @param unknown_type $credentials
+ * @param array/mixed $credentials
  * @return bool
  */
 function pam_auth_usertoken($credentials = NULL) {
@@ -1028,17 +1047,21 @@ function pam_auth_usertoken($credentials = NULL) {
 }
 
 /**
- * See if the user has a valid login sesson.
+ * See if the user has a valid login sesson
+ * @return bool
  */
 function pam_auth_session($credentials = NULL) {
 	return isloggedin();
 }
+
+// user token functions /////////////////////////////////////////////////////////////////////
 
 /**
  * Obtain a token for a user.
  *
  * @param string $username The username
  * @param int $expire minutes until token expires (default is 60 minutes)
+ * @return bool
  */
 function create_user_token($username, $expire = 60) {
 	global $CONFIG;
@@ -1063,6 +1086,30 @@ function create_user_token($username, $expire = 60) {
 }
 
 /**
+ * Get all tokens attached to a user
+ * 
+ * @param int $user_guid The user GUID
+ * @param int $site_guid The ID of the site (default is current site)
+ * @return false if none available or array of stdClass objects 
+ * 		(see users_apisessions schema for available variables in objects)
+ */
+function get_user_tokens($user_guid, $site_guid) {
+	global $CONFIG;
+
+	if (!isset($site_guid)) {
+		$site_guid = $CONFIG->site_id;	
+	}
+	
+	$site_guid = (int)$site_guid;
+	$user_guid = (int)$user_guid;
+	
+	$tokens = get_data("SELECT * from {$CONFIG->dbprefix}users_apisessions
+		where user_guid=$user_guid and site_guid=$site_guid");
+
+	return $tokens;
+}
+
+/**
  * Validate a token against a given site.
  *
  * A token registered with one site can not be used from a different apikey(site), so be aware of this
@@ -1070,7 +1117,7 @@ function create_user_token($username, $expire = 60) {
  *
  * @param string $token The Token.
  * @param int $site_guid The ID of the site (default is current site)
- * @return mixed The user id attached to the token or false.
+ * @return mixed The user id attached to the token if not expired or false.
  */
 function validate_user_token($token, $site_guid) {
 	global $CONFIG;
@@ -1136,7 +1183,7 @@ function remove_expired_user_tokens() {
 /**
  * Utility function to serialise a header array into its text representation.
  *
- * @param $headers array The array of headers "key" => "value"
+ * @param array $headers The array of headers "key" => "value"
  * @return string
  */
 function serialise_api_headers(array $headers) {
@@ -1272,6 +1319,7 @@ function send_api_post_call($url, array $call, array $keys, $post_data, $content
  *
  * @param string $secret_key Your secret key
  * @param string $api_key Your api key
+ * @return array
  */
 function get_standard_api_key_array($secret_key, $api_key) {
 	return array('public' => $api_key, 'private' => $secret_key);
@@ -1281,6 +1329,7 @@ function get_standard_api_key_array($secret_key, $api_key) {
 
 /**
  * Simple api to return a list of all api's installed on the system.
+ * @return array
  */
 function list_all_apis() {
 	global $API_METHODS;
@@ -1294,10 +1343,12 @@ function list_all_apis() {
 /**
  * The auth.gettoken API.
  * This API call lets a user log in, returning an authentication token which can be used
- * in leu of a username and password login from then on.
+ * in leu of a username and password login for a specific period of time.
  *
- * @param string username Username
- * @param string password Clear text password
+ * @param string $username Username
+ * @param string $password Clear text password
+ * @return string Token string or exception
+ * @throws SecurityException
  */
 function auth_gettoken($username, $password) {
 	if (authenticate($username, $password)) {
@@ -1316,15 +1367,16 @@ function auth_gettoken($username, $password) {
 $ERRORS = array();
 
 /**
- * PHP Error handler function.
+ * API PHP Error handler function.
  * This function acts as a wrapper to catch and report PHP error messages.
  *
  * @see http://uk3.php.net/set-error-handler
- * @param unknown_type $errno
- * @param unknown_type $errmsg
- * @param unknown_type $filename
- * @param unknown_type $linenum
- * @param unknown_type $vars
+ * @param int $errno
+ * @param string $errmsg
+ * @param string $filename
+ * @param int $linenum
+ * @param array $vars
+ * @return none
  */
 function __php_api_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 	global $ERRORS;
@@ -1353,11 +1405,13 @@ function __php_api_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 }
 
 /**
- * PHP Exception handler.
+ * API PHP Exception handler.
  * This is a generic exception handler for PHP exceptions. This will catch any
- * uncaught exception and return it as an ErrorResult in the requested format.
+ * uncaught exception, end API execution and return the result to the requestor
+ * as an ErrorResult in the requested format.
  *
  * @param Exception $exception
+ * @return none
  */
 function __php_api_exception_handler($exception) {
 
@@ -1374,6 +1428,7 @@ function __php_api_exception_handler($exception) {
 
 /**
  * Services handler - turns request over to the registered handler
+ * If no handler is found, this returns a 404 error
  * 
  * @param string $handler 
  * @param array $request
@@ -1457,6 +1512,9 @@ function unregister_service_handler($handler) {
 
 // REST handler //////////////////////////////////////////////////////////////
 
+/**
+ * REST API handler
+ */
 function rest_handler() {
 	global $CONFIG;
 	
