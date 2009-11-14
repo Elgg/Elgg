@@ -92,6 +92,10 @@ function get_tags($threshold = 1, $limit = 10, $metadata_name = "", $entity_type
 
 	if (!empty($metadata_name)) {
 		$metadata_name = (int) get_metastring_id($metadata_name);
+		// test if any metadata with that name
+		if (!$metadata_name) {
+			return false; // no matches so short circuit
+		}
 	} else {
 		$metadata_name = 0;
 	}
