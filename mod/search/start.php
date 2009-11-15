@@ -40,7 +40,7 @@ function search_init() {
 	// can't use get_data() here because some servers don't have these globals set,
 	// which throws a db exception.
 	$r = mysql_query('SELECT @@ft_min_word_len as min, @@ft_max_word_len as max');
-	if ($word_lens = mysql_fetch_assoc($r)) {
+	if ($r && ($word_lens = mysql_fetch_assoc($r))) {
 		$CONFIG->search_info['min_chars'] = $word_lens['min'];
 		$CONFIG->search_info['max_chars'] = $word_lens['max'];
 	} else {
@@ -74,11 +74,8 @@ function search_page_handler($page) {
 }
 
 /**
- * Return a string with highlighted matched elements.
- * Checks for "s
- * Provides context for matched elements.
- * Will not return more than $max_length of full context.
- * Only highlights words
+ * Return a string with highlighted matched queries and relevant context
+ * Determins context based upon occurance and distance of words with each other.
  *
  * @param unknown_type $haystack
  * @param unknown_type $need
@@ -86,358 +83,235 @@ function search_page_handler($page) {
  * @param unknown_type $max_length
  * @return unknown_type
  */
-function search_get_highlighted_relevant_substrings($haystack, $needle, $min_match_context = 15, $max_length = 500) {
+function search_get_highlighted_relevant_substrings($haystack, $query, $min_match_context = 30, $max_length = 300) {
 	global $CONFIG;
 	$haystack = strip_tags($haystack);
-	$haystack_lc = strtolower($haystack);
-//
-//	$haystack = "Like merge sort, quicksort can also be easily parallelized due to its "
-//		. "divide-and-conquer nature. Individual in-place partition operations are difficult "
-//		. "to parallelize, but once divided, different sections of the list can be sorted in parallel.  "
-//		. "If we have p processors, we can divide a list of n ele";
-//
-//	$needle = 'difficult to sort in parallel';
+	$haystack_length = elgg_strlen($haystack);
+	$haystack_lc = elgg_strtolower($haystack);
 
-	// for now don't worry about "s or boolean operators
-	$needle = str_replace(array('"', '-', '+', '~'), '', stripslashes(strip_tags($needle)));
-	$words = explode(' ', $needle);
+	$words = search_remove_ignored_words($query, 'array');
+
+	// if haystack < $max_length return the entire haystack w/formatting immediately
+	if ($haystack_length <= $max_length) {
+		$return = search_highlight_words($words, $haystack);
+
+		return $return;
+	}
+
+
+	// get the starting positions and lengths for all matching words
+	$starts = array();
+	$lengths = array();
+	foreach ($words as $word) {
+		$word = elgg_strtolower($word);
+		$count = elgg_substr_count($haystack_lc, $word);
+		$word_len = elgg_strlen($word);
+
+		// find the start positions for the words
+		if ($count > 1) {
+			$offset = 0;
+			while (FALSE !== $pos = elgg_strpos($haystack_lc, $word, $offset)) {
+				$start = ($pos - $min_match_context > 0) ? $pos - $min_match_context : 0;
+				$starts[] = $start;
+				$stop = $pos + $word_len + $min_match_context;
+				$lengths[] = $stop - $start;
+				$offset += $pos + $word_len;
+			}
+		} else {
+			$pos = elgg_strpos($haystack_lc, $word);
+			$start = ($pos - $min_match_context > 0) ? $pos - $min_match_context : 0;
+			$starts[] = $start;
+			$stop = $pos + $word_len + $min_match_context;
+			$lengths[] = $stop - $start;
+		}
+	}
+
+	$offsets = search_consolidate_substrings($starts, $lengths);
+
+	// figure out if we can adjust the offsets and lengths
+	// in order to return more context
+	$total_length = array_sum($offsets);
+
+	$add_length = 0;
+	if ($total_length < $max_length) {
+		$add_length = floor((($max_length - $total_length) / count($offsets)) / 2);
+
+		$starts = array();
+		$lengths = array();
+		foreach ($offsets as $offset => $length) {
+			$start = ($offset - $add_length > 0) ? $offset - $add_length : 0;
+			$length = $length + $add_length;
+			$starts[] = $start;
+			$lengths[] = $length;
+		}
+
+		$offsets = search_consolidate_substrings($starts, $lengths);
+	}
+
+	// sort by order of string size descending (which is roughly
+	// the proximity of matched terms) so we can keep the
+	// substrings with terms closest together and discard
+	// the others as needed to fit within $max_length.
+	arsort($offsets);
+
+	$return_strs = array();
+	$total_length = 0;
+	foreach ($offsets as $start => $length) {
+		$string = trim(elgg_substr($haystack, $start, $length));
+
+		// continue past if adding this substring exceeds max length
+		if ($total_length + $length > $max_length) {
+			continue;
+		}
+
+		$total_length += $length;
+		$return_strs[$start] = $string;
+	}
+
+	// put the strings in order of occurence
+	ksort($return_strs);
+
+	// add ...s where needed
+	$return = implode('...', $return_strs);
+	if (!array_key_exists(0, $return_strs)) {
+		$return = "...$return";
+	}
+
+	// add to end of string if last substring doesn't hit the end.
+	$starts = array_keys($return_strs);
+	$last_pos = $starts[count($starts)-1];
+	if ($last_pos + elgg_strlen($return_strs[$last_pos]) < $haystack_length) {
+		$return .= '...';
+	}
+
+	$return = search_highlight_words($words, $return);
+
+	return $return;
+}
+
+
+/**
+ * Takes an array of offsets and lengths and consolidates any
+ * overlapping entries, returning an array of new offsets and lengths
+ *
+ * Offsets and lengths are specified in separate arrays because of possible
+ * index collisions with the offsets.
+ *
+ * @param array $offsets
+ * @param array $lengths
+ * @return array
+ */
+function search_consolidate_substrings($offsets, $lengths) {
+	// sort offsets by occurence
+	asort($offsets, SORT_NUMERIC);
+
+	// reset the indexes maintaining association with the original offsets.
+	$offsets = array_merge($offsets);
+
+	$new_lengths = array();
+	foreach ($offsets as $i => $offset) {
+		$new_lengths[] = $lengths[$i];
+	}
+
+	$lengths = $new_lengths;
+
+	$return = array();
+	$count = count($offsets);
+	for ($i=0; $i<$count; $i++) {
+		$offset = $offsets[$i];
+		$length = $lengths[$i];
+		$end_pos = $offset + $length;
+
+		// find the next entry that doesn't overlap
+		while(array_key_exists($i+1, $offsets) && $end_pos > $offsets[$i+1]) {
+			$i++;
+			if (!array_key_exists($i, $offsets)) {
+				break;
+			}
+			$end_pos = $lengths[$i] + $offsets[$i];
+		}
+
+		$length = $end_pos - $offset;
+
+		// will never have a colliding offset, so can return as a single array
+		$return[$offset] = $length;
+	}
+
+	return $return;
+}
+
+/**
+ * Safely highlights the words in $words found in $string avoiding recursion
+ *
+ * @param array $words
+ * @param string $string
+ * @return string
+ */
+function search_highlight_words($words, $string) {
+	$i = 1;
+	$replace_html = array(
+		'strong' => rand(10000,99999),
+		'class' => rand(10000,99999),
+		'searchMatch' => rand(10000,99999),
+		'searchMatchColor' => rand(10000,99999)
+	);
+
+	foreach ($words as $word) {
+		$search = "/($word)/i";
+
+		// must replace with placeholders in case one of the search terms is
+		// in the html string.
+		// later, will replace the placeholders with the actual html.
+		// Yeah this is hacky.  I'm tired.
+		$strong = $replace_html['strong'];
+		$class = $replace_html['class'];
+		$searchMatch = $replace_html['searchMatch'];
+		$searchMatchColor = $replace_html['searchMatchColor'];
+
+		$replace = "<$strong $class=\"$searchMatch $searchMatchColor{$i}\">$1</$strong>";
+		$string = preg_replace($search, $replace, $string);
+		$i++;
+	}
+
+	foreach ($replace_html as $replace => $search) {
+		$string = str_replace($search, $replace, $string);
+	}
+
+	return $string;
+}
+
+/**
+ * Returns a query with stop and too short words removed.
+ * (Unless the entire query is < ft_min_word_chars, in which case
+ * it's taken literally.)
+ *
+ * @param array $query
+ * @param str $format Return as an array or a string
+ * @return mixed
+ */
+function search_remove_ignored_words($query, $format = 'array') {
+	global $CONFIG;
+
+	// don't worry about "s or boolean operators
+	$query = str_replace(array('"', '-', '+', '~'), '', stripslashes(strip_tags($query)));
+	$words = explode(' ', $query);
 
 	$min_chars = $CONFIG->search_info['min_chars'];
-	// if > ft_min_word == not running in literal mode.
-	if ($needle >= $min_chars) {
+	// if > ft_min_word we're not running in literal mode.
+	if ($query >= $min_chars) {
 		// clean out any words that are ignored by mysql
 		foreach ($words as $i => $word) {
-			if (strlen($word) < $min_chars) {
+			if (elgg_strlen($word) < $min_chars) {
 				unset ($words[$i]);
 			}
 		}
 	}
 
-	/*
-
-	$body_len = 250
-
-	$context = 5-30, 20-45, 75-100, 150
-
-	can pull out context either on:
-		one of each matching term
-		X # of highest matching terms
-
-
-	*/
-	$substr_counts = array();
-	$str_pos = array();
-	// matrices for being and end context lengths.
-	// defaults to min context.  will add additional context later if needed
-	$starts = array();
-	$stops = array();
-
-	// map the words to the starts and stops
-	$words_arg = array();
-	$context_count = 0;
-
-
-	// get the full count of matches.
-	foreach ($words as $word) {
-		$word = strtolower($word);
-		$count = substr_count($haystack, $word);
-		$word_len = strlen($word);
-
-		// find the start positions for the words
-		if ($count > 1) {
-			$str_pos[$word] = array();
-			$offset = 0;
-			while (FALSE !== $pos = strpos($haystack, $word, $offset)) {
-				$str_pos[$word][] = $pos;
-				$starts[] = ($pos - $min_match_context > 0) ? $pos - $min_match_context : 0;
-				$stops[] = $pos + $word_len + $min_match_context;
-				$words_arg[] = $word;
-				$context_count += $min_match_context + $word_len;
-				$offset += $pos + $word_len;
-			}
-		} else {
-			$pos = strpos($haystack, $word);
-			$str_pos[$word] = array($pos);
-			$starts[] = ($pos - $min_match_context > 0) ? $pos - $min_match_context : 0;
-			$stops[] = $pos + $word_len + $min_match_context;
-			$context_count += $min_match_context + $word_len;
-			$words_arg[] = $word;
-		}
-		$substr_counts[$word] = $count;
+	if ($format == 'string') {
+		return implode(' ', $words);
 	}
 
-	// sort by order of occurence
-	//krsort($substr_counts);
-	$full_count = array_sum($substr_counts);
-
-	// figure out what the context needs to be.
-	// take one of each matched phrase
-	// if there are any
-
-//
-//	var_dump($str_pos);
-//	var_dump($substr_counts);
-//	var_dump($context_count);
-
-
-	// sort to put them in order of occurence
-	asort($starts, SORT_NUMERIC);
-	asort($stops, SORT_NUMERIC);
-
-	// offset them correctly
-	$starts[] = 0;
-	$new_stops = array(0);
-	foreach ($stops as $i => $pos) {
-		$new_stops[$i+1] = $pos;
-	}
-	$stops = $new_stops;
-
-	$substrings = array();
-	$len = count($starts);
-
-	$starts = array_merge($starts);
-	$stops = array_merge($stops);
-
-	$offsets = array();
-	$limits = array();
-	$c = 0;
-	foreach ($starts as $i => $start) {
-		$stop = $stops[$i];
-		$offsets[$c] = $start;
-		$limits[$c] = $stop;
-
-		// never need the last one as it's just a displacing entry
-		if ($c+1 == count($starts)) {
-			break;
-		}
-
-		if ($start - $stop < 0) {
-			//var_dump("Looking at c=$c & $start - $stop and going to unset {$limits[$c]}");
-			unset($offsets[$c]);
-			unset($limits[$c]);
-		}
-		$c++;
-	}
-
-	// reset indexes and remove placeholder elements.
-	$limits = array_merge($limits);
-	array_shift($limits);
-	$offsets = array_merge($offsets);
-	array_pop($offsets);
-
-	// figure out if we need to adjust the offsets from the base
-	// this could result in overlapping summaries.
-	// might be nicer to just remove it.
-
-	$total_len = 0;
-	foreach ($offsets as $i => $offset) {
-		$total_len += $limits[$i] - $offset;
-	}
-
-	$add_length = 0;
-	if ($total_length < $max_length) {
-		$add_length = floor((($max_length - $total_len) / count($offsets)) / 2);
-	}
-
-	$lengths = array();
-	foreach ($offsets as $i => $offset) {
-		$limit = $limits[$i];
-		if ($offset == 0 && $add_length) {
-			$limit += $add_length;
-		} else {
-			$offset = $offset - $add_length;
-		}
-		$string = substr($haystack, $offset, $limit - $offset);
-
-		if ($offset != 0) {
-			$string = "...$string";
-		}
-
-		if ($limit + $offset >= strlen($haystack)) {
-			$string .= '...';
-		}
-
-		$substrings[] = $string;
-		$lengths[] = strlen($string);
-	}
-
-	// sort by length of context.
-	asort($lengths);
-
-	$matched = '';
-	foreach ($lengths as $i => $len) {
-		$string = $substrings[$i];
-
-		if (strlen($matched) + strlen($string) < $max_length) {
-			$matched .= $string;
-		}
-	}
-
-	$i = 1;
-	foreach ($words as $word) {
-		$search = "/($word)/i";
-		$replace = "<strong class=\"searchMatch searchMatchColor$i\">$1</strong>";
-		$matched = preg_replace($search, $replace, $matched);
-		$i++;
-	}
-
-	return $matched;
-
-
-	// crap below..
-
-
-
-	for ($i=0; $i<$len; $i++) {
-		$start = $starts[$i];
-		$stop = $stops[$i];
-		var_dump("Looking at $i = $start - $stop");
-
-		while ($start - $stop <= 0) {
-			$stop = $stops[$i++];
-			var_dump("New start is $stop");
-		}
-
-		var_dump("$start-$stop");
-	}
-
-	// find the intersecting contexts
-	foreach ($starts as $i => $start_pos) {
-		$words .= "{$words_arg[$i]}\t\t\t";
-		echo "$start_pos\t\t\t";
-	}
-
-	echo "\n";
-
-	foreach ($stops as $i => $stop_pos) {
-		echo "$stop_pos\t\t\t";
-	}
-echo "\n$words\n";
-
-	// get full number of matches against all words to see how many we actually want to look at.
-
-
-
-
-//	$desc = search_get_relevant_substring($entity->description, $params['query'], '<strong class="searchMatch">', '</strong>');
-
-
-	$params['query'];
-	// "this is"just a test "silly person"
-
-	// check for "s
-	$words_quotes = explode('"', $needle);
-
-	$words_orig = explode(' ', $needle);
-	$words = array();
-
-	foreach ($words_orig as $i => $word) {
-		// figure out if we have a special operand
-		$operand = substr($word, 0, 1);
-		switch($operand) {
-			case '"':
-				// find the matching " if any.  else, remove the "
-				if (substr_count($query, '"') < 2) {
-					$words[] = substr($word, 1);
-				} else {
-					$word = substr($word, 1);
-					$word_i = $i;
-					while ('"' != strpos($words_orig[$word_i], '"')) {
-						$word .= " {$words_orig[$word_i]}";
-						unset($words_orig[$word_i]);
-					}
-				}
-
-				break;
-
-			case '+':
-				// remove +
-				$words[] = substr($word, 1);
-				break;
-
-			case '~':
-			case '-':
-				// remove this from highlighted list.
-
-				break;
-		}
-	}
-
-	// pick out " queries
-	if (substr_count($query, '"') >= 2) {
-
-	}
-
-	// ignore queries starting with -
-
-
-	// @todo figure out a way to "center" the matches within the max_length.
-	// if only one match, its context is $context + $max_length / 2
-	// if 2 matches, its context is $context + $max_length / 4
-	// if 3 matches, its context is $context + $max_length / 6
-	// $context per match = $min_match_context + ($max_length / $num_count_match)
-
-	// if $max_length / ($matched_count * 2) < $context
-	// only match against the first X matches where $context >= $context
-}
-
-/**
- * Returns a matching string with $context amount of context, optionally
- * surrounded by $before and $after.
- *
- * If no match is found, restricts string to $context*2 starting from strpos 0.
- *
- * @param str $haystack
- * @param str $needle
- * @param str $before
- * @param str $after
- * @param int $context
- * @return str
- */
-function search_get_relevant_substring($haystack, $needle, $before = '', $after = '', $context = 75) {
-	$haystack = strip_tags($haystack);
-	$needle = strip_tags($needle);
-
-	$pos = strpos(strtolower($haystack), strtolower($needle));
-
-	if ($pos === FALSE) {
-		$str = substr($haystack, 0, $context*2);
-		if (strlen($haystack) > $context*2) {
-			$str .= '...';
-		}
-
-		return $str;
-	}
-
-	$start_pos = $pos - $context;
-
-	if ($start_pos < 0) {
-		$start_pos = 0;
-	}
-
-	// get string from -context to +context
-	$matched = substr($haystack, $start_pos, $context*2);
-
-	// add elipses to front.
-	if ($start_pos > 0) {
-		$matched = "...$matched";
-	}
-
-	// add elipses to end.
-	if ($pos + strlen($needle) + $context*2 < strlen($haystack)) {
-		$matched = "$matched...";
-	}
-
-	// surround if needed
-	// @todo would getting each position of the match then
-	// inserting manually based on the position be faster than preg_replace()?
-	if ($before || $after) {
-		$matched = str_ireplace($needle, $before . $needle . $after, $matched);
-		//$matched = mb_ereg_replace("")
-		// insert before
-	}
-
-	return $matched;
+	return $words;
 }
 
 
@@ -498,7 +372,7 @@ function search_get_listing_html($entities, $count, $params) {
  * @param array $params Original search params
  * @return str
  */
-function search_get_where_sql($table, $fields, $params) {
+function search_get_where_sql($table, $fields, $params, $use_fulltext = TRUE) {
 	global $CONFIG;
 	$query = $params['query'];
 
@@ -507,47 +381,47 @@ function search_get_where_sql($table, $fields, $params) {
 		$fields[$i] = "$table.$field";
 	}
 
+	// if we're not using full text, rewrite the query for bool mode.
+	// exploiting a feature(ish) of bool mode where +-word is the same as -word
+	if (!$use_fulltext) {
+		$query = '+' . str_replace(' ', ' +', $query);
+	}
+
 	// if query is shorter than the min for fts words
 	// it's likely a single acronym or similar
 	// switch to literal mode
-	if (strlen($query) < $CONFIG->search_info['min_chars']) {
+	if (elgg_strlen($query) < $CONFIG->search_info['min_chars']) {
 		$likes = array();
 		$query = sanitise_string($query);
 		foreach ($fields as $field) {
 			$likes[] = "$field LIKE '%$query%'";
 		}
 		$likes_str = implode(' OR ', $likes);
-		//$where = "($table.guid = e.guid AND	($likes_str))";
 		$where = "($likes_str)";
 	} else {
 		// if using advanced or paired "s, switch into boolean mode
-		if ((isset($params['advanced_search']) && $params['advanced_search']) || substr_count($query, '"') >= 2 ) {
+		if (!$use_fulltext
+		|| (isset($params['advanced_search']) && $params['advanced_search'])
+		|| elgg_substr_count($query, '"') >= 2 ) {
 			$options = 'IN BOOLEAN MODE';
 		} else {
-			// natural language mode is default and this keyword isn't supported
-			// in < 5.1
+			// natural language mode is default and this keyword isn't supported in < 5.1
 			//$options = 'IN NATURAL LANGUAGE MODE';
 			$options = '';
 		}
 
 		// if short query, use query expansion.
-		if (strlen($query) < 6) {
+		// @todo doesn't seem to be working well.
+		if (elgg_strlen($query) < 5) {
 			//$options .= ' WITH QUERY EXPANSION';
 		}
 		$query = sanitise_string($query);
 
-		// if query is shorter than the ft_min_word_len switch to literal mode.
 		$fields_str = implode(',', $fields);
-		//$where = "($table.guid = e.guid AND (MATCH ($fields_str) AGAINST ('$query' $options)))";
 		$where = "(MATCH ($fields_str) AGAINST ('$query' $options))";
 	}
 
 	return $where;
-}
-
-function search_get_query_where_sql($table, $query) {
-	// if there are multiple "s or 's it's a literal string.
-
 }
 
 /** Register init system event **/

@@ -229,7 +229,10 @@ function search_comments_hook($hook, $type, $value, $params) {
 	);
 
 	$fields = array('string');
-	$search_where = search_get_where_sql('msv', $fields, $params);
+
+	// force IN BOOLEAN MODE since fulltext isn't
+	// available on metastrings (and boolean mode doesn't need it)
+	$search_where = search_get_where_sql('msv', $fields, $params, FALSE);
 
 	$e_access = get_access_sql_suffix('e');
 	$a_access = get_access_sql_suffix('a');
@@ -245,17 +248,44 @@ function search_comments_hook($hook, $type, $value, $params) {
 
 		LIMIT {$params['offset']}, {$params['limit']}
 		";
+
 	$comments = get_data($q);
+
+//elgg_get_entities()
+	$q = "SELECT count(DISTINCT a.id) as total FROM {$CONFIG->dbprefix}annotations a
+		JOIN {$CONFIG->dbprefix}metastrings msn ON a.name_id = msn.id
+		JOIN {$CONFIG->dbprefix}metastrings msv ON a.value_id = msv.id
+		JOIN {$CONFIG->dbprefix}entities e ON a.entity_guid = e.guid
+		WHERE msn.string IN ('generic_comment', 'group_topic_post')
+			AND ($search_where)
+			AND $e_access
+			AND $a_access
+		";
+
+	$result = get_data($q);
+	$count = $result[0]->total;
+	// @todo if plugins are disabled causing subtypes
+	// to be invalid and there are comments on entities of those subtypes,
+	// the counts will be wrong here and results might not show up correctly,
+	// especially on the search landing page, which only pulls out two results.
+
+	// probably better to check against valid subtypes than to do what I'm doing.
 
 	// need to return actual entities
 	// add the volatile data for why these entities have been returned.
 	$entities = array();
 	foreach ($comments as $comment) {
-		$tags = implode(',', $entity->tags);
-		if (!$entity = get_entity($comment->entity_guid)) {
-			continue;
+		$entity = get_entity($comment->entity_guid);
+
+		// hic sunt dracones
+		if (!$entity) {
+			//continue;
+			$entity = new ElggObject();
+			$entity->setVolatileData('search_unavailable_entity', TRUE);
 		}
+
 		$comment_str = search_get_highlighted_relevant_substrings($comment->comment, $query);
+		$entity->setVolatileData('search_match_annotation_id', $comment->id);
 		$entity->setVolatileData('search_matched_comment', $comment_str);
 		$entity->setVolatileData('search_matched_comment_owner_guid', $comment->owner_guid);
 		$entity->setVolatileData('search_matched_comment_time_created', $comment->time_created);
@@ -264,7 +294,7 @@ function search_comments_hook($hook, $type, $value, $params) {
 
 	return array(
 		'entities' => $entities,
-		'count' => count($entities),
+		'count' => $count,
 	);
 }
 

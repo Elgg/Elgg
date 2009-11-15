@@ -38,7 +38,6 @@ margin: 6px;
 	background-color: #99FF99;
 }
 
-
 .searchTitle {
 	text-decoration: underline;
 }
@@ -91,7 +90,7 @@ margin: 6px;
 }
 
 /* override the entity container piece */
-.search_listing .entity_listing {
+.search_listing .search_listing {
 	-webkit-border-radius: 0px;
 	-moz-border-radius: 0px;
 	background: transparent;
