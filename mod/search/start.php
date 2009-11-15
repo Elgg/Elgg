@@ -298,7 +298,7 @@ function search_remove_ignored_words($query, $format = 'array') {
 
 	$min_chars = $CONFIG->search_info['min_chars'];
 	// if > ft_min_word we're not running in literal mode.
-	if ($query >= $min_chars) {
+	if (elgg_strlen($query) >= $min_chars) {
 		// clean out any words that are ignored by mysql
 		foreach ($words as $i => $word) {
 			if (elgg_strlen($word) < $min_chars) {
