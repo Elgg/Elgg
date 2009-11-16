@@ -10,6 +10,7 @@
  * @link http://elgg.org/
  */
 
+define('INSTALLING', TRUE);
 elgg_set_viewtype('failsafe'); // Set failsafe again incase we get an exception thrown
 
 if (is_installed()) {

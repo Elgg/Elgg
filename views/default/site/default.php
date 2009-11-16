@@ -9,10 +9,11 @@
  */
 
 // sites information (including plugin settings) shouldn't be shown.
-// there's not a real reason to display a site object
-// unless specifically overriden with a subtype view.
-if ($site = $vars['entity']->url) {
-	forward($site);
-} else {
-	forward();
+// this view is required for pinging home during install.
+if (!defined('INSTALLING')) {
+	if ($site = $vars['entity']->url) {
+		forward($site);
+	} else {
+		forward();
+	}
 }
