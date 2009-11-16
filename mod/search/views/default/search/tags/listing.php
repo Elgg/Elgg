@@ -9,7 +9,6 @@
  */
 ?>
 
-<div class="search_listing">
 
 <?php
 $entities = $vars['entities'];
@@ -22,7 +21,7 @@ if (!is_array($vars['entities']) || !count($vars['entities'])) {
 $title_str = elgg_echo("item:{$vars['params']['type']}:{$vars['params']['subtype']}");
 $body = elgg_view_title(elgg_echo('tags'));
 
-echo elgg_view('page_elements/contentwrapper', array('body' => $body));
+//echo elgg_view('page_elements/contentwrapper', array('body' => $body));
 
 foreach ($entities as $entity) {
 	if ($owner = $entity->getOwnerEntity()) {
@@ -40,16 +39,7 @@ foreach ($entities as $entity) {
 	$tu = $entity->time_updated;
 	$time = friendly_time(($tu > $tc) ? $tu : $tc);
 
-	echo <<<___END
-<span class="searchListing">
-	<h3 class="searchTitle">$title</h3>
-	<span class="searchDetails">
-		$entity_html
-		$tags
-	</span>
-</span>
-___END;
+	$body .= $entity_html;
 }
-
+echo $body;
 ?>
-</div>

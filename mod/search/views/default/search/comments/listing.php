@@ -92,15 +92,16 @@ foreach ($vars['entities'] as $entity) {
 	$time = friendly_time($tc);
 
 	$body .= <<<___END
-<span class="searchListing">
-	<h3 class="searchTitle">$title</h3>
-	<span class="searchDetails">
-		<span class="searchDescription">$description</span><br />
-		$icon $time - $more_link</a>
-	</span>
-</span>
+	<div class="search_listing">
+		<div class="search_listing_icon">$icon</div>
+		<div class="search_listing_info">
+			<p class="ItemTitle">$title</p>$description
+			<p class="ItemTimestamp">$time - $more_link</p>
+		</div>
+	</div>
 ___END;
 }
 
-$body .= $nav;
-echo elgg_view('page_elements/contentwrapper', array('body' => $body));
+echo $body;
+echo $nav;
+//echo elgg_view('page_elements/contentwrapper', array('body' => $body));
