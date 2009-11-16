@@ -61,7 +61,7 @@ if ($more) {
 }
 
 echo $nav;
-$body = elgg_view_title($title_str);
+$body = elgg_view_title($type_str);
 
 foreach ($entities as $entity) {
 	if ($owner = $entity->getOwnerEntity()) {
