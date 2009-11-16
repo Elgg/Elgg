@@ -55,7 +55,7 @@ $more = ($more_check > 0) ? $more_check : 0;
 if ($more) {
 	$title_key = ($more == 1) ? 'comment' : 'comments';
 	$more_str = sprintf(elgg_echo('search:more'), $count, $type_str);
-	$more_link = "<a href=\"$url\">$more_str</a>";
+	$more_link = "<div class='search_listing'><a href=\"$url\">$more_str</a></div>";
 } else {
 	$more_link = '';
 }
@@ -83,11 +83,11 @@ foreach ($entities as $entity) {
 		<div class="search_listing_icon">$icon</div>
 		<div class="search_listing_info">
 			<p class="ItemTitle">$title</p>$description
-			<p class="ItemTimestamp">$time - $more_link</p>
+			<p class="ItemTimestamp">$time</p>
 		</div>
 	</div>
 ___END;
 }
 echo $body;
-//echo elgg_view('page_elements/contentwrapper', array('body' => $body));
+echo $more_link;
 echo $nav;
