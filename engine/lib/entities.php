@@ -1756,12 +1756,12 @@ function elgg_get_entities(array $options = array()) {
 	// Add access controls
 	$query .= get_access_sql_suffix('e');
 	if (!$options['count']) {
-		if ($group_by = sanitise_string($options['group_by'])) {
-			$query .= " GROUP BY $group_by";
+		if ($options['group_by'] = sanitise_string($options['group_by'])) {
+			$query .= " GROUP BY {$options['group_by']}";
 		}
 
-		if ($order_by = sanitise_string($options['order_by'])) {
-			$query .= " ORDER BY $order_by";
+		if ($options['order_by'] = sanitise_string($options['order_by'])) {
+			$query .= " ORDER BY {$options['order_by']}";
 		}
 
 		if ($options['limit']) {
