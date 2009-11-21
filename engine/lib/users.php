@@ -676,7 +676,7 @@ function list_user_objects($user_guid, $subtype = "", $limit = 10, $fullview = t
  * @return false|array An array of ElggObjects or false, depending on success
  */
 function get_user_friends_objects($user_guid, $subtype = "", $limit = 10, $offset = 0) {
-	if ($friends = get_user_friends($user_guid, $subtype, 999999, 0)) {
+	if ($friends = get_user_friends($user_guid, "", 999999, 0)) {
 		$friendguids = array();
 		foreach($friends as $friend) {
 			$friendguids[] = $friend->getGUID();
@@ -694,7 +694,7 @@ function get_user_friends_objects($user_guid, $subtype = "", $limit = 10, $offse
  * @return int The number of objects
  */
 function count_user_friends_objects($user_guid, $subtype = "") {
-	if ($friends = get_user_friends($user_guid, $subtype, 999999, 0)) {
+	if ($friends = get_user_friends($user_guid, "", 999999, 0)) {
 		$friendguids = array();
 		foreach($friends as $friend) {
 			$friendguids[] = $friend->getGUID();
