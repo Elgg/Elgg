@@ -888,7 +888,7 @@ $count = false, $meta_array_operator = 'and') {
 
 	$options = array();
 
-	$options['name_value_pairs'] = $meta_array;
+	$options['metadata_name_value_pairs'] = $meta_array;
 
 	if ($entity_type) {
 		$options['types'] = $entity_type;
@@ -922,7 +922,7 @@ $count = false, $meta_array_operator = 'and') {
 		$options['count'] = $count;
 	}
 
-	$options['name_value_pairs_operator'] = $meta_array_operator;
+	$options['metadata_name_value_pairs_operator'] = $meta_array_operator;
 
 	return elgg_get_entities_from_metadata($options);
 }
