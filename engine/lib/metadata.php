@@ -809,7 +809,7 @@ $count = FALSE, $case_sensitive = TRUE) {
 	}
 
 	if ($owner_guid) {
-		$options['owner'] = $owner_guid;
+		$options['owner_guid'] = $owner_guid;
 	}
 
 	if ($limit) {
@@ -899,7 +899,7 @@ $count = false, $meta_array_operator = 'and') {
 	}
 
 	if ($owner_guid) {
-		$options['owner'] = $owner_guid;
+		$options['owner_guid'] = $owner_guid;
 	}
 
 	if ($limit) {

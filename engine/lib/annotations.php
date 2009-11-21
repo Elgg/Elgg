@@ -713,7 +713,7 @@ function get_entities_from_annotations($entity_type = "", $entity_subtype = "", 
 	}
 
 	if ($owner_guid) {
-		$options['owner'] = $owner_guid;
+		$options['owner_guid'] = $owner_guid;
 	}
 
 	if ($limit) {

@@ -613,7 +613,7 @@ $count = false, $site_guid = 0) {
 	}
 
 	if ($owner_guid) {
-		$options['owner'] = $owner_guid;
+		$options['owner_guid'] = $owner_guid;
 	}
 
 	if ($limit) {
@@ -824,7 +824,7 @@ function get_entities_from_relationships_and_meta($relationship, $relationship_g
 	}
 
 	if ($owner_guid) {
-		$options['owner'] = $owner_guid;
+		$options['owner_guid'] = $owner_guid;
 	}
 
 	if ($limit) {
