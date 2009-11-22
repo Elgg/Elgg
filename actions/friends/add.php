@@ -33,5 +33,5 @@ if (!$errors){
 	system_message(sprintf(elgg_echo("friends:add:successful"),$friend->name));
 }
 
-// Forward to the user friends page
-forward("pg/friends/" . $_SESSION['user']->username . "/");
+// Forward back to the page you friended the user on
+forward($_SERVER['HTTP_REFERER']);
