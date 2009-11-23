@@ -1296,6 +1296,57 @@ function file_set_page_owner($file) {
 	}
 }
 
+/**
+ * Recursively delete a directory
+ *
+ * @param str $directory
+ */
+function delete_directory($directory) {
+	// sanity check: must be a directory
+	if (!$handle = opendir($directory)) {
+		return FALSE;
+	}
+	
+	// loop through all files
+	while (($file = readdir($handle)) !== FALSE) {
+		if (in_array($file, array('.', '..'))) {
+			continue;
+		}
+		
+		$path = "$directory/$file";
+		if (is_dir($path)) {
+			// recurse down through directory
+			if (!delete_directory($path)) {
+				return FALSE;
+			}
+		} else {
+			// delete file
+			unlink($path);
+		}
+	}
+	
+	// remove empty directory
+	closedir($handle);
+	return rmdir($directory);
+}
+
+/**
+ * Removes all user files
+ *
+ * @param ElggUser $user
+ * @return void
+ */
+function clear_user_files($user) {
+	global $CONFIG;
+	
+	$time_created = date('Y/m/d', $user->time_created);
+	$file_path = "$CONFIG->dataroot$time_created/$user->guid";
+	if (file_exists($file_path)) {
+		delete_directory($file_path);
+	}
+}
+
+
 /// Variable holding the default datastore
 $DEFAULT_FILE_STORE = NULL;
 

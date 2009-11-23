@@ -156,6 +156,7 @@ class ElggUser extends ElggEntity
 		// Delete owned data
 		clear_annotations_by_owner($this->guid);
 		clear_metadata_by_owner($this->guid);
+		clear_user_files($this);
 
 		// Delete entity
 		return parent::delete();

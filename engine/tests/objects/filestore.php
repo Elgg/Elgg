@@ -69,18 +69,23 @@ class ElggCoreFilestoreTest extends ElggCoreUnitTest {
 		$user = $this->createTestUser();
 		$created = date('Y/m/d', $user->time_created);
 		
-		// setup a test file; no need to save
+		// setup a test file
 		$file = new ElggFile();
 		$file->owner_guid = $user->guid;
 		$file->setFilename('testing/filestore.txt');
+		$file->open('write');
+		$file->write('Testing!');
+		$this->assertTrue($file->close());
 		
 		// ensure filename and path is expected
 		$filename = $file->getFilenameOnFilestore($file);
 		$filepath = "$CONFIG->dataroot$created/$user->guid/testing/filestore.txt";
 		$this->assertIdentical($filename, $filepath);
+		$this->assertTrue(file_exists($filepath));
 		
-		// clean up user
+		// ensure file removed on user delete
 		$user->delete();
+		$this->assertFalse(file_exists($filepath));
 	}
 
 
