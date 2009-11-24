@@ -143,12 +143,9 @@ abstract class ElggEntity implements
 
 		// No, so see if its in the meta data for this entity
 		$meta = $this->getMetaData($name);
-		if ($meta) {
-			return $meta;
-		}
-
-		// Can't find it, so return null
-		return null;
+		
+		// getMetaData returns NULL if $name is not found
+		return $meta;
 	}
 
 	/**
