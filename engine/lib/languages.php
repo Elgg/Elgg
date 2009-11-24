@@ -43,6 +43,7 @@ function add_translation($country_code, $language_array) {
 /**
  * Detect the current language being used by the current site or logged in user.
  *
+ * @return string The language code for the site/user or "en" if not set
  */
 function get_current_language() {
 	global $CONFIG;
@@ -59,9 +60,7 @@ function get_current_language() {
 /**
  * Gets the current language in use by the system or user.
  *
- * [Marcus Povey 20090216: Not sure why this func is necessary.]
- *
- * @return string The language code (eg "en")
+ * @return string The language code (eg "en") or false if not set
  */
 function get_language() {
 	global $CONFIG;
@@ -88,19 +87,20 @@ function get_language() {
  * Given a message shortcode, returns an appropriately translated full-text string
  *
  * @param string $message_key The short message code
- * @param string $language Optionally, the standard language code (defaults to the site default, then English)
- * @return string Either the translated string, or the original English string, or an empty string
+ * @param string $language Optionally, the standard language code (defaults to site/user default, then English)
+ * @return string Either the translated string or the original English string
  */
 function elgg_echo($message_key, $language = "") {
 	global $CONFIG;
 
 	static $CURRENT_LANGUAGE;
-	if ((!$CURRENT_LANGUAGE) && (!$language)) {
-		$CURRENT_LANGUAGE = $language = get_language();
-	} else {
+	if (!$CURRENT_LANGUAGE) {
+		$CURRENT_LANGUAGE = get_language();
+	}
+	if (!$language) {
 		$language = $CURRENT_LANGUAGE;
 	}
-
+	
 	if (isset($CONFIG->translations[$language][$message_key])) {
 		return $CONFIG->translations[$language][$message_key];
 	} else if (isset($CONFIG->translations["en"][$message_key])) {
