@@ -640,7 +640,7 @@ function get_user_objects($user_guid, $subtype = "", $limit = 10, $offset = 0, $
  * @param int $timeupper The latest time the entity can have been created. Default: all
  * @return int The number of objects the user owns (of this subtype)
  */
-function count_user_objects($user_guid, $subtype = "", $timelower, $timeupper) {
+function count_user_objects($user_guid, $subtype = "", $timelower = 0, $timeupper = 0) {
 	$total = get_entities('object', $subtype, $user_guid, "time_created desc", null, null, true, 0, $user_guid,$timelower,$timeupper);
 	return $total;
 }
@@ -654,6 +654,8 @@ function count_user_objects($user_guid, $subtype = "", $timelower, $timeupper) {
  * @param string $subtype The object subtype
  * @param int $limit The number of entities to display on a page
  * @param true|false $fullview Whether or not to display the full view (default: true)
+ * @param true|false $viewtypetoggle Whether or not to allow gallery view (default: true)
+ * @param true|false $pagination Whether to display pagination (default: true)
  * @param int $timelower The earliest time the entity can have been created. Default: all
  * @param int $timeupper The latest time the entity can have been created. Default: all
  * @return string The list in a form suitable to display
@@ -674,15 +676,17 @@ function list_user_objects($user_guid, $subtype = "", $limit = 10, $fullview = t
  * @param string $subtype Optionally, the subtype of objects
  * @param int $limit The number of results to return (default 10)
  * @param int $offset Indexing offset, if any
+ * @param int $timelower The earliest time the entity can have been created. Default: all
+ * @param int $timeupper The latest time the entity can have been created. Default: all
  * @return false|array An array of ElggObjects or false, depending on success
  */
-function get_user_friends_objects($user_guid, $subtype = "", $limit = 10, $offset = 0) {
+function get_user_friends_objects($user_guid, $subtype = "", $limit = 10, $offset = 0, $timelower = 0, $timeupper = 0) {
 	if ($friends = get_user_friends($user_guid, "", 999999, 0)) {
 		$friendguids = array();
 		foreach($friends as $friend) {
 			$friendguids[] = $friend->getGUID();
 		}
-		return get_entities('object',$subtype,$friendguids, "time_created desc", $limit, $offset, false, 0, $friendguids);
+		return get_entities('object',$subtype,$friendguids, "time_created desc", $limit, $offset, false, 0, $friendguids, $timelower, $timeupper);
 	}
 	return false;
 }
@@ -692,15 +696,17 @@ function get_user_friends_objects($user_guid, $subtype = "", $limit = 10, $offse
  *
  * @param int $user_guid The GUID of the user to get the friends of
  * @param string $subtype Optionally, the subtype of objects
+ * @param int $timelower The earliest time the entity can have been created. Default: all
+ * @param int $timeupper The latest time the entity can have been created. Default: all
  * @return int The number of objects
  */
-function count_user_friends_objects($user_guid, $subtype = "") {
+function count_user_friends_objects($user_guid, $subtype = "", $timelower = 0, $timeupper = 0) {
 	if ($friends = get_user_friends($user_guid, "", 999999, 0)) {
 		$friendguids = array();
 		foreach($friends as $friend) {
 			$friendguids[] = $friend->getGUID();
 		}
-		return get_entities('object',$subtype,$friendguids, "time_created desc", $limit, $offset, true, 0, $friendguids);
+		return get_entities('object',$subtype,$friendguids, "time_created desc", null, null, true, 0, $friendguids, $timelower, $timeupper);
 	}
 	return 0;
 }
@@ -715,13 +721,16 @@ function count_user_friends_objects($user_guid, $subtype = "") {
  * @param int $limit The number of entities to display on a page
  * @param true|false $fullview Whether or not to display the full view (default: true)
  * @param true|false $viewtypetoggle Whether or not to allow you to flip to gallery mode (default: true)
+ * @param true|false $pagination Whether to display pagination (default: true)
+ * @param int $timelower The earliest time the entity can have been created. Default: all
+ * @param int $timeupper The latest time the entity can have been created. Default: all
  * @return string The list in a form suitable to display
  */
-function list_user_friends_objects($user_guid, $subtype = "", $limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true) {
+function list_user_friends_objects($user_guid, $subtype = "", $limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
 	$offset = (int) get_input('offset');
 	$limit = (int) $limit;
-	$count = (int) count_user_friends_objects($user_guid, $subtype);
-	$entities = get_user_friends_objects($user_guid, $subtype, $limit, $offset);
+	$count = (int) count_user_friends_objects($user_guid, $subtype, $timelower, $timeupper);
+	$entities = get_user_friends_objects($user_guid, $subtype, $limit, $offset, $timelower, $timeupper);
 
 	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle, $pagination);
 }
@@ -735,7 +744,6 @@ function list_user_friends_objects($user_guid, $subtype = "", $limit = 10, $full
  * @param int $limit The number of results to return (default 10)
  * @param int $offset Indexing offset, if any
  * @return false|array An array of ElggObjects or false, depending on success
- * @return unknown
  */
 function get_user_objects_by_metadata($user_guid, $subtype = "", $metadata = array(), $limit = 0, $offset = 0) {
 	return get_entities_from_metadata_multi($metadata,"object",$subtype,$user_guid,$limit,$offset);
