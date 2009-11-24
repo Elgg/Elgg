@@ -2665,7 +2665,7 @@ function can_edit_entity($entity_guid, $user_guid = 0) {
 		$return = false;
 
 		// Test user if possible - should default to false unless a plugin hook says otherwise
-		if (!is_null($user)) {
+		if ($user) {
 			if ($entity->getOwner() == $user->getGUID()) {
 				$return = true;
 			}
