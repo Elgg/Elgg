@@ -25,6 +25,14 @@ if (array_key_exists('type', $vars['params']) && array_key_exists('subtype', $va
 	$type_str = elgg_echo('search:unknown_entity');
 }
 
+// allow overrides for titles
+$search_type_str = elgg_echo("search_types:{$vars['params']['search_type']}");
+if (array_key_exists('search_type', $vars['params'])
+	&& $search_type_str != "search_types:{$vars['params']['search_type']}") {
+
+	$type_str = $search_type_str;
+}
+
 $query = htmlspecialchars(http_build_query(
 	array(
 		'q' => $vars['params']['query'],
@@ -73,6 +81,7 @@ foreach ($entities as $entity) {
 	}
 	$title = $entity->getVolatileData('search_matched_title');
 	$description = $entity->getVolatileData('search_matched_description');
+	$extra_info = $entity->getVolatileData('search_matched_extra');
 	$url = $entity->getURL();
 	$title = "<a href=\"$url\">$title</a>";
 	$tc = $entity->time_created;
@@ -84,7 +93,7 @@ foreach ($entities as $entity) {
 		<div class="search_listing_icon">$icon</div>
 		<div class="search_listing_info">
 			<p class="ItemTitle">$title</p>$description
-			<p class="ItemTimestamp">$time</p>
+			<p class="ItemTimestamp">$time $extra_info</p>
 		</div>
 	</div>
 ___END;

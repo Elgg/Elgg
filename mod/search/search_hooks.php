@@ -181,9 +181,17 @@ function search_tags_hook($hook, $type, $value, $params) {
 
 	// add the volatile data for why these entities have been returned.
 	foreach ($entities as $entity) {
-		$tags = implode(',', $entity->tags);
+		$tags = $entity->tags;
+
+		if (is_array($tags)) {
+			$tags = implode(', ', $entity->tags);
+		}
+
 		$tags_str = search_get_highlighted_relevant_substrings($tags, $params['query']);
-		$entity->setVolatileData('search_matched_tags', $tags_str);
+		$tags_str = '(' . elgg_echo('tags') . ": $tags_str)";
+		$entity->setVolatileData('search_matched_title', $entity->title);
+		$entity->setVolatileData('search_matched_description', $entity->description);
+		$entity->setVolatileData('search_matched_extra', $tags_str);
 	}
 
 	return array(
@@ -264,6 +272,11 @@ function search_comments_hook($hook, $type, $value, $params) {
 
 	$result = get_data($q);
 	$count = $result[0]->total;
+
+	if (!is_array($comments)) {
+		return FALSE;
+	}
+
 	// @todo if plugins are disabled causing subtypes
 	// to be invalid and there are comments on entities of those subtypes,
 	// the counts will be wrong here and results might not show up correctly,
