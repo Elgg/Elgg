@@ -66,6 +66,8 @@ $body = elgg_view_title($type_str);
 foreach ($entities as $entity) {
 	if ($owner = $entity->getOwnerEntity()) {
 		$icon = elgg_view('profile/icon', array('entity' => $owner));
+	} elseif ($entity instanceof ElggUser) {
+		$icon = elgg_view('profile/icon', array('entity' => $entity));
 	} else {
 		$icon = '';
 	}
