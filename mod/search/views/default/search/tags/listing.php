@@ -47,8 +47,7 @@ $body = elgg_view_title(elgg_echo('tags'));
 
 foreach ($entities as $entity) {
 	if ($owner = $entity->getOwnerEntity()) {
-		$owner_icon = $owner->getIcon('tiny');
-		$icon = "<img src=\"$owner_icon\" />";
+		$icon = elgg_view('profile/icon', array('entity' => $owner));
 	} else {
 		$icon = '';
 	}
