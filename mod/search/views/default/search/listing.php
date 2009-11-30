@@ -16,6 +16,31 @@ if (!is_array($vars['entities']) || !count($vars['entities'])) {
 	return FALSE;
 }
 
+$query = htmlspecialchars(http_build_query(
+	array(
+		'q' => $vars['params']['query'],
+		'entity_type' => $vars['params']['type'],
+		'entity_subtype' => $vars['params']['subtype'],
+		'limit' => get_input('limit', 10),
+		'offset' => get_input('offset', 0),
+		'search_type' => 'comments',
+	)
+));
+
+$url = "{$vars['url']}pg/search?$query";
+
+// get pagination
+if (array_key_exists('pagination', $vars) && $vars['pagination']) {
+	$nav .= elgg_view('navigation/pagination',array(
+		'baseurl' => $url,
+		'offset' => $vars['params']['offset'],
+		'count' => $vars['count'],
+		'limit' => $vars['params']['limit'],
+	));
+} else {
+	$nav = '';
+}
+
 // figure out what we're deal with.
 if (array_key_exists('type', $vars['params']) && array_key_exists('subtype', $vars['params'])) {
 	$type_str = elgg_echo("item:{$vars['params']['type']}:{$vars['params']['subtype']}");
