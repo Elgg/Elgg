@@ -41,12 +41,22 @@ if (array_key_exists('pagination', $vars) && $vars['pagination']) {
 	$nav = '';
 }
 
-// figure out what we're deal with.
+// figure out what we're dealing with.
+$type_str = NULL;
+
 if (array_key_exists('type', $vars['params']) && array_key_exists('subtype', $vars['params'])) {
-	$type_str = elgg_echo("item:{$vars['params']['type']}:{$vars['params']['subtype']}");
-} elseif (array_key_exists('type', $vars['params'])) {
+	$type_str_tmp = "item:{$vars['params']['type']}:{$vars['params']['subtype']}";
+	$type_str_echoed = elgg_echo($type_str_tmp);
+	if ($type_str_echoed != $type_str_tmp) {
+		$type_str = $type_str_echoed;
+	}
+}
+
+if (!$type_str && array_key_exists('type', $vars['params'])) {
 	$type_str = elgg_echo("item:{$vars['params']['type']}");
-} else {
+}
+
+if (!$type_str) {
 	$type_str = elgg_echo('search:unknown_entity');
 }
 
