@@ -876,8 +876,9 @@ function elgg_view_title($title, $submenu = false) {
  * @param string $label The human-readable label
  * @param string $link The URL of the submenu item
  * @param boolean $onclick Used to provide a JS popup to confirm delete
+ * @param mixed $selected BOOL to force on/off, NULL to allow auto selection
  */
-function add_submenu_item($label, $link, $group = 'a', $onclick = false) {
+function add_submenu_item($label, $link, $group = 'a', $onclick = false, $selected = NULL) {
 	global $CONFIG;
 
 	if (!isset($CONFIG->submenu)) {
@@ -891,12 +892,15 @@ function add_submenu_item($label, $link, $group = 'a', $onclick = false) {
 	$item->value = $link;
 	$item->name = $label;
 	$item->onclick = $onclick;
+	$item->selected = $selected;
 	$CONFIG->submenu[$group][] = $item;
 }
 
 /**
  * Gets a formatted list of submenu items
  *
+ * @params bool preselected Selected menu item
+ * @params bool preselectedgroup Selected menu item group
  * @return string List of items
  */
 function get_submenu() {
@@ -904,47 +908,68 @@ function get_submenu() {
 	global $CONFIG;
 
 	if (isset($CONFIG->submenu) && $submenu_register = $CONFIG->submenu) {
-		$preselected = false;
-		$comparevals = array();
-		$maxcompareval = 999999;
-
-		//asort($submenu_register);
 		ksort($submenu_register);
+		$selected_key = NULL;
+		$selected_group = NULL;
 
 		foreach($submenu_register as $groupname => $submenu_register_group) {
 			$submenu = "";
 
 			foreach($submenu_register_group as $key => $item) {
-				if ($preselected === false) {
-					if (substr_count($item->value, $_SERVER['REQUEST_URI'])) {
-						$preselected = $key;
-						$preselectedgroup = $groupname;
-						$selected = true;
+				$selected = false;
+				// figure out the selected item if required
+				// if null, try to figure out what should be selected.
+				// warning: Fuzzy logic.
+				if (!$selected_key && !$selected_group) {
+					if ($item->selected === NULL) {
+						$uri_info = parse_url($_SERVER['REQUEST_URI']);
+						$item_info = parse_url($item->value);
+
+						// don't want to mangle already encoded queries but want to
+						// make sure we're comparing encoded to encoded.
+						// for the record, queries *should* be encoded
+						$uri_info['query'] = html_entity_decode($uri_info['query']);
+						$item_info['query'] = html_entity_decode($item_info['query']);
+
+						parse_str($uri_info['query'], $uri_params);
+						parse_str($item_info['query'], $item_params);
+
+						// only if we're on the same path
+						// can't check server because sometimes it's not set in REQUEST_URI
+						if ($uri_info['path'] == $item_info['path']) {
+							if ($uri_info['query'] == $item_info['query']) {
+								//var_dump("Good on 1");
+								$selected_key = $key;
+								$selected_group = $groupname;
+								$selected = TRUE;
+							} elseif (!count(array_diff($uri_params, $item_params))) {
+								$selected_key = $key;
+								$selected_group = $groupname;
+								$selected = TRUE;
+							}
+						}
+					// if TRUE or FALSE, set selected to this item.
+					// Group doesn't seem to have anything to do with selected?
 					} else {
-						$selected = false;
-					}
-				} else {
-					if ($key == $preselected && $groupname == $preselectedgroup) {
-						$selected = true;
-					} else {
-						$selected = false;
+						$selected = $item->selected;
+						$selected_key = $key;
+						$selected_group = $groupname;
 					}
 				}
 
-				$submenu .= elgg_view('canvas_header/submenu_template',
-								array(
-										'href' => $item->value,
-										'label' => $item->name,
-										'onclick' => $item->onclick,
-										'selected' => $selected,
-									));
+				$submenu .= elgg_view('canvas_header/submenu_template', array(
+						'href' => $item->value,
+						'label' => $item->name,
+						'onclick' => $item->onclick,
+						'selected' => $selected,
+					));
 
 			}
 
 			$submenu_total .= elgg_view('canvas_header/submenu_group', array(
-										'submenu' => $submenu,
-										'group_name' => $groupname
-									));
+					'submenu' => $submenu,
+					'group_name' => $groupname
+				));
 
 		}
 	}
