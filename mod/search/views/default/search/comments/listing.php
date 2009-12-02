@@ -55,10 +55,10 @@ echo $nav;
 $body = elgg_view_title($title_str);
 
 foreach ($vars['entities'] as $entity) {
-	if ($owner = $entity->getOwnerEntity()) {
-		$icon = elgg_view('profile/icon', array('entity' => $owner));
-	} elseif ($entity instanceof ElggUser) {
-		$icon = elgg_view('profile/icon', array('entity' => $entity));
+	$owner = get_entity($entity->getVolatileData('search_matched_comment_owner_guid'));
+
+	if ($owner instanceof ElggUser) {
+		$icon = elgg_view('profile/icon', array('entity' => $owner, 'size' => 'small'));
 	} else {
 		$icon = '';
 	}
