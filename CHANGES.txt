@@ -15,7 +15,6 @@ http://code.elgg.org/elgg/.....
   * Invalid views now default to 'default' view. #1161.
   * Metadata cache now handles a 0 string. #1227
   * ElggPlugin get() now works with 0. #1286
-  * User data storage based on GUID instead of username.
 
  API changes:
   * New plugin hook system:unit_test for adding files to unit tests.
