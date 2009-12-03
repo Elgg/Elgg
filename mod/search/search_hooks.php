@@ -189,8 +189,25 @@ function search_tags_hook($hook, $type, $value, $params) {
 
 		$tags_str = search_get_highlighted_relevant_substrings($tags, $params['query']);
 		$tags_str = '(' . elgg_echo('tags') . ": $tags_str)";
-		$entity->setVolatileData('search_matched_title', $entity->title);
-		$entity->setVolatileData('search_matched_description', $entity->description);
+
+		// Nick told me my idea was dirty, so I'm hard coding the numbers.
+		$title_tmp = $entity->title;
+		if (elgg_strlen($title_tmp) > 297) {
+			$title_str = elgg_substr($title_tmp, 0, 297) . '...';
+		} else {
+			$title_str = $title_tmp;
+		}
+
+		$desc_tmp = $entity->description;
+		if (elgg_strlen($desc_tmp) > 297) {
+			$desc_str = elgg_substr($desc_tmp, 0, 297) . '...';
+		} else {
+			$desc_str = $desc_tmp;
+		}
+
+		$desc_str = search_get_highlighted_relevant_substrings($tags, $entity->description);
+		$entity->setVolatileData('search_matched_title', $title_str);
+		$entity->setVolatileData('search_matched_description', $desc_str);
 		$entity->setVolatileData('search_matched_extra', $tags_str);
 	}
 
