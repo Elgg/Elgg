@@ -934,6 +934,9 @@ function get_submenu() {
 						parse_str($uri_info['query'], $uri_params);
 						parse_str($item_info['query'], $item_params);
 
+						$uri_info['path'] = trim($uri_info['path'], '/');
+						$item_info['path'] = trim($item_info['path'], '/');
+
 						// only if we're on the same path
 						// can't check server because sometimes it's not set in REQUEST_URI
 						if ($uri_info['path'] == $item_info['path']) {
