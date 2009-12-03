@@ -650,16 +650,14 @@ function serialise_parameters($method, $parameters) {
 				$serialised_parameters .= "," . (float)trim($parameters[$key]); 
 				break;
 			case 'array':
-				// we can handle an array of strings, maybe ints, definitely not booleans or other arrays										
-				if (!is_array($parameters[$key]))
-				{
-					throw APIException(sprintf(elgg_echo('APIException:ParameterNotArray'), $key));
+				// we can handle an array of strings, maybe ints, definitely not booleans or other arrays
+				if (!is_array($parameters[$key])) {
+					throw new APIException(sprintf(elgg_echo('APIException:ParameterNotArray'), $key));
 				}
-									
+				
 				$array = "array(";
 				
-				foreach ($parameters[$key] as $k => $v)
-				{
+				foreach ($parameters[$key] as $k => $v) {
 					$k = sanitise_string($k);
 					$v = sanitise_string($v);
 									
