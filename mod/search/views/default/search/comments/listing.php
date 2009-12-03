@@ -51,7 +51,6 @@ if ($more) {
 	$more_link = '';
 }
 
-echo $nav;
 $body = elgg_view_title($title_str);
 
 foreach ($vars['entities'] as $entity) {
