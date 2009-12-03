@@ -188,14 +188,14 @@ function search_tags_hook($hook, $type, $value, $params) {
 		}
 
 		// Nick told me my idea was dirty, so I'm hard coding the numbers.
-		$title_tmp = $entity->title;
+		$title_tmp = strip_tags($entity->title);
 		if (elgg_strlen($title_tmp) > 297) {
 			$title_str = elgg_substr($title_tmp, 0, 297) . '...';
 		} else {
 			$title_str = $title_tmp;
 		}
 
-		$desc_tmp = $entity->description;
+		$desc_tmp = strip_tags($entity->description);
 		if (elgg_strlen($desc_tmp) > 297) {
 			$desc_str = elgg_substr($desc_tmp, 0, 297) . '...';
 		} else {
