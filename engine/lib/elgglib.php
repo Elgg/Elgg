@@ -603,52 +603,38 @@ function elgg_view_tree($view_root, $viewtype = "") {
  *
  * Expects a view to exist called entity-type/subtype, or for the entity to have a parameter
  * 'view' which lists a different view to display.  In both cases, elgg_view will be called with
- * array('entity' => $entity) as its parameters, and therefore this is what the view should expect
- * to receive.
+ * array('entity' => $entity, 'full' => $full) as its parameters, and therefore this is what 
+ * the view should expect to receive.
  *
  * @param ElggEntity $entity The entity to display
  * @param boolean $full Determines whether or not to display the full version of an object, or a smaller version for use in aggregators etc
  * @param boolean $bypass If set to true, elgg_view will bypass any specified alternative template handler; by default, it will hand off to this if requested (see set_template_handler)
  * @param boolean $debug If set to true, the viewer will complain if it can't find a view
- * @return string HTML (etc) to display
+ * @return string HTML to display or false 
  */
 function elgg_view_entity(ElggEntity $entity, $full = false, $bypass = true, $debug = false) {
 	global $autofeed;
 	$autofeed = true;
 
-	// No point continuing if entity is null.
+	// No point continuing if entity is null
 	if (!$entity) {
 		return '';
 	}
-
-	$view = $entity->view;
-	if (is_string($view)) {
-		return elgg_view($view,array('entity' => $entity), $bypass, $debug);
-	}
-
-	$classes = array(
-		'ElggUser' => 'user',
-		'ElggObject' => 'object',
-		'ElggSite' => 'site',
-		'ElggGroup' => 'group'
-	);
-
-	$entity_class = get_class($entity);
-
-	if (isset($classes[$entity_class])) {
-		$entity_type = $classes[$entity_class];
-	} else {
-		foreach($classes as $class => $type) {
-			if ($entity instanceof $class) {
-				$entity_type = $type;
-				break;
-			}
-		}
-	}
-
-	if (!isset($entity_class)) {
+	
+	if (!($entity instanceof ElggEntity)) {
 		return false;
 	}
+
+	// if this entity has a view defined, use it
+	$view = $entity->view;
+	if (is_string($view)) {
+		return elgg_view($view, 
+						array('entity' => $entity, 'full' => $full), 
+						$bypass, 
+						$debug);
+	}
+
+	$entity_type = $entity->getType();
 
 	$subtype = $entity->getSubtype();
 	if (empty($subtype)) {
@@ -805,26 +791,31 @@ function elgg_view_annotation_list($annotations, $count, $offset, $limit) {
 /**
  * Display a selective rendered list of annotations for a given entity.
  *
- * The list is produced as the result of the entity:annotate plugin hook and is designed to provide a
- * more generic framework to allow plugins to extend the generic display of entities with their own annotation
+ * The list is produced as the result of the entity:annotate plugin hook 
+ * and is designed to provide a more generic framework to allow plugins 
+ * to extend the generic display of entities with their own annotation
  * renderings.
  *
- * This is called automatically by the framework.
+ * This is called automatically by the framework from elgg_view_entity()
  *
  * @param ElggEntity $entity
  * @param bool $full
+ * @return string or false on failure
  */
 function elgg_view_entity_annotations(ElggEntity $entity, $full = true) {
-	$classes = array(
-		'ElggUser' => 'user',
-		'ElggObject' => 'object',
-		'ElggSite' => 'site',
-		'ElggGroup' => 'group'
-	);
 
-	$entity_class = get_class($entity);
+	// No point continuing if entity is null
+	if (!$entity) {
+		return false;
+	}
+	
+	if (!($entity instanceof ElggEntity)) {
+		return false;
+	}
+	
+	$entity_type = $entity->getType();
 
-	$annotations = trigger_plugin_hook('entity:annotate', $classes[$entity_class],
+	$annotations = trigger_plugin_hook('entity:annotate', $entity_type,
 		array(
 			'entity' => $entity,
 			'full' => $full,
