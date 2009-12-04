@@ -264,19 +264,19 @@ class ElggCoreServicesApiTest extends ElggCoreUnitTest {
 		$this->registerFunction(false, false, array('param1' => array('type' => 'array')));
 		$parameters = array('param1' => array('one', 'two'));
 		$s = serialise_parameters('test', $parameters);
-		$this->assertIdentical($s, "array('0'=>'one','1'=>'two')");
+		$this->assertIdentical($s, ",array('0'=>'one','1'=>'two')");
 
 		// associative array of strings
 		$this->registerFunction(false, false, array('param1' => array('type' => 'array')));
 		$parameters = array('param1' => array('first' => 'one', 'second' => 'two'));
 		$s = serialise_parameters('test', $parameters);
-		$this->assertIdentical($s, "array('first'=>'one','second'=>'two')");
+		$this->assertIdentical($s, ",array('first'=>'one','second'=>'two')");
 
 		// indexed array of strings
 		$this->registerFunction(false, false, array('param1' => array('type' => 'array')));
 		$parameters = array('param1' => array(1, 2));
 		$s = serialise_parameters('test', $parameters);
-		$this->assertIdentical($s, "array('0'=>'1','1'=>'2')");
+		$this->assertIdentical($s, ",array('0'=>'1','1'=>'2')");
 
 		// test unknown type
 		$this->registerFunction(false, false, array('param1' => array('type' => 'bad')));

@@ -667,6 +667,7 @@ function serialise_parameters($method, $parameters) {
 				$array = trim($array,",");
 								
 				$array .= ")";
+				$array = ",$array";
 							
 				$serialised_parameters .= $array;
 				break;
