@@ -532,7 +532,6 @@ function session_init($event, $object_type, $object) {
 			$_SESSION['user'] = $user;
 			$_SESSION['id'] = $user->getGUID();
 			$_SESSION['guid'] = $_SESSION['id'];
-			$_SESSION['code'] = $_COOKIE['elggperm'];
 		} else {
 			// user must have been deleted with a session active
 			unset($_SESSION['user']);
