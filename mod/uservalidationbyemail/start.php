@@ -43,7 +43,8 @@
 	{
 		global $CONFIG;
 		
-		return md5($user_guid . $email_address . $CONFIG->site->url); // Note I bind to site URL, this is important on multisite!
+		// Note I bind to site URL, this is important on multisite!
+		return md5($user_guid . $email_address . $CONFIG->site->url . get_site_secret()); 
 	}
 	
 	/**
