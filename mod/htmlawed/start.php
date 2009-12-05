@@ -22,7 +22,7 @@
 			'deny_attribute' => 'class',
 			'hook_tag' => 'htmlawed_hook',
 
-			'schemes' => '*:http,https,ftp,news,mailto,rtsp,teamspeak,gopher,mms,callto;'
+			'schemes' => '*:http,https,ftp,news,mailto,rtsp,teamspeak,gopher,mms,callto'
 				// apparent this doesn't work.
 				//. 'style:color,cursor,text-align,font-size,font-weight,font-style,border,margin,padding,float'
 		);
