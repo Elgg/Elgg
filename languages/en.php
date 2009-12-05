@@ -562,6 +562,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	'comments' => 'Comments',
 	'import' => 'Import',
 	'export' => 'Export',
+	'untitled' => 'Untitled',
 
 	'up' => 'Up',
 	'down' => 'Down',
