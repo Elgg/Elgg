@@ -716,6 +716,10 @@ function get_entities_from_annotations($entity_type = "", $entity_subtype = "", 
 		$options['owner_guid'] = $owner_guid;
 	}
 
+	if ($group_guid) {
+		$options['container_guid'] = $group_guid;
+	}
+	
 	if ($limit) {
 		$options['limit'] = $limit;
 	}
