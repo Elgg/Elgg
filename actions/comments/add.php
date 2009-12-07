@@ -15,6 +15,12 @@ action_gatekeeper();
 $entity_guid = (int) get_input('entity_guid');
 $comment_text = get_input('generic_comment');
 
+// make sure comment is not empty
+if (empty($comment_text)) {
+	register_error(elgg_echo("generic_comment:blank"));
+	forward($_SERVER['HTTP_REFERER']);
+}
+
 // Let's see if we can get an entity with the specified GUID
 if ($entity = get_entity($entity_guid)) {
 
