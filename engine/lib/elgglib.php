@@ -56,7 +56,8 @@ function current_page_url() {
 	if ((isset($url['pass'])) && ($url['pass'])) {
 		$page .= ":".$url['pass'];
 	}
-	if (($url['user']) || $url['pass']) {
+	if ((isset($url['user']) && $url['user']) || 
+		(isset($url['pass']) && $url['pass'])) {
 		$page .="@";
 	}
 
@@ -202,6 +203,7 @@ function elgg_view($view, $vars = "", $bypass = false, $debug = false, $viewtype
 		//= array_merge($vars, $_SESSION);
 		$vars += $_SESSION;
 	}
+
 	$vars['config'] = array();
 
 	if (!empty($CONFIG)) {
@@ -1771,7 +1773,7 @@ function __elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 
 		default:
 			global $CONFIG;
-			if (isset($CONFIG->debug)) {
+			if (isset($CONFIG->debug) && $CONFIG->debug === 'NOTICE') {
 				error_log("NOTICE: $error");
 			}
 	}
@@ -1783,7 +1785,8 @@ function __elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
  * Throws a message to the Elgg logger
  *
  * The Elgg log is currently implemented such that any messages sent at a level
- * greater than or equal to the debug setting will be dumped to the screen.
+ * greater than or equal to the debug setting will be sent to elgg_dump.
+ * The default location for elgg_dump is the screen except for notices.
  *
  * Note: No messages will be displayed unless debugging has been enabled.
  *
@@ -1802,20 +1805,20 @@ function elgg_log($message, $level='NOTICE') {
 		switch ($level) {
 			case 'ERROR':
 				// always report
-				elgg_dump("$level: $message", $to_screen);
+				elgg_dump("$level: $message", $to_screen, $level);
 				break;
 			case 'WARNING':
 			case 'DEBUG':
-				// report execept if user wants only errors
+				// report except if user wants only errors
 				if ($CONFIG->debug != 'ERROR') {
-					elgg_dump("$level: $message", $to_screen);
+					elgg_dump("$level: $message", $to_screen, $level);
 				}
 				break;
 			case 'NOTICE':
 			default:
 				// only report when lowest level is desired
 				if ($CONFIG->debug == 'NOTICE') {
-					elgg_dump("$level: $message", FALSE);
+					elgg_dump("$level: $message", FALSE, $level);
 				}
 				break;
 		}
@@ -1829,15 +1832,25 @@ function elgg_log($message, $level='NOTICE') {
 /**
  * Extremely generic var_dump-esque wrapper
  *
- * Immediately dumps the given $value to the screen as a human-readable string.
- * The $value can instead be written to the system log through the use of the
- * $to_screen flag.
+ * Immediately dumps the given $value as a human-readable string.
+ * The $value can instead be written to the screen or server log depending on
+ * the value of the $to_screen flag.
  *
  * @param mixed $value
  * @param bool $to_screen
+ * @param string $level 
  * @return void
  */
-function elgg_dump($value, $to_screen = TRUE) {
+function elgg_dump($value, $to_screen = TRUE, $level = 'NOTICE') {
+	
+	// plugin can return false to stop the default logging method
+	$params = array('level' => $level,
+					'msg' => $value,
+					'to_screen' => $to_screen);
+	if (!trigger_plugin_hook('debug', 'log', $params, true)) {
+		return;
+	}
+	
 	if ($to_screen == TRUE) {
 		echo '<pre>';
 		print_r($value);
@@ -1845,6 +1858,7 @@ function elgg_dump($value, $to_screen = TRUE) {
 	}
 	else
 	{
+		// this currently chokes on arrays and objects
 		error_log($value);
 	}
 }
