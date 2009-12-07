@@ -608,7 +608,7 @@ $count = false, $site_guid = 0) {
 		$options['types'] = $type;
 	}
 
-	if (subtype) {
+	if ($subtype) {
 		$options['subtypes'] = $subtype;
 	}
 
