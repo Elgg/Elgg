@@ -155,11 +155,8 @@ function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
 		}
 
 	} else {
-
 		$tmp_access_array = $access_array[$user_id];
 	}
-
-	$tmp_return = $access_array[$user_id];
 
 	return trigger_plugin_hook('access:collections:read','user',array('user_id' => $user_id, 'site_id' => $site_id),$tmp_access_array);
 }
