@@ -15,6 +15,14 @@
 global $START_MICROTIME;
 $START_MICROTIME = microtime(true);
 
+/*
+ * Create global CONFIG object
+ */
+global $CONFIG;
+if (!isset($CONFIG)) {
+	$CONFIG = new stdClass;
+}
+
 /**
  * Load important prerequisites
  */
