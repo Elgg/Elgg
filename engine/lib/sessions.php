@@ -92,6 +92,20 @@ class ElggSession implements ArrayAccess {
 			return true;
 		}
 	}
+	
+	
+	// Alias functions
+	function get($key) {
+		return $this->offsetGet($key);
+	}
+	
+	function set($key, $value) {
+		return $this->offsetSet($key, $value);
+	}
+	
+	function del($key) {
+		return $this->offsetUnset($key);
+	}
 }
 
 
