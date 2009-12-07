@@ -39,6 +39,8 @@ if (isset($vars['method'])) {
 	$method = 'POST';
 }
 
+$method = strtolower($method);
+
 ?>
 <form <?php if ($id) { ?>id="<?php echo $id; ?>" <?php } ?> <?php if ($name) { ?>name="<?php echo $name; ?>" <?php } ?> action="<?php echo $action; ?>" method="<?php echo $method; ?>" <?php if ($enctype!="") echo "enctype=\"$enctype\""; ?>>
 <?php echo $body; ?>

@@ -40,6 +40,8 @@ if (isset($vars['method'])) {
 	$method = 'POST';
 }
 
+$method = strtolower($method);
+
 // Generate a security header
 $security_header = "";
 if ($vars['disable_security']!=true) {

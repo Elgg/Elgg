@@ -21,7 +21,7 @@ if ($vars['settings.php']) {
 ?>
 <div>
 	<h2><?php echo elgg_echo('installation:settings:dbwizard:prompt'); ?></h2>
-	<form method="POST">
+	<form method="post">
 		<table cellpadding="0" cellspacing="10" style="background:#f1f1f1;">
 			<tr><td valign="top"><?php echo elgg_echo('installation:settings:dbwizard:label:user'); ?></td><td valign="top"> <input type="text" name="db_install_vars[CONFIG_DBUSER]" /></td></tr>
 			<tr><td valign="top"><?php echo elgg_echo('installation:settings:dbwizard:label:pass'); ?></td><td valign="top"> <input type="password" name="db_install_vars[CONFIG_DBPASS]" /></td></tr>
