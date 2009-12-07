@@ -12,7 +12,6 @@
 action_gatekeeper();
 
 // Get username and password
-
 $username = get_input('username');
 $password = get_input("password");
 $persistent = get_input("persistent", false);
@@ -28,9 +27,9 @@ if (!empty($username) && !empty($password)) {
 // Set the system_message as appropriate
 if ($result) {
 	system_message(elgg_echo('loginok'));
-	if ($_SESSION['last_forward_from']) {
+	if (isset($_SESSION['last_forward_from']) && $_SESSION['last_forward_from']) {
 		$forward_url = $_SESSION['last_forward_from'];
-		$_SESSION['last_forward_from'] = "";
+		unset($_SESSION['last_forward_from']);
 		forward($forward_url);
 	} else {
 		if ( (isadminloggedin()) && (!datalist_get('first_admin_login'))) {
