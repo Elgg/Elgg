@@ -28,6 +28,9 @@ $english = array(
 	'logoutok' => "You have been logged out.",
 	'logouterror' => "We couldn't log you out. Please try again.",
 
+	'loggedinrequired' => "You must be logged in to view that page.",
+	'adminrequired' => "You must be an administrator to view that page.",
+
 /**
  * Errors
  */
