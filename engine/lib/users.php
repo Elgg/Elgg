@@ -153,6 +153,16 @@ class ElggUser extends ElggEntity
 	 * @return bool
 	 */
 	public function delete() {
+		global $USERNAME_TO_GUID_MAP_CACHE, $CODE_TO_GUID_MAP_CACHE;
+		
+		// clear cache
+		if (isset($USERNAME_TO_GUID_MAP_CACHE[$this->username])) {
+			unset($USERNAME_TO_GUID_MAP_CACHE[$this->username]);
+		}
+		if (isset($CODE_TO_GUID_MAP_CACHE[$this->code])) {
+			unset($CODE_TO_GUID_MAP_CACHE[$this->code]);
+		}
+		
 		// Delete owned data
 		clear_annotations_by_owner($this->guid);
 		clear_metadata_by_owner($this->guid);

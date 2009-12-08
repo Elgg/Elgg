@@ -162,6 +162,20 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 		$this->assertFalse($this->fetchUser($guid));
 	}
 	
+	public function testElggUserNameCache() {
+		// Trac #1305
+		
+		// very unlikely a user would have this username
+		$name = (string)time();
+		$this->user->username = $name;
+		
+		$guid = $this->user->save();
+		
+		$user = get_user_by_username($name); 
+		$user->delete(); 
+		$user = get_user_by_username($name);
+		$this->assertFalse($user);
+	}
 	
 	protected function fetchUser($guid) {
 		global $CONFIG;

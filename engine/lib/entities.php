@@ -2399,13 +2399,18 @@ function enable_entity($guid) {
  * Note: this bypasses ownership of sub items.
  */
 function delete_entity($guid, $recursive = true) {
-	global $CONFIG;
+	global $CONFIG, $ENTITY_CACHE;
 
 	$guid = (int)$guid;
 	if ($entity = get_entity($guid)) {
 		if (trigger_elgg_event('delete', $entity->type, $entity)) {
 			if ($entity->canEdit()) {
 
+				// delete cache
+				if (isset($ENTITY_CACHE[$guid])) {
+					invalidate_cache_for_entity($guid);
+				}
+				
 				// Delete contained owned and otherwise releated objects (depth first)
 				if ($recursive) {
 					// Temporary token overriding access controls TODO: Do this better.
