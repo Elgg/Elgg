@@ -292,6 +292,21 @@ blockquote p {
 	color:#0054A7;
 }
 
+/* canvas layout: 2 column right sidebar */
+#two_column_right_sidebar {
+	width:210px;
+	margin:0 0 0 20px;
+	min-height:360px;
+	float:left;
+	background: #dedede;
+	padding:0px;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-bottom:1px solid #cccccc;
+	border-right:1px solid #cccccc;
+}
+
+
 .contentWrapper {
 	background:white;
 	-webkit-border-radius: 8px;
@@ -971,7 +986,23 @@ input[type="submit"] {
 #two_column_left_sidebar #login-box .login-textarea {
 	width:158px;
 }
-
+/* login and openID boxes when not running custom_index mod */
+#two_column_right_sidebar #login-box {
+	width:auto;
+	background: none;
+}
+#two_column_right_sidebar #login-box form {
+	width:auto;
+	margin:10px 10px 0 10px;
+	padding:5px 0 5px 10px;
+}
+#two_column_right_sidebar #login-box h2 {
+	margin:0 0 0 5px;
+	padding:5px 5px 0 5px;
+}
+#two_column_right_sidebar #login-box .login-textarea {
+	width:158px;
+}
 
 /* ***************************************
 	PROFILE
