@@ -777,8 +777,9 @@ function join_group($group_guid, $user_guid) {
  * @param int $user_guid The user.
  */
 function leave_group($group_guid, $user_guid) {
-	$result = remove_entity_relationship($user_guid, 'member', $group_guid);
+	// event needs to be triggered while user is still member of group to have access to group acl
 	trigger_elgg_event('leave', 'group', array('group' => get_entity($group_guid), 'user' => get_entity($user_guid)));
+	$result = remove_entity_relationship($user_guid, 'member', $group_guid);
 	return $result;
 }
 
