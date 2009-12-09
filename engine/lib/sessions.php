@@ -409,7 +409,7 @@ function login(ElggUser $user, $persistent = false) {
 		return false;
 	}
 
-	// Users privilege has been elevated, so change the session id (help prevent session hijacking)
+	// Users privilege has been elevated, so change the session id (prevents session fixation)
 	session_regenerate_id();
 
 	// Update statistics
