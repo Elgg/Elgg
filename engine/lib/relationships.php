@@ -59,7 +59,7 @@ class ElggRelationship implements
 	 * @param string $name
 	 * @return mixed
 	 */
-	protected function __get($name) {
+	function __get($name) {
 		if (isset($this->attributes[$name])) {
 			return $this->attributes[$name];
 		}
@@ -74,7 +74,7 @@ class ElggRelationship implements
 	 * @param mixed $value
 	 * @return mixed
 	 */
-	protected function __set($name, $value) {
+	function __set($name, $value) {
 		$this->attributes[$name] = $value;
 		return true;
 	}
