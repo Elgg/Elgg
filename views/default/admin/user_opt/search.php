@@ -17,7 +17,7 @@
 
 	?>
 	<input type="hidden" name="object" value="user" />
-	<input type="submit" name="<?php echo elgg_echo('admin:user:label:seachbutton'); ?>"
-		value="<?php echo elgg_echo('admin:user:label:seachbutton'); ?>" />
+	<input type="submit" name="<?php echo elgg_echo('admin:user:label:searchbutton'); ?>"
+		value="<?php echo elgg_echo('admin:user:label:searchbutton'); ?>" />
 	</form>
 </div>

@@ -492,7 +492,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	'admin:statistics:label:version:version' => "Version",
 
 	'admin:user:label:search' => "Find users:",
-	'admin:user:label:seachbutton' => "Search",
+	'admin:user:label:searchbutton' => "Search",
 
 	'admin:user:ban:no' => "Can not ban user",
 	'admin:user:ban:yes' => "User banned.",
