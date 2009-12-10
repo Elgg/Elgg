@@ -26,8 +26,6 @@ if (($obj instanceof ElggUser) && ($obj->canEdit())) {
 		register_error(elgg_echo('admin:user:ban:no'));
 	}
 } else {
-	$canedit = $obj->canEdit();
-	$isinstance = ($obj instanceof ElggUser);
 	register_error(elgg_echo('admin:user:ban:no'));
 }
 
