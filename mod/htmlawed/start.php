@@ -95,7 +95,7 @@
 		$return = $returnvalue;
 		$var = $returnvalue;
 
-		if (@include_once(dirname(__FILE__) . "/vendors/htmLawed/htmLawed.php")) {
+		if (include_once(dirname(__FILE__) . "/vendors/htmLawed/htmLawed.php")) {
 
 			global $CONFIG;
 
