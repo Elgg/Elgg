@@ -389,8 +389,11 @@ class ElggFileCache extends ElggCache {
 	 */
 	public function delete($key) {
 		$dir = $this->get_variable("cache_path");
-
-		return unlink($dir.$key);
+		
+		if (file_exists($dir.$key)) {
+			return unlink($dir.$key);
+		}
+		return TRUE;
 	}
 
 	public function clear() {
