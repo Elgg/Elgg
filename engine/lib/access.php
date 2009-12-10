@@ -373,7 +373,10 @@ function get_write_access_array($user_id = 0, $site_id = 0, $flush = false) {
 		$query .= " AND (ag.owner_guid = {$user_id})";
 		$query .= " AND ag.id >= 3";
 
-		$tmp_access_array = array(0 => elgg_echo("PRIVATE"), ACCESS_FRIENDS => elgg_echo("access:friends:label"), 1 => elgg_echo("LOGGED_IN"), 2 => elgg_echo("PUBLIC"));
+		$tmp_access_array = array(	ACCESS_PRIVATE => elgg_echo("PRIVATE"), 
+									ACCESS_FRIENDS => elgg_echo("access:friends:label"), 
+									ACCESS_LOGGED_IN => elgg_echo("LOGGED_IN"), 
+									ACCESS_PUBLIC => elgg_echo("PUBLIC"));
 		if ($collections = get_data($query)) {
 			foreach($collections as $collection) {
 				$tmp_access_array[$collection->id] = $collection->name;
