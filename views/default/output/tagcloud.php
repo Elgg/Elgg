@@ -40,7 +40,8 @@ if (!empty($vars['tagcloud']) && is_array($vars['tagcloud'])) {
 		if (!empty($cloud)) {
 			$cloud .= ", ";
 		}
-		$size = round((log($tag->total) / log($max)) * 100) + 30;
+		// protecting against division by zero warnings
+		$size = round((log($tag->total) / log($max + .0001)) * 100) + 30;
 		if ($size < 60) {
 			$size = 60;
 		}
