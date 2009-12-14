@@ -173,9 +173,13 @@ function get_tags($threshold = 1, $limit = 10, $metadata_name = "", $entity_type
  * @param string $entity_subtype The entity subtype, optionally
  * @param int $owner_guid The GUID of the tags owner, optionally
  * @param int $site_guid Optionally, the site to restrict to (default is the current site)
+ * @param int $start_ts Optionally specify a start timestamp for tags used to generate cloud.
+ * @param int $ent_ts Optionally specify an end timestamp for tags used to generate cloud.
  * @return string THe HTML (or other, depending on view type) of the tagcloud.
  */
 
-function display_tagcloud($threshold = 1, $limit = 10, $metadata_name = "", $entity_type = "object", $entity_subtype = "", $owner_guid = "", $site_guid = -1) {
-	return elgg_view("output/tagcloud",array('value' => get_tags($threshold, $limit, $metadata_name, $entity_type, $entity_subtype, $owner_guid, $site_guid),'object' => $entity_type, 'subtype' => $entity_subtype));
+function display_tagcloud($threshold = 1, $limit = 10, $metadata_name = "", $entity_type = "object", $entity_subtype = "", $owner_guid = "", $site_guid = -1, $start_ts = "", $end_ts = "") {
+	return elgg_view("output/tagcloud",array('value' => get_tags($threshold, $limit, $metadata_name, $entity_type, $entity_subtype, $owner_guid, $site_guid, $start_ts, $end_ts),
+											'object' => $entity_type, 
+											'subtype' => $entity_subtype));
 }
