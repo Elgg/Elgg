@@ -24,6 +24,9 @@ $form_body .= "<label>" . elgg_echo('username') . "<br />" . elgg_view('input/te
 $form_body .= "<label>" . elgg_echo('password') . "<br />" . elgg_view('input/password' , array('internalname' => 'password', 'class' => "general-textarea")) . "</label><br />";
 $form_body .= "<label>" . elgg_echo('passwordagain') . "<br />" . elgg_view('input/password' , array('internalname' => 'password2', 'class' => "general-textarea")) . "</label><br />";
 
+// view to extend to add more fields to the registration form
+$form_body .= elgg_view('register/extend');
+
 // Add captcha hook
 $form_body .= elgg_view('input/captcha');
 
