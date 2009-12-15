@@ -1,4 +1,3 @@
-
 CORE ELGG TEAM:
 
 Dave Tosh <dave@elgg.com>
