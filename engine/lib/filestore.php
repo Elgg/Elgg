@@ -762,102 +762,154 @@ function get_resized_image_from_uploaded_file($input_name, $maxwidth, $maxheight
 
 /**
  * Gets the jpeg contents of the resized version of an already uploaded image
- * (Returns false if the uploaded file was not an image)
+ * (Returns false if the file was not an image)
  *
- * @param string $input_name The name of the file input field on the submission form
- * @param int $maxwidth The maximum width of the resized image
- * @param int $maxheight The maximum height of the resized image
- * @param true|false $square If set to true, will take the smallest of maxwidth and maxheight and use it to set the dimensions on all size; the image will be cropped.
+ * @param string $input_name The name of the file on the disk
+ * @param int $maxwidth The desired width of the resized image
+ * @param int $maxheight The desired height of the resized image
+ * @param true|false $square If set to true, takes the smallest of maxwidth and 
+ * 			maxheight and use it to set the dimensions on the new image. If no
+ * 			crop parameters are set, the largest square that fits in the image
+ * 			centered will be used for the resize. If square, the crop must be a 
+ * 			square region.
+ * @param int $x1 x coordinate for top, left corner
+ * @param int $y1 y coordinate for top, left corner
+ * @param int $x2 x coordinate for bottom, right corner
+ * @param int $y2 y coordinate for bottom, right corner
  * @return false|mixed The contents of the resized image, or false on failure
  */
-function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight, $square = false, $x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0) {
+function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight, $square = FALSE, $x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0) {
 	// Get the size information from the image
-	if ($imgsizearray = getimagesize($input_name)) {
-		// Get width and height
-		$width = $imgsizearray[0];
-		$height = $imgsizearray[1];
-		$newwidth = $width;
-		$newheight = $height;
-
-		// Square the image dimensions if we're wanting a square image
-		if ($square) {
-			if ($width < $height) {
-				$height = $width;
-			} else {
-				$width = $height;
-			}
-
-			$newwidth = $width;
-			$newheight = $height;
-		}
-
-		if ($width > $maxwidth) {
-			$newheight = floor($height * ($maxwidth / $width));
-			$newwidth = $maxwidth;
-		}
-
-		if ($newheight > $maxheight) {
-			$newwidth = floor($newwidth * ($maxheight / $newheight));
-			$newheight = $maxheight;
-		}
-
-		$accepted_formats = array(
-			'image/jpeg' => 'jpeg',
-			'image/png' => 'png',
-			'image/gif' => 'gif'
-		);
-
-		// If it's a file we can manipulate ...
-		if (array_key_exists($imgsizearray['mime'],$accepted_formats)) {
-			$function = "imagecreatefrom" . $accepted_formats[$imgsizearray['mime']];
-			$newimage = imagecreatetruecolor($newwidth,$newheight);
-
-			if (is_callable($function) && $oldimage = $function($input_name)) {
-				// Crop the image if we need a square
-				if ($square) {
-					if ($x1 == 0 && $y1 == 0 && $x2 == 0 && $y2 ==0) {
-						$widthoffset = floor(($imgsizearray[0] - $width) / 2);
-						$heightoffset = floor(($imgsizearray[1] - $height) / 2);
-					} else {
-						$widthoffset = $x1;
-						$heightoffset = $y1;
-						$width = ($x2 - $x1);
-						$height = $width;
-					}
-				} else {
-					if ($x1 == 0 && $y1 == 0 && $x2 == 0 && $y2 ==0) {
-						$widthoffset = 0;
-						$heightoffset = 0;
-					} else {
-						$widthoffset = $x1;
-						$heightoffset = $y1;
-						$width = ($x2 - $x1);
-						$height = ($y2 - $y1);
-					}
-				}//else {
-					// Resize and return the image contents!
-					if ($square) {
-						$newheight = $maxheight;
-						$newwidth = $maxwidth;
-					}
-					imagecopyresampled($newimage, $oldimage, 0,0,$widthoffset,$heightoffset,$newwidth,$newheight,$width,$height);
-				//}
-
-				// imagecopyresized($newimage, $oldimage, 0,0,0,0,$newwidth,$newheight,$width,$height);
-				ob_start();
-				imagejpeg($newimage, null, 90);
-				$jpeg = ob_get_clean();
-				return $jpeg;
-			}
-		}
+	$imgsizearray = getimagesize($input_name);
+	if ($imgsizearray == FALSE) {
+		return FALSE;
+	}
+	
+	// Get width and height
+	$width = $imgsizearray[0];
+	$height = $imgsizearray[1];
+	
+	// make sure we can read the image
+	$accepted_formats = array(
+		'image/jpeg' => 'jpeg',
+		'image/pjpeg' => 'jpeg',
+		'image/png' => 'png',
+		'image/x-png' => 'png',
+		'image/gif' => 'gif'
+	);
+	
+	// make sure the function is available
+	$load_function = "imagecreatefrom" . $accepted_formats[$imgsizearray['mime']];
+	if (!is_callable($load_function)) {
+		return FALSE;
 	}
 
-	return false;
-}
+	// crop image first?
+	$crop = TRUE;
+	if ($x1 == 0 && $y1 == 0 && $x2 == 0 && $y2 == 0) {
+		$crop = FALSE;
+	}
+	
+	// how large a section of the image has been selected
+	if ($crop) {
+		$region_width = $x2 - $x1;
+		$region_height = $y2 - $y1;
+	} else {
+		// everything selected if no crop parameters
+		$region_width = $width;
+		$region_height = $height;
+	}
+	
+	// determine cropping offsets 
+	if ($square) {
+		// asking for a square image back
+		
+		// detect case where someone is passing crop parameters that are not for a square
+		if ($crop == TRUE && $region_width != $region_height) {
+			return FALSE;
+		}
+		
+		// size of the new square image
+		$new_width = $new_height = min($maxwidth, $maxheight);
+		
+		// find largest square that fits within the selected region
+		$region_width = $region_height = min($region_width, $region_height);
+		
+		// set offsets for crop
+		if ($crop) {
+			$widthoffset = $x1;
+			$heightoffset = $y1;
+			$width = $x2 - $x1;
+			$height = $width;			
+		} else {
+			// place square region in the center
+			$widthoffset = floor(($width - $region_width) / 2);
+			$heightoffset = floor(($height - $region_height) / 2);
+		}
+	} else {
+		// non-square new image
+
+		$new_width = $maxwidth;
+		$new_height = $maxwidth;
+		
+		// maintain aspect ratio of original image/crop
+		if (($region_height / (float)$new_height) > ($region_width / (float)$new_width)) {
+			$new_width = floor($new_height * $region_width / (float)$region_height);
+		} else {
+			$new_height = floor($new_width * $region_height / (float)$region_width);
+		}
+		
+		// by default, use entire image
+		$widthoffset = 0;
+		$heightoffset = 0;
+		
+		if ($crop) {
+			$widthoffset = $x1;
+			$heightoffset = $y1;
+		}
+	}
+	
+	
+	// load original image
+	$orig_image = $load_function($input_name);
+	if (!$orig_image) {
+		return FALSE;
+	}
+
+	// allocate the new image
+	$newimage = imagecreatetruecolor($new_width, $new_height);
+	if (!$newimage) {
+		return FALSE;
+	}
+	
+	// create the new image
+	$rtn_code = imagecopyresampled(	$newimage, 
+									$orig_image, 
+									0,
+									0,
+									$widthoffset,
+									$heightoffset,
+									$new_width,
+									$new_height,
+									$region_width,
+									$region_height );
+	if (!$rtn_code) {
+		return FALSE;
+	}
+	
+	// grab contents for return
+	ob_start();
+	imagejpeg($newimage, null, 90);
+	$jpeg = ob_get_clean();
+	
+	imagedestroy($newimage);
+	imagedestroy($orig_image);
+	
+	return $jpeg;
+}		
 
 
 // putting these here for now
-
 function file_delete($guid) {
 	if ($file = get_entity($guid)) {
 		if ($file->canEdit()) {
