@@ -62,7 +62,7 @@ function establish_db_link($dblinkname = "readwrite") {
 	mysql_query("SET NAMES utf8");
 
 	// Set up cache
-	if ((!$DB_QUERY_CACHE) && (!$CONFIG->db_disable_query_cache)) {
+	if ((!$DB_QUERY_CACHE) && isset($CONFIG->db_disable_query_cache) && (!$CONFIG->db_disable_query_cache)) {
 		$DB_QUERY_CACHE = new ElggStaticVariableCache('db_query_cache'); //array();
 		//$DB_QUERY_CACHE = select_default_memcache('db_query_cache'); //array();
 	}
