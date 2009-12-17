@@ -917,31 +917,44 @@ function get_submenu() {
 					if ($item->selected === NULL) {
 						$uri_info = parse_url($_SERVER['REQUEST_URI']);
 						$item_info = parse_url($item->value);
-
+						
 						// don't want to mangle already encoded queries but want to
 						// make sure we're comparing encoded to encoded.
 						// for the record, queries *should* be encoded
-						$uri_info['query'] = html_entity_decode($uri_info['query']);
-						$item_info['query'] = html_entity_decode($item_info['query']);
-
-						parse_str($uri_info['query'], $uri_params);
-						parse_str($item_info['query'], $item_params);
-
+						$uri_params = array();
+						$item_params = array();
+						if (isset($uri_info['query'])) {
+							$uri_info['query'] = html_entity_decode($uri_info['query']);
+							parse_str($uri_info['query'], $uri_params);
+						}
+						if (isset($item_info['query'])) {
+							$item_info['query'] = html_entity_decode($item_info['query']);
+							parse_str($item_info['query'], $item_params);
+						}
+						
 						$uri_info['path'] = trim($uri_info['path'], '/');
 						$item_info['path'] = trim($item_info['path'], '/');
 
 						// only if we're on the same path
 						// can't check server because sometimes it's not set in REQUEST_URI
 						if ($uri_info['path'] == $item_info['path']) {
-							if ($uri_info['query'] == $item_info['query']) {
-								//var_dump("Good on 1");
+							
+							// if no query terms, we have a match
+							if (!isset($uri_info['query']) && !isset($item_info['query'])) {
 								$selected_key = $key;
 								$selected_group = $groupname;
 								$selected = TRUE;
-							} elseif (!count(array_diff($uri_params, $item_params))) {
-								$selected_key = $key;
-								$selected_group = $groupname;
-								$selected = TRUE;
+							} else {
+								if ($uri_info['query'] == $item_info['query']) {
+									//var_dump("Good on 1");
+									$selected_key = $key;
+									$selected_group = $groupname;
+									$selected = TRUE;
+								} elseif (!count(array_diff($uri_params, $item_params))) {
+									$selected_key = $key;
+									$selected_group = $groupname;
+									$selected = TRUE;
+								}
 							}
 						}
 					// if TRUE or FALSE, set selected to this item.
