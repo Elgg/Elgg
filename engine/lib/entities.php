@@ -549,7 +549,7 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Returns whether the given user (or current user) has the ability to write to this group.
+	 * Returns whether the given user (or current user) has the ability to write to this container.
 	 *
 	 * @param int $user_guid The user.
 	 * @return bool
@@ -1640,7 +1640,8 @@ function get_entity($guid) {
  *
  * 	joins => array() Additional joins
  *
- * @return array
+ * @return 	if count, int
+ * 			if not count, array or false if no entities
  */
 function elgg_get_entities(array $options = array()) {
 	global $CONFIG;
@@ -1773,7 +1774,7 @@ function elgg_get_entities(array $options = array()) {
 		return $dt;
 	} else {
 		$total = get_data_row($query);
-		return $total->total;
+		return (int)$total->total;
 	}
 }
 
