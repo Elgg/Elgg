@@ -1,8 +1,9 @@
 <?php
 /**
  * Create a input button
- * Use this view for forms rather than creating a submit/reset button tag in the wild as it provides
- * extra security which help prevent CSRF attacks.
+ * Use this view or submit view for forms rather than creating a 
+ * submit/reset button tag in the wild as it provides extra security 
+ * which help prevent CSRF attacks.
  *
  * @package Elgg
  * @subpackage Core
@@ -21,11 +22,11 @@ global $CONFIG;
 
 if (isset($vars['class'])) {
 	$class = $vars['class'];
-}
-if (!$class) {
+} else {
 	$class = "submit_button";
 }
 
+// defaults to submit button
 if (isset($vars['type'])) {
 	$type = strtolower($vars['type']);
 } else {

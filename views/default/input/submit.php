@@ -19,8 +19,7 @@
 $vars['type'] = 'submit';
 if (isset($vars['class'])) {
 	$class = $vars['class'];
-}
-if (!$class) {
+} else {
 	$class = "submit_button";
 }
 $vars['class'] = $class;
