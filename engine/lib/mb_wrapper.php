@@ -30,6 +30,7 @@ $str_funcs = array(
 $eval_statement = '';
 foreach ($str_funcs as $func) {
 	// create wrapper function passing in the same args as given
+	$mb_func = "mb_$func";
 	$eval_statement .= "
 	function elgg_$func() {
 		\$args = func_get_args();
