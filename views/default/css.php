@@ -832,7 +832,7 @@ textarea {
 }
 textarea:focus, input[type="text"]:focus {
 	border: solid 1px #4690d6;
-	background: #e4ecf5;
+	background-color: #e4ecf5;
 	color:#333333;
 }
 .submit_button {
