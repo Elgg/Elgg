@@ -13,7 +13,10 @@
  * @uses $vars['method'] Method (default POST)
  * @uses $vars['enctype'] How the form is encoded, default blank
  * @uses $vars['action'] URL of the action being called
- *
+ * @uses $vars['js'] Any Javascript to enter into the form
+ * @uses $vars['internalid'] id for the form for CSS/Javascript
+ * @uses $vars['internalname'] name for the form for Javascript
+ * @uses $vars['disable_security'] turn off CSRF security by setting to true
  */
 
 if (isset($vars['internalid'])) {
@@ -48,7 +51,7 @@ if (!isset($vars['disable_security']) || $vars['disable_security'] != true) {
 	$security_header = elgg_view('input/securitytoken');
 }
 ?>
-<form <?php if ($id) { ?>id="<?php echo $id; ?>" <?php } ?> <?php if ($name) { ?>name="<?php echo $name; ?>" <?php } ?> action="<?php echo $action; ?>" method="<?php echo $method; ?>" <?php if ($enctype!="") echo "enctype=\"$enctype\""; ?>>
+<form <?php if ($id) { ?>id="<?php echo $id; ?>" <?php } ?> <?php if ($name) { ?>name="<?php echo $name; ?>" <?php } ?> <?php echo $vars['js']; ?> action="<?php echo $action; ?>" method="<?php echo $method; ?>" <?php if ($enctype!="") echo "enctype=\"$enctype\""; ?>>
 <?php echo $security_header; ?>
 <?php echo $body; ?>
 </form>
