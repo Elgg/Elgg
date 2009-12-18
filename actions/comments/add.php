@@ -22,40 +22,48 @@ if (empty($comment_text)) {
 }
 
 // Let's see if we can get an entity with the specified GUID
-if ($entity = get_entity($entity_guid)) {
+$entity = get_entity($entity_guid);
+if (!$entity) {
+	register_error(elgg_echo("generic_comment:notfound"));
+	forward($_SERVER['HTTP_REFERER']);
+}
 
-	// If posting the comment was successful, say so
-	$annotation = create_annotation($entity->guid, 'generic_comment',
-		$comment_text, "", $_SESSION['guid'], $entity->access_id);
+$user = get_loggedin_user();
 
-	if ($annotation) {
-		if ($entity->owner_guid != $_SESSION['user']->getGUID()) {
-			notify_user($entity->owner_guid,
-				$_SESSION['user']->getGUID(),
+$annotation = create_annotation($entity->guid, 
+								'generic_comment',
+								$comment_text, 
+								"", 
+								$user->guid, 
+								$entity->access_id);
+
+// tell user annotation posted
+if (!$annotation) {
+	register_error(elgg_echo("generic_comment:failure"));
+	forward($_SERVER['HTTP_REFERER']);
+}
+
+// notify if poster wasn't owner
+if ($entity->owner_guid != $user->guid) {
+			
+	notify_user($entity->owner_guid,
+				$user->guid,
 				elgg_echo('generic_comment:email:subject'),
 				sprintf(
 					elgg_echo('generic_comment:email:body'),
 					$entity->title,
-					$_SESSION['user']->name,
+					$user->name,
 					$comment_text,
 					$entity->getURL(),
-					$_SESSION['user']->name,
-					$_SESSION['user']->getURL()
+					$user->name,
+					$user->getURL()
 				)
 			);
-		}
-
-		system_message(elgg_echo("generic_comment:posted"));
-		//add to river
-		add_to_river('annotation/annotate','comment',$_SESSION['user']->guid,$entity->guid, "", 0, $annotation);
-	} else {
-		register_error(elgg_echo("generic_comment:failure"));
-	}
-} else {
-
-	register_error(elgg_echo("generic_comment:notfound"));
-
 }
 
-// Forward to the
+system_message(elgg_echo("generic_comment:posted"));
+//add to river
+add_to_river('annotation/annotate','comment',$user->guid,$entity->guid, "", 0, $annotation);
+
+// Forward to the entity page
 forward($entity->getURL());
