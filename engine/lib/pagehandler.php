@@ -20,16 +20,20 @@ function page_handler($handler, $page) {
 
 	set_context($handler);
 
-	//parse_url($_SERVER['REQUEST_URI']);
-	$query = substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], '?') + 1);
-	if (isset($query)) {
-		parse_str($query, $query_arr);
-		if (is_array($query_arr)) {
-			foreach($query_arr as $name => $val) {
-				set_input($name, $val);
+	// if there are any query parameters, make them available from get_input
+	if (strpos($_SERVER['REQUEST_URI'], '?') !== FALSE) {
+		$query = substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], '?') + 1);
+		if (isset($query)) {
+			parse_str($query, $query_arr);
+			if (is_array($query_arr)) {
+				foreach($query_arr as $name => $val) {
+					set_input($name, $val);
+				}
 			}
 		}
 	}
+	
+	// if page url ends in a / then last element of $page is an empty string
 	$page = explode('/',$page);
 
 	if (!isset($CONFIG->pagehandler) || empty($handler)) {

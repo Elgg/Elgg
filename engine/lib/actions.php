@@ -21,21 +21,20 @@
 function action($action, $forwarder = "") {
 	global $CONFIG;
 
-	$query = parse_url($_SERVER['REQUEST_URI']);
-	if (isset($query['query'])) {
-		$query = $query['query'];
-		$query = rawurldecode($query);
-		$query = explode('&',$query);
-		if (sizeof($query) > 0) {
-			foreach($query as $queryelement) {
-				$vals = explode('=',$queryelement, 2);
-				if (sizeof($vals) > 1) {
-					set_input(trim($vals[0]),trim($vals[1]));
+	// if there are any query parameters, make them available from get_input
+	if (strpos($_SERVER['REQUEST_URI'], '?') !== FALSE) {
+		$query = substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], '?') + 1);
+		if (isset($query)) {
+			parse_str($query, $query_arr);
+			if (is_array($query_arr)) {
+				foreach($query_arr as $name => $val) {
+					// should we trim name and val?
+					set_input($name, $val);
 				}
 			}
 		}
 	}
-
+	
 	$forwarder = str_replace($CONFIG->url, "", $forwarder);
 	$forwarder = str_replace("http://", "", $forwarder);
 	$forwarder = str_replace("@", "", $forwarder);
@@ -45,10 +44,7 @@ function action($action, $forwarder = "") {
 	}
 
 	if (isset($CONFIG->actions[$action])) {
-		if (
-			(isadminloggedin()) ||
-			(!$CONFIG->actions[$action]['admin'])
-		) {
+		if ((isadminloggedin()) || (!$CONFIG->actions[$action]['admin'])) {
 			if ($CONFIG->actions[$action]['public'] || $_SESSION['id'] != -1) {
 
 				// Trigger action event TODO: This is only called before the primary action is called. We need to rethink actions for 1.5
