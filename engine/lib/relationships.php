@@ -342,7 +342,7 @@ function delete_relationship($id) {
  * Define an arbitrary relationship between two entities.
  * This relationship could be a friendship, a group membership or a site membership.
  *
- * This function lets you make the statement "$guid_one has $relationship with $guid_two".
+ * This function lets you make the statement "$guid_one is a $relationship of $guid_two".
  *
  * @param int $guid_one
  * @param string $relationship
