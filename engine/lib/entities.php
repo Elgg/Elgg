@@ -2195,7 +2195,7 @@ function list_entities($type= "", $subtype = "", $owner_guid = 0, $limit = 10, $
 	}
 
 	$options['full_view'] = $fullview;
-	$options['view_toggle_type'] = $viewtoggletype;
+	$options['view_toggle_type'] = $viewtypetoggle;
 	$options['pagination'] = $pagination;
 
 	return elgg_list_entities($options);
