@@ -1174,12 +1174,22 @@ function autoregister_views($view_base, $folder, $base_location_path, $viewtype)
  */
 function page_draw($title, $body, $sidebar = "") {
 
+	// get messages - try for errors first
+	$sysmessages = system_messages(null, "errors");
+	if (count($sysmessages["errors"]) == 0) {
+		// no errors so grab rest of messages
+		$sysmessages = system_messages(null, "");
+	} else {
+		// we have errors - clear out remaining messages
+		system_messages(null, "");
+	}
+	
 	// Draw the page
 	$output = elgg_view('pageshells/pageshell', array(
 		'title' => $title,
 		'body' => $body,
 		'sidebar' => $sidebar,
-		'sysmessages' => system_messages(null,"")
+		'sysmessages' => $sysmessages,
 		)
 	);
 	$split_output = str_split($output, 1024);
@@ -1433,15 +1443,16 @@ function menu_item($menu_name, $menu_url) {
 
 /**
  * Message register handling
- * If no parameter is given, the function returns the array of messages so far and empties it.
- * Otherwise, any message or array of messages is added.
+ * If a null $message parameter is given, the function returns the array of messages so far and empties it
+ * based on the $register parameters. Otherwise, any message or array of messages is added.
  *
- * @param string|array $message Optionally, a single message or array of messages to add
- * @param string $register By default, "errors". This allows for different types of messages, eg errors.
+ * @param string|array $message Optionally, a single message or array of messages to add, (default: null)
+ * @param string $register This allows for different types of messages: "errors", "messages" (default: messages) 
+ * @param bool $count Count the number of messages (default: false)
  * @return true|false|array Either the array of messages, or a response regarding whether the message addition was successful
  */
 
-function system_messages($message = "", $register = "messages", $count = false) {
+function system_messages($message = null, $register = "messages", $count = false) {
 	if (!isset($_SESSION['msg'])) {
 		$_SESSION['msg'] = array();
 	}
@@ -1451,14 +1462,14 @@ function system_messages($message = "", $register = "messages", $count = false) 
 	if (!$count) {
 		if (!empty($message) && is_array($message)) {
 			$_SESSION['msg'][$register] = array_merge($_SESSION['msg'][$register], $message);
-			var_export($_SESSION['msg']); exit;
 			return true;
 		} else if (!empty($message) && is_string($message)) {
 			$_SESSION['msg'][$register][] = $message;
 			return true;
 		} else if (is_null($message)) {
 			if ($register != "") {
-				$returnarray = $_SESSION['msg'][$register];
+				$returnarray = array();
+				$returnarray[$register] = $_SESSION['msg'][$register];
 				$_SESSION['msg'][$register] = array();
 			} else {
 				$returnarray = $_SESSION['msg'];
