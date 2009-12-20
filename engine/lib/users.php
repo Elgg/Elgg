@@ -481,7 +481,11 @@ function ban_user($user_guid, $reason = "") {
 			if ($reason) {
 				create_metadata($user_guid, 'ban_reason', $reason,'', 0, ACCESS_PUBLIC);
 			}
-
+			
+			// clear "remember me" cookie code so user cannot login in using it
+			$user->code = "";
+			$user->save();
+			
 			// Set ban flag
 			return update_data("UPDATE {$CONFIG->dbprefix}users_entity set banned='yes' where guid=$user_guid");
 		}
