@@ -14,10 +14,15 @@
  * @uses $vars['body'] The main content of the page
  * @uses $vars['messages'] A 2d array of various message registers, passed from system_messages()
  */
+
+// we won't trust server configuration but specify utf-8
+header('Content-type: text/html; charset=utf-8');
+
 ?>
 <html>
 	<head>
 		<title><?php echo $vars['title']; ?></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 		<style type="text/css">
 
