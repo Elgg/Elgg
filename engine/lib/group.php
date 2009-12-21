@@ -755,7 +755,12 @@ function get_group_members($group_guid, $limit = 10, $offset = 0, $site_guid = 0
  * @return bool
  */
 function is_group_member($group_guid, $user_guid) {
-	return check_entity_relationship($user_guid, 'member', $group_guid);
+	$object = check_entity_relationship($user_guid, 'member', $group_guid);
+	if ($object) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 /**
