@@ -122,7 +122,7 @@ abstract class ElggEntity implements
 		$this->attributes['tables_split'] = 1;
 		$this->attributes['tables_loaded'] = 0;
 	}
-
+	
 	/**
 	 * Return the value of a given key.
 	 * If $name is a key field (as defined in $this->attributes) that value is returned, otherwise it will
@@ -131,6 +131,9 @@ abstract class ElggEntity implements
 	 * Q: Why are we not using __get overload here?
 	 * A: Because overload operators cause problems during subclassing, so we put the code here and
 	 * create overloads in subclasses.
+	 * 
+	 * subtype is returned as an id rather than the subtype string. Use getSubtype()
+	 * to get the subtype string.
 	 *
 	 * @param string $name
 	 * @return mixed Returns the value of a given value, or null.
@@ -613,7 +616,7 @@ abstract class ElggEntity implements
 		if (!((int) $this->guid > 0)) {
 			return $this->get('subtype');
 		}
-
+		
 		return get_subtype_from_id($this->get('subtype'));
 	}
 
@@ -735,6 +738,9 @@ abstract class ElggEntity implements
 					unset($this->temp_annotations[$name]);
 				}
 			}
+			
+			// set the subtype to id now rather than a string
+			$this->attributes['subtype'] = get_subtype_id($this->attributes['type'], $this->attributes['subtype']);
 
 			// Cache object handle
 			if ($this->attributes['guid']) cache_entity($this);
