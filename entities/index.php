@@ -42,7 +42,7 @@ if ($entity = get_entity($guid)) {
 	}
 	$area2 = elgg_view_entity($entity,true);
 	if ($shell) {
-		$body = elgg_view_layout('two_column_left_sidebar', '', $area1 . $area2);
+		$body = elgg_view_layout('two_column_left_sidebar', '', $area2);
 	} else {
 		$body = $area2;
 	}
