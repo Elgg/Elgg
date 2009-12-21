@@ -16,11 +16,14 @@
  *
  */
 
+$class = "input-access";
 if (isset($vars['class'])) {
 	$class = $vars['class'];
 }
-if (!$class) {
-	$class = "input-access";
+
+$disabled = false;
+if (isset($vars['disabled'])) {
+	$disabled = $vars['disabled'];
 }
 
 if (!array_key_exists('value', $vars) || $vars['value'] == ACCESS_DEFAULT) {
@@ -36,7 +39,7 @@ if ((!isset($vars['options'])) || (!is_array($vars['options']))) {
 if (is_array($vars['options']) && sizeof($vars['options']) > 0) {
 	?>
 
-	<select <?php if (isset($vars['internalid'])) echo "id=\"{$vars['internalid']}\""; ?> name="<?php echo $vars['internalname']; ?>" <?php if (isset($vars['js'])) echo $vars['js']; ?> <?php if ((isset($vars['disabled'])) && ($vars['disabled'])) echo ' disabled="yes" '; ?> class="<?php echo $class; ?>">
+	<select <?php if (isset($vars['internalid'])) echo "id=\"{$vars['internalid']}\""; ?> name="<?php echo $vars['internalname']; ?>" <?php if (isset($vars['js'])) echo $vars['js']; ?> <?php if ($disabled) echo ' disabled="yes" '; ?> class="<?php echo $class; ?>">
 	<?php
 
 	foreach($vars['options'] as $key => $option) {

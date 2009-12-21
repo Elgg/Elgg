@@ -10,16 +10,23 @@
 
  * @link http://elgg.org/
  *
- * @uses $vars['value'] The current value, if any
+ * @uses $vars['value'] The current value, if any - string or array - tags will be encoded
  * @uses $vars['js'] Any Javascript to enter into the input tag
  * @uses $vars['internalname'] The name of the input field
- * @uses $vars['value'] An array of tags
- * @uses $vars['class'] Class override
+ * @uses $vars['internalid'] The id of the input field
+ * @uses $vars['class'] CSS class override
+ * @uses $vars['disabled'] Is the input field disabled?
  */
 
-$class = $vars['class'];
-if (!$class) {
-	$class = "input-tags";
+
+$class = "input-tags";
+if (isset($vars['class'])) {
+	$class = $vars['class'];
+}
+
+$disabled = false;
+if (isset($vars['disabled'])) {
+	$disabled = $vars['disabled'];
 }
 
 $tags = "";
@@ -42,4 +49,4 @@ if (!empty($vars['value'])) {
 }
 
 ?>
-<input type="text" <?php if ($vars['disabled']) echo ' disabled="yes" '; ?><?php echo $vars['js']; ?> name="<?php echo $vars['internalname']; ?>" <?php if (isset($vars['internalid'])) echo "id=\"{$vars['internalid']}\""; ?> value="<?php echo htmlentities($tags, ENT_QUOTES, 'UTF-8'); ?>" class="<?php echo $class; ?>"/>
+<input type="text" <?php if ($disabled) echo ' disabled="yes" '; ?><?php echo $vars['js']; ?> name="<?php echo $vars['internalname']; ?>" <?php if (isset($vars['internalid'])) echo "id=\"{$vars['internalid']}\""; ?> value="<?php echo htmlentities($tags, ENT_QUOTES, 'UTF-8'); ?>" class="<?php echo $class; ?>"/>

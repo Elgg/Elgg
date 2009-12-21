@@ -21,7 +21,7 @@ if (!$confirm) {
 
 $link = $vars['href'];
 
-if ($vars['is_action']) {
+if (isset($vars['is_action']) && $vars['is_action']) {
 	$ts = time();
 	$token = generate_action_token($ts);
 
@@ -30,7 +30,7 @@ if ($vars['is_action']) {
 	$link = "$link{$sep}__elgg_token=$token&__elgg_ts=$ts";
 }
 
-if ($vars['class']) {
+if (isset($vars['class']) && $vars['class']) {
 	$class = 'class="' . $vars['class'] . '"';
 } else {
 	$class = '';
