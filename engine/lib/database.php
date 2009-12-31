@@ -65,7 +65,7 @@ function establish_db_link($dblinkname = "readwrite") {
 	if (isset($CONFIG->db_disable_query_cache)) {
 		$db_cache_off = $CONFIG->db_disable_query_cache;
 	}
-	
+
 	// Set up cache if global not initialized and query cache not turned off
 	if ((!$DB_QUERY_CACHE) && (!$db_cache_off)) {
 		$DB_QUERY_CACHE = new ElggStaticVariableCache('db_query_cache'); //array();
@@ -97,7 +97,7 @@ function setup_db_connections() {
  */
 function db_profiling_shutdown_hook() {
 	global $dbcalls;
-	
+
 	elgg_log("DB Queries for this page: $dbcalls", 'DEBUG');
 }
 
@@ -552,11 +552,12 @@ function db_upgrade($version, $fromdir = "") {
 
 		if (sizeof($sqlupgrades) > 0) {
 			foreach($sqlupgrades as $sqlfile) {
-				try {
+//				let's not allow failing upgrade to pass.
+//				try {
 					run_sql_script($fromdir . $sqlfile);
-				} catch (DatabaseException $e) {
-					error_log($e->getmessage());
-				}
+//				} catch (DatabaseException $e) {
+//					error_log($e->getmessage());
+//				}
 			}
 		}
 	}
