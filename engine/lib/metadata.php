@@ -691,13 +691,6 @@ function elgg_get_entity_metadata_where_sql($table, $names = NULL, $values = NUL
 	// add pairs
 	// pairs must be in arrays.
 	if (is_array($pairs)) {
-		$array = array(
-			'name' => 'test',
-			'value' => 5
-		);
-
-		$array = array('test' => 5);
-
 		// check if this is an array of pairs or just a single pair.
 		if (isset($pairs['name']) || isset($pairs['value'])) {
 			$pairs = array($pairs);
