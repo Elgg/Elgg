@@ -154,7 +154,7 @@ class ElggUser extends ElggEntity
 	 */
 	public function delete() {
 		global $USERNAME_TO_GUID_MAP_CACHE, $CODE_TO_GUID_MAP_CACHE;
-		
+
 		// clear cache
 		if (isset($USERNAME_TO_GUID_MAP_CACHE[$this->username])) {
 			unset($USERNAME_TO_GUID_MAP_CACHE[$this->username]);
@@ -162,7 +162,7 @@ class ElggUser extends ElggEntity
 		if (isset($CODE_TO_GUID_MAP_CACHE[$this->code])) {
 			unset($CODE_TO_GUID_MAP_CACHE[$this->code]);
 		}
-		
+
 		// Delete owned data
 		clear_annotations_by_owner($this->guid);
 		clear_metadata_by_owner($this->guid);
@@ -481,11 +481,11 @@ function ban_user($user_guid, $reason = "") {
 			if ($reason) {
 				create_metadata($user_guid, 'ban_reason', $reason,'', 0, ACCESS_PUBLIC);
 			}
-			
+
 			// clear "remember me" cookie code so user cannot login in using it
 			$user->code = "";
 			$user->save();
-			
+
 			// Set ban flag
 			return update_data("UPDATE {$CONFIG->dbprefix}users_entity set banned='yes' where guid=$user_guid");
 		}
@@ -1269,7 +1269,7 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
 
 	// Check to see if we've registered the first admin yet.
 	// If not, this is the first admin user!
-	$admin = datalist_get('admin_registered');
+	$have_admin = datalist_get('admin_registered');
 
 	// Otherwise ...
 	$user = new ElggUser();
@@ -1294,9 +1294,10 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
 	}
 
 	global $registering_admin;
-	if (!$admin) {
+	if (!$have_admin) {
 		$user->admin = true;
-		datalist_set('admin_registered',1);
+		$user->validated = 'admin';
+		datalist_set('admin_registered', 1);
 		$registering_admin = true;
 	} else {
 		$registering_admin = false;
