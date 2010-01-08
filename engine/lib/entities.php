@@ -122,7 +122,7 @@ abstract class ElggEntity implements
 		$this->attributes['tables_split'] = 1;
 		$this->attributes['tables_loaded'] = 0;
 	}
-	
+
 	/**
 	 * Return the value of a given key.
 	 * If $name is a key field (as defined in $this->attributes) that value is returned, otherwise it will
@@ -131,7 +131,7 @@ abstract class ElggEntity implements
 	 * Q: Why are we not using __get overload here?
 	 * A: Because overload operators cause problems during subclassing, so we put the code here and
 	 * create overloads in subclasses.
-	 * 
+	 *
 	 * subtype is returned as an id rather than the subtype string. Use getSubtype()
 	 * to get the subtype string.
 	 *
@@ -146,7 +146,7 @@ abstract class ElggEntity implements
 
 		// No, so see if its in the meta data for this entity
 		$meta = $this->getMetaData($name);
-		
+
 		// getMetaData returns NULL if $name is not found
 		return $meta;
 	}
@@ -616,7 +616,7 @@ abstract class ElggEntity implements
 		if (!((int) $this->guid > 0)) {
 			return $this->get('subtype');
 		}
-		
+
 		return get_subtype_from_id($this->get('subtype'));
 	}
 
@@ -738,7 +738,7 @@ abstract class ElggEntity implements
 					unset($this->temp_annotations[$name]);
 				}
 			}
-			
+
 			// set the subtype to id now rather than a string
 			$this->attributes['subtype'] = get_subtype_id($this->attributes['type'], $this->attributes['subtype']);
 
@@ -2118,7 +2118,7 @@ function elgg_get_entity_site_where_sql($table, $site_guids) {
 
 	$site_guids_sanitised = array();
 	foreach ($site_guids as $site_guid) {
-		if (!$site_guid || ($site_guid != sanitise_int($site_guids))) {
+		if (!$site_guid || ($site_guid != sanitise_int($site_guid))) {
 			return FALSE;
 		}
 		$site_guids_sanitised[] = $site_guid;
@@ -2417,7 +2417,7 @@ function delete_entity($guid, $recursive = true) {
 				if (isset($ENTITY_CACHE[$guid])) {
 					invalidate_cache_for_entity($guid);
 				}
-				
+
 				// Delete contained owned and otherwise releated objects (depth first)
 				if ($recursive) {
 					// Temporary token overriding access controls TODO: Do this better.
