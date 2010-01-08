@@ -22,6 +22,7 @@ if (get_input('settings') == 'go') {
 		// Sanitise
 		$path = sanitise_filepath(get_input('path'));
 		$dataroot = sanitise_filepath(get_input('dataroot'));
+		$url = sanitise_filepath(get_input('wwwroot'));
 
 		// Blank?
 		if ($dataroot == "/") {
@@ -40,7 +41,7 @@ if (get_input('settings') == 'go') {
 
 		$site = new ElggSite();
 		$site->name = get_input('sitename');
-		$site->url = get_input('wwwroot');
+		$site->url = $url;
 		$site->description = get_input('sitedescription');
 		$site->email = get_input('siteemail');
 		$site->access_id = ACCESS_PUBLIC;

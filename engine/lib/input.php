@@ -14,7 +14,7 @@
  *
  * Note: this function does not handle nested arrays (ex: form input of param[m][n])
  * because of the filtering done in htmlawed from the filter_tags call.
- * 
+ *
  * @param $variable string The variable we want to return.
  * @param $default mixed A default value for the variable if it is not found.
  * @param $filter_result If true then the result is filtered for bad tags.
@@ -52,7 +52,7 @@ function get_input($variable, $default = "", $filter_result = true) {
 
 /**
  * Sets an input value that may later be retrieved by get_input
- * 
+ *
  * Note: this function does not handle nested arrays (ex: form input of param[m][n])
  *
  * @param string $variable The name of the variable
@@ -96,7 +96,8 @@ function sanitise_filepath($path) {
 
 	// Sort trailing slash
 	$path = trim($path);
-	$path = rtrim($path, " /");
+	// rtrim defaults plus /
+	$path = rtrim($path, " \n\t\0\x0B/");
 	$path = $path . "/";
 
 	return $path;
