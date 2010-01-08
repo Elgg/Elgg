@@ -721,7 +721,7 @@ Alternatively, you can enter your database settings below and we will try and do
 	'installation:settings:dbwizard:label:pass' => "Database password",
 	'installation:settings:dbwizard:label:dbname' => "Elgg database",
 	'installation:settings:dbwizard:label:host' => "Database hostname (usually 'localhost')",
-	'installation:settings:dbwizard:label:prefix' => "Database table prefix (usually 'elgg')",
+	'installation:settings:dbwizard:label:prefix' => "Database table prefix (usually 'elgg_')",
 
 	'installation:settings:dbwizard:savefail' => "We were unable to save the new settings.php. Please save the following file as engine/settings.php using a text editor.",
 
