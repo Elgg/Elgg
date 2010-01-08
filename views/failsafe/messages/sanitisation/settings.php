@@ -27,7 +27,7 @@ if ($vars['settings.php']) {
 			<tr><td valign="top"><?php echo elgg_echo('installation:settings:dbwizard:label:pass'); ?></td><td valign="top"> <input type="password" name="db_install_vars[CONFIG_DBPASS]" /></td></tr>
 			<tr><td valign="top"><?php echo elgg_echo('installation:settings:dbwizard:label:dbname'); ?></td><td valign="top"> <input type="text" name="db_install_vars[CONFIG_DBNAME]" /></td></tr>
 			<tr><td valign="top"><?php echo elgg_echo('installation:settings:dbwizard:label:host'); ?></td><td valign="top"> <input type="text" name="db_install_vars[CONFIG_DBHOST]" value="localhost" /></td></tr>
-			<tr><td valign="top"><?php echo elgg_echo('installation:settings:dbwizard:label:prefix'); ?></td><td valign="top"> <input type="text" name="db_install_vars[CONFIG_DBPREFIX]" value="elgg" /></td></tr>
+			<tr><td valign="top"><?php echo elgg_echo('installation:settings:dbwizard:label:prefix'); ?></td><td valign="top"> <input type="text" name="db_install_vars[CONFIG_DBPREFIX]" value="elgg_" /></td></tr>
 		</table>
 
 		<input type="submit" name="<?php echo elgg_echo('save'); ?>" value="<?php echo elgg_echo('save'); ?>" />
