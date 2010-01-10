@@ -518,9 +518,10 @@ function run_sql_script($scriptlocation) {
  *
  * @param int $version The version you are upgrading from (usually given in the Elgg version format of YYYYMMDDXX - see version.php for example)
  * @param string $fromdir Optional directory to load upgrades from (default: engine/schema/upgrades/)
+ * @param bool $quiet If true, will suppress all error messages.  Don't use this.
  * @return bool
  */
-function db_upgrade($version, $fromdir = "") {
+function db_upgrade($version, $fromdir = "", $quiet = FALSE) {
 	global $CONFIG;
 
 	// Elgg and its database must be installed to upgrade it!
@@ -539,7 +540,7 @@ function db_upgrade($version, $fromdir = "") {
 
 		while ($sqlfile = readdir($handle)) {
 			if (!is_dir($fromdir . $sqlfile)) {
-				if (preg_match('/([0-9]*)\.sql/',$sqlfile,$matches)) {
+				if (preg_match('/^([0-9]{10})\.(sql)$/', $sqlfile, $matches)) {
 					$sql_version = (int) $matches[1];
 					if ($sql_version > $version) {
 						$sqlupgrades[] = $sqlfile;
@@ -552,17 +553,22 @@ function db_upgrade($version, $fromdir = "") {
 
 		if (sizeof($sqlupgrades) > 0) {
 			foreach($sqlupgrades as $sqlfile) {
-//				let's not allow failing upgrade to pass.
-//				try {
+
+				// hide all errors.
+				if ($quiet) {
+					try {
+						run_sql_script($fromdir . $sqlfile);
+					} catch (DatabaseException $e) {
+						error_log($e->getmessage());
+					}
+				} else {
 					run_sql_script($fromdir . $sqlfile);
-//				} catch (DatabaseException $e) {
-//					error_log($e->getmessage());
-//				}
+				}
 			}
 		}
 	}
 
-	return true;
+	return TRUE;
 }
 
 /**

@@ -52,11 +52,10 @@ if (get_input('settings') == 'go') {
 		}
 
 		datalist_set('installed',time());
-
 		datalist_set('path', $path);
 		datalist_set('dataroot', $dataroot);
-
-		datalist_set('default_site',$site->getGUID());
+		datalist_set('default_site', $site->getGUID());
+		datalist_set('version', get_version());
 
 		set_config('view', get_input('view'), $site->getGUID());
 		set_config('language', get_input('language'), $site->getGUID());
