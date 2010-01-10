@@ -692,7 +692,9 @@ function elgg_get_entity_annotation_where_sql($table, $names = NULL, $values = N
  * @param $timeupper
  * @return unknown_type
  */
-function get_entities_from_annotations($entity_type = "", $entity_subtype = "", $name = "", $value = "", $owner_guid = 0, $group_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $count = false, $timelower = 0, $timeupper = 0) {
+function get_entities_from_annotations($entity_type = "", $entity_subtype = "", $name = "", $value = "",
+$owner_guid = 0, $group_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $count = false,
+$timelower = 0, $timeupper = 0) {
 
 	elgg_log('get_entities_from_annotations() was deprecated in 1.7 by elgg_get_entities_from_annotations()!', 'WARNING');
 
@@ -719,7 +721,7 @@ function get_entities_from_annotations($entity_type = "", $entity_subtype = "", 
 	if ($group_guid) {
 		$options['container_guid'] = $group_guid;
 	}
-	
+
 	if ($limit) {
 		$options['limit'] = $limit;
 	}
@@ -735,9 +737,6 @@ function get_entities_from_annotations($entity_type = "", $entity_subtype = "", 
 	if ($count) {
 		$options['count'] = $count;
 	}
-
-	// need to be able to pass false
-	$options['annotations_case_sensitive'] = $case_sensitive;
 
 	return elgg_get_entities_from_annotations($options);
 }
