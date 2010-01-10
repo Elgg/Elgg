@@ -647,7 +647,7 @@ function elgg_get_entity_metadata_where_sql($table, $names = NULL, $values = NUL
 			if (!$name) {
 				$name = '0';
 			}
-			$sanitised_names[] = "'$name'";
+			$sanitised_names[] = '\'' . sanitise_string($name) . '\'';
 		}
 
 		if ($names_str = implode(',', $sanitised_names)) {
@@ -671,7 +671,7 @@ function elgg_get_entity_metadata_where_sql($table, $names = NULL, $values = NUL
 			if (!$value) {
 				$value = 0;
 			}
-			$sanitised_values[] = "'$value'";
+			$sanitised_values[] = '\'' . sanitise_string($value) . '\'';
 		}
 
 		if ($values_str = implode(',', $sanitised_values)) {
@@ -740,13 +740,15 @@ function elgg_get_entity_metadata_where_sql($table, $names = NULL, $values = NUL
 			// if the operand is IN don't quote it because quoting should be done already.
 			//$value = trim(strtolower($operand)) == 'in' ? $pair['value'] : "'{$pair['value']}'";
 			if (trim(strtolower($operand)) == 'in' || sanitise_int($pair['value'])) {
-				$value = $pair['value'];
+				$value = sanitise_string($pair['value']);
 			} else {
-				$value = "'{$pair['value']}'";
+				$value = '\'' . sanitise_string($pair['value']) . '\'';
 			}
 
+			$name = sanitise_string($pair['name']);
+
 			$access = get_access_sql_suffix("md{$i}");
-			$pair_wheres[] = "(msn{$i}.string = '{$pair['name']}' AND {$pair_binary}msv{$i}.string $operand $value AND $access)";
+			$pair_wheres[] = "(msn{$i}.string = '$name' AND {$pair_binary}msv{$i}.string $operand $value AND $access)";
 			$i++;
 		}
 
