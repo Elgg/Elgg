@@ -4,10 +4,10 @@ Full text search dev reference.
 
 	* All entities are searched through title and description using
 	MySQL's native fulltext search when possible, and LIKE %...% when not.
-	This can be overriden on a type/subtype basis.
+	This can be overridden on a type/subtype basis.
 	
 	* Entities are displayed in a standard list view consisting of a 
-	title, blurb, and icon of the owning entity.  This can be overriden 
+	title, blurb, and icon of the owning entity.  This can be overridden 
 	on a type/subtype basis.
 	
 	* Search is separated based upon types/subtypes pairs and any 
@@ -95,7 +95,7 @@ Full text search dev reference.
 	* Search views are separate from the object/entity views because
 	view types might not match entity types.
 	
-	* The default search listing view interates through each entity
+	* The default search listing view iterates through each entity
 	found and passes to the entity view.  See 3.3 for more information
 	about listing views.
 	
@@ -108,8 +108,8 @@ Full text search dev reference.
 	* The following parameters are passed in $vars to the entity view by 
 	the default listing view:
 		entity => The current returned entity
-		params =>
-		results
+		results => The results from the search/type:subtype hook
+		params => The params passed to the search/type:subtype hook
 		
 	* Example: To create an entity view for an ElggObject of subtype blog,
 	create a file called:
