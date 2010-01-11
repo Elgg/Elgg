@@ -2413,6 +2413,40 @@ interface Friendable {
 	public function countObjects($subtype = "");
 }
 
+/**
+ * Rebuilds the parsed URL
+ *
+ * @param array $parts Associative array of URL components like parse_url() returns
+ * @return str Full URL
+ * @since 1.7
+ */
+function elgg_http_build_url(array $parts) {
+	return "{$parts['scheme']}://{$parts['host']}{$parts['path']}?{$parts['query']}";
+}
+
+/**
+ * Ensures action tokens are present in the given link
+ *
+ * @param str $link Full action URL
+ * @return str Validated URL
+ * @since 1.7
+ */
+function elgg_validate_action_url($link) {
+	$url = parse_url($link);
+	parse_str($url['query'], $query);
+	if (array_key_exists('__elgg_token', $query)) {
+		return $link;
+	}
+
+	// apend action tokens to the existing query
+	$query['__elgg_ts'] = time();
+	$query['__elgg_token'] = generate_action_token($query['__elgg_ts']);
+	$url['query'] = http_build_query($query);
+
+	// rebuild the full url
+	return elgg_http_build_url($url);
+}
+
 
 /**
  * Server javascript pages.

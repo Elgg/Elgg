@@ -19,16 +19,8 @@ if (!$confirm) {
 	$confirm = elgg_echo('question:areyousure');
 }
 
-$link = $vars['href'];
-
-if (isset($vars['is_action']) && $vars['is_action']) {
-	$ts = time();
-	$token = generate_action_token($ts);
-
-	$sep = "?";
-	if (strpos($link, '?')>0) $sep = "&";
-	$link = "$link{$sep}__elgg_token=$token&__elgg_ts=$ts";
-}
+// always generate missing action tokens
+$link = elgg_validate_action_url($vars['href']);
 
 if (isset($vars['class']) && $vars['class']) {
 	$class = 'class="' . $vars['class'] . '"';
