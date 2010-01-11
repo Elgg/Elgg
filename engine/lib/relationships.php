@@ -558,7 +558,7 @@ function elgg_get_entity_relationship_where_sql($table, $relationship = NULL, $r
 	}
 
 	if ($relationship) {
-		$wheres[] = "r.relationship = '$relationship'";
+		$wheres[] = "r.relationship = '" . sanitise_string($relationship) . "'";
 	}
 
 	if ($relationship_guid) {
