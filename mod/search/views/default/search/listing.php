@@ -8,11 +8,10 @@
  * @link http://elgg.org/
  */
 
+$entities = $vars['results']['entities'];
+$count = $vars['results']['count'] - count($entities);
 
-$entities = $vars['entities'];
-$count = $vars['count'] - count($vars['entities']);
-
-if (!is_array($vars['entities']) || !count($vars['entities'])) {
+if (!is_array($entities) || !count($entities)) {
 	return FALSE;
 }
 
@@ -34,7 +33,7 @@ if (array_key_exists('pagination', $vars) && $vars['pagination']) {
 	$nav .= elgg_view('navigation/pagination',array(
 		'baseurl' => $url,
 		'offset' => $vars['params']['offset'],
-		'count' => $vars['count'],
+		'count' => $vars['results']['count'],
 		'limit' => $vars['params']['limit'],
 	));
 } else {
@@ -84,7 +83,7 @@ if (array_key_exists('pagination', $vars['params']) && $vars['params']['paginati
 	$nav .= elgg_view('navigation/pagination',array(
 		'baseurl' => $url,
 		'offset' => $vars['params']['offset'],
-		'count' => $vars['count'],
+		'count' => $vars['results']['count'],
 		'limit' => $vars['params']['limit'],
 	));
 } else {
@@ -92,7 +91,7 @@ if (array_key_exists('pagination', $vars['params']) && $vars['params']['paginati
 }
 
 // get any more links.
-$more_check = $vars['count'] - ($vars['params']['offset'] + $vars['params']['limit']);
+$more_check = $vars['results']['count'] - ($vars['params']['offset'] + $vars['params']['limit']);
 $more = ($more_check > 0) ? $more_check : 0;
 
 if ($more) {
@@ -106,31 +105,13 @@ if ($more) {
 $body = elgg_view_title($type_str);
 
 foreach ($entities as $entity) {
-	if ($owner = $entity->getOwnerEntity()) {
-		$icon = elgg_view('profile/icon', array('entity' => $owner, 'size' => 'small'));
-	} elseif ($entity instanceof ElggUser) {
-		$icon = elgg_view('profile/icon', array('entity' => $entity, 'size' => 'small'));
-	} else {
-		$icon = '';
+	if ($view = search_get_search_view($vars['params'], 'entity')) {
+		$body .= elgg_view($view, array(
+			'entity' => $entity,
+			'params' => $vars['params'],
+			'results' => $vars['results']
+		));
 	}
-	$title = $entity->getVolatileData('search_matched_title');
-	$description = $entity->getVolatileData('search_matched_description');
-	$extra_info = $entity->getVolatileData('search_matched_extra');
-	$url = $entity->getURL();
-	$title = "<a href=\"$url\">$title</a>";
-	$tc = $entity->time_created;
-	$tu = $entity->time_updated;
-	$time = friendly_time(($tu > $tc) ? $tu : $tc);
-
-	$body .= <<<___END
-	<div class="search_listing">
-		<div class="search_listing_icon">$icon</div>
-		<div class="search_listing_info">
-			<p class="ItemTitle">$title</p>$description
-			<p class="ItemTimestamp">$time $extra_info</p>
-		</div>
-	</div>
-___END;
 }
 echo $body;
 echo $more_link;

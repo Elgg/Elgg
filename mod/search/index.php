@@ -152,7 +152,9 @@ if ($search_type == 'all' || $search_type == 'entities') {
 				}
 
 				if (is_array($results['entities']) && $results['count']) {
-					$results_html .= search_get_listing_html($results['entities'], $results['count'], $params);
+					if ($view = search_get_search_view($params, 'listing')) {
+						$results_html .= elgg_view($view, array('results' => $results, 'params' => $params));
+					}
 				}
 			}
 		}
@@ -169,23 +171,23 @@ if ($search_type == 'all' || $search_type == 'entities') {
 		}
 
 		if (is_array($results['entities']) && $results['count']) {
-			$results_html .= search_get_listing_html($results['entities'], $results['count'], $params);
+			if ($view = search_get_search_view($params, 'listing')) {
+				$results_html .= elgg_view($view, array('results' => $results, 'params' => $params));
+			}
 		}
 	}
 }
 
 // call custom searches
 if ($search_type != 'entities' || $search_type == 'all') {
-	// get custom search types
-	$types = trigger_plugin_hook('search_types', 'get_types', $params, array());
-
-	if (is_array($types)) {
-		foreach ($types as $type) {
+	if (is_array($custom_types)) {
+		foreach ($custom_types as $type) {
 			if ($search_type != 'all' && $search_type != $type) {
 				continue;
 			}
 
 			$params['search_type'] = $type;
+			// custom search types have no subtype.
 			unset($params['subtype']);
 
 			$results = trigger_plugin_hook('search', $type, $params, array());
@@ -196,7 +198,9 @@ if ($search_type != 'entities' || $search_type == 'all') {
 			}
 
 			if (is_array($results['entities']) && $results['count']) {
-				$results_html .= search_get_listing_html($results['entities'], $results['count'], $params);
+				if ($view = search_get_search_view($params, 'listing')) {
+					$results_html .= elgg_view($view, array('results' => $results, 'params' => $params));
+				}
 			}
 		}
 	}

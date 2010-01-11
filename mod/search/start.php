@@ -316,48 +316,41 @@ function search_remove_ignored_words($query, $format = 'array') {
 
 
 /**
- * Passes entities, count, and original params to the view functions for
+ * Passes results, and original params to the view functions for
  * search type.
  *
- * @param array $entities
- * @param int $count
+ * @param array $results
  * @param array $params
+ * @param string $view_type = listing || entity
  * @return string
  */
-function search_get_listing_html($entities, $count, $params) {
-	if (!is_array($entities) || !$count) {
+function search_get_search_view($params, $view_type) {
+	if ($view_type != 'listing' && $view_type != 'entity') {
 		return FALSE;
 	}
-
 	$view_order = array();
 
-	// check if there's a special search view for this type:subtype
+	// check if there's a special search listing view for this type:subtype
 	if (isset($params['type']) && $params['type'] && isset($params['subtype']) && $params['subtype']) {
-		$view_order[] = "search/{$params['type']}/{$params['subtype']}/listing";
+		$view_order[] = "search/{$params['type']}/{$params['subtype']}/$view_type";
 	}
 
 	// also check for the default type
 	if (isset($params['type']) && $params['type']) {
-		$view_order[] = "search/{$params['type']}/listing";
+		$view_order[] = "search/{$params['type']}/$view_type";
 	}
 
 	// check search types
 	if (isset($params['search_type']) && $params['search_type']) {
-		$view_order[] = "search/{$params['search_type']}/listing";
+		$view_order[] = "search/{$params['search_type']}/$view_type";
 	}
 
 	// finally default to a search listing default
-	$view_order[] = "search/listing";
-
-	$vars = array(
-		'entities' => $entities,
-		'count' => $count,
-		'params' => $params
-	);
+	$view_order[] = "search/$view_type";
 
 	foreach ($view_order as $view) {
 		if (elgg_view_exists($view)) {
-			return elgg_view($view, $vars);
+			return $view;
 		}
 	}
 
