@@ -281,12 +281,7 @@ abstract class ElggEntity implements
 	 * @return bool
 	 */
 	function __isset($name) {
-		if ($this->$name!="") {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return $this->$name !== NULL;
 	}
 
 	/**
