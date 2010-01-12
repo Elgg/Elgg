@@ -1,4 +1,12 @@
 <?php
+/**
+ * Elgg core search.
+ *
+ * @package Elgg
+ * @subpackage Core
+ * @author Curverider Ltd <info@elgg.com>, The MITRE Corporation <http://www.mitre.org>
+ * @link http://elgg.org/
+ */
 
 // $search_type == all || entities || trigger plugin hook
 $search_type = get_input('search_type', 'all');
