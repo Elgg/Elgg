@@ -103,30 +103,40 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 		// clean up
 		$this->entity->delete();
 	}
-	
-	public function testElggObjectConstructorByObject() {
-		$guid = $this->entity->save();
 		
-		// stdClass: use guid
-		$object_row = $this->get_object_row($guid);
-		$entity_row = $this->get_entity_row($guid);
-		$this->assertIdentical($this->entity, new ElggObjectTest($object_row));
-		$this->assertIdentical($this->entity, new ElggObjectTest($entity_row));
+	public function testElggObjectClone() {
+		$this->entity->title = 'testing';
+		$this->entity->description = 'ElggObject';
+		$this->entity->var1 = "test";
+		$this->entity->var2 = 1;
+		$this->entity->var3 = true;
+		$this->entity->save();
 		
-		// copy attributes of ElggObject
-		$this->assertIdentical($this->entity, new ElggObjectTest($this->entity));
+		// add tag array
+		$tag_string = 'tag1, tag2, tag3';
+		$tagarray = string_to_tag_array($tag_string);
+		$this->entity->tags = $tagarray;
 		
-		// error on ElggEntity
-		$entity = new ElggEntityTest($guid);
-		try {
-			$error = new ElggObjectTest($entity);
-			$this->assertTrue(FALSE);
-		} catch (Exception $e) {
-			$this->assertIsA($e, 'InvalidParameterException');
-			$this->assertIdentical($e->getMessage(), elgg_echo('InvalidParameterException:NonElggObject'));
-		}
+		// a cloned ElggEntity has the guid reset
+		$object = clone $this->entity;
+		$this->assertIdentical(0, (int)$object->guid);
+		
+		// make sure attributes were copied over
+		$this->assertIdentical($object->title, 'testing');
+		$this->assertIdentical($object->description, 'ElggObject');
+		
+		$guid = $object->save();
+		$this->assertTrue($guid !== 0);
+		$this->assertTrue($guid !== $this->entity->guid);
+		
+		// test that metadata was transfered
+		$this->assertIdentical($this->entity->var1, $object->var1);
+		$this->assertIdentical($this->entity->var2, $object->var2);
+		$this->assertIdentical($this->entity->var3, $object->var3);
+		$this->assertIdentical($this->entity->tags, $object->tags);
 		
 		// clean up
+		$object->delete();
 		$this->entity->delete();
 	}
 	

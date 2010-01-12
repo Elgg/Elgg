@@ -183,9 +183,9 @@ function remove_metadata($entity_guid, $name, $value = "") {
 /**
  * Create a new metadata object, or update an existing one.
  *
- * @param int $entity_guid
- * @param string $name
- * @param string $value
+ * @param int $entity_guid The entity to attach the metadata to
+ * @param string $name Name of the metadata
+ * @param string $value Value of the metadata (cannot be associative array)
  * @param string $value_type
  * @param int $owner_guid
  * @param int $access_id

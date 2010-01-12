@@ -75,6 +75,8 @@ class ElggUser extends ElggEntity
 
 			// Is $guid is an ElggUser? Use a copy constructor
 			else if ($guid instanceof ElggUser) {
+				elgg_log('This type of usage of the ElggUser constructor was deprecated in 1.7. Please use the clone method.', 'WARNING');
+				
 				foreach ($guid->attributes as $key => $value) {
 					$this->attributes[$key] = $value;
 				}

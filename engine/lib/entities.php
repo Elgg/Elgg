@@ -124,6 +124,47 @@ abstract class ElggEntity implements
 	}
 
 	/**
+	 * Clone an entity 
+	 * 
+	 * Resets the guid so that the entity can be saved as a distinct entity from 
+	 * the original. Creation time will be set when this new entity is saved. 
+	 * The owner and container guids come from the original entity. The clone 
+	 * method copies metadata but does not copy over annotations, or private settings.
+	 * 
+	 * Note: metadata will have its owner and access id set when the entity is saved
+	 * and it will be the same as that off the entity.
+	 */
+	public function __clone() {
+		
+		$orig_entity = get_entity($this->guid);
+		if (!$orig_entity) {
+			elgg_log("Failed to clone entity with GUID $this->guid", "ERROR");
+			return;
+		}
+		
+		$metadata_array = get_metadata_for_entity($this->guid);
+
+		$this->attributes['guid'] = "";
+
+		// copy metadata over to new entity - slightly convoluted due to
+		// handling of metadata arrays
+		if (is_array($metadata_array)) {
+			// create list of metadata names
+			$metadata_names = array();
+			foreach ($metadata_array as $metadata) {
+				$metadata_names[] = $metadata['name'];
+			}
+			// arrays are stored with multiple enties per name
+			$metadata_names = array_unique($metadata_names);
+			
+			// move the metadata over
+			foreach ($metadata_names as $name) {
+				$this->set($name, $orig_entity->$name);
+			}
+		}
+	}
+	
+	/**
 	 * Return the value of a given key.
 	 * If $name is a key field (as defined in $this->attributes) that value is returned, otherwise it will
 	 * then look to see if the value is in this object's metadata.
@@ -265,10 +306,10 @@ abstract class ElggEntity implements
 	/**
 	 * Set a piece of metadata.
 	 *
-	 * @param string $name
-	 * @param mixed $value
-	 * @param string $value_type
-	 * @param bool $multiple
+	 * @param string $name Name of the metadata
+	 * @param mixed $value Value of the metadata
+	 * @param string $value_type Types supported: integer and string. Will auto-identify if not set
+	 * @param bool $multiple 
 	 * @return bool
 	 */
 	public function setMetaData($name, $value, $value_type = "", $multiple = false) {

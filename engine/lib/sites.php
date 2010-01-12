@@ -54,6 +54,8 @@ class ElggSite extends ElggEntity {
 
 			// Is $guid is an ElggSite? Use a copy constructor
 			else if ($guid instanceof ElggSite) {
+				elgg_log('This type of usage of the ElggSite constructor was deprecated in 1.7. Please use the clone method.', 'WARNING');
+				
 				foreach ($guid->attributes as $key => $value) {
 					$this->attributes[$key] = $value;
 				}

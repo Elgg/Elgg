@@ -119,29 +119,7 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 		$user = new ElggUser($row->username);
 		$this->assertIdentical($user, $_SESSION['user']);
 	}
-	
-	public function testElggUserConstructorByObject() {
-		$obj = new ElggUser(get_loggedin_userid());
-		$user = new ElggUser($obj);
-		$this->assertIdentical($obj, $user);
-		$this->assertIdentical($user, $_SESSION['user']);
 		
-		// fail on non-user object
-		$object = new ElggObject();
-		$object->save();
-		
-		try {
-			$error = new ElggUserTest($object);
-			$this->assertTrue(FALSE);
-		} catch (Exception $e) {
-			$this->assertIsA($e, 'InvalidParameterException');
-			$message = sprintf(elgg_echo('InvalidParameterException:NonElggUser'));
-			$this->assertIdentical($e->getMessage(), $message);
-		}
-		
-		$object->delete();
-	}
-	
 	public function testElggUserSave() {
 		// new object
 		$this->AssertEqual($this->user->getGUID(), 0);

@@ -54,6 +54,8 @@ class ElggObject extends ElggEntity {
 
 			// Is $guid is an ElggObject? Use a copy constructor
 			else if ($guid instanceof ElggObject) {
+				elgg_log('This type of usage of the ElggObject constructor was deprecated in 1.7. Please use the clone method.', 'WARNING');
+				
 				foreach ($guid->attributes as $key => $value) {
 					$this->attributes[$key] = $value;
 				}

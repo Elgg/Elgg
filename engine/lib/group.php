@@ -48,6 +48,8 @@ class ElggGroup extends ElggEntity
 			}
 			// Is $guid is an ElggGroup? Use a copy constructor
 			else if ($guid instanceof ElggGroup) {
+				elgg_log('This type of usage of the ElggGroup constructor was deprecated in 1.7. Please use the clone method.', 'WARNING');
+				
 				foreach ($guid->attributes as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
