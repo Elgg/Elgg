@@ -2447,6 +2447,32 @@ function elgg_validate_action_url($link) {
 	return elgg_http_build_url($url);
 }
 
+/**
+ * Returns the PHP INI setting in bytes
+ *
+ * @param str $setting
+ * @return int
+ * @since 1.7
+ * @link http://www.php.net/manual/en/function.ini-get.php
+ */
+function elgg_get_ini_setting_in_bytes($setting) {
+	// retrieve INI setting
+	$val = ini_get($setting);
+	
+	// convert INI setting when shorthand notation is used
+	$last = strtolower($val[strlen($val)-1]);
+	switch($last) {
+		case 'g':
+			$val *= 1024;
+		case 'm':
+			$val *= 1024;
+		case 'k':
+			$val *= 1024;
+	}
+	
+	// return byte value
+	return $val;
+}
 
 /**
  * Server javascript pages.
