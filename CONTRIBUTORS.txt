@@ -14,7 +14,7 @@ http://twitter.com/nogoodnick
 CONTRIBUTING DEVELOPERS
 
 Cash Costello - cash.costello@gmail.com
-Justin Richer - Mitre http://www.mitre.org/
+Justin Richer, Nathan Rackliffe, Tom Read - MITRE http://www.mitre.org/
 Milan Magudia - Hedgehogs.net
 
 ALUMNI DEVELOPERS/CONTRIBUTORS
