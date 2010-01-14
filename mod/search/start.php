@@ -378,7 +378,9 @@ function search_get_where_sql($table, $fields, $params, $use_fulltext = TRUE) {
 
 	// add the table prefix to the fields
 	foreach ($fields as $i => $field) {
-		$fields[$i] = "$table.$field";
+		if ($table) {
+			$fields[$i] = "$table.$field";
+		}
 	}
 
 	// if we're not using full text, rewrite the query for bool mode.
