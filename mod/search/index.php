@@ -22,13 +22,33 @@ $offset = ($search_type == 'all') ? 0 : get_input('offset', 0);
 $entity_type = get_input('entity_type', NULL);
 $entity_subtype = get_input('entity_subtype', NULL);
 $owner_guid = get_input('owner_guid', NULL);
-$friends = (int)get_input('friends', 0);
+$friends = get_input('friends', 0);
+$sort = get_input('sort');
+switch ($sort) {
+	case 'relevance':
+	case 'created':
+	case 'updated':
+	case 'action_on':
+	case 'alpha':
+		break;
+
+	default:
+		$sort = 'relevance';
+		break;
+}
+
+$order = get_input('sort', 'desc');
+if ($order != 'asc' && $order != 'desc') {
+	$order = 'desc';
+}
 
 // set up search params
 $params = array(
 	'query' => $query,
 	'offset' => $offset,
 	'limit' => $limit,
+	'sort' => $sort,
+	'order' => $order,
 	'search_type' => $search_type,
 	'type' => $entity_type,
 	'subtype' => $entity_subtype,
@@ -147,13 +167,13 @@ if ($search_type == 'all' || $search_type == 'entities') {
 				$current_params['subtype'] = $subtype;
 				$current_params['type'] = $type;
 
-				$entities = trigger_plugin_hook('search', "$type:$subtype", $current_params, NULL);
-				if ($entities === FALSE) {
+				$results = trigger_plugin_hook('search', "$type:$subtype", $current_params, NULL);
+				if ($results === FALSE) {
 					// someone is saying not to display these types in searches.
 					continue;
-				} elseif (is_array($entities) && !count($entities)) {
+				} elseif (is_array($results) && !count($results)) {
 					// no results, but results searched in hook.
-				} elseif (!$entities) {
+				} elseif (!$results) {
 					// no results and not hooked.  use default type search.
 					// don't change the params here, since it's really a different subtype.
 					// Will be passed to elgg_get_entities().

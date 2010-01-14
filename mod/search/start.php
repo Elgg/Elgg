@@ -424,6 +424,57 @@ function search_get_where_sql($table, $fields, $params, $use_fulltext = TRUE) {
 	return $where;
 }
 
+
+/**
+ * Returns ORDER BY sql for insertion into elgg_get_entities().
+ *
+ * @param str $entities_table Prefix for entities table.
+ * @param str $type_table Prefix for the type table.
+ * @param str $sort ORDER BY part
+ * @param str $order ASC or DESC
+ * @return str
+ */
+function search_get_order_by_sql($entities_table, $type_table, $sort, $order) {
+
+	$on = NULL;
+
+	switch ($sort) {
+		default:
+		case 'relevance':
+			// default is relevance descending.
+			// acending relevancy is silly and complicated.
+			$on = '';
+			break;
+		case 'created':
+			$on = "$entities_table.time_created";
+			break;
+		case 'updated':
+			$on = "$entities_table.time_updated";
+			break;
+		case 'action_on':
+			// @todo not supported yet in core
+			$on = '';
+			break;
+		case 'alpha':
+			// @todo not support yet because both title
+			// and name columns are used for this depending
+			// on the entity, which we don't always know.  >:O
+			break;
+	}
+
+	$order = strtolower($order);
+	if ($order != 'asc' && $order != 'desc') {
+		$order = 'DESC';
+	}
+
+	if ($on) {
+		$order_by = "ORDER BY $table.$column $dir";
+	} else {
+		$order_by = '';
+	}
+
+	return $ob;
+}
 /** Register init system event **/
 
 register_elgg_event_handler('init','system','search_init');

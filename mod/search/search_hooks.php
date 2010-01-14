@@ -28,8 +28,7 @@ function search_objects_hook($hook, $type, $value, $params) {
 
 	$params['wheres'] = array($where);
 
-	//@todo allow sorting by recent time
-	$params['order_by'] = NULL;
+	$params['order_by'] = search_get_order_by_sql('oe', $params['sort'], $params['order']);
 
 	$entities = elgg_get_entities($params);
 	$params['count'] = TRUE;
