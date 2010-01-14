@@ -124,8 +124,9 @@ if (!$query) {
 $results_html = '';
 
 if ($search_type == 'all' || $search_type == 'entities') {
-	// to pass the correct search type to the views
-	$params['search_type'] = 'entities';
+	// to pass the correct current search type to the views
+	$current_params = $params;
+	$current_params['search_type'] = 'entities';
 
 	// foreach through types.
 	// if a plugin returns FALSE for subtype ignore it.
@@ -143,10 +144,10 @@ if ($search_type == 'all' || $search_type == 'entities') {
 				if ($search_type != 'all' && $entity_subtype != $subtype) {
 					continue;
 				}
-				$params['subtype'] = $subtype;
-				$params['type'] = $type;
+				$current_params['subtype'] = $subtype;
+				$current_params['type'] = $type;
 
-				$entities = trigger_plugin_hook('search', "$type:$subtype", $params, NULL);
+				$entities = trigger_plugin_hook('search', "$type:$subtype", $current_params, NULL);
 				if ($entities === FALSE) {
 					// someone is saying not to display these types in searches.
 					continue;
@@ -156,12 +157,12 @@ if ($search_type == 'all' || $search_type == 'entities') {
 					// no results and not hooked.  use default type search.
 					// don't change the params here, since it's really a different subtype.
 					// Will be passed to elgg_get_entities().
-					$results = trigger_plugin_hook('search', $type, $params, array());
+					$results = trigger_plugin_hook('search', $type, $current_params, array());
 				}
 
 				if (is_array($results['entities']) && $results['count']) {
-					if ($view = search_get_search_view($params, 'listing')) {
-						$results_html .= elgg_view($view, array('results' => $results, 'params' => $params));
+					if ($view = search_get_search_view($current_params, 'listing')) {
+						$results_html .= elgg_view($view, array('results' => $results, 'params' => $current_params));
 					}
 				}
 			}
@@ -169,18 +170,18 @@ if ($search_type == 'all' || $search_type == 'entities') {
 
 		// pull in default type entities with no subtypes
 		// @todo this might currently means "all entities regardless of subtype"
-		$params['type'] = $type;
-		$params['subtype'] = 0;
+		$current_params['type'] = $type;
+		$current_params['subtype'] = 0;
 
-		$results = trigger_plugin_hook('search', $type, $params, array());
+		$results = trigger_plugin_hook('search', $type, $current_params, array());
 		if ($results === FALSE) {
 			// someone is saying not to display these types in searches.
 			continue;
 		}
 
 		if (is_array($results['entities']) && $results['count']) {
-			if ($view = search_get_search_view($params, 'listing')) {
-				$results_html .= elgg_view($view, array('results' => $results, 'params' => $params));
+			if ($view = search_get_search_view($current_params, 'listing')) {
+				$results_html .= elgg_view($view, array('results' => $results, 'params' => $current_params));
 			}
 		}
 	}
@@ -194,11 +195,12 @@ if ($search_type != 'entities' || $search_type == 'all') {
 				continue;
 			}
 
-			$params['search_type'] = $type;
+			$current_params = $params;
+			$current_params['search_type'] = $type;
 			// custom search types have no subtype.
-			unset($params['subtype']);
+			unset($current_params['subtype']);
 
-			$results = trigger_plugin_hook('search', $type, $params, array());
+			$results = trigger_plugin_hook('search', $type, $current_params, array());
 
 			if ($results === FALSE) {
 				// someone is saying not to display these types in searches.
@@ -206,8 +208,8 @@ if ($search_type != 'entities' || $search_type == 'all') {
 			}
 
 			if (is_array($results['entities']) && $results['count']) {
-				if ($view = search_get_search_view($params, 'listing')) {
-					$results_html .= elgg_view($view, array('results' => $results, 'params' => $params));
+				if ($view = search_get_search_view($current_params, 'listing')) {
+					$results_html .= elgg_view($view, array('results' => $results, 'params' => $current_params));
 				}
 			}
 		}
@@ -226,6 +228,12 @@ if (!$results_html) {
 	$body .= $results_html;
 }
 
-$layout = elgg_view_layout('two_column_left_sidebar', '', $body);
+// this is passed the original params because we don't care what actually
+// matched (which is out of date now anyway).
+// we want to know what search type it is.
+$layout_view = search_get_search_view($params, 'layout');
+$layout = elgg_view($layout_view, array('params' => $params, 'body' => $body));
+
+$title = sprintf(elgg_echo('search:results'), "\"{$params['query']}\"");
 
 page_draw($title, $layout);

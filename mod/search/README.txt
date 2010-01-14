@@ -1,4 +1,4 @@
-Full text search dev reference.
+Full text search developer's reference.
 
 1.  OVERVIEW
 
@@ -20,7 +20,7 @@ Full text search dev reference.
 	annotations, or private data it must register a search hook itself.
 
 
-2.  SEARCH AND YOUR PLUGIN
+2.  SEARCH AND CUSTOM PLUGINS
 
 	* To appear in search you must register your entity type and subtype
 	by saying in your plugin's init function:
@@ -36,9 +36,15 @@ Full text search dev reference.
 	and you don't need a custom display, there is nothing else you need 
 	to do for your results to appear in search.  If you would like more
 	granular control of search, continue below.
+
+3.0  CONTROLLING SEARCH RESULTS
+
+	* Search results can be controlled at a object:subtype level.
 	
+	* You can specify your own search types by responding to a hook.
+
 	
-3.1  CONTROLLING SEARCH -- ENTITIES
+3.1  CONTROLLING SEARCH RESULTS - ENTITIES RETURNED
 
 	* You can override the default search by responding to the search/type
 	or search/type:subtype hook.  Generally, you will be replying to 
@@ -48,14 +54,16 @@ Full text search dev reference.
 	results are returned (but not FALSE, see below) a hook for search/type 
 	will be triggered.  
 	
-	* FALSE returned for any search hook will halt results for that type/subtype.
+	* FALSE returned for any search hook will halt results for that 
+	type/subtype.
 	
 	* Register plugin hooks like this:
 	
-		register_plugin_hook('search', 'object:my_subtype', 'my_subtype_search_hook');
+		register_plugin_hook('search', 'object:my_subtype',
+			'my_subtype_search_hook');
 	
-	* The hooked function is provided with details about the search query in $param.
-	These include:
+	* The hooked function is provided with details about the search query
+	in $param.  These include:
 		query
 		offset
 		limit
@@ -88,7 +96,49 @@ Full text search dev reference.
 	you need.
 
 
-3.2  CONTROLLING SEARCH - ENTITY VIEWS
+3.2  CONTROLLING SEARCH RESULTS - CUSTOM SEARCH
+	
+	* Non-entities, including information from 3rd party applications,
+	can easily be included in search by registering a custom search hook
+	that responds to the search_types/get_types trigger:
+	
+		register_plugin_hook('search_types', 'get_types', 
+			'my_custom_search_hook_function');
+	
+	In this function, append to the array sent in $value with the name of 
+	your custom search:
+	
+		function my_custom_search_hook_function($hook, $type, 
+		$value, $params) {
+			$value[] = 'my_custom_search';
+			return $value;
+		}
+	
+	Search will trigger a hook for search/my_custom_search, which your 
+	plugin should respond to as detailed in section 3.1 above.
+
+
+4.0  CONTROLLING SEARCH VIEWS
+	* Three types views are used for displaying search: entity, listing, 
+	and layout.
+
+	* Each view has a default that standardizes the display of entities
+	regardless of type, subtype, or search type.
+
+	* The entity and listing views can be customized based upon a type,
+	subtype, or custom search type of the results.
+
+	* The layout view can be customized based upon the original search 
+	type. NB: This can be different to the types for the results.
+
+	* The entity view controls how each individual result is formatted.
+
+	* The listing view control how each group of listings is formatted.
+
+	* The listing layout controls how each full result set is formatted.
+
+
+4.1  CONTROLLING SEARCH VIEWS - ENTITIES
 
 	* The default view for entities is search/entity.
 
@@ -99,8 +149,8 @@ Full text search dev reference.
 	found and passes to the entity view.  See 3.3 for more information
 	about listing views.
 	
-	* Views are discovered in the following order.  The first search view 
-	found is used.
+	* Entity views are discovered in the following order.  The first search
+	view found is used.
 		search/type/subtype/entity (For entity-based searches only)
 		search/type/entity
 		search/entity
@@ -120,15 +170,15 @@ Full text search dev reference.
 		views/default/search/mysearch/entity.php
 	
 	
-3.3  CONTROLLING SEARCH - LISTING VIEWS
+4.2  CONTROLLING SEARCH VIEWS - LISTING
 
 	* The default search view is search/listing.
 	
 	* For each entity in the returned array, search expects two pieces of
 	volatile data: search_matched_title and search_matched_description.
 	
-	* Views are discovered in the following order.  The first search view 
-	found is used.
+	* Listing views are discovered in the following order.  The first 
+	search view found is used.
 		search/type/subtype/listing (For entity-based searches only)
 		search/type/listing
 		search/listing
@@ -144,26 +194,32 @@ Full text search dev reference.
 	To create a listing view for the custom search mysearch, create a file
 	called:
 		views/default/search/mysearch/listing.php
+		
 
+4.3  CONTROLLING SEARCH VIEWS - LAYOUT
+	
+	* The default layout view for search is search/layout, which calls
+	to elgg_view_layout(two_column_left_sidebar', '', $entity_results);
+	
+	* Layouts can be overridden only when not searching all entities.
+	
+	* Layout views are discovered in the following order.  The first search
+	view found is used.
+		search/type/subtype/layout (For entity-based searches only)
+		search/type/layout
+		search/layout
 
-3.4  CONTROLLING SEARCH - CUSTOM SEARCH
-	
-	* Non-entities, including information from 3rd party applications,
-	can easily be included in search by registering a custom search hook
-	that responds to the search_types/get_types trigger:
-	
-		register_plugin_hook('search_types', 'get_types', 'my_custom_search_hook_function');
-	
-	In this function, append to the array sent in $value with the name of 
-	your custom search:
-	
-		function my_custom_search_hook_function($hook, $type, $value, $params) {
-			$value[] = 'my_custom_search';
-			return $value;
-		}
-	
-	Search will trigger a hook for search/my_custom_search, which your 
-	plugin should respond to as detailed in section 3.1 above.
+	* The following parameters are passed in $vars to the layout view:
+		body => The HTML formatted list of results.
+		params => The original params for the search.
+
+	* Example: To create a layout view for ElggObjects with the subtype 
+	of blog, create a file called:
+		views/default/search/object/blog/layout.php
+		
+	To create a layout view for the custom search mysearch, create a file
+	called:
+		views/default/search/mysearch/layout.php
 
 
 4.  HINTS
@@ -176,8 +232,10 @@ Full text search dev reference.
 	uses volatile data.
 		$entity = new ElggObject();
 		$entity->owner_guid = use_magic_to_match_to_a_real_user();
-		$entity->setVolatileData('search_matched_title', '3rd Party Integration');
-		$entity->setVolatileData('search_matched_description', 'Searching is fun!');
+		$entity->setVolatileData('search_matched_title', 
+			'3rd Party Integration');
+		$entity->setVolatileData('search_matched_description', 
+			'Searching is fun!');
 		
 		return array(
 			'count' => $count,

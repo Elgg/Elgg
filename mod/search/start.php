@@ -321,13 +321,20 @@ function search_remove_ignored_words($query, $format = 'array') {
  *
  * @param array $results
  * @param array $params
- * @param string $view_type = listing || entity
+ * @param string $view_type = listing, entity or listing
  * @return string
  */
 function search_get_search_view($params, $view_type) {
-	if ($view_type != 'listing' && $view_type != 'entity') {
-		return FALSE;
+	switch ($view_type) {
+		case 'listing':
+		case 'entity':
+		case 'layout':
+			break;
+
+		default:
+			return FALSE;
 	}
+
 	$view_order = array();
 
 	// check if there's a special search listing view for this type:subtype
