@@ -56,7 +56,7 @@ function current_page_url() {
 	if ((isset($url['pass'])) && ($url['pass'])) {
 		$page .= ":".$url['pass'];
 	}
-	if ((isset($url['user']) && $url['user']) || 
+	if ((isset($url['user']) && $url['user']) ||
 		(isset($url['pass']) && $url['pass'])) {
 		$page .="@";
 	}
@@ -191,6 +191,11 @@ function elgg_view($view, $vars = "", $bypass = false, $debug = false, $viewtype
 
 	if (!is_array($usercache)) {
 			$usercache = array();
+	}
+
+	if (!is_array($vars)) {
+		elgg_log('Vars in views must be an array!', 'ERROR');
+		$vars = array();
 	}
 
 	if (empty($vars)) {
@@ -605,14 +610,14 @@ function elgg_view_tree($view_root, $viewtype = "") {
  *
  * Expects a view to exist called entity-type/subtype, or for the entity to have a parameter
  * 'view' which lists a different view to display.  In both cases, elgg_view will be called with
- * array('entity' => $entity, 'full' => $full) as its parameters, and therefore this is what 
+ * array('entity' => $entity, 'full' => $full) as its parameters, and therefore this is what
  * the view should expect to receive.
  *
  * @param ElggEntity $entity The entity to display
  * @param boolean $full Determines whether or not to display the full version of an object, or a smaller version for use in aggregators etc
  * @param boolean $bypass If set to true, elgg_view will bypass any specified alternative template handler; by default, it will hand off to this if requested (see set_template_handler)
  * @param boolean $debug If set to true, the viewer will complain if it can't find a view
- * @return string HTML to display or false 
+ * @return string HTML to display or false
  */
 function elgg_view_entity(ElggEntity $entity, $full = false, $bypass = true, $debug = false) {
 	global $autofeed;
@@ -622,7 +627,7 @@ function elgg_view_entity(ElggEntity $entity, $full = false, $bypass = true, $de
 	if (!$entity) {
 		return '';
 	}
-	
+
 	if (!($entity instanceof ElggEntity)) {
 		return false;
 	}
@@ -630,9 +635,9 @@ function elgg_view_entity(ElggEntity $entity, $full = false, $bypass = true, $de
 	// if this entity has a view defined, use it
 	$view = $entity->view;
 	if (is_string($view)) {
-		return elgg_view($view, 
-						array('entity' => $entity, 'full' => $full), 
-						$bypass, 
+		return elgg_view($view,
+						array('entity' => $entity, 'full' => $full),
+						$bypass,
 						$debug);
 	}
 
@@ -793,8 +798,8 @@ function elgg_view_annotation_list($annotations, $count, $offset, $limit) {
 /**
  * Display a selective rendered list of annotations for a given entity.
  *
- * The list is produced as the result of the entity:annotate plugin hook 
- * and is designed to provide a more generic framework to allow plugins 
+ * The list is produced as the result of the entity:annotate plugin hook
+ * and is designed to provide a more generic framework to allow plugins
  * to extend the generic display of entities with their own annotation
  * renderings.
  *
@@ -810,11 +815,11 @@ function elgg_view_entity_annotations(ElggEntity $entity, $full = true) {
 	if (!$entity) {
 		return false;
 	}
-	
+
 	if (!($entity instanceof ElggEntity)) {
 		return false;
 	}
-	
+
 	$entity_type = $entity->getType();
 
 	$annotations = trigger_plugin_hook('entity:annotate', $entity_type,
@@ -917,7 +922,7 @@ function get_submenu() {
 					if ($item->selected === NULL) {
 						$uri_info = parse_url($_SERVER['REQUEST_URI']);
 						$item_info = parse_url($item->value);
-						
+
 						// don't want to mangle already encoded queries but want to
 						// make sure we're comparing encoded to encoded.
 						// for the record, queries *should* be encoded
@@ -931,14 +936,14 @@ function get_submenu() {
 							$item_info['query'] = html_entity_decode($item_info['query']);
 							parse_str($item_info['query'], $item_params);
 						}
-						
+
 						$uri_info['path'] = trim($uri_info['path'], '/');
 						$item_info['path'] = trim($item_info['path'], '/');
 
 						// only if we're on the same path
 						// can't check server because sometimes it's not set in REQUEST_URI
 						if ($uri_info['path'] == $item_info['path']) {
-							
+
 							// if no query terms, we have a match
 							if (!isset($uri_info['query']) && !isset($item_info['query'])) {
 								$selected_key = $key;
@@ -1183,7 +1188,7 @@ function page_draw($title, $body, $sidebar = "") {
 		// we have errors - clear out remaining messages
 		system_messages(null, "");
 	}
-	
+
 	// Draw the page
 	$output = elgg_view('pageshells/pageshell', array(
 		'title' => $title,
@@ -1447,7 +1452,7 @@ function menu_item($menu_name, $menu_url) {
  * based on the $register parameters. Otherwise, any message or array of messages is added.
  *
  * @param string|array $message Optionally, a single message or array of messages to add, (default: null)
- * @param string $register This allows for different types of messages: "errors", "messages" (default: messages) 
+ * @param string $register This allows for different types of messages: "errors", "messages" (default: messages)
  * @param bool $count Count the number of messages (default: false)
  * @return true|false|array Either the array of messages, or a response regarding whether the message addition was successful
  */
@@ -1862,11 +1867,11 @@ function elgg_log($message, $level='NOTICE') {
  *
  * @param mixed $value
  * @param bool $to_screen
- * @param string $level 
+ * @param string $level
  * @return void
  */
 function elgg_dump($value, $to_screen = TRUE, $level = 'NOTICE') {
-	
+
 	// plugin can return false to stop the default logging method
 	$params = array('level' => $level,
 					'msg' => $value,
@@ -1874,7 +1879,7 @@ function elgg_dump($value, $to_screen = TRUE, $level = 'NOTICE') {
 	if (!trigger_plugin_hook('debug', 'log', $params, true)) {
 		return;
 	}
-	
+
 	if ($to_screen == TRUE) {
 		echo '<pre>';
 		print_r($value);
@@ -2458,7 +2463,7 @@ function elgg_validate_action_url($link) {
 function elgg_get_ini_setting_in_bytes($setting) {
 	// retrieve INI setting
 	$val = ini_get($setting);
-	
+
 	// convert INI setting when shorthand notation is used
 	$last = strtolower($val[strlen($val)-1]);
 	switch($last) {
@@ -2469,7 +2474,7 @@ function elgg_get_ini_setting_in_bytes($setting) {
 		case 'k':
 			$val *= 1024;
 	}
-	
+
 	// return byte value
 	return $val;
 }
