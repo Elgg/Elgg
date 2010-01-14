@@ -8,6 +8,8 @@ if (array_key_exists('value', $vars)) {
 	$value = elgg_echo('search');
 }
 
+$value = stripslashes($value);
+
 ?>
 
 <form id="searchform" action="<?php echo $vars['url']; ?>pg/search/" method="get">
