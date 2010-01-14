@@ -461,19 +461,18 @@ function search_get_order_by_sql($entities_table, $type_table, $sort, $order) {
 			// on the entity, which we don't always know.  >:O
 			break;
 	}
-
 	$order = strtolower($order);
 	if ($order != 'asc' && $order != 'desc') {
 		$order = 'DESC';
 	}
 
 	if ($on) {
-		$order_by = "ORDER BY $table.$column $dir";
+		$order_by = "$on $order";
 	} else {
 		$order_by = '';
 	}
 
-	return $ob;
+	return $order_by;
 }
 /** Register init system event **/
 
