@@ -875,6 +875,9 @@ function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight
 	// Size checking should be done in action code, but for backward compatibility
 	// this duplicates the previous behavior.
 	if (!$upscale && ($height < $new_height || $width < $new_width)) {
+		// zero out offsets
+		$widthoffset = $heightoffset = 0;
+
 		// determine if we can scale it down at all
 		// (ie, if only one dimension is too small)
 		// if not, just use original size.
@@ -885,9 +888,8 @@ function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight
 		} elseif ($width < $new_width) {
 			$ratio = $new_height / $height;
 		}
-
-		$new_height = floor($height * $ratio);
-		$new_width = floor($width * $ratio);
+		$region_height = $new_height = floor($height * $ratio);
+		$region_width = $new_width = floor($width * $ratio);
 	}
 
 	// load original image
