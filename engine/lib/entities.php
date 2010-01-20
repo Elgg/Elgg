@@ -124,24 +124,24 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Clone an entity 
-	 * 
-	 * Resets the guid so that the entity can be saved as a distinct entity from 
-	 * the original. Creation time will be set when this new entity is saved. 
-	 * The owner and container guids come from the original entity. The clone 
+	 * Clone an entity
+	 *
+	 * Resets the guid so that the entity can be saved as a distinct entity from
+	 * the original. Creation time will be set when this new entity is saved.
+	 * The owner and container guids come from the original entity. The clone
 	 * method copies metadata but does not copy over annotations, or private settings.
-	 * 
+	 *
 	 * Note: metadata will have its owner and access id set when the entity is saved
 	 * and it will be the same as that off the entity.
 	 */
 	public function __clone() {
-		
+
 		$orig_entity = get_entity($this->guid);
 		if (!$orig_entity) {
 			elgg_log("Failed to clone entity with GUID $this->guid", "ERROR");
 			return;
 		}
-		
+
 		$metadata_array = get_metadata_for_entity($this->guid);
 
 		$this->attributes['guid'] = "";
@@ -156,14 +156,14 @@ abstract class ElggEntity implements
 			}
 			// arrays are stored with multiple enties per name
 			$metadata_names = array_unique($metadata_names);
-			
+
 			// move the metadata over
 			foreach ($metadata_names as $name) {
 				$this->set($name, $orig_entity->$name);
 			}
 		}
 	}
-	
+
 	/**
 	 * Return the value of a given key.
 	 * If $name is a key field (as defined in $this->attributes) that value is returned, otherwise it will
@@ -304,7 +304,7 @@ abstract class ElggEntity implements
 	 * @param string $name Name of the metadata
 	 * @param mixed $value Value of the metadata
 	 * @param string $value_type Types supported: integer and string. Will auto-identify if not set
-	 * @param bool $multiple 
+	 * @param bool $multiple
 	 * @return bool
 	 */
 	public function setMetaData($name, $value, $value_type = "", $multiple = false) {
@@ -1672,9 +1672,13 @@ function get_entity($guid) {
  *
  * 	offset => NULL (0)|INT SQL offset clause
  *
- * 	time_lower => NULL|INT Time lower boundary in epoch time
+ * 	created_time_lower => NULL|INT Created time lower boundary in epoch time
  *
- * 	time_upper => NULL|INT Time upper boundary in epoch time
+ * 	created_time_upper => NULL|INT Created time upper boundary in epoch time
+ *
+ * 	modified_time_lower => NULL|INT Modified time lower boundary in epoch time
+ *
+ * 	modified_time_upper => NULL|INT Modified time upper boundary in epoch time
  *
  * 	count => TRUE|FALSE return a count instead of entities
  *
