@@ -22,7 +22,8 @@ $query = htmlspecialchars(http_build_query(
 		'entity_subtype' => $vars['params']['subtype'],
 		'limit' => get_input('limit', 10),
 		'offset' => get_input('offset', 0),
-		'search_type' => 'comments',
+		'search_type' => $vars['params']['search_type'],
+	//@todo include vars for sorting, order, and friend-only.
 	)
 ));
 
@@ -66,17 +67,6 @@ if (array_key_exists('search_type', $vars['params'])
 
 	$type_str = $search_type_str;
 }
-
-$query = htmlspecialchars(http_build_query(
-	array(
-		'q' => $vars['params']['query'],
-		'entity_type' => $vars['params']['type'],
-		'entity_subtype' => $vars['params']['subtype'],
-		'search_type' => 'entities',
-	)
-));
-
-$url = "{$vars['url']}pg/search?$query";
 
 // get pagination
 if (array_key_exists('pagination', $vars['params']) && $vars['params']['pagination']) {
