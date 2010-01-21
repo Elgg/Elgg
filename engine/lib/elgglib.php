@@ -172,13 +172,13 @@ function elgg_get_view_location($view, $viewtype = '') {
  * @param string $viewtype If set, forces the viewtype for the elgg_view call to be this value (default: standard detection)
  * @return string The HTML content
  */
-function elgg_view($view, $vars = "", $bypass = false, $debug = false, $viewtype = '') {
+function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $viewtype = '') {
 	global $CONFIG;
 	static $usercache;
 
 	// basic checking for bad paths
 	if (strpos($view, '..') !== false) {
-			return false;
+		return false;
 	}
 
 	$view_orig = $view;
@@ -190,7 +190,7 @@ function elgg_view($view, $vars = "", $bypass = false, $debug = false, $viewtype
 	}
 
 	if (!is_array($usercache)) {
-			$usercache = array();
+		$usercache = array();
 	}
 
 	if (!is_array($vars)) {
@@ -199,7 +199,7 @@ function elgg_view($view, $vars = "", $bypass = false, $debug = false, $viewtype
 	}
 
 	if (empty($vars)) {
-			$vars = array();
+		$vars = array();
 	}
 
 	// Load session and configuration variables into $vars
