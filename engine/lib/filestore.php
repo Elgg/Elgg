@@ -888,8 +888,10 @@ function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight
 		} elseif ($width < $new_width) {
 			$ratio = $new_height / $height;
 		}
-		$region_height = $new_height = floor($height * $ratio);
-		$region_width = $new_width = floor($width * $ratio);
+		$region_height = $height;
+		$region_width = $width;
+		$new_height = floor($height * $ratio);
+		$new_width = floor($width * $ratio);
 	}
 
 	// load original image
