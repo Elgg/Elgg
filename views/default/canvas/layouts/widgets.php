@@ -235,6 +235,14 @@ if (is_array($widgettypes) && sizeof($widgettypes) > 0 && $owner && $owner->canE
 
 <input type="hidden" name="context" value="<?php echo get_context(); ?>" />
 <input type="hidden" name="owner" value="<?php echo page_owner(); ?>" />
+
+<?php
+$ts = time();
+$token = generate_action_token($ts);
+?>
+<input type="hidden" name="__elgg_ts" value="<?php echo $ts; ?>" />
+<input type="hidden" name="__elgg_token" value="<?php echo $token; ?>" />
+
 <input type="submit" value="<?php echo elgg_echo('save'); ?>" class="submit_button" onclick="$('a.toggle_customise_edit_panel').click();" />
 <input type="button" value="<?php echo elgg_echo('cancel'); ?>" class="cancel_button" onclick="$('a.toggle_customise_edit_panel').click();" />
 

@@ -62,7 +62,9 @@
 
 
 <div id="elgg_topbar_container_right">
-		<a href="<?php echo $vars['url']; ?>action/logout"><small><?php echo elgg_echo('logout'); ?></small></a>
+		<small>
+			<?php echo elgg_view('output/action_link', array('href' => "{$vars['url']}action/logout", 'text' => elgg_echo('logout'))); ?>
+		</small>
 </div>
 
 <div id="elgg_topbar_container_search">

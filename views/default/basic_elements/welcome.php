@@ -13,4 +13,5 @@ $user = $vars['name'];
 ?>
 
 <p><?php echo sprintf(elgg_echo('welcome:user'), $user); ?></p>
-<p><a href="<?php echo $vars['url']; ?>action/logout">[logout]</a></p>
+<p><?php echo elgg_view('output/action_link', array('href' => "{$vars['url']}action/logout", 'text' => elgg_echo('logout'))); ?></p>
+

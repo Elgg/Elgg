@@ -11,8 +11,7 @@
 //add various views to area1
 $area1 = "<h2>" . sprintf(elgg_echo("welcome:user"),$vars['user']->name) . "</h2>";
 $area1 .= "<p>" . elgg_echo("welcome_message") . "</p><br />";
-$url = $vars['url'] . "action/logout";
-$area1 .= "<a href=" . $url . ">" . elgg_echo('logout') . "</a>";
+$area1 .= elgg_view('output/action_link', array('href' => "{$vars['url']}action/logout", 'text' => elgg_echo('logout')));
 
 //send area one to the appropriate canvas layout
 $body = elgg_view_layout("one_column", $area1);

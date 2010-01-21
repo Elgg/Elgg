@@ -21,6 +21,15 @@
 function action($action, $forwarder = "") {
 	global $CONFIG;
 
+	// All actions require a token.
+	if (!action_gatekeeper()) {
+		$message = "ERROR: $action was called without an action token and has been ignored.  This is usually caused by outdated 3rd party plugins.";
+
+		error_log($message);
+		register_error($message);
+		forward();
+	}
+
 	// if there are any query parameters, make them available from get_input
 	if (strpos($_SERVER['REQUEST_URI'], '?') !== FALSE) {
 		$query = substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], '?') + 1);
@@ -34,7 +43,7 @@ function action($action, $forwarder = "") {
 			}
 		}
 	}
-	
+
 	$forwarder = str_replace($CONFIG->url, "", $forwarder);
 	$forwarder = str_replace("http://", "", $forwarder);
 	$forwarder = str_replace("@", "", $forwarder);
@@ -56,18 +65,6 @@ function action($action, $forwarder = "") {
 				// since i assume this will be handled in the hook itself.
 				// TODO make this better!
 				if ($event_result) {
-					/** Refs #749: We now warn if action token is missing. Later this will be replaced with action_gatekeeper() as detailed in #750 */
-					if (!validate_action_token(false)) {
-						// Display a temporary warning message -
-						// in future versions this will be a hard fail via an action gatekeeper.
-						$message = "WARNING: Action $action was called without an action token. It is stongly recommended that you consider doing this. Plugin authors should use 'input/form' or pass is_action=true to 'output/confirmlink' or 'output/url'.";
-
-						//if ((!isset($CONFIG->disable_action_token_warning)) || (!$CONFIG->disable_action_token_warning))
-						//	register_error($message);
-
-						error_log($message);
-					}
-
 					if (!include($CONFIG->actions[$action]['file'])) {
 						register_error(sprintf(elgg_echo('actionundefined'),$action));
 					}
@@ -138,7 +135,7 @@ function validate_action_token($visibleerrors = true) {
 		$generated_token = generate_action_token($ts);
 
 		// Validate token
-		if (strcmp($token, $generated_token)==0) {
+		if ($token == $generated_token) {
 			$hour = 60*60;
 			$now = time();
 
@@ -169,7 +166,7 @@ function validate_action_token($visibleerrors = true) {
 		register_error(elgg_echo('actiongatekeeper:missingfields'));
 	}
 
-	return false;
+	return FALSE;
 }
 
 /**
@@ -181,7 +178,7 @@ function validate_action_token($visibleerrors = true) {
 */
 function action_gatekeeper() {
 	if (validate_action_token()) {
-		return true;
+		return TRUE;
 	}
 
 	forward();
@@ -210,7 +207,7 @@ function generate_action_token($timestamp) {
 		return md5($site_secret.$timestamp.$session_id.$ua.$st);
 	}
 
-	return false;
+	return FALSE;
 }
 
 /**
@@ -223,7 +220,7 @@ function init_site_secret() {
 		return $secret;
 	}
 
-	return false;
+	return FALSE;
 }
 
 /**

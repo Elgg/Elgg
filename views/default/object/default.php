@@ -30,7 +30,11 @@ if ($vars['full']) {
 
 	$controls = "";
 	if ($vars['entity']->canEdit()) {
-		$controls .= " (<a href=\"{$vars['url']}action/entities/delete?guid={$vars['entity']->guid}\">" . elgg_echo('delete') . "</a>)";
+		$delete = elgg_view('output/confirm_link', array(
+			'href' = "{$vars['url']}action/entities/delete?guid={$vars['entity']->guid}", 
+			'text' => elgg_echo('delete')
+		);
+		$controls .= " ($delete)";
 	}
 
 	$info = "<div><p><b><a href=\"" . $vars['entity']->getUrl() . "\">" . $title . "</a></b> $controls </p></div>";

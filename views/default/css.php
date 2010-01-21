@@ -2524,3 +2524,7 @@ div.ajax_loader {
 	float: left;
 	padding-right: 1em;
 }
+
+.draggable {
+	cursor: move;
+}
