@@ -2426,7 +2426,8 @@ interface Friendable {
  * @since 1.7
  */
 function elgg_http_build_url(array $parts) {
-	return "{$parts['scheme']}://{$parts['host']}{$parts['path']}?{$parts['query']}";
+	$port = (array_key_exists('port', $parts)) ? ":{$parts['port']}" : '';
+	return "{$parts['scheme']}://{$parts['host']}{$port}{$parts['path']}?{$parts['query']}";
 }
 
 /**
@@ -2439,11 +2440,11 @@ function elgg_http_build_url(array $parts) {
 function elgg_validate_action_url($link) {
 	$url = parse_url($link);
 	parse_str($url['query'], $query);
-	if (array_key_exists('__elgg_token', $query)) {
+	if (array_key_exists('__elgg_ts', $query) && array_key_exists('__elgg_token', $query)) {
 		return $link;
 	}
 
-	// apend action tokens to the existing query
+	// append action tokens to the existing query
 	$query['__elgg_ts'] = time();
 	$query['__elgg_token'] = generate_action_token($query['__elgg_ts']);
 	$url['query'] = http_build_query($query);
