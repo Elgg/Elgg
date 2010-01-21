@@ -740,10 +740,8 @@ function elgg_get_entity_metadata_where_sql($table, $names = NULL, $values = NUL
 			// if the operand is IN don't quote it because quoting should be done already.
 			//$value = trim(strtolower($operand)) == 'in' ? $pair['value'] : "'{$pair['value']}'";
 			if (trim(strtolower($operand)) == 'in' || is_numeric($pair['value'])) {
-				var_dump(sanitise_int($pair['value']));
 				$value = sanitise_string($pair['value']);
 			} else {
-				var_dump("Not clenaing {$pair['value']}");
 				$value = '\'' . sanitise_string($pair['value']) . '\'';
 			}
 
