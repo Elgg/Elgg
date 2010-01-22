@@ -27,7 +27,7 @@ function forward($location = "") {
 		$current_page = current_page_url();
 		if (strpos($current_page, $CONFIG->wwwroot . "action") ===false)
 
-		$_SESSION['messages'] = system_messages();
+		$_SESSION['msg'] = system_messages();
 		if ((substr_count($location, 'http://') == 0) && (substr_count($location, 'https://') == 0)) {
 			$location = $CONFIG->url . $location;
 		}
