@@ -33,7 +33,7 @@ if ($vars['full']) {
 		$delete = elgg_view('output/confirm_link', array(
 			'href' => "{$vars['url']}action/entities/delete?guid={$vars['entity']->guid}", 
 			'text' => elgg_echo('delete')
-		);
+		));
 		$controls .= " ($delete)";
 	}
 
