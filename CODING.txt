@@ -43,10 +43,11 @@ plugins, and tickets attached to Trac are expected to be in this format.
 *** DEPRECATING APIs ***
 
 Occasionally, functions and classes must be deprecated in favor of newer
-replacements.  Since 3rd party plugin authors rely on a consistent API, backward
-compatibility must be maintained, but will not be maintained indefinitely as
-plugin authors are expected to properly update their plugins.  In order to 
-maintain backward compatibility, deprecated APIs will follow these guidelines:
+replacements.  Since 3rd party plugin authors rely on a consistent API,
+backward compatibility must be maintained, but will not be maintained
+indefinitely as plugin authors are expected to properly update their
+plugins.  In order to maintain backward compatibility, deprecated APIs will
+follow these guidelines:
 
 * API changes cannot occur between bugfix versions (1.6.0 - 1.6.1).
 * API changes between minor versions (1.6 - 1.7) must maintain backward
@@ -62,9 +63,51 @@ The procedures for deprecating an API are as follows:
   compatibility, including any bugs in the original function/class.
   This wrapper function will use elgg_log('...', 'WARNING') to announce
   that the function is deprecated.
-* The second minor version (1.8) maintains the backward compatibility wrapper,
-  but in addition to elgg_log(), a register_error() message is also thrown.
+* The second minor version (1.8) maintains the backward compatibility
+  wrapper, but in addition to elgg_log(), a register_error() message is also
+  thrown.
 * The third minor version (1.9) removes the wrapper function.  Any use of 
   the deprecated API should be corrected before this.
 
 The general timeline for three minor releases is 8 to 12 months.
+
+
+*** CODING BEST PRACTICES ***
+
+The following best practices make code easier to read, easier to maintain,
+and easier to debug.  Consistent use of these guidelines means less guess
+work for developers.
+
+* Use self-documenting variable names.  $group_guids is better than $array.
+* Functions returning an array should return an empty array instead of FALSE
+  on no results.
+* If not throwing an exception, boolean FALSE should be returned by functions
+  on failure or error.
+* Functions returning only boolean should be prefaced with is_*(). (eg,
+  is_logged_in().)
+* Ternary syntax is acceptable for single-line, non-embedded statements.
+* Use comments effectively.  Good comments describe the "why."  Good code
+  describes the "how." Ex:
+	Not a very useful comment:
+
+	// increment $i only when the entity is marked as active.
+	foreach($entities as $entity) {
+		if ($entity->active == TRUE) {
+			$i++;
+		}
+	}
+
+	Useful comment:
+
+	// find the next index for inserting a new active entity.
+	foreach($entities as $entity) {
+		if ($entity->active == TRUE) {
+			$i++;
+		}
+	}
+* Commit effectively: Err on the side of atomic commits.  One revision with
+  many changes is scary.
+* Commit effectively part 2: Use concise, meaningful commit messages. Ex:
+	Not meaningful: "Fixed some bugs in groups."
+	Meaningful: "Fixes #1234: Missing ) added in group profile page."
+
