@@ -114,6 +114,12 @@ if (get_input('settings') == 'go') {
 			enable_plugin('search', $site->getGUID());
 		}
 
+		// reset the views path in case of installing over an old data dir.
+		// @todo should this warn / error first?
+		$dataroot = datalist_get('dataroot');
+		$cache = new ElggFileCache($dataroot);
+		$cache->delete('view_paths');
+
 		// Now ping home
 		if ($usage) {
 			ping_home($site);
