@@ -8,7 +8,6 @@
  * @link http://elgg.org/
  */
 
-require_once(dirname(dirname(dirname(dirname(__FILE__)))) . "/engine/start.php");
 
 // block non-admin users
 admin_gatekeeper();

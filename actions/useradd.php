@@ -8,8 +8,6 @@
  * @link http://elgg.org/
  */
 
-require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
-
 admin_gatekeeper(); // Only admins can add a user
 action_gatekeeper();
 

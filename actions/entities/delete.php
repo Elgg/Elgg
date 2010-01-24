@@ -8,8 +8,6 @@
  * @link http://elgg.org/
  */
 
-require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
-
 gatekeeper();
 
 $guid = get_input('guid');
