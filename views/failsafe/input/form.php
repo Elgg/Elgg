@@ -41,7 +41,13 @@ if (isset($vars['method'])) {
 
 $method = strtolower($method);
 
+// Generate a security header
+$security_header = "";
+if (!isset($vars['disable_security']) || $vars['disable_security'] != true) {
+	$security_header = elgg_view('input/securitytoken');
+}
 ?>
 <form <?php if ($id) { ?>id="<?php echo $id; ?>" <?php } ?> <?php if ($name) { ?>name="<?php echo $name; ?>" <?php } ?> action="<?php echo $action; ?>" method="<?php echo $method; ?>" <?php if ($enctype!="") echo "enctype=\"$enctype\""; ?>>
+<?php echo $security_header; ?>
 <?php echo $body; ?>
 </form>
