@@ -25,9 +25,10 @@ function forward($location = "") {
 
 	if (!headers_sent()) {
 		$current_page = current_page_url();
-		if (strpos($current_page, $CONFIG->wwwroot . "action") ===false)
+		// What is this meant to do?
+		//if (strpos($current_page, $CONFIG->wwwroot . "action") ===false)
 
-		$_SESSION['msg'] = system_messages();
+		$_SESSION['msg'] = array_merge($_SESSION['msg'], system_messages());
 		if ((substr_count($location, 'http://') == 0) && (substr_count($location, 'https://') == 0)) {
 			$location = $CONFIG->url . $location;
 		}
