@@ -21,6 +21,9 @@
 function action($action, $forwarder = "") {
 	global $CONFIG;
 
+	// set GET params
+	elgg_set_input_from_uri();
+
 	// @todo REMOVE THESE EXCEPTIONS IN 1.8.
 	// These are only to provide a way to disable plugins that overwrite core
 	// UI without tokens.  (And for installation because of session_id problems)
@@ -31,27 +34,7 @@ function action($action, $forwarder = "") {
 
 	if (!in_array($action, $exceptions)) {
 		// All actions require a token.
-		if (!action_gatekeeper()) {
-			$message = "ERROR: $action was called without an action token and has been ignored.  This is usually caused by outdated 3rd party plugins.";
-
-			error_log($message);
-			register_error($message);
-			forward();
-		}
-	}
-
-	// if there are any query parameters, make them available from get_input
-	if (strpos($_SERVER['REQUEST_URI'], '?') !== FALSE) {
-		$query = substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], '?') + 1);
-		if (isset($query)) {
-			parse_str($query, $query_arr);
-			if (is_array($query_arr)) {
-				foreach($query_arr as $name => $val) {
-					// should we trim name and val?
-					set_input($name, $val);
-				}
-			}
-		}
+		action_gatekeeper();
 	}
 
 	$forwarder = str_replace($CONFIG->url, "", $forwarder);
