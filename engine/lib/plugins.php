@@ -228,7 +228,14 @@ function load_plugins() {
 				if (is_plugin_enabled($mod)) {
 					if (file_exists($CONFIG->pluginspath . $mod)) {
 						if (!include($CONFIG->pluginspath . $mod . "/start.php")) {
-							throw new PluginException(sprintf(elgg_echo('PluginException:MisconfiguredPlugin'), $mod));
+							// automatically disable the bad plugin
+							disable_plugin($mod);
+							
+							// register error rather than rendering the site unusable with exception
+							register_error(sprintf(elgg_echo('PluginException:MisconfiguredPlugin'), $mod));
+							
+							// continue loading remaining plugins
+							continue;
 						}
 
 						if (!$cached_view_paths) {

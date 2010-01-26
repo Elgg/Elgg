@@ -54,7 +54,7 @@ $english = array(
 
 	'InvalidClassException:NotValidElggStar' => "GUID:%d is not a valid %s",
 
-	'PluginException:MisconfiguredPlugin' => "%s is a misconfigured plugin.",
+	'PluginException:MisconfiguredPlugin' => "%s is a misconfigured plugin. It has been disabled. Please see the Elgg wiki for possible causes.",
 
 	'InvalidParameterException:NonElggUser' => "Passing a non-ElggUser to an ElggUser constructor!",
 

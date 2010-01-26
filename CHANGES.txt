@@ -7,6 +7,7 @@ http://code.elgg.org/elgg/.....
   * Unit tests added to System diagnostics.
   * Debug values output to screen when enabled in admin settings.
   * Users can now log in from multiple computers or browsers concurrently.
+  * Misconfigured plugins no longer break the site. #1454
   * New search system.
 
  Bugfixes:
