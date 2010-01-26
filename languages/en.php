@@ -413,7 +413,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	'user:set:name' => "Account name settings",
 	'user:name:label' => "Your name",
 	'user:name:success' => "Successfully changed your name on the system.",
-	'user:name:fail' => "Could not change your name on the system.",
+	'user:name:fail' => "Could not change your name on the system.  Please make sure your name isn't too long and try again.",
 
 	'user:set:password' => "Account password",
 	'user:password:label' => "Your new password",

@@ -12,7 +12,7 @@ global $CONFIG;
 
 gatekeeper();
 
-$name = get_input('name');
+$name = strip_tags(get_input('name'));
 $user_id = get_input('guid');
 $user = "";
 
@@ -22,8 +22,13 @@ if (!$user_id) {
 	$user = get_entity($user_id);
 }
 
-if (($user) && ($name)) {
-	if (strcmp($name, $user->name)!=0) {
+if (elgg_strlen($name) > 50) {
+	register_error(elgg_echo('user:name:fail'));
+	forward($_SERVER['HTTP_REFERER']);
+}
+
+if (($user) && ($user->canEdit()) && ($name)) {
+	if ($name != $user->name) {
 		$user->name = $name;
 		if ($user->save()) {
 			system_message(elgg_echo('user:name:success'));
