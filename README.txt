@@ -1,4 +1,4 @@
-Elgg version 1.6.1
+Elgg version 1.7
 Copyright (c) 2008-2009 Curverider Ltd
 
 This program is free software; you can redistribute it and/or modify
@@ -26,7 +26,7 @@ Ben Werdmuller <ben@elgg.com> and David Tosh <dave@elgg.com>
 
 The open source project site can be found at http://elgg.org/
 
-Elgg 1.6.1 is released under the GNU Public License (GPL), which
+Elgg is released under the GNU Public License (GPL), which
 is supplied in this distribution as LICENSE.
 
 For installation instructions, please see the INSTALL file.
