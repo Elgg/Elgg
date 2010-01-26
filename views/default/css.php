@@ -2495,7 +2495,7 @@ div.ajax_loader {
 }
 
 .ac_loading {
-	background: white url(<?php echo $vars['url']; ?>_graphics/indicator.gif') right center no-repeat;
+	background: white url(<?php echo $vars['url']; ?>_graphics/indicator.gif) right center no-repeat;
 }
 
 .ac_odd {
