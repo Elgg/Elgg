@@ -8,6 +8,7 @@ http://code.elgg.org/elgg/.....
   * Debug values output to screen when enabled in admin settings.
   * Users can now log in from multiple computers or browsers concurrently.
   * Misconfigured plugins no longer break the site. #1454
+  * User display names cannot have HTML or be longer than 50 characters.
   * New search system.
 
  Bugfixes:
