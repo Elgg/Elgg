@@ -451,9 +451,16 @@ function logout() {
 
 	setcookie("elggperm", "", (time()-(86400 * 30)),"/");
 
+	// pass along any messages
+	$old_msg = $_SESSION['msg'];
+
 	session_destroy();
 
-	return true;
+	// starting a default session to store any post-logout messages.
+	session_init(NULL, NULL, NULL);
+	$_SESSION['msg'] = $old_msg;
+
+	return TRUE;
 }
 
 /**
