@@ -1637,6 +1637,22 @@ function register_elgg_event_handler($event, $object_type, $function, $priority 
 }
 
 /**
+ * Unregisters a function to a particular kind of event
+ *
+ * @param string $event The event type
+ * @param string $object_type The object type
+ * @param string $function The function name
+ */
+function unregister_elgg_event_handler($event, $object_type, $function) {
+	global $CONFIG;
+	foreach($CONFIG->events[$event][$object_type] as $key => $event_function) {
+		if ($event_function == $function) {
+			unset($CONFIG->events[$event][$object_type][$key]);
+		}
+	}
+}
+
+/**
  * Alias function for events, that triggers a particular kind of event
  *
  * @param string $event The event type
@@ -1700,6 +1716,22 @@ function register_plugin_hook($hook, $entity_type, $function, $priority = 500) {
 		return true;
 	} else {
 		return false;
+	}
+}
+
+/**
+ * Unregister a function to a plugin hook for a particular entity type
+ *
+ * @param string $hook The name of the hook
+ * @param string $entity_type The name of the type of entity (eg "user", "object" etc)
+ * @param string $function The name of a valid function to be run
+ */
+function unregister_plugin_hook($hook, $entity_type, $function) {
+	global $CONFIG;
+	foreach($CONFIG->hooks[$hook][$entity_type] as $key => $hook_function) {
+		if ($hook_function == $function) {
+			unset($CONFIG->hooks[$hook][$entity_type][$key]);
+		}
 	}
 }
 
