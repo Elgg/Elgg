@@ -17,7 +17,7 @@ http://code.elgg.org/elgg/.....
   * Invalid views now default to 'default' view. #1161.
   * Metadata cache now handles a 0 string. #1227
   * ElggPlugin get() now works with 0. #1286
-  * Metadata __isset() now works for falsy entities (except NULL). #1414
+  * Metadata __isset() now works for falsy values (except NULL). #1414
 
  API changes:
   * New plugin hook system:unit_test for adding files to unit tests.
@@ -28,7 +28,8 @@ http://code.elgg.org/elgg/.....
   * Deprecated get_entities_from_access_id(). Use elgg_get_entities_from_access_id().
   * Deprecated get_entities_from_annotations().  Use elgg_get_entities_from_annotations().
   * Reorganized directory file path to rely on GUID instead of username.
-  * annotation_id column added to the river database table
+  * annotation_id column added to the river database table.
+  * unregister_elgg_event_handler() and unregister_plugin_hook() added. #1465
 
  Services API:
   * Separated user and api authenticate processing
