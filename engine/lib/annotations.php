@@ -1136,10 +1136,11 @@ function delete_annotation($id) {
 	$annotation = get_annotation($id);
 
 	if (trigger_elgg_event('delete', 'annotation', $annotation)) {
-		return delete_data("DELETE from {$CONFIG->dbprefix}annotations  where id=$id and $access");
+		remove_from_river_by_annotation($id);
+		return delete_data("DELETE from {$CONFIG->dbprefix}annotations where id=$id and $access");
 	}
 
-	return false;
+	return FALSE;
 }
 
 /**
