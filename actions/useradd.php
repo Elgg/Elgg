@@ -36,6 +36,7 @@ try {
 
 		$new_user->admin_created = true;
 		$new_user->created_by_guid = get_loggedin_userid();
+		set_user_validation_status($new_user->getGUID(), TRUE, 'admin_created');
 
 		notify_user($new_user->guid, $CONFIG->site->guid, elgg_echo('useradd:subject'), sprintf(elgg_echo('useradd:body'), $name, $CONFIG->site->name, $CONFIG->site->url, $username, $password));
 

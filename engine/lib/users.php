@@ -1298,7 +1298,7 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
 	global $registering_admin;
 	if (!$have_admin) {
 		$user->admin = true;
-		$user->validated = 'admin';
+		set_user_validation_status($user->getGUID(), TRUE, 'first_run');
 		datalist_set('admin_registered', 1);
 		$registering_admin = true;
 	} else {
