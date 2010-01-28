@@ -53,10 +53,10 @@ class ElggPlugin extends ElggObject {
 		$meta = get_private_setting($this->guid, $name);
 
 		if ($meta === false) {
-			// Can't find it, so return null 
+			// Can't find it, so return null
 			return NULL;
 		}
-			
+
 		return $meta;
 	}
 
@@ -230,10 +230,10 @@ function load_plugins() {
 						if (!include($CONFIG->pluginspath . $mod . "/start.php")) {
 							// automatically disable the bad plugin
 							disable_plugin($mod);
-							
+
 							// register error rather than rendering the site unusable with exception
 							register_error(sprintf(elgg_echo('PluginException:MisconfiguredPlugin'), $mod));
-							
+
 							// continue loading remaining plugins
 							continue;
 						}
@@ -554,11 +554,25 @@ function clear_plugin_setting($name, $plugin_name = "") {
 	$plugin = find_plugin_settings($plugin_name);
 
 	if ($plugin) {
-		//$plugin->clearMetaData($name);
+		return remove_private_setting($plugin->guid, $name);
+	}
+
+	return FALSE;
+}
+
+/**
+ * Clear all plugin settings.
+ *
+ * @param string $plugin_name Optional plugin name, if not specified then it is detected from where you are calling from.
+ */
+function clear_all_plugin_settings($plugin_name = "") {
+	$plugin = find_plugin_settings($plugin_name);
+
+	if ($plugin) {
 		return remove_all_private_settings($plugin->guid);
 	}
 
-	return false;
+	return FALSE;
 }
 
 /**
