@@ -18,6 +18,7 @@ http://code.elgg.org/elgg/.....
   * Metadata cache now handles a 0 string. #1227
   * ElggPlugin get() now works with 0. #1286
   * Metadata __isset() now works for falsy values (except NULL). #1414
+  * clear_plugin_setting() now only clears a single setting.
 
  API changes:
   * New plugin hook system:unit_test for adding files to unit tests.
@@ -31,6 +32,7 @@ http://code.elgg.org/elgg/.....
   * annotation_id column added to the river database table.
   * remove_from_river_by_annotation() added.
   * unregister_elgg_event_handler() and unregister_plugin_hook() added. #1465
+  * clear_all_plugin_settings() added.
 
  Services API:
   * Separated user and api authenticate processing
