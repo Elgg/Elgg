@@ -12,9 +12,6 @@ require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 admin_gatekeeper();
 set_context('admin');
 
-// Set admin user for user block
-set_page_owner($_SESSION['guid']);
-
 // system diagnostics
 $body = elgg_view_title(elgg_echo('diagnostics'));
 $body .= elgg_view('page_elements/contentwrapper', array('body' => 

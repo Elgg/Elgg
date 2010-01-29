@@ -13,9 +13,6 @@
 
 	admin_gatekeeper();
 	set_context('admin');
-	// Set admin user for user block
-		set_page_owner($_SESSION['guid']);
-
 	
 	$limit = get_input('limit', 40);
 	$offset = get_input('offset');

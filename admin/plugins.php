@@ -15,9 +15,6 @@ require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
 // Make sure only valid admin users can see this
 admin_gatekeeper();
 
-// Set admin user for user block
-//set_page_owner($_SESSION['guid']);
-
 // Regenerate plugin list
 regenerate_plugin_list();
 
