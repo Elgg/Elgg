@@ -470,12 +470,14 @@ function remove_entity_relationships($guid_one, $relationship = "", $inverse = f
  *
  * @param int $guid
  */
-function get_entity_relationships($guid) {
+function get_entity_relationships($guid, $inverse_relationship = FALSE) {
 	global $CONFIG;
 
 	$guid = (int)$guid;
 
-	$query = "SELECT * from {$CONFIG->dbprefix}entity_relationships where guid_one=$guid";
+	$where = ($inverse_relationship ? "guid_two='$guid'" : "guid_one='$guid'");
+
+	$query = "SELECT * from {$CONFIG->dbprefix}entity_relationships where {$where}";
 
 	return get_data($query, "row_to_elggrelationship");
 }
