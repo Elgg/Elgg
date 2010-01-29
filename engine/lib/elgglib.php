@@ -375,6 +375,14 @@ function elgg_view_register_simplecache($viewname) {
 function elgg_view_regenerate_simplecache() {
 	global $CONFIG;
 
+	// @todo elgg_view() checks if the page set is done (isset($CONFIG->pagesetupdone)) and
+	// triggers an event if it's not. Calling elgg_view() here breaks submenus
+	// (at least) because the page setup hook is called before any
+	// contexts can be correctly set (since this is called before page_handler()).
+	// To avoid this, lie about $CONFIG->pagehandlerdone to force
+	// the trigger correctly when the first view is actually being output.
+	$CONFIG->pagesetupdone = TRUE;
+
 	if (isset($CONFIG->views->simplecache)) {
 		if (!file_exists($CONFIG->dataroot . 'views_simplecache')) {
 			@mkdir($CONFIG->dataroot . 'views_simplecache');
@@ -391,8 +399,10 @@ function elgg_view_regenerate_simplecache() {
 			}
 		}
 
-	datalist_set('simplecache_lastupdate', 0);
+		datalist_set('simplecache_lastupdate', 0);
 	}
+
+	unset($CONFIG->pagesetupdone);
 }
 
 /**
