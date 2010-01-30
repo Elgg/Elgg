@@ -2489,7 +2489,7 @@ function elgg_validate_action_url($link) {
 		$query = array();
 	}
 
-	if (array_key_exists('__elgg_ts', $query) && array_key_exists('__elgg_token', $query)) {
+	if (isset($query['__elgg_ts']) && isset($query['__elgg_token'])) {
 		return $link;
 	}
 
