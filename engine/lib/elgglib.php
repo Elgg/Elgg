@@ -2482,7 +2482,13 @@ function elgg_http_build_url(array $parts) {
  */
 function elgg_validate_action_url($link) {
 	$url = parse_url($link);
-	parse_str($url['query'], $query);
+
+	if (isset($url['query'])) {
+		parse_str($url['query'], $query);
+	} else {
+		$query = array();
+	}
+
 	if (array_key_exists('__elgg_ts', $query) && array_key_exists('__elgg_token', $query)) {
 		return $link;
 	}
