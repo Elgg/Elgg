@@ -111,15 +111,29 @@ function sanitise_filepath($path) {
  * @return string The output stirng with formatted links
  **/
 function parse_urls($text) {
-	return preg_replace_callback('/(?<!=["\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\'\!\(\)]+)/i',
+	// @todo this causes problems with <attr = "val">
+	// must be ing <attr="val"> format (no space).
+	// By default htmlawed rewrites tags to this format.
+	// if PHP supported conditional negative lookbehinds we could use this:
+	// $r = preg_replace_callback('/(?<!=)(?<![ ])?(?<!["\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\'\!\(\),]+)/i',
+	//
+	// we can put , in the list of excluded char but need to keep . because of domain names.
+	// it is removed in the callback.
+	$r = preg_replace_callback('/(?<!=)(?<!["\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\'\!\(\),]+)/i',
 	create_function(
 		'$matches',
 		'
 			$url = $matches[1];
+			if (substr($url, -1, 1) == \'.\') {
+				$period = \'.\';
+				$url = trim($url, \'.\');
+			}
 			$urltext = str_replace("/", "/<wbr />", $url);
-			return "<a href=\"$url\" style=\"text-decoration:underline;\">$urltext</a>";
+			return "<a href=\"$url\" style=\"text-decoration:underline;\">$urltext</a>$period";
 		'
 	), $text);
+
+	return $r;
 }
 
 /**
