@@ -124,6 +124,7 @@ function parse_urls($text) {
 		'$matches',
 		'
 			$url = $matches[1];
+			$period = \'\';
 			if (substr($url, -1, 1) == \'.\') {
 				$period = \'.\';
 				$url = trim($url, \'.\');
