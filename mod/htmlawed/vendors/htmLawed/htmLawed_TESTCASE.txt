@@ -1,6 +1,6 @@
 /*
-htmLawed_TESTCASE.txt, 23 April 2009
-htmLawed 1.1.8, 23 April 2009
+htmLawed_TESTCASE.txt, 22 December 2009
+htmLawed 1.1.9, 22 December 2009
 Copyright Santosh Patnaik
 GPL v3 license
 A PHP Labware internal utility - http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed
@@ -247,6 +247,7 @@ Invalid: <em <!-- check -->>comment in tag content</em>, <!--check-->
 Inscrieţi-vă acum la a Zecea Conferinţă Internaţională<br />
 გთხოვთ ახლავე გაიაროთ რეგისტრაცია<br />
 večjezično računalništvo<br />
+<a title="อ.อ่าง">อ.อ่าง</a><br />
 <a title="הירשמו
 כעת לכנס ">Зарегистрируйтесь сейчас
 на Десятую Международную Конференцию по</a><br />

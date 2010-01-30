@@ -64,7 +64,7 @@ span.totop a, span.totop a:visited {color: #6699cc;}
 &#160; <span class="toc-item"><a href="#s2.6"><span class="item-no">2.6</span>&#160; Use without modifying old <span class="term">kses()</span>&#160;code</a></span><br />
 &#160; <span class="toc-item"><a href="#s2.7"><span class="item-no">2.7</span>&#160; Tolerance for ill-written HTML</a></span><br />
 &#160; <span class="toc-item"><a href="#s2.8"><span class="item-no">2.8</span>&#160; Limitations &amp; work-arounds</a></span><br />
-&#160; <span class="toc-item"><a href="#s2.9"><span class="item-no">2.9</span>&#160; Examples</a></span><br />
+&#160; <span class="toc-item"><a href="#s2.9"><span class="item-no">2.9</span>&#160; Examples of usage</a></span><br />
 <span class="toc-item"><a href="#s3"><span class="item-no">3</span>&#160; Details</a></span><br />
 &#160; <span class="toc-item"><a href="#s3.1"><span class="item-no">3.1</span>&#160; Invalid/dangerous characters</a></span><br />
 &#160; <span class="toc-item"><a href="#s3.2"><span class="item-no">3.2</span>&#160; Character references/entities</a></span><br />
@@ -110,8 +110,8 @@ span.totop a, span.totop a:visited {color: #6699cc;}
 
 <div id="body">
 <br />
-<div class="comment">htmLawed_README.txt, 23 April 2009<br />
-htmLawed 1.1.8, 23 April 2009<br />
+<div class="comment">htmLawed_README.txt, 22 December 2009<br />
+htmLawed 1.1.9, 22 December 2009<br />
 Copyright Santosh Patnaik<br />
 GPL v3 license<br />
 A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed">http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed</a>&#160;</div>
@@ -180,7 +180,7 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 <br />
 &#160; * &#160;remove <strong>null</strong>&#160;characters &#160;*<br />
 &#160; * &#160;neutralize potentially dangerous proprietary Netscape <strong>Javascript entities</strong>&#160; *<br />
-&#160; * &#160;replace potentially dangerous <strong>soft-hyphen</strong>&#160;character in attribute values with spaces &#160;*<br />
+&#160; * &#160;replace potentially dangerous <strong>soft-hyphen</strong>&#160;character in URL-accepting attribute values with spaces &#160;*<br />
 <br />
 &#160; * &#160;remove common <strong>invalid characters</strong>&#160;not allowed in HTML or XML &#160;^`<br />
 &#160; * &#160;replace <strong>characters from Microsoft applications</strong>&#160;like <span class="term">Word</span>&#160;that are discouraged in HTML or XML &#160;^~`<br />
@@ -726,8 +726,91 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 
 </div>
 <div class="sub-section"><h3>
-<a name="s2.9" id="s2.9"></a><span class="item-no">2.9</span>&#160; Examples
+<a name="s2.9" id="s2.9"></a><span class="item-no">2.9</span>&#160; Examples of usage
 </h3><span class="totop"><a href="#peak">(to top)</a></span><br style="clear: both;" />
+<br />
+&#160; Safest, allowing only <em>safe</em>&#160;HTML markup --<br />
+<br />
+
+<code class="code">&#160; &#160; $config = array(&#39;safe&#39;=&gt;1);</code>
+<br />
+
+<code class="code">&#160; &#160; $out = htmLawed($in);</code>
+<br />
+<br />
+&#160; Simplest, allowing all valid HTML markup except <span class="term">javascript&#58;</span>&#160;--<br />
+<br />
+
+<code class="code">&#160; &#160; $out = htmLawed($in);</code>
+<br />
+<br />
+&#160; Allowing all valid HTML markup including <span class="term">javascript&#58;</span>&#160;--<br />
+<br />
+
+<code class="code">&#160; &#160; $config = array(&#39;schemes&#39;=&gt;&#39;&#42;&#58;&#42;&#39;);</code>
+<br />
+
+<code class="code">&#160; &#160; $out = htmLawed($in, $config);</code>
+<br />
+<br />
+&#160; Allowing only <span class="term">safe</span>&#160;HTML and the elements <span class="term">a</span>, <span class="term">em</span>, and <span class="term">strong</span>&#160;--<br />
+<br />
+
+<code class="code">&#160; &#160; $config = array(&#39;safe&#39;=&gt;1, &#39;elements&#39;=&gt;&#39;a, em, strong&#39;);</code>
+<br />
+
+<code class="code">&#160; &#160; $out = htmLawed($in, $config);</code>
+<br />
+<br />
+&#160; Not allowing elements <span class="term">script</span>&#160;and <span class="term">object</span>&#160;--<br />
+<br />
+
+<code class="code">&#160; &#160; $config = array(&#39;elements&#39;=&gt;&#39;&#42; -script -object&#39;);</code>
+<br />
+
+<code class="code">&#160; &#160; $out = htmLawed($in, $config);</code>
+<br />
+<br />
+&#160; Not allowing attributes <span class="term">id</span>&#160;and <span class="term">style</span>&#160;--<br />
+<br />
+
+<code class="code">&#160; &#160; $config = array(&#39;deny_attribute&#39;=&gt;&#39;id, style&#39;);</code>
+<br />
+
+<code class="code">&#160; &#160; $out = htmLawed($in, $config);</code>
+<br />
+<br />
+&#160; Permitting only attributes <span class="term">title</span>&#160;and <span class="term">href</span>&#160;--<br />
+<br />
+
+<code class="code">&#160; &#160; $config = array(&#39;deny_attribute&#39;=&gt;&#39;&#42; -title -href&#39;);</code>
+<br />
+
+<code class="code">&#160; &#160; $out = htmLawed($in, $config);</code>
+<br />
+<br />
+&#160; Remove bad/disallowed tags altogether instead of converting them to entities --<br />
+<br />
+
+<code class="code">&#160; &#160; $config = array(&#39;keep_bad&#39;=&gt;0);</code>
+<br />
+
+<code class="code">&#160; &#160; $out = htmLawed($in, $config);</code>
+<br />
+<br />
+&#160; Allowing attribute <span class="term">title</span>&#160;only in <span class="term">a</span>&#160;and not allowing attributes <span class="term">id</span>, <span class="term">style</span>, or scriptable <em>on*</em>&#160;attributes like <span class="term">onclick</span>&#160;--<br />
+<br />
+
+<code class="code">&#160; &#160; $config = array(&#39;deny_attribute&#39;=&gt;&#39;title, id, style, on&#42;&#39;);</code>
+<br />
+
+<code class="code">&#160; &#160; $spec = &#39;a=title&#39;;</code>
+<br />
+
+<code class="code">&#160; &#160; $out = htmLawed($in, $config, $spec);</code>
+<br />
+<br />
+&#160; Some case-studies are presented below.<br />
 <br />
 &#160; <strong>1.</strong>&#160;A blog administrator wants to allow only <span class="term">a</span>, <span class="term">em</span>, <span class="term">strike</span>, <span class="term">strong</span>&#160;and <span class="term">u</span>&#160;in comments, but needs <span class="term">strike</span>&#160;and <span class="term">u</span>&#160;transformed to <span class="term">span</span>&#160;for better XHTML 1-strict compliance, and, he wants the <span class="term">a</span>&#160;links to be to <span class="term">http</span>&#160;or <span class="term">https</span>&#160;resources:<br />
 <br />
@@ -772,14 +855,14 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 <br />
 &#160; The character values are replaced with entities/characters and not character values referred to by the entities/characters to keep this task independent of the character-encoding of input text.<br />
 <br />
-&#160; The <span class="term">$config["clean_ms_char"]</span>&#160;parameter need not be used if authors do not copy-paste Microsoft-created text or if the input text is not believed to use the <span class="term">Windows 1252</span>&#160;or a similar encoding. Further, the input form and the web-pages displaying it or its content should have the character encoding appropriately marked-up.<br />
+&#160; The <span class="term">$config["clean_ms_char"]</span>&#160;parameter should not be used if authors do not copy-paste Microsoft-created text, or if the input text is not believed to use the <span class="term">Windows 1252</span>&#160;(<span class="term">Cp-1252</span>) or a similar encoding like <span class="term">Cp-1251</span>. Further, the input form and the web-pages displaying it or its content should have the character encoding appropriately marked-up.<br />
 
 </div>
 <div class="sub-section"><h3>
 <a name="s3.2" id="s3.2"></a><span class="item-no">3.2</span>&#160; Character references/entities
 </h3><span class="totop"><a href="#peak">(to top)</a></span><br style="clear: both;" />
 <br />
-&#160; Valid character entities take the form <span class="term">&amp;&#42;;</span>&#160;where <span class="term">&#42;</span>&#160;is <span class="term">#x</span>&#160;followed by a hexadecimal number (hexadecimal numeric entity; like <span class="term">&amp;#xA0;</span>&#160;for non-breaking space), or alphanumeric like <span class="term">gt</span>&#160;(external or named entity; like <span class="term">&amp;nbsp;</span>&#160;for non-breaking space), or <span class="term">#</span>&#160;followed by a number (decimal numeric entity; like <span class="term">&amp;#160;</span>&#160;for non-breaking space). Character entities referring to the soft-hyphen character (the <span class="term">&amp;shy;</span>&#160;or <span class="term">\xad</span>&#160;character; hexadecimal code-point <span class="term">ad</span>&#160;[decimal <span class="term">173</span>]) in attribute values are always replaced with spaces; soft-hyphens in attribute values introduce vulnerabilities in some older versions of the Opera and Mozilla [Firefox] browsers.<br />
+&#160; Valid character entities take the form <span class="term">&amp;&#42;;</span>&#160;where <span class="term">&#42;</span>&#160;is <span class="term">#x</span>&#160;followed by a hexadecimal number (hexadecimal numeric entity; like <span class="term">&amp;#xA0;</span>&#160;for non-breaking space), or alphanumeric like <span class="term">gt</span>&#160;(external or named entity; like <span class="term">&amp;nbsp;</span>&#160;for non-breaking space), or <span class="term">#</span>&#160;followed by a number (decimal numeric entity; like <span class="term">&amp;#160;</span>&#160;for non-breaking space). Character entities referring to the soft-hyphen character (the <span class="term">&amp;shy;</span>&#160;or <span class="term">\xad</span>&#160;character; hexadecimal code-point <span class="term">ad</span>&#160;[decimal <span class="term">173</span>]) in URL-accepting attribute values are always replaced with spaces; soft-hyphens in attribute values introduce vulnerabilities in some older versions of the Opera and Mozilla [Firefox] browsers.<br />
 <br />
 &#160; htmLawed (function <span class="term">hl_ent()</span>):<br />
 <br />
@@ -1605,6 +1688,10 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 <br />
 &#160; <em>Version number - Release date. Notes</em><br />
 <br />
+&#160; 1.1.9 - 22 December 2009. Soft-hyphens are now removed only from URL-accepting attribute values<br />
+<br />
+&#160; 1.1.8.1 - 16 July 2009. Minor code-change to fix a PHP error notice<br />
+<br />
 &#160; 1.1.8 - 23 April 2009. Parameter <span class="term">deny_attribute</span>&#160;now accepts the wild-card <span class="term">&#42;</span>, making it simpler to specify its value when all but a few attributes are being denied; fixed a bug in interpreting <span class="term">$spec</span><br />
 <br />
 &#160; 1.1.7 - 11-12 March 2009. Attributes globally denied through <span class="term">deny_attribute</span>&#160;can be allowed element-specifically through <span class="term">$spec</span>; <span class="term">$config["style_pass"]</span>&#160;allowing letting through any <span class="term">style</span>&#160;value introduced; altered logic to catch certain types of dynamic crafted CSS expressions<br />
@@ -1658,7 +1745,7 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 <a name="s4.6" id="s4.6"></a><span class="item-no">4.6</span>&#160; Comparison with <span class="term">HTMLPurifier</span>
 </h3><span class="totop"><a href="#peak">(to top)</a></span><br style="clear: both;" />
 <br />
-&#160; The HTMLPurifier PHP library by Edward Yang is a very good HTML filtering script that uses object oriented PHP code. Compared to htmLawed, it:<br />
+&#160; The HTMLPurifier PHP library by Edward Yang is a very good HTML filtering script that uses object oriented PHP code. Compared to htmLawed, it (as of mid-2009):<br />
 <br />
 &#160; * &#160;does not support PHP versions older than 5.0 (HTMLPurifier dropped PHP 4 support after version 2)<br />
 <br />
@@ -1970,7 +2057,7 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 </div>
 </div>
 <br />
-<hr /><br /><br /><span class="subtle"><small>HTM version of <em><a href="htmLawed_README.txt">htmLawed_README.txt</a></em> generated on 23 Apr, 2009 using <a href="http://www.bioinformatics.org/phplabware/internal_utilities">rTxt2htm</a> from PHP Labware</small></span>
+<hr /><br /><br /><span class="subtle"><small>HTM version of <em><a href="htmLawed_README.txt">htmLawed_README.txt</a></em> generated on 22 Dec, 2009 using <a href="http://www.bioinformatics.org/phplabware/internal_utilities">rTxt2htm</a> from PHP Labware</small></span>
 </div><!-- ended div body -->
 </div><!-- ended div top -->
 </body>
