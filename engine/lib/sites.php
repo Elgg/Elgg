@@ -501,8 +501,10 @@ function get_site_by_url($url) {
  * @param int $offset Offset.
  * @param string $order_by The order.
  * @param boolean $count Whether to return the count of results or just the results.
+ * @deprecated 1.7
  */
 function search_for_site($criteria, $limit = 10, $offset = 0, $order_by = "", $count = false) {
+	elgg_log('search_for_site() was deprecated in 1.7.', 'WARNING');
 	global $CONFIG;
 
 	$criteria = sanitise_string($criteria);

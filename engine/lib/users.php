@@ -869,8 +869,10 @@ function get_user_by_email($email) {
  * @param int $offset Offset.
  * @param string $order_by The order.
  * @param boolean $count Whether to return the count of results or just the results.
+ * @deprecated 1.7
  */
 function search_for_user($criteria, $limit = 10, $offset = 0, $order_by = "", $count = false) {
+	elgg_log('search_for_user() was deprecated in 1.7.', 'WARNING');
 	global $CONFIG;
 
 	$criteria = sanitise_string($criteria);
@@ -913,8 +915,10 @@ function search_for_user($criteria, $limit = 10, $offset = 0, $order_by = "", $c
  * @param string $tag Search criteria
  * @param int $limit The number of entities to display on a page
  * @return string The list in a form suitable to display
+ * @deprecated 1.7
  */
 function list_user_search($tag, $limit = 10) {
+	elgg_log('list_user_search() deprecated in 1.7', 'WARNING');
 	$offset = (int) get_input('offset');
 	$limit = (int) $limit;
 	$count = (int) search_for_user($tag, 10, 0, '', true);
@@ -1540,9 +1544,10 @@ function users_init() {
 
 /**
  * Returns a formatted list of users suitable for injecting into search.
- *
+ * @deprecated 1.7
  */
 function search_list_users_by_name($hook, $user, $returnvalue, $tag) {
+	elgg_log('search_list_users_by_name() was deprecated in 1.7', 'WARNING');
 	// Change this to set the number of users that display on the search page
 	$threshold = 4;
 

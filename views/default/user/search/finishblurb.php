@@ -4,7 +4,10 @@
  * @subpackage Core
  * @author Curverider Ltd
  * @link http://elgg.org/
+ * @deprecated 1.7
  */
+
+elgg_log('view user/search/finishblurb was deprecated in 1.7', 'WARNING');
 
 if ($vars['count'] > $vars['threshold']) {
 

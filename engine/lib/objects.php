@@ -293,8 +293,10 @@ function delete_object_entity($guid) {
  * @param int $offset Offset.
  * @param string $order_by The order.
  * @param boolean $count Whether to return the count of results or just the results.
+ * @deprecated 1.7
  */
 function search_for_object($criteria, $limit = 10, $offset = 0, $order_by = "", $count = false) {
+	elgg_log('search_for_object was deprecated in 1.7.', 'WARNING');
 	global $CONFIG;
 
 	$criteria = sanitise_string($criteria);
@@ -355,9 +357,12 @@ function objects_test($hook, $type, $value, $params) {
 
 /**
  * Returns a formatted list of objects suitable for injecting into search.
+ * @deprecated 1.7
  *
  */
 function search_list_objects_by_name($hook, $user, $returnvalue, $tag) {
+	elgg_log('search_list_objects_by_name was deprecated in 1.7.', 'WARNING');
+
 	// Change this to set the number of users that display on the search page
 	$threshold = 4;
 

@@ -36,6 +36,8 @@ http://code.elgg.org/elgg/.....
   * clear_all_plugin_settings() added.
   * get_entity_relationships() supports inverse relationships. #1472.
   * can_write_to_container() can be overridden with the container_permissions_check hook. #1164 (part 2).
+  * Deprecated search_for_*().
+  * Deprecated search_list*().
 
  Services API:
   * Separated user and api authenticate processing

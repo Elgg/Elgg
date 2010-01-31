@@ -867,8 +867,10 @@ function add_group_tool_option($name,$label,$default_on=true) {
  * @param int $offset Offset.
  * @param string $order_by The order.
  * @param boolean $count Whether to return the count of results or just the results.
+ * @deprecated 1.7
  */
 function search_for_group($criteria, $limit = 10, $offset = 0, $order_by = "", $count = false) {
+	elgg_log('search_for_group() was deprecated in 1.7.', 'WARNING');
 	global $CONFIG;
 
 	$criteria = sanitise_string($criteria);
@@ -905,9 +907,10 @@ function search_for_group($criteria, $limit = 10, $offset = 0, $order_by = "", $
 
 /**
  * Returns a formatted list of groups suitable for injecting into search.
- *
+ * @deprecated 1.7
  */
 function search_list_groups_by_name($hook, $user, $returnvalue, $tag) {
+	elgg_log('search_list_groups_by_name() was deprecated in 1.7.', 'WARNING');
 	// Change this to set the number of groups that display on the search page
 	$threshold = 4;
 
@@ -935,8 +938,10 @@ function search_list_groups_by_name($hook, $user, $returnvalue, $tag) {
  * @param string $tag Search criteria
  * @param int $limit The number of entities to display on a page
  * @return string The list in a form suitable to display
+ * @deprecated 1.7
  */
 function list_group_search($tag, $limit = 10) {
+	elgg_log('list_group_search() was deprecated in 1.7.', 'WARNING');
 	$offset = (int) get_input('offset');
 	$limit = (int) $limit;
 	$count = (int) search_for_group($tag, 10, 0, '', true);

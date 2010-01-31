@@ -8,6 +8,8 @@
  * @link http://elgg.org/
  */
 
+var_dump("arg");
+
 $entities = $vars['results']['entities'];
 $count = $vars['results']['count'] - count($entities);
 

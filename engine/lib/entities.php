@@ -3576,8 +3576,6 @@ function entities_init() {
 	register_plugin_hook('permissions_check:metadata','all','recursive_delete_permissions_check');
 
 	register_plugin_hook('gc','system','entities_gc');
-
-	register_plugin_hook('search','all','search_list_entities_by_name');
 }
 
 /** Register the import hook */
