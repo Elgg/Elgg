@@ -81,6 +81,7 @@ function htmlawed_hook($element, $attribute_array) {
 	// to only add a space if needed.
 	if ($string = trim($string)) {
 		$string = " $string";
+	}
 	
 	$r = "<$element$string>";
 	return $r;
