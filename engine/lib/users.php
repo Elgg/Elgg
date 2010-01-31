@@ -76,7 +76,7 @@ class ElggUser extends ElggEntity
 			// Is $guid is an ElggUser? Use a copy constructor
 			else if ($guid instanceof ElggUser) {
 				elgg_log('This type of usage of the ElggUser constructor was deprecated in 1.7. Please use the clone method.', 'WARNING');
-				
+
 				foreach ($guid->attributes as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
@@ -1446,6 +1446,20 @@ function new_user_enable_permissions_check($hook, $entity_type, $returnvalue, $p
 }
 
 /**
+ * Creates a relationship between this site and the user.
+ *
+ * @param $event
+ * @param $object_type
+ * @param $object
+ * @return bool
+ */
+function user_create_hook_add_site_relationship($event, $object_type, $object) {
+	global $CONFIG;
+
+	add_entity_relationship($object->getGUID(), 'member_of_site', $CONFIG->site->getGUID());
+}
+
+/**
  * Sets up user-related menu items
  *
  */
@@ -1516,6 +1530,8 @@ function users_init() {
 	register_entity_type('user','');
 
 	register_plugin_hook('usersettings:save','user','users_settings_save');
+
+	register_elgg_event_handler('create', 'user', 'user_create_hook_add_site_relationship');
 
 	// Handle a special case for newly created users when the user is not logged in
 	// TODO: handle this better!
