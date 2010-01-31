@@ -9,6 +9,10 @@
  */
 
 header("Content-Type: text/xml");
+
+// disable caching for stupid MS products.
+header('Pragma: public', TRUE);
+
 echo "<?xml version='1.0'?>\n";
 
 // Set title
