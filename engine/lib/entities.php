@@ -1471,7 +1471,7 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $entity_typ
 		$container_guid = page_owner();
 	}
 	if (!$container_guid) {
-		return true;
+		$return = TRUE;
 	}
 
 	$container = get_entity($container_guid);
@@ -1479,21 +1479,21 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $entity_typ
 	if ($container) {
 		// If the user can edit the container, they can also write to it
 		if ($container->canEdit($user_guid)) {
-			return true;
+			$return = TRUE;
 		}
 
 		// Basics, see if the user is a member of the group.
 		if ($user && $container instanceof ElggGroup) {
 			if (!$container->isMember($user)) {
-				return false;
+				$return = FALSE;
 			} else {
-				return true;
+				$return = TRUE;
 			}
 		}
 
 		// See if anyone else has anything to say
 		return trigger_plugin_hook('container_permissions_check', $entity_type,
-			array('container' => $container, 'user' => $user), false);
+			array('container' => $container, 'user' => $user), $return);
 	}
 
 	return false;

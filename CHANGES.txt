@@ -35,6 +35,7 @@ http://code.elgg.org/elgg/.....
   * unregister_elgg_event_handler() and unregister_plugin_hook() added. #1465
   * clear_all_plugin_settings() added.
   * get_entity_relationships() supports inverse relationships. #1472.
+  * can_write_to_container() can be overridden with the container_permissions_check hook. #1164 (part 2).
 
  Services API:
   * Separated user and api authenticate processing
