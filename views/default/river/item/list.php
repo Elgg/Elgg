@@ -26,7 +26,7 @@
 
 	if ($vars['pagination'] !== false) {
 		$baseurl = $_SERVER['REQUEST_URI'];
-		$baseurl = $baseurl = preg_replace('/[\&\?]offset\=[0-9]*/',"",$baseurl);
+		$baseurl = elgg_http_remove_url_query_element($baseurl, 'offset');
 
 		$nav = '';
 

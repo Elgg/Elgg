@@ -38,7 +38,7 @@ if (isset($vars['nonefound'])) {
 $totalpages = ceil($count / $limit);
 $currentpage = ceil($offset / $limit) + 1;
 
-$baseurl = preg_replace('/[\&\?]'.$word.'\=[0-9]*/',"",$vars['baseurl']);
+$baseurl = elgg_http_remove_url_query_element($vars['baseurl'], $word);
 
 //only display if there is content to paginate through or if we already have an offset
 if (($count > $limit || $offset > 0) && get_context() != 'widget') {

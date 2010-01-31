@@ -2462,15 +2462,23 @@ interface Friendable {
 }
 
 /**
- * Rebuilds the parsed URL
+ * Rebuilds a parsed (partial) URL
  *
  * @param array $parts Associative array of URL components like parse_url() returns
  * @return str Full URL
  * @since 1.7
  */
 function elgg_http_build_url(array $parts) {
-	$port = (array_key_exists('port', $parts)) ? ":{$parts['port']}" : '';
-	return "{$parts['scheme']}://{$parts['host']}{$port}{$parts['path']}?{$parts['query']}";
+	// build only what's given to us.
+	$scheme = isset($parts['scheme']) ? "{$parts['scheme']}://" : '';
+	$host = isset($parts['host']) ? "{$parts['host']}" : '';
+	$port = isset($parts['port']) ? "{$parts['port']}" : '';
+	$path = isset($parts['path']) ? "{$parts['path']}" : '';
+	$query = isset($parts['query']) ? "?{$parts['query']}" : '';
+
+	$string = $scheme . $host . $port . $path . $query;
+
+	return $string;
 }
 
 /**
@@ -2501,6 +2509,33 @@ function elgg_validate_action_url($link) {
 	// rebuild the full url
 	return elgg_http_build_url($url);
 }
+
+/**
+ * Removes a single elementry from a (partial) url query.
+ *
+ * @param string $url
+ * @param string $element
+ * @return string
+ */
+function elgg_http_remove_url_query_element($url, $element) {
+	$url = parse_url($url);
+
+	if (isset($url['query'])) {
+		parse_str($url['query'], $query);
+	} else {
+		// nothing to remove.
+		return $url;
+	}
+
+	if (array_key_exists($element, $query)) {
+		unset($query[$element]);
+	}
+
+	$url['query'] = http_build_query($query);
+	$string = elgg_http_build_url($url);
+	return $string;
+}
+
 
 /**
  * Returns the PHP INI setting in bytes

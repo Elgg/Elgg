@@ -8,7 +8,7 @@
  * @link http://elgg.org/
  */
 
-$baseurl = preg_replace('/[\&\?]search\_viewtype\=[A-Za-z0-9]*/',"",$vars['baseurl']);
+$baseurl = elgg_http_remove_url_query_element($vars['baseurl'], 'search_viewtype');
 
 if ($vars['viewtype'] == "list") {
 	$viewtype = "gallery";
