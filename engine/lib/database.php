@@ -184,7 +184,7 @@ function execute_query($query, $dblink) {
 	}
 
 	if (mysql_errno($dblink)) {
-		throw new DatabaseException(mysql_error($dblink) . " QUERY: " . $query);
+		throw new DatabaseException(mysql_error($dblink) . "\n\n QUERY: " . $query);
 	}
 
 	return $result;
