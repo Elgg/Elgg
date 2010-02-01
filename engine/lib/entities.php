@@ -2285,9 +2285,10 @@ function list_entities_groups($subtype = "", $owner_guid = 0, $container_guid = 
  * @param string $subtype The subtype of entity
  * @param int $container_guid The container GUID that the entinties belong to
  * @param int $site_guid The site GUID
+ * @param str order_by SQL order by clause
  * @return array|false Either an array of timestamps, or false on failure
  */
-function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $site_guid = 0) {
+function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $site_guid = 0, $order_by = 'time_created') {
 	global $CONFIG;
 
 	$site_guid = (int) $site_guid;
@@ -2322,10 +2323,12 @@ function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $site_
 			$where[] = "({$tempwhere})";
 		}
 	} else {
-		if ($subtype AND !$subtype = get_subtype_id($type, $subtype)) {
-			return false;
-		} else {
-			$where[] = "subtype=$subtype";
+		if ($subtype) {
+			if (!$subtype_id = get_subtype_id($type, $subtype)) {
+				return FALSE;
+			} else {
+				$where[] = "subtype=$subtype";
+			}
 		}
 	}
 
@@ -2354,7 +2357,7 @@ function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $site_
 		$sql .= " $w and ";
 	}
 
-	$sql .= "1=1";
+	$sql .= "1=1 ORDER BY $order_by";
 	if ($result = get_data($sql)) {
 		$endresult = array();
 		foreach($result as $res) {

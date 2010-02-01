@@ -42,6 +42,7 @@ http://code.elgg.org/elgg/.....
   * ElggEntity::countEntitiesFromRelationship() supports inverse relationships. #1325
   * delete_relationship() triggers the hook delete:relationship and passes the relationship object. #1213
   * added ElggEntity::removeRelationship(). #1376.
+  * get_entity_dates() supports order by. #1406.
 
  Services API:
   * Separated user and api authenticate processing
