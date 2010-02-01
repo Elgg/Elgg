@@ -7,7 +7,7 @@
  * @link http://elgg.org/
  */
 
-elgg_log('view user/search/startblurb was deprecated in 1.7', 'WARNING');
+elgg_deprecated_notice('view user/search/startblurb was deprecated.', 1.7);
 
 ?>
 <div class="contentWrapper">

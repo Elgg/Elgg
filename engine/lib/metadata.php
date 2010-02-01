@@ -785,7 +785,7 @@ function get_entities_from_metadata($meta_name, $meta_value = "", $entity_type =
 $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0,
 $count = FALSE, $case_sensitive = TRUE) {
 
-	elgg_log('get_entities_from_metadata() was deprecated in 1.7 by elgg_get_entities_from_metadata()!', 'WARNING');
+	elgg_deprecated_notice('get_entities_from_metadata() was deprecated by elgg_get_entities_from_metadata()!', 1.7);
 
 	$options = array();
 
@@ -875,7 +875,7 @@ function list_entities_from_metadata($meta_name, $meta_value = "", $entity_type 
 function get_entities_from_metadata_multi($meta_array, $entity_type = "", $entity_subtype = "",
 $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0,
 $count = false, $meta_array_operator = 'and') {
-	elgg_log('get_entities_from_metadata_multi() was deprecated in 1.7 by elgg_get_entities_from_metadata()!', 'WARNING');
+	elgg_deprecated_notice('get_entities_from_metadata_multi() was deprecated by elgg_get_entities_from_metadata()!', 1.7);
 
 	if (!is_array($meta_array) || sizeof($meta_array) == 0) {
 		return false;

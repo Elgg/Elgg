@@ -54,7 +54,7 @@ class ElggSite extends ElggEntity {
 
 			// Is $guid is an ElggSite? Use a copy constructor
 			else if ($guid instanceof ElggSite) {
-				elgg_log('This type of usage of the ElggSite constructor was deprecated in 1.7. Please use the clone method.', 'WARNING');
+				elgg_deprecated_notice('This type of usage of the ElggSite constructor was deprecated. Please use the clone method.', 1.7);
 				
 				foreach ($guid->attributes as $key => $value) {
 					$this->attributes[$key] = $value;
@@ -504,7 +504,7 @@ function get_site_by_url($url) {
  * @deprecated 1.7
  */
 function search_for_site($criteria, $limit = 10, $offset = 0, $order_by = "", $count = false) {
-	elgg_log('search_for_site() was deprecated in 1.7.', 'WARNING');
+	elgg_deprecated_notice('search_for_site() was deprecated by new search plugin.', 1.7);
 	global $CONFIG;
 
 	$criteria = sanitise_string($criteria);

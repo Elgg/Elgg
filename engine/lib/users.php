@@ -75,7 +75,7 @@ class ElggUser extends ElggEntity
 
 			// Is $guid is an ElggUser? Use a copy constructor
 			else if ($guid instanceof ElggUser) {
-				elgg_log('This type of usage of the ElggUser constructor was deprecated in 1.7. Please use the clone method.', 'WARNING');
+				elgg_deprecated_notice('This type of usage of the ElggUser constructor was deprecated. Please use the clone method.', 1.7);
 
 				foreach ($guid->attributes as $key => $value) {
 					$this->attributes[$key] = $value;
@@ -872,7 +872,7 @@ function get_user_by_email($email) {
  * @deprecated 1.7
  */
 function search_for_user($criteria, $limit = 10, $offset = 0, $order_by = "", $count = false) {
-	elgg_log('search_for_user() was deprecated in 1.7.', 'WARNING');
+	elgg_deprecated_notice('search_for_user() was deprecated by new search.', 1.7);
 	global $CONFIG;
 
 	$criteria = sanitise_string($criteria);
@@ -918,7 +918,7 @@ function search_for_user($criteria, $limit = 10, $offset = 0, $order_by = "", $c
  * @deprecated 1.7
  */
 function list_user_search($tag, $limit = 10) {
-	elgg_log('list_user_search() deprecated in 1.7', 'WARNING');
+	elgg_deprecated_notice('list_user_search() deprecated by new search', 1.7);
 	$offset = (int) get_input('offset');
 	$limit = (int) $limit;
 	$count = (int) search_for_user($tag, 10, 0, '', true);
@@ -1547,7 +1547,7 @@ function users_init() {
  * @deprecated 1.7
  */
 function search_list_users_by_name($hook, $user, $returnvalue, $tag) {
-	elgg_log('search_list_users_by_name() was deprecated in 1.7', 'WARNING');
+	elgg_deprecated_notice('search_list_users_by_name() was deprecated by new search', 1.7);
 	// Change this to set the number of users that display on the search page
 	$threshold = 4;
 

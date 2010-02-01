@@ -598,7 +598,7 @@ function get_entities_from_relationship($relationship, $relationship_guid, $inve
 $type = "", $subtype = "", $owner_guid = 0, $order_by = "", $limit = 10, $offset = 0,
 $count = false, $site_guid = 0) {
 
-	elgg_log('get_entities_from_relationship() was deprecated in 1.7 by elgg_get_entities_from_relationship()!', 'WARNING');
+	elgg_deprecated_notice('get_entities_from_relationship() was deprecated by elgg_get_entities_from_relationship()!', 1.7);
 
 	$options = array();
 
@@ -801,7 +801,7 @@ function list_entities_by_relationship_count($relationship, $inverse_relationshi
  * @return array|int|false An array of entities, or the number of entities, or false on failure
  */
 function get_entities_from_relationships_and_meta($relationship, $relationship_guid, $inverse_relationship = false, $meta_name = "", $meta_value = "", $type = "", $subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $count = false, $site_guid = 0) {
-	elgg_log('get_entities_from_relationship_and_meta() was deprecated in 1.7 by elgg_get_entities_from_relationship()!', 'WARNING');
+	elgg_deprecated_notice('get_entities_from_relationship_and_meta() was deprecated by elgg_get_entities_from_relationship()!', 1.7);
 
 	$options = array();
 

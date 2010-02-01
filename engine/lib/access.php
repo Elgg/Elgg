@@ -671,7 +671,7 @@ function elgg_view_access_collections($owner_guid) {
  */
 function get_entities_from_access_id($collection_id, $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "", $site_guid = 0, $count = false) {
 	// log deprecated warning
-	elgg_log('get_entities_from_access_id() was deprecated in 1.7 by elgg_get_entities()!', 'WARNING');
+	elgg_deprecated_notice('get_entities_from_access_id() was deprecated by elgg_get_entities()!', 1.7);
 
 	if (!$collection_id) {
 		return FALSE;

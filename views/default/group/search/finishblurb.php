@@ -6,7 +6,7 @@
  * @link http://elgg.org/
  * @deprecated 1.7
  */
-elgg_log('view groups/search/finishblurb was deprecated in 1.7', 'WARNING');
+elgg_deprecated_notice('view groups/search/finishblurb was deprecated.', 1.7);
 
 if ($vars['count'] > $vars['threshold']) {
 

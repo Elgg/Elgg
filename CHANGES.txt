@@ -38,6 +38,7 @@ http://code.elgg.org/elgg/.....
   * can_write_to_container() can be overridden with the container_permissions_check hook. #1164 (part 2).
   * Deprecated search_for_*().
   * Deprecated search_list*().
+  * Added elgg_deprecated_notice().
 
  Services API:
   * Separated user and api authenticate processing
