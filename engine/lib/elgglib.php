@@ -1393,6 +1393,7 @@ function add_to_register($register_name, $subregister_name, $subregister_value, 
  * @return false|stdClass Depending on success
  */
 function make_register_object($register_name, $register_value, $children_array = array()) {
+	elgg_deprecated_notice('make_register_object() is deprecated by add_submenu_item()', 1.7);
 	if (empty($register_name) || empty($register_value)) {
 		return false;
 	}
@@ -1455,6 +1456,7 @@ function add_menu($menu_name, $menu_url, $menu_children = array(), $context = ""
  * @return stdClass|false Depending on success
  */
 function menu_item($menu_name, $menu_url) {
+	elgg_deprecated_notice('menu_item() is deprecated by add_submenu_item', 1.7);
 	return make_register_object($menu_name, $menu_url);
 }
 
