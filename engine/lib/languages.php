@@ -100,7 +100,7 @@ function elgg_echo($message_key, $language = "") {
 	if (!$language) {
 		$language = $CURRENT_LANGUAGE;
 	}
-	
+
 	if (isset($CONFIG->translations[$language][$message_key])) {
 		return $CONFIG->translations[$language][$message_key];
 	} else if (isset($CONFIG->translations["en"][$message_key])) {
@@ -179,10 +179,11 @@ function get_installed_translations() {
 
 	foreach ($CONFIG->translations as $k => $v) {
 		$installed[$k] = elgg_echo($k, $k);
-
-		$completeness = get_language_completeness($k);
-		if ((isadminloggedin()) && ($completeness<100) && ($k!='en')) {
-			$installed[$k] .= " (" . $completeness . "% " . elgg_echo('complete') . ")";
+		if (isadminloggedin()) {
+			$completeness = get_language_completeness($k);
+			if (($completeness < 100) && ($k != 'en')) {
+				$installed[$k] .= " (" . $completeness . "% " . elgg_echo('complete') . ")";
+			}
 		}
 	}
 
