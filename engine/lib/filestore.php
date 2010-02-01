@@ -1415,7 +1415,7 @@ function delete_directory($directory) {
 function clear_user_files($user) {
 	global $CONFIG;
 
-	$time_created = date('Y/m/d', $user->time_created);
+	$time_created = date('Y/m/d', (int)$user->time_created);
 	$file_path = "$CONFIG->dataroot$time_created/$user->guid";
 	if (file_exists($file_path)) {
 		delete_directory($file_path);
