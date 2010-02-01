@@ -2333,7 +2333,7 @@ function elgg_normalise_plural_options_array($options, $singulars) {
 
 	return $options;
 }
-elgg_http_build_url()
+
 /**
  * Get the full URL of the current page.
  *
