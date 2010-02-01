@@ -71,6 +71,8 @@ function page_owner() {
 			forward();
 		}
 
+		// set the page owner so if we're called again we don't have to think.
+		set_page_owner($returnval);
 		return $returnval;
 	}
 
