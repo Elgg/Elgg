@@ -1295,6 +1295,10 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
 			if ($invitecode == generate_invite_code($friend_user->username)) {
 				$user->addFriend($friend_guid);
 				$friend_user->addFriend($user->guid);
+
+				// @todo Should this be in addFriend?
+				add_to_river('friends/river/create', 'friend', $user->getGUID(), $friend_guid);
+				add_to_river('friends/river/create', 'friend', $friend_guid, $user->getGUID());
 			}
 		}
 	}
