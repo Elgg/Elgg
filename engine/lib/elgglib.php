@@ -2333,7 +2333,7 @@ function elgg_normalise_plural_options_array($options, $singulars) {
 
 	return $options;
 }
-
+elgg_http_build_url()
 /**
  * Get the full URL of the current page.
  *
@@ -2528,7 +2528,7 @@ function elgg_http_build_url(array $parts) {
 	// build only what's given to us.
 	$scheme = isset($parts['scheme']) ? "{$parts['scheme']}://" : '';
 	$host = isset($parts['host']) ? "{$parts['host']}" : '';
-	$port = isset($parts['port']) ? "{$parts['port']}" : '';
+	$port = isset($parts['port']) ? ":{$parts['port']}" : '';
 	$path = isset($parts['path']) ? "{$parts['path']}" : '';
 	$query = isset($parts['query']) ? "?{$parts['query']}" : '';
 
