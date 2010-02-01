@@ -173,9 +173,11 @@ function elgg_get_view_location($view, $viewtype = '') {
  * @param string $viewtype If set, forces the viewtype for the elgg_view call to be this value (default: standard detection)
  * @return string The HTML content
  */
-function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $viewtype = '') {
+function elgg_view(string $view, $vars = array(), $bypass = false, $debug = false, $viewtype = '') {
 	global $CONFIG;
 	static $usercache;
+
+	$view = (string)$view;
 
 	// basic checking for bad paths
 	if (strpos($view, '..') !== false) {
