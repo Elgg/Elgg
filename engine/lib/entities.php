@@ -1470,6 +1470,7 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $entity_typ
 	if (!$container_guid) {
 		$container_guid = page_owner();
 	}
+
 	if (!$container_guid) {
 		$return = TRUE;
 	}
@@ -1490,13 +1491,11 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $entity_typ
 				$return = TRUE;
 			}
 		}
-
-		// See if anyone else has anything to say
-		return trigger_plugin_hook('container_permissions_check', $entity_type,
-			array('container' => $container, 'user' => $user), $return);
 	}
 
-	return false;
+	// See if anyone else has anything to say
+	return trigger_plugin_hook('container_permissions_check', $entity_type,
+		array('container' => $container, 'user' => $user), $return);
 }
 
 /**
