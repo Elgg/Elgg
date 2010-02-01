@@ -22,6 +22,11 @@ if (!$user_id) {
 	$user = get_entity($user_id);
 }
 
+if (!is_email_address($email)) {
+	register_error(elgg_echo('email:save:fail'));
+	forward($_SERVER['HTTP_REFERER']);
+}
+
 if ($user) {
 	if (strcmp($email,$user->email)!=0) {
 		if (!get_user_by_email($email)) {
