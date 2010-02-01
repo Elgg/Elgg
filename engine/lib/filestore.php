@@ -183,7 +183,7 @@ class ElggDiskFilestore extends ElggFilestore {
 
 		switch ($mode) {
 			case "read" :
-				$mode = "r+b";
+				$mode = "rb";
 				break;
 			case "write" :
 				$mode = "w+b";
