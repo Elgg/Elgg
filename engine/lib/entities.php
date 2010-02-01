@@ -1654,11 +1654,11 @@ function get_entity($guid) {
  *
  * @param array $options Array in format:
  *
- * 	types => NULL|STR entity type
+ * 	types => NULL|STR entity type (SQL: type = '$type' OR...see below...)
  *
- * 	subtypes => NULL|STR entity subtype
+ * 	subtypes => NULL|STR entity subtype (SQL: subtype = '$subtype'...see above)
  *
- * 	type_subtype_pairs => NULL|ARR (type = '$type' AND subtype = '$subtype') pairs
+ * 	type_subtype_pairs => NULL|ARR (array('type' => 'subtype')) (SQL: type = '$type' AND subtype = '$subtype') pairs
  *
  * 	owner_guids => NULL|INT entity guid
  *
