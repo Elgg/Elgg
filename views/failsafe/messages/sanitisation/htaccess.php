@@ -11,4 +11,4 @@
 
 echo autop(elgg_echo('installation:error:htaccess'));
 ?>
-<textarea cols="120" rows="30"><?php echo $vars['.htaccess']; ?></textarea>
+<textarea><?php echo $vars['.htaccess']; ?></textarea>

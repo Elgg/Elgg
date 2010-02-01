@@ -82,6 +82,8 @@ header('Content-type: text/html; charset=utf-8');
 			width:220px;
 		}
 		textarea {
+			width: 100%;
+			height: 100%;
 			font: 120% Arial, Helvetica, sans-serif;
 			border: solid 1px #cccccc;
 			padding: 5px;

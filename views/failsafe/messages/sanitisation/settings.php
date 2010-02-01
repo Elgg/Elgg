@@ -13,7 +13,7 @@ if ($vars['settings.php']) {
 	echo elgg_echo('installation:settings:dbwizard:savefail');
 ?>
 <div>
-	<textarea rows="50" cols="120"><?php echo $vars['settings.php']; ?></textarea>
+	<textarea><?php echo $vars['settings.php']; ?></textarea>
 </div>
 <?php
 } else {
