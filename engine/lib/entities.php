@@ -416,9 +416,21 @@ abstract class ElggEntity implements
 	 *
 	 * @param int $guid Relationship to link to.
 	 * @param string $relationship The type of relationship.
+	 * @return bool
 	 */
 	public function addRelationship($guid, $relationship) {
 		return add_entity_relationship($this->getGUID(), $relationship, $guid);
+	}
+
+	/**
+	 * Remove a relationship
+	 *
+	 * @param int $guid
+	 * @param str $relationship
+	 * @return bool
+	 */
+	public function removeRelationship($guid, $relationship) {
+		return remove_entity_relationship($this->getGUID(), $relationship, $guid);
 	}
 
 	/**
