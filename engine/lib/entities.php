@@ -2327,7 +2327,7 @@ function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $site_
 			if (!$subtype_id = get_subtype_id($type, $subtype)) {
 				return FALSE;
 			} else {
-				$where[] = "subtype=$subtype";
+				$where[] = "subtype=$subtype_id";
 			}
 		}
 	}
