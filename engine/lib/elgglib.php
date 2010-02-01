@@ -1949,6 +1949,11 @@ function __elgg_php_exception_handler($exception) {
 
 	ob_end_clean(); // Wipe any existing output buffer
 
+	// make sure the error isn't cached
+	header("Cache-Control: no-cache, must-revalidate", true);
+	header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', true);
+	//header("Internal Server Error", true, 500);
+
 	$body = elgg_view("messages/exceptions/exception",array('object' => $exception));
 	page_draw(elgg_echo('exception:title'), $body);
 }
