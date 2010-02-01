@@ -333,9 +333,13 @@ function delete_relationship($id) {
 
 	$id = (int)$id;
 
-	$result = delete_data("delete from {$CONFIG->dbprefix}entity_relationships where id=$id");
+	$relationship = get_relationship($id);
 
-	return $result;
+	if (trigger_elgg_event('delete', 'relationship', $relationship)) {
+		return delete_data("delete from {$CONFIG->dbprefix}entity_relationships where id=$id");
+	}
+
+	return FALSE;
 }
 
 /**

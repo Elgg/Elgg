@@ -40,6 +40,7 @@ http://code.elgg.org/elgg/.....
   * Deprecated search_list*().
   * Added elgg_deprecated_notice().
   * ElggEntity::countEntitiesFromRelationship() supports inverse relationships. #1325
+  * delete_relationship() triggers the hook delete:relationship and passes the relationship object. #1213
 
  Services API:
   * Separated user and api authenticate processing
