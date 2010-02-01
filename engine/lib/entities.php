@@ -559,11 +559,12 @@ abstract class ElggEntity implements
 	 * Gets the number of of entities from a specific relationship type
 	 *
 	 * @param string $relationship Relationship type (eg "friends")
+	 * @param bool $inverse_relationship
 	 * @return int|false The number of entities or false on failure
 	 */
-	function countEntitiesFromRelationship($relationship) {
-		return get_entities_from_relationship($relationship, $this->getGUID(), false, "", "", "",
-			"time_created desc", null, null, true);
+	function countEntitiesFromRelationship($relationship, $inverse_relationship = FALSE) {
+		return get_entities_from_relationship($relationship, $this->getGUID(), $inverse_relationship, "", "", "",
+			"time_created desc", null, null, TRUE);
 	}
 
 	/**

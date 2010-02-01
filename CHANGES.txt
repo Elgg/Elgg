@@ -39,6 +39,7 @@ http://code.elgg.org/elgg/.....
   * Deprecated search_for_*().
   * Deprecated search_list*().
   * Added elgg_deprecated_notice().
+  * ElggEntity::countEntitiesFromRelationship() supports inverse relationships. #1325
 
  Services API:
   * Separated user and api authenticate processing
