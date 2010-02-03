@@ -1,3 +1,9 @@
+The latest version of this document is available at:
+[http://docs.elgg.org/wiki/Installation]
+
+Installation Troubleshooting is available at:
+[http://docs.elgg.org/wiki/Troubleshooting]
+
 
 ELGG INSTALLATION INSTRUCTIONS
 
@@ -55,10 +61,13 @@ We recommend that this folder is called data, and is stored outside
 of your document root. For example, if Elgg is installed in 
 /home/elgg/html/, you might create it in /home/elgg/data.
 
-Once this folder has been created, you'll need to make sure Elgg has
-permission to write to it. This shouldn't be a problem on Windows-
-based servers, but if your server runs Linux or a UNIX variant, 
-you'll need to type something like:
+Once this folder has been created, you'll need to make sure that your
+web server has permission to write to it. This shouldn't be a problem 
+on Windows-based servers, but if your server runs Linux or a UNIX variant, 
+you'll need to figure out what user Apache runs under. For Debian-based 
+distros, it is usually www-data and for RedHat, it is often apache. If 
+cannot figure out what the ownership and permissions should be, you can
+set the permissions for world access (though not recommended):
 
 chmod 777 /home/elgg/data/
 
@@ -98,7 +107,8 @@ Once you've performed these steps, visit your Elgg site in your web
 browser. Elgg will take you through the rest of the installation 
 process from there.
 
-A note on settings and .htaccess
+
+A note on settings.php and .htaccess
 
 The Elgg installer will try and create two files for you:
 
@@ -106,15 +116,22 @@ The Elgg installer will try and create two files for you:
       your installation
     * .htaccess, which allows Elgg to generate dynamic URLs 
 
-If these files can't be automatically generated, for example because
-you don't have the correct directory permissions, Elgg will tell you
-how to create them. If, for some reason, this won't work, you will 
-need to:
+If your web server does not have permission to create these files, you
+will need to either 
 
-    * Copy engine/settings.example.php to engine/settings.php, open 
-      it up in a text editor and fill in your database details
-    * Copy /htaccess_dist to /.htaccess 
+1. Change the permissions on the directory where you are installing 
+   Elgg and the engine directory and try again. 
+
+2. Follow the instructions that Elgg gives you to create them.
+
+3. Copy engine/settings.example.php to engine/settings.php, open 
+   it up in a text editor and fill in your database details. Then
+   copy /htaccess_dist to /.htaccess 
+
 
 
 The latest version of this document is available at:
 [http://docs.elgg.org/wiki/Installation]
+
+Installation Troubleshooting is available at:
+[http://docs.elgg.org/wiki/Troubleshooting]
