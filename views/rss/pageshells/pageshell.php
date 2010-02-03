@@ -10,7 +10,7 @@
 
 header("Content-Type: text/xml");
 
-// disable caching for stupid MS products.
+// allow caching as required by stupid MS products for https feeds.
 header('Pragma: public', TRUE);
 
 echo "<?xml version='1.0'?>\n";
