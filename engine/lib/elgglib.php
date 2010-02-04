@@ -2687,6 +2687,15 @@ function elgg_boot() {
 }
 
 /**
+ * Runs unit tests for the API.
+ */
+function elgg_api_test($hook, $type, $value, $params) {
+	global $CONFIG;
+	$value[] = $CONFIG->path . 'engine/tests/api/entity_getter_functions.php';
+	return $value;
+}
+
+/**
  * Some useful constant definitions
  */
 define('ACCESS_DEFAULT',-1);
@@ -2697,3 +2706,4 @@ define('ACCESS_FRIENDS',-2);
 
 register_elgg_event_handler('init','system','elgg_init');
 register_elgg_event_handler('boot','system','elgg_boot',1000);
+register_plugin_hook('unit_test', 'system', 'elgg_api_test');

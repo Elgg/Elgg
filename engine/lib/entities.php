@@ -1954,66 +1954,105 @@ function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pair
 			$subtypes = array($subtypes);
 		}
 
+		// decrementer for valid types.  Return FALSE if no valid types
+		$valid_types_count = count($types);
+		$valid_subtypes_count = 0;
+		// remove invalid types to get an accurate count of
+		// valid types for the invalid subtype detection to use
+		// below.
+		// also grab the count of ALL subtypes on valid types to decrement later on
+		// and check against.
+		//
+		// yes this is duplicating a foreach on $types.
+		foreach ($types as $type) {
+			if (!in_array($type, $valid_types)) {
+				$valid_types_count--;
+				unset ($types[array_search($type, $types)]);
+			} else {
+				// do the checking (and decrementing) in the subtype section.
+				$valid_subtypes_count += count($subtypes);
+			}
+		}
+
+		// return false if nothing is valid.
+		if (!$valid_types_count) {
+			return FALSE;
+		}
+
 		// subtypes are based upon types, so we need to look at each
 		// type individually to get the right subtype id.
 		foreach ($types as $type) {
-			if (!in_array($type, $valid_types)) {
-				return FALSE;
-			}
-
 			$subtype_ids = array();
 			if ($subtypes) {
-				// if there is only one subtype and it is is not 0 and it invalid return false.
-				// if the type is 0 or null, let it through.
-				// if the type is set but the subtype is FALSE, return false.
-				if (count($subtypes) === 1) {
-					if ($subtypes[0] && !get_subtype_id($type, $subtypes[0])) {
-						return FALSE;
-					}
-				}
-
 				// subtypes can be NULL or '' or 0, which means "no subtype"
 				foreach ($subtypes as $subtype) {
 					// if a subtype is sent that doesn't exist
 					if (0 === $subtype || $subtype_id = get_subtype_id($type, $subtype)) {
 						$subtype_ids[] = (0 === $subtype) ? 0 : $subtype_id;
 					} else {
-						// @todo should return false.
-						//return FALSE;
-
+						$valid_subtypes_count--;
 						elgg_log("Type-subtype $type:$subtype' does not exist!", 'WARNING');
+						// return false if we're all invalid subtypes in the only valid type
 						continue;
 					}
 				}
+
+				if ($valid_subtypes_count <= 0) {
+					return FALSE;
+				}
+			}
+
+			if (is_array($subtype_ids) && count($subtype_ids)) {
+				$subtype_ids_str = implode(',', $subtype_ids);
+				$wheres[] = "({$table}.type = '$type' AND {$table}.subtype IN ($subtype_ids_str))";
+			} else {
+				$wheres[] = "({$table}.type = '$type')";
 			}
 		}
-		//if ($subtype_ids_str = implode(',', $subtype_ids)) {
-		if (is_array($subtype_ids) && count($subtype_ids)) {
-			$subtype_ids_str = implode(',', $subtype_ids);
-			$wheres[] = "({$table}.type = '$type' AND {$table}.subtype IN ($subtype_ids_str))";
-		} else {
-			$wheres[] = "({$table}.type = '$type')";
-		}
-
 	} else {
 		// using type/subtype pairs
-		foreach ($pairs as $paired_type => $paired_subtypes) {
-			if ($paired_subtypes && !is_array($paired_subtypes)) {
-				$paired_subtypes = array($paired_subtypes);
-			}
+		$valid_pairs_count = count($pairs);
+		$valid_pairs_subtypes_count = 0;
 
-			if (is_array($paired_subtypes) && count($paired_subtypes)) {
+		// same deal as above--we need to know how many valid types
+		// and subtypes we have before hitting the subtype section.
+		// also normalize the subtypes into arrays here.
+		foreach ($pairs as $paired_type => $paired_subtypes) {
+			if (!in_array($paired_type, $valid_types)) {
+				$valid_pairs_count--;
+				unset ($pairs[array_search($paired_type, $pairs)]);
+			} else {
+				if ($paired_subtypes && !is_array($paired_subtypes)) {
+					$pairs[$paired_type] = array($paired_subtypes);
+				}
+				$valid_pairs_subtypes_count += count($paired_subtypes);
+			}
+		}
+
+		if ($valid_pairs_count <= 0) {
+			return FALSE;
+		}
+		foreach ($pairs as $paired_type => $paired_subtypes) {
+			// this will always be an array because of line 2027, right?
+			// no...some overly clever person can say pair => array('object' => null)
+			if (is_array($paired_subtypes)) {
 				$paired_subtype_ids = array();
 				foreach ($paired_subtypes as $paired_subtype) {
 					if ($paired_subtype && ($paired_subtype_id = get_subtype_id($paired_type, $paired_subtype))) {
 						$paired_subtype_ids[] = $paired_subtype_id;
 					} else {
-						// @todo should return false.
-						//return FALSE;
-						elgg_log("Paired type-subtype $paired_type:$paired_subtype' does not exist!", 'WARNING');
+						$valid_pairs_subtypes_count--;
+						elgg_log("Type-subtype $paired_type:$paired_subtype' does not exist!", 'WARNING');
+						// return false if we're all invalid subtypes in the only valid type
 						continue;
 					}
 				}
+
+				// return false if there are no valid subtypes.
+				if ($valid_pairs_subtypes_count <= 0) {
+					return FALSE;
+				}
+
 
 				if ($paired_subtype_ids_str = implode(',', $paired_subtype_ids)) {
 					$wheres[] = "({$table}.type = '$paired_type' AND {$table}.subtype IN ($paired_subtype_ids_str))";
@@ -2032,6 +2071,7 @@ function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pair
 
 	return '';
 }
+
 
 
 /**
