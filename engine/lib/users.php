@@ -969,7 +969,7 @@ function send_new_password_request($user_guid) {
 		set_private_setting($user_guid, 'passwd_conf_code', $code);
 
 		// generate link
-		$link = $CONFIG->site->url . "action/user/passwordreset?u=$user_guid&c=$code";
+		$link = $CONFIG->site->url . "pg/resetpassword?u=$user_guid&c=$code";
 
 		// generate email
 		$email = sprintf(elgg_echo('email:resetreq:body'), $user->name, $_SERVER['REMOTE_ADDR'], $link);
@@ -1017,13 +1017,14 @@ function execute_new_password_request($user_guid, $conf_code) {
 	global $CONFIG;
 
 	$user_guid = (int)$user_guid;
-
 	$user = get_entity($user_guid);
-	if (($user) && (get_private_setting($user_guid, 'passwd_conf_code') == $conf_code)) {
+
+	$saved_code = get_private_setting($user_guid, 'passwd_conf_code');
+
+	if ($user && $saved_code && $saved_code == $conf_code) {
 		$password = generate_random_cleartext_password();
 
 		if (force_user_password_reset($user_guid, $password)) {
-			//remove_metadata($user_guid, 'conf_code');
 			remove_private_setting($user_guid, 'passwd_conf_code');
 
 			$email = sprintf(elgg_echo('email:resetpassword:body'), $user->name, $password);
@@ -1032,7 +1033,54 @@ function execute_new_password_request($user_guid, $conf_code) {
 		}
 	}
 
-	return false;
+	return FALSE;
+}
+
+/**
+ * Handles pages for password reset requests.
+ *
+ * @param unknown_type $page
+ * @return unknown_type
+ */
+function elgg_user_resetpassword_page_handler($page) {
+	global $CONFIG;
+
+	$user_guid = get_input('u');
+	$code = get_input('c');
+
+	$user = get_entity($user_guid);
+
+	// don't check code here to avoid automated attacks
+	if (!$user instanceof ElggUser) {
+		register_error(elgg_echo('user:passwordreset:unknown_user'));
+		forward();
+	}
+
+	$form_body = elgg_echo('user:resetpassword:reset_password_confirm') . "<br />";
+
+	$form_body .= elgg_view('input/hidden', array(
+		'internalname' => 'u',
+		'value' => $user_guid
+	));
+
+	$form_body .= elgg_view('input/hidden', array(
+		'internalname' => 'c',
+		'value' => $code
+	));
+
+	$form_body .= elgg_view('input/submit', array(
+		'value' => elgg_echo('resetpassword')
+	));
+
+	$form .= elgg_view('input/form', array(
+		'body' => $form_body,
+		'action' => $CONFIG->site->url . 'action/user/passwordreset'
+	));
+
+	$content = elgg_view_title(elgg_echo('resetpassword'));
+	$content .= elgg_view('page_elements/contentwrapper', array('body' => $form));
+
+	page_draw($title, $content);
 }
 
 /**
@@ -1504,14 +1552,15 @@ function users_init() {
 		add_menu(elgg_echo('friends'), $CONFIG->wwwroot . "pg/friends/" . $user->username);
 	}
 
-	register_page_handler('friends','friends_page_handler');
-	register_page_handler('friendsof','friends_of_page_handler');
-	register_page_handler('collections','collections_page_handler');
-	register_page_handler('dashboard','dashboard_page_handler');
-	register_page_handler('register','registration_page_handler');
-	
-	register_action("register",true);
-	register_action("useradd",true);
+	register_page_handler('friends', 'friends_page_handler');
+	register_page_handler('friendsof', 'friends_of_page_handler');
+	register_page_handler('collections', 'collections_page_handler');
+	register_page_handler('dashboard', 'dashboard_page_handler');
+	register_page_handler('register', 'registration_page_handler');
+	register_page_handler('resetpassword', 'elgg_user_resetpassword_page_handler');
+
+	register_action("register", true);
+	register_action("useradd", true);
 	register_action("friends/add");
 	register_action("friends/remove");
 	register_action('friends/addcollection');

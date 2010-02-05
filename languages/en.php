@@ -422,6 +422,8 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	'user:password:fail' => "Could not change your password on the system.",
 	'user:password:fail:notsame' => "The two passwords are not the same!",
 	'user:password:fail:tooshort' => "Password is too short!",
+	'user:resetpassword:unknown_user' => 'Invalid user.',
+	'user:resetpassword:reset_password_confirm' => 'Resetting your password will email a new password to your registered email address.',
 
 	'user:set:language' => "Language settings",
 	'user:language:label' => "Your language",
