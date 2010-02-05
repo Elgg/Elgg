@@ -2576,12 +2576,12 @@ function elgg_validate_action_url($link) {
  * @return string
  */
 function elgg_http_remove_url_query_element($url, $element) {
-	$url = parse_url($url);
+	$url_array = parse_url($url);
 
-	if (isset($url['query'])) {
-		parse_str($url['query'], $query);
+	if (isset($url_array['query'])) {
+		parse_str($url_array['query'], $query);
 	} else {
-		// nothing to remove.
+		// nothing to remove. Return original URL.
 		return $url;
 	}
 
@@ -2589,11 +2589,37 @@ function elgg_http_remove_url_query_element($url, $element) {
 		unset($query[$element]);
 	}
 
-	$url['query'] = http_build_query($query);
-	$string = elgg_http_build_url($url);
+	$url_array['query'] = http_build_query($query);
+	$string = elgg_http_build_url($url_array);
 	return $string;
 }
 
+
+/**
+ * Adds get params to $url
+ *
+ * @param str $url
+ * @param array $elements k/v pairs.
+ * @return str
+ */
+function elgg_http_add_url_query_elements($url, array $elements) {
+	$url_array = parse_url($url);
+
+	if (isset($url_array['query'])) {
+		parse_str($url_array['query'], $query);
+	} else {
+		$query = array();
+	}
+
+	foreach ($elements as $k => $v) {
+		$query[$k] = $v;
+	}
+
+	$url_array['query'] = http_build_query($query);
+	$string = elgg_http_build_url($url_array);
+
+	return $string;
+}
 
 /**
  * Returns the PHP INI setting in bytes
