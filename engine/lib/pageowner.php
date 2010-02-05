@@ -167,8 +167,3 @@ function get_context() {
 	}
 	return "main";
 }
-
-if (defined('context')) {
-	global $CONFIG;
-	$CONFIG->context = context;
-}
