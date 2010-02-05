@@ -258,7 +258,7 @@
 				$params .= "<member><name>$k</name>$v</member>";
 			}
 			
-			return "<struct>$params</struct>";
+			return "<value><struct>$params</struct></value>";
 		}
 	}
 	
