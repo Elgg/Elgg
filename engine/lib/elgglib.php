@@ -1934,8 +1934,7 @@ function elgg_dump($value, $to_screen = TRUE, $level = 'NOTICE') {
 	}
 	else
 	{
-		// this currently chokes on arrays and objects
-		error_log($value);
+		error_log(var_export($value));
 	}
 }
 
