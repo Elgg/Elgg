@@ -121,7 +121,7 @@ function version_upgrade() {
 	}
 
 	// Now we trigger an event to give the option for plugins to do something
-	$upgrade_details = stdClass;
+	$upgrade_details = new stdClass;
 	$upgrade_details->from = $dbversion;
 	$upgrade_details->to = get_version();
 
