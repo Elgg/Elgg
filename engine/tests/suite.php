@@ -1,7 +1,7 @@
 <?php
 /**
  * Runs unit tests.
- * 
+ *
  * @package Elgg
  * @subpackage Test
  * @author Curverider Ltd
@@ -18,6 +18,10 @@ require_once("$vendor_path/unit_tester.php");
 require_once("$vendor_path/mock_objects.php");
 require_once("$vendor_path/reporter.php");
 require_once("$test_path/elgg_unit_test.php");
+
+// Disable maximum execution time.
+// Tests take a while...
+set_time_limit(0);
 
 $suite = new TestSuite('Elgg Core Unit Tests');
 
