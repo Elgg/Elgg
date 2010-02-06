@@ -68,17 +68,6 @@ if (get_input('settings') == 'go') {
 			unset_config('debug', $site->getGUID());
 		}
 
-		$usage = get_input('usage');
-		if (is_array($usage)) {
-			$usage = $usage[0];
-		}
-
-		if ($usage) {
-			unset_config('ping_home', $site->getGUID());
-		} else {
-			set_config('ping_home', 'disabled', $site->getGUID());
-		}
-
 		$api = get_input('api');
 		if ($api) {
 			unset_config('disable_api', $site->getGUID());
@@ -119,11 +108,6 @@ if (get_input('settings') == 'go') {
 		$dataroot = datalist_get('dataroot');
 		$cache = new ElggFileCache($dataroot);
 		$cache->delete('view_paths');
-
-		// Now ping home
-		if ($usage) {
-			ping_home($site);
-		}
 
 		system_message(elgg_echo("installation:configuration:success"));
 

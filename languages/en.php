@@ -742,8 +742,6 @@ Alternatively, you can enter your database settings below and we will try and do
 	'installation:debug:notice' => 'Log all errors, warnings and notices',
 	'installation:httpslogin' => "Enable this to have user logins performed over HTTPS. You will need to have https enabled on your server for this to work.",
 	'installation:httpslogin:label' => "Enable HTTPS logins",
-	'installation:usage' => "This option lets Elgg send anonymous usage statistics back to Curverider.",
-	'installation:usage:label' => "Send anonymous usage statistics",
 	'installation:view' => "Enter the view which will be used as the default for your site or leave this blank for the default view (if in doubt, leave as default):",
 
 	'installation:siteemail' => "Site email address (used when sending system emails)",
