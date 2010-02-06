@@ -42,7 +42,7 @@ CREATE TABLE `prefix_access_collections` (
   PRIMARY KEY (`id`),
   KEY `owner_guid` (`owner_guid`),
   KEY `site_guid` (`site_guid`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
