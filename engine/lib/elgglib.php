@@ -1931,10 +1931,8 @@ function elgg_dump($value, $to_screen = TRUE, $level = 'NOTICE') {
 		echo '<pre>';
 		print_r($value);
 		echo '</pre>';
-	}
-	else
-	{
-		error_log(var_export($value));
+	} else {
+		error_log(print_r($value, TRUE));
 	}
 }
 
