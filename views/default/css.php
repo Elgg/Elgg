@@ -886,6 +886,7 @@ input[type="submit"] {
 	background: #cccccc;
 }
 
+.input-password,
 .input-text,
 .input-tags,
 .input-url,
@@ -893,6 +894,7 @@ input[type="submit"] {
 	width:98%;
 }
 
+.input-password,
 .input-textarea {
 	height: 200px;
 }
