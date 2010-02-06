@@ -894,7 +894,6 @@ input[type="submit"] {
 	width:98%;
 }
 
-.input-password,
 .input-textarea {
 	height: 200px;
 }
