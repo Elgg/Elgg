@@ -1204,7 +1204,7 @@ function serialise_api_headers(array $headers) {
  * @param string $method GET or POST
  * @param string $post_data The post data
  * @param string $content_type The content type
- * @return stdClass The unserialised response object
+ * @return string
  */
 function send_api_call(array $keys, $url, array $call, $method = 'GET', $post_data = '', $content_type = 'application/octet-stream') {
 	global $CONFIG;
@@ -1293,7 +1293,7 @@ function send_api_call(array $keys, $url, array $call, $method = 'GET', $post_da
  * @param string $url URL of the endpoint.
  * @param array $call Associated array of "variable" => "value"
  * @param array $keys The keys dependant on chosen authentication method
- * @return stdClass The unserialised response object
+ * @return string
  */
 function send_api_get_call($url, array $call, array $keys) {
 	return send_api_call($keys, $url, $call);
@@ -1307,7 +1307,7 @@ function send_api_get_call($url, array $call, array $keys) {
  * @param array $keys The keys dependant on chosen authentication method
  * @param string $post_data The post data
  * @param string $content_type The content type
- * @return stdClass The unserialised response object
+ * @return string
  */
 function send_api_post_call($url, array $call, array $keys, $post_data, $content_type = 'application/octet-stream') {
 	return send_api_call($keys, $url, $call, 'POST', $post_data, $content_type);
@@ -1342,7 +1342,7 @@ function list_all_apis() {
 /**
  * The auth.gettoken API.
  * This API call lets a user log in, returning an authentication token which can be used
- * in leu of a username and password login for a specific period of time.
+ * to authenticate a user for a period of time.
  *
  * @param string $username Username
  * @param string $password Clear text password
