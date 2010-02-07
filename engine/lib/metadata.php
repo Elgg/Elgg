@@ -543,9 +543,9 @@ function find_metadata($meta_name = "", $meta_value = "", $entity_type = "", $en
  *
  * 	metadata_values => NULL|ARR metadata values
  *
- * 	metadata_name_value_pairs => NULL|ARR (name = 'name', value => 'value', 'operand' => 'AND', 'case_sensitive' => TRUE) entries
+ * 	metadata_name_value_pairs => NULL|ARR (name = 'name', value => 'value', 'operand' => '=', 'case_sensitive' => TRUE) entries
  *
- * 	metadata_name_value_pairs_operator => NULL|STR The operator to use for combining (name = value) OPERATOR (name = value)
+ * 	metadata_name_value_pairs_operator => NULL|STR The operator to use for combining (name = value) OPERATOR (name = value); default AND
  *
  * 	metadata_case_sensitive => BOOL Overall Case sensitive
  *
