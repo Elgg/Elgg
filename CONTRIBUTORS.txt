@@ -15,15 +15,17 @@ CONTRIBUTING DEVELOPERS
 
 Cash Costello - http://cashcostello.com/
 Justin Richer, Nathan Rackliffe, Tom Read - MITRE http://www.mitre.org/
-Milan Magudia - Hedgehogs.net
+Milan Magudia - http://hedgehogs.net
 
-ALUMNI DEVELOPERS/CONTRIBUTORS
+ALUMNI DEVELOPERS
 
-Ben Werdmuller <ben@elgg.com>
+Ben Werdmuller
 http://benwerd.com/
 
-Marcus Povey <marcus@elgg.com>
+Marcus Povey
 http://marcuspovey.co.uk/
+
+CLASSIC ELGG IDEAS (up until v0.92)
 
 Kevin Jardine <kevin@radagast.biz>
 http://radagast.biz/
