@@ -735,7 +735,7 @@ Alternatively, you can enter your database settings below and we will try and do
 	'installation:dataroot:warning' => "You must create this directory manually. It should sit in a different directory to your Elgg installation.",
 	'installation:sitepermissions' => "The default access permissions:",
 	'installation:language' => "The default language for your site:",
-	'installation:debug' => "Debug mode provides extra information which can be used to diagnose faults, however it can slow your system down so should only be used if you are having problems:",
+	'installation:debug' => "Debug mode provides extra information which can be used to diagnose faults. However, it can slow your system down so should only be used if you are having problems:",
 	'installation:debug:none' => 'Turn off debug mode (recommended)',
 	'installation:debug:error' => 'Display only critical errors',
 	'installation:debug:warning' => 'Display errors and warnings',
