@@ -373,9 +373,9 @@ function get_write_access_array($user_id = 0, $site_id = 0, $flush = false) {
 		$query .= " AND (ag.owner_guid = {$user_id})";
 		$query .= " AND ag.id >= 3";
 
-		$tmp_access_array = array(	ACCESS_PRIVATE => elgg_echo("PRIVATE"), 
-									ACCESS_FRIENDS => elgg_echo("access:friends:label"), 
-									ACCESS_LOGGED_IN => elgg_echo("LOGGED_IN"), 
+		$tmp_access_array = array(	ACCESS_PRIVATE => elgg_echo("PRIVATE"),
+									ACCESS_FRIENDS => elgg_echo("access:friends:label"),
+									ACCESS_LOGGED_IN => elgg_echo("LOGGED_IN"),
 									ACCESS_PUBLIC => elgg_echo("PUBLIC"));
 		if ($collections = get_data($query)) {
 			foreach($collections as $collection) {
@@ -489,7 +489,7 @@ function update_access_collection($collection_id, $members) {
 function delete_access_collection($collection_id) {
 
 	$collection_id = (int) $collection_id;
-	$collections = get_write_access_array();
+	$collections = get_write_access_array(null, null, TRUE);
 	$params = array('collection_id' => $collection_id);
 
 	if (!trigger_plugin_hook('access:collections:deletecollection', 'collection', $params, true)) {

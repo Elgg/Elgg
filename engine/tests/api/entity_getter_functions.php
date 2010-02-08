@@ -25,19 +25,14 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 			'object' => array(),
 			'user' => array(),
 			'group' => array(),
-		//'site'	=> array()
+			//'site'	=> array()
 		);
 
 		// sites are a bit wonky.  Don't use them just now.
 		$this->types = array('object', 'user', 'group');
 
 		// create some fun objects to play with.
-		// one with no subtype
-//		$e = new ElggObject();
-//		$e->subtype = $subtype;
-//		$e->save();
-
-		// and 5 with random subtypes
+		// 5 with random subtypes
 		for ($i=0; $i<5; $i++) {
 			$subtype = "test_object_subtype_" . rand();
 			$e = new ElggObject();
@@ -74,10 +69,8 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 	 */
 	public function tearDown() {
 		//$this->swallowErrors();
-
 		foreach ($this->entities as $e) {
 			$e->delete();
-			unset($this->entities);
 		}
 	}
 
