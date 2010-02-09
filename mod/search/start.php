@@ -77,11 +77,11 @@ function search_page_handler($page) {
  * Return a string with highlighted matched queries and relevant context
  * Determins context based upon occurance and distance of words with each other.
  *
- * @param unknown_type $haystack
- * @param unknown_type $need
- * @param unknown_type $context
- * @param unknown_type $max_length
- * @return unknown_type
+ * @param string $haystack
+ * @param array $query
+ * @param int $min_match_context = 30
+ * @param int $max_length = 300
+ * @return string
  */
 function search_get_highlighted_relevant_substrings($haystack, $query, $min_match_context = 30, $max_length = 300) {
 	global $CONFIG;
@@ -97,7 +97,6 @@ function search_get_highlighted_relevant_substrings($haystack, $query, $min_matc
 
 		return $return;
 	}
-
 
 	// get the starting positions and lengths for all matching words
 	$starts = array();
