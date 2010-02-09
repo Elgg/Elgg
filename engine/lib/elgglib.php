@@ -1279,32 +1279,6 @@ function friendly_title($title) {
  */
 
 /**
- * Recursive function designed to load library files on start
- * (NB: this does not include plugins.)
- *
- * @param string $directory Full path to the directory to start with
- * @param string $file_exceptions A list of filenames (with no paths) you don't ever want to include
- * @param string $file_list A list of files that you know already you want to include
- * @return array Array of full filenames
- */
-function get_library_files($directory, $file_exceptions = array(), $file_list = array()) {
-	$extensions_allowed = array('.php');
-	/*if (is_file($directory) && !in_array($directory,$file_exceptions)) {
-		$file_list[] = $directory;
-	} else */
-	if ($handle = opendir($directory)) {
-		while ($file = readdir($handle)) {
-			if (in_array(strrchr($file, '.'), $extensions_allowed) && !in_array($file,$file_exceptions)) {
-				$file_list[] = $directory . "/" . $file;
-				//$file_list = get_library_files($directory . "/" . $file, $file_exceptions, $file_list);
-			}
-		}
-	}
-
-	return $file_list;
-}
-
-/**
  * Ensures that the installation has all the correct files, that PHP is configured correctly, and so on.
  * Leaves appropriate messages in the error register if not.
  *

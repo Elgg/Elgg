@@ -116,31 +116,32 @@ if ($sanitised = sanitised()) {
 		throw new InstallationException("Elgg could not load the main Elgg database library.");
 	}
 
-	/**
-	 * Load the remaining libraries from /lib/ in alphabetical order,
-	 * except for a few exceptions
-	 */
 	if (!include_once(dirname(__FILE__) . "/lib/actions.php")) {
 		throw new InstallationException("Elgg could not load the Actions library");
 	}
 
-	// We don't want to load or reload these files
-	$file_exceptions = array(
-		'.', '..', '.DS_Store', 'Thumbs.db', '.svn',
-		'CVS', 'cvs', 'settings.php', 'settings.example.php',
-		'languages.php', 'exceptions.php', 'elgglib.php', 'access.php',
-		'database.php', 'actions.php', 'sessions.php'
-	);
-
-	// Get the list of files to include, and alphabetically sort them
-	$files = get_library_files(dirname(__FILE__) . "/lib",$file_exceptions);
-	asort($files);
-
 	// Get config
 	global $CONFIG;
 
+	// load the rest of the library files from engine/lib/
+	$lib_files = array(
+		'activity.php', 'admin.php', 'annotations.php', 'api.php',
+		'cache.php', 'calendar.php', 'configuration.php', 'cron.php',
+		'entities.php', 'export.php', 'extender.php', 'filestore.php',
+		'group.php', 'input.php', 'install.php', 'location.php', 'mb_wrapper.php',
+		'memcache.php', 'metadata.php', 'metastrings.php', 'notification.php',
+		'objects.php', 'opendd.php', 'pagehandler.php', 'pageowner.php', 'pam.php',
+		'plugins.php', 'query.php', 'relationships.php', 'river2.php', 'sites.php',
+		'social.php', 'statistics.php', 'system_log.php', 'tags.php',
+		'usersettings.php', 'users.php', 'version.php', 'widgets.php', 'xml.php',
+		'xml-rpc.php'
+	);
+
+	$lib_dir = dirname(__FILE__) . '/lib/';
+
 	// Include them
-	foreach($files as $file) {
+	foreach($lib_files as $file) {
+		$file = $lib_dir . $file;
 		elgg_log("Loading $file...");
 		if (!include_once($file)) {
 			throw new InstallationException("Could not load {$file}");
