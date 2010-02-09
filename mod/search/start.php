@@ -78,7 +78,7 @@ function search_page_handler($page) {
  * Determins context based upon occurance and distance of words with each other.
  *
  * @param string $haystack
- * @param array $query
+ * @param string $query
  * @param int $min_match_context = 30
  * @param int $max_length = 300
  * @return string
