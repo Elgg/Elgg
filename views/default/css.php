@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg v1.6 Default Theme
+ * Elgg Default Theme
  * core CSS file
  *
  * Updated 30 Sept 09
