@@ -331,9 +331,9 @@ function expose_function($method, $function, array $parameters = NULL, $descript
 	global $API_METHODS;
 
 	if (($method == "") || ($function == "")) {
-		throw new InvalidParameterException(elgg_echo('InvalidParameterException:APIMethodOrFunctionNotSet'));	
+		throw new InvalidParameterException(elgg_echo('InvalidParameterException:APIMethodOrFunctionNotSet'));
 	}
-	
+
 	// does not check whether this method has already been exposed - good idea?
 	$API_METHODS[$method] = array();
 
@@ -346,14 +346,14 @@ function expose_function($method, $function, array $parameters = NULL, $descript
 		if (!is_array($parameters)) {
 			throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:APIParametersArrayStructure'), $method));
 		}
-		
+
 		// catch common mistake of not setting up param array correctly
 		$first = current($parameters);
 		if (!is_array($first)) {
 			throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:APIParametersArrayStructure'), $method));
 		}
 	}
-	
+
 	if ($parameters != NULL) {
 		// ensure the required flag is set correctly in default case for each parameter
 		foreach ($parameters as $key => $value) {
@@ -362,7 +362,7 @@ function expose_function($method, $function, array $parameters = NULL, $descript
 				$parameters[$key]['required'] = true;
 			}
 		}
-		
+
 		$API_METHODS[$method]["parameters"] = $parameters;
 	}
 
@@ -391,7 +391,7 @@ function expose_function($method, $function, array $parameters = NULL, $descript
  */
 function unexpose_function($method) {
 	global $API_METHODS;
-	
+
 	if (isset($API_METHODS[$method])) {
 		unset($API_METHODS[$method]);
 	}
@@ -401,35 +401,35 @@ function unexpose_function($method) {
  * Check that the method call has the proper API and user authentication
  * @param string $method The api name that was exposed
  * @return true or throws an exception
- * @throws APIException 
+ * @throws APIException
  */
 function authenticate_method($method) {
 	global $API_METHODS;
-	
+
 	// method must be exposed
 	if (!isset($API_METHODS[$method])) {
 		throw new APIException(sprintf(elgg_echo('APIException:MethodCallNotImplemented'), $method));
 	}
-	
+
 	// make sure that POST variables are available if relevant
 	if (get_call_method() === 'POST') {
 		include_post_data();
 	}
-	
+
 	// check API authentication if required
 	if ($API_METHODS[$method]["require_api_auth"] == true) {
 		if (pam_authenticate(null, "api") == false) {
 			throw new APIException(elgg_echo('APIException:APIAuthenticationFailed'));
 		}
 	}
-	
+
 	// check user authentication if required
 	if ($API_METHODS[$method]["require_user_auth"] == true) {
 		if (pam_authenticate() == false) {
 			throw new APIException(elgg_echo('APIException:UserAuthenticationFailed'));
 		}
 	}
-	
+
 	return true;
 }
 
@@ -449,24 +449,24 @@ function execute_method($method) {
 		throw new APIException(sprintf(elgg_echo('APIException:MethodCallNotImplemented'), $method));
 	}
 
-	// function must be callable 
+	// function must be callable
 	if (!(isset($API_METHODS[$method]["function"])) || !(is_callable($API_METHODS[$method]["function"]))) {
 		throw new APIException(sprintf(elgg_echo('APIException:FunctionDoesNotExist'), $method));
 	}
-	
+
 	// check http call method
 	if (strcmp(get_call_method(), $API_METHODS[$method]["call_method"]) != 0) {
 		throw new CallException(sprintf(elgg_echo('CallException:InvalidCallMethod'), $method, $API_METHODS[$method]["call_method"]));
 	}
-	
+
 	$parameters = get_parameters_for_method($method);
-	
+
 	if (verify_parameters($method, $parameters) == false) {
 		// if verify_parameters fails, it throws exception which is not caught here
 	}
-	
+
 	$serialised_parameters = serialise_parameters($method, $parameters);
-	
+
 	// Execute function: Construct function and calling parameters
 	$function = $API_METHODS[$method]["function"];
 	$serialised_parameters = trim($serialised_parameters, ", ");
@@ -502,18 +502,18 @@ function get_call_method() {
 
 /**
  * This function analyses all expected parameters for a given method
- * 
+ *
  * This function sanitizes the input parameters and returns them in
- * an associated array. 
+ * an associated array.
  *
  * @param string $method The method
- * @return array containing parameters as key => value 
+ * @return array containing parameters as key => value
  */
 function get_parameters_for_method($method) {
 	global $API_METHODS;
 
 	$sanitised = array();
-	
+
 	// if there are parameters, sanitize them
 	if (isset($API_METHODS[$method]['parameters'])) {
 		foreach ($API_METHODS[$method]['parameters'] as $k => $v) {
@@ -524,11 +524,11 @@ function get_parameters_for_method($method) {
 				// parameter wasn't passed so check for default
 				if (isset($v['default'])) {
 					$sanitised[$k] = $v['default'];
-				}	
+				}
 			}
 		}
 	}
-		
+
 	return $sanitised;
 }
 
@@ -539,7 +539,7 @@ function get_parameters_for_method($method) {
  */
 function get_post_data() {
 	global $GLOBALS;
-		
+
 	$postdata = '';
 	if (isset($GLOBALS['HTTP_RAW_POST_DATA']))
 		$postdata = $GLOBALS['HTTP_RAW_POST_DATA'];
@@ -548,7 +548,7 @@ function get_post_data() {
 	if (!$postdata) {
 		$postdata = file_get_contents('php://input');
 	}
-	
+
 	return $postdata;
 }
 
@@ -556,11 +556,11 @@ function get_post_data() {
  * This fixes the post parameters that are munged due to page handler
  */
 function include_post_data() {
-	
+
 	$postdata = get_post_data();
-	
+
 	if (isset($postdata)) {
-		parse_str($postdata, $query_arr);
+		elgg_parse_str($postdata, $query_arr);
 		if (is_array($query_arr)) {
 			foreach($query_arr as $name => $val) {
 				set_input($name, $val);
@@ -578,7 +578,7 @@ function include_post_data() {
  */
 function verify_parameters($method, $parameters) {
 	global $API_METHODS;
-	
+
 	// are there any parameters for this method
 	if (!(isset($API_METHODS[$method]["parameters"]))) {
 		return true; // no so return
@@ -590,19 +590,19 @@ function verify_parameters($method, $parameters) {
 		if (!is_array($value) || !isset($value['type'])) {
 			throw new APIException(sprintf(elgg_echo('APIException:InvalidParameter'), $key, $method));
 		}
-				
+
 		// Check that the variable is present in the request if required
 		if ($value['required'] && !array_key_exists($key, $parameters)) {
 			throw new APIException(sprintf(elgg_echo('APIException:MissingParameterInMethod'), $key, $method));
 		}
 	}
-	
+
 	return true;
 }
 
 /**
  * Serialize an array of parameters for an API method call
- * 
+ *
  * @param string $method API method name
  * @param array $parameters Array of parameters
  * @return string or exception
@@ -610,12 +610,12 @@ function verify_parameters($method, $parameters) {
  */
 function serialise_parameters($method, $parameters) {
 	global $API_METHODS;
-	
+
 	// are there any parameters for this method
 	if (!(isset($API_METHODS[$method]["parameters"]))) {
 		return ''; // if not, return
 	}
-	
+
 	$serialised_parameters = "";
 	foreach ($API_METHODS[$method]['parameters'] as $key => $value) {
 
@@ -623,59 +623,59 @@ function serialise_parameters($method, $parameters) {
 		if (!isset($parameters[$key])) {
 			continue;
 		}
-		
-		// Set variables casting to type.	
+
+		// Set variables casting to type.
 		switch (strtolower($value['type']))
 		{
 			case 'int':
-			case 'integer' : 
-				$serialised_parameters .= "," . (int)trim($parameters[$key]); 
+			case 'integer' :
+				$serialised_parameters .= "," . (int)trim($parameters[$key]);
 				break;
 			case 'bool':
-			case 'boolean': 
+			case 'boolean':
 				// change word false to boolean false
-				if (strcasecmp(trim($parameters[$key]), "false") == 0) { 
+				if (strcasecmp(trim($parameters[$key]), "false") == 0) {
 					$serialised_parameters .= ',false';
 				} else if ($parameters[$key] == 0) {
 					$serialised_parameters .= ',false';
 				} else {
 					$serialised_parameters .= ',true';
 				}
-				
+
 				break;
-			case 'string': 
+			case 'string':
 				$serialised_parameters .= ",'" . addcslashes(trim($parameters[$key]), "'") . "'";
 				break;
-			case 'float': 
-				$serialised_parameters .= "," . (float)trim($parameters[$key]); 
+			case 'float':
+				$serialised_parameters .= "," . (float)trim($parameters[$key]);
 				break;
 			case 'array':
 				// we can handle an array of strings, maybe ints, definitely not booleans or other arrays
 				if (!is_array($parameters[$key])) {
 					throw new APIException(sprintf(elgg_echo('APIException:ParameterNotArray'), $key));
 				}
-				
+
 				$array = "array(";
-				
+
 				foreach ($parameters[$key] as $k => $v) {
 					$k = sanitise_string($k);
 					$v = sanitise_string($v);
-									
+
 					$array .= "'$k'=>'$v',";
 				}
-							
+
 				$array = trim($array,",");
-								
+
 				$array .= ")";
 				$array = ",$array";
-							
+
 				$serialised_parameters .= $array;
 				break;
-			default: 
+			default:
 				throw new APIException(sprintf(elgg_echo('APIException:UnrecognisedTypeCast'), $value['type'], $key, $method));
 		}
 	}
-	
+
 	return $serialised_parameters;
 }
 
@@ -688,20 +688,20 @@ function serialise_parameters($method, $parameters) {
  */
 function api_auth_key() {
 	global $CONFIG;
-	
+
 	// check that an API key is present
 	$api_key = get_input('api_key');
 	if ($api_key == "") {
 		throw new APIException(elgg_echo('APIException:MissingAPIKey'));
 	}
-	
+
 	// check that it is active
 	$api_user = get_api_user($CONFIG->site_id, $api_key);
 	if (!$api_user) {
 		// key is not active or does not exist
 		throw new APIException(elgg_echo('APIException:BadAPIKey'));
 	}
-	
+
 	// can be used for keeping stats
 	// plugin can also return false to fail this authentication method
 	return trigger_plugin_hook('api_key', 'use', $api_key, true);
@@ -718,20 +718,20 @@ function api_auth_hmac() {
 
 	// Get api header
 	$api_header = get_and_validate_api_headers();
-	
+
 	// Pull API user details
 	$api_user = get_api_user($CONFIG->site_id, $api_header->api_key);
 
 	if (!$api_user) {
 		throw new SecurityException(elgg_echo('SecurityException:InvalidAPIKey'), ErrorResult::$RESULT_FAIL_APIKEY_INVALID);
 	}
-	
+
 	// Get the secret key
 	$secret_key = $api_user->secret;
 
 	// get the query string
 	$query = substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], '?') + 1);
-	
+
 	// calculate expected HMAC
 	$hmac = calculate_hmac(	$api_header->hmac_algo,
 							$api_header->time,
@@ -741,16 +741,16 @@ function api_auth_hmac() {
 							$query,
 							$api_header->method == 'POST' ? $api_header->posthash : "");
 
-	
+
 	if ($api_header->hmac !== $hmac) {
 		throw new SecurityException("HMAC is invalid.  {$api_header->hmac} != [calc]$hmac");
 	}
-	
+
 	// Now make sure this is not a replay
 	if (cache_hmac_check_replay($hmac)) {
 		throw new SecurityException(elgg_echo('SecurityException:DupePacket'));
 	}
-	
+
 	// Validate post data
 	if ($api_header->method=="POST") {
 		$postdata = get_post_data();
@@ -806,7 +806,7 @@ function get_and_validate_api_headers() {
 	// 25 hours is more than enough to handle server clock drift.
 	// This values determines how long the HMAC cache needs to store previous
 	// signatures. Heavy use of HMAC is better handled with a shorter sig lifetime.
-	// See cache_hmac_check_replay()  
+	// See cache_hmac_check_replay()
 	if (($result->time<(time()-90000)) || ($result->time>(time()+90000))) {
 		throw new APIException(elgg_echo('APIException:TemporalDrift'));
 	}
@@ -815,7 +815,7 @@ function get_and_validate_api_headers() {
 	if ($result->nonce == "") {
 		throw new APIException(elgg_echo('APIException:MissingNonce'));
 	}
-	
+
 	if ($result->method == "POST") {
 		$result->posthash = $_SERVER['HTTP_X_ELGG_POSTHASH'];
 		if ($result->posthash == "") {
@@ -916,7 +916,7 @@ function calculate_posthash($postdata, $algo) {
  * @return bool True if replay detected, false if not.
  */
 function cache_hmac_check_replay($hmac) {
-	// cache lifetime is 25 hours (this should be related to the time drift 
+	// cache lifetime is 25 hours (this should be related to the time drift
 	// allowed in get_and_validate_headers
 	$cache = new ElggHMACCache(90000);
 
@@ -941,9 +941,9 @@ function create_api_user($site_guid) {
 	global $CONFIG;
 
 	if (!isset($site_guid)) {
-		$site_guid = $CONFIG->site_id;	
+		$site_guid = $CONFIG->site_id;
 	}
-	
+
 	$site_guid = (int)$site_guid;
 
 	$public = sha1(rand().$site_guid.microtime());
@@ -1011,9 +1011,9 @@ function pam_auth_usertoken($credentials = NULL) {
 
 	$token = get_input('auth_token');
 	if (!$token) {
-		return false;	
+		return false;
 	}
-	
+
 	$validated_userid = validate_user_token($token, $CONFIG->site_id);
 
 	if ($validated_userid) {
@@ -1038,7 +1038,7 @@ function pam_auth_usertoken($credentials = NULL) {
 		if (!login($u)) {
 			return false;
 		}
-		
+
 		return true;
 	}
 
@@ -1086,22 +1086,22 @@ function create_user_token($username, $expire = 60) {
 
 /**
  * Get all tokens attached to a user
- * 
+ *
  * @param int $user_guid The user GUID
  * @param int $site_guid The ID of the site (default is current site)
- * @return false if none available or array of stdClass objects 
+ * @return false if none available or array of stdClass objects
  * 		(see users_apisessions schema for available variables in objects)
  */
 function get_user_tokens($user_guid, $site_guid) {
 	global $CONFIG;
 
 	if (!isset($site_guid)) {
-		$site_guid = $CONFIG->site_id;	
+		$site_guid = $CONFIG->site_id;
 	}
-	
+
 	$site_guid = (int)$site_guid;
 	$user_guid = (int)$user_guid;
-	
+
 	$tokens = get_data("SELECT * from {$CONFIG->dbprefix}users_apisessions
 		where user_guid=$user_guid and site_guid=$site_guid");
 
@@ -1122,9 +1122,9 @@ function validate_user_token($token, $site_guid) {
 	global $CONFIG;
 
 	if (!isset($site_guid)) {
-		$site_guid = $CONFIG->site_id;	
+		$site_guid = $CONFIG->site_id;
 	}
-	
+
 	$site_guid = (int)$site_guid;
 	$token = sanitise_string($token);
 
@@ -1142,39 +1142,39 @@ function validate_user_token($token, $site_guid) {
 
 /**
  * Remove user token
- * 
+ *
  * @param string $token
  * @param int $site_guid The ID of the site (default is current site)
  * @return bool
  */
 function remove_user_token($token, $site_guid) {
 	global $CONFIG;
-	
+
 	if (!isset($site_guid)) {
-		$site_guid = $CONFIG->site_id;	
+		$site_guid = $CONFIG->site_id;
 	}
-	
+
 	$site_guid = (int)$site_guid;
 	$token = sanitise_string($token);
-		
-	return delete_data("DELETE from {$CONFIG->dbprefix}users_apisessions 
-		where site_guid=$site_guid and token='$token'");	
+
+	return delete_data("DELETE from {$CONFIG->dbprefix}users_apisessions
+		where site_guid=$site_guid and token='$token'");
 }
 
 /**
  * Remove expired tokens
- * 
+ *
  * @return bool
  */
 function remove_expired_user_tokens() {
 	global $CONFIG;
-	
+
 	$site_guid = $CONFIG->site_id;
-	
+
 	$time = time();
-	
-	return delete_data("DELETE from {$CONFIG->dbprefix}users_apisessions 
-		where site_guid=$site_guid and expires < $time");	
+
+	return delete_data("DELETE from {$CONFIG->dbprefix}users_apisessions
+		where site_guid=$site_guid and expires < $time");
 }
 
 // Client api functions ///////////////////////////////////////////////////////////////////
@@ -1224,7 +1224,7 @@ function send_api_call(array $keys, $url, array $call, $method = 'GET', $post_da
 
 	// Time
 	$time = time();
-	
+
 	// Nonce
 	$nonce = uniqid('');
 
@@ -1332,10 +1332,10 @@ function get_standard_api_key_array($secret_key, $api_key) {
  */
 function list_all_apis() {
 	global $API_METHODS;
-	
+
 	// sort first
 	ksort($API_METHODS);
-	
+
 	return $API_METHODS;
 }
 
@@ -1416,9 +1416,9 @@ function __php_api_exception_handler($exception) {
 
 	error_log("*** FATAL EXCEPTION (API) *** : " . $exception);
 
-	$code   = $exception->getCode() == 0 ? ErrorResult::$RESULT_FAIL : $exception->getCode(); 
+	$code   = $exception->getCode() == 0 ? ErrorResult::$RESULT_FAIL : $exception->getCode();
 	$result = new ErrorResult($exception->getMessage(), $code, NULL);
-	
+
 	page_draw($exception->getMessage(), elgg_view("api/output", array("result" => $result)));
 }
 
@@ -1428,17 +1428,17 @@ function __php_api_exception_handler($exception) {
 /**
  * Services handler - turns request over to the registered handler
  * If no handler is found, this returns a 404 error
- * 
- * @param string $handler 
+ *
+ * @param string $handler
  * @param array $request
  */
 function service_handler($handler, $request) {
 	global $CONFIG;
-		
+
 	// setup the input parameters since this comes through rewrite rule
 	$query = substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], '?')+1);
 	if (isset($query)) {
-		parse_str($query, $query_arr);
+		elgg_parse_str($query, $query_arr);
 		if (is_array($query_arr)) {
 			foreach($query_arr as $name => $val) {
 				set_input($name, $val);
@@ -1447,9 +1447,9 @@ function service_handler($handler, $request) {
 	}
 
 	set_context('api');
-	
+
 	$request = explode('/',$request);
-	
+
 	// after the handler, the first identifier is response format
 	// ex) http://example.org/services/api/rest/xml/?method=test
 	$reponse_format = array_shift($request);
@@ -1460,7 +1460,7 @@ function service_handler($handler, $request) {
 		// default to xml
 		elgg_set_viewtype("xml");
 	}
-	
+
 	if (!isset($CONFIG->servicehandler) || empty($handler)) {
 		// no handlers set or bad url
 		header("HTTP/1.0 404 Not Found");
@@ -1476,8 +1476,8 @@ function service_handler($handler, $request) {
 }
 
 /**
- * Registers a web services handler 
- * 
+ * Registers a web services handler
+ *
  * @param string $handler web services type
  * @param string $function Your function name
  * @return true|false Depending on success
@@ -1499,7 +1499,7 @@ function register_service_handler($handler, $function) {
  * Remove a web service
  * To replace a web service handler, register the desired handler over the old on
  * with register_service_handler().
- * 
+ *
  * @param string $handler web services type
  */
 function unregister_service_handler($handler) {
@@ -1516,14 +1516,14 @@ function unregister_service_handler($handler) {
  */
 function rest_handler() {
 	global $CONFIG;
-	
+
 	require $CONFIG->path . "services/api/rest.php";
 }
 
 // Initialisation /////////////////////////////////////////////////////////////
 
 /**
- * Unit tests for API 
+ * Unit tests for API
  */
 function api_unit_test($hook, $type, $value, $params) {
 	global $CONFIG;
@@ -1538,21 +1538,21 @@ function api_unit_test($hook, $type, $value, $params) {
 function api_init() {
 	// Register a page handler, so we can have nice URLs
 	register_service_handler('rest','rest_handler');
-	
+
 	register_plugin_hook('unit_test', 'system', 'api_unit_test');
-	
+
 	// expose the list of api methods
 	expose_function("system.api.list", "list_all_apis", NULL, elgg_echo("system.api.list"), "GET", false, false);
-	
+
 	// The authentication token api
-	expose_function("auth.gettoken", 
+	expose_function("auth.gettoken",
 					"auth_gettoken", array(
 											'username' => array ('type' => 'string'),
 											'password' => array ('type' => 'string'),
-											), 
-					elgg_echo('auth.gettoken'), 
-					'POST', 
-					false, 
+											),
+					elgg_echo('auth.gettoken'),
+					'POST',
+					false,
 					false);
 }
 

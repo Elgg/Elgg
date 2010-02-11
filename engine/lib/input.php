@@ -190,7 +190,7 @@ function autop($pee, $br = 1) {
  */
 function elgg_set_input_from_uri() {
 	$query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
-	parse_str($query, $query_arr);
+	elgg_parse_str($query, $query_arr);
 
 	if (is_array($query_arr)) {
 		foreach($query_arr as $name => $val) {

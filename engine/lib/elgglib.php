@@ -943,11 +943,11 @@ function get_submenu() {
 						$item_params = array();
 						if (isset($uri_info['query'])) {
 							$uri_info['query'] = html_entity_decode($uri_info['query']);
-							parse_str($uri_info['query'], $uri_params);
+							elgg_parse_str($uri_info['query'], $uri_params);
 						}
 						if (isset($item_info['query'])) {
 							$item_info['query'] = html_entity_decode($item_info['query']);
-							parse_str($item_info['query'], $item_params);
+							elgg_parse_str($item_info['query'], $item_params);
 						}
 
 						$uri_info['path'] = trim($uri_info['path'], '/');
@@ -2521,7 +2521,7 @@ function elgg_validate_action_url($link) {
 	$url = parse_url($link);
 
 	if (isset($url['query'])) {
-		parse_str($url['query'], $query);
+		elgg_parse_str($url['query'], $query);
 	} else {
 		$query = array();
 	}
@@ -2550,7 +2550,7 @@ function elgg_http_remove_url_query_element($url, $element) {
 	$url_array = parse_url($url);
 
 	if (isset($url_array['query'])) {
-		parse_str($url_array['query'], $query);
+		elgg_parse_str($url_array['query'], $query);
 	} else {
 		// nothing to remove. Return original URL.
 		return $url;
@@ -2577,7 +2577,7 @@ function elgg_http_add_url_query_elements($url, array $elements) {
 	$url_array = parse_url($url);
 
 	if (isset($url_array['query'])) {
-		parse_str($url_array['query'], $query);
+		elgg_parse_str($url_array['query'], $query);
 	} else {
 		$query = array();
 	}

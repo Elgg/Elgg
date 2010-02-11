@@ -24,7 +24,7 @@ function page_handler($handler, $page) {
 	if (strpos($_SERVER['REQUEST_URI'], '?') !== FALSE) {
 		$query = substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], '?') + 1);
 		if (isset($query)) {
-			parse_str($query, $query_arr);
+			elgg_parse_str($query, $query_arr);
 			if (is_array($query_arr)) {
 				foreach($query_arr as $name => $val) {
 					set_input($name, $val);
@@ -32,7 +32,7 @@ function page_handler($handler, $page) {
 			}
 		}
 	}
-	
+
 	// if page url ends in a / then last element of $page is an empty string
 	$page = explode('/',$page);
 
@@ -65,15 +65,15 @@ function page_handler($handler, $page) {
  * Now for all URLs of type http://yoururl/pg/blog/*, the blog_page_handler() function will be called.
  * The part of the URL marked with * above will be exploded on '/' characters and passed as an
  * array to that function.
- * For example, the URL http://yoururl/blog/username/friends/ would result in the call: 
+ * For example, the URL http://yoururl/blog/username/friends/ would result in the call:
  * blog_page_handler(array('username','friends'), blog);
- * 
+ *
  * Page handler functions should return true or the default page handler will be called.
- * 
+ *
  * A request to register a page handler with the same identifier as previously registered
  * handler will replace the previous one.
- * 
- * The context is set to the page handler identifier before the registered 
+ *
+ * The context is set to the page handler identifier before the registered
  * page handler function is called. For the above example, the context is set to 'blog'.
  *
  * @param string $handler The page type to handle
