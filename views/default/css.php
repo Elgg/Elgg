@@ -822,6 +822,10 @@ input {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 }
+input[type="checkbox"] {
+	padding: 1px;
+	border-style: none;
+}
 textarea {
 	font: 120% Arial, Helvetica, sans-serif;
 	border: solid 1px #cccccc;
