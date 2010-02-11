@@ -17,6 +17,10 @@
  *
  */
 
+if (isset($vars['value'])) {
+	$vars['href'] = $vars['value'];
+}
+
 $url = trim($vars['href']);
 
 if (!empty($url)) {
