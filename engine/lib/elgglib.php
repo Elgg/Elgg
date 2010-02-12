@@ -1279,6 +1279,43 @@ function friendly_title($title) {
  */
 
 /**
+ * @deprecated 1.7
+ */
+function get_library_files($directory, $exceptions = array(), $list = array()) {
+	elgg_deprecated_notice('get_library_files() deprecated by elgg_get_file_list()', 1.7);
+	return elgg_get_file_list($directory, $exceptions, $list, array('.php'));
+}
+
+/**
+ * Returns a list of files in $directory
+ *
+ * @param str $directory
+ * @param array $exceptions Array of filenames to ignore
+ * @param array $list Array of files to append to
+ * @param mixed $extensions Array of extensions to allow, NULL for all. (With a dot: array('.php'))
+ * @return array
+ */
+function elgg_get_file_list($directory, $exceptions = array(), $list = array(), $extensions = NULL) {
+	if ($handle = opendir($directory)) {
+		while (($file = readdir($handle)) !== FALSE) {
+			if (!is_file($file) || in_array($file, $exceptions)) {
+				continue;
+			}
+
+			if (is_array($extensions)) {
+				if (in_array(strrchr($file, '.'), $extensions)) {
+					$list[] = $directory . "/" . $file;
+				}
+			} else {
+				$list[] = $directory . "/" . $file;
+			}
+		}
+	}
+
+	return $list;
+}
+
+/**
  * Ensures that the installation has all the correct files, that PHP is configured correctly, and so on.
  * Leaves appropriate messages in the error register if not.
  *
