@@ -15,7 +15,7 @@ if (!is_array($entities) || !count($entities)) {
 	return FALSE;
 }
 
-$query = htmlspecialchars(http_build_query(
+$query = http_build_query(
 	array(
 		'q' => $vars['params']['query'],
 		'entity_type' => $vars['params']['type'],
@@ -25,7 +25,7 @@ $query = htmlspecialchars(http_build_query(
 		'search_type' => $vars['params']['search_type'],
 	//@todo include vars for sorting, order, and friend-only.
 	)
-));
+);
 
 $url = "{$vars['url']}pg/search?$query";
 

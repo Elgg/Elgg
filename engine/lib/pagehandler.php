@@ -24,7 +24,7 @@ function page_handler($handler, $page) {
 	if (strpos($_SERVER['REQUEST_URI'], '?') !== FALSE) {
 		$query = substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], '?') + 1);
 		if (isset($query)) {
-			elgg_parse_str($query, $query_arr);
+			$query_arr = elgg_parse_str($query);
 			if (is_array($query_arr)) {
 				foreach($query_arr as $name => $val) {
 					set_input($name, $val);

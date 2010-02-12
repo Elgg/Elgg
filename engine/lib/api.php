@@ -560,7 +560,7 @@ function include_post_data() {
 	$postdata = get_post_data();
 
 	if (isset($postdata)) {
-		elgg_parse_str($postdata, $query_arr);
+		$query_arr = elgg_parse_str($postdata);
 		if (is_array($query_arr)) {
 			foreach($query_arr as $name => $val) {
 				set_input($name, $val);
@@ -1342,7 +1342,7 @@ function list_all_apis() {
 /**
  * The auth.gettoken API.
  * This API call lets a user log in, returning an authentication token which can be used
- * to authenticate a user for a period of time. It is passed in future calls as the parameter 
+ * to authenticate a user for a period of time. It is passed in future calls as the parameter
  * auth_token.
  *
  * @param string $username Username
@@ -1439,7 +1439,7 @@ function service_handler($handler, $request) {
 	// setup the input parameters since this comes through rewrite rule
 	$query = substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], '?')+1);
 	if (isset($query)) {
-		elgg_parse_str($query, $query_arr);
+		$query_arr = elgg_parse_str($query);
 		if (is_array($query_arr)) {
 			foreach($query_arr as $name => $val) {
 				set_input($name, $val);

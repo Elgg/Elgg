@@ -6,6 +6,24 @@ if (is_callable('mb_internal_encoding')) {
 	ini_set("mbstring.internal_encoding", 'UTF-8');
 }
 
+/**
+ * Parses a string using mb_parse_str() if available.
+ * NOTE: This differs from parse_str() by returning the results
+ * instead of placing them in the local scope!
+ *
+ * @param str $str
+ * @return array
+ */
+function elgg_parse_str($str) {
+	if (is_callable('mb_parse_str')) {
+		mb_parse_str($str, $results);
+	} else {
+		parse_str($str, $results);
+	}
+
+	return $results;
+}
+
 // map string functions to their mb_str_func alternatives
 // and wrap them in elgg_str_fun()
 
@@ -13,7 +31,8 @@ if (is_callable('mb_internal_encoding')) {
 // only will work with mb_* functions that take the same
 // params in the same order as their non-mb safe counterparts.
 $str_funcs = array(
-	'parse_str',
+	// can't wrap parse_str() because of its 2nd parameter.
+	//'parse_str',
 	'split',
 	'stristr',
 	'strlen',
