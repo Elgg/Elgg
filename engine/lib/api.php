@@ -1342,7 +1342,8 @@ function list_all_apis() {
 /**
  * The auth.gettoken API.
  * This API call lets a user log in, returning an authentication token which can be used
- * to authenticate a user for a period of time.
+ * to authenticate a user for a period of time. It is passed in future calls as the parameter 
+ * auth_token.
  *
  * @param string $username Username
  * @param string $password Clear text password
