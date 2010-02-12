@@ -1121,6 +1121,32 @@ abstract class ElggEntity implements
 		return $this->owner_guid;
 	}
 
+	/**
+	 * Returns tags for this entity using registered tag metadata names.
+	 *
+	 * @return array
+	 */
+	public function getTags() {
+		global $CONFIG;
+
+		$valid_tags = elgg_get_registered_tag_metadata_names();
+		$entity_tags = array();
+
+		foreach ($valid_tags as $tag_name) {
+			if ($tags = $this->$tag_name) {
+				// if a single tag, metadata returns a string.
+				// if multiple tags, metadata returns an array.
+				if (is_array($tags)) {
+					$entity_tags = array_merge($entity_tags, $tags);
+				} else {
+					$entity_tags[] = $tags;
+				}
+			}
+		}
+
+		return $entity_tags;
+	}
+
 	// ITERATOR INTERFACE //////////////////////////////////////////////////////////////
 	/*
 	 * This lets an entity's attributes be displayed using foreach as a normal array.

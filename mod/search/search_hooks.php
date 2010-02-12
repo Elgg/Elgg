@@ -165,9 +165,22 @@ function search_users_hook($hook, $type, $value, $params) {
 function search_tags_hook($hook, $type, $value, $params) {
 	global $CONFIG;
 
+	$valid_tags = elgg_get_registered_tag_metadata_names();
+
 	// @todo will need to split this up to support searching multiple tags at once.
 	$query = sanitise_string($params['query']);
-	$params['metadata_name_value_pair'] = array ('name' => 'tags', 'value' => $query, 'case_sensitive' => FALSE);
+
+	$name_value_pairs = array();
+	foreach ($valid_tags as $tag_name) {
+		$name_value_pairs[] = array (
+			'name' => $tag_name,
+			'value' => $query,
+			'case_sensitive' => FALSE
+		);
+	}
+
+	$params['metadata_name_value_pairs'] = $name_value_pairs;
+	$params['metadata_name_value_pairs_operator'] = 'OR';
 
 	$entities = elgg_get_entities_from_metadata($params);
 	$params['count'] = TRUE;
@@ -180,10 +193,10 @@ function search_tags_hook($hook, $type, $value, $params) {
 
 	// add the volatile data for why these entities have been returned.
 	foreach ($entities as $entity) {
-		$tags = $entity->tags;
+		$tags = $entity->getTags();
 
 		if (is_array($tags)) {
-			$tags = implode(', ', $entity->tags);
+			$tags = implode(', ', $tags);
 		}
 
 		// Nick told me my idea was dirty, so I'm hard coding the numbers.

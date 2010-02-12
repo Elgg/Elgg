@@ -15,7 +15,6 @@
  * This is quick and dirty.
  */
 function calculate_tag_size($min, $max, $number_of_tags, $buckets = 6) {
-
 	$delta =  (($max - $min) / $buckets);
 	$thresholds = array();
 
@@ -90,6 +89,11 @@ function get_tags($threshold = 1, $limit = 10, $metadata_name = "", $entity_type
 	$threshold = (int) $threshold;
 	$limit = (int) $limit;
 
+	$registered_tags = elgg_get_registered_tag_metadata_names();
+	if (!in_array($metadata_name, $registered_tags)) {
+		elgg_deprecated_notice('Tag metadata names must be registered by elgg_register_tag_metadata_name()', 1.7);
+	}
+
 	if (!empty($metadata_name)) {
 		$metadata_name = (int) get_metastring_id($metadata_name);
 		// test if any metadata with that name
@@ -115,8 +119,6 @@ function get_tags($threshold = 1, $limit = 10, $metadata_name = "", $entity_type
 	if ($site_guid < 0) {
 		$site_guid = $CONFIG->site_id;
 	}
-
-	//$access = get_access_list();
 
 	$query = "SELECT msvalue.string as tag, count(msvalue.id) as total ";
 	$query .= "FROM {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}metadata md on md.entity_guid = e.guid ";
@@ -154,9 +156,8 @@ function get_tags($threshold = 1, $limit = 10, $metadata_name = "", $entity_type
 		$query .= " and e.time_created<=$end_ts";
 	}
 
-	//$userid = get_loggedin_userid();
-	//$query .= " and (e.access_id in {$access} or (e.access_id = " . ACCESS_PRIVATE . " and e.owner_guid = {$userid}))";
-	$query .= ' and ' . get_access_sql_suffix("e"); // Add access controls
+	// Add access controls
+	$query .= ' and ' . get_access_sql_suffix("e");
 
 	$query .= " group by msvalue.string having total > {$threshold} order by total desc limit {$limit} ";
 
@@ -179,7 +180,53 @@ function get_tags($threshold = 1, $limit = 10, $metadata_name = "", $entity_type
  */
 
 function display_tagcloud($threshold = 1, $limit = 10, $metadata_name = "", $entity_type = "object", $entity_subtype = "", $owner_guid = "", $site_guid = -1, $start_ts = "", $end_ts = "") {
+
+	if (!in_array($metadata_name, $registered_tags)) {
+		elgg_deprecated_notice('Tag metadata names must be registered by elgg_register_tag_metadata_name()', 1.7);
+	}
+
 	return elgg_view("output/tagcloud",array('value' => get_tags($threshold, $limit, $metadata_name, $entity_type, $entity_subtype, $owner_guid, $site_guid, $start_ts, $end_ts),
-											'object' => $entity_type, 
+											'object' => $entity_type,
 											'subtype' => $entity_subtype));
 }
+
+/**
+ * Registers a metadata name as containing tags for an entity.
+ * This is required if you are using a non-standard metadata name
+ * for your tags.
+ *
+ * @since 1.7
+ *
+ * @param string $name
+ * @return TRUE
+ */
+function elgg_register_tag_metadata_name($name) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->registered_tag_metadata_names)) {
+		$CONFIG->registered_tag_metadata_names = array();
+	}
+
+	if (!in_array($name, $CONFIG->registered_tag_metadata_names)) {
+		$CONFIG->registered_tag_metadata_names[] = $name;
+	}
+
+	return TRUE;
+}
+
+/**
+ * Returns an array of valid metadata names for tags.
+ *
+ * @since 1.7
+ *
+ * @return array
+ */
+function elgg_get_registered_tag_metadata_names() {
+	global $CONFIG;
+
+	$names = (isset($CONFIG->registered_tag_metadata_names)) ? $CONFIG->registered_tag_metadata_names : array();
+	return $names;
+}
+
+// register the standard tags metadata name
+elgg_register_tag_metadata_name('tags');

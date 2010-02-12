@@ -43,7 +43,9 @@ http://code.elgg.org/elgg/.....
   * delete_relationship() triggers the hook delete:relationship and passes the relationship object. #1213
   * added ElggEntity::removeRelationship(). #1376.
   * get_entity_dates() supports order by. #1406.
-  * added elgg_http_add_url_query_elements().
+  * Added elgg_http_add_url_query_elements().
+  * Added elgg_register_tag_metadata_name() and elgg_get_registered_tag_metadata_names();
+  * Added ElggEntity::getTags().
 
  Services API:
   * Separated user and api authenticate processing
