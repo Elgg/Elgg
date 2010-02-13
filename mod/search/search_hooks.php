@@ -165,13 +165,33 @@ function search_users_hook($hook, $type, $value, $params) {
 function search_tags_hook($hook, $type, $value, $params) {
 	global $CONFIG;
 
-	$valid_tags = elgg_get_registered_tag_metadata_names();
+	$valid_tag_names = elgg_get_registered_tag_metadata_names();
 
 	// @todo will need to split this up to support searching multiple tags at once.
 	$query = sanitise_string($params['query']);
 
+	// if passed a tag metadata name, only search on that tag name.
+	// tag_name isn't included in the params because it's specific to
+	// tag searches.
+	if ($tag_names = get_input('tag_names')) {
+		if (is_array($tag_names)) {
+			$search_tag_names = $tag_names;
+		} else {
+			$search_tag_names = array($tag_names);
+		}
+
+		// check these are valid to avoid arbitrary metadata searches.
+		foreach ($search_tag_names as $i => $tag_name) {
+			if (!in_array($tag_name, $valid_tag_names)) {
+				unset($search_tag_names[$i]);
+			}
+		}
+	} else {
+		$search_tag_names = $valid_tag_names;
+	}
+
 	$name_value_pairs = array();
-	foreach ($valid_tags as $tag_name) {
+	foreach ($search_tag_names as $tag_name) {
 		$name_value_pairs[] = array (
 			'name' => $tag_name,
 			'value' => $query,
@@ -193,10 +213,21 @@ function search_tags_hook($hook, $type, $value, $params) {
 
 	// add the volatile data for why these entities have been returned.
 	foreach ($entities as $entity) {
-		$tags = $entity->getTags();
+		$matched_tags_strs = array();
 
-		if (is_array($tags)) {
-			$tags = implode(', ', $tags);
+		// get tags for each tag name requested to find which ones matched.
+		foreach ($search_tag_names as $tag_name) {
+			$tags = $entity->getTags($tag_name);
+
+			// @todo make one long tag string and run this through the highlight
+			// function.  This might be confusing as it could chop off
+			// the tag labels.
+			if (in_array($query, $tags)) {
+				if (is_array($tags)) {
+					$tag_name_str = elgg_echo("tag_names:$tag_name");
+					$matched_tags_strs[] = "$tag_name_str: " . implode(', ', $tags);
+				}
+			}
 		}
 
 		// Nick told me my idea was dirty, so I'm hard coding the numbers.
@@ -214,8 +245,9 @@ function search_tags_hook($hook, $type, $value, $params) {
 			$desc_str = $desc_tmp;
 		}
 
-		$tags_str = search_get_highlighted_relevant_substrings($tags, $params['query']);
-		$tags_str = '(' . elgg_echo('tags') . ": $tags_str)";
+		$tags_str = implode('. ', $matched_tags_strs);
+		$tags_str = search_get_highlighted_relevant_substrings($tags_str, $params['query']);
+		$tags_str = "($tags_str)";
 
 		$entity->setVolatileData('search_matched_title', $title_str);
 		$entity->setVolatileData('search_matched_description', $desc_str);

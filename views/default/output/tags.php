@@ -29,6 +29,17 @@ if (empty($vars['tags']) && !empty($vars['value'])) {
 	$vars['tags'] = $vars['value'];
 }
 
+$tag_names_str = '';
+if (isset($vars['tag_names'])) {
+	if (is_array($vars['tag_names'])) {
+		foreach ($vars['tag_names'] as $tag_name) {
+			$tag_names_str .= "&tag_names[]=$tag_name";
+		}
+	} else {
+		$tag_names_str = "&tag_names={$vars['tag_names']}";
+	}
+}
+
 if (!empty($vars['tags'])) {
 	$tagstr = "";
 	if (!is_array($vars['tags'])) {
@@ -45,7 +56,7 @@ if (!empty($vars['tags'])) {
 			$type = "";
 		}
 		if (is_string($tag)) {
-			$tagstr .= "<a rel=\"tag\" href=\"{$vars['url']}pg/search/?q=".urlencode($tag) . "&search_type=tags{$type}{$subtype}{$object}\">" . htmlentities($tag, ENT_QUOTES, 'UTF-8') . "</a>";
+			$tagstr .= "<a rel=\"tag\" href=\"{$vars['url']}pg/search/?q=".urlencode($tag) . "&search_type=tags{$type}{$subtype}{$object}{$tag_names_str}\">" . htmlentities($tag, ENT_QUOTES, 'UTF-8') . "</a>";
 		}
 	}
 	echo $tagstr;

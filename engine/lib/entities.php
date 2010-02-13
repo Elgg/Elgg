@@ -1122,17 +1122,26 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Returns tags for this entity using registered tag metadata names.
+	 * Returns tags for this entity.
 	 *
+	 * @param array $tag_names Optionally restrict by tag metadata names.
 	 * @return array
 	 */
-	public function getTags() {
+	public function getTags($tag_names = NULL) {
 		global $CONFIG;
+
+		if ($tag_names && !is_array($tag_names)) {
+			$tag_names = array($tag_names);
+		}
 
 		$valid_tags = elgg_get_registered_tag_metadata_names();
 		$entity_tags = array();
 
 		foreach ($valid_tags as $tag_name) {
+			if (is_array($tag_names) && !in_array($tag_name, $tag_names)) {
+				continue;
+			}
+
 			if ($tags = $this->$tag_name) {
 				// if a single tag, metadata returns a string.
 				// if multiple tags, metadata returns an array.
