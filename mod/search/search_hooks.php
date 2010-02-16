@@ -190,21 +190,46 @@ function search_tags_hook($hook, $type, $value, $params) {
 		$search_tag_names = $valid_tag_names;
 	}
 
-	$name_value_pairs = array();
-	foreach ($search_tag_names as $tag_name) {
-		$name_value_pairs[] = array (
-			'name' => $tag_name,
-			'value' => $query,
-			'case_sensitive' => FALSE
-		);
+//	$name_value_pairs = array();
+//	foreach ($search_tag_names as $tag_name) {
+//		$name_value_pairs[] = array (
+//			'name' => $tag_name,
+//			'value' => $query,
+//			'case_sensitive' => FALSE
+//		);
+//	}
+//
+//	$params['metadata_name_value_pairs'] = $name_value_pairs;
+//	$params['metadata_name_value_pairs_operator'] = 'OR';
+//
+//	$params = array();
+//
+//	$entities = elgg_get_entities_from_metadata($params);
+//	$params['count'] = TRUE;
+//	$count = elgg_get_entities_from_metadata($params);
+
+	// don't use elgg_get_entities_from_metadata() here because of
+	// performance issues.  since we don't care what matches at this point
+	// use an IN clause to grab everything that matches at once and sort
+	// out the matches later.
+	$params['joins'][] = "JOIN {$CONFIG->dbprefix}metadata md on e.guid = md.entity_guid";
+	$params['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msn on md.name_id = msn.id";
+	$params['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msv on md.value_id = msv.id";
+
+	$access = get_access_sql_suffix('md');
+	$sanitised_tags = array();
+
+	foreach ($search_tag_names as $tag) {
+		$sanitised_tags[] = '"' . sanitise_string($tag) . '"';
 	}
 
-	$params['metadata_name_value_pairs'] = $name_value_pairs;
-	$params['metadata_name_value_pairs_operator'] = 'OR';
+	$tags_in = implode(',', $sanitised_tags);
 
-	$entities = elgg_get_entities_from_metadata($params);
+	$params['wheres'][] = "(msn.string IN ($tags_in) AND msv.string = '$query' AND $access)";
+
+	$entities = elgg_get_entities($params);
 	$params['count'] = TRUE;
-	$count = elgg_get_entities_from_metadata($params);
+	$count = elgg_get_entities($params);
 
 	// no need to continue if nothing here.
 	if (!$count) {
