@@ -65,11 +65,11 @@ $custom_types = trigger_plugin_hook('search_types', 'get_types', $params, array(
 // @todo should these maintain any existing type / subtype filters or reset?
 $data = htmlspecialchars(http_build_query(array(
 	'q' => $query,
-	'entity_subtype' => $subtype,
-	'entity_type' => $type,
+	'entity_subtype' => $entity_subtype,
+	'entity_type' => $entity_type,
 	'owner_guid' => $owner_guid,
 	'search_type' => 'all',
-	'friends' => $friends
+	//'friends' => $friends
 )));
 $url = "{$CONFIG->wwwroot}pg/search/?$data";
 add_submenu_item(elgg_echo('all'), $url);
