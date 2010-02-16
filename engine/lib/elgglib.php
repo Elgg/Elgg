@@ -2700,7 +2700,6 @@ function __elgg_shutdown_hook() {
 function elgg_init() {
 	// Page handler for JS
 	register_page_handler('js','js_page_handler');
-	elgg_extend_view('js/initialise_elgg','embed/js');
 
 	// Register an event triggered at system shutdown
 	register_shutdown_function('__elgg_shutdown_hook');
