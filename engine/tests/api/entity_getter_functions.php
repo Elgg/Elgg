@@ -68,10 +68,25 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 	 * Called after each test method.
 	 */
 	public function tearDown() {
-		//$this->swallowErrors();
+		global $CONFIG;
+
+		$this->swallowErrors();
 		foreach ($this->entities as $e) {
 			$e->delete();
 		}
+
+		// manually remove subtype entries since there is no way
+		// to using the API.
+		$subtype_arr = array();
+		foreach ($this->subtypes as $type => $subtypes) {
+			foreach ($subtypes as $subtype) {
+				$subtype_arr[] = "'$subtype'";
+			}
+		}
+
+		$subtype_str = implode(',', $subtype_arr);
+		$q = "DELETE FROM {$CONFIG->dbprefix}entity_subtypes WHERE subtype IN ($subtype_str)";
+		delete_data($q);
 	}
 
 	/**
@@ -106,7 +121,6 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		shuffle($r);
 		return $r;
 	}
-
 
 	/**
 	 * Get a random valid subtype (that we just created)
@@ -225,16 +239,16 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$options = array(
 			'type' => $type,
 			'group_by' => 'e.type'
-			);
+		);
 
-			$es = elgg_get_entities($options);
-			$this->assertIsA($es, 'array');
+		$es = elgg_get_entities($options);
+		$this->assertIsA($es, 'array');
 
-			// should only ever return one object because of group by
-			$this->assertIdentical(count($es), 1);
-			foreach ($es as $e) {
-				$this->assertTrue(in_array($e->getType(), $type_arr));
-			}
+		// should only ever return one object because of group by
+		$this->assertIdentical(count($es), 1);
+		foreach ($es as $e) {
+			$this->assertTrue(in_array($e->getType(), $type_arr));
+		}
 	}
 
 	public function testElggAPIGettersValidTypeUsingTypesAsString() {
@@ -243,16 +257,16 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$options = array(
 			'types' => $type,
 			'group_by' => 'e.type'
-			);
+		);
 
-			$es = elgg_get_entities($options);
-			$this->assertIsA($es, 'array');
+		$es = elgg_get_entities($options);
+		$this->assertIsA($es, 'array');
 
-			// should only ever return one object because of group by
-			$this->assertIdentical(count($es), 1);
-			foreach ($es as $e) {
-				$this->assertTrue(in_array($e->getType(), $type_arr));
-			}
+		// should only ever return one object because of group by
+		$this->assertIdentical(count($es), 1);
+		foreach ($es as $e) {
+			$this->assertTrue(in_array($e->getType(), $type_arr));
+		}
 	}
 
 	public function testElggAPIGettersValidTypeUsingTypesAsArray() {
@@ -261,16 +275,16 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$options = array(
 			'types' => $type_arr,
 			'group_by' => 'e.type'
-			);
+		);
 
-			$es = elgg_get_entities($options);
-			$this->assertIsA($es, 'array');
+		$es = elgg_get_entities($options);
+		$this->assertIsA($es, 'array');
 
-			// should only ever return one object because of group by
-			$this->assertIdentical(count($es), 1);
-			foreach ($es as $e) {
-				$this->assertTrue(in_array($e->getType(), $type_arr));
-			}
+		// should only ever return one object because of group by
+		$this->assertIdentical(count($es), 1);
+		foreach ($es as $e) {
+			$this->assertTrue(in_array($e->getType(), $type_arr));
+		}
 	}
 
 	public function testElggAPIGettersValidTypeUsingTypesAsArrayPlural() {
@@ -279,17 +293,17 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$options = array(
 			'types' => $types,
 			'group_by' => 'e.type'
-			);
+		);
 
-			$es = elgg_get_entities($options);
-			$this->assertIsA($es, 'array');
+		$es = elgg_get_entities($options);
+		$this->assertIsA($es, 'array');
 
-			// one of object and one of group
-			$this->assertIdentical(count($es), $num);
+		// one of object and one of group
+		$this->assertIdentical(count($es), $num);
 
-			foreach ($es as $e) {
-				$this->assertTrue(in_array($e->getType(), $types));
-			}
+		foreach ($es as $e) {
+			$this->assertTrue(in_array($e->getType(), $types));
+		}
 	}
 
 
@@ -309,14 +323,14 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$options = array(
 			'types' => array($invalid, $valid),
 			'group_by' => 'e.type'
-			);
+		);
 
-			$es = elgg_get_entities($options);
-			$this->assertIsA($es, 'array');
+		$es = elgg_get_entities($options);
+		$this->assertIsA($es, 'array');
 
-			// should only ever return one object because of group by
-			$this->assertIdentical(count($es), 1);
-			$this->assertIdentical($es[0]->getType(), $valid);
+		// should only ever return one object because of group by
+		$this->assertIdentical(count($es), 1);
+		$this->assertIdentical($es[0]->getType(), $valid);
 	}
 
 	public function testElggAPIGettersValidAndInvalidTypesPlural() {
@@ -338,16 +352,16 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$options = array(
 			'types' => $types,
 			'group_by' => 'e.type'
-			);
+		);
 
-			$es = elgg_get_entities($options);
-			$this->assertIsA($es, 'array');
+		$es = elgg_get_entities($options);
+		$this->assertIsA($es, 'array');
 
-			// should only ever return one object because of group by
-			$this->assertIdentical(count($es), $valid_num);
-			foreach ($es as $e) {
-				$this->assertTrue(in_array($e->getType(), $valid));
-			}
+		// should only ever return one object because of group by
+		$this->assertIdentical(count($es), $valid_num);
+		foreach ($es as $e) {
+			$this->assertTrue(in_array($e->getType(), $valid));
+		}
 	}
 
 

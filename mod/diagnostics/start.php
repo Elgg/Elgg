@@ -43,31 +43,8 @@ function diagnostics_page_handler($page)
 {
 	global $CONFIG;
 
-	if (isset($page[0]))
-	{
-		switch ($page[0])
-		{
-			case 'tests' :
-				if ((isset($page[1])) && ($page[1])) {
-					switch ($page[1])
-					{
-						case 'all': break;
-						default: set_input('test_func', $page[1]);
-					}
-
-					include($CONFIG->pluginspath . "diagnostics/testreport.php");
-				}
-				else
-					include($CONFIG->pluginspath . "diagnostics/unittester.php");
-			break;
-			default: include($CONFIG->pluginspath . "diagnostics/index.php");
-		}
-	}
-	else
-	{
-		// only interested in one page for now
-		include($CONFIG->pluginspath . "diagnostics/index.php");
-	}
+	// only interested in one page for now
+	include($CONFIG->pluginspath . "diagnostics/index.php");
 }
 
 /**
