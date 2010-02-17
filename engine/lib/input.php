@@ -247,7 +247,7 @@ function input_livesearch_page_handler($page) {
 			case 'all':
 				// only need to pull up title from objects.
 
-				if (!$entities = get_entities(null, null, $owner_guid, null, $limit) AND is_array($entities)) {
+				if (!$entities = elgg_get_entities(array('owner_guid' => $owner_guid, 'limit' => $limit)) AND is_array($entities)) {
 					$results = array_merge($results, $entities);
 				}
 				break;
@@ -331,7 +331,9 @@ function input_livesearch_page_handler($page) {
 
 			default:
 				// arbitrary subtype.
-				get_entities(null, $type, $owner_guid);
+				//@todo you cannot specify a subtype without a type. 
+				// did this ever work?
+				elgg_get_entities(array('subtype' => $type, 'owner_guid' => $owner_guid));
 				break;
 		}
 	}

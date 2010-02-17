@@ -662,11 +662,24 @@ $count = false, $site_guid = 0) {
  * @param true|false $pagination Whether to display pagination (default: true)
  * @return string The viewable list of entities
  */
-function list_entities_from_relationship($relationship, $relationship_guid, $inverse_relationship = false, $type = "", $subtype = "", $owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = false, $pagination = true) {
+function list_entities_from_relationship($relationship, $relationship_guid, $inverse_relationship = false, $type = ELGG_ENTITIES_ANY_VALUE, $subtype = ELGG_ENTITIES_ANY_VALUE, $owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = false, $pagination = true) {
 	$limit = (int) $limit;
 	$offset = (int) get_input('offset');
-	$count = get_entities_from_relationship($relationship, $relationship_guid, $inverse_relationship, $type, $subtype, $owner_guid, "", $limit, $offset, true);
-	$entities = get_entities_from_relationship($relationship, $relationship_guid, $inverse_relationship, $type, $subtype, $owner_guid, "", $limit, $offset);
+	$options = array(
+		'relationship' => $relationship, 
+		'relationship_guid' => $relationship_guid, 
+		'inverse_relationship' => $inverse_relationship, 
+		'types' => $type, 
+		'subtypes' => $subtype, 
+		'owner_guid' => $owner_guid, 
+		'order_by' => '', 
+		'limit' => $limit, 
+		'offset' => $offset, 
+		'count' => TRUE
+	);
+	$count = elgg_get_entities_from_relationship($options);
+	$options['count'] = FALSE;
+	$entities = elgg_get_entities_from_relationship($options);
 
 	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle, $pagination);
 }
@@ -947,7 +960,7 @@ function already_attached($guid_one, $guid_two){
 **/
 
 function get_attachments($guid, $type=""){
-	$attached = get_entities_from_relationship("attached", $guid, $inverse_relationship = false, $type, $subtype = "", $owner_guid = 0, $order_by = "time_created desc", $limit = 10, $offset = 0, $count = false, $site_guid = 0);
+	$attached = elgg_get_entities_from_relationship(array('relationship' => 'attached', 'relationship_guid' => $guid, 'inverse_relationship' => $inverse_relationship = false, 'types' => $type, 'subtypes' => '', 'owner_guid' => 0, 'order_by' => 'time_created desc', 'limit' => 10, 'offset' => 0, 'count' => false, 'site_guid' => 0));
 	return $attached;
 }
 

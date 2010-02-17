@@ -121,7 +121,7 @@ function is_uuid_this_domain($uuid) {
 function get_entity_from_uuid($uuid) {
 	$uuid = sanitise_string($uuid);
 
-	$entities = get_entities_from_metadata("import_uuid", $uuid);
+	$entities = elgg_get_entities_from_metadata(array('metadata_name' => 'import_uuid', 'metadata_value' => $uuid));
 
 	if ($entities) {
 		return $entities[0];

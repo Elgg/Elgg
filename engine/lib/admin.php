@@ -135,7 +135,11 @@ function send_admin_message($subject, $message) {
  * @param int $limit Limit
  */
 function list_admin_messages($limit = 10) {
-	return list_entities('object', 'admin_message', 0, $limit);
+	return elgg_list_entities(array(
+		'type' => 'object', 
+		'subtype' => 'admin_message', 
+		'limit' => $limit
+	));
 }
 
 /**

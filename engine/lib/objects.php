@@ -342,7 +342,13 @@ function get_object_sites($object_guid, $limit = 10, $offset = 0) {
 	$limit = (int)$limit;
 	$offset = (int)$offset;
 
-	return get_entities_from_relationship("member_of_site", $object_guid, false, "site", "", 0, "time_created desc", $limit, $offset);
+	return elgg_get_entities_from_relationship(array(
+		'relationship' => 'member_of_site', 
+		'relationship_guid' => $object_guid, 
+		'types' => 'site',
+		'limit' => $limit,
+		'offset' => $offset
+	));
 }
 
 /**

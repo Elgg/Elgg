@@ -544,7 +544,14 @@ function get_user_sites($user_guid, $limit = 10, $offset = 0) {
 	$limit = (int)$limit;
 	$offset = (int)$offset;
 
-	return get_entities_from_relationship("member_of_site", $user_guid, false, "site", "", 0, "time_created desc", $limit, $offset);
+	return elgg_get_entities_from_relationship(array(
+		'relationship' => 'member_of_site', 
+		'relationship_guid' => $user_guid, 
+		'inverse_relationship' => FALSE, 
+		'types' => 'site', 
+		'limit' => $limit, 
+		'offset' => $offset)
+	);
 }
 
 /**
@@ -614,8 +621,15 @@ function user_is_friend($user_guid, $friend_guid) {
  * @param int $offset Indexing offset, if any
  * @return false|array Either an array of ElggUsers or false, depending on success
  */
-function get_user_friends($user_guid, $subtype = "", $limit = 10, $offset = 0) {
-	return get_entities_from_relationship("friend",$user_guid,false,"user",$subtype,0,"time_created desc",$limit,$offset);
+function get_user_friends($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10, $offset = 0) {
+	return elgg_get_entities_from_relationship(array(
+		'relationship' => 'friend', 
+		'relationship_guid' => $user_guid, 
+		'types' => 'user', 
+		'subtypes' => $subtype, 
+		'limit' => $limit, 
+		'offset' => $offset
+	));
 }
 
 /**
@@ -627,8 +641,16 @@ function get_user_friends($user_guid, $subtype = "", $limit = 10, $offset = 0) {
  * @param int $offset Indexing offset, if any
  * @return false|array Either an array of ElggUsers or false, depending on success
  */
-function get_user_friends_of($user_guid, $subtype = "", $limit = 10, $offset = 0) {
-	return get_entities_from_relationship("friend",$user_guid,true,"user",$subtype,0,"time_created desc",$limit,$offset);
+function get_user_friends_of($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10, $offset = 0) {
+	return elgg_get_entities_from_relationship(array(
+		'relationship' => 'friend', 
+		'relationship_guid' => $user_guid, 
+		'inverse_relationship' => TRUE, 
+		'types' => 'user', 
+		'subtypes' => $subtype, 
+		'limit' => $limit, 
+		'offset' => $offset
+	));
 }
 
 /**
@@ -642,8 +664,17 @@ function get_user_friends_of($user_guid, $subtype = "", $limit = 10, $offset = 0
  * @param int $timeupper The latest time the entity can have been created. Default: all
  * @return false|array An array of ElggObjects or false, depending on success
  */
-function get_user_objects($user_guid, $subtype = "", $limit = 10, $offset = 0, $timelower = 0, $timeupper = 0) {
-	$ntt = get_entities('object',$subtype, $user_guid, "time_created desc", $limit, $offset,false,0,$user_guid,$timelower, $timeupper);
+function get_user_objects($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10, $offset = 0, $timelower = 0, $timeupper = 0) {
+	$ntt = elgg_get_entities(array(
+		'type' => 'object',
+		'subtype' => $subtype,
+		'owner_guid' => $user_guid,
+		'limit' => $limit, 
+		'offset' => $offset, 
+		'container_guid' => $user_guid, 
+		'created_time_lower' => $timelower, 
+		'created_time_upper' => $timeupper
+	));
 	return $ntt;
 }
 
@@ -656,8 +687,16 @@ function get_user_objects($user_guid, $subtype = "", $limit = 10, $offset = 0, $
  * @param int $timeupper The latest time the entity can have been created. Default: all
  * @return int The number of objects the user owns (of this subtype)
  */
-function count_user_objects($user_guid, $subtype = "", $timelower = 0, $timeupper = 0) {
-	$total = get_entities('object', $subtype, $user_guid, "time_created desc", null, null, true, 0, $user_guid,$timelower,$timeupper);
+function count_user_objects($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $timelower = 0, $timeupper = 0) {
+	$total = elgg_get_entities(array(
+		'type' => 'object', 
+		'subtype' => $subtype, 
+		'owner_guid' => $user_guid, 
+		'count' => TRUE,
+		'container_guid' => $user_guid,
+		'created_time_lower' => $timelower,
+		'created_time_upper' => $timeupper
+	));
 	return $total;
 }
 
@@ -676,7 +715,7 @@ function count_user_objects($user_guid, $subtype = "", $timelower = 0, $timeuppe
  * @param int $timeupper The latest time the entity can have been created. Default: all
  * @return string The list in a form suitable to display
  */
-function list_user_objects($user_guid, $subtype = "", $limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
+function list_user_objects($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
 	$offset = (int) get_input('offset');
 	$limit = (int) $limit;
 	$count = (int) count_user_objects($user_guid, $subtype,$timelower,$timeupper);
@@ -696,15 +735,24 @@ function list_user_objects($user_guid, $subtype = "", $limit = 10, $fullview = t
  * @param int $timeupper The latest time the entity can have been created. Default: all
  * @return false|array An array of ElggObjects or false, depending on success
  */
-function get_user_friends_objects($user_guid, $subtype = "", $limit = 10, $offset = 0, $timelower = 0, $timeupper = 0) {
+function get_user_friends_objects($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10, $offset = 0, $timelower = 0, $timeupper = 0) {
 	if ($friends = get_user_friends($user_guid, "", 999999, 0)) {
 		$friendguids = array();
 		foreach($friends as $friend) {
 			$friendguids[] = $friend->getGUID();
 		}
-		return get_entities('object',$subtype,$friendguids, "time_created desc", $limit, $offset, false, 0, $friendguids, $timelower, $timeupper);
+		return elgg_get_entities(array(
+			'type' => 'object', 
+			'subtype' => $subtype, 
+			'owner_guids' => $friendguids, 
+			'limit' => $limit, 
+			'offset' => $offset, 
+			'container_guids' => $friendguids,
+			'created_time_lower' => $timelower,
+			'created_time_upper' => $timeupper
+		));
 	}
-	return false;
+	return FALSE;
 }
 
 /**
@@ -716,13 +764,21 @@ function get_user_friends_objects($user_guid, $subtype = "", $limit = 10, $offse
  * @param int $timeupper The latest time the entity can have been created. Default: all
  * @return int The number of objects
  */
-function count_user_friends_objects($user_guid, $subtype = "", $timelower = 0, $timeupper = 0) {
+function count_user_friends_objects($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $timelower = 0, $timeupper = 0) {
 	if ($friends = get_user_friends($user_guid, "", 999999, 0)) {
 		$friendguids = array();
 		foreach($friends as $friend) {
 			$friendguids[] = $friend->getGUID();
 		}
-		return get_entities('object',$subtype,$friendguids, "time_created desc", null, null, true, 0, $friendguids, $timelower, $timeupper);
+		return elgg_get_entities(array(
+			'type' => 'object', 
+			'subtype' => $subtype, 
+			'owner_guids' => $friendguids, 
+			'count' => TRUE, 
+			'container_guids' => $friendguids, 
+			'created_time_lower' => $timelower, 
+			'created_time_upper' => $timeupper
+		));
 	}
 	return 0;
 }

@@ -143,8 +143,14 @@ function get_activity_stream_data($limit = 10, $offset = 0, $type = "", $subtype
 
 		if ($owner_relationship) {
 			$friendsarray = "";
-			if ($friends = get_entities_from_relationship($owner_relationship, $owner_guid[0],
-				FALSE, "user", $subtype, 0, "time_created desc", 9999)) {
+			if ($friends = elgg_get_entities_from_relationship(array(
+				'relationship' => $owner_relationship, 
+				'relationship_guid' => $owner_guid[0],
+				'inverse_relationship' => FALSE, 
+				'types' => 'user', 
+				'subtypes' => $subtype, 
+				'limit' => 9999))
+			) {
 
 				$friendsarray = array();
 				foreach($friends as $friend) {

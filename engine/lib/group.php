@@ -746,7 +746,16 @@ function get_entities_from_metadata_groups_multi($group_guid, $meta_array, $enti
  * @return mixed
  */
 function get_group_members($group_guid, $limit = 10, $offset = 0, $site_guid = 0, $count = false) {
-	return get_entities_from_relationship('member', $group_guid, true, 'user', '', 0, "", $limit, $offset, $count, $site_guid);
+	return elgg_get_entities_from_relationship(array(
+		'relationship' => 'member', 
+		'relationship_guid' => $group_guid, 
+		'inverse_relationship' => TRUE, 
+		'types' => 'user', 
+		'limit' => $limit, 
+		'offset' => $offset, 
+		'count' => $count, 
+		'site_guid' => $site_guid
+	));
 }
 
 /**
@@ -796,7 +805,7 @@ function leave_group($group_guid, $user_guid) {
  * @param unknown_type $user_guid
  */
 function get_users_membership($user_guid) {
-	return get_entities_from_relationship('member', $user_guid, false);
+	return elgg_get_entities_from_relationship(array('relationship' => 'member', 'relationship_guid' => $user_guid, 'inverse_relationship' => FALSE));
 }
 
 /**

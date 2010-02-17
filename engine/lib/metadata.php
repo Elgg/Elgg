@@ -850,11 +850,24 @@ $count = FALSE, $case_sensitive = TRUE) {
  *
  * @return string A list of entities suitable for display
  */
-function list_entities_from_metadata($meta_name, $meta_value = "", $entity_type = "", $entity_subtype = "", $owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true, $case_sensitive = true ) {
+function list_entities_from_metadata($meta_name, $meta_value = "", $entity_type = ELGG_ENTITIES_ANY_VALUE, $entity_subtype = ELGG_ENTITIES_ANY_VALUE, $owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true, $case_sensitive = true ) {
 	$offset = (int) get_input('offset');
 	$limit = (int) $limit;
-	$count = get_entities_from_metadata($meta_name, $meta_value, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, "", 0, true, $case_sensitive );
-	$entities = get_entities_from_metadata($meta_name, $meta_value, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, "", 0, false, $case_sensitive );
+	$options = array(
+		'metadata_name' => $meta_name, 
+		'metadata_value' => $meta_value, 
+		'types' => $entity_type, 
+		'subtypes' => $entity_subtype, 
+		'owner_guid' => $owner_guid, 
+		'limit' => $limit, 
+		'offset' => $offset, 
+		'count' => TRUE, 
+		'case_sensitive' => $case_sensitive
+	);
+	$count = elgg_get_entities_from_metadata($options);
+
+	$options['count'] = FALSE;
+	$entities = elgg_get_entities_from_metadata($options);
 
 	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle, $pagination);
 }

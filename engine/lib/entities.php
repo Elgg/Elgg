@@ -563,8 +563,13 @@ abstract class ElggEntity implements
 	 * @return array|false An array of entities or false on failure
 	 */
 	function getEntitiesFromRelationship($relationship, $inverse = false, $limit = 50, $offset = 0) {
-		return get_entities_from_relationship($relationship, $this->getGUID(), $inverse,
-			"", "", "", "time_created desc", $limit, $offset);
+		return elgg_get_entities_from_relationship(array(
+			'relationship' => $relationship,
+			'relationship_guid' => $this->getGUID(),
+			'inverse_relationship' => $inverse,
+			'limit' => $limit,
+			'offset' => $offset
+		));
 	}
 
 	/**
@@ -575,8 +580,12 @@ abstract class ElggEntity implements
 	 * @return int|false The number of entities or false on failure
 	 */
 	function countEntitiesFromRelationship($relationship, $inverse_relationship = FALSE) {
-		return get_entities_from_relationship($relationship, $this->getGUID(), $inverse_relationship, "", "", "",
-			"time_created desc", null, null, TRUE);
+		return elgg_get_entities_from_relationship(array(
+			'relationship' => $relationship,
+			'relationship_guid' => $this->getGUID(),
+			'inverse_relationship' => $inverse_relationship,
+			'count' => TRUE
+		));
 	}
 
 	/**

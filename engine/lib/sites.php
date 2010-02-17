@@ -361,7 +361,13 @@ function get_site_members($site_guid, $limit = 10, $offset = 0) {
 	$limit = (int)$limit;
 	$offset = (int)$offset;
 
-	return get_entities_from_relationship("member_of_site", $site_guid, true, "user", "", 0, "time_created desc", $limit, $offset);
+	return elgg_get_entities_from_relationship(array(
+		'relationship' => 'member_of_site', 
+		'relationship_guid' => $site_guid, 
+		'inverse_relationship' => TRUE, 
+		'types' => 'user', 
+		'limit' => $limit, 'offset' => $offset
+	));
 }
 
 /**
@@ -375,7 +381,16 @@ function get_site_members($site_guid, $limit = 10, $offset = 0) {
 function list_site_members($site_guid, $limit = 10, $fullview = true) {
 	$offset = (int) get_input('offset');
 	$limit = (int) $limit;
-	$count = (int) get_entities_from_relationship("member_of_site", $site_guid, true, "user", "", 0, "time_created desc", $limit, $offset, true);
+	$options = array(
+		'relationship' => 'member_of_site', 
+		'relationship_guid' => $site_guid, 
+		'inverse_relationship' => TRUE, 
+		'types' => 'user',
+		'limit' => $limit, 
+		'offset' => $offset, 
+		'count' => TRUE
+	);
+	$count = (int) elgg_get_entities_from_relationship($options);
 	$entities = get_site_members($site_guid, $limit, $offset);
 
 	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview);
@@ -424,7 +439,15 @@ function get_site_objects($site_guid, $subtype = "", $limit = 10, $offset = 0) {
 	$limit = (int)$limit;
 	$offset = (int)$offset;
 
-	return get_entities_from_relationship("member_of_site", $site_guid, true, "object", $subtype, 0, "time_created desc", $limit, $offset);
+	return elgg_get_entities_from_relationship(array(
+		'relationship' => 'member_of_site',
+		'relationship_guid' => $site_guid, 
+		'inverse_relationship' => TRUE, 
+		'types' => 'object', 
+		'subtypes' => $subtype, 
+		'limit' => $limit, 
+		'offset' => $offset
+	));
 }
 
 /**
@@ -469,7 +492,16 @@ function get_site_collections($site_guid, $subtype = "", $limit = 10, $offset = 
 	$limit = (int)$limit;
 	$offset = (int)$offset;
 
-	return get_entities_from_relationship("member_of_site", $site_guid, true, "collection", $subtype, 0, "time_created desc", $limit, $offset);
+	// collection isn't a valid type.  This won't work.
+	return elgg_get_entities_from_relationship(array(
+		'relationship' => 'member_of_site', 
+		'relationship_guid' => $site_guid, 
+		'inverse_relationship' => TRUE, 
+		'types' => 'collection', 
+		'subtypes' => $subtype, 
+		'limit' => $limit,
+		'offset' => $offset
+	));
 }
 
 /**

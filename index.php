@@ -14,7 +14,7 @@
 define('externalpage',true);
 require_once(dirname(__FILE__) . "/engine/start.php");
 
-if (!trigger_plugin_hook('index','system',null,false)) {
+if (!trigger_plugin_hook('index', 'system', null, FALSE)) {
 	/**
 	 * Check to see if user is logged in, if not display login form
 	 **/
@@ -27,10 +27,10 @@ if (!trigger_plugin_hook('index','system',null,false)) {
 	global $CONFIG;
 	$title = elgg_view_title(elgg_echo('content:latest'));
 	set_context('search');
-	$content = list_registered_entities(0,10,false,false,array('object','group'));
+	$content = elgg_list_registered_entities(array('limit' => 10, 'full_view' => FALSE, 'allowed_types' => array('object','group')));
 	set_context('main');
 	global $autofeed;
-	$autofeed = false;
+	$autofeed = FALSE;
 	$content = elgg_view_layout('two_column_left_sidebar', '', $title . $content, elgg_view("account/forms/login"));
 	page_draw(null, $content);
 }

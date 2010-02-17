@@ -401,8 +401,13 @@ function object_notifications($event, $object_type, $object) {
 			// Get users interested in content from this person and notify them
 			// (Person defined by container_guid so we can also subscribe to groups if we want)
 			foreach($NOTIFICATION_HANDLERS as $method => $foo) {
-				$interested_users = get_entities_from_relationship('notify' . $method,
-					$object->container_guid, true, 'user', '', 0, '', 99999);
+				$interested_users = elgg_get_entities_from_relationship(array(
+					'relationship' => 'notify' . $method,
+					'relationship_guid' => $object->container_guid, 
+					'inverse_relationship' => TRUE,
+					'types' => 'user',
+					'limit' => 99999
+				));
 
 				if ($interested_users && is_array($interested_users)) {
 					foreach($interested_users as $user) {
