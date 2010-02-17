@@ -2327,7 +2327,10 @@ function elgg_normalise_plural_options_array($options, $singulars) {
 		$plural = $singular . 's';
 
 		// normalize the singular to plural
-		if (isset($options[$singular]) && $options[$singular] !== NULL && $options[$singular] !== FALSE) {
+		// isset() returns FALSE for array values of NULL, so they are ignored.
+		// everything else falsy is included.
+		//if (isset($options[$singular]) && $options[$singular] !== NULL && $options[$singular] !== FALSE) {
+		if (isset($options[$singular])) {
 			if (isset($options[$plural])) {
 				if (is_array($options[$plural])) {
 					$options[$plural][] = $options[$singlar];
@@ -2338,7 +2341,7 @@ function elgg_normalise_plural_options_array($options, $singulars) {
 				$options[$plural] = array($options[$singular]);
 			}
 		}
-		$options[$singular] = NULL;
+		unset($options[$singular]);
 	}
 
 	return $options;
@@ -2731,12 +2734,15 @@ function elgg_api_test($hook, $type, $value, $params) {
 /**
  * Some useful constant definitions
  */
-define('ACCESS_DEFAULT',-1);
-define('ACCESS_PRIVATE',0);
-define('ACCESS_LOGGED_IN',1);
-define('ACCESS_PUBLIC',2);
-define('ACCESS_FRIENDS',-2);
+define('ACCESS_DEFAULT', -1);
+define('ACCESS_PRIVATE', 0);
+define('ACCESS_LOGGED_IN', 1);
+define('ACCESS_PUBLIC', 2);
+define('ACCESS_FRIENDS', -2);
 
-register_elgg_event_handler('init','system','elgg_init');
-register_elgg_event_handler('boot','system','elgg_boot',1000);
+define('ELGG_ENTITIES_ANY_VALUE', NULL);
+define('ELGG_ENTITIES_NO_VALUE', 0);
+
+register_elgg_event_handler('init', 'system', 'elgg_init');
+register_elgg_event_handler('boot', 'system', 'elgg_boot', 1000);
 register_plugin_hook('unit_test', 'system', 'elgg_api_test');

@@ -1697,7 +1697,9 @@ function get_entity($guid) {
 
 
 /**
- * Get all entities.
+ * Get all entities.  NB: Plural arguments can be written as
+ * singular if only specifying a single element.  (e.g., 'type' => 'object'
+ * vs 'types' => array('object')).
  *
  * @param array $options Array in format:
  *
@@ -1739,34 +1741,30 @@ function get_entity($guid) {
 function elgg_get_entities(array $options = array()) {
 	global $CONFIG;
 
-	//@todo allow use of singular types that rewrite to plural ones.
 	$defaults = array(
-		'type' => NULL,
-		'types' => NULL,
-		'subtypes' => NULL,
-		'subtype' => NULL,
-		'type_subtype_pairs' => NULL,
-		'owner_guids' => NULL,
-		'owner_guid' => NULL,
-		'container_guids' => NULL,
-		'container_guid' => NULL,
-		'site_guids' => $CONFIG->site_guid,
-		'site_guid' => NULL,
+		'types'					=>	ELGG_ENTITIES_ANY_VALUE,
+		'subtypes'				=>	ELGG_ENTITIES_ANY_VALUE,
+		'type_subtype_pairs'	=>	ELGG_ENTITIES_ANY_VALUE,
 
-		'modified_time_lower' => NULL,
-		'modified_time_upper' => NULL,
-		'created_time_lower' => NULL,
-		'created_time_upper' => NULL,
+		'owner_guids'			=>	ELGG_ENTITIES_ANY_VALUE,
+		'container_guids'		=>	ELGG_ENTITIES_ANY_VALUE,
+		'site_guids'			=>	$CONFIG->site_guid,
 
-		'order_by' => 'e.time_created desc',
-		'group_by' => NULL,
-		'limit' => 10,
-		'offset' => 0,
-		'count' => FALSE,
-		'selects' => array(),
-		'wheres' => array(),
-		'joins' => array()
+		'modified_time_lower'	=>	ELGG_ENTITIES_ANY_VALUE,
+		'modified_time_upper'	=>	ELGG_ENTITIES_ANY_VALUE,
+		'created_time_lower'	=>	ELGG_ENTITIES_ANY_VALUE,
+		'created_time_upper'	=>	ELGG_ENTITIES_ANY_VALUE,
+
+		'order_by' 				=>	'e.time_created desc',
+		'group_by'				=>	ELGG_ENTITIES_ANY_VALUE,
+		'limit'					=>	10,
+		'offset'				=>	0,
+		'count'					=>	FALSE,
+		'selects'				=>	array(),
+		'wheres'				=>	array(),
+		'joins'					=>	array()
 	);
+
 
 	$options = array_merge($defaults, $options);
 
@@ -2019,19 +2017,18 @@ function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pair
 		foreach ($types as $type) {
 			$subtype_ids = array();
 			if ($subtypes) {
-				// subtypes can be NULL or '' or 0, which means "no subtype"
 				foreach ($subtypes as $subtype) {
-					// if a subtype is sent that doesn't exist
-					if (0 === $subtype || $subtype_id = get_subtype_id($type, $subtype)) {
-						$subtype_ids[] = (0 === $subtype) ? 0 : $subtype_id;
+					// check that the subtype is valid (with ELGG_ENTITIES_NO_VALUE being a valid subtype)
+					if (ELGG_ENTITIES_NO_VALUE === $subtype || $subtype_id = get_subtype_id($type, $subtype)) {
+						$subtype_ids[] = (ELGG_ENTITIES_NO_VALUE === $subtype) ? ELGG_ENTITIES_NO_VALUE : $subtype_id;
 					} else {
 						$valid_subtypes_count--;
 						elgg_log("Type-subtype $type:$subtype' does not exist!", 'WARNING');
-						// return false if we're all invalid subtypes in the only valid type
 						continue;
 					}
 				}
 
+				// return false if we're all invalid subtypes in the only valid type
 				if ($valid_subtypes_count <= 0) {
 					return FALSE;
 				}
@@ -2073,8 +2070,8 @@ function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pair
 			if (is_array($paired_subtypes)) {
 				$paired_subtype_ids = array();
 				foreach ($paired_subtypes as $paired_subtype) {
-					if ($paired_subtype && ($paired_subtype_id = get_subtype_id($paired_type, $paired_subtype))) {
-						$paired_subtype_ids[] = $paired_subtype_id;
+					if (ELGG_ENTITIES_NO_VALUE === $paired_subtype || ($paired_subtype_id = get_subtype_id($paired_type, $paired_subtype))) {
+						$paired_subtype_ids[] = (ELGG_ENTITIES_NO_VALUE === $paired_subtype) ? ELGG_ENTITIES_NO_VALUE : $paired_subtype_id;
 					} else {
 						$valid_pairs_subtypes_count--;
 						elgg_log("Type-subtype $paired_type:$paired_subtype' does not exist!", 'WARNING');

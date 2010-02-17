@@ -824,4 +824,102 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$es = elgg_get_entities($options);
 		$this->assertFalse($es);
 	}
+
+
+
+
+
+
+	public function testElggApiGettersEntityNoSubtype() {
+		// create an entity we can later delete.
+		// order by time created and limit by 1 should == this entity.
+
+		$e = new ElggObject();
+		$e->save();
+
+		$options = array(
+			'type' => 'object',
+			'limit' => 1,
+			'order_by' => 'e.time_created desc'
+		);
+
+		// grab ourself again to fill out attributes.
+		$e = get_entity($e->getGUID());
+
+		$entities = elgg_get_entities($options);
+
+		$this->assertEqual(count($entities), 1);
+
+		foreach ($entities as $entity) {
+			$this->assertIdentical($e->getGUID(), $entity->getGUID());
+		}
+
+		$e->delete();
+	}
+
+	public function testElggApiGettersEntityNoValueSubtypeNotSet() {
+		// create an entity we can later delete.
+		// order by time created and limit by 1 should == this entity.
+
+		$e = new ElggObject();
+		$e->save();
+
+		$options = array(
+			'type' => 'object',
+			'subtype' => ELGG_ENTITY_NO_VALUE,
+			'limit' => 1,
+			'order_by' => 'e.time_created desc'
+		);
+
+		// grab ourself again to fill out attributes.
+		$e = get_entity($e->getGUID());
+
+		$entities = elgg_get_entities($options);
+
+		$this->assertEqual(count($entities), 1);
+
+		foreach ($entities as $entity) {
+			$this->assertIdentical($e->getGUID(), $entity->getGUID());
+		}
+
+		$e->delete();
+	}
+
+	public function testElggApiGettersEntityNoValueSubtypeSet() {
+		global $CONFIG;
+		// create an entity we can later delete.
+		// order by time created and limit by 1 should == this entity.
+
+		$subtype = 'subtype_' . rand();
+
+		$e = new ElggObject();
+		$e->subtype = $subtype;
+		$e->save();
+
+		$options = array(
+			'type' => 'object',
+			'subtype' => ELGG_ENTITIES_NO_VALUE,
+			'limit' => 1,
+			'order_by' => 'e.time_created desc'
+		);
+
+		// grab ourself again to fill out attributes.
+		$e = get_entity($e->getGUID());
+
+		$entities = elgg_get_entities($options);
+
+		$this->assertEqual(count($entities), 1);
+
+		// this entity should NOT be the entity we just created
+		// and should have no subtype
+		foreach ($entities as $entity) {
+			$this->assertNotEqual($e->getGUID(), $entity->getGUID());
+			$this->assertEqual($entity->subtype_id, 0);
+		}
+
+		$e->delete();
+
+		$q = "DELETE FROM {$CONFIG->dbprefix}entity_subtypes WHERE subtype = '$subtype'";
+		delete_data($q);
+	}
 }

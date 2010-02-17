@@ -535,8 +535,11 @@ function find_metadata($meta_name = "", $meta_value = "", $entity_type = "", $en
 
 
 /**
- * Returns entities based upon metadata.
+ * Returns entities based upon metadata.  Also accepts all
+ * options available to elgg_get_entities().  Supports
+ * the singular option shortcut.
  *
+ * @see elgg_get_entities
  * @param array $options Array in format:
  *
  * 	metadata_names => NULL|ARR metadata names
@@ -553,12 +556,10 @@ function find_metadata($meta_name = "", $meta_value = "", $entity_type = "", $en
  */
 function elgg_get_entities_from_metadata(array $options = array()) {
 	$defaults = array(
-		'metadata_names' => NULL,
-		'metadata_name' => NULL,
-		'metadata_values' => NULL,
-		'metadata_value' => NULL,
-		'metadata_name_value_pair' => NULL,
-		'metadata_name_value_pairs' => NULL,
+		'metadata_names'			=>	ELGG_ENTITIES_ANY_VALUE,
+		'metadata_values'			=>	ELGG_ENTITIES_ANY_VALUE,
+		'metadata_name_value_pairs'	=>	ELGG_ENTITIES_ANY_VALUE,
+
 		'metadata_name_value_pairs_operator' => 'AND',
 		'metadata_case_sensitive' => TRUE
 	);
