@@ -81,6 +81,9 @@ function search_groups_hook($hook, $type, $value, $params) {
 		)";
 	$params['wheres'] = array($where);
 
+	// override subtype -- All groups should be returned regardless of subtype.
+	$params['subtype'] = NULL;
+
 	$entities = elgg_get_entities($params);
 	$params['count'] = TRUE;
 	$count = elgg_get_entities($params);
@@ -128,6 +131,9 @@ function search_users_hook($hook, $type, $value, $params) {
 			)
 		)";
 	$params['wheres'] = array($where);
+
+	// override subtype -- All users should be returned regardless of subtype.
+	$params['subtype'] = NULL;
 
 	$entities = elgg_get_entities($params);
 	$params['count'] = TRUE;
@@ -189,24 +195,6 @@ function search_tags_hook($hook, $type, $value, $params) {
 	} else {
 		$search_tag_names = $valid_tag_names;
 	}
-
-//	$name_value_pairs = array();
-//	foreach ($search_tag_names as $tag_name) {
-//		$name_value_pairs[] = array (
-//			'name' => $tag_name,
-//			'value' => $query,
-//			'case_sensitive' => FALSE
-//		);
-//	}
-//
-//	$params['metadata_name_value_pairs'] = $name_value_pairs;
-//	$params['metadata_name_value_pairs_operator'] = 'OR';
-//
-//	$params = array();
-//
-//	$entities = elgg_get_entities_from_metadata($params);
-//	$params['count'] = TRUE;
-//	$count = elgg_get_entities_from_metadata($params);
 
 	// don't use elgg_get_entities_from_metadata() here because of
 	// performance issues.  since we don't care what matches at this point
