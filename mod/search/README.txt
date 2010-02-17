@@ -1,5 +1,18 @@
 Full text search developer's reference.
 
+CONTENTS:
+	1.  Overview
+	2.  Search and Custom Plugins
+	3.  Controlling Search Results
+		3.1  Entities Returned
+		3.2  Custom Search
+	4.  Controlling Search Views
+		4.1  Entities
+		4.2  Listing
+		4.3  Layout
+	5.  Hints and Quirks
+
+
 1.  OVERVIEW
 
 	* All entities are searched through title and description using
@@ -222,7 +235,7 @@ Full text search developer's reference.
 		views/default/search/mysearch/layout.php
 
 
-4.  HINTS
+5.  HINTS AND QUIRKS
 
 	* Use search_get_relevant_substring() to extract and highlight 
 	relevant substrings for the search_match_title and description.
@@ -241,3 +254,9 @@ Full text search developer's reference.
 			'count' => $count,
 			'entities' => array($entity)
 		);
+
+	* MySQL's fulltext engine returns *ZERO* rows if more than 50% of 
+	the rows searched match.
+
+	* The default search hooks for users and groups ignore subtypes.
+	See http://trac.elgg.org/elgg/ticket/1499
