@@ -29,7 +29,8 @@ function action($action, $forwarder = "") {
 	// UI without tokens.  (And for installation because of session_id problems)
 	$exceptions = array(
 		'systemsettings/install',
-		'admin/plugins/disable'
+		'admin/plugins/disable',
+		'logout'
 	);
 
 	if (!in_array($action, $exceptions)) {
