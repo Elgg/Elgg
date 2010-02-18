@@ -12,14 +12,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 	 * Called before each test object.
 	 */
 	public function __construct() {
-		parent::__construct();
-	}
-
-	/**
-	 * Called after each test method.
-	 */
-	public function setUp() {
-		elgg_set_ignore_access(TRUE);
+	elgg_set_ignore_access(TRUE);
 		$this->entities = array();
 		$this->subtypes = array(
 			'object' => array(),
@@ -62,12 +55,28 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 			$this->entities[] = $e;
 			$this->subtypes['group'][] = $subtype;
 		}
+
+		parent::__construct();
+	}
+
+	/**
+	 * Called after each test method.
+	 */
+	public function setUp() {
+		return TRUE;
 	}
 
 	/**
 	 * Called after each test method.
 	 */
 	public function tearDown() {
+		return TRUE;
+	}
+
+	/**
+	 * Called after each test object.
+	 */
+	public function __destruct() {
 		global $CONFIG;
 
 		$this->swallowErrors();
@@ -87,12 +96,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$subtype_str = implode(',', $subtype_arr);
 		$q = "DELETE FROM {$CONFIG->dbprefix}entity_subtypes WHERE subtype IN ($subtype_str)";
 		delete_data($q);
-	}
 
-	/**
-	 * Called after each test object.
-	 */
-	public function __destruct() {
 		parent::__destruct();
 	}
 
@@ -866,7 +870,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 
 		$options = array(
 			'type' => 'object',
-			'subtype' => ELGG_ENTITY_NO_VALUE,
+			'subtype' => ELGG_ENTITIES_NO_VALUE,
 			'limit' => 1,
 			'order_by' => 'e.time_created desc'
 		);
@@ -892,8 +896,11 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 
 		$subtype = 'subtype_' . rand();
 
+		$e_subtype = new ElggObject();
+		$e_subtype->subtype = $subtype;
+		$e_subtype->save();
+
 		$e = new ElggObject();
-		$e->subtype = $subtype;
 		$e->save();
 
 		$options = array(
@@ -913,10 +920,10 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		// this entity should NOT be the entity we just created
 		// and should have no subtype
 		foreach ($entities as $entity) {
-			$this->assertNotEqual($e->getGUID(), $entity->getGUID());
 			$this->assertEqual($entity->subtype_id, 0);
 		}
 
+		$e_subtype->delete();
 		$e->delete();
 
 		$q = "DELETE FROM {$CONFIG->dbprefix}entity_subtypes WHERE subtype = '$subtype'";
