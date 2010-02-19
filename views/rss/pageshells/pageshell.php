@@ -25,8 +25,8 @@ if (empty($vars['title'])) {
 }
 
 // Remove RSS from URL
-$url = str_replace('?view=rss','',full_url());
-$url = str_replace('&view=rss','',full_url());
+$url = str_replace('?view=rss','', full_url());
+$url = str_replace('&view=rss','', $url);
 
 ?>
 
