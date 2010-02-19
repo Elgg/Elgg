@@ -8,7 +8,6 @@
  * @author Curverider Ltd
  * @link http://elgg.org/
  */
-
 $widgettypes = get_widget_types();
 
 $owner = page_owner_entity();
@@ -26,7 +25,7 @@ if (empty($area1widgets) && empty($area2widgets) && empty($area3widgets)) {
 	}
 }
 
-if (is_array($widgettypes) && sizeof($widgettypes) > 0 && $owner && $owner->canEdit()) {
+if ($owner && $owner->canEdit()) {
 
 ?>
 
@@ -35,7 +34,6 @@ if (is_array($widgettypes) && sizeof($widgettypes) > 0 && $owner && $owner->canE
 <div id="customise_editpanel_rhs">
 <h2><?php echo elgg_echo("widgets:gallery"); ?></h2>
 <div id="widget_picker_gallery">
-
 
 <?php
 	foreach($widgettypes as $handler => $widget) {
@@ -65,7 +63,6 @@ if (is_array($widgettypes) && sizeof($widgettypes) > 0 && $owner && $owner->canE
 
 </div><!-- /#customise_editpanel_rhs -->
 </div><!-- /#widget_picker_gallery -->
-
 
 <div class="customise_editpanel_instructions">
 <h2><?php echo elgg_echo('widgets:add'); ?></h2>
