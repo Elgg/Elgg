@@ -413,15 +413,15 @@ function create_access_collection($name, $owner_guid = 0, $site_guid = 0) {
 	if ($owner_guid == 0) {
 		$owner_guid = get_loggedin_userid();
 	}
-	if (($site_id == 0) && (isset($CONFIG->site_guid))) {
-		$site_id = $CONFIG->site_guid;
+	if (($site_guid == 0) && (isset($CONFIG->site_guid))) {
+		$site_guid = $CONFIG->site_guid;
 	}
 	$name = sanitise_string($name);
 
 	$q = "INSERT INTO {$CONFIG->dbprefix}access_collections
 		SET name = '{$name}',
 			owner_guid = {$owner_guid},
-			site_guid = {$site_id}";
+			site_guid = {$site_guid}";
 	if (!$id = insert_data($q)) {
 		return false;
 	}
