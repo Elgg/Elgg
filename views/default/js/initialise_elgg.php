@@ -42,7 +42,6 @@ $(document).ready(function () {
 		forcePlaceholderSize: true,
 		placeholder: 'ui-state-highlight',
 		cursor: 'move',
-		revert: true,
 		opacity: 0.9,
 		appendTo: 'body',
 		connectWith: els,
