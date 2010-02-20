@@ -19,10 +19,10 @@ $query = stripslashes(get_input('q', get_input('tag', '', FALSE), FALSE));
 $limit = ($search_type == 'all') ? 2 : get_input('limit', 10);
 $offset = ($search_type == 'all') ? 0 : get_input('offset', 0);
 
-$entity_type = get_input('entity_type', NULL);
-$entity_subtype = get_input('entity_subtype', NULL);
-$owner_guid = get_input('owner_guid', NULL);
-$friends = get_input('friends', 0);
+$entity_type = get_input('entity_type', ELGG_ENTITIES_ANY_VALUE);
+$entity_subtype = get_input('entity_subtype', ELGG_ENTITIES_ANY_VALUE);
+$owner_guid = get_input('owner_guid', ELGG_ENTITIES_ANY_VALUE);
+$friends = get_input('friends', ELGG_ENTITIES_ANY_VALUE);
 $sort = get_input('sort');
 switch ($sort) {
 	case 'relevance':
@@ -189,9 +189,8 @@ if ($search_type == 'all' || $search_type == 'entities') {
 		}
 
 		// pull in default type entities with no subtypes
-		// @todo this might currently means "all entities regardless of subtype"
 		$current_params['type'] = $type;
-		$current_params['subtype'] = 0;
+		$current_params['subtype'] = ELGG_ENTITIES_NO_VALUE;
 
 		$results = trigger_plugin_hook('search', $type, $current_params, array());
 		if ($results === FALSE) {

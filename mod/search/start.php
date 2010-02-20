@@ -249,10 +249,10 @@ function search_consolidate_substrings($offsets, $lengths) {
 function search_highlight_words($words, $string) {
 	$i = 1;
 	$replace_html = array(
-		'strong' => rand(10000,99999),
-		'class' => rand(10000,99999),
-		'searchMatch' => rand(10000,99999),
-		'searchMatchColor' => rand(10000,99999)
+		'strong' => rand(10000, 99999),
+		'class' => rand(10000, 99999),
+		'searchMatch' => rand(10000, 99999),
+		'searchMatchColor' => rand(10000, 99999)
 	);
 
 	foreach ($words as $word) {

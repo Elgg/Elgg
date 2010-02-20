@@ -28,8 +28,6 @@ function search_objects_hook($hook, $type, $value, $params) {
 
 	$params['wheres'] = array($where);
 
-	//$params['order_by'] = search_get_order_by_sql('oe', $params['sort'], $params['order']);
-
 	$entities = elgg_get_entities($params);
 	$params['count'] = TRUE;
 	$count = elgg_get_entities($params);
@@ -41,12 +39,9 @@ function search_objects_hook($hook, $type, $value, $params) {
 
 	// add the volatile data for why these entities have been returned.
 	foreach ($entities as $entity) {
-		//$title = search_get_highlighted_relevant_substrings($entity->title, $params['query']);
-		//$title = search_get_relevant_substring($entity->title, $params['query'], '<strong class="searchMatch">', '</strong>');
 		$title = search_get_highlighted_relevant_substrings($entity->title, $params['query']);
 		$entity->setVolatileData('search_matched_title', $title);
 
-		//$desc = search_get_relevant_substring($entity->description, $params['query'], '<strong class="searchMatch">', '</strong>');
 		$desc = search_get_highlighted_relevant_substrings($entity->description, $params['query']);
 		$entity->setVolatileData('search_matched_description', $desc);
 	}
@@ -82,7 +77,7 @@ function search_groups_hook($hook, $type, $value, $params) {
 	$params['wheres'] = array($where);
 
 	// override subtype -- All groups should be returned regardless of subtype.
-	$params['subtype'] = NULL;
+	$params['subtype'] = ELGG_ENTITIES_ANY_VALUE;
 
 	$entities = elgg_get_entities($params);
 	$params['count'] = TRUE;
@@ -133,7 +128,7 @@ function search_users_hook($hook, $type, $value, $params) {
 	$params['wheres'] = array($where);
 
 	// override subtype -- All users should be returned regardless of subtype.
-	$params['subtype'] = NULL;
+	$params['subtype'] = ELGG_ENTITIES_ANY_VALUE;
 
 	$entities = elgg_get_entities($params);
 	$params['count'] = TRUE;
@@ -332,7 +327,6 @@ function search_comments_hook($hook, $type, $value, $params) {
 
 	$comments = get_data($q);
 
-//elgg_get_entities()
 	$q = "SELECT count(DISTINCT a.id) as total FROM {$CONFIG->dbprefix}annotations a
 		JOIN {$CONFIG->dbprefix}metastrings msn ON a.name_id = msn.id
 		JOIN {$CONFIG->dbprefix}metastrings msv ON a.value_id = msv.id
