@@ -677,6 +677,7 @@ Once you have logged in, we highly recommend that you change your password.
 	'friendlytime:hours:singular' => "an hour ago",
 	'friendlytime:days' => "%s days ago",
 	'friendlytime:days:singular' => "yesterday",
+	'friendlytime:date_format' => 'j F Y @ g:ia',
 
 	'date:month:01' => 'January %s',
 	'date:month:02' => 'February %s',

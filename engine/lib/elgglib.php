@@ -1234,29 +1234,32 @@ function friendly_time($time) {
 			$diff = 1;
 		}
 		if ($diff > 1) {
-			return sprintf(elgg_echo("friendlytime:minutes"),$diff);
+			$friendly_time = sprintf(elgg_echo("friendlytime:minutes"), $diff);
 		}
-		return sprintf(elgg_echo("friendlytime:minutes:singular"),$diff);
+		$friendly_time = sprintf(elgg_echo("friendlytime:minutes:singular"), $diff);
 	} else if ($diff < 86400) {
 		$diff = round($diff / 3600);
 		if ($diff == 0) {
 			$diff = 1;
 		}
 		if ($diff > 1) {
-			return sprintf(elgg_echo("friendlytime:hours"),$diff);
+			$friendly_time = sprintf(elgg_echo("friendlytime:hours"), $diff);
 		}
-		return sprintf(elgg_echo("friendlytime:hours:singular"),$diff);
+		$friendly_time = sprintf(elgg_echo("friendlytime:hours:singular"), $diff);
 	} else {
 		$diff = round($diff / 86400);
 		if ($diff == 0) {
 			$diff = 1;
 		}
 		if ($diff > 1) {
-			return sprintf(elgg_echo("friendlytime:days"),$diff);
+			$friendly_time = sprintf(elgg_echo("friendlytime:days"), $diff);
 		}
 
-		return sprintf(elgg_echo("friendlytime:days:singular"),$diff);
+		$friendly_time = sprintf(elgg_echo("friendlytime:days:singular"), $diff);
 	}
+
+	$timestamp = htmlentities(date(elgg_echo('friendlytime:date_format', $time)));
+	return "<acronym title=\"$timestamp\">$friendly_time</acronym>";
 }
 
 /**
