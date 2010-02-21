@@ -1518,7 +1518,7 @@ function unregister_service_handler($handler) {
 function rest_handler() {
 	global $CONFIG;
 
-	require $CONFIG->path . "services/api/rest.php";
+	require $CONFIG->path . "services/api/rest_api.php";
 }
 
 // Initialisation /////////////////////////////////////////////////////////////
