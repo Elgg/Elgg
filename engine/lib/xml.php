@@ -58,7 +58,7 @@
 			} else if (gettype($value) == "boolean") {
 				$output .= $value ? "true" : "false";
 			} else {
-				$output .= htmlentities($value);
+				$output .= htmlspecialchars($value, ENT_NOQUOTES, 'UTF-8');
 			}
 			
 			$output .= "</$key>\n";
@@ -103,7 +103,7 @@
 			} else if (gettype($value) == "boolean") {
 				$output .= $value ? "true" : "false";
 			} else {
-				$output .= htmlentities($value);
+				$output .= htmlspecialchars($value, ENT_NOQUOTES, 'UTF-8');
 			}
 			
 			$output .= "</$item>\n";
