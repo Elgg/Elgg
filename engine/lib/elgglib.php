@@ -2099,7 +2099,7 @@ function run_function_once($functionname, $timelastupdatedcheck = 0) {
 /**
  * Sends a notice about deprecated use of a function, view, etc.
  * Note: This will ALWAYS at least log a warning.  Don't use to pre-deprecate things.
- * This assume we are releasing in order and deprecating according to policy.
+ * This assumes we are releasing in order and deprecating according to policy.
  *
  * @param str $msg Message to log / display.
  * @param str $version human-readable *release* version the function was deprecated. No bloody A, B, (R)C, or D.
@@ -2110,7 +2110,7 @@ function elgg_deprecated_notice($msg, $dep_version) {
 	// if it's a major release behind, visual and logged
 	// if it's a 2 minor releases behind, visual and logged
 	// if it's 1 minor release behind, logged.
-	// bugfixes don't matter because you're not deprecating between the, RIGHT?
+	// bugfixes don't matter because you're not deprecating between them, RIGHT?
 
 	if (!$dep_version) {
 		return FALSE;
@@ -2137,11 +2137,18 @@ function elgg_deprecated_notice($msg, $dep_version) {
 
 	$msg = "Deprecated in $dep_version: $msg";
 
-	elgg_log($msg, 'WARNING');
-
 	if ($visual) {
 		register_error($msg);
 	}
+
+	// Get a file and line number for the log. Never show this in the UI.
+	// Skip over the function that sent this notice and see who called the deprecated
+	// function itself.
+	$backtrace = debug_backtrace();
+	$caller = $backtrace[1];
+	$msg .= " (Called from {$caller['file']}:{$caller['line']})";
+
+	elgg_log($msg, 'WARNING');
 
 	return TRUE;
 }
@@ -2553,33 +2560,43 @@ function elgg_http_build_url(array $parts) {
 	return $string;
 }
 
+
 /**
- * Ensures action tokens are present in the given link
+ * Adds action tokens to URL
  *
  * @param str $link Full action URL
- * @return str Validated URL
+ * @return str URL with action tokens
  * @since 1.7
  */
-function elgg_validate_action_url($link) {
-	$url = parse_url($link);
+function elgg_add_action_tokens_to_url($url) {
+	$components = parse_url($url);
 
-	if (isset($url['query'])) {
-		$query = elgg_parse_str($url['query']);
+	if (isset($components['query'])) {
+		$query = elgg_parse_str($components['query']);
 	} else {
 		$query = array();
 	}
 
 	if (isset($query['__elgg_ts']) && isset($query['__elgg_token'])) {
-		return $link;
+		return $url;
 	}
 
 	// append action tokens to the existing query
 	$query['__elgg_ts'] = time();
 	$query['__elgg_token'] = generate_action_token($query['__elgg_ts']);
-	$url['query'] = http_build_query($query);
+	$components['query'] = http_build_query($query);
 
 	// rebuild the full url
-	return elgg_http_build_url($url);
+	return elgg_http_build_url($components);
+}
+
+/**
+ * @deprecated 1.7 final
+ */
+function elgg_validate_action_url($url) {
+	elgg_deprecated_notice('elgg_validate_action_url had a short life. Use elgg_add_action_tokens_to_url() instead.', '1.7b');
+
+	return elgg_add_action_tokens_to_url($url);
 }
 
 /**

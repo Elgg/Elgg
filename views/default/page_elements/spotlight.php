@@ -28,11 +28,11 @@
 	}
 	if ($closed) {
 ?>
-		<a href="javascript:void(0);" class="toggle_box_contents" onClick="$.post('<?php echo elgg_validate_action_url("{$vars['url']}action/user/spotlight?closed=false"); ?>')">+</a>
+		<a href="javascript:void(0);" class="toggle_box_contents" onClick="$.post('<?php echo elgg_add_action_tokens_to_url("{$vars['url']}action/user/spotlight?closed=false"); ?>')">+</a>
 <?php
 		} else {
 ?>
-		<a href="javascript:void(0);" class="toggle_box_contents" onClick="$.post('<?php echo elgg_validate_action_url("{$vars['url']}action/user/spotlight?closed=true"); ?>')">-</a>
+		<a href="javascript:void(0);" class="toggle_box_contents" onClick="$.post('<?php echo elgg_add_action_tokens_to_url("{$vars['url']}action/user/spotlight?closed=true"); ?>')">-</a>
 <?php
 
 		}

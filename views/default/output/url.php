@@ -25,7 +25,7 @@ $url = trim($vars['href']);
 
 if (!empty($url)) {
 	if (array_key_exists('is_action', $vars) && $vars['is_action']) {
-		$url = elgg_validate_action_url($url);
+		$url = elgg_add_action_tokens_to_url($url);
 	}
 
 	if (array_key_exists('target', $vars) && $vars['target']) {

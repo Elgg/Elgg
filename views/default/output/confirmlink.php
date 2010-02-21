@@ -20,7 +20,7 @@ if (!$confirm) {
 }
 
 // always generate missing action tokens
-$link = elgg_validate_action_url($vars['href']);
+$link = elgg_add_action_tokens_to_url($vars['href']);
 
 if (isset($vars['class']) && $vars['class']) {
 	$class = 'class="' . $vars['class'] . '"';

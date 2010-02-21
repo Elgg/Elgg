@@ -46,6 +46,7 @@ http://code.elgg.org/elgg/.....
   * Added elgg_http_add_url_query_elements().
   * Added elgg_register_tag_metadata_name() and elgg_get_registered_tag_metadata_names();
   * Added ElggEntity::getTags().
+  * Added elgg_add_action_tokens_to_url().
 
  Services API:
   * Separated user and api authenticate processing
