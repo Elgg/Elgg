@@ -11,9 +11,6 @@
 // block non-admin users
 admin_gatekeeper();
 
-// Validate the action
-action_gatekeeper();
-
 // Get the plugin
 $mod = get_input('plugin');
 $mod = str_replace('.','',$mod);

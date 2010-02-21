@@ -10,8 +10,6 @@
 
 global $CONFIG;
 
-action_gatekeeper();
-
 // Get variables
 $username = get_input('username');
 $password = get_input('password');

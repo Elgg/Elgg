@@ -8,9 +8,6 @@
  * @link http://elgg.org/
  */
 
-// Safety first
-action_gatekeeper();
-
 // Get username and password
 $username = get_input('username');
 $password = get_input("password");

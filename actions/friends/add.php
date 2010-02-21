@@ -10,7 +10,6 @@
 
 // Ensure we are logged in
 gatekeeper();
-action_gatekeeper();
 
 // Get the GUID of the user to friend
 $friend_guid = get_input('friend');

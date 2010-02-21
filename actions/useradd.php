@@ -9,7 +9,6 @@
  */
 
 admin_gatekeeper(); // Only admins can add a user
-action_gatekeeper();
 
 // Get variables
 global $CONFIG;

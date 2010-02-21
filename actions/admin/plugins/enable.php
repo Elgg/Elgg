@@ -11,9 +11,6 @@
 // block non-admin users
 admin_gatekeeper();
 
-// Validate the action
-action_gatekeeper();
-
 // Get the plugin
 $plugin = get_input('plugin');
 if (!is_array($plugin)) {

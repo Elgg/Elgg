@@ -11,9 +11,6 @@
 // block non-admin users
 admin_gatekeeper();
 
-// Validate the action
-action_gatekeeper();
-
 $plugins = get_installed_plugins();
 
 foreach ($plugins as $p => $data) {

@@ -9,7 +9,6 @@
 
 // Make sure we're logged in; forward to the front page if not
 gatekeeper();
-action_gatekeeper();
 
 // Get input
 $entity_guid = (int) get_input('entity_guid');

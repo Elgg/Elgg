@@ -12,7 +12,6 @@ $params = get_input('params');
 $plugin = get_input('plugin');
 
 gatekeeper();
-action_gatekeeper();
 
 $result = false;
 

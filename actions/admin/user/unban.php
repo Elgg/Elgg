@@ -11,7 +11,6 @@
 
 // block non-admin users
 admin_gatekeeper();
-action_gatekeeper();
 
 $access_status = access_get_show_hidden_status();
 access_show_hidden_entities(true);
