@@ -41,7 +41,7 @@ if (!empty($url)) {
 	}
 
 	if (array_key_exists('js', $vars) && $vars['js']) {
-		$js = "{$vars['target']}";
+		$js = "{$vars['js']}";
 	} else {
 		$js = '';
 	}
