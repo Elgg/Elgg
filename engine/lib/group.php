@@ -49,7 +49,7 @@ class ElggGroup extends ElggEntity
 			// Is $guid is an ElggGroup? Use a copy constructor
 			else if ($guid instanceof ElggGroup) {
 				elgg_deprecated_notice('This type of usage of the ElggGroup constructor was deprecated. Please use the clone method.', 1.7);
-				
+
 				foreach ($guid->attributes as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
@@ -61,7 +61,7 @@ class ElggGroup extends ElggEntity
 			// We assume if we have got this far, $guid is an int
 			else if (is_numeric($guid)) {
 				if (!$this->load($guid)) {
-					IOException(sprintf(elgg_echo('IOException:FailedToLoadGUID'), get_class(), $guid));
+					throw new IOException(sprintf(elgg_echo('IOException:FailedToLoadGUID'), get_class(), $guid));
 				}
 			}
 
@@ -747,13 +747,13 @@ function get_entities_from_metadata_groups_multi($group_guid, $meta_array, $enti
  */
 function get_group_members($group_guid, $limit = 10, $offset = 0, $site_guid = 0, $count = false) {
 	return elgg_get_entities_from_relationship(array(
-		'relationship' => 'member', 
-		'relationship_guid' => $group_guid, 
-		'inverse_relationship' => TRUE, 
-		'types' => 'user', 
-		'limit' => $limit, 
-		'offset' => $offset, 
-		'count' => $count, 
+		'relationship' => 'member',
+		'relationship_guid' => $group_guid,
+		'inverse_relationship' => TRUE,
+		'types' => 'user',
+		'limit' => $limit,
+		'offset' => $offset,
+		'count' => $count,
 		'site_guid' => $site_guid
 	));
 }

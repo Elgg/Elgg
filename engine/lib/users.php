@@ -90,7 +90,7 @@ class ElggUser extends ElggEntity
 			// We assume if we have got this far, $guid is an int
 			else if (is_numeric($guid)) {
 				if (!$this->load($guid)) {
-					IOException(sprintf(elgg_echo('IOException:FailedToLoadGUID'), get_class(), $guid));
+					throw new IOException(sprintf(elgg_echo('IOException:FailedToLoadGUID'), get_class(), $guid));
 				}
 			}
 

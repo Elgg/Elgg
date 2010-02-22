@@ -55,7 +55,7 @@ class ElggObject extends ElggEntity {
 			// Is $guid is an ElggObject? Use a copy constructor
 			else if ($guid instanceof ElggObject) {
 				elgg_deprecated_notice('This type of usage of the ElggObject constructor was deprecated. Please use the clone method.', 1.7);
-				
+
 				foreach ($guid->attributes as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
@@ -69,7 +69,7 @@ class ElggObject extends ElggEntity {
 			// We assume if we have got this far, $guid is an int
 			else if (is_numeric($guid)) {
 				if (!$this->load($guid)) {
-					IOException(sprintf(elgg_echo('IOException:FailedToLoadGUID'), get_class(), $guid));
+					throw new IOException(sprintf(elgg_echo('IOException:FailedToLoadGUID'), get_class(), $guid));
 				}
 			}
 
@@ -343,8 +343,8 @@ function get_object_sites($object_guid, $limit = 10, $offset = 0) {
 	$offset = (int)$offset;
 
 	return elgg_get_entities_from_relationship(array(
-		'relationship' => 'member_of_site', 
-		'relationship_guid' => $object_guid, 
+		'relationship' => 'member_of_site',
+		'relationship_guid' => $object_guid,
 		'types' => 'site',
 		'limit' => $limit,
 		'offset' => $offset
