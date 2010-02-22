@@ -95,7 +95,6 @@ if (get_input('settings') == 'go') {
 			}
 		} else {
 			enable_plugin('profile', $site->getGUID());
-			enable_plugin('river', $site->getGUID());
 			enable_plugin('logbrowser', $site->getGUID());
 			enable_plugin('diagnostics', $site->getGUID());
 			enable_plugin('uservalidationbyemail', $site->getGUID());
