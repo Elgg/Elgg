@@ -1226,39 +1226,48 @@ function page_draw($title, $body, $sidebar = "") {
 function friendly_time($time) {
 	$diff = time() - ((int) $time);
 
-	if ($diff < 60) {
-		return elgg_echo("friendlytime:justnow");
-	} else if ($diff < 3600) {
-		$diff = round($diff / 60);
+	$minute = 60;
+	$hour = $minute * 60;
+	$day = $hour * 24;
+
+	if ($diff < $minute) {
+		$friendly_time = elgg_echo("friendlytime:justnow");
+	} else if ($diff < $hour) {
+		$diff = round($diff / $minute);
 		if ($diff == 0) {
 			$diff = 1;
 		}
+
 		if ($diff > 1) {
 			$friendly_time = sprintf(elgg_echo("friendlytime:minutes"), $diff);
+		} else {
+			$friendly_time = sprintf(elgg_echo("friendlytime:minutes:singular"), $diff);
 		}
-		$friendly_time = sprintf(elgg_echo("friendlytime:minutes:singular"), $diff);
-	} else if ($diff < 86400) {
-		$diff = round($diff / 3600);
+	} else if ($diff < $day) {
+		$diff = round($diff / $hour);
 		if ($diff == 0) {
 			$diff = 1;
 		}
+
 		if ($diff > 1) {
 			$friendly_time = sprintf(elgg_echo("friendlytime:hours"), $diff);
+		} else {
+			$friendly_time = sprintf(elgg_echo("friendlytime:hours:singular"), $diff);
 		}
-		$friendly_time = sprintf(elgg_echo("friendlytime:hours:singular"), $diff);
 	} else {
-		$diff = round($diff / 86400);
+		$diff = round($diff / $day);
 		if ($diff == 0) {
 			$diff = 1;
 		}
+
 		if ($diff > 1) {
 			$friendly_time = sprintf(elgg_echo("friendlytime:days"), $diff);
+		} else {
+			$friendly_time = sprintf(elgg_echo("friendlytime:days:singular"), $diff);
 		}
-
-		$friendly_time = sprintf(elgg_echo("friendlytime:days:singular"), $diff);
 	}
 
-	$timestamp = htmlentities(date(elgg_echo('friendlytime:date_format', $time)));
+	$timestamp = htmlentities(date(elgg_echo('friendlytime:date_format'), $time));
 	return "<acronym title=\"$timestamp\">$friendly_time</acronym>";
 }
 
