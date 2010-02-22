@@ -186,10 +186,10 @@ function diagnostics_globals_hook($hook, $entity_type, $returnvalue, $params)
 register_elgg_event_handler('init','system','diagnostics_init');
 register_elgg_event_handler('pagesetup','system','diagnostics_pagesetup');
 
-register_plugin_hook("diagnostics:report", "all", "diagnostics_basic_hook", 0); // show basics first
-register_plugin_hook("diagnostics:report", "all", "diagnostics_plugins_hook", 2); // Now the plugins
-register_plugin_hook("diagnostics:report", "all", "diagnostics_sigs_hook", 1); // Now the signatures
+register_plugin_hook("diagnostics:report", "system", "diagnostics_basic_hook", 0); // show basics first
+register_plugin_hook("diagnostics:report", "system", "diagnostics_plugins_hook", 2); // Now the plugins
+register_plugin_hook("diagnostics:report", "system", "diagnostics_sigs_hook", 1); // Now the signatures
 
-register_plugin_hook("diagnostics:report", "all", "diagnostics_globals_hook"); // Global variables
-register_plugin_hook("diagnostics:report", "all", "diagnostics_phpinfo_hook"); // PHP info
+register_plugin_hook("diagnostics:report", "system", "diagnostics_globals_hook"); // Global variables
+register_plugin_hook("diagnostics:report", "system", "diagnostics_phpinfo_hook"); // PHP info
 ?>
