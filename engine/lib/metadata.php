@@ -539,6 +539,13 @@ function find_metadata($meta_name = "", $meta_value = "", $entity_type = "", $en
  * options available to elgg_get_entities().  Supports
  * the singular option shortcut.
  *
+ * NB: Using metadata_names and metadata_values results in a
+ * "names IN (...) AND values IN (...)" clause.  This is subtly
+ * differently than default multiple metadata_name_value_pairs, which use
+ * "(name = value) AND (name = value)" clauses.
+ *
+ * When in doubt, use name_value_pairs.
+ *
  * @see elgg_get_entities
  * @param array $options Array in format:
  *
@@ -546,7 +553,8 @@ function find_metadata($meta_name = "", $meta_value = "", $entity_type = "", $en
  *
  * 	metadata_values => NULL|ARR metadata values
  *
- * 	metadata_name_value_pairs => NULL|ARR (name = 'name', value => 'value', 'operand' => '=', 'case_sensitive' => TRUE) entries
+ * 	metadata_name_value_pairs => NULL|ARR (name = 'name', value => 'value', 'operand' => '=', 'case_sensitive' => TRUE) entries.
+ * 	Currently if multiple values are sent via an array (value => array('value1', 'value2') the pair's operand will be forced to "IN".
  *
  * 	metadata_name_value_pairs_operator => NULL|STR The operator to use for combining (name = value) OPERATOR (name = value); default AND
  *
@@ -739,9 +747,28 @@ function elgg_get_entity_metadata_where_sql($table, $names = NULL, $values = NUL
 
 			// if the value is an int, don't quote it because str '15' < str '5'
 			// if the operand is IN don't quote it because quoting should be done already.
-			//$value = trim(strtolower($operand)) == 'in' ? $pair['value'] : "'{$pair['value']}'";
-			if (trim(strtolower($operand)) == 'in' || is_numeric($pair['value'])) {
+			if (is_numeric($pair['value'])) {
 				$value = sanitise_string($pair['value']);
+			} else if (is_array($pair['value'])) {
+				$values_array = array();
+
+				foreach ($pair['value'] as $pair_value) {
+					if (is_numeric($v)) {
+						$values_array[] = sanitise_string($pair_value);
+					} else {
+						$values_array[] = '\'' . sanitise_string($pair_value) . '\'';
+					}
+				}
+
+				if ($values_array) {
+					$value = '(' . implode(', ', $values_array) . ')';
+				}
+
+				// @todo allow support for non IN operands with array of values.
+				// will have to do more silly joins.
+				$operand = 'IN';
+			} else if (trim(strtolower($operand)) == 'in') {
+				$value = "({$pair['value']})";
 			} else {
 				$value = '\'' . sanitise_string($pair['value']) . '\'';
 			}
@@ -854,14 +881,14 @@ function list_entities_from_metadata($meta_name, $meta_value = "", $entity_type 
 	$offset = (int) get_input('offset');
 	$limit = (int) $limit;
 	$options = array(
-		'metadata_name' => $meta_name, 
-		'metadata_value' => $meta_value, 
-		'types' => $entity_type, 
-		'subtypes' => $entity_subtype, 
-		'owner_guid' => $owner_guid, 
-		'limit' => $limit, 
-		'offset' => $offset, 
-		'count' => TRUE, 
+		'metadata_name' => $meta_name,
+		'metadata_value' => $meta_value,
+		'types' => $entity_type,
+		'subtypes' => $entity_subtype,
+		'owner_guid' => $owner_guid,
+		'limit' => $limit,
+		'offset' => $offset,
+		'count' => TRUE,
 		'case_sensitive' => $case_sensitive
 	);
 	$count = elgg_get_entities_from_metadata($options);
