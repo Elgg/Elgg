@@ -1610,4 +1610,124 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 			}
 		}
 	}
+
+	function testElggApiGettersEntityMetadataNVPOrderByMDText() {
+		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtype = $subtypes[0];
+		$md_name = 'test_metadata_name_' . rand();
+		$md_value = 2;
+		$guids = array();
+		$valid_guids = array();
+
+		// our targets
+		$valid = new ElggObject();
+		$valid->subtype = $subtype;
+		$valid->$md_name = $md_value;
+		$valid->save();
+		$guids[] = $valid->getGUID();
+		$valid_guids[] = $valid->getGUID();
+
+		$valid2 = new ElggObject();
+		$valid2->subtype = $subtype;
+		$valid2->$md_name = 3;
+		$valid2->save();
+		$guids[] = $valid->getGUID();
+		$valid_guids[] = $valid2->getGUID();
+
+		$valid3 = new ElggObject();
+		$valid3->subtype = $subtype;
+		$valid3->$md_name = 1;
+		$valid3->save();
+		$guids[] = $valid->getGUID();
+		$valid_guids[] = $valid3->getGUID();
+
+		$md_valid_values = array($md_value, $md_value2);
+
+		$options = array(
+			'type' => 'object',
+			'subtype' => $subtype,
+			//'metadata_name' => $md_name,
+			'order_by_metadata' => array('name' => $md_name, 'as' => 'integer')
+		);
+
+		$entities = elgg_get_entities_from_metadata($options);
+
+		$this->assertIsa($entities, 'array');
+		$this->assertEqual(count($entities), 3);
+
+		$i = 1;
+		foreach ($entities as $entity) {
+			$this->assertTrue(in_array($entity->getGUID(), $valid_guids));
+			$this->assertEqual($entity->$md_name, $i);
+			$i++;
+			$entity->delete();
+		}
+
+		foreach ($guids as $guid) {
+			if ($e = get_entity($guid)) {
+				$e->delete();
+			}
+		}
+	}
+
+	function testElggApiGettersEntityMetadataNVPOrderByMDString() {
+		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtype = $subtypes[0];
+		$md_name = 'test_metadata_name_' . rand();
+		$md_value = 'b';
+		$guids = array();
+		$valid_guids = array();
+
+		// our targets
+		$valid = new ElggObject();
+		$valid->subtype = $subtype;
+		$valid->$md_name = $md_value;
+		$valid->save();
+		$guids[] = $valid->getGUID();
+		$valid_guids[] = $valid->getGUID();
+
+		$valid2 = new ElggObject();
+		$valid2->subtype = $subtype;
+		$valid2->$md_name = 'c';
+		$valid2->save();
+		$guids[] = $valid->getGUID();
+		$valid_guids[] = $valid2->getGUID();
+
+		$valid3 = new ElggObject();
+		$valid3->subtype = $subtype;
+		$valid3->$md_name = 'a';
+		$valid3->save();
+		$guids[] = $valid->getGUID();
+		$valid_guids[] = $valid3->getGUID();
+
+		$md_valid_values = array($md_value, $md_value2);
+
+		$options = array(
+			'type' => 'object',
+			'subtype' => $subtype,
+			'metadata_name' => $md_name,
+			'order_by_metadata' => array('name' => $md_name, 'as' => 'text')
+		);
+
+		$entities = elgg_get_entities_from_metadata($options);
+
+		$this->assertIsa($entities, 'array');
+		$this->assertEqual(count($entities), 3);
+
+		$alpha = array('a', 'b', 'c');
+
+		$i = 0;
+		foreach ($entities as $entity) {
+			$this->assertTrue(in_array($entity->getGUID(), $valid_guids));
+			$this->assertEqual($entity->$md_name, $alpha[$i]);
+			$i++;
+			$entity->delete();
+		}
+
+		foreach ($guids as $guid) {
+			if ($e = get_entity($guid)) {
+				$e->delete();
+			}
+		}
+	}
 }

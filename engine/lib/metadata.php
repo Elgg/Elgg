@@ -569,7 +569,8 @@ function elgg_get_entities_from_metadata(array $options = array()) {
 		'metadata_name_value_pairs'	=>	ELGG_ENTITIES_ANY_VALUE,
 
 		'metadata_name_value_pairs_operator' => 'AND',
-		'metadata_case_sensitive' => TRUE
+		'metadata_case_sensitive' => TRUE,
+		'order_by_metadata' => array(),
 	);
 
 	$options = array_merge($defaults, $options);
@@ -578,7 +579,8 @@ function elgg_get_entities_from_metadata(array $options = array()) {
 	$options = elgg_normalise_plural_options_array($options, $singulars);
 
 	$clauses = elgg_get_entity_metadata_where_sql('e', $options['metadata_names'], $options['metadata_values'],
-		$options['metadata_name_value_pairs'], $options['metadata_name_value_pairs_operator'], $options['metadata_case_sensitive']);
+		$options['metadata_name_value_pairs'], $options['metadata_name_value_pairs_operator'], $options['metadata_case_sensitive'],
+		$options['order_by_metadata']);
 
 	if ($clauses) {
 		// merge wheres to pass to get_entities()
@@ -598,6 +600,15 @@ function elgg_get_entities_from_metadata(array $options = array()) {
 		}
 
 		$options['joins'] = array_merge($options['joins'], $clauses['joins']);
+
+		if ($clauses['orders']) {
+			$order_by_metadata = implode(", ",$clauses['orders']);
+			if (isset($options['order_by']) && $options['order_by']) {
+				$options['order_by'] = "$order_by_metadata, {$options['order_by']}";
+			} else {
+				$options['order_by'] = "$order_by_metadata, e.time_created DESC";
+			}
+		}
 	}
 
 	return elgg_get_entities($options);
@@ -614,9 +625,10 @@ function elgg_get_entities_from_metadata(array $options = array()) {
  * @param ARR|NULL $pairs array of names / values / operands
  * @param AND|OR $pair_operator Operator to use to join the where clauses for pairs
  * @param BOOL $case_sensitive
+ * @param ARR|NULL $order_by_metadata array of names / direction
  * @return FALSE|array False on fail, array('joins', 'wheres')
  */
-function elgg_get_entity_metadata_where_sql($table, $names = NULL, $values = NULL, $pairs = NULL, $pair_operator = 'AND', $case_sensitive = TRUE) {
+function elgg_get_entity_metadata_where_sql($table, $names = NULL, $values = NULL, $pairs = NULL, $pair_operator = 'AND', $case_sensitive = TRUE, $order_by_metadata = NULL) {
 	global $CONFIG;
 
 	// short circuit if nothing requested
@@ -624,7 +636,8 @@ function elgg_get_entity_metadata_where_sql($table, $names = NULL, $values = NUL
 	// 0 is also a valid metadata value for FALSE, NULL, or 0
 	if ((!$names && $names !== 0)
 		&& (!$values && $values !== 0)
-		&& (!$pairs && $pairs !== 0)) {
+		&& (!$pairs && $pairs !== 0)
+		&& !isset($order_by_metadata)) {
 		return '';
 	}
 
@@ -637,7 +650,8 @@ function elgg_get_entity_metadata_where_sql($table, $names = NULL, $values = NUL
 
 	$return = array (
 		'joins' => array (),
-		'wheres' => array()
+		'wheres' => array(),
+		'orders' => array()
 	);
 
 	$wheres = array();
@@ -697,6 +711,8 @@ function elgg_get_entity_metadata_where_sql($table, $names = NULL, $values = NUL
 		$wheres[] = "($values_where AND $access)";
 	}
 
+	$i = 1;
+
 	// add pairs
 	// pairs must be in arrays.
 	if (is_array($pairs)) {
@@ -709,7 +725,7 @@ function elgg_get_entity_metadata_where_sql($table, $names = NULL, $values = NUL
 
 		// @todo when the pairs are > 3 should probably split the query up to
 		// denormalize the strings table.
-		$i = 1;
+
 		foreach ($pairs as $index => $pair) {
 			// @todo move this elsewhere?
 			// support shortcut 'n' => 'v' method.
@@ -787,6 +803,36 @@ function elgg_get_entity_metadata_where_sql($table, $names = NULL, $values = NUL
 
 	if ($where = implode(' OR ', $wheres)) {
 		$return['wheres'][] = "($where)";
+	}
+
+	if (is_array($order_by_metadata)) {
+		if ((count($order_by_metadata) > 0) && !is_array($order_by_metadata[0])) {
+			// singleton, so fix
+			$order_by_metadata = array($order_by_metadata);
+		}
+		foreach ($order_by_metadata as $order_by) {
+			if (is_array($order_by) && isset($order_by['name'])) {
+				$name = sanitise_string($order_by['name']);
+				if (isset($order_by['direction'])) {
+					$direction = sanitise_string($order_by['direction']);
+				} else {
+					$direction = 'ASC';
+				}
+				$return['joins'][] = "JOIN {$CONFIG->dbprefix}metadata md{$i} on {$table}.guid = md{$i}.entity_guid";
+				$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msn{$i} on md{$i}.name_id = msn{$i}.id";
+				$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msv{$i} on md{$i}.value_id = msv{$i}.id";
+
+				$access = get_access_sql_suffix("md{$i}");
+
+				$return['wheres'][] = "(msn{$i}.string = '$name' AND $access)";
+				if (isset($order_by['as']) && $order_by['as'] == 'integer') {
+					$return['orders'][] = "CAST(msv{$i}.string AS SIGNED) $direction";
+				} else {
+					$return['orders'][] = "msv{$i}.string $direction";
+				}
+				$i++;
+			}
+		}
 	}
 
 	return $return;
