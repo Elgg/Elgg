@@ -181,6 +181,7 @@ function get_tags($threshold = 1, $limit = 10, $metadata_name = "", $entity_type
 
 function display_tagcloud($threshold = 1, $limit = 10, $metadata_name = "", $entity_type = "object", $entity_subtype = "", $owner_guid = "", $site_guid = -1, $start_ts = "", $end_ts = "") {
 
+	$registered_tags = elgg_get_registered_tag_metadata_names();
 	if (!in_array($metadata_name, $registered_tags)) {
 		elgg_deprecated_notice('Tag metadata names must be registered by elgg_register_tag_metadata_name()', 1.7);
 	}
