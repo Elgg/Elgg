@@ -24,13 +24,17 @@ function action($action, $forwarder = "") {
 	// set GET params
 	elgg_set_input_from_uri();
 
-	// @todo REMOVE THESE EXCEPTIONS IN 1.8.
-	// These are only to provide a way to disable plugins that overwrite core
-	// UI without tokens.  (And for installation because of session_id problems)
+	// @todo REMOVE THESE ONCE #1509 IS IN PLACE.
+	// Allow users to disable plugins without a token in order to
+	// remove plugins that are imcompatible.
+	// Installation cannot use tokens because it requires site secret to be
+	// working. (#1462)
+	// Login and logout are for convenience.
 	$exceptions = array(
 		'systemsettings/install',
 		'admin/plugins/disable',
-		'logout'
+		'logout',
+		'login'
 	);
 
 	if (!in_array($action, $exceptions)) {
