@@ -600,13 +600,23 @@ function remove_user_from_access_collection($user_guid, $collection_id) {
  * Get all of a users collections
  *
  * @param int $owner_guid The user ID
+ * @param int $site_guid The GUID of the site (default: current site).
  * @return true|false Depending on success
  */
-function get_user_access_collections($owner_guid) {
+function get_user_access_collections($owner_guid, $site_guid = 0) {
 	global $CONFIG;
 	$owner_guid = (int) $owner_guid;
+	$site_guid = (int) $site_guid;
 
-	$collections = get_data("SELECT * FROM {$CONFIG->dbprefix}access_collections WHERE owner_guid = {$owner_guid}");
+	if (($site_guid == 0) && (isset($CONFIG->site_guid))) {
+		$site_guid = $CONFIG->site_guid;
+	}
+
+	$query = "SELECT * FROM {$CONFIG->dbprefix}access_collections
+			WHERE owner_guid = {$owner_guid}
+			AND site_guid = {$site_guid}";
+
+	$collections = get_data($query);
 
 	return $collections;
 }
