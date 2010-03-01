@@ -1146,6 +1146,7 @@ function delete_annotation($id) {
  * Clear all the annotations for a given entity, assuming you have access to that metadata.
  *
  * @param int $guid
+ * @return number of annotations deleted or false if an error
  */
 function clear_annotations($guid, $name = "") {
 	global $CONFIG;
@@ -1154,6 +1155,10 @@ function clear_annotations($guid, $name = "") {
 
 	if (!empty($name)) {
 		$name = get_metastring_id($name);
+		if ($name === false) {
+			// name doesn't exist so 0 rows were deleted
+			return 0;
+		}
 	}
 
 	$entity_guid = (int) $guid;
@@ -1173,6 +1178,8 @@ function clear_annotations($guid, $name = "") {
 			return delete_data($query);
 		}
 	}
+	
+	return FALSE;
 }
 
 /**
