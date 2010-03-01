@@ -20,11 +20,14 @@ configuration requirements:
       modules:
           o mod_rewrite
           o PHP 
-    * MySQL 5+ is needed for data storage
+    * MySQL 5+ with sql_mode in standard mode (ie not in traditional
+      or any other mode).
     * PHP 5.2+ needs to be installed as an Apache module (not in CGI
       mode or safe mode) with the following libraries:
           o GD (for graphics processing, eg user icon rescaling)
-          o JSON (for API functionality) 
+          o JSON (for API functionality)
+          o XML (not installed/compiled by default on all systems)
+          o Multibyte String support (for internationalisation)
 
 It is recommended that you increase the memory available to PHP 
 threads beyond the standard 8 or 12M, and increase the maximum 
@@ -33,8 +36,6 @@ found in your php.ini.
 
     * The following PHP libraries are also recommended for some 
       plugins and extra functionality:
-          o mbstring (to allow emails to be sent with non-Latin 
-            characters)
           o SOAP
           o DOM 
 
