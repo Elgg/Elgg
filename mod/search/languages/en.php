@@ -1,6 +1,6 @@
 <?php
 
-$language_array = array(
+$english = array(
 	'search:enter_term' => 'Enter a search term:',
 	'search:no_results' => 'No results.',
 	'search:matched' => 'Matched: ',
@@ -17,4 +17,4 @@ $language_array = array(
 	'search:unavailable_entity' => 'Unavailable Entity',
 );
 
-add_translation('en', $language_array);
+add_translation('en', $english);
