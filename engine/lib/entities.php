@@ -983,8 +983,10 @@ abstract class ElggEntity implements
 			'type',
 			'subtype',
 			'time_created',
+			'time_updated',
 			'container_guid',
 			'owner_guid',
+			'site_guid'
 		);
 	}
 
