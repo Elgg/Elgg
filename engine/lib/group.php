@@ -746,6 +746,12 @@ function get_entities_from_metadata_groups_multi($group_guid, $meta_array, $enti
  * @return mixed
  */
 function get_group_members($group_guid, $limit = 10, $offset = 0, $site_guid = 0, $count = false) {
+
+	// in 1.7 0 means "not set."  rewrite to make sense.
+	if (!$site_guid) {
+		$site_guid = ELGG_ENTITIES_ANY_VALUE;
+	}
+
 	return elgg_get_entities_from_relationship(array(
 		'relationship' => 'member',
 		'relationship_guid' => $group_guid,
