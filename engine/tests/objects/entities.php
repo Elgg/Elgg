@@ -199,8 +199,10 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 			'type',
 			'subtype',
 			'time_created',
+			'time_updated',
 			'container_guid',
-			'owner_guid', 
+			'owner_guid',
+			'site_guid'
 		);
 		
 		$this->assertIdentical($exportables, $this->entity->getExportableValues());
