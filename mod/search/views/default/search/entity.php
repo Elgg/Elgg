@@ -10,12 +10,21 @@
 
 $entity = $vars['entity'];
 
-if ($owner = $entity->getOwnerEntity()) {
-	$icon = elgg_view('profile/icon', array('entity' => $owner, 'size' => 'small'));
-} elseif ($entity instanceof ElggUser) {
+// display the entity's owner by default if available.
+// @todo allow an option to switch to displaying the entity's icon instead.
+$type = $entity->getType();
+if ($type == 'user' || $type == 'group') {
 	$icon = elgg_view('profile/icon', array('entity' => $entity, 'size' => 'small'));
+} elseif ($owner = $entity->getOwnerEntity()) {
+	$icon = elgg_view('profile/icon', array('entity' => $owner, 'size' => 'small'));
 } else {
-	$icon = '';
+	// display a generic icon if no owner, though there will probably be
+	// other problems if the owner can't be found.
+	$icon = elgg_view(
+		'graphics/icon', array(
+		'entity' => $entity,
+		'size' => 'small',
+	));
 }
 
 $title = $entity->getVolatileData('search_matched_title');

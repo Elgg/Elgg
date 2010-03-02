@@ -106,6 +106,8 @@ function search_groups_hook($hook, $type, $value, $params) {
 /**
  * Return default results for searches on users.
  *
+ * @todo add profile field MD searching
+ *
  * @param unknown_type $hook
  * @param unknown_type $type
  * @param unknown_type $value
