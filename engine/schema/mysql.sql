@@ -130,7 +130,7 @@ CREATE TABLE `prefix_entities` (
   `access_id` int(11) NOT NULL,
   `time_created` int(11) NOT NULL,
   `time_updated` int(11) NOT NULL,
-  `last_action` int(11) NOT NULL,
+  `last_action` int(11) NOT NULL DEFAULT '0',
   `enabled` enum('yes','no') NOT NULL DEFAULT 'yes',
   PRIMARY KEY (`guid`),
   KEY `type` (`type`),
