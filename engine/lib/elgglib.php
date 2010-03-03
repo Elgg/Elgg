@@ -259,6 +259,7 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 	} else {
 		$viewlist = array(500 => $view);
 	}
+
 	// Start the output buffer, find the requested view file, and execute it
 	ob_start();
 
@@ -860,7 +861,6 @@ function elgg_view_layout($layout) {
 		$param_array['area' . $arg] = func_get_arg($arg);
 		$arg++;
 	}
-
 	if (elgg_view_exists("canvas/layouts/{$layout}")) {
 		return elgg_view("canvas/layouts/{$layout}",$param_array);
 	} else {
@@ -964,7 +964,6 @@ function get_submenu() {
 								$selected = TRUE;
 							} else {
 								if ($uri_info['query'] == $item_info['query']) {
-									//var_dump("Good on 1");
 									$selected_key = $key;
 									$selected_group = $groupname;
 									$selected = TRUE;
@@ -1203,13 +1202,14 @@ function page_draw($title, $body, $sidebar = "") {
 	}
 
 	// Draw the page
-	$output = elgg_view('pageshells/pageshell', array(
+	$output = elgg_view('page_shells/default', array(
 		'title' => $title,
 		'body' => $body,
 		'sidebar' => $sidebar,
 		'sysmessages' => $sysmessages,
 		)
 	);
+
 	$split_output = str_split($output, 1024);
 
 	foreach($split_output as $chunk) {

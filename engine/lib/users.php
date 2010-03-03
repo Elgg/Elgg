@@ -1475,7 +1475,7 @@ function friends_page_handler($page_elements) {
 		set_page_owner($user->getGUID());
 	}
 	if ($_SESSION['guid'] == page_owner()) {
-		collections_submenu_items();
+		// collections_submenu_items(); disabled for now as we no longer use friends collections (replaced by shared access)
 	}
 
 	require_once(dirname(dirname(dirname(__FILE__))) . "/friends/index.php");
@@ -1490,7 +1490,7 @@ function friends_of_page_handler($page_elements) {
 		set_page_owner($user->getGUID());
 	}
 	if ($_SESSION['guid'] == page_owner()) {
-		collections_submenu_items();
+		// collections_submenu_items(); disabled for now as we no longer use friends collections (replaced by shared access)
 	}
 	require_once(dirname(dirname(dirname(__FILE__))) . "/friends/of.php");
 }
@@ -1609,9 +1609,11 @@ function users_pagesetup() {
 	global $CONFIG;
 
 	//add submenu options
-	if (get_context() == "friends" || get_context() == "friendsof" || get_context() == "collections") {
+	if (get_context() == "friends" || get_context() == "friendsof") {  // || get_context() == "collections") { - disabled as we no longer use collections
 		add_submenu_item(elgg_echo('friends'),$CONFIG->wwwroot."pg/friends/" . page_owner_entity()->username);
 		add_submenu_item(elgg_echo('friends:of'),$CONFIG->wwwroot."pg/friendsof/" . page_owner_entity()->username);
+		if(is_plugin_enabled('members'))
+			add_submenu_item(elgg_echo('members:browse'), $CONFIG->wwwroot . "mod/members/index.php");
 	}
 }
 
@@ -1623,15 +1625,15 @@ function users_init() {
 	// Load config
 	global $CONFIG;
 
-	// Set up menu for logged in users
-	if (isloggedin()) {
+	// add Friends to tools menu - if profile mod is running
+	if ( isloggedin() && is_plugin_enabled('profile') ) {
 		$user = get_loggedin_user();
 		add_menu(elgg_echo('friends'), $CONFIG->wwwroot . "pg/friends/" . $user->username);
 	}
 
 	register_page_handler('friends', 'friends_page_handler');
 	register_page_handler('friendsof', 'friends_of_page_handler');
-	register_page_handler('collections', 'collections_page_handler');
+	//register_page_handler('collections', 'collections_page_handler');
 	register_page_handler('dashboard', 'dashboard_page_handler');
 	register_page_handler('register', 'registration_page_handler');
 	register_page_handler('resetpassword', 'elgg_user_resetpassword_page_handler');
@@ -1640,10 +1642,10 @@ function users_init() {
 	register_action("useradd", true);
 	register_action("friends/add");
 	register_action("friends/remove");
-	register_action('friends/addcollection');
-	register_action('friends/deletecollection');
-	register_action('friends/editcollection');
-	register_action("user/spotlight");
+	//register_action('friends/addcollection');
+	//register_action('friends/deletecollection');
+	//register_action('friends/editcollection');
+	//register_action("user/spotlight");
 
 	register_action("usersettings/save");
 
