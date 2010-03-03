@@ -1,28 +1,33 @@
 <?php
+/**
+ * Elgg bookmarks plugin friends' page
+ * 
+ * @package ElggBookmarks
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * @author Curverider Ltd <info@elgg.com>
+ * @copyright Curverider Ltd 2008-2010
+ * @link http://elgg.org/
+ */
 
-	/**
-	 * Elgg bookmarks plugin friends' page
-	 * 
-	 * @package ElggBookmarks
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.org/
-	 */
-
-	// Start engine
-		require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
+// Start engine
+require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
+	
+// get the filter menu
+$area1 = elgg_view("page_elements/content_header", array('context' => "friends", 'type' => 'bookmarks'));
+			
+// List bookmarks
+set_context('search');
+$area2 .= list_user_friends_objects(page_owner(),'bookmarks',10,false,false);
+set_context('bookmarks');
 		
-	// List bookmarks
-		$area2 = elgg_view_title(elgg_echo('bookmarks:friends'));
-		set_context('search');
-		$area2 .= list_user_friends_objects(page_owner(),'bookmarks',10,false,false);
-		set_context('bookmarks');
+// sidebar options
+$area3 = elgg_view("bookmarks/sidebar_options", array("object_type" => 'bookmarks'));
 		
-	// Format page
-		$body = elgg_view_layout('two_column_left_sidebar', $area1, $area2);
+// if logged in, get the bookmarklet
+$area3 .= elgg_view("bookmarks/bookmarklet_menu_option");
 		
-	// Draw it
-		page_draw(elgg_echo('bookmarks:friends'),$body);
-
-?>
+// Format page
+$body = elgg_view_layout('one_column_with_sidebar', $area3, $area1.$area2);
+		
+// Draw it
+echo page_draw(elgg_echo('bookmarks:friends'),$body);
