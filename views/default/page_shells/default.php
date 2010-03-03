@@ -25,34 +25,12 @@ if (empty($vars['title'])) {
 } else {
 	$title = $vars['config']->sitename . ": " . $vars['title'];
 }
-?>
 
-<?php echo elgg_view('page_elements/header', $vars); ?>
-<?php echo elgg_view('page_elements/elgg_topbar', $vars); ?>
-<?php echo elgg_view('page_elements/header_contents', $vars); ?>
-
-<!-- main contents -->
-
-<!-- display any system messages -->
-<?php echo elgg_view('messages/list', array('object' => $vars['sysmessages'])); ?>
-
-
-<!-- canvas -->
-<div id="layout_canvas">
-
-<?php echo $vars['body']; ?>
-
-<div class="clearfloat"></div>
-</div><!-- /#layout_canvas -->
-
-<?php
-if(isloggedin()){
-?>
-	<!-- spotlight -->
-	<?php echo elgg_view('page_elements/spotlight', $vars); ?>
-<?php
-}
-?>
-
-<!-- footer -->
-<?php echo elgg_view('page_elements/footer', $vars); ?>
+echo elgg_view('page_elements/html_begin', $vars);
+echo elgg_view('page_elements/elgg_topbar', $vars);
+// @todo this probably should be somewhere else 
+echo elgg_view('messages/list', array('object' => $vars['sysmessages']));
+echo elgg_view('page_elements/elgg_header', $vars);
+echo elgg_view('page_elements/elgg_content', $vars);
+echo elgg_view('page_elements/elgg_footer', $vars);
+echo elgg_view('page_elements/html_end', $vars);
