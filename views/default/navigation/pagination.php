@@ -38,12 +38,14 @@ if (isset($vars['nonefound'])) {
 $totalpages = ceil($count / $limit);
 $currentpage = ceil($offset / $limit) + 1;
 
+//$baseurl = elgg_http_remove_url_query_element($vars['baseurl'], $word);
+
 //only display if there is content to paginate through or if we already have an offset
 if (($count > $limit || $offset > 0) && get_context() != 'widget') {
 
 	?>
 
-	<div class="pagination">
+	<div class="pagination clearfloat">
 	<?php
 
 	if ($offset > 0) {
@@ -53,9 +55,9 @@ if (($count > $limit || $offset > 0) && get_context() != 'widget') {
 			$prevoffset = 0;
 		}
 
-		$prevurl = elgg_http_add_url_query_elements($vars['baseurl'], array($word => $prevoffset));
+		$prevurl = elgg_http_add_url_query_elements($baseurl, array($word => $prevoffset));
 
-		echo "<a href=\"{$prevurl}\" class=\"pagination_previous\">&laquo; ". elgg_echo("previous") ."</a> ";
+		echo "<a href=\"{$prevurl}\" class='pagination_previous'>&laquo; ". elgg_echo("previous") ."</a> ";
 	}
 
 	if ($offset > 0 || $offset < ($count - $limit)) {
@@ -89,16 +91,16 @@ if (($count > $limit || $offset > 0) && get_context() != 'widget') {
 		$prev = 0;
 		foreach($pagesarray as $i) {
 			if (($i - $prev) > 1) {
-				echo "<span class=\"pagination_more\">...</span>";
+				echo "<span class='pagination_more'>...</span>";
 			}
 
 			$curoffset = (($i - 1) * $limit);
-			$counturl = elgg_http_add_url_query_elements($vars['baseurl'], array($word => $curoffset));
+			$counturl = elgg_http_add_url_query_elements($base_url, array($word => $curoffset));
 
 			if ($curoffset != $offset) {
-				echo " <a href=\"{$counturl}\" class=\"pagination_number\">{$i}</a> ";
+				echo " <a href=\"{$counturl}\" class='pagination_number'>{$i}</a> ";
 			} else {
-				echo "<span class=\"pagination_currentpage\"> {$i} </span>";
+				echo "<span class='pagination_currentpage'> {$i} </span>";
 			}
 			$prev = $i;
 
@@ -112,14 +114,13 @@ if (($count > $limit || $offset > 0) && get_context() != 'widget') {
 			$nextoffset--;
 		}
 
-		$nexturl = elgg_http_add_url_query_elements($vars['baseurl'], array($word => $nextoffset));
+		$nexturl = elgg_http_add_url_query_elements($baseurl, array($word => $nextoffset));
 
-		echo " <a href=\"{$nexturl}\" class=\"pagination_next\">" . elgg_echo("next") . " &raquo;</a>";
+		echo " <a href=\"{$nexturl}\" class='pagination_next'>" . elgg_echo("next") . " &raquo;</a>";
 
 	}
 
 	?>
-	<div class="clearfloat"></div>
 	</div>
 	<?php
 } // end of pagination check if statement

@@ -8,7 +8,7 @@
  * @link http://elgg.org/
  */
 ?>
-<div class="admin-menu-option">
+<div class="menu_admin_option">
 	<h2><?php echo elgg_echo('usersettings:user'); ?> </h2>
 	<p><?php echo elgg_echo('usersettings:user:opt:description'); ?><br />
 	<a href="<?php echo $CONFIG->wwwroot . "pg/settings/user/"; ?>"><?php echo elgg_echo('usersettings:user:opt:linktext'); ?></a></p>

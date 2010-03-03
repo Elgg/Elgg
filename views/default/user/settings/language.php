@@ -13,6 +13,7 @@ $user = page_owner_entity();
 
 if ($user) {
 ?>
+<div class="user_settings language">
 <h3><?php echo elgg_echo('user:set:language'); ?></h3>
 <p>
 
@@ -28,6 +29,6 @@ if ($user) {
 	?>
 
 </p>
-
+</div>
 <?php
 }

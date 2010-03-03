@@ -17,7 +17,7 @@
 
 $class = $vars['class'];
 if (!$class) {
-	$class = "input-radio";
+	$class = "input_radio";
 }
 
 foreach($vars['options'] as $label => $option) {

@@ -16,7 +16,7 @@
  * @uses $vars['disabled'] Is the input field disabled?
  */
 
-$class = "input-textarea";
+$class = "input_textarea";
 if (isset($vars['class'])) {
 	$class = $vars['class'];
 }

@@ -10,8 +10,4 @@
  *
  * @uses $vars['object'] An error message (string)
  */
-?>
-
-<p>
-	<?php echo elgg_view('output/longtext', array('value' => $vars['object'])); ?>
-</p>
+echo elgg_view('output/longtext', array('value' => $vars['object']));

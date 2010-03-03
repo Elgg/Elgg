@@ -8,22 +8,11 @@
  * @link http://elgg.org/
  */
 ?>
-
-<div class="search_listing">
-
-	<div class="search_listing_icon">
-		<?php
-
-			echo $vars['icon'];
-
-		?>
+<div class="entity_listing clearfloat">
+	<div class="entity_listing_icon">
+		<?php echo $vars['icon']; ?>
 	</div>
-	<div class="search_listing_info">
-		<?php
-
-			echo $vars['info'];
-
-		?>
+	<div class="entity_listing_info">
+		<?php echo $vars['info']; ?>
 	</div>
-
 </div>

@@ -31,7 +31,7 @@ set_context('admin');
 
 // Display main admin menu
 page_draw(elgg_echo("admin:user"),
-	elgg_view_layout("two_column_left_sidebar",
+	elgg_view_layout("one_column_with_sidebar",
 		'',
 		$title . elgg_view("admin/user") . $result
 	)

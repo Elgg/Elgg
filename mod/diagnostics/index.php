@@ -14,15 +14,15 @@ set_context('admin');
 
 // system diagnostics
 $body = elgg_view_title(elgg_echo('diagnostics'));
-$body .= elgg_view('page_elements/contentwrapper', array('body' =>
-	elgg_echo('diagnostics:description') . elgg_view('diagnostics/forms/download'))
+$body .= "<div class='admin_settings diagnostics'>";
+$body .= elgg_view('page_elements/elgg_content', array('body' =>
+	"<h3>".elgg_echo('diagnostics:report')."</h3>".elgg_echo('diagnostics:description') . elgg_view('diagnostics/forms/download'))
 );
 
 // unit tests
-$body .= elgg_view_title(elgg_echo('diagnostics:unittester'));
-
-$test_body = '<p>' . elgg_echo('diagnostics:unittester:description') . '</p>';
-$test_body .= '<h3>' . elgg_echo('diagnostics:unittester:warning') . '</h3>';
+$body .= "<h3>".elgg_echo('diagnostics:unittester')."</h3>";
+$test_body = "<p>" . elgg_echo('diagnostics:unittester:description') . "</p>";
+$test_body .= "<p>" . elgg_echo('diagnostics:unittester:warning') . "</p>";
 
 if (isset($CONFIG->debug)) {
 	// create a button to run tests
@@ -34,9 +34,9 @@ if (isset($CONFIG->debug)) {
 	$test_body .= elgg_echo('diagnostics:unittester:debug');
 }
 
-$body .= elgg_view('page_elements/contentwrapper', array(
+$body .= elgg_view('page_elements/elgg_content', array(
 	'body' => $test_body)
 );
-
+$body .= "</div>";
 // create page
-page_draw(elgg_echo('diagnostics'), elgg_view_layout("two_column_left_sidebar", '', $body));
+page_draw(elgg_echo('diagnostics'), elgg_view_layout("one_column_with_sidebar", '', $body));

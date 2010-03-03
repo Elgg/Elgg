@@ -12,9 +12,9 @@
 $entity_stats = get_entity_statistics();
 $even_odd = "";
 ?>
-<div class="admin_statistics">
+<div class="admin_settings site_entities">
 	<h3><?php echo elgg_echo('admin:statistics:label:numentities'); ?></h3>
-	<table>
+	<table class="styled">
 		<?php
 			foreach ($entity_stats as $k => $entry) {
 				arsort($entry);

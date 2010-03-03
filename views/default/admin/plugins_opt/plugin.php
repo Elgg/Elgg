@@ -26,7 +26,7 @@ if ($manifest['elgg_version']) {
 $ts = time();
 $token = generate_action_token($ts);
 ?>
-<div class="plugin_details <?php if ($active) echo "active"; else echo "not-active" ?>">
+<div class="plugin_details <?php if ($active) echo "active"; else echo "not_active" ?>">
 	<div class="admin_plugin_reorder">
 <?php
 			if ($vars['order'] > 10) {
@@ -56,7 +56,7 @@ $token = generate_action_token($ts);
 	<h3><?php echo $plugin; ?><?php if (elgg_view("settings/{$plugin}/edit")) { ?> <a class="pluginsettings_link">[<?php echo elgg_echo('settings'); ?>]</a><?php } ?></h3>
 
 	<?php if (elgg_view("settings/{$plugin}/edit")) { ?>
-	<div class="pluginsettings">
+	<div class="pluginsettings hidden">
 			<div id="<?php echo $plugin; ?>_settings">
 				<?php echo elgg_view("object/plugin", array('plugin' => $plugin, 'entity' => find_plugin_settings($plugin))) ?>
 			</div>
@@ -77,7 +77,7 @@ $token = generate_action_token($ts);
 
 	<p><a class="manifest_details"><?php echo elgg_echo("admin:plugins:label:moreinfo"); ?></a></p>
 
-	<div class="manifest_file">
+	<div class="manifest_file hidden">
 
 	<?php if ($manifest) { ?>
 		<?php if ((!$version_check_valid) || (!isset($manifest['elgg_version']))) { ?>

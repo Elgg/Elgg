@@ -10,4 +10,4 @@
  */
 
 // Description of what's going on
-echo "<p>" . elgg_view('output/longtext', array('value' => elgg_echo("usersettings:description"))) . "</p>";
+echo elgg_view('output/longtext', array('value' => elgg_echo("usersettings:description")));

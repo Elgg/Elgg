@@ -10,7 +10,7 @@
 
 global $CONFIG;
 ?>
-<div class="admin-menu-option">
+<div class="menu_admin_option">
 	<h2><?php echo elgg_echo('admin:plugins'); ?> </h2>
 	<p><?php echo elgg_echo('admin:plugins:opt:description'); ?><br />
 	<a href="<?php echo $CONFIG->wwwroot . "pg/admin/plugins/"; ?>"><?php echo elgg_echo('admin:plugins:opt:linktext'); ?></a></p>

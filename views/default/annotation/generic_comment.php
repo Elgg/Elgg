@@ -1,12 +1,6 @@
 <?php
 /**
  * Elgg generic comment
- *
- * @package Elgg
- * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
- *
  */
 
 $owner = get_user($vars['annotation']->owner_guid);
@@ -25,21 +19,13 @@ $owner = get_user($vars['annotation']->owner_guid);
 		?>
 	</div>
 	<div class="generic_comment_details">
-
-		<!-- output the actual comment -->
-		<?php echo elgg_view("output/longtext",array("value" => $vars['annotation']->value)); ?>
-
-		<p class="generic_comment_owner">
-			<a href="<?php echo $owner->getURL(); ?>"><?php echo $owner->name; ?></a> <?php echo friendly_time($vars['annotation']->time_created); ?>
-		</p>
-
 		<?php
 
 			// if the user looking at the comment can edit, show the delete link
 			if ($vars['annotation']->canEdit()) {
 
 			?>
-		<p>
+		<div class="delete_button">
 			<?php
 
 				echo elgg_view("output/confirmlink",array(
@@ -49,10 +35,15 @@ $owner = get_user($vars['annotation']->owner_guid);
 				));
 
 			?>
-		</p>
+		</div>
 
 			<?php
 			} //end of can edit if statement
 		?>
-	</div><!-- end of generic_comment_details -->
+		<p class="generic_comment_owner">
+			<a href="<?php echo $owner->getURL(); ?>"><?php echo $owner->name; ?></a> <?php echo friendly_time($vars['annotation']->time_created); ?>
+		</p>
+		<!-- output the actual comment -->
+		<div class="generic_comment_body"><?php echo elgg_view("output/longtext",array("value" => $vars['annotation']->value)); ?></div>
+	</div><div class="clearfloat"></div><!-- end of generic_comment_details -->
 </div><!-- end of generic_comment div -->

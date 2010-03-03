@@ -19,7 +19,7 @@
  */
 
 
-$class = "input-tags";
+$class = "input_tags";
 if (isset($vars['class'])) {
 	$class = $vars['class'];
 }

@@ -13,9 +13,9 @@ $entity_stats = get_entity_statistics($_SESSION['user']->guid);
 
 if ($entity_stats) {
 ?>
-<div class="usersettings_statistics">
+<div class="user_settings statistics">
 	<h3><?php echo elgg_echo('usersettings:statistics:label:numentities'); ?></h3>
-	<table>
+	<table class="styled">
 		<?php
 			foreach ($entity_stats as $k => $entry) {
 				foreach ($entry as $a => $b) {

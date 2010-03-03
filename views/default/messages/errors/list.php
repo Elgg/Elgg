@@ -14,37 +14,13 @@
 if (!empty($vars['object']) && is_array($vars['object'])) {
 
 ?>
-<!-- used to fade out the system messages after 3 seconds -->
-<script>
-$(document).ready(function () {
-	$('.messages_error').animate({opacity: 1.0}, 1000);
-	$('.messages_error').animate({opacity: 1.0}, 5000);
-	$('.messages_error').fadeOut('slow');
-
-	$('span.closeMessages a').click(function () {
-		$(".messages_error").stop();
-		$('.messages_error').fadeOut('slow');
-	return false;
-	});
-
-	$('div.messages_error').click(function () {
-		$(".messages_error").stop();
-		$('.messages_error').fadeOut('slow');
-	return false;
-	});
-
-});
-</script>
-
-	<div class="messages_error">
-	<span class="closeMessages"><a href="#"><?php echo elgg_echo('systemmessages:dismiss'); ?></a></span>
-
+<div id="elgg_system_message" class="hidden radius8 error">
+<script type="text/javascript">$(document).ready(function(){ elgg_system_message() });</script>
 <?php
 	foreach($vars['object'] as $error) {
 		echo elgg_view('messages/errors/error',array('object' => $error));
 	}
 ?>
-
-	</div>
+</div>
 <?php
 }

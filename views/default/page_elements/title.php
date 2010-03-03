@@ -1,12 +1,6 @@
 <?php
 /**
  * Elgg title element
- *
- * @package Elgg
- * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
- *
  * @uses $vars['title'] The page title
  */
 
@@ -23,7 +17,7 @@ if (($_SESSION['guid']) && ($page_owner && $page_owner_user->guid != $_SESSION['
 	if($page_owner_user instanceOf ElggGroup) {
 		$display = "<div id=\"content_area_group_title\">" . $info . "</div>";
 	} else {
-		$display = "<div id=\"content_area_user_title\">" . $info . "</div>";
+		$display = $info;
 	}
 	if (!empty($submenu) && $vars['submenu'] == true) {
 		// plugins can extend this to add menu options
@@ -34,7 +28,7 @@ if (($_SESSION['guid']) && ($page_owner && $page_owner_user->guid != $_SESSION['
 	if($page_owner_user instanceOf ElggGroup) {
 		$display = "<div id=\"content_area_group_title\">" . $info . "</div>";
 	} else {
-		$display = "<div id=\"content_area_user_title\">" . $info . "</div>";
+		$display = $info;
 	}
 	if (!empty($submenu)  && $vars['submenu'] == true) {
 		// plugins can extend this to add menu options

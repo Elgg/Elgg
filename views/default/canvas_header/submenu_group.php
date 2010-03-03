@@ -15,5 +15,6 @@ if (isset($vars['group_name'])) {
 
 if (isset($vars['submenu'])) {
 	$submenu = "<ul>" . $vars['submenu'] . "</ul>";
-	echo "<div class=\"submenu_group\"><div class=\"submenu_group_{$groupname}\">{$submenu}</div></div>";
+	//echo "<div class=\"submenu_group\"><div class=\"submenu_group_{$groupname}\">{$submenu}</div></div>";
+	echo $submenu;
 }

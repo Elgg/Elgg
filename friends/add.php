@@ -20,7 +20,7 @@ $area2 = elgg_view('friends/forms/edit', array(
 );
 
 // Format page
-$body = elgg_view_layout('two_column_left_sidebar', '',
+$body = elgg_view_layout('one_column_with_sidebar', '',
 	elgg_view_title(elgg_echo('friends:collections:add')) . $area2);
 
 // Draw it

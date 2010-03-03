@@ -47,7 +47,7 @@
 		}
 
 		if (!empty($nav)) {
-			echo '<div class="river_pagination"><p>'.$nav.'</p><div class="clearfloat"></div></div>';
+			echo '<div class="river_pagination"><p>'.$nav.'</p></div>';
 		}
 	}
 ?>

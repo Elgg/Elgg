@@ -12,24 +12,25 @@
 
 $contents = "";
 
-// Is there a page owner?
-$owner = page_owner_entity();
-if ($owner instanceof ElggEntity) {
-	$icon = elgg_view("profile/icon",array('entity' => $owner, 'size' => 'tiny'));
-	if ($owner instanceof ElggUser || $owner instanceof ElggGroup) {
-		$info = '<a href="' . $owner->getURL() . '">' . $owner->name . '</a>';
+if(is_plugin_enabled('profile')) {
+	// Is there a page owner?
+	$owner = page_owner_entity();
+	if ($owner instanceof ElggEntity) {
+		$icon = elgg_view("profile/icon",array('entity' => $owner, 'size' => 'tiny'));
+		if ($owner instanceof ElggUser || $owner instanceof ElggGroup) {
+			$info = '<a href="' . $owner->getURL() . '">' . $owner->name . '</a>';
+		}
+		$display = "<div id='owner_block_icon'>" . $icon . "</div>";
+		$display .= "<div id='owner_block_content'>" . $info . "</div><div class='clearfloat ownerblockline'></div>";
+	
+		if ($owner->briefdescription) {
+			$desc = $owner->briefdescription;
+			$display .= "<div id='owner_block_desc'>" . $desc . "</div>";
+		}
+	
+		$contents .= "<div id='owner_block'>".$display."</div><div id='owner_block_bottom'></div>";
 	}
-	$display = "<div id=\"owner_block_icon\">" . $icon . "</div>";
-	$display .= "<div id=\"owner_block_content\">" . $info . "</div><div class=\"clearfloat ownerblockline\"></div>";
-
-	if ($owner->briefdescription) {
-		$desc = $owner->briefdescription;
-		$display .= "<div id=\"owner_block_desc\">" . $desc . "</div>";
-	}
-
-	$contents .= $display;
 }
-
 // Are there feeds to display?
 global $autofeed;
 
@@ -43,7 +44,7 @@ if (isset($autofeed) && $autofeed == true) {
 	$label = elgg_echo('feed:rss');
 	$contents .= <<<END
 
-<div id="owner_block_rss_feed"><a href="{$url}" rel="nofollow">{$label}</a></div>
+<div id="rss_link"><a href="{$url}" rel="nofollow">{$label}</a></div>
 
 END;
 }
@@ -55,13 +56,11 @@ $contents .= elgg_view('owner_block/extend');
 if (isset($vars['content']))
 	$contents .= $vars['content'];
 
-// Initialise the submenu (plugins can add to the submenu)
+// Initialise the current tool/page submenu (plugins can add to the submenu)
 $submenu = get_submenu(); 
 if (!empty($submenu))
-	$contents .= "<div id=\"owner_block_submenu\">" . $submenu . "</div>"; 
+	$contents .= "<div class='submenu page_navigation'>" . $submenu . "</div>"; 
 
 if (!empty($contents)) {
-	echo "<div id=\"owner_block\">";
 	echo $contents;
-	echo "</div><div id=\"owner_block_bottom\"></div>";
 }

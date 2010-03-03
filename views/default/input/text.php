@@ -21,7 +21,7 @@
 if (isset($vars['class'])) {
 	$class = $vars['class'];
 } else {
-	$class = "input-text";
+	$class = "input_text";
 }
 
 $disabled = false;

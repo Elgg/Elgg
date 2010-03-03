@@ -17,7 +17,7 @@
 
 $class = $vars['class'];
 if (!$class) {
-	$class = "input-checkboxes";
+	$class = "input_checkboxes";
 }
 
 foreach($vars['options'] as $label => $option) {

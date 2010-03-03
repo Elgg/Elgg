@@ -16,7 +16,7 @@
 
 $class = $vars['class'];
 if (!$class) {
-	$class = "input-textarea";
+	$class = "input_textarea";
 }
 
 ?>

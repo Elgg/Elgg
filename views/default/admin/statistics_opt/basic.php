@@ -19,9 +19,9 @@ $version = get_version();
 $release = get_version(true);
 
 ?>
-<div class="admin_statistics">
+<div class="admin_settings site_stats">
 	<h3><?php echo elgg_echo('admin:statistics:label:basic'); ?></h3>
-	<table>
+	<table class="styled">
 		<tr class="odd">
 			<td class="column_one"><b><?php echo elgg_echo('admin:statistics:label:version'); ?> :</b></td>
 			<td><?php echo elgg_echo('admin:statistics:label:version:release'); ?> - <?php echo $release; ?>, <?php echo elgg_echo('admin:statistics:label:version:version'); ?> - <?php echo $version; ?></td>

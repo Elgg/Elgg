@@ -10,6 +10,7 @@
 	$english = array(
 
 			'diagnostics' => 'System diagnostics',
+			'diagnostics:report' => 'Diagnostics Report',
 			'diagnostics:unittester' => 'Unit Tests',
 
 			'diagnostics:description' => 'The following diagnostic report is useful for diagnosing any problems with Elgg, and should be attached to any bug reports you file.',
@@ -17,7 +18,7 @@
 
 			'diagnostics:unittester:description' => 'Unit tests check Elgg Core for broken or buggy APIs.',
 			'diagnostics:unittester:debug' => 'The site must be in debug mode to run unit tests.',
-			'diagnostics:unittester:warning' => 'WARNING: These tests can leave behind debugging objects in your database.  DO NOT USE ON A PRODUCTION SITE!',
+			'diagnostics:unittester:warning' => 'WARNING: These tests can leave behind debugging objects in your database.<br />DO NOT USE ON A PRODUCTION SITE!',
 
 			'diagnostics:test:executetest' => 'Execute test',
 			'diagnostics:test:executeall' => 'Execute All',

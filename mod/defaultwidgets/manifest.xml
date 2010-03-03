@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest>
+        <field key="author" value="Milan Magudia &amp; Curverider" />
+        <field key="version" value="2.04" />
+        <field key="description" value="This plugin enables an administrator to define a default set of widgets for new users" />
+        <field key="copyright" value="HedgeHogs &amp; Curverider Ltd" />
+		<field key="licence" value="GNU Public License version 2" />      
+		<field key="elgg_version" value="2010030101" />  
+</plugin_manifest>

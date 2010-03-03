@@ -57,7 +57,6 @@ if($avatar_icon == "icon"){
 				?>)
 			</span>
 		</p>
-		<div class="clearfloat"></div>
 	</div>
 	<?php
 }

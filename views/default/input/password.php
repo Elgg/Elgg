@@ -16,7 +16,7 @@
 
 $class = $vars['class'];
 if (!$class) {
-	$class = "input-password";
+	$class = "input_password";
 }
 ?>
 

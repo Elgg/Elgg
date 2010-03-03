@@ -8,10 +8,8 @@
  * @link http://elgg.org/
  */
 ?>
-
-<!-- main content -->
-<div id="one_column">
-
-<?php echo $vars['area1']; ?>
-
-</div><!-- /one_column -->
+<div id="elgg_content" class="clearfloat">
+	<div id="elgg_page_contents" class="clearfloat one_column">
+		<?php echo $vars['area1']; ?>
+	</div>
+</div>

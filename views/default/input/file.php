@@ -21,7 +21,7 @@ if (!empty($vars['value'])) {
 	echo elgg_echo('fileexists') . "<br />";
 }
 
-$class = "input-file";
+$class = "input_file";
 if (isset($vars['class'])) {
 	$class = $vars['class'];
 }

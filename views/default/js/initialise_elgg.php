@@ -1,9 +1,11 @@
 $(document).ready(function () {
 
-	// COLLAPSABLE WIDGETS (on Dashboard & Profile pages)
+	// COLLAPSABLE WIDGETS (on Dashboard? & Profile pages)
 	// toggle widget box contents
 	$('a.toggle_box_contents').bind('click', toggleContent);
 
+/*  // replaced with elgg_slide_toggle
+	@todo - PH update new admin area and widget canvas with the new toggle function
 	// toggle widget box edit panel
 	$('a.toggle_box_edit_panel').click(function () {
 		$(this.parentNode.parentNode).children(".collapsable_box_editpanel").slideToggle("fast");
@@ -16,20 +18,23 @@ $(document).ready(function () {
 		return false;
 	});
 
-	// toggle plugin's settings nad more info on admin tools admin
+	// toggle plugin's settings and more info on admin tools admin
 	$('a.pluginsettings_link').click(function () {
 		$(this.parentNode.parentNode).children(".pluginsettings").slideToggle("fast");
 		return false;
 	});
+	
 	$('a.manifest_details').click(function () {
 		$(this.parentNode.parentNode).children(".manifest_file").slideToggle("fast");
 		return false;
 	});
-	// reusable generic hidden panel
+	
+
 	$('a.collapsibleboxlink').click(function () {
 		$(this.parentNode.parentNode).children(".collapsible_box").slideToggle("fast");
 		return false;
 	});
+*/
 
 	// WIDGET GALLERY EDIT PANEL
 	// Sortable widgets
@@ -42,6 +47,7 @@ $(document).ready(function () {
 		forcePlaceholderSize: true,
 		placeholder: 'ui-state-highlight',
 		cursor: 'move',
+		revert: true,
 		opacity: 0.9,
 		appendTo: 'body',
 		connectWith: els,
@@ -81,6 +87,24 @@ $(document).ready(function () {
 
 }); /* end document ready function */
 
+// display & hide elgg system messages
+function elgg_system_message() {
+	$("#elgg_system_message").animate({opacity: 0.9}, 1000); 
+	$("#elgg_system_message").animate({opacity: 0.9}, 5000);
+	$("#elgg_system_message").fadeOut('slow');
+    
+	$("#elgg_system_message").click(function () {
+		$("#elgg_system_message").stop();
+		$("#elgg_system_message").fadeOut('slow');
+	return false;
+    });	
+}
+
+// reusable slide in/out toggle function
+function elgg_slide_toggle(activateLink,parentElement,toggleElement) {
+	$(activateLink).closest(parentElement).find(toggleElement).animate({"height": "toggle"}, { duration: 400 });
+	return false;
+}
 
 // List active widgets for each page column
 function outputWidgetList(forElement) {
@@ -219,8 +243,8 @@ jQuery.cookie = function(name, value, options) {
 	}
 };
 
-// ELGG TOOLBAR MENU
-$.fn.elgg_topbardropdownmenu = function(options) {
+// ELGG DROP DOWN MENU
+$.fn.elgg_dropdownmenu = function(options) {
 
 options = $.extend({speed: 350}, options || {});
 

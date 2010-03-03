@@ -29,7 +29,7 @@ $collection_members = get_members_of_access_collection($collection_id);
 $area2 = elgg_view('friends/forms/edit', array('collection' => $collection, 'collection_members' => $collection_members));
 
 // Format page
-$body = elgg_view_layout('two_column_left_sidebar',$area1. $area2);
+$body = elgg_view_layout('one_column_with_sidebar', '', $area1.$area2);
 
 // Draw it
 page_draw(elgg_echo('friends:add'),$body);

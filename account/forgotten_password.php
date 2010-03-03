@@ -11,9 +11,7 @@
 require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
 
 if (!isloggedin()) {
-	$body = elgg_view_title(elgg_echo('user:password:lost')) . elgg_view("account/forms/forgotten_password");
-
-	page_draw(elgg_echo('user:password:lost'), elgg_view_layout("one_column", $body));
+	page_draw( elgg_echo('user:password:lost'), elgg_view("account/forms/forgotten_password") );
 } else {
 	forward();
 }

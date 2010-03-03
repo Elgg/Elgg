@@ -12,8 +12,6 @@
 
 $menu = get_register('menu');
 
-//var_export($menu);
-
 if (is_array($menu) && sizeof($menu) > 0) {
 	$alphamenu = array();
 	foreach($menu as $item) {
@@ -23,8 +21,8 @@ if (is_array($menu) && sizeof($menu) > 0) {
 
 ?>
 
-<ul class="topbardropdownmenu">
-	<li class="drop"><a href="#" class="menuitemtools"><?php echo(elgg_echo('tools')); ?></a>
+<ul class="tools_menu">
+	<li class="menu"><a href="#" class="tools"><?php echo(elgg_echo('tools')); ?></a>
 	<ul>
 	<?php
 		foreach($alphamenu as $item) {
@@ -37,7 +35,7 @@ if (is_array($menu) && sizeof($menu) > 0) {
 
 <script type="text/javascript">
 $(function() {
-	$('ul.topbardropdownmenu').elgg_topbardropdownmenu();
+	$('ul.tools_menu').elgg_dropdownmenu();
 });
 </script>
 

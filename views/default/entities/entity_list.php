@@ -46,7 +46,6 @@ if ($pagination) {
 	));
 }
 
-$html .= $nav;
 if ($viewtype == 'list') {
 	if (is_array($entities) && sizeof($entities) > 0) {
 		foreach($entities as $entity) {

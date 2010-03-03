@@ -49,18 +49,11 @@
 														'body' => $form,
 														'method' => 'get',
 														'action' => $vars['url'] . "mod/logbrowser/"
-										));
-
-		if ($upperval || $lowerval || $userval) {
-			$hidden = "";
-		} else {
-			$hidden = "style=\"display:none\"";
-		}
-										
+										));										
 ?>
 
-		<div id="logbrowserSearchform" <?php echo $hidden; ?>><?php echo $wrappedform; ?></div>
-		<p>
-			<a href="#" onclick="$('#logbrowserSearchform').toggle()"><?php echo elgg_echo('logbrowser:search'); ?></a>
-		</p>
-	</div>
+	<div id="log_browser_search_form" class="hidden radius8"><?php echo $wrappedform; ?></div>
+	<p>
+		<a href="#" onclick="elgg_slide_toggle(this,'#logbrowser_search_area','#log_browser_search_form');"><?php echo elgg_echo('logbrowser:search'); ?></a>
+	</p>
+</div>

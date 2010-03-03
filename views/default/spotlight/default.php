@@ -32,5 +32,4 @@
 			<a href="http://community.elgg.org/">Elgg community</a>.
 		</p>
 	</div><!-- /spotlight LHS content -->
-	<div class="clearfloat"></div>
 </div>

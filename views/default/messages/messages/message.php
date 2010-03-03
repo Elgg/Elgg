@@ -10,8 +10,5 @@
  *
  * @uses $vars['object'] A system message (string)
  */
-?>
 
-<p>
-	<?php echo elgg_view('output/longtext', array('value' => $vars['object'])); ?>
-</p>
+echo elgg_view('output/longtext', array('value' => $vars['object']));

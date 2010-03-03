@@ -249,8 +249,6 @@ if (!isset($vars['replacement'])) {
 
 if ($formtarget) {
 
-	echo elgg_view('input/securitytoken');
-
 	if (isset($vars['formcontents']))
 		echo $vars['formcontents'];
 
