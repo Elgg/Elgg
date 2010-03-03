@@ -1,8 +1,8 @@
 <?php
 /**
- * Activity viewer
+ * Core English Lange
  *
- * @package Elgg
+ * @package ElggLanguage
  * @subpackage Core
  * @author Curverider Ltd
  * @link http://elgg.org/
@@ -259,7 +259,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
  * Friends
  */
 
-	'friends' => "Friends",
+	'friends' => "My Friends",
 	'friends:yours' => "Your friends",
 	'friends:owned' => "%s's friends",
 	'friend:add' => "Add friend",
@@ -384,8 +384,8 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 
 	'account' => "Account",
 	'settings' => "Settings",
-	'tools' => "Tools",
-	'tools:yours' => "Your tools",
+	'tools' => "My stuff",
+	'tools:yours' => "My tools",
 
 	'register' => "Register",
 	'registerok' => "You have successfully registered for %s.",
@@ -411,7 +411,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	'item:object:reported_content' => "Reported items",
 
 	'user:set:name' => "Account name settings",
-	'user:name:label' => "Your name",
+	'user:name:label' => "My display name",
 	'user:name:success' => "Successfully changed your name on the system.",
 	'user:name:fail' => "Could not change your name on the system.  Please make sure your name isn't too long and try again.",
 
