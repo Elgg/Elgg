@@ -110,7 +110,7 @@ if (get_input('settings') == 'go') {
 
 		system_message(elgg_echo("installation:configuration:success"));
 
-		header("Location: ../../account/register.php");
+		header("Location: ../../pg/register");
 		exit;
 	}
 }
