@@ -208,7 +208,7 @@ form.action {
 	margin-top:10px;
 }
 .tags {
-	background-image:url(<?php echo $vars['url']; ?>mod/elgg_layout/graphics/icon_tag.png);
+	background-image:url(<?php echo $vars['url']; ?>_graphics/icon_tag.png);
 	background-repeat: no-repeat;
 	background-position: left 2px;
 	padding:1px 0 0 16px;
@@ -216,7 +216,7 @@ form.action {
 }
 .ajax_loader {
 	background-color: white;
-	background-image: url(<?php echo $vars['url']; ?>mod/elgg_layout/graphics/ajax_loader_bw.gif);
+	background-image: url(<?php echo $vars['url']; ?>_graphics/ajax_loader_bw.gif);
 	background-repeat: no-repeat;
 	background-position: center 30px;
 	/*
@@ -279,7 +279,7 @@ form.action {
 	min-height:400px;
 }
 #elgg_content.sidebar { /* class on #elgg_content div to give a full-height sidebar background */
-	background-image:url(<?php echo $vars['url']; ?>mod/elgg_layout/graphics/sidebar_background.gif);
+	background-image:url(<?php echo $vars['url']; ?>_graphics/sidebar_background.gif);
 	background-repeat:repeat-y;
 	background-position: right top;
 }
@@ -418,19 +418,19 @@ form.action {
 	color:#71cbff;	
 }
 #elgg_topbar_contents a.settings {
-	background:transparent url(<?php echo $vars['url']; ?>mod/elgg_layout/graphics/topbar_icons.png) no-repeat left -41px;
+	background:transparent url(<?php echo $vars['url']; ?>_graphics/topbar_icons.png) no-repeat left -41px;
 	padding-left:20px !important;
 	float:right;
 	margin-right:30px;
 }
 #elgg_topbar_contents a.admin {
-	background:transparent url(<?php echo $vars['url']; ?>mod/elgg_layout/graphics/topbar_icons.png) no-repeat left -41px;
+	background:transparent url(<?php echo $vars['url']; ?>_graphics/topbar_icons.png) no-repeat left -41px;
 	padding-left:20px !important;
 	float:right;
 	margin-right:30px;
 }
 #elgg_topbar_contents a.help {
-	background:transparent url(<?php echo $vars['url']; ?>mod/elgg_layout/graphics/topbar_icons.png) no-repeat 0 -133px;
+	background:transparent url(<?php echo $vars['url']; ?>_graphics/topbar_icons.png) no-repeat 0 -133px;
 	padding-left:18px !important;
 	float:right;
 	margin-right:30px;
@@ -466,7 +466,7 @@ form.action {
 	margin:0 20px 0 5px;
 }
 #elgg_topbar_contents li.menu a.tools {
-	background:transparent url(<?php echo $vars['url']; ?>mod/elgg_layout/graphics/topbar_icons.png) no-repeat 3px 1px;
+	background:transparent url(<?php echo $vars['url']; ?>_graphics/topbar_icons.png) no-repeat 3px 1px;
 	padding-left:24px !important;
 }
 #elgg_topbar_contents ul.tools_menu li { 
@@ -554,7 +554,7 @@ form.action {
 	margin:0;
 	padding:2px 4px 2px 26px;
 	width:198px;
-	background-image: url(<?php echo $vars['url']; ?>mod/elgg_layout/graphics/search.png);
+	background-image: url(<?php echo $vars['url']; ?>_graphics/search.png);
 	background-position: 3px 0;
 	background-repeat: no-repeat;
 }
@@ -878,7 +878,7 @@ form.action {
 	margin:0 0 5px 10px;
 }
 .content_header_filter {
-	background: url(<?php echo $vars['url']; ?>mod/elgg_layout/graphics/content_header_filter.gif) no-repeat 0 0;
+	background: url(<?php echo $vars['url']; ?>_graphics/content_header_filter.gif) no-repeat 0 0;
 }
 .content_header_filter select.styled {
 	height:25px;
@@ -892,7 +892,7 @@ span.select {
 	color: #fff;
 	font-weight: bold;
 	font-size: 1.35em;
-	background: url(<?php echo $vars['url']; ?>mod/elgg_layout/graphics/content_header_filter.gif) no-repeat;
+	background: url(<?php echo $vars['url']; ?>_graphics/content_header_filter.gif) no-repeat;
 	overflow: hidden;
 	text-align: left;
 }
@@ -1123,7 +1123,7 @@ input[type="text"]:focus {
 	text-decoration:none;
 	border: 1px solid #4690d6;
 	background-color:#4690d6;
-	background-image: url(<?php echo $vars['url']; ?>mod/elgg_layout/graphics/button_graduation.png);
+	background-image: url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
 	background-repeat: repeat-x;
 	background-position: left 10px;
 	-webkit-border-radius: 7px; 
@@ -1140,7 +1140,7 @@ input[type="text"]:focus {
 	border-color: #0054a7;
 	text-decoration:none;
 	background-color:#0054a7;
-	background-image:  url(<?php echo $vars['url']; ?>mod/elgg_layout/graphics/button_graduation.png);
+	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
 }
@@ -1157,7 +1157,7 @@ input[type="submit"] {
 	text-decoration:none;
 	border: 1px solid #4690d6;
 	background-color:#4690d6;
-	background-image:  url(<?php echo $vars['url']; ?>mod/elgg_layout/graphics/button_graduation.png);
+	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
 	-webkit-border-radius: 7px; 
@@ -1175,7 +1175,7 @@ input[type="submit"]:hover {
 	border-color: #0054a7;
 	text-decoration:none;
 	background-color:#0054a7;
-	background-image:  url(<?php echo $vars['url']; ?>mod/elgg_layout/graphics/button_graduation.png);
+	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
 }
@@ -1185,7 +1185,7 @@ input[type="submit"]:hover {
 	text-decoration:none;
 	color: #333333;
 	background-color:#dddddd;
-	background-image:  url(<?php echo $vars['url']; ?>mod/elgg_layout/graphics/button_graduation.png);
+	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
 	border: 1px solid #999999;
@@ -1206,7 +1206,7 @@ a.action_button {
 	-webkit-border-radius: 5px; 
 	-moz-border-radius: 5px;
 	background-color:#cccccc;
-	background-image:  url(<?php echo $vars['url']; ?>mod/elgg_layout/graphics/button_background.gif);
+	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_background.gif);
 	background-repeat:  repeat-x;
 	background-position: 0 0;
 	border:1px solid #999999;
@@ -1243,7 +1243,7 @@ a.action_button.disabled:active {
 a.action_button.download {
 	color: white;
 	background-color:#4690d6;
-	background-image:  url(<?php echo $vars['url']; ?>mod/elgg_layout/graphics/button_graduation.png);
+	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
 	/*display:inline-block;*/
@@ -1269,7 +1269,7 @@ a.action_button.download:hover {
 	cursor: pointer;
 	width:14px;
 	height:14px;
-	background: url("<?php echo $vars['url']; ?>mod/elgg_layout/graphics/icon_delete.png") no-repeat 0 0;
+	background: url("<?php echo $vars['url']; ?>_graphics/icon_delete.png") no-repeat 0 0;
 	text-indent: -9000px;
 }
 .delete_button a:hover {
