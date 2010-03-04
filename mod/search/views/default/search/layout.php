@@ -8,4 +8,4 @@
    * @link http://elgg.org/
    */
 
-echo elgg_view_layout('two_column_left_sidebar', '', $vars['body']);
+echo elgg_view_layout('one_column_with_sidebar', '', $vars['body']);

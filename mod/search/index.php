@@ -132,9 +132,9 @@ foreach ($custom_types as $type) {
 // check that we have an actual query
 if (!$query) {
 	$body  = elgg_view_title(elgg_echo('search:search_error'));
-	$body .= elgg_view('page_elements/contentwrapper', array('body' => elgg_echo('search:no_query')));
+	$body .= elgg_view('page_elements/elgg_content', array('body' => elgg_echo('search:no_query')));
 
-	$layout = elgg_view_layout('two_column_left_sidebar', '', $body);
+	$layout = elgg_view_layout('one_column_with_sidebar', '', $body);
 	page_draw($title, $layout);
 
 	return;
