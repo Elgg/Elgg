@@ -46,8 +46,6 @@ if(page_owner()	!= get_loggedin_user()->guid){
 	$area3 = elgg_view('bookmarks/ownerblock');
 }else{	
 	if(isloggedin()){
-		//include a view for plugins to extend
-		$area3 = elgg_view("bookmarks/favourite", array("object_type" => 'bookmarks'));
 		// if logged in, get the bookmarklet
 		$area3 .= elgg_view("bookmarks/bookmarklet_menu_option");
 	}		

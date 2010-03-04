@@ -24,8 +24,12 @@ if ($page_owner === false || is_null($page_owner)) {
 if ($page_owner instanceof ElggGroup)
 	$container = $page_owner->guid;
 			
-//set breadcrumbs
-$area1 = elgg_view('page_elements/breadcrumbs', array('object_type' => 'bookmarks'));
+//set up breadcrumbs
+$area1 .= elgg_view('page_elements/breadcrumbs', array( 
+		'breadcrumb_root_url' => $CONFIG->wwwroot."mod/bookmarks/all.php",
+		'breadcrumb_root_text' => elgg_echo('bookmarks:all'),
+		'breadcrumb_currentpage' => elgg_echo("bookmarks:add")
+		)); 
 	
 // get the filter menu
 $area1 .= elgg_view('page_elements/content_header', array('context' => "action", 'type' => 'bookmarks'));

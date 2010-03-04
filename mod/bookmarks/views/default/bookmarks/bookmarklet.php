@@ -15,7 +15,6 @@ $bookmarktext = elgg_echo("bookmarks:this");
 if ($page_owner instanceof ElggGroup)	
 	$bookmarktext = sprintf(elgg_echo("bookmarks:this:group"), $page_owner->name)
 ?>
-<div class="contentWrapper">
 <p>
 	<?php echo elgg_echo("bookmarks:bookmarklet:description"); ?>
 </p>
@@ -28,4 +27,3 @@ if ($page_owner instanceof ElggGroup)
 <p>
 	<?php echo elgg_echo("bookmarks:bookmarklet:description:conclusion"); ?>
 </p>
-</div>
