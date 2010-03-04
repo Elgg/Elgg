@@ -8,7 +8,7 @@
  * @copyright Curverider Ltd 2008-2010
  * @link http://elgg.com/
  */
-
+?>
 <div class="SidebarBox">
 
 <h3><?php echo elgg_echo('members:searchtag'); ?></h3>
