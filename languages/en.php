@@ -228,7 +228,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	'widgets' => "Widgets",
 	'widget' => "Widget",
 	'item:object:widget' => "Widgets",
-	'layout:customise' => "Customise layout",
+	'layout:customise' => "Customize layout",
 	'widgets:gallery' => "Widget gallery",
 	'widgets:leftcolumn' => "Left widgets",
 	'widgets:fixed' => "Fixed position",
@@ -759,9 +759,9 @@ Alternatively, you can enter your database settings below and we will try and do
 	'installation:viewpathcache:description' => "The view filepath cache decreases the loading times of plugins by caching the location of their views.",
 	'installation:viewpathcache:label' => "Use view filepath cache (recommended)",
 
-	'upgrading' => 'Upgrading...',
+	'upgrading' => 'Upgrading',
 	'upgrade:db' => 'Your database was upgraded.',
-	'upgrade:core' => 'Your elgg installation was upgraded.',
+	'upgrade:core' => 'Your elgg installation was upgraded',
 
 /**
  * Welcome
