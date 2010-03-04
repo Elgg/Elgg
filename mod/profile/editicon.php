@@ -1,42 +1,43 @@
 <?php
+/**
+ * Elgg upload new profile icon
+ * 
+ * @package ElggProfile
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * @author Curverider Ltd <info@elgg.com>
+ * @copyright Curverider Ltd 2008-2010
+ * @link http://elgg.com/
+ */
 
-	/**
-	 * Elgg upload new profile icon
-	 * 
-	 * @package ElggProfile
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
-	 */
+// Load the Elgg framework
+require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
-	// Load the Elgg framework
-	require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
-	
-	// Make sure we're logged in
-	if (!isloggedin()) {
-		forward();
-	}
+// Make sure we're logged in
+if (!isloggedin()) {
+	forward();
+}
 
-	// Get owner of profile - set in page handler
-	$user = page_owner_entity();
-	if (!$user) {
-		register_error(elgg_echo("profile:notfound"));
-		forward();
-	}
+// Get owner of profile - set in page handler
+$user = page_owner_entity();
+if (!$user) {
+	register_error(elgg_echo("profile:notfound"));
+	forward();
+}
 
-	// check if logged in user can edit this profile icon
-	if (!$user->canEdit()) {
-		register_error(elgg_echo("profile:icon:noaccess"));
-		forward();
-	}
+// check if logged in user can edit this profile icon
+if (!$user->canEdit()) {
+	register_error(elgg_echo("profile:icon:noaccess"));
+	forward();
+}
+
+// set title
+$area2 = elgg_view_title(elgg_echo('profile:createicon:header'));
+$area2 .= elgg_view("profile/edit_icon", array('user' => $user));
+
+set_context('profile_edit');
+
+// Get the form and correct canvas area
+$body = elgg_view_layout("one_column_with_sidebar", '', $area2);
 	
-	// set title
-	$area2 = elgg_view_title(elgg_echo('profile:createicon:header'));
-	$area2 .= elgg_view("profile/editicon", array('user' => $user));
-	
-	// Get the form and correct canvas area
-	$body = elgg_view_layout("two_column_left_sidebar", '', $area2);
-	
-	// Draw the page
-	page_draw(elgg_echo("profile:editicon"), $body);
+// Draw the page
+page_draw(elgg_echo("profile:editicon"), $body);

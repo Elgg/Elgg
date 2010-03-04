@@ -1,95 +1,100 @@
 <?php
+/**
+ * Elgg profile plugin edit action
+ *
+ * @package ElggProfile
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * @author Curverider Ltd <info@elgg.com>
+ * @copyright Curverider Ltd 2008-2010
+ * @link http://elgg.com/
+ */
 
-	/**
-	 * Elgg profile plugin edit action
-	 *
-	 * @package ElggProfile
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
-	 */
+global $CONFIG;
+gatekeeper();
 
-	// Load configuration
-		global $CONFIG;
+$profile_username = get_input('username');
+$profile_owner = get_user_by_username($profile_username);
 
-		gatekeeper();
+if (!$profile_owner || !$profile_owner->canEdit()) {
+	system_message(elgg_echo("profile:noaccess"));
+	forward($_SERVER['HTTP_REFERER']);
+}
 
-	// Get profile fields
-		$input = array();
-		$accesslevel = get_input('accesslevel');
-		if (!is_array($accesslevel)) $accesslevel = array();
+// grab the defined profile field names and their load the values from POST.
+// each field can have its own access, so sort that too.
+$input = array();
+$accesslevel = get_input('accesslevel');
 
-		foreach($CONFIG->profile as $shortname => $valuetype) {
-			// the decoding is a stop gag to prevent &amp;&amp; showing up in profile fields
-			// because it is escaped on both input (get_input()) and output (view:output/text). see #561 and #1405.
-			// must decode in utf8 or string corruption occurs. see #1567.
-			$value = html_entity_decode(get_input($shortname), ENT_COMPAT, 'UTF-8');
+if (!is_array($accesslevel)) {
+	$accesslevel = array();
+}
 
-			// limit to reasonable sizes.
-			if ($valuetype != 'longtext' && elgg_strlen($value) > 250) {
-				$error = sprintf(elgg_echo('profile:field_too_long'), elgg_echo("profile:{$shortname}"));
-				register_error($error);
-				forward($_SERVER['HTTP_REFERER']);
-			}
+foreach($CONFIG->profile as $shortname => $valuetype) {
+	// the decoding is a stop gag to prevent &amp;&amp; showing up in profile fields
+	// because it is escaped on both input (get_input()) and output (view:output/text). see #561 and #1405.
+	// must decode in utf8 or string corruption occurs. see #1567.
+	$value = html_entity_decode(get_input($shortname), ENT_COMPAT, 'UTF-8');
 
-			if ($valuetype == 'tags') {
-				$value = string_to_tag_array($value);
-			}
+	// limit to reasonable sizes.
+	if ($valuetype != 'longtext' && elgg_strlen($value) > 250) {
+		$error = sprintf(elgg_echo('profile:field_too_long'), elgg_echo("profile:{$shortname}"));
+		register_error($error);
+		forward($_SERVER['HTTP_REFERER']);
+	}
 
-			$input[$shortname] = $value;
-		}
+	if ($valuetype == 'tags') {
+		$value = string_to_tag_array($value);
+	}
 
-	// Get the page owner to see if the currently logged in user canEdit() the page owner.
+	$input[$shortname] = $value;
+}
 
-		$user = page_owner_entity();
-		if (!$user) {
-			$user = $_SESSION['user'];
-
-			// @todo this doesn't make sense...???
-			set_page_owner($user->getGUID());
-		}
-		if ($user->canEdit()) {
-
-			// Save stuff
-			if (sizeof($input) > 0)
-				foreach($input as $shortname => $value) {
-					//$user->$shortname = $value;
-					remove_metadata($user->guid, $shortname);
-					if (isset($accesslevel[$shortname])) {
-						$access_id = (int) $accesslevel[$shortname];
-					} else {
-						// this should never be executed since the access level should always be set
-						$access_id = ACCESS_PRIVATE;
-					}
-					if (is_array($value)) {
-						$i = 0;
-						foreach($value as $interval) {
-							$i++;
-							if ($i == 1) { $multiple = false; } else { $multiple = true; }
-							create_metadata($user->guid, $shortname, $interval, 'text', $user->guid, $access_id, $multiple);
-						}
-					} else {
-						create_metadata($user->guid, $shortname, $value, 'text', $user->guid, $access_id);
-					}
-				}
-			$user->save();
-
-			// Notify of profile update
-			trigger_elgg_event('profileupdate',$user->type,$user);
-
-			//add to river
-			add_to_river('river/user/default/profileupdate','update',$_SESSION['user']->guid,$_SESSION['user']->guid,get_default_access($_SESSION['user']));
-
-			system_message(elgg_echo("profile:saved"));
-
-			// Forward to the user's profile
-			forward($user->getUrl());
-
+// display name is handled separately
+if ($name = strip_tags(get_input('name'))) {
+	if (elgg_strlen($name) > 50) {
+		register_error(elgg_echo('user:name:fail'));
+	} else {
+		$profile_owner->name = $name;
+		// @todo this is weird...giving two notifications?
+		if ($profile_owner->save()) {
+			system_message(elgg_echo('user:name:success'));
 		} else {
-	// If we can't, display an error
-
-			system_message(elgg_echo("profile:noaccess"));
+			register_error(elgg_echo('user:name:fail'));
 		}
+	}
+}
 
-?>
+// go through custom fields
+if (sizeof($input) > 0) {
+	foreach($input as $shortname => $value) {
+		remove_metadata($profile_owner->guid, $shortname);
+		if (isset($accesslevel[$shortname])) {
+			$access_id = (int) $accesslevel[$shortname];
+		} else {
+			// this should never be executed since the access level should always be set
+			$access_id = ACCESS_DEFAULT;
+		}
+		if (is_array($value)) {
+			$i = 0;
+			foreach($value as $interval) {
+				$i++;
+				$multiple = ($i > 1) ? TRUE : FALSE;
+				create_metadata($profile_owner->guid, $shortname, $interval, 'text', $profile_owner->guid, $access_id, $multiple);
+			}
+		} else {
+			create_metadata($profile_owner->getGUID(), $shortname, $value, 'text', $profile_owner->getGUID(), $access_id);
+		}
+	}
+
+	$profile_owner->save();
+
+	// Notify of profile update
+	trigger_elgg_event('profileupdate',$user->type,$user);
+
+	//add to river
+	add_to_river('river/user/default/profileupdate','update',$_SESSION['user']->guid,$_SESSION['user']->guid,get_default_access($_SESSION['user']));
+
+	system_message(elgg_echo("profile:saved"));
+}
+
+forward($profile_owner->getUrl());

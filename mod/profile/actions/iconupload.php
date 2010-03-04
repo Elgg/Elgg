@@ -1,91 +1,68 @@
 <?php
+/**
+ * Elgg profile plugin upload new user icon action
+ * 
+ * @package ElggProfile
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * @author Curverider Ltd <info@elgg.com>
+ * @copyright Curverider Ltd 2008-2010
+ * @link http://elgg.com/
+ */
 
-	/**
-	 * Elgg profile plugin upload new user icon action
-	 * 
-	 * @package ElggProfile
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
-	 */
+gatekeeper();
 
-	gatekeeper();
-	
-	$user = page_owner_entity();
-	if (!$user)
-		$user = $_SESSION['user'];
-		
-	// If we were given a correct icon
-		if (
-				(isloggedin()) &&
-				($user) &&
-				($user->canEdit())
-			) {
-				
-				
-				$topbar = get_resized_image_from_uploaded_file('profileicon',16,16, true);
-				$tiny = get_resized_image_from_uploaded_file('profileicon',25,25, true);
-				$small = get_resized_image_from_uploaded_file('profileicon',40,40, true);
-				$medium = get_resized_image_from_uploaded_file('profileicon',100,100, true);
-				$large = get_resized_image_from_uploaded_file('profileicon',200,200);
-				$master = get_resized_image_from_uploaded_file('profileicon',550,550);
-				
-				if ($small !== false
-					&& $medium !== false
-					&& $large !== false
-					&& $tiny !== false) {
-				
-					$filehandler = new ElggFile();
-					$filehandler->owner_guid = $user->getGUID();
-					$filehandler->setFilename("profile/" . $user->username . "large.jpg");
-					$filehandler->open("write");
-					$filehandler->write($large);
-					$filehandler->close();
-					$filehandler->setFilename("profile/" . $user->username . "medium.jpg");
-					$filehandler->open("write");
-					$filehandler->write($medium);
-					$filehandler->close();
-					$filehandler->setFilename("profile/" . $user->username . "small.jpg");
-					$filehandler->open("write");
-					$filehandler->write($small);
-					$filehandler->close();
-					$filehandler->setFilename("profile/" . $user->username . "tiny.jpg");
-					$filehandler->open("write");
-					$filehandler->write($tiny);
-					$filehandler->close();
-					$filehandler->setFilename("profile/" . $user->username . "topbar.jpg");
-					$filehandler->open("write");
-					$filehandler->write($topbar);
-					$filehandler->close();
-					$filehandler->setFilename("profile/" . $user->username . "master.jpg");
-					$filehandler->open("write");
-                    $filehandler->write($master);
-					$filehandler->close();
-					
-					$user->icontime = time();
-					
-					system_message(elgg_echo("profile:icon:uploaded"));
-					
-					trigger_elgg_event('profileiconupdate',$user->type,$user);
-					
-					//add to river
-					add_to_river('river/user/default/profileiconupdate','update',$user->guid,$user->guid);
-				
-				} else {
-					system_message(elgg_echo("profile:icon:notfound"));					
-				}
-				
-			} else {
-				
-				system_message(elgg_echo("profile:icon:notfound"));
-				
-			}
-			
-	    //forward the user back to the upload page to crop
-	    
-	    $url = "pg/profile/{$user->username}/editicon/";
-			
-		if (isloggedin()) forward($url);
+$profile_username = get_input('username');
+$profile_owner = get_user_by_username($profile_username);
 
-?>
+if (!$profile_owner || !($profile_owner instanceof ElggUser) || !$profile_owner->canEdit()) {
+	register_error(elgg_echo('profile:icon:fail'));
+	forward($_SERVER['HTTP_REFERER']);
+}
+
+$profile_owner_guid = $profile_owner->getGUID();
+
+//@todo make this configurable?
+$icon_sizes = array(
+	'topbar' => array('w'=>16, 'h'=>16, 'square'=>TRUE),
+	'tiny' => array('w'=>25, 'h'=>25, 'square'=>TRUE),
+	'small' => array('w'=>40, 'h'=>40, 'square'=>TRUE),
+	'medium' => array('w'=>100, 'h'=>100, 'square'=>TRUE),
+	'large' => array('w'=>200, 'h'=>200, 'square'=>FALSE),
+	'master' => array('w'=>1600, 'h'=>1600, 'square'=>FALSE)
+);
+
+// get the images and save their file handlers into an array
+// so we can do clean up if one fails.
+$files = array();
+foreach ($icon_sizes as $name => $size_info) {
+	$resized = get_resized_image_from_uploaded_file('profileicon', $size_info['w'], $size_info['h'], $size_info['square']);
+
+	if ($resized) {
+		//@todo Make these actual entities.  See exts #348.
+		$file = new ElggFile();
+		$file->owner_guid = $profile_owner_guid;
+		$file->setFilename("profile/{$profile_username}{$name}.jpg");
+		$file->open('write');
+		$file->write($resized);
+		$file->close();
+		$files[] = $file;
+	} else {
+		// cleanup on fail
+		foreach ($files as $file) {
+			$file->delete();
+		}
+
+		system_message(elgg_echo('profile:icon:notfound'));
+		forward($_SERVER['HTTP_REFERER']);
+	}
+}
+
+$profile_owner->icontime = time();
+if (trigger_elgg_event('profileiconupdate', $profile_owner->type, $profile_owner)) {
+	// pull this out into the river plugin.
+	//add_to_river('river/user/default/profileiconupdate','update',$user->guid,$user->guid);
+	system_message(elgg_echo("profile:icon:uploaded"));
+}
+
+//forward the user back to the upload page to crop
+forward($_SERVER['HTTP_REFERER']);
