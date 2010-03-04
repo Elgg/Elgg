@@ -29,7 +29,7 @@ set_context('bookmarks');
 
 // if logged in, get the bookmarklet
 if(isloggedin()){
-	$area3 = elgg_view("bookmarks/bookmarklet_menu_option");	
+	$area3 = elgg_view("bookmarks/bookmarklet");	
 }	
 //include a view for plugins to extend
 $area3 .= elgg_view("bookmarks/sidebar_options", array("object_type" => 'bookmarks'));

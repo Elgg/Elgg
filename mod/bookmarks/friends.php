@@ -24,7 +24,7 @@ set_context('bookmarks');
 $area3 = elgg_view("bookmarks/sidebar_options", array("object_type" => 'bookmarks'));
 		
 // if logged in, get the bookmarklet
-$area3 .= elgg_view("bookmarks/bookmarklet_menu_option");
+$area3 .= elgg_view("bookmarks/bookmarklet");
 		
 // Format page
 $body = elgg_view_layout('one_column_with_sidebar', $area3, $area1.$area2);

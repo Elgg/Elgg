@@ -191,6 +191,9 @@ h2 {
     clear: both;
     visibility: hidden;
 }
+.link {
+	cursor:pointer;
+}
 .divider {
 	border-top:1px solid #cccccc;
 }

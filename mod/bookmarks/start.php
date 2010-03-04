@@ -55,8 +55,9 @@ function bookmarks_pagesetup() {
 	global $CONFIG;
 			
 	// Set up menu for logged in users
-	//add submenu options
+	// add submenu options - @todo partially removed - now provided by drop-down menu filter in content area
 	if (get_context() == "bookmarks") {
+/*
 		if (isloggedin()) {
 			if (page_owner()) {
 				$page_owner = page_owner_entity();	
@@ -65,8 +66,10 @@ function bookmarks_pagesetup() {
 			if(!$page_owner instanceof ElggGroup)
 				add_submenu_item(elgg_echo('bookmarks:friends'),$CONFIG->wwwroot."pg/bookmarks/" . $_SESSION['user']->username . "/friends");	
 			}
+
 			if(!$page_owner instanceof ElggGroup)
 				add_submenu_item(elgg_echo('bookmarks:everyone'),$CONFIG->wwwroot."mod/bookmarks/everyone.php");
+*/
 					
 			// Bookmarklet
 			if ((isloggedin()) && (page_owner()) && (can_write_to_container(0, page_owner()))) {
@@ -74,7 +77,7 @@ function bookmarks_pagesetup() {
 				$bmtext = elgg_echo('bookmarks:bookmarklet');
 				if ($page_owner instanceof ElggGroup)
 					$bmtext = elgg_echo('bookmarks:bookmarklet:group');
-				add_submenu_item($bmtext, $CONFIG->wwwroot . "pg/bookmarks/{$page_owner->username}/bookmarklet");
+				// add_submenu_item($bmtext, $CONFIG->wwwroot . "pg/bookmarks/{$page_owner->username}/bookmarklet");
 			}
 		}
 				

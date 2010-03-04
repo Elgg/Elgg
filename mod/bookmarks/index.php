@@ -47,7 +47,7 @@ if(page_owner()	!= get_loggedin_user()->guid){
 }else{	
 	if(isloggedin()){
 		// if logged in, get the bookmarklet
-		$area3 .= elgg_view("bookmarks/bookmarklet_menu_option");
+		$area3 .= elgg_view("bookmarks/bookmarklet");
 	}		
 }
 //include a view for plugins to extend

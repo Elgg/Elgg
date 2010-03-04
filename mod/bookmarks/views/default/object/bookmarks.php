@@ -39,7 +39,7 @@ if($is_group instanceof ElggGroup){
 }
 
 if($vars['entity']->description != '')
-	$view_notes = "<a class='bookmark_note' onclick=\"elgg_slide_toggle(this,'.entity_listing','.note');\">note</a>";
+	$view_notes = "<a class='link' onclick=\"elgg_slide_toggle(this,'.entity_listing','.note');\">note</a>";
 else
 	$view_notes = '';
 if (@file_exists($faviconurl)) {

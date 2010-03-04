@@ -9,6 +9,8 @@
  * @link http://elgg.org/
  */
 
+global $CONFIG;
+
 // Start engine
 require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 		
@@ -46,7 +48,7 @@ if ($this_guid = get_input('bookmark',0)) {
 
 $area3 = elgg_view('bookmarks/ownerblock');
 // if logged in, get the bookmarklet
-$area3 .= elgg_view("bookmarks/bookmarklet_menu_option");		
+$area3 .= elgg_view("bookmarks/bookmarklet");		
 //include a view for plugins to extend
 $area3 .= elgg_view("bookmarks/sidebar_options", array("object_type" => 'bookmarks'));	
 		

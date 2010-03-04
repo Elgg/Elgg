@@ -12,7 +12,6 @@
 
 .bookmark_note {
 	margin:0 0 0 5px;
-	cursor: pointer;
 }
 .note {
 	margin-top:5px;
