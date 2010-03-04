@@ -2,9 +2,9 @@
 /**
  * Elgg twitter view page
  */
-	 
+
 $twitter_username = $vars['entity']->twitter;
-	 
+
 // if the twitter username is empty, then do not show
 if($twitter_username){
 ?>
@@ -14,11 +14,6 @@ if($twitter_username){
 	<script type="text/javascript" src="http://twitter.com/javascripts/blogger.js"></script>
 	<script type="text/javascript" src="http://twitter.com/statuses/user_timeline/<?php echo $twitter_username; ?>.json?callback=twitterCallback2&count=10"></script>
 </div>
-<div id="profile_sidebar">
+
 <?php
-	echo elgg_view('profile/profile_ownerblock', array('smallicon' => true));
-?>
-</div>
-<?php 
 }
-?>

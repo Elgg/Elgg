@@ -21,7 +21,7 @@
 					$value = $vars['entity']->$shortname;
 					if (!empty($value)) {
 						//This function controls the alternating class
-              				$even_odd = ( 'odd' != $even_odd ) ? 'odd' : 'even';					
+							  $even_odd = ( 'odd' != $even_odd ) ? 'odd' : 'even';
 ?>
 						<p class="<?php echo $even_odd; ?>">
 						<b><?php
@@ -37,27 +37,22 @@
 			}
 	}
 ?>
-<?php 
+<?php
 	if (!get_plugin_setting('user_defined_fields', 'profile')) {
 ?>
-<?php 
+<?php
 		if ($vars['entity']->isBanned()) {
 			echo "<div class='banned_user'>";
 			echo elgg_echo('profile:banned');
 			echo "</div>";
-		 }else{ 
-			 if($vars['entity']->description){
+		}else{
+			if($vars['entity']->description){
 				echo "<p class='aboutme_title'><b>" . elgg_echo("profile:aboutme") . "</b></p>";
-			 	echo "<div class='aboutme_contents'>" .elgg_view('output/longtext', array('value' => $vars['entity']->description))."</div>";
+				echo "<div class='aboutme_contents'>" .elgg_view('output/longtext', array('value' => $vars['entity']->description))."</div>";
 			}
 	?>
 <?php } ?>
-	<?php 
+	<?php
 		}
-		
+
 	echo "</div>";
-	// profile sidebar
-	echo "<div id='profile_sidebar'>";
-	echo elgg_view('profile/profile_ownerblock');
-	echo "</div>";
-?>

@@ -44,6 +44,7 @@ function profile_get_user_profile_html($user, $section = 'activity') {
 			break;
 	}
 
+	$body .= elgg_view('profile/profile_contents/sidebar');
 	return $body;
 }
 
@@ -56,10 +57,11 @@ function profile_get_user_profile_html($user, $section = 'activity') {
  */
 function profile_get_user_edit_content($user, $page) {
 	$section = (isset($page[2])) ? $page[2] : 'details';
+	$content = elgg_view('profile/profile_navigation', array('section' => $section, 'entity' => $user));
 
 	switch ($section) {
 		case 'icon':
-			$content = elgg_view_title(elgg_echo('profile:edit'));
+			$content .= elgg_view_title(elgg_echo('profile:edit'));
 			$content .= elgg_view("profile/editicon", array('entity' => $user));
 			break;
 		default:

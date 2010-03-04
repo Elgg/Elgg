@@ -13,9 +13,3 @@ if(!$friends)
 		echo $friends;
 	?>
 </div>
-
-<div id="profile_sidebar">
-<?php
-	echo elgg_view('profile/profile_ownerblock', array('smallicon' => true));
-?>
-</div>

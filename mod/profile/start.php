@@ -146,25 +146,28 @@ function profile_page_handler($page) {
 
 	switch ($action) {
 		case 'edit':
+			$layout = 'one_column_with_sidebar';
+
 			if (!$user || !$user->canEdit()) {
 				register_error(elgg_echo("profile:noaccess"));
 				forward();
 			}
 
 			$content = profile_get_user_edit_content($user, $page);
+			$content = elgg_view_layout($layout, 'asdf', $content);
 			break;
 
 		default:
+			$layout = 'one_column';
 			if (isset($page[1])) {
 				$section = $page[1];
 			} else {
 				$section = 'activity';
 			}
 			$content = profile_get_user_profile_html($user, $section);
+			$content = elgg_view_layout($layout, $content);
 			break;
 	}
-
-	$content = elgg_view_layout('one_column', $content);
 
 	page_draw($title, $content);
 	return;
