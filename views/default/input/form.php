@@ -42,6 +42,11 @@ if (isset($vars['method'])) {
 } else {
 	$method = 'POST';
 }
+if (isset($vars['class'])) {
+	$class = $vars['class'];
+} else {
+	$class = '';
+}
 
 $method = strtolower($method);
 
@@ -51,7 +56,7 @@ if (!isset($vars['disable_security']) || $vars['disable_security'] != true) {
 	$security_header = elgg_view('input/securitytoken');
 }
 ?>
-<form <?php if ($id) { ?>id="<?php echo $id; ?>" <?php } ?> <?php if ($name) { ?>name="<?php echo $name; ?>" <?php } ?> <?php echo $vars['js']; ?> action="<?php echo $action; ?>" method="<?php echo $method; ?>" <?php if ($enctype!="") echo "enctype=\"$enctype\""; ?>>
+<form <?php if ($id) { ?>id="<?php echo $id; ?>" <?php } ?> <?php if ($name) { ?>name="<?php echo $name; ?>" <?php } ?> <?php echo $vars['js']; ?> action="<?php echo $action; ?>" method="<?php echo $method; ?>" <?php if ($enctype!="") echo "enctype=\"$enctype\""; ?> class="<?php echo $class; ?>">
 <?php echo $security_header; ?>
 <?php echo $body; ?>
 </form>

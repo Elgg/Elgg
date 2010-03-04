@@ -53,7 +53,7 @@ $token = generate_action_token($ts);
 		<?php } ?>
 	</div>
 
-	<h3><?php echo $plugin; ?><?php if (elgg_view("settings/{$plugin}/edit")) { ?> <a class="pluginsettings_link">[<?php echo elgg_echo('settings'); ?>]</a><?php } ?></h3>
+	<h3><?php echo $plugin; ?><?php if (elgg_view("settings/{$plugin}/edit")) { ?> <a class="pluginsettings_link" onclick="elgg_slide_toggle(this,'.plugin_details','.pluginsettings');">[<?php echo elgg_echo('settings'); ?>]</a><?php } ?></h3>
 
 	<?php if (elgg_view("settings/{$plugin}/edit")) { ?>
 	<div class="pluginsettings hidden">
@@ -75,7 +75,7 @@ $token = generate_action_token($ts);
 
 	?>
 
-	<p><a class="manifest_details"><?php echo elgg_echo("admin:plugins:label:moreinfo"); ?></a></p>
+	<p><a class="manifest_details" onclick="elgg_slide_toggle(this,'.plugin_details','.manifest_file');"><?php echo elgg_echo("admin:plugins:label:moreinfo"); ?></a></p>
 
 	<div class="manifest_file hidden">
 

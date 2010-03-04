@@ -21,8 +21,9 @@ $form_body .= "<p>" . elgg_view('input/submit', array('value' => elgg_echo('requ
 	<?php
 		echo elgg_view('input/form', array(
 			'action' => "{$vars['url']}action/user/requestnewpassword",
-			'body' => $form_body)
-		);
+			'body' => $form_body,
+			'class' => "margin_top"
+		));
 	?>
 	</div>
 </div>

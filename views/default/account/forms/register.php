@@ -42,7 +42,7 @@ $form_body .= elgg_view('input/submit', array('internalname' => 'submit', 'value
 <div id="elgg_content" class="clearfloat sidebar">
 	<div id="elgg_page_contents" class="clearfloat register">
 		<h2><?php echo elgg_echo('register'); ?></h2>
-		<?php echo elgg_view('input/form', array('action' => "{$vars['url']}action/register", 'body' => $form_body)) ?>
+		<?php echo elgg_view('input/form', array('action' => "{$vars['url']}action/register", 'body' => $form_body, 'class' => "margin_top")) ?>
 	</div>
 </div>
 <script type="text/javascript">

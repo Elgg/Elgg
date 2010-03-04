@@ -5,7 +5,7 @@ $(document).ready(function () {
 	$('a.toggle_box_contents').bind('click', toggleContent);
 
 /*  // replaced with elgg_slide_toggle
-	@todo - PH update new admin area and widget canvas with the new toggle function
+	@todo - PH update widget canvases with the new toggle function
 	// toggle widget box edit panel
 	$('a.toggle_box_edit_panel').click(function () {
 		$(this.parentNode.parentNode).children(".collapsable_box_editpanel").slideToggle("fast");
@@ -16,19 +16,7 @@ $(document).ready(function () {
 	$('a.toggle_customise_edit_panel').click(function () {
 		$('div#customise_editpanel').slideToggle("fast");
 		return false;
-	});
-
-	// toggle plugin's settings and more info on admin tools admin
-	$('a.pluginsettings_link').click(function () {
-		$(this.parentNode.parentNode).children(".pluginsettings").slideToggle("fast");
-		return false;
-	});
-	
-	$('a.manifest_details').click(function () {
-		$(this.parentNode.parentNode).children(".manifest_file").slideToggle("fast");
-		return false;
-	});
-	
+	});	
 
 	$('a.collapsibleboxlink').click(function () {
 		$(this.parentNode.parentNode).children(".collapsible_box").slideToggle("fast");
