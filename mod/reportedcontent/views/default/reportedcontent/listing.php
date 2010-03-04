@@ -34,7 +34,7 @@ if($vars['entity']){
         echo "<a class='action_button disabled' href=\"" . elgg_validate_action_url($vars['url'] . "action/reportedcontent/delete?item={$report->guid}") . "\" onclick=\"return confirm('" . elgg_echo('reportedcontent:areyousure') . "')\">" . elgg_echo('reportedcontent:delete') . "</a></div>";
         echo "<p><b>" . elgg_echo('reportedcontent:by') . ": </b><a href=\"{$user_url}\">" . $user . "</a>, " . friendly_time($report->time_created) . "</p>";
         echo "<p><b>" . elgg_echo('reportedcontent:objecttitle') . ": </b>" . $report->title;
-		echo "<br /><a href='#' onclick=\"elgg_slide_toggle(this,'.reported_content','.container{$id}');\" class='details_link'>" . elgg_echo('reportedcontent:moreinfo') . "</a></p>";
+		echo "<br /><a onclick=\"elgg_slide_toggle(this,'.reported_content','.container{$id}');\" class='details_link'>" . elgg_echo('reportedcontent:moreinfo') . "</a></p>";
         echo "<div class='details container{$id} hidden'>";
         echo "<p><b>" . elgg_echo('reportedcontent:objecturl') . ": </b><a href=\"{$report->address}\">" . elgg_echo('reportedcontent:visit')  . "</a></p>";
         echo "<p><b>" . elgg_echo('reportedcontent:reason') . ": </b>" .$report->description . "</p>";

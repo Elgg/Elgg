@@ -54,6 +54,6 @@
 
 	<div id="log_browser_search_form" class="hidden radius8"><?php echo $wrappedform; ?></div>
 	<p>
-		<a href="#" onclick="elgg_slide_toggle(this,'#logbrowser_search_area','#log_browser_search_form');"><?php echo elgg_echo('logbrowser:search'); ?></a>
+		<a onclick="elgg_slide_toggle(this,'#logbrowser_search_area','#log_browser_search_form');"><?php echo elgg_echo('logbrowser:search'); ?></a>
 	</p>
 </div>
