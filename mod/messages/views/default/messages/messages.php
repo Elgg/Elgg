@@ -44,14 +44,8 @@ if (isloggedin())
 			echo elgg_view('page_elements/breadcrumbs', array( 
 				'breadcrumb_root_url' => $url,
 				'breadcrumb_root_text' => $breadcrumb_root_text,
-/*
-				'breadcrumb_level1_url' => $url,
-				'breadcrumb_level1_text' => $vars['entity']->title,
-				'breadcrumb_level2_url' => $url,
-				'breadcrumb_level2_text' => $vars['entity']->title,
-*/
 				'breadcrumb_currentpage' => $vars['entity']->title
-				)); 
+				));
 ?>
 <!-- display the content header block -->
 			<div id="content_header" class="clearfloat">

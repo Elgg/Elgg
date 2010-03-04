@@ -21,14 +21,10 @@ if($num_messages){
 
 if($num == 0) {
 ?>
-
 	<a href="<?php echo $vars['url']; ?>pg/messages/<?php echo $_SESSION['user']->username; ?>" class="privatemessages" >&nbsp;</a>
-	
 <?php
-    } else {
+    }else{
 ?>
-
-    <a href="<?php echo $vars['url']; ?>pg/messages/<?php echo $_SESSION['user']->username; ?>" class="privatemessages_new" >[<?php echo $num; ?>]</a>
-	
+    <a href="<?php echo $vars['url']; ?>pg/messages/<?php echo $_SESSION['user']->username; ?>" class="privatemessages new" ><span><?php echo $num; ?></span></a>
 <?php
     }

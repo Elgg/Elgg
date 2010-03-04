@@ -117,7 +117,7 @@ if (is_array($vars['entity']) && sizeof($vars['entity']) > 0) {
 
 
 		if (!empty($nav)) {
-			echo '<div class="pagination"><p>'.$nav.'</p><div class="clearfloat"></div></div>';
+			echo '<div class="pagination"><p>'.$nav.'</p></div>';
 		}
 
 } else {
