@@ -276,6 +276,10 @@ form#edit_profile {
 	width: 100px;
 	height: 100px;
 }
+/* @todo fix image cropping */
+#avatar_cropping img.current_user_avatar {
+	max-width:560px;
+}
 
 
 /* ***************************************

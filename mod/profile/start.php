@@ -154,7 +154,7 @@ function profile_page_handler($page) {
 			}
 
 			$content = profile_get_user_edit_content($user, $page);
-			$content = elgg_view_layout($layout, 'asdf', $content);
+			$content = elgg_view_layout($layout, '', $content);
 			break;
 
 		default:

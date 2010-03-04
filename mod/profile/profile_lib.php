@@ -57,7 +57,6 @@ function profile_get_user_profile_html($user, $section = 'activity') {
  */
 function profile_get_user_edit_content($user, $page) {
 	$section = (isset($page[2])) ? $page[2] : 'details';
-	$content = elgg_view('profile/profile_navigation', array('section' => $section, 'entity' => $user));
 
 	switch ($section) {
 		case 'icon':
