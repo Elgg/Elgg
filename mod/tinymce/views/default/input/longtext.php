@@ -32,15 +32,40 @@
    tinyMCE.init({
 	mode : "textareas",
 	theme : "advanced",
+	plugins : "safari,spellchecker,autosave,fullscreen,preview,paste",
 	relative_urls : false,
-	theme_advanced_buttons1 : "bold,italic,underline,separator,strikethrough,bullist,numlist,undo,redo,link,unlink,image,blockquote,code",
+	theme_advanced_buttons1 : "bold,italic,underline,separator,strikethrough,bullist,numlist,undo,redo,link,unlink,image,blockquote,code,pastetext,pasteword,more,fullscreen,",
 	theme_advanced_buttons2 : "",
 	theme_advanced_buttons3 : "",
 	theme_advanced_toolbar_location : "top",
 	theme_advanced_toolbar_align : "left",
 	theme_advanced_statusbar_location : "bottom",
 	theme_advanced_resizing : true,
-	extended_valid_elements : "a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name|style],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]"
+	theme_advanced_path : true,
+	extended_valid_elements : "a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name|style],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]",
+	setup : function(ed) {
+        // Add a custom button
+        //ed.addButton('more', {
+        //    title : 'more',
+        //    image : '<?php echo $vars['url']; ?>mod/tinymce/graphics/more.gif',
+        //    onclick : function() {
+        //        ed.selection.setContent('{{more}}');
+        //    }
+        //});
+  
+        //show the number of words
+		ed.onLoadContent.add(function(ed, o) {
+		var strip = (tinyMCE.activeEditor.getContent()).replace(/(&lt;([^&gt;]+)&gt;)/ig,"");
+		var text = " Word count:" + strip.split(' ').length;
+		tinymce.DOM.setHTML(tinymce.DOM.get(tinyMCE.activeEditor.id + '_path_row'), text);
+		});
+		 
+		ed.onKeyUp.add(function(ed, e) {
+		var strip = (tinyMCE.activeEditor.getContent()).replace(/(&lt;([^&gt;]+)&gt;)/ig,"");
+		var text = " Word count:" + strip.split(' ').length;
+		tinymce.DOM.setHTML(tinymce.DOM.get(tinyMCE.activeEditor.id + '_path_row'), text);
+		});
+    }
 });
 function toggleEditor(id) {
 if (!tinyMCE.get(id))
