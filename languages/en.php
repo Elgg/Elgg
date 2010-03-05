@@ -91,7 +91,7 @@ $english = array(
 	'ImportException:NotAllImported' => "Not all elements were imported.",
 
 	'InvalidParameterException:UnrecognisedFileMode' => "Unrecognised file mode '%s'",
-	'InvalidParameterException:MissingOwner' => "File %s (%d) is missing an owner!",
+	'InvalidParameterException:MissingOwner' => "File %s (file guid:%d) (owner guid:%d) is missing an owner!",
 	'IOException:CouldNotMake' => "Could not make %s",
 	'IOException:MissingFileName' => "You must specify a name before opening a file.",
 	'ClassNotFoundException:NotFoundNotSavedWithFile' => "Filestore not found or class not saved with file!",

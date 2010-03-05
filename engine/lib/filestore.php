@@ -247,7 +247,12 @@ class ElggDiskFilestore extends ElggFilestore {
 		}
 
 		if ((!$owner) || (!$owner->username)) {
-			throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:MissingOwner'), $file->getFilename(), $file->guid));
+			// include file guid and owner guid to make debugging easier
+			$owner_guid = 0;
+			if ($owner) {
+				$owner_guid = $owner->guid;
+			}
+			throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:MissingOwner'), $file->getFilename(), $file->guid, $owner_guid));
 		}
 
 		return $this->dir_root . $this->make_file_matrix($owner->guid) . $file->getFilename();
