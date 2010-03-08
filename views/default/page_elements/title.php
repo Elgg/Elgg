@@ -15,24 +15,24 @@ if (!empty($submenu)) {
 if (($_SESSION['guid']) && ($page_owner && $page_owner_user->guid != $_SESSION['user']->getGUID())) {
 	$info = "<h2>" . $vars['title'] . "</h2>";
 	if($page_owner_user instanceOf ElggGroup) {
-		$display = "<div id=\"content_area_group_title\">" . $info . "</div>";
+		$display = $info;
 	} else {
 		$display = $info;
 	}
 	if (!empty($submenu) && $vars['submenu'] == true) {
 		// plugins can extend this to add menu options
-		$display .= "<div id=\"owner_block_submenu\">" . $submenu . "</div>";
+		$display .= "<div class='submenu extended'>" . $submenu . "</div>";
 	}
 } else {
 	$info = "<h2>" . $vars['title'] . "</h2>";
 	if($page_owner_user instanceOf ElggGroup) {
-		$display = "<div id=\"content_area_group_title\">" . $info . "</div>";
+		$display = $info;
 	} else {
 		$display = $info;
 	}
 	if (!empty($submenu)  && $vars['submenu'] == true) {
 		// plugins can extend this to add menu options
-		$display .= "<div id=\"owner_block_submenu\">" . $submenu . "</div>";
+		$display .= "<div class='submenu extended'>" . $submenu . "</div>";
 	}
 }
 

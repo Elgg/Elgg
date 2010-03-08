@@ -12,14 +12,4 @@ $user_name = elgg_view_title($user->name . "'s " . elgg_echo($type));
 	<div class="content_header_title">
 		<?php echo $user_name; ?>
 	</div>
-<!--
-	<div class="content_header_options">
-		<?php // if we're on bookmarks 		
-			if((get_context() == 'bookmarks') && ($user instanceof ElggGroup)) {
-				$upload_link = "<a href=\"{$vars['url']}pg/{$type}/{$user->username}/add\" class='action_button'>" . elgg_echo($type . ':new') . "</a>";
-				echo $upload_link;
-			}
-		?>		
-	</div>
--->
 </div>
