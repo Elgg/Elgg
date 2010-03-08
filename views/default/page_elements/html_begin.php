@@ -2,6 +2,7 @@
 /**
  * Start html output.
  * The standard HTML header that displays across the site
+ *
  * @uses $vars['config'] The site configuration settings, imported
  * @uses $vars['title'] The page title
  * @uses $vars['body'] The main content of the page
@@ -57,7 +58,9 @@ $release = get_version(true);
 
 	<?php
 		echo $feedref;
-		echo elgg_view('metatags',$vars);
+		if (elgg_view_exists('metatags')) {
+			echo elgg_view('metatags', $vars);
+		}
 
 	// this was previously required because of an odd browser canvas drawing bug
 	// in firefox.  It seems to not be require with the new layout...?
@@ -65,7 +68,6 @@ $release = get_version(true);
 //		jQuery(document).ready(function($) {
 //		});
 //	</script>
-
 	?>
 
 <?php

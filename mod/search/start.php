@@ -1,12 +1,12 @@
 <?php
 /**
-   * Elgg core search.
-   *
-   * @package Elgg
-   * @subpackage Core
-   * @author Curverider Ltd <info@elgg.com>, The MITRE Corporation <http://www.mitre.org>
-   * @link http://elgg.org/
-   */
+ * Elgg core search.
+ *
+ * @package Elgg
+ * @subpackage Core
+ * @author Curverider Ltd <info@elgg.com>, The MITRE Corporation <http://www.mitre.org>
+ * @link http://elgg.org/
+ */
 
 /**
  * Initialise search helper functions.
@@ -51,6 +51,9 @@ function search_init() {
 
 	// add in CSS for search elements
 	elgg_extend_view('css', 'search/css');
+
+	// extend view for elgg topbar search box
+	elgg_extend_view('header/extend', 'search/search_box');
 }
 
 /**
