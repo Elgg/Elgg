@@ -27,7 +27,7 @@ if (isset($autofeed) && $autofeed == true) {
 	$feedref = <<<END
 
 	<link rel="alternate" type="application/rss+xml" title="RSS" href="{$url}" />
-	
+
 END;
 } else {
 	$feedref = "";
@@ -49,7 +49,7 @@ $release = get_version(true);
 	<title><?php echo $title; ?></title>
 	<link REL="SHORTCUT ICON" HREF="<?php echo $vars['url']; ?>_graphics/favicon.ico">
 
-	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery-1.4.min.js"></script> 
+	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery-1.4.min.js"></script>
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery-ui-1.7.2.min.js"></script>
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery.form.js"></script>
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/custom-form-elements.js"></script>
@@ -58,11 +58,15 @@ $release = get_version(true);
 	<?php
 		echo $feedref;
 		echo elgg_view('metatags',$vars);
+
+	// this was previously required because of an odd browser canvas drawing bug
+	// in firefox.  It seems to not be require with the new layout...?
+//	<script type="text/javascript">
+//		jQuery(document).ready(function($) {
+//		});
+//	</script>
+
 	?>
-	<script type="text/javascript">
-		jQuery(document).ready(function($) {
-		});
-	</script>
 
 <?php
 	global $pickerinuse;
@@ -80,7 +84,7 @@ $release = get_version(true);
 	<!--[if IE 6]>
 		<link rel="stylesheet" type="text/css" href="<?php echo $vars['url']; ?>mod/elgg_layout/css_ie6.php" />
 	<![endif]-->
-	
+
 	<!--[if gt IE 6]>
 		<link rel="stylesheet" type="text/css" href="<?php echo $vars['url']; ?>mod/elgg_layout/css_ie.php" />
 	<![endif]-->
