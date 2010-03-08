@@ -24,7 +24,7 @@
 		$body .= elgg_view("forms/groups/edit", array('entity' => $group));
 			 
 	} else {
-		$body .= elgg_view('groups/contentwrapper',array('body' => elgg_echo('groups:noaccess')));
+		$body .= elgg_echo('groups:noaccess');
 	}
 	
 	$body = elgg_view_layout('one_column_with_sidebar', '', $body);
