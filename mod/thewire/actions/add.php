@@ -14,7 +14,7 @@
 		if (!isloggedin()) forward();
 
 	// Get input data
-		$body = get_input('note');
+		$body = get_input('new_post_textarea');
 		$tags = get_input('thewiretags');
 		$access_id = (int)get_default_access();
 		if ($access_id == ACCESS_PRIVATE)

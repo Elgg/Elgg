@@ -7,11 +7,11 @@
 		 */
 	
 			'thewire' => "The wire",
-			'thewire:user' => "%s's wire",
+			'thewire:user' => "%s's wire posts",
 			'thewire:posttitle' => "%s's notes on the wire: %s",
 			'thewire:everyone' => "All wire posts",
 	
-			'thewire:read' => "Wire posts",
+			'thewire:read' => "My wire posts",
 			
 			'thewire:strapline' => "%s",
 	
@@ -20,7 +20,7 @@
 			'thewire:reply' => "Reply",
 			'thewire:via' => "via",
 			'thewire:wired' => "Posted to the wire",
-			'thewire:charleft' => "characters left",
+			'thewire:charleft' => "characters remaining",
 			'item:object:thewire' => "Wire posts",
 			'thewire:notedeleted' => "note deleted",
 			'thewire:doing' => "What are you doing? Tell everyone on the wire:",

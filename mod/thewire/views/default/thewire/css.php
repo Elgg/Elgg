@@ -11,113 +11,29 @@
 	 */
 
 ?>
-/* widget */
-.thewire-singlepage {
-	margin:0 10px 0 10px;
+/* new wire post form */
+.new_wire_post {
+	margin:10px 0 15px 0;
+	padding-bottom:15px;
+	border-bottom: 1px solid #dedede;
 }
-.thewire-singlepage .note_body {
-	background: white;
-	-webkit-border-radius: 8px; 
-	-moz-border-radius: 8px;
-}
-.collapsable_box_content .note_body {
-	line-height:1.2em;
-}
-.thewire-singlepage .thewire-post {
-	margin-bottom:5px;
-	background:transparent url(<?php echo $vars['url']; ?>mod/thewire/graphics/thewire_speech_bubble.gif) no-repeat right bottom; 
-}
-.thewire-post {
-	background:#cccccc;
-	margin-bottom:10px;
-}
-.thewire-post .note_date {
-	font-size:90%;
-	color:#666666;
-	padding:0;
-}
-.thewire_icon {
-    float:left;
-    margin:0 8px 4px 2px;
-}
-.note_body {
-	margin:0;
-	padding:6px 4px 4px 4px;
-	min-height: 40px;
-	line-height: 1.4em;
-}
-.thewire_options {
-	float:right;
-	width:65px;
-}
-.thewire-post .reply {
-	font: 11px/100% Arial, Helvetica, sans-serif;
-	font-weight: bold;
-	color: #ffffff;
-	background:#999999;
-	border: 2px solid #999999;
-	-webkit-border-radius: 4px; 
-	-moz-border-radius: 4px;
-	width: auto;
-	padding: 0 3px 2px 3px;
-	margin:0 0 5px 5px;
-	cursor: pointer;
-	float:right;
-}
-.thewire-post .reply:hover {
-	background: #4690d6;
-	border: 2px solid #4690d6;
-	color:white;
-	text-decoration: none;
-}
-.thewire-post .delete_note {
-	width:14px;
-	height:14px;
+.new_wire_post input[type="submit"] {
 	margin:3px 0 0 0;
 	float:right;
 }
-.thewire-post .delete_note a {
-	display:block;
-	cursor: pointer;
-	width:14px;
-	height:14px;
-	background: url("<?php echo $vars['url']; ?>_graphics/icon_customise_remove.png") no-repeat 0 0;
-	text-indent: -9000px;
+.new_wire_post textarea {
+	width: 719px;
+	height: 52px;
+	padding: 2px 5px 5px 5px;
+	font-size: 120%;
+	color:#333333;
 }
-.thewire-post .delete_note a:hover {
-	background-position: 0 -16px;
-}
-/* IE 6 fix */
-* html .thewire-post .delete_note a { background-position-y: 2px; }
-* html .thewire-post .delete_note a:hover { background-position-y: -14px; }
-
-.post_to_wire {
-	background: white;
-	-webkit-border-radius: 8px; 
-	-moz-border-radius: 8px;
-	margin:0 10px 10px 10px;
-	padding:10px;	
-}
-.post_to_wire input[type="submit"] {
-	margin:0;
-}
-
-/* reply form */
-textarea#thewire_large-textarea {
-	width: 664px;
-	height: 40px;
-	padding: 6px;
-	font-family: Arial, 'Trebuchet MS','Lucida Grande', sans-serif;
-	font-size: 100%;
+.character_count {
+	width: 642px;
 	color:#666666;
 }
-/* IE 6 fix */
-* html textarea#thewire_large-textarea { 
-	width: 642px;
-}
-
-input.thewire_characters_remaining_field { 
-	color:#333333;
+.character_count input { 
+	color:#666666;
 	border:none;
 	font-size: 100%;
 	font-weight: bold;
@@ -126,11 +42,59 @@ input.thewire_characters_remaining_field {
 	text-align: right;
 	background: white;
 }
-input.thewire_characters_remaining_field:focus {
+.character_count input:focus {
 	border:none;
 	background:white;
 }
-.thewire_characters_remaining {
-	text-align: right;
+
+
+/* wire posts listings */
+.wire_post {
+	padding-bottom:10px;
+	margin-bottom:5px;
+	background-image: url(<?php echo $vars['url']; ?>mod/thewire/graphics/thewire_speech_bubble.gif);
+	background-repeat: no-repeat;
+	background-position: right bottom; 
 }
+.wire_post_contents {
+	background-color: #eeeeee;
+	margin:0;
+	padding:5px;
+	line-height: 1.2em;
+	min-height: 34px;
+	position: relative;
+}
+.wire_post_icon {
+    float:left;
+    margin-right:8px;
+}
+.wire_post_info {
+	margin-top:-3px;
+	float:left;
+	width:620px;
+}
+.wire_post_options {
+	float:right;
+	width:65px;
+}
+.wire_post_options .action_button.reply.small {
+	float:right;
+}
+.wire_post_options .delete_button {
+	position: absolute;
+	bottom:5px;
+	right:5px;
+}
+
+
+/* latest wire post on profile page */
+.wire_post .action_button.update.small {
+	float:right;
+	padding:4px;
+	position: absolute;
+	bottom:5px;
+	right:5px;
+}
+
+
 

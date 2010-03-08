@@ -1,7 +1,7 @@
 <?php
 
 	/**
-	 * New wire post view for the activity stream
+	 * Latest wire post on profile activity page
 	 */
 	 
 	$owner = $vars['entity']->guid;
@@ -13,16 +13,16 @@
 	if($latest_wire){
 		foreach($latest_wire as $lw){
 			$content = $lw->description;
-			$time = "<span> (" . friendly_time($lw->time_created) . ")</span>";
+			$time = "<p class='entity_subtext'> (" . friendly_time($lw->time_created) . ")</p>";
 		}
 	}
 	
 	if($latest_wire){
-		echo "<div class=\"profile_status\">";
+		echo "<div class='wire_post'><div class='wire_post_contents clearfloat radius8'>";
 		echo $content;
 		if($owner == $_SESSION['user']->guid)
-			echo " <a class=\"status_update\" href=\"{$url_to_wire}\">update</a>";
+			echo " <a class='action_button update small' href=\"{$url_to_wire}\">update</a>";
 		echo $time;
-		echo "</div>";
+		echo "</div></div>";
 	}
 ?>

@@ -17,9 +17,9 @@
 		
 		//add form
 		$area2 .= elgg_view("thewire/forms/add");
+		$area2 .= elgg_list_entities(array('types' => 'object', 'subtypes' => 'thewire')); 
 
-		$area2 .= elgg_list_entities(array('types' => 'object', 'subtypes' => 'thewire')); // elgg_view("thewire/view",array('entity' => $thewireposts));
-	    $body = elgg_view_layout("two_column_left_sidebar", '', $area2);
+	    $body = elgg_view_layout("one_column_with_sidebar", '', $area2);
 		
 	// Display page
 		page_draw(elgg_echo('thewire:everyone'),$body);
