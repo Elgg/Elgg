@@ -65,6 +65,11 @@
 	padding:15px;
 	min-height:270px;
 }
+#elgg_sidebar #owner_block {
+	background-color: white;
+	padding:5px;
+	margin-bottom:10px;
+}
 #owner_block .owner_block_icon {
 	float:left;
 	padding:0;
@@ -79,8 +84,14 @@
 #owner_block .owner_block_contents {
 	margin-left: 50px;
 }
+#elgg_sidebar #owner_block .owner_block_contents {
+	margin-left: 34px;
+}
 #owner_block .owner_block_contents h3 {
 	margin-top:-4px;
+	border-bottom:none;
+	margin-bottom:0;
+	padding-bottom:0;
 }
 #owner_block .owner_block_contents p.profile_info {
 	margin:0;
@@ -409,48 +420,3 @@ div.usericon a.icon img {
 	color:white !important;
 	background:red !important;
 }
-/* /////////////////////////////////////////////////////////////// >>>END verified */
-
-
-
-/*
-#profile_status_wrapper {
-	background-color:#eeeeee;
-	-webkit-border-radius: 4px; 
-	-moz-border-radius: 4px;
-	padding:2px 4px 2px 4px;
-	margin:0 0 7px 0;
-	line-height:1.2em;
-	min-height:16px;
-	
-	position: relative;
-}
-#profile_status_wrapper.inline {
-	margin-top:10px;
-}
-.profile_status span {
-	display:block;
-	font-size:90%;
-	color:#666666;	
-}
-a.status_update {
-	float:right;	
-}
-div.profile_status {
-	z-index: 2;
-	position: relative;
-}
-#profile_status_tail {
-	position: absolute;
-	width:17px;
-	height:12px;
-	left:-11px;
-	bottom:-5px;
-
-	background-image: url(<?php echo $vars['url']; ?>mod/thewire/graphics/speech_tail.png);
-	background-position: 0 0;
-	background-repeat: no-repeat;
-	background-color:transparent;
-	z-index: 1;
-}
-*/

@@ -15,20 +15,23 @@ $contents = "";
 if(is_plugin_enabled('profile')) {
 	// Is there a page owner?
 	$owner = page_owner_entity();
+	$location = elgg_view("output/tags",array('value' => $owner->location));
 	if ($owner instanceof ElggEntity) {
 		$icon = elgg_view("profile/icon",array('entity' => $owner, 'size' => 'tiny'));
 		if ($owner instanceof ElggUser || $owner instanceof ElggGroup) {
-			$info = '<a href="' . $owner->getURL() . '">' . $owner->name . '</a>';
+			$info = '<h3><a href="' . $owner->getURL() . '">' . $owner->name . '</a></h3>';
 		}
-		$display = "<div id='owner_block_icon'>" . $icon . "</div>";
-		$display .= "<div id='owner_block_content'>" . $info . "</div><div class='clearfloat ownerblockline'></div>";
+		$display = "<div class='owner_block_icon'>" . $icon . "</div>";
+		$display .= "<div class='owner_block_contents clearfloat'>" . $info;
 	
 		if ($owner->briefdescription) {
 			$desc = $owner->briefdescription;
-			$display .= "<div id='owner_block_desc'>" . $desc . "</div>";
+			$display .= "<p class='profile_info briefdescription'>" . $desc . "</p>";
 		}
+		$display .= "<p class='profile_info location'>{$location}</p>";
+		$display .= "</div>"; // close owner_block_contents
 	
-		$contents .= "<div id='owner_block'>".$display."</div><div id='owner_block_bottom'></div>";
+		$contents .= "<div id='owner_block' class='radius8'>".$display."</div>";
 	}
 }
 // Are there feeds to display?

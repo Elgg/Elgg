@@ -942,14 +942,14 @@ select.styled .select_option {
 	margin:0;
 	line-height:1.2em;
 }
-.entity_listing_info p.entity_title {
+p.entity_title {
 	font-weight: bold;
 	font-size: 1.1em;
 }
-.entity_listing_info p.entity_title a {
+p.entity_title a {
 	color:#0054A7;
 }
-.entity_listing_info p.entity_subtext {
+p.entity_subtext {
 	margin:0;
 	padding:0;
 	color:#666666;
@@ -983,7 +983,6 @@ select.styled .select_option {
 	padding-top:2px;
 	width:26px;
 }
-
 
 
 /* ***************************************
@@ -1205,6 +1204,7 @@ input[type="submit"]:hover {
 	text-decoration:none;
 	color:white;
 }
+input.action_button,
 a.action_button {
 	-webkit-border-radius: 5px; 
 	-moz-border-radius: 5px;
@@ -1221,29 +1221,37 @@ a.action_button {
 	text-decoration:none;
 	text-shadow:0 1px 0 white;
 	cursor:pointer;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
 }
+input.action_button:hover,
 a.action_button:hover, 
+input.action_button:focus,
 a.action_button:focus {
 	background-position:0 -15px;
+	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_background.gif);
+	background-repeat:  repeat-x;
 	color:#111111;
 	text-decoration: none;
+	background-color:#cccccc;
+	border:1px solid #999999;
 }
-a.action_button:active {
+.action_button:active {
 	background-image:none;
 }
-a.action_button.disabled {
+.action_button.disabled {
 	color:#999999;
 	padding:2px 7px 2px 7px;
 }
-a.action_button.disabled:hover {
+.action_button.disabled:hover {
 	background-position:0 -15px;
 	color:#111111;
 	border:1px solid #999999;
 }
-a.action_button.disabled:active {
+.action_button.disabled:active {
 	background-image:none;
 }
-a.action_button.download {
+.action_button.download {
 	color: white;
 	background-color:#4690d6;
 	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
@@ -1255,10 +1263,26 @@ a.action_button.download {
 	padding: 3px 6px 3px 6px;
 	margin:0 0 10px 0;
 }
-a.action_button.download:hover {
+.action_button.download:hover {
 	background: #0054a7;
 	border-color: #0054a7;
 	color:white;
+}
+.action_button.small {
+	-webkit-border-radius: 3px; 
+	-moz-border-radius: 3px;
+	width: auto;
+	height:8px;
+	padding: 4px;
+	font-size: 0.9em;
+	line-height: 0.6em;
+}
+.action_button.small:hover {
+	background-color: #4690d6;
+	background-image: none;
+	border-color: #4690d6;
+	color:white;
+	text-shadow:0 -1px 0 #999999;
 }
 /* small round delete button */
 .delete_button {
