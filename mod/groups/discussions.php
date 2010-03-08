@@ -23,7 +23,7 @@
 	    $area2 .= list_entities_from_annotations("object", "groupforumtopic", "group_topic_post", "", 40, 0, 0, false, true);
 	    set_context('groups');
 	    
-	    $body = elgg_view_layout("two_column_left_sidebar", '', $area2);
+	    $body = elgg_view_layout("one_column_with_sidebar", '', $area2);
         
     // Display page
 		page_draw(elgg_echo('groups:latestdiscussion'),$body);

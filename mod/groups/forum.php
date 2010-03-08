@@ -23,7 +23,7 @@
 	$area2 = elgg_view("forum/topics", array('topics' => $topics));
 	set_context('groups');
 	
-	$body = elgg_view_layout('two_column_left_sidebar',$area1, $area2);
+	$body = elgg_view_layout('one_column_with_sidebar','', $area1.$area2);
 	
 	$title = elgg_echo('item:object:groupforumtopic');
 	

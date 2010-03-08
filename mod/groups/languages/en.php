@@ -15,9 +15,9 @@
 		 * Menu items and titles
 		 */
 
-			'groups' => "Groups",
-			'groups:owned' => "Groups you own",
-			'groups:yours' => "Your groups",
+			'groups' => "My groups",
+			'groups:owned' => "Groups I own",
+			'groups:yours' => "My groups",
 			'groups:user' => "%s's groups",
 			'groups:all' => "All site groups",
 			'groups:new' => "Create a new group",

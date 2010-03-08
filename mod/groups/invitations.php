@@ -28,6 +28,6 @@ if ($user) {
 	$area2 .= elgg_echo("groups:noaccess");
 }
 
-$body = elgg_view_layout('two_column_left_sidebar', '', $area2);
+$body = elgg_view_layout('one_column_with_sidebar', '', $area2);
 
 page_draw($title, $body);

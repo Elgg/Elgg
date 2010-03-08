@@ -20,18 +20,17 @@
 	
 	if (page_owner() == $_SESSION['user']->guid) {
 		$title = elgg_echo("groups:yours");
-	} else $title = sprintf(elgg_echo("groups:owned"),page_owner_entity()->name);
+	} else $title = elgg_echo("groups:owned");
 
 	// Get objects
-	$area2 = elgg_view_title($title);
+	$area2 = elgg_view('page_elements/content_header', array('context' => "mine", 'type' => 'groups'));
 	
 	set_context('search');
-	//$objects = list_entities("group", "", page_owner(), $limit, false);
 	$objects = list_entities_from_relationship('member',page_owner(),false,'group','',0, $limit,false, false);
 	set_context('groups');
 	
 	$area2 .= $objects;
-	$body = elgg_view_layout('two_column_left_sidebar',$area1, $area2);
+	$body = elgg_view_layout('one_column_with_sidebar','',$area1.$area2);
 	
 	// Finally draw the page
 	page_draw($title, $body);

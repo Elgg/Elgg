@@ -13,20 +13,13 @@
 	 * Initialise the groups plugin.
 	 * Register actions, set up menus
 	 */
-	function groups_init()
-	{
+	function groups_init() {
 
 		global $CONFIG;
 
 		// Set up the menu for logged in users
-		if (isloggedin())
-		{
-			add_menu(elgg_echo('groups'), $CONFIG->wwwroot . "pg/groups/world/");
-			//add_menu(elgg_echo('groups:alldiscussion'),$CONFIG->wwwroot."mod/groups/discussions.php");
-		}
-		else
-		{
-			add_menu(elgg_echo('groups'), $CONFIG->wwwroot . "pg/groups/world/");
+		if (isloggedin()) {
+			add_menu(elgg_echo('groups'), $CONFIG->wwwroot . "pg/groups/member/");
 		}
 
 		// Register a page handler, so we can have nice URLs
@@ -242,12 +235,14 @@
 		// Add submenu options
 			if (get_context() == 'groups' && !($page_owner instanceof ElggGroup)) {
 				if (isloggedin()) {
-					add_submenu_item(elgg_echo('groups:new'), $CONFIG->wwwroot."pg/groups/new/", '1groupslinks');
 					add_submenu_item(elgg_echo('groups:owned'), $CONFIG->wwwroot . "pg/groups/owned/" . $_SESSION['user']->username, '1groupslinks');
 					add_submenu_item(elgg_echo('groups:yours'), $CONFIG->wwwroot . "pg/groups/member/" . $_SESSION['user']->username, '1groupslinks');
-					add_submenu_item(elgg_echo('groups:invitations'), $CONFIG->wwwroot . "pg/groups/invitations/" . $_SESSION['user']->username, '1groupslinks');
 				}
 				add_submenu_item(elgg_echo('groups:all'), $CONFIG->wwwroot . "pg/groups/world/", '1groupslinks');
+			
+				if (isloggedin()) {
+					add_submenu_item(elgg_echo('groups:invitations'), $CONFIG->wwwroot . "pg/groups/invitations/" . $_SESSION['user']->username, '1groupslinks');
+				}
 			}
 
 	}

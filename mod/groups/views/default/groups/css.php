@@ -1,17 +1,17 @@
 <?php
-
-	/**
-	 * Elgg Groups css
-	 * 
-	 * @package groups
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
-	 */
+/**
+ * Elgg Groups css
+ * 
+ * @package groups
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * @author Curverider Ltd <info@elgg.com>
+ * @copyright Curverider Ltd 2008-2010
+ * @link http://elgg.com/
+ */
 
 ?>
 
+/*
 #content_area_group_title h2 {
 	color:#0054A7;
 	font-size:1.35em;
@@ -22,6 +22,7 @@
 #topic_posts #content_area_group_title h2 {
 	margin:0 0 0 0;
 }
+*/
 
 #two_column_left_sidebar_maincontent #owner_block_content {
 	margin:0 0 10px 0 !important;
@@ -69,10 +70,7 @@
 	margin:0;
 }
 #group_members {
-	margin:10px;
-	-webkit-border-radius: 8px; 
-	-moz-border-radius: 8px;
-	background: white;
+	margin:10px 0;
 }
 
 #right_column {
@@ -87,36 +85,12 @@
 	margin:0 10px 0 10px;
 
 }
-/* IE 6 fixes */
-* html #left_column { 
-	margin:0 0 0 5px;
-}
-* html #right_column { 
-	margin:0 5px 0 0;
-}
 
-#group_members h2,
-#right_column h2,
-#left_column h2,
-#fullcolumn h2 {
-	margin:0 0 10px 0;
-	padding:5px;
-	color:#0054A7;
-	font-size:1.25em;
-	line-height:1.2em;
-}
-#fullcolumn .contentWrapper {
-	margin:0 10px 20px 10px;
-	padding:0 0 5px;
-}
 
 .member_icon {
-	margin:0 0 6px 6px;
+	margin:6px 6px 0 0;
 	float:left;
 }
-
-/* IE6 */
-* html #topic_post_tbl { width:676px !important;}
 
 /* all browsers - force tinyMCE on edit comments to be full-width */
 .edit_forum_comments .defaultSkin table.mceLayout {
@@ -204,7 +178,7 @@
 	margin:0 10px 5px 10px;
 }
 .forum_latest {
-	margin:0 10px 5px 10px;
+	margin:5px 0 5px 0;
 	background: #dedede;
 	padding:5px;
    	-webkit-border-radius: 4px; 

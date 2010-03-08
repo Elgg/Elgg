@@ -29,8 +29,8 @@
     											));
 
 ?>
-    <!-- grab the topic title -->
-        <div id="content_area_group_title"><h2><?php echo $vars['entity']->title; ?></h2></div>
+<!-- grab the topic title -->
+<h2><?php echo $vars['entity']->title; ?></h2>
 <?php
     											
     foreach($vars['entity']->getAnnotations('group_topic_post', 50, $offset, "asc") as $post) {

@@ -18,7 +18,7 @@
 ?>
 
 <div id="groups_info_column_right"><!-- start of groups_info_column_right -->
-	<div id="groups_icon_wrapper"><!-- start of groups_icon_wrapper -->
+	<div id="groups_icon_wrapper" class="margin_top"><!-- start of groups_icon_wrapper -->
 
 		<?php
 			echo elgg_view(
@@ -41,7 +41,7 @@
 	</div><!-- end of group_stats -->
 </div><!-- end of groups_info_column_right -->
 
-<div id="groups_info_column_left"><!-- start of groups_info_column_left -->
+<div id="groups_info_column_left" class="margin_top"><!-- start of groups_info_column_left -->
 	<?php
 		if ($vars['full'] == true) {
 			if (is_array($vars['config']->group) && sizeof($vars['config']->group) > 0){

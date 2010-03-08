@@ -11,7 +11,7 @@
 	 
 ?>
 
-<div id="content_area_group_title"><h2><?php echo elgg_echo("groups:forum"); ?></h2></div>
+<h2><?php echo elgg_echo("groups:forum"); ?></h2>
 
 <?php
     //only show the add link if the user is a member
