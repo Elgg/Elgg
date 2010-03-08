@@ -25,6 +25,20 @@
 			$vars['entity']->access_id = 0;
 			$vars['entity']->write_access_id = 0;
 		}
+
+		// pull in sticky values from session
+		if (isset($_SESSION['page_description'])) {
+			$vars['entity']->description = $_SESSION['page_description'];
+			$vars['entity']->tags = $_SESSION['page_tags'];
+			$vars['entity']->access_id = $_SESSION['page_read_access'];
+			$vars['entity']->write_access_id = $_SESSION['page_write_access'];
+
+			// clear them
+			unset($_SESSION['page_description']);
+			unset($_SESSION['page_tags']);
+			unset($_SESSION['page_read_access']);
+			unset($_SESSION['page_write_access']);
+		}
 	}
 ?>
 <div class="contentWrapper">
