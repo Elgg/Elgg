@@ -35,6 +35,7 @@
 		$area2 = elgg_view_title(sprintf(elgg_echo('date:month:'.date('m',$timelower)),date('Y',$timelower)));
 		
 	// Get a list of blog posts
+		// note: this does not pass offset because list_user_objects gets it from input
 		$area2 .= list_user_objects($page_owner->getGUID(),'blog',10,false,false,true,$timelower,$timeupper);
 
 	// Get blog tags

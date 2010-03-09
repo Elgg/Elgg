@@ -27,15 +27,17 @@
 		}
 
 	//set blog title
-		if($page_owner == $_SESSION['user']){
+		if ($page_owner == $_SESSION['user']) {
 			$area2 = elgg_view_title(elgg_echo('blog:your'));
-		}else{
-			//$area1 = elgg_view_title($page_owner->username . "'s " . elgg_echo('blog'));
+		} else {
+			$area2 = elgg_view_title(sprintf(elgg_echo('blog:user'),$page_owner->name));
 		}
+
+		$offset = (int)get_input('offset', 0);
 		
 	// Get a list of blog posts
 		$area2 .= "<div id=\"blogs\">";
-		$area2 .= elgg_list_entities(array('type' => 'object', 'subtype' => 'blog', 'container_guid' => page_owner(), 'limit' => 10, 'full_view' => FALSE, 'view_type_toggle' => FALSE));
+		$area2 .= elgg_list_entities(array('type' => 'object', 'subtype' => 'blog', 'container_guid' => page_owner(), 'limit' => 10, 'offset' => $offset, 'full_view' => FALSE, 'view_type_toggle' => FALSE));
 		$area2 .= "<div class='clearfloat'></div></div>";
 
 	// Get blog tags

@@ -14,13 +14,13 @@
 		define('everyoneblog','true');
 		require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 	
-// Get the current page's owner
-		$page_owner = $_SESSION['user'];
-		set_page_owner($_SESSION['guid']);
+		set_page_owner(get_loggedin_userid());
+
+		$offset = (int)get_input('offset', 0);
 		
 		$area2 = elgg_view_title(elgg_echo('blog:everyone'));
 
-		$area2 .= "<div id='blogs'>" . elgg_list_entities(array('type' => 'object', 'subtype' => 'blog', 'limit' => 10, 'full_view' => FALSE)) . "<div class='clearfloat'></div></div>";
+		$area2 .= "<div id='blogs'>" . elgg_list_entities(array('type' => 'object', 'subtype' => 'blog', 'limit' => 10, 'offset' => $offset, 'full_view' => FALSE)) . "<div class='clearfloat'></div></div>";
 
 		// get tagcloud
 		// $area3 = "This will be a tagcloud for all blog posts";

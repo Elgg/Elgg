@@ -32,6 +32,7 @@
 		$area2 = elgg_view_title($title);
 		
 		// Get a list of blog posts
+		// note: this does not pass offset because list_user_friends_objects gets it from input
 		$area2 .= "<div id='blogs'>" . list_user_friends_objects($page_owner->getGUID(),'blog',10,false) . "<div class='clearfloat'></div></div>";
 		
 	// Get categories, if they're installed
