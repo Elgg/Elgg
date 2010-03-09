@@ -30,7 +30,7 @@
 	if ($tag != "")
 		$area2 .= list_entities_from_metadata('tags',$tag,'object','file',0,10,false);
 	else
-		$area2 .= elgg_list_entities(array('types' => 'object', 'subtypes' => 'file', 'limit' => 10, 'full_view' => FALSE));
+		$area2 .= elgg_list_entities(array('types' => 'object', 'subtypes' => 'file', 'limit' => 10, 'offset' => $offset, 'full_view' => FALSE));
 	set_context('file');
 		
 	$body = elgg_view_layout('two_column_left_sidebar',$area1, $area2);
