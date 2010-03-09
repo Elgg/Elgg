@@ -31,9 +31,13 @@ if (isset($vars['entity'])) {
 	    </div>
 
 		<div class="wire_post_options">
+		<?php
+			if(isloggedin()){
+		?>
 			<a href="<?php echo $vars['url']; ?>mod/thewire/add.php?wire_username=<?php echo $vars['entity']->getOwnerEntity()->username; ?>" class="action_button reply small"><?php echo elgg_echo('thewire:reply'); ?></a>
     		<?php
-				// if the user looking at thewire post can edit, show the delete link
+			}//close reply if statement
+			// if the user looking at thewire post can edit, show the delete link
 			if ($vars['entity']->canEdit()) {
 			   echo "<div class='delete_button'>" . elgg_view("output/confirmlink",array(
 					'href' => $vars['url'] . "action/thewire/delete?thewirepost=" . $vars['entity']->getGUID(),
@@ -41,7 +45,7 @@ if (isset($vars['entity'])) {
 					'confirm' => elgg_echo('deleteconfirm'),
 				)) . "</div>";
 			}
-			?>
+		?>
 	    </div>
 		
 		<div class="wire_post_info">
