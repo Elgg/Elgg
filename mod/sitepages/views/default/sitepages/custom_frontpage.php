@@ -10,8 +10,12 @@
  * @link http://elgg.org/
  */
 
-$object = sitepages_get_sitepage_object('front');
+$sitepage = sitepages_get_sitepage_object('front');
 
-if ($object) {
-	echo $object->description;
+if ($sitepage) {
+	if (get_loggedin_userid()) {
+		echo $sitepage->logged_in_content;
+	} else {
+		echo $sitepage->logged_out_content;
+	}
 }

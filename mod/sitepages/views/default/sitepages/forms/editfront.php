@@ -12,21 +12,23 @@
 $action = 'sitepages/addfront';
 
 if ($sitepages_object = sitepages_get_sitepage_object('front')) {
-	$css = $sitepages_object->title;
-	$sitepages_content = $sitepages_object->description;
-	$guid = $sitepages_object->guid;
+	$css = $sitepages_object->css;
+	$logged_in_content = $sitepages_object->logged_in_content;
+	$logged_out_content = $sitepages_object->logged_out_content;
 } else {
 	$css = '';
-	$sitepages_content = '';
-	$guid = '';
+	$logged_in_content = '';
+	$logged_out_content = '';
 }
 
 // set the required form variables
 $input_css = elgg_view('input/plaintext', array('internalname' => 'css', 'value' => $css));
-$input_sitepages_content = elgg_view('input/plaintext', array('internalname' => 'sitepages_content', 'value' => $sitepages_content));
+$input_logged_in_content = elgg_view('input/plaintext', array('internalname' => 'logged_in_content', 'value' => $logged_in_content ));
+$input_logged_out_content = elgg_view('input/plaintext', array('internalname' => 'logged_out_content', 'value' => $logged_out_content ));
 $submit_input = elgg_view('input/submit', array('internalname' => 'submit', 'value' => elgg_echo('save')));
 
-$pageshell_title = elgg_echo("sitepages:front_content");
+$logged_in_content_title = elgg_echo("sitepages:logged_in_front_content");
+$logged_out_content_title = elgg_echo("sitepages:logged_out_front_content");
 $css_title = elgg_echo("sitepages:css");
 
 //preview link
@@ -38,8 +40,13 @@ $form_body = <<<___EOT
 
 	<h3 class='settings'>$css_title</h3>
 	<p class='longtext_editarea'>$input_css</p><br />
-	<h3 class='settings'>$pageshell_title</h3>
-	<p class='longtext_editarea'>$input_sitepages_content</p>
+
+
+	<h3 class='settings'>$logged_in_content_title</h3>
+	<p class='longtext_editarea'>$input_logged_in_content</p><br />
+
+	<h3 class='settings'>$logged_out_content_title</h3>
+	<p class='longtext_editarea'>$input_logged_out_content</p>
 
 	$hidden_guid
 	<br />

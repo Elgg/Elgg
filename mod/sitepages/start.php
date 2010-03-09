@@ -11,8 +11,16 @@
  * @copyright Curverider Ltd 2008-2010
  * @link http://elgg.org/
  *
- * @todo Implement sticky pages
- * @todo DRY up actions and views
+ * @todo
+ * 	Check for SQL injection problems.
+ * 	Make sure this stuff doesn't show up in search.
+ * 	Check entity keyword views against fullview.  Force to FALSE?
+ * 	DRY up actions and views
+ * 	Implement sticky forms
+ * 	Use $entity->view to redirect to url of page.
+ * 	The tool settings view is probably not needed as it can be added to the front page edit tab.
+ * 	You can say pg/sitepages/edit|read/any_page_i_want and it will let you.
+ * 	Clean up and probably move the docs for keywords.
  */
 
 /**
@@ -93,6 +101,8 @@ function sitepages_custom_index() {
 	}
 
 	set_context($context);
+
+	// return NULL to pass this to next in chain, or back to standard index.php.
 	return NULL;
 }
 
@@ -161,12 +171,24 @@ function sitepages_page_handler($page) {
 	page_draw($title, $content);
 }
 
-
+/**
+ * Parses a registered view for supported keywords.
+ *
+ * @param unknown_type $hook
+ * @param unknown_type $entity_type
+ * @param unknown_type $return_value
+ * @param unknown_type $params
+ * @return string
+ */
 function sitepages_parse_view($hook, $entity_type, $return_value, $params) {
 	global $CONFIG;
 
+	// give me everything that is (string):(any thing that's not a ]) surrounded by [[ ]]s
+	$keyword_regex = '/\[\[([a-z]+):([^\]]+)\]\]/';
+
 	if (in_array($params['view'], $CONFIG->sitepages_parse_views)) {
 		$keywords = $CONFIG->sitepages_keywords;
+
 		$view_options = array(
 			'view' => $params['view']
 		);
@@ -176,10 +198,16 @@ function sitepages_parse_view($hook, $entity_type, $return_value, $params) {
 				$return_value = str_replace("[[$keyword]]", $content, $return_value);
 			}
 		}
+
+		// parse for specialized tags:
+		//	[[entity: key=value, key=value,etc]]
+		//	[[view:viewname, vars_key=value,...]]
+		$return_value = preg_replace_callback($keyword_regex, 'sitepages_parse_view_match', $return_value);
 	}
 
 	return $return_value;
 }
+
 
 /**
  * Register some default keywords.
@@ -191,7 +219,6 @@ function sitepages_parse_view($hook, $entity_type, $return_value, $params) {
  * @return unknown_type
  */
 function sitepages_keyword_hook($hook, $entity_type, $return_value, $params) {
-
 	$return_value['login_box'] = array(
 		'view' => 'account/forms/login',
 		'description' => elgg_echo('sitepages:keywords:login_box')
@@ -204,8 +231,6 @@ function sitepages_keyword_hook($hook, $entity_type, $return_value, $params) {
 
 	return $return_value;
 }
-
-
 
 register_elgg_event_handler('init', 'system', 'sitepages_init');
 register_elgg_event_handler('pagesetup', 'system', 'sitepages_pagesetup');

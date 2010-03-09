@@ -16,8 +16,10 @@ if ($meta_details) {
 	$description = $meta_details->description;
 
 	echo <<<___END
+
 	<meta name="description" content="$description" />
 	<meta name="keywords" content="$metatags" />
+
 ___END;
 }
 
@@ -25,11 +27,13 @@ ___END;
 if (get_context() == 'sitepages:front') {
 	$custom_css = sitepages_get_sitepage_object('front');
 
-	if ($custom_css && $custom_css->title) {
-		echo "
+	if ($custom_css && $custom_css->css) {
+		echo <<<___END
+
 		<style>
-		{$custom_css->title}
+		{$custom_css->css}
 		</style>
-		";
+
+___END;
 	}
 }

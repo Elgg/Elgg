@@ -12,6 +12,7 @@
 $keywords = $vars['config']->sitepages_keywords;
 $title = elgg_echo('sitepages:keywords_title');
 $instructions = elgg_echo('sitepages:keywords_instructions');
+$more_info = elgg_echo('sitepages:keywords_instructions_more');
 
 $keywords_html = '';
 foreach ($keywords as $keyword => $info) {
@@ -22,6 +23,8 @@ foreach ($keywords as $keyword => $info) {
 echo "
 <h3>$title</h3>
 <p>$instructions</p>
+<span id=\"sitepagesKeywordMoreInfo\" class=\"xhidden\">$more_info</span>
+
 <ul>
 	$keywords_html
 </ul>

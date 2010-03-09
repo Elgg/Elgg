@@ -12,7 +12,9 @@
 
 admin_gatekeeper();
 
-$content = get_input('sitepages_content', '', FALSE);
+$logged_in_content = get_input('logged_in_content', '', FALSE);
+$logged_out_content = get_input('logged_out_content', '', FALSE);
+
 $css = get_input('css', '', FALSE);
 $loggedin_user_guid = get_loggedin_userid();
 
@@ -25,8 +27,9 @@ if (!$sitepage = sitepages_get_sitepage_object('front')) {
 	$sitepage = sitepages_create_sitepage_object('front');
 }
 
-$sitepage->title = $css;
-$sitepage->description = $content;
+$sitepage->css = $css;
+$sitepage->logged_in_content = $logged_in_content;
+$sitepage->logged_out_content = $logged_out_content;
 
 if ($sitepage->save()) {
 	system_message(elgg_echo("sitepages:posted"));

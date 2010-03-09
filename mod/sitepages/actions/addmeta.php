@@ -19,8 +19,8 @@ $metatags = get_input('metatags', '', FALSE);
 $_SESSION['description'] = $description;
 $_SESSION['metatags'] = $metatags;
 
-if (!$sitepage = sitepages_get_sitepage_object('front')) {
-	$sitepage = sitepages_create_sitepage_object('front');
+if (!$sitepage = sitepages_get_sitepage_object('seo')) {
+	$sitepage = sitepages_create_sitepage_object('seo');
 }
 
 $sitepage->title = $metatags;

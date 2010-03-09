@@ -19,7 +19,7 @@ if ($sitepages_object = sitepages_get_sitepage_object('front')) {
 	$meta_description = '';
 }
 
-$input_keywords = elgg_view('input/plaintext', array('internalname' => 'metatags', 'value' => $meta_tags));
+$input_keywords = elgg_view('input/text', array('internalname' => 'metatags', 'value' => $meta_tags));
 $input_description = elgg_view('input/plaintext', array('internalname' => 'description', 'value' => $meta_description));
 $submit_input = elgg_view('input/submit', array('internalname' => 'submit', 'value' => elgg_echo('save')));
 
