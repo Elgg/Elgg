@@ -202,13 +202,12 @@ function sitepages_keywords_parse_entity_params($string) {
 	// handle some special cases
 	if (isset($params['owner'])) {
 		if ($user = get_user_by_username($params['owner'])) {
-			$options['owner_guid'] = $user->getGUID();
+			$params['owner_guid'] = $user->getGUID();
 		}
 	}
 
 	// @todo probably need to add more for
 	// group -> container_guid, etc
-
 	return $params;
 }
 
