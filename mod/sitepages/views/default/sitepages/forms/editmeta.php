@@ -11,7 +11,7 @@
 
 $action = 'sitepages/addmeta';
 
-if ($sitepages_object = sitepages_get_sitepage_object('front')) {
+if ($sitepages_object = sitepages_get_sitepage_object('seo')) {
 	$meta_tags = $sitepages_object->title;
 	$meta_description = $sitepages_object->description;
 } else {
