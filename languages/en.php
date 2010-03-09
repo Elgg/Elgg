@@ -1,6 +1,6 @@
 <?php
 /**
- * Activity viewer
+ * Core language file
  *
  * @package Elgg
  * @subpackage Core
