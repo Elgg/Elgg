@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg 2 column left sidebar canvas layout
+ * Elgg 1 column with sidebar canvas layout
  *
  * @package Elgg
  * @subpackage Core
