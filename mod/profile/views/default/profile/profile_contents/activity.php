@@ -12,7 +12,7 @@
 	}
 	if(is_plugin_enabled('riverdashboard')) {
 		// users last 10 activites
-		echo elgg_view('profile/profile_contents/profile_activity', array('entity' => $vars['entity']));
+		echo elgg_view('profile/profile_contents/activity', array('entity' => $vars['entity']));
 	} else {
 		echo "Riverdashboard not loaded";
 	}
