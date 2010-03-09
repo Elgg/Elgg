@@ -33,8 +33,8 @@
 <?php 
 		echo elgg_view('input/securitytoken');
 ?>
-			<!-- display the save button -->
-			<input type="submit" class="submit_button" value="<?php echo elgg_echo('save'); ?>" />
+			<!-- display the post button -->
+			<input type="submit" class="submit_button" value="<?php echo elgg_echo('post'); ?>" />
 		</p>
 	
 	</form>
