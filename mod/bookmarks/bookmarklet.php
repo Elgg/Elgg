@@ -33,7 +33,7 @@ $area2 .= elgg_view('bookmarks/bookmarklet', array('pg_owner' => $page_owner));
 $area3 = elgg_view("bookmarks/bookmarklet");
 		
 // Format page
-$body = elgg_view_layout('one_column_with_sidebar', $area3, $area1.$area2);
+$body = elgg_view_layout('one_column_with_sidebar', $area1.$area2, $area3);
 		
 // Draw it
 echo page_draw(elgg_echo('bookmarks:bookmarklet'),$body);

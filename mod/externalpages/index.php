@@ -29,5 +29,5 @@ $edit = elgg_view('expages/forms/edit', array('type' => $type));
 $body = elgg_view('page_elements/elgg_content',array('body' => elgg_view('expages/menu', array('type' => $type)).$edit));
 	
 // Display
-page_draw(elgg_echo('expages'),elgg_view_layout("one_column_with_sidebar", '', $title . $body));
+page_draw(elgg_echo('expages'),elgg_view_layout("one_column_with_sidebar", $title . $body));
 ?>

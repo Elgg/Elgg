@@ -24,4 +24,4 @@ $reported = elgg_get_entities(array('types' => 'object', 'subtypes' => 'reported
 $area2 = elgg_view("reportedcontent/listing", array('entity' => $reported));
 	
 // Display main admin menu
-page_draw(elgg_echo('reportedcontent'),elgg_view_layout("one_column_with_sidebar", '', $title . $area2));
+page_draw(elgg_echo('reportedcontent'),elgg_view_layout("one_column_with_sidebar", $title . $area2));

@@ -53,7 +53,7 @@ if(page_owner()	!= get_loggedin_user()->guid){
 //include a view for plugins to extend
 $area3 .= elgg_view("bookmarks/sidebar_options", array("object_type" => 'bookmarks'));	
 // Format page
-$body = elgg_view_layout('one_column_with_sidebar', $area3, $area1.$area2);
+$body = elgg_view_layout('one_column_with_sidebar', $area1.$area2, $area3);
 		
 // Draw it
 echo page_draw(sprintf(elgg_echo("bookmarks:user"),page_owner_entity()->name), $body);

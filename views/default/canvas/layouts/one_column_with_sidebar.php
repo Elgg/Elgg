@@ -12,12 +12,14 @@
 	<div id="elgg_sidebar">
 		<?php 
 			echo elgg_view('page_elements/owner_block'); 
-			if (isset($vars['area1'])) echo $vars['area1'];
-			if (isset($vars['area3'])) echo $vars['area3']; 
+			if (isset($vars['area2'])) echo $vars['area2']; 
+			if (isset($vars['area3'])) echo $vars['area3'];	
 		?>
 	</div>
 	
 	<div id="elgg_page_contents" class="clearfloat">
-		<?php if (isset($vars['area2'])) echo $vars['area2']; ?>
+		<?php 
+			if (isset($vars['area1'])) echo $vars['area1'];
+		?>
 	</div>
 </div>

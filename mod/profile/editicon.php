@@ -37,7 +37,7 @@ $area2 .= elgg_view("profile/edit_icon", array('user' => $user));
 set_context('profile_edit');
 
 // Get the form and correct canvas area
-$body = elgg_view_layout("one_column_with_sidebar", '', $area2);
+$body = elgg_view_layout("one_column_with_sidebar", $area2);
 	
 // Draw the page
 page_draw(elgg_echo("profile:editicon"), $body);

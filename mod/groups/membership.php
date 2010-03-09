@@ -30,7 +30,7 @@
 	set_context('groups');
 	
 	$area2 .= $objects;
-	$body = elgg_view_layout('one_column_with_sidebar','',$area1.$area2);
+	$body = elgg_view_layout('one_column_with_sidebar', $area1.$area2);
 	
 	// Finally draw the page
 	page_draw($title, $body);

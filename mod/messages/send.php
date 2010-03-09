@@ -36,7 +36,7 @@ $area2 .= elgg_view("messages/forms/send",array('friends' => $friends));
 $area3 = elgg_view("messages/menu_options");
 
 // Format
-$body = elgg_view_layout("one_column_with_sidebar", $area3, $area2);
+$body = elgg_view_layout("one_column_with_sidebar", $area2, $area3);
 
 // Draw page
 page_draw(sprintf(elgg_echo('messages:send'),$page_owner->name),$body);

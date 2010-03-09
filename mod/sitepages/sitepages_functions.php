@@ -86,7 +86,7 @@ function sitepages_get_edit_section_content($page_type) {
 	$form .= elgg_view($view, array('page_type' => $page_type));
 	$body = $title .  $menu . $form;
 
-	$content = elgg_view_layout('one_column_with_sidebar', '', $body, $keywords);
+	$content = elgg_view_layout('one_column_with_sidebar', $body, $keywords);
 	return $content;
 }
 
@@ -107,7 +107,7 @@ function sitepages_get_page_content($page_type) {
 		$body .= elgg_view('page_elements/elgg_content', array('body' => elgg_echo('sitepages:notset')));
 	}
 
-	$content = elgg_view_layout('one_column_with_sidebar', '', $body);
+	$content = elgg_view_layout('one_column_with_sidebar', $body);
 	return $content;
 }
 

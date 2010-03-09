@@ -32,6 +32,6 @@ if (!trigger_plugin_hook('index', 'system', null, FALSE)) {
 	
 	global $autofeed;
 	$autofeed = FALSE;
-	$content = elgg_view_layout('one_column_with_sidebar', elgg_view('account/forms/login'), $title . $content);
+	$content = elgg_view_layout('one_column_with_sidebar', $title, elgg_view('account/forms/login'));
 	page_draw(null, $content);
 }

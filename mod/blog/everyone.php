@@ -29,7 +29,7 @@
 		global $CONFIG;
 		$area3 = elgg_view('blog/categorylist',array('baseurl' => $CONFIG->wwwroot . 'search/?subtype=blog&tagtype=universal_categories&tag=','subtype' => 'blog'));
 
-		$body = elgg_view_layout("two_column_left_sidebar", '', $area2, $area3);
+		$body = elgg_view_layout("one_column_with_sidebar", $area2, $area3);
 		
 	// Display page
 		page_draw(elgg_echo('blog:everyone'),$body);

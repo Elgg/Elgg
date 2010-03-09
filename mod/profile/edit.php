@@ -40,7 +40,7 @@ $area1 = "";
 set_context('profile_edit');
 
 // get the required canvas area
-$body = elgg_view_layout("one_column_with_sidebar", $area1, $area2);
+$body = elgg_view_layout("one_column_with_sidebar", $area2, $area1);
 	
 // Draw the page
 page_draw(elgg_echo("profile:edit"),$body);

@@ -52,7 +52,7 @@ $content = elgg_view("messages/messages",array(
 
 $sidebar = elgg_view("messages/menu_options");
 
-$body = elgg_view_layout("one_column_with_sidebar", $sidebar, $content);
+$body = elgg_view_layout("one_column_with_sidebar", $content, $sidebar);
 
 // Display page
 page_draw(sprintf(elgg_echo('messages:message')),$body);

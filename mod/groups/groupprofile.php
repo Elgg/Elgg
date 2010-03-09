@@ -45,14 +45,14 @@
 
 		}
 		
-		$body = elgg_view_layout('one_column_with_sidebar', $area3, $area1.$area2);
+		$body = elgg_view_layout('one_column_with_sidebar', $area1.$area2, $area3);
 	} else {
 		$title = elgg_echo('groups:notfound');
 		
 		$area2 = elgg_view_title($title);
 		$area2 .= elgg_echo('groups:notfound:details');
 		
-		$body = elgg_view_layout('one_column_with_sidebar', '', $area2);
+		$body = elgg_view_layout('one_column_with_sidebar', $area2);
 	}
 		
 	// Finally draw the page

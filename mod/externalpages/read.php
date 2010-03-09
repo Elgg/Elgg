@@ -30,7 +30,7 @@ if($contents){
 	$area1 .= elgg_view('page_elements/elgg_content',array('body' => elgg_echo("expages:notset")));
 
 // Display through the correct canvas area
-$body = elgg_view_layout("one_column_with_sidebar", '', $area1);
+$body = elgg_view_layout("one_column_with_sidebar", $area1);
 
 // Display page
 page_draw($title,$body);

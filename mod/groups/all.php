@@ -61,7 +61,7 @@
 	$title = sprintf(elgg_echo("groups:all"),page_owner_entity()->name);
 	$area2 = elgg_view_title($title);
 	$area2 .= elgg_view("groups/group_sort_menu", array("count" => $group_count, "filter" => $filter)) . $objects;
-	$body = elgg_view_layout('one_column_with_sidebar',$area1,$area2);
+	$body = elgg_view_layout('one_column_with_sidebar', $area2, $area1);
 	
 	// Finally draw the page
 	page_draw($title, $body);

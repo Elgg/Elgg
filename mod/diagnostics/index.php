@@ -39,4 +39,4 @@ $body .= elgg_view('page_elements/elgg_content', array(
 );
 $body .= "</div>";
 // create page
-page_draw(elgg_echo('diagnostics'), elgg_view_layout("one_column_with_sidebar", '', $body));
+page_draw(elgg_echo('diagnostics'), elgg_view_layout("one_column_with_sidebar", $body));

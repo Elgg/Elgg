@@ -34,7 +34,7 @@
 		$area2 .= list_user_objects($page_owner->getGUID(),'thewire');
 		    
     //select the correct canvas area
-	    $body = elgg_view_layout("one_column_with_sidebar", '', $area2);
+	    $body = elgg_view_layout("one_column_with_sidebar", $area2);
 		
 	// Display page
 		page_draw(sprintf(elgg_echo('thewire:user'),$page_owner->name),$body);

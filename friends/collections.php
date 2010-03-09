@@ -17,8 +17,7 @@ gatekeeper();
 $area2 = elgg_view_access_collections($_SESSION['user']->getGUID());
 
 // Format page
-$body = elgg_view_layout('one_column_with_sidebar', '',
-	elgg_view_title(elgg_echo('friends:collections')) . $area2);
+$body = elgg_view_layout('one_column_with_sidebar', elgg_view_title(elgg_echo('friends:collections')) . $area2);
 
 // Draw it
 page_draw(elgg_echo('friends:collections'),$body);

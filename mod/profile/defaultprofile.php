@@ -46,4 +46,4 @@ $listing .= "<div class='default_profile_reset'>" . elgg_view('input/form',
 
 set_context('admin');
 	
-page_draw(elgg_echo('profile:edit:default'),elgg_view_layout("one_column_with_sidebar", '', $title . $form . $listing));
+page_draw(elgg_echo('profile:edit:default'),elgg_view_layout("one_column_with_sidebar", $title . $form . $listing));

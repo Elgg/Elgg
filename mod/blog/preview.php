@@ -2,12 +2,6 @@
 
 	/**
 	 * Elgg blog: preview page
-	 * 
-	 * @package ElggBlog
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.org/
 	 */
 
 		require_once(dirname(dirname(dirname(__FILE__))).'/engine/start.php');
@@ -41,7 +35,7 @@
 		$title = sprintf(elgg_echo("blog:posttitle"),$_SESSION['user']->name,$blogpost->title);
 
 	// Display through the correct canvas area
-		$body = elgg_view_layout("two_column_left_sidebar", '', $area1 . $area2);			
-		page_draw($blogpost->title,$body);
+		$body = elgg_view_layout("one_column_with_sidebar", $area1 . $area2);			
+		echo page_draw($blogpost->title,$body);
 
 ?>

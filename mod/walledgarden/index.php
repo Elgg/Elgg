@@ -20,6 +20,6 @@ $area1 = "This site is running in walled garden mode. <br />
 			Therefore you will need to be invited & logged in to see anything.";
 
 //display the contents in our new canvas layout
-$body = elgg_view_layout('one_column_with_sidebar', $login, $area1);
+$body = elgg_view_layout('one_column_with_sidebar', $area1, $login);
 
 page_draw($title, $body);

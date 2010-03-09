@@ -24,5 +24,5 @@ if(is_plugin_enabled('riverdashboard')) {
 } else {
 	$content = "Riverdashboard not loaded";
 }
-$content = elgg_view_layout('one_column_with_sidebar', '', $title . $content);
+$content = elgg_view_layout('one_column_with_sidebar', $title . $content);
 page_draw(elgg_echo('content:latest'), $content);
