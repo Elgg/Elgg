@@ -23,7 +23,7 @@ if ($user = get_user_by_username($username)) {
 	$body = elgg_view('profile/profile_navigation', array("option" => $option,"entity" => $user));
 	switch($option){
 		case 'activity':
-			$body .= elgg_view('profile/profile_contents/details', array("entity" => $user, "full" => true));
+			$body .= elgg_view('profile/profile_contents/details', array("entity" => $user));
 		break;
 
 		case 'widgets':
@@ -42,7 +42,7 @@ if ($user = get_user_by_username($username)) {
 		break;
 
 		case 'default':
-			$body .= elgg_view('profile/profile_contents/details', array("entity" => $user, "full" => true));
+			$body .= elgg_view('profile/profile_contents/details', array("entity" => $user));
 		break;
 	}
 	//$body .= elgg_view_entity($user,true);
