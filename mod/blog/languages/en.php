@@ -9,7 +9,7 @@
 			'blog' => "Blog",
 			'blogs' => "Blogs",
 			'blog:user' => "%s's blog",
-			'blog:user:friends' => "%s's friends' blog",
+			'blog:user:friends' => "%s's friends' blogs",
 			'blog:your' => "Your blog",
 			'blog:posttitle' => "%s's blog: %s",
 			'blog:friends' => "Friends' blogs",
