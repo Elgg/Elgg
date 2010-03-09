@@ -6,12 +6,15 @@
 	 * @package ElggBlog
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
 	 * @author Curverider Ltd <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
+	 * @copyright Curverider Ltd 2008-2009
 	 * @link http://elgg.org/
 	 */
 
 	// Make sure we're logged in (send us to the front page if not)
 		gatekeeper();
+
+        // make sure action is secure
+        action_gatekeeper();
 
 	// Get input data
 		$guid = (int) get_input('blogpost');
@@ -20,6 +23,24 @@
 		$access = get_input('access_id');
 		$tags = get_input('blogtags');
 		$comments_on = get_input('comments_select','Off');
+		$excerpt = get_input('blogexcerpt');
+		if($excerpt){
+			if(strlen($excerpt) > 300)
+        		$excerpt = substr($excerpt, 0, strpos($excerpt, ' ', 300));
+        	else
+        		$excerpt = strip_tags($excerpt);
+			
+			$show_excerpt = true;
+		}
+		if(!$excerpt){
+			//grab the first 300 characters
+			if(strlen($body) > 300)
+        		$excerpt = substr($body, 0, strpos($body, ' ', 300)) . "...";
+        	else
+        		$excerpt = strip_tags($body);
+		
+        	$show_excerpt = false;
+    	}
 		
 	// Make sure we actually have permission to edit
 		$blog = get_entity($guid);
@@ -59,9 +80,10 @@
 				if (is_array($tagarray)) {
 					$blog->tags = $tagarray;
 				}
-
+				$blog->excerpt = $excerpt;
 				$blog->comments_on = $comments_on; //whether the users wants to allow comments or not on the blog post
-
+				$blog->show_excerpt = $show_excerpt;
+				
 		// Success message
 				system_message(elgg_echo("blog:posted"));
 		//add to the river

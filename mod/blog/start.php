@@ -2,23 +2,7 @@
 
 	/**
 	 * Elgg blog plugin
-	 * 
-	 * @package ElggBlog
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
-	 */
-
-	/**
-	 * Blog initialisation
-	 *
-	 * These parameters are required for the event API, but we won't use them:
-	 * 
-	 * @param unknown_type $event
-	 * @param unknown_type $object_type
-	 * @param unknown_type $object
-	 */
+	 **/
 
 		function blog_init() {
 			
@@ -28,18 +12,19 @@
 			// Set up menu for logged in users
 				if (isloggedin()) {
     				
-					add_menu(elgg_echo('blogs'), $CONFIG->wwwroot . "pg/blog/" . $_SESSION['user']->username);
+					add_menu(elgg_echo('blog:yours'), $CONFIG->wwwroot . "pg/blog/" . $_SESSION['user']->username);
 					
 			// And for logged out users
 				} else {
-					add_menu(elgg_echo('blogs'), $CONFIG->wwwroot . "mod/blog/everyone.php");
+					add_menu(elgg_echo('blog'), $CONFIG->wwwroot . "mod/blog/everyone.php",array(
+					));
 				}
 				
 			// Extend system CSS with our own styles, which are defined in the blog/css view
-				elgg_extend_view('css','blog/css');
+				extend_view('css','blog/css');
 				
 			// Extend hover-over menu	
-				elgg_extend_view('profile/menu/links','blog/menu');
+				extend_view('profile/menu/links','blog/menu');
 				
 			// Register a page handler, so we can have nice URLs
 				register_page_handler('blog','blog_page_handler');
@@ -57,7 +42,9 @@
 			// Listen to notification events and supply a more useful message
 			register_plugin_hook('notify:entity:message', 'object', 'blog_notify_message');
 
-				
+			// Add a new blog widget
+				add_widget_type('blog',elgg_echo("blog"),elgg_echo("blog:widget:description"),'profile, dashboard');
+			
 			// Listen for new pingbacks
 				register_elgg_event_handler('create', 'object', 'blog_incoming_ping');
 				
@@ -161,7 +148,7 @@
 				}
 			// If the URL is just 'blog/username', or just 'blog/', load the standard blog index
 			} else {
-				include(dirname(__FILE__) . "/index.php");
+				@include(dirname(__FILE__) . "/index.php");
 				return true;
 			}
 			
@@ -195,7 +182,7 @@
 			}
 			
 		}
-
+		
 		/**
 		 * Returns a more meaningful message
 		 *
@@ -215,11 +202,11 @@
 				$title = $entity->title;
 				if ($method == 'sms') {
 					$owner = $entity->getOwnerEntity();
-					return $owner->name . ' via blog: ' . $title;
+					return $owner->username . ' via blog: ' . $title;
 				}
 				if ($method == 'email') {
 					$owner = $entity->getOwnerEntity();
-					return $owner->name . ' via blog: ' . $title . "\n\n" . $descr . "\n\n" . $entity->getURL();
+					return $owner->username . ' via blog: ' . $title . "\n\n" . $descr . "\n\n" . $entity->getURL();
 				}
 			}
 			return null;
@@ -270,6 +257,14 @@
 			// TODO: Get incoming ping object, see if its a ping on a blog and if so attach it as a comment
 		}
 		
+		/** 
+		 * remove the more link in the blog text
+		 **/
+		function remove_more($body){
+			$text = str_replace("{{more}}", " ", $body);
+			return $text;
+		}
+
 	// Make sure the blog initialisation function is called on initialisation
 		register_elgg_event_handler('init','system','blog_init');
 		register_elgg_event_handler('pagesetup','system','blog_pagesetup');
