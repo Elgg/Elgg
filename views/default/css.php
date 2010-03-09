@@ -207,8 +207,19 @@ h2 {
 .margin_top {
 	margin-top:10px;
 }
-form.action {
-	margin-top:10px;
+.rss_link {
+	margin-top:-10px;
+	margin-bottom:10px;
+}
+.rss_link a {
+	display:block;
+	width:14px;
+	height:14px;
+	float:right;
+	background-image:url(<?php echo $vars['url']; ?>_graphics/icon_rss.png);
+	background-repeat: no-repeat;
+	background-position: left top;
+	text-indent: -1000em;
 }
 .tags {
 	background-image:url(<?php echo $vars['url']; ?>_graphics/icon_tag.png);

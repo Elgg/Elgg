@@ -12,6 +12,21 @@
 
 $contents = "";
 
+// Are there feeds to display?
+global $autofeed;
+if (isset($autofeed) && $autofeed == true) {
+	$url = $url2 = full_url();
+	if (substr_count($url,'?')) {
+		$url .= "&view=rss";
+	} else {
+		$url .= "?view=rss";
+	}
+	$label = elgg_echo('feed:rss');
+	$contents .= <<<END
+	<div class="rss_link clearfloat"><a href="{$url}" rel="nofollow" title="{$label}">{$label}</a></div>
+END;
+}
+
 if(is_plugin_enabled('profile')) {
 	// Is there a page owner?
 	$owner = page_owner_entity();
@@ -33,23 +48,6 @@ if(is_plugin_enabled('profile')) {
 	
 		$contents .= "<div id='owner_block' class='radius8'>".$display."</div>";
 	}
-}
-// Are there feeds to display?
-global $autofeed;
-
-if (isset($autofeed) && $autofeed == true) {
-	$url = $url2 = full_url();
-	if (substr_count($url,'?')) {
-		$url .= "&view=rss";
-	} else {
-		$url .= "?view=rss";
-	}
-	$label = elgg_echo('feed:rss');
-	$contents .= <<<END
-
-<div id="rss_link"><a href="{$url}" rel="nofollow">{$label}</a></div>
-
-END;
 }
 
 $contents .= elgg_view('owner_block/extend');

@@ -295,7 +295,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	'friends:nocollections' => "You do not yet have any collections.",
 	'friends:collectiondeleted' => "Your collection has been deleted.",
 	'friends:collectiondeletefailed' => "We were unable to delete the collection. Either you don't have permission, or some other problem has occurred.",
-	'friends:collectionadded' => "Your collection was successfuly created",
+	'friends:collectionadded' => "Your collection was successfully created",
 	'friends:nocollectionname' => "You need to give your collection a name before it can be created.",
 	'friends:collections:members' => "Collection members",
 	'friends:collections:edit' => "Edit collection",
@@ -310,9 +310,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 /**
  * Feeds
  */
-	'feed:rss' => 'Subscribe to feed',
-	'feed:odd' => 'Syndicate OpenDD',
-
+	'feed:rss' => 'RSS feed for this page',
 /**
  * links
  **/
