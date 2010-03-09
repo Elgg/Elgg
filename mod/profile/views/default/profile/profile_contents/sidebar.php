@@ -11,6 +11,7 @@
 ?>
 <div id="profile_sidebar">
 <?php
-	echo elgg_view('profile/profile_ownerblock', array('smallicon' => true));
+	$section = $vars['section'];
+	echo elgg_view('profile/profile_ownerblock', array('section' => $section));
 ?>
 </div>

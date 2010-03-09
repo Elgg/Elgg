@@ -44,7 +44,7 @@ function profile_get_user_profile_html($user, $section = 'activity') {
 			break;
 	}
 
-	$body .= elgg_view('profile/profile_contents/sidebar');
+	$body .= elgg_view('profile/profile_contents/sidebar', array('section' => $section));
 	return $body;
 }
 
