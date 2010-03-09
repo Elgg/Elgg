@@ -37,7 +37,9 @@ if ($result) {
 		} else if (get_input('returntoreferer')) {
 			forward($_SERVER['HTTP_REFERER']);
 		} else {
-			forward("pg/dashboard/");
+			// forward to index for front page overrides.
+			// index will forward to dashboard if appropriate.
+			forward('index.php');
 		}
 	}
 } else {
