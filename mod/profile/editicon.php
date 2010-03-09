@@ -31,13 +31,13 @@ if (!$user->canEdit()) {
 }
 
 // set title
-$area2 = elgg_view_title(elgg_echo('profile:createicon:header'));
-$area2 .= elgg_view("profile/edit_icon", array('user' => $user));
+$area1 = elgg_view_title(elgg_echo('profile:createicon:header'));
+$area1 .= elgg_view("profile/edit_icon", array('user' => $user));
 
 set_context('profile_edit');
 
 // Get the form and correct canvas area
-$body = elgg_view_layout("one_column_with_sidebar", $area2);
+$body = elgg_view_layout("one_column_with_sidebar", $area1);
 	
 // Draw the page
 page_draw(elgg_echo("profile:editicon"), $body);

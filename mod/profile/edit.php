@@ -32,15 +32,13 @@ if (!$user->canEdit()) {
 }
 
 // Get edit form
-$area2 = elgg_view_title(elgg_echo('profile:edit'));
-$area2 .= elgg_view("profile/edit",array('entity' => $user)); 
-
-$area1 = "";
+$area1 = elgg_view_title(elgg_echo('profile:edit'));
+$area1 .= elgg_view("profile/edit",array('entity' => $user)); 
 	
 set_context('profile_edit');
 
 // get the required canvas area
-$body = elgg_view_layout("one_column_with_sidebar", $area2, $area1);
+$body = elgg_view_layout("one_column_with_sidebar", $area1);
 	
 // Draw the page
 page_draw(elgg_echo("profile:edit"),$body);
