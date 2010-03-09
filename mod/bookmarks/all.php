@@ -11,13 +11,6 @@
 
 // Start engine
 require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
-	
-// Get the current page's owner
-$page_owner = page_owner_entity();
-if ($page_owner === false || is_null($page_owner)) {
-	$page_owner = $_SESSION['user'];
-	set_page_owner($_SESSION['guid']);
-}
 		
 // get the filter menu
 $area1 = elgg_view('page_elements/content_header', array('context' => "everyone", 'type' => 'bookmarks'));
