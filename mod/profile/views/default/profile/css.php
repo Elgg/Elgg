@@ -251,14 +251,6 @@ p.visit_twitter a {
 
 
 /* ***************************************
-	edit profile page
-*************************************** */
-form#edit_profile {
-	margin-top:10px;
-}
-
-
-/* ***************************************
 	user avatar upload & crop page
 *************************************** */
 #avatar_upload {
@@ -276,20 +268,16 @@ form#edit_profile {
 	margin:20px 0 0 0;
 	padding:10px 0 0 0;
 }	
-#avatar_croppingtool .current_user_avatar {
+#user_avatar {
 	float: left;
 	margin-right: 20px;
 }	
-#avatar_croppingtool .user_avatar_crop_preview {
+#user_avatar_preview {
 	float: left;
 	position: relative;
 	overflow: hidden;
 	width: 100px;
 	height: 100px;
-}
-/* @todo fix image cropping */
-#avatar_cropping img.current_user_avatar {
-	max-width:560px;
 }
 
 
