@@ -1,49 +1,36 @@
 <?php
 /**
- * Elgg SEO: add/edit
+ * Site pages meta tags and desc page save/edit
+ *
+ * @package SitePages
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * @author Curverider Ltd <info@elgg.com>
+ * @copyright Curverider Ltd 2008-2010
+ * @link http://elgg.com/
+ *
  */
 
-// Make sure we're logged as admin
 admin_gatekeeper();
 
-// Get input data
-$description = get_input('description', '', false);
-$metatags = get_input('metatags', '', false);
-$previous_guid = get_input('seo_guid');
-		
-//remove the old front page
-if(get_entity($previous_guid)){
-	delete_entity($previous_guid);
-}
+$description = get_input('description', '', FALSE);
+$metatags = get_input('metatags', '', FALSE);
 
 // Cache to the session
 $_SESSION['description'] = $description;
 $_SESSION['metatags'] = $metatags;
-			
-// Initialise a new ElggObject
-$seo = new ElggObject();
-// Tell the system what type of external page it is
-$seo->subtype = "sitemeta";
-// Set its owner to the current user
-$seo->owner_guid = $_SESSION['user']->getGUID();
-// Set its access to public
-$seo->access_id = 2;
-// Set its title and description appropriately
-$seo->title = $metatags;
-$seo->description = $description;
-			
-// Before we can set metadata, save
-if (!$seo->save()) {
-	register_error(elgg_echo("sitepages:error"));
-	forward("pg/sitepages/index.php?type=seo");
+
+if (!$sitepage = sitepages_get_sitepage_object('front')) {
+	$sitepage = sitepages_create_sitepage_object('front');
 }
 
-// Success message
-system_message(elgg_echo("sitepages:seocreated"));
+$sitepage->title = $metatags;
+$sitepage->description = $description;
 
-// Remove the cache
-unset($_SESSION['description']); unset($_SESSION['metatags']);
-	
-	
-// Forward back to the page
-forward("pg/sitepages/index.php?type=seo");
+if ($sitepage->save()) {
+	system_message(elgg_echo("sitepages:seocreated"));
+	unset($_SESSION['description']); unset($_SESSION['metatags']);
+} else {
+	register_error(elgg_echo("sitepages:error"));
+}
+
+forward($_SERVER['HTTP_REFERER']);

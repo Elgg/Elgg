@@ -1,92 +1,51 @@
 <?php
+/**
+ * Edit non front or SEO site pages.
+ *
+ * @package Elggsitepages
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * @author Curverider Ltd <info@elgg.com>
+ * @copyright Curverider Ltd 2008-2010
+ * @link http://elgg.com/
+ *
+ */
 
-	/**
-	 * Elgg sitepages edit
-	 * 
-	 * @package Elggsitepages
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
-	 * 
-	 */
-	 
-	 //get the page type
-	 $type = $vars['type'];
-	 
-	 //action
-	 $action = "sitepages/add";
-	 
-	 //grab the required entity
-	 $page_contents = elgg_get_entities(array('type' => 'object', 'subtype' => $type, 'limit' => 1));
-	 
-	if($page_contents){
-		 foreach($page_contents as $pc){
-			 $description = $pc->description;
-			 $tags = $pc->tags;
-			 $guid = $pc->guid;
-		 }
-	}else {		
-		$tags = "";
-		$description = "";
-	}
-		
-	// set the required form variables
-		$input_area = elgg_view('input/longtext', array('internalname' => 'sitepagescontent', 'value' => $description));
-		$tag_input = elgg_view('input/tags', array('internalname' => 'sitepagestags', 'value' => $tags));
-        $submit_input = elgg_view('input/submit', array('internalname' => 'submit', 'value' => elgg_echo('save')));
-		$hidden_value = elgg_view('input/hidden', array('internalname' => 'content_type', 'value' => $type));
-		$hidden_guid = elgg_view('input/hidden', array('internalname' => 'expage_guid', 'value' => $guid));
-		$tag_label = elgg_echo('tags') . "<br/>";  
-		
-		//type
-		$type = $vars['type'];
-		//set the url
-		$url = $vars['url'] . "pg/sitepages/index.php?type=";
-		
-		if($type == 'about') { 
-			$external_page_title = elgg_echo('sitepages:about');
-		}
-		else if($type == 'terms') {
-			$external_page_title = elgg_echo('sitepages:terms');
-		}
-		else if($type == 'privacy') {
-			$external_page_title = elgg_echo('sitepages:privacy');     
-		}
-	//preview link
-	//	echo "<div class=\"page_preview\"><a href=\"#preview\">" . elgg_echo('sitepages:preview') . "</a></div>";
-		
-	//construct the form
-		$form_body = <<<EOT
+$page_type = $vars['page_type'];
+$action = 'sitepages/add';
 
-		<h3 class='settings'>$external_page_title</h3>
-		<p class='longtext_editarea'>$input_area</p>
-		<p>
-			$tag_label
-			$tag_input
-		</p>
-			$hidden_value
-			$hidden_guid
-			<br />
-			$submit_input
+if ($sitepages_object = sitepages_get_sitepage_object($page_type)) {
+		$tags = $sitepages_object->tags;
+		$description = $sitepages_object->description;
+		$guid = $sitepages_object->getGUID();
+} else {
+	$tags = array();
+	$description = '';
+	$guid = '';
+}
 
-EOT;
-?>
-<?php
-	//display the form
-	echo elgg_view('input/form', array('action' => "{$vars['url']}action/$action", 'body' => $form_body));
-?>
+// set the required form variables
+$input_area = elgg_view('input/longtext', array('internalname' => 'sitepages_content', 'value' => $description));
+$tag_input = elgg_view('input/tags', array('internalname' => 'sitepages_tags', 'value' => $tags));
 
-<!-- preview page contents -->
-<!--
-<div class="expage_preview">
-<a name="preview"></a>
-<h2>Preview</h2>
-<?php 
-	if($description)
-		echo $description;
-	else
-		echo elgg_echo('sitepages:nopreview');
-?>
-</div>
--->
+$submit_input = elgg_view('input/submit', array('internalname' => 'submit', 'value' => elgg_echo('save')));
+$hidden_value = elgg_view('input/hidden', array('internalname' => 'page_type', 'value' => $page_type));
+
+$tag_label = '<h3>' . elgg_echo('tags') . '</h3>';
+$external_page_title = elgg_echo("sitepages:$page_type");
+
+$form_body = <<<___EOT
+
+<h3 class='settings'>$external_page_title</h3>
+<p class='longtext_editarea'>$input_area</p>
+<p>
+	$tag_label
+	$tag_input
+</p>
+$hidden_value
+$hidden_guid
+<br />
+$submit_input
+
+___EOT;
+
+echo elgg_view('input/form', array('action' => "{$vars['url']}action/$action", 'body' => $form_body));

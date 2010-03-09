@@ -1,17 +1,35 @@
 <?php
 /**
- * Meta tags
- **/
- 
-$meta_details = elgg_get_entities(array('type' => 'object', 'subtype' => 'seo', 'limit' => 1));
-if($meta_details){
-	foreach($meta_details as $md){
-		 $metatags = $md->title;
-		 $description = $md->description;
-	 }
-}
- 
-?>
+ * Add any additional defined metatags or CSS.
+ *
+ * @package SitePages
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * @author Curverider Ltd
+ * @copyright Curverider Ltd 2008-2010
+ * @link http://elgg.org/
+ */
 
-<meta name="description" content="<?php echo $description; ?>." />
-<meta name="keywords" content="<?php echo $metatags; ?>" />
+$meta_details = sitepages_get_sitepage_object('seo');
+
+if ($meta_details) {
+	$metatags = $meta_details->title;
+	$description = $meta_details->description;
+
+	echo <<<___END
+	<meta name="description" content="$description" />
+	<meta name="keywords" content="$metatags" />
+___END;
+}
+
+// only show on the custom front page.
+if (get_context() == 'sitepages:front') {
+	$custom_css = sitepages_get_sitepage_object('front');
+
+	if ($custom_css && $custom_css->title) {
+		echo "
+		<style>
+		{$custom_css->title}
+		</style>
+		";
+	}
+}

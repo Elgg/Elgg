@@ -1,51 +1,39 @@
 <?php
 /**
- * Elgg front page: add/edit
+ * Site pages front page save/edit
+ *
+ * @package SitePages
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * @author Curverider Ltd <info@elgg.com>
+ * @copyright Curverider Ltd 2008-2010
+ * @link http://elgg.com/
+ *
  */
 
-// Make sure we're logged as admin
 admin_gatekeeper();
 
-// Get input data
-$frontContents = get_input('frontContents');
-$css = get_input('css');
-$previous_guid = get_input('front_guid');
-	
-//remove the old front page
-if(get_entity($previous_guid)){
-	delete_entity($previous_guid);
+$content = get_input('sitepages_content', '', FALSE);
+$css = get_input('css', '', FALSE);
+$loggedin_user_guid = get_loggedin_userid();
+
+// Cache to the session for sticky forms
+// @todo does nothing yet.
+$_SESSION['sitepages:content'] = $content;
+$_SESSION['sitepages:css'] = $css;
+
+if (!$sitepage = sitepages_get_sitepage_object('front')) {
+	$sitepage = sitepages_create_sitepage_object('front');
 }
 
-//var_export($pageshell);exit;
+$sitepage->title = $css;
+$sitepage->description = $content;
 
-// Cache to the session
-$_SESSION['pageshell'] = $pageshell;
-$_SESSION['css'] = $css;
-			
-// Initialise a new ElggObject
-$frontpage = new ElggObject();
-// Tell the system what type of external page it is
-$frontpage->subtype = "frontpage";
-// Set its owner to the current user
-$frontpage->owner_guid = $_SESSION['user']->getGUID();
-// Set its access to public
-$frontpage->access_id = 2;
-// Set its title and description appropriately
-$frontpage->title = $css;
-$frontpage->description = $frontContents;
-			
-// Before we can set metadata, save
-if (!$frontpage->save()) {
+if ($sitepage->save()) {
+	system_message(elgg_echo("sitepages:posted"));
+	unset($_SESSION['sitepages:content']);
+	unset($_SESSION['sitepages:css']);
+} else {
 	register_error(elgg_echo("sitepages:error"));
-	forward("pg/sitepages/index.php?type=front");
 }
 
-// Success message
-system_message(elgg_echo("sitepages:posted"));
-
-// Remove the cache
-unset($_SESSION['css']); unset($_SESSION['pageshell']);
-	
-	
-// Forward back to the page
-forward("pg/sitepages/index.php?type=front");
+forward($_SERVER['HTTP_REFERER']);

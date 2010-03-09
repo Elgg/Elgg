@@ -1,52 +1,51 @@
 <?php
 /**
- * Elgg edit frontpage
+ * Edit form for the custom front page
+ *
+ * @package SitePages
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * @author Curverider Ltd
+ * @copyright Curverider Ltd 2008-2010
+ * @link http://elgg.org/
  */
-	 
-//action
-$action = "sitepages/addfront";
-	 
-//grab the required entity
-$page_contents = elgg_get_entities(array('type' => 'object', 'subtype' => 'frontpage', 'limit' => 1));
-	 
-if($page_contents){
-	 foreach($page_contents as $pc){
-		 $css = $pc->title;
-		 $frontContents = $pc->description;
-		 $guid = $pc->guid;
-	 }
-}else {		
-	$tags = "";
-	$description = "";
+
+$action = 'sitepages/addfront';
+
+if ($sitepages_object = sitepages_get_sitepage_object('front')) {
+	$css = $sitepages_object->title;
+	$sitepages_content = $sitepages_object->description;
+	$guid = $sitepages_object->guid;
+} else {
+	$css = '';
+	$sitepages_content = '';
+	$guid = '';
 }
-		
+
 // set the required form variables
 $input_css = elgg_view('input/plaintext', array('internalname' => 'css', 'value' => $css));
-$input_pageshell = elgg_view('input/plaintext', array('internalname' => 'frontContents', 'value' => $frontContents));
+$input_sitepages_content = elgg_view('input/plaintext', array('internalname' => 'sitepages_content', 'value' => $sitepages_content));
 $submit_input = elgg_view('input/submit', array('internalname' => 'submit', 'value' => elgg_echo('save')));
-$hidden_guid = elgg_view('input/hidden', array('internalname' => 'front_guid', 'value' => $guid));
-$pageshell = elgg_echo("sitepages:frontContents");
-$css = elgg_echo("sitepages:css");
-		
-//preview link
-$preview = "<div class=\"page_preview\"><a href=\"#preview\">" . elgg_echo('sitepages:preview') . "</a></div>";
-		
-//construct the form
-$form_body = <<<EOT
 
-	<h3 class='settings'>$css</h3>
+$pageshell_title = elgg_echo("sitepages:front_content");
+$css_title = elgg_echo("sitepages:css");
+
+//preview link
+// @todo this doesn't do anything.
+//$preview = "<div class=\"page_preview\"><a href=\"#preview\">" . elgg_echo('sitepages:preview') . "</a></div>";
+
+//construct the form
+$form_body = <<<___EOT
+
+	<h3 class='settings'>$css_title</h3>
 	<p class='longtext_editarea'>$input_css</p><br />
-	<h3 class='settings'>$pageshell</h3>
-	<p class='longtext_editarea'>$input_pageshell</p>
-		
+	<h3 class='settings'>$pageshell_title</h3>
+	<p class='longtext_editarea'>$input_sitepages_content</p>
+
 	$hidden_guid
 	<br />
 	$submit_input
 	$preview
 
-EOT;
-?>
-<?php
-	//display the form
-	echo elgg_view('input/form', array('action' => "{$vars['url']}action/$action", 'body' => $form_body));
-?>
+___EOT;
+
+echo elgg_view('input/form', array('action' => "{$vars['url']}action/$action", 'body' => $form_body));
