@@ -10,6 +10,8 @@
 		<!-- display site name -->
 		<h1><a href="<?php echo $vars['url']; ?>"><?php echo $vars['config']->sitename; ?></a></h1>
 		<?php
+			// insert site-wide navigation
+			echo elgg_view('navigation/site_nav');
 			// insert a view which can be extended
 			echo elgg_view('header/extend');
 		?>

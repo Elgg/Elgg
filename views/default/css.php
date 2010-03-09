@@ -12,12 +12,13 @@
 	ELGG TOPBAR					elgg topbar
 	TOOLS MENU					drop-down tools menu in topbar
 	HEADER CONTENTS
+	ELGG SITE NAVIGATION		Primary site navigation in header
 	FOOTER CONTENTS
 	SYSTEM MESSAGES				system messages overlay
 	BREADCRUMBS
 	SUBMENU						current page/tool submenu in sidebar
 	PAGINATION					re-usable default page navigation
-	ELGG TABBED NAVIGATION 		primary tabbed elgg navigation in header
+	ELGG TABBED NAVIGATION 		re-usable tabbed navigation
 	LOGIN / REGISTER			login box, register, and lost password page styles
 	CONTENT HEADER
 	ENTITY LISTINGS				elgg's default entity listings
@@ -328,63 +329,6 @@ h2 {
 }
 
 
-
-/* ***************************************
-	ELGG MAIN NAVIGATION in header
-*************************************** */
-.navigation,
-.navigation ul {
-	margin:0;
-	padding:0;
-	display:inline;
-	float:left;
-	list-style-type: none;
-	z-index: 7000;
-	position: relative;
-}
-.navigation li {
-	list-style: none;
-	font-weight: bold;
-	position: relative;
-	display:block;
-	height:23px;
-	float:left;
-	margin:0;
-	padding:0;
-}
-.navigation a {
-	display:block;
-}
-.navigation a {
-	color:white;
-	margin:0 1px 0 0px;
-	text-decoration:none;
-	font-weight: bold;
-	font-size: 1em;
-	padding:3px 13px 0px 13px;
-	height:20px;
-}
-.navigation li a.hover,
-.navigation a:hover {
-	background:white;
-	color:#43575e;
-	-moz-border-radius-topleft:4px;
-	-moz-border-radius-topright:4px;
-	-webkit-border-top-left-radius:4px;
-	-webkit-border-top-right-radius:4px;
-}
-.navigation li.selected a {
-	background:white;
-	color:#43575e;
-	-moz-border-radius-topleft:4px;
-	-moz-border-radius-topright:4px;
-	-webkit-border-top-left-radius:4px;
-	-webkit-border-top-right-radius:4px;
-	margin-top:2px;
-}
-
-
-
 /* ***************************************
   ELGG TOPBAR
 *************************************** */
@@ -586,6 +530,61 @@ h2 {
 }
 #elgg_header_contents #elgg_search input.search_submit_button {
 	display:none;	
+}
+
+
+/* ***************************************
+	ELGG SITE NAVIGATION in header
+*************************************** */
+.navigation,
+.navigation ul {
+	margin:0;
+	padding:0;
+	display:inline;
+	float:left;
+	list-style-type: none;
+	z-index: 7000;
+	position: relative;
+}
+.navigation li {
+	list-style: none;
+	font-weight: bold;
+	position: relative;
+	display:block;
+	height:23px;
+	float:left;
+	margin:0;
+	padding:0;
+}
+.navigation a {
+	display:block;
+}
+.navigation a {
+	color:white;
+	margin:0 1px 0 0px;
+	text-decoration:none;
+	font-weight: bold;
+	font-size: 1em;
+	padding:3px 13px 0px 13px;
+	height:20px;
+}
+.navigation li a.hover,
+.navigation a:hover {
+	background:white;
+	color:#43575e;
+	-moz-border-radius-topleft:4px;
+	-moz-border-radius-topright:4px;
+	-webkit-border-top-left-radius:4px;
+	-webkit-border-top-right-radius:4px;
+}
+.navigation li.selected a {
+	background:white;
+	color:#43575e;
+	-moz-border-radius-topleft:4px;
+	-moz-border-radius-topright:4px;
+	-webkit-border-top-left-radius:4px;
+	-webkit-border-top-right-radius:4px;
+	margin-top:2px;
 }
 
 
@@ -997,7 +996,8 @@ p.entity_subtext {
 
 
 /* ***************************************
-	USER SETTINGS & ADMIN AREA
+	USER SETTINGS & ADMIN AREA 
+	@todo - pull admin css into stand-alone css
 *************************************** */
 /* GENERAL STYLES */
 .user_settings,

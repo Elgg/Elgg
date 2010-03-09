@@ -1,15 +1,11 @@
 <?php
 /**
- * Main navigation bar
+ * Main site-wide navigation
  **/
  
 echo "<div id='elgg_main_nav' class='clearfloat'>";
 echo "<ul class='navigation'>";
-//if(get_context() == 'home')
-//	$selected = "class=selected";
-//else
-//	$selected = "";
-//echo "<li {$selected}><a href=\"{$vars['url']}\" id='home'><span>Home</span></a></li>";
+
 if(is_plugin_enabled('riverdashboard')){
 	if(get_context() == 'riverdashboard')
 		$selected = 'class="selected"';
@@ -22,7 +18,7 @@ if(is_plugin_enabled('thewire') && isloggedin()){
 		$selected = 'class="selected"';
 	else
 		$selected = "";
-	echo "<li {$selected}><a href=\"{$vars['url']}mod/thewire/all.php\" id='thewire'><span>" . elgg_echo('thewire') . "</span></a></li>";
+	echo "<li {$selected}><a href=\"{$vars['url']}mod/thewire/everyone.php\" id='thewire'><span>" . elgg_echo('thewire:title') . "</span></a></li>";
 }
 if(is_plugin_enabled('blog')){
 	if(get_context() == 'blog')
@@ -57,7 +53,7 @@ if(is_plugin_enabled('groups')){
 		$selected = 'class="selected"';
 	else
 		$selected = "";
-	echo "<li {$selected}><a href=\"{$vars['url']}pg/groups/all/\" id='groups'><span>". elgg_echo('groups') . "</span></a></li>";
+	echo "<li {$selected}><a href=\"{$vars['url']}pg/groups/world/\" id='groups'><span>". elgg_echo('groups') . "</span></a></li>";
 }
 echo "</ul>";
 echo "</div>";
