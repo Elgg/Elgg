@@ -6,7 +6,7 @@
 		 * Menu items and titles
 		 */
 	
-			'thewire' => "The wire",
+			'thewire' => "My wire posts",
 			'thewire:user' => "%s's wire posts",
 			'thewire:posttitle' => "%s's notes on the wire: %s",
 			'thewire:everyone' => "All wire posts",
