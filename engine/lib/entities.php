@@ -3631,6 +3631,28 @@ function recursive_delete_permissions_check($hook, $entity_type, $returnvalue, $
 }
 
 /**
+ * Checks if $entity is an ElggEntity and optionally for type and subtype.
+ *
+ * @param $entity
+ * @param $type
+ * @param $subtype
+ * @return Bool
+ */
+function elgg_instanceof($entity, $type = NULL, $subtype = NULL) {
+	$return = ($entity instanceof ElggEntity);
+
+	if ($type) {
+		$return = $return && ($entity->getType() == $type);
+	}
+
+	if ($subtype) {
+		$return = $return && ($entity->getSubtype() == $subtype);
+	}
+
+	return $return;
+}
+
+/**
  * Garbage collect stub and fragments from any broken delete/create calls
  *
  * @param unknown_type $hook

@@ -2757,6 +2757,7 @@ function elgg_boot() {
 function elgg_api_test($hook, $type, $value, $params) {
 	global $CONFIG;
 	$value[] = $CONFIG->path . 'engine/tests/api/entity_getter_functions.php';
+	$value[] = $CONFIG->path . 'engine/tests/api/helpers.php';
 	$value[] = $CONFIG->path . 'engine/tests/regression/trac_bugs.php';
 	return $value;
 }
