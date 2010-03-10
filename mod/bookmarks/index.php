@@ -24,7 +24,8 @@
 	// List bookmarks
 		$area2 = elgg_view_title($title);
 		set_context('search');
-		$area2 .= elgg_list_entities(array('type' => 'object', 'subtype' => 'bookmarks', 'container_guid' => page_owner(), 'limit' => 10, 'full_view' => FALSE, 'view_type_toggle' => FALSE));
+		$offset = (int)get_input('offset', 0);
+		$area2 .= elgg_list_entities(array('type' => 'object', 'subtype' => 'bookmarks', 'container_guid' => page_owner(), 'limit' => 10, 'offset' => $offset, 'full_view' => FALSE, 'view_type_toggle' => FALSE));
 		set_context('bookmarks');
 		
 	// Format page

@@ -16,6 +16,7 @@
 	// List bookmarks
 		$area2 = elgg_view_title(elgg_echo('bookmarks:friends'));
 		set_context('search');
+		// offset is grabbed by list_user_friends_objects()
 		$area2 .= list_user_friends_objects(page_owner(),'bookmarks',10,false,false);
 		set_context('bookmarks');
 		
