@@ -3,77 +3,13 @@
 	/**
 	 * Elgg riverdashboard CSS
 	 * 
-	 * @package riverdashboard
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.org/
 	 */
 
 ?>
-.sidebarBox #thewire_sidebarInputBox {
-	width:178px;
-}
-.sidebarBox .last_wirepost {
-	margin:20px 0 20px 0;
-}
-.sidebarBox .last_wirepost .thewire-singlepage {
-	margin:0;
-}
-.sidebarBox .last_wirepost .thewire-singlepage .thewire_options {
-	display:none;
-}
-.sidebarBox .last_wirepost .thewire-singlepage .note_date {
-	line-height: 1em;
-	padding:3px 0 0 0;
-	width:142px;
-}
-.sidebarBox .last_wirepost .thewire-singlepage .note_body {
-	color:#666666;
-	line-height: 1.2em;
-}
-.sidebarBox .last_wirepost .thewire-singlepage .thewire-post {
-	background-position: 130px bottom;
-}
-.sidebarBox .thewire_characters_remaining {
-	float:right;
-}
-.sidebarBox input.thewire_characters_remaining_field {
-	background: #dedede;
-}
-.sidebarBox input.thewire_characters_remaining_field:focus {
-	background: #dedede;
-	border:none;
-}
-.sidebarBox input#thewire_submit_button {
-	margin:2px 0 0 0;
-	padding:2px 2px 1px 2px;
-	height:auto;
-}
-.sidebarBox .membersWrapper {
-	background: white;
-	-webkit-border-radius: 8px; 
-	-moz-border-radius: 8px;
-	padding:7px;	
-}
-.sidebarBox .membersWrapper .recentMember {
-	margin:2px;
-	float:left;
-}
-.sidebarBox .membersWrapper .recentMember .usericon img {
-	width:25px;
-	height:25px;
-}
-/* br necessary for ie6 & 7 */
-.sidebarBox .membersWrapper br {
-	height:0;
-	line-height:0;
-}
-.welcomemessage {
-	background:white;
-}
+
 .riverdashboard_filtermenu {
 	margin:10px 0 10px 0;
+	float:right;
 }
 
 .river_pagination .forward,
@@ -107,26 +43,31 @@
 *:first-child+html .river_pagination { margin-top:17px; }
 
 /* activity widget */
-.collapsable_box_content .river_item p {
-	color:#333333;
+.collapsable_box_content .content_area_user_title h2 {
+	font-size:1.0em;
+}
+.collapsable_box_content .ContentWrapper.ActivityWidget {
+	
 }
 
-.collapsable_box_content .content_area_user_title h2 {
-	font-size:1.25em;
-	line-height:1.2em;
-	margin:0;
-	padding:0 0 2px 0;
-	color:#4690d6;
-}
 .river_content img {
 	margin:2px 0 2px 20px;
 }
 
+.river_content_title {
+	margin-left:55px;
+	
+}
+.river_content_title a {
+	font-weight: bold;
+	/* color:#333333; */
+}
+
 .river_content_display {
-	border-left:1px solid #ddd;
-	padding:2px 10px 0 10px;
+	border-left:1px solid #DDDDDD;
 	font-size:90%;
-	margin:4px 0 2px 30px;
+	margin:8px 0 6px 55px;
+	padding-left:5px;
 }
 
 .river_content_display p {
@@ -136,13 +77,219 @@
 
 .following_icon {
 	width:20px;
-	height:40px;
+	height:25px;
 	margin:0 2px 0 2px;
-	background: url(<?php echo $vars['url']; ?>mod/riverdashboard/graphics/follow_icon.png) no-repeat left top;
+	background: url(<?php echo $vars['url']; ?>mod/riverdashboard/graphics/follow_icon.png) no-repeat left -7px;
 }
 .river_content_display div.usericon a.icon img {
-	width:40px;
-	height:40px;
+	width:25px;
+	height:25px;
 }
+
+
+/* ***************************************
+	ACTIVITY RIVER
+*************************************** */
+.river_item_list {
+	border-top:1px solid #cccccc;
+}
+.river_item p {
+	margin:0;
+}
+.river_item {
+	border-bottom:1px solid #cccccc;
+	padding:7px 0 10px 0;
+/*
+	margin-top:5px;
+	margin-bottom:5px;
+*/
+}
+.river_item_annotation {
+
+}
+span.more_comments {
+
+}
+.river_more_comments {
+	display:block;
+	float:right;
+	padding:2px 4px 7px 30px;
+	text-align:right;
+	width:auto;
+}
+.river_comments {
+	margin:5px 0 0 55px;
+	width:auto;
+}
+.comment_wrapper {
+	margin-left:34px;
+}
+.comment_link {
+	margin-left:55px;
+}
+
+.river_comment_owner_icon {
+	float:left;
+	margin:0 8px 4px 2px;
+}
+
+.river_comment {
+	background-color: #f8f8f8;
+	padding:3px;
+	margin-bottom:3px;
+	-webkit-border-radius: 4px; 
+	-moz-border-radius: 4px;	
+}
+.river_comment.penultimate {
+	background-color: #eeeeee;
+}
+.river_comment.latest {
+	background-color: #dedede;
+	margin-bottom:0;
+}
+
+.river_item_time {
+	font-size:90%;
+	color:#666666;
+}
+.river_item .river_item_useravatar {
+	float:left;
+	margin:3px 0 0 1px;
+}
+/* IE6 fix */
+* html .river_item p { 
+	/* padding:3px 0 3px 20px; */
+}
+/* IE7 */
+*:first-child+html .river_item p {
+	/* min-height:17px; */
+}
+
+/* .river_object_blog_update, */
+
+.river_object_blog_create,
+.river_object_page_create,
+.river_object_page_update {
+	float:left;
+	width:26px;
+	height:32px;
+	border:none;
+	background-color: transparent;
+	margin-right:6px;
+	margin-top:2px;
+}
+.river_object_blog_create {
+	background-image: url(<?php echo $vars['url']; ?>mod/riverdashboard/graphics/icon_activity_blogs.png);
+	background-position: left top;
+	background-repeat: no-repeat;
+}
+.river_object_page_create,
+.river_object_page_update {
+	background-image: url(<?php echo $vars['url']; ?>mod/riverdashboard/graphics/icon_activity_pages.png);
+	background-position: left top;
+	background-repeat: no-repeat;
+}
+
+
+.collapsable_box_content .river_user_update {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_profile.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_object_user_profileupdate {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_profile.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_object_user_profileiconupdate {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_profile.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_object_annotate {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_comment.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_object_bookmarks_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_bookmarks.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_object_bookmarks_comment {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_comment.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_object_status_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_status.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_object_file_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_files.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_object_file_update {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_files.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_object_file_comment {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_comment.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_object_widget_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_plugin.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_object_forums_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_forum.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_object_forums_update {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_forum.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_object_widget_update {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_plugin.gif) no-repeat left -1px;	
+}
+.collapsable_box_content .river_object_blog_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_blog.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_object_blog_update {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_blog.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_object_blog_comment {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_comment.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_object_forumtopic_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_forum.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_user_friend {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_friends.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_object_relationship_friend_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_friends.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_object_relationship_member_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_forum.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_object_thewire_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_thewire.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_group_join {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_forum.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_object_groupforumtopic_annotate {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_comment.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_object_groupforumtopic_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_forum.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_object_sitemessage_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_blog.gif) no-repeat left -1px;	
+}
+.collapsable_box_content .river_user_messageboard {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_comment.gif) no-repeat left -1px;	
+}
+.collapsable_box_content .river_object_page_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_pages.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_object_page_update {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_pages.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_object_page_top_create {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_pages.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_object_page_top_update {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_pages.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_object_page_top_comment {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_comment.gif) no-repeat left -1px;
+}
+.collapsable_box_content .river_object_page_comment {
+	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_comment.gif) no-repeat left -1px;
+}
+
 
 

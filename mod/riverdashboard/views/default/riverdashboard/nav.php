@@ -1,10 +1,11 @@
 <?php
 
-	$contents = array();
-	$contents['all'] = 'all';
-	if (!empty($vars['config']->registered_entities)) {
-		foreach ($vars['config']->registered_entities as $type => $ar) {
-			foreach ($vars['config']->registered_entities[$type] as $object) {
+$contents = array();
+$contents['all'] = 'all';
+if (!empty($vars['config']->registered_entities)) {
+	foreach ($vars['config']->registered_entities as $type => $ar) {
+		foreach ($vars['config']->registered_entities[$type] as $object) {
+			if($object != 'helppage'){
 				if (!empty($object )) {
 					$keyname = 'item:'.$type.':'.$object;
 				} else $keyname = 'item:'.$type; 
@@ -12,43 +13,41 @@
 			}
 		}
 	}
+}
 	
-	$allselect = ''; $friendsselect = ''; $mineselect = '';
-	switch($vars['orient']) {
-		case '':		$allselect = 'class="selected"';
-						break;
-		case 'friends':		$friendsselect = 'class="selected"';
-						break;
-		case 'mine':		$mineselect = 'class="selected"';
-						break;
-	}
-
+$allselect = ''; $friendsselect = ''; $mineselect = ''; $display_option = '';
+switch($vars['orient']) {
+	case '':		$allselect = 'class="selected"';
+					break;
+	case 'friends':	$friendsselect = 'class="selected"';
+					$display_option = '&amp;display=friends';
+					break;
+	case 'mine':	$mineselect = 'class="selected"';
+					$display_option = '&amp;display=mine';
+					break;
+}
 ?>
-
-<div class="contentWrapper">
-	<div id="elgg_horizontal_tabbed_nav">
-		<ul>
-			<li <?php echo $allselect; ?> ><a onclick="javascript:$('#river_container').load('<?php echo $vars['url']; ?>mod/riverdashboard/?content=<?php echo $vars['type']; ?>,<?php echo $vars['subtype']; ?>&amp;callback=true'); return false;" href="?display="><?php echo elgg_echo('all'); ?></a></li>
-			<li <?php echo $friendsselect; ?> ><a onclick="javascript:$('#river_container').load('<?php echo $vars['url']; ?>mod/riverdashboard/?display=friends&amp;content=<?php echo $vars['type']; ?>,<?php echo $vars['subtype']; ?>&amp;callback=true'); return false;" href="?display=friends"><?php echo elgg_echo('friends'); ?></a></li>
-			<li <?php echo $mineselect; ?> ><a onclick="javascript:$('#river_container').load('<?php echo $vars['url']; ?>mod/riverdashboard/?display=mine&amp;content=<?php echo $vars['type']; ?>,<?php echo $vars['subtype']; ?>&amp;callback=true'); return false;" href="?display=mine"><?php echo elgg_echo('mine'); ?></a></li>
-		</ul>
-	</div>
-	
-	<div class="riverdashboard_filtermenu">
-		<select name="content" id="content" onchange="javascript:$('#river_container').load('<?php echo $vars['url']; ?>mod/riverdashboard/?callback=true&amp;display='+$('input#display').val() + '&amp;content=' + $('select#content').val());">
-			<?php
-	
-				foreach($contents as $label => $content) {
-					if (("{$vars['type']},{$vars['subtype']}" == $content) ||
-						(empty($vars['subtype']) && $content == 'all')) {
-						$selected = 'selected="selected"';
-					} else $selected = '';
-					echo "<option value=\"{$content}\" {$selected}>".elgg_echo($label)."</option>";
-				}
-			
-			?>
-		</select>
+<div class="ContentWrapper">
+	<div class="riverdashboard_filtermenu"> 
+		<?php
+			$location_filter = "<select onchange=\"window.open(this.options[this.selectedIndex].value,'_top')\" name=\"file_filter\" class='Notstyled' >";
+			$current = get_input('subtype');
+			foreach($contents as $label => $content) {
+				$get_values = explode(",", $content);
+				//select the current filter
+				if($get_values[1] == $current)
+					$selected = "SELECTED";
+				//set the drop down filter
+				if($content[0] && $content[1])
+					$location_filter .= "<option {$selected} class='Nomenuoption' value=\"{$CONFIG->url}mod/riverdashboard/index.php?type={$get_values[0]}&subtype={$get_values[1]}{$display_option}\" >" . elgg_echo($label) . "</option>";				
+				//reset selected
+				$selected = '';
+			}
+			$location_filter .= "</select>";
+			echo $location_filter;
+		?>
 		<input type="hidden" name="display" id="display" value="<?php echo htmlentities($vars['orient']); ?>" />
-		<!-- <input type="submit" value="<?php echo elgg_echo('filter'); ?>" /> -->
 	</div>
-<!-- </div> -->
+<!-- </div> don't close ContentWrapper here, it happens later -->
+
+<div id="the-wire-updates-notice" class="ContentWrapper clearfloat"></div>
