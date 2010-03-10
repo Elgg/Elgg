@@ -67,7 +67,7 @@ if($vars['entity']->canEdit()){
 }
 	$info .= "</tr></table></div>";
 
-$info .= "<p class='entity_title'><a href=\"{$vars['entity']->address}\">{$vars['entity']->title}</a></p>";
+$info .= "<p class='entity_title'><a href=\"{$vars['entity']->address}\" target=\"_blank\">{$vars['entity']->title}</a></p>";
 $info .= "<p class='entity_subtext'>Bookmarked by <a href=\"{$vars['url']}pg/bookmarks/{$owner->username}\">{$owner->name}</a> {$friendlytime} {$view_notes}</p>";
 
 $tags = elgg_view('output/tags', array('tags' => $vars['entity']->tags));
