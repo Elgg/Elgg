@@ -955,6 +955,8 @@ select.styled .select_option {
 p.entity_title {
 	font-weight: bold;
 	font-size: 1.1em;
+	line-height:1.2em;
+	color:#666666;
 }
 p.entity_title a {
 	color:#0054A7;
@@ -964,6 +966,7 @@ p.entity_subtext {
 	padding:0;
 	color:#666666;
 	font-size: 90%;
+	line-height:1.2em;
 }
 /* entity metadata block */
 .entity_metadata {
@@ -1139,8 +1142,8 @@ input[type="text"]:focus {
 	background-image: url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
 	background-repeat: repeat-x;
 	background-position: left 10px;
-	-webkit-border-radius: 7px; 
-	-moz-border-radius: 7px;
+	-webkit-border-radius: 5px; 
+	-moz-border-radius: 5px;
 	width: auto;
 	padding: 2px 4px;
 	margin:0 10px 10px 0;
@@ -1173,8 +1176,8 @@ input[type="submit"] {
 	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
-	-webkit-border-radius: 7px; 
-	-moz-border-radius: 7px;
+	-webkit-border-radius: 5px; 
+	-moz-border-radius: 5px;
 	width: auto;
 	padding: 2px 4px;
 	margin:10px 0 10px 0;
@@ -1202,8 +1205,8 @@ input[type="submit"]:hover {
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
 	border: 1px solid #999999;
-	-webkit-border-radius: 7px; 
-	-moz-border-radius: 7px;
+	-webkit-border-radius: 5px; 
+	-moz-border-radius: 5px;
 	width: auto;
 	padding: 2px 4px;
 	margin:10px 0 10px 10px;
@@ -1268,7 +1271,6 @@ a.action_button:focus {
 	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
-	/*display:inline-block;*/
 	width:auto;
 	height:auto;
 	padding: 3px 6px 3px 6px;
@@ -1313,6 +1315,162 @@ a.action_button:focus {
 .delete_button a:hover {
 	background-position: 0 -16px;
 }
+
+
+/* ***************************************
+	FRIENDS PICKER SLIDER
+*************************************** */
+.friends_picker_container h3 {
+	font-size:4em !important;
+	text-align: left;
+	margin:10px 0 20px 0 !important;
+	color:#999999 !important;
+	background: none !important;
+	padding:0 !important;
+}
+.friends_picker .friends_picker_container .panel ul {
+	text-align: left;
+	margin: 0;
+	padding:0;
+}
+.friends_picker_wrapper {
+	margin: 0;
+	padding:0;
+	position: relative;
+	width: 100%;
+}
+.friends_picker {
+	position: relative;
+	overflow: hidden;
+	margin: 0;
+	padding:0;
+	width: 730px;
+	height: auto;
+/*
+	background: #dedede;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+*/
+}
+.friendspicker_savebuttons {
+	background: white;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	margin:0 10px 10px 10px;
+}
+.friends_picker .friends_picker_container { /* long container used to house end-to-end panels. Width is calculated in JS  */
+	position: relative;
+	left: 0;
+	top: 0;
+	width: 100%;
+	list-style-type: none;
+}
+.friends_picker .friends_picker_container .panel {
+	float:left;
+	height: 100%;
+	position: relative;
+	width: 730px;
+	margin: 0;
+	padding:0;
+}
+.friends_picker .friends_picker_container .panel .wrapper {
+	margin: 0;
+	padding:4px 10px 10px 10px;
+	min-height: 230px;
+}
+.friends_picker_navigation {
+	margin: 0 0 10px 0;
+	padding:0 0 10px 0;
+	border-bottom:1px solid #cccccc;
+}
+.friends_picker_navigation ul {
+	list-style: none;
+	padding-left: 0;
+}
+.friends_picker_navigation ul li {
+	float: left;
+	margin:0;
+	background:white;
+}
+.friends_picker_navigation a {
+	font-weight: bold;
+	text-align: center;
+	background: white;
+	color: #999999;
+	text-decoration: none;
+	display: block;
+	padding: 0;
+	width:20px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+}
+.tabHasContent {
+	background: white; 
+	color:#333333 !important;
+}
+.friends_picker_navigation li a:hover {
+	background: #333333;
+	color:white !important;
+}
+.friends_picker_navigation li a.current {
+	background: #4690D6;
+	color:white !important;
+}
+.friends_picker_navigation_l, .friends_picker_navigation_r {
+	position: absolute;
+	top: 46px;
+	text-indent: -9000em;
+}
+.friends_picker_navigation_l a, .friends_picker_navigation_r a {
+	display: block;
+	height: 43px;
+	width: 43px;
+}
+.friends_picker_navigation_l {
+	right: 48px;
+	z-index:1;
+}
+.friends_picker_navigation_r {
+	right: 0;
+	z-index:1;
+}
+.friends_picker_navigation_l {
+	background: url("<?php echo $vars['url']; ?>_graphics/friends_picker_arrows.gif") no-repeat left top;
+}
+.friends_picker_navigation_r {
+	background: url("<?php echo $vars['url']; ?>_graphics/friends_picker_arrows.gif") no-repeat -60px top;
+}
+.friends_picker_navigation_l:hover {
+	background: url("<?php echo $vars['url']; ?>_graphics/friends_picker_arrows.gif") no-repeat left -44px;
+}
+.friends_picker_navigation_r:hover {
+	background: url("<?php echo $vars['url']; ?>_graphics/friends_picker_arrows.gif") no-repeat -60px -44px;
+}
+.friends_collections_controls a.delete_collection {
+	display:block;
+	cursor: pointer;
+	width:14px;
+	height:14px;
+	margin:2px 3px 0 0;
+	background: url("<?php echo $vars['url']; ?>_graphics/icon_customise_remove.png") no-repeat 0 0;
+}
+.friends_collections_controls a.delete_collection:hover {
+	background-position: 0 -16px;
+}
+.friendspicker_savebuttons .submit_button,
+.friendspicker_savebuttons .cancel_button {
+	margin:5px 20px 5px 5px;
+}
+
+#collectionMembersTable {
+	background: #dedede;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	margin:10px 0 0 0;
+	padding:10px 10px 0 10px;
+}
+
+
 /*  //////////////////////////////////////////////////////////////////////////////////////////	>>>End Verified */
 
 
@@ -1433,255 +1591,4 @@ a.action_button:focus {
 }
 
 
-/*
 
-
-#elgg_topbar_panel {
-	background:#333333;
-	color:#eeeeee;
-	height:200px;
-	width:100%;
-	padding:10px 20px 10px 20px;
-	display:none;
-	position:relative;
-}
-#elggFooterContents .footer_legal_links {
-	text-align:right;
-}
-#elggFooterContents .footersidebar {
-	text-align:right;
-}
-#elggFooterContents table td.footersidebar a img {
-	float:right;
-	padding:5px 0;
-}
- 
-.generic_comment_owner {
-	font-size: 90%;
-	color:#666666;
-}
-.generic_comment {
-	background:white;
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
-	padding:10px;
-	margin:0 10px 10px 10px;
-}
-.generic_comment_icon {
-	float:left;
-}
-.generic_comment_details {
-	margin-left: 60px;
-}
-.generic_comment_details p {
-	margin: 0 0 5px 0;
-}
-.generic_comment_owner {
-	color:#666666;
-	margin: 0px;
-	font-size:90%;
-	border-top: 1px solid #aaaaaa;
-}
-
-
-Object page headers blogs/pages/files etc
-
-
-table.search_gallery {
-	border-spacing: 10px;
-	margin:0 0 0 0;
-}
-.search_gallery td {
-	padding: 5px;
-}
-.search_gallery_item {
-	background: white;
-	-webkit-border-radius: 8px; 
-	-moz-border-radius: 8px;
-	width:170px;
-}
-.search_gallery_item:hover {
-	background: black;
-	color:white;
-}
-.search_gallery_item .search_listing {
-	background: none;
-	text-align: center;
-}
-.search_gallery_item .search_listing_header {
-	text-align: center;
-}
-.search_gallery_item .search_listing_icon {
-	position: relative;
-	text-align: center;
-}
-.search_gallery_item .search_listing_info {
-	margin: 5px;
-}
-.search_gallery_item .search_listing_info p {
-	margin: 5px;
-	margin-bottom: 10px;
-}
-.search_gallery_item .search_listing {
-	background: none;
-	text-align: center;
-}
-.search_gallery_item .search_listing_icon {
-	position: absolute;
-	margin-bottom: 20px;
-}
-.search_gallery_item .search_listing_info {
-	margin: 5px;
-}
-.search_gallery_item .search_listing_info p {
-	margin: 5px;
-	margin-bottom: 10px;
-}
-
-#NewListStyle  {
-	padding:0;
-	margin:0;
-}
-#NewListStyle  .search_listing {
-   	-webkit-border-radius: 0; 
-	-moz-border-radius: 0;
-	background:none;
-	border-bottom:1px dotted #CCCCCC;
-	margin:0;
-	padding:5px 0 7px 0;
-	display: inline-block;
-	position: relative;
-	clear:both;
-}
-#NewListStyle  .ListTop {
-	margin:0 0;
-	clear:both;
-	width:auto;
-}
-#NewListStyle  .search_listing:hover {
-	background-color: #eeeeee;
-}
-#NewListStyle  .search_listing:last-child {
-	border-bottom:1px dotted #CCCCCC;
-}
-
-#NewListStyle .search_listing_icon {
-	float:left;
-	margin-left:3px;
-	margin-top:3px;
-}
-#NewListStyle .search_listing .search_listing_info {
-	float:left;
-	margin-left:7px;
-	min-height:28px;
-	width:693px;
-}
-#NewListStyle .search_listing .search_listing_info .ItemMetaData {
-	float:right;
-	margin-left:15px;
-	margin-top:0;
-	margin-right: 3px;
-	color:#AAAAAA;
-	font-size: 90%;
-}
-
-.ItemMetaData.special {
-	float:right;
-	margin-left:15px;
-	margin-top:0;
-	margin-right: 3px;
-	color:#AAAAAA;
-	font-size: 90%;
-}
-
-used on groups members listings where there is only a delete button in table 
-#NewListStyle .search_listing .search_listing_info .ItemMetaData table.singlecell {
-	width:auto; 
-}
-#NewListStyle .search_listing_info p.tags {
-	font-size:90%;
-	margin:0;
-	padding-top:1px;
-}
-*/
-
-
-/* ***************************************
-  COLLAPSABLE BOXES - for widgets?
-*************************************** */
-/*
-.collapsable_box {
-	margin: 0 0 20px 0;
-	height:auto;
-
-}
-.collapsable_box_header {
-	color: #4690d6;
-	padding: 5px 10px 5px 10px;
-	margin:0;
-	border-left: 1px solid white;
-	border-right: 1px solid #cccccc;
-	border-bottom: 1px solid #cccccc;
-	-moz-border-radius-topleft:8px;
-	-moz-border-radius-topright:8px;
-	-webkit-border-top-right-radius:8px;
-	-webkit-border-top-left-radius:8px;
-	background:#dedede;
-}
-.collapsable_box_header h1 {
-	color: #0054a7;
-	font-size:1.25em;
-	line-height: 1.2em;
-}
-.collapsable_box_content {
-	padding: 10px 0 10px 0;
-	margin:0;
-	height:auto;
-	background:#dedede;
-	-moz-border-radius-bottomleft:8px;
-	-moz-border-radius-bottomright:8px;
-	-webkit-border-bottom-right-radius:8px;
-	-webkit-border-bottom-left-radius:8px;
-	border-left: 1px solid white;
-	border-right: 1px solid #cccccc;
-	border-bottom: 1px solid #cccccc;
-}
-.collapsable_box_content  {
-	margin-bottom:5px;
-}
-.collapsable_box_editpanel {
-	display: none;
-	background: #a8a8a8;
-	padding:10px 10px 5px 10px;
-	border-left: 1px solid white;
-	border-bottom: 1px solid white;
-}
-.collapsable_box_editpanel p {
-	margin:0 0 5px 0;
-}
-.collapsable_box_header a.toggle_box_contents {
-	color: #4690d6;
-	cursor:pointer;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size:20px;
-	font-weight: bold;
-	text-decoration:none;
-	float:right;
-	margin: 0;
-	margin-top: -7px;
-}
-.collapsable_box_header a.toggle_box_edit_panel {
-	color: #4690d6;
-	cursor:pointer;
-	font-size:9px;
-	text-transform: uppercase;
-	text-decoration:none;
-	font-weight: normal;
-	float:right;
-	margin: 3px 10px 0 0;
-}
-.collapsable_box_editpanel label {
-	font-weight: normal;
-	font-size: 100%;
-}
-*/

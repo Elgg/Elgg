@@ -15,7 +15,6 @@ if (!isset($friendspicker)) {
 	$friendspicker = 0;
 }
 
-echo "<div class=\"contentWrapper\">";
 
 if (is_array($vars['collections']) && sizeof($vars['collections'])) {
 	echo "<ul id=\"friends_collections_accordian\">";
@@ -30,8 +29,6 @@ if (is_array($vars['collections']) && sizeof($vars['collections'])) {
 } else {
 	echo elgg_echo("friends:nocollections");
 }
-
-echo "</div>";
 
 ?>
 

@@ -64,8 +64,8 @@
 .notification_personal {
 	margin-bottom: 25px;
 }
-
-.settings_form .friendsPicker_container h3 {
+/*
+.settings_form .friends_picker_container h3 {
 	color:#999999;
 	font-size:3em;
 	margin:0 0 20px;
@@ -73,6 +73,7 @@
 	background: none;
 	border-bottom: none;
 }
+*/
 
 
 
