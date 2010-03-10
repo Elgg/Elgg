@@ -41,7 +41,7 @@ switch($orient) {
 
 $title = elgg_view_title($title_wording);
 
-$river = elgg_view_river_items($subject_guid, 0, $relationship_type, $type, $subtype, '', 20, 0, 0, true, false);
+$river = elgg_view_river_items($subject_guid, 0, $relationship_type, $type, $subtype, '', 20, 0, 0, true, false)  . "</div>";
 // Replacing callback calls in the nav with something meaningless
 $river = str_replace('callback=true','replaced=88,334',$river);
 		
