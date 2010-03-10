@@ -108,7 +108,11 @@
 	float:left;
 	margin-top:20px;
 }
-
+/* edit group page */
+.delete_group {
+	float: right;
+	margin-top:-44px;
+}
 
 /* Group forum */
 .topic .link {

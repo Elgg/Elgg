@@ -17,8 +17,7 @@
 	}
 	
 ?>
-<div class="contentWrapper">
-<form action="<?php echo $vars['url']; ?>action/groups/edit" enctype="multipart/form-data" method="post">
+<form action="<?php echo $vars['url']; ?>action/groups/edit" enctype="multipart/form-data" method="post" class="margin_top">
 
 	<?php echo elgg_view('input/securitytoken'); ?>
 
@@ -128,9 +127,8 @@
 	?>
 	<p>
 		<?php
-			if ($vars['entity'])
-			{ 
-			?><input type="hidden" name="group_guid" value="<?php echo $vars['entity']->getGUID(); ?>" /><?php 
+			if ($vars['entity']) { 
+				?><input type="hidden" name="group_guid" value="<?php echo $vars['entity']->getGUID(); ?>" /><?php 
 			}
 		?>
 		<input type="hidden" name="user_guid" value="<?php echo page_owner_entity()->guid; ?>" />
@@ -139,23 +137,19 @@
 	</p>
 
 </form>
-</div>
 
-<div class="contentWrapper">
-<div id="delete_group_option">
+<div class="delete_group">
 	<form action="<?php echo $vars['url'] . "action/groups/delete"; ?>">
 		<?php
 			echo elgg_view('input/securitytoken');
-			if ($vars['entity'])
-			{ 
+			if ($vars['entity']) { 
 				$warning = elgg_echo("groups:deletewarning");
 			?>
 			<input type="hidden" name="group_guid" value="<?php echo $vars['entity']->getGUID(); ?>" />
-			<input type="submit" name="delete" value="<?php echo elgg_echo('groups:delete'); ?>" onclick="javascript:return confirm('<?php echo $warning; ?>')"/><?php 
+			<input type="submit" class="action_button disabled" name="delete" value="<?php echo elgg_echo('groups:delete'); ?>" onclick="javascript:return confirm('<?php echo $warning; ?>')"/><?php 
 			}
 		?>
 	</form>
-</div><div class="clearfloat"></div>
 </div>
 
 
