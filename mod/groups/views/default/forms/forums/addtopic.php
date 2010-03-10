@@ -1,32 +1,40 @@
 <?php
-
-	/**
-	 * Elgg Groups topic edit/add page
-	 * 
-	 * @package ElggGroups
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
-	 * 
-	 * @uses $vars['object'] Optionally, the topic to edit
-	 */
+/**
+ * Elgg Groups topic edit/add page
+ * 
+ * @package ElggGroups
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * @author Curverider <info@elgg.com>
+ * @copyright Curverider Ltd 2008-2010
+ * @link http://elgg.com/
+ * 
+ * @uses $vars['object'] Optionally, the topic to edit
+ */
 
 	// Set title, form destination
-			$title = elgg_echo("groups:addtopic");
-			$action = "groups/addtopic";
-			$tags = "";
-			$title = "";
-			$message = "";
-			$message_id = "";
-			$status = "";
-			$access_id = ACCESS_DEFAULT;
+	$title = elgg_echo("groups:addtopic");
+	$action = "groups/addtopic";
+	$tags = "";
+	$title = "";
+	$message = "";
+	$message_id = "";
+	$status = "";
+	$access_id = ACCESS_DEFAULT;
 	    
     // get the group guid
-        $group_guid = (int) get_input('group_guid');
+    $group_guid = (int) get_input('group_guid');
+     
+	// set breadcrumbs   
+	echo elgg_view('page_elements/breadcrumbs', array( 
+		'breadcrumb_root_url' => '',
+		'breadcrumb_root_text' => 'Parent Group Name',
+		'breadcrumb_level1_url' => '#',
+		'breadcrumb_level1_text' => elgg_echo('item:object:groupforumtopic'),
+		'breadcrumb_currentpage' => elgg_echo("groups:addtopic")
+		));
         
 	// set the title
-	    echo elgg_view_title(elgg_echo("groups:addtopic"));
+	echo elgg_view_title(elgg_echo("groups:addtopic"));
 	    
 ?>
 <!-- display the input form -->

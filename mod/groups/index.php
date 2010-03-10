@@ -17,14 +17,14 @@
 	$title = elgg_echo("groups:owned");
 
 	// Get objects
-	$area2 = elgg_view('page_elements/content_header', array('context' => "everyone", 'type' => 'groups'));
+	$area1 = elgg_view('page_elements/content_header', array('context' => "everyone", 'type' => 'groups'));
 	
 	set_context('search');
 	$objects = elgg_list_entities(array('types' => 'group', 'owner_guid' => page_owner(), 'limit' => $limit, 'full_view' => FALSE));
 	set_context('groups');
 	
-	$area2 .= $objects;
-	$body = elgg_view_layout('one_column_with_sidebar', $area1.$area2);
+	$area1 .= $objects;
+	$body = elgg_view_layout('one_column_with_sidebar', $area1);
 	
 	// Finally draw the page
 	page_draw($title, $body);

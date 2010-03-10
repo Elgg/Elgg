@@ -11,17 +11,17 @@
 	 */
 	 
 	 //forum 
-	 echo "<div class=\"clearfloat\"></div><div id=\"fullcolumn\">";
+	 echo "<div class='group_profile forum_latest clearfloat'>";
 	 echo elgg_view("groups/forum_latest",array('entity' => $vars['entity']));
 	 echo "</div>";
 	 
 	 //right column
-	 echo "<div id=\"right_column\">";
+	 echo "<div class='group_profile_column right'>";
 	 echo elgg_view("groups/right_column",array('entity' => $vars['entity']));
 	 echo "</div>";
 	 
 	 //left column
-	 echo "<div id=\"left_column\">";
+	 echo "<div class='group_profile_column left'>";
 	 echo elgg_view("groups/left_column",array('entity' => $vars['entity']));
 	 echo "</div>";	 
 	 

@@ -1,44 +1,40 @@
-<div class="contentWrapper">
-
 <?php
 
-	if (!empty($vars['invitations']) && is_array($vars['invitations'])) {
-		$user = get_loggedin_user();
-		foreach($vars['invitations'] as $group)
-			if ($group instanceof ElggGroup) {
-
-?>
-	<div class="reportedcontent_content active_report">
-		<div class="groups_membershiprequest_buttons">
+if (!empty($vars['invitations']) && is_array($vars['invitations'])) {
+	$user = get_loggedin_user();
+	foreach($vars['invitations'] as $group)
+		if ($group instanceof ElggGroup) {
+		
+		?>
+		<div class="entity_listing group_invitations clearfloat">
 			<?php
-				echo "<div class=\"member_icon\"><a href=\"" . $group->getURL() . "\">";
+				echo "<div class='entity_listing_icon'>";
 				echo elgg_view("profile/icon", array(
 					'entity' => $group,
-					'size' => 'small',
+					'size' => 'tiny',
 					'override' => 'true'
-				));
-				echo "</a></div>{$group->name}<br />";
+				))."</div>";
 
-				echo str_replace('<a', '<a class="delete_report_button" ', elgg_view('output/confirmlink',array(
+			$url = elgg_add_action_tokens_to_url("{$vars['url']}action/groups/join?user_guid={$user->guid}&group_guid={$group->guid}");
+			?>
+			<div class="entity_listing_info">
+			<a href="<?php echo $url; ?>" class="submit_button"><?php echo elgg_echo('accept'); ?></a>
+			<?php		
+				echo str_replace('<a', '<a class="action_button disabled" ', elgg_view('output/confirmlink',array(
 					'href' => $vars['url'] . "action/groups/killinvitation?user_guid={$user->getGUID()}&group_guid={$group->getGUID()}",
 					'confirm' => elgg_echo('groups:joinrequest:remove:check'),
 					'text' => elgg_echo('delete'),
 				)));
-			$url = elgg_add_action_tokens_to_url("{$vars['url']}action/groups/join?user_guid={$user->guid}&group_guid={$group->guid}");
-			?>
-			<a href="<?php echo $url; ?>" class="archive_report_button"><?php echo elgg_echo('accept'); ?></a>
-			<br /><br />
-		</div>
-	</div>
-<?php
+			
+			echo "<p class='entity_title'><a href=\"" . $group->getUrl() . "\">" . $group->name . "</a></p>";
+			echo "<p class='entity_subtext'>" . $group->briefdescription . "</p>";
 
-			}
+			?>
+		</div></div>
+		<?php
+		}
 
 	} else {
-
-		echo "<p>" . elgg_echo('groups:invitations:none') . "</p>";
-
-	}
-
+		echo "<p class='margin_top'>" . elgg_echo('groups:invitations:none') . "</p>";
+}
 ?>
-</div>

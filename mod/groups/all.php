@@ -44,24 +44,25 @@
 	
 	//get a group count
 	$group_count = elgg_get_entities(array('types' => 'group', 'limit' => 10, 'count' => TRUE));
-		
-	//find groups
-	$area1 = elgg_view("groups/find");
 	
 	//menu options
-	$area1 .= elgg_view("groups/side_menu");
+	$area2 = elgg_view("groups/side_menu");		
+
+	//find groups
+	$area2 .= elgg_view("groups/find");
 	
 	//featured groups
 	$featured_groups = elgg_get_entities_from_metadata(array('metadata_name' => 'featured_group', 'metadata_value' => 'yes', 'types' => 'group', 'limit' => 10));
-	$area1 .= elgg_view("groups/featured", array("featured" => $featured_groups));
-		
+	$area2 .= elgg_view("groups/featured", array("featured" => $featured_groups));
 		
 	set_context($context);
 	
+	$objects = "<div class='group_listings'>".$objects."</div>";
+	
 	$title = sprintf(elgg_echo("groups:all"),page_owner_entity()->name);
-	$area2 = elgg_view_title($title);
-	$area2 .= elgg_view("groups/group_sort_menu", array("count" => $group_count, "filter" => $filter)) . $objects;
-	$body = elgg_view_layout('one_column_with_sidebar', $area2, $area1);
+	$area1 .= elgg_view('page_elements/content_header', array('context' => "everyone", 'type' => 'groups'));
+	$area1 .= elgg_view("groups/group_sort_menu", array("count" => $group_count, "filter" => $filter)) . $objects;
+	$body = elgg_view_layout('one_column_with_sidebar', $area1, $area2);
 	
 	// Finally draw the page
 	page_draw($title, $body);

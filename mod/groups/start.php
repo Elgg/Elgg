@@ -19,7 +19,7 @@
 
 		// Set up the menu for logged in users
 		if (isloggedin()) {
-			add_menu(elgg_echo('groups'), $CONFIG->wwwroot . "pg/groups/member/");
+			add_menu(elgg_echo('groups:yours'), $CONFIG->wwwroot . "pg/groups/member/");
 		}
 
 		// Register a page handler, so we can have nice URLs
@@ -205,7 +205,6 @@
 			if ($page_owner instanceof ElggGroup && get_context() == 'groups') {
 				if (isloggedin()) {
 					if ($page_owner->canEdit()) {
-						add_submenu_item(elgg_echo('groups:edit'),$CONFIG->wwwroot . "mod/groups/edit.php?group_guid=" . $page_owner->getGUID(), '1groupsactions');
 						add_submenu_item(elgg_echo('groups:invite'),$CONFIG->wwwroot . "mod/groups/invite.php?group_guid={$page_owner->getGUID()}", '1groupsactions');
 						if (!$page_owner->isPublicMembership())
 							add_submenu_item(elgg_echo('groups:membershiprequests'),$CONFIG->wwwroot . "mod/groups/membershipreq.php?group_guid={$page_owner->getGUID()}", '1groupsactions');

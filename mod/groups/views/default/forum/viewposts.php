@@ -12,10 +12,17 @@
 
 ?>
 
-<div id="topic_posts"><!-- open the topic_posts div -->
-<div id="pages_breadcrumbs"><b><a href="<?php echo $vars['url']; ?>pg/groups/forum/<?php echo $vars['entity']->container_guid; ?>/"><?php echo elgg_echo("groups:forum"); ?></a></b> > <?php echo $vars['entity']->title; ?></div>
-  
 <?php
+	echo elgg_view('page_elements/breadcrumbs', array( 
+		'breadcrumb_root_url' => '',
+		'breadcrumb_root_text' => 'Parent Group Name',
+		'breadcrumb_level1_url' => '#',
+		'breadcrumb_level1_text' => elgg_echo('item:object:groupforumtopic'),
+		'breadcrumb_currentpage' => $vars['entity']->title
+		));
+
+ 
+
     //display follow up comments
     $count = $vars['entity']->countAnnotations('group_topic_post');
     $offset = (int) get_input('offset',0);
@@ -55,4 +62,3 @@
     }
 
 ?>
-</div>

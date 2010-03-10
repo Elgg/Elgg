@@ -19,7 +19,7 @@
 	
 	// Get size
 	if (!in_array($vars['size'],array('small','medium','large','tiny','master','topbar')))
-		$vars['size'] = "medium";
+		$vars['size'] = "tiny";
 			
 	// Get any align and js
 	if (!empty($vars['align'])) {
@@ -37,7 +37,7 @@
 	
 ?>
 
-<div class="groupicon">
+<div class="usericon">
 <a href="<?php echo $vars['entity']->getURL(); ?>" class="icon" ><img src="<?php echo $vars['entity']->getIcon($vars['size']); ?>" border="0" <?php echo $align; ?> title="<?php echo $name; ?>" <?php echo $vars['js']; ?> /></a>
 </div>
 

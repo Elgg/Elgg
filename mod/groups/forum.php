@@ -20,10 +20,19 @@
 	//get any forum topics
 	$topics = list_entities_from_annotations("object", "groupforumtopic", "group_topic_post", "", 20, 0, get_input('group_guid'), false, false, false);
 	set_context('search');	
-	$area2 = elgg_view("forum/topics", array('topics' => $topics));
+	
+	//set up breadcrumbs
+	$area1 = elgg_view('page_elements/breadcrumbs', array( 
+		'breadcrumb_root_url' => '',
+		'breadcrumb_root_text' => 'Parent Group Name',
+		'breadcrumb_currentpage' => elgg_echo('item:object:groupforumtopic')
+		));
+	
+	
+	$area1 .= elgg_view("forum/topics", array('topics' => $topics));
 	set_context('groups');
 	
-	$body = elgg_view_layout('one_column_with_sidebar', $area1.$area2);
+	$body = elgg_view_layout('one_column_with_sidebar', $area1);
 	
 	$title = elgg_echo('item:object:groupforumtopic');
 	

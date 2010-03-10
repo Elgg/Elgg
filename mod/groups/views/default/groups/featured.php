@@ -6,7 +6,6 @@
 	 
 	
 ?>
-<div class="sidebarBox featuredgroups">
 <h3><?php echo elgg_echo("groups:featured"); ?></h3>
 
 <?php
@@ -15,15 +14,12 @@
 		foreach($vars['featured'] as $group){
 			$icon = elgg_view(
 				"groups/icon", array(
-									'entity' => $group,
-									'size' => 'small',
-								  )
-				);
+				'entity' => $group,
+				'size' => 'tiny',
+			));
 				
-			echo "<div class=\"contentWrapper\">" . $icon . " <p><span>" . $group->name . "</span><br />";
-			echo $group->briefdescription . "</p><div class=\"clearfloat\"></div></div>";
-			
+			echo "<div class='featured_group'>".$icon."<p class='entity_title clearfloat'><a href=\"" . $group->getUrl() . "\">" . $group->name . "</a></p>";
+			echo "<p class='entity_subtext'>" . $group->briefdescription . "</p></div>";
 		}
 	}
 ?>
-</div>

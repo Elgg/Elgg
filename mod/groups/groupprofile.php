@@ -28,8 +28,6 @@
 		if (!$groupaccess)
 			$view_all = false;
 		
-		
-		$area2 = elgg_view_title($title);
 		$area2 .= elgg_view('group/group', array('entity' => $group, 'user' => $_SESSION['user'], 'full' => true));
 		
 		if ($view_all) {
@@ -38,11 +36,8 @@
 			
 			//group members
 			$area3 = elgg_view('groups/members',array('entity' => $group));
-		}
-		else
-		{
+		} else {
 			$area2 .= elgg_view('groups/closedmembership', array('entity' => $group, 'user' => $_SESSION['user'], 'full' => true));
-
 		}
 		
 		$body = elgg_view_layout('one_column_with_sidebar', $area1.$area2, $area3);
@@ -50,7 +45,7 @@
 		$title = elgg_echo('groups:notfound');
 		
 		$area2 = elgg_view_title($title);
-		$area2 .= elgg_echo('groups:notfound:details');
+		$area2 .= "<p class='margin_top'>".elgg_echo('groups:notfound:details')."</p>";
 		
 		$body = elgg_view_layout('one_column_with_sidebar', $area2);
 	}

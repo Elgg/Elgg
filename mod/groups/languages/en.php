@@ -15,7 +15,7 @@
 		 * Menu items and titles
 		 */
 
-			'groups' => "My groups",
+			'groups' => "Groups",
 			'groups:owned' => "Groups I own",
 			'groups:yours' => "My groups",
 			'groups:user' => "%s's groups",
@@ -63,7 +63,7 @@
 
 			'groups:requests:none' => 'There are no outstanding membership requests at this time.',
 
-			'groups:invitations:none' => 'There are no oustanding invitations at this time.',
+			'groups:invitations:none' => 'There are no outstanding invitations at this time.',
 
 			'item:object:groupforumtopic' => "Discussion topics",
 

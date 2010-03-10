@@ -12,7 +12,6 @@
 	 
 	 //right column
 	 if ($forae = elgg_get_entities(array('types' => 'object', 'owner_guid' => $vars['entity']->guid))) {
-	 //if ($forae = get_entities_from_annotations("object", "groupforumtopic", "group_topic_post", "", 0, $vars['entity']->guid, 20, 0, "desc", false)) {
 	 	foreach($forae as $forum)
 	 		echo elgg_view_entity($forum);
 	 }

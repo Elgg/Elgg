@@ -15,92 +15,64 @@
 	
 ?>
 
-	<div class="topic_post"><!-- start the topic_post -->
+<div class="entity_listing topic clearfloat">
+<a name="<?php echo $vars['entity']->id; ?>"></a>
+	<?php
+	// get infomation about the owner of the comment
+	if ($post_owner = get_user($vars['entity']->owner_guid)) {
+	    // display the user icon
+	    echo "<div class='entity_listing_icon'>" . elgg_view("profile/icon",array('entity' => $post_owner, 'size' => 'tiny')) . "</div>";
+	    // display the user name
+	    echo "<div class='entity_listing_info'>";
+	    // if comment owner, group owner, or site admin - display edit and delete options
+	    if (groups_can_edit_discussion($vars['entity'], page_owner_entity()->owner_guid)) {
+			echo "<div class='entity_metadata'>";
+	        echo "<div class='delete_button'>".elgg_view("output/confirmlink",array(
+				'href' => $vars['url'] . "action/groups/deletepost?post=" . $vars['entity']->id . "&topic=" . get_input('topic') . "&group=" . get_input('group_guid'),
+				'text' => elgg_echo('delete'),
+				'confirm' => elgg_echo('deleteconfirm')
+				))."</div>";
+			echo "<a class='link' onclick=\"elgg_slide_toggle(this,'.topic','.edit_comment');\">".elgg_echo('edit')."</a>";
+			echo "</div>";
+
+		}	    
+	    
+	    echo "<p class='entity_title'>" . $post_owner->name . "</p>";
+	} else {
+		echo "<div class='entity_listing_icon'><img src=\"" . elgg_view('icon/user/default/tiny') . "\" /></div>";
+		echo "<div class='entity_listing_info'><p class='entity_title'>" . elgg_echo('profile:deleteduser') . "</p>";
+	}
 	
-	    <table width="100%">
-            <tr>
-                <td>
-                	<a name="<?php echo $vars['entity']->id; ?>"></a>
-                    <?php
-                        //get infomation about the owner of the comment
-                        if ($post_owner = get_user($vars['entity']->owner_guid)) {
-	                        
-	                        //display the user icon
-	                        echo "<div class=\"post_icon\">" . elgg_view("profile/icon",array('entity' => $post_owner, 'size' => 'small')) . "</div>";
-	                        
-	                        //display the user name
-	                        echo "<p><b>" . $post_owner->name . "</b><br />";
-	                        
-                        } else {
-                        	echo "<div class=\"post_icon\"><img src=\"" . elgg_view('icon/user/default/small') . "\" /></div>";
-                        	echo "<p><b>" . elgg_echo('profile:deleteduser') . "</b><br />";
-                        }
-                        
-                        //display the date of the comment
-                        echo "<small>" . friendly_time($vars['entity']->time_created) . "</small></p>";
-                    ?>
-                </td>
-                <td width="70%">       
-                    <?php
-                        //display the actual message posted
-                       echo parse_urls(elgg_view("output/longtext",array("value" => $vars['entity']->value)));
-                    ?>
-                </td>
-            </tr>
-        </table>
-		<?php
+	//display the date of the comment
+	echo "<p class='entity_subtext'>" . friendly_time($vars['entity']->time_created) . "</p>";
 
-		    //if the comment owner is looking at it, or admin, or group owner they can edit
-		    if (groups_can_edit_discussion($vars['entity'], page_owner_entity()->owner_guid)) {
-        ?>
-		        <p class="topic-post-menu">
-		        <?php
-             				
-			        echo elgg_view("output/confirmlink",array(
-														'href' => $vars['url'] . "action/groups/deletepost?post=" . $vars['entity']->id . "&topic=" . get_input('topic') . "&group=" . get_input('group_guid'),
-                										'text' => elgg_echo('delete'),
-														'confirm' => elgg_echo('deleteconfirm'),
-													));
-						
-					//display an edit link that will open up an edit area							
-					echo " <a class=\"collapsibleboxlink\">".elgg_echo('edit')."</a>";
-					echo "<div class=\"collapsible_box\">";
-					//get the edit form and details
-					$submit_input = elgg_view('input/submit', array('internalname' => 'submit', 'value' => elgg_echo('save')));
-					$text_textarea = elgg_view('input/longtext', array('internalname' => 'postComment'.$vars['entity']->id, 'value' => $vars['entity']->value));
-                	$post = elgg_view('input/hidden', array('internalname' => 'post', 'value' => $vars['entity']->id));
-		  			$field = elgg_view('input/hidden', array('internalname' => 'field_num', 'value' => $vars['entity']->id));
-                	$topic = elgg_view('input/hidden', array('internalname' => 'topic', 'value' => get_input('topic')));
-		  			$group = elgg_view('input/hidden', array('internalname' => 'group', 'value' => get_input('group_guid')));
-		  			
-					$form_body = <<<EOT
-					
-					<div class='edit_forum_comments'>
-					<p class='longtext_editarea'>	
-						$text_textarea
-					</p>
-					$post
-					$topic
-					$group
-					$field
-					<p>
-						$submit_input
-					</p>
-						
-					</div>
-					
+	//display the actual message posted
+	echo parse_urls(elgg_view("output/longtext",array("value" => $vars['entity']->value)));
+
+    // if comment owner, group owner, or site admin - display edit-form
+    if (groups_can_edit_discussion($vars['entity'], page_owner_entity()->owner_guid)) {
+		//get the edit form and details
+		$submit_input = elgg_view('input/submit', array('internalname' => 'submit', 'value' => elgg_echo('save')));
+		$text_textarea = elgg_view('input/longtext', array('internalname' => 'postComment'.$vars['entity']->id, 'value' => $vars['entity']->value));
+    	$post = elgg_view('input/hidden', array('internalname' => 'post', 'value' => $vars['entity']->id));
+		$field = elgg_view('input/hidden', array('internalname' => 'field_num', 'value' => $vars['entity']->id));
+    	$topic = elgg_view('input/hidden', array('internalname' => 'topic', 'value' => get_input('topic')));
+		$group = elgg_view('input/hidden', array('internalname' => 'group', 'value' => get_input('group_guid')));
+			
+		$form_body = <<<EOT
+		
+		<p class='longtext_editarea'>$text_textarea</p>
+		$post
+		$topic
+		$group
+		$field
+		$submit_input
 EOT;
-				
+		echo "<div class='edit_comment margin_top hidden'>";
+		echo elgg_view('input/form', array('action' => "{$vars['url']}action/groups/editpost", 'body' => $form_body, 'internalid' => 'editforumpostForm'));
+		echo "</div>";
+    }
+	echo "</div>"; // close entity_listing_info
 ?>
-
-				<?php
-					echo elgg_view('input/form', array('action' => "{$vars['url']}action/groups/editpost", 'body' => $form_body, 'internalid' => 'editforumpostForm'));
-				?>
-					</div>
-		        </p>
 		
-        <?php
-            }
-	    ?>
-		
-	</div><!-- end the topic_post -->
+</div>
