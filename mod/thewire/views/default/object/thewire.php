@@ -37,9 +37,12 @@
 	    </div>
 
 			<div class="thewire_options">
-			
+<?php
+	if (isloggedin()) {
+?>
 			<a href="<?php echo $vars['url']; ?>mod/thewire/add.php?wire_username=<?php echo $vars['entity']->getOwnerEntity()->username; ?>" class="reply"><?php echo elgg_echo('thewire:reply'); ?></a>
 		<?php
+	}
 /*		    //only have a reply option for main notes, not other replies
 		    if($vars['entity']->parent == 0){
         ?>
