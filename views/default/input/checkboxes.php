@@ -20,6 +20,10 @@ if (!$class) {
 	$class = "input_checkboxes";
 }
 
+if (!isset($vars['value']) || $vars['value'] === FALSE) {
+	$vars['value'] = elgg_get_sticky_value($vars['internalname']);
+}
+
 foreach($vars['options'] as $label => $option) {
 	//if (!in_array($option,$vars['value'])) {
 	if (is_array($vars['value'])) {

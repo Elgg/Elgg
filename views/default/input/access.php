@@ -30,6 +30,9 @@ if (!array_key_exists('value', $vars) || $vars['value'] == ACCESS_DEFAULT) {
 	$vars['value'] = get_default_access();
 }
 
+if (!isset($vars['value']) || $vars['value'] === FALSE) {
+	$vars['value'] = elgg_get_sticky_value($vars['internalname']);
+}
 
 if ((!isset($vars['options'])) || (!is_array($vars['options']))) {
 	$vars['options'] = array();

@@ -22,6 +22,10 @@
 
 global $user_picker_js_sent;
 
+if (!isset($vars['value']) || $vars['value'] === FALSE) {
+	$vars['value'] = elgg_get_sticky_value($vars['internalname']);
+}
+
 if (!$user_picker_js_sent) {
 ?>
 <!-- User picker JS -->

@@ -21,6 +21,10 @@ if (!$class) {
 	$class = "input_pulldown";
 }
 
+if (!isset($vars['value']) || $vars['value'] === FALSE) {
+	$vars['value'] = elgg_get_sticky_value($vars['internalname']);
+}
+
 ?>
 
 <select name="<?php echo $vars['internalname']; ?>" <?php if (isset($vars['internalid'])) echo "id=\"{$vars['internalid']}\""; ?> <?php echo $vars['js']; ?> <?php if ($vars['disabled']) echo ' disabled="yes" '; ?> class="<?php echo $class; ?>">

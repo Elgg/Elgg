@@ -14,5 +14,10 @@
  * @uses $vars['internalname'] The name of the input field
  *
  */
+
+if (!isset($vars['value']) || $vars['value'] === FALSE) {
+	$vars['value'] = elgg_get_sticky_value($vars['internalname']);
+}
+
 ?>
 <input type="hidden" <?php echo $vars['js']; ?> name="<?php echo $vars['internalname']; ?>" <?php if (isset($vars['internalid'])) echo "id=\"{$vars['internalid']}\""; ?> value="<?php echo htmlentities($vars['value'], ENT_QUOTES, 'UTF-8'); ?>" />
