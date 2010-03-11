@@ -25,7 +25,7 @@ $title = elgg_view_title(elgg_echo('admin:user'));
 
 set_context('search');
 
-$result = elgg_list_entities(array('type' => 'user', 'limit' => $limit, 'full_view' => FALSE));
+$result = "<div class='members_list'>".elgg_list_entities(array('type' => 'user', 'limit' => $limit, 'full_view' => FALSE))."</div>";
 
 set_context('admin');
 

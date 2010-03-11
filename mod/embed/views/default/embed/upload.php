@@ -32,7 +32,7 @@
 		</p>
 		<p>
 		<label for="filedescription"><?php echo elgg_echo("description"); ?><br />
-		<textarea class="input-textarea" name="description" id="filedescription"></textarea>
+		<textarea class="input_textarea" name="description" id="filedescription"></textarea>
 		</label></p>
 		
 		<p>

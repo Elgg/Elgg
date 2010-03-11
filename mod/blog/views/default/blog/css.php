@@ -232,7 +232,7 @@ ItemMetaData block only
 	margin-top:15px;
 	margin-bottom:15px;
 }
-#excerpt_editarea .input-textarea {
+#excerpt_editarea .input_textarea {
 	height:80px;
 }
 #blogPostForm .current_access {

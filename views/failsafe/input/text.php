@@ -19,7 +19,7 @@
 
 $class = $vars['class'];
 if (!$class) {
-	$class = "input-text";
+	$class = "input_text";
 }
 
 ?>

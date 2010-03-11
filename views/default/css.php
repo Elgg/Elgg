@@ -1098,6 +1098,7 @@ select.styled .select_option {
 }
 .input_textarea {
 	height: 200px;
+	width:718px;
 }
 input[type="checkbox"] {
 	margin:0 3px 0 0;

@@ -18,7 +18,7 @@ if (isset($vars['class'])) {
 	$class = $vars['class'];
 }
 if (!$class) {
-	$class = "input-access";
+	$class = "input_access";
 }
 
 if ((!isset($vars['options'])) || (!is_array($vars['options']))) {

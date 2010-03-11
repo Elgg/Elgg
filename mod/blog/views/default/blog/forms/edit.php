@@ -91,7 +91,7 @@ $text_label = elgg_echo('blog:text');
 $text_textarea = elgg_view('input/longtext', array('internalname' => 'blogbody', 'value' => $body));
 $excerpt_label = elgg_echo('blog:excerpt');
 $excerpt_counter = "<div class='thewire_characters_remaining'><span id='countervalue'></span></div>";
-$excerpt_textarea = elgg_view('input/text', array('internalname' => 'blogexcerpt', 'internalid' => 'excerpt', 'class' => 'excerpt input-textarea', 'value' => $excerpt));
+$excerpt_textarea = elgg_view('input/text', array('internalname' => 'blogexcerpt', 'internalid' => 'excerpt', 'class' => 'excerpt input_textarea', 'value' => $excerpt));
 $excerpt_desc = elgg_echo('blog:excerptdesc');
 $show_excerpt_field = elgg_view('input/hidden', array('internalname' => 'show_excerpt', 'value' => $show_excerpt));
 $tag_label = elgg_echo('tags');

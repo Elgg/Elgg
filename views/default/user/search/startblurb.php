@@ -9,11 +9,6 @@
 
 elgg_deprecated_notice('view user/search/startblurb was deprecated.', 1.7);
 
+echo sprintf(elgg_echo("user:search:startblurb"),$vars['tag']);
+
 ?>
-<div class="contentWrapper">
-	<?php
-
-		echo sprintf(elgg_echo("user:search:startblurb"),$vars['tag']);
-
-	?>
-</div>

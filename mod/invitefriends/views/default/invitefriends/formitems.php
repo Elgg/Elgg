@@ -16,11 +16,11 @@
 <p><label>
 	<?php echo elgg_echo('invitefriends:introduction'); ?>
 </label>
-<textarea class="input-textarea" name="emails" ></textarea></p>
+<textarea class="input_textarea" name="emails" ></textarea></p>
 <p><label>
 	<?php echo elgg_echo('invitefriends:message'); ?>
 </label>
-<textarea class="input-textarea" name="emailmessage" ><?php
+<textarea class="input_textarea" name="emailmessage" ><?php
 
 	echo sprintf(elgg_echo('invitefriends:message:default'),$CONFIG->site->name);
 
