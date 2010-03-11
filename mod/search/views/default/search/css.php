@@ -37,6 +37,15 @@
 .search_listing_info p {
 	margin:0;
 }
+.search_listing_category_title {
+	margin-top:20px;
+}
+.search_listing_category_title h2 {
+	color:#666666;
+}
+.search_listing.more {
+	display: block;
+}
 
 
 /* search matches */
@@ -48,10 +57,6 @@
 	border: 1px #EEEEEE solid;
 	padding: 4px;
 	margin: 6px;
-}
-.searchListing {
-	display: block;
-	margin-bottom: 2em;
 }
 .searchMatch {
 	background-color: #bbdaf7;
@@ -70,13 +75,4 @@
 }
 .searchMatchColor5 {
 	background-color: #4690d6;
-}
-.searchTitle {
-	text-decoration: underline;
-}
-.search_listing_category_title {
-	margin-top:20px;
-}
-.search_listing.more {
-	display: block;
 }
