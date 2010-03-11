@@ -2661,6 +2661,54 @@ function elgg_http_add_url_query_elements($url, array $elements) {
 	return $string;
 }
 
+
+/**
+ * Breadcrumb support.
+ */
+
+/**
+ * Adds a breadcrumb to the stack
+ *
+ * @param string $title The title to display
+ * @param string $link Optional. The link for the title.
+ */
+function elgg_push_breadcrumb($title, $link = NULL) {
+	global $CONFIG;
+	if (!is_array($CONFIG->breadcrumbs)) {
+		$CONFIG->breadcrumbs = array();
+	}
+
+	// avoid key collisions.
+	$CONFIG->breadcrumbs[] = array('title' => $title, 'link' => $link);
+}
+
+/**
+ * Removes last breadcrumb entry.
+ *
+ * @return array popped item.
+ */
+function elgg_pop_breadcrumb() {
+	global $CONFIG;
+
+	if (is_array($CONFIG->breadcrumbs)) {
+		array_pop($CONFIG->breadcrumbs);
+	}
+
+	return FALSE;
+}
+
+/**
+ * Returns all breadcrumbs
+ *
+ * @return array Breadcrumbs
+ */
+function elgg_get_breadcrumbs() {
+	global $CONFIG;
+
+	return (is_array($CONFIG->breadcrumbs)) ? $CONFIG->breadcrumbs : array();
+}
+
+
 /**
  * Returns the PHP INI setting in bytes
  *

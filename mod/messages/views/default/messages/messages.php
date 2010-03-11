@@ -17,15 +17,15 @@
 if(get_input("type") == "sent"){
 	// send back to the users sentbox
 	$url = $vars['url'] . "mod/messages/sent.php";
-    // set up breadcrumbs context
-    $breadcrumb_root_text = elgg_echo('messages:sent');
+	// set up breadcrumbs context
+	elgg_push_breadcrumb(elgg_echo('messages:sent'), $url);
 	//this is used on the delete link so we know which type of message it is
 	$type = "sent";
 } else {
 	//send back to the users inbox
 	$url = $vars['url'] . "pg/messages/" . $vars['user']->username;
-    // set up breadcrumbs context
-    $breadcrumb_root_text = elgg_echo('messages:inbox');
+	// set up breadcrumbs context
+	elgg_push_breadcrumb(elgg_echo('messages:inbox'), $url);
 	//this is used on the delete link so we know which type of message it is
 	$type = "inbox";
 }
@@ -41,11 +41,8 @@ if (isloggedin())
 		if ($vars['entity']->toId == $vars['user']->guid
 			|| $vars['entity']->owner_guid == $vars['user']->guid) {
 			// display breadcrumbs
-			echo elgg_view('page_elements/breadcrumbs', array( 
-				'breadcrumb_root_url' => $url,
-				'breadcrumb_root_text' => $breadcrumb_root_text,
-				'breadcrumb_currentpage' => $vars['entity']->title
-				));
+			elgg_push_breadcrumb($vars['entity']->title);
+			echo elgg_view('navigation/breadcrumbs');
 ?>
 <!-- display the content header block -->
 			<div id="content_header" class="clearfloat">
@@ -57,45 +54,45 @@ if (isloggedin())
 						'text' => elgg_echo('delete'),
 						'confirm' => elgg_echo('deleteconfirm'),
 						'class' => "action_button disabled"
-						)); 
+						));
 				?>
 				</div>
 			</div>
-		    
-		        <div class="entity_listing messages clearfloat">
-		            <?php
-		                // we need a different user icon and name depending on whether the user is reading the message
-		                // from their inbox or sentbox. If it is the inbox, then the icon and name will be the person who sent
-		                // the message. If it is the sentbox, the icon and name will be the user the message was sent to
-		                if($type == "sent"){
-		                    //get an instance of the user who the message has been sent to so we can access the name and icon
-		                    $user_object = get_entity($vars['entity']->toId);
-		                    $message_icon = elgg_view("profile/icon",array('entity' => $user_object, 'size' => 'tiny'));
-		                    $message_owner = elgg_echo('messages:to').": <a href='{$vars['url']}pg/profile/".$user_object->username."'>".$user_object->name."</a>";
-		                }else{
-			                $user_object = get_entity($vars['entity']->fromId);
-		                    $message_icon = elgg_view("profile/icon",array('entity' => $user_object, 'size' => 'tiny'));
-		                    $message_owner = elgg_echo('messages:from').": <a href='{$vars['url']}pg/profile/".$user_object->username."'>".get_entity($vars['entity']->fromId)->name."</a>";
-		                }
-		            ?>
-		            <div class="entity_listing_icon"><?php echo $message_icon ?></div>
-		            <div class="entity_listing_info"><p><?php echo $message_owner ?></p>
+
+				<div class="entity_listing messages clearfloat">
+					<?php
+						// we need a different user icon and name depending on whether the user is reading the message
+						// from their inbox or sentbox. If it is the inbox, then the icon and name will be the person who sent
+						// the message. If it is the sentbox, the icon and name will be the user the message was sent to
+						if($type == "sent"){
+							//get an instance of the user who the message has been sent to so we can access the name and icon
+							$user_object = get_entity($vars['entity']->toId);
+							$message_icon = elgg_view("profile/icon",array('entity' => $user_object, 'size' => 'tiny'));
+							$message_owner = elgg_echo('messages:to').": <a href='{$vars['url']}pg/profile/".$user_object->username."'>".$user_object->name."</a>";
+						}else{
+							$user_object = get_entity($vars['entity']->fromId);
+							$message_icon = elgg_view("profile/icon",array('entity' => $user_object, 'size' => 'tiny'));
+							$message_owner = elgg_echo('messages:from').": <a href='{$vars['url']}pg/profile/".$user_object->username."'>".get_entity($vars['entity']->fromId)->name."</a>";
+						}
+					?>
+					<div class="entity_listing_icon"><?php echo $message_icon ?></div>
+					<div class="entity_listing_info"><p><?php echo $message_owner ?></p>
 						<p class="entity_subtext"><?php echo friendly_time($vars['entity']->time_created); ?></p>
 					</div>
-		        </div>
-		        
-		        <div class="messagebody margin_top clearfloat">        
-			        <?php
-					    // if the message is a reply, display the message the reply was for
-					    // @todo I need to figure out how to get the description out using -> (anyone?)
-					    if($main_message = $vars['entity']->getEntitiesFromRelationship("reply")){
-			    		    echo $main_message[0][description];
-			    	    }
-			    	?>
+				</div>
+
+				<div class="messagebody margin_top clearfloat">
+					<?php
+						// if the message is a reply, display the message the reply was for
+						// @todo I need to figure out how to get the description out using -> (anyone?)
+						if($main_message = $vars['entity']->getEntitiesFromRelationship("reply")){
+							echo $main_message[0][description];
+						}
+					?>
 					<!-- display the message -->
 					<?php echo elgg_view('output/longtext',array('value' => $vars['entity']->description)); ?>
 				</div>
-		
+
 				<!-- reply form -->
 				<div id="message_reply_form" class="hidden margin_top">
 					<h2><?php echo elgg_echo('messages:answer'); ?></h2>
@@ -108,8 +105,8 @@ if (isloggedin())
 											"internalname" => "message",
 											"value" => '',
 															));
-				        ?></div>
-						
+						?></div>
+
 					<?php
 						//pass across the guid of the message being replied to
 						echo "<input type='hidden' name='reply' value='" . $vars['entity']->getGUID() . "' />";

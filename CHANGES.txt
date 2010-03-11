@@ -2,7 +2,11 @@ Version 1.8.0
 (??? from http://code.elgg.org/branches/1.8/)
 
  API changes:
-  * added elgg_instanceof().
+  * Added elgg_instanceof().
+
+ UI/UX
+  * Added elgg_push_breadcrumb(), elgg_pop_breadcrumb(), and elgg_get_breadcrumbs().
+  * Added navigation/breadcrumbs.
 
 
 

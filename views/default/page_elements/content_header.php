@@ -1,44 +1,51 @@
 <?php
 /**
- *	Page Content header 
-	holds the filter menu and any content action buttons
-	used on  bookmarks, blog, file, pages,
- **/
-	 
+ * Displays the dropdown filter menu.
+ *
+ * @package Elgg
+ * @subpackage Core
+ * @author Curverider Ltd
+ * @link http://elgg.org/
+ *
+ */
+
 global $CONFIG;
-	
+
 // set variables
 $page_owner = page_owner_entity();
+if (!$page_owner) {
+	$page_owner = get_loggedin_user();
+}
 $filter_context = $vars['context']; // so we know if the user is looking at their own, everyone's or all friends
-$type = $vars['type']; // get the object type 
+$type = $vars['type']; // get the object type
 $mine_selected = '';
 $all_selected = '';
 $friend_selected = '';
 $action_buttons = '';
 $title = '';
 /* $dash_selected = ''; */
-	 				
-if(!($page_owner instanceof ElggGroup)){
+
+if (!($page_owner instanceof ElggGroup)){
 	if($filter_context == 'mine') {
 		$mine_selected = "SELECTED";
 	}
 	if($filter_context == 'everyone') {
-		$all_selected = "SELECTED";	
+		$all_selected = "SELECTED";
 	}
 	if($filter_context == 'friends') {
 		$friend_selected = "SELECTED";
 	}
-	if($filter_context == 'action') { 
+	if($filter_context == 'action') {
 		// if this is an action page, we'll not be displaying the filter
 	}
 /*
-	if($filter_context == 'dashboard') 
+	if($filter_context == 'dashboard')
 		$dash_selected = "SELECTED";
 */
-}	
+}
 
 // must be logged in to see the filter menu and any action buttons
-if(isloggedin()) {
+if (isloggedin()) {
 	// if we're not on an action page (add bookmark, create page, upload a file etc)
 	if ($filter_context != 'action') {
 		$location_filter = "<select onchange=\"window.open(this.options[this.selectedIndex].value,'_top')\" name=\"file_filter\" class='styled' >";
@@ -47,10 +54,10 @@ if(isloggedin()) {
 		$location_filter .= "<option {$friend_selected} class='select_option' value=\"{$vars['url']}pg/{$type}/{$_SESSION['user']->username}/friends/\">". elgg_echo($type . ':friends') . "</option>";
 		$location_filter .= "</select>";
 		$location_filter = "<div class='content_header_filter'>".$location_filter."</div>";
-		
+
 		// action buttons
 		if(get_context() != 'bookmarks'){
-			$url = $CONFIG->wwwroot . "pg/{$type}/". $page_owner->username . "/new/";
+			$url = $CONFIG->wwwroot . "pg/{$type}/". $page_owner->username . "/new";
 		} else {
 			$url = $CONFIG->wwwroot . "pg/{$type}/". $page_owner->username . "/add";
 		}
@@ -61,7 +68,7 @@ if(isloggedin()) {
 		// if we're on an action page - we'll just have a simple page title, and no filter menu
 		$title = "<div class='content_header_title'>".elgg_view_title($title = elgg_echo($type . ':add'))."</div>";
 	}
-}	
+}
 ?>
 <!-- construct the content area header -->
 <div id="content_header" class="clearfloat">
