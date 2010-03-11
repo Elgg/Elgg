@@ -16,16 +16,16 @@ if (isloggedin()) {
 		$ts = time();
 		$token = generate_action_token($ts);
 		if ($vars['entity']->isFriend()) {
-			echo elgg_view('output/confirm_link', array(
+			echo elgg_view('output/confirmlink', array(
 				'href' => "{$vars['url']}action/friends/remove?friend={$vars['entity']->getGUID()}",
 				'text' => elgg_echo('friend:remove'),
 				'class' => 'user_menu_removefriend'
 			));
 		} else {
-			echo elgg_view('output/confirm_link', array(
+			echo elgg_view('output/confirmlink', array(
 				'href' => "{$vars['url']}action/friends/add?friend={$vars['entity']->getGUID()}",
 				'text' => elgg_echo('friend:add'),
-				'class' => 'user_menu_removefriend'
+				'class' => 'user_menu_addfriend'
 			));
 		}
 	}

@@ -54,12 +54,11 @@ if ($vars['entity'] instanceof ElggUser) {
 	<div class="sub_menu">
 		<h3><a href="<?php echo $vars['entity']->getURL(); ?>"><?php echo $vars['entity']->name; ?></a></h3>
 		<?php
+		echo "<ul class='sub_menu_list'>";
 			if (isloggedin()) {
 				$actions = elgg_view('profile/menu/actions',$vars);
 				if (!empty($actions)) {
-					
-					echo "<div class=\"item_line\">{$actions}</div>";
-					
+					echo "<li class='user_menu_addremovefriend'>{$actions}</li>";
 				}
 				if ($vars['entity']->getGUID() == $vars['user']->getGUID()) {
 					echo elgg_view('profile/menu/linksownpage',$vars);
@@ -69,11 +68,12 @@ if ($vars['entity'] instanceof ElggUser) {
 			} else {
 				echo elgg_view('profile/menu/links',$vars);
 			}
+		echo "</ul>";
 		?>
 	</div>	
 	<?php
 		if ((isadminloggedin()) || (!$vars['entity']->isBanned())) {
-	 ?><a href="<?php echo $vars['entity']->getURL(); ?>" class="icon" ><?php 
+		 ?><a href="<?php echo $vars['entity']->getURL(); ?>" class="icon" ><?php 
 		}
 		
 	} 

@@ -349,7 +349,7 @@ p.visit_twitter a {
 	height:15px;
 }
 /* user avatar submenu options */
-.usericon div.sub_menu { 
+.usericon .sub_menu { 
 	display:none; 
 	position:absolute; 
 	padding:0; 
@@ -367,44 +367,37 @@ p.visit_twitter a {
 div.usericon a.icon img {
 	z-index:10;
 }
-.usericon div.sub_menu a:link, 
-.usericon div.sub_menu a:visited, 
-.usericon div.sub_menu a:hover { 
+.usericon .sub_menu a:link, 
+.usericon .sub_menu a:visited, 
+.usericon .sub_menu a:hover { 
 	display:block;
 }	
-.usericon div.sub_menu a:hover {
+.usericon .sub_menu a:hover {
 	background:#cccccc;
 	text-decoration:none;
 }
-.usericon div.sub_menu h3 {
+.usericon .sub_menu h3 {
 	font-size:1.3em;
 	line-height: 1.1em;
 	padding:0;
+	margin:0;
 	border-bottom:solid 1px #dddddd;
 	color: #4690d6;
-	margin:0 !important;
 }
-.usericon div.sub_menu h3 a {
-	padding:3px 3px 3px 6px !important;
+.usericon .sub_menu h3 a {
+	padding:3px 3px 3px 8px;
 }
-.usericon div.sub_menu p {
-	margin:0 !important;
-	padding:0 !important;
-	height:auto !important;
-	line-height:1.2em !important;
-	font-size:12px !important;
-}
-.usericon div.sub_menu p a {
-	padding:3px 3px 3px 6px !important;
+.usericon .sub_menu a {
+	padding:2px 3px 2px 8px;
 }
 /* admin menu options in avatar submenu */
 .user_menu_admin {
 	border-top:solid 1px #dddddd;
 }
-.user_menu_admin a {
+.usericon .sub_menu li.user_menu_admin a {
 	color:red;
 }
-.user_menu_admin a:hover {
-	color:white !important;
-	background:red !important;
+.usericon .sub_menu li.user_menu_admin a:hover {
+	color:white;
+	background:red;
 }

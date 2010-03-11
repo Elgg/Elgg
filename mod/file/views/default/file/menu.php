@@ -11,6 +11,6 @@
 
 ?>
 
-	<p class="user_menu_file">
+	<li class="user_menu_file">
 		<a href="<?php echo $vars['url']; ?>pg/file/<?php echo $vars['entity']->username; ?>"><?php echo elgg_echo("file"); ?></a>	
-	</p>
+	</li>
