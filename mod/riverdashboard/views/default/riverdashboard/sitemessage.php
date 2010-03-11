@@ -26,7 +26,6 @@
 	
 ?>
 
-	<div class="sidebarBox">
 	
 <?php
 
@@ -95,4 +94,3 @@ EOT;
 	}//end of admin check
 	}//end of main if
 ?>
-</div>

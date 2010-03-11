@@ -34,7 +34,7 @@ if ($statement->getObject() instanceof ElggEntity) {
 					echo $vars['entry'];
 
 				?>
-				<span class="river_item_time">
+				<span class="entity_subtext">
 					(<?php
 
 						echo friendly_time($time);

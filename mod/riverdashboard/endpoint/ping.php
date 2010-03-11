@@ -45,8 +45,7 @@ $all_activity = $annotations + $entity_creation + $entity_update;
 
 if ($all_activity > 0) {
   	$s = ($all_activity == 1) ? '' : 's';
-  	echo "<a href=\"\" onClick=\"window.location.reload();\" class=\"update_wire\" style='margin-top:9px;'>$all_activity update$s!</a>";
-  	//echo "<script type=\"text/javascript\">$(document).ready(function() { document.title = \"[{$all_activity}] new item{$s}!\"; }); </script>";
+  	echo "<a href='' onClick=\"window.location.reload();\" class='update_link'>$all_activity update$s!</a>";
 ?>
 	<script type="text/javascript">
 		$(document).ready(function(){

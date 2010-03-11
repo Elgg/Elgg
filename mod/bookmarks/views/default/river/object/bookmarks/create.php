@@ -13,6 +13,6 @@ $performed_by = get_entity($vars['item']->subject_guid); // $statement->getSubje
 $object = get_entity($vars['item']->object_guid);
 $url = $object->getURL();
 $url = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
-$string = "<div class=\"river_content_title\">" . sprintf(elgg_echo("bookmarks:river:created"),$url) . " ";
-$string .= "<a href=\"" . $object->address . "\">" . $object->title . "</a> <span class=\"river_item_time\">" . friendly_time($object->time_updated) . "</span></div>"; //elgg_echo("bookmarks:river:item") . "</a></div>";
+$string = sprintf(elgg_echo("bookmarks:river:created"),$url) . " ";
+$string .= "<a href=\"" . $object->address . "\">" . $object->title . "</a> <span class='entity_subtext'>" . friendly_time($object->time_updated) . "</span>";
 echo $string;

@@ -11,8 +11,8 @@
 	if($vars['item']->annotation_id != 0)
 		$comment = get_annotation($vars['item']->annotation_id)->value; 
 	$url = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
-	$string = "<div class=\"river_content_title\">" . sprintf(elgg_echo("river:posted:generic"),$url) . " ";
-	$string .= elgg_echo("{$subtype}:river:annotate") . "  <a href=\"{$object->getURL()}\">" . $title . "</a> " . friendly_time($object->time_created) . "</div>";
+	$string = sprintf(elgg_echo("river:posted:generic"),$url) . " ";
+	$string .= elgg_echo("{$subtype}:river:annotate") . "  <a href=\"{$object->getURL()}\">" . $title . "</a> " . friendly_time($object->time_created);
 	if(get_context() != 'riverdashboard'){
 		$string .= "<div class=\"river_content_display\">";
 		if($comment){

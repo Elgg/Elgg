@@ -9,7 +9,7 @@
 	$desc = preg_replace('/\@([A-Za-z0-9\_\.\-]*)/i','@<a href="' . $vars['url'] . 'pg/thewire/$1">$1</a>',$desc);
 	$string .= parse_urls($desc);
 
-	$string .= " <span class=\"river_item_time\"><a href=\"{$vars['url']}mod/thewire/add.php?wire_username={$object->getOwnerEntity()->username}\" class=\"reply\">" . elgg_echo('thewire:reply') . "</a></span>";
+	$string .= " <span class='entity_subtext'>" . friendly_time($object->time_created) . "</span> <a href=\"{$vars['url']}mod/thewire/add.php?wire_username={$object->getOwnerEntity()->username}\" class='reply_link'>" . elgg_echo('thewire:reply') . "</a>";
 ?>
 
 <?php 

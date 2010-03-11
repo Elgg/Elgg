@@ -96,5 +96,7 @@
 	right:5px;
 }
 
-
-
+/* river wire entry */
+.river_item .reply_link {
+	display:block;
+}

@@ -14,7 +14,7 @@ switch($vars['orient']) {
 					break;
 }
 ?>
-<div id="Submenu"><ul>
+<div class="submenu"><ul>
 <?php
 	if(isloggedin()){
 ?>

@@ -1,9 +1,4 @@
 <?php
-/**
- */
-?>
-<div class="river_item_list">
-<?php
 	if (isset($vars['items']) && is_array($vars['items'])) {
 
 		$i = 0;
@@ -33,7 +28,7 @@
 				$nexturl=$baseurl . '?' . $urladdition;
 			}
 
-			$nav .= '<a class="back" href="'.$nexturl.'">&laquo; ' . elgg_echo('previous') . '</a> ';
+			$nav .= '<a class="pagination_previous" href="'.$nexturl.'">&laquo; ' . elgg_echo('previous') . '</a> ';
 		}
 
 		if ($vars['offset'] > 0) {
@@ -48,12 +43,11 @@
 				$prevurl=$baseurl . '?' . $urladdition;
 			}
 
-			$nav .= '<a class="forward" href="'.$prevurl.'">' . elgg_echo('next') . ' &raquo;</a> ';
+			$nav .= '<a class="pagination_next" href="'.$prevurl.'">' . elgg_echo('next') . ' &raquo;</a> ';
 		}
 
 		if (!empty($nav)) {
-			echo '<div class="river_pagination"><p>'.$nav.'</p><div class="clearfloat"></div></div>';
+			echo '<div class="pagination clearfloat">'.$nav.'</div>';
 		}
 	}
 ?>
-</div>

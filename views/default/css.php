@@ -688,11 +688,8 @@ h2 {
 	PAGINATION
 *************************************** */
 .pagination {
-	-webkit-border-radius: 8px; 
-	-moz-border-radius: 8px;
-	background:white;
-	margin:5px 10px 5px 10px;
-	padding:5px;
+	margin:5px 0 5px 0;
+	padding:5px 0;
 }
 .pagination .pagination_number {
 	display:block;
@@ -732,7 +729,7 @@ h2 {
 .pagination .pagination_next {
 	display:block;
 	float:left;
-	border:1px solid #4690d6;
+	border:1px solid #cccccc;
 	color:#4690d6;
 	text-align: center;
 	font-size: 12px;
@@ -746,6 +743,7 @@ h2 {
 .pagination .pagination_previous:hover,
 .pagination .pagination_next:hover {
 	background:#4690d6;
+	border:1px solid #4690d6;
 	color:white;
 	text-decoration: none;
 }
@@ -753,7 +751,7 @@ h2 {
 	display:block;
 	float:left;
 	background:#4690d6;
-	border:1px solid #4690d6;
+	border:1px solid #cccccc;
 	text-align: center;
 	color:white;
 	font-size: 12px;
@@ -952,21 +950,18 @@ select.styled .select_option {
 	margin:0;
 	line-height:1.2em;
 }
-p.entity_title {
+.entity_title {
 	font-weight: bold;
 	font-size: 1.1em;
 	line-height:1.2em;
 	color:#666666;
 }
-p.entity_title a {
+.entity_title a {
 	color:#0054A7;
 }
-p.entity_subtext {
-	margin:0;
-	padding:0;
+.entity_subtext {
 	color:#666666;
 	font-size: 90%;
-	line-height:1.2em;
 }
 /* entity metadata block */
 .entity_metadata {

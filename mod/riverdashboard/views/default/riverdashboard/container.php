@@ -1,4 +1,4 @@
-<div id="river_container"><?php echo $vars['body']; ?></div><!-- /river_container -->
+<?php echo $vars['body']; ?>
 
 <script type="text/JavaScript">
 $(document).ready(function(){
@@ -30,7 +30,7 @@ function thewireUpdateChecker(interval) {
 			'data': {'seconds_passed': this.seconds_passed},
 			'success': function(data) {
 				if (data) {
-					$('#the-wire-updates-notice').html(data).slideDown();
+					$('#riverdashboard_updates').html(data).slideDown();
 					// could crank down the interval here.
 					// if we change the message to simply "New Posts!" 
 					// we could stop the polling altogether.
