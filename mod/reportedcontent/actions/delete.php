@@ -17,15 +17,15 @@
 		$guid = (int) get_input('item');
 		
 	// Make sure we actually have permission to edit
-		$reported = get_entity($guid);
-		if ($reported->getSubtype() == "reported_content" && $reported->canEdit()) {
+		$report = get_entity($guid);
+		if ($report->getSubtype() == "reported_content" && $report->canEdit()) {
 	
 		// Delete it!
-				if (!trigger_plugin_hook('reportedcontent:delete', $reported->type, array('entity'=>$reported), true)) {
+				if (!trigger_plugin_hook('reportedcontent:delete', '$system', array('report'=>$report), true)) {
 	 				register_error(elgg_echo("reportedcontent:notdeleted"));
 	 				forward("pg/reportedcontent/");
 	 			}
-				$rowsaffected = $reported->delete();
+				$rowsaffected = $report->delete();
 				if ($rowsaffected > 0) {
 		// Success message
 					system_message(elgg_echo("reportedcontent:deleted"));

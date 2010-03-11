@@ -17,15 +17,15 @@
 		$guid = (int) get_input('item');
 		
 	// Make sure we actually have permission to edit
-		$reported = get_entity($guid);
-		if ($reported->getSubtype() == "reported_content" && $reported->canEdit()) {
+		$report = get_entity($guid);
+		if ($report->getSubtype() == "reported_content" && $report->canEdit()) {
 	
 		// change the state
-				if (!trigger_plugin_hook('reportedcontent:archive', $reported->type, array('entity'=>$reported), true)) {
+				if (!trigger_plugin_hook('reportedcontent:archive', 'system', array('report'=>$report), true)) {
  					system_message(elgg_echo("reportedcontent:notarchived"));
  					forward("pg/reportedcontent/");
 		 		}
-		        $reported->state = "archived";
+		        $report->state = "archived";
 				
 		// Success message
 				system_message(elgg_echo("reportedcontent:archived"));
