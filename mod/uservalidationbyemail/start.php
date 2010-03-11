@@ -26,6 +26,8 @@ function uservalidationbyemail_init() {
  * @return unknown_type
  */
 function uservalidationbyemail_page_handler($page) {
+	global $CONFIG;
+	
 	if (isset($page[0]) && $page[0] == 'confirm') {
 		$code = sanitise_string(get_input('c', FALSE));
 		$user_guid = get_input('u', FALSE);
