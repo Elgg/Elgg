@@ -9,10 +9,6 @@
  * @link http://elgg.com/
  */
 ?>
-
-.members_list {
-
-}
 .members .group_count {
 	font-weight: bold;
 	color: #666666;

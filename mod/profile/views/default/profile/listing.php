@@ -29,12 +29,12 @@ else if (check_entity_relationship(page_owner(), 'friend', $vars['entity']->guid
 		
 if (!$banned) {
 	$info .= "<p class='entity_title user'><a href=\"" . $vars['entity']->getUrl() . "\" rel=\"$rel\">" . $vars['entity']->name . "</a></p>";
-	//create a view that a status plugin could extend - in the default case, this is the wire
-	$info .= elgg_view("profile/status", array("entity" => $vars['entity']));
 	$location = $vars['entity']->location;
 	if (!empty($location)) {
 		$info .= "<p class='entity_subtext user'>" . elgg_echo("profile:location") . ": " . elgg_view("output/tags",array('value' => $vars['entity']->location)) . "</p>";
 	}
+	//create a view that a status plugin could extend - in the default case, this is the wire
+	$info .= elgg_view("profile/status", array("entity" => $vars['entity']));
 }else{
 	$info .= "<p class='entity_title user banned'>";
 	if (isadminloggedin())

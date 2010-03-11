@@ -991,7 +991,10 @@ select.styled .select_option {
 	padding-top:2px;
 	width:26px;
 }
-
+/* override hover for lists of site users/members */
+.members_list .entity_listing:hover {
+	background-color:white;
+}
 
 /* ***************************************
 	USER SETTINGS & ADMIN AREA 
@@ -1002,10 +1005,12 @@ select.styled .select_option {
 .admin_settings {
 	margin-bottom:20px;
 }
+/*
 .user_settings p,
 .admin_settings p {
 	margin-bottom:6px;
 }
+*/
 .user_settings h3,
 .admin_settings h3 {
 	background:#e4e4e4;
