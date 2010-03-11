@@ -20,7 +20,7 @@
 	$area2 = elgg_view_title($title);
 	
 	set_context('search');
-	$objects = elgg_list_entities(array('types' => 'group', 'owner_guid' => page_owner(), 'limit' => $limit, 'full_view' => FALSE));
+	$objects = elgg_list_entities(array('types' => 'group', 'owner_guid' => page_owner(), 'limit' => $limit, 'offset' => $offset, 'full_view' => FALSE));
 	set_context('groups');
 	
 	$area2 .= $objects;
