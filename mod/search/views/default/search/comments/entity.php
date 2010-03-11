@@ -12,7 +12,7 @@ $entity = $vars['entity'];
 $owner = get_entity($entity->getVolatileData('search_matched_comment_owner_guid'));
 
 if ($owner instanceof ElggUser) {
-	$icon = elgg_view('profile/icon', array('entity' => $owner, 'size' => 'small'));
+	$icon = elgg_view('profile/icon', array('entity' => $owner, 'size' => 'tiny'));
 } else {
 	$icon = '';
 }
@@ -47,11 +47,11 @@ $tc = $entity->getVolatileData('search_matched_comment_time_created');;
 $time = friendly_time($tc);
 
 echo <<<___END
-	<div class="search_listing">
+	<div class="search_listing clearfloat">
 		<div class="search_listing_icon">$icon</div>
 		<div class="search_listing_info">
-			<p class="ItemTitle">$title</p>$description
-			<p class="ItemTimestamp">$time</p>
+			<p class="entity_title">$title</p>$description
+			<p class="entity_subtext">$time</p>
 		</div>
 	</div>
 ___END;

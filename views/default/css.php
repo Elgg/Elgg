@@ -1498,6 +1498,7 @@ a.action_button:focus {
 .admin_settings.users_online  p.owner_timestamp {
 	padding-left:3px;
 }
+/*
 .admin_users_online .search_listing {
 	margin:0 0 5px 0;
 	padding:5px;
@@ -1505,6 +1506,7 @@ a.action_button:focus {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 }
+*/
 .admin_plugin_reorder {
 	float:right;
 	width:200px;

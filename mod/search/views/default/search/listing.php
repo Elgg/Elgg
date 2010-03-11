@@ -92,7 +92,7 @@ if ($more) {
 	$more_link = '';
 }
 
-$body = elgg_view_title($type_str);
+$body = "<div class='search_listing_category_title'>".elgg_view_title($type_str)."</div>";
 
 foreach ($entities as $entity) {
 	if ($view = search_get_search_view($vars['params'], 'entity')) {

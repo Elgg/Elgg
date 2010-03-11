@@ -10,9 +10,9 @@
 
 ?>
 
-<div class="search_listing">
+<div class="search_listing todo">
 
-	<div class="search_listing_header">
+	<div class="search_listing_header todo">
 
 			<?php
 
@@ -21,7 +21,7 @@
 			?>
 
 	</div>
-	<div class="search_listing_info">
+	<div class="search_listing_info todo">
 		<?php
 
 			echo $vars['info'];
