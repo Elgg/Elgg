@@ -267,6 +267,9 @@ h2 {
 	width: 100%;
 	height:90px;
 	background-color: #4690D6;
+	background-image: url(<?php echo $vars['url']; ?>_graphics/header_shadow.png);
+	background-repeat: repeat-x;
+	background-position: bottom left;
 }
 #elgg_header_contents {
 	width:990px;

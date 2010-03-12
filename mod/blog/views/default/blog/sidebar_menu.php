@@ -34,9 +34,14 @@ $page_owner = page_owner_entity();
 if ($loggedin_user) {
 
 }
-
 ?>
 
 <ul class="submenu">
 	<li><a href="">Drafts</a></li>
 </ul>
+
+<?php // temporarily force tag-cloud display
+	echo "<h3>Tagcloud</h3>";
+	echo "<div class='tagcloud sidebar'>".display_tagcloud(0, 100, 'tags')."</div>";
+	echo "<a href=\"{$vars['url']}mod/tagcloud/tagcloud.php\">All site tags</a>";
+?>
