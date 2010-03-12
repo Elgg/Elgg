@@ -27,7 +27,7 @@
 			'pages:history' => "Page history",
 			'pages:view' => "View page",
 			'pages:welcome' => "Edit welcome message",
-			'pages:welcomemessage' => "Welcome to this Elgg pages plugin. This feature allows you to create pages on any topic and select who can view them and edit them.",
+			'pages:welcomemessage' => "Welcome to the pages tool of %s. This tool allows you to create pages on any topic and select who can view them and edit them.",
 			'pages:welcomeerror' => "There was a problem saving your welcome message",
 			'pages:welcomeposted' => "Your welcome message has been posted",
 			'pages:navigation' => "Page navigation",

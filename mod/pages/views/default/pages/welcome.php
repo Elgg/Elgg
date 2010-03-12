@@ -22,7 +22,7 @@
 
 ?>
 
-<div class="contentWrapper pageswelcome"><p><?php elgg_echo('pages:welcomemessage'); ?></p></div>
+<div class="contentWrapper pageswelcome"><p><?php echo sprintf(elgg_echo('pages:welcomemessage'), $vars['config']->sitename); ?></p></div>
     
 <?php
     }
