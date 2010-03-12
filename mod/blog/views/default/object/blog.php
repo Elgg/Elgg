@@ -1,161 +1,106 @@
 <?php
 /**
- * Elgg blog individual post view
+ * View for blog objects
+ *
+ * @package Blog
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * @author Curverider Ltd
+ * @copyright Curverider Ltd 2008-2010
+ * @link http://elgg.org/
  */
 
-$page_owner = page_owner_entity();
+$full = (isset($vars['full'])) ? $vars['full'] : FALSE;
+$blog = (isset($vars['entity'])) ? $vars['entity'] : FALSE;
 
-if (isset($vars['entity'])) {
+if (!$blog) {
+	return '';
+}
 
-	//display comments link?
-	if ($vars['entity']->comments_on == 'Off') {
-		$comments_on = false;
+$owner = get_entity($blog->owner_guid);
+$container = get_entity($blog->container_guid);
+$linked_title = "<a href=\"{$blog->getURL()}\" title=\"" . htmlentities($blog->title) . "\">{$blog->title}</a>";
+$categories = elgg_view('categories/view', $vars);
+$excerpt = $blog->excerpt;
+$body = $blog->description;
+$owner_icon = elgg_view("profile/icon",array('entity' => $owner, 'size' => 'tiny'));
+$tags = elgg_view('output/tags', array('tags' => $blog->tags));
+$date = friendly_time($blog->time_created);
+
+if ($blog->comments_on == 'Yes') {
+	$comments_count = elgg_count_comments($blog);
+	$comments_link = "<a href=\"{$blog->getURL()}#annotations\">" . sprintf(elgg_echo("comments"), $comments_count) . '</a>';
+} else {
+	$comments_link = '';
+}
+
+// links to delete or edit.
+if ($blog->canEdit()) {
+	$edit_url = "{$vars['url']}pg/blog/{$owner->username}/edit/{$blog->getGUID()}/";
+	$edit_link = "<a class=\"action_button\" href=\"$edit_url\">" . elgg_echo('edit') . '</a>';
+
+	$delete_url = "{$vars['url']}action/blog/delete?guid={$blog->getGUID()}";
+	$delete_link = elgg_view('output/confirmlink', array(
+		'href' => $delete_url,
+		'text' => elgg_echo('delete'),
+		'class' => 'action_button'
+	));
+
+	$edit = "$edit_link $delete_link";
+} else {
+	$edit = '';
+}
+
+if ($full) {
+	// The "on" status changes for comments, so best to check for !Off
+	if ($blog->comments_on != 'Off') {
+		$comments = elgg_view_comments($blog);
 	} else {
-		$comments_on = true;
-	}	
-	if (get_context() == "search" && $vars['entity'] instanceof ElggObject) {	
-		//display the correct layout depending on gallery or list view
-		if (get_input('search_viewtype') == "gallery") {
-			//display the gallery view
-       		echo elgg_view("blog/gallery",$vars);
-		} else {
-			echo elgg_view("blog/listing",$vars);
-		}		
-	} else {
-		if ($vars['entity'] instanceof ElggObject) {		
-			$url = $vars['entity']->getURL();
-			$owner = $vars['entity']->getOwnerEntity();
-			$canedit = $vars['entity']->canEdit();		
-		} else {	
-			$url = 'javascript:history.go(-1);';
-			$owner = $vars['user'];
-			$canedit = false;	
-		}
-				
-?>
-
-<div id="Page_Header">
-	<div class="Page_Header_Title">
-		<div id="content_area_user_title"><h2><?php echo $page_owner->name; ?>'s Blog</h2></div>
-	</div>
-
-	<div class="Page_Header_Options">
-	<?php
-		if ($vars['entity']->canEdit()) {
-	?>
-	<a class="Action_Button" href="<?php echo $vars['url']; ?>mod/blog/edit.php?blogpost=<?php echo $vars['entity']->getGUID(); ?>"><?php echo elgg_echo('blog:editpost'); ?></a>
-	<?php 
-		echo elgg_view('output/confirmlink',array(	
-				'href' => $vars['url'] . "action/blog/delete?blogpost=" . $vars['entity']->getGUID(),
-				'text' => elgg_echo("delete"),
-				'confirm' => elgg_echo("blog:delete:confirm"),
-				'class' => "Action_Button Disabled",));  
-		}
-	?>
-	</div><div class='clearfloat'></div>
-</div>
-
-<div class="ContentWrapper singleview">
-	<div class="blog_post">
-			<?php
-				// Allow plugins to extend
-				echo elgg_view("blogs/options",array('entity' => $vars['entity']));
-			?>
-	<div id="content_area_user_title">
-		<h2><a href="<?php echo $url; ?>"><?php echo $vars['entity']->title; ?></a></h2>
-	</div>
-		<!-- display the user icon -->
-		<div class="blog_post_icon">
-		    <?php
-		        echo elgg_view("profile/icon",array('entity' => $owner, 'size' => 'tiny'));
-			?>
-	    </div>
-			<p class="strapline">
-			<!-- username -->
-			<a href="<?php echo $vars['url']; ?>pg/blog/<?php echo $owner->username; ?>"><?php echo $owner->name; ?></a>
-			
-				<?php
-	                
-					echo sprintf(elgg_echo("blog:strapline"),
-									date("F j, Y",$vars['entity']->time_created)
-					);
-				
-				?> 
-				<!-- display the comments link -->
-				<?php
-					if($comments_on && $vars['entity'] instanceof ElggObject){
-			        //get the number of comments
-			    		$num_comments = elgg_count_comments($vars['entity']);
-			    ?>
-			    	<a href="<?php echo $url; ?>"><?php echo sprintf(elgg_echo("comments")) . " (" . $num_comments . ")"; ?></a>
-			    <?php
-		    		}
-		    		//sort out the access level for display
-					$object_acl = get_readable_access_level($vars['entity']->access_id);
-		    		//files with these access level don't need an icon
-					$general_access = array('Public', 'Logged in users', 'Friends');
-		    		//set the right class for access level display - need it to set on groups and shared access only
-		    		$is_group = get_entity($vars['entity']->container_guid);
-					if($is_group instanceof ElggGroup){
-						//get the membership type open/closed
-						$membership = $is_group->membership;
-						if($membership == 2)
-							$access_level = "class='group_open'";
-						else
-							$access_level = "class='group_closed'";
-					}elseif($object_acl == 'Private'){
-						$access_level = "class='private'";
-					}else{
-						if(!in_array($object_acl, $general_access))
-							$access_level = "class='shared_collection'";
-						else
-							$access_level = "class='generic_access'";
-					}
-		    		echo "<br /><span {$access_level}>" . $object_acl . "</span>";
-		    	?>
-			</p>
-
-			<div class="clearfloat"></div>
-			<div class="blog_post_body">
-			<!-- display the actual blog post and excerpt if appropriate -->
-			<?php
-				if($vars['entity']->show_excerpt){
-					//echo "<div class='show_excerpt'>";
-					//echo elgg_view('output/longtext',array('value' => $vars['entity']->excerpt));
-					//echo "</div>";
-				}
-				echo elgg_view('output/longtext',array('value' => $vars['entity']->description));
-			?>
-			</div><div class="clearfloat"></div>			
-			<!-- display edit options if it is the blog post owner -->
-			<p class="options">
-			<?php
-				// Allow plugins to extend
-				echo elgg_view("blogs/extend",array('entity' => $vars['entity']));
-			?>
-			</p>
-			
-			<!-- display tags -->
-				<?php
-	
-					$tags = elgg_view('output/tags', array('tags' => $vars['entity']->tags));
-					if (!empty($tags)) {
-						echo '<p class="tags">' . $tags . '</p>';
-					}
-				
-					$categories = elgg_view('categories/view', $vars);
-					if (!empty($categories)) {
-						echo '<p class="categories">' . $categories . '</p>';
-					}
-				
-				?>
-			
-			<div class="clearfloat"></div>
-	</div>
-</div>
-<?php
+		$comments = '';
 	}
-}else{
 
-	echo "<div class='ContentWrapper singleview'>" . elgg_echo('blog:none') . "</div>";
+	$owner_title = sprintf(elgg_echo('blog:owner_title'), $user->name);
+
+echo <<<___END
+<div class="blog clearfloat">
+	<h1>$owner_title</h2>
+	$edit
+	<h2 class="entity_title">{$blog->title}</h2>
+	<div class="blog entity_listing_icon">
+		$owner_icon
+	</div>
+	<div class="entity_listing_info">
+		<p class="entity_subtext">
+			$date
+			$tags
+			$categories
+			$comments_link
+		</p>
+		<p class="blog body">$body</p>
+	</div>
+</div>
+
+$comments
+
+___END;
+
+} else {
+	echo <<<___END
+<div class="blog entity_listing clearfloat">
+	<div class="entity_listing_icon">
+		$owner_icon
+	</div>
+	<div class="entity_listing_info">
+		$edit
+		<p class="entity_title">$linked_title</p>
+		<p class="entity_subtext">
+			$date
+			$tags
+			$categories
+			$comments_link
+		</p>
+		<p>$excerpt</p>
+	</div>
+</div>
+
+___END;
 }

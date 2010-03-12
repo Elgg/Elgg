@@ -1,257 +1,272 @@
-<script>
-$(document).ready(function(){
-	$('#excerpt.excerpt').each(function(){
-		var allowed = 200;
-	
-		// set the initial value
-		$('#countervalue').text(allowed);
-		
-		// bind on key up event
-		$(this).keyup(function(){
-			var counter_value = ((allowed - ($(this).val().length)));
-			
-			$("#countervalue").removeClass();
-			
-			if ((counter_value > 10)) {
-				$("#countervalue").addClass("positive");
-			}
-			else if ((counter_value <= 10) && (counter_value >= 0)) {
-				$("#countervalue").addClass("gettingclose");
-			}
-			else if ((counter_value < 0)) {
-				$("#countervalue").addClass("negative");
-			}
-		
-			// insert new length
-			$('#countervalue').text(counter_value);
-						
-		});
-	});
-});
-</script>
 <?php
 /**
-* Elgg blog edit/add page
-*/
+ * Edit blog form
+ *
+ * @package Blog
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * @author Curverider Ltd
+ * @copyright Curverider Ltd 2008-2010
+ * @link http://elgg.org/
+ */
 
-//access details
-$loggedin_user_access = get_default_access(get_loggedin_user());
-$user_acl = get_readable_access_level($loggedin_user_access);
+$values = array(
+	'title' => NULL,
+	'description' => NULL,
+	'status' => 'final',
+	//'publish_date' => NULL,
+	'access_id' => ACCESS_DEFAULT,
+	'comments_on' => 'On',
+	'excerpt' => NULL,
+	'tags' => NULL,
+	'container_guid' => NULL,
+	'guid' => NULL
+);
 
-//Populate the title, body and acction variables if it is an edit, declare them if it is a new post
-if (isset($vars['entity'])) {
-	$title = sprintf(elgg_echo("blog:editpost"),$object->title);
-	$action = "blog/edit";
-	$title = $vars['entity']->title;
-	$body = $vars['entity']->description;
-	$tags = $vars['entity']->tags;
-	if ($vars['entity']->comments_on == 'Off')
-		$comments_on = false;
-	else
-		$comments_on = true;
-	$access_id = $vars['entity']->access_id;
-	$show_excerpt = $vars['entity']->show_excerpt;
-	if($show_excerpt)
-		$excerpt = $vars['entity']->excerpt;
-	else
-		$excerpt = "";
-	$page_title =  elgg_view_title(elgg_echo('blog:editpost'));
-}else{
-	$title = elgg_echo("blog:addpost");
-	$action = "blog/add";
-	$tags = "";
-	$title = "";
-	$comments_on = true;
-	$description = "";
-	$excerpt = "";
-	$show_excerpt = '';
-	$page_title =  elgg_view_title(elgg_echo('blog:addpost'));
-	if(page_owner_entity() instanceof ElggGroup){
-		//if in a group, set the access level to default to the group
-		$access_id = page_owner_entity()->group_acl;
-	}else{
-		$access_id = $loggedin_user_access;
-	}		
-	$container = $vars['container_guid'] ? elgg_view('input/hidden', array('internalname' => 'container_guid', 'value' => $vars['container_guid'])) : "";
-}
+$forward = $_SERVER['HTTP_REFERER'];
 
-//Just in case we have some cached details
-if (empty($body)) {
-	$body = $vars['user']->blogbody;
-	if (!empty($body)) {
-		$title = $vars['user']->blogtitle;
-		$tags = $vars['user']->blogtags;
+$action_buttons = '';
+$guid_input = '';
+
+// if entity is set, we're editing.
+if (isset ($vars['entity'])) {
+	$blog = $vars['entity'];
+
+	if ($blog && ($blog instanceof ElggObject) && ($blog->getSubtype() == 'blog')) {
+		foreach (array_keys($values) as $field) {
+			$values[$field] = $blog->$field;
+		}
+	} else {
+		echo elgg_echo('blog:error:post_not_found');
+		return FALSE;
 	}
+
+	// add a delete button if editing
+	$delete_url = "{$vars['url']}action/blog/delete?guid={$blog->getGUID()}";
+	$delete_link = elgg_view('output/confirmlink', array(
+		'href' => $delete_url,
+		'text' => elgg_echo('delete'),
+		'class' => 'action_button'
+	));
+
+	$action_buttons = $delete_link;
+
+	$guid_input = elgg_view('input/hidden', array('internalname' => 'guid', 'value' => $values['guid']));
 }
 
-//set the required input fields
-$title_label = elgg_echo('blog:title');
-$title_textbox = elgg_view('input/text', array('internalname' => 'blogtitle', 'value' => $title));
-$text_label = elgg_echo('blog:text');
-$text_textarea = elgg_view('input/longtext', array('internalname' => 'blogbody', 'value' => $body));
+$save_button = elgg_view('input/submit', array('value' => elgg_echo('save'), 'class' => 'action_button'));
+$action_buttons .= $save_button;
+
+$title_label = elgg_echo('title');
+$title_input = elgg_view('input/text', array(
+	'internalname' => 'title',
+	'internalid' => 'blog_title',
+	'value' => $values['title']
+));
+
 $excerpt_label = elgg_echo('blog:excerpt');
-$excerpt_counter = "<div class='thewire_characters_remaining'><span id='countervalue'></span></div>";
-$excerpt_textarea = elgg_view('input/text', array('internalname' => 'blogexcerpt', 'internalid' => 'excerpt', 'class' => 'excerpt input_textarea', 'value' => $excerpt));
-$excerpt_desc = elgg_echo('blog:excerptdesc');
-$show_excerpt_field = elgg_view('input/hidden', array('internalname' => 'show_excerpt', 'value' => $show_excerpt));
-$tag_label = elgg_echo('tags');
-$tag_input = elgg_view('input/tags', array('internalname' => 'blogtags', 'value' => $tags));
+$excerpt_input = elgg_view('input/text', array(
+	'internalname' => 'excerpt',
+	'internalid' => 'blog_excerpt',
+	'value' => $values['excerpt']
+));
+
+$body_label = elgg_echo('blog:body');
+$body_input = elgg_view('input/longtext', array(
+	'internalname' => 'description',
+	'internalid' => 'blog_description',
+	'value' => $values['description']
+));
+
+$save_status = elgg_echo('blog:save_status');
+$never = elgg_echo('never');
+
+$status_label = elgg_echo('blog:status');
+$status_input = elgg_view('input/pulldown', array(
+	'internalname' => 'status',
+	'internalid' => 'blog_status',
+	'value' => $values['status'],
+	'options_values' => array(
+		'draft' => elgg_echo('blog:draft'),
+		'final' => elgg_echo('blog:final')
+	)
+));
+
+$comments_label = elgg_echo('comments');
+$comments_input = elgg_view('input/pulldown', array(
+	'internalname' => 'comments_on',
+	'internalid' => 'blog_comments_on',
+	'value' => $values['comments_on'],
+	'options_values' => array('On' => elgg_echo('on'), 'Off' => elgg_echo('off'))
+));
+
+$tags_label = elgg_echo('tags');
+$tags_input = elgg_view('input/tags', array(
+	'internalname' => 'tags',
+	'internalid' => 'blog_tags',
+	'value' => $values['tags']
+));
+
 $access_label = elgg_echo('access');
-if($comments_on)
-	$comments_on_switch = "checked=\"checked\"";
-else
-	$comment_on_switch = "";
-//if it is a group, pull out the group access view
-if(page_owner_entity() instanceof ElggGroup){
-	$options = group_access_options(page_owner_entity());
-}else{
-	$options = '';
-} 
-$access_input = elgg_view('input/access', array('internalname' => 'access_id', 'value' => $access_id, 'options' => $options));
-$submit_input = elgg_view('input/submit', array('internalname' => 'submit', 'value' => elgg_echo('publish')));
-$conversation = elgg_echo('Conversation');
-$publish = elgg_echo('publish');
-$cat = elgg_echo('categories');
-$preview = elgg_echo('blog:preview');
-$privacy = elgg_echo('access');
-$savedraft = elgg_echo('blog:draft:save');
-$draftsaved = elgg_echo('blog:draft:saved');
-$never = elgg_echo('blog:never');
-$allowcomments = elgg_echo('blog:comments:allow');
-$user_default_access = elgg_echo('blog:defaultaccess');
-$ownerblock = elgg_view('blog/ownerblock', array('entity' => $vars['entity']));
-if($vars['entity']){
-	$deletepage = elgg_view('output/confirmlink',array(	
-				'href' => $vars['url'] . "action/blog/delete?blogpost=" . $vars['entity']->getGUID(),
-				'text' => elgg_echo("delete"),
-				'confirm' => elgg_echo("blog:delete:confirm"),
-				'class' => "Action_Button Disabled")); 
-}else{
-	$deletepage = "";
-}
+$access_input = elgg_view('input/access', array(
+	'internalname' => 'access_id',
+	'internalid' => 'blog_access_id',
+	'value' => $values['access_id']
+));
 
-//INSERT EXTRAS HERE
-$extras = elgg_view('categories',$vars);
-if (!empty($extras)) $extras = '<div class="SidebarBox">' .$cat .'<div class="ContentWrapper">'. $extras . '</div></div>';
-		  
-?>
+$publish_date_label = elgg_echo('blog:publish_date');
+$publish_date_input = elgg_view('input/datepicker', array(
+	'internalname' => 'publish_date',
+	'internalid' => 'blog_publish_date',
+	'value' => $vars['publish_date']
+));
 
-<?php
-//construct the form
-$form_body = <<<EOT
-<div id="LayoutCanvas_2ColumnRHS_Sidebar">
-	{$ownerblock}
-	<div class="SidebarBox">
-			<h3>{$publish}</h3>
+// hidden inputs
+//$container_guid_input = elgg_view('input/hidden', array('internalname' => 'container_guid', 'value' => $values['container_guid']));
+$forward_input = elgg_view('input/hidden', array('internalname' => 'forward', 'value' => $forward));
 
-		<div class="ContentWrapper">
+$form_body = <<<___END
+<p>
+	<label for="blog_title">$title_label</label>
+	$title_input
+</p>
 
-			<div class="blog_access">
-				<p>{$privacy}: {$access_input}</p>
-			</div>
-			<div class="current_access">{$user_default_access}<br /><b>{$user_acl}</b></span></div>
-		</div>
-		
-		<div class="ContentWrapper">
-			<div class="allow_comments">
-					<label><input type="checkbox" name="comments_select"  {$comments_on_switch} /> {$allowcomments}</label>
-			</div>
-		</div>
-			
-		<div class="ContentWrapper">
+<p>
+	<label for="blog_excerpt">$excerpt_label</label>
+$excerpt_input
+</p>
 
-			<div class="publish_blog">
-				<div class="publish_controls">
-					{$draftsaved}: <span id="draftSavedCounter">{$never}</span>
-					<a href="#" onclick="javascript:saveDraft(false);return false;">{$savedraft}</a>
-				</div>
+<p>
+	<label for="blog_description">$body_label</label>
+	$body_input
+</p>
 
-				{$submit_input}
-			</div>
-		</div>
-	</div>
+<p id="blog_save_status">
+	$save_status:<span id="blog_save_status_time">$never</span>
+</p>
 
-	{$extras}
-	{$container}
-</div>
-
-<!-- main content -->
-<div id="LayoutCanvas_2ColumnRHS_MainArea">
+<p>
+	<label for="blog_publish_date">$publish_date_label</label>
+	$publish_date_input
+</p>
 
 
-<div id="Page_Header">
-	<div class="Page_Header_Title">
-		{$page_title}
-	</div>
+<p>
+	<label for="blog_tags">$tags_label</label>
+	$tags_input
+</p>
 
-	<div class="Page_Header_Options">
+<p>
+	<label for="blog_comments_on">$comments_label</label>
+	$comments_input
+</p>
 
-	<a class="Action_Button" onclick="javascript:saveDraft(true);return true;">{$preview}</a>
-	{$deletepage}
-	</div><div class='clearfloat'></div>
-</div>
+<p>
+	<label for="blog_access_id">$access_label</label>
+	$access_input
+</p>
 
 
 
+<p>
+	<label for="blog_status">$status_label</label>
+	$status_input
+</p>
 
-<div class="ContentWrapper">
-EOT;
+$guid_input
+$container_guid_input
+$forward_input
 
-if (isset($vars['entity']))
-	$entity_hidden = elgg_view('input/hidden', array('internalname' => 'blogpost', 'value' => $vars['entity']->getGUID()));
-else
-   	$entity_hidden = '';
+$action_buttons
 
-$form_body .= <<<EOT
-	<p><label>$title_label</label><br />$title_textbox</p>
-	<p class='longtext_editarea'>
-            $text_textarea
-	</p>
-	<div id='excerpt_editarea'>
-			<label>$excerpt_label</label><br />$excerpt_desc $excerpt_counter<br />
-            $excerpt_textarea        
-	</div>
-	<p><label>$tag_label</label><br />$tag_input</p>
-	<p>$entity_hidden</p>
-	$show_excerpt_field
-</div>
-</div>
-<div class="clearfloat"></div>
-EOT;
+<span>
 
-//display the form
-echo elgg_view('input/form', array('action' => "{$vars['url']}action/$action", 'body' => $form_body, 'internalid' => 'blogPostForm'));
+___END;
+
+echo elgg_view('input/form', array(
+	'internalname' => 'blog_post',
+	'action' => "{$vars['url']}action/blog/save",
+	'body' => $form_body
+));
+
 ?>
 
 <script type="text/javascript">
-	setInterval( "saveDraft(false)", 120000);
-	function saveDraft(preview) {
-		temppreview = preview;
+	setInterval("blogSaveDraft()", 60000);
 
-		if (typeof(tinyMCE) != 'undefined') {
-			tinyMCE.triggerSave();
-		}
-		
-		var drafturl = "<?php echo $vars['url']; ?>mod/blog/savedraft.php";
-		var temptitle = $("input[name='blogtitle']").val();
-		var tempbody = $("textarea[name='blogbody']").val();
-		var temptags = $("input[name='blogtags']").val();
-		
-		var postdata = { blogtitle: temptitle, blogbody: tempbody, blogtags: temptags };
-		
-		$.post(drafturl, postdata, function() {
+	/*
+	 * Attempt to save and update the input with the guid.
+	 */
+	function blogSaveDraftCallback(data, textStatus, XHR) {
+		if (textStatus == 'success' && data.success == true) {
+			var form = $('form[name=blog_post]');
+			form.append('<input type="hidden" name="guid" value="' + data.guid + '" />');
+
 			var d = new Date();
 			var mins = d.getMinutes() + '';
 			if (mins.length == 1) mins = '0' + mins;
-			$("span#draftSavedCounter").html(d.getHours() + ":" + mins);
-			if (temppreview == true) {
-				$("form#blogPostForm").attr("action","<?php echo $vars['url']; ?>mod/blog/preview.php");
-				$("input[name='submit']").click();
-				//$("form#blogPostForm").submit();
-				//document.blogPostForm.submit();
+			$("#blog_save_status_time").html(d.getHours() + ":" + mins);
+
+		} else {
+			$("#blog_save_status_time").html("<?php echo elgg_echo('error'); ?>");
+		}
+	}
+
+	function blogSaveDraft() {
+		if (typeof(tinyMCE) != 'undefined') {
+			tinyMCE.triggerSave();
+		}
+
+		// only save when content exists
+		var form = $('form[name=blog_post]');
+		var title = form.children('input[name=title]').val();
+		var description = form.children('textarea[name=description]').val();
+
+		if (!(title && description)) {
+			return false;
+		}
+
+		var draftURL = "<?php echo $vars['url']; ?>action/blog/save?ajax=1";
+		var postData = form.serializeArray();
+
+		// force draft status
+		$(postData).each(function(i, e) {
+			if (e.name == 'status') {
+				e.value = 'draft';
 			}
 		});
-				
+
+		$.post(draftURL, postData, blogSaveDraftCallback, 'json');
+
 	}
-	
+
+	$(document).ready(function(){
+		$('#excerpt.excerpt').each(function(){
+			var allowed = 200;
+
+			// set the initial value
+			$('#countervalue').text(allowed);
+
+			// bind on key up event
+			$(this).keyup(function(){
+				var counter_value = ((allowed - ($(this).val().length)));
+
+				$("#countervalue").removeClass();
+
+				if ((counter_value > 10)) {
+					$("#countervalue").addClass("positive");
+				}
+				else if ((counter_value <= 10) && (counter_value >= 0)) {
+					$("#countervalue").addClass("gettingclose");
+				}
+				else if ((counter_value < 0)) {
+					$("#countervalue").addClass("negative");
+				}
+
+				// insert new length
+				$('#countervalue').text(counter_value);
+
+			});
+		});
+	});
+
 </script>
