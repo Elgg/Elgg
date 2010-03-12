@@ -9,3 +9,14 @@
  * @link http://elgg.org/
 */
 ?>
+.blogpost {
+	border-bottom:1px dotted #CCCCCC;
+}
+.blogpost .body {
+	margin-top:5px;
+	margin-bottom:10px;
+	display:block;
+}
+.blogpost .body p {
+	line-height: 1.4em;
+}

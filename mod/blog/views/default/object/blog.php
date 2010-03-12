@@ -61,7 +61,7 @@ if ($full) {
 	$owner_title = sprintf(elgg_echo('blog:owner_title'), $user->name);
 
 echo <<<___END
-<div class="blog clearfloat">
+<div class="blogpost clearfloat">
 	<div id="content_header" class="clearfloat">
 		<div class="content_header_title"><h2>$owner_title</h2></div>
 	</div>	
@@ -77,7 +77,7 @@ echo <<<___END
 			$comments_link
 		</p>
 		<p class="tags">$tags</p>
-		<p class="blog body">$body</p>
+		<span class="body">$body</span>
 	</div>
 </div>
 

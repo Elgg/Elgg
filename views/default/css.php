@@ -21,10 +21,11 @@
 	ELGG TABBED NAVIGATION 		re-usable tabbed navigation
 	LOGIN / REGISTER			login box, register, and lost password page styles
 	CONTENT HEADER
+	DEFAULT COMMENTS
 	ENTITY LISTINGS				elgg's default entity listings
 	USER SETTINGS & ADMIN AREA	styles for user settings and default admin area
 	GENERAL FORM ELEMENTS		default styles for all elgg input/form elements
-	
+	FRIENDS PICKER
 	
 
 */
@@ -642,7 +643,7 @@ h2 {
 	line-height:1.2em;
 	color:#bababa;
 	position: relative;
-	top:-8px;
+	top:-6px;
 	left:0;
 }
 #breadcrumbs a {
@@ -914,6 +915,53 @@ select.styled .select_option {
 }
 
 
+/* ***************************************
+	DEFAULT COMMENTS
+**************************************** */
+.generic_comment {
+	border-bottom:1px dotted #cccccc;
+	clear:both;
+	display:block;
+	margin:0;
+	padding:5px 0 7px;
+	position:relative;
+}
+.generic_comment:first-child {
+	border-top:1px dotted #cccccc;
+}
+.generic_comment_icon {
+	float:left;
+	margin-left:3px;
+	margin-top:3px;
+}
+.generic_comment_icon img {
+	width: auto;
+}
+.generic_comment_details {
+	float:left;
+	margin-left:7px;
+	min-height:28px;
+	width:693px;
+}
+.generic_comment_details p {
+	margin:0;
+}
+.generic_comment_owner {
+	font-size: 1.1em;
+	line-height:1.2em;
+	color:#666666;
+}
+.generic_comment_owner a {
+	color:#0054A7;
+}
+.generic_comment_owner .entity_subtext {
+	color:#666666;
+	font-size: 90%;
+}
+.generic_comment_body {
+	margin:3px 0 5px 0;
+}
+
 
 /* ***************************************
 	DEFAULT ENTITY LISTINGS
@@ -997,12 +1045,6 @@ select.styled .select_option {
 .admin_settings {
 	margin-bottom:20px;
 }
-/*
-.user_settings p,
-.admin_settings p {
-	margin-bottom:6px;
-}
-*/
 .user_settings h3,
 .admin_settings h3 {
 	background:#e4e4e4;
@@ -1312,7 +1354,7 @@ a.action_button:focus {
 
 
 /* ***************************************
-	FRIENDS PICKER SLIDER
+	FRIENDS PICKER
 *************************************** */
 .friends_picker_container h3 {
 	font-size:4em !important;
@@ -1340,11 +1382,6 @@ a.action_button:focus {
 	padding:0;
 	width: 730px;
 	height: auto;
-/*
-	background: #dedede;
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
-*/
 }
 .friendspicker_savebuttons {
 	background: white;

@@ -14,7 +14,7 @@
 	$string = sprintf(elgg_echo("river:posted:generic"),$url) . " ";
 	$string .= elgg_echo("{$subtype}:river:annotate") . "  <a href=\"{$object->getURL()}\">" . $title . "</a> " . friendly_time($object->time_created);
 	if(get_context() != 'riverdashboard'){
-		$string .= "<div class=\"river_content_display\">";
+		$string .= "<div class='river_content_display'>";
 		if($comment){
 			$contents = strip_tags($comment);//this is so we don't get large images etc in the activity river
 			if(strlen($contents) > 200)
