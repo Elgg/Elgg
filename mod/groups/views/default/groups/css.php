@@ -115,13 +115,7 @@
 }
 
 /* Group forum */
-.topic .link {
-	color:#aaaaaa;
-	margin-right:10px;
-}
-.topic .entity_metadata .delete_button {
-	margin-top:3px;
-}
+
 /* all browsers - force tinyMCE on edit forum posts to be full-width */
 .edit_comment .defaultSkin table.mceLayout {
 	width: 694px !important;

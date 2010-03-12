@@ -39,11 +39,11 @@ if (isset($vars['entity'])) {
 			}//close reply if statement
 			// if the user looking at thewire post can edit, show the delete link
 			if ($vars['entity']->canEdit()) {
-			   echo "<div class='delete_button'>" . elgg_view("output/confirmlink",array(
+			   echo "<span class='delete_button'>" . elgg_view("output/confirmlink",array(
 					'href' => $vars['url'] . "action/thewire/delete?thewirepost=" . $vars['entity']->getGUID(),
 					'text' => elgg_echo('delete'),
 					'confirm' => elgg_echo('deleteconfirm'),
-				)) . "</div>";
+				)) . "</span>";
 			}
 		?>
 	    </div>

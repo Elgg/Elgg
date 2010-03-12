@@ -44,11 +44,11 @@ if (is_array($vars['entity']) && sizeof($vars['entity']) > 0) {
 					// display message subject
 					echo "<div class='message_subject'>";
 					// display delete button
-					echo "<div class='delete_button'>" . elgg_view("output/confirmlink", array(
+					echo "<span class='delete_button'>" . elgg_view("output/confirmlink", array(
 						'href' => $vars['url'] . "action/messages/delete?message_id=" . $message->getGUID() . "&type=inbox&submit=" . urlencode(elgg_echo('delete')),
 						'text' => elgg_echo('delete'),
 						'confirm' => elgg_echo('deleteconfirm'),
-					)) . "</div>";
+					)) . "</span>";
 					echo "<p class='entity_title'><input type='checkbox' name=\"message_id[]\" value=\"{$message->guid}\" />";
 					echo "<a href=\"{$message->getURL()}\">" . $message->title . "</a></p>";								
 				    echo "</div></div></div>"; // close the message container

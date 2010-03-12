@@ -26,16 +26,16 @@ if($is_group instanceof ElggGroup){
 	//we decided to show that the item is in a group, rather than its actual access level
 	$object_acl = "Group: " . $is_group->name;
 	if($membership == 2)
-		$access_level = "class='group_open'";
+		$access_level = "class='access_level group_open'";
 	else
-		$access_level = "class='group_closed'";
+		$access_level = "class='access_level group_closed'";
 }elseif($object_acl == 'Private'){
-	$access_level = "class='private'";
+	$access_level = "class='access_level private'";
 }else{
 	if(!in_array($object_acl, $general_access))
-		$access_level = "class='shared_collection'";
+		$access_level = "class='access_level shared_collection'";
 	else
-		$access_level = "class='entity_access'";
+		$access_level = "class='access_level entity_access'";
 }
 
 if($vars['entity']->description != '')
@@ -58,14 +58,14 @@ $delete .= "<span class='delete_button'>" . elgg_view('output/confirmlink',array
 				)) . "</span>";
 }
 
-	$info = "<div class='entity_metadata'><table><tr><td><span {$access_level}>{$object_acl}</span></td>";
+	$info = "<div class='entity_metadata'><span {$access_level}>{$object_acl}</span>";
 
 //include edit and delete options
 if($vars['entity']->canEdit()){
-	$info .= "<td class='entity_edit'><a href=\"{$vars['url']}pg/bookmarks/{$owner->username}/edit/{$vars['entity']->getGUID()}\">" . elgg_echo('edit') . "</a></td>";
-	$info .= "<td class='entity_delete'>".$delete."</td>";  
+	$info .= "<span class='entity_edit'><a href=\"{$vars['url']}pg/bookmarks/{$owner->username}/edit/{$vars['entity']->getGUID()}\">" . elgg_echo('edit') . "</a></span>";
+	$info .= $delete;  
 }
-	$info .= "</tr></table></div>";
+	$info .= "</div>";
 
 $info .= "<p class='entity_title'><a href=\"{$vars['entity']->address}\" target=\"_blank\">{$vars['entity']->title}</a></p>";
 $info .= "<p class='entity_subtext'>Bookmarked by <a href=\"{$vars['url']}pg/bookmarks/{$owner->username}\">{$owner->name}</a> {$friendlytime} {$view_notes}</p>";

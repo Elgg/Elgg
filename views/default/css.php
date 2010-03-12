@@ -970,26 +970,18 @@ select.styled .select_option {
 	color:#aaaaaa;
 	font-size: 90%;
 }
-.entity_metadata table {
-	width:280px;
-}
-.entity_metadata table td {
-	height:30px;
-	vertical-align:middle;
-}
-.entity_metadata table td.entity_edit {
+.entity_metadata span {
+	margin-left:14px;
 	text-align:right;
 }
-.entity_metadata table td.entity_edit a {
+.entity_metadata a {
 	color:#aaaaaa;
-	margin:0 0 0 10px;
 }
-.entity_metadata table td.entity_edit a:hover {
+.entity_metadata a:hover {
 	color:#0054a7;
 }
-.entity_metadata table td.entity_delete {
-	padding-top:2px;
-	width:26px;
+.entity_metadata .delete_button {
+	margin-top:3px;
 }
 /* override hover for lists of site users/members */
 .members_list .entity_listing:hover {
@@ -1312,6 +1304,7 @@ a.action_button:focus {
 	height:14px;
 	background: url("<?php echo $vars['url']; ?>_graphics/icon_delete.png") no-repeat 0 0;
 	text-indent: -9000px;
+	text-align: left;
 }
 .delete_button a:hover {
 	background-position: 0 -16px;
