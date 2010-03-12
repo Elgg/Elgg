@@ -26,6 +26,7 @@ $forward = $_SERVER['HTTP_REFERER'];
 
 $action_buttons = '';
 $guid_input = '';
+$delete_link = '';
 
 // if entity is set, we're editing.
 if (isset ($vars['entity'])) {
@@ -45,16 +46,14 @@ if (isset ($vars['entity'])) {
 	$delete_link = elgg_view('output/confirmlink', array(
 		'href' => $delete_url,
 		'text' => elgg_echo('delete'),
-		'class' => 'action_button'
+		'class' => 'action_button disabled'
 	));
-
-	$action_buttons = $delete_link;
 
 	$guid_input = elgg_view('input/hidden', array('internalname' => 'guid', 'value' => $values['guid']));
 }
 
-$save_button = elgg_view('input/submit', array('value' => elgg_echo('save'), 'class' => 'action_button'));
-$action_buttons .= $save_button;
+$save_button = elgg_view('input/submit', array('value' => elgg_echo('save'), 'class' => 'submit_button'));
+$action_buttons = $save_button . $delete_link;
 
 $title_label = elgg_echo('title');
 $title_input = elgg_view('input/text', array(
@@ -123,9 +122,12 @@ $publish_date_input = elgg_view('input/datepicker', array(
 // hidden inputs
 //$container_guid_input = elgg_view('input/hidden', array('internalname' => 'container_guid', 'value' => $values['container_guid']));
 $forward_input = elgg_view('input/hidden', array('internalname' => 'forward', 'value' => $forward));
+$page_title = elgg_echo('blog:edit')." ".$values['title'];
 
 $form_body = <<<___END
-<p>
+<h2>$page_title</h2>
+
+<p class="margin_top">
 	<label for="blog_title">$title_label</label>
 	$title_input
 </p>

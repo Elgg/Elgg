@@ -6,7 +6,7 @@
 $owner = get_user($vars['annotation']->owner_guid);
 
 ?>
-<div class="generic_comment"><!-- start of generic_comment div -->
+<div class="generic_comment clearfloat"><!-- start of generic_comment div -->
 
 	<div class="generic_comment_icon">
 		<?php
@@ -25,7 +25,7 @@ $owner = get_user($vars['annotation']->owner_guid);
 			if ($vars['annotation']->canEdit()) {
 
 			?>
-		<div class="delete_button">
+		<span class="delete_button">
 			<?php
 
 				echo elgg_view("output/confirmlink",array(
@@ -35,7 +35,7 @@ $owner = get_user($vars['annotation']->owner_guid);
 				));
 
 			?>
-		</div>
+		</span>
 
 			<?php
 			} //end of can edit if statement

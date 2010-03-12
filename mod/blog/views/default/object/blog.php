@@ -36,14 +36,14 @@ if ($blog->comments_on == 'Yes') {
 // links to delete or edit.
 if ($blog->canEdit()) {
 	$edit_url = "{$vars['url']}pg/blog/{$owner->username}/edit/{$blog->getGUID()}/";
-	$edit_link = "<a class=\"action_button\" href=\"$edit_url\">" . elgg_echo('edit') . '</a>';
+	$edit_link = "<a href=\"$edit_url\">" . elgg_echo('edit') . '</a>';
 
 	$delete_url = "{$vars['url']}action/blog/delete?guid={$blog->getGUID()}";
-	$delete_link = elgg_view('output/confirmlink', array(
+	$delete_link = "<span class='delete_button'>".elgg_view('output/confirmlink', array(
 		'href' => $delete_url,
 		'text' => elgg_echo('delete'),
-		'class' => 'action_button'
-	));
+		'confirm' => elgg_echo('deleteconfirm')
+	))."</span>";
 
 	$edit = "$edit_link $delete_link";
 } else {
@@ -62,19 +62,21 @@ if ($full) {
 
 echo <<<___END
 <div class="blog clearfloat">
-	<h1>$owner_title</h2>
-	$edit
-	<h2 class="entity_title">{$blog->title}</h2>
-	<div class="blog entity_listing_icon">
+	<div id="content_header" class="clearfloat">
+		<div class="content_header_title"><h2>$owner_title</h2></div>
+	</div>	
+	<div class="entity_listing_icon">
 		$owner_icon
 	</div>
 	<div class="entity_listing_info">
+		<div class="entity_metadata">$edit</div>
+		<p class="entity_title">{$blog->title}</p>
 		<p class="entity_subtext">
 			$date
-			$tags
 			$categories
 			$comments_link
 		</p>
+		<p class="tags">$tags</p>
 		<p class="blog body">$body</p>
 	</div>
 </div>
@@ -90,14 +92,14 @@ ___END;
 		$owner_icon
 	</div>
 	<div class="entity_listing_info">
-		$edit
+		<div class="entity_metadata">$edit</div>
 		<p class="entity_title">$linked_title</p>
 		<p class="entity_subtext">
 			$date
-			$tags
 			$categories
 			$comments_link
 		</p>
+		<p class="tags">$tags</p>
 		<p>$excerpt</p>
 	</div>
 </div>
