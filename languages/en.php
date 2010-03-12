@@ -1,6 +1,6 @@
 <?php
 /**
- * Core English Lange
+ * Core English Language
  *
  * @package ElggLanguage
  * @subpackage Core
@@ -91,7 +91,7 @@ $english = array(
 	'ImportException:NotAllImported' => "Not all elements were imported.",
 
 	'InvalidParameterException:UnrecognisedFileMode' => "Unrecognised file mode '%s'",
-	'InvalidParameterException:MissingOwner' => "File %s (%d) is missing an owner!",
+	'InvalidParameterException:MissingOwner' => "File %s (file guid:%d) (owner guid:%d) is missing an owner!",
 	'IOException:CouldNotMake' => "Could not make %s",
 	'IOException:MissingFileName' => "You must specify a name before opening a file.",
 	'ClassNotFoundException:NotFoundNotSavedWithFile' => "Filestore not found or class not saved with file!",
@@ -757,9 +757,9 @@ Alternatively, you can enter your database settings below and we will try and do
 	'installation:viewpathcache:description' => "The view filepath cache decreases the loading times of plugins by caching the location of their views.",
 	'installation:viewpathcache:label' => "Use view filepath cache (recommended)",
 
-	'upgrading' => 'Upgrading',
+	'upgrading' => 'Upgrading...',
 	'upgrade:db' => 'Your database was upgraded.',
-	'upgrade:core' => 'Your elgg installation was upgraded',
+	'upgrade:core' => 'Your elgg installation was upgraded.',
 
 /**
  * Welcome

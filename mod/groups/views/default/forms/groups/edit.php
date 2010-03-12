@@ -138,19 +138,22 @@
 
 </form>
 
+<?php
+if ($vars['entity']) {
+?>
 <div class="delete_group">
 	<form action="<?php echo $vars['url'] . "action/groups/delete"; ?>">
 		<?php
 			echo elgg_view('input/securitytoken');
-			if ($vars['entity']) { 
 				$warning = elgg_echo("groups:deletewarning");
 			?>
 			<input type="hidden" name="group_guid" value="<?php echo $vars['entity']->getGUID(); ?>" />
 			<input type="submit" class="action_button disabled" name="delete" value="<?php echo elgg_echo('groups:delete'); ?>" onclick="javascript:return confirm('<?php echo $warning; ?>')"/><?php 
-			}
 		?>
 	</form>
 </div>
-
+<?php
+}
+?>
 
 

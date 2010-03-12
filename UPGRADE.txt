@@ -1,33 +1,19 @@
 
 ELGG UPGRADE INSTRUCTIONS
 
-1. Download the new version of Elgg from elgg.org or a mirror.
+1. Backup your Elgg database and code
 
-2. Overwrite your existing Elgg files. Any modifications should
+2. Download the new version of Elgg from elgg.org.
+
+3. Overwrite your existing Elgg files. Any modifications should
    have been written within plugins, so that they are not lost
    on overwriting. If this is not the case, take care to
    maintain your modifications, although Elgg is not guaranteed
    to work correctly in this instance. 
 
-3. Visit http://your-elgg-site-URL/upgrade.php
+4. Visit http://your-elgg-site-URL/upgrade.php
 
-4. Copy htaccess_dist to .htaccess, replacing your existing version.
-
-5. If you haven't already done so, install your crontab (UNIX ONLY)
-
-   Cron is a UNIX command which allows programs to be run at set 
-   times of the day.
-
-   If you want to take advantage of some of the maintenance 
-   functions such as log rotation or garbage collection, you must 
-   install a cron tab to trigger these events.
-
-   We have provided an example crontab as /crontab.example. Edit this 
-   with a text editor to provide the details of your site, rename it
-   to another filename (eg 'crontab.mine') and install it with the 
-   following command:
-
-   			crontab crontab.mine 
-   			
-   Substitute your filename for 'crontab.mine'.
+5. Copy htaccess_dist to .htaccess, replacing your existing version.
+   Any modifications to the original .htaccess should be moved to the
+   new .htaccess file.
 

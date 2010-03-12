@@ -91,22 +91,22 @@ function diagnostics_plugins_hook($hook, $entity_type, $returnvalue, $params)
  */
 function diagnostics_md5_dir($dir)
 {
-	//if (is_file(trim($dir, "/"))) {
-	$extensions_allowed = array('.php', '.gif', '.png', '.jpg');
+	$extensions_allowed = array('.php', '.js', '.css');
 
 	$buffer = "";
 
-	if (in_array(strrchr(trim($dir, "/"), '.'), $extensions_allowed))
-	{
-		//$dir = trim($dir, "/");
-		$buffer .= md5_file($dir). "  " . trim($dir, "/") . "\n";
-	} else if ($handle = opendir($dir)) {
+	if (in_array(strrchr(trim($dir, "/"), '.'), $extensions_allowed)) {
+		$dir = rtrim($dir, "/");
+		$buffer .= md5_file($dir). "  " . $dir . "\n";
+	} else if (is_dir($dir)) {
+		$handle = opendir($dir);
 		while ($file = readdir($handle)) {
-
 			if (($file != '.') && ($file != '..')) {
 				$buffer .= diagnostics_md5_dir($dir . $file. "/", $buffer);
 			}
 		}
+
+		closedir($handle);
 	}
 
 	return $buffer;

@@ -232,7 +232,7 @@ function search_tags_hook($hook, $type, $value, $params) {
 			// @todo make one long tag string and run this through the highlight
 			// function.  This might be confusing as it could chop off
 			// the tag labels.
-			if (in_array($query, $tags)) {
+			if (in_array(strtolower($query), array_map('strtolower', $tags))) {
 				if (is_array($tags)) {
 					$tag_name_str = elgg_echo("tag_names:$tag_name");
 					$matched_tags_strs[] = "$tag_name_str: " . implode(', ', $tags);

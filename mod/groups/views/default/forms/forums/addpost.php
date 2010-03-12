@@ -29,6 +29,6 @@
 	<input type="hidden" name="group_guid" value="<?php echo $vars['entity']->container_guid; ?>" />
 			
 	<?php echo elgg_view('input/securitytoken'); ?>
-	<!-- display the save button -->
+	<!-- display the post button -->
 	<input type="submit" class="submit_button" value="<?php echo elgg_echo('post'); ?>" />
 </form>

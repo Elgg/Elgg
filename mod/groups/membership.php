@@ -26,6 +26,7 @@
 	$area2 = elgg_view('page_elements/content_header', array('context' => "mine", 'type' => 'groups'));
 	
 	set_context('search');
+	// offset is grabbed in the list_entities_from_relationship() function
 	$objects = list_entities_from_relationship('member',page_owner(),false,'group','',0, $limit,false, false);
 	set_context('groups');
 	

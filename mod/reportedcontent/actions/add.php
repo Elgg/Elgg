@@ -17,21 +17,21 @@
 		
 		if ($title && $address) {
 			
-			$entity = new ElggObject;
-			$entity->subtype = "reported_content";
-			$entity->owner_guid = $_SESSION['user']->getGUID();
-		    $entity->title = $title;
-		    $entity->address = $address;
-		    $entity->description = $description;
-		    $entity->access_id = $access;
+			$report = new ElggObject;
+			$report->subtype = "reported_content";
+			$report->owner_guid = $_SESSION['user']->getGUID();
+		    $report->title = $title;
+		    $report->address = $address;
+		    $report->description = $description;
+		    $report->access_id = $access;
 		
-    		if ($entity->save()) {
-     			if (!trigger_plugin_hook('reportedcontent:add', $reported->type, array('entity'=>$reported), true)) {
-     				$entity->delete();
+    		if ($report->save()) {
+     			if (!trigger_plugin_hook('reportedcontent:add', 'system', array('report'=>$report), true)) {
+     				$report->delete();
      				register_error(elgg_echo('reportedcontent:failed'));
      			} else {
 	    			system_message(elgg_echo('reportedcontent:success'));
-	    			$entity->state = "active";
+	    			$report->state = "active";
      			}
     			forward($address);
     		} else {
