@@ -60,7 +60,7 @@ if (isset($vars['content']))
 // Initialise the current tool/page submenu (plugins can add to the submenu)
 $submenu = get_submenu(); 
 if (!empty($submenu))
-	$contents .= "<div class='submenu page_navigation'>" . $submenu . "</div>"; 
+	$contents .= $submenu; 
 
 if (!empty($contents)) {
 	echo $contents;

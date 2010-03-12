@@ -27,11 +27,10 @@ $filter = get_input("filter", "newest");
 $tag = get_input('tag');
 
 // friends links
-$area1 = "<div class='submenu page_navigation'>";
-$area1 .= "<ul><li><a href=\"" . $CONFIG->wwwroot."pg/friends/" . page_owner_entity()->username . "\">". elgg_echo('friends') . "</a></li>";
+$area1 = "<ul class='submenu page_navigation'><li><a href=\"" . $CONFIG->wwwroot."pg/friends/" . page_owner_entity()->username . "\">". elgg_echo('friends') . "</a></li>";
 $area1 .= "<li><a href=\"" . $CONFIG->wwwroot."pg/friendsof/" . page_owner_entity()->username . "\">". elgg_echo('friends:of') . "</a></li>";
 $area1 .= "<li class='selected'><a href=\"" . $CONFIG->wwwroot."mod/members/index.php\">". elgg_echo('members:browse') . "</a></li>";
-$area1 .= "</ul></div>";
+$area1 .= "</ul>";
 
 //search members
 $area1 .= elgg_view("members/search");

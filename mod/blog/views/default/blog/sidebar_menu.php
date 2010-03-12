@@ -37,6 +37,6 @@ if ($loggedin_user) {
 
 ?>
 
-<ul>
-<li>Drafts</li>
+<ul class="submenu">
+	<li><a href="">Drafts</a></li>
 </ul>

@@ -659,16 +659,16 @@ h2 {
 /* ***************************************
 	SUBMENU
 *************************************** */
-.submenu ul {
+.submenu {
 	margin:0;
 	padding:0;
 	list-style: none;
 }
-.submenu ul li.selected a {
+.submenu li.selected a {
 	background: #4690D6;
 	color:white;
 }
-.submenu ul li a {
+.submenu li a {
 	display:block;
 	-webkit-border-radius: 8px; 
 	-moz-border-radius: 8px;
@@ -676,7 +676,7 @@ h2 {
 	margin:0 0 3px 0;
 	padding:2px 4px 2px 8px;
 }
-.submenu ul li a:hover {
+.submenu li a:hover {
 	background:#0054A7;
 	color:white;
 	text-decoration:none;

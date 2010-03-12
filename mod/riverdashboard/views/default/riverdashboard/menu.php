@@ -14,7 +14,7 @@ switch($vars['orient']) {
 					break;
 }
 ?>
-<div class="submenu"><ul>
+<ul class="submenu riverdashboard">
 <?php
 	if(isloggedin()){
 ?>
@@ -25,4 +25,4 @@ switch($vars['orient']) {
 <?php
 	}
 ?>
-</ul></div>
+</ul>
