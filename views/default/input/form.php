@@ -57,6 +57,8 @@ if (!isset($vars['disable_security']) || $vars['disable_security'] != true) {
 }
 ?>
 <form <?php if ($id) { ?>id="<?php echo $id; ?>" <?php } ?> <?php if ($name) { ?>name="<?php echo $name; ?>" <?php } ?> <?php echo $vars['js']; ?> action="<?php echo $action; ?>" method="<?php echo $method; ?>" <?php if ($enctype!="") echo "enctype=\"$enctype\""; ?> class="<?php echo $class; ?>">
+<fieldset>
 <?php echo $security_header; ?>
 <?php echo $body; ?>
+</fieldset>
 </form>
