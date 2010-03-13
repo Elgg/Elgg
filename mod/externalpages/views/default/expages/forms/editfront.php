@@ -24,7 +24,6 @@
 			 $guid = $pc->guid;
 		 }
 	}else {		
-		$tags = "";
 		$description = "";
 	}
 		

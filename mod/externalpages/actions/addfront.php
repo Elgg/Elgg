@@ -31,7 +31,7 @@
 		// Set its owner to the current user
 			$frontpage->owner_guid = $_SESSION['user']->getGUID();
 		// For now, set its access to public
-			$frontpage->access_id = 2;
+			$frontpage->access_id = ACCESS_PUBLIC;
 		// Set its title and description appropriately
 			$frontpage->title = $contents_left;
 			$frontpage->description = $contents_right;

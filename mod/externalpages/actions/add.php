@@ -16,17 +16,12 @@
 	// Get input data
 		$contents = get_input('expagescontent', '', false);
 		$type = get_input('content_type');
-		$tags = get_input('expagestags');
 		$previous_guid = get_input('expage_guid');
 
 	// Cache to the session
 		$_SESSION['expages_content'] = $contents;
 		$_SESSION['expagestype'] = $type;
-		$_SESSION['expagestags'] = $tags;
-		
-	// Convert string of tags into a preformatted array
-		$tagarray = string_to_tag_array($tags);
-		
+				
 	// Make sure the content exists
 		if (empty($contents)) {
 			register_error(elgg_echo("expages:blank"));
@@ -47,7 +42,7 @@
 		// Set its owner to the current user
 			$expages->owner_guid = $_SESSION['user']->getGUID();
 		// For now, set its access to public
-			$expages->access_id = 2;
+			$expages->access_id = ACCESS_PUBLIC;
 		// Set its title and description appropriately
 			$expages->title = $type;
 			$expages->description = $contents;
@@ -56,17 +51,13 @@
 				register_error(elgg_echo("expages:error"));
 				forward("mod/expages/add.php");
 			}
-		// Now let's add tags. We can pass an array directly to the object property! Easy.
-			if (is_array($tagarray)) {
-				$expages->tags = $tagarray;
-			}
 						
 		// Success message
 			system_message(elgg_echo("expages:posted"));
 		// add to river
 		    add_to_river('river/expages/create','create',$_SESSION['user']->guid,$expages->guid);
 		// Remove the cache
-			unset($_SESSION['expages_content']); unset($_SESSION['expagestitle']); unset($_SESSION['expagestags']);
+			unset($_SESSION['expages_content']); unset($_SESSION['expagestitle']);
 						
 		
 	// Forward back to the page
