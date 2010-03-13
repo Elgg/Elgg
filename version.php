@@ -15,4 +15,4 @@
 $version = 2010030101;
 
 // Human-friendly version name
-$release = '1.7';
+$release = '1.8-svn';
