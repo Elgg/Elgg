@@ -48,7 +48,7 @@ $release = get_version(true);
 	<meta name="ElggRelease" content="<?php echo $release; ?>" />
 	<meta name="ElggVersion" content="<?php echo $version; ?>" />
 	<title><?php echo $title; ?></title>
-	<link REL="SHORTCUT ICON" HREF="<?php echo $vars['url']; ?>_graphics/favicon.ico">
+	<link REL="SHORTCUT ICON" HREF="<?php echo $vars['url']; ?>_graphics/favicon.ico" />
 
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery-1.4.min.js"></script>
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery-ui-1.7.2.min.js"></script>
