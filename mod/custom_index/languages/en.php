@@ -8,7 +8,7 @@
 			'custom:blogs' => "Latest blog posts",
 			'custom:members' => "Newest members",
 			'custom:nofiles' => "There are no files yet",
-			'custom:nogroups' => "There are no files yet",	
+			'custom:nogroups' => "There are no groups yet",
 	
 	);
 					
