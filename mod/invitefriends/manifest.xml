@@ -2,7 +2,7 @@
 <plugin_manifest>
         <field key="author" value="Curverider" />
         <field key="version" value="1.7" />
-        <field key="description" value="Friend invite page" />
+        <field key="description" value="Invite friends to Elgg network via email invites." />
         <field key="website" value="http://www.elgg.org/" />
         <field key="copyright" value="(C) Curverider 2008-2010" />
         <field key="licence" value="GNU Public License version 2" />

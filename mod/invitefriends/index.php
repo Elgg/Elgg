@@ -1,5 +1,4 @@
 <?php
-
 /**
 	 * Elgg invite page
 	 * 
@@ -18,7 +17,7 @@
 	set_page_owner($_SESSION['guid']);
 	
 	$body = elgg_view('invitefriends/form');
-	$body = elgg_view_layout('two_column_left_sidebar','',$body);
+	$body = elgg_view_layout('one_column_with_sidebar', $body);
 
 	page_draw(elgg_echo('friends:invite'),$body);
 	
