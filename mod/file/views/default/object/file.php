@@ -115,36 +115,23 @@
 		
 		<div class="filerepo_maincontent">
 		
-				<div class="filerepo_description"><?php echo elgg_view('output/longtext', array('value' => $desc)); ?></div>
-				<div class="filerepo_tags">
+		<div class="filerepo_description"><?php echo elgg_view('output/longtext', array('value' => $desc)); ?></div>
 <?php
 
 		if (!empty($tags)) {
-
 ?>
-		<div class="object_tag_string"><?php
-
-					echo elgg_view('output/tags',array('value' => $tags));
-				
-				?></div>
+			<p class="tags"><?php echo elgg_view('output/tags',array('value' => $tags)); ?></p>
 <?php
 		}
 
 		$categories = elgg_view('categories/view',$vars);
 		if (!empty($categories)) {
 ?>
-		<div class="filerepo_categories">
-			<?php
-
-				echo $categories;
-			
-			?>
-		</div>
+			<p class="categories"><?php echo $categories; ?></p>
 <?php
 		}
 
 ?>
-				</div>
 		<?php 
 			if (elgg_view_exists('file/specialcontent/' . $mime)) {
 				echo "<div class='filerepo_specialcontent'>".elgg_view('file/specialcontent/' . $mime, $vars)."</div>";

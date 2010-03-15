@@ -16,6 +16,48 @@
 	background-color: white;
 }
 
+/* files - single entity view */
+.filerepo_title_owner_wrapper .filerepo_title,
+.filerepo_title_owner_wrapper .filerepo_owner,
+.filerepo_file .filerepo_maincontent {
+	margin-left: 70px !important;
+}
+.filerepo_owner_details {
+	margin:0;
+	padding:0;
+	line-height: 1.2em;
+}
+.filerepo_owner_details small {
+	color:#666666;
+}
+.filerepo_owner .usericon {
+	margin: 3px 5px 5px 0;
+	float: left;
+}
+.filerepo_file .filerepo_icon {
+	width: 70px;
+	position: absolute;
+	margin:5px 0 10px 0;
+}
+.filerepo_file .filerepo_title {
+	margin:0;
+	padding:7px 4px 10px 0;
+	line-height: 1.2em;
+}
+.filerepo_file .filerepo_description {
+	margin:10px 0 0 0;
+}
+.filerepo_file .filerepo_description p {
+	padding:0 0 5px 0;
+	margin:0;
+}
+.filerepo_file .filerepo_specialcontent img {
+	padding:10px;
+	margin-bottom:10px;
+	-webkit-border-radius: 6px; 
+	-moz-border-radius: 6px;
+	background: #333333; 
+}
 
 
 /* files - gallery view */
@@ -29,7 +71,7 @@
 	width:165px;
 }
 .entity_gallery_item .filerepo_gallery_item:hover {
-	background-color: #333333;
+	background-color: #999999;
 }
 .filerepo_download,
 .filerepo_controls {
@@ -69,44 +111,6 @@
 }
 
 
-/*
-p.filerepo_owner {
-	margin:0;
-	padding:0;
-}
-.filerepo_owner_details {
-	margin:0;
-	padding:0;
-	line-height: 1.2em;
-}
-.filerepo_owner_details small {
-	color:#666666;
-}
-.filerepo_owner .usericon {
-	margin: 3px 5px 5px 0;
-	float: left;
-}
-
-.filerepo_download a {
-	font: 12px/100% Arial, Helvetica, sans-serif;
-	font-weight: bold;
-	color: white;
-	background:#4690d6;
-	border:none;
-	-webkit-border-radius: 5px; 
-	-moz-border-radius: 5px;
-	width: auto;
-	height: 25px;
-	padding: 3px 6px 3px 6px;
-	margin:10px 0 10px 0;
-	cursor: pointer;
-}
-.filerepo_download a:hover {
-	background: black;
-	color:white;
-	text-decoration: none;
-}
-*/
 
 /* FILE REPRO WIDGET VIEW */
 /*
@@ -146,13 +150,6 @@ p.filerepo_owner {
 .filerepo_widget_content {
 	margin-left: 70px;
 }
-.filerepo_title {
-	margin:0;
-	padding:6px 5px 0 0;
-	line-height: 1.2em;
-	color:#666666;
-	font-weight: bold;
-}
 
 .collapsable_box #filerepo_widget_layout {
 	margin:0 10px 0 10px;
@@ -178,16 +175,6 @@ p.filerepo_owner {
 }
 */
 
-/* zaudio player */
-/*
-.filerepo_maincontent .filerepo_specialcontent {
-	margin:0 0 20px 0;
-}
-.filerepo_tags {
-	padding:0 0 10px 10px;
-	margin:0;
-}
-*/
 
 
 
