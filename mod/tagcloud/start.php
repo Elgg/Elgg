@@ -3,7 +3,7 @@
     add_widget_type('tagcloud', elgg_echo('tagcloud:widget:title'), elgg_echo('tagcloud:widget:description'));
     
 	// Extend CSS
-	extend_view('css','tagcloud/css');
+	elgg_extend_view('css','tagcloud/css');
 	
 	if(is_plugin_enabled('blog')) {
 		// extend blog sidebar with a tag-cloud
