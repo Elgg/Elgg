@@ -1,9 +1,9 @@
-<p>
+<p class="twitter_username"><label>
 	<?php echo elgg_echo('twitterservice:twittername'); ?> <?php echo elgg_view('input/text', array('internalname' => 'params[twittername]', 'value' => $vars['entity']->twittername)); ?>
-</p>
-<p>
+</label></p>
+<p><label>
 	<?php echo elgg_echo('twitterservice:twitterpass'); ?> <?php echo elgg_view('input/password', array('internalname' => 'params[twitterpass]', 'value' => $vars['entity']->twitterpass)); ?>
-</p>
+</label></p>
 <?php if (is_plugin_enabled('thewire')) { ?>
 <p>
 	<?php echo elgg_echo('twitterservice:postwire'); ?>

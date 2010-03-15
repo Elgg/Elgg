@@ -1,26 +1,22 @@
-<?php
- 
-    /**
-	 * Elgg Twitter CSS
-	 * 
-	 * @package ElggTwitter
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
-	 */
-     
+<?php 
+/**
+ * Elgg Twitter CSS
+ * 
+ * @package ElggTwitter
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * @author Curverider <info@elgg.com>
+ * @copyright Curverider Ltd 2008-2010
+ * @link http://elgg.com/
+ */    
 ?>
 
 #twitter_widget {
     margin:0 10px 0 10px;
 }
-
 #twitter_widget ul {
 	margin:0;
 	padding:0;
 }
-
 #twitter_widget li {
 	background: url(<?php echo $vars['url']; ?>mod/twitter/graphics/thewire_speech_bubble.gif) no-repeat right bottom;
 	list-style-image:none;
@@ -30,7 +26,6 @@
 	padding:0;
 	overflow-x: hidden;
 }
-
 #twitter_widget li span {
 	color:#666666;
 	background:white;
@@ -39,11 +34,13 @@
 	padding:5px;
 	display:block;
 }
-
 p.visit_twitter a {
     background:url(<?php echo $vars['url']; ?>mod/twitter/graphics/twitter.png) left no-repeat;
     padding:0 0 0 20px;
     margin:0;
+}
+p.twitter_username .input_text {
+	width:200px;
 }
 .visit_twitter {
 	background:white;
@@ -52,12 +49,10 @@ p.visit_twitter a {
 	padding:2px;
 	margin:0 0 5px 0;
 }
-
 #twitter_widget li a {
 	display:block;
 	margin:0 0 0 4px;
 }
-
 #twitter_widget li span a {
 	display:inline !important;
 }
