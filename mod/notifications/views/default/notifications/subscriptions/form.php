@@ -18,8 +18,7 @@
 		
 	// Display a description
 ?>
-<div class="contentWrapper">
-<div class="notification_methods">
+<div class="user_settings notifications">
 <?php
 
 	echo elgg_view('input/form',array(
@@ -31,5 +30,4 @@
 		));
 
 ?>
-</div>
 </div>

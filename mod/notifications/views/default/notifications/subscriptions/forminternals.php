@@ -1,7 +1,9 @@
+
+<div class="notifications_per_user">
 	<h3>
 		<?php echo elgg_echo('notifications:subscriptions:title'); ?>
 	</h3>
-	<p class="notification_methods_intro">
+	<p>
 		<?php echo elgg_echo('notifications:subscriptions:description'); ?>
 	</p>
 <?php
@@ -169,14 +171,14 @@
 				ksort($users[$letter]);
 ?>
 
-<table id="notificationstable" cellspacing="0" cellpadding="4" border="1" width="100%">
+<table id="notificationstable" cellspacing="0" cellpadding="4" border="0" width="100%">
   <tr>
     <td>&nbsp;</td>
 <?php
 	$i = 0; 
 	foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 		if ($i > 0)
-			echo "<td class=\"spacercolumn\">&nbsp;</td>";
+			echo "<td class='spacercolumn'>&nbsp;</td>";
 ?>
 	<td class="<?php echo $method; ?>togglefield"><?php echo elgg_echo('notification:method:'.$method); ?></td>
 <?php
@@ -205,7 +207,7 @@
 					} else {
 						$checked[$method] = '';
 					}
-					if ($i > 0) $fields .= "<td class=\"spacercolumn\">&nbsp;</td>";
+					if ($i > 0) $fields .= "<td class='spacercolumn'>&nbsp;</td>";
 					$fields .= <<< END
 					    <td class="{$method}togglefield">
 					    <a border="0" id="{$method}{$friend->guid}" class="{$method}toggleOff" onclick="adjust{$method}_alt('{$method}{$friend->guid}');">
@@ -303,13 +305,9 @@ END;
 	}
 
 ?>
-
-
-
-<div class="clearfloat"></div>
-<div class="friendspicker_savebuttons">
+<div class="divider">
 	<input type="submit" value="<?php echo elgg_echo('save'); ?>" />
-<br /></div>	
-	
+</div>	
+</div>
 	
 	

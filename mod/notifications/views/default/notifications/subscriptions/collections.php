@@ -13,16 +13,14 @@
 	}
 	
 </script>
-
+<div class="notification_friends">
 <h3>
 	<?php echo elgg_echo('notifications:subscriptions:collections:title'); ?>
 </h3>
-<div class="notification_personal">
-<p>
+<p class="margin_none">
 	<?php echo elgg_echo('notifications:subscriptions:collections:description'); ?>
-	<a href="<?php echo $vars['url']; ?>pg/collections/<?php echo $vars['user']->username; ?>"><?php echo elgg_echo('notifications:subscriptions:collections:edit') ?></a>
 </p>
-<table id="notificationstable" cellspacing="0" cellpadding="4" border="1" width="100%">
+<table id="notificationstable" cellspacing="0" cellpadding="4" border="0" width="100%">
   <tr>
     <td>&nbsp;</td>
 <?php
@@ -30,7 +28,7 @@
 	global $NOTIFICATION_HANDLERS;
 	foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 		if ($i > 0)
-			echo "<td class=\"spacercolumn\">&nbsp;</td>";
+			echo "<td class='spacercolumn'>&nbsp;</td>";
 ?>
 	<td class="<?php echo $method; ?>togglefield"><?php echo elgg_echo('notification:method:'.$method); ?></td>
 <?php
@@ -71,7 +69,7 @@
 					$collectionschecked[$method] = '';
 				}
 			}
-			if ($i > 0) $fields .= "<td class=\"spacercolumn\">&nbsp;</td>";
+			if ($i > 0) $fields .= "<td class='spacercolumn'>&nbsp;</td>";
 			$fields .= <<< END
 			    <td class="{$method}togglefield">
 			    <a border="0" id="{$method}collections-1" class="{$method}toggleOff" onclick="adjust{$method}_alt('{$method}collections-1'); setCollection([{$members}],'{$method}',-1);">
@@ -85,7 +83,10 @@ END;
 	<td>&nbsp;</td>
   </tr>
 <?php
-
+/*
+	@todo
+	collections removed from notifications - they are no longer used and will be replaced with shared access collections
+	
 	if ($collections = get_user_access_collections($vars['user']->guid)) {
 	foreach($collections as $collection) {
 		$members = get_members_of_access_collection($collection->id, true);
@@ -117,7 +118,7 @@ END;
 					$collectionschecked[$method] = '';
 				}
 			}
-			if ($i > 0) $fields .= "<td class=\"spacercolumn\">&nbsp;</td>";
+			if ($i > 0) $fields .= "<td class='spacercolumn'>&nbsp;</td>";
 			$fields .= <<< END
 			    <td class="{$method}togglefield">
 			    <a border="0" id="{$method}collections{$collection->id}" class="{$method}toggleOff" onclick="adjust{$method}_alt('{$method}collections{$collection->id}'); setCollection([{$members}],'{$method}',{$collection->id});">
@@ -136,6 +137,7 @@ END;
 	}
 }
 
+*/
 ?>
 </table>
 </div>

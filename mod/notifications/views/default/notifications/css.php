@@ -1,15 +1,13 @@
 <?php
-
-	/**
-	 * Elgg notifications CSS
-	 * 
-	 * @package notifications
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.org/
-	 */
-
+/**
+ * Elgg notifications CSS
+ * 
+ * @package notifications
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * @author Curverider <info@elgg.com>
+ * @copyright Curverider Ltd 2008-2010
+ * @link http://elgg.org/
+ */
 ?>
 
 #notificationstable td.namefield {
@@ -23,12 +21,14 @@
 	line-height: 1.1em;
 	padding:5px 0 5px 0;
 }
-#notificationstable td.namefield img {
-	padding:6px 10px 6px 3px;
-	float:left;
-}
 #notificationstable td.namefield p.namefieldlink {
-	margin:9px 0 0 0;
+	margin:5px 0 0 0;
+}
+#notificationstable td.namefield a img {
+	float:left;
+	width:25px;
+	height:25px; 
+	margin:5px 10px 5px 5px;
 }
 #notificationstable td.emailtogglefield,
 #notificationstable td.smstogglefield {
@@ -53,27 +53,39 @@
 	display: block;
 	outline: none;
 }
+#notificationstable td.sitetogglefield {
+	width:50px;
+	text-align: center;
+	vertical-align: middle;
+}
+#notificationstable td.sitetogglefield input {
+	margin-right:36px;
+	margin-top:5px;
+}
+#notificationstable td.sitetogglefield a {
+	width:46px;
+	height:24px;
+	cursor: pointer;
+	display: block;
+	outline: none;
+}
 #notificationstable td.emailtogglefield a.emailtoggleOff {
 	background: url(<?php echo $vars['url']; ?>mod/notifications/graphics/icon_notifications_email.gif) no-repeat right 2px;
 }
 #notificationstable td.emailtogglefield a.emailtoggleOn {
 	background: url(<?php echo $vars['url']; ?>mod/notifications/graphics/icon_notifications_email.gif) no-repeat right -36px;
 }
-
-.notification_collections,
-.notification_personal {
+#notificationstable td.sitetogglefield a.sitetoggleOff {
+	background: url(<?php echo $vars['url']; ?>mod/notifications/graphics/icon_notifications_site.gif) no-repeat right 2px;
+}
+#notificationstable td.sitetogglefield a.sitetoggleOn {
+	background: url(<?php echo $vars['url']; ?>mod/notifications/graphics/icon_notifications_site.gif) no-repeat right -37px;
+}
+.notification_friends,
+.notification_personal,
+.notifications_per_user {
 	margin-bottom: 25px;
 }
-/*
-.settings_form .friends_picker_container h3 {
-	color:#999999;
-	font-size:3em;
-	margin:0 0 20px;
-	text-align:left;
-	background: none;
-	border-bottom: none;
-}
-*/
 
 
 

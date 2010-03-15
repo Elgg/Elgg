@@ -206,6 +206,9 @@ h2 {
 	-webkit-border-radius: 8px; 
 	-moz-border-radius: 8px;
 }
+.margin_none {
+	margin:0;
+}
 .margin_top {
 	margin-top:10px;
 }

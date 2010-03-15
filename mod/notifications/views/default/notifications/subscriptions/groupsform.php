@@ -12,11 +12,8 @@
 		$subsbig[$method] = $tmparray;
 	}
 
-?>
-<?php echo elgg_view_title(elgg_echo('notifications:subscriptions:changesettings:groups')); ?>
-<div class="contentWrapper">
-	<div class="notification_methods">
-
+echo elgg_view_title(elgg_echo('notifications:subscriptions:changesettings:groups')); ?>
+<div class="notification_groups margin_top">
 		<?php
 			echo elgg_view('notifications/subscriptions/jsfuncs',$vars);
 		?>
@@ -33,7 +30,7 @@
 		if (isset($vars['groups']) && !empty($vars['groups'])) {
 			
 ?>
-<table id="notificationstable" cellspacing="0" cellpadding="4" border="1" width="100%">
+<table id="notificationstable" cellspacing="0" cellpadding="4" border="0" width="100%">
   <tr>
     <td>&nbsp;</td>
 <?php
@@ -41,7 +38,7 @@
 	$i = 0; 
 	foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 		if ($i > 0)
-			echo "<td class=\"spacercolumn\">&nbsp;</td>";
+			echo "<td class='spacercolumn'>&nbsp;</td>";
 ?>
 	<td class="<?php echo $method; ?>togglefield"><?php echo elgg_echo('notification:method:'.$method); ?></td>
 <?php
@@ -95,5 +92,4 @@ END;
 ?>
 
 		<input type="submit" value="<?php echo elgg_echo('save'); ?>" />
-	</div>
 </div>

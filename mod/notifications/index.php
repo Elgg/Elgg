@@ -31,7 +31,7 @@
 						));
 		
 	// Insert it into the correct canvas layout
-		$body = elgg_view_layout('two_column_left_sidebar','',$body);
+		$body = elgg_view_layout('one_column_with_sidebar', $body);
 		
 	// Draw the page
 		page_draw(elgg_echo('notifications:subscriptions:changesettings'),$body);
