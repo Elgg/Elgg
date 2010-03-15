@@ -20,7 +20,7 @@
 		
 		$area2 = elgg_view_title(elgg_echo('blog:everyone'));
 
-		$area2 .= "<div id='blogs'>" . elgg_list_entities(array('type' => 'object', 'subtype' => 'blog', 'limit' => 10, 'offset' => $offset, 'full_view' => FALSE)) . "<div class='clearfloat'></div></div>";
+		$area2 .= elgg_list_entities(array('type' => 'object', 'subtype' => 'blog', 'limit' => 10, 'offset' => $offset, 'full_view' => FALSE));
 
 		// get tagcloud
 		// $area3 = "This will be a tagcloud for all blog posts";
