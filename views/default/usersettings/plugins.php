@@ -9,7 +9,7 @@
  */
 
 // Description of what's going on
-echo elgg_view('output/longtext', array('value' => elgg_echo("usersettings:plugins:description")));
+echo "<div class='margin_top'>".elgg_view('output/longtext', array('value' => elgg_echo("usersettings:plugins:description")))."</div>";
 
 $limit = get_input('limit', 10);
 $offset = get_input('offset', 0);
