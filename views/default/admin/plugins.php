@@ -13,9 +13,18 @@ global $CONFIG;
 $ts = time();
 $token = generate_action_token($ts);
 
-// Description of what's going on
-$buttons = " <a class='enableallplugins' href=\"{$CONFIG->url}action/admin/plugins/enableall?__elgg_token=$token&__elgg_ts=$ts\">".elgg_echo('enableall')."</a>  <a class='disableallplugins' href=\"{$CONFIG->url}action/admin/plugins/disableall?__elgg_token=$token&__elgg_ts=$ts\">".elgg_echo('disableall')."</a> ";
-echo $buttons . elgg_view('output/longtext', array('value' => elgg_echo("admin:plugins:description")));
+// Page Header elements
+$title = elgg_view_title(elgg_echo('admin:plugins'));
+$buttons = "<a class='action_button' href=\"{$CONFIG->url}action/admin/plugins/enableall?__elgg_token=$token&__elgg_ts=$ts\">".elgg_echo('enableall')."</a>  <a class='action_button disabled' href=\"{$CONFIG->url}action/admin/plugins/disableall?__elgg_token=$token&__elgg_ts=$ts\">".elgg_echo('disableall')."</a> ";
+
+// construct page header
+?>
+<div id="content_header" class="clearfloat">
+	<div class="content_header_title"><?php echo $title ?></div>
+	<div class="content_header_options"><?php echo $buttons ?></div>
+</div>
+<?php
+echo elgg_view('output/longtext', array('value' => elgg_echo("admin:plugins:description")));
 
 $limit = get_input('limit', 10);
 $offset = get_input('offset', 0);

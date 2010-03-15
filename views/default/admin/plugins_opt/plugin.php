@@ -47,13 +47,13 @@ $token = generate_action_token($ts);
 	</div><div class="clearfloat"></div>
 	<div class="admin_plugin_enable_disable">
 		<?php if ($active) { ?>
-			<a href="<?php echo $vars['url']; ?>action/admin/plugins/disable?plugin=<?php echo $plugin; ?>&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("disable"); ?></a>
+			<a class="cancel_button" href="<?php echo $vars['url']; ?>action/admin/plugins/disable?plugin=<?php echo $plugin; ?>&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("disable"); ?></a>
 		<?php } else { ?>
-			<a href="<?php echo $vars['url']; ?>action/admin/plugins/enable?plugin=<?php echo $plugin; ?>&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("enable"); ?></a>
+			<a class="submit_button" href="<?php echo $vars['url']; ?>action/admin/plugins/enable?plugin=<?php echo $plugin; ?>&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("enable"); ?></a>
 		<?php } ?>
 	</div>
 
-	<h3><?php echo $plugin; ?><?php if (elgg_view("settings/{$plugin}/edit")) { ?> <a class="pluginsettings_link" onclick="elgg_slide_toggle(this,'.plugin_details','.pluginsettings');">[<?php echo elgg_echo('settings'); ?>]</a><?php } ?></h3>
+	<h3><?php echo $plugin; ?><?php if (elgg_view("settings/{$plugin}/edit")) { ?> <a class="plugin_settings small link" onclick="elgg_slide_toggle(this,'.plugin_details','.pluginsettings');">[<?php echo elgg_echo('settings'); ?>]</a><?php } ?></h3>
 
 	<?php if (elgg_view("settings/{$plugin}/edit")) { ?>
 	<div class="pluginsettings hidden">
@@ -75,7 +75,7 @@ $token = generate_action_token($ts);
 
 	?>
 
-	<p><a class="manifest_details" onclick="elgg_slide_toggle(this,'.plugin_details','.manifest_file');"><?php echo elgg_echo("admin:plugins:label:moreinfo"); ?></a></p>
+	<p><a class="manifest_details small link" onclick="elgg_slide_toggle(this,'.plugin_details','.manifest_file');"><?php echo elgg_echo("admin:plugins:label:moreinfo"); ?></a></p>
 
 	<div class="manifest_file hidden">
 

@@ -307,17 +307,8 @@ p.visit_twitter a {
 	border-top: 1px solid #dedede;
 	margin-top:30px;
 }
-.default_profile_reset input[type="submit"] {
-	background: #dedede;
-	border-color: #dedede;
-	color:#666666;
-	text-shadow: none;
+.default_profile_reset .action_button {
 	float:right;
-}
-.default_profile_reset input[type="submit"]:hover {
-	background: red;
-	border-color: red;
-	color:white;
 }
 
 

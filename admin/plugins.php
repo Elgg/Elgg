@@ -20,9 +20,7 @@ regenerate_plugin_list();
 
 // Display main admin menu
 $vars = array('installed_plugins' => get_installed_plugins());
-
-$title = elgg_view_title(elgg_echo('admin:plugins'));
 $main_box = elgg_view("admin/plugins", $vars);
-$content = elgg_view_layout("one_column_with_sidebar", $title . $main_box);
+$content = elgg_view_layout("one_column_with_sidebar", $main_box);
 
 page_draw(elgg_echo('admin:plugins'), $content);

@@ -42,5 +42,5 @@ if($vars['entity']){
     }
     
 } else {
-	echo elgg_echo('reportedcontent:none');
+	echo "<p class='margin_top'>".elgg_echo('reportedcontent:none')."</p>";
 }

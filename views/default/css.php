@@ -26,6 +26,7 @@
 	USER SETTINGS & ADMIN AREA	styles for user settings and default admin area
 	GENERAL FORM ELEMENTS		default styles for all elgg input/form elements
 	FRIENDS PICKER
+	ADMIN AREA
 	
 
 */
@@ -195,6 +196,9 @@ h2 {
 }
 .link {
 	cursor:pointer;
+}
+.small {
+	font-size: 90%;
 }
 .divider {
 	border-top:1px solid #cccccc;
@@ -758,7 +762,7 @@ h2 {
 	display:block;
 	float:left;
 	background:#4690d6;
-	border:1px solid #cccccc;
+	border:1px solid #4690d6;
 	text-align: center;
 	color:white;
 	font-size: 12px;
@@ -1090,33 +1094,6 @@ select.styled .select_option {
 }
 .add_user form {
 	width:300px;
-}
-/* PLUGINS MANAGEMENT (ADMIN) */
-.plugin_details {
-	margin:0 0 5px 0;
-	padding:0 7px 4px 10px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-}
-.plugin_details p {
-	margin:0;
-	padding:0;
-}
-.plugin_details a.pluginsettings_link {
-	cursor:pointer;
-	font-size:80%;
-}
-.plugin_details a.manifest_details {
-	cursor:pointer;
-	font-size:80%;
-}
-.active {
-	border:1px solid #999999;
-	background:white;
-}
-.not_active {
-	border:1px solid #999999;
-	background:#dedede;
 }
 
 
@@ -1508,18 +1485,10 @@ a.action_button:focus {
 }
 
 
-/*  //////////////////////////////////////////////////////////////////////////////////////////	>>>End Verified */
-
-
-
-
-
-
-
-
-
-
-/* @todo OLD ADMIN AREA - will be replaced/updated with multi-admin */
+/* ***************************************
+	ADMIN AREA
+	@todo - replace with standalone admin area
+*************************************** */
 .admin_settings.users_online .profile_status {
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
@@ -1534,15 +1503,6 @@ a.action_button:focus {
 .admin_settings.users_online  p.owner_timestamp {
 	padding-left:3px;
 }
-/*
-.admin_users_online .search_listing {
-	margin:0 0 5px 0;
-	padding:5px;
-	border:1px solid #cccccc;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-}
-*/
 .admin_plugin_reorder {
 	float:right;
 	width:200px;
@@ -1566,50 +1526,8 @@ a.action_button:focus {
 	float:right;
 	text-align: right;
 }
- .enableallplugins,
- .disableallplugins {
-	float:right;
-}
- .enableallplugins {
-	margin-left:10px;
-}
- .enableallplugins,
-.not_active .admin_plugin_enable_disable a {
-	font: 12px/100% Arial, Helvetica, sans-serif;
-	font-weight: bold;
-	color: #ffffff;
-	background:#4690d6;
-	border: 1px solid #4690d6;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	width: auto;
-	padding: 4px;
-	cursor: pointer;
-}
- .enableallplugins:hover,
-.not_active .admin_plugin_enable_disable a:hover {
-	background: #0054a7;
-	border: 1px solid #0054a7;
-	text-decoration: none;
-}
- .disableallplugins,
-.active .admin_plugin_enable_disable a {
-	font: 12px/100% Arial, Helvetica, sans-serif;
-	font-weight: bold;
-	color: #ffffff;
-	background:#999999;
-	border: 1px solid #999999;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	width: auto;
-	padding: 4px;
-	cursor: pointer;
-}
- .disableallplugins:hover,
-.active .admin_plugin_enable_disable a:hover {
-	background: #333333;
-	border: 1px solid #333333;
-	text-decoration: none;
+.admin_plugin_enable_disable a {
+	margin:0;
 }
 .pluginsettings {
 	margin:15px 0 5px 0;
@@ -1628,6 +1546,26 @@ a.action_button:focus {
 	margin:0;
 	border:none;
 }
-
+.plugin_details {
+	margin:0 0 5px 0;
+	padding:0 7px 4px 10px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+.plugin_details p {
+	margin:0;
+	padding:0;
+}
+.plugin_settings {
+	font-weight: normal;
+}
+.active {
+	border:1px solid #999999;
+	background:white;
+}
+.not_active {
+	border:1px solid #999999;
+	background:#dedede;
+}
 
 

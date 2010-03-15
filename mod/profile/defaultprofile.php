@@ -39,7 +39,7 @@ while ($translation = get_plugin_setting("admin_defined_profile_$n", 'profile'))
 
 $listing .= "<div class='default_profile_reset'>" . elgg_view('input/form', 
 	array(
-		'body' => elgg_view('input/submit', array('value' => elgg_echo('profile:resetdefault'))), 
+		'body' => elgg_view('input/submit', array('value' => elgg_echo('profile:resetdefault'),'class' => 'action_button disable')), 
 		'action' => $CONFIG->wwwroot . 'action/profile/editdefault/reset'
 	)
 ) . "</div>";

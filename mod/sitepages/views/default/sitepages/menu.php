@@ -14,7 +14,7 @@ $url = $vars['url'] . 'pg/sitepages/edit/';
 
 ?>
 
-<div class="elgg_horizontal_tabbed_nav">
+<div class="elgg_horizontal_tabbed_nav margin_top">
 <ul>
 	<li <?php if($page_type == 'front') echo "class = 'selected'"; ?>><a href="<?php echo $url; ?>front"><?php echo elgg_echo('sitepages:frontpage'); ?></a></li>
 	<li <?php if($page_type == 'about') echo "class = 'selected'"; ?>><a href="<?php echo $url; ?>about"><?php echo elgg_echo('sitepages:about'); ?></a></li>

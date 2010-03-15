@@ -9,7 +9,7 @@
  */
 
 // Intro
-echo elgg_view('output/longtext', array('value' => elgg_echo("admin:user:description")));
+echo "<div class='margin_top'>".elgg_view('output/longtext', array('value' => elgg_echo("admin:user:description")))."</div>";
 //echo elgg_view("admin/user_opt/adduser");
 // add a new user form
 echo elgg_view('account/forms/useradd', array('show_admin'=>true));
