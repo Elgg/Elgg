@@ -2,15 +2,14 @@
 	/**
 	 * Elgg captcha plugin
 	 * 
-	 * @package ElggCaptcha
+	 * @package captcha
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
 	 * @author Curverider Ltd
 	 * @copyright Curverider Ltd 2008-2010
 	 * @link http://elgg.com/
 	 */
 
-	function captcha_init()
-	{
+	function captcha_init() {
 		global $CONFIG;
 		
 		// Register page handler for captcha functionality
@@ -39,8 +38,7 @@
 		}
 	}
 	
-	function captcha_page_handler($page) 
-	{
+	function captcha_page_handler($page) {
 		global $CONFIG;
 		
 		if (isset($page[0])) {
@@ -53,8 +51,7 @@
 	/**
 	 * Generate a token to act as a seed value for the captcha algorithm.
 	 */
-	function captcha_generate_token()
-	{
+	function captcha_generate_token() {
 		return md5(generate_action_token(time()).rand()); // Use action token plus some random for uniqueness
 	}
 	
@@ -64,8 +61,7 @@
 	 * @param string $seed_token
 	 * @return string
 	 */
-	function captcha_generate_captcha($seed_token)
-	{
+	function captcha_generate_captcha($seed_token) {
 		global $CONFIG;
 		
 		/*
@@ -88,8 +84,7 @@
 	 * @param string $seed_token
 	 * @return bool
 	 */
-	function captcha_verify_captcha($input_value, $seed_token)
-	{
+	function captcha_verify_captcha($input_value, $seed_token) {
 		if (strcasecmp($input_value, captcha_generate_captcha($seed_token)) == 0)
 			return true;
 			
@@ -104,8 +99,7 @@
 	 * @param unknown_type $returnvalue
 	 * @param unknown_type $params
 	 */
-	function captcha_verify_action_hook($hook, $entity_type, $returnvalue, $params)
-	{
+	function captcha_verify_action_hook($hook, $entity_type, $returnvalue, $params) {
 		$token = get_input('captcha_token');
 		$input = get_input('captcha_input');
 		
@@ -126,8 +120,7 @@
 	 * @param unknown_type $returnvalue
 	 * @param unknown_type $params
 	 */
-	function captcha_actionlist_hook($hook, $entity_type, $returnvalue, $params)
-	{
+	function captcha_actionlist_hook($hook, $entity_type, $returnvalue, $params) {
 		if (!is_array($returnvalue))
 			$returnvalue = array();
 			

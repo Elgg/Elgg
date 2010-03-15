@@ -13,8 +13,7 @@
 	$token = get_input('captcha_token');
 
 	// 	Output captcha
-	if ($token)
-	{ 
+	if ($token) { 
 		// Set correct header
 		header("Content-type: image/jpeg");
 	
