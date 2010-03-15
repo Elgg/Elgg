@@ -45,3 +45,6 @@ border: 1px solid #CCC;
 .wp_themeSkin .mceButtonDisabled {
 	border-color: #ccc !important;
 }
+.toggle_editor {
+	float:right;
+}

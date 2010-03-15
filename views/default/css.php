@@ -1117,6 +1117,9 @@ select.styled .select_option {
 	height: 200px;
 	width:718px;
 }
+.longtext_editarea {
+	margin:0;
+}
 input[type="checkbox"] {
 	margin:0 3px 0 0;
 	padding:0;
