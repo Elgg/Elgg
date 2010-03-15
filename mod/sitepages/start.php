@@ -13,6 +13,7 @@
  *
  * @todo
  * 	Check for SQL injection problems.
+ * 	Force [[login_box]] in the logged out view.
  * 	Make sure this stuff doesn't show up in search.
  * 	Check entity keyword views against fullview.  Force to FALSE?
  * 	DRY up actions and views
