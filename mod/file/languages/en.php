@@ -15,7 +15,7 @@
 		 */
 	
 			'file' => "Files",
-			'files' => "Files",
+			'files' => "My Files",
 			'file:yours' => "Your files",
 			'file:yours:friends' => "Your friends' files",
 			'file:user' => "%s's files",
@@ -33,7 +33,7 @@
 			'file:upload' => "Upload a file",
 			'file:replace' => 'Replace file content (leave blank to not change file)',
 	
-			'file:newupload' => 'New file upload',
+			'file:new' => 'Upload a file',
 			
 			'file:file' => "File",
 			'file:title' => "Title",

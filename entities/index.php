@@ -40,11 +40,11 @@ if ($entity = get_entity($guid)) {
 	} else if ($entity instanceof ElggEntity) {
 		$title = $entity->name;
 	}
-	$area2 = elgg_view_entity($entity,true);
+	$area1 = elgg_view_entity($entity,true);
 	if ($shell) {
-		$body = elgg_view_layout('two_column_left_sidebar', '', $area2);
+		$body = elgg_view_layout('one_column_with_sidebar', $area1);
 	} else {
-		$body = $area2;
+		$body = $area1;
 	}
 } else {
 	$body = elgg_echo('notfound');

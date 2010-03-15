@@ -47,4 +47,5 @@ border: 1px solid #CCC;
 }
 .toggle_editor {
 	float:right;
+	margin-top:-15px;
 }

@@ -24,7 +24,7 @@ if (is_array($entities) && sizeof($entities) > 0) {
 			echo "<tr>";
 
 		}
-		echo "<td class=\"entity_gallery_item\">";
+		echo "<td class='entity_gallery_item'>";
 		echo elgg_view_entity($entity);
 		echo "</td>";
 		$col++;

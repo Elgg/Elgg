@@ -370,8 +370,8 @@ div.usericon a.icon img {
 .usericon .sub_menu h3 {
 	font-size:1.3em;
 	line-height: 1.1em;
-	padding:0;
-	margin:0;
+	padding:0 !important;
+	margin:0 !important;
 	border-bottom:solid 1px #dddddd;
 	color: #4690d6;
 }

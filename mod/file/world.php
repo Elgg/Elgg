@@ -24,16 +24,18 @@
 	$title = elgg_echo('file:all');
 	
 	// Get objects
-	$area2 = elgg_view_title($title);
-	$area1 = get_filetype_cloud(); // the filter
+	$area1 = elgg_view('page_elements/content_header', array('context' => "everyone", 'type' => 'file'));
+	$area1 .= get_filetype_cloud(); // the filter
 	set_context('search');
 	if ($tag != "")
 		$area2 .= list_entities_from_metadata('tags',$tag,'object','file',0,10,false);
 	else
 		$area2 .= elgg_list_entities(array('types' => 'object', 'subtypes' => 'file', 'limit' => 10, 'offset' => $offset, 'full_view' => FALSE));
 	set_context('file');
+	
+	$content = "<div class='files'>".$area1.$area2."</div>";
 		
-	$body = elgg_view_layout('two_column_left_sidebar',$area1, $area2);
+	$body = elgg_view_layout('one_column_with_sidebar', $content);
 
 	// Finally draw the page
 	page_draw($title, $body);

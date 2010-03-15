@@ -27,7 +27,7 @@
 					echo "<tr>";
 					
 				}
-				echo "<td class=\"entity_gallery_item\">";
+				echo "<td class='entity_gallery_item'>";
 				
 				$ev = elgg_view_entity($entity, $fullview);
 						

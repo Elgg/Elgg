@@ -39,7 +39,7 @@ if(is_plugin_enabled('file')){
 		$selected = 'class="selected"';
 	else
 		$selected = "";
-	echo "<li {$selected}><a href=\"{$vars['url']}mod/file/all.php\" id='files'><span>Files</span></a></li>";
+	echo "<li {$selected}><a href=\"{$vars['url']}pg/file/world/world/\" id='files'><span>Files</span></a></li>";
 }
 if(is_plugin_enabled('bookmarks')){
 	if(get_context() == 'bookmarks')

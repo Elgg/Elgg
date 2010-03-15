@@ -34,8 +34,8 @@ if (!$file->canEdit()) {
 }
 
 $title = elgg_echo('file:edit');
-$area2 = elgg_view_title($title);
-$area2 .= elgg_view("file/upload", array('entity' => $file));
+$area1 = elgg_view_title($title);
+$area1 .= elgg_view("file/upload", array('entity' => $file));
 
-$body = elgg_view_layout('two_column_left_sidebar', '', $area2);
+$body = elgg_view_layout('one_column_with_sidebar', $area1);
 page_draw($title, $body);

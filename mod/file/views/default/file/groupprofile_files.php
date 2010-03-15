@@ -1,20 +1,18 @@
 <?php
  
-    // Latest forum discussion for the group home page
+    // Files on group profile page
 
-    //check to make sure this group forum has been activated
+    //check to make sure group files is activated
     if($vars['entity']->files_enable != 'no'){
 
 ?>
 
 <script type="text/javascript">
 $(document).ready(function () {
-
-$('a.show_file_desc').click(function () {
-	$(this.parentNode).children("[class=filerepo_listview_desc]").slideToggle("fast");
-	return false;
-});
-
+	$('a.show_file_desc').click(function () {
+		$(this.parentNode).children("[class=filerepo_listview_desc]").slideToggle("fast");
+		return false;
+	});
 }); /* end document ready function */
 </script>
 
@@ -66,7 +64,6 @@ $('a.show_file_desc').click(function () {
 	}
 
 ?>
-<div class="clearfloat" /></div>
 </div>
 
 <?php

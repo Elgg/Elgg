@@ -41,8 +41,7 @@
 	
 	
 ?>
-<div class="contentWrapper">
-<form action="<?php echo $vars['url']; ?>action/<?php echo $action; ?>" enctype="multipart/form-data" method="post">
+<form action="<?php echo $vars['url']; ?>action/<?php echo $action; ?>" enctype="multipart/form-data" method="post" class="margin_top">
 <p>
 	<label>
 <?php
@@ -131,4 +130,3 @@
 </p>
 
 </form>
-</div>
