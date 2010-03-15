@@ -20,7 +20,7 @@
 		$offset = (int)get_input('offset', 0);
 		$area2 .= elgg_list_entities(array('types' => 'object', 'subtypes' => 'thewire', 'offset' => $offset));
 
-	    $body = elgg_view_layout("two_column_left_sidebar", '', $area2);
+	    $body = elgg_view_layout("one_column_with_sidebar", '', $area2);
 		
 	// Display page
 		page_draw(elgg_echo('thewire:everyone'),$body);
