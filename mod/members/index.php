@@ -45,7 +45,7 @@ $area2 = elgg_view_title($pagetitle);
 //get the correct view based on filter
 switch($filter){
 	case "newest":
-	$content = list_entities("user","",0,10,false);
+	$content = elgg_list_entities("user","",0,10,false);
 	break;
 	case "pop":
 		$filter_content = list_entities_by_relationship_count('friend', true, '', '', 0, 10, false);

@@ -17,7 +17,7 @@ if(!$num)
 	$num = 4;
 			
 //grab the users bookmarked items
-$bookmarks = get_entities('object', 'bookmarks',$vars['entity']->owner_guid, "", $num, 0, false);
+$bookmarks = elgg_get_entities('object', 'bookmarks',$vars['entity']->owner_guid, "", $num, 0, false);
 		
 if($bookmarks){
 

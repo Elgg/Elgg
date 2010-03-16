@@ -36,7 +36,7 @@ function blog_init() {
 	// Set up menus
 	add_menu(elgg_echo('blog'), "{$CONFIG->wwwroot}pg/blog/", array());
 
-	extend_view('css', 'blog/css');
+	elgg_extend_view('css', 'blog/css');
 
 	register_page_handler('blog', 'blog_page_handler');
 	register_page_handler('blog_ajax', 'blog_ajax_page_handler');
