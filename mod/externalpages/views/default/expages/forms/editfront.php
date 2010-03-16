@@ -62,7 +62,8 @@ EOT;
 <div class="expage_preview">
 <a name="preview"></a>
 <h2>Preview</h2>
-<?php 
+<?php
+/*
 	if($description_left){
 		echo "The left column header space<br />";
 		echo $description_left;
@@ -72,6 +73,7 @@ EOT;
 		echo $description_right;
 	}else
 		echo elgg_echo('expages:nopreview');
+ */
 ?>
 </div>
 -->
