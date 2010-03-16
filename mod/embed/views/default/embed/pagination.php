@@ -92,7 +92,7 @@
 
 			if (($i - $prev) > 1) {
 
-				echo "<span class=\"pagination_more\">...</span>";
+				echo "<span class='pagination_more'>...</span>";
 
 			}
 
@@ -102,7 +102,7 @@
 			if ($curoffset != $offset) {
 				echo " <a onclick=\"javascript:$('.popup .content').load('{$counturl}'); return false\" href=\"#\" class=\"pagination_number\">{$i}</a> ";
 			} else {
-				echo "<span class=\"pagination_currentpage\"> {$i} </span>";
+				echo "<span class='pagination_currentpage'> {$i} </span>";
 			}
 			$prev = $i;
 
@@ -124,7 +124,6 @@
 	}
 
 ?>
-<br class="clearfloat" />
 </div>
 <?php
 	} // end of pagination check if statement

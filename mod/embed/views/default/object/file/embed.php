@@ -1,5 +1,4 @@
 <?php
-
 	$mime = $vars['entity']->mimetype;
 	
 	if (elgg_view_exists('file/specialcontent/' . $mime)) {

@@ -89,16 +89,16 @@
     settings: {
       opacity      : 0.7,
       overlay      : true,
-      loadingImage : '<?php echo $vars['url']; ?>mod/embed/images/loading.gif',
-      closeImage   : '<?php echo $vars['url']; ?>mod/embed/images/button_spacer.gif',
+      loadingImage : '<?php echo $vars['url']; ?>_graphics/ajax_loader_bw.gif',
+      closeImage   : '<?php echo $vars['url']; ?>_graphics/spacer.gif',
       imageTypes   : [ 'png', 'jpg', 'jpeg', 'gif' ],
       faceboxHtml  : '\
-    <div id="facebox" style="display:none;"> \
+    <div id="facebox" class="hidden"> \
       <div class="popup"> \
 	      <div class="body"> \
 		      <div class="footer"> \
 		          <a href="#" class="close"> \
-		            <img src="<?php echo $vars['url']; ?>mod/embed/images/button_spacer.gif" title="close" class="close_image" width="22" height="22" border="0" /> \
+		            <img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" title="close" class="close_image" width="22" height="22" border="0" /> \
 		          </a> \
 		        </div> \
 		        <div class="content"> \
@@ -140,7 +140,7 @@
 	    $('#facebox .body').children().fadeIn('slow');
         $('#facebox').css('left', $(window).width() / 2 - ($('#facebox').width() / 2));
         $(document).trigger('reveal.facebox').trigger('afterReveal.facebox');
-        }, 1000);
+        }, 100);
       
       //$('#facebox .loading').remove()
       //$('#facebox .body').children().fadeIn('slow')
