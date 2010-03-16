@@ -26,8 +26,9 @@
 	
 	set_context('search');
 	if ($tag != "") {
+		$filter = 'search';
 		// groups plugin saves tags as "interests" - see groups_fields_setup() in start.php
-		$objects = list_entities_from_metadata('interests',$tag,'group',"","", $limit, false);
+		$objects = list_entities_from_metadata('interests',$tag,'group',"","", $limit, false, false, true, false);
 	} else {
 		switch($filter){
 			case "newest":
