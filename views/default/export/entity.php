@@ -20,16 +20,13 @@ $relationships = get_entity_relationships($entity->guid);
 
 $exportable_values = $entity->getExportableValues();
 ?>
-<div class="contentWrapper">
 <div>
+<h2><?php echo elgg_echo('Entity'); ?></h2>
 	<?php
-		foreach ($entity as $k => $v)
-		{
+		foreach ($entity as $k => $v) {
 			if ((in_array($k, $exportable_values)) || (isadminloggedin())) {
 ?>
-		<div>
-			<p><b><?php echo $k; ?>: </b><?php echo $v; ?></p>
-		</div>
+			<p class="margin_none"><b><?php echo $k; ?>: </b><?php echo strip_tags($v); ?></p>
 <?php
 			}
 		}
@@ -37,15 +34,12 @@ $exportable_values = $entity->getExportableValues();
 </div>
 
 <?php if ($metadata) { ?>
-<div id="metadata">
+<div id="metadata" class="margin_top">
 <h2><?php echo elgg_echo('metadata'); ?></h2>
 	<?php
-		foreach ($metadata as $m)
-		{
+		foreach ($metadata as $m) {
 ?>
-		<div>
-			<p><b><?php echo $m->name; ?>: </b><?php echo $m->value; ?></p>
-		</div>
+		<p class="margin_none"><b><?php echo $m->name; ?>: </b><?php echo $m->value; ?></p>
 <?php
 		}
 	?>
@@ -54,17 +48,14 @@ $exportable_values = $entity->getExportableValues();
 <?php } ?>
 
 <?php if ($annotations) { ?>
-<div id="annotations">
+<div id="annotations" class="margin_top">
 <h2><?php echo elgg_echo('annotations'); ?></h2>
 	<?php
-		foreach ($annotations as $a)
-		{
+		foreach ($annotations as $a) {
 ?>
-		<div>
-			<table>
-				<p><b><?php echo $a->name; ?>: </b><?php echo $a->value; ?></p>
-			</table>
-		</div>
+		<table>
+			<p class="margin_none"><b><?php echo $a->name; ?>: </b><?php echo $a->value; ?></p>
+		</table>
 <?php
 		}
 	?>
@@ -72,20 +63,16 @@ $exportable_values = $entity->getExportableValues();
 <?php } ?>
 
 <?php if ($relationships) { ?>
-<div id="relationship">
+<div id="relationship" class="margin_top">
 <h2><?php echo elgg_echo('relationships'); ?></h2>
 	<?php
-		foreach ($relationships as $r)
-		{
+		foreach ($relationships as $r) {
 ?>
-		<div>
-			<table>
-				<p><b><?php echo $r->relationship; ?>: </b><?php echo $r->guid_two; ?></p>
-			</table>
-		</div>
+		<table>
+			<p class="margin_none"><b><?php echo $r->relationship; ?>: </b><?php echo $r->guid_two; ?></p>
+		</table>
 <?php
 		}
 	?>
 </div>
 <?php } ?>
-</div>

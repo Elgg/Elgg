@@ -110,4 +110,4 @@ else {
 	throw new InvalidParameterException(elgg_echo('InvalidParameterException:MissingParameter'));
 }
 
-page_draw($title, elgg_view_layout('one_column',elgg_view_title($title) . $body));
+page_draw($title, elgg_view_layout('one_column_with_sidebar', elgg_view_title($title) . $body));
