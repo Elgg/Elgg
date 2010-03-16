@@ -957,16 +957,10 @@ select.styled .select_option {
 	margin:0;
 }
 .generic_comment_owner {
-	font-size: 1.1em;
 	line-height:1.2em;
-	color:#666666;
 }
 .generic_comment_owner a {
 	color:#0054A7;
-}
-.generic_comment_owner .entity_subtext {
-	color:#666666;
-	font-size: 90%;
 }
 .generic_comment_body {
 	margin:3px 0 5px 0;
