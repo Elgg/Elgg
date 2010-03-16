@@ -20,6 +20,13 @@ if(is_plugin_enabled('thewire') && isloggedin()){
 		$selected = "";
 	echo "<li {$selected}><a href=\"{$vars['url']}mod/thewire/everyone.php\" id='thewire'><span>" . elgg_echo('thewire:title') . "</span></a></li>";
 }
+if(is_plugin_enabled('conversations') && isloggedin()){
+	if(get_context() == 'conversations')
+		$selected = 'class="selected"';
+	else
+		$selected = "";
+	echo "<li {$selected}><a href=\"{$vars['url']}mod/conversations/all.php\" id='conversations'><span>" . elgg_echo('conversations') . "</span></a></li>";
+}
 if(is_plugin_enabled('blog')){
 	if(get_context() == 'blog')
 		$selected = 'class="selected"';
