@@ -75,10 +75,12 @@ EOT;
 <a name="preview"></a>
 <h2>Preview</h2>
 <?php 
+/*
 	if($description)
 		echo $description;
 	else
 		echo elgg_echo('expages:nopreview');
+*/
 ?>
 </div>
 -->
