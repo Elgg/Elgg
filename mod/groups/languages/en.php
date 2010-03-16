@@ -63,7 +63,7 @@
 
 			'groups:requests:none' => 'There are no outstanding membership requests at this time.',
 
-			'groups:invitations:none' => 'There are no oustanding invitations at this time.',
+			'groups:invitations:none' => 'There are no outstanding invitations at this time.',
 
 			'item:object:groupforumtopic' => "Discussion topics",
 
@@ -150,9 +150,10 @@
 			'groups:invite:subject' => "%s you have been invited to join %s!",
 			'groups:started' => "Started by",
 			'groups:joinrequest:remove:check' => 'Are you sure you want to remove this join request?',
+			'groups:invite:remove:check' => 'Are you sure you want to remove this invite?',
 			'groups:invite:body' => "Hi %s,
 
-%s invited you to join the '%s' group, click below to confirm:
+%s invited you to join the '%s' group. Click below to view your invitations:
 
 %s",
 
@@ -166,11 +167,11 @@ You are now a member of the '%s' group! Click below to begin posting!
 			'groups:request:subject' => "%s has requested to join %s",
 			'groups:request:body' => "Hi %s,
 
-%s has requested to join the '%s' group, click below to view their profile:
+%s has requested to join the '%s' group. Click below to view their profile:
 
 %s
 
-or click below to confirm request:
+or click below to view the group's join requests:
 
 %s",
 
@@ -221,6 +222,7 @@ or click below to confirm request:
 			'grouppost:nopost' => 'Empty post',
 			'groups:deletewarning' => "Are you sure you want to delete this group? There is no undo!",
 
+			'groups:invitekilled' => 'The invite has been deleted.',
 			'groups:joinrequestkilled' => 'The join request has been deleted.',
 	);
 

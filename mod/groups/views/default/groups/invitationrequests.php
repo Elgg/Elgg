@@ -21,7 +21,7 @@
 
 				echo str_replace('<a', '<a class="delete_report_button" ', elgg_view('output/confirmlink',array(
 					'href' => $vars['url'] . "action/groups/killinvitation?user_guid={$user->getGUID()}&group_guid={$group->getGUID()}",
-					'confirm' => elgg_echo('groups:joinrequest:remove:check'),
+					'confirm' => elgg_echo('groups:invite:remove:check'),
 					'text' => elgg_echo('delete'),
 				)));
 			$url = elgg_add_action_tokens_to_url("{$vars['url']}action/groups/join?user_guid={$user->guid}&group_guid={$group->guid}");
