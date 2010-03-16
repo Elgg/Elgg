@@ -45,8 +45,9 @@ a.privatemessages.new span {
 	text-align:center;
 	top:-3px;
 	right:5px;
-	min-width: 15px;
-	font-size:9px;
+	min-width: 16px;
+	height:16px;
+	font-size:10px;
 	font-weight:bold;
 }
 
