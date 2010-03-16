@@ -24,7 +24,7 @@ if (substr_count($baseurl,'?')) {
 
 ?>
 
-<div class="contentWrapper">
+<p class="margin_top">
 	<?php echo elgg_echo("viewtype:change") ?>:
 	<a href="<?php echo $baseurl; ?>"><?php echo elgg_echo("viewtype:{$viewtype}"); ?></a>
-</div>
+</p>
