@@ -22,7 +22,7 @@
 }
 /* admin area */
 .admin_settings.reported_content {
-	margin:0 0 5px 0;
+	margin:5px 0 0 0;
 	padding:5px 7px 3px 9px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
