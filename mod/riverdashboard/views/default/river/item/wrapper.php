@@ -104,7 +104,7 @@ else
 			//display the comment link
 		if($vars['item']->type != 'user'){
 			//for now don't display the comment link on bookmarks and wire messages
-			if($vars['item']->subtype != 'thewire' && $vars['item']->subtype != 'bookmarks' && $vars['item']->subtype != '')
+			if($vars['item']->subtype != 'thewire' && $vars['item']->subtype != 'conversations' && $vars['item']->subtype != 'bookmarks' && $vars['item']->subtype != '')
 				echo "<a class='comment_link' href=\"{$object_url}\">Comment</a>";
 			}
 		?>

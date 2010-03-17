@@ -1486,9 +1486,9 @@ a.action_button:focus {
 .admin_settings.users_online .profile_status {
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
-	background:#bbdaf7;
 	line-height:1.2em;
-	padding:2px 4px;
+	/* background:#bbdaf7; */
+	/* padding:2px 4px; */
 }
 .admin_settings.users_online .profile_status span {
 	font-size:90%;

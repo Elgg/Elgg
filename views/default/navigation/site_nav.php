@@ -11,56 +11,56 @@ if(is_plugin_enabled('riverdashboard')){
 		$selected = 'class="selected"';
 	else
 		$selected = "";
-	echo "<li {$selected}><a href=\"{$vars['url']}mod/riverdashboard/\" id='activity'><span>Activity</span></a></li>";
+	echo "<li {$selected}><a href=\"{$vars['url']}mod/riverdashboard/\" title='Activity'><span>Activity</span></a></li>";
 }
 if(is_plugin_enabled('thewire') && isloggedin()){
 	if(get_context() == 'thewire')
 		$selected = 'class="selected"';
 	else
 		$selected = "";
-	echo "<li {$selected}><a href=\"{$vars['url']}mod/thewire/everyone.php\" id='thewire'><span>" . elgg_echo('thewire:title') . "</span></a></li>";
+	echo "<li {$selected}><a href=\"{$vars['url']}mod/thewire/everyone.php\" title='The Wire'><span>" . elgg_echo('thewire:title') . "</span></a></li>";
 }
 if(is_plugin_enabled('conversations') && isloggedin()){
 	if(get_context() == 'conversations')
 		$selected = 'class="selected"';
 	else
 		$selected = "";
-	echo "<li {$selected}><a href=\"{$vars['url']}mod/conversations/all.php\" id='conversations'><span>" . elgg_echo('conversations') . "</span></a></li>";
+	echo "<li {$selected}><a href=\"{$vars['url']}mod/conversations/all.php\" title='Conversations'><span>" . elgg_echo('conversations') . "</span></a></li>";
 }
 if(is_plugin_enabled('blog')){
 	if(get_context() == 'blog')
 		$selected = 'class="selected"';
 	else
 		$selected = "";
-	echo "<li {$selected}><a href=\"{$vars['url']}mod/blog/all.php\" id='blogs'><span>Blogs</span></a></li>";
+	echo "<li {$selected}><a href=\"{$vars['url']}mod/blog/all.php\" title='Blogs'><span>Blogs</span></a></li>";
 }
 if(is_plugin_enabled('pages')){
 	if(get_context() == 'pages')
 		$selected = 'class="selected"';
 	else
 		$selected = "";
-	echo "<li {$selected}><a href=\"{$vars['url']}mod/pages/all.php\" id='pages'><span>Pages</span></a></li>";
+	echo "<li {$selected}><a href=\"{$vars['url']}mod/pages/all.php\" title='Pages'><span>Pages</span></a></li>";
 }
 if(is_plugin_enabled('file')){
 	if(get_context() == 'file')
 		$selected = 'class="selected"';
 	else
 		$selected = "";
-	echo "<li {$selected}><a href=\"{$vars['url']}pg/file/world/world/\" id='files'><span>Files</span></a></li>";
+	echo "<li {$selected}><a href=\"{$vars['url']}pg/file/world/world/\" title='Files'><span>Files</span></a></li>";
 }
 if(is_plugin_enabled('bookmarks')){
 	if(get_context() == 'bookmarks')
 		$selected = 'class="selected"';
 	else
 		$selected = "";
-	echo "<li {$selected}><a href=\"{$vars['url']}mod/bookmarks/all.php\" id='bookmarks'><span>Bookmarks</span></a></li>";
+	echo "<li {$selected}><a href=\"{$vars['url']}mod/bookmarks/all.php\" title='Bookmarks'><span>Bookmarks</span></a></li>";
 }
 if(is_plugin_enabled('groups')){
 	if(get_context() == 'groups')
 		$selected = 'class="selected"';
 	else
 		$selected = "";
-	echo "<li {$selected}><a href=\"{$vars['url']}pg/groups/world/\" id='groups'><span>". elgg_echo('groups') . "</span></a></li>";
+	echo "<li {$selected}><a href=\"{$vars['url']}pg/groups/world/\" title='Groups'><span>". elgg_echo('groups') . "</span></a></li>";
 }
 echo "</ul>";
 echo "</div>";
