@@ -34,16 +34,15 @@ function unset_config($name, $site_guid = 0) {
  * @param string $name The name of the configuration value
  * @param string $value Its value
  * @param int $site_guid Optionally, the GUID of the site (current site is assumed by default)
- * @return false|int 1 or false depending on success or failure
+ * @return 0
+ * @todo The config table doens't have numeric primary keys so insert_data returns 0.
  */
 function set_config($name, $value, $site_guid = 0) {
 	global $CONFIG;
 
 	// Unset existing
-	unset_config($name,$site_guid);
+	unset_config($name, $site_guid);
 
-	$name = mysql_real_escape_string($name);
-	$value = mysql_real_escape_string($value);
 	$site_guid = (int) $site_guid;
 	if ($site_guid == 0) {
 		$site_guid = (int) $CONFIG->site_id;
