@@ -48,17 +48,12 @@ function admin_init() {
 	register_action('admin/user/resetpassword', false, "", true);
 	register_action('admin/user/makeadmin', false, "", true);
 	register_action('admin/user/removeadmin', false, "", true);
+	register_action('admin/site/update_basic', false, "", true);
+	register_action('admin/menu_items', false, "", true);
 
-	// Register some actions
-	register_action('admin/site/update_basic', false, "", true); // Register basic site admin action
 
 	// Page handler
-	register_page_handler('admin','admin_settings_page_handler');
-
-//	if (isadminloggedin()) {
-//		global $is_admin;
-//		$is_admin = true;
-//	}
+	register_page_handler('admin', 'admin_settings_page_handler');
 }
 
 /**
@@ -74,6 +69,7 @@ function admin_pagesetup() {
 		add_submenu_item(elgg_echo('admin:site'), $CONFIG->wwwroot . 'pg/admin/site/');
 		add_submenu_item(elgg_echo('admin:user'), $CONFIG->wwwroot . 'pg/admin/user/');
 		add_submenu_item(elgg_echo('admin:plugins'), $CONFIG->wwwroot . 'pg/admin/plugins/');
+		add_submenu_item(elgg_echo('admin:menu_items'), $CONFIG->wwwroot . 'pg/admin/menu_items/');
 	}
 }
 
@@ -94,6 +90,7 @@ function admin_settings_page_handler($page) {
 			case 'statistics' : $path = $CONFIG->path . "admin/statistics.php"; break;
 			case 'plugins' : $path = $CONFIG->path . "admin/plugins.php"; break;
 			case 'site' : $path = $CONFIG->path . "admin/site.php"; break;
+			case 'menu_items' : $path = $CONFIG->path . 'admin/menu_items.php'; break;
 		}
 	}
 
@@ -136,8 +133,8 @@ function send_admin_message($subject, $message) {
  */
 function list_admin_messages($limit = 10) {
 	return elgg_list_entities(array(
-		'type' => 'object', 
-		'subtype' => 'admin_message', 
+		'type' => 'object',
+		'subtype' => 'admin_message',
 		'limit' => $limit
 	));
 }

@@ -1453,11 +1453,12 @@ function get_register($register_name) {
  * @param string $menu_name The name of the menu item
  * @param string $menu_url The URL of the page
  * @param array $menu_children Optionally, an array of submenu items (not currently used)
- * @param string $context (not used and will likely be deprecated)
+ * @param string $context
  * @return true|false Depending on success
  */
 function add_menu($menu_name, $menu_url, $menu_children = array(), $context = "") {
 	global $CONFIG;
+
 	if (!isset($CONFIG->menucontexts)) {
 		$CONFIG->menucontexts = array();
 	}
@@ -1466,8 +1467,12 @@ function add_menu($menu_name, $menu_url, $menu_children = array(), $context = ""
 		$context = get_plugin_name();
 	}
 
+	$value = new stdClass();
+	$value->url = $menu_url;
+	$value->context = $context;
+
 	$CONFIG->menucontexts[] = $context;
-	return add_to_register('menu', $menu_name, $menu_url, $menu_children);
+	return add_to_register('menu', $menu_name, $value, $menu_children);
 }
 
 /**
@@ -2885,6 +2890,50 @@ function elgg_api_test($hook, $type, $value, $params) {
 }
 
 /**
+ * Sorts out the topbar menu and the featured URLs
+ * and saves them to $CONFIG->menu_items = array ('featured_urls' and 'toolbar')
+ *
+ */
+function ui_page_setup() {
+	global $CONFIG;
+
+	$hide_toolbar_dupes = get_config('menu_items_hide_toolbar_entries') == 'yes' ? TRUE : FALSE;
+	$menu_items = get_register('menu');
+	$featured_urls_info = get_config('menu_items_featured_urls');
+	$toolbar = array();
+	$featured_urls = array();
+	$featured_urls_sanitised = array();
+
+	// easier to compare with in_array() than embedded foreach()es
+	$valid_urls = array();
+	foreach ($menu_items as $info) {
+		$valid_urls[] = $info->value->url;
+	}
+
+	// make sure the url is a valid link.
+	// this prevents disabled plugins leaving behind
+	// valid links when no using a pagehandler.
+	foreach ($featured_urls_info as $info) {
+		if (in_array($info->value->url, $valid_urls)) {
+			$featured_urls[] = $info->value->url;
+			$featured_urls_sanitised[] = $info;
+		}
+	}
+
+	// add toolbar entries if not hiding dupes.
+	foreach ($menu_items as $name => $info) {
+		if (!($hide_toolbar_dupes && in_array($info->value->url, $featured_urls))) {
+			$toolbar[] = $info;
+		}
+	}
+
+	$CONFIG->menu_items = array(
+		'featured_urls' => $featured_urls_sanitised,
+		'toolbar' => $toolbar
+	);
+}
+
+/**
  * Some useful constant definitions
  */
 define('ACCESS_DEFAULT', -1);
@@ -2899,3 +2948,5 @@ define('ELGG_ENTITIES_NO_VALUE', 0);
 register_elgg_event_handler('init', 'system', 'elgg_init');
 register_elgg_event_handler('boot', 'system', 'elgg_boot', 1000);
 register_plugin_hook('unit_test', 'system', 'elgg_api_test');
+
+register_elgg_event_handler('pagesetup', 'system', 'ui_page_setup', 1000);

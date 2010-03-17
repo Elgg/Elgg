@@ -9,8 +9,7 @@
  * @link http://elgg.org/
  *
  */
-
-$menu = get_register('menu');
+$menu = $vars['config']->menu_items['toolbar'];
 
 if (is_array($menu) && sizeof($menu) > 0) {
 	$alphamenu = array();
@@ -26,7 +25,7 @@ if (is_array($menu) && sizeof($menu) > 0) {
 	<ul>
 	<?php
 		foreach($alphamenu as $item) {
-			echo "<li><a href=\"{$item->value}\">" . $item->name . "</a></li>";
+			echo "<li><a href=\"{$item->value->url}\">" . $item->name . "</a></li>";
 		}
 	?>
 	</ul>

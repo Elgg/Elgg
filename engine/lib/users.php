@@ -1628,7 +1628,7 @@ function users_init() {
 	// add Friends to tools menu - if profile mod is running
 	if ( isloggedin() && is_plugin_enabled('profile') ) {
 		$user = get_loggedin_user();
-		add_menu(elgg_echo('friends'), $CONFIG->wwwroot . "pg/friends/" . $user->username);
+		add_menu(elgg_echo('friends'), $CONFIG->wwwroot . "pg/friends/" . $user->username, array(), 'core:friends');
 	}
 
 	register_page_handler('friends', 'friends_page_handler');
