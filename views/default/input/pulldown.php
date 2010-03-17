@@ -26,23 +26,29 @@ if (!isset($vars['value']) || $vars['value'] === FALSE) {
 }
 
 ?>
-
 <select name="<?php echo $vars['internalname']; ?>" <?php if (isset($vars['internalid'])) echo "id=\"{$vars['internalid']}\""; ?> <?php echo $vars['js']; ?> <?php if ($vars['disabled']) echo ' disabled="yes" '; ?> class="<?php echo $class; ?>">
 <?php
+
 if ($vars['options_values']) {
 	foreach($vars['options_values'] as $value => $option) {
-		if ($value != $vars['value']) {
-			echo "<option value=\"".htmlentities($value, ENT_QUOTES, 'UTF-8')."\">". htmlentities($option, ENT_QUOTES, 'UTF-8') ."</option>";
+		$value = htmlentities($value, ENT_QUOTES, 'UTF-8');
+		$option = htmlentities($option, ENT_QUOTES, 'UTF-8');
+
+		// use strcmp() because (0 == 'string') is true
+		if (strcmp($value, $vars['value']) == 0) {
+			echo "<option value=\"$value\" selected=\"selected\">$option</option>";
 		} else {
-			echo "<option value=\"".htmlentities($value, ENT_QUOTES, 'UTF-8')."\" selected=\"selected\">". htmlentities($option, ENT_QUOTES, 'UTF-8') ."</option>";
+			echo "<option value=\"$value\">$option</option>";
 		}
 	}
 } else {
 	foreach($vars['options'] as $option) {
-		if ($option != $vars['value']) {
-			echo "<option>". htmlentities($option, ENT_QUOTES, 'UTF-8') ."</option>";
+		$option = htmlentities($option, ENT_QUOTES, 'UTF-8');
+
+		if (strcmp($value, $vars['value']) == 0) {
+			echo "<option selected=\"selected\">$option</option>";
 		} else {
-			echo "<option selected=\"selected\">". htmlentities($option, ENT_QUOTES, 'UTF-8') ."</option>";
+			echo "<option>$option</option>";
 		}
 	}
 }
