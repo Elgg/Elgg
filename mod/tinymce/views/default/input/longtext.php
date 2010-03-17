@@ -30,7 +30,8 @@
 <!-- intialise tinymce, you can find other configurations here http://wiki.moxiecode.com/examples/tinymce/installation_example_01.php -->
 <script language="javascript" type="text/javascript">
    tinyMCE.init({
-	mode : "textareas",
+	mode : "specific_textareas",
+	editor_selector : "mceEditor",
 	theme : "advanced",
 	relative_urls : false,
 	theme_advanced_buttons1 : "bold,italic,underline,separator,strikethrough,bullist,numlist,undo,redo,link,unlink,image,blockquote,code",
@@ -57,7 +58,7 @@ else
 ?>
 
 <!-- show the textarea -->
-<textarea class="input-textarea" name="<?php echo $vars['internalname']; ?>" <?php echo $vars['js']; ?>><?php echo htmlentities($vars['value'], null, 'UTF-8'); ?></textarea> 
+<textarea class="input-textarea mceEditor" name="<?php echo $vars['internalname']; ?>" <?php echo $vars['js']; ?>><?php echo htmlentities($vars['value'], null, 'UTF-8'); ?></textarea> 
 <div class="toggle_editor_container"><a class="toggle_editor" href="javascript:toggleEditor('<?php echo $vars['internalname']; ?>');"><?php echo elgg_echo('tinymce:remove'); ?></a></div>
 
 <script type="text/javascript">
