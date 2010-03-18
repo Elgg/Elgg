@@ -39,7 +39,10 @@ if ($loggedin_user) {
 <ul class="submenu">
 	<li><a href="">Drafts</a></li>
 </ul>
-
+<?php
+	// include a view for plugins to extend
+	echo elgg_view("blogs/sidebar", array("object_type" => 'blog'));
+?>
 <?php // temporarily force tag-cloud display
 	echo "<h3>Tagcloud</h3>";
 	echo "<div class='tagcloud sidebar'>".display_tagcloud(0, 100, 'tags')."</div>";

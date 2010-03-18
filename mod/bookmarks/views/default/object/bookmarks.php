@@ -63,6 +63,8 @@ $delete .= "<span class='delete_button'>" . elgg_view('output/confirmlink',array
 //include edit and delete options
 if($vars['entity']->canEdit()){
 	$info .= "<span class='entity_edit'><a href=\"{$vars['url']}pg/bookmarks/{$owner->username}/edit/{$vars['entity']->getGUID()}\">" . elgg_echo('edit') . "</a></span>";
+	// include a view for plugins to extend
+	$info .= elgg_view("bookmarks/options",array('entity' => $vars['entity']));
 	$info .= $delete;  
 }
 	$info .= "</div>";

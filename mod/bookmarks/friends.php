@@ -20,12 +20,13 @@ set_context('search');
 $area2 .= list_user_friends_objects(page_owner(),'bookmarks',10,false,false);
 set_context('bookmarks');
 		
-// sidebar options
-$area3 = elgg_view("bookmarks/sidebar_options", array("object_type" => 'bookmarks'));
+// include a view for plugins to extend
+$area3 = elgg_view("bookmarks/sidebar", array("object_type" => 'bookmarks'));
 		
 // if logged in, get the bookmarklet
-$area3 .= elgg_view("bookmarks/bookmarklet");
-		
+if(isloggedin()){
+	$area3 .= elgg_view("bookmarks/bookmarklet");
+}		
 // Format page
 $body = elgg_view_layout('one_column_with_sidebar', $area1.$area2, $area3);
 		

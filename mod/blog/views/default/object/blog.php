@@ -50,6 +50,9 @@ if ($blog->canEdit()) {
 	$edit = '';
 }
 
+	// include a view for plugins to extend
+	$edit = elgg_view("blogs/options", array("object_type" => 'blog')) .$edit;
+
 if ($full) {
 	// The "on" status changes for comments, so best to check for !Off
 	if ($blog->comments_on != 'Off') {

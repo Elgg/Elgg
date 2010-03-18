@@ -46,10 +46,10 @@ if ($this_guid = get_input('bookmark',0)) {
 }
 
 $area3 = elgg_view('bookmarks/ownerblock');
+// include a view for plugins to extend
+$area3 .= elgg_view("bookmarks/sidebar", array("object_type" => 'bookmarks'));
 // if logged in, get the bookmarklet
 $area3 .= elgg_view("bookmarks/bookmarklet");
-//include a view for plugins to extend
-$area3 .= elgg_view("bookmarks/sidebar_options", array("object_type" => 'bookmarks'));
 
 // Format page
 $body = elgg_view_layout('one_column_with_sidebar', $area1.$area2, $area3);

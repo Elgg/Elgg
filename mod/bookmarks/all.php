@@ -20,13 +20,14 @@ set_context('search');
 $area2 .= list_entities('object','bookmarks');
 set_context('bookmarks');
 
+// include a view for plugins to extend
+$area3 = elgg_view("bookmarks/sidebar", array("object_type" => 'bookmarks'));
+
 // if logged in, get the bookmarklet
-if(isloggedin()){
-	$area3 = elgg_view("bookmarks/bookmarklet");	
+if(isloggedin()){	
+	$area3 .= elgg_view("bookmarks/bookmarklet");	
 }	
-//include a view for plugins to extend
-$area3 .= elgg_view("bookmarks/sidebar_options", array("object_type" => 'bookmarks'));
-//include stats
+// include statistics
 $area3 .= elgg_view("bookmarks/stats");
 // Format page
 $body = elgg_view_layout('one_column_with_sidebar', $area1.$area2, $area3);
