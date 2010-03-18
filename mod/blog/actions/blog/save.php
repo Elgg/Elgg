@@ -9,16 +9,16 @@
  * @link http://elgg.org/
  */
 
-elgg_make_sticky_form();
-
-// edit or create a new entity
-$guid = get_input('guid');
-$user = get_loggedin_user();
-$ajax = get_input('ajax');
+// start a new sticky form session in case of failure
+//elgg_make_sticky_form();
 
 // store errors to pass along
 $error = FALSE;
 $error_forward_url = $_SERVER['HTTP_REFERER'];
+$user = get_loggedin_user();
+
+// edit or create a new entity
+$guid = get_input('guid');
 
 if ($guid) {
 	$entity = get_entity($guid);
@@ -29,10 +29,15 @@ if ($guid) {
 		forward(get_input('forward', $_SERVER['HTTP_REFERER']));
 	}
 	$success_forward_url = get_input('forward', $blog->getURL());
+
+	// save some data for revisions once we save the new edit
+	$revision_value = $blog->description;
+	$new_post = FALSE;
 } else {
 	$blog = new ElggObject();
 	$blog->subtype = 'blog';
 	$success_forward_url = get_input('forward');
+	$new_post = TRUE;
 }
 
 // set defaults and required values.
@@ -40,7 +45,7 @@ $values = array(
 	'title' => '',
 	'description' => '',
 	'status' => 'draft',
-	//'publish_date' => time(),
+	'publish_date' => time(),
 	'access_id' => ACCESS_DEFAULT,
 	'comments_on' => 'On',
 	'excerpt' => '',
@@ -48,12 +53,8 @@ $values = array(
 	'container_guid' => ''
 );
 
+// fail if a required entity isn't set
 $required = array('title', 'description');
-
-foreach ($values as $name => $default) {
-	$values[$name] = get_input($name, $default);
-}
-
 
 // load from POST and do sanity and access checking
 foreach ($values as $name => $default) {
@@ -77,17 +78,16 @@ foreach ($values as $name => $default) {
 			break;
 
 		case 'excerpt':
-			// restrict to 300 chars
 			if ($value) {
-				$value = substr(strip_tags($value), 0, 300);
+				$value = blog_make_excerpt($value);
 			} else {
-				$value = substr(strip_tags($values['description']), 0, 300);
+				$value = blog_make_excerpt($values['description']);
 			}
 			$values[$name] = $value;
 			break;
 
 		case 'container_guid':
-			// this can't be empty.
+			// this can't be empty or saving the base entity fails
 			if (!empty($value)) {
 				if (can_write_to_container($user->getGUID(), $value)) {
 					$values[$name] = $value;
@@ -97,6 +97,13 @@ foreach ($values as $name => $default) {
 			} else {
 				unset($values[$name]);
 			}
+			break;
+
+		case 'publish_date':
+			if (empty($value)) {
+				$value = time();
+			}
+			$values[$name] = $value;
 			break;
 
 		// don't try to set the guid
@@ -113,170 +120,44 @@ foreach ($values as $name => $default) {
 // assign values to the entity, stopping on error.
 if (!$error) {
 	foreach ($values as $name => $value) {
-		if (!$blog->$name = $value) {
-			$error = elgg_echo('blog:error:cannot_save1' . $name);
+		if (FALSE === ($blog->$name = $value)) {
+			$error = elgg_echo('blog:error:cannot_save' . "$name=$value");
 			break;
 		}
 	}
 }
 
 // only try to save base entity if no errors
-if (!$error && !$blog->save()) {
-	$error = elgg_echo('blog:error:cannot_save');
+if (!$error) {
+	if ($blog->save()) {
+		// remove sticky form entries
+		elgg_clear_sticky_form();
+
+		// remove autosave draft if exists
+		$blog->clearAnnotations('blog_auto_save');
+
+		// if this was an edit, create a revision
+		if (!$new_post && $revision_value) {
+			// create a revision annotation
+			$blog->annotate('blog_revision', $revision_value);
+		}
+
+		system_message(elgg_echo('blog:message:saved'));
+		forward($success_forward_url);
+	} else {
+		register_error(elgg_echo('blog:error:cannot_save'));
+		forward($error_forward_url);
+	}
+} else {
+	register_error($error);
+	forward($error_forward_url);
 }
 
 // forward with success or failure
-if ($ajax) {
-	if ($error) {
-		$json = array('success' => FALSE, 'message' => $error);
-		echo json_encode($json);
-	} else {
-		$msg = elgg_echo('blog:message:saved');
-		$json = array('success' => TRUE, 'message' => $msg, 'guid' => $blog->getGUID());
-		echo json_encode($json);
-	}
+if ($error) {
+	register_error($error);
+	forward($error_forward_url);
 } else {
-	if ($error) {
-		register_error($error);
-		forward($error_forward_url);
-	} else {
-		system_message(elgg_echo('blog:message:saved'));
-		forward($success_forward_url);
-	}
+	system_message(elgg_echo('blog:message:saved'));
+	forward($success_forward_url);
 }
-
-
-
-/*
- * This might have been a good idea.
- * It's not.
-
-// edit or create a new entity
-$guid = get_input('guid');
-$user = get_loggedin_user();
-$ajax = get_input('ajax', FALSE);
-
-// store errors to pass along
-$error = FALSE;
-$error_forward_url = $_SERVER['HTTP_REFERER'];
-
-if ($guid) {
-	$entity = get_entity($guid);
-	if (elgg_instanceof($entity, 'object', 'blog') && $entity->canEdit()) {
-		$blog = $entity;
-	} else {
-		register_error(elgg_echo('blog:error:post_not_found'));
-		forward(get_input('forward', $_SERVER['HTTP_REFERER']));
-	}
-	$success_forward_url = get_input('forward', $blog->getURL());
-} else {
-	$blog = new ElggObject();
-	$blog->subtype = 'blog';
-	$success_forward_url = get_input('forward');
-}
-
-// set defaults and required values.
-$values = array(
-	'title' => '',
-	'description' => '',
-	'access_id' => ACCESS_DEFAULT,
-	'comments_on' => 'On',
-	'excerpt' => '',
-	'tags' => '',
-	'container_guid' => ''
-);
-
-$required = array('title', 'description');
-
-foreach ($values as $name => $default) {
-	$values[$name] = get_input($name, $default);
-}
-
-
-// load from POST and do sanity and access checking
-foreach ($values as $name => $default) {
-
-	if ($error) {
-		break;
-	}
-
-	$value = get_input($name, $default);
-
-	if (in_array($name, $required) && empty($value)) {
-		register_error(elgg_echo("blog:error:missing:$name"));
-		forward($error_forward_url);
-	}
-
-	switch ($name) {
-		case 'tags':
-			$values[$name] = string_to_tag_array($value);
-			break;
-
-		case 'excerpt':
-			// restrict to 300 chars
-			if ($value) {
-				$value = substr(strip_tags($value), 0, 300);
-			} else {
-				$value = substr(strip_tags($values['description']), 0, 300);
-			}
-			$values[$name] = $value;
-			break;
-
-		case 'container_guid':
-			// this can't be empty.
-			if (!empty($value)) {
-				if (can_write_to_container($user->getGUID(), $value)) {
-					$values[$name] = $value;
-				} else {
-					$error = elgg_echo("blog:error:cannot_write_to_container");
-				}
-			} else {
-				unset($values[$name]);
-			}
-			break;
-
-		// don't try to set the guid
-		case 'guid':
-			unset($values['guid']);
-			break;
-
-		default:
-			$values[$name] = $value;
-			break;
-	}
-}
-
-// assign values to the entity, stopping on error.
-foreach ($values as $name => $value) {
-	if (!$blog->$name = $value) {
-		$error = elgg_echo('blog:error:cannot_save');
-		break;
-	}
-}
-
-// only try to save base entity if no errors
-if (!$error && !$blog->save()) {
-	$error = elgg_echo('blog:error:cannot_save');
-}
-
-// forward or return ajax data.
-if ($ajax) {
-	if ($error) {
-		$json = array('success' => FALSE, 'message' => $error);
-		echo json_encode($json);
-	} else {
-		$msg = elgg_echo('blog:message:saved');
-		$json = array('success' => TRUE, 'message' => $msg);
-		echo json_encode($json);
-	}
-} else {
-	if ($error) {
-		register_error($error);
-		forward($error_forward_url);
-	} else {
-		system_message(elgg_echo('blog:message:saved'));
-		forward($success_forward_url);
-	}
-}
-
-*/

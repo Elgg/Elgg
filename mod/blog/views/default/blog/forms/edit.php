@@ -9,11 +9,12 @@
  * @link http://elgg.org/
  */
 
+// input names => defaults
 $values = array(
 	'title' => NULL,
 	'description' => NULL,
-	'status' => 'final',
-	//'publish_date' => NULL,
+	'status' => 'published',
+	'publish_date' => NULL,
 	'access_id' => ACCESS_DEFAULT,
 	'comments_on' => 'On',
 	'excerpt' => NULL,
@@ -25,17 +26,42 @@ $values = array(
 $forward = $_SERVER['HTTP_REFERER'];
 
 $action_buttons = '';
-$guid_input = '';
 $delete_link = '';
+$draft_warning = '';
 
 // if entity is set, we're editing.
 if (isset ($vars['entity'])) {
 	$blog = $vars['entity'];
 
 	if ($blog && ($blog instanceof ElggObject) && ($blog->getSubtype() == 'blog')) {
-		foreach (array_keys($values) as $field) {
-			$values[$field] = $blog->$field;
-		}
+		// passed in values override sticky values in input views
+		// if in a sticky form, don't send the overrides and let the view figure it out.
+		//if (!elgg_is_sticky_form()) {
+			foreach (array_keys($values) as $field) {
+				$values[$field] = $blog->$field;
+			}
+
+			// load the revision annotation if requested
+			if (isset($vars['revision']) && $vars['revision'] instanceof ElggAnnotation && $vars['revision']->entity_guid == $blog->getGUID()) {
+				$revision = $vars['revision'];
+				$values['description'] = $vars['revision']->value;
+			}
+
+			// display a notice if there's an autosaved annotation
+			// and we're not editing it.
+			if ($auto_save_annotations = $blog->getAnnotations('blog_auto_save', 1)) {
+				$auto_save = $auto_save_annotations[0];
+			} else {
+				$auto_save == FALSE;
+			}
+
+			if ($auto_save && $auto_save->id != $revision->id) {
+				$draft_warning = '<span class="message warning">'
+					. elgg_echo('blog:messages:warning:draft')
+					. '</span>';
+			}
+
+		//}
 	} else {
 		echo elgg_echo('blog:error:post_not_found');
 		return FALSE;
@@ -48,8 +74,6 @@ if (isset ($vars['entity'])) {
 		'text' => elgg_echo('delete'),
 		'class' => 'action_button disabled'
 	));
-
-	$guid_input = elgg_view('input/hidden', array('internalname' => 'guid', 'value' => $values['guid']));
 }
 
 $save_button = elgg_view('input/submit', array('value' => elgg_echo('save'), 'class' => 'submit_button'));
@@ -77,7 +101,7 @@ $body_input = elgg_view('input/longtext', array(
 ));
 
 $save_status = elgg_echo('blog:save_status');
-$never = elgg_echo('never');
+$never = elgg_echo('blog:never');
 
 $status_label = elgg_echo('blog:status');
 $status_input = elgg_view('input/pulldown', array(
@@ -85,8 +109,8 @@ $status_input = elgg_view('input/pulldown', array(
 	'internalid' => 'blog_status',
 	'value' => $values['status'],
 	'options_values' => array(
-		'draft' => elgg_echo('blog:draft'),
-		'final' => elgg_echo('blog:final')
+		'draft' => elgg_echo('blog:status:draft'),
+		'published' => elgg_echo('blog:status:published')
 	)
 ));
 
@@ -121,11 +145,19 @@ $publish_date_input = elgg_view('input/datepicker', array(
 
 // hidden inputs
 //$container_guid_input = elgg_view('input/hidden', array('internalname' => 'container_guid', 'value' => $values['container_guid']));
+$guid_input = elgg_view('input/hidden', array('internalname' => 'guid', 'value' => $values['guid']));
 $forward_input = elgg_view('input/hidden', array('internalname' => 'forward', 'value' => $forward));
-$page_title = elgg_echo('blog:edit')." ".$values['title'];
+$page_title = elgg_echo('blog:edit') . " " . $values['title'];
+
+// display notice if editing an old revision
+if (isset($vars['revision']) && $vars['revision'] instanceof ElggAnnotation) {
+	$page_title .= ' ' . elgg_echo('blog:edit_revision_notice');
+}
 
 $form_body = <<<___END
 <h2>$page_title</h2>
+
+$draft_warning
 
 <p class="margin_top">
 	<label for="blog_title">$title_label</label>
@@ -137,13 +169,12 @@ $form_body = <<<___END
 $excerpt_input
 </p>
 
-<p>
-	<label for="blog_description">$body_label</label>
-	$body_input
-</p>
+<label for="blog_description">$body_label</label>
+$body_input
+<br />
 
 <p id="blog_save_status">
-	$save_status:<span id="blog_save_status_time">$never</span>
+	$save_status <span id="blog_save_status_time">$never</span>
 </p>
 
 <p>
@@ -190,6 +221,8 @@ echo elgg_view('input/form', array(
 	'body' => $form_body
 ));
 
+elgg_clear_sticky_form('blog');
+
 ?>
 
 <script type="text/javascript">
@@ -201,13 +234,16 @@ echo elgg_view('input/form', array(
 	function blogSaveDraftCallback(data, textStatus, XHR) {
 		if (textStatus == 'success' && data.success == true) {
 			var form = $('form[name=blog_post]');
-			form.append('<input type="hidden" name="guid" value="' + data.guid + '" />');
+
+			// update the guid input element for new posts that now have a guid
+			form.find('input[name=guid]').val(data.guid);
+
+			oldDescription = form.find('textarea[name=description]').val();
 
 			var d = new Date();
 			var mins = d.getMinutes() + '';
 			if (mins.length == 1) mins = '0' + mins;
 			$("#blog_save_status_time").html(d.getHours() + ":" + mins);
-
 		} else {
 			$("#blog_save_status_time").html("<?php echo elgg_echo('error'); ?>");
 		}
@@ -218,16 +254,16 @@ echo elgg_view('input/form', array(
 			tinyMCE.triggerSave();
 		}
 
-		// only save when content exists
+		// only save on changed content
 		var form = $('form[name=blog_post]');
-		var title = form.children('input[name=title]').val();
-		var description = form.children('textarea[name=description]').val();
+		var description = form.find('textarea[name=description]').val();
+		var title = form.find('input[name=title]').val();
 
-		if (!(title && description)) {
+		if (!(description && title) || (description == oldDescription)) {
 			return false;
 		}
 
-		var draftURL = "<?php echo $vars['url']; ?>action/blog/save?ajax=1";
+		var draftURL = "<?php echo $vars['url']; ?>action/blog/auto_save_revision";
 		var postData = form.serializeArray();
 
 		// force draft status
@@ -238,10 +274,12 @@ echo elgg_view('input/form', array(
 		});
 
 		$.post(draftURL, postData, blogSaveDraftCallback, 'json');
-
 	}
 
-	$(document).ready(function(){
+	$(document).ready(function() {
+		// get a copy of the body to compare for auto save
+		oldDescription = $('form[name=blog_post]').find('textarea[name=description]').val();
+
 		$('#excerpt.excerpt').each(function(){
 			var allowed = 200;
 

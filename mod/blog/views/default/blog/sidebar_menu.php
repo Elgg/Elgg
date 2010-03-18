@@ -31,14 +31,8 @@ Owned blogs;
 $loggedin_user = get_loggedin_user();
 $page_owner = page_owner_entity();
 
-if ($loggedin_user) {
-
-}
 ?>
 
-<ul class="submenu">
-	<li><a href="">Drafts</a></li>
-</ul>
 <?php
 	// include a view for plugins to extend
 	echo elgg_view("blogs/sidebar", array("object_type" => 'blog'));

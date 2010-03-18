@@ -39,7 +39,6 @@ function blog_init() {
 	elgg_extend_view('css', 'blog/css');
 
 	register_page_handler('blog', 'blog_page_handler');
-	register_page_handler('blog_ajax', 'blog_ajax_page_handler');
 
 	register_entity_url_handler('blog_url_handler', 'object', 'blog');
 
@@ -60,6 +59,7 @@ function blog_init() {
 	$action_path = dirname(__FILE__) . '/actions/blog';
 
 	register_action('blog/save', FALSE, "$action_path/save.php");
+	register_action('blog/auto_save_revision', FALSE, "$action_path/auto_save_revision.php");
 	register_action('blog/delete', FALSE, "$action_path/delete.php");
 }
 
@@ -111,13 +111,13 @@ function blog_page_handler($page) {
 		switch ($action) {
 			case 'read':
 				$title = sprintf(elgg_echo('blog:title:user_blogs'), $user->name);
-				$content = elgg_view('page_elements/content_header', array('context' => $content, 'type' => 'blog'));
-				$content .= blog_get_page_content_read($user->getGUID(), $page2);
+				$content_info = blog_get_page_content_read($user->getGUID(), $page2);
 				break;
 
 			case 'new':
 			case 'edit':
-				$content = blog_get_page_content_edit($page2);
+				//$sidebar = elgg_view('blog/sidebar_edit', array('blog_guid' => $page2));
+				$content_info = blog_get_page_content_edit($page2, $page3);
 				break;
 
 			case 'archives':
@@ -136,68 +136,19 @@ function blog_page_handler($page) {
 		}
 	} else {
 		$title = elgg_echo('blog:title:all_blogs');
-		$content = elgg_view('page_elements/content_header', array('context' => $content, 'type' => 'blog'));
-		$content .= elgg_list_entities_from_metadata(array(
-			'type' => 'object',
-			'subtype' => 'blog',
-			'full_view' => FALSE,
-			'metadata_name_value_pair' => array('name' => 'status', 'value' => 'final')
-		));
+		$content_info = blog_get_page_content_read();
 	}
 
-	$sidebar = elgg_view('blog/sidebar_menu');
-	$content = elgg_view('navigation/breadcrumbs') . $content;
+	$sidebar .= elgg_view('blog/sidebar_menu');
+	if (isset($content_info['sidebar'])) {
+		$sidebar .= $content_info['sidebar'];
+	}
+	$content = elgg_view('navigation/breadcrumbs') . $content_info['content'];
 
 	$body = elgg_view_layout('one_column_with_sidebar', $content, $sidebar);
 
 	page_draw($title, $body);
 }
-
-/**
- * Handles ajax calls for blog.
- *
- * @param array $page
- */
-function blog_ajax_page_handler($page) {
-	$action = isset($page[0]) ? $page[0] : FALSE;
-
-	var_dump($page);
-
-	switch ($action) {
-		case 'save_draft':
-			// @todo recycle the save action
-			$values = array(
-				'title' => '',
-				'description' => '',
-				'status' => 'draft',
-				'access_id' => ACCESS_DEFAULT,
-				'comments_on' => 'On',
-				'excerpt' => '',
-				'tags' => '',
-				'container_guid' => '',
-				'guid' => ''
-			);
-
-			foreach ($values as $name => $default) {
-				$values[$name] = get_input($name, $default);
-			}
-
-
-
-			/*
-			If a title and body, create a blog post marked as a draft and update the
-			GUID
-			*/
-			break;
-
-		default:
-			$content = 0;
-			break;
-	}
-
-	exit;
-}
-
 
 /**
  * Format and return the correct URL for blogs.
