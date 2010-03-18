@@ -69,7 +69,179 @@ function generate_tag_cloud(array $tags, $buckets = 6) {
 }
 
 /**
+ * Get popular tags and their frequencies
+ *
+ * Supports similar arguments as elgg_get_entities()
+ *
+ * @since 1.7.1
+ *
+ * @param array $options Array in format:
+ *
+ * 	threshold => INT minimum tag count
+ *
+ * 	tag_names => array() metadata tag names - must be registered tags
+ *
+ * 	limit => INT number of tags to return
+ *
+ *  types => NULL|STR entity type (SQL: type = '$type')
+ *
+ * 	subtypes => NULL|STR entity subtype (SQL: subtype = '$subtype')
+ *
+ * 	type_subtype_pairs => NULL|ARR (array('type' => 'subtype')) (SQL: type = '$type' AND subtype = '$subtype') pairs
+ *
+ * 	owner_guids => NULL|INT entity guid
+ *
+ * 	container_guids => NULL|INT container_guid
+ *
+ * 	site_guids => NULL (current_site)|INT site_guid
+ *
+ * 	created_time_lower => NULL|INT Created time lower boundary in epoch time
+ *
+ * 	created_time_upper => NULL|INT Created time upper boundary in epoch time
+ *
+ * 	modified_time_lower => NULL|INT Modified time lower boundary in epoch time
+ *
+ * 	modified_time_upper => NULL|INT Modified time upper boundary in epoch time
+ *
+ * 	wheres => array() Additional where clauses to AND together
+ *
+ * 	joins => array() Additional joins
+ *
+ * @return 	false/array - if no tags or error, false
+ * 			otherwise, array of objects with ->tag and ->total values
+ */
+function elgg_get_tags(array $options = array()) {
+	global $CONFIG;
+
+	$defaults = array(
+		'threshold'				=>	1,
+		'tag_names'				=>	array(),
+		'limit'					=>	10,
+
+		'types'					=>	ELGG_ENTITIES_ANY_VALUE,
+		'subtypes'				=>	ELGG_ENTITIES_ANY_VALUE,
+		'type_subtype_pairs'	=>	ELGG_ENTITIES_ANY_VALUE,
+
+		'owner_guids'			=>	ELGG_ENTITIES_ANY_VALUE,
+		'container_guids'		=>	ELGG_ENTITIES_ANY_VALUE,
+		'site_guids'			=>	$CONFIG->site_guid,
+
+		'modified_time_lower'	=>	ELGG_ENTITIES_ANY_VALUE,
+		'modified_time_upper'	=>	ELGG_ENTITIES_ANY_VALUE,
+		'created_time_lower'	=>	ELGG_ENTITIES_ANY_VALUE,
+		'created_time_upper'	=>	ELGG_ENTITIES_ANY_VALUE,
+
+		'joins'					=>	array(),
+		'wheres'				=>	array(),
+	);
+
+
+	$options = array_merge($defaults, $options);
+
+	$singulars = array('type', 'subtype', 'owner_guid', 'container_guid', 'site_guid');
+	$options = elgg_normalise_plural_options_array($options, $singulars);
+
+
+	$registered_tags = elgg_get_registered_tag_metadata_names();
+
+	if (!is_array($options['tag_names'])) {
+		return false;
+	}
+
+	// empty array so use all registered tag names
+	if (count($options['tag_names']) == 0) {
+		$options['tag_names'] = $registered_tags;
+	}
+
+	$diff = array_diff($options['tag_names'], $registered_tags);
+	if (count($diff) > 0) {
+		elgg_deprecated_notice('Tag metadata names must be registered by elgg_register_tag_metadata_name()', 1.7);
+		// return false;
+	}
+
+
+	$wheres = $options['wheres'];
+
+	// catch for tags that were spaces
+	$wheres[] = "msv.string != ''";
+
+	foreach ($options['tag_names'] as $tag) {
+		$sanitised_tags[] = '"' . sanitise_string($tag) . '"';
+	}
+	$tags_in = implode(',', $sanitised_tags);
+	$wheres[] = "(msn.string IN ($tags_in))";
+
+	$wheres[] = elgg_get_entity_type_subtype_where_sql('e', $options['types'], $options['subtypes'], $options['type_subtype_pairs']);
+	$wheres[] = elgg_get_entity_site_where_sql('e', $options['site_guids']);
+	$wheres[] = elgg_get_entity_owner_where_sql('e', $options['owner_guids']);
+	$wheres[] = elgg_get_entity_container_where_sql('e', $options['container_guids']);
+	$wheres[] = elgg_get_entity_time_where_sql('e', $options['created_time_upper'],
+		$options['created_time_lower'], $options['modified_time_upper'], $options['modified_time_lower']);
+
+	// remove identical where clauses
+	$wheres = array_unique($wheres);
+
+	// see if any functions failed
+	// remove empty strings on successful functions
+	foreach ($wheres as $i => $where) {
+		if ($where === FALSE) {
+			return FALSE;
+		} elseif (empty($where)) {
+			unset($wheres[$i]);
+		}
+	}
+
+
+	$joins = $options['joins'];
+
+	$joins[] = "JOIN {$CONFIG->dbprefix}metadata md on md.entity_guid = e.guid";
+	$joins[] = "JOIN {$CONFIG->dbprefix}metastrings msv on msv.id = md.value_id";
+	$joins[] = "JOIN {$CONFIG->dbprefix}metastrings msn on md.name_id = msn.id";
+
+	// remove identical join clauses
+	$joins = array_unique($joins);
+
+	foreach ($joins as $i => $join) {
+		if ($join === FALSE) {
+			return FALSE;
+		} elseif (empty($join)) {
+			unset($joins[$i]);
+		}
+	}
+
+
+	$query  = "SELECT msv.string as tag, count(msv.id) as total ";
+	$query .= "FROM {$CONFIG->dbprefix}entities e ";
+
+	// add joins
+	foreach ($joins as $j) {
+		$query .= " $j ";
+	}
+
+	// add wheres
+	$query .= ' WHERE ';
+
+	foreach ($wheres as $w) {
+		$query .= " $w AND ";
+	}
+
+	// Add access controls
+	$query .= get_access_sql_suffix('e');
+
+	$threshold = sanitise_int($options['threshold']);
+	$query .= " GROUP BY msv.string HAVING total > {$threshold} ";
+	$query .= " ORDER BY total DESC ";
+
+	$limit = sanitise_int($options['limit']);
+	$query .= " LIMIT {$limit} ";
+
+	return get_data($query);
+}
+
+/**
  * Get an array of tags with weights for use with the output/tagcloud view.
+ *
+ * @deprecated 1.7.1  Use elgg_get_tags().
  *
  * @param int $threshold Get the threshold of minimum number of each tags to bother with (ie only show tags where there are more than $threshold occurances)
  * @param int $limit Number of tags to return
@@ -84,88 +256,90 @@ function generate_tag_cloud(array $tags, $buckets = 6) {
  */
 
 function get_tags($threshold = 1, $limit = 10, $metadata_name = "", $entity_type = "object", $entity_subtype = "", $owner_guid = "", $site_guid = -1, $start_ts = "", $end_ts = "") {
-	global $CONFIG;
 
-	$threshold = (int) $threshold;
-	$limit = (int) $limit;
+	elgg_deprecated_notice('get_tags() has been replaced by elgg_get_tags()', 1.7);
 
-	$registered_tags = elgg_get_registered_tag_metadata_names();
-	if (!in_array($metadata_name, $registered_tags)) {
-		elgg_deprecated_notice('Tag metadata names must be registered by elgg_register_tag_metadata_name()', 1.7);
+	if (is_array($metadata_name)) {
+		return false;
 	}
 
-	if (!empty($metadata_name)) {
-		$metadata_name = (int) get_metastring_id($metadata_name);
-		// test if any metadata with that name
-		if (!$metadata_name) {
-			return false; // no matches so short circuit
-		}
+	$options = array();
+	if ($metadata_name === '') {
+		$options['tag_names'] = array();
 	} else {
-		$metadata_name = 0;
-	}
-	$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
-	$entity_type = sanitise_string($entity_type);
-
-	if ($owner_guid != "") {
-		if (is_array($owner_guid)) {
-			foreach($owner_guid as $key => $val) {
-				$owner_guid[$key] = (int) $val;
-			}
-		} else {
-			$owner_guid = (int) $owner_guid;
-		}
+		$options['tag_names'] = array($metadata_name);
 	}
 
-	if ($site_guid < 0) {
-		$site_guid = $CONFIG->site_id;
+	$options['threshold'] = $threshold;
+	$options['limit'] = $limit;
+
+	// rewrite owner_guid to container_guid to emulate old functionality
+	$container_guid = $owner_guid;
+	if ($container_guid) {
+		$options['container_guids'] = $container_guid;
 	}
 
-	$query = "SELECT msvalue.string as tag, count(msvalue.id) as total ";
-	$query .= "FROM {$CONFIG->dbprefix}entities e join {$CONFIG->dbprefix}metadata md on md.entity_guid = e.guid ";
-	if ($entity_subtype > 0) {
-		$query .= " join {$CONFIG->dbprefix}entity_subtypes subtype on subtype.id = e.subtype ";
+	if ($entity_type) {
+		$options['type'] = $entity_type;
 	}
-	$query .= " join {$CONFIG->dbprefix}metastrings msvalue on msvalue.id = md.value_id ";
 
-	$query .= " where msvalue.string != '' ";
+	if ($entity_subtype) {
+		$options['subtype'] = $entity_subtype;
+	}
 
-	if ($metadata_name > 0) {
-		$query .= " and md.name_id = {$metadata_name} ";
-	}
-	if ($site_guid > 0) {
-		$query .= " and e.site_guid = {$site_guid} ";
-	}
-	if ($entity_subtype > 0) {
-		$query .= " and e.subtype = {$entity_subtype} ";
-	}
-	if ($entity_type != "") {
-		$query .= " and e.type = '{$entity_type}' ";
-	}
-	if (is_array($owner_guid)) {
-		$query .= " and e.container_guid in (".implode(",",$owner_guid).")";
-	} else if (is_int($owner_guid)) {
-		$query .= " and e.container_guid = {$owner_guid} ";
-	}
-	if ($start_ts) {
-		$start_ts = (int)$start_ts;
-		$query .= " and e.time_created>=$start_ts";
+	if ($site_guid != -1) {
+		$options['site_guids'] = $site_guid;
 	}
 
 	if ($end_ts) {
-		$end_ts = (int)$end_ts;
-		$query .= " and e.time_created<=$end_ts";
+		$options['time_upper'] = $end_ts;
 	}
 
-	// Add access controls
-	$query .= ' and ' . get_access_sql_suffix("e");
+	if ($start_ts) {
+		$options['time_lower'] = $start_ts;
+	}
 
-	$query .= " group by msvalue.string having total > {$threshold} order by total desc limit {$limit} ";
+	$r = elgg_get_tags($options);
+	return $r;
+}
 
-	return get_data($query);
+/**
+ * Returns viewable tagcloud
+ *
+ * @since 1.7.1
+ *
+ * @see elgg_get_tags
+ *
+ * @param array $options Any elgg_get_tags() options except:
+ *
+ * 	type => must be single entity type
+ *
+ * 	subtype => must be single entity subtype
+ *
+ * @return string
+ * 
+ */
+function elgg_view_tagcloud(array $options = array()) {
+
+	$type = $subtype = '';
+	if (isset($options['type'])) {
+		$type = $options['type'];
+	}
+	if (isset($options['subtype'])) {
+		$subtype = $options['subtype'];
+	}
+	
+	$tag_data = elgg_get_tags($options);
+	return elgg_view("output/tagcloud",array('value' => $tag_data,
+											'object' => $type,
+											'subtype' => $subtype));
+
 }
 
 /**
  * Loads and displays a tagcloud given particular criteria.
+ *
+ * @deprecated 1.7.1 use elgg_view_tagcloud()
  *
  * @param int $threshold Get the threshold of minimum number of each tags to bother with (ie only show tags where there are more than $threshold occurances)
  * @param int $limit Number of tags to return
@@ -181,11 +355,8 @@ function get_tags($threshold = 1, $limit = 10, $metadata_name = "", $entity_type
 
 function display_tagcloud($threshold = 1, $limit = 10, $metadata_name = "", $entity_type = "object", $entity_subtype = "", $owner_guid = "", $site_guid = -1, $start_ts = "", $end_ts = "") {
 
-	$registered_tags = elgg_get_registered_tag_metadata_names();
-	if (!in_array($metadata_name, $registered_tags)) {
-		elgg_deprecated_notice('Tag metadata names must be registered by elgg_register_tag_metadata_name()', 1.7);
-	}
-
+	elgg_deprecated_notice('display_cloud() was deprecated by elgg_view_tagcloud()!', 1.7);
+	
 	return elgg_view("output/tagcloud",array('value' => get_tags($threshold, $limit, $metadata_name, $entity_type, $entity_subtype, $owner_guid, $site_guid, $start_ts, $end_ts),
 											'object' => $entity_type,
 											'subtype' => $entity_subtype));
