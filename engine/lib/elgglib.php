@@ -2724,14 +2724,20 @@ function elgg_get_breadcrumbs() {
  * Call this from an action when you want all your submitted variables
  * available if the submission fails validation and is sent back to the form
  */
-function elgg_make_sticky_form() {
-	elgg_clear_sticky_form();
+function elgg_make_sticky_form($form_name) {
+	global $CONFIG;
 
-	$_SESSION['sticky_form'] = array();
+	$CONFIG->active_sticky_form = $form_name;
+	elgg_clear_sticky_form($form_name);
+
+	if (!isset($_SESSION['sticky_forms'])) {
+		$_SESSION['sticky_forms'] = array();
+	}
+	$_SESSION['sticky_forms'][$form_name] = array();
 
 	foreach($_REQUEST as $key => $var) {
 		// will go through XSS filtering on the get function
-		$_SESSION['sticky_form'][$key] = $var;
+		$_SESSION['sticky_forms'][$form_name][$key] = $var;
 	}
 }
 
@@ -2742,18 +2748,21 @@ function elgg_make_sticky_form() {
  * Call this if validation is successful in the action handler or
  * when they sticky values have been used to repopulate the form
  * after a validation error.
+ *
+ * @param string $name Form namespace
  */
-function elgg_clear_sticky_form() {
-	unset($_SESSION['sticky_form']);
+function elgg_clear_sticky_form($form_name) {
+	unset($_SESSION['sticky_forms'][$form_name]);
 }
 
 /**
  * Has this form been made sticky
  *
+ * @param string $name Form namespace
  * @return boolean
  */
-function elgg_is_sticky_form() {
-	return isset($_SESSION['sticky_form']);
+function elgg_is_sticky_form($form_name) {
+	return isset($_SESSION['sticky_forms'][$form_name]);
 }
 
 /**
@@ -2766,9 +2775,9 @@ function elgg_is_sticky_form() {
  *
  * @todo should this filter the default value?
  */
-function elgg_get_sticky_value($variable, $default = "", $filter_result = true) {
-	if (isset($_SESSION['sticky_form'][$variable])) {
-		$value = $_SESSION['sticky_form'][$variable];
+function elgg_get_sticky_value($form_name, $variable, $default = NULL, $filter_result = true) {
+	if (isset($_SESSION['sticky_forms'][$form_name][$variable])) {
+		$value = $_SESSION['sticky_forms'][$form_name][$variable];
 		if ($filter_result) {
 			// XSS filter result
 			$value = filter_tags($value);
@@ -2783,11 +2792,31 @@ function elgg_get_sticky_value($variable, $default = "", $filter_result = true) 
  *
  * @param string $variable The name of the variable to clear
  */
-function elgg_clear_sticky_value($variable) {
-	unset($_SESSION['sticky_form'][$variable]);
+function elgg_clear_sticky_value($form_name, $variable) {
+	unset($_SESSION['sticky_forms'][$form_name][$variable]);
 }
 
+/**
+ * Returns the current active sticky form.
+ * @return mixed Str | FALSE
+ */
+function elgg_get_active_sticky_form() {
+	global $CONFIG;
 
+	if (isset($CONFIG->active_sticky_form)) {
+		$form_name = $CONFIG->active_sticky_form;
+	} else {
+		return FALSE;
+	}
+
+	return (elgg_is_sticky_form($form_name)) ? $form_name : FALSE;
+}
+
+function elgg_set_active_sticky_form($form_name) {
+	global $CONFIG;
+
+	$CONFIG->active_sticky_form = $form_name;
+}
 /**
  * Returns the PHP INI setting in bytes
  *
@@ -2900,6 +2929,7 @@ function ui_page_setup() {
 	$hide_toolbar_dupes = get_config('menu_items_hide_toolbar_entries') == 'yes' ? TRUE : FALSE;
 	$menu_items = get_register('menu');
 	$featured_urls_info = get_config('menu_items_featured_urls');
+
 	$toolbar = array();
 	$featured_urls = array();
 	$featured_urls_sanitised = array();
