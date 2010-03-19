@@ -1898,9 +1898,13 @@ function elgg_get_entities(array $options = array()) {
 function get_entities($type = "", $subtype = "", $owner_guid = 0, $order_by = "", $limit = 10, $offset = 0,
 $count = false, $site_guid = 0, $container_guid = null, $timelower = 0, $timeupper = 0) {
 	elgg_deprecated_notice('get_entities() was deprecated by elgg_get_entities().', 1.7);
+
 	// rewrite owner_guid to container_guid to emulate old functionality
-	$container_guid = $owner_guid;
-	$owner_guid = NULL;
+	if ($owner_guid != "") {
+		if (is_null($container_guid)) {
+			$container_guid = $owner_guid;
+		}
+	}
 
 	$options = array();
 	if ($type) {
