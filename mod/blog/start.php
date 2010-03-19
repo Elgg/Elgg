@@ -9,16 +9,12 @@
  * @link http://elgg.org/
  *
  * @todo
- *
- * Show all your drafts
- * Show revision history
- *
  * Show your blog posts
  * Show friends blog posts
+ * Widget
  *
  * Group blogs
  * 	Forward to container instead of owner
- * 	GROUPS SUCK.
  *
  * Pingbacks
  * Notifications
@@ -33,13 +29,12 @@ function blog_init() {
 	global $CONFIG;
 	require_once dirname(__FILE__) . '/blog_lib.php';
 
-	// Set up menus
 	add_menu(elgg_echo('blog'), "{$CONFIG->wwwroot}pg/blog/", array());
 
 	elgg_extend_view('css', 'blog/css');
 
+	register_elgg_event_handler('pagesetup', 'system', 'blog_page_setup');
 	register_page_handler('blog', 'blog_page_handler');
-
 	register_entity_url_handler('blog_url_handler', 'object', 'blog');
 
 	// notifications
@@ -51,10 +46,11 @@ function blog_init() {
 	//register_plugin_hook('pingback:object:subtypes', 'object', 'blog_pingback_subtypes');
 
 	// Register for search.
-	register_entity_type('object','blog');
+	register_entity_type('object', 'blog');
 
-	//add_group_tool_option('blog', elgg_echo('blog:enableblog'), true);
-	add_widget_type('blog', elgg_echo('blog'), elgg_echo('blog:widget:description'), 'profile, dashboard');
+	add_group_tool_option('blog', elgg_echo('blog:enableblog'), true);
+
+	//add_widget_type('blog', elgg_echo('blog'), elgg_echo('blog:widget:description'), 'profile, dashboard');
 
 	$action_path = dirname(__FILE__) . '/actions/blog';
 
@@ -170,5 +166,19 @@ function blog_url_handler($entity) {
 	return $url;
 }
 
+/**
+ * Add menu items for groups
+ */
+function blog_page_setup() {
+	global $CONFIG;
+	$page_owner = page_owner_entity();
+
+	if ($page_owner instanceof ElggGroup && get_context() == 'groups') {
+		if($page_owner->blog_enable != "no") {
+			$url = "{$CONFIG->wwwroot}pg/blog/{$page_owner->username}/items";
+			add_submenu_item(elgg_echo("blog:groups:group_blogs"), $url);
+		}
+	}
+}
 
 register_elgg_event_handler('init', 'system', 'blog_init');

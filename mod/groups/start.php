@@ -17,10 +17,8 @@
 
 		global $CONFIG;
 
-		// Set up the menu for logged in users
-		if (isloggedin()) {
-			add_menu(elgg_echo('groups:yours'), $CONFIG->wwwroot . "pg/groups/member/");
-		}
+		// Set up the menu 
+		add_menu(elgg_echo('groups'), $CONFIG->wwwroot . "pg/groups/member/");
 
 		// Register a page handler, so we can have nice URLs
 		register_page_handler('groups','groups_page_handler');

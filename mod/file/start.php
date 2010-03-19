@@ -31,9 +31,7 @@
 		global $CONFIG;
 				
 		// Set up menu (tools dropdown)
-		if (isloggedin()) {
-			add_menu(elgg_echo('files'), $CONFIG->wwwroot . "pg/file/" . get_loggedin_user()->username);
-		}
+		add_menu(elgg_echo('files'), $CONFIG->wwwroot . "pg/file/");
 				
 		// Extend CSS
 		elgg_extend_view('css', 'file/css');

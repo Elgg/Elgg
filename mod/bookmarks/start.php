@@ -15,9 +15,7 @@ function bookmarks_init() {
 	global $CONFIG;
 
 	//add a tools menu option
-	if (isloggedin()) {
-		add_menu(elgg_echo('bookmarks:yours'), $CONFIG->wwwroot . "pg/bookmarks/" . $_SESSION['user']->username . '/items');
-	}
+	add_menu(elgg_echo('bookmarks'), $CONFIG->wwwroot . 'mod/bookmarks/all.php');
 
 	// Register a page handler, so we can have nice URLs
 	register_page_handler('bookmarks', 'bookmarks_page_handler');
@@ -53,24 +51,24 @@ function bookmarks_init() {
  */
 function bookmarks_pagesetup() {
 	global $CONFIG;
-			
+
 	// Set up menu for logged in users
 	// add submenu options - @todo partially removed - now provided by drop-down menu filter in content area
 	if (get_context() == "bookmarks") {
 /*
 		if (isloggedin()) {
 			if (page_owner()) {
-				$page_owner = page_owner_entity();	
+				$page_owner = page_owner_entity();
 				add_submenu_item(elgg_echo('bookmarks:read'),$CONFIG->wwwroot."pg/bookmarks/" . $page_owner->username . "/items");
 			}
 			if(!$page_owner instanceof ElggGroup)
-				add_submenu_item(elgg_echo('bookmarks:friends'),$CONFIG->wwwroot."pg/bookmarks/" . $_SESSION['user']->username . "/friends");	
+				add_submenu_item(elgg_echo('bookmarks:friends'),$CONFIG->wwwroot."pg/bookmarks/" . $_SESSION['user']->username . "/friends");
 			}
 
 			if(!$page_owner instanceof ElggGroup)
 				add_submenu_item(elgg_echo('bookmarks:everyone'),$CONFIG->wwwroot."mod/bookmarks/everyone.php");
 */
-					
+
 			// Bookmarklet
 			if ((isloggedin()) && (page_owner()) && (can_write_to_container(0, page_owner()))) {
 				$page_owner = page_owner_entity();
@@ -80,14 +78,14 @@ function bookmarks_pagesetup() {
 				// add_submenu_item($bmtext, $CONFIG->wwwroot . "pg/bookmarks/{$page_owner->username}/bookmarklet");
 			}
 		}
-				
+
 		$page_owner = page_owner_entity();
-				
+
 		if ($page_owner instanceof ElggGroup && get_context() == 'groups') {
 			if($page_owner->bookmarks_enable != "no"){
-	    	add_submenu_item(sprintf(elgg_echo("bookmarks:group"),$page_owner->name), $CONFIG->wwwroot . "pg/bookmarks/" . $page_owner->username . '/items');
-    	}
-	}		
+			add_submenu_item(sprintf(elgg_echo("bookmarks:group"),$page_owner->name), $CONFIG->wwwroot . "pg/bookmarks/" . $page_owner->username . '/items');
+		}
+	}
 }
 
 /**
@@ -107,7 +105,7 @@ function bookmarks_page_handler($page) {
 	if (isset($page[1])) {
 		switch($page[1]) {
 			case "friends":
-				include(dirname(__FILE__) . "/friends.php"); 
+				include(dirname(__FILE__) . "/friends.php");
 				return true;
 				break;
 			case "items":
@@ -120,11 +118,11 @@ function bookmarks_page_handler($page) {
 				break;
 			case "edit":
 				set_input('bookmark',$page[2]);
-				include(dirname(__FILE__) . "/add.php"); 
+				include(dirname(__FILE__) . "/add.php");
 				return true;
 				break;
-			case "bookmarklet": 
-				include(dirname(__FILE__) . "/bookmarklet.php"); 
+			case "bookmarklet":
+				include(dirname(__FILE__) . "/bookmarklet.php");
 				return true;
 				break;
 		}
@@ -191,21 +189,21 @@ function bookmarks_notify_message($hook, $entity_type, $returnvalue, $params) {
  * A function to generate an internal code to put on the wire in place of the full url
  * to save space.
  **/
- 
+
 function create_wire_url_code(){
 	$chars = "abcdefghijkmnopqrstuvwxyz023456789";
 	srand((double)microtime()*1000000);
-    $i = 0;
-    $code = '';
-    
-    while ($i <= 4) {
-    	$num = rand() % 33;
-        $tmp = substr($chars, $num, 1);
-        $code = $code . $tmp;
-        $i++;
-  	}
-  	$code = "{{L:" . $code . "}}";
-    return $code;
+	$i = 0;
+	$code = '';
+
+	while ($i <= 4) {
+		$num = rand() % 33;
+		$tmp = substr($chars, $num, 1);
+		$code = $code . $tmp;
+		$i++;
+	}
+	$code = "{{L:" . $code . "}}";
+	return $code;
 }
 
 // Make sure the initialisation function is called on initialisation

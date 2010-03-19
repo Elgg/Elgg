@@ -27,9 +27,7 @@
 				global $CONFIG;
 				
 			// Set up menu for logged in users
-				if (isloggedin()) {
-					add_menu(elgg_echo('thewire'), $CONFIG->wwwroot . "pg/thewire/". $_SESSION['user']->username);
-				} 
+				add_menu(elgg_echo('thewire:title'), $CONFIG->wwwroot . "pg/thewire");
 				
 			// Extend system CSS with our own styles, which are defined in the thewire/css view
 				elgg_extend_view('css','thewire/css');

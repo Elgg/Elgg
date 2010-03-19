@@ -10,8 +10,7 @@ function riverdashboard_init() {
 		register_page_handler('dashboard','riverdashboard_page_handler');
 	} else {
 		// Activity main menu
-		if (isloggedin())
-			add_menu(elgg_echo('activity'), $CONFIG->wwwroot . "mod/riverdashboard/");
+		add_menu(elgg_echo('activity'), $CONFIG->wwwroot . "mod/riverdashboard/");
 	}	
 	// Page handler
 	register_page_handler('riverdashboard','riverdashboard_page_handler');

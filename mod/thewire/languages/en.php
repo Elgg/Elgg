@@ -7,7 +7,7 @@
 		 */
 	
 			'thewire:title' => "The Wire",
-			'thewire' => "My wire posts",
+			'thewire:my_posts' => "My wire posts",
 			'thewire:user' => "%s's wire posts",
 			'thewire:posttitle' => "%s's notes on the wire: %s",
 			'thewire:everyone' => "All wire posts",
