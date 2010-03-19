@@ -879,8 +879,7 @@ h2 {
     clear: both;
     visibility: hidden;
 }
-.content_header_title,
-.content_header_filter {
+.content_header_title {
 	float:left;
 }
 .content_header_title {
@@ -898,30 +897,6 @@ h2 {
 .content_header_options .action_button {
 	float:right;
 	margin:0 0 5px 10px;
-}
-.content_header_filter {
-	background: url(<?php echo $vars['url']; ?>_graphics/content_header_filter.gif) no-repeat 0 0;
-}
-.content_header_filter select.styled {
-	height:25px;
-	cursor: pointer;
-}
-span.select {
-	position: absolute;
-	width: 342px;
-	height: 25px;
-	padding: 3px 24px 0 8px;
-	color: #fff;
-	font-weight: bold;
-	font-size: 1.35em;
-	background: url(<?php echo $vars['url']; ?>_graphics/content_header_filter.gif) no-repeat;
-	overflow: hidden;
-	text-align: left;
-}
-select.styled .select_option {
-	font-size:1.3em;
-	margin:0;
-	padding:3px;
 }
 
 

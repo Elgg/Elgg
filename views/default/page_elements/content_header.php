@@ -22,39 +22,41 @@ $mine_selected = '';
 $all_selected = '';
 $friend_selected = '';
 $action_buttons = '';
-$title = '';
-/* $dash_selected = ''; */
+
+$all_title = elgg_echo('all');
+$mine_title = elgg_echo('mine');
+$friend_title = elgg_echo('friends');
 
 if (!($page_owner instanceof ElggGroup)){
-	if($filter_context == 'mine') {
-		$mine_selected = "SELECTED";
-	}
 	if($filter_context == 'everyone') {
-		$all_selected = "SELECTED";
+		$all_selected = "class = 'selected'";
+	}
+	if($filter_context == 'mine') {
+		$mine_selected = "class = 'selected'";
 	}
 	if($filter_context == 'friends') {
-		$friend_selected = "SELECTED";
+		$friend_selected = "class = 'selected'";
 	}
 	if($filter_context == 'action') {
-		// if this is an action page, we'll not be displaying the filter
+		// if this is an action page
 	}
-/*
-	if($filter_context == 'dashboard')
-		$dash_selected = "SELECTED";
-*/
 }
 
 // must be logged in to see the filter menu and any action buttons
-if (isloggedin()) {
-	// if we're not on an action page (add bookmark, create page, upload a file etc)
-	if ($filter_context != 'action') {
-		$location_filter = "<select onchange=\"window.open(this.options[this.selectedIndex].value,'_top')\" name=\"file_filter\" class='styled' >";
-		$location_filter .= "<option {$mine_selected} class='select_option' value=\"{$vars['url']}pg/{$type}/{$_SESSION['user']->username}\" >" . elgg_echo($type . ':yours') . "</option>";
-		$location_filter .= "<option {$all_selected} class='select_option' value=\"{$vars['url']}mod/{$type}/all.php\">" . elgg_echo($type . ':all') . "</option>";
-		$location_filter .= "<option {$friend_selected} class='select_option' value=\"{$vars['url']}pg/{$type}/{$_SESSION['user']->username}/friends/\">". elgg_echo($type . ':friends') . "</option>";
-		$location_filter .= "</select>";
-		$location_filter = "<div class='content_header_filter'>".$location_filter."</div>";
-
+if ( isloggedin() ) {
+	// if we're not on an action page (add a bookmark, create a blog, upload a file etc), or a group page 
+	if ( ($filter_context != 'action') && (get_context() != 'groups') ) {
+		$title = elgg_echo($type);
+		$title = "<div class='content_header_title'>".elgg_view_title($title)."</div>";
+		$page_filter = <<<EOT
+			<div class="elgg_horizontal_tabbed_nav margin_top">
+				<ul>
+					<li {$all_selected}><a href="{$vars['url']}mod/{$type}/all.php">{$all_title}</a></li>
+					<li {$mine_selected}><a href="{$vars['url']}pg/{$type}/{$_SESSION['user']->username}">{$mine_title}</a></li>
+					<li {$friend_selected}><a href="{$vars['url']}pg/{$type}/{$_SESSION['user']->username}/friends/">{$friend_title}</a></li>
+				</ul>
+			</div>		
+EOT;
 		// action buttons
 		if(get_context() != 'bookmarks'){
 			$url = $CONFIG->wwwroot . "pg/{$type}/". $page_owner->username . "/new";
@@ -64,15 +66,16 @@ if (isloggedin()) {
 		$action_buttons = "<a href=\"{$url}\" class='action_button'>" . elgg_echo($type . ':new') . "</a>";
 		$action_buttons = "<div class='content_header_options'>".$action_buttons."</div>";
 
-	} else {
-		// if we're on an action page - we'll just have a simple page title, and no filter menu
-		$title = "<div class='content_header_title'>".elgg_view_title($title = elgg_echo($type . ':add'))."</div>";
+	} else { // we're on an action page (or groups) - we'll just have a simple page title, and no filter menu
+		$title = elgg_echo($type);
+		$title = "<div class='content_header_title'>".elgg_view_title( $title )."</div>";
+		$page_filter = '';
 	}
 }
 ?>
-<!-- construct the content area header -->
+<!-- construct the page content area header -->
 <div id="content_header" class="clearfloat">
-	<?php echo $title; ?>
-	<?php echo $location_filter; ?>
-	<?php echo $action_buttons; ?>
+	<?php echo $title . $action_buttons; ?>
 </div>
+<?php echo $page_filter; ?>
+
