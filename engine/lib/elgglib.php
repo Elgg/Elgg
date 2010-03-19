@@ -284,7 +284,7 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 			}
 
 			// log warning
-			elgg_log($error, 'WARNING');
+			elgg_log($error, 'NOTICE');
 		}
 	}
 
