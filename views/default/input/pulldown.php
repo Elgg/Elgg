@@ -3,6 +3,8 @@
  * Elgg pulldown input
  * Displays a pulldown input field
  *
+ * NB: Default values of FALSE or NULL will match '' (empty string) and not 0.
+ *
  * @package Elgg
  * @subpackage Core
  * @author Curverider Ltd
@@ -18,7 +20,7 @@
 
 $class = $vars['class'];
 if (!$class) {
-	$class = "input-pulldown";
+	$class = "input_pulldown";
 }
 
 ?>
@@ -27,24 +29,24 @@ if (!$class) {
 
 if ($vars['options_values']) {
 	foreach($vars['options_values'] as $value => $option) {
-		$value = htmlentities($value, ENT_QUOTES, 'UTF-8');
-		$option = htmlentities($option, ENT_QUOTES, 'UTF-8');
 
-		// use strcmp() because (0 == 'string') is true
-		if (strcmp($value, $vars['value']) == 0) {
-			echo "<option value=\"$value\" selected=\"selected\">$option</option>";
+		$encoded_value = htmlentities($value, ENT_QUOTES, 'UTF-8');
+		$encoded_option = htmlentities($option, ENT_QUOTES, 'UTF-8');
+
+		if ((string)$value == (string)$vars['value']) {
+			echo "<option value=\"$encoded_value\" selected=\"selected\">$encoded_option</option>";
 		} else {
-			echo "<option value=\"$value\">$option</option>";
+			echo "<option value=\"$encoded_value\">$encoded_option</option>";
 		}
 	}
 } else {
 	foreach($vars['options'] as $option) {
-		$option = htmlentities($option, ENT_QUOTES, 'UTF-8');
+		$encoded_option = htmlentities($option, ENT_QUOTES, 'UTF-8');
 
-		if (strcmp($value, $vars['value']) == 0) {
-			echo "<option selected=\"selected\">$option</option>";
+		if ((string)$value == (string)$vars['value']) {
+			echo "<option selected=\"selected\">$encoded_option</option>";
 		} else {
-			echo "<option>$option</option>";
+			echo "<option>$encoded_option</option>";
 		}
 	}
 }
