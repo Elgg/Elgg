@@ -32,10 +32,14 @@
 	else
 		$area2 .= elgg_list_entities(array('types' => 'object', 'subtypes' => 'file', 'limit' => 10, 'offset' => $offset, 'full_view' => FALSE));
 	set_context('file');
+
+	//get the latest comments on all files
+	$comments = get_annotations(0, "object", "file", "generic_comment", "", 0, 4, 0, "desc");
+	$area3 = elgg_view('annotation/latest_comments', array('comments' => $comments));
 	
 	$content = "<div class='files'>".$area1.$area2."</div>";
 		
-	$body = elgg_view_layout('one_column_with_sidebar', $content);
+	$body = elgg_view_layout('one_column_with_sidebar', $content, $area3);
 
 	// Finally draw the page
 	page_draw($title, $body);

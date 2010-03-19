@@ -31,13 +31,14 @@ Owned blogs;
 $loggedin_user = get_loggedin_user();
 $page_owner = page_owner_entity();
 
-?>
-
-<?php
 	// include a view for plugins to extend
 	echo elgg_view("blogs/sidebar", array("object_type" => 'blog'));
-?>
-<?php // temporarily force tag-cloud display
+
+	// fetch & display latest comments on all blog posts
+	$comments = get_annotations(0, "object", "blog", "generic_comment", "", 0, 4, 0, "desc");
+	echo elgg_view('annotation/latest_comments', array('comments' => $comments));
+
+	// temporarily force tag-cloud display
 	echo "<h3>Tagcloud</h3>";
 	echo "<div class='tagcloud sidebar'>".display_tagcloud(0, 100, 'tags')."</div>";
 	echo "<a href=\"{$vars['url']}mod/tagcloud/tagcloud.php\">All site tags</a>";

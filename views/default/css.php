@@ -965,6 +965,22 @@ select.styled .select_option {
 .generic_comment_body {
 	margin:3px 0 5px 0;
 }
+/* latest comments in sidebar */
+#elgg_sidebar .generic_comment.latest {
+	padding:2px 0;
+}
+#elgg_sidebar .generic_comment.latest .generic_comment_icon  {
+	margin-left:1px;
+	margin-top:5px;
+}
+#elgg_sidebar .generic_comment.latest .generic_comment_details {
+	width:177px;
+	line-height:1.1em;
+}
+#elgg_sidebar .generic_comment.latest .entity_title {
+	font-size: inherit;
+	line-height: inherit;
+}
 
 
 /* ***************************************

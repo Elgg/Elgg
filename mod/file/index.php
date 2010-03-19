@@ -37,8 +37,13 @@
 	} else {
 		$area2 .= "<p class='margin_top'>".elgg_echo("file:none")."</p>";
 	}
+	
+	//get the latest comments on the current users files
+	$comments = get_annotations(0, "object", "file", "generic_comment", "", 0, 4, 0, "desc",0,0,page_owner());
+	$area3 = elgg_view('annotation/latest_comments', array('comments' => $comments));
+	
 	$content = "<div class='files'>".$area1.$area2."</div>";
-	$body = elgg_view_layout('one_column_with_sidebar', $content);
+	$body = elgg_view_layout('one_column_with_sidebar', $content, $area3);
 	
 	page_draw($title, $body);
 ?>
