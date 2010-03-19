@@ -935,7 +935,7 @@ function list_entities_from_metadata($meta_name, $meta_value = "", $entity_type 
 		'limit' => $limit,
 		'offset' => $offset,
 		'count' => TRUE,
-		'case_sensitive' => $case_sensitive
+		'metadata_case_sensitive' => $case_sensitive
 	);
 	$count = elgg_get_entities_from_metadata($options);
 
