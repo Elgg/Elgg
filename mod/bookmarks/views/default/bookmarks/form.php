@@ -27,6 +27,7 @@
 			
 			$guid = 0;
 			$title = get_input('title',"");
+			$title = stripslashes($title); // strip slashes from URL encoded apostrophes
 			$description = "";
 			$address = get_input('address',"");
 			$highlight = 'all';
