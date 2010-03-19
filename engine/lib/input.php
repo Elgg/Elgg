@@ -216,7 +216,7 @@ function input_livesearch_page_handler($page) {
 		exit;
 	}
 
-	$q = mysql_real_escape_string($q);
+	$q = sanitise_string($q);
 
 	// replace mysql vars with escaped strings
 	$q = str_replace(array('_', '%'), array('\_', '\%'), $q);

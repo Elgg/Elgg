@@ -756,7 +756,7 @@ function elgg_get_entity_metadata_where_sql($table, $names = NULL, $values = NUL
 			}
 
 			if (isset($pair['operand'])) {
-				$operand = mysql_real_escape_string($pair['operand']);
+				$operand = sanitise_string($pair['operand']);
 			} else {
 				$operand = ' = ';
 			}
