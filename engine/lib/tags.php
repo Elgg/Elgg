@@ -331,7 +331,7 @@ function elgg_view_tagcloud(array $options = array()) {
 	
 	$tag_data = elgg_get_tags($options);
 	return elgg_view("output/tagcloud",array('value' => $tag_data,
-											'object' => $type,
+											'type' => $type,
 											'subtype' => $subtype));
 
 }
@@ -350,7 +350,7 @@ function elgg_view_tagcloud(array $options = array()) {
  * @param int $site_guid Optionally, the site to restrict to (default is the current site)
  * @param int $start_ts Optionally specify a start timestamp for tags used to generate cloud.
  * @param int $ent_ts Optionally specify an end timestamp for tags used to generate cloud.
- * @return string THe HTML (or other, depending on view type) of the tagcloud.
+ * @return string The HTML (or other, depending on view type) of the tagcloud.
  */
 
 function display_tagcloud($threshold = 1, $limit = 10, $metadata_name = "", $entity_type = "object", $entity_subtype = "", $owner_guid = "", $site_guid = -1, $start_ts = "", $end_ts = "") {
@@ -358,7 +358,7 @@ function display_tagcloud($threshold = 1, $limit = 10, $metadata_name = "", $ent
 	elgg_deprecated_notice('display_cloud() was deprecated by elgg_view_tagcloud()!', 1.7);
 	
 	return elgg_view("output/tagcloud",array('value' => get_tags($threshold, $limit, $metadata_name, $entity_type, $entity_subtype, $owner_guid, $site_guid, $start_ts, $end_ts),
-											'object' => $entity_type,
+											'type' => $entity_type,
 											'subtype' => $entity_subtype));
 }
 
