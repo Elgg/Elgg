@@ -44,11 +44,6 @@ foreach ($required_files as $file) {
 $oldview = get_input('view');
 set_input('view', 'failsafe');
 
-/**
- * Set light mode default
- */
-$lightmode = false;
-
 // Register the error handler
 set_error_handler('__elgg_php_error_handler');
 set_exception_handler('__elgg_php_exception_handler');
@@ -96,14 +91,8 @@ trigger_elgg_event('boot', 'system');
 $installed = is_installed();
 $db_installed = is_db_installed();
 
-// Determine light mode
-$lm = strtolower(get_input('lightmode'));
-if ($lm == 'true') {
-	$lightmode = true;
-}
-
 // Load plugins, if we're not in light mode
-if (($installed) && ($db_installed) && ($sanitised) && (!$lightmode)) {
+if (($installed) && ($db_installed) && ($sanitised)) {
 	load_plugins();
 
 	trigger_elgg_event('plugins_boot', 'system');
@@ -120,9 +109,8 @@ if ((!$installed || !$db_installed)
 }
 
 // Trigger events
-if (!substr_count($_SERVER["PHP_SELF"],"install.php") &&
-	!substr_count($_SERVER["PHP_SELF"],"setup.php") &&
-	!$lightmode
+if (!substr_count($_SERVER["PHP_SELF"],"install.php")
+	&& !substr_count($_SERVER["PHP_SELF"],"setup.php")
 	&& !(defined('upgrading') && upgrading == 'upgrading')) {
 
 	trigger_elgg_event('init', 'system');
