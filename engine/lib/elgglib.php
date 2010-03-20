@@ -2979,4 +2979,4 @@ register_elgg_event_handler('init', 'system', 'elgg_init');
 register_elgg_event_handler('boot', 'system', 'elgg_boot', 1000);
 register_plugin_hook('unit_test', 'system', 'elgg_api_test');
 
-register_elgg_event_handler('pagesetup', 'system', 'ui_page_setup', 1000);
+//register_elgg_event_handler('pagesetup', 'system', 'ui_page_setup', 1000);
