@@ -1,22 +1,75 @@
 <?php
 /**
  * Main site-wide navigation
+ *
  **/
 
-$featured = $vars['config']->menu_items['featured_urls'];
-$current_context = get_context();
+$nav_items = elgg_get_nav_items();
+$featured = $nav_items['featured'];
+$more = $nav_items['more'];
 
-echo '<div id="elgg_main_nav" class="clearfloat">
-	<ul class="navigation">';
+$nav_html = '';
+$more_nav_html = '';
 
-foreach ($featured as $info) {
-	$selected = ($info->value->context == $current_context) ? 'class="selected"' : '';
+// sort more links alphabetically
+$more_sorted = array();
+foreach ($more as $info) {
+	$more_sorted[] = $info->name;
+}
+
+// required because array multisort is case sensitive
+$more_sorted_lower = array_map('elgg_strtolower', $more_sorted);
+array_multisort($more_sorted_lower, $more);
+
+$item_count = 0;
+
+// if there are no featured items, display the standard tools in alphabetical order
+if ($featured) {
+	foreach ($featured as $info) {
+		$title = htmlentities($info->name, ENT_QUOTES, 'UTF-8');
+		$url = htmlentities($info->value->url, ENT_QUOTES, 'UTF-8');
+
+		$nav_html .= "<li><a href=\"$url\" title=\"$title\"><span>$title</span></a></li>";
+	}
+} elseif ($more) {
+	for ($i=0; $i<6; $i++) {
+		$info = $more[$i];
+
+		$title = htmlentities($info->name, ENT_QUOTES, 'UTF-8');
+		$url = htmlentities($info->value->url, ENT_QUOTES, 'UTF-8');
+
+		$nav_html .= "<li><a href=\"$url\" title=\"$title\"><span>$title</span></a></li>";
+		$more[$i]->used = TRUE;
+		$item_count++;
+	}
+}
+
+// display the rest.
+foreach ($more as $info) {
+	if ($info->used) {
+		continue;
+	}
 	$title = htmlentities($info->name, ENT_QUOTES, 'UTF-8');
 	$url = htmlentities($info->value->url, ENT_QUOTES, 'UTF-8');
 
-	echo "<li $selected><a href=\"$url\" title=\"$title\"><span>$title</span></a></li>";
+	$more_nav_html .= "<li><a href=\"$url\" title=\"$title\"><span>$title</span></a></li>\n";
+	$item_count++;
 }
 
-echo '
+if ($more_nav_html) {
+	$more = elgg_echo('more');
+	$nav_html .= "<li class=\"navigation_more\"><a title=\"$more\"><span>$more</span></a>
+		<ul>
+			$more_nav_html
+		</ul>
+	</li>";
+}
+
+echo <<<___END
+<div id="elgg_main_nav" class="clearfloat">
+	<ul class="navigation">
+		$nav_html
 	</ul>
-</div>';
+</div>
+___END;
+?>

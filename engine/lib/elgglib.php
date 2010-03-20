@@ -2919,18 +2919,14 @@ function elgg_api_test($hook, $type, $value, $params) {
 }
 
 /**
- * Sorts out the topbar menu and the featured URLs
- * and saves them to $CONFIG->menu_items = array ('featured_urls' and 'toolbar')
- *
+ * Sorts out the featured URLs and the "more" dropdown
+ * @return array ('featured_urls' and 'more')
  */
-function ui_page_setup() {
-	global $CONFIG;
-
-	$hide_toolbar_dupes = get_config('menu_items_hide_toolbar_entries') == 'yes' ? TRUE : FALSE;
+function elgg_get_nav_items() {
 	$menu_items = get_register('menu');
 	$featured_urls_info = get_config('menu_items_featured_urls');
 
-	$toolbar = array();
+	$more = array();
 	$featured_urls = array();
 	$featured_urls_sanitised = array();
 
@@ -2952,14 +2948,14 @@ function ui_page_setup() {
 
 	// add toolbar entries if not hiding dupes.
 	foreach ($menu_items as $name => $info) {
-		if (!($hide_toolbar_dupes && in_array($info->value->url, $featured_urls))) {
-			$toolbar[] = $info;
+		if (!in_array($info->value->url, $featured_urls)) {
+			$more[] = $info;
 		}
 	}
 
-	$CONFIG->menu_items = array(
-		'featured_urls' => $featured_urls_sanitised,
-		'toolbar' => $toolbar
+	return array(
+		'featured' => $featured_urls_sanitised,
+		'more' => $more
 	);
 }
 

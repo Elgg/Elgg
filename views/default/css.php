@@ -27,10 +27,10 @@
 	GENERAL FORM ELEMENTS		default styles for all elgg input/form elements
 	FRIENDS PICKER
 	ADMIN AREA
-	
+
 
 */
-/* Colors:	
+/* Colors:
 
 	#4690D6 - elgg light blue
 	#0054A7 - elgg dark blue
@@ -153,7 +153,7 @@ pre, code {
 	font-size:12px;
 	background:#EBF5FF;
 	overflow:auto;
-	
+
 	overflow-x: auto; /* Use horizontal scroller if needed; for Firefox 2, not needed in Firefox 3 */
 	white-space: pre-wrap; /* css-3 */
 	white-space: -moz-pre-wrap !important; /* Mozilla, since 1999 */
@@ -175,24 +175,24 @@ blockquote {
 	line-height:1.3em;
 	background:#EBF5FF;
 	border:none;
-	-webkit-border-radius: 4px; 
+	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 }
 
 
 /* ***************************************
-   GENERIC SELECTORS 
+GENERIC SELECTORS
 *************************************** */
 h2 {
 	border-bottom:1px solid #CCCCCC;
 	padding-bottom:5px;
 }
 .clearfloat:after {
-    content: ".";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
 }
 .link {
 	cursor:pointer;
@@ -207,7 +207,7 @@ h2 {
 	display:none;
 }
 .radius8 {
-	-webkit-border-radius: 8px; 
+	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
 }
 .margin_none {
@@ -256,7 +256,7 @@ h2 {
 }
 
 /* ***************************************
-   PAGE LAYOUT - MAIN BLOCKS POSITIONING 
+PAGE LAYOUT - MAIN BLOCKS POSITIONING
 *************************************** */
 #elgg_topbar {
 	background:#333333 url(<?php echo $vars['url']; ?>_graphics/toptoolbar_background.gif) repeat-x top left;
@@ -269,7 +269,7 @@ h2 {
 	z-index: 9000;
 }
 #elgg_header {
-	overflow: hidden;
+	x-overflow: hidden;
 	position: relative;
 	width: 100%;
 	height:90px;
@@ -293,10 +293,10 @@ h2 {
 #elgg_main_nav {
 	z-index: 7000;
 	position: absolute;
-    height:23px;
-    bottom:0;
-    left:0;
-    width:auto;
+	height:23px;
+	bottom:0;
+	left:0;
+	width:auto;
 }
 #elgg_content { /* wraps sidebar and page contents */
 	width:990px;
@@ -341,7 +341,7 @@ h2 {
 
 
 /* ***************************************
-  ELGG TOPBAR
+ELGG TOPBAR
 *************************************** */
 #elgg_topbar_contents {
 	float:left;
@@ -362,7 +362,7 @@ h2 {
 }
 #elgg_topbar_contents a:hover {
 	color:#71cbff;
-	text-decoration: none;	
+	text-decoration: none;
 }
 #elgg_topbar_contents a img.user_mini_avatar {
 	border:1px solid #eeeeee;
@@ -375,16 +375,16 @@ h2 {
 	margin-top: -1px;
 }
 #elgg_topbar_contents .log_out {
-	float:right;	
+	float:right;
 }
 #elgg_topbar_contents .log_out a {
 	display: inline;
 	text-align: right;
 	margin-right:10px;
-	color:#999999;	
+	color:#999999;
 }
 #elgg_topbar_contents .log_out a:hover {
-	color:#71cbff;	
+	color:#71cbff;
 }
 #elgg_topbar_contents a.settings {
 	background:transparent url(<?php echo $vars['url']; ?>_graphics/topbar_icons.png) no-repeat left -41px;
@@ -438,7 +438,7 @@ h2 {
 	background:transparent url(<?php echo $vars['url']; ?>_graphics/topbar_icons.png) no-repeat 3px 1px;
 	padding-left:24px !important;
 }
-#elgg_topbar_contents ul.tools_menu li { 
+#elgg_topbar_contents ul.tools_menu li {
 	display: block;
 	list-style: none;
 	margin: 0;
@@ -458,7 +458,7 @@ h2 {
 }
 #elgg_topbar_contents ul.tools_menu ul li {
 	float: none;
-}   
+}
 /* elgg toolbar drop-down menu style */
 #elgg_topbar_contents ul.tools_menu ul {
 	width: 150px;
@@ -500,7 +500,7 @@ h2 {
 
 
 /* ***************************************
-  HEADER CONTENTS
+HEADER CONTENTS
 *************************************** */
 #elgg_header_contents h1 a {
 	font-size: 2em;
@@ -513,7 +513,7 @@ h2 {
 	text-shadow:1px 2px 4px #333333;
 }
 #elgg_header_contents #elgg_search input.search_input {
-	-webkit-border-radius: 10px; 
+	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	background-color:transparent;
 	border:1px solid #71b9f7;
@@ -540,7 +540,7 @@ h2 {
 	background-position: 3px -37px;
 }
 #elgg_header_contents #elgg_search input.search_submit_button {
-	display:none;	
+	display:none;
 }
 
 
@@ -597,7 +597,31 @@ h2 {
 	-webkit-border-top-right-radius:4px;
 	margin-top:2px;
 }
+.navigation_more {
+	overflow:hidden;
+}
 
+.navigation_more:hover{
+	overflow:visible;
+}
+
+li.navigation_more ul {
+	z-index: 1;
+	border: 1px solid #999;
+	border-top: 0;
+	-moz-border-radius-bottomleft:4px;
+	-moz-border-radius-bottomright:4px;
+	-webkit-border-bottom-left-radius:4px;
+	-webkit-border-bottom-right-radius:4px;
+}
+li.navigation_more ul li {
+	float:none;
+	background-color:#4690D6;
+}
+li.navigation_more ul li:hover {
+	background:white;
+	color:#43575e;
+}
 
 /* ***************************************
 	FOOTER CONTENTS
@@ -605,7 +629,7 @@ h2 {
 #elgg_footer_contents,
 #elgg_footer_contents a,
 #elgg_footer_contents p {
-   color:#999999;
+	color:#999999;
 }
 #elgg_footer_contents a:hover {
 	color:#666666;
@@ -619,15 +643,15 @@ h2 {
 
 
 /* ***************************************
-  SYSTEM MESSAGES
+SYSTEM MESSAGES
 *************************************** */
 #elgg_system_message {
-    background-color:black;
-    color:white;
-    font-weight: bold;
+	background-color:black;
+	color:white;
+	font-weight: bold;
 	display:block;
 	padding:3px 10px;
-    z-index: 9600;
+	z-index: 9600;
 	position:fixed;
 	right:20px;
 	margin-top:10px;
@@ -638,7 +662,7 @@ h2 {
 	-moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45); /* FF v3.5+ */
 }
 #elgg_system_message.error {
-    background-color:red;
+	background-color:red;
 }
 #elgg_system_message p {
 	margin:0;
@@ -681,7 +705,7 @@ h2 {
 }
 .submenu li a {
 	display:block;
-	-webkit-border-radius: 8px; 
+	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
 	background-color:white;
 	margin:0 0 3px 0;
@@ -714,7 +738,7 @@ h2 {
 	margin:0 6px 0 0;
 	padding:0px 4px;
 	cursor: pointer;
-	-webkit-border-radius: 4px; 
+	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 }
 .pagination .pagination_number:hover {
@@ -733,7 +757,7 @@ h2 {
 	font-weight: normal;
 	margin:0 6px 0 0;
 	padding:0px 4px;
-	-webkit-border-radius: 4px; 
+	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 }
 .pagination .pagination_previous,
@@ -748,7 +772,7 @@ h2 {
 	margin:0 6px 0 0;
 	padding:0px 4px;
 	cursor: pointer;
-	-webkit-border-radius: 4px; 
+	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 }
 .pagination .pagination_previous:hover,
@@ -770,7 +794,7 @@ h2 {
 	margin:0 6px 0 0;
 	padding:0px 4px;
 	cursor: pointer;
-	-webkit-border-radius: 4px; 
+	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 }
 
@@ -873,11 +897,11 @@ h2 {
 	border-bottom:1px solid #CCCCCC;
 }
 #content_header:after {
-    content: ".";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
 }
 .content_header_title {
 	float:left;
@@ -1032,7 +1056,7 @@ h2 {
 }
 
 /* ***************************************
-	USER SETTINGS & ADMIN AREA 
+	USER SETTINGS & ADMIN AREA
 	@todo - pull admin css into stand-alone css
 *************************************** */
 /* GENERAL STYLES */
@@ -1117,7 +1141,7 @@ input {
 	padding: 5px;
 	border: 1px solid #cccccc;
 	color:#666666;
-	-webkit-border-radius: 5px; 
+	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 }
 textarea {
@@ -1125,7 +1149,7 @@ textarea {
 	border: solid 1px #cccccc;
 	padding: 5px;
 	color:#666666;
-	-webkit-border-radius: 5px; 
+	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 }
 textarea:focus,
@@ -1145,7 +1169,7 @@ input[type="text"]:focus {
 	background-image: url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
 	background-repeat: repeat-x;
 	background-position: left 10px;
-	-webkit-border-radius: 5px; 
+	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	width: auto;
 	padding: 2px 4px;
@@ -1179,16 +1203,16 @@ input[type="submit"] {
 	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
-	-webkit-border-radius: 5px; 
+	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	width: auto;
 	padding: 2px 4px;
 	margin:10px 0 10px 0;
 	cursor: pointer;
 	-moz-outline-style: none;
-	outline: none;	
+	outline: none;
 	-webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40); /* safari v3+ */
-	-moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40); /* FF v3.5+ */	
+	-moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40); /* FF v3.5+ */
 }
 input[type="submit"]:hover {
 	border-color: #0054a7;
@@ -1208,7 +1232,7 @@ input[type="submit"]:hover {
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
 	border: 1px solid #999999;
-	-webkit-border-radius: 5px; 
+	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	width: auto;
 	padding: 2px 4px;
@@ -1223,7 +1247,7 @@ input[type="submit"]:hover {
 }
 input.action_button,
 a.action_button {
-	-webkit-border-radius: 5px; 
+	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	background-color:#cccccc;
 	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_background.gif);
@@ -1242,7 +1266,7 @@ a.action_button {
 	-moz-box-shadow: none;
 }
 input.action_button:hover,
-a.action_button:hover, 
+a.action_button:hover,
 input.action_button:focus,
 a.action_button:focus {
 	background-position:0 -15px;
@@ -1285,7 +1309,7 @@ a.action_button:focus {
 	color:white;
 }
 .action_button.small {
-	-webkit-border-radius: 3px; 
+	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	width: auto;
 	height:8px;
@@ -1404,7 +1428,7 @@ a.action_button:focus {
 	-moz-border-radius: 4px;
 }
 .tabHasContent {
-	background: white; 
+	background: white;
 	color:#333333 !important;
 }
 .friends_picker_navigation li a:hover {

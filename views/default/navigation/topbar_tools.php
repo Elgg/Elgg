@@ -1,7 +1,6 @@
 <?php
 /**
- * Elgg standard tools drop down
- * This will be populated depending on the plugins active - only plugin navigation will appear here
+ * Empty view for backward compatibility.
  *
  * @package Elgg
  * @subpackage Core
@@ -9,34 +8,3 @@
  * @link http://elgg.org/
  *
  */
-$menu = $vars['config']->menu_items['toolbar'];
-
-if (is_array($menu) && sizeof($menu) > 0) {
-	$alphamenu = array();
-	foreach($menu as $item) {
-		$alphamenu[$item->name] = $item;
-	}
-	ksort($alphamenu);
-
-?>
-
-<ul class="tools_menu">
-	<li class="menu"><a href="#" class="tools"><?php echo(elgg_echo('tools')); ?></a>
-	<ul>
-	<?php
-		foreach($alphamenu as $item) {
-			echo "<li><a href=\"{$item->value->url}\">" . $item->name . "</a></li>";
-		}
-	?>
-	</ul>
-	</li>
-</ul>
-
-<script type="text/javascript">
-$(function() {
-	$('ul.tools_menu').elgg_dropdownmenu();
-});
-</script>
-
-<?php
-}
