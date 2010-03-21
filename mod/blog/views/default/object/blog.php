@@ -88,7 +88,7 @@ echo <<<___END
 		<span class="body">$body</span>
 	</div>
 </div>
-
+$like
 $comments
 
 ___END;
