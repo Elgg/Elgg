@@ -105,9 +105,16 @@ else
 		}
 			//display the comment link
 		if($vars['item']->type != 'user'){
-			//for now don't display the comment link on bookmarks and wire messages
-			if($vars['item']->subtype != 'thewire' && $vars['item']->subtype != 'conversations' && $vars['item']->subtype != 'bookmarks' && $vars['item']->subtype != '')
-				echo "<a class='comment_link' href=\"{$object_url}\">Comment</a>";
+			//for now don't display the comment link on wire and conversations for now
+			if($vars['item']->subtype != 'thewire' && $vars['item']->subtype != 'conversations' && $vars['item']->subtype != '')
+				//don't display the comment option on group discussions atm
+				if($vars['item']->subtype == 'groupforumtopic'){
+					echo "<a class='comment_link' href=\"{$object_url}\">Visit discussion</a>";
+				}else{
+					echo "<div class='river_post_comment'>";
+					echo elgg_make_river_comment($object);
+					echo "</div>";
+				}
 			}
 		?>
 </div>

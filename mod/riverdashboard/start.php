@@ -32,4 +32,20 @@ function riverdashboard_dashboard() {
 	include(dirname(__FILE__) . '/index.php');
 }
 
+/**
+ * For users to make a comment on a river item
+ *
+ * @param ElggEntity $entity The entity to comment on
+ * @return string|false The HTML (etc) for the comment form, or false on failure
+ */
+function elgg_make_river_comment($entity){
+	if (!($entity instanceof ElggEntity)) {
+		return false;
+	} else {
+		//display the comment form
+		$comments = elgg_view('riverdashboard/rivercomment',array('entity' => $entity));
+		return $comments;
+	}
+}
+
 register_elgg_event_handler('init','system','riverdashboard_init');

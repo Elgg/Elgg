@@ -64,5 +64,5 @@ system_message(elgg_echo("generic_comment:posted"));
 //add to river
 add_to_river('annotation/annotate','comment',$user->guid,$entity->guid, "", 0, $annotation);
 
-// Forward to the entity page
-forward($entity->getURL());
+// Forward to the page the action occurred on
+forward($_SERVER['HTTP_REFERER']);
