@@ -1250,6 +1250,29 @@ function get_annotation_url($id) {
 	return false;
 }
 
+/**
+ * Check to see if a user has already created an annotation on an object
+ *
+ * @param ElggEntity $entity
+ * @return true | false
+ */
+function elgg_already_created_annotation($entity_guid, $annotation_type) {
+	global $CONFIG;
+	$entity_guid = (int)$entity_guid;
+	$annotation_type = sanitise_string($annotation_type);
+	$owner_guid = get_loggedin_userid();
+	$sql = "select a.id" .
+	 		" FROM {$CONFIG->dbprefix}annotations a, {$CONFIG->dbprefix}metastrings m " .
+	 		" WHERE a.owner_guid={$owner_guid} AND a.entity_guid={$entity_guid} " . 
+	 		" AND a.name_id=m.id AND m.string='{$annotation_type}'";
+	//get the annotation type id
+	$check_annotation = get_data_row($sql);
+	//check to see if the user has already liked
+	if($check_annotation)
+		return true;
+	else
+		return false;
+}
 
 /**
  * Register an annotation url handler.

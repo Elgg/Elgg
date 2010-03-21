@@ -823,6 +823,21 @@ If you requested this click on the link below, otherwise ignore this email.
  * XML-RPC
  */
 	'xmlrpc:noinputdata'	=>	"Input data missing",
+	
+/**
+ * Likes
+ **/
+ 	'likes:this' => 'liked this',
+ 	'likes:deleted' => 'Your like has been removed',
+ 	'likes:notdeleted' => 'There was a problem removing your like',
+ 	'likes:likes' => 'You now like this item',
+ 	'likes:failure' => 'There was a problem liking this item',
+ 	'likes:alreadyliked' => 'You have already liked this item',
+ 	'likes:notfound' => 'The item you are trying to like cannot be found',
+ 	'likes:likethis' => 'Like this',
+ 	'likes:userlikedthis' => 'user liked this',
+ 	'likes:userslikethis' => 'users liked this',
+ 	'likes:river:annotate' => 'likes',
 
 /**
  * Comments

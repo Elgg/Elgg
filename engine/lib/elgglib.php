@@ -1002,7 +1002,38 @@ function get_submenu() {
 
 	return $submenu_total;
 }
-
+/**
+ * Automatically views likes and a like input relating to the given entity
+ *
+ * @param ElggEntity $entity The entity to like
+ * @return string|false The HTML (etc) for the likes, or false on failure
+ */
+function elgg_view_likes($entity){
+	if (!($entity instanceof ElggEntity)) {
+		return false;
+	}
+	if ($likes = trigger_plugin_hook('likes',$entity->getType(),array('entity' => $entity),false)) {
+		return $likes;
+	} else {
+		//display the form
+		$likes = elgg_view('likes/forms/edit',array('entity' => $entity));
+		return $likes;
+	}
+}
+/**
+ * Count the number of likes attached to an entity
+ *
+ * @param ElggEntity $entity
+ * @return int Number of likes
+ */
+function elgg_count_likes($entity) {
+	if ($likeno = trigger_plugin_hook('likes:count', $entity->getType(),
+		array('entity' => $entity), false)) {
+		return $likeno;
+	} else {
+		return count_annotations($entity->getGUID(), "", "", "likes");
+	}
+}
 
 /**
  * Automatically views comments and a comment form relating to the given entity
@@ -2901,6 +2932,8 @@ function elgg_boot() {
 	// Actions
 	register_action('comments/add');
 	register_action('comments/delete');
+	register_action('likes/add');
+	register_action('likes/delete');
 
 	elgg_view_register_simplecache('css');
 	elgg_view_register_simplecache('js/friendsPickerv1');
