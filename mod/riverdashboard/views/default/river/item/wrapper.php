@@ -55,8 +55,18 @@ else
 		<?php echo $vars['body']; ?>
 	</div>
 	
-<!-- display comments -->
+<!-- display comments and likes -->
 <?php
+	//show the number of users who liked an item
+	if($likes){
+		echo "<div class='river_comments'>";
+		echo "<div class='river_comment latest clearfloat'>";
+		if($likes == 1)
+			echo $likes . " user liked this.";
+		else
+			echo $likes . " users liked this.";
+		echo "</div></div>";
+	}
 	//display latest 2 comments if there are any
 	if($get_comments){
 		$counter = 0;
