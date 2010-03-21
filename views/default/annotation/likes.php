@@ -33,7 +33,8 @@ $owner = get_user($vars['annotation']->owner_guid);
 			} //end of can edit if statement
 		?>
 		<p class="elgg_likes_owner">
-			<a href="<?php echo $owner->getURL(); ?>"><?php echo $owner->name; ?></a> <?php echo elgg_echo('likes:this'); ?>
+			<a href="<?php echo $owner->getURL(); ?>"><?php echo $owner->name; ?></a> <?php echo elgg_echo('likes:this') . 
+			" <span class=\"entity_subtext\">" . friendly_time($vars['annotation']->time_created) . "</span>"; ?> 
 		</p>
 	</div>
 </div>
