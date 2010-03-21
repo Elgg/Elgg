@@ -29,4 +29,4 @@ if ($likes = get_annotation($annotation_id)) {
 }
 
 register_error(elgg_echo("likes:notdeleted"));
-forward($entity->getURL());
+forward($_SERVER['HTTP_REFERER']);
