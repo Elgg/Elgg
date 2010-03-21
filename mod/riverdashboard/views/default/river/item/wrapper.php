@@ -29,9 +29,6 @@ switch($vars['item']->subtype){
 //count comment annotations
 $comment_count = count_annotations($vars['item']->object_guid, $vars['item']->type, $vars['item']->subtype, $annotation_comment);
 
-//count like annotations
-$likes = count_annotations($vars['item']->object_guid, $vars['item']->type, $vars['item']->subtype, "likes");
-
 //get last two comments display
 $get_comments = get_annotations($vars['item']->object_guid, "", "", $annotation_comment, "", "", 3, 0, "desc");
 
@@ -57,16 +54,11 @@ else
 	
 <!-- display comments and likes -->
 <?php
-	//show the number of users who liked an item
-	if($likes){
-		echo "<div class='river_comments'>";
-		echo "<div class='river_comment latest clearfloat'>";
-		if($likes == 1)
-			echo $likes . " user liked this.";
-		else
-			echo $likes . " users liked this.";
-		echo "</div></div>";
-	}
+	//likes
+	echo "<div class='river_comments'>";
+	echo "<div class='river_comment latest clearfloat'>";
+	echo elgg_view_likes($object);
+	echo "</div></div>";
 	//display latest 2 comments if there are any
 	if($get_comments){
 		$counter = 0;
