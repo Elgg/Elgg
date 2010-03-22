@@ -304,7 +304,3 @@ register_action("profile/cropicon",false,$CONFIG->pluginspath . "profile/actions
 register_action("profile/editdefault",false,$CONFIG->pluginspath . "profile/actions/editdefault.php", true);
 register_action("profile/editdefault/delete",false,$CONFIG->pluginspath . "profile/actions/deletedefaultprofileitem.php", true);
 register_action("profile/editdefault/reset",false,$CONFIG->pluginspath . "profile/actions/resetdefaultprofile.php", true);
-
-
-// Define widgets for use in this context
-use_widgets('profile');

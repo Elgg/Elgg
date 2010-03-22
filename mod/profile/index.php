@@ -26,10 +26,6 @@ if ($user = get_user_by_username($username)) {
 			$body .= elgg_view('profile/profile_contents/details', array("entity" => $user));
 		break;
 
-		case 'widgets':
-			$body .= elgg_view_layout('widgets');
-		break;
-
 		case 'friends':
 			$body .= elgg_view('profile/profile_contents/friends', array("entity" => $user));
 		break;
@@ -45,16 +41,10 @@ if ($user = get_user_by_username($username)) {
 			$body .= elgg_view('profile/profile_contents/details', array("entity" => $user));
 		break;
 	}
-	//$body .= elgg_view_entity($user,true);
 	$title = $user->name;
-	//$body .= elgg_view_layout('widgets');
 } else {
 	$body = elgg_echo("profile:notfound");
 	$title = elgg_echo("profile");
 }
-if ($option == 'widgets') {
-	//page_draw_widgets($title, $body, $sidebar="");
-} else {
-	$body = elgg_view_layout("one_column", $body);
-	page_draw($title, $body);
-}
+$body = elgg_view_layout("one_column", $body);
+page_draw($title, $body);

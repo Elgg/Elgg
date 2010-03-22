@@ -22,10 +22,6 @@ function profile_get_user_profile_html($user, $section = 'activity') {
 	$view_options = array('entity' => $user);
 
 	switch($section){
-		case 'widgets':
-			$body .= elgg_view_layout('widgets', $view_options);
-			break;
-
 		case 'friends':
 			$body .= elgg_view('profile/profile_contents/friends', $view_options);
 			break;
