@@ -34,6 +34,7 @@
 
 	#4690D6 - elgg light blue
 	#0054A7 - elgg dark blue
+	#e4ecf5 - elgg v light blue
 */
 
 
@@ -241,12 +242,12 @@ h2 {
 	background-color: white;
 	background-image: url(<?php echo $vars['url']; ?>_graphics/ajax_loader_bw.gif);
 	background-repeat: no-repeat;
-	background-position: center 30px;
-	/*
-	width:auto;
-	height:100px;
-	margin:0 10px 0 10px;
-*/
+	background-position: center center;
+	min-height:33px;
+	min-width:33px;
+}
+.ajax_loader.left {
+	background-position: left center;
 }
 #elgg_sidebar h3 {
 	border-bottom:1px solid #CCCCCC;
@@ -643,7 +644,7 @@ li.navigation_more ul li:hover {
 
 
 /* ***************************************
-SYSTEM MESSAGES
+	SYSTEM MESSAGES
 *************************************** */
 #elgg_system_message {
 	background-color:black;
@@ -862,11 +863,6 @@ SYSTEM MESSAGES
 	width:196px;
 }
 /* default login and register forms */
-#login label,
-.register label {
-	font-size: 1.2em;
-	color:gray;
-}
 #login input[type="text"],
 #login input[type="password"],
 .register input[type="text"],
