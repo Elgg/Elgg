@@ -1355,7 +1355,7 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
 	$username = trim($username);
 	// no need to trim password.
 	$password = $password;
-	$name = trim($name);
+	$name = trim(strip_tags($name));
 	$email = trim($email);
 
 	// A little sanity checking

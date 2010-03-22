@@ -22,7 +22,7 @@ if (!empty($vars['invitations']) && is_array($vars['invitations'])) {
 			<?php		
 				echo str_replace('<a', '<a class="action_button disabled" ', elgg_view('output/confirmlink',array(
 					'href' => $vars['url'] . "action/groups/killinvitation?user_guid={$user->getGUID()}&group_guid={$group->getGUID()}",
-					'confirm' => elgg_echo('groups:joinrequest:remove:check'),
+					'confirm' => elgg_echo('groups:invite:remove:check'),
 					'text' => elgg_echo('delete'),
 				)));
 			

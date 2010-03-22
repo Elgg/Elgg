@@ -24,7 +24,7 @@
 			if (check_entity_relationship($group->guid, 'invited', $user->guid))
 			{
 				remove_entity_relationship($group->guid, 'invited', $user->guid);
-				system_message(elgg_echo("groups:joinrequestkilled"));
+				system_message(elgg_echo("groups:invitekilled"));
 			}
 
 	forward($_SERVER['HTTP_REFERER']);

@@ -285,7 +285,7 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 			}
 
 			// log warning
-			elgg_log($error, 'WARNING');
+			elgg_log($error, 'NOTICE');
 		}
 	}
 
@@ -1372,7 +1372,20 @@ function sanitised() {
 		$save_vars = get_input('db_install_vars');
 		$result = "";
 		if ($save_vars) {
+			$rtn = db_check_settings($save_vars['CONFIG_DBUSER'],
+									$save_vars['CONFIG_DBPASS'],
+									$save_vars['CONFIG_DBNAME'],
+									$save_vars['CONFIG_DBHOST'] );
+			if ($rtn == FALSE) {
+				register_error(elgg_view("messages/sanitisation/dbsettings_error"));
+				register_error(elgg_view("messages/sanitisation/settings", 
+								array(	'settings.php' => $result,
+										'sticky' => $save_vars)));
+				return FALSE;
+			}
+
 			$result = create_settings($save_vars, dirname(dirname(__FILE__)) . "/settings.example.php");
+
 
 			if (file_put_contents(dirname(dirname(__FILE__)) . "/settings.php", $result)) {
 				// blank result to stop it being displayed in textarea

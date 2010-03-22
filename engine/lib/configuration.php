@@ -19,7 +19,7 @@
 function unset_config($name, $site_guid = 0) {
 	global $CONFIG;
 
-	$name = mysql_real_escape_string($name);
+	$name = sanitise_string($name);
 	$site_guid = (int) $site_guid;
 	if ($site_guid == 0) {
 		$site_guid = (int) $CONFIG->site_id;
@@ -66,7 +66,7 @@ function get_config($name, $site_guid = 0) {
 	if (isset($CONFIG->$name)) {
 		return $CONFIG->$name;
 	}
-	$name = mysql_real_escape_string($name);
+	$name = sanitise_string($name);
 	$site_guid = (int) $site_guid;
 	if ($site_guid == 0) {
 		$site_guid = (int) $CONFIG->site_id;

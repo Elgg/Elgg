@@ -45,6 +45,29 @@ function validate_platform() {
 }
 
 /**
+ * Confirm the settings for the database
+ *
+ * @param string $user
+ * @param string $password
+ * @param string $dbname
+ * @param string $host
+ * @return bool
+ */
+function db_check_settings($user, $password, $dbname, $host) {
+	$mysql_dblink = mysql_connect($host, $user, $password, true);
+	if ($mysql_dblink == FALSE) {
+		return $FALSE;
+	}
+
+	$result = mysql_select_db($dbname, $mysql_dblink);
+
+	mysql_close($mysql_dblink);
+	
+	return $result;
+}
+
+
+/**
  * Returns whether or not the database has been installed
  *
  * @return true|false Whether the database has been installed

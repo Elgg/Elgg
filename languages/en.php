@@ -713,6 +713,8 @@ Creating this is easy. Copy the contents of the textbox below into a text editor
 
 Alternatively, you can enter your database settings below and we will try and do this for you...",
 
+	'installation:error:db:title' => "Database settings error",
+	'installation:error:db:text' => "Check your database settings again as Elgg could not connect and access the database.",
 	'installation:error:configuration' => "Once you've corrected any configuration issues, press reload to try again.",
 
 	'installation' => "Installation",

@@ -756,7 +756,7 @@ function elgg_get_entity_metadata_where_sql($table, $names = NULL, $values = NUL
 			}
 
 			if (isset($pair['operand'])) {
-				$operand = mysql_real_escape_string($pair['operand']);
+				$operand = sanitise_string($pair['operand']);
 			} else {
 				$operand = ' = ';
 			}
@@ -938,7 +938,7 @@ function list_entities_from_metadata($meta_name, $meta_value = "", $entity_type 
 		'limit' => $limit,
 		'offset' => $offset,
 		'count' => TRUE,
-		'case_sensitive' => $case_sensitive
+		'metadata_case_sensitive' => $case_sensitive
 	);
 	$count = elgg_get_entities_from_metadata($options);
 

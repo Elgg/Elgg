@@ -11,7 +11,7 @@
 	 */
 	 
 	 //right column
-	 if ($forae = elgg_get_entities(array('types' => 'object', 'owner_guid' => $vars['entity']->guid))) {
+	 if ($forae = elgg_get_entities(array('types' => 'object', 'container_guid' => $vars['entity']->guid))) {
 	 	foreach($forae as $forum)
 	 		echo elgg_view_entity($forum);
 	 }

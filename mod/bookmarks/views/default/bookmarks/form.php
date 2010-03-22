@@ -22,6 +22,7 @@ if(isset($vars['entity'])){
 	//set some variables
 	$guid = '';
 	$title = get_input('title',"");
+	$title = stripslashes($title); // strip slashes from URL encoded apostrophes
 	$address = get_input('address',"");
 	$notes = '';
 	if ($address == "previous")

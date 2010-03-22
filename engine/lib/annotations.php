@@ -623,7 +623,7 @@ function elgg_get_entity_annotation_where_sql($table, $names = NULL, $values = N
 			}
 
 			if (isset($pair['operand'])) {
-				$operand = mysql_real_escape_string($pair['operand']);
+				$operand = sanitise_string($pair['operand']);
 			} else {
 				$operand = ' = ';
 			}
