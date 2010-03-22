@@ -1903,6 +1903,7 @@ $count = false, $site_guid = 0, $container_guid = null, $timelower = 0, $timeupp
 	if ($owner_guid != "") {
 		if (is_null($container_guid)) {
 			$container_guid = $owner_guid;
+			$owner_guid = NULL;
 		}
 	}
 
