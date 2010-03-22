@@ -44,7 +44,7 @@ function messages_init() {
 	// Register a URL handler for shouts posts
 		register_entity_url_handler('messages_url','object','messages');
 		
-    // Extend hover-over and profile menu	
+    // Extend avatar user-menu	
 		elgg_extend_view('profile/menu/links','messages/menu');
 		
 	// Register a notification handler for site messages

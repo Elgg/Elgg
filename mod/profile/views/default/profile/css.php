@@ -352,8 +352,8 @@ p.visit_twitter a {
 	width:164px; 
 	background:#FFFFFF; 
 	text-align:left;
-	-webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50); /* safari v3+ */
-	-moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50); /* FF v3.5+ */
+	-webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50);
+	-moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50);
 }
 div.usericon a.icon img {
 	z-index:10;
@@ -367,16 +367,20 @@ div.usericon a.icon img {
 	background:#cccccc;
 	text-decoration:none;
 }
-.usericon .sub_menu h3 {
-	font-size:1.3em;
-	line-height: 1.1em;
+.usericon .sub_menu h3.displayname {
+	font-size:1.3em !important; /* make sure nothing overrides our sub menu h3 */
+	line-height: 1.1em !important;
 	padding:0 !important;
 	margin:0 !important;
-	border-bottom:solid 1px #dddddd;
-	color: #4690d6;
+	border-bottom:solid 1px #dddddd !important;
 }
-.usericon .sub_menu h3 a {
+.usericon .sub_menu h3.displayname a {
 	padding:3px 3px 3px 8px;
+}
+.usericon .sub_menu h3.displayname a .username {
+	display:block;
+	font-weight: normal;
+	font-size: 0.8em;
 }
 .usericon .sub_menu a {
 	padding:2px 3px 2px 8px;

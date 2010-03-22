@@ -36,9 +36,6 @@
 		// Extend CSS
 		elgg_extend_view('css', 'file/css');
 		
-		// Extend hover-over and profile menu	
-		elgg_extend_view('profile/menu/links','file/menu');
-		
 	    // extend group main page
 		elgg_extend_view('groups/left_column','file/groupprofile_files');
 		

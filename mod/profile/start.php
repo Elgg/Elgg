@@ -48,15 +48,6 @@ function profile_init() {
 	elgg_extend_view('css', 'profile/css');
 	elgg_extend_view('js/initialise_elgg', 'profile/javascript');
 
-	if (get_context() == 'profile') {
-		elgg_extend_view('canvas_header/submenu', 'profile/submenu');
-	}
-
-	// Extend context menu with admin links
-	if (isadminloggedin()){
-		elgg_extend_view('profile/menu/links', 'profile/menu/adminwrapper', 10000);
-	}
-
 	// Now override icons
 	register_plugin_hook('entity:icon:url', 'user', 'profile_usericon_hook');
 

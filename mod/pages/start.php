@@ -27,9 +27,6 @@
 			add_menu(elgg_echo('pages'), $CONFIG->wwwroot . "mod/pages/world.php");
 		}
 		
-		// Extend hover-over menu	
-		elgg_extend_view('profile/menu/links','pages/menu');
-		
 		// Register a page handler, so we can have nice URLs
 		register_page_handler('pages','pages_page_handler');
 		

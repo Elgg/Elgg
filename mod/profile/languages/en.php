@@ -27,16 +27,16 @@ $english = array(
 	'profile:user' => "%s's profile",
 
 	'profile:edit' => "Edit profile",
-	'profile:profilepictureinstructions' => "The profile picture is the image that's displayed on your profile page. <br /> You can change it as often as you'd like. (File formats accepted: GIF, JPG or PNG)",
-	'profile:icon' => "Profile picture",
+	'profile:profilepictureinstructions' => "Your avatar is the image that's displayed on your profile page. <br /> You can change it as often as you'd like. (File formats accepted: GIF, JPG or PNG)",
+	'profile:icon' => "Avatar",
 	'profile:createicon' => "Create your avatar",
 	'profile:currentavatar' => "Current avatar",
 	'profile:createicon:header' => "Profile picture",
-	'profile:profilepicturecroppingtool' => "Profile picture cropping tool",
-	'profile:createicon:instructions' => "Click and drag a square below to match how you want your picture cropped.  A preview of your cropped picture will appear in the box on the right.  When you are happy with the preview, click 'Create your avatar'. This cropped image will be used throughout the site as your avatar. ",
+	'profile:profilepicturecroppingtool' => "Avatar cropping tool",
+	'profile:createicon:instructions' => "Click and drag a square below to match how you want your avatar cropped.  A preview will appear in the box on the right.  When you are happy with the preview, click 'Create your avatar'. This cropped version will be used throughout the site as your avatar. ",
 
-	'profile:editdetails' => "Edit details",
-	'profile:editicon' => "Edit profile icon",
+	'profile:editdetails' => "Edit profile",
+	'profile:editicon' => "Edit avatar",
 
 	'profile:aboutme' => "About me",
 	'profile:description' => "About me",

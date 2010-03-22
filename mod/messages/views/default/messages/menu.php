@@ -8,14 +8,9 @@
  * @copyright Curverider Ltd 2008-2010
  * @link http://elgg.com/
  */
- 
- //need to be logged in to send a message
- if (isloggedin()) {
-?>
 
-	<li class="user_menu_messages">
-		<a href="<?php echo $vars['url']; ?>mod/messages/send.php?send_to=<?php echo $vars['entity']->guid; ?>"><?php echo elgg_echo("messages:sendmessage"); ?></a>	
-	</li>
-	
-<?php
-}
+// login check already performed in profile/icon
+?>
+<li class="user_menu_profile">
+	<a class="send_message" href="<?php echo $vars['url']; ?>mod/messages/send.php?send_to=<?php echo $vars['entity']->guid; ?>"><?php echo elgg_echo("messages:sendmessage"); ?></a>	
+</li>
