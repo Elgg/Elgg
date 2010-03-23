@@ -30,20 +30,19 @@ $tag_input = elgg_view('input/tags', array('internalname' => 'sitepages_tags', '
 $submit_input = elgg_view('input/submit', array('internalname' => 'submit', 'value' => elgg_echo('save')));
 $hidden_value = elgg_view('input/hidden', array('internalname' => 'page_type', 'value' => $page_type));
 
-$tag_label = '<h3>' . elgg_echo('tags') . '</h3>';
+$tag_label = elgg_echo('tags');
 $external_page_title = elgg_echo("sitepages:$page_type");
 
 $form_body = <<<___EOT
 
-<h3 class='settings'>$external_page_title</h3>
-<p class='longtext_editarea'>$input_area</p>
-<p>
-	$tag_label
-	$tag_input
-</p>
+<p><label>$external_page_title
+$input_area</p></label>
+
+<p><label>$tag_label
+$tag_input</p></label>
+
 $hidden_value
 $hidden_guid
-<br />
 $submit_input
 
 ___EOT;

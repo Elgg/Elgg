@@ -38,18 +38,16 @@ $css_title = elgg_echo("sitepages:css");
 //construct the form
 $form_body = <<<___EOT
 
-	<h3 class='settings'>$css_title</h3>
-	<p class='longtext_editarea'>$input_css</p><br />
+	<p><label>$css_title
+	$input_css</label></p>
 
+	<p><label>$logged_in_content_title
+	$input_logged_in_content</label></p>
 
-	<h3 class='settings'>$logged_in_content_title</h3>
-	<p class='longtext_editarea'>$input_logged_in_content</p><br />
-
-	<h3 class='settings'>$logged_out_content_title</h3>
-	<p class='longtext_editarea'>$input_logged_out_content</p>
+	<p><label>$logged_out_content_title
+	$input_logged_out_content</label></p>
 
 	$hidden_guid
-	<br />
 	$submit_input
 	$preview
 

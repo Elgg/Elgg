@@ -58,22 +58,18 @@ $english = array(
 
 	'sitepages:keywords_instructions_more' =>
 		'
-		You can build your own keywords for views and entities.<br /><br />
+		<p>You can build your own keywords for views and entities.</p>
 
-		[[entity: type=type, subtype=subtype, owner=username, limit=number]]<br />
+		<p>[[entity: type=type, subtype=subtype, owner=username, limit=number]]<br />
 
 		EX: To show 5 blog posts by admin:<br />
-		[[entity: type=object, subtype=blog, owner=admin, limit=5]]
+		[[entity: type=object, subtype=blog, owner=admin, limit=5]]</p>
 
-		<br /><br />
+		<p>You can also specify a valid Elgg view:<br />
+		[[view: elgg_view, name=value]]</p>
 
-		You can also specify a valid Elgg view:<br />
-		[[view: elgg_view, name=value]]<br />
-
-		Ex: To show a text input with a default value:<br />
-		[[view: input/text, value=This is a default value]]
-
-		<br /><br />',
+		<p>Ex: To show a text input with a default value:<br />
+		[[view: input/text, value=This is a default value]]</p>',
 
 	'sitepages:keywords:login_box' => 'A standard login box.  Useful for the logged out content area.',
 	'sitepages:keywords:site_stats' => 'This does not exist yet.',

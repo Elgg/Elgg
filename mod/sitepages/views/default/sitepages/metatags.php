@@ -30,7 +30,7 @@ if (get_context() == 'sitepages:front') {
 	if ($custom_css && $custom_css->css) {
 		echo <<<___END
 
-		<style>
+		<style type="text/css">
 		{$custom_css->css}
 		</style>
 

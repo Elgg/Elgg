@@ -11,7 +11,6 @@
 
 $page_type = $vars['page_type'];
 $url = $vars['url'] . 'pg/sitepages/edit/';
-
 ?>
 
 <div class="elgg_horizontal_tabbed_nav margin_top">

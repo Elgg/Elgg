@@ -28,14 +28,14 @@ $metatags = elgg_echo("sitepages:metatags");
 
 $form_body = <<<___EOT
 
-	<h3 class='settings'>$description</h3>
-	<p class='longtext_editarea'>$input_description</p><br />
-	<h3 class='settings'>$metatags</h3>
-	<p class='longtext_editarea'>$input_keywords</p>
+<p><label>$description
+$input_description</p></label>
 
-	$hidden_guid
-	<br />
-	$submit_input
+<p><label>$metatags
+$input_keywords</p></label>
+
+$hidden_guid
+$submit_input
 
 ___EOT;
 

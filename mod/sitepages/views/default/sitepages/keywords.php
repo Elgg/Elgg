@@ -23,8 +23,7 @@ foreach ($keywords as $keyword => $info) {
 echo "
 <h3>$title</h3>
 <p>$instructions</p>
-<span id=\"sitepagesKeywordMoreInfo\" class=\"xhidden\">$more_info</span>
-
+$more_info
 <ul>
 	$keywords_html
 </ul>
