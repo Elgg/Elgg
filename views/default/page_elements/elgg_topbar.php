@@ -26,34 +26,32 @@
 	<div class="log_out">
 		<?php echo elgg_view('output/url', array('href' => "{$vars['url']}action/logout", 'text' => elgg_echo('logout'), 'is_action' => TRUE)); ?>
 	</div>
+	
+	<a href="<?php echo $vars['url']; ?>pg/settings/" class="settings"><?php echo elgg_echo('settings'); ?></a>
 
 	<?php
-		if(is_plugin_enabled('shared_access')){
-	?>
-	<a href="<?php echo $vars['url']; ?>pg/shared_access/home" class="shared_access"><?php echo elgg_echo('shared_access:shared_access'); ?></a>
-	<?php
-		}
-	?>
-	<a href="<?php echo $vars['url']; ?>pg/settings/" class="settings"><?php echo elgg_echo('settings'); ?></a>
-	<?php
-		if(is_plugin_enabled('help')){
-	?>
-		<a href="<?php echo $vars['url']; ?>mod/help/index.php" class="help">Help</a>
-	<?php
-		}
-	?>
-	<?php
-		// The administration link is for admin or site admin users only
-		if ($vars['user']->admin || $vars['user']->siteadmin) {
+	// The administration link is for admin or site admin users only
+	if ($vars['user']->admin || $vars['user']->siteadmin) {
 	?>
 		<a href="<?php echo $vars['url']; ?>pg/admin/" class="admin"><?php echo elgg_echo("admin"); ?></a>
 
 	<?php
-		}
+	}
+
+	if(is_plugin_enabled('help')){
+	?>
+		<a href="<?php echo $vars['url']; ?>mod/help/index.php" class="help">Help</a>
+	<?php
+	}
+
+	if(is_plugin_enabled('shared_access')){
+	?>
+		<a href="<?php echo $vars['url']; ?>pg/shared_access/home" class="shared_access"><?php echo elgg_echo('shared_access:shared_access'); ?></a>
+	<?php
+	}
 	?>
 
 </div>
-
 </div>
 <?php
 	}
