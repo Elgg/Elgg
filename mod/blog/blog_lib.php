@@ -98,6 +98,72 @@ function blog_get_page_content_edit($guid, $revision = NULL) {
 }
 
 /**
+ * Show blogs with publish dates between $lower and $upper
+ *
+ * @param unknown_type $owner_guid
+ * @param unknown_type $lower
+ * @param unknown_type $upper
+ */
+function blog_get_page_content_archive($owner_guid, $lower, $upper) {
+	$now = time();
+
+	$content = elgg_view('page_elements/content_header', array('context' => $context, 'type' => 'blog'));
+
+	if ($lower) {
+		$lower = (int)$lower;
+	}
+
+	if ($upper) {
+		$upper = (int)$upper;
+	}
+
+	$options = array(
+		'type' => 'object',
+		'subtype' => 'blog',
+		'full_view' => FALSE,
+		'order_by_metadata' => array('name'=>'publish_date', 'direction'=>'DESC', 'as'=>'int'),
+	);
+
+	if ($owner_guid) {
+		$options['owner_guid'] = $owner_guid;
+	}
+
+	// admin / owners can see any posts
+	// everyone else can only see published posts
+	if (!(isadminloggedin() || (isloggedin() && $owner_guid == get_loggedin_userid()))) {
+		if ($upper > $now) {
+			$upper = $now;
+		}
+
+		$options['metadata_name_value_pairs'] = array(
+			array('name' => 'status', 'value' => 'published')
+		);
+	}
+
+	if ($lower) {
+		$options['metadata_name_value_pairs'][] = array(
+			'name' => 'publish_date',
+			'operand' => '>',
+			'value' => $lower
+		);
+	}
+
+	if ($upper) {
+		$options['metadata_name_value_pairs'][] = array(
+			'name' => 'publish_date',
+			'operand' => '<',
+			'value' => $upper
+		);
+	}
+
+	$content .= elgg_list_entities_from_metadata($options);
+
+	return array(
+		'content' => $content
+	);
+}
+
+/**
  * Returns an appropriate excerpt for a blog.
  *
  * @param string $text

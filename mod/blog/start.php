@@ -128,12 +128,12 @@ function blog_page_handler($page) {
 				$content_info = blog_get_page_content_edit($page2, $page3);
 				break;
 
-			case 'archives':
-				$content = elgg_view('page_elements/content_header', array('context' => $content, 'type' => 'blog'));
-				$content .= blog_get_page_content_archive($user->getGUID(), $page2, $page3);
+			case 'archive':
+				$content_info = blog_get_page_content_archive($user->getGUID(), $page2, $page3);
 				break;
 
 			case 'friends':
+				//@todo make it go
 				$content = elgg_view('page_elements/content_header', array('context' => $content, 'type' => 'blog'));
 				$content .= blog_get_page_content_archive($user->getGUID());
 				break;

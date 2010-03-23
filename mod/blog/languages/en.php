@@ -9,6 +9,7 @@ $english = array(
 	'blog:blogs' => 'Blogs',
 	'blog:owned_blogs' => '%s blogs',
 	'blog:revisions' => 'Revisions',
+	'blog:archives' => 'Archives',
 
 	'blog:blog' => 'Blog',
 	'blog:yours' => 'Your blog',

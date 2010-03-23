@@ -23,23 +23,43 @@ All blogs:
 
 Owned blogs;
 	Archives
-
-
-
 */
 
 $loggedin_user = get_loggedin_user();
 $page_owner = page_owner_entity();
 
-	// include a view for plugins to extend
-	echo elgg_view("blogs/sidebar", array("object_type" => 'blog'));
+// include a view for plugins to extend
+echo elgg_view("blogs/sidebar", array("object_type" => 'blog'));
 
-	// fetch & display latest comments on all blog posts
-	$comments = get_annotations(0, "object", "blog", "generic_comment", "", 0, 4, 0, "desc");
-	echo elgg_view('annotation/latest_comments', array('comments' => $comments));
+// fetch & display latest comments on all blog posts
+$comments = get_annotations(0, "object", "blog", "generic_comment", "", 0, 4, 0, "desc");
+echo elgg_view('annotation/latest_comments', array('comments' => $comments));
 
-	// temporarily force tag-cloud display
-	echo "<h3>Tagcloud</h3>";
-	echo "<div class='tagcloud sidebar'>".display_tagcloud(0, 100, 'tags')."</div>";
-	echo "<a href=\"{$vars['url']}mod/tagcloud/tagcloud.php\">All site tags</a>";
+if ($dates = get_entity_dates('object', 'blog', page_owner())) {
+	echo elgg_view_title(elgg_echo('blog:archives'));
+
+	echo '<ul>';
+	foreach($dates as $date) {
+		$timestamplow = mktime(0,0,0,substr($date,4,2),1,substr($date,0,4));
+		$timestamphigh = mktime(0,0,0,((int) substr($date,4,2)) + 1,1,substr($date,0,4));
+
+		if (!isset($page_owner)) $page_owner = page_owner_entity();
+		$link = $CONFIG->wwwroot . 'pg/blog/' . $page_owner->username . '/archive/' . $timestamplow . '/' . $timestamphigh;
+		//add_submenu_item(sprintf(elgg_echo('date:month:' . substr($date,4,2)), substr($date, 0, 4)), $link, 'filter');
+		$month = sprintf(elgg_echo('date:month:' . substr($date,4,2)), substr($date, 0, 4));
+		echo "<li><a href=\"$link\" title=\"$month\">$month</a><li>";
+	}
+
+	echo '</ul>';
+}
+
+
+// temporarily force tag-cloud display
+$tags = display_tagcloud(0, 100, 'tags');
+echo <<<___END
+<h3>Tagcloud</h3>
+<div class="tagcloud sidebar">$tags</div>
+<a href="{$vars['url']}mod/tagcloud/tagcloud.php">All site tags</a>
+___END;
+
 ?>
