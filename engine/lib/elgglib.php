@@ -1378,7 +1378,7 @@ function sanitised() {
 									$save_vars['CONFIG_DBHOST'] );
 			if ($rtn == FALSE) {
 				register_error(elgg_view("messages/sanitisation/dbsettings_error"));
-				register_error(elgg_view("messages/sanitisation/settings", 
+				register_error(elgg_view("messages/sanitisation/settings",
 								array(	'settings.php' => $result,
 										'sticky' => $save_vars)));
 				return FALSE;
