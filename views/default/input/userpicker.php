@@ -109,7 +109,7 @@ function userPickerAddUser(event, data, formatted) {
 	var formatted = userPickerFormatItem(data);
 
 	// add guid as hidden input and to list.
-	var li = formatted + ' <a class="delete_collection" onclick="userPickerRemoveUser(this, ' + info.guid + ')"><strong>X</strong></a>'
+	var li = formatted + ' <div class="delete_button"><a onclick="userPickerRemoveUser(this, ' + info.guid + ')"><strong>X</strong></a></div>'
 	+ '<input type="hidden" name="' + internalName + '[]" value="' + info.guid + '" />';
 	$('<li class="user_picker_entry">').html(li).appendTo(users);
 
