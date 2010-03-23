@@ -29,7 +29,10 @@ function blog_init() {
 	global $CONFIG;
 	require_once dirname(__FILE__) . '/blog_lib.php';
 
-	add_menu(elgg_echo('blog'), "{$CONFIG->wwwroot}pg/blog/", array());
+	add_menu(elgg_echo('blog:blogs'), "{$CONFIG->wwwroot}pg/blog/", array());
+
+	// run the setup upon activations or to upgrade old installations.
+	run_function_once('blog_runonce', '1269370108');
 
 	elgg_extend_view('css', 'blog/css');
 
@@ -57,6 +60,15 @@ function blog_init() {
 	register_action('blog/save', FALSE, "$action_path/save.php");
 	register_action('blog/auto_save_revision', FALSE, "$action_path/auto_save_revision.php");
 	register_action('blog/delete', FALSE, "$action_path/delete.php");
+}
+
+/**
+ * Register entity class for object:blog -> ElggBlog
+ */
+function blog_runonce() {
+	if (!update_subtype('object', 'blog', 'ElggBlog')) {
+		add_subtype('object', 'blog', 'ElggBlog');
+	}
 }
 
 /**
@@ -176,7 +188,7 @@ function blog_page_setup() {
 	if ($page_owner instanceof ElggGroup && get_context() == 'groups') {
 		if($page_owner->blog_enable != "no") {
 			$url = "{$CONFIG->wwwroot}pg/blog/{$page_owner->username}/items";
-			add_submenu_item(elgg_echo("blog:groups:group_blogs"), $url);
+			add_submenu_item(elgg_echo('blog:groups:group_blogs'), $url);
 		}
 	}
 }

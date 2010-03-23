@@ -98,115 +98,6 @@ function blog_get_page_content_edit($guid, $revision = NULL) {
 }
 
 /**
- * Saves a blog
- *
- * @param array $info An array of name=>value pairs to save to the blog entity
- *
- * @return array('success' => BOOL, 'message' => string);
- */
-function blog_save_blog($info) {
-	// store errors to pass along
-	$error = FALSE;
-
-	if ($info['guid']) {
-		$entity = get_entity($info['guid']);
-		if (elgg_instanceof($entity, 'object', 'blog') && $entity->canEdit()) {
-			$blog = $entity;
-		} else {
-			$error = elgg_echo('blog:error:post_not_found');
-		}
-	} else {
-		$blog = new ElggObject();
-		$blog->subtype = 'blog';
-	}
-
-	// check required vars
-	$required = array('title', 'description');
-
-	// load from POST and do sanity and access checking
-	foreach ($info as $name => $value) {
-		if (in_array($name, $required) && empty($value)) {
-			$error = elgg_echo("blog:error:missing:$name");
-		}
-
-		if ($error) {
-			break;
-		}
-
-		switch ($name) {
-			case 'tags':
-				if ($value) {
-					$info[$name] = string_to_tag_array($value);
-				} else {
-					unset ($info[$name]);
-				}
-				break;
-
-			case 'excerpt':
-				// restrict to 300 chars
-				if ($value) {
-					$value = substr(strip_tags($value), 0, 300);
-				} else {
-					$value = substr(strip_tags($info['description']), 0, 300);
-				}
-				$info[$name] = $value;
-				break;
-
-			case 'container_guid':
-				// this can't be empty.
-				if (!empty($value)) {
-					if (can_write_to_container($user->getGUID(), $value)) {
-						$info[$name] = $value;
-					} else {
-						$error = elgg_echo("blog:error:cannot_write_to_container");
-					}
-				} else {
-					unset($info[$name]);
-				}
-				break;
-
-			// don't try to set the guid
-			case 'guid':
-				unset($info['guid']);
-				break;
-
-			default:
-				$info[$name] = $value;
-				break;
-		}
-	}
-
-	// assign values to the entity, stopping on error.
-	if (!$error) {
-		foreach ($info as $name => $value) {
-			if (!$blog->$name = $value) {
-				$error = elgg_echo('blog:error:cannot_save');
-				break;
-			}
-		}
-	}
-
-	// only try to save base entity if no errors
-	if (!$error && !$blog->save()) {
-		$error = elgg_echo('blog:error:cannot_save');
-	}
-
-	if ($error) {
-		$return = array(
-			'success' => FALSE,
-			'message' => $error
-		);
-	} else {
-		$return = array(
-			'success' => TRUE,
-			'message' => elgg_echo('blog:message:saved')
-		);
-	}
-
-	return $return;
-}
-
-/**
  * Returns an appropriate excerpt for a blog.
  *
  * @param string $text
@@ -214,4 +105,27 @@ function blog_save_blog($info) {
  */
 function blog_make_excerpt($text) {
 	return substr(strip_tags($text), 0, 300);
+}
+
+/**
+ * Extended class to override the time_created
+ */
+class ElggBlog extends ElggObject {
+	protected function initialise_attributes() {
+		parent::initialise_attributes();
+
+		// override the default file subtype.
+		$this->attributes['subtype'] = 'blog';
+	}
+
+	/**
+	 * Override the value returned for time_created
+	 */
+	public function __get($name) {
+		if ($name == 'time_created') {
+			$name = 'time_created';
+		}
+
+		return $this->get($name);
+	}
 }

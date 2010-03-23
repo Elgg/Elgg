@@ -66,7 +66,7 @@ if ($full) {
 		$comments = '';
 	}
 	$like = elgg_view_likes($blog);
-	$owner_title = sprintf(elgg_echo('blog:owner_title'), $user->name);
+	$owner_title = sprintf(elgg_echo('blog:owner_title'), $owner->name);
 
 echo <<<___END
 <div class="blogpost clearfloat">

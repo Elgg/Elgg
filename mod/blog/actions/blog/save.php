@@ -34,7 +34,7 @@ if ($guid) {
 	$revision_value = $blog->description;
 	$new_post = FALSE;
 } else {
-	$blog = new ElggObject();
+	$blog = new ElggBlog();
 	$blog->subtype = 'blog';
 	$success_forward_url = get_input('forward');
 	$new_post = TRUE;
@@ -100,9 +100,10 @@ foreach ($values as $name => $default) {
 			break;
 
 		case 'publish_date':
-			if (empty($value)) {
+			if (!$value = strtotime($value)) {
 				$value = time();
 			}
+
 			$values[$name] = $value;
 			break;
 

@@ -28,16 +28,21 @@ $english = array(
 	'blog:status' => 'Status',
 	'blog:status:draft' => 'Draft',
 	'blog:status:published' => 'Published',
+	'blog:status:unsaved_draft' => 'Recovered Draft',
 
 	'blog:revision' => 'Revision',
 	'blog:auto_saved_revision' => 'Auto Saved Revision',
+	'blog:owner_title' => '%s\'s blogs',
 
 	// messages
 	'blog:message:saved' => 'Blog post saved.',
 	'blog:error:cannot_save' => 'Cannot save blog post.',
 	'blog:error:cannot_write_to_container' => 'Insufficient access to save blog to group.',
+	'blog:error:post_not_found' => 'This post has been removed or is invalid.',
 	'blog:messages:warning:draft' => 'There is an unsaved draft of this post!',
 	'blog:edit_revision_notice' => '(Old version)',
+
+
 
 );
 

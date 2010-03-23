@@ -33,7 +33,7 @@ $draft_warning = '';
 if (isset ($vars['entity'])) {
 	$blog = $vars['entity'];
 
-	if ($blog && ($blog instanceof ElggObject) && ($blog->getSubtype() == 'blog')) {
+	if (elgg_instanceof($blog, 'object', 'blog')) {
 		// passed in values override sticky values in input views
 		// if in a sticky form, don't send the overrides and let the view figure it out.
 		//if (!elgg_is_sticky_form()) {
@@ -140,7 +140,7 @@ $publish_date_label = elgg_echo('blog:publish_date');
 $publish_date_input = elgg_view('input/datepicker', array(
 	'internalname' => 'publish_date',
 	'internalid' => 'blog_publish_date',
-	'value' => $vars['publish_date']
+	'value' => $values['publish_date']
 ));
 
 // hidden inputs

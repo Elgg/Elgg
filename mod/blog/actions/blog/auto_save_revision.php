@@ -33,7 +33,7 @@ if ($title && $description) {
 			$error = elgg_echo('blog:error:post_not_found');
 		}
 	} else {
-		$blog = new ElggObject();
+		$blog = new ElggBlog();
 		$blog->subtype = 'blog';
 
 		// force draft and private for autosaves.
