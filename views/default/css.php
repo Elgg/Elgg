@@ -182,7 +182,7 @@ blockquote {
 
 
 /* ***************************************
-GENERIC SELECTORS
+	GENERIC SELECTORS
 *************************************** */
 h2 {
 	border-bottom:1px solid #CCCCCC;
@@ -257,7 +257,7 @@ h2 {
 }
 
 /* ***************************************
-PAGE LAYOUT - MAIN BLOCKS POSITIONING
+	PAGE LAYOUT - MAIN BLOCKS POSITIONING
 *************************************** */
 #elgg_topbar {
 	background:#333333 url(<?php echo $vars['url']; ?>_graphics/toptoolbar_background.gif) repeat-x top left;
@@ -342,7 +342,7 @@ PAGE LAYOUT - MAIN BLOCKS POSITIONING
 
 
 /* ***************************************
-ELGG TOPBAR
+	ELGG TOPBAR
 *************************************** */
 #elgg_topbar_contents {
 	float:left;
@@ -405,18 +405,6 @@ ELGG TOPBAR
 	float:right;
 	margin-right:30px;
 }
-
-
-
-
-/* @todo PH check + move into shared access? */
-#elgg_topbar_contents a.shared_access {
-	background:transparent url(<?php echo $vars['url']; ?>_graphics/icons_shared_access.png) no-repeat 0 -15px;
-	padding-left:20px !important;
-	float:right;
-}
-
-
 
 
 /* ***************************************
@@ -501,7 +489,7 @@ ELGG TOPBAR
 
 
 /* ***************************************
-HEADER CONTENTS
+	HEADER CONTENTS
 *************************************** */
 #elgg_header_contents h1 a {
 	font-size: 2em;
@@ -1498,8 +1486,6 @@ a.action_button:focus {
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	line-height:1.2em;
-	/* background:#bbdaf7; */
-	/* padding:2px 4px; */
 }
 .admin_settings.users_online .profile_status span {
 	font-size:90%;
