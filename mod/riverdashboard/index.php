@@ -48,7 +48,7 @@ $river = str_replace('callback=true','replaced=88,334',$river);
 $nav = elgg_view('riverdashboard/nav',array('type' => $type,'subtype' => $subtype,'orient' => $orient));
 if(isloggedin()){
 	$sidebar = elgg_view("riverdashboard/menu",array('type' => $type,'subtype' => $subtype,'orient' => $orient));
-	$sidebar .= elgg_view("riverdashboard/sidebar_options", array("object_type" => 'riverdashboard'));
+	$sidebar .= elgg_view("riverdashboard/sidebar", array("object_type" => 'riverdashboard'));
 }else{
 	$sidebar = '';
 }
