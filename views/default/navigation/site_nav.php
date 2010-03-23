@@ -10,6 +10,7 @@ $more = $nav_items['more'];
 
 $nav_html = '';
 $more_nav_html = '';
+$context = get_context();
 
 // sort more links alphabetically
 $more_sorted = array();
@@ -26,19 +27,21 @@ $item_count = 0;
 // if there are no featured items, display the standard tools in alphabetical order
 if ($featured) {
 	foreach ($featured as $info) {
+		$selected = ($info->value->context == $context) ? 'class="selected"' : '';
 		$title = htmlentities($info->name, ENT_QUOTES, 'UTF-8');
 		$url = htmlentities($info->value->url, ENT_QUOTES, 'UTF-8');
 
-		$nav_html .= "<li><a href=\"$url\" title=\"$title\"><span>$title</span></a></li>";
+		$nav_html .= "<li $selected><a href=\"$url\" title=\"$title\"><span>$title</span></a></li>";
 	}
 } elseif ($more) {
 	for ($i=0; $i<6; $i++) {
 		$info = $more[$i];
 
+		$selected = ($info->value->context == $context) ? 'class="selected"' : '';
 		$title = htmlentities($info->name, ENT_QUOTES, 'UTF-8');
 		$url = htmlentities($info->value->url, ENT_QUOTES, 'UTF-8');
 
-		$nav_html .= "<li><a href=\"$url\" title=\"$title\"><span>$title</span></a></li>";
+		$nav_html .= "<li $selected><a href=\"$url\" title=\"$title\"><span>$title</span></a></li>";
 		$more[$i]->used = TRUE;
 		$item_count++;
 	}
@@ -49,10 +52,11 @@ foreach ($more as $info) {
 	if ($info->used) {
 		continue;
 	}
+	$selected = ($info->value->context == $context) ? 'class="selected"' : '';
 	$title = htmlentities($info->name, ENT_QUOTES, 'UTF-8');
 	$url = htmlentities($info->value->url, ENT_QUOTES, 'UTF-8');
 
-	$more_nav_html .= "<li><a href=\"$url\" title=\"$title\"><span>$title</span></a></li>\n";
+	$more_nav_html .= "<li $selected><a href=\"$url\" title=\"$title\"><span>$title</span></a></li>\n";
 	$item_count++;
 }
 
