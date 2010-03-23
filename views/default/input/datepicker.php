@@ -27,7 +27,8 @@ if (!isset($vars['value']) || $vars['value'] === FALSE) {
 }
 
 if ($vars['value'] > 86400) {
-	$val = date("F j, Y", $vars['value']);
+	//$val = date("F j, Y", $vars['value']);
+	$val = date('n/d/Y', $vars['value']);
 } else {
 	$val = $vars['value'];
 }
