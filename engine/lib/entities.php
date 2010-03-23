@@ -1462,6 +1462,44 @@ function add_subtype($type, $subtype, $class = "") {
 }
 
 /**
+ * Removes a registered subtype
+ *
+ * @param string $type
+ * @param string $subtype
+ */
+function remove_subtype($type, $subtype) {
+	global $CONFIG;
+
+	$type = sanitise_string($type);
+	$subtype = sanitise_string($subtype);
+
+	return delete_data("DELETE FROM {$CONFIG->dbprefix}entity_subtypes WHERE type = '$type' AND subtype = '$subtype'");
+}
+
+/**
+ * Update the registered information
+ *
+ * @param string $type
+ * @param string $subtype
+ * @param string $class
+ */
+function update_subtype($type, $subtype, $class = '') {
+	global $CONFIG;
+
+	if (!$id = get_subtype_id($type, $subtype)) {
+		return FALSE;
+	}
+	$type = sanitise_string($type);
+	$subtype = sanitise_string($subtype);
+
+	return update_data("UPDATE {$CONFIG->dbprefix}entity_subtypes
+		SET type = '$type', subtype = '$subtype', class = '$class'
+		WHERE id = $id
+	");
+}
+
+
+/**
  * Update an existing entity.
  *
  * @param int $guid
