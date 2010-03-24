@@ -241,7 +241,7 @@ function elgg_get_tags(array $options = array()) {
 /**
  * Get an array of tags with weights for use with the output/tagcloud view.
  *
- * @deprecated 1.7.1  Use elgg_get_tags().
+ * @deprecated 1.8  Use elgg_get_tags().
  *
  * @param int $threshold Get the threshold of minimum number of each tags to bother with (ie only show tags where there are more than $threshold occurances)
  * @param int $limit Number of tags to return
@@ -257,7 +257,7 @@ function elgg_get_tags(array $options = array()) {
 
 function get_tags($threshold = 1, $limit = 10, $metadata_name = "", $entity_type = "object", $entity_subtype = "", $owner_guid = "", $site_guid = -1, $start_ts = "", $end_ts = "") {
 
-	elgg_deprecated_notice('get_tags() has been replaced by elgg_get_tags()', 1.7);
+	elgg_deprecated_notice('get_tags() has been replaced by elgg_get_tags()', 1.8);
 
 	if (is_array($metadata_name)) {
 		return false;
@@ -339,7 +339,7 @@ function elgg_view_tagcloud(array $options = array()) {
 /**
  * Loads and displays a tagcloud given particular criteria.
  *
- * @deprecated 1.7.1 use elgg_view_tagcloud()
+ * @deprecated 1.8 use elgg_view_tagcloud()
  *
  * @param int $threshold Get the threshold of minimum number of each tags to bother with (ie only show tags where there are more than $threshold occurances)
  * @param int $limit Number of tags to return
@@ -355,7 +355,7 @@ function elgg_view_tagcloud(array $options = array()) {
 
 function display_tagcloud($threshold = 1, $limit = 10, $metadata_name = "", $entity_type = "object", $entity_subtype = "", $owner_guid = "", $site_guid = -1, $start_ts = "", $end_ts = "") {
 
-	elgg_deprecated_notice('display_cloud() was deprecated by elgg_view_tagcloud()!', 1.7);
+	elgg_deprecated_notice('display_cloud() was deprecated by elgg_view_tagcloud()!', 1.8);
 	
 	return elgg_view("output/tagcloud",array('value' => get_tags($threshold, $limit, $metadata_name, $entity_type, $entity_subtype, $owner_guid, $site_guid, $start_ts, $end_ts),
 											'type' => $entity_type,
