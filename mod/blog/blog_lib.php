@@ -174,6 +174,37 @@ function blog_make_excerpt($text) {
 }
 
 /**
+ * Returns a list of years and months for all blogs optionally for a user.
+ * Very similar to get_entity_dates() except uses a metadata field.
+ *
+ * @param mixed $user_guid
+ */
+function blog_get_blog_months($user_guid = NULL, $container_guid = NULL) {
+	global $CONFIG;
+
+	$subtype = get_subtype_id('blog');
+
+	$q = "SELECT DISTINCT EXTRACT(YEAR_MONTH FROM FROM_UNIXTIME(mdv.string)) AS yearmonth
+		FROM {$CONFIG->dbprefix}entities e, {$CONFIG->dbprefix}metadata, {$CONFIG->dbprefix}metastrings mdn, {$CONFIG->dbprefix}metastrings mdv
+		WHERE e.guid = {$CONFIG->dbprefix}metadata.entity_guid
+		AND {$CONFIG->dbprefix}metadata.name_id = mdn.id
+		AND {$CONFIG->dbprefix}metadata.value_id = mdv.id
+		AND mdn.string = 'publish_date'";
+
+	if ($user_guid) {
+		$user_guid = (int)$user_guid;
+		$q .= " AND e.owner_guid = $user_guid";
+	}
+
+	if ($container_guid) {
+		$container_guid = (int)$container_guid;
+		$q .= " AND e.container_guid = $container_guid";
+	}
+
+	return get_data($q);
+}
+
+/**
  * Extended class to override the time_created
  */
 class ElggBlog extends ElggObject {
