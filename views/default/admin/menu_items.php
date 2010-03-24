@@ -42,6 +42,46 @@ for ($i=0; $i<6; $i++) {
 }
 
 $form_body .= '<br /><br />';
+// add arbitrary links
+$form_body .= elgg_view_title(elgg_echo('admin:add_menu_item'));
+$form_body .= elgg_view('output/longtext', array('value' => elgg_echo("admin:add_menu_item:description")));
+
+$custom_items = get_config('menu_items_custom_items');
+
+$name_str = elgg_echo('name');
+$url_str = elgg_echo('admin:plugins:label:website');
+
+$form_body .= '<ul>';
+
+if (is_array($custom_items)) {
+	foreach ($custom_items as $url => $name) {
+		$name_input = elgg_view('input/text', array(
+			'internalname' => 'custom_item_names[]',
+			'value' => $name
+		));
+
+		$url_input = elgg_view('input/text', array(
+			'internalname' => 'custom_item_urls[]',
+			'value' => $url
+		));
+
+		$form_body .= "<li>$name_str: $name_input $url_str: $url_input $delete</li>";
+	}
+}
+
+$new = elgg_echo('new');
+$name_input = elgg_view('input/text', array(
+	'internalname' => 'custom_item_names[]',
+));
+
+$url_input = elgg_view('input/text', array(
+	'internalname' => 'custom_item_urls[]',
+));
+
+$form_body .= "<li>$name_str: $name_input $url_str: $url_input</li>
+</ul>";
+
+$form_body .= '<br /><br />';
 $form_body .= elgg_view('input/submit', array('value' => elgg_echo('save')));
 
 echo elgg_view('input/form', array(

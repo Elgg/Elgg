@@ -514,6 +514,8 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	'admin:menu_items:description' => 'Select which menu items you want to show as featured links.  Unused items will be added as "More" at the end of the list.',
 	'admin:menu_items:hide_toolbar_entries' => 'Remove links from tool bar menu?',
 	'admin:menu_items:saved' => 'Menu items saved.',
+	'admin:add_menu_item' => 'Add a custom menu item',
+	'admin:add_menu_item:description' => 'Fill out the Display name and URL to add custom items to your navigation menu.',
 
 /**
  * User settings
@@ -825,21 +827,21 @@ If you requested this click on the link below, otherwise ignore this email.
  * XML-RPC
  */
 	'xmlrpc:noinputdata'	=>	"Input data missing",
-	
+
 /**
  * Likes
  **/
- 	'likes:this' => 'liked this',
- 	'likes:deleted' => 'Your like has been removed',
- 	'likes:notdeleted' => 'There was a problem removing your like',
- 	'likes:likes' => 'You now like this item',
- 	'likes:failure' => 'There was a problem liking this item',
- 	'likes:alreadyliked' => 'You have already liked this item',
- 	'likes:notfound' => 'The item you are trying to like cannot be found',
- 	'likes:likethis' => 'Like this',
- 	'likes:userlikedthis' => 'user liked this',
- 	'likes:userslikethis' => 'users liked this',
- 	'likes:river:annotate' => 'likes',
+	'likes:this' => 'liked this',
+	'likes:deleted' => 'Your like has been removed',
+	'likes:notdeleted' => 'There was a problem removing your like',
+	'likes:likes' => 'You now like this item',
+	'likes:failure' => 'There was a problem liking this item',
+	'likes:alreadyliked' => 'You have already liked this item',
+	'likes:notfound' => 'The item you are trying to like cannot be found',
+	'likes:likethis' => 'Like this',
+	'likes:userlikedthis' => 'user liked this',
+	'likes:userslikethis' => 'users liked this',
+	'likes:river:annotate' => 'likes',
 
 /**
  * Comments

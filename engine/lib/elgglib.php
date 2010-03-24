@@ -3006,6 +3006,17 @@ function elgg_get_nav_items() {
 }
 
 /**
+ * Hook that registers the custom menu items.
+ */
+function add_custom_menu_items() {
+	if ($custom_items = get_config('menu_items_custom_items')) {
+		foreach ($custom_items as $url => $name) {
+			add_menu($name, $url);
+		}
+	}
+}
+
+/**
  * Some useful constant definitions
  */
 define('ACCESS_DEFAULT', -1);
@@ -3021,4 +3032,4 @@ register_elgg_event_handler('init', 'system', 'elgg_init');
 register_elgg_event_handler('boot', 'system', 'elgg_boot', 1000);
 register_plugin_hook('unit_test', 'system', 'elgg_api_test');
 
-//register_elgg_event_handler('pagesetup', 'system', 'ui_page_setup', 1000);
+register_elgg_event_handler('init', 'system', 'add_custom_menu_items', 1000);
