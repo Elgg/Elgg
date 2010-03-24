@@ -553,12 +553,15 @@ function find_metadata($meta_name = "", $meta_value = "", $entity_type = "", $en
  *
  * 	metadata_values => NULL|ARR metadata values
  *
- * 	metadata_name_value_pairs => NULL|ARR (name = 'name', value => 'value', 'operand' => '=', 'case_sensitive' => TRUE) entries.
+ * 	metadata_name_value_pairs => NULL|ARR (name => 'name', value => 'value', 'operand' => '=', 'case_sensitive' => TRUE) entries.
  * 	Currently if multiple values are sent via an array (value => array('value1', 'value2') the pair's operand will be forced to "IN".
  *
  * 	metadata_name_value_pairs_operator => NULL|STR The operator to use for combining (name = value) OPERATOR (name = value); default AND
  *
  * 	metadata_case_sensitive => BOOL Overall Case sensitive
+ *
+ * 	order_by_metadata => NULL|ARR (array('name' => 'metadata_text1', 'direction' => ASC|DESC, 'as' => text|integer),
+ * 	Also supports array('name' => 'metadata_text1')
  *
  * @return array
  */
