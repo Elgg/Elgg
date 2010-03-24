@@ -38,7 +38,7 @@ if ($entity->getVolatileData('search_unavailable_entity')) {
 	}
 
 	$title = sprintf(elgg_echo('search:comment_on'), $title);
-	$url = $entity->getURL() . '#annotation-' . $entity->getVolatileData('search_match_annotation_id');
+	$url = $entity->getURL() . '#comment_' . $entity->getVolatileData('search_match_annotation_id');
 	$title = "<a href=\"$url\">$title</a>";
 }
 

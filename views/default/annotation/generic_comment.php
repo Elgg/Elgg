@@ -6,6 +6,7 @@
 $owner = get_user($vars['annotation']->owner_guid);
 
 ?>
+<a name="comment_<?php echo $vars['annotation']->id; ?>"></a>
 <div class="generic_comment clearfloat">
 	<div class="generic_comment_icon">
 		<?php
@@ -15,7 +16,7 @@ $owner = get_user($vars['annotation']->owner_guid);
 					));
 		?>
 	</div>
-	
+
 	<div class="generic_comment_details">
 		<?php
 		// if the user looking at the comment can edit, show the delete link
