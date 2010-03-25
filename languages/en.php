@@ -852,6 +852,7 @@ If you requested this click on the link below, otherwise ignore this email.
 	'riveraction:annotation:generic_comment' => '%s commented on %s',
 
 	'generic_comments:add' => "Add a comment",
+	'generic_comments:post' => "Post comment",
 	'generic_comments:text' => "Comment",
 	'generic_comments:latest' => "Latest comments",
 	'generic_comment:posted' => "Your comment was successfully posted.",
