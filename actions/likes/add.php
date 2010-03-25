@@ -7,13 +7,11 @@
  * @link http://elgg.org/
  */
 
-// Make sure we're logged in; forward to the front page if not
 gatekeeper();
-
-// Get input
 $entity_guid = (int) get_input('guid');
+
 //check to see if the user has already liked the item
-if(elgg_already_created_annotation($entity_guid, 'likes')){
+if (elgg_annotation_exists($entity_guid, 'likes')){
 	system_message(elgg_echo("likes:alreadyliked"));
 	forward($_SERVER['HTTP_REFERER']);
 }
@@ -25,11 +23,11 @@ if (!$entity) {
 }
 
 $user = get_loggedin_user();
-$annotation = create_annotation($entity->guid, 
+$annotation = create_annotation($entity->guid,
 								'likes',
-								"likes", 
-								"", 
-								$user->guid, 
+								"likes",
+								"",
+								$user->guid,
 								$entity->access_id);
 
 // tell user annotation didn't work if that is the case
@@ -40,7 +38,7 @@ if (!$annotation) {
 
 // notify if poster wasn't owner
 if ($entity->owner_guid != $user->guid) {
-			
+
 	notify_user($entity->owner_guid,
 				$user->guid,
 				elgg_echo('likes:email:subject'),
