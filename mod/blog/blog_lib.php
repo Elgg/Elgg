@@ -22,11 +22,11 @@ function blog_get_page_content_read($owner_guid = NULL, $guid = NULL) {
 	if ($guid) {
 		$blog = get_entity($guid);
 
-		if (elgg_instanceof($blog, 'object', 'blog') && $blog->status == 'final') {
+		if (!elgg_instanceof($blog, 'object', 'blog') || ($blog->status != 'final' && $blog->owner_guid != get_loggedin_userid())) {
+			$content .= elgg_echo('blog:error:post_not_found');
+		} else {
 			elgg_push_breadcrumb($blog->title, $blog->getURL());
 			$content .= elgg_view_entity($blog, TRUE);
-		} else {
-			$content .= elgg_echo('blog:error:post_not_found');
 		}
 	} else {
 		$options = array(
