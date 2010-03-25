@@ -15,7 +15,7 @@
 
 	// Get input data
 		$guid = (int) get_input('blogpost');
-		$title = get_input('blogtitle');
+		$title = strip_tags(get_input('blogtitle'));
 		$body = get_input('blogbody');
 		$access = get_input('access_id');
 		$tags = get_input('blogtags');

@@ -12,7 +12,7 @@
 	
 	gatekeeper();
 
-		$title = get_input('title');
+		$title = strip_tags(get_input('title'));
 		$guid = get_input('bookmark_guid',0);
 		$description = get_input('description');
 		$address = get_input('address');

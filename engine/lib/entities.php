@@ -206,8 +206,6 @@ abstract class ElggEntity implements
 	 * A: Because overload operators cause problems during subclassing, so we put the code here and
 	 * create overloads in subclasses.
 	 *
-	 * @todo Move "title" logic to applicable extending classes.
-	 *
 	 * @param string $name
 	 * @param mixed $value
 	 */
@@ -216,11 +214,6 @@ abstract class ElggEntity implements
 			// Check that we're not trying to change the guid!
 			if ((array_key_exists('guid', $this->attributes)) && ($name=='guid')) {
 				return false;
-			}
-
-			// strip out tags from title
-			if ($name == 'title') {
-				$value = strip_tags($value);
 			}
 
 			$this->attributes[$name] = $value;

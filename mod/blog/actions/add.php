@@ -14,7 +14,7 @@
 		gatekeeper();
 
 	// Get input data
-		$title = get_input('blogtitle');
+		$title = strip_tags(get_input('blogtitle'));
 		$body = get_input('blogbody');
 		$tags = get_input('blogtags');
 		$access = get_input('access_id');

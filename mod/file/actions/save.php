@@ -11,7 +11,7 @@
 	global $CONFIG;
 	
 	// Get variables
-	$title = get_input("title");
+	$title = strip_tags(get_input("title"));
 	$desc = get_input("description");
 	$tags = get_input("tags");
 	$access_id = (int) get_input("access_id");

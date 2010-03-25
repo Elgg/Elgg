@@ -18,7 +18,7 @@
 	    if (!$group_entity->isMember($vars['user'])) forward();
 	    
 	// Get input data
-	    $title = get_input('topictitle');
+	    $title = strip_tags(get_input('topictitle'));
 		$message = get_input('topicmessage');
 		$tags = get_input('topictags');
 		$access = get_input('access_id');
