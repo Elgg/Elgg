@@ -22,11 +22,11 @@ function blog_get_page_content_read($owner_guid = NULL, $guid = NULL) {
 	if ($guid) {
 		$blog = get_entity($guid);
 
-		if (!elgg_instanceof($blog, 'object', 'blog') && $blog->status == 'final') {
-			$content .= elgg_echo('blog:error:post_not_found');
-		} else {
+		if (elgg_instanceof($blog, 'object', 'blog') && $blog->status == 'final') {
 			elgg_push_breadcrumb($blog->title, $blog->getURL());
 			$content .= elgg_view_entity($blog, TRUE);
+		} else {
+			$content .= elgg_echo('blog:error:post_not_found');
 		}
 	} else {
 		$options = array(
@@ -200,6 +200,8 @@ function blog_get_blog_months($user_guid = NULL, $container_guid = NULL) {
 		$container_guid = (int)$container_guid;
 		$q .= " AND e.container_guid = $container_guid";
 	}
+
+	$q .= ' AND ' . get_access_sql_suffix('e');
 
 	return get_data($q);
 }
