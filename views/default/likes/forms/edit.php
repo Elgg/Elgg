@@ -25,10 +25,10 @@ if (isset($vars['entity']) && isloggedin()) {
 			$user_string = elgg_echo('likes:userslikedthis');
 		}
 
-		echo "<a class=\"likes_list_button\">" . elgg_count_likes($vars['entity']) . " " . $user_string . "</a>";
+		echo "<a class='likes_list_button link'>" . elgg_count_likes($vars['entity']) . " " . $user_string . "</a>";
 	}
 	//show the users who liked the object
-	echo "<div class=\"likes_list\" style=\"display: none;\">";
+	echo "<div class='likes_list hidden'>";
 	echo list_annotations($vars['entity']->getGUID(), 'likes', 99);
 	echo "</div>";
 }
