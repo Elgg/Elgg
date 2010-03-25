@@ -1178,7 +1178,7 @@ function clear_annotations($guid, $name = "") {
 			return delete_data($query);
 		}
 	}
-	
+
 	return FALSE;
 }
 
@@ -1253,25 +1253,32 @@ function get_annotation_url($id) {
 /**
  * Check to see if a user has already created an annotation on an object
  *
- * @param ElggEntity $entity
+ * @param int $entity_guid
+ * @param string $annotation_type
+ * @param int $owner_guid Defaults to logged in user.
+ *
  * @return true | false
  */
-function elgg_already_created_annotation($entity_guid, $annotation_type) {
+function elgg_annotation_exists($entity_guid, $annotation_type, $owner_guid = NULL) {
 	global $CONFIG;
+
+	if (!$owner_guid && !($owner_guid = get_loggedin_userid())) {
+		return FALSE;
+	}
+
 	$entity_guid = (int)$entity_guid;
 	$annotation_type = sanitise_string($annotation_type);
-	$owner_guid = get_loggedin_userid();
+
 	$sql = "select a.id" .
-	 		" FROM {$CONFIG->dbprefix}annotations a, {$CONFIG->dbprefix}metastrings m " .
-	 		" WHERE a.owner_guid={$owner_guid} AND a.entity_guid={$entity_guid} " . 
-	 		" AND a.name_id=m.id AND m.string='{$annotation_type}'";
-	//get the annotation type id
-	$check_annotation = get_data_row($sql);
-	//check to see if the user has already liked
-	if($check_annotation)
-		return true;
-	else
-		return false;
+			" FROM {$CONFIG->dbprefix}annotations a, {$CONFIG->dbprefix}metastrings m " .
+			" WHERE a.owner_guid={$owner_guid} AND a.entity_guid={$entity_guid} " .
+			" AND a.name_id=m.id AND m.string='{$annotation_type}'";
+
+	if ($check_annotation = get_data_row($sql)) {
+		return TRUE;
+	}
+
+	return FALSE;
 }
 
 /**

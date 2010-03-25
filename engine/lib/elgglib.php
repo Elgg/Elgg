@@ -1012,11 +1012,11 @@ function elgg_view_likes($entity){
 	if (!($entity instanceof ElggEntity)) {
 		return false;
 	}
-	if ($likes = trigger_plugin_hook('likes',$entity->getType(),array('entity' => $entity),false)) {
+	if ($likes = trigger_plugin_hook('likes', $entity->getType(), array('entity' => $entity), false)) {
 		return $likes;
 	} else {
 		//display the form
-		$likes = elgg_view('likes/forms/edit',array('entity' => $entity));
+		$likes = elgg_view('likes/forms/edit', array('entity' => $entity));
 		return $likes;
 	}
 }
