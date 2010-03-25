@@ -39,8 +39,15 @@ switch ($filter) {
 	break;
 	// search based on tags
 	case "search_tags":
-		$filter_content = trigger_plugin_hook('search','',$tag,"");
-		$filter_content .= list_entities_from_metadata("", $tag, "user", "", "", 10, false, false);
+		$options = array();
+		$options['query'] = $tag;
+		$options['type'] = "user";
+		$options['offset'] = $offset;
+		$options['limit'] = $limit;
+		$results = trigger_plugin_hook('search', 'tags', $options, array());
+		$count = $results['count'];
+		$users = $results['entities'];
+		$filter_content = elgg_view_entity_list($users, $count, $offset, $limit, false, false, true);
 	break;
 	case "newest":
 	case 'default':
