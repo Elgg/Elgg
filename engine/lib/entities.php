@@ -146,6 +146,8 @@ abstract class ElggEntity implements
 
 		$this->attributes['guid'] = "";
 
+		$this->attributes['subtype'] = $orig_entity->getSubtype();
+
 		// copy metadata over to new entity - slightly convoluted due to
 		// handling of metadata arrays
 		if (is_array($metadata_array)) {
