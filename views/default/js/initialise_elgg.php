@@ -16,7 +16,7 @@ $(document).ready(function () {
 	$('a.toggle_customise_edit_panel').click(function () {
 		$('div#customise_editpanel').slideToggle("fast");
 		return false;
-	});	
+	});
 
 	$('a.collapsibleboxlink').click(function () {
 		$(this.parentNode.parentNode).children(".collapsible_box").slideToggle("fast");
@@ -73,19 +73,23 @@ $(document).ready(function () {
 		hoverClass: 'droppable-hover'
 	});
 
+	$('.likes_list_button').click(function() {
+		$(this).next('.likes_list').toggle();
+	});
+
 }); /* end document ready function */
 
 // display & hide elgg system messages
 function elgg_system_message() {
-	$("#elgg_system_message").animate({opacity: 0.9}, 1000); 
+	$("#elgg_system_message").animate({opacity: 0.9}, 1000);
 	$("#elgg_system_message").animate({opacity: 0.9}, 5000);
 	$("#elgg_system_message").fadeOut('slow');
-    
+
 	$("#elgg_system_message").click(function () {
 		$("#elgg_system_message").stop();
 		$("#elgg_system_message").fadeOut('slow');
 	return false;
-    });	
+	});
 }
 
 // reusable slide in/out toggle function
@@ -241,50 +245,50 @@ this.each(function() {
 	var root = this, zIndex = 5000;
 
 	function getSubnav(ele) {
-	  if (ele.nodeName.toLowerCase() == 'li') {
+	if (ele.nodeName.toLowerCase() == 'li') {
 		var subnav = $('> ul', ele);
 		return subnav.length ? subnav[0] : null;
-	  } else {
+	} else {
 
 		return ele;
-	  }
+	}
 	}
 
 	function getActuator(ele) {
-	  if (ele.nodeName.toLowerCase() == 'ul') {
+	if (ele.nodeName.toLowerCase() == 'ul') {
 		return $(ele).parents('li')[0];
-	  } else {
+	} else {
 		return ele;
-	  }
+	}
 	}
 
 	function hide() {
-	  var subnav = getSubnav(this);
-	  if (!subnav) return;
-	  $.data(subnav, 'cancelHide', false);
-	  setTimeout(function() {
+	var subnav = getSubnav(this);
+	if (!subnav) return;
+	$.data(subnav, 'cancelHide', false);
+	setTimeout(function() {
 		if (!$.data(subnav, 'cancelHide')) {
-		  $(subnav).slideUp(100);
+		$(subnav).slideUp(100);
 		}
-	  }, 250);
+	}, 250);
 	}
 
 	function show() {
-	  var subnav = getSubnav(this);
-	  if (!subnav) return;
-	  $.data(subnav, 'cancelHide', true);
-	  $(subnav).css({zIndex: zIndex++}).slideDown(options.speed);
-	  if (this.nodeName.toLowerCase() == 'ul') {
+	var subnav = getSubnav(this);
+	if (!subnav) return;
+	$.data(subnav, 'cancelHide', true);
+	$(subnav).css({zIndex: zIndex++}).slideDown(options.speed);
+	if (this.nodeName.toLowerCase() == 'ul') {
 		var li = getActuator(this);
 		$(li).addClass('hover');
 		$('> a', li).addClass('hover');
-	  }
+	}
 	}
 
 	$('ul, li', this).hover(show, hide);
 	$('li', this).hover(
-	  function() { $(this).addClass('hover'); $('> a', this).addClass('hover'); },
-	  function() { $(this).removeClass('hover'); $('> a', this).removeClass('hover'); }
+	function() { $(this).addClass('hover'); $('> a', this).addClass('hover'); },
+	function() { $(this).removeClass('hover'); $('> a', this).removeClass('hover'); }
 	);
 
 });

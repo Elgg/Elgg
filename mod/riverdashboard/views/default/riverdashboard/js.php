@@ -1,16 +1,7 @@
-<?php
-
-/*
 <script type="text/javascript">
 	$(document).ready(function() {
-	
-		var href = $("div.river_pagination a").attr('href');
-		href = href.replace("callback=true","callback=");
-		$("div.river_pagination a").attr('href',href);
-	
+		$('.river_comment_form_button').click(function() {
+			$(this).next('.river_comment_form').toggle();
+		});
 	});
 </script>
-
-*/
-
-?>
