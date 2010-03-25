@@ -43,6 +43,8 @@ $english = array(
 	'blog:messages:warning:draft' => 'There is an unsaved draft of this post!',
 	'blog:edit_revision_notice' => '(Old version)',
 
+	// river
+	'blog:river:create' => '%s made a new blog post.',
 
 
 );

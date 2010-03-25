@@ -144,6 +144,10 @@ if (!$error) {
 		}
 
 		system_message(elgg_echo('blog:message:saved'));
+		// @todo do we want to alert on updates?
+		if ($new_post) {
+			add_to_river('river/object/blog/create', 'create', get_loggedin_userid(), $blog->getGUID());
+		}
 		forward($success_forward_url);
 	} else {
 		register_error(elgg_echo('blog:error:cannot_save'));
@@ -152,13 +156,4 @@ if (!$error) {
 } else {
 	register_error($error);
 	forward($error_forward_url);
-}
-
-// forward with success or failure
-if ($error) {
-	register_error($error);
-	forward($error_forward_url);
-} else {
-	system_message(elgg_echo('blog:message:saved'));
-	forward($success_forward_url);
 }

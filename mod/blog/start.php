@@ -9,12 +9,10 @@
  * @link http://elgg.org/
  *
  * @todo
- * Show your blog posts
+ * Either drop support for "publish date" or duplicate more entity getter
+ * functions to work with a non-standard time_created.
  * Show friends blog posts
  * Widget
- *
- * Group blogs
- * 	Forward to container instead of owner
  *
  * Pingbacks
  * Notifications
