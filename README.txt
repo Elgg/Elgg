@@ -22,7 +22,7 @@ ABOUT:
 See CONTRIBUTORS.txt for development credits.
 
 Elgg concept originally by:
-Ben Werdmuller <ben@elgg.com> and David Tosh <dave@elgg.com>
+Ben Werdmuller <ben@benwerd.com, http://benwerd.com> and David Tosh <dave@elgg.com>
 
 The open source project site can be found at http://elgg.org/
 
