@@ -24,8 +24,8 @@ if (isset($vars['value'])) {
 $url = trim($vars['href']);
 
 if (!empty($url)) {
-	if ((substr_count($val, "http://") == 0) && (substr_count($val, "https://") == 0)) { 
-		$val = "http://" . $val; 
+	if ((substr_count($url, "http://") == 0) && (substr_count($url, "https://") == 0)) { 
+		$url = "http://" . $url; 
 	}
 
 	if (array_key_exists('is_action', $vars) && $vars['is_action']) {
