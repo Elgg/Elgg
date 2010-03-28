@@ -74,11 +74,9 @@
 		if (is_array($friends) && sizeof($friends))
 			foreach($friends as $user) {
 				
-				if (is_callable('mb_substr'))
-					$letter = strtoupper(mb_substr($user->name,0,1));
-				else
-					$letter = strtoupper(substr($user->name,0,1));
-				if (!substr_count($chararray,$letter)) {
+				$letter = elgg_substr($user->name,0,1);
+				$letter = elgg_strtoupper($letter);
+				if (!elgg_substr_count($chararray,$letter)) {
 					$letter = "*";
 				}
 				if (!isset($users[$letter])) {
@@ -151,10 +149,7 @@
 <?php
 
 	// Initialise letters
-		if (is_callable('mb_substr'))
-			$letter = mb_substr($chararray,0,1);
-		else
-			$letter = substr($chararray,0,1);
+		$letter = elgg_substr($chararray,0,1);
 		$letpos = 0;
 		$chararray .= '*';
 		while (1 == 1) {
@@ -244,11 +239,8 @@ END;
 			</div>
 <?php			
 			$letpos++;
-			if ($letpos == strlen($chararray)) break;
-			if (is_callable('mb_substr'))
-				$letter = mb_substr($chararray,$letpos,1);
-			else
-				$letter = substr($chararray,$letpos,1);
+			if ($letpos == elgg_strlen($chararray)) break;
+			$letter = elgg_substr($chararray,$letpos,1);
 		}
 		
 ?>
@@ -288,7 +280,7 @@ END;
 	if (sizeof($activeletters) > 0)
 		$chararray = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		foreach($activeletters as $letter) {
-			$tab = strpos($chararray, $letter) + 1;
+			$tab = elgg_strpos($chararray, $letter) + 1;
 ?>
 	$("div#friendsPickerNavigation<?php echo $friendspicker; ?> li.tab<?php echo $tab; ?> a").addClass("tabHasContent");
 <?php
