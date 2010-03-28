@@ -294,15 +294,14 @@ if (!isset($vars['replacement'])) {
 	$(document).ready(function () {
 	// manually add class to corresponding tab for panels that have content
 <?php
-	// this probably a bug but just dealing with formatting right now
 	if (sizeof($activeletters) > 0) {
-		$chararray = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-	}
-	foreach($activeletters as $letter) {
-		$tab = elgg_strpos($chararray, $letter) + 1;
+		$chararray .= "*";
+		foreach($activeletters as $letter) {
+			$tab = elgg_strpos($chararray, $letter) + 1;
 ?>
 	$("div#friendsPickerNavigation<?php echo $friendspicker; ?> li.tab<?php echo $tab; ?> a").addClass("tabHasContent");
 <?php
+		}
 	}
 
 ?>
