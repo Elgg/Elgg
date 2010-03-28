@@ -202,7 +202,7 @@ if (!isset($vars['replacement'])) {
 						$i = 0;
 				
 						foreach($NOTIFICATION_HANDLERS as $method => $foo) {
-							if (is_array($subs[$method]) && in_array($friend->guid,$subs[$method])) {
+							if (isset($subs[$method]) && in_array($friend->guid,$subs[$method])) {
 								$checked[$method] = 'checked="checked"';
 							} else {
 								$checked[$method] = '';
