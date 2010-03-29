@@ -46,6 +46,8 @@ switch($section){
 			<li <?php echo $twitter; ?>><a href="<?php echo $url . 'twitter'; ?>">Twitter</a></li>
 	<?php
 		}
+		//insert a view which others can extend
+		echo elgg_view('profilenav/extend', $profile);
 	?>
 </ul>
 </div>
