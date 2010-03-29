@@ -14,10 +14,10 @@
  */
 
 /**
- * Adds messages to the session so they'll be carried over, and forwards the browser.
+ * Forwards the browser.
  * Returns false if headers have already been sent and the browser cannot be moved.
  *
- * @param string $location URL to forward to browser to
+ * @param string $location URL to forward to browser to. Can be relative path.
  * @return nothing|false
  */
 function forward($location = "") {
@@ -25,10 +25,6 @@ function forward($location = "") {
 
 	if (!headers_sent()) {
 		$current_page = current_page_url();
-		// What is this meant to do?
-		//if (strpos($current_page, $CONFIG->wwwroot . "action") ===false)
-
-		$_SESSION['msg'] = array_merge($_SESSION['msg'], system_messages());
 		if ((substr_count($location, 'http://') == 0) && (substr_count($location, 'https://') == 0)) {
 			$location = $CONFIG->url . $location;
 		}
