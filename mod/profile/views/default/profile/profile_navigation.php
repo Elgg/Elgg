@@ -26,6 +26,10 @@ switch($section){
 	case 'twitter':
 		$twitter = 'class="selected"';
 		break;
+		
+	case 'commentwall':
+		$commentwall = 'class="selected"';
+		break;
 
 	case 'activity':
 	default:
@@ -39,6 +43,7 @@ switch($section){
 	<li <?php echo $activity; ?>><a href="<?php echo $url; ?>">Activity</a></li>
 	<li <?php echo $details; ?>><a href="<?php echo $url . 'details'; ?>">Details</a></li>
 	<li <?php echo $friends; ?>><a href="<?php echo $url . 'friends'; ?>">Friends</a></li>
+	<li <?php echo $commentwall; ?>><a href="<?php echo $url . 'commentwall'; ?>">Comment Wall</a></li>
 	<?php
 		//check to see if the twitter username is set
 		if($vars['entity']->twitter){

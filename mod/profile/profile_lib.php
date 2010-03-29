@@ -29,7 +29,10 @@ function profile_get_user_profile_html($user, $section = 'activity') {
 		case 'twitter':
 			$body .= elgg_view('profile/profile_contents/twitter', $view_options);
 			break;
-
+		case 'commentwall':
+			$comments = $user->getAnnotations('commentwall', 200, 0, 'desc');
+			$body .= elgg_view('profile/profile_contents/commentwall', array("entity" => $user, "comments" => $comments));
+			break;
 		case 'details':
 			$body .= elgg_view('profile/profile_contents/details', $view_options);
 			break;

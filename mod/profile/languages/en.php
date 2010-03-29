@@ -1,12 +1,6 @@
 <?php
 /**
  * Elgg profile plugin language pack
- *
- * @package ElggProfile
- * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
- * @author Curverider Ltd
- * @copyright Curverider Ltd 2008-2010
- * @link http://elgg.com/
  */
 
 $english = array(
@@ -78,6 +72,39 @@ $english = array(
 
 	'profile:saved' => "Your profile was successfully saved.",
 	'profile:icon:uploaded' => "Your profile picture was successfully uploaded.",
+	
+/**
+ * Profile comment wall
+ **/
+ 	'profile:commentwall:add' => "Add to the wall",
+ 	'profile:commentwall:posted' => "You successfully posted on the comment wall.",
+	'profile:commentwall:deleted' => "You successfully deleted the message.",
+	'profile:commentwall:blank' => "Sorry; you need to actually put something in the message area before we can save it.",
+	'profile:commentwall:notfound' => "Sorry; we could not find the specified item.",
+	'profile:commentwall:notdeleted' => "Sorry; we could not delete this message.",
+	'profile:commentwall:somethingwentwrong' => "Something went wrong when trying to save your message, make sure you actually wrote a message.",
+	'profile:commentwall:failure' => "An unexpected error occurred when adding your message. Please try again.",
+	
+/**
+ * Email messages commentwall
+ */
+	
+	'profile:comment:subject' => 'You have a new message board comment!',
+	'profile:comment:body' => "You have a new message board comment from %s. It reads:
+
+			
+%s
+
+
+To view your message board comments, click here:
+
+	%s
+
+To view %s's profile, click here:
+
+	%s
+
+You cannot reply to this email.",
 
 /**
  * Profile error messages
