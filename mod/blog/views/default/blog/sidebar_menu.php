@@ -42,7 +42,7 @@ if ($page_owner) {
 	$dates = blog_get_blog_months($user);
 
 	if ($dates) {
-		echo elgg_view_title(elgg_echo('blog:archives'));
+		echo "<h3>".elgg_echo('blog:archives')."</h3>";
 
 		echo '<ul>';
 		foreach($dates as $date) {
