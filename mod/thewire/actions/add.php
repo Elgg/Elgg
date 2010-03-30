@@ -15,7 +15,6 @@
 
 	// Get input data
 		$body = get_input('note');
-		$tags = get_input('thewiretags');
 		$access_id = (int)get_default_access();
 		if ($access_id == ACCESS_PRIVATE)
 			$access_id = ACCESS_LOGGED_IN; // Private wire messages are pointless
@@ -24,10 +23,7 @@
 		$parent = (int)get_input('parent', 0);
 		if(!$parent)   
 		    $parent = 0;
-	
-	// convert the shout body into tags
-	    $tagarray = filter_string($body);
-		
+			
 	// Make sure the title / description aren't blank
 		if (empty($body)) {
 			register_error(elgg_echo("thewire:blank"));
@@ -44,10 +40,6 @@
 					forward("mod/thewire/add.php");
 			}
 	        
-	// Now let's add tags. We can pass an array directly to the object property! Easy.
-			if (is_array($tagarray)) {
-				$thewire->tags = $tagarray;
-			}
 	        
 	// Success message
 			system_message(elgg_echo("thewire:posted"));
