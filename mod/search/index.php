@@ -8,6 +8,10 @@
  * @link http://elgg.org/
  */
 
+// Search supports RSS 
+global $autofeed;
+$autofeed = true;
+
 // $search_type == all || entities || trigger plugin hook
 $search_type = get_input('search_type', 'all');
 
