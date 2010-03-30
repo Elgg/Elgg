@@ -82,6 +82,7 @@ $english = array(
 	'profile:commentwall:blank' => "Sorry; you need to actually put something in the message area before we can save it.",
 	'profile:commentwall:notfound' => "Sorry; we could not find the specified item.",
 	'profile:commentwall:notdeleted' => "Sorry; we could not delete this message.",
+	'profile:commentwall:none' => "No comment wall posts found.",
 	'profile:commentwall:somethingwentwrong' => "Something went wrong when trying to save your message, make sure you actually wrote a message.",
 	'profile:commentwall:failure' => "An unexpected error occurred when adding your message. Please try again.",
 	

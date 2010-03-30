@@ -7,7 +7,7 @@
 if (is_array($vars['annotation']) && sizeof($vars['annotation']) > 0) {
     		
 	//start the div which will wrap all the message board contents
-	echo "<div id=\"messageboard_wrapper\">";
+	echo "<div id='comment_wall_display'>";
 			
 	//loop through all annotations and display
 	foreach($vars['annotation'] as $content) {
@@ -18,5 +18,5 @@ if (is_array($vars['annotation']) && sizeof($vars['annotation']) > 0) {
 	echo "</div>";
 			
 } else {
-	echo "<div class='ContentWrapper'>" . elgg_echo("profile:commentwall:none") . "</div>";
+	echo "<p class='margin_top'>" . elgg_echo("profile:commentwall:none") . "</p>";
 }

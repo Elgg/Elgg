@@ -3,10 +3,10 @@
  * Elgg profile comment wall add
  */ 
 ?>
-<div id="mb_input_wrapper">
+<div id="comment_wall_add">
 <form action="<?php echo $vars['url']; ?>action/profile/addcomment" method="post" name="messageboardForm">
     <!-- textarea for the contents -->
-    <textarea name="message_content" value="" class="commentwall" style="width:500px;height:20px;"></textarea><br />
+    <textarea name="message_content" value="" class="commentwall"></textarea><br />
     <!-- the person posting an item on the message board -->
     <input type="hidden" name="guid" value="<?php echo $_SESSION['guid']; ?>"  />
     <!-- the page owner, this will be the profile owner -->

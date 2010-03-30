@@ -210,6 +210,13 @@
 
 
 /* ***************************************
+	commentwall within profile
+*************************************** */
+#comment_wall_add textarea {
+	width:685px;
+}
+
+/* ***************************************
 	twitter panel within profile
 *************************************** */
 ul#twitter_update_list li {
