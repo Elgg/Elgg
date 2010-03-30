@@ -37,7 +37,7 @@
 		elgg_extend_view('css', 'file/css');
 		
 	    // extend group main page
-		elgg_extend_view('groups/left_column','file/groupprofile_files');
+		elgg_extend_view('groups/tool_latest','file/groupprofile_files');
 		
 		// Register a page handler, so we can have nice URLs
 		register_page_handler('file','file_page_handler');

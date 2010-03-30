@@ -98,6 +98,27 @@
 	border-bottom:1px solid #CCCCCC;
 	padding-bottom:5px;
 }
+
+/* tool content boxes on group profile page */
+#group_tools_latest {
+	min-height: 300px;
+	margin-top:20px;
+}
+.group_tool_widget {
+	float:left;
+	margin-right:30px;
+	margin-bottom:20px;
+	min-height:200px;
+	width:350px;
+}
+.group_tool_widget.odd {
+	margin-right:0;
+}
+.group_tool_widget h3 {
+	border-bottom:1px solid #CCCCCC;
+	padding-bottom:5px;
+}
+/*
 .group_profile_column.right {
 	float:right;
 	width:350px;
@@ -108,6 +129,7 @@
 	float:left;
 	margin-top:20px;
 }
+*/
 /* edit group page */
 .delete_group {
 	float: right;
