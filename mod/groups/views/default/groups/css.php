@@ -97,6 +97,7 @@
 .group_profile.forum_latest h3 {
 	border-bottom:1px solid #CCCCCC;
 	padding-bottom:5px;
+	color:#555555;
 }
 
 /* tool content boxes on group profile page */
@@ -117,6 +118,7 @@
 .group_tool_widget h3 {
 	border-bottom:1px solid #CCCCCC;
 	padding-bottom:5px;
+	color:#555555;
 }
 /*
 .group_profile_column.right {

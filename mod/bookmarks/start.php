@@ -42,6 +42,9 @@ function bookmarks_init() {
 
 	// Add group menu option
 	add_group_tool_option('bookmarks',elgg_echo('bookmarks:enablebookmarks'),true);
+	
+	// Extend Groups profile page	
+	elgg_extend_view('groups/tool_latest','bookmarks/group_bookmarks');
 
 }
 
