@@ -215,6 +215,10 @@
 #comment_wall_add textarea {
 	width:685px;
 }
+#comment_wall_add #postit {
+	float:right;
+}
+
 
 /* ***************************************
 	twitter panel within profile
