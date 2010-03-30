@@ -1730,4 +1730,59 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 			}
 		}
 	}
+
+	/**
+	 * Annotations
+	 */
+	public function testElggApiGettersEntitiesFromAnnotation() {
+
+		// grab a few different users to annotation
+		// there will always be at least 2 here because of the construct.
+		$users = elgg_get_entities(array('type' => 'user', 'limit' => 2));
+
+		// create some test annotations
+		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtype = $subtypes[0];
+		$annotation_name = 'test_annotation_name_' . rand();
+		$annotation_value = rand(1000, 9999);
+		$annotation_name2 = 'test_annotation_name_' . rand();
+		$annotation_value2 = rand(1000, 9999);
+		$guids = array();
+
+		// our targets
+		$valid = new ElggObject();
+		$valid->subtype = $subtype;
+		$valid->save();
+		$guids[] = $valid->getGUID();
+		create_annotation($valid->getGUID(), $annotation_name, $annotation_value, 'integer', $users[0]->getGUID());
+
+		$valid2 = new ElggObject();
+		$valid2->subtype = $subtype;
+		$valid2->save();
+		$guids[] = $valid2->getGUID();
+		create_annotation($valid2->getGUID(), $annotation_name2, $annotation_value2, 'integer', $users[1]->getGUID());
+
+		$options = array(
+			'annotation_owner_guid' => $users[0]->getGUID(),
+			'annotation_name' => $annotation_name
+		);
+
+		$entities = elgg_get_entities_from_annotations($options);
+
+		foreach ($entities as $entity) {
+			$this->assertTrue(in_array($entity->getGUID(), $guids));
+			$annotations = $entity->getAnnotations($annotation_name);
+			$this->assertEqual(count($annotations), 1);
+
+			$this->assertEqual($annotations[0]->name, $annotation_name);
+			$this->assertEqual($annotations[0]->value, $annotation_value);
+			$this->assertEqual($annotations[0]->owner_guid, $users[0]->getGUID());
+		}
+
+		foreach ($guids as $guid) {
+			if ($e = get_entity($guid)) {
+				$e->delete();
+			}
+		}
+	}
 }

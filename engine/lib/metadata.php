@@ -532,8 +532,6 @@ function find_metadata($meta_name = "", $meta_value = "", $entity_type = "", $en
 	return get_data($query, "row_to_elggmetadata");
 }
 
-
-
 /**
  * Returns entities based upon metadata.  Also accepts all
  * options available to elgg_get_entities().  Supports
@@ -547,6 +545,7 @@ function find_metadata($meta_name = "", $meta_value = "", $entity_type = "", $en
  * When in doubt, use name_value_pairs.
  *
  * @see elgg_get_entities
+ * @see elgg_get_entities_from_annotations
  * @param array $options Array in format:
  *
  * 	metadata_names => NULL|ARR metadata names
@@ -560,27 +559,59 @@ function find_metadata($meta_name = "", $meta_value = "", $entity_type = "", $en
  *
  * 	metadata_case_sensitive => BOOL Overall Case sensitive
  *
+ *  order_by_metadata => NULL|ARR (array('name' => 'metadata_text1', 'direction' => ASC|DESC, 'as' => text|integer),
+ *  Also supports array('name' => 'metadata_text1')
+ *
+ *  metadata_owner_guids => NULL|ARR guids for metadata owners
+ *
  * @return array
  */
 function elgg_get_entities_from_metadata(array $options = array()) {
 	$defaults = array(
-		'metadata_names'			=>	ELGG_ENTITIES_ANY_VALUE,
-		'metadata_values'			=>	ELGG_ENTITIES_ANY_VALUE,
-		'metadata_name_value_pairs'	=>	ELGG_ENTITIES_ANY_VALUE,
+		'metadata_names'					=>	ELGG_ENTITIES_ANY_VALUE,
+		'metadata_values'					=>	ELGG_ENTITIES_ANY_VALUE,
+		'metadata_name_value_pairs'			=>	ELGG_ENTITIES_ANY_VALUE,
 
-		'metadata_name_value_pairs_operator' => 'AND',
-		'metadata_case_sensitive' => TRUE,
-		'order_by_metadata' => array(),
+		'metadata_name_value_pairs_operator'=>	'AND',
+		'metadata_case_sensitive' 			=>	TRUE,
+		'order_by_metadata'					=>	array(),
+
+		'metadata_owner_guids'				=>	ELGG_ENTITIES_ANY_VALUE,
 	);
 
 	$options = array_merge($defaults, $options);
 
-	$singulars = array('metadata_name', 'metadata_value', 'metadata_name_value_pair');
+	if (!$options = elgg_entities_get_metastrings_options('metadata', $options)) {
+		return FALSE;
+	}
+
+	return elgg_get_entities($options);
+}
+
+/**
+ * Returns options to pass to elgg_get_entities() for metastrings operations.
+ *
+ * @param string $type Metastring type: annotations or metadata
+ * @param array $options Options
+ *
+ * @return array
+ */
+function elgg_entities_get_metastrings_options($type, $options) {
+	$valid_types = array('metadata', 'annotation');
+	if (!in_array($type, $valid_types)) {
+		return FALSE;
+	}
+
+	// the options for annotations are singular (annotation_name) but the table
+	// is plural (elgg_annotations) so rewrite for the table name.
+	$n_table = ($type == 'annotation') ? 'annotations' : $type;
+
+	$singulars = array("{$type}_name", "{$type}_value", "{$type}_name_value_pair", "{$type}_owner_guid");
 	$options = elgg_normalise_plural_options_array($options, $singulars);
 
-	$clauses = elgg_get_entity_metadata_where_sql('e', $options['metadata_names'], $options['metadata_values'],
-		$options['metadata_name_value_pairs'], $options['metadata_name_value_pairs_operator'], $options['metadata_case_sensitive'],
-		$options['order_by_metadata']);
+	$clauses = elgg_get_entity_metadata_where_sql('e', $n_table, $options["{$type}_names"], $options["{$type}_values"],
+		$options["{$type}_name_value_pairs"], $options["{$type}_name_value_pairs_operator"], $options["{$type}_case_sensitive"],
+		$options["order_by_{$type}"], $options["{$type}_owner_guids"]);
 
 	if ($clauses) {
 		// merge wheres to pass to get_entities()
@@ -611,15 +642,19 @@ function elgg_get_entities_from_metadata(array $options = array()) {
 		}
 	}
 
-	return elgg_get_entities($options);
+	return $options;
 }
 
 /**
  * Returns metadata name and value SQL where for entities.
- * nb: $names and $values are not paired. Use $pairs for this.
+ * NB: $names and $values are not paired. Use $pairs for this.
  * Pairs default to '=' operand.
  *
- * @param $prefix
+ * This function is reused for annotations because the tables are
+ * exactly the same.
+ *
+ * @param string $e_table Entities table name
+ * @param string $n_table Normalized metastrings table name (Where entities, values, and names are joined. annotations / metadata)
  * @param ARR|NULL $names
  * @param ARR|NULL $values
  * @param ARR|NULL $pairs array of names / values / operands
@@ -628,25 +663,30 @@ function elgg_get_entities_from_metadata(array $options = array()) {
  * @param ARR|NULL $order_by_metadata array of names / direction
  * @return FALSE|array False on fail, array('joins', 'wheres')
  */
-function elgg_get_entity_metadata_where_sql($table, $names = NULL, $values = NULL, $pairs = NULL, $pair_operator = 'AND', $case_sensitive = TRUE, $order_by_metadata = NULL) {
+function elgg_get_entity_metadata_where_sql($e_table, $n_table, $names = NULL, $values = NULL, $pairs = NULL, $pair_operator = 'AND', $case_sensitive = TRUE, $order_by_metadata = NULL, $owner_guids = NULL) {
 	global $CONFIG;
 
 	// short circuit if nothing requested
 	// 0 is a valid (if not ill-conceived) metadata name.
 	// 0 is also a valid metadata value for FALSE, NULL, or 0
+	// 0 is also a valid(ish) owner_guid
 	if ((!$names && $names !== 0)
 		&& (!$values && $values !== 0)
 		&& (!$pairs && $pairs !== 0)
+		&& (!$owner_guids && $owner_guids !== 0)
 		&& !isset($order_by_metadata)) {
 		return '';
 	}
+
+	// join counter for incremental joins.
+	$i = 1;
 
 	// binary forces byte-to-byte comparision of strings, making
 	// it case- and diacritical-mark- sensitive.
 	// only supported on values.
 	$binary = ($case_sensitive) ? ' BINARY ' : '';
 
-	$access = get_access_sql_suffix('md');
+	$access = get_access_sql_suffix('n_table');
 
 	$return = array (
 		'joins' => array (),
@@ -654,12 +694,14 @@ function elgg_get_entity_metadata_where_sql($table, $names = NULL, $values = NUL
 		'orders' => array()
 	);
 
+	// will always want to join these tables if pulling metastrings.
+	$return['joins'][] = "JOIN {$CONFIG->dbprefix}{$n_table} n_table on {$e_table}.guid = n_table.entity_guid";
+
 	$wheres = array();
 
 	// get names wheres and joins
 	$names_where = '';
 	if ($names !== NULL) {
-		$return['joins'][] = "JOIN {$CONFIG->dbprefix}metadata md on {$table}.guid = md.entity_guid";
 		if (!is_array($names)) {
 			$names = array($names);
 		}
@@ -674,7 +716,7 @@ function elgg_get_entity_metadata_where_sql($table, $names = NULL, $values = NUL
 		}
 
 		if ($names_str = implode(',', $sanitised_names)) {
-			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msn on md.name_id = msn.id";
+			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msn on n_table.name_id = msn.id";
 			$names_where = "(msn.string IN ($names_str))";
 		}
 	}
@@ -682,8 +724,6 @@ function elgg_get_entity_metadata_where_sql($table, $names = NULL, $values = NUL
 	// get values wheres and joins
 	$values_where = '';
 	if ($values !== NULL) {
-		$return['joins'][] = "JOIN {$CONFIG->dbprefix}metadata md on {$table}.guid = md.entity_guid";
-
 		if (!is_array($values)) {
 			$values = array($values);
 		}
@@ -698,7 +738,7 @@ function elgg_get_entity_metadata_where_sql($table, $names = NULL, $values = NUL
 		}
 
 		if ($values_str = implode(',', $sanitised_values)) {
-			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msv on md.value_id = msv.id";
+			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msv on n_table.value_id = msv.id";
 			$values_where = "({$binary}msv.string IN ($values_str))";
 		}
 	}
@@ -710,8 +750,6 @@ function elgg_get_entity_metadata_where_sql($table, $names = NULL, $values = NUL
 	} elseif ($values_where) {
 		$wheres[] = "($values_where AND $access)";
 	}
-
-	$i = 1;
 
 	// add pairs
 	// pairs must be in arrays.
@@ -737,9 +775,9 @@ function elgg_get_entity_metadata_where_sql($table, $names = NULL, $values = NUL
 			}
 
 			// @todo The multiple joins are only needed when the operator is AND
-			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metadata md{$i} on {$table}.guid = md{$i}.entity_guid";
-			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msn{$i} on md{$i}.name_id = msn{$i}.id";
-			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msv{$i} on md{$i}.value_id = msv{$i}.id";
+			$return['joins'][] = "JOIN {$CONFIG->dbprefix}{$n_table} n_table{$i} on {$e_table}.guid = n_table{$i}.entity_guid";
+			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msn{$i} on n_table{$i}.name_id = msn{$i}.id";
+			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msv{$i} on n_table{$i}.value_id = msv{$i}.id";
 
 			// must have at least a name and value
 			if (!isset($pair['name']) || !isset($pair['value'])) {
@@ -791,7 +829,7 @@ function elgg_get_entity_metadata_where_sql($table, $names = NULL, $values = NUL
 
 			$name = sanitise_string($pair['name']);
 
-			$access = get_access_sql_suffix("md{$i}");
+			$access = get_access_sql_suffix("n_table{$i}");
 			$pair_wheres[] = "(msn{$i}.string = '$name' AND {$pair_binary}msv{$i}.string $operand $value AND $access)";
 			$i++;
 		}
@@ -801,7 +839,19 @@ function elgg_get_entity_metadata_where_sql($table, $names = NULL, $values = NUL
 		}
 	}
 
-	if ($where = implode(' OR ', $wheres)) {
+	// add owner_guids
+	if ($owner_guids) {
+		if (is_array($owner_guids)) {
+			$sanitised = array_map('sanitise_int', $owner_guids);
+			$owner_str = implode(',', $sanitised);
+		} else {
+			$owner_str = sanitise_int($owner_guids);
+		}
+
+		$wheres[] = "(n_table.owner_guid IN ($owner_str))";
+	}
+
+	if ($where = implode(' AND ', $wheres)) {
 		$return['wheres'][] = "($where)";
 	}
 
@@ -818,11 +868,11 @@ function elgg_get_entity_metadata_where_sql($table, $names = NULL, $values = NUL
 				} else {
 					$direction = 'ASC';
 				}
-				$return['joins'][] = "JOIN {$CONFIG->dbprefix}metadata md{$i} on {$table}.guid = md{$i}.entity_guid";
-				$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msn{$i} on md{$i}.name_id = msn{$i}.id";
-				$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msv{$i} on md{$i}.value_id = msv{$i}.id";
+				$return['joins'][] = "JOIN {$CONFIG->dbprefix}{$n_table} n_table{$i} on {$e_table}.guid = n_table{$i}.entity_guid";
+				$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msn{$i} on n_table{$i}.name_id = msn{$i}.id";
+				$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msv{$i} on n_table{$i}.value_id = msv{$i}.id";
 
-				$access = get_access_sql_suffix("md{$i}");
+				$access = get_access_sql_suffix("n_table{$i}");
 
 				$return['wheres'][] = "(msn{$i}.string = '$name' AND $access)";
 				if (isset($order_by['as']) && $order_by['as'] == 'integer') {

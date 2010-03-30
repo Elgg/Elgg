@@ -409,70 +409,48 @@ $value = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $time
 
 
 /**
+ * Returns entities based upon annotations.  Accepts the same values as
+ * elgg_get_entities_from_metadata() but uses the annotations table.
  *
- * @todo Add support for arrays of names and values
+ * @see elgg_get_entities
+ * @see elgg_get_entities_from_metadata
+ * @param array $options Array in format:
  *
- * @param $options
- * @return unknown_type
+ * 	annotation_names => NULL|ARR annotations names
+ *
+ * 	annotation_values => NULL|ARR annotations values
+ *
+ * 	annotation_name_value_pairs => NULL|ARR (name = 'name', value => 'value', 'operand' => '=', 'case_sensitive' => TRUE) entries.
+ * 	Currently if multiple values are sent via an array (value => array('value1', 'value2') the pair's operand will be forced to "IN".
+ *
+ * 	annotation_name_value_pairs_operator => NULL|STR The operator to use for combining (name = value) OPERATOR (name = value); default AND
+ *
+ * 	annotation_case_sensitive => BOOL Overall Case sensitive
+ *
+ *  order_by_annotation => NULL|ARR (array('name' => 'annotation_text1', 'direction' => ASC|DESC, 'as' => text|integer),
+ *  Also supports array('name' => 'annotation_text1')
+ *
+ *  annotation_owner_guids => NULL|ARR guids for annotaiton owners
+ *
+ * @return array
  */
 function elgg_get_entities_from_annotations(array $options = array()) {
 	$defaults = array(
-		'annotation_names' => NULL,
-		'annotation_name' => NULL,
-		'annotation_values' => NULL,
-		'annotation_value' => NULL,
-		'annotation_name_value_pair' => NULL,
-		'annotation_name_value_pairs' => NULL,
-		'annotation_name_value_pairs_operator' => 'AND',
-		'annotation_case_sensitive' => TRUE,
-		'order_by' => 'maxtime desc',
-		'group_by' => 'a.entity_guid'
+		'annotation_names'						=>	ELGG_ENTITIES_ANY_VALUE,
+		'annotation_values'						=>	ELGG_ENTITIES_ANY_VALUE,
+		'annotation_name_value_pairs'			=>	ELGG_ENTITIES_ANY_VALUE,
+
+		'annotation_name_value_pairs_operator'	=>	'AND',
+		'annotation_case_sensitive' 			=>	TRUE,
+		'order_by_metadata'						=>	array(),
+
+		'annotation_owner_guids'				=>	ELGG_ENTITIES_ANY_VALUE,
 	);
 
 	$options = array_merge($defaults, $options);
 
-	$singulars = array('annotation_name', 'annotation_value', 'annotation_name_value_pair');
-	$options = elgg_normalise_plural_options_array($options, $singulars);
-
-	$clauses = elgg_get_entity_annotation_where_sql('e', $options['annotation_names'], $options['annotation_values'],
-		$options['annotation_name_value_pairs'], $options['annotation_name_value_pairs_operator'], $options['annotation_case_sensitive']);
-
-	if ($clauses) {
-		// merge wheres to pass to get_entities()
-		if (isset($options['wheres']) && !is_array($options['wheres'])) {
-			$options['wheres'] = array($options['wheres']);
-		} elseif (!isset($options['wheres'])) {
-			$options['wheres'] = array();
-		}
-
-		$options['wheres'] = array_merge($options['wheres'], $clauses['wheres']);
-
-		// merge joins to pass to get_entities()
-		if (isset($options['joins']) && !is_array($options['joins'])) {
-			$options['joins'] = array($options['joins']);
-		} elseif (!isset($options['joins'])) {
-			$options['joins'] = array();
-		}
-
-		$options['joins'] = array_merge($options['joins'], $clauses['joins']);
-
-		// merge selects to pass to get_entities()
-		if (isset($options['selects']) && !is_array($options['selects'])) {
-			$options['selects'] = array($options['selects']);
-		} elseif (!isset($options['selects'])) {
-			$options['selects'] = array();
-		}
-
-		$options['selects'] = array_merge($options['selects'], $clauses['selects']);
-
-		/* @todo overwrites the current order and group bys
-		if ($clauses['order_by']) {
-			$options['order_by'] = $clauses['order_by'];
-		}
-		if ($clauses['group_by']) {
-			$options['group_by'] = $clauses['group_by'];
-		}
-		*/
+	if (!$options = elgg_entities_get_metastrings_options('annotation', $options)) {
+		return FALSE;
 	}
 
 	return elgg_get_entities($options);
@@ -1178,7 +1156,7 @@ function clear_annotations($guid, $name = "") {
 			return delete_data($query);
 		}
 	}
-	
+
 	return FALSE;
 }
 
