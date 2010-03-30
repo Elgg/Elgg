@@ -45,6 +45,7 @@
 	padding:6px 4px 4px 4px;
 	min-height: 40px;
 	line-height: 1.4em;
+	overflow: hidden;
 }
 .thewire_options {
 	float:right;
