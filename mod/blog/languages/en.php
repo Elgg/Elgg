@@ -44,7 +44,7 @@ $english = array(
 	'blog:edit_revision_notice' => '(Old version)',
 
 	// river
-	'blog:river:create' => '%s made a new blog post.',
+	'blog:river:create' => '%s wrote a new blog post',
 
 
 );
