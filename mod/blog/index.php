@@ -12,6 +12,9 @@
 
 	// Load Elgg engine
 		require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
+
+	// access check for closed groups
+	group_gatekeeper();
 		
 	// Get the current page's owner
 		$page_owner = page_owner_entity();

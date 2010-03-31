@@ -24,7 +24,8 @@
         if ($owner instanceof ElggUser) add_submenu_item(elgg_echo('pages:welcome'), $CONFIG->url . "pg/pages/welcome/", 'pagesactions');
     }
     
-    if (is_callable('group_gatekeeper')) group_gatekeeper();
+	// access check for closed groups
+	group_gatekeeper();
 	
 	$limit = get_input("limit", 10);
 	$offset = get_input("offset", 0);

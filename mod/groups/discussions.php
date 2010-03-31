@@ -14,8 +14,9 @@
 
 	// Load Elgg engine
 		require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
-		
-		group_gatekeeper();
+
+	// access check for closed groups
+	group_gatekeeper();
 		
 	// Display them
 	    $area2 = elgg_view_title(elgg_echo("groups:latestdiscussion"));
