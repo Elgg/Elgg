@@ -1,4 +1,4 @@
-Elgg version 1.7
+Elgg version 1.7.1
 Copyright (c) 2008-2010 Curverider Ltd
 
 This program is free software; you can redistribute it and/or modify
@@ -22,7 +22,7 @@ ABOUT:
 See CONTRIBUTORS.txt for development credits.
 
 Elgg concept originally by:
-Ben Werdmuller <ben@elgg.com> and David Tosh <dave@elgg.com>
+Ben Werdmuller <ben@benwerd.com, http://benwerd.com> and David Tosh <dave@elgg.com>
 
 The open source project site can be found at http://elgg.org/
 
