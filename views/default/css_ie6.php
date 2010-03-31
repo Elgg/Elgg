@@ -3,7 +3,7 @@
  * @uses $vars['wwwroot'] The site URL
 */
 
-* {zoom: 1;}
+* {zoom: 1;} /* trigger hasLayout in IE */
 
 ul.topbar_tools ul {
 	line-height: 1.1em;

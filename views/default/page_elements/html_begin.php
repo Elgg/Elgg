@@ -84,11 +84,11 @@ $release = get_version(true);
 	<link rel="stylesheet" href="<?php echo $vars['url']; ?>_css/css.css?lastcache=<?php echo $vars['config']->lastcache; ?>&amp;viewtype=<?php echo $vars['view']; ?>" type="text/css" />
 
 	<!--[if IE 6]>
-		<link rel="stylesheet" type="text/css" href="<?php echo $vars['url']; ?>mod/elgg_layout/css_ie6.php" />
+		<link rel="stylesheet" type="text/css" href="<?php echo $vars['url']; ?>views/default/css_ie6.php" />
 	<![endif]-->
 
 	<!--[if gt IE 6]>
-		<link rel="stylesheet" type="text/css" href="<?php echo $vars['url']; ?>mod/elgg_layout/css_ie.php" />
+		<link rel="stylesheet" type="text/css" href="<?php echo $vars['url']; ?>views/default/css_ie.php" />
 	<![endif]-->
 </head>
 
