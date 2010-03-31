@@ -5,23 +5,12 @@
 
 * {zoom: 1;} /* trigger hasLayout in IE */
 
-ul.topbar_tools ul {
-	line-height: 1.1em;
-}
-ul.topbar_tools ul a {
-	zoom: 1;
-}
-ul.topbar_tools ul a {
-	filter: alpha(opacity=90);
-}
+/* main nav drop-down */
+#elgg_header {z-index:1;}
+.navigation li a:hover ul {display:block; position:absolute; top:21px; left:0;}
+.navigation li a:hover ul li a {display:block;}
+.navigation li.navigation_more ul li a {width:150px;background-color: #dedede;}
 
-.collapsable_box  {
-	height:10px;
-}
-
-.search_listing_info {
-	/* height:40px; */
-}
-
+/* @todo check this one */
 .delete_button a { background-position-y: 2px; }
 .delete_button a:hover { background-position-y: -14px; }

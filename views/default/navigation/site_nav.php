@@ -62,7 +62,7 @@ foreach ($more as $info) {
 
 if ($more_nav_html) {
 	$more = elgg_echo('more');
-	$nav_html .= "<li class=\"navigation_more\"><a title=\"$more\"><span>$more</span></a>
+	$nav_html .= "<li class='navigation_more'><a class='subnav' title=\"$more\"><span>$more</span></a>
 		<ul>
 			$more_nav_html
 		</ul>

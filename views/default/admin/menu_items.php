@@ -22,8 +22,8 @@ $pulldown_values = array_flip($menu_sorted);
 $pulldown_values[''] = elgg_echo('none');
 
 echo elgg_view_title(elgg_echo('admin:menu_items'));
-echo elgg_view('output/longtext', array('value' => elgg_echo("admin:menu_items:description")));
-
+echo "<div class='admin_settings menuitems'><h3>".elgg_echo('admin:menu_items:configure')."</h3>";
+echo "<p class='margin_top'>".strip_tags(elgg_view('output/longtext', array('value' => elgg_echo("admin:menu_items:description"))))."</p>";
 $form_body = '';
 
 // @todo Could probably make this number configurable
@@ -41,9 +41,8 @@ for ($i=0; $i<6; $i++) {
 	));
 }
 
-$form_body .= '<br /><br />';
 // add arbitrary links
-$form_body .= elgg_view_title(elgg_echo('admin:add_menu_item'));
+$form_body .= "<h3>".elgg_echo('admin:add_menu_item')."</h3>";
 $form_body .= elgg_view('output/longtext', array('value' => elgg_echo("admin:add_menu_item:description")));
 
 $custom_items = get_config('menu_items_custom_items');
@@ -65,7 +64,7 @@ if (is_array($custom_items)) {
 			'value' => $url
 		));
 
-		$form_body .= "<li>$name_str: $name_input $url_str: $url_input $delete</li>";
+		$form_body .= "<li class='custom_menuitem'>$name_str: $name_input $url_str: $url_input $delete</li>";
 	}
 }
 
@@ -78,13 +77,13 @@ $url_input = elgg_view('input/text', array(
 	'internalname' => 'custom_item_urls[]',
 ));
 
-$form_body .= "<li>$name_str: $name_input $url_str: $url_input</li>
+$form_body .= "<li class='custom_menuitem'>$name_str: $name_input $url_str: $url_input</li>
 </ul>";
 
-$form_body .= '<br /><br />';
 $form_body .= elgg_view('input/submit', array('value' => elgg_echo('save')));
 
 echo elgg_view('input/form', array(
 	'body' => $form_body,
 	'action' => "{$vars['url']}action/admin/menu_items"
 ));
+echo "</div>";

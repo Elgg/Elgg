@@ -4,6 +4,13 @@
 */
 * {zoom: 1;} /* trigger hasLayout in IE */
 
+/* main nav drop-down */
+#elgg_header {z-index:1;}
+.navigation li a:hover ul {display:block; position:absolute; top:21px; left:0;}
+.navigation li a:hover ul li a {display:block;}
+.navigation li.navigation_more ul li a {width:150px;background-color: #dedede;}
+
+
 #elgg_topbar_contents a.privatemessages_new span { 
 	display:block;
 	padding:1px;
@@ -15,14 +22,4 @@
 }
 #elgg_topbar_contents a.privatemessages_new  {
 	padding:0 0 0 20px;
-}
-
-ul.topbar_tools ul a {
-	zoom: 1;
-}
-ul.topbar_tools li.menu a.tools {
-	padding-bottom:6px;
-}
-ul.topbar_tools ul a {
-	filter: alpha(opacity=90);
 }

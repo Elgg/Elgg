@@ -511,6 +511,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	'admin:user:removeadmin:no' => "We could not remove administrator privileges from this user.",
 
 	'admin:menu_items' => 'Menu Items',
+	'admin:menu_items:configure' => 'Configure main menu items',
 	'admin:menu_items:description' => 'Select which menu items you want to show as featured links.  Unused items will be added as "More" at the end of the list.',
 	'admin:menu_items:hide_toolbar_entries' => 'Remove links from tool bar menu?',
 	'admin:menu_items:saved' => 'Menu items saved.',
