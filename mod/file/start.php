@@ -268,5 +268,8 @@
 	register_action("file/upload", false, $CONFIG->pluginspath . "file/actions/upload.php");
 	register_action("file/save", false, $CONFIG->pluginspath . "file/actions/save.php");
 	register_action("file/delete", false, $CONFIG->pluginspath. "file/actions/delete.php");
+
+	// temporary - see #2010
+	register_action("file/download", false, $CONFIG->pluginspath. "file/actions/download.php");
 	
 ?>
