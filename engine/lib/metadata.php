@@ -774,11 +774,6 @@ function elgg_get_entity_metadata_where_sql($e_table, $n_table, $names = NULL, $
 				);
 			}
 
-			// @todo The multiple joins are only needed when the operator is AND
-			$return['joins'][] = "JOIN {$CONFIG->dbprefix}{$n_table} n_table{$i} on {$e_table}.guid = n_table{$i}.entity_guid";
-			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msn{$i} on n_table{$i}.name_id = msn{$i}.id";
-			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msv{$i} on n_table{$i}.value_id = msv{$i}.id";
-
 			// must have at least a name and value
 			if (!isset($pair['name']) || !isset($pair['value'])) {
 				// @todo should probably return false.
@@ -799,6 +794,10 @@ function elgg_get_entity_metadata_where_sql($e_table, $n_table, $names = NULL, $
 				$operand = ' = ';
 			}
 
+			// for comparing
+			$trimmed_operand = trim(strtolower($operand));
+
+			$access = get_access_sql_suffix("n_table{$i}");
 			// if the value is an int, don't quote it because str '15' < str '5'
 			// if the operand is IN don't quote it because quoting should be done already.
 			if (is_numeric($pair['value'])) {
@@ -807,10 +806,10 @@ function elgg_get_entity_metadata_where_sql($e_table, $n_table, $names = NULL, $
 				$values_array = array();
 
 				foreach ($pair['value'] as $pair_value) {
-					if (is_numeric($v)) {
+					if (is_numeric($pair_value)) {
 						$values_array[] = sanitise_string($pair_value);
 					} else {
-						$values_array[] = '\'' . sanitise_string($pair_value) . '\'';
+						$values_array[] = "'" . sanitise_string($pair_value) . "'";
 					}
 				}
 
@@ -821,16 +820,21 @@ function elgg_get_entity_metadata_where_sql($e_table, $n_table, $names = NULL, $
 				// @todo allow support for non IN operands with array of values.
 				// will have to do more silly joins.
 				$operand = 'IN';
-			} else if (trim(strtolower($operand)) == 'in') {
+			} else if ($trimmed_operand == 'in') {
 				$value = "({$pair['value']})";
 			} else {
-				$value = '\'' . sanitise_string($pair['value']) . '\'';
+				$value = "'" . sanitise_string($pair['value']) . "'";
 			}
 
 			$name = sanitise_string($pair['name']);
 
-			$access = get_access_sql_suffix("n_table{$i}");
+			// @todo The multiple joins are only needed when the operator is AND
+			$return['joins'][] = "JOIN {$CONFIG->dbprefix}{$n_table} n_table{$i} on {$e_table}.guid = n_table{$i}.entity_guid";
+			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msn{$i} on n_table{$i}.name_id = msn{$i}.id";
+			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msv{$i} on n_table{$i}.value_id = msv{$i}.id";
+
 			$pair_wheres[] = "(msn{$i}.string = '$name' AND {$pair_binary}msv{$i}.string $operand $value AND $access)";
+
 			$i++;
 		}
 
