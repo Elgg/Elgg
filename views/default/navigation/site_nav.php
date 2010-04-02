@@ -35,6 +35,9 @@ if ($featured) {
 	}
 } elseif ($more) {
 	for ($i=0; $i<6; $i++) {
+		if (!array_key_exists($i, $more)) {
+			break;
+		}
 		$info = $more[$i];
 
 		$selected = ($info->value->context == $context) ? 'class="selected"' : '';
