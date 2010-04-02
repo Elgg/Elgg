@@ -5,9 +5,10 @@
  */
 
 $english = array(
+	'blog' => 'Blogs',
 	'item:object:blog' => 'Blog',
 	'blog:blogs' => 'Blogs',
-	'blog:owned_blogs' => '%s blogs',
+	'blog:owned_blogs' => '%s',
 	'blog:revisions' => 'Revisions',
 	'blog:archives' => 'Archives',
 
@@ -15,6 +16,8 @@ $english = array(
 	'blog:yours' => 'Your blog',
 	'blog:all' => 'All blogs',
 	'blog:friends' => 'Friends\' blogs',
+	
+	'blog:title:user_blogs' => '%s\'s Blogs',
 
 	// Editing
 	'blog:new' => 'New blog post',

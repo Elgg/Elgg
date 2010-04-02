@@ -17,16 +17,18 @@
  * @return string html
  */
 function blog_get_page_content_read($owner_guid = NULL, $guid = NULL) {
-	$content = elgg_view('page_elements/content_header', array('context' => $context, 'type' => 'blog'));
+	global $CONFIG;
+	
+	$content = elgg_view('page_elements/content_header', array('context' => $context, 'type' => 'blog', 'all_link' => "{$CONFIG->site->url}pg/blog"));
 
 	if ($guid) {
 		$blog = get_entity($guid);
 
 		if (!elgg_instanceof($blog, 'object', 'blog') || ($blog->status != 'final' && !$blog->canEdit())) {
-			$content .= elgg_echo('blog:error:post_not_found');
+			$content = elgg_echo('blog:error:post_not_found');
 		} else {
 			elgg_push_breadcrumb($blog->title, $blog->getURL());
-			$content .= elgg_view_entity($blog, TRUE);
+			$content = elgg_view_entity($blog, TRUE);
 		}
 	} else {
 		$options = array(

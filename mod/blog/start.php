@@ -92,11 +92,12 @@ function blog_runonce() {
 function blog_page_handler($page) {
 	global $CONFIG;
 
-	elgg_push_breadcrumb(elgg_echo('blog:blogs'), "{$CONFIG->site->url}pg/blog");
-
 	// see if we're showing all or just a user's
 	if (isset($page[0]) && !empty($page[0])) {
 		$username = $page[0];
+		
+		// push breadcrumb
+		elgg_push_breadcrumb(elgg_echo('blog:blogs'), "{$CONFIG->site->url}pg/blog");
 
 		// forward away if invalid user.
 		if (!$user = get_user_by_username($username)) {

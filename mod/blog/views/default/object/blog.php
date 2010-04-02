@@ -71,14 +71,13 @@ if ($full) {
 echo <<<___END
 <div class="blogpost clearfloat">
 	<div id="content_header" class="clearfloat">
-		<div class="content_header_title"><h2>$owner_title</h2></div>
+		<div class="content_header_title"><h2>{$blog->title}</h2></div>
 	</div>
 	<div class="entity_listing_icon">
 		$owner_icon
 	</div>
 	<div class="entity_listing_info">
 		<div class="entity_metadata">$edit</div>
-		<p class="entity_title">{$blog->title}</p>
 		<p class="entity_subtext">
 			$date
 			$categories
