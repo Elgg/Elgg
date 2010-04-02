@@ -17,7 +17,7 @@ if($vars['comments']){
 		if($entity->title){
 			$objecttitle = $entity->title;
 		}else{
-			$objecttitle = elgg_echo('file:untitled');
+			$objecttitle = elgg_echo('untitled');
 		}		
 				
 		//if the entity has been deleted, don't link to it
