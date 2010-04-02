@@ -42,6 +42,28 @@ if (!($page_owner instanceof ElggGroup)){
 	}
 }
 
+
+// allow plugins to override default page handlers
+if (isset($vars['all_link'])) {
+	$all_link = $vars['all_link'];
+} else {
+	// @todo switch this over to proper page handling style
+	$all_link = "{$vars['url']}mod/$type/all.php";
+}
+
+if (isset($vars['mine_link'])) {
+	$mine_link = $vars['mine_link'];
+} else {
+	$mine_link = "{$vars['url']}pg/$type/{$_SESSION['user']->username}";
+}
+
+if (isset($vars['friend_link'])) {
+	$friend_link = $vars['friend_link'];
+} else {
+	$friend_link = "{$vars['url']}pg/$type/{$_SESSION['user']->username}/friends";
+}
+
+
 // must be logged in to see the filter menu and any action buttons
 if ( isloggedin() ) {
 	// if we're not on an action page (add a bookmark, create a blog, upload a file etc), or a group page 
@@ -51,17 +73,17 @@ if ( isloggedin() ) {
 		$page_filter = <<<EOT
 			<div class="elgg_horizontal_tabbed_nav margin_top">
 				<ul>
-					<li {$all_selected}><a href="{$vars['url']}mod/{$type}/all.php">{$all_title}</a></li>
-					<li {$mine_selected}><a href="{$vars['url']}pg/{$type}/{$_SESSION['user']->username}">{$mine_title}</a></li>
-					<li {$friend_selected}><a href="{$vars['url']}pg/{$type}/{$_SESSION['user']->username}/friends/">{$friend_title}</a></li>
+					<li $all_selected><a href="$all_link">$all_title</a></li>
+					<li $mine_selected><a href="$mine_link">$mine_title</a></li>
+					<li $friend_selected><a href="$friend_link">$friend_title</a></li>
 				</ul>
 			</div>		
 EOT;
 		// action buttons
 		if(get_context() != 'bookmarks'){
-			$url = $CONFIG->wwwroot . "pg/{$type}/". $page_owner->username . "/new";
+			$url = "{$CONFIG->wwwroot}pg/$type/{$page_owner->username}/new";
 		} else {
-			$url = $CONFIG->wwwroot . "pg/{$type}/". $page_owner->username . "/add";
+			$url = "{$CONFIG->wwwroot}pg/$type/{$page_owner->username}/add";
 		}
 		$action_buttons = "<a href=\"{$url}\" class='action_button'>" . elgg_echo($type . ':new') . "</a>";
 		$action_buttons = "<div class='content_header_options'>".$action_buttons."</div>";
