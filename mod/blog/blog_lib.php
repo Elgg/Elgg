@@ -169,10 +169,19 @@ function blog_get_page_content_archive($owner_guid, $lower, $upper) {
  * Returns an appropriate excerpt for a blog.
  *
  * @param string $text
+ * @param int $words
  * @return string
  */
-function blog_make_excerpt($text) {
-	return substr(strip_tags($text), 0, 300);
+function blog_make_excerpt($text, $words=60) {
+	$text = strip_tags($text);
+	preg_match("/([\S]+\s*){0,$words}/", $text, $matches);
+	
+	$trimmed = trim($matches[0]);
+	if ($trimmed != $text) {
+		return  "$trimmed &#8230";
+	}
+	
+	return $trimmed;
 }
 
 /**
