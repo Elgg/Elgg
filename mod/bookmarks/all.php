@@ -28,7 +28,8 @@ if(isloggedin()){
 	$area3 .= elgg_view("bookmarks/bookmarklet");	
 }	
 // include statistics
-$area3 .= elgg_view("bookmarks/stats");
+$count = elgg_get_entities(array('type' => 'object', 'subtype' => 'bookmarks', 'count' => true));
+$area3 .= elgg_view("bookmarks/stats", array('count' => $count));
 // Format page
 $body = elgg_view_layout('one_column_with_sidebar', $area1.$area2, $area3);
 		
