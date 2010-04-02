@@ -23,9 +23,9 @@ function profile_init() {
 	register_entity_url_handler('profile_url', 'user', 'all');
 
 	// Set up the menu for logged-in users
-	if (isloggedin()) {
-		add_menu(elgg_echo('profile:yours'), $_SESSION['user']->getURL() . '/extend');
-	}
+	//if (isloggedin()) {
+	//	add_menu(elgg_echo('profile:yours'), $_SESSION['user']->getURL() . '/extend');
+	//}
 
 	// Metadata on users needs to be independent
 	register_metadata_as_independent('user');
