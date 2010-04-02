@@ -19,8 +19,6 @@
 function blog_get_page_content_read($owner_guid = NULL, $guid = NULL) {
 	global $CONFIG;
 	
-	$content = elgg_view('page_elements/content_header', array('context' => $context, 'type' => 'blog', 'all_link' => "{$CONFIG->site->url}pg/blog"));
-
 	if ($guid) {
 		$blog = get_entity($guid);
 
@@ -31,6 +29,12 @@ function blog_get_page_content_read($owner_guid = NULL, $guid = NULL) {
 			$content = elgg_view_entity($blog, TRUE);
 		}
 	} else {
+		$content = elgg_view('page_elements/content_header', array(
+			'context' => $context,
+			'type' => 'blog',
+			'all_link' => "{$CONFIG->site->url}pg/blog"
+		));
+		
 		$options = array(
 			'type' => 'object',
 			'subtype' => 'blog',
@@ -38,13 +42,19 @@ function blog_get_page_content_read($owner_guid = NULL, $guid = NULL) {
 			'order_by_metadata' => array('name'=>'publish_date', 'direction'=>'DESC', 'as'=>'int')
 		);
 
+		$loggedin_userid = get_loggedin_userid();
 		if ($owner_guid) {
 			$options['owner_guid'] = $owner_guid;
+			
+			if ($owner_guid != $loggedin_userid) {
+				// do not show content header when viewing other users' posts
+				$content = elgg_view('page_elements/content_header_member', array('type' => 'blog'));
+			}
 		}
 
 		// show all posts for admin or users looking at their own blogs
 		// show only published posts for other users.
-		if (!(isadminloggedin() || (isloggedin() && $owner_guid == get_loggedin_userid()))) {
+		if (!(isadminloggedin() || (isloggedin() && $owner_guid == $loggedin_userid))) {
 			$options['metadata_name_value_pairs'] = array(
 				array('name' => 'status', 'value' => 'published'),
 				array('name' => 'publish_date', 'operand' => '<', 'value' => time())
