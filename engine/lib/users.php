@@ -43,6 +43,7 @@ class ElggUser extends ElggEntity
 		$this->attributes['language'] = "";
 		$this->attributes['code'] = "";
 		$this->attributes['banned'] = "no";
+		$this->attributes['admin'] = 'no';
 		$this->attributes['tables_split'] = 2;
 	}
 
@@ -197,6 +198,46 @@ class ElggUser extends ElggEntity
 	 */
 	public function isBanned() {
 		return $this->banned == 'yes';
+	}
+
+	/**
+	 * Is this user admin?
+	 *
+	 * @return bool
+	 */
+	public function isAdmin() {
+
+		// for backward compatibility we need to pull this directly
+		// from the attributes instead of using the magic methods.
+		// this can be removed in 1.9
+		// return $this->admin == 'yes';
+		return $this->attributes['admin'] == 'yes';
+	}
+
+	/**
+	 * Make the user an admin
+	 *
+	 * @return bool
+	 */
+	public function makeAdmin() {
+		if (make_user_admin($this->guid)) {
+			$this->attributes['admin'] = 'yes';
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+	/**
+	 * Remove the admin flag for user
+	 *
+	 * @return bool
+	 */
+	public function removeAdmin() {
+		if (remove_user_admin($this->guid)) {
+			$this->attributes['admin'] = 'no';
+			return TRUE;
+		}
+		return FALSE;
 	}
 
 	/**
@@ -375,6 +416,30 @@ class ElggUser extends ElggEntity
 			'language',
 		));
 	}
+
+	// backward compatibility with admin flag
+	// remove for 1.9
+	public function __set($name, $value) {
+		if ($name == 'admin' || $name == 'siteadmin') {
+			elgg_deprecated_notice('The admin/siteadmin metadata are not longer used.  Use ElggUser->makeAdmin() and ElggUser->removeAdmin().', '1.7.1');
+
+			if ($value == 'yes' || $value == '1') {
+				$this->makeAdmin();
+			} else {
+				$this->removeAdmin();
+			}
+		}
+		return parent::__set($name, $value);
+	}
+
+	public function __get($name) {
+		if ($name == 'admin' || $name == 'siteadmin') {
+			elgg_deprecated_notice('The admin/siteadmin metadata are not longer used.  Use ElggUser->isAdmin().', '1.7.1');
+			return $this->isAdmin();
+		}
+
+		return parent::__get($name);
+	}
 }
 
 /**
@@ -501,9 +566,11 @@ function ban_user($user_guid, $reason = "") {
 			// Set ban flag
 			return update_data("UPDATE {$CONFIG->dbprefix}users_entity set banned='yes' where guid=$user_guid");
 		}
+
+		return FALSE;
 	}
 
-	return false;
+	return FALSE;
 }
 
 /**
@@ -534,9 +601,81 @@ function unban_user($user_guid) {
 
 			return update_data("UPDATE {$CONFIG->dbprefix}users_entity set banned='no' where guid=$user_guid");
 		}
+
+		return FALSE;
 	}
 
-	return false;
+	return FALSE;
+}
+
+/**
+ * Makes user $guid an admin.
+ *
+ * @param int $guid
+ * @return bool
+ */
+function make_user_admin($user_guid) {
+	global $CONFIG;
+
+	$user = get_entity((int)$user_guid);
+
+	if (($user) && ($user instanceof ElggUser) && ($user->canEdit())) {
+		if (trigger_elgg_event('make_admin', 'user', $user)) {
+
+			// invalidate memcache for this user
+			static $newentity_cache;
+			if ((!$newentity_cache) && (is_memcache_available())) {
+				$newentity_cache = new ElggMemcache('new_entity_cache');
+			}
+
+			if ($newentity_cache) {
+				$newentity_cache->delete($user_guid);
+			}
+
+			$r = update_data("UPDATE {$CONFIG->dbprefix}users_entity set admin='yes' where guid=$user_guid");
+			invalidate_cache_for_entity($user_guid);
+			return $r;
+		}
+
+		return FALSE;
+	}
+
+	return FALSE;
+}
+
+/**
+ * Removes user $guid's admin flag.
+ *
+ * @param int $guid
+ * @return bool
+ */
+function remove_user_admin($user_guid) {
+	global $CONFIG;
+
+	$user = get_entity((int)$user_guid);
+
+	if (($user) && ($user instanceof ElggUser) && ($user->canEdit())) {
+		if (trigger_elgg_event('remove_admin', 'user', $user)) {
+
+			// invalidate memcache for this user
+			static $newentity_cache;
+			if ((!$newentity_cache) && (is_memcache_available())) {
+				$newentity_cache = new ElggMemcache('new_entity_cache');
+			}
+
+			if ($newentity_cache) {
+				$newentity_cache->delete($user_guid);
+			}
+
+			$r = update_data("UPDATE {$CONFIG->dbprefix}users_entity set admin='no' where guid=$user_guid");
+			invalidate_cache_for_entity($user_guid);
+			return $r;
+		}
+
+		return FALSE;
+	}
+
+	return FALSE;
 }
 
 /**
@@ -1398,10 +1537,6 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
 
 	access_show_hidden_entities($access_status);
 
-	// Check to see if we've registered the first admin yet.
-	// If not, this is the first admin user!
-	$have_admin = datalist_get('admin_registered');
-
 	// Otherwise ...
 	$user = new ElggUser();
 	$user->username = $username;
@@ -1428,9 +1563,13 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
 		}
 	}
 
+	// Check to see if we've registered the first admin yet.
+	// If not, this is the first admin user!
+	$have_admin = datalist_get('admin_registered');
 	global $registering_admin;
+
 	if (!$have_admin) {
-		$user->admin = true;
+		$user->makeAdmin();
 		set_user_validation_status($user->getGUID(), TRUE, 'first_run');
 		datalist_set('admin_registered', 1);
 		$registering_admin = true;

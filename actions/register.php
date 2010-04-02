@@ -33,7 +33,7 @@ if (!$CONFIG->disable_registration) {
 			if (($guid) && ($admin)) {
 				// Only admins can make someone an admin
 				admin_gatekeeper();
-				$new_user->admin = 'yes';
+				$new_user->makeAdmin();
 			}
 
 			// Send user validation request on register only
@@ -42,7 +42,7 @@ if (!$CONFIG->disable_registration) {
 				request_user_validation($guid);
 			}
 
-			if (!$new_user->admin) {
+			if (!$new_user->isAdmin()) {
 				// Now disable if not an admin
 				// Don't do a recursive disable.  Any entities owned by the user at this point
 				// are products of plugins that hook into create user and might need

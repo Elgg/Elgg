@@ -13,7 +13,7 @@ $email = get_input('e');
 $name = get_input('n');
 
 $admin_option = false;
-if (($_SESSION['user']->admin) && ($vars['show_admin'])) {
+if (($_SESSION['user']->isAdmin()) && ($vars['show_admin'])) {
 	$admin_option = true;
 }
 
