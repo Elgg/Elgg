@@ -3,6 +3,7 @@
  * Elgg user display (details)
  * @uses $vars['entity'] The user entity
  */
+ $limit = 20;
 ?>
 <div id="profile_content">
 	<?php
