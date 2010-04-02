@@ -26,6 +26,7 @@
 			'thewire:doing' => "What are you doing? Tell everyone on the wire:",
 			'thewire:newpost' => 'New wire post',
 			'thewire:addpost' => 'Post to the wire',
+			'thewire:by' => "Wire post by %s",
 
 	
         /**
