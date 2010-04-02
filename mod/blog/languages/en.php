@@ -18,6 +18,7 @@ $english = array(
 	'blog:friends' => 'Friends\' blogs',
 	
 	'blog:title:user_blogs' => '%s\'s Blogs',
+	'blog:title:all_blogs' => 'All Site Blogs',
 
 	// Editing
 	'blog:new' => 'New blog post',
