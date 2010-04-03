@@ -51,6 +51,19 @@ function register_notification_handler($method, $handler, $params = NULL) {
 }
 
 /**
+ * This function unregisters a handler for a given notification type (eg "email")
+ *
+ * @param string $method The method
+ */
+function unregister_notification_handler($method) {
+	global $NOTIFICATION_HANDLERS;
+
+	if (isset($NOTIFICATION_HANDLERS[$method])) {
+		unset($NOTIFICATION_HANDLERS[$method]);
+	}
+}
+
+/**
  * Notify a user via their preferences.
  *
  * @param mixed $to Either a guid or an array of guid's to notify.
@@ -101,6 +114,11 @@ function notify_user($to, $from, $subject, $message, array $params = NULL, $meth
 			if ($methods) {
 				// Deliver
 				foreach ($methods as $method) {
+
+					if (!isset($NOTIFICATION_HANDLERS[$method])) {
+						continue;
+					}
+
 					// Extract method details from list
 					$details = $NOTIFICATION_HANDLERS[$method];
 					$handler = $details->handler;
