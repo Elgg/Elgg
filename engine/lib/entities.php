@@ -1931,9 +1931,8 @@ $count = false, $site_guid = 0, $container_guid = null, $timelower = 0, $timeupp
 		$options['order_by'] = $order_by;
 	}
 
-	if ($limit) {
-		$options['limit'] = $limit;
-	}
+	// need to pass 0 for all option
+	$options['limit'] = $limit;
 
 	if ($offset) {
 		$options['offset'] = $offset;
