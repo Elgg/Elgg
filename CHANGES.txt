@@ -5,6 +5,7 @@ Version 1.7.1
   * (Unused) tags field removed from external pages.
   * Languages fixes in groups.
   * Installation checks database settings before writing settings.php.
+  * Made the widgets more consistent in their UI
 
  Bugfixes:
   * Pagination fixed.
@@ -25,7 +26,8 @@ Version 1.7.1
   * Tags lib updated to elgg_get_*() interface.
   * Can get entities based upon annotation/metadata owner_guid.
   * Moved friendly time and friendly title into overridable views.
-
+  * Added unregister_notification_handler()
+  * Added remove_widget_type()
 
 Version 1.7.0
 (March 2, 2010 from http://code.elgg.org/elgg/trunk/)
