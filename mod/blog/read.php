@@ -28,6 +28,8 @@
 			} else {
 				set_page_owner($blogpost->owner_guid);
 			}
+
+	$page_owner = page_owner_entity();
 			
 	// Display it
 			$area2 = elgg_view_entity($blogpost, true);
