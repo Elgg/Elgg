@@ -72,11 +72,14 @@ if ($more_nav_html) {
 	</li>";
 }
 
-echo <<<___END
-<div id="elgg_main_nav" class="clearfloat">
-	<ul class="navigation">
-		$nav_html
-	</ul>
-</div>
+// only display, if there are nav items to display
+if ($nav_html) {
+	echo <<<___END
+	<div id="elgg_main_nav" class="clearfloat">
+		<ul class="navigation">
+			$nav_html
+		</ul>
+	</div>
 ___END;
+}
 ?>
