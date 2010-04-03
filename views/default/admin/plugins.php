@@ -15,7 +15,8 @@ $token = generate_action_token($ts);
 
 // Page Header elements
 $title = elgg_view_title(elgg_echo('admin:plugins'));
-$buttons = "<a class='action_button' href=\"{$CONFIG->url}action/admin/plugins/enableall?__elgg_token=$token&__elgg_ts=$ts\">".elgg_echo('enableall')."</a>  <a class='action_button disabled' href=\"{$CONFIG->url}action/admin/plugins/disableall?__elgg_token=$token&__elgg_ts=$ts\">".elgg_echo('disableall')."</a> ";
+$buttons = "<a class='action_button' href=\"{$CONFIG->url}action/admin/plugins/enableall?__elgg_token=$token&amp;__elgg_ts=$ts\">".elgg_echo('enableall')."</a>";
+$buttons .= "<a class='action_button disabled' href=\"{$CONFIG->url}action/admin/plugins/disableall?__elgg_token=$token&amp;__elgg_ts=$ts\">".elgg_echo('disableall')."</a> ";
 
 // construct page header
 ?>

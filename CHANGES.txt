@@ -6,6 +6,7 @@ Version 1.8.0
  Generic API changes:
   * Added elgg_instanceof().
   * Added remove_subtype() and update_subtype().
+  * Added elgg_format_url()
 
  UI/UX API changes:
   * Added elgg_push_breadcrumb(), elgg_pop_breadcrumb(), and elgg_get_breadcrumbs().

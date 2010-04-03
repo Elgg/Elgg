@@ -2599,6 +2599,17 @@ interface Friendable {
 }
 
 /**
+ * Handles formatting of ampersands in urls
+ * 
+ * @param string $url
+ * @return string
+ * @since 1.8
+ */
+function elgg_format_url($url) {
+	return preg_replace('/&(?!amp;)/', '&amp;', $url);
+}
+
+/**
  * Rebuilds a parsed (partial) URL
  *
  * @param array $parts Associative array of URL components like parse_url() returns
@@ -2615,7 +2626,7 @@ function elgg_http_build_url(array $parts) {
 
 	$string = $scheme . $host . $port . $path . $query;
 
-	return $string;
+	return elgg_format_url($string);
 }
 
 

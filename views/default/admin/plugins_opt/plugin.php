@@ -30,26 +30,37 @@ $token = generate_action_token($ts);
 	<div class="admin_plugin_reorder">
 <?php
 			if ($vars['order'] > 10) {
+				$top_url = "{$vars['url']}action/admin/plugins/reorder?plugin={$plugin}&order=1&__elgg_token=$token&__elgg_ts=$ts";
+				$order = $vars['order'] - 11;
+				$up_url = "{$vars['url']}action/admin/plugins/reorder?plugin={$plugin}&order=$order&__elgg_token=$token&__elgg_ts=$ts";
 ?>
-			<a href="<?php echo $vars['url']; ?>action/admin/plugins/reorder?plugin=<?php echo $plugin; ?>&order=1&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("top"); ?></a>
-			<a href="<?php echo $vars['url']; ?>action/admin/plugins/reorder?plugin=<?php echo $plugin; ?>&order=<?php echo $vars['order'] - 11; ?>&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("up"); ?></a>
+			<a href="<?php echo elgg_format_url($top_url); ?>"><?php echo elgg_echo("top"); ?></a>
+			<a href="<?php echo elgg_format_url($up_url); ?>"><?php echo elgg_echo("up"); ?></a>
 <?php
 			}
 		?>
 		<?php
 			if ($vars['order'] < $vars['maxorder']) {
+				$order =  $vars['order'] + 11;
+				$down_url = "{$vars['url']}action/admin/plugins/reorder?plugin={$plugin}&order=$order&__elgg_token=$token&__elgg_ts=$ts";
+				$order = $vars['maxorder'] + 11;
+				$bottom_url = "{$vars['url']}action/admin/plugins/reorder?plugin={$plugin}&order=$order&__elgg_token=$token&__elgg_ts=$ts";
 ?>
-			<a href="<?php echo $vars['url']; ?>action/admin/plugins/reorder?plugin=<?php echo $plugin; ?>&order=<?php echo $vars['order'] + 11; ?>&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("down"); ?></a>
-			<a href="<?php echo $vars['url']; ?>action/admin/plugins/reorder?plugin=<?php echo $plugin; ?>&order=<?php echo $vars['maxorder'] + 11; ?>&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("bottom"); ?></a>
+			<a href="<?php echo elgg_format_url($down_url); ?>"><?php echo elgg_echo("down"); ?></a>
+			<a href="<?php echo elgg_format_url($bottom_url); ?>"><?php echo elgg_echo("bottom"); ?></a>
 <?php
 			}
 		?>
 	</div><div class="clearfloat"></div>
 	<div class="admin_plugin_enable_disable">
-		<?php if ($active) { ?>
-			<a class="cancel_button" href="<?php echo $vars['url']; ?>action/admin/plugins/disable?plugin=<?php echo $plugin; ?>&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("disable"); ?></a>
-		<?php } else { ?>
-			<a class="submit_button" href="<?php echo $vars['url']; ?>action/admin/plugins/enable?plugin=<?php echo $plugin; ?>&__elgg_token=<?php echo $token; ?>&__elgg_ts=<?php echo $ts; ?>"><?php echo elgg_echo("enable"); ?></a>
+		<?php if ($active) {
+			$url = "{$vars['url']}action/admin/plugins/disable?plugin=$plugin&__elgg_token=$token&__elgg_ts=$ts";
+		?>
+			<a class="cancel_button" href="<?php echo elgg_format_url($url); ?>"><?php echo elgg_echo("disable"); ?></a>
+		<?php } else { 
+			$url = "{$vars['url']}action/admin/plugins/enable?plugin=$plugin&__elgg_token=$token&__elgg_ts=$ts";
+		?>
+			<a class="submit_button" href="<?php echo elgg_format_url($url); ?>"><?php echo elgg_echo("enable"); ?></a>
 		<?php } ?>
 	</div>
 
@@ -90,10 +101,10 @@ $token = generate_action_token($ts);
 			?>
 		</div>
 		<?php } ?>
-		<div><?php echo elgg_echo('admin:plugins:label:version') . ": ". $manifest['version'] ?></div>
-		<div><?php echo elgg_echo('admin:plugins:label:author') . ": ". $manifest['author'] ?></div>
-		<div><?php echo elgg_echo('admin:plugins:label:copyright') . ": ". $manifest['copyright'] ?></div>
-		<div><?php echo elgg_echo('admin:plugins:label:licence') . ": ". $manifest['licence'] . $manifest['license'] ?></div>
+		<div><?php echo elgg_echo('admin:plugins:label:version') . ": ". htmlspecialchars($manifest['version']) ?></div>
+		<div><?php echo elgg_echo('admin:plugins:label:author') . ": ". htmlspecialchars($manifest['author']) ?></div>
+		<div><?php echo elgg_echo('admin:plugins:label:copyright') . ": ". htmlspecialchars($manifest['copyright']) ?></div>
+		<div><?php echo elgg_echo('admin:plugins:label:licence') . ": ". htmlspecialchars($manifest['licence'] . $manifest['license']) ?></div>
 		<div><?php echo elgg_echo('admin:plugins:label:website') . ": "; ?><a href="<?php echo $manifest['website']; ?>"><?php echo $manifest['website']; ?></a></div>
 	<?php } ?>
 
