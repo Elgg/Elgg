@@ -11,7 +11,7 @@
 
 <div id="elgg_topbar" class="clearfloat">
 <div id="elgg_topbar_contents">
-	<a href="http://www.elgg.org" target="_blank"><img class="site_logo" src="<?php echo $vars['url']; ?>_graphics/elgg_toolbar_logo.gif" alt="Elgg logo" /></a>
+	<a href="http://www.elgg.org"><img class="site_logo" src="<?php echo $vars['url']; ?>_graphics/elgg_toolbar_logo.gif" alt="Elgg logo" /></a>
 	<a href="<?php echo $_SESSION['user']->getURL(); ?>"><img class="user_mini_avatar" src="<?php echo $_SESSION['user']->getIcon('topbar'); ?>" alt="User avatar" /></a>
 
 	<?php
