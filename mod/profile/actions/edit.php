@@ -18,7 +18,17 @@
 	// Get profile fields
 		$input = array();
 		$accesslevel = get_input('accesslevel');
-		if (!is_array($accesslevel)) $accesslevel = array();
+		if (!is_array($accesslevel)) {
+			$accesslevel = array();
+		}
+
+		/**
+		 * wrapper for recursive array walk decoding
+		 */
+		function profile_array_decoder(&$v) {
+			$v = html_entity_decode($v, ENT_COMPAT, 'UTF-8');
+		}
+
 
 		foreach($CONFIG->profile as $shortname => $valuetype) {
 			// the decoding is a stop gag to prevent &amp;&amp; showing up in profile fields
@@ -26,9 +36,7 @@
 			// must decode in utf8 or string corruption occurs. see #1567.
 			$value = get_input($shortname);
 			if (is_array($value)) {
-				foreach ($value as $k => $v) {
-					$value[$k] = html_entity_decode($v, ENT_COMPAT, 'UTF-8');
-				}
+				array_walk_recursive($value, 'profile_array_decoder');
 			} else {
 				$value = html_entity_decode($value, ENT_COMPAT, 'UTF-8');
 			}
