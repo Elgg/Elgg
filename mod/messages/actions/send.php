@@ -59,6 +59,6 @@
 		system_message(elgg_echo("messages:posted"));
 	
 	// Forward to the users inbox
-		forward('mod/messages/sent.php');	
+		forward('pg/messages/' . get_loggedin_user()->username);
 
 ?>
