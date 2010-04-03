@@ -66,6 +66,9 @@
 				
 			// Register an annotation handler for comments etc
 				register_plugin_hook('entity:annotate', 'object', 'blog_annotate_comments');
+
+			// Add a widget
+				add_widget_type('blog',elgg_echo("blog"),elgg_echo("blog:widget:description"));
 				
 			// Add group menu option
 				add_group_tool_option('blog',elgg_echo('blog:enableblog'),true);

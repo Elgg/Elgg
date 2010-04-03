@@ -41,7 +41,14 @@
 			'blog:enableblog' => 'Enable group blog',
 	
 			'blog:group' => 'Group blog',
-			
+
+		/**
+		 * Blog widget
+		 */
+		'blog:widget:description' => 'This widget displays your latest blog entries.',
+		'blog:moreblogs' => 'More blog posts',
+		'blog:numbertodisplay' => 'Number of blog posts to display',
+		
          /**
 	     * Blog river
 	     **/
