@@ -98,7 +98,8 @@ function setup_db_connections() {
 function db_profiling_shutdown_hook() {
 	global $dbcalls;
 
-	elgg_log("DB Queries for this page: $dbcalls", 'DEBUG');
+	// demoted to NOTICE as it corrupts javasript at DEBUG
+	elgg_log("DB Queries for this page: $dbcalls", 'NOTICE');
 }
 
 /**

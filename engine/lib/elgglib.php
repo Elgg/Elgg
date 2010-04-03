@@ -1901,13 +1901,21 @@ function elgg_log($message, $level='NOTICE') {
  * @return void
  */
 function elgg_dump($value, $to_screen = TRUE, $level = 'NOTICE') {
-
+	global $CONFIG;
+	
 	// plugin can return false to stop the default logging method
 	$params = array('level' => $level,
 					'msg' => $value,
 					'to_screen' => $to_screen);
 	if (!trigger_plugin_hook('debug', 'log', $params, true)) {
 		return;
+	}
+
+	// Do not want to write to screen before page creation has started.
+	// This is not fool-proof but probably fixes 95% of the cases when logging
+	// results in data sent to the browser before the page is begun.
+	if (!isset($CONFIG->pagesetupdone)) {
+		$to_screen = FALSE;
 	}
 
 	if ($to_screen == TRUE) {
@@ -2681,7 +2689,8 @@ function __elgg_shutdown_hook() {
 	trigger_elgg_event('shutdown', 'system');
 
 	$time = (float)(microtime(TRUE) - $START_MICROTIME);
-	elgg_log("Page {$_SERVER['REQUEST_URI']} generated in $time seconds", 'DEBUG');
+	// demoted to NOTICE from DEBUG so javascript is not corrupted
+	elgg_log("Page {$_SERVER['REQUEST_URI']} generated in $time seconds", 'NOTICE');
 }
 
 /**
