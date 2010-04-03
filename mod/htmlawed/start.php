@@ -108,9 +108,6 @@ function htmlawed_filter_tags($hook, $entity_type, $returnvalue, $params) {
 			$return = htmLawed($var, $htmlawed_config);
 		} else {
 			
-			function htmLawedArray(&$v, $k, $htmlawed_config) {
-				$v = htmLawed($v, $htmlawed_config);
-			}
 			array_walk_recursive($var, 'htmLawedArray', $htmlawed_config);
 
 			$return = $var;
@@ -119,6 +116,14 @@ function htmlawed_filter_tags($hook, $entity_type, $returnvalue, $params) {
 
 	return $return;
 }
+
+/**
+ * wrapper function for htmlawed for handling arrays
+ */
+function htmLawedArray(&$v, $k, $htmlawed_config) {
+	$v = htmLawed($v, $htmlawed_config);
+}
+
 
 
 register_elgg_event_handler('init', 'system', 'htmlawed_init');
