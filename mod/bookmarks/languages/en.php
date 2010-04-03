@@ -16,6 +16,7 @@
 			'bookmarks:bookmarklet' => "Get bookmarklet",
 			'bookmarks:bookmarklet:group' => "Get group bookmarklet",
 			'bookmarks:inbox' => "Bookmarks inbox",
+			'bookmarks:morebookmarks' => "More bookmarks",
 			'bookmarks:more' => "More",
 			'bookmarks:shareditem' => "Bookmarked item",
 			'bookmarks:with' => "Share with",
@@ -46,7 +47,7 @@
 		 */
 		    
 		    'bookmarks:widget:description' => 
-		            "This widget is designed for your dashboard and will show you the latest items in your bookmarks inbox.",
+		            "This widget displays your latest bookmarks.",
 	
 			'bookmarks:bookmarklet:description' =>
 					"The bookmarks bookmarklet allows you to share any resource you find on the web with your friends, or just bookmark it for yourself. To use it, simply drag the following button to your browser's links bar:",
