@@ -8,10 +8,10 @@
 
 
 $title = $vars['title'];
-	
-$title = trim($title);
-$title = strtolower($title);
+
+$title = elgg_strtolower($title);
 $title = preg_replace("/[^\w ]/","",$title);
+$title = trim($title);
 $title = str_replace(" ","-",$title);
 $title = str_replace("--","-",$title);
 
