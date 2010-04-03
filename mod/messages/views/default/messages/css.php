@@ -150,6 +150,11 @@ MESSAGING PLUGIN
 	margin: 0 10px 10px 0;
 }
 
+.messages_to {
+	float: left;
+	margin-right: 10px;
+}
+
 /* view and reply to message view */
 .message_body {
 	margin-left: 120px;
