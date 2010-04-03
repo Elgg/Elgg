@@ -107,11 +107,13 @@ function htmlawed_filter_tags($hook, $entity_type, $returnvalue, $params) {
 			$return = "";
 			$return = htmLawed($var, $htmlawed_config);
 		} else {
-			$return = array();
-
-			foreach($var as $key => $el) {
-				$return[$key] = htmLawed($el, $htmlawed_config);
+			
+			function htmLawedArray(&$v, $k, $htmlawed_config) {
+				$v = htmLawed($v, $htmlawed_config);
 			}
+			array_walk_recursive($var, 'htmLawedArray', $htmlawed_config);
+
+			$return = $var;
 		}
 	}
 
