@@ -7,7 +7,7 @@
 <?php
 	echo elgg_view('embed/pagination',array(
 												'offset' => $vars['offset'],
-												'baseurl' => $vars['url'] . 'pg/embed/media?internalname=' . $vars['internalname'] . "&amp;simpletype=" . $vars['simpletype'],
+												'baseurl' => $vars['url'] . 'pg/embed/media?internalname=' . $vars['internalname'] . "&simpletype=" . $vars['simpletype'],
 												'limit' => $vars['limit'],
 												'count' => $vars['count']
 											));

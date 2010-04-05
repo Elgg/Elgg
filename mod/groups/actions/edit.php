@@ -16,6 +16,9 @@
 	$input = array();
 	foreach($CONFIG->group as $shortname => $valuetype) {
 		$input[$shortname] = get_input($shortname);
+		if ($shortname == 'name') {
+			$input[$shortname] = strip_tags($input[$shortname]);
+		}
 		if ($valuetype == 'tags')
 			$input[$shortname] = string_to_tag_array($input[$shortname]);
 	}

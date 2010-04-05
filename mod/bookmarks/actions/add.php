@@ -12,7 +12,7 @@
 gatekeeper();
 action_gatekeeper();
 //set some required variables
-$title = get_input('title');
+$title = strip_tags(get_input('title'));
 $address = get_input('address');
 $notes = get_input('notes');
 $access = get_input('access');

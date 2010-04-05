@@ -19,7 +19,7 @@
      
 
 	// Get input data
-	    $title = get_input('topictitle');
+	    $title = strip_tags(get_input('topictitle'));
 		$message = get_input('topicmessage');
 		$message_id = get_input('message_id');
 		$tags = get_input('topictags');
