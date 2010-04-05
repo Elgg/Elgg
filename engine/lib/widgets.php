@@ -254,7 +254,6 @@ function add_widget($user_guid, $handler, $context, $order = 0, $column = 1, $ac
  * @param string $position A comma-separated list of positions on the page (side or main) where this widget is allowed (default: "side,main")
  * @return true|false Depending on success
  */
-
 function add_widget_type($handler, $name, $description, $context = "all", $multiple = false, $positions = "side,main") {
 	if (!empty($handler) && !empty($name)) {
 		global $CONFIG;
@@ -280,6 +279,27 @@ function add_widget_type($handler, $name, $description, $context = "all", $multi
 	}
 
 	return false;
+}
+
+/**
+ * Remove a widget type
+ *
+ * @param string $handler The identifier for the widget handler
+ */
+function remove_widget_type($handler) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->widgets)) {
+		return;
+	}
+
+	if (!isset($CONFIG->widgets->handlers)) {
+		return;
+	}
+
+	if (isset($CONFIG->widgets->handlers[$handler])) {
+		unset($CONFIG->widgets->handlers[$handler]);
+	}
 }
 
 /**

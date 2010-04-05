@@ -21,8 +21,8 @@
  * @return true|false Depending on success
  */
 function add_to_river($view,$action_type,$subject_guid,$object_guid,$access_id = "",$posted = 0, $annotation_id = 0) {
-	// Sanitise variables
-	if (!elgg_view_exists($view)) {
+	// use default viewtype for when called from REST api
+	if (!elgg_view_exists($view, 'default')) {
 		return false;
 	}
 	if (!($subject = get_entity($subject_guid))) {

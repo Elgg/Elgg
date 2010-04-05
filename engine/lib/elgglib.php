@@ -14,10 +14,10 @@
  */
 
 /**
- * Adds messages to the session so they'll be carried over, and forwards the browser.
+ * Forwards the browser.
  * Returns false if headers have already been sent and the browser cannot be moved.
  *
- * @param string $location URL to forward to browser to
+ * @param string $location URL to forward to browser to. Can be relative path.
  * @return nothing|false
  */
 function forward($location = "") {
@@ -25,10 +25,6 @@ function forward($location = "") {
 
 	if (!headers_sent()) {
 		$current_page = current_page_url();
-		// What is this meant to do?
-		//if (strpos($current_page, $CONFIG->wwwroot . "action") ===false)
-
-		$_SESSION['msg'] = array_merge($_SESSION['msg'], system_messages());
 		if ((substr_count($location, 'http://') == 0) && (substr_count($location, 'https://') == 0)) {
 			$location = $CONFIG->url . $location;
 		}
@@ -1255,51 +1251,7 @@ function page_draw($title, $body, $sidebar = "") {
  * @return string The friendly time
  */
 function friendly_time($time) {
-	$diff = time() - ((int) $time);
-
-	$minute = 60;
-	$hour = $minute * 60;
-	$day = $hour * 24;
-
-	if ($diff < $minute) {
-		$friendly_time = elgg_echo("friendlytime:justnow");
-	} else if ($diff < $hour) {
-		$diff = round($diff / $minute);
-		if ($diff == 0) {
-			$diff = 1;
-		}
-
-		if ($diff > 1) {
-			$friendly_time = sprintf(elgg_echo("friendlytime:minutes"), $diff);
-		} else {
-			$friendly_time = sprintf(elgg_echo("friendlytime:minutes:singular"), $diff);
-		}
-	} else if ($diff < $day) {
-		$diff = round($diff / $hour);
-		if ($diff == 0) {
-			$diff = 1;
-		}
-
-		if ($diff > 1) {
-			$friendly_time = sprintf(elgg_echo("friendlytime:hours"), $diff);
-		} else {
-			$friendly_time = sprintf(elgg_echo("friendlytime:hours:singular"), $diff);
-		}
-	} else {
-		$diff = round($diff / $day);
-		if ($diff == 0) {
-			$diff = 1;
-		}
-
-		if ($diff > 1) {
-			$friendly_time = sprintf(elgg_echo("friendlytime:days"), $diff);
-		} else {
-			$friendly_time = sprintf(elgg_echo("friendlytime:days:singular"), $diff);
-		}
-	}
-
-	$timestamp = htmlentities(date(elgg_echo('friendlytime:date_format'), $time));
-	return "<acronym title=\"$timestamp\">$friendly_time</acronym>";
+	return elgg_view('output/friendlytime', array('time' => $time));
 }
 
 /**
@@ -1309,12 +1261,7 @@ function friendly_time($time) {
  * @return string The optimised title
  */
 function friendly_title($title) {
-	$title = trim($title);
-	$title = strtolower($title);
-	$title = preg_replace("/[^\w ]/","",$title);
-	$title = str_replace(" ","-",$title);
-	$title = str_replace("--","-",$title);
-	return $title;
+	return elgg_view('output/friendlytitle', array('title' => $title));
 }
 
 /**
@@ -1990,13 +1937,21 @@ function elgg_log($message, $level='NOTICE') {
  * @return void
  */
 function elgg_dump($value, $to_screen = TRUE, $level = 'NOTICE') {
-
+	global $CONFIG;
+	
 	// plugin can return false to stop the default logging method
 	$params = array('level' => $level,
 					'msg' => $value,
 					'to_screen' => $to_screen);
 	if (!trigger_plugin_hook('debug', 'log', $params, true)) {
 		return;
+	}
+
+	// Do not want to write to screen before page creation has started.
+	// This is not fool-proof but probably fixes 95% of the cases when logging
+	// results in data sent to the browser before the page is begun.
+	if (!isset($CONFIG->pagesetupdone)) {
+		$to_screen = FALSE;
 	}
 
 	if ($to_screen == TRUE) {
@@ -2932,7 +2887,8 @@ function __elgg_shutdown_hook() {
 	trigger_elgg_event('shutdown', 'system');
 
 	$time = (float)(microtime(TRUE) - $START_MICROTIME);
-	elgg_log("Page {$_SERVER['REQUEST_URI']} generated in $time seconds", 'DEBUG');
+	// demoted to NOTICE from DEBUG so javascript is not corrupted
+	elgg_log("Page {$_SERVER['REQUEST_URI']} generated in $time seconds", 'NOTICE');
 }
 
 /**

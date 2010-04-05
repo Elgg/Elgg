@@ -43,7 +43,7 @@
 		register_page_handler('file','file_page_handler');
 			
 		// Add a new file widget
-		add_widget_type('filerepo',elgg_echo("file:widget"),elgg_echo("file:widget:description"));
+		add_widget_type('filerepo',elgg_echo("file"),elgg_echo("file:widget:description"));
 		
 		// Register a URL handler for files
 		register_entity_url_handler('file_url','object','file');
@@ -235,5 +235,8 @@
 	register_action("file/upload", false, $CONFIG->pluginspath . "file/actions/upload.php");
 	register_action("file/save", false, $CONFIG->pluginspath . "file/actions/save.php");
 	register_action("file/delete", false, $CONFIG->pluginspath. "file/actions/delete.php");
+
+	// temporary - see #2010
+	register_action("file/download", false, $CONFIG->pluginspath. "file/actions/download.php");
 	
 ?>

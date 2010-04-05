@@ -17,8 +17,9 @@ $('a.show_file_desc').click(function () {
 	
 	//the number of files to display
 	$number = (int) $vars['entity']->num_display;
-	if (!$number)
-		$number = 1;
+	if (!$number) {
+		$number = 4;
+	}
 	
 	//get the layout view which is set by the user in the edit panel
 	$get_view = (int) $vars['entity']->gallery_list;

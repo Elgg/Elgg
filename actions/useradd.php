@@ -25,15 +25,15 @@ if (is_array($admin)) {
 
 // For now, just try and register the user
 try {
-	$guid = register_user($username, $password, $name, $email, true);
+	$guid = register_user($username, $password, $name, $email, TRUE);
 
 	if (((trim($password) != "") && (strcmp($password, $password2)==0)) && ($guid)) {
 		$new_user = get_entity($guid);
 		if (($guid) && ($admin)) {
-			$new_user->admin = 'yes';
+			$new_user->makeAdmin();
 		}
 
-		$new_user->admin_created = true;
+		$new_user->admin_created = TRUE;
 		$new_user->created_by_guid = get_loggedin_userid();
 		set_user_validation_status($new_user->getGUID(), TRUE, 'admin_created');
 
@@ -48,4 +48,3 @@ try {
 }
 
 forward($_SERVER['HTTP_REFERER']);
-exit;

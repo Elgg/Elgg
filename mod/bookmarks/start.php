@@ -35,7 +35,7 @@ function bookmarks_init() {
 	register_entity_url_handler('bookmark_url','object','bookmarks');
 
 	// Shares widget
-	add_widget_type('bookmarks',elgg_echo("bookmarks:recent"),elgg_echo("bookmarks:widget:description"));
+	add_widget_type('bookmarks',elgg_echo("bookmarks"),elgg_echo("bookmarks:widget:description"));
 
 	// Register entity type
 	register_entity_type('object','bookmarks');

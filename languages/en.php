@@ -30,6 +30,8 @@ $english = array(
 
 	'loggedinrequired' => "You must be logged in to view that page.",
 	'adminrequired' => "You must be an administrator to view that page.",
+	'membershiprequired' => "You must be a member of this group to view that page.",
+
 
 /**
  * Errors

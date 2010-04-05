@@ -27,6 +27,7 @@
 			'thewire:doing' => "What are you doing? Tell everyone on the wire:",
 			'thewire:newpost' => 'New wire post',
 			'thewire:addpost' => 'Post to the wire',
+			'thewire:by' => "Wire post by %s",
 
 	
         /**
@@ -44,11 +45,11 @@
 	     **/
 	     
 	        'thewire:sitedesc' => 'This widget shows the latest site notes posted to the wire',
-	        'thewire:yourdesc' => 'This widget shows your latest notes posted to the wire',
+	        'thewire:yourdesc' => 'This widget displays your latest wire posts',
 	        'thewire:friendsdesc' => 'This widget will show the latest from your friends on the wire',
 	        'thewire:friends' => 'Your friends on the wire',
 	        'thewire:num' => 'Number of items to display',
-	        
+	        'thewire:moreposts' => 'More wire posts',
 	        
 	
 		/**

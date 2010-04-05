@@ -75,6 +75,7 @@
 	margin-top:-3px;
 	float:left;
 	width:620px;
+	overflow: hidden;
 }
 .wire_post_options {
 	float:right;

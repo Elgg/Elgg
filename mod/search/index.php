@@ -8,11 +8,16 @@
  * @link http://elgg.org/
  */
 
+// Search supports RSS 
+global $autofeed;
+$autofeed = true;
+
 // $search_type == all || entities || trigger plugin hook
 $search_type = get_input('search_type', 'all');
 
 // @todo there is a bug in get_input that makes variables have slashes sometimes.
-$query = stripslashes(get_input('q', get_input('tag', '', FALSE), FALSE));
+// XSS protection is more important that searching for HTML.
+$query = stripslashes(get_input('q', get_input('tag', '')));
 
 // get limit and offset.  override if on search dashboard, where only 2
 // of each most recent entity types will be shown.

@@ -14,6 +14,9 @@ global $CONFIG;
 // Start engine
 require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
+// access check for closed groups
+group_gatekeeper();
+
 $page_owner = page_owner_entity();
 if ($page_owner === false || is_null($page_owner)) {
 	$page_owner = $_SESSION['user'];

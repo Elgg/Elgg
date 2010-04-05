@@ -2863,7 +2863,7 @@ function can_edit_entity($entity_guid, $user_guid = 0) {
 				$return = true;
 			}
 			if ($container_entity = get_entity($entity->container_guid)) {
-				if ($container_entity->canEdit()) {
+				if ($container_entity->canEdit($user->getGUID())) {
 					$return = true;
 				}
 			}

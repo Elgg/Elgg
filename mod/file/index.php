@@ -13,9 +13,8 @@
 
 	require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
-	if (is_callable('group_gatekeeper')) {
-		group_gatekeeper();
-	}
+	// access check for closed groups
+	group_gatekeeper();
 	
 	//set the title
 	if (page_owner() == get_loggedin_userid()) {

@@ -30,11 +30,13 @@ function action($action, $forwarder = "") {
 	// Installation cannot use tokens because it requires site secret to be
 	// working. (#1462)
 	// Login and logout are for convenience.
+	// file/download (see #2010)
 	$exceptions = array(
 		'systemsettings/install',
 		'admin/plugins/disable',
 		'logout',
-		'login'
+		'login',
+		'file/download',
 	);
 
 	if (!in_array($action, $exceptions)) {

@@ -31,7 +31,7 @@
 
 	<?php
 	// The administration link is for admin or site admin users only
-	if ($vars['user']->admin || $vars['user']->siteadmin) {
+	if ($vars['user']->isAdmin()) {
 	?>
 		<a href="<?php echo $vars['url']; ?>pg/admin/" class="admin"><?php echo elgg_echo("admin"); ?></a>
 

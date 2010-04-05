@@ -15,6 +15,37 @@ Version 1.8.0
     elgg_clear_sticky_form(), elgg_is_sticky_form(), and elgg_get_sticky_value().
 
 
+Version 1.7.1
+(??? from http://code.elgg.org/elgg/branches/1.7)
+
+ UI changes:
+  * (Unused) tags field removed from external pages.
+  * Languages fixes in groups.
+  * Installation checks database settings before writing settings.php.
+  * Made the widgets more consistent in their UI
+
+ Bugfixes:
+  * Pagination fixed.
+  * Profile icons fixed for CGI users who were seeing incorrect avatars.
+  * Tag search works in groups and members.
+  * Tag clouds correctly link to tag search.
+  * RSS views added to search.
+  * Wrapper function for get_entities() correctly rewrites container_guid to 
+    owner_guid.
+  * output/url correctly appends http:// again.
+  
+ API changes:
+  * Moved admin flag to users_entity table and added ElggUser->isAdmin(), 
+    ->makeAdmin(), and ->removeAdmin() to replace the metadata.
+  * Plugin hook for reported content includes the report object.
+  * UTF8 upgrade checks server defaults before running to avoid
+    corrupted strings.
+  * Tags lib updated to elgg_get_*() interface.
+  * Can get entities based upon annotation/metadata owner_guid.
+  * Moved friendly time and friendly title into overridable views.
+  * Added unregister_notification_handler()
+  * Added remove_widget_type()
+
 
 Version 1.7.0
 (March 2, 2010 from http://code.elgg.org/elgg/trunk/)

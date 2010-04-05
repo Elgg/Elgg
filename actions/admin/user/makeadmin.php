@@ -15,11 +15,10 @@ admin_gatekeeper();
 
 // Get the user
 $guid = get_input('guid');
-$obj = get_entity($guid);
+$user = get_entity($guid);
 
-if (($obj instanceof ElggUser) && ($obj->canEdit())) {
-	$obj->admin = 'yes';
-	if ($obj->admin) {
+if (($user instanceof ElggUser) && ($user->canEdit())) {
+	if ($user->makeAdmin()) {
 		system_message(elgg_echo('admin:user:makeadmin:yes'));
 	} else {
 		register_error(elgg_echo('admin:user:makeadmin:no'));
