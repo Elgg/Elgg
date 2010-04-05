@@ -98,3 +98,13 @@ margin: 6px;
 	padding: 0;
 }
 
+/* formatting for the search results */
+.search_listing .item_extra {
+	border: 1px solid #cccccc;
+	margin: 2px;
+	padding: 3px;
+}
+
+.search_listing .item_timestamp {
+	font-style: italic;
+}
