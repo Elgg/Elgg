@@ -407,6 +407,7 @@ CREATE TABLE `prefix_users_entity` (
   `language` varchar(6) NOT NULL DEFAULT '',
   `code` varchar(32) NOT NULL DEFAULT '',
   `banned` enum('yes','no') NOT NULL DEFAULT 'no',
+  `admin` enum('yes','no') NOT NULL DEFAULT 'no',
   `last_action` int(11) NOT NULL DEFAULT '0',
   `prev_last_action` int(11) NOT NULL DEFAULT '0',
   `last_login` int(11) NOT NULL DEFAULT '0',
@@ -418,6 +419,7 @@ CREATE TABLE `prefix_users_entity` (
   KEY `code` (`code`),
   KEY `last_action` (`last_action`),
   KEY `last_login` (`last_login`),
+  KEY `admin` (`admin`),
   FULLTEXT KEY `name` (`name`),
   FULLTEXT KEY `name_2` (`name`,`username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
