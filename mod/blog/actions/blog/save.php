@@ -45,7 +45,6 @@ $values = array(
 	'title' => '',
 	'description' => '',
 	'status' => 'draft',
-	'publish_date' => time(),
 	'access_id' => ACCESS_DEFAULT,
 	'comments_on' => 'On',
 	'excerpt' => '',
@@ -99,14 +98,6 @@ foreach ($values as $name => $default) {
 			}
 			break;
 
-		case 'publish_date':
-			if (!$value = strtotime($value)) {
-				$value = time();
-			}
-
-			$values[$name] = $value;
-			break;
-
 		// don't try to set the guid
 		case 'guid':
 			unset($values['guid']);
@@ -117,6 +108,15 @@ foreach ($values as $name => $default) {
 			break;
 	}
 }
+
+// build publish_date
+$publish_month = get_input('publish_month');
+$publish_day = get_input('publish_day');
+$publish_year = get_input('publish_year');
+$publish_hour = get_input('publish_hour');
+$publish_minute = get_input('publish_minute');
+$datetime = "$publish_year-$publish_month-$publish_day $publish_hour:$publish_minute:00";
+$values['publish_date'] = date('U', strtotime($datetime));
 
 // assign values to the entity, stopping on error.
 if (!$error) {

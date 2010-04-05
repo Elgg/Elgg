@@ -20,3 +20,13 @@
 .blogpost .body p {
 	line-height: 1.4em;
 }
+
+input.blog_publish_day,
+input.blog_publish_hour,
+input.blog_publish_minute {
+	width: 25px;
+}
+
+input.blog_publish_year {
+	width: 50px;
+}

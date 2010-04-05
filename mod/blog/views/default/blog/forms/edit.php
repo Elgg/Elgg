@@ -137,7 +137,7 @@ $access_input = elgg_view('input/access', array(
 ));
 
 $publish_date_label = elgg_echo('blog:publish_date');
-$publish_date_input = elgg_view('input/datepicker', array(
+$publish_date_input = elgg_view('input/datetime', array(
 	'internalname' => 'publish_date',
 	'internalid' => 'blog_publish_date',
 	'value' => $values['publish_date']
