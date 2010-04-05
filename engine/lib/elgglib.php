@@ -743,8 +743,12 @@ function elgg_view_annotation(ElggAnnotation $annotation, $bypass = true, $debug
  */
 function elgg_view_entity_list($entities, $count, $offset, $limit, $fullview = true, $viewtypetoggle = true, $pagination = true) {
 	$count = (int) $count;
-	$offset = (int) $offset;
 	$limit = (int) $limit;
+	
+	// do not require views to explicitly pass in the offset
+	if (!$offset = (int) $offset) {
+		$offset = get_input('offset', 0);
+	}
 
 	$context = get_context();
 
