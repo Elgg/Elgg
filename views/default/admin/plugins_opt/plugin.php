@@ -17,6 +17,8 @@ $details = $vars['details'];
 $active = $details['active'];
 $manifest = $details['manifest'];
 
+$plugin_pretty_name = (isset($manifest['name'])) ? $manifest['name'] : $plugin;
+
 // Check elgg version if available
 $version_check_valid = false;
 if ($manifest['elgg_version']) {
@@ -64,7 +66,7 @@ $token = generate_action_token($ts);
 		<?php } ?>
 	</div>
 
-	<h3><?php echo $plugin; ?><?php if (elgg_view("settings/{$plugin}/edit")) { ?> <a class="plugin_settings small link" onclick="elgg_slide_toggle(this,'.plugin_details','.pluginsettings');">[<?php echo elgg_echo('settings'); ?>]</a><?php } ?></h3>
+	<h3><?php echo $plugin_pretty_name; ?><?php if (elgg_view("settings/{$plugin}/edit")) { ?> <a class="plugin_settings small link" onclick="elgg_slide_toggle(this,'.plugin_details','.pluginsettings');">[<?php echo elgg_echo('settings'); ?>]</a><?php } ?></h3>
 
 	<?php if (elgg_view("settings/{$plugin}/edit")) { ?>
 	<div class="pluginsettings hidden">
@@ -101,6 +103,7 @@ $token = generate_action_token($ts);
 			?>
 		</div>
 		<?php } ?>
+		<div><?php echo elgg_echo('admin:plugins:label:directory') . ": ". htmlspecialchars($plugin) ?></div>
 		<div><?php echo elgg_echo('admin:plugins:label:version') . ": ". htmlspecialchars($manifest['version']) ?></div>
 		<div><?php echo elgg_echo('admin:plugins:label:author') . ": ". htmlspecialchars($manifest['author']) ?></div>
 		<div><?php echo elgg_echo('admin:plugins:label:copyright') . ": ". htmlspecialchars($manifest['copyright']) ?></div>

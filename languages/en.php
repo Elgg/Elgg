@@ -331,16 +331,6 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	'riveritem:plural:user' => 'some users',
 
 /**
- * Plugins
- */
-	'plugins:settings:save:ok' => "Settings for the %s plugin were saved successfully.",
-	'plugins:settings:save:fail' => "There was a problem saving settings for the %s plugin.",
-	'plugins:usersettings:save:ok' => "User settings for the %s plugin were saved successfully.",
-	'plugins:usersettings:save:fail' => "There was a problem saving  user settings for the %s plugin.",
-	'admin:plugins:label:version' => "Version",
-	'item:object:plugin' => 'Plugin configuration settings',
-
-/**
  * Notifications
  */
 	'notifications:usersettings' => "Notification settings",
@@ -461,6 +451,15 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	'admin:site:opt:description' => "Configure the site technical and non-technical settings. ",
 	'admin:site:access:warning' => "Changing the access setting only affects the permissions on content created in the future.",
 
+/**
+ * Plugins
+ */
+	'plugins:settings:save:ok' => "Settings for the %s plugin were saved successfully.",
+	'plugins:settings:save:fail' => "There was a problem saving settings for the %s plugin.",
+	'plugins:usersettings:save:ok' => "User settings for the %s plugin were saved successfully.",
+	'plugins:usersettings:save:fail' => "There was a problem saving  user settings for the %s plugin.",
+	'item:object:plugin' => 'Plugin configuration settings',
+
 	'admin:plugins' => "Tool Administration",
 	'admin:plugins:description' => "This admin panel allows you to control and configure tools installed on your site.",
 	'admin:plugins:opt:linktext' => "Configure tools...",
@@ -471,6 +470,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	'admin:plugins:label:website' => "URL",
 	'admin:plugins:label:moreinfo' => 'more info',
 	'admin:plugins:label:version' => 'Version',
+	'admin:plugins:label:directory' => 'Directory',
 	'admin:plugins:warning:elggversionunknown' => 'Warning: This plugin does not specify a compatible Elgg version.',
 	'admin:plugins:warning:elggtoolow' => 'Warning: This plugin requires a later version of Elgg!',
 	'admin:plugins:reorder:yes' => "Plugin %s was reordered successfully.",
@@ -479,6 +479,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	'admin:plugins:disable:no' => "Plugin %s could not be disabled.",
 	'admin:plugins:enable:yes' => "Plugin %s was enabled successfully.",
 	'admin:plugins:enable:no' => "Plugin %s could not be enabled.",
+	'admin:plugins:categories:all' => 'All categories',
 
 	'admin:statistics' => "Statistics",
 	'admin:statistics:description' => "This is an overview of statistics on your site. If you need more detailed statistics, a professional administration feature is available.",

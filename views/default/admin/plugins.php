@@ -12,11 +12,35 @@ global $CONFIG;
 
 $ts = time();
 $token = generate_action_token($ts);
+$categories = array_merge(array('' => elgg_echo('admin:plugins:categories:all')), $vars['categories']);
+
+$category_pulldown = elgg_view('input/pulldown', array(
+	'internalname' => 'category',
+	'options_values' => $categories,
+	'value' => $vars['show_category']
+));
+
+$category_button = elgg_view('input/button', array(
+	'value' => elgg_echo('filter'),
+	'class' => 'action_button'
+));
+
+$category_form = elgg_view('input/form', array(
+	'body' => $category_pulldown . $category_button
+));
 
 // Page Header elements
 $title = elgg_view_title(elgg_echo('admin:plugins'));
-$buttons = "<a class='action_button' href=\"{$CONFIG->url}action/admin/plugins/enableall?__elgg_token=$token&amp;__elgg_ts=$ts\">".elgg_echo('enableall')."</a>";
-$buttons .= "<a class='action_button' href=\"{$CONFIG->url}action/admin/plugins/disableall?__elgg_token=$token&amp;__elgg_ts=$ts\">".elgg_echo('disableall')."</a> ";
+
+// @todo Until "en/disable all" means "All plugins on this page" hide when not looking at all.
+if (!isset($vars['show_category']) || empty($vars['show_category'])) {
+	$buttons = "<a class='action_button' href=\"{$CONFIG->url}action/admin/plugins/enableall?__elgg_token=$token&amp;__elgg_ts=$ts\">".elgg_echo('enableall')."</a>  <a class='action_button disabled' href=\"{$CONFIG->url}action/admin/plugins/disableall?__elgg_token=$token&amp;__elgg_ts=$ts\">".elgg_echo('disableall')."</a> ";
+	$buttons .= "<br /><br />";
+} else {
+	$buttons = '';
+}
+
+$buttons .= $category_form;
 
 // construct page header
 ?>

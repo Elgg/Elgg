@@ -331,7 +331,11 @@ function load_plugin_manifest($plugin) {
 	$xml = xml_to_object(file_get_contents($CONFIG->pluginspath . $plugin. "/manifest.xml"));
 
 	if ($xml) {
-		$elements = array();
+		// set up some defaults to normalize expected values to arrays
+		$elements = array(
+			'screenshot' => array(),
+			'category' => array()
+		);
 
 		foreach ($xml->children as $element) {
 			$key = $element->attributes['key'];
@@ -358,7 +362,7 @@ function load_plugin_manifest($plugin) {
 
 /**
  * This function checks a plugin manifest 'elgg_version' value against the current install
- * returning TRUE if the elgg_version is <= the current install's version.
+ * returning TRUE if the elgg_version is >= the current install's version.
  * @param $manifest_elgg_version_string The build version (eg 2009010201).
  * @return bool
  */
