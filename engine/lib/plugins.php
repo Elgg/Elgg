@@ -306,14 +306,21 @@ function get_plugin_name($mainfilename = false) {
  *
  * Example file:
  *
- * <plugin_manifest>
- * 	<field key="author" value="Curverider Ltd" />
- *  	<field key="version" value="1.0" />
- * 	<field key="description" value="My plugin description, keep it short" />
- *  	<field key="website" value="http://www.elgg.org/" />
- *  	<field key="copyright" value="(C) Curverider 2008-2010" />
- *  	<field key="licence" value="GNU Public License version 2" />
- * </plugin_manifest>
+ *	<plugin_manifest>
+ *		<!-- Basic information -->
+ *		<field key="name" value="My Plugin" />
+ *		<field key="description" value="My Plugin's concise description" />
+ *		<field key="version" value="1.0" />
+ *		<field key="category" value="theme" />
+ *		<field key="category" value="bundled" />
+ *		<field key="screenshot" value="path/relative/to/my_plugin.jpg" />
+ *		<field key="screenshot" value="path/relative/to/my_plugin_2.jpg" />
+ *
+ *		<field key="author" value="Curverider Ltd" />
+ *		<field key="website" value="http://www.elgg.org/" />
+ *		<field key="copyright" value="(C) Curverider 2008-2010" />
+ *		<field key="licence" value="GNU Public License version 2" />
+ *	</plugin_manifest>
  *
  * @param string $plugin Plugin name.
  * @return array of values
@@ -330,7 +337,17 @@ function load_plugin_manifest($plugin) {
 			$key = $element->attributes['key'];
 			$value = $element->attributes['value'];
 
-			$elements[$key] = $value;
+			// create arrays if multiple fields are set
+			if (array_key_exists($key, $elements)) {
+				if (!is_array($elements[$key])) {
+					$orig = $elements[$key];
+					$elements[$key] = array($orig);
+				}
+
+				$elements[$key][] = $value;
+			} else {
+				$elements[$key] = $value;
+			}
 		}
 
 		return $elements;
