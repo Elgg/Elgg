@@ -15,7 +15,7 @@ $form_body .= "<br />";
 $form_body .= "<label>" . elgg_echo('password') . "<br />" . elgg_view('input/password', array('internalname' => 'password', 'class' => 'login_textarea')) . "</label><br />";
 
 $form_body .= elgg_view('login/extend');
-
+$form_body .= elgg_view('input/hidden', array('internalname' => 'returntoreferer', 'value' => 'true'));
 $form_body .= elgg_view('input/submit', array('value' => elgg_echo('login')));
 $form_body .= "<div class='persistent_login'><label><input type='checkbox' name='persistent' value='true' />".elgg_echo('user:persistent')."</label></div>";
 $form_body .= "<p class='loginbox'>";
