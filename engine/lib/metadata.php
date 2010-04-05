@@ -966,7 +966,7 @@ $count = FALSE, $case_sensitive = TRUE) {
  *
  * @see elgg_view_entity_list
  *
- * @deprecated 1.7 Use elgg_list_entities_from_metadata
+ * @deprecated 1.8 Use elgg_list_entities_from_metadata
  * @param mixed $meta_name Metadata name to search on
  * @param mixed $meta_value The value to match, optionally
  * @param string $entity_type The type of entity to look for, eg 'site' or 'object'
@@ -1023,7 +1023,7 @@ function elgg_list_entities_from_metadata($options) {
 	$count = elgg_get_entities_from_metadata(array_merge(array('count' => TRUE), $options));
 	$entities = elgg_get_entities_from_metadata($options);
 
-	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle, $pagination);
+	return elgg_view_entity_list($entities, $count, $options['offset'], $options['limit'], $options['full_view'], $options['view_type_toggle'], $options['pagination']);
 }
 
 /**
