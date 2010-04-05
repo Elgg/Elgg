@@ -64,6 +64,15 @@ a.privatemessages.new span {
 	width:180px;
 	overflow: hidden;
 }
+.messages_to {
+	float: left;
+	margin-right: 10px;
+}
+
+/* view and reply to message view */
+.message_body {
+	margin-left: 120px;
+}
 .message_subject {
 	float:left;
 	width:513px;

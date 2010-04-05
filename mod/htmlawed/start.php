@@ -107,16 +107,23 @@ function htmlawed_filter_tags($hook, $entity_type, $returnvalue, $params) {
 			$return = "";
 			$return = htmLawed($var, $htmlawed_config);
 		} else {
-			$return = array();
+			
+			array_walk_recursive($var, 'htmLawedArray', $htmlawed_config);
 
-			foreach($var as $key => $el) {
-				$return[$key] = htmLawed($el, $htmlawed_config);
-			}
+			$return = $var;
 		}
 	}
 
 	return $return;
 }
+
+/**
+ * wrapper function for htmlawed for handling arrays
+ */
+function htmLawedArray(&$v, $k, $htmlawed_config) {
+	$v = htmLawed($v, $htmlawed_config);
+}
+
 
 
 register_elgg_event_handler('init', 'system', 'htmlawed_init');

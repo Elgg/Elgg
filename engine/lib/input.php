@@ -77,8 +77,10 @@ function set_input($variable, $value) {
 
 /**
  * Filter tags from a given string based on registered hooks.
- * @param $var
- * @return mixed The filtered result
+ *
+ * @param mixed $var Anything that does not include an object (strings, ints, arrays)
+ *					This includes multi-dimensional arrays.
+ * @return mixed The filtered result - everything will be strings
  */
 function filter_tags($var) {
 	return trigger_plugin_hook('validate', 'input', null, $var);

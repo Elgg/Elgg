@@ -88,8 +88,7 @@ if (is_array($friends) && sizeof($friends)) {
 		if (!isset($users[$letter])) {
 			$users[$letter] = array();
 		}
-		$users[$letter][$user->name] = $user;
-				
+		$users[$letter][$user->guid] = $user;
 	}
 }
 

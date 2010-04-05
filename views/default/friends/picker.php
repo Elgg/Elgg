@@ -79,7 +79,7 @@ if (is_array($vars['entities']) && sizeof($vars['entities'])) {
 		if (!isset($users[$letter])) {
 			$users[$letter] = array();
 		}
-		$users[$letter][$user->name] = $user;
+		$users[$letter][$user->guid] = $user;
 	}
 }
 

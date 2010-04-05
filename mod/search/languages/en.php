@@ -14,6 +14,7 @@ $english = array(
 
 	'search_types:comments' => 'Comments',
 	'search:comment_on' => 'Comment on "%s"',
+	'search:comment_by' => 'by',
 	'search:unavailable_entity' => 'Unavailable Entity',
 );
 
