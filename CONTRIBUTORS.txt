@@ -24,8 +24,3 @@ http://benwerd.com/
 
 Marcus Povey
 http://marcuspovey.co.uk/
-
-CLASSIC ELGG IDEAS (up until v0.92)
-
-Kevin Jardine <kevin@radagast.biz>
-http://radagast.biz/
