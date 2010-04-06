@@ -1614,4 +1614,16 @@ a.action_button:focus {
 .admin_settings.menuitems li.custom_menuitem {
 	margin-bottom:20px;
 }
-
+.plugin_info_label {
+	font-weight: bold;
+}
+.plugin_description {
+	font-style: italic;
+}
+.plugin_screenshot {
+	display: inline;
+	margin: 3px;
+}
+.plugin_screenshot img {
+	width: 100px;
+}

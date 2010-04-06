@@ -70,3 +70,16 @@ foreach ($installed_plugins as $plugin => $data) {
 	echo elgg_view("admin/plugins_opt/plugin", array('plugin' => $plugin, 'details' => $data, 'maxorder' => $max, 'order' => array_search($plugin, $plugin_list)));
 	$n++;
 }
+
+?>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$('a.plugin_settings.link').click(function() {
+		elgg_slide_toggle($(this), '.plugin_details', '.pluginsettings');
+	});
+	$('a.manifest_details.link').click(function() {
+		elgg_slide_toggle($(this), '.plugin_details', '.manifest_file');
+	});
+});
+</script>

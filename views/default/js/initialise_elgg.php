@@ -93,7 +93,7 @@ function elgg_system_message() {
 }
 
 // reusable slide in/out toggle function
-function elgg_slide_toggle(activateLink,parentElement,toggleElement) {
+function elgg_slide_toggle(activateLink, parentElement, toggleElement) {
 	$(activateLink).closest(parentElement).find(toggleElement).animate({"height": "toggle"}, { duration: 400 });
 	return false;
 }

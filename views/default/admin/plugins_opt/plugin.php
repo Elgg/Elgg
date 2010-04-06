@@ -27,90 +27,133 @@ if ($manifest['elgg_version']) {
 
 $ts = time();
 $token = generate_action_token($ts);
-?>
-<div class="plugin_details <?php if ($active) echo "active"; else echo "not_active" ?>">
-	<div class="admin_plugin_reorder">
-<?php
-			if ($vars['order'] > 10) {
-				$top_url = "{$vars['url']}action/admin/plugins/reorder?plugin={$plugin}&order=1&__elgg_token=$token&__elgg_ts=$ts";
-				$order = $vars['order'] - 11;
-				$up_url = "{$vars['url']}action/admin/plugins/reorder?plugin={$plugin}&order=$order&__elgg_token=$token&__elgg_ts=$ts";
-?>
-			<a href="<?php echo elgg_format_url($top_url); ?>"><?php echo elgg_echo("top"); ?></a>
-			<a href="<?php echo elgg_format_url($up_url); ?>"><?php echo elgg_echo("up"); ?></a>
-<?php
-			}
-		?>
-		<?php
-			if ($vars['order'] < $vars['maxorder']) {
-				$order =  $vars['order'] + 11;
-				$down_url = "{$vars['url']}action/admin/plugins/reorder?plugin={$plugin}&order=$order&__elgg_token=$token&__elgg_ts=$ts";
-				$order = $vars['maxorder'] + 11;
-				$bottom_url = "{$vars['url']}action/admin/plugins/reorder?plugin={$plugin}&order=$order&__elgg_token=$token&__elgg_ts=$ts";
-?>
-			<a href="<?php echo elgg_format_url($down_url); ?>"><?php echo elgg_echo("down"); ?></a>
-			<a href="<?php echo elgg_format_url($bottom_url); ?>"><?php echo elgg_echo("bottom"); ?></a>
-<?php
-			}
-		?>
-	</div><div class="clearfloat"></div>
-	<div class="admin_plugin_enable_disable">
-		<?php if ($active) {
-			$url = "{$vars['url']}action/admin/plugins/disable?plugin=$plugin&__elgg_token=$token&__elgg_ts=$ts";
-		?>
-			<a class="cancel_button" href="<?php echo elgg_format_url($url); ?>"><?php echo elgg_echo("disable"); ?></a>
-		<?php } else { 
-			$url = "{$vars['url']}action/admin/plugins/enable?plugin=$plugin&__elgg_token=$token&__elgg_ts=$ts";
-		?>
-			<a class="submit_button" href="<?php echo elgg_format_url($url); ?>"><?php echo elgg_echo("enable"); ?></a>
-		<?php } ?>
-	</div>
+$active_class = ($active) ? 'active' : 'not_active';
 
-	<h3><?php echo $plugin_pretty_name; ?><?php if (elgg_view("settings/{$plugin}/edit")) { ?> <a class="plugin_settings small link" onclick="elgg_slide_toggle(this,'.plugin_details','.pluginsettings');">[<?php echo elgg_echo('settings'); ?>]</a><?php } ?></h3>
+$top_url = $up_url = $down_url = $bottom_url = '';
+if ($vars['order'] > 10) {
+	$top_url = "{$vars['url']}action/admin/plugins/reorder?plugin={$plugin}&order=1&__elgg_token=$token&__elgg_ts=$ts";
+	$top_link = '<a href="' . elgg_format_url($top_url) . '">' . elgg_echo('top') . '</a>';
 
-	<?php if (elgg_view("settings/{$plugin}/edit")) { ?>
-	<div class="pluginsettings hidden">
-			<div id="<?php echo $plugin; ?>_settings">
-				<?php echo elgg_view("object/plugin", array('plugin' => $plugin, 'entity' => find_plugin_settings($plugin))) ?>
-			</div>
-	</div>
-	<?php } ?>
+	$order = $vars['order'] - 11;
 
-	<?php
+	$up_url = "{$vars['url']}action/admin/plugins/reorder?plugin={$plugin}&order=$order&__elgg_token=$token&__elgg_ts=$ts";
+	$up_link = '<a href="' . elgg_format_url($up_url) . '">' . elgg_echo('up') . '</a>';
+}
 
-		if ($manifest) {
+if ($vars['order'] < $vars['maxorder']) {
+	$order =  $vars['order'] + 11;
+	$down_url = "{$vars['url']}action/admin/plugins/reorder?plugin={$plugin}&order=$order&__elgg_token=$token&__elgg_ts=$ts";
+	$down_link = '<a href="' . elgg_format_url($down_url) . '">' . elgg_echo('down') . '</a>';
 
-	?>
-		<div class="plugin_description"><?php echo elgg_view('output/longtext',array('value' => $manifest['description'])); ?></div>
-	<?php
+	$order = $vars['maxorder'] + 11;
+	$bottom_url = "{$vars['url']}action/admin/plugins/reorder?plugin={$plugin}&order=$order&__elgg_token=$token&__elgg_ts=$ts";
+	$bottom_link = '<a href="' . elgg_format_url($bottom_url) . '">' . elgg_echo('bottom') . '</a>';
+}
 
+if ($active) {
+	$url = "{$vars['url']}action/admin/plugins/disable?plugin=$plugin&__elgg_token=$token&__elgg_ts=$ts";
+	$enable_disable = '<a class="cancel_button" href="' . elgg_format_url($url) . '">' . elgg_echo('disable') . '</a>';
+} else {
+	$url = "{$vars['url']}action/admin/plugins/enable?plugin=$plugin&__elgg_token=$token&__elgg_ts=$ts";
+	$enable_disable = '<a class="submit_button" href="' . elgg_format_url($url) . '">' . elgg_echo('enable') . '</a>';
+}
+
+
+$categories_list = '';
+if ($manifest['category']) {
+	$categories_arr = array();
+	$base_url = "{$vars['url']}pg/admin/plugins?category=";
+
+	foreach($manifest['category'] as $category) {
+		$url = $base_url . urlencode($category);
+		$categories_arr[] = "<a href=\"$url\">" . htmlspecialchars($category) . '</a>';
+	}
+
+	$categories_list = implode(', ', $categories_arr);
+}
+
+$screenshots = '';
+if ($manifest['screenshot']) {
+	$base_url = "{$vars['url']}mod/";
+
+	$limit = 4;
+	foreach ($manifest['screenshot'] as $screenshot) {
+		if ($limit <= 0) {
+			break;
 		}
 
-	?>
+		$screenshot_src = $base_url . $plugin . "/$screenshot";
+		$screenshots .= "<li class=\"plugin_screenshot\"><a href=\"$screenshot_src\"><img src=\"$screenshot_src\"></a></li>";
 
-	<p><a class="manifest_details small link" onclick="elgg_slide_toggle(this,'.plugin_details','.manifest_file');"><?php echo elgg_echo("admin:plugins:label:moreinfo"); ?></a></p>
+		$limit--;
+	}
+}
 
-	<div class="manifest_file hidden">
+?>
 
-	<?php if ($manifest) { ?>
-		<?php if ((!$version_check_valid) || (!isset($manifest['elgg_version']))) { ?>
-		<div id="version_check">
-			<?php
-				if (!isset($manifest['elgg_version']))
-					echo elgg_echo('admin:plugins:warning:elggversionunknown');
-				else
-					echo elgg_echo('admin:plugins:warning:elggtoolow');
-			?>
+<div class="plugin_details <?php echo $active_class ?>">
+	<div class="admin_plugin_reorder">
+	<?php echo "$top_link $up_link $down_link $bottom_link"; ?>
+	</div>
+
+	<h3><?php echo "$plugin_pretty_name $settings_link"; ?></h3>
+
+	<div class="clearfloat"></div>
+	<div class="admin_plugin_enable_disable"><?php echo $enable_disable; ?></div>
+
+	<?php
+	if (elgg_view_exists("settings/{$plugin}/edit")) {
+		?>
+		<a class="plugin_settings small link">['<?php echo elgg_echo('settings'); ?>']</a>';
+		<div class="pluginsettings hidden">
+			<div id="$plugin_settings">
+				<?php echo elgg_view("object/plugin", array('plugin' => $plugin, 'entity' => find_plugin_settings($plugin))); ?>
+			</div>
 		</div>
-		<?php } ?>
+		<?php
+	}
+	if ($manifest) {
+		?>
+		<div class="plugin_description"><?php echo elgg_view('output/longtext',array('value' => $manifest['description'])); ?></div>
+		<div><span class="plugin_label"><?php echo elgg_echo('admin:plugins:label:author') . "</span>: ". htmlspecialchars($manifest['author']) ?></div>
+		<div><span class="plugin_label"><?php echo elgg_echo('admin:plugins:label:version') . "</span>: ". htmlspecialchars($manifest['version']) ?></div>
+
+		<p><a class="manifest_details small link"><?php echo elgg_echo("admin:plugins:label:moreinfo"); ?></a></p>
+
+		<div class="manifest_file hidden">
+
+		<?php
+		if ((!$version_check_valid) || (!isset($manifest['elgg_version']))) {
+			?>
+			<div id="version_check">
+				<?php
+					if (!isset($manifest['elgg_version'])) {
+						echo elgg_echo('admin:plugins:warning:elggversionunknown');
+					} else {
+						echo elgg_echo('admin:plugins:warning:elggtoolow');
+					}
+				?>
+			</div>
+			<?php
+		}
+
+		?>
 		<div><?php echo elgg_echo('admin:plugins:label:directory') . ": ". htmlspecialchars($plugin) ?></div>
-		<div><?php echo elgg_echo('admin:plugins:label:version') . ": ". htmlspecialchars($manifest['version']) ?></div>
-		<div><?php echo elgg_echo('admin:plugins:label:author') . ": ". htmlspecialchars($manifest['author']) ?></div>
+		<?php
+		if ($categories_list) {
+			?>
+			<div><?php echo elgg_echo('admin:plugins:label:categories') . ": ". $categories_list ?></div>
+			<?php
+		}
+		if ($screenshots) {
+			?>
+			<div><ul><?php echo $screenshots; ?></ul></div>
+			<?php
+		}
+		?>
 		<div><?php echo elgg_echo('admin:plugins:label:copyright') . ": ". htmlspecialchars($manifest['copyright']) ?></div>
 		<div><?php echo elgg_echo('admin:plugins:label:licence') . ": ". htmlspecialchars($manifest['licence'] . $manifest['license']) ?></div>
 		<div><?php echo elgg_echo('admin:plugins:label:website') . ": "; ?><a href="<?php echo $manifest['website']; ?>"><?php echo $manifest['website']; ?></a></div>
 	<?php } ?>
-
 	</div>
-
 </div>
