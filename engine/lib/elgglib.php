@@ -747,7 +747,7 @@ function elgg_view_entity_list($entities, $count, $offset, $limit, $fullview = t
 	
 	// do not require views to explicitly pass in the offset
 	if (!$offset = (int) $offset) {
-		$offset = get_input('offset', 0);
+		$offset = sanitise_int(get_input('offset', 0));
 	}
 
 	$context = get_context();
