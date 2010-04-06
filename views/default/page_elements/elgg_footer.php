@@ -12,7 +12,7 @@
 
 ?>
 <div id="elgg_footer">
-	<div id="elgg_footer_contents">
+	<div id="elgg_footer_contents" class="clearfloat">
 		<?php
 			if(is_plugin_enabled('reportedcontent') && isloggedin()){
 		?>
