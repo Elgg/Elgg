@@ -15,7 +15,6 @@ CONTRIBUTING DEVELOPERS
 
 Cash Costello - http://cashcostello.com/
 Justin Richer, Nathan Rackliffe, Tom Read - MITRE http://www.mitre.org/
-Milan Magudia - http://hedgehogs.net
 
 ALUMNI DEVELOPERS
 
