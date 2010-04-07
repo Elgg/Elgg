@@ -28,7 +28,7 @@ elgg_push_breadcrumb(sprintf(elgg_echo("bookmarks:user"),$page_owner->name));
 
 //set bookmarks header
 if(page_owner() == get_loggedin_userid()) {
-	$area1 .= elgg_view('page_elements/content_header', array('context' => "own", 'type' => 'bookmarks'));
+	$area1 .= elgg_view('page_elements/content_header', array('context' => "mine", 'type' => 'bookmarks'));
 } else {
 	$area1 .= elgg_view('navigation/breadcrumbs');
 	$area1 .= elgg_view('page_elements/content_header_member', array('type' => 'bookmarks'));
