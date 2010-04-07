@@ -1,4 +1,4 @@
-<script language="javascript" type="text/javascript" src="<?php echo $vars['url']?>mod/profile/vendor/jq.editable.min.js"></script>
+<script language="javascript" type="text/javascript" src="<?php echo $vars['url']?>mod/profile/vendor/jquery.jeditable.mini.js"></script>
 <script language="javascript" type="text/javascript">
 var reorderURL = '<?php echo elgg_add_action_tokens_to_url($vars['url'] . 'action/profile/editdefault/reorder', FALSE); ?>';
 function sortCallback(event, ui) {
