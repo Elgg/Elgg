@@ -94,24 +94,24 @@ if ($manifest['screenshot']) {
 <div class="plugin_details <?php echo $active_class ?>">
 	<div class="admin_plugin_reorder">
 	<?php echo "$top_link $up_link $down_link $bottom_link"; ?>
-	</div>
+	</div><div class="clearfloat"></div>
 
-	<h3><?php echo "$plugin_pretty_name $settings_link"; ?></h3>
-
-	<div class="clearfloat"></div>
 	<div class="admin_plugin_enable_disable"><?php echo $enable_disable; ?></div>
 
 	<?php
 	if (elgg_view_exists("settings/{$plugin}/edit")) {
-		?>
-		<a class="plugin_settings small link">['<?php echo elgg_echo('settings'); ?>']</a>';
-		<div class="pluginsettings hidden">
-			<div id="$plugin_settings">
-				<?php echo elgg_view("object/plugin", array('plugin' => $plugin, 'entity' => find_plugin_settings($plugin))); ?>
-			</div>
-		</div>
-		<?php
+		
+		$settings_link = "<a class='plugin_settings small link'>[". elgg_echo('settings') ."]</a>";
+		
+		$settings_panel = "<div class='pluginsettings hidden'>";
+		$settings_panel .= elgg_view("object/plugin", array('plugin' => $plugin, 'entity' => find_plugin_settings($plugin)));
+		$settings_panel .= "</div>";
 	}
+	?>
+	<h3><?php echo "$plugin_pretty_name $settings_link"; ?></h3>
+	<?php
+	echo $settings_panel;
+	
 	if ($manifest) {
 		?>
 		<div class="plugin_description"><?php echo elgg_view('output/longtext',array('value' => $manifest['description'])); ?></div>
