@@ -30,7 +30,7 @@ function blog_get_page_content_read($owner_guid = NULL, $guid = NULL) {
 		}
 	} else {
 		$content = elgg_view('page_elements/content_header', array(
-			'context' => $context,
+			'context' => $owner_guid ? 'mine' : 'everyone',
 			'type' => 'blog',
 			'all_link' => "{$CONFIG->site->url}pg/blog"
 		));
@@ -61,7 +61,12 @@ function blog_get_page_content_read($owner_guid = NULL, $guid = NULL) {
 			);
 		}
 
-		$content .= elgg_list_entities_from_metadata($options);
+		$list = elgg_list_entities_from_metadata($options);
+		if (!$list) {
+			$content .= elgg_echo('blog:none');
+		} else {
+			$content .= $list;
+		}
 	}
 
 	return array('content' => $content);
@@ -121,11 +126,8 @@ function blog_get_page_content_archive($owner_guid, $lower=0, $upper=0) {
 	
 	$now = time();
 
-	$content = elgg_view('page_elements/content_header', array(
-		'context' => $context,
-		'type' => 'blog',
-		'all_link' => "{$CONFIG->site->url}pg/blog"
-	));
+	elgg_push_breadcrumb(elgg_echo('blog:archives'));
+	$content = elgg_view('page_elements/content_header_member', array('type' => 'blog'));
 
 	if ($lower) {
 		$lower = (int)$lower;
@@ -174,7 +176,12 @@ function blog_get_page_content_archive($owner_guid, $lower=0, $upper=0) {
 		);
 	}
 
-	$content .= elgg_list_entities_from_metadata($options);
+	$list = elgg_list_entities_from_metadata($options);
+	if (!$list) {
+		$content .= elgg_echo('blog:none');
+	} else {
+		$content .= $list;
+	}
 
 	return array(
 		'content' => $content
@@ -190,16 +197,16 @@ function blog_get_page_content_archive($owner_guid, $lower=0, $upper=0) {
 function blog_get_page_content_friends($user_guid) {
 	global $CONFIG;
 	
-	elgg_push_breadcrumb(elgg_echo('blog:friends'));
+	elgg_push_breadcrumb(elgg_echo('friends'));
 	
 	$content = elgg_view('page_elements/content_header', array(
-		'context' => $context,
+		'context' => 'friends',
 		'type' => 'blog',
 		'all_link' => "{$CONFIG->site->url}pg/blog"
 	));
 	
 	if (!$friends = get_user_friends($user_guid, ELGG_ENTITIES_ANY_VALUE, 0)) {
-		$content .= elgg_echo('blog:no_friends');
+		$content .= elgg_echo('friends:none:you');
 	} else {
 		$options = array(
 			'type' => 'object',
@@ -224,7 +231,12 @@ function blog_get_page_content_friends($user_guid) {
 			);
 		}
 		
-		$content .= elgg_list_entities_from_metadata($options);
+		$list = elgg_list_entities_from_metadata($options);
+		if (!$list) {
+			$content .= elgg_echo('blog:none');
+		} else {
+			$content .= $list;
+		}
 	}
 	
 	return array('content' => $content);

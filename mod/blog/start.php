@@ -133,7 +133,7 @@ function blog_page_handler($page) {
 				break;
 
 			case 'friends':
-				$title = elgg_echo('blog:friends');
+				$title = elgg_echo('blog:title:friends');
 				$content_info = blog_get_page_content_friends($user->getGUID());
 				break;
 

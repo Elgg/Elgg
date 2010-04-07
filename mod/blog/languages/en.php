@@ -10,12 +10,11 @@ $english = array(
 	'blog:owned_blogs' => '%s',
 	'blog:revisions' => 'Revisions',
 	'blog:archives' => 'Archives',
-
 	'blog:blog' => 'Blog',
-	'blog:friends' => 'Friends\' blogs',
 	
 	'blog:title:user_blogs' => '%s\'s Blogs',
 	'blog:title:all_blogs' => 'All Site Blogs',
+	'blog:title:friends' => 'All Friends\' Blogs',
 
 	// Editing
 	'blog:new' => 'New blog post',
@@ -41,6 +40,7 @@ $english = array(
 	'blog:error:post_not_found' => 'This post has been removed or is invalid.',
 	'blog:messages:warning:draft' => 'There is an unsaved draft of this post!',
 	'blog:edit_revision_notice' => '(Old version)',
+	'blog:none' => 'No blogs found',
 
 	// river
 	'blog:river:create' => '%s wrote a new blog post',
