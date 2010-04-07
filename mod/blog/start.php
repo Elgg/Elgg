@@ -123,22 +123,22 @@ function blog_page_handler($page) {
 
 			case 'new':
 			case 'edit':
-				//$sidebar = elgg_view('blog/sidebar_edit', array('blog_guid' => $page2));
+				$title = elgg_echo('blog:edit');
 				$content_info = blog_get_page_content_edit($page2, $page3);
 				break;
 
 			case 'archive':
+				$title = elgg_echo('blog:archives');
 				$content_info = blog_get_page_content_archive($user->getGUID(), $page2, $page3);
 				break;
 
 			case 'friends':
-				//@todo make it go
-				$content = elgg_view('page_elements/content_header', array('context' => $content, 'type' => 'blog'));
-				$content .= blog_get_page_content_archive($user->getGUID());
+				$title = elgg_echo('blog:friends');
+				$content_info = blog_get_page_content_friends($user->getGUID());
 				break;
 
 			default:
-				forward("pg/blog/{$username}/read/");
+				forward("pg/blog/$username/read/");
 				break;
 		}
 	} else {

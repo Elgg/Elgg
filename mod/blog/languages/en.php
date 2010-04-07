@@ -1,20 +1,17 @@
 <?php
 /**
- * Blog English langauge file.
+ * Blog English language file.
  *
  */
 
 $english = array(
 	'blog' => 'Blogs',
-	'item:object:blog' => 'Blog',
 	'blog:blogs' => 'Blogs',
 	'blog:owned_blogs' => '%s',
 	'blog:revisions' => 'Revisions',
 	'blog:archives' => 'Archives',
 
 	'blog:blog' => 'Blog',
-	'blog:yours' => 'Your blog',
-	'blog:all' => 'All blogs',
 	'blog:friends' => 'Friends\' blogs',
 	
 	'blog:title:user_blogs' => '%s\'s Blogs',
@@ -33,11 +30,9 @@ $english = array(
 	'blog:status' => 'Status',
 	'blog:status:draft' => 'Draft',
 	'blog:status:published' => 'Published',
-	'blog:status:unsaved_draft' => 'Recovered Draft',
 
 	'blog:revision' => 'Revision',
 	'blog:auto_saved_revision' => 'Auto Saved Revision',
-	'blog:owner_title' => '%s\'s blogs',
 
 	// messages
 	'blog:message:saved' => 'Blog post saved.',
@@ -49,8 +44,6 @@ $english = array(
 
 	// river
 	'blog:river:create' => '%s wrote a new blog post',
-
-
 );
 
 add_translation('en', $english);

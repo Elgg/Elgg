@@ -116,10 +116,16 @@ function blog_get_page_content_edit($guid, $revision = NULL) {
  * @param unknown_type $lower
  * @param unknown_type $upper
  */
-function blog_get_page_content_archive($owner_guid, $lower, $upper) {
+function blog_get_page_content_archive($owner_guid, $lower=0, $upper=0) {
+	global $CONFIG;
+	
 	$now = time();
 
-	$content = elgg_view('page_elements/content_header', array('context' => $context, 'type' => 'blog'));
+	$content = elgg_view('page_elements/content_header', array(
+		'context' => $context,
+		'type' => 'blog',
+		'all_link' => "{$CONFIG->site->url}pg/blog"
+	));
 
 	if ($lower) {
 		$lower = (int)$lower;
@@ -173,6 +179,55 @@ function blog_get_page_content_archive($owner_guid, $lower, $upper) {
 	return array(
 		'content' => $content
 	);
+}
+
+/**
+ * Returns a view of the user's friend's posts.
+ *
+ * @param int $user_guid
+ * @return string
+ */
+function blog_get_page_content_friends($user_guid) {
+	global $CONFIG;
+	
+	elgg_push_breadcrumb(elgg_echo('blog:friends'));
+	
+	$content = elgg_view('page_elements/content_header', array(
+		'context' => $context,
+		'type' => 'blog',
+		'all_link' => "{$CONFIG->site->url}pg/blog"
+	));
+	
+	if (!$friends = get_user_friends($user_guid, ELGG_ENTITIES_ANY_VALUE, 0)) {
+		$content .= elgg_echo('blog:no_friends');
+	} else {
+		$options = array(
+			'type' => 'object',
+			'subtype' => 'blog',
+			'full_view' => FALSE,
+			'order_by_metadata' => array('name'=>'publish_date', 'direction'=>'DESC', 'as'=>'int'),
+		);
+		
+		foreach ($friends as $friend) {
+			$options['container_guids'][] = $friend->getGUID();
+		}
+		
+		// admin / owners can see any posts
+		// everyone else can only see published posts
+		if (!(isadminloggedin() || (isloggedin() && $owner_guid == get_loggedin_userid()))) {
+			if ($upper > $now) {
+				$upper = $now;
+			}
+
+			$options['metadata_name_value_pairs'][] = array(
+				array('name' => 'status', 'value' => 'published')
+			);
+		}
+		
+		$content .= elgg_list_entities_from_metadata($options);
+	}
+	
+	return array('content' => $content);
 }
 
 /**
