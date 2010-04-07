@@ -13,7 +13,7 @@ global $CONFIG;
 
 admin_gatekeeper();
 
-$id = (int)get_input('id');
+$id = get_input('id');
 
 $fieldlist = get_plugin_setting('user_defined_fields', 'profile');
 if (!$fieldlist) {

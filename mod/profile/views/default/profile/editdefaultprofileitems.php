@@ -26,7 +26,7 @@ $(document).ready(function() {
 
 	$save = elgg_echo('save');
 	$cancel = elgg_echo('cancel');
-	$url = elgg_add_action_tokens_to_url("{$vars['url']}action/profile/editdefault/editfield", FALSE);
+	$edit_url = elgg_add_action_tokens_to_url("{$vars['url']}action/profile/editdefault/editfield", FALSE);
 
 	foreach($vars['items'] as $item) {
 		echo <<< END
@@ -34,7 +34,7 @@ $(document).ready(function() {
 <script language="javascript" type="text/javascript">
 
 	$(function() {
-		$(".{$item->shortname}_editable").editable("$url", {
+		$(".{$item->shortname}_editable").editable("$edit_url ", {
 			type   : 'text',
 			submitdata: { _method: "post", 'field': '{$item->shortname}' },
 			onblur: 'submit',
