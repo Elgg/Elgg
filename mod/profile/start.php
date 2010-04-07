@@ -296,5 +296,6 @@ register_action("profile/editdefault",false,$CONFIG->pluginspath . "profile/acti
 register_action("profile/editdefault/delete",false,$CONFIG->pluginspath . "profile/actions/deletedefaultprofileitem.php", true);
 register_action("profile/editdefault/reset",false,$CONFIG->pluginspath . "profile/actions/resetdefaultprofile.php", true);
 register_action("profile/editdefault/reorder",false,$CONFIG->pluginspath . "profile/actions/reorder.php", true);
+register_action("profile/editdefault/editfield",false,$CONFIG->pluginspath . "profile/actions/editfield.php", true);
 register_action("profile/addcomment",false,$CONFIG->pluginspath . "profile/actions/addcomment.php");
 register_action("profile/deletecomment",false,$CONFIG->pluginspath . "profile/actions/deletecomment.php");

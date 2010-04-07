@@ -26,9 +26,9 @@ $(document).ready(function() {
 
 	$save = elgg_echo('save');
 	$cancel = elgg_echo('cancel');
+	$url = elgg_add_action_tokens_to_url("{$vars['url']}action/profile/editdefault/editfield", FALSE);
 
 	foreach($vars['items'] as $item) {
-		$url = elgg_add_action_tokens_to_url("{$vars['url']}action/profile/editdefault/editfield");
 		echo <<< END
 
 <script language="javascript" type="text/javascript">
