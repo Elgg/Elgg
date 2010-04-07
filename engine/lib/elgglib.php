@@ -744,7 +744,7 @@ function elgg_view_annotation(ElggAnnotation $annotation, $bypass = true, $debug
 function elgg_view_entity_list($entities, $count, $offset, $limit, $fullview = true, $viewtypetoggle = true, $pagination = true) {
 	$count = (int) $count;
 	$limit = (int) $limit;
-	
+
 	// do not require views to explicitly pass in the offset
 	if (!$offset = (int) $offset) {
 		$offset = sanitise_int(get_input('offset', 0));
@@ -1942,7 +1942,7 @@ function elgg_log($message, $level='NOTICE') {
  */
 function elgg_dump($value, $to_screen = TRUE, $level = 'NOTICE') {
 	global $CONFIG;
-	
+
 	// plugin can return false to stop the default logging method
 	$params = array('level' => $level,
 					'msg' => $value,
@@ -2559,7 +2559,7 @@ interface Friendable {
 
 /**
  * Handles formatting of ampersands in urls
- * 
+ *
  * @param string $url
  * @return string
  * @since 1.8
@@ -2572,10 +2572,11 @@ function elgg_format_url($url) {
  * Rebuilds a parsed (partial) URL
  *
  * @param array $parts Associative array of URL components like parse_url() returns
+ * @param bool $htmlencode HTML Encode the url?
  * @return str Full URL
  * @since 1.7
  */
-function elgg_http_build_url(array $parts) {
+function elgg_http_build_url(array $parts, $html_encode = TRUE) {
 	// build only what's given to us.
 	$scheme = isset($parts['scheme']) ? "{$parts['scheme']}://" : '';
 	$host = isset($parts['host']) ? "{$parts['host']}" : '';
@@ -2585,7 +2586,11 @@ function elgg_http_build_url(array $parts) {
 
 	$string = $scheme . $host . $port . $path . $query;
 
-	return elgg_format_url($string);
+	if ($html_encode) {
+		return elgg_format_url($string);
+	} else {
+		return $string;
+	}
 }
 
 
@@ -2593,10 +2598,11 @@ function elgg_http_build_url(array $parts) {
  * Adds action tokens to URL
  *
  * @param str $link Full action URL
+ * @param bool $htmlencode html encode the url?
  * @return str URL with action tokens
  * @since 1.7
  */
-function elgg_add_action_tokens_to_url($url) {
+function elgg_add_action_tokens_to_url($url, $html_encode = TRUE) {
 	$components = parse_url($url);
 
 	if (isset($components['query'])) {
@@ -2615,7 +2621,7 @@ function elgg_add_action_tokens_to_url($url) {
 	$components['query'] = http_build_query($query);
 
 	// rebuild the full url
-	return elgg_http_build_url($components);
+	return elgg_http_build_url($components, $html_encode);
 }
 
 /**
