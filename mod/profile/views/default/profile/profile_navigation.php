@@ -30,10 +30,6 @@ switch($section){
 	case 'commentwall':
 		$commentwall = 'class="selected"';
 		break;
-	case 'feeds':
-		$feeds = 'class="selected"';
-		break;
-		
 	case 'activity':
 	default:
 		$activity = 'class="selected"';
@@ -48,12 +44,6 @@ switch($section){
 	<li <?php echo $friends; ?>><a href="<?php echo $url . 'friends'; ?>">Friends</a></li>
 	<li <?php echo $commentwall; ?>><a href="<?php echo $url . 'commentwall'; ?>">Comment Wall</a></li>
 	<?php
-		//check to see if the aggregator plugin is enabled
-		if(is_plugin_enabled('aggregator')){
-	?>
-	<li <?php echo $feeds; ?>><a href="<?php echo $url . 'feeds'; ?>">Feeds</a></li>
-	<?php
-		}
 		//check to see if the twitter username is set
 		if($vars['entity']->twitter){
 	?>

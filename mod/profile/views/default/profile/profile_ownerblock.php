@@ -71,27 +71,32 @@ if(isadminloggedin()){
 
 //check tools are enabled
 if(is_plugin_enabled('file')){
-	$file_link = "<li {$file_highlight}><a href=\"{$vars['url']}pg/file/{$username}\">Files</a></li>";
+	$file_link = "<li><a href=\"{$vars['url']}pg/file/{$username}\">Files</a></li>";
 }else{
 	$file_link = "";
 }
 if(is_plugin_enabled('blog')){
-	$blog_link = "<li {$blog_highlight}><a href=\"{$vars['url']}pg/blog/{$username}\">Blog</a></li>";
+	$blog_link = "<li><a href=\"{$vars['url']}pg/blog/{$username}\">Blog</a></li>";
 }else{
 	$blog_link = "";
 }
-if(is_plugin_enabled('video')){
-	$video_link = "<li {$video_highlight}><a href=\"{$vars['url']}pg/video/{$username}\">Videos</a></li>";
+if(is_plugin_enabled('videolist')){
+	$video_link = "<li><a href=\"{$vars['url']}pg/videolist/{$username}\">Videos</a></li>";
 }else{
 	$video_link = "";
 }
+if(is_plugin_enabled('feeds')){
+	$feeds_link = "<li><a href=\"{$vars['url']}pg/feeds/{$username}\">Feeds</a></li>";
+}else{
+	$feeds_link = "";
+}
 if(is_plugin_enabled('pages')){
-	$pages_link = "<li {$pages_highlight}><a href=\"{$vars['url']}pg/pages/owned/{$username}\">Pages</a></li>";
+	$pages_link = "<li><a href=\"{$vars['url']}pg/pages/owned/{$username}\">Pages</a></li>";
 }else{
 	$pages_link = "";
 }
 if(is_plugin_enabled('bookmarks')){
-	$bookmark_link = "<li {$bookmarks_highlight}><a href=\"{$vars['url']}pg/bookmarks/{$username}\">Bookmarks</a></li>";
+	$bookmark_link = "<li><a href=\"{$vars['url']}pg/bookmarks/{$username}\">Bookmarks</a></li>";
 }else{
 	$bookmark_link = "";
 }
@@ -112,6 +117,7 @@ $display = <<<EOT
 		{$file_link}
 		{$blog_link}
 		{$video_link}
+		{$feeds_link}
 		{$bookmark_link}
 		{$pages_link}
 		</ul>
