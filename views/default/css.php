@@ -10,7 +10,7 @@
 	PAGE LAYOUT					main page content blocks: header, sidebar, footer...
 	GENERIC SELECTORS			reusable generic classes
 	ELGG TOPBAR					elgg topbar
-	TOOLS MENU					drop-down tools menu in topbar
+	[ TOOLS MENU					drop-down tools menu in topbar ]
 	HEADER CONTENTS
 	ELGG SITE NAVIGATION		Primary site navigation in header
 	FOOTER CONTENTS
@@ -354,7 +354,7 @@ h2 {
 	width:100%;
 }
 #elgg_topbar_contents a {
-	margin-right:20px;
+	margin-right:30px;
 	padding-top:2px;
 	display:inline;
 	float:left;
@@ -410,6 +410,7 @@ h2 {
 /* ***************************************
 	TOOLS MENU
 *************************************** */
+/*
 #elgg_topbar_contents ul.tools_menu,
 #elgg_topbar_contents ul.tools_menu ul {
 	margin:0;
@@ -448,7 +449,9 @@ h2 {
 #elgg_topbar_contents ul.tools_menu ul li {
 	float: none;
 }
+*/
 /* elgg toolbar drop-down menu style */
+/*
 #elgg_topbar_contents ul.tools_menu ul {
 	width: 150px;
 	top: 24px;
@@ -469,7 +472,7 @@ h2 {
 	text-decoration: none;
 }
 #elgg_topbar_contents ul.tools_menu ul li a {
-	background-color: #333333; /* menu off-state color */
+	background-color: #333333; 
 	font-weight: bold;
 	padding-left:6px;
 	padding-top:4px;
@@ -480,11 +483,12 @@ h2 {
 	border-bottom: 1px solid white;
 }
 #elgg_topbar_contents ul.tools_menu ul a.hover {
-	background-color: #0054a7; /* menu hover-state color */
+	background-color: #0054a7;
 }
 #elgg_topbar_contents ul.tools_menu ul a {
 	opacity: 0.9;
 }
+*/
 
 
 
@@ -1058,7 +1062,8 @@ li.navigation_more ul li {
 }
 .entity_subtext {
 	color:#666666;
-	font-size: 90%;
+	font-size: 85%;
+	font-style: italic;
 }
 /* entity metadata block */
 .entity_metadata {
@@ -1614,16 +1619,4 @@ a.action_button:focus {
 .admin_settings.menuitems li.custom_menuitem {
 	margin-bottom:20px;
 }
-.plugin_info_label {
-	font-weight: bold;
-}
-.plugin_description {
-	font-style: italic;
-}
-.plugin_screenshot {
-	display: inline;
-	margin: 3px;
-}
-.plugin_screenshot img {
-	width: 100px;
-}
+

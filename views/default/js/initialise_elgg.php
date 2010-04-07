@@ -4,26 +4,6 @@ $(document).ready(function () {
 	// toggle widget box contents
 	$('a.toggle_box_contents').bind('click', toggleContent);
 
-/*  // replaced with elgg_slide_toggle
-	@todo - PH update widget canvases with the new toggle function
-	// toggle widget box edit panel
-	$('a.toggle_box_edit_panel').click(function () {
-		$(this.parentNode.parentNode).children(".collapsable_box_editpanel").slideToggle("fast");
-		return false;
-	});
-
-	// toggle customise edit panel
-	$('a.toggle_customise_edit_panel').click(function () {
-		$('div#customise_editpanel').slideToggle("fast");
-		return false;
-	});
-
-	$('a.collapsibleboxlink').click(function () {
-		$(this.parentNode.parentNode).children(".collapsible_box").slideToggle("fast");
-		return false;
-	});
-*/
-
 	// WIDGET GALLERY EDIT PANEL
 	// Sortable widgets
 	var els = ['#leftcolumn_widgets', '#middlecolumn_widgets', '#rightcolumn_widgets', '#widget_picker_gallery' ];

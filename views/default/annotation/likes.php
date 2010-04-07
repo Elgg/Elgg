@@ -6,8 +6,8 @@
 $owner = get_user($vars['annotation']->owner_guid);
 
 ?>
-<div class="elgg_likes clearfloat">
-	<div class="elgg_likes_icon">
+<div class="elgg_likes_user clearfloat">
+	<div class="entity_listing_icon">
 		<?php
 			echo elgg_view("profile/icon", array(
 					'entity' => $owner,
@@ -16,19 +16,19 @@ $owner = get_user($vars['annotation']->owner_guid);
 		?>
 	</div>
 	
-	<div class="elgg_likes_details">
+	<div class="entity_listing_info">
 		<?php
 		// if the user looking at the like listing can edit, show the delete link
 		if ($vars['annotation']->canEdit()) {
 		?>
-			<span class="delete_button">
+			<div class="entity_metadata"><span class="delete_button">
 				<?php echo elgg_view("output/confirmlink",array(
 						'href' => $vars['url'] . "action/likes/delete?annotation_id=" . $vars['annotation']->id,
 						'text' => elgg_echo('remove'),
 						'confirm' => elgg_echo('deleteconfirm')
 						));
 				?>
-			</span>
+			</span></div>
 		<?php
 			} //end of can edit if statement
 		?>
