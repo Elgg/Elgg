@@ -76,22 +76,21 @@ function profile_fields_setup() {
 		'twitter' => 'text'
 	);
 
-	// TODO: Have an admin interface for this
-	$n = 0;
-	$loaded_defaults = array();
-	while ($translation = get_plugin_setting("admin_defined_profile_$n", 'profile')){
-		// Add a translation
-		add_translation(get_current_language(), array("profile:admin_defined_profile_$n" => $translation));
-
-		// Detect type
-		$type = get_plugin_setting("admin_defined_profile_type_$n", 'profile');
-		if (!$type) $type = 'text';
-
-		// Set array
-		$loaded_defaults["admin_defined_profile_$n"] = $type;
-
-		$n++;
+	$loaded_default = array();
+	if ($fieldlist = get_plugin_setting('user_defined_fields','profile')) {
+		if (!empty($fieldlist)) {
+			$fieldlistarray = explode(',',$fieldlist);
+			$loaded_defaults = array();
+			foreach($fieldlistarray as $listitem) {
+				if ($translation = get_plugin_setting("admin_defined_profile_{$listitem}", 'profile')) {
+					$type = get_plugin_setting("admin_defined_profile_type_{$listitem}", 'profile');
+					$loaded_defaults["admin_defined_profile_{$listitem}"] = $type;
+					add_translation(get_current_language(), array("profile:admin_defined_profile_{$listitem}" => $translation));
+				}
+			}
+		}
 	}
+
 	if (count($loaded_defaults)) {
 		$CONFIG->profile_using_custom = true;
 		$profile_defaults = $loaded_defaults;
