@@ -101,7 +101,11 @@ $body_input = elgg_view('input/longtext', array(
 ));
 
 $save_status = elgg_echo('blog:save_status');
-$never = elgg_echo('blog:never');
+if ($values['publish_date']) {
+	$saved = date('F j, Y @ H:i', $values['publish_date']);
+} else {
+	$saved = elgg_echo('blog:never');
+}
 
 $status_label = elgg_echo('blog:status');
 $status_input = elgg_view('input/pulldown', array(
@@ -174,7 +178,7 @@ $body_input
 <br />
 
 <p id="blog_save_status">
-	$save_status <span id="blog_save_status_time">$never</span>
+	$save_status <span id="blog_save_status_time">$saved</span>
 </p>
 
 <p>
@@ -243,7 +247,7 @@ elgg_clear_sticky_form('blog');
 			var d = new Date();
 			var mins = d.getMinutes() + '';
 			if (mins.length == 1) mins = '0' + mins;
-			$("#blog_save_status_time").html(d.getHours() + ":" + mins);
+			$("#blog_save_status_time").html(d.toLocaleDateString() + " @ " + d.getHours() + ":" + mins);
 		} else {
 			$("#blog_save_status_time").html("<?php echo elgg_echo('error'); ?>");
 		}

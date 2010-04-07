@@ -87,3 +87,4 @@ if ($error) {
 	$json = array('success' => TRUE, 'message' => $msg, 'guid' => $blog->getGUID());
 	echo json_encode($json);
 }
+exit;
