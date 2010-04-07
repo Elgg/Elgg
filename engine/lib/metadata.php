@@ -1011,8 +1011,8 @@ function list_entities_from_metadata($meta_name, $meta_value = "", $entity_type 
  */
 function elgg_list_entities_from_metadata($options) {
 	$defaults = array(
-		'offset' => get_input('offset', 0),
-		'limit' => get_input('limit', 10),
+		'offset' => (int) max(get_input('offset', 0), 0),
+		'limit' => (int) max(get_input('limit', 10), 0),
 		'full_view' => TRUE,
 		'view_type_toggle' => FALSE,
 		'pagination' => TRUE
