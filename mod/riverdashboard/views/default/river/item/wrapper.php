@@ -17,22 +17,11 @@ if(get_context() == 'profile' && $object->getSubtype() ==  'thewire')
 else
 	$user = get_entity($vars['item']->subject_guid);
 
-//get the right annotation type
-//*todo - use the same for comments, everywhere e.g. comment
-switch($vars['item']->subtype){
-	case 'thewire':
-	$annotation_comment = 'wire_reply';
-	break;
-	default:
-	$annotation_comment = 'generic_comment';
-	break;
-}
-
 //count comment annotations
 $comment_count = count_annotations($vars['item']->object_guid, $vars['item']->type, $vars['item']->subtype, $annotation_comment);
 
 //get last three comments display
-$get_comments = get_annotations($vars['item']->object_guid, "", "", $annotation_comment, "", "", 3, 0, "desc");
+$get_comments = get_annotations($vars['item']->object_guid, "", "", 'generic_comment', "", "", 3, 0, "desc");
 
 if($get_comments){
 	//reverse the array so we can display comments in the right order
