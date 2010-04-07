@@ -10,7 +10,7 @@ $english = array(
  */
 
 	'profile' => "Profile",
-	'profile:edit:default' => 'Replace profile fields',
+	'profile:edit:default' => 'Profile fields',
 	'profile:preview' => 'Preview',
 
 /**
@@ -72,12 +72,12 @@ $english = array(
 
 	'profile:saved' => "Your profile was successfully saved.",
 	'profile:icon:uploaded' => "Your profile picture was successfully uploaded.",
-	
+
 /**
  * Profile comment wall
  **/
- 	'profile:commentwall:add' => "Add to the wall",
- 	'profile:commentwall:posted' => "You successfully posted on the comment wall.",
+	'profile:commentwall:add' => "Add to the wall",
+	'profile:commentwall:posted' => "You successfully posted on the comment wall.",
 	'profile:commentwall:deleted' => "You successfully deleted the message.",
 	'profile:commentwall:blank' => "Sorry; you need to actually put something in the message area before we can save it.",
 	'profile:commentwall:notfound' => "Sorry; we could not find the specified item.",
@@ -85,15 +85,15 @@ $english = array(
 	'profile:commentwall:none' => "No comment wall posts found.",
 	'profile:commentwall:somethingwentwrong' => "Something went wrong when trying to save your message, make sure you actually wrote a message.",
 	'profile:commentwall:failure' => "An unexpected error occurred when adding your message. Please try again.",
-	
+
 /**
  * Email messages commentwall
  */
-	
+
 	'profile:comment:subject' => 'You have a new message board comment!',
 	'profile:comment:body' => "You have a new message board comment from %s. It reads:
 
-			
+
 %s
 
 

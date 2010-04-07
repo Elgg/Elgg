@@ -12,12 +12,12 @@
 global $CONFIG;
 admin_gatekeeper();
 
-$n = 0;
-while (get_plugin_setting("admin_defined_profile_$n", 'profile')) {
-	set_plugin_setting("admin_defined_profile_$n", '', 'profile');
-	set_plugin_setting("admin_defined_profile_type_$n", '', 'profile');
-
-	$n++;
+if ($fieldlist = get_plugin_setting('user_defined_fields', 'profile')) {
+	$fieldlistarray = explode(',', $fieldlist);
+	foreach($fieldlistarray as $listitem) {
+		set_plugin_setting("admin_defined_profile_{$listitem}", '', 'profile');
+		set_plugin_setting("admin_defined_profile_type_{$listitem}", '', 'profile');
+	}
 }
 
 set_plugin_setting('user_defined_fields', FALSE, 'profile');

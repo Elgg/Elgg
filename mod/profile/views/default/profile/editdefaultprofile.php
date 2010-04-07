@@ -20,9 +20,9 @@ $type_control = elgg_view('input/pulldown', array('internalname' => 'type', 'opt
 	'url' => elgg_echo('url'),
 	'email' => elgg_echo('email')
 )));
-	
-$submit_control = elgg_view('input/submit', array('internalname' => elgg_echo('save'), 'value' => elgg_echo('Add')));
-	
+
+$submit_control = elgg_view('input/submit', array('internalname' => elgg_echo('add'), 'value' => elgg_echo('add')));
+
 $formbody = <<< END
 		<p>$label_text: $label_control
 		$type_text: $type_control

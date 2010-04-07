@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin_manifest>
         <field key="author" value="Curverider ltd" />
-        <field key="version" value="1.7" />
+        <field key="version" value="1.8" />
+		<field key="category" value="bundled" />
+		<field key="category" value="social" />
         <field key="description" value="Elgg profile plugin." />
         <field key="website" value="http://www.elgg.org/" />
         <field key="copyright" value="(C) Curverider 2008-2010" />
