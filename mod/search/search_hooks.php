@@ -240,8 +240,21 @@ function search_tags_hook($hook, $type, $value, $params) {
 			}
 		}
 
+		// different entities have different titles
+		switch($entity->type) {
+			case 'site':
+			case 'user':
+			case 'group':
+				$title_tmp = $entity->name;
+				break;
+
+			case 'object':
+				$title_tmp = $entity->title;
+				break;
+		}
+
 		// Nick told me my idea was dirty, so I'm hard coding the numbers.
-		$title_tmp = strip_tags($entity->title);
+		$title_tmp = strip_tags($title_tmp);
 		if (elgg_strlen($title_tmp) > 297) {
 			$title_str = elgg_substr($title_tmp, 0, 297) . '...';
 		} else {
@@ -257,7 +270,6 @@ function search_tags_hook($hook, $type, $value, $params) {
 
 		$tags_str = implode('. ', $matched_tags_strs);
 		$tags_str = search_get_highlighted_relevant_substrings($tags_str, $params['query']);
-		//$tags_str = "($tags_str)";
 
 		$entity->setVolatileData('search_matched_title', $title_str);
 		$entity->setVolatileData('search_matched_description', $desc_str);
