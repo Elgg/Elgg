@@ -50,8 +50,8 @@ echo <<<___END
 	<div class="search_listing">
 		<div class="search_listing_icon">$icon</div>
 		<div class="search_listing_info">
-			<p class="ItemTitle">$title</p>$description
-			<p class="ItemTimestamp">$time</p>
+			<p class="item_title">$title</p>$description
+			<p class="item_timestamp">$time</p>
 		</div>
 	</div>
 ___END;

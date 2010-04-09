@@ -42,9 +42,11 @@ $title = $entity->getVolatileData('search_matched_title');
 $description = $entity->getVolatileData('search_matched_description');
 $extra_info = $entity->getVolatileData('search_matched_extra');
 $url = $entity->getVolatileData('search_url');
+
 if (!$url) {
 	$url = $entity->getURL();
 }
+
 $title = "<a href=\"$url\">$title</a>";
 $time = $entity->getVolatileData('search_time');
 if (!$time) {
@@ -53,7 +55,7 @@ if (!$time) {
 	$time = friendly_time(($tu > $tc) ? $tu : $tc);
 }
 ?>
-	<div class="search_listing clearfloat">
+	<div class="search_listing">
 	<div class="search_listing_icon"><?php echo $icon; ?></div>
 		<div class="search_listing_info">
 			<p class="item_title"><?php echo $title; ?></p>
