@@ -16,7 +16,13 @@ $persistent = get_input("persistent", false);
 // If all is present and correct, try to log in
 $result = false;
 if (!empty($username) && !empty($password)) {
-	if ($user = authenticate($username,$password)) {
+	// check first if this is an email address and do a login
+	// email addies will be validated
+	if (strpos($username, '@') !== FALSE && ($user=get_user_by_email($username))) {
+		$username = $user[0]->username;
+	}
+
+	if ($user = authenticate($username, $password)) {
 		$result = login($user, $persistent);
 	}
 }
@@ -29,7 +35,7 @@ if ($result) {
 		unset($_SESSION['last_forward_from']);
 		forward($forward_url);
 	} else {
-		if ( (isadminloggedin()) && (!datalist_get('first_admin_login'))) {
+		if ((isadminloggedin()) && (!datalist_get('first_admin_login'))) {
 			system_message(elgg_echo('firstadminlogininstructions'));
 			datalist_set('first_admin_login', time());
 
