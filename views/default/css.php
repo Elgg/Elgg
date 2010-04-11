@@ -10,7 +10,6 @@
 	PAGE LAYOUT					main page content blocks: header, sidebar, footer...
 	GENERIC SELECTORS			reusable generic classes
 	ELGG TOPBAR					elgg topbar
-	[ TOOLS MENU					drop-down tools menu in topbar ]
 	HEADER CONTENTS
 	ELGG SITE NAVIGATION		Primary site navigation in header
 	FOOTER CONTENTS
@@ -26,6 +25,7 @@
 	USER SETTINGS & ADMIN AREA	styles for user settings and default admin area
 	GENERAL FORM ELEMENTS		default styles for all elgg input/form elements
 	FRIENDS PICKER
+	LIKES
 	ADMIN AREA
 
 
@@ -405,91 +405,6 @@ h2 {
 	float:right;
 	margin-right:30px;
 }
-
-
-/* ***************************************
-	TOOLS MENU
-*************************************** */
-/*
-#elgg_topbar_contents ul.tools_menu,
-#elgg_topbar_contents ul.tools_menu ul {
-	margin:0;
-	padding:0;
-	display:inline;
-	float:left;
-	list-style-type: none;
-	z-index: 9000;
-	position: relative;
-}
-#elgg_topbar_contents ul.tools_menu {
-	margin:0 20px 0 5px;
-}
-#elgg_topbar_contents li.menu a.tools {
-	background:transparent url(<?php echo $vars['url']; ?>_graphics/topbar_icons.png) no-repeat 3px 1px;
-	padding-left:24px !important;
-}
-#elgg_topbar_contents ul.tools_menu li {
-	display: block;
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	float: left;
-	position: relative;
-}
-#elgg_topbar_contents ul.tools_menu a {
-	display:block;
-}
-#elgg_topbar_contents ul.tools_menu ul {
-	display: none;
-	position: absolute;
-	left: 0;
-	margin: 0;
-	padding: 0;
-}
-#elgg_topbar_contents ul.tools_menu ul li {
-	float: none;
-}
-*/
-/* elgg toolbar drop-down menu style */
-/*
-#elgg_topbar_contents ul.tools_menu ul {
-	width: 150px;
-	top: 24px;
-	overflow: hidden;
-	border-top:1px solid black;
-}
-#elgg_topbar_contents ul.tools_menu *:hover {
-	background-color: none;
-}
-#elgg_topbar_contents ul.tools_menu a {
-	padding:2px 7px 4px 7px;
-	text-decoration:none;
-	color:white;
-	overflow-y: hidden;
-}
-#elgg_topbar_contents ul.tools_menu li.hover a {
-	background-color: #333333;
-	text-decoration: none;
-}
-#elgg_topbar_contents ul.tools_menu ul li a {
-	background-color: #333333; 
-	font-weight: bold;
-	padding-left:6px;
-	padding-top:4px;
-	padding-bottom:0;
-	height:22px;
-	width:150px;
-	display: block;
-	border-bottom: 1px solid white;
-}
-#elgg_topbar_contents ul.tools_menu ul a.hover {
-	background-color: #0054a7;
-}
-#elgg_topbar_contents ul.tools_menu ul a {
-	opacity: 0.9;
-}
-*/
-
 
 
 /* ***************************************
@@ -1526,6 +1441,44 @@ a.action_button:focus {
 	-moz-border-radius: 8px;
 	margin:10px 0 0 0;
 	padding:10px 10px 0 10px;
+}
+
+
+/* ***************************************
+	LIKES
+*************************************** */
+.likes_list_holder {
+    position: relative;
+    float:right;
+}
+.likes_list_holder .likes_list {
+	background-color: white;
+	border:1px solid #cccccc;
+    width: 345px;
+    height: auto;
+    position: absolute;
+    text-align: left;
+    z-index: 9999;
+    -webkit-border-radius: 6px; 
+    -moz-border-radius: 6px;
+	-webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+}
+.likes_list_holder .elgg_likes_user {
+	border-bottom:1px solid #cccccc;
+	padding:3px;
+}
+.likes_list_holder .elgg_likes_user .entity_listing_info {
+	width:305px;
+}
+.elgg_likes_user .entity_listing_icon {
+	margin:3px 0 4px 2px;
+}
+.elgg_likes_user .entity_metadata {
+	margin-top:3px;
+}
+p.elgg_likes_owner {
+	padding-top:4px;
 }
 
 

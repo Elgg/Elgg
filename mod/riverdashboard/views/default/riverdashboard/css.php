@@ -108,23 +108,24 @@
 .river_user_like_button {
 	font-size:85%;
 }
-.elgg_likes_user {
+/* hidden list of users that liked item */
+.river_item .elgg_likes_user {
 	border-bottom:1px solid white;
 	padding:3px;
 }
-.elgg_likes_user .entity_listing_icon {
+.river_item .elgg_likes_user .entity_listing_icon {
 	margin:3px 0 4px 2px;
 }
-.elgg_likes_user .entity_listing_info {
+.river_item .elgg_likes_user .entity_listing_info {
 	width:635px;
 }
-.elgg_likes_user .entity_metadata {
+.river_item .elgg_likes_user .entity_metadata {
 	margin-top:3px;
 }
 .river_item p.elgg_likes_owner {
 	padding-top:4px;
 }
-a.river_more_comments {
+.river_item a.river_more_comments {
 	display:block;
 	float:right;
 	padding:1px 7px 1px 7px;
@@ -138,21 +139,17 @@ a.river_more_comments {
 	-webkit-border-top-left-radius:4px;
 	-webkit-border-top-right-radius:4px;
 }
-a.river_more_comments.off {
+.river_item a.river_more_comments.off {
 	background-color: white;
 }
-.river_comment_owner_icon {
+.river_item .river_comment_owner_icon {
 	float:left;
 	margin:3px 8px 4px 2px;
 }
-.river_comment_contents {
+.river_item .river_comment_contents {
 	margin-left:34px;
 }
-/*
-.river_item .comment_link {
-	margin-left:55px;
-}
-*/
+
 
 
 

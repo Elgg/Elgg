@@ -53,8 +53,17 @@ $(document).ready(function () {
 		hoverClass: 'droppable-hover'
 	});
 
-	$('.likes_list_button').click(function() {
-		$(this).next('.likes_list').toggle();
+	// user likes
+	$(".likes_list_button").click(function(event) {	
+		if ($(this).next(".likes_list").css('display') == 'none') {	// show list
+			var topPosition = -$('.likes_list').height();
+			$('.likes_list').css('top',topPosition + 10);
+			$('.likes_list').css('left', -$('.likes_list').width()+40);
+			$(this).next(".likes_list").animate({opacity: "toggle", top: topPosition}, 500);
+		} else { // hide list
+			var topPosition = -$('.likes_list').height() + 5;
+			$(this).next(".likes_list").animate({opacity: "toggle", top: topPosition}, 500);
+		}
 	});
 
 }); /* end document ready function */
