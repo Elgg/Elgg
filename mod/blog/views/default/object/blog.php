@@ -57,7 +57,9 @@ if ($blog->canEdit()) {
 }
 
 	// include a view for plugins to extend
-	$edit = elgg_view("blogs/options", array("object_type" => 'blog')) .$edit;
+	$edit = elgg_view("blogs/options", array("object_type" => 'blog')) .
+			elgg_view_likes($blog) . // include likes
+			$edit;
 
 if ($full) {
 	if ($blog->comments_on != 'Off') {
@@ -65,8 +67,6 @@ if ($full) {
 	} else {
 		$comments = '';
 	}
-	$like = elgg_view_likes($blog);
-	$owner_title = sprintf(elgg_echo('blog:title:user_blogs'), $owner->name);
 
 echo <<<___END
 <div class="blogpost clearfloat">
@@ -87,7 +87,6 @@ echo <<<___END
 		<span class="body">$body</span>
 	</div>
 </div>
-$like
 $comments
 
 ___END;
