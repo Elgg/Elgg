@@ -14,7 +14,7 @@ $english = array(
 	 * Menu items and titles
 	 */
 	'sitepages' => "Site pages",
-	'sitepages:frontpage' => "Frontpage",
+	'sitepages:front' => "Front Page",
 	'sitepages:about' => "About",
 	'sitepages:terms' => "Terms",
 	'sitepages:privacy' => "Privacy",
