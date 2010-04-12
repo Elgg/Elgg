@@ -15,10 +15,14 @@ $url = $vars['url'] . 'pg/sitepages/edit/';
 
 <div class="elgg_horizontal_tabbed_nav margin_top">
 <ul>
-	<li <?php if($page_type == 'front') echo "class = 'selected'"; ?>><a href="<?php echo $url; ?>front"><?php echo elgg_echo('sitepages:frontpage'); ?></a></li>
-	<li <?php if($page_type == 'about') echo "class = 'selected'"; ?>><a href="<?php echo $url; ?>about"><?php echo elgg_echo('sitepages:about'); ?></a></li>
-	<li <?php if($page_type == 'terms') echo "class = 'selected'"; ?>><a href="<?php echo $url; ?>terms"><?php echo elgg_echo('sitepages:terms'); ?></a></li>
-	<li <?php if($page_type == 'privacy') echo "class = 'selected'"; ?>><a href="<?php echo $url; ?>privacy"><?php echo elgg_echo('sitepages:privacy'); ?></a></li>
-	<li <?php if($page_type == 'seo') echo "class = 'selected'"; ?>><a href="<?php echo $url; ?>seo"><?php echo elgg_echo('sitepages:seo'); ?></a></li>
+<?php
+	// @todo let users be able to add static content pages.
+	$pages = array('front', 'about', 'terms', 'privacy', 'seo');
+
+	foreach ($pages as $page) {
+		$select = ($page_type == $page) ? 'class = "selected"' : '';
+		echo "<li $selected><a href=\"{$url}{$page}\">" . elgg_echo("sitepages:$page") . "</a></li>";
+	}
+?>
 </ul>
 </div>
