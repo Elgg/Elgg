@@ -80,11 +80,13 @@ CONTENTS:
 	keyword, but custom keywords provide a simple way for non-techy users to 
 	include ready-made views without the fuss of knowing what they're doing.
 
-	The below example creates the 'my_plugin_keyword' keyword that displays the
-	view at 'my_plugin/keyword_view.'
+	Custom keywords support arguments in the same format as views and entities.
+	These arguments are passed to the custom view via the $vars array.  It is
+	the responsibility of the custom view to parse these arguments.
 
-	This is exactly the same as saying [[view: my_plugin/keyword_view]] but
-	much simpler for the user.
+	The below example creates the 'my_plugin_keyword' keyword that displays the
+	view at 'my_plugin/keyword_view.'  This is exactly the same as saying 
+	[[view: my_plugin/keyword_view]] but much simpler for the user.
 
 	Example:
 		register_plugin_hook('get_keywords', 'sitepages', 'my_plugin_keywords');
@@ -98,15 +100,17 @@ CONTENTS:
 			return $value;
 		}
 
-	NB: No variables are passed to the view when using custom keywords.
-
 
 4.  HINTS AND QUIRKS
 
-	* A custom keyword is more complicated to implement, but simpler for the
-	end user.
+	* A custom keyword is slightly more complicated to implement, but is 
+	much simpler for the end user to use.
 
-	* The view and entity keywords have limited support for passing arguments, 
-	but the arguments cannot contain '=' or ','.  If you need complicated
-	arguments, it's best to create a custom keyword with a custom view.
+	* Custom keywords can contain only alphanumeric and the underscore
+	character.
+
+	* All keywords have limited support for passing arguments but the arguments
+	cannot contain '=' or ','.  If you need complicated arguments for a custom
+	keyword, it's better to split the functionality into multiple keywords and
+	views instead of requiring complicated arguments.
 	

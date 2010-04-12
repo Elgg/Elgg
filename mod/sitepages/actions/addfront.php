@@ -15,6 +15,12 @@ admin_gatekeeper();
 $logged_in_content = get_input('logged_in_content', '', FALSE);
 $logged_out_content = get_input('logged_out_content', '', FALSE);
 
+// do some error checking to make sure you can't lock yourself out of your front page.
+if (FALSE === strpos($logged_out_content, '[[login_box')) {
+	register_error(elgg_echo('sitepages:error:no_login'));
+	forward($_SERVER['HTTP_REFERER']);
+}
+
 $css = get_input('css', '', FALSE);
 $loggedin_user_guid = get_loggedin_userid();
 

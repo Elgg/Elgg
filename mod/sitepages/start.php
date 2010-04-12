@@ -63,6 +63,7 @@ function sitepages_init() {
 
 	// grab the list of keywords and their views from plugins
 	if ($keywords = trigger_plugin_hook('get_keywords', 'sitepages', NULL, array())) {
+		ksort($keywords);
 		$CONFIG->sitepages_keywords = $keywords;
 	}
 
@@ -184,26 +185,10 @@ function sitepages_page_handler($page) {
 function sitepages_parse_view($hook, $entity_type, $return_value, $params) {
 	global $CONFIG;
 
-	// give me everything that is (string):(any thing that's not a ]) surrounded by [[ ]]s
-	$keyword_regex = '/\[\[([a-z]+):([^\]]+)\]\]/';
+	// give me everything that is (not a ]) possibly followed by a : and surrounded by [[ ]]s
+	$keyword_regex = '/\[\[([a-z0-9_]+):?([^\]]+)?\]\]/';
 
 	if (in_array($params['view'], $CONFIG->sitepages_parse_views)) {
-		$keywords = $CONFIG->sitepages_keywords;
-
-		$view_options = array(
-			'view' => $params['view']
-		);
-
-		foreach ($keywords as $keyword => $info) {
-			if (strpos($return_value, "[[$keyword]]") !== FALSE
-			&& ($content = elgg_view($info['view'], $view_options))) {
-				$return_value = str_replace("[[$keyword]]", $content, $return_value);
-			}
-		}
-
-		// parse for specialized tags:
-		//	[[entity: key=value, key=value,etc]]
-		//	[[view:viewname, vars_key=value,...]]
 		$return_value = preg_replace_callback($keyword_regex, 'sitepages_parse_view_match', $return_value);
 	}
 
@@ -226,8 +211,13 @@ function sitepages_keyword_hook($hook, $entity_type, $return_value, $params) {
 		'description' => elgg_echo('sitepages:keywords:login_box')
 	);
 
+	$return_value['user_list'] = array(
+		'view' => 'sitepages/keywords/user_list',
+		'description' => elgg_echo('sitepages:keywords:user_list')
+	);
+
 	$return_value['site_stats'] = array(
-		'view' => 'this/doesnt/exist/yet',
+		'view' => 'sitepages/keywords/site_stats',
 		'description' => elgg_echo('sitepages:keywords:site_stats')
 	);
 

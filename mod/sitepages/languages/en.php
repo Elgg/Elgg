@@ -35,6 +35,8 @@ $english = array(
 	'sitepages:addcontent' => "You can add content here via your admin tools. Look for the external pages link under admin.",
 	'item:object:front' => 'Front page items',
 
+	'sitepages:error:no_login' => 'The logged out view for the front page must contain a [[login_box]] or your users can\'t login!',
+
 	/**
 	 * Status messages
 	 */
@@ -73,6 +75,7 @@ $english = array(
 
 	'sitepages:keywords:login_box' => 'A standard login box.  Useful for the logged out content area.',
 	'sitepages:keywords:site_stats' => 'This does not exist yet.',
+	'sitepages:keywords:user_list' => "Lists users.  Supports only_with_avatars=TRUE|FALSE, list_type=newest|online|random, limit",
 );
 
 add_translation('en', $english);
