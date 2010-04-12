@@ -38,7 +38,7 @@ if ($blog->comments_on != 'Off') {
 $edit = '';
 if ($blog->canEdit()) {
 	$edit_url = "{$vars['url']}pg/blog/{$owner->username}/edit/{$blog->getGUID()}/";
-	$edit_link = "<a href=\"$edit_url\">" . elgg_echo('edit') . '</a>';
+	$edit_link = "<span class='entity_edit'><a href=\"$edit_url\">" . elgg_echo('edit') . '</a></span>';
 
 	$delete_url = "{$vars['url']}action/blog/delete?guid={$blog->getGUID()}";
 	$delete_link = "<span class='delete_button'>" . elgg_view('output/confirmlink', array(

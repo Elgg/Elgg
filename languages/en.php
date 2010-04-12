@@ -844,8 +844,8 @@ If you requested this click on the link below, otherwise ignore this email.
 	'likes:alreadyliked' => 'You have already liked this item',
 	'likes:notfound' => 'The item you are trying to like cannot be found',
 	'likes:likethis' => 'Like',
-	'likes:userlikedthis' => 'user liked this',
-	'likes:userslikedthis' => 'users liked this',
+	'likes:userlikedthis' => 'user',
+	'likes:userslikedthis' => 'users',
 	'likes:river:annotate' => 'likes',
 
 /**

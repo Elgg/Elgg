@@ -991,11 +991,11 @@ li.navigation_more ul li {
 	margin-left:14px;
 	text-align:right;
 }
-.entity_metadata a {
+.entity_metadata .entity_edit a {
 	color:#aaaaaa;
 }
-.entity_metadata a:hover {
-	color:#0054a7;
+.entity_metadata .entity_edit a:hover {
+	color:#555555;
 }
 .entity_metadata .delete_button {
 	margin-top:3px;
@@ -1447,6 +1447,9 @@ a.action_button:focus {
 /* ***************************************
 	LIKES
 *************************************** */
+.user_like_holder {
+	float:right;
+}
 .likes_list_holder {
     position: relative;
     float:right;

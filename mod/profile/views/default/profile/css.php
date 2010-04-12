@@ -392,6 +392,8 @@ div.usericon a.icon img {
 	display:block;
 	font-weight: normal;
 	font-size: 0.8em;
+	text-align: left;
+	margin:0;
 }
 .usericon .sub_menu a {
 	padding:2px 3px 2px 8px;
