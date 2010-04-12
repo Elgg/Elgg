@@ -1447,12 +1447,34 @@ a.action_button:focus {
 /* ***************************************
 	LIKES
 *************************************** */
-.user_like_holder {
-	float:right;
-}
 .likes_list_holder {
     position: relative;
     float:right;
+}
+.likes_list_holder a.user_like {
+	cursor:pointer;
+	background: url(<?php echo $vars['url']; ?>_graphics/icon_like.png) no-repeat left -2px;
+	text-indent: -9000em;
+	text-align: left;
+	display:block;
+	width:20px;
+	height:20px;
+	margin:0;
+	float:left;
+}
+.likes_list_holder a.user_like:hover {
+	background-position: left -32px;
+}
+.likes_list_holder .likes_list_button.link {
+	float:left;
+	text-align: left;
+	background: url(<?php echo $vars['url']; ?>_graphics/icon_like.png) no-repeat left -32px;
+	padding-left:21px;
+	height:20px;
+}
+.likes_list_holder .likes_list_button.link.not_liked {
+	background:none;
+	padding-left:0;
 }
 .likes_list_holder .likes_list {
 	background-color: white;
