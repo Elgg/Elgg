@@ -12,7 +12,7 @@
 
 /**
  * Returns a single object that holds information about
- * customizations for the $section site page.  The object guid
+ * customizations for the $page_type site page.  The object guid
  * is stored as private data on the site entity.  This allows the pages
  * to still be searchable as standard entities.
  *
