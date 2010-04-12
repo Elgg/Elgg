@@ -88,7 +88,15 @@ EOT;
 		$action_buttons = "<a href=\"{$url}\" class='action_button'>" . elgg_echo($type . ':new') . "</a>";
 		$action_buttons = "<div class='content_header_options'>".$action_buttons."</div>";
 
-	} else { // we're on an action page (or groups) - we'll just have a simple page title, and no filter menu
+	} elseif(get_context() == 'groups'){
+		$title = elgg_echo($type);
+		$title = "<div class='content_header_title'>".elgg_view_title( $title )."</div>";
+		$page_filter = '';
+		$url = "{$CONFIG->wwwroot}pg/groups/new/";
+		$action_buttons = "<a href=\"{$url}\" class='action_button'>" . elgg_echo($type . ':new') . "</a>";
+		$action_buttons = "<div class='content_header_options'>".$action_buttons."</div>";
+		
+	} else { // we're on an action page - we'll just have a simple page title, and no filter menu
 		$title = elgg_echo($type);
 		$title = "<div class='content_header_title'>".elgg_view_title( $title )."</div>";
 		$page_filter = '';

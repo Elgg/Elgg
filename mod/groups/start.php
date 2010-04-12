@@ -171,8 +171,7 @@
 			'description' => 'longtext',
 			'briefdescription' => 'text',
 			'interests' => 'tags',
-			'website' => 'url',
-
+			//'website' => 'url',
 		);
 
 		$CONFIG->group = trigger_plugin_hook('profile:fields', 'group', NULL, $profile_defaults);
