@@ -1,8 +1,8 @@
 <?php
 			
 //grab the groups bookmarks 
-//@todo adjust so it actually grabs the group bookmarks rather than the users
-$bookmarks = get_entities('object', 'bookmarks',$vars['entity']->owner_guid, "", 6, 0, false);
+$bookmarks = elgg_get_entities(array('type' => 'object', 'subtype' => 'bookmarks', 
+			'container_guids' => $vars['entity']->container_guid, 'limit' => 6));
 
 echo "<div class='group_tool_widget'><h3>".elgg_echo('bookmarks:group')."</h3>";
 	
