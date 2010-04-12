@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg profile index
+ * Elgg profile - Admin area: edit default profile fields
  *
  * @package ElggProfile
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
@@ -39,15 +39,17 @@ if ($fieldlist = get_plugin_setting('user_defined_fields', 'profile')) {
 
 $listing = elgg_view('profile/editdefaultprofileitems',array('items' => $items, 'fieldlist' => $fieldlist));
 
-$listing .= elgg_view('input/form',
+$resetlisting = elgg_view('input/form',
 						array (
-							'body' => elgg_view('input/submit', array('value' => elgg_echo('profile:resetdefault'))),
+							'body' => elgg_view('input/submit', array('value' => elgg_echo('profile:resetdefault'), 'class' => 'action_button disabled')),
 							'action' => $CONFIG->wwwroot . 'action/profile/editdefault/reset'
 						)
 					);
+					
+$resetlisting = "<div class='default_profile_reset'>{$resetlisting}</div>";
 
 set_context('admin');
 
-$body = elgg_view_layout("one_column_with_sidebar", $title . $form . $listing);
+$body = elgg_view_layout("one_column_with_sidebar", $title . $form . $listing . $resetlisting);
 
 page_draw(elgg_echo('profile:edit:default'), $body);

@@ -2,7 +2,7 @@
 <script language="javascript" type="text/javascript">
 var reorderURL = '<?php echo elgg_add_action_tokens_to_url($vars['url'] . 'action/profile/editdefault/reorder', FALSE); ?>';
 function sortCallback(event, ui) {
-	var orderArr = $('#sortableList').sortable('toArray');
+	var orderArr = $('#sortable_profile_fields').sortable('toArray');
 	var orderStr = orderArr.join(',');
 	console.log(orderArr);
 	console.log(orderStr);
@@ -10,7 +10,7 @@ function sortCallback(event, ui) {
 }
 
 $(document).ready(function() {
-	$('#sortableList').sortable({
+	$('#sortable_profile_fields').sortable({
 		items: 'li',
 		handle: '.handle',
 		stop: sortCallback
@@ -18,10 +18,9 @@ $(document).ready(function() {
 });
 
 </script>
-<script language="javascript" type="text/javascript" src="<?php echo $vars['url']; ?>mod/multiadmin/vendors/js/jquery.jeditable.js" ></script>
 
 <div id="list">
-	<ul id="sortableList">
+	<ul id="sortable_profile_fields">
 <?php
 
 	$save = elgg_echo('save');

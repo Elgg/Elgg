@@ -321,6 +321,26 @@ p.visit_twitter a {
 .default_profile_reset .action_button {
 	float:right;
 }
+/* field re-order */
+#sortable_profile_fields {
+	padding:0;
+	border-top:1px solid #cccccc;
+}
+#sortable_profile_fields li {
+	padding:5px 0 5px 0;
+	border-bottom:1px solid #cccccc;
+}
+#sortable_profile_fields li img.handle {
+	margin-right: 7px;
+	cursor: move;
+}
+#sortable_profile_fields .ui-sortable-helper {
+	background: #eeeeee;
+	color:#333333;
+	padding: 5px 0 5px 0;
+	margin: 0;
+	width:100%;
+}
 
 
 /* ***************************************

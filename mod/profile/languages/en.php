@@ -63,7 +63,7 @@ $english = array(
 	'profile:defaultprofile:reset' => 'Default system profile reset',
 
 	'profile:resetdefault' => 'Reset default profile',
-	'profile:explainchangefields' => 'You can replace the existing profile fields with your own using the form below. First you give the new profile field a label, for example, \'Favorite team\'. Next you need to select the field type, for example, tags, url, text and so on. At any time you can revert back to the default profile set up.',
+	'profile:explainchangefields' => 'You can replace the existing profile fields with your own using the form below. <br /><br />Give the new profile field a label, for example, \'Favorite team\', then select the field type (eg. text, url, tags), and click the \'Add\' button. To re-order the fields drag on the handle next to the field label. To edit a field label - click on the label\'s text to make it editable. <br />At any time you can revert back to the default profile set up, but you will loose any information already entered into custom fields on profile pages.',
 
 
 /**
