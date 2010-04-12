@@ -35,7 +35,7 @@
 	display:block;
 }
 p.visit_twitter a {
-    background:url(<?php echo $vars['url']; ?>mod/twitter/graphics/twitter.png) left no-repeat;
+    background:url(<?php echo $vars['url']; ?>mod/twitter/graphics/twitter16px.png) left no-repeat;
     padding:0 0 0 20px;
     margin:0;
 }

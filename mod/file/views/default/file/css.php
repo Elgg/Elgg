@@ -103,7 +103,7 @@
 }
 .filerepo_user_gallery_link a {
 	padding:2px 25px 5px 0;
-	background: transparent url(<?php echo $vars['url']; ?>_graphics/icon_gallery.gif) no-repeat right top;
+	background: transparent url(<?php echo $vars['url']; ?>mod/file/graphics/icon_gallery.gif) no-repeat right top;
 	display:block;
 }
 .filerepo_user_gallery_link a:hover {

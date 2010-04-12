@@ -1,8 +1,7 @@
 <?php
 	/**
 	 * View to display the RSS link
+	 * @todo check this - it doesn't appear this view is ever called
 	 **/
 ?>
-<div class="sidebar_container">
-<p><a href=""><img src="<?php echo $vars['url']; ?>_graphics/icon_rss.gif" alt="RSS icon" /></a> RSS feed for the wire</p>
-</div>
+<div class="rss_link clearfloat"><a href="" title="RSS feed for the wire">RSS feed for the wire</a></div>

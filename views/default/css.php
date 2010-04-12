@@ -226,15 +226,15 @@ h2 {
 	width:14px;
 	height:14px;
 	float:right;
-	background-image:url(<?php echo $vars['url']; ?>_graphics/icon_rss.png);
+	background-image:url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png);
 	background-repeat: no-repeat;
-	background-position: left top;
+	background-position: -250px top;
 	text-indent: -1000em;
 }
 .tags {
-	background-image:url(<?php echo $vars['url']; ?>_graphics/icon_tag.png);
+	background-image:url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png);
 	background-repeat: no-repeat;
-	background-position: left 2px;
+	background-position: left -198px;
 	padding:1px 0 0 16px;
 	font-size: 90%;
 }
@@ -388,19 +388,19 @@ h2 {
 	color:#71cbff;
 }
 #elgg_topbar_contents a.settings {
-	background:transparent url(<?php echo $vars['url']; ?>_graphics/topbar_icons.png) no-repeat left -41px;
+	background:transparent url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png) no-repeat -300px -41px;
 	padding-left:20px !important;
 	float:right;
 	margin-right:30px;
 }
 #elgg_topbar_contents a.admin {
-	background:transparent url(<?php echo $vars['url']; ?>_graphics/topbar_icons.png) no-repeat left -41px;
+	background:transparent url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png) no-repeat -300px -41px;
 	padding-left:20px !important;
 	float:right;
 	margin-right:30px;
 }
 #elgg_topbar_contents a.help {
-	background:transparent url(<?php echo $vars['url']; ?>_graphics/topbar_icons.png) no-repeat 0 -133px;
+	background:transparent url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png) no-repeat -300px -133px;
 	padding-left:18px !important;
 	float:right;
 	margin-right:30px;
@@ -431,21 +431,21 @@ h2 {
 	margin:0;
 	padding:2px 4px 2px 26px;
 	width:198px;
-	background-image: url(<?php echo $vars['url']; ?>_graphics/search.png);
-	background-position: 3px 0;
+	background-image: url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png);
+	background-position: 2px -220px;
 	background-repeat: no-repeat;
 }
 #elgg_header_contents #elgg_search input.search_input:focus {
 	background-color:white;
 	color:#0054A7;
 	border:1px solid white;
-	background-position: 3px -37px;
+	background-position: 2px -257px;
 }
 #elgg_header_contents #elgg_search input.search_input:active {
 	background-color:white;
 	color:#0054A7;
 	border:1px solid white;
-	background-position: 3px -37px;
+	background-position: 2px -257px;
 }
 #elgg_header_contents #elgg_search input.search_submit_button {
 	display:none;
@@ -524,14 +524,14 @@ li.navigation_more:hover a {
 	-moz-box-shadow: 2px -1px 1px rgba(0, 0, 0, 0.25);
 }
 li.navigation_more a.subnav span {
-	background-image: url(<?php echo $vars['url']; ?>_graphics/more_sprite.png);
+	background-image: url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png);
 	background-repeat: no-repeat;
-	background-position: 0 4px;
+	background-position: -150px -46px;
 	padding-left: 12px;
 }
 li.navigation_more:hover a.subnav span,
 li.navigation_more a.subnav:hover span {
-	background-position: 0 -16px;
+	background-position: -150px -66px;
 }
 li.navigation_more ul {
 	z-index: 7000;
@@ -1286,12 +1286,12 @@ a.action_button:focus {
 	cursor: pointer;
 	width:14px;
 	height:14px;
-	background: url("<?php echo $vars['url']; ?>_graphics/icon_delete.png") no-repeat 0 0;
+	background: url("<?php echo $vars['url']; ?>_graphics/elgg_sprites.png") no-repeat -200px top;
 	text-indent: -9000px;
 	text-align: left;
 }
 .delete_button a:hover {
-	background-position: 0 -16px;
+	background-position: -200px -16px;
 }
 
 
@@ -1408,33 +1408,21 @@ a.action_button:focus {
 	z-index:1;
 }
 .friends_picker_navigation_l {
-	background: url("<?php echo $vars['url']; ?>_graphics/friends_picker_arrows.gif") no-repeat left top;
+	background: url("<?php echo $vars['url']; ?>_graphics/elgg_sprites.png") no-repeat left top;
 }
 .friends_picker_navigation_r {
-	background: url("<?php echo $vars['url']; ?>_graphics/friends_picker_arrows.gif") no-repeat -60px top;
+	background: url("<?php echo $vars['url']; ?>_graphics/elgg_sprites.png") no-repeat -60px top;
 }
 .friends_picker_navigation_l:hover {
-	background: url("<?php echo $vars['url']; ?>_graphics/friends_picker_arrows.gif") no-repeat left -44px;
+	background: url("<?php echo $vars['url']; ?>_graphics/elgg_sprites.png") no-repeat left -44px;
 }
 .friends_picker_navigation_r:hover {
-	background: url("<?php echo $vars['url']; ?>_graphics/friends_picker_arrows.gif") no-repeat -60px -44px;
-}
-.friends_collections_controls a.delete_collection {
-	display:block;
-	cursor: pointer;
-	width:14px;
-	height:14px;
-	margin:2px 3px 0 0;
-	background: url("<?php echo $vars['url']; ?>_graphics/icon_customise_remove.png") no-repeat 0 0;
-}
-.friends_collections_controls a.delete_collection:hover {
-	background-position: 0 -16px;
+	background: url("<?php echo $vars['url']; ?>_graphics/elgg_sprites.png") no-repeat -60px -44px;
 }
 .friendspicker_savebuttons .submit_button,
 .friendspicker_savebuttons .cancel_button {
 	margin:5px 20px 5px 5px;
 }
-
 #collectionMembersTable {
 	background: #dedede;
 	-webkit-border-radius: 8px;
@@ -1453,7 +1441,7 @@ a.action_button:focus {
 }
 .likes_list_holder a.user_like {
 	cursor:pointer;
-	background: url(<?php echo $vars['url']; ?>_graphics/icon_like.png) no-repeat left -2px;
+	background: url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png) no-repeat left -100px;
 	text-indent: -9000em;
 	text-align: left;
 	display:block;
@@ -1463,12 +1451,12 @@ a.action_button:focus {
 	float:left;
 }
 .likes_list_holder a.user_like:hover {
-	background-position: left -32px;
+	background-position: left -130px;
 }
 .likes_list_holder .likes_list_button.link {
 	float:left;
 	text-align: left;
-	background: url(<?php echo $vars['url']; ?>_graphics/icon_like.png) no-repeat left -32px;
+	background: url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png) no-repeat left -130px;
 	padding-left:21px;
 	height:20px;
 }
