@@ -77,7 +77,7 @@ function sitepages_init() {
 /**
  * Registers the sitepages subtype to the right class.
  *
- * @return unknown_type
+ * @return bool
  */
 function sitepages_runonce() {
 	return add_subtype('object', 'sitepages_page', 'ElggSitePage');
@@ -195,7 +195,8 @@ function sitepages_parse_view($hook, $entity_type, $return_value, $params) {
 		);
 
 		foreach ($keywords as $keyword => $info) {
-			if ($content = elgg_view($info['view'], $view_options)) {
+			if (strpos($return_value, "[[$keyword]]") !== FALSE
+			&& ($content = elgg_view($info['view'], $view_options))) {
 				$return_value = str_replace("[[$keyword]]", $content, $return_value);
 			}
 		}
