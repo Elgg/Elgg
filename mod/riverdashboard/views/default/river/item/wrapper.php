@@ -34,7 +34,7 @@ if($comment_count < 3)
 else
 	$num_comments = $comment_count - 3;
 ?>
-<div class="river_item">
+<div class="river_item riverdashboard">
 	<span class="river_item_useravatar">
 		<?php echo elgg_view("profile/icon",array('entity' => $user, 'size' => 'small')); ?>
 	</span>

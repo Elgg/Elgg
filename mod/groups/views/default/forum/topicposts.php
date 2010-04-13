@@ -32,7 +32,7 @@
 				'text' => elgg_echo('delete'),
 				'confirm' => elgg_echo('deleteconfirm')
 				))."</span>";
-			echo "<a class='link' onclick=\"elgg_slide_toggle(this,'.topic','.edit_comment');\">".elgg_echo('edit')."</a>";
+			echo "<span class='entity_edit'><a class='link' onclick=\"elgg_slide_toggle(this,'.topic','.edit_comment');\">".elgg_echo('edit')."</a></span>";
 			echo "</div>";
 
 		}	    

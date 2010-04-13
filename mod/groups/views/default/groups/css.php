@@ -57,7 +57,7 @@
 }
 
 
-/* GROUP PROFILE PAGE (a groups homepage) */
+/* GROUP PROFILE PAGE (individual group homepage) */
 .group_profile_column {
 	float:left;
 	margin-top:10px;
@@ -91,14 +91,6 @@
 	padding:2px 4px;
 	margin:0 0 7px;
 }
-.group_profile.forum_latest {
-	margin-top:20px;
-}
-.group_profile.forum_latest h3 {
-	border-bottom:1px solid #CCCCCC;
-	padding-bottom:5px;
-	color:#555555;
-}
 
 /* tool content boxes on group profile page */
 #group_tools_latest {
@@ -108,7 +100,7 @@
 .group_tool_widget {
 	float:left;
 	margin-right:30px;
-	margin-bottom:20px;
+	margin-bottom:40px;
 	min-height:200px;
 	width:350px;
 }
@@ -116,31 +108,42 @@
 	margin-right:0;
 }
 .group_tool_widget h3 {
-	border-bottom:1px solid #CCCCCC;
-	padding-bottom:5px;
-	color:#555555;
+	border-bottom:1px solid #CCCCCC;	
+	background:#e4e4e4;
+	color:#333333;
+	padding:5px 5px 3px 5px;
+	-moz-border-radius-topleft:4px;
+	-moz-border-radius-topright:4px;
+	-webkit-border-top-left-radius:4px;
+	-webkit-border-top-right-radius:4px;
 }
-/*
-.group_profile_column.right {
-	float:right;
-	width:350px;
-	margin-top:20px;
-}
-.group_profile_column.left {
-	width:350px;
-	float:left;
-	margin-top:20px;
-}
+
+/* group activity latest
+	(hide some items used on the full riverdashboard activity) 
+	@todo provide a separate view for a groups latest activity
+	- so we can have tiny avatars and not have to manually hide elements
 */
+.group_tool_widget.activity a.river_comment_form_button,
+.group_tool_widget.activity .river_comments_tabs,
+.group_tool_widget.activity .river_content_display,
+.group_tool_widget.activity .river_comments,
+.group_tool_widget.activity .river_link_divider,
+.group_tool_widget.activity .river_user_like_button {
+	display:none;
+}
+/* override default entity_listing_info width */
+.group_tool_widget .entity_listing_info {
+	width:315px;
+}
+
 /* edit group page */
 .delete_group {
 	float: right;
 	margin-top:-44px;
 }
 
-/* Group forum */
-
-/* all browsers - force tinyMCE on edit forum posts to be full-width */
+/* edit forum posts
+   - force tinyMCE to correct width */
 .edit_comment .defaultSkin table.mceLayout {
 	width: 694px !important;
 }

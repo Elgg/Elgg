@@ -4,7 +4,7 @@
 $bookmarks = elgg_get_entities(array('type' => 'object', 'subtype' => 'bookmarks', 
 			'container_guids' => $vars['entity']->container_guid, 'limit' => 6));
 
-echo "<div class='group_tool_widget'><h3>".elgg_echo('bookmarks:group')."</h3>";
+echo "<div class='group_tool_widget bookmarks'><h3>".elgg_echo('bookmarks:group')."</h3>";
 	
 if($bookmarks){
 	foreach($bookmarks as $b){
@@ -14,21 +14,25 @@ if($bookmarks){
 
 		//get the time
 		$friendlytime = friendly_time($b->time_created);
+		
+	    $info = "<div class='entity_listing_icon'>" . elgg_view('profile/icon',array('entity' => $b->getOwnerEntity(), 'size' => 'tiny')) . "</div>";
 
-		//get the bookmark title
-		$info = "<div class='river_object_bookmarks_create'><p class=\"shares_title\"><a href=\"{$b->address}\">{$b->title}</a></p></div>";
+		//get the bookmark entries body
+		$info .= "<div class='entity_listing_info'><p class='entity_title'><a href=\"{$b->address}\">{$b->title}</a></p>";
 				
 		//get the user details
-		$info .= "<p class=\"shares_timestamp\"><small>{$friendlytime} ";
+		$info .= "<p class='entity_subtext'>{$friendlytime} ";
 
 		//get the bookmark description
-		if($s->description)
+		// @todo - do we even have a description anymore? or is this the current bookmarks note ?
+		if($s->description) {
 			$info .= "<a href=\"javascript:void(0);\" class=\"share_more_info\">".elgg_echo('bookmarks:more')."</a></small></p><div class=\"share_desc\"><p>{$s->description}</p></div>";
-		else 
-			$info .= "</small></p>";
-	
+		} else { 
+			$info .= "</p>";
+		}
+		$info .= "</div>";
 		//display 
-		echo "<div class='shares_widget_content'>" . $info . "</div>";
+		echo "<div class='entity_listing clearfloat'>" . $info . "</div>";
 	} 
 } else {
 	echo "<p class='margin_top'>" . elgg_echo("bookmarks:none") . "</p>";
