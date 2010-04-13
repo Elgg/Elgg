@@ -108,12 +108,8 @@ function ecml_parse_view($hook, $entity_type, $return_value, $params) {
 
 	// give me everything that is not a ], possibly followed by a :, and surrounded by [[ ]]s
 	$keyword_regex = '/\[\[([a-z0-9_]+):?([^\]]+)?\]\]/';
-
-	if (array_key_exists($params['view'], $CONFIG->ecml_parse_views)) {
-		$CONFIG->ecml_current_view = $params['view'];
-
-		$return_value = preg_replace_callback($keyword_regex, 'ecml_parse_view_match', $return_value);
-	}
+	$CONFIG->ecml_current_view = $params['view'];
+	$return_value = preg_replace_callback($keyword_regex, 'ecml_parse_view_match', $return_value);
 
 	return $return_value;
 }
