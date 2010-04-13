@@ -16,10 +16,11 @@ $offset = get_input("offset", 0);
 $category = get_input("category");
 $owner_guid = get_input("owner_guid", 0);
 $subtype = get_input("subtype", ELGG_ENTITIES_ANY_VALUE);
+$type = get_input("type", 'object');
 
 $objects = list_entities_from_metadata('universal_categories',
 										$category,
-										'ELGG_ENTITIES_ANY_VALUE',
+										$type,
 										$subtype,
 										$owner_guid,
 										$limit,
