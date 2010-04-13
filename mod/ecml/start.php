@@ -30,9 +30,6 @@ function ecml_init() {
 	register_page_handler('ecml_admin', 'ecml_admin_page_handler');
 	register_elgg_event_handler('pagesetup', 'system', 'ecml_pagesetup');
 
-	// parse views for keywords
-	register_plugin_hook('display', 'view', 'ecml_parse_view');
-
 	// show ECML-enabled icon on free-text input areas
 	elgg_extend_view('input/longtext',  'ecml/input_ext');
 	elgg_extend_view('input/plaintext', 'ecml/input_ext');
@@ -44,6 +41,10 @@ function ecml_init() {
 	// do the check in a single plugin hook.
 	// Wants array('view_name' => 'Short Description')
 	$CONFIG->ecml_parse_views = trigger_plugin_hook('get_views', 'ecml', NULL, array());
+
+	foreach ($CONFIG->ecml_parse_views as $view => $desc) {
+		register_plugin_hook('view', $view, 'ecml_parse_view');
+	}
 
 	// provide a few built-in ecml keywords.
 	// @todo could pull this out into an array here to save an API call.
