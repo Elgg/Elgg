@@ -486,6 +486,36 @@ function set_plugin_usersetting($name, $value, $user_guid = 0, $plugin_name = ""
 }
 
 /**
+ * Clears a user-specific plugin setting
+ *
+ * @param str $name Name of the plugin setting
+ * @param int $user_guid Defaults to logged in user
+ * @param str $plugin_name Defaults to contextual plugin name
+ * @return bool Success
+ */
+function clear_plugin_usersetting($name, $user_guid=0, $plugin_name='') {
+	$plugin_name = sanitise_string($plugin_name);
+	$name = sanitise_string($name);
+	
+	if (!$plugin_name) {
+		$plugin_name = get_plugin_name();
+	}
+
+	$user = get_entity((int) $user_guid);
+	if (!$user) {
+		$user = get_loggedin_user();
+	}
+	
+	if (($user) && ($user instanceof ElggUser)) {
+		$prefix = "plugin:settings:$plugin_name:$name";
+		
+		return remove_private_setting($user->getGUID(), $prefix);
+	}
+	
+	return FALSE;
+}
+
+/**
  * Get a user specific setting for a plugin.
  *
  * @param string $name The name.
