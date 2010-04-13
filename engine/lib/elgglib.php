@@ -289,8 +289,16 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 	$content = ob_get_clean();
 
 	// Plugin hook
-	$content = trigger_plugin_hook('display', 'view',
+	$content = trigger_plugin_hook('view', $view_orig,
 		array('view' => $view_orig, 'vars' => $vars), $content);
+
+	// backward compatibility with less grandular hook will be gone in 2.0
+	$content_tmp = trigger_plugin_hook('display', 'view', array('view' => $view_orig, 'vars' => $vars), $content);
+
+	if ($content_tmp != $content) {
+		$content = $content_tmp;
+		elgg_deprecated_notice('The display:view plugin hook is deprecated by view:view_name or view:all', 1.8);
+	}
 
 	// Return $content
 	return $content;
