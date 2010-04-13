@@ -11,6 +11,7 @@ $english = array(
 	'blog:revisions' => 'Revisions',
 	'blog:archives' => 'Archives',
 	'blog:blog' => 'Blog',
+	'item:object:blog' => 'Blogs',
 	
 	'blog:title:user_blogs' => '%s\'s Blogs',
 	'blog:title:all_blogs' => 'All Site Blogs',
