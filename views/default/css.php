@@ -410,7 +410,7 @@ h2 {
 /* ***************************************
 	HEADER CONTENTS
 *************************************** */
-#elgg_header_contents h1 a {
+#elgg_header_contents h1 a span.network_title {
 	font-size: 2em;
 	line-height:1.4em;
 	color: white;
