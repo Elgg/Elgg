@@ -10,7 +10,7 @@
  *
  * @todo
  *	Granular access to keywords based upon view.
- *	Updated docs
+ *	Update docs / help
  * 	Check for SQL injection problems.
  * 	Check entity keyword views against fullview.  Force to FALSE?
  *
