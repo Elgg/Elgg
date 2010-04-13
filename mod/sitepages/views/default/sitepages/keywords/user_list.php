@@ -10,7 +10,7 @@
  */
 
 $only_with_avatars = (isset($vars['only_with_avatars'])) ? $vars['only_with_avatars'] : TRUE;
-$list_type = (isset($vars['list_type'])) ? $vars['list_type'] : 'newest';
+$list_type = (isset($vars['list_type'])) ? $vars['list_type'] : 'new';
 $limit = (isset($vars['limit'])) ? $vars['limit'] : 10;
 
 $options = array(
@@ -23,7 +23,7 @@ if ($only_with_avatars == TRUE) {
 }
 
 switch ($list_type) {
-	case 'newest':
+	case 'new':
 		$options['order_by'] = 'e.time_created DESC';
 		break;
 

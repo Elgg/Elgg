@@ -12,16 +12,11 @@
  * @link http://elgg.org/
  *
  * @todo
- * 	Check for SQL injection problems.
- * 	Force [[login_box]] in the logged out view.
  * 	Make sure this stuff doesn't show up in search.
- * 	Check entity keyword views against fullview.  Force to FALSE?
  * 	DRY up actions and views
- * 	Implement sticky forms
  * 	Use $entity->view to redirect to url of page.
  * 	The tool settings view is probably not needed as it can be added to the front page edit tab.
  * 	You can say pg/sitepages/edit|read/any_page_i_want and it will let you.
- * 	Clean up and probably move the docs for keywords.
  */
 
 /**
@@ -48,24 +43,9 @@ function sitepages_init() {
 		register_plugin_hook('index', 'system', 'sitepages_custom_index');
 	}
 
-	// parse views for keywords
-	register_plugin_hook('display', 'view', 'sitepages_parse_view');
-
-	// register the views we want to parse for the keyword replacement
-	// right now this is just the custom front page, but we can
-	// expand it to the other pages later.
-	$CONFIG->sitepages_parse_views = array(
-		'sitepages/custom_frontpage'
-	);
-
-	// an example of how to register and respond to the get_keywords trigger
-	register_plugin_hook('get_keywords', 'sitepages', 'sitepages_keyword_hook');
-
-	// grab the list of keywords and their views from plugins
-	if ($keywords = trigger_plugin_hook('get_keywords', 'sitepages', NULL, array())) {
-		ksort($keywords);
-		$CONFIG->sitepages_keywords = $keywords;
-	}
+	// define our own ecml keywords and views
+	register_plugin_hook('get_keywords', 'ecml', 'sitepages_ecml_keyword_hook');
+	register_plugin_hook('get_views', 'ecml', 'sitepages_ecml_views_hook');
 
 	register_action("sitepages/add", FALSE, $CONFIG->pluginspath . "sitepages/actions/add.php");
 	register_action("sitepages/addfront", FALSE, $CONFIG->pluginspath . "sitepages/actions/addfront.php");
@@ -205,21 +185,35 @@ function sitepages_parse_view($hook, $entity_type, $return_value, $params) {
  * @param unknown_type $params
  * @return unknown_type
  */
-function sitepages_keyword_hook($hook, $entity_type, $return_value, $params) {
+function sitepages_ecml_keyword_hook($hook, $entity_type, $return_value, $params) {
 	$return_value['login_box'] = array(
 		'view' => 'account/forms/login',
-		'description' => elgg_echo('sitepages:keywords:login_box')
+		'description' => elgg_echo('sitepages:ecml:keywords:login_box')
 	);
 
 	$return_value['user_list'] = array(
 		'view' => 'sitepages/keywords/user_list',
-		'description' => elgg_echo('sitepages:keywords:user_list')
+		'description' => elgg_echo('sitepages:ecml:keywords:user_list')
 	);
 
 	$return_value['site_stats'] = array(
 		'view' => 'sitepages/keywords/site_stats',
-		'description' => elgg_echo('sitepages:keywords:site_stats')
+		'description' => elgg_echo('sitepages:ecml:keywords:site_stats')
 	);
+
+	return $return_value;
+}
+
+/**
+ * Register the frontpage with ECML.
+ *
+ * @param unknown_type $hook
+ * @param unknown_type $entity_type
+ * @param unknown_type $return_value
+ * @param unknown_type $params
+ */
+function sitepages_ecml_views_hook($hook, $entity_type, $return_value, $params) {
+	$return_value['sitepages/custom_frontpage'] = elgg_echo('sitepages:ecml:views:custom_frontpage');
 
 	return $return_value;
 }

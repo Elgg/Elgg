@@ -50,32 +50,12 @@ $english = array(
 	'sitepages:error' => "There has been an error, please try again and if the problem persists, contact the administrator",
 
 	/**
-	 * Key words
+	 * ECML
 	 */
-	'sitepages:keywords_title' => 'Keywords',
-	'sitepages:keywords_instructions' =>
-		'Keywords are replaced with content when viewed.  They must be surrounded by
-		two square brackets ([[ and ]]).  You can build your own or use the ones listed below.
-		Hover over a keyword to read its description.',
-
-	'sitepages:keywords_instructions_more' =>
-		'
-		<p>You can build your own keywords for views and entities.</p>
-
-		<p>[[entity: type=type, subtype=subtype, owner=username, limit=number]]<br />
-
-		EX: To show 5 blog posts by admin:<br />
-		[[entity: type=object, subtype=blog, owner=admin, limit=5]]</p>
-
-		<p>You can also specify a valid Elgg view:<br />
-		[[view: elgg_view, name=value]]</p>
-
-		<p>Ex: To show a text input with a default value:<br />
-		[[view: input/text, value=This is a default value]]</p>',
-
-	'sitepages:keywords:login_box' => 'A standard login box.  Useful for the logged out content area.',
-	'sitepages:keywords:site_stats' => 'This does not exist yet.',
-	'sitepages:keywords:user_list' => "Lists users.  Supports only_with_avatars=TRUE|FALSE, list_type=newest|online|random, limit",
+	'sitepages:ecml:keywords:login_box' => 'A standard login box.  Useful for the logged out content area.',
+	'sitepages:ecml:keywords:site_stats' => 'This does not exist yet.',
+	'sitepages:ecml:keywords:user_list' => "Lists users.  Supports only_with_avatars=TRUE|FALSE, list_type=newest|online|random, limit",
+	'sitepages:ecml:views:custom_frontpage' => "The front page view",
 );
 
 add_translation('en', $english);
