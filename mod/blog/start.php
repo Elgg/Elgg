@@ -58,6 +58,9 @@ function blog_init() {
 	register_action('blog/save', FALSE, "$action_path/save.php");
 	register_action('blog/auto_save_revision', FALSE, "$action_path/auto_save_revision.php");
 	register_action('blog/delete', FALSE, "$action_path/delete.php");
+
+	// ecml
+	register_plugin_hook('get_views', 'ecml', 'blog_ecml_views_hook');
 }
 
 /**
@@ -95,7 +98,7 @@ function blog_page_handler($page) {
 	// see if we're showing all or just a user's
 	if (isset($page[0]) && !empty($page[0])) {
 		$username = $page[0];
-		
+
 		// push breadcrumb
 		elgg_push_breadcrumb(elgg_echo('blog:blogs'), "{$CONFIG->site->url}pg/blog");
 
@@ -191,5 +194,20 @@ function blog_page_setup() {
 		}
 	}
 }
+
+/**
+ * Register blogs with ECML.
+ *
+ * @param unknown_type $hook
+ * @param unknown_type $entity_type
+ * @param unknown_type $return_value
+ * @param unknown_type $params
+ */
+function blog_ecml_views_hook($hook, $entity_type, $return_value, $params) {
+	$return_value['object/blog'] = elgg_echo('blog:blogs');
+
+	return $return_value;
+}
+
 
 register_elgg_event_handler('init', 'system', 'blog_init');
