@@ -52,6 +52,8 @@ function ecml_parse_view_match($matches) {
 			// match against custom keywords with optional args
 			$keyword_info = $CONFIG->ecml_keywords[$keyword];
 			$vars = ecml_keywords_tokenize_params($params_string);
+			$vars['ecml_keyword'] = $keyword;
+			$vars['ecml_params_string'] = $params_string;
 			$content = elgg_view($keyword_info['view'], $vars);
 			break;
 	}
@@ -65,35 +67,102 @@ function ecml_parse_view_match($matches) {
 }
 
 /**
- * Creates an array from a "name=value, name2=value2" string.
+ * Creates an array from a name=value name2='value2' name3="value3" string.
  *
  * @param $string
  * @return array
  */
 function ecml_keywords_tokenize_params($string) {
-	$pairs = array_map('trim', explode(',', $string));
+
+	if (empty($string)) {
+		return array();
+	}
+
 	$params = array();
+	$pos = 0;
+	$char = substr($string, $pos, 1);
 
-	foreach ($pairs as $pair) {
-		list($name, $value) = explode('=', $pair);
+	// working var for assembling name and values
+	$operand = $name = '';
 
-		$name = trim($name);
-		$value = trim($value);
+	while ($char !== FALSE) {
+		switch ($char) {
+			// handle quoted names/values
+			case '"':
+			case "'":
+				$quote = $char;
 
-		// normalize BOOL values
-		if ($value === 'true') {
-			$value = TRUE;
-		} elseif ($value === 'false') {
-			$value = FALSE;
+				$next_char = substr($string, ++$pos, 1);
+				while ($next_char != $quote) {
+					if ($next_char === FALSE) {
+						// no matching quote. bail.
+						return array();
+					}
+					$operand .= $next_char;
+					$next_char = substr($string, ++$pos, 1);
+				}
+				break;
+
+			case ECML_ATTR_SEPARATOR:
+				// normalize true and false
+				if ($operand == 'true'){
+					$operand = TRUE;
+				} elseif ($operand == 'false') {
+					$operand = FALSE;
+				}
+				$params[$name] = $operand;
+				$operand = $name = '';
+				break;
+
+			case ECML_ATTR_OPERATOR:
+				// save name, switch to value
+				$name = $operand;
+				$operand = '';
+				break;
+
+			default:
+				$operand .= $char;
 		}
 
-		// don't check against value since a falsy/empty value is valid.
-		if ($name) {
-			$params[$name] = $value;
+		$char = substr($string, ++$pos, 1);
+	}
+
+	// need to get the last attr
+	if ($name && $operand) {
+		if ($operand == 'true'){
+			$operand = TRUE;
+		} elseif ($operand == 'false') {
+			$operand = FALSE;
 		}
+		$params[$name] = $operand;
 	}
 
 	return $params;
+
+	// this is much faster, but doesn't allow quoting.
+//	$pairs = array_map('trim', explode(',', $string));
+//	$params = array();
+//
+//	foreach ($pairs as $pair) {
+//		list($name, $value) = explode('=', $pair);
+//
+//		$name = trim($name);
+//		$value = trim($value);
+//
+//		// normalize BOOL values
+//		if ($value === 'true') {
+//			$value = TRUE;
+//		} elseif ($value === 'false') {
+//			$value = FALSE;
+//		}
+//
+//		// don't check against value since a falsy/empty value is valid.
+//		if ($name) {
+//			$params[$name] = $value;
+//		}
+//	}
+//
+//	return $params;
 }
 
 /**

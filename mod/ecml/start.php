@@ -13,7 +13,6 @@
  *	Update docs / help
  * 	Check for SQL injection problems.
  * 	Check entity keyword views against fullview.  Force to FALSE?
- *
  */
 
 /**
@@ -22,6 +21,9 @@
 function ecml_init() {
 	require_once(dirname(__FILE__) . '/ecml_functions.php');
 	global $CONFIG;
+
+	define('ECML_ATTR_SEPARATOR', ' ');
+	define('ECML_ATTR_OPERATOR', '=');
 
 	// help page
 	register_page_handler('ecml', 'ecml_help_page_handler');
@@ -107,7 +109,8 @@ function ecml_parse_view($hook, $entity_type, $return_value, $params) {
 	global $CONFIG;
 
 	// give me everything that is not a ], possibly followed by a :, and surrounded by [[ ]]s
-	$keyword_regex = '/\[\[([a-z0-9_]+):?([^\]]+)?\]\]/';
+	//$keyword_regex = '/\[\[([a-z0-9_]+):?([^\]]+)?\]\]/';
+	$keyword_regex = '/\[\[([a-z0-9_]+)([^\]]+)?\]\]/';
 	$CONFIG->ecml_current_view = $params['view'];
 	$return_value = preg_replace_callback($keyword_regex, 'ecml_parse_view_match', $return_value);
 
@@ -116,7 +119,7 @@ function ecml_parse_view($hook, $entity_type, $return_value, $params) {
 
 
 /**
- * Register some default keywords.
+ * Register default keywords.
  *
  * @param unknown_type $hook
  * @param unknown_type $entity_type
@@ -125,20 +128,14 @@ function ecml_parse_view($hook, $entity_type, $return_value, $params) {
  * @return unknown_type
  */
 function ecml_keyword_hook($hook, $entity_type, $return_value, $params) {
-	$return_value['login_box'] = array(
-		'view' => 'account/forms/login',
-		'description' => elgg_echo('ecml:keywords:login_box')
-	);
+	$keywords = array('youtube', 'slideshare');
 
-	$return_value['user_list'] = array(
-		'view' => 'ecml/keywords/user_list',
-		'description' => elgg_echo('ecml:keywords:user_list')
-	);
-
-	$return_value['site_stats'] = array(
-		'view' => 'ecml/keywords/site_stats',
-		'description' => elgg_echo('ecml:keywords:site_stats')
-	);
+	foreach ($keywords as $keyword) {
+		$return_value[$keyword] = array(
+			'view' => "ecml/keywords/$keyword",
+			'description' => elgg_echo("ecml:keywords:$keyword")
+		);
+	}
 
 	return $return_value;
 }
