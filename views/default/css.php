@@ -964,7 +964,7 @@ li.navigation_more ul li {
 }
 .entity_listing_info p {
 	margin:0;
-	line-height:1.2em;
+	/* line-height:1.2em; */
 }
 .entity_title {
 	font-weight: bold;
@@ -979,6 +979,7 @@ li.navigation_more ul li {
 	color:#666666;
 	font-size: 85%;
 	font-style: italic;
+	line-height:1.2em;
 }
 /* entity metadata block */
 .entity_metadata {

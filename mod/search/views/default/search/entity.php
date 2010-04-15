@@ -24,16 +24,16 @@ if (!$icon) {
 	// @todo allow an option to switch to displaying the entity's icon instead.
 	$type = $entity->getType();
 	if ($type == 'user' || $type == 'group') {
-		$icon = elgg_view('profile/icon', array('entity' => $entity, 'size' => 'small'));
+		$icon = elgg_view('profile/icon', array('entity' => $entity, 'size' => 'tiny'));
 	} elseif ($owner = $entity->getOwnerEntity()) {
-		$icon = elgg_view('profile/icon', array('entity' => $owner, 'size' => 'small'));
+		$icon = elgg_view('profile/icon', array('entity' => $owner, 'size' => 'tiny'));
 	} else {
 		// display a generic icon if no owner, though there will probably be
 		// other problems if the owner can't be found.
 		$icon = elgg_view(
 			'graphics/icon', array(
 				'entity' => $entity,
-				'size' => 'small',
+				'size' => 'tiny',
 				));
 	}
 }
@@ -56,15 +56,15 @@ if (!$time) {
 	<div class="search_listing clearfloat">
 	<div class="search_listing_icon"><?php echo $icon; ?></div>
 		<div class="search_listing_info">
-			<p class="item_title"><?php echo $title; ?></p>
-			<p class="item_description"><?php echo $description; ?></p>
+			<p class="entity_title"><?php echo $title; ?></p>
+			<?php echo $description; ?>
 <?php 
 if ($extra_info) {
 ?>
-			<p class="item_extra"><?php echo $extra_info; ?></p>
+			<p class="entity_subtext"><?php echo $extra_info; ?></p>
 <?php
 }
 ?>
-			<p class="item_timestamp"><?php echo $time; ?></p>
+			<p class="entity_subtext"><?php echo $time; ?></p>
 		</div>
 	</div>
