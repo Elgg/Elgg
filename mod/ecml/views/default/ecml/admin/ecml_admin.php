@@ -27,7 +27,8 @@ $form_body = <<<___END
 ___END;
 
 foreach ($views as $view => $view_desc) {
-	$form_body .= "<th><acronym title=\"$view\">$view_desc</acronym></th>";
+	$form_body .= "<th><acronym class=\"ecml_view ecml_check_all\" title=\"$view\">$view_desc</acronym></th>";
+	$n++;
 }
 $form_body .= '</tr>';
 
@@ -36,7 +37,7 @@ foreach ($keywords as $keyword => $keyword_info) {
 	$keyword_desc = $keyword_info['description'];
 	$form_body .= "
 	<tr class=\"ecml_row_$odd\">
-		<td class=\"ecml_keyword_desc\"><acronym title=\"$keyword_desc\">$keyword</acryonym></td>
+		<td class=\"ecml_keyword_desc\"><acronym class=\"ecml_keyword ecml_check_all\" title=\"$keyword_desc\">$keyword</acronym></td>
 ";
 	foreach ($views as $view => $view_info) {
 		// if this is restricted and we're not on the specified view don't allow changes
@@ -65,21 +66,34 @@ echo elgg_view('input/form', array(
 	'action' => $vars['url'] . 'action/ecml/save_permissions'
 ));
 
-//foreach ($views as $view => $desc) {
-//	echo elgg_view_title($desc);
-//	echo '<ul>';
-//	foreach ($keywords as $keyword => $info) {
-//		$description = $info['description'];
-//
-//		echo "<li>$keyword</li>";
-//	}
-//	echo '</ul>';
-//
-//echo <<<___END
-//	<br />
-//	</li>
-//
-//___END;
-//}
-//
-//echo '</ul>';
+?>
+<script type="text/javascript">
+
+$(document).ready(function() {
+	// append check all link
+	$('.ecml_check_all').before('<input type="checkbox" class="check_all">');
+
+	$('input.check_all').click(function() {
+		// yoinked from
+		// http://stackoverflow.com/questions/788225/table-row-and-column-number-in-jquery
+		var rowIndex = $(this).parent().parent().children().index($(this).parent());
+		var check = $(this).attr('checked');
+
+		// clicked on a keyword on the left, check all boxes in the tr
+		if (rowIndex == 0) {
+			$(this).parent().parent().find('input').each(function() {
+				if (!$(this).attr('disabled')) {
+					$(this).attr('checked', check);
+				}
+			});
+		} else {
+			boxes = $('.ecml_admin_table > tbody > tr td:nth-child(' + (rowIndex + 1) + ') input[type=checkbox]');
+			boxes.each(function() {
+				if (!$(this).attr('disabled')) {
+					$(this).attr('checked', check);
+				}
+			});
+		}
+	});
+});
+</script>
