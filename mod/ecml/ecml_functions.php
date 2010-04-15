@@ -203,6 +203,12 @@ function ecml_is_valid_keyword($keyword, $view = NULL) {
 		return FALSE;
 	}
 
+	// this keyword is restricted to certain views
+	if (isset($CONFIG->ecml_keywords[$keyword]['restricted'])
+	&& !in_array($view, $CONFIG->ecml_keywords[$keyword]['restricted'])) {
+		return FALSE;
+	}
+
 	$views = $CONFIG->ecml_permissions;
 
 	// this is a blacklist, so return TRUE by default.

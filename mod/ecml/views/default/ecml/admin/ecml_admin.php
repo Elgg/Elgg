@@ -40,11 +40,17 @@ foreach ($views as $view => $desc) {
 		<td class=\"ecml_view_desc\">$desc</td>
 ";
 	foreach ($keywords as $keyword => $info) {
-		$checked = (in_array($keyword, $perms[$view])) ? 'checked="checked"' : '';
+		// if this is restricted and we're not on the specified view don't allow changes
+		// since we don't save this, no need to pass a name
+		if (isset($info['restricted']) && !in_array($view, $info['restricted'])) {
+			$form_body .= "<td><input type=\"checkbox\" checked=\"checked\" disabled=\"disabled\"/></td>";
+		} else {
+			$checked = (in_array($keyword, $perms[$view])) ? 'checked="checked"' : '';
 
-		// ooook. input/checkboxes isn't overly useful.
-		// do it ourself.
-		$form_body .= "<td><input type=\"checkbox\" name=\"perms[$view][]\" value=\"$keyword\" $checked /></td>";
+			// ooook. input/checkboxes isn't overly useful.
+			// do it ourself.
+			$form_body .= "<td><input type=\"checkbox\" name=\"perms[$view][]\" value=\"$keyword\" $checked /></td>";
+		}
 	}
 	$form_body .= '</tr>';
 
