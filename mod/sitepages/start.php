@@ -188,17 +188,23 @@ function sitepages_parse_view($hook, $entity_type, $return_value, $params) {
 function sitepages_ecml_keyword_hook($hook, $entity_type, $return_value, $params) {
 	$return_value['loginbox'] = array(
 		'view' => 'account/forms/login',
-		'description' => elgg_echo('sitepages:ecml:keywords:login_box')
+		'description' => elgg_echo('sitepages:ecml:keywords:login_box'),
+		'usage' => elgg_echo('sitepages:ecml:keywords:login_box_usage'),
+		'restricted' => array('sitepages/custom_frontpage')
 	);
 
 	$return_value['userlist'] = array(
-		'view' => 'sitepages/keywords/user_list',
-		'description' => elgg_echo('sitepages:ecml:keywords:user_list')
+		'view' => 'sitepages/keywords/userlist',
+		'description' => elgg_echo('sitepages:ecml:keywords:userlist'),
+		'usage' => elgg_echo('sitepages:ecml:keywords:userlist_usage'),
+		'restricted' => array('sitepages/custom_frontpage')
 	);
 
 	$return_value['sitestats'] = array(
-		'view' => 'sitepages/keywords/site_stats',
-		'description' => elgg_echo('sitepages:ecml:keywords:site_stats')
+		'view' => 'sitepages/keywords/sitestats',
+		'description' => elgg_echo('sitepages:ecml:keywords:sitestats'),
+		'usage' => elgg_echo('sitepages:ecml:keywords:sitestats_usage'),
+		'restricted' => array('sitepages/custom_frontpage')
 	);
 
 	return $return_value;

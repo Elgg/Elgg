@@ -52,10 +52,10 @@ $english = array(
 	/**
 	 * ECML
 	 */
-	'sitepages:ecml:keywords:login_box' => 'A standard login box.  Useful for the logged out content area.',
-	'sitepages:ecml:keywords:site_stats' => 'This does not exist yet.',
-	'sitepages:ecml:keywords:user_list' => "Lists users.  Supports only_with_avatars=TRUE|FALSE, list_type=newest|online|random, limit",
-	'sitepages:ecml:views:custom_frontpage' => "The front page view",
+	'sitepages:ecml:keywords:loginbox' => 'A standard login box.  Useful for the logged out content area.',
+	'sitepages:ecml:keywords:sitestats' => 'This does not exist yet.',
+	'sitepages:ecml:keywords:userlist' => "Lists users.  Supports only_with_avatars=TRUE|FALSE, list_type=newest|online|random, limit",
+	'sitepages:ecml:views:custom_frontpage' => "Custom Front Page",
 );
 
 add_translation('en', $english);
