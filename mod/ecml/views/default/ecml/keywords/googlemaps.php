@@ -18,14 +18,8 @@ if ($src) {
 	$link_href = elgg_http_add_url_query_elements($src, array('source' => 'embed'));
 
 	echo "
-
 <iframe width=\"$width\" height=\"$height\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\" src=\"$embed_src\"></iframe>
 <br />
-<small>
-	<a href=\"$link_href\" style=\"color:#0000FF;text-align:left\">
-		" . elgg_echo('ecml:googlemaps:view_larger_map') . "
-	</a>
-</small>
-
+<small><a href=\"$link_href\" style=\"color:#0000FF;text-align:left\">" . elgg_echo('ecml:googlemaps:view_larger_map') . "</a></small>
 ";
 }

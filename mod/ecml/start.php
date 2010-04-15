@@ -32,10 +32,19 @@ function ecml_init() {
 	register_page_handler('ecml_admin', 'ecml_admin_page_handler');
 	register_elgg_event_handler('pagesetup', 'system', 'ecml_pagesetup');
 
+	// CSS for admin access
+	elgg_extend_view('css', 'ecml/admin/css');
+
+	// admin action to save permissions
+	register_action('ecml/save_permissions', FALSE, dirname(__FILE__) . '/actions/save_permissions.php', TRUE);
+
 	// show ECML-enabled icon on free-text input areas
 	elgg_extend_view('input/longtext',  'ecml/input_ext');
 	elgg_extend_view('input/plaintext', 'ecml/input_ext');
 	//elgg_extend_view('input/text', 'ecml/input_ext');
+
+	// add parsing for core views.
+	register_plugin_hook('get_views', 'ecml', 'ecml_views_hook');
 
 	// get register the views we want to parse for ecml
 	// @todo will need to do profiling to see if it would be faster
@@ -60,9 +69,7 @@ function ecml_init() {
 	// it's more efficient to use this as a blacklist
 	// but probably makes more sense from a UI perspective as a whitelist.
 	// uses [views][view_name] = array(keywords, not, allowed)
-	$CONFIG->ecml_permissions = array(
-		'views' => array()
-	);
+	$CONFIG->ecml_permissions = unserialize(get_plugin_setting('ecml_permissions', 'ecml'));
 }
 
 /**
@@ -92,7 +99,8 @@ function ecml_help_page_handler($page) {
  * @param array $page
  */
 function ecml_admin_page_handler($page) {
-	$content = elgg_view('ecml/admin');
+	admin_gatekeeper();
+	$content = elgg_view('ecml/admin/ecml_admin');
 	echo page_draw(elgg_echo('ecml:admin'), $content);
 }
 
@@ -122,22 +130,39 @@ function ecml_parse_view($hook, $entity_type, $return_value, $params) {
  * Register default keywords.
  *
  * @param unknown_type $hook
- * @param unknown_type $entity_type
- * @param unknown_type $return_value
+ * @param unknown_type $type
+ * @param unknown_type $value
  * @param unknown_type $params
  * @return unknown_type
  */
-function ecml_keyword_hook($hook, $entity_type, $return_value, $params) {
+function ecml_keyword_hook($hook, $type, $value, $params) {
+	// I keep going back and forth about entity and view. They're powerful, but
+	// a great way to let a site get hacked if the admin doesn't lock them down.
 	$keywords = array('entity', 'view', 'youtube', 'slideshare', 'vimeo', 'googlemaps');
 
 	foreach ($keywords as $keyword) {
-		$return_value[$keyword] = array(
+		$value[$keyword] = array(
 			'view' => "ecml/keywords/$keyword",
-			'description' => elgg_echo("ecml:keywords:$keyword")
+			'description' => elgg_echo("ecml:keywords:desc:$keyword"),
+			'usage' => elgg_echo("ecml:keywords:usage:$keyword")
 		);
 	}
 
-	return $return_value;
+	return $value;
+}
+
+/**
+ * Register default views to parse
+ *
+ * @param unknown_type $hook
+ * @param unknown_type $type
+ * @param unknown_type $value
+ * @param unknown_type $params
+ */
+function ecml_views_hook($hook, $type, $value, $params) {
+	$value['annotation/generic_comment'] = elgg_echo('ecml:views:annotation_generic_comment');
+
+	return $value;
 }
 
 register_elgg_event_handler('init', 'system', 'ecml_init');

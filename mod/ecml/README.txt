@@ -90,7 +90,13 @@ CONTENTS:
 
 	To register your own ECML keywords, reply to the 'get_keywords'
 	hook of type 'ecml' and append to the passed array with a key that is
-	your keyword name and a value that is an array of a description and view.
+	your keyword name and a value that is an array of a view, a description,
+	and usage instructions.
+
+	Optionally, the array can pass a 'restricted' => array() value of views
+	that this keyword is valid in.  This is not overrideable by the admin
+	interface and is useful for forcing security on possibly dangerous
+	keywords.
 
 	Arguments passed to the keyword are accessible to the keyword view via
 	the $vars array.  It is	the responsibility of the custom view to parse
@@ -111,7 +117,8 @@ CONTENTS:
 			function buttonizer_ecml_keywords($hook, $type, $value, $params) {
 				$value['buttonizer'] = array(
 					'view' => 'buttonizer/ecml/buttonizer',
-					'description' => 'Makes your text a button!  What could be better?'
+					'description' => 'Makes your text a button!  What could be better?',
+					'usage' => 'Use [[buttonizer text="My text"]] to make "My text" a button!'
 				);
 
 				return $value;
@@ -128,6 +135,10 @@ CONTENTS:
 	This is exactly the same as saying:
 
 		[[view src="buttonizer/ecml/buttonizer" text="This is my button!"]]
+
+	or even:
+
+		[[view src="input/button" value="This is my button!" type="button"]]
 
 	but is much simpler for the user.
 

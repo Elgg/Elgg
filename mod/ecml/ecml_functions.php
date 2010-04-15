@@ -203,8 +203,7 @@ function ecml_is_valid_keyword($keyword, $view = NULL) {
 		return FALSE;
 	}
 
-	$views = $CONFIG->ecml_permissions['views'];
-	$contexts = $CONFIG->ecml_permissions['contexts'];
+	$views = $CONFIG->ecml_permissions;
 
 	// this is a blacklist, so return TRUE by default.
 	$r = TRUE;
