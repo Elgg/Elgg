@@ -159,3 +159,42 @@ CONTENTS:
 	* If making a custom keyword, avoid underscores in your params.  They
 	look funny.
 
+	* Are disabled keywords in comments still working?  This is probably
+	because a parent view is including comments directly.  For example:
+
+	blog page handler:
+		...logic...
+		echo elgg_view_entity($blog);
+		...logic...
+
+	view object/blog:
+		...logic...
+		echo $blog;
+		echo elgg_view_comments($blog);
+
+	The output of object/blog includes the output of the comments, so if
+	the view object/blog allows the youtube the comments will also be parsed
+	for ECML.  The solution is to keep views for the object and comments
+	separate.
+
+	blog page handler:
+		echo elgg_view_entity($blog);
+		...logic...
+		echo elgg_view_comments($blog);
+
+	view object/blog:
+		...logic...
+		echo $blog
+
+	Alternatively, you can keep the blog and comments in the object view, but
+	pull out the blog into its own view to register with ECML.
+
+	view object/blog:
+		...logic...
+		elgg_view('blog/blog', array('blog' => $blog);
+		...logic...
+		elgg_view_comments($blog);
+
+	view blog/blog:
+		...logic...
+		echo $blog
