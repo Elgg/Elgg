@@ -26,23 +26,22 @@ $form_body = <<<___END
 		<th>&nbsp</th>
 ___END;
 
-foreach ($keywords as $keyword => $info) {
-	$desc = $info['description'];
-
-	$form_body .= "<th><acronym title=\"$desc\">$keyword</acronym></th>";
+foreach ($views as $view => $view_desc) {
+	$form_body .= "<th><acronym title=\"$view\">$view_desc</acronym></th>";
 }
 $form_body .= '</tr>';
 
 $odd = 'odd';
-foreach ($views as $view => $desc) {
+foreach ($keywords as $keyword => $keyword_info) {
+	$keyword_desc = $keyword_info['description'];
 	$form_body .= "
 	<tr class=\"ecml_row_$odd\">
-		<td class=\"ecml_view_desc\">$desc</td>
+		<td class=\"ecml_keyword_desc\"><acronym title=\"$keyword_desc\">$keyword</acryonym></td>
 ";
-	foreach ($keywords as $keyword => $info) {
+	foreach ($views as $view => $view_info) {
 		// if this is restricted and we're not on the specified view don't allow changes
 		// since we don't save this, no need to pass a name
-		if (isset($info['restricted']) && !in_array($view, $info['restricted'])) {
+		if (isset($keyword_info['restricted']) && !in_array($view, $keyword_info['restricted'])) {
 			$form_body .= "<td><input type=\"checkbox\" checked=\"checked\" disabled=\"disabled\"/></td>";
 		} else {
 			$checked = (in_array($keyword, $perms[$view])) ? 'checked="checked"' : '';
