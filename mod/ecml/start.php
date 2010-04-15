@@ -100,9 +100,10 @@ function ecml_help_page_handler($page) {
  */
 function ecml_admin_page_handler($page) {
 	admin_gatekeeper();
+	set_context('admin');
 	$content = elgg_view('ecml/admin/ecml_admin');
 	$body = elgg_view_layout('one_column_with_sidebar', $content);
-	echo page_draw(elgg_echo('ecml:admin'), $body);	
+	echo page_draw(elgg_echo('ecml:admin'), $body);
 }
 
 /**
