@@ -42,9 +42,11 @@ function ecml_parse_view_match($matches) {
 			break;
 
 		case 'view':
-			// parses this into an acceptable array for $vars.
-			$info = ecml_keywords_parse_view_params($params_string);
-			$content = elgg_view($info['view'], $info['vars']);
+			// src is a required attribute of view
+			$vars = ecml_keywords_tokenize_params($params_string);
+			$vars['ecml_keyword'] = $keyword;
+			$vars['ecml_params_string'] = $params_string;
+			$content = elgg_view($vars['src'], $vars);
 
 			break;
 
@@ -163,28 +165,6 @@ function ecml_keywords_tokenize_params($string) {
 //	}
 //
 //	return $params;
-}
-
-/**
- * Extract the view and vars for view: keyword
- *
- * @param $string
- * @return array views, vars
- */
-function ecml_keywords_parse_view_params($string) {
-	$vars = ecml_keywords_tokenize_params($string);
-
-	// the first element key is the view
-	$var_keys = array_keys($vars);
-	$view = $var_keys[0];
-
-	$info = array(
-		'view' => $view,
-		'vars' => $vars
-	);
-
-	return $info;
-
 }
 
 /**

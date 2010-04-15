@@ -3,7 +3,7 @@
 	<field key="name" value="ECML V2" />
 	<field key="author" value="Curverider" />
 	<field key="version" value="1.0" />
-	<field key="description" value="Elgg Custom Markup Language v2 adds support for easy customization of pages and embedding media." />
+	<field key="description" value="Elgg Customizable Markup Language v2 adds support for easy customization of pages and embedding media." />
 	<field key="category" value="service" />
 	<field key="category" value="official" />
 	<field key="provides" value="ecml2" />

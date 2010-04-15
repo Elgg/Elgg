@@ -110,7 +110,7 @@ function ecml_parse_view($hook, $entity_type, $return_value, $params) {
 
 	// give me everything that is not a ], possibly followed by a :, and surrounded by [[ ]]s
 	//$keyword_regex = '/\[\[([a-z0-9_]+):?([^\]]+)?\]\]/';
-	$keyword_regex = '/\[\[([a-z0-9_]+)([^\]]+)?\]\]/';
+	$keyword_regex = '/\[\[([a-z0-9]+)([^\]]+)?\]\]/';
 	$CONFIG->ecml_current_view = $params['view'];
 	$return_value = preg_replace_callback($keyword_regex, 'ecml_parse_view_match', $return_value);
 
@@ -128,7 +128,7 @@ function ecml_parse_view($hook, $entity_type, $return_value, $params) {
  * @return unknown_type
  */
 function ecml_keyword_hook($hook, $entity_type, $return_value, $params) {
-	$keywords = array('youtube', 'slideshare', 'vimeo');
+	$keywords = array('entity', 'view', 'youtube', 'slideshare', 'vimeo');
 
 	foreach ($keywords as $keyword) {
 		$return_value[$keyword] = array(
