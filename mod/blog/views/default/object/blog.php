@@ -62,11 +62,6 @@ if ($blog->canEdit()) {
 			$edit;
 
 if ($full) {
-	if ($blog->comments_on != 'Off') {
-		$comments = elgg_view_comments($blog);
-	} else {
-		$comments = '';
-	}
 
 echo <<<___END
 <div class="blogpost clearfloat">
@@ -87,7 +82,6 @@ echo <<<___END
 		<span class="body">$body</span>
 	</div>
 </div>
-$comments
 
 ___END;
 
