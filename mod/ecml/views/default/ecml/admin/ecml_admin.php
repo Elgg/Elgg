@@ -17,7 +17,7 @@ ksort($views);
 ksort($keywords);
 
 echo elgg_view_title(elgg_echo('ecml:admin:admin'));
-echo '<p>' . elgg_echo('ecml:admin:instruction') . '</p>';
+echo '<p class="margin_top">' . elgg_echo('ecml:admin:instruction') . '</p>';
 
 // yes I'm using a table because this is table.
 $form_body = <<<___END
@@ -53,7 +53,7 @@ foreach ($views as $view => $desc) {
 
 $form_body .= '</table>';
 $form_body .= elgg_view('input/submit', array('value' => elgg_echo('submit')));
-$form_body .= elgg_view('input/reset', array('value' => elgg_echo('reset')));
+$form_body .= elgg_view('input/reset', array('value' => elgg_echo('reset'), 'class' => 'cancel_button'));
 
 echo elgg_view('input/form', array(
 	'body' => $form_body,

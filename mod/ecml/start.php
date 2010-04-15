@@ -94,14 +94,15 @@ function ecml_help_page_handler($page) {
 }
 
 /**
- * Display a help page for valid ECML keywords on this page.
+ * Display a admin area for ECML
  *
  * @param array $page
  */
 function ecml_admin_page_handler($page) {
 	admin_gatekeeper();
 	$content = elgg_view('ecml/admin/ecml_admin');
-	echo page_draw(elgg_echo('ecml:admin'), $content);
+	$body = elgg_view_layout('one_column_with_sidebar', $content);
+	echo page_draw(elgg_echo('ecml:admin'), $body);	
 }
 
 /**
