@@ -14,7 +14,7 @@ http://twitter.com/nogoodnick
 CONTRIBUTING DEVELOPERS
 
 Cash Costello - http://cashcostello.com/
-Justin Richer, Nathan Rackliffe, Tom Read - MITRE http://www.mitre.org/
+Justin Richer, Nathan Rackliffe, Tom Read, Jon Maul - MITRE http://www.mitre.org/
 
 ALUMNI DEVELOPERS
 
