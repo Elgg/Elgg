@@ -128,7 +128,7 @@ function ecml_parse_view($hook, $entity_type, $return_value, $params) {
  * @return unknown_type
  */
 function ecml_keyword_hook($hook, $entity_type, $return_value, $params) {
-	$keywords = array('entity', 'view', 'youtube', 'slideshare', 'vimeo');
+	$keywords = array('entity', 'view', 'youtube', 'slideshare', 'vimeo', 'googlemaps');
 
 	foreach ($keywords as $keyword) {
 		$return_value[$keyword] = array(
