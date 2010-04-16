@@ -24,11 +24,14 @@
 			//check that the user can edit as well as admin
 			if ($post->canEdit() || ($post->owner_guid == $_SESSION['user']->guid)) {
     			
-    			//delete
+    			//delete forum comment
 				$post->delete();
+				
+				// remove river entry if it exists
+				remove_from_river_by_annotation($post_id);
+
 				//display confirmation message
 				system_message(elgg_echo("grouppost:deleted"));
-				
 			}
 			
 		} else {
