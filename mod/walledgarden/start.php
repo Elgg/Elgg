@@ -29,7 +29,8 @@
 		//if (function_exists('elgg_view_disable_simplecache')) {
 		//	elgg_view_disable_simplecache();
 		//}
-
+		
+		register_plugin_hook('new_twitter_user', 'twitter_service', 'walledgarden_new_twitter_user');
 	}
 	
 	function walledgarden_pagesetup() {
@@ -52,6 +53,12 @@
 			return true;
 			
 		}
+
+	function walledgarden_new_twitter_user($hook, $entity_type, $returnvalue, $params) {
+		// do not allow new users to be created within the walled-garden
+		register_error(elgg_echo('walledgarden:new_user:fail'));
+		return FALSE;
+	}
 	
 	register_elgg_event_handler('init','system','walledgarden_init');
 	register_elgg_event_handler('pagesetup','system','walledgarden_pagesetup');
