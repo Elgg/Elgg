@@ -5,10 +5,10 @@ $english = array(
 	'riverdashboard:useasdashboard' => "Replace the default dashboard with this activity river?",
 	'activity' => 'Activity',
 	'riverdashboard:recentmembers' => 'Recent members',
-	
-    /**
-     * Site messages
-          **/
+
+	/**
+	 * Site messages
+		 **/
 
 	'sitemessages:announcements' => "Site announcements",
 	'sitemessages:posted' => "Posted",
@@ -16,7 +16,7 @@ $english = array(
 	'sitemessages:river:create' => "posted a new site wide message",
 	'sitemessages:add' => "Add a site-wide message to the river page",
 	'sitemessage:deleted' => "Site message deleted",
-		
+
 	'river:widget:noactivity' => 'We could not find any activity.',
 	'river:widget:title' => "Activity",
 	'river:all' => "All activity",
@@ -35,6 +35,10 @@ $english = array(
 	'riverdashboard:avataricon' => "Would you like to use user avatars or icons on your site activity stream?",
 	'option:icon' => 'Icons',
 	'option:avatar' => 'Avatars',
+
+	// ecml
+	'riverdashboard:ecml:desc:activity' => 'Recent Activity',
+	'riverdashboard:ecml:desc:usage' => '[activity user=username limit=limit type=type subtype=subtype]'
 );
-					
+
 add_translation("en",$english);
