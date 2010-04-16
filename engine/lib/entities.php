@@ -1774,7 +1774,7 @@ function elgg_get_entities(array $options = array()) {
 
 	$options = array_merge($defaults, $options);
 
-	$singulars = array('type', 'subtype', 'owner_guid', 'container_guid', 'site_guid');
+	$singulars = array('type', 'subtype', 'owner_guid', 'container_guid', 'site_guid', 'type_subtype_pair');
 	$options = elgg_normalise_plural_options_array($options, $singulars);
 
 	// evaluate where clauses
