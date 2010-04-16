@@ -17,7 +17,7 @@
 
 		global $CONFIG;
 
-		// Set up the menu 
+		// Set up the menu
 		add_menu(elgg_echo('groups'), $CONFIG->wwwroot . "pg/groups/world/");
 
 		// Register a page handler, so we can have nice URLs
@@ -235,7 +235,7 @@
 					add_submenu_item(elgg_echo('groups:yours'), $CONFIG->wwwroot . "pg/groups/member/" . $_SESSION['user']->username, '1groupslinks');
 				}
 				add_submenu_item(elgg_echo('groups:all'), $CONFIG->wwwroot . "pg/groups/world/", '1groupslinks');
-			
+
 				if (isloggedin()) {
 					add_submenu_item(elgg_echo('groups:invitations'), $CONFIG->wwwroot . "pg/groups/invitations/" . $_SESSION['user']->username, '1groupslinks');
 				}
@@ -417,26 +417,30 @@
 	function groups_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $params)
 	{
 		$page_owner = page_owner_entity();
-		// get all groups if logged in
-		if ($loggedin = get_loggedin_user()) {
-			$groups = elgg_get_entities_from_relationship(array('relationship' => 'member', 'relationship_guid' => $loggedin->getGUID(), 'inverse_relationship' => FALSE, 'limit' => 999));
-			if (is_array($groups)) {
-				foreach ($groups as $group) {
-					$returnvalue[$group->group_acl] = elgg_echo('groups:group') . ': ' . $group->name;
-				}
+		$loggedin = get_loggedin_user();
+
+		// only insert group access for current group
+		if ($page_owner instanceof ElggGroup && $loggedin) {
+			if ($page_owner->isMember($loggedin)) {
+				$returnvalue[$page_owner->group_acl] = elgg_echo('groups:group') . ': ' . $page_owner->name;
+
+				// remove friends access
+				unset($returnvalue[ACCESS_FRIENDS]);
+			}
+		} else {
+			// remove all group access ids the user has
+			$groups = elgg_get_entities_from_relationship(array(
+				'relationship' => 'member',
+				'relationship_guid' => $loggedin->getGUID(),
+				'inverse_relationship' => FALSE,
+				'limit' => 999
+			));
+
+			foreach ($groups as $group) {
+				unset($returnvalue[$group->group_acl]);
 			}
 		}
 
-		// This doesn't seem to do anything.
-		// There are no hooks to override container permissions for groups
-//
-//		if ($page_owner instanceof ElggGroup)
-//		{
-//			if (can_write_to_container())
-//			{
-//				$returnvalue[$page_owner->group_acl] = elgg_echo('groups:group') . ": " . $page_owner->name;
-//			}
-//		}
 		return $returnvalue;
 	}
 
