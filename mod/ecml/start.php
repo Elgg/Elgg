@@ -120,7 +120,7 @@ function ecml_parse_view($hook, $entity_type, $return_value, $params) {
 
 	// give me everything that is not a ], possibly followed by a :, and surrounded by [[ ]]s
 	//$keyword_regex = '/\[\[([a-z0-9_]+):?([^\]]+)?\]\]/';
-	$keyword_regex = '/\[\[([a-z0-9]+)([^\]]+)?\]\]/';
+	$keyword_regex = '/\[\[([a-z0-9\.]+)([^\]]+)?\]\]/';
 	$CONFIG->ecml_current_view = $params['view'];
 	$return_value = preg_replace_callback($keyword_regex, 'ecml_parse_view_match', $return_value);
 
@@ -140,7 +140,19 @@ function ecml_parse_view($hook, $entity_type, $return_value, $params) {
 function ecml_keyword_hook($hook, $type, $value, $params) {
 	// I keep going back and forth about entity and view. They're powerful, but
 	// a great way to let a site get hacked if the admin doesn't lock them down.
-	$keywords = array('entity', 'view', 'youtube', 'slideshare', 'vimeo', 'googlemaps');
+	$keywords = array(
+		'entity',
+		'view',
+		'youtube',
+		'slideshare',
+		'vimeo',
+		'googlemaps',
+		'scribd',
+		'blip.tv',
+		'dailymotion',
+		'livevideo',
+		'redlasso'
+	);
 
 	foreach ($keywords as $keyword) {
 		$value[$keyword] = array(
