@@ -118,9 +118,9 @@ function ecml_admin_page_handler($page) {
 function ecml_parse_view($hook, $entity_type, $return_value, $params) {
 	global $CONFIG;
 
-	// give me everything that is not a ], possibly followed by a :, and surrounded by [[ ]]s
+	// give me everything that is not a ], possibly followed by a :, and surrounded by [ ]s
 	//$keyword_regex = '/\[\[([a-z0-9_]+):?([^\]]+)?\]\]/';
-	$keyword_regex = '/\[\[([a-z0-9\.]+)([^\]]+)?\]\]/';
+	$keyword_regex = '/\[([a-z0-9\.]+)([^\]]+)?\]/';
 	$CONFIG->ecml_current_view = $params['view'];
 	$return_value = preg_replace_callback($keyword_regex, 'ecml_parse_view_match', $return_value);
 
@@ -179,4 +179,5 @@ function ecml_views_hook($hook, $type, $value, $params) {
 	return $value;
 }
 
-register_elgg_event_handler('init', 'system', 'ecml_init');
+// be sure to run after other plugins
+register_elgg_event_handler('init', 'system', 'ecml_init', 9999);

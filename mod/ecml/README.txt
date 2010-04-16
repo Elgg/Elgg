@@ -28,13 +28,13 @@ CONTENTS:
 
 3.  USING ECML KEYWORDS
 
-	All ECML keywords are surrounded by two square brackets: [[ and ]].
+	All ECML keywords are surrounded by square brackets: [ and ].
 	Some keywords, like views and entity lists, take optional parameters.
 
 	Examples:
-		[[userlist]] -- Display up to 10 newest users.
-		[[youtube src="http://www.youtube.com/watch?v=kCpjgl2baLs"]] -- Embed a YouTube video.
-		[[view src="input/text"]] -- Display a textarea
+		[userlist] -- Display up to 10 newest users.
+		[youtube src="http://www.youtube.com/watch?v=kCpjgl2baLs"] -- Embed a YouTube video.
+		[view src="input/text"] -- Display a textarea
 
 
 3.1  UTILITY KEYWORDS 'entity' AND 'view'
@@ -43,9 +43,9 @@ CONTENTS:
 	mainly for embedding content from 3rd party sites, but also include
 	two utility views to help non-programmers quickly display content.
 
-	The two utility keywords available are [[entity]] and [[view]].
+	The two utility keywords available are [entity] and [view].
 
-	[[entity]] - Displays a list of entities using similar arguments to the
+	[entity] - Displays a list of entities using similar arguments to the
 	elgg_get_entities() function.  See documentation for that function for
 	the full list of supported arguments and default values.
 
@@ -53,20 +53,20 @@ CONTENTS:
 		* owner: The username owner. (You can still use owner_guid)
 
 	Example: Displays a list of all blog posts by the user named 'admin':
-		[[entity type=object subtype=blog owner=admin]]
+		[entity type=object subtype=blog owner=admin]
 
 	Example: Displays newest group created:
-		[[entity type=object subtype=group limit=1]]
+		[entity type=object subtype=group limit=1]
 
 
-	[[view]] - Displays a valid Elgg view passing any optional parameters to
+	[view] - Displays a valid Elgg view passing any optional parameters to
 	the view.
 
 	Example: Display a text input:
-		[[view src="input/text"]]
+		[view src="input/text"]
 
 	Example: Display a textarea with a default value:
-		[[view src="input/longtext" value="This is an example of a quoted value!"]]
+		[view src="input/longtext" value="This is an example of a quoted value!"]
 
 
 3.2  EMBEDDED 3RD PARTY MEDIA
@@ -74,10 +74,10 @@ CONTENTS:
 	ECML provides support for embedding media from a few of the most common
 	media sites:
 
-	* Youtube -- [[youtube src="URL"]]
-	* Vimeo -- [[vimeo src="URL"]]
-	* Slideshare -- [[slideshare id="ID"]] (NB: Use the "wordpress.com" embed
-	link surrounded by two [[s and ]]s.)
+	* Youtube -- [youtube src="URL"]
+	* Vimeo -- [vimeo src="URL"]
+	* Slideshare -- [slideshare id="ID"] (NB: Use the "wordpress.com" embed
+	link)
 
 
 4  CUSTOM ECML KEYWORDS (AKA "THE 'C' in ECML)
@@ -107,7 +107,7 @@ CONTENTS:
 
 	How a user will call the keyword:
 
-		[[buttonizer text="This is my button!"]]
+		[buttonizer text="This is my button!"]
 
 	How to implement this in a plugin:
 
@@ -118,7 +118,7 @@ CONTENTS:
 				$value['buttonizer'] = array(
 					'view' => 'buttonizer/ecml/buttonizer',
 					'description' => 'Makes your text a button!  What could be better?',
-					'usage' => 'Use [[buttonizer text="My text"]] to make "My text" a button!'
+					'usage' => 'Use [buttonizer text="My text"] to make "My text" a button!'
 				);
 
 				return $value;
@@ -134,11 +134,11 @@ CONTENTS:
 
 	This is exactly the same as saying:
 
-		[[view src="buttonizer/ecml/buttonizer" text="This is my button!"]]
+		[view src="buttonizer/ecml/buttonizer" text="This is my button!"]
 
 	or even:
 
-		[[view src="input/button" value="This is my button!" type="button"]]
+		[view src="input/button" value="This is my button!" type="button"]
 
 	but is much simpler for the user.
 

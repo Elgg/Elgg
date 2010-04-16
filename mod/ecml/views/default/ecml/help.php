@@ -18,7 +18,7 @@ $keywords_html = '';
 foreach ($keywords as $keyword => $info) {
 	$desc = htmlentities($info['description']);
 	$keywords_html .= "
-<dt>[[$keyword]]</dt>
+<dt>[$keyword]</dt>
 <dd>$desc</dd>";
 }
 
