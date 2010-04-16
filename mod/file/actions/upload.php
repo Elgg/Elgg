@@ -139,6 +139,9 @@
 				unset($thumblarge);
 			}
 		}
+	} else {
+		// not saving a file but still need to save the entity to push attributes to database
+		$file->save();
 	}
 	
 	// make sure session cache is cleared
