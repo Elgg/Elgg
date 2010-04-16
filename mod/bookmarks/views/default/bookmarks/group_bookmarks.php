@@ -21,15 +21,7 @@ if($bookmarks){
 		$info .= "<div class='entity_listing_info'><p class='entity_title'><a href=\"{$b->address}\">{$b->title}</a></p>";
 				
 		//get the user details
-		$info .= "<p class='entity_subtext'>{$friendlytime} ";
-
-		//get the bookmark description
-		// @todo - do we even have a description anymore? or is this the current bookmarks note ?
-		if($s->description) {
-			$info .= "<a href=\"javascript:void(0);\" class=\"share_more_info\">".elgg_echo('bookmarks:more')."</a></small></p><div class=\"share_desc\"><p>{$s->description}</p></div>";
-		} else { 
-			$info .= "</p>";
-		}
+		$info .= "<p class='entity_subtext'>{$friendlytime}</p>";
 		$info .= "</div>";
 		//display 
 		echo "<div class='entity_listing clearfloat'>" . $info . "</div>";

@@ -1,15 +1,3 @@
-<script type="text/javascript">
-$(document).ready(function () {
-
-$('a.show_file_desc').click(function () {
-	$(this.parentNode).children("[class=filerepo_listview_desc]").slideToggle("fast");
-	return false;
-});
-
-}); /* end document ready function */
-</script>
-
-
 <?php
 
     //the page owner
@@ -62,8 +50,6 @@ $('a.show_file_desc').click(function () {
             	echo "<div class='filerepo_widget_content'>";
             	echo "<div class='filerepo_listview_title'><p class='filerepo_title'>" . $f->title . "</p></div>";
             	echo "<div class='filerepo_listview_date'><p class='filerepo_timestamp'><small>" . friendly_time($f->time_created) . "</small></p></div>";
-            	$description = $f->description;
-		        if (!empty($description)) echo "<a href=\"javascript:void(0);\" class='show_file_desc'>". elgg_echo('more') ."</a><br /><div class='filerepo_listview_desc'>" . $description . "</div>";
 		        echo "</div></div>";
             				
         	}
