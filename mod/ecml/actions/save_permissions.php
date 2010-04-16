@@ -9,7 +9,28 @@
  * @link http://elgg.org/
  */
 
-$perms = get_input('perms', array());
+$whitelist = get_input('whitelist', array());
+$keywords = $CONFIG->ecml_keywords;
+$views = $CONFIG->ecml_parse_views;
+
+// the front end uses a white list but the backend uses a
+// blacklist for performance and extensibility.
+// gotta convert.
+$perms = array();
+
+foreach ($views as $view => $view_info) {
+	foreach ($keywords as $keyword => $keyword_info) {
+
+		// don't need to add perms for restricted keywords
+		// because those perms are checked separately
+		if (isset($keyword_info['restricted'])) {
+			continue;
+		}
+		if (!isset($whitelist[$view]) || !in_array($keyword, $whitelist[$view])) {
+			$perms[$view][] = $keyword;
+		}
+	}
+}
 
 if (set_plugin_setting('ecml_permissions', serialize($perms), 'ecml')) {
 	system_message(elgg_echo('ecml:admin:permissions_saved'));

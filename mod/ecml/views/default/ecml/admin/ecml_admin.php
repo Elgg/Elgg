@@ -35,21 +35,30 @@ $form_body .= '</tr>';
 $odd = 'odd';
 foreach ($keywords as $keyword => $keyword_info) {
 	$keyword_desc = $keyword_info['description'];
-	$form_body .= "
-	<tr class=\"ecml_row_$odd\">
-		<td class=\"ecml_keyword_desc\"><acronym class=\"ecml_keyword ecml_check_all\" title=\"$keyword_desc\">$keyword</acronym></td>
-";
+	if (isset($keyword_info['restricted'])) {
+		$restricted = elgg_echo('ecml:admin:restricted');
+		$form_body .= "
+		<tr class=\"ecml_row_$odd\">
+			<td class=\"ecml_keyword_desc\"><acronym class=\"ecml_keyword ecml_restricted\" title=\"$keyword_desc\">$keyword ($restricted)</acronym></td>
+		";
+	} else {
+		$form_body .= "
+		<tr class=\"ecml_row_$odd\">
+			<td class=\"ecml_keyword_desc\"><acronym class=\"ecml_keyword ecml_check_all\" title=\"$keyword_desc\">$keyword</acronym></td>
+		";
+	}
 	foreach ($views as $view => $view_info) {
 		// if this is restricted and we're not on the specified view don't allow changes
 		// since we don't save this, no need to pass a name
-		if (isset($keyword_info['restricted']) && !in_array($view, $keyword_info['restricted'])) {
-			$form_body .= "<td><input type=\"checkbox\" checked=\"checked\" disabled=\"disabled\"/></td>";
+		if (isset($keyword_info['restricted'])) {
+			$checked = (in_array($view, $keyword_info['restricted'])) ? 'checked="checked"' : '';
+			$form_body .= "<td><input type=\"checkbox\" $checked name=\"whitelist[$view][]\" value=\"$keyword\" disabled=\"disabled\"/></td>";
 		} else {
-			$checked = (in_array($keyword, $perms[$view])) ? 'checked="checked"' : '';
+			$checked = (!in_array($keyword, $perms[$view])) ? 'checked="checked"' : '';
 
 			// ooook. input/checkboxes isn't overly useful.
 			// do it ourself.
-			$form_body .= "<td><input type=\"checkbox\" name=\"perms[$view][]\" value=\"$keyword\" $checked /></td>";
+			$form_body .= "<td><input type=\"checkbox\" name=\"whitelist[$view][]\" value=\"$keyword\" $checked /></td>";
 		}
 	}
 	$form_body .= '</tr>';
@@ -71,7 +80,7 @@ echo elgg_view('input/form', array(
 
 $(document).ready(function() {
 	// append check all link
-	$('.ecml_check_all').before('<input type="checkbox" class="check_all">');
+	$('.ecml_check_all').before('<input type="checkbox" checked="checked" class="check_all">');
 
 	$('input.check_all').click(function() {
 		// yoinked from

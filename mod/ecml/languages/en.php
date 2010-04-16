@@ -71,6 +71,7 @@ grid below.
 
 	'ecml:admin:permissions_saved' => 'ECML permissions saved.',
 	'ecml:admin:cannot_save_permissions' => 'Cannot save ECML permissions!',
+	'ecml:admin:restricted' => 'Restricted',
 
 
 );

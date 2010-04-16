@@ -15,3 +15,6 @@
 .ecml_row_even {
 
 }
+.ecml_restricted {
+	color: #555;
+}
