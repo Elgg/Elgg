@@ -87,9 +87,9 @@
 
 			// use same filename on the disk - ensures thumbnails are overwritten
 			$filestorename = $file->getFilename();
-			$filestorename = substr($filestorename, strlen($prefix));
+			$filestorename = elgg_substr($filestorename, elgg_strlen($prefix));
 		} else {
-			$filestorename = strtolower(time().$_FILES['upload']['name']);
+			$filestorename = elgg_strtolower(time().$_FILES['upload']['name']);
 		}
 		
 		$file->setFilename($prefix.$filestorename);
