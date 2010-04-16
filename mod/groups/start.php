@@ -417,7 +417,9 @@
 	function groups_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $params)
 	{
 		$page_owner = page_owner_entity();
-		$loggedin = get_loggedin_user();
+		if (!$loggedin = get_loggedin_user()) {
+			return $returnvalue;
+		}
 
 		// only insert group access for current group
 		if ($page_owner instanceof ElggGroup && $loggedin) {
