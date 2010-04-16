@@ -62,12 +62,7 @@ if ($page_owner) {
 	}
 }
 
-// temporarily force tag-cloud display
-$tags = display_tagcloud(0, 100, 'tags');
-echo <<<___END
-<h3>Tagcloud</h3>
-<div class="tagcloud sidebar">$tags</div>
-<a href="{$vars['url']}mod/tagcloud/tagcloud.php">All site tags</a>
-___END;
-
+// tag-cloud display
+$tags = display_tagcloud(0, 50, 'tags');
+echo "<h3>".elgg_echo('tagcloud')."</h3><div class='tagcloud sidebar'>{$tags}</div><a href=\"".$CONFIG->wwwroot."mod/tagcloud/tagcloud.php\">".elgg_echo('tagcloud:allsitetags')."</a>";
 ?>

@@ -635,6 +635,8 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	'annotations' => "Annotations",
 	'relationships' => "Relationships",
 	'metadata' => "Metadata",
+	'tagcloud' => "Tag cloud",
+	'tagcloud:allsitetags' => "All site tags",
 
 /**
  * Input / output strings
