@@ -554,6 +554,7 @@ li.navigation_more ul li {
 .navigation li.navigation_more ul li a {
 	background:white;
 	color:#555555;
+	margin:0;
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
 	-webkit-box-shadow: none;
@@ -575,7 +576,10 @@ li.navigation_more ul li {
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 }
-
+.navigation li.navigation_more ul li.selected a {
+	background:#4690D6;
+	color:white;
+}
 
 /* ***************************************
 	FOOTER CONTENTS
