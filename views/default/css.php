@@ -387,6 +387,15 @@ h2 {
 #elgg_topbar_contents .log_out a:hover {
 	color:#71cbff;
 }
+#elgg_topbar_contents a.myfriends {
+	background:transparent url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png) no-repeat left -297px;
+	margin-right:30px;
+	text-indent: -900em;
+	width:36px;
+}
+#elgg_topbar_contents a.myfriends:hover {
+	background-position: left -337px;
+}
 #elgg_topbar_contents a.settings {
 	background:transparent url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png) no-repeat -300px -41px;
 	padding-left:20px !important;

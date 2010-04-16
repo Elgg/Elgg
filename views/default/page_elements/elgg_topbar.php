@@ -21,8 +21,14 @@
 
 		// enable elgg topbar extending
 		echo elgg_view('elgg_topbar/extend', $vars);
+	
+		// add Friends to top toolbar - if profile mod is running
+		if ( is_plugin_enabled('profile') ) {
+			$user = get_loggedin_user();
+			echo "<a class='myfriends' href=\"".$CONFIG->wwwroot . "pg/friends/" . $user->username."\" title=\"".elgg_echo('friends')."\">".elgg_echo('friends')."</a>";
+		}
 	?>
-
+	
 	<div class="log_out">
 		<?php echo elgg_view('output/url', array('href' => "{$vars['url']}action/logout", 'text' => elgg_echo('logout'), 'is_action' => TRUE)); ?>
 	</div>
