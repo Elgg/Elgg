@@ -1446,7 +1446,7 @@ a.action_button:focus {
 }
 .likes_list_holder a.user_like {
 	cursor:pointer;
-	background: url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png) no-repeat left -100px;
+	background: url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png) no-repeat left -101px;
 	text-indent: -9000em;
 	text-align: left;
 	display:block;
@@ -1456,12 +1456,12 @@ a.action_button:focus {
 	float:left;
 }
 .likes_list_holder a.user_like:hover {
-	background-position: left -130px;
+	background-position: left -131px;
 }
 .likes_list_holder .likes_list_button.link {
 	float:left;
 	text-align: left;
-	background: url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png) no-repeat left -130px;
+	background: url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png) no-repeat left -131px;
 	padding-left:21px;
 	height:20px;
 }
