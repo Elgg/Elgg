@@ -153,28 +153,6 @@ function sitepages_page_handler($page) {
 	page_draw($title, $content);
 }
 
-/**
- * Parses a registered view for supported keywords.
- *
- * @param unknown_type $hook
- * @param unknown_type $entity_type
- * @param unknown_type $return_value
- * @param unknown_type $params
- * @return string
- */
-function sitepages_parse_view($hook, $entity_type, $return_value, $params) {
-	global $CONFIG;
-
-	// give me everything that is (not a ]) possibly followed by a : and surrounded by [[ ]]s
-	$keyword_regex = '/\[\[([a-z0-9_]+):?([^\]]+)?\]\]/';
-
-	if (in_array($params['view'], $CONFIG->sitepages_parse_views)) {
-		$return_value = preg_replace_callback($keyword_regex, 'sitepages_parse_view_match', $return_value);
-	}
-
-	return $return_value;
-}
-
 
 /**
  * Register some default keywords.

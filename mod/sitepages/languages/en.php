@@ -35,7 +35,7 @@ $english = array(
 	'sitepages:addcontent' => "You can add content here via your admin tools. Look for the external pages link under admin.",
 	'item:object:front' => 'Front page items',
 
-	'sitepages:error:no_login' => 'The logged out view for the front page must contain a [[login_box]] or your users can\'t login!',
+	'sitepages:error:no_login' => 'The logged out view for the front page must contain a [login_box] or your users can\'t login!',
 
 	/**
 	 * Status messages
