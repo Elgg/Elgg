@@ -18,17 +18,7 @@
 		
 		// elgg_set_viewtype('default');
 		elgg_extend_view('pageshells/pageshell', 'walledgarden/walledgarden');
-		
 		elgg_extend_view('css','walledgarden/css');
-		
-		// Replace the default index page if the custom index plugin does not exist
-		if(!is_plugin_enabled("custom_index"))
-			register_plugin_hook('index','system','walledgarden_index');
-		// um...what is this doing here?
-		// Turn off simple cache if enabled
-		//if (function_exists('elgg_view_disable_simplecache')) {
-		//	elgg_view_disable_simplecache();
-		//}
 		
 		register_plugin_hook('new_twitter_user', 'twitter_service', 'walledgarden_new_twitter_user');
 	}
