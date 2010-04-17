@@ -88,9 +88,9 @@ function ecml_pagesetup(){
  * @param array $page
  */
 function ecml_help_page_handler($page) {
-
 	$content = elgg_view('ecml/help');
-	echo page_draw(elgg_echo('ecml:help'), $content);
+	$body = elgg_view_layout('one_column_with_sidebar', $content);
+	echo page_draw(elgg_echo('ecml:help'), $body);
 }
 
 /**
