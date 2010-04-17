@@ -57,7 +57,7 @@ if ($blog->canEdit()) {
 }
 
 	// include a view for plugins to extend
-	$edit = elgg_view("blogs/options", array("object_type" => 'blog')) .
+	$edit = elgg_view("blogs/options", array("object_type" => 'blog', 'entity' => $blog)) .
 			elgg_view_likes($blog) . // include likes
 			$edit;
 
