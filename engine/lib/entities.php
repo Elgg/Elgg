@@ -1747,9 +1747,9 @@ function get_entity($guid) {
  *
  * @param array $options Array in format:
  *
- * 	types => NULL|STR entity type (SQL: type = '$type' OR...see below...)
+ * 	types => NULL|STR entity type (SQL: type IN ('type1', 'type2') Joined with subtypes by AND...see below)
  *
- * 	subtypes => NULL|STR entity subtype (SQL: subtype = '$subtype'...see above)
+ * 	subtypes => NULL|STR entity subtype (SQL: subtype IN ('subtype1', 'subtype2))
  *
  * 	type_subtype_pairs => NULL|ARR (array('type' => 'subtype')) (SQL: type = '$type' AND subtype = '$subtype') pairs
  *
