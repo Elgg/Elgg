@@ -60,7 +60,7 @@ $english = array(
 		[view: input/text, value=This is a default value]</p>',
 
 	// admin
-	'ecml:admin:admin' => 'ECML Permissions',
+	'ecml:admin' => 'ECML Permissions',
 	'ecml:admin:instruction' =>
 
 'ECML allows users you easily embed views, entities, and 3rd party applications into their content
