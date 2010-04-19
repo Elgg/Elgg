@@ -82,6 +82,41 @@ $(document).ready(function() {
 	// append check all link
 	$('.ecml_check_all').before('<input type="checkbox" checked="checked" class="check_all">');
 
+	// determin initial state of checkall checkbox.
+	$('.ecml_check_all').each(function() {
+		var keyword = $(this).hasClass('ecml_keyword');
+		var checkbox = $(this).parent().find('input[type=checkbox]');
+		var checked;
+
+		// no keywords checked, checkall unchecked
+		// any keyword checked, checkall unchecked
+		// all keywords checked, checkall checked
+
+		// if keyword, check the TR
+		if (keyword) {
+			checked = true;
+			$(this).parent().parent().find('input').each(function() {
+				if (!$(this).hasClass('check_all') && !$(this).attr('disabled')) {
+					checked = (checked && $(this).attr('checked'));
+					// can't break...
+				}
+			});
+			checkbox.attr('checked', checked);
+		} else {
+			checked = true;
+			var rowIndex = $(this).parent().parent().children().index($(this).parent());
+
+			$('.ecml_admin_table > tbody > tr td:nth-child(' + (rowIndex + 1) + ') input[type=checkbox]').each(function() {
+				if (!$(this).hasClass('check_all') && !$(this).attr('disabled')) {
+					checked = (checked && $(this).attr('checked'));
+					// can't break...
+				}
+			});
+			checkbox.attr('checked', checked);
+		}
+	});
+
+	// handle checkall boxes
 	$('input.check_all').click(function() {
 		// yoinked from
 		// http://stackoverflow.com/questions/788225/table-row-and-column-number-in-jquery
