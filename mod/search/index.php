@@ -8,7 +8,7 @@
  * @link http://elgg.org/
  */
 
-// Search supports RSS 
+// Search supports RSS
 global $autofeed;
 $autofeed = true;
 
@@ -27,6 +27,7 @@ $offset = ($search_type == 'all') ? 0 : get_input('offset', 0);
 $entity_type = get_input('entity_type', ELGG_ENTITIES_ANY_VALUE);
 $entity_subtype = get_input('entity_subtype', ELGG_ENTITIES_ANY_VALUE);
 $owner_guid = get_input('owner_guid', ELGG_ENTITIES_ANY_VALUE);
+$container_guid = get_input('container_guid', ELGG_ENTITIES_ANY_VALUE);
 $friends = get_input('friends', ELGG_ENTITIES_ANY_VALUE);
 $sort = get_input('sort');
 switch ($sort) {
@@ -59,6 +60,7 @@ $params = array(
 	'subtype' => $entity_subtype,
 //	'tag_type' => $tag_type,
 	'owner_guid' => $owner_guid,
+	'container_guid' => $container_guid,
 //	'friends' => $friends
 	'pagination' => ($search_type == 'all') ? FALSE : TRUE
 );

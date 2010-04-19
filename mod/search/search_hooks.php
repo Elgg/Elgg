@@ -324,6 +324,11 @@ function search_comments_hook($hook, $type, $value, $params) {
 	// available on metastrings (and boolean mode doesn't need it)
 	$search_where = search_get_where_sql('msv', $fields, $params, FALSE);
 
+	$container_and = '';
+	if ($params['container_guid'] && $params['container_guid'] !== ELGG_ENTITIES_ANY_VALUE) {
+		$container_and = 'AND e.container_guid = ' . sanitise_string($params['container_guid']);
+	}
+
 	$e_access = get_access_sql_suffix('e');
 	$a_access = get_access_sql_suffix('a');
 	// @todo this can probably be done through the api..
@@ -335,6 +340,7 @@ function search_comments_hook($hook, $type, $value, $params) {
 			AND ($search_where)
 			AND $e_access
 			AND $a_access
+			$container_and
 
 		LIMIT {$params['offset']}, {$params['limit']}
 		";
@@ -349,6 +355,7 @@ function search_comments_hook($hook, $type, $value, $params) {
 			AND ($search_where)
 			AND $e_access
 			AND $a_access
+			$container_and
 		";
 
 	$result = get_data($q);
