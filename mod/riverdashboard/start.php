@@ -8,12 +8,9 @@
 function riverdashboard_init() {
 	global $CONFIG;
 	// Register and optionally replace the dashboard
-	if (get_plugin_setting('useasdashboard', 'riverdashboard') == 'yes') {
-		register_page_handler('dashboard','riverdashboard_page_handler');
-	} else {
-		// Activity main menu
-		add_menu(elgg_echo('activity'), $CONFIG->wwwroot . "mod/riverdashboard/");
-	}
+	register_page_handler('dashboard','riverdashboard_page_handler');
+	add_menu(elgg_echo('activity'), $CONFIG->wwwroot . "mod/riverdashboard/");
+
 	// Page handler
 	register_page_handler('riverdashboard','riverdashboard_page_handler');
 	elgg_extend_view('css','riverdashboard/css');
