@@ -233,7 +233,7 @@
 				$viewtype = elgg_get_viewtype(); 
 		
 		// Viewtypes can only be alphanumeric
-			if (preg_match('[\W]', $viewtype))
+			if (preg_match('[\W]', $viewtype)) {
 				return '';
 			}
 
