@@ -2344,6 +2344,17 @@ function elgg_normalise_plural_options_array($options, $singulars) {
 }
 
 /**
+ * Handles formatting of ampersands in urls
+ *
+ * @param string $url
+ * @return string
+ * @since 1.7.1
+ */
+function elgg_format_url($url) {
+	return preg_replace('/&(?!amp;)/', '&amp;', $url);
+}
+
+/**
  * Get the full URL of the current page.
  *
  * @return string The URL
