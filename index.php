@@ -38,6 +38,9 @@ if (!trigger_plugin_hook('index', 'system', null, FALSE)) {
 	set_context('main');
 	global $autofeed;
 	$autofeed = FALSE;
-	$content .= elgg_view_layout('one_column_with_sidebar', $title, elgg_view('account/forms/login'));
+		// if drop-down login in header option not selected
+		$login_form = elgg_view('account/forms/login');
+		
+	$content .= elgg_view_layout('one_column_with_sidebar', $title, $login_form);	
 	page_draw(null, $content);
 }

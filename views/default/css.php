@@ -535,12 +535,12 @@ li.navigation_more:hover a {
 li.navigation_more a.subnav span {
 	background-image: url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png);
 	background-repeat: no-repeat;
-	background-position: -150px -46px;
+	background-position: -150px -56px;
 	padding-left: 12px;
 }
 li.navigation_more:hover a.subnav span,
 li.navigation_more a.subnav:hover span {
-	background-position: -150px -66px;
+	background-position: -150px -76px;
 }
 li.navigation_more ul {
 	z-index: 7000;

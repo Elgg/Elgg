@@ -18,6 +18,9 @@
 		}
 		?></a></h1>
 		<?php
+			// drop-down login
+			echo elgg_view('account/forms/login_dropdown');
+		
 			// insert site-wide navigation
 			echo elgg_view('navigation/site_nav');
 			// insert a view which can be extended
