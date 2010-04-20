@@ -292,6 +292,12 @@
 		// Get the current viewtype
 			if (empty($viewtype))
 				$viewtype = elgg_get_viewtype(); 
+
+
+		// Viewtypes can only be alphanumeric
+			if (preg_match('[\W]', $viewtype)) 
+				return '';
+			}
 		
 		// Set up any extensions to the requested view
 		    if (isset($CONFIG->views->extensions[$view])) {
@@ -2013,7 +2019,11 @@
 		$s = empty($_SERVER["HTTPS"]) ? '' : ($_SERVER["HTTPS"] == "on") ? "s" : "";
 		$protocol = substr(strtolower($_SERVER["SERVER_PROTOCOL"]), 0, strpos(strtolower($_SERVER["SERVER_PROTOCOL"]), "/")) . $s;
 		$port = ($_SERVER["SERVER_PORT"] == "80") ? "" : (":".$_SERVER["SERVER_PORT"]);
-		return $protocol . "://" . $_SERVER['SERVER_NAME'] . $port . $_SERVER['REQUEST_URI'];
+		
+		$quotes = array('\'', '"');
+		$encoded = array('%27', '%22');
+
+		return $protocol . "://" . $_SERVER['SERVER_NAME'] . $port . str_replace($quotes, $encoded, $_SERVER['REQUEST_URI']);
 	}
 	
 	/**
