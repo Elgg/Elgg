@@ -426,11 +426,11 @@
 			if ($page_owner->isMember($loggedin)) {
 				$returnvalue[$page_owner->group_acl] = elgg_echo('groups:group') . ': ' . $page_owner->name;
 
-				// remove friends access
 				unset($returnvalue[ACCESS_FRIENDS]);
 			}
 		} else {
-			// remove all group access ids the user has
+			// if the user owns the group, remove all access collections manually
+			// this won't be a problem once the group itself owns the acl.
 			$groups = elgg_get_entities_from_relationship(array(
 				'relationship' => 'member',
 				'relationship_guid' => $loggedin->getGUID(),
@@ -580,13 +580,13 @@
 
 		return $invitations;
 	}
-	
+
 	/**
 	 * Function to use on groups for access. It will house private, loggedin, public,
 	 * and the group itself. This is when you don't want other groups or channels in the access options available
 	 * Returns an array
 	 **/
-	 
+
 	function group_access_options($group){
 		$access_array = array(0 => 'private',1 => 'logged in users',2 => 'public',$group->group_acl => 'Group: ' . $group->name );
 		return $access_array;
