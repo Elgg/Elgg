@@ -29,7 +29,7 @@ if($section == 'details'){
 	$more_info .= "</div>";
 }
 $profile_actions = "";
-if(get_loggedin_user()->getGuid() == page_owner()){
+if(isloggedin() && (get_loggedin_user()->getGuid() == page_owner())){
 	$profile_actions = "<div class='clearfloat profile_actions'>";
 	$profile_actions .= "<a href='{$vars['url']}pg/profile/{$user->username}/edit/details' class='action_button'>". elgg_echo('profile:edit') ."</a>";
 	$profile_actions .= "<a href='{$vars['url']}pg/profile/{$user->username}/edit/icon' class='action_button'>". elgg_echo('profile:editicon') ."</a>";
@@ -48,7 +48,7 @@ if(get_loggedin_user()->getGuid() == page_owner()){
 			}
 		}
 	}
-	if(is_plugin_enabled('messages')){
+	if(is_plugin_enabled('messages') && isloggedin()){
 		$profile_actions .= "<a href=\"{$vars['url']}mod/messages/send.php?send_to={$user->guid}\" class='action_button'>". elgg_echo('messages:send') ."</a>";
 	}
 	$profile_actions .= "</div>";
