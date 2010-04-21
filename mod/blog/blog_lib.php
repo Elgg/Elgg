@@ -307,13 +307,17 @@ class ElggBlog extends ElggObject {
 	}
 
 	/**
-	 * Override the value returned for time_created
+	 * Rewrite the time created to be publish time.
+	 * This is a bit dirty, but required for proper sorting.
 	 */
-	public function __get($name) {
-		if ($name == 'time_created') {
-			$name = 'time_created';
+	public function save() {
+		if (parent::save()) {
+			global $CONFIG;
+			$published = $this->publish_date;
+			$sql = "UPDATE {$CONFIG->dbprefix}entities SET time_created = '$published', time_updated = '$published'";
+			return update_data($sql);
 		}
 
-		return $this->get($name);
+		return FALSE;
 	}
 }
