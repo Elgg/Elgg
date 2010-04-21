@@ -90,7 +90,7 @@ $excerpt_label = elgg_echo('blog:excerpt');
 $excerpt_input = elgg_view('input/text', array(
 	'internalname' => 'excerpt',
 	'internalid' => 'blog_excerpt',
-	'value' => $values['excerpt']
+	'value' => html_entity_decode($values['excerpt'], ENT_COMPAT, 'UTF-8')
 ));
 
 $body_label = elgg_echo('blog:body');
