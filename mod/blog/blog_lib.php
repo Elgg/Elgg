@@ -40,7 +40,7 @@ function blog_get_page_content_read($owner_guid = NULL, $guid = NULL) {
 			'type' => 'object',
 			'subtype' => 'blog',
 			'full_view' => FALSE,
-			'order_by_metadata' => array('name'=>'publish_date', 'direction'=>'DESC', 'as'=>'int')
+			//'order_by_metadata' => array('name'=>'publish_date', 'direction'=>'DESC', 'as'=>'int')
 		);
 
 		$loggedin_userid = get_loggedin_userid();
