@@ -16,8 +16,11 @@
 		echo elgg_view("profile/status", array("entity" => $vars['entity']));
 	}
 	if(is_plugin_enabled('riverdashboard')) {
-		// users last 10 activites
-		echo elgg_view_river_items($vars['entity']->getGuid(), 0, '', '', '', '', $limit,0,0,false,false);
+		//select the correct river
+		if (get_plugin_setting('activitytype', 'riverdashboard') == 'classic')
+			echo elgg_view_river_items($vars['entity']->getGuid(), 0, '', '', '', '', $limit,0,0,false,true);
+		else
+			echo elgg_view_river_items($vars['entity']->getGuid(), 0, '', '', '', '', $limit,0,0,false,false);
 	} else {
 		echo "Riverdashboard not loaded";
 	}

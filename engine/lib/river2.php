@@ -383,10 +383,17 @@ function elgg_view_river_item($item) {
 				));
 			}
 		}
-		return elgg_view('river/item/wrapper',array(
-			'item' => $item,
-			'body' => $body
-		));
+		if (get_plugin_setting('activitytype', 'riverdashboard') == 'classic'){
+			return elgg_view('river/item/wrapper_classic',array(
+				'item' => $item,
+				'body' => $body
+			));
+		}else{
+			return elgg_view('river/item/wrapper',array(
+				'item' => $item,
+				'body' => $body
+			));
+		}
 	}
 	return false;
 }
