@@ -10,8 +10,11 @@ $contents = strip_tags($object->description); //strip tags from the contents to 
 
 $url = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
 $title = sprintf(elgg_echo('blog:river:create'), $url);
-$string .= $title . " <a href=\"" . $object->getURL() . "\">" . $object->title . "</a> <span class='entity_subtext'>" . friendly_time($object->publish_time) . "</span> <a class='river_comment_form_button link'>Comment</a>";
-$string .= elgg_view('likes/forms/link', array('entity' => $object));
+$string .= $title . " <a href=\"" . $object->getURL() . "\">" . $object->title . "</a> <span class='entity_subtext'>" . friendly_time($object->publish_time) . "</span>";
+if (get_plugin_setting('activitytype', 'riverdashboard') != 'classic'){
+	$string .= "<a class='river_comment_form_button link'>Comment</a>";
+	$string .= elgg_view('likes/forms/link', array('entity' => $object));
+}
 $string .= "<div class=\"river_content_display\">";
 	$string .= "<div class='river_object_blog_create'></div>";
 	if(strlen($contents) > 200) {
