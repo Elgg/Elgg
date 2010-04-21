@@ -2584,7 +2584,7 @@ interface Friendable {
  *
  * @param string $url
  * @return string
- * @since 1.8
+ * @since 1.7.1
  */
 function elgg_format_url($url) {
 	return preg_replace('/&(?!amp;)/', '&amp;', $url);
