@@ -21,6 +21,12 @@ $container = get_entity($blog->container_guid);
 $linked_title = "<a href=\"{$blog->getURL()}\" title=\"" . htmlentities($blog->title) . "\">{$blog->title}</a>";
 $categories = elgg_view('categories/view', $vars);
 $excerpt = $blog->excerpt;
+
+// add ellipses to excerpt it not the full post
+if ($excerpt != trim(strip_tags($blog->description))) {
+	$excerpt .= ' &#8230';
+}
+
 $body = autop($blog->description);
 $owner_icon = elgg_view("profile/icon",array('entity' => $owner, 'size' => 'tiny'));
 $tags = elgg_view('output/tags', array('tags' => $blog->tags));

@@ -245,21 +245,28 @@ function blog_get_page_content_friends($user_guid) {
 
 /**
  * Returns an appropriate excerpt for a blog.
+ * Will return up to 250 chars stopping at the nearest space.
+ * If no spaces are found (like in Japanese) will crop off at the
+ * 250 char mark.
  *
  * @param string $text
  * @param int $words
  * @return string
  */
-function blog_make_excerpt($text, $words=60) {
-	$text = strip_tags($text);
-	preg_match("/([\S]+\s*){0,$words}/", $text, $matches);
+function blog_make_excerpt($text, $chars = 250) {
+	$text = trim(strip_tags($text));
 
-	$trimmed = trim($matches[0]);
-	if ($trimmed != $text) {
-		return  "$trimmed &#8230";
+	// handle cases
+	$excerpt = elgg_substr($text, 0, $chars);
+	$space = elgg_strrpos($excerpt, ' ', 0);
+
+	// don't crop if can't find a space.
+	if ($space === FALSE) {
+		$space = $chars;
 	}
+	$excerpt = trim(elgg_substr($excerpt, 0, $space));
 
-	return $trimmed;
+	return $excerpt ;
 }
 
 /**
