@@ -35,44 +35,57 @@
 			));
 		?>
 		</div>
-		
+
 		<div class="group_stats">
 			<?php
 				echo "<p><b>" . elgg_echo("groups:owner") . ": </b><a href=\"" . get_user($vars['entity']->owner_guid)->getURL() . "\">" . get_user($vars['entity']->owner_guid)->name . "</a></p>";
 			?>
-			<p><?php echo elgg_echo('groups:members') . ": " . get_entities_from_relationship('member', $vars['entity']->guid, true, 'user', '', 0, '', 9999, 0, true); ?></p>
+			<p><?php
+				$options = array(
+					'relationship' => 'member',
+					'relationship_guid' => $vars['entity']->guid,
+					'inverse_relationship' => TRUE,
+					'limit' => 0,
+					'count' => TRUE
+				);
+
+				$count = elgg_get_entities_from_relationship($options);
+
+				echo elgg_echo('groups:members') . ": " . $count;
+
+			?></p>
 		</div>
 	</div>
-	
+
 	<div class="group_profile_column info">
 		<?php
 			if ($vars['full'] == true) {
 				if (is_array($vars['config']->group) && sizeof($vars['config']->group) > 0){
-	
+
 					foreach($vars['config']->group as $shortname => $valtype) {
 						if ($shortname != "name") {
 							$value = $vars['entity']->$shortname;
-	
+
 							if (!empty($value)) {
 								//This function controls the alternating class
 								$even_odd = ( 'odd' != $even_odd ) ? 'odd' : 'even';
 							}
-	
+
 							echo "<p class=\"{$even_odd}\">";
 							echo "<b>";
 							echo elgg_echo("groups:{$shortname}");
 							echo ": </b>";
-	
+
 							$options = array(
 								'value' => $vars['entity']->$shortname
 							);
-	
+
 							if ($valtype == 'tags') {
 								$options['tag_names'] = $shortname;
 							}
-	
+
 							echo elgg_view("output/{$valtype}", $options);
-	
+
 							echo "</p>";
 						}
 					}

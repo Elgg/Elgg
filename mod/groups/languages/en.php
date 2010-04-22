@@ -54,6 +54,7 @@
 			'groups:invite' => 'Invite friends',
 			'groups:inviteto' => "Invite friends to '%s'",
 			'groups:nofriends' => "You have no friends left who have not been invited to this group.",
+			'groups:nofriendsatall' => 'You have no friends to invite!',
 			'groups:viagroups' => "via groups",
 			'groups:group' => "Group",
 			'groups:search:tags' => "tag",
