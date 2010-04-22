@@ -29,8 +29,15 @@ function forward($location = "") {
 			$location = $CONFIG->url . $location;
 		}
 
-		header("Location: {$location}");
-		exit;
+		// return new forward location or false to stop the forward or empty string to exit
+		$params = array('current_url' => $current_page, 'forward_url' => $location);
+		$location = trigger_plugin_hook('forward', 'system', $params, $location);
+		if ($location) {
+			header("Location: {$location}");
+			exit;
+		} else if ($location === '') {
+			exit;
+		}
 	}
 
 	return false;
