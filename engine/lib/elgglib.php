@@ -1272,23 +1272,25 @@ function get_library_files($directory, $exceptions = array(), $list = array()) {
  * @param array $exceptions Array of filenames to ignore
  * @param array $list Array of files to append to
  * @param mixed $extensions Array of extensions to allow, NULL for all. (With a dot: array('.php'))
- * @return array
+ * @return array of filenames including $directory
  */
 function elgg_get_file_list($directory, $exceptions = array(), $list = array(), $extensions = NULL) {
+	$directory = sanitise_filepath($directory);
 	if ($handle = opendir($directory)) {
 		while (($file = readdir($handle)) !== FALSE) {
-			if (!is_file($file) || in_array($file, $exceptions)) {
+			if (!is_file($directory . $file) || in_array($file, $exceptions)) {
 				continue;
 			}
 
 			if (is_array($extensions)) {
 				if (in_array(strrchr($file, '.'), $extensions)) {
-					$list[] = $directory . "/" . $file;
+					$list[] = $directory . $file;
 				}
 			} else {
-				$list[] = $directory . "/" . $file;
+				$list[] = $directory . $file;
 			}
 		}
+		closedir($handle);
 	}
 
 	return $list;
