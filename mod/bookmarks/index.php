@@ -36,7 +36,7 @@ if(page_owner() == get_loggedin_userid()) {
 
 // List bookmarks
 set_context('search');
-$bookmarks = list_entities('object','bookmarks',page_owner());
+$bookmarks = elgg_list_entities(array('type' => 'object', 'subtype' => 'bookmarks', 'owner_guid' => page_owner()));
 if(!$bookmarks && ($page_owner->guid == get_loggedin_user()->guid))
 	$bookmarks = elgg_view('help/bookmarks');
 $area2 .= $bookmarks;
@@ -49,7 +49,7 @@ if(page_owner()	!= get_loggedin_user()->guid){
 // include a view for plugins to extend
 $area3 .= elgg_view("bookmarks/sidebar", array("object_type" => 'bookmarks'));
 
-if(isloggedin()){	
+if(isloggedin()){
 	// if logged in, get the bookmarklet
 	$area3 .= elgg_view("bookmarks/bookmarklet");
 }
