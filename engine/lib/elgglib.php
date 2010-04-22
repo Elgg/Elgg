@@ -566,7 +566,7 @@ function elgg_get_views($dir, $base) {
 }
 
 /**
- * @deprecated 1.7.  Use elgg_extend_view().
+ * @deprecated 1.7.  Use elgg_get_views().
  * @param $dir
  * @param $base
  */
@@ -1088,14 +1088,18 @@ function set_template_handler($function_name) {
 }
 
 /**
- * Extends a view by adding other views to be displayed at the same time.
+ * Extends a view.
  *
- * @param string $view The view to add to.
- * @param string $view_name The name of the view to extend
- * @param int $priority The priority, from 0 to 1000, to add at (lowest numbers will be displayed first)
+ * The addititional views are displayed before or after the primary view. 
+ * Priorities less than 500 are displayed before the primary view and 
+ * greater than 500 after. The default priority is 501. 
+ *
+ * @param string $view The view to extend.
+ * @param string $view_extension This view is added to $view
+ * @param int $priority The priority, from 0 to 1000, to add at (lowest numbers displayed first)
  * @param string $viewtype Not used
  */
-function elgg_extend_view($view, $view_name, $priority = 501, $viewtype = '') {
+function elgg_extend_view($view, $view_extension, $priority = 501, $viewtype = '') {
 	global $CONFIG;
 
 	if (!isset($CONFIG->views)) {
@@ -1114,7 +1118,7 @@ function elgg_extend_view($view, $view_name, $priority = 501, $viewtype = '') {
 		$priority++;
 	}
 
-	$CONFIG->views->extensions[$view][$priority] = "{$view_name}";
+	$CONFIG->views->extensions[$view][$priority] = "{$view_extension}";
 	ksort($CONFIG->views->extensions[$view]);
 }
 
