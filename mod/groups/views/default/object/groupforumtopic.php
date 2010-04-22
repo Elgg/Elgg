@@ -36,7 +36,7 @@
 	    if (($last_time) && ($u)) $info.= sprintf(elgg_echo('groups:lastupdated'), friendly_time($last_time), " <a href=\"" . $u->getURL() . "\">" . $u->name . "</a>");
 	    $info .= '</p>';
 		//get the group avatar
-		$icon = elgg_view("profile/icon",array('entity' => $group, 'size' => 'tiny'));
+		$icon = elgg_view("profile/icon",array('entity' => $u, 'size' => 'tiny'));
 	    //get the group and topic title
 	    if ($group instanceof ElggGroup) {
 	    	$info .= "<p class='entity_title'>" . elgg_echo('group') . ": <a href=\"{$group->getURL()}\">".htmlentities($group->name, ENT_QUOTES, 'UTF-8') ."</a></p>";
