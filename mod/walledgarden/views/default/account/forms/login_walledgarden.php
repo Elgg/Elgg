@@ -27,6 +27,7 @@
 	<div id="login-box">
 		<?php 
 			echo elgg_view('input/form', array('body' => $form_body, 'action' => "{$login_url}action/login"));
+			echo elgg_view('login/extend'); //a view for plugins to extend
 		?>			
 		<div class="clearfloat"></div>
 	</div>
