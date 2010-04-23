@@ -24,9 +24,11 @@
 	// get the group guid
 	$group_guid = (int) get_input('group_guid');
 
-	// set breadcrumbs
-	elgg_push_breadcrumb('', 'Parent Group Name');
-	elgg_push_breadcrumb(elgg_echo('item:object:groupforumtopic'), '');
+	// set up breadcrumbs
+	$group = get_entity($group_guid);
+	elgg_push_breadcrumb(elgg_echo('groups'), $CONFIG->wwwroot."pg/groups/world/");
+	elgg_push_breadcrumb($group->name, $group->getURL());
+	elgg_push_breadcrumb(elgg_echo('item:object:groupforumtopic'), $CONFIG->wwwroot."pg/groups/forum/{$group_guid}/");
 	elgg_push_breadcrumb(elgg_echo("groups:addtopic"));
 
 	echo elgg_view('navigation/breadcrumbs');
