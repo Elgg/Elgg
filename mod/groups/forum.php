@@ -21,8 +21,13 @@
 	set_context('search');
 
 	// set up breadcrumbs
-	elgg_push_breadcrumb('Parent Group Name');
+	$group_guid = get_input('group_guid');
+	$group = get_entity($group_guid);
+	elgg_push_breadcrumb(elgg_echo('groups'), $CONFIG->wwwroot."pg/groups/world/");
+	elgg_push_breadcrumb($group->name, $group->getURL());
 	elgg_push_breadcrumb(elgg_echo('item:object:groupforumtopic'));
+
+	$area1 = elgg_view('navigation/breadcrumbs');
 
 	$area1 .= elgg_view("forum/topics", array('topics' => $topics));
 	set_context('groups');
