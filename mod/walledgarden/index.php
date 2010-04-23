@@ -11,15 +11,11 @@
 
 // Get the Elgg engine
 require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
-	
+
 //grab the login form
-$login = elgg_view("account/forms/login");
-
-//temp message
-$area1 = "This site is running in walled garden mode. <br />
-			Therefore you will need to be invited & logged in to see anything.";
-
+$login = elgg_view("account/forms/login_walledgarden");
+	
 //display the contents in our new canvas layout
-$body = elgg_view_layout('one_column_with_sidebar', $area1, $login);
-
-page_draw($title, $body);
+$body = elgg_view_layout('walled_garden',$login);
+   
+page_draw_walledgarden($title, $body);
