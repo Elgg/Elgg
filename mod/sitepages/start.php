@@ -38,8 +38,8 @@ function sitepages_init() {
 	elgg_extend_view('footer/links', 'sitepages/footer_menu');
 	elgg_extend_view('metatags', 'sitepages/metatags');
 
-	// Replace the default index page if user has requested
-	if (get_plugin_setting('ownfrontpage', 'sitepages') == 'yes') {
+	// Replace the default index page if user has requested and the site is not running walled garden
+	if ((get_plugin_setting('ownfrontpage', 'sitepages') == 'yes') && (!is_plugin_enabled('walledgarden'))) {
 		register_plugin_hook('index', 'system', 'sitepages_custom_index');
 	}
 
