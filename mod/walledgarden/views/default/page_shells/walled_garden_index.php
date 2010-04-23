@@ -27,50 +27,14 @@ if (empty($vars['title'])) {
 }
 
 echo elgg_view('page_elements/html_begin', $vars);
-echo elgg_view('messages/list', array('object' => $vars['sysmessages']));
-?>	
-	<style type="text/css">
-	/*
-body {background: white;}
-	#walledgardenlogin {
-		position:absolute;
-		bottom:0;
-		left:280px;
-		height:250px;
-		width:272px;
-	}
-	#walledgardenintro {
-		position: absolute;
-		bottom:15px;
-		left:25px;
-		height:215px;
-		width:232px;
-		padding:10px;
-		background-color: white;
-		-webkit-border-radius: 8px; 
-		-moz-border-radius: 8px;
-	}
-	#walledgardenlogin #login-box {
-		background: none;
-	}
-	#walledgardenlogin #login-box h2 {
-		display:none;
-	}
-	#walledgardenlogin #login-box form {height:224px;padding:10px 10px 0;}
+echo "<div id='walledgarden_sysmessages'>".elgg_view('messages/list', array('object' => $vars['sysmessages']))."</div>";
 	
-	.messages, .messages_error {
-		position: relative;
-		margin: auto;
-	}
-*/
-	
-	</style>
-<?php	
-		echo "<div style='margin:20px auto;position:relative;padding:20px;width:523px;height:355px;background: url({$vars['url']}_graphics/login_back.gif) no-repeat top left;'>";				
-		echo "<div id='walledgardenintro'><h1>Welcome to:<br />" . $title . "</h1></div>";
-		echo "<div id='walledgardenlogin' class='whereamIused'>";
-		echo $vars['body'];
-		echo "</div></div>";
-		echo elgg_view('page_elements/html_end', $vars);
+echo "<div id='walledgarden_container'><div id='walledgarden' class='clearfloat'>";				
+	echo "<div class='walledgardenintro clearfloat'><h1>Welcome to:<br />" . $title . "</h1></div>";
+	echo "<div class='walledgardenlogin clearfloat'>".$vars['body']."</div>";
+echo "</div>";
+echo "<div id='walledgarden_bottom'></div>";
+echo "</div>";
+echo elgg_view('page_elements/html_end', $vars);
 ?>
 
