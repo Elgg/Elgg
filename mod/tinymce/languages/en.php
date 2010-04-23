@@ -6,7 +6,8 @@
 		 * Menu items and titles
 		 */
 	
-		'tinymce:remove' => "Add/Remove editor",
+		'tinymce:remove' => "Remove editor",
+		'tinymce:add' => "Add editor",
 	
 	);
 					

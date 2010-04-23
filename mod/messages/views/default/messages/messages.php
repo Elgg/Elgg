@@ -99,13 +99,12 @@ if (isloggedin())
 					<form action="<?php echo $vars['url']; ?>action/messages/send" method="post" name="messageForm" class="margin_top" id="messages_send_form">
 						<?php echo elgg_view('input/securitytoken'); ?>
 						<p><label><?php echo elgg_echo("messages:title"); ?>: <br /><input type='text' name='title' class="input_text" value='<?php echo $reply_title; ?>' /></label></p>
-						<p class="longtext_editarea"><label><?php echo elgg_echo("messages:message"); ?>:</label></p>
-						<div id="message_reply_editor">
+						<p class="longtext_inputarea"><label><?php echo elgg_echo("messages:message"); ?>:</label>
 						<?php echo elgg_view("input/longtext", array(
 											"internalname" => "message",
 											"value" => '',
 															));
-						?></div>
+						?></p>
 
 					<?php
 						//pass across the guid of the message being replied to

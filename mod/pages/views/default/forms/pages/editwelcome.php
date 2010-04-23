@@ -25,10 +25,9 @@
 	 $page_owner = $vars['owner']->guid;
 	 
 ?>
-<div class="contentWrapper">
 <form action="<?php echo $vars['url']; ?>action/pages/editwelcome" method="post">
 
-    <p class="longtext_editarea">
+    <p class="longtext_inputarea">
 		<label>
 			<?php echo elgg_view("input/longtext",array(
 				'internalname' => "pages_welcome",
@@ -58,4 +57,3 @@
     
 	<input type="submit" class="submit_button" value="<?php echo elgg_echo("save"); ?>" />
 </form>
-</div>

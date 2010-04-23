@@ -15,7 +15,7 @@ $type = $vars['type'];
 $url = $vars['url'] . "pg/expages/index.php?type=";
 ?>
 
-<div class="elgg_horizontal_tabbed_nav">
+<div class="elgg_horizontal_tabbed_nav margin_top">
 <ul>
 	<li <?php if($type == 'about')   echo "class = 'selected'"; ?>><a href="<?php echo $url; ?>about"><?php echo elgg_echo('expages:about'); ?></a></li>
 	<li <?php if($type == 'terms')   echo "class = 'selected'"; ?>><a href="<?php echo $url; ?>terms"><?php echo elgg_echo('expages:terms'); ?></a></li>

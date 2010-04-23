@@ -66,8 +66,8 @@
 		</p>
 		
 		<!-- topic message input -->
-		<p class="longtext_editarea">
-			<label><?php echo elgg_echo("groups:topicmessage"); ?><br />
+		<p class="longtext_inputarea">
+			<label><?php echo elgg_echo("groups:topicmessage"); ?></label>
 			<?php
 
 				echo elgg_view("input/longtext",array(
@@ -75,7 +75,6 @@
 									"value" => $messsage_content,
 													));
 			?>
-			</label>
 		</p>
 		
 		<!-- set the topic status -->

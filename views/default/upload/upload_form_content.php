@@ -72,8 +72,8 @@ if (!$vars['entity']) {
 <?php
 	}
 ?>
-		<p class="longtext_editarea">
-			<label><?php echo elgg_echo("description"); ?><br />
+		<p class="longtext_inputarea">
+			<label><?php echo elgg_echo("description"); ?></label>
 			<?php
 
 				echo elgg_view("input/longtext",array(
@@ -81,9 +81,7 @@ if (!$vars['entity']) {
 					"value" => $description,
 				));
 			?>
-			</label>
 		</p>
-		<br />
 		<p>
 			<label><?php echo elgg_echo("tags"); ?><br />
 			<?php

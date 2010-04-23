@@ -58,10 +58,13 @@
 		$field = elgg_view('input/hidden', array('internalname' => 'field_num', 'value' => $vars['entity']->id));
     	$topic = elgg_view('input/hidden', array('internalname' => 'topic', 'value' => get_input('topic')));
 		$group = elgg_view('input/hidden', array('internalname' => 'group', 'value' => get_input('group_guid')));
+		$edittopic_title = elgg_echo('groups:edittopic');
 			
 		$form_body = <<<EOT
 		
-		<p class='longtext_editarea'>$text_textarea</p>
+		<p class='longtext_inputarea'>
+		<label>$edittopic_title</label>
+		$text_textarea</p>
 		$post
 		$topic
 		$group

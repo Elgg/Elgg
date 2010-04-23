@@ -14,7 +14,7 @@
 	    
 ?>
 <form action="<?php echo $vars['url']; ?>action/groups/addpost" method="post" class="margin_top">
-	<label><?php echo elgg_echo("groups:reply"); ?><br />
+	<label><?php echo elgg_echo("groups:reply"); ?></label>
 	<?php
 	
 	echo elgg_view("input/longtext",array(
@@ -22,7 +22,7 @@
 						"value" => $body,
 										));
 	?>
-	</label>
+	
 		
     <!-- pass across the topic guid -->
 	<input type="hidden" name="topic_guid" value="<?php echo $vars['entity']->guid; ?>" />

@@ -91,17 +91,6 @@
 #media_embed .embed_instructions {
 	margin:10px 0 5px 0;
 }
-a.embed_media {
-	margin:0;
-	float:right;
-	display:block;
-	text-align: right;
-	font-weight: normal;
-}
-label a.embed_media {
-	font-size:0.8em;
-}
-
 
 /* modal tabs */
 #embed_media_tabs {

@@ -1,3 +1,9 @@
+<?php
+/**
+* ECML CSS
+*/
+?>
+
 .ecml_admin_table {
 	width:100%;
 }

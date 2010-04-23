@@ -1,3 +1,8 @@
+<?php
+/**
+* TinyMCE CSS
+*/
+?>
 #elgg_page_contents .mceButton {
 background-color: #e9e8e8;
 	border-color: #B2B2B2;
@@ -44,8 +49,4 @@ border: 1px solid #CCC;
 #elgg_page_contents .mceIframeContainer{}
 .wp_themeSkin .mceButtonDisabled {
 	border-color: #ccc !important;
-}
-.toggle_editor {
-	float:right;
-	margin-top:-15px;
 }

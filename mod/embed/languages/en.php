@@ -2,7 +2,7 @@
 
 	$english = array(
 	
-		'media:insert' => 'Embed / upload media',
+		'media:insert' => 'Embed media',
 	
 		'embed:instructions' => 'Click on any file to embed it into your content.',
 	

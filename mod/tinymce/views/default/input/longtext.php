@@ -73,10 +73,16 @@ tinyMCE.init({
 	}
 });
 function toggleEditor(id) {
-if (!tinyMCE.get(id))
-	tinyMCE.execCommand('mceAddControl', false, id);
-else
-	tinyMCE.execCommand('mceRemoveControl', false, id);
+	if (!tinyMCE.get(id)) {
+		tinyMCE.execCommand('mceAddControl', false, id);
+		<?php $toggleEditor_linktext = elgg_echo('tinymce:remove'); ?>
+		$("a.toggle_editor").html('<?php echo $toggleEditor_linktext ?>');
+	}
+	else {
+		tinyMCE.execCommand('mceRemoveControl', false, id);
+		<?php $toggleEditor_linktext = elgg_echo('tinymce:add'); ?>
+		$("a.toggle_editor").html('<?php echo $toggleEditor_linktext ?>');
+	}
 }
 </script>
 <?php
@@ -86,9 +92,9 @@ else
 
 ?>
 
+<a class="longtext_control toggle_editor small link" href="javascript:toggleEditor('<?php echo $vars['internalname']; ?>');"><?php echo elgg_echo('tinymce:remove'); ?></a>
 <!-- show the textarea -->
 <textarea class="input_textarea mceEditor" name="<?php echo $vars['internalname']; ?>" <?php echo $vars['js']; ?>><?php echo htmlentities($vars['value'], null, 'UTF-8'); ?></textarea>
-<div class="toggle_editor_container"><a class="toggle_editor small link" href="javascript:toggleEditor('<?php echo $vars['internalname']; ?>');"><?php echo elgg_echo('tinymce:remove'); ?></a></div>
 
 <script type="text/javascript">
 	$(document).ready(function() {

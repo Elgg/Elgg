@@ -1122,6 +1122,10 @@ input[type="text"]:focus {
 	background: #e4ecf5;
 	color:#333333;
 }
+a.longtext_control {
+	float:right;
+	margin-left:14px;
+}
 .submit_button {
 	font-size: 14px;
 	font-weight: bold;
