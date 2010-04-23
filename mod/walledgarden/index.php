@@ -13,7 +13,7 @@
 require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
 //grab the login form
-$login = elgg_view("account/forms/login_walledgarden");
+$login = elgg_view("account/forms/login");
 	
 //display the contents in our new canvas layout
 $body = elgg_view_layout('walled_garden',$login);
