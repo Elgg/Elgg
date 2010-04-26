@@ -426,7 +426,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	'user:password:resetreq:success' => 'Successfully requested a new password, email sent',
 	'user:password:resetreq:fail' => 'Could not request a new password.',
 
-	'user:password:text' => 'To generate a new password, enter your username below. We will send the address of a unique verification page to you via email click on the link in the body of the message and a new password will be sent to you.',
+	'user:password:text' => 'To request a new password, enter your username below and click the Request button.',
 
 	'user:persistent' => 'Remember me',
 /**

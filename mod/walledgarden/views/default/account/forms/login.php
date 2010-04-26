@@ -28,7 +28,7 @@ if ((isset($CONFIG->https_login)) && ($CONFIG->https_login)) {
 <div class="lostpassword_form margin_top hidden">
 	<?php
 	$lostpassword_form_body = "<p>" . elgg_echo('user:password:text') . "</p>";
-	$lostpassword_form_body .= "<p><label>". elgg_echo('username') . " "
+	$lostpassword_form_body .= "<p class='margin_none'><label>". elgg_echo('username') . " "
 		. elgg_view('input/text', array('internalname' => 'username', 'class' => 'login_textarea lostusername')) . "</label></p>";
 	$lostpassword_form_body .= elgg_view('input/captcha');
 	$lostpassword_form_body .= "<p>" . elgg_view('input/submit', array('value' => elgg_echo('request'))) . "</p>";
