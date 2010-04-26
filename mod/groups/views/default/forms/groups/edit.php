@@ -32,26 +32,31 @@
 	</p>
 <?php
 
-	//var_export($vars['profile']);
-	if (is_array($vars['config']->group) && sizeof($vars['config']->group) > 0)
-		foreach($vars['config']->group as $shortname => $valtype) {
-			
+//var_export($vars['profile']);
+if (is_array($vars['config']->group) && sizeof($vars['config']->group) > 0)
+	foreach($vars['config']->group as $shortname => $valtype) {
+	if ($shortname == 'description') {
 ?>
-
-	<p>
-		<label>
-			<?php echo elgg_echo("groups:{$shortname}") ?><br />
-			<?php echo elgg_view("input/{$valtype}",array(
-															'internalname' => $shortname,
-															'value' => $vars['entity']->$shortname,
-															)); ?>
-		</label>
+	<p><label>
+	<?php echo elgg_echo("groups:{$shortname}") ?></label>
+	<?php echo elgg_view("input/{$valtype}",array(
+						'internalname' => $shortname,
+						'value' => $vars['entity']->$shortname,
+						)); ?>
 	</p>
-
+<?php			
+	} else {
+?>
+	<p><label>
+	<?php echo elgg_echo("groups:{$shortname}") ?><br />
+	<?php echo elgg_view("input/{$valtype}",array(
+						'internalname' => $shortname,
+						'value' => $vars['entity']->$shortname,
+						)); ?>
+	</label></p>
 <?php
-			
-		}
-
+	}
+}
 ?>
 
 	<p>
