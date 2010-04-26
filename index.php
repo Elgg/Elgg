@@ -34,13 +34,14 @@ if (!trigger_plugin_hook('index', 'system', null, FALSE)) {
 	$title = elgg_view_title(elgg_echo('content:latest'));
 	set_context('search');
 	$offset = (int)get_input('offset', 0);
-	$content = elgg_list_registered_entities(array('limit' => 10, 'offset' => $offset, 'full_view' => FALSE, 'allowed_types' => array('object','group')));
+	$activity = elgg_list_registered_entities(array('limit' => 10, 'offset' => $offset, 'full_view' => FALSE, 'allowed_types' => array('object','group')));
 	set_context('main');
 	global $autofeed;
 	$autofeed = FALSE;
-		// if drop-down login in header option not selected
-		$login_form = elgg_view('account/forms/login');
+
+	// if drop-down login in header option not selected
+	$login_form = elgg_view('account/forms/login');
 		
-	$content .= elgg_view_layout('one_column_with_sidebar', $title, $login_form);	
+	$content = elgg_view_layout('one_column_with_sidebar', $title . $activity, $login_form);
 	page_draw(null, $content);
 }
