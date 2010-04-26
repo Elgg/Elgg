@@ -16,9 +16,35 @@ if ($sitepages_object = sitepages_get_sitepage_object('front')) {
 	$logged_in_content = $sitepages_object->logged_in_content;
 	$logged_out_content = $sitepages_object->logged_out_content;
 } else {
-	$css = '';
-	$logged_in_content = '';
-	$logged_out_content = '';
+	$css = <<<___EOT
+#elgg_sidebar .entity_listing_info {width:173px;}
+___EOT;
+	$logged_in_content = <<<___EOT
+<div id="elgg_content" class="clearfloat sidebar">
+<div id="elgg_sidebar">
+  <h3>Newest members:</h3>[userlist: list_type=new, only_with_avatars=TRUE, limit=5] 
+</div>
+
+<div id="elgg_page_contents" class="clearfloat">
+  <h2>All site activity</h2>
+  [activity]
+</div>
+</div>
+___EOT;
+	$logged_out_content = <<<___EOT
+<div id="elgg_content" class="clearfloat sidebar">
+<div id="elgg_sidebar">
+  [loginbox]
+  <h3>Newest members:</h3>[userlist: list_type=new, only_with_avatars=TRUE, limit=5] 
+</div>
+
+<div id="elgg_page_contents" class="clearfloat">
+  <h2>Welcome to [networkname]</h2><p class="margin_top">Introduction and instructions might go here. Learn about this network, and how to get registered and start adding content.</p>
+  <h2>All site activity</h2>
+  [activity]
+</div>
+</div>
+___EOT;
 }
 
 // set the required form variables
