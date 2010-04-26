@@ -70,6 +70,7 @@ $(document).ready(function() {
 	position: absolute;
 	top:10px;
 	right:0;
+	z-index: 9599;
 }
 #login_dropdown #signin_button {
 	padding:10px 0px 12px;
@@ -81,7 +82,7 @@ $(document).ready(function() {
 	text-decoration:none;
 	font-weight:bold;
 	position:relative;
-	margin-left:3px;
+	margin-left:0;
 	color:white;
 	border:1px solid #71B9F7;
 	-webkit-border-radius:4px;
@@ -126,12 +127,11 @@ $(document).ready(function() {
 	border:5px solid #CCCCCC;
 	text-align:left;
 	padding:12px;
-	top: 24.5px; 
+	top: 26px; 
 	right: 0px; 
 	margin-top:5px;
 	margin-right: 0px;
-	*margin-right: -1px;
-	color:#333;
+	color:#333333;
 	-webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.45);
 	-moz-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.45);
 }
@@ -149,5 +149,15 @@ $(document).ready(function() {
 }
 #login_dropdown #signin_menu .submit_button {
 	margin-right:15px;
+}
+/* ie7 fixes */
+*:first-child+html #login_dropdown #signin_button {
+	line-height:10px; 
+}
+*:first-child+html #login_dropdown #signin_button a.signin span {
+	background-position:-150px -54px;
+}
+*:first-child+html #login_dropdown #signin_button a.signin.menu_open span {
+	background-position:-150px -74px;
 }
 </style>

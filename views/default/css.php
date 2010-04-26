@@ -840,10 +840,10 @@ li.navigation_more ul li {
 	width:380px;
 }
 #login .persistent_login {
-	float:left;
+	float:right;
 	display:block;
 	margin-top:-34px;
-	margin-left:100px;
+	margin-left:80px;
 }
 #login .persistent_login label {
 	font-size:1.0em;
