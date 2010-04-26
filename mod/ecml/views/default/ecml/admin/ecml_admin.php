@@ -16,7 +16,7 @@ $perms = $vars['config']->ecml_permissions;
 ksort($views);
 ksort($keywords);
 
-echo elgg_view_title(elgg_echo('ecml:admin:admin'));
+echo elgg_view_title(elgg_echo('ecml:admin'));
 echo '<p class="margin_top">' . elgg_echo('ecml:admin:instruction') . '</p>';
 
 // yes I'm using a table because this is table.
