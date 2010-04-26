@@ -26,13 +26,8 @@ function riverdashboard_init() {
  * @param unknown_type $page
  */
 function riverdashboard_page_handler($page){
-	global $CONFIG;
 	include(dirname(__FILE__) . "/index.php");
 	return true;
-}
-
-function riverdashboard_dashboard() {
-	include(dirname(__FILE__) . '/index.php');
 }
 
 /**

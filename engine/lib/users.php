@@ -1672,6 +1672,22 @@ function registration_page_handler($page_elements) {
 }
 
 /**
+ * Display a login box.
+ *
+ * This is a fallback for non-JS users who click on the
+ * dropdown login link.
+ */
+function elgg_user_login_page_handler() {
+	$content = elgg_view_layout('one_column', elgg_view('account/forms/login'));
+	$content = '
+	<div id="elgg_content" class="clearfloat">
+	' .	elgg_view('account/forms/login') . '
+	</div>
+	';
+	page_draw('test', $content);
+}
+
+/**
  * Sets the last action time of the given user to right now.
  *
  * @param int $user_guid The user GUID
@@ -1775,10 +1791,10 @@ function users_init() {
 
 	register_page_handler('friends', 'friends_page_handler');
 	register_page_handler('friendsof', 'friends_of_page_handler');
-	//register_page_handler('collections', 'collections_page_handler');
 	register_page_handler('dashboard', 'dashboard_page_handler');
 	register_page_handler('register', 'registration_page_handler');
 	register_page_handler('resetpassword', 'elgg_user_resetpassword_page_handler');
+	register_page_handler('login', 'elgg_user_login_page_handler');
 
 	register_action("register", true);
 	register_action("useradd", true);

@@ -1,13 +1,13 @@
 <?php
 /**
 * Elgg drop-down login form
-* 
+*
 */
-	 
-	if (!isloggedin()){ 
-	 
+
+if (!isloggedin()){
+
 	global $CONFIG;
-	
+
 	$form_body  = "<p class='loginbox'><label>" . elgg_echo('username') . "</label>" . elgg_view('input/text', array('internalname' => 'username', 'class' => 'login_textarea name'));
 	$form_body .= "<label>" . elgg_echo('password') . "</label>" . elgg_view('input/password', array('internalname' => 'password', 'class' => 'login_textarea'));
 	$form_body .= elgg_view('input/submit', array('value' => elgg_echo('login'))) . " <span class='remember'><label><input type=\"checkbox\" name=\"persistent\" value=\"true\" />".elgg_echo('user:persistent')."</label></span></p>";
@@ -16,17 +16,18 @@
 
 	$form_body .= "<p class='loginbox'>";
 	$form_body .= (!isset($CONFIG->disable_registration) || !($CONFIG->disable_registration)) ? "<a href=\"{$vars['url']}account/register.php\">" . elgg_echo('register') . "</a> | " : "";
-	$form_body .= "<a href=\"{$vars['url']}account/forgotten_password.php\">" . elgg_echo('user:password:lost') . "</a></p>";  
+	$form_body .= "<a href=\"{$vars['url']}account/forgotten_password.php\">" . elgg_echo('user:password:lost') . "</a></p>";
 	$form_body .= "<input type='hidden' name='returntoreferer' value='true' />";
 
 	$login_url = $vars['url'];
-	if ((isset($CONFIG->https_login)) && ($CONFIG->https_login))
+	if ((isset($CONFIG->https_login)) && ($CONFIG->https_login)) {
 		$login_url = str_replace("http", "https", $vars['url']);
+	}
 ?>
-	
+
 	<div id="login_dropdown">
 		<div id="signin_button" class="signin_button">
-			<a href="login" class="signin"><span><?php echo elgg_echo('login') ?></span></a>
+			<a href="<?php echo $CONFIG->url; ?>pg/login" class="signin"><span><?php echo elgg_echo('login') ?></span></a>
 		</div>
 		<fieldset id="signin_menu">
 <?php
@@ -36,30 +37,30 @@
 	</div>
 
 <?php
-	}
+}
 ?>
 
 <script type="text/javascript">
 $(document).ready(function() {
 
-    $(".signin").click(function(e) {          
+	$(".signin").click(function(e) {
 		e.preventDefault();
-        $("fieldset#signin_menu").toggle();
+		$("fieldset#signin_menu").toggle();
 		$(".signin").toggleClass("menu_open");
 		$('.login_textarea.name').focus();
-    });
-	
+	});
+
 	$("fieldset#signin_menu").mouseup(function() {
 		return false
 	});
-	
+
 	$(document).mouseup(function(e) {
 		if($(e.target).parent("a.signin").length==0) {
 			$(".signin").removeClass("menu_open");
 			$("fieldset#signin_menu").hide();
 		}
-	});			
-	
+	});
+
 });
 </script>
 
@@ -127,8 +128,8 @@ $(document).ready(function() {
 	border:5px solid #CCCCCC;
 	text-align:left;
 	padding:12px;
-	top: 26px; 
-	right: 0px; 
+	top: 26px;
+	right: 0px;
 	margin-top:5px;
 	margin-right: 0px;
 	color:#333333;
@@ -150,9 +151,10 @@ $(document).ready(function() {
 #login_dropdown #signin_menu .submit_button {
 	margin-right:15px;
 }
+
 /* ie7 fixes */
 *:first-child+html #login_dropdown #signin_button {
-	line-height:10px; 
+	line-height:10px;
 }
 *:first-child+html #login_dropdown #signin_button a.signin span {
 	background-position:-150px -54px;

@@ -1,4 +1,5 @@
 <?php
+
 	if (isset($vars['items']) && is_array($vars['items'])) {
 
 		$i = 0;

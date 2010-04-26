@@ -7,25 +7,25 @@
 require_once(dirname(dirname(dirname(__FILE__))) . '/engine/start.php');
 
 gatekeeper();
-		
+
 $type = get_input('type');
 $subtype = get_input('subtype');
 $orient = get_input('display');
 if(!$orient)
 	$orient = 'all';
 $callback = get_input('callback');
-		
+
 if ($type == 'all') {
 	$type = '';
 	$subtype = '';
 }
 
 $body = '';
-		
+
 switch($orient) {
 	case 'mine':
 				$subject_guid = $_SESSION['user']->guid;
-				$relationship_type = ''; 
+				$relationship_type = '';
 				$title_wording = elgg_echo('river:mine');
 				break;
 	case 'friends':	$subject_guid = $_SESSION['user']->guid;
@@ -49,7 +49,7 @@ else
 
 // Replacing callback calls in the nav with something meaningless
 $river = str_replace('callback=true','replaced=88,334',$river);
-		
+
 $nav = elgg_view('riverdashboard/nav',array('type' => $type,'subtype' => $subtype,'orient' => $orient));
 if(isloggedin()){
 	$sidebar = elgg_view("riverdashboard/menu",array('type' => $type,'subtype' => $subtype,'orient' => $orient));

@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin_manifest>
+		<field key="name" value="Blogs" />
+		<field key="category" value="utilities" />
+		<field key="screenshot" value="graphics/ss1.png" />
+		<field key="screenshot" value="graphics/ss2.png" />
+		<field key="provides" value="blog" />
+<!-- 
+		<field key="provides" value="pingbacks" />
+-->
+		<field key="conflicts" value="blog1" />
+		<field key="conflicts" value="blog2" />
 		<field key="author" value="Curverider" />
 		<field key="version" value="1.8" />
 		<field key="description" value="Elgg blog plugin" />
