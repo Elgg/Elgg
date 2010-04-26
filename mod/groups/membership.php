@@ -23,7 +23,7 @@
 	} else $title = elgg_echo("groups:owned");
 
 	// Get objects
-	$area2 = elgg_view('page_elements/content_header', array('context' => "mine", 'type' => 'groups'));
+	$area2 = elgg_view('page_elements/content_header', array('context' => "mine", 'type' => 'groups', 'new_link' => "{$CONFIG->url}pg/groups/new"));
 	
 	set_context('search');
 	// offset is grabbed in the list_entities_from_relationship() function

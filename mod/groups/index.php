@@ -17,7 +17,7 @@
 	$title = elgg_echo("groups:owned");
 
 	// Get objects
-	$area1 = elgg_view('page_elements/content_header', array('context' => "everyone", 'type' => 'groups'));
+	$area1 = elgg_view('page_elements/content_header', array('context' => "everyone", 'type' => 'groups', 'new_link' => "{$CONFIG->url}pg/groups/new"));
 	
 	set_context('search');
 	$objects = elgg_list_entities(array('types' => 'group', 'owner_guid' => page_owner(), 'limit' => $limit, 'offset' => $offset, 'full_view' => FALSE));
