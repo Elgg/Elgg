@@ -104,15 +104,21 @@ else
 			echo "</div>"; // close river_comments
 	} else {
 		// tab bar nav - for users that liked object
-		echo "<div class='river_comments_tabs clearfloat'>";
-			$numoflikes = elgg_count_likes($object);
-			if($numoflikes != 0){
-				echo elgg_view('likes/forms/display', array('entity' => $object));
-			}	
-		echo "</div>"; // close river_comments_tabs
+		$numoflikes = elgg_count_likes($object);
 		
-		echo "<div class='river_comments'>";
-		
+		if ($vars['item']->type != 'user' && $numoflikes != 0) {
+			echo "<div class='river_comments_tabs clearfloat'>";
+		}
+		if($numoflikes != 0){
+			echo elgg_view('likes/forms/display', array('entity' => $object));
+		}
+		if ($vars['item']->type != 'user' && $numoflikes != 0) {	
+			echo "</div>"; // close river_comments_tabs
+		}
+			
+		if ($vars['item']->type != 'user') {
+			echo "<div class='river_comments'>";
+		}
 		if($numoflikes != 0){
 			//show the users who liked the object
 			echo "<div class='likes_list hidden'>";
@@ -125,7 +131,9 @@ else
 		if($vars['item']->type != 'user' && $vars['item']->subtype != 'groupforumtopic') {
 			echo elgg_make_river_comment($object);
 		}
-		echo "</div>";
+		if ($vars['item']->type != 'user') {
+			echo "</div>";
+		}
 	}
 echo "</div>"; // close river_item_contents
 ?>
