@@ -9,6 +9,7 @@
 	padding:0;
 	width:563px;
 	background: url(<?php echo $vars['url']; ?>mod/walledgarden/graphics/background_extend.gif) repeat-y left top;
+	text-align: left;
 }
 #walledgarden {
 	position: relative;

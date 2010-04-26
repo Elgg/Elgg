@@ -25,11 +25,6 @@ if (empty($vars['title'])) {
 } else {
 	$title = $vars['config']->sitename . ": " . $vars['title'];
 }
-?>
-<style type="text/css">
-	body {background:white !important;}
-</style>
-<?php
 echo elgg_view('page_elements/html_begin', $vars);
 echo "<div id='walledgarden_sysmessages'>".elgg_view('messages/list', array('object' => $vars['sysmessages']))."</div>";
 	
