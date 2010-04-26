@@ -423,9 +423,11 @@ function authenticate_method($method) {
 		}
 	}
 
-	// check user authentication if required
+	$user_auth_result = pam_authenticate();
+
+	// check if user authentication is required
 	if ($API_METHODS[$method]["require_user_auth"] == true) {
-		if (pam_authenticate() == false) {
+		if ($user_auth_result == false) {
 			throw new APIException(elgg_echo('APIException:UserAuthenticationFailed'));
 		}
 	}
