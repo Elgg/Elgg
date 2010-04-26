@@ -167,34 +167,34 @@ function sitepages_page_handler($page) {
 function sitepages_ecml_keyword_hook($hook, $entity_type, $return_value, $params) {
 	$return_value['loginbox'] = array(
 		'view' => 'account/forms/login',
-		'description' => elgg_echo('sitepages:ecml:keywords:login_box'),
-		'usage' => elgg_echo('sitepages:ecml:keywords:login_box_usage'),
+		'description' => elgg_echo('sitepages:ecml:keywords:loginbox:desc'),
+		'usage' => elgg_echo('sitepages:ecml:keywords:loginbox:usage'),
 		'restricted' => array('sitepages/custom_frontpage')
 	);
 
 	$return_value['userlist'] = array(
 		'view' => 'sitepages/keywords/userlist',
-		'description' => elgg_echo('sitepages:ecml:keywords:userlist'),
-		'usage' => elgg_echo('sitepages:ecml:keywords:userlist_usage'),
+		'description' => elgg_echo('sitepages:ecml:keywords:userlist:desc'),
+		'usage' => elgg_echo('sitepages:ecml:keywords:userlist:usage'),
 		'restricted' => array('sitepages/custom_frontpage')
 	);
 
-	$return_value['sitestats'] = array(
-		'view' => 'sitepages/keywords/sitestats',
-		'description' => elgg_echo('sitepages:ecml:keywords:sitestats'),
-		'usage' => elgg_echo('sitepages:ecml:keywords:sitestats_usage'),
-		'restricted' => array('sitepages/custom_frontpage')
-	);
+//	$return_value['sitestats'] = array(
+//		'view' => 'sitepages/keywords/sitestats',
+//		'description' => elgg_echo('sitepages:ecml:keywords:sitestats:desc'),
+//		'usage' => elgg_echo('sitepages:ecml:keywords:sitestats:usage'),
+//		'restricted' => array('sitepages/custom_frontpage')
+//	);
 
 	$return_value['entity'] = array(
-		'description' => elgg_echo('sitepages:ecml:keywords:entity'),
-		'usage' => elgg_echo('sitepages:ecml:keywords:entity_usage'),
+		'description' => elgg_echo('sitepages:ecml:keywords:entity:desc'),
+		'usage' => elgg_echo('sitepages:ecml:keywords:entity:usage'),
 		'restricted' => array('sitepages/custom_frontpage')
 	);
 
 	$return_value['view'] = array(
-		'description' => elgg_echo('sitepages:ecml:keywords:view'),
-		'usage' => elgg_echo('sitepages:ecml:keywords:view_usage'),
+		'description' => elgg_echo('sitepages:ecml:keywords:view:desc'),
+		'usage' => elgg_echo('sitepages:ecml:keywords:view:usage'),
 		'restricted' => array('sitepages/custom_frontpage')
 	);
 

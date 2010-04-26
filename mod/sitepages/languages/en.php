@@ -52,9 +52,21 @@ $english = array(
 	/**
 	 * ECML
 	 */
-	'sitepages:ecml:keywords:loginbox' => 'A standard login box.  Useful for the logged out content area.',
-	'sitepages:ecml:keywords:sitestats' => 'This does not exist yet.',
-	'sitepages:ecml:keywords:userlist' => "Lists users.  Supports only_with_avatars=TRUE|FALSE, list_type=newest|online|random, limit",
+	'sitepages:ecml:keywords:loginbox:desc' => 'A standard login box.',
+	'sitepages:ecml:keywords:loginbox:usage' => '[loginbox] Useful for the logged out content area.',
+
+	'sitepages:ecml:keywords:sitestats:desc' => 'This does not exist yet.',
+	'sitepages:ecml:keywords:sitestats:usage' => 'This does not exist yet.',
+
+	'sitepages:ecml:keywords:userlist:desc' => "Lists users.",
+	'sitepages:ecml:keywords:userlist:usage' => "[userlist OPTIONS] Supports only_with_avatars=TRUE|FALSE, list_type=newest|online|random, limit",
+
+	'sitepages:ecml:keywords:entity:desc' => 'Displays a list of any Elgg entity.',
+	'sitepages:ecml:keywords:entity:usage' => '[entity] supports all options in elgg_get_entities()',
+
+	'sitepages:ecml:keywords:view:desc' => 'Displays any Elgg view.',
+	'sitepages:ecml:keywords:view:usage' => '[view src="valid/view" arg1=value1 arg2=value2]',
+
 	'sitepages:ecml:views:custom_frontpage' => "Custom Front Page",
 );
 
