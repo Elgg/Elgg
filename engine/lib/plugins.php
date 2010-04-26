@@ -496,7 +496,7 @@ function set_plugin_usersetting($name, $value, $user_guid = 0, $plugin_name = ""
 function clear_plugin_usersetting($name, $user_guid=0, $plugin_name='') {
 	$plugin_name = sanitise_string($plugin_name);
 	$name = sanitise_string($name);
-	
+
 	if (!$plugin_name) {
 		$plugin_name = get_plugin_name();
 	}
@@ -505,13 +505,13 @@ function clear_plugin_usersetting($name, $user_guid=0, $plugin_name='') {
 	if (!$user) {
 		$user = get_loggedin_user();
 	}
-	
+
 	if (($user) && ($user instanceof ElggUser)) {
 		$prefix = "plugin:settings:$plugin_name:$name";
-		
+
 		return remove_private_setting($user->getGUID(), $prefix);
 	}
-	
+
 	return FALSE;
 }
 
@@ -638,9 +638,13 @@ function get_installed_plugins() {
 		$plugins = get_plugin_list();
 
 		foreach($plugins as $mod) {
+			// require manifest.
+			if (!$manifest = load_plugin_manifest($mod)) {
+				continue;
+			}
 			$installed_plugins[$mod] = array();
 			$installed_plugins[$mod]['active'] = is_plugin_enabled($mod);
-			$installed_plugins[$mod]['manifest'] = load_plugin_manifest($mod);
+			$installed_plugins[$mod]['manifest'] = $manifest;
 		}
 	}
 
