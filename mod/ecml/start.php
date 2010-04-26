@@ -141,8 +141,6 @@ function ecml_keyword_hook($hook, $type, $value, $params) {
 	// I keep going back and forth about entity and view. They're powerful, but
 	// a great way to let a site get hacked if the admin doesn't lock them down.
 	$keywords = array(
-		'entity',
-		'view',
 		'youtube',
 		'slideshare',
 		'vimeo',
@@ -157,8 +155,8 @@ function ecml_keyword_hook($hook, $type, $value, $params) {
 	foreach ($keywords as $keyword) {
 		$value[$keyword] = array(
 			'view' => "ecml/keywords/$keyword",
-			'description' => elgg_echo("ecml:keywords:desc:$keyword"),
-			'usage' => elgg_echo("ecml:keywords:usage:$keyword")
+			'description' => elgg_echo("ecml:keywords:$keyword:desc"),
+			'usage' => elgg_echo("ecml:keywords:$keyword:usage")
 		);
 	}
 

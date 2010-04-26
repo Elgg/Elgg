@@ -13,29 +13,21 @@ $english = array(
 	'ecml' => 'ECML',
 	'ecml:help' => 'ECML Help',
 
-
 	// views
 	'ecml:views:annotation_generic_comment' => 'Comments',
 
 	// keywords
-	'ecml:keywords:desc:entity' => 'Displays a list of any Elgg entity.',
-	'ecml:keywords:usage:entity' => '[entity] supports all options in elgg_get_entities()',
+	'ecml:keywords:googlemaps:desc' => 'Embed a Google Map.',
+	'ecml:keywords:googlemaps:usage' => '[googlemaps src="URL"] Use the link code from Google Maps as the src.',
 
-	'ecml:keywords:desc:view' => 'Displays any Elgg view.',
-	'ecml:keywords:usage:view' => '[view src="valid/view" arg1=value1 arg2=value2]',
+	'ecml:keywords:slideshare:desc' => 'Embed a Slideshare slide.',
+	'ecml:keywords:slideshare:usage' => '[slideshare id="slideshare_id"] Use the Wordpress.com embed code.',
 
-	'ecml:keywords:desc:googlemaps' => 'Embed a Google Map.',
-	'ecml:keywords:usage:entity' => '[googlemaps src="URL"] Use the link code from Google Maps as the src.',
+	'ecml:keywords:vimeo:desc' => 'Embed a Vimeo video.',
+	'ecml:keywords:videmo:usage' => '[videmo src="URL"] Use a standard Vimeo URL as the source.',
 
-	'ecml:keywords:desc:slideshare' => 'Embed a Slideshare slide.',
-	'ecml:keywords:usage:entity' => '[slideshare id="slideshare_id"] Use the Wordpress.com embed code.',
-
-	'ecml:keywords:desc:vimeo' => 'Embed a Vimeo video.',
-	'ecml:keywords:usage:videmo' => '[videmo src="URL"] Use a standard Vimeo URL as the source.',
-
-	'ecml:keywords:desc:youtube' => 'Embed a YouTube video.',
-	'ecml:keywords:usage:entity' => '[youtube src="URL"] Use a standard YouTube URL as the source.',
-
+	'ecml:keywords:youtube:desc' => 'Embed a YouTube video.',
+	'ecml:keywords:youtube:usage' => '[youtube src="URL"] Use a standard YouTube URL as the source.',
 
 	// keyword help
 	'ecml:keywords_title' => 'Keywords',
