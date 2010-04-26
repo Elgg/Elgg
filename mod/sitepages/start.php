@@ -134,6 +134,7 @@ function sitepages_page_handler($page) {
 
 	switch ($action) {
 		case 'edit':
+			admin_gatekeeper();
 			$title = elgg_echo('sitepages');
 			$content = sitepages_get_edit_section_content($page_type);
 
@@ -182,6 +183,18 @@ function sitepages_ecml_keyword_hook($hook, $entity_type, $return_value, $params
 		'view' => 'sitepages/keywords/sitestats',
 		'description' => elgg_echo('sitepages:ecml:keywords:sitestats'),
 		'usage' => elgg_echo('sitepages:ecml:keywords:sitestats_usage'),
+		'restricted' => array('sitepages/custom_frontpage')
+	);
+
+	$return_value['entity'] = array(
+		'description' => elgg_echo('sitepages:ecml:keywords:entity'),
+		'usage' => elgg_echo('sitepages:ecml:keywords:entity_usage'),
+		'restricted' => array('sitepages/custom_frontpage')
+	);
+
+	$return_value['view'] = array(
+		'description' => elgg_echo('sitepages:ecml:keywords:view'),
+		'usage' => elgg_echo('sitepages:ecml:keywords:view_usage'),
 		'restricted' => array('sitepages/custom_frontpage')
 	);
 
