@@ -22,9 +22,9 @@ if ($sitepages_object = sitepages_get_sitepage_object('front')) {
 }
 
 // set the required form variables
-$input_css = elgg_view('input/plaintext', array('internalname' => 'css', 'value' => $css));
-$input_logged_in_content = elgg_view('input/plaintext', array('internalname' => 'logged_in_content', 'value' => $logged_in_content ));
-$input_logged_out_content = elgg_view('input/plaintext', array('internalname' => 'logged_out_content', 'value' => $logged_out_content ));
+$input_css = elgg_view('input/plaintext', array('internalname' => 'css', 'value' => $css, 'class' => 'input_textarea monospace'));
+$input_logged_in_content = elgg_view('input/plaintext', array('internalname' => 'logged_in_content', 'value' => $logged_in_content, 'class' => 'input_textarea monospace'));
+$input_logged_out_content = elgg_view('input/plaintext', array('internalname' => 'logged_out_content', 'value' => $logged_out_content, 'class' => 'input_textarea monospace'));
 $submit_input = elgg_view('input/submit', array('internalname' => 'submit', 'value' => elgg_echo('save')));
 
 $logged_in_content_title = elgg_echo("sitepages:logged_in_front_content");

@@ -1122,6 +1122,10 @@ input[type="text"]:focus {
 	background: #e4ecf5;
 	color:#333333;
 }
+.input_textarea.monospace {
+	font-family:Monaco,"Courier New",Courier,monospace;
+	font-size:13px;
+}
 a.longtext_control {
 	float:right;
 	margin-left:14px;
