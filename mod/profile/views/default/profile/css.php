@@ -46,13 +46,41 @@
 .usericon {
 	position:relative;
 }
-.usericon.tiny {
+.usericon.tiny,
+img.tiny {
 	width:25px;
 	height:25px;
+	/* remove the border-radius if you don't want rounded avatars in supported browsers */
+	-webkit-border-radius: 3px; 
+	-moz-border-radius: 3px;
+	-moz-background-clip:  border;
+	
+	-o-background-size: 25px;
+	-webkit-background-size: 25px;
+	-khtml-background-size: 25px;
+	-moz-background-size: 25px;
 }
-.usericon.small {
+.usericon.small,
+img.small {
 	width:40px;
 	height:40px;
+	/* remove the border-radius if you don't want rounded avatars in supported browsers */
+	-webkit-border-radius: 5px; 
+	-moz-border-radius: 5px;
+	-moz-background-clip:  border;
+	
+	-o-background-size: 40px;
+	-webkit-background-size: 40px;
+	-khtml-background-size: 40px;
+	-moz-background-size: 40px;
+}
+img.large {
+	width:200px;
+	height:200px;
+}
+img.medium {
+	width:100px;
+	height:100px;
 }
 
 /* ***************************************

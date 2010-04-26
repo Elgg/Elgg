@@ -98,8 +98,15 @@ if ($vars['entity'] instanceof ElggUser) {
 				}
 		
 	} 
-	
-	?><img src="<?php echo $vars['entity']->getIcon($vars['size']); ?>" border="0" <?php echo $align; ?> alt="<?php echo htmlentities($vars['entity']->name, ENT_QUOTES, 'UTF-8'); ?>" title="<?php echo htmlentities($vars['entity']->name, ENT_QUOTES, 'UTF-8'); ?>" <?php echo $vars['js']; ?> /><?php
+
+	// Rounded avatar corners - CSS3 method - users avatar as background image so we can clip it with border-radius in supported browsers
+	?>
+	<img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" border="0" <?php echo $align; ?> alt="<?php echo htmlentities($vars['entity']->name, ENT_QUOTES, 'UTF-8'); ?>" title="<?php echo htmlentities($vars['entity']->name, ENT_QUOTES, 'UTF-8'); ?>" <?php echo $vars['js']; ?> style="background: url(<?php echo $vars['entity']->getIcon($vars['size']); ?>) no-repeat;" class="<?php echo $vars['size']; ?>" />
+	<?php
+	/*
+	original avatar method
+	<img src="<?php echo $vars['entity']->getIcon($vars['size']); ?>" border="0" <?php echo $align; ?> alt="<?php echo htmlentities($vars['entity']->name, ENT_QUOTES, 'UTF-8'); ?>" title="<?php echo htmlentities($vars['entity']->name, ENT_QUOTES, 'UTF-8'); ?>" <?php echo $vars['js']; ?> />
+	*/
 
 	if (!$override) { 
 	?>
