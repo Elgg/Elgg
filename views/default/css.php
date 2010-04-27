@@ -623,6 +623,7 @@ li.navigation_more ul li {
 	right:20px;
 	margin-top:10px;
 	width:auto;
+	max-width: 500px;
 	cursor: pointer;
 	opacity:0.9;
 	-webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45); /* safari v3+ */
@@ -1090,7 +1091,8 @@ li.navigation_more ul li {
 	height: 200px;
 	width:718px;
 }
-input[type="checkbox"] {
+input[type="checkbox"],
+input.input_radio {
 	margin:0 3px 0 0;
 	padding:0;
 	border:none;

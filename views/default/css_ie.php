@@ -10,23 +10,41 @@
 .navigation li a:hover ul li a {display:block;}
 .navigation li.navigation_more ul li a {width:150px;background-color: #dedede;}
 
-.clearfloat {
-	display: block;
+.clearfloat { display: block; }
+#elgg_page_contents {overflow:hidden;}
+#breadcrumbs {top:-2px; margin-bottom: 5px;}
+
+.entity_metadata {max-width: 300px;}
+.entity_edit {float:right;}
+.access_level {float:left;}
+
+
+/* profile */
+.elgg_horizontal_tabbed_nav.profile .profile_name {
+	margin-left: -260px;
 }
-#elgg_topbar_contents a.privatemessages_new span { 
+
+/* private messages */
+#elgg_topbar_contents a.privatemessages.new span { 
 	display:block;
 	padding:1px;
 	position:relative;
 	text-align:center;
 	float:left;
-	top:auto;
+	top:-1px;
 	right:auto; 
 }
-#elgg_topbar_contents a.privatemessages_new  {
+#elgg_topbar_contents a.privatemessages.new  {
 	padding:0 0 0 20px;
 }
+#elgg_topbar_contents a.privatemessages:hover {
+	background-position:left 2px;
+}
+#elgg_topbar_contents a.privatemessages.new:hover {
+	background-position: left 2px;
+}
 
-/* riverdashboard rules - placed here temporarily */
+/* riverdashboard mod rules */
 #riverdashboard_updates {
 	clear:both;
 }
