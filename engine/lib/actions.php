@@ -54,7 +54,7 @@ function action($action, $forwarder = "") {
 
 	if (isset($CONFIG->actions[$action])) {
 		if ((isadminloggedin()) || (!$CONFIG->actions[$action]['admin'])) {
-			if ($CONFIG->actions[$action]['public'] || $_SESSION['id'] != -1) {
+			if ($CONFIG->actions[$action]['public'] || get_loggedin_userid()) {
 
 				// Trigger action event TODO: This is only called before the primary action is called. We need to rethink actions for 1.5
 				$event_result = true;
