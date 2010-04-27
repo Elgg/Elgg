@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg create river item
+ * Elgg create new friend river item
  *
  * @package Elgg
  * @author Curverider Ltd <info@elgg.com>
@@ -8,9 +8,8 @@
  *
  * @uses $vars['entity']
  */
-$performed_by = get_entity($vars['item']->subject_guid); // $statement->getSubject();
+$performed_by = get_entity($vars['item']->subject_guid);
 $performed_on = get_entity($vars['item']->object_guid);
-$url = $performed_on->getURL();
 
 $url = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
 $string = sprintf(elgg_echo("friends:river:add"),$url) . " ";
