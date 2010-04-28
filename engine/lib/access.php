@@ -173,7 +173,7 @@ function get_default_access(ElggUser $user = null) {
 		return $CONFIG->default_access;
 	}
 
-	if (!($user) || (!$user = get_loggedin_user())) {
+	if (!($user) && (!$user = get_loggedin_user())) {
 		return $CONFIG->default_access;
 	}
 
