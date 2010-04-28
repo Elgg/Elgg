@@ -97,6 +97,9 @@
 	width:560px;
 	padding:3px;
 }
+#profile_content .river_comment_form.hidden .input_text { /* when activity is displayed on profile page */
+	width:535px;
+}
 .river_comment_form.hidden .submit_button {
 	margin:0 0 0 10px;
 	float:right;
@@ -118,6 +121,9 @@
 }
 .river_item .elgg_likes_user .entity_listing_info {
 	width:635px;
+}
+#profile_content .river_item .elgg_likes_user .entity_listing_info { /* when likes is displayed on profile page activity stream */
+	width:600px;
 }
 .river_item .elgg_likes_user .entity_metadata {
 	margin-top:3px;

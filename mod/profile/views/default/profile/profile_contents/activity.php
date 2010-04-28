@@ -17,10 +17,12 @@
 	}
 	if(is_plugin_enabled('riverdashboard')) {
 		//select the correct river
-		if (get_plugin_setting('activitytype', 'riverdashboard') == 'classic')
+		if (get_plugin_setting('activitytype', 'riverdashboard') == 'classic') {
 			echo elgg_view_river_items($vars['entity']->getGuid(), 0, '', '', '', '', $limit,0,0,false,true);
-		else
+		} else {
 			echo elgg_view_river_items($vars['entity']->getGuid(), 0, '', '', '', '', $limit,0,0,false,false);
+			echo elgg_view('riverdashboard/js');
+		}
 	} else {
 		echo "Riverdashboard not loaded";
 	}
