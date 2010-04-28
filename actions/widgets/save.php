@@ -19,12 +19,14 @@ if (!empty($guid)) {
 	$result = save_widget_info($guid,$params);
 }
 
+if ($noforward) {
+	exit;
+}
+
 if ($result) {
 	system_message(elgg_echo('widgets:save:success'));
 } else {
 	register_error(elgg_echo('widgets:save:failure'));
 }
 
-if (!$noforward) {
-	forward($_SERVER['HTTP_REFERER']);
-}
+forward($_SERVER['HTTP_REFERER']);
