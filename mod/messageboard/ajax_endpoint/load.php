@@ -25,24 +25,7 @@ $user = get_entity($_POST['pageOwner']);
 //stage one - if a message was posted, add it as an annotation    
 if ($message) {
 
-	// If posting the comment was successful, send message
-	if ($user->annotate('messageboard',$message,$user->access_id, get_loggedin_userid())) {
-
-		if ($user->getGUID() != get_loggedin_userid())
-			notify_user($user->getGUID(), get_loggedin_userid(), elgg_echo('messageboard:email:subject'),
-					sprintf(
-					elgg_echo('messageboard:email:body'),
-					get_loggedin_user()->name,
-					$message,
-					$CONFIG->wwwroot . "pg/messageboard/" . $user->username,
-					get_loggedin_user()->name,
-					get_loggedin_user()->getURL()
-					)
-			);
-
-		// add to river
-		add_to_river('river/object/messageboard/create','messageboard',get_loggedin_userid(),$user->guid);
-	} else {
+	if (!messageboard_add(get_loggedin_user(), $user, $message, $user->access_id)) {
 		register_error(elgg_echo("messageboard:failure"));
 	}
 

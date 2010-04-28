@@ -23,6 +23,8 @@ if ($message = get_annotation($annotation_id)) {
 	if ($message->canEdit()) {
 		//delete the comment
 		$message->delete();
+		// delete river entry
+		remove_from_river_by_annotation($annotation_id);
 		//display message
 		system_message(elgg_echo("messageboard:deleted"));
 		//generate the url to forward to

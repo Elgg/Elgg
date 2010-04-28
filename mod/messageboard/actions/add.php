@@ -19,30 +19,10 @@ $user = get_entity($page_owner); // the message board owner's details
 // Let's see if we can get a user entity from the specified page_owner
 if ($user && !empty($message_content)) {
 
-	// If posting the comment was successful, say so
-	if ($user->annotate('messageboard',$message_content,$user->access_id, get_loggedin_userid())) {
-
-		if ($user->getGUID() != get_loggedin_userid())
-			notify_user($user->getGUID(), get_loggedin_userid(), elgg_echo('messageboard:email:subject'),
-					sprintf(
-					elgg_echo('messageboard:email:body'),
-					get_loggedin_user()->name,
-					$message_content,
-					$CONFIG->wwwroot . "pg/messageboard/" . $user->username,
-					get_loggedin_user()->name,
-					get_loggedin_user()->getURL()
-					)
-			);
-
+	if (messageboard_add(get_loggedin_user(), $user, $message_content, $user->access_id)) {
 		system_message(elgg_echo("messageboard:posted"));
-		// add to river
-		add_to_river('river/object/messageboard/create','messageboard',get_loggedin_userid(),$user->guid);
-
-
 	} else {
-
 		register_error(elgg_echo("messageboard:failure"));
-
 	}
 
 	//set the url to return the user to the correct message board

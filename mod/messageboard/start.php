@@ -48,6 +48,49 @@ function messageboard_page_handler($page) {
 	include($CONFIG->pluginspath . "messageboard/index.php");
 }
 
+/**
+ * Add messageboard post
+ *
+ * @param ElggUser $poster User posting the message
+ * @param ElggUser $owner User who owns the message board
+ * @param string $message The posted message
+ * @param int $access_id Access level (see defines in elgglib.php)
+ * @return bool
+ */
+function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC) {
+	global $CONFIG;
+	
+	$result = $owner->annotate('messageboard', $message, $access_id, $poster->guid);
+	if (!$result) {
+		return FALSE;
+	}
+
+	add_to_river('river/object/messageboard/create',
+				'messageboard',
+				$poster->guid,
+				$owner->guid,
+				$access_id,
+				0,
+				$result);
+
+	// only send notification if not self
+	if ($poster->guid != $owner->guid) {
+		$subject = elgg_echo('messageboard:email:subject');
+		$body = sprintf(
+						elgg_echo('messageboard:email:body'),
+						$poster->name,
+						$message,
+						$CONFIG->wwwroot . "pg/messageboard/" . $owner->username,
+						$poster->name,
+						$poster->getURL()
+						);
+
+		notify_user($owner->guid, $poster->guid, $subject, $body);
+	}
+
+	return TRUE;
+}
+
 
 // Register initialisation callback
 register_elgg_event_handler('init','system','messageboard_init');
