@@ -57,7 +57,9 @@ $(document).ready(function () {
 	$(".likes_list_button").click(function(event) {	
 		if ($(this).next(".likes_list").css('display') == 'none') {	// show list
 			var topPosition = - $(this).next(".likes_list").height();
-			$('.likes_list').css('top',topPosition + 10);
+			topPosition10 = topPosition + 10 + "px";
+			topPosition = topPosition + "px";
+			$('.likes_list').css('top',topPosition10);
 			$('.likes_list').css('left', -$('.likes_list').width()+40);
 			$(this).next(".likes_list").animate({opacity: "toggle", top: topPosition}, 500);
 		} else { // hide list

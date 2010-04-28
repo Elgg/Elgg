@@ -11,18 +11,23 @@
 .navigation li.navigation_more ul li a {width:150px;background-color: #dedede;}
 
 .clearfloat { display: block; }
-#elgg_page_contents {overflow:hidden;}
+#elgg_page_contents {overflow: hidden;} /* remove horizontal scroll on riverdash */
 #breadcrumbs {top:-2px; margin-bottom: 5px;}
 
 .entity_metadata {max-width: 300px;}
 .entity_edit {float:right;}
 .access_level {float:left;}
 
+.likes_list {display:none;}
+.likes_list_holder .likes_list {top:20px !important;} /* position likes list below link in IE to prevent clipping */
+.elgg_likes_user .entity_metadata .delete_button {float:none;}
 
 /* profile */
-.elgg_horizontal_tabbed_nav.profile .profile_name {
-	margin-left: -260px;
-}
+.elgg_horizontal_tabbed_nav.profile .profile_name {margin-left: -260px;}
+
+/* notifications */
+.friends_picker_navigation {margin:0;padding:0;}
+.friends_picker_container h3 {margin:0;padding:0;line-height: 1em;}
 
 /* private messages */
 #elgg_topbar_contents a.privatemessages.new span { 
@@ -34,26 +39,14 @@
 	top:-1px;
 	right:auto; 
 }
-#elgg_topbar_contents a.privatemessages.new  {
-	padding:0 0 0 20px;
-}
-#elgg_topbar_contents a.privatemessages:hover {
-	background-position:left 2px;
-}
-#elgg_topbar_contents a.privatemessages.new:hover {
-	background-position: left 2px;
-}
+#elgg_topbar_contents a.privatemessages.new  {padding:0 0 0 20px;}
+#elgg_topbar_contents a.privatemessages:hover {background-position:left 2px;}
+#elgg_topbar_contents a.privatemessages.new:hover {background-position: left 2px;}
 
 /* riverdashboard mod rules */
-#riverdashboard_updates {
-	clear:both;
-}
-#riverdashboard_updates a.update_link {
-	margin:0 0 9px 0;
-}
-.riverdashboard_filtermenu {
-	margin:10px 0 0 0;
-}
+#riverdashboard_updates {clear:both;}
+#riverdashboard_updates a.update_link {margin:0 0 9px 0;}
+.riverdashboard_filtermenu {margin:10px 0 0 0;}
 .river_comment_form.hidden .input_text {
 	width:530px;
 	float:left;
@@ -62,3 +55,8 @@
 	width:10px;
 	text-align: center;
 }
+
+/* shared access */
+.shared_access_collection h2.shared_access_name {margin-top:-15px;}
+
+

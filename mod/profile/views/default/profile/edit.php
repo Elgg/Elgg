@@ -42,6 +42,20 @@
 				$access_id = ACCESS_DEFAULT;
 			}
 
+	if ($shortname == 'description') { // change label positioning to allow for additional longtext field controls 
+?>
+	<p>
+		<label>
+			<?php echo elgg_echo("profile:{$shortname}") ?></label>
+			<?php echo elgg_view("input/{$valtype}",array(
+															'internalname' => $shortname,
+															'value' => $value,
+															)); ?>
+		
+			<?php echo elgg_view('input/access',array('internalname' => 'accesslevel['.$shortname.']', 'value' => $access_id)); ?>
+	</p>
+<?php			
+	} else {
 ?>
 
 	<p>
@@ -56,6 +70,7 @@
 	</p>
 
 <?php
+	}
 
 		}
 
