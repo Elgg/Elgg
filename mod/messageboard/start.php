@@ -17,17 +17,14 @@
  */
 function messageboard_init() {
 
-	// Load system configuration
-	global $CONFIG;
-
 	// Extend system CSS with our own styles, which are defined in the messageboard/css view
-	elgg_extend_view('css','messageboard/css');
+	elgg_extend_view('css', 'messageboard/css');
 
 	// Register a page handler, so we can have nice URLs
-	register_page_handler('messageboard','messageboard_page_handler');
+	register_page_handler('messageboard', 'messageboard_page_handler');
 
-	// add a messageboard widget
-	add_widget_type('messageboard',"". elgg_echo("messageboard:board") . "","" . elgg_echo("messageboard:desc") . ".", "profile");
+	// add a messageboard widget - only for profile
+	add_widget_type('messageboard', elgg_echo("messageboard:board"), elgg_echo("messageboard:desc"), "profile");
 }
 
 /**
@@ -93,8 +90,8 @@ function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC)
 
 
 // Register initialisation callback
-register_elgg_event_handler('init','system','messageboard_init');
+register_elgg_event_handler('init', 'system', 'messageboard_init');
 
 // Register actions
-register_action("messageboard/add", false, $CONFIG->pluginspath . "messageboard/actions/add.php");
-register_action("messageboard/delete", false, $CONFIG->pluginspath . "messageboard/actions/delete.php");
+register_action("messageboard/add", FALSE, $CONFIG->pluginspath . "messageboard/actions/add.php");
+register_action("messageboard/delete", FALSE, $CONFIG->pluginspath . "messageboard/actions/delete.php");

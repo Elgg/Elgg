@@ -17,9 +17,6 @@
 		<!-- textarea for the contents -->
 		<textarea name="message_content" value="" class="input_textarea"></textarea><br />
 
-		<!-- the person posting an item on the message board -->
-		<input type="hidden" name="guid" value="<?php echo $_SESSION['guid']; ?>"  />
-
 		<!-- the page owner, this will be the profile owner -->
 		<input type="hidden" name="pageOwner" value="<?php echo page_owner(); ?>"  />
 
