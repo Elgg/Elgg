@@ -24,6 +24,10 @@ function forward($location = "") {
 	global $CONFIG;
 
 	if (!headers_sent()) {
+		if ($location === REFERER) {
+			$location = $_SERVER['HTTP_REFERER'];
+		}
+
 		$current_page = current_page_url();
 		if ((substr_count($location, 'http://') == 0) && (substr_count($location, 'https://') == 0)) {
 			$location = $CONFIG->url . $location;
@@ -2815,8 +2819,17 @@ define('ACCESS_LOGGED_IN', 1);
 define('ACCESS_PUBLIC', 2);
 define('ACCESS_FRIENDS', -2);
 
+/**
+ * @since 1.7
+ */
 define('ELGG_ENTITIES_ANY_VALUE', NULL);
 define('ELGG_ENTITIES_NO_VALUE', 0);
+
+/**
+ * @since 1.7.2
+ */
+define('REFERRER', -1);
+define('REFERER', -1);
 
 register_elgg_event_handler('init', 'system', 'elgg_init');
 register_elgg_event_handler('boot', 'system', 'elgg_boot', 1000);
