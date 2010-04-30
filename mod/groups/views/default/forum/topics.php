@@ -19,7 +19,7 @@
      
 ?>
         <!-- display the add a topic link -->
-        <div class="add_topic"><a href="<?php echo $vars['url']; ?>mod/groups/addtopic.php?group_guid=<?php echo get_input('group_guid'); ?>" class="add_topic_button"><?php echo elgg_echo("groups:addtopic"); ?></a></div>
+        <div class="add_topic"><a href="<?php echo $vars['url']; ?>mod/groups/addtopic.php?group_guid=<?php echo $vars['group_guid']; ?>" class="add_topic_button"><?php echo elgg_echo("groups:addtopic"); ?></a></div>
 
 <?php
     }
