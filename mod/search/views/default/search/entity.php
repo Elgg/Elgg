@@ -55,7 +55,7 @@ if (!$time) {
 	$time = friendly_time(($tu > $tc) ? $tu : $tc);
 }
 ?>
-	<div class="search_listing">
+	<div class="search_listing clearfloat">
 	<div class="search_listing_icon"><?php echo $icon; ?></div>
 		<div class="search_listing_info">
 			<p class="entity_title"><?php echo $title; ?></p>
