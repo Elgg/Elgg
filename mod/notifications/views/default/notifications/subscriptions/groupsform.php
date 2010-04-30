@@ -13,7 +13,7 @@
 	}
 
 echo elgg_view_title(elgg_echo('notifications:subscriptions:changesettings:groups')); ?>
-<div class="notification_groups margin_top">
+<div class="user_settings margin_top">
 		<?php
 			echo elgg_view('notifications/subscriptions/jsfuncs',$vars);
 		?>
