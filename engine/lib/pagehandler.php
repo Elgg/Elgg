@@ -33,8 +33,11 @@ function page_handler($handler, $page) {
 		}
 	}
 
-	// if page url ends in a / then last element of $page is an empty string
-	$page = explode('/',$page);
+	$page = explode('/', $page);
+	// remove empty array element when page url ends in a / (see #1480)
+	if ($page[count($page) - 1] === '') {
+		array_pop($page);
+	}
 
 	if (!isset($CONFIG->pagehandler) || empty($handler)) {
 		$result = false;
