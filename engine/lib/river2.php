@@ -113,6 +113,22 @@ function remove_from_river_by_annotation($annotation_id) {
 }
 
 /**
+ * Removes a single river entry
+ *
+ * @param int $id The ID of the river entry
+ * @return true|false Depending on success
+ */
+function remove_from_river_by_id($id) {
+	global $CONFIG;
+
+	// Sanitise
+	$id = (int) $id;
+
+	return delete_data("delete from {$CONFIG->dbprefix}river where id = {$id}");
+}
+
+
+/**
  * Sets the access ID on river items for a particular object
  *
  * @param int $object_guid The GUID of the entity
