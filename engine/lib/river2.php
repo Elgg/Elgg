@@ -117,6 +117,7 @@ function remove_from_river_by_annotation($annotation_id) {
  *
  * @param int $id The ID of the river entry
  * @return true|false Depending on success
+ * @since 1.7.2
  */
 function remove_from_river_by_id($id) {
 	global $CONFIG;
