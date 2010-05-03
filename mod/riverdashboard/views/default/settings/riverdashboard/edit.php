@@ -1,5 +1,4 @@
-<?php
-?>
+
 <p>
 	<?php echo elgg_echo('riverdashboard:useasdashboard'); ?>
 	<select name="params[useasdashboard]">

@@ -1,53 +1,50 @@
 <?php
 
-	/**
-	 * Elgg thewire view page
-	 * 
-	 * @package ElggTheWire
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider <info@elgg.com>
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
-	 * 
-	 */
+/**
+ * Elgg riverdashboard site message sidebar box
+ *
+ * @package ElggRiverDash
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * @author Curverider <info@elgg.com>
+ * @copyright Curverider Ltd 2008-2010
+ * @link http://elgg.com/
+ *
+ */
 
-	//grab the current site message
-	$site_message = elgg_get_entities(array('types' => 'object', 'subtypes' => 'sitemessage', 'limit' => 1));
-	if ($site_message) {
-		$mes = $site_message[0];
-		$message = $mes->description;
-		$dateStamp = friendly_time($mes->time_created);
-		$delete = elgg_view("output/confirmlink",array(
-			'href' => $vars['url'] . "action/riverdashboard/delete?message=" . $mes->guid,
+//grab the current site message
+$site_message = elgg_get_entities(array('types' => 'object', 'subtypes' => 'sitemessage', 'limit' => 1));
+if ($site_message) {
+	$mes = $site_message[0];
+	$message = $mes->description;
+	$dateStamp = friendly_time($mes->time_created);
+	$delete = elgg_view("output/confirmlink",array(
+			'href' => $vars['url'] . "action/riverdashboard/delete?message_guid=" . $mes->guid,
 			'text' => elgg_echo('delete'),
 			'confirm' => elgg_echo('deleteconfirm'),
-		));
-	}
-	
+	));
+}
+
 ?>
 
-	<div class="sidebarBox">
-	
+<div class="sidebarBox">
+
 <?php
 
 	//if there is a site message
-	if($site_message){
-	 
-?>
-
-	<?php
+	if ($site_message) {
 
 		echo "<h3>" . elgg_echo("sitemessages:announcements") . "</h3>";
 		echo "<p><small>" . elgg_echo("sitemessages:posted") . ": " . $dateStamp;
 		//if admin display the delete link
-		if(isadminloggedin())
-			echo " " . $delete . " ";	
+		if (isadminloggedin()) {
+			echo " " . $delete . " ";
+		}
 		echo "</small></p>";
 		//display the message
 		echo "<p>" . $message . "</p>";
-	
+
 		//display the input form to add a new message
-		if(isadminloggedin()){
+		if (isadminloggedin()) {
 			//action
 			$action = "riverdashboard/add";
 			$link = elgg_echo("sitemessages:add");
@@ -57,24 +54,19 @@
 	
 			<p><a class="collapsibleboxlink">{$link}</a></p>
 			<div class="collapsible_box">
-				{$input_area}<br />{$submit_input}
+					{$input_area}<br />{$submit_input}
 			</div>
 	
 EOT;
-?>
-
-<?php
 			//display the form
 			echo elgg_view('input/form', array('action' => "{$vars['url']}action/$action", 'body' => $form_body));
-
 		}//end of admin if statement
-?>
-<?php
-	//if there is no message, add a form to create one
-	}else{
 
-		if(isadminloggedin()){
-		
+		//if there is no message, add a form to create one
+	} else {
+
+		if (isadminloggedin()) {
+
 			//action
 			$action = "riverdashboard/add";
 			$link = elgg_echo("sitemessages:add");
@@ -84,15 +76,13 @@ EOT;
 	
 			<p><a class="collapsibleboxlink">{$link}</a></p>
 			<div class="collapsible_box">
-				{$input_area}<br />{$submit_input}
+					{$input_area}<br />{$submit_input}
 			</div>
 EOT;
-?>
-<?php
-		//display the form
-		echo elgg_view('input/form', array('action' => "{$vars['url']}action/$action", 'body' => $form_body));
+			//display the form
+			echo elgg_view('input/form', array('action' => "{$vars['url']}action/$action", 'body' => $form_body));
 
-	}//end of admin check
+		}//end of admin check
 	}//end of main if
 ?>
 </div>
