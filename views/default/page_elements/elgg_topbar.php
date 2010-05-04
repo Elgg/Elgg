@@ -3,62 +3,48 @@
  * Elgg top toolbar
  * The standard elgg top toolbar
  */
-?>
 
-<?php
-	if (isloggedin()) {
-?>
-
-<div id="elgg_topbar" class="clearfloat">
-<div id="elgg_topbar_contents">
-	<a href="http://www.elgg.org"><img class="site_logo" src="<?php echo $vars['url']; ?>_graphics/elgg_toolbar_logo.gif" alt="Elgg logo" /></a>
-	<a href="<?php echo $_SESSION['user']->getURL(); ?>"><img class="user_mini_avatar" src="<?php echo $_SESSION['user']->getIcon('topbar'); ?>" alt="User avatar" /></a>
-
-	<?php
-		// elgg tools menu
-		// need to echo this empty view for backward compatibility.
-		echo elgg_view("navigation/topbar_tools");
-
-		// enable elgg topbar extending
-		echo elgg_view('elgg_topbar/extend', $vars);
+$user = get_loggedin_user();
+if (($user instanceof ElggUser) && ($user->guid > 0)) {
+	echo '<div id="elgg_topbar" class="clearfloat">';
+	echo '<div id="elgg_topbar_contents">';
 	
-		// add Friends to top toolbar - if profile mod is running
-		if ( is_plugin_enabled('profile') ) {
-			$user = get_loggedin_user();
-			echo "<a class='myfriends' href=\"".$CONFIG->wwwroot . "pg/friends/" . $user->username."\" title=\"".elgg_echo('friends')."\">".elgg_echo('friends')."</a>";
-		}
-	?>
+	// Elgg logo
+	echo '<a href="http://www.elgg.org">';
+	echo "<img class=\"site_logo\" src=\"{$vars['url']}_graphics/elgg_toolbar_logo.gif\" alt=\"Elgg logo\" />";
+	echo '</a>';
 	
-	<div class="log_out">
-		<?php echo elgg_view('output/url', array('href' => "{$vars['url']}action/logout", 'text' => elgg_echo('logout'), 'is_action' => TRUE)); ?>
-	</div>
-	
-	<a href="<?php echo $vars['url']; ?>pg/settings/" class="settings"><?php echo elgg_echo('settings'); ?></a>
+	// avatar
+	$user_link = $user->getURL();
+	$user_image = $user->getIcon('topbar');
+	echo "<a href=\"$user_link\"><img class=\"user_mini_avatar\" src=\"$user_image\" alt=\"User avatar\" /></a>";
 
-	<?php
+	// logout link
+	echo '<div class="log_out">';
+	echo elgg_view('output/url', array(
+		'href' => "{$vars['url']}action/logout",
+		'text' => elgg_echo('logout'),
+		'is_action' => TRUE
+	));
+	echo '</div>';
+	
+	// user settings
+	$settings = elgg_echo('settings');
+	echo "<a href=\"{$vars['url']}pg/settings\" class=\"settings\">$settings</a>";
+
 	// The administration link is for admin or site admin users only
-	if ($vars['user']->isAdmin()) {
-	?>
-		<a href="<?php echo $vars['url']; ?>pg/admin/" class="admin"><?php echo elgg_echo("admin"); ?></a>
-
-	<?php
+	if ($user->isAdmin()) {
+		$admin = elgg_echo("admin");
+		echo "<a href=\"{$vars['url']}pg/admin\" class=\"admin\">$admin</a>";
 	}
+	
+	// elgg tools menu
+	// need to echo this empty view for backward compatibility.
+	echo elgg_view("navigation/topbar_tools");
+	
+	// enable elgg topbar extending
+	echo elgg_view('elgg_topbar/extend', $vars);
 
-	if(is_plugin_enabled('help')){
-	?>
-		<a href="<?php echo $vars['url']; ?>mod/help/index.php" class="help">Help</a>
-	<?php
-	}
-
-	if(is_plugin_enabled('shared_access')){
-	?>
-		<a href="<?php echo $vars['url']; ?>pg/shared_access/home" class="shared_access"><?php echo elgg_echo('shared_access:shared_access'); ?></a>
-	<?php
-	}
-	?>
-
-</div>
-</div>
-<?php
-	}
-?>
+	echo '</div>';
+	echo '</div>';
+}
