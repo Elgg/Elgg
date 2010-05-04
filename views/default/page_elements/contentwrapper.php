@@ -6,7 +6,8 @@
  * @author Curverider Ltd
  * @link http://elgg.org/
  *
- * @uses $vars['value'] The URL to display
+ * @uses $vars['body'] The content to display inside content wrapper
+ * @uses $vars['subclass'] Additional css class
  *
  */
 ?>
