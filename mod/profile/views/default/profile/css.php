@@ -413,6 +413,7 @@ p.visit_twitter a {
 	text-align:left;
 	-webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50);
 	-moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50);
+	font-size:14px;
 }
 div.usericon a.icon img {
 	z-index:10;
@@ -426,25 +427,26 @@ div.usericon a.icon img {
 	background:#cccccc;
 	text-decoration:none;
 }
-.usericon .sub_menu h3.displayname {
-	font-size:1.3em !important; /* make sure nothing overrides our sub menu h3 */
-	line-height: 1.1em !important;
-	padding:0 !important;
-	margin:0 !important;
-	border-bottom:solid 1px #dddddd !important;
+.usericon .sub_menu .displayname {
+	padding:0;
+	margin:0;
+	border-bottom:solid 1px #dddddd;
+	font-size:14px;
 }
-.usericon .sub_menu h3.displayname a {
+.usericon .sub_menu .displayname a {
 	padding:3px 3px 3px 8px;
+	font-size:14px;
 }
-.usericon .sub_menu h3.displayname a .username {
+.usericon .sub_menu .displayname a .username {
 	display:block;
 	font-weight: normal;
-	font-size: 0.8em;
+	font-size:12px;
 	text-align: left;
 	margin:0;
 }
 .usericon .sub_menu a {
 	padding:2px 3px 2px 8px;
+	font-size:12px;
 }
 /* admin menu options in avatar submenu */
 .user_menu_admin {
