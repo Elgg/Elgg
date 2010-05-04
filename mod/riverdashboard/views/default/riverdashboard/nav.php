@@ -43,7 +43,9 @@ switch($vars['orient']) {
 
 ?>
 
-<div class="contentWrapper">
+<?php
+if (isloggedin()) {
+?>
 	<div id="elgg_horizontal_tabbed_nav">
 		<ul>
 			<li <?php echo $allselect; ?> ><a onclick="javascript:$('#river_container').load('<?php echo $vars['url']; ?>mod/riverdashboard/?content=<?php echo $vars['type']; ?>,<?php echo $vars['subtype']; ?>&amp;callback=true'); return false;" href="?display="><?php echo elgg_echo('all'); ?></a></li>
@@ -51,6 +53,9 @@ switch($vars['orient']) {
 			<li <?php echo $mineselect; ?> ><a onclick="javascript:$('#river_container').load('<?php echo $vars['url']; ?>mod/riverdashboard/?display=mine&amp;content=<?php echo $vars['type']; ?>,<?php echo $vars['subtype']; ?>&amp;callback=true'); return false;" href="?display=mine"><?php echo elgg_echo('mine'); ?></a></li>
 		</ul>
 	</div>
+<?php
+}
+?>
 
 	<div class="riverdashboard_filtermenu">
 		<select name="content" id="content" onchange="javascript:$('#river_container').load('<?php echo $vars['url']; ?>mod/riverdashboard/?callback=true&amp;display='+$('input#display').val() + '&amp;content=' + $('select#content').val());">

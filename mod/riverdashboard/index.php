@@ -12,7 +12,7 @@
 
 require_once(dirname(dirname(dirname(__FILE__))) . '/engine/start.php');
 
-gatekeeper();
+//gatekeeper();
 
 $content = get_input('content','');
 $content = explode(',' ,$content);
@@ -65,7 +65,7 @@ switch($orient) {
 		break;
 }
 
-$river = elgg_view_river_items($subject_guid, 0, $relationship_type, $type, $subtype, '') . "</div>";
+$river = elgg_view_river_items($subject_guid, 0, $relationship_type, $type, $subtype, '');
 
 // Replacing callback calls in the nav with something meaningless
 $river = str_replace('callback=true', 'replaced=88,334', $river);
@@ -76,13 +76,19 @@ $nav = elgg_view('riverdashboard/nav',array(
 		'orient' => $orient
 ));
 
+$content = elgg_view('page_elements/contentwrapper', array('body' => $nav . $river));
+
 if (empty($callback)) {
+	// Add RSS support to page
+	global $autofeed;
+	$autofeed = true;
+
 	// display page
-	$body .= elgg_view('riverdashboard/container', array('body' => $nav . $river . elgg_view('riverdashboard/js')));
+	$body .= elgg_view('riverdashboard/container', array('body' => $content . elgg_view('riverdashboard/js')));
 	page_draw($title, elgg_view_layout('sidebar_boxes', $area1, $body));
 } else {
 	// ajax callback
 	header("Content-type: text/html; charset=UTF-8");
-	echo $nav . $river . elgg_view('riverdashboard/js');
+	echo $content . elgg_view('riverdashboard/js');
 }
 

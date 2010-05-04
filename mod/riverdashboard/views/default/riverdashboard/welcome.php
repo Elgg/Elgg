@@ -10,8 +10,13 @@
  * @link http://elgg.com/
  * 
  */
+
+$name = '';
+if (isloggedin()) {
+	$name = get_loggedin_user()->name;
+}
 	 
 ?>
 <div id="content_area_user_title">
-	<h2><?php echo sprintf(elgg_echo('welcome:user'), get_loggedin_user()->name); ?></h2>
+	<h2><?php echo sprintf(elgg_echo('welcome:user'), $name); ?></h2>
 </div>
