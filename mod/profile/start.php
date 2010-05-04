@@ -23,6 +23,7 @@ function profile_init() {
 	register_entity_url_handler('profile_url', 'user', 'all');
 
 	// Set up the menu for logged-in users
+	elgg_extend_view('elgg_topbar/extend', 'profile/topbar_extend');
 	//if (isloggedin()) {
 	//	add_menu(elgg_echo('profile:yours'), $_SESSION['user']->getURL() . '/extend');
 	//}
