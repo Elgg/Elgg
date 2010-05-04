@@ -28,6 +28,13 @@ if (($user instanceof ElggUser) && ($user->guid > 0)) {
 	));
 	echo '</div>';
 	
+	// elgg tools menu
+	// need to echo this empty view for backward compatibility.
+	echo elgg_view("navigation/topbar_tools");
+	
+	// enable elgg topbar extending
+	echo elgg_view('elgg_topbar/extend', $vars);
+	
 	// user settings
 	$settings = elgg_echo('settings');
 	echo "<a href=\"{$vars['url']}pg/settings\" class=\"settings\">$settings</a>";
@@ -38,13 +45,6 @@ if (($user instanceof ElggUser) && ($user->guid > 0)) {
 		echo "<a href=\"{$vars['url']}pg/admin\" class=\"admin\">$admin</a>";
 	}
 	
-	// elgg tools menu
-	// need to echo this empty view for backward compatibility.
-	echo elgg_view("navigation/topbar_tools");
-	
-	// enable elgg topbar extending
-	echo elgg_view('elgg_topbar/extend', $vars);
-
 	echo '</div>';
 	echo '</div>';
 }
