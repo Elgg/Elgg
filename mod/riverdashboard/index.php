@@ -33,6 +33,12 @@ if ($type == 'all') {
 $body = '';
 if (empty($callback)) {
 
+	if (get_plugin_setting('useasdashboard', 'riverdashboard') == 'yes') {
+		$title = elgg_echo('dashboard');
+	} else {
+		$title = elgg_echo('activity');
+	}
+
 	//set a view for the wire to extend
 	$area1 = elgg_view("riverdashboard/sitemessage");
 
@@ -73,7 +79,7 @@ $nav = elgg_view('riverdashboard/nav',array(
 if (empty($callback)) {
 	// display page
 	$body .= elgg_view('riverdashboard/container', array('body' => $nav . $river . elgg_view('riverdashboard/js')));
-	page_draw(elgg_echo('dashboard'), elgg_view_layout('sidebar_boxes', $area1, $body));
+	page_draw($title, elgg_view_layout('sidebar_boxes', $area1, $body));
 } else {
 	// ajax callback
 	header("Content-type: text/html; charset=UTF-8");
