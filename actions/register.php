@@ -53,7 +53,21 @@ if (!$CONFIG->disable_registration) {
 			system_message(sprintf(elgg_echo("registerok"),$CONFIG->sitename));
 
 			// Forward on success, assume everything else is an error...
-			forward();
+			// If just registered admin user, login the user in and forward to the
+			// plugins simple settings page.
+			if (!datalist_get('first_admin_login')) {
+				login($new_user);
+				// remove the "you've registered!" system_message();
+				$_SESSION['msg']['messages'] = array();
+
+				// remind users to enable / disable desired tools
+				elgg_add_admin_notice('first_installation_plugin_reminder', elgg_echo('firstadminlogininstructions'));
+
+				datalist_set('first_admin_login', time());
+				forward('pg/admin/plugins/simple');
+			} else {
+				forward();
+			}
 		} else {
 			register_error(elgg_echo("registerbad"));
 		}

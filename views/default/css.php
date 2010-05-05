@@ -1460,8 +1460,8 @@ a.action_button:focus {
 	LIKES
 *************************************** */
 .likes_list_holder {
-    position: relative;
-    float:right;
+	position: relative;
+	float:right;
 }
 .likes_list_holder a.user_like {
 	cursor:pointer;
@@ -1491,13 +1491,13 @@ a.action_button:focus {
 .likes_list_holder .likes_list {
 	background-color: white;
 	border:1px solid #cccccc;
-    width: 345px;
-    height: auto;
-    position: absolute;
-    text-align: left;
-    z-index: 9999;
-    -webkit-border-radius: 6px; 
-    -moz-border-radius: 6px;
+	width: 345px;
+	height: auto;
+	position: absolute;
+	text-align: left;
+	z-index: 9999;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
 	-webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 	-moz-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 }
@@ -1578,6 +1578,27 @@ p.elgg_likes_owner {
 	margin:0;
 	border:none;
 }
+.plugin_controls {
+	padding: 3px 3px 3px 0;
+	font-weight: bold;
+	float: left;
+	width: 150px;
+}
+form.admin_plugins_simpleview .submit_button {
+	margin-right:20px;
+}
+.plugin_info {
+	margin: 3px;
+	padding-left: 150px;
+	display: block;
+}
+.plugin_metadata {
+	display:block;
+	color:#999999;
+}
+.plugin_name input[type="checkbox"] {
+	margin-right: 10px;
+}
 .plugin_details {
 	margin:0 0 5px 0;
 	padding:0 7px 4px 10px;
@@ -1609,4 +1630,22 @@ p.elgg_likes_owner {
 .admin_settings.menuitems li.custom_menuitem {
 	margin-bottom:20px;
 }
-
+.admin .child_submenu li a{
+	margin-left: 15px;
+	background-color: white;
+	color: #4690D6;
+}
+.admin_notices {
+	padding-bottom: 15px;
+}
+.admin_notices p {
+	background-color:#BDE5F8;
+	color: black;
+	border: 1px solid blue;
+	font-weight: bold;
+	padding:3px 10px;
+	-webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45); /* safari v3+ */
+	-moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45); /* FF v3.5+ */
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+}

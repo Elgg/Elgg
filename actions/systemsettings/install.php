@@ -10,8 +10,11 @@
  * @link http://elgg.org/
  */
 
+global $CONFIG;
 define('INSTALLING', TRUE);
-elgg_set_viewtype('failsafe'); // Set failsafe again incase we get an exception thrown
+
+// Set failsafe again in case we get an exception thrown
+elgg_set_viewtype('failsafe');
 
 if (is_installed()) {
 	forward();
@@ -43,13 +46,18 @@ if (get_input('settings') == 'go') {
 		$site->name = get_input('sitename');
 		$site->url = $url;
 		$site->description = get_input('sitedescription');
-		$site->email = get_input('siteemail');
 		$site->access_id = ACCESS_PUBLIC;
 		$guid = $site->save();
 
 		if (!$guid) {
 			throw new InstallationException(sprintf(elgg_echo('InstallationException:CantCreateSite'), get_input('sitename'), get_input('wwwroot')));
 		}
+
+		$site->email = get_input('siteemail');
+
+		// this is needed to grab plugins
+		$CONFIG->site_guid = $guid;
+		$CONFIG->site = $site;
 
 		datalist_set('installed',time());
 		datalist_set('path', $path);
@@ -94,16 +102,18 @@ if (get_input('settings') == 'go') {
 				enable_plugin(trim($plugin), $site->getGUID());
 			}
 		} else {
-			enable_plugin('profile', $site->getGUID());
-			enable_plugin('logbrowser', $site->getGUID());
-			enable_plugin('diagnostics', $site->getGUID());
-			enable_plugin('uservalidationbyemail', $site->getGUID());
-			enable_plugin('htmlawed', $site->getGUID());
-			enable_plugin('search', $site->getGUID());
+			// activate plugins with manifest.xml: elgg_install_state = enabled
+			$plugins = get_plugin_list();
+			foreach ($plugins as $plugin) {
+				if ($manifest = load_plugin_manifest($plugin)) {
+					if (isset($manifest['elgg_install_state']) && $manifest['elgg_install_state'] == 'enabled') {
+						enable_plugin($plugin);
+					}
+				}
+			}
 		}
 
 		// reset the views path in case of installing over an old data dir.
-		// @todo should this warn / error first?
 		$dataroot = datalist_get('dataroot');
 		$cache = new ElggFileCache($dataroot);
 		$cache->delete('view_paths');

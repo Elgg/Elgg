@@ -147,6 +147,8 @@ $publish_date_input = elgg_view('input/datetime', array(
 	'value' => $values['publish_date']
 ));
 
+$categories_input = elgg_view('categories', $vars);
+
 // hidden inputs
 //$container_guid_input = elgg_view('input/hidden', array('internalname' => 'container_guid', 'value' => $values['container_guid']));
 $guid_input = elgg_view('input/hidden', array('internalname' => 'guid', 'value' => $values['guid']));
@@ -202,12 +204,12 @@ $body_input
 	$access_input
 </p>
 
-
-
 <p>
 	<label for="blog_status">$status_label</label>
 	$status_input
 </p>
+
+$categories_input
 
 $guid_input
 $container_guid_input

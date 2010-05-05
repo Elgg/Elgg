@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin_manifest>
-        <field key="version" value="1.7" />
-        <field key="description" value="Elgg internal messages plugin. This plugin lets user send each other messages." />
-        <field key="website" value="http://www.elgg.org/" />
-        <field key="licence" value="GNU Public License version 2" />
-        <field key="elgg_version" value="2010030101" />
+	<field key="version" value="1.7" />
+	<field key="description" value="Elgg internal messages plugin. This plugin lets user send each other messages." />
+	<field key="website" value="http://www.elgg.org/" />
+	<field key="licence" value="GNU Public License version 2" />
+	<field key="elgg_version" value="2010030101" />
+	<field key="elgg_install_state" value="enabled" />
+	<field key="admin_interface" value="simple" />
 </plugin_manifest>

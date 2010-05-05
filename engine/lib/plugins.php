@@ -354,6 +354,11 @@ function load_plugin_manifest($plugin) {
 			}
 		}
 
+		// handle plugins that don't define a name
+		if (!isset($elements['name'])) {
+			$elements['name'] = ucwords($plugin);
+		}
+
 		return $elements;
 	}
 
@@ -677,6 +682,10 @@ function enable_plugin($plugin, $site_guid = 0) {
 		throw new InvalidClassException(sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $site_guid, "ElggSite"));
 	}
 
+	if (!$plugin_info = load_plugin_manifest($plugin)) {
+		return FALSE;
+	}
+
 	// getMetadata() doesn't return an array if only one plugin is enabled
 	if ($enabled = $site->enabled_plugins) {
 		if (!is_array($enabled)) {
@@ -689,8 +698,42 @@ function enable_plugin($plugin, $site_guid = 0) {
 	$enabled[] = $plugin;
 	$enabled = array_unique($enabled);
 
-	$return = $site->setMetaData('enabled_plugins', $enabled);
-	$ENABLED_PLUGINS_CACHE = $enabled;
+	if ($return = $site->setMetaData('enabled_plugins', $enabled)) {
+
+		// for other plugins that want to hook into this.
+		if ($return && !trigger_elgg_event('enable', 'plugin', array('plugin' => $plugin, 'manifest' => $plugin_info))) {
+			$return = FALSE;
+		}
+
+		// for this plugin's on_enable
+		if ($return && isset($plugin_info['on_enable'])) {
+			// pull in the actual plugin's start so the on_enable function is callabe
+			// NB: this will not run re-run the init hooks!
+			$start = "{$CONFIG->pluginspath}$plugin/start.php";
+			if (!file_exists($start) || !include($start)) {
+				$return = FALSE;
+			}
+
+			// need language files for the messages
+			$translations = "{$CONFIG->pluginspath}$plugin/languages/";
+			register_translations($translations);
+			if (!is_callable($plugin_info['on_enable'])) {
+				$return = FALSE;
+			} else {
+				$on_enable = call_user_func($plugin_info['on_enable']);
+				// allow null to mean "I don't care" like other subsystems
+				$return = ($on_disable === FALSE) ? FALSE : TRUE;
+			}
+		}
+
+		// disable the plugin if the on_enable or trigger results failed
+		if (!$return) {
+			array_pop($enabled);
+			$site->setMetaData('enabled_plugins', $enabled);
+		}
+
+		$ENABLED_PLUGINS_CACHE = $enabled;
+	}
 
 	return $return;
 }
@@ -721,6 +764,10 @@ function disable_plugin($plugin, $site_guid = 0) {
 		throw new InvalidClassException(sprintf(elgg_echo('InvalidClassException:NotValidElggStar'), $site_guid, "ElggSite"));
 	}
 
+	if (!$plugin_info = load_plugin_manifest($plugin)) {
+		return FALSE;
+	}
+
 	// getMetadata() doesn't return an array if only one plugin is enabled
 	if ($enabled = $site->enabled_plugins) {
 		if (!is_array($enabled)) {
@@ -730,6 +777,8 @@ function disable_plugin($plugin, $site_guid = 0) {
 		$enabled = array();
 	}
 
+	$old_enabled = $enabled;
+
 	// remove the disabled plugin from the array
 	if (FALSE !== $i = array_search($plugin, $enabled)) {
 		unset($enabled[$i]);
@@ -738,7 +787,32 @@ function disable_plugin($plugin, $site_guid = 0) {
 	// if we're unsetting all the plugins, this will return an empty array.
 	// it will fail with FALSE, though.
 	$return = (FALSE === $site->enabled_plugins = $enabled) ? FALSE : TRUE;
-	$ENABLED_PLUGINS_CACHE = $enabled;
+
+	if ($return) {
+		// for other plugins that want to hook into this.
+		if ($return && !trigger_elgg_event('disable', 'plugin', array('plugin' => $plugin, 'manifest' => $plugin_info))) {
+			$return = FALSE;
+		}
+
+		// for this plugin's on_disable
+		if ($return && isset($plugin_info['on_disable'])) {
+			if (!is_callable($plugin_info['on_disable'])) {
+				$return = FALSE;
+			} else {
+				$on_disable = call_user_func($plugin_info['on_disable']);
+				// allow null to mean "I don't care" like other subsystems
+				$return = ($on_disable === FALSE) ? FALSE : TRUE;
+			}
+		}
+
+		// disable the plugin if the on_enable or trigger results failed
+		if (!$return) {
+			$site->enabled_plugins = $old_enabled;
+			$ENABLED_PLUGINS_CACHE = $old_enabled;
+		} else {
+			$ENABLED_PLUGINS_CACHE = $enabled;
+		}
+	}
 
 	return $return;
 }

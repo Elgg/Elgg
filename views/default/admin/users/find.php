@@ -7,8 +7,8 @@
  * @author Curverider Ltd
  * @link http://elgg.org/
  */
- 
-if( (is_plugin_enabled('search')) && (is_plugin_enabled('profile')) ) { 
+
+if( (is_plugin_enabled('search')) && (is_plugin_enabled('profile')) ) {
 ?>
 	<div class="admin_settings user_search">
 		<form action="<?php echo $vars['url']; ?>pg/search/" method="get">

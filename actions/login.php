@@ -35,12 +35,7 @@ if ($result) {
 		unset($_SESSION['last_forward_from']);
 		forward($forward_url);
 	} else {
-		if ((isadminloggedin()) && (!datalist_get('first_admin_login'))) {
-			system_message(elgg_echo('firstadminlogininstructions'));
-			datalist_set('first_admin_login', time());
-
-			forward('pg/admin/plugins');
-		} else if (get_input('returntoreferer')) {
+		if (get_input('returntoreferer')) {
 			forward($_SERVER['HTTP_REFERER']);
 		} else {
 			// forward to index for front page overrides.

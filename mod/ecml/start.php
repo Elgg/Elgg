@@ -36,7 +36,7 @@ function ecml_init() {
 	elgg_extend_view('css', 'ecml/admin/css');
 
 	// admin action to save permissions
-	register_action('ecml/save_permissions', FALSE, dirname(__FILE__) . '/actions/save_permissions.php', TRUE);
+	register_action('settings/ecml/save', FALSE, dirname(__FILE__) . '/actions/save_permissions.php', TRUE);
 
 	// show ECML-enabled icon on free-text input areas
 	elgg_extend_view('input/longtext',  'ecml/input_ext', 0);
@@ -78,7 +78,7 @@ function ecml_init() {
 function ecml_pagesetup(){
 	if (get_context() == 'admin' && isadminloggedin()) {
 		global $CONFIG;
-		add_submenu_item(elgg_echo('ecml'), $CONFIG->wwwroot . 'pg/ecml_admin');
+
 	}
 }
 

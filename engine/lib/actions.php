@@ -236,5 +236,18 @@ function get_site_secret() {
 	return $secret;
 }
 
+/**
+ * Check if an action is registered and its file exists.
+ *
+ * @param string $action
+ * @return BOOL
+ * @since 1.8
+ */
+function elgg_action_exist($action) {
+	global $CONFIG;
+
+	return (isset($CONFIG->actions[$action]) && file_exists($CONFIG->actions[$action]['file']));
+}
+
 // Register some actions ***************************************************
 register_elgg_event_handler("init","system","actions_init");

@@ -13,8 +13,8 @@ admin_gatekeeper();
 
 // Get the plugin
 $mod = get_input('plugin');
-$mod = str_replace('.','',$mod);
-$mod = str_replace('/','',$mod);
+$mod = str_replace('.', '', $mod);
+$mod = str_replace('/', '', $mod);
 
 // Get the new order
 $order = (int) get_input('order');
@@ -35,6 +35,7 @@ if ($key = array_search($mod, $plugins)) {
 
 // Disable
 if (regenerate_plugin_list($plugins)) {
+	elgg_delete_admin_notice('first_installation_plugin_reminder');
 	system_message(sprintf(elgg_echo('admin:plugins:reorder:yes'), $plugin));
 } else {
 	register_error(sprintf(elgg_echo('admin:plugins:reorder:no'), $plugin));

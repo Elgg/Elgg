@@ -417,13 +417,6 @@ function login(ElggUser $user, $persistent = false) {
 	set_last_login($_SESSION['guid']);
 	reset_login_failure_count($user->guid); // Reset any previous failed login attempts
 
-	// Set admin shortcut flag if this is an admin
-//	if (isadminloggedin()) {
-//		//@todo REMOVE THIS.
-//		global $is_admin;
-//		$is_admin = true;
-//	}
-
 	return true;
 }
 

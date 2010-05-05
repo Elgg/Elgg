@@ -16,6 +16,7 @@ $plugins = get_installed_plugins();
 foreach ($plugins as $p => $data) {
 	// Enable
 	if (enable_plugin($p)) {
+		elgg_delete_admin_notice('first_installation_plugin_reminder');
 		system_message(sprintf(elgg_echo('admin:plugins:enable:yes'), $p));
 	} else {
 		register_error(sprintf(elgg_echo('admin:plugins:enable:no'), $p));
@@ -27,4 +28,3 @@ elgg_view_regenerate_simplecache();
 elgg_filepath_cache_reset();
 
 forward($_SERVER['HTTP_REFERER']);
-exit;

@@ -6,4 +6,5 @@
 	<field key="website" value="http://www.elgg.org/" />
 	<field key="copyright" value="(C) Curverider 2010" />
 	<field key="licence" value="GNU Public License version 2" />
+	<field key="admin_interface" value="advanced" />
 </plugin_manifest>

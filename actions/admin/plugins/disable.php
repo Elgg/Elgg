@@ -21,6 +21,7 @@ foreach ($plugin as $p) {
 	// Disable
 	if (disable_plugin($p)) {
 		system_message(sprintf(elgg_echo('admin:plugins:disable:yes'), $p));
+		elgg_delete_admin_notice('first_installation_plugin_reminder');
 	} else {
 		register_error(sprintf(elgg_echo('admin:plugins:disable:no'), $p));
 	}
@@ -30,4 +31,3 @@ elgg_view_regenerate_simplecache();
 elgg_filepath_cache_reset();
 
 forward($_SERVER['HTTP_REFERER']);
-exit;

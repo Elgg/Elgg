@@ -1,11 +1,11 @@
 <?php
-	/**
-	 * Categories CSS extender
-	 * 
-	 * @package Elgg File Repository
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
-	 */
+/**
+ * Categories CSS extender
+ *
+ * @package Categories
+ * @copyright Curverider Ltd 2008-2010
+ * @link http://elgg.com/
+ */
 ?>
 
 .categories .input-checkboxes {
@@ -25,13 +25,13 @@
 }
 #two_column_left_sidebar_maincontent .contentWrapper .categories {
 	border:1px solid #CCCCCC;
-	-webkit-border-radius: 4px; 
+	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	padding:5px;
-	margin:0 0 15px 0;	
+	margin:0 0 15px 0;
 }
 #two_column_left_sidebar_maincontent .contentWrapper .categories p {
-	margin:0;	
+	margin:0;
 }
 #two_column_left_sidebar_maincontent .contentWrapper .blog_post .categories {
 	border:none;
@@ -41,10 +41,10 @@
 
 #two_column_left_sidebar .blog_categories {
 	background:white;
-	-webkit-border-radius: 8px; 
+	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
-    padding:10px;
-    margin:0 10px 10px 10px;
+	padding:10px;
+	margin:0 10px 10px 10px;
 }
 #two_column_left_sidebar .blog_categories h2 {
 	background:none;

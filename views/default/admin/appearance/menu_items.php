@@ -8,7 +8,7 @@
  * @link http://elgg.org/
  */
 
-$menu_items = $vars['menu_items'];
+$menu_items = get_register('menu');
 $featured_urls = get_config('menu_items_featured_urls');
 
 // get an alphabetical sort of the items + urls

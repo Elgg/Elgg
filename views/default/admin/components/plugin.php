@@ -100,18 +100,14 @@ if ($manifest['screenshot']) {
 
 	<?php
 	if (elgg_view_exists("settings/{$plugin}/edit")) {
-		
-		$settings_link = "<a class='plugin_settings small link'>[". elgg_echo('settings') ."]</a>";
-		
-		$settings_panel = "<div class='pluginsettings hidden'>";
-		$settings_panel .= elgg_view("object/plugin", array('plugin' => $plugin, 'entity' => find_plugin_settings($plugin)));
-		$settings_panel .= "</div>";
+		$link = "{$vars['url']}pg/admin/plugin_settings/$plugin";
+		$settings_link = "<a class='plugin_settings small link' href='$link'>[". elgg_echo('settings') ."]</a>";
 	}
 	?>
 	<h3><?php echo "$plugin_pretty_name $settings_link"; ?></h3>
 	<?php
 	echo $settings_panel;
-	
+
 	if ($manifest) {
 		?>
 		<div class="plugin_description"><?php echo elgg_view('output/longtext',array('value' => $manifest['description'])); ?></div>

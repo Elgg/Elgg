@@ -11,4 +11,6 @@
 	<field key="copyright" value="(C) Curverider 2008-2010" />
 	<field key="licence" value="GNU Public License version 2" />
 	<field key="elgg_version" value="2009030702" />
+	<field key="elgg_install_state" value="enabled" />
+	<field key="admin_interface" value="advanced" />
 </plugin_manifest>
