@@ -15,6 +15,7 @@
 // user is passed to view and set by caller (normally the page editicon)
 $currentuser = $vars['user'];
 ?>
+<div id="edit_profile_avatar">
 <!-- grab the required js for icon cropping -->
 <script type="text/javascript" src="<?php echo $vars['url']; ?>mod/profile/views/default/js/jquery.imgareaselect-0.8.min.js"></script>
 
@@ -141,4 +142,4 @@ $currentuser = $vars['user'];
 </form>
 
 </div>
-
+</div>
