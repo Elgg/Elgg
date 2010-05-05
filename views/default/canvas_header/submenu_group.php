@@ -14,6 +14,6 @@ if (isset($vars['group_name'])) {
 }
 
 if (isset($vars['submenu'])) {
-	$submenu = "<ul class='submenu group'>" . $vars['submenu'] . "</ul>";
+	$submenu = "<ul class='submenu {$groupname}'>" . $vars['submenu'] . "</ul>";
 	echo $submenu;
 }
