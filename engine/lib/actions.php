@@ -72,6 +72,8 @@ function action($action, $forwarder = "") {
 			} else {
 				register_error(elgg_echo('actionloggedout'));
 			}
+		} else {
+			register_error(elgg_echo('actionunauthorized'));
 		}
 	} else {
 		register_error(sprintf(elgg_echo('actionundefined'),$action));
