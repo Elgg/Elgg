@@ -7,7 +7,7 @@
 <?php
 
 // Get friends and subscriptions
-$friends = get_user_friends($vars['user']->guid,'',9999,0);
+$friends = get_user_friends($vars['user']->guid, '', 9999, 0);
 		
 global $NOTIFICATION_HANDLERS;
 foreach($NOTIFICATION_HANDLERS as $method => $foo) {

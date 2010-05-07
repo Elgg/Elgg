@@ -22,11 +22,12 @@ set_context('settings');
 // Get the form
 $people = array();
 if ($people_ents = elgg_get_entities_from_relationship(array('relationship' => 'notify', 'relationship_guid' => get_loggedin_userid(), 'types' => 'user', 'limit' => 99999))) {
-	foreach($people_ents as $ent)
+	foreach($people_ents as $ent) {
 		$people[] = $ent->guid;
+	}
 }
 
-$body = elgg_view('notifications/subscriptions/form',array('people' => $people));
+$body = elgg_view('notifications/subscriptions/form', array('people' => $people));
 
 // Insert it into the correct canvas layout
 $body = elgg_view_layout('two_column_left_sidebar', '', $body);

@@ -1,16 +1,25 @@
 <?php
+/**
+ * Elgg notifications groups subscription form
+ *
+ * @package ElggNotifications
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * @author Curverider Ltd
+ * @copyright Curverider Ltd 2008-2010
+ * @link http://elgg.com/
+ */
 
-	global $NOTIFICATION_HANDLERS;
-	foreach($NOTIFICATION_HANDLERS as $method => $foo) {
-		$subsbig[$method] = elgg_get_entities_from_relationship(array('relationship' => 'notify' . $method, 'relationship_guid' => $vars['user']->guid, 'types' => 'group', 'limit' => 99999));
-		$tmparray = array();
-		if ($subsbig[$method]) {
-			foreach($subsbig[$method] as $tmpent) {
-				$tmparray[] = $tmpent->guid;
-			}
+global $NOTIFICATION_HANDLERS;
+foreach($NOTIFICATION_HANDLERS as $method => $foo) {
+	$subsbig[$method] = elgg_get_entities_from_relationship(array('relationship' => 'notify' . $method, 'relationship_guid' => $vars['user']->guid, 'types' => 'group', 'limit' => 99999));
+	$tmparray = array();
+	if ($subsbig[$method]) {
+		foreach($subsbig[$method] as $tmpent) {
+			$tmparray[] = $tmpent->guid;
 		}
-		$subsbig[$method] = $tmparray;
 	}
+	$subsbig[$method] = $tmparray;
+}
 
 ?>
 <?php echo elgg_view_title(elgg_echo('notifications:subscriptions:changesettings:groups')); ?>
@@ -30,18 +39,19 @@
 		</p>
 <?php
 
-		if (isset($vars['groups']) && !empty($vars['groups'])) {
+if (isset($vars['groups']) && !empty($vars['groups'])) {
 			
 ?>
 <table id="notificationstable" cellspacing="0" cellpadding="4" border="1" width="100%">
   <tr>
     <td>&nbsp;</td>
 <?php
-	global $NOTIFICATION_HANDLERS;
+
 	$i = 0; 
 	foreach($NOTIFICATION_HANDLERS as $method => $foo) {
-		if ($i > 0)
+		if ($i > 0) {
 			echo "<td class=\"spacercolumn\">&nbsp;</td>";
+		}
 ?>
 	<td class="<?php echo $method; ?>togglefield"><?php echo elgg_echo('notification:method:'.$method); ?></td>
 <?php
@@ -51,25 +61,27 @@
     <td>&nbsp;</td>
   </tr>
 <?php	
-			foreach($vars['groups'] as $group) {
+	foreach($vars['groups'] as $group) {
 				
-				$fields = '';
-				$i = 0;
+		$fields = '';
+		$i = 0;
 				
-				foreach($NOTIFICATION_HANDLERS as $method => $foo) {
-					if (in_array($group->guid,$subsbig[$method])) {
-						$checked[$method] = 'checked="checked"';
-					} else {
-						$checked[$method] = '';
-					}
-					if ($i > 0) $fields .= "<td class=\"spacercolumn\">&nbsp;</td>";
-					$fields .= <<< END
-					    <td class="{$method}togglefield">
-					    <a border="0" id="{$method}{$group->guid}" class="{$method}toggleOff" onclick="adjust{$method}_alt('{$method}{$group->guid}');">
-					    <input type="checkbox" name="{$method}subscriptions[]" id="{$method}checkbox" onclick="adjust{$method}('{$method}{$group->guid}');" value="{$group->guid}" {$checked[$method]} /></a></td>
+		foreach($NOTIFICATION_HANDLERS as $method => $foo) {
+			if (in_array($group->guid,$subsbig[$method])) {
+				$checked[$method] = 'checked="checked"';
+			} else {
+				$checked[$method] = '';
+			}
+			if ($i > 0) {
+				$fields .= "<td class=\"spacercolumn\">&nbsp;</td>";
+			}
+			$fields .= <<< END
+				<td class="{$method}togglefield">
+				<a border="0" id="{$method}{$group->guid}" class="{$method}toggleOff" onclick="adjust{$method}_alt('{$method}{$group->guid}');">
+				<input type="checkbox" name="{$method}subscriptions[]" id="{$method}checkbox" onclick="adjust{$method}('{$method}{$group->guid}');" value="{$group->guid}" {$checked[$method]} /></a></td>
 END;
-					$i++;
-				}
+			$i++;
+		}
 				
 ?>
 	<tr>
@@ -79,21 +91,17 @@ END;
 	    	</p>
 	    </td>
 <?php
-				echo $fields;
+		echo $fields;
 ?>
 		<td>&nbsp;</td>
 	</tr>
-<?php
-	
-				
-			}
+<?php		
+	}
 ?>
 </table>
 <?php
-		}
-
+}
 ?>
-
 		<input type="submit" value="<?php echo elgg_echo('save'); ?>" />
 	</div>
 </div>

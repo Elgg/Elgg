@@ -1,6 +1,6 @@
 <?php
 
-	global $NOTIFICATION_HANDLERS;
+global $NOTIFICATION_HANDLERS;
 
 ?> 
 
@@ -8,14 +8,14 @@
 
 $(document).ready(function () {
 <?php 
-	foreach($NOTIFICATION_HANDLERS as $method => $foo) {
+foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 ?>
 	$('input[type=checkbox]:checked').parent("a.<?php echo $method; ?>toggleOff").each(function(){
 		$(this).removeClass('<?php echo $method; ?>toggleOff').addClass('<?php echo $method; ?>toggleOn');
 	});
 	
 <?php
-	}
+}
 ?>
 
 });
@@ -23,7 +23,7 @@ $(document).ready(function () {
 	clickflag = 0;
 
 <?php 
-	foreach($NOTIFICATION_HANDLERS as $method => $foo) {
+foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 ?>
 function adjust<?php echo $method; ?>(linkId) {
 	var obj = $(this).prev("a");
@@ -48,7 +48,7 @@ function adjust<?php echo $method; ?>_alt(linkId) {
 	return false;
 }
 <?php
-	}
+}
 ?>
 
 </script>

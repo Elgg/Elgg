@@ -1,6 +1,6 @@
 <?php
 
-	global $NOTIFICATION_HANDLERS;
+global $NOTIFICATION_HANDLERS;
 
 ?>
 <div class="notification_personal">
@@ -13,15 +13,16 @@
   <tr>
     <td>&nbsp;</td>
 <?php
-	$i = 0; 
-	foreach($NOTIFICATION_HANDLERS as $method => $foo) {
-		if ($i > 0)
-			echo "<td class=\"spacercolumn\">&nbsp;</td>";
+$i = 0; 
+foreach($NOTIFICATION_HANDLERS as $method => $foo) {
+	if ($i > 0) {
+		echo "<td class=\"spacercolumn\">&nbsp;</td>";
+	}
 ?>
 	<td class="<?php echo $method; ?>togglefield"><?php echo elgg_echo('notification:method:'.$method); ?></td>
 <?php
-		$i++;
-	}
+	$i++;
+}
 ?>
     <td>&nbsp;</td>
   </tr>
@@ -35,25 +36,27 @@
     
 <?php
 
-		$fields = '';
-		$i = 0;
-		foreach($NOTIFICATION_HANDLERS as $method => $foo) {
-			if ($notification_settings = get_user_notification_settings($vars['user']->guid)) {
-				if ($notification_settings->$method) {
-					$personalchecked[$method] = 'checked="checked"';
-				} else {
-					$personalchecked[$method] = '';
-				}
-			}
-			if ($i > 0) $fields .= "<td class=\"spacercolumn\">&nbsp;</td>";
-			$fields .= <<< END
-			    <td class="{$method}togglefield">
-			    <a  border="0" id="{$method}personal" class="{$method}toggleOff" onclick="adjust{$method}_alt('{$method}personal');">
-			    <input type="checkbox" name="{$method}personal" id="{$method}checkbox" onclick="adjust{$method}('{$method}personal');" value="1" {$personalchecked[$method]} /></a></td>
-END;
-			$i++;
+$fields = '';
+$i = 0;
+foreach($NOTIFICATION_HANDLERS as $method => $foo) {
+	if ($notification_settings = get_user_notification_settings($vars['user']->guid)) {
+		if ($notification_settings->$method) {
+			$personalchecked[$method] = 'checked="checked"';
+		} else {
+			$personalchecked[$method] = '';
 		}
-		echo $fields;
+	}
+	if ($i > 0) {
+		$fields .= "<td class=\"spacercolumn\">&nbsp;</td>";
+	}
+	$fields .= <<< END
+		<td class="{$method}togglefield">
+		<a  border="0" id="{$method}personal" class="{$method}toggleOff" onclick="adjust{$method}_alt('{$method}personal');">
+		<input type="checkbox" name="{$method}personal" id="{$method}checkbox" onclick="adjust{$method}('{$method}personal');" value="1" {$personalchecked[$method]} /></a></td>
+END;
+	$i++;
+}
+echo $fields;
 
 ?>
   
