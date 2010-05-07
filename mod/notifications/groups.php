@@ -16,6 +16,8 @@ require_once(dirname(dirname(dirname(__FILE__))) . '/engine/start.php');
 // Ensure only logged-in users can see this page
 gatekeeper();
 
+set_page_owner(get_loggedin_userid());
+
 // Set the context to settings
 set_context('settings');
 
