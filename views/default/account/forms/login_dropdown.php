@@ -4,10 +4,7 @@
 *
 */
 
-if (!isloggedin()){
-
-	global $CONFIG;
-
+if (!isloggedin()) {
 	$form_body  = "<p class='loginbox'><label>" . elgg_echo('username') . "</label>" . elgg_view('input/text', array('internalname' => 'username', 'class' => 'login_textarea name'));
 	$form_body .= "<label>" . elgg_echo('password') . "</label>" . elgg_view('input/password', array('internalname' => 'password', 'class' => 'login_textarea'));
 	$form_body .= elgg_view('input/submit', array('value' => elgg_echo('login'))) . " <span class='remember'><label><input type=\"checkbox\" name=\"persistent\" value=\"true\" />".elgg_echo('user:persistent')."</label></span></p>";
@@ -15,7 +12,7 @@ if (!isloggedin()){
 	$form_body .= elgg_view('login/extend');
 
 	$form_body .= "<p class='loginbox'>";
-	$form_body .= (!isset($CONFIG->disable_registration) || !($CONFIG->disable_registration)) ? "<a href=\"{$vars['url']}account/register.php\">" . elgg_echo('register') . "</a> | " : "";
+	$form_body .= $CONFIG->allow_registration ? "<a href=\"{$vars['url']}account/register.php\">" . elgg_echo('register') . '</a> | ' : '';
 	$form_body .= "<a href=\"{$vars['url']}account/forgotten_password.php\">" . elgg_echo('user:password:lost') . "</a></p>";
 	$form_body .= "<input type='hidden' name='returntoreferer' value='true' />";
 

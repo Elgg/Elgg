@@ -68,6 +68,7 @@ if (get_input('settings') == 'go') {
 		set_config('view', get_input('view'), $site->getGUID());
 		set_config('language', get_input('language'), $site->getGUID());
 		set_config('default_access', get_input('default_access'), $site->getGUID());
+		set_config('allow_registration', TRUE, $site->getGUID());
 
 		$debug = get_input('debug');
 		if ($debug) {

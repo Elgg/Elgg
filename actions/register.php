@@ -24,7 +24,7 @@ if (is_array($admin)) {
 	$admin = $admin[0];
 }
 
-if (!$CONFIG->disable_registration) {
+if ($CONFIG->allow_registration) {
 // For now, just try and register the user
 	try {
 		$guid = register_user($username, $password, $name, $email, false, $friend_guid, $invitecode);

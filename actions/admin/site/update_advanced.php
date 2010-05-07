@@ -49,6 +49,13 @@ if (datalist_get('default_site')) {
 	} else {
 		unset_config('debug', $site->getGUID());
 	}
+	
+	// allow new user registration?
+	if (get_input('allow_registration', FALSE)) {
+		set_config('allow_registration', TRUE, $site->getGUID());
+	} else {
+		set_config('allow_registration', FALSE, $site->getGUID());
+	}
 
 	$https_login = get_input('https_login');
 	if ($https_login) {

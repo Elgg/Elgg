@@ -33,6 +33,14 @@ $form_body .= "<p>" . elgg_echo('installation:debug');
 $form_body .= elgg_view('input/pulldown', array('options_values' => $debug_options, 'internalname' => 'debug', 'value' => $vars['config']->debug));
 $form_body .= '</p>';
 
+$options = array(
+	'options' => array(elgg_echo('installation:registration:label')),
+	'internalname' => 'allow_registration',
+	'value' => $vars['config']->allow_registration ? elgg_echo('installation:registration:label') : '',
+);
+$form_body .= '<p>' . elgg_echo('installation:registration:description');
+$form_body .= '<br />' .elgg_view('input/checkboxes', $options) . '</p>';
+
 $form_body .= "<p>" . elgg_echo('installation:httpslogin') . "<br />" .elgg_view("input/checkboxes", array('options' => array(elgg_echo('installation:httpslogin:label')), 'internalname' => 'https_login', 'value' => ($vars['config']->https_login ? elgg_echo('installation:httpslogin:label') : "") )) . "</p>";
 
 $form_body .= "<p>" . elgg_echo('installation:disableapi') . "<br />";
