@@ -16,6 +16,8 @@ function notifications_plugin_init() {
 
 	elgg_extend_view('css','notifications/css');
 
+	register_page_handler('notifications', 'notifications_page_handler');
+
 	register_elgg_event_handler('pagesetup', 'system', 'notifications_plugin_pagesetup');
 
 	// Unset the default user settings hook
@@ -29,15 +31,41 @@ function notifications_plugin_init() {
 }
 
 /**
+ * Route page requests
+ *
+ * @param array $page Array of url parameters
+ */
+function notifications_page_handler($page) {
+	global $CONFIG;
+
+	// default to personal notifications
+	if (!isset($page[0])) {
+		$page[0] = 'personal';
+	}
+
+	switch ($page[0]) {
+		case 'group':
+			require $CONFIG->pluginspath . "notifications/groups.php";
+			break;
+		case 'personal':
+		default:
+			require $CONFIG->pluginspath . "notifications/index.php";
+			break;
+	}
+
+	return TRUE;
+}
+
+/**
  * Notification settings page setup function
  *
  */
 function notifications_plugin_pagesetup() {
 	global $CONFIG;
 	if (get_context() == 'settings') {
-		add_submenu_item(elgg_echo('notifications:subscriptions:changesettings'), $CONFIG->wwwroot . "mod/notifications/");
+		add_submenu_item(elgg_echo('notifications:subscriptions:changesettings'), $CONFIG->wwwroot . "pg/notifications/personal");
 		if (is_plugin_enabled('groups')) {
-			add_submenu_item(elgg_echo('notifications:subscriptions:changesettings:groups'), $CONFIG->wwwroot . "mod/notifications/groups.php");
+			add_submenu_item(elgg_echo('notifications:subscriptions:changesettings:groups'), $CONFIG->wwwroot . "pg/notifications/group");
 		}
 	}
 }
