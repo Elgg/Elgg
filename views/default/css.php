@@ -684,6 +684,11 @@ li.navigation_more ul li {
 	color:white;
 	text-decoration:none;
 }
+.submenu .child li a{
+	margin-left:15px;
+	background-color:white;
+	color:#4690D6;
+}
 
 
 
@@ -1629,11 +1634,6 @@ form.admin_plugins_simpleview .submit_button {
 }
 .admin_settings.menuitems li.custom_menuitem {
 	margin-bottom:20px;
-}
-.admin .child_submenu li a{
-	margin-left: 15px;
-	background-color: white;
-	color: #4690D6;
 }
 .admin_notices {
 	padding-bottom: 15px;

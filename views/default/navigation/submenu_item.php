@@ -1,0 +1,41 @@
+<?php
+/**
+ * Elgg submenu item.  Displays the <li> part of a submenu.
+ *
+ * @uses $vars['group']
+ * @uses $vars['item']
+ * @uses $vars['children_html']
+ * @package Elgg
+ * @subpackage Core
+ * @author Curverider Ltd
+ * @link http://elgg.org/
+ */
+
+$group = (isset($vars['group'])) ? $vars['group'] : 'default';
+$item = (isset($vars['item'])) ? $vars['item'] : FALSE;
+$children_html = (isset($vars['children_html'])) ? $vars['children_html'] : FALSE;
+
+
+if ($item) {
+	$has_children = (isset($item->children) && $item->children) ? TRUE : FALSE;
+	$selected = (isset($item->selected) && $item->selected == TRUE) ? 'class="selected"' : '';
+	$js = (isset($vars['js'])) ? $vars['js'] : '';
+
+	$child_indicator = '';
+	if ($has_children) {
+		if ($selected) {
+			$child_indicator = '<span class="close_child">-</span>';
+			$child_indicator .= '<span class="hidden open_child">+</span>';
+		} else {
+			$child_indicator = '<span class="hidden close_child">-</span>';
+			$child_indicator .= '<span class="open_child">+</span>';
+		}
+
+		$child_indicator = "<span class=\"child_indicator\">$child_indicator </span>";
+	}
+
+	$url = htmlentities($item->url);
+	$text = $child_indicator . htmlentities($item->text);
+}
+?>
+<li <?php echo $selected; ?>><a href="<?php echo $url; ?>" <?php echo $js; ?>><?php echo $text; ?></a><?php echo $children_html; ?></li>

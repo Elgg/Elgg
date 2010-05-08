@@ -249,10 +249,10 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 		$viewtype = elgg_get_viewtype();
 	}
 
-	// Viewtypes can only be alphanumeric 
+	// Viewtypes can only be alphanumeric
 	if (preg_match('[\W]', $viewtype)) {
-		return ''; 
-	} 
+		return '';
+	}
 
 	// Set up any extensions to the requested view
 	if (isset($CONFIG->views->extensions[$view])) {
@@ -757,7 +757,7 @@ function elgg_view_annotation(ElggAnnotation $annotation, $bypass = true, $debug
 function elgg_view_entity_list($entities, $count, $offset, $limit, $fullview = true, $viewtypetoggle = true, $pagination = true) {
 	$count = (int) $count;
 	$limit = (int) $limit;
-	
+
 	// do not require views to explicitly pass in the offset
 	if (!$offset = (int) $offset) {
 		$offset = sanitise_int(get_input('offset', 0));
@@ -900,131 +900,317 @@ function elgg_view_title($title, $submenu = false) {
 }
 
 /**
- * Adds an item to the submenu
+ * Deprecated by elgg_add_submenu_item()
  *
- * @param string $label The human-readable label
- * @param string $link The URL of the submenu item
- * @param boolean $onclick Used to provide a JS popup to confirm delete
- * @param mixed $selected BOOL to force on/off, NULL to allow auto selection
+ * @see elgg_add_submenu_item()
+ * @deprecated 1.8
  */
-function add_submenu_item($label, $link, $group = 'a', $onclick = false, $selected = NULL) {
-	global $CONFIG;
+function add_submenu_item($label, $link, $group = 'default', $onclick = false, $selected = NULL) {
+	elgg_deprecated_notice('add_submenu_item was deprecated by elgg_add_submenu_item', 1.8);
 
-	if (!isset($CONFIG->submenu)) {
-		$CONFIG->submenu = array();
-	}
-	if (!isset($CONFIG->submenu[$group])) {
-		$CONFIG->submenu[$group] = array();
+	$item = array(
+		'text' => $label,
+		'url' => $link,
+		'selected' => $selected
+	);
+
+	if (!$group) {
+		$group = 'default';
 	}
 
-	$item = new stdClass;
-	$item->value = $link;
-	$item->name = $label;
-	$item->onclick = $onclick;
-	$item->selected = $selected;
-	$CONFIG->submenu[$group][] = $item;
+	if ($onclick) {
+		$js = "onclick=\"javascript:return confirm('". elgg_echo('deleteconfirm') . "')\"";
+		$item['vars'] = array('js' => $js);
+	}
+	// submenu items were added in the page setup hook usually by checking
+	// the context.  We'll pass in the current context here, which will
+	// emulate that effect.
+	// if context == 'main' (default) it probably means they always wanted
+	// the menu item to show up everywhere.
+	$context = get_context();
+
+	if ($context == 'main') {
+		$context = 'all';
+	}
+	return elgg_add_submenu_item($item, $context, $group);
 }
 
 /**
- * Gets a formatted list of submenu items
+ * Add an entry to the submenu.
  *
- * @params bool preselected Selected menu item
- * @params bool preselectedgroup Selected menu item group
- * @return string List of items
+ * @param array $item The item as array(
+ * 	'title' => 'Text to display',
+ * 	'url' => 'URL of the link',
+ * 	'id' => 'entry_unique_id' //used by children items to identify parents
+ * 	'parent_id' => 'id_of_parent',
+ * 	'selected' => BOOL // Is this item selected? (If NULL or unset will attempt to guess)
+ * 	'vars' => array() // Array of vars to pass to the navigation/submenu_item view
+ * )
+ *
+ * @param string $context Context in which to display this menu item.  'all' will make it show up all the time. Use sparingly.
+ * @param string $group Group for the item. Each submenu group has its own <ul>
+ * @return BOOL
+ * @since 1.8
  */
-function get_submenu() {
-	$submenu_total = "";
+function elgg_add_submenu_item(array $item, $context = 'all', $group = 'default') {
 	global $CONFIG;
 
-	if (isset($CONFIG->submenu) && $submenu_register = $CONFIG->submenu) {
-		ksort($submenu_register);
-		$selected_key = NULL;
-		$selected_group = NULL;
+	if (!isset($CONFIG->submenu_items)) {
+		$CONFIG->submenu_items = array();
+	}
 
-		foreach($submenu_register as $groupname => $submenu_register_group) {
-			$submenu = "";
+	if (!isset($CONFIG->submenu_items[$context])) {
+		$CONFIG->submenu_items[$context] = array();
+	}
 
-			foreach($submenu_register_group as $key => $item) {
-				$selected = false;
-				// figure out the selected item if required
-				// if null, try to figure out what should be selected.
-				// warning: Fuzzy logic.
-				if (!$selected_key && !$selected_group) {
-					if ($item->selected === NULL) {
-						$uri_info = parse_url($_SERVER['REQUEST_URI']);
-						$item_info = parse_url($item->value);
+	if (!isset($CONFIG->submenu_items[$context][$group])) {
+		$CONFIG->submenu_items[$context][$group] = array();
+	}
 
-						// don't want to mangle already encoded queries but want to
-						// make sure we're comparing encoded to encoded.
-						// for the record, queries *should* be encoded
-						$uri_params = array();
-						$item_params = array();
-						if (isset($uri_info['query'])) {
-							$uri_info['query'] = html_entity_decode($uri_info['query']);
-							$uri_params = elgg_parse_str($uri_info['query']);
-						}
-						if (isset($item_info['query'])) {
-							$item_info['query'] = html_entity_decode($item_info['query']);
-							$item_params = elgg_parse_str($item_info['query']);
-						}
+	if (!isset($item['text'])) {
+		return FALSE;
+	}
 
-						$uri_info['path'] = trim($uri_info['path'], '/');
-						$item_info['path'] = trim($item_info['path'], '/');
+	// we use persistent object properties in the submenu
+	// setup function, so normalize the array to an object.
+	// we pass it in as an array because this would be the only
+	// place in elgg that we ask for an object like this.
+	// consistency ftw.
+	$item_obj = new StdClass();
 
-						// only if we're on the same path
-						// can't check server because sometimes it's not set in REQUEST_URI
-						if ($uri_info['path'] == $item_info['path']) {
+	foreach ($item as $k => $v) {
+		switch ($k) {
+			case 'parent_id':
+			case 'id':
+				// make sure '' and false make sense
+				$v = (empty($v)) ? NULL : $v;
 
-							// if no query terms, we have a match
-							if (!isset($uri_info['query']) && !isset($item_info['query'])) {
-								$selected_key = $key;
-								$selected_group = $groupname;
-								$selected = TRUE;
-							} else {
-								if ($uri_info['query'] == $item_info['query']) {
-									$selected_key = $key;
-									$selected_group = $groupname;
-									$selected = TRUE;
-								} elseif (!count(array_diff($uri_params, $item_params))) {
-									$selected_key = $key;
-									$selected_group = $groupname;
-									$selected = TRUE;
-								}
-							}
-						}
-					// if TRUE or FALSE, set selected to this item.
-					// Group doesn't seem to have anything to do with selected?
-					} else {
-						$selected = $item->selected;
-						$selected_key = $key;
-						$selected_group = $groupname;
-					}
-				}
-
-				$submenu .= elgg_view('canvas_header/submenu_template', array(
-						'href' => $item->value,
-						'label' => $item->name,
-						'onclick' => $item->onclick,
-						'selected' => $selected,
-					));
-
-			}
-
-			$submenu_total .= elgg_view('canvas_header/submenu_group', array(
-					'submenu' => $submenu,
-					'group_name' => $groupname
-				));
-
+			default:
+				$item_obj->$k = $v;
+				break;
 		}
 	}
 
-	return $submenu_total;
+	$CONFIG->submenu_items[$context][$group][] = $item_obj;
+
+	return TRUE;
 }
+
+/**
+ * Properly nest all submenu entries for contexts $context and 'all'
+ *
+ * @param string $context
+ * @param bool $sort Sort the menu items alphabetically
+ * @since 1.8
+ */
+function elgg_prepare_submenu($context = 'main', $sort = TRUE) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->submenu_items) || !($CONFIG->submenu_items)) {
+		return FALSE;
+	}
+
+	$groups = array();
+
+	if (isset($CONFIG->submenu_items['all'])) {
+		$groups = $CONFIG->submenu_items['all'];
+	}
+
+	if (isset($CONFIG->submenu_items[$context])) {
+		$groups = array_merge_recursive($groups, $CONFIG->submenu_items[$context]);
+	}
+
+	if (!$groups) {
+		return FALSE;
+	}
+
+	foreach ($groups as $group => $items) {
+		if ($sort) {
+			usort($items, 'elgg_submenu_item_cmp');
+		}
+
+		$parsed_menu = array();
+		// determin which children need to go in this item.
+		foreach ($items as $i => $item) {
+			// can only support children if there's an id
+			if (isset($item->id)) {
+				foreach ($items as $child_i => $child_item) {
+					// don't check ourselves or used children.
+					if ($child_i == $i || $child_item->used == TRUE) {
+						continue;
+					}
+
+					if (isset($child_item->parent_id) && $child_item->parent_id == $item->id) {
+						if (!isset($item->children)) {
+							$item->children = array();
+						}
+						$item->children[] = $child_item;
+						$child_item->parent = $item;
+						// don't unset because we still need to check this item for children
+						$child_item->used = TRUE;
+					}
+				}
+
+				// if the parent doesn't have a url, make it the first child item.
+				if (isset($item->children) && $item->children && !$item->url) {
+					$child = $item->children[0];
+					while ($child && !isset($child->url)) {
+						if (isset($child->children) && isset($child->children[0])) {
+							$child = $child->children[0];
+						} else {
+							$child = NULL;
+						}
+					}
+
+					if ($child && isset($child->url)) {
+						$item->url = $child->url;
+					} else {
+						// @todo There are no URLs anywhere in this tree.
+						$item->url = $CONFIG->url;
+					}
+				}
+			}
+
+			// only add top-level elements to the menu.
+			// the rest are children.
+			if (!isset($item->parent_id)) {
+				$parsed_menu[] = $item;
+			}
+		}
+
+		$CONFIG->submenu[$context][$group] = $parsed_menu;
+	}
+	return TRUE;
+}
+
+/**
+ * Helper function used to sort submenu items by their display text.
+ *
+ * @param object $a
+ * @param object $b
+ * @since 1.8
+ */
+function elgg_submenu_item_cmp($a, $b) {
+	$a = $a->text;
+	$b = $b->text;
+
+	return strnatcmp($a, $b);
+}
+
+/**
+ * Use elgg_get_submenu().
+ *
+ * @see elgg_get_submenu()
+ * @deprecated 1.8
+ */
+function get_submenu() {
+	elgg_deprecated_notice("get_submenu() has been deprecated by elgg_get_submenu()", 1.8);
+	return elgg_get_submenu();
+}
+
+/**
+ * Return the HTML for a sidemenu.
+ *
+ * @param string $context The context of the submenu (defaults to main)
+ * @param BOOL $sort Sort by display name?
+ * @return string Formatted HTML.
+ * @since 1.8
+ */
+function elgg_get_submenu($context = NULL, $sort = FALSE) {
+	global $CONFIG;
+
+	if (!$context) {
+		$context = get_context();
+	}
+
+	if (!elgg_prepare_submenu($context, $sort)) {
+		return '';
+	}
+
+	$groups = $CONFIG->submenu[$context];
+	$submenu_html = '';
+
+	// the guessed selected item.
+	$auto_selected = NULL;
+
+	foreach ($groups as $group => $items) {
+		// how far down we are in children arrays
+		$depth = 0;
+		// push and pop parent items
+		$temp_items = array();
+
+		while ($item = current($items)) {
+			$t = '';
+			// ignore parents created by a child but parent never defined properly
+			if (!isset($item->text) || !isset($item->url) || !($item->text) || !($item->url)) {
+				next($items);
+				continue;
+			}
+
+			// try to guess if this should be selected if they don't specify
+			if ($item->selected === NULL && isset($item->url)) {
+				$item->selected = elgg_http_url_is_identical($_SERVER['REQUEST_URI'], $item->url);
+			}
+
+			// traverse up the parent tree if matached to mark all parents as selected/expanded.
+			if ($item->selected && isset($item->parent)) {
+				$parent = $item->parent;
+				while ($parent) {
+					$parent->selected = TRUE;
+					if (isset($parent->parent)) {
+						$parent = $parent->parent;
+					} else {
+						$parent = NULL;
+					}
+				}
+			}
+
+			$item->depth = $depth;
+//
+//			for ($i=0; $i<$depth; $i++) {
+//				$t .= " - ";
+//			}
+//
+//			var_dump("$t{$item->text} -> {$item->url} {$item->selected}");
+
+
+			// get the next item
+			if (isset($item->children) && $item->children) {
+				$depth++;
+				array_push($temp_items, $items);
+				$items = $item->children;
+			} elseif ($depth > 0) {
+				// check if there are more children elements in the current items
+				// pop back up to the parent(s) if not
+				if ($item = next($items)) {
+					continue;
+				} else {
+					while($depth > 0) {
+						$depth--;
+						$items = array_pop($temp_items);
+						if ($item = next($items)) {
+							break;
+						}
+					}
+				}
+			} else {
+				next($items);
+			}
+		}
+
+		$submenu_html .= elgg_view('navigation/submenu_group', array('group' => $group, 'items' => $items));
+	}
+
+	// include the JS for the expand menus too
+	return elgg_view('navigation/submenu_js') . $submenu_html;
+}
+
 /**
  * Automatically views likes and a like input relating to the given entity
  *
  * @param ElggEntity $entity The entity to like
  * @return string|false The HTML (etc) for the likes, or false on failure
+ * @since 1.8
  */
 function elgg_view_likes($entity){
 	if (!($entity instanceof ElggEntity)) {
@@ -1038,11 +1224,13 @@ function elgg_view_likes($entity){
 		return $likes;
 	}
 }
+
 /**
  * Count the number of likes attached to an entity
  *
  * @param ElggEntity $entity
  * @return int Number of likes
+ * @since 1.8
  */
 function elgg_count_likes($entity) {
 	if ($likeno = trigger_plugin_hook('likes:count', $entity->getType(),
@@ -2402,10 +2590,10 @@ function full_url() {
 	$protocol = substr(strtolower($_SERVER["SERVER_PROTOCOL"]), 0, strpos(strtolower($_SERVER["SERVER_PROTOCOL"]), "/")) . $s;
 	$port = ($_SERVER["SERVER_PORT"] == "80" || $_SERVER["SERVER_PORT"] == "443") ? "" : (":".$_SERVER["SERVER_PORT"]);
 
-	$quotes = array('\'', '"'); 
-	$encoded = array('%27', '%22'); 
+	$quotes = array('\'', '"');
+	$encoded = array('%27', '%22');
 
-	return $protocol . "://" . $_SERVER['SERVER_NAME'] . $port . str_replace($quotes, $encoded, $_SERVER['REQUEST_URI']); 
+	return $protocol . "://" . $_SERVER['SERVER_NAME'] . $port . str_replace($quotes, $encoded, $_SERVER['REQUEST_URI']);
 }
 
 /**
@@ -2966,6 +3154,7 @@ function elgg_api_test($hook, $type, $value, $params) {
 /**
  * Sorts out the featured URLs and the "more" dropdown
  * @return array ('featured_urls' and 'more')
+ * @since 1.8
  */
 function elgg_get_nav_items() {
 	$menu_items = get_register('menu');
@@ -3006,6 +3195,7 @@ function elgg_get_nav_items() {
 
 /**
  * Hook that registers the custom menu items.
+ * @since 1.8
  */
 function add_custom_menu_items() {
 	if ($custom_items = get_config('menu_items_custom_items')) {
@@ -3013,6 +3203,97 @@ function add_custom_menu_items() {
 			add_menu($name, $url);
 		}
 	}
+}
+
+/**
+ * Test two URLs to see if they are functionally identical.
+ *
+ * @param string $url1
+ * @param string $url2
+ * @param array $ignore_params - GET params to ignore in the comparison
+ * @return BOOL
+ * @since 1.8
+ */
+function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset', 'limit')) {
+	global $CONFIG;
+
+	// if the server portion is missing but it starts with / then add the url in.
+	if (elgg_substr($url1, 0, 1) == '/') {
+		$url1 = $CONFIG->url . ltrim($url1, '/');
+	}
+
+	if (elgg_substr($url1, 0, 1) == '/') {
+		$url2 = $CONFIG->url . ltrim($url2, '/');
+	}
+
+	// @todo - should probably do something with relative URLs
+
+	if ($url1 == $url2) {
+		return TRUE;
+	}
+
+	$url1_info = parse_url($url1);
+	$url2_info = parse_url($url2);
+
+	$url1_info['path'] = trim($url1_info['path'], '/');
+	$url2_info['path'] = trim($url2_info['path'], '/');
+
+	// compare basic bits
+	$parts = array('scheme', 'host', 'path');
+
+	foreach ($parts as $part) {
+		if ((isset($url1_info[$part]) && isset($url2_info[$part])) && $url1_info[$part] != $url2_info[$part]) {
+			return FALSE;
+		} elseif (isset($url1_info[$part]) && !isset($url2_info[$part])) {
+			return FALSE;
+		} elseif (!isset($url1_info[$part]) && isset($url2_info[$part])) {
+			return FALSE;
+		}
+	}
+
+	// quick compare of get params
+	if (isset($url1_info['query']) && isset($url2_info['query']) && $url1_info['query'] == $url2_info['query']) {
+		return TRUE;
+	}
+
+	// compare get params that might be out of order
+	$url1_params = array();
+	$url2_params = array();
+
+	if (isset($url1_info['query'])) {
+		if ($url1_info['query'] = html_entity_decode($url1_info['query'])) {
+			$url1_params = elgg_parse_str($url1_info['query']);
+		}
+	}
+
+	if (isset($url2_info['query'])) {
+		if ($url2_info['query'] = html_entity_decode($url2_info['query'])) {
+			$url2_params = elgg_parse_str($url2_info['query']);
+		}
+	}
+
+	// drop ignored params
+	foreach ($ignore_params as $param) {
+		if (isset($url1_params[$param])) {
+			unset($url1_params[$param]);
+		}
+		if (isset($url2_params[$param])) {
+			unset($url2_params[$param]);
+		}
+	}
+
+	// array_diff_assoc only returns the items in arr1 that aren't in arrN
+	// but not the items that ARE in arrN but NOT in arr1
+	// if arr1 is an empty array, this function will return 0 no matter what.
+	// since we only care if they're different and not how different,
+	// add the results together to get a non-zero (ie, different) result
+	$diff_count = count(array_diff_assoc($url1_params, $url2_params));
+	$diff_count += count(array_diff_assoc($url2_params, $url1_params));
+	if ($diff_count > 0) {
+		return FALSE;
+	}
+
+	return TRUE;
 }
 
 /**
