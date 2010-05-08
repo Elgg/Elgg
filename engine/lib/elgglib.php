@@ -1130,9 +1130,6 @@ function elgg_get_submenu($context = NULL, $sort = FALSE) {
 	$groups = $CONFIG->submenu[$context];
 	$submenu_html = '';
 
-	// the guessed selected item.
-	$auto_selected = NULL;
-
 	foreach ($groups as $group => $items) {
 		// how far down we are in children arrays
 		$depth = 0;
@@ -1148,7 +1145,7 @@ function elgg_get_submenu($context = NULL, $sort = FALSE) {
 			}
 
 			// try to guess if this should be selected if they don't specify
-			if ($item->selected === NULL && isset($item->url)) {
+			if ((!isset($item->selected) || $item->selected === NULL) && isset($item->url)) {
 				$item->selected = elgg_http_url_is_identical($_SERVER['REQUEST_URI'], $item->url);
 			}
 
@@ -1164,15 +1161,6 @@ function elgg_get_submenu($context = NULL, $sort = FALSE) {
 					}
 				}
 			}
-
-			$item->depth = $depth;
-//
-//			for ($i=0; $i<$depth; $i++) {
-//				$t .= " - ";
-//			}
-//
-//			var_dump("$t{$item->text} -> {$item->url} {$item->selected}");
-
 
 			// get the next item
 			if (isset($item->children) && $item->children) {
