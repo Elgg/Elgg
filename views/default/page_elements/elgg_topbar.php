@@ -20,13 +20,7 @@ if (($user instanceof ElggUser) && ($user->guid > 0)) {
 	echo "<a href=\"$user_link\"><img class=\"user_mini_avatar\" src=\"$user_image\" alt=\"User avatar\" /></a>";
 
 	// logout link
-	echo '<div class="log_out">';
-	echo elgg_view('output/url', array(
-		'href' => "{$vars['url']}action/logout",
-		'text' => elgg_echo('logout'),
-		'is_action' => TRUE
-	));
-	echo '</div>';
+	echo elgg_view('page_elements/elgg_topbar_logout', $vars);
 	
 	// elgg tools menu
 	// need to echo this empty view for backward compatibility.
