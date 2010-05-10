@@ -185,23 +185,6 @@ function autop($pee, $br = 1) {
 }
 
 /**
- * Examins $_SERVER['REQUEST_URI'] and set_input()s on each.
- * Required if the params are sent as GET and not forwarded by mod_rewrite.
- *
- * @return bool on success
- */
-function elgg_set_input_from_uri() {
-	$query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
-	$query_arr = elgg_parse_str($query);
-
-	if (is_array($query_arr)) {
-		foreach($query_arr as $name => $val) {
-			set_input($name, $val);
-		}
-	}
-}
-
-/**
  * Page handler for autocomplete endpoint.
  *
  * @param $page

@@ -21,9 +21,6 @@
 function action($action, $forwarder = "") {
 	global $CONFIG;
 
-	// set GET params
-	elgg_set_input_from_uri();
-
 	// @todo REMOVE THESE ONCE #1509 IS IN PLACE.
 	// Allow users to disable plugins without a token in order to
 	// remove plugins that are imcompatible.
