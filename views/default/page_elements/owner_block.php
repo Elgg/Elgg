@@ -38,14 +38,14 @@ if(is_plugin_enabled('profile')) {
 		}
 		$display = "<div class='owner_block_icon'>" . $icon . "</div>";
 		$display .= "<div class='owner_block_contents clearfloat'>" . $info;
-	
+
 		if ($owner->briefdescription) {
 			$desc = $owner->briefdescription;
 			$display .= "<p class='profile_info briefdescription'>" . $desc . "</p>";
 		}
 		$display .= "<p class='profile_info location'>{$location}</p>";
 		$display .= "</div>"; // close owner_block_contents
-	
+
 		$contents .= "<div id='owner_block' class='radius8'>".$display."</div>";
 	}
 }
@@ -58,9 +58,10 @@ if (isset($vars['content']))
 	$contents .= $vars['content'];
 
 // Initialise the current tool/page submenu (plugins can add to the submenu)
-$submenu = get_submenu(); 
+$submenu = elgg_get_submenu();
+
 if (!empty($submenu))
-	$contents .= $submenu; 
+	$contents .= $submenu;
 
 if (!empty($contents)) {
 	echo $contents;

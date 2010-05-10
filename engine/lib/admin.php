@@ -34,51 +34,72 @@ function extend_elgg_admin_page($new_admin_view, $view = 'admin/main', $priority
 }
 
 /**
- * Add an admin area section or child section (aka tab).
+ * Calculate the plugin settings submenu.
+ * This is done in a separate function called from the admin
+ * page handler because of performance concerns.
  *
- * Used in conjuction with http://elgg.org/admin/section/child_section style
- * page handler.
- *
- * @param string $section_id Globally unique section id.
- * @param string $section_title Human readable section title.
- * @param string $parent_id If a child section, the parent section id.  Cannot have grandchildren.
  */
-function elgg_add_admin_section($section_id, $section_title, $parent_id = NULL) {
+function elgg_admin_add_plugin_settings_sidemenu() {
 	global $CONFIG;
 
-	if (!isset($CONFIG->admin_sections)) {
-		$CONFIG->admin_sections = array();
+	if (!$installed_plugins = get_installed_plugins()) {
+		// nothing added because no items
+		return FALSE;
 	}
 
-	// have to support adding a child section to a missing parent
-	// because of plugin order problems.  A plugin can extend
-	// an admin section added by different plugin lower in the load priority.
+	$parent_item = array(
+		'text' => elgg_echo('admin:plugin_settings'),
+		'id' => 'admin:plugin_settings'
+	);
+
+	elgg_add_submenu_item($parent_item, 'admin');
+
+	foreach ($installed_plugins as $plugin_id => $info) {
+		if (!$info['active']) {
+			continue;
+		}
+
+		if (elgg_view_exists("settings/{$plugin_id}/edit")) {
+			$item = array(
+				'text' => $info['manifest']['name'],
+				'href' => "{$CONFIG->url}pg/admin/plugin_settings/$plugin_id",
+				'parent_id' => 'admin:plugin_settings'
+			);
+
+			elgg_add_submenu_item($item, 'admin');
+		}
+	}
+}
+
+/**
+ * Add an admin area section or child section.
+ * This is a wrapper for elgg_add_admin_item(array(...), 'admin').
+ *
+ * Used in conjuction with http://elgg.org/admin/section_id/child_section style
+ * page handler.
+ *
+ * @param string $section_id
+ * @param string $section_title Human readable section title.
+ * @param string $parent_id If a child section, the parent section id.
+ */
+function elgg_add_admin_submenu_item($section_id, $section_title, $parent_id = NULL) {
+	global $CONFIG;
+
+	// in the admin section parents never have links
 	if ($parent_id) {
-		if (!isset($CONFIG->admin_sections[$parent_id])) {
-			$CONFIG->admin_sections[$parent_id] = array('children' => array());
-		}
-
-		if (!isset($CONFIG->admin_sections[$parent_id][$section_id])) {
-			$CONFIG->admin_sections[$parent_id]['children'][$section_id] = array('title' => $section_title);
-			return TRUE;
-		} else {
-			return FALSE;
-		}
+		$href = "{$CONFIG->url}pg/admin/$parent_id/$section_id";
 	} else {
-		// children can be defined before parents
-		if (!isset($CONFIG->admin_sections[$section_id])) {
-			$CONFIG->admin_sections[$section_id] = array(
-				'title' => $section_title,
-				'children' => array()
-			);
-			return TRUE;
-		} else {
-			// allow to define this since children can be defined before the parent.
-			$CONFIG->admin_sections[$section_id] = array(
-				'title' => $section_title
-			);
-		}
+		$href = NULL;
 	}
+
+	$item = array(
+		'text' => $section_title,
+		'href' => $href,
+		'id' => $section_id,
+		'parent_id' => $parent_id
+	);
+
+	return elgg_add_submenu_item($item, 'admin');
 }
 
 /**
@@ -99,31 +120,30 @@ function admin_init() {
 
 	register_action('admin/plugins/simple_update_states', FALSE, '', TRUE);
 
-
 	// admin area overview and basic site settings
-	elgg_add_admin_section('overview', elgg_echo('admin:overview'));
-	elgg_add_admin_section('site', elgg_echo('admin:site'));
-	elgg_add_admin_section('basic', elgg_echo('admin:site:basic'), 'site');
-	elgg_add_admin_section('advanced', elgg_echo('admin:site:advanced'), 'site');
+	elgg_add_admin_submenu_item('overview', elgg_echo('admin:overview'));
+	elgg_add_admin_submenu_item('site', elgg_echo('admin:site'));
+	elgg_add_admin_submenu_item('basic', elgg_echo('admin:site:basic'), 'admin:overview:site');
+	elgg_add_admin_submenu_item('advanced', elgg_echo('admin:site:advanced'), 'admin:overview:site');
 
 	// appearance
-	elgg_add_admin_section('appearance', elgg_echo('admin:appearance'));
-	//elgg_add_admin_section('basic', elgg_echo('admin:appearance'), 'appearance');
-	elgg_add_admin_section('menu_items', elgg_echo('admin:menu_items'), 'appearance');
+	elgg_add_admin_submenu_item('appearance', elgg_echo('admin:appearance'));
+	//elgg_add_admin_submenu_item('basic', elgg_echo('admin:appearance'), 'appearance');
+	elgg_add_admin_submenu_item('menu_items', elgg_echo('admin:menu_items'), 'appearance');
 
 	// users
-	elgg_add_admin_section('users', elgg_echo('admin:users'));
-	elgg_add_admin_section('online', elgg_echo('admin:users:online'), 'users');
-	elgg_add_admin_section('add', elgg_echo('admin:users:add'), 'users');
-	elgg_add_admin_section('find', elgg_echo('admin:users:find'), 'users');
+	elgg_add_admin_submenu_item('users', elgg_echo('admin:users'));
+	elgg_add_admin_submenu_item('online', elgg_echo('admin:users:online'), 'users');
+	elgg_add_admin_submenu_item('add', elgg_echo('admin:users:add'), 'users');
+	elgg_add_admin_submenu_item('find', elgg_echo('admin:users:find'), 'users');
 
 	// plugins
-	elgg_add_admin_section('plugins', elgg_echo('admin:plugins'));
-	elgg_add_admin_section('simple', elgg_echo('admin:plugins:simple'), 'plugins');
-	elgg_add_admin_section('advanced', elgg_echo('admin:plugins:advanced'), 'plugins');
+	elgg_add_admin_submenu_item('plugins', elgg_echo('admin:plugins'));
+	elgg_add_admin_submenu_item('simple', elgg_echo('admin:plugins:simple'), 'plugins');
+	elgg_add_admin_submenu_item('advanced', elgg_echo('admin:plugins:advanced'), 'plugins');
 
 	// handled in the admin sidemenu so we don't have to generate this on every page load.
-	//elgg_add_admin_section('plugin_settings', elgg_echo('admin:plugin_settings'));
+	//elgg_add_admin_submenu_item('plugin_settings', elgg_echo('admin:plugin_settings'));
 
 	register_page_handler('admin', 'admin_settings_page_handler');
 }
@@ -138,6 +158,8 @@ function admin_settings_page_handler($page) {
 	global $CONFIG;
 
 	admin_gatekeeper();
+	elgg_admin_add_plugin_settings_sidemenu();
+	set_context('admin');
 
 	// default to overview
 	if (!isset($page[0]) || empty($page[0])) {
@@ -169,7 +191,18 @@ function admin_settings_page_handler($page) {
 		$content = elgg_echo('admin:unknown_section');
 	}
 
-	$body = elgg_view('admin/components/admin_page_layout', array('content' => $content, 'page' => $page));
+	//$body = elgg_view('admin/components/admin_page_layout', array('content' => $content, 'page' => $page));
+
+	$notices_html = '';
+	if ($notices = elgg_get_admin_notices()) {
+		foreach ($notices as $notice) {
+			$notices_html .= elgg_view_entity($notice);
+		}
+
+		$content = "<div class=\"admin_notices\">$notices_html</div>$content";
+	}
+
+	$body = elgg_view_layout('one_column_with_sidebar', $content);
 	page_draw($title, $body);
 }
 
@@ -179,7 +212,7 @@ function admin_settings_page_handler($page) {
  * The id is a unique ID that can be cleared once the admin
  * completes the action.
  *
- * eg: add_admin_notice('twitter_service_no_api',
+ * eg: add_admin_notice('twitter_services_no_api',
  * 	'Before your users can use Twitter services on this site, you must set up
  * 	the Twitter API key in the <a href="link">Twitter Services Settings</a>');
  *
@@ -198,7 +231,7 @@ function elgg_add_admin_notice($id, $message) {
 		return $admin_notice->save();
 	}
 
-	return false;
+	return FALSE;
 }
 
 

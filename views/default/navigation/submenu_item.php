@@ -13,7 +13,7 @@
 
 $group = (isset($vars['group'])) ? $vars['group'] : 'default';
 $item = (isset($vars['item'])) ? $vars['item'] : FALSE;
-$children_html = (isset($vars['children_html'])) ? $vars['children_html'] : FALSE;
+$children_html = (isset($vars['children_html'])) ? $vars['children_html'] : '';
 
 
 if ($item) {
@@ -34,8 +34,16 @@ if ($item) {
 		$child_indicator = "<span class=\"child_indicator\">$child_indicator </span>";
 	}
 
-	$url = htmlentities($item->url);
+	$url = htmlentities($item->href);
 	$text = $child_indicator . htmlentities($item->text);
+
+	$link_vars = array_merge($vars, array(
+		'href' => $item->href,
+		'text' => $text,
+		'encode_text' => FALSE
+	));
+
+	$link = elgg_view('output/url', $link_vars);
 }
-?>
-<li <?php echo $selected; ?>><a href="<?php echo $url; ?>" <?php echo $js; ?>><?php echo $text; ?></a><?php echo $children_html; ?></li>
+
+echo "<li $selected>$link$children_html</li>";

@@ -20,7 +20,7 @@ $url = "{$CONFIG->url}engine/tests/ui/submenu.php";
 $items = array(
 	array(
 		'text' => 'Upper level 1',
-		'url' => "$url?upper_level_1",
+		'href' => "$url?upper_level_1",
 		'id' => 'ul1'
 	),
 		array(
@@ -30,50 +30,50 @@ $items = array(
 		),
 			array(
 				'text' => 'Sub CD',
-				'url' => "$url?sub_cd",
+				'href' => "$url?sub_cd",
 				'parent_id' => 'cd'
 			),
 	array(
 		'text' => 'Cup',
-		'url' => "$url?cup",
+		'href' => "$url?cup",
 		'id' => 'cup'
 	),
 		array(
 			'text' => 'Phone',
-			'url' => "$url?phone",
+			'href' => "$url?phone",
 			'id' => 'phone',
 			'parent_id' => 'cup'
 		),
 			array(
 				'text' => 'Wallet',
-				'url' => "$url?wallet",
+				'href' => "$url?wallet",
 				'id' => 'wallet',
 				'parent_id' => 'phone'
 			),
 	array(
 		'text' => 'Upper level',
-		'url' => "$url?upper_level",
+		'href' => "$url?upper_level",
 		'id' => 'ul'
 	),
 		array(
 			'text' => 'Sub Upper level',
-			'url' => "$url?sub_upper_level",
+			'href' => "$url?sub_upper_level",
 			'parent_id' => 'ul'
 		),
 	array(
 		'text' => 'Root',
-		'url' => $url,
+		'href' => $url,
 	),
 
 	array(
 		'text' => 'I am an orphan',
-		'url' => 'http://google.com',
+		'href' => 'http://google.com',
 		'parent_id' => 'missing_parent'
 	),
 
 	array(
 		'text' => 'JS Test',
-		'url' => 'http://elgg.org',
+		'href' => 'http://elgg.org',
 		'vars' => array('js' => 'onclick="alert(\'Link to \' + $(this).attr(\'href\') + \'!\'); return false;"')
 	)
 );
@@ -86,10 +86,10 @@ add_submenu_item('Old Onclick Test', 'http://elgg.com', NULL, TRUE);
 add_submenu_item('Old Selected Test', 'http://elgg.com', NULL, '', TRUE);
 
 
-elgg_add_submenu_item(array('text' => 'Not Main Test', 'url' => "$url?not_main_test"), 'not_main', 'new_menu');
-elgg_add_submenu_item(array('text' => 'Not Main C Test', 'url' => "$url?not_main_c_test"), 'not_main', 'new_menu');
+elgg_add_submenu_item(array('text' => 'Not Main Test', 'href' => "$url?not_main_test"), 'not_main', 'new_menu');
+elgg_add_submenu_item(array('text' => 'Not Main C Test', 'href' => "$url?not_main_c_test"), 'not_main', 'new_menu');
 
-elgg_add_submenu_item(array('text' => 'All test', 'url' => "$url?all"), 'all');
+elgg_add_submenu_item(array('text' => 'All test', 'href' => "$url?all"), 'all');
 
 //set_context('not_main');
 

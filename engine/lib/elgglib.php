@@ -910,7 +910,7 @@ function add_submenu_item($label, $link, $group = 'default', $onclick = false, $
 
 	$item = array(
 		'text' => $label,
-		'url' => $link,
+		'href' => $link,
 		'selected' => $selected
 	);
 
@@ -1003,7 +1003,7 @@ function elgg_add_submenu_item(array $item, $context = 'all', $group = 'default'
  * @param bool $sort Sort the menu items alphabetically
  * @since 1.8
  */
-function elgg_prepare_submenu($context = 'main', $sort = TRUE) {
+function elgg_prepare_submenu($context = 'main', $sort = FALSE) {
 	global $CONFIG;
 
 	if (!isset($CONFIG->submenu_items) || !($CONFIG->submenu_items)) {
@@ -1052,9 +1052,9 @@ function elgg_prepare_submenu($context = 'main', $sort = TRUE) {
 				}
 
 				// if the parent doesn't have a url, make it the first child item.
-				if (isset($item->children) && $item->children && !$item->url) {
+				if (isset($item->children) && $item->children && !$item->href) {
 					$child = $item->children[0];
-					while ($child && !isset($child->url)) {
+					while ($child && !isset($child->href)) {
 						if (isset($child->children) && isset($child->children[0])) {
 							$child = $child->children[0];
 						} else {
@@ -1062,11 +1062,11 @@ function elgg_prepare_submenu($context = 'main', $sort = TRUE) {
 						}
 					}
 
-					if ($child && isset($child->url)) {
-						$item->url = $child->url;
+					if ($child && isset($child->href)) {
+						$item->href = $child->href;
 					} else {
 						// @todo There are no URLs anywhere in this tree.
-						$item->url = $CONFIG->url;
+						$item->href = $CONFIG->url;
 					}
 				}
 			}
@@ -1139,14 +1139,14 @@ function elgg_get_submenu($context = NULL, $sort = FALSE) {
 		while ($item = current($items)) {
 			$t = '';
 			// ignore parents created by a child but parent never defined properly
-			if (!isset($item->text) || !isset($item->url) || !($item->text) || !($item->url)) {
+			if (!isset($item->text) || !isset($item->href) || !($item->text) || !($item->href)) {
 				next($items);
 				continue;
 			}
 
 			// try to guess if this should be selected if they don't specify
-			if ((!isset($item->selected) || $item->selected === NULL) && isset($item->url)) {
-				$item->selected = elgg_http_url_is_identical($_SERVER['REQUEST_URI'], $item->url);
+			if ((!isset($item->selected) || $item->selected === NULL) && isset($item->href)) {
+				$item->selected = elgg_http_url_is_identical($_SERVER['REQUEST_URI'], $item->href);
 			}
 
 			// traverse up the parent tree if matached to mark all parents as selected/expanded.
