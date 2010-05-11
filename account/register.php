@@ -14,6 +14,12 @@
  */
 require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
 
+// check new registration allowed
+if (!$CONFIG->allow_registration) {
+	register_error(elgg_echo('registerdisabled'));
+	forward();
+}
+
 $friend_guid = (int) get_input('friend_guid',0);
 $invitecode = get_input('invitecode');
 
