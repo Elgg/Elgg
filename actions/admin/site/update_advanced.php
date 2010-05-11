@@ -56,6 +56,13 @@ if (datalist_get('default_site')) {
 	} else {
 		set_config('allow_registration', FALSE, $site->getGUID());
 	}
+	
+	// setup walled garden
+	if (get_input('walled_garden', FALSE)) {
+		set_config('walled_garden', TRUE, $site->getGUID());
+	} else {
+		set_config('walled_garden', FALSE, $site->getGUID());
+	}
 
 	$https_login = get_input('https_login');
 	if ($https_login) {

@@ -33,6 +33,7 @@ $form_body .= "<p>" . elgg_echo('installation:debug');
 $form_body .= elgg_view('input/pulldown', array('options_values' => $debug_options, 'internalname' => 'debug', 'value' => $vars['config']->debug));
 $form_body .= '</p>';
 
+// control new user registration
 $options = array(
 	'options' => array(elgg_echo('installation:registration:label')),
 	'internalname' => 'allow_registration',
@@ -40,6 +41,15 @@ $options = array(
 );
 $form_body .= '<p>' . elgg_echo('installation:registration:description');
 $form_body .= '<br />' .elgg_view('input/checkboxes', $options) . '</p>';
+
+// control walled garden
+$options = array(
+	'options' => array(elgg_echo('installation:walled_garden:label')),
+	'internalname' => 'walled_garden',
+	'value' => $vars['config']->walled_garden ? elgg_echo('installation:walled_garden:label') : '',
+);
+$form_body .= '<p>' . elgg_echo('installation:walled_garden:description');
+$form_body .= '<br />' . elgg_view('input/checkboxes', $options) . '</p>';
 
 $form_body .= "<p>" . elgg_echo('installation:httpslogin') . "<br />" .elgg_view("input/checkboxes", array('options' => array(elgg_echo('installation:httpslogin:label')), 'internalname' => 'https_login', 'value' => ($vars['config']->https_login ? elgg_echo('installation:httpslogin:label') : "") )) . "</p>";
 

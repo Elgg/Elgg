@@ -243,6 +243,51 @@ class ElggSite extends ElggEntity {
 			'url',
 		));
 	}
+	
+	public function check_walled_garden() {
+		global $CONFIG;
+		
+		if ($CONFIG->walled_garden && !isloggedin()) {
+			register_plugin_hook('index', 'system', 'elgg_walled_garden_index');
+			
+			if (!$this->is_public_page()) {
+				register_error(elgg_echo('walled_garden:private_page') . current_page_url());
+				forward();
+			}
+		}
+	}
+	
+	public function is_public_page($url='') {
+		global $CONFIG;
+		
+		if (empty($url)) {
+			$url = current_page_url();
+			
+			// do not check against URL queries
+			if ($pos = strpos($url, '?')) {
+				$url = substr($url, 0, $pos);
+			}
+		}
+		
+		// default public pages
+		$public = array(
+			$CONFIG->url,
+			"{$CONFIG->url}action/login",
+			"{$CONFIG->url}upgrade.php",
+		);
+		
+		// include a hook for plugin authors to include public pages
+		
+		// lookup admin-specific public pages
+		
+		// allow public pages
+		if (in_array($url, $public)) {
+			return TRUE;
+		}
+		
+		// non-public page
+		return FALSE;
+	}
 }
 
 /**

@@ -3107,9 +3107,19 @@ function __elgg_shutdown_hook() {
 function elgg_init() {
 	// Page handler for JS
 	register_page_handler('js','js_page_handler');
-
+	
 	// Register an event triggered at system shutdown
 	register_shutdown_function('__elgg_shutdown_hook');
+}
+
+function elgg_walled_garden_index() {
+	global $CONFIG;
+	
+	$login = elgg_view('account/forms/login');
+	$layout = elgg_view_layout('one_column', $login);
+	
+	echo page_draw('', $layout);
+	return TRUE;
 }
 
 /**
@@ -3117,6 +3127,8 @@ function elgg_init() {
  * @return unknown_type
  */
 function elgg_boot() {
+	global $CONFIG;
+	
 	// Actions
 	register_action('comments/add');
 	register_action('comments/delete');
@@ -3126,6 +3138,11 @@ function elgg_boot() {
 	elgg_view_register_simplecache('css');
 	elgg_view_register_simplecache('js/friendsPickerv1');
 	elgg_view_register_simplecache('js/initialise_elgg');
+	
+	// check for external page view
+	if (isset($CONFIG->site) && $CONFIG->site instanceof ElggSite) {
+		$CONFIG->site->check_walled_garden();
+	}
 }
 
 /**

@@ -69,6 +69,7 @@ if (get_input('settings') == 'go') {
 		set_config('language', get_input('language'), $site->getGUID());
 		set_config('default_access', get_input('default_access'), $site->getGUID());
 		set_config('allow_registration', TRUE, $site->getGUID());
+		set_config('walled_garden', FALSE, $site->getGUID());
 
 		$debug = get_input('debug');
 		if ($debug) {
