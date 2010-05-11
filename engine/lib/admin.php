@@ -88,6 +88,9 @@ function elgg_add_admin_submenu_item($section_id, $section_title, $parent_id = N
 	// in the admin section parents never have links
 	if ($parent_id) {
 		$href = "{$CONFIG->url}pg/admin/$parent_id/$section_id";
+	} elseif ($section_id == 'overview') {
+		$href = "{$CONFIG->url}pg/admin/$section_id";
+
 	} else {
 		$href = NULL;
 	}
@@ -122,12 +125,14 @@ function admin_init() {
 
 	// admin area overview and basic site settings
 	elgg_add_admin_submenu_item('overview', elgg_echo('admin:overview'));
+
 	elgg_add_admin_submenu_item('site', elgg_echo('admin:site'));
-	elgg_add_admin_submenu_item('basic', elgg_echo('admin:site:basic'), 'admin:overview:site');
-	elgg_add_admin_submenu_item('advanced', elgg_echo('admin:site:advanced'), 'admin:overview:site');
+	elgg_add_admin_submenu_item('basic', elgg_echo('admin:site:basic'), 'site');
+	elgg_add_admin_submenu_item('advanced', elgg_echo('admin:site:advanced'), 'site');
 
 	// appearance
 	elgg_add_admin_submenu_item('appearance', elgg_echo('admin:appearance'));
+
 	//elgg_add_admin_submenu_item('basic', elgg_echo('admin:appearance'), 'appearance');
 	elgg_add_admin_submenu_item('menu_items', elgg_echo('admin:menu_items'), 'appearance');
 

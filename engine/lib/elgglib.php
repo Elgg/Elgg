@@ -1139,7 +1139,7 @@ function elgg_get_submenu($context = NULL, $sort = FALSE) {
 		while ($item = current($items)) {
 			$t = '';
 			// ignore parents created by a child but parent never defined properly
-			if (!isset($item->text) || !isset($item->href) || !($item->text) || !($item->href)) {
+			if (!isset($item->text) || !($item->text)) {
 				next($items);
 				continue;
 			}

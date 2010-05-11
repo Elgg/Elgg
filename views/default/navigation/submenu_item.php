@@ -15,7 +15,6 @@ $group = (isset($vars['group'])) ? $vars['group'] : 'default';
 $item = (isset($vars['item'])) ? $vars['item'] : FALSE;
 $children_html = (isset($vars['children_html'])) ? $vars['children_html'] : '';
 
-
 if ($item) {
 	$has_children = (isset($item->children) && $item->children) ? TRUE : FALSE;
 	$selected = (isset($item->selected) && $item->selected == TRUE) ? 'class="selected"' : '';
