@@ -20,14 +20,9 @@ function notifications_plugin_init() {
 
 	register_elgg_event_handler('pagesetup', 'system', 'notifications_plugin_pagesetup');
 
-	// Unset the default user settings hook
-	if (isset($CONFIG->hooks['usersettings:save']['user'])) {
-		foreach($CONFIG->hooks['usersettings:save']['user'] as $key => $function) {
-			if ($function == 'notification_user_settings_save') {
-				unset($CONFIG->hooks['usersettings:save']['user'][$key]);
-			}
-		}
-	}
+	// Unset the default notification settings
+	unregister_plugin_hook('usersettings:save', 'user', 'notification_user_settings_save');
+	elgg_unextend_view('usersettings/user', 'notifications/settings/usersettings');
 }
 
 /**
