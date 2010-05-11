@@ -116,9 +116,9 @@ RewriteEngine on
 #
 #RewriteBase /
 
-RewriteRule ^action\/([A-Za-z0-9\_\-\/]+)$ engine/handlers/action_handler.php?action=$1%{QUERY_STRING}
+RewriteRule ^action\/([A-Za-z0-9\_\-\/]+)$ engine/handlers/action_handler.php?action=$1&%{QUERY_STRING}
 
-RewriteRule ^services\/api\/([A-Za-z0-9\_\-]+)\/(.*)$ engine/handlers/service_handler.php?handler=$1&request=$2%{QUERY_STRING}
+RewriteRule ^services\/api\/([A-Za-z0-9\_\-]+)\/(.*)$ engine/handlers/service_handler.php?handler=$1&request=$2&%{QUERY_STRING}
 
 RewriteRule ^export\/([A-Za-z]+)\/([0-9]+)$ services/export/handler.php?view=$1&guid=$2
 RewriteRule ^export\/([A-Za-z]+)\/([0-9]+)\/$ services/export/handler.php?view=$1&guid=$2
@@ -126,8 +126,8 @@ RewriteRule ^export\/([A-Za-z]+)\/([0-9]+)\/([A-Za-z]+)\/([A-Za-z0-9\_]+)\/$ ser
 
 RewriteRule ^\_css\/css\.css$ _css/css.php
 
-RewriteRule ^pg\/([A-Za-z0-9\_\-]+)\/(.*)$ engine/handlers/pagehandler.php?handler=$1&page=$2%{QUERY_STRING}
-RewriteRule ^pg\/([A-Za-z0-9\_\-]+)$ engine/handlers/pagehandler.php?handler=$1%{QUERY_STRING}
+RewriteRule ^pg\/([A-Za-z0-9\_\-]+)\/(.*)$ engine/handlers/pagehandler.php?handler=$1&page=$2&%{QUERY_STRING}
+RewriteRule ^pg\/([A-Za-z0-9\_\-]+)$ engine/handlers/pagehandler.php?handler=$1&%{QUERY_STRING}
 
 RewriteRule xml-rpc.php engine/handlers/xml-rpc_handler.php
 RewriteRule mt/mt-xmlrpc.cgi engine/handlers/xml-rpc_handler.php
