@@ -2,7 +2,7 @@
 /**
  * Elgg install site action
  *
- * Creates a nwe site and sets it as the default
+ * Creates a new site and sets it as the default
  *
  * @package Elgg
  * @subpackage Core
