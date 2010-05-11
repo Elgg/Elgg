@@ -1166,6 +1166,39 @@ function elgg_extend_view($view, $view_extension, $priority = 501, $viewtype = '
 }
 
 /**
+ * Unextends a view.
+ *
+ * @param string $view The view that was extended.
+ * @param string $view_extension This view that was added to $view
+ * @return bool
+ * @since 1.7.2
+ */
+function elgg_unextend_view($view, $view_extension) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->views)) {
+		return FALSE;
+	}
+
+	if (!isset($CONFIG->views->extensions)) {
+		return FALSE;
+	}
+
+	if (!isset($CONFIG->views->extensions[$view])) {
+		return FALSE;
+	}
+
+	$priority = array_search($view_extension, $CONFIG->views->extensions[$view]);
+	if ($priority === FALSE) {
+		return FALSE;
+	}
+
+	unset($CONFIG->views->extensions[$view][$priority]);
+	
+	return TRUE;
+}
+
+/**
  * @deprecated 1.7.  Use elgg_extend_view().
  * @param $view
  * @param $view_name
