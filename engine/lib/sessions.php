@@ -467,17 +467,6 @@ function logout() {
 }
 
 /**
- * Returns a fingerprint for an elgg session.
- *
- * @return string
- */
-function get_session_fingerprint() {
-	global $CONFIG;
-
-	return md5($_SERVER['HTTP_USER_AGENT'] . get_site_secret());
-}
-
-/**
  * Initialises the system session and potentially logs the user in
  *
  * This function looks for:
@@ -511,16 +500,6 @@ function session_init($event, $object_type, $object) {
 
 	session_name('Elgg');
 	session_start();
-
-	// Do some sanity checking by generating a fingerprint (makes some XSS attacks harder)
-	if (isset($_SESSION['__elgg_fingerprint'])) {
-		if ($_SESSION['__elgg_fingerprint'] != get_session_fingerprint()) {
-			session_destroy();
-			return false;
-		}
-	} else {
-		$_SESSION['__elgg_fingerprint'] = get_session_fingerprint();
-	}
 
 	// Generate a simple token (private from potentially public session id)
 	if (!isset($_SESSION['__elgg_session'])) {
