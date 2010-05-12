@@ -467,11 +467,10 @@ function elgg_view_regenerate_simplecache() {
 
 function elgg_view_enable_simplecache() {
 	global $CONFIG;
-	if(!$CONFIG->simplecache_enabled) {
-		datalist_set('simplecache_enabled',1);
-		$CONFIG->simplecache_enabled = 1;
-		elgg_view_regenerate_simplecache();
-	}
+
+	datalist_set('simplecache_enabled',1);
+	$CONFIG->simplecache_enabled = 1;
+	elgg_view_regenerate_simplecache();
 }
 
 /**
