@@ -12,6 +12,8 @@
 require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 gatekeeper();
 
+set_page_owner(get_loggedin_userid());
+
 $user = get_loggedin_user();
 
 $title = elgg_echo('groups:invitations');

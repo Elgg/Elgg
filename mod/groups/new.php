@@ -11,6 +11,8 @@
 
 	gatekeeper();
 
+	set_page_owner(get_loggedin_userid());
+
 	// Render the file upload page
 	$title = elgg_echo("groups:new");
 	$area2 = elgg_view_title($title);
