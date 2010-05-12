@@ -89,7 +89,3 @@ p.message_item_timestamp {
 	background-position: 0 -16px;
 }
 
-
-
-
-
