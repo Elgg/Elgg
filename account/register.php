@@ -11,8 +11,14 @@
 
 /**
  * Start the Elgg engine
+ *
+ * WHY???? In the case this file is called thru a page handler: $CONFIG
+ * is not within the global scope (the page handler function does not include it).
+ * BUT, there _might_ exist direct calls to this file, requiring the engine
+ * to be started. Logic for both cases follow.
  */
 require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
+global $CONFIG;
 
 // check new registration allowed
 if (!$CONFIG->allow_registration) {

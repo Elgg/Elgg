@@ -270,18 +270,24 @@ class ElggSite extends ElggEntity {
 		}
 		
 		// default public pages
-		$public = array(
+		$defaults = array(
 			$CONFIG->url,
 			"{$CONFIG->url}action/login",
+			"{$CONFIG->url}pg/register/",
+			"{$CONFIG->url}action/register",
+			"{$CONFIG->url}account/forgotten_password.php",
+			"{$CONFIG->url}action/user/requestnewpassword",
+			"{$CONFIG->url}pg/resetpassword",
 			"{$CONFIG->url}upgrade.php",
 		);
 		
 		// include a hook for plugin authors to include public pages
+		$plugins = trigger_plugin_hook('public_pages', 'walled_garden', NULL, array());
 		
 		// lookup admin-specific public pages
 		
 		// allow public pages
-		if (in_array($url, $public)) {
+		if (in_array($url, array_merge($defaults, $plugins))) {
 			return TRUE;
 		}
 		

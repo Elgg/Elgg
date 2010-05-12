@@ -46,6 +46,9 @@ function sitepages_init() {
 	// define our own ecml keywords and views
 	register_plugin_hook('get_keywords', 'ecml', 'sitepages_ecml_keyword_hook');
 	register_plugin_hook('get_views', 'ecml', 'sitepages_ecml_views_hook');
+	
+	// hook into the walled garden pages
+	register_plugin_hook('public_pages', 'walled_garden', 'sitepages_public_pages');
 
 	register_action("sitepages/add", FALSE, $CONFIG->pluginspath . "sitepages/actions/add.php");
 	register_action("sitepages/addfront", FALSE, $CONFIG->pluginspath . "sitepages/actions/addfront.php");
@@ -212,6 +215,16 @@ function sitepages_ecml_keyword_hook($hook, $entity_type, $return_value, $params
 function sitepages_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 	$return_value['sitepages/custom_frontpage'] = elgg_echo('sitepages:ecml:views:custom_frontpage');
 
+	return $return_value;
+}
+
+function sitepages_public_pages($hook, $type, $return_value, $params) {
+	global $CONFIG;
+	
+	$return_value[] = "{$CONFIG->url}pg/sitepages/read/About/";
+	$return_value[] = "{$CONFIG->url}pg/sitepages/read/Terms/";
+	$return_value[] = "{$CONFIG->url}pg/sitepages/read/Privacy/";
+	
 	return $return_value;
 }
 

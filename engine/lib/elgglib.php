@@ -3127,8 +3127,6 @@ function elgg_walled_garden_index() {
  * @return unknown_type
  */
 function elgg_boot() {
-	global $CONFIG;
-	
 	// Actions
 	register_action('comments/add');
 	register_action('comments/delete');
@@ -3138,11 +3136,6 @@ function elgg_boot() {
 	elgg_view_register_simplecache('css');
 	elgg_view_register_simplecache('js/friendsPickerv1');
 	elgg_view_register_simplecache('js/initialise_elgg');
-	
-	// check for external page view
-	if (isset($CONFIG->site) && $CONFIG->site instanceof ElggSite) {
-		$CONFIG->site->check_walled_garden();
-	}
 }
 
 /**
@@ -3301,6 +3294,15 @@ function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset
 	return TRUE;
 }
 
+function elgg_walled_garden() {
+	global $CONFIG;
+	
+	// check for external page view
+	if (isset($CONFIG->site) && $CONFIG->site instanceof ElggSite) {
+		$CONFIG->site->check_walled_garden();
+	}
+}
+
 /**
  * Some useful constant definitions
  */
@@ -3318,3 +3320,4 @@ register_elgg_event_handler('boot', 'system', 'elgg_boot', 1000);
 register_plugin_hook('unit_test', 'system', 'elgg_api_test');
 
 register_elgg_event_handler('init', 'system', 'add_custom_menu_items', 1000);
+register_elgg_event_handler('init', 'system', 'elgg_walled_garden', 1000);
