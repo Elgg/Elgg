@@ -2,7 +2,7 @@
 			
 //grab the groups bookmarks 
 $bookmarks = elgg_get_entities(array('type' => 'object', 'subtype' => 'bookmarks', 
-			'container_guids' => $vars['entity']->container_guid, 'limit' => 6));
+			'container_guids' => page_owner(), 'limit' => 6));
 
 echo "<div class='group_tool_widget bookmarks'><h3>".elgg_echo('bookmarks:group')."</h3>";
 	
