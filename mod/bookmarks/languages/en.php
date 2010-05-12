@@ -12,7 +12,7 @@ $english = array(
 		'bookmarks:friends' => "Friends' bookmarks",
 		'bookmarks:all' => "All site bookmarks",
 		'bookmarks:user' => "%s's bookmarks",
-		'bookmarks:group' => "Group bookmarks",
+		'bookmarks:group' => "Bookmarks",
 		'bookmarks:this' => "Bookmark this",
 		'bookmarks:this:group' => "Bookmark in %s",
 		'bookmarks:bookmarklet' => "Get bookmarklet",
@@ -42,7 +42,6 @@ $english = array(
 
 		'item:object:bookmarks' => 'Bookmarked items',
 
-		'bookmarks:group' => 'Group bookmarks',
 		'bookmarks:enablebookmarks' => 'Enable community bookmarks',
 		'bookmarks:referenceadded' => 'You have added that bookmark as a reference',
 		'bookmarks:referenceerror' => 'There was a problem adding that bookmark as a reference',
