@@ -8,6 +8,8 @@
  * @link http://elgg.org/
  */
 
+echo elgg_view_title(elgg_echo('admin:users'));
+
 if( (is_plugin_enabled('search')) && (is_plugin_enabled('profile')) ) {
 ?>
 	<div class="admin_settings user_search">

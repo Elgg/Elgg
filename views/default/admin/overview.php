@@ -18,6 +18,7 @@ global $CONFIG;
 $version = get_version();
 $release = get_version(true);
 
+echo elgg_view_title(elgg_echo('admin:overview'));
 ?>
 <div class="admin_settings site_stats">
 	<h3><?php echo elgg_echo('admin:statistics:label:basic'); ?></h3>
