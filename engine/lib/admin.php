@@ -207,7 +207,7 @@ function admin_settings_page_handler($page) {
 		$content = "<div class=\"admin_notices\">$notices_html</div>$content";
 	}
 
-	$body = elgg_view_layout('one_column_with_sidebar', $content);
+	$body = elgg_view_layout('administration', $content);
 	page_draw($title, $body);
 }
 
