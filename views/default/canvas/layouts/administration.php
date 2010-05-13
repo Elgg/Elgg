@@ -80,9 +80,11 @@ body { background-color: #444444; }
 	padding:0;
 	list-style: none;
 }
-.admin_area .submenu li.selected a {
-	background-color: #666666;
-	color:white;
+.admin_area .submenu li.selected a,
+.admin_area .submenu li.selected li.selected a,
+.admin_area .submenu li.selected li.selected li.selected a {
+	background-color: black;
+	color:white; 
 }
 .admin_area .submenu li a {
 	display:block;

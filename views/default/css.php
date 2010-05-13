@@ -667,7 +667,9 @@ li.navigation_more ul li {
 	padding:0;
 	list-style: none;
 }
-.submenu li.selected a {
+.submenu li.selected a,
+.submenu li.selected li.selected a,
+.submenu li.selected li.selected li.selected a {
 	background: #4690D6;
 	color:white;
 }
@@ -684,10 +686,15 @@ li.navigation_more ul li {
 	color:white;
 	text-decoration:none;
 }
-.submenu .child li a{
+.submenu .child li a {
 	margin-left:15px;
 	background-color:white;
 	color:#4690D6;
+}
+.submenu .child li a:hover {
+	background:#0054A7;
+	color:white;
+	text-decoration:none;
 }
 
 
