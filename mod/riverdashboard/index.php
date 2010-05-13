@@ -46,9 +46,9 @@ $title = elgg_view_title($title_wording);
 
 //select the correct river
 if (get_plugin_setting('activitytype', 'riverdashboard') == 'classic') {
-	$river = elgg_view_river_items($subject_guid, 0, $relationship_type, $type, $subtype, '', 20, 0, 0, true, true)  . "</div>";
+	$river = elgg_view_river_items($subject_guid, 0, $relationship_type, $type, $subtype, '', 20, 0, 0, true, true);
 } else {
-	$river = elgg_view_river_items($subject_guid, 0, $relationship_type, $type, $subtype, '', 20, 0, 0, true, false)  . "</div>";
+	$river = elgg_view_river_items($subject_guid, 0, $relationship_type, $type, $subtype, '', 20, 0, 0, true, false);
 }
 
 // Replacing callback calls in the nav with something meaningless
