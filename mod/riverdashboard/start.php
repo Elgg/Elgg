@@ -9,10 +9,10 @@ function riverdashboard_init() {
 	global $CONFIG;
 	// Register and optionally replace the dashboard
 	register_page_handler('dashboard', 'riverdashboard_page_handler');
-	add_menu(elgg_echo('activity'), $CONFIG->wwwroot . "mod/riverdashboard/");
+	add_menu(elgg_echo('activity'), $CONFIG->wwwroot . "pg/activity/");
 
 	// Page handler
-	register_page_handler('riverdashboard', 'riverdashboard_page_handler');
+	register_page_handler('activity', 'riverdashboard_page_handler');
 	elgg_extend_view('css', 'riverdashboard/css');
 
 	// add an activity stream ECML keyword
