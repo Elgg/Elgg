@@ -1080,6 +1080,7 @@ function elgg_prepare_submenu($context = 'main', $sort = FALSE) {
 
 		$CONFIG->submenu[$context][$group] = $parsed_menu;
 	}
+
 	return TRUE;
 }
 
@@ -1146,7 +1147,7 @@ function elgg_get_submenu($context = NULL, $sort = FALSE) {
 
 			// try to guess if this should be selected if they don't specify
 			if ((!isset($item->selected) || $item->selected === NULL) && isset($item->href)) {
-				$item->selected = elgg_http_url_is_identical($_SERVER['REQUEST_URI'], $item->href);
+				$item->selected = elgg_http_url_is_identical(full_url(), $item->href);
 			}
 
 			// traverse up the parent tree if matached to mark all parents as selected/expanded.
@@ -3107,17 +3108,17 @@ function __elgg_shutdown_hook() {
 function elgg_init() {
 	// Page handler for JS
 	register_page_handler('js','js_page_handler');
-	
+
 	// Register an event triggered at system shutdown
 	register_shutdown_function('__elgg_shutdown_hook');
 }
 
 function elgg_walled_garden_index() {
 	global $CONFIG;
-	
+
 	$login = elgg_view('account/forms/login');
 	$layout = elgg_view_layout('one_column', $login);
-	
+
 	echo page_draw('', $layout);
 	return TRUE;
 }
@@ -3296,7 +3297,7 @@ function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset
 
 function elgg_walled_garden() {
 	global $CONFIG;
-	
+
 	// check for external page view
 	if (isset($CONFIG->site) && $CONFIG->site instanceof ElggSite) {
 		$CONFIG->site->check_walled_garden();
