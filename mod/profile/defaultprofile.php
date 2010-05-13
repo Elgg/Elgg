@@ -50,6 +50,6 @@ $resetlisting = "<div class='default_profile_reset'>{$resetlisting}</div>";
 
 set_context('admin');
 
-$body = elgg_view_layout("one_column_with_sidebar", $title . $form . $listing . $resetlisting);
+$body = elgg_view_layout("administration", $title . $form . $listing . $resetlisting);
 
 page_draw(elgg_echo('profile:edit:default'), $body);

@@ -83,7 +83,7 @@ function sitepages_get_edit_section_content($page_type) {
 	$form .= elgg_view($view, array('page_type' => $page_type));
 	$body = $title .  $menu . $form;
 
-	$content = elgg_view_layout('one_column_with_sidebar', $body);
+	$content = elgg_view_layout('administration', $body);
 	return $content;
 }
 
