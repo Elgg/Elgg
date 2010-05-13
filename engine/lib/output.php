@@ -117,3 +117,34 @@ function elgg_make_excerpt($text, $num_chars = 250) {
 
 	return $excerpt;
 }
+
+/**
+ * Handles formatting of ampersands in urls
+ *
+ * @param string $url
+ * @return string
+ * @since 1.7.1
+ */
+function elgg_format_url($url) {
+	return preg_replace('/&(?!amp;)/', '&amp;', $url);
+}
+
+/**
+ * When given a title, returns a version suitable for inclusion in a URL
+ *
+ * @param string $title The title
+ * @return string The optimised title
+ */
+function friendly_title($title) {
+	return elgg_view('output/friendlytitle', array('title' => $title));
+}
+
+/**
+ * Displays a UNIX timestamp in a friendly way (eg "less than a minute ago")
+ *
+ * @param int $time A UNIX epoch timestamp
+ * @return string The friendly time
+ */
+function friendly_time($time) {
+	return elgg_view('output/friendlytime', array('time' => $time));
+}

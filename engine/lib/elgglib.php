@@ -1309,26 +1309,6 @@ function page_draw($title, $body, $sidebar = "") {
 }
 
 /**
- * Displays a UNIX timestamp in a friendly way (eg "less than a minute ago")
- *
- * @param int $time A UNIX epoch timestamp
- * @return string The friendly time
- */
-function friendly_time($time) {
-	return elgg_view('output/friendlytime', array('time' => $time));
-}
-
-/**
- * When given a title, returns a version suitable for inclusion in a URL
- *
- * @param string $title The title
- * @return string The optimised title
- */
-function friendly_title($title) {
-	return elgg_view('output/friendlytitle', array('title' => $title));
-}
-
-/**
  * Library loading and handling
  */
 
@@ -2616,17 +2596,6 @@ interface Friendable {
 	 * @param string $subtype The subtype of entity to count
 	 */
 	public function countObjects($subtype = "");
-}
-
-/**
- * Handles formatting of ampersands in urls
- *
- * @param string $url
- * @return string
- * @since 1.7.1
- */
-function elgg_format_url($url) {
-	return preg_replace('/&(?!amp;)/', '&amp;', $url);
 }
 
 /**
