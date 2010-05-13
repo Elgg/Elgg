@@ -131,7 +131,7 @@ if ($sanitised = sanitised()) {
 		'group.php', 'input.php', 'install.php', 'location.php', 'mb_wrapper.php',
 		'memcache.php', 'metadata.php', 'metastrings.php', 'notification.php',
 		'objects.php', 'opendd.php', 'output.php', 'pagehandler.php', 'pageowner.php', 'pam.php',
-		'plugins.php', 'query.php', 'relationships.php', 'river2.php', 'sites.php',
+		'plugins.php', 'query.php', 'relationships.php', 'river.php', 'sites.php',
 		'social.php', 'statistics.php', 'system_log.php', 'tags.php',
 		'usersettings.php', 'users.php', 'version.php', 'widgets.php', 'xml.php',
 		'xml-rpc.php'
