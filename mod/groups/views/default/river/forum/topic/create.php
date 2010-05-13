@@ -1,4 +1,7 @@
 <?php
+/**
+ * First post on a topic
+ */
 
 	$performed_by = get_entity($vars['item']->subject_guid); // $statement->getSubject();
 	$object = get_entity($vars['item']->object_guid);
@@ -15,13 +18,10 @@
 	$string = sprintf(elgg_echo("groupforum:river:postedtopic"),$url_user) . ": ";
 	$string .= "<a href=\"" . $url . "\">" . $object->title . "</a>";
 	$string .= "<div class=\"river_content_display\">";
-	if(strlen($contents) > 200) {
-        	$string .= substr($contents, 0, strpos($contents, ' ', 200)) . "...";
-    	}else{
-	    	$string .= $contents;
-    	}
+	$string .= elgg_make_excerpt($contents, 200);
 	$string .= "</div>";
 	
-?>
 
-<?php echo $string; ?>
+
+	echo $string;
+?>

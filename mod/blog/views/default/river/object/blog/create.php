@@ -9,12 +9,8 @@
 	$string = sprintf(elgg_echo("blog:river:created"),$url) . " ";
 	$string .= elgg_echo("blog:river:create") . " <a href=\"" . $object->getURL() . "\">" . $object->title . "</a>";
 	$string .= "<div class=\"river_content_display\">";
-	if(strlen($contents) > 200) {
-        	$string .= substr($contents, 0, strpos($contents, ' ', 200)) . "...";
-    }else{
-	    $string .= $contents;
-    }
+	$string .= elgg_make_excerpt($contents, 200);
 	$string .= "</div>";
-?>
 
-<?php echo $string; ?>
+	echo $string;
+?>
