@@ -48,13 +48,12 @@ if ($vars['entity'] instanceof ElggUser) {
 	}
 	// profile avatar drop-down menu
 	if (!$override) {
-		?>
+	?>	
 		<div class="usericon <?php echo $vars['size']; ?>">
 		<div class="avatar_menu_button"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" border="0" width="15px" height="15px" /></div>
 		<div class="sub_menu">
 			<h3 class="displayname"><a href="<?php echo $vars['entity']->getURL(); ?>"><?php echo $vars['entity']->name; ?>
-			<span class="username"><?php echo "@".$vars['entity']->username; ?></span>
-			</a></h3>
+			<span class="username"><?php echo "&#64;" . $vars['entity']->username; ?></span></a></h3>			
 			<?php
 			echo "<ul class='sub_menu_list'>";
 				if (isloggedin()) {
