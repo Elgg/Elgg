@@ -1,6 +1,6 @@
 <?php echo $vars['body']; ?>
 
-<script type="text/JavaScript">
+<script type="text/javascript">
 $(document).ready(function(){
 	var updates = new thewireUpdateChecker(10000);
 	updates.start();

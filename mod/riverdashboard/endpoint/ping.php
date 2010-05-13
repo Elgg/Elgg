@@ -17,24 +17,30 @@ $last_reload = time() - $seconds_passed;
 
 //grab any new annotations
 $annotations = count_annotations('', '', '', '', '', '', '', $last_reload);
-if(!$annotations)
+if (!$annotations) {
 	$annotations = 0;
+}
+
 //grab all new objects created	
 $entity_creation = elgg_get_entities(array(
 	'count' => TRUE, 
 	'created_time_lower' => $last_reload,
 	'wheres' => array('e.type != \'user\'')
 ));
-if(!$entity_creation)
+
+if (!$entity_creation) {
 	$entity_creation = 0;
+}
+
 //grab any entities updated
 $entity_update = elgg_get_entities(array(
 	'count' => TRUE, 
 	'modified_time_lower' => $last_reload,
 	'wheres' => array('e.type != \'user\'')
 ));
-if(!$entity_update)
+if (!$entity_update) {
 	$entity_update = 0;
+}
 //get any relationships, such as friending - this is not working quite right yet
 //$relationship_action = elgg_get_entities_from_relationship(array('count' => TRUE));
 //if(!$relationship_action)

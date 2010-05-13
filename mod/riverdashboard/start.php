@@ -8,12 +8,12 @@
 function riverdashboard_init() {
 	global $CONFIG;
 	// Register and optionally replace the dashboard
-	register_page_handler('dashboard','riverdashboard_page_handler');
+	register_page_handler('dashboard', 'riverdashboard_page_handler');
 	add_menu(elgg_echo('activity'), $CONFIG->wwwroot . "mod/riverdashboard/");
 
 	// Page handler
-	register_page_handler('riverdashboard','riverdashboard_page_handler');
-	elgg_extend_view('css','riverdashboard/css');
+	register_page_handler('riverdashboard', 'riverdashboard_page_handler');
+	elgg_extend_view('css', 'riverdashboard/css');
 
 	// add an activity stream ECML keyword
 	// we'll restrict it to use in sitepages's custom_frontpage
@@ -41,7 +41,7 @@ function elgg_make_river_comment($entity){
 		return false;
 	} else {
 		//display the comment form
-		$comments = elgg_view('riverdashboard/rivercomment',array('entity' => $entity));
+		$comments = elgg_view('riverdashboard/rivercomment', array('entity' => $entity));
 		return $comments;
 	}
 }

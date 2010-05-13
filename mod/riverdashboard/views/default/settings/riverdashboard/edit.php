@@ -1,5 +1,4 @@
-<?php
-?>
+
 <p>
 	<?php echo elgg_echo('river:type'); ?>
 	<select name="params[activitytype]">

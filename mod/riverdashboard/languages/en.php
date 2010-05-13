@@ -8,7 +8,7 @@ $english = array(
 
 	/**
 	 * Site messages
-		 **/
+	 **/
 
 	'sitemessages:announcements' => "Site announcements",
 	'sitemessages:posted' => "Posted",
@@ -44,4 +44,4 @@ $english = array(
 	'riverdashboard:ecml:desc:usage' => '[activity user=username limit=limit type=type subtype=subtype]'
 );
 
-add_translation("en",$english);
+add_translation("en", $english);
