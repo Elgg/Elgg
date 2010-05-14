@@ -238,6 +238,9 @@ h2 {
 	padding:1px 0 0 16px;
 	font-size: 90%;
 }
+.tagcloud {
+	text-align:justify;
+}
 .ajax_loader {
 	background-color: white;
 	background-image: url(<?php echo $vars['url']; ?>_graphics/ajax_loader_bw.gif);
