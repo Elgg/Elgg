@@ -251,7 +251,7 @@ class ElggSite extends ElggEntity {
 			register_plugin_hook('index', 'system', 'elgg_walled_garden_index');
 			
 			if (!$this->is_public_page()) {
-				register_error(elgg_echo('walled_garden:private_page') . current_page_url());
+				register_error(elgg_echo('loggedinrequired'));
 				forward();
 			}
 		}
