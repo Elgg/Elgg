@@ -50,9 +50,21 @@ set_exception_handler('__elgg_php_exception_handler');
 
 // attempt to save settings.php and .htaccess if in installation.
 if ($sanitised = sanitised()) {
+	/**
+	 * Load the system settings
+	 */
+	if (!include_once(dirname(__FILE__) . "/settings.php")) {
+		throw new InstallationException("Elgg could not load the settings file.");
+	}
+
+	// Get config
+	global $CONFIG;
 
 	// load the rest of the library files from engine/lib/
 	$lib_files = array(
+		// these want to be loaded first apparently?
+		'database.php', 'actions.php',
+
 		'admin.php', 'annotations.php', 'api.php', 'cache.php',
 		'calendar.php', 'configuration.php', 'cron.php', 'entities.php',
 		'export.php', 'extender.php', 'filestore.php', 'group.php',
@@ -71,11 +83,6 @@ if ($sanitised = sanitised()) {
 		if (!include_once($file)) {
 			throw new InstallationException("Could not load {$file}");
 		}
-	}
-
-	// Load system settings
-	if (!include_once(dirname(__FILE__) . "/settings.php")) {
-		throw new InstallationException("Elgg could not load the settings file.");
 	}
 } else {
 	throw new InstallationException(elgg_echo('installation:error:configuration'));
