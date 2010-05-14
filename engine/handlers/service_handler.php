@@ -10,7 +10,6 @@
 
 
 // Load Elgg engine
-define('externalpage',true);
 require_once("../start.php");
 
 // Get input

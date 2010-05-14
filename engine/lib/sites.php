@@ -279,6 +279,8 @@ class ElggSite extends ElggEntity {
 			"{$CONFIG->url}action/user/requestnewpassword",
 			"{$CONFIG->url}pg/resetpassword",
 			"{$CONFIG->url}upgrade.php",
+			"{$CONFIG->url}xml-rpc.php",
+			"{$CONFIG->url}mt/mt-xmlrpc.cgi",
 		);
 		
 		// include a hook for plugin authors to include public pages

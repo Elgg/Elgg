@@ -18,6 +18,9 @@ class CronException extends Exception {}
 function cron_init() {
 	// Register a pagehandler for cron
 	register_page_handler('cron','cron_page_handler');
+	
+	// register a hook for Walled Garden public pages
+	register_plugin_hook('public_pages', 'walled_garden', 'cron_public_pages');
 }
 
 /**
@@ -51,6 +54,23 @@ function cron_page_handler($page) {
 	} else {
 		forward();
 	}
+}
+
+function cron_public_pages($hook, $type, $return_value, $params) {
+	global $CONFIG;
+	
+	$return_value[] = "{$CONFIG->url}pg/cron/minute";
+	$return_value[] = "{$CONFIG->url}pg/cron/fiveminute";
+	$return_value[] = "{$CONFIG->url}pg/cron/fifteenmin";
+	$return_value[] = "{$CONFIG->url}pg/cron/halfhour";
+	$return_value[] = "{$CONFIG->url}pg/cron/hourly";
+	$return_value[] = "{$CONFIG->url}pg/cron/daily";
+	$return_value[] = "{$CONFIG->url}pg/cron/weekly";
+	$return_value[] = "{$CONFIG->url}pg/cron/monthly";
+	$return_value[] = "{$CONFIG->url}pg/cron/yearly";
+	$return_value[] = "{$CONFIG->url}pg/cron/reboot";
+	
+	return $return_value;
 }
 
 // Register a startup event
