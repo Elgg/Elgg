@@ -309,6 +309,78 @@ function email_notify_handler(ElggEntity $from, ElggUser $to, $subject, $message
 }
 
 /**
+ * Send an email to any email address
+ *
+ * @param string $from Email address or string: "name <email>"
+ * @param string $to Email address or string: "name <email>"
+ * @param string $subject The subject of the message
+ * @param string $body The message body
+ * @param array $params Optional parameters (none used in this function)
+ * @return bool
+ */
+function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
+	global $CONFIG;
+
+	if (!$from) {
+		throw new NotificationException(sprintf(elgg_echo('NotificationException:NoEmailAddress'), 'from'));
+	}
+
+	if (!$to) {
+		throw new NotificationException(sprintf(elgg_echo('NotificationException:NoEmailAddress'), 'to'));
+	}
+
+	// return TRUE/FALSE to stop elgg_send_email() from sending
+	$mail_params = array(	'to' => $to,
+							'from' => $from,
+							'subject' => $subject,
+							'body' => $body,
+							'params' => $params);
+	$result = trigger_plugin_hook('email', 'system', $mail_params, NULL);
+	if ($result !== NULL) {
+		return $result;
+	}
+
+	$header_eol = "\r\n";
+	if (isset($CONFIG->broken_mta) && $CONFIG->broken_mta) {
+		// Allow non-RFC 2822 mail headers to support some broken MTAs
+		$header_eol = "\n";
+	}
+
+	// Windows is somewhat broken, so we use just address for to and from
+	if (strtolower(substr(PHP_OS, 0 , 3)) == 'win') {
+		// strip name from to and from
+		if (strpos($to, '<')) {
+			preg_match('/<(.*)>/', $to, $matches);
+			$to = $matches[1];
+		}
+		if (strpos($from, '<')) {
+			preg_match('/<(.*)>/', $from, $matches);
+			$from = $matches[1];
+		}
+	}
+
+	$headers = "From: $from{$header_eol}"
+		. "Content-Type: text/plain; charset=UTF-8; format=flowed{$header_eol}"
+		. "MIME-Version: 1.0{$header_eol}"
+		. "Content-Transfer-Encoding: 8bit{$header_eol}";
+
+
+	// Sanitise subject by stripping line endings
+	$subject = preg_replace("/(\r\n|\r|\n)/", " ", $subject);
+	if (is_callable('mb_encode_mimeheader')) {
+		$subject = mb_encode_mimeheader($subject,"UTF-8", "B");
+	}
+
+	// Format message
+	$message = html_entity_decode($body, ENT_COMPAT, 'UTF-8'); // Decode any html entities
+	$message = strip_tags($body); // Strip tags from message
+	$message = preg_replace("/(\r\n|\r)/", "\n", $body); // Convert to unix line endings in body
+	$message = preg_replace("/^From/", ">From", $body); // Change lines starting with From to >From
+
+	return mail($to, $subject, wordwrap($body), $headers);
+}
+
+/**
  * Correctly initialise notifications and register the email handler.
  *
  */

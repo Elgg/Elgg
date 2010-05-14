@@ -29,8 +29,15 @@ function forward($location = "") {
 			$location = $CONFIG->url . $location;
 		}
 
-		header("Location: {$location}");
-		exit;
+		// return new forward location or false to stop the forward or empty string to exit
+		$params = array('current_url' => $current_page, 'forward_url' => $location);
+		$location = trigger_plugin_hook('forward', 'system', $params, $location);
+		if ($location) {
+			header("Location: {$location}");
+			exit;
+		} else if ($location === '') {
+			exit;
+		}
 	}
 
 	return false;
@@ -568,7 +575,7 @@ function elgg_get_views($dir, $base) {
 }
 
 /**
- * @deprecated 1.7.  Use elgg_extend_view().
+ * @deprecated 1.7.  Use elgg_get_views().
  * @param $dir
  * @param $base
  */
@@ -1301,14 +1308,18 @@ function set_template_handler($function_name) {
 }
 
 /**
- * Extends a view by adding other views to be displayed at the same time.
+ * Extends a view.
  *
- * @param string $view The view to add to.
- * @param string $view_name The name of the view to extend
- * @param int $priority The priority, from 0 to 1000, to add at (lowest numbers will be displayed first)
+ * The addititional views are displayed before or after the primary view. 
+ * Priorities less than 500 are displayed before the primary view and 
+ * greater than 500 after. The default priority is 501. 
+ *
+ * @param string $view The view to extend.
+ * @param string $view_extension This view is added to $view
+ * @param int $priority The priority, from 0 to 1000, to add at (lowest numbers displayed first)
  * @param string $viewtype Not used
  */
-function elgg_extend_view($view, $view_name, $priority = 501, $viewtype = '') {
+function elgg_extend_view($view, $view_extension, $priority = 501, $viewtype = '') {
 	global $CONFIG;
 
 	if (!isset($CONFIG->views)) {
@@ -1327,7 +1338,7 @@ function elgg_extend_view($view, $view_name, $priority = 501, $viewtype = '') {
 		$priority++;
 	}
 
-	$CONFIG->views->extensions[$view][$priority] = "{$view_name}";
+	$CONFIG->views->extensions[$view][$priority] = "{$view_extension}";
 	ksort($CONFIG->views->extensions[$view]);
 }
 
@@ -1482,23 +1493,25 @@ function get_library_files($directory, $exceptions = array(), $list = array()) {
  * @param array $exceptions Array of filenames to ignore
  * @param array $list Array of files to append to
  * @param mixed $extensions Array of extensions to allow, NULL for all. (With a dot: array('.php'))
- * @return array
+ * @return array of filenames including $directory
  */
 function elgg_get_file_list($directory, $exceptions = array(), $list = array(), $extensions = NULL) {
+	$directory = sanitise_filepath($directory);
 	if ($handle = opendir($directory)) {
 		while (($file = readdir($handle)) !== FALSE) {
-			if (!is_file($file) || in_array($file, $exceptions)) {
+			if (!is_file($directory . $file) || in_array($file, $exceptions)) {
 				continue;
 			}
 
 			if (is_array($extensions)) {
 				if (in_array(strrchr($file, '.'), $extensions)) {
-					$list[] = $directory . "/" . $file;
+					$list[] = $directory . $file;
 				}
 			} else {
-				$list[] = $directory . "/" . $file;
+				$list[] = $directory . $file;
 			}
 		}
+		closedir($handle);
 	}
 
 	return $list;
