@@ -24,6 +24,10 @@ function forward($location = "") {
 	global $CONFIG;
 
 	if (!headers_sent()) {
+		if ($location === REFERER) {
+			$location = $_SERVER['HTTP_REFERER'];
+		}
+
 		$current_page = current_page_url();
 		if ((substr_count($location, 'http://') == 0) && (substr_count($location, 'https://') == 0)) {
 			$location = $CONFIG->url . $location;
@@ -137,6 +141,45 @@ function elgg_get_viewtype() {
 
 	return $viewtype;
 }
+
+/**
+ * Register a viewtype to fall back to a default view if view does not exist in
+ * that viewtype.
+ *
+ * This is useful for alternate html viewtypes (such as for mobile devices)
+ *
+ * @param string $viewtype The viewtype to register
+ */
+function elgg_register_viewtype_fallback($viewtype) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->viewtype)) {
+		$CONFIG->viewtype = new stdClass;
+	}
+
+	if (!isset($CONFIG->viewtype->fallback)) {
+		$CONFIG->viewtype->fallback = array();
+	}
+
+	$CONFIG->viewtype->fallback[] = $viewtype;
+}
+
+/**
+ * Checks if this viewtype falls back to default
+ *
+ * @param string $viewtype
+ * @return boolean
+ */
+function elgg_does_viewtype_fallback($viewtype) {
+	global $CONFIG;
+
+	if (isset($CONFIG->viewtype) && isset($CONFIG->viewtype->fallback)) {
+		return in_array($viewtype, $CONFIG->viewtype->fallback);
+	}
+	
+	return FALSE;
+}
+
 
 /**
  * Return the location of a given view.
@@ -282,7 +325,7 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 			$error = "$viewtype/$view view does not exist.";
 
 			// attempt to load default view
-			if ($viewtype != 'default') {
+			if ($viewtype != 'default' && elgg_does_viewtype_fallback($viewtype)) {
 				if (file_exists($default_view_file) && include($default_view_file)) {
 					// default view found
 					$error .= " Using default/$view instead.";
@@ -3326,8 +3369,17 @@ define('ACCESS_LOGGED_IN', 1);
 define('ACCESS_PUBLIC', 2);
 define('ACCESS_FRIENDS', -2);
 
+/**
+ * @since 1.7
+ */
 define('ELGG_ENTITIES_ANY_VALUE', NULL);
 define('ELGG_ENTITIES_NO_VALUE', 0);
+
+/**
+ * @since 1.7.2
+ */
+define('REFERRER', -1);
+define('REFERER', -1);
 
 register_elgg_event_handler('init', 'system', 'elgg_init');
 register_elgg_event_handler('boot', 'system', 'elgg_boot', 1000);

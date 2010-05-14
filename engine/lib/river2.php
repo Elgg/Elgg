@@ -191,6 +191,7 @@ function get_river_items($subject_guid = 0, $object_guid = 0, $subject_relations
 
 	// Construct 'where' clauses for the river
 	$where = array();
+	// river table does not have columns expected by get_access_sql_suffix so we modify its output
 	$where[] = str_replace("and enabled='yes'",'',str_replace('owner_guid','subject_guid',get_access_sql_suffix()));
 
 	if (empty($subject_relationship)) {

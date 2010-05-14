@@ -292,11 +292,11 @@ function get_tags($threshold = 1, $limit = 10, $metadata_name = "", $entity_type
 	}
 
 	if ($end_ts) {
-		$options['time_upper'] = $end_ts;
+		$options['created_time_upper'] = $end_ts;
 	}
 
 	if ($start_ts) {
-		$options['time_lower'] = $start_ts;
+		$options['created_time_lower'] = $start_ts;
 	}
 
 	$r = elgg_get_tags($options);

@@ -1602,7 +1602,7 @@ function collections_submenu_items() {
 	global $CONFIG;
 	$user = get_loggedin_user();
 	add_submenu_item(elgg_echo('friends:collections'), $CONFIG->wwwroot . "pg/collections/" . $user->username);
-	add_submenu_item(elgg_echo('friends:collections:add'),$CONFIG->wwwroot."pg/collections/add");
+	add_submenu_item(elgg_echo('friends:collections:add'), $CONFIG->wwwroot . "pg/collections/add");
 }
 
 /**
@@ -1613,10 +1613,9 @@ function friends_page_handler($page_elements) {
 	if (isset($page_elements[0]) && $user = get_user_by_username($page_elements[0])) {
 		set_page_owner($user->getGUID());
 	}
-	if ($_SESSION['guid'] == page_owner()) {
+	if (get_loggedin_userid() == page_owner()) {
 		// collections_submenu_items(); disabled for now as we no longer use friends collections (replaced by shared access)
 	}
-
 	require_once(dirname(dirname(dirname(__FILE__))) . "/friends/index.php");
 }
 
@@ -1628,26 +1627,26 @@ function friends_of_page_handler($page_elements) {
 	if (isset($page_elements[0]) && $user = get_user_by_username($page_elements[0])) {
 		set_page_owner($user->getGUID());
 	}
-	if ($_SESSION['guid'] == page_owner()) {
+	if (get_loggedin_userid() == page_owner()) {
 		// collections_submenu_items(); disabled for now as we no longer use friends collections (replaced by shared access)
 	}
 	require_once(dirname(dirname(dirname(__FILE__))) . "/friends/of.php");
 }
 
 /**
- * Page handler for friends of
+ * Page handler for friends collections
  *
  */
 function collections_page_handler($page_elements) {
 	if (isset($page_elements[0])) {
 		if ($page_elements[0] == "add") {
-			set_page_owner($_SESSION['guid']);
+			set_page_owner(get_loggedin_userid());
 			collections_submenu_items();
 			require_once(dirname(dirname(dirname(__FILE__))) . "/friends/add.php");
 		} else {
 			if ($user = get_user_by_username($page_elements[0])) {
 				set_page_owner($user->getGUID());
-				if ($_SESSION['guid'] == page_owner()) {
+				if (get_loggedin_userid() == page_owner()) {
 					collections_submenu_items();
 				}
 				require_once(dirname(dirname(dirname(__FILE__))) . "/friends/collections.php");

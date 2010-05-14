@@ -1,14 +1,14 @@
 <?php
 
-	/**
-	 * Elgg invite page
-	 * 
-	 * @package ElggFile
-	 * @author Curverider Ltd
-	 * @copyright Curverider Ltd 2008-2010
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @link http://elgg.org/
-	 */
+/**
+ * Elgg invite form contents
+ *
+ * @package ElggInviteFriends
+ * @author Curverider Ltd
+ * @copyright Curverider Ltd 2008-2010
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * @link http://elgg.org/
+ */
 
 
 echo "<h2>".elgg_echo('friends:invite')."</h2>";

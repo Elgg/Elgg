@@ -20,6 +20,13 @@ $size = strtolower(get_input('size'));
 if (!in_array($size,array('large','medium','small','tiny','master','topbar')))
 	$size = "medium";
 
+// If user doesn't exist, return default icon
+if (!$user) {
+	$path = elgg_view("icon/user/default/$size");
+	header("Location: $path");
+	exit;
+}
+
 // Try and get the icon
 $filehandler = new ElggFile();
 $filehandler->owner_guid = $user->getGUID();

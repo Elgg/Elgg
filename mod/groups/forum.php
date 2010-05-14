@@ -1,7 +1,7 @@
 <?php
 	/**
 	 * Elgg groups forum
-	 *
+	 * 
 	 * @package ElggGroups
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
 	 * @author Curverider
@@ -11,8 +11,11 @@
 
 	require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
-	set_page_owner((int)get_input('group_guid'));
-	if (!(page_owner_entity() instanceof ElggGroup)) forward();
+	$group_guid = (int)get_input('group_guid');
+	set_page_owner($group_guid);
+	if (!(page_owner_entity() instanceof ElggGroup)) {
+		forward();
+	}
 
 	group_gatekeeper();
 
@@ -21,7 +24,6 @@
 	set_context('search');
 
 	// set up breadcrumbs
-	$group_guid = get_input('group_guid');
 	$group = get_entity($group_guid);
 	elgg_push_breadcrumb(elgg_echo('groups'), $CONFIG->wwwroot."pg/groups/world/");
 	elgg_push_breadcrumb($group->name, $group->getURL());

@@ -1989,11 +1989,11 @@ $count = false, $site_guid = 0, $container_guid = null, $timelower = 0, $timeupp
 	}
 
 	if ($timeupper) {
-		$options['time_upper'] = $timeupper;
+		$options['created_time_upper'] = $timeupper;
 	}
 
 	if ($timelower) {
-		$options['time_lower'] = $timelower;
+		$options['created_time_lower'] = $timelower;
 	}
 
 	$r = elgg_get_entities($options);

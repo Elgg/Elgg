@@ -18,7 +18,7 @@
 		if(page_owner_entity()->isMember($vars['user'])) {
 	?>
 		<div class="content_header_options">
-			<a class="action_button" href="<?php echo $vars['url']; ?>mod/groups/addtopic.php?group_guid=<?php echo get_input('group_guid'); ?>"><?php echo elgg_echo("groups:addtopic"); ?></a>
+			<a class="action_button" href="<?php echo $vars['url']; ?>mod/groups/addtopic.php?group_guid=<?php echo vars('group_guid'); ?>"><?php echo elgg_echo("groups:addtopic"); ?></a>
 		</div>
 	<?php
 		}
