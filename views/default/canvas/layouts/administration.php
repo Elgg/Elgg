@@ -48,6 +48,10 @@ body { background-color: #444444; }
 	min-height:400px;
 	position:relative;
 	width:auto;
+	background-image: none;
+	background-color: transparent;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
 }
 #elgg_content.admin_area #elgg_page_contents  {
 	float:left;
@@ -75,7 +79,7 @@ body { background-color: #444444; }
 .admin_area h6 { 
 	color:#666666;
 }
-.admin_area .submenu {
+.admin_area #elgg_sidebar .submenu {
 	margin:0;
 	padding:0;
 	list-style: none;
