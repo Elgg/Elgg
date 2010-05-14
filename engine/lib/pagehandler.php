@@ -20,20 +20,7 @@ function page_handler($handler, $page) {
 
 	set_context($handler);
 
-	// if there are any query parameters, make them available from get_input
-	if (strpos($_SERVER['REQUEST_URI'], '?') !== FALSE) {
-		$query = substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], '?') + 1);
-		if (isset($query)) {
-			$query_arr = elgg_parse_str($query);
-			if (is_array($query_arr)) {
-				foreach($query_arr as $name => $val) {
-					set_input($name, $val);
-				}
-			}
-		}
-	}
-
-	$page = explode('/', $page);
+	$page = explode('/',$page);
 	// remove empty array element when page url ends in a / (see #1480)
 	if ($page[count($page) - 1] === '') {
 		array_pop($page);

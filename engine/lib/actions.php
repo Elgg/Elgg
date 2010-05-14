@@ -21,9 +21,6 @@
 function action($action, $forwarder = "") {
 	global $CONFIG;
 
-	// set GET params
-	elgg_set_input_from_uri();
-
 	// @todo REMOVE THESE ONCE #1509 IS IN PLACE.
 	// Allow users to disable plugins without a token in order to
 	// remove plugins that are imcompatible.
@@ -72,6 +69,8 @@ function action($action, $forwarder = "") {
 			} else {
 				register_error(elgg_echo('actionloggedout'));
 			}
+		} else {
+			register_error(elgg_echo('actionunauthorized'));
 		}
 	} else {
 		register_error(sprintf(elgg_echo('actionundefined'),$action));
@@ -197,14 +196,11 @@ function generate_action_token($timestamp) {
 	// Current session id
 	$session_id = session_id();
 
-	// Get user agent
-	$ua = $_SERVER['HTTP_USER_AGENT'];
-
 	// Session token
 	$st = $_SESSION['__elgg_session'];
 
 	if (($site_secret) && ($session_id)) {
-		return md5($site_secret.$timestamp.$session_id.$ua.$st);
+		return md5($site_secret.$timestamp.$session_id.$st);
 	}
 
 	return FALSE;

@@ -104,8 +104,10 @@ if (sizeof($input) > 0) {
 	// Notify of profile update
 	trigger_elgg_event('profileupdate',$user->type,$user);
 
-	//add to river
-	add_to_river('river/user/default/profileupdate','update',$_SESSION['user']->guid,$_SESSION['user']->guid,get_default_access($_SESSION['user']));
+	//add to river if edited by self
+	if (get_loggedin_userid() == $user->guid) {
+		add_to_river('river/user/default/profileupdate','update',$_SESSION['user']->guid,$_SESSION['user']->guid,get_default_access($_SESSION['user']));
+ 	}
 
 	system_message(elgg_echo("profile:saved"));
 }

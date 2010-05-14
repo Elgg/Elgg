@@ -51,18 +51,18 @@ set_exception_handler('__elgg_php_exception_handler');
 // attempt to save settings.php and .htaccess if in installation.
 if ($sanitised = sanitised()) {
 
-	// load library files
+	// load the rest of the library files from engine/lib/
 	$lib_files = array(
-		'actions.php', 'activity.php', 'admin.php', 'annotations.php', 'api.php',
-		'cache.php', 'calendar.php', 'configuration.php', 'cron.php',
-		'entities.php', 'export.php', 'extender.php', 'database.php', 'filestore.php',
-		'group.php', 'input.php', 'install.php', 'location.php', 'mb_wrapper.php',
+		'admin.php', 'annotations.php', 'api.php', 'cache.php',
+		'calendar.php', 'configuration.php', 'cron.php', 'entities.php',
+		'export.php', 'extender.php', 'filestore.php', 'group.php',
+		'input.php', 'install.php', 'location.php', 'mb_wrapper.php',
 		'memcache.php', 'metadata.php', 'metastrings.php', 'notification.php',
-		'objects.php', 'opendd.php', 'pagehandler.php', 'pageowner.php', 'pam.php',
-		'plugins.php', 'query.php', 'relationships.php', 'river2.php', 'sites.php',
-		'social.php', 'statistics.php', 'system_log.php', 'tags.php',
-		'usersettings.php', 'users.php', 'version.php', 'widgets.php', 'xml.php',
-		'xml-rpc.php'
+		'objects.php', 'opendd.php', 'output.php', 'pagehandler.php', 
+		'pageowner.php', 'pam.php', 'plugins.php', 'query.php',
+		'relationships.php', 'river.php', 'sites.php', 'social.php',
+		'statistics.php', 'system_log.php', 'tags.php', 'usersettings.php',
+		'users.php', 'version.php', 'widgets.php', 'xml.php', 'xml-rpc.php'
 	);
 
 	foreach($lib_files as $file) {

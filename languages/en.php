@@ -42,6 +42,7 @@ $english = array(
 
 	'actionundefined' => "The requested action (%s) was not defined in the system.",
 	'actionloggedout' => "Sorry, you cannot perform this action while logged out.",
+	'actionunauthorized' => 'You are unauthorized to perform this action',
 
 	'SecurityException:Codeblock' => "Denied access to execute privileged code block",
 	'DatabaseException:WrongCredentials' => "Elgg couldn't connect to the database using the given credentials.",

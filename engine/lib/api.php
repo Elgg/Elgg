@@ -1438,17 +1438,6 @@ function __php_api_exception_handler($exception) {
 function service_handler($handler, $request) {
 	global $CONFIG;
 
-	// setup the input parameters since this comes through rewrite rule
-	$query = substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], '?')+1);
-	if (isset($query)) {
-		$query_arr = elgg_parse_str($query);
-		if (is_array($query_arr)) {
-			foreach($query_arr as $name => $val) {
-				set_input($name, $val);
-			}
-		}
-	}
-
 	set_context('api');
 
 	$request = explode('/',$request);

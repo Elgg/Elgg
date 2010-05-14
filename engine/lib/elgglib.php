@@ -476,11 +476,10 @@ function elgg_view_regenerate_simplecache() {
 
 function elgg_view_enable_simplecache() {
 	global $CONFIG;
-	if(!$CONFIG->simplecache_enabled) {
-		datalist_set('simplecache_enabled',1);
-		$CONFIG->simplecache_enabled = 1;
-		elgg_view_regenerate_simplecache();
-	}
+
+	datalist_set('simplecache_enabled',1);
+	$CONFIG->simplecache_enabled = 1;
+	elgg_view_regenerate_simplecache();
 }
 
 /**
@@ -1386,6 +1385,39 @@ function elgg_extend_view($view, $view_extension, $priority = 501, $viewtype = '
 }
 
 /**
+ * Unextends a view.
+ *
+ * @param string $view The view that was extended.
+ * @param string $view_extension This view that was added to $view
+ * @return bool
+ * @since 1.7.2
+ */
+function elgg_unextend_view($view, $view_extension) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->views)) {
+		return FALSE;
+	}
+
+	if (!isset($CONFIG->views->extensions)) {
+		return FALSE;
+	}
+
+	if (!isset($CONFIG->views->extensions[$view])) {
+		return FALSE;
+	}
+
+	$priority = array_search($view_extension, $CONFIG->views->extensions[$view]);
+	if ($priority === FALSE) {
+		return FALSE;
+	}
+
+	unset($CONFIG->views->extensions[$view][$priority]);
+	
+	return TRUE;
+}
+
+/**
  * @deprecated 1.7.  Use elgg_extend_view().
  * @param $view
  * @param $view_name
@@ -1495,26 +1527,6 @@ function page_draw($title, $body, $sidebar = "") {
 	foreach($split_output as $chunk) {
 		echo $chunk;
 	}
-}
-
-/**
- * Displays a UNIX timestamp in a friendly way (eg "less than a minute ago")
- *
- * @param int $time A UNIX epoch timestamp
- * @return string The friendly time
- */
-function friendly_time($time) {
-	return elgg_view('output/friendlytime', array('time' => $time));
-}
-
-/**
- * When given a title, returns a version suitable for inclusion in a URL
- *
- * @param string $title The title
- * @return string The optimised title
- */
-function friendly_title($title) {
-	return elgg_view('output/friendlytitle', array('title' => $title));
 }
 
 /**
@@ -2810,17 +2822,6 @@ interface Friendable {
 	 * @param string $subtype The subtype of entity to count
 	 */
 	public function countObjects($subtype = "");
-}
-
-/**
- * Handles formatting of ampersands in urls
- *
- * @param string $url
- * @return string
- * @since 1.7.1
- */
-function elgg_format_url($url) {
-	return preg_replace('/&(?!amp;)/', '&amp;', $url);
 }
 
 /**

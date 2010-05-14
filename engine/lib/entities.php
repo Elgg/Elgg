@@ -2319,8 +2319,8 @@ function elgg_get_entity_site_where_sql($table, $site_guids) {
  */
 function elgg_list_entities($options) {
 	$defaults = array(
-		'offset' => 0,
-		'limit' => 10,
+		'offset' => (int) max(get_input('offset', 0), 0),
+		'limit' => (int) max(get_input('limit', 10), 0),
 		'full_view' => TRUE,
 		'view_type_toggle' => FALSE,
 		'pagination' => TRUE

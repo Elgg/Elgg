@@ -11,13 +11,7 @@
 	$string .= elgg_echo("pages:river:create") . " <a href=\"" . $object->getURL() . "\">" . $object->title . "</a> <span class='entity_subtext'>". friendly_time($object->time_created) ."</span> <a class='river_comment_form_button link'>Comment</a>";
 	$string .= elgg_view('likes/forms/link', array('entity' => $object));
 	$string .= "<div class=\"river_content_display\">";
-	if(strlen($contents) > 200) {
-        	$string .= substr($contents, 0, strpos($contents, ' ', 200)) . "&hellip;";
-    }else{
-	    $string .= $contents;
-    }
+	$string .= elgg_make_excerpt($contents, 200);
 	$string .= "</div>";
 
-?>
-
-<?php echo $string; ?>
+	echo $string;
