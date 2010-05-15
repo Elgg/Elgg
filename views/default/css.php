@@ -138,7 +138,7 @@ h1, h2, h3, h4, h5, h6 {
 	color:#0054A7;
 }
 h1 { font-size: 1.8em; }
-h2 { font-size: 1.5em; }
+h2 { font-size: 1.5em; line-height: 1.1em; }
 h3 { font-size: 1.2em; }
 h4 { font-size: 1.0em; }
 h5 { font-size: 0.9em; }
@@ -234,9 +234,9 @@ h2 {
 .tags {
 	background-image:url(<?php echo $vars['url']; ?>_graphics/elgg_sprites.png);
 	background-repeat: no-repeat;
-	background-position: left -198px;
-	padding:1px 0 0 16px;
-	font-size: 90%;
+	background-position: left -196px;
+	padding:1px 0 0 14px;
+	font-size: 85%;
 }
 .tagcloud {
 	text-align:justify;
@@ -968,7 +968,7 @@ li.navigation_more ul li {
 	clear:both;
 	display:block;
 	margin:0;
-	padding:5px 0 7px;
+	padding:4px 0 4px;
 	position:relative;
 }
 .entity_listing:first-child {
@@ -1000,6 +1000,7 @@ li.navigation_more ul li {
 	font-size: 1.1em;
 	line-height:1.2em;
 	color:#666666;
+	padding-bottom:4px;
 }
 .entity_title a {
 	color:#0054A7;

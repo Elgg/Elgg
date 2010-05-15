@@ -38,8 +38,8 @@
 }
 .river_item .entity_subtext {
 	padding-left:5px;
-	padding-right:5px;
-	font-size:85%;
+	padding-right:12px;
+	/*font-size:85%;*/
 }
 .river_item_useravatar {
 	float:left;
@@ -48,6 +48,9 @@
 }
 .river_item_contents {
 	margin-left:55px;
+}
+.river_item_contents a {
+	font-weight: bold;
 }
 .river_content_display {
 	border-left:1px solid #DDDDDD;
@@ -107,9 +110,10 @@
 .river_link_divider {
 	color:#999999;
 }
-.river_comment_form_button,
-.river_user_like_button {
+.river_item_contents .river_comment_form_button,
+.river_item_contents .river_user_like_button {
 	font-size:85%;
+	font-weight:normal;
 }
 /* hidden list of users that liked item */
 .river_item .elgg_likes_user {
@@ -138,6 +142,7 @@
 	margin-left:6px;
 	text-align:right;
 	font-size:85%;
+	font-weight:normal;
 	width:auto;
 	background-color: #eeeeee;
 	-moz-border-radius-topleft:4px;
