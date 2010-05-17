@@ -12,6 +12,12 @@
 .blogpost {
 	border-bottom:1px dotted #CCCCCC;
 }
+.blogpost .entity_listing_icon {
+	margin-top:6px;
+}
+.blogpost .entity_listing_info {
+	margin-top:4px;
+}
 .blogpost .body {
 	margin-top:5px;
 	margin-bottom:10px;
