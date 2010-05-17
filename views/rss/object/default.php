@@ -11,38 +11,43 @@
 $title = $vars['entity']->title;
 if (empty($title)) {
 	$subtitle = strip_tags($vars['entity']->description);
-	$title = substr($subtitle,0,32);
+	$title = substr($subtitle, 0, 32);
 	if (strlen($subtitle) > 32) {
-		$title .= " ...";
+		$title .= ' ...';
 	}
 }
 
-?>
+$permalink = htmlspecialchars($vars['entity']->getURL());
+$pubdate = date('r', $vars['entity']->time_created);
 
+$creator = '';
+if ($owner = $vars['entity']->getOwnerEntity()) {
+	$creator = "<dc:creator>{$owner->name}</dc:creator>";
+}
+
+$georss = '';
+if (
+	($vars['entity'] instanceof Locatable) &&
+	($vars['entity']->getLongitude()) &&
+	($vars['entity']->getLatitude())
+) {
+	$latitude = $vars['entity']->getLatitude();
+	$longitude = $vars['entity']->getLongitude();
+	$georss = "<georss:point>$latitude $longitude</georss:point>";
+}
+
+$extension = elgg_view('extensions/item');
+
+$item = <<<__HTML
 <item>
-<guid isPermaLink='true'><?php echo htmlspecialchars($vars['entity']->getURL()); ?></guid>
-<pubDate><?php echo date("r",$vars['entity']->time_created) ?></pubDate>
-<link><?php echo htmlspecialchars($vars['entity']->getURL()); ?></link>
-<title><![CDATA[<?php echo $title; ?>]]></title>
-<description><![CDATA[<?php echo (autop($vars['entity']->description)); ?>]]></description>
-<?php
-		$owner = $vars['entity']->getOwnerEntity();
-		if ($owner) {
-?>
-<dc:creator><?php echo $owner->name; ?></dc:creator>
-<?php
-		}
-?>
-<?php
-		if (
-			($vars['entity'] instanceof Locatable) &&
-			($vars['entity']->getLongitude()) &&
-			($vars['entity']->getLatitude())
-		) {
-			?>
-			<georss:point><?php echo $vars['entity']->getLatitude(); ?> <?php echo $vars['entity']->getLongitude(); ?></georss:point>
-			<?php
-		}
-?>
-<?php echo elgg_view('extensions/item'); ?>
+	<guid isPermaLink="true">$permalink</guid>
+	<pubDate>$pubdate</pubDate>
+	<link>$permalink</link>
+	<title><![CDATA[$title]]></title>
+	<description><![CDATA[{$vars['entity']->description}]]></description>
+	$creator$georss$extension
 </item>
+
+__HTML;
+
+echo $item;

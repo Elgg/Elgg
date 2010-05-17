@@ -6,35 +6,29 @@
  * @link http://elgg.org/
  */
 
-if (isset($vars['items']) && is_array($vars['items'])) {
-
-	$i = 0;
-	if (!empty($vars['items'])) {
-		foreach($vars['items'] as $item) {
-
-			// echo elgg_view_river_item($item);
-			if (elgg_view_exists($item->view,'default')) {
-				$body = elgg_view($item->view,array('item' => $item),false,false,'default');
-				$time = date("r",$item->posted);
-				if ($entity = get_entity($item->object_guid)) {
-					$url = htmlspecialchars($entity->getURL());
-				} else {
-					$url = $vars['url'];
-				}
-				$title = strip_tags($body);
-
-	?>
-	<item>
-		<guid isPermaLink='true'><?php echo $url; ?></guid>
-		<pubDate><?php echo $time; ?></pubDate>
-		<link><?php echo $url; ?></link>
-		<title><![CDATA[<?php echo $title; ?>]]></title>
-		<description><![CDATA[<?php echo (autop($body)); ?>]]></description>
-	</item>
-	<?php
-
+if (isset($vars['items']) && is_array($vars['items']) && !empty($vars['items'])) {
+	foreach($vars['items'] as $item) {
+		if (elgg_view_exists($item->view)) {
+			$body = elgg_view($item->view, array('item' => $item));
+			$time = date('r', $item->posted);
+			if ($entity = get_entity($item->object_guid)) {
+				$url = htmlspecialchars($entity->getURL());
+			} else {
+				$url = $vars['url'];
 			}
+			$title = strip_tags($body);
+			
+			echo <<<__HTML
+<item>
+	<guid isPermaLink="true">$url</guid>
+	<pubDate>$time</pubDate>
+	<title><![CDATA[$title]]></title>
+	<link>$url</link>
+	<description><![CDATA[$body]]></description>
+</item>
 
+__HTML;
+			
 			$i++;
 			if ($i >= $vars['limit']) {
 				break;
