@@ -19,6 +19,7 @@
 }
 .blogpost .body p {
 	line-height: 1.4em;
+	padding-bottom:12px;
 }
 
 input.blog_publish_day,

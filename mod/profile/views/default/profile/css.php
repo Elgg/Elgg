@@ -428,10 +428,10 @@ div.usericon a.icon img {
 	text-decoration:none;
 }
 .usericon .sub_menu .displayname {
-	padding:0;
-	margin:0;
-	border-bottom:solid 1px #dddddd;
-	font-size:14px;
+	padding:0 !important;
+	margin:0 !important;
+	border-bottom:solid 1px #dddddd !important;
+	font-size:14px !important;
 }
 .usericon .sub_menu .displayname a {
 	padding:3px 3px 3px 8px;
