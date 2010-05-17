@@ -104,6 +104,9 @@ body { background-color: #444444; }
 	color:white;
 	text-decoration:none;
 }
+.admin_area #elgg_sidebar .submenu ul.child {
+	margin-bottom:10px;
+}
 .admin_area .submenu .child li a {
 	margin-left:15px;
 	background-color:#dedede;
