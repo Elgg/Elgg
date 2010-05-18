@@ -5,7 +5,7 @@
 */
 
 if (!isloggedin()) {
-	$form_body  = "<p class='loginbox'><label>" . elgg_echo('username') . "</label>" . elgg_view('input/text', array('internalname' => 'username', 'class' => 'login_textarea name'));
+	$form_body  = "<p class='loginbox'><label>" . elgg_echo('loginusername') . "</label>" . elgg_view('input/text', array('internalname' => 'username', 'class' => 'login_textarea name'));
 	$form_body .= "<label>" . elgg_echo('password') . "</label>" . elgg_view('input/password', array('internalname' => 'password', 'class' => 'login_textarea'));
 	$form_body .= elgg_view('input/submit', array('value' => elgg_echo('login'))) . " <span class='remember'><label><input type=\"checkbox\" name=\"persistent\" value=\"true\" />".elgg_echo('user:persistent')."</label></span></p>";
 

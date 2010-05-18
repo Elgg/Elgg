@@ -8,7 +8,7 @@
  * @link http://elgg.org/
  */
 
-$form_body = "<label>" . elgg_echo('username') . "<br />" . elgg_view('input/text', array('internalname' => 'username', 'class' => 'login_textarea')) . "</label>";
+$form_body = "<label>" . elgg_echo('loginusername') . "<br />" . elgg_view('input/text', array('internalname' => 'username', 'class' => 'login_textarea')) . "</label>";
 $form_body .= "<br />";
 $form_body .= "<label>" . elgg_echo('password') . "<br />" . elgg_view('input/password', array('internalname' => 'password', 'class' => 'login_textarea')) . "</label><br />";
 

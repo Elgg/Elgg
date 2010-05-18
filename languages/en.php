@@ -200,6 +200,7 @@ $english = array(
 	'name' => "Display name",
 	'email' => "Email address",
 	'username' => "Username",
+	'loginusername' => "Username or email",
 	'password' => "Password",
 	'passwordagain' => "Password (again for verification)",
 	'admin_option' => "Make this user an admin?",
