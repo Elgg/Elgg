@@ -28,7 +28,7 @@ $lib_dir = dirname(__FILE__) . '/lib/';
 // bootstrapping with required files in a required order
 $required_files = array(
 	'exceptions.php', 'elgglib.php', 'access.php', 'system_log.php', 'export.php',
-	'sessions.php', 'languages.php', 'input.php', 'install.php', 'cache.php',
+	'sessions.php', 'languages.php', 'input.php', 'install.php', 'cache.php', 'output.php'
 );
 
 foreach ($required_files as $file) {
@@ -70,7 +70,7 @@ if ($sanitised = sanitised()) {
 		'export.php', 'extender.php', 'filestore.php', 'group.php',
 		'input.php', 'install.php', 'location.php', 'mb_wrapper.php',
 		'memcache.php', 'metadata.php', 'metastrings.php', 'notification.php',
-		'objects.php', 'opendd.php', 'output.php', 'pagehandler.php', 
+		'objects.php', 'opendd.php', 'pagehandler.php',
 		'pageowner.php', 'pam.php', 'plugins.php', 'query.php',
 		'relationships.php', 'river.php', 'sites.php', 'social.php',
 		'statistics.php', 'system_log.php', 'tags.php', 'usersettings.php',
