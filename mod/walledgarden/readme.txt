@@ -1,1 +1,0 @@
-Make sure the walledgarden plugin is the last one in the plugin list to ensure it works as expected.
