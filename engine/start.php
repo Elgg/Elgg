@@ -77,6 +77,11 @@ if (!include_once(dirname(__FILE__) . "/lib/cache.php")) {		// Installation libr
 	exit;
 }
 
+if (!include_once(dirname(__FILE__) . "/lib/output.php")) {		// Installation library
+	echo "Error in installation: could not load the output library.";
+	exit;
+}
+
 
 
 // Use fallback view until sanitised
@@ -130,7 +135,7 @@ if ($sanitised = sanitised()) {
 		'export.php', 'extender.php', 'filestore.php', 'group.php',
 		'input.php', 'install.php', 'location.php', 'mb_wrapper.php',
 		'memcache.php', 'metadata.php', 'metastrings.php', 'notification.php',
-		'objects.php', 'opendd.php', 'output.php', 'pagehandler.php', 
+		'objects.php', 'opendd.php', 'pagehandler.php', 
 		'pageowner.php', 'pam.php', 'plugins.php', 'query.php',
 		'relationships.php', 'river.php', 'sites.php', 'social.php',
 		'statistics.php', 'system_log.php', 'tags.php', 'usersettings.php',
