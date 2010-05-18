@@ -134,6 +134,13 @@ body { background-color: #444444; }
 .admin_area .input_textarea {
 	width:98%;
 }
+.admin_area form#plugin_settings {
+	margin-top: 10px;
+}
+.admin_area form#plugin_settings .action_button.disabled {
+	margin-top:10px;
+	float:right;
+}
 .admin_settings {
 	margin-bottom:20px;
 }
