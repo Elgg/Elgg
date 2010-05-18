@@ -131,6 +131,9 @@ body { background-color: #444444; }
 	font-size:100%;
 	font-weight:normal;
 }
+.admin_area .input_textarea {
+	width:98%;
+}
 .admin_settings {
 	margin-bottom:20px;
 }
