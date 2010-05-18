@@ -779,7 +779,7 @@ Alternatively, you can enter your database settings below and we will try and do
 	// Walled Garden support
 	'installation:registration:description' => 'User registration is enabled by default. Turn this off if you do not want new users to be able to register on their own.',
 	'installation:registration:label' => 'Allow new users to register',
-	'installation:walled_garden:description' => 'Enable the site to run as a Walled Garden. This will not allow non logged-in users to view any site pages other than those specifically marked as public.',
+	'installation:walled_garden:description' => 'Enable the site to run as a private network. This will not allow non logged-in users to view any site pages other than those specifically marked as public.',
 	'installation:walled_garden:label' => 'Restrict pages to logged-in users',
 	
 	'installation:httpslogin' => "Enable this to have user logins performed over HTTPS. You will need to have https enabled on your server for this to work.",
@@ -874,8 +874,8 @@ If you requested this click on the link below, otherwise ignore this email.
 	'likes:alreadyliked' => 'You have already liked this item',
 	'likes:notfound' => 'The item you are trying to like cannot be found',
 	'likes:likethis' => 'Like this',
-	'likes:userlikedthis' => 'user',
-	'likes:userslikedthis' => 'users',
+	'likes:userlikedthis' => 'user liked this',
+	'likes:userslikedthis' => 'users like this',
 	'likes:river:annotate' => 'likes',
 
 /**
