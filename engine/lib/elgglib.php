@@ -3177,6 +3177,9 @@ function elgg_walled_garden_index() {
 	$layout = elgg_view_layout('one_column', $login);
 
 	echo page_draw('', $layout);
+	
+	// @hack Index must exit to keep plugins from continuing to extend
+	exit;
 	return TRUE;
 }
 

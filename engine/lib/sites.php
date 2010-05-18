@@ -248,7 +248,8 @@ class ElggSite extends ElggEntity {
 		global $CONFIG;
 		
 		if ($CONFIG->walled_garden && !isloggedin()) {
-			register_plugin_hook('index', 'system', 'elgg_walled_garden_index');
+			// hook into the index system call at the highest priority
+			register_plugin_hook('index', 'system', 'elgg_walled_garden_index', 1);
 			
 			if (!$this->is_public_page()) {
 				register_error(elgg_echo('loggedinrequired'));
