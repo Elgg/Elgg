@@ -45,7 +45,7 @@ $area2 = elgg_view_title($pagetitle);
 //get the correct view based on filter
 switch($filter){
 	case "newest":
-	$content = elgg_list_entities("user","",0,10,false);
+	$filter_content = elgg_list_entities(array('type' => 'user', 'offset' => $offset, 'full_view' => FALSE));
 	break;
 	case "pop":
 		$filter_content = list_entities_by_relationship_count('friend', true, '', '', 0, 10, false);
@@ -70,7 +70,6 @@ switch($filter){
 		$users = $results['entities'];
 		$filter_content = elgg_view_entity_list($users, $count, $offset, $limit, false, false, true);
 		break;
-	case "newest":
 	case 'default':
 		$filter_content = elgg_list_entities(array('type' => 'user', 'offset' => $offset, 'full_view' => FALSE));
 		break;
