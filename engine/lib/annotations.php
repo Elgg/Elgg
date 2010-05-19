@@ -412,6 +412,11 @@ $value = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $time
  * Returns entities based upon annotations.  Accepts the same values as
  * elgg_get_entities_from_metadata() but uses the annotations table.
  *
+ * NB: Entity creation time is selected as max_time. To sort based upon
+ * this, pass 'order_by' => 'maxtime asc' || 'maxtime desc'
+ *
+ * time_created in this case will be the time the annotation was created.
+ *
  * @see elgg_get_entities
  * @see elgg_get_entities_from_metadata
  * @param array $options Array in format:
@@ -546,18 +551,83 @@ $timelower = 0, $timeupper = 0) {
  * @return string Formatted entity list
  */
 function list_entities_from_annotations($entity_type = "", $entity_subtype = "", $name = "", $value = "", $limit = 10, $owner_guid = 0, $group_guid = 0, $asc = false, $fullview = true, $viewtypetoggle = false) {
-	if ($asc) {
-		$asc = "asc";
-	} else {
-		$asc = "desc";
-	}
-	$count = get_entities_from_annotations($entity_type, $entity_subtype, $name,
-		$value, $owner_guid, $group_guid, null, null, $asc, true);
-	$offset = (int) get_input("offset",0);
-	$entities = get_entities_from_annotations($entity_type, $entity_subtype, $name,
-		$value, $owner_guid, $group_guid, $limit, $offset, $asc);
+	elgg_deprecated_notice('list_entities_from_annotations is deprecated by elgg_list_entities_from_annotations', 1.8);
 
-	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle);
+	if ($entity_type) {
+		$options['types'] = $entity_type;
+	}
+
+	if ($entity_subtype) {
+		$options['subtypes'] = $entity_subtype;
+	}
+
+	if ($name) {
+		$options['annotation_names'] = $name;
+	}
+
+	if ($value) {
+		$options['annotation_values'] = $value;
+	}
+
+	if ($limit) {
+		$options['limit'] = $limit;
+	}
+
+	if ($owner_guid) {
+		$options['annotation_owner_guid'] = $owner_guid;
+	}
+
+	if ($group_guid) {
+		$options['container_guid'] = $group_guid;
+	}
+
+	if ($asc) {
+		$options['order_by'] = 'maxtime desc';
+	}
+
+	if ($offset = sanitise_int(get_input('offset', null))) {
+		$options['offset'] = $offset;
+	}
+
+	$options['full_view'] = $fullview;
+	$options['view_type_toggle'] = $viewtypetoggle;
+	$options['pagination'] = $pagination;
+
+	return elgg_list_entities_from_annotations($options);
+}
+
+/**
+ * Returns a viewable list of entities from annotations.
+ *
+ * @param array $options Any elgg_get_entity_from_annotation() options plus:
+ *
+ * 	offset => INT Start this many from the first result
+ *
+ * 	limit => INT Limit results to this
+ *
+ * 	full_view => BOOL Display full view entities
+ *
+ * 	view_type_toggle => BOOL Display gallery / list switch
+ *
+ * 	pagination => BOOL Display pagination links
+ *
+ * @return str
+ */
+function elgg_list_entities_from_annotations($options = array()) {
+	$defaults = array(
+		'offset' => (int) max(get_input('offset', 0), 0),
+		'limit' => (int) max(get_input('limit', 10), 0),
+		'full_view' => TRUE,
+		'view_type_toggle' => FALSE,
+		'pagination' => TRUE
+	);
+	$options = array_merge($defaults, $options);
+
+	$count = elgg_get_entities_from_annotations(array_merge(array('count' => TRUE), $options));
+	$entities = elgg_get_entities_from_annotations($options);
+
+	return elgg_view_entity_list($entities, $count, $options['offset'],
+		$options['limit'], $options['full_view'], $options['view_type_toggle'], $options['pagination']);
 }
 
 /**
