@@ -6,6 +6,6 @@ $url = $object->getURL();
 $title = $object->title;
  
 $string = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a> ";
-$string .= elgg_echo("likes:river:annotate") . "  <a href=\"{$object->getURL()}\">" . $title . "</a> " . friendly_time($object->time_created);
+$string .= elgg_echo("likes:river:annotate") . "  <a href=\"{$object->getURL()}\">" . $title . "</a> <span class='entity_subtext'>" . friendly_time($object->time_created)."</span>";
 	
 echo $string;
