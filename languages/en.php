@@ -449,6 +449,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 
 	'admin:users' => "Users",
 	'admin:users:online' => 'Currently Online',
+	'admin:users:newest' => 'Newest',
 	'admin:users:add' => 'Add',
 	'admin:users:description' => "This admin panel allows you to control user settings for your site. Choose an option below to get started.",
 	'admin:users:adduser:label' => "Click here to add a new user...",
@@ -776,13 +777,13 @@ Alternatively, you can enter your database settings below and we will try and do
 	'installation:debug:error' => 'Display only critical errors',
 	'installation:debug:warning' => 'Display errors and warnings',
 	'installation:debug:notice' => 'Log all errors, warnings and notices',
-	
+
 	// Walled Garden support
 	'installation:registration:description' => 'User registration is enabled by default. Turn this off if you do not want new users to be able to register on their own.',
 	'installation:registration:label' => 'Allow new users to register',
 	'installation:walled_garden:description' => 'Enable the site to run as a private network. This will not allow non logged-in users to view any site pages other than those specifically marked as public.',
 	'installation:walled_garden:label' => 'Restrict pages to logged-in users',
-	
+
 	'installation:httpslogin' => "Enable this to have user logins performed over HTTPS. You will need to have https enabled on your server for this to work.",
 	'installation:httpslogin:label' => "Enable HTTPS logins",
 	'installation:view' => "Enter the view which will be used as the default for your site or leave this blank for the default view (if in doubt, leave as default):",
