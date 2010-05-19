@@ -131,6 +131,10 @@
 .group_tool_widget.activity .river_user_like_button {
 	display:none;
 }
+.group_tool_widget.activity .river_item .entity_subtext {
+	padding:0;
+}
+
 /* override default entity_listing_info width */
 .group_tool_widget .entity_listing_info {
 	width:315px;
