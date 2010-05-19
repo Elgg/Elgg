@@ -8,8 +8,8 @@
 	 * @copyright Curverider Ltd 2008-2010
 	 * @link http://elgg.com/
 	 */
-
 ?>
+
 <div id="content_header" class="clearfloat">
 	<div class="content_header_title">
 		<h2><?php echo elgg_echo("groups:forum"); ?></h2>
