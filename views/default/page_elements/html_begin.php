@@ -49,7 +49,7 @@ $release = get_version(true);
 	<title><?php echo $title; ?></title>
 	<link rel="SHORTCUT ICON" href="<?php echo $vars['url']; ?>_graphics/favicon.ico" />
 
-	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery-1.4.min.js"></script>
+	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery-1.4.2.min.js"></script>
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery-ui-1.7.2.min.js"></script>
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>vendors/jquery/jquery.form.js"></script>
 	<script type="text/javascript" src="<?php echo $vars['url']; ?>_css/js.php?lastcache=<?php echo $vars['config']->lastcache; ?>&amp;js=initialise_elgg&amp;viewtype=<?php echo $vars['view']; ?>"></script>
