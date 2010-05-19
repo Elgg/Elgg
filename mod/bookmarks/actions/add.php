@@ -21,13 +21,16 @@
 		
 		$tags = get_input('tags');
 		$tagarray = string_to_tag_array($tags);
-		
+
+		$new_bookmark = FALSE;
 		if ($guid == 0) {
 			
 			$entity = new ElggObject;
 			$entity->subtype = "bookmarks";
 			$entity->owner_guid = $_SESSION['user']->getGUID();
 			$entity->container_guid = (int)get_input('container_guid', $_SESSION['user']->getGUID());
+
+			$new_bookmark = TRUE;
 			
 		} else {
 			
@@ -62,7 +65,9 @@
 			}
 			system_message(elgg_echo('bookmarks:save:success'));
 			//add to river
-			add_to_river('river/object/bookmarks/create','create',$_SESSION['user']->guid,$entity->guid);
+			if ($new_bookmark) {
+				add_to_river('river/object/bookmarks/create','create',$_SESSION['user']->guid,$entity->guid);
+			}
 			forward($entity->getURL());
 		} else {
 			register_error(elgg_echo('bookmarks:save:failed'));
