@@ -1,7 +1,7 @@
 <?php
 	/**
 	 * Elgg groups forum
-	 * 
+	 *
 	 * @package ElggGroups
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
 	 * @author Curverider
@@ -31,7 +31,7 @@
 
 	$area1 = elgg_view('navigation/breadcrumbs');
 
-	$area1 .= elgg_view("forum/topics", array('topics' => $topics));
+	$area1 .= elgg_view("forum/topics", array('topics' => $topics, 'group_guid' => $group_guid));
 	set_context('groups');
 
 	$body = elgg_view_layout('one_column_with_sidebar', $area1);
