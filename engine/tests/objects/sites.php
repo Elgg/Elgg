@@ -52,6 +52,7 @@ class ElggCoreSiteTest extends ElggCoreUnitTest {
 		$attributes['access_id'] = ACCESS_PRIVATE;
 		$attributes['time_created'] = '';
 		$attributes['time_updated'] = '';
+		$attributes['last_action'] = '';
 		$attributes['enabled'] = 'yes';
 		$attributes['tables_split'] = 2;
 		$attributes['tables_loaded'] = 0;
@@ -61,7 +62,7 @@ class ElggCoreSiteTest extends ElggCoreUnitTest {
 
 		$this->assertIdentical($this->site->expose_attributes(), $attributes);
 	}
-	
+
 	public function testElggSiteSaveAndDelete() {
 		$this->assertTrue($this->site->save());
 		$this->assertTrue($this->site->delete());
