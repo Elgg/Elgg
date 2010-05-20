@@ -43,6 +43,13 @@ body { background-color: #444444; }
 	color:white;
 	text-decoration: underline;
 }
+#admin_header .network_title h2 a.return_to_network {
+	font-size:12px;
+	font-weight: normal;
+	color:#666666;
+	float:right;
+	margin-right:40px;
+}
 #elgg_content.admin_area {
 	margin:20px;
 	min-height:400px;
@@ -286,7 +293,9 @@ form.admin_plugins_simpleview .submit_button {
 <div id="admin_header">
 	<span class="network_title"><h2>
 	<a href="<?php echo $vars['url']; ?>">
-	<?php echo $vars['config']->sitename; echo " ".elgg_echo('admin'); ?></a></h2></span>
+	<?php echo $vars['config']->sitename; echo " ".elgg_echo('admin'); ?></a>
+	<a class="return_to_network" href="<?php echo $vars['url']; ?>">&lt;&lt; Return to network</a>
+	</h2></span>
 </div>
 
 <div id="elgg_content" class="clearfloat admin_area">
