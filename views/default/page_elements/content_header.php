@@ -73,7 +73,13 @@ if (isloggedin()) {
 		$tabs = '';
 	} else {
 		$new_button = "<a href=\"{$new_link}\" class='action_button'>" . elgg_echo($type . ':new') . '</a>';
-		$new_button = "<div class='content_header_options'>$new_button</div>";
+		if(get_context() == "videolist"){
+			$video_link = $CONFIG->wwwroot . "pg/videolist/browse/$username/";
+			$browse_video .= "<a href=\"{$video_link}\" class='action_button'>" . elgg_echo('videolist:browsemenu') . '</a>';
+		}else{
+			$browse_video = '';
+		}
+		$new_button = "<div class='content_header_options'>$new_button $browse_video</div>";
 	}
 
 	// also hide the tabs if in a group context (ie, listing groups) or
