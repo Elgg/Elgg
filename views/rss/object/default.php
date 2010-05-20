@@ -20,22 +20,8 @@ if (empty($title)) {
 $permalink = htmlspecialchars($vars['entity']->getURL());
 $pubdate = date('r', $vars['entity']->time_created);
 
-$creator = '';
-if ($owner = $vars['entity']->getOwnerEntity()) {
-	$creator = "<dc:creator>{$owner->name}</dc:creator>";
-}
-
-$georss = '';
-if (
-	($vars['entity'] instanceof Locatable) &&
-	($vars['entity']->getLongitude()) &&
-	($vars['entity']->getLatitude())
-) {
-	$latitude = $vars['entity']->getLatitude();
-	$longitude = $vars['entity']->getLongitude();
-	$georss = "<georss:point>$latitude $longitude</georss:point>";
-}
-
+$creator = elgg_view('object/creator', $vars);
+$georss = elgg_view('object/georss', $vars);
 $extension = elgg_view('extensions/item');
 
 $item = <<<__HTML
