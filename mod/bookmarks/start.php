@@ -205,6 +205,10 @@ function bookmarks_page_handler($page) {
 	if ($owner != $logged_in_user || $context == 'action') {
 		$header = elgg_view('navigation/breadcrumbs');
 	}
+	//if no user is set
+	if(!$owner_name){
+		$owner_name = get_loggedin_user()->username;
+	}
 
 	$header .= elgg_view("page_elements/content_header", array(
 		'context' => $context,
