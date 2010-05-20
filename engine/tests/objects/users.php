@@ -57,6 +57,7 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 		$attributes['access_id'] = ACCESS_PRIVATE;
 		$attributes['time_created'] = '';
 		$attributes['time_updated'] = '';
+		$attributes['last_action'] = '';
 		$attributes['enabled'] = 'yes';
 		$attributes['tables_split'] = 2;
 		$attributes['tables_loaded'] = 0;
