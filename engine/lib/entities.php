@@ -106,6 +106,7 @@ abstract class ElggEntity implements
 		$this->attributes['access_id'] = ACCESS_PRIVATE;
 		$this->attributes['time_created'] = "";
 		$this->attributes['time_updated'] = "";
+		$this->attributes['last_action'] = '';
 		$this->attributes['enabled'] = "yes";
 
 		// There now follows a bit of a hack
@@ -132,7 +133,7 @@ abstract class ElggEntity implements
 	 * method copies metadata but does not copy over annotations, or private settings.
 	 *
 	 * Note: metadata will have its owner and access id set when the entity is saved
-	 * and it will be the same as that off the entity.
+	 * and it will be the same as that of the entity.
 	 */
 	public function __clone() {
 
@@ -335,8 +336,6 @@ abstract class ElggEntity implements
 			if ((int) $this->guid > 0) {
 				return create_metadata($this->getGUID(), $name, $value, $value_type, $this->getOwner(), $this->getAccessID(), $multiple);
 			} else {
-				//$this->temp_metadata[$name] = $value;
-
 				if (($multiple) && (isset($this->temp_metadata[$name]))) {
 					if (!is_array($this->temp_metadata[$name])) {
 						$tmp = $this->temp_metadata[$name];
@@ -1630,8 +1629,8 @@ function create_entity($type, $subtype, $owner_guid, $access_id, $site_guid = 0,
 	}
 
 	return insert_data("INSERT into {$CONFIG->dbprefix}entities
-		(type, subtype, owner_guid, site_guid, container_guid, access_id, time_created, time_updated) values
-		('$type',$subtype, $owner_guid, $site_guid, $container_guid, $access_id, $time, $time)");
+		(type, subtype, owner_guid, site_guid, container_guid, access_id, time_created, time_updated, last_action) values
+		('$type',$subtype, $owner_guid, $site_guid, $container_guid, $access_id, $time, $time, $time)");
 }
 
 /**
@@ -3687,6 +3686,34 @@ function elgg_instanceof($entity, $type = NULL, $subtype = NULL) {
 	}
 
 	return $return;
+}
+
+
+/**
+ * Update last_action on the given entity.
+ *
+ * @param int $guid Entity annotation|relationship action carried out on
+ * @param int $posted Timestamp of last action
+ **/
+function update_entity_last_action($guid, $posted = NULL){
+	global $CONFIG;
+	$guid = (int)$guid;
+
+	if (!$posted) {
+		$posted = time();
+	}
+
+	if ($guid){
+		//now add to the river updated table
+		$query = update_data("UPDATE {$CONFIG->dbprefix}entities SET last_action = {$posted} WHERE guid = {$guid}");
+		if ($query) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	} else {
+		return FALSE;
+	}
 }
 
 /**
