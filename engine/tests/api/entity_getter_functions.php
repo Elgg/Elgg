@@ -847,7 +847,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$options = array(
 			'type' => 'object',
 			'limit' => 1,
-			'order_by' => 'e.time_created desc'
+			'order_by' => 'guid desc'
 		);
 
 		// grab ourself again to fill out attributes.
@@ -875,7 +875,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 			'type' => 'object',
 			'subtype' => ELGG_ENTITIES_NO_VALUE,
 			'limit' => 1,
-			'order_by' => 'e.time_created desc'
+			'order_by' => 'guid desc'
 		);
 
 		// grab ourself again to fill out attributes.
@@ -910,7 +910,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 			'type' => 'object',
 			'subtype' => ELGG_ENTITIES_NO_VALUE,
 			'limit' => 1,
-			'order_by' => 'e.time_created desc'
+			'order_by' => 'guid desc'
 		);
 
 		// grab ourself again to fill out attributes.
