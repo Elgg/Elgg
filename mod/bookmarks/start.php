@@ -63,6 +63,13 @@ function bookmarks_pagesetup() {
 				add_submenu_item(sprintf(elgg_echo("bookmarks:group"),$page_owner->name), $CONFIG->wwwroot . "pg/bookmarks/" . $page_owner->username . '/items');
 			}
 		}
+		
+		if ($page_owner instanceof ElggEntity) {
+			elgg_add_submenu_item(array(
+				'text' => elgg_echo('bookmarks'),
+				'href' => "{$CONFIG->url}pg/bookmarks/{$page_owner->username}",
+			));
+		}
 	}
 }
 

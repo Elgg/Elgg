@@ -104,7 +104,12 @@
 			    }
 			}
 			
-			
+		if ($page_owner instanceof ElggEntity) {
+			elgg_add_submenu_item(array(
+				'text' => elgg_echo('pages'),
+				'href' => "{$CONFIG->url}pg/pages/owned/{$page_owner->username}",
+			));
+		}
     }
 	
 	/**

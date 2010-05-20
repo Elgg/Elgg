@@ -193,6 +193,13 @@ function blog_page_setup() {
 			add_submenu_item(elgg_echo('blog:groups:group_blogs'), $url);
 		}
 	}
+	
+	if ($page_owner instanceof ElggEntity) {
+		elgg_add_submenu_item(array(
+			'text' => elgg_echo('blog'),
+			'href' => "{$CONFIG->url}pg/blog/{$page_owner->username}/read",
+		));
+	}
 }
 
 /**
@@ -208,6 +215,5 @@ function blog_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 
 	return $return_value;
 }
-
 
 register_elgg_event_handler('init', 'system', 'blog_init');

@@ -79,6 +79,13 @@
 				    add_submenu_item(sprintf(elgg_echo("file:group"),$page_owner->name), $CONFIG->wwwroot . "pg/file/" . $page_owner->username);
 			    }
 			}
+		
+		if ($page_owner instanceof ElggEntity) {
+			elgg_add_submenu_item(array(
+				'text' => elgg_echo('file'),
+				'href' => "{$CONFIG->url}pg/file/{$page_owner->username}",
+			));
+		}
 	}
 
 	/**
