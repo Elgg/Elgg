@@ -61,6 +61,9 @@ function blog_init() {
 
 	// ecml
 	register_plugin_hook('get_views', 'ecml', 'blog_ecml_views_hook');
+	
+	// Register profile menu hook
+	register_plugin_hook('profile_menu', 'profile', 'blog_profile_menu');
 }
 
 /**
@@ -193,13 +196,6 @@ function blog_page_setup() {
 			add_submenu_item(elgg_echo('blog:groups:group_blogs'), $url);
 		}
 	}
-	
-	if ($page_owner instanceof ElggEntity) {
-		elgg_add_submenu_item(array(
-			'text' => elgg_echo('blog'),
-			'href' => "{$CONFIG->url}pg/blog/{$page_owner->username}/read",
-		));
-	}
 }
 
 /**
@@ -213,6 +209,17 @@ function blog_page_setup() {
 function blog_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 	$return_value['object/blog'] = elgg_echo('blog:blogs');
 
+	return $return_value;
+}
+
+function blog_profile_menu($hook, $entity_type, $return_value, $params) {
+	global $CONFIG;
+	
+	$return_value[] = array(
+		'text' => elgg_echo('blog'),
+		'href' => "{$CONFIG->url}pg/blog/{$params['owner']->username}/read",
+	);
+	
 	return $return_value;
 }
 

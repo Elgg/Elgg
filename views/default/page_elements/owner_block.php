@@ -45,7 +45,19 @@ if(is_plugin_enabled('profile')) {
 		
 		$location = elgg_view('output/tags', array('value' => $owner->location));
 		$display .= "<p class=\"profile_info location\">$location</p>";
-
+		
+		// Trigger owner block menu
+		$params = array('owner' => $owner);
+		$links = trigger_plugin_hook('profile_menu', 'profile', $params, array());
+		if (is_array($links) && !empty($links)) {
+			$display .= '<div><ul>';
+			foreach ($links as $link) {
+				$display .= "<li><a href=\"{$link['href']}\">{$link['text']}</a></li>";
+			}
+			$display .= '</ul></div>';
+		}
+		
+		// Allow plugins to extend the owner block contents
 		$display .= elgg_view('owner_block/profile_extend');
 		
 		// close owner_block_content
