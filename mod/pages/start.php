@@ -43,6 +43,7 @@
 		elgg_extend_view('css','pages/css');
 		elgg_extend_view('groups/menu/links', 'pages/menu'); // Add to groups context
 		elgg_extend_view('groups/right_column', 'pages/groupprofile_pages'); // Add to groups context
+		elgg_extend_view('owner_block/profile_extend', 'pages/profile_extend');
 		
 		// Register entity type
 		register_entity_type('object','page');
@@ -103,13 +104,6 @@
 				    add_submenu_item(sprintf(elgg_echo("pages:group"),$page_owner->name), $CONFIG->wwwroot . "pg/pages/owned/" . $page_owner->username);
 			    }
 			}
-			
-		if ($page_owner instanceof ElggEntity) {
-			elgg_add_submenu_item(array(
-				'text' => elgg_echo('pages'),
-				'href' => "{$CONFIG->url}pg/pages/owned/{$page_owner->username}",
-			));
-		}
     }
 	
 	/**
