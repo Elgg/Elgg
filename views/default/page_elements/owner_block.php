@@ -31,7 +31,7 @@ if(is_plugin_enabled('profile')) {
 	// Is there a page owner?
 	$owner = page_owner_entity();
 	if ($owner instanceof ElggGroup ||
-		($owner instanceof ElggUser && $owner->getGUID != get_loggedin_userid())
+		($owner instanceof ElggUser && $owner->getGUID() != get_loggedin_userid())
 	) {
 		$icon = elgg_view('profile/icon', array('entity' => $owner, 'size' => 'tiny'));
 		$owner_url = $owner->getURL();
