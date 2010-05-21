@@ -43,7 +43,6 @@
 		elgg_extend_view('css','pages/css');
 		elgg_extend_view('groups/menu/links', 'pages/menu'); // Add to groups context
 		elgg_extend_view('groups/right_column', 'pages/groupprofile_pages'); // Add to groups context
-		elgg_extend_view('owner_block/profile_extend', 'pages/profile_extend');
 		
 		// Register entity type
 		register_entity_type('object','page');
