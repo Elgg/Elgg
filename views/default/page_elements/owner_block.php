@@ -50,6 +50,12 @@ if(is_plugin_enabled('profile')) {
 		$params = array('owner' => $owner);
 		$links = trigger_plugin_hook('profile_menu', 'profile', $params, array());
 		if (is_array($links) && !empty($links)) {
+			// sort the links by name
+			usort($links, create_function(
+				'$a, $b',
+				'return strnatcasecmp($a[\'text\'], $b[\'text\']);'
+			));
+			
 			$display .= '<div><ul>';
 			foreach ($links as $link) {
 				$display .= "<li><a href=\"{$link['href']}\">{$link['text']}</a></li>";
