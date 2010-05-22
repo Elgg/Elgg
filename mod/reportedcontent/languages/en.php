@@ -18,6 +18,7 @@
 			'item:object:reported_content' => 'Reported items',
 			'reportedcontent' => 'Reported content',
 			'reportedcontent:this' => 'Report this',
+			'reportedcontent:this:title' => 'Report this page to the site administrator for review',
 			'reportedcontent:none' => 'There is no reported content at this time.',
 			'reportedcontent:report' => 'Report to admin',
 			'reportedcontent:title' => 'Page title',
