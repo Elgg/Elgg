@@ -17,14 +17,15 @@ function reportedcontent_init() {
 	global $CONFIG;
 	
 	// Register a page handler, so we can have nice URLs
-	register_page_handler('reportedcontent','reportedcontent_page_handler');
+	register_page_handler('reportedcontent', 'reportedcontent_page_handler');
 	
 	// Extend CSS
-	elgg_extend_view('css','reportedcontent/css');
+	elgg_extend_view('css', 'reportedcontent/css');
 			
-	// Extend context menu and owner_block with report content link
+	// Extend context menu and footer with report content link
 	if (isloggedin()) {
-	    elgg_extend_view('profile/menu/links','reportedcontent/user_report');
+	    elgg_extend_view('profile/menu/links', 'reportedcontent/user_report');
+		elgg_extend_view('footer/links', 'reportedcontent/footer_link');
 	}
 }
 
