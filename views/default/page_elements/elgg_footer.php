@@ -28,3 +28,5 @@
 		</a>
 	</div>
 </div>
+
+<?php echo elgg_view('footer/analytics'); ?>
