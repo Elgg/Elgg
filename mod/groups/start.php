@@ -224,11 +224,6 @@
 						}
 					}
 				}
-
-				if($page_owner->forum_enable != "no"){
-					//add_submenu_item(elgg_echo('groups:forum'),$CONFIG->wwwroot . "pg/groups/forum/{$page_owner->getGUID()}/", '1groupslinks');
-				}
-
 			}
 
 		// Add submenu options
@@ -600,11 +595,12 @@
 		
 		$group_owner = page_owner_entity();
 		
-		$return_value[] = array(
-			'text' => elgg_echo('groups:forum'),
-			'href' => "{$CONFIG->url}pg/groups/forum/{$group_owner->getGUID()}"
-		);
-		
+		if ($group_owner instanceof ElggGroup && get_context() == 'groups' && $group_owner->forum_enable != "no") {
+			$return_value[] = array(
+				'text' => elgg_echo('groups:forum'),
+				'href' => "{$CONFIG->url}pg/groups/forum/{$group_owner->getGUID()}"
+			);
+		}
 		return $return_value;
 	}
 
