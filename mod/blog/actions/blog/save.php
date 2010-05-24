@@ -145,7 +145,7 @@ if (!$error) {
 
 		system_message(elgg_echo('blog:message:saved'));
 		// @todo do we want to alert on updates?
-		if ($new_post) {
+		if ($new_post && $blog->status == 'published') {
 			add_to_river('river/object/blog/create', 'create', get_loggedin_userid(), $blog->getGUID());
 		}
 		forward($success_forward_url);
