@@ -35,7 +35,7 @@ if(is_plugin_enabled('profile')) {
 	) {
 		$icon = elgg_view('profile/icon', array('entity' => $owner, 'size' => 'tiny'));
 		$owner_url = $owner->getURL();
-		$display = "<div class=\"owner_block_icon\">$icon</div>";
+		$display = "<div class='owner_block_icon'>$icon</div>";
 		$display .= '<div class="owner_block_contents clearfloat">';
 		$display .= "<h3><a href=\"$owner_url\">{$owner->name}</a></h3>";
 
@@ -45,6 +45,8 @@ if(is_plugin_enabled('profile')) {
 		
 		$location = elgg_view('output/tags', array('value' => $owner->location));
 		$display .= "<p class=\"profile_info location\">$location</p>";
+		
+		$display .= '</div>';
 		
 		// Trigger owner block menu
 		$params = array('owner' => $owner);
@@ -56,7 +58,7 @@ if(is_plugin_enabled('profile')) {
 				'return strnatcasecmp($a[\'text\'], $b[\'text\']);'
 			));
 			
-			$display .= '<div><ul>';
+			$display .= '<div class="owners_content_links"><ul>';
 			foreach ($links as $link) {
 				$display .= "<li><a href=\"{$link['href']}\">{$link['text']}</a></li>";
 			}
@@ -67,9 +69,9 @@ if(is_plugin_enabled('profile')) {
 		$display .= elgg_view('owner_block/profile_extend');
 		
 		// close owner_block_content
-		$display .= '</div>';
+		//$display .= '</div>';
 
-		$contents .= "<div id=\"owner_block\" class=\"radius8\">$display</div>";
+		$contents .= "<div id='owner_block' class='clearfloat'>$display</div>";
 	}
 }
 
