@@ -2,21 +2,21 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-	var updates = new thewireUpdateChecker(10000);
+	var updates = new activityUpdateChecker(10000);
 	updates.start();
 });
 
 // check for updates on the wire.
-function thewireUpdateChecker(interval) {
+function activityUpdateChecker(interval) {
 	this.intervalID = null;
 	this.interval = interval;
 	this.url = '<?php echo $vars['url']; ?>mod/riverdashboard/endpoint/ping.php';
 	this.seconds_passed = 0;
-	
+
 	this.start = function() {
 		// needed to complete closure scope.
 		var self = this;
-		
+
 		this.intervalID = setInterval(function() { self.checkUpdates(); }, this.interval);
 	}
 
@@ -32,7 +32,7 @@ function thewireUpdateChecker(interval) {
 				if (data) {
 					$('#riverdashboard_updates').html(data).slideDown();
 					// could crank down the interval here.
-					// if we change the message to simply "New Posts!" 
+					// if we change the message to simply "New Posts!"
 					// we could stop the polling altogether.
 				}
 			}

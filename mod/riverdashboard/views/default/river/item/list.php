@@ -16,7 +16,7 @@ if (isset($vars['items']) && is_array($vars['items'])) {
 
 if ($vars['pagination'] !== false) {
 	$baseurl = $_SERVER['REQUEST_URI'];
-	$baseurl = $baseurl = preg_replace('/[\&\?]offset\=[0-9]*/',"",$baseurl);
+	$baseurl = preg_replace('/[\&\?]offset\=[0-9]*/',"",$baseurl);
 
 	$nav = '';
 

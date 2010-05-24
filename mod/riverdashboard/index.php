@@ -41,13 +41,12 @@ switch($orient) {
 		break;
 }
 
-
 $title = elgg_view_title($title_wording);
 
 $river = elgg_view_river_items($subject_guid, 0, $relationship_type, $type, $subtype, '', 20, 0, 0, true, false);
 
 // Replacing callback calls in the nav with something meaningless
-$river = str_replace('callback=true','replaced=88,334',$river);
+$river = str_replace('callback=true', 'replaced=88,334', $river);
 
 $nav = elgg_view('riverdashboard/nav',array('type' => $type,'subtype' => $subtype,'orient' => $orient));
 if (isloggedin()) {
@@ -56,7 +55,9 @@ if (isloggedin()) {
 } else {
 	$sidebar = '';
 }
+
 set_context('riverdashboard');
+
 if (empty($callback)) {
 	$body .= elgg_view('riverdashboard/container', array('body' => $nav . $river . elgg_view('riverdashboard/js')));
 	page_draw($title_wording,elgg_view_layout('one_column_with_sidebar',$title . $body, $sidebar));
