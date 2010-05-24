@@ -104,7 +104,7 @@
 			*/
 
 			'group:replies' => 'Replies',
-			'groups:forum' => 'Group discussion',
+			'groups:forum' => 'Discussion',
 			'groups:addtopic' => 'Add a topic',
 			'groups:forumlatest' => 'Latest discussion',
 			'groups:latestdiscussion' => 'Latest discussion',
