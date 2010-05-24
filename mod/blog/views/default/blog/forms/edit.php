@@ -190,12 +190,6 @@ $body_input
 </p>
 
 <p>
-	<label for="blog_publish_date">$publish_date_label</label>
-	$publish_date_input
-</p>
-
-
-<p>
 	<label for="blog_tags">$tags_label</label>
 	$tags_input
 </p>

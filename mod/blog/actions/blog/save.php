@@ -110,13 +110,16 @@ foreach ($values as $name => $default) {
 }
 
 // build publish_date
-$publish_month = get_input('publish_month');
-$publish_day = get_input('publish_day');
-$publish_year = get_input('publish_year');
-$publish_hour = get_input('publish_hour');
-$publish_minute = get_input('publish_minute');
-$datetime = "$publish_year-$publish_month-$publish_day $publish_hour:$publish_minute:00";
-$values['publish_date'] = date('U', strtotime($datetime));
+//$publish_month = get_input('publish_month');
+//$publish_day = get_input('publish_day');
+//$publish_year = get_input('publish_year');
+//$publish_hour = get_input('publish_hour');
+//$publish_minute = get_input('publish_minute');
+//$datetime = "$publish_year-$publish_month-$publish_day $publish_hour:$publish_minute:00";
+//$values['publish_date'] = date('U', strtotime($datetime));
+
+// setting publish_date to now until the problems with locale dates can be resolved.
+$values['publish_date'] = time();
 
 // assign values to the entity, stopping on error.
 if (!$error) {

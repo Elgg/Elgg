@@ -58,7 +58,7 @@ function blog_get_page_content_read($owner_guid = NULL, $guid = NULL) {
 		if (!(isadminloggedin() || (isloggedin() && $owner_guid == $loggedin_userid))) {
 			$options['metadata_name_value_pairs'] = array(
 				array('name' => 'status', 'value' => 'published'),
-				array('name' => 'publish_date', 'operand' => '<', 'value' => time())
+				//array('name' => 'publish_date', 'operand' => '<', 'value' => time())
 			);
 		}
 
@@ -320,7 +320,17 @@ class ElggBlog extends ElggObject {
 	public function save() {
 		if (parent::save()) {
 			global $CONFIG;
-			$published = $this->publish_date;
+
+			// try to grab the publish date, but default to now.
+			foreach (array('publish_date', 'time_created') as $field) {
+				if (isset($this->$field) && $this->field) {
+					$published = $this->field;
+					break;
+				}
+			}
+			if (!$published) {
+				$published = time();
+			}
 			$sql = "UPDATE {$CONFIG->dbprefix}entities SET time_created = '$published', time_updated = '$published' WHERE guid = '{$this->getGUID()}'";
 			return update_data($sql);
 		}
