@@ -321,7 +321,7 @@ class ElggBlog extends ElggObject {
 		if (parent::save()) {
 			global $CONFIG;
 			$published = $this->publish_date;
-			$sql = "UPDATE {$CONFIG->dbprefix}entities SET time_created = '$published', time_updated = '$published'";
+			$sql = "UPDATE {$CONFIG->dbprefix}entities SET time_created = '$published', time_updated = '$published' WHERE guid = '{$this->getGUID()}'";
 			return update_data($sql);
 		}
 
