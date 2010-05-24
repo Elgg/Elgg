@@ -66,7 +66,7 @@ foreach($CONFIG->profile as $shortname => $valuetype) {
 if ($name = strip_tags(get_input('name'))) {
 	if (elgg_strlen($name) > 50) {
 		register_error(elgg_echo('user:name:fail'));
-	} else {
+	} elseif ($profile_owner->name != $name) {
 		$profile_owner->name = $name;
 		// @todo this is weird...giving two notifications?
 		if ($profile_owner->save()) {
