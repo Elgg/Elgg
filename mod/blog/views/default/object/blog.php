@@ -54,7 +54,9 @@ if ($blog->canEdit()) {
 		$status = "<span class='blog_status'>$status_text</a>";
 	}
 
-	$edit = "$status $edit_link $delete_link";
+	$access = elgg_view('output/access', array('entity' => $vars['entity']));
+
+	$edit = "$access $status $edit_link $delete_link";
 }
 
 	// include a view for plugins to extend
