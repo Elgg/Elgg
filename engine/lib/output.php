@@ -112,7 +112,7 @@ function elgg_make_excerpt($text, $num_chars = 250) {
 	$excerpt = trim(elgg_substr($excerpt, 0, $space));
 
 	if ($string_length != elgg_strlen($excerpt)) {
-		$excerpt .= '...';
+		$excerpt .= '&#8230';
 	}
 
 	return $excerpt;
