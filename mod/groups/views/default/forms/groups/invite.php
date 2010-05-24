@@ -12,14 +12,13 @@
 	$group = $vars['entity'];
 	$owner = get_entity($vars['entity']->owner_guid);
 	$forward_url = $group->getURL();
-
-	$friends = elgg_get_entities_from_relationship($options);
 	$options = array(
 		'relationship' => 'friend',
 		'relationship_guid' => get_loggedin_user()->guid,
 		'type' => 'user',
 		'limit' => 9999
 	);
+	$friends = elgg_get_entities_from_relationship($options);
 if ($friends) {
 ?>
 <form action="<?php echo $vars['url']; ?>action/groups/invite" method="post" class="margin_top">
