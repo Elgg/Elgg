@@ -63,7 +63,7 @@ function bookmarks_pagesetup() {
 	if (isloggedin()) {
 		if ($page_owner instanceof ElggGroup && get_context() == 'groups') {
 			if ($page_owner->bookmarks_enable != "no") {
-				add_submenu_item(sprintf(elgg_echo("bookmarks:group"),$page_owner->name), $CONFIG->wwwroot . "pg/bookmarks/" . $page_owner->username . '/items');
+				//add_submenu_item(sprintf(elgg_echo("bookmarks:group"),$page_owner->name), $CONFIG->wwwroot . "pg/bookmarks/" . $page_owner->username . '/items');
 			}
 		}
 	}

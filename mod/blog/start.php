@@ -193,7 +193,7 @@ function blog_page_setup() {
 	if ($page_owner instanceof ElggGroup && get_context() == 'groups') {
 		if($page_owner->blog_enable != "no") {
 			$url = "{$CONFIG->wwwroot}pg/blog/{$page_owner->username}/items";
-			add_submenu_item(elgg_echo('blog:groups:group_blogs'), $url);
+			//add_submenu_item(elgg_echo('blog:groups:group_blogs'), $url);
 		}
 	}
 }
