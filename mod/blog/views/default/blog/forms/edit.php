@@ -153,7 +153,13 @@ $categories_input = elgg_view('categories', $vars);
 //$container_guid_input = elgg_view('input/hidden', array('internalname' => 'container_guid', 'value' => $values['container_guid']));
 $guid_input = elgg_view('input/hidden', array('internalname' => 'guid', 'value' => $values['guid']));
 $forward_input = elgg_view('input/hidden', array('internalname' => 'forward', 'value' => $forward));
-$page_title = elgg_echo('blog:edit') . " " . $values['title'];
+
+// editing or creating.
+if (isset($values['guid'])) {
+	$page_title = elgg_echo('blog:edit') . ": \"{$values['title']}\"";
+} else {
+	$page_title = elgg_echo('blog:new');
+}
 
 // display notice if editing an old revision
 if (isset($vars['revision']) && $vars['revision'] instanceof ElggAnnotation) {
