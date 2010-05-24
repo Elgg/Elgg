@@ -16,7 +16,7 @@ $content .= elgg_view_title(elgg_echo('content:latest'));
 set_context('search');
 $offset = (int)get_input('offset', 0);
 if(is_plugin_enabled('riverdashboard'))
-	$content .= elgg_view_river_items(0, 0, "", "", "", '', 10, 0, 0, true, true);
+	$content .= elgg_view_river_items(0, 0, "", "", "", '', 10, 0, 0, true, false);
 else
 	$content .= elgg_list_registered_entities(array('limit' => 10, 'offset' => $offset, 'full_view' => FALSE, 'allowed_types' => array('object','group')));
 set_context('main');
