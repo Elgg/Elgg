@@ -149,6 +149,10 @@ img.medium {
 	margin-top:4px;
 	padding-top:2px;
 }
+#owner_block .owners_content_links ul {
+	margin:0;
+	padding:0;
+}
 #owner_block .owners_content_links ul li {
 	display:block;
 	float:left;
