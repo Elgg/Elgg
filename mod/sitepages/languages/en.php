@@ -31,7 +31,7 @@ $english = array(
 	'sitepages:seocreated' => "Your search engine information has been added",
 	'sitepages:logged_in_front_content' => "Logged in front page content",
 	'sitepages:logged_out_front_content' => "Logged out front page content",
-	'sitepages:ownfront' => "Construct your own frontpage for this network. (Note:you will need to know html and css)",
+	'sitepages:ownfront' => "Turn on the custom frontpage for this network.",
 	'sitepages:addcontent' => "You can add content here via your admin tools. Look for the external pages link under admin.",
 	'item:object:front' => 'Front page items',
 
@@ -42,6 +42,19 @@ $english = array(
 	 */
 	'sitepages:posted' => "Your page was successfully posted.",
 	'sitepages:deleted' => "Your page was successfully deleted.",
+	
+	/**
+	 * Frontpage form
+	 **/
+
+	'sitepages:welcometitle' => 'Welcome title',
+	'sitepages:welcomemessage' => 'Welcome message.',
+	'sitepages:welcomeintro' => 'Use the following fields to construct a welcome title and message for your users.',
+	'sitepages:sidebarintro' => 'Use the following input boxes to set a title and some content for the sidebar freeform content area.',
+	'sitepages:sidebartitle' => 'Title',
+	'sitepages:sidebarmessage' => 'Message.',
+	'sitepages:warning' => 'We recommend that you keep this to less than 300 characters.',
+	'sitepagessimple:posted' => 'The frontpage has successfully updated.',
 
 	/**
 	 * Error messages

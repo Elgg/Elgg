@@ -39,7 +39,7 @@ function sitepages_init() {
 	elgg_extend_view('metatags', 'sitepages/metatags');
 
 	// Replace the default index page if user has requested and the site is not running walled garden
-	if ((get_plugin_setting('ownfrontpage', 'sitepages') == 'yes') && (!is_plugin_enabled('walledgarden'))) {
+	if (get_plugin_setting('ownfrontpage', 'sitepages') == 'yes') {
 		register_plugin_hook('index', 'system', 'sitepages_custom_index');
 	}
 
@@ -52,6 +52,7 @@ function sitepages_init() {
 
 	register_action("sitepages/add", FALSE, $CONFIG->pluginspath . "sitepages/actions/add.php");
 	register_action("sitepages/addfront", FALSE, $CONFIG->pluginspath . "sitepages/actions/addfront.php");
+	register_action("sitepages/addfrontsimple", FALSE, $CONFIG->pluginspath . "sitepages/actions/addfrontsimple.php");
 	register_action("sitepages/addmeta", FALSE, $CONFIG->pluginspath . "sitepages/actions/addmeta.php");
 	register_action("sitepages/edit", FALSE, $CONFIG->pluginspath . "sitepages/actions/edit.php");
 	register_action("sitepages/delete", FALSE, $CONFIG->pluginspath . "sitepages/actions/delete.php");
@@ -74,21 +75,25 @@ function sitepages_runonce() {
  */
 function sitepages_custom_index() {
 	// context is checked by the extended metatags view to print out its custom CSS
-	$context = get_context();
-	set_context('sitepages:front');
+	//$context = get_context();
+	//set_context('sitepages:front');
 
-	if ($contents = elgg_view('sitepages/custom_frontpage')) {
-		page_draw(FALSE, $contents);
+	//if ($contents = elgg_view('sitepages/custom_frontpage')) {
+	//	page_draw(FALSE, $contents);
 
-		set_context($context);
+	//	set_context($context);
 		// return TRUE to tell index.php we've got its content right here.
-		return TRUE;
-	}
+	//	return TRUE;
+	//}
 
-	set_context($context);
+	//set_context($context);
 
 	// return NULL to pass this to next in chain, or back to standard index.php.
-	return NULL;
+	//return NULL;
+	if (!include_once(dirname(dirname(__FILE__))) . "/sitepages/index.php") {
+		return false;
+	}
+	return true;
 }
 
 /**

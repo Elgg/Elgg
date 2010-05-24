@@ -67,7 +67,7 @@ function sitepages_get_edit_section_content($page_type) {
 
 	switch ($page_type) {
 		case 'front':
-			$view = 'sitepages/forms/editfront';
+			$view = 'sitepages/forms/editfrontsimple';
 			break;
 
 		case 'seo':
