@@ -290,11 +290,11 @@ function count_unread_messages() {
     
     //get the users inbox messages
     //$num_messages = get_entities_from_metadata("toId", $_SESSION['user']->getGUID(), "object", "messages", 0, 10, 0, "", 0, false);
-    $num_messages = elgg_get_entities_from_metadata(array('metadata_name_value_pairs' => array(
+   $num_messages = elgg_get_entities_from_metadata(array('metadata_name_value_pairs' => array(
     							'toId' => $_SESSION['user']->guid,
     							'readYet' => 0,
     							'msg' => 1
-    						)));
+    						), 'owner_guid' => $_SESSION['user']->guid));
 
 	if (is_array($num_messages))
 		$counter = sizeof($num_messages);
