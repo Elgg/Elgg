@@ -12,7 +12,7 @@ $url = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
 $title = sprintf(elgg_echo('blog:river:create'), $url);
 $string .= $title . " <a href=\"{$object->getURL()}\">{$object->title}</a> <span class=\"entity_subtext\">" . friendly_time($object->time_created) . '</span>';
 
-if (get_plugin_setting('activitytype', 'riverdashboard') != 'classic') {
+if (isloggedin()) {
 	$string .= '<a class="river_comment_form_button link">' . elgg_echo('generic_comments:text') . '</a>';
 	$string .= elgg_view('likes/forms/link', array('entity' => $object));
 }
