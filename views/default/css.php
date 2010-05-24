@@ -22,11 +22,10 @@
 	CONTENT HEADER
 	DEFAULT COMMENTS
 	ENTITY LISTINGS				elgg's default entity listings
-	USER SETTINGS & ADMIN AREA	styles for user settings and default admin area
+	USER SETTINGS				styles for user settings
 	GENERAL FORM ELEMENTS		default styles for all elgg input/form elements
 	FRIENDS PICKER
 	LIKES
-	ADMIN AREA
 
 
 */
@@ -634,8 +633,8 @@ li.navigation_more ul li {
 	max-width: 500px;
 	cursor: pointer;
 	opacity:0.9;
-	-webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45); /* safari v3+ */
-	-moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45); /* FF v3.5+ */
+	-webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
+	-moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
 }
 #elgg_system_message.error {
 	background-color:red;
@@ -1169,8 +1168,8 @@ a.longtext_control {
 	padding: 2px 4px;
 	margin:0 10px 10px 0;
 	cursor: pointer;
-	-webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40); /* safari v3+ */
-	-moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40); /* FF v3.5+ */
+	-webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
+	-moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
 }
 .submit_button:hover {
 	color: white;
@@ -1205,8 +1204,8 @@ input[type="submit"] {
 	cursor: pointer;
 	-moz-outline-style: none;
 	outline: none;
-	-webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40); /* safari v3+ */
-	-moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40); /* FF v3.5+ */
+	-webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
+	-moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
 }
 input[type="submit"]:hover {
 	border-color: #0054a7;
@@ -1249,7 +1248,6 @@ a.action_button {
 	background-position: 0 0;
 	border:1px solid #999999;
 	color:#333333;
-	/*display:block;*/
 	padding:2px 15px 2px 15px;
 	text-align:center;
 	font-weight:bold;

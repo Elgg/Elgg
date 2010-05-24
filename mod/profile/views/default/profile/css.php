@@ -200,9 +200,12 @@ img.medium {
 	cursor:pointer;
 }
 .owner_block_links ul.admin_menu li a {
-	background-color: red;
-	color:white;
+	background-color: white;
+	color:red;
 	margin-bottom:0;
+}
+.owner_block_links ul.admin_menu li a:hover {
+	color:black;
 }
 .owner_block_links ul.admin_menu li ul.admin_menu_options li a {
 	color:red;
