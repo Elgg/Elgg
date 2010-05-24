@@ -675,6 +675,11 @@ li.navigation_more ul li {
 	padding:0;
 	list-style: none;
 }
+.submenu ul {
+	margin-bottom:0;
+	padding-left:0;
+	list-style: none;
+}
 .submenu li.selected a,
 .submenu li.selected li.selected a,
 .submenu li.selected li.selected li.selected a {

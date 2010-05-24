@@ -243,6 +243,11 @@ form.admin_plugins_simpleview .submit_button {
 .plugin_name input[type="checkbox"] {
 	margin-right: 10px;
 }
+ul.admin_plugins {
+	margin-bottom:0;
+	padding-left:0;
+	list-style: none;
+}
 .plugin_details {
 	margin:0 0 5px 0;
 	padding:0 7px 4px 10px;
