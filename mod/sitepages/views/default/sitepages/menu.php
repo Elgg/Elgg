@@ -20,7 +20,7 @@ $url = $vars['url'] . 'pg/sitepages/edit/';
 	$pages = array('front', 'about', 'terms', 'privacy', 'seo');
 
 	foreach ($pages as $page) {
-		$select = ($page_type == $page) ? 'class = "selected"' : '';
+		$selected = ($page_type == $page) ? 'class = "selected"' : '';
 		echo "<li $selected><a href=\"{$url}{$page}\">" . elgg_echo("sitepages:$page") . "</a></li>";
 	}
 ?>
