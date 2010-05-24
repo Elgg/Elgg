@@ -38,7 +38,7 @@ unset($_SESSION['msg_contents']);
 	        echo "<div class='entity_listing messages clearfloat'><div class='entity_listing_icon'>".elgg_view("profile/icon",array('entity' => $user, 'size' => 'tiny'))."</div>";
 	        
 	        //draw it
-			echo "<div class='entity_listing_info'>".elgg_echo("messages:to").": <a href='{$vars['url']}pg/profile/".$user->username."'>".$user->username."</a>";
+			echo "<div class='entity_listing_info'>".elgg_echo("messages:to").": <a href='{$vars['url']}pg/profile/".$user->username."'>".$user->name."</a>";
 			//set the hidden input field to the recipients guid
 	        echo "<input type='hidden' name='send_to' value=\"{$send_to}\" />";	
 			echo "</div></div>";
