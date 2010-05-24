@@ -57,6 +57,11 @@ function sitepages_init() {
 	register_action("sitepages/edit", FALSE, $CONFIG->pluginspath . "sitepages/actions/edit.php");
 	register_action("sitepages/delete", FALSE, $CONFIG->pluginspath . "sitepages/actions/delete.php");
 
+	elgg_add_submenu_item(array(
+		'text' => elgg_echo('sitepages'),
+		'href' => "{$CONFIG->wwwroot}pg/sitepages/edit/front",
+		'parent_id' => 'site',
+	), 'admin', 'default');
 }
 
 /**
@@ -94,16 +99,6 @@ function sitepages_custom_index() {
 		return false;
 	}
 	return true;
-}
-
-/**
- * Page setup. Adds admin controls to the admin panel.
- */
-function sitepages_pagesetup(){
-	if (get_context() == 'admin' && isadminloggedin()) {
-		global $CONFIG;
-		add_submenu_item(elgg_echo('sitepages'), $CONFIG->wwwroot . 'pg/sitepages/edit/front');
-	}
 }
 
 /**
@@ -234,4 +229,3 @@ function sitepages_public_pages($hook, $type, $return_value, $params) {
 }
 
 register_elgg_event_handler('init', 'system', 'sitepages_init');
-register_elgg_event_handler('pagesetup', 'system', 'sitepages_pagesetup');

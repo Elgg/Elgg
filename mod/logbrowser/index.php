@@ -59,6 +59,6 @@
 	set_context('admin');
 		
 // Display main admin menu
-	page_draw(elgg_echo('logbrowser'),elgg_view_layout("one_column_with_sidebar", $title . $form . $result));
+	page_draw(elgg_echo('logbrowser'),elgg_view_layout('administration', $title . $form . $result));
 
 ?>

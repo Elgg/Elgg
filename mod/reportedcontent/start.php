@@ -27,17 +27,12 @@ function reportedcontent_init() {
 	    elgg_extend_view('profile/menu/links', 'reportedcontent/user_report');
 		elgg_extend_view('footer/links', 'reportedcontent/footer_link');
 	}
-}
-
-/**
- * Adding the reported content to the admin menu
- *
- */
-function reportedcontent_pagesetup() {
-	if (get_context() == 'admin' && isadminloggedin()) {
-		global $CONFIG;
-		add_submenu_item(elgg_echo('reportedcontent'), $CONFIG->wwwroot . 'pg/reportedcontent/');
-	}
+	
+	elgg_add_submenu_item(array(
+		'text' => elgg_echo('reportedcontent'),
+		'href' => "{$CONFIG->wwwroot}pg/reportedcontent",
+		'parent_id' => 'overview',
+	), 'admin', 'default');
 }
 
 /**
@@ -54,7 +49,6 @@ function reportedcontent_page_handler($page) {
 
 // Initialise Reported Content
 register_elgg_event_handler('init','system','reportedcontent_init');
-register_elgg_event_handler('pagesetup','system','reportedcontent_pagesetup');
 
 //register action
 register_action('reportedcontent/add',false,$CONFIG->pluginspath . "reportedcontent/actions/add.php");

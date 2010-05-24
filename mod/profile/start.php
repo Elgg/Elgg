@@ -51,7 +51,12 @@ function profile_init() {
 
 	// Now override icons
 	register_plugin_hook('entity:icon:url', 'user', 'profile_usericon_hook');
-
+	
+	elgg_add_submenu_item(array(
+		'text' => elgg_echo('profile:edit:default'),
+		'href' => "{$CONFIG->wwwroot}pg/defaultprofile/edit",
+		'parent_id' => 'appearance',
+	), 'admin', 'default');
 }
 
 /**
@@ -189,9 +194,6 @@ function profileedit_page_handler($page) {
 function profile_pagesetup()
 {
 	global $CONFIG;
-	if (get_context() == 'admin' && isadminloggedin()) {
-		add_submenu_item(elgg_echo('profile:edit:default'), $CONFIG->wwwroot . 'pg/defaultprofile/edit/');
-	}
 
 	//add submenu options
 	if (get_context() == "profile") {
