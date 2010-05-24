@@ -198,10 +198,12 @@ function blog_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 function blog_profile_menu($hook, $entity_type, $return_value, $params) {
 	global $CONFIG;
 
-	$return_value[] = array(
-		'text' => elgg_echo('blog'),
-		'href' => "{$CONFIG->url}pg/blog/{$params['owner']->username}/read",
-	);
+	if (get_context() != 'groups') {
+		$return_value[] = array(
+			'text' => elgg_echo('blog'),
+			'href' => "{$CONFIG->url}pg/blog/{$params['owner']->username}/read",
+		);
+	}
 
 	return $return_value;
 }
