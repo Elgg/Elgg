@@ -23,7 +23,9 @@ $categories = elgg_view('categories/view', $vars);
 $excerpt = $blog->excerpt;
 
 $body = autop($blog->description);
-$owner_icon = elgg_view("profile/icon",array('entity' => $owner, 'size' => 'tiny'));
+$owner_icon = elgg_view('profile/icon', array('entity' => $owner, 'size' => 'tiny'));
+$owner_blog_link = "<a href=\"{$vars['url']}pg/blog/$owner->username\">{$owner->name}</a>";
+$author_text = sprintf(elgg_echo('blog:author_by_line'), $owner_blog_link);
 $tags = elgg_view('output/tags', array('tags' => $blog->tags));
 $date = friendly_time($blog->publish_date);
 
@@ -77,6 +79,7 @@ echo <<<___END
 	<div class="entity_listing_info">
 		<div class="entity_metadata">$edit</div>
 		<p class="entity_subtext">
+			$author_text
 			$date
 			$categories
 			$comments_link
@@ -98,6 +101,7 @@ ___END;
 		<div class="entity_metadata">$edit</div>
 		<p class="entity_title">$linked_title</p>
 		<p class="entity_subtext">
+			$author_text
 			$date
 			$categories
 			$comments_link

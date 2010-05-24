@@ -11,8 +11,9 @@ $english = array(
 	'blog:revisions' => 'Revisions',
 	'blog:archives' => 'Archives',
 	'blog:blog' => 'Blog',
+	'blog:author_by_line' => 'By %s',
 	'item:object:blog' => 'Blogs',
-	
+
 	'blog:title:user_blogs' => '%s\'s Blogs',
 	'blog:title:all_blogs' => 'All Site Blogs',
 	'blog:title:friends' => 'All Friends\' Blogs',
