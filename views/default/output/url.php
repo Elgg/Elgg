@@ -19,6 +19,9 @@
  */
 
 $url = trim($vars['href']);
+if (!$url and isset($vars['value'])) {
+	$url = trim($vars['value']);
+}
 
 if (!empty($url)) {
 	if (array_key_exists('target', $vars) && $vars['target']) {
