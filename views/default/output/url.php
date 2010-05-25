@@ -25,25 +25,25 @@ if (!$url and isset($vars['value'])) {
 }
 
 if (!empty($url)) {
-	if (array_key_exists('target', $vars) && $vars['target']) {
+	if (isset($vars['target'])) {
 		$target = "target = \"{$vars['target']}\"";
 	} else {
 		$target = '';
 	}
 
-	if (array_key_exists('class', $vars) && $vars['class']) {
+	if (isset($vars['class'])) {
 		$class = "class = \"{$vars['class']}\"";
 	} else {
 		$class = '';
 	}
 
-	if (array_key_exists('js', $vars) && $vars['js']) {
-		$js = "{$vars['target']}";
+	if (isset($vars['js'])) {
+		$js = "{$vars['js']}";
 	} else {
 		$js = '';
 	}
 
-	if (array_key_exists('text', $vars) && $vars['text']) {
+	if (isset($vars['text'])) {
 		if (isset($vars['encode_text']) && $vars['encode_text']) {
 			$text = htmlentities($vars['text'], ENT_QUOTES, 'UTF-8');
 		} else {
@@ -57,7 +57,7 @@ if (!empty($url)) {
 		$url = "http://" . $url;
 	}
 
-	if (array_key_exists('is_action', $vars) && $vars['is_action']) {
+	if (isset($vars['is_action'])) {
 		$url = elgg_add_action_tokens_to_url($url);
 	}
 
