@@ -8,7 +8,7 @@
  * @author Curverider Ltd
  * @link http://elgg.org/
  *
- * @uses string $vars['href'] The string to display in the <a></a> tags
+ * @uses string $vars['href'] The URL.
  * @uses string $vars['text'] The string between the <a></a> tags.
  * @uses string $vars['target'] Set the target="" attribute.
  * @uses bool $vars['encode_text'] Run $vars['text'] through htmlentities()?
