@@ -90,8 +90,8 @@ $english = array(
  * Email messages commentwall
  */
 
-	'profile:comment:subject' => 'You have a new message board comment!',
-	'profile:comment:body' => "You have a new message board comment from %s. It reads:
+	'profile:comment:subject' => 'You have a new message on your comment wall!',
+	'profile:comment:body' => "You have a new message on your comment wall from %s. It reads:
 
 
 %s
