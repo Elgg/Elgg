@@ -27,6 +27,14 @@
 	line-height: 1.4em;
 	padding-bottom:12px;
 }
+
+/* blogs list view */
+.entity_listing.blog .entity_metadata {
+	min-width:400px;
+	text-align: right;
+}
+
+/* blogs edit/create form */
 form#blog_post_edit .submit_button {
 	margin-right:15px;
 }
