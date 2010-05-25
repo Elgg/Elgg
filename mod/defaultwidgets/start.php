@@ -30,11 +30,6 @@ global $CONFIG;
  * @param unknown_type $object
  */
 function defaultwidgets_init() {
-	global $CONFIG;
-	
-	// Load system configuration
-	register_page_handler ( 'defaultwidgets', 'defaultwidgets_page_handler' );
-	
 	// register create user event hook
 	register_elgg_event_handler ( 'create', 'user', 'defaultwidgets_newusers' );
 	
@@ -43,20 +38,9 @@ function defaultwidgets_init() {
 		register_elgg_event_handler('validate', 'user', 'defaultwidgets_reset_access');
 	}
 	
-	// Override metadata permissions
-	//register_plugin_hook ( 'permissions_check:metadata', 'object', 'defaultwidgets_can_edit_metadata' );
-	
-	elgg_add_submenu_item(array(
-		'text' => elgg_echo('defaultwidgets:menu:profile'),
-		'href' => "{$CONFIG->wwwroot}pg/defaultwidgets/profile",
-		'parent_id' => 'appearance',
-	), 'admin', 'default');
-	
-	elgg_add_submenu_item(array(
-		'text' => elgg_echo('defaultwidgets:menu:dashboard'),
-		'href' => "{$CONFIG->wwwroot}pg/defaultwidgets/dashboard",
-		'parent_id' => 'appearance',
-	), 'admin', 'default');
+	// @todo These submenu pages should be DRYed up
+	elgg_add_admin_submenu_item('default_profile_widgets', elgg_echo('defaultwidgets:menu:profile'), 'appearance');
+	elgg_add_admin_submenu_item('default_dashboard_widgets', elgg_echo('defaultwidgets:menu:dashboard'), 'appearance');
 }
 
 /**
@@ -217,32 +201,6 @@ function defaultwidgets_reset_access($event, $object_type, $object) {
 	// turn off permissions override
 	$defaultwidget_access = false;
 	
-	return true;
-}
-
-/**
- * Default widgets page handler; allows the use of fancy URLs
- *
- * @param array $page From the page_handler function
- * @return true|false Depending on success
- */
-function defaultwidgets_page_handler($page) {
-	global $CONFIG;
-	
-	if (isset ( $page [0] )) {
-		
-		switch ($page [0]) {
-			case "profile" :
-				include (dirname ( __FILE__ ) . "/profile.php");
-				break;
-			case "dashboard" :
-				include (dirname ( __FILE__ ) . "/dashboard.php");
-				break;
-		}
-	} else {
-		register_error ( elgg_echo ( "defaultwidgets:admin:notfound" ) );
-		forward ( $CONFIG->wwwroot );
-	}
 	return true;
 }
 

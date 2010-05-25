@@ -49,13 +49,13 @@ if ($context && isset ( $leftbar ) && isset ( $middlebar ) && isset ( $rightbar 
 		forward ( 'pg/admin' );
 	} else {
 		register_error ( elgg_echo ( 'defaultwidgets:update:failed' ) );
-		forward ( 'pg/defaultwidgets/' . $context );
+		forward("pg/admin/appearance/default_{$context}_widgets");
 	}
 
 } else {
 	
 	// report incorrect parameters error
 	register_error ( elgg_echo ( 'defaultwidgets:update:noparams' ) );
-	forward ( 'pg/defaultwidgets/' . $context );
+	forward("pg/admin/appearance/default_{$context}_widgets");
 
 }

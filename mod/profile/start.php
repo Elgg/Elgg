@@ -40,7 +40,6 @@ function profile_init() {
 
 	// Register a page handler, so we can have nice URLs
 	register_page_handler('profile', 'profile_page_handler');
-	register_page_handler('defaultprofile', 'profileedit_page_handler');
 	register_page_handler('icon', 'profile_icon_handler');
 	register_page_handler('iconjs', 'profile_iconjs_handler');
 
@@ -52,11 +51,7 @@ function profile_init() {
 	// Now override icons
 	register_plugin_hook('entity:icon:url', 'user', 'profile_usericon_hook');
 	
-	elgg_add_submenu_item(array(
-		'text' => elgg_echo('profile:edit:default'),
-		'href' => "{$CONFIG->wwwroot}pg/defaultprofile/edit",
-		'parent_id' => 'appearance',
-	), 'admin', 'default');
+	elgg_add_admin_submenu_item('defaultprofile', elgg_echo('profile:edit:default'), 'appearance');
 }
 
 /**
@@ -167,24 +162,6 @@ function profile_page_handler($page) {
 
 	page_draw($title, $content);
 	return;
-}
-
-/**
- * Profile edit page handler
- *
- * @param array $page Array of page elements, forwarded by the page handling mechanism
- */
-function profileedit_page_handler($page) {
-	global $CONFIG;
-
-	// The username should be the file we're getting
-	if (isset($page[0])) {
-		switch ($page[0]) {
-			default:
-				include($CONFIG->pluginspath . "profile/defaultprofile.php");
-				break;
-		}
-	}
 }
 
 /**

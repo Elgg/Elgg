@@ -9,15 +9,8 @@
  * @link http://elgg.com/
  */
 
-require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
-
-admin_gatekeeper();
-set_context('admin');
-
 $title = elgg_view_title(elgg_echo('profile:edit:default'));
 $form = elgg_view('profile/editdefaultprofile');
-
-set_context('search');
 
 // List form elements
 $n = 0;
@@ -46,10 +39,13 @@ $resetlisting = elgg_view('input/form',
 						)
 					);
 					
-$resetlisting = "<div class='default_profile_reset'>{$resetlisting}</div>";
+$body = <<<__HTML
+$title
+$form
+$listing
+<div class="default_profile_reset">
+	$resetlisting
+</div>
+__HTML;
 
-set_context('admin');
-
-$body = elgg_view_layout("administration", $title . $form . $listing . $resetlisting);
-
-page_draw(elgg_echo('profile:edit:default'), $body);
+echo $body;

@@ -22,34 +22,32 @@
 		}
 		
 
-		$form = "";
-		
-		$form .= "<p>" . elgg_echo('logbrowser:user');
-		$form .= elgg_view('input/text',array(
-														'internalname' => 'search_username',
-														'value' => $userval 
-													)) . "</p>";
+		$form = "<p>" . elgg_echo('logbrowser:user');
+		$form .= elgg_view('input/text', array(
+			'internalname' => 'search_username',
+			'value' => $userval,
+		)) . "</p>";
 		
 		$form .= "<p>" . elgg_echo('logbrowser:starttime');
-		$form .= elgg_view('input/text',array(
-														'internalname' => 'timelower',
-														'value' => $lowerval 
-													)) . "</p>";
+		$form .= elgg_view('input/text', array(
+			'internalname' => 'timelower',
+			'value' => $lowerval,
+		)) . "</p>";
 
 		$form .= "<p>" . elgg_echo('logbrowser:endtime');
-		$form .= elgg_view('input/text',array(
-														'internalname' => 'timeupper',
-														'value' => $upperval
-													))  . "</p>";
-		$form .= elgg_view('input/submit',array(
-														'value' => elgg_echo('search')
-													));
-													
-		$wrappedform = elgg_view('input/form',array(
-														'body' => $form,
-														'method' => 'get',
-														'action' => $vars['url'] . "mod/logbrowser/"
-										));										
+		$form .= elgg_view('input/text', array(
+			'internalname' => 'timeupper',
+			'value' => $upperval,
+		))  . "</p>";
+		$form .= elgg_view('input/submit', array(
+			'value' => elgg_echo('search'),
+		));
+		
+		$wrappedform = elgg_view('input/form', array(
+			'body' => $form,
+			'method' => 'get',
+			'action' => "{$vars['url']}pg/admin/logbrowser",
+		));
 ?>
 
 	<div id="log_browser_search_form" class="hidden radius8"><?php echo $wrappedform; ?></div>

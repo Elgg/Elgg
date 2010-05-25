@@ -16,9 +16,6 @@
 function reportedcontent_init() {
 	global $CONFIG;
 	
-	// Register a page handler, so we can have nice URLs
-	register_page_handler('reportedcontent', 'reportedcontent_page_handler');
-	
 	// Extend CSS
 	elgg_extend_view('css', 'reportedcontent/css');
 			
@@ -28,29 +25,13 @@ function reportedcontent_init() {
 		elgg_extend_view('footer/links', 'reportedcontent/footer_link');
 	}
 	
-	elgg_add_submenu_item(array(
-		'text' => elgg_echo('reportedcontent'),
-		'href' => "{$CONFIG->wwwroot}pg/reportedcontent",
-		'parent_id' => 'overview',
-	), 'admin', 'default');
-}
-
-/**
- * Reported content page handler
- *
- * @param array $page Array of page elements, forwarded by the page handling mechanism
- */
-function reportedcontent_page_handler($page) {
-	global $CONFIG;
+	elgg_add_admin_submenu_item('reportedcontent', elgg_echo('reportedcontent'), 'overview');
 	
-	// only interested in one page for now
-	include($CONFIG->pluginspath . "reportedcontent/index.php"); 
+	//register action
+	register_action('reportedcontent/add', FALSE, "{$CONFIG->pluginspath}reportedcontent/actions/add.php");
+	register_action('reportedcontent/delete', FALSE, "{$CONFIG->pluginspath}reportedcontent/actions/delete.php");
+	register_action('reportedcontent/archive', FALSE, "{$CONFIG->pluginspath}reportedcontent/actions/archive.php");
 }
 
 // Initialise Reported Content
 register_elgg_event_handler('init','system','reportedcontent_init');
-
-//register action
-register_action('reportedcontent/add',false,$CONFIG->pluginspath . "reportedcontent/actions/add.php");
-register_action('reportedcontent/delete',false,$CONFIG->pluginspath . "reportedcontent/actions/delete.php");
-register_action('reportedcontent/archive',false,$CONFIG->pluginspath . "reportedcontent/actions/archive.php");

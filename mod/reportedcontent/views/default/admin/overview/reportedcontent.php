@@ -9,19 +9,19 @@
  * @link http://elgg.com/
  */
 
-require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
-
-admin_gatekeeper();
-set_context('admin');
 // Set admin user for user block
 set_page_owner($_SESSION['guid']);
 
-	
 $title = elgg_view_title(elgg_echo('reportedcontent'));
 
 $reported = elgg_get_entities(array('types' => 'object', 'subtypes' => 'reported_content', 'limit' => 9999));
-
-$area2 = elgg_view("reportedcontent/listing", array('entity' => $reported));
+$list = elgg_view("reportedcontent/listing", array('entity' => $reported));
 	
 // Display main admin menu
-page_draw(elgg_echo('reportedcontent'),elgg_view_layout("administration", $title . $area2));
+$body = <<<__HTML
+$title
+$reported
+$list
+__HTML;
+
+echo $body;
