@@ -6,6 +6,8 @@
  * @uses array $vars['tabs'] A multi-dimensional array of tab entries in the format array(
  * 	'title' => string, // Title of link
  * 	'url' => string, // URL for the link
+ * 	'url_js' => string, // JS to pass to the link
+ * 	'url_class' => string, // Class to pass to the link
  * 	'class' => string  // Class of the li element.
  * 	'selected' => bool // if this link is currently selected
  * )
@@ -34,7 +36,23 @@ if (isset($vars['tabs'])) {
 		$title = htmlentities($info['title'], ENT_QUOTES, 'UTF-8');
 		$url = htmlentities($info['url'], ENT_QUOTES, 'UTF-8');
 
-		echo "<li $class_str $js><a href=\"$url\" title=\"$title\"><span>$title</span></a></li>";
+		$options = array(
+			'href' => $url,
+			'title' => $title,
+			'text' => $title
+		);
+
+		if (isset($info['url_js'])) {
+			$options['js'] = $info['url_js'];
+		}
+
+		if (isset($info['url_class'])) {
+			$options['class'] = $info['url_class'];
+		}
+
+		$link = elgg_view('output/url', $options);
+
+		echo "<li $class_str $js>$link</li>";
 	}
 	?>
 		</ul>
