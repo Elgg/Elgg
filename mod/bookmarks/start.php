@@ -205,20 +205,36 @@ function bookmarks_page_handler($page) {
 	}
 
 	// main content
-	if ($owner != $logged_in_user || $context == 'action') {
-		$header = elgg_view('navigation/breadcrumbs');
-	}
+	//if ($owner != $logged_in_user || $context == 'action') {
+	$header = elgg_view('navigation/breadcrumbs');
+	//}
 	//if no user is set
 	if(!$owner_name){
 		$owner_name = get_loggedin_user()->username;
 	}
 
-	$header .= elgg_view("page_elements/content_header", array(
-		'context' => $context,
-		'type' => 'bookmarks',
-		'all_link' => "{$CONFIG->url}pg/bookmarks/",
-		'new_link' => "{$CONFIG->url}pg/bookmarks/{$owner_name}/add"
-	));
+	//select the header depending on whether a user is looking at their bookmarks or someone elses
+	if($owner){
+		if ($owner != $logged_in_user) {
+			$header .= elgg_view("page_elements/content_header_member", array(
+				'type' => 'bookmarks'
+			));
+		}else{
+			$header .= elgg_view("page_elements/content_header", array(
+				'context' => $context,
+				'type' => 'bookmarks',
+				'all_link' => "{$CONFIG->url}pg/bookmarks/",
+				'new_link' => "{$CONFIG->url}pg/bookmarks/{$owner_name}/add"
+			));
+		}
+	}else{
+		$header .= elgg_view("page_elements/content_header", array(
+				'context' => $context,
+				'type' => 'bookmarks',
+				'all_link' => "{$CONFIG->url}pg/bookmarks/",
+				'new_link' => "{$CONFIG->url}pg/bookmarks/{$owner_name}/add"
+			));
+	}
 
 	$content = $header . $content;
 	$body = elgg_view_layout('one_column_with_sidebar', $content, $sidebar);
