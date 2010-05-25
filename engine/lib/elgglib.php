@@ -3171,12 +3171,11 @@ function elgg_init() {
 }
 
 function elgg_walled_garden_index() {
-	global $CONFIG;
-
-	$login = elgg_view('account/forms/login');
-	$layout = elgg_view_layout('one_column', $login);
-
-	echo page_draw('', $layout);
+	$login = elgg_view('account/forms/login_walled_garden');
+	echo elgg_view('page_shells/walled_garden', array(
+		'body' => $login,
+		'sysmessages' => system_messages(NULL, ''),
+	));
 	
 	// @hack Index must exit to keep plugins from continuing to extend
 	exit;
