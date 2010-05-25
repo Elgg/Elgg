@@ -14,6 +14,7 @@
  * @uses bool $vars['encode_text'] Run $vars['text'] through htmlentities()?
  * @uses string $vars['class'] what to add in class=""
  * @uses string $vars['js'] Javascript to insert in <a> tag
+ * @uses string $vars['title'] Title attribute to <a> tag
  * @uses bool $vars['is_action'] Is this a link to an action?
  *
  */
@@ -60,5 +61,11 @@ if (!empty($url)) {
 		$url = elgg_add_action_tokens_to_url($url);
 	}
 
-	echo "<a href=\"{$url}\" $target $class $js>$text</a>";
+	if (isset($vars['title'])) {
+		$title = 'title="' . htmlentities($vars['title']) . '"';
+	} else {
+		$title = '';
+	}
+
+	echo "<a href=\"{$url}\" $target $class $js $title>$text</a>";
 }
