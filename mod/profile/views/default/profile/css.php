@@ -465,6 +465,11 @@ div.usericon a.icon img {
 	text-align: left;
 	margin:0;
 }
+.sub_menu ul.sub_menu_list {
+	list-style: none;
+	margin-bottom:0;
+	padding-left:0;
+}
 .usericon .sub_menu a {
 	padding:2px 3px 2px 8px;
 	font-size:12px;
