@@ -1970,7 +1970,7 @@ function trigger_elgg_event($event, $object_type, $object = null) {
 }
 
 /**
- * Register a function to a plugin hook for a particular entity type, with a given priority.
+ * Register a function to a plugin hook for a particular hook name and type, with a given priority.
  *
  * eg if you want the function "export_user" to be called when the hook "export" for "user" entities
  * is run, use:
@@ -1987,32 +1987,32 @@ function trigger_elgg_event($event, $object_type, $object = null) {
  * $params is an array containing a set of parameters (or nothing).
  *
  * @param string $hook The name of the hook
- * @param string $entity_type The name of the type of entity (eg "user", "object" etc)
+ * @param string $type The type of the hook (NB Can be an ElggEntity type [user, object, group, site] or custom-defined 'get_sections')
  * @param string $function The name of a valid function to be run
  * @param string $priority The priority - 0 is first, 1000 last, default is 500
  * @return true|false Depending on success
  */
-function register_plugin_hook($hook, $entity_type, $function, $priority = 500) {
+function register_plugin_hook($hook, $type, $function, $priority = 500) {
 	global $CONFIG;
 
 	if (!isset($CONFIG->hooks)) {
 		$CONFIG->hooks = array();
 	} else if (!isset($CONFIG->hooks[$hook]) && !empty($hook)) {
 		$CONFIG->hooks[$hook] = array();
-	} else if (!isset($CONFIG->hooks[$hook][$entity_type]) && !empty($entity_type)) {
-		$CONFIG->hooks[$hook][$entity_type] = array();
+	} else if (!isset($CONFIG->hooks[$hook][$type]) && !empty($type)) {
+		$CONFIG->hooks[$hook][$type] = array();
 	}
 
-	if (!empty($hook) && !empty($entity_type) && is_callable($function)) {
+	if (!empty($hook) && !empty($type) && is_callable($function)) {
 		$priority = (int) $priority;
 		if ($priority < 0) {
 			$priority = 0;
 		}
-		while (isset($CONFIG->hooks[$hook][$entity_type][$priority])) {
+		while (isset($CONFIG->hooks[$hook][$type][$priority])) {
 			$priority++;
 		}
-		$CONFIG->hooks[$hook][$entity_type][$priority] = $function;
-		ksort($CONFIG->hooks[$hook][$entity_type]);
+		$CONFIG->hooks[$hook][$type][$priority] = $function;
+		ksort($CONFIG->hooks[$hook][$type]);
 		return true;
 	} else {
 		return false;
