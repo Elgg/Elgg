@@ -27,7 +27,10 @@ function blog_get_page_content_read($owner_guid = NULL, $guid = NULL) {
 		} else {
 			elgg_push_breadcrumb($blog->title, $blog->getURL());
 			$content = elgg_view_entity($blog, TRUE);
-			$content .= elgg_view_comments($blog);
+			//check to see if comment are on
+			if ($blog->comments_on != 'Off') {
+				$content .= elgg_view_comments($blog);
+			}
 		}
 	} else {
 		$content = elgg_view('page_elements/content_header', array(
