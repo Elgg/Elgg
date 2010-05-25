@@ -28,4 +28,4 @@ $context = 'dashboard';
 $content = elgg_view ( "defaultwidgets/editor", array ('token' => $token, 'ts' => $ts, 'context' => $context ) );
 
 // Display main admin menu
-page_draw ( 'Default dashboard widgets for new users', $content );
+page_draw('Default dashboard widgets for new users', elgg_view_layout('administration', $content));

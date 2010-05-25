@@ -30,6 +30,7 @@ global $CONFIG;
  * @param unknown_type $object
  */
 function defaultwidgets_init() {
+	global $CONFIG;
 	
 	// Load system configuration
 	register_page_handler ( 'defaultwidgets', 'defaultwidgets_page_handler' );
@@ -44,6 +45,18 @@ function defaultwidgets_init() {
 	
 	// Override metadata permissions
 	//register_plugin_hook ( 'permissions_check:metadata', 'object', 'defaultwidgets_can_edit_metadata' );
+	
+	elgg_add_submenu_item(array(
+		'text' => elgg_echo('defaultwidgets:menu:profile'),
+		'href' => "{$CONFIG->wwwroot}pg/defaultwidgets/profile",
+		'parent_id' => 'appearance',
+	), 'admin', 'default');
+	
+	elgg_add_submenu_item(array(
+		'text' => elgg_echo('defaultwidgets:menu:dashboard'),
+		'href' => "{$CONFIG->wwwroot}pg/defaultwidgets/dashboard",
+		'parent_id' => 'appearance',
+	), 'admin', 'default');
 }
 
 /**
@@ -233,21 +246,8 @@ function defaultwidgets_page_handler($page) {
 	return true;
 }
 
-/**
- * Page setup. Adds admin controls to the admin panel.
- *
- */
-function defaultwidgets_pagesetup() {
-	if (get_context () == 'admin' && isadminloggedin ()) {
-		global $CONFIG;
-		add_submenu_item ( elgg_echo ( 'defaultwidgets:menu:profile' ), $CONFIG->wwwroot . 'pg/defaultwidgets/profile' );
-		add_submenu_item ( elgg_echo ( 'defaultwidgets:menu:dashboard' ), $CONFIG->wwwroot . 'pg/defaultwidgets/dashboard' );
-	}
-}
-
 // Make sure the status initialisation function is called on initialisation
 register_elgg_event_handler ( 'init', 'system', 'defaultwidgets_init' );
-register_elgg_event_handler ( 'pagesetup', 'system', 'defaultwidgets_pagesetup' );
 
 register_plugin_hook ( 'permissions_check', 'user', 'defaultwidgets_can_edit' );
 register_plugin_hook ( 'permissions_check', 'object', 'defaultwidgets_can_edit' );

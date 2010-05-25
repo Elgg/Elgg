@@ -53,7 +53,7 @@
 ?>
 <script type="text/javascript">
 $(document).ready(function () {
-	$('div#customise_editpanel').slideToggle("fast");
+	//$('div#customise_editpanel').slideToggle("fast");
 });
 </script>
 
