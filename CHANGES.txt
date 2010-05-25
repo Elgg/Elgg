@@ -1,7 +1,9 @@
-Version 1.8.0
+Version 1.8.0 (Jackie)
 (??? from http://code.elgg.org/branches/1.8/)
 
  User-visible changes:
+  * New default theme.
+  * Separated admin interface.
 
  Generic API changes:
   * Added elgg_instanceof().
