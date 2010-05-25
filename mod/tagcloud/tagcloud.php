@@ -1,6 +1,6 @@
 <?php
 /**
- * Display site tagcloud
+ * Display sidebar tagcloud
  **/
  
 // Load Elgg engine
