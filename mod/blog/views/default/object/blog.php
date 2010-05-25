@@ -32,7 +32,12 @@ $date = friendly_time($blog->publish_date);
 // The "on" status changes for comments, so best to check for !Off
 if ($blog->comments_on != 'Off') {
 	$comments_count = elgg_count_comments($blog);
-	$comments_link = "<a href=\"{$blog->getURL()}#annotations\">" . sprintf(elgg_echo("comments"), $comments_count) . '</a>';
+	//only display if there are commments
+	if($comments_count != 0){
+		$comments_link = "<a href=\"{$blog->getURL()}#annotations\">" . elgg_echo("comments") . " (". $comments_count .")</a>";
+	}else{
+		$comments_link = '';
+	}
 } else {
 	$comments_link = '';
 }
