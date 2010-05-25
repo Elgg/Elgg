@@ -185,10 +185,6 @@ $excerpt_input
 $body_input
 <br />
 
-<p id="blog_save_status">
-	$save_status <span id="blog_save_status_time">$saved</span>
-</p>
-
 <p>
 	<label for="blog_tags">$tags_label</label>
 	$tags_input
@@ -211,17 +207,21 @@ $body_input
 
 $categories_input
 
+<div class="divider"></div>
+<p class="margin_none margin_top entity_subtext">
+	$save_status <span class="blog_save_status_time">$saved</span>
+</p>
+
 $guid_input
 $container_guid_input
 $forward_input
 
 $action_buttons
 
-<span>
-
 ___END;
 
 echo elgg_view('input/form', array(
+	'internalid' => 'blog_post_edit',
 	'internalname' => 'blog_post',
 	'action' => "{$vars['url']}action/blog/save",
 	'body' => $form_body
@@ -286,6 +286,7 @@ elgg_clear_sticky_form('blog');
 		// get a copy of the body to compare for auto save
 		oldDescription = $('form[name=blog_post]').find('textarea[name=description]').val();
 
+/* we don't seems to be using the text counter anymore…
 		$('#excerpt.excerpt').each(function(){
 			var allowed = 200;
 
@@ -313,6 +314,7 @@ elgg_clear_sticky_form('blog');
 
 			});
 		});
+*/
 	});
 
 </script>

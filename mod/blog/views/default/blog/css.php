@@ -27,13 +27,10 @@
 	line-height: 1.4em;
 	padding-bottom:12px;
 }
-
-input.blog_publish_day,
-input.blog_publish_hour,
-input.blog_publish_minute {
-	width: 25px;
+form#blog_post_edit .submit_button {
+	margin-right:15px;
 }
-
-input.blog_publish_year {
-	width: 50px;
+/* force tinymce input height for a more useful editing / blog creation area */
+form#blog_post_edit #description_parent #description_ifr {
+	height:400px !important;
 }
