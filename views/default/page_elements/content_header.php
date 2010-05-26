@@ -69,17 +69,17 @@ EOT;
 if (isloggedin()) {
 	// only show the new button when not on the add form.
 	// hide the tabs when on the add form.
+	// @todo remove the hard coded reference to the videolist plugin
 	if ($filter_context == 'action') {
 		$tabs = '';
 	} else {
-		$new_button = "<a href=\"{$new_link}\" class='action_button'>" . elgg_echo($type . ':new') . '</a>';
 		if(get_context() == "videolist"){
 			$video_link = $CONFIG->wwwroot . "pg/videolist/browse/$username/";
-			$browse_video .= "<a href=\"{$video_link}\" class='action_button'>" . elgg_echo('videolist:browsemenu') . '</a>';
+			$new_button .= "<a href=\"{$video_link}\" class='action_button'>" . elgg_echo('videolist:browsemenu') . '</a>';
 		}else{
-			$browse_video = '';
+			$new_button = "<a href=\"{$new_link}\" class='action_button'>" . elgg_echo($type . ':new') . '</a>';
 		}
-		$new_button = "<div class='content_header_options'>$new_button $browse_video</div>";
+		$new_button = "<div class='content_header_options'>$new_button</div>";
 	}
 
 	// also hide the tabs if in a group context (ie, listing groups) or
