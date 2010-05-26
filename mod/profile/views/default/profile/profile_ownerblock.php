@@ -69,39 +69,38 @@ if(isadminloggedin()){
 }
 
 
-//check tools are enabled
-if(is_plugin_enabled('file')){
-	$file_link = "<li><a href=\"{$vars['url']}pg/file/{$username}\">Files</a></li>";
-}else{
-	$file_link = "";
-}
+//check tools are enabled - hard-coded for phase1
+// @todo - provide a view to extend for profile pages ownerblock tool-links
 if(is_plugin_enabled('blog')){
 	$blog_link = "<li><a href=\"{$vars['url']}pg/blog/{$username}\">Blog</a></li>";
 }else{
 	$blog_link = "";
-}
-if(is_plugin_enabled('videolist')){
-	$video_link = "<li><a href=\"{$vars['url']}pg/videolist/{$username}\">Videos</a></li>";
-}else{
-	$video_link = "";
-}
-if(is_plugin_enabled('feeds')){
-	$feeds_link = "<li><a href=\"{$vars['url']}pg/feeds/{$username}\">Feeds</a></li>";
-}else{
-	$feeds_link = "";
-}
-if(is_plugin_enabled('pages')){
-	$pages_link = "<li><a href=\"{$vars['url']}pg/pages/owned/{$username}\">Pages</a></li>";
-}else{
-	$pages_link = "";
 }
 if(is_plugin_enabled('bookmarks')){
 	$bookmark_link = "<li><a href=\"{$vars['url']}pg/bookmarks/{$username}\">Bookmarks</a></li>";
 }else{
 	$bookmark_link = "";
 }
-
-
+if(is_plugin_enabled('document')){
+	$docs_link = "<li><a href=\"{$vars['url']}pg/document/{$username}\">Documents</a></li>";
+}else{
+	$docs_link = "";
+}
+if(is_plugin_enabled('feeds')){
+	$feeds_link = "<li><a href=\"{$vars['url']}pg/feeds/{$username}\">Feeds</a></li>";
+}else{
+	$feeds_link = "";
+}
+if(is_plugin_enabled('tidypics')){
+	$tidypics_link = "<li><a href=\"{$vars['url']}pg/photos/owned/{$username}\">Photos</a></li>";
+}else{
+	$tidypics_link = "";
+}
+if(is_plugin_enabled('videolist')){
+	$video_link = "<li><a href=\"{$vars['url']}pg/videolist/{$username}\">Videos</a></li>";
+}else{
+	$video_link = "";
+}
 
 //contruct the display
 $display = <<<EOT
@@ -114,12 +113,12 @@ $display = <<<EOT
 	{$profile_actions}
 	<div class="owner_block_links">
 		<ul>
-		{$file_link}
 		{$blog_link}
-		{$video_link}
-		{$feeds_link}
 		{$bookmark_link}
-		{$pages_link}
+		{$docs_link}
+		{$feeds_link}
+		{$tidypics_link}
+		{$video_link}
 		</ul>
 	</div>
 	<!-- if admin user -->
