@@ -33,7 +33,15 @@ $notification_settings = get_user_notification_settings(page_owner());
 	} else {
 		$val = "no";
 	}
-	echo elgg_view('input/radio',array('internalname' => "method[{$k}]", 'options' => array(elgg_echo('option:yes') => 'yes',elgg_echo('option:no') => 'no'), 'value' => $val));
+	
+	echo elgg_view('input/radio', array(
+		'internalname' => "method[$k]",
+		'value' => $val,
+		'options' => array(
+			elgg_echo('option:yes') => 'yes',
+			elgg_echo('option:no') => 'no'
+		),
+	));
 
 ?>
 			</td>

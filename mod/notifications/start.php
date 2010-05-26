@@ -22,9 +22,7 @@ function notifications_plugin_init() {
 
 	// Unset the default notification settings
 	unregister_plugin_hook('usersettings:save', 'user', 'notification_user_settings_save');
-	
-	// must wait until elgg_unextend_view() is merged in from 1.7 branch - if still needed
-	//elgg_unextend_view('usersettings/user', 'notifications/settings/usersettings');
+	elgg_unextend_view('usersettings/user', 'notifications/settings/usersettings');
 }
 
 /**
