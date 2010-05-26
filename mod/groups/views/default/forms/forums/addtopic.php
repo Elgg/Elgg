@@ -19,13 +19,14 @@
 	$message = "";
 	$message_id = "";
 	$status = "";
-	$access_id = ACCESS_DEFAULT;
-
+	
 	// get the group guid
 	$group_guid = (int) get_input('group_guid');
 
 	// set up breadcrumbs
 	$group = get_entity($group_guid);
+	$access_id = $group->group_acl;
+	$options = group_access_options($group);
 	elgg_push_breadcrumb(elgg_echo('groups'), $CONFIG->wwwroot."pg/groups/world/");
 	elgg_push_breadcrumb($group->name, $group->getURL());
 	elgg_push_breadcrumb(elgg_echo('item:object:groupforumtopic'), $CONFIG->wwwroot."pg/groups/forum/{$group_guid}/");
@@ -93,7 +94,7 @@
 	<p>
 		<label>
 			<?php echo elgg_echo('access'); ?><br />
-			<?php echo elgg_view('input/access', array('internalname' => 'access_id','value' => $access_id)); ?>
+			<?php echo elgg_view('input/access', array('internalname' => 'access_id','value' => $access_id, 'options' => $options)); ?>
 		</label>
 	</p>
 
