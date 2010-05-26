@@ -198,7 +198,7 @@ function blog_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 function blog_profile_menu($hook, $entity_type, $return_value, $params) {
 	global $CONFIG;
 
-	if (get_context() != 'groups') {
+	if (!($params['owner'] instanceof ElggGroup)) {
 		$return_value[] = array(
 			'text' => elgg_echo('blog'),
 			'href' => "{$CONFIG->url}pg/blog/{$params['owner']->username}/read",

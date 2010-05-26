@@ -593,12 +593,10 @@
 	function forum_profile_menu($hook, $entity_type, $return_value, $params) {
 		global $CONFIG;
 		
-		$group_owner = page_owner_entity();
-		
-		if ($group_owner instanceof ElggGroup && get_context() == 'groups' && $group_owner->forum_enable != "no") {
+		if ($params['owner'] instanceof ElggGroup && $group_owner->forum_enable != 'no') {
 			$return_value[] = array(
 				'text' => elgg_echo('groups:forum'),
-				'href' => "{$CONFIG->url}pg/groups/forum/{$group_owner->getGUID()}"
+				'href' => "{$CONFIG->url}pg/groups/forum/{$params['owner']->getGUID()}"
 			);
 		}
 		return $return_value;
