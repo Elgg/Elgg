@@ -14,8 +14,10 @@ global $CONFIG;
 
 // Get group fields
 $input = array();
-foreach($CONFIG->group as $shortname => $valuetype) {
+foreach ($CONFIG->group as $shortname => $valuetype) {
 	$input[$shortname] = get_input($shortname);
+	// another work around for Elgg's encoding problems: #561, #2072
+	//$input[$shortname] = html_entity_decode($input[$shortname], ENT_COMPAT, 'UTF-8');
 	if ($shortname == 'name') {
 		$input[$shortname] = strip_tags($input[$shortname]);
 	}
