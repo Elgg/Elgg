@@ -26,15 +26,10 @@ foreach ($CONFIG->group as $shortname => $valuetype) {
 	}
 }
 
-$user_guid = get_input('user_guid');
-$user = NULL;
-if (!$user_guid) {
-	$user = $_SESSION['user'];
-} else {
-	$user = get_entity($user_guid);
-}
+$user = get_loggedin_user();
 
-$group_guid = get_input('group_guid');
+$group_guid = (int)get_input('group_guid');
+$new_group_flag = $group_guid == 0;
 
 $group = new ElggGroup($group_guid); // load if present, if not create a new group
 if (($group_guid) && (!$group->canEdit())) {
@@ -97,9 +92,11 @@ if (isset($CONFIG->group_tool_options)) {
 
 $group->save();
 
-if (!$group->isMember($user)) {
-	$group->join($user); // Creator always a member
+// group creator needs to be member of new group
+if ($new_group_flag) {
+	$group->join($user);
 }
+
 
 
 // Now see if we have a file icon

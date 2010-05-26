@@ -130,10 +130,11 @@
 		<?php
 			if ($vars['entity'])
 			{ 
-			?><input type="hidden" name="group_guid" value="<?php echo $vars['entity']->getGUID(); ?>" /><?php 
+		?>
+		<input type="hidden" name="group_guid" value="<?php echo $vars['entity']->getGUID(); ?>" />
+		<?php
 			}
 		?>
-		<input type="hidden" name="user_guid" value="<?php echo page_owner_entity()->guid; ?>" />
 		<input type="submit" class="submit_button" value="<?php echo elgg_echo("save"); ?>" />
 		
 	</p>
