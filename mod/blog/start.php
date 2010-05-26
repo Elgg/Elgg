@@ -127,6 +127,7 @@ function blog_page_handler($page) {
 
 			case 'new':
 			case 'edit':
+				gatekeeper();
 				$title = elgg_echo('blog:edit');
 				$content_info = blog_get_page_content_edit($page2, $page3);
 				break;
