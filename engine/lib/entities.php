@@ -1770,10 +1770,18 @@ function elgg_get_entities(array $options = array()) {
 		'joins'					=>	array()
 	);
 
-
 	$options = array_merge($defaults, $options);
 
-	$singulars = array('type', 'subtype', 'owner_guid', 'container_guid', 'site_guid', 'type_subtype_pair');
+	// can't use helper function with type_subtype_pair because it's already an array...just need to merge it
+	if (isset($options['type_subtype_pair'])) {
+		if (isset($options['type_subtype_pairs'])) {
+			$options['type_subtype_pairs'] = array_merge($options['type_subtype_pairs'], $options['type_subtype_pair']);
+		} else {
+			$options['type_subtype_pairs'] = $options['type_subtype_pair'];
+		}
+	}
+
+	$singulars = array('type', 'subtype', 'owner_guid', 'container_guid', 'site_guid');
 	$options = elgg_normalise_plural_options_array($options, $singulars);
 
 	// evaluate where clauses
