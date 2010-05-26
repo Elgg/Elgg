@@ -10,7 +10,7 @@
  */
 
 $page_type = $vars['page_type'];
-$url = $vars['url'] . 'pg/sitepages/edit/';
+$url = "{$vars['url']}pg/admin/plugin_settings/sitepages/";
 ?>
 
 <div class="elgg_horizontal_tabbed_nav margin_top">
@@ -21,7 +21,7 @@ $url = $vars['url'] . 'pg/sitepages/edit/';
 
 	foreach ($pages as $page) {
 		$selected = ($page_type == $page) ? 'class = "selected"' : '';
-		echo "<li $selected><a href=\"{$url}{$page}\">" . elgg_echo("sitepages:$page") . "</a></li>";
+		echo "<li $selected><a href=\"$url$page\">" . elgg_echo("sitepages:$page") . "</a></li>";
 	}
 ?>
 </ul>

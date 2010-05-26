@@ -16,7 +16,7 @@
  * 	DRY up actions and views
  * 	Use $entity->view to redirect to url of page.
  * 	The tool settings view is probably not needed as it can be added to the front page edit tab.
- * 	You can say pg/sitepages/edit|read/any_page_i_want and it will let you.
+ * 	You can say pg/sitepages/read/any_page_i_want and it will let you.
  */
 
 /**
@@ -50,18 +50,7 @@ function sitepages_init() {
 	// hook into the walled garden pages
 	register_plugin_hook('public_pages', 'walled_garden', 'sitepages_public_pages');
 
-	register_action("sitepages/add", FALSE, $CONFIG->pluginspath . "sitepages/actions/add.php");
-	register_action("sitepages/addfront", FALSE, $CONFIG->pluginspath . "sitepages/actions/addfront.php");
-	register_action("sitepages/addfrontsimple", FALSE, $CONFIG->pluginspath . "sitepages/actions/addfrontsimple.php");
-	register_action("sitepages/addmeta", FALSE, $CONFIG->pluginspath . "sitepages/actions/addmeta.php");
-	register_action("sitepages/edit", FALSE, $CONFIG->pluginspath . "sitepages/actions/edit.php");
-	register_action("sitepages/delete", FALSE, $CONFIG->pluginspath . "sitepages/actions/delete.php");
-
-	elgg_add_submenu_item(array(
-		'text' => elgg_echo('sitepages'),
-		'href' => "{$CONFIG->wwwroot}pg/sitepages/edit/front",
-		'parent_id' => 'site',
-	), 'admin', 'default');
+	register_action('settings/sitepages/save', FALSE, "{$CONFIG->pluginspath}sitepages/actions/edit_settings.php");
 }
 
 /**
@@ -136,13 +125,6 @@ function sitepages_page_handler($page) {
 	$page_type = isset($page[1]) ? $page[1] : FALSE;
 
 	switch ($action) {
-		case 'edit':
-			admin_gatekeeper();
-			$title = elgg_echo('sitepages');
-			$content = sitepages_get_edit_section_content($page_type);
-
-			break;
-
 		case 'read':
 			$title = elgg_echo('sitepages:' . strtolower($page_type));
 			$content = sitepages_get_page_content($page_type);

@@ -8,12 +8,10 @@
  * @copyright Curverider Ltd 2008-2010
  * @link http://elgg.org/
  */
-?>
 
-<p>
-	<?php echo elgg_echo('sitepages:ownfront'); ?>
-	<select name="params[ownfrontpage]">
-		<option value="yes" <?php if ($vars['entity']->ownfrontpage == 'yes') echo " selected=\"yes\" "; ?>><?php echo elgg_echo('option:yes'); ?></option>
-		<option value="no" <?php if ($vars['entity']->ownfrontpage != 'yes') echo " selected=\"yes\" "; ?>><?php echo elgg_echo('option:no'); ?></option>
-	</select>
-</p>
+$page_type = 'front';
+if (isset($vars['page'][2])) {
+	$page_type = $vars['page'][2];
+}
+
+echo sitepages_get_edit_section_content($page_type, $vars['entity']);

@@ -11,7 +11,6 @@
  */
 
 $page_type = $vars['page_type'];
-$action = 'sitepages/add';
 
 if ($sitepages_object = sitepages_get_sitepage_object($page_type)) {
 		$tags = $sitepages_object->tags;
@@ -24,11 +23,19 @@ if ($sitepages_object = sitepages_get_sitepage_object($page_type)) {
 }
 
 // set the required form variables
-$input_area = elgg_view('input/longtext', array('internalname' => 'sitepages_content', 'value' => $description));
-$tag_input = elgg_view('input/tags', array('internalname' => 'sitepages_tags', 'value' => $tags));
+$input_area = elgg_view('input/longtext', array(
+	'internalname' => 'sitepages_content',
+	'value' => $description
+));
+$tag_input = elgg_view('input/tags', array(
+	'internalname' => 'sitepages_tags',
+	'value' => $tags
+));
 
-$submit_input = elgg_view('input/submit', array('internalname' => 'submit', 'value' => elgg_echo('save')));
-$hidden_value = elgg_view('input/hidden', array('internalname' => 'page_type', 'value' => $page_type));
+$hidden_value = elgg_view('input/hidden', array(
+	'internalname' => 'page_type',
+	'value' => $page_type
+));
 
 $tag_label = elgg_echo('tags');
 $external_page_title = elgg_echo("sitepages:$page_type");
@@ -42,9 +49,7 @@ $input_area</p></label>
 $tag_input</p></label>
 
 $hidden_value
-$hidden_guid
-$submit_input
 
 ___EOT;
 
-echo elgg_view('input/form', array('action' => "{$vars['url']}action/$action", 'body' => $form_body));
+echo $form_body;

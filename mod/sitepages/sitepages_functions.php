@@ -59,10 +59,7 @@ function sitepages_create_sitepage_object($page_type) {
  * @param str $section
  * @return str html
  */
-function sitepages_get_edit_section_content($page_type) {
-	set_context('admin');
-
-	$title = elgg_view_title(elgg_echo('sitepages'));
+function sitepages_get_edit_section_content($page_type, $entity=NULL) {
 	$menu = elgg_view('sitepages/menu', array('page_type' => $page_type));
 
 	switch ($page_type) {
@@ -80,11 +77,11 @@ function sitepages_get_edit_section_content($page_type) {
 
 	}
 
-	$form .= elgg_view($view, array('page_type' => $page_type));
-	$body = $title .  $menu . $form;
-
-	$content = elgg_view_layout('administration', $body);
-	return $content;
+	$form .= elgg_view($view, array(
+		'page_type' => $page_type,
+		'entity' => $entity,
+	));
+	return $menu . $form;
 }
 
 /**
