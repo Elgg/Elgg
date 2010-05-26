@@ -17,10 +17,10 @@ $name = page_owner_entity()->name;
 $type = $vars['type'];
 
 $title = elgg_echo($type);
-$title = '<div class="content_header_title">' . $name . "'s " . $type . '</div>';
+$title = $name . "'s " . $type;
 ?>
 
 <div id="content_header" class="clearfloat">
-	<?php echo $title; ?>
+	<?php echo '<div class="content_header_title">' . elgg_view_title($title) . '</div>'; ?>
 </div>
 
