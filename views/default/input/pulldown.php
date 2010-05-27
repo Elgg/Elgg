@@ -43,7 +43,7 @@ if ($vars['options_values']) {
 	foreach($vars['options'] as $option) {
 		$encoded_option = htmlentities($option, ENT_QUOTES, 'UTF-8');
 
-		if ((string)$value == (string)$vars['value']) {
+		if ((string)$option == (string)$vars['value']) {
 			echo "<option selected=\"selected\">$encoded_option</option>";
 		} else {
 			echo "<option>$encoded_option</option>";
