@@ -58,7 +58,7 @@ if ($blog->canEdit()) {
 	$status = '';
 	if ($blog->status != 'published') {
 		$status_text = elgg_echo("blog:status:{$blog->status}");
-		$status = "<span class='blog_status'>$status_text</a>";
+		$status = "<span class='blog_status'>$status_text</span>";
 	}
 
 	$access = elgg_view('output/access', array('entity' => $vars['entity']));
