@@ -9,7 +9,9 @@
  */
 
 /**
- * Turns the current page over to the page handler, allowing registered handlers to take over
+ * Turns the current page over to the page handler, allowing registered handlers to take over.
+ *
+ * If a page handler returns FALSE, the request is handed over to the default_page_handler.
  *
  * @param string $handler The name of the handler type (eg 'blog')
  * @param array $page The parameters to the page, as an array (exploded by '/' slashes)
@@ -84,7 +86,8 @@ function register_page_handler($handler, $function) {
 }
 
 /**
- * A default page handler that attempts to load the actual file at a given page handler location
+ * A default page handler
+ * Tries to locate a suitable file to include. Only works for core pages, not plugins.
  *
  * @param array $page The page URL elements
  * @param string $handler The base handler
@@ -92,25 +95,25 @@ function register_page_handler($handler, $function) {
  */
 function default_page_handler($page, $handler) {
 	global $CONFIG;
-	$script = "";
 
-	$page = implode('/',$page);
-	if (($questionmark = strripos($page, '?'))) {
-		$page = substr($page, 0, $questionmark);
-	}
-	$script = str_replace("..","",$script);
+	$page = implode('/', $page);
+
+	// protect against including arbitary files
+	$page = str_replace("..", "", $page);
+	
 	$callpath = $CONFIG->path . $handler . "/" . $page;
-	if (!file_exists($callpath) || is_dir($callpath) || substr_count($callpath,'.php') == 0) {
-			if (substr($callpath,strlen($callpath) - 1, 1) != "/") {
-				$callpath .= "/";
+	if (is_dir($callpath)) {
+		$callpath = sanitise_filepath($callpath);
+		$callpath .= "index.php";
+		if (file_exists($callpath)) {
+			if (include($callpath)) {
+				return TRUE;
 			}
-			$callpath .= "index.php";
-			if (!include($callpath)) {
-				return false;
-			}
-	} else {
+		}
+	} else if (file_exists($callpath)) {
 		include($callpath);
+		return TRUE;
 	}
 
-	return true;
+	return FALSE;
 }
