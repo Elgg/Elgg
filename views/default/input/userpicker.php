@@ -117,7 +117,7 @@ function userPickerAddUser(event, data, formatted) {
 }
 
 function userPickerRemoveUser(link, guid) {
-	$(link).parent('.user_picker_entry').remove();
+	$(link).parents('.user_picker_entry').remove();
 }
 
 function userPickerGetSearchParams(e) {
