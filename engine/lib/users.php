@@ -1293,10 +1293,10 @@ function elgg_user_resetpassword_page_handler($page) {
 		'action' => $CONFIG->site->url . 'action/user/passwordreset'
 	));
 
-	$content = elgg_view_title(elgg_echo('resetpassword'));
-	$content .= elgg_view('page_elements/contentwrapper', array('body' => $form));
+	$title = elgg_echo('resetpassword');
+	$content = elgg_view_title(elgg_echo('resetpassword')) . $form;
 
-	page_draw($title, $content);
+	page_draw($title, elgg_view_layout('one_column', $content));
 }
 
 /**
@@ -1806,8 +1806,8 @@ function users_init() {
 
 	register_action("usersettings/save");
 
-	register_action("user/passwordreset");
-	register_action("user/requestnewpassword");
+	register_action("user/passwordreset", TRUE);
+	register_action("user/requestnewpassword", TRUE);
 
 	// User name change
 	extend_elgg_settings_page('user/settings/name', 'usersettings/user', 1);
