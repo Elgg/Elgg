@@ -77,6 +77,7 @@ $english = array(
  * Profile comment wall
  **/
 	'profile:commentwall:add' => "Add to the wall",
+	'profile:commentwall' => "Comment Wall",
 	'profile:commentwall:posted' => "You successfully posted on the comment wall.",
 	'profile:commentwall:deleted' => "You successfully deleted the message.",
 	'profile:commentwall:blank' => "Sorry; you need to actually put something in the message area before we can save it.",

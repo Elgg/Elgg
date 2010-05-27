@@ -39,10 +39,10 @@ switch($section){
 <div class="elgg_horizontal_tabbed_nav profile">
 <div class="profile_name"><h2><?php echo $profile->name; ?></h2></div>
 <ul>
-	<li <?php echo $activity; ?>><a href="<?php echo $url; ?>">Activity</a></li>
-	<li <?php echo $details; ?>><a href="<?php echo $url . 'details'; ?>">Details</a></li>
-	<li <?php echo $friends; ?>><a href="<?php echo $url . 'friends'; ?>">Friends</a></li>
-	<li <?php echo $commentwall; ?>><a href="<?php echo $url . 'commentwall'; ?>">Comment Wall</a></li>
+	<li <?php echo $activity; ?>><a href="<?php echo $url; ?>"><?php echo elgg_echo('activity'); ?></a></li>
+	<li <?php echo $details; ?>><a href="<?php echo $url . 'details'; ?>"><?php echo elgg_echo('Details'); ?></a></li>
+	<li <?php echo $friends; ?>><a href="<?php echo $url . 'friends'; ?>"><?php echo elgg_echo('friends'); ?></a></li>
+	<li <?php echo $commentwall; ?>><a href="<?php echo $url . 'commentwall'; ?>"><?php echo elgg_echo('profile:commentwall'); ?></a></li>
 	<?php
 		//check to see if the twitter username is set
 		if($vars['entity']->twitter){
