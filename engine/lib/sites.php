@@ -270,18 +270,22 @@ class ElggSite extends ElggEntity {
 			}
 		}
 		
+		// always allow index page
+		if ($url == $CONFIG->url) {
+			return TRUE;
+		}
+		
 		// default public pages
 		$defaults = array(
-			$CONFIG->url,
-			"{$CONFIG->url}action/login",
-			"{$CONFIG->url}pg/register/",
-			"{$CONFIG->url}action/register",
-			"{$CONFIG->url}account/forgotten_password.php",
-			"{$CONFIG->url}action/user/requestnewpassword",
-			"{$CONFIG->url}pg/resetpassword",
-			"{$CONFIG->url}upgrade.php",
-			"{$CONFIG->url}xml-rpc.php",
-			"{$CONFIG->url}mt/mt-xmlrpc.cgi",
+			'action/login',
+			'pg/register',
+			'action/register',
+			'account/forgotten_password\.php',
+			'action/user/requestnewpassword',
+			'pg/resetpassword',
+			'upgrade\.php',
+			'xml-rpc\.php',
+			'mt/mt-xmlrpc\.cgi',
 		);
 		
 		// include a hook for plugin authors to include public pages
@@ -290,8 +294,11 @@ class ElggSite extends ElggEntity {
 		// lookup admin-specific public pages
 		
 		// allow public pages
-		if (in_array($url, array_merge($defaults, $plugins))) {
-			return TRUE;
+		foreach (array_merge($defaults, $plugins) as $public) {
+			$pattern = "`^{$CONFIG->url}$public/*$`i";
+			if (preg_match($pattern, $url)) {
+				return TRUE;
+			}
 		}
 		
 		// non-public page

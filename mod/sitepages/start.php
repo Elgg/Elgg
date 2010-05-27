@@ -201,11 +201,9 @@ function sitepages_ecml_views_hook($hook, $entity_type, $return_value, $params) 
 }
 
 function sitepages_public_pages($hook, $type, $return_value, $params) {
-	global $CONFIG;
-	
-	$return_value[] = "{$CONFIG->url}pg/sitepages/read/About/";
-	$return_value[] = "{$CONFIG->url}pg/sitepages/read/Terms/";
-	$return_value[] = "{$CONFIG->url}pg/sitepages/read/Privacy/";
+	$return_value[] = 'pg/sitepages/read/About';
+	$return_value[] = 'pg/sitepages/read/Terms';
+	$return_value[] = 'pg/sitepages/read/Privacy';
 	
 	return $return_value;
 }
