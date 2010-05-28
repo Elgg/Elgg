@@ -276,6 +276,11 @@ ul.admin_plugins {
 	margin-right:15px;
 	margin-bottom:10px;
 }
+.admin_settings.menuitems .custom_menuitems {
+	list-style: none;
+	padding:0;
+	margin:0;
+}
 .admin_settings.menuitems li.custom_menuitem {
 	margin-bottom:20px;
 }

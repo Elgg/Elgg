@@ -50,7 +50,7 @@ $custom_items = get_config('menu_items_custom_items');
 $name_str = elgg_echo('name');
 $url_str = elgg_echo('admin:plugins:label:website');
 
-$form_body .= '<ul>';
+$form_body .= '<ul class="custom_menuitems">';
 
 if (is_array($custom_items)) {
 	foreach ($custom_items as $url => $name) {
