@@ -239,11 +239,18 @@ function load_plugins() {
 						}
 
 						if (!$cached_view_paths) {
-							if (is_dir($CONFIG->pluginspath . $mod . "/views")) {
-								if ($handle = opendir($CONFIG->pluginspath . $mod . "/views")) {
-									while ($viewtype = readdir($handle)) {
-										if (!in_array($viewtype,array('.','..','.svn','CVS')) && is_dir($CONFIG->pluginspath . $mod . "/views/" . $viewtype)) {
-											autoregister_views("",$CONFIG->pluginspath . $mod . "/views/" . $viewtype,$CONFIG->pluginspath . $mod . "/views/", $viewtype);
+							$view_dir = $CONFIG->pluginspath . $mod . '/views/';
+
+							if (is_dir($view_dir) && ($handle = opendir($view_dir))) {
+								while (FALSE !== ($view_type = readdir($handle))) {
+									$view_type_dir = $view_dir . $view_type;
+
+									if ('.' !== substr($view_type, 0, 1) && is_dir($view_type_dir)) {
+										if (autoregister_views('', $view_type_dir, $view_dir, $view_type)) {
+											// add the valid view type.
+											if (!in_array($view_type, $CONFIG->view_types)) {
+												$CONFIG->view_types[] = $view_type;
+											}
 										}
 									}
 								}
