@@ -79,15 +79,9 @@ $contents .= elgg_view('owner_block/extend');
 
 
 // Have we been asked to inject any content? If so, display it
-if (isset($vars['content']))
+if (isset($vars['content'])) {
 	$contents .= $vars['content'];
-
-// Initialise the current tool/page submenu (plugins can add to the submenu)
-$submenu = elgg_get_submenu();
-
-if (!empty($submenu))
-	$contents .= $submenu;
-
-if (!empty($contents)) {
-	echo $contents;
 }
+
+
+echo $contents;
