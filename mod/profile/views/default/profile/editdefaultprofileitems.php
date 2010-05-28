@@ -4,8 +4,6 @@ var reorderURL = '<?php echo elgg_add_action_tokens_to_url($vars['url'] . 'actio
 function sortCallback(event, ui) {
 	var orderArr = $('#sortable_profile_fields').sortable('toArray');
 	var orderStr = orderArr.join(',');
-	console.log(orderArr);
-	console.log(orderStr);
 	jQuery.post(reorderURL, {'fieldorder': orderStr});
 }
 
