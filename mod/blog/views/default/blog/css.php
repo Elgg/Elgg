@@ -27,6 +27,11 @@
 	line-height: 1.4em;
 	padding-bottom:12px;
 }
+.blog_archives {
+	list-style: none;
+	margin-bottom:0;
+	padding-left:0;
+}
 
 /* blogs list view */
 .entity_listing.blog .entity_metadata {

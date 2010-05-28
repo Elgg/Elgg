@@ -42,7 +42,7 @@ if ($page_owner) {
 
 	if ($dates) {
 		echo "<h3>" . elgg_echo('blog:archives') . "</h3>";
-		echo '<ul>';
+		echo '<ul class="blog_archives">';
 		foreach($dates as $date) {
 			$date = $date->yearmonth;
 
