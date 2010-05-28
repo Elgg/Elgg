@@ -100,6 +100,10 @@ function autop($pee, $br = 1) {
 function elgg_make_excerpt($text, $num_chars = 250) {
 	$text = trim(strip_tags($text));
 	$string_length = elgg_strlen($text);
+	
+	if ($string_length <= $num_chars) {
+		return $text;
+	}
 
 	// handle cases
 	$excerpt = elgg_substr($text, 0, $num_chars);
