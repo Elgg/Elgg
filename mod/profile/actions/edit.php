@@ -112,4 +112,4 @@ if (sizeof($input) > 0) {
 	system_message(elgg_echo("profile:saved"));
 }
 
-forward($profile_owner->getUrl());
+forward($profile_owner->getUrl() . "/details");
