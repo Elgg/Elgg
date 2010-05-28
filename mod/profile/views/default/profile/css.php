@@ -372,7 +372,9 @@ p.visit_twitter a {
 }
 /* field re-order */
 #sortable_profile_fields {
+	list-style: none;
 	padding:0;
+	margin:0;
 	border-top:1px solid #cccccc;
 }
 #sortable_profile_fields li {
