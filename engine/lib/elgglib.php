@@ -1671,6 +1671,36 @@ function add_to_register($register_name, $subregister_name, $subregister_value, 
 }
 
 /**
+ * Removes what has been registered at [register_name][subregister_name]
+ *
+ * @param string $register_name The name of the top-level register
+ * @param string $subregister_name The name of the subregister
+ * @return true|false Depending on success
+ */
+function remove_from_register($register_name, $subregister_name) {
+	global $CONFIG;
+
+	if (empty($register_name) || empty($subregister_name)) {
+		return false;
+	}
+
+	if (!isset($CONFIG->registers)) {
+		return false;
+	}
+
+	if (!isset($CONFIG->registers[$register_name])) {
+		return false;
+	}
+
+	if (isset($CONFIG->registers[$register_name][$subregister_name])) {
+		unset($CONFIG->registers[$register_name][$subregister_name]);
+		return true;
+	}
+
+	return false;
+}
+
+/**
  * Returns a register object
  *
  * @param string $register_name The name of the register
@@ -1739,6 +1769,16 @@ function add_menu($menu_name, $menu_url, $menu_children = array(), $context = ""
 }
 
 /**
+ * Removes an item from the menu register
+ *
+ * @param string $menu_name The name of the menu item
+ * @return true|false Depending on success
+ */
+function remove_menu($menu_name) {
+	return remove_from_register('menu', $menu_name);
+}
+
+/**
  * Returns a menu item for use in the children section of add_menu()
  * This is not currently used in the Elgg core
  *
@@ -1751,7 +1791,6 @@ function menu_item($menu_name, $menu_url) {
 	return make_register_object($menu_name, $menu_url);
 }
 
-
 /**
  * Message register handling
  * If a null $message parameter is given, the function returns the array of messages so far and empties it
@@ -1762,7 +1801,6 @@ function menu_item($menu_name, $menu_url) {
  * @param bool $count Count the number of messages (default: false)
  * @return true|false|array Either the array of messages, or a response regarding whether the message addition was successful
  */
-
 function system_messages($message = null, $register = "messages", $count = false) {
 	if (!isset($_SESSION['msg'])) {
 		$_SESSION['msg'] = array();
