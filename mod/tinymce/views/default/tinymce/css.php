@@ -4,7 +4,7 @@
 */
 ?>
 #elgg_page_contents .mceButton {
-background-color: #e9e8e8;
+	background-color: #e9e8e8;
 	border-color: #B2B2B2;
 	margin:4px;
 	padding:2px;
@@ -36,7 +36,7 @@ background-color: #e9e8e8;
 	-moz-border-radius: 0 4px 0 0;
 }
 #elgg_page_contents .mceLayout{
-border: 1px solid #CCC;
+	border: 1px solid #CCC;
 	-webkit-border-radius: 5px; 
 	-moz-border-radius: 5px;
 }

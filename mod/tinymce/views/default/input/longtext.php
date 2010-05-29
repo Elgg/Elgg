@@ -1,36 +1,37 @@
 <?php
+/**
+ * Elgg long text input with the tinymce text editor intacts
+ * Displays a long text input field
+ *
+ * @package ElggTinyMCE
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * @author Curverider Ltd
+ * @copyright Curverider Ltd 2008-2010
+ * @link http://elgg.org/
+ *
+ * @uses $vars['value'] The current value, if any
+ * @uses $vars['js'] Any Javascript to enter into the input tag
+ * @uses $vars['internalname'] The name of the input field
+ *
+ */
 
-	/**
-	 * Elgg long text input with the tinymce text editor intacts
-	 * Displays a long text input field
-	 *
-	 * @package ElggTinyMCE
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.org/
-	 *
-	 * @uses $vars['value'] The current value, if any
-	 * @uses $vars['js'] Any Javascript to enter into the input tag
-	 * @uses $vars['internalname'] The name of the input field
-	 *
-	 */
+global $tinymce_js_loaded;
 
-	global $tinymce_js_loaded;
+if (!isset($vars['value']) || $vars['value'] === FALSE) {
+	$vars['value'] = elgg_get_sticky_value($vars['internalname']);
+}
 
-	if (!isset($vars['value']) || $vars['value'] === FALSE) {
-		$vars['value'] = elgg_get_sticky_value($vars['internalname']);
-	}
+$input = rand(0,9999);
 
-	$input = rand(0,9999);
+if (!isset($tinymce_js_loaded)) {
+	$tinymce_js_loaded = false;
+}
 
-	if (!isset($tinymce_js_loaded)) $tinymce_js_loaded = false;
-
-	if (!$tinymce_js_loaded) {
+if (!$tinymce_js_loaded) {
 
 ?>
 <!-- include tinymce -->
-<script language="javascript" type="text/javascript" src="<?php echo $vars['url']; ?>mod/tinymce/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
+<script language="javascript" type="text/javascript" src="<?php echo $vars['url']; ?>mod/tinymce/vendor/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
 <!-- intialise tinymce, you can find other configurations here http://wiki.moxiecode.com/examples/tinymce/installation_example_01.php -->
 <script language="javascript" type="text/javascript">
 tinyMCE.init({
@@ -49,29 +50,22 @@ tinyMCE.init({
 	theme_advanced_path : true,
 	extended_valid_elements : "a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name|style],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]",
 	setup : function(ed) {
-		// Add a custom button
-		//ed.addButton('more', {
-		//    title : 'more',
-		//    image : '<?php echo $vars['url']; ?>mod/tinymce/graphics/more.gif',
-		//    onclick : function() {
-		//        ed.selection.setContent('{{more}}');
-		//    }
-		//});
-
 		//show the number of words
 		ed.onLoadContent.add(function(ed, o) {
-		var strip = (tinyMCE.activeEditor.getContent()).replace(/(&lt;([^&gt;]+)&gt;)/ig,"");
-		var text = " Word count: " + strip.split(' ').length;
-		tinymce.DOM.setHTML(tinymce.DOM.get(tinyMCE.activeEditor.id + '_path_row'), text);
+			var strip = (tinyMCE.activeEditor.getContent()).replace(/(&lt;([^&gt;]+)&gt;)/ig,"");
+			var text = " <?php echo elgg_echo('tinymce:word_count'); ?>" + strip.split(' ').length + ' ';
+			tinymce.DOM.setHTML(tinymce.DOM.get(tinyMCE.activeEditor.id + '_path_row'), text);
 		});
 
 		ed.onKeyUp.add(function(ed, e) {
-		var strip = (tinyMCE.activeEditor.getContent()).replace(/(&lt;([^&gt;]+)&gt;)/ig,"");
-		var text = " Word count: " + strip.split(' ').length;
-		tinymce.DOM.setHTML(tinymce.DOM.get(tinyMCE.activeEditor.id + '_path_row'), text);
+			var strip = (tinyMCE.activeEditor.getContent()).replace(/(&lt;([^&gt;]+)&gt;)/ig,"");
+			var text = " <?php echo elgg_echo('tinymce:word_count'); ?>" + strip.split(' ').length + ' ';
+			tinymce.DOM.setHTML(tinymce.DOM.get(tinyMCE.activeEditor.id + '_path_row'), text);
 		});
-	}
+	},
+	content_css: '<?php echo $vars['url']; ?>mod/tinymce/tinymce_content.css'
 });
+
 function toggleEditor(id) {
 	if (!tinyMCE.get(id)) {
 		tinyMCE.execCommand('mceAddControl', false, id);
@@ -87,8 +81,8 @@ function toggleEditor(id) {
 </script>
 <?php
 
-		$tinymce_js_loaded = true;
-	}
+	$tinymce_js_loaded = true;
+}
 
 ?>
 
