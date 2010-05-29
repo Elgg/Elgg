@@ -67,21 +67,12 @@ if(is_plugin_enabled('profile')) {
 		
 		// Allow plugins to extend the owner block contents
 		$display .= elgg_view('owner_block/profile_extend');
-		
-		// close owner_block_content
-		//$display .= '</div>';
 
 		$contents .= "<div id='owner_block' class='clearfloat'>$display</div>";
 	}
 }
 
 $contents .= elgg_view('owner_block/extend');
-
-
-// Have we been asked to inject any content? If so, display it
-if (isset($vars['content'])) {
-	$contents .= $vars['content'];
-}
 
 
 echo $contents;
