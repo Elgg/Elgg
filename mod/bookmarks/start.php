@@ -106,8 +106,11 @@ function bookmarks_page_handler($page) {
 	$logged_in_user = get_loggedin_user();
 	$section = (isset($page[1])) ? $page[1] : $section = 'items';
 
-	elgg_push_breadcrumb(elgg_echo('bookmarks:all'), $CONFIG->wwwroot . 'pg/bookmarks/');
-
+	//don't show the all site bookmarks breadcrumb when on the all site bookmarks page
+	if(page_owner() != 0){
+		elgg_push_breadcrumb(elgg_echo('bookmarks:all'), $CONFIG->wwwroot . 'pg/bookmarks/');
+	}
+	
 	if ($owner) {
 		switch($section) {
 			case 'friends':
