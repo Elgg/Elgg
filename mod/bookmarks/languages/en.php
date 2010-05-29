@@ -42,7 +42,7 @@ $english = array(
 
 		'item:object:bookmarks' => 'Bookmarked items',
 
-		'bookmarks:enablebookmarks' => 'Enable community bookmarks',
+		'bookmarks:enablebookmarks' => 'Enable group bookmarks',
 		'bookmarks:referenceadded' => 'You have added that bookmark as a reference',
 		'bookmarks:referenceerror' => 'There was a problem adding that bookmark as a reference',
 		'bookmarks:none' => 'You don\'t have any bookmarks',
