@@ -316,10 +316,8 @@ ul.admin_plugins {
 		?>
 	</div>
 	<div id="elgg_sidebar" class="clearfloat">
-		<?php 
-			echo elgg_view('page_elements/owner_block'); 
-			if (isset($vars['area2'])) echo $vars['area2']; 
-			if (isset($vars['area3'])) echo $vars['area3'];	
+		<?php
+			echo elgg_view('page_elements/elgg_sidebar', $vars);
 		?>
 	</div>
 </div>
