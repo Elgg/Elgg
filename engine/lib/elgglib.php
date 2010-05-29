@@ -1253,6 +1253,8 @@ function autoregister_views($view_base, $folder, $base_location_path, $viewtype)
 	if ($handle = opendir($folder)) {
 		while ($view = readdir($handle)) {
 			if (!in_array($view,array('.','..','.svn','CVS')) && !is_dir($folder . "/" . $view)) {
+				// this includes png files because some icons are stored within view directories.
+				// See commit [1705]
 				if ((substr_count($view,".php") > 0) || (substr_count($view,".png") > 0)) {
 					if (!empty($view_base)) {
 						$view_base_new = $view_base . "/";
@@ -1260,9 +1262,9 @@ function autoregister_views($view_base, $folder, $base_location_path, $viewtype)
 						$view_base_new = "";
 					}
 
-					set_view_location($view_base_new . str_replace(".php","",$view), $base_location_path, $viewtype);
+					set_view_location($view_base_new . str_replace('.php', '', $view), $base_location_path, $viewtype);
 				}
-			} else if (!in_array($view,array('.','..','.svn','CVS')) && is_dir($folder . "/" . $view)) {
+			} else if (!in_array($view, array('.', '..', '.svn', 'CVS')) && is_dir($folder . "/" . $view)) {
 				if (!empty($view_base)) {
 					$view_base_new = $view_base . "/";
 				} else {
@@ -1271,7 +1273,10 @@ function autoregister_views($view_base, $folder, $base_location_path, $viewtype)
 				autoregister_views($view_base_new . $view, $folder . "/" . $view, $base_location_path, $viewtype);
 			}
 		}
+		return TRUE;
 	}
+
+	return FALSE;
 }
 
 /**
@@ -2818,11 +2823,26 @@ function __elgg_shutdown_hook() {
  * @return unknown_type
  */
 function elgg_init() {
+	global $CONFIG;
+
 	// Page handler for JS
 	register_page_handler('js','js_page_handler');
 
 	// Register an event triggered at system shutdown
 	register_shutdown_function('__elgg_shutdown_hook');
+
+	// discover the built-in view types
+	// @todo cache this
+	$view_path = $CONFIG->viewpath;
+	$CONFIG->view_types = array();
+
+	$views = scandir($view_path);
+
+	foreach ($views as $view) {
+		if ('.' !== substr($view, 0, 1) && is_dir($view_path . $view)) {
+			$CONFIG->view_types[] = $view;
+		}
+	}
 }
 
 /**
@@ -2847,6 +2867,18 @@ function elgg_api_test($hook, $type, $value, $params) {
 	$value[] = $CONFIG->path . 'engine/tests/api/entity_getter_functions.php';
 	$value[] = $CONFIG->path . 'engine/tests/regression/trac_bugs.php';
 	return $value;
+}
+
+/**
+ * Checks if $view_type is valid on this installation.
+ *
+ * @param string $view_type
+ * @return bool
+ */
+function elgg_is_valid_view_type($view_type) {
+	global $CONFIG;
+
+	return in_array($view_type, $CONFIG->view_types);
 }
 
 /**
