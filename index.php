@@ -34,7 +34,7 @@ if (!trigger_plugin_hook('index', 'system', null, FALSE)) {
 	set_context('search');
 	$offset = (int)get_input('offset', 0);
 	if(is_plugin_enabled('riverdashboard'))
-		$activity = elgg_view_river_items(0, 0, '', '', '', '', 10, 0, 0, true, true);
+		$activity = elgg_view_river_items(0, 0, '', '', '', '', 10, 0, 0, true, false);
 	else
 		$activity = elgg_list_registered_entities(array('limit' => 10, 'offset' => $offset, 'full_view' => FALSE, 'allowed_types' => array('object','group')));
 	set_context('main');
