@@ -8,7 +8,7 @@
  * @link http://elgg.org/
  *
  * @uses optional $vars['breadcrumbs'] = array('title' => 'The title', 'link' => 'url')
- *
+ * @see elgg_push_breadcrumb
  */
 
 if (isset($vars['breadcrumbs'])) {
