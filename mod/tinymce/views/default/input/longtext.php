@@ -40,6 +40,8 @@ tinyMCE.init({
 	theme : "advanced",
 	plugins : "safari,spellchecker,autosave,fullscreen,preview,paste",
 	relative_urls : false,
+	remove_script_host : false,
+	document_base_url : "<?php echo $vars['url']; ?>",
 	theme_advanced_buttons1 : "bold,italic,underline,separator,strikethrough,bullist,numlist,undo,redo,link,unlink,image,blockquote,code,pastetext,pasteword,more,fullscreen,",
 	theme_advanced_buttons2 : "",
 	theme_advanced_buttons3 : "",

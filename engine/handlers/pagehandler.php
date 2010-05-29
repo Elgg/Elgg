@@ -2,6 +2,8 @@
 /**
  * Elgg page handler
  *
+ * If page_handler() fails, send to front page.
+ *
  * @package Elgg
  * @subpackage Core
  * @author Curverider Ltd
