@@ -429,7 +429,7 @@ function elgg_view_river_item($item) {
  * @return string Human-readable river.
  */
 function elgg_view_river_items($subject_guid = 0, $object_guid = 0, $subject_relationship = '',
-	$type = '', $subtype = '', $action_type = '', $limit = 20, $posted_min = 0, $posted_max = 0, $pagination = true, $chronological = true) {
+	$type = '', $subtype = '', $action_type = '', $limit = 20, $posted_min = 0, $posted_max = 0, $pagination = true, $chronological = false) {
 
 	// Get input from outside world and sanitise it
 	$offset = (int) get_input('offset',0);
