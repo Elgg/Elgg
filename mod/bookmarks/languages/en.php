@@ -14,6 +14,7 @@ $english = array(
 		'bookmarks:user' => "%s's bookmarks",
 		'bookmarks:group' => "Bookmarks",
 		'bookmarks:this' => "Bookmark this",
+		'bookmarks:ingroup' => "in the group",
 		'bookmarks:this:group' => "Bookmark in %s",
 		'bookmarks:bookmarklet' => "Get bookmarklet",
 		'bookmarks:bookmarklet:group' => "Get community bookmarklet",
