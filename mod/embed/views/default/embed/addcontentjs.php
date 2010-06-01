@@ -1,4 +1,2 @@
-
 	var entity;
-	$('textarea[name='+entityname+']').val($('textarea[name='+entityname+']').val() + ' ' + content);	
-	
+	$('textarea[name=' + textAreaName + ']').val($('textarea[name=' + textAreaName + ']').val() + ' ' + content);

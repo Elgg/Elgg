@@ -1,5 +1,6 @@
 <h2 class="media_modal_title">Embed / Upload Media</h2>
 <?php
+$internalname = get_input('internalname');
 
 echo elgg_view('embed/tabs',array('tab' => 'upload', 'internalname'=>get_input('internalname')));
 
@@ -7,7 +8,7 @@ if (!elgg_view_exists('file/upload')) {
 	echo "<p>" . elgg_echo('embed:file:required') . "</p>";
 } else {
 	$action = 'file/upload';
-	
+
 ?>
 <form id="media_upload" action="<?php echo $vars['url']; ?>action/file/upload" method="post" enctype="multipart/form-data">
 	<p>
@@ -15,7 +16,7 @@ if (!elgg_view_exists('file/upload')) {
 	<?php
 		echo elgg_view('input/securitytoken');
 		echo elgg_view("input/file",array('internalname' => 'upload', 'js' => 'id="upload"'));
-		
+
 	?>
 	</label></p>
 	<p>
@@ -26,7 +27,7 @@ if (!elgg_view_exists('file/upload')) {
 								"internalname" => "title",
 								"value" => $title,
 												));
-		
+
 		?>
 		</label>
 	</p>
@@ -34,7 +35,7 @@ if (!elgg_view_exists('file/upload')) {
 	<label for="filedescription"><?php echo elgg_echo("description"); ?><br />
 	<textarea class="input_textarea" name="description" id="filedescription"></textarea>
 	</label></p>
-	
+
 	<p>
 		<label><?php echo elgg_echo("tags"); ?><br />
 		<?php
@@ -60,26 +61,26 @@ if (!elgg_view_exists('file/upload')) {
 				echo "<input type=\"hidden\" name=\"container_guid\" value=\"{$vars['container_guid']}\" />";
 			if (isset($vars['entity']))
 				echo "<input type=\"hidden\" name=\"file_guid\" value=\"{$vars['entity']->getGUID()}\" />";
-		
+
 		?>
 		<input type="submit" value="<?php echo elgg_echo("save"); ?>" />
 	</p>
 </form>
-<script type="text/javascript"> 
-        // bind 'myForm' and provide a simple callback function 
-        $('#media_upload').submit(function() { 
-            var options = {  
-			    success:    function() { 
-			        $('.popup .content').load('<?php echo $vars['url'] . 'pg/embed/media'; ?>?internalname=<?php echo $vars['internalname']; ?>'); 
-			    } 
-			}; 
-        	$(this).ajaxSubmit(options);
-            return false; 
-        }); 
-</script> 
+<script type="text/javascript">
+		// bind 'myForm' and provide a simple callback function
+		$('#media_upload').submit(function() {
+			var options = {
+				success:    function() {
+					$('.popup .content').load('<?php echo $vars['url'] . 'pg/embed/media'; ?>?internalname=<?php echo $internalname; ?>');
+				}
+			};
+			$(this).ajaxSubmit(options);
+			return false;
+		});
+</script>
 
 <?php
-	
+
 }
 
 ?>
