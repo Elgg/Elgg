@@ -153,7 +153,9 @@ function blog_page_handler($page) {
 
 	$sidebar = isset($content_info['sidebar']) ? $content_info['sidebar'] : '';
 
-	$sidebar .= elgg_view('blog/sidebar_menu');
+	$sidebar .= elgg_view('blog/sidebar_menu', array(
+		'page' => isset($page[1]) ? $page[1] : FALSE,
+	));
 
 	$content = elgg_view('navigation/breadcrumbs') . $content_info['content'];
 

@@ -60,7 +60,10 @@ if ($page_owner) {
 
 		echo '</ul>';
 	}
+	
+	// friends page lists all tags; mine lists owner's
+	$owner_guid = ($vars['page'] == 'friends') ? '' : $page_owner->getGUID();
+	echo display_tagcloud(0, 50, 'tags', 'object', 'blog', $owner_guid);
+} else {
+	echo display_tagcloud(0, 50, 'tags', 'object', 'blog');
 }
-
-// tag-cloud display
-echo display_tagcloud(0, 50, 'tags');
