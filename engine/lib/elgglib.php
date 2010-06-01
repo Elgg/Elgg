@@ -3419,11 +3419,27 @@ function elgg_walled_garden() {
  *
  * @param string $view_type
  * @return bool
+ * @since 1.7
  */
 function elgg_is_valid_view_type($view_type) {
 	global $CONFIG;
 
 	return in_array($view_type, $CONFIG->view_types);
+}
+
+/**
+ * Checks for $array[$key] and returns its value if it exists, else
+ * returns $default.
+ *
+ * Shorthand for $value = (isset($array['key'])) ? $array['key'] : 'default';
+ *
+ * @param string $key The key to check.
+ * @param array $array The array to check against.
+ * @param mixed $default Default value to return if nothing is found.
+ * @since 1.8
+ */
+function elgg_get_array_value($key, array $array, $default = NULL) {
+	return (isset($array[$key])) ? $array[$key] : $default;
 }
 
 /**
