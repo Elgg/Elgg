@@ -8,6 +8,6 @@ $welcometitle = $sitepages_object->welcometitle;
 $welcomemessage = $sitepages_object->welcomemessage;
 
 if($welcomemessage){
-	echo "<h2>" . $welcometitle . "</h2>";
-	echo $welcomemessage;
+	echo "<div class='sitepages_welcome clearfloat'><h2>" . $welcometitle . "</h2>";
+	echo "<div class='sitepages_message'>".$welcomemessage."</div></div>";
 }
