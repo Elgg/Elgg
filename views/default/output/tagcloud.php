@@ -34,26 +34,32 @@ if (!empty($vars['tagcloud']) && is_array($vars['tagcloud'])) {
 	$cloud = "";
 	$max = 0;
 	
-	$cloud .= "<h3>".elgg_echo('tagcloud')."</h3><div class='tagcloud'>";
+	$cloud .= '<h3>'.elgg_echo('tagcloud').'</h3>';
+	$cloud .= '<div class="tagcloud">';
 
 	foreach($vars['tagcloud'] as $tag) {
 		if ($tag->total > $max) {
 			$max = $tag->total;
 		}
 	}
+	
+	$list = '';
 	foreach($vars['tagcloud'] as $tag) {
-		if (!empty($cloud)) {
-			$cloud .= ", ";
+		if ($list != '') {
+			$list .= ', ';
 		}
 		// protecting against division by zero warnings
 		$size = round((log($tag->total) / log($max + .0001)) * 100) + 30;
 		if ($size < 100) {
 			$size = 100;
 		}
-		$url = $vars['url'] . "pg/search/?q=". urlencode($tag->tag) . "&search_type=tags{$type}{$subtype}";
-		$cloud .= "<a href=\"{$url}\" style=\"font-size: {$size}%\" title=\"".addslashes($tag->tag)." ({$tag->total})\" style=\"text-decoration:none;\">" . htmlentities($tag->tag, ENT_QUOTES, 'UTF-8') . "</a>";
+		$url = "{$vars['url']}pg/search/?q=". urlencode($tag->tag) . "&search_type=tags$type$subtype";
+		$list .= "<a href=\"$url\" style=\"font-size: $size%\" title=\"".addslashes($tag->tag)." ($tag->total)\" style=\"text-decoration:none;\">" . htmlentities($tag->tag, ENT_QUOTES, 'UTF-8') . "</a>";
 	}
 	
-	$cloud .= "</div>";
+	$cloud .= "$list</div>";
+	
+	$cloud .= elgg_view('tagcloud/extend');
+	
 	echo $cloud;
 }
