@@ -20,8 +20,7 @@ if (get_input('upgrade') == 'upgrade') {
 	if (version_upgrade_check()) {
 		version_upgrade();
 	}
-	datalist_set('simplecache_lastupdate',0);
-
+	elgg_view_regenerate_simplecache();
 	elgg_filepath_cache_reset();
 } else {
 	global $CONFIG;

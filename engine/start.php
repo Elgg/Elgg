@@ -210,13 +210,13 @@ if (empty($oldview)) {
 }
 
 if (($installed) && ($db_installed)) {
-	$lastupdate = datalist_get('simplecache_lastupdate');
-	$lastcached = datalist_get('simplecache_'.$oldview);
+	$lastupdate = datalist_get("simplecache_lastupdate_$oldview");
+	$lastcached = datalist_get("simplecache_lastcached_$oldview");
 	if ($lastupdate == 0 || $lastcached < $lastupdate) {
-		elgg_view_regenerate_simplecache();
+		elgg_view_regenerate_simplecache($oldview);
 		$lastcached = time();
-		datalist_set('simplecache_lastupdate',$lastcached);
-		datalist_set('simplecache_'.$oldview,$lastcached);
+		datalist_set("simplecache_lastupdate_$oldview", $lastcached);
+		datalist_set("simplecache_lastcached_$oldview", $lastcached);
 	}
 	$CONFIG->lastcache = $lastcached;
 }
