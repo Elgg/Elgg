@@ -19,7 +19,7 @@
  * @param $default mixed A default value for the variable if it is not found.
  * @param $filter_result If true then the result is filtered for bad tags.
  */
-function get_input($variable, $default = "", $filter_result = true) {
+function get_input($variable, $default = NULL, $filter_result = TRUE) {
 
 	global $CONFIG;
 
@@ -237,7 +237,7 @@ function input_livesearch_page_handler($page) {
 
 			default:
 				// arbitrary subtype.
-				//@todo you cannot specify a subtype without a type. 
+				//@todo you cannot specify a subtype without a type.
 				// did this ever work?
 				elgg_get_entities(array('subtype' => $type, 'owner_guid' => $owner_guid));
 				break;
