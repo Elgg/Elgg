@@ -11,7 +11,13 @@ $form_body .= "<label>" . elgg_echo('password') . "<br />" . elgg_view('input/pa
 $form_body .= elgg_view('input/hidden', array('internalname' => 'returntoreferer', 'value' => 'true'));
 $form_body .= elgg_view('input/submit', array('value' => elgg_echo('login')));
 $form_body .= "<div class='remember_me'><label><input type='checkbox' name='persistent' checked value='true' />".elgg_echo('user:persistent')."</label></div>";
-$form_body .= "<p class='lost_password'><a class='forgotten_password_link' href=\"{$login_url}account/forgotten_password.php\">" . elgg_echo('user:password:lost') . "</a></p>";
+
+$register = elgg_echo('register');
+$lost_password = elgg_echo('user:password:lost');
+$form_body .= '<p class="lost_password">';
+$form_body .= $CONFIG->allow_registration ? "<a class=\"registration_link\" href=\"{$vars['url']}pg/register/\">$register</a> | " : '';
+$form_body .= "<a class='forgotten_password_link' href=\"{$login_url}account/forgotten_password.php\">$lost_password</a>";
+$form_body .= '</p>';
 
 $login_url = $vars['url'];
 if ((isset($CONFIG->https_login)) && ($CONFIG->https_login)) {
@@ -27,7 +33,24 @@ if ((isset($CONFIG->https_login)) && ($CONFIG->https_login)) {
 	echo elgg_view('login/extend'); // view for plugins to extend
 ?>
 
-<div class="lostpassword_form margin_top hidden">
+<?php
+if ($CONFIG->allow_registration) {
+	$title = elgg_echo('register');
+	$body = elgg_view("account/forms/register", array(
+		'friend_guid' => (int) get_input('friend_guid', 0),
+		'invitecode' => get_input('invitecode'),
+	));
+
+	echo <<<__HTML
+<div id="registration_form" class="registration_form margin_top hidden">
+	<h2>$title</h2>
+	$body
+</div>
+__HTML;
+}
+?>
+
+<div id="lostpassword_form" class="lostpassword_form margin_top hidden">
 	<?php
 	$lostpassword_form_body = "<p>" . elgg_echo('user:password:text') . "</p>";
 	$lostpassword_form_body .= "<p class='margin_none'><label>". elgg_echo('username') . " "
@@ -50,10 +73,23 @@ if ((isset($CONFIG->https_login)) && ($CONFIG->https_login)) {
 $(document).ready(function() { 	
 	$('input.username').focus();
 	
+	$('a.registration_link').click(function(e) {
+		e.preventDefault();
+		if ($('#lostpassword_form').is(':visible')) {
+			elgg_slide_toggle($('a.forgotten_password_link'), '.walledgardenlogin', '.lostpassword_form');
+		}
+		
+		elgg_slide_toggle(this, '.walledgardenlogin', '.registration_form');
+	});
+	
 	$('a.forgotten_password_link').click(function(e) {
 		e.preventDefault();
+		if ($('#registration_form').is(':visible')) {
+			elgg_slide_toggle($('a.registration_link'), '.walledgardenlogin', '.registration_form');
+		}
+		
 		elgg_slide_toggle(this, '.walledgardenlogin', '.lostpassword_form');
 		$('input.lostusername').focus();
-	});			
-});			
+	});
+});
 </script>

@@ -1609,7 +1609,8 @@ p.elgg_likes_owner {
 .walledgardenlogin .lost_password {
 	margin-bottom: 10px;
 }
-.walledgardenlogin a.forgotten_password_link {
+.walledgardenlogin a.forgotten_password_link,
+.walledgardenlogin a.registration_link {
 	color:#999999;
 }
 #walledgarden_sysmessages #elgg_system_message {
