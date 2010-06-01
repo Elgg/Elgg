@@ -1,11 +1,14 @@
 <?php
 /**
- * Elgg entity listing
+ * Generic display for a single entity.
  *
  * @package Elgg
  * @subpackage Core
  * @author Curverider Ltd
  * @link http://elgg.org/
+ *
+ * @uses string $vars['icon'] Full icon HTML to display.
+ * @uses string $vars['info'] Info about the entity.
  */
 ?>
 <div class="entity_listing clearfloat">
