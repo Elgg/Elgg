@@ -445,6 +445,7 @@ div.usericon a.icon img {
 .usericon .sub_menu a:visited, 
 .usericon .sub_menu a:hover { 
 	display:block;
+	font-weight: normal;
 }	
 .usericon .sub_menu a:hover {
 	background:#cccccc;
@@ -459,6 +460,7 @@ div.usericon a.icon img {
 .usericon .sub_menu .displayname a {
 	padding:3px 3px 3px 8px;
 	font-size:14px;
+	font-weight: bold;
 }
 .usericon .sub_menu .displayname a .username {
 	display:block;
