@@ -7,38 +7,24 @@
  * @author Curverider Ltd
  * @link http://elgg.org/
  *
+ * @uses int $vars['offset']
+ * @uses int $vars['limit']
+ * @uses int $vars['count'] Number of entities.
+ * @uses string $vars['word'] Word to use in GET params for the offset
+ * @uses string $vars['baseurl'] Base URL to use in links
  */
 
-if (!isset($vars['offset'])) {
-	$offset = 0;
-} else {
-	$offset = $vars['offset'];
-}
-if ((!isset($vars['limit'])) || (!$vars['limit'])) {
+$offset = (int) elgg_get_array_value('offset', $vars, 0);
+// because you can say $vars['limit'] = 0
+if (!$limit = (int) elgg_get_array_value('limit', $vars, 10)) {
 	$limit = 10;
-} else {
-	$limit = (int)$vars['limit'];
 }
-if (!isset($vars['count'])) {
-	$count = 0;
-} else {
-	$count = $vars['count'];
-}
-if (!isset($vars['word'])) {
-	$word = "offset";
-} else {
-	$word = $vars['word'];
-}
-if (isset($vars['nonefound'])) {
-	$nonefound = $vars['nonefound'];
-} else {
-	$nonefound = true;
-}
+$count = (int) elgg_get_array_value('count', $vars, 0);
+$word = elgg_get_array_value('word', $vars, 'offset');
+$baseurl = elgg_get_array_value('baseurl', $vars, current_page_url());
 
 $totalpages = ceil($count / $limit);
 $currentpage = ceil($offset / $limit) + 1;
-
-$baseurl = isset($vars['baseurl']) ? $vars['baseurl'] : current_page_url();
 
 //only display if there is content to paginate through or if we already have an offset
 if (($count > $limit || $offset > 0) && get_context() != 'widget') {
@@ -123,4 +109,4 @@ if (($count > $limit || $offset > 0) && get_context() != 'widget') {
 	?>
 	</div>
 	<?php
-} // end of pagination check if statement
+}
