@@ -38,7 +38,7 @@ if (isset($vars['nonefound'])) {
 $totalpages = ceil($count / $limit);
 $currentpage = ceil($offset / $limit) + 1;
 
-//$baseurl = elgg_http_remove_url_query_element($vars['baseurl'], $word);
+$baseurl = isset($vars['baseurl']) ? $vars['baseurl'] : current_page_url();
 
 //only display if there is content to paginate through or if we already have an offset
 if (($count > $limit || $offset > 0) && get_context() != 'widget') {
@@ -95,7 +95,7 @@ if (($count > $limit || $offset > 0) && get_context() != 'widget') {
 			}
 
 			$curoffset = (($i - 1) * $limit);
-			$counturl = elgg_http_add_url_query_elements($base_url, array($word => $curoffset));
+			$counturl = elgg_http_add_url_query_elements($baseurl, array($word => $curoffset));
 
 			if ($curoffset != $offset) {
 				echo " <a href=\"{$counturl}\" class='pagination_number'>{$i}</a> ";
