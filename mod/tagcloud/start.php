@@ -18,7 +18,7 @@ function tagcloud_page_handler($page) {
 		default:
 			$title = elgg_view_title(elgg_echo('tagcloud:site:title'));
 			$tags = display_tagcloud(0, 100, 'tags');
-			$body = elgg_view_layout('one_column', $title . $tags);
+			$body = elgg_view_layout('one_column_with_sidebar', $title . $tags);
 			
 			page_draw(elgg_echo('tagcloud:site:title'), $body);
 			break;
