@@ -1,5 +1,5 @@
 <?php
 
-echo '<div>';
+echo '<p class="tags">';
 echo "<a href=\"{$vars['url']}pg/tagcloud\">All site tags</a>";
-echo '</div>';
+echo '</p>';
