@@ -10,23 +10,11 @@
 
 ?>
 
-<div class="search_listing todo">
-
-	<div class="search_listing_header todo">
-
-			<?php
-
-				echo $vars['icon'];
-
-			?>
-
+<div class="gallery_listing clearfloat">
+	<div class="gallery_listing_icon">
+		<?php echo $vars['icon']; ?>
 	</div>
-	<div class="search_listing_info todo">
-		<?php
-
-			echo $vars['info'];
-
-		?>
+	<div class="gallery_listing_info">
+		<?php echo $vars['info']; ?>
 	</div>
-
 </div>
