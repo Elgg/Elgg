@@ -214,9 +214,5 @@ if (($installed) && ($db_installed)) {
 	$lastcached = datalist_get("simplecache_lastcached_$oldview");
 	if ($lastupdate == 0 || $lastcached < $lastupdate) {
 		elgg_view_regenerate_simplecache($oldview);
-		$lastcached = time();
-		datalist_set("simplecache_lastupdate_$oldview", $lastcached);
-		datalist_set("simplecache_lastcached_$oldview", $lastcached);
 	}
-	$CONFIG->lastcache = $lastcached;
 }

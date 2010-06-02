@@ -426,12 +426,14 @@ function elgg_view_register_simplecache($viewname) {
  * @see elgg_view_register_simplecache
  *
  */
-function elgg_view_regenerate_simplecache($viewtype) {
+function elgg_view_regenerate_simplecache($viewtype = NULL) {
 	global $CONFIG;
 
 	if (!isset($CONFIG->views->simplecache) || !is_array($CONFIG->views->simplecache)) {
 		return;
 	}
+
+	$lastcached = time();
 
 	// @todo elgg_view() checks if the page set is done (isset($CONFIG->pagesetupdone)) and
 	// triggers an event if it's not. Calling elgg_view() here breaks submenus
@@ -464,7 +466,8 @@ function elgg_view_regenerate_simplecache($viewtype) {
 			}
 		}
 
-		datalist_set("simplecache_lastupdate_$viewtype", 0);
+		datalist_set("simplecache_lastupdate_$viewtype", $lastcached);
+		datalist_set("simplecache_lastcached_$viewtype", $lastcached);
 	}
 
 	elgg_set_viewtype($original_viewtype);
