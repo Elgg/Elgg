@@ -24,9 +24,6 @@ if ((isset($CONFIG->https_login)) && ($CONFIG->https_login)) {
 	$login_url = str_replace("http", "https", $vars['url']);
 }
 ?>
-<style type="text/css">
-	body {background:white !important; text-align: center !important;}
-</style>
 <h2><?php echo elgg_echo('login'); ?></h2>
 <?php
 	echo elgg_view('input/form', array('body' => $form_body, 'action' => "{$login_url}action/login"));
@@ -42,54 +39,67 @@ if ($CONFIG->allow_registration) {
 	));
 
 	echo <<<__HTML
-<div id="registration_form" class="registration_form margin_top hidden">
+<div id="registration_form" class="hidden clearfloat">
+<div id="hiddenform_body" class="clearfloat">
 	<h2>$title</h2>
 	$body
-</div>
+</div><div id="hiddenform_bottom"></div></div>
 __HTML;
 }
 ?>
-
-<div id="lostpassword_form" class="lostpassword_form margin_top hidden">
 	<?php
 	$lostpassword_form_body = "<p>" . elgg_echo('user:password:text') . "</p>";
 	$lostpassword_form_body .= "<p class='margin_none'><label>". elgg_echo('username') . " "
 		. elgg_view('input/text', array('internalname' => 'username', 'class' => 'login_textarea lostusername')) . "</label></p>";
 	$lostpassword_form_body .= elgg_view('input/captcha');
-	$lostpassword_form_body .= "<p>" . elgg_view('input/submit', array('value' => elgg_echo('request'))) . "</p>";
+	$lostpassword_form_body .= "<p>" . elgg_view('input/submit', array('value' => elgg_echo('request'))) . "<input class='action_button disabled cancel_request' type='reset' value='Cancel'></p>";
 	
 	?>
-	<h2><?php echo elgg_echo('user:password:lost'); ?></h2>
-	<?php
-		echo elgg_view('input/form', array(
-			'action' => "{$vars['url']}action/user/requestnewpassword",
-			'body' => $lostpassword_form_body,
-			'class' => "margin_top"
-		));
-	?>
-</div>
+<div id="lostpassword_form" class="hidden clearfloat">
+	<div id="hiddenform_body" class="clearfloat">
+		<h2><?php echo elgg_echo('user:password:lost'); ?></h2>
+		<?php
+			echo elgg_view('input/form', array(
+				'action' => "{$vars['url']}action/user/requestnewpassword",
+				'body' => $lostpassword_form_body
+			));
+		?>
+</div><div id="hiddenform_bottom"></div></div>
 
 <script type="text/javascript"> 
 $(document).ready(function() { 	
 	$('input.username').focus();
 	
+	// add cancel button to inline register form
+	$('#registration_form').find('input.submit_button').after("<input class='action_button disabled cancel_request' type='reset' value='Cancel'>");
+	
+	function elgg_slide_hiddenform(activateLink, parentElement, toggleElement) {
+		$(activateLink).closest(parentElement).find(toggleElement).animate({"width": "563px"}, { duration: 400 });
+		$(activateLink).closest(parentElement).animate({"height": "256px"}, { duration: 400 });
+		return false;
+	}
+
 	$('a.registration_link').click(function(e) {
 		e.preventDefault();
-		if ($('#lostpassword_form').is(':visible')) {
-			elgg_slide_toggle($('a.forgotten_password_link'), '.walledgardenlogin', '.lostpassword_form');
-		}
-		
-		elgg_slide_toggle(this, '.walledgardenlogin', '.registration_form');
+		elgg_slide_hiddenform(this, '.walledgardenlogin', '#registration_form');
+		$('input.name').focus();	
 	});
 	
 	$('a.forgotten_password_link').click(function(e) {
 		e.preventDefault();
-		if ($('#registration_form').is(':visible')) {
-			elgg_slide_toggle($('a.registration_link'), '.walledgardenlogin', '.registration_form');
-		}
-		
-		elgg_slide_toggle(this, '.walledgardenlogin', '.lostpassword_form');
+		elgg_slide_hiddenform(this, '.walledgardenlogin', '#lostpassword_form');
 		$('input.lostusername').focus();
+	});
+	
+	$('input.cancel_request').click(function() {
+		if ($('#lostpassword_form').is(':visible')) {
+			$('#lostpassword_form').fadeOut(400);
+			location.reload();
+		} else if ($('#registration_form').is(':visible')) {
+			$('#registration_form').fadeOut(400);
+			location.reload();
+		}
+		return false;
 	});
 });
 </script>
