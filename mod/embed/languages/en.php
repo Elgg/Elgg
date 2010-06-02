@@ -1,18 +1,13 @@
 <?php
+/**
+ * Embed English language strings
+ *
+ * @var unknown_type
+ */
+$english = array(
+	'media:insert' => 'Embed media',
+	'embed:instructions' => 'Click on any file to embed it into your content.',
+	'embed:media' => 'Embed media',
+);
 
-	$english = array(
-	
-		'media:insert' => 'Embed media',
-	
-		'embed:instructions' => 'Click on any file to embed it into your content.',
-	
-		'embed:media' => 'Embed media',
-		'upload:media' => 'Upload media',
-	
-		'embed:file:required' => 'No file upload facilities were found. The system administrator may need to upload the file plugin or similar.',
-	
-	);
-					
-	add_translation("en",$english);
-
-?>
+add_translation("en", $english);

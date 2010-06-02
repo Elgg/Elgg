@@ -15,7 +15,8 @@ if (!$sections) {
 	$offset = max(0, get_input('offset', 0));
 	$limit = get_input('limit', 10);
 
-	$content = elgg_view_title(elgg_echo('embed:embed'));
+	$content = elgg_view_title(elgg_echo('embed:media'));
+	//$content .= elgg_echo('embed:instructions');
 
 	// prepare tabbed menu
 	$tabs = array();
