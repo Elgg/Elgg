@@ -1,11 +1,14 @@
 <?php
 /**
- * Elgg entity listing: gallery view
+ * Generic display for a single entity in gallery view.
  *
  * @package Elgg
  * @subpackage Core
  * @author Curverider Ltd
  * @link http://elgg.org/
+ *
+ * @uses string $vars['icon'] Full icon HTML to display.
+ * @uses string $vars['info'] Info about the entity.
  */
 
 ?>

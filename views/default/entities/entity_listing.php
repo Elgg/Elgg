@@ -1,6 +1,6 @@
 <?php
 /**
- * Generic display for a single entity.
+ * Generic display for a single entity in list view.
  *
  * @package Elgg
  * @subpackage Core
