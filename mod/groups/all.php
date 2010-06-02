@@ -46,9 +46,6 @@
 	//get a group count
 	$group_count = elgg_get_entities(array('types' => 'group', 'limit' => 10, 'count' => TRUE));
 
-	//menu options
-	$area2 = elgg_view("groups/side_menu");
-
 	//find groups
 	$area2 .= elgg_view("groups/find");
 
