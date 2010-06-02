@@ -737,7 +737,14 @@ function __get_annotations_calculate_x($sum = "avg", $entity_guid, $entity_type 
 	$entity_type = sanitise_string($entity_type);
 	$timeupper = (int)$timeupper;
 	$timelower = (int)$timelower;
-	$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
+	
+	if ($entity_subtype) {
+		if (!$entity_subtype = get_subtype_id($entity_type, $entity_subtype)) {
+			// requesting a non-existing subtype: return false
+			return FALSE;
+		}
+	}
+	
 	if ($name != '' AND !$name = get_metastring_id($name)) {
 		return 0;
 	}
@@ -830,7 +837,14 @@ function __get_entities_from_annotations_calculate_x($sum = "sum", $entity_type 
 
 	$sum = sanitise_string($sum);
 	$entity_type = sanitise_string($entity_type);
-	$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
+	
+	if ($entity_subtype) {
+		if (!$entity_subtype = get_subtype_id($entity_type, $entity_subtype)) {
+			// requesting a non-existing subtype: return false
+			return FALSE;
+		}
+	}
+	
 	$name = get_metastring_id($name);
 	$limit = (int) $limit;
 	$offset = (int) $offset;
