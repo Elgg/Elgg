@@ -44,6 +44,8 @@ $english = array(
 	'blog:messages:warning:draft' => 'There is an unsaved draft of this post!',
 	'blog:edit_revision_notice' => '(Old version)',
 	'blog:none' => 'No blogs found',
+	'blog:error:missing:title' => 'Please enter a blog title!',
+	'blog:error:missing:description' => 'Please enter the body of your blog!',
 
 	// river
 	'blog:river:create' => '%s wrote a new blog post',
