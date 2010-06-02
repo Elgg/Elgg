@@ -297,8 +297,16 @@ $value = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $time
 	} else {
 		$entity_guid = (int)$entity_guid;
 	}
+	
 	$entity_type = sanitise_string($entity_type);
-	$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
+	
+	if ($entity_subtype) {
+		if (!$entity_subtype = get_subtype_id($entity_type, $entity_subtype)) {
+			// requesting a non-existing subtype: return false
+			return FALSE;
+		}
+	}
+	
 	if ($name) {
 		$name = get_metastring_id($name);
 
