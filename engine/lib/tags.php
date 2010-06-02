@@ -357,9 +357,12 @@ function display_tagcloud($threshold = 1, $limit = 10, $metadata_name = "", $ent
 
 	elgg_deprecated_notice('display_cloud() was deprecated by elgg_view_tagcloud()!', 1.8);
 	
-	return elgg_view("output/tagcloud",array('value' => get_tags($threshold, $limit, $metadata_name, $entity_type, $entity_subtype, $owner_guid, $site_guid, $start_ts, $end_ts),
-											'type' => $entity_type,
-											'subtype' => $entity_subtype));
+	$tags = get_tags($threshold, $limit, $metadata_name, $entity_type, $entity_subtype, $owner_guid, $site_guid, $start_ts, $end_ts);
+	return elgg_view('output/tagcloud', array(
+		'value' => $tags,
+		'type' => $entity_type,
+		'subtype' => $entity_subtype,
+	));
 }
 
 /**
@@ -402,3 +405,18 @@ function elgg_get_registered_tag_metadata_names() {
 
 // register the standard tags metadata name
 elgg_register_tag_metadata_name('tags');
+
+register_page_handler('tags', 'elgg_tagcloud_page_handler');
+function elgg_tagcloud_page_handler($page) {
+	global $CONFIG;
+	
+	switch ($page[0]) {
+		default:
+			$title = elgg_view_title(elgg_echo('tags:site_cloud'));
+			$tags = display_tagcloud(0, 100, 'tags');
+			$body = elgg_view_layout('one_column_with_sidebar', $title . $tags);
+			
+			page_draw(elgg_echo('tags:site_cloud'), $body);
+			break;
+	}
+}

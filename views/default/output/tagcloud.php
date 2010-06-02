@@ -14,6 +14,8 @@
  * @uses $vars['subtype'] Entity subtype
  */
 
+$context = get_context();
+
 if (!empty($vars['subtype'])) {
 	$subtype = "&entity_subtype=" . urlencode($vars['subtype']);
 } else {
@@ -34,7 +36,11 @@ if (!empty($vars['tagcloud']) && is_array($vars['tagcloud'])) {
 	$cloud = "";
 	$max = 0;
 	
-	$cloud .= '<h3>'.elgg_echo('tagcloud').'</h3>';
+	if ($context != 'tags') {
+		$title = elgg_echo('tagcloud');
+		$cloud .= "<h3>$title</h3>";
+	}
+	
 	$cloud .= '<div class="tagcloud">';
 
 	foreach($vars['tagcloud'] as $tag) {
@@ -58,6 +64,12 @@ if (!empty($vars['tagcloud']) && is_array($vars['tagcloud'])) {
 	}
 	
 	$cloud .= "$list</div>";
+	
+	if ($context != 'tags') {
+		$cloud .= '<p class="tags">';
+		$cloud .= "<a href=\"{$vars['url']}pg/tags\">All site tags</a>";
+		$cloud .= '</p>';
+	}
 	
 	$cloud .= elgg_view('tagcloud/extend');
 	

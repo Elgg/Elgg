@@ -944,6 +944,7 @@ You cannot reply to this email.",
  */
 
 	'tag_names:tags' => 'Tags',
+	'tags:site_cloud' => 'Site Tag Cloud',
 
 /**
  * Languages according to ISO 639-1
