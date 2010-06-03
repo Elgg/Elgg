@@ -52,7 +52,7 @@ if (isset($vars['entity'])) {
 			<a href="<?php echo $vars['url']; ?>pg/thewire/<?php echo $vars['entity']->getOwnerEntity()->username; ?>"><?php echo $user_name; ?></a>
 			<?php
 			    $desc = $vars['entity']->description;
-			    $desc = preg_replace('/\@([A-Za-z0-9\_\.\-]*)/i','@<a href="' . $vars['url'] . 'pg/thewire/$1">$1</a>',$desc);
+			    //$desc = preg_replace('/\@([A-Za-z0-9\_\.\-]*)/i','@<a href="' . $vars['url'] . 'pg/thewire/$1">$1</a>',$desc);
 				echo parse_urls($desc);
 			?>
 			<p class="entity_subtext">		
