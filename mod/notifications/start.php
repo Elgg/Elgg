@@ -25,7 +25,8 @@ function notifications_plugin_init() {
 	elgg_unextend_view('usersettings/user', 'notifications/settings/usersettings');
 
 	// update notifications based on relationships changing
-	register_elgg_event_handler('delete', 'member', 'notifications_group_update');
+	register_elgg_event_handler('delete', 'member', 'notifications_relationship_remove');
+	register_elgg_event_handler('delete', 'friend', 'notifications_relationship_remove');
 }
 
 /**
@@ -69,23 +70,24 @@ function notifications_plugin_pagesetup() {
 }
 
 /**
- * Update group notifications when someone leaves a group
+ * Update notifications when a relationship is deleted
  *
  * @param string $event
  * @param string $object_type
  * @param object $relationship
  */
-function notifications_group_update($event, $object_type, $relationship) {
+function notifications_relationship_remove($event, $object_type, $relationship) {
 	global $NOTIFICATION_HANDLERS;
 
 	$user_guid = $relationship->guid_one;
-	$group_guid = $relationship->guid_two;
+	$object_guid = $relationship->guid_two;
 
 	// loop through all notification types
 	foreach($NOTIFICATION_HANDLERS as $method => $foo) {
-		remove_entity_relationship($user_guid, "notify{$method}", $group_guid);
+		remove_entity_relationship($user_guid, "notify{$method}", $object_guid);
 	}
 }
+
 
 
 register_elgg_event_handler('init', 'system', 'notifications_plugin_init', 1000);
