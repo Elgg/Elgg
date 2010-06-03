@@ -23,6 +23,9 @@ function notifications_plugin_init() {
 	// Unset the default notification settings
 	unregister_plugin_hook('usersettings:save', 'user', 'notification_user_settings_save');
 	elgg_unextend_view('usersettings/user', 'notifications/settings/usersettings');
+
+	// update notifications based on relationships changing
+	register_elgg_event_handler('delete', 'member', 'notifications_group_update');
 }
 
 /**
@@ -52,7 +55,7 @@ function notifications_page_handler($page) {
 }
 
 /**
- * Notification settings page setup function
+ * Notification settings sidebar menu
  *
  */
 function notifications_plugin_pagesetup() {
@@ -65,9 +68,28 @@ function notifications_plugin_pagesetup() {
 	}
 }
 
+/**
+ * Update group notifications when someone leaves a group
+ *
+ * @param string $event
+ * @param string $object_type
+ * @param object $relationship
+ */
+function notifications_group_update($event, $object_type, $relationship) {
+	global $NOTIFICATION_HANDLERS;
+
+	$user_guid = $relationship->guid_one;
+	$group_guid = $relationship->guid_two;
+
+	// loop through all notification types
+	foreach($NOTIFICATION_HANDLERS as $method => $foo) {
+		remove_entity_relationship($user_guid, "notify{$method}", $group_guid);
+	}
+}
+
 
 register_elgg_event_handler('init', 'system', 'notifications_plugin_init', 1000);
 
-// Register action
+
 register_action("notificationsettings/save", FALSE, $CONFIG->pluginspath . "notifications/actions/save.php");
 register_action("notificationsettings/groupsave", FALSE, $CONFIG->pluginspath . "notifications/actions/groupsave.php");
