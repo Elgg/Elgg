@@ -5,13 +5,13 @@ plugins, and tickets attached to Trac are expected to be in this format.
 
 * Unix line endings
 * Hard tabs, 4 character tab spacing.
-* No shortcut tags ( <? or <?= or <% )
-* PHPDoc comments on functions and classes (including methods and declared 
-  members).
+* No PHP shortcut tags ( <? or <?= or <% )
+* PHPDoc comments on functions and classes (all methods; declared properties
+  when appropriate).
 * Mandatory wrapped {}s around any code blocks. 
 	Bad:
-	if (true)
-		foreach($arr as $elem)
+	if (true) 
+		foreach($arr as $elem) 
 			echo $elem;
 
 	Good:
@@ -25,66 +25,41 @@ plugins, and tickets attached to Trac are expected to be in this format.
 * Name globals and constants in ALL_CAPS (FALSE, TRUE, NULL, ACCESS_FRIENDS, 
   $CONFIG).
 * Space functions like_this($required, $optional = TRUE)
-* Space keywords and constructs like this: if (false) { ... }
-* Include variables in strings with double quotes instead of concatenating:
-	Bad: 
-	echo 'Hello, ' . $name . '!  How are you?';
+* Space keywords and constructs like this: if (FALSE) { ... }
+* Correctly use spaces, quotes, and {}s in strings: 
+	Bad (hard to read, misuse of quotes and {}s): 
+	echo 'Hello, '.$name."!  How is your {$time_of_day}?";
 	
 	Good:
-	echo "Hello, $name!  How are you?"; 
+	echo "Hello, $name!  How is your $time_of_day?"; 
 	
 * Line lengths should be reasonable.  If you are writing lines over 100 
-  characters, please revise the code.
-* Use slash-style comments. (// and /* */)
-* Preferred no closing ?> tag at EOF. (Avoids problems with trailing 
-  whitespace, marginal speed improvements.)
-
-
-*** DEPRECATING APIs ***
-
-Occasionally, functions and classes must be deprecated in favor of newer
-replacements.  Since 3rd party plugin authors rely on a consistent API,
-backward compatibility must be maintained, but will not be maintained
-indefinitely as plugin authors are expected to properly update their
-plugins.  In order to maintain backward compatibility, deprecated APIs will
-follow these guidelines:
-
-* API changes cannot occur between bugfix versions (1.6.0 - 1.6.1).
-* API changes between minor versions (1.6 - 1.7) must maintain backward
-  compatibility for at least 2 minor versions.  (See procedures, below.)
-* Bugfixes that change the API cannot be included in bugfix versions.
-* API changes between major versions (1.0 - 2.0) can occur without regard to
-  backward compatibility.
-
-The procedures for deprecating an API are as follows:
-
-* The first minor version (1.7) with a deprecated API must include a wrapper
-  function/class (or otherwise appropriate means) to maintain backward
-  compatibility, including any bugs in the original function/class.
-  This wrapper function will use elgg_log('...', 'WARNING') to announce
-  that the function is deprecated.
-* The second minor version (1.8) maintains the backward compatibility
-  wrapper, but in addition to elgg_log(), a register_error() message is also
-  thrown.
-* The third minor version (1.9) removes the wrapper function.  Any use of 
-  the deprecated API should be corrected before this.
-
-The general timeline for three minor releases is 8 to 12 months.
+  characters on a line, please revise the code.
+* Use // or /* */ when commenting.
+* No closing PHP tag (?>) at EOF unless after a heredoc. (Avoids problems with 
+  trailing whitespace. Required after heredoc by PHP.)
 
 
 *** CODING BEST PRACTICES ***
 
 The following best practices make code easier to read, easier to maintain,
 and easier to debug.  Consistent use of these guidelines means less guess
-work for developers.
+work for developers, which means happier, more productive developers.
 
+* Adhere to "Don't Repeat Yourself" (DRY) principles of code design and 
+  organization. If you are copy-and-pasting code YOU ARE DOING SOMETHING WRONG.
+  If you find a block of code that you want to use multiple times, make a 
+  function.  If you find views that are identical except for a single value,
+  pull it out into a generic view that takes an option.
+* Whitespace is free.  Don't be afraid to use it to separate blocks of code. 
+  Use a single space to separate function params and string concatenation.
 * Use self-documenting variable names.  $group_guids is better than $array.
 * Functions returning an array should return an empty array instead of FALSE
   on no results.
-* If not throwing an exception, boolean FALSE should be returned by functions
-  on failure or error.
-* Functions returning only boolean should be prefaced with is_*(). (eg,
-  is_logged_in().)
+* FALSE should be returned by functions on failure or error if not throwing an 
+  exception. 
+* Functions returning only boolean should be prefaced with is_ or has_ (eg,
+  is_logged_in(), has_access_to_entity()).
 * Ternary syntax is acceptable for single-line, non-embedded statements.
 * Use comments effectively.  Good comments describe the "why."  Good code
   describes the "how." Ex:
@@ -105,9 +80,45 @@ work for developers.
 			$i++;
 		}
 	}
+* Use commit messages effectively.  Be concise and meaningful. Ex:
+	Not meaningful:
+	Small fix to groups.
+
+	Meaningful:
+	Fixes #1234: Missing ) was causing WSOD on group profile page when
+	logged out.
+
 * Commit effectively: Err on the side of atomic commits.  One revision with
   many changes is scary.
-* Commit effectively part 2: Use concise, meaningful commit messages. Ex:
-	Not meaningful: "Fixed some bugs in groups."
-	Meaningful: "Fixes #1234: Missing ) added in group profile page."
 
+
+*** DEPRECATING APIs ***
+
+Occasionally, functions and classes must be deprecated in favor of newer
+replacements.  Since 3rd party plugin authors rely on a consistent API,
+backward compatibility must be maintained, but will not be maintained
+indefinitely as plugin authors are expected to properly update their
+plugins.  In order to maintain backward compatibility, deprecated APIs will
+follow these guidelines:
+
+* API changes cannot occur between bugfix versions (1.6.0 - 1.6.1).
+* API changes between minor versions (1.6 - 1.7) must maintain backward
+  compatibility for at least 2 minor versions.  (1.7 and 1.8. See 
+  procedures, below.)
+* Bugfixes that change the API cannot be included in bugfix versions.
+* API changes between major versions (1.0 - 2.0) can occur without regard to
+  backward compatibility.
+
+The procedures for deprecating an API are as follows:
+
+* The first minor version (1.7) with a deprecated API must include a wrapper
+  function/class (or otherwise appropriate means) to maintain backward
+  compatibility, including any bugs in the original function/class.
+  This wrapper function will elgg_deprecated_notice('...', 1.7) to log
+  that the function is deprecated.
+* The second minor version (1.8) maintains the backward compatibility
+  wrapper, but elgg_deprecated_notice() will produce a visible warning.
+* The third minor version (1.9) removes the wrapper function.  Any use of 
+  the deprecated API should be corrected before this.
+
+The general timeline for two minor releases is 8 to 12 months.
