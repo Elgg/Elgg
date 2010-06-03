@@ -149,7 +149,8 @@ function ecml_keyword_hook($hook, $type, $value, $params) {
 		'blip.tv',
 		'dailymotion',
 		'livevideo',
-		'redlasso'
+		'redlasso',
+		'entity'
 	);
 
 	foreach ($keywords as $keyword) {

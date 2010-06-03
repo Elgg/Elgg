@@ -191,7 +191,7 @@ CONTENTS:
 
 	view object/blog:
 		...logic...
-		elgg_view('blog/blog', array('blog' => $blog);
+		echo elgg_view('blog/blog', array('blog' => $blog);
 		...logic...
 		elgg_view_comments($blog);
 

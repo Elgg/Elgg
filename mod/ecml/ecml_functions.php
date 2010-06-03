@@ -30,7 +30,7 @@ function ecml_parse_view_match($matches) {
 	}
 
 	switch ($keyword) {
-		case 'entity':
+		case 'entity_list':
 			$options = ecml_keywords_parse_entity_params($params_string);
 			// must use this lower-level function because I missed refactoring
 			// the list entity functions for relationships.
@@ -61,6 +61,8 @@ function ecml_parse_view_match($matches) {
 	}
 
 	// if nothing matched return the original string.
+	// @todo this might be undesirable.  will show ugly code everywhere
+	// if you delete a file or something.
 	if (!$content) {
 		$content = $matches[0];
 	}
