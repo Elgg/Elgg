@@ -1,50 +1,51 @@
 <?php
 
-	/**
-	  *  Group profile widget - this displays a users groups on their profile
-	  **/
+/** 
+ *  Group profile widget - this displays a users groups on their profile
+ **/
 
-	//the number of groups to display
-	$number = (int) $vars['entity']->num_display;
-	if (!$number)
-		$number = 4;
+//the number of groups to display
+$number = (int) $vars['entity']->num_display;
+if (!$number) {
+	$number = 4;
+}
 
-	//the page owner
-	$owner = $vars['entity']->owner_guid;
+//the page owner
+$owner = $vars['entity']->owner_guid;
 
-	//$groups = get_users_membership($owner);
-	//$groups = list_entities_from_relationship('member',$owner,false,'group','',0,$number,false,false,false);
-
-	$options = array(
-		'relationship' => 'member',
-		'relationship_guid' => $owner,
-		'type' => 'group',
-		'limit' => $number,
-	);
-
-	$groups = elgg_get_entities_from_relationship($options);
+//$groups = get_users_membership($owner);
+//$groups = list_entities_from_relationship('member',$owner,false,'group','',0,$number,false,false,false);
+$groups = get_entities_from_relationship('member', $owner, false, "group", "", 0, "", $number, 0, false, 0);
 
 
-	if($groups){
+if ($groups) {
 
-		echo "<div class=\"groupmembershipwidget\">";
+	echo "<div class=\"groupmembershipwidget\">";
 
-		foreach($groups as $group){
-			$icon = elgg_view(
+	foreach ($groups as $group) {
+		$icon = elgg_view(
 				"groups/icon", array(
-									'entity' => $group,
-									'size' => 'small',
-								)
-				);
+				'entity' => $group,
+				'size' => 'small',
+				)
+		);
 
-			echo "<div class=\"contentWrapper\">" . $icon . " <div class='search_listing_info'><p><span>" . $group->name . "</span><br />";
-			echo $group->briefdescription . "</p></div><div class=\"clearfloat\"></div></div>";
+		$group_link = $group->getURL();
 
-		}
-		echo "</div>";
+		echo <<<___END
+
+<div class="contentWrapper">
+	$icon
+	<div class="search_listing_info">
+		<p>
+			<span><a href="$group_link">$group->name</a></span><br />
+			$group->briefdescription
+		</p>
+	</div>
+	<div class="clearfloat"></div>
+</div>
+___END;
+
 	}
-
-
-// echo $groups;
-
-?>
+	echo "</div>";
+}
