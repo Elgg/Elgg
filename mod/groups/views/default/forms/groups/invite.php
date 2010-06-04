@@ -21,7 +21,7 @@
 	$friends = elgg_get_entities_from_relationship($options);
 if ($friends) {
 ?>
-<form action="<?php echo $vars['url']; ?>action/groups/invite" method="post" class="margin_top">
+<form action="<?php echo $vars['url']; ?>action/groups/invite" method="post" id="invite_to_group" class="margin_top">
 
 	<?php
 	echo elgg_view('input/securitytoken');
