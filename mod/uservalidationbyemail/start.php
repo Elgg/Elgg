@@ -17,6 +17,9 @@ function uservalidationbyemail_init() {
 
 	// Register hook listening to new users.
 	register_elgg_event_handler('validate', 'user', 'uservalidationbyemail_email_validation');
+	
+	// register Walled Garden public pages
+	register_plugin_hook('public_pages', 'walled_garden', 'uservalidationbyemail_public_pages');
 }
 
 /**
@@ -132,6 +135,14 @@ function uservalidationbyemail_validate_email($user_guid, $code) {
 	}
 
 	return false;
+}
+
+/**
+ * Registers public pages to allow in the case Private Network has been enabled.
+ */
+function uservalidationbyemail_public_pages($hook, $type, $return_value, $params) {
+	$return_value[] = 'pg/uservalidationbyemail/confirm';
+	return $return_value;
 }
 
 // Initialise
