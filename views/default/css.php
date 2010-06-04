@@ -1536,4 +1536,13 @@ p.elgg_likes_owner {
 	padding-top:4px;
 }
 
-
+.user_picker .user_picker_entry {
+	clear:both;
+	height:25px;
+	padding:5px;
+	margin-top:5px;
+	border-bottom:1px solid #cccccc;
+}
+.user_picker_entry .delete_button {
+	margin-right:10px;
+}
