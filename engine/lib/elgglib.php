@@ -431,11 +431,18 @@ function elgg_view_register_simplecache($viewname) {
 /**
  * Regenerates the simple cache.
  *
+ * @param string $viewtype Optional viewtype to regenerate
  * @see elgg_view_register_simplecache
  *
  */
-function elgg_view_regenerate_simplecache() {
+function elgg_view_regenerate_simplecache($viewtype = NULL) {
 	global $CONFIG;
+
+	if (!isset($CONFIG->views->simplecache) || !is_array($CONFIG->views->simplecache)) {
+		return;
+	}
+
+	$lastcached = time();
 
 	// @todo elgg_view() checks if the page set is done (isset($CONFIG->pagesetupdone)) and
 	// triggers an event if it's not. Calling elgg_view() here breaks submenus
@@ -445,24 +452,34 @@ function elgg_view_regenerate_simplecache() {
 	// the trigger correctly when the first view is actually being output.
 	$CONFIG->pagesetupdone = TRUE;
 
-	if (isset($CONFIG->views->simplecache)) {
-		if (!file_exists($CONFIG->dataroot . 'views_simplecache')) {
-			@mkdir($CONFIG->dataroot . 'views_simplecache');
-		}
+	if (!file_exists($CONFIG->dataroot . 'views_simplecache')) {
+		mkdir($CONFIG->dataroot . 'views_simplecache');
+	}
 
-		if (!empty($CONFIG->views->simplecache) && is_array($CONFIG->views->simplecache)) {
-			foreach($CONFIG->views->simplecache as $view) {
-				$viewcontents = elgg_view($view);
-				$viewname = md5(elgg_get_viewtype() . $view);
-				if ($handle = fopen($CONFIG->dataroot . 'views_simplecache/' . $viewname, 'w')) {
-					fwrite($handle, $viewcontents);
-					fclose($handle);
-				}
+	if (isset($viewtype)) {
+		$viewtypes = array($viewtype);
+	} else {
+		$viewtypes = $CONFIG->view_types;
+	}
+
+	$original_viewtype = elgg_get_viewtype();
+	
+	foreach ($viewtypes as $viewtype) {
+		elgg_set_viewtype($viewtype);
+		foreach ($CONFIG->views->simplecache as $view) {
+			$viewcontents = elgg_view($view);
+			$viewname = md5(elgg_get_viewtype() . $view);
+			if ($handle = fopen($CONFIG->dataroot . 'views_simplecache/' . $viewname, 'w')) {
+				fwrite($handle, $viewcontents);
+				fclose($handle);
 			}
 		}
 
-		datalist_set('simplecache_lastupdate', 0);
+		datalist_set("simplecache_lastupdate_$viewtype", $lastcached);
+		datalist_set("simplecache_lastcached_$viewtype", $lastcached);
 	}
+
+	elgg_set_viewtype($original_viewtype);
 
 	unset($CONFIG->pagesetupdone);
 }

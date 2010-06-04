@@ -50,7 +50,7 @@ if ($vars['entity'] instanceof ElggUser) {
 	if (!$override) {
 	?>	
 		<div class="usericon <?php echo $vars['size']; ?>">
-		<div class="avatar_menu_button"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" border="0" width="15px" height="15px" /></div>
+		<div class="avatar_menu_button"><img src="<?php echo $vars['url']; ?>_graphics/spacer.gif" border="0" width="15" height="15" /></div>
 		<div class="sub_menu">
 			<h3 class="displayname"><a href="<?php echo $vars['entity']->getURL(); ?>"><?php echo $vars['entity']->name; ?>
 			<span class="username"><?php echo "&#64;" . $vars['entity']->username; ?></span></a></h3>			
@@ -104,7 +104,7 @@ if ($vars['entity'] instanceof ElggUser) {
 	<?php
 	/*
 	original avatar method
-	<img src="<?php echo $vars['entity']->getIcon($vars['size']); ?>" border="0" <?php echo $align; ?> alt="<?php echo htmlentities($vars['entity']->name, ENT_QUOTES, 'UTF-8'); ?>" title="<?php echo htmlentities($vars['entity']->name, ENT_QUOTES, 'UTF-8'); ?>" <?php echo $vars['js']; ?> />
+	<img src="<?php echo elgg_format_url($vars['entity']->getIcon($vars['size'])); ?>" border="0" <?php echo $align; ?> alt="<?php echo htmlentities($vars['entity']->name, ENT_QUOTES, 'UTF-8'); ?>" title="<?php echo htmlentities($vars['entity']->name, ENT_QUOTES, 'UTF-8'); ?>" <?php echo $vars['js']; ?> />
 	*/
 
 	if (!$override) { 
