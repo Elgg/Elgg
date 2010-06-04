@@ -9,8 +9,9 @@
  * @uses string $vars['active_section'] Currently selected section_id
  */
 
-$sections = (isset($vars['sections'])) ? $vars['sections'] : array();
-$active_section = (isset($vars['active_section'])) ? $vars['active_section'] : array_shift(array_keys($sections));
+$sections = elgg_get_array_value('sections', $vars, array());
+$active_section = elgg_get_array_value('active_section', $vars, array_shift(array_keys($sections)));
+$upload_sections = elgg_get_array_value('upload_sections', $vars, array());
 
 if (!$sections) {
 	$content = elgg_echo('embed:no_sections');
@@ -38,11 +39,21 @@ if (!$sections) {
 		$tabs[] = $tab;
 	}
 
+	// make sure upload is always the last tab
+	if ($upload_sections) {
+		$tabs[] = array(
+			'title' => elgg_echo('embed:upload'),
+			'url' => '#',
+			'url_class' => 'embed_section',
+			'url_js' => 'id="upload"',
+		);
+	}
+
 	$tabs_html = elgg_view('navigation/tabs', array('tabs' => $tabs));
 	$content .= $tabs_html;
 
 	// build the items and layout.
-	if (array_key_exists($active_section, $sections)) {
+	if ($section != 'upload' || array_key_exists($active_section, $sections)) {
 		$section_info = $sections[$active_section];
 		$layout = isset($section_info['layout']) ? $section_info['layout'] : 'list';
 
@@ -51,7 +62,8 @@ if (!$sections) {
 			//'subtype'	=> $subtype,
 			'offset' => $offset,
 			'limit' => $limit,
-			'section' => $active_section
+			'section' => $active_section,
+			'upload_sections' => $upload_sections
 		);
 
 		// allow full override for this section
@@ -99,7 +111,6 @@ if (!$sections) {
 	} else {
 		$content .= elgg_echo('embed:invalid_section');
 	}
-
 }
 echo $content;
 ?>

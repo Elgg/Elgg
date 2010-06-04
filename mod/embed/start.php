@@ -49,12 +49,15 @@ function embed_page_handler($page) {
 			// @todo trigger for all right now. If we categorize these later we can trigger
 			// for certain categories.
 			$sections = trigger_plugin_hook('embed_get_sections', 'all', NULL, array());
+			$upload_sections = trigger_plugin_hook('embed_get_upload_sections', 'all', NULL, array());
 			asort($sections, SORT_LOCALE_STRING);
+			asort($upload_sections, SORT_LOCALE_STRING);
 			$active_section = get_input('active_section', NULL);
 
 			echo elgg_view('embed/embed', array(
 				'sections' => $sections,
-				'active_section' => $active_section
+				'active_section' => $active_section,
+				'upload_sections' => $upload_sections
 			));
 
 			break;
