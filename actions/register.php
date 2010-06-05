@@ -64,8 +64,4 @@ if (!$CONFIG->disable_registration) {
 	register_error(elgg_echo('registerdisabled'));
 }
 
-$qs = explode('?',$_SERVER['HTTP_REFERER']);
-$qs = $qs[0];
-$qs .= "?u=" . urlencode($username) . "&e=" . urlencode($email) . "&n=" . urlencode($name) . "&friend_guid=" . $friend_guid;
-
-forward($qs);
+forward(REFERER);
