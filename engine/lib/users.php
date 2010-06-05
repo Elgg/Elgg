@@ -754,8 +754,10 @@ function user_remove_friend($user_guid, $friend_guid) {
 
 	// perform cleanup for access lists.
 	$collections = get_user_access_collections($user_guid);
-	foreach ($collections as $collection) {
-		remove_user_from_access_collection($friend_guid, $collection->id);
+	if ($collections) {
+		foreach ($collections as $collection) {
+			remove_user_from_access_collection($friend_guid, $collection->id);
+		}
 	}
 
 	return remove_entity_relationship($user_guid, "friend", $friend_guid);
