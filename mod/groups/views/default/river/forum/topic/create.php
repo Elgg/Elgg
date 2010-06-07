@@ -5,6 +5,7 @@
 	$object_url = $object->getURL();
 	$forumtopic = $object->guid;
 	$group_guid = $object->container_guid;
+	$group = get_entity($group_guid);
 	$url = $vars['url'] . "mod/groups/topicposts.php?topic=" . $forumtopic . "&group_guid=" . $group_guid;
 	$comment = $object->getAnnotations("group_topic_post", 1, 0, "asc"); 
 	foreach($comment as $c){
@@ -13,7 +14,11 @@
 	$contents = strip_tags($contents);//this is so we don't get large images etc in the activity river
 	$url_user = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
 	$string = sprintf(elgg_echo("groupforum:river:postedtopic"),$url_user) . ": ";
-	$string .= "<a href=\"" . $url . "\">" . $object->title . "</a> <span class='entity_subtext'>" . friendly_time($object->time_created) . "</span> <a class='river_comment_form_button link' href=\"{$object_url}\">Visit discussion</a>";
+	$string .= "<a href=\"" . $url . "\">" . $object->title . "</a>";
+	if(get_context() != 'groups'){
+		$string .= " " . elgg_echo('groups:ingroup') . " <a href=\"{$group->getURL()}\">" . $group->name . "</a>";
+	}
+	$string .= " <span class='entity_subtext'>". friendly_time($object->time_created) ."</span> <a class='river_comment_form_button link' href=\"{$object_url}\">Visit discussion</a>";
 	$string .= elgg_view('likes/forms/link', array('entity' => $object));
 	$string .= "<div class=\"river_content_display\">";
 	$string .= elgg_make_excerpt($contents, 200);
