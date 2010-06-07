@@ -141,7 +141,6 @@ function admin_init() {
 	elgg_add_admin_submenu_item('online', elgg_echo('admin:users:online'), 'users');
 	elgg_add_admin_submenu_item('newest', elgg_echo('admin:users:newest'), 'users');
 	elgg_add_admin_submenu_item('add', elgg_echo('admin:users:add'), 'users');
-	elgg_add_admin_submenu_item('find', elgg_echo('admin:users:find'), 'users');
 
 	// plugins
 	elgg_add_admin_submenu_item('plugins', elgg_echo('admin:plugins'));
