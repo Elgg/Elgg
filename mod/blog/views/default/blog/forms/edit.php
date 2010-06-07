@@ -249,9 +249,9 @@ elgg_clear_sticky_form('blog');
 			var d = new Date();
 			var mins = d.getMinutes() + '';
 			if (mins.length == 1) mins = '0' + mins;
-			$("#blog_save_status_time").html(d.toLocaleDateString() + " @ " + d.getHours() + ":" + mins);
+			$(".blog_save_status_time").html(d.toLocaleDateString() + " @ " + d.getHours() + ":" + mins);
 		} else {
-			$("#blog_save_status_time").html("<?php echo elgg_echo('error'); ?>");
+			$(".blog_save_status_time").html("<?php echo elgg_echo('error'); ?>");
 		}
 	}
 
