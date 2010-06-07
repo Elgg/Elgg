@@ -27,7 +27,7 @@ function riverdashboard_init() {
  */
 function riverdashboard_page_handler($page){
 	include(dirname(__FILE__) . "/index.php");
-	return true;
+	return TRUE;
 }
 
 /**
@@ -38,7 +38,7 @@ function riverdashboard_page_handler($page){
  */
 function elgg_make_river_comment($entity){
 	if (!($entity instanceof ElggEntity)) {
-		return false;
+		return FALSE;
 	} else {
 		//display the comment form
 		$comments = elgg_view('riverdashboard/rivercomment', array('entity' => $entity));

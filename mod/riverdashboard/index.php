@@ -6,8 +6,6 @@
 
 require_once(dirname(dirname(dirname(__FILE__))) . '/engine/start.php');
 
-gatekeeper();
-
 $type = get_input('type');
 $subtype = get_input('subtype');
 $orient = get_input('display');
@@ -43,7 +41,7 @@ switch($orient) {
 
 $title = elgg_view_title($title_wording);
 
-$river = elgg_view_river_items($subject_guid, 0, $relationship_type, $type, $subtype, '', 20, 0, 0, true, false);
+$river = elgg_view_river_items($subject_guid, 0, $relationship_type, $type, $subtype, '', 20, 0, 0, TRUE, FALSE);
 
 // Replacing callback calls in the nav with something meaningless
 $river = str_replace('callback=true', 'replaced=88,334', $river);

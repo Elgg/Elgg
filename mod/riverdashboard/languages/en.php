@@ -9,7 +9,6 @@ $english = array(
 	/**
 	 * Site messages
 	 **/
-
 	'sitemessages:announcements' => "Site announcements",
 	'sitemessages:posted' => "Posted",
 	'sitemessages:river:created' => "Site admin, %s,",
@@ -38,6 +37,9 @@ $english = array(
 	'riverdashboard:avataricon' => "Would you like to use user avatars or icons on your site activity stream?",
 	'option:icon' => 'Icons',
 	'option:avatar' => 'Avatars',
+
+	// likes and comments
+	'riverdashbardo:n_more_comments' => '+%s more',
 
 	// ecml
 	'riverdashboard:ecml:desc:activity' => 'Recent Activity',

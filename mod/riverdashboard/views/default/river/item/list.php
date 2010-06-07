@@ -51,3 +51,13 @@ if ($vars['pagination'] !== false) {
 		echo '<div class="pagination clearfloat">'.$nav.'</div>';
 	}
 }
+
+?>
+
+<script type="text/javascript">
+
+// pull in extra comments and likes with ajax
+$(function() {
+
+});
+</script>
