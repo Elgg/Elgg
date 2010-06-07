@@ -44,9 +44,9 @@ if ($entity->owner_guid != $user->guid) {
 				elgg_echo('likes:email:subject'),
 				sprintf(
 					elgg_echo('likes:email:body'),
-					$entity->title,
 					$user->name,
-					$comment_text,
+					$entity->title,
+					//$comment_text,
 					$entity->getURL(),
 					$user->name,
 					$user->getURL()
