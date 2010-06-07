@@ -15,10 +15,10 @@
 </script>
 <div class="notification_friends">
 <h3>
-	<?php echo elgg_echo('notifications:subscriptions:collections:title'); ?>
+	<?php echo elgg_echo('notifications:subscriptions:friends:title'); ?>
 </h3>
 <p class="margin_none">
-	<?php echo elgg_echo('notifications:subscriptions:collections:description'); ?>
+	<?php echo elgg_echo('notifications:subscriptions:friends:description'); ?>
 </p>
 <table id="notificationstable" cellspacing="0" cellpadding="4" border="0" width="100%">
 	<tr>
