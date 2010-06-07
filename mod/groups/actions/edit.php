@@ -90,13 +90,12 @@ if (isset($CONFIG->group_tool_options)) {
 	}
 }	
 
-if($group->save()){
-	add_to_river('river/group/create','create',$user->guid,$group->guid);
-}
+$group->save();
 
-// group creator needs to be member of new group
+// group creator needs to be member of new group and river entry created
 if ($new_group_flag) {
 	$group->join($user);
+	add_to_river('river/group/create','create',$user->guid,$group->guid);
 }
 
 
