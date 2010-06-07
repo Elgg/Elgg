@@ -16,7 +16,7 @@
 ?>
 
 <div class="entity_listing topic clearfloat">
-<a name="<?php echo $vars['entity']->id; ?>"></a>
+<a class="anchor_link" name="<?php echo $vars['entity']->id; ?>"></a>
 	<?php
 	// get infomation about the owner of the comment
 	if ($post_owner = get_user($vars['entity']->owner_guid)) {

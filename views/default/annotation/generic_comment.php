@@ -6,7 +6,7 @@
 $owner = get_user($vars['annotation']->owner_guid);
 
 ?>
-<a name="comment_<?php echo $vars['annotation']->id; ?>"></a>
+<a class="anchor_link" name="comment_<?php echo $vars['annotation']->id; ?>"></a>
 <div class="generic_comment clearfloat">
 	<div class="generic_comment_icon">
 		<?php
