@@ -336,7 +336,12 @@ function elgg_get_river_items($subject_guid = 0, $object_guid = 0, $subject_rela
 		}
 	} else {
 		if (!is_array($subject_guid)) {
-			if ($entities = get_entities_from_relationship($subject_relationship,$subject_guid,false,'','',0,'',9999)) {
+			$entities = elgg_get_entities_from_relationship(array(
+				'relationship' => $subject_relationship,
+				'relationship_guid' => $subject_guid,
+				'limit' => 9999,
+			));
+			if (is_array($entities) && !empty($entities)) {
 				$guids = array();
 				foreach($entities as $entity) {
 					$guids[] = (int) $entity->guid;

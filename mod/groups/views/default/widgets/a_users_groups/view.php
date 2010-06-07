@@ -13,9 +13,12 @@ if (!$number) {
 //the page owner
 $owner = $vars['entity']->owner_guid;
 
-//$groups = get_users_membership($owner);
-//$groups = list_entities_from_relationship('member',$owner,false,'group','',0,$number,false,false,false);
-$groups = get_entities_from_relationship('member', $owner, false, "group", "", 0, "", $number, 0, false, 0);
+$groups = elgg_get_entities_from_relationship(array(
+	'relationship' => 'member',
+	'relationship_guid' => $owner,
+	'types' => 'group',
+	'limit' => $number,
+));
 
 
 if ($groups) {
