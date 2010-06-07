@@ -16,7 +16,7 @@
 	admin_gatekeeper();
 	
 	$group_guid = get_input('group_guid');
-	$action = get_input('action');
+	$action = get_input('type');
 	
 	$group = get_entity($group_guid);
 	
@@ -39,6 +39,4 @@
 		
 	}
 	
-	forward("pg/groups/world/");
-	
-?>
+	forward($_SERVER['HTTP_REFERER']);

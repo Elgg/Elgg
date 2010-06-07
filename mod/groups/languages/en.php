@@ -47,7 +47,7 @@
 			'groups:makeunfeatured' => 'Unfeature',
 			'groups:makefeatured' => 'Make featured',
 			'groups:featuredon' => 'You have made this group a featured one.',
-			'groups:unfeature' => 'You have removed this group from the featured list',
+			'groups:unfeatured' => 'You have removed this group from the featured list',
 			'groups:joinrequest' => 'Request membership',
 			'groups:join' => 'Join group',
 			'groups:leave' => 'Leave group',
