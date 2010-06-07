@@ -31,8 +31,8 @@ if ($guid) {
 	$success_forward_url = get_input('forward', $blog->getURL());
 
 	// save some data for revisions once we save the new edit
-	$revision_value = $blog->description;
-	$new_post = FALSE;
+	$revision_text = $blog->description;
+	$new_post = $blog->new_post;
 } else {
 	$blog = new ElggBlog();
 	$blog->subtype = 'blog';
@@ -140,13 +140,16 @@ if (!$error) {
 		// remove autosave draft if exists
 		$blog->clearAnnotations('blog_auto_save');
 
-		// if this was an edit, create a revision
-		if (!$new_post && $revision_value) {
-			// create a revision annotation
-			$blog->annotate('blog_revision', $revision_value);
+		// no longer a brand new post.
+		$blog->clearMetadata('new_post');
+
+		// if this was an edit, create a revision annotation
+		if (!$new_post && $revision_text) {
+			$blog->annotate('blog_revision', $revision_text);
 		}
 
 		system_message(elgg_echo('blog:message:saved'));
+
 		// @todo do we want to alert on updates?
 		if ($new_post && $blog->status == 'published') {
 			add_to_river('river/object/blog/create', 'create', get_loggedin_userid(), $blog->getGUID());

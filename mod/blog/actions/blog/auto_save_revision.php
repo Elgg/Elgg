@@ -44,6 +44,11 @@ if ($title && $description) {
 		$blog->excerpt = elgg_make_excerpt($excerpt);
 		// must be present or doesn't show up when metadata sorting.
 		$blog->publish_date = time();
+
+		// mark this as a brand new post so we can work out the
+		// river / revision logic in the real save action.
+		$blog->new_post = TRUE;
+
 		if (!$blog->save()) {
 			$error = elgg_echo('blog:error:cannot_save');
 		}
