@@ -879,8 +879,8 @@ If you requested this click on the link below, otherwise ignore this email.
 	'likes:userlikedthis' => 'user liked this',
 	'likes:userslikedthis' => 'users like this',
 	'likes:river:annotate' => 'likes',
-	'likes:email:body' => "%s liked %s.",
- 	'likes:email:subject' => 'A user liked \"%s\"',
+	'likes:email:body' => '%s liked %s',
+ 	'likes:email:subject' => 'A user liked one of your objects',
 
 /**
  * Comments
