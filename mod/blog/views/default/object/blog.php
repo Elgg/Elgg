@@ -26,7 +26,11 @@ $body = autop($blog->description);
 $owner_icon = elgg_view('profile/icon', array('entity' => $owner, 'size' => 'tiny'));
 $owner_blog_link = "<a href=\"{$vars['url']}pg/blog/$owner->username\">{$owner->name}</a>";
 $author_text = sprintf(elgg_echo('blog:author_by_line'), $owner_blog_link);
-$tags = elgg_view('output/tags', array('tags' => $blog->tags));
+if($blog->tags){
+	$tags = "<p class=\"tags\">" . elgg_view('output/tags', array('tags' => $blog->tags)) . "</p>";
+}else{
+	$tags = "";
+}
 $date = friendly_time($blog->publish_date);
 
 // The "on" status changes for comments, so best to check for !Off
@@ -89,7 +93,7 @@ echo <<<___END
 			$categories
 			$comments_link
 		</p>
-		<p class="tags">$tags</p>
+		$tags
 		<span class="body">$body</span>
 	</div>
 </div>
@@ -111,7 +115,7 @@ ___END;
 			$categories
 			$comments_link
 		</p>
-		<p class="tags">$tags</p>
+		$tags
 		<p>$excerpt</p>
 	</div>
 </div>
