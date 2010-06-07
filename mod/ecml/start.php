@@ -39,8 +39,8 @@ function ecml_init() {
 	register_action('settings/ecml/save', FALSE, dirname(__FILE__) . '/actions/save_permissions.php', TRUE);
 
 	// show ECML-enabled icon on free-text input areas
-	elgg_extend_view('input/longtext',  'ecml/input_ext', 0);
-	elgg_extend_view('input/plaintext', 'ecml/input_ext');
+	//elgg_extend_view('input/longtext',  'ecml/input_ext', 0);
+	//elgg_extend_view('input/plaintext', 'ecml/input_ext');
 	//elgg_extend_view('input/text', 'ecml/input_ext');
 
 	// add parsing for core views.
