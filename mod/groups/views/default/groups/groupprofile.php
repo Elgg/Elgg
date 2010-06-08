@@ -8,22 +8,62 @@
  * @copyright Curverider Ltd 2008-2010
  * @link http://elgg.com/
  */
-?>
+
+
+$user = get_loggedin_user();
+elgg_push_breadcrumb(elgg_echo('groups:all'), "{$vars['url']}pg/groups/world");
+
+// create user actions
+$actions = array();
+if ($vars['entity']->canEdit()) {
+	// breadcrumb trail
+	elgg_push_breadcrumb(elgg_echo('groups:yours'), "{$vars['url']}pg/groups/member/{$user->username}");
+	
+	// edit and invite
+	$actions["mod/groups/edit.php?group_guid={$vars['entity']->getGUID()}"] = elgg_echo('groups:edit');
+	$actions["mod/groups/invite.php?group_guid={$vars['entity']->getGUID()}"] = elgg_echo('groups:invite');
+} elseif ($vars['entity']->isMember($user)) {
+	// breadcrumb trail
+	elgg_push_breadcrumb(elgg_echo('groups:yours'), "{$vars['url']}pg/groups/member/{$user->username}");
+	
+	// leave
+	$url = elgg_add_action_tokens_to_url("action/groups/leave?group_guid={$vars['entity']->getGUID()}");
+	$actions[$url] = elgg_echo('groups:leave');
+} elseif ($vars['entity']->isPublicMembership()) {
+	// join
+	$url = elgg_add_action_tokens_to_url("action/groups/join?group_guid={$vars['entity']->getGUID()}");
+	$actions[$url] = elgg_echo('groups:join');
+} else {
+	// request membership
+	$url = elgg_add_action_tokens_to_url("action/groups/joinrequest?group_guid={$vars['entity']->getGUID()}");
+	$actions[$url] = elgg_echo('groups:joinrequest');
+}
+
+// build aciton buttons
+$action_buttons = '';
+if (!empty($actions)) {
+	$action_buttons = '<div class="content_header_options">';
+	foreach ($actions as $url => $action) {
+		$action_buttons .= "<a class=\"action_button\" href=\"{$vars['url']}$url\">$action</a>";
+	}
+	$action_buttons .= '</div>';
+}
+
+// display breadcrumb
+elgg_push_breadcrumb($vars['entity']->name);
+echo elgg_view('navigation/breadcrumbs');
+
+// build and display header
+echo <<<__HTML
 <div id="content_header" class="clearfloat">
 	<div class="content_header_title">
-		<h2><?php echo $vars['entity']->name; ?></h2>
+		<h2>{$vars['entity']->name}</h2>
 	</div>
-	<?php
-		if ($vars['entity']->canEdit())	{
-	?>
-		<div class="content_header_options">
-			<a class="action_button" href="<?php echo $vars['url']; ?>mod/groups/edit.php?group_guid=<?php echo $vars['entity']->getGUID(); ?>"><?php echo elgg_echo("groups:edit"); ?></a>
-		</div>
-	<?php
-		}
-	?>
+	$action_buttons
 </div>
+__HTML;
 
+?>
 <div class="group_profile clearfloat">
 	<div class="group_profile_column icon">
 		<div class="group_profile_icon">
@@ -94,5 +134,3 @@
 		?>
 	</div>
 </div>
-
-
