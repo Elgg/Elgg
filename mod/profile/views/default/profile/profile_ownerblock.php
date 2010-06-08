@@ -97,7 +97,7 @@ if(is_plugin_enabled('tidypics')){
 	$tidypics_link = "";
 }
 if(is_plugin_enabled('videolist')){
-	$video_link = "<li><a href=\"{$vars['url']}pg/videolist/{$username}\">Videos</a></li>";
+	$video_link = "<li><a href=\"{$vars['url']}pg/videolist/owned/{$username}\">Videos</a></li>";
 }else{
 	$video_link = "";
 }
