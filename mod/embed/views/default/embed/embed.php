@@ -54,7 +54,7 @@ if (!$sections) {
 	$content .= $tabs_html;
 
 	// build the items and layout.
-	if ($section != 'upload' || array_key_exists($active_section, $sections)) {
+	if ($active_section != 'upload' || array_key_exists($active_section, $sections)) {
 		$section_info = $sections[$active_section];
 		$layout = isset($section_info['layout']) ? $section_info['layout'] : 'list';
 
@@ -74,17 +74,17 @@ if (!$sections) {
 			$content .= $section_content;
 		} elseif ($embed_info = trigger_plugin_hook('embed_get_items', $active_section, $params, array('items' => array(), 'count' => 0))) {
 			// check if we have an override for this section type.
-			$view = "embed/$section/item/$layout";
-
+			$view = "embed/$active_section/item/$layout";
+var_dump($view);
 			if (!elgg_view_exists($view)) {
 				$view = "embed/item/$layout";
 			}
-
+var_dump($view);
 			// pull out some common tests
 			// embed requires ECML, but until we have plugin deps working
 			// we need to explicitly check and use a fallback.
 			if ($ecml_enabled = is_plugin_enabled('ecml')){
-				$ecml_valid_keyword = ecml_is_valid_keyword($section);
+				$ecml_valid_keyword = ecml_is_valid_keyword($active_section);
 			} else {
 				$ecml_valid_keyword = FALSE;
 			}
@@ -92,10 +92,10 @@ if (!$sections) {
 			$items_content = '';
 			foreach ($embed_info['items'] as $item) {
 				$item_params = array(
-					'section' => $section,
+					'section' => $active_section,
 					'item' => $item,
 					'ecml_enabled' => $ecml_enabled,
-					'ecml_keyword' => ($ecml_valid_keyword) ? $section : 'entity'
+					'ecml_keyword' => ($ecml_valid_keyword) ? $active_section : 'entity'
 				);
 
 				$items_content .= elgg_view($view, $item_params);
