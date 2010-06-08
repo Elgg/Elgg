@@ -75,11 +75,11 @@ if (!$sections) {
 		} elseif ($embed_info = trigger_plugin_hook('embed_get_items', $active_section, $params, array('items' => array(), 'count' => 0))) {
 			// check if we have an override for this section type.
 			$view = "embed/$active_section/item/$layout";
-var_dump($view);
+			
 			if (!elgg_view_exists($view)) {
 				$view = "embed/item/$layout";
 			}
-var_dump($view);
+
 			// pull out some common tests
 			// embed requires ECML, but until we have plugin deps working
 			// we need to explicitly check and use a fallback.
