@@ -1285,20 +1285,15 @@ a.action_button:focus {
 	background-image:none;
 }
 .action_button.download {
-	color: white;
-	background-color:#4690d6;
-	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
-	background-repeat:  repeat-x;
-	background-position:  left 10px;
-	width:auto;
-	height:auto;
-	padding: 3px 6px 3px 6px;
-	margin:0 0 10px 0;
+	padding: 5px 9px 5px 6px;
 }
 .action_button.download:hover {
-	background: #0054a7;
-	border-color: #0054a7;
-	color:white;
+
+}
+.action_button.download img {
+	margin-right:4px;
+	position:relative;
+	top:5px;
 }
 .action_button.small {
 	-webkit-border-radius: 3px;
