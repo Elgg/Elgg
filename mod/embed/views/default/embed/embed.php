@@ -46,6 +46,7 @@ if (!$sections) {
 			'url' => '#',
 			'url_class' => 'embed_section',
 			'url_js' => 'id="upload"',
+			'selected' => ($active_section == 'upload')
 		);
 	}
 
