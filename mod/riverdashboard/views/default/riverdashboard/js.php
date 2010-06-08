@@ -6,14 +6,27 @@
 
 		$('.likes_user_list_button').click(function() {
 			var myParent = $(this).closest('.river_item');
-			if (myParent.find('.likes_list').css('display') == 'none') {
-				// hide comments
-				myParent.find('.comments_container').animate({"height": "toggle", "opacity": "toggle"}, { duration: 400 });
-				// change selected tab
-				myParent.find('.show_comments_button').addClass('off');
-				myParent.find('.likes_user_list_button').removeClass('off');
-				// show users that liked object
-				elgg_slide_toggle(this, '.river_item', '.likes_list');
+			var likesList = myParent.find('.likes_list');
+
+			if (likesList.css('display') == 'none') {
+				// pull in likes via ajax to save on loading many avatars
+				var riverItem = $(this).closest('.river_item');
+				var guid = riverItem.attr('id').replace('river_entity_', '');
+
+				var params = {
+					'entity_guid': guid
+				}
+
+				$(likesList).load('<?php echo $vars['url'];?>mod/riverdashboard/endpoint/get_likes.php', params, function(data) {
+					console.log(data);
+					// hide comments
+					myParent.find('.comments_container').animate({"height": "toggle", "opacity": "toggle"}, { duration: 400 });
+					// change selected tab
+					myParent.find('.show_comments_button').addClass('off');
+					myParent.find('.likes_user_list_button').removeClass('off');
+					// show users that liked object
+					elgg_slide_toggle(this, '.river_item', '.likes_list');
+				});
 			}
 		});
 

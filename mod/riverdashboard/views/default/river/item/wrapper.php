@@ -69,9 +69,8 @@ if ($comments){
 
 	if ($likes_count != 0) {
 		//show the users who liked the object
-		echo "<div class='likes_list hidden'>";
-		echo list_annotations($object->getGUID(), 'likes', 99);
-		echo "</div>";
+		// this is loaded via ajax to avoid pounding the server with avatar requests.
+		echo "<div class='likes_list hidden'></div>";
 	}
 
 	echo "<div class=\"comments_container\">";
