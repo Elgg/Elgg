@@ -581,6 +581,9 @@ function elgg_get_entities_from_metadata(array $options = array()) {
 
 	$options = array_merge($defaults, $options);
 
+	$singulars = array('metadata_name', 'metadata_value', 'metadata_name_value_pair', 'metadata_owner_guid');
+	$options = elgg_normalise_plural_options_array($options, $singulars);
+
 	if (!$options = elgg_entities_get_metastrings_options('metadata', $options)) {
 		return FALSE;
 	}

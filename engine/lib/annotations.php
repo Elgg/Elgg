@@ -297,16 +297,16 @@ $value = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $time
 	} else {
 		$entity_guid = (int)$entity_guid;
 	}
-	
+
 	$entity_type = sanitise_string($entity_type);
-	
+
 	if ($entity_subtype) {
 		if (!$entity_subtype = get_subtype_id($entity_type, $entity_subtype)) {
 			// requesting a non-existing subtype: return false
 			return FALSE;
 		}
 	}
-	
+
 	if ($name) {
 		$name = get_metastring_id($name);
 
@@ -464,6 +464,9 @@ function elgg_get_entities_from_annotations(array $options = array()) {
 	);
 
 	$options = array_merge($defaults, $options);
+
+	$singulars = array('annotation_name', 'annotation_value', 'annotation_name_value_pair', 'annotation_owner_guid');
+	$options = elgg_normalise_plural_options_array($options, $singulars);
 
 	if (!$options = elgg_entities_get_metastrings_options('annotation', $options)) {
 		return FALSE;
@@ -737,14 +740,14 @@ function __get_annotations_calculate_x($sum = "avg", $entity_guid, $entity_type 
 	$entity_type = sanitise_string($entity_type);
 	$timeupper = (int)$timeupper;
 	$timelower = (int)$timelower;
-	
+
 	if ($entity_subtype) {
 		if (!$entity_subtype = get_subtype_id($entity_type, $entity_subtype)) {
 			// requesting a non-existing subtype: return false
 			return FALSE;
 		}
 	}
-	
+
 	if ($name != '' AND !$name = get_metastring_id($name)) {
 		return 0;
 	}
@@ -837,14 +840,14 @@ function __get_entities_from_annotations_calculate_x($sum = "sum", $entity_type 
 
 	$sum = sanitise_string($sum);
 	$entity_type = sanitise_string($entity_type);
-	
+
 	if ($entity_subtype) {
 		if (!$entity_subtype = get_subtype_id($entity_type, $entity_subtype)) {
 			// requesting a non-existing subtype: return false
 			return FALSE;
 		}
 	}
-	
+
 	$name = get_metastring_id($name);
 	$limit = (int) $limit;
 	$offset = (int) $offset;
