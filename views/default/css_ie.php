@@ -37,7 +37,7 @@
 	text-align:center;
 	float:left;
 	top:-1px;
-	right:auto; 
+	right:auto;
 }
 #elgg_topbar_contents a.privatemessages.new  {padding:0 0 0 20px;}
 #elgg_topbar_contents a.privatemessages:hover {background-position:left 2px;}

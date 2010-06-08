@@ -1526,6 +1526,9 @@ a.action_button:focus {
 .likes_list_holder .elgg_likes_user .entity_listing_info {
 	width:305px;
 }
+.entity_listing .elgg_likes_user .entity_metadata {
+	min-width:20px !important;
+}
 .elgg_likes_user .entity_listing_icon {
 	margin:3px 0 4px 2px;
 }
