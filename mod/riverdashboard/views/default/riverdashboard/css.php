@@ -160,7 +160,12 @@
 .river_item .river_comment_contents {
 	margin-left:34px;
 }
-
+a.river_show_more_comments {
+	float:right;
+	font-size:85%;
+	padding-right:7px;
+	text-align: right:
+}
 
 
 
