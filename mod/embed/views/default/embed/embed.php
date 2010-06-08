@@ -54,7 +54,7 @@ if (!$sections) {
 	$content .= $tabs_html;
 
 	// build the items and layout.
-	if ($active_section != 'upload' || array_key_exists($active_section, $sections)) {
+	if ($active_section == 'upload' || array_key_exists($active_section, $sections)) {
 		$section_info = $sections[$active_section];
 		$layout = isset($section_info['layout']) ? $section_info['layout'] : 'list';
 
@@ -75,7 +75,7 @@ if (!$sections) {
 		} elseif ($embed_info = trigger_plugin_hook('embed_get_items', $active_section, $params, array('items' => array(), 'count' => 0))) {
 			// check if we have an override for this section type.
 			$view = "embed/$active_section/item/$layout";
-			
+
 			if (!elgg_view_exists($view)) {
 				$view = "embed/item/$layout";
 			}
