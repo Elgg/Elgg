@@ -1291,7 +1291,7 @@ a.action_button:focus {
 
 }
 .action_button.download img {
-	margin-right:4px;
+	margin-right:6px;
 	position:relative;
 	top:5px;
 }
