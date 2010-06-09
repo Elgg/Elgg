@@ -24,6 +24,7 @@
 	padding: 10px;
 	background-color: white;
 	width: 730px;
+	min-height:400px;
 	-webkit-border-radius: 12px; 
 	-moz-border-radius: 12px;
 }
