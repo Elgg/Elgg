@@ -31,7 +31,7 @@ if ($ecml_keyword) {
 	$embed_code = "[$ecml_keyword guid={$item->getGUID()}]";
 } else {
 	// fallback to inserting a hard link to the object with its icon
-	$icon = "<img src=\"{$item->getIcon()}\" />" . htmlentities($title, ENT_QUOTES, 'UTF-8');
+	$icon = "<img src=\"{$item->getIcon('medium')}\" />" . htmlentities($title, ENT_QUOTES, 'UTF-8');
 
 	$embed_code = elgg_view('output/url', array(
 		'href' => $item->getURL(),
@@ -41,7 +41,7 @@ if ($ecml_keyword) {
 	));
 }
 
-$icon = "<img src=\"{$item->getIcon('tiny')}\" />";
+$icon = "<img src=\"{$item->getIcon('medium')}\" />";
 $info = htmlentities($title, ENT_QUOTES, 'UTF-8');
 
 $listing = elgg_view('entities/gallery_listing', array('icon' => $icon, 'info' => $info));
