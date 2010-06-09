@@ -15,7 +15,8 @@ if ($entity = get_entity($guid)) {
 	echo elgg_view('output/url', array(
 		'href' => $entity->getURL(),
 		'title' => $entity->title,
-		'text' => "<img src={$entity->getIcon('tiny')}>" . $entity->title
+		'text' => "<img src={$entity->getIcon('tiny')}>" . $entity->title,
+		'class' => "embeded_file link"
 	));
 } else {
 	echo elgg_echo('ecml:entity:invalid');
