@@ -22,9 +22,36 @@
 
 global $user_picker_js_sent;
 
+function user_picker_add_user($user_id) {
+	$user = get_entity($user_id);
+	$icon = $user->getIcon('tiny');
+	
+	$code = '<li class="user_picker_entry">';
+	$code .= "<img class=\"livesearch_icon\" src=\"$icon\" />";
+	$code .= "$user->name - $user->username";
+	$code .= '<div class="delete_button">';
+	$code .= "<a onclick=\"userPickerRemoveUser(this, $user_id)\"><strong>X</strong></a>";
+	$code .= '</div>';
+	$code .= "<input type=\"hidden\" name=\"members[]\" value=\"$user_id\">";
+	$code .= '</li>';
+	
+	return $code;
+}
+
 if (!isset($vars['value']) || $vars['value'] === FALSE) {
 	$vars['value'] = elgg_get_sticky_value($vars['internalname']);
 }
+
+// loop over all values and prepare them so that "in" will work in javascript
+if (!is_array($vars['value'])) {
+	$vars['value'] = array($vars['value']);
+}
+foreach ($vars['value'] as $value) {
+	$values[$value] = TRUE;
+}
+
+// convert the values to a json-encoded list
+$json_values = json_encode($values);
 
 if (!$user_picker_js_sent) {
 ?>
@@ -33,6 +60,7 @@ if (!$user_picker_js_sent) {
 <script type="text/javascript">
 // set up a few required variables
 userPickerURL = '<?php echo $vars['url'] ?>pg/livesearch';
+userList = <?php echo $json_values ?>;
 
 function userPickerBindEvents() {
 	// binding autocomplete.
@@ -102,18 +130,24 @@ function userPickerFormatItem(row, i, max, term) {
 
 function userPickerAddUser(event, data, formatted) {
 	eval("var info = " + data + ";");
-	var picker = $(this).parent('.user_picker');
-	var users = picker.find('.users');
-	var internalName = picker.find('input.internalname').val();
-	// not sure why formatted isn't.
-	var formatted = userPickerFormatItem(data);
+	
+	// do not allow users to be added multiple times
+	if (!(info.guid in userList)) {
+		userList.push(info.guid);
+	
+		var picker = $(this).parent('.user_picker');
+		var users = picker.find('.users');
+		var internalName = picker.find('input.internalname').val();
+		// not sure why formatted isn't.
+		var formatted = userPickerFormatItem(data);
 
-	// add guid as hidden input and to list.
-	var li = formatted + ' <div class="delete_button"><a onclick="userPickerRemoveUser(this, ' + info.guid + ')"><strong>X</strong></a></div>'
-	+ '<input type="hidden" name="' + internalName + '[]" value="' + info.guid + '" />';
-	$('<li class="user_picker_entry">').html(li).appendTo(users);
+		// add guid as hidden input and to list.
+		var li = formatted + ' <div class="delete_button"><a onclick="userPickerRemoveUser(this, ' + info.guid + ')"><strong>X</strong></a></div>'
+		+ '<input type="hidden" name="' + internalName + '[]" value="' + info.guid + '" />';
+		$('<li class="user_picker_entry">').html(li).appendTo(users);
 
-	$(this).val('');
+		$(this).val('');
+	}
 }
 
 function userPickerRemoveUser(link, guid) {
@@ -136,6 +170,12 @@ $(document).ready(function() {
 	$user_picker_js_sent = true;
 }
 
+// create an HTML list of users
+$user_list = '';
+foreach ($vars['value'] as $user_id) {
+	$user_list .= user_picker_add_user($user_id);
+}
+
 ?>
 <div class="user_picker">
 	<input class="internalname" type="hidden" name="internalname" value="<?php echo $vars['internalname']; ?>" />
@@ -146,5 +186,5 @@ $(document).ready(function() {
 	<div class="results">
 		<!-- This space will be filled with users, checkboxes and magic. -->
 	</div>
-	<ul class="users"></ul>
+	<ul class="users"><?php echo $user_list; ?></ul>
 </div>
