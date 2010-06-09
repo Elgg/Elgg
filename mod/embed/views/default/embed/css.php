@@ -93,6 +93,24 @@
 	margin:10px 0 5px 0;
 }
 
+/* embeded content links */
+.embeded_file.link img {
+	height:18px;
+	width:auto;
+	margin-right:4px;
+	position:relative;
+	top:4px;
+}
+.embeded_file.link {
+	display: inline;
+	margin-right: 5px;
+	
+	background-repeat:no-repeat;
+	-webkit-background-size: 12px 16px;
+	-moz-background-size: 12px 16px; 
+	padding-left:14px;
+}
+
 /* modal tabs */
 #embed_media_tabs {
 	margin:10px 0 0 10px;
