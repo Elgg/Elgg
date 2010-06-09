@@ -25,8 +25,8 @@
 	background-color: white;
 	width: 730px;
 	min-height:400px;
-	-webkit-border-radius: 12px; 
-	-moz-border-radius: 12px;
+	-webkit-border-radius: 8px; 
+	-moz-border-radius: 8px;
 }
 #facebox .loading {
 	text-align: center;
