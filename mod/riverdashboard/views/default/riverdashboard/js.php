@@ -18,7 +18,6 @@
 				}
 
 				$(likesList).load('<?php echo $vars['url'];?>mod/riverdashboard/endpoint/get_likes.php', params, function(data) {
-					console.log(data);
 					// hide comments
 					myParent.find('.comments_container').animate({"height": "toggle", "opacity": "toggle"}, { duration: 400 });
 					// change selected tab
