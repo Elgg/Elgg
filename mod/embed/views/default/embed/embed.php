@@ -95,7 +95,8 @@ if (!$sections) {
 					'section' => $active_section,
 					'item' => $item,
 					'ecml_enabled' => $ecml_enabled,
-					'ecml_keyword' => ($ecml_valid_keyword) ? $active_section : 'entity'
+					'ecml_keyword' => ($ecml_valid_keyword) ? $active_section : 'entity',
+					'icon_size' => elgg_get_array_value('icon_size', $section_info, 'tiny'),
 				);
 
 				$items_content .= elgg_view($view, $item_params);

@@ -14,6 +14,7 @@ $item = $vars['item'];
 $section = $vars['section'];
 $target = $vars['target'];
 $ecml_keyword = (isset($vars['ecml_enabled']) && isset($vars['ecml_keyword'])) ? $vars['ecml_keyword'] : NULL;
+$icon_size = $vars['icon_size'];
 
 // @todo add entity checking.
 
@@ -29,7 +30,7 @@ if ($ecml_keyword) {
 	$embed_code = "[$ecml_keyword guid={$item->getGUID()}]";
 } else {
 	// fallback to inserting a hard link to the object with its icon
-	$icon = "<img src=\"{$item->getIcon()}\" />" . htmlentities($title, ENT_QUOTES, 'UTF-8');
+	$icon = "<img src=\"{$item->getIcon($icon_size)}\" />" . htmlentities($title, ENT_QUOTES, 'UTF-8');
 
 	$embed_code = elgg_view('output/url', array(
 		'href' => $item->getURL(),
@@ -39,7 +40,7 @@ if ($ecml_keyword) {
 	));
 }
 
-$icon = "<img src=\"{$item->getIcon('tiny')}\" />";
+$icon = "<img src=\"{$item->getIcon($icon_size)}\" />";
 $info = htmlentities($title, ENT_QUOTES, 'UTF-8');
 
 // @todo is this approach better than inline js?
