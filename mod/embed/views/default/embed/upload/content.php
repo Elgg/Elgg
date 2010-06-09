@@ -20,7 +20,7 @@ if ($upload_sections) {
 	));
 
 	echo "<div class='embed_modal_upload'>";
-	echo "<p>$input</p>";
+	echo "<p>Choose upload type: $input</p>";
 
 	if (!$upload_content = elgg_view($upload_sections[$active_section]['view'])) {
 		$upload_content = elgg_echo('embed:no_upload_content');

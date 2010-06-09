@@ -41,7 +41,8 @@ if ($ecml_keyword) {
 }
 
 $icon = "<img src=\"{$item->getIcon($icon_size)}\" />";
-$info = htmlentities($title, ENT_QUOTES, 'UTF-8');
+$info = "<p class='entity_title'>" . htmlentities($title, ENT_QUOTES, 'UTF-8') . "</p>";
+$info .= "<p class='entity_subtext'>" . friendly_time($vars['item']->time_created) . "</p>";
 
 // @todo is this approach better than inline js?
 echo "<div class=\"embed_data\" id=\"embed_{$item->getGUID()}\">" . elgg_view_listing($icon, $info) . '</div>';
