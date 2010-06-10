@@ -272,6 +272,9 @@ img.medium {
 /* ***************************************
 	twitter panel within profile
 *************************************** */
+ul#twitter_update_list {
+	padding-left:0;
+}
 ul#twitter_update_list li {
 	background-image: url(<?php echo $vars['url']; ?>mod/profile/graphics/speech_bubble_tail.gif);
 	background-position:right bottom;
