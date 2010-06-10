@@ -22,7 +22,8 @@ if($vars['entity']->forum_enable != 'no'){
     	        echo "</div>";
         }
     } else {
-		echo "<p class='margin_top'>".elgg_echo("grouptopic:notcreated")."</p>";
+		$create_discussion = $vars['url'] . "mod/groups/addtopic.php?group_guid=" . page_owner();
+		echo "<p class='margin_top'><a href=\"{$create_discussion}\">".elgg_echo("groups:addtopic")."</a></p>";
     }
 
 }//end of forum active check
