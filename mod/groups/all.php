@@ -16,7 +16,7 @@
 	$filter = get_input("filter");
 	if (!$filter) {
 		// active discussions is the default
-		$filter = "active";
+		$filter = "newest";
 	}
 
 	$context = get_context();
