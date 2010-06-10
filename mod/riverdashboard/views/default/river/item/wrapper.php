@@ -77,7 +77,7 @@ if ($comments){
 	// display appropriate comment link
 	if ($more_comments_count > 0) {
 		echo "<a class=\"river_show_more_comments link\">" .
-		sprintf(elgg_echo('riverdashbardo:n_more_comments'), $more_comments_count) . '</a>';
+		sprintf(elgg_echo('riverdashboard:n_more_comments'), $more_comments_count) . '</a>';
 	}
 	echo "<div class=\"comments_list\">";
 	foreach ($comments as $comment) {

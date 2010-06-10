@@ -56,7 +56,9 @@
 
 			$.post('<?php echo $vars['url'];?>mod/riverdashboard/endpoint/get_comments.php', params, function(data) {
 				commentsList.prepend(data);
-				commentsList.prev('.river_show_more_comments').hide();
+				commentsList.prev('.river_show_more_comments').html('Show less');
+				// @todo need a new function to collapse list back down to only show 3 comments
+				
 			});
 		});
 	});

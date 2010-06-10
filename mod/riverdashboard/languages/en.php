@@ -39,7 +39,7 @@ $english = array(
 	'option:avatar' => 'Avatars',
 
 	// likes and comments
-	'riverdashbardo:n_more_comments' => '+%s more',
+	'riverdashboard:n_more_comments' => '+%s more',
 
 	// ecml
 	'riverdashboard:ecml:desc:activity' => 'Recent Activity',
