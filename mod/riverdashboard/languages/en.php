@@ -41,7 +41,10 @@ $english = array(
 	// likes and comments
 	'riverdashboard:n_more_comments' => '+%s more',
 
-	// ecml
+	// ecml desc
+	'riverdashboard:ecml:riverdashboard' => 'River Dashboard',
+
+	// ecml keywords
 	'riverdashboard:ecml:desc:activity' => 'Recent Activity',
 	'riverdashboard:ecml:desc:usage' => '[activity user=username limit=limit type=type subtype=subtype]'
 );

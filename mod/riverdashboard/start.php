@@ -18,6 +18,8 @@ function riverdashboard_init() {
 	// add an activity stream ECML keyword
 	// we'll restrict it to use in sitepages's custom_frontpage
 	register_plugin_hook('get_keywords', 'ecml', 'riverdashboard_ecml_keywords_hook');
+
+	register_plugin_hook('get_views', 'ecml', 'riverdashboard_ecml_views_hook');
 }
 
 /**
@@ -65,6 +67,20 @@ function riverdashboard_ecml_keywords_hook($hook, $type, $value, $params) {
 	);
 
 	return $value;
+}
+
+/**
+ * Register the activity front page with ECML.
+ *
+ * @param unknown_type $hook
+ * @param unknown_type $entity_type
+ * @param unknown_type $return_value
+ * @param unknown_type $params
+ */
+function riverdashboard_ecml_views_hook($hook, $entity_type, $return_value, $params) {
+	$return_value['riverdashboard/container'] = elgg_echo('riverdashboard:ecml:riverdashboard');
+
+	return $return_value;
 }
 
 register_elgg_event_handler('init', 'system', 'riverdashboard_init');
