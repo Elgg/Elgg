@@ -17,6 +17,11 @@
 body { background-color: #444444; }
 #elgg_header { display:none; }
 #elgg_footer { display:none; }
+#elgg_topbar { display:none; }
+a { color:#0054A7; text-decoration:none; }
+a:hover { color:black; text-decoration:underline; }
+.entity_title a { color:#0054A7; }
+.elgg_horizontal_tabbed_nav a:hover { color:#0054A7; }
 
 #admin_header {
 	background-color:#333333;
@@ -148,6 +153,252 @@ body { background-color: #444444; }
 	margin-top:10px;
 	float:right;
 }
+
+/* ***************************************
+	GENERAL FORM ELEMENTS
+*************************************** */
+/* default elgg core input field classes */
+.admin_area .input_text,
+.admin_area .input_tags,
+.admin_area .input_url,
+.admin_area .input_textarea {
+	width:98%;
+}
+.admin_area .input_access {
+	margin:5px 0 0 0;
+}
+.admin_area .input_password {
+	width:200px;
+}
+.admin_area .input_textarea {
+	height: 200px;
+	width:718px;
+}
+.admin_area input[type="checkbox"],
+.admin_area input.input_radio {
+	margin:0 3px 0 0;
+	padding:0;
+	border:none;
+}
+.admin_area label {
+	font-weight: bold;
+	color:#333333;
+	font-size: 110%;
+}
+.admin_area input {
+	font: 120% Arial, Helvetica, sans-serif;
+	padding: 5px;
+	border: 1px solid #cccccc;
+	color:#666666;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+.admin_area textarea {
+	font: 120% Arial, Helvetica, sans-serif;
+	border: solid 1px #cccccc;
+	padding: 5px;
+	color:#666666;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+.admin_area textarea:focus,
+.admin_area input[type="text"]:focus {
+	border: solid 1px #666666;
+	background: #f5f5f5;
+	color:#333333;
+}
+.admin_area .input_textarea.monospace {
+	font-family:Monaco,"Courier New",Courier,monospace;
+	font-size:13px;
+}
+.admin_area a.longtext_control {
+	float:right;
+	margin-left:14px;
+}
+.admin_area .submit_button {
+	font-size: 14px;
+	font-weight: bold;
+	color: white;
+	text-shadow:1px 1px 0px black;
+	text-decoration:none;
+	border: 1px solid #0054A7;
+	background-color:#0054A7;
+	background-image: url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
+	background-repeat: repeat-x;
+	background-position: left 10px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	width: auto;
+	padding: 2px 4px;
+	margin:0 10px 10px 0;
+	cursor: pointer;
+	-webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
+	-moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
+}
+.admin_area .submit_button:hover {
+	color: white;
+	border-color: #333333;
+	text-decoration:none;
+	background-color:#333333;
+	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
+	background-repeat:  repeat-x;
+	background-position:  left 10px;
+}
+.admin_area input[type="password"]:focus {
+	border: solid 1px #666666;
+	background-color: #f5f5f5;
+	color:#333333;
+}
+.admin_area input[type="submit"] {
+	font-size: 14px;
+	font-weight: bold;
+	color: white;
+	text-shadow:1px 1px 0px black;
+	text-decoration:none;
+	border: 1px solid #0054A7;
+	background-color:#0054A7;
+	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
+	background-repeat:  repeat-x;
+	background-position:  left 10px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	width: auto;
+	padding: 2px 4px;
+	margin:10px 0 10px 0;
+	cursor: pointer;
+	-moz-outline-style: none;
+	outline: none;
+	-webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
+	-moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
+}
+.admin_area input[type="submit"]:hover {
+	border-color: #333333;
+	text-decoration:none;
+	background-color:#333333;
+	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
+	background-repeat:  repeat-x;
+	background-position:  left 10px;
+}
+.admin_area .cancel_button {
+	font-size: 14px;
+	font-weight: bold;
+	text-decoration:none;
+	color: #333333;
+	background-color:#dddddd;
+	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_graduation.png);
+	background-repeat:  repeat-x;
+	background-position:  left 10px;
+	border: 1px solid #999999;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	width: auto;
+	padding: 2px 4px;
+	margin:10px 0 10px 10px;
+	cursor: pointer;
+}
+.admin_area .cancel_button:hover {
+	background-color: #999999;
+	background-position:  left 10px;
+	text-decoration:none;
+	color:white;
+}
+.admin_area .content_header_options .action_button {
+	margin-top:0;
+	margin-left:10px;
+}
+.admin_area input.action_button,
+.admin_area a.action_button {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	background-color:#cccccc;
+	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_background.gif);
+	background-repeat:  repeat-x;
+	background-position: 0 0;
+	border:1px solid #999999;
+	color:#333333;
+	padding:2px 15px 2px 15px;
+	text-align:center;
+	font-weight:bold;
+	text-decoration:none;
+	text-shadow:0 1px 0 white;
+	cursor:pointer;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+}
+.admin_area input.action_button:hover,
+.admin_area a.action_button:hover,
+.admin_area input.action_button:focus,
+.admin_area a.action_button:focus {
+	background-position:0 -15px;
+	background-image:  url(<?php echo $vars['url']; ?>_graphics/button_background.gif);
+	background-repeat:  repeat-x;
+	color:#111111;
+	text-decoration: none;
+	background-color:#cccccc;
+	border:1px solid #999999;
+}
+.admin_area .action_button:active {
+	background-image:none;
+}
+.admin_area .action_button.disabled {
+	color:#999999;
+	padding:2px 7px 2px 7px;
+}
+.admin_area .action_button.disabled:hover {
+	background-position:0 -15px;
+	color:#111111;
+	border:1px solid #999999;
+}
+.admin_area .action_button.disabled:active {
+	background-image:none;
+}
+.admin_area .action_button.download {
+	padding: 5px 9px 5px 6px;
+}
+.admin_area .action_button.download:hover {
+
+}
+.admin_area .action_button.download img {
+	margin-right:6px;
+	position:relative;
+	top:5px;
+}
+.admin_area .action_button.small {
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	width: auto;
+	height:8px;
+	padding: 4px;
+	font-size: 0.9em;
+	line-height: 0.6em;
+}
+.admin_area .action_button.small:hover {
+	background-color: #0054A7;
+	background-image: none;
+	border-color: #0054A7;
+	color:white;
+	text-shadow:0 -1px 0 #999999;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .admin_settings {
 	margin-bottom:20px;
 }
@@ -189,20 +440,20 @@ body { background-color: #444444; }
 	font-size:80%;
 	color:#999999;
 }
-.manifest_file {
+.admin_area .manifest_file {
 	background-color:#eeeeee;
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
 	padding:5px 10px 5px 10px;
 	margin:4px 0 4px 0;
 }
-.admin_plugin_enable_disable {
+.admin_area .admin_plugin_enable_disable {
 	width:150px;
 	margin:10px 0 0 0;
 	float:right;
 	text-align: right;
 }
-.admin_plugin_enable_disable a {
+.admin_area .admin_plugin_enable_disable a {
 	margin:0;
 }
 .pluginsettings {
@@ -257,6 +508,10 @@ ul.admin_plugins {
 .plugin_details p {
 	margin:0;
 	padding:0;
+}
+.plugin_details h3 {
+	margin-top:-13px;
+	color:black;
 }
 .plugin_settings {
 	font-weight: normal;
