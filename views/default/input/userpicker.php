@@ -24,6 +24,10 @@ global $user_picker_js_sent;
 
 function user_picker_add_user($user_id) {
 	$user = get_entity($user_id);
+	if (!$user || !($user instanceof ElggUser)) {
+		return FALSE;
+	}
+	
 	$icon = $user->getIcon('tiny');
 	
 	$code = '<li class="user_picker_entry">';
@@ -43,6 +47,7 @@ if (!isset($vars['value']) || $vars['value'] === FALSE) {
 }
 
 // loop over all values and prepare them so that "in" will work in javascript
+$values = array();
 if (!is_array($vars['value'])) {
 	$vars['value'] = array($vars['value']);
 }
@@ -133,7 +138,7 @@ function userPickerAddUser(event, data, formatted) {
 	
 	// do not allow users to be added multiple times
 	if (!(info.guid in userList)) {
-		userList.push(info.guid);
+		userList[info.guid] = true;
 	
 		var picker = $(this).parent('.user_picker');
 		var users = picker.find('.users');
