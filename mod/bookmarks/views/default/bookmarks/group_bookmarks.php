@@ -27,6 +27,7 @@ if($bookmarks){
 		echo "<div class='entity_listing clearfloat'>" . $info . "</div>";
 	} 
 } else {
-	echo "<p class='margin_top'>" . elgg_echo("bookmarks:none") . "</p>";
+	$create_bookmark = $vars['url'] . "pg/bookmarks/" . page_owner_entity()->username . "/add";
+	echo "<p class='margin_top'><a href=\"{$create_bookmark}\">" . elgg_echo("bookmarks:new") . "</a></p>";
 }
 echo "</div>";
