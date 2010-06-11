@@ -15,38 +15,24 @@
  * @param string $username The username of the profile to display
  * @param string $section Which section is currently selected.
  *
- * return mixed FALSE or html for the profile.
+ * @todo - This should really use a plugin hook to get the list of plugin tabs
+ *
+ * @return mixed FALSE or html for the profile.
  */
 function profile_get_user_profile_html($user, $section = 'activity') {
 	$body = elgg_view('profile/profile_navigation', array('section' => $section, 'entity' => $user));
 	$view_options = array('entity' => $user);
 
-	switch($section){
-		case 'friends':
-			$body .= elgg_view('profile/profile_contents/friends', $view_options);
-			break;
-
-		case 'twitter':
-			$body .= elgg_view('profile/profile_contents/twitter', $view_options);
-			break;
-		case 'feeds':
-			$body .= elgg_view('profile/profile_contents/feeds', $view_options);
-			break;
-		case 'commentwall':
-			$comments = $user->getAnnotations('commentwall', 200, 0, 'desc');
-			$body .= elgg_view('profile/profile_contents/commentwall', array("entity" => $user, "comments" => $comments));
-			break;
-		case 'details':
-			$body .= elgg_view('profile/profile_contents/details', $view_options);
-			break;
-
-		default:
-		case 'activity':
-			$body .= elgg_view('profile/profile_contents/activity', $view_options);
-			break;
+	if ($section == 'commentwall') {
+		$comments = $user->getAnnotations('commentwall', 200, 0, 'desc');
+		$view_options['comments'] = $comments;
 	}
 
-	$body .= elgg_view('profile/profile_contents/sidebar', array('section' => $section));
+	$content = elgg_view("profile/profile_contents/$section", $view_options);
+
+	$body .= elgg_view('profile/profile_content', array('content' => $content));
+
+	$body .= elgg_view('profile/sidebar', array('section' => $section));
 	return $body;
 }
 

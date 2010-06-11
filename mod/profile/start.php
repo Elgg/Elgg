@@ -50,7 +50,11 @@ function profile_init() {
 
 	// Now override icons
 	register_plugin_hook('entity:icon:url', 'user', 'profile_usericon_hook');
-	
+
+	// allow ECML in parts of the profile
+	register_plugin_hook('get_views', 'ecml', 'profile_ecml_views_hook');
+
+	// default profile fields admin item
 	elgg_add_admin_submenu_item('defaultprofile', elgg_echo('profile:edit:default'), 'appearance');
 }
 
@@ -256,6 +260,20 @@ function profile_usericon_hook($hook, $entity_type, $returnvalue, $params){
 			return $CONFIG->wwwroot . 'mod/profile/icondirect.php?lastcache='.$icontime.'&username='.$entity->username.'&joindate=' . $entity->time_created . '&guid=' . $entity->guid . '&size='.$size;
 		}
 	}
+}
+
+/**
+ * Parse ECML on parts of the profile
+ *
+ * @param unknown_type $hook
+ * @param unknown_type $entity_type
+ * @param unknown_type $return_value
+ * @param unknown_type $params
+ */
+function profile_ecml_views_hook($hook, $entity_type, $return_value, $params) {
+	$return_value['profile/profile_content'] = elgg_echo('profile');
+
+	return $return_value;
 }
 
 // Make sure the profile initialisation function is called on initialisation

@@ -3,13 +3,10 @@
  * Profile friends
  **/
 
-$friends = list_entities_from_relationship('friend',$vars['entity']->getGUID(),false,'user','',0,10,false);
-if(!$friends)
-	$friends = "<p>This user has not made any friends yet.</p>";
+$friends = list_entities_from_relationship('friend', $vars['entity']->getGUID(), FALSE, 'user', '', 0, 10, FALSE);
 
-?>
-<div id="profile_content">
-	<?php
-		echo $friends;
-	?>
-</div>
+if(!$friends) {
+	$friends = '<p>' . elgg_echo('profile:no_friends') . '</p>';
+}
+
+echo $friends;
