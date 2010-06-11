@@ -100,10 +100,14 @@
 	margin-top:0;
 	margin-left:7px;
 }
+.embed_modal_tidypics .embed_data .entity_listing_info {
+	margin-top:11px;
+}
 .embed_data .entity_listing_info {
 	width:auto;
 	margin-top:15px;
 	margin-left:15px;
+	float:left;
 }
 .embed_data .entity_listing {
 	cursor:pointer;
