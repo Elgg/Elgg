@@ -47,7 +47,10 @@ if ($blog->comments_on != 'Off') {
 }
 
 // links to delete or edit.
-$edit = '';
+
+// access is always shown.
+$edit = elgg_view('output/access', array('entity' => $vars['entity']));
+
 if ($blog->canEdit()) {
 	$edit_url = "{$vars['url']}pg/blog/{$owner->username}/edit/{$blog->getGUID()}/";
 	$edit_link = "<span class='entity_edit'><a href=\"$edit_url\">" . elgg_echo('edit') . '</a></span>';
@@ -65,9 +68,7 @@ if ($blog->canEdit()) {
 		$status = "<span class='blog_status'>$status_text</span>";
 	}
 
-	$access = elgg_view('output/access', array('entity' => $vars['entity']));
-
-	$edit = "$access $status $edit_link $delete_link";
+	$edit .= "$status $edit_link $delete_link";
 }
 
 	// include a view for plugins to extend
