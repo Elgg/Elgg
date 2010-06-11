@@ -45,7 +45,7 @@ function bookmarks_init() {
 
 	// Extend Groups profile page
 	elgg_extend_view('groups/tool_latest','bookmarks/group_bookmarks');
-	
+
 	// Register profile menu hook
 	register_plugin_hook('profile_menu', 'profile', 'bookmarks_profile_menu');
 }
@@ -90,6 +90,8 @@ function bookmarks_page_handler($page) {
 
 		// grab the page owner here so the group magic works.
 		$owner = page_owner_entity();
+	} else {
+		set_page_owner(get_loggedin_userid());
 	}
 
 	// owner name passed but invalid.
@@ -110,7 +112,7 @@ function bookmarks_page_handler($page) {
 	if(page_owner() != 0){
 		elgg_push_breadcrumb(elgg_echo('bookmarks:all'), $CONFIG->wwwroot . 'pg/bookmarks/');
 	}
-	
+
 	if ($owner) {
 		switch($section) {
 			case 'friends':
@@ -185,7 +187,7 @@ function bookmarks_page_handler($page) {
 				gatekeeper();
 
 				$content = elgg_view_title(elgg_echo('bookmarks:bookmarklet'));
-				$content .= elgg_view('bookmarks/bookmarklet', array('pg_owner' => $owner));
+				$content .= elgg_view('bookmarks/bookmarklet');
 
 				break;
 		}
@@ -245,6 +247,7 @@ function bookmarks_page_handler($page) {
 
 	return TRUE;
 }
+
 
 /**
  * Populates the ->getUrl() method for bookmarked objects
@@ -318,12 +321,12 @@ function create_wire_url_code(){
 
 function bookmarks_profile_menu($hook, $entity_type, $return_value, $params) {
 	global $CONFIG;
-	
+
 	$return_value[] = array(
 		'text' => elgg_echo('bookmarks'),
 		'href' => "{$CONFIG->url}pg/bookmarks/{$params['owner']->username}",
 	);
-	
+
 	return $return_value;
 }
 
