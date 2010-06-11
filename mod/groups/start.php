@@ -72,9 +72,12 @@
 
 		// Now override icons
 		register_plugin_hook('entity:icon:url', 'group', 'groups_groupicon_hook');
-		
+
 		// Register profile menu hook
 		register_plugin_hook('profile_menu', 'profile', 'forum_profile_menu');
+
+		// allow ecml in discussion
+		register_plugin_hook('get_views', 'ecml', 'groups_ecml_views_hook');
 	}
 
 	/**
@@ -208,7 +211,7 @@
 				}
 			} else {
 				add_submenu_item(elgg_echo('groups:all'), "{$CONFIG->wwwroot}pg/groups/world/", '1groupslinks');
-				
+
 				if ($user = get_loggedin_user()) {
 					add_submenu_item(elgg_echo('groups:owned'), "{$CONFIG->wwwroot}pg/groups/owned/$user->username", '1groupslinks');
 					add_submenu_item(elgg_echo('groups:yours'), "{$CONFIG->wwwroot}pg/groups/member/$user->username", '1groupslinks');
@@ -569,7 +572,7 @@
 
 	function forum_profile_menu($hook, $entity_type, $return_value, $params) {
 		global $CONFIG;
-		
+
 		if ($params['owner'] instanceof ElggGroup && $group_owner->forum_enable != 'no') {
 			$return_value[] = array(
 				'text' => elgg_echo('groups:forum'),
@@ -579,6 +582,19 @@
 		return $return_value;
 	}
 
+	/**
+	 * Parse ECML on group discussion views
+	 *
+	 * @param unknown_type $hook
+	 * @param unknown_type $entity_type
+	 * @param unknown_type $return_value
+	 * @param unknown_type $params
+	 */
+	function groups_ecml_views_hook($hook, $entity_type, $return_value, $params) {
+		$return_value['forum/viewposts'] = elgg_echo('groups:ecml:discussion');
+
+		return $return_value;
+	}
 
 	register_extender_url_handler('group_topicpost_url','annotation', 'group_topic_post');
 
