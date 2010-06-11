@@ -40,6 +40,7 @@ $english = array(
 
 	// likes and comments
 	'riverdashboard:n_more_comments' => '+%s more',
+	'riverdashboard:show_less' => 'Show less',
 
 	// ecml desc
 	'riverdashboard:ecml:riverdashboard' => 'River Dashboard',

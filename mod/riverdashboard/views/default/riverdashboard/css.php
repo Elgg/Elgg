@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg riverdashboard CSS
- * 
+ *
  */
 ?>
 #riverdashboard_updates {
@@ -13,10 +13,10 @@
 	font-weight: bold;
 	padding:1px 8px 2px 24px;
 	margin-top:9px;
-    cursor: pointer;
+	cursor: pointer;
 	background: red url("<?php echo $vars['url']; ?>mod/riverdashboard/graphics/refresh.png") no-repeat 5px 3px;
-    -webkit-border-radius: 10px; 
-    -moz-border-radius: 10px;    
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
 }
 #riverdashboard_updates a.update_link:hover {
 	background: #4690D6 url("<?php echo $vars['url']; ?>mod/riverdashboard/graphics/refresh.png") no-repeat 5px -22px;
@@ -79,12 +79,12 @@
 	-webkit-border-top-left-radius:5px;
 	-webkit-border-top-right-radius:0;
 	-webkit-border-bottom-right-radius:5px;
-	-webkit-border-bottom-left-radius:5px; 
-    background-color: #eeeeee;
+	-webkit-border-bottom-left-radius:5px;
+	background-color: #eeeeee;
 }
 .river_comment {
 	padding:3px;
-	border-bottom:1px solid white;	
+	border-bottom:1px solid white;
 }
 .river_comment.penultimate {
 
@@ -95,7 +95,7 @@
 /* hidden inline comment form */
 .river_comment_form.hidden {
 	padding:5px;
-	height:26px;	
+	height:26px;
 }
 .river_comment_form.hidden .input_text {
 	width:560px;
@@ -161,7 +161,7 @@
 .river_item .river_comment_contents {
 	margin-left:34px;
 }
-a.river_show_more_comments {
+a.river_more_comments {
 	float:right;
 	font-size:85%;
 	padding-right:7px;

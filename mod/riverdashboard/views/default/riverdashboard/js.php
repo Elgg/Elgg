@@ -43,8 +43,11 @@
 		});
 
 		// grab more comments
-		$('.river_show_more_comments').click(function() {
+		$('.river_more_comments.show_more_button').click(function() {
+			var showLess = $(this).next('.show_less_button');
+			var showMore = $(this);
 			var riverItem = $(this).closest('.river_item');
+
 			var guid = riverItem.attr('id').replace('river_entity_', '');
 			var commentsList = riverItem.find('.comments_list');
 			var numComments = riverItem.find('.river_comment').length;
@@ -56,10 +59,35 @@
 
 			$.post('<?php echo $vars['url'];?>mod/riverdashboard/endpoint/get_comments.php', params, function(data) {
 				commentsList.prepend(data);
-				commentsList.prev('.river_show_more_comments').html('Show less');
-				// @todo need a new function to collapse list back down to only show 3 comments
-				
+
+				showLess.toggle();
+				showMore.toggle();
+
 			});
+		});
+
+		// hide more comments
+		$('.river_more_comments.show_less_button').click(function() {
+			var showLess = $(this);
+			var showMore = $(this).prev('.show_more_button');
+			var riverItem = $(this).closest('.river_item');
+			// want to keep the latest 3 comments
+			var comments = riverItem.find('.river_comment')
+			comments = $.makeArray(comments).reverse();
+			//reverse().splice(0, 3);
+
+			len = comments.length;
+
+			for (i=3; i<len; i++) {
+				$(comments[i]).empty().remove();
+			}
+
+
+			// remove them so we can force an ajax update when clicked again.
+
+			showLess.toggle();
+			showMore.toggle();
+
 		});
 	});
 </script>

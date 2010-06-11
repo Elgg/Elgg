@@ -25,7 +25,7 @@ if (get_context() == 'profile' && $object->getSubtype() ==  'thewire') {
 }
 
 // get last three comments display
-// want the 3 most recent comments (order by time_created desc = 3 2 1)
+// want the 3 most recent comments (order by time_created desc = 3 2 1 limit 3)
 // but will display them with the newest at the bottom (1 2 3)
 if ($comments = get_annotations($vars['item']->object_guid, "", "", 'generic_comment', "", "", 3, 0, "desc")) {
 	$comments = array_reverse($comments);
@@ -76,8 +76,10 @@ if ($comments){
 	echo "<div class=\"comments_container\">";
 	// display appropriate comment link
 	if ($more_comments_count > 0) {
-		echo "<a class=\"river_show_more_comments link\">" .
+		echo "<a class=\"river_more_comments show_more_button link\">" .
 		sprintf(elgg_echo('riverdashboard:n_more_comments'), $more_comments_count) . '</a>';
+
+		echo "<a style=\"display: none\" class=\"river_more_comments show_less_button link\">" . elgg_echo('riverdashboard:show_less') . '</a>';
 	}
 	echo "<div class=\"comments_list\">";
 	foreach ($comments as $comment) {
