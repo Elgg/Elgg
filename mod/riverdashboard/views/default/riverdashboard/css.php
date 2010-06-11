@@ -94,7 +94,8 @@
 }
 /* hidden inline comment form */
 .river_comment_form.hidden {
-	padding:5px;	
+	padding:5px;
+	height:26px;	
 }
 .river_comment_form.hidden .input_text {
 	width:560px;
