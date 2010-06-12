@@ -18,8 +18,10 @@ $english = array(
 	'invitefriends:subject' => 'Invitation to join %s',
 
 	'invitefriends:success' => 'Your friends were invited.',
-	'invitefriends:email_error' => 'Invitations were sent, but the following addresses are not valid: %s',
-	'invitefriends:failure' => 'Your friends could not be invited.',
+	'invitefriends:invitations_sent' => 'Invites sent: %s. There were the following problems:',
+	'invitefriends:email_error' => 'The following addresses are not valid: %s',
+	'invitefriends:already_members' => 'The following are already members: %s',
+	'invitefriends:noemails' => 'No email addresses were entered.',
 	
 	'invitefriends:message:default' => '
 Hi,

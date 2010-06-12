@@ -628,7 +628,7 @@ function get_user_access_collections($owner_guid, $site_guid = 0) {
  * @param true|false $idonly If set to true, will only return the members' IDs (default: false)
  * @return ElggUser entities if successful, false if not
  */
-function get_members_of_access_collection($collection, $idonly = false) {
+function get_members_of_access_collection($collection, $idonly = FALSE) {
 	global $CONFIG;
 	$collection = (int)$collection;
 
@@ -638,6 +638,9 @@ function get_members_of_access_collection($collection, $idonly = false) {
 	} else {
 		$query = "SELECT e.guid FROM {$CONFIG->dbprefix}access_collection_membership m JOIN {$CONFIG->dbprefix}entities e ON e.guid = m.user_guid WHERE m.access_collection_id = {$collection}";
 		$collection_members = get_data($query);
+		if (!$collection_members) {
+			return FALSE;
+		}
 		foreach($collection_members as $key => $val) {
 			$collection_members[$key] = $val->guid;
 		}

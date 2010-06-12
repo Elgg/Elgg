@@ -19,7 +19,7 @@ if (strlen($emails) > 0) {
 }
 
 if (!is_array($emails) || count($emails) == 0) {
-	register_error(elgg_echo('invitefriends:failure'));
+	register_error(elgg_echo('invitefriends:noemails'));
 	forward($_SERVER['HTTP_REFERER']);
 }
 
@@ -27,7 +27,9 @@ $current_user = get_loggedin_user();
 
 $error = FALSE;
 $bad_emails = array();
-foreach($emails as $email) {
+$already_members = array();
+$sent_total = 0;
+foreach ($emails as $email) {
 
 	$email = trim($email);
 	if (empty($email)) {
@@ -38,6 +40,12 @@ foreach($emails as $email) {
 	if (!is_email_address($email)) {
 		$error = TRUE;
 		$bad_emails[] = $email;
+		continue;
+	}
+
+	if (get_user_by_email($email)) {
+		$error = TRUE;
+		$already_members[] = $email;
 		continue;
 	}
 
@@ -60,10 +68,20 @@ foreach($emails as $email) {
 	}
 
 	elgg_send_email($from, $email, $subject, $message);
+	$sent_total++;
 }
 
 if ($error) {
-	register_error(sprintf(elgg_echo('invitefriends:email_error'), implode(', ', $bad_emails)));
+	register_error(sprintf(elgg_echo('invitefriends:invitations_sent'), $sent_total));
+
+	if (count($bad_emails) > 0) {
+		register_error(sprintf(elgg_echo('invitefriends:email_error'), implode(', ', $bad_emails)));
+	}
+
+	if (count($already_members) > 0) {
+		register_error(sprintf(elgg_echo('invitefriends:already_members'), implode(', ', $already_members)));
+	}
+	
 } else {
 	system_message(elgg_echo('invitefriends:success'));
 }
