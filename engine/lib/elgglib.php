@@ -316,8 +316,10 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 	foreach($viewlist as $priority => $view) {
 		$view_location = elgg_get_view_location($view, $viewtype);
 		$view_file = "$view_location$viewtype/$view.php";
-		$default_view_file = "{$view_location}default/$view.php";
-
+		
+		$default_location = elgg_get_view_location($view, 'default');
+		$default_view_file = "{$default_location}default/$view.php";
+		
 		// try to include view
 		if (!file_exists($view_file) || !include($view_file)) {
 			// requested view does not exist
