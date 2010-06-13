@@ -944,11 +944,11 @@ $count = FALSE, $case_sensitive = TRUE) {
 	}
 
 	if ($order_by) {
-		$options['order_by'];
+		$options['order_by'] = $order_by;
 	}
 
 	if ($site_guid) {
-		$options['site_guid'];
+		$options['site_guid'] = $site_guid;
 	}
 
 	if ($count) {
