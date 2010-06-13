@@ -86,7 +86,7 @@ if (($count > $limit || $offset > 0) && get_context() != 'widget') {
 			if ($curoffset != $offset) {
 				echo " <a href=\"{$counturl}\" class='pagination_number'>{$i}</a> ";
 			} else {
-				echo "<span class='pagination_currentpage'> {$i} </span>";
+				echo "<span class='pagination_currentpage'>{$i}</span>";
 			}
 			$prev = $i;
 
@@ -109,4 +109,4 @@ if (($count > $limit || $offset > 0) && get_context() != 'widget') {
 	?>
 	</div>
 	<?php
-}
+} // end of pagination check if statement
