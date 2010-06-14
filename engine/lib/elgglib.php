@@ -1822,7 +1822,23 @@ function elgg_init() {
 
 	// Register an event triggered at system shutdown
 	register_shutdown_function('__elgg_shutdown_hook');
+}
 
+/**
+ * Boot Elgg
+ * @return unknown_type
+ */
+function elgg_boot() {
+	global $CONFIG;
+	
+	// Actions
+	register_action('comments/add');
+	register_action('comments/delete');
+
+	elgg_view_register_simplecache('css');
+	elgg_view_register_simplecache('js/friendsPickerv1');
+	elgg_view_register_simplecache('js/initialise_elgg');
+	
 	// discover the built-in view types
 	// @todo cache this
 	$view_path = $CONFIG->viewpath;
@@ -1835,20 +1851,6 @@ function elgg_init() {
 			$CONFIG->view_types[] = $view;
 		}
 	}
-}
-
-/**
- * Boot Elgg
- * @return unknown_type
- */
-function elgg_boot() {
-	// Actions
-	register_action('comments/add');
-	register_action('comments/delete');
-
-	elgg_view_register_simplecache('css');
-	elgg_view_register_simplecache('js/friendsPickerv1');
-	elgg_view_register_simplecache('js/initialise_elgg');
 }
 
 /**
