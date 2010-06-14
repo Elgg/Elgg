@@ -37,6 +37,11 @@ if (!include_once(dirname(__FILE__) . "/lib/elgglib.php")) {		// Main Elgg libra
 	exit;
 }
 
+if (!include_once(dirname(__FILE__) . "/lib/views.php")) {		// Views
+	echo "Error in installation: could not load the Views library.";
+	exit;
+}
+
 if (!include_once(dirname(__FILE__) . "/lib/access.php")) {		// Access library
 	echo "Error in installation: could not load the Access library.";
 	exit;
