@@ -27,7 +27,7 @@ $lib_dir = dirname(__FILE__) . '/lib/';
 
 // bootstrapping with required files in a required order
 $required_files = array(
-	'exceptions.php', 'elgglib.php', 'access.php', 'system_log.php', 'export.php',
+	'exceptions.php', 'elgglib.php', 'views.php', 'access.php', 'system_log.php', 'export.php',
 	'sessions.php', 'languages.php', 'input.php', 'install.php', 'cache.php', 'output.php'
 );
 
