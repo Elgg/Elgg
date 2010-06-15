@@ -552,7 +552,7 @@ function find_metadata($meta_name = "", $meta_value = "", $entity_type = "", $en
  *
  * 	metadata_values => NULL|ARR metadata values
  *
- * 	metadata_name_value_pairs => NULL|ARR (name = 'name', value => 'value', 'operand' => '=', 'case_sensitive' => TRUE) entries.
+ * 	metadata_name_value_pairs => NULL|ARR (name => 'name', value => 'value', 'operand' => '=', 'case_sensitive' => TRUE) entries.
  * 	Currently if multiple values are sent via an array (value => array('value1', 'value2') the pair's operand will be forced to "IN".
  *
  * 	metadata_name_value_pairs_operator => NULL|STR The operator to use for combining (name = value) OPERATOR (name = value); default AND
@@ -966,6 +966,7 @@ $count = FALSE, $case_sensitive = TRUE) {
  *
  * @see elgg_view_entity_list
  *
+ * @deprecated 1.8 Use elgg_list_entities_from_metadata
  * @param mixed $meta_name Metadata name to search on
  * @param mixed $meta_value The value to match, optionally
  * @param string $entity_type The type of entity to look for, eg 'site' or 'object'
@@ -978,6 +979,8 @@ $count = FALSE, $case_sensitive = TRUE) {
  * @return string A list of entities suitable for display
  */
 function list_entities_from_metadata($meta_name, $meta_value = "", $entity_type = ELGG_ENTITIES_ANY_VALUE, $entity_subtype = ELGG_ENTITIES_ANY_VALUE, $owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true, $case_sensitive = true ) {
+	elgg_deprecated_notice('get_entities_from_metadata_multi() was deprecated by elgg_get_entities_from_metadata()!', 1.8);
+
 	$offset = (int) get_input('offset');
 	$limit = (int) $limit;
 	$options = array(
@@ -997,6 +1000,30 @@ function list_entities_from_metadata($meta_name, $meta_value = "", $entity_type 
 	$entities = elgg_get_entities_from_metadata($options);
 
 	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle, $pagination);
+}
+
+/**
+ * Returns a list of entities filtered by provided metadata.
+ *
+ * @see elgg_get_entities_from_metadata
+ *
+ * @param array $options
+ */
+function elgg_list_entities_from_metadata($options) {
+	$defaults = array(
+		'offset' => (int) max(get_input('offset', 0), 0),
+		'limit' => (int) max(get_input('limit', 10), 0),
+		'full_view' => TRUE,
+		'view_type_toggle' => FALSE,
+		'pagination' => TRUE
+	);
+
+	$options = array_merge($defaults, $options);
+
+	$count = elgg_get_entities_from_metadata(array_merge(array('count' => TRUE), $options));
+	$entities = elgg_get_entities_from_metadata($options);
+
+	return elgg_view_entity_list($entities, $count, $options['offset'], $options['limit'], $options['full_view'], $options['view_type_toggle'], $options['pagination']);
 }
 
 /**
