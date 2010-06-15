@@ -1435,10 +1435,10 @@ function validate_username($username) {
 	}
 
 	// Belts and braces TODO: Tidy into main unicode
-	$blacklist2 = '/\\"\'*& ?#%^(){}[]~?<>;|¬`@-+=';
+	$blacklist2 = '\'/\\"*& ?#%^(){}[]~?<>;|¬`@-+=';
 	for ($n=0; $n < strlen($blacklist2); $n++) {
 		if (strpos($username, $blacklist2[$n])!==false) {
-			throw new RegistrationException(elgg_echo('registration:invalidchars'));
+			throw new RegistrationException(sprintf(elgg_echo('registration:invalidchars'), $blacklist2[$n], $blacklist2));
 		}
 	}
 
