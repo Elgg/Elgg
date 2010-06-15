@@ -47,7 +47,7 @@
 	
 	$body = elgg_view_title($title);
 	$body .= $objects;
-	$body = elgg_view_layout('two_column_left_sidebar','',$body);
+	$body = elgg_view_layout('one_column_with_sidebar', $body);
 	
 	// Finally draw the page
 	page_draw($title, $body);

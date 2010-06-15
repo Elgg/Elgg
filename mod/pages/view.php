@@ -54,7 +54,7 @@
 	pages_set_navigation_parent($pages);
 	$sidebar = elgg_view('pages/sidebar/tree');
 
-	$body = elgg_view_layout('two_column_left_sidebar', '', $body, $sidebar);
+	$body = elgg_view_layout('one_column_with_sidebar', $body, $sidebar);
 
 	// Finally draw the page
 	page_draw($title, $body);
