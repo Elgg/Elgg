@@ -16,7 +16,7 @@
 	admin_gatekeeper();
 	
 	$group_guid = get_input('group_guid');
-	$action = get_input('action');
+	$action = get_input('action_type');
 	
 	$group = get_entity($group_guid);
 	

@@ -27,10 +27,10 @@
 
 	//for admins display the feature or unfeature option
 	if($vars['entity']->featured_group == "yes"){
-		$url = elgg_add_action_tokens_to_url($vars['url'] . "action/groups/featured?group_guid=" . $vars['entity']->guid . "&action=unfeature");
+		$url = elgg_add_action_tokens_to_url($vars['url'] . "action/groups/featured?group_guid=" . $vars['entity']->guid . "&action_type=unfeature");
 		$wording = elgg_echo("groups:makeunfeatured");
 	}else{
-		$url = elgg_add_action_tokens_to_url($vars['url'] . "action/groups/featured?group_guid=" . $vars['entity']->guid . "&action=feature");
+		$url = elgg_add_action_tokens_to_url($vars['url'] . "action/groups/featured?group_guid=" . $vars['entity']->guid . "&action_type=feature");
 		$wording = elgg_echo("groups:makefeatured");
 	}
 
