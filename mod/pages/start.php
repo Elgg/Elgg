@@ -16,16 +16,8 @@
 	function pages_init()
 	{
 		global $CONFIG;
-		
-		// Set up the menu for logged in users
-		if (isloggedin()) 
-		{
-			add_menu(elgg_echo('pages'), $CONFIG->wwwroot . "pg/pages/owned/" . $_SESSION['user']->username,'pages');
-		}
-		else
-		{
-			add_menu(elgg_echo('pages'), $CONFIG->wwwroot . "mod/pages/world.php");
-		}
+	
+		add_menu(elgg_echo('pages'), $CONFIG->wwwroot . "mod/pages/world.php");
 		
 		// Register a page handler, so we can have nice URLs
 		register_page_handler('pages','pages_page_handler');
