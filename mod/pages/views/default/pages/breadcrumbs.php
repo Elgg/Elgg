@@ -6,7 +6,7 @@
 		$breadcrumbs = '';
 	    
 	    $owner_url = $CONFIG->wwwroot . "pg/pages/owned/" . get_entity($page_owner)->username;
-	    echo "<div id=\"pages_breadcrumbs\"><b><a href=\"{$owner_url}\">" . elgg_echo('pages:user') . "</a></b>";
+	    echo "<div id='breadcrumbs'><b><a href=\"{$owner_url}\">" . elgg_echo('pages:user') . "</a></b>";
 	    
 	    //see if the new page's parent has a parent
         $getparent = get_entity($parent->parent_guid);
