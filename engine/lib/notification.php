@@ -249,10 +249,10 @@ function email_notify_handler(ElggEntity $from, ElggUser $to, $subject, $message
 	// From
 	$site = get_entity($CONFIG->site_guid);
 	// If there's an email address, use it - but only if its not from a user.
-	if ((isset($from->email)) && (!($from instanceof ElggUser))) {
+	if (!($from instanceof ElggUser) && $from->email) {
 		$from = $from->email;
-	} else if (($site) && (isset($site->email))) {
-		// Has the current site got a from email address?
+	} else if ($site && $site->email) {
+		// Use email address of current site if we cannot use sender's email
 		$from = $site->email;
 	} else {
 		// If all else fails, use the domain of the site.
