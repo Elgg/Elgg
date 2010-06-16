@@ -8,17 +8,15 @@
  * @link http://elgg.org/
  */
 
-// Start engine
-require_once(dirname(dirname((__FILE__))) . "/engine/start.php");
-
 // You need to be logged in for this one
 gatekeeper();
 
-$area2 = elgg_view_access_collections($_SESSION['user']->getGUID());
+$title = elgg_echo('friends:collections');
 
-// Format page
-$body = elgg_view_layout('two_column_left_sidebar', '',
-	elgg_view_title(elgg_echo('friends:collections')) . $area2);
+$content = elgg_view_title($title);
 
-// Draw it
-page_draw(elgg_echo('friends:collections'),$body);
+$content .= elgg_view_access_collections(get_loggedin_userid());
+
+$body = elgg_view_layout('two_column_left_sidebar', '', $content);
+
+page_draw($title, $body);

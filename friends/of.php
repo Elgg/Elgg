@@ -8,16 +8,19 @@
  * @link http://elgg.org/
  */
 
-if (!$owner = page_owner_entity()) {
+$owner = page_owner_entity();
+if (!$owner) {
 	gatekeeper();
-	set_page_owner($_SESSION['user']->getGUID());
-	$owner = $_SESSION['user'];
+	set_page_owner(get_loggedin_userid());
+	$owner = page_owner_entity();
 }
-$friends_of = sprintf(elgg_echo("friends:of:owned"),$owner->name);
 
-$area1 = elgg_view_title($friends_of);
-$area2 = list_entities_from_relationship('friend',$owner->getGUID(),true,'user','',0,10,false);
-$body = elgg_view_layout('two_column_left_sidebar', '', $area1 . $area2);
+$title = sprintf(elgg_echo("friends:of:owned"), $owner->name);
 
-page_draw($friends_of, $body);
+$content = elgg_view_title($title);
 
+$content .= list_entities_from_relationship('friend', $owner->getGUID(), TRUE, 'user', '', 0, 10, FALSE);
+
+$body = elgg_view_layout('two_column_left_sidebar', '', $content);
+
+page_draw($title, $body);
