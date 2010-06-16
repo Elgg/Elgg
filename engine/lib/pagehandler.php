@@ -86,6 +86,24 @@ function register_page_handler($handler, $function) {
 }
 
 /**
+ * Unregister a page handler for an identifier
+ *
+ * Note: to replace a page handler, call register_page_handler()
+ * 
+ * @param string $handler The page type identifier
+ * @since 1.7.2
+ */
+function unregister_page_handler($handler) {
+	global $CONFIG;
+	
+	if (!isset($CONFIG->pagehandler)) {
+		return;
+	}
+
+	unset($CONFIG->pagehandler[$handler]);
+}
+
+/**
  * A default page handler
  * Tries to locate a suitable file to include. Only works for core pages, not plugins.
  *
