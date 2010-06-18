@@ -2041,4 +2041,139 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 			}
 		}
 	}
+	
+	// Make sure metadata doesn't affect getting entities by relationship.  See #2274
+	public function testElggApiGettersEntityRelationshipWithMetadata() {
+		$guids = array();
+		
+		$obj1 = new ElggObject();
+		$obj1->test_md = 'test';
+		$obj1->save();
+		$guids[] = $obj1->guid;
+
+		$obj2 = new ElggObject();
+		$obj2->test_md = 'test';
+		$obj2->save();
+		$guids[] = $obj2->guid;
+
+		add_entity_relationship($guids[0], 'test', $guids[1]);
+		
+		$options = array(
+			'relationship' => 'test',
+			'relationship_guid' => $guids[0]
+		);
+		
+		$es = elgg_get_entities_from_relationship($options);
+		$this->assertTrue(is_array($es));
+		$this->assertTrue(count($es), 1);
+		
+		foreach ($es as $e) {
+			$this->assertEqual($guids[1], $e->guid);
+		}
+		
+		foreach ($guids as $guid) {
+			$e = get_entity($guid);
+			$e->delete();
+		}
+	}
+	
+	public function testElggApiGettersEntityRelationshipWithOutMetadata() {
+		$guids = array();
+		
+		$obj1 = new ElggObject();
+		$obj1->save();
+		$guids[] = $obj1->guid;
+
+		$obj2 = new ElggObject();
+		$obj2->save();
+		$guids[] = $obj2->guid;
+
+		add_entity_relationship($guids[0], 'test', $guids[1]);
+		
+		$options = array(
+			'relationship' => 'test',
+			'relationship_guid' => $guids[0]
+		);
+		
+		$es = elgg_get_entities_from_relationship($options);
+		$this->assertTrue(is_array($es));
+		$this->assertTrue(count($es), 1);
+		
+		foreach ($es as $e) {
+			$this->assertEqual($guids[1], $e->guid);
+		}
+		
+		foreach ($guids as $guid) {
+			$e = get_entity($guid);
+			$e->delete();
+		}
+	}
+	
+	public function testElggApiGettersEntityRelationshipWithMetadataIncludingRealMetadata() {
+		$guids = array();
+		
+		$obj1 = new ElggObject();
+		$obj1->test_md = 'test';
+		$obj1->save();
+		$guids[] = $obj1->guid;
+
+		$obj2 = new ElggObject();
+		$obj2->test_md = 'test';
+		$obj2->save();
+		$guids[] = $obj2->guid;
+
+		add_entity_relationship($guids[0], 'test', $guids[1]);
+		
+		$options = array(
+			'relationship' => 'test',
+			'relationship_guid' => $guids[0],
+			'metadata_name' => 'test_md',
+			'metadata_value' => 'test',
+		);
+		
+		$es = elgg_get_entities_from_relationship($options);
+		$this->assertTrue(is_array($es));
+		$this->assertTrue(count($es), 1);
+		
+		foreach ($es as $e) {
+			$this->assertEqual($guids[1], $e->guid);
+		}
+		
+		foreach ($guids as $guid) {
+			$e = get_entity($guid);
+			$e->delete();
+		}
+	}
+	
+	public function testElggApiGettersEntityRelationshipWithMetadataIncludingFakeMetadata() {
+		$guids = array();
+		
+		$obj1 = new ElggObject();
+		$obj1->test_md = 'test';
+		$obj1->save();
+		$guids[] = $obj1->guid;
+
+		$obj2 = new ElggObject();
+		$obj2->test_md = 'test';
+		$obj2->save();
+		$guids[] = $obj2->guid;
+
+		add_entity_relationship($guids[0], 'test', $guids[1]);
+		
+		$options = array(
+			'relationship' => 'test',
+			'relationship_guid' => $guids[0],
+			'metadata_name' => 'test_md',
+			'metadata_value' => 'invalid',
+		);
+		
+		$es = elgg_get_entities_from_relationship($options);
+		
+		$this->assertTrue(empty($es));
+
+		foreach ($guids as $guid) {
+			$e = get_entity($guid);
+			$e->delete();
+		}
+	}
 }
