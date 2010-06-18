@@ -400,6 +400,9 @@ function elgg_view_regenerate_simplecache($viewtype = NULL) {
 
 	elgg_set_viewtype($original_viewtype);
 
+	// needs to be set for links in html head
+	$CONFIG->lastcache = $lastcached;
+
 	unset($CONFIG->pagesetupdone);
 }
 

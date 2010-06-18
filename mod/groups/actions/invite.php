@@ -31,7 +31,7 @@ if (sizeof($user_guid))
 
 		if ( $user && $group) {
 
-			if (get_loggedin_userid() == $group->owner_guid)
+			if (($group instanceof ElggGroup) && ($group->canEdit()))
 			{
 				if (!check_entity_relationship($group->guid, 'invited', $user->guid))
 				{

@@ -141,4 +141,6 @@ if (($installed) && ($db_installed) && !(defined('upgrading') && upgrading == 'u
 	if ($lastupdate == 0 || $lastcached < $lastupdate) {
 		elgg_view_regenerate_simplecache($oldview);
 	}
+	// needs to be set for links in html head
+	$CONFIG->lastcache = $lastcached;
 }
