@@ -35,11 +35,12 @@
 			$options = array(
 				'type' => 'object',
 				'subtype' => 'groupforumtopic',
-				'annotation_name' => 'group_topic_post',
+				'annotation_name' => 'generic_comment',
+				'order_by' => 'e.last_action desc',
 				'limit' => 40,
 				'fullview' => TRUE
 			);
-			$objects = elgg_list_entities_from_annotations($options);
+			$objects = elgg_list_entities($options);
 			break;
 	}
 

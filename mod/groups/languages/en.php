@@ -58,7 +58,8 @@ $english = array(
 	'groups:viagroups' => "via groups",
 	'groups:group' => "Group",
 	'groups:search:tags' => "tag",
-
+	'groups:activity' => "Group activity",
+	'groups:no_activity' => "There is no group activity yet",
 	'groups:notfound' => "Group not found",
 	'groups:notfound:details' => "The requested group either does not exist or you do not have access to it",
 
@@ -93,8 +94,6 @@ $english = array(
 	'groups:enablefiles' => 'Enable group files',
 	'groups:yes' => 'yes',
 	'groups:no' => 'no',
-
-	'group:created' => 'Created %s with %d posts',
 	'groups:lastupdated' => 'Last updated %s by %s',
 	'groups:pages' => 'Group pages',
 	'groups:files' => 'Group files',
@@ -104,6 +103,8 @@ $english = array(
 	*/
 
 	'group:replies' => 'Replies',
+	'groups:forum:created' => 'Created %s with %d comments',
+	'groups:forum:created:single' => 'Created %s with %d reply',
 	'groups:forum' => 'Discussion',
 	'groups:addtopic' => 'Add a topic',
 	'groups:forumlatest' => 'Latest discussion',
@@ -127,8 +128,8 @@ $english = array(
 	'grouptopic:created' => 'Your topic was created.',
 	'groupstopic:deleted' => 'The topic has been deleted.',
 	'groups:topicsticky' => 'Sticky',
-	'groups:topicisclosed' => 'This topic is closed.',
-	'groups:topiccloseddesc' => 'This topic has now been closed and is not accepting new comments.',
+	'groups:topicisclosed' => 'This discussion is closed.',
+	'groups:topiccloseddesc' => 'This discussion has now been closed and is not accepting new comments.',
 	'grouptopic:error' => 'Your group topic could not be created. Please try again or contact a system administrator.',
 	'groups:forumpost:edited' => "You have successfully edited the forum post.",
 	'groups:forumpost:error' => "There was a problem editing the forum post.",
@@ -186,8 +187,9 @@ or click below to view the group's join requests:
 	'groupforum:river:update' => 'this discussion topic',
 	'groupforum:river:created' => '%s has created',
 	'groupforum:river:create' => 'a new discussion topic titled',
-	'groupforum:river:posted' => '%s has posted a new comment',
+	'groupforum:river:posted' => '%s has posted a comment',
 	'groupforum:river:annotate:create' => 'on this discussion topic',
+	'groupforumtopic:river:annotate' => 'a new comment on this discussion topic',
 	'groupforum:river:postedtopic' => '%s has started a new discussion topic titled',
 	'groups:river:member' => '%s is now a member of',
 	'groups:river:togroup' => 'to the group',

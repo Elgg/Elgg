@@ -49,6 +49,8 @@
 			$grouptopic->access_id = $access;
 	// Set its title and description appropriately
 			$grouptopic->title = $title;
+	// Set its title and description appropriately
+			$grouptopic->description = $message;
 	// Before we can set metadata, we need to save the topic
 			if (!$grouptopic->save()) {
 				register_error(elgg_echo("grouptopic:error"));
@@ -60,10 +62,7 @@
 			}
 	// add metadata
 	        $grouptopic->status = $status; // the current status i.e sticky, closed, resolved, open
-	           
-    // now add the topic message as an annotation
-        	$grouptopic->annotate('group_topic_post',$message,$access, $user);   
-        	
+	             	
     // add to river
 	        add_to_river('river/forum/topic/create','create',$_SESSION['user']->guid,$grouptopic->guid);
 	        

@@ -1,13 +1,7 @@
 <?php
-	/**
-	 * Elgg groups plugin
-	 *
-	 * @package ElggGroups
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
-	 */
+/**
+ * Elgg groups plugin
+ */
 ?>
 
 <div id="content_header" class="clearfloat">
@@ -25,9 +19,7 @@
 	?>
 </div>
 <?php
-	if($vars['topics'])
-		echo $vars['topics'];
-	else
-		echo "<p class='margin_top'>". elgg_echo("grouptopic:notcreated") . "</p>";
-
-?>
+if($vars['topics'])
+	echo $vars['topics'];
+else
+	echo "<p class='margin_top'>". elgg_echo("grouptopic:notcreated") . "</p>";

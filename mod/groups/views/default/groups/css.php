@@ -151,4 +151,3 @@
 .edit_comment .defaultSkin table.mceLayout {
 	width: 694px !important;
 }
-

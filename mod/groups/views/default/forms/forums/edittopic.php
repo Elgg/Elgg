@@ -17,12 +17,7 @@
 	    $status = $vars['entity']->status;
 	    $tags = $vars['entity']->tags;
 	    $title = $vars['entity']->title;
-	    $message = $vars['entity']->getAnnotations('group_topic_post', 1, 0, "asc");
-	    
-	    foreach($message as $mes){
-			$messsage_content = $mes->value;
-		    $message_id = $mes->id;
-	    }		    
+	    $message = $vars['entity']->description;		    
 		    
 	 // get the group GUID
 	    $group_guid = get_input("group");
@@ -72,7 +67,7 @@
 
 				echo elgg_view("input/longtext",array(
 									"internalname" => "topicmessage",
-									"value" => $messsage_content,
+									"value" => html_entity_decode($message, ENT_COMPAT, 'UTF-8')
 													));
 			?>
 		</p>
@@ -82,8 +77,6 @@
 		    <label><?php echo elgg_echo("groups:topicstatus"); ?><br />
 		    <select name="status">
 		        <option value="open" <?php if($status == "") echo "SELECTED";?>><?php echo elgg_echo('groups:topicopen'); ?></option>
-		        <option value="sticky" <?php if($status == "sticky") echo "SELECTED";?>><?php echo elgg_echo('groups:topicsticky'); ?></option>
-		        <option value="resolved" <?php if($status == "resolved") echo "SELECTED";?>><?php echo elgg_echo('groups:topicresolved'); ?></option>
 		        <option value="closed" <?php if($status == "closed") echo "SELECTED";?>><?php echo elgg_echo('groups:topicclosed'); ?></option>
 		    </select>
 		    </label>

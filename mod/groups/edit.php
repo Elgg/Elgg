@@ -10,7 +10,7 @@
 	 */
 
 	require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
-	gatekeeper();
+	group_gatekeeper();
 
 	$group_guid = get_input('group_guid');
 	$group = get_entity($group_guid);

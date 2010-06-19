@@ -75,6 +75,7 @@
 
 		// Register profile menu hook
 		register_plugin_hook('profile_menu', 'profile', 'forum_profile_menu');
+		register_plugin_hook('profile_menu', 'profile', 'activity_profile_menu');
 
 		// allow ecml in discussion
 		register_plugin_hook('get_views', 'ecml', 'groups_ecml_views_hook');
@@ -275,6 +276,15 @@
 				case "forum":
 					set_input('group_guid', $page[1]);
 					include($CONFIG->pluginspath . "groups/forum.php");
+				break;
+				case "edittopic":
+					set_input('group', $page[1]);
+					set_input('topic', $page[2]);
+					include($CONFIG->pluginspath . "groups/edittopic.php");
+				break;
+				case "activity":
+					set_input('group', $page[1]);
+					include($CONFIG->pluginspath . "groups/activity.php");
 				break;
 				case "owned" :
 					// Owned by a user
@@ -577,6 +587,18 @@
 			$return_value[] = array(
 				'text' => elgg_echo('groups:forum'),
 				'href' => "{$CONFIG->url}pg/groups/forum/{$params['owner']->getGUID()}"
+			);
+		}
+		return $return_value;
+	}
+	
+	function activity_profile_menu($hook, $entity_type, $return_value, $params) {
+		global $CONFIG;
+
+		if ($params['owner'] instanceof ElggGroup) {
+			$return_value[] = array(
+				'text' => elgg_echo('Activity'),
+				'href' => "{$CONFIG->url}pg/groups/activity/{$params['owner']->getGUID()}"
 			);
 		}
 		return $return_value;
