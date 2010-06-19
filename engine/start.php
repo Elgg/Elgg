@@ -41,7 +41,7 @@ foreach ($required_files as $file) {
 }
 
 // Use fallback view until sanitised
-$oldview = get_input('view');
+$oldview = get_input('view', 'default');
 set_input('view', 'failsafe');
 
 // Register the error handler
@@ -94,16 +94,9 @@ set_default_config();
 // Trigger events
 trigger_elgg_event('boot', 'system');
 
-// Load plugins
+// Check if installed
 $installed = is_installed();
 $db_installed = is_db_installed();
-
-// Load plugins, if we're not in light mode
-if (($installed) && ($db_installed) && ($sanitised)) {
-	load_plugins();
-
-	trigger_elgg_event('plugins_boot', 'system');
-}
 
 // Forward if we haven't been installed
 if ((!$installed || !$db_installed)
@@ -115,16 +108,23 @@ if ((!$installed || !$db_installed)
 		exit;
 }
 
-// Trigger events
-if (!substr_count($_SERVER["PHP_SELF"],"install.php")
-	&& !substr_count($_SERVER["PHP_SELF"],"setup.php")
-	&& !(defined('upgrading') && upgrading == 'upgrading')) {
+// Load plugins
+if (($installed) && ($db_installed) && ($sanitised)) {
+	load_plugins();
+
+	trigger_elgg_event('plugins_boot', 'system');
+}
+
+// Trigger system init event for plugins
+if (!substr_count($_SERVER["PHP_SELF"], "install.php")
+	&& !substr_count($_SERVER["PHP_SELF"], "setup.php")) {
 
 	trigger_elgg_event('init', 'system');
 }
 
 // System booted, return to normal view
 set_input('view', $oldview);
+
 if (empty($oldview)) {
 	if (empty($CONFIG->view)) {
 		$oldview = 'default';
@@ -133,7 +133,9 @@ if (empty($oldview)) {
 	}
 }
 
-if (($installed) && ($db_installed)) {
+// Regenerate the simple cache if expired.
+// Don't do it on upgrade, because upgrade does it itself.
+if (($installed) && ($db_installed) && !(defined('upgrading') && upgrading == 'upgrading')) {
 	$lastupdate = datalist_get("simplecache_lastupdate_$oldview");
 	$lastcached = datalist_get("simplecache_lastcached_$oldview");
 	if ($lastupdate == 0 || $lastcached < $lastupdate) {
