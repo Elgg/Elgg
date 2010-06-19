@@ -23,6 +23,8 @@
 		$user = get_entity($user_guid);
 		
 	$group = get_entity($group_guid);
+
+	set_page_owner($group->guid);
 	
 	if (($user instanceof ElggUser) && ($group instanceof ElggGroup))
 	{

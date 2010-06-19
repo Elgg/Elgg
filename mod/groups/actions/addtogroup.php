@@ -29,6 +29,8 @@
 			$user = get_entity($u_id);
 			$group = get_entity($group_guid);
 
+			set_page_owner($group->guid);
+
 			if ( $user && $group) {
 
 				//if (get_loggedin_userid() == $group->owner_guid)

@@ -30,6 +30,8 @@ if (in_array($group_guid, $invitations)) {
 $user = get_entity($user_guid);
 $group = get_entity($group_guid);
 
+set_page_owner($group->guid);
+
 // If not a member of this group
 if (($group) && ($user) && (!$group->isMember($user)))
 {
