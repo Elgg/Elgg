@@ -59,8 +59,8 @@ if ($topic){
 		}
 	}
 }
-// Forward to the group forum page
+// Forward to the discussion
 global $CONFIG;
-$url = $CONFIG->wwwroot . "pg/groups/forum/{$group_guid}/";
+$url = $CONFIG->wwwroot . "mod/groups/topicposts.php?topic={$topic_guid}&group_guid={$group_guid}/";
 forward($url);
 
