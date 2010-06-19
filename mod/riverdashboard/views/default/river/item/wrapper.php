@@ -137,8 +137,8 @@ if ($comments){
 	}
 
 	// if there are no comments to display
-	// and this is not a user or a group discussion entry - include the inline comment form
-	if ($vars['item']->type != 'user' && $vars['item']->subtype != 'groupforumtopic') {
+	// and this is not a user - include the inline comment form
+	if ($vars['item']->type != 'user') {
 		echo elgg_make_river_comment($object);
 	}
 	if ($vars['item']->type != 'user') {
