@@ -807,9 +807,10 @@ function elgg_view_title($title, $submenu = false) {
  * Automatically views comments and a comment form relating to the given entity
  *
  * @param ElggEntity $entity The entity to comment on
+ * @param $add_comment Whether or not you want users to add more comments
  * @return string|false The HTML (etc) for the comments, or false on failure
  */
-function elgg_view_comments($entity){
+function elgg_view_comments($entity, $add_comment = true){
 
 	if (!($entity instanceof ElggEntity)) {
 		return false;
@@ -820,8 +821,10 @@ function elgg_view_comments($entity){
 	} else {
 		$comments = list_annotations($entity->getGUID(),'generic_comment');
 
-		//display the comment form
-		$comments .= elgg_view('comments/forms/edit',array('entity' => $entity));
+		//display the new comment form if required
+		if($add_comment){
+			$comments .= elgg_view('comments/forms/edit',array('entity' => $entity));
+		}
 
 		return $comments;
 	}
