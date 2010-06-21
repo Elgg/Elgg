@@ -20,10 +20,11 @@
 
 	//get the membership type
 	$membership = $vars['entity']->membership;
-	if($membership == 2)
+	if ($membership == ACCESS_PUBLIC) {
 		$mem = elgg_echo("groups:open");
-	else
+	} else {
 		$mem = elgg_echo("groups:closed");
+	}
 
 	//for admins display the feature or unfeature option
 	if($vars['entity']->featured_group == "yes"){
