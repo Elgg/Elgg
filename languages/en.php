@@ -320,6 +320,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
  **/
 
 	'link:view' => 'view link',
+	'link:view:all' => 'View all',
 
 
 /**

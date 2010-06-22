@@ -3,9 +3,11 @@
 //grab the groups bookmarks 
 $bookmarks = elgg_get_entities(array('type' => 'object', 'subtype' => 'bookmarks', 
 			'container_guids' => page_owner(), 'limit' => 6));
-
-echo "<div class='group_tool_widget bookmarks'><h3>".elgg_echo('bookmarks:group')."</h3>";
-	
+?>
+<div class="group_tool_widget bookmarks">
+<span class="group_widget_link"><a href="<?php echo $vars['url'] . "pg/bookmarks/" . page_owner_entity()->username; ?>"><?php echo elgg_echo('link:view:all')?></a></span>
+<h3><?php echo elgg_echo('bookmarks:group') ?></h3>
+<?php	
 if($bookmarks){
 	foreach($bookmarks as $b){
 			

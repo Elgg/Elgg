@@ -142,6 +142,11 @@
 .group_tool_widget .entity_listing_info {
 	width:315px;
 }
+.group_widget_link {
+	float:right;
+	margin:4px 6px 0 0;
+	font-size: 85%;
+}
 
 /* edit group page */
 .delete_group {
