@@ -24,18 +24,19 @@ function search_objects_hook($hook, $type, $value, $params) {
 	$params['joins'] = array($join);
 	$fields = array('title', 'description');
 
-	$where = search_get_where_sql('oe', $fields, $params);
+	$where = search_get_where_sql('oe', $fields, $params, FALSE);
 
 	$params['wheres'] = array($where);
-
-	$entities = elgg_get_entities($params);
 	$params['count'] = TRUE;
 	$count = elgg_get_entities($params);
-
+	
 	// no need to continue if nothing here.
 	if (!$count) {
 		return array('entities' => array(), 'count' => $count);
 	}
+	
+	$params['count'] = FALSE;
+	$entities = elgg_get_entities($params);
 
 	// add the volatile data for why these entities have been returned.
 	foreach ($entities as $entity) {
@@ -68,25 +69,28 @@ function search_groups_hook($hook, $type, $value, $params) {
 
 	$join = "JOIN {$CONFIG->dbprefix}groups_entity ge ON e.guid = ge.guid";
 	$params['joins'] = array($join);
+	
+	$fields = array('name', 'description');
 
-	$where = "(ge.guid = e.guid
-		AND (ge.name LIKE '%$query%'
-			OR ge.description LIKE '%$query%'
-			)
-		)";
+	// force into boolean mode because we've having problems with the
+	// "if > 50% match 0 sets are returns" problem.
+	$where = search_get_where_sql('ge', $fields, $params, FALSE);
+
 	$params['wheres'] = array($where);
 
 	// override subtype -- All groups should be returned regardless of subtype.
 	$params['subtype'] = ELGG_ENTITIES_ANY_VALUE;
 
-	$entities = elgg_get_entities($params);
 	$params['count'] = TRUE;
 	$count = elgg_get_entities($params);
-
+	
 	// no need to continue if nothing here.
 	if (!$count) {
 		return array('entities' => array(), 'count' => $count);
 	}
+	
+	$params['count'] = FALSE;
+	$entities = elgg_get_entities($params);
 
 	// add the volatile data for why these entities have been returned.
 	foreach ($entities as $entity) {
@@ -122,17 +126,20 @@ function search_users_hook($hook, $type, $value, $params) {
 	$join = "JOIN {$CONFIG->dbprefix}users_entity ue ON e.guid = ue.guid";
 	$params['joins'] = array($join);
 
-	$where = "(ue.guid = e.guid
-		AND (ue.username LIKE '%$query%'
-			OR ue.name LIKE '%$query%'
-			)
-		)";
+//	$where = "(ue.guid = e.guid
+//		AND (ue.username LIKE '%$query%'
+//			OR ue.name LIKE '%$query%'
+//			)
+//		)";
+
+	$fields = array('username', 'name');
+	$where = search_get_where_sql('ue', $fields, $params, FALSE);
+	
 	$params['wheres'] = array($where);
 
 	// override subtype -- All users should be returned regardless of subtype.
 	$params['subtype'] = ELGG_ENTITIES_ANY_VALUE;
 
-	$entities = elgg_get_entities($params);
 	$params['count'] = TRUE;
 	$count = elgg_get_entities($params);
 
@@ -140,6 +147,9 @@ function search_users_hook($hook, $type, $value, $params) {
 	if (!$count) {
 		return array('entities' => array(), 'count' => $count);
 	}
+	
+	$params['count'] = FALSE;
+	$entities = elgg_get_entities($params);
 
 	// add the volatile data for why these entities have been returned.
 	foreach ($entities as $entity) {
@@ -212,7 +222,6 @@ function search_tags_hook($hook, $type, $value, $params) {
 
 	$params['wheres'][] = "(msn.string IN ($tags_in) AND msv.string = '$query' AND $access)";
 
-	$entities = elgg_get_entities($params);
 	$params['count'] = TRUE;
 	$count = elgg_get_entities($params);
 
@@ -220,6 +229,9 @@ function search_tags_hook($hook, $type, $value, $params) {
 	if (!$count) {
 		return array('entities' => array(), 'count' => $count);
 	}
+	
+	$params['count'] = FALSE;
+	$entities = elgg_get_entities($params);
 
 	// add the volatile data for why these entities have been returned.
 	foreach ($entities as $entity) {
@@ -332,6 +344,28 @@ function search_comments_hook($hook, $type, $value, $params) {
 	$e_access = get_access_sql_suffix('e');
 	$a_access = get_access_sql_suffix('a');
 	// @todo this can probably be done through the api..
+	$q = "SELECT count(DISTINCT a.id) as total FROM {$CONFIG->dbprefix}annotations a
+		JOIN {$CONFIG->dbprefix}metastrings msn ON a.name_id = msn.id
+		JOIN {$CONFIG->dbprefix}metastrings msv ON a.value_id = msv.id
+		JOIN {$CONFIG->dbprefix}entities e ON a.entity_guid = e.guid
+		WHERE msn.string IN ('generic_comment', 'group_topic_post')
+			AND ($search_where)
+			AND $e_access
+			AND $a_access
+			$container_and
+		";
+
+	if (!$result = get_data($q)) {
+		return FALSE;
+	}
+	
+	$count = $result[0]->total;
+	
+	// don't continue if nothing there...
+	if (!$count) {
+		return array ('entities' => array(), 'count' => 0);
+	}
+	
 	$q = "SELECT DISTINCT a.*, msv.string as comment FROM {$CONFIG->dbprefix}annotations a
 		JOIN {$CONFIG->dbprefix}metastrings msn ON a.name_id = msn.id
 		JOIN {$CONFIG->dbprefix}metastrings msv ON a.value_id = msv.id
@@ -346,24 +380,6 @@ function search_comments_hook($hook, $type, $value, $params) {
 		";
 
 	$comments = get_data($q);
-
-	$q = "SELECT count(DISTINCT a.id) as total FROM {$CONFIG->dbprefix}annotations a
-		JOIN {$CONFIG->dbprefix}metastrings msn ON a.name_id = msn.id
-		JOIN {$CONFIG->dbprefix}metastrings msv ON a.value_id = msv.id
-		JOIN {$CONFIG->dbprefix}entities e ON a.entity_guid = e.guid
-		WHERE msn.string IN ('generic_comment', 'group_topic_post')
-			AND ($search_where)
-			AND $e_access
-			AND $a_access
-			$container_and
-		";
-
-	$result = get_data($q);
-	$count = $result[0]->total;
-
-	if (!is_array($comments)) {
-		return FALSE;
-	}
 
 	// @todo if plugins are disabled causing subtypes
 	// to be invalid and there are comments on entities of those subtypes,
