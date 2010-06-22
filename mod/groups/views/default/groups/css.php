@@ -24,6 +24,9 @@
 	text-align: right;
 	margin-left: 10px;
 }
+.entity_listing.topic .topic_post p {
+	margin:10px 0 5px 0;
+}
 .entity_listing.topic:hover {
 	background-color: white;
 }

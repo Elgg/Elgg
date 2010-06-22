@@ -49,8 +49,9 @@
 	echo "<p class='entity_subtext'>" . friendly_time($vars['entity']->time_created) . "</p>";
 
 	//display the actual message posted
+	echo "<div class='topic_post'>";
 	echo parse_urls(elgg_view("output/longtext",array("value" => $vars['entity']->description)));
-	echo "</div>"; // close entity_listing_info
+	echo "</div></div>"; // close entity_listing_info
 ?>
 		
 </div>
