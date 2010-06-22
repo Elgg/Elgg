@@ -389,6 +389,8 @@ function search_get_where_sql($table, $fields, $params, $use_fulltext = TRUE) {
 			$fields[$i] = "$table.$field";
 		}
 	}
+	
+	$where = '';
 
 	// if query is shorter than the min for fts words
 	// it's likely a single acronym or similar
@@ -420,12 +422,12 @@ function search_get_where_sql($table, $fields, $params, $use_fulltext = TRUE) {
 			//$options = 'IN NATURAL LANGUAGE MODE';
 			$options = '';
 		}
-
+		
 		// if short query, use query expansion.
 		// @todo doesn't seem to be working well.
-		if (elgg_strlen($query) < 5) {
-			//$options .= ' WITH QUERY EXPANSION';
-		}
+//		if (elgg_strlen($query) < 5) {
+//			$options .= ' WITH QUERY EXPANSION';
+//		}
 		$query = sanitise_string($query);
 
 		$fields_str = implode(',', $fields);
