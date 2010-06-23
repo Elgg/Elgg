@@ -83,6 +83,14 @@ if (is_array($vars['entities']) && sizeof($vars['entities'])) {
 	}
 }
 
+// sort users in letters alphabetically
+foreach ($users as $letter => $letter_users) {
+	usort($letter_users, create_function('$a, $b', '
+		return strcasecmp($a->name, $b->name);
+	'));
+	$users[$letter] = $letter_users;
+}
+
 if (!$callback) {
 	?>
 
