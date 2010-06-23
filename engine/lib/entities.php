@@ -3681,8 +3681,9 @@ function recursive_delete_permissions_check($hook, $entity_type, $returnvalue, $
  * @param $type
  * @param $subtype
  * @return Bool
+ * @since 1.8
  */
-function elgg_instanceof($entity, $type = NULL, $subtype = NULL) {
+function elgg_instanceof($entity, $type = NULL, $subtype = NULL, $class = NULL) {
 	$return = ($entity instanceof ElggEntity);
 
 	if ($type) {
@@ -3691,6 +3692,10 @@ function elgg_instanceof($entity, $type = NULL, $subtype = NULL) {
 
 	if ($subtype) {
 		$return = $return && ($entity->getSubtype() == $subtype);
+	}
+	
+	if ($class) {
+		$return = $return && ($entity instanceof $class);
 	}
 
 	return $return;
