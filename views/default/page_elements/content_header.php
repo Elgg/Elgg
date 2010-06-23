@@ -3,12 +3,19 @@
  * Displays the Add New button, and the All, Mine, My Friends tabs for plugins
  * If a user is not logged in, this only displays the All tab.
  * If this is in a group context, it doesn't display any tabs
+ * 
+ * @uses string $vars['type'] The section type.  Should be the same as the page handler.  Used for generating URLs.
+ * @uses string $vars['context'] Which filter we're looking at: all, mine, friends, or action. Nothing to do with get_context().
+ * 
+ * @uses string $vars['all_link'] Optional. The URL to use for the "All" tab link.  Defaults to mod/$type/all.php
+ * @uses string $vars['mine_link'] Optional. The URL to use for the "Mine" tab link.  Defaults to pg/$type/$username
+ * @uses string $vars['friends_link'] Optional. The URL to use for the "Friends" tab link.  Defaults to pg/$type/$username/friends
+ * @uses string $vars['new_link'] Optional. The URL to use for the "New" button.  Defaults to pg/$type/$username/new
+ * @uses array $vars['tabs'] Optional. Override all tab generation.  See view:navgiation/tabs for formatting
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
  * @link http://elgg.org/
- *
  */
 
 $page_owner = page_owner_entity();
@@ -62,10 +69,10 @@ if (isloggedin()) {
 		$tab_list = '';
 	} else {
 		// @todo remove the hard coded reference to the videolist plugin
-		if(get_context() == "videolist"){
+		if (get_context() == "videolist"){
 			$video_link = $CONFIG->wwwroot . "pg/videolist/browse/$username/";
 			$new_button = "<a href=\"{$video_link}\" class='action_button'>" . elgg_echo('videolist:browsemenu') . '</a>';
-		}else{
+		} else {
 			$new_link = (isset($vars['new_link'])) ? $vars['new_link'] : "{$CONFIG->wwwroot}pg/$type/$username/new";
 			$new_button = "<a href=\"{$new_link}\" class='action_button'>" . elgg_echo($type . ':new') . '</a>';
 		}
