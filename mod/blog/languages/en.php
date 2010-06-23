@@ -41,6 +41,8 @@
 			'blog:enableblog' => 'Enable group blog',
 	
 			'blog:group' => 'Group blog',
+	
+			'blog:read_more' => 'Read full post',
 
 		/**
 		 * Blog widget

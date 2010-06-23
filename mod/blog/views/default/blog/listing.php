@@ -9,7 +9,6 @@
 	 * @copyright Curverider Ltd 2008-2010
 	 * @link http://elgg.com/
 	 */
-
 		$owner = $vars['entity']->getOwnerEntity();
 		$friendlytime = friendly_time($vars['entity']->time_created);
 		$icon = elgg_view(
