@@ -12,7 +12,7 @@
  * @author Curverider Ltd
  * @link http://elgg.org/
  *
- * @uses string $vars['internalname'] The name of the input fields (use name[] to send an array)
+ * @uses string $vars['internalname'] The name of the input fields (Forced to an array by appending [])
  * @uses array $vars['options'] An array of strings representing the label => option for the each checkbox field
  * @uses string $vars['internalid'] The id for each input field. Optional (Only use this with a single value.)
  * @uses string $vars['default'] The default value to send if nothing is checked. Optional, defaults to 0.
@@ -83,11 +83,12 @@ if ($options) {
 		}
 		
 		if ($internalname) {
-			$attr[] = "name=\"$internalname\"";
+			// @todo this really, really should only add the []s if there are > 1 element in options.
+			$attr[] = "name=\"{$internalname}[]\"";
 		}
 		
 		$attr_str = implode(' ', $attr);
 		
-		echo "<label><input $attr_str />$label</label></br />";
+		echo "<label><input $attr_str />$label</label><br />";
 	}
 }
