@@ -20,7 +20,7 @@ if ($type == 'horizontal') {
 	$type_class = "elgg_vertical_tabbed_nav";
 }
 
-if (isset($vars['tabs'])) {
+if (isset($vars['tabs']) && is_array($vars['tabs']) && !empty($vars['tabs'])) {
 	?>
 	<div class="<?php echo $type_class; ?>">
 		<ul>
