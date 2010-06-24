@@ -358,13 +358,16 @@ function add_entity_relationship($guid_one, $relationship, $guid_two) {
 	$guid_one = (int)$guid_one;
 	$relationship = sanitise_string($relationship);
 	$guid_two = (int)$guid_two;
+	$time = time();
 
 	// Check for duplicates
 	if (check_entity_relationship($guid_one, $relationship, $guid_two)) {
 		return false;
 	}
 
-	$result = insert_data("INSERT into {$CONFIG->dbprefix}entity_relationships (guid_one, relationship, guid_two) values ($guid_one, '$relationship', $guid_two)");
+	$result = insert_data("INSERT into {$CONFIG->dbprefix}entity_relationships 
+		(guid_one, relationship, guid_two, time_created)
+		values ($guid_one, '$relationship', $guid_two, $time)");
 
 	if ($result!==false) {
 		$obj = get_relationship($result);

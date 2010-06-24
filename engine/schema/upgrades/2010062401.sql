@@ -1,0 +1,1 @@
+ALTER TABLE `prefix_entity_relationships` ADD COLUMN `time_created` int(11) NOT NULL AFTER `guid_two`;
