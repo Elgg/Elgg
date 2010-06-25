@@ -14,9 +14,14 @@
 #elgg_page_contents {overflow: hidden;} /* remove horizontal scroll on riverdash */
 #breadcrumbs {top:-2px; margin-bottom: 5px;}
 
+/* entity list views */
 .entity_metadata {max-width: 300px;}
 .entity_edit {float:right;}
 .access_level {float:left;}
+.entity_listing .entity_metadata {
+	min-width:400px;
+	text-align: right;
+}
 
 .likes_list {display:none;}
 .likes_list_holder .likes_list {top:20px !important;} /* position likes list below link in IE to prevent clipping */
@@ -24,6 +29,7 @@
 
 /* profile */
 .elgg_horizontal_tabbed_nav.profile .profile_name {margin-left: -260px;}
+#profile_content .river_comment_form.hidden .input_text { width:510px; }
 
 /* notifications */
 .friends_picker_navigation {margin:0;padding:0;}
@@ -58,5 +64,3 @@
 
 /* shared access */
 .shared_access_collection h2.shared_access_name {margin-top:-15px;}
-
-
