@@ -111,8 +111,8 @@ if ($manifest['screenshot']) {
 	if ($manifest) {
 		?>
 		<div class="plugin_description"><?php echo elgg_view('output/longtext',array('value' => $manifest['description'])); ?></div>
-		<div><span class="plugin_label"><?php echo elgg_echo('admin:plugins:label:author') . "</span>: ". htmlspecialchars($manifest['author']) ?></div>
-		<div><span class="plugin_label"><?php echo elgg_echo('admin:plugins:label:version') . "</span>: ". htmlspecialchars($manifest['version']) ?></div>
+		<p class="plugin_author"><span><?php echo elgg_echo('admin:plugins:label:author') . "</span>: ". htmlspecialchars($manifest['author']) ?></p>
+		<p class="plugin_version"><span><?php echo elgg_echo('admin:plugins:label:version') . "</span>: ". htmlspecialchars($manifest['version']) ?></p>
 
 		<p><a class="manifest_details small link"><?php echo elgg_echo("admin:plugins:label:moreinfo"); ?></a></p>
 
