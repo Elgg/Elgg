@@ -15,12 +15,13 @@ $contents = "";
 // Are there feeds to display?
 global $autofeed;
 if (isset($autofeed) && $autofeed == true) {
-	$url = $url2 = full_url();
+	$url = full_url();
 	if (substr_count($url,'?')) {
 		$url .= "&view=rss";
 	} else {
 		$url .= "?view=rss";
 	}
+	$url = elgg_format_url($url);
 	$label = elgg_echo('feed:rss');
 	$contents .= <<<END
 	<div class="rss_link clearfloat"><a href="{$url}" rel="nofollow" title="{$label}">{$label}</a></div>

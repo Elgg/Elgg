@@ -19,12 +19,13 @@ if (empty($vars['title'])) {
 
 global $autofeed;
 if (isset($autofeed) && $autofeed == true) {
-	$url = $url2 = full_url();
+	$url = full_url();
 	if (substr_count($url,'?')) {
-		$url .= "&amp;view=rss";
+		$url .= "&view=rss";
 	} else {
 		$url .= "?view=rss";
 	}
+	$url = elgg_format_url($url);
 	$feedref = <<<END
 
 	<link rel="alternate" type="application/rss+xml" title="RSS" href="{$url}" />
