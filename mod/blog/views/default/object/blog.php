@@ -83,6 +83,7 @@ echo <<<___END
 	<div id="content_header" class="clearfloat">
 		<div class="content_header_title"><h2>{$blog->title}</h2></div>
 	</div>
+	<div class="clearfloat">
 	<div class="entity_listing_icon">
 		$owner_icon
 	</div>
@@ -95,8 +96,9 @@ echo <<<___END
 			$comments_link
 		</p>
 		$tags
-		<span class="body">$body</span>
 	</div>
+	</div>
+	<div class='blog_post'>$body</div>
 </div>
 
 ___END;

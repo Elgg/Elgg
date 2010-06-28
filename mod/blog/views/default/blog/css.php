@@ -18,12 +18,13 @@
 .blogpost .entity_listing_info {
 	margin-top:4px;
 }
-.blogpost .body {
-	margin-top:5px;
-	margin-bottom:10px;
-	display:block;
+.blog_post {
+	border-top:1px solid #CCCCCC;
+	margin:10px 0 0;
+	padding-bottom:40px;
+	padding-top:10px;
 }
-.blogpost .body p {
+.blog_post p {
 	line-height: 1.4em;
 	padding-bottom:12px;
 }
