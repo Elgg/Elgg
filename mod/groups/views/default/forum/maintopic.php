@@ -39,7 +39,7 @@
 
 		}	    
 	    
-	    echo "<p class='entity_title'>" . $post_owner->name . "</p>";
+	    echo "<p class='entity_title'><a href='".$post_owner->getURL()."'>" . $post_owner->name . "</a></p>";
 	} else {
 		echo "<div class='entity_listing_icon'><img src=\"" . elgg_view('icon/user/default/tiny') . "\" /></div>";
 		echo "<div class='entity_listing_info'><p class='entity_title'>" . elgg_echo('profile:deleteduser') . "</p>";
@@ -47,11 +47,13 @@
 	
 	//display the date of the comment
 	echo "<p class='entity_subtext'>" . friendly_time($vars['entity']->time_created) . "</p>";
+	echo "</div>"; // close entity_listing_info
+	echo "</div>"; // close entity_listing.topic
 
 	//display the actual message posted
-	echo "<div class='topic_post'>";
+	echo "<div class='topic_post maintopic'>";
 	echo parse_urls(elgg_view("output/longtext",array("value" => $vars['entity']->description)));
-	echo "</div></div>"; // close entity_listing_info
+	echo "</div>";
 ?>
 		
-</div>
+<!-- </div> -->

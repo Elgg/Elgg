@@ -24,6 +24,11 @@
 	text-align: right;
 	margin-left: 10px;
 }
+.topic_post.maintopic {
+	margin:10px 0 0 0;
+	padding-bottom:40px;
+	border-bottom:1px solid #CCCCCC;
+}
 .entity_listing.topic .topic_post p {
 	margin:10px 0 5px 0;
 }
