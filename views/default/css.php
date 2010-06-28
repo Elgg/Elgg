@@ -965,6 +965,7 @@ li.navigation_more ul li {
 #elgg_sidebar .generic_comment.latest .generic_comment_details {
 	width:177px;
 	line-height:1.1em;
+	overflow:hidden;
 }
 #elgg_sidebar .generic_comment.latest .entity_title {
 	font-size: inherit;
