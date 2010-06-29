@@ -33,7 +33,7 @@ if (empty($vars['tagcloud']) && !empty($vars['value'])) {
 
 if (!empty($vars['tagcloud']) && is_array($vars['tagcloud'])) {
 	$counter = 0;
-	$cloud = "";
+	$cloud = "<div class='tagcloud_wrapper'>";
 	$max = 0;
 	
 	if ($context != 'tags') {
@@ -72,6 +72,6 @@ if (!empty($vars['tagcloud']) && is_array($vars['tagcloud'])) {
 	}
 	
 	$cloud .= elgg_view('tagcloud/extend');
-	
+	$cloud .= '</div>';
 	echo $cloud;
 }
