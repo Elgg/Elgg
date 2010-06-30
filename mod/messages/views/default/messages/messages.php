@@ -69,7 +69,7 @@
 				}
 			?>
 			<!-- get the time the message was sent -->
-			<small><?php echo friendly_time($vars['entity']->time_created); ?></small>
+			<small><?php echo elgg_view_friendly_time($vars['entity']->time_created); ?></small>
 			</p>
 		</div><!-- end of the message_user_icon div -->
 

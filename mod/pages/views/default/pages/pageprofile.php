@@ -72,7 +72,7 @@
 			$owner = get_entity($owner_guid);
 		
 			echo sprintf(elgg_echo("pages:strapline"),
-							friendly_time($time_updated),
+							elgg_view_friendly_time($time_updated),
 							"<a href=\"" . $owner->getURL() . "\">" . $owner->name ."</a>"
 			);
 		

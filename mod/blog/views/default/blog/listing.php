@@ -10,7 +10,7 @@
 	 * @link http://elgg.com/
 	 */
 		$owner = $vars['entity']->getOwnerEntity();
-		$friendlytime = friendly_time($vars['entity']->time_created);
+		$friendlytime = elgg_view_friendly_time($vars['entity']->time_created);
 		$icon = elgg_view(
 				"profile/icon", array(
 										'entity' => $owner,

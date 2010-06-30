@@ -44,7 +44,7 @@ if ($entity->getVolatileData('search_unavailable_entity')) {
 
 $description = $entity->getVolatileData('search_matched_comment');
 $tc = $entity->getVolatileData('search_matched_comment_time_created');;
-$time = friendly_time($tc);
+$time = elgg_view_friendly_time($tc);
 
 echo <<<___END
 	<div class="search_listing">

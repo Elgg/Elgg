@@ -18,7 +18,7 @@
 	$title = $file->title;
 	$desc = $file->description;
 	$owner = $vars['entity']->getOwnerEntity();
-	$friendlytime = friendly_time($vars['entity']->time_created);
+	$friendlytime = elgg_view_friendly_time($vars['entity']->time_created);
 	$mime = $file->mimetype;
 	
 	if (!$title) {

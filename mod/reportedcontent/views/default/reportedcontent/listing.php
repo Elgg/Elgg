@@ -27,7 +27,7 @@
 		$url = elgg_add_action_tokens_to_url($vars['url'] . "action/reportedcontent/delete?item=" . $report->guid);
 			echo "<a class=\"delete_report_button\" href=\"$url\" onclick=\"return confirm('" . elgg_echo('reportedcontent:areyousure') . "')\">" . elgg_echo('reportedcontent:delete') . "</a></p>";
 
-			echo "<p class=\"reportedcontent_detail\"><b>" . elgg_echo('reportedcontent:by') . ": </b><a href=\"{$user_url}\">" . $user . "</a>, " . friendly_time($report->time_created) . "</p>";
+			echo "<p class=\"reportedcontent_detail\"><b>" . elgg_echo('reportedcontent:by') . ": </b><a href=\"{$user_url}\">" . $user . "</a>, " . elgg_view_friendly_time($report->time_created) . "</p>";
 			echo "<p class=\"reportedcontent_detail\"><b>" . elgg_echo('reportedcontent:objecttitle') . ": </b>" . $report->title . "</p>";
 			echo "<p class=\"reportedcontent_detail\"><b>" . elgg_echo('reportedcontent:objecturl') . ": </b><a href=\"{$report->address}\">" . elgg_echo('reportedcontent:visit')  . "</a></p>";
 			echo "<p><a class=\"collapsibleboxlink\">" . elgg_echo('reportedcontent:moreinfo') . "</a></p>";

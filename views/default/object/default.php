@@ -50,7 +50,7 @@ if ($vars['full']) {
 	}
 
 	$info .= "<div>".sprintf(elgg_echo("entity:default:strapline"),
-		friendly_time($vars['entity']->time_created),
+		elgg_view_friendly_time($vars['entity']->time_created),
 		$ownertxt
 	);
 

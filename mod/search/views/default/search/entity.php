@@ -52,7 +52,7 @@ $time = $entity->getVolatileData('search_time');
 if (!$time) {
 	$tc = $entity->time_created;
 	$tu = $entity->time_updated;
-	$time = friendly_time(($tu > $tc) ? $tu : $tc);
+	$time = elgg_view_friendly_time(($tu > $tc) ? $tu : $tc);
 }
 ?>
 	<div class="search_listing">

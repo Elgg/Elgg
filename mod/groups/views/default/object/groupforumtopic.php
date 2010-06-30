@@ -15,7 +15,7 @@
     //$description = get_entity($vars['entity']->description);
     $topic_owner = get_user($vars['entity']->owner_guid);
     $group = get_entity($vars['entity']->container_guid);
-    $forum_created = friendly_time($vars['entity']->time_created);
+    $forum_created = elgg_view_friendly_time($vars['entity']->time_created);
     $counter = $vars['entity']->countAnnotations("group_topic_post");
 	$last_post = $vars['entity']->getAnnotations("group_topic_post", 1, 0, "desc");
  
@@ -34,7 +34,7 @@
 	if(get_context() == "search"){
 	
 	    $info = "<p class=\"latest_discussion_info\">" . sprintf(elgg_echo('group:created'), $forum_created, $counter) .  "<br /><span class=\"timestamp\">";
-	    if (($last_time) && ($u)) $info.= sprintf(elgg_echo('groups:lastupdated'), friendly_time($last_time), " <a href=\"" . $u->getURL() . "\">" . $u->name . "</a>");
+	    if (($last_time) && ($u)) $info.= sprintf(elgg_echo('groups:lastupdated'), elgg_view_friendly_time($last_time), " <a href=\"" . $u->getURL() . "\">" . $u->name . "</a>");
 	    $info .= '</span></p>';
 		//get the group avatar
 		$icon = elgg_view("profile/icon",array('entity' => $group, 'size' => 'small'));
@@ -49,7 +49,7 @@
 	}else{
 		
 		$info = "<span class=\"latest_discussion_info\"><span class=\"timestamp\">" . sprintf(elgg_echo('group:created'), $forum_created, $counter) . "</span>";
-		if (($last_time) && ($u)) $info.= "<br /><span class='timestamp'>" . elgg_echo('groups:updated') . " " . friendly_time($last_time) . " by <a href=\"" . $u->getURL() . "\">" . $u->name . "</a></span>";
+		if (($last_time) && ($u)) $info.= "<br /><span class='timestamp'>" . elgg_echo('groups:updated') . " " . elgg_view_friendly_time($last_time) . " by <a href=\"" . $u->getURL() . "\">" . $u->name . "</a></span>";
 
 		    if (groups_can_edit_discussion($vars['entity'], page_owner_entity()->owner_guid)) {
 	

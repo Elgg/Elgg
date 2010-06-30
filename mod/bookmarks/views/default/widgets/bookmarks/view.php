@@ -28,7 +28,7 @@ $(document).ready(function () {
 				$owner = $s->getOwnerEntity();
 
 				//get the time
-				$friendlytime = friendly_time($s->time_created);
+				$friendlytime = elgg_view_friendly_time($s->time_created);
 
 				//get the user icon
 				$icon = elgg_view(

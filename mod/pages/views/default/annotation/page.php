@@ -23,7 +23,7 @@
 	$owner = get_entity($owner_guid);
 			
 	$rev = sprintf(elgg_echo('pages:revision'), 
-		friendly_time($annotation->time_created),
+		elgg_view_friendly_time($annotation->time_created),
 		
 		"<a href=\"" . $owner->getURL() . "\">" . $owner->name ."</a>"
 	);
