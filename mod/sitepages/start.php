@@ -25,7 +25,7 @@
 function sitepages_init() {
 	require_once(dirname(__FILE__) . '/sitepages_functions.php');
 	global $CONFIG;
-	
+
 	// Extend CSS
 	elgg_extend_view('css', 'sitepages/css');
 
@@ -49,11 +49,13 @@ function sitepages_init() {
 	// define our own ecml keywords and views
 	register_plugin_hook('get_keywords', 'ecml', 'sitepages_ecml_keyword_hook');
 	register_plugin_hook('get_views', 'ecml', 'sitepages_ecml_views_hook');
-	
+
 	// hook into the walled garden pages
 	register_plugin_hook('public_pages', 'walled_garden', 'sitepages_public_pages');
 
 	register_action('settings/sitepages/save', FALSE, "{$CONFIG->pluginspath}sitepages/actions/edit_settings.php");
+	
+	elgg_add_admin_submenu_item('sitepages', elgg_echo('sitepages'), 'site');
 }
 
 /**
@@ -174,7 +176,7 @@ function sitepages_ecml_keyword_hook($hook, $entity_type, $return_value, $params
 //		'restricted' => array('sitepages/custom_frontpage')
 //	);
 
-	$return_value['entity'] = array(
+	$return_value['entities'] = array(
 		'description' => elgg_echo('sitepages:ecml:keywords:entity:desc'),
 		'usage' => elgg_echo('sitepages:ecml:keywords:entity:usage'),
 		'restricted' => array('sitepages/custom_frontpage')
@@ -207,7 +209,7 @@ function sitepages_public_pages($hook, $type, $return_value, $params) {
 	$return_value[] = 'pg/sitepages/read/About';
 	$return_value[] = 'pg/sitepages/read/Terms';
 	$return_value[] = 'pg/sitepages/read/Privacy';
-	
+
 	return $return_value;
 }
 

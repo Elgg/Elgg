@@ -4,9 +4,9 @@ HTML metatags.
 CONTENTS:
 	1.  Overview
 	2.  Using ECML on the front pages
-	2.1  [[login_box]]
-	2.2  [[site_stats]]
-	2.3  [[user_list]]
+	2.1  [loginbox]
+	2.2  [sitestats]
+	2.3  [userlist]
 
 
 1.  OVERVIEW
@@ -21,23 +21,23 @@ CONTENTS:
 	Site Pages supports ECML on the front page and provides the following
 	ECML keywords:
 
-	[[login_box]] -- A login box.  Required on the logged out front page.
-	[[site_stats]] -- Simple site statistics.
-	[[user_list]] -- A list of users.
+	[loginbox] -- A login box.  Required on the logged out front page.
+	[sitestats] -- Simple site statistics.
+	[userlist] -- A list of users.
 
 	To learn more about ECML, click the ECML icon below the input fields.
 
 
-2.1  [[login_box]]
+2.1  [loginbox]
 	The Login Box keyword displays a box to let users log in.  This view
 	is required on the logged out front page.
 
 
-2.2  [[site_stats]]
+2.2  [sitestats]
 	The Site Stats keyword doesn't do anything yet.
 
 
-2.3  [user_list]]
+2.3  [userlist]
 	The User List keyword displays a list of users and takes the following
 	optional arguments (*default if not passed):
 
