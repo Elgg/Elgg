@@ -1,3 +1,4 @@
+<div class="sidebar_container clearfloat">
 <?php
 	$newest_members = $vars['members'];
 ?>
@@ -7,3 +8,4 @@
 		echo "<div class='entity_listing_icon'>" . elgg_view("profile/icon",array('entity' => $mem, 'size' => 'small')) . "</div>";
 	}
 ?>
+</div>
