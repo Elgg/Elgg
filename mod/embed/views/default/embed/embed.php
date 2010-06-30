@@ -12,6 +12,7 @@
 $sections = elgg_get_array_value('sections', $vars, array());
 $active_section = elgg_get_array_value('active_section', $vars, array_shift(array_keys($sections)));
 $upload_sections = elgg_get_array_value('upload_sections', $vars, array());
+$internal_name = elgg_get_array_value('internal_name', $vars, array());
 
 if (!$sections) {
 	$content = elgg_echo('embed:no_sections');
@@ -122,7 +123,7 @@ $(document).ready(function() {
 	// insert embed codes
 	$('.embed_data').click(function() {
 		var embed_code = $(this).data('embed_code');
-		elggEmbedInsertContent(embed_code);
+		elggEmbedInsertContent(embed_code, '<?php echo addslashes($internal_name); ?>');
 	});
 
 	// tabs
