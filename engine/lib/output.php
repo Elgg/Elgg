@@ -140,7 +140,25 @@ function elgg_format_url($url) {
  * @return string The optimised title
  */
 function friendly_title($title) {
-	return elgg_view('output/friendlytitle', array('title' => $title));
+	return elgg_get_friendly_title($title);
+}
+
+/**
+ * When given a title, returns a version suitable for inclusion in a URL
+ *
+ * @todo add plugin hook so that developers can provide their own friendly title
+ * @param string $title The title
+ * @return string The optimised title
+ * @since 1.7.2
+ */
+function elgg_get_friendly_title($title) {
+	//$title = iconv('UTF-8', 'ASCII//TRANSLIT', $title);
+	$title = preg_replace("/[^\w ]/","",$title);
+	$title = str_replace(" ","-",$title);
+	$title = str_replace("--","-",$title);
+	$title = trim($title);
+	$title = strtolower($title);
+	return $title;
 }
 
 /**
@@ -150,5 +168,69 @@ function friendly_title($title) {
  * @return string The friendly time
  */
 function friendly_time($time) {
+	return elgg_view_friendly_time($time);
+}
+
+/**
+ * Displays a UNIX timestamp in a friendly way (eg "less than a minute ago")
+ *
+ * @todo add plugin hook so that developers can provide their own friendly time
+ * @param int $time A UNIX epoch timestamp
+ * @return string The friendly time
+ * @since 1.7.2
+ */
+function elgg_get_friendly_time($time) {
+	$diff = time() - (int)$time;
+
+	$minute = 60;
+	$hour = $minute * 60;
+	$day = $hour * 24;
+
+	if ($diff < $minute) {
+			return elgg_echo("friendlytime:justnow");
+	} else if ($diff < $hour) {
+		$diff = round($diff / $minute);
+		if ($diff == 0) {
+			$diff = 1;
+		}
+
+		if ($diff > 1) {
+			return sprintf(elgg_echo("friendlytime:minutes"), $diff);
+		} else {
+			return sprintf(elgg_echo("friendlytime:minutes:singular"), $diff);
+		}
+	} else if ($diff < $day) {
+		$diff = round($diff / $hour);
+		if ($diff == 0) {
+			$diff = 1;
+		}
+
+		if ($diff > 1) {
+			return sprintf(elgg_echo("friendlytime:hours"), $diff);
+		} else {
+			return sprintf(elgg_echo("friendlytime:hours:singular"), $diff);
+		}
+	} else {
+		$diff = round($diff / $day);
+		if ($diff == 0) {
+			$diff = 1;
+		}
+
+		if ($diff > 1) {
+			return sprintf(elgg_echo("friendlytime:days"), $diff);
+		} else {
+			return sprintf(elgg_echo("friendlytime:days:singular"), $diff);
+		}
+	}
+}
+
+/**
+ * Displays a UNIX timestamp in a friendly way
+ *
+ * @param int $time A UNIX epoch timestamp
+ * @return string The friendly time HTML
+ * @since 1.7.2
+ */
+function elgg_view_friendly_time($time) {
 	return elgg_view('output/friendlytime', array('time' => $time));
 }
