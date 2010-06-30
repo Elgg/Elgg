@@ -1,2 +1,5 @@
-	var entity;
-	$('textarea[name=' + textAreaName + ']').val($('textarea[name=' + textAreaName + ']').val() + ' ' + content);
+<?php 
+/**
+ * Blank for compatibility.
+ */
+?>

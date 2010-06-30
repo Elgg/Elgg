@@ -13,7 +13,7 @@ function tinymce_init() {
 	global $CONFIG;
 
 	elgg_extend_view('css', 'tinymce/css');
-	//set_view_location('embed/addcontentjs', $CONFIG->pluginspath . 'tinymce/views/');
+	elgg_extend_view('embed/custom_insert_js', 'tinymce/embed_custom_insert_js');
 }
 
 register_elgg_event_handler('init', 'system', 'tinymce_init', 9999);

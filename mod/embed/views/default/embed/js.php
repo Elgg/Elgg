@@ -6,14 +6,27 @@
 ?>
 function elggEmbedInsertContent(content, textAreaName) {
 	content = ' ' + content + ' ';
+	
+	// default input.
+	// if this doesn't match anything it won't add anything.
+	$('textarea[name=' + textAreaName + ']').val($('textarea[name=' + textAreaName + ']').val() + ' ' + content);
+	
 	<?php
 		// This view includes the guts of the function to do the inserting.
 		// Anything that overrides input/longtext with its own editor
 		// needs to supply its own function here that inserts
 		// content into textAreaName.
 		// See TinyMCE as an example.
+		
+		// for compatibility
+		// the old on that was overriden.
 		echo elgg_view('embed/addcontentjs');
+		
+		// the one you should extend.
+		echo elgg_view('embed/custom_insert_js');
 	?>
+	
+	
 	$.facebox.close();
 }
 
