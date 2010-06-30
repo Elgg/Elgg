@@ -9,7 +9,7 @@
  * @link http://elgg.com/
  */
 ?>
-<div class="SidebarBox">
+<div class="sidebar_container">
 
 <h3><?php echo elgg_echo('members:searchtag'); ?></h3>
 <form id="memberssearchform" action="<?php echo $vars['url']; ?>mod/members/index.php?" method="get">
