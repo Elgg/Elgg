@@ -95,6 +95,12 @@ a:hover { color:black; text-decoration:underline; }
 	margin:0;
 	padding:0;
 	list-style: none;
+	background-color: transparent;
+	background-image: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
 }
 .admin_area .submenu li.selected a,
 .admin_area .submenu li.selected li.selected a,
@@ -153,6 +159,7 @@ a:hover { color:black; text-decoration:underline; }
 	margin-top:10px;
 	float:right;
 }
+
 
 /* ***************************************
 	GENERAL FORM ELEMENTS
