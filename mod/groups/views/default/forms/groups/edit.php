@@ -17,7 +17,7 @@
 	}
 	
 ?>
-<form action="<?php echo $vars['url']; ?>action/groups/edit" enctype="multipart/form-data" method="post" class="margin_top">
+<form action="<?php echo $vars['url']; ?>action/groups/edit" id="edit_group" enctype="multipart/form-data" method="post" class="margin_top">
 
 	<?php echo elgg_view('input/securitytoken'); ?>
 
@@ -130,6 +130,7 @@ if (is_array($vars['config']->group) && sizeof($vars['config']->group) > 0)
 		}
 	}
 	?>
+	<div class="divider"></div>
 	<p>
 		<?php
 			if ($vars['entity'])

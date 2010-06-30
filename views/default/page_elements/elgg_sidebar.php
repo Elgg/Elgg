@@ -17,4 +17,3 @@ if (isset($vars['area2'])) {
 if (isset($vars['area3'])) {
 	echo $vars['area3'];
 }
-

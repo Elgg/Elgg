@@ -208,15 +208,15 @@
 			if ($page_owner instanceof ElggGroup) {
 				if (isloggedin() && $page_owner->canEdit() && !$page_owner->isPublicMembership()) {
 					$url = "{$CONFIG->wwwroot}mod/groups/membershipreq.php?group_guid={$page_owner->getGUID()}";
-					add_submenu_item(elgg_echo('groups:membershiprequests'), $url, '1groupsactions');
+					add_submenu_item(elgg_echo('groups:membershiprequests'), $url, 'groupsactions1');
 				}
 			} else {
-				add_submenu_item(elgg_echo('groups:all'), "{$CONFIG->wwwroot}pg/groups/world/", '1groupslinks');
+				add_submenu_item(elgg_echo('groups:all'), "{$CONFIG->wwwroot}pg/groups/world/", 'groupslinks1');
 
 				if ($user = get_loggedin_user()) {
-					add_submenu_item(elgg_echo('groups:owned'), "{$CONFIG->wwwroot}pg/groups/owned/$user->username", '1groupslinks');
-					add_submenu_item(elgg_echo('groups:yours'), "{$CONFIG->wwwroot}pg/groups/member/$user->username", '1groupslinks');
-					add_submenu_item(elgg_echo('groups:invitations'), "{$CONFIG->wwwroot}pg/groups/invitations/$user->username", '1groupslinks');
+					add_submenu_item(elgg_echo('groups:owned'), "{$CONFIG->wwwroot}pg/groups/owned/$user->username", 'groupslinks1');
+					add_submenu_item(elgg_echo('groups:yours'), "{$CONFIG->wwwroot}pg/groups/member/$user->username", 'groupslinks1');
+					add_submenu_item(elgg_echo('groups:invitations'), "{$CONFIG->wwwroot}pg/groups/invitations/$user->username", 'groupslinks1');
 				}
 			}
 		}
