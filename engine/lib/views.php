@@ -1019,7 +1019,7 @@ function autoregister_views($view_base, $folder, $base_location_path, $viewtype)
  * @param unknown_type $body
  * @return unknown
  */
-function page_draw($title, $body, $sidebar = "") {
+function page_draw($title, $body, $sidebar = "", $page_shell = 'page_shells/default') {
 
 	// get messages - try for errors first
 	$sysmessages = system_messages(null, "errors");
@@ -1032,7 +1032,7 @@ function page_draw($title, $body, $sidebar = "") {
 	}
 
 	// Draw the page
-	$output = elgg_view('page_shells/default', array(
+	$output = elgg_view($page_shell, array(
 		'title' => $title,
 		'body' => $body,
 		'sidebar' => $sidebar,
