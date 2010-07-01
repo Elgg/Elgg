@@ -11,17 +11,202 @@
 <style type="text/css">
 /**
  * ELGG DEFAULT ADMIN AREA CSS
-   @todo - move into separate css file
 */
-/* temporary force-hide / override some base elements  */
-body { background-color: #444444; }
-#elgg_header { display:none; }
-#elgg_footer { display:none; }
-#elgg_topbar { display:none; }
-a { color:#0054A7; text-decoration:none; }
-a:hover { color:black; text-decoration:underline; }
+
+/* ***************************************
+	RESET CSS
+*************************************** */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+img {
+	border-width:0;
+	border-color:transparent;
+}
+:focus {
+	outline:0 none;
+	-moz-outline-style: none;
+}
+ol, ul {
+	/* list-style:none outside none; */
+	margin: 0 0 10px 0;
+	padding-left: 20px;
+}
+em, i {
+	font-style:italic;
+}
+ins {
+	text-decoration:none;
+}
+del {
+	text-decoration:line-through;
+}
+strong {
+	font-weight:bold;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+caption, th, td {
+	text-align: left;
+	font-weight: normal;
+	vertical-align: top;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: "";
+}
+blockquote, q {
+	quotes: "" "";
+}
+
+
+
+
+/* ***************************************
+	BASICS
+*************************************** */
+body {
+	text-align:left;
+	margin:0 auto;
+	padding:0;
+	background-color: #444444;
+	font-size: 80%;
+	line-height: 1.4em;
+	font-family: "Lucida Grande",Arial,Tahoma,Verdana,sans-serif;
+}
+a {
+	color:#0054A7;
+	text-decoration: none;
+	-moz-outline-style: none;
+	outline: none;
+}
+a:hover,
+a.selected {
+	color: black;
+	text-decoration: underline;
+}
+p {
+	margin-bottom:15px;
+}
+p:last-child {
+	margin-bottom:0;
+}
+small {
+	font-size: 90%;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-weight: bold;
+	line-height: auto;
+	color:#0054A7;
+}
+h1 { font-size: 1.8em; }
+h2 { font-size: 1.5em; line-height: 1.1em; }
+h3 { font-size: 1.2em; }
+h4 { font-size: 1.0em; }
+h5 { font-size: 0.9em; }
+h6 { font-size: 0.8em; }
+dt {
+	font-weight: bold;
+}
+dd {
+	margin: 0 0 1em 1em;
+}
+pre, code {
+	font-family:Monaco,"Courier New",Courier,monospace;
+	font-size:12px;
+	background:#EBF5FF;
+	overflow:auto;
+
+	overflow-x: auto; /* Use horizontal scroller if needed; for Firefox 2, not needed in Firefox 3 */
+	white-space: pre-wrap; /* css-3 */
+	white-space: -moz-pre-wrap !important; /* Mozilla, since 1999 */
+	white-space: -pre-wrap; /* Opera 4-6 */
+	white-space: -o-pre-wrap; /* Opera 7 */
+	word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+code {
+	padding:2px 3px;
+}
+pre {
+	padding:3px 15px;
+	margin:0px 0 15px 0;
+	line-height:1.3em;
+}
+blockquote {
+	padding:3px 15px;
+	margin:0px 0 15px 0;
+	line-height:1.3em;
+	background:#EBF5FF;
+	border:none;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+}
+
+
+/* ***************************************
+	GENERIC SELECTORS
+*************************************** */
+h2 {
+	border-bottom:1px solid #CCCCCC;
+	padding-bottom:5px;
+}
+.clearfloat:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.link {
+	cursor:pointer;
+}
+.small {
+	font-size: 90%;
+}
+.divider {
+	border-top:1px solid #cccccc;
+}
+.hidden {
+	display:none;
+}
+.radius8 {
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+}
+.margin_none {
+	margin:0;
+}
+.margin_top {
+	margin-top:10px;
+}
 .entity_title a { color:#0054A7; }
 .elgg_horizontal_tabbed_nav a:hover { color:#0054A7; }
+table.mceLayout {
+	width:100% !important;
+}
+
+
+
+
+
+
 
 #admin_header {
 	background-color:#333333;
@@ -389,15 +574,95 @@ a:hover { color:black; text-decoration:underline; }
 
 
 
+/* ***************************************
+	CONTENT HEADER
+**************************************** */
+#content_header {
+	border-bottom:1px solid #CCCCCC;
+}
+#content_header:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.content_header_title {
+	float:left;
+}
+.content_header_title {
+	margin-right:10px;
+	max-width: 530px;
+}
+.content_header_title h2 {
+	border:none;
+	margin-bottom:0;
+	padding-bottom:5px;
+}
+.content_header_options {
+	float:right;
+}
+.content_header_options .action_button {
+	float:right;
+	margin:0 0 5px 10px;
+}
 
 
 
+/* REPORTED CONTENT */
+.admin_settings.reported_content {
+	margin:5px 0 0 0;
+	padding:5px 7px 3px 9px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+.admin_settings.reported_content p {
+	margin:0;
+}
+.active_report {
+	border:1px solid #D3322A;
+	background:#F7DAD8;
+}
+.archived_report {
+	border:1px solid #666666;
+	background:#dedede;
+}
+.admin_settings.reported_content .controls {
+	float:right;
+	margin:14px 5px 0 0;
+}
+.admin_settings.reported_content a.action_button {
+	display:inline;
+	float:right;
+	margin-left:15px;
+}
+.admin_settings.reported_content .details_link {
+	cursor: pointer;
+}
 
 
 
+/* ECML */
+.ecml_admin_table {
+	width:100%;
+}
+.ecml_admin_table td, th {
+	border: 1px solid gray;
+	text-align: center;
+	padding: 5px;
+}
+.ecml_admin_table th, .ecml_keyword_desc {
+	font-weight: bold;
+}
+.ecml_row_odd {
+	background-color: #EEE;
+}
+.ecml_row_even {
 
-
-
+}
+.ecml_restricted {
+	color: #555;
+}
 
 
 
@@ -560,6 +825,55 @@ ul.admin_plugins {
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 }
+
+/* ***************************************
+	ELGG TABBED PAGE NAVIGATION
+*************************************** */
+.elgg_horizontal_tabbed_nav {
+	margin-bottom:5px;
+	padding: 0;
+	border-bottom: 2px solid #cccccc;
+	display:table;
+	width:100%;
+}
+.elgg_horizontal_tabbed_nav ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.elgg_horizontal_tabbed_nav li {
+	float: left;
+	border: 2px solid #cccccc;
+	border-bottom-width: 0;
+	background: #eeeeee;
+	margin: 0 0 0 10px;
+	-moz-border-radius-topleft:5px;
+	-moz-border-radius-topright:5px;
+	-webkit-border-top-left-radius:5px;
+	-webkit-border-top-right-radius:5px;
+}
+.elgg_horizontal_tabbed_nav a {
+	text-decoration: none;
+	display: block;
+	padding:3px 10px 0 10px;
+	text-align: center;
+	height:21px;
+	color:#999999;
+}
+.elgg_horizontal_tabbed_nav a:hover {
+	background: #dedede;
+	color:#4690D6;
+}
+.elgg_horizontal_tabbed_nav .selected {
+	border-color: #cccccc;
+	background: white;
+}
+.elgg_horizontal_tabbed_nav .selected a {
+	position: relative;
+	top: 2px;
+	background: white;
+}
+
 </style>
 
 <div id="admin_header">

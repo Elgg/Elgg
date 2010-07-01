@@ -25,11 +25,7 @@ if (empty($vars['title'])) {
 	$title = $vars['config']->sitename . ": " . $vars['title'];
 }
 
-echo elgg_view('page_elements/html_begin', $vars);
-echo elgg_view('page_elements/elgg_topbar', $vars);
-// @todo this probably should be somewhere else 
+echo elgg_view('page_elements/html_begin_admin', $vars);
 echo elgg_view('messages/list', array('object' => $vars['sysmessages']));
-echo elgg_view('page_elements/elgg_header', $vars);
 echo elgg_view('page_elements/elgg_content', $vars);
-echo elgg_view('page_elements/elgg_footer', $vars);
 echo elgg_view('page_elements/html_end', $vars);
