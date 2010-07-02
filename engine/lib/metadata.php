@@ -190,18 +190,23 @@ function remove_metadata($entity_guid, $name, $value = "") {
  * @param int $owner_guid GUID of entity that owns the metadata
  * @param int $access_id Default is ACCESS_PRIVATE
  * @param bool $allow_multiple Allow multiple values for one key. Default is FALSE
- * @return bool
+ * @return int/bool id of metadata or FALSE if failure
  */
 function create_metadata($entity_guid, $name, $value, $value_type, $owner_guid, $access_id = ACCESS_PRIVATE, $allow_multiple = false) {
 	global $CONFIG;
 
 	$entity_guid = (int)$entity_guid;
+	// name and value are encoded in add_metastring()
 	//$name = sanitise_string(trim($name));
 	//$value = sanitise_string(trim($value));
 	$value_type = detect_extender_valuetype($value, sanitise_string(trim($value_type)));
 	$time = time();
 	$owner_guid = (int)$owner_guid;
 	$allow_multiple = (boolean)$allow_multiple;
+
+	if (!isset($value)) {
+		return FALSE;
+	}
 
 	if ($owner_guid==0) {
 		$owner_guid = get_loggedin_userid();
@@ -212,14 +217,14 @@ function create_metadata($entity_guid, $name, $value, $value_type, $owner_guid, 
 	$id = false;
 
 	$existing = get_data_row("SELECT * from {$CONFIG->dbprefix}metadata WHERE entity_guid = $entity_guid and name_id=" . add_metastring($name) . " limit 1");
-	if (($existing) && (!$allow_multiple) && (isset($value))) {
-		$id = $existing->id;
+	if ($existing && !$allow_multiple) {
+		$id = (int)$existing->id;
 		$result = update_metadata($id, $name, $value, $value_type, $owner_guid, $access_id);
 
 		if (!$result) {
 			return false;
 		}
-	} else if (isset($value)) {
+	} else {
 		// Support boolean types
 		if (is_bool($value)) {
 			if ($value) {
@@ -243,19 +248,14 @@ function create_metadata($entity_guid, $name, $value, $value_type, $owner_guid, 
 		// If ok then add it
 		$id = insert_data("INSERT into {$CONFIG->dbprefix}metadata (entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id) VALUES ($entity_guid, '$name','$value','$value_type', $owner_guid, $time, $access_id)");
 
-		if ($id!==false) {
+		if ($id !== false) {
 			$obj = get_metadata($id);
 			if (trigger_elgg_event('create', 'metadata', $obj)) {
-				return true;
+				return $id;
 			} else {
 				delete_metadata($id);
 			}
 		}
-
-	} else if ($existing) {
-		// TODO: Check... are you sure you meant to do this Ben? :)
-		$id = $existing->id;
-		delete_metadata($id);
 	}
 
 	return $id;
