@@ -142,7 +142,7 @@ function add_uuid_to_guid($guid, $uuid) {
 	$uuid = sanitise_string($uuid);
 
 	$result = create_metadata($guid, "import_uuid", $uuid);
-	return $result !== FALSE;
+	return (bool)$result;
 }
 
 

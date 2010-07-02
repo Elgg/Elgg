@@ -335,7 +335,7 @@ abstract class ElggEntity implements
 			unset($this->temp_metadata[$name]);
 			if ((int) $this->guid > 0) {
 				$result = create_metadata($this->getGUID(), $name, $value, $value_type, $this->getOwner(), $this->getAccessID(), $multiple);
-				return $result !== FALSE;
+				return (bool)$result;
 			} else {
 				if (($multiple) && (isset($this->temp_metadata[$name]))) {
 					if (!is_array($this->temp_metadata[$name])) {
