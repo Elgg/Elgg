@@ -21,7 +21,8 @@
 			$count = elgg_get_entities_from_metadata(array('metadata_name' => 'simpletype', 'metadata_value' => $simpletype, 'types' => 'object', 'subtypes' => 'file', 'owner_guid' => $SESSION['user']->guid, 'limit' => 6, 'offset' => $offset, 'count' => TRUE));
 			$entities = elgg_get_entities_from_metadata(array('metadata_name' => 'simpletype', 'metadata_value' => $simpletype, 'types' => 'object', 'subtypes' => 'file', 'owner_guid' => $SESSION['user']->guid, 'limit' => 6, 'offset' => $offset));
 		}
-		
+
+		elgg_register_tag_metadata_name('simpletype');
 		$types = get_tags(0,10,'simpletype','object','file',$SESSION['user']->guid);
 		
 	// Echo the embed view
