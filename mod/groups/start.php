@@ -321,6 +321,10 @@
 
 					include($CONFIG->pluginspath . "groups/membership.php");
 				break;
+				case "memberlist":
+					set_input('group_guid', $page[1]);
+					include($CONFIG->pluginspath . "groups/memberlist.php");
+				break;
 				default:
 					set_input('group_guid', $page[0]);
 					include($CONFIG->pluginspath . "groups/groupprofile.php");

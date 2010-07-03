@@ -58,6 +58,10 @@
 			'groups:group' => "Group",
 			'groups:search:tags' => "tag",
 
+			'groups:memberlist' => "Group members",
+			'groups:membersof' => "Members of %s",
+			'groups:members:more' => "View more members",
+
 			'groups:notfound' => "Group not found",
 			'groups:notfound:details' => "The requested group either does not exist or you do not have access to it",
 

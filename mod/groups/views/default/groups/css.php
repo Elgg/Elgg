@@ -399,6 +399,11 @@ span.timestamp {
 	width:176px;
 }
 
+#groups_member_link {
+	padding-bottom: 5px;
+	text-align: center;
+}
+
 .group_widget {
 	margin:0 0 20px 0;
 	padding: 0 0 5px 0;
