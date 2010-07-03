@@ -551,11 +551,51 @@ function list_entities_from_annotations($entity_type = "", $entity_subtype = "",
 	} else {
 		$asc = "desc";
 	}
-	$count = get_entities_from_annotations($entity_type, $entity_subtype, $name,
-		$value, $owner_guid, $group_guid, null, null, $asc, true);
-	$offset = (int) get_input("offset",0);
-	$entities = get_entities_from_annotations($entity_type, $entity_subtype, $name,
-		$value, $owner_guid, $group_guid, $limit, $offset, $asc);
+
+	$options = array();
+
+	if ($entity_type) {
+		$options['types'] = $entity_type;
+	}
+
+	if ($entity_subtype) {
+		$options['subtypes'] = $entity_subtype;
+	}
+
+	if ($name) {
+		$options['annotation_names'] = $name;
+	}
+
+	if ($value) {
+		$options['annotation_values'] = $value;
+	}
+
+	if ($limit) {
+		$options['limit'] = $limit;
+	}
+
+	if ($owner_guid) {
+		$options['annotation_owner_guid'] = $owner_guid;
+	}
+
+	if ($group_guid) {
+		$options['container_guid'] = $group_guid;
+	}
+
+	if ($order_by) {
+		$options['order_by'] = "maxtime $asc";
+	}
+
+	$options['count'] = TRUE;
+
+	$count = elgg_get_entities_from_annotations($options);
+
+	$options['count'] = FALSE;
+	if ($offset = sanitise_int(get_input('offset', 0))) {
+		$options['offset'] = $offset;
+	}
+
+	$entities = elgg_get_entities_from_annotations($options);
 
 	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $viewtypetoggle);
 }
