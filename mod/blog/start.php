@@ -103,7 +103,7 @@
 						
 					if (!defined('everyoneblog') && page_owner()) {
 						
-						if ($dates = get_entity_dates('object','blog',page_owner())) {
+						if ($dates = get_entity_dates('object','blog',page_owner(),0,'time_created desc')) {
 							foreach($dates as $date) {
 								$timestamplow = mktime(0,0,0,substr($date,4,2),1,substr($date,0,4));
 								$timestamphigh = mktime(0,0,0,((int) substr($date,4,2)) + 1,1,substr($date,0,4));
