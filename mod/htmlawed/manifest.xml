@@ -2,7 +2,7 @@
 <plugin_manifest>
 	<field key="author" value="Curverider Ltd" />
 	<field key="version" value="1.5" />
-	<field key="description" value="Provide tag filtering for user input (highly recommended)." />
+	<field key="description" value="Provides security filtering. Disabling this plugin is extremely insecure. DO NOT DISABLE." />
 	<field key="website" value="http://www.elgg.org/" />
 	<field key="copyright" value="(C) Curverider 2008-2010" />
 	<field key="licence" value="GNU Public License version 3" />
