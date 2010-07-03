@@ -17,9 +17,6 @@
 	if(!$type)
 		$type = "front"; //default to the frontpage
 	
-	// Set admin user for user block
-	set_page_owner($_SESSION['guid']);
-	
 	//display the title
 	$title = elgg_view_title(elgg_echo('expages'));
 	
