@@ -399,3 +399,14 @@ span.timestamp {
 	width:176px;
 }
 
+.group_widget {
+	margin:0 0 20px 0;
+	padding: 0 0 5px 0;
+	background:white;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+}
+
+.group_widget .search_listing {
+border:2px solid #CCCCCC;
+}

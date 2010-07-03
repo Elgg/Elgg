@@ -39,7 +39,9 @@
 			'item:object:bookmarks' => 'Bookmarked items',
 	
 			'bookmarks:group' => 'Group bookmarks',
-			'bookmarks:enablebookmarks' => 'Enable group bookmarks',
+			'groups:enablebookmarks' => 'Enable group bookmarks',
+			'bookmarks:nogroup' => 'This group does not have any bookmarks yet',
+			'bookmarks:more' => 'More bookmarks',
 	
 	
 		/**

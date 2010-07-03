@@ -48,8 +48,8 @@ function bookmarks_init() {
 	register_entity_type('object','bookmarks');
 
 	// Add group menu option
-	add_group_tool_option('bookmarks',elgg_echo('bookmarks:enablebookmarks'),true);
-
+	add_group_tool_option('bookmarks',elgg_echo('groups:enablebookmarks'),true);
+	elgg_extend_view('groups/right_column', 'bookmarks/groupprofile_bookmarks');
 }
 
 /**

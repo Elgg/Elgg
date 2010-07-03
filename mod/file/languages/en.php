@@ -22,9 +22,7 @@
 			'file:friends' => "%s's friends' files",
 			'file:all' => "All site files",
 			'file:edit' => "Edit file",
-			'file:more' => "More files",
 			'file:list' => "list view",
-			'file:group' => "Group files",
 			'file:gallery' => "gallery view",
 			'file:gallery_list' => "Gallery or list view",
 			'file:num_files' => "Number of files to display",
@@ -33,7 +31,12 @@
 			'file:upload' => "Upload a file",
 			'file:replace' => 'Replace file content (leave blank to not change file)',
 	
+			'file:group' => "Group files",
+			'groups:enablefiles' => 'Enable group files',
 			'file:newupload' => 'New file upload',
+			'file:more' => "More files",
+
+			'file:nogroup' => 'This group does not have any files yet',
 			
 			'file:file' => "File",
 			'file:title' => "Title",

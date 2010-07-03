@@ -71,7 +71,8 @@
 				add_widget_type('blog',elgg_echo("blog"),elgg_echo("blog:widget:description"));
 				
 			// Add group menu option
-				add_group_tool_option('blog',elgg_echo('blog:enableblog'),true);
+				add_group_tool_option('blog',elgg_echo('groups:enableblog'),true);
+				elgg_extend_view('groups/left_column', 'blog/groupprofile_blog');
 		}
 		
 		function blog_pagesetup() {
