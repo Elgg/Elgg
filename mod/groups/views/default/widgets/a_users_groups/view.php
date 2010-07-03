@@ -1,7 +1,7 @@
 <?php
 
 /** 
- *  Group profile widget - this displays a users groups on their profile
+ *  Group profile widget - this displays a user's groups on their profile
  **/
 
 //the number of groups to display
@@ -10,13 +10,15 @@ if (!$number) {
 	$number = 4;
 }
 
-//the page owner
-$owner = $vars['entity']->owner_guid;
+$options = array(
+	'relationship' => 'member',
+	'relationship_guid' => $vars['entity']->owner_guid,
+	'types' => 'group',
+	'limit' => $number,
+);
 
-//$groups = get_users_membership($owner);
-//$groups = list_entities_from_relationship('member',$owner,false,'group','',0,$number,false,false,false);
-$groups = get_entities_from_relationship('member', $owner, false, "group", "", 0, "", $number, 0, false, 0);
 
+$groups = elgg_get_entities_from_relationship($options);
 
 if ($groups) {
 
