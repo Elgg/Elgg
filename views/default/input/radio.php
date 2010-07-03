@@ -26,11 +26,13 @@ foreach($vars['options'] as $label => $option) {
 	} else {
 		$selected = "checked = \"checked\"";
 	}
-	$labelint = (int) $label;
-	if ("{$label}" == "{$labelint}") {
+
+	// handle indexed array where label is not specified
+	// @todo deprecate in Elgg 1.8
+	if (is_integer($label)) {
 		$label = $option;
 	}
-
+	
 	if (isset($vars['internalid'])) {
 		$id = "id=\"{$vars['internalid']}\"";
 	}
