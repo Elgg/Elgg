@@ -31,7 +31,7 @@
 	$u = get_user($last_user);
 
 	//select the correct output depending on where you are
-	if(get_context() == "search"){
+	if (get_context() == "search") {
 	
 	    $info = "<p class=\"latest_discussion_info\">" . sprintf(elgg_echo('group:created'), $forum_created, $counter) .  "<br /><span class=\"timestamp\">";
 	    if (($last_time) && ($u)) $info.= sprintf(elgg_echo('groups:lastupdated'), elgg_view_friendly_time($last_time), " <a href=\"" . $u->getURL() . "\">" . $u->name . "</a>");
@@ -46,17 +46,23 @@
 		//get the forum description
 		//$info .= $description;
 		
-	}else{
+	} else {
 		
 		$info = "<span class=\"latest_discussion_info\"><span class=\"timestamp\">" . sprintf(elgg_echo('group:created'), $forum_created, $counter) . "</span>";
 		if (($last_time) && ($u)) $info.= "<br /><span class='timestamp'>" . elgg_echo('groups:updated') . " " . elgg_view_friendly_time($last_time) . " by <a href=\"" . $u->getURL() . "\">" . $u->name . "</a></span>";
 
 		    if (groups_can_edit_discussion($vars['entity'], page_owner_entity()->owner_guid)) {
 	
-	                	// display the delete link to those allowed to delete
-	                	$info .= "<br /><span class=\"delete_discussion\">" . elgg_view("output/confirmlink", array(
+	                	// edit link
+	                	$info .= "<br /><span class='timestamp'>" . elgg_view("output/url", array(
+	                																'href' => $vars['url'] . "mod/groups/edittopic.php?group={$vars['entity']->container_guid}&amp;topic={$vars['entity']->guid}",
+	                																'text' => elgg_echo('edit'),
+	                															)) . "</span>&nbsp;";
+
+	                	// delete link
+	                	$info .= "<span class=\"timestamp\">" . elgg_view("output/confirmlink", array(
 	                																'href' => $vars['url'] . "action/groups/deletetopic?topic=" . $vars['entity']->guid . "&group=" . $vars['entity']->container_guid,
-	                																'text' => " ",
+	                																'text' => elgg_echo('delete'),
 	                																'confirm' => elgg_echo('deleteconfirm'),
 	                															)) . "</span>";
 	                				
