@@ -668,17 +668,20 @@ class ElggFile extends ElggObject {
 			}
 		}
 
-		// If parameters loaded then create new filestore
-		if (count($parameters)!=0) {
-			// Create new filestore object
-			if ((!isset($parameters['filestore'])) || (!class_exists($parameters['filestore']))) {
-				throw new ClassNotFoundException(elgg_echo('ClassNotFoundException:NotFoundNotSavedWithFile'));
+		if (isset($parameters['filestore'])) {
+			if (!class_exists($parameters['filestore'])) {
+				$msg = sprintf(elgg_echo('ClassNotFoundException:NotFoundNotSavedWithFile'),
+								$parameters['filestore'],
+								$this->guid);
+				throw new ClassNotFoundException($msg);
 			}
 
+			// Create new filestore object
 			$this->filestore = new $parameters['filestore']();
 
-			// Set parameters
 			$this->filestore->setParameters($parameters);
+		} else {
+			// @todo - should we log error if filestore not set
 		}
 
 
