@@ -504,7 +504,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	'admin:user:unban:no' => "Can not unban user",
 	'admin:user:unban:yes' => "User un-banned.",
 	'admin:user:delete:no' => "Can not delete user",
-	'admin:user:delete:yes' => "User deleted",
+	'admin:user:delete:yes' => "The user %s has been deleted",
 
 	'admin:user:resetpassword:yes' => "Password reset, user notified.",
 	'admin:user:resetpassword:no' => "Password could not be reset.",
