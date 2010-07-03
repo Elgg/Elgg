@@ -183,7 +183,8 @@ or click below to view the group's join requests:
 				Forum river items
 			*/
 
-			'groups:river:member' => 'is now a member of',
+			'groups:river:member' => '%s is now a member of',
+			'groups:river:create' => '%s has created the group',
 			'groupforum:river:updated' => '%s has updated',
 			'groupforum:river:update' => 'this discussion topic',
 			'groupforum:river:created' => '%s has created',
@@ -191,7 +192,6 @@ or click below to view the group's join requests:
 			'groupforum:river:posted' => '%s has posted a new comment',
 			'groupforum:river:annotate:create' => 'on this discussion topic',
 			'groupforum:river:postedtopic' => '%s has started a new discussion topic titled',
-			'groups:river:member' => '%s is now a member of',
 			'groups:river:togroup' => 'to the group',
 
 			'groups:nowidgets' => 'No widgets have been defined for this group.',

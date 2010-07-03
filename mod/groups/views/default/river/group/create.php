@@ -5,7 +5,7 @@
 	$objecturl = $object->getURL();
 	
 	$url = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
-	$string = sprintf(elgg_echo("groups:river:member"),$url) . " ";
+	$string = sprintf(elgg_echo("groups:river:create"),$url) . " ";
 	$string .= " <a href=\"" . $object->getURL() . "\">" . $object->name . "</a>";
 	
 ?>
