@@ -175,6 +175,7 @@ function bookmarks_page_handler($page) {
 
 				if ($bookmark && elgg_instanceof($bookmark, 'object', 'bookmarks') && $bookmark->canEdit()) {
 					$vars['entity'] = $bookmark;
+					$context = 'action';
 					$content = elgg_view('bookmarks/form', $vars);
 				} else {
 					$content = elgg_echo('bookmarks:cannot_find_bookmark');
