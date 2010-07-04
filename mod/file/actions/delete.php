@@ -63,6 +63,6 @@
 			
 		}
 		
-		forward("pg/file/" . $_SESSION['user']->username);
+		forward("pg/file/$container->username/");
 
 ?>

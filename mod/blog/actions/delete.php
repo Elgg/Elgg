@@ -20,8 +20,8 @@
 		$blog = get_entity($guid);
 		if ($blog->getSubtype() == "blog" && $blog->canEdit()) {
 	
-		// Get owning user
-				$owner = get_entity($blog->getOwner());
+		// Get container (user or group)
+				$container = get_entity($blog->container_guid);
 		// Delete it!
 				$rowsaffected = $blog->delete();
 				if ($rowsaffected > 0) {
@@ -31,7 +31,7 @@
 					register_error(elgg_echo("blog:notdeleted"));
 				}
 		// Forward to the main blog page
-				forward("mod/blog/?username=" . $owner->username);
+				forward("pg/blog/$container->username/");
 		
 		}
 		

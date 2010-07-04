@@ -5,6 +5,8 @@
 	if ($page = get_entity($page)) {
 		
 		if ($page->canEdit()) {
+
+			$container = get_entity($page->container_guid);
 			
 			// Bring all child elements forward
 				$parent = $page->parent_guid;
@@ -18,11 +20,9 @@
 					if ($parent) {
 						if ($parent = get_entity($parent)) {
 							forward($parent->getURL());
-							exit;
 						}
 					}
-					forward('pg/pages/owned/' . $_SESSION['user']->username);
-					exit;
+					forward("pg/pages/owned/$container->username/");
 				}
 			
 		}
