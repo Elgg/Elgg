@@ -26,7 +26,6 @@ if (empty($vars['title'])) {
 	$title = $vars['config']->sitename . ": " . $vars['title'];
 }
 ?>
-
 <?php echo elgg_view('page_elements/header', $vars); ?>
 <?php echo elgg_view('page_elements/elgg_topbar', $vars); ?>
 <?php echo elgg_view('page_elements/header_contents', $vars); ?>
