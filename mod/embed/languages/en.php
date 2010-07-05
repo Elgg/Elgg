@@ -5,9 +5,9 @@
  * @var unknown_type
  */
 $english = array(
-	'media:insert' => 'Embed media',
+	'media:insert' => 'Embed content',
 	'embed:instructions' => 'Click on any file to embed it into your content.',
-	'embed:media' => 'Embed media',
+	'embed:media' => 'Embed content',
 	'embed:upload' => 'Upload media',
 
 	// messages
