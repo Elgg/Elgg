@@ -203,7 +203,9 @@
 	font-size: 100%;
 }
 
-
+.blog_access .input-access {
+	width: 130px;
+}
 
 
 
