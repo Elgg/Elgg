@@ -61,6 +61,10 @@
 
 		// Register entity type
 		register_entity_type('object','file');
+
+		// embed support
+		register_plugin_hook('embed_get_sections', 'all', 'file_embed_get_sections');
+		register_plugin_hook('embed_get_items', 'file', 'file_embed_get_items');
 	}
 	
 	/**
@@ -210,6 +214,54 @@
 		}
 		return elgg_view('file/typecloud',array('owner_guid' => $owner_guid, 'friend_guid' => $friendofguid, 'types' => get_tags(0,10,'simpletype','object','file',$owner_guid)));
 
+	}
+	
+	/**
+	 * Register file as an embed type.
+	 *
+	 * @param unknown_type $hook
+	 * @param unknown_type $type
+	 * @param unknown_type $value
+	 * @param unknown_type $params
+	 */
+	function file_embed_get_sections($hook, $type, $value, $params) {
+		$value['file'] = array(
+			'name' => elgg_echo('file:files'),
+			'layout' => 'list',
+			'icon_size' => 'medium',
+		);
+	
+		return $value;
+	}
+	
+	/**
+	 * Return a list of files for embedding
+	 *
+	 * @param unknown_type $hook
+	 * @param unknown_type $type
+	 * @param unknown_type $value
+	 * @param unknown_type $params
+	 */
+	function file_embed_get_items($hook, $type, $value, $params) {
+		$options = array(
+			'owner_guid' => get_loggedin_userid(),
+			'type_subtype_pair' => array('object' => 'file'),
+			'count' => TRUE
+		);
+	
+		if ($count = elgg_get_entities($options)) {
+			$value['count'] += $count;
+		
+			unset($options['count']);
+			$options['offset'] = $params['offset'];
+			$options['limit'] = $params['limit'];
+		
+			$items = elgg_get_entities($options);
+		
+			$value['items'] = array_merge($items, $value['items']);
+		}
+	
+		return $value;
 	}
 	
 	/**
