@@ -42,6 +42,7 @@ foreach ($entities as $entity) {
 
 if (count($entity_guids) > 0) {
 	$river_items = elgg_view_river_items('', $entity_guids, '', '', '', '', $limit);
+	$river_items .= elgg_view('riverdashboard/js');
 } else {
 	$river_items .= elgg_echo('groups:no_activity');
 }
