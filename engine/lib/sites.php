@@ -286,6 +286,8 @@ class ElggSite extends ElggEntity {
 			'upgrade\.php',
 			'xml-rpc\.php',
 			'mt/mt-xmlrpc\.cgi',
+			'_css/css\.css',
+			'_css/js\.php',
 		);
 		
 		// include a hook for plugin authors to include public pages
