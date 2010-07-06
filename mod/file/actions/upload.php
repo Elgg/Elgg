@@ -17,6 +17,8 @@
 	$desc = get_input("description");
 	$access_id = (int) get_input("access_id");
 	$container_guid = (int) get_input('container_guid', 0);
+	$ajax = get_input('ajax', FALSE);
+	
 	if ($container_guid == 0) {
 		$container_guid = get_loggedin_userid();
 	}
@@ -38,8 +40,18 @@
 			$_SESSION['uploadtags'] = $tags;
 			$_SESSION['uploadaccessid'] = $access_id;
 			
-			register_error(elgg_echo('file:nofile'));
-			forward($_SERVER['HTTP_REFERER']);
+			$error = elgg_echo('file:nofile');
+			
+			if ($ajax) {
+				echo json_encode(array(
+					'status' => 'error',
+					'message' => $error
+				));
+				exit;
+			} else {
+				register_error($error);
+				forward($_SERVER['HTTP_REFERER']);
+			}
 		}
 		
 		$file = new FilePluginFile();
@@ -151,17 +163,41 @@
 	unset($_SESSION['uploadaccessid']);
 	
 	// handle results differently for new files and file updates
+	// ajax is only for new files from embed right now.
 	if ($new_file) {
 		if ($guid) {
-			system_message(elgg_echo("file:saved"));
-			add_to_river('river/object/file/create', 'create', get_loggedin_userid(), $file->guid);
+			$message = elgg_echo("file:saved");
+			if ($ajax) {
+				echo json_encode(array(
+					'status' => 'success',
+					'message' => $message
+				));
+				exit;
+				
+			} else {
+				system_message($message);
+				add_to_river('river/object/file/create', 'create', get_loggedin_userid(), $file->guid);
+			}
 		} else {
 			// failed to save file object - nothing we can do about this
-			register_error(elgg_echo("file:uploadfailed"));
+			$error = elgg_echo("file:uploadfailed");
+			
+			if ($ajax) {
+				echo json_encode(array(
+					'status' => 'error',
+					'message' => $error
+				));
+				exit;
+				
+			} else {
+				register_error($error);
+			}
 		}
 	
-		$container_user = get_entity($container_guid);
-		forward($CONFIG->wwwroot . "pg/file/" . $container_user->username);
+		if (!$ajax) {
+			$container_user = get_entity($container_guid);
+			forward($CONFIG->wwwroot . "pg/file/" . $container_user->username);
+		}
 	
 	} else {
 		if ($guid) {

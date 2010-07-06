@@ -65,6 +65,8 @@
 		// embed support
 		register_plugin_hook('embed_get_sections', 'all', 'file_embed_get_sections');
 		register_plugin_hook('embed_get_items', 'file', 'file_embed_get_items');
+		register_plugin_hook('embed_get_upload_sections', 'all', 'file_embed_get_upload_sections');
+		
 	}
 	
 	/**
@@ -226,9 +228,9 @@
 	 */
 	function file_embed_get_sections($hook, $type, $value, $params) {
 		$value['file'] = array(
-			'name' => elgg_echo('file:files'),
+			'name' => elgg_echo('file'),
 			'layout' => 'list',
-			'icon_size' => 'medium',
+			'icon_size' => 'small',
 		);
 	
 		return $value;
@@ -263,6 +265,24 @@
 	
 		return $value;
 	}
+	
+	/**
+	 * Register file as an embed type.
+	 *
+	 * @param unknown_type $hook
+	 * @param unknown_type $type
+	 * @param unknown_type $value
+	 * @param unknown_type $params
+	 */
+	function file_embed_get_upload_sections($hook, $type, $value, $params) {
+		$value['file'] = array(
+			'name' => elgg_echo('file'),
+			'view' => 'file/embed_upload'
+		);
+	
+		return $value;
+	}
+	
 	
 	/**
 	 * Populates the ->getUrl() method for file objects
