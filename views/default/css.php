@@ -1310,7 +1310,7 @@ a.action_button:focus {
 	background-image: none;
 	border-color: #4690d6;
 	color:white;
-	text-shadow:0 -1px 0 #999999;
+	text-shadow:0 -1px 0 black;
 }
 /* small round delete button */
 .delete_button {
