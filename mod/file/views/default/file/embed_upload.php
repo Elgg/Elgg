@@ -17,7 +17,6 @@ $form_body .= '<p>' . elgg_echo('access') . ": " . elgg_view('input/access', arr
 $form_body .= $categories;
 $form_body .= elgg_view('input/hidden', array('internalname' => 'ajax', 'value' => TRUE));
 $form_body .= '<p>' . elgg_view('input/submit', array('value' => elgg_echo('upload'))) . '</p>';
-$form_body .= '</div>';
 
 echo elgg_view('input/form', array(
 	'body' => $form_body,
