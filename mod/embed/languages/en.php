@@ -9,6 +9,7 @@ $english = array(
 	'embed:instructions' => 'Click on any file to embed it into your content.',
 	'embed:media' => 'Embed content',
 	'embed:upload' => 'Upload media',
+	'embed:upload_type' => 'Upload type: ',
 
 	// messages
 	'embed:no_upload_content' => 'No upload content!',
