@@ -53,7 +53,7 @@ function embed_page_handler($page) {
 			asort($sections, SORT_LOCALE_STRING);
 			asort($upload_sections, SORT_LOCALE_STRING);
 			$active_section = get_input('active_section', NULL);
-			$internal_name = get_input('internalname', NULL);
+			$internal_name = get_input('internal_name', NULL);
 
 			echo elgg_view('embed/embed', array(
 				'sections' => $sections,

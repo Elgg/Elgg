@@ -12,6 +12,7 @@ $english = array(
 
 	// messages
 	'embed:no_upload_content' => 'No upload content!',
+	'embed:no_section_content' => 'No items found.',
 );
 
 add_translation("en", $english);
