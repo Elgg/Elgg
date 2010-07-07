@@ -99,7 +99,7 @@
 					if (!isset($vars['full']) || (isset($vars['full']) && $vars['full'] != FALSE)) {
 						echo elgg_view('output/longtext', array('value' => $vars['entity']->description));
 					} else {
-						$body = elgg_make_excerpt($vars['entity']->description, 500);
+						$body = elgg_get_excerpt($vars['entity']->description, 500);
 						// add a "read more" link if cropped.
 						if (elgg_substr($body, -3, 3) == '...') {
 							$body .= " <a href=\"{$vars['entity']->getURL()}\">" . elgg_echo('blog:read_more') . '</a>';

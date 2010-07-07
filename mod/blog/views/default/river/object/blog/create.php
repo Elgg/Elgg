@@ -9,7 +9,7 @@
 	$string = sprintf(elgg_echo("blog:river:created"),$url) . " ";
 	$string .= elgg_echo("blog:river:create") . " <a href=\"" . $object->getURL() . "\">" . $object->title . "</a>";
 	$string .= "<div class=\"river_content_display\">";
-	$string .= elgg_make_excerpt($contents, 200);
+	$string .= elgg_get_excerpt($contents, 200);
 	$string .= "</div>";
 
 	echo $string;

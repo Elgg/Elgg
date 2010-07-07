@@ -97,7 +97,7 @@ function autop($pee, $br = 1) {
  * @return string
  * @since 1.7.2
  */
-function elgg_make_excerpt($text, $num_chars = 250) {
+function elgg_get_excerpt($text, $num_chars = 250) {
 	$text = trim(strip_tags($text));
 	$string_length = elgg_strlen($text);
 	

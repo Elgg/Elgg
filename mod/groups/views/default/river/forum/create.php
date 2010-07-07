@@ -18,7 +18,7 @@
 	$string = sprintf(elgg_echo("groupforum:river:posted"),$url_user) . " ";
 	$string .= elgg_echo("groupforum:river:annotate:create") . " | <a href=\"" . $url . "\">" . $object->title . "</a>";
 	$string .= "<div class=\"river_content_display\">";
-	$string .= elgg_make_excerpt($contents, 200);
+	$string .= elgg_get_excerpt($contents, 200);
 	$string .= "</div>";
 
 	echo $string;
