@@ -1809,41 +1809,17 @@ function __elgg_shutdown_hook() {
 function elgg_init() {
 	global $CONFIG;
 
+	// Actions
+	register_action('comments/add');
+	register_action('comments/delete');
+
 	// Page handler for JS
-	register_page_handler('js','js_page_handler');
+	register_page_handler('js', 'js_page_handler');
 
 	// Register an event triggered at system shutdown
 	register_shutdown_function('__elgg_shutdown_hook');
 }
 
-/**
- * Boot Elgg
- * @return unknown_type
- */
-function elgg_boot() {
-	global $CONFIG;
-	
-	// Actions
-	register_action('comments/add');
-	register_action('comments/delete');
-
-	elgg_view_register_simplecache('css');
-	elgg_view_register_simplecache('js/friendsPickerv1');
-	elgg_view_register_simplecache('js/initialise_elgg');
-	
-	// discover the built-in view types
-	// @todo cache this
-	$view_path = $CONFIG->viewpath;
-	$CONFIG->view_types = array();
-
-	$views = scandir($view_path);
-
-	foreach ($views as $view) {
-		if ('.' !== substr($view, 0, 1) && is_dir($view_path . $view)) {
-			$CONFIG->view_types[] = $view;
-		}
-	}
-}
 
 /**
  * Runs unit tests for the API.
@@ -1877,5 +1853,4 @@ define('REFERRER', -1);
 define('REFERER', -1);
 
 register_elgg_event_handler('init', 'system', 'elgg_init');
-register_elgg_event_handler('boot', 'system', 'elgg_boot', 1000);
 register_plugin_hook('unit_test', 'system', 'elgg_api_test');
