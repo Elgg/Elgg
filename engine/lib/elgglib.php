@@ -2411,6 +2411,37 @@ function elgg_get_array_value($key, array $array, $default = NULL) {
 }
 
 /**
+ * Sorts a 3d array by specific element.
+ * Will re-index numeric indexes.
+ * NB: This operates the same as the built-in sort functions.
+ * ie, sorts the array and returns a bool for success.
+ *
+ * Do this: elgg_sort_3d_array_by_value($my_array);
+ * Not this: $my_array = elgg_sort_3d_array_by_value($my_array);
+ *
+ * @param array $array Array to sort
+ * @param string $element Element to sort by
+ * @param $sort_order
+ * @param $sort_type
+ * @return bool
+ */
+function elgg_sort_3d_array_by_value(&$array, $element, $sort_order = SORT_ASC, $sort_type = SORT_LOCALE_STRING) {
+	$sort = array();
+	
+	foreach ($array as $k => $v) {
+		if (isset($v[$element])) {
+			$sort[] = strtolower($v[$element]);
+		} else {
+			$sort[] = NULL;
+		}
+	}
+
+	var_dump($sort, $array);
+	
+	return array_multisort($sort, $sort_order, $sort_type, $array);
+}
+
+/**
  * Some useful constant definitions
  */
 define('ACCESS_DEFAULT', -1);
