@@ -17,6 +17,7 @@ if(isset($vars['entity'])){
 	$access_id = $vars['entity']->access_id;
 	$tags = $vars['entity']->tags;
 	$notes = $vars['entity']->description;
+	$owner = get_entity($vars['entity']->container_guid);
 	$url = "action/bookmarks/edit";
 }else{
 	//set some variables
@@ -93,7 +94,7 @@ if(isset($vars['entity'])){
 			<?php
 					//if it is a group, pull out the group access view
 					if(page_owner_entity() instanceof ElggGroup){
-						$access_options = group_access_options(page_owner_entity());
+						$access_options = group_access_options($owner);
 						echo elgg_view('input/access', array('internalname' => 'access', 
 																		'value' => $access_id, 
 																		'options' => $access_options));
