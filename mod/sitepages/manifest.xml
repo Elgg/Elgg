@@ -11,5 +11,4 @@
 	<field key="licence" value="GNU Public License version 2" />
 	<field key="elgg_version" value="2009030702" />
 	<field key="admin_interface" value="advanced" />
-	<field key="elgg_install_state" value="enabled" />
 </plugin_manifest>
