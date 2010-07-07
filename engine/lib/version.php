@@ -103,6 +103,9 @@ function version_upgrade_check() {
  *
  */
 function version_upgrade() {
+	// It's possible large upgrades could exceed the max execution time.
+	set_time_limit(0);
+	
 	$dbversion = (int) datalist_get('version');
 
 	// No version number? Oh snap...this is an upgrade from a clean installation < 1.7.
