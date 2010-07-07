@@ -2434,9 +2434,7 @@ function elgg_sort_3d_array_by_value(&$array, $element, $sort_order = SORT_ASC, 
 		} else {
 			$sort[] = NULL;
 		}
-	}
-
-	var_dump($sort, $array);
+	};
 	
 	return array_multisort($sort, $sort_order, $sort_type, $array);
 }
