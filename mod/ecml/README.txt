@@ -7,7 +7,8 @@ CONTENTS:
 		3.1  Utility keywords 'entity' and 'view'
 		3.2  Embedded 3rd party media
 	4.  Custom ECML Keywords
-	5.  Hints and Quirks
+	5.  Embed support
+	6.  Hints and Quirks
 
 
 1.  OVERVIEW
@@ -116,6 +117,7 @@ CONTENTS:
 
 			function buttonizer_ecml_keywords($hook, $type, $value, $params) {
 				$value['buttonizer'] = array(
+					'name' => 'Buttonizer',
 					'view' => 'buttonizer/ecml/buttonizer',
 					'description' => 'Makes your text a button!  What could be better?',
 					'usage' => 'Use [buttonizer text="My text"] to make "My text" a button!'
@@ -143,7 +145,31 @@ CONTENTS:
 	but is much simpler for the user.
 
 
-5.  HINTS AND QUIRKS
+5.  EMBED SUPPORT
+
+	ECML and the Embed plugin are closely related in that Embed serves
+	as a sort of front end for ECML.  Especially with 3rd party web
+	services, where URLs and embed codes vary greatly, having a system
+	in place that allows a user to easily generate and insert ECML
+	is benificial.
+	
+	Currently, only web services ECML keywords are supported in the
+	embed plugin.  Registering a web service keyword looks like this:
+	
+		$value[youtube] = array(
+			'name' => 'Youtube',
+			'view' => "ecml/keywords/youtube",
+			'description' => 'Embed YouTube videos',
+			'usage' => 'Use src="URL".',
+			
+			// important bits
+			'type' => 'web_service',
+			'params' => array('src', 'width', 'height') // a list of supported params
+			'embed' => 'src="%s"' // a sprintf string of the require param format. Added automatically to [keyword $here]
+		); 
+
+
+6.  HINTS AND QUIRKS
 
 	* A custom keyword is slightly more complicated to implement, but is
 	much simpler for the end user to use.

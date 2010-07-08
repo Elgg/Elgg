@@ -9,6 +9,39 @@
  * @link http://elgg.org/
  */
 
+/**
+ * Parses a string for ECML.
+ * 
+ * @param string $string
+ * @return string $string with ECML replaced by HTML.
+ */
+function ecml_parse_string($string, $view = NULL) {
+	global $CONFIG;
+	
+	$CONFIG->ecml_current_view = $view;
+	
+	return preg_replace_callback(ECML_KEYWORD_REGEX, 'ecml_parse_view_match', $string);
+}
+
+/**
+ * Returns ECML-style keywords found in $string.
+ * Doesn't validate them.
+ * Returns an array of keyword => arguments
+ * 
+ * @param string $string
+ * @return array
+ */
+function ecml_extract_keywords($string) {
+	$return = array();
+		
+	if (preg_match_all(ECML_KEYWORD_REGEX, $string, $matches)) {
+		foreach ($matches[1] as $i => $keyword) {
+			$return[] = array('keyword' => $keyword, 'params' => $matches[2][$i]);
+		}
+	}
+	
+	return $return;
+}
 
 /**
  * Parse ECML keywords
@@ -204,6 +237,11 @@ function ecml_is_valid_keyword($keyword, $view = NULL) {
 	if (!isset($CONFIG->ecml_keywords[$keyword])) {
 		return FALSE;
 	}
+	
+	// don't check against views. Already know it's a real one.
+	if (!$view) {
+		return TRUE;
+	}
 
 	// this keyword is restricted to certain views
 	if (isset($CONFIG->ecml_keywords[$keyword]['restricted'])
@@ -221,4 +259,35 @@ function ecml_is_valid_keyword($keyword, $view = NULL) {
 	}
 
 	return $r;
+}
+
+/**
+ * Grab the ECML keywords as saved in $CONFIG or regenerate.
+ */
+function ecml_get_keywords($recache = FALSE) {
+	global $CONFIG;
+	
+	if (isset($CONFIG->ecml_keywords) && !$recache) {
+		return $CONFIG->ecml_keywords;
+	}
+	
+	$keywords = trigger_plugin_hook('get_keywords', 'ecml', NULL, array());
+	$CONFIG->ecml_keywords = $keywords;
+	return $keywords;
+}
+
+/**
+ * Return basic info about the keyword.
+ * 
+ * @param string $keyword
+ * @return array
+ */
+function ecml_get_keyword_info($keyword) {
+	global $CONFIG;
+	
+	if (isset($CONFIG->ecml_keywords[$keyword])) {
+		return $CONFIG->ecml_keywords[$keyword];
+	}
+	
+	return FALSE;
 }

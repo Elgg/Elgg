@@ -24,13 +24,18 @@ function ecml_init() {
 
 	define('ECML_ATTR_SEPARATOR', ' ');
 	define('ECML_ATTR_OPERATOR', '=');
+	
+	// find alphanumerics (keywords) possibly followed by everything that is not a ] (args) and all surrounded by [ ]s
+	define('ECML_KEYWORD_REGEX', '/\[([a-z0-9\.]+)([^\]]+)?\]/');
 
 	// help page
 	register_page_handler('ecml', 'ecml_help_page_handler');
 
 	// admin access page
 	register_page_handler('ecml_admin', 'ecml_admin_page_handler');
-	register_elgg_event_handler('pagesetup', 'system', 'ecml_pagesetup');
+	
+	// ecml validator for embed
+	register_page_handler('ecml_generate', 'ecml_generate_page_handler');
 
 	// CSS for admin access
 	elgg_extend_view('css', 'ecml/admin/css');
@@ -70,16 +75,9 @@ function ecml_init() {
 	// but probably makes more sense from a UI perspective as a whitelist.
 	// uses [views][view_name] = array(keywords, not, allowed)
 	$CONFIG->ecml_permissions = unserialize(get_plugin_setting('ecml_permissions', 'ecml'));
-}
-
-/**
- * Page setup. Adds admin controls to the admin panel for granular permission
- */
-function ecml_pagesetup(){
-	if (get_context() == 'admin' && isadminloggedin()) {
-		global $CONFIG;
-
-	}
+	
+	// 3rd party media embed section
+	register_plugin_hook('embed_get_sections', 'all', 'ecml_embed_web_services_hook');
 }
 
 /**
@@ -91,6 +89,74 @@ function ecml_help_page_handler($page) {
 	$content = elgg_view('ecml/help');
 	$body = elgg_view_layout('one_column_with_sidebar', $content);
 	echo page_draw(elgg_echo('ecml:help'), $body);
+}
+
+/**
+ * Generate ECML given a URL or embed link and service.
+ * Doesn't check if the resource actually exists.
+ * Outputs JSON.
+ * 
+ * @param unknown_type $page
+ */
+function ecml_generate_page_handler($page) {
+	$service = trim(get_input('service'));
+	$resource = trim(get_input('resource'));
+
+	// if standard ECML is passed, guess the service from that instead
+	// only support one.
+	if (elgg_substr($resource, 0, 1) == '[') {
+		if ($keywords = ecml_extract_keywords($resource)) {
+			$keyword = $keywords[0]['keyword'];
+			$ecml_info = ecml_get_keyword_info($keyword);
+			$html = ecml_parse_string($resource);
+			
+			echo json_encode(array(
+				'status' => 'success',
+				'ecml' => $resource,
+				'html' => $html
+			));
+			
+			exit;
+		}
+	}
+
+	if (!$service || !$resource) {
+		echo json_encode(array(
+			'status' => 'error',
+			'message' => elgg_echo('ecml:embed:invalid_web_service_keyword')
+		));
+		
+		exit;
+	}
+	
+	$ecml_info = ecml_get_keyword_info($service);
+	
+	if ($ecml_info) {
+		// don't allow embedding for restricted.
+		if (isset($ecml_info['restricted'])) {
+			$result = array(
+				'status' => 'error',
+				'message' => elgg_echo('ecml:embed:cannot_embed'),
+			);
+		} else {
+			// @todo pull this out into a function.  allow optional arguments.
+			$ecml = "[$service " . sprintf($ecml_info['embed_format'], $resource) . ']';
+			$html = ecml_parse_string($ecml, NULL);
+			$result = array(
+				'status' => 'success',
+				'ecml' => $ecml,
+				'html' => $html
+			);
+		}
+	} else {
+		$result = array(
+			'status' => 'error',
+			'message' => elgg_echo('ecml:embed:invalid_web_service_keyword')
+		);
+	}
+	
+	echo json_encode($result);
+	exit;
 }
 
 /**
@@ -118,13 +184,7 @@ function ecml_admin_page_handler($page) {
 function ecml_parse_view($hook, $entity_type, $return_value, $params) {
 	global $CONFIG;
 
-	// give me everything that is not a ], possibly followed by a :, and surrounded by [ ]s
-	//$keyword_regex = '/\[\[([a-z0-9_]+):?([^\]]+)?\]\]/';
-	$keyword_regex = '/\[([a-z0-9\.]+)([^\]]+)?\]/';
-	$CONFIG->ecml_current_view = $params['view'];
-	$return_value = preg_replace_callback($keyword_regex, 'ecml_parse_view_match', $return_value);
-
-	return $return_value;
+	return ecml_parse_string($return_value, $params['view']);
 }
 
 
@@ -141,26 +201,37 @@ function ecml_keyword_hook($hook, $type, $value, $params) {
 	// I keep going back and forth about entity and view. They're powerful, but
 	// a great way to let a site get hacked if the admin doesn't lock them down.
 	$keywords = array(
-		'youtube',
-		'slideshare',
-		'vimeo',
-		'googlemaps',
-		'scribd',
-		'blip.tv',
-		'dailymotion',
-		'livevideo',
-		'redlasso',
-		'entity'
+		'youtube' => array('params' => array('src', 'width', 'height'), 'embed_format' => 'src="%s"'),
+		'slideshare' => array('params' => array('id', 'width', 'height'), 'embed_format' => 'id="%s"'),
+		'vimeo' => array('params' => array('src', 'width', 'height'), 'embed_format' => 'src="%s"'),
+		'googlemaps' => array('params' => array('src', 'width', 'height'), 'embed_format' => 'src="%s"'),
+		//'scribd'
+		'blip.tv' => array('params' => array('width', 'height'), 'embed_format' => '%s'),
+		'dailymotion' => array('params' => array('src', 'width', 'height'), 'embed_format' => 'src="%s"'),
+		'livevideo' => array('params' => array('src', 'width', 'height'), 'embed_format' => 'src="%s"'),
+		'redlasso' => array('params' => array('id', 'width', 'height'), 'embed_format' => 'id="%s"'),
 	);
 
-	foreach ($keywords as $keyword) {
+	foreach ($keywords as $keyword => $info) {
 		$value[$keyword] = array(
+			'name' => elgg_echo("ecml:keywords:$keyword"),
 			'view' => "ecml/keywords/$keyword",
 			'description' => elgg_echo("ecml:keywords:$keyword:desc"),
-			'usage' => elgg_echo("ecml:keywords:$keyword:usage")
+			'usage' => elgg_echo("ecml:keywords:$keyword:usage"),
+			'type' => 'web_service',
+			'params' => $info['params'],
+			'embed_format' => $info['embed_format']
 		);
 	}
-
+	
+	// default entity keyword
+	$value['entity'] = array(
+		'name' => elgg_echo('ecml:keywords:entity'),
+		'view' => "ecml/keywords/entity",
+		'description' => elgg_echo("ecml:keywords:entity:desc"),
+		'usage' => elgg_echo("ecml:keywords:entity:usage")
+	);
+	
 	return $value;
 }
 
@@ -174,6 +245,24 @@ function ecml_keyword_hook($hook, $type, $value, $params) {
  */
 function ecml_views_hook($hook, $type, $value, $params) {
 	$value['annotation/generic_comment'] = elgg_echo('ecml:views:annotation_generic_comment');
+
+	return $value;
+}
+
+/**
+ * Show the special Web Services embed section.
+ * 
+ * @param unknown_type $hook
+ * @param unknown_type $type
+ * @param unknown_type $value
+ * @param unknown_type $params
+ */
+function ecml_embed_web_services_hook($hook, $type, $value, $params) {
+	// we're using a view override for this section's content
+	// so only need to pass the name.
+	$value['web_services'] = array(
+		'name' => elgg_echo('embed:web_services')
+	);
 
 	return $value;
 }
