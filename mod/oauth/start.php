@@ -12,6 +12,8 @@ require_once "{$CONFIG->pluginspath}oauth/vendors/oauth/library/OAuthServer.php"
 
 require_once "{$CONFIG->pluginspath}oauth/vendors/oauth/library/body/OAuthBodyMultipartFormdata.php";
 
+require_once "{$CONFIG->pluginspath}oauth/vendors/oauth/library/store/OAuthStoreAbstract.class.php";
+
 require_once "{$CONFIG->pluginspath}oauth/vendors/oauth/library/signature_method/OAuthSignatureMethod_HMAC_SHA1.php";
 require_once "{$CONFIG->pluginspath}oauth/vendors/oauth/library/signature_method/OAuthSignatureMethod_MD5.php";
 require_once "{$CONFIG->pluginspath}oauth/vendors/oauth/library/signature_method/OAuthSignatureMethod_PLAINTEXT.php";
