@@ -37,9 +37,8 @@
 	margin:0;
 }
 .river_item .entity_subtext {
-	padding-left:5px;
-	padding-right:12px;
-	/*font-size:85%;*/
+	display: block;
+	line-height: 1.4em;
 }
 .river_item_useravatar {
 	float:left;
@@ -110,11 +109,15 @@
 }
 .river_link_divider {
 	color:#999999;
+	font-style: normal;
 }
 .river_item_contents .river_comment_form_button,
 .river_item_contents .river_user_like_button {
-	font-size:85%;
 	font-weight:normal;
+	font-style: normal;
+}
+.river_item_contents .river_comment_form_button {
+	margin-left: 7px;
 }
 /* hidden list of users that liked item */
 .river_item .elgg_likes_user {
@@ -134,7 +137,7 @@
 	margin-top:3px;
 }
 .river_item p.elgg_likes_owner {
-	padding-top:4px;
+	padding-top:0;
 }
 .river_item a.river_more_comments {
 	display:block;

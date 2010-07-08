@@ -13,9 +13,10 @@ $string .= "<a href=\"" . $object->address . "\">" . $object->title . "</a>";
 if(($is_group instanceof ElggGroup) && (get_context() != 'groups')){
 	$string .= " " . elgg_echo('bookmarks:ingroup') . " <a href=\"{$is_group->getURL()}\">" . $is_group->name . "</a>";
 }
-$string .= " <span class='entity_subtext'>" . friendly_time($object->time_created) . "</span>";
+$string .= " <span class='entity_subtext'>" . friendly_time($object->time_created);
 if (isloggedin()){
 	$string .= "<a class='river_comment_form_button link'>Comment</a>";
 	$string .= elgg_view('likes/forms/link', array('entity' => $object));
 }
+$string .= "</span>";
 echo $string;
