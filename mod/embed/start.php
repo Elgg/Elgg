@@ -49,9 +49,10 @@ function embed_page_handler($page) {
 			// @todo trigger for all right now. If we categorize these later we can trigger
 			// for certain categories.
 			$sections = trigger_plugin_hook('embed_get_sections', 'all', NULL, array());
-			$upload_sections = trigger_plugin_hook('embed_get_upload_sections', 'all', NULL, array());
-			asort($sections, SORT_LOCALE_STRING);
-			asort($upload_sections, SORT_LOCALE_STRING);
+			$upload_sections = trigger_plugin_hook('embed_get_upload_sections', 'all', NULL, array()); 
+			
+			elgg_sort_3d_array_by_value($sections, 'name');
+			elgg_sort_3d_array_by_value($upload_sections, 'name');
 			$active_section = get_input('active_section', NULL);
 			$internal_name = get_input('internal_name', NULL);
 
@@ -65,6 +66,7 @@ function embed_page_handler($page) {
 			break;
 	}
 
+	// exit because this is in a modal display.
 	exit;
 }
 

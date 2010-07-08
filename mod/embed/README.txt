@@ -94,6 +94,7 @@ CONTENTS:
 			limit - Limit for entity list.
 			section - The current active section.
 			upload_sections - Valid upload sections.
+			internal_name - Internal name of the input field
 			
 		The function should return $value as:
 			items - An array of ElggEntities

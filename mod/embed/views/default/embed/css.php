@@ -148,3 +148,16 @@
 	border:1px solid #666666; 
 	color:white;
 }
+
+/* embed web services */
+.embed_disabled {
+	background-color: red;
+}
+
+.embed_warning {
+	background-color: yellow;
+}
+
+.embed_good {
+	background-color: green;
+}

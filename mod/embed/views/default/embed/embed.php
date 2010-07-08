@@ -65,7 +65,8 @@ if (!$sections) {
 			'offset' => $offset,
 			'limit' => $limit,
 			'section' => $active_section,
-			'upload_sections' => $upload_sections
+			'upload_sections' => $upload_sections,
+			'internal_name' => $internal_name
 		);
 
 		// allow full override for this section
