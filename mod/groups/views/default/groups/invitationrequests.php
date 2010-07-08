@@ -35,6 +35,6 @@ if (!empty($vars['invitations']) && is_array($vars['invitations'])) {
 		}
 
 	} else {
-		echo "<p class='margin_top'>" . elgg_echo('groups:invitations:none') . "</p>";
+		echo "<p class='default_string margin_top'>" . elgg_echo('groups:invitations:none') . "</p>";
 }
 ?>
