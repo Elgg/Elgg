@@ -16,7 +16,8 @@ $height = (isset($vars['height'])) ? $vars['height'] : 369;
 
 if ($src) {
 	$parts = explode('/', $src);
-	$vid = $parts[1];
+	$vid = $parts[0];
+	
 	// it automatically autostarts, but not passing it causes control issues
 	$url =  "http://www.livevideo.com/flvplayer/embed/$vid&autoStart=1";
 

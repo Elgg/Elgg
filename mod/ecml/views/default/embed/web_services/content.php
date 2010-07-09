@@ -49,6 +49,8 @@ $embed = elgg_view('input/button', array(
 	'disabled' => TRUE
 ));
 
+echo '<p>' . elgg_echo('ecml:embed:instructions') . '</p>';
+echo '<div id="embed_ecml_keyword_help"></div>';
 echo $input;
 echo '<p>ECML: <span id="ecml_code"></span></p>';
 echo $keywords_html;
@@ -70,7 +72,8 @@ $(function() {
 	// counter for paused input to try to validate/generate a preview.
 	var rest_timeout_id = null;
 	var rest_min_time = 750;
-	var embed_generate_ecml_url = '<?php echo $vars['url']; ?>/pg/ecml_generate';
+	var embed_generate_ecml_url = '<?php echo $vars['url']; ?>pg/ecml_generate';
+	var embed_ecml_keyword_help_url = '<?php echo $vars['url']; ?>pg/ecml/';
 	var internal_name = '<?php echo addslashes($internal_name); ?>';
 	
 	var web_services_ecml_update = function() {
@@ -161,8 +164,12 @@ $(function() {
 
 	// manually specify the service
 	$('.ecml_web_service a').click(function() {
-		select_service($(this).attr('class'));
+		select_service($(this).attr('class').split(' ')[0]);
 		manual_selected_service = true;
+
+		// show tip
+		var help_url = embed_ecml_keyword_help_url + selected_service + '?ajax=true';
+		$('#embed_ecml_keyword_help').load(help_url);
 	});
 	
 	$('#embed_submit').click(function() {

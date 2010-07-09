@@ -86,9 +86,25 @@ function ecml_init() {
  * @param array $page
  */
 function ecml_help_page_handler($page) {
-	$content = elgg_view('ecml/help');
-	$body = elgg_view_layout('one_column_with_sidebar', $content);
-	echo page_draw(elgg_echo('ecml:help'), $body);
+	if (!isset($page[0]) || empty($page[0])) {
+		$content = elgg_view('ecml/help');
+		$body = elgg_view_layout('one_column_with_sidebar', $content);
+		echo page_draw(elgg_echo('ecml:help'), $body);
+	} else {
+		// asking for detailed help about a keyword
+		$keyword = $page[0];
+		$content = elgg_view('ecml/keyword_help', array('keyword' => $keyword));
+		
+		if (get_input('ajax', FALSE)) {
+			echo $content;
+			exit;
+		} else {
+			$body = elgg_view_layout('one_column_with_sidebar', $content);
+			echo page_draw(elgg_echo('ecml:help'), $body);
+		}
+	}
+	
+	return TRUE;
 }
 
 /**
@@ -261,7 +277,7 @@ function ecml_embed_web_services_hook($hook, $type, $value, $params) {
 	// we're using a view override for this section's content
 	// so only need to pass the name.
 	$value['web_services'] = array(
-		'name' => elgg_echo('embed:web_services')
+		'name' => elgg_echo('ecml:embed:web_services')
 	);
 
 	return $value;

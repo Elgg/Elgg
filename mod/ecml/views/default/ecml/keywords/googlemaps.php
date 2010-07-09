@@ -14,6 +14,8 @@ $width = (isset($vars['width'])) ? $vars['width'] : 425;
 $height = (isset($vars['height'])) ? $vars['height'] : 350;
 
 if ($src) {
+	$src = html_entity_decode($src);
+	
 	$embed_src = elgg_http_add_url_query_elements($src, array('output' => 'embed'));
 	$link_href = elgg_http_add_url_query_elements($src, array('source' => 'embed'));
 
