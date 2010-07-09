@@ -28,9 +28,9 @@
 	$area1 = get_filetype_cloud(); // the filter
 	set_context('search');
 	if ($tag != "")
-		$area2 .= list_entities_from_metadata('tags',$tag,'object','file',0,10,false);
+		$area2 .= list_entities_from_metadata('tags',$tag,'object','file',0,$limit,false);
 	else
-		$area2 .= elgg_list_entities(array('types' => 'object', 'subtypes' => 'file', 'limit' => 10, 'offset' => $offset, 'full_view' => FALSE));
+		$area2 .= elgg_list_entities(array('types' => 'object', 'subtypes' => 'file', 'limit' => $limit, 'offset' => $offset, 'full_view' => FALSE));
 	set_context('file');
 		
 	$body = elgg_view_layout('two_column_left_sidebar',$area1, $area2);
