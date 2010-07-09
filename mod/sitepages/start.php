@@ -55,7 +55,6 @@ function sitepages_init() {
 
 	register_action('settings/sitepages/save', FALSE, "{$CONFIG->pluginspath}sitepages/actions/edit_settings.php");
 	
-	elgg_add_admin_submenu_item('sitepages', elgg_echo('sitepages'), 'site');
 }
 
 /**
