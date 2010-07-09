@@ -212,18 +212,23 @@ abstract class ElggEntity implements
 	 */
 	public function set($name, $value) {
 		if (array_key_exists($name, $this->attributes)) {
-			// Check that we're not trying to change the guid!
-			if ((array_key_exists('guid', $this->attributes)) && ($name=='guid')) {
-				return false;
+			// Certain properties should not be manually changed!
+			switch ($name) {
+				case 'guid':
+				case 'time_created':
+				case 'time_updated':
+				case 'last_action':
+					return FALSE;
+					break;
+				default:
+					$this->attributes[$name] = $value;
+					break;
 			}
-
-			$this->attributes[$name] = $value;
-		}
-		else {
+		} else {
 			return $this->setMetaData($name, $value);
 		}
 
-		return true;
+		return TRUE;
 	}
 
 	/**
