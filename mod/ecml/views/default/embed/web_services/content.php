@@ -15,7 +15,7 @@ $keywords = ecml_get_keywords();
 elgg_sort_3d_array_by_value($keywords, 'name');
 
 $keyword_js_array = array();
-$keyword_html = '<ul>';
+$keywords_html = "<ul class='ecml_web_service_list'>";
 // include support for standard ECML so you can get previews and validation.
 //$keyword_html = '<li class="ecml_web_service"><a class="ecml">Generic ECML</a></li>';
 
@@ -29,10 +29,10 @@ foreach ($keywords as $i => $v) {
 	$class = str_replace(array('.', ','), '_', $i);
 	$keyword_js_array[] = $class;
 	
-	$keywords_html .= "<li class=\"ecml_web_service\"><a class=\"$class\">{$v['name']}</a></li>";
+	$keywords_html .= "<li class='ecml_web_service'><a class=\"$class link\">{$v['name']}</a></li>";
 }
 
-$keywords_html .= '</ul>';
+$keywords_html .= "</ul>";
 
 $keywords_js = json_encode($keyword_js_array);
 
@@ -45,22 +45,37 @@ $embed = elgg_view('input/button', array(
 	'internalid' => 'embed_submit',
 	'type' => 'button',
 	'value' => elgg_echo('embed:embed'),
-	'class' => 'embed_disabled',
+	'class' => 'submit_button embed_disabled',
 	'disabled' => TRUE
 ));
 
 echo '<p>' . elgg_echo('ecml:embed:instructions') . '</p>';
-echo '<div id="embed_ecml_keyword_help"></div>';
-echo $input;
-echo '<p>ECML: <span id="ecml_code"></span></p>';
+
 echo $keywords_html;
+
+echo "<h2 class='embed_content_section instructions hidden'><a class='ecml_embed_instructions link'>Instructions</a></h2><div id='embed_ecml_keyword_help' class='hidden'></div>";
+
+echo "<h2 class='embed_content_section'>URL</h2><div id='embed_ecml_url'>".$input."</div>";
+
+echo "<p>ECML: <span id='ecml_code'></span></p>";
+
+echo "<h2 class='embed_content_section preview hidden'><a class='ecml_embed_preview link'>Preview</a></h2><div id='ecml_preview' class='hidden'></div>";
+
 echo $embed;
 
 ?>
-<h2>Preview</h2>
-<div id="ecml_preview"></div>
 
 <script type="text/javascript">
+
+$(document).ready(function() {
+	$('a.ecml_embed_instructions.link').click(function() {
+		elgg_slide_toggle($(this), '#facebox', '#embed_ecml_keyword_help');
+	});
+	
+	$('a.ecml_embed_preview.link').click(function() {
+		elgg_slide_toggle($(this), '#facebox', '#ecml_preview');
+	});
+});
 
 $(function() {
 	var keywords = <?php echo $keywords_js; ?>;
@@ -122,6 +137,7 @@ $(function() {
 
 		// fire off a preview attempt
 		if (selected_service) {
+			$('.embed_content_section.preview').removeClass('hidden'); // reveal preview link/panel
 			rest_timeout_id = setTimeout(generate_ecml, rest_min_time);
 		}
 	};
@@ -134,6 +150,7 @@ $(function() {
 		selected_service = service;
 		$('.ecml_web_service a').removeClass('selected');
 		$('.ecml_web_service a.' + service).addClass('selected');
+		$('.embed_content_section.instructions').removeClass('hidden'); // reveal instructions link/panel
 	}
 
 	// pings back core to generate the ecml.

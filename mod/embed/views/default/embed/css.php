@@ -103,6 +103,10 @@
 .embed_modal_tidypics .embed_data .entity_listing_info {
 	margin-top:11px;
 }
+.embed_modal_file .embed_data .entity_listing_info {
+	margin-top:0px;
+	margin-left:9px;
+}
 .embed_data .entity_listing_info {
 	width:auto;
 	margin-top:15px;
@@ -151,13 +155,15 @@
 
 /* embed web services */
 .embed_disabled {
-	background-color: red;
+	/* background-color: red; */
 }
 
 .embed_warning {
 	background-color: yellow;
+	border-color: yellow;
 }
 
 .embed_good {
 	background-color: green;
+	border-color: green;
 }
