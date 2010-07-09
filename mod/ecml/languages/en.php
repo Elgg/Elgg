@@ -20,6 +20,7 @@ $english = array(
 	'ecml:keywords:googlemaps' => 'Google Maps',
 	'ecml:keywords:googlemaps:desc' => 'Embed a Google Map.',
 	'ecml:keywords:googlemaps:usage' => '[googlemaps src="URL"] Use the link code from Google Maps as the src.',
+	'ecml:googlemaps:view_larger_map' => 'View larger map',
 
 	'ecml:keywords:slideshare' => 'Slide Share',
 	'ecml:keywords:slideshare:desc' => 'Embed a Slideshare slide.',
