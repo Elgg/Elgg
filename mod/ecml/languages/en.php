@@ -88,7 +88,7 @@ grid below.
 
 	// embed support
 	'ecml:embed:web_services' => 'Web Services',
-	'ecml:embed:instructions' => 'Select a service for instructions on how to get embed code or paste the code in directly.',
+	'ecml:embed:instructions' => 'Select a service for instructions on how to get embed code or paste the url in directly.',
 
 
 );

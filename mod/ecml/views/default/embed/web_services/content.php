@@ -53,14 +53,16 @@ echo '<p>' . elgg_echo('ecml:embed:instructions') . '</p>';
 
 echo $keywords_html;
 
-echo "<h2 class='embed_content_section instructions hidden'><a class='ecml_embed_instructions link'>Instructions</a></h2><div id='embed_ecml_keyword_help' class='hidden'></div>";
+echo "<div class='embed_content_section instructions hidden'><a class='ecml_embed_instructions link'>Instructions</a>";
+echo "<div id='embed_ecml_keyword_help' class='hidden'></div></div>";
 
-echo "<h2 class='embed_content_section'>URL</h2><div id='embed_ecml_url'>".$input."</div>";
+echo "<div id='embed_service_url'><label>URL".$input."</label>";
+echo "<div class='ecml_generated_code'>ECML: <span id='ecml_code'></span></div></div>";
 
-echo "<p>ECML: <span id='ecml_code'></span></p>";
+echo "<div class='embed_content_section preview hidden'><a class='ecml_embed_preview link'>Preview</a>";
+echo "<div id='ecml_preview' class='hidden'></div></div>";
 
-echo "<h2 class='embed_content_section preview hidden'><a class='ecml_embed_preview link'>Preview</a></h2><div id='ecml_preview' class='hidden'></div>";
-
+echo "<div class='divider margin_top'></div>";
 echo $embed;
 
 ?>
@@ -69,11 +71,13 @@ echo $embed;
 
 $(document).ready(function() {
 	$('a.ecml_embed_instructions.link').click(function() {
-		elgg_slide_toggle($(this), '#facebox', '#embed_ecml_keyword_help');
+		elgg_slide_toggle($(this), '.embed_content_section.instructions', '#embed_ecml_keyword_help');
+		$('.ecml_embed_instructions').toggleClass('open');
 	});
 	
 	$('a.ecml_embed_preview.link').click(function() {
-		elgg_slide_toggle($(this), '#facebox', '#ecml_preview');
+		elgg_slide_toggle($(this), '.embed_content_section.preview', '#ecml_preview');
+		$('.ecml_embed_instructions').toggleClass('open');
 	});
 });
 
@@ -137,7 +141,6 @@ $(function() {
 
 		// fire off a preview attempt
 		if (selected_service) {
-			$('.embed_content_section.preview').removeClass('hidden'); // reveal preview link/panel
 			rest_timeout_id = setTimeout(generate_ecml, rest_min_time);
 		}
 	};
@@ -169,6 +172,7 @@ $(function() {
 				$('#ecml_preview').html(data.html);
 				$('#ecml_code').html(data.ecml);
 				$('body').data('elgg_embed_ecml', data.ecml);
+				$('.embed_content_section.preview').removeClass('hidden'); // reveal preview link/panel
 
 				// set status for embed button
 				embed_button.removeAttr('disabled').removeClass('embed_disabled').removeClass('embed_warning').addClass('embed_good');
