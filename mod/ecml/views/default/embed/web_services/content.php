@@ -57,7 +57,7 @@ echo "<div class='embed_content_section instructions hidden'><a class='ecml_embe
 echo "<div id='embed_ecml_keyword_help' class='hidden'></div></div>";
 
 echo "<div id='embed_service_url'><label>URL".$input."</label>";
-echo "<div class='ecml_generated_code'>ECML: <span id='ecml_code'></span></div></div>";
+echo "<div class='ecml_generated_code hidden'>ECML: <span id='ecml_code'></span></div></div>";
 
 echo "<div class='embed_content_section preview hidden'><a class='ecml_embed_preview link'>Preview</a>";
 echo "<div id='ecml_preview' class='hidden'></div></div>";
@@ -173,6 +173,7 @@ $(function() {
 				$('#ecml_code').html(data.ecml);
 				$('body').data('elgg_embed_ecml', data.ecml);
 				$('.embed_content_section.preview').removeClass('hidden'); // reveal preview link/panel
+				$('.ecml_generated_code').removeClass('hidden'); // reveal ecml generated code
 
 				// set status for embed button
 				embed_button.removeAttr('disabled').removeClass('embed_disabled').removeClass('embed_warning').addClass('embed_good');

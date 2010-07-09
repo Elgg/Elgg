@@ -77,7 +77,8 @@
 	padding:10px;
 }
 #ecml_preview object,
-#ecml_preview embed {
+#ecml_preview embed,
+#ecml_preview iframe {
 	width: auto;
 	max-height:240px;
 }

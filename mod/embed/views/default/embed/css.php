@@ -39,7 +39,7 @@
 	float: right;
 	width:22px;
 	height:22px;
-	margin:0;
+	margin:-4px 0 0 0;
 	padding:0;
 }
 #facebox .footer img.close_image {
