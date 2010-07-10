@@ -49,11 +49,12 @@
 		foreach($vars['config']->pages as $shortname => $valtype) {
 			
 			$disabled = "";
-			
-			if (!$new_page && ($shortname == 'title'))
-			{
-				$disabled = true;
-			}
+
+			// no longer disable title editing
+			//if (!$new_page && ($shortname == 'title'))
+			//{
+			//	$disabled = true;
+			//}
 ?>
 
 	<p>
