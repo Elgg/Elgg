@@ -801,7 +801,9 @@ abstract class ElggEntity implements
 			$this->attributes['subtype'] = get_subtype_id($this->attributes['type'], $this->attributes['subtype']);
 
 			// Cache object handle
-			if ($this->attributes['guid']) cache_entity($this);
+			if ($this->attributes['guid']) {
+				cache_entity($this);
+			}
 
 			return $this->attributes['guid'];
 		}
