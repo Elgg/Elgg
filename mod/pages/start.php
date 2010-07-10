@@ -214,7 +214,7 @@
 					$owner = $entity->getOwnerEntity();
 					return $owner->name . ' ' . elgg_echo("pages:via") . ': ' . $title . "\n\n" . $descr . "\n\n" . $entity->getURL();
 				}
-				if ($method == 'web') {
+				if ($method == 'site') {
 					$owner = $entity->getOwnerEntity();
 					return $owner->name . ' ' . elgg_echo("pages:via") . ': ' . $title . "\n\n" . $descr . "\n\n" . $entity->getURL();
 				}

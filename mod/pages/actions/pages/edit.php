@@ -72,7 +72,7 @@
 		if (sizeof($input) > 0)
 		{
 			foreach ($input as $shortname => $value) {
-					$page->$shortname = $value;
+				$page->$shortname = $value;
 			}
 		}
 		
