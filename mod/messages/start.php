@@ -58,6 +58,10 @@ function messages_init() {
 	    
 	// Override metadata permissions
 	    register_plugin_hook('permissions_check:metadata','object','messages_can_edit_metadata');
+	    
+	// ecml
+	register_plugin_hook('get_views', 'ecml', 'messages_ecml_views_hook');
+
 }
 
 /**
@@ -320,6 +324,19 @@ function messages_site_notify_handler(ElggEntity $from, ElggUser $to, $subject, 
 		return messages_send($subject,$message,$to->guid,$from->guid,0,false,false);
 	else return true;
 	
+}
+/**
+ * Register messages with ECML.
+ *
+ * @param unknown_type $hook
+ * @param unknown_type $entity_type
+ * @param unknown_type $return_value
+ * @param unknown_type $params
+ */
+function messages_ecml_views_hook($hook, $entity_type, $return_value, $params) {
+	$return_value['messages/messages'] = elgg_echo('messages');
+
+	return $return_value;
 }
 
 
