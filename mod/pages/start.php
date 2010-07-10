@@ -82,12 +82,9 @@
 	}
 	
 	function pages_url($entity) {
-		
 		global $CONFIG;
-		
-		
-		return $CONFIG->url . "pg/pages/view/{$entity->guid}/";
-		
+		$title = elgg_get_friendly_title($entity->title);
+		return $CONFIG->url . "pg/pages/view/{$entity->guid}/$title";
 	}
 	
 	/**
