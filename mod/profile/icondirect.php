@@ -16,8 +16,6 @@ require_once(dirname(dirname(dirname(__FILE__))). '/engine/settings.php');
 
 global $CONFIG;
 
-
-$username = $_GET['username'];
 $joindate = (int)$_GET['joindate'];
 $guid = (int)$_GET['guid'];
 
@@ -25,20 +23,6 @@ $size = strtolower($_GET['size']);
 if (!in_array($size,array('large','medium','small','tiny','master','topbar'))) {
 	$size = "medium";
 }
-
-// security check on username string
-if (	(strpos($username, '/')!==false) ||
-		(strpos($username, '\\')!==false) ||
-		(strpos($username, '"')!==false) ||
-		(strpos($username, '\'')!==false) ||
-		(strpos($username, '*')!==false) ||
-		(strpos($username, '&')!==false) ||
-		(strpos($username, ' ')!==false) ) {
-	// these characters are not allowed in usernames
-	exit;
-}
-
-
 
 $mysql_dblink = @mysql_connect($CONFIG->dbhost,$CONFIG->dbuser,$CONFIG->dbpass, true);
 if ($mysql_dblink) {
@@ -65,7 +49,7 @@ if ($mysql_dblink) {
 
 			// first try to read icon directly
 			$user_path = date('Y/m/d/', $joindate) . $guid;
-			$filename = $dataroot . $user_path . "/profile/" . $username . $size . ".jpg";
+			$filename = "$dataroot$user_path/profile/{$guid}{$size}.jpg";
 			$contents = @file_get_contents($filename);
 			if (!empty($contents)) {
 				header("Content-type: image/jpeg");
@@ -86,4 +70,6 @@ if ($mysql_dblink) {
 
 // simplecache is not turned on or something went wrong so load engine and try that way
 require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
+$user = get_entity($guid);
+set_input('username', $user->username);
 require_once(dirname(__FILE__).'/icon.php');

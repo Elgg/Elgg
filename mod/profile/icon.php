@@ -16,7 +16,6 @@
 	// Get the owning user
 
 		$user = page_owner_entity(); // page_owner_entity();
-		$username = $user->username;
 		
 	// Get the size
 		$size = strtolower(get_input('size'));
@@ -34,7 +33,7 @@
 	
 		$filehandler = new ElggFile();
 		$filehandler->owner_guid = $user->getGUID();
-		$filehandler->setFilename("profile/" . $username . $size . ".jpg");
+		$filehandler->setFilename("profile/" . $user->getGUID() . $size . ".jpg");
 		
 		$success = false;
 		if ($filehandler->open("read")) {
@@ -52,7 +51,7 @@
 			//$contents = @file_get_contents($CONFIG-pluginspath . "profile/graphics/default{$size}.jpg");
 			
 		}
-		
+
 		header("Content-type: image/jpeg");
 		header('Expires: ' . date('r',time() + 864000));
 		header("Pragma: public");
