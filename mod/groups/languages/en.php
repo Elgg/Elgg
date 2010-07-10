@@ -231,6 +231,8 @@ or click below to view the group's join requests:
 
 	// ecml
 	'groups:ecml:discussion' => 'Group Discussions',
+	'groups:ecml:groupprofile' => 'Group profiles',
+
 );
 
 add_translation("en", $english);

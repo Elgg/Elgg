@@ -77,8 +77,10 @@
 		register_plugin_hook('profile_menu', 'profile', 'forum_profile_menu');
 		register_plugin_hook('profile_menu', 'profile', 'activity_profile_menu');
 
-		// allow ecml in discussion
+		// allow ecml in discussion and profiles
 		register_plugin_hook('get_views', 'ecml', 'groups_ecml_views_hook');
+		register_plugin_hook('get_views', 'ecml', 'groupprofile_ecml_views_hook');
+
 	}
 
 	/**
@@ -614,6 +616,19 @@
 	 */
 	function groups_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 		$return_value['forum/viewposts'] = elgg_echo('groups:ecml:discussion');
+
+		return $return_value;
+	}
+	/**
+	 * Parse ECML on group profiles
+	 *
+	 * @param unknown_type $hook
+	 * @param unknown_type $entity_type
+	 * @param unknown_type $return_value
+	 * @param unknown_type $params
+	 */
+	function groupprofile_ecml_views_hook($hook, $entity_type, $return_value, $params) {
+		$return_value['groups/groupprofile'] = elgg_echo('groups:ecml:groupprofile');
 
 		return $return_value;
 	}
