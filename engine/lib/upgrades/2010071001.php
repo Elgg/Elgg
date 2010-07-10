@@ -3,7 +3,7 @@
  *	Change profile image names to use guid rather than username
  */
 
-function user_file_matrix($guid) {
+function user_file_matrix_2010071001($guid) {
 	// lookup the entity
 	$user = get_entity($guid);
 	if ($user->type != 'user') {
@@ -27,7 +27,7 @@ $users = mysql_query("SELECT guid, username FROM {$CONFIG->dbprefix}users_entity
 while ($user = mysql_fetch_object($users)) {
 	$DB_QUERY_CACHE = $DB_PROFILE = $ENTITY_CACHE = array();
 
-	$user_directory = user_file_matrix($user->guid);
+	$user_directory = user_file_matrix_2010071001($user->guid);
 	if (!$user_directory) {
 		continue;
 	}
