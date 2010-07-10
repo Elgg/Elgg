@@ -625,9 +625,7 @@ $count = false, $site_guid = 0) {
 		$options['owner_guid'] = $owner_guid;
 	}
 
-	if ($limit) {
-		$options['limit'] = $limit;
-	}
+	$options['limit'] = $limit;
 
 	if ($offset) {
 		$options['offset'] = $offset;
