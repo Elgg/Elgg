@@ -152,18 +152,3 @@
 	border:1px solid #666666; 
 	color:white;
 }
-
-/* embed web services */
-.embed_disabled {
-	background-color: silver;
-}
-
-.embed_warning {
-	background-color: red;
-	border-color: red;
-}
-
-.embed_good {
-	background-color: green;
-	border-color: green;
-}
