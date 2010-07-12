@@ -1181,6 +1181,16 @@ a.longtext_control {
 	background-repeat:  repeat-x;
 	background-position:  left 10px;
 }
+.submit_button.disabled {
+	background-color:#999999;
+	border-color:#999999;
+	color:#dedede;
+}
+.submit_button.disabled:hover {
+	background-color:#999999;
+	border-color:#999999;
+	color:#dedede;
+}
 input[type="password"]:focus {
 	border: solid 1px #4690d6;
 	background-color: #e4ecf5;
