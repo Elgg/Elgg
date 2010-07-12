@@ -118,11 +118,54 @@
 }
 
 
-/* navigation overrides */
-.elgg_horizontal_tabbed_nav .selected a.embed_section,
-.elgg_horizontal_tabbed_nav a.embed_section:hover {
-	color:#333333;
+/* ***************************************
+	ELGG TABBED PAGE NAVIGATION
+*************************************** */
+#facebox .body .elgg_horizontal_tabbed_nav {
+	margin-bottom:5px;
+	padding: 0;
+	border-bottom: 2px solid #cccccc;
+	display:table;
+	width:100%;
 }
+#facebox .body .elgg_horizontal_tabbed_nav ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+#facebox .body .elgg_horizontal_tabbed_nav li {
+	float: left;
+	border: 2px solid #cccccc;
+	border-bottom-width: 0;
+	background: #eeeeee;
+	margin: 0 0 0 10px;
+	-moz-border-radius-topleft:5px;
+	-moz-border-radius-topright:5px;
+	-webkit-border-top-left-radius:5px;
+	-webkit-border-top-right-radius:5px;
+}
+#facebox .body .elgg_horizontal_tabbed_nav a {
+	text-decoration: none;
+	display: block;
+	padding:3px 10px 0 10px;
+	text-align: center;
+	height:21px;
+	color:#999999;
+}
+#facebox .body .elgg_horizontal_tabbed_nav a:hover {
+	background: #dedede;
+	color:#666666;
+}
+#facebox .body .elgg_horizontal_tabbed_nav .selected {
+	border-color: #cccccc;
+	background: white;
+}
+#facebox .body .elgg_horizontal_tabbed_nav .selected a {
+	position: relative;
+	top: 2px;
+	background: white;
+}
+
 
 
 /* Pagination (override core elgg css defaults) */

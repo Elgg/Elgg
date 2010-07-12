@@ -33,10 +33,58 @@
 }
 .ecml_web_service_list li {
 	list-style: none;
-	margin:0 20px 0 0;
+	margin:0 0 0 0;
 	padding:0;
-	display:inline;
+	/* display:inline; */
+
 }
+.ecml_web_service_list li a {
+	display:block;
+	float:left;
+	height:41px;
+	width:152px;
+	background-position: center center;
+	background-repeat: no-repeat;
+	text-indent: -900em;
+	border:2px solid transparent;
+	margin:0 20px 10px 0;
+}
+.ecml_web_service_list li a.selected {
+	border-color:#999999;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+.ecml_web_service_list li a.youtube {
+	background-image: url(<?php echo $vars['url']; ?>mod/ecml/graphics/logo_youtube.gif);
+	width:102px;
+}
+.ecml_web_service_list li a.slideshare {
+	background-image: url(<?php echo $vars['url']; ?>mod/ecml/graphics/logo_slideshare.gif);
+}
+.ecml_web_service_list li a.vimeo {
+	background-image: url(<?php echo $vars['url']; ?>mod/ecml/graphics/logo_vimeo.gif);	
+	width:130px;
+}
+.ecml_web_service_list li a.googlemaps {
+	background-image: url(<?php echo $vars['url']; ?>mod/ecml/graphics/logo_googlemaps.gif);	
+}
+.ecml_web_service_list li a.blip_tv {
+	background-image: url(<?php echo $vars['url']; ?>mod/ecml/graphics/logo_bliptv.gif);
+	width:102px;	
+}
+.ecml_web_service_list li a.dailymotion {
+	background-image: url(<?php echo $vars['url']; ?>mod/ecml/graphics/logo_dailymotion.gif);	
+}
+.ecml_web_service_list li a.livevideo {
+	background-image: url(<?php echo $vars['url']; ?>mod/ecml/graphics/logo_livevideo.gif);	
+	width:166px;
+}
+.ecml_web_service_list li a.redlasso {
+	background-image: url(<?php echo $vars['url']; ?>mod/ecml/graphics/logo_redlasso.gif);
+	background-position:center 4px;
+	width:130px;
+}
+
 .embed_content_section {
 	border:none;
 	-webkit-border-radius: 5px;
