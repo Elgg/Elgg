@@ -77,7 +77,7 @@ $(document).ready(function() {
 	
 	$('a.ecml_embed_preview.link').click(function() {
 		elgg_slide_toggle($(this), '.embed_content_section.preview', '#ecml_preview');
-		$('.ecml_embed_instructions').toggleClass('open');
+		$('.ecml_embed_preview').toggleClass('open');
 	});
 });
 
