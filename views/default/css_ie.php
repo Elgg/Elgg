@@ -11,6 +11,7 @@
 .navigation li.navigation_more ul li a {width:150px;background-color: #dedede;}
 
 .clearfloat { display: block; }
+.hidden.clearfloat { display: none; }
 #elgg_page_contents {overflow: hidden;} /* remove horizontal scroll on riverdash */
 #breadcrumbs {top:-2px; margin-bottom: 5px;}
 
