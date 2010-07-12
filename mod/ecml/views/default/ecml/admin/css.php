@@ -72,6 +72,24 @@
 	padding:5px;
 	width:auto;
 }
+#web_services_resource {
+	width:670px;
+}
+#url_status {
+	width:30px;
+	height:30px;
+	float:right;
+}
+#url_status.success {
+	background-image: url(<?php echo $vars['url']; ?>mod/ecml/graphics/url_status.png);
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+#url_status.failure {
+	background-image: url(<?php echo $vars['url']; ?>mod/ecml/graphics/url_status.png);
+	background-repeat: no-repeat;
+	background-position: left bottom;
+}
 #embed_ecml_keyword_help,
 #ecml_preview {
 	padding:10px;

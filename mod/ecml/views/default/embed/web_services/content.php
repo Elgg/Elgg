@@ -45,7 +45,7 @@ $embed = elgg_view('input/button', array(
 	'internalid' => 'embed_submit',
 	'type' => 'button',
 	'value' => elgg_echo('embed:embed'),
-	'class' => 'submit_button embed_disabled',
+	'class' => 'submit_button disabled',
 	'disabled' => TRUE
 ));
 
@@ -56,7 +56,7 @@ echo $keywords_html;
 echo "<div class='embed_content_section instructions hidden'><a class='ecml_embed_instructions link'>Instructions</a>";
 echo "<div id='embed_ecml_keyword_help' class='hidden'></div></div>";
 
-echo "<div id='embed_service_url'><label>URL".$input."</label>";
+echo "<div id='embed_service_url'><label>URL<br />".$input."<div id='url_status' class=''></div></label>";
 echo "<div class='ecml_generated_code hidden'>ECML: <span id='ecml_code'></span></div></div>";
 
 echo "<div class='embed_content_section preview hidden'><a class='ecml_embed_preview link'>Preview</a>";
@@ -86,6 +86,7 @@ $(function() {
 	var selected_service = '';
 	var manual_selected_service = false;
 	var embed_button = $('#embed_submit');
+	var url_status = $('#url_status');
 	var embed_resource_input = $('#web_services_resource');
 
 	// counter for paused input to try to validate/generate a preview.
@@ -110,9 +111,11 @@ $(function() {
 		var value_length = value.length;
 		 
 		if (value_length > 0) {
-			embed_button.removeAttr('disabled').removeClass('embed_disabled').addClass('embed_warning');
+			//embed_button.removeAttr('disabled').removeClass('disabled');//.addClass('embed_warning');
+			url_status.removeClass('success').addClass('failure');
 		} else {
-			embed_button.attr('disabled', 'disabled').addClass('embed_disabled');
+			embed_button.attr('disabled', 'disabled').addClass('disabled');
+			url_status.removeClass('success').removeClass('failure');
 		}
 		
 		if (value_length < 5) {
@@ -176,7 +179,12 @@ $(function() {
 				$('.ecml_generated_code').removeClass('hidden'); // reveal ecml generated code
 
 				// set status for embed button
-				embed_button.removeAttr('disabled').removeClass('embed_disabled').removeClass('embed_warning').addClass('embed_good');
+				embed_button.removeAttr('disabled').removeClass('disabled');
+				url_status.removeClass('failure').addClass('success');
+			} else {
+				// data failure
+				embed_button.attr('disabled', 'disabled').addClass('disabled');
+				url_status.removeClass('success').removeClass('failure');
 			}
 		}, 'json');
 	}

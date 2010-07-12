@@ -155,12 +155,12 @@
 
 /* embed web services */
 .embed_disabled {
-	/* background-color: red; */
+	background-color: silver;
 }
 
 .embed_warning {
-	background-color: yellow;
-	border-color: yellow;
+	background-color: red;
+	border-color: red;
 }
 
 .embed_good {
