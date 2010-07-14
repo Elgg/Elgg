@@ -10,16 +10,29 @@
  * @link http://elgg.org/
  */
 
+if ($CONFIG->allow_registration) {
+	$invite = elgg_echo('friends:invite');
+	$introduction = elgg_echo('invitefriends:introduction');
+	$message = elgg_echo('invitefriends:message');
+	$default = sprintf(elgg_echo('invitefriends:message:default'), $CONFIG->site->name);
 
-echo "<h2>".elgg_echo('friends:invite')."</h2>";
-?>
+	echo <<< HTML
+<h2>$invite</h2>
 <p class="margin_top">
-<label>
-	<?php echo elgg_echo('invitefriends:introduction'); ?>
-<textarea class="input_textarea" name="emails" ></textarea></label></p>
-<p><label>
-	<?php echo elgg_echo('invitefriends:message'); ?>
-<textarea class="input_textarea" name="emailmessage" ><?php
-	echo sprintf(elgg_echo('invitefriends:message:default'),$CONFIG->site->name);
-?></textarea></label></p>
-<?php echo elgg_view('input/submit', array('value' => elgg_echo('send'))); ?>
+	<label>
+		$introduction
+		<textarea class="input_textarea" name="emails" ></textarea>
+	</label>
+</p>
+<p>
+	<label>
+		$message
+		<textarea class="input_textarea" name="emailmessage" >$default</textarea>
+	</label>
+</p>
+HTML;
+
+	echo elgg_view('input/submit', array('value' => elgg_echo('send')));
+} else {
+	echo elgg_echo('invitefriends:registration_disabled');
+}
