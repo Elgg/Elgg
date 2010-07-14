@@ -32,7 +32,7 @@
 
 	if (($user instanceof ElggUser) && ($group instanceof ElggGroup))
 	{
-		if ($group->isPublicMembership())
+		if ($group->isPublicMembership() || $group->canEdit($user->guid))
 		{
 			if ($group->join($user))
 			{

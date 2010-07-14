@@ -15,6 +15,7 @@ elgg_push_breadcrumb(elgg_echo('groups:all'), "{$vars['url']}pg/groups/world");
 
 // create user actions
 $actions = array();
+
 if ($vars['entity']->canEdit()) {
 	// breadcrumb trail
 	elgg_push_breadcrumb(elgg_echo('groups:yours'), "{$vars['url']}pg/groups/member/{$user->username}");
@@ -22,24 +23,33 @@ if ($vars['entity']->canEdit()) {
 	// edit and invite
 	$actions["mod/groups/edit.php?group_guid={$vars['entity']->getGUID()}"] = elgg_echo('groups:edit');
 	$actions["mod/groups/invite.php?group_guid={$vars['entity']->getGUID()}"] = elgg_echo('groups:invite');
-} elseif ($vars['entity']->isMember($user)) {
+} 
+
+if ($vars['entity']->isMember($user)) {
 	// breadcrumb trail
 	elgg_push_breadcrumb(elgg_echo('groups:yours'), "{$vars['url']}pg/groups/member/{$user->username}");
 	
 	// leave
 	$url = elgg_add_action_tokens_to_url("action/groups/leave?group_guid={$vars['entity']->getGUID()}");
 	$actions[$url] = elgg_echo('groups:leave');
-} elseif ($vars['entity']->isPublicMembership()) {
-	// join
-	$url = elgg_add_action_tokens_to_url("action/groups/join?group_guid={$vars['entity']->getGUID()}");
-	$actions[$url] = elgg_echo('groups:join');
 } else {
-	// request membership
-	$url = elgg_add_action_tokens_to_url("action/groups/joinrequest?group_guid={$vars['entity']->getGUID()}");
-	$actions[$url] = elgg_echo('groups:joinrequest');
+	// join
+	// admins can always join.
+	if ($vars['entity']->isPublicMembership() || $vars['entity']->canEdit()) {
+		$url = elgg_add_action_tokens_to_url("action/groups/join?group_guid={$vars['entity']->getGUID()}");
+		$actions[$url] = elgg_echo('groups:join');
+	} else {
+		// request membership
+		$url = elgg_add_action_tokens_to_url("action/groups/joinrequest?group_guid={$vars['entity']->getGUID()}");
+		$actions[$url] = elgg_echo('groups:joinrequest');
+	}
 }
 
-// build aciton buttons
+/*
+
+*/
+
+// build action buttons
 $action_buttons = '';
 if (!empty($actions)) {
 	$action_buttons = '<div class="content_header_options">';
