@@ -67,22 +67,26 @@ __HTML;
 </div><div id="hiddenform_bottom"></div></div>
 
 <script type="text/javascript"> 
-$(document).ready(function() { 	
+$(document).ready(function() {
 	$('input.username').focus();
 	
 	// add cancel button to inline register form
 	$('#registration_form').find('input.submit_button').after("<input class='action_button disabled cancel_request' type='reset' value='Cancel'>");
 	
 	function elgg_slide_hiddenform(activateLink, parentElement, toggleElement) {
-		$(activateLink).closest(parentElement).find(toggleElement).animate({"width": "563px"}, { duration: 400 });
-		$(activateLink).closest(parentElement).animate({"height": "256px"}, { duration: 400 });
+		$(activateLink).closest(parentElement).find(toggleElement).animate({"width": "563px", duration: 400});
+		$(activateLink).closest(parentElement).animate({"height": "256px", duration: 400}, function() {
+			// ewwww dirty.  Webkit has problems when showing images that were hidden.
+			// forcing a reload of all the images.
+			$('.visual_captcha img').each(function() { $(this).attr('src', $(this).attr('src')); });
+		});
 		return false;
 	}
 
 	$('a.registration_link').click(function(e) {
 		e.preventDefault();
 		elgg_slide_hiddenform(this, '.walledgardenlogin', '#registration_form');
-		$('input.name').focus();	
+		$('input.name').focus();
 	});
 	
 	$('a.forgotten_password_link').click(function(e) {
