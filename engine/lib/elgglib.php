@@ -2181,16 +2181,16 @@ function elgg_init() {
 	register_shutdown_function('__elgg_shutdown_hook');
 }
 
+/**
+ * Walled garden system:index plugin hook.
+ */
 function elgg_walled_garden_index() {
 	$login = elgg_view('account/forms/login_walled_garden');
-	echo elgg_view('page_shells/walled_garden', array(
-		'body' => $login,
-		'sysmessages' => system_messages(NULL, ''),
-	));
 
+	page_draw('', $login, 'page_shells/walled_garden');
+	
 	// @hack Index must exit to keep plugins from continuing to extend
 	exit;
-	return TRUE;
 }
 
 /**

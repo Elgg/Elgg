@@ -1013,16 +1013,18 @@ function autoregister_views($view_base, $folder, $base_location_path, $viewtype)
 }
 
 /**
- * Returns a representation of a full 'page' (which might be an HTML page, RSS file, etc, depending on the current view)
+ * Outputs a representation of a full 'page' (which might be an HTML page, RSS file, etc, depending on the current view)
  *
- * @param unknown_type $title
- * @param unknown_type $body
- * @return unknown
+ * @param string $title
+ * @param string $body
+ * @param string $page_shell Optional page shell to use.
+ * @param array $vars Optional vars array to pass to the page shell. Automatically adds title, body, and sysmessages
+ * @return NULL
  */
-function page_draw($title, $body, $sidebar = "", $page_shell = 'page_shells/default') {
-
+function page_draw($title, $body, $page_shell = 'page_shells/default', $vars = array()) {
 	// get messages - try for errors first
-	$sysmessages = system_messages(null, "errors");
+	$sysmessages = system_messages(NULL, "errors");
+	
 	if (count($sysmessages["errors"]) == 0) {
 		// no errors so grab rest of messages
 		$sysmessages = system_messages(null, "");
@@ -1031,14 +1033,12 @@ function page_draw($title, $body, $sidebar = "", $page_shell = 'page_shells/defa
 		system_messages(null, "");
 	}
 
+	$vars['title'] = $title;
+	$vars['body'] = $body;
+	$vars['sysmessages'] = $sysmessages;
+	
 	// Draw the page
-	$output = elgg_view($page_shell, array(
-		'title' => $title,
-		'body' => $body,
-		'sidebar' => $sidebar,
-		'sysmessages' => $sysmessages,
-		)
-	);
+	$output = elgg_view($page_shell, $vars);
 	$split_output = str_split($output, 1024);
 
 	foreach($split_output as $chunk) {
