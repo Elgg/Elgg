@@ -327,7 +327,7 @@ function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
 
 	// Format message
 	$body = html_entity_decode($body, ENT_COMPAT, 'UTF-8'); // Decode any html entities
-	$body = strip_tags($body); // Strip tags from message
+	$body = elgg_strip_tags($body); // Strip tags from message
 	$body = preg_replace("/(\r\n|\r)/", "\n", $body); // Convert to unix line endings in body
 	$body = preg_replace("/^From/", ">From", $body); // Change lines starting with From to >From
 
@@ -447,7 +447,7 @@ function object_notifications($event, $object_type, $object) {
 			foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 				$interested_users = elgg_get_entities_from_relationship(array(
 					'relationship' => 'notify' . $method,
-					'relationship_guid' => $object->container_guid, 
+					'relationship_guid' => $object->container_guid,
 					'inverse_relationship' => TRUE,
 					'types' => 'user',
 					'limit' => 99999
