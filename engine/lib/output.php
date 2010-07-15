@@ -1,7 +1,7 @@
 <?php
 /**
  * Output functions
- * Processing text for output, formatting HTML, 
+ * Processing text for output, formatting HTML,
  *
  * @package Elgg
  * @subpackage Core
@@ -100,7 +100,7 @@ function autop($pee, $br = 1) {
 function elgg_make_excerpt($text, $num_chars = 250) {
 	$text = trim(strip_tags($text));
 	$string_length = elgg_strlen($text);
-	
+
 	if ($string_length <= $num_chars) {
 		return $text;
 	}
@@ -151,4 +151,21 @@ function friendly_title($title) {
  */
 function friendly_time($time) {
 	return elgg_view('output/friendlytime', array('time' => $time));
+}
+
+/**
+ * Strip tags and offer plugins the chance.
+ * Plugins register for output:strip_tags plugin hook.
+ * 	Original string included in $params['original_string']
+ *
+ * @param string $string Formatted string
+ * @return string String run through strip_tags() and any plugin hooks.
+ */
+function elgg_strip_tags($string) {
+	$params['original_string'] = $string;
+
+	$string = strip_tags($string);
+	$string = trigger_plugin_hook('output', 'strip_tags', $params, $string);
+
+	return $string;
 }
