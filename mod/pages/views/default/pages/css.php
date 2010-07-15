@@ -84,19 +84,19 @@
 }
 
 #pages_page .strapline {
-    text-align:right;
-    border-top:1px solid #efefef;
-    margin:10px 0 10px 0;
-    color:#666666;
+ttext-align:right;
+tborder-top:1px solid #efefef;
+tmargin:10px 0 10px 0;
+tcolor:#666666;
 }
 #pages_page .categories {
-    border:none !important;
-    padding:0 !important;
+tborder:none !important;
+tpadding:0 !important;
 }
 
 #pages_page .tags {
-    padding:0 0 0 16px;
-    margin:10px 0 4px 0;
+tpadding:0 0 0 16px;
+tmargin:10px 0 4px 0;
 	background:transparent url(<?php echo $vars['url']; ?>_graphics/icon_tag.gif) no-repeat scroll left 2px;
 }
 
@@ -117,8 +117,8 @@
 	background:white;
 	-webkit-border-radius: 8px; 
 	-moz-border-radius: 8px;
-    padding:10px;
-    margin:0 10px 10px 10px;
+tpadding:10px;
+tmargin:0 10px 10px 10px;
 }
 #sidebar_page_tree h3 {
 	background: none;

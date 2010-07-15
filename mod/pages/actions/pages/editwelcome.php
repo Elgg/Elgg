@@ -22,54 +22,54 @@
 	
 	//check to see if this is an edit or new welcome message
 	if($object_guid){
-    	
-    	//it is an edit so grab the object
-    	$welcome = get_entity($object_guid);
+t	
+t	//it is an edit so grab the object
+t	$welcome = get_entity($object_guid);
 		if ($welcome->getSubtype() == "pages_welcome" && $welcome->canEdit()) {
-    		
-    		$welcome->description = $message;
-    		$welcome->access_id = $access_id; 
-    		$welcome->save();
-    		system_message(elgg_echo("pages:welcomeposted"));
-    		
+t		
+t		$welcome->description = $message;
+t		$welcome->access_id = $access_id; 
+t		$welcome->save();
+t		system_message(elgg_echo("pages:welcomeposted"));
+t		
 		} else {
-    		
-    		register_error(elgg_echo("pages:welcomeerror"));
-    		
+t		
+t		register_error(elgg_echo("pages:welcomeerror"));
+t		
 		}
-    	
-    	
+t	
+t	
 	}else{
 	
-        //it is a new welcome object
-    	if ($owner_guid){
-        	
-    		$welcome = new ElggObject();
-    		// Tell the system it's a pages welcome message
-    		$welcome->subtype = "pages_welcome";
-    		$welcome->title = "Welcome";
-    		$welcome->description = $message;
-    		$welcome->access_id = $access_id;
-    		
-    		// Set the owner
-    		$welcome->owner_guid = $owner_guid;
-    		
-    	    // save
-    		if (!$welcome->save()){
-    			register_error(elgg_echo("pages:welcomeerror"));
-    		} else {
-        		system_message(elgg_echo("pages:welcomeposted"));
-    		}
-    
-    		
-    	} else {
-        	
-        	register_error(elgg_echo("pages:welcomeerror"));
-        	
-    	}
-    	
+tt//it is a new welcome object
+t	if ($owner_guid){
+tt	
+t		$welcome = new ElggObject();
+t		// Tell the system it's a pages welcome message
+t		$welcome->subtype = "pages_welcome";
+t		$welcome->title = "Welcome";
+t		$welcome->description = $message;
+t		$welcome->access_id = $access_id;
+t		
+t		// Set the owner
+t		$welcome->owner_guid = $owner_guid;
+t		
+t	t// save
+t		if (!$welcome->save()){
+t			register_error(elgg_echo("pages:welcomeerror"));
+t		} else {
+tt		system_message(elgg_echo("pages:welcomeposted"));
+t		}
+t
+t		
+t	} else {
+tt	
+tt	register_error(elgg_echo("pages:welcomeerror"));
+tt	
+t	}
+t	
 	}//end of first if statement
-    	
+t	
 	// Forward to the main blog page
 	forward("pg/pages/owned/" . get_user($owner_guid)->username);
 	exit;

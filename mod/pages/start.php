@@ -49,12 +49,12 @@
 		// Listen to notification events and supply a more useful message
 			register_plugin_hook('notify:entity:message', 'object', 'page_notify_message');
 			
-		// add the group pages tool option     
-            add_group_tool_option('pages',elgg_echo('groups:enablepages'),true);
+		// add the group pages tool optiont 
+tttadd_group_tool_option('pages',elgg_echo('groups:enablepages'),true);
 
 		
 		//add a widget
-	    add_widget_type('pages',elgg_echo('pages'),elgg_echo('pages:widget:description'));
+	tadd_widget_type('pages',elgg_echo('pages'),elgg_echo('pages:widget:description'));
 		
 		// For now, we'll hard code the groups profile items as follows:
 		// TODO make this user configurable
@@ -91,11 +91,11 @@
 		
 		// Group submenu option	
 			if ($page_owner instanceof ElggGroup && get_context() == 'groups') {
-    			if($page_owner->pages_enable != "no"){
-				    add_submenu_item(sprintf(elgg_echo("pages:group"),$page_owner->name), $CONFIG->wwwroot . "pg/pages/owned/" . $page_owner->username);
-			    }
+t			if($page_owner->pages_enable != "no"){
+				tadd_submenu_item(sprintf(elgg_echo("pages:group"),$page_owner->name), $CONFIG->wwwroot . "pg/pages/owned/" . $page_owner->username);
+			t}
 			}
-    }
+t}
 	
 	/**
 	 * Pages page handler.
@@ -113,62 +113,62 @@
 			{
 				case "new" :
 					include($CONFIG->pluginspath . "pages/new.php");
-          		break;
-          		case "welcome" :
+tt  		break;
+tt  		case "welcome" :
 					include($CONFIG->pluginspath . "pages/welcome.php");
-          		break;
-    			case "world":  
+tt  		break;
+t			case "world":  
    					include($CONFIG->pluginspath . "pages/world.php");
-          		break;
-    			case "owned" :
-    				// Owned by a user
-    				if (isset($page[1]))
-    					set_input('username',$page[1]);
-    					
-    				include($CONFIG->pluginspath . "pages/index.php");	
-    			break;
-    			case "edit" :
-    				if (isset($page[1]))
-    					set_input('page_guid', $page[1]);
-    					
-    				 $entity = get_entity($page[1]);
-    				 add_submenu_item(elgg_echo('pages:label:view'), $CONFIG->url . "pg/pages/view/{$page[1]}", 'pageslinks');
-    				 // add_submenu_item(elgg_echo('pages:user'), $CONFIG->wwwroot . "pg/pages/owned/" . $_SESSION['user']->username, 'pageslinksgeneral');
-    				 if (($entity) && ($entity->canEdit())) add_submenu_item(elgg_echo('pages:label:edit'), $CONFIG->url . "pg/pages/edit/{$page[1]}", 'pagesactions');
-    				 add_submenu_item(elgg_echo('pages:label:history'), $CONFIG->url . "pg/pages/history/{$page[1]}", 'pageslinks');
+tt  		break;
+t			case "owned" :
+t				// Owned by a user
+t				if (isset($page[1]))
+t					set_input('username',$page[1]);
+t					
+t				include($CONFIG->pluginspath . "pages/index.php");	
+t			break;
+t			case "edit" :
+t				if (isset($page[1]))
+t					set_input('page_guid', $page[1]);
+t					
+t				 $entity = get_entity($page[1]);
+t				 add_submenu_item(elgg_echo('pages:label:view'), $CONFIG->url . "pg/pages/view/{$page[1]}", 'pageslinks');
+t				 // add_submenu_item(elgg_echo('pages:user'), $CONFIG->wwwroot . "pg/pages/owned/" . $_SESSION['user']->username, 'pageslinksgeneral');
+t				 if (($entity) && ($entity->canEdit())) add_submenu_item(elgg_echo('pages:label:edit'), $CONFIG->url . "pg/pages/edit/{$page[1]}", 'pagesactions');
+t				 add_submenu_item(elgg_echo('pages:label:history'), $CONFIG->url . "pg/pages/history/{$page[1]}", 'pageslinks');
 
-    				include($CONFIG->pluginspath . "pages/edit.php");
-    			break;
-    			case "view" :
-    				
-    				if (isset($page[1]))
-    					set_input('page_guid', $page[1]);
-    					
-    				 elgg_extend_view('metatags','pages/metatags');
-    					
-    				 $entity = get_entity($page[1]);
-    				 //add_submenu_item(elgg_echo('pages:label:view'), $CONFIG->url . "pg/pages/view/{$page[1]}", 'pageslinks');
-    				 if (($entity) && ($entity->canEdit())) add_submenu_item(elgg_echo('pages:label:edit'), $CONFIG->url . "pg/pages/edit/{$page[1]}", 'pagesactions');
-    				 add_submenu_item(elgg_echo('pages:label:history'), $CONFIG->url . "pg/pages/history/{$page[1]}", 'pageslinks');
-    					
-    				include($CONFIG->pluginspath . "pages/view.php");
-    			break;   
-    			case "history" :
-    				if (isset($page[1]))
-    					set_input('page_guid', $page[1]);
-    					
-    				 elgg_extend_view('metatags','pages/metatags');
-    					
-    				 $entity = get_entity($page[1]);
-    				 add_submenu_item(elgg_echo('pages:label:view'), $CONFIG->url . "pg/pages/view/{$page[1]}", 'pageslinks');
-    				 if (($entity) && ($entity->canEdit())) add_submenu_item(elgg_echo('pages:label:edit'), $CONFIG->url . "pg/pages/edit/{$page[1]}", 'pagesactions');
-    				 add_submenu_item(elgg_echo('pages:label:history'), $CONFIG->url . "pg/pages/history/{$page[1]}", 'pageslinks');
-    					
-    				include($CONFIG->pluginspath . "pages/history.php");
-    			break; 				
-    			default:
-    				include($CONFIG->pluginspath . "pages/new.php");
-    			break;
+t				include($CONFIG->pluginspath . "pages/edit.php");
+t			break;
+t			case "view" :
+t				
+t				if (isset($page[1]))
+t					set_input('page_guid', $page[1]);
+t					
+t				 elgg_extend_view('metatags','pages/metatags');
+t					
+t				 $entity = get_entity($page[1]);
+t				 //add_submenu_item(elgg_echo('pages:label:view'), $CONFIG->url . "pg/pages/view/{$page[1]}", 'pageslinks');
+t				 if (($entity) && ($entity->canEdit())) add_submenu_item(elgg_echo('pages:label:edit'), $CONFIG->url . "pg/pages/edit/{$page[1]}", 'pagesactions');
+t				 add_submenu_item(elgg_echo('pages:label:history'), $CONFIG->url . "pg/pages/history/{$page[1]}", 'pageslinks');
+t					
+t				include($CONFIG->pluginspath . "pages/view.php");
+t			break;   
+t			case "history" :
+t				if (isset($page[1]))
+t					set_input('page_guid', $page[1]);
+t					
+t				 elgg_extend_view('metatags','pages/metatags');
+t					
+t				 $entity = get_entity($page[1]);
+t				 add_submenu_item(elgg_echo('pages:label:view'), $CONFIG->url . "pg/pages/view/{$page[1]}", 'pageslinks');
+t				 if (($entity) && ($entity->canEdit())) add_submenu_item(elgg_echo('pages:label:edit'), $CONFIG->url . "pg/pages/edit/{$page[1]}", 'pagesactions');
+t				 add_submenu_item(elgg_echo('pages:label:history'), $CONFIG->url . "pg/pages/history/{$page[1]}", 'pageslinks');
+t					
+t				include($CONFIG->pluginspath . "pages/history.php");
+t			break; 				
+t			default:
+t				include($CONFIG->pluginspath . "pages/new.php");
+t			break;
 			}
 		}
 		

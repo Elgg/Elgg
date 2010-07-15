@@ -11,15 +11,15 @@
 	 
 	 //set some variables
 	 if($vars['entity']){
-    	 foreach($vars['entity'] as $welcome){
-    	    $current_message = $welcome->description;
-    	    $object_guid = $welcome->guid;
-    	    $access_id = $welcome->access_id;
-	    }
+t	 foreach($vars['entity'] as $welcome){
+t	t$current_message = $welcome->description;
+t	t$object_guid = $welcome->guid;
+t	t$access_id = $welcome->access_id;
+	t}
 	 }else{
-    	 $current_message = '';
-    	 $object_guid = '';
-    	 $access_id = ACCESS_PRIVATE;
+t	 $current_message = '';
+t	 $object_guid = '';
+t	 $access_id = ACCESS_PRIVATE;
 	 }
 	 
 	 $page_owner = $vars['owner']->guid;
@@ -27,7 +27,7 @@
 ?>
 <form action="<?php echo $vars['url']; ?>action/pages/editwelcome" method="post">
 
-    <p class="longtext_inputarea">
+t<p class="longtext_inputarea">
 		<label>
 			<?php echo elgg_view("input/longtext",array(
 				'internalname' => "pages_welcome",
@@ -47,13 +47,13 @@
 	<?php
 		echo elgg_view('input/securitytoken');
 
-	    //if it is editing, include the object guid
-	    if($object_guid != ''){
-    ?>
-	    <input type="hidden" name="object_guid" value="<?php echo $object_guid; ?>" />
+	t//if it is editing, include the object guid
+	tif($object_guid != ''){
+t?>
+	t<input type="hidden" name="object_guid" value="<?php echo $object_guid; ?>" />
 	<?php
-        }
-    ?>
-    
+tt}
+t?>
+t
 	<input type="submit" class="submit_button" value="<?php echo elgg_echo("save"); ?>" />
 </form>

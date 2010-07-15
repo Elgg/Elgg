@@ -14,7 +14,7 @@
 		
 	$page_guid = get_input('page_guid');
 		
-    $pages = get_entity($page_guid);
+t$pages = get_entity($page_guid);
 	if ($pages->container_guid) {
 		set_page_owner($pages->container_guid);
 	} else {

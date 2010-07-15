@@ -31,7 +31,7 @@
 			'pages:welcomeerror' => "There was a problem saving your welcome message",
 			'pages:welcomeposted' => "Your welcome message has been posted",
 			'pages:navigation' => "Page navigation",
-	        'pages:via' => "via pages",
+	tt'pages:via' => "via pages",
 			'item:object:page_top' => 'Top-level pages',
 			'item:object:page' => 'Pages',
 			'item:object:pages_welcome' => 'Pages welcome blocks',
@@ -42,14 +42,14 @@
 		* River
 		**/
 		
-		    'pages:river:annotate' => "a comment on this page",
-		    'pages:river:created' => "%s wrote",
-	        'pages:river:updated' => "%s updated",
-	        'pages:river:posted' => "%s posted",
+		t'pages:river:annotate' => "a comment on this page",
+		t'pages:river:created' => "%s wrote",
+	tt'pages:river:updated' => "%s updated",
+	tt'pages:river:posted' => "%s posted",
 			'pages:river:create' => "a new page titled",
-	        'pages:river:update' => "a page titled",
-	        'page:river:annotate' => "a comment on this page",
-	        'page_top:river:annotate' => "a comment on this page",
+	tt'pages:river:update' => "a page titled",
+	tt'page:river:annotate' => "a comment on this page",
+	tt'page_top:river:annotate' => "a comment on this page",
 	
 		/**
 		 * Form fields
@@ -86,7 +86,7 @@
 		 * Widget
 		 **/
 		 
-		    'pages:num' => 'Number of pages to display',
+		t'pages:num' => 'Number of pages to display',
 			'pages:widget:description' => "This is a list of your pages.",
 	
 		/**
