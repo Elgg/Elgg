@@ -485,7 +485,7 @@ function get_objects_in_group($group_guid, $subtype = "", $owner_guid = 0, $site
 
 	$where[] = "e.type='object'";
 	
-	if ($subtype !== "") {
+	if (!empty($subtype)) {
 		if (!$subtype = get_subtype_id('object', $subtype)) {
 			return FALSE;
 		}
