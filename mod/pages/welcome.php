@@ -23,12 +23,12 @@
 			$page_owner = $_SESSION['user'];
 			set_page_owner($page_owner->getGUID());
 		}
-t
+    
 	//get the owners welcome message if it exists
 	$welcome_message = elgg_get_entities(array('types' => 'object', 'subtypes' => 'pages_welcome', 'owner_guid' => $page_owner->getGUID(), 'limit' => 1));
 	global $CONFIG;
 	add_submenu_item(sprintf(elgg_echo("pages:user"), page_owner_entity()->name), $CONFIG->url . "pg/pages/owned/" . page_owner_entity()->username, 'pageslinksgeneral');
-t
+    
 	$title = elgg_echo("pages:welcome");
 	$area2 .= elgg_view_title($title);
 	$area2 .= elgg_view("forms/pages/editwelcome", array('entity' => $welcome_message, 'owner' => $page_owner));

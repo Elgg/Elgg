@@ -66,7 +66,7 @@
 
 	<p class="strapline">
 		<?php
-tttt
+                
 			$time_updated = $latest->time_created;
 			$owner_guid = $latest->owner_guid;
 			$owner = get_entity($owner_guid);

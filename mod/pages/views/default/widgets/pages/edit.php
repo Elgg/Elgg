@@ -1,6 +1,6 @@
 <?php
 
-t/**
+    /**
 	 * Elgg pages widget edit
 	 *
 	 * @package ElggPages

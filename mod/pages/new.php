@@ -25,15 +25,15 @@
 
 	//if it is a sub page, provide a link back to parent
 	if(get_input('parent_guid')){
-	t$parent = get_entity(get_input('parent_guid'));
-	t
-	t// Breadcrumbs
-	t$area2 .= elgg_view('pages/breadcrumbs', array('page_owner' => $page_owner, 'parent' => $parent, 'add' => true));
-t}
-t
-tglobal $CONFIG;
+	    $parent = get_entity(get_input('parent_guid'));
+	    
+	    // Breadcrumbs
+	    $area2 .= elgg_view('pages/breadcrumbs', array('page_owner' => $page_owner, 'parent' => $parent, 'add' => true));
+    }
+    
+    global $CONFIG;
 	add_submenu_item(sprintf(elgg_echo("pages:user"), page_owner_entity()->name), $CONFIG->url . "pg/pages/owned/" . page_owner_entity()->username, 'pageslinksgeneral');
-t
+    
 	$title = elgg_echo("pages:new");
 	$area2 .= elgg_view_title($title);
 	$area2 .= elgg_view("forms/pages/edit");

@@ -1,6 +1,6 @@
 <?php
 
-t/**
+    /**
 	 * Elgg Pages welcome message
 	 * 
 	 * @package ElggPages
@@ -11,19 +11,19 @@ t/**
 	 */
 	 
 	 if($vars['entity']){
-t	 
-t	 foreach($vars['entity'] as $welcome){
-t	 
-t	techo "<div class=\"contentWrapper pageswelcome\">" . $welcome->description . "</div>";
-t	t
-	t}
-t	 
+    	 
+    	 foreach($vars['entity'] as $welcome){
+    	 
+    	    echo "<div class=\"contentWrapper pageswelcome\">" . $welcome->description . "</div>";
+    	    
+	    }
+    	 
 	 } else {
 
 ?>
 
 <div class="contentWrapper pageswelcome"><p><?php echo sprintf(elgg_echo('pages:welcomemessage'), $vars['config']->sitename); ?></p></div>
-t
+    
 <?php
-t}
+    }
 ?>
