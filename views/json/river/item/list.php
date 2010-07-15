@@ -31,7 +31,7 @@ if (isset($vars['items']) && is_array($vars['items'])) {
 
 			if (elgg_view_exists($item->view, 'default')) {
 				$json_entry['string'] = elgg_view($item->view, array('item' => $item), FALSE, FALSE, 'default');
-				$json_entry['timestamp'] = date("r", $item->posted);
+				$json_entry['timestamp'] = (int)$item->posted;
 			}
 
 			$json_items[] = $json_entry;
@@ -44,4 +44,4 @@ if (isset($vars['items']) && is_array($vars['items'])) {
 	}
 }
 
-echo json_encode($json_items);
+$jsonexport['activity'] = $json_items;
