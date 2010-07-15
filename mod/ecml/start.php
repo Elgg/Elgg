@@ -24,7 +24,7 @@ function ecml_init() {
 
 	define('ECML_ATTR_SEPARATOR', ' ');
 	define('ECML_ATTR_OPERATOR', '=');
-	
+
 	// find alphanumerics (keywords) possibly followed by everything that is not a ] (args) and all surrounded by [ ]s
 	define('ECML_KEYWORD_REGEX', '/\[([a-z0-9\.]+)([^\]]+)?\]/');
 
@@ -33,7 +33,7 @@ function ecml_init() {
 
 	// admin access page
 	register_page_handler('ecml_admin', 'ecml_admin_page_handler');
-	
+
 	// ecml validator for embed
 	register_page_handler('ecml_generate', 'ecml_generate_page_handler');
 
@@ -75,9 +75,12 @@ function ecml_init() {
 	// but probably makes more sense from a UI perspective as a whitelist.
 	// uses [views][view_name] = array(keywords, not, allowed)
 	$CONFIG->ecml_permissions = unserialize(get_plugin_setting('ecml_permissions', 'ecml'));
-	
+
 	// 3rd party media embed section
 	register_plugin_hook('embed_get_sections', 'all', 'ecml_embed_web_services_hook');
+
+	// remove ecml when stripping tags
+	register_plugin_hook('output', 'strip_tags', 'ecml_strip_tags');
 }
 
 /**
@@ -94,7 +97,7 @@ function ecml_help_page_handler($page) {
 		// asking for detailed help about a keyword
 		$keyword = $page[0];
 		$content = elgg_view('ecml/keyword_help', array('keyword' => $keyword));
-		
+
 		if (get_input('ajax', FALSE)) {
 			echo $content;
 			exit;
@@ -103,7 +106,7 @@ function ecml_help_page_handler($page) {
 			echo page_draw(elgg_echo('ecml:help'), $body);
 		}
 	}
-	
+
 	return TRUE;
 }
 
@@ -111,7 +114,7 @@ function ecml_help_page_handler($page) {
  * Generate ECML given a URL or embed link and service.
  * Doesn't check if the resource actually exists.
  * Outputs JSON.
- * 
+ *
  * @param unknown_type $page
  */
 function ecml_generate_page_handler($page) {
@@ -125,13 +128,13 @@ function ecml_generate_page_handler($page) {
 			$keyword = $keywords[0]['keyword'];
 			$ecml_info = ecml_get_keyword_info($keyword);
 			$html = ecml_parse_string($resource);
-			
+
 			echo json_encode(array(
 				'status' => 'success',
 				'ecml' => $resource,
 				'html' => $html
 			));
-			
+
 			exit;
 		}
 	}
@@ -141,12 +144,12 @@ function ecml_generate_page_handler($page) {
 			'status' => 'error',
 			'message' => elgg_echo('ecml:embed:invalid_web_service_keyword')
 		));
-		
+
 		exit;
 	}
-	
+
 	$ecml_info = ecml_get_keyword_info($service);
-	
+
 	if ($ecml_info) {
 		// don't allow embedding for restricted.
 		if (isset($ecml_info['restricted'])) {
@@ -170,7 +173,7 @@ function ecml_generate_page_handler($page) {
 			'message' => elgg_echo('ecml:embed:invalid_web_service_keyword')
 		);
 	}
-	
+
 	echo json_encode($result);
 	exit;
 }
@@ -239,7 +242,7 @@ function ecml_keyword_hook($hook, $type, $value, $params) {
 			'embed_format' => $info['embed_format']
 		);
 	}
-	
+
 	// default entity keyword
 	$value['entity'] = array(
 		'name' => elgg_echo('ecml:keywords:entity'),
@@ -247,7 +250,7 @@ function ecml_keyword_hook($hook, $type, $value, $params) {
 		'description' => elgg_echo("ecml:keywords:entity:desc"),
 		'usage' => elgg_echo("ecml:keywords:entity:usage")
 	);
-	
+
 	return $value;
 }
 
@@ -267,7 +270,7 @@ function ecml_views_hook($hook, $type, $value, $params) {
 
 /**
  * Show the special Web Services embed section.
- * 
+ *
  * @param unknown_type $hook
  * @param unknown_type $type
  * @param unknown_type $value
@@ -281,6 +284,18 @@ function ecml_embed_web_services_hook($hook, $type, $value, $params) {
 	);
 
 	return $value;
+}
+
+/**
+ * Remove ecml code for elgg_strip_tags()
+ *
+ * @param unknown_type $hook
+ * @param unknown_type $type
+ * @param unknown_type $value
+ * @param unknown_type $params
+ */
+function ecml_strip_tags($hook, $type, $value, $params) {
+	return preg_replace(ECML_KEYWORD_REGEX, '', $value);
 }
 
 // be sure to run after other plugins
