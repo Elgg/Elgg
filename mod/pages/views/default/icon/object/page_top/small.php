@@ -1,3 +1,8 @@
 <?php
-	echo $vars['url'] . "mod/pages/images/pages.gif";
-?>
+/**
+ * Top Page icon override small
+ *
+ * @package ElggPages
+ */
+
+echo $vars['url'] . "mod/pages/images/pages.gif";
