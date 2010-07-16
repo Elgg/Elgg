@@ -1,7 +1,7 @@
-<?php 
+<?php
 /**
  * Provides interfaces for Elgg's views system
- * 
+ *
  * @package Elgg
  */
 
@@ -94,7 +94,7 @@ function elgg_does_viewtype_fallback($viewtype) {
 	if (isset($CONFIG->viewtype) && isset($CONFIG->viewtype->fallback)) {
 		return in_array($viewtype, $CONFIG->viewtype->fallback);
 	}
-	
+
 	return FALSE;
 }
 
@@ -217,10 +217,10 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 		$viewtype = elgg_get_viewtype();
 	}
 
-	// Viewtypes can only be alphanumeric 
+	// Viewtypes can only be alphanumeric
 	if (preg_match('[\W]', $viewtype)) {
-		return ''; 
-	} 
+		return '';
+	}
 
 	// Set up any extensions to the requested view
 	if (isset($CONFIG->views->extensions[$view])) {
@@ -234,10 +234,10 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 	foreach($viewlist as $priority => $view) {
 		$view_location = elgg_get_view_location($view, $viewtype);
 		$view_file = "$view_location$viewtype/$view.php";
-		
+
 		$default_location = elgg_get_view_location($view, 'default');
 		$default_view_file = "{$default_location}default/$view.php";
-		
+
 		// try to include view
 		if (!file_exists($view_file) || !include($view_file)) {
 			// requested view does not exist
@@ -382,7 +382,7 @@ function elgg_view_regenerate_simplecache($viewtype = NULL) {
 	}
 
 	$original_viewtype = elgg_get_viewtype();
-	
+
 	foreach ($viewtypes as $viewtype) {
 		elgg_set_viewtype($viewtype);
 		foreach ($CONFIG->views->simplecache as $view) {
@@ -664,7 +664,7 @@ function elgg_view_annotation(ElggAnnotation $annotation, $bypass = true, $debug
 function elgg_view_entity_list($entities, $count, $offset, $limit, $fullview = true, $viewtypetoggle = true, $pagination = true) {
 	$count = (int) $count;
 	$limit = (int) $limit;
-	
+
 	// do not require views to explicitly pass in the offset
 	if (!$offset = (int) $offset) {
 		$offset = sanitise_int(get_input('offset', 0));
@@ -865,9 +865,9 @@ function set_template_handler($function_name) {
 /**
  * Extends a view.
  *
- * The addititional views are displayed before or after the primary view. 
- * Priorities less than 500 are displayed before the primary view and 
- * greater than 500 after. The default priority is 501. 
+ * The addititional views are displayed before or after the primary view.
+ * Priorities less than 500 are displayed before the primary view and
+ * greater than 500 after. The default priority is 501.
  *
  * @param string $view The view to extend.
  * @param string $view_extension This view is added to $view
@@ -926,7 +926,7 @@ function elgg_unextend_view($view, $view_extension) {
 	}
 
 	unset($CONFIG->views->extensions[$view][$priority]);
-	
+
 	return TRUE;
 }
 
@@ -1024,7 +1024,7 @@ function autoregister_views($view_base, $folder, $base_location_path, $viewtype)
 function page_draw($title, $body, $page_shell = 'page_shells/default', $vars = array()) {
 	// get messages - try for errors first
 	$sysmessages = system_messages(NULL, "errors");
-	
+
 	if (count($sysmessages["errors"]) == 0) {
 		// no errors so grab rest of messages
 		$sysmessages = system_messages(null, "");
@@ -1036,9 +1036,15 @@ function page_draw($title, $body, $page_shell = 'page_shells/default', $vars = a
 	$vars['title'] = $title;
 	$vars['body'] = $body;
 	$vars['sysmessages'] = $sysmessages;
-	
+
 	// Draw the page
 	$output = elgg_view($page_shell, $vars);
+
+	$vars['page_shell'] = $page_shell;
+
+	// Allow plugins to mod output
+	$output = trigger_plugin_hook('output', 'page', $vars, $output);
+
 	$split_output = str_split($output, 1024);
 
 	foreach($split_output as $chunk) {
