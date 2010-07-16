@@ -31,22 +31,22 @@ $parent_guid = (int)get_input('parent_guid', 0);
 // New or old?
 $page = NULL;
 $pages_guid = (int)get_input('pages_guid');
-if ($pages_guid)
-{
+
+if ($pages_guid) {
 	$page = get_entity($pages_guid);
-	if (!$page->canEdit())
+	if (!$page->canEdit()) {
 		$page = NULL; // if we can't edit it, go no further.
+	}
 
 	//select river boolean to edit
 	$which_river = 'edit';
-}
-else
-{
+} else {
 	$page = new ElggObject();
-	if (!$parent_guid)
+	if (!$parent_guid) {
 		$page->subtype = 'page_top';
-	else
+	} else {
 		$page->subtype = 'page';
+	}
 
 	// New instance, so set container_guid
 	$container_guid = get_input('container_guid', $_SESSION['user']->getGUID());
@@ -60,44 +60,28 @@ else
 }
 
 // Have we got it? Can we edit it?
-if ($page instanceof ElggObject)
-{
-	// Yes we have, and yes we can.
-
+if ($page instanceof ElggObject) {
 	// Save fields - note we always save latest description as both description and annotation
-	if (sizeof($input) > 0)
-	{
+	if (sizeof($input) > 0) {
 		foreach($input as $shortname => $value) {
-			if ((!$pages_guid) || (($pages_guid) && ($shortname != 'title')))
+			if ((!$pages_guid) || (($pages_guid) && ($shortname != 'title'))) {
 				$page->$shortname = $value;
+			}
 		}
 	}
 
-
-	// Validate create
-	if (!$page->title)
-	{
+	if (!$page->title) {
 		register_error(elgg_echo("pages:notitle"));
 
 		forward($_SERVER['HTTP_REFERER']);
-		exit;
 	}
 
-	// Access ids
 	$page->access_id = (int)get_input('access_id', ACCESS_PRIVATE);
-
-	// Write access id
 	$page->write_access_id = (int)get_input('write_access_id', ACCESS_PRIVATE);
-
-	// Set parent
-	$page->parent_guid = $parent_guid;
-
-	// Ensure ultimate owner
+	$page->parent_guid = $parent_guid;\
 	$page->owner_guid = ($page->owner_guid ? $page->owner_guid : $_SESSION['user']->guid);
 
-	// finally save
-	if ($page->save())
-	{
+	if ($page->save()) {
 
 		// Now save description as an annotation
 		$page->annotate('page', $page->description, $page->access_id);
@@ -108,30 +92,24 @@ if ($page instanceof ElggObject)
 		unset($_SESSION['page_read_access']);
 		unset($_SESSION['page_write_access']);
 
-
 		system_message(elgg_echo("pages:saved"));
 
 		//add to river
-		if($which_river == 'new')
+		if ($which_river == 'new') {
 			add_to_river('river/object/page/create','create',$_SESSION['user']->guid,$page->guid);
-		else
+		} else {
 			add_to_river('river/object/page/update','update',$_SESSION['user']->guid,$page->guid);
+		}
 
 		// Forward to the user's profile
 		forward($page->getUrl());
-		exit;
-	}
-	else
+	} else {
 		register_error(elgg_echo('pages:notsaved'));
+	}
 
-}
-else
-{
+} else {
 	register_error(elgg_echo("pages:noaccess"));
 }
 
-
 // Forward to the user's profile
 forward($page->getUrl());
-exit;
-?>

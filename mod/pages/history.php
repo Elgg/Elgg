@@ -29,19 +29,12 @@ $pages = get_entity($page_guid);
 add_submenu_item(sprintf(elgg_echo("pages:user"), page_owner_entity()->name), $CONFIG->url . "pg/pages/owned/" . page_owner_entity()->username, 'pageslinksgeneral');
 
 $title = $pages->title . ": " . elgg_echo("pages:history");
-$area2 = elgg_view_title($title);
-
-$context = get_context();
-
-set_context('search');
-
-$area2 .= list_annotations($page_guid, 'page', $limit, false);
-
-set_context($context);
+$content = elgg_view_title($title);
+$content.= list_annotations($page_guid, 'page', $limit, false);
 
 pages_set_navigation_parent($pages);
-$area3 = elgg_view('pages/sidebar/tree');
+$sidebar = elgg_view('pages/sidebar/tree');
 
-$body = elgg_view_layout('one_column_with_sidebar', $area3, $area2);
+$body = elgg_view_layout('one_column_with_sidebar', $content, $sidebar);
 
 page_draw($title, $body);
