@@ -98,7 +98,7 @@ function autop($pee, $br = 1) {
  * @since 1.7.2
  */
 function elgg_make_excerpt($text, $num_chars = 250) {
-	$text = trim(strip_tags($text));
+	$text = trim(elgg_strip_tags($text));
 	$string_length = elgg_strlen($text);
 
 	if ($string_length <= $num_chars) {
@@ -152,7 +152,7 @@ function friendly_title($title) {
 function friendly_time($time) {
 	return elgg_view('output/friendlytime', array('time' => $time));
 }
-
+elgg_make_excerpt($text)
 /**
  * Strip tags and offer plugins the chance.
  * Plugins register for output:strip_tags plugin hook.
