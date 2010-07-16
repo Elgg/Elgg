@@ -165,7 +165,7 @@ function elgg_strip_tags($string) {
 	$params['original_string'] = $string;
 
 	$string = strip_tags($string);
-	$string = trigger_plugin_hook('output', 'strip_tags', $params, $string);
+	$string = trigger_plugin_hook('format', 'strip_tags', $params, $string);
 
 	return $string;
 }

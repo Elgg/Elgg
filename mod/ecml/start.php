@@ -80,7 +80,7 @@ function ecml_init() {
 	register_plugin_hook('embed_get_sections', 'all', 'ecml_embed_web_services_hook');
 
 	// remove ecml when stripping tags
-	register_plugin_hook('output', 'strip_tags', 'ecml_strip_tags');
+	register_plugin_hook('format', 'strip_tags', 'ecml_strip_tags');
 }
 
 /**
