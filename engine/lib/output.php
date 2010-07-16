@@ -152,7 +152,7 @@ function friendly_title($title) {
 function friendly_time($time) {
 	return elgg_view('output/friendlytime', array('time' => $time));
 }
-elgg_make_excerpt($text)
+
 /**
  * Strip tags and offer plugins the chance.
  * Plugins register for output:strip_tags plugin hook.
