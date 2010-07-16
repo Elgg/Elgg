@@ -131,10 +131,10 @@ function get_plugin_list() {
  * @param array $pluginorder Optionally, a list of existing plugins and their orders
  * @return array The new list of plugins and their orders
  */
-function regenerate_plugin_list($pluginorder = false) {
+function regenerate_plugin_list($pluginorder = FALSE) {
 	global $CONFIG;
 
-	$CONFIG->pluginlistcache = null;
+	$CONFIG->pluginlistcache = NULL;
 
 	if ($site = get_entity($CONFIG->site_guid)) {
 		if (empty($pluginorder)) {
@@ -187,15 +187,10 @@ function regenerate_plugin_list($pluginorder = false) {
 
 		$site->pluginorder = $plugins;
 
-		// Regenerate caches
-		elgg_view_regenerate_simplecache();
-		elgg_filepath_cache_reset();
-
 		return $plugins;
-
 	}
 
-	return false;
+	return FALSE;
 }
 
 
