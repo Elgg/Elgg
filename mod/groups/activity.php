@@ -48,6 +48,7 @@ if (count($entity_guids) > 0) {
 }
 
 $area1 .= elgg_view_title(elgg_echo('groups:activity'));
+$area1 .= elgg_view("group_activity/extend");
 $area1 .= "<div class='group_listings hide_comments'>".$river_items."</div>";
 $title = sprintf(elgg_echo("groups:activity"), page_owner_entity()->name);
 $body = elgg_view_layout('one_column_with_sidebar', $area1);
