@@ -113,6 +113,7 @@ You cannot reply to this email.",
  */
 
 	'profile:no_friends' => 'This person hasn\'t added any friends yet!',
+	'profile:no_groups' => 'This user has not joined any groups yet.',
 	'profile:noaccess' => "You do not have permission to edit this profile.",
 	'profile:notfound' => "Sorry, we could not find the specified profile.",
 	'profile:icon:notfound' => "Sorry, there was a problem uploading your profile picture.",
