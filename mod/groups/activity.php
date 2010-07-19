@@ -47,7 +47,6 @@ if (count($entity_guids) > 0) {
 	$river_items .= elgg_echo('groups:no_activity');
 }
 
-$area1 .= "<a class='start_conversation link groups_activity action_button'>New conversation</a>";
 $area1 .= elgg_view_title(elgg_echo('groups:activity'));
 $area1 .= elgg_view("group_activity/extend");
 $area1 .= "<div class='group_listings hide_comments'>".$river_items."</div>";
