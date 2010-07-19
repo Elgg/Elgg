@@ -29,6 +29,9 @@ if ($user = get_user_by_username($username)) {
 		case 'friends':
 			$body .= elgg_view('profile/profile_contents/friends', array("entity" => $user));
 		break;
+		case 'groups':
+			$body .= elgg_view('profile/profile_contents/groups', array("entity" => $user));
+		break;
 		case 'extend':
 			$body .= elgg_view('profile/profile_contents/extend', array("entity" => $user));
 		break;

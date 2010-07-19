@@ -22,7 +22,9 @@ switch($section){
 	case 'details':
 		$details = 'class="selected"';
 		break;
-
+	case 'groups':
+		$groups = 'class="selected"';
+		break;
 	case 'twitter':
 		$twitter = 'class="selected"';
 		break;
@@ -42,6 +44,7 @@ switch($section){
 	<li <?php echo $activity; ?>><a href="<?php echo $url; ?>"><?php echo elgg_echo('activity'); ?></a></li>
 	<li <?php echo $details; ?>><a href="<?php echo $url . 'details'; ?>"><?php echo elgg_echo('Details'); ?></a></li>
 	<li <?php echo $friends; ?>><a href="<?php echo $url . 'friends'; ?>"><?php echo elgg_echo('friends'); ?></a></li>
+	<li <?php echo $groups; ?>><a href="<?php echo $url . 'groups'; ?>"><?php echo elgg_echo('groups'); ?></a></li>
 	<li <?php echo $commentwall; ?>><a href="<?php echo $url . 'commentwall'; ?>"><?php echo elgg_echo('profile:commentwall'); ?></a></li>
 	<?php
 		//check to see if the twitter username is set
