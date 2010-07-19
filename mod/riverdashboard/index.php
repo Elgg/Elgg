@@ -40,7 +40,7 @@ switch($orient) {
 }
 
 $title = elgg_view_title($title_wording);
-
+$extend = elgg_view("activity/extend");
 $river = elgg_view_river_items($subject_guid, 0, $relationship_type, $type, $subtype, '', 20, 0, 0, TRUE, FALSE);
 
 // Replacing callback calls in the nav with something meaningless
@@ -58,7 +58,7 @@ set_context('riverdashboard');
 
 if (empty($callback)) {
 	$body .= elgg_view('riverdashboard/container', array('body' => $nav . $river . elgg_view('riverdashboard/js')));
-	page_draw($title_wording,elgg_view_layout('one_column_with_sidebar',$title . $body, $sidebar));
+	page_draw($title_wording,elgg_view_layout('one_column_with_sidebar',$extend . $title . $body, $sidebar));
 } else {
 	header("Content-type: text/html; charset=UTF-8");
 	echo $nav . $river . elgg_view('riverdashboard/js');
