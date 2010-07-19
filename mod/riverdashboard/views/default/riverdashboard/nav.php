@@ -44,7 +44,7 @@ switch($vars['orient']) {
 			}
 			//set the drop down filter
 			if ($content[0] && $content[1]) {
-				$location_filter .= "<option {$selected} class='Nomenuoption' value=\"{$CONFIG->url}pg/activity/?type={$get_values[0]}&subtype={$get_values[1]}{$display_option}\" >" . elgg_echo('Show') . " " . elgg_echo($label) . "</option>";
+				$location_filter .= "<option {$selected} class='Nomenuoption' value=\"{$CONFIG->url}pg/activity/?type={$get_values[0]}&subtype={$get_values[1]}{$display_option}\" >" . elgg_echo($label) . "</option>";
 			}
 			//reset selected
 			$selected = '';
@@ -54,5 +54,4 @@ switch($vars['orient']) {
 	?>
 	<input type="hidden" name="display" id="display" value="<?php echo htmlentities($vars['orient']); ?>" />
 </div>
-<a class="start_conversation link action_button">New conversation</a>
 <div id="riverdashboard_updates" class="clearfloat"></div>
