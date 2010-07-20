@@ -85,7 +85,8 @@
 			 */
 			'groups:access:private' => 'Closed - Users must be invited',
 			'groups:access:public' => 'Open - Any user may join',
-			'groups:closedgroup' => 'This group has a closed membership. To ask to be added, click the "request membership" menu link.',
+			'groups:closedgroup' => 'This group has a closed membership.',
+			'groups:closedgroup:request' => 'To ask to be added, click the "request membership" menu link.',
 			'groups:visibility' => 'Who can see this group?',
 
 			/*
