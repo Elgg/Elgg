@@ -75,7 +75,15 @@
 		$limit = 10;
 		if ($search_viewtype == "gallery") $limit = 12;
 		if (!empty($tag)) {
-			$area2 .= list_entities_from_metadata($md_type, $tag, 'object', 'file', $owner_guid, $limit);
+			$params = array(
+				'metadata_name' => $md_type,
+				'metadata_value' => $tag,
+				'types' => 'object',
+				'subtypes' => 'file',
+				'owner_guid' => $owner_guid,
+				'limit' => $limit,
+			);
+			$area2 .= elgg_list_entities_from_metadata($params);
 		} else {
 			$area2 .= elgg_list_entities(array('types' => 'object', 'subtypes' => 'file', 'owner_guid' => $owner_guid, 'limit' => $limit, 'offset' => $offset));
 		}
