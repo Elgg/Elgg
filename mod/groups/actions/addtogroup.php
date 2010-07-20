@@ -54,7 +54,7 @@
 							// send welcome email
 							notify_user($user->getGUID(), $group->owner_guid,
 								sprintf(elgg_echo('groups:welcome:subject'), $group->name),
-								sprintf(elgg_echo('groups:welcome:body'), $user->name, $logged_in_user->name, $group->name, $group->getURL()),
+								sprintf(elgg_echo('groups:welcome:body'), $user->name, $group->name, $group->getURL()),
 								NULL);
 
 							system_message(elgg_echo('groups:addedtogroup'));
