@@ -13,7 +13,18 @@ if ($categories) {
 		if (isset($vars['owner_guid'])) {
 			$owner_guid = (int) $vars['owner_guid'];
 		}
-		if ($cats = get_tags(0,999,'universal_categories','object',$vars['subtype'],$owner_guid)) {
+
+		elgg_register_tag_metadata_name('universal_categories');
+		$params = array(
+			'threshold' => 1,
+			'limit' => 999,
+			'tag_names' => array('universal_categories'),
+			'types' => 'object',
+			'subtypes' => $vars['subtype'],
+			'owner_guid' => $owner_guid,
+		);
+		$cats = elgg_get_tags($params);		
+		if ($cats) {
 			foreach($cats as $cat) {
 				$flag[] = $cat->tag;
 			}
