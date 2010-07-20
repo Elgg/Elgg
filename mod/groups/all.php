@@ -28,7 +28,14 @@
 	if ($tag != "") {
 		$filter = 'search';
 		// groups plugin saves tags as "interests" - see groups_fields_setup() in start.php
-		$objects = list_entities_from_metadata('interests',$tag,'group',"","", $limit, false, false, true, false);
+		$params = array(
+			'metadata_name' => 'interests',
+			'metadata_value' => $tag,
+			'types' => 'group',
+			'limit' => $limit,
+			'full_view' => FALSE,
+		);
+		$objects = elgg_list_entities_from_metadata($params);
 	} else {
 		switch($filter){
 			case "newest":
