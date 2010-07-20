@@ -18,17 +18,20 @@ $owner_guid = get_input("owner_guid", 0);
 $subtype = get_input("subtype", ELGG_ENTITIES_ANY_VALUE);
 $type = get_input("type", 'object');
 
-$objects = list_entities_from_metadata('universal_categories',
-										$category,
-										$type,
-										$subtype,
-										$owner_guid,
-										$limit,
-										false,
-										false,
-										true,
-										false);
-
+$params = array(
+	'metadata_name' => 'universal_categories',
+	'metadata_value' => $category,
+	'types' => $type,
+	'subtypes' => $subtype,
+	'owner_guid' => $owner_guid,
+	'limit' => $limit,
+	'full_view' => FALSE,
+	'metadata_case_sensitive' => FALSE,
+);
+$current_context = get_context();
+set_context('search');
+$objects = elgg_list_entities_from_metadata($params);
+set_context($current_context);
 
 $title = sprintf(elgg_echo('categories:results'), $category);
 
