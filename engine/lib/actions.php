@@ -19,7 +19,7 @@
 */
 function action($action, $forwarder = "") {
 	global $CONFIG;
-	
+
 	$action = rtrim($action, '/');
 
 	// @todo REMOVE THESE ONCE #1509 IS IN PLACE.
@@ -129,9 +129,15 @@ function actions_init($event, $object_type, $object) {
  *
  * @return unknown
  */
-function validate_action_token($visibleerrors = true) {
-	$token = get_input('__elgg_token');
-	$ts = get_input('__elgg_ts');
+function validate_action_token($visibleerrors = TRUE, $token = NULL, $ts = NULL) {
+	if (!$token) {
+		$token = get_input('__elgg_token');
+	}
+
+	if (!$ts) {
+		$ts = get_input('__elgg_ts');
+	}
+
 	$session_id = session_id();
 
 	if (($token) && ($ts) && ($session_id)) {
