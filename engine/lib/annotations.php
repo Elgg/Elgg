@@ -87,7 +87,7 @@ class ElggAnnotation extends ElggExtender {
 				$this->value_type, $this->owner_guid, $this->access_id);
 
 			if (!$this->id) {
-				throw new IOException(sprintf(elgg_new('IOException:UnableToSaveNew'), get_class()));
+				throw new IOException(sprintf(elgg_echo('IOException:UnableToSaveNew'), get_class()));
 			}
 			return $this->id;
 		}
