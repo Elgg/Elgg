@@ -8,16 +8,13 @@
  * @link http://elgg.org/
  */
 
-global $CONFIG;
-
 gatekeeper();
 
 $email = get_input('email');
 $user_id = get_input('guid');
-$user = "";
 
 if (!$user_id) {
-	$user = $_SESSION['user'];
+	$user = get_loggedin_user();
 } else {
 	$user = get_entity($user_id);
 }
@@ -47,7 +44,3 @@ if ($user) {
 } else {
 	register_error(elgg_echo('email:save:fail'));
 }
-
-//forward($_SERVER['HTTP_REFERER']);
-//exit;
-?>

@@ -15,10 +15,9 @@ if ($CONFIG->allow_user_default_access) {
 
 	$default_access = get_input('default_access');
 	$user_id = get_input('guid');
-	$user = "";
 
 	if (!$user_id) {
-		$user = $_SESSION['user'];
+		$user = get_loggedin_user();
 	} else {
 		$user = get_entity($user_id);
 	}
