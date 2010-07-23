@@ -11,37 +11,22 @@
  */
 
 $page_owner = page_owner();
-$page_owner_user = get_entity($page_owner);
+$page_owner_entity = get_entity($page_owner);
 
-$submenu = get_submenu(); // elgg_view('canvas_header/submenu');
+$info = "<h2>" . $vars['title'] . "</h2>";
+if ($page_owner_entity instanceOf ElggGroup) {
+	$display = "<div id=\"content_area_group_title\">" . $info . "</div>";
+} else {
+	$display = "<div id=\"content_area_user_title\">" . $info . "</div>";
+}
+
+$submenu = get_submenu();
 if (!empty($submenu)) {
 	$submenu = "<ul>" . $submenu . "</ul>";
 }
-
-if (($_SESSION['guid']) && ($page_owner && $page_owner_user->guid != $_SESSION['user']->getGUID())) {
-	$info = "<h2>" . $vars['title'] . "</h2>";
-	if($page_owner_user instanceOf ElggGroup) {
-		$display = "<div id=\"content_area_group_title\">" . $info . "</div>";
-	} else {
-		$display = "<div id=\"content_area_user_title\">" . $info . "</div>";
-	}
-	if (!empty($submenu) && $vars['submenu'] == true) {
-		// plugins can extend this to add menu options
-		$display .= "<div id=\"owner_block_submenu\">" . $submenu . "</div>";
-	}
-} else {
-	$info = "<h2>" . $vars['title'] . "</h2>";
-	if($page_owner_user instanceOf ElggGroup) {
-		$display = "<div id=\"content_area_group_title\">" . $info . "</div>";
-	} else {
-		$display = "<div id=\"content_area_user_title\">" . $info . "</div>";
-	}
-	if (!empty($submenu)  && $vars['submenu'] == true) {
-		// plugins can extend this to add menu options
-		$display .= "<div id=\"owner_block_submenu\">" . $submenu . "</div>";
-	}
+if (!empty($submenu) && $vars['submenu'] == true) {
+	// plugins can extend this to add menu options
+	$display .= "<div id=\"owner_block_submenu\">" . $submenu . "</div>";
 }
 
-
-//print to screen
 echo $display;
