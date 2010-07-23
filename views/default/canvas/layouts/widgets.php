@@ -257,11 +257,15 @@ $token = generate_action_token($ts);
 <tr>
 	<td colspan="2" align="left" valign="top" height="1px">
 		<!-- profile box or 'dashboard info' notice -->
-		<?php if (isset($vars['area1'])) echo $vars['area1']; ?>
+<?php 
+		if (isset($vars['area1'])) {
+			echo $vars['area1'];
+		}
+?>
 	</td>
 	<td rowspan="2" align="left" valign="top" height="100%">
 		<?php
-		if($_SESSION['user']->guid == page_owner()){
+		if (get_loggedin_userid() == page_owner()) {
 		?>
 		<!-- customise page button -->
 		<a href="javascript:void(0);" class="toggle_customise_edit_panel"><?php echo(elgg_echo('dashboard:configure')); ?></a>
