@@ -284,10 +284,6 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 
 	'friends:of:owned' => "People who have made %s a friend",
 
-	'friends:num_display' => "Number of friends to display",
-	'friends:icon_size' => "Icon size",
-	'friends:tiny' => "tiny",
-	'friends:small' => "small",
 	'friends:of' => "Friends of",
 	'friends:collections' => "Collections of friends",
 	'friends:collections:add' => "New friends collection",
@@ -303,9 +299,6 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 	'friends:collections:members' => "Collection members",
 	'friends:collections:edit' => "Edit collection",
 
-	'friends:river:created' => "%s added the friends widget.",
-	'friends:river:updated' => "%s updated their friends widget.",
-	'friends:river:delete' => "%s removed their friends widget.",
 	'friends:river:add' => "%s is now a friend with",
 
 	'friendspicker:chararray' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
