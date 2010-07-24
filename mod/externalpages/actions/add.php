@@ -40,7 +40,7 @@
 		// Tell the system what type of external page it is
 			$expages->subtype = $type;
 		// Set its owner to the current user
-			$expages->owner_guid = $_SESSION['user']->getGUID();
+			$expages->owner_guid = get_loggedin_userid();
 		// For now, set its access to public
 			$expages->access_id = ACCESS_PUBLIC;
 		// Set its title and description appropriately
@@ -55,7 +55,7 @@
 		// Success message
 			system_message(elgg_echo("expages:posted"));
 		// add to river
-		    add_to_river('river/expages/create','create',$_SESSION['user']->guid,$expages->guid);
+		    add_to_river('river/expages/create','create',get_loggedin_userid(),$expages->guid);
 		// Remove the cache
 			unset($_SESSION['expages_content']); unset($_SESSION['expagestitle']);
 						

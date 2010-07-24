@@ -17,7 +17,7 @@ admin_gatekeeper ();
 set_context ( 'admin' );
 
 // set admin user for user block
-set_page_owner ( $_SESSION ['guid'] );
+set_page_owner ( get_loggedin_userid() );
 
 // vars required for action gatekeeper
 $ts = time ();

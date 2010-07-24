@@ -31,7 +31,7 @@ if ($context && isset ( $leftbar ) && isset ( $middlebar ) && isset ( $rightbar 
 	if (! isset ( $entities [0] )) {
 		$entity = new ElggObject ( );
 		$entity->subtype = 'moddefaultwidgets';
-		$entity->owner_guid = $_SESSION ['user']->getGUID ();
+		$entity->owner_guid = get_loggedin_userid();
 	} else {
 		$entity = $entities [0];
 	}

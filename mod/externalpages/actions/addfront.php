@@ -29,7 +29,7 @@
 		// Tell the system what type of external page it is
 			$frontpage->subtype = "front";
 		// Set its owner to the current user
-			$frontpage->owner_guid = $_SESSION['user']->getGUID();
+			$frontpage->owner_guid = get_loggedin_userid();
 		// For now, set its access to public
 			$frontpage->access_id = ACCESS_PUBLIC;
 		// Set its title and description appropriately
