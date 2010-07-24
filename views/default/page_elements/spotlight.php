@@ -19,11 +19,9 @@
 <?php
 
 	$closed = false;
-	if ($_SESSION['user'] instanceof ElggUser) {
-		if ($_SESSION['user']->spotlightclosed) {
-
+	if (get_loggedin_user() instanceof ElggUser) {
+		if (get_loggedin_user()->spotlightclosed) {
 			$closed = true;
-
 		}
 	}
 	if ($closed) {
