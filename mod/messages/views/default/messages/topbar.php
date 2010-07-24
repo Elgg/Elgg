@@ -25,13 +25,13 @@
 
 ?>
 
-	<a href="<?php echo $vars['url']; ?>pg/messages/<?php echo $_SESSION['user']->username; ?>" class="privatemessages" >&nbsp;</a>
+<a href="<?php echo $vars['url']; ?>pg/messages/<?php echo get_loggedin_user()->username; ?>" class="privatemessages" >&nbsp;</a>
 	
 <?php
     }else{
 ?>
 
-    <a href="<?php echo $vars['url']; ?>pg/messages/<?php echo $_SESSION['user']->username; ?>" class="privatemessages_new" >[<?php echo $num; ?>]</a>
+<a href="<?php echo $vars['url']; ?>pg/messages/<?php echo get_loggedin_user()->username; ?>" class="privatemessages_new" >[<?php echo $num; ?>]</a>
 	
 <?php
     }

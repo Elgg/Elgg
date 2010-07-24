@@ -23,7 +23,7 @@
 		$limit = 10;
 
 	// Get the logged in user, you can't see other peoples messages so use session id
-		$page_owner = $_SESSION['user'];
+		$page_owner = get_loggedin_user();
 		set_page_owner($page_owner->getGUID());
 
 	// Get the user's inbox, this will be all messages where the 'toId' field matches their guid

@@ -29,7 +29,7 @@
 			//add submenu options
 				if (get_context() == "messages") {
 					add_submenu_item(elgg_echo('messages:compose'), $CONFIG->wwwroot . "mod/messages/send.php");
-					add_submenu_item(elgg_echo('messages:inbox'), $CONFIG->wwwroot . "pg/messages/" . $_SESSION['user']->username);
+					add_submenu_item(elgg_echo('messages:inbox'), $CONFIG->wwwroot . "pg/messages/" . get_loggedin_user()->username);
 					add_submenu_item(elgg_echo('messages:sentmessages'), $CONFIG->wwwroot . "mod/messages/sent.php");
 				}
 				
@@ -53,10 +53,7 @@
 				register_plugin_hook('notify:entity:message','object','messages_notification_msg');
 				if (is_callable('register_notification_object'))
 					register_notification_object('object','messages',elgg_echo('messages:new'));
-				
-		    // Shares widget
-			  //  add_widget_type('messages',elgg_echo("messages:recent"),elgg_echo("messages:widget:description"));
-			    
+							    
 			// Override metadata permissions
 			    register_plugin_hook('permissions_check:metadata','object','messages_can_edit_metadata');
 		}
@@ -180,7 +177,6 @@
 					$message_to->subtype = "messages";
 					$message_sent->subtype = "messages";
 			// Set its owner to the current user
-					// $message_to->owner_guid = $_SESSION['user']->getGUID();
 					$message_to->owner_guid = $send_to;
 					$message_to->container_guid = $send_to;
 					$message_sent->owner_guid = $from;
@@ -290,20 +286,18 @@
         function count_unread_messages() {
             
             //get the users inbox messages
-		    //$num_messages = get_entities_from_metadata("toId", $_SESSION['user']->getGUID(), "object", "messages", 0, 10, 0, "", 0, false);
-		    $num_messages = elgg_get_entities_from_metadata(array('metadata_name_value_pairs' => array(
-		    							'toId' => $_SESSION['user']->guid,
+		    $num_messages = elgg_get_entities_from_metadata(array(
+				'metadata_name_value_pairs' => array(
+		    							'toId' => get_loggedin_userid(),
 		    							'readYet' => 0,
 		    							'msg' => 1
-		    									   ), 'types' => 'object', 'subtypes' => 'messages', 'owner_guid' => $_SESSION['user']->guid, 'limit' => 9999));
-		
-			if (is_array($num_messages))
-				$counter = sizeof($num_messages);
-			else
-				$counter = 0;
-				
-		    return $counter;
-            
+		    									   ),
+				'types' => 'object',
+				'subtypes' => 'messages',
+				'owner_guid' => get_loggedin_userid(),
+				'count' => TRUE));
+
+			return (int)$num_messages;
         }
         
         function messages_site_notify_handler(ElggEntity $from, ElggUser $to, $subject, $message, array $params = NULL)

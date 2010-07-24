@@ -47,7 +47,7 @@
 		}
 
 	// Get the logged in user
-		$page_owner = $_SESSION['user'];
+		$page_owner = get_loggedin_user();
 		set_page_owner($page_owner->getGUID());
 
 	// Display it
