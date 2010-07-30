@@ -502,6 +502,7 @@ function get_entity_relationships($guid, $inverse_relationship = FALSE) {
  * 	inverse_relationship => BOOL Inverse the relationship
  *
  * @return array
+ * @since 1.7.0
  */
 function elgg_get_entities_from_relationship($options) {
 	$defaults = array(
@@ -547,6 +548,7 @@ function elgg_get_entities_from_relationship($options) {
  * @param $relationship relationship string
  * @param $entity_guid entity guid to check
  * @return mixed
+ * @since 1.7.0
  */
 function elgg_get_entity_relationship_where_sql($table, $relationship = NULL, $relationship_guid = NULL, $inverse_relationship = FALSE) {
 	if ($relationship == NULL && $entity_guid == NULL) {

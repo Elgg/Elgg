@@ -87,6 +87,7 @@ abstract class ElggExtender implements
 	 * Return the owner entity
 	 *
 	 * @return mixed
+	 * @since 1.7.0
 	 */
 	public function getOwnerEntity() {
 		return get_user($this->owner_guid);

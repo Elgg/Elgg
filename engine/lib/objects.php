@@ -272,7 +272,7 @@ function create_object_entity($guid, $title, $description) {
  * THIS FUNCTION IS DEPRECATED.
  *
  * Delete a object's extra data.
- *
+ * @todo - this should be removed - was deprecated in 1.5 or earlier
  * @param int $guid
  */
 function delete_object_entity($guid) {

@@ -312,7 +312,7 @@ function create_site_entity($guid, $name, $description, $url) {
  * THIS FUNCTION IS DEPRECATED.
  *
  * Delete a site's extra data.
- *
+ * @todo remove
  * @param int $guid
  */
 function delete_site_entity($guid) {

@@ -682,7 +682,7 @@ function remove_user_admin($user_guid) {
  * THIS FUNCTION IS DEPRECATED.
  *
  * Delete a user's extra data.
- *
+ * @todo remove
  * @param int $guid
  */
 function delete_user_entity($guid) {

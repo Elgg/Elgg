@@ -73,7 +73,6 @@ function generate_tag_cloud(array $tags, $buckets = 6) {
  *
  * Supports similar arguments as elgg_get_entities()
  *
- * @since 1.7.1
  *
  * @param array $options Array in format:
  *
@@ -109,6 +108,7 @@ function generate_tag_cloud(array $tags, $buckets = 6) {
  *
  * @return 	false/array - if no tags or error, false
  * 			otherwise, array of objects with ->tag and ->total values
+ * @since 1.7.1
  */
 function elgg_get_tags(array $options = array()) {
 	global $CONFIG;
@@ -304,7 +304,6 @@ function get_tags($threshold = 1, $limit = 10, $metadata_name = "", $entity_type
 /**
  * Returns viewable tagcloud
  *
- * @since 1.7.1
  *
  * @see elgg_get_tags
  *
@@ -315,7 +314,7 @@ function get_tags($threshold = 1, $limit = 10, $metadata_name = "", $entity_type
  * 	subtype => must be single entity subtype
  *
  * @return string
- * 
+ * @since 1.7.1
  */
 function elgg_view_tagcloud(array $options = array()) {
 
@@ -363,10 +362,10 @@ function display_tagcloud($threshold = 1, $limit = 10, $metadata_name = "", $ent
  * This is required if you are using a non-standard metadata name
  * for your tags.
  *
- * @since 1.7
  *
  * @param string $name
- * @return TRUE
+ * @return bool
+ * @since 1.7.0
  */
 function elgg_register_tag_metadata_name($name) {
 	global $CONFIG;
@@ -385,9 +384,8 @@ function elgg_register_tag_metadata_name($name) {
 /**
  * Returns an array of valid metadata names for tags.
  *
- * @since 1.7
- *
  * @return array
+ * @since 1.7.0
  */
 function elgg_get_registered_tag_metadata_names() {
 	global $CONFIG;

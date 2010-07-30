@@ -446,6 +446,7 @@ function add_to_register($register_name, $subregister_name, $subregister_value, 
  * @param string $register_name The name of the top-level register
  * @param string $subregister_name The name of the subregister
  * @return true|false Depending on success
+ * @since 1.7.0
  */
 function remove_from_register($register_name, $subregister_name) {
 	global $CONFIG;
@@ -750,6 +751,7 @@ function register_elgg_event_handler($event, $object_type, $function, $priority 
  * @param string $event The event type
  * @param string $object_type The object type
  * @param string $function The function name
+ * @since 1.7.0
  */
 function unregister_elgg_event_handler($event, $object_type, $function) {
 	global $CONFIG;
@@ -833,6 +835,7 @@ function register_plugin_hook($hook, $entity_type, $function, $priority = 500) {
  * @param string $hook The name of the hook
  * @param string $entity_type The name of the type of entity (eg "user", "object" etc)
  * @param string $function The name of a valid function to be run
+ * @since 1.7.0
  */
 function unregister_plugin_hook($hook, $entity_type, $function) {
 	global $CONFIG;
@@ -963,6 +966,7 @@ function __elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
  * @param str $message User message
  * @param str $level NOTICE | WARNING | ERROR | DEBUG
  * @return bool
+ * @since 1.7.0
  */
 function elgg_log($message, $level='NOTICE') {
 	global $CONFIG;
@@ -1010,6 +1014,7 @@ function elgg_log($message, $level='NOTICE') {
  * @param bool $to_screen
  * @param string $level
  * @return void
+ * @since 1.7.0
  */
 function elgg_dump($value, $to_screen = TRUE, $level = 'NOTICE') {
 	global $CONFIG;
@@ -1193,6 +1198,7 @@ function run_function_once($functionname, $timelastupdatedcheck = 0) {
  * @param str $version human-readable *release* version the function was deprecated. No bloody A, B, (R)C, or D.
  *
  * @return bool
+ * @since 1.7.0
  */
 function elgg_deprecated_notice($msg, $dep_version) {
 	// if it's a major release behind, visual and logged
@@ -1419,6 +1425,7 @@ function is_not_null($string) {
  * @param $options
  * @param $singulars
  * @return array
+ * @since 1.7.0
  */
 function elgg_normalise_plural_options_array($options, $singulars) {
 	foreach ($singulars as $singular) {
@@ -1630,7 +1637,7 @@ interface Friendable {
  *
  * @param array $parts Associative array of URL components like parse_url() returns
  * @return str Full URL
- * @since 1.7
+ * @since 1.7.0
  */
 function elgg_http_build_url(array $parts) {
 	// build only what's given to us.
@@ -1651,7 +1658,7 @@ function elgg_http_build_url(array $parts) {
  *
  * @param str $link Full action URL
  * @return str URL with action tokens
- * @since 1.7
+ * @since 1.7.0
  */
 function elgg_add_action_tokens_to_url($url) {
 	$components = parse_url($url);
@@ -1690,6 +1697,7 @@ function elgg_validate_action_url($url) {
  * @param string $url
  * @param string $element
  * @return string
+ * @since 1.7.0
  */
 function elgg_http_remove_url_query_element($url, $element) {
 	$url_array = parse_url($url);
@@ -1717,6 +1725,7 @@ function elgg_http_remove_url_query_element($url, $element) {
  * @param str $url
  * @param array $elements k/v pairs.
  * @return str
+ * @since 1.7.0
  */
 function elgg_http_add_url_query_elements($url, array $elements) {
 	$url_array = parse_url($url);
@@ -1742,7 +1751,7 @@ function elgg_http_add_url_query_elements($url, array $elements) {
  *
  * @param str $setting
  * @return int
- * @since 1.7
+ * @since 1.7.0
  * @link http://www.php.net/manual/en/function.ini-get.php
  */
 function elgg_get_ini_setting_in_bytes($setting) {
@@ -1841,7 +1850,7 @@ define('ACCESS_PUBLIC', 2);
 define('ACCESS_FRIENDS', -2);
 
 /**
- * @since 1.7
+ * @since 1.7.0
  */
 define('ELGG_ENTITIES_ANY_VALUE', NULL);
 define('ELGG_ENTITIES_NO_VALUE', 0);

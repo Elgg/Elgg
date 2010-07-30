@@ -57,6 +57,7 @@ function register_pam_handler($handler, $importance = "sufficient", $policy = "u
  *
  * @param string $handler The PAM handler function name
  * @param string $policy - the policy type, default is "user"
+ * @since 1.7.0
  */
 function unregister_pam_handler($handler, $policy = "user") {
 	global $_PAM_HANDLERS;

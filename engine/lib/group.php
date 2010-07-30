@@ -857,8 +857,7 @@ function group_gatekeeper($forward = true) {
  * @param string $label Used for the group edit form
  * @param boolean $default_on True if this option should be active by default
  *
- **/
-
+ */
 function add_group_tool_option($name,$label,$default_on=true) {
 	global $CONFIG;
 

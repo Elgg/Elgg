@@ -284,6 +284,7 @@ function add_widget_type($handler, $name, $description, $context = "all", $multi
  * Remove a widget type
  *
  * @param string $handler The identifier for the widget handler
+ * @since 1.7.1
  */
 function remove_widget_type($handler) {
 	global $CONFIG;

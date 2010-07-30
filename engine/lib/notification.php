@@ -54,6 +54,7 @@ function register_notification_handler($method, $handler, $params = NULL) {
  * This function unregisters a handler for a given notification type (eg "email")
  *
  * @param string $method The method
+ * @since 1.7.1
  */
 function unregister_notification_handler($method) {
 	global $NOTIFICATION_HANDLERS;
@@ -271,6 +272,7 @@ function email_notify_handler(ElggEntity $from, ElggUser $to, $subject, $message
  * @param string $body The message body
  * @param array $params Optional parameters (none used in this function)
  * @return bool
+ * @since 1.7.2
  */
 function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
 	global $CONFIG;
