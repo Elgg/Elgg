@@ -458,7 +458,7 @@
 	        case 'value':
 	            return xmlrpc_scalar_value($object->children[0]);
 	        default:
-	            // TODO unsupported, throw an error
+	            // @todo unsupported, throw an error
 	            return false;
 	    }
 	}

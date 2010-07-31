@@ -379,7 +379,7 @@ function save_widget_info($widget_guid, $params) {
 					'guid','owner_guid','site_guid'
 				))) {
 					if (is_array($value)) {
-						// TODO: Handle arrays securely
+						// @todo Handle arrays securely
 						$widget->setMetaData($name, $value, "", true);
 					} else {
 						$widget->$name = $value;

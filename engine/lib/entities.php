@@ -15,7 +15,8 @@ $ENTITY_CACHE = NULL;
 /// Cache subtype searches
 $SUBTYPE_CACHE = NULL;
 
-/// Require the locatable interface TODO: Move this into start.php?
+/// Require the locatable interface
+// @todo Move this into start.php?
 require_once('location.php');
 
 /**
@@ -781,7 +782,8 @@ abstract class ElggEntity implements
 				throw new IOException(elgg_echo('IOException:BaseEntitySaveFailed'));
 			}
 
-			// Save any unsaved metadata TODO: How to capture extra information (access id etc)
+			// Save any unsaved metadata
+			// @todo How to capture extra information (access id etc)
 			if (sizeof($this->temp_metadata) > 0) {
 				foreach($this->temp_metadata as $name => $value) {
 					$this->$name = $value;
@@ -789,7 +791,8 @@ abstract class ElggEntity implements
 				}
 			}
 
-			// Save any unsaved annotations metadata. TODO: How to capture extra information (access id etc)
+			// Save any unsaved annotations metadata.
+			// @todo How to capture extra information (access id etc)
 			if (sizeof($this->temp_annotations) > 0) {
 				foreach($this->temp_annotations as $name => $value) {
 					$this->annotate($name, $value);
@@ -1233,7 +1236,7 @@ function initialise_entity_cache() {
 	global $ENTITY_CACHE;
 
 	if (!$ENTITY_CACHE) {
-		//select_default_memcache('entity_cache'); // TODO: Replace with memcache?
+		//select_default_memcache('entity_cache'); // @todo Replace with memcache?
 		$ENTITY_CACHE = array();
 	}
 }
@@ -1306,7 +1309,7 @@ function retrieve_cached_entity_row($guid) {
 /**
  * Return the integer ID for a given subtype, or false.
  *
- * TODO: Move to a nicer place?
+ * @todo Move to a nicer place?
  *
  * @param string $type
  * @param string $subtype
@@ -1342,7 +1345,7 @@ function get_subtype_id($type, $subtype) {
 /**
  * For a given subtype ID, return its identifier text.
  *
- * TODO: Move to a nicer place?
+ * @todo Move to a nicer place?
  *
  * @param int $subtype_id
  */
@@ -2495,7 +2498,8 @@ function disable_entity($guid, $reason = "", $recursive = true) {
 				}
 
 				if ($recursive) {
-					// Temporary token overriding access controls TODO: Do this better.
+					// Temporary token overriding access controls
+					// @todo Do this better.
 					static $__RECURSIVE_DELETE_TOKEN;
 					// Make it slightly harder to guess
 					$__RECURSIVE_DELETE_TOKEN = md5(get_loggedin_userid());
@@ -2581,7 +2585,8 @@ function delete_entity($guid, $recursive = true) {
 
 				// Delete contained owned and otherwise releated objects (depth first)
 				if ($recursive) {
-					// Temporary token overriding access controls TODO: Do this better.
+					// Temporary token overriding access controls
+					// @todo Do this better.
 					static $__RECURSIVE_DELETE_TOKEN;
 					// Make it slightly harder to guess
 					$__RECURSIVE_DELETE_TOKEN = md5(get_loggedin_userid());
@@ -3693,7 +3698,7 @@ function entities_init() {
 	register_plugin_hook('unit_test', 'system', 'entities_test');
 
 	// Allow a permission override for recursive entity deletion
-	// TODO: Can this be done better?
+	// @todo Can this be done better?
 	register_plugin_hook('permissions_check','all','recursive_delete_permissions_check');
 	register_plugin_hook('permissions_check:metadata','all','recursive_delete_permissions_check');
 

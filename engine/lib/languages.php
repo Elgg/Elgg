@@ -147,7 +147,7 @@ function register_translations($path, $load_all = false) {
  * This is only called by functions which need to know all possible translations, namely the
  * statistic gathering ones.
  *
- * TODO: Better on demand loading based on language_paths array
+ * @todo Better on demand loading based on language_paths array
  *
  * @return bool
  */

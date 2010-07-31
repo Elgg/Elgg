@@ -1362,7 +1362,7 @@ function request_user_validation($user_guid) {
  * @return bool
  */
 function is_email_address($address) {
-	// TODO: Make this better!
+	// @todo Make this better!
 
 	if (strpos($address, '@')=== false) {
 		return false;
@@ -1434,7 +1434,8 @@ function validate_username($username) {
 		throw new RegistrationException(elgg_echo('registration:invalidchars'));
 	}
 
-	// Belts and braces TODO: Tidy into main unicode
+	// Belts and braces
+	// @todo Tidy into main unicode
 	$blacklist2 = '\'/\\"*& ?#%^(){}[]~?<>;|¬`@-+=';
 	for ($n=0; $n < strlen($blacklist2); $n++) {
 		if (strpos($username, $blacklist2[$n])!==false) {
@@ -1702,7 +1703,7 @@ function set_last_login($user_guid) {
  * A permissions plugin hook that grants access to users if they are newly created - allows
  * for email activation.
  *
- * TODO: Do this in a better way!
+ * @todo Do this in a better way!
  *
  * @param unknown_type $hook
  * @param unknown_type $entity_type
@@ -1818,7 +1819,7 @@ function users_init() {
 	register_elgg_event_handler('create', 'user', 'user_create_hook_add_site_relationship');
 
 	// Handle a special case for newly created users when the user is not logged in
-	// TODO: handle this better!
+	// @todo handle this better!
 	register_plugin_hook('permissions_check','all','new_user_enable_permissions_check');
 }
 

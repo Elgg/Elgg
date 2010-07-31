@@ -857,7 +857,7 @@ function get_and_validate_api_headers() {
 function map_api_hash($algo) {
 	$algo = strtolower(sanitise_string($algo));
 	$supported_algos = array(
-		"md5" => "md5",	// TODO: Consider phasing this out
+		"md5" => "md5",	// @todo Consider phasing this out
 		"sha" => "sha1", // alias for sha1
 		"sha1" => "sha1",
 		"sha256" => "sha256"
@@ -904,7 +904,7 @@ function calculate_hmac($algo, $time, $nonce, $api_key, $secret_key, $get_variab
 /**
  * Calculate a hash for some post data.
  *
- * TODO: Work out how to handle really large bits of data.
+ * @todo Work out how to handle really large bits of data.
  *
  * @param string $postdata string The post data.
  * @param string $algo The algorithm used.

@@ -54,14 +54,15 @@ function action($action, $forwarder = "") {
 		if ((isadminloggedin()) || (!$CONFIG->actions[$action]['admin'])) {
 			if ($CONFIG->actions[$action]['public'] || get_loggedin_userid()) {
 
-				// Trigger action event TODO: This is only called before the primary action is called. We need to rethink actions for 1.5
+				// Trigger action event
+				// @todo This is only called before the primary action is called. We need to rethink actions for 1.5
 				$event_result = true;
 				$event_result = trigger_plugin_hook('action', $action, null, $event_result);
 
 				// Include action
 				// Event_result being false doesn't produce an error -
 				// since i assume this will be handled in the hook itself.
-				// TODO make this better!
+				// @todo make this better!
 				if ($event_result) {
 					if (!include($CONFIG->actions[$action]['file'])) {
 						register_error(sprintf(elgg_echo('actionundefined'),$action));

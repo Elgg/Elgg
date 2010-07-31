@@ -264,7 +264,7 @@ abstract class ElggExtender implements
  * Detect the value_type for a given value.
  * Currently this is very crude.
  *
- * TODO: Make better!
+ * @todo Make better!
  *
  * @param mixed $value
  * @param string $value_type If specified, overrides the detection.

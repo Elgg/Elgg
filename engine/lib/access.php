@@ -216,13 +216,13 @@ function access_get_show_hidden_status() {
  * Returns an SQL fragment that is true (or optionally false) if the given user has
  * added an annotation with the given name to the given entity.
  *
- * TODO: This is fairly generic so perhaps it could be moved to annotations.php
+ * @todo This is fairly generic so perhaps it could be moved to annotations.php
  *
  * @param string $annotation_name name of the annotation
-	* @param string $entity_guid SQL string that evaluates to the GUID of the entity the annotation should be attached to
-	* @param string $owner_guid SQL string that evaluates to the GUID of the owner of the annotation	 	 *
-	* @param boolean $exists If set to true, will return true if the annotation exists, otherwise returns false
-	* @return string An SQL fragment suitable for inserting into a WHERE clause
+ * @param string $entity_guid SQL string that evaluates to the GUID of the entity the annotation should be attached to
+ * @param string $owner_guid SQL string that evaluates to the GUID of the owner of the annotation	 	 *
+ * @param boolean $exists If set to true, will return true if the annotation exists, otherwise returns false
+ * @return string An SQL fragment suitable for inserting into a WHERE clause
  */
 function get_annotation_sql($annotation_name, $entity_guid, $owner_guid, $exists) {
 	global $CONFIG;
@@ -246,7 +246,7 @@ END;
 /**
  * Add access restriction sql code to a given query.
  * Note that if this code is executed in privileged mode it will return blank.
- * @TODO: DELETE once Query classes are fully integrated
+ * @todo DELETE once Query classes are fully integrated
  *
  * @param string $table_prefix Optional table. prefix for the access code.
  * @param int $owner

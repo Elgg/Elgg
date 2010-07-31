@@ -87,8 +87,8 @@ function current_page_url() {
 /**
  * This is a factory function which produces an ElggCache object suitable for caching file load paths.
  *
- * TODO: Can this be done in a cleaner way?
- * TODO: Swap to memcache etc?
+ * @todo Can this be done in a cleaner way?
+ * @todo Swap to memcache etc?
  */
 function elgg_get_filepath_cache() {
 	global $CONFIG;
@@ -1465,7 +1465,7 @@ function full_url() {
  * Useful function found in the comments on the PHP man page for ip2long.
  * Returns 1 if an IP matches a given range.
  *
- * TODO: Check licence... assuming this is PD since it was found several places on the interwebs..
+ * @todo Check licence... assuming this is PD since it was found several places on the interwebs..
  * please check or rewrite.
  *
  * Matches:

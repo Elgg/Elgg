@@ -157,7 +157,7 @@ class ElggMemcache extends ElggSharedMemoryCache {
 		// DISABLE clearing for now - you must use delete on a specific key.
 		return true;
 
-		//TODO: Namespaces as in #532
+		// @todo Namespaces as in #532
 	}
 }
 
