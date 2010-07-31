@@ -60,7 +60,7 @@ if ($viewtype == 'list') {
 }
 
 if ($count) {
-	$html .= $nav;
+	$html .= '<div class="clearfloat"></div>' . $nav;
 }
 
 echo $html;
