@@ -21,6 +21,7 @@ $release = get_version(true);
 echo elgg_view_title(elgg_echo('admin:overview'));
 ?>
 <div class="admin_settings site_stats">
+	<?php echo elgg_view('overview/extend'); ?>
 	<h3><?php echo elgg_echo('admin:statistics:label:basic'); ?></h3>
 	<table class="styled">
 		<tr class="odd">
