@@ -89,6 +89,7 @@ $release = get_version(true);
 	<!--[if gt IE 6]>
 		<link rel="stylesheet" type="text/css" href="<?php echo $vars['url']; ?>views/default/css_ie.php" />
 	<![endif]-->
+	<?php echo elgg_view('header/extend'); ?>
 </head>
 
 <body>
