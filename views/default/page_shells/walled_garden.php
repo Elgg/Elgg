@@ -105,6 +105,7 @@ body {background: white;}
 	padding: 5px;
 	border: 1px solid #cccccc;
 	color:#666666;
+	background-color: white;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 }
@@ -121,6 +122,9 @@ body {background: white;}
 	border: solid 1px #4690d6;
 	background: #e4ecf5;
 	color:#333333;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;	
 }
 .walledgardenlogin .input_password {
 	width:200px;
@@ -129,6 +133,17 @@ body {background: white;}
 	border: solid 1px #4690d6;
 	background-color: #e4ecf5;
 	color:#333333;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+.walledgardenlogin input[type="password"]:focus {
+	border: solid 1px #4690d6;
+	background-color: #e4ecf5;
+	color:#333333;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
 }
 .walledgardenlogin .submit_button {
 	font-size: 14px;
