@@ -117,6 +117,42 @@
 	cursor:pointer;
 }
 
+/* input field classes */
+#facebox .content .input_text,
+#facebox .content .input_tags {
+	font: 120% Arial, Helvetica, sans-serif;
+	padding: 5px;
+	border: 1px solid #cccccc;
+	color:#666666;
+	background-color: white;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+#facebox .content .input_text:focus,
+#facebox .content .input_tags:focus {
+	border: solid 1px #4690d6;
+	background: #e4ecf5;
+	color:#333333;
+}
+#facebox .content .input_file {
+	background-color: white;
+}
+#facebox .content p {
+	color:#333333;
+}
+#facebox .content p.entity_title {
+	color:#666666;
+}
+#facebox .content .entity_listing:hover {
+	background-color: #eeeeee;
+}
+#facebox .content label {
+	color:#333333;
+}
+
 
 /* ***************************************
 	ELGG TABBED PAGE NAVIGATION
