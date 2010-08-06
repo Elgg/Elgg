@@ -47,14 +47,6 @@
 	echo elgg_view('input/securitytoken'); 
 	if (is_array($vars['config']->pages) && sizeof($vars['config']->pages) > 0)
 		foreach($vars['config']->pages as $shortname => $valtype) {
-			
-			$disabled = "";
-
-			// no longer disable title editing
-			//if (!$new_page && ($shortname == 'title'))
-			//{
-			//	$disabled = true;
-			//}
 ?>
 
 	<p>
@@ -63,7 +55,6 @@
 			<?php echo elgg_view("input/{$valtype}",array(
 				'internalname' => $shortname,
 				'value' => $vars['entity']->$shortname,
-				'disabled' => $disabled
 			)); ?>
 		</label>
 	</p>
