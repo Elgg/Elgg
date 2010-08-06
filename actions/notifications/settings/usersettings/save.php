@@ -12,8 +12,15 @@
 $method = get_input('method');
 gatekeeper();
 
+$current_settings = get_user_notification_settings();
+
 $result = false;
 foreach ($method as $k => $v) {
+	// check if setting has changed and skip if not
+	if ($current_settings->$k == ($v == 'yes')) {
+		continue;
+	}
+
 	$result = set_user_notification_setting(get_loggedin_userid(), $k, ($v == 'yes') ? true : false);
 
 	if (!$result) {
@@ -23,6 +30,4 @@ foreach ($method as $k => $v) {
 
 if ($result) {
 	system_message(elgg_echo('notifications:usersettings:save:ok'));
-} else {
-	register_error(elgg_echo('notifications:usersettings:save:fail'));
 }
