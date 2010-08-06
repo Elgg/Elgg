@@ -226,9 +226,9 @@ if ($owner && $owner->canEdit()) {
 </div><!-- /#customise_page_view -->
 
 <form action="<?php echo $vars['url']; ?>action/widgets/reorder" method="post">
-<textarea type="textarea" value="Left widgets"   style="display:none" name="debugField1" id="debugField1" /><?php echo $leftcolumn_widgets; ?></textarea>
-<textarea type="textarea" value="Middle widgets" style="display:none" name="debugField2" id="debugField2" /><?php echo $middlecolumn_widgets; ?></textarea>
-<textarea type="textarea" value="Right widgets"  style="display:none" name="debugField3" id="debugField3" /><?php echo $rightcolumn_widgets; ?></textarea>
+<textarea style="display:none" name="debugField1" id="debugField1"><?php echo $leftcolumn_widgets; ?></textarea>
+<textarea style="display:none" name="debugField2" id="debugField2"><?php echo $middlecolumn_widgets; ?></textarea>
+<textarea style="display:none" name="debugField3" id="debugField3"><?php echo $rightcolumn_widgets; ?></textarea>
 
 <input type="hidden" name="context" value="<?php echo get_context(); ?>" />
 <input type="hidden" name="owner" value="<?php echo page_owner(); ?>" />
