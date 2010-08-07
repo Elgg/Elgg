@@ -13,5 +13,9 @@
 ?>
 
 <p>
-	<?php echo elgg_view('output/longtext', array('value' => $vars['object'])); ?>
+<?php 
+	echo elgg_view('output/longtext', array(
+		'value' => $vars['object'],
+		'parse_urls' => FALSE));
+?>
 </p>

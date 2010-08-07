@@ -8,10 +8,20 @@
  * @author Curverider Ltd
  * @link http://elgg.org/
  *
- * @uses $vars['text'] The text to display
- *
+ * @uses $vars['value'] The text to display
+ * @uses $vars['parse_urls'] Whether to turn urls into links. Default is true.
  */
 
-global $CONFIG;
+$parse_urls = isset($vars['parse_urls']) ? $vars['parse_urls'] : TRUE;
 
-echo autop(parse_urls(filter_tags($vars['value'])));
+$text = $vars['value'];
+
+$text = filter_tags($text);
+
+if ($parse_urls) {
+	$text = parse_urls($text);
+}
+
+$text = autop($text);
+
+echo $text;
