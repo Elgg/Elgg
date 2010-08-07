@@ -45,6 +45,8 @@
 	padding:6px 4px 4px 4px;
 	min-height: 40px;
 	line-height: 1.4em;
+}
+.note_text {
 	overflow: hidden;
 }
 .thewire_options {

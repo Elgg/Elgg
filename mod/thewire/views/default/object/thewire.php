@@ -68,7 +68,7 @@
 		?>
 	    </div>
 	    
-		
+			<div class="note_text">
 		<?php
 		    echo "<b>{$user_name}: </b>";
 		    
@@ -78,7 +78,7 @@
 		    $desc = preg_replace('/\@([A-Za-z0-9\_\.\-]*)/i','@<a href="' . $vars['url'] . 'pg/thewire/$1">$1</a>',$desc);
 			echo parse_urls($desc);
 		?>
-		
+			</div>
 		
 		<div class="clearfloat"></div>
 		</div>
