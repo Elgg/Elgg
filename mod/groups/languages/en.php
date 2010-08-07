@@ -100,6 +100,7 @@
 
 			'group:created' => 'Created %s with %d posts',
 			'groups:lastupdated' => 'Last updated %s by %s',
+			'groups:lastcomment' => 'Last comment %s by %s',
 			'groups:pages' => 'Group pages',
 			'groups:files' => 'Group files',
 
