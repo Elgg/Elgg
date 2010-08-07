@@ -24,7 +24,7 @@
 	 
 	 if ($pages) {
 		$pagesurl = $vars['url'] . "pg/pages/owned/" . page_owner_entity()->username;
-		$pages .= "<div class=\"pages_widget_singleitem_more\"><a href=\"{$pagesurl}\">" . elgg_echo('pages:more') . "</a></div>";
+		$pages .= "<div class=\"widget_more_wrapper\"><a href=\"{$pagesurl}\">" . elgg_echo('pages:more') . "</a></div>";
 	 }
 
      echo "<div id=\"pages_widget\">" . $pages . "</div>";

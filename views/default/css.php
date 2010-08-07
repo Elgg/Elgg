@@ -2143,6 +2143,13 @@ a.toggle_customise_edit_panel:hover {
 	width: 200px;
 	line-height: 1.2em;
 }
+.widget_more_wrapper {
+	background-color: white;
+	margin:0 10px 5px 10px;
+	padding:5px;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+}
 /* droppable area hover class  */
 .droppable-hover {
 	background:#bbdaf7;

@@ -17,5 +17,5 @@ echo $content;
 
 if ($content) {
 	$blogurl = $vars['url'] . "pg/blog/" . page_owner_entity()->username;
-	echo "<div class=\"shares_widget_wrapper\"><a href=\"{$blogurl}\">".elgg_echo('blog:moreblogs')."</a></div>";
+	echo "<div class=\"widget_more_wrapper\"><a href=\"{$blogurl}\">".elgg_echo('blog:moreblogs')."</a></div>";
 }
