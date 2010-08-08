@@ -89,9 +89,10 @@
 				echo elgg_echo("thewire:wired") . " " . sprintf(elgg_echo("thewire:strapline"),
 								elgg_view_friendly_time($vars['entity']->time_created)
 				);
-				
-				echo " via " . elgg_echo($vars['entity']->method) . ".";
-			
+
+				echo ' ';
+				echo sprintf(elgg_echo('thewire:via_method'), elgg_echo($vars['entity']->method));
+				echo '.';
 		?>
 		</div>
 		
