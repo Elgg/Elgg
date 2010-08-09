@@ -31,6 +31,7 @@ body {background: white;}
 	width:563px;
 	background: url(<?php echo $vars['url']; ?>_graphics/walled_garden_background_extend.gif) repeat-y left top;
 	text-align: left;
+	word-wrap:break-word;
 }
 #walledgarden {
 	position: relative;
