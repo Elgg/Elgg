@@ -11,11 +11,13 @@ Pete Harris <pete@elgg.com>
 Nicholas Whitt <nick@elgg.com>
 http://twitter.com/nogoodnick
 
+
 CONTRIBUTING DEVELOPERS
 
 Cash Costello - http://cashcostello.com/
 Justin Richer, Nathan Rackliffe, Tom Read - MITRE http://www.mitre.org/
-Milan Magudia - http://hedgehogs.net
+Milan Magudia - http://hedgehogs.net/
+Evan Winslow - http://evanwinslow.com/
 
 ALUMNI DEVELOPERS
 
