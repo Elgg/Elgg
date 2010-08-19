@@ -1,5 +1,5 @@
 Version 1.7.2
-(xxxxx from http://code.elgg.org/elgg/branches/1.7)
+(August 18, 2010 from http://code.elgg.org/elgg/branches/1.7)
 
  UI Changes:
   * Group "widgets" have been standardized with new blog and bookmark widgets.
