@@ -1624,22 +1624,15 @@ function is_not_null($string) {
 function elgg_normalise_plural_options_array($options, $singulars) {
 	foreach ($singulars as $singular) {
 		$plural = $singular . 's';
-
-		// normalize the singular to plural
-		// isset() returns FALSE for array values of NULL, so they are ignored.
-		// everything else falsy is included.
-		//if (isset($options[$singular]) && $options[$singular] !== NULL && $options[$singular] !== FALSE) {
-		if (isset($options[$singular])) {
-			if (isset($options[$plural])) {
-				if (is_array($options[$plural])) {
-					$options[$plural][] = $options[$singlar];
-				} else {
-					$options[$plural] = array($options[$plural], $options[$singular]);
-				}
+		
+		if (array_key_exists($singular, $options)) {
+			if ($options[$singular] === ELGG_ENTITIES_ANY_VALUE) {
+				$options[$plural] = $options[$singular];
 			} else {
 				$options[$plural] = array($options[$singular]);
 			}
 		}
+		 
 		unset($options[$singular]);
 	}
 

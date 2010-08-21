@@ -155,6 +155,7 @@ CREATE TABLE `prefix_entity_relationships` (
   `guid_one` bigint(20) unsigned NOT NULL,
   `relationship` varchar(50) NOT NULL,
   `guid_two` bigint(20) unsigned NOT NULL,
+  `time_created` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `guid_one` (`guid_one`,`relationship`,`guid_two`),
   KEY `relationship` (`relationship`),

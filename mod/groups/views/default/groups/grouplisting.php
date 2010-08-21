@@ -19,7 +19,7 @@ $icon = elgg_view(
 
 //get the membership type
 $membership = $vars['entity']->membership;
-if($membership == 2) {
+if($membership == ACCESS_PUBLIC) {
 	$mem = elgg_echo("groups:open");
 } else {
 	$mem = elgg_echo("groups:closed");

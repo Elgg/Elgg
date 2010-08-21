@@ -356,20 +356,18 @@
 	}
 
 	/**
-	 * Groups created, so add users to access lists.
+	 * Groups created so create an access list for it
 	 */
 	function groups_create_event_listener($event, $object_type, $object)
 	{
-		//if (($event == 'create') && ($object_type == 'group') && ($object instanceof ElggGroup))
-		//{
-			$group_id = create_access_collection(elgg_echo('groups:group') . ": " . $object->name);
-			if ($group_id)
-			{
-				$object->group_acl = $group_id;
-			}
-			else
-				return false;
-		//}
+		$ac_name = elgg_echo('groups:group') . ": " . $object->name;
+		$group_id = create_access_collection($ac_name, $object->guid);
+		if ($group_id) {
+			$object->group_acl = $group_id;
+		} else {
+			// delete group if access creation fails
+			return false;
+		}
 
 		return true;
 	}
@@ -459,7 +457,6 @@
 		add_user_to_access_collection($user->guid, $acl);
 
 		return true;
-
 	}
 
 	/**
@@ -475,7 +472,6 @@
 		remove_user_from_access_collection($user->guid, $acl);
 
 		return true;
-
 	}
 
 	/**

@@ -66,7 +66,7 @@ Once this folder has been created, you'll need to make sure that your
 web server has permission to write to it. This shouldn't be a problem 
 on Windows-based servers, but if your server runs Linux or a UNIX variant, 
 you'll need to figure out what user Apache runs under. For Debian-based 
-distros, it is usually www-data and for RedHat, it is often apache. If 
+distros, it is usually www-data and for RedHat, it is often apache. If you
 cannot figure out what the ownership and permissions should be, you can
 set the permissions for world access (though not recommended):
 

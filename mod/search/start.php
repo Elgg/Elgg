@@ -259,8 +259,12 @@ function search_highlight_words($words, $string) {
 	);
 
 	foreach ($words as $word) {
+		// remove any boolean mode operators
+		$word = preg_replace("/([\-\+~])([\w]+)/i", '$2', $word);
+		
 		// escape the delimiter and any other regexp special chars
 		$word = preg_quote($word, '/');
+		
 		$search = "/($word)/i";
 
 		// must replace with placeholders in case one of the search terms is
@@ -297,7 +301,9 @@ function search_remove_ignored_words($query, $format = 'array') {
 	global $CONFIG;
 
 	// don't worry about "s or boolean operators
-	$query = str_replace(array('"', '-', '+', '~'), '', stripslashes(strip_tags($query)));
+	//$query = str_replace(array('"', '-', '+', '~'), '', stripslashes(strip_tags($query)));
+	$query = stripslashes(strip_tags($query));
+	
 	$words = explode(' ', $query);
 
 	$min_chars = $CONFIG->search_info['min_chars'];
@@ -386,12 +392,8 @@ function search_get_where_sql($table, $fields, $params, $use_fulltext = TRUE) {
 			$fields[$i] = "$table.$field";
 		}
 	}
-
-	// if we're not using full text, rewrite the query for bool mode.
-	// exploiting a feature(ish) of bool mode where +-word is the same as -word
-	if (!$use_fulltext) {
-		$query = '+' . str_replace(' ', ' +', $query);
-	}
+	
+	$where = '';
 
 	// if query is shorter than the min for fts words
 	// it's likely a single acronym or similar
@@ -405,22 +407,30 @@ function search_get_where_sql($table, $fields, $params, $use_fulltext = TRUE) {
 		$likes_str = implode(' OR ', $likes);
 		$where = "($likes_str)";
 	} else {
-		// if using advanced or paired "s, switch into boolean mode
-		if (!$use_fulltext
-		|| (isset($params['advanced_search']) && $params['advanced_search'])
-		|| elgg_substr_count($query, '"') >= 2 ) {
+		// if we're not using full text, rewrite the query for bool mode.
+		// exploiting a feature(ish) of bool mode where +-word is the same as -word
+		if (!$use_fulltext) {
+			$query = '+' . str_replace(' ', ' +', $query);
+		}
+		
+		// if using advanced, boolean operators, or paired "s, switch into boolean mode
+		$booleans_used = preg_match("/([\-\+~])([\w]+)/i", $query);
+		$advanced_search = (isset($params['advanced_search']) && $params['advanced_search']);
+		$quotes_used = (elgg_substr_count($query, '"') >= 2); 
+		
+		if (!$use_fulltext || $booleans_used || $advanced_search || $quotes_used) {
 			$options = 'IN BOOLEAN MODE';
 		} else {
 			// natural language mode is default and this keyword isn't supported in < 5.1
 			//$options = 'IN NATURAL LANGUAGE MODE';
 			$options = '';
 		}
-
+		
 		// if short query, use query expansion.
 		// @todo doesn't seem to be working well.
-		if (elgg_strlen($query) < 5) {
-			//$options .= ' WITH QUERY EXPANSION';
-		}
+//		if (elgg_strlen($query) < 5) {
+//			$options .= ' WITH QUERY EXPANSION';
+//		}
 		$query = sanitise_string($query);
 
 		$fields_str = implode(',', $fields);

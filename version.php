@@ -12,7 +12,7 @@
 
 // YYYYMMDD = Elgg Date
 // XX = Interim incrementer
-$version = 2010061501;
+$version = 2010062401;
 
 // Human-friendly version name
 $release = '1.8-svn';

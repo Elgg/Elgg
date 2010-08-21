@@ -186,10 +186,11 @@ function remove_metadata($entity_guid, $name, $value = "") {
  * @param int $entity_guid The entity to attach the metadata to
  * @param string $name Name of the metadata
  * @param string $value Value of the metadata (cannot be associative array)
- * @param string $value_type
- * @param int $owner_guid
- * @param int $access_id
- * @param bool $allow_multiple
+ * @param string $value_type 'text', 'integer', or '' for automatic detection
+ * @param int $owner_guid GUID of entity that owns the metadata
+ * @param int $access_id Default is ACCESS_PRIVATE
+ * @param bool $allow_multiple Allow multiple values for one key. Default is FALSE
+ * @return bool
  */
 function create_metadata($entity_guid, $name, $value, $value_type, $owner_guid, $access_id = ACCESS_PRIVATE, $allow_multiple = false) {
 	global $CONFIG;
@@ -218,8 +219,7 @@ function create_metadata($entity_guid, $name, $value, $value_type, $owner_guid, 
 		if (!$result) {
 			return false;
 		}
-	}
-	else if (isset($value)) {
+	} else if (isset($value)) {
 		// Support boolean types
 		if (is_bool($value)) {
 			if ($value) {
@@ -343,12 +343,12 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
 /**
  * This function creates metadata from an associative array of "key => value" pairs.
  *
- * @param int $entity_guid
- * @param string $name_and_values
- * @param string $value_type
- * @param int $owner_guid
- * @param int $access_id
- * @param bool $allow_multiple
+ * @param int $entity_guid The entity to attach the metadata to
+ * @param string $name_and_values Associative array
+ * @param string $value_type 'text', 'integer', or '' for automatic detection
+ * @param int $owner_guid GUID of entity that owns the metadata
+ * @param int $access_id Default is ACCESS_PRIVATE
+ * @param bool $allow_multiple Allow multiple values for one key. Default is FALSE
  */
 function create_metadata_from_array($entity_guid, array $name_and_values, $value_type, $owner_guid, $access_id = ACCESS_PRIVATE, $allow_multiple = false) {
 	foreach ($name_and_values as $k => $v) {
