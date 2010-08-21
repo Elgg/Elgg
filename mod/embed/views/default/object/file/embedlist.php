@@ -1,6 +1,6 @@
 <?php
 	$file = $vars['entity'];
-	$friendlytime = friendly_time($vars['entity']->time_created);
+	$friendlytime = elgg_view_friendly_time($vars['entity']->time_created);
 	
 	$info = "<p class='entity_title'> <a href=\"{$file->getURL()}\">{$file->title}</a></p>";
 	$info .= "<p class='entity_subtext'>{$friendlytime}";	

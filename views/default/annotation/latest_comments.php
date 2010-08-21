@@ -11,7 +11,7 @@ if($vars['comments']){
 	   $entity = get_entity($comment->entity_guid);
 		//comment owner
 		$comment_owner = get_user($comment->owner_guid);
-		$friendlytime = friendly_time($comment->time_created); // get timestamp for comment
+		$friendlytime = elgg_view_friendly_time($comment->time_created); // get timestamp for comment
 	
 		//set the title
 		if($entity->title){

@@ -31,7 +31,7 @@ if($blog->tags){
 }else{
 	$tags = "";
 }
-$date = friendly_time($blog->publish_date);
+$date = elgg_view_friendly_time($blog->publish_date);
 
 // The "on" status changes for comments, so best to check for !Off
 if ($blog->comments_on != 'Off') {

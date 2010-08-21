@@ -23,7 +23,7 @@
 
 	<!-- display the user's name who posted and the date/time -->
 	<p class="message_item_timestamp">
-		<?php echo get_entity($vars['annotation']->owner_guid)->name . " " . friendly_time($vars['annotation']->time_created); ?>
+		<?php echo get_entity($vars['annotation']->owner_guid)->name . " " . elgg_view_friendly_time($vars['annotation']->time_created); ?>
 	</p>
 
 	<!-- output the actual comment -->

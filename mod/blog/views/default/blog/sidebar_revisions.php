@@ -44,7 +44,7 @@ if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
 				'text' => elgg_echo('blog:status:published')
 			));
 
-			$time = "<span class='entity_subtext'>".friendly_time($blog->publish_date)."</span>";
+			$time = "<span class='entity_subtext'>".elgg_view_friendly_time($blog->publish_date)."</span>";
 
 			echo '<li>
 			' . $load . ": $time
@@ -52,7 +52,7 @@ if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
 		}
 
 		foreach ($revisions as $revision) {
-			$time = "<span class='entity_subtext'>".friendly_time($revision->time_created)."</span>";
+			$time = "<span class='entity_subtext'>".elgg_view_friendly_time($revision->time_created)."</span>";
 			if ($revision->name == 'blog_auto_save') {
 				$revision_lang = elgg_echo('blog:auto_saved_revision');
 			} else {

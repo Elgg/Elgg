@@ -24,7 +24,7 @@ if ($latest) {
 
 
 	$info .= "<p class=\"owner_timestamp\">".sprintf(elgg_echo("pages:strapline"),
-					friendly_time($time_updated),
+					elgg_view_friendly_time($time_updated),
 					"<a href=\"" . $owner->getURL() . "\">" . $owner->name ."</a>"
 	) . "</p>";
 }

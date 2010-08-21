@@ -34,7 +34,7 @@ $owner = get_user($vars['annotation']->owner_guid);
 		?>
 		<p class="elgg_likes_owner">
 			<a href="<?php echo $owner->getURL(); ?>"><?php echo $owner->name; ?></a> <?php echo elgg_echo('likes:this') . 
-			" <span class=\"entity_subtext\">" . friendly_time($vars['annotation']->time_created) . "</span>"; ?> 
+			" <span class=\"entity_subtext\">" . elgg_view_friendly_time($vars['annotation']->time_created) . "</span>"; ?>
 		</p>
 	</div>
 </div>

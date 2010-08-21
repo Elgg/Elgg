@@ -58,7 +58,7 @@ if (isset($vars['entity'])) {
 			<p class="entity_subtext">		
 			<?php
 				echo elgg_echo("thewire:wired") . " " . sprintf(elgg_echo("thewire:strapline"),
-								friendly_time($vars['entity']->time_created)
+								elgg_view_friendly_time($vars['entity']->time_created)
 				);
 				echo " via " . elgg_echo($vars['entity']->method) . ".";
 			?>

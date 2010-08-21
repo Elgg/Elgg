@@ -260,9 +260,8 @@ function bookmark_url($entity) {
 
 	global $CONFIG;
 	$title = $entity->title;
-	$title = friendly_title($title);
+	$title = elgg_get_friendly_title($title);
 	return $CONFIG->url . "pg/bookmarks/" . $entity->getOwnerEntity()->username . "/read/" . $entity->getGUID() . "/" . $title;
-
 }
 
 /**

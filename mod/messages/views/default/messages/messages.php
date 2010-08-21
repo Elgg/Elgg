@@ -77,7 +77,7 @@ if (isloggedin())
 					?>
 					<div class="entity_listing_icon"><?php echo $message_icon ?></div>
 					<div class="entity_listing_info"><p><?php echo $message_owner ?></p>
-						<p class="entity_subtext"><?php echo friendly_time($vars['entity']->time_created); ?></p>
+						<p class="entity_subtext"><?php echo elgg_view_friendly_time($vars['entity']->time_created); ?></p>
 					</div>
 				</div>
 

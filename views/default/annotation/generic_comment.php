@@ -36,7 +36,7 @@ $owner = get_user($vars['annotation']->owner_guid);
 		<p class="generic_comment_owner">
 			<a href="<?php echo $owner->getURL(); ?>"><?php echo $owner->name; ?></a>
 			<span class="entity_subtext">
-				<?php echo friendly_time($vars['annotation']->time_created); ?>
+				<?php echo elgg_view_friendly_time($vars['annotation']->time_created); ?>
 			</span>
 		</p>
 		<!-- output the actual comment -->

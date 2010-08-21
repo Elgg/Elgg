@@ -27,7 +27,7 @@ if($bookmarks){
 		$owner = $b->getOwnerEntity();
 
 		//get the time
-		$friendlytime = friendly_time($b->time_created);
+		$friendlytime = elgg_view_friendly_time($s->time_created);
 
 		//get the bookmark title
 		$info = "<div class='river_object_bookmarks_create'><p class=\"shares_title\"><a href=\"{$b->address}\">{$b->title}</a></p></div>";

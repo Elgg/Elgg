@@ -27,7 +27,7 @@ if (is_array($vars['entity']) && sizeof($vars['entity']) > 0) {
 
 		foreach($vars['entity'] as $message) {
 			if ($message->owner_guid == $vars['user']->guid || $message->toId == $vars['user']->guid) {
-				
+
 				//make sure to only display the messages that have not been 'deleted' (1 = deleted)
 				if($message->hiddenFrom != 1){
 					// check to see if the message has been read, if so, set the correct container class
@@ -40,7 +40,7 @@ if (is_array($vars['entity']) && sizeof($vars['entity']) > 0) {
 				    $from = get_entity($message->fromId);
 					echo "<div class='entity_listing_icon'>".elgg_view("profile/icon",array('entity' => $from, 'size' => 'tiny'))."</div>";
 					// message block (message sender, message subject, delete checkbox)
-					echo "<div class='entity_listing_info'><div class='message_sender'>".$from->name."<p class='entity_subtext'>".friendly_time($message->time_created)."</p></div>";
+					echo "<div class='entity_listing_info'><div class='message_sender'>".$from->name."<p class='entity_subtext'>".elgg_view_friendly_time($message->time_created)."</p></div>";
 					// display message subject
 					echo "<div class='message_subject'>";
 					// display delete button
@@ -50,10 +50,10 @@ if (is_array($vars['entity']) && sizeof($vars['entity']) > 0) {
 						'confirm' => elgg_echo('deleteconfirm'),
 					)) . "</span>";
 					echo "<p class='entity_title'><input type='checkbox' name=\"message_id[]\" value=\"{$message->guid}\" />";
-					echo "<a href=\"{$message->getURL()}\">" . $message->title . "</a></p>";								
+					echo "<a href=\"{$message->getURL()}\">" . $message->title . "</a></p>";
 				    echo "</div></div></div>"; // close the message container
 				}//end of hiddenFrom if statement
-				} // end of user check 
+				} // end of user check
 				$counter++;
 				if ($counter == $limit) break;
 
@@ -72,10 +72,10 @@ if (is_array($vars['entity']) && sizeof($vars['entity']) > 0) {
 
 					//get the correct user entity
 					$user = get_entity($message->toId);
-					echo "<div class='message sent clearfloat'>";				
+					echo "<div class='message sent clearfloat'>";
 					//get the icon for the user the message was sent to
 					echo "<div class='entity_listing_icon'>".elgg_view("profile/icon",array('entity' => $user, 'size' => 'tiny'))."</div>";
-					echo "<div class='entity_listing_info'><div class='message_sender'>".$_SESSION['user']->name."<p class='entity_subtext'>".friendly_time($message->time_created)."</p></div>";
+					echo "<div class='entity_listing_info'><div class='message_sender'>".$_SESSION['user']->name."<p class='entity_subtext'>".elgg_view_friendly_time($message->time_created)."</p></div>";
 					// display message subject
 					echo "<div class='message_subject'>";
 					//display the link to 'delete'

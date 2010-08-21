@@ -178,7 +178,7 @@ function blog_url_handler($entity) {
 		return FALSE;
 	}
 
-	$friendly_title = friendly_title($entity->title);
+	$friendly_title = elgg_get_friendly_title($entity->title);
 
 	$url = "{$CONFIG->site->url}pg/blog/{$user->username}/read/{$entity->getGUID()}/$friendly_title";
 	return $url;

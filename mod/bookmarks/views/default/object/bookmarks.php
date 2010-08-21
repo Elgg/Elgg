@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg bookmark view
- * 
+ *
  * @package ElggBookmarks
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
  * @author Curverider <info@elgg.com>
@@ -10,7 +10,7 @@
  */
 
 $owner = $vars['entity']->getOwnerEntity();
-$friendlytime = friendly_time($vars['entity']->time_created);
+$friendlytime = elgg_view_friendly_time($vars['entity']->time_created);
 $parsed_url = parse_url($vars['entity']->address);
 $faviconurl = $parsed_url['scheme'] . "://" . $parsed_url['host'] . "/favicon.ico";
 
@@ -51,7 +51,7 @@ if (@file_exists($faviconurl)) {
 
 //delete
 if($vars['entity']->canEdit()){
-$delete .= "<span class='delete_button'>" . elgg_view('output/confirmlink',array(	
+$delete .= "<span class='delete_button'>" . elgg_view('output/confirmlink',array(
 				'href' => $vars['url'] . "action/bookmarks/delete?bookmark_guid=" . $vars['entity']->guid,
 				'text' => elgg_echo("delete"),
 				'confirm' => elgg_echo("bookmarks:delete:confirm"),
@@ -63,11 +63,11 @@ $info = "<div class='entity_metadata'><span {$access_level}>{$object_acl}</span>
 // include a view for plugins to extend
 $info .= elgg_view("bookmarks/options",array('entity' => $vars['entity']));
 $info .= elgg_view_likes($vars['entity']); // include likes
-	
+
 //include edit and delete options
 if($vars['entity']->canEdit()){
 	$info .= "<span class='entity_edit'><a href=\"{$vars['url']}pg/bookmarks/{$owner->username}/edit/{$vars['entity']->getGUID()}\">" . elgg_echo('edit') . "</a></span>";
-	$info .= $delete;  
+	$info .= $delete;
 }
 
 	$info .= "</div>";
@@ -82,6 +82,6 @@ if (!empty($tags)) {
 if($view_notes != ''){
 	$info .= "<div class='note hidden'>". $vars['entity']->description . "</div>";
 }
-	
+
 //display
 echo elgg_view_listing($icon, $info);

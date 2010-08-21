@@ -35,6 +35,6 @@ foreach ($comments as $comment) {
 
 	echo "<div class='river_comment_contents'>";
 	echo "<a href=\"{$comment_owner_url}\">" . $comment_owner->name . '</a>&nbsp;<span class="twitter_anywhere">' . parse_urls($contents) . '</span>';
-	echo "<span class='entity_subtext'>" . friendly_time($comment->time_created) . "</span>";
+	echo "<span class='entity_subtext'>" . elgg_view_friendly_time($comment->time_created) . "</span>";
 	echo "</div></div>";
 }

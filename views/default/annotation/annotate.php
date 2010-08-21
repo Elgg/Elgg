@@ -12,7 +12,7 @@
 		$comment = get_annotation($vars['item']->annotation_id)->value; 
 	$url = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
 	$string = sprintf(elgg_echo("river:posted:generic"),$url) . " ";
-	$string .= elgg_echo("{$subtype}:river:annotate") . "  <a href=\"{$object->getURL()}\">" . $title . "</a> <span class='entity_subtext'>". friendly_time($object->time_created) ."<a class='river_comment_form_button link'>Comment</a>";
+	$string .= elgg_echo("{$subtype}:river:annotate") . "  <a href=\"{$object->getURL()}\">" . $title . "</a> <span class='entity_subtext'>". elgg_view_friendly_time($object->time_created) ."<a class='river_comment_form_button link'>Comment</a>";
 	$string .= elgg_view('likes/forms/link', array('entity' => $object));
 	$string .= "</span>";
 	if(get_context() != 'riverdashboard'){

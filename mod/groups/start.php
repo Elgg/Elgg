@@ -342,10 +342,9 @@
 
 		global $CONFIG;
 
-		$title = friendly_title($entity->name);
+		$title = elgg_get_friendly_title($entity->name);
 
 		return $CONFIG->url . "pg/groups/{$entity->guid}/$title/";
-
 	}
 
 	function groups_groupforumtopic_url($entity) {

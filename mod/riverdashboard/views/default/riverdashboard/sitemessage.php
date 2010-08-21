@@ -16,7 +16,7 @@ $site_message = elgg_get_entities(array('types' => 'object', 'subtypes' => 'site
 if ($site_message) {
 	$mes = $site_message[0];
 	$message = $mes->description;
-	$dateStamp = friendly_time($mes->time_created);
+	$dateStamp = elgg_view_friendly_time($mes->time_created);
 	$delete = elgg_view("output/confirmlink",array(
 			'href' => $vars['url'] . "action/riverdashboard/delete?message=" . $mes->guid,
 			'text' => elgg_echo('delete'),

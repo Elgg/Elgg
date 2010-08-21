@@ -34,7 +34,7 @@ if ($revisions) {
 	$load_base_url = "{$vars['url']}pg/blog/{$owner->username}/edit/{$blog->getGUID()}/";
 
 	foreach ($revisions as $revision) {
-		$time = friendly_time($revision->time_created);
+		$time = elgg_view_friendly_time($revision->time_created);
 		$load = elgg_view('output/url', array(
 			'href' => $load_base_url . $revision->id,
 			'text' => elgg_echo('load')

@@ -15,7 +15,7 @@ if($bookmarks){
 		$owner = $b->getOwnerEntity();
 
 		//get the time
-		$friendlytime = friendly_time($b->time_created);
+		$friendlytime = elgg_view_friendly_time($b->time_created);
 		
 	    $info = "<div class='entity_listing_icon'>" . elgg_view('profile/icon',array('entity' => $b->getOwnerEntity(), 'size' => 'tiny')) . "</div>";
 

@@ -1,17 +1,17 @@
 <?php
 /**
  * Elgg Groups latest discussion listing
- * 
+ *
  * @package ElggGroups
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
 */
-	 
+
 //get the required variables
 $title = htmlentities($vars['entity']->title, ENT_QUOTES, 'UTF-8');
 //$description = get_entity($vars['entity']->description);
 $topic_owner = get_user($vars['entity']->owner_guid);
 $group = get_entity($vars['entity']->container_guid);
-$forum_created = friendly_time($vars['entity']->time_created);
+$forum_created = elgg_view_friendly_time($vars['entity']->time_created);
 $counter = $vars['entity']->countAnnotations("generic_comment");
 $last_post = $vars['entity']->getAnnotations("generic_comment", 1, 0, "desc");
 //get the time and user
@@ -32,7 +32,7 @@ if(get_context() == "search"){
 	}else{
 		$info = "<p class='entity_subtext groups'>" . sprintf(elgg_echo('groups:forum:created'), $forum_created, $counter) .  "<br />";
 	}
-    if (($last_time) && ($u)) $info.= sprintf(elgg_echo('groups:lastupdated'), friendly_time($last_time), " <a href=\"" . $u->getURL() . "\">" . $u->name . "</a>");
+    if (($last_time) && ($u)) $info.= sprintf(elgg_echo('groups:lastupdated'), elgg_view_friendly_time($last_time), " <a href=\"" . $u->getURL() . "\">" . $u->name . "</a>");
     $info .= '</p>';
 	//get the group avatar
 	$icon = elgg_view("profile/icon",array('entity' => $u, 'size' => 'tiny'));
@@ -41,7 +41,7 @@ if(get_context() == "search"){
     if ($group instanceof ElggGroup) {
     	$info .= "<p class='entity_title'><b>" . elgg_echo('group') . ":</b> <a href=\"{$group->getURL()}\">".htmlentities($group->name, ENT_QUOTES, 'UTF-8') ."</a></p>";
     }
-		
+
 }else{
 	if($counter == 1){
 		$info = "<p class='entity_subtext groups'>" . sprintf(elgg_echo('groups:forum:created:single'), $forum_created, $counter) . "</p>";
@@ -57,15 +57,15 @@ if(get_context() == "search"){
                																'text' => " ",
                																'confirm' => elgg_echo('deleteconfirm'),
                															)) . "</div>";
-                				
-   }		
+
+   }
 
 	if (($last_time) && ($u)) {
-		$info.= "<p class='entity_subtext'>" . elgg_echo('groups:updated') . " " . friendly_time($last_time) . " by <a href=\"" . $u->getURL() . "\">" . $u->name . "</a></p>";		
+		$info.= "<p class='entity_subtext'>" . elgg_echo('groups:updated') . " " . elgg_view_friendly_time($last_time) . " by <a href=\"" . $u->getURL() . "\">" . $u->name . "</a></p>";
 	}
     //get the user avatar
-	$icon = elgg_view("profile/icon",array('entity' => $topic_owner, 'size' => 'tiny'));		
+	$icon = elgg_view("profile/icon",array('entity' => $topic_owner, 'size' => 'tiny'));
 }
-		
+
 //display
 echo elgg_view_listing($icon, $info);

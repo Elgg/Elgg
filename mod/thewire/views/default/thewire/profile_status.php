@@ -13,7 +13,7 @@
 	if($latest_wire){
 		foreach($latest_wire as $lw){
 			$content = $lw->description;
-			$time = "<p class='entity_subtext'> (" . friendly_time($lw->time_created) . ")</p>";
+			$time = "<p class='entity_subtext'> (" . elgg_view_friendly_time($lw->time_created) . ")</p>";
 		}
 	}
 	

@@ -294,9 +294,8 @@
 			
 			global $CONFIG;
 			$title = $entity->title;
-			$title = friendly_title($title);
-			return $CONFIG->url . "pg/file/" . $entity->getOwnerEntity()->username . "/read/" . $entity->getGUID() . "/" . $title;
-			
+			$title = elgg_get_friendly_title($title);
+			return $CONFIG->url . "pg/file/" . $entity->getOwnerEntity()->username . "/read/" . $entity->getGUID() . "/" . $title;	
 		}
 	
 	// Make sure test_init is called on initialisation

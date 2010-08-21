@@ -46,7 +46,7 @@
 	}
 	
 	//display the date of the comment
-	echo "<p class='entity_subtext'>" . friendly_time($vars['entity']->time_created) . "</p>";
+	echo "<p class='entity_subtext'>" . elgg_view_friendly_time($vars['entity']->time_created) . "</p>";
 	echo "</div>"; // close entity_listing_info
 	echo "</div>"; // close entity_listing.topic
 

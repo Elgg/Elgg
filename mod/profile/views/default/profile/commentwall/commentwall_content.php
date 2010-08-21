@@ -24,7 +24,7 @@
 	?>
 	    <!-- display the user's name who posted and the date/time -->
 	    <p class="entity_subtext">
-	        <?php echo get_entity($vars['annotation']->owner_guid)->name . " " . friendly_time($vars['annotation']->time_created); ?>
+	        <?php echo get_entity($vars['annotation']->owner_guid)->name . " " . elgg_view_friendly_time($vars['annotation']->time_created); ?>
 	    </p>	
 		<!-- output the actual comment -->
 		<?php echo elgg_view("output/longtext",array("value" => parse_urls($vars['annotation']->value))); ?>  
