@@ -6,6 +6,12 @@
  * @subpackage Core
  * @author Curverider Ltd
  * @link http://elgg.org/
+ *
+ * @uses $vars['entity'] The entity the icon represents - uses getIcon() method
+ * @uses $vars['js'] Any JavaScript to add to img tag
+ * @uses $vars['size'] topbar, tiny, small, medium (default), large, master
+ * @uses $vars['link'] Optional link for the image
+ * @uses $vars['align'] Align attribute of the img tag
  */
 
 $entity = $vars['entity'];

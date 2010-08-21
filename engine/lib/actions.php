@@ -17,13 +17,14 @@
 * @param string $action The requested action
 * @param string $forwarder Optionally, the location to forward to
 */
-
 function action($action, $forwarder = "") {
 	global $CONFIG;
 
+	$action = rtrim($action, '/');
+
 	// @todo REMOVE THESE ONCE #1509 IS IN PLACE.
 	// Allow users to disable plugins without a token in order to
-	// remove plugins that are imcompatible.
+	// remove plugins that are incompatible.
 	// Installation cannot use tokens because it requires site secret to be
 	// working. (#1462)
 	// Login and logout are for convenience.
@@ -45,8 +46,8 @@ function action($action, $forwarder = "") {
 	$forwarder = str_replace("http://", "", $forwarder);
 	$forwarder = str_replace("@", "", $forwarder);
 
-	if (substr($forwarder,0,1) == "/") {
-		$forwarder = substr($forwarder,1);
+	if (substr($forwarder, 0, 1) == "/") {
+		$forwarder = substr($forwarder, 1);
 	}
 
 	if (isset($CONFIG->actions[$action])) {
@@ -89,6 +90,10 @@ function action($action, $forwarder = "") {
  */
 function register_action($action, $public = false, $filename = "", $admin_only = false) {
 	global $CONFIG;
+
+	// plugins are encouraged to call actions with a trailing / to prevent 301
+	// redirects but we store the actions without it
+	$action = rtrim($action, '/');
 
 	if (!isset($CONFIG->actions)) {
 		$CONFIG->actions = array();
@@ -251,5 +256,5 @@ function elgg_action_exist($action) {
 	return (isset($CONFIG->actions[$action]) && file_exists($CONFIG->actions[$action]['file']));
 }
 
-// Register some actions ***************************************************
+
 register_elgg_event_handler("init","system","actions_init");

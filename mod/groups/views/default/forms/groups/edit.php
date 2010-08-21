@@ -78,17 +78,21 @@ if (is_array($vars['config']->group) && sizeof($vars['config']->group) > 0)
 			<?php 
 			
 			$this_owner = $vars['entity']->owner_guid;
-			if (!$this_owner) $this_owner = get_loggedin_userid();
+			if (!$this_owner) {
+				$this_owner = get_loggedin_userid();
+			}
 			
-			$access = array(ACCESS_FRIENDS => elgg_echo("access:friends:label"), 1 => elgg_echo("LOGGED_IN"), 2 => elgg_echo("PUBLIC"));
-			$collections = get_user_access_collections($this_owner);
-			if (is_array($collections))
-			{
+			$access = array(ACCESS_FRIENDS => elgg_echo("access:friends:label"), ACCESS_LOGGED_IN => elgg_echo("LOGGED_IN"), ACCESS_PUBLIC => elgg_echo("PUBLIC"));
+			$collections = get_user_access_collections($vars['entity']->guid);
+			if (is_array($collections)) {
 				foreach ($collections as $c)
 					$access[$c->id] = $c->name;
 			}
-			
-			echo elgg_view('input/access', array('internalname' => 'vis', 'value' =>  ($vars['entity']->access_id ? $vars['entity']->access_id : ACCESS_PUBLIC), 'options' => $access)); 
+
+			$current_access = ($vars['entity']->access_id ? $vars['entity']->access_id : ACCESS_PUBLIC);
+			echo elgg_view('input/access', array('internalname' => 'vis', 
+												'value' =>  $current_access,
+												'options' => $access));
 			
 			
 			?>
