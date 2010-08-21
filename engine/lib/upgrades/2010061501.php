@@ -30,9 +30,9 @@ if ($dbversion < 2009100701) {
 	
 		$qs[] = "ALTER TABLE {$CONFIG->dbprefix}users_entity DISABLE KEYS";
 		$qs[] = "REPLACE INTO {$CONFIG->dbprefix}users_entity (guid, name, username, password, salt, email, language, code,
-		banned, last_action, prev_last_action, last_login, prev_last_login)
+		banned, admin, last_action, prev_last_action, last_login, prev_last_login)
 			SELECT guid, name, unhex(hex(convert(username using latin1))), password, salt, email, language, code,
-				banned, last_action, prev_last_action, last_login, prev_last_login
+				banned, admin, last_action, prev_last_action, last_login, prev_last_login
 			FROM {$CONFIG->dbprefix}users_entity";
 		
 		$qs[] = "ALTER TABLE {$CONFIG->dbprefix}users_entity ENABLE KEYS";

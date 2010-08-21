@@ -259,6 +259,8 @@ function search_highlight_words($words, $string) {
 	);
 
 	foreach ($words as $word) {
+		// escape the delimiter and any other regexp special chars
+		$word = preg_quote($word, '/');
 		$search = "/($word)/i";
 
 		// must replace with placeholders in case one of the search terms is

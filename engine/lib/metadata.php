@@ -677,7 +677,7 @@ function elgg_get_entity_metadata_where_sql($e_table, $n_table, $names = NULL, $
 		&& (!$values && $values !== 0)
 		&& (!$pairs && $pairs !== 0)
 		&& (!$owner_guids && $owner_guids !== 0)
-		&& !isset($order_by_metadata)) {
+		&& !$order_by_metadata) {
 		return '';
 	}
 
