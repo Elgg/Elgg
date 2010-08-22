@@ -91,16 +91,7 @@ __HTML;
 				echo "<p><b>" . elgg_echo("groups:owner") . ": </b><a href=\"" . get_user($vars['entity']->owner_guid)->getURL() . "\">" . get_user($vars['entity']->owner_guid)->name . "</a></p>";
 			?>
 			<p><?php
-				$options = array(
-					'relationship' => 'member',
-					'relationship_guid' => $vars['entity']->guid,
-					'inverse_relationship' => TRUE,
-					'limit' => 0,
-					'count' => TRUE
-				);
-
-				$count = elgg_get_entities_from_relationship($options);
-
+				$count = $vars['entity']->getMembers(0, 0, TRUE);
 				echo elgg_echo('groups:members') . ": " . $count;
 
 			?></p>

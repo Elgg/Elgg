@@ -214,8 +214,11 @@
 		} else {
 			$friendofguid = false;
 		}
-		return elgg_view('file/typecloud',array('owner_guid' => $owner_guid, 'friend_guid' => $friendofguid, 'types' => get_tags(0,10,'simpletype','object','file',$owner_guid)));
 
+		elgg_register_tag_metadata_name('simpletype');
+		$types = get_tags(0,10,'simpletype','object','file',$owner_guid);
+
+		return elgg_view('file/typecloud',array('owner_guid' => $owner_guid, 'friend_guid' => $friendofguid, 'types' => $types));
 	}
 	
 	/**

@@ -564,6 +564,8 @@ $timelower = 0, $timeupper = 0) {
 function list_entities_from_annotations($entity_type = "", $entity_subtype = "", $name = "", $value = "", $limit = 10, $owner_guid = 0, $group_guid = 0, $asc = false, $fullview = true, $viewtypetoggle = false) {
 	elgg_deprecated_notice('list_entities_from_annotations is deprecated by elgg_list_entities_from_annotations', 1.8);
 
+	$options = array();
+	
 	if ($entity_type) {
 		$options['types'] = $entity_type;
 	}

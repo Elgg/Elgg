@@ -290,9 +290,10 @@ class ElggHMACCache extends ElggCache {
  * 			"description" => "Some human readable description"
  * 			"function" = 'my_function_callback'
  * 			"parameters" = array (
- * 				"variable" = array ( // NB, the order should be the same as the function callback
+ * 				"variable" = array ( // the order should be the same as the function callback
  * 					type => 'int' | 'bool' | 'float' | 'string'
  * 					required => true (default) | false
+ *					default => value // optional
  * 				)
  * 			)
  * 			"call_method" = 'GET' | 'POST'
@@ -313,7 +314,7 @@ $API_METHODS = array();
  * @param string $method The api name to expose - for example "myapi.dosomething"
  * @param string $function Your function callback.
  * @param array $parameters (optional) List of parameters in the same order as in your function.
- * Default values may be set for parameters which would allow REST api users flexibility in
+ * Default values may be set for parameters which allow REST api users flexibility in
  * what parameters are passed. Generally, optional parameters should be after required parameters.
  * This array should be in the format
  *   "variable" = array (
