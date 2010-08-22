@@ -989,7 +989,7 @@ $count = FALSE, $case_sensitive = TRUE) {
  * @return string A list of entities suitable for display
  */
 function list_entities_from_metadata($meta_name, $meta_value = "", $entity_type = ELGG_ENTITIES_ANY_VALUE, $entity_subtype = ELGG_ENTITIES_ANY_VALUE, $owner_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true, $case_sensitive = true ) {
-	elgg_deprecated_notice('get_entities_from_metadata_multi() was deprecated by elgg_get_entities_from_metadata()!', 1.8);
+	elgg_deprecated_notice('list_entities_from_metadata() was deprecated by elgg_list_entities_from_metadata()!', 1.8);
 
 	$offset = (int) get_input('offset');
 	$limit = (int) $limit;

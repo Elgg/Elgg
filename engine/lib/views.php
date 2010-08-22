@@ -3,6 +3,7 @@
  * Provides interfaces for Elgg's views system
  *
  * @package Elgg
+ * @subpackage Core
  */
 
 $CURRENT_SYSTEM_VIEWTYPE = "";
@@ -67,6 +68,7 @@ function elgg_get_viewtype() {
  * This is useful for alternate html viewtypes (such as for mobile devices)
  *
  * @param string $viewtype The viewtype to register
+ * @since 1.7.2
  */
 function elgg_register_viewtype_fallback($viewtype) {
 	global $CONFIG;
@@ -87,6 +89,7 @@ function elgg_register_viewtype_fallback($viewtype) {
  *
  * @param string $viewtype
  * @return boolean
+ * @since 1.7.2
  */
 function elgg_does_viewtype_fallback($viewtype) {
 	global $CONFIG;
@@ -351,8 +354,7 @@ function elgg_view_register_simplecache($viewname) {
  * Regenerates the simple cache.
  *
  * @param string $viewtype Optional viewtype to regenerate
- * @see elgg_view_register_simplecache
- *
+ * @see elgg_view_register_simplecache()
  */
 function elgg_view_regenerate_simplecache($viewtype = NULL) {
 	global $CONFIG;
@@ -409,10 +411,8 @@ function elgg_view_regenerate_simplecache($viewtype = NULL) {
 /**
  * Enables the simple cache.
  *
- * @see elgg_view_register_simplecache
- *
+ * @see elgg_view_register_simplecache()
  */
-
 function elgg_view_enable_simplecache() {
 	global $CONFIG;
 
@@ -424,8 +424,7 @@ function elgg_view_enable_simplecache() {
 /**
  * Disables the simple cache.
  *
- * @see elgg_view_register_simplecache
- *
+ * @see elgg_view_register_simplecache()
  */
 function elgg_view_disable_simplecache() {
 	global $CONFIG;
@@ -449,9 +448,10 @@ function elgg_view_disable_simplecache() {
 /**
  * Internal function for retrieving views used by elgg_view_tree
  *
- * @param unknown_type $dir
- * @param unknown_type $base
- * @return unknown
+ * @param string $dir
+ * @param string $base
+ * @return array
+ * @since 1.7
  */
 function elgg_get_views($dir, $base) {
 	$return = array();
@@ -802,6 +802,19 @@ function elgg_view_title($title, $submenu = false) {
 	return $title;
 }
 
+/**
+ * Displays a UNIX timestamp in a friendly way
+ *
+ * @see elgg_get_friendly_time()
+ * 
+ * @param int $time A UNIX epoch timestamp
+ * @return string The friendly time HTML
+ * @since 1.7.2
+ */
+function elgg_view_friendly_time($time) {
+	return elgg_view('output/friendlytime', array('time' => $time));
+}
+
 
 /**
  * Automatically views comments and a comment form relating to the given entity
@@ -848,7 +861,7 @@ function elgg_view_listing($icon, $info) {
  *
  * 		function my_template_function(string $view, array $vars = array())
  *
- * @see elgg_view
+ * @see elgg_view()
  *
  * @param string $function_name The name of the function to pass to.
  * @return true|false
@@ -1013,7 +1026,8 @@ function autoregister_views($view_base, $folder, $base_location_path, $viewtype)
 }
 
 /**
- * Outputs a representation of a full 'page' (which might be an HTML page, RSS file, etc, depending on the current view)
+ * Returns a representation of a full 'page' (which might be an HTML page,
+ * RSS file, etc, depending on the current viewtype)
  *
  * @param string $title
  * @param string $body

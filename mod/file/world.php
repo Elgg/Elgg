@@ -12,7 +12,6 @@
 	
 	$limit = get_input("limit", 10);
 	$offset = get_input("offset", 0);
-	$tag = get_input("tag");
 	
 	// Get the current page's owner
 		$page_owner = page_owner_entity();
@@ -27,10 +26,7 @@
 	$area1 = elgg_view('page_elements/content_header', array('context' => "everyone", 'type' => 'file'));
 	$area1 .= get_filetype_cloud(); // the filter
 	set_context('search');
-	if ($tag != "")
-		$area2 .= list_entities_from_metadata('tags',$tag,'object','file',0,10,false);
-	else
-		$area2 .= elgg_list_entities(array('types' => 'object', 'subtypes' => 'file', 'limit' => 10, 'offset' => $offset, 'full_view' => FALSE));
+	$area2 .= elgg_list_entities(array('types' => 'object', 'subtypes' => 'file', 'limit' => $limit, 'offset' => $offset, 'full_view' => FALSE));
 	set_context('file');
 
 	//get the latest comments on all files
@@ -41,6 +37,4 @@
 		
 	$body = elgg_view_layout('one_column_with_sidebar', $content, $area3);
 
-	// Finally draw the page
 	page_draw($title, $body);
-?>

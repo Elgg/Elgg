@@ -1,7 +1,7 @@
 <?php
 /**
  * Output functions
- * Processing text for output, formatting HTML,
+ * Processing text for output such as pulling out URLs and extracting excerpts
  *
  * @package Elgg
  * @subpackage Core
@@ -46,6 +46,9 @@ function parse_urls($text) {
  * Create paragraphs from text with line spacing
  * Borrowed from Wordpress.
  *
+ * @param string $pee
+ * @param bool $br
+ * @return string
  **/
 function autop($pee, $br = 1) {
 	$pee = $pee . "\n"; // just to make things a little easier, pad the end
@@ -185,6 +188,8 @@ function friendly_time($time) {
 /**
  * Formats a UNIX timestamp in a friendly way (eg "less than a minute ago")
  *
+ * @see elgg_view_friendly_time()
+ * 
  * @param int $time A UNIX epoch timestamp
  * @return string The friendly time string
  * @since 1.7.2
@@ -240,17 +245,6 @@ function elgg_get_friendly_time($time) {
 			return sprintf(elgg_echo("friendlytime:days:singular"), $diff);
 		}
 	}
-}
-
-/**
- * Displays a UNIX timestamp in a friendly way
- *
- * @param int $time A UNIX epoch timestamp
- * @return string The friendly time HTML
- * @since 1.7.2
- */
-function elgg_view_friendly_time($time) {
-	return elgg_view('output/friendlytime', array('time' => $time));
 }
 
 /**

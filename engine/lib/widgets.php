@@ -201,9 +201,9 @@ function display_widget(ElggObject $widget) {
 }
 
 /**
- * Add a new widget
+ * Add a new widget instance
  *
- * @param int $user_guid User GUID to associate this widget with
+ * @param int $entity_guid GUID of entity that owns this widget
  * @param string $handler The handler for this widget
  * @param string $context The page context for this widget
  * @param int $order The order to display this widget in
@@ -211,15 +211,15 @@ function display_widget(ElggObject $widget) {
  * @param int $access_id If not specified, it is set to the default access level
  * @return true|false Depending on success
  */
-function add_widget($user_guid, $handler, $context, $order = 0, $column = 1, $access_id = null) {
-	if (empty($user_guid) || empty($context) || empty($handler) || !widget_type_exists($handler)) {
+function add_widget($entity_guid, $handler, $context, $order = 0, $column = 1, $access_id = null) {
+	if (empty($entity_guid) || empty($context) || empty($handler) || !widget_type_exists($handler)) {
 		return false;
 	}
 
-	if ($user = get_user($user_guid)) {
+	if ($entity = get_entity($entity_guid)) {
 		$widget = new ElggWidget;
-		$widget->owner_guid = $user_guid;
-		$widget->container_guid = $user_guid;
+		$widget->owner_guid = $entity_guid;
+		$widget->container_guid = $entity_guid;
 		if (isset($access_id)) {
 			$widget->access_id = $access_id;
 		} else {
@@ -237,7 +237,6 @@ function add_widget($user_guid, $handler, $context, $order = 0, $column = 1, $ac
 
 		// save_widget_location($widget, $order, $column);
 		return true;
-
 	}
 
 	return false;
