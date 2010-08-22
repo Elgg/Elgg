@@ -300,7 +300,7 @@ abstract class ElggEntity implements
 	 * @param string $name Name of the metadata
 	 * @param mixed $value Value of the metadata
 	 * @param string $value_type Types supported: integer and string. Will auto-identify if not set
-	 * @param bool $multiple
+	 * @param bool $multiple (does not support associative arrays)
 	 * @return bool
 	 */
 	public function setMetaData($name, $value, $value_type = "", $multiple = false) {

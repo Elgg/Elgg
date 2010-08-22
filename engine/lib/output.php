@@ -97,7 +97,7 @@ function autop($pee, $br = 1) {
  * @return string
  * @since 1.7.2
  */
-function elgg_make_excerpt($text, $num_chars = 250) {
+function elgg_get_excerpt($text, $num_chars = 250) {
 	$text = trim(elgg_strip_tags($text));
 	$string_length = elgg_strlen($text);
 
@@ -148,12 +148,19 @@ function friendly_title($title) {
 /**
  * When given a title, returns a version suitable for inclusion in a URL
  *
- * @todo add plugin hook so that developers can provide their own friendly title
  * @param string $title The title
  * @return string The optimised title
  * @since 1.7.2
  */
 function elgg_get_friendly_title($title) {
+
+	// return a URL friendly title to short circuit normal title formatting
+	$params = array('title' => $title);
+	$result = trigger_plugin_hook('format', 'friendly:title', $params, NULL);
+	if ($result) {
+		return $result;
+	}
+
 	//$title = iconv('UTF-8', 'ASCII//TRANSLIT', $title);
 	$title = preg_replace("/[^\w ]/","",$title);
 	$title = str_replace(" ","-",$title);
@@ -176,14 +183,21 @@ function friendly_time($time) {
 }
 
 /**
- * Displays a UNIX timestamp in a friendly way (eg "less than a minute ago")
+ * Formats a UNIX timestamp in a friendly way (eg "less than a minute ago")
  *
- * @todo add plugin hook so that developers can provide their own friendly time
  * @param int $time A UNIX epoch timestamp
- * @return string The friendly time
+ * @return string The friendly time string
  * @since 1.7.2
  */
 function elgg_get_friendly_time($time) {
+
+	// return a time string to short circuit normal time formatting
+	$params = array('time' => $time);
+	$result = trigger_plugin_hook('format', 'friendly:time', $params, NULL);
+	if ($result) {
+		return $result;
+	}
+
 	$diff = time() - (int)$time;
 
 	$minute = 60;

@@ -21,7 +21,7 @@ $icon_size = $vars['icon_size'];
 // different entity types have different title attribute names.
 $title = isset($item->name) ? $item->name : $item->title;
 // don't let it be too long
-$title = elgg_make_excerpt($title);
+$title = elgg_get_excerpt($title);
 
 // @todo you can disable plugins that are required by other plugins
 // (embed requires ecml) so fallback to a hard-coded check to see if ecml is enabled.

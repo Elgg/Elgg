@@ -9,9 +9,6 @@
  * @link http://elgg.com/
  */
 
-// Set admin user for user block
-set_page_owner($_SESSION['guid']);
-
 $title = elgg_view_title(elgg_echo('reportedcontent'));
 
 $reported = elgg_get_entities(array('types' => 'object', 'subtypes' => 'reported_content', 'limit' => 9999));

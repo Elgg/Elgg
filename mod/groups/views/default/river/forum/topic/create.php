@@ -23,7 +23,7 @@
 	}
 	$string .= "</span>";
 	$string .= "<div class=\"river_content_display\">";
-	$string .= elgg_make_excerpt($contents, 200);
+	$string .= elgg_get_excerpt($contents, 200);
 	$string .= "</div>";
 	
 	echo $string;

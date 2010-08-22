@@ -49,9 +49,8 @@ if ($options) {
 		// ignores the label (because it's just the index) and sets the value ($option)
 		// as the label.
 		// Wow.
-		$labelint = (int) $label;
-
-		if ("{$label}" == "{$labelint}") {
+		// @todo deprecate in Elgg 1.8
+		if (is_integer($label)) {
 			$label = $option;
 		}
 

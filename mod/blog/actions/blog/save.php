@@ -78,9 +78,9 @@ foreach ($values as $name => $default) {
 
 		case 'excerpt':
 			if ($value) {
-				$value = elgg_make_excerpt($value);
+				$value = elgg_get_excerpt($value);
 			} else {
-				$value = elgg_make_excerpt($values['description']);
+				$value = elgg_get_excerpt($values['description']);
 			}
 			$values[$name] = $value;
 			break;

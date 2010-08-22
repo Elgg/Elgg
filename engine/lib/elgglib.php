@@ -1624,7 +1624,7 @@ function is_not_null($string) {
 function elgg_normalise_plural_options_array($options, $singulars) {
 	foreach ($singulars as $singular) {
 		$plural = $singular . 's';
-		
+
 		if (array_key_exists($singular, $options)) {
 			if ($options[$singular] === ELGG_ENTITIES_ANY_VALUE) {
 				$options[$plural] = $options[$singular];
@@ -1632,7 +1632,7 @@ function elgg_normalise_plural_options_array($options, $singulars) {
 				$options[$plural] = array($options[$singular]);
 			}
 		}
-		 
+
 		unset($options[$singular]);
 	}
 
@@ -2167,6 +2167,12 @@ function __elgg_shutdown_hook() {
 function elgg_init() {
 	global $CONFIG;
 
+	// Actions
+	register_action('comments/add');
+	register_action('comments/delete');
+	register_action('likes/add');
+	register_action('likes/delete');
+
 	// Page handler for JS
 	register_page_handler('js','js_page_handler');
 
@@ -2181,41 +2187,9 @@ function elgg_walled_garden_index() {
 	$login = elgg_view('account/forms/login_walled_garden');
 
 	page_draw('', $login, 'page_shells/walled_garden');
-	
+
 	// @hack Index must exit to keep plugins from continuing to extend
 	exit;
-}
-
-/**
- * Boot Elgg
- * @return unknown_type
- */
-function elgg_boot() {
-	global $CONFIG;
-
-	// Actions
-	register_action('comments/add');
-	register_action('comments/delete');
-	register_action('likes/add');
-	register_action('likes/delete');
-
-	elgg_view_register_simplecache('css');
-	elgg_view_register_simplecache('js/friendsPickerv1');
-	elgg_view_register_simplecache('js/initialise_elgg');
-
-	// discover the built-in view types
-	// @todo cache this
-	$view_path = $CONFIG->viewpath;
-	$CONFIG->view_types = array();
-
-	$views = scandir($view_path);
-
-	foreach ($views as $view) {
-		if ('.' !== substr($view, 0, 1) && is_dir($view_path . $view)) {
-			$CONFIG->view_types[] = $view;
-		}
-	}
-
 }
 
 /**
@@ -2420,7 +2394,7 @@ function elgg_get_array_value($key, array $array, $default = NULL) {
  */
 function elgg_sort_3d_array_by_value(&$array, $element, $sort_order = SORT_ASC, $sort_type = SORT_LOCALE_STRING) {
 	$sort = array();
-	
+
 	foreach ($array as $k => $v) {
 		if (isset($v[$element])) {
 			$sort[] = strtolower($v[$element]);
@@ -2428,7 +2402,7 @@ function elgg_sort_3d_array_by_value(&$array, $element, $sort_order = SORT_ASC, 
 			$sort[] = NULL;
 		}
 	};
-	
+
 	return array_multisort($sort, $sort_order, $sort_type, $array);
 }
 
@@ -2454,7 +2428,6 @@ define('REFERRER', -1);
 define('REFERER', -1);
 
 register_elgg_event_handler('init', 'system', 'elgg_init');
-register_elgg_event_handler('boot', 'system', 'elgg_boot', 1000);
 register_plugin_hook('unit_test', 'system', 'elgg_api_test');
 
 register_elgg_event_handler('init', 'system', 'add_custom_menu_items', 1000);

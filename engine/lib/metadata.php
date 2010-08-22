@@ -183,9 +183,12 @@ function remove_metadata($entity_guid, $name, $value = "") {
 /**
  * Create a new metadata object, or update an existing one.
  *
+ * Metadata can be an array by setting allow_multiple to TRUE, but it is an
+ * indexed array with no control over the indexing.
+ *
  * @param int $entity_guid The entity to attach the metadata to
  * @param string $name Name of the metadata
- * @param string $value Value of the metadata (cannot be associative array)
+ * @param string $value Value of the metadata
  * @param string $value_type 'text', 'integer', or '' for automatic detection
  * @param int $owner_guid GUID of entity that owns the metadata
  * @param int $access_id Default is ACCESS_PRIVATE
@@ -343,8 +346,12 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
 /**
  * This function creates metadata from an associative array of "key => value" pairs.
  *
+ * To achieve an array for a single key, pass in the same key multiple times with
+ * allow_multiple set to TRUE. This creates an indexed array. It does not support
+ * associative arrays and there is no guarantee on the ordering in the array.
+ *
  * @param int $entity_guid The entity to attach the metadata to
- * @param string $name_and_values Associative array
+ * @param string $name_and_values Associative array - a value can be a string, number, bool
  * @param string $value_type 'text', 'integer', or '' for automatic detection
  * @param int $owner_guid GUID of entity that owns the metadata
  * @param int $access_id Default is ACCESS_PRIVATE

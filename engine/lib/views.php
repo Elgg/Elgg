@@ -1063,3 +1063,31 @@ function elgg_is_valid_view_type($view_type) {
 
 	return in_array($view_type, $CONFIG->view_types);
 }
+
+
+/**
+ * Initialize viewtypes on system boot event
+ * This ensures simplecache is cleared during upgrades. See #2252
+ */
+function elgg_views_boot() {
+	global $CONFIG;
+
+	elgg_view_register_simplecache('css');
+	elgg_view_register_simplecache('js/friendsPickerv1');
+	elgg_view_register_simplecache('js/initialise_elgg');
+
+	// discover the built-in view types
+	// @todo cache this
+	$view_path = $CONFIG->viewpath;
+	$CONFIG->view_types = array();
+
+	$views = scandir($view_path);
+
+	foreach ($views as $view) {
+		if ('.' !== substr($view, 0, 1) && is_dir($view_path . $view)) {
+			$CONFIG->view_types[] = $view;
+		}
+	}
+}
+
+register_elgg_event_handler('boot', 'system', 'elgg_views_boot', 1000);

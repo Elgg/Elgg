@@ -101,7 +101,7 @@ if ($comments){
 		echo "</span>";
 
 		//truncate comment to 150 characters and strip tags
-		$contents = elgg_make_excerpt($comment->value, 150);
+		$contents = elgg_get_excerpt($comment->value, 150);
 
 		echo "<div class='river_comment_contents'>";
 		echo "<a href=\"{$comment_owner_url}\">" . $comment_owner->name . '</a>&nbsp;<span class="elgg_excerpt">' . parse_urls($contents) . '</span>';

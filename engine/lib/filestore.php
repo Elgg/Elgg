@@ -663,17 +663,20 @@ class ElggFile extends ElggObject {
 			}
 		}
 
-		// If parameters loaded then create new filestore
-		if (count($parameters)!=0) {
-			// Create new filestore object
-			if ((!isset($parameters['filestore'])) || (!class_exists($parameters['filestore']))) {
-				throw new ClassNotFoundException(elgg_echo('ClassNotFoundException:NotFoundNotSavedWithFile'));
+		if (isset($parameters['filestore'])) {
+			if (!class_exists($parameters['filestore'])) {
+				$msg = sprintf(elgg_echo('ClassNotFoundException:NotFoundNotSavedWithFile'),
+								$parameters['filestore'],
+								$this->guid);
+				throw new ClassNotFoundException($msg);
 			}
 
+			// Create new filestore object
 			$this->filestore = new $parameters['filestore']();
 
-			// Set parameters
 			$this->filestore->setParameters($parameters);
+		} else {
+			// @todo - should we log error if filestore not set
 		}
 
 
@@ -756,7 +759,6 @@ function get_resized_image_from_uploaded_file($input_name, $maxwidth, $maxheight
 	if (isset($_FILES[$input_name]) && $_FILES[$input_name]['error'] == 0) {
 		return get_resized_image_from_existing_file($_FILES[$input_name]['tmp_name'], $maxwidth, $maxheight, $square);
 	}
-
 	return false;
 }
 
@@ -786,11 +788,9 @@ function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight
 		return FALSE;
 	}
 
-	// Get width and height
 	$width = $imgsizearray[0];
 	$height = $imgsizearray[1];
 
-	// make sure we can read the image
 	$accepted_formats = array(
 		'image/jpeg' => 'jpeg',
 		'image/pjpeg' => 'jpeg',
@@ -805,6 +805,87 @@ function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight
 		return FALSE;
 	}
 
+	// get the parameters for resizing the image
+	$options = array(
+		'maxwidth' => $maxwidth,
+		'maxheight' => $maxheight,
+		'square' => $square,
+		'upscale' => $upscale,
+		'x1' => $x1,
+		'y1' => $y1,
+		'x2' => $x2,
+		'y2' => $y2,
+	);
+	$params = get_image_resize_parameters($width, $height, $options);
+	if ($params == FALSE) {
+		return FALSE;
+	}
+
+	// load original image
+	$original_image = $load_function($input_name);
+	if (!$original_image) {
+		return FALSE;
+	}
+
+	// allocate the new image
+	$new_image = imagecreatetruecolor($params['newwidth'], $params['newheight']);
+	if (!$new_image) {
+		return FALSE;
+	}
+
+	$rtn_code = imagecopyresampled(	$new_image,
+									$original_image,
+									0,
+									0,
+									$params['xoffset'],
+									$params['yoffset'],
+									$params['newwidth'],
+									$params['newheight'],
+									$params['selectionwidth'],
+									$params['selectionheight']);
+	if (!$rtn_code) {
+		return FALSE;
+	}
+
+	// grab a compressed jpeg version of the image
+	ob_start();
+	imagejpeg($new_image, NULL, 90);
+	$jpeg = ob_get_clean();
+
+	imagedestroy($new_image);
+	imagedestroy($original_image);
+
+	return $jpeg;
+}
+
+/**
+ * Calculate the parameters for resizing an image
+ *
+ * @param int $width Width of the original image
+ * @param int $height Height of the original image
+ * @param array $options See $defaults for the options
+ * @return array or FALSE
+ * @since 1.7.2
+ */
+function get_image_resize_parameters($width, $height, $options) {
+
+	$defaults = array(
+		'maxwidth' => 100,
+		'maxheight' => 100,
+		
+		'square' => FALSE,
+		'upscale' => FALSE,
+
+		'x1' => 0,
+		'y1' => 0,
+		'x2' => 0,
+		'y2' => 0,
+	);
+
+	$options = array_merge($defaults, $options);
+
+	extract($options);
+
 	// crop image first?
 	$crop = TRUE;
 	if ($x1 == 0 && $y1 == 0 && $x2 == 0 && $y2 == 0) {
@@ -813,12 +894,12 @@ function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight
 
 	// how large a section of the image has been selected
 	if ($crop) {
-		$region_width = $x2 - $x1;
-		$region_height = $y2 - $y1;
+		$selection_width = $x2 - $x1;
+		$selection_height = $y2 - $y1;
 	} else {
 		// everything selected if no crop parameters
-		$region_width = $width;
-		$region_height = $height;
+		$selection_width = $width;
+		$selection_height = $height;
 	}
 
 	// determine cropping offsets
@@ -826,7 +907,7 @@ function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight
 		// asking for a square image back
 
 		// detect case where someone is passing crop parameters that are not for a square
-		if ($crop == TRUE && $region_width != $region_height) {
+		if ($crop == TRUE && $selection_width != $selection_height) {
 			return FALSE;
 		}
 
@@ -834,7 +915,7 @@ function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight
 		$new_width = $new_height = min($maxwidth, $maxheight);
 
 		// find largest square that fits within the selected region
-		$region_width = $region_height = min($region_width, $region_height);
+		$selection_width = $selection_height = min($selection_width, $selection_height);
 
 		// set offsets for crop
 		if ($crop) {
@@ -844,20 +925,19 @@ function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight
 			$height = $width;
 		} else {
 			// place square region in the center
-			$widthoffset = floor(($width - $region_width) / 2);
-			$heightoffset = floor(($height - $region_height) / 2);
+			$widthoffset = floor(($width - $selection_width) / 2);
+			$heightoffset = floor(($height - $selection_height) / 2);
 		}
 	} else {
 		// non-square new image
-
 		$new_width = $maxwidth;
 		$new_height = $maxwidth;
 
 		// maintain aspect ratio of original image/crop
-		if (($region_height / (float)$new_height) > ($region_width / (float)$new_width)) {
-			$new_width = floor($new_height * $region_width / (float)$region_height);
+		if (($selection_height / (float)$new_height) > ($selection_width / (float)$new_width)) {
+			$new_width = floor($new_height * $selection_width / (float)$selection_height);
 		} else {
-			$new_height = floor($new_width * $region_height / (float)$region_width);
+			$new_height = floor($new_width * $selection_height / (float)$selection_width);
 		}
 
 		// by default, use entire image
@@ -888,48 +968,22 @@ function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight
 		} elseif ($width < $new_width) {
 			$ratio = $new_height / $height;
 		}
-		$region_height = $height;
-		$region_width = $width;
+		$selection_height = $height;
+		$selection_width = $width;
 		$new_height = floor($height * $ratio);
 		$new_width = floor($width * $ratio);
 	}
 
-	// load original image
-	$orig_image = $load_function($input_name);
-	if (!$orig_image) {
-		return FALSE;
-	}
+	$params = array(
+		'newwidth' => $new_width,
+		'newheight' => $new_height,
+		'selectionwidth' => $selection_width,
+		'selectionheight' => $selection_height,
+		'xoffset' => $widthoffset,
+		'yoffset' => $heightoffset,
+	);
 
-	// allocate the new image
-	$newimage = imagecreatetruecolor($new_width, $new_height);
-	if (!$newimage) {
-		return FALSE;
-	}
-
-	// create the new image
-	$rtn_code = imagecopyresampled(	$newimage,
-									$orig_image,
-									0,
-									0,
-									$widthoffset,
-									$heightoffset,
-									$new_width,
-									$new_height,
-									$region_width,
-									$region_height );
-	if (!$rtn_code) {
-		return FALSE;
-	}
-
-	// grab contents for return
-	ob_start();
-	imagejpeg($newimage, null, 90);
-	$jpeg = ob_get_clean();
-
-	imagedestroy($newimage);
-	imagedestroy($orig_image);
-
-	return $jpeg;
+	return $params;
 }
 
 

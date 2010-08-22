@@ -41,7 +41,7 @@ if ($title && $description) {
 		$blog->access_id = ACCESS_PRIVATE;
 		$blog->title = $title;
 		$blog->description = $description;
-		$blog->excerpt = elgg_make_excerpt($excerpt);
+		$blog->excerpt = elgg_get_excerpt($excerpt);
 		// must be present or doesn't show up when metadata sorting.
 		$blog->publish_date = time();
 
