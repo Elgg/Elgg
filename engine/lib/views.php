@@ -451,7 +451,7 @@ function elgg_view_disable_simplecache() {
  * @param string $dir
  * @param string $base
  * @return array
- * @since 1.7
+ * @since 1.7.0
  */
 function elgg_get_views($dir, $base) {
 	$return = array();
@@ -886,6 +886,7 @@ function set_template_handler($function_name) {
  * @param string $view_extension This view is added to $view
  * @param int $priority The priority, from 0 to 1000, to add at (lowest numbers displayed first)
  * @param string $viewtype Not used
+ * @since 1.7.0
  */
 function elgg_extend_view($view, $view_extension, $priority = 501, $viewtype = '') {
 	global $CONFIG;
@@ -990,6 +991,7 @@ function set_view_location($view, $location, $viewtype = '') {
  * @param string $folder The folder to begin looking in
  * @param string $base_location_path The base views directory to use with set_view_location
  * @param string $viewtype The type of view we're looking at (default, rss, etc)
+ * @since 1.7.0
  */
 function autoregister_views($view_base, $folder, $base_location_path, $viewtype) {
 	if (!isset($i)) {
@@ -1071,6 +1073,7 @@ function page_draw($title, $body, $page_shell = 'page_shells/default', $vars = a
  *
  * @param string $view_type
  * @return bool
+ * @since 1.7.2
  */
 function elgg_is_valid_view_type($view_type) {
 	global $CONFIG;

@@ -17,6 +17,32 @@ Version 1.8.0 (Jackie)
     elgg_clear_sticky_form(), elgg_is_sticky_form(), and elgg_get_sticky_value().
 
 
+Version 1.7.2
+(xxxxx from http://code.elgg.org/elgg/branches/1.7)
+
+ UI Changes:
+  * Group "widgets" have been standardized with new blog and bookmark widgets.
+  * New group member listing page.
+  * Group forum topics can be edited including title and status.
+  * Added a group creation river entry.
+
+ Bugfixes:
+  * Fixed preview and draft saving for blog plugin.
+  * Page titles are now editable.
+  * Fixed several bugs with the new elgg_get* and elgg_list* functions.
+  * Groups do not show up as personal friend collections anymore.
+  * Fixed an upgrade issue with utf8 usernames.
+  * Encoding of & in group forums is fixed.
+
+ API changes:
+  * Added elgg_list_entities_from_metadata().
+  * Added elgg_send_email().
+  * Added remove_from_river_by_id().
+  * Added remove_from_register() for removing menu items.
+  * Added elgg_get_excerpt().
+  * Added elgg_get_friendly_title() and elgg_get_friendly_time().
+
+
 Version 1.7.1
 (April 21, 2010 from http://code.elgg.org/elgg/branches/1.7)
 

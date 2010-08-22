@@ -577,7 +577,7 @@ function db_upgrade($version, $fromdir = "", $quiet = FALSE) {
  * This function, called by validate_platform(), will check whether the installed version of
  * MySQL meets the minimum required.
  *
- * TODO: If multiple dbs are supported check which db is supported and use the appropriate code to validate
+ * @todo If multiple dbs are supported check which db is supported and use the appropriate code to validate
  * the appropriate version.
  *
  * @return bool

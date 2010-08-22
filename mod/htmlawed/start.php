@@ -13,7 +13,7 @@
  *
  */
 function htmlawed_init() {
-	/** For now declare allowed tags and protocols here, TODO: Make this configurable */
+	/** For now declare allowed tags and protocols here, @todo Make this configurable */
 	global $CONFIG;
 	$CONFIG->htmlawed_config = array(
 		// seems to handle about everything we need.

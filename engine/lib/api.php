@@ -389,6 +389,7 @@ function expose_function($method, $function, array $parameters = NULL, $descript
 /**
  * Unregister an API method
  * @param string $method The api name that was exposed
+ * @since 1.7.0
  */
 function unexpose_function($method) {
 	global $API_METHODS;
@@ -403,6 +404,7 @@ function unexpose_function($method) {
  * @param string $method The api name that was exposed
  * @return true or throws an exception
  * @throws APIException
+ * @since 1.7.0
  */
 function authenticate_method($method) {
 	global $API_METHODS;
@@ -557,6 +559,7 @@ function get_post_data() {
 
 /**
  * This fixes the post parameters that are munged due to page handler
+ * @since 1.7.0
  */
 function include_post_data() {
 
@@ -578,6 +581,7 @@ function include_post_data() {
  * @param $parameters
  * @return true on success or exception
  * @throws APIException
+ * @since 1.7.0
  */
 function verify_parameters($method, $parameters) {
 	global $API_METHODS;
@@ -610,6 +614,7 @@ function verify_parameters($method, $parameters) {
  * @param array $parameters Array of parameters
  * @return string or exception
  * @throws APIException
+ * @since 1.7.0
  */
 function serialise_parameters($method, $parameters) {
 	global $API_METHODS;
@@ -688,6 +693,7 @@ function serialise_parameters($method, $parameters) {
  * PAM: Confirm that the call includes a valid API key
  * @return true if good API key - otherwise throws exception
  * @throws APIException
+ * @since 1.7.0
  */
 function api_auth_key() {
 	global $CONFIG;
@@ -715,6 +721,7 @@ function api_auth_key() {
  * PAM: Confirm the HMAC signature
  * @return true if success - otherwise throws exception
  * @throws SecurityException
+ * @since 1.7.0
  */
 function api_auth_hmac() {
 	global $CONFIG;
@@ -850,7 +857,7 @@ function get_and_validate_api_headers() {
 function map_api_hash($algo) {
 	$algo = strtolower(sanitise_string($algo));
 	$supported_algos = array(
-		"md5" => "md5",	// TODO: Consider phasing this out
+		"md5" => "md5",	// @todo Consider phasing this out
 		"sha" => "sha1", // alias for sha1
 		"sha1" => "sha1",
 		"sha256" => "sha256"
@@ -897,7 +904,7 @@ function calculate_hmac($algo, $time, $nonce, $api_key, $secret_key, $get_variab
 /**
  * Calculate a hash for some post data.
  *
- * TODO: Work out how to handle really large bits of data.
+ * @todo Work out how to handle really large bits of data.
  *
  * @param string $postdata string The post data.
  * @param string $algo The algorithm used.
@@ -1094,6 +1101,7 @@ function create_user_token($username, $expire = 60) {
  * @param int $site_guid The ID of the site (default is current site)
  * @return false if none available or array of stdClass objects
  * 		(see users_apisessions schema for available variables in objects)
+ * @since 1.7.0
  */
 function get_user_tokens($user_guid, $site_guid) {
 	global $CONFIG;
@@ -1149,6 +1157,7 @@ function validate_user_token($token, $site_guid) {
  * @param string $token
  * @param int $site_guid The ID of the site (default is current site)
  * @return bool
+ * @since 1.7.0
  */
 function remove_user_token($token, $site_guid) {
 	global $CONFIG;
@@ -1168,6 +1177,7 @@ function remove_user_token($token, $site_guid) {
  * Remove expired tokens
  *
  * @return bool
+ * @since 1.7.0
  */
 function remove_expired_user_tokens() {
 	global $CONFIG;
@@ -1474,6 +1484,7 @@ function service_handler($handler, $request) {
  * @param string $handler web services type
  * @param string $function Your function name
  * @return true|false Depending on success
+ * @since 1.7.0
  */
 function register_service_handler($handler, $function) {
 	global $CONFIG;
@@ -1494,6 +1505,7 @@ function register_service_handler($handler, $function) {
  * with register_service_handler().
  *
  * @param string $handler web services type
+ * @return 1.7.0
  */
 function unregister_service_handler($handler) {
 	global $CONFIG;

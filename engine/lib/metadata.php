@@ -572,6 +572,7 @@ function find_metadata($meta_name = "", $meta_value = "", $entity_type = "", $en
  *  metadata_owner_guids => NULL|ARR guids for metadata owners
  *
  * @return array
+ * @since 1.7.0
  */
 function elgg_get_entities_from_metadata(array $options = array()) {
 	$defaults = array(
@@ -605,6 +606,7 @@ function elgg_get_entities_from_metadata(array $options = array()) {
  * @param array $options Options
  *
  * @return array
+ * @since 1.7.0
  */
 function elgg_entities_get_metastrings_options($type, $options) {
 	$valid_types = array('metadata', 'annotation');
@@ -672,6 +674,7 @@ function elgg_entities_get_metastrings_options($type, $options) {
  * @param BOOL $case_sensitive
  * @param ARR|NULL $order_by_metadata array of names / direction
  * @return FALSE|array False on fail, array('joins', 'wheres')
+ * @since 1.7.0
  */
 function elgg_get_entity_metadata_where_sql($e_table, $n_table, $names = NULL, $values = NULL, $pairs = NULL, $pair_operator = 'AND', $case_sensitive = TRUE, $order_by_metadata = NULL, $owner_guids = NULL) {
 	global $CONFIG;
@@ -1018,6 +1021,7 @@ function list_entities_from_metadata($meta_name, $meta_value = "", $entity_type 
  * @see elgg_get_entities_from_metadata
  *
  * @param array $options
+ * @since 1.7.0
  */
 function elgg_list_entities_from_metadata($options) {
 	$defaults = array(

@@ -45,7 +45,7 @@ else if (($guid!="") && ($type!="") && ($id_or_name!="")) {
 	$uuid = guid_to_uuid($entity->getGUID()) . "$type/$id_or_name/";
 
 	switch ($type) {
-		case 'attr' : // TODO: Do this better? - This is a bit of a hack...
+		case 'attr' : // @todo: Do this better? - This is a bit of a hack...
 			$v = $entity->get($id_or_name);
 			if (!$v) {
 				throw new InvalidParameterException(sprintf(elgg_echo('InvalidParameterException:IdNotExistForGUID'), $id_or_name, $guid));

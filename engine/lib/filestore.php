@@ -471,7 +471,7 @@ class ElggFile extends ElggObject {
 			return $this->mimetype;
 		}
 
-		// TODO : Guess mimetype if not here
+		// @todo Guess mimetype if not here
 	}
 
 	/**
@@ -648,7 +648,8 @@ class ElggFile extends ElggObject {
 			return $this->filestore;
 		}
 
-		// If filestore meta set then retrieve filestore TODO: Better way of doing this?
+		// If filestore meta set then retrieve filestore
+		// @todo Better way of doing this?
 		$metas = get_metadata_for_entity($this->guid);
 		$parameters = array();
 		if (is_array($metas)) {

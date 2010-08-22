@@ -450,6 +450,7 @@ $value = "", $owner_guid = 0, $limit = 10, $offset = 0, $order_by = "asc", $time
  *  annotation_owner_guids => NULL|ARR guids for annotaiton owners
  *
  * @return array
+ * @since 1.7.0
  */
 function elgg_get_entities_from_annotations(array $options = array()) {
 	$defaults = array(

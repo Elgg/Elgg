@@ -332,7 +332,7 @@ class ElggFileCache extends ElggCache {
 	 * @param string $filename
 	 */
 	protected function sanitise_filename($filename) {
-		// TODO : Writeme
+		// @todo : Writeme
 
 		return $filename;
 	}
@@ -397,11 +397,11 @@ class ElggFileCache extends ElggCache {
 	}
 
 	public function clear() {
-		// TODO : writeme
+		// @todo writeme
 	}
 
 	public function __destruct() {
-		// TODO: Check size and age, clean up accordingly
+		// @todo Check size and age, clean up accordingly
 		$size = 0;
 		$dir = $this->get_variable("cache_path");
 
@@ -430,7 +430,7 @@ class ElggFileCache extends ElggCache {
 					unlink($dir.$f);
 				}
 
-				// TODO: Size
+				// @todo Size
 			}
 		}
 	}

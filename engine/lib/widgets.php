@@ -284,6 +284,7 @@ function add_widget_type($handler, $name, $description, $context = "all", $multi
  * Remove a widget type
  *
  * @param string $handler The identifier for the widget handler
+ * @since 1.7.1
  */
 function remove_widget_type($handler) {
 	global $CONFIG;
@@ -378,7 +379,7 @@ function save_widget_info($widget_guid, $params) {
 					'guid','owner_guid','site_guid'
 				))) {
 					if (is_array($value)) {
-						// TODO: Handle arrays securely
+						// @todo Handle arrays securely
 						$widget->setMetaData($name, $value, "", true);
 					} else {
 						$widget->$name = $value;

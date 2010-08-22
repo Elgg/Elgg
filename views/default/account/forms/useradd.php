@@ -9,7 +9,7 @@
  */
 
 $admin_option = false;
-if (($_SESSION['user']->isAdmin()) && ($vars['show_admin'])) {
+if ((get_loggedin_user()->isAdmin()) && ($vars['show_admin'])) {
 	$admin_option = true;
 }
 

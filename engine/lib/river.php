@@ -106,6 +106,7 @@ function remove_from_river_by_object($object_guid) {
  *
  * @param int annotation_id The ID of the annotation
  * @return true|false Depending on success
+ * @since 1.7.0
  */
 function remove_from_river_by_annotation($annotation_id) {
 	// Sanitise

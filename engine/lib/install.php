@@ -40,7 +40,7 @@ function validate_platform() {
 		throw new ConfigurationException(elgg_echo('ConfigurationException:BadPHPVersion'));
 	}
 
-	// TODO: Consider checking for installed modules etc
+	// @todo Consider checking for installed modules etc
 	return true;
 }
 
@@ -52,6 +52,7 @@ function validate_platform() {
  * @param string $dbname
  * @param string $host
  * @return bool
+ * @since 1.7.1
  */
 function db_check_settings($user, $password, $dbname, $host) {
 	$mysql_dblink = mysql_connect($host, $user, $password, true);

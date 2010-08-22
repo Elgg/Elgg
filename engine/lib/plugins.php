@@ -622,6 +622,7 @@ function clear_plugin_setting($name, $plugin_name = "") {
  * Clear all plugin settings.
  *
  * @param string $plugin_name Optional plugin name, if not specified then it is detected from where you are calling from.
+ * @since 1.7.0
  */
 function clear_all_plugin_settings($plugin_name = "") {
 	$plugin = find_plugin_settings($plugin_name);

@@ -20,7 +20,6 @@
 * @param unknown_type $object_type
 * @param unknown_type $object
 */
-
 function messages_init() {
     
     // Load system configuration
@@ -28,7 +27,7 @@ function messages_init() {
 		
 	//add submenu options
 		if (get_context() == "messages") {
-			add_submenu_item(elgg_echo('messages:inbox'), $CONFIG->wwwroot . "pg/messages/" . $_SESSION['user']->username);
+			add_submenu_item(elgg_echo('messages:inbox'), $CONFIG->wwwroot . "pg/messages/" . get_loggedin_user()->username);
 			add_submenu_item(elgg_echo('messages:sentmessages'), $CONFIG->wwwroot . "mod/messages/sent.php");
 		}
 		
@@ -50,12 +49,8 @@ function messages_init() {
 	// Register a notification handler for site messages
 		register_notification_handler("site", "messages_site_notify_handler");
 		register_plugin_hook('notify:entity:message','object','messages_notification_msg');
-		if (is_callable('register_notification_object'))
-			register_notification_object('object','messages',elgg_echo('messages:new'));
-		
-    // Shares widget
-	  //  add_widget_type('messages',elgg_echo("messages:recent"),elgg_echo("messages:widget:description"));
-	    
+		register_notification_object('object','messages',elgg_echo('messages:new'));
+			    
 	// Override metadata permissions
 	    register_plugin_hook('permissions_check:metadata','object','messages_can_edit_metadata');
 	    
@@ -295,10 +290,10 @@ function count_unread_messages() {
     //get the users inbox messages
     //$num_messages = get_entities_from_metadata("toId", $_SESSION['user']->getGUID(), "object", "messages", 0, 10, 0, "", 0, false);
    $num_messages = elgg_get_entities_from_metadata(array('metadata_name_value_pairs' => array(
-    							'toId' => $_SESSION['user']->guid,
+    							'toId' => get_loggedin_userid(),
     							'readYet' => 0,
     							'msg' => 1
-    						), 'owner_guid' => $_SESSION['user']->guid));
+    						), 'owner_guid' => get_loggedin_userid()));
 
 	if (is_array($num_messages))
 		$counter = sizeof($num_messages);

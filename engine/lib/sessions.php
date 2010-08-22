@@ -186,6 +186,7 @@ function isadminloggedin() {
  *
  * @param $user_guid
  * @return bool
+ * @since 1.7.1
  */
 function elgg_is_admin_user($user_guid) {
 	global $CONFIG;

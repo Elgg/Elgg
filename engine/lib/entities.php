@@ -15,7 +15,8 @@ $ENTITY_CACHE = NULL;
 /// Cache subtype searches
 $SUBTYPE_CACHE = NULL;
 
-/// Require the locatable interface TODO: Move this into start.php?
+/// Require the locatable interface
+// @todo Move this into start.php?
 require_once('location.php');
 
 /**
@@ -781,7 +782,8 @@ abstract class ElggEntity implements
 				throw new IOException(elgg_echo('IOException:BaseEntitySaveFailed'));
 			}
 
-			// Save any unsaved metadata TODO: How to capture extra information (access id etc)
+			// Save any unsaved metadata
+			// @todo How to capture extra information (access id etc)
 			if (sizeof($this->temp_metadata) > 0) {
 				foreach($this->temp_metadata as $name => $value) {
 					$this->$name = $value;
@@ -789,7 +791,8 @@ abstract class ElggEntity implements
 				}
 			}
 
-			// Save any unsaved annotations metadata. TODO: How to capture extra information (access id etc)
+			// Save any unsaved annotations metadata.
+			// @todo How to capture extra information (access id etc)
 			if (sizeof($this->temp_annotations) > 0) {
 				foreach($this->temp_annotations as $name => $value) {
 					$this->annotate($name, $value);
@@ -1233,7 +1236,7 @@ function initialise_entity_cache() {
 	global $ENTITY_CACHE;
 
 	if (!$ENTITY_CACHE) {
-		//select_default_memcache('entity_cache'); // TODO: Replace with memcache?
+		//select_default_memcache('entity_cache'); // @todo Replace with memcache?
 		$ENTITY_CACHE = array();
 	}
 }
@@ -1306,7 +1309,7 @@ function retrieve_cached_entity_row($guid) {
 /**
  * Return the integer ID for a given subtype, or false.
  *
- * TODO: Move to a nicer place?
+ * @todo Move to a nicer place?
  *
  * @param string $type
  * @param string $subtype
@@ -1342,7 +1345,7 @@ function get_subtype_id($type, $subtype) {
 /**
  * For a given subtype ID, return its identifier text.
  *
- * TODO: Move to a nicer place?
+ * @todo Move to a nicer place?
  *
  * @param int $subtype_id
  */
@@ -1791,6 +1794,7 @@ function get_entity($guid) {
  *
  * @return 	if count, int
  * 			if not count, array or false if no entities
+ * @since 1.7.0
  */
 function elgg_get_entities(array $options = array()) {
 	global $CONFIG;
@@ -2026,6 +2030,7 @@ $count = false, $site_guid = 0, $container_guid = null, $timelower = 0, $timeupp
  * @param NULL|array $subtypes
  * @param NULL|array $pairs
  * @return FALSE|string
+ * @since 1.7.0
  */
 function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pairs) {
 	// subtype depends upon type.
@@ -2179,6 +2184,7 @@ function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pair
  * @param str $table
  * @param NULL|array $owner_guids
  * @return FALSE|str
+ * @since 1.7.0
  */
 function elgg_get_entity_owner_where_sql($table, $owner_guids) {
 	// short circuit if nothing requested
@@ -2216,6 +2222,7 @@ function elgg_get_entity_owner_where_sql($table, $owner_guids) {
  * @param string $table entity table prefix
  * @param NULL|array $container_guids
  * @return FALSE|string
+ * @since 1.7.0
  */
 function elgg_get_entity_container_where_sql($table, $container_guids) {
 	// short circuit if nothing is requested.
@@ -2257,6 +2264,7 @@ function elgg_get_entity_container_where_sql($table, $container_guids) {
  * @param NULL|int $time_updated_lower
  *
  * @return FALSE|str FALSE on fail, string on success.
+ * @since 1.7.0
  */
 function elgg_get_entity_time_where_sql($table, $time_created_upper = NULL, $time_created_lower = NULL,
 	$time_updated_upper = NULL, $time_updated_lower = NULL) {
@@ -2294,6 +2302,7 @@ function elgg_get_entity_time_where_sql($table, $time_created_upper = NULL, $tim
  * @param string $table entity table name
  * @param NULL|array $site_guids
  * @return FALSE|string
+ * @since 1.7.0
  */
 function elgg_get_entity_site_where_sql($table, $site_guids) {
 	// short circuit if nothing requested
@@ -2334,6 +2343,7 @@ function elgg_get_entity_site_where_sql($table, $site_guids) {
  * 	pagination => BOOL Display pagination links
  *
  * @return str
+ * @since 1.7.0
  */
 function elgg_list_entities($options) {
 	$defaults = array(
@@ -2526,7 +2536,8 @@ function disable_entity($guid, $reason = "", $recursive = true) {
 				}
 
 				if ($recursive) {
-					// Temporary token overriding access controls TODO: Do this better.
+					// Temporary token overriding access controls
+					// @todo Do this better.
 					static $__RECURSIVE_DELETE_TOKEN;
 					// Make it slightly harder to guess
 					$__RECURSIVE_DELETE_TOKEN = md5(get_loggedin_userid());
@@ -2612,7 +2623,8 @@ function delete_entity($guid, $recursive = true) {
 
 				// Delete contained owned and otherwise releated objects (depth first)
 				if ($recursive) {
-					// Temporary token overriding access controls TODO: Do this better.
+					// Temporary token overriding access controls
+					// @todo Do this better.
 					static $__RECURSIVE_DELETE_TOKEN;
 					// Make it slightly harder to guess
 					$__RECURSIVE_DELETE_TOKEN = md5(get_loggedin_userid());
@@ -3245,6 +3257,7 @@ function list_registered_entities($owner_guid = 0, $limit = 10, $fullview = true
  * 	pagination => BOOL Display pagination links
  *
  * @return string A viewable list of entities
+ * @since 1.7.0
  */
 function elgg_list_registered_entities($options) {
 	$defaults = array(
@@ -3778,7 +3791,7 @@ function entities_init() {
 	register_plugin_hook('unit_test', 'system', 'entities_test');
 
 	// Allow a permission override for recursive entity deletion
-	// TODO: Can this be done better?
+	// @todo Can this be done better?
 	register_plugin_hook('permissions_check','all','recursive_delete_permissions_check');
 	register_plugin_hook('permissions_check:metadata','all','recursive_delete_permissions_check');
 

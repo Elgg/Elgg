@@ -9,7 +9,7 @@
  */
 
 // Get entity statistics
-$entity_stats = get_entity_statistics($_SESSION['user']->guid);
+$entity_stats = get_entity_statistics(get_loggedin_userid());
 
 if ($entity_stats) {
 ?>
