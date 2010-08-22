@@ -206,7 +206,9 @@ function create_annotation($entity_guid, $name, $value, $value_type, $owner_guid
 			if (trigger_elgg_event('create', 'annotation', $obj)) {
 				return $result;
 			} else {
+				// plugin returned false to reject annotation
 				delete_annotation($result);
+				return FALSE;
 			}
 		}
 	}
@@ -263,6 +265,7 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
 		if (trigger_elgg_event('update', 'annotation', $obj)) {
 			return true;
 		} else {
+			// @todo add plugin hook that sends old and new annotation information before db access
 			delete_annotation($annotation_id);
 		}
 	}

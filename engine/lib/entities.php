@@ -1690,6 +1690,7 @@ function entity_row_to_elggstar($row) {
 		return $new_entity;
 	}
 
+	// load class for entity if one is registered
 	$classname = get_subtype_class_from_id($row->subtype);
 	if ($classname!="") {
 		if (class_exists($classname)) {
@@ -1702,7 +1703,8 @@ function entity_row_to_elggstar($row) {
 			error_log(sprintf(elgg_echo('ClassNotFoundException:MissingClass'), $classname));
 		}
 	}
-	else {
+
+	if (!$new_entity) {
 		switch ($row->type) {
 			case 'object' :
 				$new_entity = new ElggObject($row);

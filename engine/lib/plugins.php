@@ -99,11 +99,13 @@ function get_plugin_list() {
 			$CONFIG->pluginlistcache = $plugins;
 			return $plugins;
 		} else {
+			// this only runs on install, otherwise uses serialized plugin order
 			$plugins = array();
 
 			if ($handle = opendir($CONFIG->pluginspath)) {
 				while ($mod = readdir($handle)) {
-					if (!in_array($mod,array('.','..','.svn','CVS')) && is_dir($CONFIG->pluginspath . "/" . $mod)) {
+					// must be directory and not begin with a .
+					if (substr($mod, 0, 1) !== '.' && is_dir($CONFIG->pluginspath . "/" . $mod)) {
 						$plugins[] = $mod;
 					}
 				}
@@ -162,7 +164,8 @@ function regenerate_plugin_list($pluginorder = FALSE) {
 		// Add new plugins to the end
 		if ($handle = opendir($CONFIG->pluginspath)) {
 			while ($mod = readdir($handle)) {
-				if (!in_array($mod,array('.','..','.svn','CVS')) && is_dir($CONFIG->pluginspath . "/" . $mod)) {
+				// must be directory and not begin with a .
+				if (substr($mod, 0, 1) !== '.' && is_dir($CONFIG->pluginspath . "/" . $mod)) {
 					if (!in_array($mod, $pluginorder)) {
 						$max = $max + 10;
 						$pluginorder[$max] = $mod;

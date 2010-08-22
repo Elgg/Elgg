@@ -123,15 +123,14 @@ if (!substr_count($_SERVER["PHP_SELF"], "install.php")
 }
 
 // System booted, return to normal view
-set_input('view', $oldview);
-
-if (empty($oldview)) {
+if (!elgg_is_valid_view_type($oldview)) {
 	if (empty($CONFIG->view)) {
 		$oldview = 'default';
 	} else {
 		$oldview = $CONFIG->view;
 	}
 }
+set_input('view', $oldview);
 
 // Regenerate the simple cache if expired.
 // Don't do it on upgrade, because upgrade does it itself.
