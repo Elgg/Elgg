@@ -96,7 +96,7 @@ $group->save();
 if ($new_group_flag) {
 	set_page_owner($group->guid);
 	$group->join($user);
-	add_to_river('river/group/create','create',$user->guid,$group->guid);
+	add_to_river('river/group/create', 'create', $user->guid, $group->guid);
 }
 
 

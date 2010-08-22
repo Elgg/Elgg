@@ -181,17 +181,16 @@ or click below to view the group's join requests:
 		Forum river items
 	*/
 
-	'groups:river:member' => 'is now a member of',
-	'groups:river:created' => '%s created a new group called',
+	'groups:river:member' => '%s is now a member of',
+	'groups:river:create' => '%s created a new group called',
 	'groupforum:river:updated' => '%s has updated',
 	'groupforum:river:update' => 'this discussion topic',
 	'groupforum:river:created' => '%s has created',
 	'groupforum:river:create' => 'a new discussion topic titled',
-	'groupforum:river:posted' => '%s has posted a comment',
+	'groupforum:river:posted' => '%s has posted a new comment',
 	'groupforum:river:annotate:create' => 'on this discussion topic',
 	'groupforumtopic:river:annotate' => 'a new comment on this discussion topic',
 	'groupforum:river:postedtopic' => '%s has started a new discussion topic titled',
-	'groups:river:member' => '%s is now a member of',
 	'groups:river:togroup' => 'to the group',
 
 	'groups:nowidgets' => 'No widgets have been defined for this group.',
