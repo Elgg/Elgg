@@ -65,10 +65,7 @@ function set_input($variable, $value) {
 	}
 
 	if (is_array($value)) {
-		foreach ($value as $key => $val) {
-			$value[$key] = trim($val);
-		}
-
+		array_walk_recursive($value, create_function('&$v, $k', '$v = trim($v);'));
 		$CONFIG->input[trim($variable)] = $value;
 	} else {
 		$CONFIG->input[trim($variable)] = trim($value);

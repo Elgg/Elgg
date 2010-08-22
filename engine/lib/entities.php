@@ -334,7 +334,8 @@ abstract class ElggEntity implements
 		} else {
 			unset($this->temp_metadata[$name]);
 			if ((int) $this->guid > 0) {
-				return create_metadata($this->getGUID(), $name, $value, $value_type, $this->getOwner(), $this->getAccessID(), $multiple);
+				$result = create_metadata($this->getGUID(), $name, $value, $value_type, $this->getOwner(), $this->getAccessID(), $multiple);
+				return (bool)$result;
 			} else {
 				if (($multiple) && (isset($this->temp_metadata[$name]))) {
 					if (!is_array($this->temp_metadata[$name])) {
@@ -2511,7 +2512,7 @@ function disable_entity($guid, $reason = "", $recursive = true) {
 		if (trigger_elgg_event('disable',$entity->type,$entity)) {
 			if ($entity->canEdit()) {
 				if ($reason) {
-					create_metadata($guid, 'disable_reason', $reason,'', 0, ACCESS_PUBLIC);
+					create_metadata($guid, 'disable_reason', $reason, '', 0, ACCESS_PUBLIC);
 				}
 
 				if ($recursive) {

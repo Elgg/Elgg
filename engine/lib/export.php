@@ -135,12 +135,14 @@ function get_entity_from_uuid($uuid) {
  *
  * @param int $guid
  * @param string $uuid
+ * @return bool
  */
 function add_uuid_to_guid($guid, $uuid) {
 	$guid = (int)$guid;
 	$uuid = sanitise_string($uuid);
 
-	return create_metadata($guid, "import_uuid", $uuid);
+	$result = create_metadata($guid, "import_uuid", $uuid);
+	return (bool)$result;
 }
 
 

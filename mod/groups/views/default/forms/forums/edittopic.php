@@ -29,7 +29,6 @@
 	    echo elgg_view_title(elgg_echo("groups:edittopic"));
 	 
 ?>
-
 <!-- display the input form -->
 	<form id="group_edittopic" action="<?php echo $vars['url']; ?>action/groups/edittopic" method="post">
 	<?php echo elgg_view('input/securitytoken'); ?>
