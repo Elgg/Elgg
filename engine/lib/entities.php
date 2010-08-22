@@ -801,7 +801,9 @@ abstract class ElggEntity implements
 			$this->attributes['subtype'] = get_subtype_id($this->attributes['type'], $this->attributes['subtype']);
 
 			// Cache object handle
-			if ($this->attributes['guid']) cache_entity($this);
+			if ($this->attributes['guid']) {
+				cache_entity($this);
+			}
 
 			return $this->attributes['guid'];
 		}
@@ -1693,21 +1695,24 @@ function entity_row_to_elggstar($row) {
 			if (!($new_entity instanceof ElggEntity)) {
 				throw new ClassException(sprintf(elgg_echo('ClassException:ClassnameNotClass'), $classname, 'ElggEntity'));
 			}
-		}
-		else {
+		} else {
 			error_log(sprintf(elgg_echo('ClassNotFoundException:MissingClass'), $classname));
 		}
 	}
 	else {
 		switch ($row->type) {
 			case 'object' :
-				$new_entity = new ElggObject($row); break;
+				$new_entity = new ElggObject($row);
+				break;
 			case 'user' :
-				$new_entity = new ElggUser($row); break;
+				$new_entity = new ElggUser($row);
+				break;
 			case 'group' :
-				$new_entity = new ElggGroup($row); break;
+				$new_entity = new ElggGroup($row);
+				break;
 			case 'site' :
-				$new_entity = new ElggSite($row); break;
+				$new_entity = new ElggSite($row);
+				break;
 			default:
 				throw new InstallationException(sprintf(elgg_echo('InstallationException:TypeNotSupported'), $row->type));
 		}

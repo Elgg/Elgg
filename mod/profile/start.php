@@ -253,11 +253,11 @@ function profile_usericon_hook($hook, $entity_type, $returnvalue, $params){
 
 		$filehandler = new ElggFile();
 		$filehandler->owner_guid = $entity->getGUID();
-		$filehandler->setFilename("profile/" . $username . $size . ".jpg");
+		$filehandler->setFilename("profile/" . $entity->guid . $size . ".jpg");
 
 		if ($filehandler->exists()) {
 			//$url = $CONFIG->url . "pg/icon/$username/$size/$icontime.jpg";
-			return $CONFIG->wwwroot . 'mod/profile/icondirect.php?lastcache='.$icontime.'&username='.$entity->username.'&joindate=' . $entity->time_created . '&guid=' . $entity->guid . '&size='.$size;
+			return $CONFIG->wwwroot . 'mod/profile/icondirect.php?lastcache='.$icontime.'&joindate=' . $entity->time_created . '&guid=' . $entity->guid . '&size='.$size;
 		}
 	}
 }

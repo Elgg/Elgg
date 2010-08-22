@@ -1,7 +1,7 @@
 <?php
 /**
 * Elgg profile icon
-* 
+*
 * @package ElggProfile
 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
 * @author Curverider Ltd <info@elgg.com>
@@ -13,7 +13,6 @@ require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
 // Get the owning user
 $user = page_owner_entity();
-$username = $user->username;
 
 // Get the size
 $size = strtolower(get_input('size'));
@@ -30,13 +29,13 @@ if (!$user) {
 // Try and get the icon
 $filehandler = new ElggFile();
 $filehandler->owner_guid = $user->getGUID();
-$filehandler->setFilename("profile/" . $username . $size . ".jpg");
+$filehandler->setFilename("profile/" .  $user->getGUID() . $size . ".jpg");
 
 $success = false;
 if ($filehandler->open("read")) {
 	if ($contents = $filehandler->read($filehandler->size())) {
 		$success = true;
-	} 
+	}
 }
 
 if (!$success) {

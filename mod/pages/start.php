@@ -70,9 +70,8 @@ function pages_init() {
 function pages_url($entity) {
 	global $CONFIG;
 
-
-	return $CONFIG->url . "pg/pages/view/{$entity->guid}/";
-
+	$title = elgg_get_friendly_title($entity->title);
+	return $CONFIG->url . "pg/pages/view/{$entity->guid}/$title";
 }
 
 /**
@@ -207,7 +206,7 @@ function page_notify_message($hook, $entity_type, $returnvalue, $params) {
 			$owner = $entity->getOwnerEntity();
 			return $owner->name . ' ' . elgg_echo("pages:via") . ': ' . $title . "\n\n" . $descr . "\n\n" . $entity->getURL();
 		}
-		if ($method == 'web') {
+		if ($method == 'site') {
 			$owner = $entity->getOwnerEntity();
 			return $owner->name . ' ' . elgg_echo("pages:via") . ': ' . $title . "\n\n" . $descr . "\n\n" . $entity->getURL();
 		}

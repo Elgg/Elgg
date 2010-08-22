@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg profile plugin upload new user icon action
- * 
+ *
  * @package ElggProfile
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
  * @author Curverider Ltd <info@elgg.com>
@@ -41,7 +41,7 @@ foreach ($icon_sizes as $name => $size_info) {
 		//@todo Make these actual entities.  See exts #348.
 		$file = new ElggFile();
 		$file->owner_guid = $profile_owner_guid;
-		$file->setFilename("profile/{$profile_username}{$name}.jpg");
+		$file->setFilename("profile/{$profile_owner_guid}{$name}.jpg");
 		$file->open('write');
 		$file->write($resized);
 		$file->close();
