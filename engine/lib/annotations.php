@@ -18,7 +18,8 @@ require_once('extender.php');
 /**
  * ElggAnnotation
  *
- * An annotation is similar to metadata each entity can contain more than one of each annotation.
+ * An annotation is similar to metadata.
+ * Each entity can have more than one of each type of annotation.
  *
  * @package Elgg
  * @subpackage Core
@@ -27,7 +28,7 @@ require_once('extender.php');
 class ElggAnnotation extends ElggExtender {
 
 	/**
-	 * Construct a new site object, optionally from a given id value or db row.
+	 * Construct a new annotation, optionally from a given id value or db object.
 	 *
 	 * @param mixed $id
 	 */
@@ -87,14 +88,14 @@ class ElggAnnotation extends ElggExtender {
 				$this->value_type, $this->owner_guid, $this->access_id);
 
 			if (!$this->id) {
-				throw new IOException(sprintf(elgg_new('IOException:UnableToSaveNew'), get_class()));
+				throw new IOException(sprintf(elgg_echo('IOException:UnableToSaveNew'), get_class()));
 			}
 			return $this->id;
 		}
 	}
 
 	/**
-	 * Delete a given site.
+	 * Delete the annotation.
 	 */
 	function delete() {
 		return delete_annotation($this->id);
@@ -125,7 +126,7 @@ class ElggAnnotation extends ElggExtender {
  * Convert a database row to a new ElggAnnotation
  *
  * @param stdClass $row
- * @return stdClass or ElggAnnotation
+ * @return ElggAnnotation
  */
 function row_to_elggannotation($row) {
 	if (!($row instanceof stdClass)) {
@@ -139,6 +140,7 @@ function row_to_elggannotation($row) {
  * Get a specific annotation.
  *
  * @param int $annotation_id
+ * @return ElggAnnotation
  */
 function get_annotation($annotation_id) {
 	global $CONFIG;
@@ -158,6 +160,7 @@ function get_annotation($annotation_id) {
  * @param string $value_type
  * @param int $owner_guid
  * @param int $access_id
+ * @return int|bool id on success or false on failure
  */
 function create_annotation($entity_guid, $name, $value, $value_type, $owner_guid, $access_id = ACCESS_PRIVATE) {
 	global $CONFIG;
@@ -220,6 +223,7 @@ function create_annotation($entity_guid, $name, $value, $value_type, $owner_guid
  * @param string $value_type
  * @param int $owner_guid
  * @param int $access_id
+ * @return bool
  */
 function update_annotation($annotation_id, $name, $value, $value_type, $owner_guid, $access_id) {
 	global $CONFIG;

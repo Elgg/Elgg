@@ -229,7 +229,7 @@ function elgg_get_tags(array $options = array()) {
 	$query .= get_access_sql_suffix('e');
 
 	$threshold = sanitise_int($options['threshold']);
-	$query .= " GROUP BY msv.string HAVING total > {$threshold} ";
+	$query .= " GROUP BY msv.string HAVING total >= {$threshold} ";
 	$query .= " ORDER BY total DESC ";
 
 	$limit = sanitise_int($options['limit']);

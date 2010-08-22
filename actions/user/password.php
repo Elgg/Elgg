@@ -8,17 +8,14 @@
  * @link http://elgg.org/
  */
 
-global $CONFIG;
-
 gatekeeper();
 
 $password = get_input('password');
 $password2 = get_input('password2');
 $user_id = get_input('guid');
-$user = "";
 
 if (!$user_id) {
-	$user = $_SESSION['user'];
+	$user = get_loggedin_user();
 } else {
 	$user = get_entity($user_id);
 }

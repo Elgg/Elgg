@@ -951,13 +951,7 @@ function get_image_resize_parameters($width, $height, $options) {
 	}
 
 	// check for upscaling
-	// @todo This ignores squares, coordinates, and cropping. It's probably not the best idea.
-	// Size checking should be done in action code, but for backward compatibility
-	// this duplicates the previous behavior.
 	if (!$upscale && ($height < $new_height || $width < $new_width)) {
-		// zero out offsets
-		$widthoffset = $heightoffset = 0;
-
 		// determine if we can scale it down at all
 		// (ie, if only one dimension is too small)
 		// if not, just use original size.
@@ -968,10 +962,9 @@ function get_image_resize_parameters($width, $height, $options) {
 		} elseif ($width < $new_width) {
 			$ratio = $new_height / $height;
 		}
+		
 		$selection_height = $height;
 		$selection_width = $width;
-		$new_height = floor($height * $ratio);
-		$new_width = floor($width * $ratio);
 	}
 
 	$params = array(
@@ -985,7 +978,6 @@ function get_image_resize_parameters($width, $height, $options) {
 
 	return $params;
 }
-
 
 // putting these here for now
 function file_delete($guid) {

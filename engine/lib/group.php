@@ -460,14 +460,10 @@ function remove_object_from_group($group_guid, $object_guid) {
  * @param unknown_type $offset Where to start, by default 0.
  * @param unknown_type $count Whether to return the entities or a count of them.
  */
-function get_objects_in_group($group_guid, $subtype = "", $owner_guid = 0, $site_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = false) {
-	global $CONFIG;
-
-	if ($subtype === false || $subtype === null || $subtype === 0) {
-		return false;
+function get_objects_in_group($group_guid, $subtype = "", $owner_guid = 0, $site_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = FALSE) {
+	if ($subtype === FALSE || $subtype === null || $subtype === 0) {
+		return FALSE;
 	}
-
-	$subtype = get_subtype_id('object', $subtype);
 
 	if ($order_by == "") {
 		$order_by = "e.time_created desc";
@@ -488,7 +484,11 @@ function get_objects_in_group($group_guid, $subtype = "", $owner_guid = 0, $site
 	$where = array();
 
 	$where[] = "e.type='object'";
-	if ($subtype!=="") {
+	
+	if (!empty($subtype)) {
+		if (!$subtype = get_subtype_id('object', $subtype)) {
+			return FALSE;
+		}
 		$where[] = "e.subtype=$subtype";
 	}
 	if ($owner_guid != "") {

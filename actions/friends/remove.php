@@ -19,7 +19,7 @@ $errors = false;
 // Get the user
 try{
 	if ($friend instanceof ElggUser) {
-		$_SESSION['user']->removeFriend($friend_guid);
+		get_loggedin_user()->removeFriend($friend_guid);
 	} else{
 		register_error(sprintf(elgg_echo("friends:remove:failure"), $friend->name));
 		$errors = true;

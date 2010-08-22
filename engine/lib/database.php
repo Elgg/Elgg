@@ -280,6 +280,7 @@ function get_data($query, $callback = "") {
 
 	if (empty($resultarray)) {
 		elgg_log("DB query \"$query\" returned no results.");
+		// @todo consider changing this to return empty array #1242
 		return false;
 	}
 

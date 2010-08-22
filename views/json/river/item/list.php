@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg default layout
+ * JSON river view
  *
  * @package Elgg
  * @subpackage Core
@@ -8,39 +8,34 @@
  * @link http://elgg.org/
  */
 global $jsonexport;
-if (isset($vars['items']) && is_array($vars['items'])) {
 
+$json_items = array();
+
+if (isset($vars['items']) && is_array($vars['items'])) {
 	$i = 0;
+	
 	if (!empty($vars['items'])) {
 		foreach($vars['items'] as $item) {
+			
+			$json_entry = array(
+				'subject' 		=>	NULL,
+				'object' 		=>	NULL,
+				'type' 			=>	NULL,
+				'subtype' 		=>	NULL,
+				'action_type' 	=>	NULL,
+				'view' 			=>	NULL,
+				'annotation'	=>	NULL,
+				'timestamp' 	=>	NULL,
+				'string' 		=>	NULL
+			);
 
-			// echo elgg_view_river_item($item);
-			if (elgg_view_exists($item->view,'default')) {
-				$body = elgg_view($item->view,array('item' => $item), false, false, 'default');
-				$time = date("r",$item->posted);
-				if ($entity = get_entity($item->object_guid)) {
-					$url = htmlspecialchars($entity->getURL());
-				} else {
-					$url = $vars['url'];
-				}
-				$title = strip_tags($body);
-
-				$jsonitem = $item;
-				$jsonitem->url = $url;
-				$jsonitem->description = autop($body);
-				$jsonitem->title = $title;
-				unset($jsonitem->view);
-
-				if ($subject = get_entity($item->subject_guid)) {
-					elgg_view_entity($subject);
-				}
-				if ($object = get_entity($item->object_guid)) {
-					elgg_view_entity($object);
-				}
-
-				$jsonexport['activity'][] = $jsonitem;
+			if (elgg_view_exists($item->view, 'default')) {
+				$json_entry['string'] = elgg_view($item->view, array('item' => $item), FALSE, FALSE, 'default');
+				$json_entry['timestamp'] = (int)$item->posted;
 			}
 
+			$json_items[] = $json_entry;
+			
 			$i++;
 			if ($i >= $vars['limit']) {
 				break;
@@ -48,4 +43,5 @@ if (isset($vars['items']) && is_array($vars['items'])) {
 		}
 	}
 }
-echo "!";
+
+$jsonexport['activity'] = $json_items;

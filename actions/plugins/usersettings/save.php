@@ -17,7 +17,7 @@ $result = false;
 
 foreach ($params as $k => $v) {
 	// Save
-	$result = set_plugin_usersetting($k, $v, $_SESSION['user']->guid, $plugin);
+	$result = set_plugin_usersetting($k, $v, get_loggedin_userid(), $plugin);
 
 	// Error?
 	if (!$result) {

@@ -19,7 +19,7 @@ $errors = false;
 
 // Get the user
 try {
-	if (!$_SESSION['user']->addFriend($friend_guid)) {
+	if (!get_loggedin_user()->addFriend($friend_guid)) {
 		$errors = true;
 	}
 } catch (Exception $e) {
@@ -28,7 +28,7 @@ try {
 }
 if (!$errors){
 	// add to river
-	add_to_river('friends/river/create','friend',$_SESSION['user']->guid,$friend_guid);
+	add_to_river('friends/river/create','friend',get_loggedin_userid(),$friend_guid);
 	system_message(sprintf(elgg_echo("friends:add:successful"),$friend->name));
 }
 

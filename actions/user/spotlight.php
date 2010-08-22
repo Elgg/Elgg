@@ -17,5 +17,6 @@ if ($closed != 'true') {
 	$closed = true;
 }
 
-$_SESSION['user']->spotlightclosed = $closed;
+get_loggedin_user()->spotlightclosed = $closed;
+// exit as this action is called through Ajax
 exit;
