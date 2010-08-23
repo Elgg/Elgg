@@ -37,7 +37,7 @@ if (get_context() == "search") {
 	//get the group avatar
 	$icon = elgg_view("profile/icon",array('entity' => $u, 'size' => 'tiny'));
     //get the group and topic title
-    $info .= "<p class='entity_subtext'><b>" . elgg_echo('Topic') . ":</b> <a href=\"{$vars['url']}mod/groups/topicposts.php?topic={$vars['entity']->guid}&group_guid={$group->guid}\">{$title}</a></p>";
+    $info .= "<p class='entity_subtext'><b>" . elgg_echo('groups:topic') . ":</b> <a href=\"{$vars['url']}mod/groups/topicposts.php?topic={$vars['entity']->guid}&group_guid={$group->guid}\">{$title}</a></p>";
     if ($group instanceof ElggGroup) {
     	$info .= "<p class='entity_title'><b>" . elgg_echo('group') . ":</b> <a href=\"{$group->getURL()}\">".htmlentities($group->name, ENT_QUOTES, 'UTF-8') ."</a></p>";
     }
