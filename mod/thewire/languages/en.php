@@ -28,6 +28,7 @@
 			'thewire:newpost' => 'New wire post',
 			'thewire:addpost' => 'Post to the wire',
 			'thewire:by' => "Wire post by %s",
+			'thewire:update' => 'update',
 
 	
         /**
