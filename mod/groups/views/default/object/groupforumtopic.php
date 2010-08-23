@@ -70,7 +70,9 @@ if (get_context() == "search") {
    }
 
 	if (($last_time) && ($u)) {
-		$info.= "<p class='entity_subtext'>" . elgg_echo('groups:updated') . " " . elgg_view_friendly_time($last_time) . " by <a href=\"" . $u->getURL() . "\">" . $u->name . "</a></p>";
+		$commenter_link = "<a href\"{$u->getURL()}\">$u->name</a>";
+		$text = sprintf(elgg_echo('groups:lastcomment'), elgg_view_friendly_time($last_time), $commenter_link);
+		$info .= "<p class='entity_subtext'>$text</p>";
 	}
     //get the user avatar
 	$icon = elgg_view("profile/icon",array('entity' => $topic_owner, 'size' => 'tiny'));

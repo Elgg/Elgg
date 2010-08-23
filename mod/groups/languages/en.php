@@ -96,6 +96,7 @@ $english = array(
 	'groups:yes' => 'yes',
 	'groups:no' => 'no',
 	'groups:lastupdated' => 'Last updated %s by %s',
+	'groups:lastcomment' => 'Last comment %s by %s',
 	'groups:pages' => 'Group pages',
 	'groups:files' => 'Group files',
 
