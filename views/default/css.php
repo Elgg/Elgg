@@ -309,6 +309,8 @@ h2 {
 #elgg_content { /* wraps sidebar and page contents */
 	width:990px;
 	position: relative;
+	overflow:hidden;
+	word-wrap:break-word;
 	margin:0 auto;
 	min-height:400px;
 }
