@@ -19,7 +19,7 @@
 			'thewire:add' => "Post to the wire",
 		    'thewire:text' => "A note on the wire",
 			'thewire:reply' => "Reply",
-			'thewire:via' => "via",
+			'thewire:via_method' => "via %s",
 			'thewire:wired' => "Posted to the wire",
 			'thewire:charleft' => "characters remaining",
 			'item:object:thewire' => "Wire posts",
