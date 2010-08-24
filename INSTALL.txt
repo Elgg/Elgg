@@ -130,6 +130,7 @@ will need to either
    copy /htaccess_dist to /.htaccess 
 
 
+
 The latest version of this document is available at:
 [http://docs.elgg.org/wiki/Installation]
 
