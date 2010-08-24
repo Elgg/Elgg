@@ -4,7 +4,6 @@ The latest version of this document is available at:
 Installation Troubleshooting is available at:
 [http://docs.elgg.org/wiki/Troubleshooting]
 
-
 ELGG INSTALLATION INSTRUCTIONS
 
 TECHNICAL REQUIREMENTS
