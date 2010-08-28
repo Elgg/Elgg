@@ -29,3 +29,4 @@ Elgg is released under the GNU Public License (GPL), which
 is supplied in this distribution as LICENSE.
 
 For installation instructions, please see the INSTALL file.
+
