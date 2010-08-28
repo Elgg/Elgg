@@ -712,10 +712,11 @@ function get_entities_from_access_id($collection_id, $entity_type = "", $entity_
 		$options['order_by'] = sanitise_string("e.time_created, $order_by");
 	}
 
-	if ((is_array($owner_guid) && (count($owner_guid)))) {
-		$options['owner_guids'] = array();
-		foreach($owner_guid as $guid) {
-			$options['owner_guids'][] = $guid;
+	if ($owner_guid) {
+		if (is_array($owner_guid)) {
+			$options['owner_guids'] = $owner_guid;
+		} else {
+			$options['owner_guid'] = $owner_guid;
 		}
 	}
 
