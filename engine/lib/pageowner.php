@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg page owner library
- * Contains functions for managing page ownership
+ * Contains functions for managing page ownership and context
  *
  * @package Elgg
  * @subpackage Core
@@ -9,129 +9,84 @@
  * @link http://elgg.org/
  */
 
+
 /**
- * Gets the page owner for the current page.
- * @uses $CONFIG
- * @return int|false The current page owner guid (0 if none).
+ * Gets the guid of the entity that owns the current page.
+ * @param int $guid Optional parameter used by elgg_set_page_owner_guid().
+ * @return int The current page owner guid (0 if none).
+ * @since 1.8
  */
+function elgg_get_page_owner_guid($guid = 0) {
+	static $page_owner_guid;
 
-function page_owner() {
-	global $CONFIG;
-
-	$returnval = NULL;
-
-	$setpageowner = set_page_owner();
-	if ($setpageowner !== false) {
-		return $setpageowner;
+	if ($guid) {
+		$page_owner_guid = $guid;
 	}
 
-	if ((!isset($returnval)) && ($username = get_input("username"))) {
-		if (substr_count($username,'group:')) {
-			preg_match('/group\:([0-9]+)/i',$username,$matches);
-			$guid = $matches[1];
-			if ($entity = get_entity($guid)) {
-				$returnval = $entity->getGUID();
-			}
-		}
-		if ((!isset($returnval)) && ($user = get_user_by_username($username))) {
-			$returnval = $user->getGUID();
-		}
+	if (isset($page_owner_guid)) {
+		return $page_owner_guid;
 	}
 
+	$guid = trigger_plugin_hook('page_owner', 'system', NULL, 0);
 
-	if ((!isset($returnval)) && ($owner = get_input("owner_guid"))) {
-		if ($user = get_entity($owner)) {
-			$returnval = $user->getGUID();
-		}
-	}
+	$page_owner_guid = $guid;
 
-
-	if ((!isset($returnval)) && (!empty($CONFIG->page_owner_handlers) && is_array($CONFIG->page_owner_handlers))) {
-		foreach($CONFIG->page_owner_handlers as $handler) {
-			if ((!isset($returnval)) && ($guid = $handler())) {
-				$returnval = $guid;
-			}
-		}
-	}
-
-	if (isset($returnval)) {
-		// Check if this is obtainable, forwarding if not.
-		/*
-		 * If the owner entity has been set, but is inaccessible then we forward to the dashboard. This
-		 * catches a bunch of WSoDs. It doesn't have much of a performance hit since 99.999% of the time the next thing
-		 * a page does after calling this function is to retrieve the owner entity - which is of course cashed.
-		 */
-		$owner_entity = get_entity($returnval);
-		if (!$owner_entity) {
-
-			// Log an error
-			error_log(sprintf(elgg_echo('pageownerunavailable'), $returnval));
-
-			// Forward
-			forward();
-		}
-
-		// set the page owner so if we're called again we don't have to think.
-		set_page_owner($returnval);
-		return $returnval;
-	}
-
-	return 0;
+	return $guid;
 }
 
 /**
- * Gets the page owner for the current page.
- * @uses $CONFIG
- * @return ElggUser|false The current page owner (false if none).
+ * @deprecated 1.8  Use get_page_owner_guid()
+ */
+function page_owner() {
+	elgg_deprecated_notice('page_owner() was deprecated by elgg_get_page_owner_guid().', 1.8);
+	return elgg_get_page_owner_guid();
+}
+
+/**
+ * Gets the owner entity for the current page.
+ * @return ElggEntity|false The current page owner or false if none.
+ * @since 1.8
+ */
+function elgg_get_page_owner() {
+	$guid = elgg_get_page_owner_guid();
+	if ($guid > 0) {
+		return get_entity($guid);
+	}
+
+	return FALSE;
+}
+
+/**
+ * @deprecated 1.8  Use elgg_get_page_owner()
  */
 function page_owner_entity() {
-	global $CONFIG;
-	$page_owner = page_owner();
-	if ($page_owner > 0) {
-		return get_entity($page_owner);
-	}
-
-	return false;
+	elgg_deprecated_notice('page_owner_entity() was deprecated by elgg_get_page_owner().', 1.8);
+	return elgg_get_page_owner();
 }
 
 /**
- * Adds a page owner handler - a function that will
- * return the page owner if required
- * (Such functions are required to return false if they don't know)
- * @uses $CONFIG
- * @param string $functionname The name of the function to call
- * @return mixed The guid of the owner or false
+ * Set the guid of the entity that owns this page
+ * @param int $guid
+ * @since 1.8
  */
+function elgg_set_page_owner_guid($guid) {
+	elgg_get_page_owner_guid($guid);
+}
 
+
+/**
+ * @deprecated 1.8  Use the 'page_owner', 'system' plugin hook
+ */
 function add_page_owner_handler($functionname) {
-	global $CONFIG;
-	if (empty($CONFIG->page_owner_handlers)) {
-		$CONFIG->page_owner_handlers = array();
-	}
-	if (is_callable($functionname)) {
-		$CONFIG->page_owner_handlers[] = $functionname;
-	}
+	elgg_deprecated_notice("add_page_owner_handler() was deprecated by the plugin hook 'page_owner', 'system'.", 1.8);
 }
 
 /**
- * Allows a page to manually set a page owner
- *
- * @param int $entitytoset The GUID of the page owner
- * @return int|false Either the page owner we've just set, or false if unset
+ * @deprecated 1.8  Use elgg_set_page_owner_guid()
  */
 function set_page_owner($entitytoset = -1) {
-	static $entity;
-
-	if (!isset($entity)) {
-		$entity = false;
-	}
-
-	if ($entitytoset > -1) {
-		$entity = $entitytoset;
-	}
-
-	return $entity;
-
+	elgg_deprecated_notice('set_page_owner() was deprecated by elgg_set_page_owner_guid().', 1.8);
+	elgg_set_page_owner_guid($entitytoset);
 }
 
 /**
@@ -167,3 +122,40 @@ function get_context() {
 	}
 	return "main";
 }
+
+function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) {
+
+	if ($returnvalue) {
+		return $returnvalue;
+	}
+	
+	$username = get_input("username");
+	if ($username) {
+		if (substr_count($username, 'group:')) {
+			preg_match('/group\:([0-9]+)/i', $username, $matches);
+			$guid = $matches[1];
+			if ($entity = get_entity($guid)) {
+				return $entity->getGUID();
+			}
+		}
+
+		if ($user = get_user_by_username($username)) {
+			return $user->getGUID();
+		}
+	}
+
+	$owner = get_input("owner_guid");
+	if ($owner) {
+		if ($user = get_entity($owner)) {
+			return $user->getGUID();
+		}
+	}
+
+	return $returnvalue;
+}
+
+function page_owner_init() {
+	register_plugin_hook('page_owner', 'system', 'default_page_owner_handler');
+}
+
+register_elgg_event_handler('init', 'system', 'page_owner_init');
