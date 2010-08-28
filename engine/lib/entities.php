@@ -3546,6 +3546,7 @@ function get_entities_from_private_setting_multi(array $name, $type = "", $subty
 		$i = 1;
 		foreach ($name as $k => $n) {
 			$k = sanitise_string($k);
+			$n = sanitise_string($n);
 			$s_join .= " JOIN {$CONFIG->dbprefix}private_settings s$i ON e.guid=s$i.entity_guid";
 			$where[] = "s$i.name = '$k'";
 			$where[] = "s$i.value = '$n'";
