@@ -945,7 +945,11 @@ $count = FALSE, $case_sensitive = TRUE) {
 	}
 
 	if ($owner_guid) {
-		$options['owner_guid'] = $owner_guid;
+		if (is_array($owner_guid)) {
+			$options['owner_guids'] = $owner_guid;
+		} else {
+			$options['owner_guid'] = $owner_guid;
+		}
 	}
 
 	if ($limit) {
@@ -1076,7 +1080,11 @@ $count = false, $meta_array_operator = 'and') {
 	}
 
 	if ($owner_guid) {
-		$options['owner_guid'] = $owner_guid;
+		if (is_array($owner_guid)) {
+			$options['owner_guids'] = $owner_guid;
+		} else {
+			$options['owner_guid'] = $owner_guid;
+		}
 	}
 
 	if ($limit) {

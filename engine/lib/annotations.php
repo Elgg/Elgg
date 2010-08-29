@@ -526,7 +526,11 @@ $timelower = 0, $timeupper = 0) {
 	}
 
 	if ($owner_guid) {
-		$options['annotation_owner_guid'] = $owner_guid;
+		if (is_array($owner_guid)) {
+			$options['annotation_owner_guids'] = $owner_guid;
+		} else {
+			$options['annotation_owner_guid'] = $owner_guid;
+		}
 	}
 
 	if ($group_guid) {
