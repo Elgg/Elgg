@@ -111,6 +111,9 @@ function captcha_verify_action_hook($hook, $entity_type, $returnvalue, $params) 
 
 	register_error(elgg_echo('captcha:captchafail'));
 
+	// forward to referrer or else action code sends to front page
+	forward(REFERER);
+
 	return FALSE;
 }
 
