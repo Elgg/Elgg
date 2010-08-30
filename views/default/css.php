@@ -649,7 +649,7 @@ li.navigation_more ul li {
 /* ***************************************
 	BREADCRUMBS
 *************************************** */
-#breadcrumbs {
+.breadcrumbs {
 	font-size: 80%;
 	line-height:1.2em;
 	color:#bababa;
@@ -657,12 +657,12 @@ li.navigation_more ul li {
 	top:-6px;
 	left:0;
 }
-#breadcrumbs a {
+.breadcrumbs a {
 	color:#999999;
 	font-weight:bold;
 	text-decoration: none;
 }
-#breadcrumbs a:hover {
+.breadcrumbs a:hover {
 	color: #0054a7;
 	text-decoration: underline;
 }

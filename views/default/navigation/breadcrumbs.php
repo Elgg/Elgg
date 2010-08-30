@@ -37,7 +37,7 @@ $breadcrumbs_html = implode(' &gt; ', $formatted_breadcrumbs);
 
 echo <<<___END
 
-<div id="breadcrumbs">
+<div class="breadcrumbs">
 	$breadcrumbs_html
 </div>
 
