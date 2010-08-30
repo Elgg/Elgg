@@ -28,7 +28,7 @@
 		if (!$groupaccess)
 			$view_all = false;
 		
-		$area2 .= elgg_view('group/group', array('entity' => $group, 'user' => $_SESSION['user'], 'full' => true));
+		$area2 .= elgg_view_entity($group, TRUE);
 		
 		if ($view_all) {
 			//group profile 'items' - these are not real widgets, just contents to display
