@@ -14,7 +14,7 @@ if ($vars['entity']) {
 } else {
 	$user = page_owner_entity();
 }
-if ($user) {
+if (!$user) {
 	// no user so we quit view
 	echo sprintf(elgg_echo('viewfailure'), __FILE__);
 	return TRUE;
