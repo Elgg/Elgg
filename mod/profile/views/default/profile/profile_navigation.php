@@ -5,13 +5,19 @@ if (isset($vars['section'])) {
 	$section = $vars['section'];
 }
 
-$profile = $vars['entity'];
+$user = $vars['entity'];
+if (!$user) {
+	// no user so no profile
+	return TRUE;
+}
+
+
 $activity = '';
 $friends = '';
 $extend = '';
 $twitter = '';
 
-$url = "{$profile->getURL()}/";
+$url = "{$user->getURL()}/";
 
 //select section 
 switch($section){
@@ -39,7 +45,7 @@ switch($section){
 }
 ?>
 <div class="elgg_horizontal_tabbed_nav profile">
-<div class="profile_name"><h2><?php echo $profile->name; ?></h2></div>
+<div class="profile_name"><h2><?php echo $user->name; ?></h2></div>
 <ul>
 	<li <?php echo $activity; ?>><a href="<?php echo $url; ?>"><?php echo elgg_echo('activity'); ?></a></li>
 	<li <?php echo $details; ?>><a href="<?php echo $url . 'details'; ?>"><?php echo elgg_echo('Details'); ?></a></li>
@@ -55,7 +61,7 @@ switch($section){
 		}
 		
 		//insert a view which others can extend
-		echo elgg_view('profilenav/extend', array('profile' => $profile));
+		echo elgg_view('profile_navigation/extend', array('entity' => $user));
 	?>
 </ul>
 </div>

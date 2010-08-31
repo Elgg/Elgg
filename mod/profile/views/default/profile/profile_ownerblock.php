@@ -4,23 +4,29 @@
  * A simple owner block which houses info about the user whose 'stuff' you are looking at
  */
  
-//get the page owner
-if($vars['entity']){
-	if($vars['context'] == 'edit')
+// get the user who owns this profile
+if ($vars['entity']) {
+	if ($vars['context'] == 'edit') {
 		$user = get_entity($vars['entity']->container_guid);
-	else
+	} else {
 		$user = get_entity($vars['entity']->guid);
-}else{
+	}
+} else {
 	$user = page_owner_entity();
+	if (!$user) {
+		// no user so we quit
+		return TRUE;
+	}
 }
+
 $more_info = '';
-//set some variables
+
 $location = elgg_view("output/tags",array('value' => $user->location));
 $section = $vars['section'];
-if($section == 'details'){
+if ($section == 'details') {
 	$icon = elgg_view("profile/icon",array('entity' => $user, 'size' => 'large', 'override' => 'true'));
 	$icon_class = "large";
-}else{
+} else {
 	$icon = elgg_view("profile/icon",array('entity' => $user, 'size' => 'small'));
 	$more_info = "<div class='owner_block_contents clearfloat'>";
 	$more_info .= "<h3><a href='{$url}'>{$user->name}</a></h3>";
@@ -29,26 +35,27 @@ if($section == 'details'){
 	$more_info .= "</div>";
 }
 $profile_actions = "";
-if(isloggedin() && (get_loggedin_user()->getGuid() == page_owner())){
+if (isloggedin() && (get_loggedin_user()->getGuid() == page_owner())) {
 	$profile_actions = "<div class='clearfloat profile_actions'>";
 	$profile_actions .= "<a href='{$vars['url']}pg/profile/{$user->username}/edit/details' class='action_button'>". elgg_echo('profile:edit') ."</a>";
 	$profile_actions .= "<a href='{$vars['url']}pg/profile/{$user->username}/edit/icon' class='action_button'>". elgg_echo('profile:editicon') ."</a>";
 	$profile_actions .= "</div>";
-}else{
+} else {
 	$profile_actions = "<div class='profile_actions'>";
 	if (isloggedin()) {
-		if ($_SESSION['user']->getGUID() != $user->getGUID()) {
-			$ts = time();
-			$token = generate_action_token($ts);
-					
+		if (get_loggedin_userid() != $user->getGUID()) {
 			if ($user->isFriend()) {
-				$profile_actions .= "<a href=\"{$vars['url']}action/friends/remove?friend={$user->getGUID()}&__elgg_token=$token&__elgg_ts=$ts\" class='action_button'>" . elgg_echo('friend:remove') . "</a>";
+				$url = "{$vars['url']}action/friends/remove?friend={$user->getGUID()}";
+				$url = elgg_add_action_tokens_to_url($url);
+				$profile_actions .= "<a href=\"$url\" class='action_button'>" . elgg_echo('friend:remove') . "</a>";
 			} else {
-				$profile_actions .= "<a href=\"{$vars['url']}action/friends/add?friend={$user->getGUID()}&__elgg_token=$token&__elgg_ts=$ts\" class='action_button'>" . elgg_echo('friend:add') . "</a>";
+				$url = "{$vars['url']}action/friends/add?friend={$user->getGUID()}";
+				$url = elgg_add_action_tokens_to_url($url);
+				$profile_actions .= "<a href=\"$url\" class='action_button'>" . elgg_echo('friend:add') . "</a>";
 			}
 		}
 	}
-	if(is_plugin_enabled('messages') && isloggedin()){
+	if (is_plugin_enabled('messages') && isloggedin()) {
 		$profile_actions .= "<a href=\"{$vars['url']}mod/messages/send.php?send_to={$user->guid}\" class='action_button'>". elgg_echo('messages:send') ."</a>";
 	}
 	$profile_actions .= "</div>";
@@ -57,14 +64,12 @@ if(isloggedin() && (get_loggedin_user()->getGuid() == page_owner())){
 $username = $user->username;
 $email = $user->email;
 $phone = $user->phone;
-	
-//get correct links
-$url = $vars['url'];
+
 
 //if admin display admin links
-if(isadminloggedin()){
+if (isadminloggedin()) {
 	$admin_links = elgg_view('profile/admin_menu');
-}else{
+} else {
 	$admin_links = '';
 }
 

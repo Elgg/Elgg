@@ -121,18 +121,18 @@ function profile_fields_setup() {
 function profile_page_handler($page) {
 	global $CONFIG;
 
-	$username = $action = NULL;
+	$action = NULL;
 
 	// short circuit if invalid or banned username
 	if (isset($page[0])) {
 		$username = $page[0];
 		$user = get_user_by_username($username);
+		set_input('username', $page[0]);
+	}
 
-		if (!$user || ($user->isBanned() && !isadminloggedin())) {
-			return elgg_echo('profile:notfound');
-		} else {
-			set_input('username', $page[0]);
-		}
+	if (!$user || ($user->isBanned() && !isadminloggedin())) {
+		register_error(elgg_echo('profile:notfound'));
+		forward();
 	}
 
 	if (isset($page[1])) {
