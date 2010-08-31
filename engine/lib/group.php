@@ -461,6 +461,8 @@ function remove_object_from_group($group_guid, $object_guid) {
  * @param unknown_type $count Whether to return the entities or a count of them.
  */
 function get_objects_in_group($group_guid, $subtype = "", $owner_guid = 0, $site_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = FALSE) {
+	global $CONFIG;
+	
 	if ($subtype === FALSE || $subtype === null || $subtype === 0) {
 		return FALSE;
 	}
