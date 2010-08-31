@@ -187,6 +187,7 @@ $english = array(
 	'deprecatedfunction' => 'Warning: This code uses the deprecated function \'%s\' and is not compatible with this version of Elgg',
 
 	'pageownerunavailable' => 'Warning: The page owner %d is not accessible!',
+	'viewfailure' => 'There was an internal failure in the view %s',
 /**
  * API
  */

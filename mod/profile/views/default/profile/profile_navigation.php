@@ -8,6 +8,7 @@ if (isset($vars['section'])) {
 $user = $vars['entity'];
 if (!$user) {
 	// no user so no profile
+	echo sprintf(elgg_echo('viewfailure'), __FILE__);
 	return TRUE;
 }
 
