@@ -14,6 +14,6 @@
 	   $version = 2009072201;  // YYYYMMDD   = Elgg Date
 	                           //         XX = Interim incrementer
 	
-	   $release = '1.6.2';    // Human-friendly version name
+	   $release = '1.6.3';    // Human-friendly version name
 
 ?>
