@@ -1,12 +1,17 @@
 <?php
-
 /**
- * Elgg registration page
+ * Assembles and outputs the registration page.
+ *
+ * Since 1.8 registration can be disabled via administration.  If this is
+ * the case, calls to this page will forward to the network front page.
+ *
+ * If the user is logged in, this page will forward to the network
+ * front page.
+ *
+ * @see views/default/account/forms/register.php
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 /**
