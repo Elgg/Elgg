@@ -13,8 +13,8 @@
  *
  * These 2 main JS views are cached via simplecache.
  *
- * @see views/js/initialise_elgg.php
- * @see views/js/friendsPickerv1.php
+ * @see views/default/js/initialise_elgg.php
+ * @see views/default/js/friendsPickerv1.php
  * @see simplecache/view.php
  * @see elgg_extend_view()
  *
