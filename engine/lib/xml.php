@@ -9,25 +9,8 @@
 	 * @link http://elgg.org/
 	 */
 
-	/**
-	 * @class XmlElement
-	 * A class representing an XML element for import.
-	 */
-	class XmlElement 
-	{
-		/** The name of the element */
-		public $name;
-		
-		/** The attributes */
-		public $attributes;
-		
-		/** CData */
-		public $content;
-		
-		/** Child elements */
-		public $children;
-	};
-	
+	require_once dirname(dirname(__FILE__)).'/classes/XmlElement.php';
+
 	/**
 	 * This function serialises an object recursively into an XML representation.
 	 * The function attempts to call $data->export() which expects a stdClass in return, otherwise it will attempt to

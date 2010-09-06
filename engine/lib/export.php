@@ -8,59 +8,10 @@
  * @link http://elgg.org/
  */
 
-/**
- * Define an interface for all ODD exportable objects.
- *
- * @package Elgg
- * @subpackage Core
- * @author Curverider Ltd
- */
-interface Exportable {
-	/**
-	 * This must take the contents of the object and convert it to exportable ODD
-	 * @return object or array of objects.
-	 */
-	public function export();
-
-	/**
-	 * Return a list of all fields that can be exported.
-	 * This should be used as the basis for the values returned by export()
-	 */
-	public function getExportableValues();
-}
-
-/**
- * Define an interface for all ODD importable objects.
- * @author Curverider Ltd
- */
-interface Importable {
-	/**
-	 * Accepts an array of data to import, this data is parsed from the XML produced by export.
-	 * The function should return the constructed object data, or NULL.
-	 *
-	 * @param ODD $data
-	 * @return bool
-	 * @throws ImportException if there was a critical error importing data.
-	 */
-	public function import(ODD $data);
-}
-
-/**
- * Export exception
- *
- * @package Elgg
- * @subpackage Exceptions
- *
- */
-class ExportException extends DataFormatException {}
-
-/**
- * Import exception
- *
- * @package Elgg
- * @subpackage Exceptions
- */
-class ImportException extends DataFormatException {}
+require_once dirname(dirname(__FILE__)).'/classes/Exportable.php';
+require_once dirname(dirname(__FILE__)).'/classes/Importable.php';
+require_once dirname(dirname(__FILE__)).'/classes/ExportException.php';
+require_once dirname(dirname(__FILE__)).'/classes/ImportException.php';
 
 /**
  * Get a UUID from a given object.

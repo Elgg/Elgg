@@ -8,8 +8,7 @@
  * @link http://elgg.org/
  */
 
-/** The cron exception. */
-class CronException extends Exception {}
+require_once dirname(dirname(__FILE__)).'/classes/CronException.php';
 
 /**
  * Initialisation
