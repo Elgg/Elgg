@@ -1,11 +1,30 @@
 <?php
 /**
- * Elgg CSS file
+ * Outputs a JS view.
+ *
+ * There are 2 main JS views used in elgg:
+ * 	js/initialise_elgg
+ * 	js/friendsPickerv1
+ *
+ * The location of the files used to generate these view can change based upon
+ * current viewtype and plugins enabled.  By default the viewtype is
+ * 'default' (HTML) and the view files are in views/default/js/.  Plugins can
+ * override or extend these views.
+ *
+ * These 2 main JS views are cached via simplecache.
+ *
+ * @see views/js/initialise_elgg.php
+ * @see views/js/friendsPickerv1.php
+ * @see simplecache/view.php
+ * @see elgg_extend_view()
+ *
+ * @uses $_GET['viewtype'] The current viewtype.  Determins where to look for the
+ * JS view files.
+ * @uses $_GET['view'] The view to output, relative to the view js/
+ * @uses $override A global that tells simplecache to ignore caching.
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 global $viewinput, $override;
