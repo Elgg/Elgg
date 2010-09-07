@@ -13,10 +13,10 @@
  * This view is cached via simplecache.
  *
  * @see views/default/css.php
- * @see simgplecache/view.php
+ * @see simplecache/view.php
  * @see elgg_extend_view()
  *
- * @uses $_GET['viewtype'] The current viewtype.  Determins where to look for the
+ * @uses $_GET['viewtype'] The current viewtype.  Determines where to look for the
  * css.php view.
  * @uses $override A global that tells simplecache to ignore caching.
  *

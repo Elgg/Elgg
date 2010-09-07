@@ -18,7 +18,7 @@
  * @see simplecache/view.php
  * @see elgg_extend_view()
  *
- * @uses $_GET['viewtype'] The current viewtype.  Determins where to look for the
+ * @uses $_GET['viewtype'] The current viewtype.  Determines where to look for the
  * JS view files.
  * @uses $_GET['view'] The view to output, relative to the view js/
  * @uses $override A global that tells simplecache to ignore caching.
