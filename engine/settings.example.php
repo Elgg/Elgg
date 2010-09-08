@@ -1,11 +1,17 @@
 <?php
 /**
- * Elgg settings
+ * Defines database creditials.
  *
- * Elgg manages most of its configuration from the admin panel. However, we need you to
- * include your database settings below.
+ * Most of Elgg's configuration is stored in the database.  This file contains the
+ * credentials to connect to the database, as well as a few optional configuration
+ * values.
+ *
+ * The Elgg installation attempts to populate this file with the correct settings
+ * and then rename it to settings.php.
  *
  * @todo Turn this into something we handle more automatically.
+ * @package Elgg
+ * @subpackage Core
  */
 
 global $CONFIG;
@@ -23,29 +29,54 @@ if (!isset($CONFIG)) {
  * to explain, but if you know you need it, skip past this section.
  */
 
-// Database username
+/**
+ * The database username
+ *
+ * @global string $CONFIG->dbuser
+ */
 $CONFIG->dbuser = '{{CONFIG_DBUSER}}';
 
-// Database password
+/**
+ * The database password
+ *
+ * @global string $CONFIG->dbpass
+ */
 $CONFIG->dbpass = '{{CONFIG_DBPASS}}';
 
-// Database name
+/**
+ * The database name
+ *
+ * @global string $CONFIG->dbname
+ */
 $CONFIG->dbname = '{{CONFIG_DBNAME}}';
 
-// Database server
-// (For most configurations, you can leave this as 'localhost')
+/**
+ * The database host.
+ *
+ * For most installations, this is 'localhost'
+ *
+ * @global string $CONFIG->dbhost
+ */
 $CONFIG->dbhost = '{{CONFIG_DBHOST}}';
 
-// Database table prefix
-// If you're sharing a database with other applications, you will want to use this
-// to differentiate Elgg's tables.
+/**
+ * The database prefix
+ *
+ * This prefix will be appended to all Elgg tables.  If you're sharing
+ * a database with other applications, use a database prefix to namespace tables
+ * in order to avoid table name collisions.
+ *
+ * @global string $CONFIG->dbprefix
+ */
 $CONFIG->dbprefix = '{{CONFIG_DBPREFIX}}';
 
-/*
+/**
  * Multiple database connections
  *
  * Here you can set up multiple connections for reads and writes. To do this, uncomment out
  * the lines below.
+ *
+ * @todo Does this work?
  */
 
 /*
@@ -112,15 +143,12 @@ $CONFIG->db['write']->dbhost = "localhost";
 //);
 
 /**
- * Some work-around flags.
+ * Use non-standard headers for broken MTAs.
+ *
+ * The default header EOL for headers is \r\n.  This causes problems
+ * on some broken MTAs.  Setting this to TRUE will cause Elgg to use
+ * \n, which will fix some problems sending email on broken MTAs.
+ *
+ * @global bool $CONFIG->broken_mta
  */
-
-// Try uncommenting the below if your notification emails are not being sent
-// $CONFIG->broken_mta = true;
-
-/**
- * Url - I am not sure if this will be here ?
- **/
-
-// URL
-$CONFIG->url = "";
+$CONFIG->broken_mta = FALSE;
