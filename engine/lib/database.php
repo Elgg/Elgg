@@ -1,31 +1,82 @@
 <?php
 /**
- * Elgg database
- * Contains database connection and transfer functionality
+ * Elgg database procedural code.
+ *
+ * Includes functions for establishing and retrieving a database link,
+ * reading data, writing data, upgrading DB schemas, and sanitizing input.
  *
  * @package Elgg
  * @subpackage Core
-
- * @author Curverider Ltd
-
- * @link http://elgg.org/
  */
 
+/**
+ * Query cache for all queries.
+ *
+ * Each query and its results are stored in this array as:
+ * <code>
+ * $DB_QUERY_CACHE[$query] => array(result1, result2, ... resultN)
+ * </code>
+ *
+ * @global array $DB_QUERY_CACHE
+ */
 $DB_QUERY_CACHE = array();
+
+/**
+ * Queries to be executed upon shutdown.
+ *
+ * These queries are saved to an array and executed using
+ * a function registered by register_shutdown_function().
+ *
+ * Queries are saved as an array in the format:
+ * <code>
+ * $DB_DELAYED_QUERIES[] = array(
+ * 	'q' => str $query,
+ * 	'l' => resource $dblink,
+ * 	'h' => str $handler // a callback function
+ * );
+ * </code>
+ *
+ * @see db_delayedexecution_shutdown_hook()
+ * @see execute_delayed_query()
+ * @see init_db()
+ * @see register_shutdown_function()
+ * @global array $DB_DELAYED_QUERIES
+ */
 $DB_DELAYED_QUERIES = array();
 
 /**
+ * Database connection resources.
+ *
+ * Each database link created with establish_db_link($name) is stored in
+ * $dblink as $dblink[$name] => resource.  Use get_db_link($name) to retrieve it.
+ *
+ * @global array $dblink
+ */
+$dblink = array();
+
+/**
+ * Database call count
+ *
+ * Each call to the database increments this counter.
+ *
+ * @global integer $dbcalls
+ */
+$dbcalls = 0;
+
+/**
+ * Establish a connection to the database servser
+ *
  * Connect to the database server and use the Elgg database for a particular database link
  *
- * @param string $dblinkname Default "readwrite"; you can change this to set up additional global database links, eg "read" and "write"
+ * @param string $dblinkname The type of database connection. Used to identify the resource. eg "read", "write", or "readwrite".
+ * @uses $CONFIG
+ * @uses $dblink
+ * @uses $DB_QUERY_CACHE
+ * @uses $dbcalls;
  */
 function establish_db_link($dblinkname = "readwrite") {
 	// Get configuration, and globalise database link
 	global $CONFIG, $dblink, $DB_QUERY_CACHE, $dbcalls;
-
-	if (!isset($dblink)) {
-		$dblink = array();
-	}
 
 	if ($dblinkname != "readwrite" && isset($CONFIG->db[$dblinkname])) {
 		if (is_array($CONFIG->db[$dblinkname])) {
@@ -53,6 +104,7 @@ function establish_db_link($dblinkname = "readwrite") {
 				$CONFIG->dbuser, $CONFIG->dbhost, "****");
 		throw new DatabaseException($msg);
 	}
+
 	if (!mysql_select_db($CONFIG->dbname, $dblink[$dblinkname])) {
 		$msg = sprintf(elgg_echo('DatabaseException:NoConnect'), $CONFIG->dbname);
 		throw new DatabaseException($msg);
@@ -68,20 +120,21 @@ function establish_db_link($dblinkname = "readwrite") {
 
 	// Set up cache if global not initialized and query cache not turned off
 	if ((!$DB_QUERY_CACHE) && (!$db_cache_off)) {
-		$DB_QUERY_CACHE = new ElggStaticVariableCache('db_query_cache'); //array();
-		//$DB_QUERY_CACHE = select_default_memcache('db_query_cache'); //array();
+		$DB_QUERY_CACHE = new ElggStaticVariableCache('db_query_cache');
 	}
 }
 
 /**
- * Establish all database connections
+ * Establish database connections
  *
  * If the configuration has been set up for multiple read/write databases, set those
- * links up separately; otherwise just create the one database link
+ * links up separately; otherwise just create the one database link.
  *
+ * @uses $CONFIG
+ * @uses $dblink
+ * @uses establish_db_link
  */
 function setup_db_connections() {
-	// Get configuration and globalise database link
 	global $CONFIG, $dblink;
 
 	if (!empty($CONFIG->db->split)) {
@@ -93,7 +146,11 @@ function setup_db_connections() {
 }
 
 /**
- * Shutdown hook to display profiling information about db (debug mode)
+ * Display profiling information about db at NOTICE debug level upon shutdown.
+ *
+ * @uses $dbcalls
+ * @uses init_db()
+ * @uses register_shutdown_function()
  */
 function db_profiling_shutdown_hook() {
 	global $dbcalls;
@@ -103,7 +160,12 @@ function db_profiling_shutdown_hook() {
 }
 
 /**
- * Execute any delayed queries.
+ * Execute any delayed queries upon shutdown.
+ *
+ * @uses $DB_DELAYED_QUERIES
+ * @uses $CONFIG
+ * @uses init_db()
+ * @uses register_shutdown_function()
  */
 function db_delayedexecution_shutdown_hook() {
 	global $DB_DELAYED_QUERIES, $CONFIG;
@@ -116,31 +178,42 @@ function db_delayedexecution_shutdown_hook() {
 			if ((isset($query_details['h'])) && (is_callable($query_details['h']))) {
 				$query_details['h']($result);
 			}
-		} catch (Exception $e) { // Suppress all errors since these can't be delt with here
+		} catch (Exception $e) {
+			// Suppress all errors since these can't be dealt with here
 			elgg_log($e, 'WARNING');
 		}
 	}
 }
 
 /**
- * Alias to setup_db_connections, for use in the event handler
+ * Registers shutdown functions for database profiling and delayed queries.
+ *
+ * NB: Database connections are established upon first call to database.
  *
  * @param string $event The event type
  * @param string $object_type The object type
  * @param mixed $object Used for nothing in this context
+ * @elgg_event_handler boot system
  */
-function init_db($event, $object_type, $object = null) {
+function init_db() {
 	register_shutdown_function('db_delayedexecution_shutdown_hook');
 	register_shutdown_function('db_profiling_shutdown_hook');
-	// [Marcus Povey 20090213: Db connection moved to first db connection attempt]
+
 	return true;
 }
 
 /**
- * Gets the appropriate db link for the operation mode requested
+ * Returns (if required, also creates) a database link resource.
  *
- * @param string $dblinktype The type of link we want - "read", "write" or "readwrite" (the default)
+ * Database link resources are stored in the {@link $dblink} global.  These
+ * resources are created by {@link setup_db_connections()}, which is called if
+ * no links exist.
+ *
+ * @param string $dblinktype The type of link we want: "read", "write" or "readwrite".
  * @return object Database link
+ * @uses setup_db_connections()
+ * @uses get_db_link()
+ * @uses $dblink
  */
 function get_db_link($dblinktype) {
 	global $dblink;
@@ -149,30 +222,42 @@ function get_db_link($dblinktype) {
 		return $dblink[$dblinktype];
 	} else if (isset($dblink['readwrite'])) {
 		return $dblink['readwrite'];
-	}
-	else {
+	} else {
 		setup_db_connections();
 		return get_db_link($dblinktype);
 	}
 }
 
 /**
- * Explain a given query, useful for debug.
+ * Execute an EXPLAIN for $query.
+ *
+ * @param str $query The query to explain
+ * @param mixed $link The database link resource to user.
+ * @return mixed An object of the query's result, or FALSE
+ * @uses execute_query()
  */
 function explain_query($query, $link) {
 	if ($result = execute_query("explain " . $query, $link)) {
 		return mysql_fetch_object($result);
 	}
 
-	return false;
+	return FALSE;
 }
 
 /**
  * Execute a query.
  *
+ * {@link $dbcalls} is incremented and $query is executed via {@link mysql_query()}.
+ * The query is saved into the {@link $DB_QUERY_CACHE}.  If there is an SQL error,
+ * a {@link DatabaseException} is thrown.
+ *
  * @param string $query The query
  * @param link $dblink the DB link
- * @return Returns a the result of mysql_query
+ * @return The result of mysql_query()
+ * @uses $CONFIG
+ * @uses $dbcalls
+ * @uses $DB_QUERY_CACHE
+ * @throws DatabaseException
  */
 function execute_query($query, $dblink) {
 	global $CONFIG, $dbcalls, $DB_QUERY_CACHE;
@@ -192,14 +277,14 @@ function execute_query($query, $dblink) {
 }
 
 /**
- * Queue a query for execution after all output has been sent to the user.
+ * Queue a query for execution upon shutdown.
  *
  * You can specify a handler function if you care about the result. This function will accept
- * the raw result from mysql_query();
+ * the raw result from {@link mysql_query()}.
  *
  * @param string $query The query to execute
  * @param resource $dblink The database link to use
- * @param string $handler The handler
+ * @param string $handler A callback function to pass the results array to
  */
 function execute_delayed_query($query, $dblink, $handler = "") {
 	global $DB_DELAYED_QUERIES;
@@ -216,7 +301,7 @@ function execute_delayed_query($query, $dblink, $handler = "") {
 
 	$DB_DELAYED_QUERIES[] = $delayed_query;
 
-	return true;
+	return TRUE;
 }
 
 /**
@@ -224,6 +309,8 @@ function execute_delayed_query($query, $dblink, $handler = "") {
  *
  * @param string $query The query to execute
  * @param string $handler The handler if you care about the result.
+ * @uses execute_delayed_query()
+ * @uses get_db_link()
  */
 function execute_delayed_write_query($query, $handler = "") {
 	return execute_delayed_query($query, get_db_link('write'), $handler);
@@ -234,16 +321,31 @@ function execute_delayed_write_query($query, $handler = "") {
  *
  * @param string $query The query to execute
  * @param string $handler The handler if you care about the result.
+ * @uses execute_delayed_query()
+ * @uses get_db_link()
  */
 function execute_delayed_read_query($query, $handler = "") {
 	return execute_delayed_query($query, get_db_link('read'), $handler);
 }
 
 /**
- * Use this function to get data from the database
+ * Retrieve rows from the database.
+ *
+ * Queries are executed with {@link execute_query()} and results
+ * are retrieved with {@link mysql_fetch_object()}.  If a callback
+ * function $callback is defined, each row will be passed as the single
+ * argument to $callback.  If no callback function is defined, the
+ * entire result set is returned as an array.
+ *
+ * If no results are matched, FALSE is returned.
+ *
  * @param mixed $query The query being passed.
- * @param string $call Optionally, the name of a function to call back to on each row (which takes $row as a single parameter)
- * @return array An array of database result objects
+ * @param string $call Optionally, the name of a function to call back to on each row
+ * @return array|false An array of database result objects or callback function results or false
+ * @uses $CONFIG
+ * @uses $DB_QUERY_CACHE
+ * @uses get_db_link()
+ * @uses execute_query()
  */
 function get_data($query, $callback = "") {
 	global $CONFIG, $DB_QUERY_CACHE;
@@ -281,7 +383,7 @@ function get_data($query, $callback = "") {
 	if (empty($resultarray)) {
 		elgg_log("DB query \"$query\" returned no results.");
 		// @todo consider changing this to return empty array #1242
-		return false;
+		return FALSE;
 	}
 
 	// Cache result
@@ -294,11 +396,19 @@ function get_data($query, $callback = "") {
 }
 
 /**
- * Use this function to get a single data row from the database
- * @param mixed $query The query to run.
- * @return object A single database result object
+ * Retrieve a single row from the database.
+ *
+ * Similar to {@link get_data()} but returns only the first row
+ * matched.  If a callback function $callback is specified, the row will be passed
+ * as the only argument to $callback.
+ *
+ * @param mixed $query The query to execute.
+ * @return mixed A single database result object or the result of the callback function.
+ * @uses $CONFIG
+ * @uses $DB_QUERY_CACHE
+ * @uses execute_query()
+ * @uses get_db_link()
  */
-
 function get_data_row($query, $callback = "") {
 	global $CONFIG, $DB_QUERY_CACHE;
 
@@ -313,7 +423,7 @@ function get_data_row($query, $callback = "") {
 		if ($cached_query === -1) {
 			// Last time this query returned nothing, so return false
 			//@todo fix me this should return array().
-			return false;
+			return FALSE;
 		}
 
 		return $cached_query;
@@ -344,10 +454,17 @@ function get_data_row($query, $callback = "") {
 }
 
 /**
- * Use this function to insert database data; returns id or false
+ * Insert a row into the database.
  *
- * @param mixed $query The query to run.
- * @return int $id the database id of the inserted row.
+ * NB: Altering the DB invalidates all queries in {@link $DB_QUERY_CACHE}.
+ *
+ * @param mixed $query The query to execute.
+ * @return int|false The database id of the inserted row if a AUTO_INCREMENT field is defined, 0 if not, and false on failure.
+ * @uses $CONFIG
+ * @uses $DB_QUERY_CACHE
+ * @uses get_db_link()
+ * @uses execute_query()
+ * @uses mysql_insert_id()
  */
 function insert_data($query) {
 	global $CONFIG, $DB_QUERY_CACHE;
@@ -365,14 +482,20 @@ function insert_data($query) {
 		return mysql_insert_id($dblink);
 	}
 
-	return false;
+	return FALSE;
 }
 
 /**
- * Update database data
+ * Update a row in the database.
  *
- * @param mixed $query The query to run.
- * @return Bool on success
+ * NB: Altering the DB invalidates all queries in {@link $DB_QUERY_CACHE}.
+ *
+ * @param string $query The query to run.
+ * @return Bool
+ * @uses $CONFIG
+ * @uses $DB_QUERY_CACHE
+ * @uses get_db_link()
+ * @uses execute_db_query()
  */
 function update_data($query) {
 	global $CONFIG, $DB_QUERY_CACHE;
@@ -386,19 +509,23 @@ function update_data($query) {
 	}
 
 	if (execute_query("$query", $dblink)) {
-		// @todo why is this comment out?
-		//return mysql_affected_rows();
-		return true;
+		return TRUE;
 	}
 
-	return false;
+	return FALSE;
 }
 
 /**
- * Use this function to delete data
+ * Remove a row from the database.
  *
- * @param mixed $query The SQL query to run
- * @return int|false Either the number of affected rows, or false on failure
+ * NB: Altering the DB invalidates all queries in {@link $DB_QUERY_CACHE}.
+ *
+ * @param string $query The SQL query to run
+ * @return int|false The number of affected rows or false on failure
+ * @uses $CONFIG
+ * @uses $DB_QUERY_CACHE
+ * @uses execute_query()
+ * @uses mysql_affected_rows()
  */
 function delete_data($query) {
 	global $CONFIG, $DB_QUERY_CACHE;
@@ -415,14 +542,17 @@ function delete_data($query) {
 		return mysql_affected_rows($dblink);
 	}
 
-	return false;
+	return FALSE;
 }
 
 
 /**
- * Get the tables currently installed in the Elgg database
+ * Return tables matching the database prefix {@link $CONFIG->dbprefix}% in the currently
+ * selected database.
  *
- * @return array List of tables
+ * @return array|false List of tables or false on failure
+ * @uses $CONFIG
+ * @static array $tables Tables found matching the database prefix
  */
 function get_db_tables() {
 	global $CONFIG;
@@ -436,7 +566,7 @@ function get_db_tables() {
 		$result = get_data("show tables like '" . $CONFIG->dbprefix . "%'");
 	} catch (DatabaseException $d) {
 		// Likely we can't handle an exception here, so just return false.
-		return false;
+		return FALSE;
 	}
 
 	$tables = array();
@@ -450,15 +580,19 @@ function get_db_tables() {
 				}
 		}
 	} else {
-		return false;
+		return FALSE;
 	}
 
 	return $tables;
 }
 
 /**
- * Run an optimize query on a mysql tables. Useful for executing after major data changes.
+ * Optimise a table.
  *
+ * Executes an OPTIMIZE TABLE query on $table.  Useful after large DB changes.
+ *
+ * @param string $table The name of the table to optimise
+ * @uses update_data()
  */
 function optimize_table($table) {
 	$table = sanitise_string($table);
@@ -468,7 +602,7 @@ function optimize_table($table) {
 /**
  * Get the last database error for a particular database link
  *
- * @param database link $dblink
+ * @param resource $dblink
  * @return string Database error message
  */
 function get_db_error($dblink) {
@@ -476,10 +610,24 @@ function get_db_error($dblink) {
 }
 
 /**
- * Runs a full database script from disk
+ * Runs a full database script from disk.
  *
- * @uses $CONFIG
+ * The file specified should be a standard SQL file as created by
+ * mysqldump or similar.  Statements must be terminated with ;
+ * and a newline character (\n or \r\n) with only one statement per line.
+ *
+ * The special string 'prefix_' is replaced with the database prefix
+ * as defined in {@link $CONFIG->dbprefix}.
+ *
+ * NB: Errors do not halt execution of the script.  If a line
+ * generates an error, the error message is saved and the
+ * next line is executed.  After the file is run, any errors
+ * are displayed as a {@link DatabaseException}
+ *
  * @param string $scriptlocation The full path to the script
+ * @throws DatabaseException
+ * @uses $CONFIG
+ * @uses update_data()
  */
 function run_sql_script($scriptlocation) {
 	if ($script = file_get_contents($scriptlocation)) {
@@ -487,8 +635,12 @@ function run_sql_script($scriptlocation) {
 
 		$errors = array();
 
+		// Remove MySQL -- style comments
 		$script = preg_replace('/\-\-.*\n/', '', $script);
+
+		// Statements must end with ; and a newline
 		$sql_statements =  preg_split('/;[\n\r]+/', $script);
+
 		foreach($sql_statements as $statement) {
 			$statement = trim($statement);
 			$statement = str_replace("prefix_",$CONFIG->dbprefix,$statement);
@@ -502,8 +654,9 @@ function run_sql_script($scriptlocation) {
 		}
 		if (!empty($errors)) {
 			$errortxt = "";
-			foreach($errors as $error)
+			foreach($errors as $error) {
 				$errortxt .= " {$error};";
+			}
 			throw new DatabaseException(elgg_echo('DatabaseException:DBSetupIssues') . $errortxt);
 		}
 	} else {
@@ -514,14 +667,22 @@ function run_sql_script($scriptlocation) {
 /**
  * Upgrade the database schema in an ordered sequence.
  *
- * Makes use of schema upgrade files
+ * Executes all upgrade files in elgg/engine/schema/upgrades/ in sequential order.
+ * Upgrade files must be in the standard Elgg release format of YYYYMMDDII.sql
+ * where II is an incrementor starting from 01.
  *
- * This is a about as core as it comes, so don't start running this from your plugins!
+ * Files that are < $version will be ignored.
  *
- * @param int $version The version you are upgrading from (usually given in the Elgg version format of YYYYMMDDXX - see version.php for example)
+ * NB: Plugin authors should not call this function directly.
+ *
+ * @param int $version The version you are upgrading from in the format YYYYMMDDII.
  * @param string $fromdir Optional directory to load upgrades from (default: engine/schema/upgrades/)
- * @param bool $quiet If true, will suppress all error messages.  Don't use this.
+ * @param bool $quiet If true, will suppress all error messages.  Should be used only for the upgrade from version <=1.6.
  * @return bool
+ * @uses $CONFIG
+ * @uses run_sql_script()
+ * @see upgrade.php
+ * @see version.php
  */
 function db_upgrade($version, $fromdir = "", $quiet = FALSE) {
 	global $CONFIG;
@@ -574,27 +735,31 @@ function db_upgrade($version, $fromdir = "", $quiet = FALSE) {
 }
 
 /**
- * This function, called by validate_platform(), will check whether the installed version of
- * MySQL meets the minimum required.
+ * Check if MySQL is at least version 5.
  *
  * @todo If multiple dbs are supported check which db is supported and use the appropriate code to validate
  * the appropriate version.
- *
  * @return bool
+ * @see mysql_get_server_info()
  */
 function db_check_version() {
 	$version = mysql_get_server_info();
 	$points = explode('.', $version);
 
 	if ($points[0] < 5) {
-		return false;
+		return FALSE;
 	}
 
-	return true;
+	return TRUE;
 }
 
 /**
  * Sanitise a string for database use, but with the option of escaping extra characters.
+ *
+ * @param string $string The string to sanitise
+ * @param string $extra_escapeable Extra characters to escape with '\\'
+ * @return string The escaped string
+ * @uses sanitise_string()
  */
 function sanitise_string_special($string, $extra_escapeable = '') {
 	$string = sanitise_string($string);
@@ -607,7 +772,7 @@ function sanitise_string_special($string, $extra_escapeable = '') {
 }
 
 /**
- * Sanitise a string for database use
+ * Sanitise a string for database use.
  *
  * @param string $string The string to sanitise
  * @return string Sanitised string
@@ -623,14 +788,14 @@ function sanitise_string($string) {
  *
  * @param string $string The string to sanitise
  * @return string Sanitised string
- * @uses sanitise_string
+ * @uses sanitise_string()
  */
 function sanitize_string($string) {
 	return sanitise_string($string);
 }
 
 /**
- * Sanitises an integer for database use
+ * Sanitises an integer for database use.
  *
  * @param int $int
  * @return int Sanitised integer
@@ -644,12 +809,13 @@ function sanitise_int($int) {
  *
  * @param int $int
  * @return int Sanitised integer
- * @uses sanitise_string
+ * @uses sanitise_int()
  */
 function sanitize_int($int) {
 	return (int) $int;
 }
 
-// Stuff for initialisation
-
-register_elgg_event_handler('boot','system','init_db',0);
+/**
+ * @elgg_register_event boot system init_db
+ */
+register_elgg_event_handler('boot', 'system', 'init_db', 0);
