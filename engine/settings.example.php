@@ -124,6 +124,9 @@ $CONFIG->db['write']->dbhost = "localhost";
  * at 0, the next one must be at 1, etc.
  */
 
+/*
+ * Optional configuration
+ */
 
 /**
  * Memcache setup (optional)
@@ -152,3 +155,14 @@ $CONFIG->db['write']->dbhost = "localhost";
  * @global bool $CONFIG->broken_mta
  */
 $CONFIG->broken_mta = FALSE;
+
+/**
+ * Disable the database query cache
+ *
+ * Elgg stores each query and its results in a query cache.
+ * On large sites or long-running scripts, this cache can grow to be
+ * large.  To disable query caching, set this to FALSE.
+ *
+ * @global bool $CONFIG->db_disable_query_cache
+ */
+$CONFIG->db_disable_query_cache = FALSE;
