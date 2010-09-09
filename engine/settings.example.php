@@ -10,8 +10,8 @@
  * and then rename it to settings.php.
  *
  * @todo Turn this into something we handle more automatically.
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage Configuration
  */
 
 global $CONFIG;
@@ -33,6 +33,7 @@ if (!isset($CONFIG)) {
  * The database username
  *
  * @global string $CONFIG->dbuser
+ * @name $CONFIG->dbuser
  */
 $CONFIG->dbuser = '{{CONFIG_DBUSER}}';
 
