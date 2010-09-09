@@ -179,6 +179,9 @@ $english = array(
 
 	'SecurityException:deletedisablecurrentsite' => 'You can not delete or disable the site you are currently viewing!',
 
+	'RegistrationException:EmptyPassword' => 'The password fields cannot be empty',
+	'RegistrationException:PasswordMismatch' => 'Passwords must match',
+
 	'memcache:notinstalled' => 'PHP memcache module not installed, you must install php5-memcache',
 	'memcache:noservers' => 'No memcache servers defined, please populate the $CONFIG->memcache_servers variable',
 	'memcache:versiontoolow' => 'Memcache needs at least version %s to run, you are running %s',
