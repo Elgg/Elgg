@@ -1,20 +1,34 @@
 <?php
 /**
- * Elgg configuration library
- * Contains functions for managing system configuration
+ * Elgg configuration procedural code.
  *
- * @package Elgg
- * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
+ * Includes functions for manipulating the configuration values stored in the database
+ * Plugin authors should use the {@link get_config()}, {@link set_config()},
+ * and {@unset_config()} functions to access or update config values.
+ *
+ * Elgg's configuration is split among 2 tables and 1 file:
+ * - dbprefix_config
+ * - dbprefix_datalists
+ * - engine/settings.php (See {@link settings.example.php})
+ *
+ * Upon system boot, all values in dbprefix_config are read into $CONFIG.
+ *
+ * @package Elgg.Core
+ * @subpackage Configuration
  */
 
 /**
- * Unset a config option.
+ * Removes a config setting.
+ *
+ * @internal
+ * These settings are stored in the dbprefix_config table and read during system
+ * boot into $CONFIG.
  *
  * @param string $name The name of the field.
  * @param int $site_guid Optionally, the GUID of the site (current site is assumed by default).
- * @return mixed
+ * @return int|false The number of affected rows or false on error.
+ * @see get_config()
+ * @see set_config()
  */
 function unset_config($name, $site_guid = 0) {
 	global $CONFIG;
@@ -29,13 +43,22 @@ function unset_config($name, $site_guid = 0) {
 }
 
 /**
- * Sets a configuration value
+ * Add or update a config setting.
+ *
+ * If the config name already exists, it will be updated to the new value.
+ *
+ * @internal
+ * These settings are stored in the dbprefix_config table and read during system
+ * boot into $CONFIG.
  *
  * @param string $name The name of the configuration value
  * @param string $value Its value
  * @param int $site_guid Optionally, the GUID of the site (current site is assumed by default)
  * @return 0
  * @todo The config table doens't have numeric primary keys so insert_data returns 0.
+ * @todo Use "INSERT ... ON DUPLICATE KEY UPDATE" instead of trying to delete then add.
+ * @see unset_config()
+ * @see get_config()
  */
 function set_config($name, $value, $site_guid = 0) {
 	global $CONFIG;
@@ -56,9 +79,15 @@ function set_config($name, $value, $site_guid = 0) {
 /**
  * Gets a configuration value
  *
+ * @internal
+ * These settings are stored in the dbprefix_config table and read during system
+ * boot into $CONFIG.
+ *
  * @param string $name The name of the config value
  * @param int $site_guid Optionally, the GUID of the site (current site is assumed by default)
- * @return mixed|false Depending on success
+ * @return mixed|false
+ * @see set_config()
+ * @see unset_config()
  */
 function get_config($name, $site_guid = 0) {
 	global $CONFIG;
@@ -83,9 +112,10 @@ function get_config($name, $site_guid = 0) {
 }
 
 /**
- * Gets all the configuration details in the config database for a given site.
+ * Loads all configuration values from the dbprefix_config table into $CONFIG.
  *
  * @param int $site_guid Optionally, the GUID of the site (current site is assumed by default)
+ * @return bool
  */
 function get_all_config($site_guid = 0) {
 	global $CONFIG;
@@ -109,10 +139,8 @@ function get_all_config($site_guid = 0) {
 }
 
 /**
- * If certain configuration elements don't exist, autodetect sensible defaults
- *
- * @uses $CONFIG The main configuration global
- *
+ * Sets defaults for or attempts to autodetect some common config values and
+ * loads them into $CONFIG.
  */
 function set_default_config() {
 	global $CONFIG;
@@ -163,8 +191,14 @@ function set_default_config() {
 }
 
 /**
- * Function that provides some config initialisation on system init
+ * Loads values into $CONFIG.
  *
+ * If Elgg is installed, this function pulls all rows from dbprefix_config
+ * and cherry picks some values from dbprefix_datalists.  This also extracts
+ * some commonly used values from the default site object.
+ *
+ * @elgg_event boot system
+ * @return true|null
  */
 function configuration_init() {
 	global $CONFIG;
@@ -204,9 +238,5 @@ function configuration_init() {
 		return true;
 	}
 }
-
-/**
- * Register config_init
- */
 
 register_elgg_event_handler('boot', 'system', 'configuration_init', 10);
