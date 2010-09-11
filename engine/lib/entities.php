@@ -1701,6 +1701,11 @@ function entity_row_to_elggstar($row) {
 function get_entity($guid) {
 	static $newentity_cache;
 	$new_entity = false;
+
+	if (!is_numeric($guid)) {
+		return FALSE;
+	}
+
 	if ((!$newentity_cache) && (is_memcache_available())) {
 		$newentity_cache = new ElggMemcache('new_entity_cache');
 	}
