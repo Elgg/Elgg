@@ -414,8 +414,9 @@ function authenticate_method($method) {
 		throw new APIException(sprintf(elgg_echo('APIException:MethodCallNotImplemented'), $method));
 	}
 
-	// make sure that POST variables are available if relevant
-	if (get_call_method() === 'POST') {
+	// make sure that POST variables are available if needed
+	// @todo this may not be needed anymore due to adding %{QUERY_STRING} in .htaccess in 1.7.2
+	if (get_call_method() === 'POST' && empty($_POST)) {
 		include_post_data();
 	}
 
@@ -540,19 +541,11 @@ function get_parameters_for_method($method) {
 /**
  * Get POST data
  * Since this is called through a handler, we need to manually get the post data
- * @return POST data from PHP
+ * @return POST data as string encoded as multipart/form-data
  */
 function get_post_data() {
-	global $GLOBALS;
 
-	$postdata = '';
-	if (isset($GLOBALS['HTTP_RAW_POST_DATA']))
-		$postdata = $GLOBALS['HTTP_RAW_POST_DATA'];
-
-	// Attempt another method to return post data (incase always_populate_raw_post_data is switched off)
-	if (!$postdata) {
-		$postdata = file_get_contents('php://input');
-	}
+	$postdata = file_get_contents('php://input');
 
 	return $postdata;
 }
@@ -567,11 +560,21 @@ function include_post_data() {
 
 	if (isset($postdata)) {
 		$query_arr = elgg_parse_str($postdata);
+
+		// grrrr... magic quotes is turned on so we need to strip slashes
+		if (ini_get_bool('magic_quotes_gpc')) {
+			if (function_exists('stripslashes_deep')) {
+				// defined in input.php to handle magic quotes
+				$query_arr = stripslashes_deep($query_arr);
+			}
+		}
+
 		if (is_array($query_arr)) {
-			foreach($query_arr as $name => $val) {
+			foreach ($query_arr as $name => $val) {
 				set_input($name, $val);
 			}
 		}
+
 	}
 }
 
