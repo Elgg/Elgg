@@ -36,10 +36,6 @@ $DB_QUERY_CACHE = array();
  * );
  * </code>
  *
- * @see db_delayedexecution_shutdown_hook()
- * @see execute_delayed_query()
- * @see init_db()
- * @see register_shutdown_function()
  * @global array $DB_DELAYED_QUERIES
  */
 $DB_DELAYED_QUERIES = array();
@@ -69,10 +65,6 @@ $dbcalls = 0;
  * Connect to the database server and use the Elgg database for a particular database link
  *
  * @param string $dblinkname The type of database connection. Used to identify the resource. eg "read", "write", or "readwrite".
- * @uses $CONFIG
- * @uses $dblink
- * @uses $DB_QUERY_CACHE
- * @uses $dbcalls;
  */
 function establish_db_link($dblinkname = "readwrite") {
 	// Get configuration, and globalise database link
@@ -129,10 +121,6 @@ function establish_db_link($dblinkname = "readwrite") {
  *
  * If the configuration has been set up for multiple read/write databases, set those
  * links up separately; otherwise just create the one database link.
- *
- * @uses $CONFIG
- * @uses $dblink
- * @uses establish_db_link
  */
 function setup_db_connections() {
 	global $CONFIG, $dblink;
@@ -147,10 +135,6 @@ function setup_db_connections() {
 
 /**
  * Display profiling information about db at NOTICE debug level upon shutdown.
- *
- * @uses $dbcalls
- * @uses init_db()
- * @uses register_shutdown_function()
  */
 function db_profiling_shutdown_hook() {
 	global $dbcalls;
@@ -161,11 +145,6 @@ function db_profiling_shutdown_hook() {
 
 /**
  * Execute any delayed queries upon shutdown.
- *
- * @uses $DB_DELAYED_QUERIES
- * @uses $CONFIG
- * @uses init_db()
- * @uses register_shutdown_function()
  */
 function db_delayedexecution_shutdown_hook() {
 	global $DB_DELAYED_QUERIES, $CONFIG;
@@ -188,7 +167,7 @@ function db_delayedexecution_shutdown_hook() {
 /**
  * Registers shutdown functions for database profiling and delayed queries.
  *
- * NOTE: Database connections are established upon first call to database.
+ * @note Database connections are established upon first call to database.
  *
  * @param string $event The event type
  * @param string $object_type The object type
@@ -211,9 +190,6 @@ function init_db() {
  *
  * @param string $dblinktype The type of link we want: "read", "write" or "readwrite".
  * @return object Database link
- * @uses setup_db_connections()
- * @uses get_db_link()
- * @uses $dblink
  */
 function get_db_link($dblinktype) {
 	global $dblink;
@@ -234,7 +210,6 @@ function get_db_link($dblinktype) {
  * @param str $query The query to explain
  * @param mixed $link The database link resource to user.
  * @return mixed An object of the query's result, or FALSE
- * @uses execute_query()
  */
 function explain_query($query, $link) {
 	if ($result = execute_query("explain " . $query, $link)) {
@@ -256,9 +231,6 @@ function explain_query($query, $link) {
  * @param string $query The query
  * @param link $dblink the DB link
  * @return The result of mysql_query()
- * @uses $CONFIG
- * @uses $dbcalls
- * @uses $DB_QUERY_CACHE
  * @throws DatabaseException
  */
 function execute_query($query, $dblink) {
@@ -344,10 +316,6 @@ function execute_delayed_read_query($query, $handler = "") {
  * @param mixed $query The query being passed.
  * @param string $call Optionally, the name of a function to call back to on each row
  * @return array|false An array of database result objects or callback function results or false
- * @uses $CONFIG
- * @uses $DB_QUERY_CACHE
- * @uses get_db_link()
- * @uses execute_query()
  */
 function get_data($query, $callback = "") {
 	global $CONFIG, $DB_QUERY_CACHE;
@@ -406,10 +374,6 @@ function get_data($query, $callback = "") {
  *
  * @param mixed $query The query to execute.
  * @return mixed A single database result object or the result of the callback function.
- * @uses $CONFIG
- * @uses $DB_QUERY_CACHE
- * @uses execute_query()
- * @uses get_db_link()
  */
 function get_data_row($query, $callback = "") {
 	global $CONFIG, $DB_QUERY_CACHE;
@@ -458,15 +422,10 @@ function get_data_row($query, $callback = "") {
 /**
  * Insert a row into the database.
  *
- * NOTE: Altering the DB invalidates all queries in {@link $DB_QUERY_CACHE}.
+ * @note Altering the DB invalidates all queries in {@link $DB_QUERY_CACHE}.
  *
  * @param mixed $query The query to execute.
  * @return int|false The database id of the inserted row if a AUTO_INCREMENT field is defined, 0 if not, and false on failure.
- * @uses $CONFIG
- * @uses $DB_QUERY_CACHE
- * @uses get_db_link()
- * @uses execute_query()
- * @uses mysql_insert_id()
  */
 function insert_data($query) {
 	global $CONFIG, $DB_QUERY_CACHE;
@@ -490,14 +449,10 @@ function insert_data($query) {
 /**
  * Update a row in the database.
  *
- * NOTE: Altering the DB invalidates all queries in {@link $DB_QUERY_CACHE}.
+ * @note Altering the DB invalidates all queries in {@link $DB_QUERY_CACHE}.
  *
  * @param string $query The query to run.
  * @return Bool
- * @uses $CONFIG
- * @uses $DB_QUERY_CACHE
- * @uses get_db_link()
- * @uses execute_db_query()
  */
 function update_data($query) {
 	global $CONFIG, $DB_QUERY_CACHE;
@@ -520,7 +475,7 @@ function update_data($query) {
 /**
  * Remove a row from the database.
  *
- * NOTE: Altering the DB invalidates all queries in {@link $DB_QUERY_CACHE}.
+ * @note Altering the DB invalidates all queries in {@link $DB_QUERY_CACHE}.
  *
  * @param string $query The SQL query to run
  * @return int|false The number of affected rows or false on failure
@@ -549,7 +504,6 @@ function delete_data($query) {
  * selected database.
  *
  * @return array|false List of tables or false on failure
- * @uses $CONFIG
  * @static array $tables Tables found matching the database prefix
  */
 function get_db_tables() {
@@ -590,7 +544,6 @@ function get_db_tables() {
  * Executes an OPTIMIZE TABLE query on $table.  Useful after large DB changes.
  *
  * @param string $table The name of the table to optimise
- * @uses update_data()
  */
 function optimize_table($table) {
 	$table = sanitise_string($table);
@@ -617,15 +570,13 @@ function get_db_error($dblink) {
  * The special string 'prefix_' is replaced with the database prefix
  * as defined in {@link $CONFIG->dbprefix}.
  *
- * WARNING: Errors do not halt execution of the script.  If a line
+ * @warning Errors do not halt execution of the script.  If a line
  * generates an error, the error message is saved and the
  * next line is executed.  After the file is run, any errors
  * are displayed as a {@link DatabaseException}
  *
  * @param string $scriptlocation The full path to the script
  * @throws DatabaseException
- * @uses $CONFIG
- * @uses update_data()
  */
 function run_sql_script($scriptlocation) {
 	if ($script = file_get_contents($scriptlocation)) {
@@ -671,14 +622,12 @@ function run_sql_script($scriptlocation) {
  *
  * Files that are < $version will be ignored.
  *
- * WARNING: Plugin authors should not call this function directly.
+ * @warning Plugin authors should not call this function directly.
  *
  * @param int $version The version you are upgrading from in the format YYYYMMDDII.
  * @param string $fromdir Optional directory to load upgrades from (default: engine/schema/upgrades/)
  * @param bool $quiet If true, will suppress all error messages.  Should be used only for the upgrade from version <=1.6.
  * @return bool
- * @uses $CONFIG
- * @uses run_sql_script()
  * @see upgrade.php
  * @see version.php
  */
@@ -738,7 +687,6 @@ function db_upgrade($version, $fromdir = "", $quiet = FALSE) {
  * @todo If multiple dbs are supported check which db is supported and use the appropriate code to validate
  * the appropriate version.
  * @return bool
- * @see mysql_get_server_info()
  */
 function db_check_version() {
 	$version = mysql_get_server_info();
@@ -757,7 +705,6 @@ function db_check_version() {
  * @param string $string The string to sanitise
  * @param string $extra_escapeable Extra characters to escape with '\\'
  * @return string The escaped string
- * @uses sanitise_string()
  */
 function sanitise_string_special($string, $extra_escapeable = '') {
 	$string = sanitise_string($string);
@@ -786,7 +733,6 @@ function sanitise_string($string) {
  *
  * @param string $string The string to sanitise
  * @return string Sanitised string
- * @uses sanitise_string()
  */
 function sanitize_string($string) {
 	return sanitise_string($string);
@@ -807,7 +753,6 @@ function sanitise_int($int) {
  *
  * @param int $int
  * @return int Sanitised integer
- * @uses sanitise_int()
  */
 function sanitize_int($int) {
 	return (int) $int;
