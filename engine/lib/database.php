@@ -5,8 +5,8 @@
  * Includes functions for establishing and retrieving a database link,
  * reading data, writing data, upgrading DB schemas, and sanitizing input.
  *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage Database
  */
 
 /**
@@ -188,7 +188,7 @@ function db_delayedexecution_shutdown_hook() {
 /**
  * Registers shutdown functions for database profiling and delayed queries.
  *
- * NB: Database connections are established upon first call to database.
+ * NOTE: Database connections are established upon first call to database.
  *
  * @param string $event The event type
  * @param string $object_type The object type
@@ -247,9 +247,11 @@ function explain_query($query, $link) {
 /**
  * Execute a query.
  *
- * {@link $dbcalls} is incremented and $query is executed via {@link mysql_query()}.
- * The query is saved into the {@link $DB_QUERY_CACHE}.  If there is an SQL error,
+ * $query is executed via {@link mysql_query()}.  If there is an SQL error,
  * a {@link DatabaseException} is thrown.
+ *
+ * @internal
+ * {@link $dbcalls} is incremented and the query is saved into the {@link $DB_QUERY_CACHE}.
  *
  * @param string $query The query
  * @param link $dblink the DB link
@@ -456,7 +458,7 @@ function get_data_row($query, $callback = "") {
 /**
  * Insert a row into the database.
  *
- * NB: Altering the DB invalidates all queries in {@link $DB_QUERY_CACHE}.
+ * NOTE: Altering the DB invalidates all queries in {@link $DB_QUERY_CACHE}.
  *
  * @param mixed $query The query to execute.
  * @return int|false The database id of the inserted row if a AUTO_INCREMENT field is defined, 0 if not, and false on failure.
@@ -488,7 +490,7 @@ function insert_data($query) {
 /**
  * Update a row in the database.
  *
- * NB: Altering the DB invalidates all queries in {@link $DB_QUERY_CACHE}.
+ * NOTE: Altering the DB invalidates all queries in {@link $DB_QUERY_CACHE}.
  *
  * @param string $query The query to run.
  * @return Bool
@@ -518,14 +520,10 @@ function update_data($query) {
 /**
  * Remove a row from the database.
  *
- * NB: Altering the DB invalidates all queries in {@link $DB_QUERY_CACHE}.
+ * NOTE: Altering the DB invalidates all queries in {@link $DB_QUERY_CACHE}.
  *
  * @param string $query The SQL query to run
  * @return int|false The number of affected rows or false on failure
- * @uses $CONFIG
- * @uses $DB_QUERY_CACHE
- * @uses execute_query()
- * @uses mysql_affected_rows()
  */
 function delete_data($query) {
 	global $CONFIG, $DB_QUERY_CACHE;
@@ -619,7 +617,7 @@ function get_db_error($dblink) {
  * The special string 'prefix_' is replaced with the database prefix
  * as defined in {@link $CONFIG->dbprefix}.
  *
- * NB: Errors do not halt execution of the script.  If a line
+ * WARNING: Errors do not halt execution of the script.  If a line
  * generates an error, the error message is saved and the
  * next line is executed.  After the file is run, any errors
  * are displayed as a {@link DatabaseException}
@@ -673,7 +671,7 @@ function run_sql_script($scriptlocation) {
  *
  * Files that are < $version will be ignored.
  *
- * NB: Plugin authors should not call this function directly.
+ * WARNING: Plugin authors should not call this function directly.
  *
  * @param int $version The version you are upgrading from in the format YYYYMMDDII.
  * @param string $fromdir Optional directory to load upgrades from (default: engine/schema/upgrades/)
