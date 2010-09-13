@@ -1,17 +1,21 @@
 <?php
 /**
- * Reorder plugin action.
+ * Changes the load order of a plugin.
  *
- * @package Elgg
- * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
+ * Plugin order affects priority for view, action, and page handler
+ * overriding as well as the order of view extensions.  Higher numbers
+ * are loaded after lower numbers, and so receive higher priority.
+ *
+ * NOTE: When viewing the admin page (advanced plugin admin in >= 1.8) plugins
+ * LOWER on the page have HIGHER priority and will override views, etc
+ * from plugins above them.
+ *
+ * @package Elgg.Core
+ * @subpackage Administration.Site
  */
 
-// block non-admin users
 admin_gatekeeper();
 
-// Get the plugin
 $mod = get_input('plugin');
 $mod = str_replace('.', '', $mod);
 $mod = str_replace('/', '', $mod);

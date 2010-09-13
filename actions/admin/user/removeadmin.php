@@ -1,19 +1,13 @@
 <?php
 /**
- * Make another user an admin.
+ * Revokes admin privileges from a user.
  *
- * @package Elgg
- * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
+ * @package Elgg.Core
+ * @subpackage Administration.User
  */
 
-global $CONFIG;
-
-// block non-admin users
 admin_gatekeeper();
 
-// Get the user
 $guid = get_input('guid');
 $user = get_entity($guid);
 

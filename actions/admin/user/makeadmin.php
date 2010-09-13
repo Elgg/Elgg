@@ -1,19 +1,18 @@
 <?php
 /**
- * Make another user an admin.
+ * Grants admin privileges to a user.
  *
- * @package Elgg
- * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
+ * In >=1.7.1, admin is flagged by setting the admin
+ * column in the users_entity table.
+ *
+ * In <1.7.1, admin is a piece of metadata on the user object.
+ *
+ * @package Elgg.Core
+ * @subpackage Administration.User
  */
 
-global $CONFIG;
-
-// block non-admin users
 admin_gatekeeper();
 
-// Get the user
 $guid = get_input('guid');
 $user = get_entity($guid);
 

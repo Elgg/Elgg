@@ -1,20 +1,19 @@
 <?php
 /**
- * Enable plugin action.
+ * Enables all installed plugins.
  *
- * @package Elgg
- * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
+ * All plugins in the mod/ directory are enabled and the views cache and simplecache
+ * are reset.
+ *
+ * @package Elgg.Core
+ * @subpackage Administration.Site
  */
 
-// block non-admin users
 admin_gatekeeper();
 
 $plugins = get_installed_plugins();
 
 foreach ($plugins as $p => $data) {
-	// Enable
 	if (enable_plugin($p)) {
 		elgg_delete_admin_notice('first_installation_plugin_reminder');
 		system_message(sprintf(elgg_echo('admin:plugins:enable:yes'), $p));
@@ -23,7 +22,7 @@ foreach ($plugins as $p => $data) {
 	}
 }
 
-// Regen view cache
+// need to reset caches for new view locations and cached view output.
 elgg_view_regenerate_simplecache();
 elgg_filepath_cache_reset();
 

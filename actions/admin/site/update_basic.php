@@ -1,14 +1,13 @@
 <?php
 /**
- * Elgg update site action
+ * Updates the basic settings for the primary site object.
  *
- * This is an update version of the sitesettings/install action
- * which is used by the admin panel to modify basic settings.
+ * Basic site settings are saved as metadata on the site object,
+ * with the exception of the default language, which is saved in
+ * the config table.
  *
- * @package Elgg
- * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
+ * @package Elgg.Core
+ * @subpackage Administration.Site
  */
 
 admin_gatekeeper();
@@ -25,7 +24,6 @@ if (datalist_get('default_site')) {
 	$site->save();
 
 	set_config('language', get_input('language'), $site->getGUID());
-
-	forward($_SERVER['HTTP_REFERER']);
-	exit;
 }
+
+forward($_SERVER['HTTP_REFERER']);

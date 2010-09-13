@@ -1,26 +1,29 @@
 <?php
 /**
- * Admin password reset.
+ * Reset a user's password.
  *
- * @package Elgg
- * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
+ * This is an admin action that generates a new salt and password
+ * for a user, then emails the password to the user's registered
+ * email address.
+ *
+ * NOTE: This is different to the "reset password" link users
+ * can use in that it does not first email the user asking if
+ * they want to have their password reset.
+ *
+ * @package Elgg.Core
+ * @subpackage Administration.User
  */
 
-global $CONFIG;
-
-// block non-admin users
 admin_gatekeeper();
 
-// Get the user
 $guid = get_input('guid');
 $obj = get_entity($guid);
 
 if (($obj instanceof ElggUser) && ($obj->canEdit())) {
 	$password = generate_random_cleartext_password();
 
-	$obj->salt = generate_random_cleartext_password(); // Reset the salt
+	// Always reset the salt before generating the user password.
+	$obj->salt = generate_random_cleartext_password();
 	$obj->password = generate_user_password($obj, $password);
 
 	if ($obj->save()) {
@@ -40,4 +43,3 @@ if (($obj instanceof ElggUser) && ($obj->canEdit())) {
 }
 
 forward($_SERVER['HTTP_REFERER']);
-exit;

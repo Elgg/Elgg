@@ -1,23 +1,20 @@
 <?php
 /**
- * Elgg ban user
+ * Bans a user.
  *
- * @package Elgg
- * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
+ * User entities are banned by setting the 'banned' column
+ * to 'yes' in the users_entity table.
+ *
+ * @package Elgg.Core
+ * @subpackage Administration.User
  */
 
-
-// block non-admin users
 admin_gatekeeper();
 
-// Get the user
 $guid = get_input('guid');
 $obj = get_entity($guid);
 
 if (($obj instanceof ElggUser) && ($obj->canEdit())) {
-	// Now actually disable it
 	if ($obj->ban('banned')) {
 		system_message(elgg_echo('admin:user:ban:yes'));
 	} else {
@@ -28,4 +25,3 @@ if (($obj instanceof ElggUser) && ($obj->canEdit())) {
 }
 
 forward('pg/admin/user/');
-exit;

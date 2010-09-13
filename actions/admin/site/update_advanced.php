@@ -1,14 +1,12 @@
 <?php
 /**
- * Elgg update site action
+ * Updates the advanced settings for the primary site object.
  *
- * This is an update version of the sitesettings/install action
- * which is used by the admin panel to modify basic settings.
+ * Options are saved among metadata on the site object, entries
+ * in the datalist table, and entries in the config table.
  *
- * @package Elgg
- * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
+ * @package Elgg.Core
+ * @subpackage Administration.Site
  */
 
 admin_gatekeeper();
@@ -49,14 +47,14 @@ if (datalist_get('default_site')) {
 	} else {
 		unset_config('debug', $site->getGUID());
 	}
-	
+
 	// allow new user registration?
 	if (get_input('allow_registration', FALSE)) {
 		set_config('allow_registration', TRUE, $site->getGUID());
 	} else {
 		set_config('allow_registration', FALSE, $site->getGUID());
 	}
-	
+
 	// setup walled garden
 	if (get_input('walled_garden', FALSE)) {
 		set_config('walled_garden', TRUE, $site->getGUID());

@@ -1,15 +1,16 @@
 <?php
 /**
- * Elgg delete user
+ * Delete a user.
  *
- * @package Elgg
- * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
+ * The user will be deleted recursively, meaning all entities
+ * owned or contained by the user will also be removed.
+ *
+ * @package Elgg.Core
+ * @subpackage Administration.User
  */
 
-
 // block non-admin users - require since this action is not registered
+// @todo why isn't this action registered?
 admin_gatekeeper();
 
 // Get the user
