@@ -8,16 +8,14 @@
  * If the user is logged in, this page will forward to the network
  * front page.
  *
- * @see views/default/account/forms/register.php
- *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage Registration
  */
 
 /**
  * Start the Elgg engine
  *
- * WHY???? In the case this file is called thru a page handler: $CONFIG
+ * Why? In the case this file is called thru a page handler: $CONFIG
  * is not within the global scope (the page handler function does not include it).
  * BUT, there _might_ exist direct calls to this file, requiring the engine
  * to be started. Logic for both cases follow.

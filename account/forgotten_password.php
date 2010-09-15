@@ -2,10 +2,8 @@
 /**
  * Assembles and outputs the forgotten password page.
  *
- * @see views/default/account/forums/forgotten_password.php
- *
- * @package Elgg
- * @subpackage Core
+ * @package Elgg.Core
+ * @subpackage Registration
  */
 
 require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
