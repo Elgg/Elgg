@@ -9,7 +9,6 @@
  */
 
 $featured_urls = get_input('featured_urls', array());
-$hide_toolbar_entries = get_input('menu_items_hide_toolbar_entries', 'yes');
 $custom_item_names = get_input('custom_item_names', array());
 $custom_item_urls = get_input('custom_item_urls', array());
 
@@ -46,7 +45,6 @@ for ($i=0; $i<$custom_count; $i++) {
 
 // set_config() always returns 0 so can't check for failures
 set_config('menu_items_featured_urls', $featured_url_info);
-set_config('menu_items_hide_toolbar_entries', $hide_toolbar_entries);
 set_config('menu_items_custom_items', $custom_items);
 
 system_message(elgg_echo('admin:menu_items:saved'));
