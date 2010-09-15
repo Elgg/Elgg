@@ -1893,90 +1893,28 @@ function full_url() {
 }
 
 /**
- * Useful function found in the comments on the PHP man page for ip2long.
- * Returns 1 if an IP matches a given range.
+ * Does nothing.
  *
- * @todo Check licence... assuming this is PD since it was found several places on the interwebs..
- * please check or rewrite.
- *
- * Matches:
- *  xxx.xxx.xxx.xxx        (exact)
- *  xxx.xxx.xxx.[yyy-zzz]  (range)
- *  xxx.xxx.xxx.xxx/nn    (nn = # bits, cisco style -- i.e. /24 = class C)
- * Does not match:
- * xxx.xxx.xxx.xx[yyy-zzz]  (range, partial octets not supported)
- *
- * @todo not used at all.
+ * @param $range
+ * @param $ip
+ * @deprecated 1.7
  */
 function test_ip($range, $ip) {
-	$result = 1;
+	elgg_deprecated_notice('test_ip() was removed because of licensing issues.', 1.7);
 
-	# IP Pattern Matcher
-	# J.Adams <jna@retina.net>
-	#
-	# Matches:
-	#
-	# xxx.xxx.xxx.xxx        (exact)
-	# xxx.xxx.xxx.[yyy-zzz]  (range)
-	# xxx.xxx.xxx.xxx/nn    (nn = # bits, cisco style -- i.e. /24 = class C)
-	#
-	# Does not match:
-	# xxx.xxx.xxx.xx[yyy-zzz]  (range, partial octets not supported)
-
-	if (ereg("([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+)/([0-9]+)",$range,$regs)) {
-		# perform a mask match
-		$ipl = ip2long($ip);
-		$rangel = ip2long($regs[1] . "." . $regs[2] . "." . $regs[3] . "." . $regs[4]);
-
-		$maskl = 0;
-
-		for ($i = 0; $i< 31; $i++) {
-			if ($i < $regs[5]-1) {
-				$maskl = $maskl + pow(2,(30-$i));
-			}
-		}
-
-		if (($maskl & $rangel) == ($maskl & $ipl)) {
-			return 1;
-		} else {
-			return 0;
-		}
-	} else {
-		# range based
-		$maskocts = split("\.",$range);
-		$ipocts = split("\.",$ip);
-
-		# perform a range match
-		for ($i=0; $i<4; $i++) {
-			if (ereg("\[([0-9]+)\-([0-9]+)\]",$maskocts[$i],$regs)) {
-				if ( ($ipocts[$i] > $regs[2]) || ($ipocts[$i] < $regs[1])) {
-					$result = 0;
-				}
-			} else {
-				if ($maskocts[$i] <> $ipocts[$i]) {
-					$result = 0;
-				}
-			}
-		}
-	}
-
-	return $result;
+	return 0;
 }
 
 /**
- * Match an IP address against a number of ip addresses or ranges, returning true if found.
+ * Does nothing.
  *
  * @param array $networks
  * @param string $ip
  * @return bool
- * @todo not used at all in core.
+ * @deprecated 1.7
  */
 function is_ip_in_array(array $networks, $ip) {
-	foreach ($networks as $network) {
-		if (test_ip(trim($network), $ip)) {
-			return true;
-		}
-	}
+	elgg_deprecated_notice('is_ip_in_array() was removed because of licensing issues.', 1.7);
 
 	return false;
 }
