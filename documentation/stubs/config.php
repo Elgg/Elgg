@@ -241,6 +241,10 @@ $CONFIG->siteemail;
 /**
  * The current view type
  *
+ * View types determin the location of view files that are used to draw pages.
+ * They are set system-wide by the $_REQUEST['view'].  If a view type is manually
+ * set in settings.php or through a function hooking to the {@elgg_hook
+ *
  * @warning This is the current view type used to determine where to load views.
  * Don't confuse this with the current view.
  *
