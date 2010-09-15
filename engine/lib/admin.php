@@ -9,7 +9,6 @@
  * @link http://elgg.org/
  */
 
-
 /**
  * Register an admin page with the admin panel.
  * This function extends the view "admin/main" with the provided view. This view should provide a description
@@ -291,7 +290,6 @@ function elgg_admin_notice_exists($id) {
 
 	return ($notice) ? TRUE : FALSE;
 }
-
 
 // Register init functions
 register_elgg_event_handler('init', 'system', 'admin_init');

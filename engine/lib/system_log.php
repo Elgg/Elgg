@@ -9,8 +9,6 @@
  * @link http://elgg.org/
  */
 
-require_once dirname(dirname(__FILE__)).'/classes/Loggable.php';
-
 /**
  * Retrieve the system log based on a number of parameters.
  *

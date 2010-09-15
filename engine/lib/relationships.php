@@ -9,8 +9,6 @@
  * @link http://elgg.org/
  */
 
-require_once dirname(dirname(__FILE__)).'/classes/ElggRelationship.php';
-
 /**
  * Convert a database row to a new ElggRelationship
  *

@@ -11,9 +11,6 @@
  * @link http://elgg.org/
  */
 
-include dirname(dirname(__FILE__)).'/classes/ElggAccess.php';
-
-
 /**
  * Return a string of access_ids for $user_id appropriate for inserting into an SQL IN clause.
  *

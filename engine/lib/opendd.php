@@ -9,12 +9,6 @@
  * @link http://elgg.org/
  */
 
-include_once("xml.php");
-
-require_once dirname(dirname(__FILE__)).'/classes/ODDDocument.php';
-require_once dirname(dirname(__FILE__)).'/classes/ODD.php';
-require_once dirname(dirname(__FILE__)).'/classes/ODDEntity.php';
-
 /**
  * Attempt to construct an ODD object out of a XmlElement or sub-elements.
  *

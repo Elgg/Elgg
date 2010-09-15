@@ -257,5 +257,4 @@ function elgg_action_exist($action) {
 	return (isset($CONFIG->actions[$action]) && file_exists($CONFIG->actions[$action]['file']));
 }
 
-
 register_elgg_event_handler("init","system","actions_init");

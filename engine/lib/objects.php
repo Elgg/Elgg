@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Elgg objects
  * Functions to manage multiple or single objects in an Elgg install
@@ -9,8 +8,6 @@
  * @author Curverider Ltd
  * @link http://elgg.org/
  */
-
-require_once dirname(dirname(__FILE__)).'/classes/ElggObject.php';
 
 /**
  * Return the object specific details of a object by a row.

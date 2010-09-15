@@ -15,8 +15,6 @@ $USERNAME_TO_GUID_MAP_CACHE = array();
 /// Map a user code to a cached GUID
 $CODE_TO_GUID_MAP_CACHE = array();
 
-require_once dirname(dirname(__FILE__)).'/classes/ElggUser.php';
-
 /**
  * Return the user specific details of a user by a row.
  *

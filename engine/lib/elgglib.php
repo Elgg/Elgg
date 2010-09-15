@@ -1919,8 +1919,6 @@ function is_ip_in_array(array $networks, $ip) {
 	return false;
 }
 
-require_once dirname(dirname(__FILE__)).'/classes/Friendable.php';
-
 /**
  * Builds a URL from the a parts array like one returned by {@link parse_url()}.
  *
@@ -2266,6 +2264,10 @@ function js_page_handler($page) {
 		echo $return;
 		exit;
 	}
+}
+
+function __autoload($class) {
+    require_once dirname(dirname(__FILE__))."/classes/$class.php";
 }
 
 /**

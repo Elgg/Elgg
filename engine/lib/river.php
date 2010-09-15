@@ -135,7 +135,6 @@ function remove_from_river_by_id($id) {
 	return delete_data("delete from {$CONFIG->dbprefix}river where id = {$id}");
 }
 
-
 /**
  * Sets the access ID on river items for a particular object
  *

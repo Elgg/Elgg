@@ -9,8 +9,6 @@
  * @link http://elgg.org/
  */
 
-require_once dirname(dirname(__FILE__)).'/classes/ElggExtender.php';
-
 /**
  * Detect the value_type for a given value.
  * Currently this is very crude.

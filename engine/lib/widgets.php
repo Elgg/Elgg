@@ -8,8 +8,6 @@
  * @link http://elgg.org/
  */
 
-require_once dirname(dirname(__FILE__)).'/classes/ElggWidget.php';
-
 /**
  * Register a particular context for use with widgets.
  *

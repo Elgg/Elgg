@@ -12,8 +12,6 @@
  * @link http://elgg.org/
  */
 
-require_once dirname(dirname(__FILE__)).'/classes/ElggGroup.php';
-
 /**
  * Get the group entity.
  *

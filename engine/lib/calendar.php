@@ -8,8 +8,6 @@
  * @link http://elgg.org/
  */
 
-require_once dirname(dirname(__FILE__)).'/classes/Notable.php';
-
 /**
  * Return a timestamp for the start of a given day (defaults today).
  *

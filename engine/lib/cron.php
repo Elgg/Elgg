@@ -8,8 +8,6 @@
  * @link http://elgg.org/
  */
 
-require_once dirname(dirname(__FILE__)).'/classes/CronException.php';
-
 /**
  * Initialisation
  *

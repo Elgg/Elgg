@@ -250,7 +250,6 @@ function input_livesearch_page_handler($page) {
 	exit;
 }
 
-
 function input_init() {
 	// register an endpoint for live search / autocomplete.
 	register_page_handler('livesearch', 'input_livesearch_page_handler');

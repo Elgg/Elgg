@@ -9,13 +9,6 @@
  * @link http://elgg.org/
  */
 
-// Result classes /////////////////////////////////////////////////////////////////////////
-
-require_once dirname(dirname(__FILE__)).'/classes/GenericResult.php';
-require_once dirname(dirname(__FILE__)).'/classes/SuccessResult.php';
-require_once dirname(dirname(__FILE__)).'/classes/ErrorResult.php';
-require_once dirname(dirname(__FILE__)).'/classes/ElggHMACCache.php';
-
 // Primary Services API Server functions /////////////////////////////////////////////////////////////////////
 
 /**

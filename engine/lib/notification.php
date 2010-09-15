@@ -213,13 +213,6 @@ function set_user_notification_setting($user_guid, $method, $value) {
 }
 
 /**
- * Notification exception.
- * @author Curverider Ltd
- */
-class NotificationException extends Exception {}
-
-
-/**
  * Send a notification via email.
  *
  * @param ElggEntity $from The from user/site/object

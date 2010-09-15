@@ -9,21 +9,8 @@
  * @link http://elgg.org/
  */
 
-
 /// Cache enabled plugins per page
 $ENABLED_PLUGINS_CACHE = NULL;
-
-/**
- * PluginException
- *
- * A plugin Exception, thrown when an Exception occurs relating to the plugin mechanism. Subclass for specific plugin Exceptions.
- *
- * @package Elgg
- * @subpackage Exceptions
- */
-class PluginException extends Exception {}
-
-require_once dirname(dirname(__FILE__)).'/classes/ElggPlugin.php';
 
 /**
  * Returns a list of plugins to load, in the order that they should be loaded.

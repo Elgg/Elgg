@@ -67,7 +67,6 @@ function db_check_settings($user, $password, $dbname, $host) {
 	return $result;
 }
 
-
 /**
  * Returns whether or not the database has been installed
  *

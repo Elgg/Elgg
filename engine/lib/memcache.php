@@ -10,8 +10,6 @@
  * @link http://elgg.org/
  */
 
-require_once dirname(dirname(__FILE__)).'/classes/ElggMemcache.php';
-
 /**
  * Return true if memcache is available and configured.
  *

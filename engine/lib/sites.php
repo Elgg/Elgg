@@ -9,8 +9,6 @@
  * @link http://elgg.org/
  */
 
-require_once dirname(dirname(__FILE__)).'/classes/ElggSite.php';
-
 /**
  * Return the site specific details of a site by a row.
  *

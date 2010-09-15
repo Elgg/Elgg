@@ -13,9 +13,6 @@
 /** Elgg magic session */
 global $SESSION;
 
-require_once dirname(dirname(__FILE__)).'/classes/ElggSession.php';
-
-
 /**
  * Return the current logged in user, or NULL if no user is logged in.
  *

@@ -8,8 +8,6 @@
  * @link http://elgg.org/
  */
 
-require_once dirname(dirname(__FILE__)).'/classes/Locatable.php';
-
 /**
  * Encode a location into a latitude and longitude, caching the result.
  *

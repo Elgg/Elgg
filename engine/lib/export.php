@@ -8,11 +8,6 @@
  * @link http://elgg.org/
  */
 
-require_once dirname(dirname(__FILE__)).'/classes/Exportable.php';
-require_once dirname(dirname(__FILE__)).'/classes/Importable.php';
-require_once dirname(dirname(__FILE__)).'/classes/ExportException.php';
-require_once dirname(dirname(__FILE__)).'/classes/ImportException.php';
-
 /**
  * Get a UUID from a given object.
  *

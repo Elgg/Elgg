@@ -9,7 +9,6 @@
  * @link http://elgg.org/
  */
 
-
 /**
  * The algorithm working out the size of font based on the number of tags.
  * This is quick and dirty.

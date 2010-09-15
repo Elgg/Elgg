@@ -10,12 +10,6 @@
  * @link http://elgg.org/
  */
 
-include_once("objects.php");
-
-require_once dirname(dirname(__FILE__)).'/classes/ElggFilestore.php';
-require_once dirname(dirname(__FILE__)).'/classes/ElggDiskFilestore.php';
-require_once dirname(dirname(__FILE__)).'/classes/ElggFile.php';
-
 /**
  * Get the size of the specified directory.
  *

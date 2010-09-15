@@ -9,10 +9,6 @@
  * @link http://elgg.org/
  */
 
-require_once 'extender.php';
-
-require_once dirname(dirname(__FILE__)).'/classes/ElggMetadata.php';
-
 /**
  * Convert a database row to a new ElggMetadata
  *

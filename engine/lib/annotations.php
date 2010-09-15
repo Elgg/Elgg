@@ -9,10 +9,6 @@
  * @link http://elgg.org/
  */
 
-require_once 'extender.php';
-
-require_once dirname(dirname(__FILE__)).'/classes/ElggAnnotation.php';
-
 /**
  * Convert a database row to a new ElggAnnotation
  *

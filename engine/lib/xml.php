@@ -9,8 +9,6 @@
 	 * @link http://elgg.org/
 	 */
 
-	require_once dirname(dirname(__FILE__)).'/classes/XmlElement.php';
-
 	/**
 	 * This function serialises an object recursively into an XML representation.
 	 * The function attempts to call $data->export() which expects a stdClass in return, otherwise it will attempt to

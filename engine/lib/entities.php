@@ -15,12 +15,6 @@ $ENTITY_CACHE = NULL;
 /// Cache subtype searches
 $SUBTYPE_CACHE = NULL;
 
-/// Require the locatable interface
-// @todo Move this into start.php?
-require_once('location.php');
-
-require_once dirname(dirname(__FILE__)).'/classes/ElggEntity.php';
-
 /**
  * Initialise the entity cache.
  */

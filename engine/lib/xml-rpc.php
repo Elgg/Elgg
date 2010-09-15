@@ -9,26 +9,6 @@
 	 * @link http://elgg.org/
 	 */
 
-	// XMLRPC Call ////////////////////////////////////////////////////////////////////////////
-
-	require_once dirname(dirname(__FILE__)).'/classes/XMLRPCCall.php';
-
-	
-	// Response classes ///////////////////////////////////////////////////////////////////////
-
-	require_once dirname(dirname(__FILE__)).'/classes/XMLRPCParameter.php';
-	require_once dirname(dirname(__FILE__)).'/classes/XMLRPCIntParameter.php';
-	require_once dirname(dirname(__FILE__)).'/classes/XMLRPCBoolParameter.php';
-	require_once dirname(dirname(__FILE__)).'/classes/XMLRPCStringParameter.php';
-	require_once dirname(dirname(__FILE__)).'/classes/XMLRPCDoubleParameter.php';
-	require_once dirname(dirname(__FILE__)).'/classes/XMLRPCDateParameter.php';
-	require_once dirname(dirname(__FILE__)).'/classes/XMLRPCBase64Parameter.php';
-	require_once dirname(dirname(__FILE__)).'/classes/XMLRPCStructParameter.php';
-	require_once dirname(dirname(__FILE__)).'/classes/XMLRPCArrayParameter.php';
-	require_once dirname(dirname(__FILE__)).'/classes/XMLRPCResponse.php';
-	require_once dirname(dirname(__FILE__)).'/classes/XMLRPCSuccessResponse.php';
-	require_once dirname(dirname(__FILE__)).'/classes/XMLRPCErrorResponse.php';
-	
 	// Helper functions ///////////////////////////////////////////////////////////////////////
 	
 	/**
