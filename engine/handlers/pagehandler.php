@@ -1,23 +1,27 @@
 <?php
 /**
- * Elgg page handler
+ * Pages handler.
  *
- * If page_handler() fails, send to front page.
+ * This file dispatches pages.  It is called via a URL rewrite in .htaccess
+ * from http://site/pg/handler/page1/page2.  The first element after 'pg/' is
+ * the page handler name as registered by {@link register_page_handler()}.
+ * The rest of the string is sent to {@link page_handler()}.
  *
- * @package Elgg
- * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
+ * {@link page_handler()} explodes the pages string by / and sends it to
+ * the page handler function as registered by {@link register_page_handler()}.
+ * If a valid page handler isn't found, the user will be forwarded to the site
+ * front page.
+ *
+ * @package Elgg.Core
+ * @subpackage PageHandler
+ * @link http://docs.elgg.org/Tutorials/PageHandlers
  */
 
-// Load Elgg engine
 require_once("../start.php");
 
-// Get input
 $handler = get_input('handler');
 $page = get_input('page');
 
-// Call the page handler functions
 if (!page_handler($handler, $page)) {
 	forward();
 }

@@ -1,14 +1,15 @@
 <?php
 /**
- * Elgg XML-RPC handler.
+ * XML-RPC handler.
  *
- * @package Elgg
- * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
+ * @warning This is very old code. Does it work at all?
+ *
+ * @package Elgg.Core
+ * @subpackage XMLRPC
+ * @link http://docs.elgg.org/Tutorials/XMLRPC
+ * @todo Does this work?
  */
 
-// Load Elgg engine
 require_once("../start.php");
 global $CONFIG;
 

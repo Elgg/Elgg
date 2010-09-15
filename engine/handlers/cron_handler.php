@@ -1,18 +1,21 @@
 <?php
 /**
- * Elgg Cron handler.
+ * Cron handlers
  *
- * @package Elgg
- * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
+ * This file dispatches cron actions.  It is called via a URL rewrite in .htaccess
+ * from http://site/p/.  Anything after 'action/' is considered the action
+ * and will be passed to {@link action()}.
+ *
+ * @package Elgg.Core
+ * @subpackage Actions
+ * @link http://docs.elgg.org/Tutorials/Actions
+ *
+ * @todo
  */
 
-// Load Elgg engine
 require_once("../start.php");
 global $CONFIG;
 
-// Get basic parameters
 $period = get_input('period');
 if (!$period) {
 	throw new CronException(sprintf(elgg_echo('CronException:unknownperiod'), $period));
@@ -25,8 +28,6 @@ $params['time'] = time();
 foreach ($CONFIG->input as $k => $v) {
 	$params[$k] = $v;
 }
-
-// Trigger hack
 
 // Data to return to
 $std_out = "";
