@@ -1057,7 +1057,7 @@ function events($event = "", $object_type = "", $function = "", $priority = 500,
  * @warning If you use the 'all' keyword, you must have logic in the handler function to
  * test the passed parameters before taking an action.
  *
- * @tip When referring to events, the preferred syntax is "event:type".
+ * @tip When referring to events, the preferred syntax is "event, type".
  *
  * @param string $event The event type
  * @param string $object_type The object type
@@ -1091,9 +1091,9 @@ function unregister_elgg_event_handler($event, $object_type, $function) {
 }
 
 /**
- * Trigger an Elgg Event and run all handler functions registered to that event:type.
+ * Trigger an Elgg Event and run all handler functions registered to that event, type.
  *
- * This function runs all handlers regsitered to $event:$object_type or
+ * This function runs all handlers regsitered to $event, $object_type or
  * the special keyword 'all' for either or both.
  *
  * $event is usually a verb: create, update, delete, annotation.
@@ -1105,7 +1105,7 @@ function unregister_elgg_event_handler($event, $object_type, $function) {
  * @warning Elgg events should only be called by core.  Plugin authors should use
  * {@link trigger_elgg_plugin_hook()} instead.
  *
- * @tip When referring to events, the preferred syntax is "event:type".
+ * @tip When referring to events, the preferred syntax is "event, type".
  *
  * @internal Only rarely should events be changed, added, or removed in core.
  * When making changes to events, be sure to first create a ticket in trac.
@@ -1239,7 +1239,7 @@ function unregister_plugin_hook($hook, $entity_type, $function) {
 /**
  * Trigger a Plugin Hook and run all handler functions registered to that hook:type.
  *
- * This function runs all handlers regsitered to $hook:$type or
+ * This function runs all handlers regsitered to $hook, $type or
  * the special keyword 'all' for either or both.
  *
  * Use $params to send additional information to the handler functions.
@@ -1415,7 +1415,7 @@ function elgg_log($message, $level='NOTICE') {
  * If $to_screen is true, $value is displayed to screen.  Else,
  * it is handled by PHP's {@link error_log()} function.
  *
- * A {@elgg_plugin_hook debug:log} is called.  If a handler returns
+ * A {@elgg_plugin_hook debug log} is called.  If a handler returns
  * false, it will stop the default logging method.
  *
  * @param mixed $value
