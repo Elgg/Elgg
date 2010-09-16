@@ -2267,7 +2267,7 @@ function js_page_handler($page) {
 }
 
 function __autoload($class) {
-    require_once dirname(dirname(__FILE__))."/classes/$class.php";
+	require_once dirname(dirname(__FILE__))."/classes/$class.php";
 }
 
 /**
