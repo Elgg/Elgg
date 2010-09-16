@@ -1,36 +1,46 @@
 <?php
 /**
- * Elgg entities.
- * Functions to manage all elgg entities (sites, collections, objects and users).
+ * Procedural code for creating, loading, and modifying ElggEntity objects.
  *
- * @package Elgg
- * @subpackage Core
- * @author Curverider Ltd <info@elgg.com>
- * @link http://elgg.org/
+ * @package Elgg.Core
+ * @subpackage DataModel
+ * @link http://docs.elgg.org/DataModel/Entities
  */
 
-/// Cache objects in order to minimise database access.
+/**
+ * Cache entities in memory once loaded.
+ *
+ * @global array $ENTITY_CACHE
+ * @access private
+ */
 $ENTITY_CACHE = NULL;
 
-/// Cache subtype searches
+/**
+ * Cache subtypes and related class names once loaded.
+ *
+ * @global array $SUBTYPE_CACHE
+ * @access private
+ */
 $SUBTYPE_CACHE = NULL;
 
 /**
  * Initialise the entity cache.
+ * @todo remove this.
+ * @access private
  */
 function initialise_entity_cache() {
 	global $ENTITY_CACHE;
 
 	if (!$ENTITY_CACHE) {
-		//select_default_memcache('entity_cache'); // @todo Replace with memcache?
 		$ENTITY_CACHE = array();
 	}
 }
 
 /**
- * Invalidate this class' entry in the cache.
+ * Invalidate this class's entry in the cache.
  *
- * @param int $guid The guid
+ * @param int $guid The entity guid
+ * @access private
  */
 function invalidate_cache_for_entity($guid) {
 	global $ENTITY_CACHE;
@@ -38,13 +48,17 @@ function invalidate_cache_for_entity($guid) {
 	$guid = (int)$guid;
 
 	unset($ENTITY_CACHE[$guid]);
-	//$ENTITY_CACHE->delete($guid);
 }
 
 /**
  * Cache an entity.
  *
+ * Stores an entity in $ENTITY_CACHE;
+ *
  * @param ElggEntity $entity Entity to cache
+ * @see retrieve_cached_entity()
+ * @see invalidate_cache_for_entity()
+ * @access private
  */
 function cache_entity(ElggEntity $entity) {
 	global $ENTITY_CACHE;
@@ -56,6 +70,9 @@ function cache_entity(ElggEntity $entity) {
  * Retrieve a entity from the cache.
  *
  * @param int $guid The guid
+ * @see cache_entity()
+ * @see invalidate_cache_for_entity()
+ * @access private
  */
 function retrieve_cached_entity($guid) {
 	global $ENTITY_CACHE;
@@ -76,6 +93,8 @@ function retrieve_cached_entity($guid) {
  * expect a database row.)
  *
  * @param int $guid The guid
+ * @todo unused
+ * @access private
  */
 function retrieve_cached_entity_row($guid) {
 	$obj = retrieve_cached_entity($guid);
@@ -93,12 +112,29 @@ function retrieve_cached_entity_row($guid) {
 }
 
 /**
- * Return the integer ID for a given subtype, or false.
+ * Return the id for a given subtype.
+ *
+ * ElggEntity objects have a type and a subtype.  Subtypes
+ * are defined upon creation and cannot be changed.
+ *
+ * Plugin authors generally don't need to use this function
+ * unless writing their own SQL queries.  Use {@link ElggEntity::getSubtype()}
+ * to return the string subtype.
+ *
+ * @warning {@link ElggEntity::subtype} returns the ID.  You probably want
+ * {@link ElggEntity::getSubtype()} instead!
+ *
+ * @internal Subtypes are stored in the entity_subtypes table.  There is a foreign
+ * key in the entities table.
  *
  * @todo Move to a nicer place?
  *
  * @param string $type
  * @param string $subtype
+ * @return int Subtype ID
+ * @link http://docs.elgg.org/DataModel/Entities/Subtypes
+ * @see get_subtype_from_id()
+ * @access private
  */
 function get_subtype_id($type, $subtype) {
 	global $CONFIG, $SUBTYPE_CACHE;
@@ -107,7 +143,6 @@ function get_subtype_id($type, $subtype) {
 	$subtype = sanitise_string($subtype);
 
 	if ($subtype=="") {
-		//return $subtype;
 		return FALSE;
 	}
 
@@ -117,7 +152,6 @@ function get_subtype_id($type, $subtype) {
 
 	if ($result) {
 		if (!$SUBTYPE_CACHE) {
-			//select_default_memcache('subtype_cache');
 			$SUBTYPE_CACHE = array();
 		}
 
@@ -129,11 +163,15 @@ function get_subtype_id($type, $subtype) {
 }
 
 /**
- * For a given subtype ID, return its identifier text.
+ * Return string name for a given subtype ID.
  *
  * @todo Move to a nicer place?
  *
  * @param int $subtype_id
+ * @return string Subtype name
+ * @link http://docs.elgg.org/DataModel/Entities/Subtypes
+ * @see get_subtype_from_id()
+ * @access private
  */
 function get_subtype_from_id($subtype_id) {
 	global $CONFIG, $SUBTYPE_CACHE;
@@ -151,7 +189,6 @@ function get_subtype_from_id($subtype_id) {
 	$result = get_data_row("SELECT * from {$CONFIG->dbprefix}entity_subtypes where id=$subtype_id");
 	if ($result) {
 		if (!$SUBTYPE_CACHE) {
-			//select_default_memcache('subtype_cache');
 			$SUBTYPE_CACHE = array();
 		}
 
@@ -163,11 +200,18 @@ function get_subtype_from_id($subtype_id) {
 }
 
 /**
- * This function tests to see if a subtype has a registered class handler.
+ * Return a classname for a registered type and subtype.
+ *
+ * Entities can be registered to always be loaded as a certain class
+ * with {@link register_entity_subtype()}.  This function returns
+ * the class name if found, and NULL if not.
  *
  * @param string $type The type
  * @param string $subtype The subtype
- * @return a class name or null
+ * @return string|null a class name or null
+ * @see get_subtype_from_id()
+ * @see get_subtype_class_from_id()
+ * @access private
  */
 function get_subtype_class($type, $subtype) {
 	global $CONFIG, $SUBTYPE_CACHE;
@@ -181,7 +225,6 @@ function get_subtype_class($type, $subtype) {
 
 	if ($result) {
 		if (!$SUBTYPE_CACHE) {
-			//select_default_memcache('subtype_cache');
 			$SUBTYPE_CACHE = array();
 		}
 
@@ -193,10 +236,13 @@ function get_subtype_class($type, $subtype) {
 }
 
 /**
- * This function tests to see if a subtype has a registered class handler by its id.
+ * Returns the classname for a subtype id.
  *
- * @param int $subtype_id The subtype
- * @return a class name or null
+ * @param int $subtype_id The subtype id
+ * @return string|null
+ * @see get_subtype_class()
+ * @see get_subtype_from_id()
+ * @access private
  */
 function get_subtype_class_from_id($subtype_id) {
 	global $CONFIG, $SUBTYPE_CACHE;
@@ -215,7 +261,6 @@ function get_subtype_class_from_id($subtype_id) {
 
 	if ($result) {
 		if (!$SUBTYPE_CACHE) {
-			//select_default_memcache('subtype_cache');
 			$SUBTYPE_CACHE = array();
 		}
 		$SUBTYPE_CACHE[$subtype_id] = $result;
@@ -226,11 +271,21 @@ function get_subtype_class_from_id($subtype_id) {
 }
 
 /**
- * This function will register a new subtype, returning its ID as required.
+ * Register ElggEntities with a certain type and subtype to be loaded as a specific class.
  *
- * @param string $type The type you're subtyping
- * @param string $subtype The subtype label
- * @param string $class Optional class handler (if you don't want it handled by the generic elgg handler for the type)
+ * By default entities are loaded as one of the 4 parent objects: site, user, object, or group.
+ * If you subclass any of these you can register the classname with add_subtype() so
+ * it will be loaded as that class automatically when retrieved from the database with
+ * {@link get_entity()}.
+ *
+ * @param string $type The type you're subtyping (site, user, object, or group)
+ * @param string $subtype The subtype
+ * @param string $class Optional class name for the object
+ * @link http://docs.elgg.org/Tutorials/Subclasses
+ * @link http://docs.elgg.org/DataModel/Entities
+ * @see update_subtype()
+ * @see remove_subtype()
+ * @see get_entity()
  */
 function add_subtype($type, $subtype, $class = "") {
 	global $CONFIG;
@@ -253,10 +308,12 @@ function add_subtype($type, $subtype, $class = "") {
 }
 
 /**
- * Removes a registered subtype
+ * Removes a registered ElggEntity type, subtype, and classname.
  *
  * @param string $type
  * @param string $subtype
+ * @see add_subtype()
+ * @see update_subtype()
  */
 function remove_subtype($type, $subtype) {
 	global $CONFIG;
@@ -268,7 +325,7 @@ function remove_subtype($type, $subtype) {
 }
 
 /**
- * Update the registered information
+ * Update a registered ElggEntity type, subtype, and classname
  *
  * @param string $type
  * @param string $subtype
@@ -289,14 +346,21 @@ function update_subtype($type, $subtype, $class = '') {
 	");
 }
 
-
 /**
- * Update an existing entity.
+ * Update an entity in the database.
+ *
+ * There are 4 basic entity types: site, user, object, and group.
+ * All entities are split between two tables: the entities table and their type table.
+ *
+ * @warning Plugin authors should never call this directly. Use ->save() instead.
  *
  * @param int $guid
  * @param int $owner_guid
  * @param int $access_id
  * @param int $container_guid
+ * @return bool
+ * @link http://docs.elgg.org/DataModel/Entities
+ * @access private
  */
 function update_entity($guid, $owner_guid, $access_id, $container_guid = null) {
 	global $CONFIG, $ENTITY_CACHE;
@@ -313,7 +377,7 @@ function update_entity($guid, $owner_guid, $access_id, $container_guid = null) {
 	$entity = get_entity($guid);
 
 	if ($entity->canEdit()) {
-		if (trigger_elgg_event('update',$entity->type,$entity)) {
+		if (trigger_elgg_event('update', $entity->type, $entity)) {
 			$ret = update_data("UPDATE {$CONFIG->dbprefix}entities set owner_guid='$owner_guid', access_id='$access_id', container_guid='$container_guid', time_updated='$time' WHERE guid=$guid");
 
 			if ($entity instanceof ElggObject) {
@@ -340,10 +404,18 @@ function update_entity($guid, $owner_guid, $access_id, $container_guid = null) {
 }
 
 /**
- * Determine whether a given user is able to write to a given container.
+ * Determine if a given user is can write to an entity container.
+ *
+ * An entity can be a container for any other entity by setting the
+ * container_guid.  container_guid can differ from owner_guid.
+ *
+ * A plugin hook container_permissions_check:$entity_type is emitted to allow granular
+ * access controls in plugins.
  *
  * @param int $user_guid The user guid, or 0 for get_loggedin_userid()
  * @param int $container_guid The container, or 0 for the current page owner.
+ * @return bool
+ * @link http://docs.elgg.org/DataModel/Containers
  */
 function can_write_to_container($user_guid = 0, $container_guid = 0, $entity_type = 'all') {
 	global $CONFIG;
@@ -372,6 +444,7 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $entity_typ
 		}
 
 		// Basics, see if the user is a member of the group.
+		// @todo this should be moved to the groups plugin
 		if ($user && $container instanceof ElggGroup) {
 			if (!$container->isMember($user)) {
 				$return = FALSE;
@@ -387,14 +460,25 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $entity_typ
 }
 
 /**
- * Create a new entity of a given type.
+ * Create a new entry in the entities table.
  *
- * @param string $type The type of the entity (site, user, object).
+ * Saves the base information in the entities table for the entity.  Saving
+ * the type information is handled in the calling class method.
+ *
+ * @warning Plugin authors should never call this directly.  Always use entity objects.
+ *
+ * @warning Entities must have an entry in both the entities table and their type table
+ * or they will throw an exception when loaded.
+ *
+ * @param string $type The type of the entity (site, user, object, group).
  * @param string $subtype The subtype of the entity.
  * @param int $owner_guid The GUID of the object's owner.
  * @param int $access_id The access control group to create the entity with.
  * @param int $site_guid The site to add this entity to. Leave as 0 (default) for the current site.
- * @return mixed The new entity's GUID, or false on failure
+ * @return int|false The new entity's GUID, or false on failure
+ * @throws InvalidParameterException
+ * @access private
+ * @link http://docs.elgg.org/DataModel/Entities
  */
 function create_entity($type, $subtype, $owner_guid, $access_id, $site_guid = 0, $container_guid = 0) {
 	global $CONFIG;
@@ -431,11 +515,18 @@ function create_entity($type, $subtype, $owner_guid, $access_id, $site_guid = 0,
 }
 
 /**
- * Retrieve the entity details for a specific GUID, returning it as a stdClass db row.
+ * Returns a database row from the entities table.
  *
- * You will only get an object if a) it exists, b) you have access to it.
+ * @tip Use get_entity() to return the fully loaded entity.
+ *
+ * @warning This will only return results if a) it exists, b) you have access to it.
+ * see {@link get_access_sql_suffix()}.
  *
  * @param int $guid The GUID of the object to extract
+ * @return stdClass|false
+ * @link http://docs.elgg.org/DataModel/Entities
+ * @see entity_row_to_elggstar()
+ * @access private
  */
 function get_entity_as_row($guid) {
 	global $CONFIG;
@@ -452,6 +543,16 @@ function get_entity_as_row($guid) {
 
 /**
  * Create an Elgg* object from a given entity row.
+ *
+ * Handles loading all tables into the correct class.
+ *
+ * @param stdClass The row of the entry in the entities table.
+ * @return object|false
+ * @link http://docs.elgg.org/DataModel/Entities
+ * @see get_entity_as_row()
+ * @see add_subtype()
+ * @see get_entity()
+ * @access private
  */
 function entity_row_to_elggstar($row) {
 	if (!($row instanceof stdClass)) {
@@ -518,9 +619,11 @@ function entity_row_to_elggstar($row) {
 }
 
 /**
- * Return the entity for a given guid as the correct object.
+ * Loads and returns an entity object from a guid.
+ *
  * @param int $guid The GUID of the entity
- * @return a child of ElggEntity appropriate for the type.
+ * @return object The correct Elgg or custom object based upon entity type and subtype
+ * @link http://docs.elgg.org/DataModel/Entities
  */
 function get_entity($guid) {
 	static $newentity_cache;
@@ -547,9 +650,18 @@ function get_entity($guid) {
 
 
 /**
- * Get all entities.  NB: Plural arguments can be written as
- * singular if only specifying a single element.  (e.g., 'type' => 'object'
- * vs 'types' => array('object')).
+ * Returns an array of entities with optional filtering.
+ *
+ * Entities are the basic unit of storage in Elgg.  This function
+ * provides the simplest way to get an array of entities.  There
+ * are many options available that can be passed to filter
+ * what sorts of entities are returned.
+ *
+ * @tip To output formatted strings of entities, use {@link elgg_list_entities()} and
+ * its cousins.
+ *
+ * @tip Plural arguments can be written as singular if only specifying a
+ * single element.  ('type' => 'object' vs 'types' => array('object')).
  *
  * @param array $options Array in format:
  *
@@ -585,9 +697,14 @@ function get_entity($guid) {
  *
  * 	joins => array() Additional joins
  *
- * @return 	if count, int
- * 			if not count, array or false if no entities
+ * @return mixed int if count is true, an array of entity objects, or false on failure
  * @since 1.7.0
+ * @see elgg_get_entities_from_metadata()
+ * @see elgg_get_entities_from_relationship()
+ * @see elgg_get_entities_from_access_id()
+ * @see elgg_get_entities_from_annotations()
+ * @see elgg_list_entities()
+ * @link http://docs.elgg.org/DataModel/Entities/Getters
  */
 function elgg_get_entities(array $options = array()) {
 	global $CONFIG;
@@ -816,14 +933,15 @@ $count = false, $site_guid = 0, $container_guid = null, $timelower = 0, $timeupp
 }
 
 /**
- * Returns type and subtype SQL appropriate for inclusion in an IN clause.
+ * Returns SQL where clause for type and subtype on main entity table
  *
- * @param string $table entity table prefix.
+ * @param string $table entity table prefix as defined in SELECT ... FROM prefix_entities $table
  * @param NULL|$types
  * @param NULL|array $subtypes
  * @param NULL|array $pairs
  * @return FALSE|string
  * @since 1.7.0
+ * @access private
  */
 function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pairs) {
 	// subtype depends upon type.
@@ -968,16 +1086,15 @@ function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pair
 	return '';
 }
 
-
-
 /**
- * Returns SQL for owner and containers.
+ * Returns SQL where clause for owner and containers.
  *
  * @todo Probably DRY up once things are settled.
- * @param str $table
+ * @param string $table entity table prefix as defined in SELECT ... FROM prefix_entities $table
  * @param NULL|array $owner_guids
  * @return FALSE|str
  * @since 1.7.0
+ * @access private
  */
 function elgg_get_entity_owner_where_sql($table, $owner_guids) {
 	// short circuit if nothing requested
@@ -1010,12 +1127,13 @@ function elgg_get_entity_owner_where_sql($table, $owner_guids) {
 }
 
 /**
- * Returns SQL for containers.
+ * Returns SQL where clause for containers.
  *
- * @param string $table entity table prefix
+ * @param string $table entity table prefix as defined in SELECT ... FROM prefix_entities $table
  * @param NULL|array $container_guids
  * @return FALSE|string
  * @since 1.7.0
+ * @access private
  */
 function elgg_get_entity_container_where_sql($table, $container_guids) {
 	// short circuit if nothing is requested.
@@ -1050,14 +1168,14 @@ function elgg_get_entity_container_where_sql($table, $container_guids) {
 /**
  * Returns SQL where clause for entity time limits.
  *
- * @param string $table Prefix for entity table name.
+ * @param string $table entity table prefix as defined in SELECT ... FROM prefix_entities $table
  * @param NULL|int $time_created_upper
  * @param NULL|int $time_created_lower
  * @param NULL|int $time_updated_upper
  * @param NULL|int $time_updated_lower
- *
  * @return FALSE|str FALSE on fail, string on success.
  * @since 1.7.0
+ * @access private
  */
 function elgg_get_entity_time_where_sql($table, $time_created_upper = NULL, $time_created_lower = NULL,
 	$time_updated_upper = NULL, $time_updated_lower = NULL) {
@@ -1090,12 +1208,13 @@ function elgg_get_entity_time_where_sql($table, $time_created_upper = NULL, $tim
 }
 
 /**
- * Gets SQL for site entities
+ * Returns SQL where clause for site entities
  *
- * @param string $table entity table name
+ * @param string $table entity table prefix as defined in SELECT ... FROM prefix_entities $table
  * @param NULL|array $site_guids
  * @return FALSE|string
  * @since 1.7.0
+ * @access private
  */
 function elgg_get_entity_site_where_sql($table, $site_guids) {
 	// short circuit if nothing requested
@@ -1123,9 +1242,12 @@ function elgg_get_entity_site_where_sql($table, $site_guids) {
 }
 
 /**
- * Returns a viewable list of entities
+ * Returns a string of parsed entities.
  *
- * @see elgg_view_entity_list
+ * Displays list of entities with formatting specified
+ * by the entity view.
+ *
+ * @tip Pagination is handled automatically.
  *
  * @param array $options Any elgg_get_entity() options plus:
  *
@@ -1137,6 +1259,9 @@ function elgg_get_entity_site_where_sql($table, $site_guids) {
  *
  * @return str
  * @since 1.7.0
+ * @see elgg_view_entity_list()
+ * @see elgg_get_entities()
+ * @link http://docs.elgg.org/Entities/Output
  */
 function elgg_list_entities($options) {
 	$defaults = array(
@@ -1200,7 +1325,11 @@ function list_entities($type= "", $subtype = "", $owner_guid = 0, $limit = 10, $
 }
 
 /**
- * Returns a viewable list of entities contained in a number of groups.
+ * Lists entities that belong to a group.
+ *
+ * @warning This function is largely redundant.  The preferred
+ * method of listing group entities is by setting the container
+ * guid option in {@link elgg_list_entities()}.
  *
  * @param string $subtype The arbitrary subtype of the entity
  * @param int $owner_guid The GUID of the owning user
@@ -1209,7 +1338,8 @@ function list_entities($type= "", $subtype = "", $owner_guid = 0, $limit = 10, $
  * @param true|false $fullview Whether or not to display the full view (default: true)
  * @param true|false $viewtypetoggle Whether or not to allow gallery view (default: true)
  * @param true|false $pagination Whether to display pagination (default: true)
- * @return string A viewable list of entities
+ * @return string List of parsed entities
+ * @see elgg_list_entities()
  */
 function list_entities_groups($subtype = "", $owner_guid = 0, $container_guid = 0, $limit = 10, $fullview = true, $viewtypetoggle = true, $pagination = true) {
 	$offset = (int) get_input('offset');
@@ -1220,14 +1350,18 @@ function list_entities_groups($subtype = "", $owner_guid = 0, $container_guid = 
 }
 
 /**
- * Returns a list of months containing content specified by the parameters
+ * Returns a list of months in which entities were updated or created.
+ *
+ * @tip Use this to generate a list of archives by month for when entities were added or updated.
+ *
+ * @warning Months are returned in the form YYYYMM.
  *
  * @param string $type The type of entity
  * @param string $subtype The subtype of entity
  * @param int $container_guid The container GUID that the entinties belong to
  * @param int $site_guid The site GUID
  * @param str order_by SQL order by clause
- * @return array|false Either an array of timestamps, or false on failure
+ * @return array|false Either an array months as YYYYMM, or false on failure
  */
 function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $site_guid = 0, $order_by = 'time_created') {
 	global $CONFIG;
@@ -1310,10 +1444,25 @@ function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $site_
 }
 
 /**
- * Disable an entity but not delete it.
+ * Disable an entity.
+ *
+ * Disabled entities do not show up in list or elgg_get_entity()
+ * calls, but still exist in the database.
+ *
+ * Entities are disabled by setting disabled = yes in the
+ * entities table.
+ *
+ * You can ignore the disabled field by using {@link access_show_hidden_entities()}.
+ *
+ * @note Use ElggEntity::disable() instead.
  *
  * @param int $guid The guid
  * @param string $reason Optional reason
+ * @param bool $recursive Recursively disable all entities owned or contained by $guid?
+ * @return bool
+ * @access private
+ * @see access_show_hidden_entities()
+ * @link http://docs.elgg.org/Entities
  */
 function disable_entity($guid, $reason = "", $recursive = true) {
 	global $CONFIG;
@@ -1361,9 +1510,13 @@ function disable_entity($guid, $reason = "", $recursive = true) {
 }
 
 /**
- * Enable an entity again.
+ * Enable an entity.
+ *
+ * @warning In order to enable an entity using ElggEntity::enable(),
+ * you must first use {@link access_show_hidden_entities()}.
  *
  * @param int $guid
+ * @return bool
  */
 function enable_entity($guid) {
 	global $CONFIG;
@@ -1395,11 +1548,22 @@ function enable_entity($guid) {
 }
 
 /**
- * Delete a given entity.
+ * Delete an entity.
+ *
+ * Removes an entity and its metadata, annotations, relationships, river entries,
+ * and private data.
+ *
+ * Optionally can remove entities contained and owned by $guid.
+ *
+ * @tip Use ElggEntity::delete() instead.
+ *
+ * @warning If deleting recursively, this bypasses ownership of items contained by
+ * the entity.  That means that if the container_guid = $guid, the item will be deleted
+ * regardless of who owns it.
  *
  * @param int $guid
  * @param bool $recursive If true (default) then all entities which are owned or contained by $guid will also be deleted.
- * Note: this bypasses ownership of sub items.
+ * @access private
  */
 function delete_entity($guid, $recursive = true) {
 	global $CONFIG, $ENTITY_CACHE;
@@ -1477,7 +1641,7 @@ function delete_entity($guid, $recursive = true) {
 
 /**
  * Delete multiple entities that match a given query.
- * This function itterates through and calls delete_entity on each one, this is somewhat inefficient but lets
+ * This function iterates through and calls delete_entity on each one, this is somewhat inefficient but lets
  * the 'delete' even be called for each entity.
  *
  * @deprecated 1.7. This is a dangerous function as it defaults to deleting everything.
@@ -1491,13 +1655,17 @@ function delete_entities($type = "", $subtype = "", $owner_guid = 0) {
 }
 
 /**
- * A plugin hook to get certain volitile (generated on the fly) attributes about an entity in order to export them.
+ * Exports attributes generated on the fly (volatile) about an entity.
  *
  * @param unknown_type $hook
  * @param unknown_type $entity_type
  * @param unknown_type $returnvalue
  * @param unknown_type $params The parameters, passed 'guid' and 'varname'
- * @return unknown
+ * @return null
+ * @elgg_plugin_hook_handler volatile metadata
+ * @todo investigate more.
+ * @access private
+ * @todo document
  */
 function volatile_data_export_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	$guid = (int)$params['guid'];
@@ -1526,7 +1694,12 @@ function volatile_data_export_plugin_hook($hook, $entity_type, $returnvalue, $pa
 }
 
 /**
- * Handler called by trigger_plugin_hook on the "export" event.
+ * Exports all attributes of an entity.
+ *
+ * @warning Only exports fields in the entity and entity type tables.
+ *
+ * @elgg_event_handler export all
+ * @todo document
  */
 function export_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	// Sanity check values
@@ -1564,6 +1737,7 @@ function export_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
  *
  * @param ODDEntity $element The OpenDD element
  * @return ElggEntity the unsaved entity which should be populated by items.
+ * @todo Remove this.
  */
 function oddentity_to_elggentity(ODDEntity $element) {
 	$class = $element->getAttribute('class');
@@ -1619,8 +1793,12 @@ function oddentity_to_elggentity(ODDEntity $element) {
 
 /**
  * Import an entity.
+ *
  * This function checks the passed XML doc (as array) to see if it is a user, if so it constructs a new
  * elgg user and returns "true" to inform the importer that it's been handled.
+ *
+ * @elgg_plugin_hook_handler import all
+ * @todo document
  */
 function import_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	$element = $params['element'];
@@ -1650,16 +1828,19 @@ function import_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 }
 
 /**
- * Determines whether or not the specified user can edit the specified entity.
+ * Returns if $user_guid is able to edit $entity_guid.
  *
- * This is extendible by registering a plugin hook taking in the parameters 'entity' and 'user',
- * which are the entity and user entities respectively
+ * @tip Can be overridden by by registering for the permissions_check
+ * plugin hook.
  *
- * @see register_plugin_hook
+ * @warning If a $user_guid is not passed it will default to the logged in user.
+ *
+ * @tip Use ElggEntity::canEdit() instead.
  *
  * @param int $entity_guid The GUID of the entity
  * @param int $user_guid The GUID of the user
- * @return true|false Whether the specified user can edit the specified entity.
+ * @return bool
+ * @link http://docs.elgg.org/Entities/AccessControl
  */
 function can_edit_entity($entity_guid, $user_guid = 0) {
 	global $CONFIG;
@@ -1700,17 +1881,18 @@ function can_edit_entity($entity_guid, $user_guid = 0) {
 }
 
 /**
- * Determines whether or not the specified user can edit metadata on the specified entity.
+ * Returns if $user_guid can edit the metadata on $entity_guid.
  *
- * This is extendible by registering a plugin hook taking in the parameters 'entity' and 'user',
- * which are the entity and user entities respectively
+ * @tip Can be overridden by by registering for the permissions_check:metadata
+ * plugin hook.
  *
- * @see register_plugin_hook
+ * @warning If a $user_guid isn't specified, the currently logged in user is used.
  *
  * @param int $entity_guid The GUID of the entity
  * @param int $user_guid The GUID of the user
  * @param ElggMetadata $metadata The metadata to specifically check (if any; default null)
- * @return true|false Whether the specified user can edit the specified entity.
+ * @return bool
+ * @see register_plugin_hook()
  */
 function can_edit_entity_metadata($entity_guid, $user_guid = 0, $metadata = null) {
 	if ($entity = get_entity($entity_guid)) {
@@ -1732,12 +1914,17 @@ function can_edit_entity_metadata($entity_guid, $user_guid = 0, $metadata = null
 	}
 }
 
-
 /**
- * Get the icon for an entity
+ * Return the icon URL for an entity.
  *
- * @param ElggEntity $entity The entity (passed an entity rather than a guid to handle non-created entities)
+ * @tip Can be overridden by registering a plugin hook for entity:icon:url OR
+ * with {@link register_
+ *
+ * @internal This is passed an entity rather than a guid to handle non-created entities.
+ *
+ * @param ElggEntity $entity The entity
  * @param string $size
+ * @return string URL to the entity icon.
  */
 function get_entity_icon_url(ElggEntity $entity, $size = 'medium') {
 	global $CONFIG;
@@ -1800,10 +1987,13 @@ function get_entity_icon_url(ElggEntity $entity, $size = 'medium') {
 }
 
 /**
- * Gets the URL for an entity, given a particular GUID
+ * Returns the URL for an entity.
+ *
+ * @tip Can be overridden with {@link register_entity_url_handler()}.
  *
  * @param int $entity_guid The GUID of the entity
  * @return string The URL of the entity
+ * @see register_entity_url_handler()
  */
 function get_entity_url($entity_guid) {
 	global $CONFIG;
@@ -1845,6 +2035,8 @@ function get_entity_url($entity_guid) {
  * @param string $entity_type The entity type
  * @param string $entity_subtype The entity subtype
  * @return true|false Depending on success
+ * @see get_entity_url()
+ * @see ElggEntity::getURL()
  */
 function register_entity_url_handler($function_name, $entity_type = "all", $entity_subtype = "all") {
 	global $CONFIG;
@@ -1867,14 +2059,16 @@ function register_entity_url_handler($function_name, $entity_type = "all", $enti
 }
 
 /**
- * Default Icon URL handler for entities.
- * This will attempt to find a default entity for the current view and return a url. This is registered at
- * a low priority so that other handlers will pick it up first.
+ * Default Icon handler for entities.
+ *
+ * @tip This will attempt to find a default entity for the current view and return a url.
+ * This is registered at a high priority so that other handlers will pick it up first.
  *
  * @param unknown_type $hook
  * @param unknown_type $entity_type
  * @param unknown_type $returnvalue
  * @param unknown_type $params
+ * @elgg_plugin_hook_handler entity:icon:url all
  */
 function default_entity_icon_hook($hook, $entity_type, $returnvalue, $params) {
 	global $CONFIG;
@@ -1903,13 +2097,19 @@ function default_entity_icon_hook($hook, $entity_type, $returnvalue, $params) {
 }
 
 /**
- * Registers and entity type and subtype to return in search and other places.
- * A description in the elgg_echo languages file of the form item:type:subtype
- * is also expected.
+ * Registers an entity type and subtype as a public-facing entity that should
+ * be shown in search and by {@link elgg_list_registered_entities()}.
+ *
+ * @warning Entities that aren't registered here will not show up in search.
+ *
+ * @tip Add a language string item:type:subtype to make sure the items are display properly.
  *
  * @param string $type The type of entity (object, site, user, group)
  * @param string $subtype The subtype to register (may be blank)
  * @return true|false Depending on success
+ * @see get_registered_entity_types()
+ * @link http://docs.elgg.org/Search
+ * @link http://docs.elgg.org/Tutorials/Search
  */
 function register_entity_type($type, $subtype) {
 	global $CONFIG;
@@ -1937,10 +2137,9 @@ function register_entity_type($type, $subtype) {
 /**
  * Returns registered entity types and subtypes
  *
- * @see register_entity_type
- *
  * @param string $type The type of entity (object, site, user, group) or blank for all
  * @return array|false Depending on whether entities have been registered
+ * @see register_entity_type()
  */
 function get_registered_entity_types($type = '') {
 	global $CONFIG;
@@ -1963,7 +2162,7 @@ function get_registered_entity_types($type = '') {
 }
 
 /**
- * Determines whether or not the specified entity type and subtype have been registered in the system
+ * Returns if the entity type and subtype have been registered with {@see register_entity_type()}.
  *
  * @param string $type The type of entity (object, site, user, group)
  * @param string $subtype The subtype (may be blank)
@@ -1982,13 +2181,13 @@ function is_registered_entity_type($type, $subtype) {
 	if (in_array($subtype, $CONFIG->registered_entities[$type])) {
 		return true;
 	}
-
 }
 
 /**
  * Page handler for generic entities view system
  *
  * @param array $page Page elements from pain page handler
+ * @elgg_page_handler view
  */
 function entities_page_handler($page) {
 	if (isset($page[0])) {
@@ -2088,7 +2287,7 @@ function elgg_list_registered_entities($options) {
 }
 
 /**
- * Get entities based on their private data, in a similar way to metadata.
+ * Get entities based on their private data.
  *
  * @param string $name The name of the setting
  * @param string $value The value of the setting
@@ -2102,6 +2301,7 @@ function elgg_list_registered_entities($options) {
  * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
  * @param int|array $container_guid The container or containers to get entities from (default: all containers).
  * @return array A list of entities.
+ * @todo deprecate
  */
 function get_entities_from_private_setting($name = "", $value = "", $type = "", $subtype = "", $owner_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0, $container_guid = null) {
 	global $CONFIG;
@@ -2230,7 +2430,7 @@ function get_entities_from_private_setting($name = "", $value = "", $type = "", 
 }
 
 /**
- * Get entities based on their private data by multiple keys, in a similar way to metadata.
+ * Get entities based on their private data by multiple keys.
  *
  * @param string $name The name of the setting
  * @param string $value The value of the setting
@@ -2244,6 +2444,7 @@ function get_entities_from_private_setting($name = "", $value = "", $type = "", 
  * @param int $site_guid The site to get entities for. Leave as 0 (default) for the current site; -1 for all sites.
  * @param int|array $container_guid The container or containers to get entities from (default: all containers).
  * @return array A list of entities.
+ * @todo deprecate
  */
 function get_entities_from_private_setting_multi(array $name, $type = "", $subtype = "", $owner_guid = 0, $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0, $container_guid = null) {
 	global $CONFIG;
@@ -2377,9 +2578,20 @@ function get_entities_from_private_setting_multi(array $name, $type = "", $subty
 /**
  * Gets a private setting for an entity.
  *
+ * Plugin authors can set private data on entities.  By default
+ * private data will not be searched or exported.
+ *
+ * @internal Private data is used to store settings for plugins
+ * and user settings.
+ *
  * @param int $entity_guid The entity GUID
  * @param string $name The name of the setting
  * @return mixed The setting value, or false on failure
+ * @see set_private_setting()
+ * @see get_all_private_settings()
+ * @see remove_private_setting()
+ * @see remove_all_private_settings()
+ * @link http://docs.elgg.org/DataModel/Entities/PrivateSettings
  */
 function get_private_setting($entity_guid, $name) {
 	global $CONFIG;
@@ -2393,9 +2605,15 @@ function get_private_setting($entity_guid, $name) {
 }
 
 /**
- * Return an array of all private settings for a given
+ * Return an array of all private settings.
  *
  * @param int $entity_guid The entity GUID
+ * @return array|false
+ * @see set_private_setting()
+ * @see get_private_settings()
+ * @see remove_private_setting()
+ * @see remove_all_private_settings()
+ * @link http://docs.elgg.org/DataModel/Entities/PrivateSettings
  */
 function get_all_private_settings($entity_guid) {
 	global $CONFIG;
@@ -2422,6 +2640,11 @@ function get_all_private_settings($entity_guid) {
  * @param string $name The name of the setting
  * @param string $value The value of the setting
  * @return mixed The setting ID, or false on failure
+ * @see get_private_setting()
+ * @see get_all_private_settings()
+ * @see remove_private_setting()
+ * @see remove_all_private_settings()
+ * @link http://docs.elgg.org/DataModel/Entities/PrivateSettings
  */
 function set_private_setting($entity_guid, $name, $value) {
 	global $CONFIG;
@@ -2446,7 +2669,11 @@ function set_private_setting($entity_guid, $name, $value) {
  * @param int $entity_guid The Entity GUID
  * @param string $name The name of the setting
  * @return true|false depending on success
- *
+ * @see get_private_setting()
+ * @see get_all_private_settings()
+ * @see set_private_setting()
+ * @see remove_all_private_settings()
+ * @link http://docs.elgg.org/DataModel/Entities/PrivateSettings
  */
 function remove_private_setting($entity_guid, $name) {
 	global $CONFIG;
@@ -2464,7 +2691,11 @@ function remove_private_setting($entity_guid, $name) {
  *
  * @param int $entity_guid The Entity GUID
  * @return true|false depending on success
- *
+ * @see get_private_setting()
+ * @see get_all_private_settings()
+ * @see set_private_setting()
+ * @see remove_private_settings()
+ * @link http://docs.elgg.org/DataModel/Entities/PrivateSettings
  */
 function remove_all_private_settings($entity_guid) {
 	global $CONFIG;
@@ -2475,9 +2706,15 @@ function remove_all_private_settings($entity_guid) {
 }
 
 /*
- * Check the recurisve delete permissions token.
+ * Check the recursive delete permissions token.
  *
+ * If an entity is deleted recursively, a permissions override is required to allow
+ * contained or owned entities to be removed.
+ *
+ * @access private
  * @return bool
+ * @elgg_plugin_hook_handler permissions_check all
+ * @elgg_plugin_hook_handler permissions_check:metadata all
  */
 function recursive_delete_permissions_check($hook, $entity_type, $returnvalue, $params) {
 	static $__RECURSIVE_DELETE_TOKEN;
@@ -2495,6 +2732,9 @@ function recursive_delete_permissions_check($hook, $entity_type, $returnvalue, $
 /**
  * Checks if $entity is an ElggEntity and optionally for type and subtype.
  *
+ * @tip Use this function in actions and views to check that you are dealing
+ * with the correct type of entity.
+ *
  * @param $entity
  * @param $type
  * @param $subtype
@@ -2511,7 +2751,7 @@ function elgg_instanceof($entity, $type = NULL, $subtype = NULL, $class = NULL) 
 	if ($subtype) {
 		$return = $return && ($entity->getSubtype() == $subtype);
 	}
-	
+
 	if ($class) {
 		$return = $return && ($entity instanceof $class);
 	}
@@ -2521,7 +2761,12 @@ function elgg_instanceof($entity, $type = NULL, $subtype = NULL, $class = NULL) 
 
 
 /**
- * Update last_action on the given entity.
+ * Update the last_action column in the entities table for $guid.
+ *
+ * This determines the sort order of 1.8's default river.
+ *
+ * @warning This is different to time_updated.  Time_updated is automatically set,
+ * while last_action is only set when explicitly called.
  *
  * @param int $guid Entity annotation|relationship action carried out on
  * @param int $posted Timestamp of last action
@@ -2554,6 +2799,7 @@ function update_entity_last_action($guid, $posted = NULL){
  * @param unknown_type $user
  * @param unknown_type $returnvalue
  * @param unknown_type $tag
+ * @elgg_plugin_hook_handler gc system
  */
 function entities_gc($hook, $user, $returnvalue, $tag) {
 	global $CONFIG;
@@ -2567,7 +2813,9 @@ function entities_gc($hook, $user, $returnvalue, $tag) {
 }
 
 /**
- * Runs unit tests for the entities object.
+ * Runs unit tests for the entity objects.
+ *
+ * @elgg_plugin_hook_handler unit_test system
  */
 function entities_test($hook, $type, $value, $params) {
 	global $CONFIG;
@@ -2576,8 +2824,9 @@ function entities_test($hook, $type, $value, $params) {
 }
 
 /**
- * Entities init function; establishes the page handler
+ * Entities init function; establishes the default entity page handler
  *
+ * @elgg_event_handler init system
  */
 function entities_init() {
 	register_page_handler('view','entities_page_handler');
@@ -2605,4 +2854,4 @@ register_plugin_hook('volatile', 'metadata', 'volatile_data_export_plugin_hook')
 register_plugin_hook('entity:icon:url', 'all', 'default_entity_icon_hook', 1000);
 
 /** Register init system event **/
-register_elgg_event_handler('init','system','entities_init');
+register_elgg_event_handler('init', 'system', 'entities_init');
