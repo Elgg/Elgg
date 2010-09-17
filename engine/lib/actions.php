@@ -177,19 +177,6 @@ function register_action($action, $public = false, $filename = "", $admin_only =
 }
 
 /**
- * Actions to perform on initialisation
- *
- * @param string $event Events API required parameters
- * @param string $object_type Events API required parameters
- * @param string $object Events API required parameters
- * @todo remove
- */
-function actions_init($event, $object_type, $object) {
-	register_action("error");
-	return true;
-}
-
-/**
  * Validate an action token.
  *
  * Calls to actions will automatically validate tokens.
@@ -353,5 +340,3 @@ function elgg_action_exist($action) {
 
 	return (isset($CONFIG->actions[$action]) && file_exists($CONFIG->actions[$action]['file']));
 }
-
-register_elgg_event_handler("init", "system", "actions_init");
