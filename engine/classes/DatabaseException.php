@@ -1,10 +1,10 @@
 <?php
 /**
- * DatabaseException
- * An database exception, throw when a database exception happens, subclass if more detail is needed.
+ * Database Exception
  *
- * @author Curverider Ltd <info@elgg.com>
- * @package Elgg
- * @subpackage Exceptions
+ * A generic parent class for database exceptions
+ *
+ * @package Elgg.Core
+ * @subpackage Exceptions.Stub
  */
 class DatabaseException extends Exception {}

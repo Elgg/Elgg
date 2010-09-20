@@ -1,12 +1,10 @@
 <?php
-
 /**
  * ElggCache The elgg cache superclass.
  * This defines the interface for a cache (wherever that cache is stored).
  *
- * @author Curverider Ltd <info@elgg.com>
- * @package Elgg
- * @subpackage API
+ * @package Elgg.Core
+ * @subpackage Cache
  */
 abstract class ElggCache implements
 	// Override for array access

@@ -3,8 +3,7 @@
  * Data format exception
  * An exception thrown when there is a problem in the format of some data.
  *
- * @author Curverider Ltd <info@elgg.com>
- * @package Elgg
- * @subpackage Exceptions
+ * @package Elgg.Core
+ * @subpackage Exceptions.Stub
  */
 class DataFormatException extends Exception {}

@@ -1,9 +1,11 @@
 <?php
 /**
- * @class DeleteQueryTypeQueryComponent
- * A delete query.
- * @author Curverider Ltd
- * @see Query
+ * Delete query
+ *
+ * @todo probably remove.
+ * @access private
+ * @package Elgg.Core
+ * @subpackage Unimplemented
  */
 class DeleteQueryTypeQueryComponent extends QueryTypeQueryComponent
 {

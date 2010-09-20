@@ -1,10 +1,10 @@
 <?php
 /**
- * APIException
- * The API Exception class, thrown by the API layer when an API call has an issue.
+ * API Exception Stub
  *
- * @author Curverider Ltd <info@elgg.com>
- * @package Elgg
- * @subpackage Exceptions
+ * Generic parent class for API exceptions.
+ *
+ * @package Elgg.Core
+ * @subpackage Exceptions.Stub
  */
 class APIException extends Exception {}

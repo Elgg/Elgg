@@ -1,10 +1,10 @@
 <?php
 /**
- * ConfigurationException
- * There is a configuration error
+ * Configuration exception
  *
- * @author Curverider Ltd <info@elgg.com>
+ * A generic parent class for Configuration exceptions
+ *
  * @package Elgg
- * @subpackage Exceptions
+ * @subpackage Exceptions.Stub
  */
 class ConfigurationException extends Exception {}

@@ -1,12 +1,13 @@
 <?php
 /**
- * @class AccessControlQueryComponent
- * Access control component.
- * @author Curverider Ltd
- * @see Query
+ * The access control component of the query class.
+ *
+ * @todo probably remove.
+ * @access private
+ * @package Elgg.Core
+ * @subpackage Unimplemented
  */
-class AccessControlQueryComponent extends QueryComponent
-{
+class AccessControlQueryComponent extends QueryComponent {
 	/**
 	 * Construct the ACL.
 	 *
@@ -15,8 +16,7 @@ class AccessControlQueryComponent extends QueryComponent
 	 * @param string $object_owner_table The table containing the owner information for the stuff you're retrieving.
 	 * @param string $object_owner_id_field The field in $object_owner_table containing the owner information
 	 */
-	function __construct($acl_table = "entities", $acl_field = "access_id", $object_owner_table = "entities", $object_owner_id_field = "owner_guid")
-	{
+	function __construct($acl_table = "entities", $acl_field = "access_id", $object_owner_table = "entities", $object_owner_id_field = "owner_guid") {
 		global $CONFIG;
 
 		$this->acl_table = $CONFIG->dbprefix . sanitise_string($acl_table);
@@ -25,8 +25,7 @@ class AccessControlQueryComponent extends QueryComponent
 		$this->object_owner_id_field = sanitise_string($object_owner_id_field);
 	}
 
-	function __toString()
-	{
+	function __toString() {
 		//$access = get_access_list();
 		// KJ - changed to use get_access_sql_suffix
 		// Note: currently get_access_sql_suffix is hardwired to use

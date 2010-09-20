@@ -1,10 +1,10 @@
 <?php
 /**
- * CallException
- * An exception thrown when there is a problem calling something.
+ * Call Exception Stub
  *
- * @author Curverider Ltd <info@elgg.com>
- * @package Elgg
- * @subpackage Exceptions
+ * Generic parent class for Call exceptions
+ *
+ * @package Elgg.Core
+ * @subpackage Exceptions.Stub
  */
 class CallException extends Exception {}

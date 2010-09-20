@@ -1,6 +1,12 @@
 <?php
 /**
- * Temporary class used to determing if access is being ignored
+ * Class used to determin if access is being ignored.
+ *
+ * @access private
+ * @todo I don't remember why this was required beyond scope concerns.
+ * @see elgg_get_ignore_access()
+ * @package Elgg.Core
+ * @subpackage Access
  */
 class ElggAccess {
 	/**

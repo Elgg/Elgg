@@ -1,10 +1,10 @@
 <?php
 /**
- * ClassNotFoundException
- * An Class not found Exception, throw when an class can not be found occurs.
+ * Class not found
  *
- * @author Curverider Ltd <info@elgg.com>
- * @package Elgg
+ * Thrown when trying to load a class that doesn't exist.
+ *
+ * @package Elgg.Core
  * @subpackage Exceptions
  */
 class ClassNotFoundException extends ClassException {}

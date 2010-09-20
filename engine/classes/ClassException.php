@@ -1,10 +1,10 @@
 <?php
 /**
- * ClassException
- * A class Exception, throw when there is a class error.
+ * Class Exception
  *
- * @author Curverider Ltd <info@elgg.com>
- * @package Elgg
- * @subpackage Exceptions
+ * A generic parent class for Class exceptions
+ *
+ * @package Elgg.Core
+ * @subpackage Exceptions.Stub
  */
 class ClassException extends Exception {}

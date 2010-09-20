@@ -1,13 +1,14 @@
 <?php
 /**
- * ElggAnnotation
+ * Elgg Annotations
  *
- * An annotation is similar to metadata.
- * Each entity can have more than one of each type of annotation.
+ * Annotations allow you to attach bits of information to entities.
+ * They are essentially the same as metadata, but with additional
+ * helper functions.
  *
- * @package Elgg
- * @subpackage Core
- * @author Curverider Ltd <info@elgg.com>
+ * @package Elgg.Core
+ * @subpackage DataModel.Annotations
+ * @link http://docs.elgg.org/DataModel/Annotations
  */
 class ElggAnnotation extends ElggExtender {
 
