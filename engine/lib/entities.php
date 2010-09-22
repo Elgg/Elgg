@@ -3,7 +3,7 @@
  * Procedural code for creating, loading, and modifying ElggEntity objects.
  *
  * @package Elgg.Core
- * @subpackage DataModel
+ * @subpackage DataModel.Entities
  * @link http://docs.elgg.org/DataModel/Entities
  */
 
@@ -1917,8 +1917,7 @@ function can_edit_entity_metadata($entity_guid, $user_guid = 0, $metadata = null
 /**
  * Return the icon URL for an entity.
  *
- * @tip Can be overridden by registering a plugin hook for entity:icon:url OR
- * with {@link register_
+ * @tip Can be overridden by registering a plugin hook for entity:icon:url, $entity_type.
  *
  * @internal This is passed an entity rather than a guid to handle non-created entities.
  *
