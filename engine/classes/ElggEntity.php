@@ -1,11 +1,30 @@
 <?php
 /**
- * ElggEntity The elgg entity superclass
- * This class holds methods for accessing the main entities table.
+ * The parent class for all Elgg Entities.
  *
- * @author Curverider Ltd <info@elgg.com>
- * @package Elgg
- * @subpackage Core
+ * An ElggEntity is one of the basic data models in Elgg.  It is the primary
+ * means of storing and retrieving data from the database.  An ElggEntity
+ * represents one row of the entities table.
+ *
+ * The ElggEntity class handles CRUD operations for the entities table.
+ * ElggEntity should always be extended by another class to handle CRUD
+ * operations on the type-specific table.
+ *
+ * ElggEntity uses magic methods for get and set, so any property that isn't
+ * declared will be assumed to be metadata and written to the database
+ * as metadata on the object.  All children classes must declare which
+ * properties are columns of the type table or they will be assumed
+ * to be metadata.  See ElggObject::initialise_entities() for examples.
+ *
+ * Core supports 4 types of entities: ElggObject, ElggUser, ElggGroup, and
+ * ElggSite.
+ *
+ * @tip Most plugin authors will want to extend the ElggObject class
+ * instead of this class.
+ *
+ * @package Elgg.Core
+ * @subpackage DataMode.Entities
+ * @link http://docs.elgg.org/DataModel/ElggEntity
  */
 abstract class ElggEntity implements
 	Notable,    // Calendar interface
@@ -35,12 +54,12 @@ abstract class ElggEntity implements
 	protected $icon_override;
 
 	/**
-	 * Temporary cache for metadata, permitting meta data access before a guid has obtained.
+	 * Holds metadata until entity is saved.  Once the entity is saved, metadata are written immediately to the database.
 	 */
 	protected $temp_metadata;
 
 	/**
-	 * Temporary cache for annotations, permitting meta data access before a guid has obtained.
+	 * Holds annotations until entity is saved.  Once the entity is saved, annotations are written immediately to the database.
 	 */
 	protected $temp_annotations;
 
@@ -53,9 +72,8 @@ abstract class ElggEntity implements
 
 	/**
 	 * Initialise the attributes array.
-	 * This is vital to distinguish between metadata and base parameters.
 	 *
-	 * Place your base parameters here.
+	 * This is vital to distinguish between metadata and base parameters.
 	 *
 	 * @return void
 	 */
@@ -111,13 +129,12 @@ abstract class ElggEntity implements
 	 * Resets the guid so that the entity can be saved as a distinct entity from
 	 * the original. Creation time will be set when this new entity is saved.
 	 * The owner and container guids come from the original entity. The clone
-	 * method copies metadata but does not copy over annotations, or private settings.
+	 * method copies metadata but does not copy annotations or private settings.
 	 *
-	 * Note: metadata will have its owner and access id set when the entity is saved
+	 * @note metadata will have its owner and access id set when the entity is saved
 	 * and it will be the same as that of the entity.
 	 */
 	public function __clone() {
-
 		$orig_entity = get_entity($this->guid);
 		if (!$orig_entity) {
 			elgg_log("Failed to clone entity with GUID $this->guid", "ERROR");
@@ -149,22 +166,24 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Return the value of a given key.
-	 * If $name is a key field (as defined in $this->attributes) that value is returned, otherwise it will
-	 * then look to see if the value is in this object's metadata.
+	 * Return the value of a property.
+	 *
+	 * If $name is defined in $this->attributes that value is returned, otherwise it will
+	 * pull from the entity's metadata.
 	 *
 	 * Q: Why are we not using __get overload here?
 	 * A: Because overload operators cause problems during subclassing, so we put the code here and
 	 * create overloads in subclasses.
+	 * @todo What problems are these?
 	 *
-	 * subtype is returned as an id rather than the subtype string. Use getSubtype()
+	 * @warning Subtype is returned as an id rather than the subtype string. Use getSubtype()
 	 * to get the subtype string.
 	 *
 	 * @param string $name
 	 * @return mixed Returns the value of a given value, or null.
 	 */
 	public function get($name) {
-		// See if its in our base attribute
+		// See if its in our base attributes
 		if (isset($this->attributes[$name])) {
 			return $this->attributes[$name];
 		}
@@ -177,16 +196,18 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Set the value of a given key, replacing it if necessary.
-	 * If $name is a base attribute (as defined in $this->attributes) that value is set, otherwise it will
+	 * Sets the value of a property.
+	 *
+	 * If $name is defined in $this->attributes that value is set, otherwise it will
 	 * set the appropriate item of metadata.
 	 *
-	 * Note: It is important that your class populates $this->attributes with keys for all base attributes, anything
+	 * @warning It is important that your class populates $this->attributes with keys for all base attributes, anything
 	 * not in their gets set as METADATA.
 	 *
 	 * Q: Why are we not using __set overload here?
 	 * A: Because overload operators cause problems during subclassing, so we put the code here and
 	 * create overloads in subclasses.
+	 * @todo What problems?
 	 *
 	 * @param string $name
 	 * @param mixed $value
@@ -213,9 +234,10 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Get a given piece of metadata.
+	 * Return the value of a piece of metadata.
 	 *
 	 * @param string $name
+	 * @return mixed The value, or NULL if not found.
 	 */
 	public function getMetaData($name) {
 		if ((int) ($this->guid) > 0) {
@@ -236,7 +258,7 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Class member get overloading
+	 * Return an attribute or a piece of metadata.
 	 *
 	 * @param string $name
 	 * @return mixed
@@ -246,7 +268,7 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Class member set overloading
+	 * Set an attribute or a piece of metadata.
 	 *
 	 * @param string $name
 	 * @param mixed $value
@@ -257,7 +279,9 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Supporting isset.
+	 * Test if property is set either as an attribute or metadata.
+	 *
+	 * @tip Use isset($entity->property)
 	 *
 	 * @param string $name The name of the attribute or metadata.
 	 * @return bool
@@ -267,7 +291,9 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Supporting unsetting of magic attributes.
+	 * Unset a property from metadata or attribute.
+	 *
+	 * @warning If you use this to unset an attribute, you must save the object!
 	 *
 	 * @param string $name The name of the attribute or metadata.
 	 */
@@ -283,6 +309,9 @@ abstract class ElggEntity implements
 	/**
 	 * Set a piece of metadata.
 	 *
+	 * @tip Plugin authors should use the magic methods.
+	 *
+	 * @access private
 	 * @param string $name Name of the metadata
 	 * @param mixed $value Value of the metadata
 	 * @param string $value_type Types supported: integer and string. Will auto-identify if not set
@@ -342,19 +371,26 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Clear metadata.
+	 * Remove metadata
+	 *
+	 * @warning Calling this with no or empty arguments will clear all metadata on the entity.
+	 * @param string The name of the metadata to clear
+	 * @return mixed The n
 	 */
 	public function clearMetaData($name = "") {
 		if (empty($name)) {
 			return clear_metadata($this->getGUID());
 		} else {
-			return remove_metadata($this->getGUID(),$name);
+			return remove_metadata($this->getGUID(), $name);
 		}
 	}
 
 
 	/**
-	 * Get a piece of volatile (non-persisted) data on this entity
+	 * Get a piece of volatile (non-persisted) data on this entity.
+	 *
+	 * @param string $name The name of the volatile data
+	 * @return mixed The value or NULL if not found.
 	 */
 	public function getVolatileData($name) {
 		if (!is_array($this->volatile)) {
@@ -371,6 +407,9 @@ abstract class ElggEntity implements
 
 	/**
 	 * Set a piece of volatile (non-persisted) data on this entity
+	 *
+	 * @param string $name
+	 * @param mixed $value
 	 */
 	public function setVolatileData($name, $value) {
 		if (!is_array($this->volatile)) {
@@ -382,22 +421,29 @@ abstract class ElggEntity implements
 
 
 	/**
-	 * Remove all entities associated with this entity
+	 * Remove all relationships to and from this entity.
 	 *
 	 * @return true
+	 * @todo This should actually return if it worked.
+	 * @see ElggEntity::addRelationship()
+	 * @see ElggEntity::removeRelationship()
 	 */
 	public function clearRelationships() {
 		remove_entity_relationships($this->getGUID());
-		remove_entity_relationships($this->getGUID(),"",true);
+		remove_entity_relationships($this->getGUID(), "", true);
 		return true;
 	}
 
 	/**
-	 * Add a relationship.
+	 * Add a relationship between this an another entity.
 	 *
-	 * @param int $guid Relationship to link to.
+	 * @tip Read the relationship like "$guid is a $relationship of this entity."
+	 *
+	 * @param int $guid Entity to link to.
 	 * @param string $relationship The type of relationship.
 	 * @return bool
+	 * @see ElggEntity::removeRelationship()
+	 * @see ElggEntity::clearRelationships()
 	 */
 	public function addRelationship($guid, $relationship) {
 		return add_entity_relationship($this->getGUID(), $relationship, $guid);
@@ -409,6 +455,8 @@ abstract class ElggEntity implements
 	 * @param int $guid
 	 * @param str $relationship
 	 * @return bool
+	 * @see ElggEntity::addRelationship()
+	 * @see ElggEntity::clearRelationships()
 	 */
 	public function removeRelationship($guid, $relationship) {
 		return remove_entity_relationship($this->getGUID(), $relationship, $guid);
@@ -417,43 +465,49 @@ abstract class ElggEntity implements
 	/**
 	 * Adds a private setting to this entity.
 	 *
+	 * Private settings are similar to metadata but will not
+	 * be searched and there are fewer helper functions for them.
+	 *
 	 * @param $name
 	 * @param $value
-	 * @return unknown_type
+	 * @return bool
+	 * @link http://docs.elgg.org/DataModel/Entities/PrivateSettings
 	 */
 	function setPrivateSetting($name, $value) {
 		return set_private_setting($this->getGUID(), $name, $value);
 	}
 
 	/**
-	 * Gets private setting for this entity
+	 * Returns a private setting value
 	 *
 	 * @param $name
-	 * @return unknown_type
+	 * @return mixed
 	 */
 	function getPrivateSetting($name) {
 		return get_private_setting($this->getGUID(), $name);
 	}
 
 	/**
-	 * Removes private setting for this entity.
+	 * Removes private setting
 	 *
 	 * @param $name
-	 * @return unknown_type
+	 * @return bool
 	 */
 	function removePrivateSetting($name) {
 		return remove_private_setting($this->getGUID(), $name);
 	}
 
 	/**
-	 * Adds an annotation to an entity. By default, the type is detected automatically; however,
-	 * it can also be set. Note that by default, annotations are private.
+	 * Adds an annotation to an entity.
+	 *
+	 * @warning By default, annotations are private.
 	 *
 	 * @param string $name
 	 * @param mixed $value
 	 * @param int $access_id
 	 * @param int $owner_id
 	 * @param string $vartype
+	 * @link http://docs.elgg.org/DataModel/Annotations
 	 */
 	function annotate($name, $value, $access_id = ACCESS_PRIVATE, $owner_id = 0, $vartype = "") {
 		if ((int) $this->guid > 0) {
@@ -465,12 +519,13 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Get the annotations for an entity.
+	 * Returns an array of annotations.
 	 *
 	 * @param string $name
 	 * @param int $limit
 	 * @param int $offset
-	 * @param string $order
+	 * @param string $order asc or desc
+	 * @return array
 	 */
 	function getAnnotations($name, $limit = 50, $offset = 0, $order="asc") {
 		if ((int) ($this->guid) > 0) {
@@ -481,18 +536,22 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Remove all annotations or all annotations for this entity.
+	 * Remove an annotation or all annotations for this entity.
+	 *
+	 * @warning Calling this method with no or an empty argument will remove all annotations on the entity.
 	 *
 	 * @param string $name
+	 * @return bool
 	 */
 	function clearAnnotations($name = "") {
 		return clear_annotations($this->getGUID(), $name);
 	}
 
 	/**
-	 * Return the annotations for the entity.
+	 * Count annotations.
 	 *
 	 * @param string $name The type of annotation.
+	 * @return int
 	 */
 	function countAnnotations($name = "") {
 		return count_annotations($this->getGUID(), "", "", $name);
@@ -502,6 +561,7 @@ abstract class ElggEntity implements
 	 * Get the average of an integer type annotation.
 	 *
 	 * @param string $name
+	 * @return int
 	 */
 	function getAnnotationsAvg($name) {
 		return get_annotations_avg($this->getGUID(), "", "", $name);
@@ -511,6 +571,7 @@ abstract class ElggEntity implements
 	 * Get the sum of integer type annotations of a given name.
 	 *
 	 * @param string $name
+	 * @return int
 	 */
 	function getAnnotationsSum($name) {
 		return get_annotations_sum($this->getGUID(), "", "", $name);
@@ -520,6 +581,7 @@ abstract class ElggEntity implements
 	 * Get the minimum of integer type annotations of given name.
 	 *
 	 * @param string $name
+	 * @return int
 	 */
 	function getAnnotationsMin($name) {
 		return get_annotations_min($this->getGUID(), "", "", $name);
@@ -529,13 +591,14 @@ abstract class ElggEntity implements
 	 * Get the maximum of integer type annotations of a given name.
 	 *
 	 * @param string $name
+	 * @return int
 	 */
 	function getAnnotationsMax($name) {
 		return get_annotations_max($this->getGUID(), "", "", $name);
 	}
 
 	/**
-	 * Gets an array of entities from a specific relationship type
+	 * Gets an array of entities with a relationship to this entity.
 	 *
 	 * @param string $relationship Relationship type (eg "friends")
 	 * @param true|false $inverse Is this an inverse relationship?
@@ -570,7 +633,7 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Determines whether or not the specified user (by default the current one) can edit the entity
+	 * Can a user edit this entity.
 	 *
 	 * @param int $user_guid The user GUID, optionally (defaults to the currently logged in user)
 	 * @return true|false
@@ -580,7 +643,7 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Determines whether or not the specified user (by default the current one) can edit metadata on the entity
+	 * Can a user edit metadata on this entity
 	 *
 	 * @param ElggMetadata $metadata The piece of metadata to specifically check
 	 * @param int $user_guid The user GUID, optionally (defaults to the currently logged in user)
@@ -591,7 +654,7 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Returns whether the given user (or current user) has the ability to write to this container.
+	 * Can a user write to this entity's container.
 	 *
 	 * @param int $user_guid The user.
 	 * @return bool
@@ -601,7 +664,7 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Obtain this entity's access ID
+	 * Returns the access_id.
 	 *
 	 * @return int The access ID
 	 */
@@ -610,7 +673,7 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Obtain this entity's GUID
+	 * Returns the guid.
 	 *
 	 * @return int GUID
 	 */
@@ -619,7 +682,7 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Get the owner of this entity
+	 * Return the guid of the entity's owner.
 	 *
 	 * @return int The owner GUID
 	 */
@@ -628,7 +691,7 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Returns the actual entity of the user who owns this entity, if any
+	 * Returns the ElggEntity or child object of the owner of the entity.
 	 *
 	 * @return ElggEntity The owning user
 	 */
@@ -637,7 +700,7 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Gets the type of entity this is
+	 * Returns the entity type
 	 *
 	 * @return string Entity type
 	 */
@@ -646,7 +709,9 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Returns the subtype of this entity
+	 * Returns the entity subtype string
+	 *
+	 * @note This returns a string.  If you want the id, use ElggEntity::subtype.
 	 *
 	 * @return string The entity subtype
 	 */
@@ -660,7 +725,7 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Gets the UNIX epoch time that this entity was created
+	 * Returns the UNIX epoch time that this entity was created
 	 *
 	 * @return int UNIX epoch time
 	 */
@@ -669,7 +734,7 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Gets the UNIX epoch time that this entity was last updated
+	 * Returns the UNIX epoch time that this entity was last updated
 	 *
 	 * @return int UNIX epoch time
 	 */
@@ -678,9 +743,11 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Gets the display URL for this entity
+	 * Returns the URL for this entity
 	 *
 	 * @return string The URL
+	 * @see register_entity_url_handler()
+	 * @see ElggEntity::setURL()
 	 */
 	public function getURL() {
 		if (!empty($this->url_override)) {
@@ -690,7 +757,9 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Overrides the URL returned by getURL
+	 * Overrides the URL returned by getURL()
+	 *
+	 * @warning This override exists only for the life of the object.
 	 *
 	 * @param string $url The new item URL
 	 * @return string The URL
@@ -701,10 +770,11 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Return a url for the entity's icon, trying multiple alternatives.
+	 * Returns a URL for the entity's icon.
 	 *
-	 * @param string $size Either 'large','medium','small' or 'tiny'
+	 * @param string $size Either 'large', 'medium', 'small' or 'tiny'
 	 * @return string The url or false if no url could be worked out.
+	 * @see get_entity_icon_url()
 	 */
 	public function getIcon($size = 'medium') {
 		if (isset($this->icon_override[$size])) {
@@ -715,6 +785,8 @@ abstract class ElggEntity implements
 
 	/**
 	 * Set an icon override for an icon and size.
+	 *
+	 * @warning This override exists only for the life of the object.
 	 *
 	 * @param string $url The url of the icon.
 	 * @param string $size The size its for.
@@ -742,7 +814,10 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Save generic attributes to the entities table.
+	 * Save attributes to the entities table.
+	 *
+	 * @return bool
+	 * @throws IOException
 	 */
 	public function save() {
 		$guid = (int) $this->guid;
@@ -793,9 +868,10 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Load the basic entity information and populate base attributes array.
+	 * Loads attributes from the entities table into the object.
 	 *
 	 * @param int $guid
+	 * @return bool
 	 */
 	protected function load($guid) {
 		$row = get_entity_as_row($guid);
@@ -831,15 +907,33 @@ abstract class ElggEntity implements
 	/**
 	 * Disable this entity.
 	 *
+	 * Disabled entities are not returned by getter functions.
+	 * To enable an entity, use {@link enable_entity()}.
+	 *
+	 * Recursively disabling an entity will disable all entities
+	 * owned or contained by the parent entity.
+	 *
+	 * @internal Disabling an entity sets the 'enabled' column to 'no'.
+	 *
 	 * @param string $reason Optional reason
 	 * @param bool $recursive Recursively disable all contained entities?
+	 * @return bool
+	 * @see enable_entity()
+	 * @see ElggEntity::enable()
 	 */
 	public function disable($reason = "", $recursive = true) {
 		return disable_entity($this->get('guid'), $reason, $recursive);
 	}
 
 	/**
-	 * Re-enable this entity.
+	 * Enable an entity
+	 *
+	 * @warning Disabled entities can't be loaded unless
+	 * {@link access_show_hidden_entities(true)} has been called.
+	 *
+	 * @see enable_entity()
+	 * @see access_show_hiden_entities()
+	 * @return bool
 	 */
 	public function enable() {
 		return enable_entity($this->get('guid'));
@@ -860,14 +954,24 @@ abstract class ElggEntity implements
 
 	/**
 	 * Delete this entity.
+	 *
+	 * @return bool
 	 */
 	public function delete() {
 		return delete_entity($this->get('guid'));
 	}
 
-	// LOCATABLE INTERFACE /////////////////////////////////////////////////////////////
+	/*
+	 * LOCATABLE INTERFACE
+	 */
 
-	/** Interface to set the location */
+	/**
+	 * Sets the 'location' metadata for the entity
+	 *
+	 * @todo Unimplemented
+	 * @param string $location
+	 * @return true
+	 */
 	public function setLocation($location) {
 		$location = sanitise_string($location);
 
@@ -877,10 +981,12 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Set latitude and longitude tags for a given entity.
+	 * Set latitude and longitude metadata tags for a given entity.
 	 *
 	 * @param float $lat
 	 * @param float $long
+	 * @return true
+	 * @todo Unimplemented
 	 */
 	public function setLatLong($lat, $long) {
 		$lat = sanitise_string($lat);
@@ -893,34 +999,39 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Get the contents of the ->geo:lat field.
+	 * Return the entity's latitude.
 	 *
+	 * @return int
+	 * @todo Unimplemented
 	 */
 	public function getLatitude() {
 		return $this->get('geo:lat');
 	}
 
 	/**
-	 * Get the contents of the ->geo:lat field.
+	 * Return the entity's longitude
 	 *
+	 * @return Int
 	 */
 	public function getLongitude() {
 		return $this->get('geo:long');
 	}
 
 	/**
-	 * Get the ->location metadata.
+	 * Return the entity's location
 	 *
+	 * @return string
 	 */
 	public function getLocation() {
 		return $this->get('location');
 	}
 
-	// NOTABLE INTERFACE ///////////////////////////////////////////////////////////////
+	/*
+	 * NOTABLE INTERFACE
+	 */
 
 	/**
-	 * Calendar functionality.
-	 * This function sets the time of an object on a calendar listing.
+	 * Set the time and duration of an object
 	 *
 	 * @param int $hour If ommitted, now is assumed.
 	 * @param int $minute If ommitted, now is assumed.
@@ -929,6 +1040,8 @@ abstract class ElggEntity implements
 	 * @param int $month If ommitted, now is assumed.
 	 * @param int $year If ommitted, now is assumed.
 	 * @param int $duration Duration of event, remainder of the day is assumed.
+	 * @return true
+	 * @todo Unimplemented
 	 */
 	public function setCalendarTimeAndDuration($hour = NULL, $minute = NULL, $second = NULL, $day = NULL, $month = NULL, $year = NULL, $duration = NULL) {
 		$start = mktime($hour, $minute, $second, $month, $day, $year);
@@ -944,23 +1057,32 @@ abstract class ElggEntity implements
 	}
 
 	/**
-	 * Return the start timestamp.
+	 * Returns the start timestamp.
+	 *
+	 * @return int
+	 * @todo Unimplemented
 	 */
 	public function getCalendarStartTime() {
 		return (int)$this->calendar_start;
 	}
 
 	/**
-	 * Return the end timestamp.
+	 * Returns the end timestamp.
+	 *
+	 * @todo Unimplemented
 	 */
 	public function getCalendarEndTime() {
 		return (int)$this->calendar_end;
 	}
 
-	// EXPORTABLE INTERFACE ////////////////////////////////////////////////////////////
+	/*
+	 * EXPORTABLE INTERFACE
+	 */
 
 	/**
-	 * Return an array of fields which can be exported.
+	 * Returns an array of fields which can be exported.
+	 *
+	 * @return array
 	 */
 	public function getExportableValues() {
 		return array(
@@ -978,6 +1100,8 @@ abstract class ElggEntity implements
 	/**
 	 * Export this class into an array of ODD Elements containing all necessary fields.
 	 * Override if you wish to return more information than can be found in $this->attributes (shouldn't happen)
+	 *
+	 * @return array
 	 */
 	public function export() {
 		$tmp = array();
@@ -1055,13 +1179,16 @@ abstract class ElggEntity implements
 		return $tmp;
 	}
 
-	// IMPORTABLE INTERFACE ////////////////////////////////////////////////////////////
+	/*
+	 * IMPORTABLE INTERFACE
+	 */
 
 	/**
-	 * Import data from an parsed xml data array.
+	 * Import data from an parsed ODD xml data array.
 	 *
 	 * @param array $data
 	 * @param int $version
+	 * @return true
 	 */
 	public function import(ODD $data) {
 		if (!($data instanceof ODDEntity)) {
@@ -1082,7 +1209,9 @@ abstract class ElggEntity implements
 		return true;
 	}
 
-	// SYSTEM LOG INTERFACE ////////////////////////////////////////////////////////////
+	/*
+	 * SYSTEM LOG INTERFACE
+	 */
 
 	/**
 	 * Return an identification for the object for storage in the system log.
@@ -1104,14 +1233,18 @@ abstract class ElggEntity implements
 	/**
 	 * For a given ID, return the object associated with it.
 	 * This is used by the river functionality primarily.
+	 *
 	 * This is useful for checking access permissions etc on objects.
+	 * @return guid
 	 */
 	public function getObjectFromID($id) {
 		return get_entity($id);
 	}
 
 	/**
-	 * Return the GUID of the owner of this object.
+	 * Returns the GUID of the owner of this entity.
+	 *
+	 * @return int Owner guid
 	 */
 	public function getObjectOwnerGUID() {
 		return $this->owner_guid;
@@ -1119,6 +1252,8 @@ abstract class ElggEntity implements
 
 	/**
 	 * Returns tags for this entity.
+	 *
+	 * @warning Tags must be registered by {@link elgg_register_tag_metadata_name()}.
 	 *
 	 * @param array $tag_names Optionally restrict by tag metadata names.
 	 * @return array
@@ -1152,12 +1287,14 @@ abstract class ElggEntity implements
 		return $entity_tags;
 	}
 
-	// ITERATOR INTERFACE //////////////////////////////////////////////////////////////
+	/*
+	 * ITERATOR INTERFACE
+	 */
+
 	/*
 	 * This lets an entity's attributes be displayed using foreach as a normal array.
 	 * Example: http://www.sitepoint.com/print/php5-standard-library
 	 */
-
 	private $valid = FALSE;
 
 	function rewind() {
@@ -1180,12 +1317,14 @@ abstract class ElggEntity implements
 		return $this->valid;
 	}
 
-	// ARRAY ACCESS INTERFACE //////////////////////////////////////////////////////////
+	/*
+	 * ARRAY ACCESS INTERFACE
+	 */
+
 	/*
 	 * This lets an entity's attributes be accessed like an associative array.
 	 * Example: http://www.sitepoint.com/print/php5-standard-library
 	 */
-
 	function offsetSet($key, $value) {
 		if ( array_key_exists($key, $this->attributes) ) {
 			$this->attributes[$key] = $value;
