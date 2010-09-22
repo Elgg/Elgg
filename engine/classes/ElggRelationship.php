@@ -1,10 +1,8 @@
 <?php
-
 /**
  * Relationship class.
  *
- * @author Curverider Ltd
- * @package Elgg
+ * @package Elgg.Core
  * @subpackage Core
  */
 class ElggRelationship implements

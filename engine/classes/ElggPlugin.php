@@ -1,8 +1,12 @@
 <?php
 /**
- * @class ElggPlugin Object representing a plugin's settings for a given site.
- * This class is currently a stub, allowing a plugin to saving settings in an object's metadata for each site.
- * @author Curverider Ltd
+ * Stores site-side plugin settings as private data.
+ *
+ * This class is currently a stub, allowing a plugin to
+ * save settings in an object's private settings for each site.
+ *
+ * @package Elgg.Core
+ * @subpackage Plugins.Settings
  */
 class ElggPlugin extends ElggObject {
 	protected function initialise_attributes() {
@@ -16,7 +20,10 @@ class ElggPlugin extends ElggObject {
 	}
 
 	/**
-	 * Override entity get and sets in order to save data to private data store.
+	 * Get a value from private settings.
+	 *
+	 * @param string $name
+	 * @return mixed
 	 */
 	public function get($name) {
 		// See if its in our base attribute
@@ -37,7 +44,10 @@ class ElggPlugin extends ElggObject {
 	}
 
 	/**
-	 * Override entity get and sets in order to save data to private data store.
+	 * Save a value to private settings.
+	 *
+	 * @param string $name
+	 * @param mixed $value
 	 */
 	public function set($name, $value) {
 		if (array_key_exists($name, $this->attributes)) {

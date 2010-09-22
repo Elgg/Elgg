@@ -1,11 +1,21 @@
 <?php
-
 /**
- * ElggExtender
+ * The base class for ElggEntity extenders.
  *
- * @author Curverider Ltd
- * @package Elgg
- * @subpackage Core
+ * Extenders allow you to attach extended information to an
+ * ElggEntity.  Core supports two: ElggAnnotation, ElggMetadata,
+ * and ElggRelationship
+ *
+ * Saving the extender data to database is handled by the child class.
+ *
+ * @tip Plugin authors would probably want to extend either ElggAnnotation
+ * or ElggMetadata instead of this class.
+ *
+ * @package Elgg.Core
+ * @subpackage DataModel.Extender
+ * @see ElggAnnotation
+ * @see ElggMetadata
+ * @link http://docs.elgg.org/DataModel/Extenders
  */
 abstract class ElggExtender implements
 	Exportable,
@@ -14,13 +24,14 @@ abstract class ElggExtender implements
 	ArrayAccess // Override for array access
 {
 	/**
-	 * This contains the site's main properties (id, etc)
+	 * Holds attributes to save to database
+	 *
 	 * @var array
 	 */
 	protected $attributes;
 
 	/**
-	 * Get an attribute
+	 * Returns an attribute
 	 *
 	 * @param string $name
 	 * @return mixed
@@ -66,18 +77,18 @@ abstract class ElggExtender implements
 	}
 
 	/**
-	 * Return the owner of this annotation.
+	 * Return the owner guid of this extender.
 	 *
-	 * @return mixed
+	 * @return int
 	 */
 	public function getOwner() {
 		return $this->owner_guid;
 	}
 
 	/**
-	 * Return the owner entity
+	 * Return the owner entity.
 	 *
-	 * @return mixed
+	 * @return ElggEntity|false
 	 * @since 1.7.0
 	 */
 	public function getOwnerEntity() {
@@ -85,7 +96,7 @@ abstract class ElggExtender implements
 	}
 
 	/**
-	 * Returns the entity this is attached to
+	 * Return the entity this describes.
 	 *
 	 * @return ElggEntity The enttiy
 	 */
@@ -104,10 +115,10 @@ abstract class ElggExtender implements
 	abstract public function delete();
 
 	/**
-	 * Determines whether or not the specified user can edit this
+	 * Returns if a user can edit this extended data.
 	 *
 	 * @param int $user_guid The GUID of the user (defaults to currently logged in user)
-	 * @return true|false
+	 * @return bool
 	 */
 	public function canEdit($user_guid = 0) {
 		return can_edit_extender($this->id,$this->type,$user_guid);
@@ -120,10 +131,14 @@ abstract class ElggExtender implements
 	 */
 	public abstract function getURL();
 
-	// EXPORTABLE INTERFACE ////////////////////////////////////////////////////////////
+	/*
+	 * EXPORTABLE INTERFACE
+	 */
 
 	/**
 	 * Return an array of fields which can be exported.
+	 *
+	 * @return array
 	 */
 	public function getExportableValues() {
 		return array(
@@ -151,7 +166,9 @@ abstract class ElggExtender implements
 		return $meta;
 	}
 
-	// SYSTEM LOG INTERFACE ////////////////////////////////////////////////////////////
+	/*
+	 * SYSTEM LOG INTERFACE
+	 */
 
 	/**
 	 * Return an identification for the object for storage in the system log.
@@ -165,6 +182,8 @@ abstract class ElggExtender implements
 
 	/**
 	 * Return the class name of the object.
+	 *
+	 * @return string
 	 */
 	public function getClassName() {
 		return get_class($this);
@@ -172,13 +191,17 @@ abstract class ElggExtender implements
 
 	/**
 	 * Return the GUID of the owner of this object.
+	 *
+	 * @return int
 	 */
 	public function getObjectOwnerGUID() {
 		return $this->owner_guid;
 	}
 
 	/**
-	 * Return a type of the object - eg. object, group, user, relationship, metadata, annotation etc
+	 * Return a type of extension.
+	 *
+	 * @return string
 	 */
 	public function getType() {
 		return $this->type;
@@ -187,18 +210,22 @@ abstract class ElggExtender implements
 	/**
 	 * Return a subtype. For metadata & annotations this is the 'name' and
 	 * for relationship this is the relationship type.
+	 *
+	 * @return string
 	 */
 	public function getSubtype() {
 		return $this->name;
 	}
 
 
-	// ITERATOR INTERFACE //////////////////////////////////////////////////////////////
+	/*
+	 * ITERATOR INTERFACE
+	 */
+
 	/*
 	 * This lets an entity's attributes be displayed using foreach as a normal array.
 	 * Example: http://www.sitepoint.com/print/php5-standard-library
 	 */
-
 	private $valid = FALSE;
 
 	function rewind() {
@@ -221,12 +248,14 @@ abstract class ElggExtender implements
 		return $this->valid;
 	}
 
-	// ARRAY ACCESS INTERFACE //////////////////////////////////////////////////////////
+	/*
+	 * ARRAY ACCESS INTERFACE
+	 */
+
 	/*
 	 * This lets an entity's attributes be accessed like an associative array.
 	 * Example: http://www.sitepoint.com/print/php5-standard-library
 	 */
-
 	function offsetSet($key, $value) {
 		if ( array_key_exists($key, $this->attributes) ) {
 			$this->attributes[$key] = $value;
