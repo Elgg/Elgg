@@ -33,9 +33,11 @@ class ElggObject extends ElggEntity {
 	 * Load or create a new ElggObject.
 	 *
 	 * If no arguments are passed, create a new entity.
-	 * If an argument is passed as an int, attempt to load that object by guid.
-	 * If an argument is passed as an object, assume that it is as database result object and attempt to load
-	 * by $obj->guid.
+	 *
+	 * If an argument is passed attempt to load a full Object entity.  Arguments
+	 * can be:
+	 *  - The GUID of an object entity.
+	 *  - A DB result object with a guid property
 	 *
 	 * @param mixed $guid If an int, load that GUID.  If a db row then will attempt to load the rest of the data.
 	 * @throws IOException If passed an incorrect guid
