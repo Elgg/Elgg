@@ -2,10 +2,8 @@
 /**
  * Action for saving a new email address for a user and triggering a confirmation.
  *
- * @package Elgg
- * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
+ * @package Elgg.Core
+ * @subpackage Administration.Users
  */
 
 gatekeeper();
@@ -31,7 +29,6 @@ if ($user) {
 
 				$user->email = $email;
 				if ($user->save()) {
-					request_user_validation($user->getGUID());
 					system_message(elgg_echo('email:save:success'));
 				} else {
 					register_error(elgg_echo('email:save:fail'));
