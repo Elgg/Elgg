@@ -204,11 +204,15 @@ class ElggUser extends ElggEntity
 	 * @return bool
 	 */
 	public function makeAdmin() {
-		if (make_user_admin($this->guid)) {
-			$this->attributes['admin'] = 'yes';
-			return TRUE;
+		// If already saved, use the standard function.
+		if ($this->guid && !make_user_admin($this->guid)) {
+			return FALSE;
 		}
-		return FALSE;
+
+		// need to manually set attributes since they've already been loaded.
+		$this->attributes['admin'] = 'yes';
+
+		return TRUE;
 	}
 
 	/**
@@ -217,11 +221,15 @@ class ElggUser extends ElggEntity
 	 * @return bool
 	 */
 	public function removeAdmin() {
-		if (remove_user_admin($this->guid)) {
-			$this->attributes['admin'] = 'no';
-			return TRUE;
+		// If already saved, use the standard function.
+		if ($this->guid && !remove_user_admin($this->guid)) {
+			return FALSE;
 		}
-		return FALSE;
+
+		// need to manually set attributes since they've already been loaded.
+		$this->attributes['admin'] = 'no';
+
+		return TRUE;
 	}
 
 	/**
