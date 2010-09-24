@@ -25,11 +25,21 @@ if (is_array($admin)) {
 }
 
 if ($CONFIG->allow_registration) {
-// For now, just try and register the user
 	try {
+		if (trim($password) == "" || trim($password2) == "") {
+			throw new RegistrationException(elgg_echo('RegistrationException:EmptyPassword'));
+		}
+
+		if (strcmp($password, $password2) != 0) {
+			throw new RegistrationException(elgg_echo('RegistrationException:PasswordMismatch'));
+		}
+
 		$guid = register_user($username, $password, $name, $email, false, $friend_guid, $invitecode);
-		if (((trim($password) != "") && (strcmp($password, $password2) == 0)) && ($guid)) {
+		if ($guid) {
 			$new_user = get_entity($guid);
+
+			// @todo - consider removing registering admins since this is done
+			// through the useradd action
 			if (($guid) && ($admin)) {
 				// Only admins can make someone an admin
 				admin_gatekeeper();
