@@ -179,7 +179,7 @@ function profile_pagesetup()
 	//add submenu options
 	if (get_context() == "profile") {
 		$page_owner = page_owner_entity();
-		if ($page_owner->canEdit()) {
+		if ($page_owner && $page_owner->canEdit()) {
 			add_submenu_item(elgg_echo('profile:editdetails'), $CONFIG->wwwroot . "pg/profile/{$page_owner->username}/edit/details");
 			add_submenu_item(elgg_echo('profile:editicon'), $CONFIG->wwwroot . "pg/profile/{$page_owner->username}/edit/icon");
 		}
