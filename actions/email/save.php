@@ -1,6 +1,6 @@
 <?php
 /**
- * Action for saving a new email address for a user and triggering a confirmation.
+ * Save email address for user.
  *
  * @package Elgg.Core
  * @subpackage Administration.Users
@@ -23,7 +23,7 @@ if (!is_email_address($email)) {
 }
 
 if ($user) {
-	if (strcmp($email,$user->email)!=0) {
+	if (strcmp($email, $user->email)!=0) {
 		if (!get_user_by_email($email)) {
 			if ($user->email != $email) {
 
