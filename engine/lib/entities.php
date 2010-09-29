@@ -1488,6 +1488,10 @@ function update_entity($guid, $owner_guid, $access_id, $container_guid = null) {
 
 	$entity = get_entity($guid);
 
+	if (!$entity) {
+		return FALSE;
+	}
+
 	if ($entity->canEdit()) {
 		if (trigger_elgg_event('update',$entity->type,$entity)) {
 			$ret = update_data("UPDATE {$CONFIG->dbprefix}entities set owner_guid='$owner_guid', access_id='$access_id', container_guid='$container_guid', time_updated='$time' WHERE guid=$guid");
