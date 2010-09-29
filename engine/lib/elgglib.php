@@ -2366,10 +2366,12 @@ function elgg_get_nav_items() {
 	// make sure the url is a valid link.
 	// this prevents disabled plugins leaving behind
 	// valid links when not using a pagehandler.
-	foreach ($featured_urls_info as $info) {
-		if (in_array($info->value->url, $valid_urls)) {
-			$featured_urls[] = $info->value->url;
-			$featured_urls_sanitised[] = $info;
+	if ($featured_url_info) {
+		foreach ($featured_urls_info as $info) {
+			if (in_array($info->value->url, $valid_urls)) {
+				$featured_urls[] = $info->value->url;
+				$featured_urls_sanitised[] = $info;
+			}
 		}
 	}
 
