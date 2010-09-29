@@ -21,7 +21,9 @@
 	}
     if (($owner instanceof ElggEntity) && (can_write_to_container(0,$owner->guid))){
         add_submenu_item(elgg_echo('pages:new'), $CONFIG->url . "pg/pages/new/?container_guid=" . page_owner(), 'pagesactions');
-        if ($owner instanceof ElggUser) add_submenu_item(elgg_echo('pages:welcome'), $CONFIG->url . "pg/pages/welcome/", 'pagesactions');
+        //if ($owner instanceof ElggUser) {
+			add_submenu_item(elgg_echo('pages:welcome'), $CONFIG->url . "pg/pages/welcome/" . $owner->username, 'pagesactions');
+		//}
     }
     
 	// access check for closed groups
@@ -47,7 +49,7 @@
 	set_context($context);
 	
 	//get the owners latest welcome message
-	$welcome_message = elgg_get_entities(array('types' => 'object', 'subtypes' => 'pages_welcome', 'owner_guid' => $owner->guid, 'limit' => 1));
+	$welcome_message = elgg_get_entities(array('types' => 'object', 'subtypes' => 'pages_welcome', 'container_guid' => $owner->guid, 'limit' => 1));
 	
 	$body = elgg_view_title($title);
 	$body .= elgg_view("pages/welcome", array('entity' => $welcome_message));

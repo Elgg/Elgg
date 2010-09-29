@@ -22,7 +22,6 @@
 		
     if (($page_owner instanceof ElggEntity) && ($page_owner->canWriteToContainer())){
         add_submenu_item(elgg_echo('pages:new'), $CONFIG->url . "pg/pages/new/", 'pagesactions');
-        add_submenu_item(elgg_echo('pages:welcome'), $CONFIG->url . "pg/pages/welcome/", 'pagesactions');
     }
     
     if(isloggedin())
