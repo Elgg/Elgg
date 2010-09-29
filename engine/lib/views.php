@@ -1259,6 +1259,10 @@ function page_draw($title, $body, $page_shell = 'page_shells/default', $vars = a
 function elgg_is_valid_view_type($view_type) {
 	global $CONFIG;
 
+	if (!isset($CONFIG->view_types) || !is_array($CONFIG->view_types)) {
+		return FALSE;
+	}
+
 	return in_array($view_type, $CONFIG->view_types);
 }
 
