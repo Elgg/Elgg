@@ -160,19 +160,13 @@ function pam_auth_userpass($credentials = NULL) {
 
 	if (is_array($credentials) && ($credentials['username']) && ($credentials['password'])) {
 		if ($user = get_user_by_username($credentials['username'])) {
-
-			// Let admins log in without validating their email, but normal users must have validated their email or been admin created
-			if ((!$user->isAdmin()) && (!$user->validated) && (!$user->admin_created)) {
-				return false;
-			}
-
 			// User has been banned, so prevent from logging in
 			if ($user->isBanned()) {
-				return false;
+				return FALSE;
 			}
 
 			if ($user->password == generate_user_password($user, $credentials['password'])) {
-				return true;
+				return TRUE;
 			} else {
 				// Password failed, log.
 				log_login_failure($user->guid);
@@ -181,7 +175,7 @@ function pam_auth_userpass($credentials = NULL) {
 		}
 	}
 
-	return false;
+	return FALSE;
 }
 
 /**
@@ -303,17 +297,17 @@ function login(ElggUser $user, $persistent = false) {
 		$code = (md5($user->name . $user->username . time() . rand()));
 		$_SESSION['code'] = $code;
 		$user->code = md5($code);
-		setcookie("elggperm", $code, (time()+(86400 * 30)),"/");
+		setcookie("elggperm", $code, (time()+(86400 * 30)), "/");
 	}
 
-	if (!$user->save() || !trigger_elgg_event('login','user',$user)) {
+	if (!$user->save() || !trigger_elgg_event('login', 'user', $user)) {
 		unset($_SESSION['username']);
 		unset($_SESSION['name']);
 		unset($_SESSION['code']);
 		unset($_SESSION['guid']);
 		unset($_SESSION['id']);
 		unset($_SESSION['user']);
-		setcookie("elggperm", "", (time()-(86400 * 30)),"/");
+		setcookie("elggperm", "", (time()-(86400 * 30)), "/");
 		return false;
 	}
 

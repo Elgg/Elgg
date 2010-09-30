@@ -875,60 +875,6 @@ function elgg_user_resetpassword_page_handler($page) {
 }
 
 /**
- * Set the validation status for a user.
- *
- * @param bool $status Validated (true) or false
- * @param string $method Optional method to say how a user was validated
- * @return bool
- */
-function set_user_validation_status($user_guid, $status, $method = '') {
-	if (!$status) {
-		$method = '';
-	}
-
-	if ($status) {
-		if (
-			(create_metadata($user_guid, 'validated', $status,'', 0, ACCESS_PUBLIC)) &&
-			(create_metadata($user_guid, 'validated_method', $method,'', 0, ACCESS_PUBLIC))
-		) {
-			return true;
-		}
-	} else {
-		$validated = get_metadata_byname($user_guid,  'validated');
-		$validated_method = get_metadata_byname($user_guid,  'validated_method');
-
-		if (
-			($validated) &&
-			($validated_method) &&
-			(delete_metadata($validated->id)) &&
-			(delete_metadata($validated_method->id))
-		)
-			return true;
-	}
-
-	return false;
-}
-
-/**
- * Trigger an event requesting that a user guid be validated somehow - either by email address or some other way.
- *
- * This event invalidates any existing values and returns
- *
- * @param unknown_type $user_guid
- */
-function request_user_validation($user_guid) {
-	$user = get_entity($user_guid);
-
-	if (($user) && ($user instanceof ElggUser)) {
-		// invalidate any existing validations
-		set_user_validation_status($user_guid, false);
-
-		// request validation
-		trigger_elgg_event('validate', 'user', $user);
-	}
-}
-
-/**
  * Validates an email address.
  *
  * @param string $address Email address.
@@ -1067,9 +1013,8 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
 	// Load the configuration
 	global $CONFIG;
 
-	$username = trim($username);
 	// no need to trim password.
-	$password = $password;
+	$username = trim($username);
 	$name = trim(strip_tags($name));
 	$email = trim($email);
 
@@ -1081,39 +1026,33 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
 		return false;
 	}
 
-	// See if it exists and is disabled
+	// Make sure a user with conflicting details hasn't registered and been disabled
 	$access_status = access_get_show_hidden_status();
 	access_show_hidden_entities(true);
 
-	// Validate email address
 	if (!validate_email_address($email)) {
 		throw new RegistrationException(elgg_echo('registration:emailnotvalid'));
 	}
 
-	// Validate password
 	if (!validate_password($password)) {
 		throw new RegistrationException(elgg_echo('registration:passwordnotvalid'));
 	}
 
-	// Validate the username
 	if (!validate_username($username)) {
 		throw new RegistrationException(elgg_echo('registration:usernamenotvalid'));
 	}
 
-	// Check to see if $username exists already
 	if ($user = get_user_by_username($username)) {
-		//return false;
 		throw new RegistrationException(elgg_echo('registration:userexists'));
 	}
 
-	// If we're not allowed multiple emails then see if this address has been used before
 	if ((!$allow_multiple_emails) && (get_user_by_email($email))) {
 		throw new RegistrationException(elgg_echo('registration:dupeemail'));
 	}
 
 	access_show_hidden_entities($access_status);
 
-	// Otherwise ...
+	// Create user
 	$user = new ElggUser();
 	$user->username = $username;
 	$user->email = $email;
@@ -1142,15 +1081,17 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
 	// Check to see if we've registered the first admin yet.
 	// If not, this is the first admin user!
 	$have_admin = datalist_get('admin_registered');
-	global $registering_admin;
 
 	if (!$have_admin) {
+		// makeAdmin() calls ElggUser::canEdit().
+		// right now no one is logged in and so canEdit() returns false.
+		// instead of making an override for this one instance that is called on every
+		// canEdit() call, just override the access system to set the first admin user.
+		// @todo remove this when Cash merges in the new installer
+		$ia = elgg_set_ignore_access(TRUE);
 		$user->makeAdmin();
-		set_user_validation_status($user->getGUID(), TRUE, 'first_run');
 		datalist_set('admin_registered', 1);
-		$registering_admin = true;
-	} else {
-		$registering_admin = false;
+		elgg_set_ignore_access($ia);
 	}
 
 	// Turn on email notifications by default
@@ -1289,34 +1230,6 @@ function set_last_login($user_guid) {
 }
 
 /**
- * A permissions plugin hook that grants access to users if they are newly created - allows
- * for email activation.
- *
- * @todo Do this in a better way!
- *
- * @param unknown_type $hook
- * @param unknown_type $entity_type
- * @param unknown_type $returnvalue
- * @param unknown_type $params
- */
-function new_user_enable_permissions_check($hook, $entity_type, $returnvalue, $params) {
-	$entity = $params['entity'];
-	$user = $params['user'];
-	if (($entity) && ($entity instanceof ElggUser)) {
-		if (
-			(($entity->disable_reason == 'new_user') || (
-				// if this isn't set at all they're a "new user"
-				!$entity->validated
-			))
-			&& (!isloggedin())) {
-				return true;
-		}
-	}
-
-	return $returnvalue;
-}
-
-/**
  * Creates a relationship between this site and the user.
  *
  * @param $event
@@ -1411,10 +1324,6 @@ function users_init() {
 	register_plugin_hook('usersettings:save','user','users_settings_save');
 
 	register_elgg_event_handler('create', 'user', 'user_create_hook_add_site_relationship');
-
-	// Handle a special case for newly created users when the user is not logged in
-	// @todo handle this better!
-	register_plugin_hook('permissions_check','all','new_user_enable_permissions_check');
 }
 
 /**

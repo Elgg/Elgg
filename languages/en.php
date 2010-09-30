@@ -22,7 +22,7 @@ $english = array(
 
 	'login' => "Log in",
 	'loginok' => "You have been logged in.",
-	'loginerror' => "We couldn't log you in. This may be because you haven't validated your account yet, the details you supplied were incorrect, or you have made too many incorrect login attempts. Make sure your details are correct and please try again.",
+	'loginerror' => "We couldn't log you in. Please check your credentials and try again.",
 
 	'logout' => "Log out",
 	'logoutok' => "You have been logged out.",
@@ -379,7 +379,7 @@ To remove a widget drag it back to the <b>Widget gallery</b>.",
 
 	'register' => "Register",
 	'registerok' => "You have successfully registered for %s.",
-	'registerbad' => "Your registration was unsuccessful. The username may already exist, your passwords might not match, or your username or password may be too short.",
+	'registerbad' => "Your registration was unsuccessful because of an unknown error.",
 	'registerdisabled' => "Registration has been disabled by the system administrator",
 
 	'firstadminlogininstructions' => "Enable and disable plugins to customize your new Elgg site! (Remember to hit 'Save' when you're done.)",
@@ -878,7 +878,7 @@ If you requested this click on the link below, otherwise ignore this email.
 	'likes:userslikedthis' => 'users like this',
 	'likes:river:annotate' => 'likes',
 	'likes:email:body' => '%s liked %s',
- 	'likes:email:subject' => 'A user liked one of your objects',
+	'likes:email:subject' => 'A user liked one of your objects',
 
 /**
  * Comments
