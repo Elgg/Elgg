@@ -2160,7 +2160,7 @@ function elgg_is_sticky_form($form_name) {
  * @todo should this filter the default value?
  * @link http://docs.elgg.org/Tutorials/UI/StickyForms
  */
-function elgg_get_sticky_value($form_name, $variable, $default = NULL, $filter_result = true) {
+function elgg_get_sticky_value($form_name, $variable='', $default = NULL, $filter_result = true) {
 	if (isset($_SESSION['sticky_forms'][$form_name][$variable])) {
 		$value = $_SESSION['sticky_forms'][$form_name][$variable];
 		if ($filter_result) {
@@ -2366,7 +2366,7 @@ function elgg_get_nav_items() {
 	// make sure the url is a valid link.
 	// this prevents disabled plugins leaving behind
 	// valid links when not using a pagehandler.
-	if ($featured_url_info) {
+	if ($featured_urls_info) {
 		foreach ($featured_urls_info as $info) {
 			if (in_array($info->value->url, $valid_urls)) {
 				$featured_urls[] = $info->value->url;
