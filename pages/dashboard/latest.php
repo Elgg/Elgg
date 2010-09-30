@@ -11,7 +11,7 @@
 /**
  * Start the Elgg engine
  */
-require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
+require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
 // Load the front page
 global $CONFIG;

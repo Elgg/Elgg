@@ -19,6 +19,6 @@
 ?>
 </p>
 <p>
-	<a href="<?php echo $vars['url']; ?>dashboard/latest.php"><?php echo elgg_echo('content:latest:blurb'); ?></a>
+	<a href="<?php echo $vars['url']; ?>pages/dashboard/latest.php"><?php echo elgg_echo('content:latest:blurb'); ?></a>
 </p>
 </div>

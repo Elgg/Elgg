@@ -1176,7 +1176,7 @@ function collections_page_handler($page_elements) {
  * Page handler for dashboard
  */
 function dashboard_page_handler($page_elements) {
-	require_once(dirname(dirname(dirname(__FILE__))) . "/dashboard/index.php");
+	require_once(dirname(dirname(dirname(__FILE__))) . "/pages/dashboard/index.php");
 }
 
 

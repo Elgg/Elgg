@@ -8,9 +8,6 @@
  * @link http://elgg.org/
  */
 
-// Get the Elgg engine
-require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
-
 // Ensure that only logged-in users can see this page
 gatekeeper();
 
