@@ -8,9 +8,6 @@
  * @link http://elgg.org/
  */
 
-// Get the Elgg framework
-require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
-
 // Make sure only valid admin users can see this
 gatekeeper();
 

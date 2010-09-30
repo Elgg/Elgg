@@ -8,9 +8,6 @@
  * @link http://elgg.org/
  */
 
-// Get the Elgg framework
-require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
-
 if (!page_owner()) {
 	set_page_owner(get_loggedin_userid());
 }

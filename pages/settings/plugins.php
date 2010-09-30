@@ -8,8 +8,6 @@
  * @link http://elgg.org/
  */
 
-require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
-
 // Make sure only valid users can see this
 gatekeeper();
 

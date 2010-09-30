@@ -46,13 +46,19 @@ function usersettings_pagesetup() {
 function usersettings_page_handler($page) {
 	global $CONFIG;
 
-	$path = $CONFIG->path . "settings/index.php";
+	$path = $CONFIG->path . "pages/settings/index.php";
 
 	if ($page[0]) {
 		switch ($page[0]) {
-			case 'user' : $path = $CONFIG->path . "settings/user.php"; break;
-			case 'statistics' : $path = $CONFIG->path . "settings/statistics.php"; break;
-			case 'plugins' : $path = $CONFIG->path . "settings/plugins.php"; break;
+			case 'user':
+				$path = $CONFIG->path . "pages/settings/user.php";
+				break;
+			case 'statistics':
+				$path = $CONFIG->path . "pages/settings/statistics.php";
+				break;
+			case 'plugins':
+				$path = $CONFIG->path . "pages/settings/plugins.php";
+				break;
 		}
 	}
 
@@ -60,7 +66,7 @@ function usersettings_page_handler($page) {
 		set_input('username', $page[1]);
 	}
 
-	include($path);
+	require($path);
 }
 
 /**
