@@ -6,7 +6,7 @@
  * @subpackage Registration
  */
 
-require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
+require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
 if (!isloggedin()) {
 	$area1 = elgg_view_title(elgg_echo("user:password:lost"));

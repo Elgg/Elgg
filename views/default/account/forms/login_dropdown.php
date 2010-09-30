@@ -13,7 +13,7 @@ if (!isloggedin()) {
 
 	$form_body .= "<p class='loginbox'>";
 	$form_body .= $CONFIG->allow_registration ? "<a href=\"{$vars['url']}account/register.php\">" . elgg_echo('register') . '</a> | ' : '';
-	$form_body .= "<a href=\"{$vars['url']}account/forgotten_password.php\">" . elgg_echo('user:password:lost') . "</a></p>";
+	$form_body .= "<a href=\"{$vars['url']}pages/account/forgotten_password.php\">" . elgg_echo('user:password:lost') . "</a></p>";
 	$form_body .= "<input type='hidden' name='returntoreferer' value='true' />";
 
 	$login_url = $vars['url'];

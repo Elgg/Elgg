@@ -1184,7 +1184,7 @@ function dashboard_page_handler($page_elements) {
  * Page handler for registration
  */
 function registration_page_handler($page_elements) {
-	require_once(dirname(dirname(dirname(__FILE__))) . "/account/register.php");
+	require_once(dirname(dirname(dirname(__FILE__))) . "/pages/account/register.php");
 }
 
 /**

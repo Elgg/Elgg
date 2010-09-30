@@ -332,7 +332,7 @@ class ElggSite extends ElggEntity {
 			'action/login',
 			'pg/register',
 			'action/register',
-			'account/forgotten_password\.php',
+			'pages/account/forgotten_password\.php',
 			'action/user/requestnewpassword',
 			'pg/resetpassword',
 			'upgrade\.php',

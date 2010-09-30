@@ -20,7 +20,7 @@
  * BUT, there _might_ exist direct calls to this file, requiring the engine
  * to be started. Logic for both cases follow.
  */
-require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
+require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 global $CONFIG;
 
 // check new registration allowed

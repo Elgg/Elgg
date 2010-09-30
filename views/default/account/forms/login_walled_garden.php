@@ -16,7 +16,7 @@ $register = elgg_echo('register');
 $lost_password = elgg_echo('user:password:lost');
 $form_body .= '<p class="lost_password">';
 $form_body .= $CONFIG->allow_registration ? "<a class=\"registration_link\" href=\"{$vars['url']}pg/register/\">$register</a> | " : '';
-$form_body .= "<a class='forgotten_password_link' href=\"{$login_url}account/forgotten_password.php\">$lost_password</a>";
+$form_body .= "<a class='forgotten_password_link' href=\"{$login_url}pages/account/forgotten_password.php\">$lost_password</a>";
 $form_body .= '</p>';
 
 $login_url = $vars['url'];
