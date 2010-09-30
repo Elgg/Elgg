@@ -47,9 +47,6 @@
 		// Extend hover-over and profile menu	
 		elgg_extend_view('profile/menu/links','file/menu');
 		
-	    // extend group main page
-		elgg_extend_view('groups/left_column','file/groupprofile_files');
-		
 		// Register a page handler, so we can have nice URLs
 		register_page_handler('file','file_page_handler');
 			
@@ -68,8 +65,10 @@
 		register_plugin_hook('notify:entity:message', 'object', 'file_notify_message');
 		
 		// add the group files tool option     
-		add_group_tool_option('files',elgg_echo('groups:enablefiles'),true);
-
+		add_group_tool_option('file',elgg_echo('groups:enablefiles'),true);
+	    // extend group main page
+		elgg_extend_view('groups/left_column','file/groupprofile_files');
+		
 		// Register entity type
 		register_entity_type('object','file');
 	}
