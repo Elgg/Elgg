@@ -156,7 +156,6 @@ function admin_init() {
  * Handle admin pages.  Expects corresponding views as admin/section/subsection
  *
  * @param $page
- * @return unknown_type
  */
 function admin_settings_page_handler($page) {
 	global $CONFIG;
