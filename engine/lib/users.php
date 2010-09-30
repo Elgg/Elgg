@@ -1133,7 +1133,7 @@ function friends_page_handler($page_elements) {
 	if (get_loggedin_userid() == page_owner()) {
 		// collections_submenu_items(); disabled for now as we no longer use friends collections (replaced by shared access)
 	}
-	require_once(dirname(dirname(dirname(__FILE__))) . "/friends/index.php");
+	require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/index.php");
 }
 
 /**
@@ -1147,7 +1147,7 @@ function friends_of_page_handler($page_elements) {
 	if (get_loggedin_userid() == page_owner()) {
 		// collections_submenu_items(); disabled for now as we no longer use friends collections (replaced by shared access)
 	}
-	require_once(dirname(dirname(dirname(__FILE__))) . "/friends/of.php");
+	require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/of.php");
 }
 
 /**
@@ -1159,14 +1159,14 @@ function collections_page_handler($page_elements) {
 		if ($page_elements[0] == "add") {
 			set_page_owner(get_loggedin_userid());
 			collections_submenu_items();
-			require_once(dirname(dirname(dirname(__FILE__))) . "/friends/add.php");
+			require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/add.php");
 		} else {
 			if ($user = get_user_by_username($page_elements[0])) {
 				set_page_owner($user->getGUID());
 				if (get_loggedin_userid() == page_owner()) {
 					collections_submenu_items();
 				}
-				require_once(dirname(dirname(dirname(__FILE__))) . "/friends/collections.php");
+				require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/collections.php");
 			}
 		}
 	}
