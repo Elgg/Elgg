@@ -33,6 +33,16 @@ function uservalidationbyemail_init() {
 
 	// register Walled Garden public pages
 	register_plugin_hook('public_pages', 'walled_garden', 'uservalidationbyemail_public_pages');
+
+	// admin interface to manually validate users
+	elgg_add_admin_submenu_item('unvalidated', elgg_echo('uservalidationbyemail:admin:unvalidated'), 'users');
+
+	$action_path = dirname(__FILE__) . '/actions';
+
+	register_action('uservalidationbyemail/validate', FALSE, "$action_path/validate.php", TRUE);
+	register_action('uservalidationbyemail/resend_validation', FALSE, "$action_path/resend_validation.php", TRUE);
+	register_action('uservalidationbyemail/delete', FALSE, "$action_path/delete.php", TRUE);
+	register_action('uservalidationbyemail/bulk_action', FALSE, "$action_path/bulk_action.php", TRUE);
 }
 
 /**

@@ -105,3 +105,44 @@ function uservalidationbyemail_set_user_validation_status($user_guid, $status, $
 
 	return FALSE;
 }
+
+/**
+ * Returns the validation status of a user.
+ *
+ * @param unknown_type $user_guid
+ * @return int|null
+ */
+function uservalidationbyemail_get_user_validation_status($user_guid) {
+	return get_metadata_byname($user_guid, 'validated');
+}
+
+/**
+ * Returns all users who haven't been validated.
+ *
+ * "Unvalidated" means metadata of validated is not set or not truthy.
+ * We can't use the elgg_get_entities_from_metadata() because you can't say
+ * "where the entity has metadata set OR it's not equal to 1".
+ *
+ * This doesn't include any security, so should be called ONLY be admin users!
+ * @return array
+ */
+function uservalidationbyemail_get_unvalidated_users() {
+	global $CONFIG;
+
+	$validated_id = get_metastring_id('validated');
+	$one_id = get_metastring_id(1);
+
+	// thanks to daveb@freenode for the SQL tips!
+	$q = "SELECT e.* FROM {$CONFIG->dbprefix}entities e
+		WHERE e.type = 'user'
+		AND NOT EXISTS (
+			SELECT 1 FROM {$CONFIG->dbprefix}metadata md
+			WHERE md.entity_guid = e.guid
+				AND md.name_id = $validated_id
+				AND md.value_id = $one_id)
+
+		ORDER BY e.guid DESC";
+
+	$users = get_data($q, 'entity_row_to_elggstar');
+	return $users;
+}
