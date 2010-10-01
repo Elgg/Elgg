@@ -24,10 +24,10 @@
 			) {
 				
 				
-				$topbar = get_resized_image_from_uploaded_file('profileicon',16,16, true);
-				$tiny = get_resized_image_from_uploaded_file('profileicon',25,25, true);
-				$small = get_resized_image_from_uploaded_file('profileicon',40,40, true);
-				$medium = get_resized_image_from_uploaded_file('profileicon',100,100, true);
+				$topbar = get_resized_image_from_uploaded_file('profileicon',16,16, true, true);
+				$tiny = get_resized_image_from_uploaded_file('profileicon',25,25, true, true);
+				$small = get_resized_image_from_uploaded_file('profileicon',40,40, true, true);
+				$medium = get_resized_image_from_uploaded_file('profileicon',100,100, true, true);
 				$large = get_resized_image_from_uploaded_file('profileicon',200,200);
 				$master = get_resized_image_from_uploaded_file('profileicon',550,550);
 				
