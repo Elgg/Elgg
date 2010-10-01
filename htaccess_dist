@@ -115,4 +115,7 @@ RewriteRule mt/mt-xmlrpc.cgi engine/handlers/xml-rpc_handler.php
 
 RewriteRule ^tag/(.+)/?$ engine/handlers/pagehandler.php?handler=search&page=$1
 
+# rule for rewrite module test during install - can be removed after installation
+RewriteRule ^modrewrite.php$ install.php
+
 </IfModule>

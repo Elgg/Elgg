@@ -1,0 +1,266 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+
+body {
+	color: #333333;
+	background: #4690d6;
+	font-size: 80%;
+	font-family: "Lucida Grande",Arial,Tahoma,Verdana,sans-serif;
+	text-align: left;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: bold;
+}
+h1 { font-size: 1.8em; }
+h2 { font-size: 1.5em; }
+h3 { font-size: 1.2em; }
+h4 { font-size: 1.0em; }
+h5 { font-size: 0.9em; }
+h6 { font-size: 0.8em; }
+
+a {
+	color: #4690d6;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #0054a7;
+	text-decoration: underline;
+}
+
+p {
+	margin: 0px 0px 15px 0;
+}
+
+img {
+	border: none;
+}
+
+h2 {
+	border-bottom: 1px solid #555555;
+	margin-bottom: 20px;
+}
+
+ul {
+	list-style: none;
+}
+
+.clearfloat {
+	clear:both;
+	height:0;
+	font-size: 1px;
+	line-height: 0px;
+}
+
+#elgg_wrapper {
+	background: white;
+	width: 800px;
+	margin: auto;
+	padding: 10px 40px;
+	margin-top: 20px;
+	border-right: 1px solid #666666;
+	border-bottom: 1px solid #666666;
+}
+#elgg_header {
+	margin: 20px 10px;
+}
+#elgg_sidebar {
+	float: left;
+	width: 250px;
+}
+#elgg_content {
+	float: left;
+	width: 550px;
+	min-height: 320px;
+	padding-bottom: 60px;
+	position: relative;
+}
+#elgg_footer {
+	width: 800px;
+	height: 20px;
+	clear: both;
+	padding: 10px 20px 0 20px;
+	margin: auto;
+	margin-bottom: 40px;
+}
+
+.install_nav {
+	width: 100%;
+	text-align: right;
+	position: absolute;
+	bottom: 0px;
+}
+
+#elgg_footer a {
+	color: white;
+}
+
+#elgg_footer li {
+	float: left;
+	list-style: none;
+	margin-right: 20px;
+}
+
+#elgg_sidebar ol {
+	padding-left: 30px;
+}
+
+#elgg_sidebar li {
+	font-size: 1.2em;
+	margin-bottom: 5px;
+}
+
+.past {
+	text-decoration: line-through;
+}
+.present {
+	font-weight: bold;
+}
+
+.future {
+	color: #cccccc;
+}
+
+h3 {
+	margin: 15px 0 5px;
+}
+
+label {
+	font-weight: bold;
+	color:#333333;
+	font-size: 140%;
+}
+input[type="text"],
+input[type="password"]  {
+	font: 120% Arial, Helvetica, sans-serif;
+	padding: 5px;
+	border: 1px solid #cccccc;
+	color:#666666;
+	width:566px;
+}
+.database_settings input[type="text"],
+.database_settings input[type="password"] {
+	width:220px;
+}
+textarea {
+	width: 100%;
+	height: 100%;
+	font: 120% Arial, Helvetica, sans-serif;
+	border: solid 1px #cccccc;
+	padding: 5px;
+	color:#666666;
+}
+textarea:focus, input[type="password"]:focus, input[type="text"]:focus {
+	border: solid 1px #4690d6;
+	background: #e4ecf5;
+	color:#333333;
+}
+input[type="submit"] {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+	color: #ffffff;
+	background: #4690d6;
+	border: 4px solid #4690d6;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	width: auto;
+	height: 35px;
+	padding: 2px 6px 2px 6px;
+	margin: 10px 0 10px 0;
+	cursor: pointer;
+	float: right;
+}
+
+input[type="submit"]:hover {
+	background: #0054a7;
+	border: 4px solid #0054a7;
+}
+
+select {
+	display: block;
+	padding: 5px;
+}
+
+.install_nav a {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+	color: #ffffff;
+	background: #4690d6;
+	border: 4px solid #4690d6;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	padding: 2px 9px 2px 9px;
+	margin: 10px;
+	cursor: pointer;
+	float: right;
+}
+
+.install_nav a:hover {
+	text-decoration: none;
+	background: #0054a7;
+	border: 4px solid #0054a7;
+}
+.install_nav .disabled, .install_nav .disabled:hover {
+	background: #555555;
+	border-color: #555555;
+	cursor: default;
+}
+
+#elgg_system_message {
+	padding: 3px 10px 3px 10px;
+	margin-bottom: 20px;
+}
+
+.success {
+	border: 1px solid #00cc00;
+	background: #ccffcc;
+}
+
+.error {
+	border: 1px solid #D3322A;
+	background: #F7DAD8;
+}
+
+#elgg_content li {
+	margin-top: 5px;
+	padding: 5px;
+}
+
+.pass {
+	border: 1px solid #00cc00;
+	background: #ccffcc;
+}
+
+.warning {
+	border: 1px solid #ded0a9;
+	background: #FEF5AA;
+}
+
+.failure {
+	border: 1px solid #D3322A;
+	background: #F7DAD8;
+}
+
+.info {
+	border: 1px solid #aaaaaa;
+	background: #ffffff;
+}

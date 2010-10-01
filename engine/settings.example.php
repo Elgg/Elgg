@@ -29,105 +29,24 @@ if (!isset($CONFIG)) {
  * to explain, but if you know you need it, skip past this section.
  */
 
-/**
- * The database username
- *
- * @global string $CONFIG->dbuser
- * @name $CONFIG->dbuser
- */
-$CONFIG->dbuser = '{{CONFIG_DBUSER}}';
-
-/**
- * The database password
- *
- * @global string $CONFIG->dbpass
- */
-$CONFIG->dbpass = '{{CONFIG_DBPASS}}';
-
-/**
- * The database name
- *
- * @global string $CONFIG->dbname
- */
-$CONFIG->dbname = '{{CONFIG_DBNAME}}';
-
-/**
- * The database host.
- *
- * For most installations, this is 'localhost'
- *
- * @global string $CONFIG->dbhost
- */
-$CONFIG->dbhost = '{{CONFIG_DBHOST}}';
-
-/**
- * The database prefix
- *
- * This prefix will be appended to all Elgg tables.  If you're sharing
- * a database with other applications, use a database prefix to namespace tables
- * in order to avoid table name collisions.
- *
- * @global string $CONFIG->dbprefix
- */
-$CONFIG->dbprefix = '{{CONFIG_DBPREFIX}}';
-
-/**
- * Multiple database connections
- *
- * Here you can set up multiple connections for reads and writes. To do this, uncomment out
- * the lines below.
- *
- * @todo Does this work?
- */
-
-/*
-
-// Yes! We want to split reads and writes
-$CONFIG->db->split = true;
-
-// READS
 // Database username
-$CONFIG->db['read']->dbuser = "";
+$CONFIG->dbuser = '{{dbuser}}';
 
 // Database password
-$CONFIG->db['read']->dbpass = "";
+$CONFIG->dbpass = '{{dbpassword}}';
 
 // Database name
-$CONFIG->db['read']->dbname = "";
+$CONFIG->dbname = '{{dbname}}';
 
 // Database server
 // (For most configurations, you can leave this as 'localhost')
-$CONFIG->db['read']->dbhost = "localhost";
+$CONFIG->dbhost = '{{dbhost}}';
 
-// WRITES
-// Database username
-$CONFIG->db['write']->dbuser = "";
+// Database table prefix
+// If you're sharing a database with other applications, you will want to use this
+// to differentiate Elgg's tables.
+$CONFIG->dbprefix = '{{dbprefix}}';
 
-// Database password
-$CONFIG->db['write']->dbpass = "";
-
-// Database name
-$CONFIG->db['write']->dbname = "";
-
-// Database server
-// (For most configurations, you can leave this as 'localhost')
-$CONFIG->db['write']->dbhost = "localhost";
-
- */
-
-/*
- * For extra connections for both reads and writes, you can turn both
- * $CONFIG->db['read'] and $CONFIG->db['write'] into an array, eg:
- *
- * 	$CONFIG->db['read'][0]->dbhost = "localhost";
- *
- * Note that the array keys must be numeric and consecutive, i.e., they start
- * at 0, the next one must be at 1, etc.
- */
-
-/*
- * Optional configuration
- */
 
 /**
  * Memcache setup (optional)
@@ -145,6 +64,7 @@ $CONFIG->db['write']->dbhost = "localhost";
 //	array('server1', 11211),
 //	array('server2', 11211)
 //);
+
 
 /**
  * Use non-standard headers for broken MTAs.

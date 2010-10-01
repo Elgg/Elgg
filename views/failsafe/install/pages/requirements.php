@@ -1,0 +1,39 @@
+<?php
+/**
+ * Install requirements checking page
+ *
+ * @uses $vars['num_failures] Number of requirements failures
+ * @uses $vars['num_warnings] Number of recommendation warnings
+ */
+
+if ($vars['num_failures'] != 0) {
+	$instruct_text = elgg_echo('install:requirements:instructions:failure');
+} elseif ($vars['num_warnings'] != 0) {
+	$instruct_text = elgg_echo('install:requirements:instructions:warning');
+} else {
+	$instruct_text = elgg_echo('install:requirements:instructions:success');
+}
+
+echo autop($instruct_text);
+
+$report = $vars['report'];
+foreach ($report as $category => $checks) {
+	$title = elgg_echo("install:require:$category");
+	echo "<h3>$title</h3>";
+	echo "<ul>";
+	foreach ($checks as $check) {
+		echo "<li class=\"{$check['severity']}\">";
+		echo autop($check['message']);
+		echo "</li>";
+	}
+	echo "</ul>";
+}
+
+$vars['refresh'] = TRUE;
+
+// cannot advance to next step with a failure
+if ($vars['num_failures'] != 0) {
+	$vars['advance'] = FALSE;
+}
+
+echo elgg_view('install/nav', $vars);
