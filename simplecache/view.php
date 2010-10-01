@@ -23,7 +23,7 @@ if (!isset($viewinput)) {
 }
 
 if ($mysql_dblink = @mysql_connect($CONFIG->dbhost,$CONFIG->dbuser,$CONFIG->dbpass, true)) {
-	$view = $viewinput['view'];
+	$view_name = $viewinput['view'];
 	$viewtype = $viewinput['viewtype'];
 	if (empty($viewtype)) {
 		$viewtype = 'default';
@@ -48,7 +48,7 @@ if ($mysql_dblink = @mysql_connect($CONFIG->dbhost,$CONFIG->dbuser,$CONFIG->dbpa
 		}
 
 		if ($simplecache_enabled || $override) {
-			$filename = $dataroot . 'views_simplecache/' . md5($viewtype . $view);
+			$filename = $dataroot . 'views_simplecache/' . md5($viewtype . $view_name);
 			if (file_exists($filename)) {
 				$contents = file_get_contents($filename);
 				header("Content-Length: " . strlen($contents));
@@ -60,7 +60,7 @@ if ($mysql_dblink = @mysql_connect($CONFIG->dbhost,$CONFIG->dbuser,$CONFIG->dbpa
 		} else {
 			mysql_close($mysql_dblink);
 			require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
-			$contents = elgg_view($view);
+			$contents = elgg_view($view_name);
 			header("Content-Length: " . strlen($contents));
 		}
 	}
