@@ -125,7 +125,8 @@ if (!$installed) {
 // Autodetect some default configuration settings
 set_default_config();
 
-// Trigger events
+// Trigger boot events for core. Plugins can't hook
+// into this because they haven't been loaded yet.
 trigger_elgg_event('boot', 'system');
 
 // Load the plugins that are active
@@ -137,6 +138,7 @@ trigger_elgg_event('init', 'system');
 
 // Regenerate the simple cache if expired.
 // Don't do it on upgrade because upgrade does it itself.
+// @todo - move into function and perhaps run off init system event
 if (!defined('upgrading')) {
 	$view = get_input('view', 'default');
 	$lastupdate = datalist_get("simplecache_lastupdate_$view");
