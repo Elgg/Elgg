@@ -974,6 +974,7 @@ If you are ready to proceed, click the Next button.",
 	'install:check:htaccess_exists' => 'There is an .htaccess file in the root directory of Elgg. Please remove it.',
 	'install:check:htaccess_fail' => 'Unable to create an .htaccess file in the root directory of Elgg. You will need to copy htaccess_dist to .htaccess',
 	'install:check:rewrite:success' => 'The test of the rewrite rules was successful.',
+	'install:check:rewrite:fail' => 'The URL rewrite test failed.',
 
 	'install:check:enginedir' => 'Your web server does not have permission to create the settings.php file in the engine directory. You have two choices:
 

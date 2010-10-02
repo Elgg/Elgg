@@ -122,15 +122,15 @@ class ElggInstaller {
 		// check PHP parameters and libraries
 		$this->checkPHP($report);
 
-		// @todo - rewrite this to handle different web servers
-		// attempt to create .htaccess file
-		$htaccessExists = $this->createHtaccess($report);
-
-		// check rewrite module
-		if ($htaccessExists) {
-			$this->checkRewriteModule($report);
+		// check rewrite. If failure, create .htaccess and try again. 
+		$rewriteResult = $this->checkRewriteRules($report);
+		if ($rewriteResult == FALSE) {
+			$htaccessExists = $this->createHtaccess($report);
+			if ($htaccessExists) {
+				$this->checkRewriteRules($report);
+			}
 		}
-		
+
 		// check for existence of settings file
 		if ($this->checkSettingsFile() != TRUE) {
 			// no file, so check permissions on engine directory
@@ -871,11 +871,11 @@ class ElggInstaller {
 	}
 
 	/**
-	 * Confirm that Apache's rewrite module and AllowOverride are set up
+	 * Confirm that the rewrite rules are firing
 	 * @param array $report
 	 * @return bool
 	 */
-	protected function checkRewriteModule(&$report) {
+	protected function checkRewriteRules(&$report) {
 		global $CONFIG;
 
 		$url = "{$CONFIG->wwwroot}modrewrite.php";
@@ -885,13 +885,14 @@ class ElggInstaller {
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, $url);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 			$response = curl_exec($ch);
 			curl_close($ch);
 			$result = $response === 'success';
 		} else if (ini_get('allow_url_fopen')) {
 			// use file_get_contents as fallback
-			$data = file_get_contents($url);
-			$result = $data === 'success';
+			$response = file_get_contents($url);
+			$result = $response === 'success';
 		} else {
 			$report['htaccess'] = array(
 				array(
@@ -910,6 +911,9 @@ class ElggInstaller {
 				)
 			);
 		} else {
+			if (strpos($response, 'No input file specified.') !== FALSE) {
+				// nginx with no or bad rewrite rules
+			}
 			$report['htaccess'] = array(
 				array(
 					'severity' => 'failure',
