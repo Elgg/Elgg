@@ -1273,6 +1273,9 @@ class ElggInstaller {
 			return FALSE;
 		}
 
+		create_metadata($guid, 'validated', TRUE, '', 0, ACCESS_PUBLIC);
+		create_metadata($guid, 'validated_method', 'admin_user', '', 0, ACCESS_PUBLIC);
+
 		return TRUE;
 	}
 }
