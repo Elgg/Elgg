@@ -987,6 +987,7 @@ If you are ready to proceed, click the Next button.",
 	'install:check:database' => 'The database requirements are checked when Elgg loads its database.',
 
 	'install:database:instructions' => "If you haven't already created a database for Elgg, do that now. Then fill in the values below to initialize the Elgg database.",
+	'install:database:error' => 'There was an error creating the Elgg database and installation cannot continue. Review the message above and correct any problems. If you need more help, visit the Install Troubleshooting link below, or post to the Elgg community forums.',
 
 	'installation:database:label:dbuser' =>  'Database Username',
 	'installation:database:label:dbpassword' => 'Database Password',
