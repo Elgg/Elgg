@@ -1035,6 +1035,10 @@ If you are ready to proceed, click the Next button.",
 	'installation:admin:help:password1' => 'Account password must be at least x characters long',
 	'installation:admin:help:password2' => 'Retype password to confirm',
 
+	'installation:admin:password:mismatch' => 'Password must match.',
+	'installation:admin:password:empty' => 'Password cannot be empty.',
+	'installation:admin:cannot_create' => 'Unable to create an admin account.',
+
 	'install:complete:instructions' => 'Your Elgg site is now ready to be used. Click the button below to be taken to your site.',
 
 

@@ -35,7 +35,7 @@ class ElggInstaller {
 		$this->isAction = $_SERVER['REQUEST_METHOD'] === 'POST';
 
 		$this->bootstrapConfig();
-		
+
 		$this->bootstrapEngine();
 
 		elgg_set_viewtype('failsafe');
@@ -118,11 +118,11 @@ class ElggInstaller {
 	protected function requirements($vars) {
 
 		$report = array();
-		
+
 		// check PHP parameters and libraries
 		$this->checkPHP($report);
 
-		// check rewrite. If failure, create .htaccess and try again. 
+		// check rewrite. If failure, create .htaccess and try again.
 		$rewriteResult = $this->checkRewriteRules($report);
 		if ($rewriteResult == FALSE) {
 			$htaccessExists = $this->createHtaccess($report);
@@ -161,7 +161,7 @@ class ElggInstaller {
 
 	/**
 	 * Database set up controller
-	 * 
+	 *
 	 * Creates the settings.php file and creates the database tables
 	 *
 	 * @param array $submissionVars Submitted form variables
@@ -215,7 +215,7 @@ class ElggInstaller {
 					}
 				}
 
-				// check db version and connect 
+				// check db version and connect
 				if (!$this->connectToDatabase()) {
 					break;
 				}
@@ -251,7 +251,7 @@ class ElggInstaller {
 	 */
 	protected function settings($submissionVars) {
 		global $CONFIG;
-		
+
 		$languages = get_installed_translations();
 		$formVars = array(
 			'sitename' => array(
@@ -291,7 +291,7 @@ class ElggInstaller {
 				'required' => TRUE,
 				),
 		);
-		
+
 		if ($this->isAction) {
 			do {
 				if (!$this->validateSettingsVars($submissionVars, $formVars)) {
@@ -301,14 +301,14 @@ class ElggInstaller {
 				if (!$this->saveSiteSettings($submissionVars)) {
 					break;
 				}
-				
+
 				system_message('Site settings have been saved.');
 
 				$this->continueToNextStep('settings');
 
 			} while (FALSE);  // PHP doesn't support breaking out of if statements
 		}
-		
+
 		$formVars = $this->makeFormSticky($formVars, $submissionVars);
 
 		$this->render('settings', array('variables' => $formVars));
@@ -359,14 +359,14 @@ class ElggInstaller {
 				if (!$this->createAdminAccount($submissionVars)) {
 					break;
 				}
-				
+
 				system_message('Admin account has been created.');
 
 				$this->continueToNextStep('admin');
 
 			} while (FALSE);  // PHP doesn't support breaking out of if statements
 		}
-		
+
 		$formVars = $this->makeFormSticky($formVars, $submissionVars);
 
 		$this->render('admin', array('variables' => $formVars));
@@ -397,7 +397,7 @@ class ElggInstaller {
 
 	/**
 	 * Forwards the browser to the next step
-	 * 
+	 *
 	 * @param string $currentStep
 	 */
 	protected function continueToNextStep($currentStep) {
@@ -417,7 +417,7 @@ class ElggInstaller {
 
 	/**
 	 * Get the URL of the next step
-	 * 
+	 *
 	 * @param string $currentStep
 	 * @return string
 	 */
@@ -432,14 +432,14 @@ class ElggInstaller {
 	 */
 	protected function setInstallStatus() {
 		global $CONFIG;
-		
+
 		$settingsCreated = $this->checkSettingsFile();
 		if ($settingsCreated == FALSE) {
 			return;
 		}
 
 		$this->loadSettingsFile();
-		
+
 		// must be able to connect to database to jump install steps
 		$dbSettingsPass = $this->checkDatabaseSettings(
 				$CONFIG->dbuser,
@@ -565,7 +565,7 @@ class ElggInstaller {
 
 	/**
 	 * Load remaining engine libraries and complete bootstraping (see start.php)
-	 * 
+	 *
 	 * @param string $step
 	 */
 	protected function finishBootstraping($step) {
@@ -584,7 +584,7 @@ class ElggInstaller {
 			$lib_dir = $CONFIG->path . 'engine/lib/';
 
 			$this->loadSettingsFile();
-			
+
 			$lib_files = array(
 				// these want to be loaded first apparently?
 				'database.php', 'actions.php',
@@ -599,8 +599,8 @@ class ElggInstaller {
 				'relationships.php', 'river.php', 'sites.php', 'social.php',
 				'statistics.php', 'tags.php', 'usersettings.php',
 				'users.php', 'version.php', 'widgets.php', 'xml.php', 'xml-rpc.php'
- 			);
-			
+			);
+
 			foreach ($lib_files as $file) {
 				$path = $lib_dir . $file;
 				if (!include_once($path)) {
@@ -653,7 +653,7 @@ class ElggInstaller {
 
 	function loadSettingsFile() {
 		global $CONFIG;
-		
+
 		if (!include_once("{$CONFIG->path}engine/settings.php")) {
 			throw new InstallationException("Elgg could not load the settings file. It does not exist or there is a permissions issue.");
 		}
@@ -666,7 +666,7 @@ class ElggInstaller {
 	/**
 	 * Return an associative array of post variables
 	 * (could be selective based on expected variables)
-	 * 
+	 *
 	 * @return array
 	 */
 	protected function getPostVariables() {
@@ -724,7 +724,7 @@ class ElggInstaller {
 				return TRUE;
 			}
 		}
-		
+
 		if (!is_writable($CONFIG->path)) {
 			$report['htaccess'] = array(
 				array(
@@ -756,7 +756,7 @@ class ElggInstaller {
 	 */
 	protected function checkEngineDir(&$report) {
 		global $CONFIG;
-		
+
 		$writable = is_writable("{$CONFIG->path}engine");
 		if (!$writable) {
 			$report['engine'] = array(
@@ -851,7 +851,7 @@ class ElggInstaller {
 
 	/**
 	 * Check PHP parameters
-	 * 
+	 *
 	 * @param array $phpReport
 	 */
 	protected function checkPhpDirectives(&$phpReport) {
@@ -956,7 +956,7 @@ class ElggInstaller {
 		return $count;
 	}
 
-	
+
 	/**
 	 * Database support methods
 	 */
@@ -977,7 +977,7 @@ class ElggInstaller {
 				return FALSE;
 			}
 		}
-		
+
 		return $this->checkDatabaseSettings(
 					$submissionVars['dbuser'],
 					$submissionVars['dbpassword'],
@@ -1081,7 +1081,7 @@ class ElggInstaller {
 
 	/**
 	 * Create the database tables
-	 * 
+	 *
 	 * @return bool
 	 */
 	protected function installDatabase() {
@@ -1093,7 +1093,7 @@ class ElggInstaller {
 			register_error($e->getMessage());
 			return FALSE;
 		}
-		
+
 		return TRUE;
 	}
 
@@ -1222,7 +1222,7 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function validateAdminVars($submissionVars, $formVars) {
-		
+
 		foreach ($formVars as $field => $info) {
 			if ($info['required'] == TRUE && !$submissionVars[$field]) {
 				$name = elgg_echo("installation:admin:label:$field");
@@ -1232,12 +1232,12 @@ class ElggInstaller {
 		}
 
 		if ($submissionVars['password1'] !== $submissionVars['password2']) {
-			register_error("Your passwords must match.");
+			register_error(elgg_echo('installation:admin:password:mismatch'));
 			return FALSE;
 		}
 
 		if (trim($submissionVars['password1']) == "") {
-			register_error("Password cannot be empty.");
+			register_error(elgg_echo('installation:admin:password:empty'));
 			return FALSE;
 		}
 
@@ -1252,7 +1252,7 @@ class ElggInstaller {
 	 */
 	protected function createAdminAccount($submissionVars) {
 		global $CONFIG;
-		
+
 		$guid = register_user(
 				$submissionVars['username'],
 				$submissionVars['password1'],
@@ -1261,7 +1261,7 @@ class ElggInstaller {
 				);
 
 		if (!$guid) {
-			register_error("Unable to create an admin account.");
+			register_error(elgg_echo('installation:admin:cannot_create'));
 			return FALSE;
 		}
 
