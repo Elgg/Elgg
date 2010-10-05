@@ -1,16 +1,4 @@
-<?php
-
-/*
 <script type="text/javascript">
-	$(document).ready(function() {
-	
-		var href = $("div.river_pagination a").attr('href');
-		href = href.replace("callback=true","callback=");
-		$("div.river_pagination a").attr('href',href);
-	
-	});
+	// re-add avatar menus for new avatars
+	setup_avatar_menu($('.river_item_list'));
 </script>
-
-*/
-
-?>
