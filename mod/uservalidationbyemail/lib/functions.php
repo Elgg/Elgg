@@ -126,23 +126,18 @@ function uservalidationbyemail_get_user_validation_status($user_guid) {
  * This doesn't include any security, so should be called ONLY be admin users!
  * @return array
  */
-function uservalidationbyemail_get_unvalidated_users() {
+function uservalidationbyemail_get_unvalidated_users_sql_where() {
 	global $CONFIG;
 
 	$validated_id = get_metastring_id('validated');
 	$one_id = get_metastring_id(1);
 
 	// thanks to daveb@freenode for the SQL tips!
-	$q = "SELECT e.* FROM {$CONFIG->dbprefix}entities e
-		WHERE e.type = 'user'
-		AND NOT EXISTS (
+	$where = "NOT EXISTS (
 			SELECT 1 FROM {$CONFIG->dbprefix}metadata md
 			WHERE md.entity_guid = e.guid
 				AND md.name_id = $validated_id
-				AND md.value_id = $one_id)
+				AND md.value_id = $one_id)";
 
-		ORDER BY e.guid DESC";
-
-	$users = get_data($q, 'entity_row_to_elggstar');
-	return $users;
+	return $where;
 }

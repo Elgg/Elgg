@@ -7,7 +7,12 @@
  */
 
 // @todo pagination would be nice.
-$users = uservalidationbyemail_get_unvalidated_users();
+// can't use elgg_list_entities() and friends because we don't use the default view for users.
+$users = elgg_get_entities(array(
+	'type' => 'user',
+	'wheres' => array(uservalidationbyemail_get_unvalidated_users_sql_where()),
+	'limit' => 9999,
+));
 
 if ($users) {
 	foreach ($users as $user) {
