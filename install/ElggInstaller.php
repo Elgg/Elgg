@@ -38,7 +38,7 @@ class ElggInstaller {
 
 		$this->bootstrapEngine();
 
-		elgg_set_viewtype('failsafe');
+		elgg_set_viewtype('installation');
 
 		set_error_handler('__elgg_php_error_handler');
 		set_exception_handler('__elgg_php_exception_handler');
@@ -86,7 +86,7 @@ class ElggInstaller {
 		page_draw(
 				$title,
 				$body,
-				'page_shells/install',
+				'page_shells/default',
 				array(
 					'step' => $step,
 					'steps' => $this->getSteps(),
