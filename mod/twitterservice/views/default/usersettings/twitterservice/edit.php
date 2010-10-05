@@ -1,17 +1,37 @@
-<p>
-	<?php echo elgg_echo('twitterservice:twittername'); ?> <?php echo elgg_view('input/text', array('internalname' => 'params[twittername]', 'value' => $vars['entity']->twittername)); ?>
-</p>
-<p>
-	<?php echo elgg_echo('twitterservice:twitterpass'); ?> <?php echo elgg_view('input/password', array('internalname' => 'params[twitterpass]', 'value' => $vars['entity']->twitterpass)); ?>
-</p>
-<?php if (is_plugin_enabled('thewire')) { ?>
-<p>
-	<?php echo elgg_echo('twitterservice:postwire'); ?>
-	
-	<select name="params[sendtowire]">
-		<option value="yes" <?php if ($vars['entity']->sendtowire == 'yes') echo " selected=\"yes\" "; ?>><?php echo elgg_echo('option:yes'); ?></option>
-		<option value="no" <?php if ($vars['entity']->sendtowire != 'yes') echo " selected=\"yes\" "; ?>><?php echo elgg_echo('option:no'); ?></option>
-	</select>
-	
-</p>
-<?php } ?>
+<?php
+/**
+ *
+ */
+
+$user_id = get_loggedin_userid();
+$twitter_name = get_plugin_usersetting('twitter_name', $user_id, 'twitterservice');
+$access_key = get_plugin_usersetting('access_key', $user_id, 'twitterservice');
+$access_secret = get_plugin_usersetting('access_secret', $user_id, 'twitterservice');
+$plugins  = twitterservice_get_tweeting_plugins();
+
+echo '<p>' . elgg_echo('twitterservice:usersettings:description') . '</p>';
+
+if (!$access_key || !$access_secret) {
+	// send user off to validate account
+	$request_link = twitterservice_get_authorize_url($vars['url'] . 'pg/twitterservice/authorize');
+	echo '<p>' . sprintf(elgg_echo('twitterservice:usersettings:request'), $request_link) . '</p>';
+} else {
+	$url = "{$CONFIG->site->url}pg/twitterservice/revoke";
+	echo '<p class="twitter_anywhere">' . sprintf(elgg_echo('twitterservice:usersettings:authorized'), $twitter_name, $vars['config']->site->name) . '</p>';
+	echo '<p>' . sprintf(elgg_echo('twitterservice:usersettings:revoke'), $url) . '</p>';
+
+	// allow granular plugin access to twitter
+	echo '<h3>' . elgg_echo('twitterservice:usersettings:allowed_plugins') . '</h3><br />';
+
+	foreach ($plugins as $plugin => $info) {
+		$name = "allowed_plugin:$plugin";
+		$checked = (twitterservice_can_tweet($plugin, $user_guid)) ? 'checked = checked' : '';
+
+		// can't use input because it doesn't work correctly for sending a single checkbox.
+		echo "<input type=\"hidden\" name=\"params[$name]\" value=\"0\" />
+			<label><input type=\"checkbox\" name=\"params[$name]\" value=\"1\" $checked />"
+			. elgg_echo($info['name']) . '</label>
+			<p class="twitterservice_usersettings_desc">' . $info['description'] . '</p>
+			';
+	}
+}

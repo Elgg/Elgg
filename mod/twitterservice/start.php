@@ -1,54 +1,78 @@
 <?php
-	/**
-	 * Elgg Twitter Service.
-	 * This plugin provides a wrapper around David Grudl's twitter library and exposes some basic functionality.
-	 * 
-	 * @package ElggSMS
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-	 * @author Curverider Ltd
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
-	 */
+/**
+ * Elgg Twitter Service
+ * This service plugin allows users to authenticate their Elgg account with Twitter.
+ *
+ * @package TwitterService
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * @copyright Curverider Ltd 2008-2010
+ */
 
+register_elgg_event_handler('init','system','twitterservice_init');
+function twitterservice_init() {
 	global $CONFIG;
-	require_once($CONFIG->pluginspath . "twitterservice/vendors/twitter/twitter.class.php"); 
 
-	function twitterservice_init()
-	{
-		// Listen for wire create event
-		register_elgg_event_handler('create','object','twitterservice_wire_listener');
-		
-	}
-	
-	/**
-	 * Post a message to a twitter feed.
-	 *
-	 */
-	function twitterservice_send($twittername, $twitterpass, $twittermessage)
-	{
-		$twitter = new Twitter($twittername, $twitterpass);
-		
-		return $twitter->send($twittermessage);
-	}
-	
-	/**
-	 * Listen for thewire and push messages accordingly.
-	 */
-	function twitterservice_wire_listener($event, $object_type, $object)
-	{
+	// require libraries
+	require_once "{$CONFIG->pluginspath}twitterservice/twitterservice_lib.php";
 
-		if (($object) && ($object->subtype == get_subtype_id('object', 'thewire')) )
-		{
-			if (get_plugin_usersetting('sendtowire', $object->owner_guid, 'twitterservice')=='yes')
-			{
-				$twittername = get_plugin_usersetting('twittername', $object->owner_guid, 'twitterservice');
-				$twitterpass = get_plugin_usersetting('twitterpass', $object->owner_guid, 'twitterservice');
-			
-				if (($twittername) && ($twitterpass))
-					twitterservice_send($twittername, $twitterpass, $object->description);
-			}
-		}
+	if (!class_exists('twitterOAuth')) {
+		require_once "{$CONFIG->pluginspath}twitterservice/vendors/twitteroauth/twitterOAuth.php";
 	}
-	
-	register_elgg_event_handler('init','system','twitterservice_init');
-?>
+
+	// extend site views
+	elgg_extend_view('css', 'twitterservice/css');
+
+	// register page handler
+	register_page_handler('twitterservice', 'twitterservice_pagehandler');
+
+	// allow plugin authors to hook into this service
+	register_plugin_hook('tweet', 'twitter_service', 'twitterservice_tweet');
+}
+
+function twitterservice_pagehandler($page) {
+	if (!isset($page[0])) {
+		forward();
+	}
+
+	switch ($page[0]) {
+		case 'authorize':
+			twitterservice_authorize();
+			break;
+		case 'revoke':
+			twitterservice_revoke();
+			break;
+		case 'forward':
+			twitterservice_forward();
+			break;
+		default:
+			forward();
+			break;
+	}
+}
+
+function twitterservice_tweet($hook, $entity_type, $returnvalue, $params) {
+	if (!twitterservice_can_tweet($params['plugin'])) {
+		return NULL;
+	}
+
+	// check admin settings
+	$consumer_key = get_plugin_setting('consumer_key', 'twitterservice');
+	$consumer_secret = get_plugin_setting('consumer_secret', 'twitterservice');
+	if (!($consumer_key && $consumer_secret)) {
+		return NULL;
+	}
+
+	// check user settings
+	$user_id = get_loggedin_userid();
+	$access_key = get_plugin_usersetting('access_key', $user_id, 'twitterservice');
+	$access_secret = get_plugin_usersetting('access_secret', $user_id, 'twitterservice');
+	if (!($access_key && $access_secret)) {
+		return NULL;
+	}
+
+	// send tweet
+	$api = new TwitterOAuth($consumer_key, $consumer_secret, $access_key, $access_secret);
+	$response = $api->post('statuses/update', array('status' => $params['message']));
+
+	return TRUE;
+}
