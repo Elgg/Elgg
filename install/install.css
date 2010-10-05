@@ -264,3 +264,9 @@ select {
 	border: 1px solid #aaaaaa;
 	background: #ffffff;
 }
+
+.messages {
+	padding: 3px 10px 3px 10px;
+	margin: 20px 0px 10px 0px;
+	width: 95%;
+}

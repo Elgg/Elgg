@@ -15,20 +15,7 @@ if (!empty($vars['object']) && is_array($vars['object'])) {
 
 ?>
 
-<style type="text/css">
-.messages {
-	border:1px solid #00cc00;
-	background:#ccffcc;
-	color:#000000;
-	padding:3px 10px 3px 10px;
-	margin:20px 0px 0px 0px;
-	z-index: 9999;
-	position:relative;
-	width:95%;
-}
-</style>
-
-	<div class="messages">
+	<div class="messages success">
 
 <?php
 	foreach($vars['object'] as $message) {
