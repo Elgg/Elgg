@@ -1,3 +1,36 @@
+Version 1.7.4
+(??? from http://code.elgg.org/branches/1.7)
+
+ Bugfixes:
+  * Upgrade Twitter Services to use oAuth so The Wire can post
+    to Twitter. (Requires special actions. See LINK TO BLOG POST.)
+  * WSOD fixed when viewing an invalid profile page.
+  * Checking for mismatched passwords earlier in registration to avoid
+    creating a user who can never log in and wasting a username/email.
+  * POST data in the web services API is correctly quoted on servers
+    with magic quotes enabled.
+  * WSOD fixed when trying to update an invalid entity.
+  * Group file widget only shows when Files are enabled for the group.
+  * Fixed misformatting of some group forum posts in the River.
+  * Fixed resizing tall non-square images.
+  * Non-English languages work when using memcache.
+  * User avatar menus work when switching filters on River Dashboard page.
+ 
+ UI/UX Changes:
+  * Pages: Admin users can edit user-defined "Welcome page."
+  * Pages: Group "Welcome page" can be edited.
+  * User Validation:  Added an admin section for unvalidated users. An 
+    admin user can resend validation request, validate, or delete 
+    unvalidated users.
+
+ API Changes:
+  * test_ip() removed.
+  * is_ip_in_range() removed.
+  * Read/write DB connections can use different credentials.
+  * Twitter services plugin allows other plugins to tweet
+    if the user authorizes them.  See twitterservice/README.txt
+
+
 Version 1.7.3
 (September 2, 2010 from http://code.elgg.org/branches/1.7)
 
