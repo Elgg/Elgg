@@ -1,7 +1,7 @@
-<?php 
+<?php
 /**
  * Provides interfaces for Elgg's views system
- * 
+ *
  * @package Elgg
  * @subpackage Core
  */
@@ -97,7 +97,7 @@ function elgg_does_viewtype_fallback($viewtype) {
 	if (isset($CONFIG->viewtype) && isset($CONFIG->viewtype->fallback)) {
 		return in_array($viewtype, $CONFIG->viewtype->fallback);
 	}
-	
+
 	return FALSE;
 }
 
@@ -220,10 +220,10 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 		$viewtype = elgg_get_viewtype();
 	}
 
-	// Viewtypes can only be alphanumeric 
+	// Viewtypes can only be alphanumeric
 	if (preg_match('[\W]', $viewtype)) {
-		return ''; 
-	} 
+		return '';
+	}
 
 	// Set up any extensions to the requested view
 	if (isset($CONFIG->views->extensions[$view])) {
@@ -237,10 +237,10 @@ function elgg_view($view, $vars = array(), $bypass = false, $debug = false, $vie
 	foreach($viewlist as $priority => $view) {
 		$view_location = elgg_get_view_location($view, $viewtype);
 		$view_file = "$view_location$viewtype/$view.php";
-		
+
 		$default_location = elgg_get_view_location($view, 'default');
 		$default_view_file = "{$default_location}default/$view.php";
-		
+
 		// try to include view
 		if (!file_exists($view_file) || !include($view_file)) {
 			// requested view does not exist
@@ -376,7 +376,7 @@ function elgg_view_regenerate_simplecache($viewtype = NULL) {
 	}
 
 	$original_viewtype = elgg_get_viewtype();
-	
+
 	foreach ($viewtypes as $viewtype) {
 		elgg_set_viewtype($viewtype);
 		foreach ($CONFIG->views->simplecache as $view) {
@@ -424,18 +424,33 @@ function elgg_view_disable_simplecache() {
 		datalist_set('simplecache_enabled',0);
 		$CONFIG->simplecache_enabled = 0;
 
-		// purge simple cache
-		if ($handle = opendir($CONFIG->dataroot.'views_simplecache')) {
-			while (false !== ($file = readdir($handle))) {
-				if ($file != "." && $file != "..") {
-					unlink($CONFIG->dataroot.'views_simplecache/'.$file);
-				}
-			}
-			closedir($handle);
-		}
+		elgg_invalidate_simplecache();
 	}
 }
 
+/**
+ * Invalidates all cached views in the simplecache
+ *
+ * @since 1.7.4
+ */
+function elgg_invalidate_simplecache() {
+	global $CONFIG;
+
+	$return = TRUE;
+
+	if ($handle = opendir($CONFIG->dataroot . 'views_simplecache')) {
+		while (false !== ($file = readdir($handle))) {
+			if ($file != "." && $file != "..") {
+				$return = $return && unlink($CONFIG->dataroot.'views_simplecache/'.$file);
+			}
+		}
+		closedir($handle);
+	} else {
+		$return = FALSE;
+	}
+
+	return $return;
+}
 
 /**
  * Internal function for retrieving views used by elgg_view_tree
@@ -656,7 +671,7 @@ function elgg_view_annotation(ElggAnnotation $annotation, $bypass = true, $debug
 function elgg_view_entity_list($entities, $count, $offset, $limit, $fullview = true, $viewtypetoggle = true, $pagination = true) {
 	$count = (int) $count;
 	$limit = (int) $limit;
-	
+
 	// do not require views to explicitly pass in the offset
 	if (!$offset = (int) $offset) {
 		$offset = sanitise_int(get_input('offset', 0));
@@ -798,7 +813,7 @@ function elgg_view_title($title, $submenu = false) {
  * Displays a UNIX timestamp in a friendly way
  *
  * @see elgg_get_friendly_time()
- * 
+ *
  * @param int $time A UNIX epoch timestamp
  * @return string The friendly time HTML
  * @since 1.7.2
@@ -867,9 +882,9 @@ function set_template_handler($function_name) {
 /**
  * Extends a view.
  *
- * The addititional views are displayed before or after the primary view. 
- * Priorities less than 500 are displayed before the primary view and 
- * greater than 500 after. The default priority is 501. 
+ * The addititional views are displayed before or after the primary view.
+ * Priorities less than 500 are displayed before the primary view and
+ * greater than 500 after. The default priority is 501.
  *
  * @param string $view The view to extend.
  * @param string $view_extension This view is added to $view
@@ -929,7 +944,7 @@ function elgg_unextend_view($view, $view_extension) {
 	}
 
 	unset($CONFIG->views->extensions[$view][$priority]);
-	
+
 	return TRUE;
 }
 
