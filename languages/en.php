@@ -38,8 +38,6 @@ $english = array(
  */
 	'exception:title' => "Welcome to Elgg.",
 
-	'InstallationException:CantCreateSite' => "Unable to create a default ElggSite with credentials Name:%s, Url: %s",
-
 	'actionundefined' => "The requested action (%s) was not defined in the system.",
 	'actionloggedout' => "Sorry, you cannot perform this action while logged out.",
 	'actionunauthorized' => 'You are unauthorized to perform this action',
@@ -163,15 +161,6 @@ $english = array(
 	'CallException:NotRPCCall' => "Call does not appear to be a valid XML-RPC call",
 
 	'PluginException:NoPluginName' => "The plugin name could not be found",
-
-	'ConfigurationException:BadDatabaseVersion' => "The database backend you have installed doesn't meet the basic requirements to run Elgg. Please consult your documentation.",
-	'ConfigurationException:BadPHPVersion' => "You need at least PHP version 5.2 to run Elgg.",
-	'configurationwarning:phpversion' => "Elgg requires at least PHP version 5.2, you can install it on 5.1.6 but some features may not work. Use at your own risk.",
-
-
-	'InstallationException:DatarootNotWritable' => "Your data directory %s is not writable.",
-	'InstallationException:DatarootUnderPath' => "Your data directory %s must be outside of your install path.",
-	'InstallationException:DatarootBlank' => "You have not specified a data directory.",
 
 	'SecurityException:authenticationfailed' => "User could not be authenticated",
 
@@ -726,41 +715,8 @@ Once you have logged in, we highly recommend that you change your password.
 
 
 /**
- * Installation and system settings
+ * System settings
  */
-
-	'installation:error:htaccess' => "Elgg requires a file called .htaccess to be set in the root directory of its installation. We tried to create it for you, but Elgg doesn't have permission to write to that directory.
-
-Creating this is easy. Copy the contents of the textbox below into a text editor and save it as .htaccess
-
-",
-	'installation:error:settings' => "Elgg couldn't find its settings file. Most of Elgg's settings will be handled for you, but we need you to supply your database details. To do this:
-
-1. Rename engine/settings.example.php to settings.php in your Elgg installation.
-
-2. Open it with a text editor and enter your MySQL database details. If you don't know these, ask your system administrator or technical support for help.
-
-Alternatively, you can enter your database settings below and we will try and do this for you...",
-
-	'installation:error:db:title' => "Database settings error",
-	'installation:error:db:text' => "Check your database settings again as Elgg could not connect and access the database.",
-	'installation:error:configuration' => "Once you've corrected any configuration issues, press reload to try again.",
-
-	'installation' => "Installation",
-	'installation:success' => "Elgg's database was installed successfully.",
-	'installation:configuration:success' => "Your initial configuration settings have been saved. Now register your initial user; this will be your first system administrator.",
-
-	'installation:settings' => "System settings",
-	'installation:settings:description' => "Now that the Elgg database has been successfully installed, you need to enter a couple of pieces of information to get your site fully up and running. We've tried to guess where we could, but <b>you should check these details.</b>",
-
-	'installation:settings:dbwizard:prompt' => "Enter your database settings below and hit save:",
-	'installation:settings:dbwizard:label:user' => "Database user",
-	'installation:settings:dbwizard:label:pass' => "Database password",
-	'installation:settings:dbwizard:label:dbname' => "Elgg database",
-	'installation:settings:dbwizard:label:host' => "Database hostname (usually 'localhost')",
-	'installation:settings:dbwizard:label:prefix' => "Database table prefix (usually 'elgg_')",
-
-	'installation:settings:dbwizard:savefail' => "We were unable to save the new settings.php. Please save the following file as engine/settings.php using a text editor.",
 
 	'installation:sitename' => "The name of your site:",
 	'installation:sitedescription' => "Short description of your site (optional):",
@@ -810,7 +766,6 @@ Alternatively, you can enter your database settings below and we will try and do
 
 	'welcome' => "Welcome",
 	'welcome:user' => 'Welcome %s',
-	'welcome_message' => "Welcome to this Elgg installation.",
 
 /**
  * Emails
@@ -933,113 +888,6 @@ You cannot reply to this email.",
 	'actiongatekeeper:tokeninvalid' => "We encountered an error (token mismatch). This probably means that the page you were using expired. Please try again.",
 	'actiongatekeeper:timeerror' => 'The page you were using has expired. Please refresh and try again.',
 	'actiongatekeeper:pluginprevents' => 'A extension has prevented this form from being submitted.',
-
-/**
- * Installation
- * @todo - move to separate language file for install
- */
-	'install:welcome' => 'Welcome',
-	'install:requirements' => 'Requirements check',
-	'install:database' => 'Database installation',
-	'install:settings' => 'Configure site',
-	'install:admin' => 'Create admin account',
-	'install:complete' => 'Finished',
-
-	'install:welcome:instructions' => "Installing Elgg has 6 simple steps and reading this welcome is the first one!
-
-If you haven't already, read through the installation instructions included with Elgg (or click the instructions link at the bottom of the page).
-
-If you are ready to proceed, click the Next button.",
-	'install:requirements:instructions:success' => "Your server passed the requirement checks.",
-	'install:requirements:instructions:failure' => "Your server failed the requirements check. After you have fixed the below issues, refresh this page.",
-	'install:requirements:instructions:warning' => "Your server passed the requirements check, but there is at least one warning. We recommend that you check the install troubleshooting page for more details.",
-
-	'install:require:php' => 'PHP',
-	'install:require:htaccess' => 'Web server',
-	'install:require:engine' => 'Settings file',
-	'install:require:database' => 'Database',
-
-	'install:check:root' => 'Your web server does not have permission to create an .htaccess file in the root directory of Elgg. You have two choices:
-
-		1. Change the permissions on the root directory
-
-		2. Copy the file htaccess_dist to .htaccess',
-
-	'install:check:php:version' => 'Elgg requires PHP %s or above. This server is using version %s.',
-	'install:check:php:extension' => 'Elgg requires the PHP extension %s.',
-	'install:check:php:extension:recommend' => 'It is recommended that the PHP extension %s is installed.',
-	'install:check:php:open_basedir' => 'The open_basedir PHP directive may prevent Elgg from saving files to its data directory.',
-	'install:check:php:safe_mode' => 'Running PHP in safe mode is not recommened and may cause problems with Elgg.',
-
-	'install:check:htaccess_exists' => 'There is an .htaccess file in the root directory of Elgg. Please remove it.',
-	'install:check:htaccess_fail' => 'Unable to create an .htaccess file in the root directory of Elgg. You will need to copy htaccess_dist to .htaccess',
-	'install:check:rewrite:success' => 'The test of the rewrite rules was successful.',
-	'install:check:rewrite:fail' => 'The URL rewrite test failed.',
-	'install:check:rewrite:unknown' => 'The result rewrite test could not be determined.  Continue at your own risk.',
-
-	'install:check:enginedir' => 'Your web server does not have permission to create the settings.php file in the engine directory. You have two choices:
-
-		1. Change the permissions on the engine directory
-
-		2. Copy the file settings.example.php to settings.php and follow the instructions in it for setting your database parameters.',
-
-	'install:check:php:success' => "Your server's PHP satisfies all of Elgg's requirements.",
-	'install:check:database' => 'The database requirements are checked when Elgg loads its database.',
-
-	'install:database:instructions' => "If you haven't already created a database for Elgg, do that now. Then fill in the values below to initialize the Elgg database.",
-	'install:database:error' => 'There was an error creating the Elgg database and installation cannot continue. Review the message above and correct any problems. If you need more help, visit the Install Troubleshooting link below, or post to the Elgg community forums.',
-
-	'installation:database:label:dbuser' =>  'Database Username',
-	'installation:database:label:dbpassword' => 'Database Password',
-	'installation:database:label:dbname' => 'Database Name',
-	'installation:database:label:dbhost' => 'Database Host',
-	'installation:database:label:dbprefix' => 'Database Table Prefix',
-
-	'installation:database:help:dbuser' => 'User that has full priviledges to the MySQL database that you created for Elgg',
-	'installation:database:help:dbpassword' => 'Password for the above database user account',
-	'installation:database:help:dbname' => 'Name of the Elgg database',
-	'installation:database:help:dbhost' => 'Hostname of the MySQL server (usually localhost)',
-	'installation:database:help:dbprefix' => "The prefix given to all of Elgg's tables (usually elgg_)",
-
-	'install:dbuser' => '',
-
-	'install:settings:instructions' => "We need some information about the site as we configure Elgg. If you haven't created a data directory for Elgg, please do so before completing this step.",
-
-	'installation:settings:label:sitename' => 'Site Name',
-	'installation:settings:label:siteemail' => 'Site Email Address',
-	'installation:settings:label:wwwroot' => 'Site URL',
-	'installation:settings:label:path' => 'Elgg Install Directory',
-	'installation:settings:label:dataroot' => 'Data Directory',
-	'installation:settings:label:language' => 'Site Language',
-	'installation:settings:label:siteaccess' => 'Default Site Access',
-
-	'installation:settings:help:sitename' => 'The name of your new Elgg site',
-	'installation:settings:help:siteemail' => 'Email address used by Elgg for communication with users',
-	'installation:settings:help:wwwroot' => 'The address of the site (Elgg usually guesses this correctly)',
-	'installation:settings:help:path' => 'The directory where you put the Elgg code (Elgg usually guesses this correctly)',
-	'installation:settings:help:dataroot' => 'The directory that you created for Elgg to save files (the permissions on this directory are checked when you click Next)',
-	'installation:settings:help:language' => 'The default language for the site',
-	'installation:settings:help:siteaccess' => 'The default access level for new user created content',
-
-	'install:admin:instructions' => "It is now time to create an administrator's account.",
-
-	'installation:admin:label:displayname' => 'Display Name',
-	'installation:admin:label:email' => 'Email Address',
-	'installation:admin:label:username' => 'Username',
-	'installation:admin:label:password1' => 'Password',
-	'installation:admin:label:password2' => 'Password Again',
-
-	'installation:admin:help:displayname' => 'The name that is displayed on the site for this account',
-	'installation:admin:help:email' => '',
-	'installation:admin:help:username' => 'Account username used for logging in',
-	'installation:admin:help:password1' => 'Account password must be at least x characters long',
-	'installation:admin:help:password2' => 'Retype password to confirm',
-
-	'installation:admin:password:mismatch' => 'Password must match.',
-	'installation:admin:password:empty' => 'Password cannot be empty.',
-	'installation:admin:cannot_create' => 'Unable to create an admin account.',
-
-	'install:complete:instructions' => 'Your Elgg site is now ready to be used. Click the button below to be taken to your site.',
 
 
 /**

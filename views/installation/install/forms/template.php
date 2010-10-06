@@ -11,8 +11,8 @@ $type = $vars['type'];
 
 $form_body = '';
 foreach ($variables as $field => $params) {
-	$label = elgg_echo("installation:$type:label:$field");
-	$help = elgg_echo("installation:$type:help:$field");
+	$label = elgg_echo("install:$type:label:$field");
+	$help = elgg_echo("install:$type:help:$field");
 	$params['internalname'] = $field;
 
 	$form_body .= '<p>';

@@ -42,6 +42,8 @@ class ElggInstaller {
 
 		set_error_handler('__elgg_php_error_handler');
 		set_exception_handler('__elgg_php_exception_handler');
+
+		register_translations(dirname(__FILE__) . '/languages/', TRUE);
 	}
 
 	/**
@@ -55,7 +57,8 @@ class ElggInstaller {
 		$this->runModRewriteTest();
 
 		if (!in_array($step, $this->getSteps())) {
-			throw new InstallationException("$step is an unknown installation step.");
+			$msg = sprintf(elgg_echo('InstallationException:UnknownStep'), $step);
+			throw new InstallationException($msg);
 		}
 
 		$this->setInstallStatus();
@@ -452,7 +455,8 @@ class ElggInstaller {
 		}
 
 		if (!include_once("{$CONFIG->path}engine/lib/database.php")) {
-			throw new InstallationException("Could not load database.php");
+			$msg = sprintf(elgg_echo('InstallationException:MissingLibrary'), 'database.php');
+			throw new InstallationException($msg);
 		}
 
 		// check that the config table has been created
@@ -604,7 +608,8 @@ class ElggInstaller {
 			foreach ($lib_files as $file) {
 				$path = $lib_dir . $file;
 				if (!include_once($path)) {
-					throw new InstallationException("Could not load {$file}");
+					$msg = sprintf(elgg_echo('InstallationException:MissingLibrary'), $file);
+					throw new InstallationException($msg);
 				}
 			}
 
@@ -655,7 +660,8 @@ class ElggInstaller {
 		global $CONFIG;
 
 		if (!include_once("{$CONFIG->path}engine/settings.php")) {
-			throw new InstallationException("Elgg could not load the settings file. It does not exist or there is a permissions issue.");
+			$msg = elgg_echo('InstallationException:CannotLoadSettings');
+			throw new InstallationException($msg);
 		}
 	}
 
@@ -972,7 +978,7 @@ class ElggInstaller {
 
 		foreach ($formVars as $field => $info) {
 			if ($info['required'] == TRUE && !$submissionVars[$field]) {
-				$name = elgg_echo("installation:database:label:$field");
+				$name = elgg_echo("install:database:label:$field");
 				register_error("$name is required");
 				return FALSE;
 			}
@@ -1112,7 +1118,7 @@ class ElggInstaller {
 
 		foreach ($formVars as $field => $info) {
 			if ($info['required'] == TRUE && !$submissionVars[$field]) {
-				$name = elgg_echo("installation:settings:label:$field");
+				$name = elgg_echo("install:settings:label:$field");
 				register_error("$name is required");
 				return FALSE;
 			}
@@ -1225,19 +1231,19 @@ class ElggInstaller {
 
 		foreach ($formVars as $field => $info) {
 			if ($info['required'] == TRUE && !$submissionVars[$field]) {
-				$name = elgg_echo("installation:admin:label:$field");
+				$name = elgg_echo("install:admin:label:$field");
 				register_error("$name is required");
 				return FALSE;
 			}
 		}
 
 		if ($submissionVars['password1'] !== $submissionVars['password2']) {
-			register_error(elgg_echo('installation:admin:password:mismatch'));
+			register_error(elgg_echo('install:admin:password:mismatch'));
 			return FALSE;
 		}
 
 		if (trim($submissionVars['password1']) == "") {
-			register_error(elgg_echo('installation:admin:password:empty'));
+			register_error(elgg_echo('install:admin:password:empty'));
 			return FALSE;
 		}
 
@@ -1261,7 +1267,7 @@ class ElggInstaller {
 				);
 
 		if (!$guid) {
-			register_error(elgg_echo('installation:admin:cannot_create'));
+			register_error(elgg_echo('install:admin:cannot_create'));
 			return FALSE;
 		}
 
