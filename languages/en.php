@@ -42,6 +42,9 @@ $english = array(
 	'actionloggedout' => "Sorry, you cannot perform this action while logged out.",
 	'actionunauthorized' => 'You are unauthorized to perform this action',
 
+	'InstallationException:MissingLibrary' => 'Could not load %s',
+	'InstallationException:CannotLoadSettings' => 'Elgg could not load the settings file. It does not exist or there is a file permissions issue.',
+
 	'SecurityException:Codeblock' => "Denied access to execute privileged code block",
 	'DatabaseException:WrongCredentials' => "Elgg couldn't connect to the database using the given credentials.",
 	'DatabaseException:NoConnect' => "Elgg couldn't select the database '%s', please check that the database is created and you have access to it.",

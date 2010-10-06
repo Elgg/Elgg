@@ -82,7 +82,8 @@ set_exception_handler('__elgg_php_exception_handler');
  * Load the system settings
  */
 if (!include_once(dirname(__FILE__) . "/settings.php")) {
-	throw new InstallationException("Elgg could not load the settings file.");
+	$msg = elgg_echo('InstallationException:CannotLoadSettings');
+	throw new InstallationException($msg);
 }
 
 
@@ -94,7 +95,7 @@ $lib_files = array(
 	'admin.php', 'annotations.php', 'api.php', 'cache.php',
 	'calendar.php', 'configuration.php', 'cron.php', 'entities.php',
 	'export.php', 'extender.php', 'filestore.php', 'group.php',
-	'input.php', 'install.php', 'location.php', 'mb_wrapper.php',
+	'input.php', 'location.php', 'mb_wrapper.php',
 	'memcache.php', 'metadata.php', 'metastrings.php', 'notification.php',
 	'objects.php', 'opendd.php', 'pagehandler.php',
 	'pageowner.php', 'pam.php', 'plugins.php', 'query.php',
@@ -107,20 +108,13 @@ foreach($lib_files as $file) {
 	$file = $lib_dir . $file;
 	elgg_log("Loading $file...");
 	if (!include_once($file)) {
-		throw new InstallationException("Could not load {$file}");
+		$msg = sprint(elgg_echo('InstallationException:MissingLibrary'), $file);
+		throw new InstallationException($msg);
 	}
 }
 
-// check if the install was completed
-// @todo move into function
-$installed = FALSE;
-try {
-	$installed = is_installed();
-} catch (DatabaseException $e) {}
-if (!$installed) {
-	header("Location: install.php");
-	exit;
-}
+// confirm that the installation completed successfully
+verify_installation();
 
 // Autodetect some default configuration settings
 set_default_config();
