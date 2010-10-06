@@ -26,7 +26,9 @@ foreach ($plugin as $p) {
 	}
 }
 
-elgg_view_regenerate_simplecache();
+// don't regenerate the simplecache because the plugin won't be
+// loaded until next run.  Just invalidate and let it regnerate as needed
+elgg_invalidate_simplecache();
 elgg_filepath_cache_reset();
 
 forward($_SERVER['HTTP_REFERER']);
