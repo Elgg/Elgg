@@ -28,7 +28,7 @@ foreach ($user_guids as $guid) {
 	$is_validated = uservalidationbyemail_get_user_validation_status($guid);
 	$validate_success = uservalidationbyemail_set_user_validation_status($guid, TRUE);
 
-	if (!$is_validated || !$validate_success || !$user->enable()) {
+	if ($is_validated || !($validate_success && $user->enable())) {
 		$error = TRUE;
 		continue;
 	}

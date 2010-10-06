@@ -8,11 +8,18 @@
 
 // @todo pagination would be nice.
 // can't use elgg_list_entities() and friends because we don't use the default view for users.
+$ia = elgg_set_ignore_access(TRUE);
+$hidden_entities = access_get_show_hidden_status();
+access_show_hidden_entities(TRUE);
+
 $users = elgg_get_entities(array(
 	'type' => 'user',
 	'wheres' => array(uservalidationbyemail_get_unvalidated_users_sql_where()),
 	'limit' => 9999,
 ));
+
+access_show_hidden_entities($hidden_entities);
+elgg_set_ignore_access($ia);
 
 if ($users) {
 	foreach ($users as $user) {
@@ -29,7 +36,8 @@ $form_body .= elgg_echo('uservalidationbyemail:admin:with_checked') . elgg_view(
 		'validate' => elgg_echo('uservalidationbyemail:admin:validate'),
 		'resend_validation' => elgg_echo('uservalidationbyemail:admin:resend_validation'),
 		'delete' => elgg_echo('uservalidationbyemail:admin:delete'),
-	)
+	),
+	'value' => 'resend_validation',
 ));
 
 $form_body .= '<br />' . elgg_view('input/button', array('value' => elgg_echo('submit')));

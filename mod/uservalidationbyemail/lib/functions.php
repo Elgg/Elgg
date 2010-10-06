@@ -113,7 +113,13 @@ function uservalidationbyemail_set_user_validation_status($user_guid, $status, $
  * @return int|null
  */
 function uservalidationbyemail_get_user_validation_status($user_guid) {
-	return get_metadata_byname($user_guid, 'validated');
+	$md = get_metadata_byname($user_guid, 'validated');
+
+	if ($md && $md->value) {
+		return TRUE;
+	}
+
+	return FALSE;
 }
 
 /**
