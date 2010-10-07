@@ -15,6 +15,7 @@ Version 1.7.4
   * Fixed resizing tall non-square images.
   * Non-English languages work when using memcache.
   * User avatar menus work when switching filters on River Dashboard page.
+  * CSS is correctly cached for newly enabled plugins.
  
  UI/UX Changes:
   * Pages: Admin users can edit user-defined "Welcome page."
