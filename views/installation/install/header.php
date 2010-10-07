@@ -2,5 +2,7 @@
 /**
  * Install header
  */
+
+$url = "{$vars['url']}_graphics/elgg_logo.png";
 ?>
-<h1>Elgg</h1>
+<img src="<?php echo $url; ?>" alt="Elgg" />

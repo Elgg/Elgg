@@ -30,7 +30,7 @@ header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', TRUE);
 		<title><?php echo $title; ?></title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link rel="SHORTCUT ICON" href="<?php echo $vars['url']; ?>_graphics/favicon.ico" />
-		<link rel="stylesheet" href="<?php echo $vars['url']; ?>install/install.css" type="text/css" />
+		<link rel="stylesheet" href="<?php echo $vars['url']; ?>install/css/install.css" type="text/css" />
 	</head>
 	<body>
 	<div id="elgg_wrapper">

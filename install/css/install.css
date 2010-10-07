@@ -73,13 +73,13 @@ ul {
 	background: white;
 	width: 800px;
 	margin: auto;
-	padding: 10px 40px;
+	padding: 5px 40px;
 	margin-top: 20px;
 	border-right: 1px solid #666666;
 	border-bottom: 1px solid #666666;
 }
 #elgg_header {
-	margin: 20px 10px;
+	margin: 10px 10px;
 }
 #elgg_sidebar {
 	float: left;
