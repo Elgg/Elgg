@@ -110,10 +110,23 @@ If you are ready to proceed, click the Next button.",
 	'install:admin:cannot_create' => 'Unable to create an admin account.',
 
 	'install:complete:instructions' => 'Your Elgg site is now ready to be used. Click the button below to be taken to your site.',
+	'install:complete:gotosite' => 'Go to site',
 
+	'InstallationException:UnknownStep' => '%s is an unknown installation step.',
 
-	'InstallationException:UnknownStep' => '%s is an unknown installation step.',	
+	'install:success:database' => 'Database has been installed.',
+	'install:success:settings' => 'Site settings have been saved.',
+	'install:success:admin' => 'Admin account has been created.',
 
+	'install:error:databasesettings' => 'Unable to connect to the database with these settings.',
+	'install:error:oldmysql' => 'MySQL must be version 5.0 or above. Your server is using %s.',
+	'install:error:nodatabase' => 'Unable to use database %s. It may not exist.',
+	'install:error:readsettingsphp' => 'Unable to read engine/settings.example.php',
+	'install:error:writesettingphp' => 'Unable to write engine/settings.php',
+	'install:error:requiredfield' => '%s is required',
+	'install:error:writedatadirectory' => 'Your data directory %s is not writable by the web server.',
+	'install:error:locationdatadirectory' => 'Your data directory %s must be outside of your install path for security.',
+	'install:error:createsite' => 'Unable to create the site.',
 );
 
 add_translation("en", $english);

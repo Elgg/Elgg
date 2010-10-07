@@ -227,7 +227,7 @@ class ElggInstaller {
 					break;
 				}
 
-				system_message('Database has been installed.');
+				system_message(elgg_echo('install:success:database'));
 
 				$this->continueToNextStep('database');
 			} while (FALSE);  // PHP doesn't support breaking out of if statements
@@ -305,7 +305,7 @@ class ElggInstaller {
 					break;
 				}
 
-				system_message('Site settings have been saved.');
+				system_message(elgg_echo('install:success:settings'));
 
 				$this->continueToNextStep('settings');
 
@@ -363,7 +363,7 @@ class ElggInstaller {
 					break;
 				}
 
-				system_message('Admin account has been created.');
+				system_message(elgg_echo('install:success:admin'));
 
 				$this->continueToNextStep('admin');
 
@@ -1004,24 +1004,25 @@ class ElggInstaller {
 	function checkDatabaseSettings($user, $password, $dbname, $host) {
 		$mysql_dblink = mysql_connect($host, $user, $password, true);
 		if ($mysql_dblink == FALSE) {
-			register_error('Unable to connect to the database with these settings.');
+			register_error(elgg_echo('install:error:databasesettings'));
 			return $FALSE;
 		}
 
 		$result = mysql_select_db($dbname, $mysql_dblink);
 
 		// check MySQL version - must be 5.0 or >
+		$required_version = 5.0;
 		$version = mysql_get_server_info();
 		$points = explode('.', $version);
-		if ($points[0] < 5) {
-			register_error("MySQL must be 5.0 or above. Your server is using $version.");
+		if ($points[0] < $required_version) {
+			register_error(sprintf(elgg_echo('install:error:oldmysql'), $version));
 			return FALSE;
 		}
 
 		mysql_close($mysql_dblink);
 
 		if (!$result) {
-			register_error("Unable to use database $dbname");
+			register_error(sprintf(elgg_echo('install:error:nodatabase'), $dbname));
 		}
 
 		return $result;
@@ -1039,7 +1040,7 @@ class ElggInstaller {
 		$templateFile = "{$CONFIG->path}engine/settings.example.php";
 		$template = file_get_contents($templateFile);
 		if (!$template) {
-			register_error('Unable to read engine/settings.example.php');
+			register_error(elgg_echo('install:error:readsettingsphp'));
 			return FALSE;
 		}
 
@@ -1050,7 +1051,7 @@ class ElggInstaller {
 		$settingsFilename = "{$CONFIG->path}engine/settings.php";
 		$result = file_put_contents($settingsFilename, $template);
 		if (!$result) {
-			register_error('Unable to write engine/settings.php');
+			register_error(elgg_echo('install:error:writesettingphp'));
 			return FALSE;
 		}
 
@@ -1066,12 +1067,13 @@ class ElggInstaller {
 		global $CONFIG;
 
 		if (!include_once("{$CONFIG->path}engine/settings.php")) {
-			register_error("Elgg could not load the settings file.");
+			register_error(elgg_echo('InstallationException:CannotLoadSettings'));
 			return FALSE;
 		}
 
 		if (!include_once("{$CONFIG->path}engine/lib/database.php")) {
-			register_error("Elgg could not load the database library.");
+			$msg = sprintf(elgg_echo('InstallationException:MissingLibrary'), 'database.php');
+			register_error($msg);
 			return FALSE;
 		}
 
@@ -1119,20 +1121,22 @@ class ElggInstaller {
 		foreach ($formVars as $field => $info) {
 			if ($info['required'] == TRUE && !$submissionVars[$field]) {
 				$name = elgg_echo("install:settings:label:$field");
-				register_error("$name is required");
+				register_error(sprintf(elgg_echo('install:error:requiredfield')), $name);
 				return FALSE;
 			}
 		}
 
 		// check that data root is writable
 		if (!is_writable($submissionVars['dataroot'])) {
-			register_error("Your data directory {$submissionVars['dataroot']} is not writable by the web server.");
+			$msg = sprintf(elgg_echo('install:error:writedatadirectory'), $submissionVars['dataroot']);
+			register_error($msg);
 			return FALSE;
 		}
 
 		// check that data root is not subdirectory of Elgg root
 		if (stripos($submissionVars['dataroot'], $submissionVars['path']) !== FALSE) {
-			register_error("Your data directory {$submissionVars['dataroot']} must be outside of your install path for security.");
+			$msg = sprintf(elgg_echo('install:error:locationdatadirectory'), $submissionVars['dataroot']);
+			register_error($msg);
 			return FALSE;
 		}
 
@@ -1171,7 +1175,7 @@ class ElggInstaller {
 		$guid            = $site->save();
 
 		if (!$guid) {
-			register_error("Unable to create the site.");
+			register_error(elgg_echo('install:error:createsite'));
 			return FALSE;
 		}
 
@@ -1232,7 +1236,7 @@ class ElggInstaller {
 		foreach ($formVars as $field => $info) {
 			if ($info['required'] == TRUE && !$submissionVars[$field]) {
 				$name = elgg_echo("install:admin:label:$field");
-				register_error("$name is required");
+				register_error(sprintf(elgg_echo('install:error:requiredfield'), $name));
 				return FALSE;
 			}
 		}

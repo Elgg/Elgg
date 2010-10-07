@@ -9,6 +9,7 @@ echo autop(elgg_echo('install:complete:instructions'));
 
 <div class="install_nav">
 <?php
-	echo "<a href=\"{$vars['url']}index.php\">Go to site</a>";
+	$text = elgg_echo('install:complete:gotosite');
+	echo "<a href=\"{$vars['url']}index.php\">$text</a>";
 ?>
 </div>
