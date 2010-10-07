@@ -44,7 +44,7 @@ $delete = elgg_view('output/confirmlink', array(
 // they're here because you can't currently extend the admin css.
 ?>
 
-<div class="admin_settings" style="border: 1px solid black; padding: 5px; -webkit-border-radius: 8px; -moz-border-radius: 8px; margin-bottom: 1em;">
+<div class="admin_settings" style="border: 1px solid gray; padding: 5px; -webkit-border-radius: 8px; -moz-border-radius: 8px; margin-bottom: 1em;">
 	<?php echo $checkbox; ?><br />
 
 	<div class="uservalidationbyemail_unvalidated_controls" style="float: right">

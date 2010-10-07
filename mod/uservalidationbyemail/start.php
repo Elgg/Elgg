@@ -72,8 +72,6 @@ function uservalidationbyemail_page_handler($page) {
 		$content = elgg_view('uservalidationbyemail/admin/users/unvalidated');
 		$title = elgg_echo('uservalidationbyemail:admin:unvalidated');
 
-		$content = elgg_view("page_elements/contentwrapper", array('body' => $content));
-
 		$body = elgg_view_layout('two_column_left_sidebar', '', elgg_view_title($title) . $content);
 
 		page_draw($title, $body);
