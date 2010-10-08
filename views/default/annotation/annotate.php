@@ -18,23 +18,21 @@ if (!$title) {
 $subtype = get_subtype_from_id($object->subtype);
 
 //grab the annotation, if one exists
+$comment = '';
 if ($vars['item']->annotation_id != 0) {
 	$comment = get_annotation($vars['item']->annotation_id)->value;
 }
+
 $url = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
 $string = sprintf(elgg_echo("river:posted:generic"),$url) . " ";
 $string .= elgg_echo("{$subtype}:river:annotate") . " | <a href=\"{$object->getURL()}\">" . $title . "</a>";
-$string .= "<div class=\"river_content_display\">";
 
+$comment = elgg_get_excerpt($comment, 200);
 if ($comment) {
-	$contents = strip_tags($comment);//this is so we don't get large images etc in the activity river
-	if (strlen($contents) > 200) {
-		$string .= substr($contents, 0, strpos($contents, ' ', 200)) . "...";
-	} else {
-		$string .= $contents;
-	}
+	$string .= "<div class=\"river_content_display\">";
+	$string .= $comment;
+	$string .= "</div>";
 }
 
-$string .= "</div>";
 
 echo $string;
