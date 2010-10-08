@@ -189,13 +189,15 @@ function uservalidationbyemail_get_unvalidated_users_sql_where() {
 	$one_id = get_metastring_id(1);
 
 	// thanks to daveb@freenode for the SQL tips!
-	$where = "NOT EXISTS (
+	$wheres = array();
+	$wheres[] = "e.enabled='no'";
+	$wheres[] = "NOT EXISTS (
 			SELECT 1 FROM {$CONFIG->dbprefix}metadata md
 			WHERE md.entity_guid = e.guid
 				AND md.name_id = $validated_id
 				AND md.value_id = $one_id)";
 
-	return $where;
+	return $wheres;
 }
 
 /**

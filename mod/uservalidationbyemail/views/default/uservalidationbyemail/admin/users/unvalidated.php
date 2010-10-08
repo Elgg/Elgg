@@ -16,7 +16,7 @@ access_show_hidden_entities(TRUE);
 
 $options = array(
 	'type' => 'user',
-	'wheres' => array(uservalidationbyemail_get_unvalidated_users_sql_where()),
+	'wheres' => uservalidationbyemail_get_unvalidated_users_sql_where(),
 	'limit' => $limit,
 	'offset' => $offset
 );
