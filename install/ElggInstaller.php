@@ -673,6 +673,9 @@ class ElggInstaller {
 	 * Return an associative array of post variables
 	 * (could be selective based on expected variables)
 	 *
+	 * Does not filter as person installing the site should not be attempting
+	 * XSS attacks. If filtering is added, it should not be done for passwords.
+	 *
 	 * @return array
 	 */
 	protected function getPostVariables() {
@@ -1140,12 +1143,12 @@ class ElggInstaller {
 			return FALSE;
 		}
 
-		// @todo move is_email_address to a better library than users.php
 		// check that email address is email address
-		//if ($submissionVars['siteemail'] && !is_email_address($submissionVars['siteemail'])) {
-		//	register_error("{$submissionVars['']} is not a valid email address.");
-		//	return FALSE;
-		//}
+		if ($submissionVars['siteemail'] && !is_email_address($submissionVars['siteemail'])) {
+			$msg = sprintf(elgg_echo('install:error:emailaddress'), $submissionVars['siteemail']);
+			register_error($msg);
+			return FALSE;
+		}
 
 		// @todo check that url is a url
 
@@ -1248,6 +1251,13 @@ class ElggInstaller {
 
 		if (trim($submissionVars['password1']) == "") {
 			register_error(elgg_echo('install:admin:password:empty'));
+			return FALSE;
+		}
+
+		// check that email address is email address
+		if ($submissionVars['email'] && !is_email_address($submissionVars['email'])) {
+			$msg = sprintf(elgg_echo('install:error:emailaddress'), $submissionVars['email']);
+			register_error($msg);
 			return FALSE;
 		}
 

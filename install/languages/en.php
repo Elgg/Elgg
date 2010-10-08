@@ -126,6 +126,7 @@ If you are ready to proceed, click the Next button.",
 	'install:error:requiredfield' => '%s is required',
 	'install:error:writedatadirectory' => 'Your data directory %s is not writable by the web server.',
 	'install:error:locationdatadirectory' => 'Your data directory %s must be outside of your install path for security.',
+	'install:error:emailaddress' => '%s is not a valid email address',
 	'install:error:createsite' => 'Unable to create the site.',
 );
 
