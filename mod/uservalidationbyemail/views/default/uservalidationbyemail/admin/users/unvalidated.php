@@ -39,6 +39,46 @@ $pagination = elgg_view('navigation/pagination',array(
 
 echo $pagination;
 
+$bulk_actions_checkbox = '<label><input type="checkbox" id="unvalidated_users_checkall" />'
+	. elgg_echo('uservalidationbyemail:check_all') . '</label>';
+
+$validate = elgg_view('output/url', array(
+	'is_action' => TRUE,
+	'js' => 'title="' . elgg_echo('uservalidationbyemail:confirm_validate_checked') . '"',
+	'href' => $vars['url'] . "action/uservalidationbyemail/validate/",
+	'text' => elgg_echo('uservalidationbyemail:admin:validate'),
+	'class' => 'unvalidated_users_bulk_post',
+));
+
+$resend_email = elgg_view('output/url', array(
+	'is_action' => TRUE,
+	'js' => 'title="' . elgg_echo('uservalidationbyemail:confirm_resend_validation_checked') . '"',
+	'href' => $vars['url'] . "action/uservalidationbyemail/resend_validation/",
+	'text' => elgg_echo('uservalidationbyemail:admin:resend_validation'),
+	'class' => 'unvalidated_users_bulk_post',
+));
+
+$delete = elgg_view('output/url', array(
+	'is_action' => TRUE,
+	'js' => 'title="' . elgg_echo('uservalidationbyemail:confirm_delete_checked') . '"',
+	'href' => $vars['url'] . "action/uservalidationbyemail/delete/",
+	'text' => elgg_echo('uservalidationbyemail:admin:delete'),
+	'class' => 'unvalidated_users_bulk_post',
+));
+
+$bulk_actions = <<<___END
+<div class="admin_settings" style="padding: 0 5px;">
+	$bulk_actions_checkbox
+
+	<div class="uservalidationbyemail_unvalidated_controls" style="float: right">
+		$resend_email | $validate | $delete
+	</div>
+</div>
+___END;
+
+//$form_body .= $bulk_actions;
+echo elgg_view('page_elements/contentwrapper', array('body' => $bulk_actions));
+
 if ($users) {
 	foreach ($users as $user) {
 		$form_body .= elgg_view('uservalidationbyemail/unvalidated_user', array('user' => $user));
@@ -48,21 +88,39 @@ if ($users) {
 	return;
 }
 
-$form_body .= '<br />' . elgg_echo('uservalidationbyemail:admin:with_checked') . elgg_view('input/pulldown', array(
-	'internalname' => 'action_type',
-	'options_values' => array(
-		'validate' => elgg_echo('uservalidationbyemail:admin:validate'),
-		'resend_validation' => elgg_echo('uservalidationbyemail:admin:resend_validation'),
-		'delete' => elgg_echo('uservalidationbyemail:admin:delete'),
-	),
-	'value' => 'resend_validation'
-));
-
-$form_body .= '<br />' . elgg_view('input/button', array('value' => elgg_echo('submit')));
-
 $form_body = elgg_view("page_elements/contentwrapper", array('body' => $form_body));
 
 echo elgg_view('input/form', array(
 	'action' => $vars['url'] . 'action/uservalidationbyemail/bulk_action',
-	'body' => $form_body
+	'body' => $form_body,
+	'internalname' => 'unvalidated_users',
 ));
+
+echo $pagination;
+
+?>
+<script type="text/javascript">
+$(function() {
+	$('#unvalidated_users_checkall').click(function() {
+		checked = $(this).attr('checked');
+		$('form[name=unvalidated_users]').find('input[type=checkbox]').attr('checked', checked);
+	});
+
+	$('.unvalidated_users_bulk_post').click(function(event) {
+		event.preventDefault();
+
+		// check there are selected users
+		if ($('form[name=unvalidated_users]').find('input[type=checkbox][checked=true]').length < 1) {
+			return false;
+		}
+
+		// confirmation
+		if (!confirm($(this).attr('title'))) {
+			return false;
+		}
+
+		$('form[name=unvalidated_users]').attr('action', $(this).attr('href')).submit();
+	});
+});
+
+</script>
