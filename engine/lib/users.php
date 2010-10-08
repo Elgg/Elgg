@@ -875,26 +875,6 @@ function elgg_user_resetpassword_page_handler($page) {
 }
 
 /**
- * Validates an email address.
- *
- * @param string $address Email address.
- * @return bool
- */
-function is_email_address($address) {
-	// @todo Make this better!
-
-	if (strpos($address, '@')=== false) {
-		return false;
-	}
-
-	if (strpos($address, '.')=== false) {
-		return false;
-	}
-
-	return true;
-}
-
-/**
  * Simple function that will generate a random clear text password suitable for feeding into generate_user_password().
  *
  * @see generate_user_password

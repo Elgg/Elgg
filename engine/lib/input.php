@@ -107,6 +107,16 @@ function sanitise_filepath($path, $append_slash = TRUE) {
 }
 
 /**
+ * Validates an email address.
+ *
+ * @param string $address Email address.
+ * @return bool
+ */
+function is_email_address($address) {
+	return filter_var($address, FILTER_VALIDATE_EMAIL) === $address;
+}
+
+/**
  * Page handler for autocomplete endpoint.
  *
  * @param $page
