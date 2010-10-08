@@ -18,13 +18,23 @@ $options = array(
 	'type' => 'user',
 	'wheres' => uservalidationbyemail_get_unvalidated_users_sql_where(),
 	'limit' => $limit,
-	'offset' => $offset
+	'offset' => $offset,
+	'count' => TRUE,
 );
 
-$users = elgg_get_entities($options);
+if (!$count = elgg_get_entities($options)) {
+	access_show_hidden_entities($hidden_entities);
+	elgg_set_ignore_access($ia);
 
-$options['count']  = TRUE;
-$count = elgg_get_entities($options);
+	echo elgg_view('page_elements/contentwrapper', array(
+		'body' => elgg_echo('uservalidationbyemail:admin:no_unvalidated_users')
+	));
+	return;
+}
+
+$options['count']  = FALSE;
+
+$users = elgg_get_entities($options);
 
 access_show_hidden_entities($hidden_entities);
 elgg_set_ignore_access($ia);
@@ -79,13 +89,8 @@ ___END;
 //$form_body .= $bulk_actions;
 echo elgg_view('page_elements/contentwrapper', array('body' => $bulk_actions));
 
-if ($users) {
-	foreach ($users as $user) {
-		$form_body .= elgg_view('uservalidationbyemail/unvalidated_user', array('user' => $user));
-	}
-} else {
-	echo elgg_echo('uservalidationbyemail:admin:no_unvalidated_users');
-	return;
+foreach ($users as $user) {
+	$form_body .= elgg_view('uservalidationbyemail/unvalidated_user', array('user' => $user));
 }
 
 $form_body = elgg_view("page_elements/contentwrapper", array('body' => $form_body));
