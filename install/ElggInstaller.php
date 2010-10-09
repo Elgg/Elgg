@@ -9,6 +9,16 @@
  * @link http://elgg.org/
  */
 
+/*
+ * @todo - integrate this could in case we want to send new admin to plugins page
+				// remind users to enable / disable desired tools
+				elgg_add_admin_notice('first_installation_plugin_reminder', elgg_echo('firstadminlogininstructions'));
+
+				datalist_set('first_admin_login', time());
+				forward('pg/admin/plugins/simple');
+
+ */
+
 class ElggInstaller {
 
 	protected $steps = array(
@@ -26,7 +36,9 @@ class ElggInstaller {
 		'admin' => FALSE,
 	);
 
-	protected $isAction;
+	protected $isAction = FALSE;
+
+	protected $autoLogin = FALSE;
 
 	/**
 	 * Constructor bootstraps the Elgg engine
@@ -359,10 +371,10 @@ class ElggInstaller {
 					break;
 				}
 
-				if (!$this->createAdminAccount($submissionVars)) {
+				if (!$this->createAdminAccount($submissionVars, $this->autoLogin)) {
 					break;
 				}
-
+				
 				system_message(elgg_echo('install:success:admin'));
 
 				$this->continueToNextStep('admin');
@@ -574,16 +586,19 @@ class ElggInstaller {
 	 */
 	protected function finishBootstraping($step) {
 
-		// install has its own session handling
-		session_name('Elgg');
-		session_start();
-		unregister_elgg_event_handler('boot', 'system', 'session_init');
-
-		// once the database has been created, load rest of engine
 		$dbIndex = array_search('database', $this->getSteps());
+		$settingsIndex = array_search('settings', $this->getSteps());
 		$stepIndex = array_search($step, $this->getSteps());
 
+		if ($stepIndex <= $settingsIndex) {
+			// install has its own session handling before the db created and set up
+			session_name('Elgg');
+			session_start();
+			unregister_elgg_event_handler('boot', 'system', 'session_init');
+		}
+
 		if ($stepIndex > $dbIndex) {
+			// once the database has been created, load rest of engine
 			global $CONFIG;
 			$lib_dir = $CONFIG->path . 'engine/lib/';
 
@@ -1124,7 +1139,7 @@ class ElggInstaller {
 		foreach ($formVars as $field => $info) {
 			if ($info['required'] == TRUE && !$submissionVars[$field]) {
 				$name = elgg_echo("install:settings:label:$field");
-				register_error(sprintf(elgg_echo('install:error:requiredfield')), $name);
+				register_error(sprintf(elgg_echo('install:error:requiredfield'), $name));
 				return FALSE;
 			}
 		}
@@ -1151,7 +1166,7 @@ class ElggInstaller {
 		}
 
 		// @todo check that url is a url
-
+		// @note filter_var cannot be used because it doesn't work on international urls
 
 		return TRUE;
 	}
@@ -1268,9 +1283,10 @@ class ElggInstaller {
 	 * Create a user account for the admin
 	 *
 	 * @param array $submissionVars
+	 * @param bool $login Login in the admin user?
 	 * @return bool
 	 */
-	protected function createAdminAccount($submissionVars) {
+	protected function createAdminAccount($submissionVars, $login = FALSE) {
 		global $CONFIG;
 
 		$guid = register_user(
@@ -1285,16 +1301,27 @@ class ElggInstaller {
 			return FALSE;
 		}
 
-		// @todo - register plugin hook instead for can edit
-		// need a logged in user to set admin flag so we go directly to database
-		$result = update_data("UPDATE {$CONFIG->dbprefix}users_entity set admin='yes' where guid=$guid");
-		if (!$result) {
-			register_error("Unable to give new user account admin privileges.");
+		$user = get_entity($guid);
+		if (!$user) {
+			register_error(elgg_echo('install:error:loadadmin'));
 			return FALSE;
 		}
 
+		elgg_set_ignore_access(TRUE);
+		if ($user->makeAdmin() == FALSE) {
+			register_error(elgg_echo('install:error:adminaccess'));
+		}
+		elgg_set_ignore_access(FALSE);
+
+		// add validation data to satisfy the user validation plugins
 		create_metadata($guid, 'validated', TRUE, '', 0, ACCESS_PUBLIC);
 		create_metadata($guid, 'validated_method', 'admin_user', '', 0, ACCESS_PUBLIC);
+
+		if ($login) {
+			if (login($user) == FALSE) {
+				register_error(elgg_echo('install:error:adminlogin'));				
+			}
+		}
 
 		return TRUE;
 	}

@@ -43,39 +43,20 @@ if ($CONFIG->allow_registration) {
 				'invitecode' => $invitecode
 			);
 
-			// if this user is admin, that means it was the first
-			// registered user.  Don't trigger this hook.
-			// @todo This can be removed in the new installer
-			if (!$new_user->isAdmin()) {
-				// @todo should registration be allowed no matter what the plugins return?
-				if (!trigger_plugin_hook('register', 'user', $params, TRUE)) {
-					$new_user->delete();
-					// @todo this is a generic messages. We could have plugins
-					// throw a RegistrationException, but that is very odd
-					// for the plugin hooks system.
-					throw new RegistrationException(elgg_echo('registerbad'));
-				}
+			// @todo should registration be allowed no matter what the plugins return?
+			if (!trigger_plugin_hook('register', 'user', $params, TRUE)) {
+				$new_user->delete();
+				// @todo this is a generic messages. We could have plugins
+				// throw a RegistrationException, but that is very odd
+				// for the plugin hooks system.
+				throw new RegistrationException(elgg_echo('registerbad'));
 			}
 
 			system_message(sprintf(elgg_echo("registerok"), $CONFIG->sitename));
 
 			// Forward on success, assume everything else is an error...
-			// If just registered admin user, login the user in and forward to the
-			// plugins simple settings page.
-			if (!datalist_get('first_admin_login') && $new_user->isAdmin()) {
-				login($new_user);
-				// remove the "you've registered!" system_message();
-				$_SESSION['msg']['messages'] = array();
-
-				// remind users to enable / disable desired tools
-				elgg_add_admin_notice('first_installation_plugin_reminder', elgg_echo('firstadminlogininstructions'));
-
-				datalist_set('first_admin_login', time());
-				forward('pg/admin/plugins/simple');
-			} else {
-				login($new_user);
-				forward();
-			}
+			login($new_user);
+			forward();
 		} else {
 			register_error(elgg_echo("registerbad"));
 		}

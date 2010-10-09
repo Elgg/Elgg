@@ -128,6 +128,9 @@ If you are ready to proceed, click the Next button.",
 	'install:error:locationdatadirectory' => 'Your data directory %s must be outside of your install path for security.',
 	'install:error:emailaddress' => '%s is not a valid email address',
 	'install:error:createsite' => 'Unable to create the site.',
+	'install:error:loadadmin' => 'Unable to load admin user.',
+	'install:error:adminaccess' => 'Unable to give new user account admin privileges.',
+	'install:error:adminlogin' => 'Unable to login the new admin user automatically.',
 );
 
 add_translation("en", $english);
