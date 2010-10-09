@@ -192,7 +192,7 @@ function uservalidationbyemail_check_manual_login($event, $type, $user) {
 	access_show_hidden_entities(TRUE);
 
 	// @todo register_error()?
-	$return = ($user instanceof ElggUser && !$user->validated) ? FALSE : NULL;
+	$return = ($user instanceof ElggUser && $user->disabled == 'yes' && !$user->validated) ? FALSE : NULL;
 
 	access_show_hidden_entities($access_status);
 
