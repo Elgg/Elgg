@@ -42,7 +42,8 @@
 		}
 
 	// Just in case we have some cached details
-		if (empty($body)) {
+		if ((isset($vars['entity']) && $vars['user']->blogguid == $vars['entity']->guid)
+		|| $vars['user']->blogguid == 0 && empty($body)) {
 			$body = $vars['user']->blogbody;
 			$title = $vars['user']->blogtitle;
 			$tags = $vars['user']->blogtags;
@@ -178,8 +179,9 @@ EOT;
 		var temptitle = $("input[name='blogtitle']").val();
 		var tempbody = $("textarea[name='blogbody']").val();
 		var temptags = $("input[name='blogtags']").val();
+		var tempguid = $("input[name='blogpost']").val() || 0;
 
-		var postdata = { blogtitle: temptitle, blogbody: tempbody, blogtags: temptags };
+		var postdata = { blogtitle: temptitle, blogbody: tempbody, blogtags: temptags, blogpost: tempguid };
 
 		$.post(drafturl, postdata, function() {
 			var d = new Date();

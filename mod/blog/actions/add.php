@@ -2,7 +2,7 @@
 
 	/**
 	 * Elgg blog: add post action
-	 * 
+	 *
 	 * @package ElggBlog
 	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
 	 * @author Curverider Ltd <info@elgg.com>
@@ -24,17 +24,17 @@
 		$_SESSION['user']->blogtitle = $title;
 		$_SESSION['user']->blogbody = $body;
 		$_SESSION['user']->blogtags = $tags;
-		
+
 	// Convert string of tags into a preformatted array
 		$tagarray = string_to_tag_array($tags);
-		
+
 	// Make sure the title / description aren't blank
 		if (empty($title) || empty($body)) {
 			register_error(elgg_echo("blog:blank"));
 			forward($_SERVER['HTTP_REFERER']);
 		}
 
-	
+
 	// Initialise a new ElggObject
 		$blog = new ElggObject();
 	// Tell the system it's a blog post
@@ -54,7 +54,7 @@
 		}
 	//whether the user wants to allow comments or not on the blog post
 		$blog->comments_on = $comments_on;
-		
+
 	// Now save the object
 		if (!$blog->save()) {
 			register_error(elgg_echo("blog:error"));
@@ -70,7 +70,8 @@
 		remove_metadata($_SESSION['user']->guid,'blogtitle');
 		remove_metadata($_SESSION['user']->guid,'blogbody');
 		remove_metadata($_SESSION['user']->guid,'blogtags');
-			
+		remove_metadata($_SESSION['user']->guid,'blogguid');
+
 	// Forward to the main blog page
 		$page_owner = get_entity($blog->container_guid);
 		if ($page_owner instanceof ElggUser) {
@@ -78,7 +79,7 @@
 		} else if ($page_owner instanceof ElggGroup) {
 			$username = "group:" . $page_owner->guid;
 		}
-		
+
 		forward("pg/blog/$username");
-		
+
 ?>
