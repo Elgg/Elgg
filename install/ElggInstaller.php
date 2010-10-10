@@ -1130,7 +1130,11 @@ class ElggInstaller {
 		try {
 			run_sql_script("{$CONFIG->path}engine/schema/mysql.sql");
 		} catch (Exception $e) {
-			register_error($e->getMessage());
+			$msg = $e->getMessage();
+			if (strpos($msg, 'already exists')) {
+				$msg = elgg_echo('install:error:tables_exist');
+			}
+			register_error($msg);
 			return FALSE;
 		}
 
