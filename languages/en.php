@@ -36,12 +36,13 @@ $english = array(
 /**
  * Errors
  */
-	'exception:title' => "Welcome to Elgg.",
+	'exception:title' => "Fatal Error.",
 
 	'actionundefined' => "The requested action (%s) was not defined in the system.",
 	'actionloggedout' => "Sorry, you cannot perform this action while logged out.",
 	'actionunauthorized' => 'You are unauthorized to perform this action',
 
+	'InstallationException:SiteNotInstalled' => 'Unable to handle this request. This site is not configured or the database is down.',
 	'InstallationException:MissingLibrary' => 'Could not load %s',
 	'InstallationException:CannotLoadSettings' => 'Elgg could not load the settings file. It does not exist or there is a file permissions issue.',
 

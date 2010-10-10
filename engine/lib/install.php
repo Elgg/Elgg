@@ -53,7 +53,6 @@ function verify_installation() {
 		$installed = is_installed();
 	} catch (DatabaseException $e) {}
 	if (!$installed) {
-		header("Location: install.php");
-		exit;
+		throw new InstallationException(elgg_echo('InstallationException:SiteNotInstalled'));
 	}
 }

@@ -1401,9 +1401,10 @@ function __elgg_php_exception_handler($exception) {
 	// make sure the error isn't cached
 	header("Cache-Control: no-cache, must-revalidate", true);
 	header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', true);
-	// @todo Why don't we send a 500 header?
+	// @note Do not send a 500 header because it is not a server error
 	//header("Internal Server Error", true, 500);
 
+	elgg_set_viewtype('failsafe');
 	$body = elgg_view("messages/exceptions/exception", array('object' => $exception));
 	page_draw(elgg_echo('exception:title'), $body);
 }

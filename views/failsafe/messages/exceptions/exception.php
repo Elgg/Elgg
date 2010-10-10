@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg exception (fallback mode)
+ * Elgg exception (failsafe mode)
  * Displays a single exception
  *
  * @package Elgg
@@ -11,10 +11,9 @@
  * @uses $vars['object'] An exception
  */
 
-global $CONFIG;
 ?>
 
-<p class="messages-exception" style="background:#FDFFC3;display:block;padding:10px;">
+<p class="messages_exception">
 	<span title="<?php echo get_class($vars['object']); ?>">
 	<?php
 
@@ -24,13 +23,18 @@ global $CONFIG;
 	</span>
 </p>
 
-<?php if (isset($CONFIG->debug)) { ?>
+<?php
+global $CONFIG;
+if (isset($CONFIG->debug)) {
+?>
 
-<p class="messages-exception-detail" style="background:#FDFFC3;display:block;padding:10px;">
+<p class="messages_exception">
 	<?php
 
 		echo nl2br(htmlentities(print_r($vars['object'], true), ENT_QUOTES, 'UTF-8'));
 
 	?>
 </p>
-<?php } ?>
+<?php
+
+}
