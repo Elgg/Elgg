@@ -682,24 +682,6 @@ function db_upgrade($version, $fromdir = "", $quiet = FALSE) {
 }
 
 /**
- * Check if MySQL is at least version 5.
- *
- * @todo If multiple dbs are supported check which db is supported and use the appropriate code to validate
- * the appropriate version.
- * @return bool
- */
-function db_check_version() {
-	$version = mysql_get_server_info();
-	$points = explode('.', $version);
-
-	if ($points[0] < 5) {
-		return FALSE;
-	}
-
-	return TRUE;
-}
-
-/**
  * Sanitise a string for database use, but with the option of escaping extra characters.
  *
  * @param string $string The string to sanitise
