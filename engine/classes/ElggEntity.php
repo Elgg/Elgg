@@ -922,7 +922,11 @@ abstract class ElggEntity implements
 	 * @see ElggEntity::enable()
 	 */
 	public function disable($reason = "", $recursive = true) {
-		return disable_entity($this->get('guid'), $reason, $recursive);
+		if ($r = disable_entity($this->get('guid'), $reason, $recursive)) {
+			$this->attributes['enabled'] = 'no';
+		}
+
+		return $r;
 	}
 
 	/**
@@ -936,7 +940,11 @@ abstract class ElggEntity implements
 	 * @return bool
 	 */
 	public function enable() {
-		return enable_entity($this->get('guid'));
+		if ($r = enable_entity($this->get('guid'))) {
+			$this->attributes['enabled'] = 'yes';
+		}
+
+		return $r;
 	}
 
 	/**
