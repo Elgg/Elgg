@@ -16,8 +16,11 @@ function uservalidationbyemail_init() {
 	// This doesn't need to be an action because security is handled by the validation codes.
 	register_page_handler('uservalidationbyemail', 'uservalidationbyemail_page_handler');
 
-	// mark users as unvalidated when they register
+	// mark users as unvalidated and disable when they register
 	register_plugin_hook('register', 'user', 'uservalidationbyemail_disable_new_user');
+
+	// canEdit override to allow not logged in code to disable a user
+	register_plugin_hook('permissions_check', 'user', 'uservalidationbyemail_allow_new_user_can_edit');
 
 	// prevent users from logging in if they aren't validated
 	register_plugin_hook('action', 'login', 'uservalidationbyemail_check_login_attempt');
@@ -62,6 +65,12 @@ function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
 	}
 
 	// disable user to prevent showing up on the site
+	// set context to our canEdit() override works
+	$context = get_context();
+	set_context('uservalidationbyemail_new_user');
+	$hidden_entities = access_get_show_hidden_status();
+	access_show_hidden_entities(TRUE);
+
 	// Don't do a recursive disable.  Any entities owned by the user at this point
 	// are products of plugins that hook into create user and might need
 	// access to the entities.
@@ -72,7 +81,31 @@ function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
 	uservalidationbyemail_set_user_validation_status($user->guid, FALSE);
 	uservalidationbyemail_request_validation($user->guid);
 
+	set_context($context);
+	access_show_hidden_entities($hidden_entities);
+
 	return TRUE;
+}
+
+/**
+ * Override the canEdit() call for if we're in the context of registering a new user.
+ *
+ */
+function uservalidationbyemail_allow_new_user_can_edit($hook, $type, $value, $params) {
+	// $params['user'] is the user to check permissions for.
+	// we want the entity to check, which is a user.
+	$user = elgg_get_array_value('entity', $params);
+
+	if (!($user instanceof ElggUser)) {
+		return NULL;
+	}
+
+	$context = get_context();
+	if ($context == 'uservalidationbyemail_new_user' || $context = 'uservalidationbyemail_validate_user') {
+		return TRUE;
+	}
+
+	return NULL;
 }
 
 /**
@@ -137,10 +170,16 @@ function uservalidationbyemail_page_handler($page) {
 
 		if (($code) && ($user)) {
 			if (uservalidationbyemail_validate_email($user_guid, $code)) {
+
+				$context = get_context();
+				set_context('uservalidationbyemail_validate_user');
+
 				system_message(elgg_echo('email:confirm:success'));
 
 				$user = get_entity($user_guid);
 				$user->enable();
+
+				set_context($context);
 				login($user);
 			} else {
 				register_error(elgg_echo('email:confirm:fail'));
@@ -192,7 +231,7 @@ function uservalidationbyemail_check_manual_login($event, $type, $user) {
 	access_show_hidden_entities(TRUE);
 
 	// @todo register_error()?
-	$return = ($user instanceof ElggUser && $user->disabled == 'yes' && !$user->validated) ? FALSE : NULL;
+	$return = ($user instanceof ElggUser && !$user->isEnabled() && !$user->validated) ? FALSE : NULL;
 
 	access_show_hidden_entities($access_status);
 
