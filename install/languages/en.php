@@ -102,11 +102,12 @@ If you are ready to proceed, click the Next button.",
 	'install:admin:help:displayname' => 'The name that is displayed on the site for this account',
 	'install:admin:help:email' => '',
 	'install:admin:help:username' => 'Account username used for logging in',
-	'install:admin:help:password1' => 'Account password must be at least x characters long',
+	'install:admin:help:password1' => "Account password must be at least %u characters long",
 	'install:admin:help:password2' => 'Retype password to confirm',
 
 	'install:admin:password:mismatch' => 'Password must match.',
 	'install:admin:password:empty' => 'Password cannot be empty.',
+	'install:admin:password:tooshort' => 'Your password was too short',
 	'install:admin:cannot_create' => 'Unable to create an admin account.',
 
 	'install:complete:instructions' => 'Your Elgg site is now ready to be used. Click the button below to be taken to your site.',

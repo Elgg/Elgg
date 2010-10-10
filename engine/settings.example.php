@@ -111,3 +111,12 @@ $CONFIG->broken_mta = FALSE;
  * @global bool $CONFIG->db_disable_query_cache
  */
 $CONFIG->db_disable_query_cache = FALSE;
+
+/**
+ * Minimum password length
+ *
+ * This value is used when validating a user's password during registration.
+ *
+ * @global int $CONFIG->min_password_length
+ */
+$CONFIG->min_password_length = 6;

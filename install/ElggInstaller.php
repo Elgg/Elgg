@@ -382,6 +382,12 @@ class ElggInstaller {
 			} while (FALSE);  // PHP doesn't support breaking out of if statements
 		}
 
+		// bit of a hack to get the password help to show right number of characters
+		global $CONFIG;
+		$lang = get_current_language();
+		$CONFIG->translations[$lang]['install:admin:help:password1'] =
+				sprintf($CONFIG->translations[$lang]['install:admin:help:password1'], $CONFIG->min_password_length);
+
 		$formVars = $this->makeFormSticky($formVars, $submissionVars);
 
 		$this->render('admin', array('variables' => $formVars));
@@ -1284,6 +1290,12 @@ class ElggInstaller {
 
 		if (trim($submissionVars['password1']) == "") {
 			register_error(elgg_echo('install:admin:password:empty'));
+			return FALSE;
+		}
+
+		$minLength = get_config('min_password_length');
+		if (strlen($submissionVars['password1']) < $minLength) {
+			register_error(elgg_echo('install:admin:password:tooshort'));
 			return FALSE;
 		}
 

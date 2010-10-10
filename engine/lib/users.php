@@ -953,7 +953,9 @@ function validate_username($username) {
  * @throws RegistrationException on invalid
  */
 function validate_password($password) {
-	if (strlen($password) < 6) {
+	global $CONFIG;
+
+	if (strlen($password) < $CONFIG->min_password_length) {
 		throw new RegistrationException(elgg_echo('registration:passwordtooshort'));
 	}
 
