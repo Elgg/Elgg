@@ -9,15 +9,6 @@
  * @link http://elgg.org/
  */
 
-/*
- * @todo - integrate this could in case we want to send new admin to plugins page
-				// remind users to enable / disable desired tools
-				elgg_add_admin_notice('first_installation_plugin_reminder', elgg_echo('firstadminlogininstructions'));
-
-				datalist_set('first_admin_login', time());
-				forward('pg/admin/plugins/simple');
-
- */
 
 class ElggInstaller {
 
@@ -84,6 +75,15 @@ class ElggInstaller {
 
 		$params = $this->getPostVariables();
 		$this->$step($params);
+	}
+
+	/**
+	 * Set the auto login flag
+	 * 
+	 * @param bool $flag
+	 */
+	public function setAutoLogin(bool $flag) {
+		$this->autoLogin = $value;
 	}
 
 	/**
@@ -394,7 +394,18 @@ class ElggInstaller {
 	 */
 	protected function complete($vars) {
 
-		$this->render('complete');
+		$params = array();
+		if ($this->autoLogin) {
+			// remind users to enable / disable desired tools
+			$msg = elgg_echo('firstadminlogininstructions');
+			elgg_add_admin_notice('first_installation_plugin_reminder', $msg);
+
+			$params['destination'] = 'pg/admin/plugins/simple';
+		} else {
+			$params['destination'] = 'index.php';
+		}
+
+		$this->render('complete', $params);
 	}
 
 	/**
@@ -671,7 +682,7 @@ class ElggInstaller {
 		return $url;
 	}
 
-	function loadSettingsFile() {
+	protected function loadSettingsFile() {
 		global $CONFIG;
 
 		if (!include_once("{$CONFIG->path}engine/settings.php")) {
@@ -1019,7 +1030,7 @@ class ElggInstaller {
 	 * @param string $host
 	 * @return bool
 	 */
-	function checkDatabaseSettings($user, $password, $dbname, $host) {
+	protected function checkDatabaseSettings($user, $password, $dbname, $host) {
 		$mysql_dblink = mysql_connect($host, $user, $password, true);
 		if ($mysql_dblink == FALSE) {
 			register_error(elgg_echo('install:error:databasesettings'));
