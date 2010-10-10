@@ -495,6 +495,9 @@ class ElggInstaller {
 			if ($this->status['database'] == FALSE) {
 				return;
 			}
+		} else {
+			// no tables
+			return;
 		}
 
 		// check that the config table has entries
