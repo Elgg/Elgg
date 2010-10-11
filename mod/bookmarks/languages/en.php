@@ -60,6 +60,8 @@
 			'bookmarks:bookmarklet:description:conclusion' =>
 					"You can then save any page you visit by clicking it at any time.",
 
+			'bookmarks:no_title' => 'No title',
+
 		/**
 		 * Status messages
 		 */
