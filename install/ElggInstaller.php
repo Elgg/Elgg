@@ -56,8 +56,8 @@ class ElggInstaller {
 	 */
 	public function run($step) {
 
-		// check if this a mod rewrite test coming in
-		$this->runModRewriteTest();
+		// check if this is a URL rewrite test coming in
+		$this->processRewriteTest();
 
 		if (!in_array($step, $this->getSteps())) {
 			$msg = sprintf(elgg_echo('InstallationException:UnknownStep'), $step);
@@ -137,14 +137,8 @@ class ElggInstaller {
 		// check PHP parameters and libraries
 		$this->checkPHP($report);
 
-		// check rewrite. If failure, create .htaccess and try again.
-		$rewriteResult = $this->checkRewriteRules($report);
-		if ($rewriteResult == FALSE) {
-			$htaccessExists = $this->createHtaccess($report);
-			if ($htaccessExists) {
-				$this->checkRewriteRules($report);
-			}
-		}
+		// check URL rewriting
+		$this->checkRewriteRules($report);
 
 		// check for existence of settings file
 		if ($this->checkSettingsFile() != TRUE) {
@@ -691,6 +685,9 @@ class ElggInstaller {
 		return $url;
 	}
 
+	/**
+	 * Load settings.php
+	 */
 	protected function loadSettingsFile() {
 		global $CONFIG;
 
@@ -738,60 +735,6 @@ class ElggInstaller {
 	/**
 	 * Requirement checks support methods
 	 */
-
-	/**
-	 * Create Elgg's .htaccess file or confirm that it exists
-	 *
-	 * @param array $report Reference to the report array
-	 * @return bool
-	 */
-	protected function createHtaccess(&$report) {
-		global $CONFIG;
-
-		$filename = "{$CONFIG->path}.htaccess";
-		if (file_exists($filename)) {
-			// check that this is the Elgg .htaccess
-			$data = file_get_contents($filename);
-			if ($data === FALSE) {
-				// don't have permission to read the file
-			}
-			if (strpos($data, 'Elgg') === FALSE) {
-				$report['htaccess'] = array(
-					array(
-						'severity' => 'failure',
-						'message' => elgg_echo('install:check:htaccess_exists'),
-					)
-				);
-				return FALSE;
-			} else {
-				// Elgg .htaccess is already there
-				return TRUE;
-			}
-		}
-
-		if (!is_writable($CONFIG->path)) {
-			$report['htaccess'] = array(
-				array(
-					'severity' => 'failure',
-					'message' => elgg_echo('install:check:root'),
-				)
-			);
-			return FALSE;
-		}
-
-		// create the .htaccess file
-		$result = copy("{$CONFIG->path}htaccess_dist", $filename);
-		if (!$result) {
-			$report['htaccess'] = array(
-				array(
-					'severity' => 'failure',
-					'message' => elgg_echo('install:check:htaccess_fail'),
-				)
-			);
-		}
-
-		return $result;
-	}
 
 	/**
 	 * Check that the engine dir is writable
@@ -917,64 +860,23 @@ class ElggInstaller {
 	/**
 	 * Confirm that the rewrite rules are firing
 	 * @param array $report
-	 * @return bool
 	 */
 	protected function checkRewriteRules(&$report) {
 		global $CONFIG;
 
-		$url = "{$CONFIG->wwwroot}modrewrite.php";
+		require_once(dirname(__FILE__) . "/ElggRewriteTester.php");
 
-		if (function_exists('curl_init')) {
-			// try curl if installed
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, $url);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-			$response = curl_exec($ch);
-			curl_close($ch);
-			$result = $response === 'success';
-		} else if (ini_get('allow_url_fopen')) {
-			// use file_get_contents as fallback
-			$response = file_get_contents($url);
-			$result = $response === 'success';
-		} else {
-			$report['htaccess'] = array(
-				array(
-					'severity' => 'warning',
-					'message' => elgg_echo('install:check:rewrite:unknown'),
-				)
-			);
-			return FALSE;
-		}
-
-		if ($result) {
-			$report['htaccess'] = array(
-				array(
-					'severity' => 'pass',
-					'message' => elgg_echo('install:check:rewrite:success'),
-				)
-			);
-		} else {
-			if (strpos($response, 'No input file specified.') !== FALSE) {
-				// nginx with no or bad rewrite rules
-			}
-			$report['htaccess'] = array(
-				array(
-					'severity' => 'failure',
-					'message' => elgg_echo('install:check:rewrite:fail'),
-				)
-			);
-		}
-
-		return $result;
+		$tester = new ElggRewriteTester();
+		$url = "{$CONFIG->wwwroot}rewrite.php";
+		$report['rewrite'] = array($tester->run($url, $CONFIG->path));
 	}
 
 	/**
-	 * Check if the request is coming from the mod rewrite test on the
+	 * Check if the request is coming from the URL rewrite test on the
 	 * requirements page.
 	 */
-	protected function runModRewriteTest() {
-		if (strpos($_SERVER['REQUEST_URI'], 'modrewrite.php') !== FALSE) {
+	protected function processRewriteTest() {
+		if (strpos($_SERVER['REQUEST_URI'], 'rewrite.php') !== FALSE) {
 			echo 'success';
 			exit;
 		}
@@ -1343,7 +1245,7 @@ class ElggInstaller {
 		}
 		elgg_set_ignore_access(FALSE);
 
-		// add validation data to satisfy the user validation plugins
+		// add validation data to satisfy user validation plugins
 		create_metadata($guid, 'validated', TRUE, '', 0, ACCESS_PUBLIC);
 		create_metadata($guid, 'validated_method', 'admin_user', '', 0, ACCESS_PUBLIC);
 

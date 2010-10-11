@@ -21,11 +21,11 @@ If you haven't already, read through the installation instructions included with
 
 If you are ready to proceed, click the Next button.",
 	'install:requirements:instructions:success' => "Your server passed the requirement checks.",
-	'install:requirements:instructions:failure' => "Your server failed the requirements check. After you have fixed the below issues, refresh this page.",
+	'install:requirements:instructions:failure' => "Your server failed the requirements check. After you have fixed the below issues, refresh this page. Check the troubleshooting links at the bottom of this page if you need further assistance.",
 	'install:requirements:instructions:warning' => "Your server passed the requirements check, but there is at least one warning. We recommend that you check the install troubleshooting page for more details.",
 
 	'install:require:php' => 'PHP',
-	'install:require:htaccess' => 'Web server',
+	'install:require:rewrite' => 'Web server',
 	'install:require:engine' => 'Settings file',
 	'install:require:database' => 'Database',
 
@@ -41,12 +41,6 @@ If you are ready to proceed, click the Next button.",
 	'install:check:php:open_basedir' => 'The open_basedir PHP directive may prevent Elgg from saving files to its data directory.',
 	'install:check:php:safe_mode' => 'Running PHP in safe mode is not recommened and may cause problems with Elgg.',
 
-	'install:check:htaccess_exists' => 'There is an .htaccess file in the root directory of Elgg. Please remove it.',
-	'install:check:htaccess_fail' => 'Unable to create an .htaccess file in the root directory of Elgg. You will need to copy htaccess_dist to .htaccess',
-	'install:check:rewrite:success' => 'The test of the rewrite rules was successful.',
-	'install:check:rewrite:fail' => 'The URL rewrite test failed.',
-	'install:check:rewrite:unknown' => 'The result rewrite test could not be determined.  Continue at your own risk.',
-
 	'install:check:enginedir' => 'Your web server does not have permission to create the settings.php file in the engine directory. You have two choices:
 
 		1. Change the permissions on the engine directory
@@ -54,6 +48,7 @@ If you are ready to proceed, click the Next button.",
 		2. Copy the file settings.example.php to settings.php and follow the instructions in it for setting your database parameters.',
 
 	'install:check:php:success' => "Your server's PHP satisfies all of Elgg's requirements.",
+	'install:check:rewrite:success' => 'The test of the rewrite rules was successful.',
 	'install:check:database' => 'The database requirements are checked when Elgg loads its database.',
 
 	'install:database:instructions' => "If you haven't already created a database for Elgg, do that now. Then fill in the values below to initialize the Elgg database.",
@@ -133,6 +128,19 @@ If you are ready to proceed, click the Next button.",
 	'install:error:loadadmin' => 'Unable to load admin user.',
 	'install:error:adminaccess' => 'Unable to give new user account admin privileges.',
 	'install:error:adminlogin' => 'Unable to login the new admin user automatically.',
+	'install:error:rewrite:apache' => 'We think your server is running the Apache web server.',
+	'install:error:rewrite:nginx' => 'We think your server is running the Nginx web server.',
+	'install:error:rewrite:lighttpd' => 'We think your server is running the Lighttpd web server.',
+	'install:error:rewrite:iis' => 'We think your server is running the IIS web server.',
+	'install:error:rewrite:allowoverride' => "The rewrite test failed and the most likely cause is that AllowOverride is not set to All for Elgg's directory. This prevents Apache from processing the .htaccess file which contains the rewrite rules.
+				\n\nA less likely cause is Apache is configured with an alias for your Elgg directory and you need to set the RewriteBase in your .htaccess. There are further instructions in the .htaccess file in your Elgg directory.",
+	'install:error:rewrite:htaccess:write_permission' => 'Your web server does not have permission to create the .htaccess file in Elgg\'s directory. You need to manually copy htaccess_dist to .htaccess or change the permissions on the directory.',
+	'install:error:rewrite:htaccess:read_permission' => 'There is an .htaccess file in Elgg\'s directory, but your web server does not have permission to read it.',
+	'install:error:rewrite:htaccess:non_elgg_htaccess' => 'There is an .htaccess file in Elgg\'s directory that was not not created by Elgg. Please remove it.',
+	'install:error:rewrite:htaccess:cannot_copy' => 'A unknown error occurred while creating the .htaccess file. You need to manually copy htaccess_dist to .htaccess in Elgg\'s directory.',
+	'install:error:rewrite:altserver' => 'The rewrite rules test failed. You need to configure your web server with Elgg\'s rewrite rules and try again.',
+	'install:error:rewrite:unknown' => 'Oof. We couldn\'t figure out what kind of web server is running on your server and it failed the rewrite rules. We cannot offer any specific advice. Please check the troubleshooting link.',
+	'install:warning:rewrite:unknown' => 'Your server does not support automatic testing of the rewrite rules. You can continue the installation, but you may experience problems with your site. You can manually test the rewrite rules by clicking this link: <a href="%s" target="_blank">test</a>. You will see the word success if the rules are working.',
 );
 
 add_translation("en", $english);
