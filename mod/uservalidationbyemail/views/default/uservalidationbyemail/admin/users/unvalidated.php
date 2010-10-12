@@ -49,7 +49,7 @@ $pagination = elgg_view('navigation/pagination',array(
 
 echo $pagination;
 
-$bulk_actions_checkbox = '<label><input type="checkbox" id="unvalidated_users_checkall" />'
+$bulk_actions_checkbox = '<label><input type="checkbox" class="unvalidated_users_checkall" />'
 	. elgg_echo('uservalidationbyemail:check_all') . '</label>';
 
 $validate = elgg_view('output/url', array(
@@ -86,8 +86,9 @@ $bulk_actions = <<<___END
 </div>
 ___END;
 
-//$form_body .= $bulk_actions;
-echo elgg_view('page_elements/contentwrapper', array('body' => $bulk_actions));
+$bulk_actions = elgg_view('page_elements/contentwrapper', array('body' => $bulk_actions));
+
+echo $bulk_actions;
 
 foreach ($users as $user) {
 	$form_body .= elgg_view('uservalidationbyemail/unvalidated_user', array('user' => $user));
@@ -101,12 +102,15 @@ echo elgg_view('input/form', array(
 	'internalname' => 'unvalidated_users',
 ));
 
+if ($count > 5) {
+	echo $bulk_actions;
+}
 echo $pagination;
 
 ?>
 <script type="text/javascript">
 $(function() {
-	$('#unvalidated_users_checkall').click(function() {
+	$('.unvalidated_users_checkall').click(function() {
 		checked = $(this).attr('checked');
 		$('form[name=unvalidated_users]').find('input[type=checkbox]').attr('checked', checked);
 	});
