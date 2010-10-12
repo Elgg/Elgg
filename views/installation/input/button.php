@@ -50,4 +50,4 @@ if (strpos($src,$CONFIG->wwwroot)===false) {
 	$src = "";
 }
 ?>
-<input type="<?php echo $type; ?>" class="<?php echo $type; ?>_button" <?php echo $vars['js']; ?> value="<?php echo $value; ?>" src="<?php echo $src; ?>" class="<?php echo $class; ?>" />
+<input type="<?php echo $type; ?>" <?php if (isset($vars['internalid'])) echo "id=\"{$vars['internalid']}\"";?> <?php echo $vars['js']; ?> value="<?php echo $value; ?>" src="<?php echo $src; ?>" class="<?php echo $class; ?>" />

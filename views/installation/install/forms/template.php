@@ -22,6 +22,21 @@ foreach ($variables as $field => $params) {
 	$form_body .= '</p>';
 }
 
-$form_body .= elgg_view('input/submit', array('value' => elgg_echo('next')));
+$submit_params = array(
+	'value' => elgg_echo('next'),
+);
+$form_body .= elgg_view('input/submit', $submit_params);
 
 echo $form_body;
+
+?>
+<script type="text/javascript">
+	var was_submitted = false;
+	function elggCheckFormSubmission() {
+		if (was_submitted == false) {
+			was_submitted = true;
+			return true;
+		}
+		return false;
+	}
+</script>

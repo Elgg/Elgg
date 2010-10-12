@@ -17,5 +17,6 @@ $params = array(
 	'body' => $form_body,
 	'action' => $url,
 	'disable_security' => TRUE,
+	'js' => 'onsubmit="return elggCheckFormSubmission()"',
 );
 echo elgg_view('input/form', $params);
