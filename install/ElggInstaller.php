@@ -5,7 +5,7 @@
  *
  * @package Elgg
  * @subpackage Installer
- * @author Curverider Ltd
+ * @author Cash Costello and Curverider Ltd
  * @link http://elgg.org/
  */
 
@@ -141,7 +141,7 @@ class ElggInstaller {
 		$this->checkRewriteRules($report);
 
 		// check for existence of settings file
-		if ($this->checkSettingsFile() != TRUE) {
+		if ($this->checkSettingsFile($report) != TRUE) {
 			// no file, so check permissions on engine directory
 			$this->checkEngineDir($report);
 		}
@@ -459,8 +459,7 @@ class ElggInstaller {
 	protected function setInstallStatus() {
 		global $CONFIG;
 
-		$settingsCreated = $this->checkSettingsFile();
-		if ($settingsCreated == FALSE) {
+		if (!is_readable("{$CONFIG->path}engine/settings.php")) {
 			return;
 		}
 
@@ -746,7 +745,7 @@ class ElggInstaller {
 
 		$writable = is_writable("{$CONFIG->path}engine");
 		if (!$writable) {
-			$report['engine'] = array(
+			$report['settings'] = array(
 				array(
 					'severity' => 'failure',
 					'message' => elgg_echo('install:check:enginedir'),
@@ -760,16 +759,26 @@ class ElggInstaller {
 
 	/**
 	 * Check that the settings file exists
+	 * @param array $report
 	 * @return bool
 	 */
-	protected function checkSettingsFile() {
+	protected function checkSettingsFile(&$report) {
 		global $CONFIG;
 
-		if (is_readable("{$CONFIG->path}engine/settings.php")) {
-			return TRUE;
+		if (!file_exists("{$CONFIG->path}engine/settings.php")) {
+			return FALSE;
 		}
 
-		return FALSE;
+		if (!is_readable("{$CONFIG->path}engine/settings.php")) {
+			$report['settings'] = array(
+				array(
+					'severity' => 'failure',
+					'message' => elgg_echo('install:check:readsettings'),
+				)
+			);
+		}
+
+		return TRUE;
 	}
 
 	/**

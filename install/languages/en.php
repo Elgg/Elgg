@@ -26,7 +26,7 @@ If you are ready to proceed, click the Next button.",
 
 	'install:require:php' => 'PHP',
 	'install:require:rewrite' => 'Web server',
-	'install:require:engine' => 'Settings file',
+	'install:require:settings' => 'Settings file',
 	'install:require:database' => 'Database',
 
 	'install:check:root' => 'Your web server does not have permission to create an .htaccess file in the root directory of Elgg. You have two choices:
@@ -46,6 +46,7 @@ If you are ready to proceed, click the Next button.",
 		1. Change the permissions on the engine directory
 
 		2. Copy the file settings.example.php to settings.php and follow the instructions in it for setting your database parameters.',
+	'install:check:readsettings' => 'A settings file exists in the engine directory, but the web server cannot read it. You can delete the file or change the read permissions on it.',
 
 	'install:check:php:success' => "Your server's PHP satisfies all of Elgg's requirements.",
 	'install:check:rewrite:success' => 'The test of the rewrite rules was successful.',

@@ -47,7 +47,7 @@ $english = array(
 	'InstallationException:CannotLoadSettings' => 'Elgg could not load the settings file. It does not exist or there is a file permissions issue.',
 
 	'SecurityException:Codeblock' => "Denied access to execute privileged code block",
-	'DatabaseException:WrongCredentials' => "Elgg couldn't connect to the database using the given credentials.",
+	'DatabaseException:WrongCredentials' => "Elgg couldn't connect to the database using the given credentials. Check the settings file.",
 	'DatabaseException:NoConnect' => "Elgg couldn't select the database '%s', please check that the database is created and you have access to it.",
 	'SecurityException:FunctionDenied' => "Access to privileged function '%s' is denied.",
 	'DatabaseException:DBSetupIssues' => "There were a number of issues: ",
