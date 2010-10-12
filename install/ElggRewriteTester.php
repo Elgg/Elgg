@@ -105,6 +105,11 @@ class ElggRewriteTester {
 				$this->htaccessIssue = 'non_elgg_htaccess';
 				return FALSE;
 			} else {
+				// check if this is an old Elgg htaccess
+				if (strpos($data, 'RewriteRule ^rewrite.php$ install.php') == FALSE) {
+					$this->htaccessIssue = 'old_elgg_htaccess';
+					return FALSE;
+				}
 				return TRUE;
 			}
 		}
