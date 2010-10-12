@@ -864,6 +864,15 @@ class ElggInstaller {
 				'message' => elgg_echo("install:check:php:safe_mode")
 			);
 		}
+
+		if (ini_get('arg_separator.output') !== '&') {
+			$separator = htmlspecialchars(ini_get('arg_separator.output'));
+			$msg = sprintf(elgg_echo("install:check:php:arg_separator"), $separator);
+			$phpReport[] = array(
+				'severity' => 'failure',
+				'message' => $msg,
+			);
+		}
 	}
 
 	/**

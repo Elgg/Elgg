@@ -40,6 +40,7 @@ If you are ready to proceed, click the Next button.",
 	'install:check:php:extension:recommend' => 'It is recommended that the PHP extension %s is installed.',
 	'install:check:php:open_basedir' => 'The open_basedir PHP directive may prevent Elgg from saving files to its data directory.',
 	'install:check:php:safe_mode' => 'Running PHP in safe mode is not recommened and may cause problems with Elgg.',
+	'install:check:php:arg_separator' => 'arg_separator.output must be & for Elgg to work and your server\'s value is %s ',
 
 	'install:check:enginedir' => 'Your web server does not have permission to create the settings.php file in the engine directory. You have two choices:
 
