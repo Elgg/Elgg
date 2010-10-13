@@ -87,6 +87,86 @@ class ElggInstaller {
 	}
 
 	/**
+	 * A batch install of Elgg
+	 *
+	 * All required parameters must be passed in as an associative array. See
+	 * $requiredParams for a list of them. This creates the necessary files,
+	 * loads the database, configures the site settings, and creates the admin
+	 * account. If it fails, an exception is thrown. It does not check any of
+	 * the requirements as the multiple step web installer does.
+	 *
+	 * @param array $params Array of key value pairs
+	 * @param bool $createHtaccess Should .htaccess be created
+	 */
+	public function batchInstall(array $params, $createHtaccess = FALSE) {
+		global $CONFIG;
+
+		restore_error_handler();
+		restore_exception_handler();
+		
+		$defaults = array(
+			'dbhost' => 'localhost',
+			'dbprefix' => 'elgg_',
+			'path' => $CONFIG->path,
+			'language' => 'en',
+			'siteaccess' => ACCESS_PUBLIC,
+		);
+		$params = array_merge($defaults, $params);
+
+		$requiredParams = array(
+			'dbuser',
+			'dbpassword',
+			'dbname',
+			'sitename',
+			'wwwroot',
+			'dataroot',
+			'displayname',
+			'email',
+			'username',
+			'password',
+		);
+		foreach ($requiredParams as $key) {
+			if (!array_key_exists($key, $params)) {
+				$msg = sprintf(elgg_echo('install:error:requiredfield'), $key);
+				throw new InstallationException($msg);
+			}
+		}
+
+		// password is passed in once
+		$params['password1'] = $params['password2'] = $params['password'];
+
+		if ($createHtaccess) {
+			require_once(dirname(__FILE__) . "/ElggRewriteTester.php");
+			$rewriteTester = new ElggRewriteTester();
+			if (!$rewriteTester->createHtaccess($CONFIG->path)) {
+				throw new InstallationException(elgg_echo('install:error:htaccess'));
+			}
+		}
+		
+		if (!$this->createSettingsFile($params)) {
+			throw new InstallationException(elgg_echo('install:error:settings'));
+		}
+
+		if (!$this->connectToDatabase()) {
+			throw new InstallationException(elgg_echo('install:error:databasesettings'));
+		}
+		if (!$this->installDatabase()) {
+			throw new InstallationException(elgg_echo('install:error:cannotloadtables'));
+		}
+
+		// load remaining core libraries
+		$this->finishBootstraping('settings');
+
+		if (!$this->saveSiteSettings($params)) {
+			throw new InstallationException(elgg_echo('install:error:savesitesettings'));
+		}
+
+		if (!$this->createAdminAccount($params)) {
+			throw new InstallationException(elgg_echo('install:admin:cannot_create'));
+		}
+	}
+
+	/**
 	 * Renders the data passed by a controller
 	 *
 	 * @param string $step
@@ -640,6 +720,8 @@ class ElggInstaller {
 					throw new InstallationException($msg);
 				}
 			}
+
+			$this->initGlobals();
 
 			set_default_config();
 
@@ -1274,5 +1356,18 @@ class ElggInstaller {
 		}
 
 		return TRUE;
+	}
+
+	/**
+	 * Init globals because engine loaded within a function
+	 */
+	protected function initGlobals() {
+		global $DB_QUERY_CACHE, $DB_DELAYED_QUERIES;
+		$DB_QUERY_CACHE = array();
+		$DB_DELAYED_QUERIES = array();
+
+		global $METASTRINGS_CACHE, $METASTRINGS_DEADNAME_CACHE;
+		$METASTRINGS_CACHE = array();
+		$METASTRINGS_DEADNAME_CACHE = array();
 	}
 }

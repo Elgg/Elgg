@@ -91,7 +91,7 @@ class ElggRewriteTester {
 	 * @param string $path Elgg's root directory with trailing slash
 	 * @return bool
 	 */
-	protected function createHtaccess($path) {
+	public function createHtaccess($path) {
 		$filename = "{$path}.htaccess";
 		if (file_exists($filename)) {
 			// check that this is the Elgg .htaccess

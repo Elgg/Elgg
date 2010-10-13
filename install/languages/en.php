@@ -40,7 +40,7 @@ If you are ready to proceed, click the Next button.",
 	'install:check:php:extension:recommend' => 'It is recommended that the PHP extension %s is installed.',
 	'install:check:php:open_basedir' => 'The open_basedir PHP directive may prevent Elgg from saving files to its data directory.',
 	'install:check:php:safe_mode' => 'Running PHP in safe mode is not recommened and may cause problems with Elgg.',
-	'install:check:php:arg_separator' => 'arg_separator.output must be & for Elgg to work and your server\'s value is %s ',
+	'install:check:php:arg_separator' => 'arg_separator.output must be & for Elgg to work and your server\'s value is %s',
 
 	'install:check:enginedir' => 'Your web server does not have permission to create the settings.php file in the engine directory. You have two choices:
 
@@ -67,8 +67,6 @@ If you are ready to proceed, click the Next button.",
 	'install:database:help:dbname' => 'Name of the Elgg database',
 	'install:database:help:dbhost' => 'Hostname of the MySQL server (usually localhost)',
 	'install:database:help:dbprefix' => "The prefix given to all of Elgg's tables (usually elgg_)",
-
-	'install:dbuser' => '',
 
 	'install:settings:instructions' => "We need some information about the site as we configure Elgg. If you haven't created a data directory for Elgg, please do so before completing this step.",
 
@@ -116,9 +114,12 @@ If you are ready to proceed, click the Next button.",
 	'install:success:settings' => 'Site settings have been saved.',
 	'install:success:admin' => 'Admin account has been created.',
 
+	'install:error:htaccess' => 'Unable to create an .htaccess',
+	'install:error:settings' => 'Unable to create the settings file',
 	'install:error:databasesettings' => 'Unable to connect to the database with these settings.',
 	'install:error:oldmysql' => 'MySQL must be version 5.0 or above. Your server is using %s.',
 	'install:error:nodatabase' => 'Unable to use database %s. It may not exist.',
+	'install:error:cannotloadtables' => 'Cannot load the database tables',
 	'install:error:tables_exist' => 'There are already Elgg tables in the database. You need to either drop those tables or restart the installer and we will attempt to use them. To restart the installer, remove \'?step=database\' from the URL in your browser\'s address bar and press Enter.',
 	'install:error:readsettingsphp' => 'Unable to read engine/settings.example.php',
 	'install:error:writesettingphp' => 'Unable to write engine/settings.php',
@@ -127,6 +128,7 @@ If you are ready to proceed, click the Next button.",
 	'install:error:locationdatadirectory' => 'Your data directory %s must be outside of your install path for security.',
 	'install:error:emailaddress' => '%s is not a valid email address',
 	'install:error:createsite' => 'Unable to create the site.',
+	'install:error:savesitesettings' => 'Unable to save site settings',
 	'install:error:loadadmin' => 'Unable to load admin user.',
 	'install:error:adminaccess' => 'Unable to give new user account admin privileges.',
 	'install:error:adminlogin' => 'Unable to login the new admin user automatically.',
