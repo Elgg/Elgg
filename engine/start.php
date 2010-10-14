@@ -59,7 +59,7 @@ $lib_dir = dirname(__FILE__) . '/lib/';
  * @var array
  */
 $required_files = array(
-	'exceptions.php', 'elgglib.php', 'views.php', 'access.php', 'system_log.php', 'export.php',
+	'elgglib.php', 'views.php', 'access.php', 'system_log.php', 'export.php',
 	'sessions.php', 'languages.php', 'input.php', 'install.php', 'cache.php', 'output.php'
 );
 
