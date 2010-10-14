@@ -97,7 +97,7 @@ function action($action, $forwarder = "") {
 				// @todo make this better!
 				if ($event_result) {
 					if (!include($CONFIG->actions[$action]['file'])) {
-						register_error(sprintf(elgg_echo('actionundefined'), $action));
+						register_error(sprintf(elgg_echo('actionnotfound'), $action));
 					}
 				}
 			} else {

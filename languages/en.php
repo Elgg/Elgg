@@ -39,6 +39,7 @@ $english = array(
 	'exception:title' => "Fatal Error.",
 
 	'actionundefined' => "The requested action (%s) was not defined in the system.",
+	'actionnotfound' => "The action file for %s was not found.",
 	'actionloggedout' => "Sorry, you cannot perform this action while logged out.",
 	'actionunauthorized' => 'You are unauthorized to perform this action',
 
