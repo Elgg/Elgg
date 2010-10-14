@@ -77,7 +77,6 @@ foreach ($required_files as $file) {
 set_error_handler('__elgg_php_error_handler');
 set_exception_handler('__elgg_php_exception_handler');
 
-
 /**
  * Load the system settings
  */
@@ -112,6 +111,10 @@ foreach($lib_files as $file) {
 		throw new InstallationException($msg);
 	}
 }
+
+// prep core classes to be autoloadable
+spl_autoload_register('__elgg_autoload');
+elgg_register_classes(dirname(__FILE__).'/classes');
 
 // confirm that the installation completed successfully
 verify_installation();

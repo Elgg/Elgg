@@ -2200,8 +2200,30 @@ function js_page_handler($page) {
 	}
 }
 
-function __autoload($class) {
-	require_once dirname(dirname(__FILE__))."/classes/$class.php";
+function __elgg_autoload($class) {
+	global $CONFIG;
+
+	if (!include($CONFIG->classes[$class])) {
+		throw new Exception("Failed to autoload $class");
+	}	
+}
+
+function elgg_register_classes($dir) {
+	$classes = elgg_get_file_list($dir, array(), array(), array('.php'));
+	
+	foreach ($classes as $class) {
+		elgg_register_class(basename($class, '.php'), $class);
+	}
+}
+
+function elgg_register_class($class, $location) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->classes)) {
+		$CONFIG->classes = array();
+	}
+	
+	$CONFIG->classes[$class] = $location;
 }
 
 /**
@@ -2233,7 +2255,7 @@ function __elgg_shutdown_hook() {
  */
 function elgg_init() {
 	global $CONFIG;
-
+	
 	register_action('comments/add');
 	register_action('comments/delete');
 	register_action('likes/add');
