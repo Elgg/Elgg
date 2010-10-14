@@ -1,5 +1,5 @@
 Version 1.7.4
-(??? from http://code.elgg.org/branches/1.7)
+(October 14, 2010 from http://code.elgg.org/branches/1.7)
 
  Bugfixes:
   * Upgrade Twitter Services to use oAuth so The Wire can post
