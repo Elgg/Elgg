@@ -263,3 +263,60 @@ function elgg_strip_tags($string) {
 
 	return $string;
 }
+
+/**
+  * Filters a string into an array of significant words
+  *
+  * @deprecated 1.8
+  * @param string $string
+  * @return array
+  */
+function filter_string($string) {
+	elgg_deprecated_notice('filter_string() was deprecated!', 1.8);
+
+	// Convert it to lower and trim
+	$string = strtolower($string);
+	$string = trim($string);
+
+	// Remove links and email addresses
+	// match protocol://address/path/file.extension?some=variable&another=asf%
+	$string = preg_replace("/\s([a-zA-Z]+:\/\/[a-z][a-z0-9\_\.\-]*[a-z]{2,6}[a-zA-Z0-9\/\*\-\?\&\%\=]*)([\s|\.|\,])/iu"," ", $string);
+	// match www.something.domain/path/file.extension?some=variable&another=asf%
+	$string = preg_replace("/\s(www\.[a-z][a-z0-9\_\.\-]*[a-z]{2,6}[a-zA-Z0-9\/\*\-\?\&\%\=]*)([\s|\.|\,])/iu"," ", $string);
+	// match name@address
+	$string = preg_replace("/\s([a-zA-Z][a-zA-Z0-9\_\.\-]*[a-zA-Z]*\@[a-zA-Z][a-zA-Z0-9\_\.\-]*[a-zA-Z]{2,6})([\s|\.|\,])/iu"," ", $string);
+
+	// Sanitise the string; remove unwanted characters
+	$string = preg_replace('/\W/ui', ' ', $string);
+
+	// Explode it into an array
+	$terms = explode(' ',$string);
+
+	// Remove any blacklist terms
+	//$terms = array_filter($terms, 'remove_blacklist');
+
+	return $terms;
+}
+
+/**
+ * Returns true if the word in $input is considered significant
+ *
+ * @deprecated 1.8
+ * @param string $input
+ * @return true|false
+ */
+function remove_blacklist($input) {
+	elgg_deprecated_notice('remove_blacklist() was deprecated!', 1.8);
+
+	global $CONFIG;
+
+	if (!is_array($CONFIG->wordblacklist)) {
+		return $input;
+	}
+
+	if (strlen($input) < 3 || in_array($input,$CONFIG->wordblacklist)) {
+		return false;
+	}
+
+	return true;
+}

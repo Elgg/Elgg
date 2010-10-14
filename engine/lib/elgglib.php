@@ -2265,6 +2265,17 @@ function elgg_init() {
 
 	// Trigger the shutdown:system event upon PHP shutdown.
 	register_shutdown_function('__elgg_shutdown_hook');
+
+	// Sets a blacklist of words in the current language.
+	// This is a comma separated list in word:blacklist.
+	// @todo possibly deprecate
+	$CONFIG->wordblacklist = array();
+	$list = explode(',', elgg_echo('word:blacklist'));
+	if ($list) {
+		foreach ($list as $l) {
+			$CONFIG->wordblacklist[] = trim($l);
+		}
+	}
 }
 
 /**
