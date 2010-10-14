@@ -2114,8 +2114,8 @@ function register_entity_type($type, $subtype) {
 	global $CONFIG;
 
 	$type = strtolower($type);
-	if (!in_array($type, array('object','site','group','user'))) {
-		return false;
+	if (!in_array($type, array('object', 'site', 'group', 'user'))) {
+		return FALSE;
 	}
 
 	if (!isset($CONFIG->registered_entities)) {
@@ -2130,7 +2130,48 @@ function register_entity_type($type, $subtype) {
 		$CONFIG->registered_entities[$type][] = $subtype;
 	}
 
-	return true;
+	return TRUE;
+}
+
+/**
+ * Unregisters an entity type and subtype as a public-facing entity.
+ *
+ * @warning With a blank subtype, it unregisters that entity type including
+ * all subtypes. This must be called after all subtypes have been registered.
+ *
+ * @param string $type The type of entity (object, site, user, group)
+ * @param string $subtype The subtype to register (may be blank)
+ * @return true|false Depending on success
+ * @see register_entity_type()
+ */
+function unregister_entity_type($type, $subtype) {
+	global $CONFIG;
+
+	$type = strtolower($type);
+	if (!in_array($type, array('object', 'site', 'group', 'user'))) {
+		return FALSE;
+	}
+
+	if (!isset($CONFIG->registered_entities)) {
+		return FALSE;
+	}
+
+	if (!isset($CONFIG->registered_entities[$type])) {
+		return FALSE;
+	}
+
+	if ($subtype) {
+		if (in_array($subtype, $CONFIG->registered_entities[$type])) {
+			$key = array_search($subtype, $CONFIG->registered_entities[$type]);
+			unset($CONFIG->registered_entities[$type][$key]);
+		} else {
+			return FALSE;
+		}
+	} else {
+		unset($CONFIG->registered_entities[$type]);
+	}
+
+	return TRUE;
 }
 
 /**
