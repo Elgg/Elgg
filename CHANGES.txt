@@ -16,6 +16,8 @@ Version 1.7.4
   * Non-English languages work when using memcache.
   * User avatar menus work when switching filters on River Dashboard page.
   * CSS is correctly cached for newly enabled plugins.
+  * Can no longer add bookmarks without a title. Previous bookmarks with
+    out titles can now be deleted.
  
  UI/UX Changes:
   * Pages: Admin users can edit user-defined "Welcome page."
