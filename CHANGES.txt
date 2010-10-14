@@ -3,7 +3,7 @@ Version 1.7.4
 
  Bugfixes:
   * Upgrade Twitter Services to use oAuth so The Wire can post
-    to Twitter. (Requires special actions. See LINK TO BLOG POST.)
+    to Twitter. See http://el.gg/twitteroauth for instructions.
   * WSOD fixed when viewing an invalid profile page.
   * Checking for mismatched passwords earlier in registration to avoid
     creating a user who can never log in and wasting a username/email.
