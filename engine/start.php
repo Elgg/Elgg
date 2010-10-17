@@ -112,10 +112,6 @@ foreach($lib_files as $file) {
 	}
 }
 
-// prep core classes to be autoloadable
-spl_autoload_register('__elgg_autoload');
-elgg_register_classes(dirname(__FILE__).'/classes');
-
 // confirm that the installation completed successfully
 verify_installation();
 

@@ -84,29 +84,6 @@ function filter_tags($var) {
 }
 
 /**
- * Sanitise file paths for input, ensuring that they begin and end with slashes etc.
- *
- * @param string $path The path
- * @return string
- */
-function sanitise_filepath($path, $append_slash = TRUE) {
-	// Convert to correct UNIX paths
-	$path = str_replace('\\', '/', $path);
-	$path = str_replace('../', '/', $path);
-
-	// Sort trailing slash
-	$path = trim($path);
-	// rtrim defaults plus /
-	$path = rtrim($path, " \n\t\0\x0B/");
-
-	if ($append_slash) {
-		$path = $path . '/';
-	}
-
-	return $path;
-}
-
-/**
  * Validates an email address.
  *
  * @param string $address Email address.

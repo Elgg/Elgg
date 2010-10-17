@@ -8,6 +8,36 @@
  * puposes and subsystems.  Many of them should be moved to more relevant files.
  */
 
+// prep core classes to be autoloadable
+spl_autoload_register('__elgg_autoload');
+elgg_register_classes(dirname(dirname(__FILE__)) . '/classes');
+
+function __elgg_autoload($class) {
+	global $CONFIG;
+
+	if (!include($CONFIG->classes[$class])) {
+		throw new Exception("Failed to autoload $class");
+	}
+}
+
+function elgg_register_classes($dir) {
+	$classes = elgg_get_file_list($dir, array(), array(), array('.php'));
+
+	foreach ($classes as $class) {
+		elgg_register_class(basename($class, '.php'), $class);
+	}
+}
+
+function elgg_register_class($class, $location) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->classes)) {
+		$CONFIG->classes = array();
+	}
+
+	$CONFIG->classes[$class] = $location;
+}
+
 /**
  * Forward to $location.
  *
@@ -581,6 +611,29 @@ function elgg_get_file_list($directory, $exceptions = array(), $list = array(), 
 	}
 
 	return $list;
+}
+
+/**
+ * Sanitise file paths ensuring that they begin and end with slashes etc.
+ *
+ * @param string $path The path
+ * @return string
+ */
+function sanitise_filepath($path, $append_slash = TRUE) {
+	// Convert to correct UNIX paths
+	$path = str_replace('\\', '/', $path);
+	$path = str_replace('../', '/', $path);
+
+	// Sort trailing slash
+	$path = trim($path);
+	// rtrim defaults plus /
+	$path = rtrim($path, " \n\t\0\x0B/");
+
+	if ($append_slash) {
+		$path = $path . '/';
+	}
+
+	return $path;
 }
 
 /**
@@ -2198,32 +2251,6 @@ function js_page_handler($page) {
 		echo $return;
 		exit;
 	}
-}
-
-function __elgg_autoload($class) {
-	global $CONFIG;
-
-	if (!include($CONFIG->classes[$class])) {
-		throw new Exception("Failed to autoload $class");
-	}	
-}
-
-function elgg_register_classes($dir) {
-	$classes = elgg_get_file_list($dir, array(), array(), array('.php'));
-	
-	foreach ($classes as $class) {
-		elgg_register_class(basename($class, '.php'), $class);
-	}
-}
-
-function elgg_register_class($class, $location) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->classes)) {
-		$CONFIG->classes = array();
-	}
-	
-	$CONFIG->classes[$class] = $location;
 }
 
 /**
