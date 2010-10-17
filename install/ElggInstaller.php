@@ -658,7 +658,7 @@ class ElggInstaller {
 
 		// bootstrapping with required files in a required order
 		$required_files = array(
-			'exceptions.php', 'elgglib.php', 'views.php', 'access.php', 'system_log.php', 'export.php',
+			'elgglib.php', 'views.php', 'access.php', 'system_log.php', 'export.php',
 			'sessions.php', 'languages.php', 'input.php', 'install.php', 'cache.php', 'output.php'
 		);
 
