@@ -955,6 +955,13 @@ class ElggInstaller {
 				'message' => $msg,
 			);
 		}
+
+		if (ini_get('register_globals')) {
+			$phpReport[] = array(
+				'severity' => 'failure',
+				'message' => elgg_echo("install:check:php:register_globals")
+			);
+		}
 	}
 
 	/**
