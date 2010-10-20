@@ -108,6 +108,9 @@ function pages_page_handler($page) {
 				break;
 
 			case "welcome" :
+				if (isset($page[1])) {
+					set_input('username', $page[1]);
+				}
 				include($CONFIG->pluginspath . "pages/welcome.php");
 				break;
 

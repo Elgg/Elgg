@@ -16,7 +16,7 @@ gatekeeper();
 
 // Get group fields
 $message = get_input("pages_welcome");
-$owner_guid = get_input("owner_guid");
+$container_guid = get_input("owner_guid");
 $object_guid = get_input("object_guid");
 $access_id = (int) get_input("access_id");
 
@@ -37,7 +37,7 @@ if($object_guid){
 	}
 } else {
 	//it is a new welcome object
-	if ($owner_guid) {
+	if ($container_guid) {
 		$welcome = new ElggObject();
 		// Tell the system it's a pages welcome message
 		$welcome->subtype = "pages_welcome";
@@ -46,7 +46,7 @@ if($object_guid){
 		$welcome->access_id = $access_id;
 
 		// Set the owner
-		$welcome->owner_guid = $owner_guid;
+		$welcome->container_guid = $container_guid;
 
 		// save
 		if (!$welcome->save()){
@@ -59,5 +59,4 @@ if($object_guid){
 	}
 }
 
-// Forward to the main blog page
-forward("pg/pages/owned/" . get_user($owner_guid)->username);
+forward("pg/pages/owned/" . get_entity($container_guid)->username);

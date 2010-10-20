@@ -15,7 +15,7 @@ if($vars['entity']) {
 } else {
 	$current_message = '';
 	$object_guid = '';
-	$access_id = ACCESS_PRIVATE;
+	$access_id = ACCESS_PUBLIC;
 }
 
 $page_owner = $vars['owner']->guid;
