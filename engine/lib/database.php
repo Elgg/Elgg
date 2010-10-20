@@ -91,14 +91,14 @@ function establish_db_link($dblinkname = "readwrite") {
 	}
 
 	// Connect to database
-	if (!$dblink[$dblinkname] = mysql_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, true)) {
+	if (!$dblink[$dblinkname] = mysql_connect($dbhost, $dbuser, $dbpass, true)) {
 		$msg = sprintf(elgg_echo('DatabaseException:WrongCredentials'),
-				$CONFIG->dbuser, $CONFIG->dbhost, "****");
+				$dbuser, $dbhost, "****");
 		throw new DatabaseException($msg);
 	}
 
-	if (!mysql_select_db($CONFIG->dbname, $dblink[$dblinkname])) {
-		$msg = sprintf(elgg_echo('DatabaseException:NoConnect'), $CONFIG->dbname);
+	if (!mysql_select_db($dbname, $dblink[$dblinkname])) {
+		$msg = sprintf(elgg_echo('DatabaseException:NoConnect'), $dbname);
 		throw new DatabaseException($msg);
 	}
 
