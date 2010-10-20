@@ -56,12 +56,13 @@ function get_uploaded_file($input_name) {
  * @param int $maxwidth The maximum width of the resized image
  * @param int $maxheight The maximum height of the resized image
  * @param true|false $square If set to true, will take the smallest of maxwidth and maxheight and use it to set the dimensions on all size; the image will be cropped.
+ * @param true|false $upscale Resize images smaller than $maxwidth x $maxheight?
  * @return false|mixed The contents of the resized image, or false on failure
  */
-function get_resized_image_from_uploaded_file($input_name, $maxwidth, $maxheight, $square = false) {
+function get_resized_image_from_uploaded_file($input_name, $maxwidth, $maxheight, $square = false, $upscale = false) {
 	// If our file exists ...
 	if (isset($_FILES[$input_name]) && $_FILES[$input_name]['error'] == 0) {
-		return get_resized_image_from_existing_file($_FILES[$input_name]['tmp_name'], $maxwidth, $maxheight, $square);
+		return get_resized_image_from_existing_file($_FILES[$input_name]['tmp_name'], $maxwidth, $maxheight, $square, 0, 0, 0, 0, $upscale);
 	}
 	return false;
 }
@@ -235,7 +236,7 @@ function get_image_resize_parameters($width, $height, $options) {
 	} else {
 		// non-square new image
 		$new_width = $maxwidth;
-		$new_height = $maxwidth;
+		$new_height = $maxheight;
 
 		// maintain aspect ratio of original image/crop
 		if (($selection_height / (float)$new_height) > ($selection_width / (float)$new_width)) {
@@ -254,21 +255,17 @@ function get_image_resize_parameters($width, $height, $options) {
 		}
 	}
 
-	// check for upscaling
-	if (!$upscale && ($height < $new_height || $width < $new_width)) {
-		// determine if we can scale it down at all
-		// (ie, if only one dimension is too small)
-		// if not, just use original size.
-		if ($height < $new_height && $width < $new_width) {
-			$ratio = 1;
-		} elseif ($height < $new_height) {
-			$ratio = $new_width / $width;
-		} elseif ($width < $new_width) {
-			$ratio = $new_height / $height;
+	if (!$upscale && ($selection_height < $new_height || $selection_width < $new_width)) {
+		// we cannot upscale and selected area is too small so we decrease size of returned image
+		if ($square) {
+			$new_height = $selection_height;
+			$new_width = $selection_width;
+		} else {
+			if ($selection_height < $new_height && $selection_width < $new_width) {
+				$new_height = $selection_height;
+				$new_width = $selection_width;
+			}
 		}
-		
-		$selection_height = $height;
-		$selection_width = $width;
 	}
 
 	$params = array(

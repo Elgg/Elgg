@@ -23,19 +23,19 @@ $profile_owner_guid = $profile_owner->getGUID();
 
 //@todo make this configurable?
 $icon_sizes = array(
-	'topbar' => array('w'=>16, 'h'=>16, 'square'=>TRUE),
-	'tiny' => array('w'=>25, 'h'=>25, 'square'=>TRUE),
-	'small' => array('w'=>40, 'h'=>40, 'square'=>TRUE),
-	'medium' => array('w'=>100, 'h'=>100, 'square'=>TRUE),
-	'large' => array('w'=>200, 'h'=>200, 'square'=>FALSE),
-	'master' => array('w'=>1600, 'h'=>1600, 'square'=>FALSE)
+	'topbar' => array('w'=>16, 'h'=>16, 'square'=>TRUE, 'upscale'=>TRUE),
+	'tiny' => array('w'=>25, 'h'=>25, 'square'=>TRUE, 'upscale'=>TRUE),
+	'small' => array('w'=>40, 'h'=>40, 'square'=>TRUE, 'upscale'=>TRUE),
+	'medium' => array('w'=>100, 'h'=>100, 'square'=>TRUE, 'upscale'=>TRUE),
+	'large' => array('w'=>200, 'h'=>200, 'square'=>FALSE, 'upscale'=>FALSE),
+	'master' => array('w'=>1600, 'h'=>1600, 'square'=>FALSE, 'upscale'=>FALSE)
 );
 
 // get the images and save their file handlers into an array
 // so we can do clean up if one fails.
 $files = array();
 foreach ($icon_sizes as $name => $size_info) {
-	$resized = get_resized_image_from_uploaded_file('profileicon', $size_info['w'], $size_info['h'], $size_info['square']);
+	$resized = get_resized_image_from_uploaded_file('profileicon', $size_info['w'], $size_info['h'], $size_info['square'], $size_info['upscale']);
 
 	if ($resized) {
 		//@todo Make these actual entities.  See exts #348.
