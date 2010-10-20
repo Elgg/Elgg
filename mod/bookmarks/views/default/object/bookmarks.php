@@ -11,7 +11,15 @@
 
 $owner = $vars['entity']->getOwnerEntity();
 $friendlytime = elgg_view_friendly_time($vars['entity']->time_created);
-$parsed_url = parse_url($vars['entity']->address);
+$address = $vars['entity']->address;
+
+// you used to be able to add without titles, which created unclickable bookmarks
+// putting a fake title in so you can click on it.
+if (!$title = $vars['entity']->title) {
+	$title = elgg_echo('bookmarks:no_title');
+}
+
+$parsed_url = parse_url($address);
 $faviconurl = $parsed_url['scheme'] . "://" . $parsed_url['host'] . "/favicon.ico";
 
 //sort out the access level for display
@@ -51,7 +59,7 @@ if (@file_exists($faviconurl)) {
 
 //delete
 if($vars['entity']->canEdit()){
-$delete .= "<span class='delete_button'>" . elgg_view('output/confirmlink',array(
+	$delete .= "<span class='delete_button'>" . elgg_view('output/confirmlink',array(
 				'href' => $vars['url'] . "action/bookmarks/delete?bookmark_guid=" . $vars['entity']->guid,
 				'text' => elgg_echo("delete"),
 				'confirm' => elgg_echo("bookmarks:delete:confirm"),
@@ -72,7 +80,7 @@ if($vars['entity']->canEdit()){
 
 	$info .= "</div>";
 
-$info .= "<p class='entity_title'><a href=\"{$vars['entity']->address}\" target=\"_blank\">{$vars['entity']->title}</a></p>";
+$info .= "<p class='entity_title'><a href=\"{$address}\" target=\"_blank\">{$title}</a></p>";
 $info .= "<p class='entity_subtext'>Bookmarked by <a href=\"{$vars['url']}pg/bookmarks/{$owner->username}\">{$owner->name}</a> {$friendlytime} {$view_notes}</p>";
 
 $tags = elgg_view('output/tags', array('tags' => $vars['entity']->tags));

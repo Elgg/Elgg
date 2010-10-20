@@ -69,6 +69,8 @@ $english = array(
 	'bookmarks:bookmarklet:description:conclusion' =>
 		"You can then bookmark any webpage you visit by clicking the button in your browsers toolbar.",
 
+	'bookmarks:no_title' => 'No title',
+
 	/**
 	 * Status messages
 	 */
@@ -80,8 +82,8 @@ $english = array(
 	 * Error messages
 	 */
 
-	'bookmarks:save:failed' => "Your bookmarked item could not be saved. Please try again.",
-	'bookmarks:delete:failed' => "Your bookmarked item could not be deleted. Please try again.",
+	'bookmarks:save:failed' => "Your bookmarked item could not be saved. Make sure you've entered a title and address and then try again.",
+	'bookmarks:delete:failed' => "Your bookmarked item could not be deleted.",
 
 
 );

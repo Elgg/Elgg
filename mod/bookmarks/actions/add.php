@@ -18,6 +18,12 @@ $notes = get_input('notes');
 $access = get_input('access');
 $tags = get_input('tags');
 $tagarray = string_to_tag_array($tags);
+
+if (!$title || !$address) {
+	register_error(elgg_echo('bookmarks:save:failed'));
+	forward(REFERER);
+}
+
 //create a new bookmark object
 $entity = new ElggObject;
 $entity->subtype = "bookmarks";
