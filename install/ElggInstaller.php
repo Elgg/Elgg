@@ -746,6 +746,7 @@ class ElggInstaller {
 
 	/**
 	 * Get the best guess at the base URL
+	 * @note Cannot use current_page_url() because it depends on $CONFIG->wwwroot
 	 * @todo Should this be a core function?
 	 * @return string
 	 */
