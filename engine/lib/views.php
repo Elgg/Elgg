@@ -545,6 +545,29 @@ function elgg_view_disable_simplecache() {
 	}
 }
 
+/**
+ * Invalidates all cached views in the simplecache
+ *
+ * @since 1.7.4
+ */
+function elgg_invalidate_simplecache() {
+	global $CONFIG;
+
+	$return = TRUE;
+
+	if ($handle = opendir($CONFIG->dataroot . 'views_simplecache')) {
+		while (false !== ($file = readdir($handle))) {
+			if ($file != "." && $file != "..") {
+				$return = $return && unlink($CONFIG->dataroot.'views_simplecache/'.$file);
+			}
+		}
+		closedir($handle);
+	} else {
+		$return = FALSE;
+	}
+
+	return $return;
+}
 
 /**
  * Returns the name of views for in a directory.

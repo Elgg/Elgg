@@ -14,10 +14,11 @@ require_once(dirname(dirname(__FILE__)). '/engine/settings.php');
 
 global $CONFIG, $viewinput, $override;
 if (!isset($override)) {
-	$override = false;
+	$override = FALSE;
 }
 
 $contents = '';
+
 if (!isset($viewinput)) {
 	$viewinput = $_GET;
 }
@@ -51,20 +52,21 @@ if ($mysql_dblink = @mysql_connect($CONFIG->dbhost,$CONFIG->dbuser,$CONFIG->dbpa
 			$filename = $dataroot . 'views_simplecache/' . md5($viewtype . $view_name);
 			if (file_exists($filename)) {
 				$contents = file_get_contents($filename);
-				header("Content-Length: " . strlen($contents));
 			} else {
 				mysql_query("INSERT into {$CONFIG->dbprefix}datalists set name = 'simplecache_lastupdate_$viewtype', value = '0' ON DUPLICATE KEY UPDATE value='0'");
-
-				echo ''; exit;
 			}
-		} else {
-			mysql_close($mysql_dblink);
-			require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
-			$contents = elgg_view($view_name);
-			header("Content-Length: " . strlen($contents));
 		}
 	}
 }
+
+// load full engine if simplecache is disabled, overriden, or invalid
+if (!$contents) {
+	mysql_close($mysql_dblink);
+	require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
+	$contents = elgg_view($view);
+}
+
+header("Content-Length: " . strlen($contents));
 
 $split_output = str_split($contents, 1024);
 
