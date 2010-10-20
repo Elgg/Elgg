@@ -76,7 +76,7 @@ if ($page instanceof ElggObject) {
 
 	$page->access_id = (int)get_input('access_id', ACCESS_PRIVATE);
 	$page->write_access_id = (int)get_input('write_access_id', ACCESS_PRIVATE);
-	$page->parent_guid = $parent_guid;\
+	$page->parent_guid = $parent_guid;
 	$page->owner_guid = ($page->owner_guid ? $page->owner_guid : $_SESSION['user']->guid);
 
 	if ($page->save()) {
