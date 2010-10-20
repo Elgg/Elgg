@@ -48,17 +48,17 @@ class ElggMemcache extends ElggSharedMemoryCache {
 			throw new ConfigurationException(elgg_echo('memcache:noservers'));
 		}
 
-		if (is_callable($this->memcache, 'addServer')) {
+		if (is_callable(array($this->memcache, 'addServer'))) {
 			foreach ($CONFIG->memcache_servers as $server) {
 				if (is_array($server)) {
 					$this->memcache->addServer(
 						$server[0],
 						isset($server[1]) ? $server[1] : 11211,
-						isset($server[2]) ? $server[2] : true,
-						isset($server[3]) ? $server[3] : null,
+						isset($server[2]) ? $server[2] : FALSE,
+						isset($server[3]) ? $server[3] : 1,
 						isset($server[4]) ? $server[4] : 1,
 						isset($server[5]) ? $server[5] : 15,
-						isset($server[6]) ? $server[6] : true
+						isset($server[6]) ? $server[6] : TRUE
 					);
 
 				} else {
@@ -66,7 +66,10 @@ class ElggMemcache extends ElggSharedMemoryCache {
 				}
 			}
 		} else {
-			elgg_log(elgg_echo('memcache:noaddserver'), 'ERROR');
+			// don't use elgg_echo() here because most of the config hasn't been loaded yet
+			// and it caches the language, which is hard coded in $CONFIG->language as en.
+			// overriding it with real values later has no effect because it's already cached.
+			elgg_log("This version of the PHP memcache API doesn't support multiple servers.", 'ERROR');
 
 			$server = $CONFIG->memcache_servers[0];
 			if (is_array($server)) {
@@ -77,7 +80,7 @@ class ElggMemcache extends ElggSharedMemoryCache {
 		}
 
 		// Get version
-		$this->version = $this->memcache->getversion();
+		$this->version = $this->memcache->getVersion();
 		if (version_compare($this->version, ElggMemcache::$MINSERVERVERSION, '<')) {
 			throw new ConfigurationException(sprintf(elgg_echo('memcache:versiontoolow'), ElggMemcache::$MINSERVERVERSION, $this->version));
 		}
