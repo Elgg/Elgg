@@ -57,7 +57,7 @@
 		register_plugin_hook('notify:entity:message', 'object', 'file_notify_message');
 		
 		// add the group files tool option     
-		add_group_tool_option('files',elgg_echo('groups:enablefiles'),true);
+		add_group_tool_option('file',elgg_echo('groups:enablefiles'),true);
 
 		// Register entity type
 		register_entity_type('object','file');
@@ -81,7 +81,7 @@
 		
 		// Group submenu option	
 			if ($page_owner instanceof ElggGroup && get_context() == "groups") {
-    			if($page_owner->files_enable != "no"){ 
+    			if($page_owner->file_enable != "no"){ 
 				    add_submenu_item(sprintf(elgg_echo("file:group"),$page_owner->name), $CONFIG->wwwroot . "pg/file/" . $page_owner->username);
 			    }
 			}

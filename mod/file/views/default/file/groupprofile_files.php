@@ -3,7 +3,7 @@
     // Files on group profile page
 
     //check to make sure group files is activated
-    if($vars['entity']->files_enable != 'no'){
+    if($vars['entity']->file_enable != 'no'){
 
 ?>
 <div class="group_tool_widget files">
