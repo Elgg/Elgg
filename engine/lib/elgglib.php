@@ -1115,34 +1115,34 @@ function trigger_elgg_event($event, $object_type, $object = null) {
 }
 
 /**
- * Register a callback function as a plugin hook handler.
+ * Register a callback as a plugin hook handler.
  *
  * Plugin hooks allow developers to losely couple plugins and features by
  * repsonding to and emitting {@link trigger_plugin_hook()} customizable hooks.
- * Handler functions can respond to the hook, change the details of the hook, or ignore it.
+ * Handler callbacks can respond to the hook, change the details of the hook, or
+ * ignore it.
  *
  * Multiple handlers can be registered for a plugin hook, and each callback
- * function is called in order of priority.  If the return value of a handler
- * function is not null, that value is passed to the next function in the
- * call stack.  When all functions have been run, the final value is passed
- * back to the caller via {@link trigger_plugin_hook()}.
+ * is called in order of priority.  If the return value of a handler is not
+ * null, that value is passed to the next callback in the call stack.  When all
+ * callbacks have been run, the final value is passed back to the caller
+ * via {@link trigger_plugin_hook()}.
  *
- * Similar to Elgg Events, plugin hook handler functions are registered by passing
+ * Similar to Elgg Events, plugin hook handler callbacks are registered by passing
  * a hook, a type, and a priority.
  *
- * The callback function is passed 4 arguments when called: $hook, $type
- * $value, and $params.
+ * The callback is passed 4 arguments when called: $hook, $type, $value, and $params.
  *
  *  - str $hook The name of the hook.
  *  - str $type The type of hook.
  *  - mixed $value The return value of the last handler or the default
  *  value if no other handlers have been called.
- *  - mixed $params An optional array of parameters.  Used to provide additional information
- *  to plugins.
+ *  - mixed $params An optional array of parameters.  Used to provide additional
+ *  information to plugins.
  *
  * @internal Plugin hooks are stored in $CONFIG->hooks as:
  * <code>
- * $CONFIG->hooks[$hook][$type][$priority] = 'callback_function'
+ * $CONFIG->hooks[$hook][$type][$priority] = $callback;
  * </code>
  *
  * @tip Plugin hooks are similar to Elgg Events in that Elgg emits
@@ -1155,7 +1155,7 @@ function trigger_elgg_event($event, $object_type, $object = null) {
  * any event handlers.
  *
  * @tip Like Elgg Events, $hook and $type can use the special keyword 'all'.
- * Handler functions registered with $hook = all will be called for all hooks
+ * Handler callbacks registered with $hook = all will be called for all hooks
  * of type $type.  Similarly, handlers registered with $type = all will be
  * called for all hooks of type $event, regardless of $object_type.  If $hook
  * and $type both are 'all', the handler will be called for all hooks.
@@ -1170,7 +1170,7 @@ function trigger_elgg_event($event, $object_type, $object = null) {
  *
  * @param string $hook The name of the hook
  * @param string $type The type of the hook
- * @param string $function The name of a valid function to be run
+ * @param callback $callback The name of a valid function or an array with object and method
  * @param string $priority The priority - 0 is first, 1000 last, default is 500
  * @return bool
  *
@@ -1178,7 +1178,7 @@ function trigger_elgg_event($event, $object_type, $object = null) {
  * @example hooks/register/advanced.php Registering for a plugin hook and changing the params.
  * @link http://docs.elgg.org/Tutorials/Plugins/Hooks
  */
-function register_plugin_hook($hook, $type, $function, $priority = 500) {
+function register_plugin_hook($hook, $type, $callback, $priority = 500) {
 	global $CONFIG;
 
 	if (!isset($CONFIG->hooks)) {
@@ -1189,46 +1189,50 @@ function register_plugin_hook($hook, $type, $function, $priority = 500) {
 		$CONFIG->hooks[$hook][$type] = array();
 	}
 
-	if (!empty($hook) && !empty($type) && is_callable($function)) {
-		$priority = (int) $priority;
-		if ($priority < 0) {
-			$priority = 0;
-		}
-		while (isset($CONFIG->hooks[$hook][$type][$priority])) {
-			$priority++;
-		}
-		$CONFIG->hooks[$hook][$type][$priority] = $function;
-		ksort($CONFIG->hooks[$hook][$type]);
-		return true;
-	} else {
-		return false;
+	if (empty($hook) && empty($type)) {
+		return FALSE;
 	}
+
+	if (!is_callable($callback)) {
+		return FALSE;
+	}
+
+	$priority = (int) $priority;
+	if ($priority < 0) {
+		$priority = 0;
+	}
+	while (isset($CONFIG->hooks[$hook][$type][$priority])) {
+		$priority++;
+	}
+	$CONFIG->hooks[$hook][$type][$priority] = $callback;
+	ksort($CONFIG->hooks[$hook][$type]);
+	return TRUE;
 }
 
 /**
- * Unregister a callback function as a plugin hook.
+ * Unregister a callback as a plugin hook.
  *
  * @param string $hook The name of the hook
  * @param string $entity_type The name of the type of entity (eg "user", "object" etc)
- * @param string $function The name of a valid function to be run
+ * @param callback $callback The PHP callback to be removed
  * @since 1.7.0
  */
-function unregister_plugin_hook($hook, $entity_type, $function) {
+function unregister_plugin_hook($hook, $entity_type, $callback) {
 	global $CONFIG;
-	foreach($CONFIG->hooks[$hook][$entity_type] as $key => $hook_function) {
-		if ($hook_function == $function) {
+	foreach($CONFIG->hooks[$hook][$entity_type] as $key => $hook_callback) {
+		if ($hook_callback == $callback) {
 			unset($CONFIG->hooks[$hook][$entity_type][$key]);
 		}
 	}
 }
 
 /**
- * Trigger a Plugin Hook and run all handler functions registered to that hook:type.
+ * Trigger a Plugin Hook and run all handler callbacks registered to that hook:type.
  *
  * This function runs all handlers regsitered to $hook, $type or
  * the special keyword 'all' for either or both.
  *
- * Use $params to send additional information to the handler functions.
+ * Use $params to send additional information to the handler callbacks.
  *
  * $returnvalue Is the initial value to pass to the handlers, which can
  * then change it.  It is useful to use $returnvalue to set defaults.
@@ -1239,17 +1243,17 @@ function unregister_plugin_hook($hook, $entity_type, $function) {
  * $type is usually a noun: user, ecml, page.
  *
  * @tip Like Elgg Events, $hook and $type can use the special keyword 'all'.
- * Handler functions registered with $hook = all will be called for all hooks
+ * Handler callbacks registered with $hook = all will be called for all hooks
  * of type $type.  Similarly, handlers registered with $type = all will be
  * called for all hooks of type $event, regardless of $object_type.  If $hook
  * and $type both are 'all', the handler will be called for all hooks.
  *
  * @see register_plugin_hook()
- * @param string $hook The name of the hook to trigger (NB: "all" will trigger for all $types regardless of $hook value)
- * @param string $type The type of the hook to trigger (NB: "all" will trigger for all $hooks regardless of $type value)
+ * @param string $hook The name of the hook to trigger ("all" will trigger for all $types regardless of $hook value)
+ * @param string $type The type of the hook to trigger ("all" will trigger for all $hooks regardless of $type value)
  * @param mixed $params Additional parameters to pass to the handlers
  * @param mixed $returnvalue An initial return value
- * @return mixed|null The return value of the last handler function called
+ * @return mixed|null The return value of the last handler callback called
  *
  * @example hooks/trigger/basic.php Trigger a hook that determins if execution should continue.
  * @example hooks/trigger/advanced.php Trigger a hook with a default value and use the results to populate a menu.
@@ -1260,8 +1264,8 @@ function trigger_plugin_hook($hook, $type, $params = null, $returnvalue = null) 
 	global $CONFIG;
 
 	if (!empty($CONFIG->hooks[$hook][$type]) && is_array($CONFIG->hooks[$hook][$type])) {
-		foreach($CONFIG->hooks[$hook][$type] as $hookfunction) {
-			$temp_return_value = $hookfunction($hook, $type, $returnvalue, $params);
+		foreach($CONFIG->hooks[$hook][$type] as $hookcallback) {
+			$temp_return_value = call_user_func_array($hookcallback, array($hook, $type, $returnvalue, $params));
 			if (!is_null($temp_return_value)) {
 				$returnvalue = $temp_return_value;
 			}
@@ -1269,8 +1273,8 @@ function trigger_plugin_hook($hook, $type, $params = null, $returnvalue = null) 
 	}
 
 	if (!empty($CONFIG->hooks['all'][$type]) && is_array($CONFIG->hooks['all'][$type])) {
-		foreach($CONFIG->hooks['all'][$type] as $hookfunction) {
-			$temp_return_value = $hookfunction($hook, $type, $returnvalue, $params);
+		foreach($CONFIG->hooks['all'][$type] as $hookcallback) {
+			$temp_return_value = call_user_func_array($hookcallback, array($hook, $type, $returnvalue, $params));
 			if (!is_null($temp_return_value)) {
 				$returnvalue = $temp_return_value;
 			}
@@ -1278,8 +1282,8 @@ function trigger_plugin_hook($hook, $type, $params = null, $returnvalue = null) 
 	}
 
 	if (!empty($CONFIG->hooks[$hook]['all']) && is_array($CONFIG->hooks[$hook]['all'])) {
-		foreach($CONFIG->hooks[$hook]['all'] as $hookfunction) {
-			$temp_return_value = $hookfunction($hook, $type, $returnvalue, $params);
+		foreach($CONFIG->hooks[$hook]['all'] as $hookcallback) {
+			$temp_return_value = call_user_func_array($hookcallback, array($hook, $type, $returnvalue, $params));
 			if (!is_null($temp_return_value)) {
 				$returnvalue = $temp_return_value;
 			}
@@ -1287,8 +1291,8 @@ function trigger_plugin_hook($hook, $type, $params = null, $returnvalue = null) 
 	}
 
 	if (!empty($CONFIG->hooks['all']['all']) && is_array($CONFIG->hooks['all']['all'])) {
-		foreach($CONFIG->hooks['all']['all'] as $hookfunction) {
-			$temp_return_value = $hookfunction($hook, $type, $returnvalue, $params);
+		foreach($CONFIG->hooks['all']['all'] as $hookcallback) {
+			$temp_return_value = call_user_func_array($hookcallback, array($hook, $type, $returnvalue, $params));
 			if (!is_null($temp_return_value)) {
 				$returnvalue = $temp_return_value;
 			}
