@@ -5,8 +5,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 // Description of what's going on

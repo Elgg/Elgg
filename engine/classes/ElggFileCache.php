@@ -3,7 +3,6 @@
  * ElggFileCache
  * Store cached data in a file store.
  *
- * @author Curverider Ltd <info@elgg.com>
  * @package Elgg
  * @subpackage API
  */

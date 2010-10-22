@@ -2,7 +2,6 @@
 /**
  * @class SetQueryComponent Set query.
  * Represents an update set query.
- * @author Curverider Ltd
  * @see Query
  */
 class SetQueryComponent extends QueryComponent

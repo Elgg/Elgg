@@ -5,8 +5,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd <info@elgg.com>, The MITRE Corporation <http://www.mitre.org>
- * @link http://elgg.org/
  */
 
 $entities = $vars['results']['entities'];

@@ -2,7 +2,6 @@
 
 /**
  * @class XMLRPCArrayParameter An array containing other XMLRPCParameter objects.
- * @author Curverider Ltd
  */
 class XMLRPCArrayParameter extends XMLRPCParameter
 {

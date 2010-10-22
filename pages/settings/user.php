@@ -4,8 +4,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 // Make sure only valid admin users can see this

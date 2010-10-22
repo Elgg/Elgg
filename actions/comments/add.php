@@ -3,8 +3,6 @@
  * Elgg add comment action
  *
  * @package Elgg
- * @author Curverider <curverider.co.uk>
- * @link http://elgg.org/
  */
 
 // Make sure we're logged in; forward to the front page if not

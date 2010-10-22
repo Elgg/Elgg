@@ -4,7 +4,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @link http://elgg.org/
  */
 
 // check for PHP 4 before we do anything else

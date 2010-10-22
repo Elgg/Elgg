@@ -15,7 +15,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @link http://elgg.org/
  */
 
 $page_owner = page_owner_entity();

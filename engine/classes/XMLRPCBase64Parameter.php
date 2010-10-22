@@ -1,7 +1,6 @@
 <?php
 /**
  * @class XMLRPCBase64Parameter A base 64 encoded blob of binary.
- * @author Curverider Ltd
  */
 class XMLRPCBase64Parameter extends XMLRPCParameter
 {

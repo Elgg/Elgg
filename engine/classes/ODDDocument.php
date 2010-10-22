@@ -2,7 +2,6 @@
 /**
  * @class ODDDocument ODD Document container.
  * This class is used during import and export to construct.
- * @author Curverider Ltd
  */
 class ODDDocument implements Iterator {
 	/**

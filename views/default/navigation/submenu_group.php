@@ -7,8 +7,6 @@
  * @uses $vars['items']
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 $group = (isset($vars['group'])) ? $vars['group'] : 'default';

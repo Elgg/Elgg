@@ -9,7 +9,6 @@
  * Elgg pages widget edit
  *
  * @package ElggPages
- * @link http://elgg.com/
  */
 
 $num_display = (int) $vars['entity']->pages_num;

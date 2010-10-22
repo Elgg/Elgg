@@ -3,9 +3,6 @@
  * Elgg htmLawed tag filtering.
  *
  * @package ElgghtmLawed
- * @author Curverider Ltd
- * @author Brett Profitt
- * @link http://elgg.com/
  */
 
 /**

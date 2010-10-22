@@ -4,9 +4,6 @@
 	 * Elgg file delete
 	 * 
 	 * @package ElggFile
-	 * @author Curverider Ltd
-	 * @copyright Curverider Ltd 2008-2010
-	 * @link http://elgg.com/
 	 */
 
 		$guid = (int) get_input('file');

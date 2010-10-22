@@ -2,7 +2,6 @@
 /**
  * @class QueryComponent Query component superclass.
  * Component of a query.
- * @author Curverider Ltd
  * @see Query
  */
 abstract class QueryComponent

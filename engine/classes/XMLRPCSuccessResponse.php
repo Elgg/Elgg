@@ -1,7 +1,6 @@
 <?php
 /**
  * @class XMLRPCSuccessResponse
- * @author Curverider Ltd
  */
 class XMLRPCSuccessResponse extends XMLRPCResponse
 {

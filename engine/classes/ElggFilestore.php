@@ -2,7 +2,6 @@
 /**
  * @class ElggFilestore
  * This class defines the interface for all elgg data repositories.
- * @author Curverider Ltd
  */
 abstract class ElggFilestore {
 	/**

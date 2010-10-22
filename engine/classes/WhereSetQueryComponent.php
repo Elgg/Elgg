@@ -2,7 +2,6 @@
 /**
  * @class WhereSetQueryComponent
  * A where query that may contain other where queries (in brackets).
- * @author Curverider Ltd
  * @see Query
  */
 class WhereSetQueryComponent extends WhereQueryComponent

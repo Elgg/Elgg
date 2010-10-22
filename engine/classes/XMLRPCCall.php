@@ -2,7 +2,6 @@
 /**
  * @class XMLRPCCall
  * This class represents 
- * @author Curverider Ltd
  */
 class XMLRPCCall
 {

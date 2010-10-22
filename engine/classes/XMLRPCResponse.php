@@ -2,7 +2,6 @@
 
 /**
  * @class XMLRPCResponse XML-RPC Response. 
- * @author Curverider Ltd
  */
 abstract class XMLRPCResponse
 {

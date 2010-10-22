@@ -5,8 +5,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  *
  * @uses $vars['entities'] The array of ElggUser objects
  */

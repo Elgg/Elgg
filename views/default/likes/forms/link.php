@@ -3,8 +3,6 @@
  * Elgg likes link form - used on riverdashboard where we want the likes link separate from the list of users that liked the object
  *
  * @package Elgg
- * @author Curverider Ltd <info@elgg.com>
- * @link http://elgg.com/
  *
  * @uses $vars['entity']
  */

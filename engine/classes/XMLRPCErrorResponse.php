@@ -2,7 +2,6 @@
 
 /**
  * @class XMLRPCErrorResponse
- * @author Curverider Ltd
  */
 class XMLRPCErrorResponse extends XMLRPCResponse
 {		

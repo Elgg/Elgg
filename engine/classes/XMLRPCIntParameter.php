@@ -1,7 +1,6 @@
 <?php
 /**
  * @class XMLRPCIntParameter An Integer.
- * @author Curverider Ltd
  */
 class XMLRPCIntParameter extends XMLRPCParameter
 {

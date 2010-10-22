@@ -3,7 +3,6 @@
  * ErrorResult
  * The error result class.
  *
- * @author Curverider Ltd <info@elgg.com>
  * @package Elgg
  * @subpackage Core
  */

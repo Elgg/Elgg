@@ -5,8 +5,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  *
  * @uses string $vars['href'] The URL.
  * @uses string $vars['text'] The string between the <a></a> tags.

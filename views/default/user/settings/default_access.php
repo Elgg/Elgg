@@ -4,8 +4,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 if ($vars['config']->allow_user_default_access) {
 	$user = page_owner_entity();

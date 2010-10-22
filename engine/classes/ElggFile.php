@@ -15,7 +15,6 @@
  * 		there are many occasions where you may want access to file data on datastores using the ElggFile interface
  * 		but do not want to create an Entity reference to it in the system (temporary files for example).
  *
- * @author Curverider Ltd
  */
 class ElggFile extends ElggObject {
 	/** Filestore */

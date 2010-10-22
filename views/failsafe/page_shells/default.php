@@ -6,8 +6,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  *
  * @uses $vars['title'] The page title
  * @uses $vars['body'] The main content of the page

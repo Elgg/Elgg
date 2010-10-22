@@ -6,9 +6,7 @@
  * @package Elgg
  * @subpackage Core
 
- * @author Curverider Ltd
 
- * @link http://elgg.org/
  */
 
 // Make sure we're logged in (send us to the front page if not)

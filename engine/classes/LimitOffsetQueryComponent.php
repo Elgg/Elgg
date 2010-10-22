@@ -2,7 +2,6 @@
 /**
  * @class LimitOffsetQueryComponent
  * Limit and offset clauses of a query.
- * @author Curverider Ltd
  * @see Query
  */
 class LimitOffsetQueryComponent extends QueryComponent

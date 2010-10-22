@@ -2,7 +2,6 @@
 /**
  * @class WhereQueryComponent
  * A component of a where query.
- * @author Curverider Ltd
  * @see Query
  */
 class WhereQueryComponent extends QueryComponent

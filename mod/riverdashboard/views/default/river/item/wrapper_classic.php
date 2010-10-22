@@ -4,8 +4,6 @@
  * Wraps all river items.
  *
  * @package Elgg
- * @author Curverider
- * @link http://elgg.com/
  */
 ?>
 <div class="river_item riverdashboard">

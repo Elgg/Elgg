@@ -8,7 +8,6 @@
  * The constructor for this class sets a number of defaults, for example sets default access controls
  * and a limit and offset - to change this then set it manually.
  *
- * @author Curverider Ltd
  * @see Query
  */
 class SimpleQuery extends Query

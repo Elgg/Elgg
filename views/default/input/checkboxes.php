@@ -9,8 +9,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  *
  * @uses string $vars['internalname'] The name of the input fields (Forced to an array by appending [])
  * @uses array $vars['options'] An array of strings representing the label => option for the each checkbox field

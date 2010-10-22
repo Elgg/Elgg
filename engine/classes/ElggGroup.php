@@ -2,7 +2,6 @@
 
 /**
  * @class ElggGroup Class representing a container for other elgg entities.
- * @author Curverider Ltd
  */
 class ElggGroup extends ElggEntity
 	implements Friendable {

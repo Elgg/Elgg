@@ -5,8 +5,6 @@
  *
  * @package Elgg
  * @subpackage Installer
- * @author Cash Costello and Curverider Ltd
- * @link http://elgg.org/
  */
 
 

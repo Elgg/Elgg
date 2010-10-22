@@ -4,8 +4,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  *
  * @uses $vars['entity'] The entity the icon represents - uses getIcon() method
  * @uses $vars['js'] Any JavaScript to add to img tag

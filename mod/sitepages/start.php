@@ -6,10 +6,6 @@
  * Formerly implemented as "external pages" and "custom index."
  *
  * @package SitePages
- * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
- * @author Curverider Ltd
- * @copyright Curverider Ltd 2008-2010
- * @link http://elgg.org/
  *
  * @todo
  * 	Make sure this stuff doesn't show up in search.

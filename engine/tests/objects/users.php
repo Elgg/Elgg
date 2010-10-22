@@ -4,8 +4,6 @@
  *
  * @package Elgg
  * @subpackage Test
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 class ElggCoreUserTest extends ElggCoreUnitTest {
 

@@ -59,7 +59,6 @@
  * 		get_data($query);
  * </blockquote>
  *
- * @author Curverider Ltd
  */
 class Query
 {

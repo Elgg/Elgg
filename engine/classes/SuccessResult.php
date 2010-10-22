@@ -3,7 +3,6 @@
  * SuccessResult
  * Generic success result class, extend if you want to do something special.
  *
- * @author Curverider Ltd <info@elgg.com>
  * @package Elgg
  * @subpackage Core
  */

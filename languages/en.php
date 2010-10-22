@@ -4,8 +4,6 @@
  *
  * @package ElggLanguage
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 $english = array(

@@ -1,7 +1,6 @@
 <?php
 /**
  * @class XMLRPCDoubleParameter A double precision signed floating point number.
- * @author Curverider Ltd
  */
 class XMLRPCDoubleParameter extends XMLRPCParameter
 {

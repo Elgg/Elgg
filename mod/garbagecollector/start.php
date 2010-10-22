@@ -3,8 +3,6 @@
 	 * Elgg garbage collector.
 	 * 
 	 * @package ElggGarbageCollector
-	 * @author Curverider Ltd
-	 * @link http://elgg.com/
 	 */
 
 	/**

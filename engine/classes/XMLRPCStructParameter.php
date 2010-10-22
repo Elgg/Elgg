@@ -2,7 +2,6 @@
 
 /**
  * @class XMLRPCStructParameter A structure containing other XMLRPCParameter objects.
- * @author Curverider Ltd
  */
 class XMLRPCStructParameter extends XMLRPCParameter
 {

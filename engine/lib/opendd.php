@@ -4,9 +4,7 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
  * @version 0.4
- * @link http://elgg.org/
  */
 
 /**

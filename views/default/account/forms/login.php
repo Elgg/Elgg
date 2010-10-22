@@ -4,8 +4,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 
 $form_body = "<label>" . elgg_echo('loginusername') . "<br />" . elgg_view('input/text', array('internalname' => 'username', 'class' => 'login_textarea')) . "</label>";

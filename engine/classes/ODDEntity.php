@@ -4,7 +4,6 @@
  * ODD Entity class.
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
  */
 class ODDEntity extends ODD {
 	function __construct($uuid, $class, $subclass = "") {
@@ -22,7 +21,6 @@ class ODDEntity extends ODD {
  * ODD Metadata class.
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
  */
 class ODDMetaData extends ODD {
 	function __construct($uuid, $entity_uuid, $name, $value, $type = "", $owner_uuid = "") {
@@ -45,7 +43,6 @@ class ODDMetaData extends ODD {
  * ODD Relationship class.
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
  */
 class ODDRelationship extends ODD {
 	function __construct($uuid1, $type, $uuid2) {

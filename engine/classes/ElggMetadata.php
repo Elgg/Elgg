@@ -4,7 +4,6 @@
  * ElggMetadata
  * This class describes metadata that can be attached to ElggEntities.
  *
- * @author Curverider Ltd <info@elgg.com>
  * @package Elgg
  * @subpackage Core
  */

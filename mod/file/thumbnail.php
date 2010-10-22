@@ -4,9 +4,6 @@
  * Elgg file thumbnail
  *
  * @package ElggFile
- * @author Curverider Ltd
- * @copyright Curverider Ltd 2008-2010
- * @link http://elgg.com/
  */
 
 // Get engine

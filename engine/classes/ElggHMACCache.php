@@ -3,7 +3,6 @@
  * ElggHMACCache
  * Store cached data in a temporary database, only used by the HMAC stuff.
  *
- * @author Curverider Ltd <info@elgg.com>
  * @package Elgg
  * @subpackage API
  */

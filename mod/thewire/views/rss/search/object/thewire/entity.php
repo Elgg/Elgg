@@ -4,7 +4,6 @@
  * Search entity view for RSS feeds.
  *
  * @package ElggTheWire
- * @link http://elgg.org/
  */
 
 if (!array_key_exists('entity', $vars)) {

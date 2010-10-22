@@ -16,9 +16,7 @@
  * @package Elgg
  * @subpackage API
 
- * @author Curverider Ltd
 
- * @link http://elgg.org/
  */
 
 /** Notification handlers */

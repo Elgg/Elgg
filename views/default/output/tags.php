@@ -7,8 +7,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
- * @link http://elgg.org/
  *
  * @uses $vars['tags'] The tags to display
  * @uses $vars['tagtype'] The tagtype, optionally

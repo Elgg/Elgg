@@ -2,7 +2,6 @@
 /**
  * @class TableQueryComponent
  * List of tables to select from or insert into.
- * @author Curverider Ltd
  * @see Query
  */
 class TableQueryComponent extends QueryComponent

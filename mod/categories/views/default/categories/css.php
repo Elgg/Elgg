@@ -3,8 +3,6 @@
  * Categories CSS extender
  *
  * @package Categories
- * @copyright Curverider Ltd 2008-2010
- * @link http://elgg.com/
  */
 ?>
 

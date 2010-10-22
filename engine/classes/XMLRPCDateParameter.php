@@ -1,7 +1,6 @@
 <?php
 /**
  * @class XMLRPCDateParameter An ISO8601 data and time.
- * @author Curverider Ltd
  */
 class XMLRPCDateParameter extends XMLRPCParameter
 {

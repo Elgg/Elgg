@@ -2,7 +2,6 @@
 /**
  * @class OrderQueryComponent
  * Order the query results.
- * @author Curverider Ltd
  * @see Query
  */
 class OrderQueryComponent extends QueryComponent

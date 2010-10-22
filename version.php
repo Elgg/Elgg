@@ -7,7 +7,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @link http://elgg.org/
  */
 
 // YYYYMMDD = Elgg Date

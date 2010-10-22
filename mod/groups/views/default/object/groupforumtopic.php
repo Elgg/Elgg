@@ -3,7 +3,6 @@
  * Elgg Groups latest discussion listing
  *
  * @package ElggGroups
- * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
 */
 
 //get the required variables

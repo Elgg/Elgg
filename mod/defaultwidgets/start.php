@@ -3,17 +3,10 @@
  * Elgg default_widgets plugin.
  *
  * @package DefaultWidgets
- * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU
- * @author Milan Magudia & Curverider
- * @copyright HedgeHogs.net & Curverider ltd
  * 
  * Code based on the work of:
- * @author Jade Dominguez, Chad Sowald
- * @copyright tastyseed,  2008
- * @copyright Chad Sowald, 2008
  * @link http://www.tastyseed.com
  * @link http://www.chadsowald.com
- * @author Diego Ramirez
  * @links http://www.somosmas.org
  * 
  */

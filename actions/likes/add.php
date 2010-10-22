@@ -3,8 +3,6 @@
  * Elgg add like action
  *
  * @package Elgg
- * @author Curverider <curverider.co.uk>
- * @link http://elgg.org/
  */
 
 gatekeeper();

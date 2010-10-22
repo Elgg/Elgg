@@ -3,7 +3,6 @@
  * Open Data Definition (ODD) superclass.
  * @package Elgg
  * @subpackage Core
- * @author Curverider Ltd
  */
 abstract class ODD {
 	/**

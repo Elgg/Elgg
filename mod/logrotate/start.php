@@ -3,8 +3,6 @@
 	 * Elgg log rotator.
 	 * 
 	 * @package ElggLogRotate
-	 * @author Curverider Ltd
-	 * @link http://elgg.com/
 	 */
 
 	/**

@@ -2,7 +2,6 @@
 /**
  * @class SelectFieldQueryComponent Class representing a select field.
  * This class represents a select field component.
- * @author Curverider Ltd
  * @see Query
  */
 class SelectFieldQueryComponent extends QueryComponent

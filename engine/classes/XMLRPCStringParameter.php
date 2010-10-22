@@ -1,7 +1,6 @@
 <?php
 /**
  * @class XMLRPCStringParameter A string.
- * @author Curverider Ltd
  */
 class XMLRPCStringParameter extends XMLRPCParameter
 {

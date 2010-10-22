@@ -2,7 +2,6 @@
 /**
  * @class WhereStaticQueryComponent
  * A component of a where query where there is no right hand table, rather a static value.
- * @author Curverider Ltd
  * @see Query
  */
 class WhereStaticQueryComponent extends WhereQueryComponent

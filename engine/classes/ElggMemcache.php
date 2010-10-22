@@ -1,7 +1,6 @@
 <?php
 /**
  * Memcache wrapper class.
- * @author Curverider Ltd <info@elgg.com>
  */
 class ElggMemcache extends ElggSharedMemoryCache {
 	/**

@@ -2,7 +2,6 @@
 /**
  * @class JoinQueryComponent Join query.
  * Represents a join query.
- * @author Curverider Ltd
  * @see Query
  */
 class JoinQueryComponent extends QueryComponent

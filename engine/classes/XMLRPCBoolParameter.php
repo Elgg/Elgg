@@ -1,7 +1,6 @@
 <?php
 /**
  * @class XMLRPCBoolParameter A boolean.
- * @author Curverider Ltd
  */
 class XMLRPCBoolParameter extends XMLRPCParameter
 {

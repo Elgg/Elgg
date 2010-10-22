@@ -1,7 +1,6 @@
 <?php
 /**
  * Define an interface for all ODD importable objects.
- * @author Curverider Ltd
  */
 interface Importable {
 	/**

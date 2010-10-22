@@ -4,7 +4,6 @@
  *
  * @package Elgg
  * @subpackage Core
- * @link http://elgg.org/
  */
 
 if ($vars['full']) {

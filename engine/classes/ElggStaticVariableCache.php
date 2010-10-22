@@ -4,7 +4,6 @@
  * Dummy cache which stores values in a static array. Using this makes future replacements to other caching back
  * ends (eg memcache) much easier.
  *
- * @author Curverider Ltd <info@elgg.com>
  * @package Elgg
  * @subpackage API
  */

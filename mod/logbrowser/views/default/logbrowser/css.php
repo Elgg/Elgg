@@ -4,8 +4,6 @@
 	 * Elgg logbrowser CSS
 	 * 
 	 * @package logbrowser
-	 * @author Curverider <info@elgg.com>
-	 * @link http://elgg.org/
 	 */
 
 ?>

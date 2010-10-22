@@ -3,8 +3,6 @@
 	 * Elgg log browser plugin language pack
 	 * 
 	 * @package ElggLogBrowser
-	 * @author Curverider Ltd
-	 * @link http://elgg.com/
 	 */
 
 	$english = array(

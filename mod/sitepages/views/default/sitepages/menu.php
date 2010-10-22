@@ -3,10 +3,6 @@
  * Displays the tabbed menu for editing site pages.
  *
  * @package SitePages
- * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
- * @author Curverider Ltd
- * @copyright Curverider Ltd 2008-2010
- * @link http://elgg.org/
  */
 
 $page_type = $vars['page_type'];

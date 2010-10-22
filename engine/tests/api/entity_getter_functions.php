@@ -4,8 +4,6 @@
  * Elgg Test Entity Getter Functions
  * @package Elgg
  * @subpackage Test
- * @author Curverider Ltd
- * @link http://elgg.org/
  */
 class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 	/**

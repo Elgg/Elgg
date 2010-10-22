@@ -3,8 +3,6 @@
 	 * Elgg diagnostics
 	 * 
 	 * @package ElggDiagnostics
-	 * @author Curverider Ltd
-	 * @link http://elgg.com/
 	 */
 
 	admin_gatekeeper();
