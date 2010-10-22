@@ -982,9 +982,11 @@ function register_elgg_event_handler($event, $object_type, $function, $priority 
 
 	if (!isset($CONFIG->events)) {
 		$CONFIG->events = array();
-	} else if (!isset($CONFIG->events[$event])) {
+	}
+	if (!isset($CONFIG->events[$event])) {
 		$CONFIG->events[$event] = array();
-	} else if (!isset($CONFIG->events[$event][$object_type])) {
+	}
+	if (!isset($CONFIG->events[$event][$object_type])) {
 		$CONFIG->events[$event][$object_type] = array();
 	}
 
@@ -1156,16 +1158,18 @@ function trigger_elgg_event($event, $object_type, $object = null) {
 function register_plugin_hook($hook, $type, $callback, $priority = 500) {
 	global $CONFIG;
 
-	if (!isset($CONFIG->hooks)) {
-		$CONFIG->hooks = array();
-	} else if (!isset($CONFIG->hooks[$hook]) && !empty($hook)) {
-		$CONFIG->hooks[$hook] = array();
-	} else if (!isset($CONFIG->hooks[$hook][$type]) && !empty($type)) {
-		$CONFIG->hooks[$hook][$type] = array();
+	if (empty($hook) || empty($type)) {
+		return FALSE;
 	}
 
-	if (empty($hook) && empty($type)) {
-		return FALSE;
+	if (!isset($CONFIG->hooks)) {
+		$CONFIG->hooks = array();
+	}
+	if (!isset($CONFIG->hooks[$hook])) {
+		$CONFIG->hooks[$hook] = array();
+	}
+	if (!isset($CONFIG->hooks[$hook][$type])) {
+		$CONFIG->hooks[$hook][$type] = array();
 	}
 
 	if (!is_callable($callback)) {
