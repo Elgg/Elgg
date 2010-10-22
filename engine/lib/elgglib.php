@@ -902,105 +902,18 @@ function register_error($error) {
 }
 
 /**
- * Register a callback function as a handler or trigger registered handlers for an event.
- *
- * Elgg emits an event when certain core actions occur, like creating an entity.
- * Functions registered to these events can respond to the event, prevent the
- * event from completing, or ignore the event.
- *
- * Callback functions are registered with {@link register_elgg_event_handler()}
- *
- * When an event is triggered ({@link trigger_elgg_event()}, each callback function is
- * run in order of priority.  Any callback that returns false will halt execution
- * and control will be passed back to the caller.
- *
- * @internal Events are stored in $CONFIG->events as:
- * <code>
- * $CONFIG->events[$event][$type][$priority] = 'callback_function'
- * </code>
- *
- * @note You cannot generally alter the event, only halt it.
- * @tip Plugin authors should use {@link register_elgg_event_handler()} to register events.
- *
- * @param string $event The type of event (eg 'init', 'update', 'delete')
- * @param string $object_type The type of object (eg 'system', 'blog', 'user')
- * @param string $function The name of the function that will handle the event
- * @param int $priority A priority to add new event handlers at. Lower numbers will be called first (default 500)
- * @param boolean $call Set to true to call the event rather than add to it (default false)
- * @param mixed $object Optionally, the object the event is being performed on (eg a user)
- * @return true|false Depending on success
- *
- * @todo Separate registering and calling events. {@trac #2466}
- * @example events/basic.php Register and respond to an Elgg event
- * @example events/advanced.php Register for an Elgg event and optionally halt it.
- * @internal @example events/emit.php Basic emitting of an Elgg event.
- * @link http://docs.elgg.org/Tutorials/Core/Events
+ * Deprecated events core function. Code divided between register_elgg_event_handler()
+ * and trigger_elgg_event().
  */
 function events($event = "", $object_type = "", $function = "", $priority = 500, $call = false, $object = null) {
-	global $CONFIG;
+	elgg_deprecated_notice('events has been deprecated', 1.8);
 
-	if (!isset($CONFIG->events)) {
-		$CONFIG->events = array();
-	} else if (!isset($CONFIG->events[$event]) && !empty($event)) {
-		$CONFIG->events[$event] = array();
-	} else if (!isset($CONFIG->events[$event][$object_type]) && !empty($event) && !empty($object_type)) {
-		$CONFIG->events[$event][$object_type] = array();
-	}
-
+	// leaving this here just in case someone was directly calling this internal function
 	if (!$call) {
-		if (!empty($event) && !empty($object_type) && is_callable($function)) {
-			$priority = (int) $priority;
-			if ($priority < 0) {
-				$priority = 0;
-			}
-			while (isset($CONFIG->events[$event][$object_type][$priority])) {
-				$priority++;
-			}
-			$CONFIG->events[$event][$object_type][$priority] = $function;
-			ksort($CONFIG->events[$event][$object_type]);
-			return true;
-		} else {
-			return false;
-		}
+		return register_elgg_event_handler($event, $object_type, $function, $priority);
 	} else {
-		$return = true;
-		if (!empty($CONFIG->events[$event][$object_type]) && is_array($CONFIG->events[$event][$object_type])) {
-			foreach($CONFIG->events[$event][$object_type] as $eventfunction) {
-				if ($eventfunction($event, $object_type, $object) === false) {
-					return false;
-				}
-			}
-		}
-
-		if (!empty($CONFIG->events['all'][$object_type]) && is_array($CONFIG->events['all'][$object_type])) {
-			foreach($CONFIG->events['all'][$object_type] as $eventfunction) {
-				if ($eventfunction($event, $object_type, $object) === false) {
-					return false;
-				}
-			}
-		}
-
-		if (!empty($CONFIG->events[$event]['all']) && is_array($CONFIG->events[$event]['all'])) {
-			foreach($CONFIG->events[$event]['all'] as $eventfunction) {
-				if ($eventfunction($event, $object_type, $object) === false) {
-					return false;
-				}
-			}
-		}
-
-		if (!empty($CONFIG->events['all']['all']) && is_array($CONFIG->events['all']['all'])) {
-			foreach($CONFIG->events['all']['all'] as $eventfunction) {
-				if ($eventfunction($event, $object_type, $object) === false) {
-					return false;
-				}
-			}
-		}
-
-		return $return;
-
+		return trigger_elgg_event($event, $object_type, $object);
 	}
-
-	return false;
 }
 
 /**
@@ -1045,6 +958,11 @@ function events($event = "", $object_type = "", $function = "", $priority = 500,
  *
  * @tip When referring to events, the preferred syntax is "event, type".
  *
+ * @internal Events are stored in $CONFIG->events as:
+ * <code>
+ * $CONFIG->events[$event][$type][$priority] = 'callback_function'
+ * </code>
+ *
  * @param string $event The event type
  * @param string $object_type The object type
  * @param string $function The handler callback function name
@@ -1056,7 +974,34 @@ function events($event = "", $object_type = "", $function = "", $priority = 500,
  * @example events/all.php Example of how to use the 'all' keyword.
  */
 function register_elgg_event_handler($event, $object_type, $function, $priority = 500) {
-	return events($event, $object_type, $function, $priority);
+	global $CONFIG;
+
+	if (empty($event) || empty($object_type)) {
+		return FALSE;
+	}
+
+	if (!isset($CONFIG->events)) {
+		$CONFIG->events = array();
+	} else if (!isset($CONFIG->events[$event])) {
+		$CONFIG->events[$event] = array();
+	} else if (!isset($CONFIG->events[$event][$object_type])) {
+		$CONFIG->events[$event][$object_type] = array();
+	}
+
+	if (!is_callable($function)) {
+		return FALSE;
+	}
+
+	$priority = (int) $priority;
+	if ($priority < 0) {
+		$priority = 0;
+	}
+	while (isset($CONFIG->events[$event][$object_type][$priority])) {
+		$priority++;
+	}
+	$CONFIG->events[$event][$object_type][$priority] = $function;
+	ksort($CONFIG->events[$event][$object_type]);
+	return TRUE;
 }
 
 /**
@@ -1104,14 +1049,44 @@ function unregister_elgg_event_handler($event, $object_type, $function) {
  * @param string $function The function name
  * @return bool The result of running all handler functions.
  * @link http://docs.elgg.org/Tutorials/Core/Events
+ * @internal @example events/emit.php Basic emitting of an Elgg event.
  */
 function trigger_elgg_event($event, $object_type, $object = null) {
-	$return = true;
-	$return1 = events($event, $object_type, "", null, true, $object);
-	if (!is_null($return1)) {
-		$return = $return1;
+	global $CONFIG;
+
+	if (!empty($CONFIG->events[$event][$object_type]) && is_array($CONFIG->events[$event][$object_type])) {
+		foreach ($CONFIG->events[$event][$object_type] as $eventfunction) {
+			if ($eventfunction($event, $object_type, $object) === FALSE) {
+				return FALSE;
+			}
+		}
 	}
-	return $return;
+
+	if (!empty($CONFIG->events['all'][$object_type]) && is_array($CONFIG->events['all'][$object_type])) {
+		foreach ($CONFIG->events['all'][$object_type] as $eventfunction) {
+			if ($eventfunction($event, $object_type, $object) === FALSE) {
+				return FALSE;
+			}
+		}
+	}
+
+	if (!empty($CONFIG->events[$event]['all']) && is_array($CONFIG->events[$event]['all'])) {
+		foreach ($CONFIG->events[$event]['all'] as $eventfunction) {
+			if ($eventfunction($event, $object_type, $object) === FALSE) {
+				return FALSE;
+			}
+		}
+	}
+
+	if (!empty($CONFIG->events['all']['all']) && is_array($CONFIG->events['all']['all'])) {
+		foreach ($CONFIG->events['all']['all'] as $eventfunction) {
+			if ($eventfunction($event, $object_type, $object) === FALSE) {
+				return FALSE;
+			}
+		}
+	}
+
+	return TRUE;
 }
 
 /**
