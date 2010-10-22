@@ -917,19 +917,19 @@ function events($event = "", $object_type = "", $function = "", $priority = 500,
 }
 
 /**
- * Register a callback function as an Elgg event handler.
+ * Register a callback as an Elgg event handler.
  *
  * Events are emitted by Elgg when certain actions occur.  Plugins
  * can respond to these events or halt them completely by registering a handler
- * as a callback function to an event.  Multiple handlers can be registered for
+ * as a callback to an event.  Multiple handlers can be registered for
  * the same event and will be executed in order of $priority.  Any handler
  * returning false will halt the execution chain.
  *
- * This function is called with the event name, event type, and handler function name.
+ * This function is called with the event name, event type, and handler callback name.
  * Setting the optional $priority allows plugin authors to specify when the
- * function should be run.  Priorities for plugins should be 1-1000.
+ * callback should be run.  Priorities for plugins should be 1-1000.
  *
- * The callback function is passed 3 arguments when called: $event, $type, and optional $params.
+ * The callback is passed 3 arguments when called: $event, $type, and optional $params.
  *
  * $event is the name of event being emitted.
  * $type is the type of event or object concerned.
@@ -941,39 +941,39 @@ function events($event = "", $object_type = "", $function = "", $priority = 500,
  * the earlier the plugin is in the load order, the earlier the priorities are for
  * any event handlers.
  *
- * @tip $event and $object_type can use the special keyword 'all'.  Handler functions registered
+ * @tip $event and $object_type can use the special keyword 'all'.  Handler callbacks registered
  * with $event = all will be called for all events of type $object_type.  Similarly,
- * functions registered with $object_type = all will be called for all events of type
+ * callbacks registered with $object_type = all will be called for all events of type
  * $event, regardless of $object_type.  If $event and $object_type both are 'all', the
- * handler function will be called for all events.
+ * handler callback will be called for all events.
  *
- * @tip Event handler functions are considered in the follow order:
+ * @tip Event handler callbacks are considered in the follow order:
  *  - Specific registration where 'all' isn't used.
  *  - Registration where 'all' is used for $event only.
  *  - Registration where 'all' is used for $type only.
  *  - Registration where 'all' is used for both.
  *
- * @warning If you use the 'all' keyword, you must have logic in the handler function to
+ * @warning If you use the 'all' keyword, you must have logic in the handler callback to
  * test the passed parameters before taking an action.
  *
  * @tip When referring to events, the preferred syntax is "event, type".
  *
  * @internal Events are stored in $CONFIG->events as:
  * <code>
- * $CONFIG->events[$event][$type][$priority] = 'callback_function'
+ * $CONFIG->events[$event][$type][$priority] = $callback;
  * </code>
  *
  * @param string $event The event type
  * @param string $object_type The object type
- * @param string $function The handler callback function name
+ * @param string $callback The handler callback
  * @param int $priority The priority of the event
  * @return bool
  * @link http://docs.elgg.org/Tutorials/Plugins/Events
- * @example events/basic.php Basic example of registering an event handler callback function.
- * @example events/advanced.php Advanced example of registering an event handler callback function and halting execution.
+ * @example events/basic.php Basic example of registering an event handler callback.
+ * @example events/advanced.php Advanced example of registering an event handler callback and halting execution.
  * @example events/all.php Example of how to use the 'all' keyword.
  */
-function register_elgg_event_handler($event, $object_type, $function, $priority = 500) {
+function register_elgg_event_handler($event, $object_type, $callback, $priority = 500) {
 	global $CONFIG;
 
 	if (empty($event) || empty($object_type)) {
@@ -990,7 +990,7 @@ function register_elgg_event_handler($event, $object_type, $function, $priority 
 		$CONFIG->events[$event][$object_type] = array();
 	}
 
-	if (!is_callable($function)) {
+	if (!is_callable($callback)) {
 		return FALSE;
 	}
 
@@ -1001,32 +1001,32 @@ function register_elgg_event_handler($event, $object_type, $function, $priority 
 	while (isset($CONFIG->events[$event][$object_type][$priority])) {
 		$priority++;
 	}
-	$CONFIG->events[$event][$object_type][$priority] = $function;
+	$CONFIG->events[$event][$object_type][$priority] = $callback;
 	ksort($CONFIG->events[$event][$object_type]);
 	return TRUE;
 }
 
 /**
- * Unregisters a callback function from an event.
+ * Unregisters a callback for an event.
  *
  * @param string $event The event type
  * @param string $object_type The object type
- * @param string $function The function name
+ * @param string $callback The callback
  * @since 1.7.0
  */
-function unregister_elgg_event_handler($event, $object_type, $function) {
+function unregister_elgg_event_handler($event, $object_type, $callback) {
 	global $CONFIG;
-	foreach($CONFIG->events[$event][$object_type] as $key => $event_function) {
-		if ($event_function == $function) {
+	foreach($CONFIG->events[$event][$object_type] as $key => $event_callback) {
+		if ($event_callback == $callback) {
 			unset($CONFIG->events[$event][$object_type][$key]);
 		}
 	}
 }
 
 /**
- * Trigger an Elgg Event and run all handler functions registered to that event, type.
+ * Trigger an Elgg Event and run all handler callbacks registered to that event, type.
  *
- * This function runs all handlers regsitered to $event, $object_type or
+ * This function runs all handlers registered to $event, $object_type or
  * the special keyword 'all' for either or both.
  *
  * $event is usually a verb: create, update, delete, annotation.
@@ -1035,7 +1035,7 @@ function unregister_elgg_event_handler($event, $object_type, $function) {
  *
  * $object is usually an Elgg* object assciated with the event.
  *
- * @warning Elgg events should only be called by core.  Plugin authors should use
+ * @warning Elgg events should only be triggered by core.  Plugin authors should use
  * {@link trigger_elgg_plugin_hook()} instead.
  *
  * @tip When referring to events, the preferred syntax is "event, type".
@@ -1048,8 +1048,8 @@ function unregister_elgg_event_handler($event, $object_type, $function) {
  *
  * @param string $event The event type
  * @param string $object_type The object type
- * @param string $function The function name
- * @return bool The result of running all handler functions.
+ * @param string $object The object involved in the event
+ * @return bool The result of running all handler callbacks.
  * @link http://docs.elgg.org/Tutorials/Core/Events
  * @internal @example events/emit.php Basic emitting of an Elgg event.
  */
@@ -1057,32 +1057,32 @@ function trigger_elgg_event($event, $object_type, $object = null) {
 	global $CONFIG;
 
 	if (!empty($CONFIG->events[$event][$object_type]) && is_array($CONFIG->events[$event][$object_type])) {
-		foreach ($CONFIG->events[$event][$object_type] as $eventfunction) {
-			if ($eventfunction($event, $object_type, $object) === FALSE) {
+		foreach ($CONFIG->events[$event][$object_type] as $callback) {
+			if (call_user_func_array($callback, array($event, $object_type, $object)) === FALSE) {
 				return FALSE;
 			}
 		}
 	}
 
 	if (!empty($CONFIG->events['all'][$object_type]) && is_array($CONFIG->events['all'][$object_type])) {
-		foreach ($CONFIG->events['all'][$object_type] as $eventfunction) {
-			if ($eventfunction($event, $object_type, $object) === FALSE) {
+		foreach ($CONFIG->events['all'][$object_type] as $callback) {
+			if (call_user_func_array($callback, array($event, $object_type, $object)) === FALSE) {
 				return FALSE;
 			}
 		}
 	}
 
 	if (!empty($CONFIG->events[$event]['all']) && is_array($CONFIG->events[$event]['all'])) {
-		foreach ($CONFIG->events[$event]['all'] as $eventfunction) {
-			if ($eventfunction($event, $object_type, $object) === FALSE) {
+		foreach ($CONFIG->events[$event]['all'] as $callback) {
+			if (call_user_func_array($callback, array($event, $object_type, $object)) === FALSE) {
 				return FALSE;
 			}
 		}
 	}
 
 	if (!empty($CONFIG->events['all']['all']) && is_array($CONFIG->events['all']['all'])) {
-		foreach ($CONFIG->events['all']['all'] as $eventfunction) {
-			if ($eventfunction($event, $object_type, $object) === FALSE) {
+		foreach ($CONFIG->events['all']['all'] as $callback) {
+			if (call_user_func_array($callback, array($event, $object_type, $object)) === FALSE) {
 				return FALSE;
 			}
 		}
