@@ -8,8 +8,6 @@
  * @link http://elgg.org/
  */
 
-require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
-
 set_context('search');
 $area2 = elgg_list_entities();
 set_context('entities');
