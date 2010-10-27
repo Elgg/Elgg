@@ -61,7 +61,7 @@ if ($mysql_dblink = @mysql_connect($CONFIG->dbhost,$CONFIG->dbuser,$CONFIG->dbpa
 if (!$contents) {
 	mysql_close($mysql_dblink);
 	require_once(dirname(dirname(__FILE__)) . "/engine/start.php");
-	$contents = elgg_view($view);
+	$contents = elgg_view($view_name);
 }
 
 header("Content-Length: " . strlen($contents));
