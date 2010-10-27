@@ -1,29 +1,28 @@
-CORE ELGG TEAM:
-
-Dave Tosh <dave@elgg.com>
-http://twitter.com/davetosh
-
-Brett Profitt <brett@elgg.com>
-http://twitter.com/brettprofitt
-
-Pete Harris <pete@elgg.com>
-
-Nicholas Whitt <nick@elgg.com>
-http://twitter.com/nogoodnick
-
-
-CONTRIBUTING DEVELOPERS
+These developers have developed or contributed significant bodies of code
+to the Elgg Project.  (List in alphabetical order.)
 
 Cash Costello - http://cashcostello.com/
-Justin Richer, Nathan Rackliffe, Tom Read, Jon Maul - MITRE http://www.mitre.org/
+
+Pete Harris - pete@elgg.com
+
 Milan Magudia - http://hedgehogs.net/
+
+Jon Maul - MITRE http://www.mitre.org/
+
+Marcus Povey - http://marcuspovey.co.uk/
+
+Brett Profitt - brett.profitt@gmail.com,  http://twitter.com/brettprofitt
+
+Nathan Rackliffe - MITRE http://mitre.org/
+
+Tom Readi - MITRE http://mitre.org/
+
+Justin Richer - MITRE http://mitre.org/
+
+Dave Tosh - davidgtosh@gmail.com,  http://twitter.com/davetosh
+
+Ben Werdmuller - http://benwerd.com/
+
+Nicholas Whitt - nick.whitt@gmail.com,  http://twitter.com/nogoodnick
+
 Evan Winslow - http://evanwinslow.com/
-
-
-ALUMNI DEVELOPERS
-
-Ben Werdmuller
-http://benwerd.com/
-
-Marcus Povey
-http://marcuspovey.co.uk/
