@@ -34,13 +34,20 @@
 	$tiny = get_resized_image_from_existing_file($filename,25,25, true, $x1, $y1, $x2, $y2, TRUE);
 	$small = get_resized_image_from_existing_file($filename,40,40, true, $x1, $y1, $x2, $y2, TRUE);
 	$medium = get_resized_image_from_existing_file($filename,100,100, true, $x1, $y1, $x2, $y2, TRUE);
+	$large = get_resized_image_from_existing_file($filename,200,200, true, $x1, $y1, $x2, $y2);
 	
-	if ($small !== false
-				&& $medium !== false
-				&& $tiny !== false) {
+	if ($topbar !== false &&
+		$tiny   !== false &&
+		$small  !== false &&
+		$medium !== false &&
+		$large  !== false ) {
 			
 				$filehandler = new ElggFile();
 				$filehandler->owner_guid = $user->getGUID();
+				$filehandler->setFilename("profile/" .  $user->guid . "large.jpg");
+				$filehandler->open("write");
+				$filehandler->write($large);
+				$filehandler->close();
 				$filehandler->setFilename("profile/" .  $user->guid . "medium.jpg");
 				$filehandler->open("write");
 				$filehandler->write($medium);
