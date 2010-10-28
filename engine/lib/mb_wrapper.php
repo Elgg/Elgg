@@ -11,7 +11,8 @@ if (is_callable('mb_internal_encoding')) {
  * NOTE: This differs from parse_str() by returning the results
  * instead of placing them in the local scope!
  *
- * @param str $str
+ * @param str $str The string
+ *
  * @return array
  * @since 1.7.0
  */
@@ -25,44 +26,208 @@ function elgg_parse_str($str) {
 	return $results;
 }
 
-// map string functions to their mb_str_func alternatives
-// and wrap them in elgg_str_fun()
 
-// list of non-mb safe string functions to wrap in elgg_*()
-// only will work with mb_* functions that take the same
-// params in the same order as their non-mb safe counterparts.
-$str_funcs = array(
-	// can't wrap parse_str() because of its 2nd parameter.
-	//'parse_str',
-	'split',
-	'stristr',
-	'strlen',
-	'strpos',
-	'strrchr',
-	'strripos',
-	'strrpos',
-	'strstr',
-	'strtolower',
-	'strtoupper',
-	'substr_count',
-	'substr'
-);
 
-$eval_statement = '';
-foreach ($str_funcs as $func) {
-	// create wrapper function passing in the same args as given
-	$mb_func = "mb_$func";
-	$eval_statement .= "
-	function elgg_$func() {
-		\$args = func_get_args();
-		if (is_callable('$mb_func')) {
-			return call_user_func_array('$mb_func', \$args);
-		}
-		return call_user_func_array('$func', \$args);
+/**
+ * Wrapper function for mb_split(). Falls back to split() if
+ * mb_split() isn't available.  Parameters are passed to the
+ * wrapped function in the same order they are passed to this
+ * function.
+ *
+ * @return string
+ * @since 1.7.0
+ */
+function elgg_split() {
+	$args = func_get_args();
+	if (is_callable('mb_split')) {
+		return call_user_func_array('mb_split', $args);
 	}
-";
+	return call_user_func_array('split', $args);
 }
 
-eval($eval_statement);
+/**
+ * Wrapper function for mb_stristr(). Falls back to stristr() if
+ * mb_stristr() isn't available.  Parameters are passed to the
+ * wrapped function in the same order they are passed to this
+ * function.
+ *
+ * @return string
+ * @since 1.7.0
+ */
+function elgg_stristr() {
+	$args = func_get_args();
+	if (is_callable('mb_stristr')) {
+		return call_user_func_array('mb_stristr', $args);
+	}
+	return call_user_func_array('stristr', $args);
+}
 
-// @todo Other wrapper functions
+/**
+ * Wrapper function for mb_strlen(). Falls back to strlen() if
+ * mb_strlen() isn't available.  Parameters are passed to the
+ * wrapped function in the same order they are passed to this
+ * function.
+ *
+ * @return string
+ * @since 1.7.0
+ */
+function elgg_strlen() {
+	$args = func_get_args();
+	if (is_callable('mb_strlen')) {
+		return call_user_func_array('mb_strlen', $args);
+	}
+	return call_user_func_array('strlen', $args);
+}
+
+/**
+ * Wrapper function for mb_strpos(). Falls back to strpos() if
+ * mb_strpos() isn't available.  Parameters are passed to the
+ * wrapped function in the same order they are passed to this
+ * function.
+ *
+ * @return string
+ * @since 1.7.0
+ */
+function elgg_strpos() {
+	$args = func_get_args();
+	if (is_callable('mb_strpos')) {
+		return call_user_func_array('mb_strpos', $args);
+	}
+	return call_user_func_array('strpos', $args);
+}
+
+/**
+ * Wrapper function for mb_strrchr(). Falls back to strrchr() if
+ * mb_strrchr() isn't available.  Parameters are passed to the
+ * wrapped function in the same order they are passed to this
+ * function.
+ *
+ * @return string
+ * @since 1.7.0
+ */
+function elgg_strrchr() {
+	$args = func_get_args();
+	if (is_callable('mb_strrchr')) {
+		return call_user_func_array('mb_strrchr', $args);
+	}
+	return call_user_func_array('strrchr', $args);
+}
+
+/**
+ * Wrapper function for mb_strripos(). Falls back to strripos() if
+ * mb_strripos() isn't available.  Parameters are passed to the
+ * wrapped function in the same order they are passed to this
+ * function.
+ *
+ * @return int
+ * @since 1.7.0
+ */
+function elgg_strripos() {
+	$args = func_get_args();
+	if (is_callable('mb_strripos')) {
+		return call_user_func_array('mb_strripos', $args);
+	}
+	return call_user_func_array('strripos', $args);
+}
+
+/**
+ * Wrapper function for mb_strrpos(). Falls back to strrpos() if
+ * mb_strrpos() isn't available.  Parameters are passed to the
+ * wrapped function in the same order they are passed to this
+ * function.
+ *
+ * @return int
+ * @since 1.7.0
+ */
+function elgg_strrpos() {
+	$args = func_get_args();
+	if (is_callable('mb_strrpos')) {
+		return call_user_func_array('mb_strrpos', $args);
+	}
+	return call_user_func_array('strrpos', $args);
+}
+
+/**
+ * Wrapper function for mb_strstr(). Falls back to strstr() if
+ * mb_strstr() isn't available.  Parameters are passed to the
+ * wrapped function in the same order they are passed to this
+ * function.
+ *
+ * @return bool
+ * @since 1.7.0
+ */
+function elgg_strstr() {
+	$args = func_get_args();
+	if (is_callable('mb_strstr')) {
+		return call_user_func_array('mb_strstr', $args);
+	}
+	return call_user_func_array('strstr', $args);
+}
+
+/**
+ * Wrapper function for mb_strtolower(). Falls back to strtolower() if
+ * mb_strtolower() isn't available.  Parameters are passed to the
+ * wrapped function in the same order they are passed to this
+ * function.
+ *
+ * @return string
+ * @since 1.7.0
+ */
+function elgg_strtolower() {
+	$args = func_get_args();
+	if (is_callable('mb_strtolower')) {
+		return call_user_func_array('mb_strtolower', $args);
+	}
+	return call_user_func_array('strtolower', $args);
+}
+
+/**
+ * Wrapper function for mb_strtoupper(). Falls back to strtoupper() if
+ * mb_strtoupper() isn't available.  Parameters are passed to the
+ * wrapped function in the same order they are passed to this
+ * function.
+ *
+ * @return string
+ * @since 1.7.0
+ */
+function elgg_strtoupper() {
+	$args = func_get_args();
+	if (is_callable('mb_strtoupper')) {
+		return call_user_func_array('mb_strtoupper', $args);
+	}
+	return call_user_func_array('strtoupper', $args);
+}
+
+/**
+ * Wrapper function for mb_substr_count(). Falls back to substr_count() if
+ * mb_substr_count() isn't available.  Parameters are passed to the
+ * wrapped function in the same order they are passed to this
+ * function.
+ *
+ * @return int
+ * @since 1.7.0
+ */
+function elgg_substr_count() {
+	$args = func_get_args();
+	if (is_callable('mb_substr_count')) {
+		return call_user_func_array('mb_substr_count', $args);
+	}
+	return call_user_func_array('substr_count', $args);
+}
+
+/**
+ * Wrapper function for mb_substr(). Falls back to substr() if
+ * mb_substr() isn't available.  Parameters are passed to the
+ * wrapped function in the same order they are passed to this
+ * function.
+ *
+ * @return string
+ * @since 1.7.0
+ */
+function elgg_substr() {
+	$args = func_get_args();
+	if (is_callable('mb_substr')) {
+		return call_user_func_array('mb_substr', $args);
+	}
+	return call_user_func_array('substr', $args);
+}
